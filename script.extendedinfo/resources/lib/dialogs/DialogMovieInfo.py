@@ -13,6 +13,7 @@ from .. import TheMovieDB as tmdb
 from .. import omdb
 from .. import ImageTools
 from .. import addon
+from .. import KodiJson
 from DialogBaseInfo import DialogBaseInfo
 from ..WindowManager import wm
 from ActionHandler import ActionHandler
@@ -20,7 +21,7 @@ from ..VideoPlayer import PLAYER
 
 ID_LIST_SIMILAR = 150
 ID_LIST_SEASONS = 250
-ID_LIST_TRAILERS = 350
+ID_LIST_YOUTUBE = 350
 ID_LIST_LISTS = 450
 ID_LIST_STUDIOS = 550
 ID_LIST_CERTS = 650
@@ -59,21 +60,19 @@ def get_window(window_type):
             if not data:
                 return None
             self.info, self.data, self.account_states = data
-            sets_thread = SetItemsThread(self.info["SetId"])
-            self.omdb_thread = Utils.FunctionThread(omdb.get_movie_info, self.info["imdb_id"])
-            filter_thread = ImageTools.FilterImageThread(self.info.get("thumb"))
-            for thread in [self.omdb_thread, sets_thread, filter_thread]:
+            sets_thread = SetItemsThread(self.info.get_property("set_id"))
+            self.omdb_thread = Utils.FunctionThread(function=omdb.get_movie_info,
+                                                    param=self.info.get_property("imdb_id"))
+            for thread in [self.omdb_thread, sets_thread]:
                 thread.start()
-            if "dbid" not in self.info:
-                self.info['poster'] = Utils.get_file(self.info.get("poster", ""))
+            self.info.update_properties(ImageTools.blur(self.info.get_art("thumb")))
+            if "dbid" not in self.info.get_infos():
+                self.info.set_art("poster", Utils.get_file(self.info.get_art("poster")))
             lists = self.sort_lists(self.data["lists"])
             sets_thread.join()
             self.setinfo = sets_thread.setinfo
-            set_ids = [item["properties"]["id"] for item in sets_thread.listitems]
-            self.data["similar"] = [i for i in self.data["similar"] if i["properties"]["id"] not in set_ids]
-            filter_thread.join()
-            self.info['ImageFilter'] = filter_thread.image
-            self.info['ImageColor'] = filter_thread.imagecolor
+            set_ids = [item.get_property("id") for item in sets_thread.listitems]
+            self.data["similar"] = [i for i in self.data["similar"] if i.get_property("id") not in set_ids]
             self.listitems = [(ID_LIST_ACTORS, self.data["actors"]),
                               (ID_LIST_SIMILAR, self.data["similar"]),
                               (ID_LIST_SEASONS, sets_thread.listitems),
@@ -90,8 +89,7 @@ def get_window(window_type):
 
         def onInit(self):
             super(DialogMovieInfo, self).onInit()
-            Utils.pass_dict_to_skin(data=self.info,
-                                    window_id=self.window_id)
+            self.info.to_windowprops(window_id=self.window_id)
             super(DialogMovieInfo, self).update_states()
             self.get_youtube_vids("%s %s, movie" % (self.info["label"], self.info["year"]))
             self.fill_lists()
@@ -107,12 +105,6 @@ def get_window(window_type):
         def onAction(self, action):
             super(DialogMovieInfo, self).onAction(action)
             ch.serve_action(action, self.getFocusId(), self)
-
-        @ch.action("contextmenu", ID_LIST_SIMILAR)
-        @ch.action("contextmenu", ID_LIST_SEASONS)
-        def movie_context_menu(self):
-            movie_id = self.listitem.getProperty("id")
-            tmdb.add_movie_to_list(movie_id)
 
         @ch.click(ID_LIST_ACTORS)
         @ch.click(ID_LIST_CREW)
@@ -133,7 +125,7 @@ def get_window(window_type):
             PLAYER.play_youtube_video(youtube_id=youtube_id,
                                       window=self)
 
-        @ch.click(ID_LIST_TRAILERS)
+        @ch.click(ID_LIST_YOUTUBE)
         @ch.click(ID_LIST_VIDEOS)
         def play_youtube_video(self):
             PLAYER.play_youtube_video(youtube_id=self.listitem.getProperty("youtube_id"),
@@ -201,32 +193,28 @@ def get_window(window_type):
 
         @ch.click(ID_BUTTON_OPENLIST)
         def show_list_dialog(self):
-            listitems = [addon.LANG(32134), addon.LANG(32135)]
             xbmc.executebuiltin("ActivateWindow(busydialog)")
-            account_lists = tmdb.get_account_lists()
-            for item in account_lists:
-                listitems.append("%s (%i)" % (item["name"], item["item_count"]))
+            movie_lists = tmdb.get_movie_lists()
+            listitems = ["%s (%i)" % (i["name"], i["item_count"]) for i in movie_lists]
+            listitems = [addon.LANG(32134), addon.LANG(32135)] + listitems
             xbmc.executebuiltin("Dialog.Close(busydialog)")
             index = xbmcgui.Dialog().select(addon.LANG(32136), listitems)
             if index == -1:
                 pass
-            elif index == 0:
+            elif index < 2:
                 wm.open_video_list(prev_window=self,
-                                   mode="favorites")
-            elif index == 1:
-                wm.open_video_list(prev_window=self,
-                                   mode="rating")
+                                   mode="favorites" if index == 0 else "rating")
             else:
                 wm.open_video_list(prev_window=self,
                                    mode="list",
-                                   list_id=account_lists[index - 2]["id"],
-                                   filter_label=account_lists[index - 2]["name"],
+                                   list_id=movie_lists[index - 2]["id"],
+                                   filter_label=movie_lists[index - 2]["name"],
                                    force=True)
 
         @ch.click(ID_BUTTON_PLOT)
         def show_plot(self):
             xbmcgui.Dialog().textviewer(heading=addon.LANG(207),
-                                        text=self.info["Plot"])
+                                        text=self.info.get_info("plot"))
 
         @ch.click(ID_BUTTON_SETRATING)
         def set_rating_dialog(self):
@@ -275,15 +263,15 @@ def get_window(window_type):
 
         @ch.click(ID_BUTTON_PLAY_RESUME)
         def play_movie_resume(self):
-            self.close()
-            Utils.get_kodi_json(method="Player.Open",
-                                params='{"item": {"movieid": %s}, "options":{"resume": %s}}' % (self.info['dbid'], "true"))
+            self.exit_script()
+            xbmc.executebuiltin("Dialog.Close(movieinformation)")
+            KodiJson.play_media("movie", self.info["dbid"], True)
 
         @ch.click(ID_BUTTON_PLAY_NORESUME)
         def play_movie_no_resume(self):
-            self.close()
-            Utils.get_kodi_json(method="Player.Open",
-                                params='{"item": {"movieid": %s}, "options":{"resume": %s}}' % (self.info['dbid'], "false"))
+            self.exit_script()
+            xbmc.executebuiltin("Dialog.Close(movieinformation)")
+            KodiJson.play_media("movie", self.info["dbid"], False)
 
         @ch.click(ID_BUTTON_MANAGE)
         def show_manage_dialog(self):
@@ -291,11 +279,11 @@ def get_window(window_type):
             movie_id = str(self.info.get("dbid", ""))
             imdb_id = str(self.info.get("imdb_id", ""))
             if movie_id:
-                call = "RunScript(script.artwork.downloader,mediatype=movie,%s)"
-                options += [[addon.LANG(413), call % ("mode=gui,dbid=" + movie_id)],
-                            [addon.LANG(14061), call % ("dbid=" + movie_id)],
-                            [addon.LANG(32101), call % ("mode=custom,dbid=" + movie_id + ",extrathumbs")],
-                            [addon.LANG(32100), call % ("mode=custom,dbid=" + movie_id)]]
+                call = "RunScript(script.artwork.downloader,mediatype=movie,dbid={}%s)".format(movie_id)
+                options += [[addon.LANG(413), call % "mode=gui"],
+                            [addon.LANG(14061), call % ""],
+                            [addon.LANG(32101), call % "mode=custom,extrathumbs"],
+                            [addon.LANG(32100), call % "mode=custom"]]
             else:
                 options += [[addon.LANG(32165), "RunPlugin(plugin://plugin.video.couchpotato_manager/movies/add?imdb_id=" + imdb_id + ")||Notification(script.extendedinfo,%s))" % addon.LANG(32059)]]
             if xbmc.getCondVisibility("system.hasaddon(script.libraryeditor)") and movie_id:
@@ -303,18 +291,20 @@ def get_window(window_type):
             options.append([addon.LANG(1049), "Addon.OpenSettings(script.extendedinfo)"])
             selection = xbmcgui.Dialog().select(heading=addon.LANG(32133),
                                                 list=[i[0] for i in options])
-            if selection > -1:
-                for item in options[selection][1].split("||"):
-                    xbmc.executebuiltin(item)
+            if selection == -1:
+                return None
+            for item in options[selection][1].split("||"):
+                xbmc.executebuiltin(item)
 
         def sort_lists(self, lists):
             if not self.logged_in:
                 return lists
             account_list = tmdb.get_account_lists(10)  # use caching here, forceupdate everywhere else
-            ids = [item["id"] for item in account_list]
-            own_lists = [item for item in lists if item["properties"]["id"] in ids]
-            own_lists = [dict({"account": "True"}, **item) for item in own_lists]
-            misc_lists = [item for item in lists if item["properties"]["id"] not in ids]
+            ids = [i["id"] for i in account_list]
+            own_lists = [i for i in lists if i.get_property("id") in ids]
+            for item in own_lists:
+                item.set_property("account", "True")
+            misc_lists = [i for i in lists if i.get_property("id") not in ids]
             return own_lists + misc_lists
 
         def update_states(self):

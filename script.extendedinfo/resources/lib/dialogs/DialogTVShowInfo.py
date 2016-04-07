@@ -50,9 +50,9 @@ def get_window(window_type):
             if not data:
                 return None
             self.info, self.data, self.account_states = data
-            if "dbid" not in self.info:
-                self.info['poster'] = Utils.get_file(self.info.get("poster", ""))
-            self.info['ImageFilter'], self.info['ImageColor'] = ImageTools.filter_image(self.info.get("poster"))
+            if "dbid" not in self.info.get_properties():
+                self.info.set_art("poster", Utils.get_file(self.info.get_art("poster")))
+            self.info.update_properties(ImageTools.blur(self.info.get_art("poster")))
             self.listitems = [(ID_LIST_SIMILAR, self.data["similar"]),
                               (ID_LIST_SEASONS, self.data["seasons"]),
                               (ID_LIST_NETWORKS, self.data["networks"]),
@@ -67,10 +67,9 @@ def get_window(window_type):
                               (ID_LIST_BACKDROPS, self.data["backdrops"])]
 
         def onInit(self):
-            self.get_youtube_vids("%s tv" % (self.info['title']))
+            self.get_youtube_vids("%s tv" % (self.info.get_info("title")))
             super(DialogTVShowInfo, self).onInit()
-            Utils.pass_dict_to_skin(data=self.info,
-                                    window_id=self.window_id)
+            self.info.to_windowprops(window_id=self.window_id)
             super(DialogTVShowInfo, self).update_states()
             self.fill_lists()
 
@@ -81,6 +80,7 @@ def get_window(window_type):
         @ch.click(ID_BUTTON_BROWSE)
         def browse_tvshow(self):
             self.close()
+            xbmc.executebuiltin("Dialog.Close(all)")
             xbmc.executebuiltin("ActivateWindow(videos,videodb://tvshows/titles/%s/)" % self.dbid)
 
         @ch.click(ID_LIST_CREW)
@@ -104,9 +104,9 @@ def get_window(window_type):
         def open_season_dialog(self):
             info = self.listitem.getVideoInfoTag()
             wm.open_season_info(prev_window=self,
-                                tvshow_id=self.info["id"],
+                                tvshow_id=self.info.get_property("id"),
                                 season=info.getSeason(),
-                                tvshow=self.info['title'])
+                                tvshow=self.info.get_info("title"))
 
         @ch.click(ID_LIST_STUDIOS)
         def open_company_info(self):
@@ -149,7 +149,7 @@ def get_window(window_type):
         @ch.click(ID_BUTTON_MANAGE)
         def show_manage_dialog(self):
             options = []
-            title = self.info.get("tvshowtitle", "")
+            title = self.info.get_info("tvshowtitle")
             if self.dbid:
                 call = "RunScript(script.artwork.downloader,mediatype=tv,%s)"
                 options += [[addon.LANG(413), call % ("mode=gui,dbid=" + self.dbid)],
@@ -171,8 +171,8 @@ def get_window(window_type):
         @ch.click(ID_BUTTON_SETRATING)
         def set_rating(self):
             if tmdb.set_rating_prompt(media_type="tv",
-                                      media_id=self.info["id"],
-                                      dbid=self.info.get("dbid")):
+                                      media_id=self.info.get_property("id"),
+                                      dbid=self.info.get_property("dbid")):
                 self.update_states()
 
         @ch.click(ID_BUTTON_OPENLIST)
@@ -190,7 +190,7 @@ def get_window(window_type):
 
         @ch.click(ID_BUTTON_FAV)
         def toggle_fav_status(self):
-            tmdb.change_fav_status(media_id=self.info["id"],
+            tmdb.change_fav_status(media_id=self.info.get_property("id"),
                                    media_type="tv",
                                    status=str(not bool(self.account_states["favorite"])).lower())
             self.update_states()
@@ -204,7 +204,7 @@ def get_window(window_type):
         @ch.click(ID_BUTTON_PLOT)
         def open_text(self):
             xbmcgui.Dialog().textviewer(heading=addon.LANG(32037),
-                                        text=self.info["Plot"])
+                                        text=self.info.get_info("plot"))
 
         @ch.click(ID_LIST_VIDEOS)
         def play_youtube_video(self):
@@ -214,7 +214,7 @@ def get_window(window_type):
 
         def update_states(self):
             xbmc.sleep(2000)  # delay because MovieDB takes some time to update
-            _, __, self.account_states = tmdb.extended_tvshow_info(tvshow_id=self.info["id"],
+            _, __, self.account_states = tmdb.extended_tvshow_info(tvshow_id=self.info.get_property("id"),
                                                                    cache_time=0,
                                                                    dbid=self.dbid)
             super(DialogTVShowInfo, self).update_states()

@@ -63,7 +63,7 @@ msgstr ""
 
 #: \resources\lib\DialogTVShowInfo.py:101
 msgctxt "#32009"
-msgid "Show actor information"
+msgid "Show person information"
 msgstr ""
 
 msgctxt "#32010"
@@ -141,12 +141,12 @@ msgstr ""
 
 #: /plugin.py:56
 msgctxt "#32028"
-msgid "Airing TV shows"
+msgid "Airing episodes"
 msgstr ""
 
 #: /plugin.py:57
 msgctxt "#32029"
-msgid "Premiere TV shows"
+msgid "Season premiere episodes"
 msgstr ""
 
 msgctxt "#32030"
@@ -452,6 +452,21 @@ msgstr ""
 #: /plugin.py:132
 msgctxt "#32092"
 msgid "Anticipated movies"
+msgstr ""
+
+#: /plugin.py:128
+msgctxt "#32093"
+msgid "Rated episodes"
+msgstr ""
+
+#: /resources/lib/TheMovieDB.py:55
+msgctxt "#32094"
+msgid "Male"
+msgstr ""
+
+#: /resources/lib/TheMovieDB.py:54
+msgctxt "#32095"
+msgid "Female"
 msgstr ""
 
 msgctxt "#32099"

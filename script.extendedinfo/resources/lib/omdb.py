@@ -13,6 +13,6 @@ def get_movie_info(imdb_id):
         url = 'i=%s' % (imdb_id)
         results = Utils.get_JSON_response(BASE_URL + url, 20, "OMDB")
         return dict((k, v) for (k, v) in results.iteritems() if v != "N/A")
-    except:
+    except Exception:
         Utils.log("Exception: Error when fetching Omdb data from net")
         return {}

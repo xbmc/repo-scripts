@@ -76,13 +76,9 @@ RunScript(script.extendedinfo,info=set)                 --> MovieSetItems.%d
 - fetches a list of movies from the same Set
   - required additional parameters: dbid=
 ```
-RunScript(script.extendedinfo,info=directormovies)      --> DirectorMovies.%d
+RunScript(script.extendedinfo,info=personmovies)      --> PersonMovies.%d
 ```
-  - required additional parameters: director=
-```
-RunScript(script.extendedinfo,info=writermovies)        --> WriterMovies.%d
-```
-  - required additional parameters: writer=
+  - required additional parameters: person=
 ```
 RunScript(script.extendedinfo,info=studio)              --> StudioInfo.%d
 ```

@@ -15,10 +15,6 @@ def handle_events(results):
     events = []
     for event in results:
         venue = event['venue']
-        artists = ''
-        for art in event["artists"]:
-            artists = artists + ' / ' + art['name']
-            artists = artists.replace(" / ", "", 1)
         events.append({'date': event['datetime'].replace("T", " - ").replace(":00", "", 1),
                        'city': venue['city'],
                        'lat': venue['latitude'],
@@ -28,7 +24,7 @@ def handle_events(results):
                        'label': venue['name'],
                        'region': venue['region'],
                        'country': venue['country'],
-                       'artists': artists})
+                       'artists': " / ".join([art for art in event["artists"]])})
     return events
 
 
@@ -37,7 +33,7 @@ def get_near_events(artists):  # not possible with api 2.0
     for art in artists[:50]:
         try:
             arts.append(urllib.quote(art['artist']))
-        except:
+        except Exception:
             arts.append(urllib.quote(art['artist'].encode("utf-8")))
     artist_str = 'artists[]=' + '&artists[]='.join(arts)
     url = BASE_URL + 'location=use_geoip&radius=50&per_page=100&%s' % (artist_str)

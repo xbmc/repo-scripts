@@ -22,26 +22,28 @@ def get_movies(movie_type):
         if "alternate_ids" not in item:
             continue
         imdb_id = str(item["alternate_ids"]["imdb"])
-        poster = "http://content6.flixster.com/" + item["posters"]["original"][93:]
         if addon.bool_setting("infodialog_onclick"):
             path = PLUGIN_BASE + 'extendedinfo&&imdb_id=%s' % imdb_id
         else:
             search_string = "%s %s trailer" % (item["title"], item["year"])
             path = PLUGIN_BASE + "playtrailer&&title=%s&&imdb_id=%s" % (search_string, imdb_id)
-        movie = {'label': item["title"],
-                 'path': path,
-                 'title': item["title"],
-                 'mediatype': "movie",
-                 'duration': item["runtime"]*60,
-                 'year': item["year"],
-                 'Premiered': item["release_dates"].get("theater", ""),
-                 'Rating': item["ratings"]["audience_score"] / 10.0,
-                 'Plot': item["synopsis"],
-                 'mpaa': item["mpaa_rating"]}
-        movie["properties"] = {'imdb_id': imdb_id,
-                               'duration(h)': Utils.format_time(item["runtime"], "h"),
-                               'duration(m)': Utils.format_time(item["runtime"], "m")}
-        movie["artwork"] = {'thumb': poster,
-                            'poster': poster}
+        movie = Utils.ListItem(label=item.get('title'),
+                               path=path)
+        movie.set_infos({'title': item["title"],
+                         'mediatype': "movie",
+                         'duration': item["runtime"]*60,
+                         'year': item["year"],
+                         'premiered': item["release_dates"].get("theater", ""),
+                         'rating': item["ratings"]["audience_score"] / 10.0,
+                         'plot': item["synopsis"],
+                         'imdbnumber': imdb_id,
+                         'mpaa': item["mpaa_rating"]})
+        movie.set_properties({'imdb_id': imdb_id,
+                              'duration(h)': Utils.format_time(item["runtime"], "h"),
+                              'duration(m)': Utils.format_time(item["runtime"], "m")})
+        movie.set_artwork({'thumb': item["posters"]["original"],
+                           'poster': item["posters"]["original"]})
         movies.append(movie)
-    return local_db.merge_with_local_movie_info(movies, False)
+    return local_db.merge_with_local(media_type="movie",
+                                     items=movies,
+                                     library_first=False)

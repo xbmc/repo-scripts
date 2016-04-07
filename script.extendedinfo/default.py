@@ -5,9 +5,24 @@
 
 import sys
 import xbmc
-from resources.lib.process import start_info_actions
-from resources.lib import Utils
+from resources.lib import process
 from resources.lib import addon
+
+
+def pass_list_to_skin(name, data, prefix="", limit=False):
+    if data and limit and int(limit) < len(data):
+        data = data[:int(limit)]
+    if not data:
+        addon.set_global('%s%s.Count' % (prefix, name), '0')
+        return None
+    for (count, result) in enumerate(data):
+        for (key, value) in result.iteritems():
+            addon.set_global('%s%s.%i.%s' % (prefix, name, count + 1, key), unicode(value))
+        for key, value in result.get("properties", {}).iteritems():
+            if not value:
+                continue
+            addon.set_global('%s%s.%i.%s' % (prefix, name, count + 1, key), unicode(value))
+    addon.set_global('%s%s.Count' % (prefix, name), str(len(data)))
 
 
 class Main:
@@ -17,11 +32,11 @@ class Main:
         addon.set_global("extendedinfo_running", "true")
         self._parse_argv()
         for info in self.infos:
-            listitems = start_info_actions(info, self.params)
-            Utils.pass_list_to_skin(name=info,
-                                    data=listitems,
-                                    prefix=self.params.get("prefix", ""),
-                                    limit=self.params.get("limit", 20))
+            listitems = process.start_info_actions(info, self.params)
+            pass_list_to_skin(name=info,
+                              data=listitems,
+                              prefix=self.params.get("prefix", ""),
+                              limit=self.params.get("limit", 20))
         if not self.infos:
             addon.set_global('infodialogs.active', "true")
             from resources.lib.WindowManager import wm
@@ -39,7 +54,7 @@ class Main:
             else:
                 try:
                     self.params[param.split("=")[0].lower()] = "=".join(param.split("=")[1:]).strip().decode('utf-8')
-                except:
+                except Exception:
                     pass
 
 if (__name__ == "__main__"):

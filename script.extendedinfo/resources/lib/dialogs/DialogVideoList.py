@@ -324,7 +324,7 @@ def get_window(window_type):
             response = tmdb.search_company(result)
             if len(response) > 1:
                 selection = xbmcgui.Dialog().select(heading=addon.LANG(32151),
-                                                    list=[item["name"] for item in response])
+                                                    list=[i["name"] for i in response])
                 if selection > -1:
                     response = response[selection]
             elif response:
@@ -385,14 +385,7 @@ def get_window(window_type):
 
         def fetch_data(self, force=False):  # TODO: rewrite
             sort_by = self.sort + "." + self.order
-            if self.type == "tv":
-                temp = "tv"
-                rated = addon.LANG(32145)
-                starred = addon.LANG(32144)
-            else:
-                temp = "movies"
-                rated = addon.LANG(32135)
-                starred = addon.LANG(32134)
+            temp = "tv" if self.type == "tv" else "movies"
             if self.mode == "search":
                 params = {"query": self.search_str,
                           "include_adult": include_adult,
@@ -409,7 +402,7 @@ def get_window(window_type):
                           "page": self.page,
                           "session_id": tmdb.Login.get_session_id()}
                 url = "account/%s/favorite/%s" % (tmdb.Login.get_account_id(), temp)
-                self.filter_label = starred
+                self.filter_label = addon.LANG(32144) if self.type == "tv" else addon.LANG(32134)
             elif self.mode == "rating":
                 force = True  # workaround, should be updated after setting rating
                 if self.logged_in:
@@ -433,7 +426,7 @@ def get_window(window_type):
                                 "total_results": 0}
                     params = {"language": addon.setting("LanguageID")}
                     url = "guest_session/%s/rated_movies" % (session_id)
-                self.filter_label = rated
+                self.filter_label = addon.LANG(32145) if self.type == "tv" else addon.LANG(32135)
             else:
                 self.set_filter_label()
                 params = {"sort_by": sort_by,

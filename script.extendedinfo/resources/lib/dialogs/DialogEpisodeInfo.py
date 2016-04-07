@@ -14,11 +14,12 @@ from ..WindowManager import wm
 from ActionHandler import ActionHandler
 from ..VideoPlayer import PLAYER
 
-ID_LIST_ACTORS = 1000
+ID_CONTROL_PLOT = 132
+ID_LIST_YOUTUBE = 350
 ID_LIST_CREW = 750
+ID_LIST_ACTORS = 1000
 ID_LIST_VIDEOS = 1150
 ID_LIST_BACKDROPS = 1350
-ID_CONTROL_PLOT = 132
 ID_CONTROL_SETRATING = 6001
 ID_CONTROL_RATINGLISTS = 6006
 
@@ -40,7 +41,7 @@ def get_window(window_type):
             if not data:
                 return None
             self.info, self.data, self.account_states = data
-            self.info['ImageFilter'], self.info['ImageColor'] = ImageTools.filter_image(self.info.get("thumb"))
+            self.info.update_properties(ImageTools.blur(self.info.get("thumb")))
             self.listitems = [(ID_LIST_ACTORS, self.data["actors"] + self.data["guest_stars"]),
                               (ID_LIST_CREW, self.data["crew"]),
                               (ID_LIST_VIDEOS, self.data["videos"]),
@@ -48,8 +49,7 @@ def get_window(window_type):
 
         def onInit(self):
             super(DialogEpisodeInfo, self).onInit()
-            Utils.pass_dict_to_skin(data=self.info,
-                                    window_id=self.window_id)
+            self.info.to_windowprops(window_id=self.window_id)
             super(DialogEpisodeInfo, self).update_states()
             self.get_youtube_vids("%s tv" % (self.info['title']))
             self.fill_lists()
@@ -67,7 +67,7 @@ def get_window(window_type):
         @ch.click(ID_CONTROL_PLOT)
         def open_text(self):
             xbmcgui.Dialog().textviewer(heading=addon.LANG(32037),
-                                        text=self.info["Plot"])
+                                        text=self.info.get_info("plot"))
 
         @ch.click(ID_CONTROL_SETRATING)
         def set_rating_dialog(self):
@@ -83,6 +83,7 @@ def get_window(window_type):
             wm.open_video_list(prev_window=self,
                                listitems=listitems)
 
+        @ch.click(ID_LIST_YOUTUBE)
         @ch.click(ID_LIST_VIDEOS)
         def play_youtube_video(self):
             PLAYER.play_youtube_video(youtube_id=self.listitem.getProperty("youtube_id"),

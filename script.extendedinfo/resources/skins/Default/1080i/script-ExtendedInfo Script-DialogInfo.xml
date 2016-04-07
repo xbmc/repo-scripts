@@ -24,7 +24,7 @@
 			<height>0</height>
 			<width>0</width>
 			<texturefocus>-</texturefocus>
-			<posx>-5000</posx>
+			<left>-5000</left>
 			<onfocus>SetFocus(132)</onfocus>
 			<onclick>noop</onclick>
 			<visible allowhiddenfocus="true">Control.HasFocus(20000)</visible>
@@ -33,7 +33,7 @@
 			<height>0</height>
 			<width>0</width>
 			<texturefocus>-</texturefocus>
-			<posx>-5000</posx>
+			<left>-5000</left>
 			<onclick>noop</onclick>
 			<visible allowhiddenfocus="true">Control.HasFocus(20001)</visible>
 		</control>
@@ -44,14 +44,14 @@
 			<animation effect="slide" end="-749,0" time="450" tween="sine" easing="inout" condition="!Control.HasFocus(132) + !ControlGroup(5000).HasFocus">Conditional</animation>
 			<!-- right side -->
 			<control type="image">
-				<posx>729</posx>
+				<left>729</left>
 				<width>1950</width>
 				<height>1080</height>
 				<aspectratio align="center">scale</aspectratio>
 				<texture fallback="common/black.png">$INFO[Window.Property(ImageFilter)]</texture>
 			</control>
 			<control type="image">
-				<posx>729</posx>
+				<left>729</left>
 				<width>1950</width>
 				<animation effect="fade" start="100" end="60" time="0" condition="true">Conditional</animation>
 				<height>1080</height>
@@ -59,13 +59,13 @@
 				<texture colordiffuse="$INFO[Window(home).Property(ImageColor)]">diffuseoverlay.png</texture>
 			</control>
 			<control type="group" id="33000">
-				<posx>825</posx>
-				<posy>22</posy>
+				<left>825</left>
+				<top>22</top>
 				<visible>!Control.HasFocus(132)</visible>
 				<animation effect="fade" time="250">VisibleChange</animation>
 				<control type="image">
-					<posx>990</posx>
-					<posy>-20</posy>
+					<left>990</left>
+					<top>-20</top>
 					<width>830</width>
 					<height>130</height>
 					<aspectratio align="right">keep</aspectratio>
@@ -73,13 +73,13 @@
 				</control>
 			</control>
 			<control type="group">
-				<posx>825</posx>
-				<posy>68</posy>
+				<left>825</left>
+				<top>68</top>
 				<width>1042</width>
 				<height>854</height>
 				<control type="label">
-					<posx>-40</posx>
-					<posy>-15</posy>
+					<left>-40</left>
+					<top>-15</top>
 					<height>60</height>
 					<width>1050</width>
 					<label>$INFO[Window.Property(label)]</label>
@@ -87,15 +87,15 @@
 					<scroll>true</scroll>
 				</control>
 				<control type="image">
-					<posx>-40</posx>
-					<posy>58</posy>
+					<left>-40</left>
+					<top>58</top>
 					<width>1042</width>
 					<height>1</height>
 					<texture>info/infopanel_line.png</texture>
 				</control>
 				<control type="grouplist" id="4000">
-					<posx>-80</posx>
-					<posy>60</posy>
+					<left>-80</left>
+					<top>60</top>
 					<width>2000</width>
 					<itemgap>15</itemgap>
 					<height>1000</height>
@@ -113,8 +113,8 @@
 					<control type="label">
 						<align>left</align>
 						<aligny>center</aligny>
-						<posx>40</posx>
-						<posy>10</posy>
+						<left>40</left>
+						<top>10</top>
 						<width>1000</width>
 						<height>25</height>
 						<textcolor>FF999999</textcolor>
@@ -125,8 +125,8 @@
 					<control type="label">
 						<align>left</align>
 						<aligny>center</aligny>
-						<posx>40</posx>
-						<posy>10</posy>
+						<left>40</left>
+						<top>10</top>
 						<width>1000</width>
 						<height>25</height>
 						<textcolor>FF999999</textcolor>
@@ -137,8 +137,8 @@
 					<control type="label">
 						<align>left</align>
 						<aligny>center</aligny>
-						<posx>40</posx>
-						<posy>10</posy>
+						<left>40</left>
+						<top>10</top>
 						<width>1000</width>
 						<height>25</height>
 						<textcolor>FF999999</textcolor>
@@ -149,8 +149,8 @@
 					<control type="label">
 						<align>left</align>
 						<aligny>center</aligny>
-						<posx>40</posx>
-						<posy>10</posy>
+						<left>40</left>
+						<top>10</top>
 						<width>1000</width>
 						<height>25</height>
 						<textcolor>FF999999</textcolor>
@@ -161,8 +161,8 @@
 					<control type="label">
 						<align>left</align>
 						<aligny>center</aligny>
-						<posx>40</posx>
-						<posy>10</posy>
+						<left>40</left>
+						<top>10</top>
 						<width>1000</width>
 						<height>25</height>
 						<textcolor>FF999999</textcolor>
@@ -173,8 +173,8 @@
 					<control type="label">
 						<align>left</align>
 						<aligny>center</aligny>
-						<posx>40</posx>
-						<posy>10</posy>
+						<left>40</left>
+						<top>10</top>
 						<width>1000</width>
 						<height>25</height>
 						<textcolor>FF999999</textcolor>
@@ -185,8 +185,8 @@
 					<control type="label">
 						<align>left</align>
 						<aligny>center</aligny>
-						<posx>40</posx>
-						<posy>0</posy>
+						<left>40</left>
+						<top>0</top>
 						<width>1000</width>
 						<height>25</height>
 						<textcolor>FF999999</textcolor>
@@ -197,8 +197,8 @@
 					<control type="group" id="140">
 						<height>255</height>
 						<control type="radiobutton" id="132">
-							<posx>0</posx>
-							<posy>0</posy>
+							<left>0</left>
+							<top>0</top>
 							<width>1120</width>
 							<height>255</height>
 							<radioposx>30</radioposx>
@@ -216,8 +216,8 @@
 							<label>-</label>
 						</control>
 						<control type="textbox" id="800">
-							<posx>93</posx>
-							<posy>20</posy>
+							<left>93</left>
+							<top>20</top>
 							<width>980</width>
 							<height>210</height>
 							<align>left</align>
@@ -230,8 +230,8 @@
 						<visible>IntegerGreaterThan(Container(150).NumItems,0)</visible>
 						<height>540</height>
 						<control type="label">
-							<posy>6</posy>
-							<posx>25</posx>
+							<top>6</top>
+							<left>25</left>
 							<width>500</width>
 							<height>25</height>
 							<aligny>center</aligny>
@@ -239,8 +239,8 @@
 							<label>$ADDON[script.extendedinfo 32120]$INFO[Container(150).NumItems, (,)]</label>
 						</control>
 						<control type="image">
-							<posx>0</posx>
-							<posy>200</posy>
+							<left>0</left>
+							<top>200</top>
 							<width>28</width>
 							<height>28</height>
 							<texture colordiffuse="$INFO[Window.Property(ImageColor)]" flipx="true">arrowright.png</texture>
@@ -249,8 +249,8 @@
 							<visible>Container(150).HasPrevious + Control.HasFocus(150)</visible>
 						</control>
 						<control type="image">
-							<posx>1883</posx>
-							<posy>200</posy>
+							<left>1883</left>
+							<top>200</top>
 							<width>28</width>
 							<height>28</height>
 							<texture colordiffuse="$INFO[Window.Property(ImageColor)]">arrowright.png</texture>
@@ -259,8 +259,8 @@
 							<visible>Container(150).HasNext + Control.HasFocus(150)</visible>
 						</control>
 						<control type="panel" id="150">
-							<posy>30</posy>
-							<posx>-45</posx>
+							<top>30</top>
+							<left>-45</left>
 							<width>1950</width>
 							<height>600</height>
 							<onleft>150</onleft>
@@ -272,17 +272,17 @@
 							<itemlayout height="400" width="270">
 								<control type="group">
 									<control type="image">
-										<posy>0</posy>
-										<posx>50</posx>
+										<top>0</top>
+										<left>50</left>
 										<width>280</width>
 										<height>380</height>
 										<texture border="40" colordiffuse="$INFO[Window(home).Property(ImageColor)]">buttons/roundedbutton-nofocus.png</texture>
 									</control>
 									<control type="group">
-										<posx>77</posx>
-										<posy>18</posy>
+										<left>77</left>
+										<top>18</top>
 										<control type="image">
-											<posy>10</posy>
+											<top>10</top>
 											<width>224</width>
 											<height>325</height>
 											<texture background="true" fallback="DefaultVideo.png">$INFO[ListItem.Thumb]</texture>
@@ -292,13 +292,13 @@
 										<control type="image">
 											<width>55</width>
 											<height>55</height>
-											<posy>10</posy>
-											<posx>169</posx>
+											<top>10</top>
+											<left>169</left>
 											<texture>flags/local.png</texture>
 											<visible>!IsEmpty(ListItem.Property(DBID))</visible>
 										</control>
 										<control type="image">
-											<posy>310</posy>
+											<top>310</top>
 											<width>63</width>
 											<height>25</height>
 											<texture>common/black.png</texture>
@@ -307,8 +307,8 @@
 											<visible>!IsEmpty(ListItem.Year)</visible>
 										</control>
 										<control type="label">
-											<posx>5</posx>
-											<posy>310</posy>
+											<left>5</left>
+											<top>310</top>
 											<width>84</width>
 											<height>25</height>
 											<font>font10</font>
@@ -317,7 +317,7 @@
 											<label>$INFO[ListItem.Year]</label>
 										</control>
 										<control type="image">
-											<posy>10</posy>
+											<top>10</top>
 											<width>224</width>
 											<height>325</height>
 											<texture>common/black.png</texture>
@@ -328,8 +328,8 @@
 										<control type="textbox">
 											<width>228</width>
 											<height>140</height>
-											<posx>0</posx>
-											<posy>340</posy>
+											<left>0</left>
+											<top>340</top>
 											<align>center</align>
 											<font>font12</font>
 											<textcolor>FFF0F0F0</textcolor>
@@ -341,15 +341,15 @@
 							<focusedlayout height="400" width="270">
 								<control type="group">
 									<control type="image">
-										<posy>0</posy>
-										<posx>50</posx>
+										<top>0</top>
+										<left>50</left>
 										<width>280</width>
 										<height>380</height>
 										<texture border="40" colordiffuse="$INFO[Window(home).Property(ImageColor)]">buttons/roundedbutton-nofocus.png</texture>
 									</control>
 									<control type="image">
-										<posy>0</posy>
-										<posx>50</posx>
+										<top>0</top>
+										<left>50</left>
 										<width>280</width>
 										<height>380</height>
 										<texture border="40" colordiffuse="$INFO[Window(home).Property(ImageColor)]">buttons/roundedbutton-focus.png</texture>
@@ -357,10 +357,10 @@
 										<animation effect="fade" start="0" end="100" time="0">UnFocus</animation>
 									</control>
 									<control type="group">
-										<posx>77</posx>
-										<posy>18</posy>
+										<left>77</left>
+										<top>18</top>
 										<control type="image">
-											<posy>10</posy>
+											<top>10</top>
 											<width>224</width>
 											<height>325</height>
 											<texture background="true" fallback="DefaultVideo.png">$INFO[ListItem.Thumb]</texture>
@@ -370,13 +370,13 @@
 										<control type="image">
 											<width>55</width>
 											<height>55</height>
-											<posy>10</posy>
-											<posx>169</posx>
+											<top>10</top>
+											<left>169</left>
 											<texture>flags/local.png</texture>
 											<visible>!IsEmpty(ListItem.Property(DBID))</visible>
 										</control>
 										<control type="image">
-											<posy>310</posy>
+											<top>310</top>
 											<width>63</width>
 											<height>25</height>
 											<texture>common/black.png</texture>
@@ -385,8 +385,8 @@
 											<visible>!IsEmpty(ListItem.Year)</visible>
 										</control>
 										<control type="label">
-											<posx>5</posx>
-											<posy>310</posy>
+											<left>5</left>
+											<top>310</top>
 											<width>84</width>
 											<height>25</height>
 											<font>font10</font>
@@ -397,8 +397,8 @@
 										<control type="textbox">
 											<width>228</width>
 											<height>140</height>
-											<posx>0</posx>
-											<posy>340</posy>
+											<left>0</left>
+											<top>340</top>
 											<align>center</align>
 											<font>font12</font>
 											<textcolor>FFF0F0F0</textcolor>
@@ -413,8 +413,8 @@
 						<height>540</height>
 						<visible>IntegerGreaterThan(Container(250).NumItems,0)</visible>
 						<control type="label">
-							<posy>6</posy>
-							<posx>25</posx>
+							<top>6</top>
+							<left>25</left>
 							<width>500</width>
 							<height>25</height>
 							<aligny>center</aligny>
@@ -422,8 +422,8 @@
 							<label>$ADDON[script.extendedinfo 32121]$INFO[Container(250).NumItems, (,)]</label>
 						</control>
 						<control type="image">
-							<posx>0</posx>
-							<posy>200</posy>
+							<left>0</left>
+							<top>200</top>
 							<width>28</width>
 							<height>28</height>
 							<texture colordiffuse="$INFO[Window.Property(ImageColor)]" flipx="true">arrowright.png</texture>
@@ -432,8 +432,8 @@
 							<visible>Container(250).HasPrevious + Control.HasFocus(250)</visible>
 						</control>
 						<control type="image">
-							<posx>1883</posx>
-							<posy>200</posy>
+							<left>1883</left>
+							<top>200</top>
 							<width>28</width>
 							<height>28</height>
 							<texture colordiffuse="$INFO[Window.Property(ImageColor)]">arrowright.png</texture>
@@ -442,8 +442,8 @@
 							<visible>Container(250).HasNext + Control.HasFocus(250)</visible>
 						</control>
 						<control type="panel" id="250">
-							<posy>30</posy>
-							<posx>-45</posx>
+							<top>30</top>
+							<left>-45</left>
 							<width>1950</width>
 							<height>600</height>
 							<onleft>250</onleft>
@@ -455,17 +455,17 @@
 							<itemlayout height="400" width="270">
 								<control type="group">
 									<control type="image">
-										<posy>0</posy>
-										<posx>50</posx>
+										<top>0</top>
+										<left>50</left>
 										<width>280</width>
 										<height>380</height>
 										<texture border="40" colordiffuse="$INFO[Window(home).Property(ImageColor)]">buttons/roundedbutton-nofocus.png</texture>
 									</control>
 									<control type="group">
-										<posx>77</posx>
-										<posy>18</posy>
+										<left>77</left>
+										<top>18</top>
 										<control type="image">
-											<posy>10</posy>
+											<top>10</top>
 											<width>224</width>
 											<height>325</height>
 											<texture background="true" fallback="DefaultVideo.png">$INFO[ListItem.Thumb]</texture>
@@ -475,13 +475,13 @@
 										<control type="image">
 											<width>55</width>
 											<height>55</height>
-											<posy>10</posy>
-											<posx>169</posx>
+											<top>10</top>
+											<left>169</left>
 											<texture>flags/local.png</texture>
 											<visible>!IsEmpty(ListItem.Property(DBID))</visible>
 										</control>
 										<control type="image">
-											<posy>310</posy>
+											<top>310</top>
 											<width>63</width>
 											<height>25</height>
 											<texture>common/black.png</texture>
@@ -490,8 +490,8 @@
 											<visible>!IsEmpty(ListItem.Year)</visible>
 										</control>
 										<control type="label">
-											<posx>5</posx>
-											<posy>310</posy>
+											<left>5</left>
+											<top>310</top>
 											<width>84</width>
 											<height>25</height>
 											<font>font10</font>
@@ -500,7 +500,7 @@
 											<label>$INFO[ListItem.Year]</label>
 										</control>
 										<control type="image">
-											<posy>10</posy>
+											<top>10</top>
 											<width>224</width>
 											<height>325</height>
 											<texture>common/black.png</texture>
@@ -511,8 +511,8 @@
 										<control type="textbox">
 											<width>228</width>
 											<height>140</height>
-											<posx>0</posx>
-											<posy>340</posy>
+											<left>0</left>
+											<top>340</top>
 											<align>center</align>
 											<font>font12</font>
 											<textcolor>FFF0F0F0</textcolor>
@@ -524,15 +524,15 @@
 							<focusedlayout height="400" width="270">
 								<control type="group">
 									<control type="image">
-										<posy>0</posy>
-										<posx>50</posx>
+										<top>0</top>
+										<left>50</left>
 										<width>280</width>
 										<height>380</height>
 										<texture border="40" colordiffuse="$INFO[Window(home).Property(ImageColor)]">buttons/roundedbutton-nofocus.png</texture>
 									</control>
 									<control type="image">
-										<posy>0</posy>
-										<posx>50</posx>
+										<top>0</top>
+										<left>50</left>
 										<width>280</width>
 										<height>380</height>
 										<texture border="40" colordiffuse="$INFO[Window(home).Property(ImageColor)]">buttons/roundedbutton-focus.png</texture>
@@ -540,10 +540,10 @@
 										<animation effect="fade" start="0" end="100" time="0">UnFocus</animation>
 									</control>
 									<control type="group">
-										<posx>77</posx>
-										<posy>18</posy>
+										<left>77</left>
+										<top>18</top>
 										<control type="image">
-											<posy>10</posy>
+											<top>10</top>
 											<width>224</width>
 											<height>325</height>
 											<texture background="true" fallback="DefaultVideo.png">$INFO[ListItem.Thumb]</texture>
@@ -553,13 +553,13 @@
 										<control type="image">
 											<width>55</width>
 											<height>55</height>
-											<posy>10</posy>
-											<posx>169</posx>
+											<top>10</top>
+											<left>169</left>
 											<texture>flags/local.png</texture>
 											<visible>!IsEmpty(ListItem.Property(DBID))</visible>
 										</control>
 										<control type="image">
-											<posy>310</posy>
+											<top>310</top>
 											<width>63</width>
 											<height>25</height>
 											<texture>common/black.png</texture>
@@ -568,8 +568,8 @@
 											<visible>!IsEmpty(ListItem.Year)</visible>
 										</control>
 										<control type="label">
-											<posx>5</posx>
-											<posy>310</posy>
+											<left>5</left>
+											<top>310</top>
 											<width>84</width>
 											<height>25</height>
 											<font>font10</font>
@@ -580,8 +580,8 @@
 										<control type="textbox">
 											<width>228</width>
 											<height>140</height>
-											<posx>0</posx>
-											<posy>340</posy>
+											<left>0</left>
+											<top>340</top>
 											<align>center</align>
 											<font>font12</font>
 											<textcolor>FFF0F0F0</textcolor>
@@ -596,8 +596,8 @@
 						<visible>IntegerGreaterThan(Container(550).NumItems,0)</visible>
 						<height>540</height>
 						<control type="label">
-							<posy>6</posy>
-							<posx>25</posx>
+							<top>6</top>
+							<left>25</left>
 							<width>500</width>
 							<height>25</height>
 							<aligny>center</aligny>
@@ -605,8 +605,8 @@
 							<label>$ADDON[script.extendedinfo 32122]$INFO[Container(550).NumItems, (,)]</label>
 						</control>
 						<control type="image">
-							<posx>0</posx>
-							<posy>200</posy>
+							<left>0</left>
+							<top>200</top>
 							<width>28</width>
 							<height>28</height>
 							<texture colordiffuse="$INFO[Window.Property(ImageColor)]" flipx="true">arrowright.png</texture>
@@ -615,8 +615,8 @@
 							<visible>Container(550).HasPrevious + Control.HasFocus(550)</visible>
 						</control>
 						<control type="image">
-							<posx>1883</posx>
-							<posy>200</posy>
+							<left>1883</left>
+							<top>200</top>
 							<width>28</width>
 							<height>28</height>
 							<texture colordiffuse="$INFO[Window.Property(ImageColor)]">arrowright.png</texture>
@@ -625,8 +625,8 @@
 							<visible>Container(550).HasNext + Control.HasFocus(550)</visible>
 						</control>
 						<control type="panel" id="550">
-							<posy>30</posy>
-							<posx>-45</posx>
+							<top>30</top>
+							<left>-45</left>
 							<width>1950</width>
 							<height>600</height>
 							<onleft>550</onleft>
@@ -638,17 +638,17 @@
 							<itemlayout height="400" width="270">
 								<control type="group">
 									<control type="image">
-										<posy>0</posy>
-										<posx>50</posx>
+										<top>0</top>
+										<left>50</left>
 										<width>280</width>
 										<height>380</height>
 										<texture border="40" colordiffuse="$INFO[Window(home).Property(ImageColor)]">buttons/roundedbutton-nofocus.png</texture>
 									</control>
 									<control type="group">
-										<posx>77</posx>
-										<posy>18</posy>
+										<left>77</left>
+										<top>18</top>
 										<control type="image">
-											<posy>10</posy>
+											<top>10</top>
 											<width>224</width>
 											<height>325</height>
 											<texture background="true" fallback="DefaultVideo.png">$INFO[ListItem.Thumb]</texture>
@@ -658,13 +658,13 @@
 										<control type="image">
 											<width>55</width>
 											<height>55</height>
-											<posy>10</posy>
-											<posx>169</posx>
+											<top>10</top>
+											<left>169</left>
 											<texture>flags/local.png</texture>
 											<visible>!IsEmpty(ListItem.Property(DBID))</visible>
 										</control>
 										<control type="image">
-											<posy>310</posy>
+											<top>310</top>
 											<width>63</width>
 											<height>25</height>
 											<texture>common/black.png</texture>
@@ -673,8 +673,8 @@
 											<visible>!IsEmpty(ListItem.Year)</visible>
 										</control>
 										<control type="label">
-											<posx>5</posx>
-											<posy>310</posy>
+											<left>5</left>
+											<top>310</top>
 											<width>84</width>
 											<height>25</height>
 											<font>font10</font>
@@ -683,7 +683,7 @@
 											<label>$INFO[ListItem.Year]</label>
 										</control>
 										<control type="image">
-											<posy>10</posy>
+											<top>10</top>
 											<width>224</width>
 											<height>325</height>
 											<texture>common/black.png</texture>
@@ -694,8 +694,8 @@
 										<control type="textbox">
 											<width>228</width>
 											<height>140</height>
-											<posx>0</posx>
-											<posy>340</posy>
+											<left>0</left>
+											<top>340</top>
 											<align>center</align>
 											<font>font12</font>
 											<textcolor>FFF0F0F0</textcolor>
@@ -707,15 +707,15 @@
 							<focusedlayout height="400" width="270">
 								<control type="group">
 									<control type="image">
-										<posy>0</posy>
-										<posx>50</posx>
+										<top>0</top>
+										<left>50</left>
 										<width>280</width>
 										<height>380</height>
 										<texture border="40" colordiffuse="$INFO[Window(home).Property(ImageColor)]">buttons/roundedbutton-nofocus.png</texture>
 									</control>
 									<control type="image">
-										<posy>0</posy>
-										<posx>50</posx>
+										<top>0</top>
+										<left>50</left>
 										<width>280</width>
 										<height>380</height>
 										<texture border="40" colordiffuse="$INFO[Window(home).Property(ImageColor)]">buttons/roundedbutton-focus.png</texture>
@@ -723,10 +723,10 @@
 										<animation effect="fade" start="0" end="100" time="0">UnFocus</animation>
 									</control>
 									<control type="group">
-										<posx>77</posx>
-										<posy>18</posy>
+										<left>77</left>
+										<top>18</top>
 										<control type="image">
-											<posy>10</posy>
+											<top>10</top>
 											<width>224</width>
 											<height>325</height>
 											<texture background="true" fallback="DefaultVideo.png">$INFO[ListItem.Thumb]</texture>
@@ -736,13 +736,13 @@
 										<control type="image">
 											<width>55</width>
 											<height>55</height>
-											<posy>10</posy>
-											<posx>169</posx>
+											<top>10</top>
+											<left>169</left>
 											<texture>flags/local.png</texture>
 											<visible>!IsEmpty(ListItem.Property(DBID))</visible>
 										</control>
 										<control type="image">
-											<posy>310</posy>
+											<top>310</top>
 											<width>63</width>
 											<height>25</height>
 											<texture>common/black.png</texture>
@@ -751,8 +751,8 @@
 											<visible>!IsEmpty(ListItem.Year)</visible>
 										</control>
 										<control type="label">
-											<posx>5</posx>
-											<posy>310</posy>
+											<left>5</left>
+											<top>310</top>
 											<width>84</width>
 											<height>25</height>
 											<font>font10</font>
@@ -763,8 +763,8 @@
 										<control type="textbox">
 											<width>228</width>
 											<height>140</height>
-											<posx>0</posx>
-											<posy>340</posy>
+											<left>0</left>
+											<top>340</top>
 											<align>center</align>
 											<font>font12</font>
 											<textcolor>FFF0F0F0</textcolor>
@@ -779,8 +779,8 @@
 						<height>540</height>
 						<visible>IntegerGreaterThan(Container(650).NumItems,0)</visible>
 						<control type="label">
-							<posy>6</posy>
-							<posx>25</posx>
+							<top>6</top>
+							<left>25</left>
 							<width>500</width>
 							<height>25</height>
 							<aligny>center</aligny>
@@ -788,8 +788,8 @@
 							<label>$ADDON[script.extendedinfo 32123]$INFO[Container(650).NumItems, (,)]</label>
 						</control>
 						<control type="image">
-							<posx>0</posx>
-							<posy>200</posy>
+							<left>0</left>
+							<top>200</top>
 							<width>28</width>
 							<height>28</height>
 							<texture colordiffuse="$INFO[Window.Property(ImageColor)]" flipx="true">arrowright.png</texture>
@@ -798,8 +798,8 @@
 							<visible>Container(650).HasPrevious + Control.HasFocus(650)</visible>
 						</control>
 						<control type="image">
-							<posx>1883</posx>
-							<posy>200</posy>
+							<left>1883</left>
+							<top>200</top>
 							<width>28</width>
 							<height>28</height>
 							<texture colordiffuse="$INFO[Window.Property(ImageColor)]">arrowright.png</texture>
@@ -808,8 +808,8 @@
 							<visible>Container(650).HasNext + Control.HasFocus(650)</visible>
 						</control>
 						<control type="panel" id="650">
-							<posy>30</posy>
-							<posx>-45</posx>
+							<top>30</top>
+							<left>-45</left>
 							<width>1950</width>
 							<height>600</height>
 							<onleft>650</onleft>
@@ -821,17 +821,17 @@
 							<itemlayout height="400" width="270">
 								<control type="group">
 									<control type="image">
-										<posy>0</posy>
-										<posx>50</posx>
+										<top>0</top>
+										<left>50</left>
 										<width>280</width>
 										<height>380</height>
 										<texture border="40" colordiffuse="$INFO[Window(home).Property(ImageColor)]">buttons/roundedbutton-nofocus.png</texture>
 									</control>
 									<control type="group">
-										<posx>77</posx>
-										<posy>18</posy>
+										<left>77</left>
+										<top>18</top>
 										<control type="image">
-											<posy>10</posy>
+											<top>10</top>
 											<width>224</width>
 											<height>325</height>
 											<texture background="true" fallback="DefaultVideo.png">$INFO[ListItem.Thumb]</texture>
@@ -841,13 +841,13 @@
 										<control type="image">
 											<width>55</width>
 											<height>55</height>
-											<posy>10</posy>
-											<posx>169</posx>
+											<top>10</top>
+											<left>169</left>
 											<texture>flags/local.png</texture>
 											<visible>!IsEmpty(ListItem.Property(DBID))</visible>
 										</control>
 										<control type="image">
-											<posy>310</posy>
+											<top>310</top>
 											<width>63</width>
 											<height>25</height>
 											<texture>common/black.png</texture>
@@ -856,8 +856,8 @@
 											<visible>!IsEmpty(ListItem.Year)</visible>
 										</control>
 										<control type="label">
-											<posx>5</posx>
-											<posy>310</posy>
+											<left>5</left>
+											<top>310</top>
 											<width>84</width>
 											<height>25</height>
 											<font>font10</font>
@@ -866,7 +866,7 @@
 											<label>$INFO[ListItem.Year]</label>
 										</control>
 										<control type="image">
-											<posy>10</posy>
+											<top>10</top>
 											<width>224</width>
 											<height>325</height>
 											<texture>common/black.png</texture>
@@ -877,8 +877,8 @@
 										<control type="textbox">
 											<width>228</width>
 											<height>140</height>
-											<posx>0</posx>
-											<posy>340</posy>
+											<left>0</left>
+											<top>340</top>
 											<align>center</align>
 											<font>font12</font>
 											<textcolor>FFF0F0F0</textcolor>
@@ -890,15 +890,15 @@
 							<focusedlayout height="400" width="270">
 								<control type="group">
 									<control type="image">
-										<posy>0</posy>
-										<posx>50</posx>
+										<top>0</top>
+										<left>50</left>
 										<width>280</width>
 										<height>380</height>
 										<texture border="40" colordiffuse="$INFO[Window(home).Property(ImageColor)]">buttons/roundedbutton-nofocus.png</texture>
 									</control>
 									<control type="image">
-										<posy>0</posy>
-										<posx>50</posx>
+										<top>0</top>
+										<left>50</left>
 										<width>280</width>
 										<height>380</height>
 										<texture border="40" colordiffuse="$INFO[Window(home).Property(ImageColor)]">buttons/roundedbutton-focus.png</texture>
@@ -906,10 +906,10 @@
 										<animation effect="fade" start="0" end="100" time="0">UnFocus</animation>
 									</control>
 									<control type="group">
-										<posx>77</posx>
-										<posy>18</posy>
+										<left>77</left>
+										<top>18</top>
 										<control type="image">
-											<posy>10</posy>
+											<top>10</top>
 											<width>224</width>
 											<height>325</height>
 											<texture background="true" fallback="DefaultVideo.png">$INFO[ListItem.Thumb]</texture>
@@ -919,13 +919,13 @@
 										<control type="image">
 											<width>55</width>
 											<height>55</height>
-											<posy>10</posy>
-											<posx>169</posx>
+											<top>10</top>
+											<left>169</left>
 											<texture>flags/local.png</texture>
 											<visible>!IsEmpty(ListItem.Property(DBID))</visible>
 										</control>
 										<control type="image">
-											<posy>310</posy>
+											<top>310</top>
 											<width>63</width>
 											<height>25</height>
 											<texture>common/black.png</texture>
@@ -934,8 +934,8 @@
 											<visible>!IsEmpty(ListItem.Year)</visible>
 										</control>
 										<control type="label">
-											<posx>5</posx>
-											<posy>310</posy>
+											<left>5</left>
+											<top>310</top>
 											<width>84</width>
 											<height>25</height>
 											<font>font10</font>
@@ -946,8 +946,8 @@
 										<control type="textbox">
 											<width>228</width>
 											<height>140</height>
-											<posx>0</posx>
-											<posy>340</posy>
+											<left>0</left>
+											<top>340</top>
 											<align>center</align>
 											<font>font12</font>
 											<textcolor>FFF0F0F0</textcolor>
@@ -962,8 +962,8 @@
 						<visible>IntegerGreaterThan(Container(350).NumItems,0)</visible>
 						<height>440</height>
 						<control type="label">
-							<posy>6</posy>
-							<posx>25</posx>
+							<top>6</top>
+							<left>25</left>
 							<width>500</width>
 							<height>25</height>
 							<aligny>center</aligny>
@@ -971,8 +971,8 @@
 							<label>$ADDON[script.extendedinfo 32118]$INFO[Container(350).NumItems, (,)]</label>
 						</control>
 						<control type="image">
-							<posx>0</posx>
-							<posy>150</posy>
+							<left>0</left>
+							<top>150</top>
 							<width>28</width>
 							<height>28</height>
 							<texture colordiffuse="$INFO[Window.Property(ImageColor)]" flipx="true">arrowright.png</texture>
@@ -981,8 +981,8 @@
 							<visible>Container(350).HasPrevious + Control.HasFocus(350)</visible>
 						</control>
 						<control type="image">
-							<posx>1883</posx>
-							<posy>150</posy>
+							<left>1883</left>
+							<top>150</top>
 							<width>28</width>
 							<height>28</height>
 							<texture colordiffuse="$INFO[Window.Property(ImageColor)]">arrowright.png</texture>
@@ -991,8 +991,8 @@
 							<visible>Container(350).HasNext + Control.HasFocus(350)</visible>
 						</control>
 						<control type="panel" id="350">
-							<posx>-45</posx>
-							<posy>30</posy>
+							<left>-45</left>
+							<top>30</top>
 							<width>1950</width>
 							<height>700</height>
 							<onleft>250</onleft>
@@ -1005,17 +1005,17 @@
 							<preloaditems>2</preloaditems>
 							<itemlayout height="410" width="380">
 								<control type="image">
-									<posy>0</posy>
-									<posx>50</posx>
+									<top>0</top>
+									<left>50</left>
 									<width>373</width>
 									<height>260</height>
 									<texture border="40" colordiffuse="$INFO[Window(home).Property(ImageColor)]">buttons/roundedbutton-nofocus.png</texture>
 								</control>
 								<control type="group">
-									<posx>77</posx>
-									<posy>18</posy>
+									<left>77</left>
+									<top>18</top>
 									<control type="image">
-										<posy>10</posy>
+										<top>10</top>
 										<width>320</width>
 										<height>200</height>
 										<texture background="true" fallback="DefaultVideo.png">$INFO[ListItem.Art(thumb)]</texture>
@@ -1025,8 +1025,8 @@
 									<control type="textbox">
 										<width>323</width>
 										<height>100</height>
-										<posx>0</posx>
-										<posy>227</posy>
+										<left>0</left>
+										<top>227</top>
 										<align>center</align>
 										<font>font12</font>
 										<textcolor>FFF0F0F0</textcolor>
@@ -1036,15 +1036,15 @@
 							</itemlayout>
 							<focusedlayout height="410" width="380">
 								<control type="image">
-									<posy>0</posy>
-									<posx>50</posx>
+									<top>0</top>
+									<left>50</left>
 									<width>373</width>
 									<height>260</height>
 									<texture border="40" colordiffuse="$INFO[Window(home).Property(ImageColor)]">buttons/roundedbutton-nofocus.png</texture>
 								</control>
 								<control type="image">
-									<posy>0</posy>
-									<posx>50</posx>
+									<top>0</top>
+									<left>50</left>
 									<width>373</width>
 									<animation effect="fade" start="0" end="100" time="160">Focus</animation>
 									<animation effect="fade" start="0" end="100" time="0">UnFocus</animation>
@@ -1052,10 +1052,10 @@
 									<texture border="40" colordiffuse="$INFO[Window(home).Property(ImageColor)]">buttons/roundedbutton-focus.png</texture>
 								</control>
 								<control type="group">
-									<posx>77</posx>
-									<posy>18</posy>
+									<left>77</left>
+									<top>18</top>
 									<control type="image">
-										<posy>10</posy>
+										<top>10</top>
 										<width>320</width>
 										<height>200</height>
 										<texture background="true" fallback="DefaultVideo.png">$INFO[ListItem.Art(thumb)]</texture>
@@ -1065,8 +1065,8 @@
 									<control type="textbox">
 										<width>323</width>
 										<height>100</height>
-										<posx>0</posx>
-										<posy>227</posy>
+										<left>0</left>
+										<top>227</top>
 										<align>center</align>
 										<font>font12</font>
 										<textcolor>FFF0F0F0</textcolor>
@@ -1080,8 +1080,8 @@
 						<height>450</height>
 						<visible>IntegerGreaterThan(Container(450).NumItems,0)</visible>
 						<control type="label">
-							<posy>6</posy>
-							<posx>25</posx>
+							<top>6</top>
+							<left>25</left>
 							<width>500</width>
 							<height>25</height>
 							<aligny>center</aligny>
@@ -1089,8 +1089,8 @@
 							<label>$ADDON[script.extendedinfo 32119]$INFO[Container(450).NumItems, (,)]</label>
 						</control>
 						<control type="image">
-							<posx>0</posx>
-							<posy>200</posy>
+							<left>0</left>
+							<top>200</top>
 							<width>28</width>
 							<height>28</height>
 							<texture colordiffuse="$INFO[Window.Property(ImageColor)]" flipx="true">arrowright.png</texture>
@@ -1099,8 +1099,8 @@
 							<visible>Container(450).HasPrevious + Control.HasFocus(450)</visible>
 						</control>
 						<control type="image">
-							<posx>1883</posx>
-							<posy>200</posy>
+							<left>1883</left>
+							<top>200</top>
 							<width>28</width>
 							<height>28</height>
 							<texture colordiffuse="$INFO[Window.Property(ImageColor)]">arrowright.png</texture>
@@ -1109,8 +1109,8 @@
 							<visible>Container(450).HasNext + Control.HasFocus(450)</visible>
 						</control>
 						<control type="panel" id="450">
-							<posy>30</posy>
-							<posx>-45</posx>
+							<top>30</top>
+							<left>-45</left>
 							<width>1950</width>
 							<height>600</height>
 							<onleft>450</onleft>
@@ -1122,15 +1122,15 @@
 							<itemlayout height="400" width="270">
 								<control type="group">
 									<control type="image">
-										<posy>0</posy>
-										<posx>50</posx>
+										<top>0</top>
+										<left>50</left>
 										<width>280</width>
 										<height>380</height>
 										<texture border="40" colordiffuse="$INFO[Window(home).Property(ImageColor)]">buttons/roundedbutton-nofocus.png</texture>
 									</control>
 									<control type="image">
-										<posx>77</posx>
-										<posy>28</posy>
+										<left>77</left>
+										<top>28</top>
 										<width>224</width>
 										<height>325</height>
 										<texture background="true" fallback="DefaultVideo.png">$INFO[ListItem.Thumb]</texture>
@@ -1142,15 +1142,15 @@
 							<focusedlayout height="400" width="270">
 								<control type="group">
 									<control type="image">
-										<posy>0</posy>
-										<posx>50</posx>
+										<top>0</top>
+										<left>50</left>
 										<width>280</width>
 										<height>380</height>
 										<texture border="40" colordiffuse="$INFO[Window(home).Property(ImageColor)]">buttons/roundedbutton-nofocus.png</texture>
 									</control>
 									<control type="image">
-										<posy>0</posy>
-										<posx>50</posx>
+										<top>0</top>
+										<left>50</left>
 										<width>280</width>
 										<height>380</height>
 										<texture border="40" colordiffuse="$INFO[Window(home).Property(ImageColor)]">buttons/roundedbutton-focus.png</texture>
@@ -1158,10 +1158,10 @@
 										<animation effect="fade" start="0" end="100" time="0">UnFocus</animation>
 									</control>
 									<control type="group">
-										<posx>77</posx>
-										<posy>18</posy>
+										<left>77</left>
+										<top>18</top>
 										<control type="image">
-											<posy>10</posy>
+											<top>10</top>
 											<width>224</width>
 											<height>325</height>
 											<texture background="true" fallback="DefaultVideo.png">$INFO[ListItem.Thumb]</texture>
@@ -1177,8 +1177,8 @@
 						<height>550</height>
 						<visible>IntegerGreaterThan(Container(750).NumItems,0)</visible>
 						<control type="label">
-							<posx>25</posx>
-							<posy>6</posy>
+							<left>25</left>
+							<top>6</top>
 							<width>500</width>
 							<height>25</height>
 							<aligny>center</aligny>
@@ -1186,8 +1186,8 @@
 							<label>$LOCALIZE[20445]$INFO[Container(750).NumItems, (,)]</label>
 						</control>
 						<control type="image">
-							<posx>0</posx>
-							<posy>200</posy>
+							<left>0</left>
+							<top>200</top>
 							<width>28</width>
 							<height>28</height>
 							<texture colordiffuse="$INFO[Window.Property(ImageColor)]" flipx="true">arrowright.png</texture>
@@ -1196,8 +1196,8 @@
 							<visible>Container(750).HasPrevious + Control.HasFocus(750)</visible>
 						</control>
 						<control type="image">
-							<posx>1883</posx>
-							<posy>200</posy>
+							<left>1883</left>
+							<top>200</top>
 							<width>28</width>
 							<height>28</height>
 							<texture colordiffuse="$INFO[Window.Property(ImageColor)]">arrowright.png</texture>
@@ -1206,8 +1206,8 @@
 							<visible>Container(750).HasNext + Control.HasFocus(750)</visible>
 						</control>
 						<control type="panel" id="750">
-							<posy>30</posy>
-							<posx>-45</posx>
+							<top>30</top>
+							<left>-45</left>
 							<width>1950</width>
 							<height>600</height>
 							<onleft>750</onleft>
@@ -1219,23 +1219,23 @@
 							<itemlayout height="400" width="665">
 								<control type="group">
 									<control type="image">
-										<posy>0</posy>
-										<posx>50</posx>
+										<top>0</top>
+										<left>50</left>
 										<width>560</width>
 										<height>380</height>
 										<texture border="40" colordiffuse="$INFO[Window(home).Property(ImageColor)]">buttons/roundedbutton-nofocus.png</texture>
 									</control>
 									<control type="image">
-										<posx>77</posx>
-										<posy>28</posy>
+										<left>77</left>
+										<top>28</top>
 										<width>505</width>
 										<height>325</height>
 										<texture background="true" fallback="DefaultVideo.png">$INFO[ListItem.Thumb]</texture>
 										<aspectratio aligny="center">scale</aspectratio>
 									</control>
 									<control type="label">
-										<posx>77</posx>
-										<posy>350</posy>
+										<left>77</left>
+										<top>350</top>
 										<height>60</height>
 										<width>505</width>
 										<label>$INFO[ListItem.Label]</label>
@@ -1249,15 +1249,15 @@
 							<focusedlayout height="400" width="665">
 								<control type="group">
 									<control type="image">
-										<posy>0</posy>
-										<posx>50</posx>
+										<top>0</top>
+										<left>50</left>
 										<width>560</width>
 										<height>380</height>
 										<texture border="40" colordiffuse="$INFO[Window(home).Property(ImageColor)]">buttons/roundedbutton-nofocus.png</texture>
 									</control>
 									<control type="image">
-										<posy>0</posy>
-										<posx>50</posx>
+										<top>0</top>
+										<left>50</left>
 										<width>560</width>
 										<height>380</height>
 										<texture border="40" colordiffuse="$INFO[Window(home).Property(ImageColor)]">buttons/roundedbutton-focus.png</texture>
@@ -1265,16 +1265,16 @@
 										<animation effect="fade" start="0" end="100" time="0">UnFocus</animation>
 									</control>
 									<control type="image">
-										<posx>77</posx>
-										<posy>28</posy>
+										<left>77</left>
+										<top>28</top>
 										<width>505</width>
 										<height>325</height>
 										<texture background="true" fallback="DefaultVideo.png">$INFO[ListItem.Thumb]</texture>
 										<aspectratio aligny="center">scale</aspectratio>
 									</control>
 									<control type="label">
-										<posx>77</posx>
-										<posy>350</posy>
+										<left>77</left>
+										<top>350</top>
 										<height>60</height>
 										<width>505</width>
 										<label>$INFO[ListItem.Label]</label>

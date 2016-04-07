@@ -31,12 +31,12 @@ class DialogBaseInfo(object):
         self.last_focus = None
         self.data = None
         self.yt_listitems = []
-        self.info = {}
+        self.info = Utils.ListItem()
 
     def onInit(self, *args, **kwargs):
         super(DialogBaseInfo, self).onInit()
-        addon.set_global("ImageColor", self.info.get('ImageColor', ""))
-        addon.set_global("infobackground", self.info.get('fanart', ""))
+        addon.set_global("ImageColor", self.info.get_property('ImageColor'))
+        addon.set_global("infobackground", self.info.get_art('fanart'))
         self.setProperty("type", self.type)
         self.setProperty("tmdb_logged_in", "true" if self.logged_in else "")
 
@@ -69,8 +69,8 @@ class DialogBaseInfo(object):
         for container_id, listitems in self.listitems:
             try:
                 self.getControl(container_id).reset()
-                self.getControl(container_id).addItems(Utils.create_listitems(listitems))
-            except:
+                self.getControl(container_id).addItems([i.get_listitem() for i in listitems])
+            except Exception:
                 Utils.log("Notice: No container with id %i available" % container_id)
 
     @ch.click(ID_LIST_IMAGES)
@@ -88,9 +88,9 @@ class DialogBaseInfo(object):
                                             list=[addon.LANG(32006)])
         if selection == 0:
             media_type = self.getProperty("type")
-            params = '"art": {"poster": "%s"}' % self.listitem.getProperty("original")
+            art = {"poster": self.listitem.getProperty("original")}
             Utils.get_kodi_json(method="VideoLibrary.Set%sDetails" % media_type,
-                                params='{ %s, "%sid":%s }' % (params, media_type.lower(), self.info['dbid']))
+                                params={"art": art, "%sid" % media_type.lower(): self.info['dbid']})
 
     @ch.action("contextmenu", ID_LIST_BACKDROPS)
     def fanart_options(self):
@@ -100,9 +100,9 @@ class DialogBaseInfo(object):
                                             list=[addon.LANG(32007)])
         if selection == 0:
             media_type = self.getProperty("type")
-            params = '"art": {"fanart": "%s"}' % self.listitem.getProperty("original")
+            art = {"fanart": self.listitem.getProperty("original")}
             Utils.get_kodi_json(method="VideoLibrary.Set%sDetails" % media_type,
-                                params='{ %s, "%sid":%s }' % (params, media_type.lower(), self.info['dbid']))
+                                params={"art": art, "%sid" % media_type.lower(): self.info['dbid']})
 
     @ch.action("contextmenu", ID_LIST_VIDEOS)
     @ch.action("contextmenu", ID_LIST_YOUTUBE)
@@ -133,14 +133,14 @@ class DialogBaseInfo(object):
     def get_youtube_vids(self, search_str):
         try:
             youtube_list = self.getControl(ID_LIST_YOUTUBE)
-        except:
+        except Exception:
             return None
-        result = YouTube.search(search_str, limit=15)
         if not self.yt_listitems:
+            result = YouTube.search(search_str, limit=15)
             self.yt_listitems = result.get("listitems", [])
             if "videos" in self.data:
-                vid_ids = [item["properties"]["key"] for item in self.data["videos"]]
-                self.yt_listitems = [i for i in self.yt_listitems if i["youtube_id"] not in vid_ids]
+                vid_ids = [item.get_property("key") for item in self.data["videos"]]
+                self.yt_listitems = [i for i in self.yt_listitems if i.get_property("youtube_id") not in vid_ids]
         youtube_list.reset()
         youtube_list.addItems(Utils.create_listitems(self.yt_listitems))
 
@@ -169,3 +169,16 @@ class DialogBaseInfo(object):
             return None
         Utils.pass_dict_to_skin(data=tmdb.get_account_props(self.account_states),
                                 window_id=self.window_id)
+
+    @ch.action("contextmenu", "*")
+    def movie_context_menu(self):
+        if self.listitem.getVideoInfoTag().getMediaType() == "movie":
+            selection = xbmcgui.Dialog().select(heading=addon.LANG(22080),
+                                                list=[addon.LANG(32083)])
+            if selection == 0:
+                account_lists = get_account_lists()
+                listitems = ["%s (%i)" % (i["name"], i["item_count"]) for i in account_lists]
+                index = xbmcgui.Dialog().select(addon.LANG(32136), listitems)
+                change_list_status(list_id=account_lists[index]["id"],
+                                   movie_id=self.listitem.getProperty("id"),
+                                   status=True)

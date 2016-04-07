@@ -13,57 +13,57 @@ import PIL.Image
 import PIL.ImageFilter
 import threading
 
-THUMBS_CACHE_PATH = xbmc.translatePath("special://profile/Thumbnails/Video")
+THUMBS_CACHE_PATH = xbmc.translatePath("special://profile/Thumbnails/Video").decode("utf-8")
 IMAGE_PATH = os.path.join(addon.DATA_PATH, "images")
 
 
-def filter_image(input_img, radius=25):
+def blur(input_img, radius=25):
     if not input_img:
-        return "", ""
+        return {}
     if not xbmcvfs.exists(IMAGE_PATH):
         xbmcvfs.mkdir(IMAGE_PATH)
-    input_img = xbmc.translatePath(urllib.unquote(input_img.encode("utf-8"))).replace("image://", "")
-    input_img.rstrip("/")
+    input_img = xbmc.translatePath(urllib.unquote(input_img.encode("utf-8"))).decode("utf-8")
+    input_img.replace("image://", "").rstrip("/")
     cachedthumb = xbmc.getCacheThumbName(input_img)
     filename = "%s-radius_%i.png" % (cachedthumb, radius)
     targetfile = os.path.join(IMAGE_PATH, filename)
-    xbmc_vid_cache_file = os.path.join("special://profile/Thumbnails/Video", cachedthumb[0], cachedthumb)
-    xbmc_cache_file = os.path.join("special://profile/Thumbnails", cachedthumb[0], cachedthumb[:-4] + ".jpg")
+    vid_cache_file = os.path.join("special://profile/Thumbnails/Video", cachedthumb[0], cachedthumb)
+    cache_file = os.path.join("special://profile/Thumbnails", cachedthumb[0], cachedthumb[:-4] + ".jpg")
     if not xbmcvfs.exists(targetfile):
         img = None
         for i in xrange(1, 4):
             try:
-                if xbmcvfs.exists(xbmc_cache_file):
-                    Utils.log("image already in xbmc cache: " + xbmc_cache_file)
-                    img = PIL.Image.open(xbmc.translatePath(xbmc_cache_file))
+                if xbmcvfs.exists(cache_file):
+                    Utils.log("image already in xbmc cache: " + cache_file)
+                    img = PIL.Image.open(xbmc.translatePath(cache_file).decode("utf-8"))
                     break
-                elif xbmcvfs.exists(xbmc_vid_cache_file):
-                    Utils.log("image already in xbmc video cache: " + xbmc_vid_cache_file)
-                    img = PIL.Image.open(xbmc.translatePath(xbmc_vid_cache_file))
+                elif xbmcvfs.exists(vid_cache_file):
+                    Utils.log("image already in xbmc video cache: " + vid_cache_file)
+                    img = PIL.Image.open(xbmc.translatePath(vid_cache_file).decode("utf-8"))
                     break
                 else:
-                    xbmcvfs.copy(unicode(input_img, 'utf-8', errors='ignore'), targetfile)
+                    xbmcvfs.copy(input_img, targetfile)
                     img = PIL.Image.open(targetfile)
                     break
-            except:
+            except Exception:
                 Utils.log("Could not get image for %s (try %i)" % (input_img, i))
                 xbmc.sleep(500)
         if not img:
-            return "", ""
+            return {}
         try:
             img.thumbnail((200, 200), PIL.Image.ANTIALIAS)
             img = img.convert('RGB')
             imgfilter = MyGaussianBlur(radius=radius)
             img = img.filter(imgfilter)
             img.save(targetfile)
-        except:
+        except Exception:
             Utils.log("PIL problem probably....")
-            return "", ""
+            return {}
     else:
-        Utils.log("blurred img already created: " + targetfile)
+        # Utils.log("blurred img already created: " + targetfile)
         img = PIL.Image.open(targetfile)
-    imagecolor = get_colors(img)
-    return targetfile, imagecolor
+    return {"ImageFilter": targetfile,
+            "ImageColor": get_colors(img)}
 
 
 def get_cached_thumb(filename):
@@ -86,7 +86,7 @@ def get_colors(img):
     width, height = img.size
     try:
         pixels = img.load()
-    except:
+    except Exception:
         return "FFF0F0F0"
     data = []
     for x in xrange(width/2):
@@ -94,19 +94,19 @@ def get_colors(img):
     r = 0
     g = 0
     b = 0
-    counter = 0
+    pixels = 0
     for x in data:
         brightness = x[0] + x[1] + x[2]
         if 150 < brightness < 720:
             r += x[0]
             g += x[1]
             b += x[2]
-            counter += 1
-    if counter == 0:
+            pixels += 1
+    if pixels == 0:
         return "FFF0F0F0"
-    r_avg = int(r/counter)
-    g_avg = int(g/counter)
-    b_avg = int(b/counter)
+    r_avg = int(r / pixels)
+    g_avg = int(g / pixels)
+    b_avg = int(b / pixels)
     avg = (r_avg + g_avg + b_avg) / 3
     min_brightness = 130
     if avg < min_brightness:
@@ -114,7 +114,7 @@ def get_colors(img):
         for color in [r_avg, g_avg, b_avg]:
             color = color + diff if color <= (255 - diff) else 255
     imagecolor = "FF%s%s%s" % (format(r_avg, '02x'), format(g_avg, '02x'), format(b_avg, '02x'))
-    Utils.log("Average Color: " + imagecolor)
+    # Utils.log("Average Color: " + imagecolor)
     return imagecolor
 
 
@@ -124,13 +124,13 @@ class FilterImageThread(threading.Thread):
         threading.Thread.__init__(self)
         self.image = image
         self.radius = radius
+        self.info = {}
 
     def run(self):
         try:
-            self.image, self.imagecolor = filter_image(self.image, self.radius)
-        except:
-            self.image = ""
-            self.imagecolor = ""
+            self.info = blur(self.image, self.radius)
+        except Exception:
+            pass
 
 
 class MyGaussianBlur(PIL.ImageFilter.Filter):

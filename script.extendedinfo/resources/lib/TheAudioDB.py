@@ -28,18 +28,20 @@ def handle_albums(results):
             desc = album['strDescription']
         if album.get('strReview'):
             desc += "[CR][CR][B]%s:[/B][CR][CR]%s" % (addon.LANG(185), album['strReview'])
-        album = {'artist': album['strArtist'],
+        album = {'label': album['strAlbum'],
+                 'artist': album['strArtist'],
+                 'mediatype': "album",
+                 'genre': album['strGenre'],
+                 'year': album['intYearReleased'],
                  'mbid': album['strMusicBrainzID'],
                  'id': album['idAlbum'],
                  'audiodb_id': album['idAlbum'],
-                 'Album_Description': desc,
-                 'mediatype': "album",
-                 'genre': album['strGenre'],
-                 'Album_Mood': album['strMood'],
-                 'Album_Style': album['strStyle'],
-                 'Speed': album['strSpeed'],
-                 'Album_Theme': album['strTheme'],
-                 'Type': album['strReleaseFormat'],
+                 'album_description': desc,
+                 'album_mood': album['strMood'],
+                 'album_style': album['strStyle'],
+                 'speed': album['strSpeed'],
+                 'album_Theme': album['strTheme'],
+                 'type': album['strReleaseFormat'],
                  'thumb': album['strAlbumThumb'],
                  'spine': album['strAlbumSpine'],
                  'cdart': album['strAlbumCDart'],
@@ -48,9 +50,7 @@ def handle_albums(results):
                  'location': album['strLocation'],
                  'itunes_id': album['strItunesID'],
                  'amazon_id': album['strAmazonID'],
-                 'year': album['intYearReleased'],
-                 'Sales': album['intSales'],
-                 'label': album['strAlbum']}
+                 'sales': album['intSales']}
         albums.append(album)
     return local_db.compare_album_with_library(albums)
 
@@ -62,12 +62,13 @@ def handle_tracks(results):
     for item in results['track']:
         youtube_id = Utils.extract_youtube_id(item.get('strMusicVid', ''))
         track = {'label': item['strTrack'],
-                 'Artist': item['strArtist'],
+                 'path': Utils.convert_youtube_url(item['strMusicVid']),
+                 'title': item['strTrack'],
+                 'album': item['strAlbum'],
+                 'artist': item['strArtist'],
                  'mediatype': "song",
                  'mbid': item['strMusicBrainzID'],
-                 'Album': item['strAlbum'],
-                 'thumb': "http://i.ytimg.com/vi/" + youtube_id + "/0.jpg",
-                 'path': Utils.convert_youtube_url(item['strMusicVid'])}
+                 "artwork": {'thumb': "http://i.ytimg.com/vi/" + youtube_id + "/0.jpg"}}
         tracks.append(track)
     return tracks
 
@@ -80,11 +81,11 @@ def handle_musicvideos(results):
         youtube_id = Utils.extract_youtube_id(item.get('strMusicVid', ''))
         mvid = {'label': item['strTrack'],
                 'path': Utils.convert_youtube_url(item['strMusicVid']),
-                'Plot': item['strDescriptionEN'],
+                'title': item['strTrack'],
+                'plot': item['strDescriptionEN'],
                 'mediatype': "musicvideo",
                 'id': item['idTrack'],
-                'thumb': "http://i.ytimg.com/vi/" + youtube_id + "/0.jpg",
-                'title': item['strTrack']}
+                "artwork": {'thumb': "http://i.ytimg.com/vi/" + youtube_id + "/0.jpg"}}
         mvids.append(mvid)
     return mvids
 
@@ -107,11 +108,13 @@ def extended_artist_info(results):
             banner = ""
         if 'strReview' in artist and artist['strReview']:
             description += "[CR]" + artist.get('strReview')
-        artist = {'artist': artist.get('strArtist'),
-                  'thumb': artist.get('strArtistThumb'),
-                  'mbid': artist.get('strMusicBrainzID'),
-                  'Banner': banner,
+        artist = {'label': artist.get('strArtist'),
+                  'artist': artist.get('strArtist'),
                   'mediatype': "artist",
+                  'Country': artist.get('strCountry'),
+                  'mbid': artist.get('strMusicBrainzID'),
+                  'thumb': artist.get('strArtistThumb'),
+                  'Banner': banner,
                   'clearlogo': artist.get('strArtistLogo'),
                   'fanart': artist.get('strArtistFanart'),
                   'fanart2': artist.get('strArtistFanart2'),
@@ -122,17 +125,16 @@ def extended_artist_info(results):
                   'Artist_Died': artist.get('intDiedYear'),
                   'Artist_Disbanded': artist.get('strDisbanded'),
                   'Artist_Mood': artist.get('strMood'),
+                  'Artist_Description': description,
+                  'Artist_Genre': artist.get('strGenre'),
+                  'Artist_Style': artist.get('strStyle'),
                   'CountryCode': artist.get('strCountryCode'),
-                  'Country': artist.get('strCountry'),
                   'Website': artist.get('strWebsite'),
                   'Twitter': artist.get('strTwitter'),
                   'Facebook': artist.get('strFacebook'),
                   'LastFMChart': artist.get('strLastFMChart'),
                   'Gender': artist.get('strGender'),
                   'audiodb_id': artist.get('idArtist'),
-                  'Artist_Description': description,
-                  'Artist_Genre': artist.get('strGenre'),
-                  'Artist_Style': artist.get('strStyle'),
                   'Members': artist.get('intMembers')}
         artists.append(artist)
     if artists:

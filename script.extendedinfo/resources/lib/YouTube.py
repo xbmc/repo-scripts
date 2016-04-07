@@ -15,109 +15,118 @@ PLUGIN_BASE = "plugin://script.extendedinfo/?info="
 def handle_videos(results, extended=False):
     videos = []
     for item in results:
-        thumb = ""
-        if "thumbnails" in item["snippet"]:
-            thumb = item["snippet"]["thumbnails"]["high"]["url"]
+        snippet = item["snippet"]
+        thumb = snippet["thumbnails"]["high"]["url"] if "thumbnails" in snippet else ""
         try:
             video_id = item["id"]["videoId"]
-        except:
-            video_id = item["snippet"]["resourceId"]["videoId"]
-        video = {'youtube_id': video_id,
-                 'Play': PLUGIN_BASE + 'youtubevideo&&id=%s' % video_id,
-                 'path': PLUGIN_BASE + 'youtubevideo&&id=%s' % video_id,
-                 'Plot': item["snippet"]["description"],
-                 'label': item["snippet"]["title"],
-                 'channel_title': item["snippet"]["channelTitle"],
-                 'channel_id': item["snippet"]["channelId"],
-                 'Date': item["snippet"]["publishedAt"].replace("T", " ").replace(".000Z", "")[:-3]}
-        video["artwork"] = {'thumb': thumb}
+        except Exception:
+            video_id = snippet["resourceId"]["videoId"]
+        video = Utils.ListItem(label=snippet["title"],
+                               path=PLUGIN_BASE + 'youtubevideo&&id=%s' % video_id)
+        video.set_infos({'plot': snippet["description"],
+                         'premiered': snippet["publishedAt"][:10]})
+        video.set_artwork({'thumb': thumb})
+        video.set_properties({'channel_title': snippet["channelTitle"],
+                              'channel_id': snippet["channelId"],
+                              'youtube_id': video_id,
+                              'Play': PLUGIN_BASE + 'youtubevideo&&id=%s' % video_id})
         videos.append(video)
     if not extended:
         return videos
     params = {"part": "contentDetails,statistics",
-              "id": ",".join([i["youtube_id"] for i in videos])}
+              "id": ",".join([i.get_property("youtube_id") for i in videos])}
     ext_results = get_data(method="videos",
                            params=params)
     if not ext_results:
         return videos
     for item in videos:
         for ext_item in ext_results["items"]:
-            if not item["youtube_id"] == ext_item['id']:
+            if not item.get_property("youtube_id") == ext_item['id']:
                 continue
-            item["duration"] = ext_item['contentDetails']['duration'][2:].lower()
-            item["dimension"] = ext_item['contentDetails']['dimension']
-            item["definition"] = ext_item['contentDetails']['definition']
-            item["caption"] = ext_item['contentDetails']['caption']
-            item["viewcount"] = Utils.millify(ext_item['statistics']['viewCount'])
-            item["likes"] = ext_item['statistics'].get('likeCount')
-            item["dislikes"] = ext_item['statistics'].get('dislikeCount')
-            if item["likes"] and item["dislikes"]:
-                vote_count = int(item["likes"]) + int(item["dislikes"])
+            details = ext_item['contentDetails']
+            duration = details['duration']
+            likes = ext_item['statistics'].get('likeCount')
+            dislikes = ext_item['statistics'].get('dislikeCount')
+            item.set_info("duration", duration)
+            props = {"duration": details['duration'][2:].lower(),
+                     "dimension": details['dimension'],
+                     "definition": details['definition'],
+                     "caption": details['caption'],
+                     "viewcount": Utils.millify(ext_item['statistics']['viewCount']),
+                     "likes": likes,
+                     "dislikes": dislikes}
+            item.update_properties(props)
+            if likes and dislikes:
+                vote_count = int(likes) + int(dislikes)
                 if vote_count > 0:
-                    item["rating"] = format(float(item["likes"]) / vote_count * 10, '.2f')
+                    item.set_info("rating", format(float(likes) / vote_count * 10, '.2f'))
             break
-        else:
-            item["duration"] = ""
     return videos
+
+
+def get_duration_in_seconds(duration):
+    duration = duration[2:-1].replace("H", "M").split("M")
+    if len(duration) == 3:
+        return int(duration[0]) * 3600 + int(duration[1]) * 60 + int(duration[0])
+    elif len(duration) == 2:
+        return int(duration[0]) * 60 + int(duration[1])
+    else:
+        return int(duration[0])
 
 
 def handle_playlists(results):
     playlists = []
     for item in results:
-        thumb = ""
-        if "thumbnails" in item["snippet"]:
-            thumb = item["snippet"]["thumbnails"]["high"]["url"]
+        snippet = item["snippet"]
+        thumb = snippet["thumbnails"]["high"]["url"] if "thumbnails" in snippet else ""
         try:
             playlist_id = item["id"]["playlistId"]
-        except:
-            playlist_id = item["snippet"]["resourceId"]["playlistId"]
-        playlist = {'youtube_id': playlist_id,
-                    'Play': PLUGIN_BASE + 'youtubeplaylist&&id=%s' % playlist_id,
-                    'path': PLUGIN_BASE + 'youtubeplaylist&&id=%s' % playlist_id,
-                    'label': item["snippet"]["title"],
-                    'Plot': item["snippet"]["description"],
-                    'channel_title': item["snippet"]["channelTitle"],
-                    'live': item["snippet"]["liveBroadcastContent"].replace("none", ""),
-                    'Date': item["snippet"]["publishedAt"].replace("T", " ").replace(".000Z", "")[:-3]}
-        playlist["artwork"] = {'thumb': thumb}
+        except Exception:
+            playlist_id = snippet["resourceId"]["playlistId"]
+        playlist = Utils.ListItem(label=snippet["title"],
+                                  path=PLUGIN_BASE + 'youtubeplaylist&&id=%s' % playlist_id)
+        playlist.set_infos({'plot': snippet["description"],
+                            'premiered': snippet["publishedAt"][:10]})
+        playlist.set_art("thumb", thumb)
+        playlist.set_properties({'youtube_id': playlist_id,
+                                 'channel_title': snippet["channelTitle"],
+                                 'live': snippet["liveBroadcastContent"].replace("none", "")})
         playlists.append(playlist)
-    params = {"id": ",".join([i["youtube_id"] for i in playlists]),
+    params = {"id": ",".join([i.get_property("youtube_id") for i in playlists]),
               "part": "contentDetails"}
     ext_results = get_data(method="playlists",
                            params=params)
     for item, ext_item in itertools.product(playlists, ext_results["items"]):
-        if item["youtube_id"] == ext_item['id']:
-            item["itemcount"] = ext_item['contentDetails']['itemCount']
+        if item.get_property("youtube_id") == ext_item['id']:
+            item.set_property("itemcount", ext_item['contentDetails']['itemCount'])
     return playlists
 
 
 def handle_channels(results):
     channels = []
     for item in results:
-        thumb = ""
-        if "thumbnails" in item["snippet"]:
-            thumb = item["snippet"]["thumbnails"]["high"]["url"]
+        snippet = item["snippet"]
+        thumb = snippet["thumbnails"]["high"]["url"] if "thumbnails" in snippet else ""
         try:
             channel_id = item["id"]["channelId"]
-        except:
-            channel_id = item["snippet"]["resourceId"]["channelId"]
-        channel = {'youtube_id': channel_id,
-                   'Play': PLUGIN_BASE + 'youtubechannel&&id=%s' % channel_id,
-                   'path': PLUGIN_BASE + 'youtubechannel&&id=%s' % channel_id,
-                   'Plot': item["snippet"]["description"],
-                   'label': item["snippet"]["title"],
-                   'Date': item["snippet"]["publishedAt"].replace("T", " ").replace(".000Z", "")[:-3]}
-        channel["artwork"] = {'thumb': thumb}
+        except Exception:
+            channel_id = snippet["resourceId"]["channelId"]
+        channel = Utils.ListItem(label=snippet["title"],
+                                 path=PLUGIN_BASE + 'youtubechannel&&id=%s' % channel_id)
+        channel.set_infos({'plot': snippet["description"],
+                           'premiered': snippet["publishedAt"][:10]})
+        channel.set_art("thumb", thumb)
+        channel.set_property("youtube_id", channel_id)
         channels.append(channel)
-    channel_ids = [item["youtube_id"] for item in channels]
+    channel_ids = [item.get_property("youtube_id") for item in channels]
     params = {"id": ",".join(channel_ids),
               "part": "contentDetails,statistics,brandingSettings"}
     ext_results = get_data(method="channels",
                            params=params)
     for item, ext_item in itertools.product(channels, ext_results["items"]):
-        if item["youtube_id"] == ext_item['id']:
-            item["itemcount"] = ext_item['statistics']['videoCount']
-            item["fanart"] = ext_item["brandingSettings"]["image"].get("bannerTvMediumImageUrl", "")
+        if item.get_property("youtube_id") == ext_item['id']:
+            item.set_property("itemcount", ext_item['statistics']['videoCount'])
+            item.set_art("fanart", ext_item["brandingSettings"]["image"].get("bannerTvMediumImageUrl"))
     return channels
 
 
