@@ -1,25 +1,16 @@
 # -*- coding: utf-8 -*-
-import sys
-import os
-import xbmc
 import xbmcaddon
 import xbmcgui
 
-
-__addon__ = xbmcaddon.Addon(id='script.game.filmwise')
-__icon__ = __addon__.getAddonInfo('icon')
-__cwd__ = __addon__.getAddonInfo('path').decode("utf-8")
-__resource__ = xbmc.translatePath(os.path.join(__cwd__, 'resources').encode("utf-8")).decode("utf-8")
-__lib__ = xbmc.translatePath(os.path.join(__resource__, 'lib').encode("utf-8")).decode("utf-8")
-
-sys.path.append(__lib__)
-
 # Import the common settings
-from settings import log
-from settings import Settings
+from resources.lib.settings import log
+from resources.lib.settings import Settings
 
-from core import FilmWiseCore
-from viewer import FilmWiseViewer
+from resources.lib.core import FilmWiseCore
+from resources.lib.viewer import FilmWiseViewer
+
+ADDON = xbmcaddon.Addon(id='script.game.filmwise')
+ICON = ADDON.getAddonInfo('icon')
 
 
 ##################################
@@ -58,8 +49,8 @@ if __name__ == '__main__':
                         quizNum = ''
                         if quizList[0]['number'] > 0:
                             quizNum = " (#%d)" % quizList[0]['number']
-                        msg = "%s%s" % (__addon__.getLocalizedString(32013).encode('utf-8'), quizNum)
-                        xbmcgui.Dialog().notification(__addon__.getLocalizedString(32001).encode('utf-8'), msg, __icon__, 5000, False)
+                        msg = "%s%s" % (ADDON.getLocalizedString(32013).encode('utf-8'), quizNum)
+                        xbmcgui.Dialog().notification(ADDON.getLocalizedString(32001).encode('utf-8'), msg, ICON, 5000, False)
                 else:
                     log("FilmWise: Latest quiz already viewed")
             else:

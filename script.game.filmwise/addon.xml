@@ -1,18 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.game.filmwise" name="FilmWise" version="1.0.1" provider-name="robwebset">
+<addon id="script.game.filmwise" name="FilmWise" version="1.0.2" provider-name="robwebset">
 	<requires>
 		<import addon="xbmc.python" version="2.20.0"/>
 		<import addon="script.module.beautifulsoup" version="3.2.1"/>
 	</requires>
-	<extension point="xbmc.python.script" library="default.py">
-		<provides>executable</provides>
-	</extension>
+	<extension point="xbmc.python.script" library="default.py"/>
 	<extension point="xbmc.python.pluginsource" library="plugin.py">
 		<provides>video</provides>
 	</extension>
-	<extension point="xbmc.service" library="service.py" start="login">
-		<provides>executable</provides>
-	</extension>
+	<extension point="xbmc.service" library="service.py" start="login"/>
 	<extension point="xbmc.addon.metadata">
 		<summary lang="en">FilmWise Invisibles Quiz</summary>
 		<description lang="en">Play the FilmWise weekly invisibles quiz</description>

@@ -3,16 +3,16 @@ import os
 import xbmc
 import xbmcaddon
 
-__addon__ = xbmcaddon.Addon(id='script.game.filmwise')
-__addonid__ = __addon__.getAddonInfo('id')
+ADDON = xbmcaddon.Addon(id='script.game.filmwise')
+ADDON_ID = ADDON.getAddonInfo('id')
 
 
 # Common logging module
 def log(txt, loglevel=xbmc.LOGDEBUG):
-    if (__addon__.getSetting("logEnabled") == "true") or (loglevel != xbmc.LOGDEBUG):
+    if (ADDON.getSetting("logEnabled") == "true") or (loglevel != xbmc.LOGDEBUG):
         if isinstance(txt, str):
             txt = txt.decode("utf-8")
-        message = u'%s: %s' % (__addonid__, txt)
+        message = u'%s: %s' % (ADDON_ID, txt)
         xbmc.log(msg=message.encode("utf-8"), level=loglevel)
 
 
@@ -42,20 +42,20 @@ class Settings():
 
     @staticmethod
     def getLastViewed():
-        return __addon__.getSetting("lastViewedUrl")
+        return ADDON.getSetting("lastViewedUrl")
 
     @staticmethod
     def setLastViewed(url):
-        __addon__.setSetting("lastViewedUrl", url)
+        ADDON.setSetting("lastViewedUrl", url)
 
     @staticmethod
     def isSaveUserAnswers():
-        return __addon__.getSetting("saveUserAnswers") == 'true'
+        return ADDON.getSetting("saveUserAnswers") == 'true'
 
     @staticmethod
     def isNotifyNewQuiz():
-        return __addon__.getSetting("notifyNewQuiz") == 'true'
+        return ADDON.getSetting("notifyNewQuiz") == 'true'
 
     @staticmethod
     def isAutoOpenNewQuiz():
-        return __addon__.getSetting("autoOpenNewQuiz") == 'true'
+        return ADDON.getSetting("autoOpenNewQuiz") == 'true'
