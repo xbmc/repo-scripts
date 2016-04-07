@@ -13,24 +13,17 @@ if sys.version_info < (2, 7):
 else:
     import json as simplejson
 
-
-__addon__ = xbmcaddon.Addon(id='script.pinsentry')
-__icon__ = __addon__.getAddonInfo('icon')
-__fanart__ = __addon__.getAddonInfo('fanart')
-__cwd__ = __addon__.getAddonInfo('path').decode("utf-8")
-__profile__ = xbmc.translatePath(__addon__.getAddonInfo('profile')).decode("utf-8")
-__resource__ = xbmc.translatePath(os.path.join(__cwd__, 'resources').encode("utf-8")).decode("utf-8")
-__lib__ = xbmc.translatePath(os.path.join(__resource__, 'lib').encode("utf-8")).decode("utf-8")
-
-
-sys.path.append(__resource__)
-sys.path.append(__lib__)
-
 # Import the common settings
-from settings import Settings
-from settings import log
-from settings import os_path_join
-from database import PinSentryDB
+from resources.lib.settings import Settings
+from resources.lib.settings import log
+from resources.lib.settings import os_path_join
+from resources.lib.database import PinSentryDB
+
+ADDON = xbmcaddon.Addon(id='script.pinsentry')
+ICON = ADDON.getAddonInfo('icon')
+FANART = ADDON.getAddonInfo('fanart')
+CWD = ADDON.getAddonInfo('path').decode("utf-8")
+ICON_DIR = xbmc.translatePath(os.path.join(CWD, 'resources', 'media', 'classifications').encode("utf-8")).decode("utf-8")
 
 
 ###################################################################
@@ -60,70 +53,70 @@ class MenuNavigator():
     def showRootMenu(self):
         # Movies
         url = self._build_url({'mode': 'folder', 'foldername': MenuNavigator.MOVIES})
-        li = xbmcgui.ListItem(__addon__.getLocalizedString(32201), iconImage=__icon__)
-        li.setProperty("Fanart_Image", __fanart__)
+        li = xbmcgui.ListItem(ADDON.getLocalizedString(32201), iconImage=ICON)
+        li.setProperty("Fanart_Image", FANART)
         li.addContextMenuItems(self._getContextMenu(MenuNavigator.MOVIES), replaceItems=True)
         xbmcplugin.addDirectoryItem(handle=self.addon_handle, url=url, listitem=li, isFolder=True)
 
         # TV Shows
         url = self._build_url({'mode': 'folder', 'foldername': MenuNavigator.TVSHOWS})
-        li = xbmcgui.ListItem(__addon__.getLocalizedString(32202), iconImage=__icon__)
-        li.setProperty("Fanart_Image", __fanart__)
+        li = xbmcgui.ListItem(ADDON.getLocalizedString(32202), iconImage=ICON)
+        li.setProperty("Fanart_Image", FANART)
         li.addContextMenuItems(self._getContextMenu(MenuNavigator.TVSHOWS), replaceItems=True)
         xbmcplugin.addDirectoryItem(handle=self.addon_handle, url=url, listitem=li, isFolder=True)
 
         # Movie Sets
         url = self._build_url({'mode': 'folder', 'foldername': MenuNavigator.MOVIESETS})
-        li = xbmcgui.ListItem(__addon__.getLocalizedString(32203), iconImage=__icon__)
-        li.setProperty("Fanart_Image", __fanart__)
+        li = xbmcgui.ListItem(ADDON.getLocalizedString(32203), iconImage=ICON)
+        li.setProperty("Fanart_Image", FANART)
         li.addContextMenuItems(self._getContextMenu(MenuNavigator.MOVIESETS), replaceItems=True)
         xbmcplugin.addDirectoryItem(handle=self.addon_handle, url=url, listitem=li, isFolder=True)
 
         # Music Videos
         url = self._build_url({'mode': 'folder', 'foldername': MenuNavigator.MUSICVIDEOS})
-        li = xbmcgui.ListItem(__addon__.getLocalizedString(32205), iconImage=__icon__)
-        li.setProperty("Fanart_Image", __fanart__)
+        li = xbmcgui.ListItem(ADDON.getLocalizedString(32205), iconImage=ICON)
+        li.setProperty("Fanart_Image", FANART)
         li.addContextMenuItems(self._getContextMenu(MenuNavigator.MUSICVIDEOS), replaceItems=True)
         xbmcplugin.addDirectoryItem(handle=self.addon_handle, url=url, listitem=li, isFolder=True)
 
         # Plugins
         if Settings.isActivePlugins():
             url = self._build_url({'mode': 'folder', 'foldername': MenuNavigator.PLUGINS})
-            li = xbmcgui.ListItem(__addon__.getLocalizedString(32128), iconImage=__icon__)
-            li.setProperty("Fanart_Image", __fanart__)
+            li = xbmcgui.ListItem(ADDON.getLocalizedString(32128), iconImage=ICON)
+            li.setProperty("Fanart_Image", FANART)
             li.addContextMenuItems([], replaceItems=True)
             xbmcplugin.addDirectoryItem(handle=self.addon_handle, url=url, listitem=li, isFolder=True)
 
         # Files
         if Settings.isActiveFileSource():
             url = self._build_url({'mode': 'folder', 'foldername': MenuNavigator.FILESOURCE})
-            li = xbmcgui.ListItem(__addon__.getLocalizedString(32204), iconImage=__icon__)
-            li.setProperty("Fanart_Image", __fanart__)
+            li = xbmcgui.ListItem(ADDON.getLocalizedString(32204), iconImage=ICON)
+            li.setProperty("Fanart_Image", FANART)
             li.addContextMenuItems([], replaceItems=True)
             xbmcplugin.addDirectoryItem(handle=self.addon_handle, url=url, listitem=li, isFolder=True)
 
         # Classifications
         url = self._build_url({'mode': 'folder', 'foldername': MenuNavigator.CLASSIFICATIONS})
-        li = xbmcgui.ListItem(__addon__.getLocalizedString(32206), iconImage=__icon__)
-        li.setProperty("Fanart_Image", __fanart__)
+        li = xbmcgui.ListItem(ADDON.getLocalizedString(32206), iconImage=ICON)
+        li.setProperty("Fanart_Image", FANART)
         li.addContextMenuItems([], replaceItems=True)
         xbmcplugin.addDirectoryItem(handle=self.addon_handle, url=url, listitem=li, isFolder=True)
 
         # Add a blank line before the Operations
-        li = xbmcgui.ListItem("", iconImage=__icon__)
-        li.setProperty("Fanart_Image", __fanart__)
+        li = xbmcgui.ListItem("", iconImage=ICON)
+        li.setProperty("Fanart_Image", FANART)
         li.addContextMenuItems([], replaceItems=True)
         xbmcplugin.addDirectoryItem(handle=self.addon_handle, url="", listitem=li, isFolder=False)
 
         # Force Pin Entry
         url = self._build_url({'mode': 'forcepin', 'foldername': 'none'})
-        menuItemName = __addon__.getLocalizedString(32213)
+        menuItemName = ADDON.getLocalizedString(32213)
         try:
             menuItemName = "[%s]" % menuItemName
         except:
             pass
-        li = xbmcgui.ListItem(menuItemName, iconImage=__icon__)
-        li.setProperty("Fanart_Image", __fanart__)
+        li = xbmcgui.ListItem(menuItemName, iconImage=ICON)
+        li.setProperty("Fanart_Image", FANART)
         li.addContextMenuItems([], replaceItems=True)
         xbmcplugin.addDirectoryItem(handle=self.addon_handle, url=url, listitem=li, isFolder=False)
 
@@ -255,7 +248,7 @@ class MenuNavigator():
                     videoItem['thumbnail'] = item['thumbnail']
 
                 if item['fanart'] in [None, ""]:
-                    videoItem['fanart'] = __fanart__
+                    videoItem['fanart'] = FANART
                 else:
                     videoItem['fanart'] = item['fanart']
 
@@ -378,7 +371,7 @@ class MenuNavigator():
                     pluginDetails['thumbnail'] = addonItem['thumbnail']
 
                 if addonItem['fanart'] in [None, ""]:
-                    pluginDetails['fanart'] = __fanart__
+                    pluginDetails['fanart'] = FANART
                 else:
                     pluginDetails['fanart'] = addonItem['fanart']
 
@@ -400,7 +393,7 @@ class MenuNavigator():
                 fileDetails['title'] = fileSource['label']
                 fileDetails['dbid'] = fileSource['file']
                 fileDetails['thumbnail'] = 'DefaultFolder.png'
-                fileDetails['fanart'] = __fanart__
+                fileDetails['fanart'] = FANART
 
                 fileSources.append(fileDetails)
         return fileSources
@@ -422,21 +415,17 @@ class MenuNavigator():
 
         del pinDB
 
-        # Get the root location of the icons
-        iconLocation = os_path_join(__resource__, 'media')
-        iconLocation = os_path_join(iconLocation, 'classifications')
-
         # Check if we are showing the root classification listing
         if type in [None, ""]:
             url = self._build_url({'mode': 'folder', 'foldername': MenuNavigator.CLASSIFICATIONS, 'type': MenuNavigator.CLASSIFICATIONS_MOVIES})
-            li = xbmcgui.ListItem(__addon__.getLocalizedString(32207), iconImage=__icon__)
-            li.setProperty("Fanart_Image", __fanart__)
+            li = xbmcgui.ListItem(ADDON.getLocalizedString(32207), iconImage=ICON)
+            li.setProperty("Fanart_Image", FANART)
             li.addContextMenuItems([], replaceItems=True)
             xbmcplugin.addDirectoryItem(handle=self.addon_handle, url=url, listitem=li, isFolder=True)
 
             url = self._build_url({'mode': 'folder', 'foldername': MenuNavigator.CLASSIFICATIONS, 'type': MenuNavigator.CLASSIFICATIONS_TV})
-            li = xbmcgui.ListItem(__addon__.getLocalizedString(32208), iconImage=__icon__)
-            li.setProperty("Fanart_Image", __fanart__)
+            li = xbmcgui.ListItem(ADDON.getLocalizedString(32208), iconImage=ICON)
+            li.setProperty("Fanart_Image", FANART)
             li.addContextMenuItems([], replaceItems=True)
             xbmcplugin.addDirectoryItem(handle=self.addon_handle, url=url, listitem=li, isFolder=True)
         elif subtype in [None, ""]:
@@ -448,7 +437,7 @@ class MenuNavigator():
 
             # Check to see if we can sort all the entries alphabetically for the given language
             try:
-                languages = sorted(languages, key=__addon__.getLocalizedString)
+                languages = sorted(languages, key=ADDON.getLocalizedString)
             except:
                 # If it fails to sort, then we just list them unsorted
                 log("PinSentryPlugin: Failed to sort language list")
@@ -457,13 +446,13 @@ class MenuNavigator():
             for lang in languages:
                 url = self._build_url({'mode': 'folder', 'foldername': MenuNavigator.CLASSIFICATIONS, 'type': type, 'subtype': str(lang)})
 
-                iconImage = __icon__
+                iconImage = ICON
                 for flag in Settings.flags:
                     if flag['lang'] == lang:
-                        iconImage = os_path_join(iconLocation, flag['icon'])
+                        iconImage = os_path_join(ICON_DIR, flag['icon'])
 
-                li = xbmcgui.ListItem(__addon__.getLocalizedString(lang), iconImage=iconImage)
-                li.setProperty("Fanart_Image", __fanart__)
+                li = xbmcgui.ListItem(ADDON.getLocalizedString(lang), iconImage=iconImage)
+                li.setProperty("Fanart_Image", FANART)
                 li.addContextMenuItems([], replaceItems=True)
                 xbmcplugin.addDirectoryItem(handle=self.addon_handle, url=url, listitem=li, isFolder=True)
         else:
@@ -472,7 +461,7 @@ class MenuNavigator():
                 if subtype != str(classification['lang']):
                     continue
 
-                fullName = classification['name'] % __addon__.getLocalizedString(classification['lang'])
+                fullName = classification['name'] % ADDON.getLocalizedString(classification['lang'])
                 idStr = str(classification['id'])
                 securityLevel = 0
                 if idStr in securityDetails:
@@ -480,9 +469,9 @@ class MenuNavigator():
                     log("PinSentryPlugin: Classification %s has security level %d" % (fullName, securityLevel))
 
                 # Set the icon to the certificate one if available
-                iconImage = __icon__
+                iconImage = ICON
                 if classification['icon'] not in [None, ""]:
-                    iconImage = os_path_join(iconLocation, classification['icon'])
+                    iconImage = os_path_join(ICON_DIR, classification['icon'])
 
                 li = xbmcgui.ListItem(fullName, iconImage=iconImage)
 
@@ -490,7 +479,7 @@ class MenuNavigator():
                 if securityLevel > 0:
                     li.setInfo('video', {'PlayCount': 1})
 
-                li.setProperty("Fanart_Image", __fanart__)
+                li.setProperty("Fanart_Image", FANART)
                 li.addContextMenuItems([], replaceItems=True)
                 url = self._build_url({'mode': 'setsecurity', 'type': type, 'id': classification['id'], 'title': classification['match'], 'level': securityLevel})
                 xbmcplugin.addDirectoryItem(handle=self.addon_handle, url=url, listitem=li, isFolder=False)
@@ -515,20 +504,20 @@ class MenuNavigator():
                 # Need to prompt the user to see which pin they are trying to set
                 displayNameList = []
                 # Add the option to turn it off
-                displayNameList.append("%s %s" % (__addon__.getLocalizedString(32211), __addon__.getLocalizedString(32013)))
+                displayNameList.append("%s %s" % (ADDON.getLocalizedString(32211), ADDON.getLocalizedString(32013)))
                 for i in range(1, numLevels + 1):
                     secLevStr = str(i)
                     if numLevels < 2:
                         # If there is only one security level, use "On" rather than the number
-                        secLevStr = __addon__.getLocalizedString(32014)
-                    displayString = "%s %s" % (__addon__.getLocalizedString(32211), secLevStr)
+                        secLevStr = ADDON.getLocalizedString(32014)
+                    displayString = "%s %s" % (ADDON.getLocalizedString(32211), secLevStr)
                     displayNameList.append(displayString)
 
                 # Check if we need the option to disable a classification restriction
                 if classBlocked:
-                    displayNameList.append(__addon__.getLocalizedString(32212))
+                    displayNameList.append(ADDON.getLocalizedString(32212))
 
-                select = xbmcgui.Dialog().select(__addon__.getLocalizedString(32001), displayNameList)
+                select = xbmcgui.Dialog().select(ADDON.getLocalizedString(32001), displayNameList)
 
                 if select != -1:
                     level = select
@@ -610,11 +599,11 @@ class MenuNavigator():
         if type in [MenuNavigator.TVSHOWS, MenuNavigator.MOVIES, MenuNavigator.MOVIESETS, MenuNavigator.MUSICVIDEOS]:
             # Clear All Security
             cmd = self._build_url({'mode': 'setsecurity', 'level': 0, 'type': type, 'forceLevel': 0})
-            ctxtMenu.append((__addon__.getLocalizedString(32209), 'RunPlugin(%s)' % cmd))
+            ctxtMenu.append((ADDON.getLocalizedString(32209), 'RunPlugin(%s)' % cmd))
 
             # Apply Security To All
             cmd = self._build_url({'mode': 'setsecurity', 'level': 1, 'type': type})
-            ctxtMenu.append((__addon__.getLocalizedString(32210), 'RunPlugin(%s)' % cmd))
+            ctxtMenu.append((ADDON.getLocalizedString(32210), 'RunPlugin(%s)' % cmd))
 
         return ctxtMenu
 

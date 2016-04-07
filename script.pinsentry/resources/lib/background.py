@@ -2,13 +2,12 @@
 import xbmcaddon
 import xbmcgui
 
-
-__addon__ = xbmcaddon.Addon(id='script.pinsentry')
-__cwd__ = __addon__.getAddonInfo('path').decode("utf-8")
-
 # Import the common settings
 from settings import log
 from settings import Settings
+
+ADDON = xbmcaddon.Addon(id='script.pinsentry')
+CWD = ADDON.getAddonInfo('path').decode("utf-8")
 
 
 # Class to set the background while a pin is prompted for
@@ -20,7 +19,7 @@ class Background(xbmcgui.WindowXML):
         # Check to see if the background is enabled
         if not Settings.isDisplayBackground():
             return None
-        return Background("pinsentry-background.xml", __cwd__)
+        return Background("pinsentry-background.xml", CWD)
 
     def onInit(self):
         xbmcgui.WindowXMLDialog.onInit(self)

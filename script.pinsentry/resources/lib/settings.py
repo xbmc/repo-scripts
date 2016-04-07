@@ -6,16 +6,16 @@ from datetime import date
 import xbmc
 import xbmcaddon
 
-__addon__ = xbmcaddon.Addon(id='script.pinsentry')
-__addonid__ = __addon__.getAddonInfo('id')
+ADDON = xbmcaddon.Addon(id='script.pinsentry')
+ADDON_ID = ADDON.getAddonInfo('id')
 
 
 # Common logging module
 def log(txt, loglevel=xbmc.LOGDEBUG):
-    if (__addon__.getSetting("logEnabled") == "true") or (loglevel != xbmc.LOGDEBUG):
+    if (ADDON.getSetting("logEnabled") == "true") or (loglevel != xbmc.LOGDEBUG):
         if isinstance(txt, str):
             txt = txt.decode("utf-8")
-        message = u'%s: %s' % (__addonid__, txt)
+        message = u'%s: %s' % (ADDON_ID, txt)
         xbmc.log(msg=message.encode("utf-8"), level=loglevel)
 
 
@@ -151,10 +151,10 @@ class Settings():
                                 {'id': 72, 'name': '%s - 14A', 'lang': 32313, 'match': '14A', 'icon': 'Canada/Canada-14A.png'},
                                 {'id': 73, 'name': '%s - 18A', 'lang': 32313, 'match': '18A', 'icon': 'Canada/Canada-18A.png'},
                                 {'id': 74, 'name': '%s - R', 'lang': 32313, 'match': 'R', 'icon': 'Canada/Canada-R.png'},
-                                {'id': 75, 'name': '%%s (%s) - G' % __addon__.getLocalizedString(32314), 'lang': 32313, 'match': 'G', 'icon': 'Canada/Canada-Quebec-G.png'},
-                                {'id': 76, 'name': '%%s (%s) - 13+' % __addon__.getLocalizedString(32314), 'lang': 32313, 'match': '13+', 'icon': 'Canada/Canada-Quebec-13.png'},
-                                {'id': 77, 'name': '%%s (%s) - 16+' % __addon__.getLocalizedString(32314), 'lang': 32313, 'match': '16+', 'icon': 'Canada/Canada-Quebec-16.png'},
-                                {'id': 78, 'name': '%%s (%s) - 18+' % __addon__.getLocalizedString(32314), 'lang': 32313, 'match': '18+', 'icon': 'Canada/Canada-Quebec-18.png'},
+                                {'id': 75, 'name': '%%s (%s) - G' % ADDON.getLocalizedString(32314), 'lang': 32313, 'match': 'G', 'icon': 'Canada/Canada-Quebec-G.png'},
+                                {'id': 76, 'name': '%%s (%s) - 13+' % ADDON.getLocalizedString(32314), 'lang': 32313, 'match': '13+', 'icon': 'Canada/Canada-Quebec-13.png'},
+                                {'id': 77, 'name': '%%s (%s) - 16+' % ADDON.getLocalizedString(32314), 'lang': 32313, 'match': '16+', 'icon': 'Canada/Canada-Quebec-16.png'},
+                                {'id': 78, 'name': '%%s (%s) - 18+' % ADDON.getLocalizedString(32314), 'lang': 32313, 'match': '18+', 'icon': 'Canada/Canada-Quebec-18.png'},
                                 # France
                                 {'id': 79, 'name': '%s - U', 'lang': 32315, 'match': 'U', 'icon': None},
                                 {'id': 80, 'name': '%s - 12', 'lang': 32315, 'match': '12', 'icon': None},
@@ -209,10 +209,10 @@ class Settings():
                              {'id': 39, 'name': '%s - PG', 'lang': 32313, 'match': 'PG', 'icon': 'Canada/Canada-TV-PG.png'},
                              {'id': 40, 'name': '%s - 14+', 'lang': 32313, 'match': '14+', 'icon': 'Canada/Canada-TV-14.png'},
                              {'id': 41, 'name': '%s - 18+', 'lang': 32313, 'match': '18+', 'icon': 'Canada/Canada-TV-18.png'},
-                             {'id': 42, 'name': '%%s (%s) - G' % __addon__.getLocalizedString(32314), 'lang': 32313, 'match': 'G', 'icon': 'Canada/Canada-Quebec-G.png'},
-                             {'id': 43, 'name': '%%s (%s) - 13+' % __addon__.getLocalizedString(32314), 'lang': 32313, 'match': '13+', 'icon': 'Canada/Canada-Quebec-13.png'},
-                             {'id': 44, 'name': '%%s (%s) - 16+' % __addon__.getLocalizedString(32314), 'lang': 32313, 'match': '16+', 'icon': 'Canada/Canada-Quebec-16.png'},
-                             {'id': 45, 'name': '%%s (%s) - 18+' % __addon__.getLocalizedString(32314), 'lang': 32313, 'match': '18+', 'icon': 'Canada/Canada-Quebec-18.png'},
+                             {'id': 42, 'name': '%%s (%s) - G' % ADDON.getLocalizedString(32314), 'lang': 32313, 'match': 'G', 'icon': 'Canada/Canada-Quebec-G.png'},
+                             {'id': 43, 'name': '%%s (%s) - 13+' % ADDON.getLocalizedString(32314), 'lang': 32313, 'match': '13+', 'icon': 'Canada/Canada-Quebec-13.png'},
+                             {'id': 44, 'name': '%%s (%s) - 16+' % ADDON.getLocalizedString(32314), 'lang': 32313, 'match': '16+', 'icon': 'Canada/Canada-Quebec-16.png'},
+                             {'id': 45, 'name': '%%s (%s) - 18+' % ADDON.getLocalizedString(32314), 'lang': 32313, 'match': '18+', 'icon': 'Canada/Canada-Quebec-18.png'},
                              # Finland
                              {'id': 46, 'name': '%s - 10', 'lang': 32315, 'match': '10', 'icon': 'France/France-TV-10.png'},
                              {'id': 47, 'name': '%s - 12', 'lang': 32315, 'match': '12', 'icon': 'France/France-TV-12.png'},
@@ -222,8 +222,8 @@ class Settings():
     @staticmethod
     def reloadSettings():
         # Force the reload of the settings to pick up any new values
-        global __addon__
-        __addon__ = xbmcaddon.Addon(id='script.pinsentry')
+        global ADDON
+        ADDON = xbmcaddon.Addon(id='script.pinsentry')
 
     @staticmethod
     def setPinValue(newPin, pinLevel=1):
@@ -236,7 +236,7 @@ class Settings():
         pinSettingsValue = "pinValue"
         if pinLevel > 1:
             pinSettingsValue = "%s%d" % (pinSettingsValue, pinLevel)
-        __addon__.setSetting(pinSettingsValue, encryptedPin)
+        ADDON.setSetting(pinSettingsValue, encryptedPin)
 
     @staticmethod
     def setUserPinValue(newPin, pinId):
@@ -247,8 +247,8 @@ class Settings():
             encryptedPin = Settings.encryptPin(newPin)
             pinSet = 'true'
 
-        __addon__.setSetting(pinId, encryptedPin)
-        __addon__.setSetting("%sSet" % pinId, pinSet)
+        ADDON.setSetting(pinId, encryptedPin)
+        ADDON.setSetting("%sSet" % pinId, pinSet)
 
     @staticmethod
     def checkPinSettings():
@@ -276,9 +276,9 @@ class Settings():
 
         if allPinsSet:
             # This is an internal fudge so that we can display a warning if the pin is not set
-            __addon__.setSetting("pinValueSet", "true")
+            ADDON.setSetting("pinValueSet", "true")
         else:
-            __addon__.setSetting("pinValueSet", "false")
+            ADDON.setSetting("pinValueSet", "false")
 
         # Now we need to tidy up the user limits values
         numUsers = Settings.getNumberOfLimitedUsers()
@@ -290,8 +290,8 @@ class Settings():
             Settings.setUserPinValue("", userId)
 
             # Set the user name to the default language specific one
-            userName = "%s %d" % (__addon__.getLocalizedString(32036), clearUserPinNum)
-            __addon__.setSetting(userNameId, userName)
+            userName = "%s %d" % (ADDON.getLocalizedString(32036), clearUserPinNum)
+            ADDON.setSetting(userNameId, userName)
             clearUserPinNum = clearUserPinNum - 1
         # Also clear the unrestricted user if no user limit is being used
         if numUsers < 1:
@@ -306,14 +306,14 @@ class Settings():
         pinSettingsValue = "pinValue"
         if pinLevel > 1:
             pinSettingsValue = "%s%d" % (pinSettingsValue, pinLevel)
-        pinValue = __addon__.getSetting(pinSettingsValue)
+        pinValue = ADDON.getSetting(pinSettingsValue)
         if pinValue not in [None, ""]:
             return True
         return False
 
     @staticmethod
     def getPinLength():
-        return int(float(__addon__.getSetting('pinLength')))
+        return int(float(ADDON.getSetting('pinLength')))
 
     @staticmethod
     def isPinCorrect(inputPin, pinLevel=1):
@@ -322,14 +322,14 @@ class Settings():
             pinSettingsValue = "%s%d" % (pinSettingsValue, pinLevel)
         # First encrypt the pin that has been passed in
         inputPinEncrypt = Settings.encryptPin(inputPin)
-        if inputPinEncrypt == __addon__.getSetting(pinSettingsValue):
+        if inputPinEncrypt == ADDON.getSetting(pinSettingsValue):
             return True
         return False
 
     @staticmethod
     def isUserPinCorrect(inputPin, pinId, blankIsCorrect=True):
         # Make sure if the pin has not been set we do not lock the user out
-        storedPin = __addon__.getSetting(pinId)
+        storedPin = ADDON.getSetting(pinId)
         if storedPin in [None, ""]:
             # Check if we are treating blank as a match to everything
             if blankIsCorrect:
@@ -420,12 +420,12 @@ class Settings():
 
     @staticmethod
     def getInvalidPinNotificationType():
-        return int(float(__addon__.getSetting('invalidPinNotificationType')))
+        return int(float(ADDON.getSetting('invalidPinNotificationType')))
 
     @staticmethod
     def isPinActive():
         # Check if the time restriction is enabled
-        if __addon__.getSetting("timeRestrictionEnabled") != 'true':
+        if ADDON.getSetting("timeRestrictionEnabled") != 'true':
             return True
 
         # Get the current time
@@ -433,7 +433,7 @@ class Settings():
         currentTime = (localTime.tm_hour * 60) + localTime.tm_min
 
         # Get the start time
-        startTimeStr = __addon__.getSetting("startTime")
+        startTimeStr = ADDON.getSetting("startTime")
         startTimeSplit = startTimeStr.split(':')
         startTime = (int(startTimeSplit[0]) * 60) + int(startTimeSplit[1])
         if startTime > currentTime:
@@ -441,7 +441,7 @@ class Settings():
             return False
 
         # Now check the end time
-        endTimeStr = __addon__.getSetting("endTime")
+        endTimeStr = ADDON.getSetting("endTime")
         endTimeSplit = endTimeStr.split(':')
         endTime = (int(endTimeSplit[0]) * 60) + int(endTimeSplit[1])
         if endTime < currentTime:
@@ -454,7 +454,7 @@ class Settings():
     @staticmethod
     def getPinCachingEnabledDuration():
         cacheDuration = 0
-        cacheSelection = int(__addon__.getSetting("pinCachingStatus"))
+        cacheSelection = int(ADDON.getSetting("pinCachingStatus"))
         if cacheSelection == 0:
             # Cache is off
             cacheDuration = 0
@@ -463,60 +463,60 @@ class Settings():
             cacheDuration = -1
         elif cacheSelection == 2:
             # Will time-out, so get the timeout time
-            cacheDuration = int(float(__addon__.getSetting("pinCachingDuration")))
+            cacheDuration = int(float(ADDON.getSetting("pinCachingDuration")))
 
         return cacheDuration
 
     @staticmethod
     def isDirectionKeysAsPin():
-        return __addon__.getSetting("directionKeysAsPin") == 'true'
+        return ADDON.getSetting("directionKeysAsPin") == 'true'
 
     @staticmethod
     def isDisplayBackground():
-        return __addon__.getSetting("background") != "0"
+        return ADDON.getSetting("background") != "0"
 
     @staticmethod
     def getBackgroundImage():
-        selectIdx = __addon__.getSetting("background")
+        selectIdx = ADDON.getSetting("background")
         if selectIdx == "2":
             # PinSentry Fanart file as the BackgroundBrowser
-            return __addon__.getAddonInfo('fanart')
+            return ADDON.getAddonInfo('fanart')
         elif selectIdx == "3":
             # Custom image selected, so return the value entered
-            return __addon__.getSetting("backgroundImage")
+            return ADDON.getSetting("backgroundImage")
         # If we reach here then there is no background image
         # or we want a black background
         return None
 
     @staticmethod
     def isActiveVideoPlaying():
-        return __addon__.getSetting("activityVideoPlaying") == 'true'
+        return ADDON.getSetting("activityVideoPlaying") == 'true'
 
     @staticmethod
     def isActiveNavigation():
-        return __addon__.getSetting("activityNavigation") == 'true'
+        return ADDON.getSetting("activityNavigation") == 'true'
 
     @staticmethod
     def isActivePlugins():
-        return __addon__.getSetting("activityPlugins") == 'true'
+        return ADDON.getSetting("activityPlugins") == 'true'
 
     @staticmethod
     def isActiveSystemSettings():
-        return __addon__.getSetting("activitySystemSettings") == 'true'
+        return ADDON.getSetting("activitySystemSettings") == 'true'
 
     @staticmethod
     def isActiveFileSource():
-        return __addon__.getSetting("activityFileSource") == 'true'
+        return ADDON.getSetting("activityFileSource") == 'true'
 
     @staticmethod
     def isActiveFileSourcePlaying():
-        return __addon__.getSetting("activityFileSourceNavigationOnly") != 'true'
+        return ADDON.getSetting("activityFileSourceNavigationOnly") != 'true'
 
     @staticmethod
     def showSecurityLevelInPlugin():
         if Settings.getNumberOfLevels() < 2:
             return False
-        return __addon__.getSetting("showSecurityInfo") == 'true'
+        return ADDON.getSetting("showSecurityInfo") == 'true'
 
     @staticmethod
     def isSupportedMovieClassification(classification):
@@ -535,28 +535,28 @@ class Settings():
     @staticmethod
     def getDefaultMoviesWithoutClassification():
         securityValue = 0
-        if __addon__.getSetting("defaultMoviesWithoutClassification") != '0':
+        if ADDON.getSetting("defaultMoviesWithoutClassification") != '0':
             securityValue = 1
         return securityValue
 
     @staticmethod
     def getDefaultTvShowsWithoutClassification():
         securityValue = 0
-        if __addon__.getSetting("defaultTvShowsWithoutClassification") != '0':
+        if ADDON.getSetting("defaultTvShowsWithoutClassification") != '0':
             securityValue = 1
         return securityValue
 
     @staticmethod
     def isHighlightClassificationUnprotectedVideos():
-        return __addon__.getSetting("highlightClassificationUnprotectedVideos") == 'true'
+        return ADDON.getSetting("highlightClassificationUnprotectedVideos") == 'true'
 
     @staticmethod
     def isPromptForPinOnStartup():
-        return __addon__.getSetting("promptForPinOnStartup") == 'true'
+        return ADDON.getSetting("promptForPinOnStartup") == 'true'
 
     @staticmethod
     def getNumberOfLevels():
-        return int(__addon__.getSetting("numberOfLevels")) + 1
+        return int(ADDON.getSetting("numberOfLevels")) + 1
 
     @staticmethod
     def getSettingsSecurityLevel():
@@ -570,13 +570,13 @@ class Settings():
 
     @staticmethod
     def getNumberOfLimitedUsers():
-        return int(__addon__.getSetting("numberOfLimitedUsers"))
+        return int(ADDON.getSetting("numberOfLimitedUsers"))
 
     @staticmethod
     def getUserStartTime(userId):
         startTimeTag = "%sStartTime" % userId
         # Get the start time
-        startTimeStr = __addon__.getSetting(startTimeTag)
+        startTimeStr = ADDON.getSetting(startTimeTag)
         startTimeSplit = startTimeStr.split(':')
         startTime = (int(startTimeSplit[0]) * 60) + int(startTimeSplit[1])
         return (startTime, startTimeStr)
@@ -585,7 +585,7 @@ class Settings():
     def getUserEndTime(userId):
         endTimeTag = "%sEndTime" % userId
         # Get the end time
-        endTimeStr = __addon__.getSetting(endTimeTag)
+        endTimeStr = ADDON.getSetting(endTimeTag)
         endTimeSplit = endTimeStr.split(':')
         endTime = (int(endTimeSplit[0]) * 60) + int(endTimeSplit[1])
         return (endTime, endTimeStr)
@@ -593,13 +593,13 @@ class Settings():
     @staticmethod
     def getUserViewingLimit(userId):
         viewingLimitTag = "%sViewingLimit" % userId
-        viewingLimit = int(__addon__.getSetting(viewingLimitTag))
+        viewingLimit = int(ADDON.getSetting(viewingLimitTag))
         return viewingLimit
 
     @staticmethod
     def getUserViewingUsedTime(userId):
         lastLimitDataTag = "%sLastLimitData" % userId
-        lastLimitData = __addon__.getSetting(lastLimitDataTag)
+        lastLimitData = ADDON.getSetting(lastLimitDataTag)
 
         # Check to see if the last date that viewing limit was set is still today
         todaysDate = date.today().strftime("%d/%m/%y")
@@ -610,7 +610,7 @@ class Settings():
 
         # Now check to see how much the user has already used today
         limitUsedTag = "%sLimitUsed" % userId
-        limitUsed = __addon__.getSetting(limitUsedTag)
+        limitUsed = ADDON.getSetting(limitUsedTag)
 
         if limitUsed in [None, ""]:
             return 0
@@ -621,17 +621,17 @@ class Settings():
         # Store the date when we last viewed something
         todaysDate = date.today().strftime("%d/%m/%y")
         lastLimitDataTag = "%sLastLimitData" % userId
-        __addon__.setSetting(lastLimitDataTag, todaysDate)
+        ADDON.setSetting(lastLimitDataTag, todaysDate)
 
         # Now store the amount of time we have used
         limitUsedTag = "%sLimitUsed" % userId
-        __addon__.setSetting(limitUsedTag, str(usedViewingTime))
+        ADDON.setSetting(limitUsedTag, str(usedViewingTime))
 
     @staticmethod
     def getWarnExpiringTime():
-        return int(float(__addon__.getSetting('warnExpiringTime')))
+        return int(float(ADDON.getSetting('warnExpiringTime')))
 
     @staticmethod
     def getUserName(userId):
         userNameTag = "%sName" % userId
-        return __addon__.getSetting(userNameTag)
+        return ADDON.getSetting(userNameTag)
