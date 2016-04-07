@@ -9,11 +9,6 @@ import xbmc
 import xbmcvfs
 import xbmcaddon
 
-ADDON = xbmcaddon.Addon(id='script.ebooks')
-CWD = ADDON.getAddonInfo('path').decode("utf-8")
-RES_DIR = xbmc.translatePath(os.path.join(CWD, 'resources').encode("utf-8")).decode("utf-8")
-MEDIA_DIR = xbmc.translatePath(os.path.join(RES_DIR, 'media').encode("utf-8")).decode("utf-8")
-
 # Import the common settings
 from settings import Settings
 from settings import log
@@ -35,6 +30,11 @@ from pdfminer.psparser import PSLiteral
 from pdfminer.pdfinterp import PDFResourceManager, PDFPageInterpreter
 from pdfminer.converter import TextConverter
 from pdfminer.layout import LAParams
+
+ADDON = xbmcaddon.Addon(id='script.ebooks')
+CWD = ADDON.getAddonInfo('path').decode("utf-8")
+RES_DIR = xbmc.translatePath(os.path.join(CWD, 'resources').encode("utf-8")).decode("utf-8")
+MEDIA_DIR = xbmc.translatePath(os.path.join(RES_DIR, 'media').encode("utf-8")).decode("utf-8")
 
 
 # Generic class for handling EBook details
@@ -734,7 +734,13 @@ class EPubEBook(EBookBase):
                         chapterContent = "%s\n%s" % (chapterContent, self.bookFile.read_item(aChapter['link']))
             else:
                 # Get the content of the chapter, this will be in XML
-                chapterContent = self.bookFile.read_item(chapterLink)
+                if '#' in chapterLink:
+                    # If the chapter link also has a section anchor on it, then remove it
+                    noAnchor = chapterLink.rsplit('#', 1)[0]
+                    log("EPubEBook: Getting chapter contents for unanchored %s" % noAnchor)
+                    chapterContent = self.bookFile.read_item(noAnchor)
+                else:
+                    chapterContent = self.bookFile.read_item(chapterLink)
         except:
             log("EPubEBook: Failed to read chapter %s with error: %s" % (chapterLink, traceback.format_exc()), xbmc.LOGERROR)
 

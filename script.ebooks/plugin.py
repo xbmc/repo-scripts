@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 import sys
-import os
 import urllib
 import urlparse
 import xbmc
@@ -9,23 +8,18 @@ import xbmcplugin
 import xbmcaddon
 import xbmcvfs
 
+# Import the common settings
+from resources.lib.settings import Settings
+from resources.lib.settings import log
+from resources.lib.settings import os_path_join
+
+from resources.lib.textviewer import TextViewer
+from resources.lib.ebook import EBookBase
+from resources.lib.database import EbooksDB
+from resources.lib.opds import Opds
+
 ADDON = xbmcaddon.Addon(id='script.ebooks')
 FANART = ADDON.getAddonInfo('fanart')
-CWD = ADDON.getAddonInfo('path').decode("utf-8")
-RES_DIR = xbmc.translatePath(os.path.join(CWD, 'resources').encode("utf-8")).decode("utf-8")
-LIB_DIR = xbmc.translatePath(os.path.join(RES_DIR, 'lib').encode("utf-8")).decode("utf-8")
-
-sys.path.append(LIB_DIR)
-
-# Import the common settings
-from settings import Settings
-from settings import log
-from settings import os_path_join
-
-from textviewer import TextViewer
-from ebook import EBookBase
-from database import EbooksDB
-from opds import Opds
 
 
 ###################################################################

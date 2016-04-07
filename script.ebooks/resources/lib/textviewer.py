@@ -2,13 +2,12 @@
 import xbmcgui
 import xbmcaddon
 
-ADDON = xbmcaddon.Addon(id='script.ebooks')
-CWD = ADDON.getAddonInfo('path').decode("utf-8")
-
-
 # Import the common settings
 from settings import log
 from settings import Settings
+
+ADDON = xbmcaddon.Addon(id='script.ebooks')
+CWD = ADDON.getAddonInfo('path').decode("utf-8")
 
 
 # Handles the simple text display window

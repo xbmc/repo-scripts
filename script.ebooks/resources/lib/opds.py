@@ -2,7 +2,6 @@
 import urllib2
 import traceback
 import xbmc
-
 from BeautifulSoup import BeautifulSoup
 
 # Import the common settings
