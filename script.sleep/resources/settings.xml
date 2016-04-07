@@ -23,8 +23,9 @@
 		<setting id="remoteName" label="32019" visible="eq(-10,3) + eq(-9,false)" subsetting="true" type="text" default="" />
 	</category>
 	<category label="32029">
-		<setting id="shutdownCommand" label="32030" type="enum" lvalues="32031|32032|32034" default="0"/>
+		<setting id="shutdownCommand" label="32030" type="enum" lvalues="32031|32032|32034|32035" default="0"/>
 		<setting id="shutdownHttpLink" label="32033" visible="eq(-1,1)" subsetting="true" type="text" default="" />
+		<setting id="shutdownScript" label="32036" visible="eq(-2,3)" subsetting="true" type="file" value="" mask="*.py"/>
 		<setting label="32002" type="lsep"/>
 		<setting id="logEnabled" type="bool" label="32003" default="false"/>
 	</category>

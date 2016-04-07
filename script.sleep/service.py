@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-import sys
 import os
 import urllib
 import traceback
@@ -8,21 +7,13 @@ import xbmcaddon
 import xbmcgui
 import xbmcvfs
 
-
-__addon__ = xbmcaddon.Addon(id='script.sleep')
-__icon__ = __addon__.getAddonInfo('icon')
-__cwd__ = __addon__.getAddonInfo('path').decode("utf-8")
-__resource__ = xbmc.translatePath(os.path.join(__cwd__, 'resources').encode("utf-8")).decode("utf-8")
-__lib__ = xbmc.translatePath(os.path.join(__resource__, 'lib').encode("utf-8")).decode("utf-8")
-
-sys.path.append(__lib__)
-
 # Import the common settings
-from settings import log
-from settings import Settings
+from resources.lib.settings import log
+from resources.lib.settings import Settings
+from resources.lib.timer import TimerWindow
+from resources.lib.overlay import SleepOverlay
 
-from timer import TimerWindow
-from overlay import SleepOverlay
+ADDON = xbmcaddon.Addon(id='script.sleep')
 
 
 # Class to detect when something in the system has changed
@@ -345,8 +336,8 @@ if __name__ == '__main__':
             secondsInInterval = Settings.getIntervalLength() * 60
             # Check if we are on a set interval
             if secondsUntilSleep % secondsInInterval == 0:
-                label = "%d %s" % (int(secondsUntilSleep / 60), __addon__.getLocalizedString(32106))
-                xbmcgui.Dialog().notification(__addon__.getLocalizedString(32001).encode('utf-8'), label.encode('utf-8'), __icon__, 3000, False)
+                label = "%d %s" % (int(secondsUntilSleep / 60), ADDON.getLocalizedString(32106))
+                xbmcgui.Dialog().notification(ADDON.getLocalizedString(32001).encode('utf-8'), label.encode('utf-8'), ADDON.getAddonInfo('icon'), 3000, False)
 
         if secondsUntilSleep > 0:
             # Reduce the remaining timer by one second
@@ -377,6 +368,14 @@ if __name__ == '__main__':
                         log(h)
                     except:
                         log("Sleep: Failed to call shutdown url: %s" % traceback.format_exc(), xbmc.LOGERROR)
+            elif Settings.getShutdownCommand() == Settings.SHUTDOWN_SCRIPT:
+                log("Sleep: Script shutdown started")
+                shutdownScript = Settings.getShutdownScript()
+                if (shutdownScript in [None, ""]) or (not xbmcvfs.exists(shutdownScript)):
+                    log("Sleep: Shutdown Script Invalid")
+                    xbmcgui.Dialog().notification(ADDON.getLocalizedString(32001).encode('utf-8'), ADDON.getLocalizedString(32037).encode('utf-8'), ADDON.getAddonInfo('icon'), 5000, False)
+                else:
+                    xbmc.executebuiltin("RunScript(%s)" % shutdownScript, False)
 
             secondsUntilSleep = -1
             timerCancelled = True

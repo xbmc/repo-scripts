@@ -160,7 +160,19 @@ msgctxt "#32034"
 msgid "Screensaver"
 msgstr ""
 
-#empty strings from id 32035 to 32102
+msgctxt "#32035"
+msgid "Script"
+msgstr ""
+
+msgctxt "#32036"
+msgid "Python Script"
+msgstr ""
+
+msgctxt "#32037"
+msgid "Python Shutdown Script Invalid"
+msgstr ""
+
+#empty strings from id 32038 to 32102
 
 msgctxt "#32102"
 msgid "Waiting for button press ..."

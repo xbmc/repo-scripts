@@ -2,16 +2,16 @@
 import xbmc
 import xbmcaddon
 
-__addon__ = xbmcaddon.Addon(id='script.sleep')
-__addonid__ = __addon__.getAddonInfo('id')
+ADDON = xbmcaddon.Addon(id='script.sleep')
+ADDON_ID = ADDON.getAddonInfo('id')
 
 
 # Common logging module
 def log(txt, loglevel=xbmc.LOGDEBUG):
-    if (__addon__.getSetting("logEnabled") == "true") or (loglevel != xbmc.LOGDEBUG):
+    if (ADDON.getSetting("logEnabled") == "true") or (loglevel != xbmc.LOGDEBUG):
         if isinstance(txt, str):
             txt = txt.decode("utf-8")
-        message = u'%s: %s' % (__addonid__, txt)
+        message = u'%s: %s' % (ADDON_ID, txt)
         xbmc.log(msg=message.encode("utf-8"), level=loglevel)
 
 
@@ -22,6 +22,7 @@ class Settings():
     SHUTDOWN_DEFAULT = 0
     SHUTDOWN_HTTP = 1
     SHUTDOWN_SCREENSAVER = 2
+    SHUTDOWN_SCRIPT = 3
 
     DIM_LEVEL = (
         '00000000',
@@ -45,32 +46,32 @@ class Settings():
     @staticmethod
     def reloadSettings():
         # Force the reload of the settings to pick up any new values
-        global __addon__
-        __addon__ = xbmcaddon.Addon(id='script.sleep')
+        global ADDON
+        ADDON = xbmcaddon.Addon(id='script.sleep')
 
     @staticmethod
     def getIntervalLength():
-        return int(float(__addon__.getSetting("intervalLength")))
+        return int(float(ADDON.getSetting("intervalLength")))
 
     @staticmethod
     def getWarningLength():
-        return int(float(__addon__.getSetting("warningLength")))
+        return int(float(ADDON.getSetting("warningLength")))
 
     @staticmethod
     def getMaxSleepTime():
-        return int(float(__addon__.getSetting("maxSleepTime")))
+        return int(float(ADDON.getSetting("maxSleepTime")))
 
     @staticmethod
     def pauseVideoForDialogDisplay():
-        return __addon__.getSetting("pauseVideoForDialogDisplay") == 'true'
+        return ADDON.getSetting("pauseVideoForDialogDisplay") == 'true'
 
     @staticmethod
     def shutdownOnScreensaver():
-        return __addon__.getSetting("shutdownOnScreensaver") == 'true'
+        return ADDON.getSetting("shutdownOnScreensaver") == 'true'
 
     @staticmethod
     def displaySleepReminders():
-        return __addon__.getSetting("displaySleepReminders") == 'true'
+        return ADDON.getSetting("displaySleepReminders") == 'true'
 
     @staticmethod
     def getDimValue():
@@ -78,24 +79,30 @@ class Settings():
         # Where 00000000 is not changed
         # So that is a total of 16 different options
         # FF000000 would be completely black
-        if __addon__.getSetting("dimLevel"):
-            return Settings.DIM_LEVEL[int(__addon__.getSetting("dimLevel"))]
+        if ADDON.getSetting("dimLevel"):
+            return Settings.DIM_LEVEL[int(ADDON.getSetting("dimLevel"))]
         else:
             return '00000000'
 
     @staticmethod
     def getShutdownCommand():
-        return int(__addon__.getSetting("shutdownCommand"))
+        return int(ADDON.getSetting("shutdownCommand"))
 
     @staticmethod
     def getShutdownURL():
         if Settings.getShutdownCommand() != Settings.SHUTDOWN_HTTP:
             return None
-        return __addon__.getSetting("shutdownHttpLink")
+        return ADDON.getSetting("shutdownHttpLink")
+
+    @staticmethod
+    def getShutdownScript():
+        if Settings.getShutdownCommand() != Settings.SHUTDOWN_SCRIPT:
+            return None
+        return ADDON.getSetting("shutdownScript")
 
     @staticmethod
     def getKeymapData():
-        index = int(__addon__.getSetting("buttonSelection"))
+        index = int(ADDON.getSetting("buttonSelection"))
         if index == 0:
             # No button mapping required
             return None
@@ -114,21 +121,21 @@ class Settings():
             remote.append({'name': 'star', 'ctrl': False, 'alt': False, 'shift': False, 'code': False})
         elif index == 3:  # Custom
             isCode = False
-            if int(__addon__.getSetting("controlEntryType")) == 1:
+            if int(ADDON.getSetting("controlEntryType")) == 1:
                 isCode = True
             # Check to see if there is a keyboard button value
-            keyboardButton = __addon__.getSetting("keyboardName")
+            keyboardButton = ADDON.getSetting("keyboardName")
             if keyboardButton not in [None, ""]:
                 alt = False
                 ctrl = False
                 shift = False
                 if not isCode:
                     keyboardButton = Settings.checkForNumber(keyboardButton)
-                    alt = __addon__.getSetting("keyboardAlt") == 'true'
-                    ctrl = __addon__.getSetting("keyboardCtrl") == 'true'
-                    shift = __addon__.getSetting("keyboardShift") == 'true'
+                    alt = ADDON.getSetting("keyboardAlt") == 'true'
+                    ctrl = ADDON.getSetting("keyboardCtrl") == 'true'
+                    shift = ADDON.getSetting("keyboardShift") == 'true'
                 keyboard.append({'name': keyboardButton, 'ctrl': ctrl, 'alt': alt, 'shift': shift, 'code': isCode})
-            remoteButton = __addon__.getSetting("remoteName")
+            remoteButton = ADDON.getSetting("remoteName")
             if remoteButton not in [None, ""]:
                 if not isCode:
                     remoteButton = Settings.checkForNumber(remoteButton)
@@ -170,15 +177,15 @@ class Settings():
     @staticmethod
     def setKeymapData(buttonCode):
         # Make sure custom is enabled (it should already be
-        if int(__addon__.getSetting("buttonSelection")) != 3:
-            __addon__.setSetting("buttonSelection", str(3))
+        if int(ADDON.getSetting("buttonSelection")) != 3:
+            ADDON.setSetting("buttonSelection", str(3))
         # Make sure the Control type is set to "Code"
-        if int(__addon__.getSetting("controlEntryType")) != 1:
-            __addon__.setSetting("controlEntryType", str(1))
+        if int(ADDON.getSetting("controlEntryType")) != 1:
+            ADDON.setSetting("controlEntryType", str(1))
         # Switch it back to manual setup so the user can see it's got a value
-        if __addon__.getSetting("automaticSetup") != 'false':
-            __addon__.setSetting("automaticSetup", 'false')
+        if ADDON.getSetting("automaticSetup") != 'false':
+            ADDON.setSetting("automaticSetup", 'false')
 
         # Set the code for the button
-        __addon__.setSetting("keyboardName", buttonCode)
-        __addon__.setSetting("remoteName", buttonCode)
+        ADDON.setSetting("keyboardName", buttonCode)
+        ADDON.setSetting("remoteName", buttonCode)
