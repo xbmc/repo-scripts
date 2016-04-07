@@ -4,11 +4,11 @@ import xbmcaddon
 import xbmcvfs
 import sqlite3
 
-__addon__ = xbmcaddon.Addon(id='script.game.filmwise')
-
 # Import the common settings
 from settings import log
 from settings import os_path_join
+
+ADDON = xbmcaddon.Addon(id='script.game.filmwise')
 
 
 #################################
@@ -17,7 +17,7 @@ from settings import os_path_join
 class FilmWiseDB():
     def __init__(self):
         # Start by getting the database location
-        self.configPath = xbmc.translatePath(__addon__.getAddonInfo('profile'))
+        self.configPath = xbmc.translatePath(ADDON.getAddonInfo('profile'))
         self.databasefile = os_path_join(self.configPath, "filmwise_database.db")
         log("FilmWiseDB: Database file location = %s" % self.databasefile)
         # Check to make sure the DB has been created
