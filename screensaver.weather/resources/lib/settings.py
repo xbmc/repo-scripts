@@ -2,16 +2,16 @@
 import xbmc
 import xbmcaddon
 
-__addon__ = xbmcaddon.Addon(id='screensaver.weather')
-__addonid__ = __addon__.getAddonInfo('id')
+ADDON = xbmcaddon.Addon(id='screensaver.weather')
+ADDON_ID = ADDON.getAddonInfo('id')
 
 
 # Common logging module
 def log(txt, loglevel=xbmc.LOGDEBUG):
-    if (__addon__.getSetting("logEnabled") == "true") or (loglevel != xbmc.LOGDEBUG):
+    if (ADDON.getSetting("logEnabled") == "true") or (loglevel != xbmc.LOGDEBUG):
         if isinstance(txt, str):
             txt = txt.decode("utf-8")
-        message = u'%s: %s' % (__addonid__, txt)
+        message = u'%s: %s' % (ADDON_ID, txt)
         xbmc.log(msg=message.encode("utf-8"), level=loglevel)
 
 
@@ -43,7 +43,7 @@ class Settings():
         # Where 00000000 is not changed
         # So that is a total of 15 different options
         # FF000000 would be completely black, so we do not use that one
-        if __addon__.getSetting("dimLevel"):
-            return Settings.DIM_LEVEL[int(__addon__.getSetting("dimLevel"))]
+        if ADDON.getSetting("dimLevel"):
+            return Settings.DIM_LEVEL[int(ADDON.getSetting("dimLevel"))]
         else:
             return '00000000'

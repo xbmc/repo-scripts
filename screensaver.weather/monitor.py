@@ -1,21 +1,15 @@
 # -*- coding: utf-8 -*-
 import sys
-import os
 import xbmc
 import xbmcaddon
 import xbmcgui
 
-__addon__ = xbmcaddon.Addon(id='screensaver.weather')
-__icon__ = __addon__.getAddonInfo('icon')
-__cwd__ = __addon__.getAddonInfo('path').decode("utf-8")
-__resource__ = xbmc.translatePath(os.path.join(__cwd__, 'resources').encode("utf-8")).decode("utf-8")
-__lib__ = xbmc.translatePath(os.path.join(__resource__, 'lib').encode("utf-8")).decode("utf-8")
-
-sys.path.append(__lib__)
-
 # Import the common settings
-from settings import log
-from settings import Settings
+from resources.lib.settings import log
+from resources.lib.settings import Settings
+
+ADDON = xbmcaddon.Addon(id='screensaver.weather')
+CWD = ADDON.getAddonInfo('path').decode("utf-8")
 
 
 # Window to overlay the Weather screen
@@ -28,7 +22,7 @@ class WeatherScreen(xbmcgui.WindowXMLDialog):
 
     @staticmethod
     def createWeatherScreen():
-        return WeatherScreen("screensaver-weather-main.xml", __cwd__)
+        return WeatherScreen("screensaver-weather-main.xml", CWD)
 
     # Called when setting up the window
     def onInit(self):
