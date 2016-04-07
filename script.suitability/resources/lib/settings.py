@@ -3,16 +3,16 @@ import os
 import xbmc
 import xbmcaddon
 
-__addon__ = xbmcaddon.Addon(id='script.suitability')
-__addonid__ = __addon__.getAddonInfo('id')
+ADDON = xbmcaddon.Addon(id='script.suitability')
+ADDON_ID = ADDON.getAddonInfo('id')
 
 
 # Common logging module
 def log(txt, loglevel=xbmc.LOGDEBUG):
-    if (__addon__.getSetting("logEnabled") == "true") or (loglevel != xbmc.LOGDEBUG):
+    if (ADDON.getSetting("logEnabled") == "true") or (loglevel != xbmc.LOGDEBUG):
         if isinstance(txt, str):
             txt = txt.decode("utf-8")
-        message = u'%s: %s' % (__addonid__, txt)
+        message = u'%s: %s' % (ADDON_ID, txt)
         xbmc.log(msg=message.encode("utf-8"), level=loglevel)
 
 
@@ -48,7 +48,7 @@ class Settings():
 
     @staticmethod
     def getDefaultSource():
-        index = int(__addon__.getSetting("defaultSource"))
+        index = int(ADDON.getSetting("defaultSource"))
         if index == 0:
             return Settings.COMMON_SENSE_MEDIA
         elif index == 1:
@@ -62,7 +62,7 @@ class Settings():
 
     @staticmethod
     def getDefaultViewer():
-        index = int(__addon__.getSetting("defaultViewer"))
+        index = int(ADDON.getSetting("defaultViewer"))
         if index == 0:
             return Settings.VIEWER_SUMMARY
         elif index == 1:
@@ -72,32 +72,32 @@ class Settings():
 
     @staticmethod
     def showOnContextMenu():
-        return __addon__.getSetting("showOnContextMenu") == "true"
+        return ADDON.getSetting("showOnContextMenu") == "true"
 
     @staticmethod
     def getNextSource(currentSource):
         # Read the setting to see which order they should be in
         order = [None, None, None, None]
 
-        index = int(__addon__.getSetting("commonSenseMediaPosition"))
+        index = int(ADDON.getSetting("commonSenseMediaPosition"))
         if (index > 0) and (index < 5):
             if order[index - 1] is None:
                 order[index - 1] = Settings.COMMON_SENSE_MEDIA
             else:
                 order.append(Settings.COMMON_SENSE_MEDIA)
-        index = int(__addon__.getSetting("kidsInMindPosition"))
+        index = int(ADDON.getSetting("kidsInMindPosition"))
         if (index > 0) and (index < 5):
             if order[index - 1] is None:
                 order[index - 1] = Settings.KIDS_IN_MIND
             else:
                 order.append(Settings.KIDS_IN_MIND)
-        index = int(__addon__.getSetting("doveFoundationPosition"))
+        index = int(ADDON.getSetting("doveFoundationPosition"))
         if (index > 0) and (index < 5):
             if order[index - 1] is None:
                 order[index - 1] = Settings.DOVE_FOUNDATION
             else:
                 order.append(Settings.DOVE_FOUNDATION)
-        index = int(__addon__.getSetting("movieGuideOrgPosition"))
+        index = int(ADDON.getSetting("movieGuideOrgPosition"))
         if (index > 0) and (index < 5):
             if order[index - 1] is None:
                 order[index - 1] = Settings.MOVIE_GUIDE_ORG
