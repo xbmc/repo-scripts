@@ -1,27 +1,17 @@
 # -*- coding: utf-8 -*-
-import sys
-import os
 import re
 import traceback
+import datetime
 import xbmc
 import xbmcaddon
 import xbmcvfs
 import xbmcgui
-import datetime
-
-
-__addon__ = xbmcaddon.Addon(id='script.videoextras')
-__version__ = __addon__.getAddonInfo('version')
-__cwd__ = __addon__.getAddonInfo('path').decode("utf-8")
-__resource__ = xbmc.translatePath(os.path.join(__cwd__, 'resources').encode("utf-8")).decode("utf-8")
-__lib__ = xbmc.translatePath(os.path.join(__resource__, 'lib').encode("utf-8")).decode("utf-8")
-
-sys.path.append(__resource__)
-sys.path.append(__lib__)
 
 # Import the common settings
-from settings import log
-from settings import Settings
+from resources.lib.settings import log
+from resources.lib.settings import Settings
+
+ADDON = xbmcaddon.Addon(id='script.videoextras')
 
 
 # This class reads the advancedsettings.xml file like it was a text file
@@ -93,7 +83,7 @@ class AdvSettings():
                 log("Invalid advancedsettings.xml detected")
                 xmlFileStr = None
                 # Show Error Dialog
-                xbmcgui.Dialog().ok(__addon__.getLocalizedString(32001), __addon__.getLocalizedString(32153))
+                xbmcgui.Dialog().ok(ADDON.getLocalizedString(32001), ADDON.getLocalizedString(32153))
 
             # Make a backup of the file as we are going to change it
             if xmlFileStr is not None:
@@ -118,7 +108,7 @@ class AdvSettings():
             xmlFile.write(xmlFileStr)
             xmlFile.close()
 
-            xbmcgui.Dialog().ok(__addon__.getLocalizedString(32001), __addon__.getLocalizedString(32154))
+            xbmcgui.Dialog().ok(ADDON.getLocalizedString(32001), ADDON.getLocalizedString(32154))
             log("New advancedsettings.xml content: %s" % xmlFileStr)
         else:
             log("advancedsettings.xml has been left unchanged")
@@ -146,9 +136,9 @@ class AdvSettings():
 # Main
 #########################
 if __name__ == '__main__':
-    log("VideoExtras: Updating Advanced Settings (version %s)" % __version__)
+    log("VideoExtras: Updating Advanced Settings (version %s)" % ADDON.getAddonInfo('version'))
 
-    doUpdate = xbmcgui.Dialog().yesno(__addon__.getLocalizedString(32001), __addon__.getLocalizedString(32150))
+    doUpdate = xbmcgui.Dialog().yesno(ADDON.getLocalizedString(32001), ADDON.getLocalizedString(32150))
 
     if doUpdate:
         try:
@@ -157,4 +147,4 @@ if __name__ == '__main__':
             del advSet
         except:
             log("VideoExtras: %s" % traceback.format_exc(), xbmc.LOGERROR)
-            xbmcgui.Dialog().ok(__addon__.getLocalizedString(32001), __addon__.getLocalizedString(32151), __addon__.getLocalizedString(32152))
+            xbmcgui.Dialog().ok(ADDON.getLocalizedString(32001), ADDON.getLocalizedString(32151), ADDON.getLocalizedString(32152))

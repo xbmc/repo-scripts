@@ -13,29 +13,20 @@ if sys.version_info < (2, 7):
 else:
     import json as simplejson
 
-
-__addon__ = xbmcaddon.Addon(id='script.videoextras')
-__addonid__ = __addon__.getAddonInfo('id')
-__version__ = __addon__.getAddonInfo('version')
-__cwd__ = __addon__.getAddonInfo('path').decode("utf-8")
-__profile__ = xbmc.translatePath(__addon__.getAddonInfo('profile')).decode("utf-8")
-__resource__ = xbmc.translatePath(os.path.join(__cwd__, 'resources').encode("utf-8")).decode("utf-8")
-__lib__ = xbmc.translatePath(os.path.join(__resource__, 'lib').encode("utf-8")).decode("utf-8")
-
-sys.path.append(__resource__)
-sys.path.append(__lib__)
-
 # Import the common settings
-from settings import Settings
-from settings import log
-from settings import os_path_join
-from settings import dir_exists
-
+from resources.lib.settings import Settings
+from resources.lib.settings import log
+from resources.lib.settings import os_path_join
+from resources.lib.settings import dir_exists
 # Load the core Video Extras classes
-from core import VideoExtrasBase
-
+from resources.lib.core import VideoExtrasBase
 # Load the cache cleaner
-from CacheCleanup import CacheCleanup
+from resources.lib.CacheCleanup import CacheCleanup
+
+ADDON = xbmcaddon.Addon(id='script.videoextras')
+CWD = ADDON.getAddonInfo('path').decode("utf-8")
+PROFILE_DIR = xbmc.translatePath(ADDON.getAddonInfo('profile')).decode("utf-8")
+RES_DIR = xbmc.translatePath(os.path.join(CWD, 'resources').encode("utf-8")).decode("utf-8")
 
 
 #####################################
@@ -65,7 +56,7 @@ class VideoExtrasService():
         if not xbmcvfs.exists(self.skinExtrasOverlay):
             log("VideoExtrasService: No custom image, using default")
             # Add default image setting to skinExtrasOverlay
-            self.skinExtrasOverlay = os_path_join(__resource__, "skins")
+            self.skinExtrasOverlay = os_path_join(RES_DIR, "skins")
             self.skinExtrasOverlay = os_path_join(self.skinExtrasOverlay, "icons")
             self.skinExtrasOverlay = os_path_join(self.skinExtrasOverlay, "overlay1.png")
 
@@ -74,7 +65,7 @@ class VideoExtrasService():
         if not xbmcvfs.exists(self.skinExtrasOverlayList):
             log("VideoExtrasService: No custom wide image, using default")
             # Add default image setting to skinExtrasOverlay
-            self.skinExtrasOverlayList = os_path_join(__resource__, "skins")
+            self.skinExtrasOverlayList = os_path_join(RES_DIR, "skins")
             self.skinExtrasOverlayList = os_path_join(self.skinExtrasOverlayList, "icons")
             self.skinExtrasOverlayList = os_path_join(self.skinExtrasOverlayList, "list1.png")
 
@@ -82,7 +73,7 @@ class VideoExtrasService():
 
         # We now know the file that we are going to use for the overlay
         # Check to see if this is different from the last overlay file used
-        filename = os_path_join(__profile__, "overlay_image_used.txt")
+        filename = os_path_join(PROFILE_DIR, "overlay_image_used.txt")
         try:
             previousOverlay = None
             if xbmcvfs.exists(filename):
@@ -151,7 +142,7 @@ class VideoExtrasService():
     # Calculates where a given overlay file should be
     def _createTargetPath(self, target, dbid, postfix=''):
         # Get the path where the file exists
-        rootPath = os_path_join(__profile__, target)
+        rootPath = os_path_join(PROFILE_DIR, target)
         if not dir_exists(rootPath):
             # Directory does not exist yet, create one
             xbmcvfs.mkdirs(rootPath)
@@ -238,7 +229,7 @@ def checkVimeoSettings():
 # Main of the Video Extras Service
 ###################################
 if __name__ == '__main__':
-    log("VideoExtrasService: Starting service (version %s)" % __version__)
+    log("VideoExtrasService: Starting service (version %s)" % ADDON.getAddonInfo('version'))
 
     # Record if the Context menu should be displayed
     if Settings.showOnContextMenu():
@@ -246,23 +237,23 @@ if __name__ == '__main__':
     else:
         xbmcgui.Window(10025).clearProperty("VideoExtrasShowContextMenu")
 
-    log("VideoExtrasService: Directory for overlay images is %s" % __profile__)
+    log("VideoExtrasService: Directory for overlay images is %s" % PROFILE_DIR)
 
     # This is a bit of a hack, but we want to force the default paths for the
     # images if they are not set.  This way it will point to the directory containing
     # all the overlay images to start with, meaning that it will be the directory
     # shown to the user if they choose to change the icons
-    if __addon__.getSetting("useCustomImages") != "true":
-        if __addon__.getSetting('overlayImage') in [None, '']:
-            skinExtrasOverlay = os_path_join(__resource__, "skins")
+    if ADDON.getSetting("useCustomImages") != "true":
+        if ADDON.getSetting('overlayImage') in [None, '']:
+            skinExtrasOverlay = os_path_join(RES_DIR, "skins")
             skinExtrasOverlay = os_path_join(skinExtrasOverlay, "icons")
             skinExtrasOverlay = os_path_join(skinExtrasOverlay, "overlay1.png")
-            __addon__.setSetting('overlayImage', skinExtrasOverlay)
-        if __addon__.getSetting('listImage') in [None, '']:
-            skinExtrasList = os_path_join(__resource__, "skins")
+            ADDON.setSetting('overlayImage', skinExtrasOverlay)
+        if ADDON.getSetting('listImage') in [None, '']:
+            skinExtrasList = os_path_join(RES_DIR, "skins")
             skinExtrasList = os_path_join(skinExtrasList, "icons")
             skinExtrasList = os_path_join(skinExtrasList, "list1.png")
-            __addon__.setSetting('listImage', skinExtrasList)
+            ADDON.setSetting('listImage', skinExtrasList)
 
     # Check the YouTube settings are correct, we will automatically disable the
     # option if the YouTube addon is not installed
