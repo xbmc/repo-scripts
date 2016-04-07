@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-import sys
 import os
 import traceback
 import xbmc
@@ -9,30 +8,21 @@ import threading
 import xbmcvfs
 import time
 
-__addon__ = xbmcaddon.Addon(id='script.sonos')
-__addonid__ = __addon__.getAddonInfo('id')
-__addonname__ = __addon__.getAddonInfo('name')
-__cwd__ = __addon__.getAddonInfo('path').decode("utf-8")
-__version__ = __addon__.getAddonInfo('version')
-__icon__ = __addon__.getAddonInfo('icon')
-__resource__ = xbmc.translatePath(os.path.join(__cwd__, 'resources').encode("utf-8")).decode("utf-8")
-__lib__ = xbmc.translatePath(os.path.join(__resource__, 'lib').encode("utf-8")).decode("utf-8")
-
-sys.path.append(__resource__)
-sys.path.append(__lib__)
-
 # Import the common settings
-from settings import Settings
-from settings import log
-
-from sonos import Sonos
-
+from resources.lib.settings import Settings
+from resources.lib.settings import log
+from resources.lib.sonos import Sonos
 # Import the Event Listener for the Sonos system
-from soco.events import event_listener
+from resources.lib.soco.events import event_listener
+from resources.lib.lyrics import Lyrics
 
-from lyrics import Lyrics
+ADDON = xbmcaddon.Addon(id='script.sonos')
+CWD = ADDON.getAddonInfo('path').decode("utf-8")
+ICON = ADDON.getAddonInfo('icon')
+RES_DIR = xbmc.translatePath(os.path.join(CWD, 'resources').encode("utf-8")).decode("utf-8")
 
-log('script version %s started' % __version__)
+
+log('script version %s started' % ADDON.getAddonInfo('version'))
 
 # The base type of the window depends on if we are just having the basic controls
 # (In which case it is a dialog, so you can see the rest of the screen)
@@ -96,7 +86,7 @@ class SonosControllerWindow(BaseWindow):  # xbmcgui.WindowXMLDialog
     # Static method to create the Window Dialog class
     @staticmethod
     def createSonosControllerWindow(sonosDevice):
-        return SonosControllerWindow("script-sonos-controller.xml", __cwd__, sonosDevice=sonosDevice)
+        return SonosControllerWindow("script-sonos-controller.xml", CWD, sonosDevice=sonosDevice)
 
     def isClose(self):
         return self.closeRequested
@@ -206,7 +196,7 @@ class SonosControllerWindow(BaseWindow):  # xbmcgui.WindowXMLDialog
         if self.sonosDevice.hasTrackChanged(self.currentTrack, track):
             log("SonosControllerWindow: Track changed, updating screen")
             # Get the album art if it is set (Default to the Sonos icon)
-            albumArtImage = __icon__
+            albumArtImage = ICON
             if track['album_art'] != "":
                 albumArtImage = track['album_art']
 
@@ -472,9 +462,6 @@ class SonosControllerWindow(BaseWindow):  # xbmcgui.WindowXMLDialog
                 # Now set the seek location
                 self._setSeekPosition(currentSliderPosition)
 
-#        else:
-#            xbmcgui.Dialog().ok(__addon__.getLocalizedString(32001), "Control clicked is " + str(controlID))
-
         # Refresh the screen to show the current state
         self.updateDisplay()
 
@@ -620,7 +607,7 @@ class SonosControllerWindow(BaseWindow):  # xbmcgui.WindowXMLDialog
 
         # Check to see if both the title and creator of the next track is set
         if (nextTrackCreator is not None) and (nextTrackTitle is not None):
-            nextTrackText = "[COLOR=FF0084ff]%s:[/COLOR] %s - %s" % (__addon__.getLocalizedString(32062), nextTrackTitle, nextTrackCreator)
+            nextTrackText = "[COLOR=FF0084ff]%s:[/COLOR] %s - %s" % (ADDON.getLocalizedString(32062), nextTrackTitle, nextTrackCreator)
             # If the next track has changed, then set the new value
             # Otherwise we just leave it as it was
             if self.nextTrack != nextTrackText:
@@ -656,22 +643,22 @@ class SonosArtistSlideshow(SonosControllerWindow):
             artistslideshow = xbmcaddon.Addon(id='script.artistslideshow')
             if artistslideshow.getSetting('artistinfo') != 'true':
                 # Biography is not set, prompt the use to see if we should set it
-                if xbmcgui.Dialog().yesno(__addon__.getLocalizedString(32001),
-                                          __addon__.getLocalizedString(32060),
+                if xbmcgui.Dialog().yesno(ADDON.getLocalizedString(32001),
+                                          ADDON.getLocalizedString(32060),
                                           "  \"%s\"" % artistslideshow.getLocalizedString(32005),
-                                          __addon__.getLocalizedString(32061)):
+                                          ADDON.getLocalizedString(32061)):
                     artistslideshow.setSetting('artistinfo', 'true')
             if artistslideshow.getSetting('transparent') != 'true':
                 # Transparent image is not set, prompt the use to see if we should set it
-                if xbmcgui.Dialog().yesno(__addon__.getLocalizedString(32001),
-                                          __addon__.getLocalizedString(32060),
+                if xbmcgui.Dialog().yesno(ADDON.getLocalizedString(32001),
+                                          ADDON.getLocalizedString(32060),
                                           "  \"%s\"" % artistslideshow.getLocalizedString(32107),
-                                          __addon__.getLocalizedString(32061)):
+                                          ADDON.getLocalizedString(32061)):
                     artistslideshow.setSetting('transparent', 'true')
         except:
             log("SonosArtistSlideshow: Exception Details: %s" % traceback.format_exc(), xbmc.LOGERROR)
 
-        return SonosArtistSlideshow(Settings.getArtistInfoLayout(), __cwd__, sonosDevice=sonosDevice)
+        return SonosArtistSlideshow(Settings.getArtistInfoLayout(), CWD, sonosDevice=sonosDevice)
 
     # Launch ArtistSlideshow
     def runArtistSlideshow(self):
@@ -705,7 +692,7 @@ class SonosArtistSlideshow(SonosControllerWindow):
 
         # Set the sonos icon
         if not Settings.hideSonosLogo():
-            xbmcgui.Window(self.windowId).setProperty('SonosAddonIcon', __icon__)
+            xbmcgui.Window(self.windowId).setProperty('SonosAddonIcon', ICON)
 
         # Set option to make the artist slideshow full screen
         if Settings.fullScreenArtistSlideshow():
@@ -809,7 +796,7 @@ class SonosArtistSlideshow(SonosControllerWindow):
 # we do the reverse - delete the custom one and reload the original setup
 class KeyMaps():
     def __init__(self):
-        self.KEYMAP_PATH = xbmc.translatePath(os.path.join(__resource__, "keymaps"))
+        self.KEYMAP_PATH = xbmc.translatePath(os.path.join(RES_DIR, "keymaps"))
         self.KEYMAPSOURCEFILE = os.path.join(self.KEYMAP_PATH, "sonos_keymap.xml")
         self.KEYMAPDESTFILE = os.path.join(xbmc.translatePath('special://userdata/keymaps'), "sonos_keymap.xml")
         self.keymapCopied = False
@@ -892,7 +879,7 @@ if __name__ == '__main__':
             except:
                 # Failed to connect to the Sonos Speaker
                 log("Sonos: Exception Details: %s" % traceback.format_exc(), xbmc.LOGERROR)
-                xbmcgui.Dialog().ok(__addon__.getLocalizedString(32001), (__addon__.getLocalizedString(32066) % Settings.getIPAddress()))
+                xbmcgui.Dialog().ok(ADDON.getLocalizedString(32001), (ADDON.getLocalizedString(32066) % Settings.getIPAddress()))
 
             # Need to check to see if we can stop any subscriptsions
             if sub is not None:
@@ -919,4 +906,4 @@ if __name__ == '__main__':
         del keyMapCtrl
         del sonosDevice
     else:
-        xbmcgui.Dialog().ok(__addon__.getLocalizedString(32001), __addon__.getLocalizedString(32067))
+        xbmcgui.Dialog().ok(ADDON.getLocalizedString(32001), ADDON.getLocalizedString(32067))

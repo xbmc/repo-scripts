@@ -13,26 +13,17 @@ if sys.version_info < (2, 7):
 else:
     import json as simplejson
 
-
-__addon__ = xbmcaddon.Addon(id='script.sonos')
-__addonid__ = __addon__.getAddonInfo('id')
-__cwd__ = __addon__.getAddonInfo('path').decode("utf-8")
-__version__ = __addon__.getAddonInfo('version')
-__icon__ = __addon__.getAddonInfo('icon')
-__resource__ = xbmc.translatePath(os.path.join(__cwd__, 'resources').encode("utf-8")).decode("utf-8")
-__lib__ = xbmc.translatePath(os.path.join(__resource__, 'lib').encode("utf-8")).decode("utf-8")
-
-sys.path.append(__resource__)
-sys.path.append(__lib__)
-
 # Import the common settings
-from settings import Settings
-from settings import log
-from settings import SocoLogging
+from resources.lib.settings import Settings
+from resources.lib.settings import log
+from resources.lib.settings import SocoLogging
+from resources.lib.sonos import Sonos
+from resources.lib.soco import discover
 
-from sonos import Sonos
-
-import soco
+ADDON = xbmcaddon.Addon(id='script.sonos')
+CWD = ADDON.getAddonInfo('path').decode("utf-8")
+ICON = ADDON.getAddonInfo('icon')
+RES_DIR = xbmc.translatePath(os.path.join(CWD, 'resources').encode("utf-8")).decode("utf-8")
 
 
 ##########################################################
@@ -59,11 +50,11 @@ class SonosPlayingPopup(xbmcgui.WindowXMLDialog):
         log("SonosPlayingPopup: Currently playing artist = %s, album = %s, track = %s" % (track['artist'], track['album'], track['title']))
 
         # Get the album art if it is set (Default to the Sonos icon)
-        albumArt = __icon__
+        albumArt = ICON
         if track['album_art'] != "":
             albumArt = track['album_art']
 
-        return SonosPlayingPopup("script-sonos-notif-popup.xml", __cwd__, artist=track['artist'], album=track['album'], title=track['title'], albumArt=albumArt)
+        return SonosPlayingPopup("script-sonos-notif-popup.xml", CWD, artist=track['artist'], album=track['album'], title=track['title'], albumArt=albumArt)
 
     def onInit(self):
         # Need to populate the popup with the artist details
@@ -171,7 +162,7 @@ class SonosVolumeLink():
 class SonosVolumeRedirect():
     def __init__(self, sonosDevice):
         self.sonosDevice = sonosDevice
-        self.KEYMAP_PATH = xbmc.translatePath(os.path.join(__resource__, "keymaps"))
+        self.KEYMAP_PATH = xbmc.translatePath(os.path.join(RES_DIR, "keymaps"))
         self.KEYMAPSOURCEFILE = os.path.join(self.KEYMAP_PATH, "sonos_volume_keymap.xml")
         self.KEYMAPDESTFILE = os.path.join(xbmc.translatePath('special://userdata/keymaps'), "sonos_volume_keymap.xml")
 
@@ -223,10 +214,10 @@ class SonosVolumeRedirect():
         if self.volumeChangeNotification == 0:
             self.volumeChangeNotification = -1
             if sonosDevice.mute:
-                xbmcgui.Dialog().notification(__addon__.getLocalizedString(32074), __addon__.getLocalizedString(32075), __icon__, 2000, False)
+                xbmcgui.Dialog().notification(ADDON.getLocalizedString(32074), ADDON.getLocalizedString(32075), ICON, 2000, False)
             else:
                 displayMsg = "%d" % sonosDevice.volume
-                xbmcgui.Dialog().notification(__addon__.getLocalizedString(32074), displayMsg, __icon__, 2000, False)
+                xbmcgui.Dialog().notification(ADDON.getLocalizedString(32074), displayMsg, ICON, 2000, False)
 
     def cleanup(self):
         if Settings.redirectVolumeControls():
@@ -325,7 +316,7 @@ class AutoUpdateIPAddress():
         SocoLogging.enable()
 
         try:
-            sonos_devices = soco.discover()
+            sonos_devices = discover()
         except:
             log("AutoUpdateIPAddress: Exception when getting devices")
             log("AutoUpdateIPAddress: %s" % traceback.format_exc())
@@ -380,7 +371,7 @@ class AutoUpdateIPAddress():
 # Main of the Sonos Service
 ################################
 if __name__ == '__main__':
-    log("SonosService: Starting service (version %s)" % __version__)
+    log("SonosService: Starting service (version %s)" % ADDON.getAddonInfo('version'))
 
     # Start by doing any auto-setting of the IP Address
     autoIpAdd = AutoUpdateIPAddress()
@@ -393,7 +384,7 @@ if __name__ == '__main__':
     if Settings.autoLaunchControllerOnStartup():
         # Launch the Sonos controller, but do not block as we have more to do as a service
         log("SonosService: Launching controller on startup")
-        xbmc.executebuiltin('RunScript(%s)' % (os.path.join(__cwd__, "default.py")), False)
+        xbmc.executebuiltin('RunScript(%s)' % (os.path.join(CWD, "default.py")), False)
 
     if (not Settings.isNotificationEnabled()) and (not audioChanges) and (not Settings.autoPauseSonos()) and (not Settings.redirectVolumeControls()):
         log("SonosService: Notifications, Volume Link and Auto Pause are disabled, exiting service")
@@ -476,7 +467,7 @@ if __name__ == '__main__':
                                         log("SonosService: Currently playing artist = %s, album = %s, track = %s" % (track['artist'], track['album'], track['title']))
 
                                         # Get the album art if it is set (Default to the Sonos icon)
-                                        albumArt = __icon__
+                                        albumArt = ICON
                                         if track['album_art'] != "":
                                             albumArt = track['album_art']
 

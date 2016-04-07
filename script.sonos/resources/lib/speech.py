@@ -2,22 +2,19 @@
 import cgi
 import traceback
 from datetime import datetime
-
 import xbmc
 import xbmcaddon
 import xbmcgui
 import xbmcvfs
-
 from Queue import Empty
 
 # Load the Soco classes
 from soco.snapshot import Snapshot
 from soco.events import event_listener
-
 from settings import log
 from settings import os_path_join
 
-__addon__ = xbmcaddon.Addon(id='script.sonos')
+ADDON = xbmcaddon.Addon(id='script.sonos')
 
 
 #########################################################################
@@ -118,7 +115,7 @@ class Speech():
             # Get the URI and play it
             trans_URI = self._get_uri(message)
             log("Speech: Playing URI %s" % trans_URI)
-            self.device.play_uri(trans_URI, title=__addon__.getLocalizedString(32105))
+            self.device.play_uri(trans_URI, title=ADDON.getLocalizedString(32105))
 
             # The maximum number of seconds that we will wait for the message to
             # complete playing
@@ -184,11 +181,11 @@ class Speech():
         msg_len = len(msg)
 
         valid = False
-        header = "%s - %s" % (__addon__.getLocalizedString(32001), __addon__.getLocalizedString(32105))
+        header = "%s - %s" % (ADDON.getLocalizedString(32001), ADDON.getLocalizedString(32105))
         if msg_len > 100:
-            xbmcgui.Dialog().ok(header, __addon__.getLocalizedString(32201))
+            xbmcgui.Dialog().ok(header, ADDON.getLocalizedString(32201))
         elif msg_len < 1:
-            xbmcgui.Dialog().ok(header, __addon__.getLocalizedString(32202))
+            xbmcgui.Dialog().ok(header, ADDON.getLocalizedString(32202))
         else:
             valid = True
 
@@ -235,10 +232,10 @@ class Speech():
             words = words.replace('%date', str(d) + suffix + ' ' + mth)
 
         if '%greet' in words:
-            GREET = [__addon__.getLocalizedString(32223),
-                     __addon__.getLocalizedString(32223),
-                     __addon__.getLocalizedString(32224),
-                     __addon__.getLocalizedString(32225)]
+            GREET = [ADDON.getLocalizedString(32223),
+                     ADDON.getLocalizedString(32223),
+                     ADDON.getLocalizedString(32224),
+                     ADDON.getLocalizedString(32225)]
             hour = int(now.strftime('%H'))
             words = words.replace('%greet', GREET[hour / 6])
 
@@ -246,7 +243,7 @@ class Speech():
 
     # Show the keyboad so a user can type what speech string they want
     def promptForInput(self):
-        header = "%s - %s" % (__addon__.getLocalizedString(32001), __addon__.getLocalizedString(32105))
+        header = "%s - %s" % (ADDON.getLocalizedString(32001), ADDON.getLocalizedString(32105))
         keyboard = xbmc.Keyboard(heading=header)
         keyboard.setHeading(header)
         keyboard.doModal()
@@ -264,7 +261,7 @@ class Speech():
     # Loads all the saved phrases
     def loadSavedPhrases(self):
         # Get the location of the speech list file
-        configPath = xbmc.translatePath(__addon__.getAddonInfo('profile'))
+        configPath = xbmc.translatePath(ADDON.getAddonInfo('profile'))
         speechfile = os_path_join(configPath, "speech.txt")
         log("Speech: Phrases file location = %s" % speechfile)
 
@@ -272,9 +269,9 @@ class Speech():
         # Check to see if the speech list file exists
         if not xbmcvfs.exists(speechfile):
             # Create a list of pre-defined phrases
-            phrases.append(__addon__.getLocalizedString(32221))
-            phrases.append(__addon__.getLocalizedString(32222))
-            phrases.append(__addon__.getLocalizedString(32226))
+            phrases.append(ADDON.getLocalizedString(32221))
+            phrases.append(ADDON.getLocalizedString(32222))
+            phrases.append(ADDON.getLocalizedString(32226))
             phrases.append('%greet')
             phrases.sort()
         else:
@@ -292,7 +289,7 @@ class Speech():
     # Writes the list of phrases to a file
     def savePhrases(self, phrases):
         # Get the location of the speech list file
-        configPath = xbmc.translatePath(__addon__.getAddonInfo('profile'))
+        configPath = xbmc.translatePath(ADDON.getAddonInfo('profile'))
         speechfile = os_path_join(configPath, "speech.txt")
         log("Speech: Phrases file location = %s" % speechfile)
 

@@ -10,42 +10,34 @@ import xbmcgui
 import xbmcplugin
 import xbmcaddon
 
-__addon__ = xbmcaddon.Addon(id='script.sonos')
-__icon__ = __addon__.getAddonInfo('icon')
-__cwd__ = __addon__.getAddonInfo('path').decode("utf-8")
-__resource__ = xbmc.translatePath(os.path.join(__cwd__, 'resources').encode("utf-8")).decode("utf-8")
-__lib__ = xbmc.translatePath(os.path.join(__resource__, 'lib').encode("utf-8")).decode("utf-8")
-__media__ = xbmc.translatePath(os.path.join(__resource__, 'media').encode("utf-8")).decode("utf-8")
-
-
-sys.path.append(__resource__)
-sys.path.append(__lib__)
-
 # Import the common settings
-from settings import Settings
-from settings import log
+from resources.lib.settings import Settings
+from resources.lib.settings import log
+from resources.lib.sonos import Sonos
+from resources.lib.speech import Speech
+from resources.lib.soco import data_structures
 
-from sonos import Sonos
-
-import soco
-from speech import Speech
+ADDON = xbmcaddon.Addon(id='script.sonos')
+ICON = ADDON.getAddonInfo('icon')
+CWD = ADDON.getAddonInfo('path').decode("utf-8")
+MEDIA = xbmc.translatePath(os.path.join(CWD, 'resources', 'media').encode("utf-8")).decode("utf-8")
 
 
 ###################################################################
 # Media files used by the plugin
 ###################################################################
 class MediaFiles():
-    RadioIcon = 'DefaultAudio.png' if Settings.useSkinIcons() else os.path.join(__media__, 'radio.png')
-    MusicLibraryIcon = 'DefaultAudio.png' if Settings.useSkinIcons() else os.path.join(__media__, 'library.png')
-    QueueIcon = 'DefaultMusicPlaylists.png' if Settings.useSkinIcons() else os.path.join(__media__, 'playlist.png')
+    RadioIcon = 'DefaultAudio.png' if Settings.useSkinIcons() else os.path.join(MEDIA, 'radio.png')
+    MusicLibraryIcon = 'DefaultAudio.png' if Settings.useSkinIcons() else os.path.join(MEDIA, 'library.png')
+    QueueIcon = 'DefaultMusicPlaylists.png' if Settings.useSkinIcons() else os.path.join(MEDIA, 'playlist.png')
 
-    AlbumsIcon = 'DefaultMusicAlbums.png' if Settings.useSkinIcons() else os.path.join(__media__, 'albums.png')
-    ArtistsIcon = 'DefaultMusicArtists.png' if Settings.useSkinIcons() else os.path.join(__media__, 'artists.png')
-    ComposersIcon = 'DefaultArtist.png' if Settings.useSkinIcons() else os.path.join(__media__, 'composers.png')
-    GenresIcon = 'DefaultMusicGenres.png' if Settings.useSkinIcons() else os.path.join(__media__, 'genres.png')
-    TracksIcon = 'DefaultMusicSongs.png' if Settings.useSkinIcons() else os.path.join(__media__, 'tracks.png')
-    RadioStationIcon = 'DefaultAudio.png' if Settings.useSkinIcons() else os.path.join(__media__, 'radiostation.png')
-    SonosPlaylistIcon = 'DefaultMusicPlaylists.png' if Settings.useSkinIcons() else os.path.join(__media__, 'sonosplaylist.png')
+    AlbumsIcon = 'DefaultMusicAlbums.png' if Settings.useSkinIcons() else os.path.join(MEDIA, 'albums.png')
+    ArtistsIcon = 'DefaultMusicArtists.png' if Settings.useSkinIcons() else os.path.join(MEDIA, 'artists.png')
+    ComposersIcon = 'DefaultArtist.png' if Settings.useSkinIcons() else os.path.join(MEDIA, 'composers.png')
+    GenresIcon = 'DefaultMusicGenres.png' if Settings.useSkinIcons() else os.path.join(MEDIA, 'genres.png')
+    TracksIcon = 'DefaultMusicSongs.png' if Settings.useSkinIcons() else os.path.join(MEDIA, 'tracks.png')
+    RadioStationIcon = 'DefaultAudio.png' if Settings.useSkinIcons() else os.path.join(MEDIA, 'radiostation.png')
+    SonosPlaylistIcon = 'DefaultMusicPlaylists.png' if Settings.useSkinIcons() else os.path.join(MEDIA, 'sonosplaylist.png')
 
 
 ###################################################################
@@ -95,7 +87,7 @@ class MenuNavigator():
     def setRootMenu(self):
         # Sonos Controller Link
         url = self._build_url({'mode': MenuNavigator.COMMAND_CONTROLLER})
-        li = xbmcgui.ListItem(__addon__.getLocalizedString(32103), iconImage=__icon__)
+        li = xbmcgui.ListItem(ADDON.getLocalizedString(32103), iconImage=ICON)
         li.addContextMenuItems([], replaceItems=True)  # Clear the Context Menu
         self._addPlayerToContextMenu(li)  # Add the Sonos player to the menu
         xbmcplugin.addDirectoryItem(handle=self.addon_handle, url=url, listitem=li, isFolder=True)
@@ -108,13 +100,13 @@ class MenuNavigator():
 
         # Music Library
         url = self._build_url({'mode': 'folder', 'foldername': MenuNavigator.ROOT_MENU_MUSIC_LIBRARY})
-        li = xbmcgui.ListItem(__addon__.getLocalizedString(32100), iconImage=MediaFiles.MusicLibraryIcon)
+        li = xbmcgui.ListItem(ADDON.getLocalizedString(32100), iconImage=MediaFiles.MusicLibraryIcon)
         li.addContextMenuItems([], replaceItems=True)  # Clear the Context Menu
         self._addMusicLibraryContextMenu(li)  # Add the Sonos player to the menu
         xbmcplugin.addDirectoryItem(handle=self.addon_handle, url=url, listitem=li, isFolder=True)
 
         url = self._build_url({'mode': 'folder', 'foldername': MenuNavigator.ROOT_MENU_RADIO_STATIONS})
-        li = xbmcgui.ListItem(__addon__.getLocalizedString(32102), iconImage=MediaFiles.RadioIcon)
+        li = xbmcgui.ListItem(ADDON.getLocalizedString(32102), iconImage=MediaFiles.RadioIcon)
         li.addContextMenuItems([], replaceItems=True)  # Clear the Context Menu
         self._addPlayerToContextMenu(li)  # Add the Sonos player to the menu
         xbmcplugin.addDirectoryItem(handle=self.addon_handle, url=url, listitem=li, isFolder=True)
@@ -128,20 +120,20 @@ class MenuNavigator():
 #        xbmcplugin.addDirectoryItem(handle=self.addon_handle, url=url, listitem=li, isFolder=True)
 
         url = self._build_url({'mode': 'folder', 'foldername': MenuNavigator.SONOS_PLAYLISTS})
-        li = xbmcgui.ListItem(__addon__.getLocalizedString(32104), iconImage=MediaFiles.QueueIcon)
+        li = xbmcgui.ListItem(ADDON.getLocalizedString(32104), iconImage=MediaFiles.QueueIcon)
         li.addContextMenuItems([], replaceItems=True)  # Clear the Context Menu
         self._addPlayerToContextMenu(li)  # Add the Sonos player to the menu
         xbmcplugin.addDirectoryItem(handle=self.addon_handle, url=url, listitem=li, isFolder=True)
 
         url = self._build_url({'mode': 'folder', 'foldername': MenuNavigator.ROOT_MENU_QUEUE})
-        li = xbmcgui.ListItem(__addon__.getLocalizedString(32101), iconImage=MediaFiles.QueueIcon)
+        li = xbmcgui.ListItem(ADDON.getLocalizedString(32101), iconImage=MediaFiles.QueueIcon)
         li.addContextMenuItems([], replaceItems=True)  # Clear the Context Menu
         self._addPlayerToContextMenu(li)  # Add the Sonos player to the menu
         xbmcplugin.addDirectoryItem(handle=self.addon_handle, url=url, listitem=li, isFolder=True)
 
         # Custom Speech Options
         url = self._build_url({'mode': 'folder', 'foldername': MenuNavigator.ROOT_MENU_SPEECH})
-        li = xbmcgui.ListItem(__addon__.getLocalizedString(32105), iconImage=__icon__)
+        li = xbmcgui.ListItem(ADDON.getLocalizedString(32105), iconImage=ICON)
         li.addContextMenuItems([], replaceItems=True)  # Clear the Context Menu
         self._addPlayerToContextMenu(li)  # Add the Sonos player to the menu
         xbmcplugin.addDirectoryItem(handle=self.addon_handle, url=url, listitem=li, isFolder=True)
@@ -153,42 +145,42 @@ class MenuNavigator():
         # Artists
         # Note: For artists, the sonos system actually calls "Album Artists"
         url = self._build_url({'mode': 'folder', 'foldername': MenuNavigator.ALBUMARTISTS})
-        li = xbmcgui.ListItem(__addon__.getLocalizedString(32110), iconImage=MediaFiles.ArtistsIcon)
+        li = xbmcgui.ListItem(ADDON.getLocalizedString(32110), iconImage=MediaFiles.ArtistsIcon)
         li.addContextMenuItems([], replaceItems=True)  # Clear the Context Menu
         self._addPlayerToContextMenu(li)  # Add the Sonos player to the menu
         xbmcplugin.addDirectoryItem(handle=self.addon_handle, url=url, listitem=li, isFolder=True)
 
         # Albums
         url = self._build_url({'mode': 'folder', 'foldername': MenuNavigator.ALBUMS})
-        li = xbmcgui.ListItem(__addon__.getLocalizedString(32111), iconImage=MediaFiles.AlbumsIcon)
+        li = xbmcgui.ListItem(ADDON.getLocalizedString(32111), iconImage=MediaFiles.AlbumsIcon)
         li.addContextMenuItems([], replaceItems=True)  # Clear the Context Menu
         self._addPlayerToContextMenu(li)  # Add the Sonos player to the menu
         xbmcplugin.addDirectoryItem(handle=self.addon_handle, url=url, listitem=li, isFolder=True)
 
         # Composers
         url = self._build_url({'mode': 'folder', 'foldername': MenuNavigator.COMPOSERS})
-        li = xbmcgui.ListItem(__addon__.getLocalizedString(32112), iconImage=MediaFiles.ComposersIcon)
+        li = xbmcgui.ListItem(ADDON.getLocalizedString(32112), iconImage=MediaFiles.ComposersIcon)
         li.addContextMenuItems([], replaceItems=True)  # Clear the Context Menu
         self._addPlayerToContextMenu(li)  # Add the Sonos player to the menu
         xbmcplugin.addDirectoryItem(handle=self.addon_handle, url=url, listitem=li, isFolder=True)
 
         # Genres
         url = self._build_url({'mode': 'folder', 'foldername': MenuNavigator.GENRES})
-        li = xbmcgui.ListItem(__addon__.getLocalizedString(32113), iconImage=MediaFiles.GenresIcon)
+        li = xbmcgui.ListItem(ADDON.getLocalizedString(32113), iconImage=MediaFiles.GenresIcon)
         li.addContextMenuItems([], replaceItems=True)  # Clear the Context Menu
         self._addPlayerToContextMenu(li)  # Add the Sonos player to the menu
         xbmcplugin.addDirectoryItem(handle=self.addon_handle, url=url, listitem=li, isFolder=True)
 
         # Tracks
         url = self._build_url({'mode': 'folder', 'foldername': MenuNavigator.TRACKS})
-        li = xbmcgui.ListItem(__addon__.getLocalizedString(32114), iconImage=MediaFiles.TracksIcon)
+        li = xbmcgui.ListItem(ADDON.getLocalizedString(32114), iconImage=MediaFiles.TracksIcon)
         li.addContextMenuItems([], replaceItems=True)  # Clear the Context Menu
         self._addPlayerToContextMenu(li)  # Add the Sonos player to the menu
         xbmcplugin.addDirectoryItem(handle=self.addon_handle, url=url, listitem=li, isFolder=True)
 
         # Imported Playlists
         url = self._build_url({'mode': 'folder', 'foldername': MenuNavigator.IMPORTED_PLAYLISTS})
-        li = xbmcgui.ListItem(__addon__.getLocalizedString(32115), iconImage=MediaFiles.SonosPlaylistIcon)
+        li = xbmcgui.ListItem(ADDON.getLocalizedString(32115), iconImage=MediaFiles.SonosPlaylistIcon)
         li.addContextMenuItems([], replaceItems=True)  # Clear the Context Menu
         self._addPlayerToContextMenu(li)  # Add the Sonos player to the menu
         xbmcplugin.addDirectoryItem(handle=self.addon_handle, url=url, listitem=li, isFolder=True)
@@ -213,7 +205,7 @@ class MenuNavigator():
                     list = sonosDevice.get_queue(totalCollected, Settings.getBatchSize(), True)
                 except:
                     log("SonosPlugin: %s" % traceback.format_exc(), xbmc.LOGERROR)
-                    xbmcgui.Dialog().ok(__addon__.getLocalizedString(32068), __addon__.getLocalizedString(32070))
+                    xbmcgui.Dialog().ok(ADDON.getLocalizedString(32068), ADDON.getLocalizedString(32070))
                     return
 
                 # Processes the list returned from Sonos, creating the list display on the screen
@@ -283,7 +275,7 @@ class MenuNavigator():
                         list = sonosDevice.music_library.browse_by_idstring(folderName, subCategory, totalCollected, Settings.getBatchSize(), True)
                 except:
                     log("SonosPlugin: %s" % traceback.format_exc(), xbmc.LOGERROR)
-                    xbmcgui.Dialog().ok(__addon__.getLocalizedString(32068), __addon__.getLocalizedString(32069) % (folderName, subCategory))
+                    xbmcgui.Dialog().ok(ADDON.getLocalizedString(32068), ADDON.getLocalizedString(32069) % (folderName, subCategory))
                     return
 
                 # Processes the list returned from Sonos, creating the list display on the screen
@@ -301,7 +293,7 @@ class MenuNavigator():
 
                 for item in list:
                     # Check if this item is a track of a directory
-                    if isinstance(item, soco.data_structures.DidlMusicTrack):
+                    if isinstance(item, data_structures.DidlMusicTrack):
                         self._addTrack(item, totalEntries, folderName)
                     else:
                         # Check for the special case where there is an "All" first in the list
@@ -313,7 +305,7 @@ class MenuNavigator():
                             continue
 
                         # Check to see if we are dealing with a sonos playlist
-                        if isinstance(item, soco.data_structures.DidlPlaylistContainer):
+                        if isinstance(item, data_structures.DidlPlaylistContainer):
                             # Will need to do the search by ID for playlists as the text method
                             # does not work
                             self._addDirectory(item, folderName, totalEntries, subCategory, item.item_id)
@@ -345,7 +337,7 @@ class MenuNavigator():
                     list = sonosDevice.get_favorite_radio_stations(start=totalCollected, max_items=Settings.getBatchSize())
                 except:
                     log("SonosPlugin: %s" % traceback.format_exc(), xbmc.LOGERROR)
-                    xbmcgui.Dialog().ok(__addon__.getLocalizedString(32068), __addon__.getLocalizedString(32071))
+                    xbmcgui.Dialog().ok(ADDON.getLocalizedString(32068), ADDON.getLocalizedString(32071))
                     return
 
                 # Processes the list returned from Sonos, creating the list display on the screen
@@ -395,7 +387,7 @@ class MenuNavigator():
                     list = sonosDevice.get_favorite_radio_shows(start=totalCollected, max_items=Settings.getBatchSize())
                 except:
                     log("SonosPlugin: %s" % traceback.format_exc(), xbmc.LOGERROR)
-                    xbmcgui.Dialog().ok(__addon__.getLocalizedString(32068), __addon__.getLocalizedString(32072))
+                    xbmcgui.Dialog().ok(ADDON.getLocalizedString(32068), ADDON.getLocalizedString(32072))
                     return
 
                 # Processes the list returned from Sonos, creating the list display on the screen
@@ -431,19 +423,19 @@ class MenuNavigator():
     # Populate the Music menu
     def populateSpeech(self):
         url = self._build_url({'mode': MenuNavigator.COMMAND_SPEECH_INPUT})
-        li = xbmcgui.ListItem(__addon__.getLocalizedString(32200), iconImage=__icon__)
+        li = xbmcgui.ListItem(ADDON.getLocalizedString(32200), iconImage=ICON)
         li.addContextMenuItems([], replaceItems=True)  # Clear the Context Menu
         self._addPlayerToContextMenu(li)  # Add the Sonos player to the menu
         xbmcplugin.addDirectoryItem(handle=self.addon_handle, url=url, listitem=li, isFolder=False)
 
         url = self._build_url({'mode': MenuNavigator.COMMAND_SPEECH_SAVE})
-        li = xbmcgui.ListItem(__addon__.getLocalizedString(32203), iconImage=__icon__)
+        li = xbmcgui.ListItem(ADDON.getLocalizedString(32203), iconImage=ICON)
         li.addContextMenuItems([], replaceItems=True)  # Clear the Context Menu
         self._addPlayerToContextMenu(li)  # Add the Sonos player to the menu
         xbmcplugin.addDirectoryItem(handle=self.addon_handle, url=url, listitem=li, isFolder=False)
 
         # Add a blank line before the filters
-        li = xbmcgui.ListItem("", iconImage=__icon__)
+        li = xbmcgui.ListItem("", iconImage=ICON)
         li.addContextMenuItems([], replaceItems=True)
         xbmcplugin.addDirectoryItem(handle=self.addon_handle, url="", listitem=li, isFolder=False)
 
@@ -455,11 +447,11 @@ class MenuNavigator():
         # Loop through all the phrases and add them to the screen
         for phrase in phrases:
             url = self._build_url({'mode': 'action', 'action': ActionManager.ACTION_SPEECH_SAY_PHRASE, 'itemId': phrase})
-            li = xbmcgui.ListItem(phrase, iconImage=__icon__)
+            li = xbmcgui.ListItem(phrase, iconImage=ICON)
             # Add the remove button to the context menu
             cmd = self._build_url({'mode': 'action', 'action': ActionManager.ACTION_SPEECH_REMOVE_PHRASE, 'itemId': phrase})
             ctxtMenu = []
-            ctxtMenu.append((__addon__.getLocalizedString(32204), 'RunPlugin(%s)' % cmd))
+            ctxtMenu.append((ADDON.getLocalizedString(32204), 'RunPlugin(%s)' % cmd))
             li.addContextMenuItems(ctxtMenu, replaceItems=True)  # Clear the Context Menu
             xbmcplugin.addDirectoryItem(handle=self.addon_handle, url=url, listitem=li, isFolder=False)
 
@@ -570,16 +562,16 @@ class MenuNavigator():
         ctxtMenu = []
         # Play Now
         cmd = self._build_url({'mode': 'action', 'action': ActionManager.ACTION_PLAY_NOW, 'itemId': itemId})
-        ctxtMenu.append((__addon__.getLocalizedString(32154), 'RunPlugin(%s)' % cmd))
+        ctxtMenu.append((ADDON.getLocalizedString(32154), 'RunPlugin(%s)' % cmd))
 
 #        cmd = self._build_url({'mode': 'action', 'action': ActionManager.ACTION_PLAY_NEXT, 'itemId': itemId})
 #        ctxtMenu.append(('Play Next', 'RunPlugin(%s)' % cmd))
         # Add To QueueIcon
         cmd = self._build_url({'mode': 'action', 'action': ActionManager.ACTION_ADD_TO_QUEUE, 'itemId': itemId})
-        ctxtMenu.append((__addon__.getLocalizedString(32155), 'RunPlugin(%s)' % cmd))
+        ctxtMenu.append((ADDON.getLocalizedString(32155), 'RunPlugin(%s)' % cmd))
         # Replace QueueIcon
         cmd = self._build_url({'mode': 'action', 'action': ActionManager.ACTION_REPLACE_QUEUE, 'itemId': itemId})
-        ctxtMenu.append((__addon__.getLocalizedString(32156), 'RunPlugin(%s)' % cmd))
+        ctxtMenu.append((ADDON.getLocalizedString(32156), 'RunPlugin(%s)' % cmd))
 
 #        cmd = self._build_url({'mode': 'action', 'action': ActionManager.ACTION_ADD_TO_SONOS_FAVOURITES, 'itemId': itemId})
 #        ctxtMenu.append(('Add To Sonos Favourites', 'RunPlugin(%s)' % cmd))
@@ -597,13 +589,13 @@ class MenuNavigator():
         ctxtMenu = []
         # Play Track
         cmd = self._build_url({'mode': 'action', 'action': ActionManager.ACTION_QUEUE_PLAY_ITEM, 'itemId': itemId})
-        ctxtMenu.append((__addon__.getLocalizedString(32151), 'RunPlugin(%s)' % cmd))
+        ctxtMenu.append((ADDON.getLocalizedString(32151), 'RunPlugin(%s)' % cmd))
         # Remove Track
         cmd = self._build_url({'mode': 'action', 'action': ActionManager.ACTION_QUEUE_REMOVE_ITEM, 'itemId': itemId})
-        ctxtMenu.append((__addon__.getLocalizedString(32152), 'RunPlugin(%s)' % cmd))
+        ctxtMenu.append((ADDON.getLocalizedString(32152), 'RunPlugin(%s)' % cmd))
         # Clear QueueIcon
         cmd = self._build_url({'mode': 'action', 'action': ActionManager.ACTION_QUEUE_CLEAR, 'itemId': itemId})
-        ctxtMenu.append((__addon__.getLocalizedString(32153), 'RunPlugin(%s)' % cmd))
+        ctxtMenu.append((ADDON.getLocalizedString(32153), 'RunPlugin(%s)' % cmd))
 
         # Add a link to the player from the context menu
         playerList = self._addPlayerToContextMenu(list_item)
@@ -615,7 +607,7 @@ class MenuNavigator():
     def _addPlayerToContextMenu(self, list_item):
         ctxtMenu = []
         # Open Sonos Player
-        ctxtMenu.append((__addon__.getLocalizedString(32150), 'RunScript(%s)' % os.path.join(__cwd__, "default.py")))
+        ctxtMenu.append((ADDON.getLocalizedString(32150), 'RunScript(%s)' % os.path.join(CWD, "default.py")))
         list_item.addContextMenuItems(ctxtMenu, replaceItems=False)
         return ctxtMenu
 
@@ -627,7 +619,7 @@ class MenuNavigator():
 
         # Add a link to the player from the context menu
         fullMenu = self._addPlayerToContextMenu(list_item)
-        fullMenu.append((__addon__.getLocalizedString(32157), 'RunPlugin(%s)' % cmd))
+        fullMenu.append((ADDON.getLocalizedString(32157), 'RunPlugin(%s)' % cmd))
 
         list_item.addContextMenuItems(fullMenu, replaceItems=True)
 
@@ -685,10 +677,10 @@ class ActionManager():
                 self.updateLibrary()
             else:
                 # This should never be shown, so no need to translate, enabled for debug
-                xbmcgui.Dialog().ok(__addon__.getLocalizedString(32068), "Operation %s not currently supported" % actionType)
+                xbmcgui.Dialog().ok(ADDON.getLocalizedString(32068), "Operation %s not currently supported" % actionType)
         except:
             log("SonosPlugin: %s" % traceback.format_exc(), xbmc.LOGERROR)
-            xbmcgui.Dialog().ok(__addon__.getLocalizedString(32068), __addon__.getLocalizedString(32073) % actionType)
+            xbmcgui.Dialog().ok(ADDON.getLocalizedString(32068), ADDON.getLocalizedString(32073) % actionType)
 
     # The default play command for Sonos is to add it to the queue and play that item
     def performPlay(self, itemId):
@@ -746,11 +738,11 @@ class ActionManager():
             # First check to see if the library is already being updated
             if self.sonosDevice.music_library.library_updating is True:
                 # Tell the user that an update is already in progress
-                xbmcgui.Dialog().ok(__addon__.getLocalizedString(32001), __addon__.getLocalizedString(32065))
+                xbmcgui.Dialog().ok(ADDON.getLocalizedString(32001), ADDON.getLocalizedString(32065))
             else:
                 # Perform the update
                 self.sonosDevice.music_library.start_library_update()
-                xbmcgui.Dialog().ok(__addon__.getLocalizedString(32001), __addon__.getLocalizedString(32064))
+                xbmcgui.Dialog().ok(ADDON.getLocalizedString(32001), ADDON.getLocalizedString(32064))
 
     # SPEECH OPERATIONS
     def sayPhrase(self, phrase):

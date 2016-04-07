@@ -1,30 +1,17 @@
 # -*- coding: utf-8 -*-
-import sys
-import os
 import traceback
 import socket
 import xbmc
 import xbmcaddon
 import xbmcgui
 
-__addon__ = xbmcaddon.Addon(id='script.sonos')
-__cwd__ = __addon__.getAddonInfo('path').decode("utf-8")
-__version__ = __addon__.getAddonInfo('version')
-__resource__ = xbmc.translatePath(os.path.join(__cwd__, 'resources').encode("utf-8")).decode("utf-8")
-__lib__ = xbmc.translatePath(os.path.join(__resource__, 'lib').encode("utf-8")).decode("utf-8")
-
-sys.path.append(__resource__)
-sys.path.append(__lib__)
-
-
 # Import the common settings
-from settings import Settings
-from settings import log
-from settings import SocoLogging
+from resources.lib.settings import Settings
+from resources.lib.settings import log
+from resources.lib.settings import SocoLogging
+from resources.lib.soco import discover
 
-import soco
-
-log('script version %s started' % __version__)
+ADDON = xbmcaddon.Addon(id='script.sonos')
 
 
 ###########################################################################
@@ -32,7 +19,7 @@ log('script version %s started' % __version__)
 # the settings
 ###########################################################################
 if __name__ == '__main__':
-    log("SonosDiscovery: Searching for Sonos devices")
+    log("SonosDiscovery: Searching for Sonos devices (version %s)" % ADDON.getAddonInfo('version'))
 
     # Set up the logging before using the Sonos Device
     SocoLogging.enable()
@@ -42,7 +29,7 @@ if __name__ == '__main__':
 
     # Use the default method to search for Sonos Devices
     try:
-        sonos_devices = soco.discover(timeout=5)
+        sonos_devices = discover(timeout=5)
     except:
         log("SonosDiscovery: Exception when getting devices", xbmc.LOGERROR)
         log("SonosDiscovery: %s" % traceback.format_exc(), xbmc.LOGERROR)
@@ -56,7 +43,7 @@ if __name__ == '__main__':
             interfaceAddr = socket.gethostbyname(socket.gethostname())
             log("SonosDiscovery: Searching for devices using gethostname %s" % interfaceAddr)
             if interfaceAddr not in [None, '']:
-                sonos_devices = soco.discover(timeout=5, interface_addr=interfaceAddr)
+                sonos_devices = discover(timeout=5, interface_addr=interfaceAddr)
         except:
             log("SonosDiscovery: Exception when getting devices", xbmc.LOGERROR)
             log("SonosDiscovery: %s" % traceback.format_exc(), xbmc.LOGERROR)
@@ -69,7 +56,7 @@ if __name__ == '__main__':
             interfaceAddr = socket.gethostbyname(socket.getfqdn())
             log("SonosDiscovery: Searching for devices using getfqdn %s" % interfaceAddr)
             if interfaceAddr not in [None, '']:
-                sonos_devices = soco.discover(timeout=5, interface_addr=interfaceAddr)
+                sonos_devices = discover(timeout=5, interface_addr=interfaceAddr)
         except:
             log("SonosDiscovery: Exception when getting devices", xbmc.LOGERROR)
             log("SonosDiscovery: %s" % traceback.format_exc(), xbmc.LOGERROR)
@@ -85,7 +72,7 @@ if __name__ == '__main__':
             s.close()
             log("SonosDiscovery: Searching for devices using web search %s" % interfaceAddr)
             if interfaceAddr not in [None, '']:
-                sonos_devices = soco.discover(timeout=5, interface_addr=interfaceAddr)
+                sonos_devices = discover(timeout=5, interface_addr=interfaceAddr)
         except:
             log("SonosDiscovery: Exception when getting devices", xbmc.LOGERROR)
             log("SonosDiscovery: %s" % traceback.format_exc(), xbmc.LOGERROR)
@@ -129,7 +116,7 @@ if __name__ == '__main__':
             isCoordinator = device.is_coordinator
             if isCoordinator:
                 log("SonosDiscovery: %s is the group coordinator" % ip)
-                displayName = "%s - %s" % (displayName, __addon__.getLocalizedString(32031))
+                displayName = "%s - %s" % (displayName, ADDON.getLocalizedString(32031))
             else:
                 log("SonosDiscovery: %s is not the group coordinator" % ip)
 
@@ -140,10 +127,10 @@ if __name__ == '__main__':
 
     # Check to see if there are any speakers
     if len(speakers) < 1:
-        xbmcgui.Dialog().ok(__addon__.getLocalizedString(32001), __addon__.getLocalizedString(32014))
+        xbmcgui.Dialog().ok(ADDON.getLocalizedString(32001), ADDON.getLocalizedString(32014))
     else:
         # Now prompt the user to pick one of the speakers
-        select = xbmcgui.Dialog().select(__addon__.getLocalizedString(32001), speakers.keys())
+        select = xbmcgui.Dialog().select(ADDON.getLocalizedString(32001), speakers.keys())
 
         if select != -1:
             selectedDisplayName = speakers.keys()[select]
@@ -154,10 +141,10 @@ if __name__ == '__main__':
 
             # Warn the user if they have selected something that is not the zone coordinator
             if not chosenIsCoordinator:
-                xbmcgui.Dialog().ok(__addon__.getLocalizedString(32001),
-                                    "%s %s:" % (chosenIPAddress, __addon__.getLocalizedString(32032)),
+                xbmcgui.Dialog().ok(ADDON.getLocalizedString(32001),
+                                    "%s %s:" % (chosenIPAddress, ADDON.getLocalizedString(32032)),
                                     "          \"%s\"" % chosenZoneName,
-                                    __addon__.getLocalizedString(32033))
+                                    ADDON.getLocalizedString(32033))
             # Set the selected item into the settings
             Settings.setIPAddress(chosenIPAddress)
             Settings.setZoneName(chosenZoneName)
