@@ -1,29 +1,19 @@
 # -*- coding: utf-8 -*-
-import sys
-import os
 import xbmc
 import xbmcaddon
 import xbmcgui
 
-
-__addon__ = xbmcaddon.Addon(id='script.suitability')
-__cwd__ = __addon__.getAddonInfo('path').decode("utf-8")
-__resource__ = xbmc.translatePath(os.path.join(__cwd__, 'resources').encode("utf-8")).decode("utf-8")
-__lib__ = xbmc.translatePath(os.path.join(__resource__, 'lib').encode("utf-8")).decode("utf-8")
-
-sys.path.append(__resource__)
-sys.path.append(__lib__)
-
 # Import the common settings
 from settings import log
 from settings import Settings
-
 from scraper import KidsInMindScraper
 from scraper import CommonSenseMediaScraper
 from scraper import DoveFoundationScraper
 from scraper import MovieGuideOrgScraper
 from viewer import DetailViewer
 from viewer import SummaryViewer
+
+ADDON = xbmcaddon.Addon(id='script.suitability')
 
 
 #########################
@@ -60,9 +50,9 @@ class SuitabilityCore():
             if len(searchMatches) < 1:
                 # Offer searching by the other provider if there is one
                 if switchSource is not None:
-                    msg1 = "%s %s" % (__addon__.getLocalizedString(32005), videoName)
-                    msg2 = "%s %s" % (__addon__.getLocalizedString(32010), __addon__.getLocalizedString(switchSource))
-                    switchSearch = xbmcgui.Dialog().yesno(__addon__.getLocalizedString(32001), msg1, msg2)
+                    msg1 = "%s %s" % (ADDON.getLocalizedString(32005), videoName)
+                    msg2 = "%s %s" % (ADDON.getLocalizedString(32010), ADDON.getLocalizedString(switchSource))
+                    switchSearch = xbmcgui.Dialog().yesno(ADDON.getLocalizedString(32001), msg1, msg2)
                     # If the user wants to switch the search then tidy up then loop again
                     if switchSearch:
                         searchSource = switchSource
@@ -76,12 +66,12 @@ class SuitabilityCore():
                 displayList = []
                 for aMatch in searchMatches:
                     displayList.append(aMatch["name"])
-                select = xbmcgui.Dialog().select(__addon__.getLocalizedString(32004), displayList)
+                select = xbmcgui.Dialog().select(ADDON.getLocalizedString(32004), displayList)
                 if select == -1:
                     log("Suitability: Cancelled by user")
                     selectedItem = None
-                    msg = "%s %s" % (__addon__.getLocalizedString(32010), __addon__.getLocalizedString(switchSource))
-                    switchSearch = xbmcgui.Dialog().yesno(__addon__.getLocalizedString(32001), msg)
+                    msg = "%s %s" % (ADDON.getLocalizedString(32010), ADDON.getLocalizedString(switchSource))
+                    switchSearch = xbmcgui.Dialog().yesno(ADDON.getLocalizedString(32001), msg)
                     # If the user wants to switch the search then tidy up then loop again
                     if switchSearch:
                         searchSource = switchSource
@@ -100,7 +90,7 @@ class SuitabilityCore():
             else:
                 xbmc.executebuiltin("ActivateWindow(busydialog)")
                 # Now get the details of the single film
-                displayTitle = "%s: %s" % (__addon__.getLocalizedString(searchSource), selectedItem["name"])
+                displayTitle = "%s: %s" % (ADDON.getLocalizedString(searchSource), selectedItem["name"])
                 log("Suitability: Found film with name: %s" % selectedItem["name"])
 
                 details = dataScraper.getSuitabilityData(selectedItem["link"])

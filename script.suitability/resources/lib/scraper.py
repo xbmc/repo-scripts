@@ -3,7 +3,6 @@ import re
 import traceback
 import xbmc
 import xml.etree.ElementTree as ET
-
 import urllib
 import urllib2
 from BeautifulSoup import BeautifulSoup

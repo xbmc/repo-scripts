@@ -1,21 +1,9 @@
 # -*- coding: utf-8 -*-
-import os
-import sys
-import xbmc
-import xbmcaddon
 import xbmcgui
 
-__addon__ = xbmcaddon.Addon(id='script.suitability')
-__cwd__ = __addon__.getAddonInfo('path').decode("utf-8")
-__resource__ = xbmc.translatePath(os.path.join(__cwd__, 'resources').encode("utf-8")).decode("utf-8")
-__lib__ = xbmc.translatePath(os.path.join(__resource__, 'lib').encode("utf-8")).decode("utf-8")
-
-sys.path.append(__resource__)
-sys.path.append(__lib__)
-
 # Import the common settings
-from settings import Settings
-from settings import log
+from resources.lib.settings import Settings
+from resources.lib.settings import log
 
 
 ###################################
