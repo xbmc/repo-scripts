@@ -3,15 +3,14 @@ import xbmc
 import xbmcgui
 import xbmcaddon
 
-__addon__ = xbmcaddon.Addon(id='script.game.filmwise')
-__cwd__ = __addon__.getAddonInfo('path').decode("utf-8")
-
-
 # Import the common settings
 from settings import log
 from settings import Settings
 from core import FilmWiseCore
 from database import FilmWiseDB
+
+ADDON = xbmcaddon.Addon(id='script.game.filmwise')
+CWD = ADDON.getAddonInfo('path').decode("utf-8")
 
 
 #################################
@@ -50,7 +49,7 @@ class FilmWiseViewer(xbmcgui.WindowXMLDialog):
 
     @staticmethod
     def createFilmWiseViewer(quizNum, title, details, solution):
-        return FilmWiseViewer("script-filmwise-dialog.xml", __cwd__, quizNum=quizNum, title=title, details=details, solution=solution)
+        return FilmWiseViewer("script-filmwise-dialog.xml", CWD, quizNum=quizNum, title=title, details=details, solution=solution)
 
     # Called when setting up the window
     def onInit(self):
@@ -226,7 +225,7 @@ class FilmWiseViewer(xbmcgui.WindowXMLDialog):
 
     # Sets the text display of the score
     def _setScore(self, numCorrectAnswers, numQuestions):
-        scoreText = "[B]%s: %d/%d[/B]" % (__addon__.getLocalizedString(32007), numCorrectAnswers, numQuestions)
+        scoreText = "[B]%s: %d/%d[/B]" % (ADDON.getLocalizedString(32007), numCorrectAnswers, numQuestions)
         log("checkAnswers: Setting score label to %s" % scoreText)
         labelControl = self.getControl(FilmWiseViewer.SCORE_LABEL_ID)
         labelControl.setLabel(scoreText)

@@ -1,22 +1,9 @@
 # -*- coding: utf-8 -*-
-import sys
-import os
 import traceback
-import xbmc
-import xbmcaddon
-
 import urllib
 import urllib2
 from BeautifulSoup import BeautifulSoup
-
-
-__addon__ = xbmcaddon.Addon(id='script.game.filmwise')
-__cwd__ = __addon__.getAddonInfo('path').decode("utf-8")
-__resource__ = xbmc.translatePath(os.path.join(__cwd__, 'resources').encode("utf-8")).decode("utf-8")
-__lib__ = xbmc.translatePath(os.path.join(__resource__, 'lib').encode("utf-8")).decode("utf-8")
-
-sys.path.append(__resource__)
-sys.path.append(__lib__)
+import xbmc
 
 # Import the common settings
 from settings import log
@@ -177,14 +164,6 @@ class FilmWiseCore():
                 scoreIdx = scoreIdx + 6
                 correctAnswers = int(forwardUrl[scoreIdx:scoreIdx + 1])
                 log("checkAnswers: Number of correct answers is %d" % correctAnswers)
-
-            # Holds the webpage that was read via the response.read() command
-#            doc = response.read()
-            # Closes the connection after we have read the webpage.
-#            try:
-#                response.close()
-#            except:
-#                pass
         except:
             pass
 

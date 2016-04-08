@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 import sys
-import os
 import urllib
 import urlparse
 import xbmc
@@ -8,23 +7,16 @@ import xbmcgui
 import xbmcplugin
 import xbmcaddon
 
-__addon__ = xbmcaddon.Addon(id='script.game.filmwise')
-__icon__ = __addon__.getAddonInfo('icon')
-__fanart__ = __addon__.getAddonInfo('fanart')
-__cwd__ = __addon__.getAddonInfo('path').decode("utf-8")
-__resource__ = xbmc.translatePath(os.path.join(__cwd__, 'resources').encode("utf-8")).decode("utf-8")
-__lib__ = xbmc.translatePath(os.path.join(__resource__, 'lib').encode("utf-8")).decode("utf-8")
-
-
-sys.path.append(__resource__)
-sys.path.append(__lib__)
-
 # Import the common settings
-from settings import Settings
-from settings import log
+from resources.lib.settings import Settings
+from resources.lib.settings import log
 
-from core import FilmWiseCore
-from viewer import FilmWiseViewer
+from resources.lib.core import FilmWiseCore
+from resources.lib.viewer import FilmWiseViewer
+
+ADDON = xbmcaddon.Addon(id='script.game.filmwise')
+ICON = ADDON.getAddonInfo('icon')
+FANART = ADDON.getAddonInfo('fanart')
 
 
 ###################################################################
@@ -54,8 +46,8 @@ class MenuNavigator():
         for quiz in quizList:
             displaytitle = "%s %s" % (quiz['date'], quiz['name'])
 
-            li = xbmcgui.ListItem(displaytitle, iconImage=__icon__)
-            li.setProperty("Fanart_Image", __fanart__)
+            li = xbmcgui.ListItem(displaytitle, iconImage=ICON)
+            li.setProperty("Fanart_Image", FANART)
             url = self._build_url({'mode': 'quiz', 'number': quiz['number'], 'name': quiz['name'], 'link': quiz['link'], 'solution': quiz['solution']})
             xbmcplugin.addDirectoryItem(handle=self.addon_handle, url=url, listitem=li, isFolder=False)
 

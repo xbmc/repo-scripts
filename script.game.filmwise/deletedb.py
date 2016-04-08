@@ -1,33 +1,23 @@
 # -*- coding: utf-8 -*-
-import sys
-import os
 import xbmc
 import xbmcaddon
 import xbmcvfs
 import xbmcgui
 
-
-__addon__ = xbmcaddon.Addon(id='script.game.filmwise')
-__version__ = __addon__.getAddonInfo('version')
-__cwd__ = __addon__.getAddonInfo('path').decode("utf-8")
-__resource__ = xbmc.translatePath(os.path.join(__cwd__, 'resources').encode("utf-8")).decode("utf-8")
-__lib__ = xbmc.translatePath(os.path.join(__resource__, 'lib').encode("utf-8")).decode("utf-8")
-
-sys.path.append(__resource__)
-sys.path.append(__lib__)
-
 # Import the common settings
-from settings import log
-from settings import os_path_join
+from resources.lib.settings import log
+from resources.lib.settings import os_path_join
+
+ADDON = xbmcaddon.Addon(id='script.game.filmwise')
 
 
 #########################
 # Main
 #########################
 if __name__ == '__main__':
-    log("FilmwiseDeleteDb: Delete filmwise database called (version %s)" % __version__)
+    log("FilmwiseDeleteDb: Delete filmwise database called (version %s)" % ADDON.getAddonInfo('version'))
 
-    configPath = xbmc.translatePath(__addon__.getAddonInfo('profile'))
+    configPath = xbmc.translatePath(ADDON.getAddonInfo('profile'))
     databasefile = os_path_join(configPath, "filmwise_database.db")
     log("FilmwiseDeleteDb: Database file location = %s" % databasefile)
 
@@ -38,4 +28,4 @@ if __name__ == '__main__':
     else:
         log("FilmwiseDeleteDb: No database exists: %s" % databasefile)
 
-    xbmcgui.Dialog().ok(__addon__.getLocalizedString(32001), __addon__.getLocalizedString(32009))
+    xbmcgui.Dialog().ok(ADDON.getLocalizedString(32001), ADDON.getLocalizedString(32009))
