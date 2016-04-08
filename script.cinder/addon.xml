@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.cinder" name="Cinder" version="1.0.0" provider-name="Justin Rush">
+	<requires>
+		<import addon="xbmc.python" version="2.24.0"/>
+		<import addon="script.module.simplejson" version="3.3.0"/>
+	</requires>
+	<extension point="xbmc.python.script" library="script.py"/>
+	<extension point="xbmc.addon.metadata">
+		<summary lang="en">Plays TV Shows randomly for mindless consumption.</summary>
+		<description lang="en">Plays TV Shows randomly from a list of SMB shares. See README.md for detailed instructions.</description>
+		<platform>all</platform>
+		<license>GPLv3</license>
+		<email>cinder.kodi@gmail.com</email>
+                <source>https://github.com/jpr679/stript.cinder</source>
+	</extension>
+</addon>

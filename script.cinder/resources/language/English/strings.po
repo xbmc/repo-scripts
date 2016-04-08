@@ -1,0 +1,236 @@
+# Kodi Media Center language file
+# Addon Name: Cinder
+# Addon id: script.cinder
+msgid ""
+msgstr ""
+
+# Settings
+msgctxt "#32000"
+msgid "General"
+msgstr ""
+
+msgctxt "#32100"
+msgid "Select random episodes by watched status"
+msgstr ""
+
+msgctxt "#32101"
+msgid "Select episodes from:"
+msgstr ""
+
+msgctxt "#32102"
+msgid "Number of episodes to queue up"
+msgstr ""
+
+msgctxt "#32103"
+msgid "Queue length:"
+msgstr ""
+
+msgctxt "#32104"
+msgid "Shuffle selected episodes to play in random order"
+msgstr ""
+
+msgctxt "#32105"
+msgid "Shuffle episodes:"
+msgstr ""
+
+msgctxt "#32106"
+msgid "Randomly skip sources"
+msgstr ""
+
+msgctxt "#32107"
+msgid "Can skip sources:"
+msgstr ""
+
+msgctxt "#32108"
+msgid "Play as soon as possible (skipping episodes is temporarily delayed)"
+msgstr ""
+
+msgctxt "#32109"
+msgid "Bootstrap playback:"
+msgstr ""
+
+
+msgctxt "#32001"
+msgid "Sources"
+msgstr ""
+
+msgctxt "#32196"
+msgid "Folders are Samba share locations"
+msgstr ""
+
+msgctxt "#32197"
+msgid "    example: 'smb://192.168.1.10/TV Shows/Rick and Morty'"
+msgstr ""
+
+msgctxt "#32198"
+msgid "Weights determine frequency of source selection (percentage)"
+msgstr ""
+
+msgctxt "#32199"
+msgid "    example: 1 - Rarest, 100 - Always Play"
+msgstr ""
+
+msgctxt "#32201"
+msgid "Source 1 folder:"
+msgstr ""
+
+msgctxt "#32202"
+msgid "Source 1 weight:"
+msgstr "test"
+
+msgctxt "#32203"
+msgid "Source 2 folder:"
+msgstr ""
+
+msgctxt "#32204"
+msgid "Source 2 weight:"
+msgstr ""
+
+msgctxt "#32205"
+msgid "Source 3 folder:"
+msgstr ""
+
+msgctxt "#32206"
+msgid "Source 3 weight:"
+msgstr ""
+
+msgctxt "#32207"
+msgid "Source 4 folder:"
+msgstr ""
+
+msgctxt "#32208"
+msgid "Source 4 weight:"
+msgstr ""
+
+msgctxt "#32209"
+msgid "Source 5 folder:"
+msgstr ""
+
+msgctxt "#32210"
+msgid "Source 5 weight:"
+msgstr ""
+
+msgctxt "#32211"
+msgid "Source 6 folder:"
+msgstr ""
+
+msgctxt "#32212"
+msgid "Source 6 weight:"
+msgstr ""
+
+msgctxt "#32213"
+msgid "Source 7 folder:"
+msgstr ""
+
+msgctxt "#32214"
+msgid "Source 7 weight:"
+msgstr ""
+
+msgctxt "#32215"
+msgid "Source 8 folder:"
+msgstr ""
+
+msgctxt "#32216"
+msgid "Source 8 weight:"
+msgstr ""
+
+msgctxt "#32217"
+msgid "Source 9 folder:"
+msgstr ""
+
+msgctxt "#32218"
+msgid "Source 9 weight:"
+msgstr ""
+
+msgctxt "#32219"
+msgid "Source 10 folder:"
+msgstr ""
+
+msgctxt "#32220"
+msgid "Source 10 weight:"
+
+
+
+msgctxt "#32002"
+msgid "More Sources"
+msgstr ""
+
+msgctxt "#32301"
+msgid "Source 11 folder:"
+msgstr ""
+
+msgctxt "#32302"
+msgid "Source 11 weight:"
+msgstr "test"
+
+msgctxt "#32303"
+msgid "Source 12 folder:"
+msgstr ""
+
+msgctxt "#32304"
+msgid "Source 12 weight:"
+msgstr ""
+
+msgctxt "#32305"
+msgid "Source 13 folder:"
+msgstr ""
+
+msgctxt "#32306"
+msgid "Source 13 weight:"
+msgstr ""
+
+msgctxt "#32307"
+msgid "Source 14 folder:"
+msgstr ""
+
+msgctxt "#32308"
+msgid "Source 14 weight:"
+msgstr ""
+
+msgctxt "#32309"
+msgid "Source 15 folder:"
+msgstr ""
+
+msgctxt "#32310"
+msgid "Source 15 weight:"
+msgstr ""
+
+msgctxt "#32311"
+msgid "Source 16 folder:"
+msgstr ""
+
+msgctxt "#32312"
+msgid "Source 16 weight:"
+msgstr ""
+
+msgctxt "#32313"
+msgid "Source 17 folder:"
+msgstr ""
+
+msgctxt "#32314"
+msgid "Source 17 weight:"
+msgstr ""
+
+msgctxt "#32315"
+msgid "Source 18 folder:"
+msgstr ""
+
+msgctxt "#32316"
+msgid "Source 18 weight:"
+msgstr ""
+
+msgctxt "#32317"
+msgid "Source 19 folder:"
+msgstr ""
+
+msgctxt "#32318"
+msgid "Source 19 weight:"
+msgstr ""
+
+msgctxt "#32319"
+msgid "Source 20 folder:"
+msgstr ""
+
+msgctxt "#32320"
+msgid "Source 20 weight:"
+msgstr ""
