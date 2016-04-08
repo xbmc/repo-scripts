@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 import sys
-import os
 import urllib
 import urlparse
 import xbmc
@@ -9,26 +8,16 @@ import xbmcplugin
 import xbmcaddon
 import xbmcvfs
 
-__addon__ = xbmcaddon.Addon(id='script.audiobooks')
-__addonid__ = __addon__.getAddonInfo('id')
-__fanart__ = __addon__.getAddonInfo('fanart')
-__cwd__ = __addon__.getAddonInfo('path').decode("utf-8")
-__profile__ = xbmc.translatePath(__addon__.getAddonInfo('profile')).decode("utf-8")
-__resource__ = xbmc.translatePath(os.path.join(__cwd__, 'resources').encode("utf-8")).decode("utf-8")
-__lib__ = xbmc.translatePath(os.path.join(__resource__, 'lib').encode("utf-8")).decode("utf-8")
-
-
-sys.path.append(__resource__)
-sys.path.append(__lib__)
-
 # Import the common settings
-from settings import Settings
-from settings import log
-from settings import os_path_join
+from resources.lib.settings import Settings
+from resources.lib.settings import log
+from resources.lib.settings import os_path_join
+from resources.lib.audiobook import AudioBookHandler
+from resources.lib.bookplayer import BookPlayer
+from resources.lib.database import AudioBooksDB
 
-from audiobook import AudioBookHandler
-from bookplayer import BookPlayer
-from database import AudioBooksDB
+ADDON = xbmcaddon.Addon(id='script.audiobooks')
+FANART = ADDON.getAddonInfo('fanart')
 
 
 ###################################################################
@@ -53,11 +42,11 @@ class MenuNavigator():
 
         if audioBookFolder in [None, ""]:
             # Prompt the user to set the eBooks Folder
-            audioBookFolder = xbmcgui.Dialog().browseSingle(0, __addon__.getLocalizedString(32005), 'files')
+            audioBookFolder = xbmcgui.Dialog().browseSingle(0, ADDON.getLocalizedString(32005), 'files')
 
             # Check to make sure the directory is set now
             if audioBookFolder in [None, ""]:
-                xbmcgui.Dialog().ok(__addon__.getLocalizedString(32001), __addon__.getLocalizedString(32006))
+                xbmcgui.Dialog().ok(ADDON.getLocalizedString(32001), ADDON.getLocalizedString(32006))
                 return
 
             # Save the directory in settings for future use
@@ -98,7 +87,7 @@ class MenuNavigator():
 
             url = self._build_url({'mode': 'directory', 'directory': fullDir})
             li = xbmcgui.ListItem(displayName, iconImage='DefaultFolder.png')
-            li.setProperty("Fanart_Image", __fanart__)
+            li.setProperty("Fanart_Image", FANART)
             li.addContextMenuItems([], replaceItems=True)
             xbmcplugin.addDirectoryItem(handle=self.addon_handle, url=url, listitem=li, isFolder=True)
 
@@ -155,7 +144,7 @@ class MenuNavigator():
 
             url = self._build_url({'mode': 'chapters', 'filename': audioBookHandler.getFile(True), 'cover': coverTargetName})
             li = xbmcgui.ListItem(displayString, iconImage=coverTargetName)
-            li.setProperty("Fanart_Image", __fanart__)
+            li.setProperty("Fanart_Image", FANART)
             li.addContextMenuItems(self._getContextMenu(audioBookHandler), replaceItems=True)
             xbmcplugin.addDirectoryItem(handle=self.addon_handle, url=url, listitem=li, isFolder=True)
 
@@ -187,8 +176,8 @@ class MenuNavigator():
         if len(chapters) < 1:
             url = self._build_url({'mode': 'play', 'filename': audioBookHandler.getFile(True), 'startTime': 0, 'chapter': 0})
 
-            li = xbmcgui.ListItem(__addon__.getLocalizedString(32018), iconImage=defaultImage)
-            li.setProperty("Fanart_Image", __fanart__)
+            li = xbmcgui.ListItem(ADDON.getLocalizedString(32018), iconImage=defaultImage)
+            li.setProperty("Fanart_Image", FANART)
             li.addContextMenuItems([], replaceItems=True)
             xbmcplugin.addDirectoryItem(handle=self.addon_handle, url=url, listitem=li, isFolder=False)
 
@@ -197,13 +186,13 @@ class MenuNavigator():
             url = self._build_url({'mode': 'play', 'filename': audioBookHandler.getFile(True), 'startTime': secondsIn, 'chapter': chapterPosition})
 
             displayTime = self._getDisplayTimeFromSeconds(secondsIn)
-            displayName = "%s %s" % (__addon__.getLocalizedString(32019), displayTime)
+            displayName = "%s %s" % (ADDON.getLocalizedString(32019), displayTime)
 
             if chapterPosition > 0:
-                displayName = "%s (%s: %d)" % (displayName, __addon__.getLocalizedString(32017), chapterPosition)
+                displayName = "%s (%s: %d)" % (displayName, ADDON.getLocalizedString(32017), chapterPosition)
 
             li = xbmcgui.ListItem(displayName, iconImage=defaultImage)
-            li.setProperty("Fanart_Image", __fanart__)
+            li.setProperty("Fanart_Image", FANART)
             li.addContextMenuItems([], replaceItems=True)
             xbmcplugin.addDirectoryItem(handle=self.addon_handle, url=url, listitem=li, isFolder=False)
 
@@ -241,7 +230,7 @@ class MenuNavigator():
                 # how far through the book the chapter is
                 li.setInfo('music', {'Duration': durationEntry})
 
-            li.setProperty("Fanart_Image", __fanart__)
+            li.setProperty("Fanart_Image", FANART)
             li.addContextMenuItems([], replaceItems=True)
             xbmcplugin.addDirectoryItem(handle=self.addon_handle, url=url, listitem=li, isFolder=False)
 
@@ -270,26 +259,26 @@ class MenuNavigator():
         if (secondsIn > 0) or (chapterPosition > 1):
             cmd = self._build_url({'mode': 'play', 'filename': bookHandle.getFile(True), 'startTime': secondsIn, 'chapter': chapterPosition})
             displayTime = self._getDisplayTimeFromSeconds(secondsIn)
-            displayName = "%s %s" % (__addon__.getLocalizedString(32019), displayTime)
+            displayName = "%s %s" % (ADDON.getLocalizedString(32019), displayTime)
 
             if chapterPosition > 1:
-                displayName = "%s (%s: %d)" % (displayName, __addon__.getLocalizedString(32017), chapterPosition)
+                displayName = "%s (%s: %d)" % (displayName, ADDON.getLocalizedString(32017), chapterPosition)
 
             ctxtMenu.append((displayName, 'RunPlugin(%s)' % cmd))
 
         # Play from start
         cmd = self._build_url({'mode': 'play', 'filename': bookHandle.getFile(True), 'startTime': 0, 'chapter': 0})
-        ctxtMenu.append((__addon__.getLocalizedString(32018), 'RunPlugin(%s)' % cmd))
+        ctxtMenu.append((ADDON.getLocalizedString(32018), 'RunPlugin(%s)' % cmd))
 
         # If this item is not already complete, allow it to be marked as complete
         if not bookHandle.isCompleted():
             # Mark as complete
             cmd = self._build_url({'mode': 'progress', 'filename': bookHandle.getFile(True), 'isComplete': 1, 'startTime': 0})
-            ctxtMenu.append((__addon__.getLocalizedString(32010), 'RunPlugin(%s)' % cmd))
+            ctxtMenu.append((ADDON.getLocalizedString(32010), 'RunPlugin(%s)' % cmd))
 
         # Clear History
         cmd = self._build_url({'mode': 'clear', 'filename': bookHandle.getFile(True)})
-        ctxtMenu.append((__addon__.getLocalizedString(32011), 'RunPlugin(%s)' % cmd))
+        ctxtMenu.append((ADDON.getLocalizedString(32011), 'RunPlugin(%s)' % cmd))
 
         return ctxtMenu
 

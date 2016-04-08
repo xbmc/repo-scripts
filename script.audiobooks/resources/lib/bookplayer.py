@@ -1,12 +1,8 @@
 # -*- coding: utf-8 -*-
 import xbmc
-import xbmcaddon
-
-__addon__ = xbmcaddon.Addon(id='script.audiobooks')
 
 # Import the common settings
 from settings import log
-
 from database import AudioBooksDB
 
 

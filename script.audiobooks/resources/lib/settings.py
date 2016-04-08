@@ -4,17 +4,17 @@ import xbmc
 import xbmcaddon
 import xbmcvfs
 
-__addon__ = xbmcaddon.Addon(id='script.audiobooks')
-__addonid__ = __addon__.getAddonInfo('id')
-__icon__ = __addon__.getAddonInfo('icon')
+ADDON = xbmcaddon.Addon(id='script.audiobooks')
+ADDON_ID = ADDON.getAddonInfo('id')
+ICON = ADDON.getAddonInfo('icon')
 
 
 # Common logging module
 def log(txt, loglevel=xbmc.LOGDEBUG):
-    if (__addon__.getSetting("logEnabled") == "true") or (loglevel != xbmc.LOGDEBUG):
+    if (ADDON.getSetting("logEnabled") == "true") or (loglevel != xbmc.LOGDEBUG):
         if isinstance(txt, str):
             txt = txt.decode("utf-8")
-        message = u'%s: %s' % (__addonid__, txt)
+        message = u'%s: %s' % (ADDON_ID, txt)
         xbmc.log(msg=message.encode("utf-8"), level=loglevel)
 
 
@@ -87,15 +87,15 @@ def dir_exists(dirpath):
 class Settings():
     @staticmethod
     def getAudioBookFolder():
-        return __addon__.getSetting("audioBooksFolder")
+        return ADDON.getSetting("audioBooksFolder")
 
     @staticmethod
     def setAudioBookFolder(audioBooksFolder):
-        __addon__.setSetting("audioBooksFolder", audioBooksFolder)
+        ADDON.setSetting("audioBooksFolder", audioBooksFolder)
 
     @staticmethod
     def getFFmpegLocation():
-        location = __addon__.getSetting("ffmpegLocation")
+        location = ADDON.getSetting("ffmpegLocation")
         # Check to see if this location actually exists
         if location not in [None, ""]:
             if not xbmcvfs.exists(location):
@@ -105,37 +105,37 @@ class Settings():
 
     @staticmethod
     def isMarkCompletedItems():
-        return __addon__.getSetting("markCompletedItems") == 'true'
+        return ADDON.getSetting("markCompletedItems") == 'true'
 
     @staticmethod
     def autoNumberChapters():
-        return __addon__.getSetting("autoNumberChapters") == 'true'
+        return ADDON.getSetting("autoNumberChapters") == 'true'
 
     @staticmethod
     def getFallbackCoverImage():
-        fallbackCover = __addon__.getSetting("fallbackCoverImage")
+        fallbackCover = ADDON.getSetting("fallbackCoverImage")
         if fallbackCover in [None, ""]:
-            fallbackCover = __icon__
+            fallbackCover = ICON
         return fallbackCover
 
     @staticmethod
     def getCoverCacheLocation():
-        coverCache = xbmc.translatePath('special://profile/addon_data/%s/covers' % __addonid__).decode("utf-8")
+        coverCache = xbmc.translatePath('special://profile/addon_data/%s/covers' % ADDON_ID).decode("utf-8")
 
         # Make sure the directory to cache the covers exists
-        if not dir_exists(xbmc.translatePath('special://profile/addon_data/%s' % __addonid__).decode("utf-8")):
-            xbmcvfs.mkdir(xbmc.translatePath('special://profile/addon_data/%s' % __addonid__).decode("utf-8"))
+        if not dir_exists(xbmc.translatePath('special://profile/addon_data/%s' % ADDON_ID).decode("utf-8")):
+            xbmcvfs.mkdir(xbmc.translatePath('special://profile/addon_data/%s' % ADDON_ID).decode("utf-8"))
         if not dir_exists(coverCache):
             xbmcvfs.mkdir(coverCache)
         return coverCache
 
     @staticmethod
     def getTempLocation():
-        tmpdestination = xbmc.translatePath('special://profile/addon_data/%s/temp' % __addonid__).decode("utf-8")
+        tmpdestination = xbmc.translatePath('special://profile/addon_data/%s/temp' % ADDON_ID).decode("utf-8")
 
         # Make sure the directory to cache the covers exists
-        if not dir_exists(xbmc.translatePath('special://profile/addon_data/%s' % __addonid__).decode("utf-8")):
-            xbmcvfs.mkdir(xbmc.translatePath('special://profile/addon_data/%s' % __addonid__).decode("utf-8"))
+        if not dir_exists(xbmc.translatePath('special://profile/addon_data/%s' % ADDON_ID).decode("utf-8")):
+            xbmcvfs.mkdir(xbmc.translatePath('special://profile/addon_data/%s' % ADDON_ID).decode("utf-8"))
         if not dir_exists(tmpdestination):
             xbmcvfs.mkdir(tmpdestination)
         return tmpdestination
