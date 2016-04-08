@@ -2,12 +2,12 @@
 import xbmcaddon
 import xbmcgui
 
-__addon__ = xbmcaddon.Addon(id='script.sleep')
-__cwd__ = __addon__.getAddonInfo('path').decode("utf-8")
-
 # Import the common settings
 from settings import log
 from settings import Settings
+
+ADDON = xbmcaddon.Addon(id='script.sleep')
+CWD = ADDON.getAddonInfo('path').decode("utf-8")
 
 
 # Window to overlay the Weather screen
@@ -19,7 +19,7 @@ class SleepOverlay(xbmcgui.WindowXMLDialog):
 
     @staticmethod
     def createSleepOverlay():
-        return SleepOverlay("script-sleep-overlay.xml", __cwd__)
+        return SleepOverlay("script-sleep-overlay.xml", CWD)
 
     # Called when setting up the window
     def onInit(self):

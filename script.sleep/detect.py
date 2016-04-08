@@ -1,21 +1,14 @@
 # -*- coding: utf-8 -*-
-import sys
-import os
 import xbmc
 import xbmcgui
 import xbmcaddon
 
-__addon__ = xbmcaddon.Addon(id='script.sleep')
-__cwd__ = __addon__.getAddonInfo('path').decode("utf-8")
-__fanart__ = __addon__.getAddonInfo('fanart')
-__resource__ = xbmc.translatePath(os.path.join(__cwd__, 'resources').encode("utf-8")).decode("utf-8")
-__lib__ = xbmc.translatePath(os.path.join(__resource__, 'lib').encode("utf-8")).decode("utf-8")
-
-sys.path.append(__lib__)
-
 # Import the common settings
-from settings import log
-from settings import Settings
+from resources.lib.settings import log
+from resources.lib.settings import Settings
+
+ADDON = xbmcaddon.Addon(id='script.sleep')
+CWD = ADDON.getAddonInfo('path').decode("utf-8")
 
 
 #######################################
@@ -34,13 +27,13 @@ class DetectWindow(xbmcgui.WindowXMLDialog):
 
     @staticmethod
     def createDetectWindow():
-        return DetectWindow("script-sleep-detect.xml", __cwd__)
+        return DetectWindow("script-sleep-detect.xml", CWD)
 
     # Called when setting up the window
     def onInit(self):
         # Set the labels on the decrease and increase buttons
         imageControl = self.getControl(DetectWindow.BACKGROUND_IMAGE)
-        imageControl.setImage(__fanart__)
+        imageControl.setImage(ADDON.getAddonInfo('fanart'))
 
         xbmcgui.WindowXMLDialog.onInit(self)
 
@@ -53,7 +46,7 @@ class DetectWindow(xbmcgui.WindowXMLDialog):
             self.close()
         elif action.getButtonCode() not in [None, "", 0]:
             labelControl = self.getControl(DetectWindow.TEXT_LABEL)
-            labelControl.setText(__addon__.getLocalizedString(32103))
+            labelControl.setText(ADDON.getLocalizedString(32103))
             self.buttonCode = str(action.getButtonCode())
             log("DetectWindow: Button Code is %s" % self.buttonCode)
 

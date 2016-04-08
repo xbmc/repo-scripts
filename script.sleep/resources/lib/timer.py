@@ -3,13 +3,12 @@ import xbmc
 import xbmcgui
 import xbmcaddon
 
-__addon__ = xbmcaddon.Addon(id='script.sleep')
-__cwd__ = __addon__.getAddonInfo('path').decode("utf-8")
-
-
 # Import the common settings
 from settings import log
 from settings import Settings
+
+ADDON = xbmcaddon.Addon(id='script.sleep')
+CWD = ADDON.getAddonInfo('path').decode("utf-8")
 
 
 #######################################
@@ -34,7 +33,7 @@ class TimerWindow(xbmcgui.WindowXMLDialog):
 
     @staticmethod
     def createTimerWindow(onVideoEnd=False, secondsUntilSleep=0):
-        return TimerWindow("script-sleep-dialog.xml", __cwd__, onVideoEnd=onVideoEnd, secondsUntilSleep=secondsUntilSleep)
+        return TimerWindow("script-sleep-dialog.xml", CWD, onVideoEnd=onVideoEnd, secondsUntilSleep=secondsUntilSleep)
 
     # Called when setting up the window
     def onInit(self):
@@ -44,7 +43,7 @@ class TimerWindow(xbmcgui.WindowXMLDialog):
             # If the current value set is the end of video, need to show that
             labelControl = self.getControl(TimerWindow.TEXT_LABEL)
             if self.onVideoEnd:
-                labelControl.setText(__addon__.getLocalizedString(32107))
+                labelControl.setText(ADDON.getLocalizedString(32107))
             else:
                 # Set the time remaining to disabled
                 self._setRemainingTimeMessage(self.sleepTime)
@@ -54,7 +53,7 @@ class TimerWindow(xbmcgui.WindowXMLDialog):
         else:
             # Default message it that we are about to shut down
             labelControl = self.getControl(TimerWindow.TEXT_LABEL)
-            labelControl.setText(__addon__.getLocalizedString(32104))
+            labelControl.setText(ADDON.getLocalizedString(32104))
 
         # Set the labels on the decrease and increase buttons
         decreaseControl = self.getControl(TimerWindow.DECREASE_BUTTON)
@@ -74,9 +73,6 @@ class TimerWindow(xbmcgui.WindowXMLDialog):
         if (action.getId() == ACTION_PREVIOUS_MENU) or (action.getId() == ACTION_NAV_BACK):
             log("TimerWindow: Close Action received: %s" % str(action.getId()))
             self.close()
-#         elif action.getButtonCode() not in [None, "", 0]:
-#             log("*** ROB ***: Button Code is %s" % str(action.getButtonCode()))
-#             xbmcgui.Dialog().notification(__addon__.getLocalizedString(32001).encode('utf-8'), str(action.getButtonCode()), __addon__.getAddonInfo('icon'), 5000, False)
 
     def onClick(self, controlID):
         # Play button has been clicked
@@ -171,10 +167,10 @@ class TimerWindow(xbmcgui.WindowXMLDialog):
         label = ""
         if remainingSeconds < 1:
             # Set label to disabled
-            label = __addon__.getLocalizedString(32108)
+            label = ADDON.getLocalizedString(32108)
         else:
             # Convert the time to minutes, making sure it is at least one
             remainingMinutes = int((remainingSeconds + 29) / 60)
             log("TimerWindow: Converted %d seconds into %d minutes" % (remainingSeconds, remainingMinutes))
-            label = "%d %s" % (remainingMinutes, __addon__.getLocalizedString(32106))
+            label = "%d %s" % (remainingMinutes, ADDON.getLocalizedString(32106))
         labelControl.setText(label)
