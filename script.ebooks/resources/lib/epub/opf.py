@@ -27,7 +27,7 @@ except ImportError:
             'You should use Python 2.7 or install `ordereddict` from pypi.')
 
 
-from epub.utils import get_node_text
+from utils import get_node_text
 
 
 XMLNS_DC = 'http://purl.org/dc/elements/1.1/'

@@ -4,11 +4,11 @@ import xbmcaddon
 import xbmcvfs
 import sqlite3
 
-ADDON = xbmcaddon.Addon(id='script.ebooks')
-
 # Import the common settings
 from settings import log
 from settings import os_path_join
+
+ADDON = xbmcaddon.Addon(id='script.ebooks')
 
 
 #################################

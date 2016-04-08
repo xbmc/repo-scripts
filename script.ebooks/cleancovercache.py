@@ -1,25 +1,17 @@
 # -*- coding: utf-8 -*-
-import sys
-import os
 import traceback
 import xbmc
 import xbmcaddon
 import xbmcvfs
 import xbmcgui
 
+# Import the common settings
+from resources.lib.settings import Settings
+from resources.lib.settings import log
+from resources.lib.settings import dir_exists
+from resources.lib.settings import os_path_join
 
 ADDON = xbmcaddon.Addon(id='script.ebooks')
-CWD = ADDON.getAddonInfo('path').decode("utf-8")
-RES_DIR = xbmc.translatePath(os.path.join(CWD, 'resources').encode("utf-8")).decode("utf-8")
-LIB_DIR = xbmc.translatePath(os.path.join(RES_DIR, 'lib').encode("utf-8")).decode("utf-8")
-
-sys.path.append(LIB_DIR)
-
-# Import the common settings
-from settings import Settings
-from settings import log
-from settings import dir_exists
-from settings import os_path_join
 
 
 #########################
