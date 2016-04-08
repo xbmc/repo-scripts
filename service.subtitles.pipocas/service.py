@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Service Pipocas.tv version 0.1.2
+# Service Pipocas.tv version 0.1.3
 # Code based on Undertext (FRODO) service
 # Coded by HiGhLaNdR@OLDSCHOOL
 # Ported to Gotham by HiGhLaNdR@OLDSCHOOL
@@ -25,23 +25,28 @@ import xbmcplugin
 import xbmcvfs
 import cookielib
 import urllib2
+import uuid
 
-__addon__ = xbmcaddon.Addon()
-__author__     = __addon__.getAddonInfo('author')
-__scriptid__   = __addon__.getAddonInfo('id')
-__scriptname__ = __addon__.getAddonInfo('name')
-__version__    = __addon__.getAddonInfo('version')
-__language__   = __addon__.getLocalizedString
+_addon = xbmcaddon.Addon()
+_author     = _addon.getAddonInfo('author')
+_scriptid   = _addon.getAddonInfo('id')
+_scriptname = _addon.getAddonInfo('name')
+_version    = _addon.getAddonInfo('version')
+_language   = _addon.getLocalizedString
 
-__cwd__        = xbmc.translatePath(__addon__.getAddonInfo('path')).decode("utf-8")
-__profile__    = xbmc.translatePath(__addon__.getAddonInfo('profile')).decode("utf-8")
-__resource__   = xbmc.translatePath(pjoin(__cwd__, 'resources', 'lib' ) ).decode("utf-8")
-__temp__       = xbmc.translatePath(pjoin(__profile__, 'temp'))
+_cwd        = xbmc.translatePath(_addon.getAddonInfo('path')).decode("utf-8")
+_profile    = xbmc.translatePath(_addon.getAddonInfo('profile')).decode("utf-8")
+_resource   = xbmc.translatePath(pjoin(_cwd, 'resources', 'lib' ) ).decode("utf-8")
+_temp       = xbmc.translatePath(pjoin(_profile, 'temp'))
 
-sys.path.append (__resource__)
+if os.path.isdir(_temp):shutil.rmtree(_temp)
+xbmcvfs.mkdirs(_temp)
+if not os.path.isdir(_temp):xbmcvfs.mkdir(_temp)
 
-__search__ = __addon__.getSetting( 'SEARCH' )
-debug = __addon__.getSetting( 'DEBUG' )
+sys.path.append (_resource)
+
+_search = _addon.getSetting( 'SEARCH' )
+debug = _addon.getSetting( 'DEBUG' )
 
 main_url = "http://pipocas.tv/"
 debug_pretext = "Pipocas"
@@ -52,8 +57,8 @@ SUB_EXTS = ['srt', 'sub', 'txt', 'aas', 'ssa', 'smi']
 HTTP_USER_AGENT = "User-Agent=Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.2.3) Gecko/20100401 Firefox/3.6.3 ( .NET CLR 3.5.30729)"
 
 #Grabbing login and pass from xbmc settings
-username = __addon__.getSetting( "PPuser" )
-password = __addon__.getSetting( "PPpass" )
+username = _addon.getSetting( "PPuser" )
+password = _addon.getSetting( "PPpass" )
 
 #====================================================================================================================
 # Regular expression patterns
@@ -79,7 +84,7 @@ def _log(module, msg):
     xbmc.log(s.encode('utf-8'), level=xbmc.LOGDEBUG)
 
 def log(msg=None):
-    if debug == 'true': _log(__name__, msg)
+    if debug == 'true': _log(_name, msg)
 
 def geturl(url):
     class MyOpener(urllib.FancyURLopener):
@@ -153,14 +158,14 @@ def getallsubs(searchstring, languageshort, languagelong, file_original_path, se
             dirsearch = filesearch[0].split(os.sep)
             dirsearch_check = string.split(dirsearch[-1], '.')
             #### PARENT FOLDER TWEAK DEFINED IN THE ADD-ON SETTINGS (AUTO | ALWAYS ON (DEACTIVATED) | OFF)
-            __parentfolder__ = __addon__.getSetting( 'PARENT' )
-            if __parentfolder__ == '0':
-                if re.search(release_pattern, dirsearch[-1], re.IGNORECASE): __parentfolder__ = '1'
-                else: __parentfolder__ = '2'
-            if __parentfolder__ == '1':
+            _parentfolder = _addon.getSetting( 'PARENT' )
+            if _parentfolder == '0':
+                if re.search(release_pattern, dirsearch[-1], re.IGNORECASE): _parentfolder = '1'
+                else: _parentfolder = '2'
+            if _parentfolder == '1':
                 if re.search(dirsearch[-1], desc, re.IGNORECASE): sync = True
                 else: sync = False
-            if __parentfolder__ == '2':
+            if _parentfolder == '2':
                 if (searchstring_notclean != ""):
                     sync = False
                     if string.lower(searchstring_notclean) in string.lower(desc): sync = True
@@ -212,7 +217,7 @@ def append_subtitle(item):
     ## below arguments are optional, it can be used to pass any info needed in download function
     ## anything after "action=download&" will be sent to addon once user clicks listed subtitle to downlaod
     args = dict(item)
-    args['scriptid'] = __scriptid__
+    args['scriptid'] = _scriptid
     url = INTERNAL_LINK_URL % args
     ## add it to list, this can be done as many times as needed for all subtitles found
     xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=url, listitem=listitem, isFolder=False)
@@ -223,30 +228,30 @@ def Search(item):
     #### use item["some_property"] that was set earlier
     #### once done, set xbmcgui.ListItem() below and pass it to xbmcplugin.addDirectoryItem()
     #### CHECKING FOR ANYTHING IN THE USERNAME AND PASSWORD, IF NULL IT STOPS THE SCRIPT WITH A WARNING
-    username = __addon__.getSetting( 'PPuser' )
-    password = __addon__.getSetting( 'PPpass' )
+    username = _addon.getSetting( 'PPuser' )
+    password = _addon.getSetting( 'PPpass' )
     if username == '' or password == '':
         xbmcplugin.endOfDirectory(int(sys.argv[1]))
-        if username == '' and password != '': xbmc.executebuiltin(('Notification(%s,%s,%d)' % (__scriptname__ , __language__(32016).encode('utf-8'),5000)))
-        if username != '' and password == '': xbmc.executebuiltin(('Notification(%s,%s,%d)' % (__scriptname__ , __language__(32017).encode('utf-8'),5000)))
-        if username == '' and password == '': xbmc.executebuiltin(('Notification(%s,%s,%d)' % (__scriptname__ , __language__(32018).encode('utf-8'),5000)))
+        if username == '' and password != '': xbmc.executebuiltin(('Notification(%s,%s,%d)' % (_scriptname , _language(32016).encode('utf-8'),5000)))
+        if username != '' and password == '': xbmc.executebuiltin(('Notification(%s,%s,%d)' % (_scriptname , _language(32017).encode('utf-8'),5000)))
+        if username == '' and password == '': xbmc.executebuiltin(('Notification(%s,%s,%d)' % (_scriptname , _language(32018).encode('utf-8'),5000)))
     #### PARENT FOLDER TWEAK DEFINED IN THE ADD-ON SETTINGS (AUTO | ALWAYS ON (DEACTIVATED) | OFF)
     file_original_path = item['file_original_path']
-    __parentfolder__ = __addon__.getSetting( 'PARENT' )
-    if __parentfolder__ == '0':
+    _parentfolder = _addon.getSetting( 'PARENT' )
+    if _parentfolder == '0':
         filename = os.path.abspath(file_original_path)
         dirsearch = filename.split(os.sep)
         log(u"dirsearch_search string = %s" % dirsearch)
-        if re.search(release_pattern, dirsearch[-2], re.IGNORECASE): __parentfolder__ = '1'
-        else: __parentfolder__ = '2'
-    if __parentfolder__ == '1':
+        if re.search(release_pattern, dirsearch[-2], re.IGNORECASE): _parentfolder = '1'
+        else: _parentfolder = '2'
+    if _parentfolder == '1':
         filename = os.path.abspath(file_original_path)
         dirsearch = filename.split(os.sep)
         filename = dirsearch[-2]
-        log(u"__parentfolder1__ = %s" % filename)
-    if __parentfolder__ == '2':   
+        log(u"_parentfolder1 = %s" % filename)
+    if _parentfolder == '2':   
         filename = os.path.splitext(os.path.basename(file_original_path))[0]
-        log(u"__parentfolder2__ = %s" % filename)
+        log(u"_parentfolder2 = %s" % filename)
 
     filename = xbmc.getCleanMovieTitle(filename)[0]
     searchstring_notclean = os.path.splitext(os.path.basename(file_original_path))[0]
@@ -307,42 +312,42 @@ def Search(item):
                     searchstring = title[-1]
                     log(u"TITLE NULL Searchstring string = %s" % searchstring)
                 else:
-                    if __search__ == '0':
-						if re.search("(.+?s[0-9][0-9]e[0-9][0-9])", filename, re.IGNORECASE):
-							searchstring = re.search("(.+?s[0-9][0-9]e[0-9][0-9])", filename, re.IGNORECASE)
-							searchstring = searchstring.group(0)
-							log(u"FilenameTV Searchstring = %s" % searchstring)
-						else:
-							searchstring = filename
-							log(u"Filename Searchstring = %s" % searchstring)
+                    if _search == '0':
+                        if re.search("(.+?s[0-9][0-9]e[0-9][0-9])", filename, re.IGNORECASE):
+                            searchstring = re.search("(.+?s[0-9][0-9]e[0-9][0-9])", filename, re.IGNORECASE)
+                            searchstring = searchstring.group(0)
+                            log(u"FilenameTV Searchstring = %s" % searchstring)
+                        else:
+                            searchstring = filename
+                            log(u"Filename Searchstring = %s" % searchstring)
                     else:
-						if re.search("(.+?s[0-9][0-9]e[0-9][0-9])", title, re.IGNORECASE):
-							searchstring = re.search("(.+?s[0-9][0-9]e[0-9][0-9])", title, re.IGNORECASE)
-							searchstring = searchstring.group(0)
-							log(u"TitleTV Searchstring = %s" % searchstring)
-						else:
-							searchstring = title
-							log(u"Title Searchstring = %s" % searchstring)
+                        if re.search("(.+?s[0-9][0-9]e[0-9][0-9])", title, re.IGNORECASE):
+                            searchstring = re.search("(.+?s[0-9][0-9]e[0-9][0-9])", title, re.IGNORECASE)
+                            searchstring = searchstring.group(0)
+                            log(u"TitleTV Searchstring = %s" % searchstring)
+                        else:
+                            searchstring = title
+                            log(u"Title Searchstring = %s" % searchstring)
 
-    PT_ON = __addon__.getSetting( 'PT' )
-    PTBR_ON = __addon__.getSetting( 'PTBR' )
-    ES_ON = __addon__.getSetting( 'ES' )
-    EN_ON = __addon__.getSetting( 'EN' )
+    PT_ON = _addon.getSetting( 'PT' )
+    PTBR_ON = _addon.getSetting( 'PTBR' )
+    ES_ON = _addon.getSetting( 'ES' )
+    EN_ON = _addon.getSetting( 'EN' )
     
-    if 'por' in item['languages'] and PT_ON == 'true':
+    if PT_ON == 'true':
         subtitles_list = getallsubs(searchstring, "pt", "Portuguese", file_original_path, searchstring_notclean)
         for sub in subtitles_list: append_subtitle(sub)
-    if 'por' in item['languages'] and PTBR_ON == 'true':
+    if PTBR_ON == 'true':
         subtitles_list = getallsubs(searchstring, "pb", "Brazilian", file_original_path, searchstring_notclean)
         for sub in subtitles_list: append_subtitle(sub)
-    if 'spa' in item['languages'] and ES_ON == 'true':
+    if ES_ON == 'true':
         subtitles_list = getallsubs(searchstring, "es", "Spanish", file_original_path, searchstring_notclean)
         for sub in subtitles_list: append_subtitle(sub)
-    if 'eng' in item['languages'] and EN_ON == 'true':
+    if EN_ON == 'true':
         subtitles_list = getallsubs(searchstring, "en", "English", file_original_path, searchstring_notclean)
         for sub in subtitles_list: append_subtitle(sub)
-    if 'eng' not in item['languages'] and 'spa' not in item['languages'] and 'por' not in item['languages'] and 'por' not in item['languages']:
-        xbmc.executebuiltin((u'Notification(%s,%s,%d)' % (__scriptname__ , 'Only Portuguese | Portuguese Brazilian | English | Spanish.',5000)))
+    if PT_ON == 'false' and PTBR_ON == 'false' and ES_ON == 'false' and EN_ON == 'false':
+        xbmc.executebuiltin((u'Notification(%s,%s,%d)' % (_scriptname , 'Apenas Português | Português Brasil | English | Spanish.',5000)))
 
 def recursive_glob(treeroot, pattern):
     results = []
@@ -371,9 +376,10 @@ def Download(id, filename):
     """Called when subtitle download request from XBMC."""
     # Cleanup temp dir, we recomend you download/unzip your subs in temp folder and
     # pass that to XBMC to copy and activate
-    if xbmcvfs.exists(__temp__): shutil.rmtree(__temp__)
-    xbmcvfs.mkdirs(__temp__)
-
+    if os.path.isdir(_temp):shutil.rmtree(_temp)
+    xbmcvfs.mkdirs(_temp)
+    if not os.path.isdir(_temp):xbmcvfs.mkdir(_temp)
+    
     subtitles_list = []
 
     url = main_url + 'vlogin.php'
@@ -398,19 +404,19 @@ def Download(id, filename):
     #### If user is not registered or User\Pass is misspelled it will generate an error message and break the script execution!
     if '<title>Pipocas.TV - Login</title>' in content.decode('utf8', 'ignore'):
         xbmcplugin.endOfDirectory(int(sys.argv[1]))
-        xbmc.executebuiltin(('Notification(%s,%s,%d)' % (__scriptname__ , __language__(32019).encode('utf8'),5000)))
+        xbmc.executebuiltin(('Notification(%s,%s,%d)' % (_scriptname , _language(32019).encode('utf8'),5000)))
     if content is not None:
         header = content[:4]
         if header == 'Rar!':
-            local_tmp_file = pjoin(__temp__, "pipocas.rar")
+            local_tmp_file = pjoin(_temp, str(uuid.uuid4())+".rar")
             packed = True
         elif header == 'PK':
-            local_tmp_file = pjoin(__temp__, "pipocas.zip")
+            local_tmp_file = pjoin(_temp, str(uuid.uuid4())+".zip")
             packed = True
         else:
             # never found/downloaded an unpacked subtitles file, but just to be sure ...
             # assume unpacked sub file is an '.srt'
-            local_tmp_file = pjoin(__temp__, "pipocas.srt")
+            local_tmp_file = pjoin(_temp, str(uuid.uuid4())+".srt")
             subs_file = local_tmp_file
             packed = False
         log(u"Saving subtitles to '%s'" % (local_tmp_file,))
@@ -420,53 +426,53 @@ def Download(id, filename):
             local_file_handle.close()
         except: log(u"Failed to save subtitles to '%s'" % (local_tmp_file,))
         if packed:
-            files = os.listdir(__temp__)
+            files = os.listdir(_temp)
             init_filecount = len(files)
             log(u"pipocas: número de init_filecount %s" % (init_filecount,)) #EGO
             filecount = init_filecount
             max_mtime = 0
-            # Determine the newest file from __temp__
+            # Determine the newest file from _temp
             for file in files:
                 if file.split('.')[-1] in SUB_EXTS:
-                    mtime = os.stat(pjoin(__temp__, file)).st_mtime
+                    mtime = os.stat(pjoin(_temp, file)).st_mtime
                     if mtime > max_mtime: max_mtime =  mtime
             init_max_mtime = max_mtime
             # Wait 2 seconds so that the unpacked files are at least 1 second newer
             time.sleep(2)
-            xbmc.executebuiltin("XBMC.Extract(" + local_tmp_file.encode("utf-8") + ", " + __temp__ +")")
+            xbmc.executebuiltin("XBMC.Extract(" + local_tmp_file.encode("utf-8") + ", " + _temp +")")
             waittime  = 0
             while filecount == init_filecount and waittime < 20 and init_max_mtime == max_mtime: # nothing yet extracted
                 time.sleep(1)  # wait 1 second to let the builtin function 'XBMC.extract' unpack
-                files = os.listdir(__temp__)
+                files = os.listdir(_temp)
                 filecount = len(files)
-                # determine if there is a newer file created in __temp__ (marks that the extraction had completed)
+                # determine if there is a newer file created in _temp (marks that the extraction had completed)
                 for file in files:
                     if file.split('.')[-1] in SUB_EXTS:
-                        mtime = os.stat(pjoin(__temp__, file)).st_mtime
+                        mtime = os.stat(pjoin(_temp, file)).st_mtime
                         if mtime > max_mtime: max_mtime =  mtime
                 waittime  = waittime + 1
-            if waittime == 20: log(u"Failed to unpack subtitles in '%s'" % (__temp__,))
+            if waittime == 20: log(u"Failed to unpack subtitles in '%s'" % (_temp,))
             else:
-                log(u"Unpacked files in '%s'" % (__temp__,))
-                searchsubs = recursive_glob(__temp__, SUB_EXTS)
+                log(u"Unpacked files in '%s'" % (_temp,))
+                searchsubs = recursive_glob(_temp, SUB_EXTS)
                 searchsubscount = len(searchsubs)
                 for file in searchsubs:
-                    # There could be more subtitle files in __temp__, so make
+                    # There could be more subtitle files in _temp, so make
                     # sure we get the newly created subtitle file
-                    #if file.split('.')[-1] in SUB_EXTS and os.stat(pjoin(__temp__, file)).st_mtime > init_max_mtime:
+                    #if file.split('.')[-1] in SUB_EXTS and os.stat(pjoin(_temp, file)).st_mtime > init_max_mtime:
                     if searchsubscount == 1:
                         # unpacked file is a newly created subtitle file
                         log(u"Unpacked subtitles file '%s'" % (file.decode('utf-8'),))
-                        try:  subs_file = pjoin(__temp__, file.decode("utf-8"))
-                        except: subs_file = pjoin(__temp__, file.decode("latin1"))
+                        try:  subs_file = pjoin(_temp, file.decode("utf-8"))
+                        except: subs_file = pjoin(_temp, file.decode("latin1"))
                         subtitles_list.append(subs_file)
                         break
                     else:
                     # If there are more than one subtitle in the temp dir, launch a browse dialog
                     # so user can choose. If only one subtitle is found, parse it to the addon.
-                        if len(__temp__) > 1:
+                        if len(_temp) > 1:
                             dialog = xbmcgui.Dialog()
-                            subs_file = dialog.browse(1, 'XBMC', 'files', '.srt|.sub|.aas|.ssa|.smi|.txt', False, False, __temp__+'/')
+                            subs_file = dialog.browse(1, 'XBMC', 'files', '.srt|.sub|.aas|.ssa|.smi|.txt', False, False, _temp+'/')
                             subtitles_list.append(subs_file)
                             break
         else: subtitles_list.append(subs_file)
