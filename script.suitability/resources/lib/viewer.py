@@ -2,12 +2,11 @@
 import xbmcgui
 import xbmcaddon
 
-__addon__ = xbmcaddon.Addon(id='script.suitability')
-__cwd__ = __addon__.getAddonInfo('path').decode("utf-8")
-
-
 # Import the common settings
 from settings import log
+
+ADDON = xbmcaddon.Addon(id='script.suitability')
+CWD = ADDON.getAddonInfo('path').decode("utf-8")
 
 
 class SuitabilityViewer(xbmcgui.WindowXMLDialog):
@@ -35,7 +34,7 @@ class SuitabilityViewer(xbmcgui.WindowXMLDialog):
             switchButton.setVisible(False)
         else:
             switchButton.setVisible(True)
-            switchButton.setLabel(__addon__.getLocalizedString(self.switchText))
+            switchButton.setLabel(ADDON.getLocalizedString(self.switchText))
 
         xbmcgui.WindowXMLDialog.onInit(self)
 
@@ -78,7 +77,7 @@ class SummaryViewer(SuitabilityViewer):
 
     @staticmethod
     def createSummaryViewer(switchText, title, details):
-        return SummaryViewer("script-suitability-summary.xml", __cwd__, switchText=switchText, title=title, details=details)
+        return SummaryViewer("script-suitability-summary.xml", CWD, switchText=switchText, title=title, details=details)
 
     def close(self):
         log("SuitabilityViewer: Closing window")
@@ -116,7 +115,7 @@ class DetailViewer(SuitabilityViewer):
 
     @staticmethod
     def createDetailViewer(switchText, title, content):
-        return DetailViewer("script-suitability-dialog.xml", __cwd__, switchText=switchText, title=title, content=content)
+        return DetailViewer("script-suitability-dialog.xml", CWD, switchText=switchText, title=title, content=content)
 
     # Called when setting up the window
     def onInit(self):
