@@ -126,6 +126,7 @@
 					<textureradioonnofocus colordiffuse="D0FFFFFF">globalsearch-button-play.png</textureradioonnofocus>
 					<textureradioofffocus colordiffuse="D0FFFFFF">globalsearch-button-play.png</textureradioofffocus>
 					<textureradiooffnofocus colordiffuse="D0FFFFFF">globalsearch-button-play.png</textureradiooffnofocus>
+					<onclick>SendClick(192)</onclick>
 					<visible>Control.IsVisible(192) + ![Control.IsVisible(120) | Control.IsVisible(130) | Control.IsVisible(160)]</visible>
 				</control>
 				<control type="radiobutton" id="9002">
@@ -146,6 +147,7 @@
 					<textureradioonnofocus colordiffuse="D0FFFFFF">globalsearch-button-browse.png</textureradioonnofocus>
 					<textureradioofffocus colordiffuse="D0FFFFFF">globalsearch-button-browse.png</textureradioofffocus>
 					<textureradiooffnofocus colordiffuse="D0FFFFFF">globalsearch-button-browse.png</textureradiooffnofocus>
+					<onclick>SendClick(192)</onclick>
 					<visible>Control.IsVisible(192) + [Control.IsVisible(120) | Control.IsVisible(130) | Control.IsVisible(160)]</visible>
 				</control>
 				<control type="radiobutton" id="9003">
@@ -166,6 +168,7 @@
 					<textureradioonnofocus colordiffuse="D0FFFFFF">globalsearch-button-trailer.png</textureradioonnofocus>
 					<textureradioofffocus colordiffuse="D0FFFFFF">globalsearch-button-trailer.png</textureradioofffocus>
 					<textureradiooffnofocus colordiffuse="D0FFFFFF">globalsearch-button-trailer.png</textureradiooffnofocus>
+					<onclick>SendClick(193)</onclick>
 					<visible>Control.IsVisible(193) + !Control.IsVisible(170)</visible>
 				</control>
 				<control type="radiobutton" id="9004">
@@ -186,6 +189,7 @@
 					<textureradioonnofocus colordiffuse="D0FFFFFF">globalsearch-button-browse.png</textureradioonnofocus>
 					<textureradioofffocus colordiffuse="D0FFFFFF">globalsearch-button-browse.png</textureradioofffocus>
 					<textureradiooffnofocus colordiffuse="D0FFFFFF">globalsearch-button-browse.png</textureradiooffnofocus>
+					<onclick>SendClick(193)</onclick>
 					<visible>Control.IsVisible(193) + Control.IsVisible(170)</visible>
 				</control>
 			</control>

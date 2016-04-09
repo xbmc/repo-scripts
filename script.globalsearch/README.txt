@@ -25,7 +25,7 @@ You can specify which categories should be searched (this overrides the user pre
 RunScript(script.globalsearch,movies=true)
 RunScript(script.globalsearch,tvshows=true&amp;musicvideos=true&amp;songs=true)
 
-available options: epg, movies, tvshows, episodes, musicvideos, artists, albums, songs, actors
+available options: epg, movies, tvshows, episodes, musicvideos, artists, albums, songs, actors, directors
 
 
 
@@ -45,7 +45,7 @@ ListItem.Property(Path)
 ListItem.Property(DBID)
 
 
-MOVIES (and movies by actor):
+MOVIES (and movies by actor/director):
 ListItem.Label
 ListItem.Icon
 ListItem.Property(Fanart)
@@ -260,6 +260,10 @@ III. Control id's used in script-globalsearch-main.xml
 221 - Container for found programmes 
 229 - The script will set this id to visible when programmes are found
 
+230 - Label containing the number of found movies containing the director
+231 - Container for found movies containing the director
+239 - The script will set this id to visible when movies containing the director are found
+
 190 - 'Searching...' label, visible when the script is searching
 191 - Search category label, visible when the script is searching
 198 - 'New search' button, visible when the script finished searching
@@ -271,7 +275,7 @@ IV. Control id's used in script-globalsearch-infodialog.xml
 -----------------------------------------------------------
 100 - Hidden list containing the selected ListItem.
 
-110 - The script will set this id to visible when the selected item is a movie or actor
+110 - The script will set this id to visible when the selected item is a movie or actor or director
 120 - The script will set this id to visible when the selected item is a tv show
 130 - The script will set this id to visible when the selected item is a season
 140 - The script will set this id to visible when the selected item is a episode

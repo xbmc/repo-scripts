@@ -86,6 +86,13 @@ class GUI( xbmcgui.WindowXMLDialog ):
             self.getControl( 192 ).setVisible( True )
             if self.listitem.getProperty('trailer'):
                 self.getControl( 193 ).setVisible( True )
+        elif self.content == 'directors':
+            self.getControl( 192 ).setLabel( xbmc.getLocalizedString(208) )
+            self.getControl( 193 ).setLabel( xbmc.getLocalizedString(20410) )
+            self.getControl( 110 ).setVisible( True )
+            self.getControl( 192 ).setVisible( True )
+            if self.listitem.getProperty('trailer'):
+                self.getControl( 193 ).setVisible( True )
         self.setFocus( self.getControl( 192 ) )
 
     def _close_dialog( self, action=None ):
@@ -114,8 +121,10 @@ class GUI( xbmcgui.WindowXMLDialog ):
                 self._close_dialog( 'play_album' )
             elif self.content == 'songs':
                 self._close_dialog( 'play_song' )
-            if self.content == 'actors':
+            elif self.content == 'actors':
                 self._close_dialog( 'play_movie_actors' )
+            elif self.content == 'directors':
+                self._close_dialog( 'play_movie_directors' )
         elif controlId == 193:
             if self.content == 'movies':
                 self._close_dialog( 'play_trailer' )
@@ -123,6 +132,8 @@ class GUI( xbmcgui.WindowXMLDialog ):
                 self._close_dialog( 'browse_album' )
             if self.content == 'actors':
                 self._close_dialog( 'play_trailer_actors' )
+            if self.content == 'directors':
+                self._close_dialog( 'play_trailer_directors' )
 
     def onFocus( self, controlId ):
         pass

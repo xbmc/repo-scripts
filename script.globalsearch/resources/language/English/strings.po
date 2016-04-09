@@ -56,6 +56,10 @@ msgctxt "#32009"
 msgid "Search EPG"
 msgstr ""
 
+msgctxt "#32010"
+msgid "Search Directors"
+msgstr ""
+
 #empty strings from id 32010 to 32100
 
 msgctxt "#32101"
@@ -102,7 +106,11 @@ msgctxt "#32211"
 msgid "Movies starring"
 msgstr ""
 
-#empty strings from id 32212 to 32298
+#empty strings from id 32212 to 32297
+
+msgctxt "#32298"
+msgid "Search again?"
+msgstr ""
 
 msgctxt "#32299"
 msgid "New search"
