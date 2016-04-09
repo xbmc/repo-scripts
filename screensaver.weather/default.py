@@ -1,19 +1,13 @@
 # -*- coding: utf-8 -*-
-import sys
 import os
 import xbmc
 import xbmcaddon
 
-__addon__ = xbmcaddon.Addon(id='screensaver.weather')
-__icon__ = __addon__.getAddonInfo('icon')
-__cwd__ = __addon__.getAddonInfo('path').decode("utf-8")
-__resource__ = xbmc.translatePath(os.path.join(__cwd__, 'resources').encode("utf-8")).decode("utf-8")
-__lib__ = xbmc.translatePath(os.path.join(__resource__, 'lib').encode("utf-8")).decode("utf-8")
-
-sys.path.append(__lib__)
-
 # Import the common settings
-from settings import log
+from resources.lib.settings import log
+
+ADDON = xbmcaddon.Addon(id='screensaver.weather')
+CWD = ADDON.getAddonInfo('path').decode("utf-8")
 
 
 # Monitor class to handle events like the screensaver deactivating
@@ -38,7 +32,7 @@ class ScreensaverExitMonitor(xbmc.Monitor):
 # Main of the Weather Screensaver
 ##################################
 if __name__ == '__main__':
-    log("WeatherScreensaver Starting %s" % __addon__.getAddonInfo('version'))
+    log("WeatherScreensaver Starting %s" % ADDON.getAddonInfo('version'))
 
     # Start the monitor so we can see when the screensaver quits
     exitMon = ScreensaverExitMonitor()
@@ -84,6 +78,6 @@ if __name__ == '__main__':
         xbmc.sleep(100)
         maxWait = maxWait - 1
 
-    xbmc.executebuiltin('RunScript(%s,%s)' % (os.path.join(__cwd__, "monitor.py"), backRequired))
+    xbmc.executebuiltin('RunScript(%s,%s)' % (os.path.join(CWD, "monitor.py"), backRequired))
 
     log("WeatherScreensaver Finished")
