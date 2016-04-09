@@ -51,7 +51,7 @@ class SubTiToolHelper:
                 log("Subtitool","Not Found OR")
 
            try:
-            url = "http://www.subtitool.com/api/?query=" + QueryString + "&Lang=" + langs
+            url = "http://www.subtitool.com/api/?query=" + QueryString + "&Lang=" + langs + "&OR=1"
             subs = urllib.urlopen(url).read()
             DOMTree = minidom.parseString(subs)
            except Exception, e:
