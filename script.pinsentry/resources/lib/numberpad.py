@@ -2,13 +2,12 @@
 import xbmcaddon
 import xbmcgui
 
-
-__addon__ = xbmcaddon.Addon(id='script.pinsentry')
-__cwd__ = __addon__.getAddonInfo('path').decode("utf-8")
-
 # Import the common settings
 from settings import log
 from settings import Settings
+
+ADDON = xbmcaddon.Addon(id='script.pinsentry')
+CWD = ADDON.getAddonInfo('path').decode("utf-8")
 
 
 # Class that uses the default Number keyboard and overwrites it's behaviour
@@ -26,7 +25,7 @@ class NumberPad(xbmcgui.WindowXMLDialog):
 
     @staticmethod
     def createNumberPad(titleLangId=32103):
-        return NumberPad("DialogNumeric.xml", __cwd__, titleLangId=titleLangId)
+        return NumberPad("DialogNumeric.xml", CWD, titleLangId=titleLangId)
 
     # Returns the value of the pin code
     def getPin(self):
@@ -50,13 +49,13 @@ class NumberPad(xbmcgui.WindowXMLDialog):
         # Replace Done and Backspace buttons labels
         try:
             backspaceButton = self.getControl(NumberPad.BUTTON_BACKSPACE)
-            backspaceButton.setLabel(__addon__.getLocalizedString(32101).encode('utf-8'))
+            backspaceButton.setLabel(ADDON.getLocalizedString(32101).encode('utf-8'))
         except:
             log("NumberPad: Failed to update text for backspace button")
 
         try:
             doneButton = self.getControl(NumberPad.BUTTON_DONE)
-            doneButton.setLabel(__addon__.getLocalizedString(32102).encode('utf-8'))
+            doneButton.setLabel(ADDON.getLocalizedString(32102).encode('utf-8'))
         except:
             log("NumberPad: Failed to update text for done button")
 
@@ -71,7 +70,7 @@ class NumberPad(xbmcgui.WindowXMLDialog):
 
         # Set the title of the dialog
         try:
-            self.getControl(1).setLabel(__addon__.getLocalizedString(self.titleLangId).encode('utf-8'))
+            self.getControl(1).setLabel(ADDON.getLocalizedString(self.titleLangId).encode('utf-8'))
         except:
             log("NumberPad: Failed to set title")
 

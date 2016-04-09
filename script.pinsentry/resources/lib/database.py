@@ -5,11 +5,11 @@ import xbmcvfs
 import sqlite3
 import xbmcgui
 
-__addon__ = xbmcaddon.Addon(id='script.pinsentry')
-
 # Import the common settings
 from settings import log
 from settings import os_path_join
+
+ADDON = xbmcaddon.Addon(id='script.pinsentry')
 
 
 #################################
@@ -18,7 +18,7 @@ from settings import os_path_join
 class PinSentryDB():
     def __init__(self):
         # Start by getting the database location
-        self.configPath = xbmc.translatePath(__addon__.getAddonInfo('profile'))
+        self.configPath = xbmc.translatePath(ADDON.getAddonInfo('profile'))
         self.databasefile = os_path_join(self.configPath, "pinsentry_database.db")
         log("PinSentryDB: Database file location = %s" % self.databasefile)
         # Check to make sure the DB has been created
@@ -26,8 +26,8 @@ class PinSentryDB():
 
     # Removes the database if it exists
     def cleanDatabase(self):
-        msg = "%s%s" % (__addon__.getLocalizedString(32113), "?")
-        isYes = xbmcgui.Dialog().yesno(__addon__.getLocalizedString(32001), msg)
+        msg = "%s%s" % (ADDON.getLocalizedString(32113), "?")
+        isYes = xbmcgui.Dialog().yesno(ADDON.getLocalizedString(32001), msg)
         if isYes:
             # If the database file exists, delete it
             if xbmcvfs.exists(self.databasefile):

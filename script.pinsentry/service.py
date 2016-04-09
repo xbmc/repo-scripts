@@ -1,27 +1,18 @@
 # -*- coding: utf-8 -*-
-import sys
-import os
 import time
 import xbmc
 import xbmcaddon
 import xbmcgui
 
-
-__addon__ = xbmcaddon.Addon(id='script.pinsentry')
-__icon__ = __addon__.getAddonInfo('icon')
-__cwd__ = __addon__.getAddonInfo('path').decode("utf-8")
-__resource__ = xbmc.translatePath(os.path.join(__cwd__, 'resources').encode("utf-8")).decode("utf-8")
-__lib__ = xbmc.translatePath(os.path.join(__resource__, 'lib').encode("utf-8")).decode("utf-8")
-
-sys.path.append(__lib__)
-
 # Import the common settings
-from settings import log
-from settings import Settings
+from resources.lib.settings import log
+from resources.lib.settings import Settings
+from resources.lib.numberpad import NumberPad
+from resources.lib.database import PinSentryDB
+from resources.lib.background import Background
 
-from numberpad import NumberPad
-from database import PinSentryDB
-from background import Background
+ADDON = xbmcaddon.Addon(id='script.pinsentry')
+ICON = ADDON.getAddonInfo('icon')
 
 
 # Class to handle core Pin Sentry behaviour
@@ -112,15 +103,15 @@ class PinSentry():
         if notifType == Settings.INVALID_PIN_NOTIFICATION_POPUP:
             cmd = ""
             if Settings.getNumberOfLevels() > 1:
-                cmd = 'Notification("{0}", "{1} {2}", 3000, "{3}")'.format(__addon__.getLocalizedString(32104).encode('utf-8'), __addon__.getLocalizedString(32211).encode('utf-8'), str(level), __icon__)
+                cmd = 'Notification("{0}", "{1} {2}", 3000, "{3}")'.format(ADDON.getLocalizedString(32104).encode('utf-8'), ADDON.getLocalizedString(32211).encode('utf-8'), str(level), ICON)
             else:
-                cmd = 'Notification("{0}", "{1}", 3000, "{2}")'.format(__addon__.getLocalizedString(32001).encode('utf-8'), __addon__.getLocalizedString(32104).encode('utf-8'), __icon__)
+                cmd = 'Notification("{0}", "{1}", 3000, "{2}")'.format(ADDON.getLocalizedString(32001).encode('utf-8'), ADDON.getLocalizedString(32104).encode('utf-8'), ICON)
             xbmc.executebuiltin(cmd)
         elif notifType == Settings.INVALID_PIN_NOTIFICATION_DIALOG:
             line3 = None
             if Settings.getNumberOfLevels() > 1:
-                line3 = "%s %d" % (__addon__.getLocalizedString(32211), level)
-            xbmcgui.Dialog().ok(__addon__.getLocalizedString(32001).encode('utf-8'), __addon__.getLocalizedString(32104).encode('utf-8'), line3)
+                line3 = "%s %d" % (ADDON.getLocalizedString(32211), level)
+            xbmcgui.Dialog().ok(ADDON.getLocalizedString(32001).encode('utf-8'), ADDON.getLocalizedString(32104).encode('utf-8'), line3)
         # Remaining option is to not show any error
 
 
@@ -564,7 +555,7 @@ class NavigationRestrictions():
             log("NavigationRestrictions: Allowed access to settings")
             # Allow the user 5 minutes to change the settings
             self.canChangeSettings = int(time.time()) + 300
-            xbmcgui.Dialog().notification(__addon__.getLocalizedString(32001).encode('utf-8'), __addon__.getLocalizedString(32110).encode('utf-8'), __icon__, 3000, False)
+            xbmcgui.Dialog().notification(ADDON.getLocalizedString(32001).encode('utf-8'), ADDON.getLocalizedString(32110).encode('utf-8'), ICON, 3000, False)
 
             # Open the dialogs that should be shown, we don't reopen the Information dialog
             # as if we do the Close Dialog will not close it and the pin screen will not show correctly
@@ -622,7 +613,7 @@ class NavigationRestrictions():
             log("NavigationRestrictions: Allowed access to settings")
             # Allow the user 5 minutes to change the settings
             self.canChangeSettings = int(time.time()) + 300
-            xbmcgui.Dialog().notification(__addon__.getLocalizedString(32001).encode('utf-8'), __addon__.getLocalizedString(32110).encode('utf-8'), __icon__, 3000, False)
+            xbmcgui.Dialog().notification(ADDON.getLocalizedString(32001).encode('utf-8'), ADDON.getLocalizedString(32110).encode('utf-8'), ICON, 3000, False)
         else:
             log("NavigationRestrictions: Not allowed access to settings which has security level %d" % securityLevel)
             self.canChangeSettings = False
@@ -756,7 +747,7 @@ class UserPinControl():
                 log("UserPinControl: Unknown pin entered, offering retry")
                 # This is not a valid user, so display the error message and work out
                 # if we should prompt the user again or shutdown the system
-                tryAgain = xbmcgui.Dialog().yesno(__addon__.getLocalizedString(32001).encode('utf-8'), __addon__.getLocalizedString(32104).encode('utf-8'), __addon__.getLocalizedString(32129).encode('utf-8'))
+                tryAgain = xbmcgui.Dialog().yesno(ADDON.getLocalizedString(32001).encode('utf-8'), ADDON.getLocalizedString(32104).encode('utf-8'), ADDON.getLocalizedString(32129).encode('utf-8'))
 
                 if not tryAgain:
                     # Need to stop this user accessing the system
@@ -813,12 +804,12 @@ class UserPinControl():
             displayRemainingTime = 0
 
         # Do a notification to let the user know how long they have left today
-        summaryUserName = "%s:    %s" % (__addon__.getLocalizedString(32035), usersName)
-        summaryLimit = "%s:    %d" % (__addon__.getLocalizedString(32033), viewingLimit)
-        summaryLimitRemaining = "%s:    %d" % (__addon__.getLocalizedString(32131), displayRemainingTime)
-        summaryAccess = "%s:    %s - %s" % (__addon__.getLocalizedString(32132), displayStartTime, displayEndTime)
+        summaryUserName = "%s:    %s" % (ADDON.getLocalizedString(32035), usersName)
+        summaryLimit = "%s:    %d" % (ADDON.getLocalizedString(32033), viewingLimit)
+        summaryLimitRemaining = "%s:    %d" % (ADDON.getLocalizedString(32131), displayRemainingTime)
+        summaryAccess = "%s:    %s - %s" % (ADDON.getLocalizedString(32132), displayStartTime, displayEndTime)
         fullSummary = "%s\n%s\n%s\n%s" % (summaryUserName, summaryLimit, summaryLimitRemaining, summaryAccess)
-        xbmcgui.Dialog().ok(__addon__.getLocalizedString(32001).encode('utf-8'), fullSummary)
+        xbmcgui.Dialog().ok(ADDON.getLocalizedString(32001).encode('utf-8'), fullSummary)
 
     # Check the current user access status
     def check(self):
@@ -877,8 +868,8 @@ class UserPinControl():
                 self.warningDisplayed = True
                 # Calculate the time left
                 remainingTime = viewingLimit - self.usedViewingLimit
-                msg = "%d %s" % (remainingTime, __addon__.getLocalizedString(32134))
-                xbmcgui.Dialog().notification(__addon__.getLocalizedString(32001).encode('utf-8'), msg, __icon__, 3000, False)
+                msg = "%d %s" % (remainingTime, ADDON.getLocalizedString(32134))
+                xbmcgui.Dialog().notification(ADDON.getLocalizedString(32001).encode('utf-8'), msg, ICON, 3000, False)
 
         return True
 
@@ -893,7 +884,7 @@ class UserPinControl():
 
         # Display a notification to let the user know why we are about to shut down
         if reason > 0:
-            cmd = 'Notification("{0}", "{1}", 3000, "{2}")'.format(__addon__.getLocalizedString(32001).encode('utf-8'), __addon__.getLocalizedString(reason).encode('utf-8'), __icon__)
+            cmd = 'Notification("{0}", "{1}", 3000, "{2}")'.format(ADDON.getLocalizedString(32001).encode('utf-8'), ADDON.getLocalizedString(reason).encode('utf-8'), ICON)
             xbmc.executebuiltin(cmd)
 
         # Give the user time to see why we are shutting down
@@ -910,7 +901,7 @@ class UserPinControl():
 # Main of the PinSentry Service
 ##################################
 if __name__ == '__main__':
-    log("Starting Pin Sentry Service %s" % __addon__.getAddonInfo('version'))
+    log("Starting Pin Sentry Service %s" % ADDON.getAddonInfo('version'))
 
     # Tidy up any old pins and set any warnings when we first start
     Settings.checkPinSettings()

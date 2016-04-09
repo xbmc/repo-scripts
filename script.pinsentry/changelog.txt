@@ -1,3 +1,6 @@
+v1.3.1 (2016-04-05)
+- Tidy up import, globals and plugin provides
+
 v1.3.0 (2016-03-19)
 - Add French classifications
 - Add screensaver option that triggers a prompt for the pin

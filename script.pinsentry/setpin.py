@@ -1,23 +1,15 @@
 # -*- coding: utf-8 -*-
 import sys
-import os
 import xbmc
 import xbmcaddon
 import xbmcgui
 
-
-__addon__ = xbmcaddon.Addon(id='script.pinsentry')
-__cwd__ = __addon__.getAddonInfo('path').decode("utf-8")
-__resource__ = xbmc.translatePath(os.path.join(__cwd__, 'resources').encode("utf-8")).decode("utf-8")
-__lib__ = xbmc.translatePath(os.path.join(__resource__, 'lib').encode("utf-8")).decode("utf-8")
-
-sys.path.append(__lib__)
-
 # Import the common settings
-from settings import log
-from settings import Settings
+from resources.lib.settings import log
+from resources.lib.settings import Settings
+from resources.lib.numberpad import NumberPad
 
-from numberpad import NumberPad
+ADDON = xbmcaddon.Addon(id='script.pinsentry')
 
 
 # Function to set the pin
@@ -39,7 +31,7 @@ def setPin(pinLevel=1):
         if not Settings.isPinCorrect(enteredPin, pinLevel):
             log("SetPin: Incorrect Existing Pin Entered")
             okToChangePin = False
-            xbmcgui.Dialog().ok(__addon__.getLocalizedString(32001).encode('utf-8'), __addon__.getLocalizedString(32104).encode('utf-8'))
+            xbmcgui.Dialog().ok(ADDON.getLocalizedString(32001).encode('utf-8'), ADDON.getLocalizedString(32104).encode('utf-8'))
         else:
             log("SetPin: Correct Existing Pin Entered")
 
@@ -56,11 +48,11 @@ def setPin(pinLevel=1):
         # Check to ensure the user has either set no password or one the correct length
         if (len(enteredPin) > 0) and (Settings.getPinLength() > len(enteredPin)):
             log("SetPin: Incorrect length pin entered, expecting %d digits" % Settings.getPinLength())
-            xbmcgui.Dialog().ok(__addon__.getLocalizedString(32001).encode('utf-8'), __addon__.getLocalizedString(32109).encode('utf-8'))
+            xbmcgui.Dialog().ok(ADDON.getLocalizedString(32001).encode('utf-8'), ADDON.getLocalizedString(32109).encode('utf-8'))
         elif Settings.checkPinClash(enteredPin, pinLevel):
             # This pin clashes with an existing pin
             log("SetPin: Entered pin clashes with an existing pin")
-            xbmcgui.Dialog().ok(__addon__.getLocalizedString(32001).encode('utf-8'), __addon__.getLocalizedString(32112).encode('utf-8'))
+            xbmcgui.Dialog().ok(ADDON.getLocalizedString(32001).encode('utf-8'), ADDON.getLocalizedString(32112).encode('utf-8'))
         else:
             # Now double check the value the user entered
             numberpad = NumberPad.createNumberPad(32107)
@@ -74,7 +66,7 @@ def setPin(pinLevel=1):
                 Settings.setPinValue(enteredPin, pinLevel)
             else:
                 log("SetPin: Pin entry different, first: %s, second %s" % (enteredPin, enteredPin2))
-                xbmcgui.Dialog().ok(__addon__.getLocalizedString(32001).encode('utf-8'), __addon__.getLocalizedString(32108).encode('utf-8'))
+                xbmcgui.Dialog().ok(ADDON.getLocalizedString(32001).encode('utf-8'), ADDON.getLocalizedString(32108).encode('utf-8'))
 
 
 # Function to set the user pin
@@ -90,11 +82,11 @@ def setUserPin(pinId):
     # Check to ensure the user has either set no password or one the correct length
     if (len(enteredPin) > 0) and (Settings.getPinLength() > len(enteredPin)):
         log("SetPin: Incorrect length pin entered, expecting %d digits" % Settings.getPinLength())
-        xbmcgui.Dialog().ok(__addon__.getLocalizedString(32001).encode('utf-8'), __addon__.getLocalizedString(32109).encode('utf-8'))
+        xbmcgui.Dialog().ok(ADDON.getLocalizedString(32001).encode('utf-8'), ADDON.getLocalizedString(32109).encode('utf-8'))
     elif Settings.checkUserPinClash(enteredPin, pinId):
         # This pin clashes with an existing pin
         log("SetPin: Entered pin clashes with an existing pin")
-        xbmcgui.Dialog().ok(__addon__.getLocalizedString(32001).encode('utf-8'), __addon__.getLocalizedString(32112).encode('utf-8'))
+        xbmcgui.Dialog().ok(ADDON.getLocalizedString(32001).encode('utf-8'), ADDON.getLocalizedString(32112).encode('utf-8'))
     else:
         # Now double check the value the user entered
         numberpad = NumberPad.createNumberPad(32107)
@@ -108,7 +100,7 @@ def setUserPin(pinId):
             Settings.setUserPinValue(enteredPin, pinId)
         else:
             log("SetPin: Pin entry different, first: %s, second %s" % (enteredPin, enteredPin2))
-            xbmcgui.Dialog().ok(__addon__.getLocalizedString(32001).encode('utf-8'), __addon__.getLocalizedString(32108).encode('utf-8'))
+            xbmcgui.Dialog().ok(ADDON.getLocalizedString(32001).encode('utf-8'), ADDON.getLocalizedString(32108).encode('utf-8'))
 
 
 ##################################
@@ -138,11 +130,11 @@ if __name__ == '__main__':
             for i in range(1, numLevels + 1):
                 notSetMsg = ""
                 if not Settings.isPinSet(i):
-                    notSetMsg = " %s" % __addon__.getLocalizedString(32024)
+                    notSetMsg = " %s" % ADDON.getLocalizedString(32024)
 
-                displayString = "%s %d%s" % (__addon__.getLocalizedString(32021), i, notSetMsg)
+                displayString = "%s %d%s" % (ADDON.getLocalizedString(32021), i, notSetMsg)
                 displayNameList.append(displayString)
-            select = xbmcgui.Dialog().select(__addon__.getLocalizedString(32001), displayNameList)
+            select = xbmcgui.Dialog().select(ADDON.getLocalizedString(32001), displayNameList)
 
             if select != -1:
                 log("SetPin: Setting pin for %d" % (select + 1))
