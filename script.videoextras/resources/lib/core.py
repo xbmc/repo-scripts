@@ -13,7 +13,6 @@ from settings import os_path_join
 from settings import os_path_split
 from settings import dir_exists
 from settings import normalize_string
-
 from ExtrasItem import ExtrasItem
 
 

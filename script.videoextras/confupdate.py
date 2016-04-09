@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-import sys
 import os
 import traceback
 import xbmc
@@ -8,18 +7,13 @@ import xbmcvfs
 import xbmcgui
 import datetime
 
-__addon__ = xbmcaddon.Addon(id='script.videoextras')
-__version__ = __addon__.getAddonInfo('version')
-__cwd__ = __addon__.getAddonInfo('path').decode("utf-8")
-__resource__ = xbmc.translatePath(os.path.join(__cwd__, 'resources').encode("utf-8")).decode("utf-8")
-__lib__ = xbmc.translatePath(os.path.join(__resource__, 'lib').encode("utf-8")).decode("utf-8")
-
-sys.path.append(__resource__)
-sys.path.append(__lib__)
-
 # Import the common settings
-from settings import log
-from settings import os_path_join
+from resources.lib.settings import log
+from resources.lib.settings import os_path_join
+
+ADDON = xbmcaddon.Addon(id='script.videoextras')
+CWD = ADDON.getAddonInfo('path').decode("utf-8")
+RES_DIR = xbmc.translatePath(os.path.join(CWD, 'resources').encode("utf-8")).decode("utf-8")
 
 
 # Ideally we would use an XML parser to do this like ElementTree
@@ -54,7 +48,7 @@ class ConfUpdate():
     def updateSkin(self):
         # Start by copying the include file, will return if the copy worked and the file was created
         if not self._addIncludeFile():
-            xbmcgui.Dialog().ok(__addon__.getLocalizedString(32001), __addon__.getLocalizedString(32160), __addon__.getLocalizedString(32161))
+            xbmcgui.Dialog().ok(ADDON.getLocalizedString(32001), ADDON.getLocalizedString(32160), ADDON.getLocalizedString(32161))
             return
 
         # Update the files one at a time
@@ -64,14 +58,14 @@ class ConfUpdate():
 
         # Now either print the complete message or the "check log" message
         if self.errorToLog:
-            xbmcgui.Dialog().ok(__addon__.getLocalizedString(32001), __addon__.getLocalizedString(32157), __addon__.getLocalizedString(32152))
+            xbmcgui.Dialog().ok(ADDON.getLocalizedString(32001), ADDON.getLocalizedString(32157), ADDON.getLocalizedString(32152))
         else:
-            xbmcgui.Dialog().ok(__addon__.getLocalizedString(32001), __addon__.getLocalizedString(32158), __addon__.getLocalizedString(32159))
+            xbmcgui.Dialog().ok(ADDON.getLocalizedString(32001), ADDON.getLocalizedString(32158), ADDON.getLocalizedString(32159))
 
     # Copies over the include file used for icon overlays
     def _addIncludeFile(self):
         # copy over the video extras include file
-        skinsDir = xbmc.translatePath(os_path_join(__resource__, 'skins').encode("utf-8")).decode("utf-8")
+        skinsDir = xbmc.translatePath(os_path_join(RES_DIR, 'skins').encode("utf-8")).decode("utf-8")
         incFile = os_path_join(skinsDir, 'IncludesVideoExtras.xml')
         # Work out where it is going to go
         tgtFile = os_path_join(self.confpath, 'IncludesVideoExtras.xml')
@@ -859,9 +853,9 @@ class ConfUpdate():
 # Main
 #########################
 if __name__ == '__main__':
-    log("VideoExtras: Updating Confluence Skin (version %s)" % __version__)
+    log("VideoExtras: Updating Confluence Skin (version %s)" % ADDON.getAddonInfo('version'))
 
-    doUpdate = xbmcgui.Dialog().yesno(__addon__.getLocalizedString(32001), __addon__.getLocalizedString(32155))
+    doUpdate = xbmcgui.Dialog().yesno(ADDON.getLocalizedString(32001), ADDON.getLocalizedString(32155))
 
     if doUpdate:
         try:
@@ -870,4 +864,4 @@ if __name__ == '__main__':
             del confUp
         except:
             log("VideoExtras: %s" % traceback.format_exc(), xbmc.LOGERROR)
-            xbmcgui.Dialog().ok(__addon__.getLocalizedString(32001), __addon__.getLocalizedString(32156), __addon__.getLocalizedString(32152))
+            xbmcgui.Dialog().ok(ADDON.getLocalizedString(32001), ADDON.getLocalizedString(32156), ADDON.getLocalizedString(32152))

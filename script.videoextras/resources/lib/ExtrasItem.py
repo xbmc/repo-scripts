@@ -13,7 +13,6 @@ from settings import log
 from settings import os_path_join
 from settings import os_path_split
 from settings import dir_exists
-
 from VideoParser import VideoParser
 
 
