@@ -1,0 +1,65 @@
+# Kodi Media Center language file
+# Addon Name: RandomScreensaver
+# Addon id: screensaver.random
+# Addon Provider: robwebset
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: French (Canada) (http://www.transifex.com/projects/p/xbmc-addons/language/fr_CA/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: fr_CA\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+msgctxt "Addon Summary"
+msgid "Random Screensaver"
+msgstr "Économiseur d'écran aléatoire"
+
+msgctxt "Addon Description"
+msgid "Screensaver that selects an installed screensaver at random to be used."
+msgstr "Un économiseur d'écran installé est choisi aléatoirement et utilisé."
+
+msgctxt "#32001"
+msgid "Random Screensaver"
+msgstr "Économiseur d'écran aléatoire"
+
+msgctxt "#32002"
+msgid "Screensaver"
+msgstr "Économiseur d'écran"
+
+msgctxt "#32003"
+msgid "Debugging"
+msgstr "Débogage"
+
+msgctxt "#32004"
+msgid "Enable debug logging"
+msgstr "Activer la journalisation de débogage"
+
+msgctxt "#32005"
+msgid "Operations"
+msgstr "Opérations"
+
+msgctxt "#32006"
+msgid "Check Supported Screensavers"
+msgstr "Vérifier les économiseurs d'écran pris en charge"
+
+msgctxt "#32007"
+msgid "Excluded Screensavers"
+msgstr "Économiseurs d'écran exclus"
+
+msgctxt "#32101"
+msgid "No Supported Screensavers Installed"
+msgstr "Aucun économiseur d'écran pris en charge n'est installé"
+
+msgctxt "#32102"
+msgid "All installed screensavers are supported by Random Screensaver"
+msgstr "Tous les économiseurs d'écran installés sont pris en charge par l'économiseur d'écran aléatoire"
+
+msgctxt "#32103"
+msgid "The following screensavers require updating for Random Screensaver support"
+msgstr "Les économiseurs d'écran suivant doivent être mis à jour pour être pris en charge par l'économiseur d'écran aléatoire"

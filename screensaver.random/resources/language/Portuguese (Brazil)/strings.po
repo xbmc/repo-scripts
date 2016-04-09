@@ -1,0 +1,65 @@
+# Kodi Media Center language file
+# Addon Name: RandomScreensaver
+# Addon id: screensaver.random
+# Addon Provider: robwebset
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: Portuguese (Brazil) (http://www.transifex.com/projects/p/xbmc-addons/language/pt_BR/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: pt_BR\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+msgctxt "Addon Summary"
+msgid "Random Screensaver"
+msgstr "Protetor de Tela Randômico"
+
+msgctxt "Addon Description"
+msgid "Screensaver that selects an installed screensaver at random to be used."
+msgstr "Protetor de Tela que seleciona um dos protetores de tela disponíveis em seu sistema, para ser usado de maneira randômica"
+
+msgctxt "#32001"
+msgid "Random Screensaver"
+msgstr "Protetor de Tela Randômico"
+
+msgctxt "#32002"
+msgid "Screensaver"
+msgstr "Proteção de Tela"
+
+msgctxt "#32003"
+msgid "Debugging"
+msgstr "Depurando"
+
+msgctxt "#32004"
+msgid "Enable debug logging"
+msgstr "Ativar log de depuração"
+
+msgctxt "#32005"
+msgid "Operations"
+msgstr "Operações"
+
+msgctxt "#32006"
+msgid "Check Supported Screensavers"
+msgstr "Verificar Protetores de Tela suportados"
+
+msgctxt "#32007"
+msgid "Excluded Screensavers"
+msgstr "Protetores de Tela Excluídos"
+
+msgctxt "#32101"
+msgid "No Supported Screensavers Installed"
+msgstr "Nenhum Protetor de Tela Suportado Instalado"
+
+msgctxt "#32102"
+msgid "All installed screensavers are supported by Random Screensaver"
+msgstr "Todos os protetores de tela instalados são suportados pelo Protetor de Tela Randômico"
+
+msgctxt "#32103"
+msgid "The following screensavers require updating for Random Screensaver support"
+msgstr "Os seguintes protetores de telas requerem atualização para terem suporte no Protetor de Tela Randômico"

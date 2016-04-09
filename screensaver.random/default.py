@@ -1,30 +1,22 @@
 # -*- coding: utf-8 -*-
-import sys
-import os
 import xbmc
 import xbmcaddon
 import random
 
-
-__addon__ = xbmcaddon.Addon(id='screensaver.random')
-__icon__ = __addon__.getAddonInfo('icon')
-__cwd__ = __addon__.getAddonInfo('path').decode("utf-8")
-__resource__ = xbmc.translatePath(os.path.join(__cwd__, 'resources').encode("utf-8")).decode("utf-8")
-__lib__ = xbmc.translatePath(os.path.join(__resource__, 'lib').encode("utf-8")).decode("utf-8")
-
-sys.path.append(__lib__)
-
 # Import the common settings
-from settings import log
-from settings import Settings
-from collector import Collector
+from resources.lib.settings import log
+from resources.lib.settings import Settings
+from resources.lib.collector import Collector
+
+ADDON = xbmcaddon.Addon(id='screensaver.random')
+ICON = ADDON.getAddonInfo('icon')
 
 
 ##################################
 # Main of the Random Screensaver
 ##################################
 if __name__ == '__main__':
-    log("RandomScreensaver Starting")
+    log("RandomScreensaver Starting %s" % ADDON.getAddonInfo('version'))
 
     # Make the call to find out all the screensaver addons that are installed
     screensavers = Collector.getInstalledScreensavers()
@@ -61,7 +53,7 @@ if __name__ == '__main__':
     else:
         # If there are no screensavers that can be used for the random screensaver
         # then let the user know
-        cmd = 'XBMC.Notification("{0}", "{1}", 5, "{2}")'.format(__addon__.getLocalizedString(32001).encode('utf-8'), __addon__.getLocalizedString(32101).encode('utf-8'), __icon__)
+        cmd = 'Notification("{0}", "{1}", 3000, "{2}")'.format(ADDON.getLocalizedString(32001).encode('utf-8'), ADDON.getLocalizedString(32101).encode('utf-8'), ICON)
         xbmc.executebuiltin(cmd)
 
     log("RandomScreensaver Finished")

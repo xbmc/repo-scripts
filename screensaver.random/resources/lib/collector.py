@@ -7,7 +7,6 @@ if sys.version_info >= (2, 7):
 else:
     import simplejson as json
 
-
 # Import the common settings
 from settings import log
 
@@ -35,6 +34,12 @@ class Collector:
                 # and are a bit dull, so should not be in the mix
                 if addonName in ['screensaver.xbmc.builtin.black', 'screensaver.xbmc.builtin.dim']:
                     log("RandomScreensaver: Skipping built-in screensaver: %s" % addonName)
+                    continue
+
+                # Need to skip the operation type screensaver, things like screensavers that
+                # send to sleep and prompt for a Pin
+                if addonName in ['script.pinsentry', 'script.sleep']:
+                    log("RandomScreensaver: Skipping operation screensaver: %s" % addonName)
                     continue
 
                 # Skip ourselves as we don't want to random a random!

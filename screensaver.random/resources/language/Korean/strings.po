@@ -1,0 +1,61 @@
+# Kodi Media Center language file
+# Addon Name: RandomScreensaver
+# Addon id: screensaver.random
+# Addon Provider: robwebset
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: Korean (http://www.transifex.com/projects/p/xbmc-addons/language/ko/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ko\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgctxt "Addon Summary"
+msgid "Random Screensaver"
+msgstr "Random Screensaver"
+
+msgctxt "#32001"
+msgid "Random Screensaver"
+msgstr "Random Screensaver"
+
+msgctxt "#32002"
+msgid "Screensaver"
+msgstr "화면 보호기"
+
+msgctxt "#32003"
+msgid "Debugging"
+msgstr "디버깅"
+
+msgctxt "#32004"
+msgid "Enable debug logging"
+msgstr "디버그 로그 사용"
+
+msgctxt "#32005"
+msgid "Operations"
+msgstr "작업"
+
+msgctxt "#32006"
+msgid "Check Supported Screensavers"
+msgstr "지원하는 화면 보호기 확인"
+
+msgctxt "#32007"
+msgid "Excluded Screensavers"
+msgstr "제외할 화면 보호기"
+
+msgctxt "#32101"
+msgid "No Supported Screensavers Installed"
+msgstr "지원하는 화면 보호기가 설치되지 않음"
+
+msgctxt "#32102"
+msgid "All installed screensavers are supported by Random Screensaver"
+msgstr "Random Screensaver가 설치된 화면 보호기를 지원합니다"
+
+msgctxt "#32103"
+msgid "The following screensavers require updating for Random Screensaver support"
+msgstr "다음의 화면 보호기는 Random Screensaver 업데이트가 필요합니다"
