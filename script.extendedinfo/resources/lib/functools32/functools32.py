@@ -18,7 +18,7 @@ from weakref import proxy as _proxy
 import sys as _sys
 try:
     from _thread import allocate_lock as Lock
-except:
+except Exception:
     from ._dummy_thread32 import allocate_lock as Lock
 
 ################################################################################

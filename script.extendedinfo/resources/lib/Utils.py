@@ -17,7 +17,6 @@ from functools import wraps
 import xbmc
 import xbmcgui
 import xbmcvfs
-import xbmcplugin
 
 import addon
 
@@ -71,7 +70,7 @@ def format_time(time, time_format=None):
     """
     try:
         intTime = int(time)
-    except:
+    except Exception:
         return time
     hour = str(intTime / 60)
     minute = str(intTime % 60).zfill(2)
@@ -94,21 +93,6 @@ def merge_dicts(*dict_args):
     for dictionary in dict_args:
         result.update(dictionary)
     return result
-
-
-def check_version():
-    """
-    check version, open TextViewer if update detected
-    """
-    if not addon.setting("changelog_version") == addon.VERSION:
-        xbmcgui.Dialog().textviewer(heading=addon.LANG(24036),
-                                    text=read_from_file(os.path.join(addon.PATH, "changelog.txt"), True))
-        addon.set_setting("changelog_version", addon.VERSION)
-    if not addon.setting("first_start_infodialog"):
-        addon.set_setting("first_start_infodialog", "True")
-        xbmcgui.Dialog().ok(heading=addon.NAME,
-                            line1=addon.LANG(32140),
-                            line2=addon.LANG(32141))
 
 
 def calculate_age(born, died=False):
@@ -189,6 +173,23 @@ def media_streamdetails(filename, streamdetails):
     if audio:
         info['AudioCodec'] = audio[0]['codec']
         info['AudioChannels'] = audio[0]['channels']
+        streams = []
+        for i, item in enumerate(audio, start=1):
+            language = item['language']
+            if language in streams and language == "und":
+                continue
+            streams.append(language)
+            streaminfo = {'AudioLanguage.%d' % i: language,
+                          'AudioCodec.%d' % i: item["codec"],
+                          'AudioChannels.%d' % i: str(item['channels'])}
+            info.update(streaminfo)
+        subs = []
+        for i, item in enumerate(streamdetails['subtitle'], start=1):
+            language = item['language']
+            if language in subs or language == "und":
+                continue
+            subs.append(language)
+            info.update({'SubtitleLanguage.%d' % i: language})
     return info
 
 
@@ -196,10 +197,7 @@ def get_year(year_string):
     """
     return last 4 chars of string
     """
-    if year_string and len(year_string) > 3:
-        return year_string[:4]
-    else:
-        return ""
+    return year_string[:4] if year_string else ""
 
 
 def fetch_musicbrainz_id(artist, artist_id=-1):
@@ -233,7 +231,7 @@ def get_http(url=None, headers=False):
         try:
             response = urllib2.urlopen(request, timeout=3)
             return response.read()
-        except:
+        except Exception:
             log("get_http: could not get data from %s" % url)
             xbmc.sleep(1000)
             succeed += 1
@@ -247,30 +245,31 @@ def get_JSON_response(url="", cache_days=7.0, folder=False, headers=False):
     now = time.time()
     hashed_url = hashlib.md5(url).hexdigest()
     if folder:
-        cache_path = xbmc.translatePath(os.path.join(addon.DATA_PATH, folder))
+        cache_path = xbmc.translatePath(os.path.join(addon.DATA_PATH, folder)).decode("utf-8")
     else:
-        cache_path = xbmc.translatePath(os.path.join(addon.DATA_PATH))
+        cache_path = xbmc.translatePath(os.path.join(addon.DATA_PATH)).decode("utf-8")
     path = os.path.join(cache_path, hashed_url + ".txt")
     cache_seconds = int(cache_days * 86400.0)
     prop_time = addon.get_global(hashed_url + "_timestamp")
     if prop_time and now - float(prop_time) < cache_seconds:
         try:
             prop = json.loads(addon.get_global(hashed_url))
-            log("prop load for %s. time: %f" % (url, time.time() - now))
+            # log("prop load for %s. time: %f" % (url, time.time() - now))
             if prop:
                 return prop
-        except:
-            log("could not load prop data for %s" % url)
+        except Exception:
+            # log("could not load prop data for %s" % url)
+            pass
     if xbmcvfs.exists(path) and ((now - os.path.getmtime(path)) < cache_seconds):
         results = read_from_file(path)
-        log("loaded file for %s. time: %f" % (url, time.time() - now))
+        # log("loaded file for %s. time: %f" % (url, time.time() - now))
     else:
         response = get_http(url, headers)
         try:
             results = json.loads(response)
-            log("download %s. time: %f" % (url, time.time() - now))
+            # log("download %s. time: %f" % (url, time.time() - now))
             save_to_file(results, hashed_url, cache_path)
-        except:
+        except Exception:
             log("Exception: Could not get new JSON data from %s. Tryin to fallback to cache" % url)
             log(response)
             results = read_from_file(path) if xbmcvfs.exists(path) else []
@@ -296,7 +295,7 @@ class FunctionThread(threading.Thread):
 
 
 def get_file(url):
-    clean_url = xbmc.translatePath(urllib.unquote(url)).replace("image://", "")
+    clean_url = xbmc.translatePath(urllib.unquote(url)).decode("utf-8").replace("image://", "")
     if clean_url.endswith("/"):
         clean_url = clean_url[:-1]
     cached_thumb = xbmc.getCacheThumbName(clean_url)
@@ -305,7 +304,7 @@ def get_file(url):
     cache_file_png = cache_file_jpg[:-4] + ".png"
     if xbmcvfs.exists(cache_file_jpg):
         log("cache_file_jpg Image: " + url + "-->" + cache_file_jpg)
-        return xbmc.translatePath(cache_file_jpg)
+        return xbmc.translatePath(cache_file_jpg).decode("utf-8")
     elif xbmcvfs.exists(cache_file_png):
         log("cache_file_png Image: " + url + "-->" + cache_file_png)
         return cache_file_png
@@ -319,17 +318,17 @@ def get_file(url):
         data = response.read()
         response.close()
         log('image downloaded: ' + url)
-    except:
+    except Exception:
         log('image download failed: ' + url)
         return ""
     if not data:
         return ""
     image = cache_file_png if url.endswith(".png") else cache_file_jpg
     try:
-        with open(xbmc.translatePath(image), "wb") as f:
+        with open(xbmc.translatePath(image).decode("utf-8"), "wb") as f:
             f.write(data)
-        return xbmc.translatePath(image)
-    except:
+        return xbmc.translatePath(image).decode("utf-8")
+    except Exception:
         log('failed to save image ' + url)
         return ""
 
@@ -358,15 +357,15 @@ def get_favs():
     """
     items = []
     data = get_kodi_json(method="Favourites.GetFavourites",
-                         params='{"type": null, "properties": ["path", "thumbnail", "window", "windowparameter"]}')
+                         params={"type": None, "properties": ["path", "thumbnail", "window", "windowparameter"]})
     if "result" not in data or data["result"]["limits"]["total"] == 0:
         return []
     for fav in data["result"]["favourites"]:
         path = get_fav_path(fav)
         items.append({'label': fav["title"],
                       'thumb': fav["thumbnail"],
-                      'Type': fav["type"],
-                      'Builtin': path,
+                      'type': fav["type"],
+                      'builtin': path,
                       'path': "plugin://script.extendedinfo/?info=action&&id=" + path})
     return items
 
@@ -417,11 +416,9 @@ def save_to_file(content, filename, path=""):
         if not xbmcvfs.exists(path):
             xbmcvfs.mkdirs(path)
         text_file_path = os.path.join(path, filename + ".txt")
-    now = time.time()
     text_file = xbmcvfs.File(text_file_path, "w")
     json.dump(content, text_file)
     text_file.close()
-    log("saved textfile %s. Time: %f" % (text_file_path, time.time() - now))
     return True
 
 
@@ -435,18 +432,21 @@ def read_from_file(path="", raw=False):
         return False
     try:
         with open(path) as f:
-            log("opened textfile %s." % (path))
+            # log("opened textfile %s." % (path))
             if not raw:
                 result = json.load(f)
             else:
                 result = f.read()
         return result
-    except:
+    except Exception:
         log("failed to load textfile: " + path)
         return False
 
 
 def convert_youtube_url(raw_string):
+    """
+    get plugin playback URL for URL *raw_string
+    """
     youtube_id = extract_youtube_id(raw_string)
     if youtube_id:
         return 'plugin://script.extendedinfo/?info=youtubevideo&&id=%s' % youtube_id
@@ -454,6 +454,9 @@ def convert_youtube_url(raw_string):
 
 
 def extract_youtube_id(raw_string):
+    """
+    get youtube video id if from youtube URL
+    """
     vid_ids = None
     if raw_string and 'youtube.com/v' in raw_string:
         vid_ids = re.findall('http://www.youtube.com/v/(.{11})\??', raw_string, re.DOTALL)
@@ -474,12 +477,18 @@ def notify(header="", message="", icon=addon.ICON, time=5000, sound=True):
 
 
 def get_kodi_json(method, params):
-    json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "%s", "params": %s, "id": 1}' % (method, params))
+    """
+    communicate with kodi JSON-RPC
+    """
+    json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "%s", "params": %s, "id": 1}' % (method, json.dumps(params)))
     json_query = unicode(json_query, 'utf-8', errors='ignore')
     return json.loads(json_query)
 
 
-def prettyprint(string):
+def pp(string):
+    """
+    prettyprint json
+    """
     log(json.dumps(string,
                    sort_keys=True,
                    indent=4,
@@ -498,94 +507,25 @@ def pass_dict_to_skin(data=None, prefix="", window_id=10000):
 
 
 def merge_dict_lists(items, key="job"):
+    """
+    TODO: refactor
+    """
     crew_ids = []
     crews = []
     for item in items:
-        if item["properties"]["id"] not in crew_ids:
-            crew_ids.append(item["properties"]["id"])
+        id_ = item.get_property("id")
+        if id_ not in crew_ids:
+            crew_ids.append(id_)
             crews.append(item)
         else:
-            index = crew_ids.index(item["properties"]["id"])
+            index = crew_ids.index(id_)
             if key in crews[index]:
                 crews[index][key] = crews[index][key] + " / " + item[key]
     return crews
 
 
-def pass_list_to_skin(name, data, prefix="", handle=None, limit=False):
-    if data and limit and int(limit) < len(data):
-        data = data[:int(limit)]
-    if not handle:
-        set_window_props(name, data, prefix)
-        return None
-    addon.clear_global(name)
-    if data:
-        addon.set_global(name + ".Count", str(len(data)))
-        items = create_listitems(data)
-        items = [(i.getProperty("path"), i, bool(i.getProperty("directory"))) for i in items]
-        xbmcplugin.addDirectoryItems(handle=handle,
-                                     items=items,
-                                     totalItems=len(items))
-    xbmcplugin.endOfDirectory(handle)
-
-
-def set_window_props(name, data, prefix=""):
-    if not data:
-        addon.set_global('%s%s.Count' % (prefix, name), '0')
-        log("%s%s.Count = None" % (prefix, name))
-        return None
-    for (count, result) in enumerate(data):
-        for (key, value) in result.iteritems():
-            value = unicode(value)
-            addon.set_global('%s%s.%i.%s' % (prefix, name, count + 1, key), value)
-        for key, value in result.get("properties", {}).iteritems():
-            if not value:
-                continue
-            addon.set_global('%s%s.%i.%s' % (prefix, name, count + 1, key), value)
-    addon.set_global('%s%s.Count' % (prefix, name), str(len(data)))
-
-
 def create_listitems(data=None, preload_images=0):
-    INT_INFOLABELS = ["year", "episode", "season", "top250", "tracknumber", "playcount", "overlay", "userrating"]
-    FLOAT_INFOLABELS = ["rating"]
-    STRING_INFOLABELS = ["genre", "director", "mpaa", "plot", "plotoutline", "title", "originaltitle",
-                         "sorttitle", "duration", "studio", "tagline", "writer", "tvshowtitle", "premiered",
-                         "status", "code", "aired", "credits", "lastplayed", "album", "votes", "trailer", "dateadded", "mediatype"]
-    if not data:
-        return []
-    itemlist = []
-    for (count, result) in enumerate(data):
-        listitem = xbmcgui.ListItem(label=result.get("label"),
-                                    label2=result.get("label2"),
-                                    iconImage=result.get("icon"),
-                                    thumbnailImage=result.get("thumb"),
-                                    path=result.get("path"))
-        for (key, value) in result.iteritems():
-            if not value:
-                continue
-            key = key.lower()
-            if key == "artwork":
-                listitem.setArt(value)
-            elif key in INT_INFOLABELS:
-                try:
-                    listitem.setInfo('video', {key: int(value)})
-                except:
-                    pass
-            elif key in STRING_INFOLABELS:
-                listitem.setInfo('video', {key: unicode(value)})
-            elif key in FLOAT_INFOLABELS:
-                try:
-                    listitem.setInfo('video', {key: "%1.1f" % float(value)})
-                except:
-                    pass
-            else:
-                listitem.setProperty(key, unicode(value))
-        for key, value in result.get("properties", {}).iteritems():
-            if not value:
-                continue
-            listitem.setProperty(key, unicode(value))
-        listitem.setProperty("index", str(count))
-        itemlist.append(listitem)
-    return itemlist
+    return [item.get_listitem() for item in data] if data else []
 
 
 def clean_text(text):
@@ -612,3 +552,199 @@ def clean_text(text):
         else:
             break
     return text.strip()
+
+
+class ListItem(object):
+
+    def __init__(self, label="", label2="", path="", infos={}, properties={}, size="", artwork={}):
+        self.label = label
+        self.label2 = label
+        self.path = path
+        self.size = ""
+        self.properties = properties
+        self.artwork = artwork
+        self.infos = infos
+        self.videoinfo = []
+        self.audioinfo = []
+        self.subinfo = []
+        self.cast = []
+
+    def __setitem__(self, key, value):
+        self.properties[key] = value
+
+    def __getitem__(self, key):
+        if key in self.properties:
+            return self.properties[key]
+        elif key in self.artwork:
+            return self.artwork[key]
+        elif key in self.infos:
+            return self.infos[key]
+        elif key == "properties":
+            return self.properties
+        elif key == "infos":
+            return self.infos
+        elif key == "artwork":
+            return self.artwork
+        elif key == "label":
+            return self.label
+        elif key == "label2":
+            return self.label2
+        elif key == "path":
+            return self.path
+        else:
+            raise KeyError
+
+    def get(self, key, fallback=None):
+        try:
+            return self.__getitem__(key)
+        except KeyError:
+            return fallback
+
+    def __repr__(self):
+        return "\n".join(["Label:", self.label,
+                          "Label2:", self.label2,
+                          "InfoLabels:", self.dump_dict(self.infos),
+                          "Properties:", self.dump_dict(self.properties),
+                          "Artwork:", self.dump_dict(self.artwork),
+                          "Cast:", self.dump_dict(self.cast),
+                          "VideoStreams:", self.dump_dict(self.videoinfo),
+                          "AudioStreams:", self.dump_dict(self.audioinfo),
+                          "Subs:", self.dump_dict(self.subinfo),
+                          "", ""])
+
+    def __contains__(self, key):
+        if key in self.properties:
+            return True
+        elif key in self.artwork:
+            return True
+        elif key in self.infos:
+            return True
+        elif key in ["properties", "infos", "artwork", "label", "label2", "path"]:
+            return True
+
+    def dump_dict(self, dct):
+        return json.dumps(dct,
+                          sort_keys=True,
+                          indent=4,
+                          separators=(',', ': '))
+
+    def update_from_listitem(self, listitem):
+        self.update_properties(listitem.get_properties())
+        self.update_artwork(listitem.get_artwork())
+        self.update_infos(listitem.get_infos())
+        self.set_videoinfos(listitem.videoinfo)
+        self.set_audioinfos(listitem.audioinfo)
+        self.set_subinfos(listitem.subinfo)
+        self.set_cast(listitem.cast)
+
+    def set_properties(self, properties):
+        self.properties = properties
+
+    def update_properties(self, properties):
+        self.properties.update({k: v for k, v in properties.iteritems() if v})
+
+    def set_artwork(self, artwork):
+        self.artwork = artwork
+
+    def set_art(self, key, value):
+        self.artwork[key] = value
+
+    def set_cast(self, value):
+        self.cast = value
+
+    def add_cast(self, value):
+        self.cast.append(value)
+
+    def get_art(self, key):
+        value = self.artwork.get(key)
+        return value if value else ""
+
+    def get_artwork(self):
+        return {k: v for k, v in self.artwork.iteritems() if v}
+
+    def update_artwork(self, artwork):
+        self.artwork.update({k: v for k, v in artwork.iteritems() if v})
+
+    def add_videoinfo(self, info):
+        self.videoinfo.append(info)
+
+    def add_audioinfo(self, info):
+        self.audioinfo.append(info)
+
+    def add_subinfo(self, info):
+        self.subinfo.append(info)
+
+    def set_videoinfos(self, infos):
+        self.videoinfo = infos
+
+    def set_audioinfos(self, infos):
+        self.audioinfo = infos
+
+    def set_subinfos(self, infos):
+        self.subinfo = infos
+
+    def set_infos(self, infos):
+        self.infos = infos
+
+    def get_infos(self):
+        return {k: v for k, v in self.infos.iteritems() if v}
+
+    def get_info(self, key):
+        value = self.infos.get(key)
+        return value if value else ""
+
+    def set_label(self, label):
+        self.label = label
+
+    def set_label2(self, label):
+        self.label2 = label
+
+    def set_size(self, size):
+        self.size = size
+
+    def update_infos(self, infos):
+        self.infos.update({k: v for k, v in infos.iteritems() if v})
+
+    def get_property(self, key):
+        value = self.properties.get(key)
+        return value if value else ""
+
+    def get_properties(self):
+        return {k: v for k, v in self.properties.iteritems() if v}
+
+    def set_property(self, key, value):
+        self.properties[key] = value
+
+    def set_info(self, key, value):
+        self.infos[key] = value
+
+    def get_listitem(self):
+        listitem = xbmcgui.ListItem(label=self.label,
+                                    label2=self.label2,
+                                    path=self.path)
+        props = {k: unicode(v) for k, v in self.properties.iteritems() if v}
+        for key, value in props.iteritems():
+            listitem.setProperty(key, unicode(value))
+        artwork = {k: v.replace("https://", "http://") for k, v in self.artwork.items() if v}
+        listitem.setArt(artwork)
+        infos = {k.lower(): v for k, v in self.infos.items() if v}
+        listitem.setInfo("video", infos)
+        for item in self.videoinfo:
+            listitem.addStreamInfo("video", item)
+        for item in self.audioinfo:
+            listitem.addStreamInfo("audio", item)
+        for item in self.subinfo:
+            listitem.addStreamInfo("subtitle", item)
+        listitem.setInfo("video", {"castandrole": [(i["name"], i["role"]) for i in self.cast]})
+        return listitem
+
+    def to_windowprops(self, prefix="", window_id=10000):
+        window = xbmcgui.Window(window_id)
+        window.setProperty('%slabel' % (prefix), self.label)
+        window.setProperty('%slabel2' % (prefix), self.label2)
+        window.setProperty('%spath' % (prefix), self.path)
+        dct = merge_dicts(self.get_properties(),
+                          self.get_artwork(),
+                          self.get_infos())
+        for k, v in dct.iteritems():
+            window.setProperty('%s%s' % (prefix, k), unicode(v))

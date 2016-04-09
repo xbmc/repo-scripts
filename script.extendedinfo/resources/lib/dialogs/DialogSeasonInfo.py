@@ -13,8 +13,9 @@ from ..WindowManager import wm
 from ActionHandler import ActionHandler
 from ..VideoPlayer import PLAYER
 
-ID_LIST_ACTORS = 1000
+ID_LIST_YOUTUBE = 350
 ID_LIST_CREW = 750
+ID_LIST_ACTORS = 1000
 ID_LIST_EPISODES = 2000
 ID_LIST_VIDEOS = 1150
 ID_LIST_IMAGES = 1250
@@ -39,7 +40,7 @@ def get_window(window_type):
             self.info, self.data = data
             if "dbid" not in self.info:  # need to add comparing for seasons
                 self.info['poster'] = Utils.get_file(url=self.info.get("poster", ""))
-            self.info['ImageFilter'], self.info['ImageColor'] = ImageTools.filter_image(self.info.get("poster"))
+            self.info["properties"].update(ImageTools.blur(self.info.get("poster")))
             self.listitems = [(ID_LIST_ACTORS, self.data["actors"]),
                               (ID_LIST_CREW, self.data["crew"]),
                               (ID_LIST_EPISODES, self.data["episodes"]),
@@ -50,8 +51,7 @@ def get_window(window_type):
         def onInit(self):
             self.get_youtube_vids("%s %s tv" % (self.info["tvshowtitle"], self.info['title']))
             super(DialogSeasonInfo, self).onInit()
-            Utils.pass_dict_to_skin(data=self.info,
-                                    window_id=self.window_id)
+            self.info.to_windowprops(window_id=self.window_id)
             self.fill_lists()
 
         def onClick(self, control_id):
@@ -76,8 +76,9 @@ def get_window(window_type):
         @ch.click(ID_CONTROL_PLOT)
         def open_text(self):
             xbmcgui.Dialog().textviewer(heading=addon.LANG(32037),
-                                        text=self.info["Plot"])
+                                        text=self.info.get_info("plot"))
 
+        @ch.click(ID_LIST_YOUTUBE)
         @ch.click(ID_LIST_VIDEOS)
         def play_youtube_video(self):
             PLAYER.play_youtube_video(youtube_id=self.listitem.getProperty("youtube_id"),

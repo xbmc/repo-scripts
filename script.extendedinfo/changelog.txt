@@ -1,3 +1,8 @@
+v5.1.0
+- code rework
+- added "Rated episodes" to plugin part
+- fixed several bugs
+
 v5.0.1
 - fix bugs related to episode info
 - fix youtube thumbs

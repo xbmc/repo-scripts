@@ -3,7 +3,7 @@
 # Copyright (C) 2015 - Philipp Temminghoff <phil65@kodi.tv>
 # This program is Free Software see LICENSE file for details
 
-import Utils
+from .. import Utils
 from .BaseClasses import DialogXML
 
 

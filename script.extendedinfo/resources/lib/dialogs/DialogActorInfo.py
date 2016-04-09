@@ -38,9 +38,9 @@ def get_window(window_type):
             if not data:
                 return None
             self.info, self.data = data
-            self.info['ImageFilter'], self.info['ImageColor'] = ImageTools.filter_image(self.info.get("thumb"))
-            self.listitems = [(ID_LIST_MOVIE_ROLES, self.data["movie_roles"]),
-                              (ID_LIST_TV_ROLES, self.data["tvshow_roles"]),
+            self.info.update_properties(ImageTools.blur(self.info.get("thumb")))
+            self.listitems = [(ID_LIST_MOVIE_ROLES, Utils.merge_dict_lists(self.data["movie_roles"], "character")),
+                              (ID_LIST_TV_ROLES, Utils.merge_dict_lists(self.data["tvshow_roles"], "character")),
                               (ID_LIST_IMAGES, self.data["images"]),
                               (ID_LIST_MOVIE_CREW, Utils.merge_dict_lists(self.data["movie_crew_roles"])),
                               (ID_LIST_TV_CREW, Utils.merge_dict_lists(self.data["tvshow_crew_roles"])),
@@ -49,8 +49,7 @@ def get_window(window_type):
         def onInit(self):
             self.get_youtube_vids(self.info["label"])
             super(DialogActorInfo, self).onInit()
-            Utils.pass_dict_to_skin(data=self.info,
-                                    window_id=self.window_id)
+            self.info.to_windowprops(window_id=self.window_id)
             self.fill_lists()
 
         def onClick(self, control_id):
@@ -98,10 +97,5 @@ def get_window(window_type):
         def show_plot(self):
             xbmcgui.Dialog().textviewer(heading=addon.LANG(32037),
                                         text=self.info["biography"])
-
-        @ch.action("contextmenu", ID_LIST_MOVIE_ROLES)
-        @ch.action("contextmenu", ID_LIST_MOVIE_CREW)
-        def movie_context_menu(self):
-            tmdb.add_movie_to_list(self.listitem.getProperty("id"))
 
     return DialogActorInfo

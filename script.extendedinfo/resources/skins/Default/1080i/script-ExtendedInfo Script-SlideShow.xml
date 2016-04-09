@@ -14,8 +14,8 @@
 			<animation effect="fade" end="100" time="200" tween="sine">WindowClose</animation>
 		</control>
 		<control type="image">
-			<posx>910</posx>
-			<posy>503</posy>
+			<left>910</left>
+			<top>503</top>
 			<width>100</width>
 			<height>100</height>
 			<visible>!Container(5000).OnScrollPrevious + !Container(5000).OnScrollNext</visible>
@@ -25,8 +25,8 @@
 			<animation effect="fade" start="70" time="1200" condition="true" pulse="true">Conditional</animation>
 		</control>
 		<control type="image">
-			<posx>925</posx>
-			<posy>518</posy>
+			<left>925</left>
+			<top>518</top>
 			<width>70</width>
 			<height>70</height>
 			<visible>!Container(5000).OnScrollPrevious + !Container(5000).OnScrollNext</visible>

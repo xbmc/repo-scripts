@@ -36,7 +36,7 @@
 			<animation effect="fade" start="100" end="0" time="250">WindowClose</animation>
 		</control>
 		<control type="group">
-			<posy>0</posy>
+			<top>0</top>
 			<animation type="WindowOpen" reversible="false">
 				<effect type="zoom" start="80" end="100" center="960,540" delay="500" tween="back" time="240" />
 				<effect type="fade" delay="500" end="100" time="240" />
@@ -49,8 +49,8 @@
 				<visible>IntegerGreaterThan(Container.NumItems,0)</visible>
 				<animation effect="fade" time="320" delay="300">Visible</animation>
 				<control type="image">
-					<posx>75</posx>
-					<posy>165</posy>
+					<left>75</left>
+					<top>165</top>
 					<width>440</width>
 					<height>380</height>
 					<visible>Control.HasFocus(500)</visible>
@@ -64,8 +64,8 @@
 				</control>
 			</control>
 			<control type="panel" id="500">
-				<posx>0</posx>
-				<posy>0</posy>
+				<left>0</left>
+				<top>0</top>
 				<animation effect="zoom" end="83" center="2100,100" time="300" tween="cubic" easing="inout" condition="ControlGroup(9000).HasFocus | Control.HasFocus(6000) | Control.HasFocus(7000)">Conditional</animation>
 				<width>1920</width>
 				<height>1229</height>
@@ -80,10 +80,10 @@
 				<orientation>vertical</orientation>
 				<itemlayout height="410" width="440">
 					<control type="group">
-						<posx>75</posx>
-						<posy>190</posy>
+						<left>75</left>
+						<top>190</top>
 						<control type="image">
-							<posx>25</posx>
+							<left>25</left>
 							<width>390</width>
 							<height>220</height>
 							<fadetime>200</fadetime>
@@ -93,14 +93,14 @@
 							<bordersize>5</bordersize>
 						</control>
 						<control type="image">
-							<posx>25</posx>
+							<left>25</left>
 							<width>390</width>
 							<height>220</height>
 							<texture colordiffuse="55FFFFFF">common/bgcolor.png</texture>
 						</control>
 						<control type="label">
-							<posx>35</posx>
-							<posy>-25</posy>
+							<left>35</left>
+							<top>-25</top>
 							<width>380</width>
 							<height>5</height>
 							<align>left</align>
@@ -110,18 +110,18 @@
 							<textcolor>AAFFFFFF</textcolor>
 						</control>
 						<control type="image">
-							<posx>280</posx>
-							<posy>218</posy>
+							<left>280</left>
+							<top>218</top>
 							<width>130</width>
 							<height>30</height>
-							<texture colordiffuse="AAFFFFFF">$INFO[ListItem.Rating,flags/rating/,.png]</texture>
+							<texture colordiffuse="AAFFFFFF">$INFO[ListItem.Rating,flags/stars/,.png]</texture>
 							<animation effect="fade" delay="800" time="400">WindowOpen</animation>
 							<animation effect="fade" time="160">WindowClose</animation>
 							<animation effect="fade" time="240">VisibleChange</animation>
 						</control>
 						<control type="label">
-							<posx>30</posx>
-							<posy>218</posy>
+							<left>30</left>
+							<top>218</top>
 							<width>380</width>
 							<height>30</height>
 							<align>left</align>
@@ -131,8 +131,8 @@
 							<textcolor>FFBBBBBB</textcolor>
 						</control>
 						<control type="textbox">
-							<posx>20</posx>
-							<posy>250</posy>
+							<left>20</left>
+							<top>250</top>
 							<height>66</height>
 							<width>400</width>
 							<label>$INFO[ListItem.Label]</label>
@@ -141,13 +141,13 @@
 							<textcolor>FFFAFAFA</textcolor>
 						</control>
 						<control type="label">
-							<posx>30</posx>
-							<posy>-25</posy>
+							<left>30</left>
+							<top>-25</top>
 							<width>380</width>
 							<height>5</height>
 							<align>right</align>
 							<aligny>center</aligny>
-							<label>$INFO[ListItem.Property(date)]</label>
+							<label>$INFO[ListItem.Premiered]</label>
 							<font>font10</font>
 <!--                             <shadowcolor>FF222222</shadowcolor>
  -->                            <textcolor>FFBBBBBB</textcolor>
@@ -156,21 +156,21 @@
 				</itemlayout>
 				<focusedlayout height="410" width="440">
 					<control type="group">
-						<posx>75</posx>
-						<posy>190</posy>
+						<left>75</left>
+						<top>190</top>
 						<animation type="Focus">
 							<effect type="zoom" time="150" start="95" end="100" center="245,260" />
 							<effect type="zoom" time="150" start="105" end="100" delay="150" center="245,260" />
 						</animation>
 						<!--
 						<control type="image">
-							<posy>-45</posy>
+							<top>-45</top>
 							<width>440</width>
 							<height>410</height>
 							<texture colordiffuse="FFFFFFFF" border="40">buttons/roundedbutton-focus.png</texture>
 						</control>-->
 						<control type="image">
-							<posx>25</posx>
+							<left>25</left>
 							<width>390</width>
 							<height>220</height>
 							<aspectratio aligny="center">scale</aspectratio>
@@ -181,14 +181,14 @@
 						<control type="image">
 							<animation effect="fade" time="300" start="100" end="0" delay="100">Focus</animation>
 							<animation effect="fade" time="300" start="0" end="100">UnFocus</animation>
-							<posx>25</posx>
+							<left>25</left>
 							<width>390</width>
 							<height>220</height>
 							<texture colordiffuse="55FFFFFF">common/bgcolor.png</texture>
 						</control>
 						<control type="label">
-							<posx>35</posx>
-							<posy>-25</posy>
+							<left>35</left>
+							<top>-25</top>
 							<width>380</width>
 							<height>5</height>
 							<align>left</align>
@@ -198,18 +198,18 @@
 							<textcolor>AAFFFFFF</textcolor>
 						</control>
 						<control type="image">
-							<posx>280</posx>
-							<posy>218</posy>
+							<left>280</left>
+							<top>218</top>
 							<width>130</width>
 							<height>30</height>
-							<texture colordiffuse="AAFFFFFF">$INFO[ListItem.Rating,flags/rating/,.png]</texture>
+							<texture colordiffuse="AAFFFFFF">$INFO[ListItem.Rating,flags/stars/,.png]</texture>
 							<animation effect="fade" delay="800" time="400">WindowOpen</animation>
 							<animation effect="fade" time="160">WindowClose</animation>
 							<animation effect="fade" time="240">VisibleChange</animation>
 						</control>
 						<control type="label">
-							<posx>30</posx>
-							<posy>218</posy>
+							<left>30</left>
+							<top>218</top>
 							<width>380</width>
 							<height>30</height>
 							<align>left</align>
@@ -219,8 +219,8 @@
 							<textcolor>FFBBBBBB</textcolor>
 						</control>
 						<control type="textbox">
-							<posx>20</posx>
-							<posy>250</posy>
+							<left>20</left>
+							<top>250</top>
 							<height>66</height>
 							<width>400</width>
 							<align>center</align>
@@ -229,13 +229,13 @@
 							<textcolor>FFFAFAFA</textcolor>
 						</control>
 						<control type="label">
-							<posx>30</posx>
-							<posy>-25</posy>
+							<left>30</left>
+							<top>-25</top>
 							<width>380</width>
 							<height>5</height>
 							<align>right</align>
 							<aligny>center</aligny>
-							<label>$INFO[ListItem.Property(date)]</label>
+							<label>$INFO[ListItem.Premiered]</label>
 							<font>font10</font>
 <!--                             <shadowcolor>FF222222</shadowcolor>
  -->                            <textcolor>FFBBBBBB</textcolor>
@@ -247,17 +247,17 @@
 				<onfocus>SetFocus(500)</onfocus>
 				<width>1</width>
 				<height>1</height>
-				<posx>-1000</posx>
+				<left>-1000</left>
 			</control>
 			<control type="button" id="700">
 				<onfocus>SetFocus(500)</onfocus>
 				<width>1</width>
 				<height>1</height>
-				<posx>-1000</posx>
+				<left>-1000</left>
 			</control>
 		</control>
 		<control type="group">
-			<posy>0</posy>
+			<top>0</top>
 			<animation type="WindowOpen" reversible="false">
 				<effect type="zoom" start="80" end="100" center="960,540" delay="500" tween="back" time="240" />
 				<effect type="fade" delay="500" end="100" time="240" />
@@ -271,13 +271,13 @@
 				<width>1920</width>
 				<height>40</height>
 				<texture>common/black.png</texture>
-				<posx>0</posx>
-				<posy>0</posy>
+				<left>0</left>
+				<top>0</top>
 			</control>-->
 			<control type="image">
 				<texture flipy="true">fade.png</texture>
-				<posx>0</posx>
-				<posy>0</posy>
+				<left>0</left>
+				<top>0</top>
 				<!--
 				<animation effect="fade" start="100" end="80" time="0" condition="true">Conditional</animation>-->
 				<width>1920</width>
@@ -287,10 +287,10 @@
 			</control>
 			<control type="image">
 				<texture>fade.png</texture>
-				<posx>0</posx>
+				<left>0</left>
 				<!--
 				<animation effect="fade" start="100" end="80" time="0" condition="true">Conditional</animation>-->
-				<posy>980</posy>
+				<top>980</top>
 				<width>1920</width>
 				<height>100</height>
 				<animation effect="fade" end="100" time="360">WindowOpen</animation>
@@ -298,9 +298,9 @@
 			</control>
 			<control type="image">
 				<texture>arrowdown.png</texture>
-				<posx>900</posx>
+				<left>900</left>
 				<animation effect="fade" time="250">VisibleChange</animation>
-				<posy>1040</posy>
+				<top>1040</top>
 				<width>120</width>
 				<height>30</height>
 				<animation effect="fade" end="100" time="360">WindowOpen</animation>
@@ -309,9 +309,9 @@
 			</control>
 			<control type="image">
 				<texture flipy="true">arrowdown.png</texture>
-				<posx>900</posx>
+				<left>900</left>
 				<animation effect="fade" time="250">VisibleChange</animation>
-				<posy>10</posy>
+				<top>10</top>
 				<width>120</width>
 				<height>30</height>
 				<animation effect="fade" end="100" time="360">WindowOpen</animation>
@@ -320,17 +320,17 @@
 			</control>
 			<control type="image">
 				<texture flipx="true">arrowright.png</texture>
-				<posx>10</posx>
+				<left>10</left>
 				<animation effect="fade" time="250">VisibleChange</animation>
-				<posy>1050</posy>
+				<top>1050</top>
 				<width>25</width>
 				<height>25</height>
 				<animation effect="fade" end="100" time="360">WindowOpen</animation>
 				<animation effect="fade" start="100" end="0" time="250">WindowClose</animation>
 			</control>
 			<control type="label">
-				<posx>50</posx>
-				<posy>1045</posy>
+				<left>50</left>
+				<top>1045</top>
 				<height>30</height>
 				<aligny>center</aligny>
 				<width>1920</width>
@@ -339,8 +339,8 @@
 				<label>$ADDON[script.extendedinfo 32023]</label>
 			</control>
 			<control type="label">
-				<posx>1900</posx>
-				<posy>0</posy>
+				<left>1900</left>
+				<top>0</top>
 				<height>40</height>
 				<aligny>center</aligny>
 				<width>1920</width>
@@ -349,8 +349,8 @@
 				<label>$INFO[Window.Property(TotalItems),[COLOR FF999999]$ADDON[script.extendedinfo 32124]:[/COLOR] ]$INFO[Window.Property(CurrentPage),[COLOR FF999999] - $ADDON[script.extendedinfo 32125]: [/COLOR]]$INFO[Window.Property(TotalPages), / ]</label>
 			</control>
 			<control type="label">
-				<posx>440</posx>
-				<posy>0</posy>
+				<left>440</left>
+				<top>0</top>
 				<height>40</height>
 				<aligny>center</aligny>
 				<width>1200</width>
@@ -366,16 +366,17 @@
 			<animation type="Conditional" condition="!ControlGroup(9000).HasFocus + !Control.HasFocus(6000) + !Control.HasFocus(7000)">
 				<effect type="slide" end="-420" time="320" easing="in" tween="cubic" />
 			</animation>
+			<animation effect="slide" start="0" end="-460" time="320" tween="cubic">WindowClose</animation>
 			<control type="image">
-				<posx>-92</posx>
-				<width>512</width>
+				<left>-92</left>
+				<width>572</width>
 				<height>1080</height>
-				<texture colordiffuse="$INFO[Window(home).Property(WindowColor)]">dialogs/context_middle.png</texture>
+				<texture colordiffuse="$INFO[Window(home).Property(WindowColor)]">lists/panel.png</texture>
 			</control>
 			<control type="button" id="6000">
 				<label>$LOCALIZE[19140]</label>
-				<posx>0</posx>
-				<posy>40</posy>
+				<left>0</left>
+				<top>40</top>
 				<width>400</width>
 				<height>110</height>
 				<textoffsetx>40</textoffsetx>
@@ -393,8 +394,8 @@
 				<focusedcolor>FFFAFAFA</focusedcolor>
 			</control>
 			<control type="image">
-				<posx>305</posx>
-				<posy>70</posy>
+				<left>305</left>
+				<top>70</top>
 				<width>45</width>
 				<height>45</height>
 				<align>center</align>
@@ -403,8 +404,8 @@
 				<texture colordiffuse="AAFFFFFF">icons/magnifier.png</texture>
 			</control>
 			<control type="radiobutton" id="7000">
-				<posx>0</posx>
-				<posy>135</posy>
+				<left>0</left>
+				<top>135</top>
 				<width>400</width>
 				<height>110</height>
 				<align>left</align>
@@ -431,7 +432,7 @@
 				<textureradiooffnofocus>common/youtube.png</textureradiooffnofocus>
 			</control>
 			<control type="grouplist" id="9000">
-				<posy>250</posy>
+				<top>250</top>
 				<width>400</width>
 				<height>830</height>
 				<orientation>vertical</orientation>
