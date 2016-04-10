@@ -1,27 +1,24 @@
 <videoscreensaver>
 	<collection>Space</collection>
-	<encoded>true</encoded>
 	<video>
 		<name>Space 1 - [970MB] - 720p</name>
 		<filename>Space001-720p.mp4</filename>
 		<image>http://kodi.wiki/images/c/c9/VideoScreensaver-Space001.PNG</image>
 		<duration>5692</duration>
-		<primary>aHR0cDovL2tvZGkuemlnZ3k3MzcwMS5zZWVkci5pby9WaWRlb1NjcmVlbnNhdmVyL1NwYWNlMDAxLTcyMHAubXA0</primary>
-		<secondary>aHR0cDovLzE3OC4zMy42MS42L3B1dHN0b3JhZ2UvRG93bmxvYWRGaWxlLmFzaHg/RG93bmxvYWRGaWxlSGFzaD1EQ0E4OTFEMTNBNUE0QTVRUVdFMjAxMTc3NkVXUVM=</secondary>
+		<primary>http://kodi.ziggy73701.seedr.io/VideoScreensaver/Space001-720p.mp4</primary>
 	</video>
 	<video>
 		<name>Space 2 - [563MB] - 1080p</name>
 		<filename>Space002-1080p.mp4</filename>
 		<image>http://kodi.wiki/images/7/72/VideoScreensaver-Space002.JPG</image>
 		<duration>1845</duration>
-		<primary>aHR0cDovL2tvZGkuemlnZ3k3MzcwMS5zZWVkci5pby9WaWRlb1NjcmVlbnNhdmVyL1NwYWNlMDAyLTEwODBwLm1wNA==</primary>
-		<secondary>aHR0cDovLzE3OC4zMy42MS42L3B1dHN0b3JhZ2UvRG93bmxvYWRGaWxlLmFzaHg/RG93bmxvYWRGaWxlSGFzaD00NDQxQ0JCNTNBNUE0QTVRUVdFMjEwMzA4OUVXUVM=</secondary>
+		<primary>http://kodi.ziggy73701.seedr.io/VideoScreensaver/Space002-1080p.mp4</primary>
 	</video>
 	<video>
 		<name>Space 3 - [2.2GB] - 720p</name>
 		<filename>Space003-720p.mp4</filename>
 		<image>http://kodi.wiki/images/7/72/VideoScreensaver-Space003.png</image>
 		<duration>3765</duration>
-		<primary>aHR0cDovL2tvZGkuemlnZ3k3MzcwMS5zZWVkci5pby9WaWRlb1NjcmVlbnNhdmVyL1NwYWNlMDAzLTcyMHAubXA0</primary>
+		<primary>http://kodi.ziggy73701.seedr.io/VideoScreensaver/Space003-720p.mp4</primary>
 	</video>
 </videoscreensaver>

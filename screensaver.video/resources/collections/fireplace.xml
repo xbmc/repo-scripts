@@ -1,34 +1,31 @@
 <videoscreensaver>
 	<collection>Fireplace</collection>
-	<encoded>true</encoded>
 	<video>
 		<name>Fireplace 1 - [965MB] - 720p</name>
 		<filename>Fireplace001-720p.mkv</filename>
 		<image>http://kodi.wiki/images/1/1d/Fireplace001-720p.png</image>
 		<duration>4162</duration>
-		<primary>aHR0cDovL2tvZGkuemlnZ3k3MzcwMS5zZWVkci5pby9WaWRlb1NjcmVlbnNhdmVyL0ZpcmVwbGFjZTAwMS03MjBwLm1rdg==</primary>
-		<secondary>aHR0cDovLzE3OC4zMy42MS42L3B1dHN0b3JhZ2UvRG93bmxvYWRGaWxlLmFzaHg/RG93bmxvYWRGaWxlSGFzaD1ENzMwODE2OTNBNUE0QTVRUVdFMjAxMTcyOUVXUVM=</secondary>
+		<primary>http://kodi.ziggy73701.seedr.io/VideoScreensaver/Fireplace001-720p.mkv</primary>
 	</video>
 	<video>
 		<name>Fireplace 2 - [827MB] - 480p</name>
 		<filename>Fireplace002.mkv</filename>
 		<image>http://kodi.wiki/images/5/50/Fireplace002.png</image>
 		<duration>4284</duration>
-		<primary>aHR0cDovL2tvZGkuemlnZ3k3MzcwMS5zZWVkci5pby9WaWRlb1NjcmVlbnNhdmVyL0ZpcmVwbGFjZTAwMi5ta3Y=</primary>
-		<secondary>aHR0cDovLzE3OC4zMy42MS42L3B1dHN0b3JhZ2UvRG93bmxvYWRGaWxlLmFzaHg/RG93bmxvYWRGaWxlSGFzaD05QkRBRDdDODNBNUE0QTVRUVdFMjAxMTY4OUVXUVM=</secondary>
+		<primary>http://kodi.ziggy73701.seedr.io/VideoScreensaver/Fireplace002.mkv</primary>
 	</video>
 	<video>
 		<name>Fireplace 3 - [2.1GB] - 1080p</name>
 		<filename>Fireplace003-1080p.mkv</filename>
 		<image>http://kodi.wiki/images/e/e3/Fireplace003-1080p.png</image>
 		<duration>1200</duration>
-		<primary>aHR0cDovL2tvZGkuemlnZ3k3MzcwMS5zZWVkci5pby9WaWRlb1NjcmVlbnNhdmVyL0ZpcmVwbGFjZTAwMy0xMDgwcC5ta3Y=</primary>
+		<primary>http://kodi.ziggy73701.seedr.io/VideoScreensaver/Fireplace003-1080p.mkv</primary>
 	</video>
 	<video>
 		<name>Fireplace 4 - [2.7GB] - 720p</name>
 		<filename>Fireplace004-720p.mp4</filename>
 		<image>http://kodi.wiki/images/5/58/VideoScreensaver-Fireplace004.PNG</image>
 		<duration>7199</duration>
-		<primary>aHR0cDovL2tvZGkuemlnZ3k3MzcwMS5zZWVkci5pby9WaWRlb1NjcmVlbnNhdmVyL0ZpcmVwbGFjZTAwNC03MjBwLm1wNA==</primary>
+		<primary>http://kodi.ziggy73701.seedr.io/VideoScreensaver/Fireplace004-720p.mp4</primary>
 	</video>
 </videoscreensaver>

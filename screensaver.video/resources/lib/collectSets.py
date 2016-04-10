@@ -89,7 +89,7 @@ class CollectSets():
 
             # Get the videos that are in the collection
             for elemItem in collectionElem.findall('video'):
-                video = {'name': None, 'filename': None, 'image': ICON, 'duration': None, 'primary': None, 'secondary': None, 'enabled': True}
+                video = {'name': None, 'filename': None, 'image': ICON, 'duration': None, 'primary': None, 'enabled': True}
 
                 nameElem = elemItem.find('name')
                 if nameElem not in [None, ""]:
@@ -113,13 +113,6 @@ class CollectSets():
                         video['primary'] = base64.b64decode(primaryElem.text)
                     else:
                         video['primary'] = primaryElem.text
-
-                secondaryElem = elemItem.find('secondary')
-                if secondaryElem not in [None, ""]:
-                    if isEncoded:
-                        video['secondary'] = base64.b64decode(secondaryElem.text)
-                    else:
-                        video['secondary'] = secondaryElem.text
 
                 # Check if this video is in the disabled list
                 if video['filename'] in disabledVideos:

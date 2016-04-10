@@ -331,7 +331,3 @@ msgstr ""
 msgctxt "#32306"
 msgid "Failed to download video file"
 msgstr ""
-
-msgctxt "#32307"
-msgid "This may be due to the server bandwidth limit being exceeded, please try again tomorrow"
-msgstr ""

@@ -1,20 +1,17 @@
 <videoscreensaver>
 	<collection>Clock</collection>
-	<encoded>true</encoded>
 	<video>
 		<name>Clock 1 - [1.5GB] - 720p</name>
 		<filename>Clock001-720p.mp4</filename>
 		<image>http://kodi.wiki/images/8/8d/VideoScreensaver-Clock001.JPG</image>
 		<duration>43200</duration>
-		<primary>aHR0cDovL2tvZGkuemlnZ3k3MzcwMS5zZWVkci5pby9WaWRlb1NjcmVlbnNhdmVyL0Nsb2NrMDAxLTcyMHAubXA0</primary>
-		<secondary>aHR0cDovLzE3OC4zMy42My42OC9wdXRzdG9yYWdlL0Rvd25sb2FkRmlsZUhhc2gvRDZBRjc2MEEzQTVBNEE1UVFXRTE1MDM1OTRFV1FTL0Nsb2NrMDAxLTcyMHAubXA0</secondary>
+		<primary>http://kodi.ziggy73701.seedr.io/VideoScreensaver/Clock001-720p.mp4</primary>
 	</video>
 	<video>
 		<name>Clock 2 - [1.3GB] - 360p</name>
 		<filename>Clock002-360p.mp4</filename>
 		<image>http://kodi.wiki/images/c/c0/VideoScreensaver-Clock002.JPG</image>
 		<duration>86399</duration>
-		<primary>aHR0cDovL2tvZGkuemlnZ3k3MzcwMS5zZWVkci5pby9WaWRlb1NjcmVlbnNhdmVyL0Nsb2NrMDAyLTM2MHAubXA0</primary>
-		<secondary>aHR0cDovLzE3OC4zMy42My42OC9wdXRzdG9yYWdlL0Rvd25sb2FkRmlsZUhhc2gvQjFDMjJCNTMzQTVBNEE1UVFXRTE1MDM1OThFV1FTL0Nsb2NrMDAyLTM2MHAubXA0</secondary>
+		<primary>http://kodi.ziggy73701.seedr.io/VideoScreensaver/Clock002-360p.mp4</primary>
 	</video>
 </videoscreensaver>

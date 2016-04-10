@@ -1,41 +1,38 @@
 <videoscreensaver>
 	<collection>Aquarium</collection>
-	<encoded>true</encoded>
 	<video>
 		<name>Aquarium 1 - [846MB] - 400p</name>
 		<filename>Aquarium001.mkv</filename>
 		<image>http://kodi.wiki/images/4/45/Aquarium001.png</image>
 		<duration>3602</duration>
-		<primary>aHR0cDovL2tvZGkuemlnZ3k3MzcwMS5zZWVkci5pby9WaWRlb1NjcmVlbnNhdmVyL0FxdWFyaXVtMDAxLm1rdg==</primary>
-		<secondary>aHR0cDovLzE3OC4zMy42MS42L3B1dHN0b3JhZ2UvRG93bmxvYWRGaWxlLmFzaHg/RG93bmxvYWRGaWxlSGFzaD03QTcyNTkyQTNBNUE0QTVRUVdFMjAxMTY2N0VXUVM=</secondary>
+		<primary>http://kodi.ziggy73701.seedr.io/VideoScreensaver/Aquarium001.mkv</primary>
 	</video>
 	<video>
 		<name>Aquarium 2 - [2.7GB] - 720p</name>
 		<filename>Aquarium002-720p.mkv</filename>
 		<image>http://kodi.wiki/images/4/44/Aquarium002-720p.png</image>
 		<duration>3602</duration>
-		<primary>aHR0cDovL2tvZGkuemlnZ3k3MzcwMS5zZWVkci5pby9WaWRlb1NjcmVlbnNhdmVyL0FxdWFyaXVtMDAyLTcyMHAubWt2</primary>
+		<primary>http://kodi.ziggy73701.seedr.io/VideoScreensaver/Aquarium002-720p.mkv</primary>
 	</video>
 	<video>
 		<name>Aquarium 3 - [2.4GB] - 720p</name>
 		<filename>Aquarium003-720p.mp4</filename>
 		<image>http://kodi.wiki/images/d/df/VideoScreensaver-Aquarium003.PNG</image>
 		<duration>7200</duration>
-		<primary>aHR0cDovL2tvZGkuemlnZ3k3MzcwMS5zZWVkci5pby9WaWRlb1NjcmVlbnNhdmVyL0FxdWFyaXVtMDAzLTcyMHAubXA0</primary>
+		<primary>http://kodi.ziggy73701.seedr.io/VideoScreensaver/Aquarium003-720p.mp4</primary>
 	</video>
 	<video>
 		<name>Aquarium 4 - [780MB] - 720p</name>
 		<filename>Aquarium004-720p.mp4</filename>
 		<image>http://kodi.wiki/images/3/39/VideoScreensaver-Aquarium004.JPG</image>
 		<duration>2048</duration>
-		<primary>aHR0cDovL2tvZGkuemlnZ3k3MzcwMS5zZWVkci5pby9WaWRlb1NjcmVlbnNhdmVyL0FxdWFyaXVtMDA0LTcyMHAubXA0</primary>
-		<secondary>aHR0cDovLzE3OC4zMy42My42OC9wdXRzdG9yYWdlL0Rvd25sb2FkRmlsZUhhc2gvQ0NCNDY2NDEzQTVBNEE1UVFXRTEzMDY2OTlFV1FTL0FxdWFyaXVtMDA0LTcyMHAubXA0</secondary>
+		<primary>http://kodi.ziggy73701.seedr.io/VideoScreensaver/Aquarium004-720p.mp4</primary>
 	</video>
 	<video>
 		<name>Aquarium 5 - [3.0GB] - 720p</name>
 		<filename>Aquarium005-720p.mkv</filename>
 		<image>http://kodi.wiki/images/8/80/VideoScreensaver-Aquarium005.png</image>
 		<duration>3491</duration>
-		<primary>aHR0cDovL2tvZGkuemlnZ3k3MzcwMS5zZWVkci5pby9WaWRlb1NjcmVlbnNhdmVyL0FxdWFyaXVtMDA1LTcyMHAubWt2</primary>
+		<primary>http://kodi.ziggy73701.seedr.io/VideoScreensaver/Aquarium005-720p.mkv</primary>
 	</video>
 </videoscreensaver>

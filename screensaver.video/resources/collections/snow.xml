@@ -1,28 +1,24 @@
 <videoscreensaver>
 	<collection>Snow</collection>
-	<encoded>true</encoded>
 	<video>
 		<name>Snow 1 - [1.3GB] - 720p</name>
 		<filename>Snow001-720p.mp4</filename>
 		<image>http://kodi.wiki/images/c/c3/VideoScreensaver-Snow001.JPG</image>
 		<duration>3600</duration>
-		<primary>aHR0cDovL2tvZGkuemlnZ3k3MzcwMS5zZWVkci5pby9WaWRlb1NjcmVlbnNhdmVyL1Nub3cwMDEtNzIwcC5tcDQ=</primary>
-		<secondary>aHR0cDovLzE3OC4zMy42My42OC9wdXRzdG9yYWdlL0Rvd25sb2FkRmlsZUhhc2gvRjI5QkZFQzIzQTVBNEE1UVFXRTk0MTMzN0VXUVMvU25vdzAwMS03MjBwLm1wNA==</secondary>
+		<primary>http://kodi.ziggy73701.seedr.io/VideoScreensaver/Snow001-720p.mp4</primary>
 	</video>
 	<video>
 		<name>Snow 2 - [677MB] - 1080p</name>
 		<filename>Snow002-1080p.mp4</filename>
 		<image>http://kodi.wiki/images/d/d6/VideoScreensaver-Snow002.JPG</image>
 		<duration>1370</duration>
-		<primary>aHR0cDovL2tvZGkuemlnZ3k3MzcwMS5zZWVkci5pby9WaWRlb1NjcmVlbnNhdmVyL1Nub3cwMDItMTA4MHAubXA0</primary>
-		<secondary>aHR0cDovLzE3OC4zMy42MS42L3B1dHN0b3JhZ2UvRG93bmxvYWRGaWxlSGFzaC85MEE1NjhDRDNBNUE0QTVRUVdFMjc3ODg4N0VXUVMvU25vdzAwMi0xMDgwcC5tcDQ=</secondary>
+		<primary>http://kodi.ziggy73701.seedr.io/VideoScreensaver/Snow002-1080p.mp4</primary>
 	</video>
 	<video>
 		<name>Snow 3 - [1.2GB] - 720p</name>
 		<filename>Snow003-720p.mp4</filename>
 		<image>http://kodi.wiki/images/0/02/VideoScreensaver-Snow003.JPG</image>
 		<duration>3600</duration>
-		<primary>aHR0cDovL2tvZGkuemlnZ3k3MzcwMS5zZWVkci5pby9WaWRlb1NjcmVlbnNhdmVyL1Nub3cwMDMtNzIwcC5tcDQ=</primary>
-		<secondary>aHR0cDovLzE3OC4zMy42My42OC9wdXRzdG9yYWdlL0Rvd25sb2FkRmlsZUhhc2gvQjE0RUE1NDYzQTVBNEE1UVFXRTk0MTQ3MkVXUVMvU25vdzAwMy03MjBwLm1wNA==</secondary>
+		<primary>http://kodi.ziggy73701.seedr.io/VideoScreensaver/Snow003-720p.mp4</primary>
 	</video>
 </videoscreensaver>

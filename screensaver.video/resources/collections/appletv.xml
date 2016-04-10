@@ -1,207 +1,240 @@
 <videoscreensaver>
 	<collection>Apple TV</collection>
-	<encoded>false</encoded>
 	<video>
 		<name>China (Day) 1</name>
 		<filename>appletv-b2-1.mov</filename>
+		<image>http://kodi.wiki/images/9/93/VideoSecreensaver-appletv-China-D1.JPG</image>
 		<duration>239</duration>
 		<primary>http://a1.phobos.apple.com/us/r1000/000/Features/atv/AutumnResources/videos/b2-1.mov</primary>
 	</video>
 	<video>
 		<name>China (Day) 2</name>
 		<filename>appletv-b5-1.mov</filename>
+		<image>http://kodi.wiki/images/9/95/VideoSecreensaver-appletv-China-D2.JPG</image>
 		<duration>144</duration>
 		<primary>http://a1.phobos.apple.com/us/r1000/000/Features/atv/AutumnResources/videos/b5-1.mov</primary>
 	</video>
 	<video>
 		<name>China (Day) 3</name>
 		<filename>appletv-b6-1.mov</filename>
+		<image>http://kodi.wiki/images/2/2f/VideoSecreensaver-appletv-China-D3.JPG</image>
 		<duration>240</duration>
 		<primary>http://a1.phobos.apple.com/us/r1000/000/Features/atv/AutumnResources/videos/b6-1.mov</primary>
 	</video>
 	<video>
 		<name>Hawaii (Day) 1</name>
 		<filename>appletv-b1-1.mov</filename>
+		<image>http://kodi.wiki/images/2/2a/VideoSecreensaver-appletv-Hawaii-D1.JPG</image>
 		<duration>191</duration>
 		<primary>http://a1.phobos.apple.com/us/r1000/000/Features/atv/AutumnResources/videos/b1-1.mov</primary>
 	</video>
 	<video>
 		<name>Hawaii (Day) 2</name>
 		<filename>appletv-b2-2.mov</filename>
+		<image>http://kodi.wiki/images/6/63/VideoSecreensaver-appletv-Hawaii-D2.JPG</image>
 		<duration>432</duration>
 		<primary>http://a1.phobos.apple.com/us/r1000/000/Features/atv/AutumnResources/videos/b2-2.mov</primary>
 	</video>
 	<video>
 		<name>Hawaii (Day) 3</name>
 		<filename>appletv-b4-1.mov</filename>
+		<image>http://kodi.wiki/images/0/01/VideoSecreensaver-appletv-Hawaii-D3.JPG</image>
 		<duration>144</duration>
 		<primary>http://a1.phobos.apple.com/us/r1000/000/Features/atv/AutumnResources/videos/b4-1.mov</primary>
 	</video>
 	<video>
 		<name>Hawaii (Day) 4</name>
 		<filename>appletv-b7-1.mov</filename>
+		<image>http://kodi.wiki/images/0/06/VideoSecreensaver-appletv-Hawaii-D4.JPG</image>
 		<duration>335</duration>
 		<primary>http://a1.phobos.apple.com/us/r1000/000/Features/atv/AutumnResources/videos/b7-1.mov</primary>
 	</video>
 	<video>
 		<name>Hawaii (Day) 5</name>
 		<filename>appletv-b9-1.mov</filename>
+		<image>http://kodi.wiki/images/1/1a/VideoSecreensaver-appletv-Hawaii-D5.JPG</image>
 		<duration>432</duration>
 		<primary>http://a1.phobos.apple.com/us/r1000/000/Features/atv/AutumnResources/videos/b9-1.mov</primary>
 	</video>
 	<video>
 		<name>Hawaii (Day) 6</name>
 		<filename>appletv-b10-1.mov</filename>
+		<image>http://kodi.wiki/images/c/c4/VideoSecreensaver-appletv-Hawaii-D6.JPG</image>
 		<duration>191</duration>
 		<primary>http://a1.phobos.apple.com/us/r1000/000/Features/atv/AutumnResources/videos/b10-1.mov</primary>
 	</video>
 	<video>
 		<name>Hawaii (Night) 1</name>
 		<filename>appletv-b6-2.mov</filename>
+		<image>http://kodi.wiki/images/e/ec/VideoSecreensaver-appletv-Hawaii-N1.JPG</image>
 		<duration>192</duration>
 		<primary>http://a1.phobos.apple.com/us/r1000/000/Features/atv/AutumnResources/videos/b6-2.mov</primary>
 	</video>
 	<video>
 		<name>Hawaii (Night) 2</name>
 		<filename>appletv-b8-1.mov</filename>
+		<image>http://kodi.wiki/images/1/16/VideoSecreensaver-appletv-Hawaii-N2.JPG</image>
 		<duration>143</duration>
 		<primary>http://a1.phobos.apple.com/us/r1000/000/Features/atv/AutumnResources/videos/b8-1.mov</primary>
 	</video>
 	<video>
 		<name>London (Day) 1</name>
 		<filename>appletv-b5-2.mov</filename>
+		<image>http://kodi.wiki/images/5/52/VideoSecreensaver-appletv-London-D1.JPG</image>
 		<duration>335</duration>
 		<primary>http://a1.phobos.apple.com/us/r1000/000/Features/atv/AutumnResources/videos/b5-2.mov</primary>
 	</video>
 	<video>
 		<name>London (Day) 2</name>
 		<filename>appletv-b6-3.mov</filename>
+		<image>http://kodi.wiki/images/9/92/VideoSecreensaver-appletv-London-D2.JPG</image>
 		<duration>240</duration>
 		<primary>http://a1.phobos.apple.com/us/r1000/000/Features/atv/AutumnResources/videos/b6-3.mov</primary>
 	</video>
 	<video>
 		<name>London (Night) 1</name>
 		<filename>appletv-b1-2.mov</filename>
+		<image>http://kodi.wiki/images/4/4f/VideoSecreensaver-appletv-London-N1.JPG</image>
 		<duration>239</duration>
 		<primary>http://a1.phobos.apple.com/us/r1000/000/Features/atv/AutumnResources/videos/b1-2.mov</primary>
 	</video>
 	<video>
 		<name>London (Night) 2</name>
 		<filename>appletv-b3-1.mov</filename>
+		<image>http://kodi.wiki/images/0/04/VideoSecreensaver-appletv-London-N2.JPG</image>
 		<duration>335</duration>
 		<primary>http://a1.phobos.apple.com/us/r1000/000/Features/atv/AutumnResources/videos/b3-1.mov</primary>
 	</video>
 	<video>
 		<name>London (Night) 3</name>
 		<filename>appletv-b9-2.mov</filename>
+		<image>http://kodi.wiki/images/5/52/VideoSecreensaver-appletv-London-N3.JPG</image>
 		<duration>335</duration>
 		<primary>http://a1.phobos.apple.com/us/r1000/000/Features/atv/AutumnResources/videos/b9-2.mov</primary>
 	</video>
 	<video>
 		<name>New York City (Day) 1</name>
 		<filename>appletv-b1-3.mov</filename>
+		<image>http://kodi.wiki/images/1/11/VideoSecreensaver-appletv-NewYork-D1.JPG</image>
 		<duration>191</duration>
 		<primary>http://a1.phobos.apple.com/us/r1000/000/Features/atv/AutumnResources/videos/b1-3.mov</primary>
 	</video>
 	<video>
 		<name>New York City (Day) 2</name>
 		<filename>appletv-b3-2.mov</filename>
+		<image>http://kodi.wiki/images/a/af/VideoSecreensaver-appletv-NewYork-D2.JPG</image>
 		<duration>239</duration>
 		<primary>http://a1.phobos.apple.com/us/r1000/000/Features/atv/AutumnResources/videos/b3-2.mov</primary>
 	</video>
 	<video>
 		<name>New York City (Day) 3</name>
 		<filename>appletv-b7-2.mov</filename>
+		<image>http://kodi.wiki/images/3/3d/VideoSecreensaver-appletv-NewYork-D3.JPG</image>
 		<duration>288</duration>
 		<primary>http://a1.phobos.apple.com/us/r1000/000/Features/atv/AutumnResources/videos/b7-2.mov</primary>
 	</video>
 	<video>
 		<name>New York City (Night) 1</name>
 		<filename>appletv-b2-3.mov</filename>
+		<image>http://kodi.wiki/images/4/4a/VideoSecreensaver-appletv-NewYork-N1.JPG</image>
 		<duration>192</duration>
 		<primary>http://a1.phobos.apple.com/us/r1000/000/Features/atv/AutumnResources/videos/b2-3.mov</primary>
 	</video>
 	<video>
 		<name>New York City (Night) 2</name>
 		<filename>appletv-b4-2.mov</filename>
+		<image>http://kodi.wiki/images/5/5b/VideoSecreensaver-appletv-NewYork-N2.JPG</image>
 		<duration>239</duration>
 		<primary>http://a1.phobos.apple.com/us/r1000/000/Features/atv/AutumnResources/videos/b4-2.mov</primary>
 	</video>
 	<video>
 		<name>New York City (Night) 3</name>
 		<filename>appletv-b10-2.mov</filename>
+		<image>http://kodi.wiki/images/5/51/VideoSecreensaver-appletv-NewYork-N3.JPG</image>
 		<duration>192</duration>
 		<primary>http://a1.phobos.apple.com/us/r1000/000/Features/atv/AutumnResources/videos/b10-2.mov</primary>
 	</video>
 	<video>
 		<name>San Francisco (Day) 1</name>
 		<filename>appletv-b3-3.mov</filename>
+		<image>http://kodi.wiki/images/e/ed/VideoSecreensaver-appletv-SanFrancisco-D1.JPG</image>
 		<duration>336</duration>
 		<primary>http://a1.phobos.apple.com/us/r1000/000/Features/atv/AutumnResources/videos/b3-3.mov</primary>
 	</video>
 	<video>
 		<name>San Francisco (Day) 2</name>
 		<filename>appletv-b4-3.mov</filename>
+		<image>http://kodi.wiki/images/9/94/VideoSecreensaver-appletv-SanFrancisco-D2.JPG</image>
 		<duration>527</duration>
 		<primary>http://a1.phobos.apple.com/us/r1000/000/Features/atv/AutumnResources/videos/b4-3.mov</primary>
 	</video>
 	<video>
 		<name>San Francisco (Day) 3</name>
 		<filename>appletv-b8-2.mov</filename>
+		<image>http://kodi.wiki/images/a/ae/VideoSecreensaver-appletv-SanFrancisco-D3.JPG</image>
 		<duration>432</duration>
 		<primary>http://a1.phobos.apple.com/us/r1000/000/Features/atv/AutumnResources/videos/b8-2.mov</primary>
 	</video>
 	<video>
 		<name>San Francisco (Day) 4</name>
 		<filename>appletv-b8-3.mov</filename>
+		<image>http://kodi.wiki/images/b/bc/VideoSecreensaver-appletv-SanFrancisco-D4.JPG</image>
 		<duration>287</duration>
 		<primary>http://a1.phobos.apple.com/us/r1000/000/Features/atv/AutumnResources/videos/b8-3.mov</primary>
 	</video>
 	<video>
 		<name>San Francisco (Day) 5</name>
 		<filename>appletv-b9-3.mov</filename>
+		<image>http://kodi.wiki/images/5/5e/VideoSecreensaver-appletv-SanFrancisco-D5.JPG</image>
 		<duration>144</duration>
 		<primary>http://a1.phobos.apple.com/us/r1000/000/Features/atv/AutumnResources/videos/b9-3.mov</primary>
 	</video>
 	<video>
 		<name>San Francisco (Day) 6</name>
 		<filename>appletv-b10-3.mov</filename>
+		<image>http://kodi.wiki/images/d/df/VideoSecreensaver-appletv-SanFrancisco-D6.JPG</image>
 		<duration>335</duration>
 		<primary>http://a1.phobos.apple.com/us/r1000/000/Features/atv/AutumnResources/videos/b10-3.mov</primary>
 	</video>
 	<video>
 		<name>San Francisco (Night) 1</name>
 		<filename>appletv-b1-4.mov</filename>
+		<image>http://kodi.wiki/images/8/8e/VideoSecreensaver-appletv-SanFrancisco-N1.JPG</image>
 		<duration>143</duration>
 		<primary>http://a1.phobos.apple.com/us/r1000/000/Features/atv/AutumnResources/videos/b1-4.mov</primary>
 	</video>
 	<video>
 		<name>San Francisco (Night) 2</name>
 		<filename>appletv-b2-4.mov</filename>
+		<image>http://kodi.wiki/images/d/d9/VideoSecreensaver-appletv-SanFrancisco-N2.JPG</image>
 		<duration>96</duration>
 		<primary>http://a1.phobos.apple.com/us/r1000/000/Features/atv/AutumnResources/videos/b2-4.mov</primary>
 	</video>
 	<video>
 		<name>San Francisco (Night) 3</name>
 		<filename>appletv-b5-3.mov</filename>
+		<image>http://kodi.wiki/images/0/0d/VideoSecreensaver-appletv-SanFrancisco-N3.JPG</image>
 		<duration>383</duration>
 		<primary>http://a1.phobos.apple.com/us/r1000/000/Features/atv/AutumnResources/videos/b5-3.mov</primary>
 	</video>
 	<video>
 		<name>San Francisco (Night) 4</name>
 		<filename>appletv-b6-4.mov</filename>
+		<image>http://kodi.wiki/images/c/cb/VideoSecreensaver-appletv-SanFrancisco-N4.JPG</image>
 		<duration>192</duration>
 		<primary>http://a1.phobos.apple.com/us/r1000/000/Features/atv/AutumnResources/videos/b6-4.mov</primary>
 	</video>
 	<video>
 		<name>San Francisco (Night) 5</name>
 		<filename>appletv-b7-3.mov</filename>
+		<image>http://kodi.wiki/images/a/a7/VideoSecreensaver-appletv-SanFrancisco-N5.JPG</image>
 		<duration>191</duration>
 		<primary>http://a1.phobos.apple.com/us/r1000/000/Features/atv/AutumnResources/videos/b7-3.mov</primary>
 	</video>
 	<video>
 		<name>San Francisco (Night) 6</name>
 		<filename>appletv-b10-4.mov</filename>
+		<image>http://kodi.wiki/images/2/29/VideoSecreensaver-appletv-SanFrancisco-N6.JPG</image>
 		<duration>96</duration>
 		<primary>http://a1.phobos.apple.com/us/r1000/000/Features/atv/AutumnResources/videos/b10-4.mov</primary>
 	</video>

@@ -1,27 +1,24 @@
 <videoscreensaver>
 	<collection>Waterfall</collection>
-	<encoded>true</encoded>
 	<video>
 		<name>Waterfall 1 - [1.3GB] - 720p</name>
 		<filename>Waterfall001-720p.mp4</filename>
 		<image>http://kodi.wiki/images/b/b0/VideoScreensaver-Waterfall001.JPG</image>
 		<duration>3603</duration>
-		<primary>aHR0cDovL2tvZGkuemlnZ3k3MzcwMS5zZWVkci5pby9WaWRlb1NjcmVlbnNhdmVyL1dhdGVyZmFsbDAwMS03MjBwLm1wNA==</primary>
-		<secondary>aHR0cDovLzE3OC4zMy42MS42L3B1dHN0b3JhZ2UvRG93bmxvYWRGaWxlLmFzaHg/RG93bmxvYWRGaWxlSGFzaD0wNDk1NDU5RTNBNUE0QTVRUVdFMjExNTk2N0VXUVM=</secondary>
+		<primary>http://kodi.ziggy73701.seedr.io/VideoScreensaver/Waterfall001-720p.mp4</primary>
 	</video>
 	<video>
 		<name>Waterfall 2 - [1.3GB] - 720p</name>
 		<filename>Waterfall002-720p.mp4</filename>
 		<image>http://kodi.wiki/images/d/df/VideoScreensaver-Waterfall002.JPG</image>
 		<duration>3608</duration>
-		<primary>aHR0cDovL2tvZGkuemlnZ3k3MzcwMS5zZWVkci5pby9WaWRlb1NjcmVlbnNhdmVyL1dhdGVyZmFsbDAwMi03MjBwLm1wNA==</primary>
-		<secondary>aHR0cDovLzE3OC4zMy42MS42L3B1dHN0b3JhZ2UvRG93bmxvYWRGaWxlLmFzaHg/RG93bmxvYWRGaWxlSGFzaD0wQTRGQjAxMjNBNUE0QTVRUVdFMjExNTk4NUVXUVM=</secondary>
+		<primary>http://kodi.ziggy73701.seedr.io/VideoScreensaver/Waterfall002-720p.mp4</primary>
 	</video>
 	<video>
 		<name>Waterfall 3 - [2.4GB] - 720p</name>
 		<filename>Waterfall003-720p.mp4</filename>
 		<image>http://kodi.wiki/images/7/7d/VideoScreensaver-Waterfall003.JPG</image>
 		<duration>7255</duration>
-		<primary>aHR0cDovL2tvZGkuemlnZ3k3MzcwMS5zZWVkci5pby9WaWRlb1NjcmVlbnNhdmVyL1dhdGVyZmFsbDAwMy03MjBwLm1wNA==</primary>
+		<primary>http://kodi.ziggy73701.seedr.io/VideoScreensaver/Waterfall003-720p.mp4</primary>
 	</video>
 </videoscreensaver>
