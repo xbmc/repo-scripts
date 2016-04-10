@@ -5,15 +5,13 @@ import xbmcaddon
 
 # Load the Soco classes
 from soco import SoCo
-
 from settings import Settings
 from settings import log
 from settings import SocoLogging
-
 from lyrics import Lyrics
 
-__addon__ = xbmcaddon.Addon(id='script.sonos')
-__icon__ = __addon__.getAddonInfo('icon')
+ADDON = xbmcaddon.Addon(id='script.sonos')
+ICON = ADDON.getAddonInfo('icon')
 
 
 #########################################################################
@@ -214,6 +212,6 @@ class Sonos(SoCo):
             # might not be complete of upto date, only show the error once
             if Sonos.SHOWN_ERROR is not True:
                 Sonos.SHOWN_ERROR = True
-                xbmc.executebuiltin('Notification(%s, %s, 3000, %s)' % (__addon__.getLocalizedString(32001).encode('utf-8'), __addon__.getLocalizedString(32063).encode('utf-8'), __icon__))
+                xbmc.executebuiltin('Notification(%s, %s, 3000, %s)' % (ADDON.getLocalizedString(32001).encode('utf-8'), ADDON.getLocalizedString(32063).encode('utf-8'), ICON))
 
         return track
