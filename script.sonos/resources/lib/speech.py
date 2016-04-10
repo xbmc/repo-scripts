@@ -277,9 +277,8 @@ class Speech():
         else:
             # Read the phases from the file
             try:
-                file_in = open(speechfile, 'r')
-                phrases = file_in.readlines()
-                file_in.close()
+                with open(speechfile, 'r') as file_in:
+                    phrases = file_in.readlines()
             except:
                 log("Speech: Failed to read lines from file %s" % speechfile, xbmc.LOGERROR)
                 log("Speech: %s" % traceback.format_exc(), xbmc.LOGERROR)
