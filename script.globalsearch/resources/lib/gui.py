@@ -1,6 +1,6 @@
 import sys, datetime, re
 import xbmc, xbmcgui
-import contextmenu, infodialog
+import infodialog
 import json
 
 ADDON        = sys.modules[ "__main__" ].ADDON
@@ -962,11 +962,10 @@ class GUI( xbmcgui.WindowXMLDialog ):
             if self.trailer:
                 labels += ( LANGUAGE(32205), )
                 functions += ( self._play_trailer, )
-        context_menu = contextmenu.GUI( "script-globalsearch-contextmenu.xml" , CWD, "default", labels=labels )
-        context_menu.doModal()
-        if context_menu.selection is not None:
-            functions[ context_menu.selection ]()
-        del context_menu
+        selection = xbmcgui.Dialog().contextmenu(labels)
+        if selection >= 0:
+            functions[ selection ]()
+
 
     def _showInfo( self ):
         items = []

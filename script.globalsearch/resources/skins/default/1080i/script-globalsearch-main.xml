@@ -589,7 +589,7 @@
 								</control>
 								<control type="image">
 									<top>15</top>
-									<right>27</right>
+									<left>190</left>
 									<width>70</width>
 									<height>330</height>
 									<fadetime>300</fadetime>
@@ -599,14 +599,14 @@
 								</control>
 								<control type="group">
 									<top>15</top>
-									<right>-15</right>
+									<left>190</left>
 									<animation effect="fade" start="0" end="100" time="200" delay="250">Focus</animation>
 									<animation effect="fade" start="100" end="0" time="50">UnFocus</animation>
 									<control type="group">
 										<top>20</top>
 										<control type="image">
 											<top>0</top>
-											<right>41</right>
+											<left>0</left>
 											<width>70</width>
 											<height>32</height>
 											<fadetime>300</fadetime>
@@ -614,7 +614,7 @@
 											<texture>globalsearch-list-rating.png</texture>
 										</control>
 										<control type="label">
-											<right>41</right>
+											<left>0</left>
 											<top>35</top>
 											<width>70</width>
 											<height>32</height>
@@ -628,7 +628,7 @@
 										<top>140</top>
 										<control type="image">
 											<top>0</top>
-											<right>41</right>
+											<left>0</left>
 											<width>70</width>
 											<height>32</height>
 											<fadetime>300</fadetime>
@@ -636,7 +636,7 @@
 											<texture>globalsearch-list-year.png</texture>
 										</control>
 										<control type="label">
-											<right>41</right>
+											<left>0</left>
 											<top>35</top>
 											<width>70</width>
 											<height>32</height>
@@ -646,21 +646,24 @@
 											<label fallback="-">$INFO[ListItem.Property(Year)]</label>
 										</control>
 									</control>
-									<control type="image">
-										<right>52</right>
+									<control type="group">
 										<top>260</top>
-										<width>48</width>
-										<height>48</height>
-										<texture>globalsearch-list-watched.png</texture>
-										<visible>IntegerGreaterThan(ListItem.Property(Playcount),0)</visible>
-									</control>
-									<control type="image">
-										<right>52</right>
-										<top>260</top>
-										<width>48</width>
-										<height>48</height>
-										<texture>globalsearch-list-unwatched.png</texture>
-										<visible>!IntegerGreaterThan(ListItem.Property(Playcount),0)</visible>
+										<control type="image">
+											<left>11</left>
+											<top>0</top>
+											<width>48</width>
+											<height>48</height>
+											<texture>globalsearch-list-watched.png</texture>
+											<visible>IntegerGreaterThan(ListItem.Property(Playcount),0)</visible>
+										</control>
+										<control type="image">
+											<left>11</left>
+											<top>0</top>
+											<width>48</width>
+											<height>48</height>
+											<texture>globalsearch-list-unwatched.png</texture>
+											<visible>!IntegerGreaterThan(ListItem.Property(Playcount),0)</visible>
+										</control>
 									</control>
 								</control>
 							</focusedlayout>
@@ -897,7 +900,7 @@
 								</control>
 								<control type="image">
 									<top>15</top>
-									<right>27</right>
+									<left>190</left>
 									<width>70</width>
 									<height>330</height>
 									<fadetime>300</fadetime>
@@ -907,14 +910,14 @@
 								</control>
 								<control type="group">
 									<top>15</top>
-									<right>-15</right>
+									<left>190</left>
 									<animation effect="fade" start="0" end="100" time="200" delay="250">Focus</animation>
 									<animation effect="fade" start="100" end="0" time="50">UnFocus</animation>
 									<control type="group">
 										<top>20</top>
 										<control type="image">
 											<top>0</top>
-											<right>41</right>
+											<left>0</left>
 											<width>70</width>
 											<height>32</height>
 											<fadetime>300</fadetime>
@@ -922,7 +925,7 @@
 											<texture>globalsearch-list-rating.png</texture>
 										</control>
 										<control type="label">
-											<right>41</right>
+											<left>0</left>
 											<top>35</top>
 											<width>70</width>
 											<height>32</height>
@@ -936,7 +939,7 @@
 										<top>140</top>
 										<control type="image">
 											<top>0</top>
-											<right>41</right>
+											<left>0</left>
 											<width>70</width>
 											<height>32</height>
 											<fadetime>300</fadetime>
@@ -944,7 +947,7 @@
 											<texture>globalsearch-list-year.png</texture>
 										</control>
 										<control type="label">
-											<right>41</right>
+											<left>0</left>
 											<top>35</top>
 											<width>70</width>
 											<height>32</height>
@@ -954,21 +957,24 @@
 											<label fallback="-">$INFO[ListItem.Property(Year)]</label>
 										</control>
 									</control>
-									<control type="image">
-										<right>52</right>
+									<control type="group">
 										<top>260</top>
-										<width>48</width>
-										<height>48</height>
-										<texture>globalsearch-list-watched.png</texture>
-										<visible>IntegerGreaterThan(ListItem.Property(Playcount),0)</visible>
-									</control>
-									<control type="image">
-										<right>52</right>
-										<top>260</top>
-										<width>48</width>
-										<height>48</height>
-										<texture>globalsearch-list-unwatched.png</texture>
-										<visible>!IntegerGreaterThan(ListItem.Property(Playcount),0)</visible>
+										<control type="image">
+											<left>11</left>
+											<top>0</top>
+											<width>48</width>
+											<height>48</height>
+											<texture>globalsearch-list-watched.png</texture>
+											<visible>IntegerGreaterThan(ListItem.Property(Playcount),0)</visible>
+										</control>
+										<control type="image">
+											<left>11</left>
+											<top>0</top>
+											<width>48</width>
+											<height>48</height>
+											<texture>globalsearch-list-unwatched.png</texture>
+											<visible>!IntegerGreaterThan(ListItem.Property(Playcount),0)</visible>
+										</control>
 									</control>
 								</control>
 							</focusedlayout>
@@ -1157,7 +1163,7 @@
 								</control>
 								<control type="image">
 									<top>15</top>
-									<right>27</right>
+									<left>190</left>
 									<width>70</width>
 									<height>330</height>
 									<fadetime>300</fadetime>
@@ -1167,14 +1173,14 @@
 								</control>
 								<control type="group">
 									<top>15</top>
-									<right>-15</right>
+									<left>190</left>
 									<animation effect="fade" start="0" end="100" time="200" delay="250">Focus</animation>
 									<animation effect="fade" start="100" end="0" time="50">UnFocus</animation>
 									<control type="group">
 										<top>20</top>
 										<control type="image">
 											<top>0</top>
-											<right>41</right>
+											<left>0</left>
 											<width>70</width>
 											<height>32</height>
 											<fadetime>300</fadetime>
@@ -1182,7 +1188,7 @@
 											<texture>globalsearch-list-rating.png</texture>
 										</control>
 										<control type="label">
-											<right>41</right>
+											<left>0</left>
 											<top>35</top>
 											<width>70</width>
 											<height>32</height>
@@ -1196,7 +1202,7 @@
 										<top>140</top>
 										<control type="image">
 											<top>0</top>
-											<right>41</right>
+											<left>0</left>
 											<width>70</width>
 											<height>32</height>
 											<fadetime>300</fadetime>
@@ -1205,7 +1211,7 @@
 										</control>
 										<control type="label">
 											<right>41</right>
-											<top>35</top>
+											<left>0</left>
 											<width>70</width>
 											<height>32</height>
 											<align>center</align>
@@ -1214,21 +1220,24 @@
 											<label fallback="-">$INFO[ListItem.Property(Episode)]</label>
 										</control>
 									</control>
-									<control type="image">
-										<right>52</right>
+									<control type="group">
 										<top>260</top>
-										<width>48</width>
-										<height>48</height>
-										<texture>globalsearch-list-watched.png</texture>
-										<visible>IntegerGreaterThan(ListItem.Property(Playcount),0)</visible>
-									</control>
-									<control type="image">
-										<right>52</right>
-										<top>260</top>
-										<width>48</width>
-										<height>48</height>
-										<texture>globalsearch-list-unwatched.png</texture>
-										<visible>!IntegerGreaterThan(ListItem.Property(Playcount),0)</visible>
+										<control type="image">
+											<left>11</left>
+											<top>0</top>
+											<width>48</width>
+											<height>48</height>
+											<texture>globalsearch-list-watched.png</texture>
+											<visible>IntegerGreaterThan(ListItem.Property(Playcount),0)</visible>
+										</control>
+										<control type="image">
+											<left>11</left>
+											<top>0</top>
+											<width>48</width>
+											<height>48</height>
+											<texture>globalsearch-list-unwatched.png</texture>
+											<visible>!IntegerGreaterThan(ListItem.Property(Playcount),0)</visible>
+										</control>
 									</control>
 								</control>
 							</focusedlayout>
@@ -1448,7 +1457,7 @@
 									</control>
 								</control>
 								<control type="image">
-									<right>42</right>
+									<left>354</left>
 									<top>12</top>
 									<width>70</width>
 									<height>330</height>
@@ -1459,14 +1468,14 @@
 								</control>
 								<control type="group">
 									<top>12</top>
-									<right>0</right>
+									<left>354</left>
 									<animation effect="fade" start="0" end="100" time="200" delay="250">Focus</animation>
 									<animation effect="fade" start="100" end="0" time="50">UnFocus</animation>
 									<control type="group">
 										<top>20</top>
 										<control type="image">
 											<top>0</top>
-											<right>41</right>
+											<left>0</left>
 											<width>70</width>
 											<height>32</height>
 											<fadetime>300</fadetime>
@@ -1474,8 +1483,8 @@
 											<texture>globalsearch-list-rating.png</texture>
 										</control>
 										<control type="label">
-											<right>41</right>
 											<top>35</top>
+											<left>0</left>
 											<width>70</width>
 											<height>32</height>
 											<align>center</align>
@@ -1488,7 +1497,7 @@
 										<top>140</top>
 										<control type="image">
 											<top>0</top>
-											<right>41</right>
+											<left>0</left>
 											<width>70</width>
 											<height>32</height>
 											<fadetime>300</fadetime>
@@ -1496,7 +1505,7 @@
 											<texture>globalsearch-list-number.png</texture>
 										</control>
 										<control type="label">
-											<right>41</right>
+											<left>0</left>
 											<top>35</top>
 											<width>70</width>
 											<height>32</height>
@@ -1506,21 +1515,24 @@
 											<label fallback="-">$INFO[ListItem.Property(Season)]</label>
 										</control>
 									</control>
-									<control type="image">
-										<right>52</right>
+									<control type="group">
 										<top>260</top>
-										<width>48</width>
-										<height>48</height>
-										<texture>globalsearch-list-watched.png</texture>
-										<visible>IntegerGreaterThan(ListItem.Property(Playcount),0)</visible>
-									</control>
-									<control type="image">
-										<right>52</right>
-										<top>260</top>
-										<width>48</width>
-										<height>48</height>
-										<texture>globalsearch-list-unwatched.png</texture>
-										<visible>!IntegerGreaterThan(ListItem.Property(Playcount),0)</visible>
+										<control type="image">
+											<left>11</left>
+											<top>0</top>
+											<width>48</width>
+											<height>48</height>
+											<texture>globalsearch-list-watched.png</texture>
+											<visible>IntegerGreaterThan(ListItem.Property(Playcount),0)</visible>
+										</control>
+										<control type="image">
+											<left>11</left>
+											<top>0</top>
+											<width>48</width>
+											<height>48</height>
+											<texture>globalsearch-list-unwatched.png</texture>
+											<visible>!IntegerGreaterThan(ListItem.Property(Playcount),0)</visible>
+										</control>
 									</control>
 								</control>
 							</focusedlayout>
@@ -1788,7 +1800,7 @@
 									</control>
 								</control>
 								<control type="image">
-									<right>42</right>
+									<left>354</left>
 									<top>12</top>
 									<width>70</width>
 									<height>330</height>
@@ -1799,14 +1811,14 @@
 								</control>
 								<control type="group">
 									<top>12</top>
-									<right>0</right>
+									<left>354</left>
 									<animation effect="fade" start="0" end="100" time="200" delay="250">Focus</animation>
 									<animation effect="fade" start="100" end="0" time="50">UnFocus</animation>
 									<control type="group">
 										<top>20</top>
 										<control type="image">
 											<top>0</top>
-											<right>41</right>
+											<left>0</left>
 											<width>70</width>
 											<height>32</height>
 											<fadetime>300</fadetime>
@@ -1814,7 +1826,7 @@
 											<texture>globalsearch-list-rating.png</texture>
 										</control>
 										<control type="label">
-											<right>41</right>
+											<left>0</left>
 											<top>35</top>
 											<width>70</width>
 											<height>32</height>
@@ -1828,7 +1840,7 @@
 										<top>140</top>
 										<control type="image">
 											<top>0</top>
-											<right>41</right>
+											<left>0</left>
 											<width>70</width>
 											<height>32</height>
 											<fadetime>300</fadetime>
@@ -1836,7 +1848,7 @@
 											<texture>globalsearch-list-year.png</texture>
 										</control>
 										<control type="label">
-											<right>41</right>
+											<left>0</left>
 											<top>35</top>
 											<width>70</width>
 											<height>32</height>
@@ -1846,21 +1858,24 @@
 											<label fallback="-">$INFO[ListItem.Property(Year)]</label>
 										</control>
 									</control>
-									<control type="image">
-										<right>52</right>
+									<control type="group">
 										<top>260</top>
-										<width>48</width>
-										<height>48</height>
-										<texture>globalsearch-list-watched.png</texture>
-										<visible>IntegerGreaterThan(ListItem.Property(Playcount),0)</visible>
-									</control>
-									<control type="image">
-										<right>52</right>
-										<top>260</top>
-										<width>48</width>
-										<height>48</height>
-										<texture>globalsearch-list-unwatched.png</texture>
-										<visible>!IntegerGreaterThan(ListItem.Property(Playcount),0)</visible>
+										<control type="image">
+											<left>11</left>
+											<top>0</top>
+											<width>48</width>
+											<height>48</height>
+											<texture>globalsearch-list-watched.png</texture>
+											<visible>IntegerGreaterThan(ListItem.Property(Playcount),0)</visible>
+										</control>
+										<control type="image">
+											<left>11</left>
+											<top>0</top>
+											<width>48</width>
+											<height>48</height>
+											<texture>globalsearch-list-unwatched.png</texture>
+											<visible>!IntegerGreaterThan(ListItem.Property(Playcount),0)</visible>
+										</control>
 									</control>
 								</control>
 							</focusedlayout>
@@ -2106,7 +2121,7 @@
 									</control>
 								</control>
 								<control type="image">
-									<right>12</right>
+									<left>268</left>
 									<top>12</top>
 									<width>70</width>
 									<height>300</height>
@@ -2117,14 +2132,14 @@
 								</control>
 								<control type="group">
 									<top>12</top>
-									<right>-30</right>
+									<left>268</left>
 									<animation effect="fade" start="0" end="100" time="200" delay="250">Focus</animation>
 									<animation effect="fade" start="100" end="0" time="50">UnFocus</animation>
 									<control type="group">
 										<top>20</top>
 										<control type="image">
 											<top>0</top>
-											<right>41</right>
+											<left>0</left>
 											<width>70</width>
 											<height>32</height>
 											<fadetime>300</fadetime>
@@ -2132,9 +2147,9 @@
 											<texture>globalsearch-list-formed.png</texture>
 										</control>
 										<control type="textbox">
-											<right>46</right>
+											<left>0</left>
 											<top>35</top>
-											<width>60</width>
+											<width>70</width>
 											<height>32</height>
 											<align>center</align>
 											<font>font_textbox</font>
@@ -2146,7 +2161,7 @@
 										<top>140</top>
 										<control type="image">
 											<top>0</top>
-											<right>41</right>
+											<left>0</left>
 											<width>70</width>
 											<height>32</height>
 											<fadetime>300</fadetime>
@@ -2154,9 +2169,9 @@
 											<texture>globalsearch-list-disbanded.png</texture>
 										</control>
 										<control type="textbox">
-											<right>46</right>
+											<left>0</left>
 											<top>35</top>
-											<width>60</width>
+											<width>70</width>
 											<height>32</height>
 											<align>center</align>
 											<font>font_textbox</font>
@@ -2382,7 +2397,7 @@
 									</control>
 								</control>
 								<control type="image">
-									<right>12</right>
+									<left>268</left>
 									<top>12</top>
 									<width>70</width>
 									<height>300</height>
@@ -2393,14 +2408,14 @@
 								</control>
 								<control type="group">
 									<top>12</top>
-									<right>-30</right>
+									<left>268</left>
 									<animation effect="fade" start="0" end="100" time="200" delay="250">Focus</animation>
 									<animation effect="fade" start="100" end="0" time="50">UnFocus</animation>
 									<control type="group">
 										<top>20</top>
 										<control type="image">
 											<top>0</top>
-											<right>41</right>
+											<left>0</left>
 											<width>70</width>
 											<height>32</height>
 											<fadetime>300</fadetime>
@@ -2408,7 +2423,7 @@
 											<texture>globalsearch-list-rating.png</texture>
 										</control>
 										<control type="label">
-											<right>41</right>
+											<left>0</left>
 											<top>35</top>
 											<width>70</width>
 											<height>32</height>
@@ -2422,7 +2437,7 @@
 										<top>140</top>
 										<control type="image">
 											<top>0</top>
-											<right>41</right>
+											<left>0</left>
 											<width>70</width>
 											<height>32</height>
 											<fadetime>300</fadetime>
@@ -2430,7 +2445,7 @@
 											<texture>globalsearch-list-year.png</texture>
 										</control>
 										<control type="label">
-											<right>41</right>
+											<left>0</left>
 											<top>35</top>
 											<width>70</width>
 											<height>32</height>
@@ -2658,7 +2673,7 @@
 									</control>
 								</control>
 								<control type="image">
-									<right>12</right>
+									<left>268</left>
 									<top>12</top>
 									<width>70</width>
 									<height>300</height>
@@ -2669,14 +2684,14 @@
 								</control>
 								<control type="group">
 									<top>12</top>
-									<right>-30</right>
+									<left>268</left>
 									<animation effect="fade" start="0" end="100" time="200" delay="250">Focus</animation>
 									<animation effect="fade" start="100" end="0" time="50">UnFocus</animation>
 									<control type="group">
 										<top>20</top>
 										<control type="image">
 											<top>0</top>
-											<right>41</right>
+											<left>0</left>
 											<width>70</width>
 											<height>32</height>
 											<fadetime>300</fadetime>
@@ -2684,7 +2699,7 @@
 											<texture>globalsearch-list-rating.png</texture>
 										</control>
 										<control type="label">
-											<right>41</right>
+											<left>0</left>
 											<top>35</top>
 											<width>70</width>
 											<height>32</height>
@@ -2698,7 +2713,7 @@
 										<top>140</top>
 										<control type="image">
 											<top>0</top>
-											<right>41</right>
+											<left>0</left>
 											<width>70</width>
 											<height>32</height>
 											<fadetime>300</fadetime>
@@ -2706,7 +2721,7 @@
 											<texture>globalsearch-list-year.png</texture>
 										</control>
 										<control type="label">
-											<right>41</right>
+											<left>0</left>
 											<top>35</top>
 											<width>70</width>
 											<height>32</height>
@@ -2716,21 +2731,24 @@
 											<label fallback="-">$INFO[ListItem.Property(Year)]</label>
 										</control>
 									</control>
-									<control type="image">
-										<right>52</right>
+									<control type="group">
 										<top>240</top>
-										<width>48</width>
-										<height>48</height>
-										<texture>globalsearch-list-watched.png</texture>
-										<visible>IntegerGreaterThan(ListItem.Property(Playcount),0)</visible>
-									</control>
-									<control type="image">
-										<right>52</right>
-										<top>240</top>
-										<width>48</width>
-										<height>48</height>
-										<texture>globalsearch-list-unwatched.png</texture>
-										<visible>!IntegerGreaterThan(ListItem.Property(Playcount),0)</visible>
+										<control type="image">
+											<left>11</left>
+											<top>0</top>
+											<width>48</width>
+											<height>48</height>
+											<texture>globalsearch-list-watched.png</texture>
+											<visible>IntegerGreaterThan(ListItem.Property(Playcount),0)</visible>
+										</control>
+										<control type="image">
+											<left>11</left>
+											<top>0</top>
+											<width>48</width>
+											<height>48</height>
+											<texture>globalsearch-list-unwatched.png</texture>
+											<visible>!IntegerGreaterThan(ListItem.Property(Playcount),0)</visible>
+										</control>
 									</control>
 								</control>
 							</focusedlayout>
@@ -2919,7 +2937,7 @@
 								</control>
 								<control type="image">
 									<top>15</top>
-									<right>27</right>
+									<left>190</left>
 									<width>70</width>
 									<height>330</height>
 									<fadetime>300</fadetime>
@@ -2929,14 +2947,14 @@
 								</control>
 								<control type="group">
 									<top>15</top>
-									<right>-15</right>
+									<left>190</left>
 									<animation effect="fade" start="0" end="100" time="200" delay="250">Focus</animation>
 									<animation effect="fade" start="100" end="0" time="50">UnFocus</animation>
 									<control type="group">
 										<top>20</top>
 										<control type="image">
 											<top>0</top>
-											<right>41</right>
+											<left>0</left>
 											<width>70</width>
 											<height>32</height>
 											<fadetime>300</fadetime>
@@ -2944,7 +2962,7 @@
 											<texture>globalsearch-list-rating.png</texture>
 										</control>
 										<control type="label">
-											<right>41</right>
+											<left>0</left>
 											<top>35</top>
 											<width>70</width>
 											<height>32</height>
@@ -2958,7 +2976,7 @@
 										<top>140</top>
 										<control type="image">
 											<top>0</top>
-											<right>41</right>
+											<left>0</left>
 											<width>70</width>
 											<height>32</height>
 											<fadetime>300</fadetime>
@@ -2966,7 +2984,7 @@
 											<texture>globalsearch-list-year.png</texture>
 										</control>
 										<control type="label">
-											<right>41</right>
+											<left>0</left>
 											<top>35</top>
 											<width>70</width>
 											<height>32</height>
@@ -2976,21 +2994,24 @@
 											<label fallback="-">$INFO[ListItem.Property(Year)]</label>
 										</control>
 									</control>
-									<control type="image">
-										<right>52</right>
+									<control type="group">
 										<top>260</top>
-										<width>48</width>
-										<height>48</height>
-										<texture>globalsearch-list-watched.png</texture>
-										<visible>IntegerGreaterThan(ListItem.Property(Playcount),0)</visible>
-									</control>
-									<control type="image">
-										<right>52</right>
-										<top>260</top>
-										<width>48</width>
-										<height>48</height>
-										<texture>globalsearch-list-unwatched.png</texture>
-										<visible>!IntegerGreaterThan(ListItem.Property(Playcount),0)</visible>
+										<control type="image">
+											<left>11</left>
+											<top>0</top>
+											<width>48</width>
+											<height>48</height>
+											<texture>globalsearch-list-watched.png</texture>
+											<visible>IntegerGreaterThan(ListItem.Property(Playcount),0)</visible>
+										</control>
+										<control type="image">
+											<left>11</left>
+											<top>0</top>
+											<width>48</width>
+											<height>48</height>
+											<texture>globalsearch-list-unwatched.png</texture>
+											<visible>!IntegerGreaterThan(ListItem.Property(Playcount),0)</visible>
+										</control>
 									</control>
 								</control>
 							</focusedlayout>
@@ -3102,216 +3123,6 @@
 									<aspectratio align="center" aligny="top">keep</aspectratio>
 									<texture>$INFO[Container(211).ListItem.Property(VideoCodec),globalsearch-flags/videocodec/,.png]</texture>
 								</control>
-							</control>
-						</control>
-					</control>
-					<control type="group" id="229">
-						<control type="panel" id="221">
-							<left>0</left>
-							<top>22</top>
-							<width>1500</width>
-							<height>720</height>
-							<onleft>9000</onleft>
-							<onright>531</onright>
-							<onup>500</onup>
-							<ondown>500</ondown>
-							<viewtype label="31102">icon</viewtype>
-							<preloaditems>4</preloaditems>
-							<pagecontrol>531</pagecontrol>
-							<scrolltime tween="cubic" easing="out">500</scrolltime>
-							<animation effect="fade" time="200">VisibleChange</animation>
-							<visible>Container(9000).HasFocus(11)</visible>
-							<itemlayout height="360" width="350">
-								<control type="image">
-									<left>1</left>
-									<top>10</top>
-									<width>300</width>
-									<height>300</height>
-									<texture border="2" fallback="DefaultVideo.png" background="true">$INFO[ListItem.Icon]</texture>
-									<aspectratio>scale</aspectratio>
-									<bordertexture colordiffuse="60FFFFFF">globalsearch-black.png</bordertexture>
-									<bordersize>4</bordersize>
-								</control>
-								<control type="image">
-									<left>1</left>
-									<top>250</top>
-									<width>300</width>
-									<height>58</height>
-									<texture colordiffuse="B0FFFFFF">globalsearch-black.png</texture>
-								</control>
-								<control type="label">
-									<left>15</left>
-									<top>250</top>
-									<width>270</width>
-									<height>29</height>
-									<font>font10</font>
-									<align>center</align>
-									<aligny>center</aligny>
-									<selectedcolor>white</selectedcolor>
-									<label>[B]$INFO[ListItem.Property(ChannelName)][/B]</label>
-								</control>
-								<control type="label">
-									<left>15</left>
-									<top>276</top>
-									<width>280</width>
-									<height>29</height>
-									<font>font10</font>
-									<align>center</align>
-									<aligny>center</aligny>
-									<selectedcolor>white</selectedcolor>
-									<label>$INFO[ListItem.Label]</label>
-								</control>
-							</itemlayout>
-							<focusedlayout height="360" width="350">
-								<control type="group">
-									<animation effect="slide" start="0,0" end="-40,0" time="300">Focus</animation>
-									<animation effect="slide" start="-40,0" end="0,0" time="125">UnFocus</animation>
-									<control type="image">
-										<left>1</left>
-										<top>10</top>
-										<width>300</width>
-										<height>300</height>
-										<texture border="2" fallback="DefaultVideo.png" background="true">$INFO[ListItem.Icon]</texture>
-										<aspectratio>scale</aspectratio>
-										<bordertexture colordiffuse="60FFFFFF">globalsearch-black.png</bordertexture>
-										<bordersize>4</bordersize>
-									</control>
-									<control type="image">
-										<left>1</left>
-										<top>250</top>
-										<width>300</width>
-										<height>58</height>
-										<texture colordiffuse="B0FFFFFF">globalsearch-black.png</texture>
-									</control>
-									<control type="label">
-										<left>15</left>
-										<top>250</top>
-										<width>270</width>
-										<height>29</height>
-										<font>font10</font>
-										<align>center</align>
-										<aligny>center</aligny>
-										<selectedcolor>white</selectedcolor>
-										<label>[B]$INFO[ListItem.Property(ChannelName)][/B]</label>
-									</control>
-									<control type="label">
-										<left>15</left>
-										<top>276</top>
-										<width>280</width>
-										<height>29</height>
-										<font>font10</font>
-										<align>center</align>
-										<aligny>center</aligny>
-										<selectedcolor>white</selectedcolor>
-										<label>$INFO[ListItem.Label]</label>
-									</control>
-									<control type="image">
-										<left>1</left>
-										<top>11</top>
-										<width>300</width>
-										<height>300</height>
-										<texture border="8" colordiffuse="FF12B2E7">globalsearch-thumbnail-focus.png</texture>
-									</control>
-								</control>
-								<control type="image">
-									<right>12</right>
-									<top>12</top>
-									<width>70</width>
-									<height>300</height>
-									<fadetime>300</fadetime>
-									<texture colordiffuse="FF12B2E7">globalsearch-white.png</texture>
-									<animation effect="zoom" start="0,100" end="100,100" time="250" center="auto">Focus</animation>
-									<animation effect="zoom" start="100,100" end="0,100" time="125" center="auto" delay="50">UnFocus</animation>
-								</control>
-								<control type="group">
-									<top>12</top>
-									<right>-30</right>
-									<animation effect="fade" start="0" end="100" time="200" delay="250">Focus</animation>
-									<animation effect="fade" start="100" end="0" time="50">UnFocus</animation>
-									<control type="group">
-										<top>20</top>
-										<control type="image">
-											<top>0</top>
-											<right>41</right>
-											<width>70</width>
-											<height>32</height>
-											<fadetime>300</fadetime>
-											<aspectratio align="center">keep</aspectratio>
-											<texture>globalsearch-list-number.png</texture>
-										</control>
-										<control type="textbox">
-											<right>46</right>
-											<top>35</top>
-											<width>60</width>
-											<height>32</height>
-											<align>center</align>
-											<font>font_textbox</font>
-											<selectedcolor>white</selectedcolor>
-											<label fallback="-">$INFO[ListItem.Property(ChannelNumber)]</label>
-										</control>
-									</control>
-								</control>
-							</focusedlayout>
-						</control>
-						<control type="group">
-							<visible>Control.IsVisible(221)</visible>
-							<control type="button">
-								<left>659</left>
-								<top>-38</top>
-								<width>48</width>
-								<height>24</height>
-								<texturefocus colordiffuse="FF12B2E7" flipy="true">globalsearch-arrowdown.png</texturefocus>
-								<texturenofocus colordiffuse="FF12B2E7" flipy="true">globalsearch-arrowdown.png</texturenofocus>
-								<animation effect="zoom" start="100,0" end="100,100" center="auto" time="200" delay="10">VisibleChange</animation>
-								<animation effect="zoom" start="100,0" end="100,100" delay="500" center="auto" time="200">WindowOpen</animation>
-								<animation effect="zoom" start="100,100" end="100,0" center="auto" time="200">WindowClose</animation>
-								<onclick>SetFocus(221)</onclick>
-								<onclick>PageUp</onclick>
-								<animation effect="fade" time="200">VisibleChange</animation>
-								<visible>Container(221).HasPrevious</visible>
-							</control>
-							<control type="button">
-								<left>659</left>
-								<top>738</top>
-								<width>48</width>
-								<height>24</height>
-								<texturefocus colordiffuse="FF12B2E7">globalsearch-arrowdown.png</texturefocus>
-								<texturenofocus colordiffuse="FF12B2E7">globalsearch-arrowdown.png</texturenofocus>
-								<animation effect="zoom" start="100,0" end="100,100" center="auto" time="200" delay="10">VisibleChange</animation>
-								<animation effect="zoom" start="100,0" end="100,100" delay="500" center="auto" time="200">WindowOpen</animation>
-								<animation effect="zoom" start="100,100" end="100,0" center="auto" time="200">WindowClose</animation>
-								<onclick>SetFocus(221)</onclick>
-								<onclick>PageDown</onclick>
-								<animation effect="fade" time="200">VisibleChange</animation>
-								<visible>Container(221).HasNext</visible>
-							</control>
-						</control>
-						<control type="grouplist">
-							<visible>Control.IsVisible(221)</visible>
-							<animation effect="fade" start="0" end="100" time="400">WindowOpen</animation>
-							<animation effect="fade" start="100" end="0" time="300">WindowClose</animation>
-							<orientation>horizontal</orientation>
-							<align>right</align>
-							<top>775</top>
-							<right>24</right>
-							<width>1200</width>
-							<itemgap>10</itemgap>
-							<animation effect="fade" time="200">VisibleChange</animation>
-							<control type="label">
-								<width>auto</width>
-								<height>48</height>
-								<aligny>center</aligny>
-								<align>right</align>
-								<shadowcolor>22000000</shadowcolor>
-								<label>$INFO[Container(221).CurrentItem,, / ]$INFO[Container(221).NumItems]</label>
-							</control>
-							<control type="image">
-								<width>54</width>
-								<height>44</height>
-								<aspectratio>keep</aspectratio>
-								<texture colordiffuse="FF12B2E7">globalsearch-itemcount.png</texture>
-								<animation effect="fade" time="200">VisibleChange</animation>
-								<xvisible>!IsEmpty(Container(221).NumItems)</xvisible>
 							</control>
 						</control>
 					</control>
@@ -3437,7 +3248,7 @@
 								</control>
 								<control type="image">
 									<top>15</top>
-									<right>27</right>
+									<left>190</left>
 									<width>70</width>
 									<height>330</height>
 									<fadetime>300</fadetime>
@@ -3447,14 +3258,14 @@
 								</control>
 								<control type="group">
 									<top>15</top>
-									<right>-15</right>
+									<left>190</left>
 									<animation effect="fade" start="0" end="100" time="200" delay="250">Focus</animation>
 									<animation effect="fade" start="100" end="0" time="50">UnFocus</animation>
 									<control type="group">
 										<top>20</top>
 										<control type="image">
 											<top>0</top>
-											<right>41</right>
+											<left>0</left>
 											<width>70</width>
 											<height>32</height>
 											<fadetime>300</fadetime>
@@ -3462,7 +3273,7 @@
 											<texture>globalsearch-list-rating.png</texture>
 										</control>
 										<control type="label">
-											<right>41</right>
+											<left>0</left>
 											<top>35</top>
 											<width>70</width>
 											<height>32</height>
@@ -3476,7 +3287,7 @@
 										<top>140</top>
 										<control type="image">
 											<top>0</top>
-											<right>41</right>
+											<left>0</left>
 											<width>70</width>
 											<height>32</height>
 											<fadetime>300</fadetime>
@@ -3484,7 +3295,7 @@
 											<texture>globalsearch-list-year.png</texture>
 										</control>
 										<control type="label">
-											<right>41</right>
+											<left>0</left>
 											<top>35</top>
 											<width>70</width>
 											<height>32</height>
@@ -3494,21 +3305,24 @@
 											<label fallback="-">$INFO[ListItem.Property(Year)]</label>
 										</control>
 									</control>
-									<control type="image">
-										<right>52</right>
+									<control type="group">
 										<top>260</top>
-										<width>48</width>
-										<height>48</height>
-										<texture>globalsearch-list-watched.png</texture>
-										<visible>IntegerGreaterThan(ListItem.Property(Playcount),0)</visible>
-									</control>
-									<control type="image">
-										<right>52</right>
-										<top>260</top>
-										<width>48</width>
-										<height>48</height>
-										<texture>globalsearch-list-unwatched.png</texture>
-										<visible>!IntegerGreaterThan(ListItem.Property(Playcount),0)</visible>
+										<control type="image">
+											<left>11</left>
+											<top>0</top>
+											<width>48</width>
+											<height>48</height>
+											<texture>globalsearch-list-watched.png</texture>
+											<visible>IntegerGreaterThan(ListItem.Property(Playcount),0)</visible>
+										</control>
+										<control type="image">
+											<left>11</left>
+											<top>0</top>
+											<width>48</width>
+											<height>48</height>
+											<texture>globalsearch-list-unwatched.png</texture>
+											<visible>!IntegerGreaterThan(ListItem.Property(Playcount),0)</visible>
+										</control>
 									</control>
 								</control>
 							</focusedlayout>
@@ -3620,6 +3434,216 @@
 									<aspectratio align="center" aligny="top">keep</aspectratio>
 									<texture>$INFO[Container(231).ListItem.Property(VideoCodec),globalsearch-flags/videocodec/,.png]</texture>
 								</control>
+							</control>
+						</control>
+					</control>
+					<control type="group" id="229">
+						<control type="panel" id="221">
+							<left>0</left>
+							<top>22</top>
+							<width>1500</width>
+							<height>720</height>
+							<onleft>9000</onleft>
+							<onright>531</onright>
+							<onup>500</onup>
+							<ondown>500</ondown>
+							<viewtype label="31102">icon</viewtype>
+							<preloaditems>4</preloaditems>
+							<pagecontrol>531</pagecontrol>
+							<scrolltime tween="cubic" easing="out">500</scrolltime>
+							<animation effect="fade" time="200">VisibleChange</animation>
+							<visible>Container(9000).HasFocus(11)</visible>
+							<itemlayout height="360" width="350">
+								<control type="image">
+									<left>1</left>
+									<top>10</top>
+									<width>300</width>
+									<height>300</height>
+									<texture border="2" fallback="DefaultVideo.png" background="true">$INFO[ListItem.Icon]</texture>
+									<aspectratio>scale</aspectratio>
+									<bordertexture colordiffuse="60FFFFFF">globalsearch-black.png</bordertexture>
+									<bordersize>4</bordersize>
+								</control>
+								<control type="image">
+									<left>1</left>
+									<top>250</top>
+									<width>300</width>
+									<height>58</height>
+									<texture colordiffuse="B0FFFFFF">globalsearch-black.png</texture>
+								</control>
+								<control type="label">
+									<left>15</left>
+									<top>250</top>
+									<width>270</width>
+									<height>29</height>
+									<font>font10</font>
+									<align>center</align>
+									<aligny>center</aligny>
+									<selectedcolor>white</selectedcolor>
+									<label>[B]$INFO[ListItem.Property(ChannelName)][/B]</label>
+								</control>
+								<control type="label">
+									<left>15</left>
+									<top>276</top>
+									<width>280</width>
+									<height>29</height>
+									<font>font10</font>
+									<align>center</align>
+									<aligny>center</aligny>
+									<selectedcolor>white</selectedcolor>
+									<label>$INFO[ListItem.Label]</label>
+								</control>
+							</itemlayout>
+							<focusedlayout height="360" width="350">
+								<control type="group">
+									<animation effect="slide" start="0,0" end="-40,0" time="300">Focus</animation>
+									<animation effect="slide" start="-40,0" end="0,0" time="125">UnFocus</animation>
+									<control type="image">
+										<left>1</left>
+										<top>10</top>
+										<width>300</width>
+										<height>300</height>
+										<texture border="2" fallback="DefaultVideo.png" background="true">$INFO[ListItem.Icon]</texture>
+										<aspectratio>scale</aspectratio>
+										<bordertexture colordiffuse="60FFFFFF">globalsearch-black.png</bordertexture>
+										<bordersize>4</bordersize>
+									</control>
+									<control type="image">
+										<left>1</left>
+										<top>250</top>
+										<width>300</width>
+										<height>58</height>
+										<texture colordiffuse="B0FFFFFF">globalsearch-black.png</texture>
+									</control>
+									<control type="label">
+										<left>15</left>
+										<top>250</top>
+										<width>270</width>
+										<height>29</height>
+										<font>font10</font>
+										<align>center</align>
+										<aligny>center</aligny>
+										<selectedcolor>white</selectedcolor>
+										<label>[B]$INFO[ListItem.Property(ChannelName)][/B]</label>
+									</control>
+									<control type="label">
+										<left>15</left>
+										<top>276</top>
+										<width>280</width>
+										<height>29</height>
+										<font>font10</font>
+										<align>center</align>
+										<aligny>center</aligny>
+										<selectedcolor>white</selectedcolor>
+										<label>$INFO[ListItem.Label]</label>
+									</control>
+									<control type="image">
+										<left>1</left>
+										<top>11</top>
+										<width>300</width>
+										<height>300</height>
+										<texture border="8" colordiffuse="FF12B2E7">globalsearch-thumbnail-focus.png</texture>
+									</control>
+								</control>
+								<control type="image">
+									<left>268</left>
+									<top>12</top>
+									<width>70</width>
+									<height>300</height>
+									<fadetime>300</fadetime>
+									<texture colordiffuse="FF12B2E7">globalsearch-white.png</texture>
+									<animation effect="zoom" start="0,100" end="100,100" time="250" center="auto">Focus</animation>
+									<animation effect="zoom" start="100,100" end="0,100" time="125" center="auto" delay="50">UnFocus</animation>
+								</control>
+								<control type="group">
+									<top>12</top>
+									<left>268</left>
+									<animation effect="fade" start="0" end="100" time="200" delay="250">Focus</animation>
+									<animation effect="fade" start="100" end="0" time="50">UnFocus</animation>
+									<control type="group">
+										<top>20</top>
+										<control type="image">
+											<top>0</top>
+											<left>0</left>
+											<width>70</width>
+											<height>32</height>
+											<fadetime>300</fadetime>
+											<aspectratio align="center">keep</aspectratio>
+											<texture>globalsearch-list-number.png</texture>
+										</control>
+										<control type="textbox">
+											<left>0</left>
+											<top>35</top>
+											<width>70</width>
+											<height>32</height>
+											<align>center</align>
+											<font>font_textbox</font>
+											<selectedcolor>white</selectedcolor>
+											<label fallback="-">$INFO[ListItem.Property(ChannelNumber)]</label>
+										</control>
+									</control>
+								</control>
+							</focusedlayout>
+						</control>
+						<control type="group">
+							<visible>Control.IsVisible(221)</visible>
+							<control type="button">
+								<left>659</left>
+								<top>-38</top>
+								<width>48</width>
+								<height>24</height>
+								<texturefocus colordiffuse="FF12B2E7" flipy="true">globalsearch-arrowdown.png</texturefocus>
+								<texturenofocus colordiffuse="FF12B2E7" flipy="true">globalsearch-arrowdown.png</texturenofocus>
+								<animation effect="zoom" start="100,0" end="100,100" center="auto" time="200" delay="10">VisibleChange</animation>
+								<animation effect="zoom" start="100,0" end="100,100" delay="500" center="auto" time="200">WindowOpen</animation>
+								<animation effect="zoom" start="100,100" end="100,0" center="auto" time="200">WindowClose</animation>
+								<onclick>SetFocus(221)</onclick>
+								<onclick>PageUp</onclick>
+								<animation effect="fade" time="200">VisibleChange</animation>
+								<visible>Container(221).HasPrevious</visible>
+							</control>
+							<control type="button">
+								<left>659</left>
+								<top>738</top>
+								<width>48</width>
+								<height>24</height>
+								<texturefocus colordiffuse="FF12B2E7">globalsearch-arrowdown.png</texturefocus>
+								<texturenofocus colordiffuse="FF12B2E7">globalsearch-arrowdown.png</texturenofocus>
+								<animation effect="zoom" start="100,0" end="100,100" center="auto" time="200" delay="10">VisibleChange</animation>
+								<animation effect="zoom" start="100,0" end="100,100" delay="500" center="auto" time="200">WindowOpen</animation>
+								<animation effect="zoom" start="100,100" end="100,0" center="auto" time="200">WindowClose</animation>
+								<onclick>SetFocus(221)</onclick>
+								<onclick>PageDown</onclick>
+								<animation effect="fade" time="200">VisibleChange</animation>
+								<visible>Container(221).HasNext</visible>
+							</control>
+						</control>
+						<control type="grouplist">
+							<visible>Control.IsVisible(221)</visible>
+							<animation effect="fade" start="0" end="100" time="400">WindowOpen</animation>
+							<animation effect="fade" start="100" end="0" time="300">WindowClose</animation>
+							<orientation>horizontal</orientation>
+							<align>right</align>
+							<top>775</top>
+							<right>24</right>
+							<width>1200</width>
+							<itemgap>10</itemgap>
+							<animation effect="fade" time="200">VisibleChange</animation>
+							<control type="label">
+								<width>auto</width>
+								<height>48</height>
+								<aligny>center</aligny>
+								<align>right</align>
+								<shadowcolor>22000000</shadowcolor>
+								<label>$INFO[Container(221).CurrentItem,, / ]$INFO[Container(221).NumItems]</label>
+							</control>
+							<control type="image">
+								<width>54</width>
+								<height>44</height>
+								<aspectratio>keep</aspectratio>
+								<texture colordiffuse="FF12B2E7">globalsearch-itemcount.png</texture>
+								<animation effect="fade" time="200">VisibleChange</animation>
+								<xvisible>!IsEmpty(Container(221).NumItems)</xvisible>
 							</control>
 						</control>
 					</control>

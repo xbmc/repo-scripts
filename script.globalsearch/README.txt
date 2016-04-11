@@ -10,8 +10,7 @@ I.   Infolabels available in script-globalsearch-main.xml
 II.  Infolabels available in script-globalsearch-infodialog.xml
 III. Control id's used in script-globalsearch-main.xml
 IV.  Control id's used in script-globalsearch-infodialog.xml
-V.   Control id's used in script-globalsearch-contextmenu.xml
-VI.  Available window properties
+V.   Available window properties
 
 
 
@@ -288,17 +287,6 @@ IV. Control id's used in script-globalsearch-infodialog.xml
 192 - Button, The script will set the button label and the visible condition.
 193 - Button, The script will set the button label and the visible condition.
 
-
-
-V. Control id's used in script-globalsearch-contextmenu.xml
------------------------------------------------------------
-997 - Context menu top texture
-998 - Context menu middle texture
-999 - Context menu bottom texture
-
-1001 - First context menu button, the script will handle the visible condition
-1002 - Second context menu button, the script will handle the visible condition
-1003 - Third context menu button, the script will handle the visible condition
 
 
 As always, do not change or remove any of the id's mentioned above!
