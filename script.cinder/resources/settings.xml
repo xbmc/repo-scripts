@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<settings>
+	<category label="32000">
+                <setting type="lsep" label="32100"/>
+		<setting label="32101" type="enum" id="WatchedRandomMode" default="0" lvalues="16100|16101|16102"/>
+                <setting type="lsep" label="32102"/>
+                <setting label="32103" type="slider" id="NumberOfShows" default="10" range="1,1,100" option="int"/>
+                <setting type="lsep" label="32104"/>
+		<setting label="32105" type="bool" id="ShufflePlaylist" default="true"/>
+                <setting type="lsep" label="32106"/>
+		<setting label="32107" type="bool" id="SkipSources" default="true"/>
+                <setting type="lsep" label="32108"/>
+		<setting label="32109" type="bool" id="BootstrapPlayback" default="true"/>
+	</category>
+	<category label="32001">
+                <setting type="lsep" label="32196"/>
+                <setting type="lsep" label="32197"/>
+                <setting type="lsep" label="32198"/>
+                <setting type="lsep" label="32199"/>
+                <setting type="sep"/>
+		<setting label="32201" type="text" id="Source1Uri"/>
+                <setting label="32202" type="slider" id="Source1Weight" default="50" range="0,1,100" option="int"/>
+                <setting type="sep"/>
+		<setting label="32203" type="text" id="Source2Uri"/>
+                <setting label="32204" type="slider" id="Source2Weight" default="50" range="0,1,100" option="int"/>
+                <setting type="sep"/>
+		<setting label="32205" type="text" id="Source3Uri"/>
+                <setting label="32206" type="slider" id="Source3Weight" default="50" range="0,1,100" option="int"/>
+                <setting type="sep"/>
+		<setting label="32207" type="text" id="Source4Uri"/>
+                <setting label="32208" type="slider" id="Source4Weight" default="50" range="0,1,100" option="int"/>
+                <setting type="sep"/>
+		<setting label="32209" type="text" id="Source5Uri"/>
+                <setting label="32210" type="slider" id="Source5Weight" default="50" range="0,1,100" option="int"/>
+                <setting type="sep"/>
+		<setting label="32211" type="text" id="Source6Uri"/>
+                <setting label="32212" type="slider" id="Source6Weight" default="50" range="0,1,100" option="int"/>
+                <setting type="sep"/>
+		<setting label="32213" type="text" id="Source7Uri"/>
+                <setting label="32214" type="slider" id="Source7Weight" default="50" range="0,1,100" option="int"/>
+                <setting type="sep"/>
+		<setting label="32215" type="text" id="Source8Uri"/>
+                <setting label="32216" type="slider" id="Source8Weight" default="50" range="0,1,100" option="int"/>
+                <setting type="sep"/>
+		<setting label="32217" type="text" id="Source9Uri"/>
+                <setting label="32218" type="slider" id="Source9Weight" default="50" range="0,1,100" option="int"/>
+                <setting type="sep"/>
+		<setting label="32219" type="text" id="Source10Uri"/>
+                <setting label="32220" type="slider" id="Source10Weight" default="50" range="0,1,100" option="int"/>
+	</category>
+	<category label="32002">
+		<setting label="32301" type="text" id="Source11Uri"/>
+                <setting label="32302" type="slider" id="Source11Weight" default="50" range="0,1,100" option="int"/>
+                <setting type="sep"/>
+		<setting label="32303" type="text" id="Source12Uri"/>
+                <setting label="32304" type="slider" id="Source12Weight" default="50" range="0,1,100" option="int"/>
+                <setting type="sep"/>
+		<setting label="32305" type="text" id="Source13Uri"/>
+                <setting label="32306" type="slider" id="Source13Weight" default="50" range="0,1,100" option="int"/>
+                <setting type="sep"/>
+		<setting label="32307" type="text" id="Source14Uri"/>
+                <setting label="32308" type="slider" id="Source14Weight" default="50" range="0,1,100" option="int"/>
+                <setting type="sep"/>
+		<setting label="32309" type="text" id="Source15Uri"/>
+                <setting label="32310" type="slider" id="Source15Weight" default="50" range="0,1,100" option="int"/>
+                <setting type="sep"/>
+		<setting label="32311" type="text" id="Source16Uri"/>
+                <setting label="32312" type="slider" id="Source16Weight" default="50" range="0,1,100" option="int"/>
+                <setting type="sep"/>
+		<setting label="32313" type="text" id="Source17Uri"/>
+                <setting label="32314" type="slider" id="Source17Weight" default="50" range="0,1,100" option="int"/>
+                <setting type="sep"/>
+		<setting label="32315" type="text" id="Source18Uri"/>
+                <setting label="32316" type="slider" id="Source18Weight" default="50" range="0,1,100" option="int"/>
+                <setting type="sep"/>
+		<setting label="32317" type="text" id="Source19Uri"/>
+                <setting label="32318" type="slider" id="Source19Weight" default="50" range="0,1,100" option="int"/>
+                <setting type="sep"/>
+		<setting label="32319" type="text" id="Source20Uri"/>
+                <setting label="32320" type="slider" id="Source20Weight" default="50" range="0,1,100" option="int"/>
+	</category>
+</settings>
