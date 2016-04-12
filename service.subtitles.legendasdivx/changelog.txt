@@ -1,3 +1,6 @@
+0.2.6
+- _newtemp variable without decode utf-8 was causing issues with accents.
+- code cleanup
 0.2.5
 - RAR download\extraction bug hopefully fixed.
 - REQUEST: added uploader to the display.
