@@ -1,3 +1,6 @@
+v5.0.1
+- fixed lyricwiki scraper
+
 v5.0.0
 - remove simplejson support
 - update skin
