@@ -1,3 +1,6 @@
+v3.2.3
+- fixed lyricwiki scraper
+
 v3.2.2
 - try to strip tracknumber from songtitle
 
