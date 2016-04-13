@@ -85,3 +85,7 @@ try: property_temp = property_temp.replace('"',"")
 except: pass
 try: property_temp2 = property_temp2.replace('"',"")
 except: pass
+
+if not os.path.exists(featherenceserviceaddondata_media_path):
+	try: os.mkdir(featherenceserviceaddondata_media_path)
+	except: pass

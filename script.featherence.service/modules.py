@@ -7,13 +7,14 @@ from shared_modules import *
 def mode0(admin, name, printpoint):
 	'''test'''
 	pass
+	#xbmc.executebuiltin('RunPlugin(resource.images.weathericons.outline)')
+	#installaddon('resource.images.weathericons.outline')
+	#installaddon('resource.images.weatherfanart.single')
+	
+	#DownloadFile('asd', 'asd', 'qwe', 'zxc', silent=False, percentinfo="")
 	
 def mode5(value, admin, name, printpoint):
 	'''startup'''
-	Remote_Name = getsetting('Remote_Name')
-	Remote_Support = getsetting('Remote_Support')
-	if Remote_Name != "" and Remote_Name != 'None' and Remote_Support == 'true':
-		xbmc.executebuiltin('RunScript(script.featherence.service,,?mode=27&value=0)')
 	
 	try:
 		VolumeLevel = int(xbmcaddon.Addon(addonID).getSetting('VolumeLevel'))
@@ -39,8 +40,9 @@ def mode5(value, admin, name, printpoint):
 		xbmc.executebuiltin('RunScript(script.featherence.service,,?mode=23&value=)')
 		setSkin_Update(admin, datenowS, Skin_Version, Skin_UpdateDate, Skin_UpdateLog)
 		
-		installaddon('resource.images.weathericons.outline')
-		installaddon('resource.images.weatherfanart.single')
+		#installaddon('resource.images.weathericons.outline')
+		#installaddon('resource.images.weatherfanart.single')
+		#xbmc.executebuiltin('RunPlugin(resource.images.weathericons.outline)')
 	
 def mode8(admin, name, printpoint):
 	'''------------------------------
@@ -155,8 +157,8 @@ def mode9(admin, name):
 							'''---------------------------'''
 							
 					elif tip == "true" and countidle == 3:
-						if container120listitemlabel2 == property_dialogsubtitles2: notification('$LOCALIZE[78947]',property_dialogsubtitles2,"",3000)
-						elif container120listitemlabel2 in subL: notification('$LOCALIZE[78949]',property_dialogsubtitles2,"",3000)
+						if container120listitemlabel2 == property_dialogsubtitles2: notification('$LOCALIZE[31858]',property_dialogsubtitles2,"",3000)
+						elif container120listitemlabel2 in subL: notification('$LOCALIZE[31859]',property_dialogsubtitles2,"",3000)
 						
 						tip = "false"
 						'''---------------------------'''
@@ -168,7 +170,7 @@ def mode9(admin, name):
 					'''------------------------------
 					---LOOKING-FOR-SUBTITLE----------
 					------------------------------'''
-					notification('$LOCALIZE[78952]',"","",4000)
+					notification('$LOCALIZE[31862]',"","",4000)
 					'''---------------------------'''
 				
 				elif countidle > 3 and count2 == 10 and systemcurrentcontrol == controlgetlabel100:
@@ -176,7 +178,7 @@ def mode9(admin, name):
 					---REFRESH-----------------------
 					------------------------------'''
 					if controlgetlabel100 == "Subtitle.co.il": xbmc.sleep(1000)
-					notification('$LOCALIZE[78951]',"","",2000)
+					notification('$LOCALIZE[31861]',"","",2000)
 					systemcurrentcontrol = findin_systemcurrentcontrol("0",controlgetlabel100,40,'Action(Down)','')
 					systemcurrentcontrol = findin_systemcurrentcontrol("0",controlgetlabel100,40,'Action(Down)','')
 					systemcurrentcontrol = findin_systemcurrentcontrol("0",controlgetlabel100,40,'Action(Down)','')
@@ -189,7 +191,7 @@ def mode9(admin, name):
 					'''------------------------------
 					---CHANGE-SUBTITLE-SERVICE-------
 					------------------------------'''
-					notification('$LOCALIZE[78950]',"","",2000)
+					notification('$LOCALIZE[31860]',"","",2000)
 					if controlgetlabel100 in listL: listL.remove(controlgetlabel100) #listL = 
 					
 					systemcurrentcontrol = findin_systemcurrentcontrol("2",listL,40,'Action(Down)','')
@@ -253,8 +255,7 @@ def ClearSubHisotry():
 	setProperty('DialogSubtitles2',"",type="home")
 	for i in range(1,11):
 		setProperty('DialogSubtitlesNA'+str(i),"",type="home")
-
-				
+			
 def setPlayerInfo(admin):
 	type = None
 	playertitle = xbmc.getInfoLabel('Player.Title')
@@ -341,22 +342,94 @@ def mode10(admin, name, printpoint):
 			'''refresh widget'''
 			xbmc.sleep(3000)
 			xbmc.executebuiltin('RunScript(script.featherence.service,,?mode=23)')
-		
 
-def mode22(value, admin, name, printpoint, ScreenSaver_Music):
-	'''------------------------------
-	---ScreenSaver_Music-------------
-	------------------------------'''
-	screensavermusic = xbmc.getInfoLabel('Skin.String(screensavermusic)')
-	returned = setPath(1,'.mp3|.flac|.wav|.m3u')
-	notification(returned,screensavermusic,'',4000)
+def mode22(header, message, nolabel, yeslabel, skinstring, type='video'):
+	skinstring_ = xbmc.getInfoLabel('Skin.String('+skinstring+')')
+	returned = dialogyesno(header, message, nolabel=nolabel, yeslabel=yeslabel)
+	if returned == 'ok': z = 0
+	else: z = 1
+	returned = setPath(z,type)
+	notification(returned,skinstring,'',4000)
 	if returned != "":
-		if returned != screensavermusic: setSkinSetting('0','screensavermusic',returned)
+		if returned != skinstring_: setSkinSetting('0',skinstring,returned)
 		else:
-			returned2 = dialogyesno('Remove Current Path?',screensavermusic)
-			if returned2 == 'ok': setSkinSetting('0','screensavermusic',"")
+			returned2 = dialogyesno('Remove Current Path?',skinstring)
+			if returned2 == 'ok': setSkinSetting('0',skinstring,"")
 			'''---------------------------'''
+			
+def CheckExtensions(x, mask='video'):
+	name = 'CheckExtensions' ; printpoint = "" ; returned = ""
+	if mask =='video': list = ['mp4', 'mov', 'avi']
+	elif mask =='picture': list = []
+	elif mask =='music': list = ['mp3', 'flac', 'wav', 'm3u']
+	else: list = []
+	
+	extension = os.path.splitext(x)[1][1:].strip().lower()
+	if extension in list:
+		returned = 'ok'
+	
+	text = 'mask' + space2 + str(mask) + newline + \
+	'x' + space2 + str(x) + newline + \
+	'list' + space2 + str(list) + newline + \
+	'extension' + space2 + str(extension) + newline + \
+	'returned' + space2 + str(returned)
+	
+	printlog(title=name, printpoint=printpoint, text=text, level=0, option="")
+	
+	return returned
 
+def CreatePL2(x, type, playlist, level, levelmax):
+	name = 'CreatePL2' ; printpoint = "" ; x2 = ""
+	if os.path.isdir(x):
+		for x2 in os.listdir(x):
+			x2 = to_utf8(x2)
+			x2 = os.path.join(x, x2)
+			if os.path.isdir(x2) and level <= levelmax:
+				playlist = CreatePL2(x + x2, type, playlist, level + 1, levelmax)
+			else:
+				returned = CheckExtensions(x2, type)
+				if returned == 'ok': playlist.append(x2)
+	else:
+		returned = CheckExtensions(x, type)
+		if returned == 'ok': playlist.append(x)
+	
+	text = 'level' + space2 + str(level) + space + 'levelmax' + space2 + str(levelmax) + newline + \
+	'x' + space2 + str(x) + newline + \
+	'x2' + space2 + str(x2) + newline + \
+	'playlist' + space2 + str(playlist)
+	
+	printlog(title=name, printpoint=printpoint, text=text, level=0, option="")
+	
+	return playlist
+	
+def CreatePL(path, type='video', levelmax=10):
+	name = 'CreatePL' ; printpoint = "" ; extra = "" ; notexistsL= []
+	if type == 'music': pl = xbmc.PlayList(xbmc.PLAYLIST_MUSIC)
+	else: pl = xbmc.PlayList(xbmc.PLAYLIST_VIDEO)
+	
+	pl.clear()
+	playlist = []
+	for x in os.listdir(path):
+		x = os.path.join(path, x)
+		x = to_utf8(x)
+		if os.path.exists(x):
+			playlist = CreatePL2(x, type, playlist, 0, levelmax)
+		else: notexistsL.append(x)
+		
+	if playlist != []:
+		random.shuffle(playlist)
+		for x in playlist:
+			pl.add(x)
+			extra = extra + newline + 'x' + space2 + str(x)
+		xbmc.Player(xbmc.PLAYER_CORE_MPLAYER).play(pl)
+	
+	text = 'type' + space2 + str(type) + newline + \
+	'path' + space2 + str(path) + newline + \
+	'pl' + space2 + str(pl) + newline + \
+	'playlist' + space2 + str(playlist) + newline + \
+	'notexistsL' + space2 + str(notexistsL) + extra
+	printlog(title=name, printpoint=printpoint, text=text, level=0, option="")
+		
 def mode25(value, admin, name, printpoint):
 	'''------------------------------
 	---Play-Random-Trailers----------
@@ -388,7 +461,7 @@ def mode28(value, admin, name, printpoint):
 	list.append(localize(31014)) #Poster
 	list.append(localize(31015)) #List
 
-	returned, value2 = dialogselect('$LOCALIZE[74433]',list,0)
+	returned, value2 = dialogselect(addonString_servicefeatherence(32423).encode('utf-8'),list,0)
 
 	if returned == -1: printpoint = printpoint + "9"
 	elif returned == 0: printpoint = printpoint + "8"
@@ -425,7 +498,7 @@ def mode29(value, command, header, exit, name, printpoint):
 	for x in valueL:
 		#x = to_utf8(x)
 		y = find_string(x, '-[', ']-')
-		print y
+		extra = extra + newline + 'y' + space2 + str(y)
 		if y != "":
 			y_ = x.replace(y, "")
 			list.append(y_)
@@ -521,7 +594,7 @@ def mode32(value, admin, name, printpoint):
 		if containerfolderpath == "": nolabel = nolabel + space + '[Empty]'
 		if listitemfolderpath == "": yeslabel = yeslabel + space + '[Empty]'
 		
-		returned = dialogyesno(str(name), addonString_servicefeatherence(31).encode('utf-8'), nolabel=nolabel, yeslabel=yeslabel)
+		returned = dialogyesno(str(name), addonString_servicefeatherence(32423).encode('utf-8'), nolabel=nolabel, yeslabel=yeslabel)
 		
 		if returned != 'skip': text = listitemfolderpath ; printpoint = printpoint + '1'
 		else: text = containerfolderpath ; printpoint = printpoint + '2'
@@ -530,41 +603,16 @@ def mode32(value, admin, name, printpoint):
 			printpoint = printpoint + '3'
 			text = text.replace('&amp;','&')
 			text = text.replace('&quot;',"")
-			if 'plugin://plugin.video.sdarot.tv/?' in text:
-				printpoint = printpoint + '4'
-				text = text.replace('plugin://plugin.video.sdarot.tv/?',"")
-				list = []
-				list.append('mode=')
-				list.append('image=')
-				list.append('summary')
-				list.append('name=')
-				for x in list:
-					text_ = regex_from_to(text, x, '&', excluding=False)
-					text = text.replace(text_,"",1)
-					extra = extra + 'x' + space2 + str(x) + space + 'text_' + space2 + str(text_) + newline
-				text = "list.append('&sdarot=" + text + "')"
 			
-			elif 'plugin://plugin.video.wallaNew.video/?' in text and 1 + 1 == 3:
-				printpoint = printpoint + '4'
-				text = text.replace('plugin://plugin.video.wallaNew.video/?',"")
-				list = []
-				list.append('mode=')
-				list.append('module=')
-				list.append('name=')
-				for x in list:
-					text_ = regex_from_to(text, x, '&', excluding=False)
-					text = text.replace(text_,"",1)
-					extra = extra + 'x' + space2 + str(x) + space + 'text_' + space2 + str(text_) + newline
-				text = "list.append('&wallaNew=" + text + "')"
-			
-			else:
-				if '1' in printpoint: text = "list.append('&custom4=" + text + "')"
-				elif '2' in printpoint: text = "list.append('&custom8=" + text + "')"
+			if '1' in printpoint: text = "list.append('&custom4=" + text + "')"
+			elif '2' in printpoint: text = "list.append('&custom8=" + text + "')"
 		
 		if listitemthumb != "":
 			text = text + newline + str(listitemthumb)
-		write_to_file(featherenceservice_addondata_path + "Container.FolderPath" + ".txt", str(text), append=False, silent=True, utf8=False)
-		notification('url saved!','Container.FolderPath.txt','',2000)
+		
+		dest = featherenceservice_addondata_path + "Container.FolderPath" + ".txt"
+		write_to_file(dest, str(text), append=False, silent=True, utf8=False)
+		notification(addonString(32130).encode('utf-8'),dest,'',2000)
 		'''---------------------------'''
 		
 		text2 = newline + 'text' + space2 + str(text) + newline + \
@@ -601,11 +649,40 @@ def mode32(value, admin, name, printpoint):
 	elif value == '5':
 		ReloadSkin(admin,force=False)
 		#ReloadSkin(admin)
-	
+	elif value == '6':
+		custom1170W_ = xbmc.getCondVisibility('Window.IsVisible(Custom1170.xml)')
+		custom1173W_ = xbmc.getCondVisibility('Window.IsVisible(Custom1173.xml)')
+		if custom1170W_: xbmc.executebuiltin('Dialog.Close(1170)')
+		elif custom1173W_: xbmc.executebuiltin('Dialog.Close(1173)')
+		
+		xbmc.executebuiltin('Action(Close)')
+		xbmc.executebuiltin('ActivateWindow(1117)') ; xbmc.sleep(1000)
+		
+		
+		count = 0
+		property_buttonid = xbmc.getInfoLabel('Window(home).Property(Button.ID)') #DYNAMIC
+		property_buttonid_ = xbmc.getInfoLabel('Window(home).Property(Button.ID_)') #BASE
+		while count < 20 and property_buttonid == "" and property_buttonid_ == "" and not xbmc.abortRequested:
+			xbmc.sleep(50)
+			property_buttonid = xbmc.getInfoLabel('Window(home).Property(Button.ID)') #DYNAMIC
+			property_buttonid_ = xbmc.getInfoLabel('Window(home).Property(Button.ID_)') #BASE
+			count += 1
+		if count < 20:
+			xbmc.executebuiltin('ActivateWindow(1173)')
+			custom1173W = xbmc.getCondVisibility('Window.IsVisible(Custom1173.xml)')
+			while count < 20 and not custom1173W and not xbmc.abortRequested:
+				xbmc.sleep(50)
+				custom1173W = xbmc.getCondVisibility('Window.IsVisible(Custom1173.xml)')
+				count += 1
+			if custom1173W:
+				xbmc.executebuiltin('Action(Down)')
+		
+		setProperty('TEMP', '', type="home")
+		
 	elif value == '40':
 		addon = 'plugin.video.featherence.kids'
 		if xbmc.getCondVisibility('System.HasAddon('+ addon +')'):
-			dialogok(addonString_servicefeatherence(32085).encode('utf-8'),addonString_servicefeatherence(32081).encode('utf-8'),"",'[B][COLOR=blue]Website[/COLOR][/B]: www.facebook.com/groups/featherence[CR]',line1c="yellow")
+			dialogok(addonString_servicefeatherence(32085).encode('utf-8'),addonString_servicefeatherence(32081).encode('utf-8'),"",addonString_servicefeatherence(32108).encode('utf-8'),line1c="yellow")
 			General_Language2 = xbmcaddon.Addon(addon).getSetting('General_Language2') ; General_Language2 = str(General_Language2)
 			dialogok(addonString_servicefeatherence(32086).encode('utf-8') % (General_Language2),addonString_servicefeatherence(32087).encode('utf-8'),"",addonString_servicefeatherence(32088).encode('utf-8'),line1c="yellow")
 		
@@ -617,7 +694,7 @@ def mode40(value, admin, name, printpoint):
 	extra2 = "" ; TypeError = ""
 	if value == '0': printpoint = printpoint + '1'
 	elif value == '1':
-		returned = dialogyesno(localize(74554) , localize(74556))
+		returned = dialogyesno(localize(31821) , localize(31822))
 		if returned == 'ok': printpoint = printpoint + '1' ; xbmc.executebuiltin('Dialog.Close(1173)')
 	
 	if printpoint == '1':
@@ -627,7 +704,7 @@ def mode40(value, admin, name, printpoint):
 	
 	if printpoint == '1':
 		xbmc.executebuiltin('Skin.ResetSettings') ; xbmc.sleep(500)
-		Custom1000(name,1,'This action may take a while.. be patient!',30)
+		Custom1000(name,1,addonString_servicefeatherence(32131).encode('utf-8'),30) #This action may take a while.. be patient!
 		playerhasmedia = xbmc.getCondVisibility('Player.HasMedia')
 		if playerhasmedia: xbmc.executebuiltin('Action(Stop)')
 		
@@ -645,9 +722,9 @@ def mode41(admin, name, printpoint):
 	'''------------------------------
 	---Network-Settings--------------
 	------------------------------'''
-	if systemplatformandroid: terminal('am start -a android.intent.action.MAIN -n com.android.settings/.Settings',name)
-	elif systemplatformwindows: terminal('rundll32.exe van.dll,RunVAN',name)
-	elif systemplatformlinux and xbmc.getCondVisiblity('System.HasAddon(service.openelec.settings)'): xbmc.executebuiltin('RunScript(service.openelec.settings)')
+	if systemplatformandroid: pass
+	elif systemplatformwindows: pass
+	elif systemplatformlinux and xbmc.getCondVisibility('System.HasAddon(service.openelec.settings)'): xbmc.executebuiltin('RunScript(service.openelec.settings)')
 	'''---------------------------'''
 
 def mode69(value, admin, name, printpoint):
@@ -725,7 +802,7 @@ def mode70(value, admin, name, printpoint, property_temp):
 						list.append(x)
 					
 					if len(list) > 1:
-						returned, value = dialogselect(addonString_servicefeatherence(31).encode('utf-8'),list,0)
+						returned, value = dialogselect(addonString_servicefeatherence(32423).encode('utf-8'),list,0)
 						if returned == -1: printpoint = printpoint + "9"
 						else:
 							printpoint = printpoint + "7"
@@ -798,7 +875,7 @@ def mode200(value, admin, name, printpoint):
 	else: pass
 	
 	if "1" in printpoint:
-		returned, value2 = dialogselect('$LOCALIZE[74433]',list,0)
+		returned, value2 = dialogselect(addonString_servicefeatherence(32423).encode('utf-8'),list,0)
 	
 		if returned == -1: printpoint = printpoint + "9"
 		elif returned == 0: printpoint = printpoint + "8"
@@ -880,13 +957,13 @@ def mode201(value, admin, name, printpoint):
 	container50hasfocus390 = xbmc.getCondVisibility('Container(50).HasFocus(390)') #BUTTONS
 
 	list = ['-> (Exit)', localize(10035) + space + "(" + localize(593) + ")", localize(590) + space + "(" + localize(593) + ")", \
-	localize(74840) + space + "(" + localize(80,addon='script.featherence.service') + ")", localize(74840) + space + localize(590) + space + "(" + localize(80,addon='script.featherence.service') + ")", \
-	localize(74840) + space + "(" + localize(593) + ")", localize(74840) + space + localize(590) + space + "(" + localize(593) + ")", \
-	localize(10035) + space + localize(78215) + space + "(" + localize(593) + ")", localize(10035) + space + localize(78215) + space + localize(590) + space + "(" + localize(593) + ")", \
-	localize(10035) + space + "(" + localize(74614) + ")"]
+	localize(31827) + space + "(" + localize(80,addon='script.featherence.service') + ")", localize(31827) + space + localize(590) + space + "(" + localize(80,addon='script.featherence.service') + ")", \
+	localize(31827) + space + "(" + localize(593) + ")", localize(31827) + space + localize(590) + space + "(" + localize(593) + ")", \
+	localize(10035) + space + localize(31849) + space + "(" + localize(593) + ")", localize(10035) + space + localize(31849) + space + localize(590) + space + "(" + localize(593) + ")", \
+	localize(10035) + space + "(" + localize(31825) + ")"]
 	
 	if value == "" or container50hasfocus390:
-		returned, value_ = dialogselect(addonString_servicefeatherence(31).encode('utf-8'),list,0)
+		returned, value_ = dialogselect(addonString_servicefeatherence(32423).encode('utf-8'),list,0)
 		
 		if returned == -1: printpoint = printpoint + "9"
 		elif returned == 0: printpoint = printpoint + "8"
@@ -909,7 +986,7 @@ def mode201(value, admin, name, printpoint):
 	if "A" in printpoint:
 		Custom1000(name,20,str(list[returned]),20)
 		xbmc.executebuiltin('SetProperty(1000title,'+name+',home)')
-		xbmc.executebuiltin('SetProperty(1000comment,This action may take a while be patient!,home)')
+		xbmc.executebuiltin('SetProperty(1000comment,'+addonString_servicefeatherence(32131).encode('utf-8')+',home)')
 		for x in list0: setSkinSetting('0',x,"")
 		for x in list1: setSkinSetting('1',x,"false")
 		'''---------------------------'''
@@ -1212,9 +1289,10 @@ def mode210(value, admin, name, printpoint):
 				
 				extra2 = extra2 + newline + "i" + space2 + str(i) + space + "x" + space2 + str(x) + space + "y" + space2 + str(y) + space + "y2" + space2 + str(y2) + space
 	#dp.close
-	if "9" in printpoint: notification("Error Occured!", '', '', 2000)
+	if "9" in printpoint: notification(localize(257) + space2 + '209', '', '', 2000)
 	else:
-		pass#ReloadSkin(admin)
+		pass
+		#ReloadSkin(admin)
 		xbmc.sleep(500) ; xbmc.executebuiltin('Action(Down)') ; xbmc.sleep(500) ; xbmc.executebuiltin('Action(Up)')
 	
 	text = "value" + space2 + str(value) + newline + \
@@ -1235,7 +1313,7 @@ def mode211(value, admin, name, printpoint):
 	extra = "" ; TypeError = "" ; x = "" ; y = ""
 	
 	#xbmc.executebuiltin('Action(Close)')
-	if not int(property_buttonid_) > 0: printpoint = printpoint + "1" ; notification("Error No.1", "", "", 1000)
+	if not int(property_buttonid_) > 0: printpoint = printpoint + "1" ; notification(localize(257) + space2 + '211', "", "", 1000)
 	else:
 		'''Get new control ID'''
 		if '0' in value:
@@ -1264,7 +1342,7 @@ def mode211(value, admin, name, printpoint):
 				else: pass
 
 					
-		if y == "": printpoint = printpoint + "9" ; notification("Cannot create new buttons","Delete some first","",2000)
+		if y == "": printpoint = printpoint + "9" ; notification(addonString_servicefeatherence(32132).encode('utf-8'),addonString_servicefeatherence(32133).encode('utf-8'),"",2000) #Cannot create new buttons, Delete some first!
 		else:
 			notification("...", "", "", 1000)
 			mode232(y, admin, 'ACTION-BUTTON', printpoint)
@@ -1300,7 +1378,7 @@ def mode212(value, admin, name, printpoint):
 			y = 'Reset item'
 			x = property_buttonid_
 			property_buttonname2 = labelT.get('label'+property_buttonid)
-			extra2 = extra2 + newline + "This action will also reset" + space2 + str(property_buttonname2) + space + "(" + str(property_buttonid) + ")"
+			extra2 = extra2 + newline + addonString_servicefeatherence(32134).encode('utf-8') + space2 + str(property_buttonname2) + space + "(" + str(property_buttonid) + ")" #This action will also reset
 		
 		else:
 			y = 'Remove item'
@@ -1313,7 +1391,7 @@ def mode212(value, admin, name, printpoint):
 		if '0' in value:
 			'''main menu item'''
 			printpoint = printpoint + "0"
-			xbmc.sleep(100) ; returned = dialogyesno(y + space2 + str(property_buttonname), "Choose YES to proceed!" + extra2)
+			xbmc.sleep(100) ; returned = dialogyesno(y + space2 + str(property_buttonname), localize(19194) + extra2)
 			if returned == 'skip': printpoint = printpoint + "8"
 			else:
 				for i in range(0,two):
@@ -1352,7 +1430,7 @@ def mode212(value, admin, name, printpoint):
 				y = 'Remove item'
 				x = property_subbuttonid_
 				
-			xbmc.sleep(100) ; returned = dialogyesno(y + space2 + str(property_subbuttonname), "Choose YES to proceed!")
+			xbmc.sleep(100) ; returned = dialogyesno(y + space2 + str(property_subbuttonname), localize(19194))
 			if returned == 'skip': printpoint = printpoint + "8"
 			else:
 				setSkinSetting('1','off' + x,"false")
@@ -1387,12 +1465,12 @@ def mode214(value, admin, name, printpoint):
 	text = "value" + space2 + str(value)
 	
 	if value == '0':
-		returned = dialogkeyboard(property_buttonname,'Button Name',0,"",'label'+property_buttonid_,"")
+		returned = dialogkeyboard(property_buttonname,addonString_servicefeatherence(32110).encode('utf-8'),0,"",'label'+property_buttonid_,"")
 		if returned != 'skip':
 			if returned == "": setSkinSetting('0','label'+property_buttonid_, '...')
 	
 	if value == '1':
-		returned = dialogkeyboard(property_subbuttonname,'Sub Button Name',0,"",'label'+property_subbuttonid_,"")
+		returned = dialogkeyboard(property_subbuttonname,addonString_servicefeatherence(32109).encode('utf-8'),0,"",'label'+property_subbuttonid_,"")
 		if returned != 'skip':
 			if returned == "": setSkinSetting('0','label'+property_subbuttonid_, '...')
 	
@@ -1405,7 +1483,7 @@ def mode214(value, admin, name, printpoint):
 		if property_selectedcolor == "" and property_buttonid_ != "": value2 = currentbuttoncolor
 		else: value2 = property_selectedcolor
 		
-		returned = dialogkeyboard(value2,'Choose manual color code',0,"","","")
+		returned = dialogkeyboard(value2,addonString_servicefeatherence(32111).encode('utf-8'),0,"","","")
 		if returned != 'skip':
 			if returned != "":
 				returned_len = len(returned) ; returned1 = returned[:2]
@@ -1415,7 +1493,7 @@ def mode214(value, admin, name, printpoint):
 					elif returned_len == 6: returned = 'ff' + returned
 				
 				setProperty('SelectedColor', str(returned), type="home")
-				notification('New color selected!', str(returned), '', 1000)
+				notification(addonString_servicefeatherence(32135).encode('utf-8'), str(returned), '', 1000) #New color selected!
 	
 		text = text + newline + 'returned' + space2 + str(returned) + space + 'returned_len' + space2 + str(returned_len) + space + 'returned1' + space2 + str(returned1) + newline + \
 		'path' + space2 + str(path) + newline + \
@@ -1428,7 +1506,8 @@ def mode214(value, admin, name, printpoint):
 def mode215(value, admin, name, printpoint):
 	from variables2 import *
 	extra2 = "" ; id = ""
-				
+	exe = printlog(title="test", printpoint="", text="", level=0, option="")
+	
 	if value != "": notification_common("2")
 	
 	'''הגדרות'''
@@ -1491,7 +1570,7 @@ def mode215(value, admin, name, printpoint):
 		x = '93' ; id = idT2.get(x) ; background = backgroundT.get('icon'+x)
 		if id != "" and id != None and 1 + 1 == 2:	
 			label = labelT.get('label'+str(id)) ; icon = iconT.get('icon'+str(id))
-			if label == "" or label == "..." or value == 'RESET' or value == 'LABEL': setSkinSetting('0','label'+id,localize(73220))
+			if label == "" or label == "..." or value == 'RESET' or value == 'LABEL': setSkinSetting('0','label'+id,localize(31814))
 			if not defaultactionbuttons: setSkinSetting('0','action'+id,'ActivateWindow(10025,plugin://plugin.video.featherence.kids,return)')
 			if icon == "" or value == 'RESET': setSkinSetting('0','icon'+id,'special://home/addons/script.featherence.service/resources/icons/kids.png')
 			'''---------------------------'''	
@@ -1540,15 +1619,15 @@ def mode215(value, admin, name, printpoint):
 			if icon == "" or value == 'RESET': setSkinSetting('0','icon'+id,'special://home/addons/script.featherence.service/resources/icons/weather.png')
 			'''---------------------------'''
 			
-	'''משחקים'''
+	''''''
 	if value != "":
 		'''ראשי'''
 		x = '98' ; id = idT2.get(x)
-		if id != "" and id != None and 1 + 1 == 3:	
+		if id != "" and id != None and ( systemplatformwindows or systemplatformlinux and xbmc.getCondVisibility('System.HasAddon(service.openelec.settings)') ):
 			label = labelT.get('label'+str(id)) ; icon = iconT.get('icon'+str(id))
-			if label == "" or label == "..." or value == 'RESET' or value == 'LABEL': setSkinSetting('0','label'+id,localize(15016))
-			if not defaultactionbuttons: setSkinSetting('0','action'+id,'ActivateWindow(10025,plugin://plugin.program.featherence.emu,return)')
-			if icon == "" or value == 'RESET': setSkinSetting('0','icon'+id,'special://home/addons/script.featherence.service/resources/icons/games.png')
+			setSkinSetting('0','label'+id,"")
+			setSkinSetting('0','action'+id,'')
+			setSkinSetting('0','icon'+id,'')
 			'''---------------------------'''	
 
 	'''דוקו'''
@@ -1557,7 +1636,7 @@ def mode215(value, admin, name, printpoint):
 		x = '99' ; id = idT2.get(x)
 		if id != "" and id != None and 1 + 1 == 2:	
 			label = labelT.get('label'+str(id)) ; icon = iconT.get('icon'+str(id))
-			if label == "" or label == "..." or value == 'RESET' or value == 'LABEL': setSkinSetting('0','label'+id,localize(78942))
+			if label == "" or label == "..." or value == 'RESET' or value == 'LABEL': setSkinSetting('0','label'+id,addonString(32803).encode('utf-8'))
 			if not defaultactionbuttons: setSkinSetting('0','action'+id,'ActivateWindow(10025,plugin://plugin.video.featherence.docu,return)')
 			if icon == "" or value == 'RESET': setSkinSetting('0','icon'+id,'special://home/addons/script.featherence.service/resources/icons/animals.png')
 			'''---------------------------'''
@@ -1641,6 +1720,8 @@ def mode218(value, admin, name, printpoint):
 			message = message + newline + '---------------------------'
 			message = message + newline + "property_mode10" + space2 + property_mode10
 			message = message + newline + "ViewsSettings" + space2 + xbmc.getInfoLabel('Window(home).Property(ViewsSettings)')
+			message = message + newline + "HomeLastPos" + space2 + xbmc.getInfoLabel('Window(home).Property(HomeLastPos)')
+			message = message + newline + "HomeLastPos2" + space2 + xbmc.getInfoLabel('Window(home).Property(HomeLastPos2)')
 			message = message + newline + '---------------------------'
 			message = message + newline + "SelectedColor" + space2 + xbmc.getInfoLabel('Window(home).Property(SelectedColor)')
 			message = message + newline + "ListItemYear" + space2 + xbmc.getInfoLabel('Window(home).Property(ListItemYear)')
@@ -1666,6 +1747,7 @@ def mode218(value, admin, name, printpoint):
 			message = message + newline + "custom" + space2 + xbmc.getInfoLabel('ListItem.Art(Poster)') #CUSTOM TEST
 			message = message + newline + "custom2" + space2 + xbmc.getInfoLabel('ListItem.IsCollection') #CUSTOM TEST
 			message = message + newline + "custom3" + space2 + str(xbmc.getInfoLabel('System.InternetState')) #CUSTOM TEST
+			message = message + newline + "ListItem.Property(TotalEpisodes)" + space2 + str(xbmc.getInfoLabel('ListItem.Property(TotalEpisodes)')) #CUSTOM TEST
 			
 			
 
@@ -1687,6 +1769,8 @@ def mode232(value, admin, name, printpoint):
 	id1 = "" ; id2 = "" ; extra = "" ; TypeError = ""
 	if printpoint != "": printpoint = printpoint + "_"
 	
+	if not os.path.exists(addons_path + 'script.module.unidecode'):
+		installaddon('script.module.unidecode', update=True)
 	if not xbmc.getCondVisibility('System.HasAddon(script.skinshortcuts)'):
 		addon1 = installaddon('script.skinshortcuts', update=True)
 	else:
@@ -1704,15 +1788,22 @@ def mode232(value, admin, name, printpoint):
 				else: id1 = property_subbuttonid_
 		except Exception, TypeError: extra = extra + newline + "TypeError" + space2 + str(TypeError) ; printpoint = printpoint + "9D"
 		
-		if id1 != "":			
+		if id1 != "":
+			if not xbmc.getInfoLabel('Skin.HasSetting(Action_Thumbnail)'):
+				Action_Thumbnail = '&skinThumbnail=icon'+id1
+				Action_Label = '&skinLabel=label'+id1
+			else:
+				Action_Thumbnail = ""
+				Action_Label = ""
+			
 			if custom1175W and not custom1138W:
 				'''Main Action'''
 				printpoint = printpoint + "x1"
-				xbmc.executebuiltin('RunScript(script.skinshortcuts,type=shortcuts&custom=True&showNone=True&skinLabel=label'+id1+'&skinAction=action'+id1+'&skinList=[skinList]&skinType=[skinType]&skinThumbnail=icon'+id1+')')
+				xbmc.executebuiltin('RunScript(script.skinshortcuts,type=shortcuts&custom=True&showNone=True&skinAction=action'+id1+'&skinList=[skinList]&skinType=[skinType]'+Action_Thumbnail+Action_Label+')')
 			elif custom1138W:	
 				'''Sub Action'''
 				printpoint = printpoint + "x2"
-				xbmc.executebuiltin('RunScript(script.skinshortcuts,type=shortcuts&custom=True&showNone=True&skinLabel=label'+id1+'&skinAction=action'+id1+'&skinList=[skinList]&skinType=[skinType]&skinThumbnail=icon'+id1+')')
+				xbmc.executebuiltin('RunScript(script.skinshortcuts,type=shortcuts&custom=True&showNone=True&skinAction=action'+id1+'&skinList=[skinList]&skinType=[skinType]'+Action_Thumbnail+Action_Label+')')
 				'''---------------------------'''
 			else: printpoint = printpoint + "8"	
 			
@@ -1746,6 +1837,10 @@ def mode232(value, admin, name, printpoint):
 def mode233(value, admin, name, printpoint):
 	printpoint = "" ; returned_ = ""
 	x = "" ; y = property_buttonid_ ; path = "" ; x2_ = ""
+	customiconspath = to_unicode(xbmc.getInfoLabel('Skin.String(CustomIconsPath)'))
+	custombackgroundspath = to_unicode(xbmc.getInfoLabel('Skin.String(CustomBackgroundsPath)'))
+	property_temp2 = xbmc.getInfoLabel('Window(home).Property(TEMP2)')
+	
 	if '0' in value:
 		printpoint = printpoint + '0'
 		y = property_subbuttonid_
@@ -1768,7 +1863,7 @@ def mode233(value, admin, name, printpoint):
 	
 	if x != "":
 		printpoint = printpoint + '1'
-		returned = dialogyesno(str(name), addonString_servicefeatherence(31).encode('utf-8'), nolabel=nolabel, yeslabel=yeslabel)
+		returned = dialogyesno(str(name), addonString_servicefeatherence(32423).encode('utf-8'), nolabel=nolabel, yeslabel=yeslabel)
 		if returned == 'ok':
 			printpoint = printpoint + '2'
 			returned2, value2 = getRandom(0, min=0, max=100, percent=40)
@@ -1779,51 +1874,61 @@ def mode233(value, admin, name, printpoint):
 				from shared_modules3 import urlcheck
 				returned2 = urlcheck(url, ping=False)
 				if returned2 != "ok":
-					notification("URL Error", "Try again..", "", 2000)
-					header = "URL Error"
-					message = "Examine your URL for errors:" + newline + '[B]' + str(url) + '[/B]'
+					notification(localize(2102, s=[addonString_servicefeatherence(32436).encode('utf-8')]), addonString_servicefeatherence(32801).encode('utf-8') + space + '..', "", 2000)
+					header = localize(2102, s=[addonString_servicefeatherence(32436).encode('utf-8')]) #"URL Error"
+					message = addonString_servicefeatherence(32802).encode('utf-8') + space2 + newline + '[B]' + str(value) + '[/B]'
 					diaogtextviewer(header,message)
 				else:
 					setSkinSetting('0',x+y,str(url))
 		else:
 			printpoint = printpoint + '3'
+			
 			'''local'''
 			if '1' in value:
+				if xbmc.getCondVisibility('Skin.HasSetting(MultiFanart)'):
+					returned = dialogyesno(str(name), addonString_servicefeatherence(32423).encode('utf-8'), nolabel=localize(20428), yeslabel=addonString_servicefeatherence(32112).encode('utf-8'))
+					if returned == 'ok': type = 0
+					else: type = 2
+				else: type = 2
 				printpoint = printpoint + '4'
-				custombackgroundspath = xbmc.getInfoLabel('Skin.String(CustomBackgroundsPath)')
+				
 				x_ = xbmc.getInfoLabel('Skin.String(background'+y+')')
 				x2, x2_ = TranslatePath(x_, filename=False)
 				
-				if os.path.exists(x2_): path = x2_
+				if os.path.exists(custombackgroundspath): path = custombackgroundspath
+				elif os.path.exists(x2_): path = x2_
 				elif os.path.exists(x2): path = x2
-				elif os.path.exists(custombackgroundspath): path = custombackgroundspath
+				
 				else: path = featherenceserviceicons_path_
 				#xbmc.executebuiltin('Skin.SetImage(background'+y+',,'+path+')')
-				returned_ = setPath(type=2,mask="pic", folderpath=path, original=False) ; xbmc.sleep(500) ; property_temp2 = xbmc.getInfoLabel('Window(home).Property(TEMP2)')
-				if property_temp2 == 'ok': setSkinSetting('0','background'+y,str(returned_))
+				returned_ = setPath(type=type,mask="pic", folderpath=path, original=False) ; xbmc.sleep(500) ; property_temp2 = xbmc.getInfoLabel('Window(home).Property(TEMP2)')
+				if property_temp2 == 'ok': setSkinSetting('0','background'+y,to_unicode(returned_))
 				
 			elif '2' in value:
 				printpoint = printpoint + '5'
-				customiconspath = xbmc.getInfoLabel('Skin.String(CustomIconsPath)')
+				
 				x_ = xbmc.getInfoLabel('Skin.String(icon'+y+')')
 				x2, x2_ = TranslatePath(x_, filename=False)
 				
-				if os.path.exists(x2_): path = x2_
+				if os.path.exists(customiconspath): path = customiconspath
+				elif os.path.exists(x2_): path = x2_
 				elif os.path.exists(x2): path = x2
-				elif os.path.exists(customiconspath): path = customiconspath
+				
 				else: path = featherenceserviceicons_path_
 				#xbmc.executebuiltin('Skin.SetImage(icon'+y+',,'+path+')')
 				returned_ = setPath(type=2,mask="pic", folderpath=path, original=False) ; xbmc.sleep(500) ; property_temp2 = xbmc.getInfoLabel('Window(home).Property(TEMP2)')
-				if property_temp2 == 'ok': setSkinSetting('0','icon'+y,str(returned_))
+				if property_temp2 == 'ok': setSkinSetting('0','icon'+y,to_unicode(returned_))
 			else: printpoint = printpoint + '9'
 			
 			setProperty('TEMP', '', type="home")
 			setProperty('TEMP2', '', type="home")
 			
-	text = 'value' + space2 + str(value) + space + 'path' + space2 + str(path) + newline + \
-	'name' + space2 + str(name) + newline + \
-	'x2_' + space2 + str(x2_) + newline + \
-	'property_temp2' + space2 + str(property_temp2)
+	text = 'value' + space2 + to_utf8(value) + space + 'path' + space2 + to_utf8(path) + newline + \
+	'name' + space2 + to_utf8(name) + newline + \
+	'x2_' + space2 + to_utf8(x2_) + newline + \
+	'customiconspath' + space2 + to_utf8(customiconspath) + newline + \
+	'custombackgroundspath' + space2 + to_utf8(custombackgroundspath) + newline + \
+	'property_temp2' + space2 + to_utf8(property_temp2)
 	printlog(title='mode233', printpoint=printpoint, text=text, level=0, option="")
 
 def mode235(value, admin, name, printpoint):
@@ -1860,27 +1965,48 @@ def mode235(value, admin, name, printpoint):
 	
 	printlog(title=name, printpoint=printpoint, text=text, level=0, option="")
 
-def mode512(value, admin, name, printpoint):
+def mode512(value):
 	'''------------------------------
 	---INTERNET-BUTTON---------------
 	------------------------------'''
-	url = ""
-	if value == '0': url = 'www.google.co.il'
-	elif value == '1': url = 'www.facebook.com/groups/featherence'
-	elif value == '2': url = 'www.github.com/finalmakerr/featherence'
-	elif value == '3': url = 'www.youtube.com'
-	elif value == '4': url = 'https://www.google.co.il/imghp?hl=iw&tab=wi' #Thumbnail
-	elif value == '5': url = 'https://www.google.co.il/imghp?hl=iw&tab=wi' #Fanart
+	import webbrowser
+	name = 'INTERNET-BUTTON' ; TypeError = "" ; extra = "" ; printpoint = ""
+	xbmc.executebuiltin('ActivateWindow(busydialog)')
+	try:
+		url = ""
+		if value == '0': url = 'www.google.com'
+		elif value == '1': url = 'www.facebook.com/groups/featherence'
+		elif value == '2': url = 'www.github.com/finalmakerr/featherence'
+		elif value == '3': url = 'www.youtube.com'
+		elif value == '4': url = 'https://www.google.co.il/imghp?hl=iw&tab=wi' #Thumbnail
+		elif value == '5': url = 'https://www.google.co.il/imghp?hl=iw&tab=wi' #Fanart
+		else: url = value
+		
+		name = localize(443)
+		
+		
+		
+
+		if systemplatformwindows: webbrowser.open(url)
+		elif systemplatformandroid:
+			webbrowser.open(url)
+			#StartAndroidActivity('start -a', 'action', 'VIEW')
+			#terminal('adb shell am start -a android.intent.action.VIEW -d '+url+'','')
+		elif systemplatformlinux:
+			if xbmc.getCondVisibility('System.HasAddon(service.openelec.settings)'): xbmc.executebuiltin('RunAddon(browser.chromium)')
+			else: webbrowser.open(url)
+		elif systemplatformosx: webbrowser.open(url)
+		elif systemplatformios: webbrowser.open(url)
+		else: notification_common('25')
+
+	except Exception, TypeError:
+		extra = extra + 'TypeError' + space2 + str(TypeError)
 	
-	name = localize(443)
-	if systemplatformwindows: terminal('start /max '+url+'','')
-	elif systemplatformandroid: terminal('adb shell am start -a android.intent.action.VIEW -d '+url+'','')
-	elif systemplatformlinux: xbmc.executebuiltin('RunAddon(browser.chromium)')
-	else: notification_common('25')
-
-
-
-
+	xbmc.sleep(1000)
+	xbmc.executebuiltin('Dialog.Close(busydialog)')
+	
+	text = 'value' + space2 + str(value) + space + extra
+	printlog(title=name, printpoint=printpoint, text=text, level=1, option="")
 
 def videoplayertweak(admin,playerhasvideo):
 	if playerhasvideo:
@@ -1906,110 +2032,6 @@ def videoplayertweak(admin,playerhasvideo):
 				if xbmc.getCondVisibility('System.IdleTime(20)'): xbmc.executebuiltin('Dialog.Close(VideoOSD.xml)')
 				'''---------------------------'''
 
-def getPing(output):
-	'''------------------------------
-	---setPing-ms--------------------
-	------------------------------'''
-	output2 = output
-	output2len = len(output2)
-	output2lenS = str(output2len)
-	
-	if systemplatformlinux or systemplatformlinuxraspberrypi: start_len = output2.find("min/avg/max =", 0, output2len)
-	elif systemplatformwindows: start_len = output2.find("Average =", 0, output2len)
-	elif systemplatformandroid: start_len = output2.find("min/avg/max/mdev =", 0, output2len)
-	
-	start_lenS = str(start_len)
-	if systemplatformlinux or systemplatformlinuxraspberrypi: start_lenN = int(start_lenS) + 14
-	elif systemplatformwindows: start_lenN = int(start_lenS) + 10
-	elif systemplatformandroid: start_lenN = int(start_lenS) + 19
-	
-	if systemplatformlinux or systemplatformlinuxraspberrypi: end_len = output2.find("/", start_lenN, output2len)
-	elif systemplatformwindows: end_len = output2.find("ms", start_lenN, output2len)
-	elif systemplatformandroid: end_len = output2.find("/", start_lenN, output2len)
-	
-	end_lenS = str(end_len)
-	end_lenN = int(end_lenS)
-	found = output2[start_lenN:end_lenN]
-	foundS = str(found)
-	try: foundF = float(foundS)
-	except: foundF = ""
-	'''---------------------------'''
-	if not systemplatformwindows:
-		mid_len = output2.find(".", start_lenN, end_lenN)
-		mid_lenS = str(mid_len)
-		mid_lenN = int(mid_lenS)
-		totalnumN = mid_lenN - start_lenN
-		totalnumS = str(start_lenN)
-		'''---------------------------'''
-		if foundF != "":
-			found2 = round(foundF)
-			found2S = str(found2)
-		else:
-			found2S = foundS
-		if ".0" in found2S: found2S = found2S.replace(".0","",1)
-		'''---------------------------'''
-	else:
-		found2S = foundS
-		mid_lenS = ""
-		'''---------------------------'''
-	if admin: extra = newline + "output2len" + space2 + output2lenS + space + "start_len" + space2 + start_lenS + space + "end_len" + space2 + end_lenS + space + "found/2" + space2 + foundS + "/" + found2S + space + "mid_len" + space2 + mid_lenS
-	'''---------------------------'''
-	return found2S
-			
-def connectioncheck(admin):
-	'''------------------------------
-	---NETWORK-STATUS----------------
-	------------------------------'''
-	name = 'connectioncheck' ; printpoint = ""
-	list = ['-> (Exit)', 'Internet', 'Router'] ; returned = "" ; returned2 = "" ; totalL = []
-	
-	returned, type = dialogselect('Choose ping type',list,0)
-	if returned == -1: pass
-	elif returned == 0: pass
-	else:
-		if returned == 1:
-			'''Internet'''
-			list = ['-> (Exit)', 'www.google.com', 'www.google.co.il', 'en.wikipedia.org', 'www.facebook.com']
-			returned2, target = dialogselect('Choose ping target',list,0)
-			if returned == -1: pass
-			elif returned == 0: pass
-			else: printpoint = printpoint + '7'
-		
-		elif returned == 2:
-			'''Router'''
-			list = ['-> (Exit)', xbmc.getInfoLabel('Network.GatewayAddress'), 'Manual']
-			returned2, target = dialogselect('Choose ping target',list,0)
-			if returned2 == -1: pass
-			elif returned2 == 0: pass
-			elif returned2 == 1: printpoint = printpoint + '7'
-			elif returned2 == 2:
-				target = dialogkeyboard(xbmc.getInfoLabel('Network.GatewayAddress'), 'Choose local IP address', 0, '0', "", "")
-				if target != 'skip': printpoint = printpoint + '7'
-		
-		if '7' in printpoint:
-			dp = xbmcgui.DialogProgress() ; count = 0
-			dp.create('Pinging type: ' + str(type), 'target: ' + str(target), " ")
-			while count < 100 and not dp.iscanceled() and not xbmc.abortRequested:
-				if returned == 1 or returned == 2:
-					if systemplatformwindows: output = terminal('ping '+str(target)+' -n 1',"Connected")
-					elif systemplatformlinux or systemplatformlinuxraspberrypi: output = terminal('ping -W 1 -w 1 -4 -q '+str(target)+'',"Connected")
-					elif systemplatformandroid: output = terminal('ping -W 1 -w 1 -c 1 '+str(target)+'',"Connected")
-					else: output = ""
-
-					ping = getPing(output)
-					totalL.append(ping)
-					
-				count += 1
-				dp.update(count,'','Ping: ' + str(ping))
-				xbmc.sleep(1000)
-				
-			dp.close
-			message = 'Pinging type: ' + str(type) + newline + 'target: ' + str(target) + newline + 'pings: ' + str(totalL)
-			diaogtextviewer('Pinging summary',message)
-	
-	text = "returned" + space2 + str(returned) + space + space + "returned2" + space2 + str(returned2) + newline + \
-	'totalL' + space2 + str(totalL)
-	printlog(title=name, printpoint=printpoint, text=text, level=0, option="")
 	
 def setSkin_Update(admin, datenowS, Skin_Version, Skin_UpdateDate, Skin_UpdateLog):
 	'''------------------------------
@@ -2072,8 +2094,8 @@ def setSkin_UpdateLog(admin, Skin_Version, Skin_UpdateDate, datenowS, force=Fals
 		number2N = int(number2S)
 		'''---------------------------'''
 		if number2N == 0: header = '[COLOR=yellow]' + localize(31418) + space + localize(33006) + " - " + Skin_Version + '[/COLOR]'
-		elif number2N == 1: header = '[COLOR=green]' + localize(31418) + space + addonString_servicefeatherence(5).encode('utf-8') + " - " + Skin_Version + '[/COLOR]'
-		elif number2N <= 7: header = '[COLOR=purple]' + localize(31418) + space + addonString_servicefeatherence(6).encode('utf-8') + " - " + Skin_Version + '[/COLOR]'
+		elif number2N == 1: header = '[COLOR=green]' + localize(31418) + space + addonString_servicefeatherence(32410).encode('utf-8') + " - " + Skin_Version + '[/COLOR]'
+		elif number2N <= 7: header = '[COLOR=purple]' + localize(31418) + space + addonString_servicefeatherence(32411).encode('utf-8') + " - " + Skin_Version + '[/COLOR]'
 		elif force == True: header = addonString(32091).encode('utf-8') + space + space5 + Skin_Version
 		else: header = ""
 		'''---------------------------'''

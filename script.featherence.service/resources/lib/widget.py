@@ -35,11 +35,13 @@ from shared_modules import *
 if sys.version_info < (2, 7):
     try: import simplejson
     except Exception, TypeError:
-        print "import simplejson " + "TypeError: " + str(TypeError)
+        text = "import simplejson " + "TypeError: " + str(TypeError)
+        printlog(title='widget_error!', printpoint=printpoint, text=text, level=1, option="")
         try: import json as simplejson
         except Exception, TypeError:
-            print "import simplejson " + "TypeError: " + str(TypeError)
-            xbmc.executebuiltin('Notification("Widget Error","Your OS is missing json module!", 2000)')
+            text = "import simplejson " + "TypeError: " + str(TypeError)
+            printlog(title='widget_error!', printpoint=printpoint, text=text, level=1, option="")
+            notification(addonString_servicefeatherence(32136).encode('utf-8'),addonString_servicefeatherence(32137).encode('utf-8'),'',2000) #Widget Error, Your OS is missing json module!
 else:
     import json as simplejson
 

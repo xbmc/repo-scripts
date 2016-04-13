@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.featherence.service" name="Featherence Service" version="0.2.1" provider-name="finalmakerr">
+<addon id="script.featherence.service" name="Featherence Service" version="0.2.24" provider-name="finalmakerr">
   <requires>
 	<import addon="xbmc.json" version="6.0.0"/>
 	<import addon="xbmc.python" version="2.1.0"/>
@@ -9,8 +9,7 @@
   <extension point="xbmc.addon.metadata">
 	<platform>all</platform>
     <summary>Add-on for skins and video plugins to provide simple development</summary>
-    <description lang="en">_</description>
-	<description lang="he">_</description>
+    <description>Add-on features can be used on any addon (with the right touch). Check Featherence Be-Creative for more information!</description>
     <disclaimer></disclaimer>
 	<email>featherence@groups.facebook.com</email>
 	<forum></forum>

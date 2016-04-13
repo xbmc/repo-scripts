@@ -17,7 +17,8 @@ printfirst = addonName + ": !@# "
 try: pluginhandle = int(sys.argv[1])
 except: pluginhandle = ""
 
-containerfolderpath = xbmc.getInfoLabel('Container.FolderPath')
+templates2_path = os.path.join(addonPath, 'resources', 'templates2', '')
+
 '''---------------------------'''
 General_AutoView = getsetting('General_AutoView')
 General_TVModeShuffle = getsetting('General_TVModeShuffle')

@@ -52,18 +52,20 @@ def sendMail(Debug_Email, Debug_Password, subject, text, *attachmentFilePaths):
 	#from email import Encoders
 	TypeError = "" ; extra = "" ; gmailUser = "" ; count = 0
 	SMTP_SSL = False
-	#recipient = 'infohtpt@gmail.com'
+	#recipient = 'finalmakerr@gmail.com'
 	#if 1 + 1 == 2:
 	try:
 		dp = xbmcgui.DialogProgress()
 		dp.create(addonString(32095), addonString(10),"")
 		while count == 0 and not dp.iscanceled() and not xbmc.abortRequested:
-			if '@gmail.com' in Debug_Email: mailServer = smtplib.SMTP('smtp.gmail.com', 587) #, timeout=20
-			elif '@walla.com' in Debug_Email:
+			if '@gmail.com' in Debug_Email:
+				mailServer = smtplib.SMTP('smtp.gmail.com', 587) #, timeout=20
+			elif '@walla.com' in Debug_Email or '@walla.co.il' in Debug_Email:
 				mailServer = smtplib.SMTP_SSL('out.walla.co.il', 587)
 				SMTP_SSL = True
-			elif '@walla.co.il' in Debug_Email:
-				mailServer = smtplib.SMTP_SSL('out.walla.co.il', 587)
+			elif '@yahoo.com' in Debug_Email or '@yahoo.co.uk' in Debug_Email:
+				try: mailServer = smtplib.SMTP_SSL('smtp.mail.yahoo.com', 465)
+				except: mailServer = smtplib.SMTP_SSL('smtp.mail.yahoo.com', 587)
 				SMTP_SSL = True
 			else:
 				notification_common('27')
@@ -161,7 +163,7 @@ def SendDebug(Debug_Email, Debug_Password, Debug_Title, Debug_Message, Debug_Fil
 			notification_common("2")
 			SendDebug(Debug_Email, Debug_Password, Debug_Title, Debug_Message, Debug_File)
 		else:
-			returned = dialogyesno(addonString(32092).encode('utf-8'), addonString(21).encode('utf-8') + '[CR]' + str(TypeError))
+			returned = dialogyesno(addonString(32092).encode('utf-8'), addonString(32449).encode('utf-8') + '[CR]' + str(TypeError))
 			if returned == 'ok': SendDebug(Debug_Email, Debug_Password, Debug_Title, Debug_Message, Debug_File)
 			else:
 				notification(localize(16200), addonString(10), "", 2000)
@@ -247,7 +249,7 @@ def upload_file(file, filesize):
 	
 	dp.close
 	if 'timed out' in extra:
-		dialogok('Your %s is too big!' % (str(filesize)),'You should restart your Kodi and try again!','','')
+		dialogok(addonString(32116).encode('utf-8') % (str(filesize)),addonString(32117).encode('utf-8'),'','')
 		
 	return returned
 
@@ -283,7 +285,7 @@ def upload_file2(file):
 		dp.update(30,addonString(32094), addonString(32093) % ("2","4"))
 		req = urllib2.Request(UPLOAD_URL2, post_data, headers)
 		dp.update(40,addonString(32094), addonString(32093) % ("3","4"))
-		print 'req' + space2 + str(req)
+		#print 'req' + space2 + str(req)
 		response = urllib2.urlopen(req).read()
 		dp.update(50,addonString(32094), addonString(32093) % ("3","4"))
 

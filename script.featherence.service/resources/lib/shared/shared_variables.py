@@ -63,7 +63,9 @@ featherenceserviceicons_path = os.path.join(featherenceservice_path, 'resources'
 featherenceserviceicons_path_ = os.path.join('special://home/addons/', 'script.featherence.service', 'resources', 'icons', '')
 
 systemlanguage = xbmc.getInfoLabel('System.Language')
+containerfolderpath = xbmc.getInfoLabel('Container.FolderPath')
 '''---------------------------'''
+
 
 '''------------------------------
 ---Window(Home).Property(key)----
@@ -80,9 +82,13 @@ if scriptfeatherenceservice_random2 != "": scriptfeatherenceservice_randomL.appe
 if scriptfeatherenceservice_random3 != "": scriptfeatherenceservice_randomL.append(scriptfeatherenceservice_random3)
 if scriptfeatherenceservice_random4 != "": scriptfeatherenceservice_randomL.append(scriptfeatherenceservice_random4)
 if scriptfeatherenceservice_random5 != "": scriptfeatherenceservice_randomL.append(scriptfeatherenceservice_random5)
+
 '''---------------------------'''
 
 api_youtube_featherence = 'AIzaSyDkNxiwClyCildDbHdDKSWt5BkKQ6LeQqA'
+api_youtube_featherence_kids = 'AIzaSyDhADc1LWKBkrEWgViqoe4gjo6YmLKU9uY'
+
+api_youtube_featherence_general = 'AIzaSyBukTBissSIDs7-Aw0f_CU1blwrj-fTl-M'
 api_dailymotion_featherence = '3e563cafd4fbba5de0c1'
 api_vimeo_featherence = '45584ad52d6951f441fd2f7c7ae690d2'
 api_pastebin_featherence = '1040252c25203082ce6901fcf22e2756'

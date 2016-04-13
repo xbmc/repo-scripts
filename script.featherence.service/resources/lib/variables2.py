@@ -2760,7 +2760,7 @@ if xbmc.getCondVisibility('Window.IsVisible(DialogSelect.xml)') or 1 + 1 == 2:
 	list0c = ['MenuColor', 'SubMenuMarkColor', 'TopInformationColor', 'TopVideoInformationColor', 'MainBackgroundColor', 'TopBackgroundColor', 'IconUnFocusColor', 'IconFocusColor', 'ButtonUnFocusColor', 'ButtonFocusColor', 'KeyboardUnFocusColor', 'KeyboardFocusColor', 'keyboardbackgroundcolor', 'KeyboardEditColor', 'SelectedFrameColor', 'SubMenuMarkColor']
 	list0c2 = ['MainBackgroundTexture', 'TopBackgroundTexture'] #NO RANDOM SUPPORT
 	list0o = ['IconOverlayButton', 'MenuButtonsOverlay', 'MenuOverlay', 'DialogBackgroundOverlay', 'KeyboardBackgroundOverlay', 'TopVideoInformationOverlay', 'TopMainBackgroundOverlay', 'TopInformationOverlay', 'MainBackgroundOverlay', 'BackgroundOverlay', 'Background2Overlay']
-	list1 = ['SelectionMarker', 'SelectionMarker2', 'ShadowButton', 'OverlayButton', 'BevelButton', 'StrokeButton', '2DButton2', 'MenuBackground', 'ShadowButton2', 'OverlayButton2', 'BevelButton2', 'StrokeButton2', 'background', 'HideTopMainBackground', 'FixedUnFocusButtonsTransperancy', 'HomeFanartHalfScreen', 'ReshapeIcons', 'SubBackground', 'DefaultActionButtons', 'SubMenuAction']
+	list1 = ['SelectionMarker', 'SelectionMarker2', 'ShadowButton', 'OverlayButton', 'BevelButton', 'StrokeButton', '2DButton2', 'MenuBackground', 'ShadowButton2', 'OverlayButton2', 'BevelButton2', 'StrokeButton2', 'background', 'HideTopMainBackground', 'FixedUnFocusButtonsTransperancy', 'HomeFanartHalfScreen', 'ReshapeIcons', 'SubBackground', 'DefaultActionButtons', 'SubMenuAction', 'Action_Thumbnail', 'MultiFanart', 'BigHomeIcons']
 	
 	'''left menu'''
 	list0l = ['MoviesTVCoversOverlay']

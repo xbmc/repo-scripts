@@ -10,34 +10,35 @@ printpoint = ""
 
 class SendDebug:
 	'''Current_Name'''
-	returned = dialogkeyboard(Debug_Email, 'Email (related to facebook)', 0, '1', '', '')
+	returned = dialogkeyboard(Debug_Email, addonString(32115).encode('utf-8'), 0, '1', '', '')
 	if returned == 'skip': notification_common("3")
 	else:
 		emailprovider = regex_from_to(returned, '@', returned[-4:], excluding=False)
+		emailprovider = emailprovider.lower()
 		if emailprovider == "":
-			notification('Email is not valid!',"","",2000)
+			notification(addonString(32113).encode('utf-8'),"","",2000)
 		elif not emailprovider in Debug_EmailL:
 			notification_common('27')
 		else:
 			Debug_Email = to_utf8(returned.lower())
 			setsetting('Debug_Email',Debug_Email)
-			returned = dialogkeyboard(Debug_Password, 'Email Password', 5, '1', '', '')
+			returned = dialogkeyboard(Debug_Password, addonString(32114).encode('utf-8'), 5, '1', '', '')
 			if returned == 'skip': notification_common("3")
 			else:
 				Debug_Password = str(returned)
 				'''Debug_Title'''
-				returned = dialogkeyboard(Debug_Title,'Title',0,'1','Debug_Title', 'script.featherence.service')
+				returned = dialogkeyboard(Debug_Title,localize(528),0,'1','Debug_Title', 'script.featherence.service')
 				if returned == 'skip': notification_common("3")
 				else:
 					Debug_Title = to_utf8(returned)
 					'''Debug_Message'''
-					returned = dialogkeyboard(Debug_Message,'Message',0,'1','Debug_Message', 'script.featherence.service')
+					returned = dialogkeyboard(Debug_Message,localize(15007),0,'1','Debug_Message', 'script.featherence.service')
 					if returned == 'skip': notification_common("3")
 					else:
 						Debug_Message = to_utf8(returned)
 						'''Add File'''
 						if 1 + 1 == 3:
-							returned = dialogyesno('Would you like to add a screenshot?','')
+							returned = dialogyesno(localize(20008) + '?','')
 							if returned == 'skip': Debug_File = ""
 							else:
 								Debug_File = setPath(type=1,mask="pic", folderpath="")
@@ -55,11 +56,11 @@ class SendDebug:
 								else:
 									x_ = '[COLOR=red]' + x_ + '[/COLOR]'
 							else:
-								x_ = '[COLOR=red]' + x_ + space + 'Not Found!' + '[/COLOR]'
+								x_ = '[COLOR=red]' + x_ + space + localize(33077) + '[/COLOR]'
 								
 							list.append(x_)
 							
-						returned, value = dialogselect(addonString_servicefeatherence(31).encode('utf-8'),list,0)	
+						returned, value = dialogselect(addonString_servicefeatherence(32423).encode('utf-8'),list,0)	
 						if returned == -1: printpoint = printpoint + "9"
 						elif returned == 0: file = ""
 						else:
@@ -74,8 +75,8 @@ class SendDebug:
 						Debug_Message = newline + str(Debug_Message) + newline + newline + str(file)
 
 						'''send debug prompt'''
-						returned = dialogyesno(addonString(32098), addonString(32097))
-						if returned == 'skip': notification('$LOCALIZE[257]',addonString(10).encode('utf-8'),"",2000)
+						returned = dialogyesno(addonString(32098).encode('utf-8'), addonString(32097).encode('utf-8'))
+						if returned == 'skip': notification(localize(2102, s=[localize(504)]),"","",2000)
 						elif returned == 'ok':
 							SendDebug(Debug_Email, Debug_Password, Debug_Title, Debug_Message, Debug_File)
 					

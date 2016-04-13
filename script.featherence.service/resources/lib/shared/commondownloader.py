@@ -25,6 +25,8 @@ import xbmcvfs
 import os
 import inspect
 
+from variables import *
+from shared_modules import *
 
 def getResponse(url, size, referer, agent, cookie, silent):
     try:
@@ -77,7 +79,8 @@ def download(url, dest, title=None, referer=None, agent=None, cookie=None, silen
 
 
 def doDownload(url, dest, title, referer, agent, cookie, silent=False, percentinfo=10):
-    admin = xbmc.getInfoLabel('Skin.HasSetting(Admin)')
+    printpoint = "" ; extra = ""
+    exe = printlog(title="exe", printpoint="", text="", level=0, option="")
     try: test = percentinfo + 1
     except: percentinfo = 10
 	#unquote parameters
@@ -97,7 +100,8 @@ def doDownload(url, dest, title, referer, agent, cookie, silent=False, percentin
     xbmc.executebuiltin('Dialog.Close(busydialog)')
 	
     if not resp:
-        if silent != True or admin: xbmcgui.Dialog().ok(title, dest, 'Download failed', 'No response from server')
+        if silent != True or exe != "":
+            dialogok(title, dest, localize(13036, s=[localize(33003)]), localize(15301)) #Failed for %s, Couldn't connect to network server
         return "skip"
 
     try:    content = int(resp.headers['Content-Length'])
@@ -106,14 +110,11 @@ def doDownload(url, dest, title, referer, agent, cookie, silent=False, percentin
     try:    resumable = 'bytes' in resp.headers['Accept-Ranges'].lower()
     except: resumable = False
 
-    #print "Download Header"
-    #print resp.headers
     if resumable:
         pass
-		#print "Download is resumable"
 
     if content < 1:
-        if silent != True or admin: xbmcgui.Dialog().ok(title, file, 'Unknown filesize', 'Unable to download')
+        if silent != True or exe != "": dialogok(title, file, localize(1446) + space + localize(21802), localize(13036, s=[localize(33003)]))
         return "skip"
 
     size = 1024 * 1024
@@ -129,11 +130,12 @@ def doDownload(url, dest, title, referer, agent, cookie, silent=False, percentin
     resume  = 0
     sleep   = 0
 
-    if silent == False:
-        if xbmcgui.Dialog().yesno(title + ' - Confirm Download', file, 'Complete file is %dMB' % mb, 'Continue with download?', 'Confirm',  'Cancel') == 1:
+    if silent == False or exe != "":
+        if dialogyesno(title + addonString_servicefeatherence(32138).encode('utf-8') + '[CR]' + file, addonString_servicefeatherence(32139).encode('utf-8') % (mb) + '[CR]' + addonString_servicefeatherence(32140).encode('utf-8'), nolabel=localize(222),  yeslabel=(12321)) == 1:
 			return "abort"
 
-    if silent != True or admin: print 'Download File Size : %dMB %s ' % (mb, dest)
+    text = 'Download File Size : %dMB %s ' % (mb, dest)
+    printlog(title="doDownload", printpoint=printpoint, text=text, level=1, option="")
 
     #f = open(dest, mode='wb')
     f = xbmcvfs.File(dest, 'w')
@@ -147,10 +149,11 @@ def doDownload(url, dest, title, referer, agent, cookie, silent=False, percentin
             downloaded += len(c)
         percent = min(100 * downloaded / content, 100)
         if percent >= notify:
-			if silent != True or admin:
+			if silent != True or exe != "":
 				xbmc.executebuiltin( "XBMC.Notification(%s,%s,%i)" % ( title + " - " + str(percent)+'%', dest, 10000))
 
-				print 'Download percent : %s %s %dMB downloaded : %sMB File Size : %sMB' % (str(percent)+'%', dest, mb, downloaded / 1000000, content / 1000000)
+				text = 'Download percent : %s %s %dMB downloaded : %sMB File Size : %sMB' % (str(percent)+'%', dest, mb, downloaded / 1000000, content / 1000000)
+				printlog(title="doDownload", printpoint=printpoint, text=text, level=1, option="")
 
 				notify += percentinfo
 
@@ -175,7 +178,9 @@ def doDownload(url, dest, title, referer, agent, cookie, silent=False, percentin
                     return "ok"
 					
         except Exception, e:
-            print str(e)
+            text = str(e)
+            printlog(title="doDownload", printpoint=printpoint, text=text, level=1, option="")
+			
             error = True
             sleep = 10
             errno = 0
@@ -206,13 +211,15 @@ def doDownload(url, dest, title, referer, agent, cookie, silent=False, percentin
         if error:
             errors += 1
             count  += 1
-            print '%d Error(s) whilst downloading %s' % (count, dest)
+            text = '%d Error(s) whilst downloading %s' % (count, dest)
+            printlog(title="doDownload", printpoint=printpoint, text=text, level=1, option="")
             xbmc.sleep(sleep*1000)
 
         if (resumable and errors > 0) or errors >= 10:
             if (not resumable and resume >= 10) or resume >= 100:
                 #Give up!
-                print '%s download canceled - too many error whilst downloading' % (dest)
+                text = '%s download canceled - too many error whilst downloading' % (dest)
+                printlog(title="doDownload", printpoint=printpoint, text=text, level=1, option="")
                 xbmcgui.Dialog().ok(title, dest, '' , 'Download failed')
                 return "error"
 
@@ -221,12 +228,19 @@ def doDownload(url, dest, title, referer, agent, cookie, silent=False, percentin
             if resumable:
                 chunks  = []
                 #create new response
-                print 'Download resumed (%d) %s' % (resume, dest)
+                text = 'Download resumed (%d) %s' % (resume, dest)
+                printlog(title="doDownload", printpoint=printpoint, text=text, level=1, option="")
                 resp = getResponse(url, total, referer, agent, cookie, silent)
             else:
                 #use existing response
                 pass
 
+	
+	text = 'url' + space2 + str(url) + newline + \
+	'dest' + space2 + str(dest) + newline + \
+	'title' + space2 + str(title) + newline + \
+	'resp.headers' + space2 + str(resp.headers)
+	printlog(title="commondownloader", printpoint=printpoint, text=text, level=0, option="")
 
 if __name__ == '__main__':
     if 'commondownloader.py' in sys.argv[0]:

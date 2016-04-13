@@ -11,7 +11,7 @@ addon = xbmcaddon.Addon(id='script.featherence.service')
 ADDON_TITLE = addon.getAddonInfo('name')
 ADDON_VERSION = addon.getAddonInfo('version')
 
-DEBUG = True
+exe = printlog(title="exe", printpoint="", text="", level=1, option="")
 
 STRINGS = {
     'do_upload': 30000,
@@ -123,12 +123,13 @@ class LogUploader(object):
             elif logfile['title'] == 'crash.log':
                 post_dict['crashlog_id'] = logfile['paste_id']
         post_data = urllib.urlencode(post_dict)
-        if DEBUG:
-            print post_data
+
         req = urllib2.Request(EMAIL_URL, post_data)
         response = urllib2.urlopen(req).read()
-        if DEBUG:
-            print response
+        
+        text = 'post_data' + space2 + str(post_data) + newline + \
+        'response' + space2 + str(response)
+        printlog(title='report_mail', printpoint=printpoint, text=text, level=0, option="")
 
     def __get_logs(self):
         log_path = translate('special://logpath')
