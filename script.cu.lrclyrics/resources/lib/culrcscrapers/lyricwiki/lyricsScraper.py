@@ -47,7 +47,7 @@ class LyricsFetcher:
                 else:
                     return None
             req.close()
-            matchcode = re.search('lyricbox.*?</script>(.*?)<!--', response)
+            matchcode = re.search('lyricbox.*?(&#.*?)<!--', response)
             try:
                 lyricscode = (matchcode.group(1))
                 htmlparser = HTMLParser.HTMLParser()

@@ -1,3 +1,6 @@
+v4.1.10
+- fixed lyricwiki scraper
+
 v4.1.9
 - clear culrc.lyrics window property when needed
 
