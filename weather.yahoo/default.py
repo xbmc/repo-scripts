@@ -1,10 +1,10 @@
-import os, sys, socket, urllib2
+import os, sys, socket, urllib2, time
 from xml.dom import minidom
 import xbmc, xbmcgui, xbmcaddon
 if sys.version_info < (2, 7):
-    import simplejson
+    import simplejson as json
 else:
-    import json as simplejson
+    import json
 
 ADDON        = xbmcaddon.Addon()
 ADDONNAME    = ADDON.getAddonInfo('name')
@@ -17,10 +17,9 @@ sys.path.append(RESOURCE)
 
 from utilities import *
 
-LOC_URL          = 'http://query.yahooapis.com/v1/public/yql?q=%s&format=json'
+YQL_URL          = 'https://query.yahooapis.com/v1/public/yql?q=%s&format=json'
 LOC_QUERY        = 'select * from geo.places where text="%s"'
-API_URL          = 'http://xml.weather.yahoo.com/forecastrss?w=%s&u=c'
-WEATHER_ICON     = xbmc.translatePath('special://temp/weather/%s.png').decode("utf-8")
+FORECAST_QUERY   = 'select * from weather.forecast where woeid=%s and u="c"'
 WEATHER_WINDOW   = xbmcgui.Window(12600)
 
 socket.setdefaulttimeout(10)
@@ -38,7 +37,7 @@ def refresh_locations():
     locations = 0
     for count in range(1, 6):
         loc_name = ADDON.getSetting('Location%s' % count)
-        if loc_name != '':
+        if loc_name:
             locations += 1
         set_property('Location%s' % count, loc_name)
     set_property('Locations', str(locations))
@@ -52,9 +51,10 @@ def location(loc):
     query = find_location(loc)
     log('location data: %s' % query)
     data = parse_data(query)
-    if data != '' and data.has_key('query') and data['query'].has_key('results') and data['query']['results'].has_key('place'):
-        if isinstance (data['query']['results']['place'],list):
-            for item in data['query']['results']['place']:
+    if data and ('query' in data) and ('results' in data['query']) and ('place' in data['query']['results']):
+        results = data['query']['results']['place']
+        if isinstance (results,list):
+            for item in results:
                 listitem = item['name'] + ' (' + (item['admin1']['content'] + ' - ' if item['admin1'] is not None else '') + item['country']['code'] + ')'
                 location   = item['name'] + ' (' + item['country']['code'] + ')'
                 locationid = item['woeid']
@@ -62,9 +62,9 @@ def location(loc):
                 locs.append(location)
                 locids.append(locationid)
         else:
-            listitem   = data['query']['results']['place']['name'] + ' (' + data['query']['results']['place']['admin1']['content'] + ' - ' + data['query']['results']['place']['country']['code'] + ')'
-            location   = data['query']['results']['place']['name'] + ' (' + data['query']['results']['place']['country']['code'] + ')'
-            locationid = data['query']['results']['place']['woeid']
+            listitem   = results['name'] + ' (' + results['admin1']['content'] + ' - ' + results['country']['code'] + ')'
+            location   = results['name'] + ' (' + results['country']['code'] + ')'
+            locationid = results['woeid']
             items.append(listitem)
             locs.append(location)
             locids.append(locationid)
@@ -72,50 +72,55 @@ def location(loc):
 
 def find_location(loc):
     query = urllib2.quote(LOC_QUERY % loc)
-    url = LOC_URL % query
+    url = YQL_URL % query
     try:
         req = urllib2.urlopen(url)
         response = req.read()
         req.close()
     except:
-        response = ''
+        return
     return response
 
 def parse_data(reply):
     try:
-        data = simplejson.loads(reply)
+        response = json.loads(reply)
     except:
+        response = ''
         log('failed to parse weather data')
-        data = ''
-    return data
+    return response
 
 def forecast(loc,locid):
     log('weather location: %s' % locid)
     retry = 0
     while (retry < 6) and (not MONITOR.abortRequested()):
         query = get_weather(locid)
-        if query != '':
+        if query:
             retry = 6
         else:
             retry += 1
             xbmc.sleep(10000)
             log('weather download failed')
     log('forecast data: %s' % query)
-    if query != '':
-        properties(query,loc)
+    if query:
+        data = parse_data(query)
+        if data:
+            properties(data,loc)
+        else:
+            clear()
     else:
         clear()
 
 def get_weather(locid):
-    url = API_URL % locid
+    query = urllib2.quote(FORECAST_QUERY % locid)
+    url = YQL_URL % query
     try:
         req = urllib2.urlopen(url)
         response = req.read()
         req.close()
     except:
-        response = ''
+        return
     return response
-
+    
 def clear():
     set_property('Current.Condition'     , 'N/A')
     set_property('Current.Temperature'   , '0')
@@ -135,49 +140,87 @@ def clear():
         set_property('Day%i.OutlookIcon' % count, 'na.png')
         set_property('Day%i.FanartCode'  % count, 'na')
 
-def properties(data,loc):
-    xml = minidom.parseString(data)
-    wind = xml.getElementsByTagName('yweather:wind')
-    atmosphere = xml.getElementsByTagName('yweather:atmosphere')
-    astronomy = xml.getElementsByTagName('yweather:astronomy')
-    condition = xml.getElementsByTagName('yweather:condition')
-    forecast = xml.getElementsByTagName('yweather:forecast')
-    set_property('Current.Location'      , loc)
-    set_property('Current.Condition'     , condition[0].attributes['text'].value.replace('/', ' / '))
-    set_property('Current.Temperature'   , condition[0].attributes['temp'].value)
-    set_property('Current.Wind'          , wind[0].attributes['speed'].value)
-    if (wind[0].attributes['direction'].value != ''):
-        set_property('Current.WindDirection' , winddir(int(wind[0].attributes['direction'].value)))
+def properties(response,loc):
+    condition = ''
+    wind = ''
+    atmosphere = ''
+    if response and ('query' in response) and ('results' in response['query']) and ('channel' in response['query']['results']):
+        data = response['query']['results']['channel']
+        if 'wind' in data:
+            wind = data['wind']
+            props_wind(wind)
+        if 'atmosphere' in data:
+            atmosphere = data['atmosphere']
+            props_atmosphere(atmosphere)
+        if 'astronomy' in data:
+            astronomy = data['astronomy']
+            props_astronomy(astronomy)
+        if ('item' in data):
+            if 'condition' in data['item']:
+                condition = data['item']['condition']
+                props_condition(condition,loc)
+                if wind:
+                    props_feelslike(condition, wind)
+                if atmosphere:
+                    props_dewpoint(condition, atmosphere)
+            if 'forecast' in data['item']:
+                forecast = data['item']['forecast']
+                props_forecast(forecast)        
+
+def props_condition(condition,loc):
+    set_property('Current.Location'          , loc)
+    set_property('Current.Condition'         , condition['text'].replace('/', ' / '))
+    set_property('Current.Temperature'       , condition['temp'])
+    set_property('Current.UVIndex'           , '')
+    set_property('Current.OutlookIcon'       , '%s.png' % condition['code']) # Kodi translates it to Current.ConditionIcon
+    set_property('Current.FanartCode'        , condition['code'])
+
+def props_wind(wind):
+    set_property('Current.Wind'              , wind['speed'])
+    if (wind['direction']):
+        set_property('Current.WindDirection' , winddir(int(wind['direction'])))
     else:
         set_property('Current.WindDirection' , '')
-    set_property('Current.WindChill'     , wind[0].attributes['chill'].value)
-    set_property('Current.Humidity'      , atmosphere[0].attributes['humidity'].value)
-    set_property('Current.Visibility'    , atmosphere[0].attributes['visibility'].value)
-    set_property('Current.Pressure'      , atmosphere[0].attributes['pressure'].value)
-    if (wind[0].attributes['speed'].value != ''):
-        set_property('Current.FeelsLike'     , feelslike(int(condition[0].attributes['temp'].value), int(round(float(wind[0].attributes['speed'].value) + 0.5))))
+    set_property('Current.WindChill'         , wind['chill'])
+
+def props_atmosphere(atmosphere):
+    set_property('Current.Humidity'          , atmosphere['humidity'])
+    set_property('Current.Visibility'        , atmosphere['visibility'])
+    set_property('Current.Pressure'          , atmosphere['pressure'])
+
+def props_feelslike(condition, wind):
+    if (wind['speed']):
+        set_property('Current.FeelsLike'     , feelslike(int(condition['temp']), int(round(float(wind['speed']) + 0.5))))
     else:
-        set_property('Current.FeelsLike' , '')
-    if (condition[0].attributes['temp'].value != '') and (atmosphere[0].attributes['humidity'].value != ''):
-        set_property('Current.DewPoint'      , dewpoint(int(condition[0].attributes['temp'].value), int(atmosphere[0].attributes['humidity'].value)))
+        set_property('Current.FeelsLike'     , '')
+
+def props_dewpoint(condition, atmosphere):
+    if (condition['temp']) and (atmosphere['humidity']):
+        set_property('Current.DewPoint'      , dewpoint(int(condition['temp']), int(atmosphere['humidity'])))
     else:
-        set_property('Current.DewPoint' , '')
-    set_property('Current.UVIndex'       , '')
-    set_property('Current.OutlookIcon'   , '%s.png' % condition[0].attributes['code'].value) # Kodi translates it to Current.ConditionIcon
-    set_property('Current.FanartCode'    , condition[0].attributes['code'].value)
-    set_property('Today.Sunrise'         , astronomy[0].attributes['sunrise'].value)
-    set_property('Today.Sunset'          , astronomy[0].attributes['sunset'].value)
+        set_property('Current.DewPoint'      , '')
+
+def props_astronomy(astronomy):
+    ftime   = xbmc.getRegion('time').replace(":%S","")
+    sunrise = time.strptime(astronomy['sunrise'], "%I:%M %p")
+    sunset  = time.strptime(astronomy['sunset'], "%I:%M %p")
+    set_property('Today.Sunrise'             , time.strftime(ftime, sunrise))
+    set_property('Today.Sunset'              , time.strftime(ftime, sunset))
+
+def props_forecast(forecast):
     for count, item in enumerate(forecast):
-        set_property('Day%i.Title'       % count, DAYS[item.attributes['day'].value])
-        set_property('Day%i.HighTemp'    % count, item.attributes['high'].value)
-        set_property('Day%i.LowTemp'     % count, item.attributes['low'].value)
-        set_property('Day%i.Outlook'     % count, item.attributes['text'].value.replace('/', ' / '))
-        set_property('Day%i.OutlookIcon' % count, '%s.png' % item.attributes['code'].value)
-        set_property('Day%i.FanartCode'  % count, item.attributes['code'].value)
+        set_property('Day%i.Title'           % count, DAYS[item['day']])
+        set_property('Day%i.HighTemp'        % count, item['high'])
+        set_property('Day%i.LowTemp'         % count, item['low'])
+        set_property('Day%i.Outlook'         % count, item['text'].replace('/', ' / '))
+        set_property('Day%i.OutlookIcon'     % count, '%s.png' % item['code'])
+        set_property('Day%i.FanartCode'      % count, item['code'])
+
 
 class MyMonitor(xbmc.Monitor):
     def __init__(self, *args, **kwargs):
         xbmc.Monitor.__init__(self)
+
 
 log('version %s started: %s' % (ADDONVERSION, sys.argv))
 
@@ -197,7 +240,7 @@ set_property('WeatherProviderLogo', xbmc.translatePath(os.path.join(CWD, 'resour
 if sys.argv[1].startswith('Location'):
     keyboard = xbmc.Keyboard('', xbmc.getLocalizedString(14024), False)
     keyboard.doModal()
-    if (keyboard.isConfirmed() and keyboard.getText() != ''):
+    if (keyboard.isConfirmed() and keyboard.getText()):
         text = keyboard.getText()
         items, locs, locids = location(text)
         dialog = xbmcgui.Dialog()
@@ -213,11 +256,11 @@ if sys.argv[1].startswith('Location'):
 else:
     location = ADDON.getSetting('Location%s' % sys.argv[1])
     locationid = ADDON.getSetting('Location%sid' % sys.argv[1])
-    if (locationid == '') and (sys.argv[1] != '1'):
+    if (not locationid) and (sys.argv[1] != '1'):
         location = ADDON.getSetting('Location1')
         locationid = ADDON.getSetting('Location1id')
         log('trying location 1 instead')
-    if not locationid == '':
+    if locationid:
         forecast(location, locationid)
     else:
         log('empty location id')

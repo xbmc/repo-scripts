@@ -1,3 +1,6 @@
+v3.2.0
+- update to new api
+
 v3.1.0
 - change url due to api changes
 
