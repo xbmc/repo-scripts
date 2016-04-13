@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+    <category label="About" description="About">
+		<setting type="lsep" label=""/>
+		<setting type="lsep" label="$ADDON[script.featherence.service 32079]"/>
+		<setting type="lsep" label="$ADDON[script.featherence.service 32108]"/>
+		<setting type="action" action="RunScript(script.featherence.service,,?mode=512&amp;value=1)" label="$ADDON[script.featherence.service 32078]" option="close" visible="true"/>
+		<setting type="lsep" label="$ADDON[script.featherence.service 32048] $ADDON[script.featherence.service 32049]" visible="true"/>
+		<setting type="action" action="RunScript(script.featherence.service,,?mode=7)" label="$ADDON[script.featherence.service 32073]" option="close" visible=""/>
+		<setting type="lsep" label="$ADDON[script.featherence.service 32072]"/>
+		<setting type="action" action="RunScript(script.featherence.service,,?mode=32&amp;value=3)" label="$ADDON[script.featherence.service 32076]" option="close" visible="true"/>
+		<setting type="lsep" label="$ADDON[script.featherence.service 32071]"/>
+		<setting type="action" action="RunScript(script.featherence.service,,?mode=512&amp;value=2)" label="$ADDON[script.featherence.service 32077]" option="close" visible="true"/>
+		<setting type="lsep" label="[CR]$ADDON[script.featherence.service 32044]"/>
+		<setting type="lsep" label="$ADDON[script.featherence.service 32045]"/>
+		<setting type="lsep" label=""/>
+	</category>
+	
+	<category label="Widget">
+	  <setting type="lsep" label="32038"/>
+	  <setting id="widget_enable" type="bool" default="true" label="32016" visible="true"/>
+	  <setting type="action" action="RunScript(script.featherence.service,,?mode=23&amp;value=1)" label="32039" option="close" visible="eq(-1,true)"/>
+	  <setting label="32013" type="bool" id="plot_enable" default="true"/>
+	  <setting label="32001" type="bool" id="recommended_enable" default="true"/>
+	  <setting label="32002" type="bool" id="randomitems_enable" default="true"/>
+      <setting label="32011" type="bool" id="randomitems_unplayed" subsetting="true" default="true" enable="eq(-1,true)"/>
+      <setting label="32005" type="bool" id="randomitems_seasonfolders" subsetting="true" default="true" enable="eq(-2,true)"/>
+	  <setting label="32009" type="bool" id="recentitems_enable" default="true"/>
+      <setting label="32011" type="bool" id="recentitems_unplayed" subsetting="true" default="true" enable="eq(-1,true)"/>
+	</category>
+	
+	<category label="Tools" description="">
+		<setting type="lsep" label=""/>
+		<setting type="lsep" label="32041"/>
+	    <setting id="VolumeLevel" type="select" default="-" label="32015" values="-|40|50|60|70|80|90|100" visible="true"/>
+		<setting type="action" action="RunScript(script.featherence.service,,?mode=31&amp;value=Custom)" label="32121" option="close" visible="true"/>
+	</category>
+	
+	<category label="Debug">
+	  <setting id="Debug_Email" type="text" default="" label="32115" visible="false"/>
+	  <setting id="Debug_Password" type="text" default="" label="32114" visible="false" option="hidden"/>
+	  <setting type="lsep" label="32118" visible="false"/>
+	  <setting id="Debug_PasswordKeeper" type="bool" default="false" label="32119" visible="false"/>
+	  <setting id="Debug_Title" type="text" default="" label="$LOCALIZE[369]" visible="false"/>
+	  <setting id="Debug_Message" type="text" default="" label="$LOCALIZE[15007]" visible="false"/>
+	  <setting type="lsep" label=""/>
+	  <setting type="lsep" label="32120"/>
+	  <setting id="admin" type="bool" default="false" label="$LOCALIZE[20191]" visible="true"/>
+	  <setting type="lsep" label=""/>
+	  <!--<setting id="listappend" type="bool" default="false" label="Debug" visible="true"/>-->
+	  
+	  
+	  <setting id="Skin_UpdateDate" type="text" default="" label="Skin_UpdateDate" visible="false"/>
+	  <setting id="Skin_UpdateLog" type="bool" default="true" label="Skin_UpdateLog" visible="false"/>
+	  <setting id="Skin_Version" type="text" default="" label="Skin_Version" visible="false"/>
+		
+	  <setting type="lsep" label=""/>
+	</category>
+</settings>
