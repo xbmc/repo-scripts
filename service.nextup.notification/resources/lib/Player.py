@@ -23,15 +23,10 @@ class Player(xbmc.Player):
     addonId = clientInfo.getAddonId()
     addon = xbmcaddon.Addon(id=addonId)
 
-    episode = None
-    nextUpPage = None
-    stillWatchingPage = None
     logLevel = 0
-    totalTime = 0
     currenttvshowid = None
     currentepisodeid = None
     playedinarow = 1
-    playbackonended = False
     fields_base = '"dateadded", "file", "lastplayed","plot", "title", "art", "playcount",'
     fields_file = fields_base + '"streamdetails", "director", "resume", "runtime",'
     fields_tvshows = fields_base + '"sorttitle", "mpaa", "premiered", "year", "episode", "watchedepisodes", "votes", "rating", "studio", "season", "genre", "episodeguide", "tag", "originaltitle", "imdbnumber"'
@@ -63,9 +58,7 @@ class Player(xbmc.Player):
             return json.loads(result)
 
     def onPlayBackStarted(self):
-        # Will be called when kodi starts playing a file
-        self.playbackonended = False
-        self.episode = None
+        # Will be called when xbmc starts playing a file
         WINDOW = xbmcgui.Window(10000)
         WINDOW.clearProperty("NextUpNotification.NowPlaying.DBID")
         WINDOW.clearProperty("NextUpNotification.NowPlaying.Type")
@@ -254,6 +247,7 @@ class Player(xbmc.Player):
 
     def autoPlayPlayback(self):
         currentFile = xbmc.Player().getPlayingFile()
+
         # Get the active player
         result = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "id": 1, "method": "Player.GetActivePlayers"}')
         result = unicode(result, 'utf-8', errors='ignore')
@@ -334,7 +328,6 @@ class Player(xbmc.Player):
                         # no episode get out of here
                         return
                     self.logMsg("episode details %s" % str(episode), 2)
-                    self.episode = episode
                     episodeid = episode["episodeid"]
 
                     if includeWatched:
@@ -343,110 +336,68 @@ class Player(xbmc.Player):
                         includePlaycount = episode["playcount"] == 0
                     if includePlaycount and currentepisodeid != episodeid:
                         # we have a next up episode
-                        self.playbackonended = True
-                        self.nextUpPage = NextUpInfo("script-nextup-notification-NextUpInfo.xml",
+                        nextUpPage = NextUpInfo("script-nextup-notification-NextUpInfo.xml",
                                                 addonSettings.getAddonInfo('path'), "default", "1080i")
-                        self.nextUpPage.setItem(episode)
-                        self.stillWatchingPage = StillWatchingInfo(
+                        nextUpPage.setItem(episode)
+                        stillWatchingPage = StillWatchingInfo(
                             "script-nextup-notification-StillWatchingInfo.xml",
                             addonSettings.getAddonInfo('path'), "default", "1080i")
-                        self.stillWatchingPage.setItem(episode)
+                        stillWatchingPage.setItem(episode)
                         playedinarownumber = addonSettings.getSetting("playedInARow")
                         playTime = xbmc.Player().getTime()
-                        self.totalTime =  xbmc.Player().getTotalTime()
+                        totalTime =  xbmc.Player().getTotalTime()
                         self.logMsg("played in a row settings %s" % str(playedinarownumber), 2)
                         self.logMsg("played in a row %s" % str(self.playedinarow), 2)
                         if int(self.playedinarow) <= int(playedinarownumber):
                             self.logMsg(
-                                "showing next up page as played in a row is %s" % str(self.playedinarow), 2)                         
-                            if (shortplayNotification == "false") and (shortplayLength >= self.totalTime) and (shortplayMode == "true"):
+                                "showing next up page as played in a row is %s" % str(self.playedinarow), 2)
+                            if (shortplayNotification == "false") and (shortplayLength >= totalTime) and (shortplayMode == "true"):
                                 self.logMsg("hiding notification for short videos")
                             else:
-	                            self.nextUpPage.show()
+                                nextUpPage.show()
                         else:
                             self.logMsg(
                                 "showing still watching page as played in a row %s" % str(self.playedinarow), 2)
-                            if (shortplayNotification == "false") and (shortplayLength >= self.totalTime) and (shortplayMode == "true"):
+                            if (shortplayNotification == "false") and (shortplayLength >= totalTime) and (shortplayMode == "true"):
                                 self.logMsg("hiding notification for short videos")
                             else:
-                                self.stillWatchingPage.show()
-                        while xbmc.Player().isPlaying() and not self.nextUpPage.isCancel() and not self.nextUpPage.isWatchNow() and not self.stillWatchingPage.isStillWatching() and not self.stillWatchingPage.isCancel():
+                                stillWatchingPage.show()
+                        while xbmc.Player().isPlaying() and (
+                                        totalTime - playTime > 1) and not nextUpPage.isCancel() and not nextUpPage.isWatchNow() and not stillWatchingPage.isStillWatching() and not stillWatchingPage.isCancel():
                             xbmc.sleep(100)
-                            #try:
-                            # playTime = xbmc.Player().getTime()
-                            #  totalTime = xbmc.Player().getTotalTime()
-                            #except:
-                            # pass
-                        if xbmc.Player().isPlaying():
-                            if shortplayLength >= self.totalTime and shortplayMode == "true":
-                                #play short video and don't add to playcount
-                                self.playedinarow += 0
-                                self.logMsg("Continuing short video autoplay - %s")
-                                if self.nextUpPage.isWatchNow() or self.stillWatchingPage.isStillWatching():
-                                    self.playedinarow = 1
-                                shouldPlayDefault = not self.nextUpPage.isCancel()
+                            try:
+                                playTime = xbmc.Player().getTime()
+                                totalTime = xbmc.Player().getTotalTime()
+                            except:
+                                pass
+                        if shortplayLength >= totalTime and shortplayMode == "true":
+                            #play short video and don't add to playcount
+                            self.playedinarow += 0
+                            self.logMsg("Continuing short video autoplay - %s")
+                            if nextUpPage.isWatchNow() or stillWatchingPage.isStillWatching():
+                                self.playedinarow = 1
+                            shouldPlayDefault = not nextUpPage.isCancel()
+                        else:
+                            if int(self.playedinarow) <= int(playedinarownumber):
+                                nextUpPage.close()
+                                shouldPlayDefault = not nextUpPage.isCancel()
+                                shouldPlayNonDefault = nextUpPage.isWatchNow()
                             else:
-                                if int(self.playedinarow) <= int(playedinarownumber):
-                                    self.nextUpPage.close()
-                                    shouldPlayDefault = not self.nextUpPage.isCancel()
-                                    shouldPlayNonDefault = self.nextUpPage.isWatchNow()
-                                else:
-                                    self.stillWatchingPage.close()
-                                    shouldPlayDefault = self.stillWatchingPage.isStillWatching()
-                                    shouldPlayNonDefault = self.stillWatchingPage.isStillWatching()
+                                stillWatchingPage.close()
+                                shouldPlayDefault = stillWatchingPage.isStillWatching()
+                                shouldPlayNonDefault = stillWatchingPage.isStillWatching()
 
-                                if self.nextUpPage.isWatchNow() or self.stillWatchingPage.isStillWatching():
-                                    self.playedinarow = 1
-                                else:
-                                    self.playedinarow += 1
-                                
-                            if (shouldPlayDefault and playMode == "0") or (shouldPlayNonDefault and playMode == "1"):
-                                self.logMsg("playing media episode id %s" % str(episodeid), 2)
-                                # Signal to trakt previous episode watched as playback ended early
-                                AddonSignals.sendSignal("NEXTUPWATCHEDSIGNAL", {'episodeid': self.currentepisodeid})
+                            if nextUpPage.isWatchNow() or stillWatchingPage.isStillWatching():
+                                self.playedinarow = 1
+                            else:
+                                self.playedinarow += 1
 
-                                # Play media
-                                xbmc.executeJSONRPC(
-                                    '{ "jsonrpc": "2.0", "id": 0, "method": "Player.Open", '
-                                    '"params": { "item": {"episodeid": ' + str(episode["episodeid"]) + '} } }')
+                        if (shouldPlayDefault and playMode == "0") or (shouldPlayNonDefault and playMode == "1"):
+                            self.logMsg("playing media episode id %s" % str(episodeid), 2)
+                            # Signal to trakt previous episode watched
+                            AddonSignals.sendSignal("NEXTUPWATCHEDSIGNAL", {'episodeid': self.currentepisodeid})
 
-    def onPlayBackEnded( self ):
-        # Will be called when kodi stops playing a file
-        self.logMsg("ONPLAYBACK_ENDED", 2)
-        addonSettings = xbmcaddon.Addon(id='service.nextup.notification')
-        playMode = addonSettings.getSetting("autoPlayMode")
-        playedinarownumber = addonSettings.getSetting("playedInARow")
-        shortplayMode = addonSettings.getSetting("shortPlayMode")
-        shortplayLength = int(addonSettings.getSetting("shortPlayLength")) * 60
-
-        if self.playbackonended and self.episode:
-            self.logMsg("playback ended and next up episode to show", 2)
-            if shortplayLength >= self.totalTime and shortplayMode == "true":
-                #play short video and don't add to playcount
-                self.playedinarow += 0
-                self.logMsg("Continuing short video autoplay - %s")
-                if self.nextUpPage.isWatchNow() or self.stillWatchingPage.isStillWatching():
-                    self.playedinarow = 1
-                shouldPlayDefault = not self.nextUpPage.isCancel()
-            else:
-                if int(self.playedinarow) <= int(playedinarownumber):
-                    self.nextUpPage.close()
-                    shouldPlayDefault = not self.nextUpPage.isCancel()
-                    shouldPlayNonDefault = self.nextUpPage.isWatchNow()
-                else:
-                    self.stillWatchingPage.close()
-                    shouldPlayDefault = self.stillWatchingPage.isStillWatching()
-                    shouldPlayNonDefault = self.stillWatchingPage.isStillWatching()
-
-                if self.nextUpPage.isWatchNow() or self.stillWatchingPage.isStillWatching():
-                    self.playedinarow = 1
-                else:
-                    self.playedinarow += 1
-
-            if (shouldPlayDefault and playMode == "0") or (shouldPlayNonDefault and playMode == "1"):
-                episodeid = self.episode["episodeid"]
-                self.logMsg("playing media episode onplaybackended id %s" % str(episodeid), 2)
-                # Play media
-                xbmc.executeJSONRPC(
-                    '{ "jsonrpc": "2.0", "id": 0, "method": "Player.Open", '
-                    '"params": { "item": {"episodeid": ' + str(episodeid) + '} } }')
+                            # Play media
+                            xbmc.executeJSONRPC(
+                                '{ "jsonrpc": "2.0", "id": 0, "method": "Player.Open", '
+                                '"params": { "item": {"episodeid": ' + str(episode["episodeid"]) + '} } }')
