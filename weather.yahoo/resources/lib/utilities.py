@@ -1,13 +1,53 @@
+# -*- coding: utf-8 -*-
+
 import math
 import xbmc
 
-DAYS = { 'Mon': xbmc.getLocalizedString( 11 ),
-         'Tue': xbmc.getLocalizedString( 12 ),
-         'Wed': xbmc.getLocalizedString( 13 ),
-         'Thu': xbmc.getLocalizedString( 14 ),
-         'Fri': xbmc.getLocalizedString( 15 ),
-         'Sat': xbmc.getLocalizedString( 16 ),
-         'Sun': xbmc.getLocalizedString( 17 )}
+TEMPUNIT   = unicode(xbmc.getRegion('tempunit'),encoding='utf-8')
+DATEFORMAT = xbmc.getRegion('dateshort')
+
+LDAYS = { 'Mon': xbmc.getLocalizedString( 11 ),
+          'Tue': xbmc.getLocalizedString( 12 ),
+          'Wed': xbmc.getLocalizedString( 13 ),
+          'Thu': xbmc.getLocalizedString( 14 ),
+          'Fri': xbmc.getLocalizedString( 15 ),
+          'Sat': xbmc.getLocalizedString( 16 ),
+          'Sun': xbmc.getLocalizedString( 17 )}
+
+DAYS = { 'Mon': xbmc.getLocalizedString( 41 ),
+         'Tue': xbmc.getLocalizedString( 42 ),
+         'Wed': xbmc.getLocalizedString( 43 ),
+         'Thu': xbmc.getLocalizedString( 44 ),
+         'Fri': xbmc.getLocalizedString( 45 ),
+         'Sat': xbmc.getLocalizedString( 46 ),
+         'Sun': xbmc.getLocalizedString( 47 )}
+
+def DATE(date):
+    if DATEFORMAT[1] == 'd' or DATEFORMAT[0] == 'D':
+        date = date[0:2] + ' ' + date[3:6]
+    else:
+        date = date[3:6] + ' ' + date[0:2]
+    return date
+
+
+def TEMP(deg):
+    if TEMPUNIT == u'°F':
+        temp = deg * 1.8 + 32
+    elif TEMPUNIT == u'K':
+        temp = deg + 273.15
+    elif TEMPUNIT == u'°Ré':
+        temp = deg * 0.8
+    elif TEMPUNIT == u'°Ra':
+        temp = deg * 1.8 + 491.67
+    elif TEMPUNIT == u'°Rø':
+        temp = deg * 0.525 + 7.5
+    elif TEMPUNIT == u'°D':
+        temp = deg / -0.667 + 150
+    elif TEMPUNIT == u'°N':
+        temp = deg * 0.33
+    else:
+        temp = deg
+    return str(int(round(temp)))
 
 def winddir(deg):
     if deg >= 12 and deg <= 34:

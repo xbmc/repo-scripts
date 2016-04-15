@@ -129,13 +129,20 @@ def clear():
     set_property('Current.DewPoint'      , '0')
     set_property('Current.OutlookIcon'   , 'na.png')
     set_property('Current.FanartCode'    , 'na')
-    for count in range (0, 5):
+    for count in range (0, 7):
         set_property('Day%i.Title'       % count, 'N/A')
         set_property('Day%i.HighTemp'    % count, '0')
         set_property('Day%i.LowTemp'     % count, '0')
         set_property('Day%i.Outlook'     % count, 'N/A')
         set_property('Day%i.OutlookIcon' % count, 'na.png')
         set_property('Day%i.FanartCode'  % count, 'na')
+    for count in range (1, 11):
+        set_property('Daily%i.Title'       % count, 'N/A')
+        set_property('Daily%i.HighTemp'    % count, '0')
+        set_property('Daily%i.LowTemp'     % count, '0')
+        set_property('Daily%i.Outlook'     % count, 'N/A')
+        set_property('Daily%i.OutlookIcon' % count, 'na.png')
+        set_property('Daily%i.FanartCode'  % count, 'na')
 
 def properties(response,loc):
     condition = ''
@@ -178,12 +185,12 @@ def props_wind(wind):
         set_property('Current.WindDirection' , winddir(int(wind['direction'])))
     else:
         set_property('Current.WindDirection' , '')
-    set_property('Current.WindChill'         , wind['chill'])
+    set_property('Current.WindChill'         , TEMP(int(wind['chill'])) + TEMPUNIT)
 
 def props_atmosphere(atmosphere):
     set_property('Current.Humidity'          , atmosphere['humidity'])
-    set_property('Current.Visibility'        , atmosphere['visibility'])
-    set_property('Current.Pressure'          , atmosphere['pressure'])
+    set_property('Current.Visibility'        , atmosphere['visibility'] + '%')
+    set_property('Current.Pressure'          , atmosphere['pressure'] + ' Pa')
 
 def props_feelslike(condition, wind):
     if (wind['speed']):
@@ -212,7 +219,14 @@ def props_forecast(forecast):
         set_property('Day%i.Outlook'         % count, item['text'].replace('/', ' / '))
         set_property('Day%i.OutlookIcon'     % count, '%s.png' % item['code'])
         set_property('Day%i.FanartCode'      % count, item['code'])
-
+        set_property('Daily.%i.ShortDay'        % (count + 1), DAYS[item['day']])
+        set_property('Daily.%i.LongDay'         % (count + 1), LDAYS[item['day']])
+        set_property('Daily.%i.ShortDate'       % (count + 1), DATE(item['date']))
+        set_property('Daily.%i.HighTemperature' % (count + 1), TEMP(int(item['high'])) + TEMPUNIT)
+        set_property('Daily.%i.LowTemperature'  % (count + 1), TEMP(int(item['low'])) + TEMPUNIT)
+        set_property('Daily.%i.Outlook'         % (count + 1), item['text'].replace('/', ' / '))
+        set_property('Daily.%i.OutlookIcon'     % (count + 1), '%s.png' % item['code'])
+        set_property('Daily.%i.FanartCode'      % (count + 1), item['code'])
 
 class MyMonitor(xbmc.Monitor):
     def __init__(self, *args, **kwargs):
@@ -223,9 +237,9 @@ log('version %s started: %s' % (ADDONVERSION, sys.argv))
 
 MONITOR = MyMonitor()
 set_property('Forecast.IsFetched' , '')
-set_property('Current.IsFetched'  , '')
-set_property('Today.IsFetched'    , '')
-set_property('Daily.IsFetched'    , '')
+set_property('Current.IsFetched'  , 'true')
+set_property('Today.IsFetched'    , 'true')
+set_property('Daily.IsFetched'    , 'true')
 set_property('Weekend.IsFetched'  , '')
 set_property('36Hour.IsFetched'   , '')
 set_property('Hourly.IsFetched'   , '')

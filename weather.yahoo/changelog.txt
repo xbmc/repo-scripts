@@ -1,3 +1,6 @@
+v4.2.0
+- add support for daily infolabels
+
 v4.1.0
 - update to new api
 
