@@ -1,0 +1,18 @@
+3.0.0
+- update skin to match Estuary
+- fixes and cosmetics
+
+2.0.4
+- fix crash when no RssFeeds.xml file is found
+
+2.0.3
+- bump for Frodo
+
+2.0.2
+- fix encoding issues when writing to log
+
+2.0.1
+- fix encoding issues when opening files
+
+2.0.0
+- eden compatible version

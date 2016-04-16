@@ -1,0 +1,102 @@
+# Kodi Media Center language file
+# Addon Name: RSS Editor
+# Addon id: script.rss.editor
+# Addon Provider: Team Kodi
+msgid ""
+msgstr ""
+
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: English (http://www.transifex.com/projects/p/xbmc-addons/language/en/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#32000"
+msgid "RSS Editor"
+msgstr ""
+
+msgctxt "#32001"
+msgid "Change Set"
+msgstr ""
+
+msgctxt "#32006"
+msgid "Edit Attributes"
+msgstr ""
+
+msgctxt "#32012"
+msgid "RSS Feed URL"
+msgstr ""
+
+msgctxt "#32013"
+msgid "Update Interval"
+msgstr ""
+
+msgctxt "#32014"
+msgid "Enter the paths of your RSS feeds %s"
+msgstr ""
+
+msgctxt "#32024"
+msgid "Select a Set "
+msgstr ""
+
+msgctxt "#32025"
+msgid "Set ID"
+msgstr ""
+
+msgctxt "#32027"
+msgid "Enable Right to Left Text for this Set?"
+msgstr ""
+
+msgctxt "#32030"
+msgid "Set Editor"
+msgstr ""
+
+msgctxt "#32040"
+msgid "Error: "
+msgstr ""
+
+msgctxt "#32041"
+msgid "was either not found in the system,"
+msgstr ""
+
+msgctxt "#32042"
+msgid "or does not contain parsable XML."
+msgstr ""
+
+msgctxt "#32043"
+msgid "Try deleting it from your userdata folder and restarting XBMC."
+msgstr ""
+
+msgctxt "#32045"
+msgid "Cannot Delete Set 1"
+msgstr ""
+
+msgctxt "#32046"
+msgid "Set 1 is required.  You cannot delete this."
+msgstr ""
+
+msgctxt "#32047"
+msgid "Reset set 1 to default?"
+msgstr ""
+
+msgctxt "#32050"
+msgid "Set %s already exists."
+msgstr ""
+
+msgctxt "#32051"
+msgid "Your RSSFeeds.xml file is corrupt."
+msgstr ""
+
+msgctxt "#32052"
+msgid "Attempt to regenerate"
+msgstr ""
+
+msgctxt "#32053"
+msgid "You will loose all previous settings"
+msgstr ""
