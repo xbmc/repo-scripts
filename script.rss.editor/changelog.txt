@@ -1,3 +1,6 @@
+3.0.1
+- fixes
+
 3.0.0
 - update skin to match Estuary
 - fixes and cosmetics

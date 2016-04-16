@@ -73,10 +73,10 @@
 					<top>0</top>
 					<width>880</width>
 					<height>69</height>
-					<align>$PARAM[align]</align>
 					<aligny>center</aligny>
 					<textcolor>grey</textcolor>
 					<label>$INFO[ListItem.Label]</label>
+					<font>font13</font>
 				</control>
 			</itemlayout>
 			<focusedlayout height="69">
@@ -101,9 +101,9 @@
 					<top>0</top>
 					<width>880</width>
 					<height>69</height>
-					<align>$PARAM[align]</align>
 					<aligny>center</aligny>
 					<label>$INFO[ListItem.Label]</label>
+					<font>font13</font>
 				</control>
 			</focusedlayout>
 		</control>
