@@ -9,8 +9,8 @@ import buggalo
 import re
 import random
 
-__addon_id__= u'service.watchedlist'
-__Addon = xbmcaddon.Addon(__addon_id__)
+_addon_id = u'service.watchedlist'
+_Addon = xbmcaddon.Addon(_addon_id)
 
 # XBMC-JSON
 if sys.version_info < (2, 7):
@@ -23,16 +23,16 @@ def data_dir():
     """"get user data directory of this addon. 
     according to http://wiki.xbmc.org/index.php?title=Add-on_Rules#Requirements_for_scripts_and_plugins
     """
-    __datapath__ = xbmc.translatePath( __Addon.getAddonInfo('profile') ).decode('utf-8')
-    if not xbmcvfs.exists(__datapath__):
-        xbmcvfs.mkdir(__datapath__)
-    return __datapath__
+    _datapath = xbmc.translatePath( _Addon.getAddonInfo('profile') ).decode('utf-8')
+    if not xbmcvfs.exists(_datapath):
+        xbmcvfs.mkdir(_datapath)
+    return _datapath
 
 def addon_dir():
     """"get source directory of this addon.
     according to http://wiki.xbmc.org/index.php?title=Add-on_Rules#Requirements_for_scripts_and_plugins
     """
-    return __Addon.getAddonInfo('path').decode('utf-8')
+    return _Addon.getAddonInfo('path').decode('utf-8')
 
 def log(message,loglevel=xbmc.LOGNOTICE):
     """"save message to xbmc.log.
@@ -41,7 +41,7 @@ def log(message,loglevel=xbmc.LOGNOTICE):
         message: has to be unicode, http://wiki.xbmc.org/index.php?title=Add-on_unicode_paths#Logging
         loglevel: xbmc.LOGDEBUG, xbmc.LOGINFO, xbmc.LOGNOTICE, xbmc.LOGWARNING, xbmc.LOGERROR, xbmc.LOGFATAL
     """
-    xbmc.log(encode(__addon_id__ + u": " + message), level=loglevel)
+    xbmc.log(encode(_addon_id + u": " + message), level=loglevel)
 
 
 def showNotification(title,message, time=4000):
@@ -52,24 +52,24 @@ def showNotification(title,message, time=4000):
         message: has to be unicode
         time: Time that the message is beeing displayed
     """
-    __addoniconpath__ = os.path.join(addon_dir(),"icon.png")
+    _addoniconpath = os.path.join(addon_dir(),"icon.png")
     log(u'Notification. %s: %s' % (title, message) )
     if xbmc.Player().isPlaying() == False: # do not show the notification, if a video is being played.
-        xbmc.executebuiltin(encode('Notification("' + title + '","' + message + '",'+(str(time)).decode('utf-8')+',"' + __addoniconpath__ + '")'))
+        xbmcgui.Dialog().notification(title, message, _addoniconpath, time)
     if getSetting('debug') == 'true':
         xbmc.sleep(250) # time to read the message
         
 
 def setSetting(name,value):
-    __Addon.setSetting(name,value)
+    _Addon.setSetting(name,value)
 
 def getSetting(name):
-    return __Addon.getSetting(name)
+    return _Addon.getSetting(name)
     
 def getString(string_id):
     # return a localized string from resources/language/*.po
     # The returned string is unicode
-    return __Addon.getLocalizedString(string_id)
+    return _Addon.getLocalizedString(string_id)
 
 def encode(string):
     return string.encode('UTF-8','replace')
@@ -86,16 +86,23 @@ def footprint():
     log(u'w_movies = %s' % getSetting('w_movies'), xbmc.LOGDEBUG)
     log(u'w_episodes = %s' % getSetting('w_episodes'), xbmc.LOGDEBUG)
     log(u'autostart = %s' % getSetting('autostart'), xbmc.LOGDEBUG)
-    log(u'periodic = %s' % getSetting('periodic'), xbmc.LOGDEBUG)
-    log(u'interval = %s' % getSetting('interval'), xbmc.LOGDEBUG)
     log(u'delay = %s' % getSetting('delay'), xbmc.LOGDEBUG)
+    log(u'starttype = %s' % getSetting('starttype'), xbmc.LOGDEBUG)
+    log(u'interval = %s' % getSetting('interval'), xbmc.LOGDEBUG)
+    log(u'watch_user = %s' % getSetting('watch_user'), xbmc.LOGDEBUG)
     log(u'progressdialog = %s' % getSetting('progressdialog'), xbmc.LOGDEBUG)
+    log(u'db_format = %s' % getSetting('db_format'), xbmc.LOGDEBUG)
     log(u'extdb = %s' % getSetting('extdb'), xbmc.LOGDEBUG)
     log(u'dbpath = %s' % getSetting('dbpath'), xbmc.LOGDEBUG)
     log(u'dbfilename = %s' % getSetting('dbfilename'), xbmc.LOGDEBUG)
     log(u'dbbackup = %s' % getSetting('dbbackup'), xbmc.LOGDEBUG)
-    
-# 
+    log(u'dropbox_enabled = %s' % getSetting('dropbox_enabled'), xbmc.LOGDEBUG)
+    log(u'dropbox_apikey = %s' % getSetting('dropbox_apikey'), xbmc.LOGDEBUG)
+    log(u'mysql_server = %s' % getSetting('mysql_server'), xbmc.LOGDEBUG)
+    log(u'mysql_port = %s' % getSetting('mysql_port'), xbmc.LOGDEBUG)
+    log(u'mysql_user = %s' % getSetting('mysql_user'), xbmc.LOGDEBUG)
+    log(u'mysql_pass = %s' % getSetting('mysql_pass'), xbmc.LOGDEBUG)
+
 def sqlDateTimeToTimeStamp(sqlDateTime):
     """Convert SQLite DateTime to Unix Timestamp
     
@@ -224,20 +231,3 @@ def fileaccessmode(path):
         else:
             # "normal" path
             return 'normal'
-
-def sleepsafe(waittime):
-    """"sleep waittime return if a shutdown is requested
-    
-    Args:
-        waittime: Time in [seconds] to wait
-        
-    Returns:
-        0 waited the requested time
-        1 shutdown detected within waiting time. Aborted waiting
-    """
-    starttime = time.time()
-    while not xbmc.abortRequested:
-        if time.time() > starttime + waittime:
-            return 0
-        xbmc.sleep(1000) # wait 1 second until next check if xbmc terminates
-    return 1 # shutdown requested

@@ -147,6 +147,9 @@ class WatchedList:
         self.dbdirectory = ''
         self.dropbox_path = None
         self.downloaded_dropbox_timestamp = 0
+        
+        # monitor for shutdown detection
+        self.monitor = xbmc.Monitor()
 
     def runProgram(self):
         """Main function to call other functions
@@ -169,7 +172,7 @@ class WatchedList:
             delaytime = float(utils.getSetting("delay")) * 60 # in seconds
             utils.log(u'Delay time before execution: %d seconds' % delaytime, xbmc.LOGDEBUG)
             utils.showNotification(utils.getString(32101), utils.getString(32004)%float(utils.getSetting("delay")))
-            if utils.sleepsafe(delaytime):
+            if self.monitor.waitForAbort(delaytime):
                 return 0
 
             # load all databases
@@ -202,9 +205,9 @@ class WatchedList:
                 else: # no autostart, only watch user
                     sleeptime = 3600 # arbitrary time for infinite loop
                 
-                # workaround to sleep the requested time. When using the sleep-function, xbmc can not exit 
+                # sleep the requested time and watch user changes
                 while 1:
-                    if xbmc.abortRequested: return 1
+                    if self.monitor.abortRequested(): return 1
                     # check if user changes arrived
                     if utils.getSetting("watch_user") == 'true':
                         idletime_old = idletime
@@ -214,7 +217,7 @@ class WatchedList:
                     # check if time for update arrived
                     if time.time() > starttime + sleeptime:
                         break
-                    xbmc.sleep(1000) # wait 1 second until next check if xbmc terminates
+                    xbmc.sleep(1000) # wait 1 second until next check if xbmc terminates and user made changes
                 # perform full update
                 if utils.getSetting("starttype") == '1' and executioncount == 0 or utils.getSetting("starttype") == '2':
                     self.runUpdate(False)
@@ -253,9 +256,9 @@ class WatchedList:
 
             # check if player is running before doing the update. Only do this check for automatic start
             while xbmc.Player().isPlaying() == True and not manualstart:
-                if utils.sleepsafe(60*1000): return 1 # wait one minute until next check for active playback
+                if self.monitor.waitForAbort(60*1000): return 1 # wait one minute until next check for active playback
                 if xbmc.Player().isPlaying() == False:
-                    if utils.sleepsafe(180*1000): return 1 # wait 3 minutes so the dialogue does not pop up directly after the playback ends
+                    if self.monitor.waitForAbort(180*1000): return 1 # wait 3 minutes so the dialogue does not pop up directly after the playback ends
           
             # load the addon-database
             if self.load_db(True): # True: Manual start
@@ -344,7 +347,7 @@ class WatchedList:
                 else:
                     wait_minutes = 1 # retry waittime if db path does not exist/ is offline
                         
-                    while xbmc.abortRequested == False:
+                    while not self.monitor.abortRequested():
                         # use a user specified file, for example to synchronize multiple clients
                         self.dbdirectory = xbmc.translatePath( utils.getSetting("dbpath") ).decode('utf-8')
                         self.dbfileaccess = utils.fileaccessmode(self.dbdirectory)
@@ -362,7 +365,7 @@ class WatchedList:
                             utils.showNotification(utils.getString(32102), utils.getString(32002) % self.dbdirectory )
                             # Wait "wait_minutes" minutes until next check for file path (necessary on network shares, that are offline)
                             wait_minutes += wait_minutes # increase waittime until next check
-                            if utils.sleepsafe(wait_minutes*60): return 2
+                            if self.monitor.waitForAbort(wait_minutes*60): return 2
                         else:
                             break # directory exists, continue below      
                     
@@ -761,7 +764,7 @@ class WatchedList:
                 list_length = len(self.watchedepisodelist_xbmc)
                 
             for i in range(list_length):
-                if xbmc.abortRequested: break # this loop can take some time in debug mode and prevents xbmc exit
+                if self.monitor.abortRequested(): break # this loop can take some time in debug mode and prevents xbmc exit
                 if utils.getSetting("progressdialog") == 'true' and DIALOG_PROGRESS.iscanceled():
                     if modus == 'movie': strno = 32202
                     else: strno = 32203;
@@ -846,7 +849,7 @@ class WatchedList:
                 list_length = len(self.watchedepisodelist_wl)
             # iterate over wl-list
             for j in range(list_length):
-                if xbmc.abortRequested: break # this loop can take some time in debug mode and prevents xbmc exit
+                if self.monitor.abortRequested(): break # this loop can take some time in debug mode and prevents xbmc exit
                 if progressdialogue and DIALOG_PROGRESS.iscanceled():
                     if notifications > 0: utils.showNotification(utils.getString(32204), utils.getString(32302)%(count_update))  
                     return 2
@@ -1039,7 +1042,7 @@ class WatchedList:
                 # one of the lists is empty: nothing to compare. No user changes noticable
                 continue
             for i_n, row_xbmc in enumerate(list_new):
-                if xbmc.abortRequested: return
+                if self.monitor.abortRequested(): return
                 mediaid = row_xbmc[7]
                 lastplayed_new = row_xbmc[3]
                 playcount_new = row_xbmc[4]
@@ -1062,7 +1065,7 @@ class WatchedList:
             
             # go through all movies changed by the user        
             for icx in indices_changed:  
-                if xbmc.abortRequested: return 1
+                if self.monitor.abortRequested(): return 1
                 i_o = icx[1]; row_xbmc = icx[2]
                 i_n = icx[0];
                 lastplayed_old = list_old[i_o][3]; playcount_old = list_old[i_o][4];

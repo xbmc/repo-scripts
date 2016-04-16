@@ -4,7 +4,7 @@
 	version="1.1.0"
 	provider-name="schapplm">
 	<requires>
-		<import addon="xbmc.python" version="2.1.0"/>
+		<import addon="xbmc.python" version="2.20.0"/>
 		<import addon="script.module.simplejson" version="2.0.10" />
 		<import addon="script.module.buggalo" version="1.1.3" /> <!-- min. version 1.1.3 for email report -->
 		<import addon="script.module.myconnpy" version="1.1.7" /> <!-- mySQL Connector for python. Default in XBMC since Frodo -->
@@ -20,12 +20,12 @@
 		<summary lang="en">Save watched Movies and TV Episodes independent from filenames</summary>
 		<summary lang="de">Gesehen-Status von Filmen und Serien-Episoden unabhängig von Dateinamen speichern</summary>
 		<description lang="en">
-		Export: Searches the XBMC-Database for watched files. Determine imdb-id and thetvdb-id to identify movies and TV-episodes. Then save the list to a new independent table.
-		Import: Set the watched state for each video file in xbmc.
+		Export: Searches the Kodi-Database for watched files. Determine imdb-id and thetvdb-id to identify movies and TV-episodes. Then save the list to a new independent table.
+		Import: Set the watched state for each video file in Kodi.
 		Automatic background process without user interaction.</description>
 		<description lang="de">
-		Export: Durchsucht die XBMC-Datenbank nach gesehenen Filmen und ordnet den Dateien die eindeutigen Kennnummern von imdb und TheTVDB zu. Gesehene Filme und Episoden werden jeweils in einer eigenen Datenbank gespeichert.
-		Import: Der Gesehen-Status von Medien in XBMC wird aus der Gesehenen-Tabelle geholt.
+		Export: Durchsucht die Kodi-Datenbank nach gesehenen Filmen und ordnet den Dateien die eindeutigen Kennnummern von imdb und TheTVDB zu. Gesehene Filme und Episoden werden jeweils in einer eigenen Datenbank gespeichert.
+		Import: Der Gesehen-Status von Medien in Kodi wird aus der Gesehenen-Tabelle geholt.
 		Die Synchronisierung geschieht automatisch im Hintergrund ohne Benutzereingriff.</description>
 		<disclaimer lang="en">This script does not regard the file format. A Movie watched in DVD quality will also set	the 1080p version as watched.</disclaimer>
 		<disclaimer lang="de">Dieses Script ignoriert das Dateiformat. Ein gesehener Film in DVD-Qualität wird auch in der BlueRay-Version als gesehen gekennzeichnet.</disclaimer>

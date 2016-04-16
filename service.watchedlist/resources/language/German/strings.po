@@ -1,7 +1,7 @@
 # XBMC Media Center language file
 # Addon Name: WatchedList
 # Addon id: service.watchedlist
-# Addon version: 1.0.5
+# Addon version: 1.1.0
 # Addon Provider: schapplm
 msgid ""
 msgstr ""
@@ -9,7 +9,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
 "POT-Creation-Date: 2016-03-28 16:47+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Last-Translator: Moritz Schappler <moritz-schappler@web.de>\n"
 "Language-Team: LANGUAGE\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -22,8 +22,8 @@ msgid "Save watched Movies and TV Episodes independent from filenames"
 msgstr "Gesehen-Status von Filmen und Serien-Episoden unabhängig von Dateinamen speichern"
 
 msgctxt "Addon Description"
-msgid "\n		Export: Searches the XBMC-Database for watched files. Determine imdb-id and thetvdb-id to identify movies and TV-episodes. Then save the list to a new independent table.\n		Import: Set the watched state for each video file in xbmc.\n		Automatic background process without user interaction."
-msgstr "\n		Export: Durchsucht die XBMC-Datenbank nach gesehenen Filmen und ordnet den Dateien die eindeutigen Kennnummern von imdb und TheTVDB zu. Gesehene Filme und Episoden werden jeweils in einer eigenen Datenbank gespeichert.\n		Import: Der Gesehen-Status von Medien in XBMC wird aus der Gesehenen-Tabelle geholt.\n		Die Synchronisierung geschieht automatisch im Hintergrund ohne Benutzereingriff."
+msgid "Export: Searches the Kodi-Database for watched files. Determine imdb-id and thetvdb-id to identify movies and TV-episodes. Then save the list to a new independent table.\nImport: Set the watched state for each video file in Kodi.\nAutomatic background process without user interaction."
+msgstr "Export: Durchsucht die Kodi-Datenbank nach gesehenen Filmen und ordnet den Dateien die eindeutigen Kennnummern von imdb und TheTVDB zu. Gesehene Filme und Episoden werden jeweils in einer eigenen Datenbank gespeichert.\nImport: Der Gesehen-Status von Medien in Kodi wird aus der Gesehenen-Tabelle geholt.\nDie Synchronisierung geschieht automatisch im Hintergrund ohne Benutzereingriff."
 
 msgctxt "Addon Disclaimer"
 msgid "This script does not regard the file format. A Movie watched in DVD quality will also set	the 1080p version as watched."
@@ -82,8 +82,8 @@ msgid "Backup copy before accessing database file"
 msgstr "Sicherungskopie vor Datenbankzugriff"
 
 msgctxt "#30021"
-msgid "Start with XBMC (autorun)"
-msgstr "Automatisch mit XBMC starten"
+msgid "Start with Kodi (autorun)"
+msgstr "Automatisch mit Kodi starten"
 
 msgctxt "#30022"
 msgid "follow user setting watched/unwatched"
@@ -154,7 +154,7 @@ msgid "manually run the database update again?"
 msgstr "Datenbank-Aktualisierung nochmal starten?"
 
 msgctxt "#32002"
-msgid "db path does not exist: %s"
+msgid "DB path does not exist: %s"
 msgstr "DB-Pfad existiert nicht: %s"
 
 msgctxt "#32003"
@@ -182,16 +182,16 @@ msgid "Load watched states from addon-database..."
 msgstr "Lade Gesehen-Status aus Gesehen-Datenbank..."
 
 msgctxt "#32104"
-msgid "load watched states xbmc-database ..."
-msgstr "Lade Gesehene-Status aus XBMC-Datenbank ..."
+msgid "load watched states Kodi-database ..."
+msgstr "Lade Gesehene-Status aus Kodi-Datenbank ..."
 
 msgctxt "#32105"
 msgid "update the addon watched-database ..."
 msgstr "Aktualisiere die Gesehen-Datenbank: ..."
 
 msgctxt "#32106"
-msgid "update the xbmc-database ..."
-msgstr "Aktualisiere die XBMC-Datenbank ..."
+msgid "update the Kodi-database ..."
+msgstr "Aktualisiere die Kodi-Datenbank ..."
 
 msgctxt "#32107"
 msgid "update complete."
@@ -210,12 +210,12 @@ msgid "Addon episode database"
 msgstr "Gesehen-Datenbank (Episoden)"
 
 msgctxt "#32204"
-msgid "xbmc-movie database"
-msgstr "XBMC-Filmdatenbank"
+msgid "Kodi-movie database"
+msgstr "Kodi-Filmdatenbank"
 
 msgctxt "#32205"
-msgid "xbmc-episode database"
-msgstr "XBMC-Episodendatenbank"
+msgid "Kodi-episode database"
+msgstr "Kodi-Episodendatenbank"
 
 msgctxt "#32208"
 msgid "Access Denied (username/password/rights)"
@@ -234,8 +234,8 @@ msgid "%d movies and %d episodes read from WL."
 msgstr "%d Filme, %d Episoden in WL."
 
 msgctxt "#32299"
-msgid "%d movies and %d episodes read from xbmc-db."
-msgstr "%d Filme, %d Episoden in XBMC-DB."
+msgid "%d movies and %d episodes read from Kodi-DB."
+msgstr "%d Filme, %d Episoden in Kodi-DB."
 
 msgctxt "#32301"
 msgid "%d watched new. %d updated"
@@ -250,20 +250,20 @@ msgid "%d episodes marked as watched"
 msgstr "%d Episoden als gesehen markiert."
 
 msgctxt "#32401"
-msgid "Set as watched (XBMC-DB)"
-msgstr "Als gesehen markiert (XBMC-DB)"
+msgid "Set as watched (Kodi-DB)"
+msgstr "Als gesehen markiert (Kodi-DB)"
 
 msgctxt "#32402"
 msgid "Remember as newly watched (WL-DB)"
 msgstr "Merke als neu gesehen (WL-DB)"
 
 msgctxt "#32403"
-msgid "Remember as watched (updated) (WL-B)"
+msgid "Remember as watched (updated) (WL-DB)"
 msgstr "Merke als gesehen (aktualisiert) (WL-DB)"
 
 msgctxt "#32404"
-msgid "Set as not watched (XBMC-DB)"
-msgstr "Als ungesehen markiert (XBMC-DB)"
+msgid "Set as not watched (Kodi-DB)"
+msgstr "Als ungesehen markiert (Kodi-DB)"
 
 msgctxt "#32405"
 msgid "Remember as not watched (WL-DB)"
@@ -278,16 +278,16 @@ msgid "Error loading WL-database"
 msgstr "Laden der Gesehen-Datenbank"
 
 msgctxt "#32603"
-msgid "Error loading xbmc-database"
-msgstr "Laden der XBMC-Datenbank"
+msgid "Error loading Kodi-database"
+msgstr "Laden der Kodi-Datenbank"
 
 msgctxt "#32604"
 msgid "Error updating WL database"
 msgstr "Aktualisieren der Gesehen-Datenbank"
 
 msgctxt "#32605"
-msgid "Error updating xbmc-database"
-msgstr "Aktualisieren der XBMC-Datenbank"
+msgid "Error updating Kodi-database"
+msgstr "Aktualisieren der Kodi-Datenbank"
 
 msgctxt "#32606"
 msgid "Writing the WL-database file %s"
@@ -296,10 +296,6 @@ msgstr "Beim Schreiben der Gesehen-Datenbank %s"
 msgctxt "#32607"
 msgid "Unable to merge dropbox data"
 msgstr "Zusammenführung mit Dropbox"
-
-msgctxt "#32608"
-msgid "Python Image Library for QR code not available"
-msgstr "Python Image Library für QR Code nicht verfügbar"
 
 msgctxt "#32610"
 msgid "%d/%d: %s"

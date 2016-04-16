@@ -1,7 +1,7 @@
 # XBMC Media Center language file
 # Addon Name: WatchedList
 # Addon id: service.watchedlist
-# Addon version: 1.0.5
+# Addon version: 1.1.0
 # Addon Provider: schapplm
 msgid ""
 msgstr ""
@@ -22,7 +22,7 @@ msgid "Save watched Movies and TV Episodes independent from filenames"
 msgstr ""
 
 msgctxt "Addon Description"
-msgid "\n		Export: Searches the XBMC-Database for watched files. Determine imdb-id and thetvdb-id to identify movies and TV-episodes. Then save the list to a new independent table.\n		Import: Set the watched state for each video file in xbmc.\n		Automatic background process without user interaction."
+msgid "Export: Searches the Kodi-Database for watched files. Determine imdb-id and thetvdb-id to identify movies and TV-episodes. Then save the list to a new independent table.\nImport: Set the watched state for each video file in Kodi.\nAutomatic background process without user interaction."
 msgstr ""
 
 msgctxt "Addon Disclaimer"
@@ -86,7 +86,7 @@ msgid "Backup copy before accessing database file"
 msgstr ""
 
 msgctxt "#30021"
-msgid "Start with XBMC (autorun)"
+msgid "Start with Kodi (autorun)"
 msgstr ""
 
 msgctxt "#30022"
@@ -166,7 +166,7 @@ msgid "manually run the database update again?"
 msgstr ""
 
 msgctxt "#32002"
-msgid "db path does not exist: %s"
+msgid "DB path does not exist: %s"
 msgstr ""
 
 msgctxt "#32003"
@@ -196,7 +196,7 @@ msgid "Load watched states from addon-database..."
 msgstr ""
 
 msgctxt "#32104"
-msgid "load watched states xbmc-database ..."
+msgid "load watched states Kodi-database ..."
 msgstr ""
 
 msgctxt "#32105"
@@ -204,7 +204,7 @@ msgid "update the addon watched-database ..."
 msgstr ""
 
 msgctxt "#32106"
-msgid "update the xbmc-database ..."
+msgid "update the Kodi-database ..."
 msgstr ""
 
 msgctxt "#32107"
@@ -226,11 +226,11 @@ msgid "Addon episode database"
 msgstr ""
 
 msgctxt "#32204"
-msgid "xbmc-movie database"
+msgid "Kodi-movie database"
 msgstr ""
 
 msgctxt "#32205"
-msgid "xbmc-episode database"
+msgid "Kodi-episode database"
 msgstr ""
 
 #empty strings from id 32206 to 32207
@@ -254,7 +254,7 @@ msgid "%d movies and %d episodes read from WL."
 msgstr ""
 
 msgctxt "#32299"
-msgid "%d movies and %d episodes read from xbmc-db."
+msgid "%d movies and %d episodes read from Kodi-DB."
 msgstr ""
 
 #empty string with id 32300
@@ -275,7 +275,7 @@ msgstr ""
 #empty strings from id 32304 to 32400
 
 msgctxt "#32401"
-msgid "Set as watched (XBMC-DB)"
+msgid "Set as watched (Kodi-DB)"
 msgstr ""
 
 msgctxt "#32402"
@@ -283,11 +283,11 @@ msgid "Remember as newly watched (WL-DB)"
 msgstr ""
 
 msgctxt "#32403"
-msgid "Remember as watched (updated) (WL-B)"
+msgid "Remember as watched (updated) (WL-DB)"
 msgstr ""
 
 msgctxt "#32404"
-msgid "Set as not watched (XBMC-DB)"
+msgid "Set as not watched (Kodi-DB)"
 msgstr ""
 
 msgctxt "#32405"
@@ -306,7 +306,7 @@ msgid "Error loading WL-database"
 msgstr ""
 
 msgctxt "#32603"
-msgid "Error loading xbmc-database"
+msgid "Error loading Kodi-database"
 msgstr ""
 
 msgctxt "#32604"
@@ -314,7 +314,7 @@ msgid "Error updating WL database"
 msgstr ""
 
 msgctxt "#32605"
-msgid "Error updating xbmc-database"
+msgid "Error updating Kodi-database"
 msgstr ""
 
 msgctxt "#32606"
@@ -323,10 +323,6 @@ msgstr ""
 
 msgctxt "#32607"
 msgid "Unable to merge dropbox data"
-msgstr ""
-
-msgctxt "#32608"
-msgid "Python Image Library for QR code not available"
 msgstr ""
 
 #Progress Dialog
