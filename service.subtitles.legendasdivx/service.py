@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Service LegendasDivx.com version 0.2.6
+# Service LegendasDivx.com version 0.2.7
 # Code based on Undertext (FRODO) service
 # Coded by HiGhLaNdR@OLDSCHOOL
 # Ported to Gotham by HiGhLaNdR@OLDSCHOOL
@@ -113,7 +113,7 @@ def _log(module, msg):
     xbmc.log(s.encode('utf-8'), level=xbmc.LOGDEBUG)
 
 def log(msg):
-    if debug == 'true': _log(_name, msg)
+    if debug == 'true': _log(_scriptname, msg)
 
 def urlpost(query, lang, page):
     postdata = urllib.urlencode({'query' : query, 'form_cat' : lang})

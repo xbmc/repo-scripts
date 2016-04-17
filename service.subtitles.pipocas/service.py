@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Service Pipocas.tv version 0.1.3
+# Service Pipocas.tv version 0.1.4
 # Code based on Undertext (FRODO) service
 # Coded by HiGhLaNdR@OLDSCHOOL
 # Ported to Gotham by HiGhLaNdR@OLDSCHOOL
@@ -84,7 +84,7 @@ def _log(module, msg):
     xbmc.log(s.encode('utf-8'), level=xbmc.LOGDEBUG)
 
 def log(msg=None):
-    if debug == 'true': _log(_name, msg)
+    if debug == 'true': _log(_scriptname, msg)
 
 def geturl(url):
     class MyOpener(urllib.FancyURLopener):
