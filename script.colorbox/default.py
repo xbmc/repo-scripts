@@ -34,18 +34,25 @@ class Main:
                 try:
                     self.image_prev_cfa = self.image_now_cfa
                     HOME.setProperty(self.prefix + 'ImageUpdating', '0')
-                    image, imagecolor = Filter_Image(self.image_now_cfa, self.radius)
-                    HOME.setProperty(self.prefix + 'ImageFiltercfa1', image)
-                    HOME.setProperty(self.prefix + "ImageColorcfa1", imagecolor)
-                    image = Filter_Pixelate(self.image_now_cfa, self.pixels)
-                    HOME.setProperty(self.prefix + 'ImageFiltercfa2', image)
-                    HOME.setProperty(self.prefix + "ImageColorcfa2", Random_Color())
-                    image = Filter_Posterize(self.image_now_cfa, self.bits)
-                    HOME.setProperty(self.prefix + 'ImageFiltercfa3', image)
-                    HOME.setProperty(self.prefix + "ImageColorcfa3", Random_Color())
-                    HOME.setProperty(self.prefix + 'ImageUpdating', '1')
+                    if HOME.getProperty("cfa_daemon_set") == 'Blur':
+                        image, imagecolor = Filter_Image(self.image_now_cfa, self.radius)
+                        HOME.setProperty(self.prefix + 'ImageFiltercfa1', image)
+                        HOME.setProperty(self.prefix + "ImageColorcfa1", imagecolor)
+                    elif HOME.getProperty("cfa_daemon_set") == 'Pixelate':
+                        image = Filter_Pixelate(self.image_now_cfa, self.pixels)
+                        HOME.setProperty(self.prefix + 'ImageFiltercfa2', image)
+                        HOME.setProperty(self.prefix + "ImageColorcfa2", Random_Color())
+                    elif HOME.getProperty("cfa_daemon_set") == 'Posterize':
+                        image = Filter_Posterize(self.image_now_cfa, self.bits)
+                        HOME.setProperty(self.prefix + 'ImageFiltercfa3', image)
+                        HOME.setProperty(self.prefix + "ImageColorcfa3", Random_Color())
+                    elif HOME.getProperty("cfa_daemon_set") == 'Distort':
+                        image = Filter_Distort(self.image_now_cfa, self.delta_x, self.delta_y)
+                        HOME.setProperty(self.prefix + 'ImageFiltercfa4', image)
+                        HOME.setProperty(self.prefix + "ImageColorcfa4", Random_Color())
                 except:
                     log("Could not process image for daemon")
+                HOME.setProperty(self.prefix + 'ImageUpdating', '1')
             if self.image_now != self.image_prev and xbmc.Player().isPlayingAudio():
                 try:
                     self.image_prev = self.image_now
@@ -90,7 +97,6 @@ class Main:
                 HOME.setProperty(self.prefix + 'ImageFilter', image)
             elif info == 'blur':
                 HOME.clearProperty(self.prefix + 'ImageFilter')
-                log("Blur image %s with radius %i" % (self.id, self.radius))
                 image, imagecolor = Filter_Image(self.id, self.radius)
                 HOME.setProperty(self.prefix + 'ImageFilter', image)
                 HOME.setProperty(self.prefix + "ImageColor", imagecolor)
@@ -103,17 +109,18 @@ class Main:
                 HOME.setProperty(self.prefix + 'ImageUpdating', '1')
             elif info == 'twotone':
                 image = Filter_Twotone(self.id, self.black, self.white)
-                log("Twotone image %s with color1 %s color2 %s" % (self.id, self.black, self.white))
                 HOME.setProperty(self.prefix + 'ImageFilter', image)
                 HOME.setProperty(self.prefix + 'ImageUpdating', '1')
             elif info == 'posterize':
                 image = Filter_Posterize(self.id, self.bits)
-                log("Posterize image %s with bits %i" % (self.id, self.bits))
                 HOME.setProperty(self.prefix + 'ImageFilter', image)
                 HOME.setProperty(self.prefix + 'ImageUpdating', '1')
             elif info == 'fakelight':
                 image = Filter_Fakelight(self.id, self.pixels)
-                log("Fakelight image %s with tile %i" % (self.id, self.pixels))
+                HOME.setProperty(self.prefix + 'ImageFilter', image)
+                HOME.setProperty(self.prefix + 'ImageUpdating', '1')
+            elif info == 'distort':
+                image = Filter_Distort(self.id, self.delta_x, self.delta_y)
                 HOME.setProperty(self.prefix + 'ImageFilter', image)
                 HOME.setProperty(self.prefix + 'ImageUpdating', '1')
 
@@ -130,6 +137,8 @@ class Main:
         self.container = 518
         self.black = "#000000"
         self.white = "#FFFFFF"
+        self.delta_x = 50
+        self.delta_y = 90
         self.daemon = False
         self.image_now = ""
         self.image_now_fa = ""
@@ -143,7 +152,6 @@ class Main:
         args = sys.argv
         for arg in args:
             arg = arg.replace("'\"", "").replace("\"'", "")
-            log(arg)
             if arg == 'script.colorbox':
                 continue
             elif arg.startswith('info='):
@@ -168,6 +176,10 @@ class Main:
                 self.black = RemoveQuotes(arg[6:])
             elif arg.startswith('white='):
                 self.white = RemoveQuotes(arg[6:])
+            elif arg.startswith('delta_x='):
+                self.delta_x = int(arg[8:])
+            elif arg.startswith('delta_y='):
+                self.delta_y = int(arg[8:])
             elif arg.startswith('container='):
                 self.container = RemoveQuotes(arg[10:])
 

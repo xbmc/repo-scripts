@@ -1,3 +1,5 @@
+v1.0.8
+- add 'distort' - check code for info atm
 v1.0.7
 - check if audio for player daemon ops
 v1.0.6
