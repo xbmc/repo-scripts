@@ -9,6 +9,8 @@ script.colorbox
   
   pixelate: will bulk up pixels to size requested and add black border round each pixel block
   
+  distort: will fuzzy spread image using two deltas, x & y.
+  
   blur: will return a guassian blurred image dependant on radius supplied, larger radius means larger blur + color match
   
   bluronly: will return a guassian blurred image dependant on radius supplied, larger radius means larger blur - no color match
@@ -34,6 +36,8 @@ script.colorbox
   RunScript(script.colorbox,info=posterize,id='"IMAGE_TO_USE"',bits=BIT_SIZE,prefix=RETURN_IMAGE_ID)
 
   RunScript(script.colorbox,info=pixelate,id='"IMAGE_TO_USE"',pixels=PIXELATION_SIZE,prefix=RETURN_IMAGE_ID)
+  
+  RunScript(script.colorbox,info=distort,id='"IMAGE_TO_USE"',delta_x=DELTA_X,delta_y=DELTA_Y,prefix=RETURN_IMAGE_ID)
 
   RunScript(script.colorbox,info=blur,id='"IMAGE_TO_USE"',radius=RADIUS_SIZE,prefix=RETURN_IMAGE_ID)
 
@@ -57,6 +61,8 @@ script.colorbox
   PIXELATION_SIZE     1-infinity, though 1 will return a 1:1 copy!
 
   RADIUS_SIZE         The larger the more blurred the returned image
+  
+  DELTA_X/Y           Lower the delta for high distortion, higher delta for low distortion
 
 
 - Window properties:
@@ -75,11 +81,11 @@ script.colorbox
   
   Window(home).Property(ImageFilterfa1|2|3) <- available when music playing, 1 is blur, 2 pixel, 3 posterize
   
-  Window(home).Property(ImageColorcfa1|2|3) <- available current list item fanart, 1 is color from art other two are random
+  Window(home).Property(ImageColorcfa1|2|3|4) <- available current list item fanart, 1 is color from art other three are random
   
-  Window(home).Property(ImageFiltercfa1|2|3) <- available current list item fanart, 1 is blur, 2 pixel, 3 posterize
+  Window(home).Property(ImageFiltercfa1|2|3|4) <- available current list item fanart, 1 is blur, 2 pixel, 3 posterize & 4 distort
 
-  Window(home).Property(cfa_ignore_set) <- set True to ignore listitem fanart (remember to clear if needed!)
+  Window(home).Property(cfa_ignore_set) <- set True for daemon to ignore listitem fanart (remember to clear if needed!)
   
   
 - Daemon:
@@ -87,3 +93,17 @@ script.colorbox
   In say startup.xml use below code to start daemon (pixels etc will default if not set). This will process 'Player.Art(thumb)', 'MusicPlayer.Property(Fanart_Image)' & current 'Listitem.Fanart'. See above 'cfa_ignore_set' to disable the current fanart option.
 
   	RunScript(script.colorbox,daemon=True,pixels=20,bits=2,radius=10)
+
+  To speed up daemon and not to process all types off effects, use:
+  
+  SetProperty(cfa_daemon_set,Blur,home)
+  
+  SetProperty(cfa_daemon_set,Pixelate,home)
+  
+  SetProperty(cfa_daemon_set,Posterize,home)
+  
+  SetProperty(cfa_daemon_set,Distort,home)
+  
+  This MUST be used as of now.
+  NONE will be processed if not set.
+  Next version will default to ALL being processed if not set!
