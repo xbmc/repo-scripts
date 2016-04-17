@@ -1,0 +1,3 @@
+[B]v1.2.0[/B]
+- Added support for opening Extras from the home menu in Kodi 17 Krypton.
+- Added help dialog.

@@ -6,12 +6,12 @@ msgstr ""
 
 msgctxt "#30000"
 msgid "Extras"
-msgstr ""
+msgstr "Ekstramateriale"
 
 msgctxt "#30001"
 msgid "Extras folder"
-msgstr ""
+msgstr "Mappenavn"
 
 msgctxt "#30002"
-msgid "To use this add-on go to the video library and open the context menu on a movie or TV show."
+msgid "For å bruke denne utvidelsen, gå til videobiblioteket og åpne hurtigmenyen for en film eller TV-serie."
 msgstr ""

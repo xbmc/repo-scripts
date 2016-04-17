@@ -19,7 +19,8 @@ import os
 import xbmc
 import xbmcvfs
 import routing
-from xbmcgui import ListItem
+import xbmcaddon
+from xbmcgui import Dialog, ListItem
 from xbmcplugin import addDirectoryItem, endOfDirectory
 from urllib import urlencode, quote_plus
 
@@ -29,7 +30,8 @@ plugin = routing.Plugin()
 
 @plugin.route("/")
 def root():
-    return
+    addon = xbmcaddon.Addon()
+    Dialog().ok(addon.getLocalizedString(30000), addon.getLocalizedString(30002))
 
 
 @plugin.route("/browse")

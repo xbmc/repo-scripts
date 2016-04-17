@@ -18,6 +18,7 @@
 import os
 import sys
 import xbmc
+import xbmcgui
 import xbmcaddon
 from urllib import urlencode
 
@@ -38,7 +39,11 @@ def main():
         'fanart': sys.listitem.getProperty('fanart_image'),
     }
     plugin_url = "plugin://context.item.extras/browse?" + urlencode(params)
-    xbmc.executebuiltin('Container.Update(\"%s\")' % plugin_url)
+
+    if xbmcgui.getCurrentWindowId() == 10025:
+        xbmc.executebuiltin('Container.Update(\"%s\")' % plugin_url)
+    else:
+        xbmc.executebuiltin('ActivateWindow(Video, \"%s\", return)' % plugin_url)
 
 
 if __name__ == '__main__':
