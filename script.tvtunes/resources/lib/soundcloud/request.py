@@ -2,7 +2,9 @@ import urllib
 
 import requests
 
-import soundcloud
+__version__ = '0.4.2'
+USER_AGENT = 'SoundCloud Python API Wrapper %s' % __version__
+
 import hashconversions
 
 
@@ -95,7 +97,7 @@ def make_request(method, url, params):
     kwargs = {
         'allow_redirects': allow_redirects,
         'headers': {
-            'User-Agent': soundcloud.USER_AGENT
+            'User-Agent': USER_AGENT
         }
     }
     # options, not params

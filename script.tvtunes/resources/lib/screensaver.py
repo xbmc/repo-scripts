@@ -14,13 +14,6 @@ if sys.version_info >= (2, 7):
 else:
     import simplejson as json
 
-
-__addon__ = xbmcaddon.Addon(id='script.tvtunes')
-__cwd__ = __addon__.getAddonInfo('path').decode("utf-8")
-__resource__ = xbmc.translatePath(os.path.join(__cwd__, 'resources').encode("utf-8")).decode("utf-8")
-__media__ = xbmc.translatePath(os.path.join(__resource__, 'media').encode("utf-8")).decode("utf-8")
-
-
 from settings import ScreensaverSettings
 from settings import Settings
 from settings import log
@@ -29,8 +22,11 @@ from settings import dir_exists
 from settings import os_path_join
 from settings import os_path_split
 from settings import normalize_string
-
 from themeFinder import ThemeFiles
+
+ADDON = xbmcaddon.Addon(id='script.tvtunes')
+CWD = ADDON.getAddonInfo('path').decode("utf-8")
+MEDIA_DIR = xbmc.translatePath(os.path.join(CWD, 'resources', 'media').encode("utf-8")).decode("utf-8")
 
 
 # Helper method to allow the cycling through a list of values
@@ -89,10 +85,10 @@ class ScreensaverWindow(xbmcgui.WindowDialog):
 
 # Class to hold all of the media files used that are stored in the addon
 class MediaFiles(object):
-    LOADING_IMAGE = os.path.join(__media__, 'loading.gif')
-    BLACK_IMAGE = os.path.join(__media__, 'black.jpg')
-    STARS_IMAGE = os.path.join(__media__, 'stars.jpg')
-    TABLE_IMAGE = os.path.join(__media__, 'table.jpg')
+    LOADING_IMAGE = os.path.join(MEDIA_DIR, 'loading.gif')
+    BLACK_IMAGE = os.path.join(MEDIA_DIR, 'black.jpg')
+    STARS_IMAGE = os.path.join(MEDIA_DIR, 'stars.jpg')
+    TABLE_IMAGE = os.path.join(MEDIA_DIR, 'table.jpg')
 
 
 class VolumeDrop(object):
@@ -598,7 +594,7 @@ class ScreensaverBase(object):
                 imgGrp = self._getFolderImages(path)
                 imageGroups.extend(imgGrp)
         if not imageGroups and not self.exit_requested:
-            cmd = 'Notification("{0}", "{1}")'.format(__addon__.getLocalizedString(32101).encode('utf-8'), __addon__.getLocalizedString(32995).encode('utf-8'))
+            cmd = 'Notification("{0}", "{1}")'.format(ADDON.getLocalizedString(32101).encode('utf-8'), ADDON.getLocalizedString(32995).encode('utf-8'))
             xbmc.executebuiltin(cmd)
         return imageGroups
 

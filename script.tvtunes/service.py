@@ -1,23 +1,17 @@
 # -*- coding: utf-8 -*-
-import sys
 import os
 import xbmc
 import xbmcaddon
 
-
-__addon__ = xbmcaddon.Addon(id='script.tvtunes')
-__cwd__ = __addon__.getAddonInfo('path').decode("utf-8")
-__resource__ = xbmc.translatePath(os.path.join(__cwd__, 'resources').encode("utf-8")).decode("utf-8")
-__lib__ = xbmc.translatePath(os.path.join(__resource__, 'lib').encode("utf-8")).decode("utf-8")
-
-sys.path.append(__lib__)
-
 # Import the common settings
-from settings import log
-from settings import Settings
-from settings import WindowShowing
+from resources.lib.settings import log
+from resources.lib.settings import Settings
+from resources.lib.settings import WindowShowing
+from resources.lib.backend import TunesBackend
 
-from backend import TunesBackend
+ADDON = xbmcaddon.Addon(id='script.tvtunes')
+CWD = ADDON.getAddonInfo('path').decode("utf-8")
+LIB_DIR = xbmc.translatePath(os.path.join(CWD, 'resources', 'lib').encode("utf-8")).decode("utf-8")
 
 
 # Class to detect when something in the system has changed
@@ -31,7 +25,7 @@ class TvTunesMonitor(xbmc.Monitor):
 # Main of the TvTunes Service
 ##################################
 if __name__ == '__main__':
-    log("Starting TvTunes Service %s" % __addon__.getAddonInfo('version'))
+    log("Starting TvTunes Service %s" % ADDON.getAddonInfo('version'))
 
     # Make sure we have recorded this machines Id
     Settings.setTvTunesId()
@@ -57,7 +51,7 @@ if __name__ == '__main__':
 
         if Settings.isUploadEnabled():
             log("TvTunesService: Launching uploader")
-            xbmc.executebuiltin('RunScript(%s)' % os.path.join(__lib__, "upload.py"), False)
+            xbmc.executebuiltin('RunScript(%s)' % os.path.join(LIB_DIR, "upload.py"), False)
         else:
             log("TvTunesService: Uploader not enabled")
 

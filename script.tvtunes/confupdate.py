@@ -1,6 +1,4 @@
 # -*- coding: utf-8 -*-
-import sys
-import os
 import traceback
 import xbmc
 import xbmcaddon
@@ -8,18 +6,11 @@ import xbmcvfs
 import xbmcgui
 import datetime
 
-__addon__ = xbmcaddon.Addon(id='script.tvtunes')
-__version__ = __addon__.getAddonInfo('version')
-__cwd__ = __addon__.getAddonInfo('path').decode("utf-8")
-__resource__ = xbmc.translatePath(os.path.join(__cwd__, 'resources').encode("utf-8")).decode("utf-8")
-__lib__ = xbmc.translatePath(os.path.join(__resource__, 'lib').encode("utf-8")).decode("utf-8")
-
-sys.path.append(__resource__)
-sys.path.append(__lib__)
-
 # Import the common settings
-from settings import log
-from settings import os_path_join
+from resources.lib.settings import log
+from resources.lib.settings import os_path_join
+
+ADDON = xbmcaddon.Addon(id='script.tvtunes')
 
 
 # Ideally we would use an XML parser to do this like ElementTree
@@ -46,9 +37,9 @@ class ConfUpdate():
 
         # Now either print the complete message or the "check log" message
         if self.errorToLog:
-            xbmcgui.Dialog().ok(__addon__.getLocalizedString(32105), __addon__.getLocalizedString(32137), __addon__.getLocalizedString(32135))
+            xbmcgui.Dialog().ok(ADDON.getLocalizedString(32105), ADDON.getLocalizedString(32137), ADDON.getLocalizedString(32135))
         else:
-            xbmcgui.Dialog().ok(__addon__.getLocalizedString(32105), __addon__.getLocalizedString(32138), __addon__.getLocalizedString(32139))
+            xbmcgui.Dialog().ok(ADDON.getLocalizedString(32105), ADDON.getLocalizedString(32138), ADDON.getLocalizedString(32139))
 
     # Save the new contents, taking a backup of the old file
     def _saveNewFile(self, dialogXml, dialogXmlStr):
@@ -127,9 +118,9 @@ class ConfUpdate():
 # Main
 #########################
 if __name__ == '__main__':
-    log("TvTunes: Updating Confluence Skin (version %s)" % __version__)
+    log("TvTunes: Updating Confluence Skin (version %s)" % ADDON.getAddonInfo('version'))
 
-    doUpdate = xbmcgui.Dialog().yesno(__addon__.getLocalizedString(32105), __addon__.getLocalizedString(32134))
+    doUpdate = xbmcgui.Dialog().yesno(ADDON.getLocalizedString(32105), ADDON.getLocalizedString(32134))
 
     if doUpdate:
         try:
@@ -138,4 +129,4 @@ if __name__ == '__main__':
             del confUp
         except:
             log("VideoExtras: %s" % traceback.format_exc(), xbmc.LOGERROR)
-            xbmcgui.Dialog().ok(__addon__.getLocalizedString(32105), __addon__.getLocalizedString(32134), __addon__.getLocalizedString(32135))
+            xbmcgui.Dialog().ok(ADDON.getLocalizedString(32105), ADDON.getLocalizedString(32134), ADDON.getLocalizedString(32135))

@@ -1,8 +1,8 @@
 from functools import partial
 from urllib import urlencode
 
-from soundcloud.resource import wrapped_resource
-from soundcloud.request import make_request
+from resource import wrapped_resource
+from request import make_request
 
 
 class Client(object):
