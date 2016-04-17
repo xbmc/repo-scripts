@@ -354,3 +354,24 @@ class CollectSets():
             del customCollections[name]
             # save the new set of custom collections
             self.saveCustomCollections(customCollections)
+
+    # Given a filename, finds the other videos in the same collection
+    def getFilesInSameCollection(self, keyFile):
+        log("CollectSets: Getting files in same collection as: %s" % keyFile)
+
+        videoList = []
+        # get all the collections
+        collectionMap = self.getCollections()
+        for collectionKey in collectionMap.keys():
+            collectionDetail = collectionMap[collectionKey]
+            # Load the details about this collection
+            collectionDetails = self.loadCollection(collectionDetail['filename'])
+            for videoDetails in collectionDetails['videos']:
+                if keyFile.lower() == videoDetails['filename'].lower():
+                    log("CollectSets: Found video in collection %s" % collectionDetail['name'])
+                    # Add all the videos
+                    for matchedDetails in collectionDetails['videos']:
+                        videoList.append(matchedDetails['filename'])
+                    return videoList
+
+        return videoList

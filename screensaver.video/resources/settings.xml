@@ -4,14 +4,13 @@
 		<setting id="useFolder" type="bool" label="32023" default="true"/>
 		<setting id="screensaverFile" label="32051" subsetting="true" visible="eq(-1,false)" type="video"/>
 		<setting id="screensaverFolder" label="32054" subsetting="true" visible="eq(-2,true)" type="folder"/>
-		<setting id="screensaverFolderNested" label="32010" subsetting="true" visible="eq(-3,true)" type="bool" default="false"/>
-		<setting id="folderRepeatType" subsetting="true" visible="eq(-4,true)" type="enum" label="32024" lvalues="32025|32026" default="0"/>
+		<setting id="limitSessionToSingleCollection" label="32032" subsetting="true" visible="eq(-3,true)" type="bool" default="false"/>
+		<setting id="screensaverFolderNested" label="32010" subsetting="true" visible="eq(-4,true)" type="bool" default="false"/>
+		<setting id="folderRepeatType" subsetting="true" visible="eq(-5,true)" type="enum" label="32024" lvalues="32025|32026" default="0"/>
 		<setting id="overlayImage" type="enum" label="32200" lvalues="32202|32204|32205|32206|32203" default="0"/>
-		<setting id="overlayImageFile" label="32201" subsetting="true" visible="eq(-1,4)" type="image"/>
+		<setting id="overlayImageFile" label="32201" subsetting="true" visible="eq(-1,5)" type="image"/>
     	<setting label="32011" type="lsep"/>
 		<setting label="32012" type="action" option="close" action="RunScript($CWD/launchplugin.py)"/>
-    	<setting label="32002" type="lsep"/>
-		<setting id="logEnabled" type="bool" label="32003" default="false"/>
 	</category>
 	<category label="32006">
 		<setting id="showTime" type="bool" label="32052" default="false"/>
@@ -29,6 +28,8 @@
     	<setting id="resetVolumeOnStartup" type="bool" label="32061" default="false"/>
 		<setting id="resetStartupVolumeValue" label="32062" visible="eq(-1,true)" type="slider" default="100" range="0,1,100" option="int" />
     	<setting id="launchOnStartup" type="bool" label="32008" default="false"/>
+    	<setting label="32002" type="lsep"/>
+		<setting id="logEnabled" type="bool" label="32003" default="false"/>
 	</category>
 	<category label="32066">
 		<setting id="scheduleSource" type="enum" label="32027" lvalues="32028|32029|32030" default="0"/>

@@ -134,7 +134,11 @@ msgctxt "#32031"
 msgid "Schedule Settings File"
 msgstr ""
 
-#empty strings from id 32032 to 32050
+msgctxt "#32032"
+msgid "Limit Session To Single Collection/Folder"
+msgstr ""
+
+#empty strings from id 32033 to 32050
 
 msgctxt "#32051"
 msgid "Select Video File"

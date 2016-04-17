@@ -221,6 +221,13 @@ class Settings():
         return nested
 
     @staticmethod
+    def isLimitSessionToSingleCollection():
+        limitSessionToSingleCollection = False
+        if Settings.isFolderSelection():
+            limitSessionToSingleCollection = ADDON.getSetting("limitSessionToSingleCollection") == "true"
+        return limitSessionToSingleCollection
+
+    @staticmethod
     def cleanAddonSettings():
         # Set the default values for the schedule screensaver folders
         defaultFolder = Settings.getScreensaverFolder()

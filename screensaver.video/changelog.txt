@@ -5,6 +5,7 @@ v1.4.0 (2016-04-05)
 - Add support for installing custom collections
 - Support cancel of downloads
 - Tidy up import, globals and plugin provides
+- Allow each session to be restricted to Collection or Folder
 
 v1.3.0 (2016-01-28)
 - Add support for scheduling by day

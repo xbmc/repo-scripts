@@ -13,6 +13,7 @@ import xbmcaddon
 from resources.lib.settings import Settings
 from resources.lib.settings import log
 from resources.lib.settings import os_path_join
+from resources.lib.settings import list_dir
 from resources.lib.collectSets import CollectSets
 
 ADDON = xbmcaddon.Addon(id='screensaver.video')
@@ -89,10 +90,7 @@ class MenuNavigator():
             # If theme already exists flag it using the play count
             # This will normally put a tick on the GUI
             if screensaverFolder not in [None, ""]:
-                videoLocation = os_path_join(screensaverFolder, videoItem['filename'])
-
-                log("VideoScreensaverPlugin: Checking if %s already downloaded to %s" % (videoItem['filename'], videoLocation))
-                if xbmcvfs.exists(videoLocation):
+                if self._getVideoLocation(screensaverFolder, videoItem['filename']) not in [None, ""]:
                     li.setInfo('video', {'PlayCount': 1})
 
             li.addContextMenuItems(self._getContextMenu(videoItem), replaceItems=True)
@@ -102,6 +100,23 @@ class MenuNavigator():
             xbmcplugin.addDirectoryItem(handle=self.addon_handle, url=url, listitem=li, isFolder=False)
 
         xbmcplugin.endOfDirectory(self.addon_handle)
+
+    # Support users relocating videos into sub-directories
+    def _getVideoLocation(self, folder, filename):
+        log("VideoScreensaverPlugin: Checking if %s already downloaded to %s" % (filename, folder))
+        videoLocation = os_path_join(folder, filename)
+        if xbmcvfs.exists(videoLocation):
+            return videoLocation
+
+        # Check nested directories
+        if Settings.isFolderNested():
+            dirs, files = list_dir(folder)
+            for aDir in dirs:
+                fullPath = os_path_join(folder, aDir)
+                filePath = self._getVideoLocation(fullPath, filename)
+                if filePath not in [None, ""]:
+                    return filePath
+        return None
 
     def download(self, name, filename, downloadURL):
         log("VideoScreensaverPlugin: Downloading %s" % name)
@@ -174,10 +189,11 @@ class MenuNavigator():
     def delete(self, name, filename):
         log("VideoScreensaverPlugin: Deleting %s" % name)
 
-        destination = os_path_join(Settings.getScreensaverFolder(), filename)
+        screensaverFolder = Settings.getScreensaverFolder()
+        destination = self._getVideoLocation(screensaverFolder, filename)
 
         # Check to see if there is already a file present
-        if xbmcvfs.exists(destination):
+        if destination not in [None, ""]:
             deleteFile = xbmcgui.Dialog().yesno(ADDON.getLocalizedString(32005), ADDON.getLocalizedString(32014), name)
             if deleteFile:
                 log("VideoScreensaverPlugin: Removing existing file %s" % destination)
@@ -192,9 +208,8 @@ class MenuNavigator():
 
         destination = filename
         if not filename.startswith('http'):
-            destination = os_path_join(Settings.getScreensaverFolder(), filename)
-            if not xbmcvfs.exists(destination):
-                destination = None
+            screensaverFolder = Settings.getScreensaverFolder()
+            destination = self._getVideoLocation(screensaverFolder, filename)
 
         # Check to see if there is already a file present
         if destination not in [None, ""]:
@@ -291,8 +306,7 @@ class MenuNavigator():
         ctxtMenu = []
 
         # Check if the file has already been downloaded
-        destination = os_path_join(Settings.getScreensaverFolder(), videoItem['filename'])
-        if not xbmcvfs.exists(destination):
+        if self._getVideoLocation(Settings.getScreensaverFolder(), videoItem['filename']) in [None, ""]:
             # If not already exists, add a download option
             cmd = self._build_url({'mode': 'download', 'name': videoItem['name'], 'filename': videoItem['filename'], 'primary': videoItem['primary']})
             ctxtMenu.append((ADDON.getLocalizedString(32013), 'RunPlugin(%s)' % cmd))
