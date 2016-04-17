@@ -1,0 +1,1214 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<settings>
+  <category label="32056">
+    <setting id="T1.div" label="32001" type="lsep" />
+    <setting id="T1.type" label="32057" type="labelenum" default="none" lvalues="32129|32130|32131|32288|32132|32133" />
+    <setting id="T1.maxrunning" label="32058" type="number" visible="!eq(-1,0)" default="-1" />
+    <setting id="T1.maxruns" label="32059" type="number" visible="!eq(-2,0)" default="-1" />
+    <setting id="T1.refractory" label="32060" type="number" visible="!eq(-3,0)" default="-1" />
+    <setting id="T1.builtin" label="32075" type="text" visible="eq(-4,1)" default="" />
+    <setting id="T1.http" label="32077" type="text" visible="eq(-5,2)" default="" />
+    <setting id="T1.user" label="32078" type="text" visible="eq(-6,2)" default="" />
+    <setting id="T1.pass" label="32079" type="text" visible="eq(-7,2)" default="" option="hidden" />
+    <setting id="T1.request-type" label="32287" type="labelenum" visible="eq(-8,2)" default="GET" values="GET|POST|POST-GET|PUT|DELETE|HEAD|OPTIONS" />
+    <setting id="T1.content-type" label="32297" type="labelenum" visible="eq(-9,2)" default="application/json" values="application/json|application/x-www-form-urlencoded|text/html|text/plain" />
+    <setting id="T1.jsonnotify" label="32286" type="text" visible="eq(-10,3)" default="kodi.callbacks" />
+    <setting id="T1.pythonfile" label="32092" type="file" visible="eq(-11,4)" value="" />
+    <setting id="T1.import" label="32093" type="bool" visible="eq(-12,4)" default="false" />
+    <setting id="T1.scriptfile" label="32274" type="file" visible="eq(-13,5)" value="" />
+    <setting id="T1.scriptfile" label="32275" type="text" visible="eq(-14,5)" default="" />
+    <setting id="T1.use_shell" label="32097" type="bool" visible="eq(-15,5)" default="false" />
+    <setting id="T1.waitForCompletion" label="32098" type="bool" visible="eq(-16,5)" default="true" />
+    <setting id="T2.div" label="32002" type="lsep" visible="!eq(-17,0)" />
+    <setting id="T2.type" label="32057" type="labelenum" visible="!eq(-18,0)" default="none" lvalues="32129|32130|32131|32288|32132|32133" />
+    <setting id="T2.maxrunning" label="32058" type="number" visible="!eq(-1,0)" default="-1" />
+    <setting id="T2.maxruns" label="32059" type="number" visible="!eq(-2,0)" default="-1" />
+    <setting id="T2.refractory" label="32060" type="number" visible="!eq(-3,0)" default="-1" />
+    <setting id="T2.builtin" label="32075" type="text" visible="eq(-4,1)" default="" />
+    <setting id="T2.http" label="32077" type="text" visible="eq(-5,2)" default="" />
+    <setting id="T2.user" label="32078" type="text" visible="eq(-6,2)" default="" />
+    <setting id="T2.pass" label="32079" type="text" visible="eq(-7,2)" default="" option="hidden" />
+    <setting id="T2.request-type" label="32287" type="labelenum" visible="eq(-8,2)" default="GET" values="GET|POST|POST-GET|PUT|DELETE|HEAD|OPTIONS" />
+    <setting id="T2.content-type" label="32297" type="labelenum" visible="eq(-9,2)" default="application/json" values="application/json|application/x-www-form-urlencoded|text/html|text/plain" />
+    <setting id="T2.jsonnotify" label="32286" type="text" visible="eq(-10,3)" default="kodi.callbacks" />
+    <setting id="T2.pythonfile" label="32092" type="file" visible="eq(-11,4)" value="" />
+    <setting id="T2.import" label="32093" type="bool" visible="eq(-12,4)" default="false" />
+    <setting id="T2.scriptfile" label="32274" type="file" visible="eq(-13,5)" value="" />
+    <setting id="T2.scriptfile" label="32275" type="text" visible="eq(-14,5)" default="" />
+    <setting id="T2.use_shell" label="32097" type="bool" visible="eq(-15,5)" default="false" />
+    <setting id="T2.waitForCompletion" label="32098" type="bool" visible="eq(-16,5)" default="true" />
+    <setting id="T3.div" label="32003" type="lsep" visible="!eq(-17,0)" />
+    <setting id="T3.type" label="32057" type="labelenum" visible="!eq(-18,0)" default="none" lvalues="32129|32130|32131|32288|32132|32133" />
+    <setting id="T3.maxrunning" label="32058" type="number" visible="!eq(-1,0)" default="-1" />
+    <setting id="T3.maxruns" label="32059" type="number" visible="!eq(-2,0)" default="-1" />
+    <setting id="T3.refractory" label="32060" type="number" visible="!eq(-3,0)" default="-1" />
+    <setting id="T3.builtin" label="32075" type="text" visible="eq(-4,1)" default="" />
+    <setting id="T3.http" label="32077" type="text" visible="eq(-5,2)" default="" />
+    <setting id="T3.user" label="32078" type="text" visible="eq(-6,2)" default="" />
+    <setting id="T3.pass" label="32079" type="text" visible="eq(-7,2)" default="" option="hidden" />
+    <setting id="T3.request-type" label="32287" type="labelenum" visible="eq(-8,2)" default="GET" values="GET|POST|POST-GET|PUT|DELETE|HEAD|OPTIONS" />
+    <setting id="T3.content-type" label="32297" type="labelenum" visible="eq(-9,2)" default="application/json" values="application/json|application/x-www-form-urlencoded|text/html|text/plain" />
+    <setting id="T3.jsonnotify" label="32286" type="text" visible="eq(-10,3)" default="kodi.callbacks" />
+    <setting id="T3.pythonfile" label="32092" type="file" visible="eq(-11,4)" value="" />
+    <setting id="T3.import" label="32093" type="bool" visible="eq(-12,4)" default="false" />
+    <setting id="T3.scriptfile" label="32274" type="file" visible="eq(-13,5)" value="" />
+    <setting id="T3.scriptfile" label="32275" type="text" visible="eq(-14,5)" default="" />
+    <setting id="T3.use_shell" label="32097" type="bool" visible="eq(-15,5)" default="false" />
+    <setting id="T3.waitForCompletion" label="32098" type="bool" visible="eq(-16,5)" default="true" />
+    <setting id="T4.div" label="32004" type="lsep" visible="!eq(-17,0)" />
+    <setting id="T4.type" label="32057" type="labelenum" visible="!eq(-18,0)" default="none" lvalues="32129|32130|32131|32288|32132|32133" />
+    <setting id="T4.maxrunning" label="32058" type="number" visible="!eq(-1,0)" default="-1" />
+    <setting id="T4.maxruns" label="32059" type="number" visible="!eq(-2,0)" default="-1" />
+    <setting id="T4.refractory" label="32060" type="number" visible="!eq(-3,0)" default="-1" />
+    <setting id="T4.builtin" label="32075" type="text" visible="eq(-4,1)" default="" />
+    <setting id="T4.http" label="32077" type="text" visible="eq(-5,2)" default="" />
+    <setting id="T4.user" label="32078" type="text" visible="eq(-6,2)" default="" />
+    <setting id="T4.pass" label="32079" type="text" visible="eq(-7,2)" default="" option="hidden" />
+    <setting id="T4.request-type" label="32287" type="labelenum" visible="eq(-8,2)" default="GET" values="GET|POST|POST-GET|PUT|DELETE|HEAD|OPTIONS" />
+    <setting id="T4.content-type" label="32297" type="labelenum" visible="eq(-9,2)" default="application/json" values="application/json|application/x-www-form-urlencoded|text/html|text/plain" />
+    <setting id="T4.jsonnotify" label="32286" type="text" visible="eq(-10,3)" default="kodi.callbacks" />
+    <setting id="T4.pythonfile" label="32092" type="file" visible="eq(-11,4)" value="" />
+    <setting id="T4.import" label="32093" type="bool" visible="eq(-12,4)" default="false" />
+    <setting id="T4.scriptfile" label="32274" type="file" visible="eq(-13,5)" value="" />
+    <setting id="T4.scriptfile" label="32275" type="text" visible="eq(-14,5)" default="" />
+    <setting id="T4.use_shell" label="32097" type="bool" visible="eq(-15,5)" default="false" />
+    <setting id="T4.waitForCompletion" label="32098" type="bool" visible="eq(-16,5)" default="true" />
+    <setting id="T5.div" label="32005" type="lsep" visible="!eq(-17,0)" />
+    <setting id="T5.type" label="32057" type="labelenum" visible="!eq(-18,0)" default="none" lvalues="32129|32130|32131|32288|32132|32133" />
+    <setting id="T5.maxrunning" label="32058" type="number" visible="!eq(-1,0)" default="-1" />
+    <setting id="T5.maxruns" label="32059" type="number" visible="!eq(-2,0)" default="-1" />
+    <setting id="T5.refractory" label="32060" type="number" visible="!eq(-3,0)" default="-1" />
+    <setting id="T5.builtin" label="32075" type="text" visible="eq(-4,1)" default="" />
+    <setting id="T5.http" label="32077" type="text" visible="eq(-5,2)" default="" />
+    <setting id="T5.user" label="32078" type="text" visible="eq(-6,2)" default="" />
+    <setting id="T5.pass" label="32079" type="text" visible="eq(-7,2)" default="" option="hidden" />
+    <setting id="T5.request-type" label="32287" type="labelenum" visible="eq(-8,2)" default="GET" values="GET|POST|POST-GET|PUT|DELETE|HEAD|OPTIONS" />
+    <setting id="T5.content-type" label="32297" type="labelenum" visible="eq(-9,2)" default="application/json" values="application/json|application/x-www-form-urlencoded|text/html|text/plain" />
+    <setting id="T5.jsonnotify" label="32286" type="text" visible="eq(-10,3)" default="kodi.callbacks" />
+    <setting id="T5.pythonfile" label="32092" type="file" visible="eq(-11,4)" value="" />
+    <setting id="T5.import" label="32093" type="bool" visible="eq(-12,4)" default="false" />
+    <setting id="T5.scriptfile" label="32274" type="file" visible="eq(-13,5)" value="" />
+    <setting id="T5.scriptfile" label="32275" type="text" visible="eq(-14,5)" default="" />
+    <setting id="T5.use_shell" label="32097" type="bool" visible="eq(-15,5)" default="false" />
+    <setting id="T5.waitForCompletion" label="32098" type="bool" visible="eq(-16,5)" default="true" />
+    <setting id="T6.div" label="32006" type="lsep" visible="!eq(-17,0)" />
+    <setting id="T6.type" label="32057" type="labelenum" visible="!eq(-18,0)" default="none" lvalues="32129|32130|32131|32288|32132|32133" />
+    <setting id="T6.maxrunning" label="32058" type="number" visible="!eq(-1,0)" default="-1" />
+    <setting id="T6.maxruns" label="32059" type="number" visible="!eq(-2,0)" default="-1" />
+    <setting id="T6.refractory" label="32060" type="number" visible="!eq(-3,0)" default="-1" />
+    <setting id="T6.builtin" label="32075" type="text" visible="eq(-4,1)" default="" />
+    <setting id="T6.http" label="32077" type="text" visible="eq(-5,2)" default="" />
+    <setting id="T6.user" label="32078" type="text" visible="eq(-6,2)" default="" />
+    <setting id="T6.pass" label="32079" type="text" visible="eq(-7,2)" default="" option="hidden" />
+    <setting id="T6.request-type" label="32287" type="labelenum" visible="eq(-8,2)" default="GET" values="GET|POST|POST-GET|PUT|DELETE|HEAD|OPTIONS" />
+    <setting id="T6.content-type" label="32297" type="labelenum" visible="eq(-9,2)" default="application/json" values="application/json|application/x-www-form-urlencoded|text/html|text/plain" />
+    <setting id="T6.jsonnotify" label="32286" type="text" visible="eq(-10,3)" default="kodi.callbacks" />
+    <setting id="T6.pythonfile" label="32092" type="file" visible="eq(-11,4)" value="" />
+    <setting id="T6.import" label="32093" type="bool" visible="eq(-12,4)" default="false" />
+    <setting id="T6.scriptfile" label="32274" type="file" visible="eq(-13,5)" value="" />
+    <setting id="T6.scriptfile" label="32275" type="text" visible="eq(-14,5)" default="" />
+    <setting id="T6.use_shell" label="32097" type="bool" visible="eq(-15,5)" default="false" />
+    <setting id="T6.waitForCompletion" label="32098" type="bool" visible="eq(-16,5)" default="true" />
+    <setting id="T7.div" label="32007" type="lsep" visible="!eq(-17,0)" />
+    <setting id="T7.type" label="32057" type="labelenum" visible="!eq(-18,0)" default="none" lvalues="32129|32130|32131|32288|32132|32133" />
+    <setting id="T7.maxrunning" label="32058" type="number" visible="!eq(-1,0)" default="-1" />
+    <setting id="T7.maxruns" label="32059" type="number" visible="!eq(-2,0)" default="-1" />
+    <setting id="T7.refractory" label="32060" type="number" visible="!eq(-3,0)" default="-1" />
+    <setting id="T7.builtin" label="32075" type="text" visible="eq(-4,1)" default="" />
+    <setting id="T7.http" label="32077" type="text" visible="eq(-5,2)" default="" />
+    <setting id="T7.user" label="32078" type="text" visible="eq(-6,2)" default="" />
+    <setting id="T7.pass" label="32079" type="text" visible="eq(-7,2)" default="" option="hidden" />
+    <setting id="T7.request-type" label="32287" type="labelenum" visible="eq(-8,2)" default="GET" values="GET|POST|POST-GET|PUT|DELETE|HEAD|OPTIONS" />
+    <setting id="T7.content-type" label="32297" type="labelenum" visible="eq(-9,2)" default="application/json" values="application/json|application/x-www-form-urlencoded|text/html|text/plain" />
+    <setting id="T7.jsonnotify" label="32286" type="text" visible="eq(-10,3)" default="kodi.callbacks" />
+    <setting id="T7.pythonfile" label="32092" type="file" visible="eq(-11,4)" value="" />
+    <setting id="T7.import" label="32093" type="bool" visible="eq(-12,4)" default="false" />
+    <setting id="T7.scriptfile" label="32274" type="file" visible="eq(-13,5)" value="" />
+    <setting id="T7.scriptfile" label="32275" type="text" visible="eq(-14,5)" default="" />
+    <setting id="T7.use_shell" label="32097" type="bool" visible="eq(-15,5)" default="false" />
+    <setting id="T7.waitForCompletion" label="32098" type="bool" visible="eq(-16,5)" default="true" />
+    <setting id="T8.div" label="32008" type="lsep" visible="!eq(-17,0)" />
+    <setting id="T8.type" label="32057" type="labelenum" visible="!eq(-18,0)" default="none" lvalues="32129|32130|32131|32288|32132|32133" />
+    <setting id="T8.maxrunning" label="32058" type="number" visible="!eq(-1,0)" default="-1" />
+    <setting id="T8.maxruns" label="32059" type="number" visible="!eq(-2,0)" default="-1" />
+    <setting id="T8.refractory" label="32060" type="number" visible="!eq(-3,0)" default="-1" />
+    <setting id="T8.builtin" label="32075" type="text" visible="eq(-4,1)" default="" />
+    <setting id="T8.http" label="32077" type="text" visible="eq(-5,2)" default="" />
+    <setting id="T8.user" label="32078" type="text" visible="eq(-6,2)" default="" />
+    <setting id="T8.pass" label="32079" type="text" visible="eq(-7,2)" default="" option="hidden" />
+    <setting id="T8.request-type" label="32287" type="labelenum" visible="eq(-8,2)" default="GET" values="GET|POST|POST-GET|PUT|DELETE|HEAD|OPTIONS" />
+    <setting id="T8.content-type" label="32297" type="labelenum" visible="eq(-9,2)" default="application/json" values="application/json|application/x-www-form-urlencoded|text/html|text/plain" />
+    <setting id="T8.jsonnotify" label="32286" type="text" visible="eq(-10,3)" default="kodi.callbacks" />
+    <setting id="T8.pythonfile" label="32092" type="file" visible="eq(-11,4)" value="" />
+    <setting id="T8.import" label="32093" type="bool" visible="eq(-12,4)" default="false" />
+    <setting id="T8.scriptfile" label="32274" type="file" visible="eq(-13,5)" value="" />
+    <setting id="T8.scriptfile" label="32275" type="text" visible="eq(-14,5)" default="" />
+    <setting id="T8.use_shell" label="32097" type="bool" visible="eq(-15,5)" default="false" />
+    <setting id="T8.waitForCompletion" label="32098" type="bool" visible="eq(-16,5)" default="true" />
+    <setting id="T9.div" label="32009" type="lsep" visible="!eq(-17,0)" />
+    <setting id="T9.type" label="32057" type="labelenum" visible="!eq(-18,0)" default="none" lvalues="32129|32130|32131|32288|32132|32133" />
+    <setting id="T9.maxrunning" label="32058" type="number" visible="!eq(-1,0)" default="-1" />
+    <setting id="T9.maxruns" label="32059" type="number" visible="!eq(-2,0)" default="-1" />
+    <setting id="T9.refractory" label="32060" type="number" visible="!eq(-3,0)" default="-1" />
+    <setting id="T9.builtin" label="32075" type="text" visible="eq(-4,1)" default="" />
+    <setting id="T9.http" label="32077" type="text" visible="eq(-5,2)" default="" />
+    <setting id="T9.user" label="32078" type="text" visible="eq(-6,2)" default="" />
+    <setting id="T9.pass" label="32079" type="text" visible="eq(-7,2)" default="" option="hidden" />
+    <setting id="T9.request-type" label="32287" type="labelenum" visible="eq(-8,2)" default="GET" values="GET|POST|POST-GET|PUT|DELETE|HEAD|OPTIONS" />
+    <setting id="T9.content-type" label="32297" type="labelenum" visible="eq(-9,2)" default="application/json" values="application/json|application/x-www-form-urlencoded|text/html|text/plain" />
+    <setting id="T9.jsonnotify" label="32286" type="text" visible="eq(-10,3)" default="kodi.callbacks" />
+    <setting id="T9.pythonfile" label="32092" type="file" visible="eq(-11,4)" value="" />
+    <setting id="T9.import" label="32093" type="bool" visible="eq(-12,4)" default="false" />
+    <setting id="T9.scriptfile" label="32274" type="file" visible="eq(-13,5)" value="" />
+    <setting id="T9.scriptfile" label="32275" type="text" visible="eq(-14,5)" default="" />
+    <setting id="T9.use_shell" label="32097" type="bool" visible="eq(-15,5)" default="false" />
+    <setting id="T9.waitForCompletion" label="32098" type="bool" visible="eq(-16,5)" default="true" />
+    <setting id="T10.div" label="32010" type="lsep" visible="!eq(-17,0)" />
+    <setting id="T10.type" label="32057" type="labelenum" visible="!eq(-18,0)" default="none" lvalues="32129|32130|32131|32288|32132|32133" />
+    <setting id="T10.maxrunning" label="32058" type="number" visible="!eq(-1,0)" default="-1" />
+    <setting id="T10.maxruns" label="32059" type="number" visible="!eq(-2,0)" default="-1" />
+    <setting id="T10.refractory" label="32060" type="number" visible="!eq(-3,0)" default="-1" />
+    <setting id="T10.builtin" label="32075" type="text" visible="eq(-4,1)" default="" />
+    <setting id="T10.http" label="32077" type="text" visible="eq(-5,2)" default="" />
+    <setting id="T10.user" label="32078" type="text" visible="eq(-6,2)" default="" />
+    <setting id="T10.pass" label="32079" type="text" visible="eq(-7,2)" default="" option="hidden" />
+    <setting id="T10.request-type" label="32287" type="labelenum" visible="eq(-8,2)" default="GET" values="GET|POST|POST-GET|PUT|DELETE|HEAD|OPTIONS" />
+    <setting id="T10.content-type" label="32297" type="labelenum" visible="eq(-9,2)" default="application/json" values="application/json|application/x-www-form-urlencoded|text/html|text/plain" />
+    <setting id="T10.jsonnotify" label="32286" type="text" visible="eq(-10,3)" default="kodi.callbacks" />
+    <setting id="T10.pythonfile" label="32092" type="file" visible="eq(-11,4)" value="" />
+    <setting id="T10.import" label="32093" type="bool" visible="eq(-12,4)" default="false" />
+    <setting id="T10.scriptfile" label="32274" type="file" visible="eq(-13,5)" value="" />
+    <setting id="T10.scriptfile" label="32275" type="text" visible="eq(-14,5)" default="" />
+    <setting id="T10.use_shell" label="32097" type="bool" visible="eq(-15,5)" default="false" />
+    <setting id="T10.waitForCompletion" label="32098" type="bool" visible="eq(-16,5)" default="true" />
+  </category>
+  <category label="32061">
+    <setting id="E1.lsep" label="32011" type="lsep" />
+    <setting id="E1.action" label="32277" type="action" action="RunScript(script.service.kodi.callbacks, lselector, id=E1.type, heading=32284, lvalues=32229|32230|32231|32232|32233|32234|32235|32236|32237|32238|32239|32240|32241|32242|32243|32244|32245|32246|32247|32248|32249|32250|32251|32252|32253|32254|32255|32256|32257|32258|32259|32260)" />
+    <setting id="E1.type-v" label="32262" type="select" enable="false" default="None" lvalues="32229|32230|32231|32232|32233|32234|32235|32236|32237|32238|32239|32240|32241|32242|32243|32244|32245|32246|32247|32248|32249|32250|32251|32252|32253|32254|32255|32256|32257|32258|32259|32260" />
+    <setting id="E1.type" label="32276" type="text" visible="false" default="32229" />
+    <setting id="E1.task" label="32057" type="labelenum" visible="!eq(-1,32229)" default="Task 1" lvalues="32001|32002|32003|32004|32005|32006|32007|32008|32009|32010" />
+    <setting id="E1.idleTime" label="32107" type="number" visible="eq(-2,32237)" default="60" />
+    <setting label="32278" type="lsep" visible="eq(-3,32237)" />
+    <setting label="32278" type="lsep" visible="eq(-4,32247)" />
+    <setting label="32289" type="lsep" visible="eq(-5,32247)" />
+    <setting label="32292" type="lsep" visible="eq(-6,32247)" />
+    <setting label="32293" type="lsep" visible="eq(-7,32247)" />
+    <setting label="32278" type="lsep" visible="eq(-8,32248)" />
+    <setting label="32289" type="lsep" visible="eq(-9,32248)" />
+    <setting label="32290" type="lsep" visible="eq(-10,32248)" />
+    <setting label="32291" type="lsep" visible="eq(-11,32248)" />
+    <setting label="32278" type="lsep" visible="eq(-12,32255)" />
+    <setting id="E1.ws_folder" label="32279" type="folder" visible="eq(-13,32236)" value="" />
+    <setting id="E1.ws_folder" label="32280" type="text" visible="eq(-14,32236)" default="" />
+    <setting id="E1.ws_patterns" label="32170" type="text" visible="eq(-15,32236)" default="" />
+    <setting id="E1.ws_ignore_patterns" label="32171" type="text" visible="eq(-16,32236)" default="" />
+    <setting id="E1.ws_ignore_directories" label="32172" type="bool" visible="eq(-17,32236)" default="false" />
+    <setting id="E1.ws_recursive" label="32173" type="bool" visible="eq(-18,32236)" default="false" />
+    <setting label="32278" type="lsep" visible="eq(-19,32236)" />
+    <setting label="32166" type="lsep" visible="eq(-20,32236)" />
+    <setting id="E1.afterIdleTime" label="32162" type="number" visible="eq(-21,32251)" default="60" />
+    <setting label="32278" type="lsep" visible="eq(-22,32251)" />
+    <setting label="32278" type="lsep" visible="eq(-23,32245)" />
+    <setting label="32289" type="lsep" visible="eq(-24,32245)" />
+    <setting label="32290" type="lsep" visible="eq(-25,32245)" />
+    <setting label="32294" type="lsep" visible="eq(-26,32245)" />
+    <setting label="32278" type="lsep" visible="eq(-27,32256)" />
+    <setting label="32119" type="lsep" visible="eq(-28,32256)" />
+    <setting label="32278" type="lsep" visible="eq(-29,32246)" />
+    <setting label="32295" type="lsep" visible="eq(-30,32246)" />
+    <setting label="32296" type="lsep" visible="eq(-31,32246)" />
+    <setting label="32293" type="lsep" visible="eq(-32,32246)" />
+    <setting label="32278" type="lsep" visible="eq(-33,32230)" />
+    <setting label="32121" type="lsep" visible="eq(-34,32230)" />
+    <setting label="32278" type="lsep" visible="eq(-35,32254)" />
+    <setting id="E1.windowIdO" label="32105" type="number" visible="eq(-36,32260)" default="0" />
+    <setting label="32278" type="lsep" visible="eq(-37,32260)" />
+    <setting label="32122" type="lsep" visible="eq(-38,32260)" />
+    <setting label="32278" type="lsep" visible="eq(-39,32233)" />
+    <setting label="32278" type="lsep" visible="eq(-40,32253)" />
+    <setting label="32121" type="lsep" visible="eq(-41,32253)" />
+    <setting label="32278" type="lsep" visible="eq(-42,32249)" />
+    <setting label="32123" type="lsep" visible="eq(-43,32249)" />
+    <setting id="E1.folder" label="32281" type="folder" visible="eq(-44,32235)" value="" />
+    <setting id="E1.folder" label="32282" type="text" visible="eq(-45,32235)" default="" />
+    <setting id="E1.patterns" label="32111" type="text" visible="eq(-46,32235)" default="" />
+    <setting id="E1.ignore_patterns" label="32112" type="text" visible="eq(-47,32235)" default="" />
+    <setting id="E1.ignore_directories" label="32113" type="bool" visible="eq(-48,32235)" default="false" />
+    <setting id="E1.recursive" label="32114" type="bool" visible="eq(-49,32235)" default="false" />
+    <setting label="32278" type="lsep" visible="eq(-50,32235)" />
+    <setting label="32124" type="lsep" visible="eq(-51,32235)" />
+    <setting id="E1.hour" label="32215" type="number" visible="eq(-52,32234)" default="13" />
+    <setting id="E1.minute" label="32216" type="number" visible="eq(-53,32234)" default="0" />
+    <setting label="32278" type="lsep" visible="eq(-54,32234)" />
+    <setting label="32278" type="lsep" visible="eq(-55,32242)" />
+    <setting label="32289" type="lsep" visible="eq(-56,32242)" />
+    <setting label="32290" type="lsep" visible="eq(-57,32242)" />
+    <setting label="32291" type="lsep" visible="eq(-58,32242)" />
+    <setting label="32278" type="lsep" visible="eq(-59,32250)" />
+    <setting label="32278" type="lsep" visible="eq(-60,32231)" />
+    <setting label="32121" type="lsep" visible="eq(-61,32231)" />
+    <setting id="E1.sender" label="32102" type="text" visible="eq(-62,32239)" default="" />
+    <setting id="E1.method" label="32103" type="text" visible="eq(-63,32239)" default="" />
+    <setting id="E1.data" label="32104" type="text" visible="eq(-64,32239)" default="" />
+    <setting label="32278" type="lsep" visible="eq(-65,32239)" />
+    <setting label="32126" type="lsep" visible="eq(-66,32239)" />
+    <setting label="32278" type="lsep" visible="eq(-67,32258)" />
+    <setting label="32127" type="lsep" visible="eq(-68,32258)" />
+    <setting id="E1.hours" label="32217" type="number" visible="eq(-69,32238)" default="0" />
+    <setting id="E1.minutes" label="32218" type="number" visible="eq(-70,32238)" default="30" />
+    <setting id="E1.seconds" label="32219" type="number" visible="eq(-71,32238)" default="0" />
+    <setting label="32278" type="lsep" visible="eq(-72,32238)" />
+    <setting id="E1.matchIf" label="32108" type="text" visible="eq(-73,32240)" default="" />
+    <setting id="E1.rejectIf" label="32109" type="text" visible="eq(-74,32240)" default="" />
+    <setting label="32278" type="lsep" visible="eq(-75,32240)" />
+    <setting label="32128" type="lsep" visible="eq(-76,32240)" />
+    <setting id="E1.windowIdC" label="32106" type="number" visible="eq(-77,32259)" default="0" />
+    <setting label="32278" type="lsep" visible="eq(-78,32259)" />
+    <setting label="32122" type="lsep" visible="eq(-79,32259)" />
+    <setting id="E1.matchIf" label="32108" type="text" visible="eq(-80,32241)" default="" />
+    <setting id="E1.rejectIf" label="32109" type="text" visible="eq(-81,32241)" default="" />
+    <setting label="32278" type="lsep" visible="eq(-82,32241)" />
+    <setting label="32128" type="lsep" visible="eq(-83,32241)" />
+    <setting label="32278" type="lsep" visible="eq(-84,32257)" />
+    <setting label="32278" type="lsep" visible="eq(-85,32244)" />
+    <setting label="32289" type="lsep" visible="eq(-86,32244)" />
+    <setting label="32290" type="lsep" visible="eq(-87,32244)" />
+    <setting label="32294" type="lsep" visible="eq(-88,32244)" />
+    <setting label="32278" type="lsep" visible="eq(-89,32232)" />
+    <setting label="32278" type="lsep" visible="eq(-90,32252)" />
+    <setting label="32121" type="lsep" visible="eq(-91,32252)" />
+    <setting label="32278" type="lsep" visible="eq(-92,32243)" />
+    <setting label="32289" type="lsep" visible="eq(-93,32243)" />
+    <setting label="32290" type="lsep" visible="eq(-94,32243)" />
+    <setting label="32294" type="lsep" visible="eq(-95,32243)" />
+    <setting id="E1.userargs" label="32064" type="text" visible="!eq(-96,32229)" default="" />
+    <setting id="E1.test" label="32065" type="action" visible="!eq(-97,32229)" action="RunScript(script.service.kodi.callbacks, E1)" />
+    <setting id="E2.lsep" label="32012" type="lsep" visible="!eq(-98,32229)" />
+    <setting id="E2.action" label="32277" type="action" visible="!eq(-99,32229)" action="RunScript(script.service.kodi.callbacks, lselector, id=E2.type, heading=32284, lvalues=32229|32230|32231|32232|32233|32234|32235|32236|32237|32238|32239|32240|32241|32242|32243|32244|32245|32246|32247|32248|32249|32250|32251|32252|32253|32254|32255|32256|32257|32258|32259|32260)" />
+    <setting id="E2.type-v" label="32262" type="select" enable="false" visible="!eq(-100,32229)" default="32229" lvalues="32229|32230|32231|32232|32233|32234|32235|32236|32237|32238|32239|32240|32241|32242|32243|32244|32245|32246|32247|32248|32249|32250|32251|32252|32253|32254|32255|32256|32257|32258|32259|32260" />
+    <setting id="E2.type" label="32276" type="text" visible="false" default="32229" />
+    <setting id="E2.task" label="32057" type="labelenum" visible="!eq(-1,32229)" default="Task 1" lvalues="32001|32002|32003|32004|32005|32006|32007|32008|32009|32010" />
+    <setting id="E2.idleTime" label="32107" type="number" visible="eq(-2,32237)" default="60" />
+    <setting label="32278" type="lsep" visible="eq(-3,32237)" />
+    <setting label="32278" type="lsep" visible="eq(-4,32247)" />
+    <setting label="32289" type="lsep" visible="eq(-5,32247)" />
+    <setting label="32292" type="lsep" visible="eq(-6,32247)" />
+    <setting label="32293" type="lsep" visible="eq(-7,32247)" />
+    <setting label="32278" type="lsep" visible="eq(-8,32248)" />
+    <setting label="32289" type="lsep" visible="eq(-9,32248)" />
+    <setting label="32290" type="lsep" visible="eq(-10,32248)" />
+    <setting label="32291" type="lsep" visible="eq(-11,32248)" />
+    <setting label="32278" type="lsep" visible="eq(-12,32255)" />
+    <setting id="E2.ws_folder" label="32279" type="folder" visible="eq(-13,32236)" value="" />
+    <setting id="E2.ws_folder" label="32280" type="text" visible="eq(-14,32236)" default="" />
+    <setting id="E2.ws_patterns" label="32170" type="text" visible="eq(-15,32236)" default="" />
+    <setting id="E2.ws_ignore_patterns" label="32171" type="text" visible="eq(-16,32236)" default="" />
+    <setting id="E2.ws_ignore_directories" label="32172" type="bool" visible="eq(-17,32236)" default="false" />
+    <setting id="E2.ws_recursive" label="32173" type="bool" visible="eq(-18,32236)" default="false" />
+    <setting label="32278" type="lsep" visible="eq(-19,32236)" />
+    <setting label="32166" type="lsep" visible="eq(-20,32236)" />
+    <setting id="E2.afterIdleTime" label="32162" type="number" visible="eq(-21,32251)" default="60" />
+    <setting label="32278" type="lsep" visible="eq(-22,32251)" />
+    <setting label="32278" type="lsep" visible="eq(-23,32245)" />
+    <setting label="32289" type="lsep" visible="eq(-24,32245)" />
+    <setting label="32290" type="lsep" visible="eq(-25,32245)" />
+    <setting label="32294" type="lsep" visible="eq(-26,32245)" />
+    <setting label="32278" type="lsep" visible="eq(-27,32256)" />
+    <setting label="32119" type="lsep" visible="eq(-28,32256)" />
+    <setting label="32278" type="lsep" visible="eq(-29,32246)" />
+    <setting label="32295" type="lsep" visible="eq(-30,32246)" />
+    <setting label="32296" type="lsep" visible="eq(-31,32246)" />
+    <setting label="32293" type="lsep" visible="eq(-32,32246)" />
+    <setting label="32278" type="lsep" visible="eq(-33,32230)" />
+    <setting label="32121" type="lsep" visible="eq(-34,32230)" />
+    <setting label="32278" type="lsep" visible="eq(-35,32254)" />
+    <setting id="E2.windowIdO" label="32105" type="number" visible="eq(-36,32260)" default="0" />
+    <setting label="32278" type="lsep" visible="eq(-37,32260)" />
+    <setting label="32122" type="lsep" visible="eq(-38,32260)" />
+    <setting label="32278" type="lsep" visible="eq(-39,32233)" />
+    <setting label="32278" type="lsep" visible="eq(-40,32253)" />
+    <setting label="32121" type="lsep" visible="eq(-41,32253)" />
+    <setting label="32278" type="lsep" visible="eq(-42,32249)" />
+    <setting label="32123" type="lsep" visible="eq(-43,32249)" />
+    <setting id="E2.folder" label="32281" type="folder" visible="eq(-44,32235)" value="" />
+    <setting id="E2.folder" label="32282" type="text" visible="eq(-45,32235)" default="" />
+    <setting id="E2.patterns" label="32111" type="text" visible="eq(-46,32235)" default="" />
+    <setting id="E2.ignore_patterns" label="32112" type="text" visible="eq(-47,32235)" default="" />
+    <setting id="E2.ignore_directories" label="32113" type="bool" visible="eq(-48,32235)" default="false" />
+    <setting id="E2.recursive" label="32114" type="bool" visible="eq(-49,32235)" default="false" />
+    <setting label="32278" type="lsep" visible="eq(-50,32235)" />
+    <setting label="32124" type="lsep" visible="eq(-51,32235)" />
+    <setting id="E2.hour" label="32215" type="number" visible="eq(-52,32234)" default="13" />
+    <setting id="E2.minute" label="32216" type="number" visible="eq(-53,32234)" default="0" />
+    <setting label="32278" type="lsep" visible="eq(-54,32234)" />
+    <setting label="32278" type="lsep" visible="eq(-55,32242)" />
+    <setting label="32289" type="lsep" visible="eq(-56,32242)" />
+    <setting label="32290" type="lsep" visible="eq(-57,32242)" />
+    <setting label="32291" type="lsep" visible="eq(-58,32242)" />
+    <setting label="32278" type="lsep" visible="eq(-59,32250)" />
+    <setting label="32278" type="lsep" visible="eq(-60,32231)" />
+    <setting label="32121" type="lsep" visible="eq(-61,32231)" />
+    <setting id="E2.sender" label="32102" type="text" visible="eq(-62,32239)" default="" />
+    <setting id="E2.method" label="32103" type="text" visible="eq(-63,32239)" default="" />
+    <setting id="E2.data" label="32104" type="text" visible="eq(-64,32239)" default="" />
+    <setting label="32278" type="lsep" visible="eq(-65,32239)" />
+    <setting label="32126" type="lsep" visible="eq(-66,32239)" />
+    <setting label="32278" type="lsep" visible="eq(-67,32258)" />
+    <setting label="32127" type="lsep" visible="eq(-68,32258)" />
+    <setting id="E2.hours" label="32217" type="number" visible="eq(-69,32238)" default="0" />
+    <setting id="E2.minutes" label="32218" type="number" visible="eq(-70,32238)" default="30" />
+    <setting id="E2.seconds" label="32219" type="number" visible="eq(-71,32238)" default="0" />
+    <setting label="32278" type="lsep" visible="eq(-72,32238)" />
+    <setting id="E2.matchIf" label="32108" type="text" visible="eq(-73,32240)" default="" />
+    <setting id="E2.rejectIf" label="32109" type="text" visible="eq(-74,32240)" default="" />
+    <setting label="32278" type="lsep" visible="eq(-75,32240)" />
+    <setting label="32128" type="lsep" visible="eq(-76,32240)" />
+    <setting id="E2.windowIdC" label="32106" type="number" visible="eq(-77,32259)" default="0" />
+    <setting label="32278" type="lsep" visible="eq(-78,32259)" />
+    <setting label="32122" type="lsep" visible="eq(-79,32259)" />
+    <setting id="E2.matchIf" label="32108" type="text" visible="eq(-80,32241)" default="" />
+    <setting id="E2.rejectIf" label="32109" type="text" visible="eq(-81,32241)" default="" />
+    <setting label="32278" type="lsep" visible="eq(-82,32241)" />
+    <setting label="32128" type="lsep" visible="eq(-83,32241)" />
+    <setting label="32278" type="lsep" visible="eq(-84,32257)" />
+    <setting label="32278" type="lsep" visible="eq(-85,32244)" />
+    <setting label="32289" type="lsep" visible="eq(-86,32244)" />
+    <setting label="32290" type="lsep" visible="eq(-87,32244)" />
+    <setting label="32294" type="lsep" visible="eq(-88,32244)" />
+    <setting label="32278" type="lsep" visible="eq(-89,32232)" />
+    <setting label="32278" type="lsep" visible="eq(-90,32252)" />
+    <setting label="32121" type="lsep" visible="eq(-91,32252)" />
+    <setting label="32278" type="lsep" visible="eq(-92,32243)" />
+    <setting label="32289" type="lsep" visible="eq(-93,32243)" />
+    <setting label="32290" type="lsep" visible="eq(-94,32243)" />
+    <setting label="32294" type="lsep" visible="eq(-95,32243)" />
+    <setting id="E2.userargs" label="32064" type="text" visible="!eq(-96,32229)" default="" />
+    <setting id="E2.test" label="32065" type="action" visible="!eq(-97,32229)" action="RunScript(script.service.kodi.callbacks, E2)" />
+    <setting id="E3.lsep" label="32013" type="lsep" visible="!eq(-98,32229)" />
+    <setting id="E3.action" label="32277" type="action" visible="!eq(-99,32229)" action="RunScript(script.service.kodi.callbacks, lselector, id=E3.type, heading=32284, lvalues=32229|32230|32231|32232|32233|32234|32235|32236|32237|32238|32239|32240|32241|32242|32243|32244|32245|32246|32247|32248|32249|32250|32251|32252|32253|32254|32255|32256|32257|32258|32259|32260)" />
+    <setting id="E3.type-v" label="32262" type="select" enable="false" visible="!eq(-100,32229)" default="32229" lvalues="32229|32230|32231|32232|32233|32234|32235|32236|32237|32238|32239|32240|32241|32242|32243|32244|32245|32246|32247|32248|32249|32250|32251|32252|32253|32254|32255|32256|32257|32258|32259|32260" />
+    <setting id="E3.type" label="32276" type="text" visible="false" default="32229" />
+    <setting id="E3.task" label="32057" type="labelenum" visible="!eq(-1,32229)" default="Task 1" lvalues="32001|32002|32003|32004|32005|32006|32007|32008|32009|32010" />
+    <setting id="E3.idleTime" label="32107" type="number" visible="eq(-2,32237)" default="60" />
+    <setting label="32278" type="lsep" visible="eq(-3,32237)" />
+    <setting label="32278" type="lsep" visible="eq(-4,32247)" />
+    <setting label="32289" type="lsep" visible="eq(-5,32247)" />
+    <setting label="32292" type="lsep" visible="eq(-6,32247)" />
+    <setting label="32293" type="lsep" visible="eq(-7,32247)" />
+    <setting label="32278" type="lsep" visible="eq(-8,32248)" />
+    <setting label="32289" type="lsep" visible="eq(-9,32248)" />
+    <setting label="32290" type="lsep" visible="eq(-10,32248)" />
+    <setting label="32291" type="lsep" visible="eq(-11,32248)" />
+    <setting label="32278" type="lsep" visible="eq(-12,32255)" />
+    <setting id="E3.ws_folder" label="32279" type="folder" visible="eq(-13,32236)" value="" />
+    <setting id="E3.ws_folder" label="32280" type="text" visible="eq(-14,32236)" default="" />
+    <setting id="E3.ws_patterns" label="32170" type="text" visible="eq(-15,32236)" default="" />
+    <setting id="E3.ws_ignore_patterns" label="32171" type="text" visible="eq(-16,32236)" default="" />
+    <setting id="E3.ws_ignore_directories" label="32172" type="bool" visible="eq(-17,32236)" default="false" />
+    <setting id="E3.ws_recursive" label="32173" type="bool" visible="eq(-18,32236)" default="false" />
+    <setting label="32278" type="lsep" visible="eq(-19,32236)" />
+    <setting label="32166" type="lsep" visible="eq(-20,32236)" />
+    <setting id="E3.afterIdleTime" label="32162" type="number" visible="eq(-21,32251)" default="60" />
+    <setting label="32278" type="lsep" visible="eq(-22,32251)" />
+    <setting label="32278" type="lsep" visible="eq(-23,32245)" />
+    <setting label="32289" type="lsep" visible="eq(-24,32245)" />
+    <setting label="32290" type="lsep" visible="eq(-25,32245)" />
+    <setting label="32294" type="lsep" visible="eq(-26,32245)" />
+    <setting label="32278" type="lsep" visible="eq(-27,32256)" />
+    <setting label="32119" type="lsep" visible="eq(-28,32256)" />
+    <setting label="32278" type="lsep" visible="eq(-29,32246)" />
+    <setting label="32295" type="lsep" visible="eq(-30,32246)" />
+    <setting label="32296" type="lsep" visible="eq(-31,32246)" />
+    <setting label="32293" type="lsep" visible="eq(-32,32246)" />
+    <setting label="32278" type="lsep" visible="eq(-33,32230)" />
+    <setting label="32121" type="lsep" visible="eq(-34,32230)" />
+    <setting label="32278" type="lsep" visible="eq(-35,32254)" />
+    <setting id="E3.windowIdO" label="32105" type="number" visible="eq(-36,32260)" default="0" />
+    <setting label="32278" type="lsep" visible="eq(-37,32260)" />
+    <setting label="32122" type="lsep" visible="eq(-38,32260)" />
+    <setting label="32278" type="lsep" visible="eq(-39,32233)" />
+    <setting label="32278" type="lsep" visible="eq(-40,32253)" />
+    <setting label="32121" type="lsep" visible="eq(-41,32253)" />
+    <setting label="32278" type="lsep" visible="eq(-42,32249)" />
+    <setting label="32123" type="lsep" visible="eq(-43,32249)" />
+    <setting id="E3.folder" label="32281" type="folder" visible="eq(-44,32235)" value="" />
+    <setting id="E3.folder" label="32282" type="text" visible="eq(-45,32235)" default="" />
+    <setting id="E3.patterns" label="32111" type="text" visible="eq(-46,32235)" default="" />
+    <setting id="E3.ignore_patterns" label="32112" type="text" visible="eq(-47,32235)" default="" />
+    <setting id="E3.ignore_directories" label="32113" type="bool" visible="eq(-48,32235)" default="false" />
+    <setting id="E3.recursive" label="32114" type="bool" visible="eq(-49,32235)" default="false" />
+    <setting label="32278" type="lsep" visible="eq(-50,32235)" />
+    <setting label="32124" type="lsep" visible="eq(-51,32235)" />
+    <setting id="E3.hour" label="32215" type="number" visible="eq(-52,32234)" default="13" />
+    <setting id="E3.minute" label="32216" type="number" visible="eq(-53,32234)" default="0" />
+    <setting label="32278" type="lsep" visible="eq(-54,32234)" />
+    <setting label="32278" type="lsep" visible="eq(-55,32242)" />
+    <setting label="32289" type="lsep" visible="eq(-56,32242)" />
+    <setting label="32290" type="lsep" visible="eq(-57,32242)" />
+    <setting label="32291" type="lsep" visible="eq(-58,32242)" />
+    <setting label="32278" type="lsep" visible="eq(-59,32250)" />
+    <setting label="32278" type="lsep" visible="eq(-60,32231)" />
+    <setting label="32121" type="lsep" visible="eq(-61,32231)" />
+    <setting id="E3.sender" label="32102" type="text" visible="eq(-62,32239)" default="" />
+    <setting id="E3.method" label="32103" type="text" visible="eq(-63,32239)" default="" />
+    <setting id="E3.data" label="32104" type="text" visible="eq(-64,32239)" default="" />
+    <setting label="32278" type="lsep" visible="eq(-65,32239)" />
+    <setting label="32126" type="lsep" visible="eq(-66,32239)" />
+    <setting label="32278" type="lsep" visible="eq(-67,32258)" />
+    <setting label="32127" type="lsep" visible="eq(-68,32258)" />
+    <setting id="E3.hours" label="32217" type="number" visible="eq(-69,32238)" default="0" />
+    <setting id="E3.minutes" label="32218" type="number" visible="eq(-70,32238)" default="30" />
+    <setting id="E3.seconds" label="32219" type="number" visible="eq(-71,32238)" default="0" />
+    <setting label="32278" type="lsep" visible="eq(-72,32238)" />
+    <setting id="E3.matchIf" label="32108" type="text" visible="eq(-73,32240)" default="" />
+    <setting id="E3.rejectIf" label="32109" type="text" visible="eq(-74,32240)" default="" />
+    <setting label="32278" type="lsep" visible="eq(-75,32240)" />
+    <setting label="32128" type="lsep" visible="eq(-76,32240)" />
+    <setting id="E3.windowIdC" label="32106" type="number" visible="eq(-77,32259)" default="0" />
+    <setting label="32278" type="lsep" visible="eq(-78,32259)" />
+    <setting label="32122" type="lsep" visible="eq(-79,32259)" />
+    <setting id="E3.matchIf" label="32108" type="text" visible="eq(-80,32241)" default="" />
+    <setting id="E3.rejectIf" label="32109" type="text" visible="eq(-81,32241)" default="" />
+    <setting label="32278" type="lsep" visible="eq(-82,32241)" />
+    <setting label="32128" type="lsep" visible="eq(-83,32241)" />
+    <setting label="32278" type="lsep" visible="eq(-84,32257)" />
+    <setting label="32278" type="lsep" visible="eq(-85,32244)" />
+    <setting label="32289" type="lsep" visible="eq(-86,32244)" />
+    <setting label="32290" type="lsep" visible="eq(-87,32244)" />
+    <setting label="32294" type="lsep" visible="eq(-88,32244)" />
+    <setting label="32278" type="lsep" visible="eq(-89,32232)" />
+    <setting label="32278" type="lsep" visible="eq(-90,32252)" />
+    <setting label="32121" type="lsep" visible="eq(-91,32252)" />
+    <setting label="32278" type="lsep" visible="eq(-92,32243)" />
+    <setting label="32289" type="lsep" visible="eq(-93,32243)" />
+    <setting label="32290" type="lsep" visible="eq(-94,32243)" />
+    <setting label="32294" type="lsep" visible="eq(-95,32243)" />
+    <setting id="E3.userargs" label="32064" type="text" visible="!eq(-96,32229)" default="" />
+    <setting id="E3.test" label="32065" type="action" visible="!eq(-97,32229)" action="RunScript(script.service.kodi.callbacks, E3)" />
+    <setting id="E4.lsep" label="32014" type="lsep" visible="!eq(-98,32229)" />
+    <setting id="E4.action" label="32277" type="action" visible="!eq(-99,32229)" action="RunScript(script.service.kodi.callbacks, lselector, id=E4.type, heading=32284, lvalues=32229|32230|32231|32232|32233|32234|32235|32236|32237|32238|32239|32240|32241|32242|32243|32244|32245|32246|32247|32248|32249|32250|32251|32252|32253|32254|32255|32256|32257|32258|32259|32260)" />
+    <setting id="E4.type-v" label="32262" type="select" enable="false" visible="!eq(-100,32229)" default="32229" lvalues="32229|32230|32231|32232|32233|32234|32235|32236|32237|32238|32239|32240|32241|32242|32243|32244|32245|32246|32247|32248|32249|32250|32251|32252|32253|32254|32255|32256|32257|32258|32259|32260" />
+    <setting id="E4.type" label="32276" type="text" visible="false" default="32229" />
+    <setting id="E4.task" label="32057" type="labelenum" visible="!eq(-1,32229)" default="Task 1" lvalues="32001|32002|32003|32004|32005|32006|32007|32008|32009|32010" />
+    <setting id="E4.idleTime" label="32107" type="number" visible="eq(-2,32237)" default="60" />
+    <setting label="32278" type="lsep" visible="eq(-3,32237)" />
+    <setting label="32278" type="lsep" visible="eq(-4,32247)" />
+    <setting label="32289" type="lsep" visible="eq(-5,32247)" />
+    <setting label="32292" type="lsep" visible="eq(-6,32247)" />
+    <setting label="32293" type="lsep" visible="eq(-7,32247)" />
+    <setting label="32278" type="lsep" visible="eq(-8,32248)" />
+    <setting label="32289" type="lsep" visible="eq(-9,32248)" />
+    <setting label="32290" type="lsep" visible="eq(-10,32248)" />
+    <setting label="32291" type="lsep" visible="eq(-11,32248)" />
+    <setting label="32278" type="lsep" visible="eq(-12,32255)" />
+    <setting id="E4.ws_folder" label="32279" type="folder" visible="eq(-13,32236)" value="" />
+    <setting id="E4.ws_folder" label="32280" type="text" visible="eq(-14,32236)" default="" />
+    <setting id="E4.ws_patterns" label="32170" type="text" visible="eq(-15,32236)" default="" />
+    <setting id="E4.ws_ignore_patterns" label="32171" type="text" visible="eq(-16,32236)" default="" />
+    <setting id="E4.ws_ignore_directories" label="32172" type="bool" visible="eq(-17,32236)" default="false" />
+    <setting id="E4.ws_recursive" label="32173" type="bool" visible="eq(-18,32236)" default="false" />
+    <setting label="32278" type="lsep" visible="eq(-19,32236)" />
+    <setting label="32166" type="lsep" visible="eq(-20,32236)" />
+    <setting id="E4.afterIdleTime" label="32162" type="number" visible="eq(-21,32251)" default="60" />
+    <setting label="32278" type="lsep" visible="eq(-22,32251)" />
+    <setting label="32278" type="lsep" visible="eq(-23,32245)" />
+    <setting label="32289" type="lsep" visible="eq(-24,32245)" />
+    <setting label="32290" type="lsep" visible="eq(-25,32245)" />
+    <setting label="32294" type="lsep" visible="eq(-26,32245)" />
+    <setting label="32278" type="lsep" visible="eq(-27,32256)" />
+    <setting label="32119" type="lsep" visible="eq(-28,32256)" />
+    <setting label="32278" type="lsep" visible="eq(-29,32246)" />
+    <setting label="32295" type="lsep" visible="eq(-30,32246)" />
+    <setting label="32296" type="lsep" visible="eq(-31,32246)" />
+    <setting label="32293" type="lsep" visible="eq(-32,32246)" />
+    <setting label="32278" type="lsep" visible="eq(-33,32230)" />
+    <setting label="32121" type="lsep" visible="eq(-34,32230)" />
+    <setting label="32278" type="lsep" visible="eq(-35,32254)" />
+    <setting id="E4.windowIdO" label="32105" type="number" visible="eq(-36,32260)" default="0" />
+    <setting label="32278" type="lsep" visible="eq(-37,32260)" />
+    <setting label="32122" type="lsep" visible="eq(-38,32260)" />
+    <setting label="32278" type="lsep" visible="eq(-39,32233)" />
+    <setting label="32278" type="lsep" visible="eq(-40,32253)" />
+    <setting label="32121" type="lsep" visible="eq(-41,32253)" />
+    <setting label="32278" type="lsep" visible="eq(-42,32249)" />
+    <setting label="32123" type="lsep" visible="eq(-43,32249)" />
+    <setting id="E4.folder" label="32281" type="folder" visible="eq(-44,32235)" value="" />
+    <setting id="E4.folder" label="32282" type="text" visible="eq(-45,32235)" default="" />
+    <setting id="E4.patterns" label="32111" type="text" visible="eq(-46,32235)" default="" />
+    <setting id="E4.ignore_patterns" label="32112" type="text" visible="eq(-47,32235)" default="" />
+    <setting id="E4.ignore_directories" label="32113" type="bool" visible="eq(-48,32235)" default="false" />
+    <setting id="E4.recursive" label="32114" type="bool" visible="eq(-49,32235)" default="false" />
+    <setting label="32278" type="lsep" visible="eq(-50,32235)" />
+    <setting label="32124" type="lsep" visible="eq(-51,32235)" />
+    <setting id="E4.hour" label="32215" type="number" visible="eq(-52,32234)" default="13" />
+    <setting id="E4.minute" label="32216" type="number" visible="eq(-53,32234)" default="0" />
+    <setting label="32278" type="lsep" visible="eq(-54,32234)" />
+    <setting label="32278" type="lsep" visible="eq(-55,32242)" />
+    <setting label="32289" type="lsep" visible="eq(-56,32242)" />
+    <setting label="32290" type="lsep" visible="eq(-57,32242)" />
+    <setting label="32291" type="lsep" visible="eq(-58,32242)" />
+    <setting label="32278" type="lsep" visible="eq(-59,32250)" />
+    <setting label="32278" type="lsep" visible="eq(-60,32231)" />
+    <setting label="32121" type="lsep" visible="eq(-61,32231)" />
+    <setting id="E4.sender" label="32102" type="text" visible="eq(-62,32239)" default="" />
+    <setting id="E4.method" label="32103" type="text" visible="eq(-63,32239)" default="" />
+    <setting id="E4.data" label="32104" type="text" visible="eq(-64,32239)" default="" />
+    <setting label="32278" type="lsep" visible="eq(-65,32239)" />
+    <setting label="32126" type="lsep" visible="eq(-66,32239)" />
+    <setting label="32278" type="lsep" visible="eq(-67,32258)" />
+    <setting label="32127" type="lsep" visible="eq(-68,32258)" />
+    <setting id="E4.hours" label="32217" type="number" visible="eq(-69,32238)" default="0" />
+    <setting id="E4.minutes" label="32218" type="number" visible="eq(-70,32238)" default="30" />
+    <setting id="E4.seconds" label="32219" type="number" visible="eq(-71,32238)" default="0" />
+    <setting label="32278" type="lsep" visible="eq(-72,32238)" />
+    <setting id="E4.matchIf" label="32108" type="text" visible="eq(-73,32240)" default="" />
+    <setting id="E4.rejectIf" label="32109" type="text" visible="eq(-74,32240)" default="" />
+    <setting label="32278" type="lsep" visible="eq(-75,32240)" />
+    <setting label="32128" type="lsep" visible="eq(-76,32240)" />
+    <setting id="E4.windowIdC" label="32106" type="number" visible="eq(-77,32259)" default="0" />
+    <setting label="32278" type="lsep" visible="eq(-78,32259)" />
+    <setting label="32122" type="lsep" visible="eq(-79,32259)" />
+    <setting id="E4.matchIf" label="32108" type="text" visible="eq(-80,32241)" default="" />
+    <setting id="E4.rejectIf" label="32109" type="text" visible="eq(-81,32241)" default="" />
+    <setting label="32278" type="lsep" visible="eq(-82,32241)" />
+    <setting label="32128" type="lsep" visible="eq(-83,32241)" />
+    <setting label="32278" type="lsep" visible="eq(-84,32257)" />
+    <setting label="32278" type="lsep" visible="eq(-85,32244)" />
+    <setting label="32289" type="lsep" visible="eq(-86,32244)" />
+    <setting label="32290" type="lsep" visible="eq(-87,32244)" />
+    <setting label="32294" type="lsep" visible="eq(-88,32244)" />
+    <setting label="32278" type="lsep" visible="eq(-89,32232)" />
+    <setting label="32278" type="lsep" visible="eq(-90,32252)" />
+    <setting label="32121" type="lsep" visible="eq(-91,32252)" />
+    <setting label="32278" type="lsep" visible="eq(-92,32243)" />
+    <setting label="32289" type="lsep" visible="eq(-93,32243)" />
+    <setting label="32290" type="lsep" visible="eq(-94,32243)" />
+    <setting label="32294" type="lsep" visible="eq(-95,32243)" />
+    <setting id="E4.userargs" label="32064" type="text" visible="!eq(-96,32229)" default="" />
+    <setting id="E4.test" label="32065" type="action" visible="!eq(-97,32229)" action="RunScript(script.service.kodi.callbacks, E4)" />
+    <setting id="E5.lsep" label="32015" type="lsep" visible="!eq(-98,32229)" />
+    <setting id="E5.action" label="32277" type="action" visible="!eq(-99,32229)" action="RunScript(script.service.kodi.callbacks, lselector, id=E5.type, heading=32284, lvalues=32229|32230|32231|32232|32233|32234|32235|32236|32237|32238|32239|32240|32241|32242|32243|32244|32245|32246|32247|32248|32249|32250|32251|32252|32253|32254|32255|32256|32257|32258|32259|32260)" />
+    <setting id="E5.type-v" label="32262" type="select" enable="false" visible="!eq(-100,32229)" default="32229" lvalues="32229|32230|32231|32232|32233|32234|32235|32236|32237|32238|32239|32240|32241|32242|32243|32244|32245|32246|32247|32248|32249|32250|32251|32252|32253|32254|32255|32256|32257|32258|32259|32260" />
+    <setting id="E5.type" label="32276" type="text" visible="false" default="32229" />
+    <setting id="E5.task" label="32057" type="labelenum" visible="!eq(-1,32229)" default="Task 1" lvalues="32001|32002|32003|32004|32005|32006|32007|32008|32009|32010" />
+    <setting id="E5.idleTime" label="32107" type="number" visible="eq(-2,32237)" default="60" />
+    <setting label="32278" type="lsep" visible="eq(-3,32237)" />
+    <setting label="32278" type="lsep" visible="eq(-4,32247)" />
+    <setting label="32289" type="lsep" visible="eq(-5,32247)" />
+    <setting label="32292" type="lsep" visible="eq(-6,32247)" />
+    <setting label="32293" type="lsep" visible="eq(-7,32247)" />
+    <setting label="32278" type="lsep" visible="eq(-8,32248)" />
+    <setting label="32289" type="lsep" visible="eq(-9,32248)" />
+    <setting label="32290" type="lsep" visible="eq(-10,32248)" />
+    <setting label="32291" type="lsep" visible="eq(-11,32248)" />
+    <setting label="32278" type="lsep" visible="eq(-12,32255)" />
+    <setting id="E5.ws_folder" label="32279" type="folder" visible="eq(-13,32236)" value="" />
+    <setting id="E5.ws_folder" label="32280" type="text" visible="eq(-14,32236)" default="" />
+    <setting id="E5.ws_patterns" label="32170" type="text" visible="eq(-15,32236)" default="" />
+    <setting id="E5.ws_ignore_patterns" label="32171" type="text" visible="eq(-16,32236)" default="" />
+    <setting id="E5.ws_ignore_directories" label="32172" type="bool" visible="eq(-17,32236)" default="false" />
+    <setting id="E5.ws_recursive" label="32173" type="bool" visible="eq(-18,32236)" default="false" />
+    <setting label="32278" type="lsep" visible="eq(-19,32236)" />
+    <setting label="32166" type="lsep" visible="eq(-20,32236)" />
+    <setting id="E5.afterIdleTime" label="32162" type="number" visible="eq(-21,32251)" default="60" />
+    <setting label="32278" type="lsep" visible="eq(-22,32251)" />
+    <setting label="32278" type="lsep" visible="eq(-23,32245)" />
+    <setting label="32289" type="lsep" visible="eq(-24,32245)" />
+    <setting label="32290" type="lsep" visible="eq(-25,32245)" />
+    <setting label="32294" type="lsep" visible="eq(-26,32245)" />
+    <setting label="32278" type="lsep" visible="eq(-27,32256)" />
+    <setting label="32119" type="lsep" visible="eq(-28,32256)" />
+    <setting label="32278" type="lsep" visible="eq(-29,32246)" />
+    <setting label="32295" type="lsep" visible="eq(-30,32246)" />
+    <setting label="32296" type="lsep" visible="eq(-31,32246)" />
+    <setting label="32293" type="lsep" visible="eq(-32,32246)" />
+    <setting label="32278" type="lsep" visible="eq(-33,32230)" />
+    <setting label="32121" type="lsep" visible="eq(-34,32230)" />
+    <setting label="32278" type="lsep" visible="eq(-35,32254)" />
+    <setting id="E5.windowIdO" label="32105" type="number" visible="eq(-36,32260)" default="0" />
+    <setting label="32278" type="lsep" visible="eq(-37,32260)" />
+    <setting label="32122" type="lsep" visible="eq(-38,32260)" />
+    <setting label="32278" type="lsep" visible="eq(-39,32233)" />
+    <setting label="32278" type="lsep" visible="eq(-40,32253)" />
+    <setting label="32121" type="lsep" visible="eq(-41,32253)" />
+    <setting label="32278" type="lsep" visible="eq(-42,32249)" />
+    <setting label="32123" type="lsep" visible="eq(-43,32249)" />
+    <setting id="E5.folder" label="32281" type="folder" visible="eq(-44,32235)" value="" />
+    <setting id="E5.folder" label="32282" type="text" visible="eq(-45,32235)" default="" />
+    <setting id="E5.patterns" label="32111" type="text" visible="eq(-46,32235)" default="" />
+    <setting id="E5.ignore_patterns" label="32112" type="text" visible="eq(-47,32235)" default="" />
+    <setting id="E5.ignore_directories" label="32113" type="bool" visible="eq(-48,32235)" default="false" />
+    <setting id="E5.recursive" label="32114" type="bool" visible="eq(-49,32235)" default="false" />
+    <setting label="32278" type="lsep" visible="eq(-50,32235)" />
+    <setting label="32124" type="lsep" visible="eq(-51,32235)" />
+    <setting id="E5.hour" label="32215" type="number" visible="eq(-52,32234)" default="13" />
+    <setting id="E5.minute" label="32216" type="number" visible="eq(-53,32234)" default="0" />
+    <setting label="32278" type="lsep" visible="eq(-54,32234)" />
+    <setting label="32278" type="lsep" visible="eq(-55,32242)" />
+    <setting label="32289" type="lsep" visible="eq(-56,32242)" />
+    <setting label="32290" type="lsep" visible="eq(-57,32242)" />
+    <setting label="32291" type="lsep" visible="eq(-58,32242)" />
+    <setting label="32278" type="lsep" visible="eq(-59,32250)" />
+    <setting label="32278" type="lsep" visible="eq(-60,32231)" />
+    <setting label="32121" type="lsep" visible="eq(-61,32231)" />
+    <setting id="E5.sender" label="32102" type="text" visible="eq(-62,32239)" default="" />
+    <setting id="E5.method" label="32103" type="text" visible="eq(-63,32239)" default="" />
+    <setting id="E5.data" label="32104" type="text" visible="eq(-64,32239)" default="" />
+    <setting label="32278" type="lsep" visible="eq(-65,32239)" />
+    <setting label="32126" type="lsep" visible="eq(-66,32239)" />
+    <setting label="32278" type="lsep" visible="eq(-67,32258)" />
+    <setting label="32127" type="lsep" visible="eq(-68,32258)" />
+    <setting id="E5.hours" label="32217" type="number" visible="eq(-69,32238)" default="0" />
+    <setting id="E5.minutes" label="32218" type="number" visible="eq(-70,32238)" default="30" />
+    <setting id="E5.seconds" label="32219" type="number" visible="eq(-71,32238)" default="0" />
+    <setting label="32278" type="lsep" visible="eq(-72,32238)" />
+    <setting id="E5.matchIf" label="32108" type="text" visible="eq(-73,32240)" default="" />
+    <setting id="E5.rejectIf" label="32109" type="text" visible="eq(-74,32240)" default="" />
+    <setting label="32278" type="lsep" visible="eq(-75,32240)" />
+    <setting label="32128" type="lsep" visible="eq(-76,32240)" />
+    <setting id="E5.windowIdC" label="32106" type="number" visible="eq(-77,32259)" default="0" />
+    <setting label="32278" type="lsep" visible="eq(-78,32259)" />
+    <setting label="32122" type="lsep" visible="eq(-79,32259)" />
+    <setting id="E5.matchIf" label="32108" type="text" visible="eq(-80,32241)" default="" />
+    <setting id="E5.rejectIf" label="32109" type="text" visible="eq(-81,32241)" default="" />
+    <setting label="32278" type="lsep" visible="eq(-82,32241)" />
+    <setting label="32128" type="lsep" visible="eq(-83,32241)" />
+    <setting label="32278" type="lsep" visible="eq(-84,32257)" />
+    <setting label="32278" type="lsep" visible="eq(-85,32244)" />
+    <setting label="32289" type="lsep" visible="eq(-86,32244)" />
+    <setting label="32290" type="lsep" visible="eq(-87,32244)" />
+    <setting label="32294" type="lsep" visible="eq(-88,32244)" />
+    <setting label="32278" type="lsep" visible="eq(-89,32232)" />
+    <setting label="32278" type="lsep" visible="eq(-90,32252)" />
+    <setting label="32121" type="lsep" visible="eq(-91,32252)" />
+    <setting label="32278" type="lsep" visible="eq(-92,32243)" />
+    <setting label="32289" type="lsep" visible="eq(-93,32243)" />
+    <setting label="32290" type="lsep" visible="eq(-94,32243)" />
+    <setting label="32294" type="lsep" visible="eq(-95,32243)" />
+    <setting id="E5.userargs" label="32064" type="text" visible="!eq(-96,32229)" default="" />
+    <setting id="E5.test" label="32065" type="action" visible="!eq(-97,32229)" action="RunScript(script.service.kodi.callbacks, E5)" />
+    <setting id="E6.lsep" label="32016" type="lsep" visible="!eq(-98,32229)" />
+    <setting id="E6.action" label="32277" type="action" visible="!eq(-99,32229)" action="RunScript(script.service.kodi.callbacks, lselector, id=E6.type, heading=32284, lvalues=32229|32230|32231|32232|32233|32234|32235|32236|32237|32238|32239|32240|32241|32242|32243|32244|32245|32246|32247|32248|32249|32250|32251|32252|32253|32254|32255|32256|32257|32258|32259|32260)" />
+    <setting id="E6.type-v" label="32262" type="select" enable="false" visible="!eq(-100,32229)" default="32229" lvalues="32229|32230|32231|32232|32233|32234|32235|32236|32237|32238|32239|32240|32241|32242|32243|32244|32245|32246|32247|32248|32249|32250|32251|32252|32253|32254|32255|32256|32257|32258|32259|32260" />
+    <setting id="E6.type" label="32276" type="text" visible="false" default="32229" />
+    <setting id="E6.task" label="32057" type="labelenum" visible="!eq(-1,32229)" default="Task 1" lvalues="32001|32002|32003|32004|32005|32006|32007|32008|32009|32010" />
+    <setting id="E6.idleTime" label="32107" type="number" visible="eq(-2,32237)" default="60" />
+    <setting label="32278" type="lsep" visible="eq(-3,32237)" />
+    <setting label="32278" type="lsep" visible="eq(-4,32247)" />
+    <setting label="32289" type="lsep" visible="eq(-5,32247)" />
+    <setting label="32292" type="lsep" visible="eq(-6,32247)" />
+    <setting label="32293" type="lsep" visible="eq(-7,32247)" />
+    <setting label="32278" type="lsep" visible="eq(-8,32248)" />
+    <setting label="32289" type="lsep" visible="eq(-9,32248)" />
+    <setting label="32290" type="lsep" visible="eq(-10,32248)" />
+    <setting label="32291" type="lsep" visible="eq(-11,32248)" />
+    <setting label="32278" type="lsep" visible="eq(-12,32255)" />
+    <setting id="E6.ws_folder" label="32279" type="folder" visible="eq(-13,32236)" value="" />
+    <setting id="E6.ws_folder" label="32280" type="text" visible="eq(-14,32236)" default="" />
+    <setting id="E6.ws_patterns" label="32170" type="text" visible="eq(-15,32236)" default="" />
+    <setting id="E6.ws_ignore_patterns" label="32171" type="text" visible="eq(-16,32236)" default="" />
+    <setting id="E6.ws_ignore_directories" label="32172" type="bool" visible="eq(-17,32236)" default="false" />
+    <setting id="E6.ws_recursive" label="32173" type="bool" visible="eq(-18,32236)" default="false" />
+    <setting label="32278" type="lsep" visible="eq(-19,32236)" />
+    <setting label="32166" type="lsep" visible="eq(-20,32236)" />
+    <setting id="E6.afterIdleTime" label="32162" type="number" visible="eq(-21,32251)" default="60" />
+    <setting label="32278" type="lsep" visible="eq(-22,32251)" />
+    <setting label="32278" type="lsep" visible="eq(-23,32245)" />
+    <setting label="32289" type="lsep" visible="eq(-24,32245)" />
+    <setting label="32290" type="lsep" visible="eq(-25,32245)" />
+    <setting label="32294" type="lsep" visible="eq(-26,32245)" />
+    <setting label="32278" type="lsep" visible="eq(-27,32256)" />
+    <setting label="32119" type="lsep" visible="eq(-28,32256)" />
+    <setting label="32278" type="lsep" visible="eq(-29,32246)" />
+    <setting label="32295" type="lsep" visible="eq(-30,32246)" />
+    <setting label="32296" type="lsep" visible="eq(-31,32246)" />
+    <setting label="32293" type="lsep" visible="eq(-32,32246)" />
+    <setting label="32278" type="lsep" visible="eq(-33,32230)" />
+    <setting label="32121" type="lsep" visible="eq(-34,32230)" />
+    <setting label="32278" type="lsep" visible="eq(-35,32254)" />
+    <setting id="E6.windowIdO" label="32105" type="number" visible="eq(-36,32260)" default="0" />
+    <setting label="32278" type="lsep" visible="eq(-37,32260)" />
+    <setting label="32122" type="lsep" visible="eq(-38,32260)" />
+    <setting label="32278" type="lsep" visible="eq(-39,32233)" />
+    <setting label="32278" type="lsep" visible="eq(-40,32253)" />
+    <setting label="32121" type="lsep" visible="eq(-41,32253)" />
+    <setting label="32278" type="lsep" visible="eq(-42,32249)" />
+    <setting label="32123" type="lsep" visible="eq(-43,32249)" />
+    <setting id="E6.folder" label="32281" type="folder" visible="eq(-44,32235)" value="" />
+    <setting id="E6.folder" label="32282" type="text" visible="eq(-45,32235)" default="" />
+    <setting id="E6.patterns" label="32111" type="text" visible="eq(-46,32235)" default="" />
+    <setting id="E6.ignore_patterns" label="32112" type="text" visible="eq(-47,32235)" default="" />
+    <setting id="E6.ignore_directories" label="32113" type="bool" visible="eq(-48,32235)" default="false" />
+    <setting id="E6.recursive" label="32114" type="bool" visible="eq(-49,32235)" default="false" />
+    <setting label="32278" type="lsep" visible="eq(-50,32235)" />
+    <setting label="32124" type="lsep" visible="eq(-51,32235)" />
+    <setting id="E6.hour" label="32215" type="number" visible="eq(-52,32234)" default="13" />
+    <setting id="E6.minute" label="32216" type="number" visible="eq(-53,32234)" default="0" />
+    <setting label="32278" type="lsep" visible="eq(-54,32234)" />
+    <setting label="32278" type="lsep" visible="eq(-55,32242)" />
+    <setting label="32289" type="lsep" visible="eq(-56,32242)" />
+    <setting label="32290" type="lsep" visible="eq(-57,32242)" />
+    <setting label="32291" type="lsep" visible="eq(-58,32242)" />
+    <setting label="32278" type="lsep" visible="eq(-59,32250)" />
+    <setting label="32278" type="lsep" visible="eq(-60,32231)" />
+    <setting label="32121" type="lsep" visible="eq(-61,32231)" />
+    <setting id="E6.sender" label="32102" type="text" visible="eq(-62,32239)" default="" />
+    <setting id="E6.method" label="32103" type="text" visible="eq(-63,32239)" default="" />
+    <setting id="E6.data" label="32104" type="text" visible="eq(-64,32239)" default="" />
+    <setting label="32278" type="lsep" visible="eq(-65,32239)" />
+    <setting label="32126" type="lsep" visible="eq(-66,32239)" />
+    <setting label="32278" type="lsep" visible="eq(-67,32258)" />
+    <setting label="32127" type="lsep" visible="eq(-68,32258)" />
+    <setting id="E6.hours" label="32217" type="number" visible="eq(-69,32238)" default="0" />
+    <setting id="E6.minutes" label="32218" type="number" visible="eq(-70,32238)" default="30" />
+    <setting id="E6.seconds" label="32219" type="number" visible="eq(-71,32238)" default="0" />
+    <setting label="32278" type="lsep" visible="eq(-72,32238)" />
+    <setting id="E6.matchIf" label="32108" type="text" visible="eq(-73,32240)" default="" />
+    <setting id="E6.rejectIf" label="32109" type="text" visible="eq(-74,32240)" default="" />
+    <setting label="32278" type="lsep" visible="eq(-75,32240)" />
+    <setting label="32128" type="lsep" visible="eq(-76,32240)" />
+    <setting id="E6.windowIdC" label="32106" type="number" visible="eq(-77,32259)" default="0" />
+    <setting label="32278" type="lsep" visible="eq(-78,32259)" />
+    <setting label="32122" type="lsep" visible="eq(-79,32259)" />
+    <setting id="E6.matchIf" label="32108" type="text" visible="eq(-80,32241)" default="" />
+    <setting id="E6.rejectIf" label="32109" type="text" visible="eq(-81,32241)" default="" />
+    <setting label="32278" type="lsep" visible="eq(-82,32241)" />
+    <setting label="32128" type="lsep" visible="eq(-83,32241)" />
+    <setting label="32278" type="lsep" visible="eq(-84,32257)" />
+    <setting label="32278" type="lsep" visible="eq(-85,32244)" />
+    <setting label="32289" type="lsep" visible="eq(-86,32244)" />
+    <setting label="32290" type="lsep" visible="eq(-87,32244)" />
+    <setting label="32294" type="lsep" visible="eq(-88,32244)" />
+    <setting label="32278" type="lsep" visible="eq(-89,32232)" />
+    <setting label="32278" type="lsep" visible="eq(-90,32252)" />
+    <setting label="32121" type="lsep" visible="eq(-91,32252)" />
+    <setting label="32278" type="lsep" visible="eq(-92,32243)" />
+    <setting label="32289" type="lsep" visible="eq(-93,32243)" />
+    <setting label="32290" type="lsep" visible="eq(-94,32243)" />
+    <setting label="32294" type="lsep" visible="eq(-95,32243)" />
+    <setting id="E6.userargs" label="32064" type="text" visible="!eq(-96,32229)" default="" />
+    <setting id="E6.test" label="32065" type="action" visible="!eq(-97,32229)" action="RunScript(script.service.kodi.callbacks, E6)" />
+    <setting id="E7.lsep" label="32017" type="lsep" visible="!eq(-98,32229)" />
+    <setting id="E7.action" label="32277" type="action" visible="!eq(-99,32229)" action="RunScript(script.service.kodi.callbacks, lselector, id=E7.type, heading=32284, lvalues=32229|32230|32231|32232|32233|32234|32235|32236|32237|32238|32239|32240|32241|32242|32243|32244|32245|32246|32247|32248|32249|32250|32251|32252|32253|32254|32255|32256|32257|32258|32259|32260)" />
+    <setting id="E7.type-v" label="32262" type="select" enable="false" visible="!eq(-100,32229)" default="32229" lvalues="32229|32230|32231|32232|32233|32234|32235|32236|32237|32238|32239|32240|32241|32242|32243|32244|32245|32246|32247|32248|32249|32250|32251|32252|32253|32254|32255|32256|32257|32258|32259|32260" />
+    <setting id="E7.type" label="32276" type="text" visible="false" default="32229" />
+    <setting id="E7.task" label="32057" type="labelenum" visible="!eq(-1,32229)" default="Task 1" lvalues="32001|32002|32003|32004|32005|32006|32007|32008|32009|32010" />
+    <setting id="E7.idleTime" label="32107" type="number" visible="eq(-2,32237)" default="60" />
+    <setting label="32278" type="lsep" visible="eq(-3,32237)" />
+    <setting label="32278" type="lsep" visible="eq(-4,32247)" />
+    <setting label="32289" type="lsep" visible="eq(-5,32247)" />
+    <setting label="32292" type="lsep" visible="eq(-6,32247)" />
+    <setting label="32293" type="lsep" visible="eq(-7,32247)" />
+    <setting label="32278" type="lsep" visible="eq(-8,32248)" />
+    <setting label="32289" type="lsep" visible="eq(-9,32248)" />
+    <setting label="32290" type="lsep" visible="eq(-10,32248)" />
+    <setting label="32291" type="lsep" visible="eq(-11,32248)" />
+    <setting label="32278" type="lsep" visible="eq(-12,32255)" />
+    <setting id="E7.ws_folder" label="32279" type="folder" visible="eq(-13,32236)" value="" />
+    <setting id="E7.ws_folder" label="32280" type="text" visible="eq(-14,32236)" default="" />
+    <setting id="E7.ws_patterns" label="32170" type="text" visible="eq(-15,32236)" default="" />
+    <setting id="E7.ws_ignore_patterns" label="32171" type="text" visible="eq(-16,32236)" default="" />
+    <setting id="E7.ws_ignore_directories" label="32172" type="bool" visible="eq(-17,32236)" default="false" />
+    <setting id="E7.ws_recursive" label="32173" type="bool" visible="eq(-18,32236)" default="false" />
+    <setting label="32278" type="lsep" visible="eq(-19,32236)" />
+    <setting label="32166" type="lsep" visible="eq(-20,32236)" />
+    <setting id="E7.afterIdleTime" label="32162" type="number" visible="eq(-21,32251)" default="60" />
+    <setting label="32278" type="lsep" visible="eq(-22,32251)" />
+    <setting label="32278" type="lsep" visible="eq(-23,32245)" />
+    <setting label="32289" type="lsep" visible="eq(-24,32245)" />
+    <setting label="32290" type="lsep" visible="eq(-25,32245)" />
+    <setting label="32294" type="lsep" visible="eq(-26,32245)" />
+    <setting label="32278" type="lsep" visible="eq(-27,32256)" />
+    <setting label="32119" type="lsep" visible="eq(-28,32256)" />
+    <setting label="32278" type="lsep" visible="eq(-29,32246)" />
+    <setting label="32295" type="lsep" visible="eq(-30,32246)" />
+    <setting label="32296" type="lsep" visible="eq(-31,32246)" />
+    <setting label="32293" type="lsep" visible="eq(-32,32246)" />
+    <setting label="32278" type="lsep" visible="eq(-33,32230)" />
+    <setting label="32121" type="lsep" visible="eq(-34,32230)" />
+    <setting label="32278" type="lsep" visible="eq(-35,32254)" />
+    <setting id="E7.windowIdO" label="32105" type="number" visible="eq(-36,32260)" default="0" />
+    <setting label="32278" type="lsep" visible="eq(-37,32260)" />
+    <setting label="32122" type="lsep" visible="eq(-38,32260)" />
+    <setting label="32278" type="lsep" visible="eq(-39,32233)" />
+    <setting label="32278" type="lsep" visible="eq(-40,32253)" />
+    <setting label="32121" type="lsep" visible="eq(-41,32253)" />
+    <setting label="32278" type="lsep" visible="eq(-42,32249)" />
+    <setting label="32123" type="lsep" visible="eq(-43,32249)" />
+    <setting id="E7.folder" label="32281" type="folder" visible="eq(-44,32235)" value="" />
+    <setting id="E7.folder" label="32282" type="text" visible="eq(-45,32235)" default="" />
+    <setting id="E7.patterns" label="32111" type="text" visible="eq(-46,32235)" default="" />
+    <setting id="E7.ignore_patterns" label="32112" type="text" visible="eq(-47,32235)" default="" />
+    <setting id="E7.ignore_directories" label="32113" type="bool" visible="eq(-48,32235)" default="false" />
+    <setting id="E7.recursive" label="32114" type="bool" visible="eq(-49,32235)" default="false" />
+    <setting label="32278" type="lsep" visible="eq(-50,32235)" />
+    <setting label="32124" type="lsep" visible="eq(-51,32235)" />
+    <setting id="E7.hour" label="32215" type="number" visible="eq(-52,32234)" default="13" />
+    <setting id="E7.minute" label="32216" type="number" visible="eq(-53,32234)" default="0" />
+    <setting label="32278" type="lsep" visible="eq(-54,32234)" />
+    <setting label="32278" type="lsep" visible="eq(-55,32242)" />
+    <setting label="32289" type="lsep" visible="eq(-56,32242)" />
+    <setting label="32290" type="lsep" visible="eq(-57,32242)" />
+    <setting label="32291" type="lsep" visible="eq(-58,32242)" />
+    <setting label="32278" type="lsep" visible="eq(-59,32250)" />
+    <setting label="32278" type="lsep" visible="eq(-60,32231)" />
+    <setting label="32121" type="lsep" visible="eq(-61,32231)" />
+    <setting id="E7.sender" label="32102" type="text" visible="eq(-62,32239)" default="" />
+    <setting id="E7.method" label="32103" type="text" visible="eq(-63,32239)" default="" />
+    <setting id="E7.data" label="32104" type="text" visible="eq(-64,32239)" default="" />
+    <setting label="32278" type="lsep" visible="eq(-65,32239)" />
+    <setting label="32126" type="lsep" visible="eq(-66,32239)" />
+    <setting label="32278" type="lsep" visible="eq(-67,32258)" />
+    <setting label="32127" type="lsep" visible="eq(-68,32258)" />
+    <setting id="E7.hours" label="32217" type="number" visible="eq(-69,32238)" default="0" />
+    <setting id="E7.minutes" label="32218" type="number" visible="eq(-70,32238)" default="30" />
+    <setting id="E7.seconds" label="32219" type="number" visible="eq(-71,32238)" default="0" />
+    <setting label="32278" type="lsep" visible="eq(-72,32238)" />
+    <setting id="E7.matchIf" label="32108" type="text" visible="eq(-73,32240)" default="" />
+    <setting id="E7.rejectIf" label="32109" type="text" visible="eq(-74,32240)" default="" />
+    <setting label="32278" type="lsep" visible="eq(-75,32240)" />
+    <setting label="32128" type="lsep" visible="eq(-76,32240)" />
+    <setting id="E7.windowIdC" label="32106" type="number" visible="eq(-77,32259)" default="0" />
+    <setting label="32278" type="lsep" visible="eq(-78,32259)" />
+    <setting label="32122" type="lsep" visible="eq(-79,32259)" />
+    <setting id="E7.matchIf" label="32108" type="text" visible="eq(-80,32241)" default="" />
+    <setting id="E7.rejectIf" label="32109" type="text" visible="eq(-81,32241)" default="" />
+    <setting label="32278" type="lsep" visible="eq(-82,32241)" />
+    <setting label="32128" type="lsep" visible="eq(-83,32241)" />
+    <setting label="32278" type="lsep" visible="eq(-84,32257)" />
+    <setting label="32278" type="lsep" visible="eq(-85,32244)" />
+    <setting label="32289" type="lsep" visible="eq(-86,32244)" />
+    <setting label="32290" type="lsep" visible="eq(-87,32244)" />
+    <setting label="32294" type="lsep" visible="eq(-88,32244)" />
+    <setting label="32278" type="lsep" visible="eq(-89,32232)" />
+    <setting label="32278" type="lsep" visible="eq(-90,32252)" />
+    <setting label="32121" type="lsep" visible="eq(-91,32252)" />
+    <setting label="32278" type="lsep" visible="eq(-92,32243)" />
+    <setting label="32289" type="lsep" visible="eq(-93,32243)" />
+    <setting label="32290" type="lsep" visible="eq(-94,32243)" />
+    <setting label="32294" type="lsep" visible="eq(-95,32243)" />
+    <setting id="E7.userargs" label="32064" type="text" visible="!eq(-96,32229)" default="" />
+    <setting id="E7.test" label="32065" type="action" visible="!eq(-97,32229)" action="RunScript(script.service.kodi.callbacks, E7)" />
+    <setting id="E8.lsep" label="32018" type="lsep" visible="!eq(-98,32229)" />
+    <setting id="E8.action" label="32277" type="action" visible="!eq(-99,32229)" action="RunScript(script.service.kodi.callbacks, lselector, id=E8.type, heading=32284, lvalues=32229|32230|32231|32232|32233|32234|32235|32236|32237|32238|32239|32240|32241|32242|32243|32244|32245|32246|32247|32248|32249|32250|32251|32252|32253|32254|32255|32256|32257|32258|32259|32260)" />
+    <setting id="E8.type-v" label="32262" type="select" enable="false" visible="!eq(-100,32229)" default="32229" lvalues="32229|32230|32231|32232|32233|32234|32235|32236|32237|32238|32239|32240|32241|32242|32243|32244|32245|32246|32247|32248|32249|32250|32251|32252|32253|32254|32255|32256|32257|32258|32259|32260" />
+    <setting id="E8.type" label="32276" type="text" visible="false" default="32229" />
+    <setting id="E8.task" label="32057" type="labelenum" visible="!eq(-1,32229)" default="Task 1" lvalues="32001|32002|32003|32004|32005|32006|32007|32008|32009|32010" />
+    <setting id="E8.idleTime" label="32107" type="number" visible="eq(-2,32237)" default="60" />
+    <setting label="32278" type="lsep" visible="eq(-3,32237)" />
+    <setting label="32278" type="lsep" visible="eq(-4,32247)" />
+    <setting label="32289" type="lsep" visible="eq(-5,32247)" />
+    <setting label="32292" type="lsep" visible="eq(-6,32247)" />
+    <setting label="32293" type="lsep" visible="eq(-7,32247)" />
+    <setting label="32278" type="lsep" visible="eq(-8,32248)" />
+    <setting label="32289" type="lsep" visible="eq(-9,32248)" />
+    <setting label="32290" type="lsep" visible="eq(-10,32248)" />
+    <setting label="32291" type="lsep" visible="eq(-11,32248)" />
+    <setting label="32278" type="lsep" visible="eq(-12,32255)" />
+    <setting id="E8.ws_folder" label="32279" type="folder" visible="eq(-13,32236)" value="" />
+    <setting id="E8.ws_folder" label="32280" type="text" visible="eq(-14,32236)" default="" />
+    <setting id="E8.ws_patterns" label="32170" type="text" visible="eq(-15,32236)" default="" />
+    <setting id="E8.ws_ignore_patterns" label="32171" type="text" visible="eq(-16,32236)" default="" />
+    <setting id="E8.ws_ignore_directories" label="32172" type="bool" visible="eq(-17,32236)" default="false" />
+    <setting id="E8.ws_recursive" label="32173" type="bool" visible="eq(-18,32236)" default="false" />
+    <setting label="32278" type="lsep" visible="eq(-19,32236)" />
+    <setting label="32166" type="lsep" visible="eq(-20,32236)" />
+    <setting id="E8.afterIdleTime" label="32162" type="number" visible="eq(-21,32251)" default="60" />
+    <setting label="32278" type="lsep" visible="eq(-22,32251)" />
+    <setting label="32278" type="lsep" visible="eq(-23,32245)" />
+    <setting label="32289" type="lsep" visible="eq(-24,32245)" />
+    <setting label="32290" type="lsep" visible="eq(-25,32245)" />
+    <setting label="32294" type="lsep" visible="eq(-26,32245)" />
+    <setting label="32278" type="lsep" visible="eq(-27,32256)" />
+    <setting label="32119" type="lsep" visible="eq(-28,32256)" />
+    <setting label="32278" type="lsep" visible="eq(-29,32246)" />
+    <setting label="32295" type="lsep" visible="eq(-30,32246)" />
+    <setting label="32296" type="lsep" visible="eq(-31,32246)" />
+    <setting label="32293" type="lsep" visible="eq(-32,32246)" />
+    <setting label="32278" type="lsep" visible="eq(-33,32230)" />
+    <setting label="32121" type="lsep" visible="eq(-34,32230)" />
+    <setting label="32278" type="lsep" visible="eq(-35,32254)" />
+    <setting id="E8.windowIdO" label="32105" type="number" visible="eq(-36,32260)" default="0" />
+    <setting label="32278" type="lsep" visible="eq(-37,32260)" />
+    <setting label="32122" type="lsep" visible="eq(-38,32260)" />
+    <setting label="32278" type="lsep" visible="eq(-39,32233)" />
+    <setting label="32278" type="lsep" visible="eq(-40,32253)" />
+    <setting label="32121" type="lsep" visible="eq(-41,32253)" />
+    <setting label="32278" type="lsep" visible="eq(-42,32249)" />
+    <setting label="32123" type="lsep" visible="eq(-43,32249)" />
+    <setting id="E8.folder" label="32281" type="folder" visible="eq(-44,32235)" value="" />
+    <setting id="E8.folder" label="32282" type="text" visible="eq(-45,32235)" default="" />
+    <setting id="E8.patterns" label="32111" type="text" visible="eq(-46,32235)" default="" />
+    <setting id="E8.ignore_patterns" label="32112" type="text" visible="eq(-47,32235)" default="" />
+    <setting id="E8.ignore_directories" label="32113" type="bool" visible="eq(-48,32235)" default="false" />
+    <setting id="E8.recursive" label="32114" type="bool" visible="eq(-49,32235)" default="false" />
+    <setting label="32278" type="lsep" visible="eq(-50,32235)" />
+    <setting label="32124" type="lsep" visible="eq(-51,32235)" />
+    <setting id="E8.hour" label="32215" type="number" visible="eq(-52,32234)" default="13" />
+    <setting id="E8.minute" label="32216" type="number" visible="eq(-53,32234)" default="0" />
+    <setting label="32278" type="lsep" visible="eq(-54,32234)" />
+    <setting label="32278" type="lsep" visible="eq(-55,32242)" />
+    <setting label="32289" type="lsep" visible="eq(-56,32242)" />
+    <setting label="32290" type="lsep" visible="eq(-57,32242)" />
+    <setting label="32291" type="lsep" visible="eq(-58,32242)" />
+    <setting label="32278" type="lsep" visible="eq(-59,32250)" />
+    <setting label="32278" type="lsep" visible="eq(-60,32231)" />
+    <setting label="32121" type="lsep" visible="eq(-61,32231)" />
+    <setting id="E8.sender" label="32102" type="text" visible="eq(-62,32239)" default="" />
+    <setting id="E8.method" label="32103" type="text" visible="eq(-63,32239)" default="" />
+    <setting id="E8.data" label="32104" type="text" visible="eq(-64,32239)" default="" />
+    <setting label="32278" type="lsep" visible="eq(-65,32239)" />
+    <setting label="32126" type="lsep" visible="eq(-66,32239)" />
+    <setting label="32278" type="lsep" visible="eq(-67,32258)" />
+    <setting label="32127" type="lsep" visible="eq(-68,32258)" />
+    <setting id="E8.hours" label="32217" type="number" visible="eq(-69,32238)" default="0" />
+    <setting id="E8.minutes" label="32218" type="number" visible="eq(-70,32238)" default="30" />
+    <setting id="E8.seconds" label="32219" type="number" visible="eq(-71,32238)" default="0" />
+    <setting label="32278" type="lsep" visible="eq(-72,32238)" />
+    <setting id="E8.matchIf" label="32108" type="text" visible="eq(-73,32240)" default="" />
+    <setting id="E8.rejectIf" label="32109" type="text" visible="eq(-74,32240)" default="" />
+    <setting label="32278" type="lsep" visible="eq(-75,32240)" />
+    <setting label="32128" type="lsep" visible="eq(-76,32240)" />
+    <setting id="E8.windowIdC" label="32106" type="number" visible="eq(-77,32259)" default="0" />
+    <setting label="32278" type="lsep" visible="eq(-78,32259)" />
+    <setting label="32122" type="lsep" visible="eq(-79,32259)" />
+    <setting id="E8.matchIf" label="32108" type="text" visible="eq(-80,32241)" default="" />
+    <setting id="E8.rejectIf" label="32109" type="text" visible="eq(-81,32241)" default="" />
+    <setting label="32278" type="lsep" visible="eq(-82,32241)" />
+    <setting label="32128" type="lsep" visible="eq(-83,32241)" />
+    <setting label="32278" type="lsep" visible="eq(-84,32257)" />
+    <setting label="32278" type="lsep" visible="eq(-85,32244)" />
+    <setting label="32289" type="lsep" visible="eq(-86,32244)" />
+    <setting label="32290" type="lsep" visible="eq(-87,32244)" />
+    <setting label="32294" type="lsep" visible="eq(-88,32244)" />
+    <setting label="32278" type="lsep" visible="eq(-89,32232)" />
+    <setting label="32278" type="lsep" visible="eq(-90,32252)" />
+    <setting label="32121" type="lsep" visible="eq(-91,32252)" />
+    <setting label="32278" type="lsep" visible="eq(-92,32243)" />
+    <setting label="32289" type="lsep" visible="eq(-93,32243)" />
+    <setting label="32290" type="lsep" visible="eq(-94,32243)" />
+    <setting label="32294" type="lsep" visible="eq(-95,32243)" />
+    <setting id="E8.userargs" label="32064" type="text" visible="!eq(-96,32229)" default="" />
+    <setting id="E8.test" label="32065" type="action" visible="!eq(-97,32229)" action="RunScript(script.service.kodi.callbacks, E8)" />
+    <setting id="E9.lsep" label="32019" type="lsep" visible="!eq(-98,32229)" />
+    <setting id="E9.action" label="32277" type="action" visible="!eq(-99,32229)" action="RunScript(script.service.kodi.callbacks, lselector, id=E9.type, heading=32284, lvalues=32229|32230|32231|32232|32233|32234|32235|32236|32237|32238|32239|32240|32241|32242|32243|32244|32245|32246|32247|32248|32249|32250|32251|32252|32253|32254|32255|32256|32257|32258|32259|32260)" />
+    <setting id="E9.type-v" label="32262" type="select" enable="false" visible="!eq(-100,32229)" default="32229" lvalues="32229|32230|32231|32232|32233|32234|32235|32236|32237|32238|32239|32240|32241|32242|32243|32244|32245|32246|32247|32248|32249|32250|32251|32252|32253|32254|32255|32256|32257|32258|32259|32260" />
+    <setting id="E9.type" label="32276" type="text" visible="false" default="32229" />
+    <setting id="E9.task" label="32057" type="labelenum" visible="!eq(-1,32229)" default="Task 1" lvalues="32001|32002|32003|32004|32005|32006|32007|32008|32009|32010" />
+    <setting id="E9.idleTime" label="32107" type="number" visible="eq(-2,32237)" default="60" />
+    <setting label="32278" type="lsep" visible="eq(-3,32237)" />
+    <setting label="32278" type="lsep" visible="eq(-4,32247)" />
+    <setting label="32289" type="lsep" visible="eq(-5,32247)" />
+    <setting label="32292" type="lsep" visible="eq(-6,32247)" />
+    <setting label="32293" type="lsep" visible="eq(-7,32247)" />
+    <setting label="32278" type="lsep" visible="eq(-8,32248)" />
+    <setting label="32289" type="lsep" visible="eq(-9,32248)" />
+    <setting label="32290" type="lsep" visible="eq(-10,32248)" />
+    <setting label="32291" type="lsep" visible="eq(-11,32248)" />
+    <setting label="32278" type="lsep" visible="eq(-12,32255)" />
+    <setting id="E9.ws_folder" label="32279" type="folder" visible="eq(-13,32236)" value="" />
+    <setting id="E9.ws_folder" label="32280" type="text" visible="eq(-14,32236)" default="" />
+    <setting id="E9.ws_patterns" label="32170" type="text" visible="eq(-15,32236)" default="" />
+    <setting id="E9.ws_ignore_patterns" label="32171" type="text" visible="eq(-16,32236)" default="" />
+    <setting id="E9.ws_ignore_directories" label="32172" type="bool" visible="eq(-17,32236)" default="false" />
+    <setting id="E9.ws_recursive" label="32173" type="bool" visible="eq(-18,32236)" default="false" />
+    <setting label="32278" type="lsep" visible="eq(-19,32236)" />
+    <setting label="32166" type="lsep" visible="eq(-20,32236)" />
+    <setting id="E9.afterIdleTime" label="32162" type="number" visible="eq(-21,32251)" default="60" />
+    <setting label="32278" type="lsep" visible="eq(-22,32251)" />
+    <setting label="32278" type="lsep" visible="eq(-23,32245)" />
+    <setting label="32289" type="lsep" visible="eq(-24,32245)" />
+    <setting label="32290" type="lsep" visible="eq(-25,32245)" />
+    <setting label="32294" type="lsep" visible="eq(-26,32245)" />
+    <setting label="32278" type="lsep" visible="eq(-27,32256)" />
+    <setting label="32119" type="lsep" visible="eq(-28,32256)" />
+    <setting label="32278" type="lsep" visible="eq(-29,32246)" />
+    <setting label="32295" type="lsep" visible="eq(-30,32246)" />
+    <setting label="32296" type="lsep" visible="eq(-31,32246)" />
+    <setting label="32293" type="lsep" visible="eq(-32,32246)" />
+    <setting label="32278" type="lsep" visible="eq(-33,32230)" />
+    <setting label="32121" type="lsep" visible="eq(-34,32230)" />
+    <setting label="32278" type="lsep" visible="eq(-35,32254)" />
+    <setting id="E9.windowIdO" label="32105" type="number" visible="eq(-36,32260)" default="0" />
+    <setting label="32278" type="lsep" visible="eq(-37,32260)" />
+    <setting label="32122" type="lsep" visible="eq(-38,32260)" />
+    <setting label="32278" type="lsep" visible="eq(-39,32233)" />
+    <setting label="32278" type="lsep" visible="eq(-40,32253)" />
+    <setting label="32121" type="lsep" visible="eq(-41,32253)" />
+    <setting label="32278" type="lsep" visible="eq(-42,32249)" />
+    <setting label="32123" type="lsep" visible="eq(-43,32249)" />
+    <setting id="E9.folder" label="32281" type="folder" visible="eq(-44,32235)" value="" />
+    <setting id="E9.folder" label="32282" type="text" visible="eq(-45,32235)" default="" />
+    <setting id="E9.patterns" label="32111" type="text" visible="eq(-46,32235)" default="" />
+    <setting id="E9.ignore_patterns" label="32112" type="text" visible="eq(-47,32235)" default="" />
+    <setting id="E9.ignore_directories" label="32113" type="bool" visible="eq(-48,32235)" default="false" />
+    <setting id="E9.recursive" label="32114" type="bool" visible="eq(-49,32235)" default="false" />
+    <setting label="32278" type="lsep" visible="eq(-50,32235)" />
+    <setting label="32124" type="lsep" visible="eq(-51,32235)" />
+    <setting id="E9.hour" label="32215" type="number" visible="eq(-52,32234)" default="13" />
+    <setting id="E9.minute" label="32216" type="number" visible="eq(-53,32234)" default="0" />
+    <setting label="32278" type="lsep" visible="eq(-54,32234)" />
+    <setting label="32278" type="lsep" visible="eq(-55,32242)" />
+    <setting label="32289" type="lsep" visible="eq(-56,32242)" />
+    <setting label="32290" type="lsep" visible="eq(-57,32242)" />
+    <setting label="32291" type="lsep" visible="eq(-58,32242)" />
+    <setting label="32278" type="lsep" visible="eq(-59,32250)" />
+    <setting label="32278" type="lsep" visible="eq(-60,32231)" />
+    <setting label="32121" type="lsep" visible="eq(-61,32231)" />
+    <setting id="E9.sender" label="32102" type="text" visible="eq(-62,32239)" default="" />
+    <setting id="E9.method" label="32103" type="text" visible="eq(-63,32239)" default="" />
+    <setting id="E9.data" label="32104" type="text" visible="eq(-64,32239)" default="" />
+    <setting label="32278" type="lsep" visible="eq(-65,32239)" />
+    <setting label="32126" type="lsep" visible="eq(-66,32239)" />
+    <setting label="32278" type="lsep" visible="eq(-67,32258)" />
+    <setting label="32127" type="lsep" visible="eq(-68,32258)" />
+    <setting id="E9.hours" label="32217" type="number" visible="eq(-69,32238)" default="0" />
+    <setting id="E9.minutes" label="32218" type="number" visible="eq(-70,32238)" default="30" />
+    <setting id="E9.seconds" label="32219" type="number" visible="eq(-71,32238)" default="0" />
+    <setting label="32278" type="lsep" visible="eq(-72,32238)" />
+    <setting id="E9.matchIf" label="32108" type="text" visible="eq(-73,32240)" default="" />
+    <setting id="E9.rejectIf" label="32109" type="text" visible="eq(-74,32240)" default="" />
+    <setting label="32278" type="lsep" visible="eq(-75,32240)" />
+    <setting label="32128" type="lsep" visible="eq(-76,32240)" />
+    <setting id="E9.windowIdC" label="32106" type="number" visible="eq(-77,32259)" default="0" />
+    <setting label="32278" type="lsep" visible="eq(-78,32259)" />
+    <setting label="32122" type="lsep" visible="eq(-79,32259)" />
+    <setting id="E9.matchIf" label="32108" type="text" visible="eq(-80,32241)" default="" />
+    <setting id="E9.rejectIf" label="32109" type="text" visible="eq(-81,32241)" default="" />
+    <setting label="32278" type="lsep" visible="eq(-82,32241)" />
+    <setting label="32128" type="lsep" visible="eq(-83,32241)" />
+    <setting label="32278" type="lsep" visible="eq(-84,32257)" />
+    <setting label="32278" type="lsep" visible="eq(-85,32244)" />
+    <setting label="32289" type="lsep" visible="eq(-86,32244)" />
+    <setting label="32290" type="lsep" visible="eq(-87,32244)" />
+    <setting label="32294" type="lsep" visible="eq(-88,32244)" />
+    <setting label="32278" type="lsep" visible="eq(-89,32232)" />
+    <setting label="32278" type="lsep" visible="eq(-90,32252)" />
+    <setting label="32121" type="lsep" visible="eq(-91,32252)" />
+    <setting label="32278" type="lsep" visible="eq(-92,32243)" />
+    <setting label="32289" type="lsep" visible="eq(-93,32243)" />
+    <setting label="32290" type="lsep" visible="eq(-94,32243)" />
+    <setting label="32294" type="lsep" visible="eq(-95,32243)" />
+    <setting id="E9.userargs" label="32064" type="text" visible="!eq(-96,32229)" default="" />
+    <setting id="E9.test" label="32065" type="action" visible="!eq(-97,32229)" action="RunScript(script.service.kodi.callbacks, E9)" />
+    <setting id="E10.lsep" label="32020" type="lsep" visible="!eq(-98,32229)" />
+    <setting id="E10.action" label="32277" type="action" visible="!eq(-99,32229)" action="RunScript(script.service.kodi.callbacks, lselector, id=E10.type, heading=32284, lvalues=32229|32230|32231|32232|32233|32234|32235|32236|32237|32238|32239|32240|32241|32242|32243|32244|32245|32246|32247|32248|32249|32250|32251|32252|32253|32254|32255|32256|32257|32258|32259|32260)" />
+    <setting id="E10.type-v" label="32262" type="select" enable="false" visible="!eq(-100,32229)" default="32229" lvalues="32229|32230|32231|32232|32233|32234|32235|32236|32237|32238|32239|32240|32241|32242|32243|32244|32245|32246|32247|32248|32249|32250|32251|32252|32253|32254|32255|32256|32257|32258|32259|32260" />
+    <setting id="E10.type" label="32276" type="text" visible="false" default="32229" />
+    <setting id="E10.task" label="32057" type="labelenum" visible="!eq(-1,32229)" default="Task 1" lvalues="32001|32002|32003|32004|32005|32006|32007|32008|32009|32010" />
+    <setting id="E10.idleTime" label="32107" type="number" visible="eq(-2,32237)" default="60" />
+    <setting label="32278" type="lsep" visible="eq(-3,32237)" />
+    <setting label="32278" type="lsep" visible="eq(-4,32247)" />
+    <setting label="32289" type="lsep" visible="eq(-5,32247)" />
+    <setting label="32292" type="lsep" visible="eq(-6,32247)" />
+    <setting label="32293" type="lsep" visible="eq(-7,32247)" />
+    <setting label="32278" type="lsep" visible="eq(-8,32248)" />
+    <setting label="32289" type="lsep" visible="eq(-9,32248)" />
+    <setting label="32290" type="lsep" visible="eq(-10,32248)" />
+    <setting label="32291" type="lsep" visible="eq(-11,32248)" />
+    <setting label="32278" type="lsep" visible="eq(-12,32255)" />
+    <setting id="E10.ws_folder" label="32279" type="folder" visible="eq(-13,32236)" value="" />
+    <setting id="E10.ws_folder" label="32280" type="text" visible="eq(-14,32236)" default="" />
+    <setting id="E10.ws_patterns" label="32170" type="text" visible="eq(-15,32236)" default="" />
+    <setting id="E10.ws_ignore_patterns" label="32171" type="text" visible="eq(-16,32236)" default="" />
+    <setting id="E10.ws_ignore_directories" label="32172" type="bool" visible="eq(-17,32236)" default="false" />
+    <setting id="E10.ws_recursive" label="32173" type="bool" visible="eq(-18,32236)" default="false" />
+    <setting label="32278" type="lsep" visible="eq(-19,32236)" />
+    <setting label="32166" type="lsep" visible="eq(-20,32236)" />
+    <setting id="E10.afterIdleTime" label="32162" type="number" visible="eq(-21,32251)" default="60" />
+    <setting label="32278" type="lsep" visible="eq(-22,32251)" />
+    <setting label="32278" type="lsep" visible="eq(-23,32245)" />
+    <setting label="32289" type="lsep" visible="eq(-24,32245)" />
+    <setting label="32290" type="lsep" visible="eq(-25,32245)" />
+    <setting label="32294" type="lsep" visible="eq(-26,32245)" />
+    <setting label="32278" type="lsep" visible="eq(-27,32256)" />
+    <setting label="32119" type="lsep" visible="eq(-28,32256)" />
+    <setting label="32278" type="lsep" visible="eq(-29,32246)" />
+    <setting label="32295" type="lsep" visible="eq(-30,32246)" />
+    <setting label="32296" type="lsep" visible="eq(-31,32246)" />
+    <setting label="32293" type="lsep" visible="eq(-32,32246)" />
+    <setting label="32278" type="lsep" visible="eq(-33,32230)" />
+    <setting label="32121" type="lsep" visible="eq(-34,32230)" />
+    <setting label="32278" type="lsep" visible="eq(-35,32254)" />
+    <setting id="E10.windowIdO" label="32105" type="number" visible="eq(-36,32260)" default="0" />
+    <setting label="32278" type="lsep" visible="eq(-37,32260)" />
+    <setting label="32122" type="lsep" visible="eq(-38,32260)" />
+    <setting label="32278" type="lsep" visible="eq(-39,32233)" />
+    <setting label="32278" type="lsep" visible="eq(-40,32253)" />
+    <setting label="32121" type="lsep" visible="eq(-41,32253)" />
+    <setting label="32278" type="lsep" visible="eq(-42,32249)" />
+    <setting label="32123" type="lsep" visible="eq(-43,32249)" />
+    <setting id="E10.folder" label="32281" type="folder" visible="eq(-44,32235)" value="" />
+    <setting id="E10.folder" label="32282" type="text" visible="eq(-45,32235)" default="" />
+    <setting id="E10.patterns" label="32111" type="text" visible="eq(-46,32235)" default="" />
+    <setting id="E10.ignore_patterns" label="32112" type="text" visible="eq(-47,32235)" default="" />
+    <setting id="E10.ignore_directories" label="32113" type="bool" visible="eq(-48,32235)" default="false" />
+    <setting id="E10.recursive" label="32114" type="bool" visible="eq(-49,32235)" default="false" />
+    <setting label="32278" type="lsep" visible="eq(-50,32235)" />
+    <setting label="32124" type="lsep" visible="eq(-51,32235)" />
+    <setting id="E10.hour" label="32215" type="number" visible="eq(-52,32234)" default="13" />
+    <setting id="E10.minute" label="32216" type="number" visible="eq(-53,32234)" default="0" />
+    <setting label="32278" type="lsep" visible="eq(-54,32234)" />
+    <setting label="32278" type="lsep" visible="eq(-55,32242)" />
+    <setting label="32289" type="lsep" visible="eq(-56,32242)" />
+    <setting label="32290" type="lsep" visible="eq(-57,32242)" />
+    <setting label="32291" type="lsep" visible="eq(-58,32242)" />
+    <setting label="32278" type="lsep" visible="eq(-59,32250)" />
+    <setting label="32278" type="lsep" visible="eq(-60,32231)" />
+    <setting label="32121" type="lsep" visible="eq(-61,32231)" />
+    <setting id="E10.sender" label="32102" type="text" visible="eq(-62,32239)" default="" />
+    <setting id="E10.method" label="32103" type="text" visible="eq(-63,32239)" default="" />
+    <setting id="E10.data" label="32104" type="text" visible="eq(-64,32239)" default="" />
+    <setting label="32278" type="lsep" visible="eq(-65,32239)" />
+    <setting label="32126" type="lsep" visible="eq(-66,32239)" />
+    <setting label="32278" type="lsep" visible="eq(-67,32258)" />
+    <setting label="32127" type="lsep" visible="eq(-68,32258)" />
+    <setting id="E10.hours" label="32217" type="number" visible="eq(-69,32238)" default="0" />
+    <setting id="E10.minutes" label="32218" type="number" visible="eq(-70,32238)" default="30" />
+    <setting id="E10.seconds" label="32219" type="number" visible="eq(-71,32238)" default="0" />
+    <setting label="32278" type="lsep" visible="eq(-72,32238)" />
+    <setting id="E10.matchIf" label="32108" type="text" visible="eq(-73,32240)" default="" />
+    <setting id="E10.rejectIf" label="32109" type="text" visible="eq(-74,32240)" default="" />
+    <setting label="32278" type="lsep" visible="eq(-75,32240)" />
+    <setting label="32128" type="lsep" visible="eq(-76,32240)" />
+    <setting id="E10.windowIdC" label="32106" type="number" visible="eq(-77,32259)" default="0" />
+    <setting label="32278" type="lsep" visible="eq(-78,32259)" />
+    <setting label="32122" type="lsep" visible="eq(-79,32259)" />
+    <setting id="E10.matchIf" label="32108" type="text" visible="eq(-80,32241)" default="" />
+    <setting id="E10.rejectIf" label="32109" type="text" visible="eq(-81,32241)" default="" />
+    <setting label="32278" type="lsep" visible="eq(-82,32241)" />
+    <setting label="32128" type="lsep" visible="eq(-83,32241)" />
+    <setting label="32278" type="lsep" visible="eq(-84,32257)" />
+    <setting label="32278" type="lsep" visible="eq(-85,32244)" />
+    <setting label="32289" type="lsep" visible="eq(-86,32244)" />
+    <setting label="32290" type="lsep" visible="eq(-87,32244)" />
+    <setting label="32294" type="lsep" visible="eq(-88,32244)" />
+    <setting label="32278" type="lsep" visible="eq(-89,32232)" />
+    <setting label="32278" type="lsep" visible="eq(-90,32252)" />
+    <setting label="32121" type="lsep" visible="eq(-91,32252)" />
+    <setting label="32278" type="lsep" visible="eq(-92,32243)" />
+    <setting label="32289" type="lsep" visible="eq(-93,32243)" />
+    <setting label="32290" type="lsep" visible="eq(-94,32243)" />
+    <setting label="32294" type="lsep" visible="eq(-95,32243)" />
+    <setting id="E10.userargs" label="32064" type="text" visible="!eq(-96,32229)" default="" />
+    <setting id="E10.test" label="32065" type="action" visible="!eq(-97,32229)" action="RunScript(script.service.kodi.callbacks, E10)" />
+  </category>
+  <category label="32066">
+    <setting id="Notify" label="32067" type="bool" default="false" />
+    <setting id="LoopFreq" label="32068" type="number" default="500" />
+    <setting id="LogFreq" label="32069" type="number" default="500" />
+    <setting id="TaskFreq" label="32070" type="number" default="100" />
+    <setting id="loglevel" label="32071" type="bool" default="false" />
+    <setting id="logsettings" label="32263" type="action" action="RunScript(script.service.kodi.callbacks, logsettings)" />
+    <setting id="uploadlog" label="32283" type="action" visible="System.HasAddon(script.xbmc.debug.log)" action="RunScript(script.xbmc.debug.log)" />
+    <setting id="regen" label="32072" type="action" action="RunScript(script.service.kodi.callbacks, regen)" />
+    <setting id="test" label="32073" type="action" action="RunScript(script.service.kodi.callbacks, test)" />
+  </category>
+  <category label="32190">
+    <setting label="32205" type="lsep" />
+    <setting id="silent_install" label="32207" type="bool" visible="false" default="false" />
+    <setting id="updatefromzip" label="32191" type="action" action="RunScript(script.service.kodi.callbacks, updatefromzip)" />
+    <setting id="restorebackup" label="32192" type="action" action="RunScript(script.service.kodi.callbacks, restorebackup)" />
+  </category>
+</settings>
