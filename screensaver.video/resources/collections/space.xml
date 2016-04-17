@@ -1,0 +1,24 @@
+<videoscreensaver>
+	<collection>Space</collection>
+	<video>
+		<name>Space 1 - [970MB] - 720p</name>
+		<filename>Space001-720p.mp4</filename>
+		<image>http://kodi.wiki/images/c/c9/VideoScreensaver-Space001.PNG</image>
+		<duration>5692</duration>
+		<primary>http://kodi.ziggy73701.seedr.io/VideoScreensaver/Space001-720p.mp4</primary>
+	</video>
+	<video>
+		<name>Space 2 - [563MB] - 1080p</name>
+		<filename>Space002-1080p.mp4</filename>
+		<image>http://kodi.wiki/images/7/72/VideoScreensaver-Space002.JPG</image>
+		<duration>1845</duration>
+		<primary>http://kodi.ziggy73701.seedr.io/VideoScreensaver/Space002-1080p.mp4</primary>
+	</video>
+	<video>
+		<name>Space 3 - [2.2GB] - 720p</name>
+		<filename>Space003-720p.mp4</filename>
+		<image>http://kodi.wiki/images/7/72/VideoScreensaver-Space003.png</image>
+		<duration>3765</duration>
+		<primary>http://kodi.ziggy73701.seedr.io/VideoScreensaver/Space003-720p.mp4</primary>
+	</video>
+</videoscreensaver>

@@ -36,10 +36,6 @@ msgctxt "#32003"
 msgid "Enable debug logging"
 msgstr ""
 
-msgctxt "#32004"
-msgid "Video Selection"
-msgstr ""
-
 msgctxt "#32005"
 msgid "VideoScreensaver"
 msgstr ""
@@ -64,19 +60,43 @@ msgctxt "#32010"
 msgid "Include Nested Folders"
 msgstr ""
 
-#empty strings from id 32011 to 32019
-
-msgctxt "#32020"
-msgid "Preset Video"
+msgctxt "#32011"
+msgid "Operations"
 msgstr ""
 
-msgctxt "#32021"
-msgid "User Defined"
+msgctxt "#32012"
+msgid "Download Screensaver Videos"
 msgstr ""
 
-msgctxt "#32022"
-msgid "Selected Screensaver"
+msgctxt "#32013"
+msgid "Download"
 msgstr ""
+
+msgctxt "#32014"
+msgid "Delete"
+msgstr ""
+
+msgctxt "#32015"
+msgid "Play"
+msgstr ""
+
+msgctxt "#32016"
+msgid "[Disabled]"
+msgstr ""
+
+msgctxt "#32017"
+msgid "Disable"
+msgstr ""
+
+msgctxt "#32018"
+msgid "Enable"
+msgstr ""
+
+msgctxt "#32019"
+msgid "Preview"
+msgstr ""
+
+#empty strings from id 32020 to 32022
 
 msgctxt "#32023"
 msgid "Use All Files In A Folder"
@@ -114,11 +134,11 @@ msgctxt "#32031"
 msgid "Schedule Settings File"
 msgstr ""
 
-#empty strings from id 32032 to 32049
-
-msgctxt "#32050"
-msgid "Set/Download Preset Video File"
+msgctxt "#32032"
+msgid "Limit Session To Single Collection/Folder"
 msgstr ""
+
+#empty strings from id 32033 to 32050
 
 msgctxt "#32051"
 msgid "Select Video File"
@@ -244,137 +264,27 @@ msgctxt "#32081"
 msgid "Sunday"
 msgstr ""
 
-#empty strings from id 32082 to 32099
-
-msgctxt "#32100"
-msgid "*** All Downloaded Videos ***"
+msgctxt "#32082"
+msgid "Add Collection..."
 msgstr ""
 
-msgctxt "#32101"
-msgid "Aquarium 1  - [846MB] - 400p"
+msgctxt "#32083"
+msgid "Failed To Add Collection"
 msgstr ""
 
-msgctxt "#32102"
-msgid "Aquarium 2  - [2.7GB] - 720p"
+msgctxt "#32084"
+msgid "Collection Already Exists"
 msgstr ""
 
-msgctxt "#32103"
-msgid "Fireplace 1 - [965MB] - 720p"
+msgctxt "#32085"
+msgid "Remove Collection"
 msgstr ""
 
-msgctxt "#32104"
-msgid "Fireplace 2 - [827MB] - 480p"
+msgctxt "#32086"
+msgid "Remove Downloaded Video Files?"
 msgstr ""
 
-msgctxt "#32105"
-msgid "Fireplace 3 - [2.1GB] - 1080p"
-msgstr ""
-
-msgctxt "#32106"
-msgid "Aquarium 3  - [2.4GB] - 720p"
-msgstr ""
-
-msgctxt "#32107"
-msgid "Fireplace 4 - [2.7GB] - 720p"
-msgstr ""
-
-msgctxt "#32108"
-msgid "Space 1 - [970MB] - 720p"
-msgstr ""
-
-msgctxt "#32109"
-msgid "Beach 1 - [2.5GB] - 720p"
-msgstr ""
-
-msgctxt "#32110"
-msgid "Beach 2 - [838MB] - 720p"
-msgstr ""
-
-msgctxt "#32111"
-msgid "Matrix 1 - [909MB] - 720p"
-msgstr ""
-
-msgctxt "#32112"
-msgid "Space 2 - [563MB] - 1080p"
-msgstr ""
-
-msgctxt "#32113"
-msgid "Woodland 1 - [1.3GB] - 720p"
-msgstr ""
-
-msgctxt "#32114"
-msgid "Star Trek TNG 1 - [54MB] - 720p"
-msgstr ""
-
-msgctxt "#32115"
-msgid "Retro Sci-Fi 1 - [200MB] - 1080p"
-msgstr ""
-
-msgctxt "#32116"
-msgid "Waterfall 1 - [1.3GB] - 720p"
-msgstr ""
-
-msgctxt "#32117"
-msgid "Waterfall 2 - [1.3GB] - 720p"
-msgstr ""
-
-msgctxt "#32118"
-msgid "Waterfall 3 - [2.4GB] - 720p"
-msgstr ""
-
-msgctxt "#32119"
-msgid "Beach 3 - [3.4GB] - 720p"
-msgstr ""
-
-msgctxt "#32120"
-msgid "Snow 1 - [1.3GB] - 720p"
-msgstr ""
-
-msgctxt "#32121"
-msgid "Snow 2 - [677MB] - 1080p"
-msgstr ""
-
-msgctxt "#32122"
-msgid "Snow 3 - [1.2GB] - 720p"
-msgstr ""
-
-msgctxt "#32123"
-msgid "Watermill 1 - [549MB] - 1080p"
-msgstr ""
-
-msgctxt "#32124"
-msgid "Aquarium 4 - [780MB] - 720p"
-msgstr ""
-
-msgctxt "#32125"
-msgid "Christmas 1 - [777MB] - 1080p"
-msgstr ""
-
-msgctxt "#32126"
-msgid "Johnny Castaway 1 - [75MB] - 480p"
-msgstr ""
-
-msgctxt "#32127"
-msgid "Ocean 1 - [1.1GB] - 720p"
-msgstr ""
-
-msgctxt "#32128"
-msgid "Aquarium 5 - [3.0GB] - 720p"
-msgstr ""
-
-msgctxt "#32129"
-msgid "Space 3 - [2.2GB] - 720p"
-msgstr ""
-
-msgctxt "#32130"
-msgid "Clock 1 - [1.5GB] - 720p"
-msgstr ""
-
-msgctxt "#32131"
-msgid "Clock 2 - [1.3GB] - 360p"
-msgstr ""
-
-#empty strings from id 32132 to 32199
+#empty strings from id 32087 to 32199
 
 msgctxt "#32200"
 msgid "Overlay Image"
@@ -411,7 +321,7 @@ msgid "Screensaver File Is Not Valid"
 msgstr ""
 
 msgctxt "#32301"
-msgid "The following default video already exists"
+msgid "The following video already exists"
 msgstr ""
 
 msgctxt "#32302"
@@ -422,18 +332,6 @@ msgctxt "#32303"
 msgid "Downloading Screensaver Video File"
 msgstr ""
 
-msgctxt "#32304"
-msgid "This option will use all videos already downloaded"
-msgstr ""
-
-msgctxt "#32305"
-msgid "Each video required should be downloaded individually first"
-msgstr ""
-
 msgctxt "#32306"
 msgid "Failed to download video file"
-msgstr ""
-
-msgctxt "#32307"
-msgid "This may be due to the server bandwidth limit being exceeded, please try again tomorrow"
 msgstr ""

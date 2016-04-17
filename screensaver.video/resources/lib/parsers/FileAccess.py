@@ -12,8 +12,8 @@ import xbmcaddon
 VFS_AVAILABLE = True
 
 
-__addon__     = xbmcaddon.Addon(id='screensaver.video')
-__addonid__   = __addon__.getAddonInfo('id')
+ADDON     = xbmcaddon.Addon(id='screensaver.video')
+ADDON_ID   = ADDON.getAddonInfo('id')
 
 
 def ascii(string):
@@ -26,10 +26,10 @@ def ascii(string):
 class FileAccess:
     @staticmethod
     def log(txt):
-        if __addon__.getSetting( "logEnabled" ) == "true":
+        if ADDON.getSetting( "logEnabled" ) == "true":
             if isinstance (txt,str):
                 txt = txt.decode("utf-8")
-            message = u'%s: %s' % (__addonid__, txt)
+            message = u'%s: %s' % (ADDON_ID, txt)
             xbmc.log(msg=message.encode("utf-8"), level=xbmc.LOGDEBUG)
 
 

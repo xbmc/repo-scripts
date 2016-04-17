@@ -15,26 +15,20 @@ if sys.version_info >= (2, 7):
 else:
     import simplejson as json
 
-
-__addon__ = xbmcaddon.Addon(id='screensaver.video')
-__icon__ = __addon__.getAddonInfo('icon')
-__cwd__ = __addon__.getAddonInfo('path').decode("utf-8")
-__resource__ = xbmc.translatePath(os.path.join(__cwd__, 'resources').encode("utf-8")).decode("utf-8")
-__lib__ = xbmc.translatePath(os.path.join(__resource__, 'lib').encode("utf-8")).decode("utf-8")
-
-
-sys.path.append(__lib__)
-
 # Import the common settings
-from settings import log
-from settings import Settings
-from settings import list_dir
-from settings import os_path_join
-from settings import dir_exists
-from settings import os_path_isfile
-from settings import os_path_split
+from resources.lib.settings import log
+from resources.lib.settings import Settings
+from resources.lib.settings import list_dir
+from resources.lib.settings import os_path_join
+from resources.lib.settings import dir_exists
+from resources.lib.settings import os_path_isfile
+from resources.lib.settings import os_path_split
 
-from VideoParser import VideoParser
+from resources.lib.VideoParser import VideoParser
+from resources.lib.collectSets import CollectSets
+
+ADDON = xbmcaddon.Addon(id='screensaver.video')
+CWD = ADDON.getAddonInfo('path').decode("utf-8")
 
 
 # Video Screensaver Player that can detect when the next item in a playlist starts
@@ -100,7 +94,7 @@ class ScreensaverWindow(xbmcgui.WindowXMLDialog):
     # Static method to create the Window class
     @staticmethod
     def createScreensaverWindow():
-        return ScreensaverWindow("screensaver-video-main.xml", __cwd__)
+        return ScreensaverWindow("screensaver-video-main.xml", CWD)
 
     # Called when setting up the window
     def onInit(self):
@@ -189,7 +183,7 @@ class ScreensaverWindow(xbmcgui.WindowXMLDialog):
     # Generates the playlist to use for the screensaver
     def _getPlaylist(self):
         playlist = xbmc.PlayList(xbmc.PLAYLIST_VIDEO)
-        # Note: The playlist clear option seems to creat all playlist settings,
+        # Note: The playlist clear option seems to impact all playlist settings,
         # so will remove the repeat settings on a playlist that is currently playing,
         # not just this instance - a bit nasty, but not much we can do about it
         playlist.clear()
@@ -219,6 +213,41 @@ class ScreensaverWindow(xbmcgui.WindowXMLDialog):
                 if dir_exists(videosFolder):
                     self.currentScheduleItem = -1
                     files = self._getAllFilesInDirectory(videosFolder)
+
+                    # Check if we are limiting to a single folder per session
+                    if Settings.isLimitSessionToSingleCollection():
+                        # Select just one file at random
+                        singleVideo = random.choice(files)
+
+                        # Check if this file is part of a collection
+                        justFilename = (os_path_split(singleVideo))[-1]
+                        collectionCtrl = CollectSets()
+                        collectionVideos = collectionCtrl.getFilesInSameCollection(justFilename)
+                        del collectionCtrl
+
+                        # If it is part of a collection, then limit to only files in
+                        # this collection
+                        if len(collectionVideos) > 0:
+                            log("Screensaver restricting to collection containing %s" % singleVideo)
+                            # Check each of the videos to see which are in the collection
+                            collectionFileList = []
+                            for aFile in files:
+                                # Get just the filename
+                                aFilename = (os_path_split(aFile))[-1]
+                                if aFilename in collectionVideos:
+                                    log("Screensaver including collection video %s" % aFile)
+                                    collectionFileList.append(aFile)
+                                else:
+                                    log("Screensaver excluding non collection video %s" % aFile)
+                        else:
+                            log("Screensaver restricting to directory containing %s" % singleVideo)
+                            # Not in a collection, so just gather the files in the same directory
+                            # Get the directory that file was part of
+                            parentPath = (os_path_split(singleVideo))[0]
+
+                            # Now only select videos from that directory
+                            files = self._getAllFilesInDirectory(parentPath, False)
+
                     # Now shuffle the playlist to ensure that if there are more
                     # than one video a different one starts each time
                     random.shuffle(files)
@@ -243,24 +272,34 @@ class ScreensaverWindow(xbmcgui.WindowXMLDialog):
                 errorLocation = Settings.getScreensaverFolder()
 
             log("No Screensaver file set or not valid %s" % errorLocation)
-            cmd = 'Notification("{0}", "{1}", 3000, "{2}")'.format(__addon__.getLocalizedString(32300).encode('utf-8'), errorLocation, __icon__)
+            cmd = 'Notification("{0}", "{1}", 3000, "{2}")'.format(ADDON.getLocalizedString(32300).encode('utf-8'), errorLocation, ADDON.getAddonInfo('icon'))
             xbmc.executebuiltin(cmd)
             return None
 
         return playlist
 
     # Get the files in the directory and all subdirectories
-    def _getAllFilesInDirectory(self, baseDir):
+    def _getAllFilesInDirectory(self, baseDir, includeSubDirs=True):
         videoFiles = []
         dirs, files = list_dir(baseDir)
 
+        # Get the list of files that are to be excluded
+        collectionCtrl = CollectSets()
+        disabledVideos = collectionCtrl.getDisabledVideos()
+        del collectionCtrl
+
         # Get all the files in the current directory
         for vidFile in files:
+            # Check if this file is excluded
+            if vidFile in disabledVideos:
+                log("Ignoring disabled screensaver video %s" % vidFile)
+                continue
+
             fullPath = os_path_join(baseDir, vidFile)
             videoFiles.append(fullPath)
 
         # Now check each directory
-        if Settings.isFolderNested():
+        if includeSubDirs and Settings.isFolderNested():
             for aDir in dirs:
                 fullPath = os_path_join(baseDir, aDir)
                 dirContents = self._getAllFilesInDirectory(fullPath)
@@ -456,7 +495,6 @@ class Scheduler(object):
         # Get the current day of the week
         # 0 = Monday 6 = Sunday
         today = localTime.tm_wday
-        log("*** ROB ***: Today is %d" % today)
         # Make sure that the day returned is within our expected list
         if today not in Settings.DAY_TYPE:
             log("Schedule: Unknown day today %d, setting to everyday" % today)
@@ -679,7 +717,7 @@ if __name__ == '__main__':
         # Launch the core screensaver script - this will ensure all the pre-checks
         # are done (like TvTunes) before running the screensaver
         log("Screensaver started by script with screensaver argument")
-        xbmc.executebuiltin('RunScript(%s)' % (os.path.join(__cwd__, "default.py")))
+        xbmc.executebuiltin('RunScript(%s)' % (os.path.join(CWD, "default.py")))
     else:
         # Before we start, make sure that the settings have been updated correctly
         Settings.cleanAddonSettings()
