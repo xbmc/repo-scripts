@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addon id="script.module.trakt"
        name="trakt.py"
-       version="2.5.2"
+       version="2.6.0"
        provider-name="Fuzeman, Razzeee">
   <requires>
-    <import addon="xbmc.python" version="2.1.0"/>
+    <import addon="xbmc.python" version="2.24.0"/>
 	<import addon="script.module.requests" version="2.7.0"/>
 	<import addon="script.module.six" version="1.9.0"/>
 	<import addon="script.module.arrow" version="0.6.0"/>

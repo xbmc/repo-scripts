@@ -1,3 +1,16 @@
+2.6.0 (2016-04-15)
+------------------
+**Added**
+ - :code:`Trakt['oauth/device']` (see :code:`examples/authentication/device.py` for usage details)
+ - :code:`Trakt['shows'].seasons()` now supports the :code:`extended="episodes"` parameter
+ - Pagination can now be enabled with :code:`pagination=True`, `warnings <https://docs.python.org/2/library/warnings.html>`_ will be displayed if you ignore pagination responses
+
+**Changed**
+ - Moved the :code:`Trakt['oauth'].pin_url()` method to :code:`Trakt['oauth/pin'].url()`, the old method still works but will display a deprecation `warning <https://docs.python.org/2/library/warnings.html>`_
+
+**Fixed**
+ - Issue retrieving lists by users with the :code:`.` character in their usernames
+
 2.5.2 (2016-02-19)
 ------------------
 **Added**
