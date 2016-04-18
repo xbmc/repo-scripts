@@ -1,0 +1,24 @@
+<videoscreensaver>
+	<collection>Snow</collection>
+	<video>
+		<name>Snow 1 - [1.3GB] - 720p</name>
+		<filename>Snow001-720p.mp4</filename>
+		<image>http://kodi.wiki/images/c/c3/VideoScreensaver-Snow001.JPG</image>
+		<duration>3600</duration>
+		<primary>http://kodi.ziggy73701.seedr.io/VideoScreensaver/Snow001-720p.mp4</primary>
+	</video>
+	<video>
+		<name>Snow 2 - [677MB] - 1080p</name>
+		<filename>Snow002-1080p.mp4</filename>
+		<image>http://kodi.wiki/images/d/d6/VideoScreensaver-Snow002.JPG</image>
+		<duration>1370</duration>
+		<primary>http://kodi.ziggy73701.seedr.io/VideoScreensaver/Snow002-1080p.mp4</primary>
+	</video>
+	<video>
+		<name>Snow 3 - [1.2GB] - 720p</name>
+		<filename>Snow003-720p.mp4</filename>
+		<image>http://kodi.wiki/images/0/02/VideoScreensaver-Snow003.JPG</image>
+		<duration>3600</duration>
+		<primary>http://kodi.ziggy73701.seedr.io/VideoScreensaver/Snow003-720p.mp4</primary>
+	</video>
+</videoscreensaver>

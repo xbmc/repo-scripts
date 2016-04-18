@@ -1,0 +1,24 @@
+<videoscreensaver>
+	<collection>Beach</collection>
+	<video>
+		<name>Beach 1 - [2.5GB] - 720p </name>
+		<filename>Beach001-720p.mp4</filename>
+		<image>http://kodi.wiki/images/d/df/VideoScreensaver-Beach001.JPG</image>
+		<duration>10801</duration>
+		<primary>http://kodi.ziggy73701.seedr.io/VideoScreensaver/Beach001-720p.mp4</primary>
+	</video>
+	<video>
+		<name>Beach 2 - [838MB] - 720p</name>
+		<filename>Beach002-720p.mp4</filename>
+		<image>http://kodi.wiki/images/a/ab/VideoScreensaver-Beach002.JPG</image>
+		<duration>3604</duration>
+		<primary>http://kodi.ziggy73701.seedr.io/VideoScreensaver/Beach002-720p.mp4</primary>
+	</video>
+	<video>
+		<name>Beach 3 - [3.4GB] - 720p</name>
+		<filename>Beach003-720p.mp4</filename>
+		<image>http://kodi.wiki/images/9/9e/VideoScreensaver-Beach003.JPG</image>
+		<duration>10910</duration>
+		<primary>http://kodi.ziggy73701.seedr.io/VideoScreensaver/Beach003-720p.mp4</primary>
+	</video>
+</videoscreensaver>
