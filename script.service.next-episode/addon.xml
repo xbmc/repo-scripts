@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<addon id="script.service.next-episode"
+   name="next-episode.net"
+   version="1.0.0"
+   provider-name="next-episode.net">
+  <requires>
+    <import addon="xbmc.python" version="2.19.0" />
+    <import addon="script.module.pyxbmct" version="1.1.0" />
+    <import addon="script.module.requests" version="2.9.0" />
+  </requires>
+  <extension point="xbmc.service" library="service.py" start="[login|startup]" />
+  <extension point="xbmc.python.script" library="main.py">
+    <provides>executable</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <platform>all</platform>
+    <summary lang="en">The next-episode.net service for Kodi.</summary>
+    <description lang="en">The next-episode.net service for Kodi allows to add your movies and TV episodes from
+      media library to your inventory on next-episode.net. The service also monitors video playback and updates
+      'watched' status of your movies and episodes on next-episode.net.</description>
+    <summary lang="ru">Служба next-episode.net для Kodi.</summary>
+    <description lang="ru">Служба next-episode.net для Kodi позволяет добавлять фильмы и сериалы из меедиатеки
+      в вас список на next-episode.net. Служба также отслеживает проигрывание видео и обновляет состояние
+      "просмотрено" на next-episode.net.</description>
+    <summary lang="uk">Служба next-episode.net для Kodi.</summary>
+    <description lang="uk">Служба next-episode.net для Kodi allows дозволяє додавати фільми та серіали з медіатеки
+      на next-episode.net. Служба також відстежує перегляд відео та оновлює статус "переглянуто" на next-episode.net.</description>
+    <license>GNU GPL v.3</license>
+    <forum></forum>
+    <website>http://next-episode.net/</website>
+    <email>romanvm@yandex.ua</email>
+    <source>https://github.com/santah/next-episode-kodi</source>
+  </extension>
+</addon>
