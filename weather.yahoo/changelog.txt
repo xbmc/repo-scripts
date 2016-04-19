@@ -1,3 +1,6 @@
+v4.2.1
+- bugfix
+
 v4.2.0
 - add support for daily infolabels
 

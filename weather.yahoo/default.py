@@ -2,6 +2,7 @@ import os, sys, socket, urllib2, time
 from xml.dom import minidom
 import xbmc, xbmcgui, xbmcaddon
 import json
+import _strptime
 
 ADDON        = xbmcaddon.Addon()
 ADDONNAME    = ADDON.getAddonInfo('name')
