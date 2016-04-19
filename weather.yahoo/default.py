@@ -5,6 +5,7 @@ if sys.version_info < (2, 7):
     import simplejson as json
 else:
     import json
+import _strptime
 
 ADDON        = xbmcaddon.Addon()
 ADDONNAME    = ADDON.getAddonInfo('name')
