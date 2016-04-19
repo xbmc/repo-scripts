@@ -1,6 +1,5 @@
 from Utils import *
 import random
-from xml.dom.minidom import parse
 
 
 def getSkinSettings(filter=None):

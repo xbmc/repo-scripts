@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from resources.lib.Utils import *
+from Utils import *
 
 #Kodi contextmenu item to go to the series level from a listing with episodes from multiple shows like in progress, recent etc.
 if __name__ == '__main__':
@@ -9,7 +9,7 @@ if __name__ == '__main__':
         dbId = xbmc.getInfoLabel("ListItem.Property(DBID)")
         
     if dbId:
-        logMsg("Context menu open series level for episodeId " + dbId)
+        logMsg("Context menu open series level for episodeId " + dbId,0)
         json_result = getJSON('VideoLibrary.GetEpisodeDetails','{ "episodeid": %d, "properties": [ "tvshowid" ] }' %(int(dbId)))
         if json_result:
             path = "videodb://tvshows/titles/%s/" %str(json_result["tvshowid"])

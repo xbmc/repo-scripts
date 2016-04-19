@@ -377,7 +377,7 @@ msgid "Reset persistant cache"
 msgstr ""
 
 msgctxt "#32090"
-msgid "Are you sure you want to reset the permanent cache ? \nWarning: This will delete all contents of the folder "
+msgid "Are you sure you want to reset the permanent cache ? Warning: This will delete all contents of the folder "
 msgstr ""
 
 msgctxt "#32091"
@@ -704,3 +704,62 @@ msgctxt "#32171"
 msgid "PVR - Next unwatched recordings (reversed)"
 msgstr ""
 
+msgctxt "#32172"
+msgid "Precache all artwork"
+msgstr ""
+
+msgctxt "#32173"
+msgid "Manual select Animated Poster"
+msgstr ""
+
+msgctxt "#32174"
+msgid "Manual select Animated fanart"
+msgstr ""
+
+msgctxt "#32175"
+msgid "Select Animated artwork"
+msgstr ""
+
+msgctxt "#32176"
+msgid "Browse for image..."
+msgstr ""
+
+msgctxt "#32177"
+msgid "Custom folder with music artwork"
+msgstr ""
+
+msgctxt "#32178"
+msgid "Lookup artwork in custom folder"
+msgstr ""
+
+msgctxt "#32179"
+msgid "Contextmenu"
+msgstr ""
+
+msgctxt "#32180"
+msgid "Show contextmenu for music artwork"
+msgstr ""
+
+msgctxt "#32181"
+msgid "Show contextmenu for pvr artwork"
+msgstr ""
+
+msgctxt "#32182"
+msgid "Show contextmenu for animated artwork"
+msgstr ""
+
+msgctxt "#32183"
+msgid "Show series-level button in contextmenu"
+msgstr ""
+
+msgctxt "#32184"
+msgid "Skip online lookup if all artwork is found locally"
+msgstr ""
+
+msgctxt "#32185"
+msgid "Random movies"
+msgstr ""
+
+msgctxt "#32186"
+msgid "In-progress and random movies"
+msgstr ""

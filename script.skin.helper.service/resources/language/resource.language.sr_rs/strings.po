@@ -1,0 +1,709 @@
+# Kodi language file
+# Addon Name: Skin Helper Service
+# Addon id: script.skin.helper.service
+# Addon Provider: marcelveldt
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC-Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: 2014-10-26 17:05+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Angelinas <logo.kanala@gmail.com>\n"
+"Language-Team: Serbian (Serbia)\n"
+"Language: sr_RS\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+
+msgctxt "#32000"
+msgid "Favourites"
+msgstr "Фаворити"
+
+msgctxt "#32001"
+msgid "Favourite Media"
+msgstr "Фаворити Медија"
+
+msgctxt "#32002"
+msgid "Next Episodes"
+msgstr "Следећа Епизода"
+
+msgctxt "#32003"
+msgid "Recommended Movies"
+msgstr "Препоручени Филмови"
+
+msgctxt "#32004"
+msgid "Recommended Media"
+msgstr "Препоручени Медији"
+
+msgctxt "#32005"
+msgid "Recent Media"
+msgstr "Скорашњи Медији"
+
+msgctxt "#32006"
+msgid "Similar Movies"
+msgstr "Слични Филмови"
+
+msgctxt "#32007"
+msgid "In progress and Recommended Media"
+msgstr "У репродукцији и Препоручени Медији"
+
+msgctxt "#32008"
+msgid "Next Episodes"
+msgstr "Следеће Епизоде"
+
+msgctxt "#32009"
+msgid "Next Episodes"
+msgstr "Следеће Епизоде"
+
+msgctxt "#32010"
+msgid "Next Episodes"
+msgstr "Следеће Епизоде"
+
+msgctxt "#32011"
+msgid "Pick a color..."
+msgstr "Изабери боју..."
+
+msgctxt "#32012"
+msgid "Color value:"
+msgstr "Боја:"
+
+msgctxt "#32013"
+msgid "None"
+msgstr "Ниједна"
+
+msgctxt "#32014"
+msgid "Select a color theme"
+msgstr "Изабери боју за тему"
+
+msgctxt "#32015"
+msgid "Background overlay texture"
+msgstr "Позадинско преклапање текстура"
+
+msgctxt "#32016"
+msgid "Browse custom image for background overlay"
+msgstr "Изабери слику за позадину"
+
+msgctxt "#32017"
+msgid "Enable/disable views"
+msgstr "Омогући/Онемогући преклапање"
+
+msgctxt "#32018"
+msgid "Select a folder to create the backupfile"
+msgstr "Изабери фолдер за снимање бекап фајла"
+
+msgctxt "#32019"
+msgid "Export this theme to file"
+msgstr "Сачувај ову тему у фајлу"
+
+msgctxt "#32020"
+msgid "Select skin backup file"
+msgstr "Изабери фајл за бекап скина"
+
+msgctxt "#32021"
+msgid "Your colortheme is now available in the list of available themes"
+msgstr "Ваша колор тема је сад доступна у лист омогућених тема"
+
+msgctxt "#32022"
+msgid "Color theme imported succesfully"
+msgstr "Тема боја је увезена успешно"
+
+msgctxt "#32023"
+msgid "Enter a name for your color theme"
+msgstr "Упиши име за вашу колор тему"
+
+msgctxt "#32024"
+msgid "Screenshot of color theme (optional)"
+msgstr "Слика ваше колор теме (опционо)"
+
+msgctxt "#32025"
+msgid "User defined color theme"
+msgstr "Колор тема дефинисана корисником"
+
+msgctxt "#32026"
+msgid "Color theme created succesfully"
+msgstr "Колор тема успешно направљена"
+
+msgctxt "#32027"
+msgid "Your colortheme is now available in the list of available themes"
+msgstr "Ваша колор тема је доступна у лист тема"
+
+msgctxt "#32028"
+msgid "Backup the skin settings"
+msgstr "Беакапуј подешавање скина"
+
+msgctxt "#32029"
+msgid "Backupfile was succesfully created!"
+msgstr "Фајл бекапа је успешно креиран"
+
+msgctxt "#32030"
+msgid "An error has occured creating the backup!"
+msgstr "Грешка се појавила приликом креирања бекапа"
+
+msgctxt "#32031"
+msgid "Select skin backup file"
+msgstr "Изабери скин бекап фајл"
+
+msgctxt "#32032"
+msgid "Restore the skin settings"
+msgstr "Врати подешавања скина"
+
+msgctxt "#32033"
+msgid "Restoring..."
+msgstr "Враћање"
+
+msgctxt "#32034"
+msgid "Your backup is succesfully restored!"
+msgstr "Ваш бекап је успешно враћен"
+
+msgctxt "#32035"
+msgid "An error has occured while restoring the backup"
+msgstr "Грешка се појавила приликом враћања бекапа"
+
+msgctxt "#32036"
+msgid "Reset the skin to default settings"
+msgstr "Ресетуј подешавање скина на оригинална"
+
+msgctxt "#32037"
+msgid "Are you sure you want to reset the skin to default settings ?"
+msgstr "Да ли сте сигурни да желите да ресетујете подешавања скина"
+
+msgctxt "#32038"
+msgid "Global media fanart background"
+msgstr "Глобална позадина свих медија"
+
+msgctxt "#32039"
+msgid "Random movies background"
+msgstr "Позадина-Филмови без редоследа"
+
+msgctxt "#32040"
+msgid "Recent movies background"
+msgstr "Позадина-Филмови скоро емитовани"
+
+msgctxt "#32041"
+msgid "In progress movies background"
+msgstr "Позадина-Филмови у прогресу"
+
+msgctxt "#32042"
+msgid "Unwatched movies background"
+msgstr "Позадина-неодгледани Филмови"
+
+msgctxt "#32043"
+msgid "Random Tv Shows background"
+msgstr "Позадина-серије без редоследа"
+
+msgctxt "#32044"
+msgid "Recent episodes background"
+msgstr "Позадина-серије скоро емитовани"
+
+msgctxt "#32045"
+msgid "In progress Tv Shows background"
+msgstr "Позадина-серије у прогресу"
+
+msgctxt "#32046"
+msgid "Random pictures background"
+msgstr "Позадина-слике без редоследа"
+
+msgctxt "#32047"
+msgid "Random music videos background"
+msgstr "Позадина-спотови без редоследа"
+
+msgctxt "#32048"
+msgid "Random music artists background"
+msgstr "Позадина-музичари без редоследа"
+
+msgctxt "#32049"
+msgid "Opacity"
+msgstr "Провидност"
+
+msgctxt "#32050"
+msgid "Custom color"
+msgstr "Боја"
+
+msgctxt "#32051"
+msgid "Select busy spinner"
+msgstr "Изабери лого за заузето"
+
+msgctxt "#32052"
+msgid "Custom single image (gif)"
+msgstr "Једна слика (gif)"
+
+msgctxt "#32053"
+msgid "Custom multi image (path)"
+msgstr "Више слика (path)"
+
+msgctxt "#32054"
+msgid "Select view"
+msgstr "Изабери изглед"
+
+msgctxt "#32055"
+msgid "My TV Shows Airing today"
+msgstr "Серије које се емитују данас"
+
+msgctxt "#32056"
+msgid "Configure conditional backgrounds"
+msgstr "Конфигуриши своју позадину"
+
+msgctxt "#32057"
+msgid "Setup backgrounds that will be activated on specified dates"
+msgstr "Подешавање личне позадине ће се активирати одређеног датума"
+
+msgctxt "#32058"
+msgid "Please enter a name for your conditional background"
+msgstr "Молим упишите име за вашу личну позадину"
+
+msgctxt "#32059"
+msgid "Conditional background override"
+msgstr "Провидност ваше личне позадине"
+
+msgctxt "#32060"
+msgid "Error while writing changes. Make sure you have filled in all fields correctly."
+msgstr "Грешка се појавила приликом уписивања.Проверите јел су сва поља испуњена исправно"
+
+msgctxt "#32061"
+msgid "Please select a background image"
+msgstr "Молим изаберите позадинску слику"
+
+msgctxt "#32062"
+msgid "Smart Shortcuts"
+msgstr "Смарт Пречице"
+
+msgctxt "#32063"
+msgid "Default Widgets"
+msgstr "Виџгет"
+
+msgctxt "#32064"
+msgid "Do you want to setup a single background or a folder with multiple backgrounds ?"
+msgstr "Да ли желите подесити једну или више позадинских слика"
+
+msgctxt "#32065"
+msgid "Single"
+msgstr "Једна"
+
+msgctxt "#32066"
+msgid "Multiple"
+msgstr "Више"
+
+msgctxt "#32067"
+msgid "Select image folder path"
+msgstr "Изаберите путању до фолдера са сликама"
+
+msgctxt "#32068"
+msgid "Please enter a filename for your backup"
+msgstr "Молим изаберите име фајла за ваш бекап"
+
+msgctxt "#32069"
+msgid "Please enter the time that this theme should be activated (hh:mm in 24-hours format)"
+msgstr "Молим изаберите време када ће се активирати (hh:mm  24-часова формат)"
+
+msgctxt "#32070"
+msgid "Did you enter the time in the correct format ?"
+msgstr "Проверите да ли је време у исправном формату"
+
+msgctxt "#32071"
+msgid "Activates every day at "
+msgstr "Активирај се свакодневно у"
+
+msgctxt "#32072"
+msgid "Go to Series level"
+msgstr "Иди на серијски ниво"
+
+msgctxt "#32073"
+msgid "Add new condition..."
+msgstr "Додај нов услов"
+
+msgctxt "#32074"
+msgid "Add a new condition to activate a custom background on a selected timespan"
+msgstr "Додај нов услов за активирање позадине са временским одлагањем"
+
+msgctxt "#32075"
+msgid "Delete or change ?"
+msgstr "Обриши или промени ?"
+
+msgctxt "#32076"
+msgid "Do you want to delete or change the existing entry ?"
+msgstr "Да ли желите да промените постојећи запис"
+
+msgctxt "#32077"
+msgid "Change"
+msgstr "Промени"
+
+msgctxt "#32078"
+msgid "Delete"
+msgstr "Обриши"
+
+msgctxt "#32079"
+msgid "Create Color Theme..."
+msgstr "Креирај колор тему..."
+
+msgctxt "#32080"
+msgid "Create new custom color theme based on your current skin color settings."
+msgstr "Креирај нову колор тему засновану на тренутним подешавањима боја"
+
+msgctxt "#32081"
+msgid "Import Color Theme from file..."
+msgstr "Преузми колор тему из фајла..."
+
+msgctxt "#32082"
+msgid "Import a colortheme from file."
+msgstr "Преузми колор тему из фајла."
+
+msgctxt "#32083"
+msgid "Apply this Color Theme"
+msgstr "Потврди Колор Тему"
+
+msgctxt "#32084"
+msgid "Export this Color Theme to file"
+msgstr "Сачувај Колор тему у фајлу"
+
+msgctxt "#32085"
+msgid "Manage Color Themes"
+msgstr "Организуј Колор Тему"
+
+msgctxt "#32086"
+msgid "In progress Media"
+msgstr "Медији у репродукцији"
+
+msgctxt "#32087"
+msgid "Recently added songs"
+msgstr "Скоро додане песме"
+
+msgctxt "#32088"
+msgid "Recently played songs"
+msgstr "Скоро емитоване песме"
+
+msgctxt "#32089"
+msgid "Reset persistant cache"
+msgstr "Обриши кеш"
+
+msgctxt "#32090"
+msgid "Are you sure you want to reset the permanent cache ? \nWarning: This will delete all contents of the folder "
+msgstr "Да ли сте сигурни да желите да обришете кеш ?\nУпозорење: Ово ће обрисати све у фолдеру"
+
+msgctxt "#32091"
+msgid "The action completed sucesfully"
+msgstr "Брисање је било успешно"
+
+msgctxt "#32092"
+msgid "The action completed with errors"
+msgstr "Појавила се грешка приликом брисања"
+
+msgctxt "#32093"
+msgid "PVR Thumbs are disabled or not supported in this skin"
+msgstr "ПВР слике су онемогућене или нису подржане у скину"
+
+msgctxt "#32094"
+msgid "Use TMDB for lookups"
+msgstr "Користи TMDB као извор"
+
+msgctxt "#32095"
+msgid "Use extended images from Fanart.tv"
+msgstr "Користи Fanart.tv као извор"
+
+msgctxt "#32096"
+msgid "Use Google images for lookups"
+msgstr "Користи Google као извор"
+
+msgctxt "#32097"
+msgid "Use Youtube for lookups"
+msgstr "Користи Youtube као извор"
+
+msgctxt "#32098"
+msgid "Use local video Library for lookups"
+msgstr "Користи Локалну библиотеку као извор"
+
+msgctxt "#32099"
+msgid "Custom (recordings) folder for lookups"
+msgstr "Одреди фолдер (за снимање) као извор"
+
+msgctxt "#32100"
+msgid "Use thumb provided by PVR addon"
+msgstr "Користи слике које је генерише ПВР додатак"
+
+msgctxt "#32101"
+msgid "Download artwork for PVR Recordings"
+msgstr "Сачувај слике за ПВР Снимање"
+
+msgctxt "#32102"
+msgid "Download artwork for PVR Guide entries"
+msgstr "Сачувај слике за ПВР Програмски водич"
+
+msgctxt "#32103"
+msgid "Location of the persistant cache"
+msgstr "Путања до Кеш-а"
+
+msgctxt "#32104"
+msgid "Live TV channels (with artwork)"
+msgstr "ТВ Канали (са сликама)"
+
+msgctxt "#32105"
+msgid "Live TV Recordings (with artwork)"
+msgstr "ТВ Канали Снимци (са сликама)"
+
+msgctxt "#32106"
+msgid "Channels to ignore with lookups, seperate with ;"
+msgstr "ТВ Канали игнориши за претрагу, раздвојте их са ;"
+
+msgctxt "#32107"
+msgid "Ignore titles with these words, seperate with ;"
+msgstr "Игнориши те наслове са овим речима, раздвојте их са ;"
+
+msgctxt "#32108"
+msgid "Directory structure for cache folder"
+msgstr "Дирокторијум за кеш фолдер"
+
+msgctxt "#32109"
+msgid "Programtitle (default)"
+msgstr "Име-Наслов (default)"
+
+msgctxt "#32110"
+msgid "Име Канала\\Programtitle"
+msgstr ""
+
+msgctxt "#32111"
+msgid "Channelname - Programtitle"
+msgstr "Име канала-Наслов"
+
+msgctxt "#32112"
+msgid "Words to ignore (strip) in titles, seperate with ;"
+msgstr "Речи које се игноришу у наслову, раздвојте их са ;"
+
+msgctxt "#32113"
+msgid "Random PVR fanart background"
+msgstr "ПВР Позадинске слике без реда"
+
+msgctxt "#32114"
+msgid "Preferred language for TMDB metadata"
+msgstr "Преферирани језик за податке са TMDB"
+
+msgctxt "#32115"
+msgid "Enable creation of wall/grid backgrounds"
+msgstr "Омогући креирање зид-а позадинских слика"
+
+msgctxt "#32116"
+msgid "Prefer black & white for wall backgrounds"
+msgstr "Преферирај црно-беле слике за зид позадинских слика"
+
+msgctxt "#32117"
+msgid "Random Movies Wall/Grid"
+msgstr "Филмови без реда креирају позадинске слике-зид"
+
+msgctxt "#32118"
+msgid "Random Artists Wall/Grid"
+msgstr "Музичари без реда креирају позадинске слике-зид"
+
+msgctxt "#32119"
+msgid "Random Albums Wall/Grid"
+msgstr "Албуми без реда креирају позадинске слике-зид"
+
+msgctxt "#32120"
+msgid "PVR Artwork"
+msgstr "ПВР Слике"
+
+msgctxt "#32121"
+msgid "Backgrounds"
+msgstr "Позадинске слике"
+
+msgctxt "#32122"
+msgid "Music Artwork"
+msgstr "Музичке слике"
+
+msgctxt "#32123"
+msgid "Enable online lookups for music artwork"
+msgstr "Омогући онлине претрагу за музичаре"
+
+msgctxt "#32124"
+msgid "Lookup artwork in local music folders"
+msgstr "Потражи слике у фолдерима музичара"
+
+msgctxt "#32125"
+msgid "Download artwork to local music folders"
+msgstr "Сачувај слике у фолдерима музичара"
+
+msgctxt "#32126"
+msgid "Reset persistant cache"
+msgstr "Ресетуј Кеш"
+
+msgctxt "#32127"
+msgid "Random Tv Shows Wall/Grid"
+msgstr "Серије без реда креирају позадинске слике-зид"
+
+msgctxt "#32128"
+msgid "Only build the wall images once (reuse images)"
+msgstr "Направите зид слика-само једном"
+
+msgctxt "#32129"
+msgid "Clear cache (rebuild all wall images)"
+msgstr "Обриши Кеш (Поново направи зид позадинских слика)"
+
+msgctxt "#32130"
+msgid "Similar TV Shows"
+msgstr "Сличне Серије"
+
+msgctxt "#32131"
+msgid "Recommended albums"
+msgstr "Препоручени албуми"
+
+msgctxt "#32132"
+msgid "Recommended songs"
+msgstr "Препоручене нумере"
+
+msgctxt "#32133"
+msgid "PVR Channel groups"
+msgstr "Група канала за ПВР"
+
+msgctxt "#32134"
+msgid "Other"
+msgstr "Друге"
+
+msgctxt "#32135"
+msgid "Enable verbose debug logging"
+msgstr "Омогућити записивање грешака"
+
+msgctxt "#32136"
+msgid "Max number of extrafanarts to grab for music/pvr fanart"
+msgstr "Максималан број екстра слика за музику/ПВР је:"
+
+msgctxt "#32137"
+msgid "Title's character splitter"
+msgstr "За размак у наслову користити"
+
+msgctxt "#32138"
+msgid "Random videos background (movie/show/musicvideo)"
+msgstr ""
+
+msgctxt "#32139"
+msgid "Recent videos background (movie or tvshow)"
+msgstr "Позадине видеа (филмови и серије)"
+
+msgctxt "#32140"
+msgid "In progress videos background (movie or tvshow)"
+msgstr "Позадине видеа У репродукцији (филмови и серије)"
+
+msgctxt "#32141"
+msgid "Color Palette"
+msgstr "Палете Боја"
+
+msgctxt "#32142"
+msgid "Recently added music"
+msgstr "Скоро додана Музика"
+
+msgctxt "#32143"
+msgid "Artwork settings"
+msgstr "Подешавање слика"
+
+msgctxt "#32144"
+msgid "Refresh item (auto lookup)"
+msgstr "Освежи претрагу (Аутоматско)"
+
+msgctxt "#32145"
+msgid "Refresh item (manual lookup)"
+msgstr "Освежи претрагу (Ручни унос)"
+
+msgctxt "#32146"
+msgid "Enter a name for the theme"
+msgstr "Упиши име теме"
+
+msgctxt "#32147"
+msgid "Enter search phrase for lookup"
+msgstr "Упиши реч за претрагу"
+
+msgctxt "#32148"
+msgid "Open Configuration"
+msgstr "Отвори конфигурисање"
+
+msgctxt "#32149"
+msgid "Add channel to ignore list"
+msgstr "Додај канал као игнорисан"
+
+msgctxt "#32150"
+msgid "Add title to ignore list"
+msgstr "Додај наслов као игнорисан"
+
+msgctxt "#32151"
+msgid "PVR - Recent recordings"
+msgstr "ПВР - скоро снимано"
+
+msgctxt "#32152"
+msgid "PVR - Next unwatched recordings"
+msgstr "ПВР - Следећи неодгледани снимак"
+
+msgctxt "#32153"
+msgid "PVR - TV Channels"
+msgstr "ПВР - Канал"
+
+msgctxt "#32154"
+msgid "PVR - Timers"
+msgstr "ПВР - Тајмер"
+
+msgctxt "#32155"
+msgid "Enable PVR artwork for Recordings/timers only"
+msgstr "Омогућити ПВР Слике само за Снимање/Тајмер"
+
+msgctxt "#32156"
+msgid "Posters"
+msgstr "Постери"
+
+msgctxt "#32157"
+msgid "Precache all music artwork"
+msgstr "Уради прекеширање слика"
+
+msgctxt "#32158"
+msgid "Are you sure you want to continue? This can take some time, depending on your collection size."
+msgstr "Дали си сигуран да желиш да наставиш?Ово би могло да потраје ,зависи од величине ваше колекције."
+
+msgctxt "#32159"
+msgid "Allow existing artwork to be overwritten with better quality"
+msgstr "Дозволи да ваше слике буду преомењене са сликама бољег квалитета"
+
+msgctxt "#32160"
+msgid "Maximum number of wall images to create for each background"
+msgstr "Максималан број позадинских wall-слика за једну позадину"
+
+msgctxt "#32161"
+msgid "Black & White"
+msgstr "ЦрноБела"
+
+msgctxt "#32162"
+msgid "Similar Media"
+msgstr "Слични Медији"
+
+msgctxt "#32163"
+msgid "Widgets"
+msgstr "Виџгети"
+
+msgctxt "#32164"
+msgid "Enable artwork lookups for music/pvr widgets"
+msgstr "Омогући слике за Музику/ПВР"
+
+msgctxt "#32165"
+msgid "Show specials in episode widgets"
+msgstr "Прикажи Специјале у виџгетима за Епизоде"
+
+msgctxt "#32166"
+msgid "Browse albums instead of playing for album widgets"
+msgstr "Отвори у листи уместо да репродукујеш албуме"
+
+msgctxt "#32167"
+msgid "In-progress episodes"
+msgstr "У емитовању Епизоде"
+
+msgctxt "#32168"
+msgid "In-progress movies"
+msgstr "У емитовању Филмови"
+
+msgctxt "#32169"
+msgid "In-progress and recommended movies"
+msgstr "У емитовању и препоручени Филмови"
+
+msgctxt "#32170"
+msgid "PVR - TV Channels (with artwork)"
+msgstr "ПВР - Канали (са сликама)"
+
+msgctxt "#32171"
+msgid "PVR - Next unwatched recordings (reversed)"
+msgstr "ПВР - Следећи неодгледани снимак"
+
+msgctxt "#32172"
+msgid "Precache all artwork"
+msgstr "Уради преКеширање свих слика"

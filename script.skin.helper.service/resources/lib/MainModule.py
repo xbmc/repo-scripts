@@ -210,6 +210,7 @@ def searchYouTube(title,windowHeader="",autoplay="",windowed=""):
         del w
         if selectedItem != -1:
             path = allResults[selectedItem].getProperty("path")
+        else: path = ""
     
     #play video...
     if path and windowed:
@@ -241,7 +242,6 @@ def selectView(contenttype="other", currentView=None, displayNone=False):
         for count, view in enumerate(listing):
             label = xbmc.getLocalizedString(int(view.attributes[ 'languageid' ].nodeValue))
             id = view.attributes[ 'value' ].nodeValue
-            desc = label + " (" + str(id) + ")"
             type = view.attributes[ 'type' ].nodeValue.lower().split(",")
             if label.lower() == currentView.lower() or id == currentView:
                 currentViewSelectId = itemcount
@@ -249,7 +249,7 @@ def selectView(contenttype="other", currentView=None, displayNone=False):
                     currentViewSelectId += 1
             if ("all" in type or contenttype.lower() in type) and (not "!" + contenttype.lower() in type) and not xbmc.getCondVisibility("Skin.HasSetting(SkinHelper.View.Disabled.%s)" %id):
                 image = "special://skin/extras/viewthumbs/%s.jpg" %id
-                listitem = xbmcgui.ListItem(label=label, label2=desc, iconImage=image)
+                listitem = xbmcgui.ListItem(label=label, iconImage=image)
                 listitem.setProperty("id",id)
                 listitem.setProperty("icon",image)
                 allViews.append(listitem)
@@ -277,7 +277,7 @@ def setSkinShortCutsProperty(setting="",windowHeader="",propertyName=""):
     curValue = xbmc.getInfoLabel("$INFO[Container(211).ListItem.Property(%s)]" %propertyName).decode("utf-8")
     if not curValue: curValue = "None"
     if setting:
-        (value, label) = setSkinSetting(setting, windowHeader, None, curValue)
+        (value, label) = setSkinSetting(setting, windowHeader, None, curValue, True)
     else:
         value = xbmcgui.Dialog().input(windowHeader, curValue, type=xbmcgui.INPUT_ALPHANUM).decode("utf-8")
     if value:
@@ -341,8 +341,10 @@ def writeSkinConstants(listing):
                 for key, value in listing.iteritems():
                     if value:
                         child = xmltree.SubElement( root, "constant" )
-                        child.text = try_decode(value)
+                        child.text = value
                         child.attrib[ "name" ] = key
+                        #also write to skin strings
+                        xbmc.executebuiltin("Skin.SetString(%s,%s)" %(key.encode("utf-8"),value.encode("utf-8")))
                 indentXML( tree.getroot() )
                 xmlstring = xmltree.tostring(tree.getroot(), encoding="utf-8")
                 f = xbmcvfs.File(includes_file, 'w')
@@ -366,8 +368,8 @@ def getSkinConstants():
                     doc = parse( includes_file )
                     listing = doc.documentElement.getElementsByTagName( 'constant' )
                     for count, item in enumerate(listing):
-                        name = item.attributes[ 'name' ].nodeValue
-                        value = item.firstChild.nodeValue
+                        name = try_decode(item.attributes[ 'name' ].nodeValue)
+                        value = try_decode(item.firstChild.nodeValue)
                         allConstants[name] = value
     return allConstants
 
@@ -385,15 +387,22 @@ def updateSkinConstants(newValues):
     if updateNeeded:
         writeSkinConstants(allValues)
 
-def setSkinConstant(setting="", windowHeader=""):
+def setSkinConstant(setting="", windowHeader="", value=""):
     allCurrentValues = getSkinConstants()
-    value, label = setSkinSetting(setting=setting, windowHeader=windowHeader, sublevel="", valueOnly=allCurrentValues.get(setting,"emptyconstant"))
+    if not value:
+        value, label = setSkinSetting(setting, windowHeader, "", allCurrentValues.get(setting,"emptyconstant"))
     result = { setting:value }
     updateSkinConstants(result)
+    
+def setSkinConstants(settings, values):
+    result = {}
+    for count, setting in enumerate(settings):
+        result[setting] = values[count]
+    updateSkinConstants(result)
         
-def setSkinSetting(setting="", windowHeader="", sublevel="", valueOnly=""):
-    curValue = xbmc.getInfoLabel("Skin.String(%s)" %setting).decode("utf-8")
-    if valueOnly: curValue = valueOnly
+def setSkinSetting(setting="", windowHeader="", sublevel="", curValue="", skipSkinString=False):
+    if not curValue:
+        curValue = xbmc.getInfoLabel("Skin.String(%s)" %setting).decode("utf-8")
     curValueLabel = xbmc.getInfoLabel("Skin.String(%s.label)" %setting).decode("utf-8")
     useRichLayout = False
     selectId = 0
@@ -423,6 +432,7 @@ def setSkinSetting(setting="", windowHeader="", sublevel="", valueOnly=""):
                 if condition and not xbmc.getCondVisibility(condition): continue
                 if icon: useRichLayout = True
                 if icon and icon.startswith("$"): icon = xbmc.getInfoLabel(icon)
+                if "%" in label: label = label %value
                 if curValue and (curValue.lower() == value.lower() or label.lower() == curValueLabel.lower()): selectId = itemcount
                 listitem = xbmcgui.ListItem(label=label, iconImage=icon)
                 listitem.setProperty("value",value)
@@ -468,10 +478,16 @@ def setSkinSetting(setting="", windowHeader="", sublevel="", valueOnly=""):
             else:
                 if value == "||BROWSEIMAGE||":
                     if xbmcgui.Dialog().yesno( label, ADDON.getLocalizedString(32064), yeslabel=ADDON.getLocalizedString(32065), nolabel=ADDON.getLocalizedString(32066) ):
-                        value = xbmcgui.Dialog().browse( 2 , label, 'files').decode("utf-8")
-                    else: value = xbmcgui.Dialog().browse( 0 , ADDON.getLocalizedString(32067), 'files')
+                        value = xbmcgui.Dialog().browse( 2 , label, 'files', '', True, True, curValue).decode("utf-8")
+                    else:
+                        if not curValue.startswith("$"):
+                            if "\\" in curValue: delim = "\\"
+                            else: delim = "/"
+                            curdir = curValue.rsplit(delim, 1)[0] + delim
+                        else: curdir = ""
+                        value = xbmcgui.Dialog().browse( 0 , ADDON.getLocalizedString(32067), 'files', '', True, True, curdir).decode("utf-8")
                 if value == "||BROWSESINGLEIMAGE||":
-                    value = xbmcgui.Dialog().browse( 2 , label, 'files').decode("utf-8")
+                    value = xbmcgui.Dialog().browse( 2 , label, 'files', '', True, True, curValue).decode("utf-8")
                 if value == "||PROMPTNUMERIC||":
                     value = xbmcgui.Dialog().input( label,curValue, 1).decode("utf-8")
                 if value == "||PROMPTSTRING||":
@@ -487,7 +503,7 @@ def setSkinSetting(setting="", windowHeader="", sublevel="", valueOnly=""):
                             value = xbmcgui.Dialog().notification( "Invalid input", "Please enter a number...")
                             
                 #write skin strings
-                if not valueOnly and value != "||SKIPSTRING||":
+                if not skipSkinString and value != "||SKIPSTRING||":
                     xbmc.executebuiltin("Skin.SetString(%s,%s)" %(setting.encode("utf-8"),value.encode("utf-8")))
                     xbmc.executebuiltin("Skin.SetString(%s.label,%s)" %(setting.encode("utf-8"),label.encode("utf-8")))
                 #process additional actions
@@ -509,6 +525,7 @@ def correctSkinSettings():
             value = item.attributes[ 'value' ].nodeValue
             curvalue = xbmc.getInfoLabel("Skin.String(%s)" %id.encode("utf-8")).decode("utf-8")
             label = xbmc.getInfoLabel(item.attributes[ 'label' ].nodeValue).decode("utf-8")
+            if "%" in label: label = label %value
             additionalactions = item.getElementsByTagName( 'onselect' )
             try: default = item.attributes[ 'default' ].nodeValue
             except: default = ""
@@ -535,11 +552,13 @@ def correctSkinSettings():
                         if (item2.attributes[ 'value' ].nodeValue.lower() == curvalue.lower()) or (not curvalue and xbmc.getCondVisibility( subdefault )):
                             label = xbmc.getInfoLabel(item2.attributes[ 'label' ].nodeValue).decode("utf-8")
                             value = item2.attributes[ 'value' ].nodeValue
+                            if "%" in label: label = label %value
                             default = subdefault
                             additionalactions = item2.getElementsByTagName( 'onselect' )
                         if (item2.attributes[ 'value' ].nodeValue.lower() == curvalue.lower()) or xbmc.getCondVisibility( subconstantdefault ):
                             label = xbmc.getInfoLabel(item2.attributes[ 'label' ].nodeValue).decode("utf-8")
                             value = item2.attributes[ 'value' ].nodeValue
+                            if "%" in label: label = label %value
                             constantdefault = subconstantdefault
                             additionalactions = item2.getElementsByTagName( 'onselect' )
             #process any multiselects

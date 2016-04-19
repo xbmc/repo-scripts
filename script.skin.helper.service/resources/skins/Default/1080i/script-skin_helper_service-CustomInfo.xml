@@ -1,21 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <window>
     <defaultcontrol always="true">5</defaultcontrol>
+    <onunload>ClearProperty(AdditionalInfo)</onunload>
     <controls>
 	
 		<!--fake list used as container -->
 		<!-- use Container(999).ListItem to get all info -->
 		<!-- all normal listitem properties will be available -->
+        <!-- Also, all skinhelper window props will be available -->
+        <!-- If tvshow content, nextaired addon props are also available -->
+        <!-- ListItem.Property(type) will return the type: e.g. movie, tvshow, episode -->
 		<control type="list" id="999">
             <posx>630</posx>
             <posy>0</posy>
             <itemlayout />
             <focusedlayout />
 		</control>
-        
-        <!-- include list/container with ID 998 for cast list -->
-        <!-- include list/container with ID 997 for similar list -->
-		
+
         <control type="group">
 			<animation type="WindowOpen">
 				<effect type="slide" start="1200" end="0" time="250" tween="cubic" easing="inout" />
@@ -73,13 +74,12 @@
                 <height>460</height>
                 <fadetime>800</fadetime>
                 <aspectratio align="right" aligny="bottom">keep</aspectratio>
-				<texture>$INFO[Container(999).ListItem.Icon]</texture>
+				<texture>$INFO[Container(999).ListItem.Art(poster)]</texture>
             </control>
 			
             <control type="grouplist">
                 <posx>680</posx>
                 <posy>220</posy>
-				
 				<control type="group">
 					<height>60</height>
 					<control type="label">
@@ -99,7 +99,6 @@
 						<height>60</height>
 						<align>left</align>
 						<label>$LOCALIZE[572]:</label>
-						
 						<textcolor>white</textcolor>
 						<visible>StringCompare(Container(999).ListItem.Property(type),tvshow)</visible>
 					</control>
@@ -138,7 +137,6 @@
 						<height>60</height>
 						<align>left</align>
 						<label>$LOCALIZE[515]:</label>
-						
 						<textcolor>white</textcolor>
 					</control>
 					<control type="label">
@@ -212,7 +210,6 @@
 						<height>60</height>
 						<align>left</align>
 						<label>$LOCALIZE[563]:</label>
-						
 						<textcolor>white</textcolor>
 					</control>
 					<control type="label">
@@ -224,7 +221,6 @@
 						<label>$INFO[Container(999).ListItem.Rating]</label>
 					</control>
 				</control>
-
             </control>
             <control type="image">
                 <posx>680</posx>
@@ -243,7 +239,71 @@
                 <pagecontrol>60</pagecontrol>
                 <label fallback="19055">$INFO[Container(999).ListItem.Plot]</label>
 				<textcolor>white</textcolor>
+                <visible>IsEmpty(Window.Property(AdditionalInfo))</visible>
             </control>
+            
+            <!-- cast list -->
+            <control type="list" id="998">
+                <description>Cast</description>
+                <posx>700</posx>
+                <posy>506</posy>
+                <width>1160</width>
+                <height>388</height>
+                <ondown>9000</ondown>
+                <onleft>9000</onleft>
+                <onright>9000</onright>
+                <orientation>vertical</orientation>
+                <scrolltime>200</scrolltime>
+                <visible>StringCompare(Window.Property(AdditionalInfo),cast)</visible>
+                <itemlayout height="60">
+                    <control type="label">
+                        <posx>0</posx>
+                        <width>810</width>
+                        <textcolor>aaffffff</textcolor>
+                        <info>ListItem.Label</info>
+                    </control>
+                </itemlayout>
+                <focusedlayout height="60">
+                    <control type="label">
+                        <posx>0</posx>
+                        <width>810</width>
+                        <textcolor>ffffffff</textcolor>
+                        <label>[B]$INFO[ListItem.Label][/B]</label>
+                    </control>
+                </focusedlayout>
+            </control>
+            
+            <!-- similar list -->
+            <control type="list" id="997">
+                <description>Similar Media</description>
+                <posx>700</posx>
+                <posy>506</posy>
+                <width>1160</width>
+                <height>388</height>
+                <ondown>9000</ondown>
+                <onleft>9000</onleft>
+                <onright>9000</onright>
+                <orientation>vertical</orientation>
+                <scrolltime>200</scrolltime>
+                <visible>StringCompare(Window.Property(AdditionalInfo),similar)</visible>
+                <itemlayout height="60">
+                    <control type="label">
+                        <posx>0</posx>
+                        <width>810</width>
+                        <textcolor>aaffffff</textcolor>
+                        <info>ListItem.Label</info>
+                    </control>
+                </itemlayout>
+                <focusedlayout height="60">
+                    <control type="label">
+                        <posx>0</posx>
+                        <width>810</width>
+                        <textcolor>ffffffff</textcolor>
+                        <label>[B]$INFO[ListItem.Label][/B]</label>
+                    </control>
+                </focusedlayout>
+            </control>
+            
 			<!--Button Group-->
             <control type="grouplist" id="9000">
                 <posx>680</posx>
@@ -268,6 +328,29 @@
                     <label>20410</label>
 					<textcolor>white</textcolor>
 					<onclick>PlayMedia($ESCINFO[Container(999).ListItem.Trailer])</onclick>
+                    <visible>!IsEmpty(Container(999).ListItem.Trailer)</visible>
+                </control>
+                <control type="button" id="7">
+                    <!--Cast-->
+                    <width>280</width>
+                    <height>80</height>
+                    <align>center</align>
+                    <label>206</label>
+					<textcolor>white</textcolor>
+                    <onup>998</onup>
+					<onclick>SetProperty(AdditionalInfo, cast)</onclick>
+                    <visible>IntegerGreaterThan(Container(998).NumItems,0)</visible>
+                </control>
+                <control type="button" id="8">
+                    <!--Similar Media-->
+                    <width>280</width>
+                    <height>80</height>
+                    <align>center</align>
+                    <label>Similar</label>
+                    <onup>997</onup>
+					<textcolor>white</textcolor>
+					<onclick>SetProperty(AdditionalInfo, similar)</onclick>
+                    <visible>IntegerGreaterThan(Container(997).NumItems,0)</visible>
                 </control>
             </control>
         </control>

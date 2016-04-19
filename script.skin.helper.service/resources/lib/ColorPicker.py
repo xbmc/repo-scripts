@@ -168,13 +168,6 @@ class ColorPicker(xbmcgui.WindowXMLDialog):
         if action.getId() in ACTION_CANCEL_DIALOG:
             self.setColorSetting(restoreprevious=True)
             self.closeDialog()
-        else:
-            if self.currentWindow.getFocusId() == 3110:
-                item =  self.colorsList.getSelectedItem()
-                colorstring = item.getProperty("colorstring")
-                self.currentWindow.setProperty("colorstring",colorstring)
-                self.currentWindow.setProperty("colorname",item.getLabel())
-                self.setOpacitySlider()
 
     def closeDialog(self):
         self.close()
@@ -214,8 +207,13 @@ class ColorPicker(xbmcgui.WindowXMLDialog):
     
     def onClick(self, controlID):
         colorname = self.currentWindow.getProperty("colorname")
-        colorstring = self.currentWindow.getProperty("colorstring")
+        
         if controlID == 3110:
+            item =  self.colorsList.getSelectedItem()
+            colorstring = item.getProperty("colorstring")
+            self.currentWindow.setProperty("colorstring",colorstring)
+            self.currentWindow.setProperty("colorname",item.getLabel())
+            self.setOpacitySlider()
             self.currentWindow.setFocusId(3012)
             self.currentWindow.setProperty("color_chosen","true")
             self.setColorSetting()
@@ -242,6 +240,7 @@ class ColorPicker(xbmcgui.WindowXMLDialog):
           
         elif controlID == 3015:
             try:
+                colorstring = self.currentWindow.getProperty("colorstring")
                 opacity = self.getControl( 3015 ).getPercent()
                 num = opacity / 100.0 * 255
                 e = num - math.floor( num )
