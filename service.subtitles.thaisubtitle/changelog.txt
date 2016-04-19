@@ -1,0 +1,12 @@
+1.1.0 (2016-4-19)
+- Fix dependencies
+- fix scrapping error
+- fix log bug
+- converted subtitles to utf-8 so there is not need to specify thai char set
+- tested on jarvis
+
+1.0.0
+Initial release with features:
+- Shows Sync flag when filename matches
+- Manual search
+- Search based on cleaning up movie title
