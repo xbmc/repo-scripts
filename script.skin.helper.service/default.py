@@ -114,7 +114,6 @@ class Main:
                 if resultAction:
                     if "jsonrpc" in resultAction:
                         xbmc.executeJSONRPC(resultAction)
-                        xbmc.executeJSONRPC(resultAction)
                     else:
                         xbmc.executebuiltin(resultAction)
             elif action == "SHOWINFO":
@@ -154,11 +153,9 @@ class Main:
                             xbmc.sleep(500)
                         if "jsonrpc" in resultAction:
                             xbmc.executeJSONRPC(resultAction)
-                            #xbmc.executeJSONRPC(resultAction)
                         else:
                             xbmc.executebuiltin(resultAction)
                 
-            
             elif action == "COLORPICKER":
                 from resources.lib.ColorPicker import ColorPicker
                 colorPicker = ColorPicker("script-skin_helper_service-ColorPicker.xml", utils.ADDON_PATH, "Default", "1080i")

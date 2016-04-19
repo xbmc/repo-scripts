@@ -1118,19 +1118,13 @@ def GETCASTMEDIA(limit,name=""):
     if name:
         json_result = getJSON('VideoLibrary.GetMovies', '{ "filter": {"operator": "contains", "field": "actor", "value": "%s"}, "properties": [ %s ] }' %(name,fields_movies))
         for item in json_result:
-            if KODI_VERSION > 15:
-                item["file"] = "plugin://script.skin.helper.service/?action=focusandclick&control=150&title=%s" %item["title"]
-            else:
-                url = "RunScript(script.skin.helper.service,action=showinfo,movieid=%s)" %item["movieid"]
-                item["file"] = "plugin://script.skin.helper.service/?action=launch&path=" + url
+            url = "RunScript(script.skin.helper.service,action=showinfo,movieid=%s)" %item["movieid"]
+            item["file"] = "plugin://script.skin.helper.service/?action=launch&path=" + url
             allItems.append(item)
         json_result = getJSON('VideoLibrary.GetTvShows', '{ "filter": {"operator": "contains", "field": "actor", "value": "%s"}, "properties": [ %s ] }' %(name,fields_tvshows))
         for item in json_result:
-            if KODI_VERSION > 15:
-                item["file"] = "plugin://script.skin.helper.service/?action=focusandclick&control=150&title=%s" %item["title"]
-            else:
-                url = "RunScript(script.skin.helper.service,action=showinfo,tvshowid=%s)" %item["tvshowid"]
-                item["file"] = "plugin://script.skin.helper.service/?action=launch&path=" + url
+            url = "RunScript(script.skin.helper.service,action=showinfo,tvshowid=%s)" %item["tvshowid"]
+            item["file"] = "plugin://script.skin.helper.service/?action=launch&path=" + url
             allItems.append(item)
 
     return allItems
@@ -1143,22 +1137,22 @@ def getCast(movie=None,tvshow=None,movieset=None,episode=None,downloadThumbs=Fal
     cachedataStr = ""
     try:
         if movieset:
-            cachedataStr = "movieset.castcache-" + str(movieset)+str(downloadThumbs)
+            cachedataStr = "movieset.castcache-%s-%s" %(movieset, downloadThumbs)
             itemId = int(movieset)
         elif tvshow:
-            cachedataStr = "tvshow.castcache-" + str(tvshow)+str(downloadThumbs)
+            cachedataStr = "tvshow.castcache-%s-%s" %(tvshow,downloadThumbs)
             itemId = int(tvshow)
         elif movie:
-            cachedataStr = "movie.castcache-" + str(movie)+str(downloadThumbs)
+            cachedataStr = "movie.castcache-%s-%s" %(movie,downloadThumbs)
             itemId = int(movie)
         elif episode:
-            cachedataStr = "episode.castcache-" + str(episode)+str(downloadThumbs)
+            cachedataStr = "episode.castcache-%s-%s" %(episode,downloadThumbs)
             itemId = int(episode)
         elif not (movie or tvshow or episode or movieset) and xbmc.getCondVisibility("Window.IsActive(DialogVideoInfo.xml)"):
-            cachedataStr = xbmc.getInfoLabel("ListItem.Title")+xbmc.getInfoLabel("ListItem.FileNameAndPath")+str(downloadThumbs)
+            cachedataStr = xbmc.getInfoLabel("ListItem.Title") + xbmc.getInfoLabel("ListItem.FileNameAndPath") + str(downloadThumbs)
     except: pass
     
-    cachedata = WINDOW.getProperty(cachedataStr+"bla").decode("utf-8")
+    cachedata = WINDOW.getProperty(cachedataStr).decode("utf-8")
     if cachedata:
         #get data from cache
         allCast = eval(cachedata)
@@ -1217,7 +1211,6 @@ def getCast(movie=None,tvshow=None,movieset=None,episode=None,downloadThumbs=Fal
             tmdbdetails = artutils.getTmdbDetails(tvshow,None,"tv","",True)
         if tmdbdetails:
             allCast = eval(tmdbdetails.get("cast"))
-        
         
         #optional: download missing actor thumbs
         if allCast and downloadThumbs:
