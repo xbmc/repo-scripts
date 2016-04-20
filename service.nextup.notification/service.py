@@ -67,7 +67,7 @@ class Service():
                         self.logMsg("randomunwatchedtime is %s" % (int(randomunwatchedtime)), 2)
                         if (int(playTime) >= int(randomunwatchedtime)) and (int(playTime) < int(randomunwatchedtime+100)) and displayrandomunwatched and (
                                         lastUnwatchedFile is None or lastUnwatchedFile != currentFile):
-                            self.logMsg("Calling display unwatched playtime is %s" % (playTime), 2)
+                            self.logMsg("Calling display unwatched playtime is %s" % (int(playTime)), 2)
                             lastUnwatchedFile = currentFile
                             player.displayRandomUnwatched()
 
