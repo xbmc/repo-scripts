@@ -1,3 +1,26 @@
+v.1.0.84
+- FIX optimize shutdown requests
+- FIX additional properties for home backgrounds
+- FIX widget caching
+- ADD artist/album thumb to music artwork
+- ADD inprogressandrandom movies widget node
+- FIX colorpicker, apply color only on click
+- FIX custom infodialog for other media types
+- FIX rework to music artwork for better matching (strict check removed)
+- ADD contextmenu options to choose PVR art
+- FIX PVR artwork google images lookup
+- ADD animated artwork contextmenu options
+- ADD custom path setting for music artwork
+- FIX for movieset cast listing
+- FIX cache issues for moviesets and streamdetails
+- ADD getpercentage methode
+- FIX OMDB data retrieval
+- ADD IMDB TOP 250 for movies and tvshows
+- FIX hide skinhelper from addon listings
+- FIX code cleanup and speed improvements
+- FIX androidapps in favourites widgets
+
+
 v.1.0.68
 - FIX Kodi crashing issue in certain situations
 - General stability fixes

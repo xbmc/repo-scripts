@@ -22,7 +22,7 @@
             <posy>60</posy>
             <width min="80" max="1400">auto</width>
             <height>100</height>
-            <font>font35_title</font>
+            <font>font16</font>
 			<label>19140</label>
             <align>left</align>
             <textcolor>white</textcolor>
@@ -74,12 +74,12 @@
 					<width>900</width>
 					<height>80</height>
 					<onright>2900</onright>
-					<itemgap>-10</itemgap>
+					<itemgap>5</itemgap>
 					<orientation>horizontal</orientation>
 						
 					
 					<control type="button" id="3020">
-						<width>90</width>
+						<width>80</width>
 						<height>90</height>
 						<label>A</label>
 						<onleft>noop</onleft>
@@ -89,7 +89,7 @@
 					</control>
 					
 					<control type="button" id="3021">
-						<width>90</width>
+						<width>80</width>
 						<height>90</height>
 						<label>B</label>
 						<onleft>3020</onleft>
@@ -99,7 +99,7 @@
 					</control>   
 
 					<control type="button" id="3022">
-						<width>90</width>
+						<width>80</width>
 						<height>90</height>
 						<label>C</label>
 						<onleft>3021</onleft>
@@ -109,7 +109,7 @@
 					</control>  
 					
 					<control type="button" id="3023">
-						<width>90</width>
+						<width>80</width>
 						<height>90</height>
 						<label>D</label>
 						<onleft>3022</onleft>
@@ -119,7 +119,7 @@
 					</control>     
 
 					<control type="button" id="3024">
-						<width>90</width>
+						<width>80</width>
 						<height>90</height>
 						<label>E</label>
 						<onleft>3023</onleft>
@@ -129,7 +129,7 @@
 					</control>   
 					
 					<control type="button" id="3025">
-						<width>90</width>
+						<width>80</width>
 						<height>90</height>
 						<label>F</label>
 						<onleft>3024</onleft>
@@ -145,11 +145,11 @@
 					<height>80</height>
 					<width>900</width>
 					<onright>2900</onright>
-					<itemgap>-10</itemgap>
+					<itemgap>5</itemgap>
 					<orientation>horizontal</orientation>			
 
 					<control type="button" id="3026">
-						<width>90</width>
+						<width>80</width>
 						<height>90</height>
 						<label>G</label>
 						<onleft>noop</onleft>
@@ -159,7 +159,7 @@
 					</control>
 					
 					<control type="button" id="3027">
-						<width>90</width>
+						<width>80</width>
 						<height>90</height>
 						<label>H</label>
 						<onleft>3026</onleft>
@@ -169,7 +169,7 @@
 					</control>   
 
 					<control type="button" id="3028">
-						<width>90</width>
+						<width>80</width>
 						<height>90</height>
 						<label>I</label>
 						<onleft>3027</onleft>
@@ -179,7 +179,7 @@
 					</control>  
 					
 					<control type="button" id="3029">
-						<width>90</width>
+						<width>80</width>
 						<height>90</height>
 						<label>J</label>
 						<onleft>3028</onleft>
@@ -189,7 +189,7 @@
 					</control>     
 
 					<control type="button" id="3030">
-						<width>90</width>
+						<width>80</width>
 						<height>90</height>
 						<label>K</label>
 						<onleft>3029</onleft>
@@ -199,7 +199,7 @@
 					</control>   
 					
 					<control type="button" id="3031">
-						<width>90</width>
+						<width>80</width>
 						<height>90</height>
 						<label>L</label>
 						<onleft>3030</onleft>
@@ -215,11 +215,11 @@
 					<top>320</top>
 					<width>900</width>
 					<onright>2900</onright>
-					<itemgap>-10</itemgap>
+					<itemgap>5</itemgap>
 					<height>80</height>
 					<orientation>horizontal</orientation>
 					<control type="button" id="3032">
-						<width>90</width>
+						<width>80</width>
 						<height>90</height>
 						<label>M</label>
 						<onleft>noop</onleft>
@@ -229,7 +229,7 @@
 					</control>
 					
 					<control type="button" id="3033">
-						<width>90</width>
+						<width>80</width>
 						<height>90</height>
 						<label>N</label>
 						<onleft>3032</onleft>
@@ -239,7 +239,7 @@
 					</control>   
 
 					<control type="button" id="3034">
-					   <width>90</width>
+					   <width>80</width>
 						<height>90</height>
 						<label>O</label>
 						<onleft>3033</onleft>
@@ -249,7 +249,7 @@
 					</control>  
 					
 					<control type="button" id="3035">
-						<width>90</width>
+						<width>80</width>
 						<height>90</height>
 						<label>P</label>
 						<onleft>3034</onleft>
@@ -259,7 +259,7 @@
 					</control>     
 
 					<control type="button" id="3036">
-						<width>90</width>
+						<width>80</width>
 						<height>90</height>
 						<label>Q</label>
 						<onleft>3035</onleft>
@@ -269,7 +269,7 @@
 					</control>   
 					
 					<control type="button" id="3037">
-					   <width>90</width>
+					   <width>80</width>
 						<height>90</height>
 						<label>R</label>
 						<onleft>3036</onleft>
@@ -286,11 +286,11 @@
 					<width>900</width>
 					<height>80</height>
 					<onright>2900</onright>
-					<itemgap>-10</itemgap>
+					<itemgap>5</itemgap>
 					<orientation>horizontal</orientation>			
 			
 					<control type="button" id="3038">
-						<width>90</width>
+						<width>80</width>
 						<height>90</height>
 						<label>S</label>
 						<onleft>noop</onleft>
@@ -300,7 +300,7 @@
 					</control>
 					
 					<control type="button" id="3039">
-						<width>90</width>
+						<width>80</width>
 						<height>90</height>
 						<label>T</label>
 						<onleft>3038</onleft>
@@ -310,7 +310,7 @@
 					</control>   
 
 					<control type="button" id="3040">
-						<width>90</width>
+						<width>80</width>
 						<height>90</height>
 						<label>U</label>
 						<onleft>3039</onleft>
@@ -320,7 +320,7 @@
 					</control>  
 					
 					<control type="button" id="3041">
-						<width>90</width>
+						<width>80</width>
 						<height>90</height>
 						<label>V</label>
 						<onleft>3040</onleft>
@@ -330,7 +330,7 @@
 					</control>     
 
 					<control type="button" id="3042">
-						<width>90</width>
+						<width>80</width>
 						<height>90</height>
 						<label>W</label>
 						<onleft>3041</onleft>
@@ -340,7 +340,7 @@
 					</control>   
 					
 					<control type="button" id="3043">
-						<width>90</width>
+						<width>80</width>
 						<height>90</height>
 						<label>X</label>
 						<onleft>3042</onleft>
@@ -357,11 +357,11 @@
 					<width>900</width>
 					<height>80</height>
 					<onright>2900</onright>
-					<itemgap>-10</itemgap>
+					<itemgap>5</itemgap>
 					<orientation>horizontal</orientation>			
 			
 					<control type="button" id="3044">
-						<width>90</width>
+						<width>80</width>
 						<height>90</height>
 						<label>Y</label>
 						<onleft>noop</onleft>
@@ -371,7 +371,7 @@
 					</control>
 					
 					<control type="button" id="3045">
-						<width>90</width>
+						<width>80</width>
 						<height>90</height>
 						<label>Z</label>
 						<onleft>3044</onleft>
@@ -381,7 +381,7 @@
 					</control>   
 
 					<control type="button" id="3046">
-						<width>90</width>
+						<width>80</width>
 						<height>90</height>
 						<label>$NUMBER[0]</label>
 						<onleft>3045</onleft>
@@ -391,7 +391,7 @@
 					</control>  
 					
 					<control type="button" id="3047">
-					   <width>90</width>
+					   <width>80</width>
 						<height>90</height>
 						<label>$NUMBER[1]</label>
 						<onleft>3046</onleft>
@@ -401,7 +401,7 @@
 					</control>     
 
 					<control type="button" id="3048">
-						<width>90</width>
+						<width>80</width>
 						<height>90</height>
 						<label>$NUMBER[2]</label>
 						<onleft>3047</onleft>
@@ -411,7 +411,7 @@
 					</control>   
 					
 					<control type="button" id="3049">
-					   <width>90</width>
+					   <width>80</width>
 						<height>90</height>
 						<label>$NUMBER[3]</label>
 						<onleft>3048</onleft>
@@ -428,10 +428,10 @@
 				<width>900</width>
 				<height>80</height>
 				<onright>2900</onright>
-				<itemgap>-10</itemgap>
+				<itemgap>5</itemgap>
 				<orientation>horizontal</orientation>		
 					<control type="button" id="3050">
-					   <width>90</width>
+					   <width>80</width>
 						<height>90</height>
 						<label>$NUMBER[4]</label>
 						<onleft>noop</onleft>
@@ -441,7 +441,7 @@
 					</control>
 					
 					<control type="button" id="3051">
-					   <width>90</width>
+					   <width>80</width>
 						<height>90</height>
 						<label>$NUMBER[5]</label>
 						<onleft>3050</onleft>
@@ -451,7 +451,7 @@
 					</control>   
 
 					<control type="button" id="3052">
-						<width>90</width>
+						<width>80</width>
 						<height>90</height>
 						<label>$NUMBER[6]</label>
 						<onleft>3051</onleft>
@@ -461,7 +461,7 @@
 					</control>  
 					
 					<control type="button" id="3053">
-					   <width>90</width>
+					   <width>80</width>
 						<height>90</height>
 						<label>$NUMBER[7]</label>
 						<onleft>3052</onleft>
@@ -471,7 +471,7 @@
 					</control>     
 
 					<control type="button" id="3054">
-						<width>90</width>
+						<width>80</width>
 						<height>90</height>
 						<label>$NUMBER[8]</label>
 						<onleft>3053</onleft>
@@ -481,7 +481,7 @@
 					</control>   
 					
 					<control type="button" id="3055">
-					   <width>90</width>
+					   <width>80</width>
 						<height>90</height>
 						<label>$NUMBER[9]</label>
 						<onleft>3054</onleft>
@@ -497,13 +497,13 @@
 				<top>720</top>
 				<width>900</width>
 				<height>80</height>
-				<itemgap>-10</itemgap>
+				<itemgap>5</itemgap>
 				<onright>2900</onright>
 				<orientation>horizontal</orientation>		
 					<control type="button" id="3056">
 						<width>170</width>
-						<font>font13</font>
-						<width>90</width>
+						<font>font10</font>
+						<width>80</width>
 						<height>90</height>
 						<label>20181</label>
 						<onleft>noop</onleft>
@@ -514,8 +514,8 @@
 					
 					<control type="button" id="3057">
 						<width>170</width>
-						<font>font13</font>
-						<width>90</width>
+						<font>font10</font>
+						<width>80</width>
 						<height>90</height>
 						<label>20182</label>
 						<onleft>3056</onleft>
@@ -526,8 +526,8 @@
 
 					<control type="button" id="3058">
 						<width>170</width>
-						<font>font13</font>
-						<width>90</width>
+						<font>font10</font>
+						<width>80</width>
 						<height>90</height>
 						<label>192</label>
 						<onleft>3057</onleft>
@@ -564,7 +564,7 @@
 				<height>20</height>
 				<width>190</width>
 				<label>342</label>
-				<font>font35_title</font>
+				<font>font16</font>
 				<textcolor>white</textcolor>
 				<angle>-90</angle>
 			</control>   
@@ -597,11 +597,10 @@
 						  <control type="image">
 							<width>150</width>
 							<height>221</height>
-							<texture border="1" background="true" diffuse="poster.png" fallback="DefaultVideo.png">$INFO[ListItem.Icon]</texture>
+							<texture border="1" background="true" diffuse="poster.png" fallback="DefaultVideo.png">$INFO[ListItem.Art(poster)]</texture>
 							<aspectratio scalediffuse="true" aligny="bottom" align="center">stretch</aspectratio>
 							<bordersize>0</bordersize>
 						  </control>
-						  
 					  </control>
                 </itemlayout>
                 <!-- focussed layout movies -->
@@ -620,24 +619,22 @@
 						<control type="image">
 							<width>150</width>
 							<height>221</height>
-							<texture border="1" background="true" diffuse="poster.png" fallback="DefaultVideo.png">$INFO[ListItem.Icon]</texture>
+							<texture border="1" background="true" diffuse="poster.png" fallback="DefaultVideo.png">$INFO[ListItem.Art(poster)]</texture>
 							<aspectratio scalediffuse="true" aligny="bottom" align="center">stretch</aspectratio>
 							<bordersize>0</bordersize>
 					  </control>
-					  
 				  </control>
                 </focusedlayout>
 			</control>
 
 			<!-- Series -->
-			
 			<control type="label">
 				<left>0</left>
 				<top>330</top>
 				<height>20</height>
 				<width>190</width>
 				<label>20343</label>
-				<font>font35_title</font>
+				<font>font16</font>
 				<textcolor>white</textcolor>
 				<angle>-90</angle>
 			</control>   		
@@ -669,11 +666,10 @@
 						  <control type="image">
 							<width>150</width>
 							<height>221</height>
-							<texture border="1" background="true" diffuse="poster.png" fallback="DefaultVideo.png">$INFO[ListItem.Icon]</texture>
+							<texture border="1" background="true" diffuse="poster.png" fallback="DefaultVideo.png">$INFO[ListItem.Art(poster)]</texture>
 							<aspectratio scalediffuse="true" aligny="bottom" align="center">stretch</aspectratio>
 							<bordersize>0</bordersize>
 						  </control>
-						  
 					  </control>
                 </itemlayout>
                 <!-- focussed layout series -->
@@ -692,11 +688,10 @@
 					  <control type="image">
 							<width>150</width>
 							<height>221</height>
-							<texture border="1" background="true" diffuse="poster.png" fallback="DefaultVideo.png">$INFO[ListItem.Icon]</texture>
+							<texture border="1" background="true" diffuse="poster.png" fallback="DefaultVideo.png">$INFO[ListItem.Art(poster)]</texture>
 							<aspectratio scalediffuse="true" aligny="bottom" align="center">stretch</aspectratio>
 							<bordersize>0</bordersize>
 					  </control>
-					  
 				  </control>
                 </focusedlayout>
 			</control>
@@ -709,7 +704,7 @@
 				<height>20</height>
 				<width>190</width>
 				<label>20360</label>
-				<font>font35_title</font>
+				<font>font16</font>
 				<textcolor>white</textcolor>
 				<angle>-90</angle>
 			</control> 
@@ -741,11 +736,10 @@
 						  <control type="image">
 							<width>150</width>
 							<height>221</height>
-							<texture border="1" background="true" diffuse="poster.png" fallback="DefaultVideo.png">$INFO[ListItem.Art(tvshow.poster)]</texture>
+							<texture border="1" background="true" diffuse="poster.png" fallback="DefaultVideo.png">$INFO[ListItem.Art(poster)]</texture>
 							<aspectratio scalediffuse="true" aligny="bottom" align="center">stretch</aspectratio>
 							<bordersize>0</bordersize>
 						  </control>
-						  
 					  </control>
 					  <control type="label">
 						<top>230</top>
@@ -753,7 +747,7 @@
 						<width>150</width>
 						<height>30</height>
 						<align>left</align>
-						<font>font13</font>
+						<font>font10</font>
 						<textcolor>white</textcolor>
 						<shadowcolor>black</shadowcolor>
 						<label>$INFO[Listitem.tvshowtitle]</label>
@@ -764,7 +758,7 @@
 						<width>150</width>
 						<height>30</height>
 						<align>left</align>
-						<font>font13</font>
+						<font>font10</font>
 						<textcolor>white</textcolor>
 						<label>$INFO[Listitem.Label]</label>
 					</control>        					
@@ -783,11 +777,10 @@
 					  <control type="image">
 						<width>150</width>
 							<height>221</height>
-						<texture border="1" background="true" diffuse="poster.png" fallback="DefaultVideo.png">$INFO[ListItem.Art(tvshow.poster)]</texture>
+						<texture border="1" background="true" diffuse="poster.png" fallback="DefaultVideo.png">$INFO[ListItem.Art(poster)]</texture>
 							<aspectratio scalediffuse="true" aligny="bottom" align="center">stretch</aspectratio>
 							<bordersize>0</bordersize>
 					  </control>
-					  
 				  </control>
 				  <control type="label">
 						<top>230</top>
@@ -795,7 +788,7 @@
 						<width>150</width>
 						<height>30</height>
 						<align>left</align>
-						<font>font13</font>
+						<font>font10</font>
 						<textcolor>black</textcolor>
 						<label>$INFO[Listitem.tvshowtitle]</label>
 					</control>
@@ -805,7 +798,7 @@
 						<width>150</width>
 						<height>30</height>
 						<align>left</align>
-						<font>font13</font>
+						<font>font10</font>
 						<textcolor>black</textcolor>
 						<label>$INFO[Listitem.Label]</label>
 					</control>        					

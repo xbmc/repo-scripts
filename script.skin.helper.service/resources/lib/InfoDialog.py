@@ -9,13 +9,54 @@ CANCEL_DIALOG  = ( 9, 10, 92, 216, 247, 257, 275, 61467, 61448, )
 ACTION_SHOW_INFO = ( 11, )
 
 class GUI( xbmcgui.WindowXMLDialog ):
+    
     def __init__( self, *args, **kwargs ):
         xbmcgui.WindowXMLDialog.__init__( self )
-        self.listitem = kwargs[ "listitem" ]
-        self.content = kwargs[ "content" ]
-        WINDOW.setProperty("SkinHelper.WidgetContainer","999")
+        params = kwargs[ "params" ]
+        logMsg( repr(params) )
+        if params.get("MOVIEID"):
+            item = getJSON('VideoLibrary.GetMovieDetails', '{ "movieid": %s, "properties": [ %s ] }' %(params["MOVIEID"],fields_movies))
+            self.content = "movies"
+        elif params.get("MUSICVIDEOID"):
+            item = getJSON('VideoLibrary.GetMusicVideoDetails', '{ "musicvideoid": %s, "properties": [ %s ] }' %(params["MUSICVIDEOID"],fields_musicvideos))
+            self.content = "musicvideos"
+        elif params.get("EPISODEID"):
+            item = getJSON('VideoLibrary.GetEpisodeDetails', '{ "episodeid": %s, "properties": [ %s ] }' %(params["EPISODEID"],fields_episodes))
+            self.content = "episodes"
+        elif params.get("TVSHOWID"):
+            item = getJSON('VideoLibrary.GetTVShowDetails', '{ "tvshowid": %s, "properties": [ %s ] }' %(params["TVSHOWID"],fields_tvshows))
+            self.content = "tvshows"
+        elif params.get("ALBUMID"):
+            item = getJSON('AudioLibrary.GetAlbumDetails', '{ "albumid": %s, "properties": [ %s ] }' %(params["ALBUMID"],fields_albums))
+            self.content = "albums"
+        elif params.get("SONGID"):
+            item = getJSON('AudioLibrary.GetSongDetails', '{ "songid": %s, "properties": [ %s ] }' %(params["SONGID"],fields_songs))
+            self.content = "songs"
+        elif params.get("RECORDINGID"):
+            item = getJSON('PVR.GetRecordingDetails', '{ "recordingid": %s, "properties": [ %s ]}' %( params["RECORDINGID"], fields_pvrrecordings))
+            artwork = artutils.getPVRThumbs(item["title"],item["channel"],"recordings",item["file"])
+            item["art"] = artwork
+            for key, value in artwork.iteritems():
+                if not item.get(key):
+                    item[key] = value
+            if artwork.get("tmdb_type") == "movies":
+                self.content = "movies"
+            elif artwork.get("tmdb_type") == "tv":
+                self.content = "episodes"
+            else:
+                self.content = "tvrecordings"
+        else:
+            item = None
+            self.listitem = None
+        
+        if item:        
+            liz = prepareListItem(item)
+            liz = createListItem(item)
+            self.listitem = liz
+            self.lastwidgetcontainer = params.get("lastwidgetcontainer","")
+            WINDOW.setProperty("SkinHelper.WidgetContainer","999")
 
-    def onInit( self ):
+    def onInit( self ):       
         self._hide_controls()
         self._show_info()
         self.bginfoThread = BackgroundInfoThread()
@@ -29,15 +70,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
     def _show_info( self ):
             
         self.listitem.setProperty("contenttype",self.content)
-        
-        if self.content == 'movies':
-            self.listitem.setProperty("type","movie")
-        
-        elif self.content == 'tvshows':
-            self.listitem.setProperty("type","tvshow")
-            
-        elif self.content == 'episodes':
-            self.listitem.setProperty("type","episode")
+        self.listitem.setProperty("type",self.content[:-1])
             
         list = self.getControl( 999 )
         list.addItem(self.listitem)
@@ -49,17 +82,16 @@ class GUI( xbmcgui.WindowXMLDialog ):
     def _close_dialog( self, action=None ):
         self.action = action
         self.bginfoThread.stopRunning()
-        WINDOW.clearProperty("SkinHelper.WidgetContainer")
+        WINDOW.setProperty("SkinHelper.WidgetContainer",self.lastwidgetcontainer)
         self.close()
 
     def onClick( self, controlId ):
         if controlId == 5:
-            if self.content == 'movies':
-                path = self.getControl( 999 ).getSelectedItem().getProperty('dbid')
-                self._close_dialog('{ "jsonrpc": "2.0", "method": "Player.Open", "params": { "item": { "movieid": %s } }, "id": 1 }' % path)
-            elif self.content == 'episodes':
-                path = self.getControl( 999 ).getSelectedItem().getProperty('dbid')
-                self._close_dialog('{ "jsonrpc": "2.0", "method": "Player.Open", "params": { "item": { "episodeid": %s } }, "id": 1 }' % path)
+            type = self.getControl( 999 ).getSelectedItem().getProperty('dbtype')
+            id = self.getControl( 999 ).getSelectedItem().getProperty('dbid')
+            logMsg("type: %s - id: %s" %(type,id))
+            if type and id and self.content != "tvshows":
+                self._close_dialog('{ "jsonrpc": "2.0", "method": "Player.Open", "params": { "item": { "%sid": %s } }, "id": 1 }' % (type,id))
             elif self.content == 'tvshows':
                 path = self.getControl( 999 ).getSelectedItem().getProperty('path')
                 self._close_dialog('ActivateWindow(Videos,%s,return)' %path)
@@ -129,7 +161,7 @@ class BackgroundInfoThread(threading.Thread):
                 liz = xbmcgui.ListItem(label=cast.get("name"),label2=cast.get("role"),iconImage=cast.get("thumbnail"))
                 liz.setProperty('IsPlayable', 'false')
                 url = "RunScript(script.extendedinfo,info=extendedactorinfo,name=%s)"%cast.get("name")
-                path="plugin://script.skin.helper.service/?action=launch&path=" + url
+                liz.setProperty("path",url)
                 liz.setThumbnailImage(cast.get("thumbnail"))
                 castlist.addItem(liz)
                     

@@ -57,7 +57,6 @@ def getPluginListing(action,limit,refresh=None,optionalParam=None,randomize=Fals
     
     #try to get from cache first...
     cache = WINDOW.getProperty(cacheStr).decode("utf-8")
-    cache = None
     if cache:
         allItems = eval(cache)
             
@@ -102,7 +101,9 @@ def doMainListing(mode=""):
         addDirectoryItem(ADDON.getLocalizedString(32168), "plugin://script.skin.helper.service/?action=inprogressmovies&limit=100")
         addDirectoryItem(ADDON.getLocalizedString(32003), "plugin://script.skin.helper.service/?action=recommendedmovies&limit=100")
         addDirectoryItem(ADDON.getLocalizedString(32169), "plugin://script.skin.helper.service/?action=inprogressandrecommendedmovies&limit=100")
+        addDirectoryItem(ADDON.getLocalizedString(32186), "plugin://script.skin.helper.service/?action=inprogressandrandommovies&limit=100")
         addDirectoryItem(ADDON.getLocalizedString(32006), "plugin://script.skin.helper.service/?action=similarmovies&limit=100")
+        addDirectoryItem(ADDON.getLocalizedString(32185), "plugin://script.skin.helper.service/?action=randommovies&limit=100")
         
         #tvshow nodes
         addDirectoryItem(ADDON.getLocalizedString(32167), "plugin://script.skin.helper.service/?action=inprogressepisodes&limit=100")
@@ -857,6 +858,23 @@ def INPROGRESSANDRECOMMENDEDMOVIES(limit):
             allItems.append(item)
     return allItems
 
+def RANDOMMOVIES(limit):
+    return getJSON('VideoLibrary.GetMovies','{ "sort": { "order": "descending", "method": "random" }, "filter": {"operator":"is", "field":"playcount", "value":"0"}, "properties": [ %s ], "limits":{"end":%d} }' %(fields_movies,limit))
+    
+def INPROGRESSANDRANDOMMOVIES(limit):
+    allTitles = list()
+    
+    # In progress movies
+    allItems = INPROGRESSMOVIES(limit)
+    for item in allItems:
+        allTitles.append(item["title"])
+    
+    # Random movies
+    for item in RANDOMMOVIES(limit):
+        if item["title"] not in allTitles:
+            allItems.append(item)
+    return allItems
+
 def INPROGRESSANDRECOMMENDEDTVSHOWS(limit):
     allTitles = list()
     
@@ -949,6 +967,36 @@ def RECENTMEDIA(limit):
     #sort the list with in recent items by lastplayed date   
     return sorted(allItems,key=itemgetter("sortkey"),reverse=True)
 
+def getKodiFavsFromFile():
+    #json method for favourites doesn't return all items (such as android apps) so retrieve them from file
+    allfavourites = []
+    favourites_path = xbmc.translatePath('special://profile/favourites.xml').decode("utf-8")
+    if xbmcvfs.exists(favourites_path):
+        doc = parse(favourites_path)
+        result = doc.documentElement.getElementsByTagName('favourite')
+        for count, fav in enumerate(result):
+            action = fav.childNodes[0].nodeValue
+            action = action.replace('"','')
+            label = fav.attributes['name'].nodeValue
+            try: thumb = fav.attributes['thumb'].nodeValue
+            except: thumb = ""
+            window = ""
+            windowparameter = ""
+            type = "unknown"
+            if action.startswith("StartAndroidActivity"):
+                type = "androidapp"
+            elif action.startswith("ActivateWindow"):
+                type = "window"
+                actionparts = action.replace("ActivateWindow(","").replace(",return)","").split(",")
+                window = actionparts[0]
+                if len(actionparts) > 1:
+                    windowparameter = actionparts[1]
+            elif action.startswith("PlayMedia"):
+                type = "media"
+                action = action.replace("PlayMedia(","")[:-1]
+            allfavourites.append( {"label":label, "path":action, "thumbnail": thumb, "window":window, "windowparameter":windowparameter, "type":type} )
+    return allfavourites
+    
 def FAVOURITEMEDIA(limit,AllKodiFavsOnly=False):
     count = 0
     allItems = []
@@ -971,10 +1019,11 @@ def FAVOURITEMEDIA(limit,AllKodiFavsOnly=False):
                 allItems.append(item)
     
     #Kodi favourites
-    json_result = getJSON('Favourites.GetFavourites', '{"type": null, "properties": ["path", "thumbnail", "window", "windowparameter"]}')
-    for fav in json_result:
+    #all_favs = getJSON('Favourites.GetFavourites', '{"type": null, "properties": ["path", "thumbnail", "window", "windowparameter"]}')
+    all_favs = getKodiFavsFromFile()
+    for fav in all_favs:
         matchFound = False
-        if "windowparameter" in fav:
+        if fav.get("windowparameter"):
             if fav["windowparameter"].startswith("videodb://tvshows/titles"):
                 #it's a tv show
                 try:
@@ -986,7 +1035,7 @@ def FAVOURITEMEDIA(limit,AllKodiFavsOnly=False):
                     tvshowpath = "ActivateWindow(Videos,%s,return)" %fav["windowparameter"]
                     tvshowpath="plugin://script.skin.helper.service?action=launch&path=" + tvshowpath
                     json_result["file"] == tvshowpath
-                    allItems.append(json_result)            
+                    allItems.append(json_result)
         if fav["type"] == "media":
             path = fav["path"]
             if "/" in path:
@@ -1030,20 +1079,15 @@ def FAVOURITEMEDIA(limit,AllKodiFavsOnly=False):
                 path="plugin://script.skin.helper.service/?action=launch&path=" + path
             elif fav.get("type") == "media":
                 path = fav.get("path")
-            elif fav.get("type") == "script":
-                path='plugin://script.skin.helper.service/?action=launch&path=RunScript("%s")' %fav.get("path")
-            elif "android" in fav.get("type"):
-                path='plugin://script.skin.helper.service/?action=launch&path=StartAndroidActivity("%s")' %fav.get("path")
             else:
-                path='plugin://script.skin.helper.service/?action=launch&path=RunScript("%s")' %fav.get("path")
+                path='plugin://script.skin.helper.service/?action=launch&path=%s' %fav.get("path")
             if not fav.get("label"): fav["label"] = fav.get("title")
             if not fav.get("title"): fav["label"] = fav.get("label")
             item = {"label": fav.get("label"), "title": fav.get("title"), "thumbnail":fav.get("thumbnail"), "file":path}
             if fav.get("thumbnail").endswith("icon.png") and fav.get("thumbnail").endswith("icon.png") and  xbmcvfs.exists(fav.get("thumbnail").replace("icon.png","fanart.jpg")):
                 item["art"] = {"landscape": fav.get("thumbnail"), "poster": fav.get("thumbnail"), "fanart": fav.get("thumbnail").replace("icon.png","fanart.jpg")}
             item["extraproperties"] = {"IsPlayable": "false"}
-            allItems.append(item)
-            
+            allItems.append(item)      
     return allItems
     
 def getExtraFanArt(path):
@@ -1072,20 +1116,17 @@ def getExtraFanArt(path):
 def GETCASTMEDIA(limit,name=""):
     allItems = []
     if name:
-        json_result = getJSON('VideoLibrary.GetMovies', '{ "properties": [ %s ] }' %fields_movies)
+        json_result = getJSON('VideoLibrary.GetMovies', '{ "filter": {"operator": "contains", "field": "actor", "value": "%s"}, "properties": [ %s ] }' %(name,fields_movies))
         for item in json_result:
-            for castmember in item["cast"]:
-                if castmember["name"].lower() == name.lower():
-                    url = "RunScript(script.skin.helper.service,action=showinfo,movieid=%s)" %item["movieid"]
-                    item["file"] = "plugin://script.skin.helper.service/?action=launch&path=" + url
-                    allItems.append(item)
-        json_result = getJSON('VideoLibrary.GetTvShows', '{ "properties": [ %s ] }' %fields_tvshows)
+            url = "RunScript(script.skin.helper.service,action=showinfo,movieid=%s)" %item["movieid"]
+            item["file"] = "plugin://script.skin.helper.service/?action=launch&path=" + url
+            allItems.append(item)
+        json_result = getJSON('VideoLibrary.GetTvShows', '{ "filter": {"operator": "contains", "field": "actor", "value": "%s"}, "properties": [ %s ] }' %(name,fields_tvshows))
         for item in json_result:
-            for castmember in item["cast"]:
-                if castmember["name"].lower() == name.lower():
-                    url = "RunScript(script.skin.helper.service,action=showinfo,tvshowid=%s)" %item["tvshowid"]
-                    item["file"] = "plugin://script.skin.helper.service/?action=launch&path=" + url
-                    allItems.append(item)
+            url = "RunScript(script.skin.helper.service,action=showinfo,tvshowid=%s)" %item["tvshowid"]
+            item["file"] = "plugin://script.skin.helper.service/?action=launch&path=" + url
+            allItems.append(item)
+
     return allItems
     
 def getCast(movie=None,tvshow=None,movieset=None,episode=None,downloadThumbs=False,listOnly=False):
@@ -1096,19 +1137,19 @@ def getCast(movie=None,tvshow=None,movieset=None,episode=None,downloadThumbs=Fal
     cachedataStr = ""
     try:
         if movieset:
-            cachedataStr = "movieset.castcache-" + str(movieset)+str(downloadThumbs)
+            cachedataStr = "movieset.castcache-%s-%s" %(movieset, downloadThumbs)
             itemId = int(movieset)
         elif tvshow:
-            cachedataStr = "tvshow.castcache-" + str(tvshow)+str(downloadThumbs)
+            cachedataStr = "tvshow.castcache-%s-%s" %(tvshow,downloadThumbs)
             itemId = int(tvshow)
         elif movie:
-            cachedataStr = "movie.castcache-" + str(movie)+str(downloadThumbs)
+            cachedataStr = "movie.castcache-%s-%s" %(movie,downloadThumbs)
             itemId = int(movie)
         elif episode:
-            cachedataStr = "episode.castcache-" + str(episode)+str(downloadThumbs)
+            cachedataStr = "episode.castcache-%s-%s" %(episode,downloadThumbs)
             itemId = int(episode)
         elif not (movie or tvshow or episode or movieset) and xbmc.getCondVisibility("Window.IsActive(DialogVideoInfo.xml)"):
-            cachedataStr = xbmc.getInfoLabel("ListItem.Title")+xbmc.getInfoLabel("ListItem.FileNameAndPath")+str(downloadThumbs)
+            cachedataStr = xbmc.getInfoLabel("ListItem.Title") + xbmc.getInfoLabel("ListItem.FileNameAndPath") + str(downloadThumbs)
     except: pass
     
     cachedata = WINDOW.getProperty(cachedataStr).decode("utf-8")
@@ -1138,19 +1179,17 @@ def getCast(movie=None,tvshow=None,movieset=None,episode=None,downloadThumbs=Fal
             if json_result and json_result[0].get("cast"): allCast = json_result[0].get("cast")
         elif movieset:
             moviesetmovies = []
-            if itemId:
-                json_result = getJSON('VideoLibrary.GetMovieSetDetails', '{ "setid": %d, "properties": [ "title" ] }' %itemId)
-                if json_result.has_key("movies"): moviesetmovies = json_result['movies']
-            elif not itemId:
+            if not itemId:
                 json_result = getJSON('VideoLibrary.GetMovieSets', '{ "properties": [ "title" ] }')
                 for result in json_result:
-                    if result.get("title") == movieset and result.get("movies"):
-                        moviesetmovies = result['movies']
+                    if result.get("title").lower() == movieset.lower():
+                        itemId = result['setid']
                         break
-            if moviesetmovies:
-                for setmovie in moviesetmovies:
-                    json_result = getJSON('VideoLibrary.GetMovieDetails', '{ "movieid": %d, "properties": [ "title", "cast" ] }' %setmovie["movieid"])
-                    if json_result and json_result.get("cast"): allCast += json_result.get("cast")
+            if itemId:
+                json_result = getJSON('VideoLibrary.GetMovieSetDetails', '{ "setid": %d, "movies": {"properties": [ "title","cast" ]} }' %itemId)
+                if json_result.has_key("movies"):
+                    for movie in json_result['movies']:
+                        allCast += movie['cast']
         
         #no item provided, try to grab the cast list from container 50 (dialogvideoinfo)
         elif not (movie or tvshow or episode or movieset) and xbmc.getCondVisibility("Window.IsActive(DialogVideoInfo.xml)"):
@@ -1172,7 +1211,6 @@ def getCast(movie=None,tvshow=None,movieset=None,episode=None,downloadThumbs=Fal
             tmdbdetails = artutils.getTmdbDetails(tvshow,None,"tv","",True)
         if tmdbdetails:
             allCast = eval(tmdbdetails.get("cast"))
-        
         
         #optional: download missing actor thumbs
         if allCast and downloadThumbs:

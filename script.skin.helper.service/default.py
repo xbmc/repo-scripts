@@ -15,13 +15,14 @@ class Main:
         #extract the params from the called script path
         params = {}
         for arg in sys.argv:
+            arg = arg.decode("utf-8")
             if arg == 'script.skin.helper.service' or arg == 'default.py':
                 continue
-            arg = arg.replace('"', '').replace("'", " ").replace("?", "")
-            if "=" in arg:
-                paramname = arg.split('=')[0].upper()
-                paramvalue = arg.split('=')[1]
+            elif "=" in arg:
+                paramname = arg.split('=')[0]
+                paramvalue = arg.replace(paramname+"=","")
                 params[paramname] = paramvalue
+                params[paramname.upper()] = paramvalue
         
         utils.logMsg("Parameter string: " + str(params))
         return params
@@ -52,9 +53,17 @@ class Main:
             
             elif action == "SETFOCUS":
                 control = params.get("CONTROL",None)
-                xbmc.sleep(50)
-                xbmc.executebuiltin("Control.SetFocus(%s)"%control)
-            
+                fallback = params.get("FALLBACK",None)
+                count = 0
+                while not xbmc.getCondVisibility("Control.HasFocus(%s)" %control):
+                    if count == 20 or (fallback and xbmc.getCondVisibility("Control.IsVisible(%s) + !IntegerGreaterThan(Container(%s).NumItems,0)" %(control,control))):
+                        if fallback: xbmc.executebuiltin("Control.SetFocus(%s)"%fallback)
+                        break
+                    else:
+                        xbmc.executebuiltin("Control.SetFocus(%s)"%control)
+                        xbmc.sleep(50)
+                        count += 1
+                
             elif action == "SETFORCEDVIEW":
                 contenttype = params.get("CONTENTTYPE",None)
                 mainmodule.setForcedView(contenttype)
@@ -67,7 +76,13 @@ class Main:
             elif action == "SETSKINCONSTANT":
                 setting = params.get("SETTING","")
                 windowHeader = params.get("HEADER","")
-                mainmodule.setSkinConstant(setting,windowHeader)
+                value = params.get("VALUE","")
+                mainmodule.setSkinConstant(setting,windowHeader,value)
+                
+            elif action == "SETSKINCONSTANTS":
+                settings = params.get("SETTINGS","").split("|")
+                values = params.get("VALUES","").split("|")
+                mainmodule.setSkinConstant(settings,values)
                 
             elif action == "SETSKINSHORTCUTSPROPERTY":
                 setting = params.get("SETTING","")
@@ -101,35 +116,46 @@ class Main:
                         xbmc.executeJSONRPC(resultAction)
                     else:
                         xbmc.executebuiltin(resultAction)
-            
             elif action == "SHOWINFO":
                 xbmc.executebuiltin( "ActivateWindow(busydialog)" )
+                
+                #try to figure out the params automatically if no ID provided...
+                if not ( params.get("MOVIEID") or params.get("EPISODEID") or params.get("TVSHOWID") ):
+                    widgetContainer = utils.WINDOW.getProperty("SkinHelper.WidgetContainer").decode('utf-8')
+                    if widgetContainer: widgetContainerPrefix = "Container(%s)."%widgetContainer
+                    else: widgetContainerPrefix = ""
+                    dbid = xbmc.getInfoLabel("%sListItem.DBID"%widgetContainerPrefix).decode('utf-8')
+                    if not dbid or dbid == "-1": dbid = xbmc.getInfoLabel("%sListItem.Property(DBID)"%widgetContainerPrefix).decode('utf-8')
+                    if dbid == "-1": dbid = ""
+                    dbtype = xbmc.getInfoLabel("%sListItem.DBTYPE"%widgetContainerPrefix).decode('utf-8')
+                    utils.logMsg("dbtype: %s - dbid: %s" %(dbtype,dbid))
+                    if not dbtype: dbtype = xbmc.getInfoLabel("%sListItem.Property(DBTYPE)"%widgetContainerPrefix).decode('utf-8')
+                    if not dbtype:
+                        db_type = xbmc.getInfoLabel("%sListItem.Property(type)"%widgetContainerPrefix).decode('utf-8')
+                        if "episode" in db_type.lower() or xbmc.getLocalizedString(20360).lower() in db_type.lower(): dbtype = "episode"
+                        elif "movie" in db_type.lower() or xbmc.getLocalizedString(342).lower() in db_type.lower(): dbtype = "movie"
+                        elif "tvshow" in db_type.lower() or xbmc.getLocalizedString(36903).lower() in db_type.lower(): dbtype = "tvshow"
+                        elif "album" in db_type.lower() or xbmc.getLocalizedString(558).lower() in db_type.lower(): dbtype = "album"
+                        elif "song" in db_type.lower() or xbmc.getLocalizedString(36920).lower() in db_type.lower(): dbtype = "song"
+                    if dbid and dbtype: params["%sID" %dbtype.upper()] = dbid
+                    params["lastwidgetcontainer"] = widgetContainer
+                
+                #open info dialog...
                 from resources.lib.InfoDialog import GUI
-                item = None
-                if params.get("MOVIEID"):
-                    item = utils.getJSON('VideoLibrary.GetMovieDetails', '{ "movieid": %s, "properties": [ %s ] }' %(params.get("MOVIEID"),utils.fields_movies))
-                    content = "movies"
-                elif params.get("EPISODEID"):
-                    item = utils.getJSON('VideoLibrary.GetEpisodeDetails', '{ "episodeid": %s, "properties": [ %s ] }' %(params.get("EPISODEID"),utils.fields_episodes))
-                    content = "episodes"
-                elif params.get("TVSHOWID"):
-                    item = utils.getJSON('VideoLibrary.GetTVShowDetails', '{ "tvshowid": %s, "properties": [ %s ] }' %(params.get("TVSHOWID"),utils.fields_tvshows))
-                    content = "tvshows"
-                if item:
-                    liz = utils.prepareListItem(item)
-                    liz = utils.createListItem(item)
-                    liz.setProperty("json",repr(item))
-                    info_dialog = GUI( "script-skin_helper_service-CustomInfo.xml" , utils.ADDON_PATH, "Default", "1080i", listitem=liz, content=content )
+                info_dialog = GUI( "script-skin_helper_service-CustomInfo.xml" , utils.ADDON_PATH, "Default", "1080i", params=params )
+                xbmc.executebuiltin( "Dialog.Close(busydialog)" )
+                if info_dialog.listitem:
                     info_dialog.doModal()
                     resultAction = info_dialog.action
-                    del info_dialog
                     if resultAction:
+                        while xbmc.getCondVisibility("System.HasModalDialog | Window.IsActive(script-ExtendedInfo Script-DialogVideoInfo.xml) | Window.IsActive(script-ExtendedInfo Script-DialogInfo.xml) | Window.IsActive(script-skin_helper_service-CustomInfo.xml) | Window.IsActive(script-skin_helper_service-CustomSearch.xml)"):
+                            xbmc.executebuiltin("Action(Back)")
+                            xbmc.sleep(500)
                         if "jsonrpc" in resultAction:
                             xbmc.executeJSONRPC(resultAction)
                         else:
                             xbmc.executebuiltin(resultAction)
-                xbmc.executebuiltin( "Dialog.Close(busydialog)" )
-            
+                
             elif action == "COLORPICKER":
                 from resources.lib.ColorPicker import ColorPicker
                 colorPicker = ColorPicker("script-skin_helper_service-ColorPicker.xml", utils.ADDON_PATH, "Default", "1080i")
@@ -190,7 +216,7 @@ class Main:
                     path = utils.WINDOW.getProperty("SkinHelper.pvrthumbspath").decode("utf-8")
                     utils.WINDOW.setProperty("resetPvrArtCache","reset")
                 elif path == "music":
-                    path = "special://profile/addon_data/script.skin.helper.service/musicart/"
+                    path = "special://profile/addon_data/script.skin.helper.service/musicartcache/"
                     utils.WINDOW.setProperty("resetMusicArtCache","reset")
                 elif path == "wallbackgrounds":
                     path = "special://profile/addon_data/script.skin.helper.service/wallbackgrounds/"
@@ -201,8 +227,10 @@ class Main:
                     success = True
                     ret = xbmcgui.Dialog().yesno(heading=utils.ADDON.getLocalizedString(32089), line1=utils.ADDON.getLocalizedString(32090)+path)
                     if ret:
+                        utils.WINDOW.setProperty("SkinHelper.IgnoreCache","ignore")
                         success = utils.recursiveDelete(path)
                         if success:
+                            utils.checkFolders()
                             xbmcgui.Dialog().ok(heading=utils.ADDON.getLocalizedString(32089), line1=utils.ADDON.getLocalizedString(32091))
                         else:
                             xbmcgui.Dialog().ok(heading=utils.ADDON.getLocalizedString(32089), line1=utils.ADDON.getLocalizedString(32092))
@@ -301,7 +329,19 @@ class Main:
             elif action == "CHECKRESOURCEADDONS":
                 ADDONSLIST = params.get("ADDONSLIST")
                 mainmodule.checkResourceAddons(ADDONSLIST)
-
+                
+            elif action == "GETPERCENTAGE":
+                total = int(params.get("TOTAL"))
+                count = int(params.get("COUNT"))
+                roundsteps = params.get("ROUNDSTEPS")
+                skinstring = params.get("SKINSTRING")
+                
+                percentage = int(round((1.0 * count / total) * 100))
+                if roundsteps:
+                    roundsteps = int(roundsteps)
+                    percentage = percentage + (roundsteps - percentage) % roundsteps
+                
+                xbmc.executebuiltin("Skin.SetString(%s,%s)" %(skinstring,percentage))    
 
 
 if (__name__ == "__main__"):

@@ -83,6 +83,7 @@ Some additional window properties that can be used in the video library.
 |Window(Home).Property(SkinHelper.ListItemAllAudioStreams) | Will return a formatted list of all audiostreams for the current listitem separated by / |
 |Window(Home).Property(SkinHelper.ListItemVideoHeight) | Will return the height of the video stream for the current listitem |
 |Window(Home).Property(SkinHelper.ListItemVideoWidth) | Will return the width of the video stream for the current listitem |
+|Window(Home).Property(SkinHelper.ListItemTags) | Will return all tags for the selected movie, separated by / |
 |Window(Home).Property(SkinHelper.RottenTomatoesRating) | rotten tomatoes rating |
 |Window(Home).Property(SkinHelper.RottenTomatoesMeter) | rotten tomatoes meter |
 |Window(Home).Property(SkinHelper.RottenTomatoesFresh) | rotten tomatoes fresh count |
@@ -101,7 +102,7 @@ Some additional window properties that can be used in the video library.
 |Window(Home).Property(SkinHelper.IMDB.Votes) | No. of votes for rating on IMDB |
 |Window(Home).Property(SkinHelper.IMDB.MPAA) | MPAA rating on IMDB |
 |Window(Home).Property(SkinHelper.IMDB.Runtime) | Runtime on IMDB |
-|Window(Home).Property(SkinHelper.IMDB.Top250) | Position of the movie in the IMDB Top250 |
+|Window(Home).Property(SkinHelper.IMDB.Top250) | Position of the movie or tvshow in the IMDB Top250 |
 |Window(Home).Property(SkinHelper.TMDB.Budget) | budget spent to this movie in dollars (from tmdb)|
 |Window(Home).Property(SkinHelper.TMDB.Budget.mln) | budget spent to this movie in millions of dollars|
 |Window(Home).Property(SkinHelper.TMDB.Budget.formatted) | Same as Budget.mln but formatted as $ 123 mln.|
@@ -135,7 +136,7 @@ plugin://myvideoplugin/movies/?latest&amp;reload=$INFO[Window(Home).Property(wid
 _____________________________________________________________________________________________________
 #### Animated Posters
 Provides animated poster in window property (cached locally)
-For info, see: http://forum.kodi.tv/showthread.php?tid=215727
+For more info, see: http://forum.kodi.tv/showthread.php?tid=215727
 
 Only available when enabled as skin setting --> Skin.SetBool(SkinHelper.EnableAnimatedPosters)
 
@@ -143,6 +144,14 @@ Only available when enabled as skin setting --> Skin.SetBool(SkinHelper.EnableAn
 |:-----------------------------	| :----------- |
 |Window(Home).Property(SkinHelper.AnimatedPoster) | Animated (gif) Movie poster image -if available-  |
 |Window(Home).Property(SkinHelper.AnimatedFanart) | Animated (gif) Movie fanart image -if available-  |
+
+NOTE: UPDATED 01-04-2026:
+
+1. The properties will now also be saved into the Kodi database for easy access in lists:
+   ListItem.Art(animatedposter) and ListItem.Art(animatedfanart)
+   
+2. A contextmenu will be shown in the movies library to allow the user to manual select the animated artwork
+
 
 ________________________________________________________________________________________________________
 #### Studio Logos
@@ -192,6 +201,11 @@ If the selected listitem in the videolibrary is a movie set, some additional win
 | Window(Home).Property(SkinHelper.MovieSet.UnWatchedCount) | Total unwatched movies in the set |
 | Window(Home).Property(SkinHelper.ExtraFanArtPath) | Rotating fanart images from movies in the set |
 | Window(Home).Property(SkinHelper.MovieSet.X.Title) | Title of Movie X in the set |
+| Window(Home).Property(SkinHelper.MovieSet.X.Plot) | Plot of Movie X in the set |
+| Window(Home).Property(SkinHelper.MovieSet.X.Rating) | Rating of Movie X in the set |
+| Window(Home).Property(SkinHelper.MovieSet.X.Year) | Year of Movie X in the set |
+| Window(Home).Property(SkinHelper.MovieSet.X.DBID) | DBID of Movie X in the set |
+| Window(Home).Property(SkinHelper.MovieSet.X.Duration) | Duration of Movie X in the set |
 | Window(Home).Property(SkinHelper.MovieSet.X.Poster) | Poster image of Movie X in the set |
 | Window(Home).Property(SkinHelper.MovieSet.X.FanArt) | FanArt image of Movie X in the set |
 | Window(Home).Property(SkinHelper.MovieSet.X.Landscape) | Landscape image of Movie X in the set |
@@ -225,6 +239,9 @@ The artwork is detected in the music paths automatically. Also in the addon sett
 | Window(Home).Property(SkinHelper.Music.ClearLogo) | Will return the Artist's logo image for the current selected item in the list. |
 | Window(Home).Property(SkinHelper.Music.DiscArt) | Will return the Album's cd art image for the current selected item in the list. |
 | Window(Home).Property(SkinHelper.Music.ExtraFanArt) | Will return the ExtraFanArt path (if exists) for the current selected item in the list, to be used in a multiimage control. |
+| Window(Home).Property(SkinHelper.Music.Thumb) | Returns the album thumb image if exist, fallback to artist image |
+| Window(Home).Property(SkinHelper.Music.ArtistThumb) | Returns the artist thumb image |
+| Window(Home).Property(SkinHelper.Music.AlbumThumb) | Returns the album thumb image |
 | Window(Home).Property(SkinHelper.Music.Info) | Returns the album's description or if empty the artist info. Can be used at both album- and songlevel.  |
 | Window(Home).Property(SkinHelper.Music.TrackList) | Returns all tracks (in the library) for the selected album or artist, separated by [CR] in the format tracknumber - title  |
 | Window(Home).Property(SkinHelper.Music.TrackList.Formatted) | Same as Tracklist, but prefixed with a • character|
@@ -245,6 +262,9 @@ The music properties are also available for the player:
 | Window(Home).Property(SkinHelper.Player.Music.FanArt) | Will return the Artist's fanart image (if found). |
 | Window(Home).Property(SkinHelper.Player.Music.ClearLogo) | Will return the Artist's logo image (if found). |
 | Window(Home).Property(SkinHelper.Player.Music.DiscArt) | Will return the Album's cd art image (if found). |
+| Window(Home).Property(SkinHelper.Player.Music.Thumb) | Will return the Album/Artist thumb image (if found). |
+| Window(Home).Property(SkinHelper.Player.Music.ArtistThumb) | Returns the artist thumb image (if found). |
+| Window(Home).Property(SkinHelper.Player.Music.AlbumThumb) | Returns the album thumb image (if found). |
 | Window(Home).Property(SkinHelper.Player.Music.ExtraFanArt) | Will return the ExtraFanArt path for the artist (if found). |
 | Window(Home).Property(SkinHelper.Player.Music.Info) | Returns the album's description or if empty the artist info. (if found).  |
 | Window(Home).Property(SkinHelper.Player.Music.TrackList) | Returns all tracks (in the library) for the selected album or artist  |
@@ -292,6 +312,8 @@ What you need to do is set a window property with the ID of your widget containe
 For example set that in the onload of your home window if you only have 1 focusable widget control or set it as onfocus action on the widgetcontainer itself with the correct ID.
 
 
+IMPORTANT NOTE: You need to clear the SkinHelper.WidgetContainer property after leaving your custom window or homescreen, 
+otherwise the properties won't be returned in the default library.
 ________________________________________________________________________________________________________
 
 #### window properties for addons
@@ -456,9 +478,12 @@ RunScript(script.skin.helper.service,action=showinfo,episodeid=&amp;INFO[ListIte
 ```
 
 It is possible to show the infodialog provided by the script (see video library search command), for example if you want to call that info screen from your widgets.
-In that case run the command above. In the info dialog will also all special properties be available from the script.
+In that case run the command above. In the info dialog will also provide all special home properties available from the script.
 Note that ListItem.DBID and ListItem.DBTYPE can only be used for "real" library items, for widgets provided by this script, use ListItem.Property(DBID) and ListItem.Property(type) instead.
 
+You can also let the script auto detect the info, in that case only use this command as onclick/oninfo action:
+
+RunScript(script.skin.helper.service,action=showinfo
 ________________________________________________________________________________________________________
 
 #### Yes/No Dialog (dialogYesNo)
@@ -794,6 +819,14 @@ If the file exists, the result will be written as EXISTS in the property or skin
 ________________________________________________________________________________________________________
 
 
+#### Get percentage of 2 values
+```
+RunScript(script.skin.helper.service,action=getpercentage,count=[count value],total=[total items],skinstring=[skin string to write the result],roundsteps=[optional: round to specific steps])
+```
+This command will allow you to get a percentage of 2 numbers. The result is (rounded without decimals) written to a skin string.
+If you want the result to be rounded in blocks (e.g. ), you can provide the optional roundsteps parameter
+________________________________________________________________________________________________________
+
 
 
 #### Set skin setting
@@ -913,7 +946,7 @@ With the default attribute you can specify what the default value should be for 
 
 
 #### Write constants to includes file
-You can use the above described approach for skin settings to write constants to an includes file.
+You can use the above described approach for skin settings also to write constants to an includes file.
 For this you can use the same settings file with the same xml elements etc.
 Only, instead of calling "setskinsetting", you should call "setskinconstant".
 Any value that is selected by the user will be written to an XML file in your skin directory called script-skin_helper_service-includes.xml
@@ -922,7 +955,53 @@ Any value that is selected by the user will be written to an XML file in your sk
 RunScript(script.skin.helper.service,action=setskinconstant,setting=PanelWidth,header=Width for Panel)
 ```
 
+
+##### Default value for constant
 On your defined <skinsettings> you may use the additional attribute constantdefault="MyVisibilityCondition" to set your default value at skin install/update.
+You can use any Kodi visibility condition. Example:
+
+```xml
+<settings>
+    <setting id="PanelWidth" value="1" label="1 pixel" condition="" icon="" description=""/>
+    <setting id="PanelWidth" value="2" label="2 pixels" condition="" icon="" description="" constantdefault="Skin.HasSetting(UseWidePanels)"/>
+    <setting id="PanelWidth" value="3" label="3 pixels" condition="" icon="" description="" constantdefault="!Skin.HasSetting(UseWidePanels)"/>
+</settings>
+```
+In the above example, if no value is set for the PanelWidth constant it will default to value 2 if the skin bool UseWidePanels is true, otherwise it will set value 3 as default. 
+
+
+##### Only set the value for a constant
+It is also possible to directly pass the value to the script so the settings dialog won't be opened.
+In this case, just add the optional value argument to the script and that value will be written to the constant.
+
+```
+RunScript(script.skin.helper.service,action=setskinconstant,setting=PanelWidth,value=13)
+```
+
+##### Value of the skinconstant as skinstring
+If you'd like to display the value of your constant in the GUI, it might be comfortable to also have the value of the constant as a skin string.
+All values you set for constants will also be written to a skin string for easy access within your skin.
+For example you've set the contstant PanelWidth with the script, this means that besides a constant you will also have a skin string with that name, e.g. Skin.String(PanelWidth)
+
+
+##### Copy value of constant
+If you want to copy the value of an constant to another constant, there is an easy trick.
+Just use the above explained skinstring for that. For example, you want to use the value of PanelWidth to also set the PanelWidth2 constant:
+
+```
+RunScript(script.skin.helper.service,action=setskinconstant,setting=PanelWidth2,value=$INFO[Skin.String(PanelWidth)])
+```
+
+##### Set multiple constants at once
+If you want to set a whole bunch of constants in one single command (so there is only 1 reloadskin command issued), you can use this syntax:
+
+```
+RunScript(script.skin.helper.service,action=setskinconstant,settings=PanelWidth|PanelWidth2,values=13|14)
+```
+use the settings parameter to define all constants you want to set, seperate with |
+use the values parameter to define all values for the constants, seperate with |
+
+
 ________________________________________________________________________________________________________
 
 

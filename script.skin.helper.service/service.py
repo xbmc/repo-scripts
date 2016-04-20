@@ -9,7 +9,6 @@ from resources.lib.KodiMonitor import Kodi_Monitor
 from resources.lib.WebService import WebService
 import xbmc, xbmcaddon
 
-
 class Main:
     
     lastSkin = ""
@@ -31,6 +30,7 @@ class Main:
     
     def __init__(self):
         
+        utils.WINDOW.clearProperty("SkinHelperShutdownRequested")
         KodiMonitor = Kodi_Monitor()
         listItemMonitor = ListItemMonitor()
         backgroundsUpdater = BackgroundsUpdater()
@@ -38,13 +38,11 @@ class Main:
         lastSkin = None
                    
         #start the extra threads
-        utils.WINDOW.clearProperty("SkinHelperShutdownRequested")
         listItemMonitor.start()
         backgroundsUpdater.start()
         webService.start()
         
-        while not KodiMonitor.abortRequested():
-            
+        while not (KodiMonitor.abortRequested() or utils.WINDOW.getProperty("SkinHelperShutdownRequested")):
             self.checkSkinVersion()
             KodiMonitor.waitForAbort(10)
         else:

@@ -28,14 +28,23 @@
     <category label="32122">
         <setting id="enableMusicArtScraper" type="bool" label="32123" default="true"/>
         <setting id="enableLocalMusicArtLookup" type="bool" label="32124" default="true"/>
-        <setting id="downloadMusicArt" type="bool" label="32125" default="false" visible="eq(-1,true)"/>
+        <setting id="enableCustomMusicArtLookup" type="bool" label="32178" default="false"/>
+        <setting label="32177" type="folder" id="custommusiclookuppath" source="auto" default="" visible="eq(-1,true)"/>
+        <setting id="downloadMusicArt" type="bool" label="32125" default="false" visible="eq(-4,true)"/>
         <setting id="preferOnlineMusicArt" type="bool" label="32159" default="false" visible="eq(-1,true)"/>
+        <setting id="skipOnlineMusicArtOnLocal" type="bool" label="32184" default="true" visible="eq(-6,true)"/>
         <setting label="32126" type="action" action="RunScript(script.skin.helper.service,action=RESETCACHE,path=music)"/>
-        <setting label="Precache all artwork" type="action" action="RunScript(script.skin.helper.service,action=CACHEALLMUSICART)" option="close"/>
+        <setting label="32172" type="action" action="RunScript(script.skin.helper.service,action=CACHEALLMUSICART)" option="close"/>
     </category>
     <category label="32163">
         <setting id="enableWidgetsArtworkLookups" type="bool" label="32164" default="true"/>
         <setting id="enableSpecialsInWidgets" type="bool" label="32165" default="false"/>
+    </category>
+    <category label="32179">
+        <setting id="enablecontextmenu_music" type="bool" label="32180" default="true"/>
+        <setting id="enablecontextmenu_pvr" type="bool" label="32181" default="true" visible="Skin.HasSetting(SkinHelper.EnablePVRThumbs)"/>
+        <setting id="enablecontextmenu_animatedart" type="bool" label="32182" default="true" visible="Skin.HasSetting(SkinHelper.EnableAnimatedPosters)"/>
+        <setting id="enablecontextmenu_series" type="bool" label="32183" default="true"/>
     </category>
     <category label="32134">
         <setting id="enableDebugLog" type="bool" label="32135" default="false"/>
