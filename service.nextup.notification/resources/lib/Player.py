@@ -319,9 +319,7 @@ class Player(xbmc.Player):
                 result = unicode(result, 'utf-8', errors='ignore')
                 result = json.loads(result)
                 self.logMsg("Got details of next up episode %s" % str(result), 2)
-                monitor = xbmc.Monitor()
-                monitor.waitForAbort(0.1)
-                del monitor
+                xbmc.sleep(100)
 
                 # Find the next unwatched and the newest added episodes
                 if "result" in result and "episodes" in result["result"]:
@@ -368,9 +366,7 @@ class Player(xbmc.Player):
                                 stillWatchingPage.show()
                         while xbmc.Player().isPlaying() and (
                                         totalTime - playTime > 1) and not nextUpPage.isCancel() and not nextUpPage.isWatchNow() and not stillWatchingPage.isStillWatching() and not stillWatchingPage.isCancel():
-                            monitor = xbmc.Monitor()
-                            monitor.waitForAbort(0.1)
-                            del monitor
+                            xbmc.sleep(100)
                             try:
                                 playTime = xbmc.Player().getTime()
                                 totalTime = xbmc.Player().getTotalTime()
