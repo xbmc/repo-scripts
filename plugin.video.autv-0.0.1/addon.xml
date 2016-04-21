@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="plugin.video.autv" name="AUTV" version="0.0.1" provider-name="Russell Harrower">
+  <requires>
+       <import addon="xbmc.python" version="2.20.0"/>
+  </requires>
+        <extension point="xbmc.python.pluginsource" library="addon.py">
+            <provides>video</provides>
+        </extension>
+        <extension point="xbmc.addon.metadata">
+    <language />
+    <platform>all</platform>
+    <website>http://www.russellharrower.com/</website>
+    <source>https://github.com/russellharrower/plugin.video.autv</source>
+    <forum>http://forum.xbmc.org/showthread.php?tid=567567</forum>
+    <email>rharrower@harrower.xyz</email>
+    <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+        <summary lang="en">Access Australia Free-to-air Channels</summary>
+        <summary lang="en_NZ">Access Australia Free-to-air Channels</summary>
+        <summary lang="en_US">Access Australia Free-to-air Channels</summary>
+        <description lang="en">Access Australia Free-to-air Channels</description>
+        <description lang="en_NZ">Access Australia Free-to-air Channels</description>
+        <description lang="en_US">Access Australia Free-to-air Channels</description>
+  </extension>
+</addon>
