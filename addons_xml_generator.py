@@ -1,4 +1,4 @@
-!/usr/bin/env python
+#!/usr/bin/env python
 # *
 # *  Copyright (C) 2014-2015 Roman Miroshnychenko
 # *  Copyright (C) 2012-2013 Garrett Brown
