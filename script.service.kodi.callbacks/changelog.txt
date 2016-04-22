@@ -1,0 +1,67 @@
+v0.9.9 (2016-03-22)
+Version changed to meet official repo rules
+
+v0.9.8.5 (2016-03-15)
+Fixed log bug and testWatchdogStartup bugs
+
+v0.9.8.4 (2016-03-09)
+- Added JSON Notify task
+- Corrected settings bug where one could not select tasks properly
+
+v0.9.8.3 (2016-03-07)
+- Removed github code from master branch
+
+v0.9.8.2 (2016-03-05)
+- Refactored settings xml generation
+- Made unconfigured tasks unselectable in settings
+
+v0.9.8 (2016-02-26)
+- Merged nonrepo branch onto master
+- Change xml to be official repo compliant
+- Added ability to write settings to log - useful if need to put log on pastebin
+- Hide unused tasks and events in settings
+
+v0.9.7.6 (2016-02-22)
+- Refactored update, detects paths with spaces
+
+v0.9.7.5 (2016-02-16)
+- Fix schedule import
+
+v0.9.7.4 (2016-02-16)
+- Added Scheduler publisher to schedule tasks to run daily or at a given interval
+
+v0.9.7.3 (2016-02-15)
+- Non-repo version added ability to update from Github
+
+v0.9.7.2 (2016-02-14)
+- Added ability to load from zip in settings and backup current
+
+v0.9.7.2 (2016-02-13)
+- Implement kodipathtools. Publisher tests passing on Linux, OSX, Windows.
+
+v0.9.7.1 (2016-02-04)
+- Android path fix. Added %mt for pause and resume. Changed settings to allow for special// paths.
+
+v0.9.7 (2016-02-03)
+- Watchdog startup file change detection added. Several bugs corrected.
+
+v0.9.6 (2016-01-31)
+- Publisher and Subscriber Factories. Readied for offical repo submission.
+
+v0.9.5 (2016-01-29)
+- Minor changes to onIdle and afterIdle
+
+v0.9.4 (2016-01-27)
+- Added after Idle event. Bug fix with string handling from settings.xml
+
+v0.9.3 (2016-01-25)
+- Provided string localization and po handling
+
+v0.9.2 (2016-01-22)
+- Added basic auth for http, added task testing to settings, bug fixes, removed dependency on service.watchdog
+
+v0.9.1 (2016-01-16)
+- Bug fixes, file watchdog added
+
+v0.9.0 (2016-01-12)
+- Initial version
