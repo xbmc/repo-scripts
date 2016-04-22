@@ -20,9 +20,9 @@ __all__ = [
 class UsersInterface(Interface):
     path = 'users'
 
-    def likes(self, type=None):
+    def likes(self, type=None, **kwargs):
         if type and type not in ['comments', 'lists']:
-            raise ValueError('Unknown type specified: %r', type)
+            raise ValueError('Unknown type specified: %r' % type)
 
         # Send request
         response = self.http.get('likes', params=[
@@ -33,7 +33,7 @@ class UsersInterface(Interface):
             return
 
         # Parse response
-        items = self.get_data(response)
+        items = self.get_data(response, **kwargs)
 
         # Map items to comment/list objects
         for item in items:
