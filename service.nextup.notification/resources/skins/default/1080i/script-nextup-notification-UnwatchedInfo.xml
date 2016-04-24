@@ -18,10 +18,6 @@
 					<effect type="zoom" start="100" end="20" delay="0" tween="sine" time="2500" />
 					<effect type="slide" start="0,0" end="0,-1000" delay="0" tween="sine" time="1000" />
 				</animation>
-				<control type="image">
-					<animation effect="fade" start="100" end="97" time="200" condition="true">Conditional</animation>
-					<texture border="5" colordiffuse="ff000000">box.png</texture>
-				</control>
 				<control type="group">
 					<left>5</left>
 					<right>5</right>
@@ -36,7 +32,7 @@
 						<align>center</align>
 						<height>40</height>
 						<font>font13</font>
-						<textcolor>FF00a2e0</textcolor>
+						<textcolor>FFdddddd</textcolor>
 					</control>
 					<control type="label" description="episode/season" id="5002">
 						<width>100%</width>
@@ -44,7 +40,7 @@
 						<align>center</align>
 						<height>40</height>
 						<font>font12</font>
-						<textcolor>FF00a2e0</textcolor>
+						<textcolor>FFdddddd</textcolor>
 					</control>
 					<control type="image">
 						<top>57</top>

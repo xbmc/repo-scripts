@@ -19,6 +19,8 @@ class UnwatchedInfo(xbmcgui.WindowXMLDialog):
         self.action_exitkeys_id = [10, 13]
 
         clearlogo = self.item['art'].get('tvshow.clearlogo', '')
+        clearartimage = self.item['art'].get('tvshow.clearart', '')
+        fanartimage = self.item['art'].get('tvshow.fanart', '')
         overview = self.item['plot']
         name = self.item['title']
 
@@ -36,7 +38,12 @@ class UnwatchedInfo(xbmcgui.WindowXMLDialog):
         try:
             clearartimageControl = self.getControl(5004)
             if clearartimageControl != None:
-                self.getControl(5004).setImage(clearlogo)
+                if clearlogo:
+                    self.getControl(5004).setImage(clearlogo)
+                elif clearartimage:
+                    self.getControl(5004).setImage(clearartimage)
+                elif fanartimage:
+                    self.getControl(5004).setImage(fanartimage)
         except:
             pass
 
