@@ -15,19 +15,12 @@ import unicodedata
 from bs4 import BeautifulSoup
 import re
 
-__addon__ = xbmcaddon.Addon()
-__author__     = __addon__.getAddonInfo('author')
-__scriptid__   = __addon__.getAddonInfo('id')
-__scriptname__ = __addon__.getAddonInfo('name')
-__version__    = __addon__.getAddonInfo('version')
-__language__   = __addon__.getLocalizedString
-
-__cwd__        = xbmc.translatePath( __addon__.getAddonInfo('path') ).decode("utf-8")
-__profile__    = xbmc.translatePath( __addon__.getAddonInfo('profile') ).decode("utf-8")
-__resource__   = xbmc.translatePath( os.path.join( __cwd__, 'resources', 'lib' ) ).decode("utf-8")
-__temp__       = xbmc.translatePath( os.path.join( __profile__, 'temp','') ).decode("utf-8")
-
-sys.path.append (__resource__)
+addon = xbmcaddon.Addon()
+scriptid   = addon.getAddonInfo('id')
+scriptname = addon.getAddonInfo('name')
+language   = addon.getLocalizedString
+profile    = xbmc.translatePath( addon.getAddonInfo('profile') ).decode("utf-8")
+temp       = xbmc.translatePath( os.path.join( profile, 'temp','') ).decode("utf-8")
 
 def Search(item):
     if 'ita' in item['3let_language'] and item['tvshow']:
@@ -55,9 +48,9 @@ def Search(item):
                         first=1
                 showlist(sublist)
         else:
-            notify(__language__(32002))
+            notify(language(32002))
     else:
-        notify(__language__(32001))
+        notify(language(32001))
         log('Subsfactory only works with italian subs. Skipped')
 
 def checkexp(tvshow):
@@ -76,10 +69,10 @@ def checkexp(tvshow):
     return tvshow
 
 def showlist(list):
-    if xbmcvfs.exists(__temp__):
-        shutil.rmtree(__temp__)
+    if xbmcvfs.exists(temp):
+        shutil.rmtree(temp)
         #log("elimino temp")
-    xbmcvfs.mkdirs(__temp__)
+    xbmcvfs.mkdirs(temp)
     #log("ricreo temp")
     i=0
     for sub in list:
@@ -88,7 +81,7 @@ def showlist(list):
         si=str(i)
         if content:
             log('File downloaded')
-            local_tmp_file = os.path.join(__temp__, 'subsfactory'+si+'.xxx')
+            local_tmp_file = os.path.join(temp, 'subsfactory'+si+'.xxx')
             try:
                 log("Saving subtitles to '%s'" % local_tmp_file)
                 local_file_handle = open(local_tmp_file, 'wb')
@@ -113,15 +106,15 @@ def showlist(list):
                         packed = False
                         log('Discovered a non-archive file')
                 myfile.close()
-                local_tmp_file = os.path.join(__temp__, 'subsfactory'+si+'.' + typeid)
-                os.rename(os.path.join(__temp__, 'subsfactory'+si+'.xxx'), local_tmp_file)
+                local_tmp_file = os.path.join(temp, 'subsfactory'+si+'.' + typeid)
+                os.rename(os.path.join(temp, 'subsfactory'+si+'.xxx'), local_tmp_file)
                 log("Saving to %s" % local_tmp_file)
             except:
                 #log("Failed to save subtitle to %s" % local_tmp_file)
                 return []
             if packed:
                 xbmc.sleep(500)
-                dirtemp=__temp__ +"unpack"+si
+                dirtemp=temp+"unpack"+si
                 #log("dirtemp %s "%dirtemp)
                 if not os.path.exists(dirtemp):
                     os.makedirs(dirtemp)
@@ -131,18 +124,19 @@ def showlist(list):
                 xbmc.executebuiltin(('XBMC.Extract(' + local_tmp_file + ',' + dirtemp +')').encode('utf-8'), True)
                 dirs = os.listdir(dirtemp)
                 for file in dirs:
-                    if (os.path.isdir(dirtemp+"\\"+file)):
-                        dirs_rec = os.listdir(dirtemp+"\\"+file)
+                    path_rec=os.path.join(dirtemp,file)
+                    if (os.path.isdir(path_rec)):
+                        dirs_rec = os.listdir(path_rec)
                         for file_rec in dirs_rec:
                             filen=cleanName(file_rec)
-                            url = "plugin://%s/?action=download&file=%s&type=%s&si=%s" % (__scriptid__,file+"\\"+file_rec,"pack",si)
+                            url = "plugin://%s/?action=download&file=%s&type=%s&si=%s" % (scriptid,os.path.join(file,file_rec),"pack",si)
                             xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url=url,listitem=make_listItem(filen),isFolder=False)
                     else:
                         filen=cleanName(file)
-                        url = "plugin://%s/?action=download&file=%s&type=%s&si=%s" % (__scriptid__,file,"pack",si)
+                        url = "plugin://%s/?action=download&file=%s&type=%s&si=%s" % (scriptid,file,"pack",si)
                         xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url=url,listitem=make_listItem(filen),isFolder=False)
             else:
-                url = "plugin://%s/?action=download&file=%s&type=%s&si=no" % (__scriptid__,local_tmp_file,"unpack")
+                url = "plugin://%s/?action=download&file=%s&type=%s&si=no" % (scriptid,local_tmp_file,"unpack")
                 xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url=url,listitem=make_listItem(sub[0]),isFolder=False)
         i=i+1
 
@@ -164,13 +158,13 @@ def cleanName(file):
 def Download(link,type,si):
     subtitle_list=[]
     if type=="pack" and si!="no":
-        dirtemp=__temp__ +"unpack"+si+"\\"
-        link=dirtemp+link
+        dirtemp=temp+"unpack"+si+"\\"
+        link=os.path.join(dirtemp,link)
     subtitle_list.append(link)
     return subtitle_list
 
 def notify(msg):
-    xbmc.executebuiltin((u'Notification(%s,%s)' % (__scriptname__ , msg)).encode('utf-8'))
+    xbmc.executebuiltin((u'Notification(%s,%s)' % (scriptname , msg)).encode('utf-8'))
 
 def normalizeString(str):
   return unicodedata.normalize(
@@ -229,7 +223,7 @@ if params['action'] == 'search':
         item['season']= infoFromTitle['season']
         item['episode']= infoFromTitle['episode']
     else:
-        notify(__language__(32003))
+        notify(language(32003))
 
   if "s" in item['episode'].lower():                                      # Check if season is "Special"
     item['season'] = "0"
@@ -244,7 +238,7 @@ elif params['action'] == 'manualsearch':
         item['3let_language'] = [xbmc.convertLanguage(lang,xbmc.ISO_639_2) for lang in langstring.split(",")]
         Search(item)
     else:
-        notify(__language__(32003))
+        notify(language(32003))
 elif params['action'] == 'download':
   ## we pickup all our arguments sent from def Search()
   subs = Download(params["file"],params["type"],params["si"])
