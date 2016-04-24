@@ -29,6 +29,8 @@ ADDONPATH    = ADDON.getAddonInfo('path').decode('utf-8')
 ADDONPROFILE = xbmc.translatePath( ADDON.getAddonInfo('profile') ).decode('utf-8')
 ICON         = ADDON.getAddonInfo('icon')
 
+monitor = xbmc.Monitor()
+
 # Fixes unicode problems
 def string_unicode(text, encoding='utf-8'):
     try:
@@ -77,13 +79,8 @@ def dialog_yesno(line1 = 0, line2 = 0):
                                   localise(line2))
 
 def upgrade_message(msg, oldversion, upgrade, msg_current, msg_available):
-    # Don't show while watching a video
-    while(xbmc.Player().isPlayingVideo() and not xbmc.abortRequested):
-        xbmc.sleep(1000)
-    i = 0
-    while(i < 5 and not xbmc.abortRequested):
-        xbmc.sleep(1000)
-        i += 1
+    wait_for_end_of_video()
+
     if ADDON.getSetting("lastnotified_version") < ADDONVERSION:
         xbmcgui.Dialog().ok(ADDONNAME,
                     localise(msg),
@@ -108,13 +105,7 @@ def upgrade_message2( version_installed, version_available, version_stable, oldv
     msg_stable = version_stable['major'] + '.' + version_stable['minor'] + ' ' + version_stable['tag'] + version_stable.get('tagversion','')
     msg = localise(32034) %(msg_current, msg_available)
 
-    # Don't show notify while watching a video
-    while(xbmc.Player().isPlayingVideo() and not xbmc.abortRequested):
-        xbmc.sleep(1000)
-    i = 0
-    while(i < 10 and not xbmc.abortRequested):
-        xbmc.sleep(1000)
-        i += 1
+    wait_for_end_of_video()
 
     # hack: convert current version number to stable string
     # so users don't get notified again. remove in future
@@ -169,3 +160,17 @@ def upgrade_message2( version_installed, version_available, version_stable, oldv
         
     else:
         log("Already notified one time for upgrading.")
+
+
+def wait_for_end_of_video():
+    # Don't show notify while watching a video
+    while xbmc.Player().isPlayingVideo() and not monitor.abortRequested():
+        if monitor.waitForAbort(1):
+            # Abort was requested while waiting. We should exit
+            break
+    i = 0
+    while i < 10 and not monitor.abortRequested():
+        if monitor.waitForAbort(1):
+            # Abort was requested while waiting. We should exit
+            break
+        i += 1
