@@ -169,10 +169,11 @@ class EBookBase():
     # Get the text for a given chapter
     def convertHtmlIntoKodiText(self, htmlText):
         # Remove the header section of the page
-        plainText = re.sub("<head>.*?</head>", "", htmlText, flags=re.DOTALL)
+        regexHeader = re.compile("<head>.*?</head>", re.IGNORECASE | re.DOTALL)
+        plainText = regexHeader.sub("", htmlText)
 
         # Remove random spaces in epub files
-        plainText = re.sub('\s+', ' ', plainText, flags=re.DOTALL)
+        plainText = re.sub('\s+', ' ', plainText)
 
         # Replace the bold tags
         plainText = plainText.replace('<br></br><br></br>', '<p></p>')
@@ -208,7 +209,7 @@ class EBookBase():
         except:
             log("EBookBase: Failed to strip html text with ElementTree, error: %s" % traceback.format_exc())
             log("EBookBase: Using regex for content handling")
-            plainText = re.sub(r'<[^>]+>', '', plainText, flags=re.DOTALL)
+            plainText = re.sub(r'<[^>]+>', '', plainText)
 
         # Replace any quotes or other escape characters
         plainText = plainText.replace('&quote;', '"')
@@ -223,8 +224,8 @@ class EBookBase():
         plainText = plainText.replace('[/I][/I]', '[/I]')
 
         # Remove empty space between tags, where there is no content
-        plainText = re.sub("\[B]\s*\[/B]", "", plainText, flags=re.DOTALL)
-        plainText = re.sub("\[I\]\s*\[/I\]", "", plainText, flags=re.DOTALL)
+        plainText = re.sub("\[B]\s*\[/B]", "", plainText)
+        plainText = re.sub("\[I\]\s*\[/I\]", "", plainText)
 
         # Remove blank lines at the start of the chapter
         plainText = plainText.lstrip('\n')
