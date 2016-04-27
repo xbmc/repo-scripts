@@ -59,7 +59,8 @@ class AdvSettings():
                 insertTxt = AdvSettings.HEADER + "\n"
                 insertTxt += self._getNewSettingsXml()
                 insertTxt += '        ' + AdvSettings.FOOTER
-                xmlFileStr = re.sub("(%s).*?(%s)" % (AdvSettings.HEADER, AdvSettings.FOOTER), insertTxt, xmlFileStr, flags=re.DOTALL)
+                regexCompiled = re.compile("(%s).*?(%s)" % (AdvSettings.HEADER, AdvSettings.FOOTER), re.IGNORECASE | re.DOTALL)
+                xmlFileStr = regexCompiled.sub(insertTxt, xmlFileStr)
             elif AdvSettings.VIDEO_SECTION_END in xmlFileStr:
                 log("Adding to existing video section")
                 insertTxt = '    ' + AdvSettings.HEADER + "\n"

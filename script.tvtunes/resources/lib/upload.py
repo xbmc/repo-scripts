@@ -236,6 +236,7 @@ class UploadThemes(ThemeLibrary):
                 requiredThemes = self._getThemesToUpload(target, videoItem['imdbnumber'], themeFileMgr.getThemeLocations())
                 if len(requiredThemes) < 1:
                     log("UploadThemes: No Required themes found")
+                    continue
 
                 # This video have themes that are needed
                 videoItem['themes'] = requiredThemes
