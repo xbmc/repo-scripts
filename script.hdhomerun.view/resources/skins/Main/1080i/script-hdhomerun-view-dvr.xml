@@ -1684,9 +1684,9 @@
                     </control>
 
                     <control type="label">
-                        <posx>1425</posx>
+                        <posx>1195</posx>
                         <posy>5</posy>
-                        <width>500</width>
+                        <width>465</width>
                         <height>30</height>
                         <font>font10</font>
                         <align>left</align>
@@ -1744,7 +1744,7 @@
                                 <control type="image">
                                     <posx>0</posx>
                                     <posy>0</posy>
-                                    <width>1410</width>
+                                    <width>1180</width>
                                     <height>80</height>
                                     <texture>script-hdhomerun-view-white_square.png</texture>
                                     <colordiffuse>FF404040</colordiffuse>
@@ -1753,7 +1753,7 @@
                                 <control type="label">
                                     <posx>20</posx>
                                     <posy>5</posy>
-                                    <width>1360</width>
+                                    <width>1140</width>
                                     <height>70</height>
                                     <font>font13</font>
                                     <align>left</align>
@@ -1764,12 +1764,12 @@
                             </control>
 
                             <control type="group">
-                                <posx>1425</posx>
+                                <posx>1195</posx>
                                 <posy>5</posy>
                                 <control type="image">
                                     <posx>0</posx>
                                     <posy>0</posy>
-                                    <width>235</width>
+                                    <width>465</width>
                                     <height>80</height>
                                     <texture>script-hdhomerun-view-white_square.png</texture>
                                     <colordiffuse>FF404040</colordiffuse>
@@ -1778,7 +1778,7 @@
                                 <control type="label">
                                     <posx>20</posx>
                                     <posy>5</posy>
-                                    <width>195</width>
+                                    <width>425</width>
                                     <height>70</height>
                                     <font>font13</font>
                                     <align>left</align>
@@ -1823,7 +1823,7 @@
                                 <control type="image">
                                     <posx>0</posx>
                                     <posy>0</posy>
-                                    <width>1410</width>
+                                    <width>1180</width>
                                     <height>80</height>
                                     <texture>script-hdhomerun-view-white_square.png</texture>
                                     <colordiffuse>FF006000</colordiffuse>
@@ -1832,7 +1832,7 @@
                                 <control type="label">
                                     <posx>20</posx>
                                     <posy>5</posy>
-                                    <width>1360</width>
+                                    <width>1140</width>
                                     <height>70</height>
                                     <font>font13</font>
                                     <align>left</align>
@@ -1843,12 +1843,12 @@
                             </control>
 
                             <control type="group">
-                                <posx>1425</posx>
+                                <posx>1195</posx>
                                 <posy>5</posy>
                                 <control type="image">
                                     <posx>0</posx>
                                     <posy>0</posy>
-                                    <width>235</width>
+                                    <width>465</width>
                                     <height>80</height>
                                     <texture>script-hdhomerun-view-white_square.png</texture>
                                     <colordiffuse>FF006000</colordiffuse>
@@ -1857,7 +1857,7 @@
                                 <control type="label">
                                     <posx>20</posx>
                                     <posy>5</posy>
-                                    <width>195</width>
+                                    <width>425</width>
                                     <height>70</height>
                                     <font>font13</font>
                                     <align>left</align>

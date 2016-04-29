@@ -15,3 +15,5 @@ class RuleModException(Exception): pass
 class RuleDelException(Exception): pass
 
 class SeriesHideException(Exception): pass
+
+class RecordingDelException(Exception): pass

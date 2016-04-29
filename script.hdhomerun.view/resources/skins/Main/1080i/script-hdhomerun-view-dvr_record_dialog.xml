@@ -145,8 +145,8 @@
             </control>
 
             <control type="grouplist" id="220">
-                <width>1120</width>
-                <left>60</left>
+                <width>1220</width>
+                <left>10</left>
                 <align>left</align>
                 <top>340</top>
                 <height>110</height>
@@ -156,7 +156,7 @@
                 <orientation>horizontal</orientation>
                 <control type="button" id="208">
                     <visible>!IsEmpty(Window.Property(show.watch))</visible>
-                    <width>240</width>
+                    <width>200</width>
                     <height>70</height>
                     <label>[B]WATCH[/B]</label>
                     <font>font13</font>
@@ -175,7 +175,7 @@
                     <texturenofocus border="6">script-hdhomerun-view-flat_button_nf.png</texturenofocus>
                 </control>
                 <control type="button" id="205">
-                    <visible>!IsEmpty(Window.Property(show.hasRule))</visible>
+                    <visible>!IsEmpty(Window.Property(show.hasRule)) + IsEmpty(Window.Property(is.movie))</visible>
                     <width>250</width>
                     <height>70</height>
                     <label>[B]$INFO[Window.Property(record.always)][/B]</label>
@@ -194,6 +194,16 @@
                     <texturefocus border="6">script-hdhomerun-view-flat_button.png</texturefocus>
                     <texturenofocus border="6">script-hdhomerun-view-flat_button_nf.png</texturenofocus>
                 </control>
+                <!-- <control type="button" id="209">
+                    <visible>!IsEmpty(Window.Property(has.teams))</visible>
+                    <width>200</width>
+                    <height>70</height>
+                    <label>[B]TEAMS[/B]</label>
+                    <font>font13</font>
+                    <align>center</align>
+                    <texturefocus border="6">script-hdhomerun-view-flat_button.png</texturefocus>
+                    <texturenofocus border="6">script-hdhomerun-view-flat_button_nf.png</texturenofocus>
+                </control> -->
                 <control type="button" id="207">
                     <visible>!IsEmpty(Window.Property(show.hasRule))</visible>
                     <width>280</width>
@@ -206,7 +216,7 @@
                 </control>
                 <control type="button" id="204">
                     <visible>!IsEmpty(Window.Property(show.hide))</visible>
-                    <width>250</width>
+                    <width>240</width>
                     <height>70</height>
                     <label>[B]$INFO[Window.Property(show.hide)][/B]</label>
                     <font>font13</font>
@@ -218,13 +228,12 @@
 
             <control type="group" id="217">
                 <defaultcontrol>215</defaultcontrol>
-                <width>520</width>
-                <left>1210</left>
+                <width>530</width>
+                <left>1245</left>
                 <align>left</align>
                 <top>340</top>
                 <height>110</height>
                 <orientation>horizontal</orientation>
-                <onleft>220</onleft>
                 <control type="label">
                     <left>0</left>
                     <top>0</top>
@@ -239,10 +248,11 @@
                 <control type="button" id="215">
                     <left>110</left>
                     <top>0</top>
-                    <width>100</width>
+                    <width>120</width>
                     <height>50</height>
                     <onleft>220</onleft>
                     <onright>216</onright>
+                    <ondown>200</ondown>
                     <label>30s</label>
                     <font>font10</font>
                     <align>left</align>
@@ -252,7 +262,7 @@
                 </control>
 
                 <control type="label">
-                    <left>220</left>
+                    <left>200</left>
                     <top>0</top>
                     <width>100</width>
                     <height>50</height>
@@ -263,11 +273,12 @@
                     <label>[B]END[/B]</label>
                 </control>
                 <control type="button" id="216">
-                    <left>330</left>
+                    <left>310</left>
                     <top>0</top>
-                    <width>100</width>
+                    <width>120</width>
                     <height>50</height>
                     <onleft>215</onleft>
+                    <ondown>200</ondown>
                     <label>30s</label>
                     <font>font10</font>
                     <align>left</align>
@@ -403,6 +414,15 @@
                                 <aligny>center</aligny>
                                 <textcolor>FFCCCCCC</textcolor>
                                 <label>$INFO[ListItem.Property(channel.name)]</label>
+                            </control>
+                            <control type="image">
+                                <visible>!IsEmpty(ListItem.Property(has.rule))</visible>
+                                <posx>164</posx>
+                                <posy>10</posy>
+                                <width>16</width>
+                                <height>16</height>
+                                <texture>script-hdhomerun-view-rule_indicator.png</texture>
+                                <aspectratio>stretch</aspectratio>
                             </control>
                         </control>
 
@@ -600,6 +620,15 @@
                                 <aligny>center</aligny>
                                 <textcolor>FFCCCCCC</textcolor>
                                 <label>$INFO[ListItem.Property(channel.name)]</label>
+                            </control>
+                            <control type="image">
+                                <visible>!IsEmpty(ListItem.Property(has.rule))</visible>
+                                <posx>164</posx>
+                                <posy>10</posy>
+                                <width>16</width>
+                                <height>16</height>
+                                <texture>script-hdhomerun-view-rule_indicator.png</texture>
+                                <aspectratio>stretch</aspectratio>
                             </control>
                         </control>
 

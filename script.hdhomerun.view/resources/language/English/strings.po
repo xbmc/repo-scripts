@@ -158,7 +158,7 @@ msgid "Are you sure you want to delete this recording?"
 msgstr ""
 
 msgctxt "#32037"
-msgid "Are you sure you want to delete this rule?"
+msgid "Would you like to delete this rule?"
 msgstr ""
 
 #First run text
@@ -290,7 +290,7 @@ msgid "TITLE"
 msgstr ""
 
 msgctxt "#32822"
-msgid "RECENT ONLY"
+msgid "RULE"
 msgstr ""
 
 msgctxt "#32823"
