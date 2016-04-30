@@ -453,6 +453,7 @@ class StorageServers(object):
             util.DEBUG_LOG('Delete recording URL: {0}'.format(url))
             req = requests.get(url)
             util.DEBUG_LOG('Delete recording response: {0}'.format(repr(req.text)))
+            self.updateRecordings()
             return True
         except:
             e = util.ERROR()
@@ -467,7 +468,7 @@ class StorageServers(object):
     def _removeRule(self, ruleID):
         rule = self.getRuleById(ruleID)
         if not rule:
-            util.DEBUG_LOG('StorageServers: Attemted to remove rule not in list')
+            util.DEBUG_LOG('StorageServers: Attempted to remove rule not in list')
             return
         self._rules.pop(self._rules.index(rule))
 

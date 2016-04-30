@@ -368,3 +368,7 @@ msgstr ""
 msgctxt "#32841"
 msgid "UNHIDE"
 msgstr ""
+
+msgctxt "#32842"
+msgid "EPISODE NAME"
+msgstr ""

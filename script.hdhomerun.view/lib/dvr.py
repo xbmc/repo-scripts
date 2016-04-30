@@ -70,6 +70,7 @@ class EpisodesDialog(kodigui.BaseDialog):
             self.storageServer.deleteRecording(item.dataSource)
 
     def setWindowProperties(self):
+        self.setProperty('sort.name.label', self.groupID and T(32842) or T(32815))
         self.setProperty('sort.mode',self.sortMode)
         self.setProperty('sort.asc',self.sortASC and '1' or '')
 
@@ -90,7 +91,7 @@ class EpisodesDialog(kodigui.BaseDialog):
 
     def sortItems(self,items):
         if self.sortMode == 'NAME':
-            if self.seriesID:
+            if self.groupID:
                 items.sort(key=lambda x: util.sortTitle(x.dataSource.episodeTitle), reverse=not self.sortASC)
             else:
                 items.sort(key=lambda x: util.sortTitle(x.dataSource.seriesTitle), reverse=not self.sortASC)

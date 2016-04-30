@@ -174,7 +174,7 @@
                         <focusedcolor>FF7CF711</focusedcolor>
                         <texturefocus>-</texturefocus>
                         <texturenofocus>-</texturenofocus>
-                        <label>[B]$ADDON[script.hdhomerun.view 32815][/B]</label>
+                        <label>[B]$INFO[Window.Property(sort.name.label)][/B]</label>
                     </control>
                     <control type="group">
                         <visible>StringCompare(Window.Property(sort.mode),ORIGINAL)</visible>

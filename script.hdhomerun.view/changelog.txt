@@ -1,8 +1,17 @@
+** 2016.04.30 **
+
+Refresh cached recordings after delete
+Fix for error causing failure when attempting to sort by program name/episode name
+Change column header to 'EPISODE NAME' when showing episodes for a single show to match the sort target
+
 ** 2016.04.29 **
 
-Add record dots to slice
-Change team recording to Win 10 method
+Add single episode recording
+Add team recording
 Add recordings delete options
+Add ability to set a custom padding value
+Various interface fixes, tweaks and improvements
+
 
 ** 2016.03.24 **
 
