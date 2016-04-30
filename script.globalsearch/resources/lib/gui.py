@@ -151,7 +151,11 @@ class GUI( xbmcgui.WindowXMLDialog ):
         listitems = []
         self.getControl( 191 ).setLabel( xbmc.getLocalizedString(label) )
         count = 0
-        json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetMovies", "params": {"properties": ["title", "streamdetails", "genre", "studio", "year", "tagline", "plot", "plotoutline", "runtime", "fanart", "thumbnail", "file", "trailer", "playcount", "rating", "userrating", "mpaa", "director", "writer"], "sort": { "method": "label" }, "filter": {"field":"%s", "operator":"contains","value":"%s"} }, "id": 1}' % (query, self.searchstring))
+        if query == 'movies':
+            rule = '{"or": [{"field": "title", "operator": "contains", "value": "%s"}, {"field": "originaltitle", "operator": "contains", "value": "%s"}]}' % (self.searchstring, self.searchstring) 
+        else:
+            rule = '{"field":"%s", "operator":"contains", "value":"%s"}' % (query, self.searchstring)
+        json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetMovies", "params": {"properties": ["title", "streamdetails", "genre", "studio", "year", "tagline", "plot", "plotoutline", "runtime", "fanart", "thumbnail", "file", "trailer", "playcount", "rating", "userrating", "mpaa", "director", "writer", "originaltitle"], "sort": { "method": "label" }, "filter": %s }, "id": 1}' % rule)
         json_query = unicode(json_query, 'utf-8', errors='ignore')
         json_response = json.loads(json_query)
         if json_response.has_key('result') and (json_response['result'] != None) and json_response['result'].has_key('movies'):
@@ -177,6 +181,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
                 tagline = item['tagline']
                 thumb = item['thumbnail']
                 trailer = item['trailer']
+                originaltitle = item['originaltitle']
                 year = str(item['year'])
                 if item['streamdetails']['audio'] != []:
                     audiochannels = str(item['streamdetails']['audio'][0]['channels'])
@@ -218,6 +223,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
                 listitem = xbmcgui.ListItem(label=movie, iconImage='DefaultVideo.png', thumbnailImage=thumb)
                 listitem.setProperty( "icon", thumb )
                 listitem.setProperty( "fanart", fanart )
+                listitem.setProperty( "originaltitle", originaltitle )
                 listitem.setProperty( "genre", genre )
                 listitem.setProperty( "plot", plot )
                 listitem.setProperty( "plotoutline", outline )
@@ -911,9 +917,6 @@ class GUI( xbmcgui.WindowXMLDialog ):
         labels = ()
         functions = ()
         controlId = self.getFocusId()
-        x, y = self.getControl( controlId ).getPosition()
-        w = self.getControl( controlId ).getWidth()
-        h = self.getControl( controlId ).getHeight()
         if controlId == 111:
             labels += ( xbmc.getLocalizedString(13346), )
             functions += ( self._showInfo, )
@@ -962,9 +965,10 @@ class GUI( xbmcgui.WindowXMLDialog ):
             if self.trailer:
                 labels += ( LANGUAGE(32205), )
                 functions += ( self._play_trailer, )
-        selection = xbmcgui.Dialog().contextmenu(labels)
-        if selection >= 0:
-            functions[ selection ]()
+        if labels:
+            selection = xbmcgui.Dialog().contextmenu(labels)
+            if selection >= 0:
+                functions[ selection ]()
 
 
     def _showInfo( self ):

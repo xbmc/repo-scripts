@@ -48,6 +48,7 @@ MOVIES (and movies by actor/director):
 ListItem.Label
 ListItem.Icon
 ListItem.Property(Fanart)
+ListItem.Property(OriginalTitle)
 ListItem.Property(Genre)
 ListItem.Property(Plot)
 ListItem.Property(Plotoutline)

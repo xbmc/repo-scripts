@@ -118,8 +118,9 @@
 					<textoffsetx>35</textoffsetx>
 					<textoffsety>78</textoffsety>
 					<radioposx>108</radioposx>
-					<radioposy>13</radioposy>
+					<radioposy>25</radioposy>
 					<radiowidth>48</radiowidth>
+					<radioheight>48</radioheight>
 					<font>font12</font>
 					<label>$INFO[Control.GetLabel(192)]</label>
 					<textureradioonfocus colordiffuse="D0FFFFFF">globalsearch-button-play.png</textureradioonfocus>
@@ -139,8 +140,9 @@
 					<textoffsetx>35</textoffsetx>
 					<textoffsety>78</textoffsety>
 					<radioposx>108</radioposx>
-					<radioposy>13</radioposy>
+					<radioposy>25</radioposy>
 					<radiowidth>48</radiowidth>
+					<radioheight>48</radioheight>
 					<font>font12</font>
 					<label>$INFO[Control.GetLabel(192)]</label>
 					<textureradioonfocus colordiffuse="D0FFFFFF">globalsearch-button-browse.png</textureradioonfocus>
@@ -160,8 +162,9 @@
 					<textoffsetx>35</textoffsetx>
 					<textoffsety>78</textoffsety>
 					<radioposx>108</radioposx>
-					<radioposy>13</radioposy>
+					<radioposy>25</radioposy>
 					<radiowidth>48</radiowidth>
+					<radioheight>48</radioheight>
 					<font>font12</font>
 					<label>$INFO[Control.GetLabel(193)]</label>
 					<textureradioonfocus colordiffuse="D0FFFFFF">globalsearch-button-trailer.png</textureradioonfocus>
@@ -181,8 +184,9 @@
 					<textoffsetx>35</textoffsetx>
 					<textoffsety>78</textoffsety>
 					<radioposx>108</radioposx>
-					<radioposy>13</radioposy>
+					<radioposy>25</radioposy>
 					<radiowidth>48</radiowidth>
+					<radioheight>48</radioheight>
 					<font>font12</font>
 					<label>$INFO[Control.GetLabel(193)]</label>
 					<textureradioonfocus colordiffuse="D0FFFFFF">globalsearch-button-browse.png</textureradioonfocus>
