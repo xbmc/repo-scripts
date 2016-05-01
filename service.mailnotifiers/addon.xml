@@ -17,5 +17,13 @@
     </description>
     <description lang="fr">Notification de l'arrivée des mails[CR]Attention il y a un bug avec Aeon MQ5, les messages se superposent. je n'ai pas encore trouvé de solution[CR]Pour l'intégration dans un skin lisez le fichier LISEZMOI
     </description>
+    <disclaimer lang="en_gb">Feel free to use this script. For information visit the wiki.</disclaimer>
+    <language>en fr</language>
+    <platform>all</platform>
+    <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+    <forum></forum>
+    <website>https://github.com/senufo/xbmc-mailnotifier/wiki</website>
+    <email></email>
+    <source>https://github.com/senufo/xbmc-mailnotifier/archive/v0.2.10.zip</source>
  </extension>
 </addon>

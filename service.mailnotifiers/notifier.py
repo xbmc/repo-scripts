@@ -8,19 +8,17 @@ import xbmcaddon
 import poplib, imaplib
 import time
 
-__author__     = "Senufo"
-__scriptid__   = "service.notifier"
-__scriptname__ = "Notifier"
+author     = "Senufo"
+scriptid   = "service.notifier"
+scriptname = "Notifier"
 
-Addon          = xbmcaddon.Addon(__scriptid__)
+Addon          = xbmcaddon.Addon(scriptid)
 
-__cwd__        = Addon.getAddonInfo('path')
-__version__    = Addon.getAddonInfo('version')
-__language__   = Addon.getLocalizedString
+cwd        = Addon.getAddonInfo('path')
+version    = Addon.getAddonInfo('version')
+language   = Addon.getLocalizedString
 
-__profile__    = xbmc.translatePath(Addon.getAddonInfo('profile'))
-# __resource__   = xbmc.translatePath(os.path.join(__cwd__, 'resources',
-#                                                 'lib'))
+profile    = xbmc.translatePath(Addon.getAddonInfo('profile'))
 
 DEBUG_LOG = Addon.getSetting('debug')
 if 'true' in DEBUG_LOG: DEBUG_LOG = 1 #loglevel == 1 (DEBUG, shows all)
@@ -70,14 +68,9 @@ if __name__ == '__main__':
         if monitor.waitForAbort(intervalle):
             # Abort was requested while waiting. We should exit
             break
-#        xbmc.log("hello addon! %s" % time.time(), level=xbmc.LOGDEBUG)
 
-# Verify if kodi work
-#while (not xbmc.abortRequested):
-    # Wait before get mails
-    #intervalle = int(float(Addon.getSetting('time')) * 60.0)
         if start_time and (time.time() - start_time) < intervalle:
-            time.sleep(.5)
+            monitor.waitForAbort(.5)
             SHOW_UPDATE     = Addon.getSetting('show_update') == "true"
             # if control exist
             if MsgBox:
@@ -87,16 +80,16 @@ if __name__ == '__main__':
                     if SHOW_UPDATE:
                         up = int(intervalle) - (time.time() - start_time)
                         locstr = Addon.getLocalizedString(615)  # Update in %i second
-                        xbmc.log(("[%s] : MSG up = %s " % (__scriptname__, msg),DEBUG_LOG))
+                        xbmc.log(("[%s] : MSG up = %s " % (scriptname, msg),DEBUG_LOG))
                         label = "%s[CR], %s : %s" % (msg, locstr, up)
                         debug_string = "Msg = %s, Update = %s" % (msg, up)
                         xbmc.log(("[%s] : label = %s " % debug_string),DEBUG_LOG)
                     else:  # Need to refresh display
-                        xbmc.log(("[%s] : MSG = %s " % (__scriptname__, msg),DEBUG_LOG))
+                        xbmc.log(("[%s] : MSG = %s " % (scriptname, msg),DEBUG_LOG))
                         label = '%s' % msg
                     if (SKIN == "false"):
                         MsgBox.setLabel(msg)
-                        xbmc.log(("[%s] : setlabel : %s" % (__scriptname__, msg),DEBUG_LOG))
+                        xbmc.log(("[%s] : setlabel : %s" % (scriptname, msg),DEBUG_LOG))
                     else:
                         MsgBox.setLabel('')
                         debug('Clean label')
@@ -124,7 +117,7 @@ if __name__ == '__main__':
                 # Not used now ?
                 re_added_control = False
                 # reload addon setting possible change
-                Addon = xbmcaddon.Addon(__scriptid__)
+                Addon = xbmcaddon.Addon(scriptid)
             # End if HomeNotVisible
             # continue the while without do the rest
             continue
@@ -143,7 +136,7 @@ if __name__ == '__main__':
             try:
                 homeWin.removeControl(MsgBox)
             except:
-                xbmc.log(("[%s] : Control don\'t exist" % __scriptname__),DEBUG_LOG)
+                xbmc.log(("[%s] : Control don\'t exist" % scriptname),DEBUG_LOG)
                 pass
             # add control label and set default label
             homeWin.addControl(MsgBox)
@@ -162,7 +155,7 @@ if __name__ == '__main__':
             homeWin.setProperty(("notifier.enable%i" % i), ("%s" % ENABLE))
             if ENABLE == "false":
                 # homeWin.setProperty( ("notifier.enable%i" % i) , ("false"))
-                xbmc.log(("[%s] : Enableserver = %s, i = %d  " % (__scriptname__, Addon.getSetting('enableserver%i' % i), i),DEBUG_LOG))
+                xbmc.log(("[%s] : Enableserver = %s, i = %d  " % (scriptname, Addon.getSetting('enableserver%i' % i), i),DEBUG_LOG))
                 # If server not defined continue with the next
                 continue
             USER     = Addon.getSetting('user%i'   % i)
@@ -174,8 +167,7 @@ if __name__ == '__main__':
             TYPE     = Addon.getSetting('type%i'   % i)
             FOLDER   = Addon.getSetting('folder%i' % i)
 
-            #debug("SERVER = %s, PORT = %s, USER = %s, password = %s, SSL = %s" % (SERVER, PORT, USER, PASSWORD, SSL))
-            xbmc.log(("[%s] : SERVER = %s, PORT = %s, USER = %s, password = %s, SSL = %s" % (__scriptname__, SERVER, PORT, USER, PASSWORD, SSL)), DEBUG_LOG)
+            xbmc.log(("[%s] : SERVER = %s, PORT = %s, USER = %s, password = %s, SSL = %s" % (scriptname, SERVER, PORT, USER, PASSWORD, SSL)), DEBUG_LOG)
     # Total new messages
             NxMsgTot = 0
     # No new message
@@ -195,7 +187,7 @@ if __name__ == '__main__':
                         mail.user(str(USER))
                         mail.pass_(str(PASSWORD))
                         numEmails = mail.stat()[0]
-                        xbmc.log(("[%s] : POP numEmails = %d " % (__scriptname__, numEmails)),DEBUG_LOG)
+                        xbmc.log(("[%s] : POP numEmails = %d " % (scriptname, numEmails)),DEBUG_LOG)
     # Party IMAP
                     if '1' in TYPE:
                         if SSL.lower() == 'true':
@@ -206,20 +198,15 @@ if __name__ == '__main__':
                         FOLDER = Addon.getSetting('folder%i' % i)
                         imap.select(FOLDER)
                         numEmails = len(imap.search(None, 'UnSeen')[1][0].split())
-                        xbmc.log(("[%s] : IMAP numEmails = %d " % (__scriptname__,numEmails)),DEBUG_LOG)
+                        xbmc.log(("[%s] : IMAP numEmails = %d " % (scriptname,numEmails)),DEBUG_LOG)
 
-                    # debug( :numEmails = %d " % numEmails
                     locstr = Addon.getLocalizedString(610)  # message(s)
-                    # msg = msg + "%s : %d %s" % (NOM,numEmails, locstr) + "\n"
-                    # numEmails = 0
                 except:
                     locstr = Addon.getLocalizedString(613)  # Connexion Error
                     if Addon.getSetting('erreur') == "true":
                         xbmc.executebuiltin("XBMC.Notification(%s : ,%s,30)" % (locstr, SERVER))
-                    xbmc.log(("[%s] : Erreur de connection : %s" % (__scriptname__, SERVER)),DEBUG_LOG)
+                    xbmc.log(("[%s] : Erreur de connection : %s" % (scriptname, SERVER)),DEBUG_LOG)
     # Display Msg on the HOME
-                #msg = msg + "%s => %s\n" % (NOM, locstr)
-
                 if numEmails > 0:
                     MsgTot = True  # New Messages present
                 # Look if new messages in NbMsg
@@ -248,10 +235,8 @@ if __name__ == '__main__':
                     # homeWin.setProperty( "server" , ("%s" % SERVER ))
                 homeWin.setProperty(("notifier.name%i" % i), ("%s" % NOM))
                 homeWin.setProperty(("notifier.msg%i" % i), ("%i" % numEmails))
-                    # debug( "name = %s %i" % (NOM, i))
-                    # debug( "numEmails = %i, Server : %i" % (numEmails, i))
-                xbmc.log(("[%s] : 235 notifier.msg%i, Server : %s, numEmails : %i" % (__scriptname__, i, NOM, numEmails)),DEBUG_LOG)
-                xbmc.log(("[%s] : Affiche 236 : %s" % (__scriptname__, msg)),DEBUG_LOG)
+                xbmc.log(("[%s] : 235 notifier.msg%i, Server : %s, numEmails : %i" % (scriptname, i, NOM, numEmails)),DEBUG_LOG)
+                xbmc.log(("[%s] : Affiche 236 : %s" % (scriptname, msg)),DEBUG_LOG)
                 numEmails = 0
                 if NxMsgTot > 0:
                     locstr = Addon.getLocalizedString(id=611)  # New(s) message(s)
@@ -268,4 +253,4 @@ if __name__ == '__main__':
 
         # init start time
         start_time = time.time()
-        time.sleep(.5)
+        monitor.waitForAbort(.5)
