@@ -25,7 +25,6 @@ from resources.lib.settings import normalize_string
 from resources.lib.settings import dir_exists
 from resources.lib.themeFetcher import TvTunesFetcher
 from resources.lib.themeFinder import ThemeFiles
-from resources.lib.screensaver import launchScreensaver
 
 ADDON = xbmcaddon.Addon(id='script.tvtunes')
 ICON = ADDON.getAddonInfo('icon')
@@ -110,14 +109,6 @@ class MenuNavigator():
             li.setProperty("Fanart_Image", FANART)
             li.addContextMenuItems([], replaceItems=True)
             xbmcplugin.addDirectoryItem(handle=self.addon_handle, url=url, listitem=li, isFolder=False)
-
-        # Action: Start Screensaver
-        url = self._build_url({'mode': 'screensaver', 'actiontype': 'StartScreensaver'})
-        filterTitle = "  %s" % ADDON.getLocalizedString(32208)
-        li = xbmcgui.ListItem(filterTitle, iconImage=ICON)
-        li.setProperty("Fanart_Image", FANART)
-        li.addContextMenuItems([], replaceItems=True)
-        xbmcplugin.addDirectoryItem(handle=self.addon_handle, url=url, listitem=li, isFolder=False)
 
         xbmcplugin.endOfDirectory(self.addon_handle)
 
@@ -533,8 +524,3 @@ if __name__ == '__main__':
         menuNav = MenuNavigator(base_url, addon_handle)
         menuNav.fetchMissingThemes(incAudio, incVideo)
         del menuNav
-
-    elif mode[0] == 'screensaver':
-        log("TvTunesPlugin: Mode is Screensaver")
-        # Launch the screensaver
-        launchScreensaver()
