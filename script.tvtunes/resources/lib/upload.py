@@ -78,6 +78,13 @@ class UploadThemes(ThemeLibrary):
                 self.uploadsDisabled = True
                 return
 
+            minVersion = uploadSettingET.find('version')
+            if minVersion not in [None, ""]:
+                if not self._isSupportedVersion(minVersion.text):
+                    log("UploadThemes: Uploads disabled for older version")
+                    self.uploadsDisabled = True
+                    return
+
             # Check if audio uploads are enabled
             isAudioElem = uploadSettingET.find('audio')
             if (isAudioElem is None) or (isAudioElem.text != 'true'):
@@ -548,6 +555,43 @@ class UploadThemes(ThemeLibrary):
             fileUploaded = False
 
         return fileUploaded
+
+    # Checks if the version installed is supported
+    def _isSupportedVersion(self, requiredVersion):
+        # Check if there is no minimum version set
+        if requiredVersion in [None, ""]:
+            return True
+
+        log("UploadThemes: Required version is %s" % requiredVersion)
+
+        # Get the current version
+        currentVersion = ADDON.getAddonInfo('version')
+        log("UploadThemes: Current version is %s" % currentVersion)
+
+        # Split each version into parts
+        requiredVersionParts = requiredVersion.split('.')
+        currentVersionParts = currentVersion.split('.')
+
+        try:
+            if (len(requiredVersionParts) > 0) and (len(currentVersionParts) > 0):
+                if int(currentVersionParts[0]) < int(requiredVersionParts[0]):
+                    return False
+                elif int(currentVersionParts[0]) > int(requiredVersionParts[0]):
+                    return True
+            if (len(requiredVersionParts) > 1) and (len(currentVersionParts) > 1):
+                if int(currentVersionParts[1]) < int(requiredVersionParts[1]):
+                    return False
+                elif int(currentVersionParts[1]) > int(requiredVersionParts[1]):
+                    return True
+            if (len(requiredVersionParts) > 2) and (len(currentVersionParts) > 2):
+                if int(currentVersionParts[2]) < int(requiredVersionParts[2]):
+                    return False
+                elif int(currentVersionParts[2]) > int(requiredVersionParts[2]):
+                    return True
+        except:
+            log("UploadThemes: Problem checking version (%s and %s)" % (requiredVersion, currentVersion), xbmc.LOGERROR)
+
+        return True
 
 
 #########################
