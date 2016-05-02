@@ -528,12 +528,12 @@ msgid "Error ID"
 msgstr ""
 
 msgctxt "#32146"
-msgid ""
+msgid "Choose this option in order to sync remote tv to this device."
 msgstr ""
 
 msgctxt "#32147"
-msgid ""
-msgstr ""
+msgid "This button is locked but you haven't set a password!"
+msgstr "כפתור זה נעול אך טרם הגדרת סיסמא!"
 
 msgctxt "#32148"
 msgid ""

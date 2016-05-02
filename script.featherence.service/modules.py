@@ -11,7 +11,6 @@ def mode0(admin, name, printpoint):
 	#installaddon('resource.images.weathericons.outline')
 	#installaddon('resource.images.weatherfanart.single')
 	
-	#DownloadFile('asd', 'asd', 'qwe', 'zxc', silent=False, percentinfo="")
 	
 def mode5(value, admin, name, printpoint):
 	'''startup'''
@@ -43,6 +42,49 @@ def mode5(value, admin, name, printpoint):
 		#installaddon('resource.images.weathericons.outline')
 		#installaddon('resource.images.weatherfanart.single')
 		#xbmc.executebuiltin('RunPlugin(resource.images.weathericons.outline)')
+
+def mode6(value):
+	name = 'mode6 (pwd)' ; printpoint = ""
+	passprotect = xbmc.getInfoLabel('Skin.String(PassProtect)')
+	passprotect_property = xbmc.getInfoLabel('Window(home).Property(PassProtect)')
+	currentpwd = xbmc.getCondVisibility('Skin.HasSetting('+value+')')
+	set1v = ""
+	#label = labelT.get('label'+str(id)) ; icon = iconT.get('icon'+str(id))
+	
+	if currentpwd:
+		printpoint = printpoint + '1'
+		if passprotect_property != "":
+			printpoint = printpoint + '2'
+			
+		elif not passprotect:
+			'''This button is locked but you haven't set a password!'''
+			printpoint = printpoint + '3'
+			notification(addonString(32147).encode('utf-8'),"","",4000)
+			setProperty('PassProtect','','home')
+			xbmc.executebuiltin('ReplaceWindow(Home.xml)')
+		else:
+			printpoint = printpoint + '4'
+			returned, set1v = dialognumeric(0,localize(12326),"",'1','','')
+			if set1v != passprotect:
+				printpoint = printpoint + '5'
+				notification(localize(12342),"","",2000)
+				setProperty('PassProtect','','home')
+				xbmc.executebuiltin('ReplaceWindow(Home.xml)')
+			else:
+				printpoint = printpoint + '6'
+				xbmc.executebuiltin('AlarmClock(PassProtect,ClearProperty(home,PassProtect),15,silent)')
+				setProperty('PassProtect','true', 'home')
+	else:
+		printpoint = printpoint + '9'
+	
+	passprotect_property_ = xbmc.getInfoLabel('Window(home).Property(PassProtect)')
+	text = 'value' + space2 + str(value) + newline + \
+	'set1v' + space2 + str(set1v) + newline + \
+	'passprotect' + space2 + str(passprotect) + newline + \
+	'passprotect_property' + space2 + str(passprotect_property) + newline + \
+	'passprotect_property_' + space2 + str(passprotect_property_) + newline + \
+	'currentpwd' + space2 + str(currentpwd) + newline
+	printlog(title=name, printpoint=printpoint, text=text, level=1, option="")
 	
 def mode8(admin, name, printpoint):
 	'''------------------------------
@@ -1118,6 +1160,7 @@ def mode201(value, admin, name, printpoint):
 			setSkinSetting('0','icon'+str(i),"")
 			setSkinSetting('0','background'+str(i),"")
 			setSkinSetting('1','off'+str(i),"")
+			setSkinSetting('1','pwd'+str(i),"")
 		for i in range(90,120):
 			count += 2
 			i_ = xbmc.getInfoLabel('Skin.String(label'+str(i)+')')
@@ -1129,6 +1172,7 @@ def mode201(value, admin, name, printpoint):
 				setSkinSetting('0','icon'+str(i),"")
 				setSkinSetting('0','background'+str(i),"")
 				setSkinSetting('1','off'+str(i),"")
+				setSkinSetting('1','pwd'+str(i),"")
 				setSkinSetting('1','sub'+str(i),"")
 				'''---------------------------'''
 			for i2 in range(100,110):
@@ -1138,6 +1182,7 @@ def mode201(value, admin, name, printpoint):
 					setSkinSetting('0','label'+str(i)+'_'+str(i2),"")
 					setSkinSetting('0','action'+str(i)+'_'+str(i2),"")
 					setSkinSetting('1','off'+str(i)+'_'+str(i2),"")
+					setSkinSetting('1','pwd'+str(i)+'_'+str(i2),"")
 					setSkinSetting('0','icon'+str(i)+'_'+str(i2),"")
 					'''---------------------------'''
 		
@@ -1235,6 +1280,7 @@ def mode210(value, admin, name, printpoint):
 					setSkinSetting('0','label'+x,str(labelT.get('label'+y)))
 					setSkinSetting('0','action'+x,str(actionT.get('action'+y)))
 					setSkinSetting('1','off'+x,str(offT.get('off'+y)))
+					setSkinSetting('1','pwd'+x,str(pwdT.get('pwd'+y)))
 					setSkinSetting('0','color'+x,str(colorT.get('color'+y)))
 					setSkinSetting('0','icon'+x,str(iconT.get('icon'+y)))
 					#setSkinSetting('0','background'+y,str(backgroundT.get('background'+x)))
@@ -1276,6 +1322,7 @@ def mode210(value, admin, name, printpoint):
 					label_ = xbmc.getInfoLabel('$VAR['+label_T.get('label'+y)+']')
 					notification("...", "", "", 1000)
 					setSkinSetting('1','off'+x,str(off_T.get('off'+y)))
+					setSkinSetting('1','pwd'+x,str(pwd_T.get('pwd'+y)))
 					setSkinSetting('0','label'+x,label_T.get('label'+y))
 					setSkinSetting('0','action'+x,str(action_T.get('action'+y)))
 					setSkinSetting('0','icon'+x,str(icon_T.get('icon'+y)))
@@ -1325,6 +1372,7 @@ def mode211(value, admin, name, printpoint):
 					y = str(i)
 					setSkinSetting('0','label'+y,"...")
 					setSkinSetting('1','off'+y,"false")
+					setSkinSetting('1','pwd'+y,"false")
 					break
 				else: pass
 		
@@ -1338,6 +1386,7 @@ def mode211(value, admin, name, printpoint):
 					#setSkinSetting('0','id'+y,y)
 					setSkinSetting('0','label'+y,"...")
 					setSkinSetting('1','off'+y,"false")
+					setSkinSetting('1','pwd'+y,"false")
 					break
 				else: pass
 
@@ -1397,6 +1446,7 @@ def mode212(value, admin, name, printpoint):
 				for i in range(0,two):
 					if i == 1: x = str(property_buttonid)
 					setSkinSetting('1','off' + x,"false")
+					setSkinSetting('1','pwd' + x,"false")
 					if int(property_buttonid) > 99 and not 'B' in value: setSkinSetting('0','label' + x,"")
 					else: setSkinSetting('0','label' + x,"...")
 					setSkinSetting('1','sub' + x,"false")
@@ -1414,6 +1464,7 @@ def mode212(value, admin, name, printpoint):
 								if i > 99 : setSkinSetting('0','label'+x+'_'+str(i),"")
 								else: setSkinSetting('0','label'+x+'_'+str(i),"")
 								setSkinSetting('1','off'+x+'_'+str(i),"false")
+								setSkinSetting('1','pwd'+x+'_'+str(i),"false")
 								#setSkinSetting('0','id'+x+'_'+str(i),"")
 								setSkinSetting('0','action'+x+'_'+str(i),"")
 								setSkinSetting('0','icon'+x+'_'+str(i),"")
@@ -1434,6 +1485,7 @@ def mode212(value, admin, name, printpoint):
 			if returned == 'skip': printpoint = printpoint + "8"
 			else:
 				setSkinSetting('1','off' + x,"false")
+				setSkinSetting('1','pwd' + x,"false")
 				if not '_90' in property_subbuttonid_ and not 'B' in value: setSkinSetting('0','label' + x,"")
 				else: setSkinSetting('0','label' + x,"...")
 				#setSkinSetting('0','id' + x,"")
@@ -1672,6 +1724,7 @@ def mode218(value, admin, name, printpoint):
 			message = message + newline + "TopVideoInformation7" + space2 + xbmc.getInfoLabel('Window(home).Property(TopVideoInformation7)')
 			message = message + newline + "VideoPlayer.Title" + space2 + xbmc.getInfoLabel('VideoPlayer.Title')
 			message = message + newline + "TopVideoInformation8" + space2 + xbmc.getInfoLabel('Window(home).Property(TopVideoInformation8)')
+			message = message + newline + "custom" + space2 + xbmc.getInfoLabel('VideoPlayer.VideoCodec') #CUSTOM TEST
 			
 		elif myweatherW:
 			message = message + newline + "Day0 Title" + space2 + xbmc.getInfoLabel('Window.Property(Day0.Title)')
@@ -1744,7 +1797,7 @@ def mode218(value, admin, name, printpoint):
 			message = message + newline + "ListItem.Duration" + space2 + xbmc.getInfoLabel('ListItem.Duration')
 			message = message + newline + "Container.Viewmode" + space2 + xbmc.getInfoLabel('Container.Viewmode')
 			message = message + newline + '---------------------------'
-			message = message + newline + "custom" + space2 + xbmc.getInfoLabel('ListItem.Art(Poster)') #CUSTOM TEST
+			message = message + newline + "custom" + space2 + xbmc.getInfoLabel('VideoPlayer.VideoCodec') #CUSTOM TEST
 			message = message + newline + "custom2" + space2 + xbmc.getInfoLabel('ListItem.IsCollection') #CUSTOM TEST
 			message = message + newline + "custom3" + space2 + str(xbmc.getInfoLabel('System.InternetState')) #CUSTOM TEST
 			message = message + newline + "ListItem.Property(TotalEpisodes)" + space2 + str(xbmc.getInfoLabel('ListItem.Property(TotalEpisodes)')) #CUSTOM TEST
@@ -1791,10 +1844,11 @@ def mode232(value, admin, name, printpoint):
 		if id1 != "":
 			if not xbmc.getInfoLabel('Skin.HasSetting(Action_Thumbnail)'):
 				Action_Thumbnail = '&skinThumbnail=icon'+id1
-				Action_Label = '&skinLabel=label'+id1
+				#Action_Label = '&skinLabel=label'+id1
 			else:
 				Action_Thumbnail = ""
-				Action_Label = ""
+				#Action_Label = ""
+			Action_Label = '&skinLabel=label'+id1
 			
 			if custom1175W and not custom1138W:
 				'''Main Action'''
@@ -1990,7 +2044,11 @@ def mode512(value):
 		if systemplatformwindows: webbrowser.open(url)
 		elif systemplatformandroid:
 			webbrowser.open(url)
-			#StartAndroidActivity('start -a', 'action', 'VIEW')
+			app = 'com.android.chrome'
+			intent = 'android.intent.action.VIEW'
+			dataType = ''
+			cmd = 'StartAndroidActivity("%s", "%s", "%s", "%s")' % (app, intent, dataType, url)
+			xbmc.executebuiltin(cmd)
 			#terminal('adb shell am start -a android.intent.action.VIEW -d '+url+'','')
 		elif systemplatformlinux:
 			if xbmc.getCondVisibility('System.HasAddon(service.openelec.settings)'): xbmc.executebuiltin('RunAddon(browser.chromium)')

@@ -48,6 +48,12 @@ elif mode == 5:
 	mode5(value, admin, name, printpoint)
 	'''---------------------------'''
 
+elif mode == 6:
+	'''------------------------------
+	---PASSWORD-PROTECT--------------
+	------------------------------'''
+	mode6(value)
+	
 elif mode == 7:
 	'''------------------------------
 	---SEND-DEBUG--------------------
@@ -369,6 +375,8 @@ elif mode >= 200 and mode <= 249:
 								formula = formula + newline + 'action'+str(i)+'=0' + str(x)
 								x = offT.get('off'+str(i))
 								formula = formula + newline + 'off'+str(i)+'=1' + str(x)
+								x = pwdT.get('pwd'+str(i))
+								formula = formula + newline + 'pwd'+str(i)+'=1' + str(x)
 								x = colorT.get('color'+str(i))
 								formula = formula + newline + 'color'+str(i)+'=0' + str(x)
 								x = iconT.get('icon'+str(i))
@@ -388,6 +396,8 @@ elif mode >= 200 and mode <= 249:
 									formula = formula + newline + 'action'+str(i)+'=0' + str(x)
 									x = offT.get('off'+str(i))
 									formula = formula + newline + 'off'+str(i)+'=1' + str(x)
+									x = pwdT.get('pwd'+str(i))
+									formula = formula + newline + 'pwd'+str(i)+'=1' + str(x)
 									x = colorT.get('color'+str(i))
 									formula = formula + newline + 'color'+str(i)+'=0' + str(x)
 									x = subT.get('sub'+str(i))
@@ -532,7 +542,7 @@ elif mode >= 200 and mode <= 249:
 									x2 = x2.replace("=","",1)
 									x2 = x2.replace("\n","")
 									if x2 != None:
-										setSkinSetting('0', str(x1), str(x2))
+										setSkinSetting('0', str(x1), str(x2), force=True)
 									
 								elif "=1" in line:
 									'''Skin.HasSetting'''
@@ -545,7 +555,7 @@ elif mode >= 200 and mode <= 249:
 									if x2 == "" or x2 == 'None' or x2 == None: x3 = "false"
 									else:
 										x3 = "true" ; x2 = "*" + x2 + "*"
-									setSkinSetting('1', str(x1), str(x3))
+									setSkinSetting('1', str(x1), str(x3), force=True)
 								
 								elif "=2" in line:
 									'''xbmc.executebuiltin'''

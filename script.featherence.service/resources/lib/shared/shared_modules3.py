@@ -907,7 +907,7 @@ def apimaster(x, title="", thumb="", desc="", fanart="", playlist=[], addonID=ad
 		if 'commonsearch' in x:
 			printpoint = printpoint + 'c'
 			x2 = clean_commonsearch(x2, match=False)
-			x2 = title + space + x2
+			#x2 = title + space + x2
 			
 		url = 'https://www.googleapis.com/youtube/v3/search?q='+x2+'&key='+api_youtube_featherence+'&videoDuration='+videoDuration+'&videoDefinition='+videoDefinition+'&safeSearch='+safeSearch+'&type=video&part=snippet&maxResults='+maxResults+'&pageToken='
 	elif "&youtube_se2=" in x:
@@ -970,7 +970,7 @@ def apimaster(x, title="", thumb="", desc="", fanart="", playlist=[], addonID=ad
 	
 	if url != "":
 		if 'A' in printpoint: title2 = ""
-		if not 'c' in printpoint:
+		if not 'c' in printpoint or 1 + 1 == 2:
 			try: link = OPEN_URL(url)
 			except Exception, TypeError:
 				printpoint = printpoint + '9'
