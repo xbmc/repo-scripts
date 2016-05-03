@@ -94,20 +94,22 @@ def search(item):
     xbmcplugin.addDirectoryItems(handle=int(sys.argv[1]), items=list_items)
     log(__name__, "Overall search took %f" % (time.time() - start_time))
 
-def download(page_id, subtitle_id,filename, stack=False):
-    files = glob.glob(os.path.join(__temp__, "*.srt"))
-    for f in files:
-      log(__name__, "deleting %s" % f)
-      os.remove(f)
+def delete_old_subs():
+  files = glob.glob(os.path.join(__temp__, u"*.srt"))
+  for f in files:
+    log(__name__, "deleting %s" % f)
+    os.remove(f)
 
+def download(page_id, subtitle_id,filename, stack=False):
     subtitle_list = []
-    exts = [".srt", ".sub"]
+    exts          = [".srt", ".sub"]
     
     delay         = 20
     download_wait = delay
     downloader    = TorecSubtitlesDownloader()
     start_time    = time.time()
 
+    delete_old_subs()
     try:
         # Wait the minimal time needed for retrieving the download link
         for i in range (int(download_wait)):
@@ -125,16 +127,18 @@ def download(page_id, subtitle_id,filename, stack=False):
         log(__name__ ,"Downloading subtitles from '%s'" % result)
         
         (subtitleData, subtitleName) = downloader.download(result)
-        zip = os.path.join(__temp__, "Torec.zip")
-        with open(zip, "wb") as subFile:
+        (fileName, fileExt) = os.path.splitext(subtitleName)
+        archiveFile = os.path.join(__temp__, "Torec%s" % fileExt)
+        with open(archiveFile, "wb") as subFile:
             subFile.write(subtitleData)
 
-        xbmc.executebuiltin(('XBMC.Extract("%s","%s")' % (zip,__temp__,)).encode('utf-8'), True)
+        xbmc.executebuiltin(('XBMC.Extract("%s","%s")' % (archiveFile,__temp__,)).encode('utf-8'), True)
 
         for file in xbmcvfs.listdir(__temp__)[1]:
-            log(__name__, "file=%s" % file)
-            file = os.path.join(__temp__, file)
-            if (os.path.splitext(file)[1] in exts):
+            ufile=file.decode('utf-8')
+            log(__name__, "file=%s" % ufile)
+            file = os.path.join(__temp__, ufile)
+            if (os.path.splitext(ufile)[1] in exts):
               convert_to_utf(file)
               subtitle_list.append(file)
       

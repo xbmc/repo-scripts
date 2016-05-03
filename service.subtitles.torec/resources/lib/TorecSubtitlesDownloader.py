@@ -7,10 +7,9 @@ import re
 import zlib
 import bs4
 
-import xbmcaddon
-
 from SubtitleHelper import log
 
+import xbmcaddon
 __addon__      = xbmcaddon.Addon()
 __version__    = __addon__.getAddonInfo('version') # Module version
 __scriptname__ = __addon__.getAddonInfo('name')
@@ -31,7 +30,7 @@ class SubtitlePage(object):
         self.options = self._parseOptions(data)
         
     def _parseOptions(self, data):
-        subtitleSoup = bs4.BeautifulSoup(data)
+        subtitleSoup = bs4.BeautifulSoup(data, "html.parser")
         subtitleOptions = subtitleSoup("div", {'class' : 'download_box' })[0].findAll("option")
         filteredSubtitleOptions = filter(lambda x: x.has_key("value"), subtitleOptions)
         return map(lambda x: SubtitleOption(x.string.strip(), x["value"]), filteredSubtitleOptions)
@@ -55,10 +54,10 @@ class FirefoxURLHandler:
         cj = cookielib.CookieJar()
         self.opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cj))
         self.opener.addheaders = [('Accept-Encoding','gzip, deflate'),
-                                  ('Accept-Language', 'en-us,en;q=0.5'),
+                                  ('Accept-Language', 'en-US,en;q=0.8,he;q=0.6'),
                                   ('Pragma', 'no-cache'),
                                   ('Cache-Control', 'no-cache'),
-                                  ('User-Agent', 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36')]
+                                  ('User-Agent', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.86 Safari/537.36')]
     
     def request(self, url, data=None, ajax=False, referer=None, cookie=None):
         if (data != None):
@@ -77,16 +76,17 @@ class TorecSubtitlesDownloader:
     DEFAULT_SEPERATOR = " "
     BASE_URL          = "http://www.torec.net"
     SUBTITLE_PATH     = "sub.asp?sub_id="
-    DEFAULT_COOKIE    = "Torec_NC_s=%(screen_width)d; Torec_NC_sub_%(subId)s=sub=%(current_datetime)s"
+    DEFAULT_COOKIE    = "Torec_NC_sub_%(subId)s=sub=%(current_datetime)s; Torec_NC_s=%(screen_width)d"
 
     def __init__(self):
         self.urlHandler = FirefoxURLHandler()
         
     def _buildDefaultCookie(self, subID):
-        currentTime = datetime.datetime.now().strftime("%m/%d/%Y+%I:%M:%S+%p")
-        return self.DEFAULT_COOKIE % {"screen_width" : 1440, 
-                                      "subId" : subID, 
-                                      "current_datetime" : currentTime}
+        currentTime = datetime.datetime.now()
+
+        return self.DEFAULT_COOKIE % {"screen_width" :     1440, 
+                                      "subId" :            subID, 
+                                      "current_datetime" : currentTime.strftime("%m/%d/%Y+%I:%M:%S+%p") }
     
     def search(self, movie_name):
         santized_name = self.sanitize(movie_name)
@@ -120,7 +120,7 @@ class TorecSubtitlesDownloader:
     def getDownloadLink(self, subID, optionID, subURL, persist=True):        
         requestID = self._requestSubtitle(subID, subURL)
         
-        params = {"sub_id" : subID, "code": optionID, "sh" : "yes", "guest" : requestID, "timewaited" : "12"}
+        params = {"sub_id" : subID, "code": optionID, "sh" : "yes", "guest" : requestID, "timewated" : "15"}
         for i in xrange(16):
             response = self.urlHandler.request("%s/ajax/sub/downloadun.asp" % self.BASE_URL, params, ajax=True)
             if (not persist):

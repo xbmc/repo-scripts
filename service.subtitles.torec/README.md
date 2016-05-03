@@ -1,4 +1,4 @@
 service.subtitles.torec
 ==================
 
-XBMC Torec subtitle service for Gotham
+XBMC/Kodi Torec subtitle service
