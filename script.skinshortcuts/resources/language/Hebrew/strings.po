@@ -8,7 +8,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Kodi Translation Team\n"
+"Last-Translator: tomer953\n"
 "Language-Team: Hebrew (http://www.transifex.com/projects/p/xbmc-addons/language/he/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -166,11 +166,11 @@ msgstr "פקודות Kodi"
 
 msgctxt "#32061"
 msgid "Display"
-msgstr "תצוגה"
+msgstr "הצגה"
 
 msgctxt "#32062"
 msgid "Play"
-msgstr "שחק"
+msgstr "ניגון"
 
 msgctxt "#32066"
 msgid "Last TV channel"
@@ -231,3 +231,253 @@ msgstr "מקור תמונות"
 msgctxt "#32096"
 msgid "Browse..."
 msgstr "עיון..."
+
+msgctxt "#32053"
+msgid "None"
+msgstr ""
+
+msgctxt "#32054"
+msgid "Kodi Command"
+msgstr "פקודת Kodi"
+
+msgctxt "#32055"
+msgid "Clean video library"
+msgstr "ניקוי ספרית וידאו"
+
+msgctxt "#32056"
+msgid "Clean audio library"
+msgstr "ניקוי ספרית מוסיקה"
+
+msgctxt "#32057"
+msgid "Kodi Commands"
+msgstr "פקודות Kodi"
+
+msgctxt "#32058"
+msgid "Create menu item to here"
+msgstr "צור תפריט המקשר לכאן"
+
+msgctxt "#32059"
+msgid "Skin Playlist"
+msgstr "רשימות ניגון של הסקין"
+
+msgctxt "#32060"
+msgid "What do you want to do with the playlist?"
+msgstr "מה ברצונך לבצע עם רשימת הניגון?"
+
+msgctxt "#32061"
+msgid "Display"
+msgstr "להציג"
+
+msgctxt "#32062"
+msgid "Play"
+msgstr "לנגן"
+
+msgctxt "#32063"
+msgid "Getting directory listing..."
+msgstr "טוען פריטים..."
+
+msgctxt "#32064"
+msgid "No available items"
+msgstr "אין פריטים זמינים"
+
+msgctxt "#32065"
+msgid "There are no available items to choose from for the category that you choose."
+msgstr "אין פריטים זמינים לבחירה בקטגוריה שבחרת"
+
+msgctxt "#32066"
+msgid "Last TV channel"
+msgstr "ערוץ טלויזיה אחרון"
+
+msgctxt "#32067"
+msgid "Last radio channel"
+msgstr "ערוץ רדיו אחרון"
+
+msgctxt "#32068"
+msgid "Last channel"
+msgstr "ערוץ אחרון"
+
+msgctxt "#32069"
+msgid "Video Source"
+msgstr "מקור וידאו"
+
+msgctxt "#32070"
+msgid "UPnP"
+msgstr ""
+
+msgctxt "#32071"
+msgid "Customize Main Menu"
+msgstr "התאמת התפריט הראשי"
+
+msgctxt "#32072"
+msgid "Customize Submenu"
+msgstr "התאמת תת-תפריט"
+
+msgctxt "#32073"
+msgid "Music Source"
+msgstr "מקור מוסיקה"
+
+msgctxt "#32074"
+msgid "Library Sources"
+msgstr "מקורות לספריה"
+
+msgctxt "#32075"
+msgid "Sources"
+msgstr "מקורות"
+
+msgctxt "#32076"
+msgid "TV Channel"
+msgstr "ערוצי טלויזיה"
+
+msgctxt "#32077"
+msgid "Radio Channel"
+msgstr "ערוצי רדיו"
+
+msgctxt "#32078"
+msgid "Display..."
+msgstr ""
+
+msgctxt "#32079"
+msgid "Files view"
+msgstr "תצוגת קבצים"
+
+#. ::MENUNAME:: is used internally and should NOT be translated :)
+
+msgctxt "#32080"
+msgid "Edit ::MENUNAME:: Submenu"
+msgstr ""
+
+msgctxt "#32081"
+msgid "Movies not in this source"
+msgstr ""
+
+msgctxt "#32082"
+msgid "TV Shows not in this source"
+msgstr ""
+
+msgctxt "#32083"
+msgid "Music Videos not in this source"
+msgstr ""
+
+msgctxt "#32084"
+msgid "Songs not in this source"
+msgstr ""
+
+msgctxt "#32085"
+msgid "Albums not in this source"
+msgstr ""
+
+msgctxt "#32086"
+msgid "Mixed content not in this source"
+msgstr ""
+
+msgctxt "#32087"
+msgid "Radio"
+msgstr "רדיו"
+
+msgctxt "#32088"
+msgid "Channels"
+msgstr "ערוצים"
+
+msgctxt "#32089"
+msgid "Picture Source"
+msgstr "מקור תמונות"
+
+msgctxt "#32090"
+msgid "The item has been added to the menu"
+msgstr "הפריט התווסף לתפריט"
+
+msgctxt "#32091"
+msgid "Unable to add item to the menu. Please check log for errors."
+msgstr "נכשל בהוספת הפריט לתפריט - יש לבדוק בלוג השגיאות"
+
+msgctxt "#32092"
+msgid "Unable to build menu."
+msgstr "נכשל ביצירת תפריט."
+
+msgctxt "#32093"
+msgid "Upload debug log?"
+msgstr "שלח לוג מורחב?"
+
+msgctxt "#32094"
+msgid "Install Kodi Log Uploader add-on to easily provide a debug log."
+msgstr ""
+
+msgctxt "#32095"
+msgid "Choose default action for menu item"
+msgstr "בחר פעולת ברירת מחדל לתפריט"
+
+msgctxt "#32096"
+msgid "Browse..."
+msgstr "עיון..."
+
+msgctxt "#32097"
+msgid "Unable to save menu"
+msgstr "נכשל בשמירת תפריט"
+
+msgctxt "#32098"
+msgid "Writing menu..."
+msgstr "יוצר תפריט..."
+
+msgctxt "#32099"
+msgid "Widget"
+msgstr "יישומונים"
+
+msgctxt "#32100"
+msgid "Use as widget"
+msgstr "השתמש כיישומון"
+
+msgctxt "#32101"
+msgid "Choose property"
+msgstr "בחר אפשרות"
+
+msgctxt "#32102"
+msgid "Restore or reset?"
+msgstr "שחזור או איפוס?"
+
+msgctxt "#32103"
+msgid "Restore an original menu item"
+msgstr ""
+
+msgctxt "#32104"
+msgid "Reset to skin defaults"
+msgstr "איפוס לברירת המחדל של הסקין"
+
+msgctxt "#32105"
+msgid "There are no menu items to restore for this menu"
+msgstr ""
+
+msgctxt "#32106"
+msgid "Install widget provider"
+msgstr ""
+
+msgctxt "#32107"
+msgid "Enable default widgets"
+msgstr ""
+
+msgctxt "#32108"
+msgid "Party mode (music videos)"
+msgstr ""
+
+msgctxt "#32109"
+msgid "No menus from compatible skins found to import"
+msgstr "לא נמצאו תפריטים תואמים מסקינים אחרים המתאימים לייבוא"
+
+msgctxt "#32110"
+msgid "Import menu from skin"
+msgstr "ייבוא תפריטים מסקין"
+
+msgctxt "#32111"
+msgid "Shared menu"
+msgstr "תפריטים משותפים"
+
+msgctxt "#32112"
+msgid "New item on the main menu"
+msgstr "פריט חדש בתפריט הראשי"
+
+msgctxt "#32113"
+msgid "New item on the main menu (autofill submenu items)"
+msgstr "פריט חדש בתפריט הראשי (מתמלא אוטומטית עם פריטי התת-תפריט)"
+
+msgctxt "#32114"
+msgid "Where should menu item be created"
+msgstr "היכן ליצור את התפריט"

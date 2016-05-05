@@ -76,6 +76,18 @@ Important note: If you are using skinshortcuts to provide the powermenu (DialogB
 Example (assuming the name of your powermenu is powermenu):
 `<groupoverride group="powermenu" condition="Window.IsActive(DialogButtonMenu.xml)">Close</groupoverride>`
 
+## Run a different command based on automatic visibility condition
+
+Skin Shortcuts adds automatic visibility conditions to relevant shortcuts - such as ensuring library nodes have the relevant content. If you wish, rather than having the visibility condition applied, you can run a different action if the visibility condition doesn't match
+
+`<visibleoverride group="[GroupName]" condition="[Condition]">[Action]</visibleoverride>`
+
+| Property | Optional | Description |
+| :------: | :------: | ----------- |
+| `[GroupName]` | Yes | The group that the override applies to, for example "mainmenu" or "movies". If omitted, the override will apply to all menus |
+| `Condition]` | | The visibility condition that is being matched (not case sensitive) |
+| `[Action]` | | The action that will be run if the condition does not match |
+
 # Notes
 
 #### Respecting user choice

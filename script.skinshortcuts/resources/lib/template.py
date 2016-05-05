@@ -5,6 +5,8 @@ import xml.etree.ElementTree as xmltree
 import hashlib, hashlist
 import copy
 from traceback import print_exc
+import simpleeval, operator, ast
+from simpleeval import simple_eval
 
 __addon__        = xbmcaddon.Addon()
 __addonid__      = __addon__.getAddonInfo('id').decode( 'utf-8' )
@@ -64,8 +66,12 @@ class Template():
         # List which will contain 'other' elements we will need to finalize (we won't have all the
         # visibility conditions until the end)
         self.finalize = []
+
+        # Initialize simple eval
+        self.simple_eval = simpleeval.SimpleEval()
+        self.simple_eval.operators[ast.In] = operator.contains
             
-    def parseItems( self, menuType, level, items, profile, profileVisibility, visibilityCondition, menuName, mainmenuID = None ):
+    def parseItems( self, menuType, level, items, profile, profileVisibility, visibilityCondition, menuName, mainmenuID = None, buildOthers = False ):
         # This will build an item in our includes for a menu
         if self.includes is None or self.tree is None:
             return
@@ -103,28 +109,45 @@ class Template():
                 includeTree.append( child )
             
         # Now we want to see if any of the main menu items match a template
-        if menuType != "mainmenu" or len( self.otherTemplates ) == 0:
+        if not buildOthers or len( self.otherTemplates ) == 0:
             return
         progressCount = 0
         numTemplates = 0
-        log( "Building templates")
+        if menuType == "mainmenu":
+            log( "Building templates")
+        else:
+            # Switch menutype for level for submenu templates, to make it easier to pass in
+            menuType = level
         for item in items:
             progressCount = progressCount + 1
-            # First we need to build the visibilityCondition, based on the items
-            # submenuVisibility element, and the mainmenuID
-            visibilityName = ""
-            for element in item.findall( "property" ):
-                if "name" in element.attrib and element.attrib.get( "name" ) == "submenuVisibility":
-                    visibilityName = element.text
-                    break
-            
-            visibilityCondition = "StringCompare(Container(" + mainmenuID + ").ListItem.Property(submenuVisibility)," + visibilityName + ")"
-            
+            if menuType == "mainmenu":
+                # First we need to build the visibilityCondition, based on the items
+                # submenuVisibility element, and the mainmenuID
+                visibilityName = ""
+                for element in item.findall( "property" ):
+                    if "name" in element.attrib and element.attrib.get( "name" ) == "submenuVisibility":
+                        visibilityName = element.text
+                        break
+                
+                finalVisibility = "StringCompare(Container(" + mainmenuID + ").ListItem.Property(submenuVisibility)," + visibilityName + ")"
+            else:
+                # First we need to build the visibilityCondition, based on the visibility condition
+                # passed in, and the submenuVisibility element
+                visibilityName = ""
+                for element in item.findall( "property" ):
+                    if "name" in element.attrib and element.attrib.get( "name" ) == "labelID":
+                        visibilityName = element.text
+                        break
+                
+                finalVisibility = "[%s + StringCompare(Container(::SUBMENUCONTAINER::).ListItem.Property(labelID),%s)]" %( visibilityCondition, visibilityName )
+
             # Now find a matching template - if one matches, it will be saved to be processed
             # at the end (when we have all visibility conditions)
-            numTemplates += self.findOther( item, profile, profileVisibility, visibilityCondition )
-            self.progress.update( int( self.current + ( ( float( self.percent ) / float( len( items ) ) ) * progressCount ) ) )
-        log( " - Built %d templates" %( numTemplates ) )
+            numTemplates += self.findOther( item, profile, profileVisibility, finalVisibility, menuType )
+            if menuType == "mainmenu":
+                self.progress.update( int( self.current + ( ( float( self.percent ) / float( len( items ) ) ) * progressCount ) ) )
+        if numTemplates != 0:
+            log( " - %d templates" %( numTemplates ) )
                     
     def writeOthers( self ):
         # This will write any 'other' elements we have into the includes file
@@ -332,11 +355,14 @@ class Template():
         if returnElem is None: return None            
         return self.copy_tree( returnElem )
         
-    def findOther( self, item, profile, profileVisibility, visibilityCondition ):
+    def findOther( self, item, profile, profileVisibility, visibilityCondition, menuType ):
         # Find a template matching the item we have been passed
         foundTemplateIncludes = []
         numTemplates = 0
-        for elem in self.tree.findall( "other" ):
+        searchType = "other"
+        if menuType != "mainmenu":
+            searchType = "submenuOther"
+        for elem in self.tree.findall( searchType ):
             # Check that we don't already have a template for this include
             includeName = None
             if "include" in elem.attrib:
@@ -346,6 +372,26 @@ class Template():
 
             template = self.copy_tree( elem )
             matched = True
+
+            finalVisibility = visibilityCondition
+            if menuType != "mainmenu":
+                # This isn't the main menu
+
+                # First we check if the level matches
+                if "level" in elem.attrib:
+                    if menuType != int( elem.attrib.get( "level" ) ):
+                        matched = False
+                        continue
+                elif menuType != 0:
+                    matched = False
+                    continue
+                
+                # Next we either extend the visibility condition to also match the submenu
+                # (if the template provides the submenu container ID), or drop the visibility condition
+                if "container" in elem.attrib:
+                    finalVisibility = visibilityCondition.replace( "::SUBMENUCONTAINER::", elem.attrib.get( "container" ) )
+                else:
+                    finalVisibility = ""
 
             # Check whether the skinner has set the match type (whether all conditions need to match, or any)
             matchType = "all"
@@ -410,12 +456,12 @@ class Template():
                         if profileMatch.attrib.get( "profile" ) == profile:
                             # Check if we've already added this visibilityCondition
                             for visible in profileMatch.findall( "visible" ):
-                                if visible.text == visibilityCondition:
+                                if visible.text == finalVisibility:
                                     # The condition is already there
                                     foundInPrevious = True
                             
                             # We didn't find it, so add it
-                            xmltree.SubElement( profileMatch, "visible" ).text = visibilityCondition
+                            xmltree.SubElement( profileMatch, "visible" ).text = finalVisibility
                             foundInPrevious = True
 
                     if foundInPrevious == True:
@@ -427,7 +473,7 @@ class Template():
                     newElement.set( "visible", profileVisibility )
                     
                     # And save the visibility condition
-                    xmltree.SubElement( newElement, "visible" ).text = visibilityCondition
+                    xmltree.SubElement( newElement, "visible" ).text = finalVisibility
                     
                     # And we're done
                     foundTemplateIncludes.append( includeName )
@@ -440,7 +486,7 @@ class Template():
                 newElement.set( "visible", profileVisibility )
 
                 # Save the visibility condition
-                xmltree.SubElement( newElement, "visible" ).text = visibilityCondition
+                xmltree.SubElement( newElement, "visible" ).text = finalVisibility
 
                 newElement = xmltree.SubElement( template, "skinshortcuts-includeName" )
                 if includeName is None:
@@ -491,57 +537,157 @@ class Template():
     def getProperties( self, elem, items ):
         # Get any properties specified in an 'other' template
         properties = {}
-        for property in elem.findall( "property" ):
-            value = None
+
+        # Start by finding all properties defined directly in the template
+        searchProperties = elem.findall( "property" )
+
+        # Add any properties defined in a property group
+        for propertyGroup in elem.findall( "propertyGroup" ):
+            for searchGroup in self.tree.findall( "propertyGroup" ):
+                if propertyGroup.text.lower() == searchGroup.attrib.get( "name" ).lower():
+                    searchProperties += searchGroup.findall( "property" )
+
+        # Loop through all the properties
+        for property in searchProperties:
             if "name" not in property.attrib or property.attrib.get( "name" ) in properties:
                 # Name attrib required, or we've already got a property with this name
                 continue
             name = property.attrib.get( "name" )
-            if "tag" in property.attrib:
-                tag = property.attrib.get( "tag" )
-            else:
-                # No tag property, so this will always match (so let's just use it!)
-                if property.text:
-                    properties[ name ] = property.text
+
+            # Pull out the tag, attribute and value attribs into an array of tuples
+            rules = []
+            matchAny = True
+            propertyValue = None
+            if "propertyValue" in property.attrib:
+                propertyValue = property.attrib.get( "propertyValue" )
+            
+            # Check for multiple items to match against this single value
+            for singleMatch in property.findall( "rule" ):
+                tag = None
+                attribute = None
+                value = None
+                if "tag" in singleMatch.attrib:
+                    tag = singleMatch.attrib.get( "tag" )
                 else:
-                    properties[ name ] = ""
-                continue
-
-            if tag.lower() == "mainmenuid":
-                # Special case for the ID of the main menu item
-                properties[ name ] = items.attrib.get( "id" )
-                continue
-
-            if "attribute" in property.attrib and "value" not in property.attrib:
-                attrib = property.attrib.get( "attribute" ).split( "|" )
-            else:
-                attrib = property.attrib.get( "attribute" ).split( "|" )
-                value = property.attrib.get( "value" ).split( "|" )
-                
-            # Let's get looking for any items that match
-            for item in items.findall( tag ):
-                if attrib is not None:
-                    if attrib[ 0 ] not in item.attrib:
-                        # Doesn't have the attribute we're looking for
-                        continue
-                    if attrib[ 1 ] != item.attrib.get( attrib[ 0 ] ):
-                        # The attributes value doesn't match
-                        continue
-
-                if not item.text:
-                    # The item doesn't have a value to match
+                    # Tag is required, so we'll pass on this
+                    log( "Trying to match a property without using a tag element" )
                     continue
-                        
-                if value is not None and item.text not in value:
-                    # The value doesn't match
+                if "attribute" in singleMatch.attrib:
+                    attribute = singleMatch.attrib.get( "attribute" ).split( "|" )
+                if "value" in singleMatch.attrib:
+                    value = singleMatch.attrib.get( "value" ).split( "|" )
+                rules.append( ( tag, attribute, value, propertyValue ) )
+
+            matchAll = property.find( "match" )
+            if matchAll is not None and matchAll.text.lower() == "all":
+                matchAny = False
+
+            # If we haven't grabbed anything to match against yet
+            if len( rules ) == 0:
+                if "tag" in property.attrib:
+                    tag = property.attrib.get( "tag" )
+
+                    # Special case for the ID of the main menu item
+                    if tag.lower() == "mainmenuid":
+                        properties[ name ] = items.attrib.get( "id" )
+                        continue
+
+                    # Pull out the properties we'll match against
+                    attribute = None
+                    value = None
+                    propertyValue = None
+                    if "attribute" in property.attrib:
+                        attribute = property.attrib.get( "attribute" ).split( "|" )
+                    if "value" in property.attrib:
+                        value = property.attrib.get( "value" ).split( "|" )
+                    if property.text:
+                        propertyValue = property.text
+                    rules.append( ( tag, attribute, value, propertyValue ) )
+                else:
+                    # No tag property, so this will always match (so let's just use it!)
+                    if property.text:
+                        properties[ name ] = property.text
+                    else:
+                        properties[ name ] = ""
                     continue
+
+            if matchAny:
+                # Match the property if any of the rules match
+                matchedRule = False
+                for rule in rules:
+                    if matchedRule:
+                        break
+
+                    # Let's get looking for any items that match
+                    tag = rule[ 0 ]
+                    attrib = rule[ 1 ]
+                    value = rule[ 2 ]
                     
-                # We've matched a property :)
-                if property.text:
-                    properties[ name ] = property.text
-                else:
-                    properties[ name ] = item.text
-                break
+                    for item in items.findall( tag ):
+                        if attrib is not None:
+                            if attrib[ 0 ] not in item.attrib:
+                                # Doesn't have the attribute we're looking for
+                                continue
+                            if attrib[ 1 ] != item.attrib.get( attrib[ 0 ] ):
+                                # The attributes value doesn't match
+                                continue
+
+                        if not item.text:
+                            # The item doesn't have a value to match
+                            continue
+                                
+                        if value is not None and item.text not in value:
+                            # The value doesn't match
+                            continue
+                            
+                        # We've matched a property :)
+                        if rule[ 3 ] is not None:
+                            properties[ name ] = rule[ 3 ]
+                        else:
+                            properties[ name ] = item.text
+                        break
+
+            else:
+                # Match the property only if all the rules match
+                matchedRule = True
+                for rule in rules:
+                    if not matchedRule:
+                        break
+
+                    # Let's get looking for any items that match
+                    tag = rule[ 0 ]
+                    attrib = rule[ 1 ]
+                    value = rule[ 2 ]
+                    
+                    for item in items.findall( tag ):
+                        log( repr( attrib ) )
+                        if attrib is not None:
+                            if attrib[ 0 ] not in item.attrib:
+                                # Doesn't have the attribute we're looking for
+                                matchedRule = False
+                                continue
+                            if attrib[ 1 ] != item.attrib.get( attrib[ 0 ] ):
+                                # The attributes value doesn't match, so we don't want to check the rule against it
+                                continue
+
+                        if not item.text:
+                            # The item doesn't have a value to match
+                            matchedRule = False
+                            continue
+                                
+                        if value is not None and item.text not in value:
+                            # The value doesn't match
+                            matchedRule = False
+                            continue
+                            
+                if matchedRule:
+                    # We've matched a property :)
+                    if rule[ 3 ] is not None:
+                        properties[ name ] = rule[ 3 ]
+                    else:
+                        # This method only supports setting the property value directly, so if it wasn't specified,
+                        # include a log error
+                        log( "Invalid template - cannot set property directly to menu item elements value when using multiple rules for single property")
         
         return properties
     
@@ -625,6 +771,32 @@ class Template():
                     if value[ 15:-1 ] in properties:
                         newValue = properties[ value[ 15:-1 ] ]
                     elem.set( attrib, newValue )
+
+            # <tag>$PYTHON[var]</tag> -> <tag>[result]</tag>
+            if elem.text is not None:
+                while "$PYTHON[" in elem.text:
+                    # Split the string into its composite parts
+                    stringStart = elem.text.split( "$PYTHON[", 1 )
+                    stringEnd = stringStart[ 1 ].split( "]", 1 )
+                    # stringStart[ 0 ] = Any code before the $MATHS property
+                    # StringEnd[ 0 ] = The maths to be performed
+                    # stringEnd[ 1 ] = Any code after the $MATHS property
+
+                    stringEnd[ 0 ] = simple_eval( "%s" %( stringEnd[ 0 ] ), names=properties )
+                    
+                    elem.text = stringStart[ 0 ] + str( stringEnd[ 0 ] ) + stringEnd[ 1 ]
+            
+            # <tag attrib="$PYTHON[var]" /> -> <tag attrib="[value]" />
+            for attrib in elem.attrib:
+                value = elem.attrib.get( attrib )
+                while "$PYTHON[" in elem.attrib.get( attrib ):
+                    # Split the string into its composite parts
+                    stringStart = elem.attrib.get( attrib ).split( "$PYTHON[", 1 )
+                    stringEnd = stringStart[ 1 ].split( "]", 1 )
+
+                    stringEnd[ 0 ] = simple_eval( "%s" %( stringEnd[ 0 ] ), names=properties )
+
+                    elem.set( attrib, stringStart[ 0 ] + str( stringEnd[ 0 ] ) + stringEnd[ 1 ] )
             
             # <skinshortcuts>visible</skinshortcuts> -> <visible>[condition]</visible>
             # <skinshortcuts>items</skinshortcuts> -> <item/><item/>...

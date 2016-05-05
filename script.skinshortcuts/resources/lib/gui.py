@@ -71,7 +71,8 @@ class GUI( xbmcgui.WindowXMLDialog ):
         
         # Empty arrays for different shortcut types
         self.thumbnailBrowseDefault = None
-        self.backgroundBrowse = False
+        self.thumbnailNone = None
+        self.backgroundBrowse = None
         self.backgroundBrowseDefault = None
         self.widgetPlaylists = False
         self.widgetPlaylistsType = None
@@ -86,6 +87,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
 
         # Additional button ID's we'll handle for setting custom properties
         self.customPropertyButtons = {}
+        self.customToggleButtons = {}
 
         self.windowProperties = {}
         
@@ -820,8 +822,8 @@ class GUI( xbmcgui.WindowXMLDialog ):
 
         # Should we allow the user to browse for background images...
         elem = tree.find('backgroundBrowse')
-        if elem is not None and elem.text == "True":
-            self.backgroundBrowse = True
+        if elem is not None and elem.text.lower() in ("true", "single", "multi"):
+            self.backgroundBrowse = elem.text.lower()
             if "default" in elem.attrib:
                 self.backgroundBrowseDefault = elem.attrib.get( "default" )
 
@@ -891,6 +893,11 @@ class GUI( xbmcgui.WindowXMLDialog ):
                 images = LIBRARY.getImagesFromVfsPath(elem.text.replace("||BROWSE||",""))
                 for image in images:
                     thumbnails.append( [image[0], image[1] ] )
+            if elem.text == "::NONE::":
+                if "label" in elem.attrib:
+                    self.thumbnailNone = elem.attrib.get( "label" )
+                else:
+                    self.thumbnailNone = "231"
             else:
                 thumbnails.append( [elem.text, DATA.local( elem.attrib.get( 'label' ) )[2] ] )
 
@@ -905,6 +912,8 @@ class GUI( xbmcgui.WindowXMLDialog ):
         for elem in tree.findall( "propertySettings" ):
             if "buttonID" in elem.attrib and "property" in elem.attrib:
                 self.customPropertyButtons[ int( elem.attrib.get( "buttonID" ) ) ] = elem.attrib.get( "property" )
+            elif "buttonID" in elem.attrib and "toggle" in elem.attrib:
+                self.customToggleButtons[ int( elem.attrib.get( "buttonID" ) ) ] = elem.attrib.get( "toggle" )
                 
     # ========================
     # === GUI INTERACTIONS ===
@@ -1445,13 +1454,21 @@ class GUI( xbmcgui.WindowXMLDialog ):
             LIBRARY.loadLibrary( "widgets" )
 
             # Let user choose widget
-            selectedShortcut = LIBRARY.selectShortcut( grouping = "widget", showNone = True )
+            if listitem.getProperty( "widgetPath" ) == "":
+                selectedShortcut = LIBRARY.selectShortcut( grouping = "widget", showNone = True )
+            else:
+                selectedShortcut = LIBRARY.selectShortcut( grouping = "widget", showNone = True, custom = True, currentAction = listitem.getProperty( "widgetPath" ) )
 
             if selectedShortcut is None:
                 # User cancelled
                 return
 
-            if selectedShortcut.getProperty( "Path" ):
+            if selectedShortcut.getProperty( "Path" ) and selectedShortcut.getProperty( "custom" ) == "true":
+                # User has manually edited the widget path, so we'll update that property only
+                self._add_additionalproperty( listitem, "widgetPath" + widgetID, selectedShortcut.getProperty( "Path" ) )
+                self.changeMade = True
+
+            elif selectedShortcut.getProperty( "Path" ):
                 # User has chosen a widget
 
                 # Let user edit widget title, if they want & skin hasn't disabled it
@@ -1465,15 +1482,18 @@ class GUI( xbmcgui.WindowXMLDialog ):
                         widgetTempName = widgetTempName[::-1]
                     keyboard = xbmc.Keyboard( widgetTempName, xbmc.getLocalizedString(16105), False )
                     keyboard.doModal()
-                    if ( keyboard.isConfirmed() ) and keyboard.getText != "":
-                        if widgetTempName != keyboard.getText():
-                            widgetName = keyboard.getText()
+                    if ( keyboard.isConfirmed() ) and keyboard.getText() != "":
+                        if widgetTempName != try_decode( keyboard.getText() ):
+                            widgetName = try_decode( keyboard.getText() )
+
+                # Add any necessary reload parameter
+                widgetPath = LIBRARY.addWidgetReload( selectedShortcut.getProperty( "widgetPath" ) )
                 
                 self._add_additionalproperty( listitem, "widget" + widgetID, selectedShortcut.getProperty( "widget" ) )
                 self._add_additionalproperty( listitem, "widgetName" + widgetID, widgetName )
                 self._add_additionalproperty( listitem, "widgetType" + widgetID, selectedShortcut.getProperty( "widgetType" ) )
                 self._add_additionalproperty( listitem, "widgetTarget" + widgetID, selectedShortcut.getProperty( "widgetTarget" ) )
-                self._add_additionalproperty( listitem, "widgetPath" + widgetID, selectedShortcut.getProperty( "widgetPath" ) )
+                self._add_additionalproperty( listitem, "widgetPath" + widgetID, widgetPath )
                 if self.currentWindow.getProperty( "useWidgetNameAsLabel" ) == "true" and widgetID == "":
                     self._set_label( listitem, selectedShortcut.getProperty( ( "widgetName" ) ) )
                     self.currentWindow.clearProperty( "useWidgetNameAsLabel" )
@@ -1502,10 +1522,21 @@ class GUI( xbmcgui.WindowXMLDialog ):
             usePrettyDialog = False
             
             # Create lists for the select dialog, with image browse buttons if enabled
-            if self.backgroundBrowse:
+            if self.backgroundBrowse == "true":
+                log( "Adding both browse options" )
                 background = ["", "", ""]         
                 backgroundLabel = [__language__(32053), __language__(32051), __language__(32052)]
                 backgroundPretty = [ LIBRARY._create(["", __language__(32053), "", { "icon": "DefaultAddonNone.png" }] ), LIBRARY._create(["", __language__(32051), "", { "icon": "DefaultFile.png" }] ), LIBRARY._create(["", __language__(32052), "", { "icon": "DefaultFolder.png" }] ) ]
+            elif self.backgroundBrowse == "single":
+                log( "Adding single browse option" )
+                background = ["", ""]         
+                backgroundLabel = [__language__(32053), __language__(32051)]
+                backgroundPretty = [ LIBRARY._create(["", __language__(32053), "", { "icon": "DefaultAddonNone.png" }] ), LIBRARY._create(["", __language__(32051), "", { "icon": "DefaultFile.png" }] ) ]
+            elif self.backgroundBrowse == "multi":
+                log( "Adding multi browse option" )
+                background = ["", ""]         
+                backgroundLabel = [__language__(32053), __language__(32052)]
+                backgroundPretty = [ LIBRARY._create(["", __language__(32053), "", { "icon": "DefaultAddonNone.png" }] ), LIBRARY._create(["", __language__(32052), "", { "icon": "DefaultFolder.png" }] ) ]
             else:
                 background = [""]                         
                 backgroundLabel = [__language__(32053)]
@@ -1541,10 +1572,13 @@ class GUI( xbmcgui.WindowXMLDialog ):
                         virtualImage = key[0].replace("$INFO[","").replace("$VAR[","").replace("]","")
                         virtualImage = xbmc.getInfoLabel(virtualImage)
 
+                    label = key[ 1 ]
+                    if label.startswith( "$INFO" ) or label.startswith( "$VAR" ):
+                        label = xbmc.getInfoLabel( label )
+
                     if defaultBackground == key[ 0 ]:
-                        label = "%s (%s)" %( key[ 1 ], __language__( 32050 ) )
-                    else:
-                        label = key[ 1 ]
+                        label = "%s (%s)" %( label, __language__( 32050 ) )
+
                     backgroundLabel.append( label )
                     if xbmc.skinHasImage( key[ 0 ] ) or virtualImage:
                         usePrettyDialog = True
@@ -1573,10 +1607,10 @@ class GUI( xbmcgui.WindowXMLDialog ):
                 self.changeMade = True
                 return
 
-            elif self.backgroundBrowse == True and (selectedBackground == 1 or selectedBackground == 2):
+            elif self.backgroundBrowse and (selectedBackground == 1 or (self.backgroundBrowse == "true" and selectedBackground == 2)):
                 # User has chosen to browse for an image/folder
                 imagedialog = xbmcgui.Dialog()
-                if selectedBackground == 1: # Single image
+                if selectedBackground == 1 and self.backgroundBrowse != "multi": # Single image
                     custom_image = imagedialog.browse( 2 , xbmc.getLocalizedString(1030), 'files', '', True, False, self.backgroundBrowseDefault)
                 else: # Multi-image
                     custom_image = imagedialog.browse( 0 , xbmc.getLocalizedString(1030), 'files', '', True, False, self.backgroundBrowseDefault)
@@ -1617,6 +1651,11 @@ class GUI( xbmcgui.WindowXMLDialog ):
             thumbnail = [""]                     
             thumbnailLabel = [LIBRARY._create(["", __language__(32096), "", {}] )]
 
+            # Add a None option if the skin specified it
+            if self.thumbnailNone:
+                thumbnail.append( "" )
+                thumbnailLabel.insert( 0, LIBRARY._create(["", self.thumbnailNone, "", {}] ) )
+
             # Ensure thumbnails have been loaded
             count = 0
             while self.thumbnails == "LOADING" and count < 20:
@@ -1642,7 +1681,12 @@ class GUI( xbmcgui.WindowXMLDialog ):
                 # User cancelled
                 return
 
-            elif selectedThumbnail == 0:
+            elif self.thumbnailNone and selectedThumbnail == 0:
+                # User has chosen 'None'
+                listitem.setThumbnailImage( None )
+                listitem.setProperty( "thumbnail", None )
+
+            elif (not self.thumbnailNone and selectedThumbnail == 0) or (self.thumbnailNone and selectedThumbnail == 1):
                 # User has chosen to browse for an image
                 imagedialog = xbmcgui.Dialog()
                 
@@ -1784,6 +1828,20 @@ class GUI( xbmcgui.WindowXMLDialog ):
             ui.doModal()
             del ui
             self.currentWindow.clearProperty( "additionalDialog" )
+
+        if controlID in self.customToggleButtons:
+            # Toggle a custom property
+            log( "Toggling custom property (%s)" %( str( controlID ) ) )
+            listControl = self.getControl( 211 )
+            listitem = listControl.getSelectedItem()
+
+            propertyName = self.customToggleButtons[ controlID ]
+            self.changeMade = True
+
+            if listitem.getProperty( propertyName ) == "True":
+                self._remove_additionalproperty( listitem, propertyName )
+            else:
+                self._add_additionalproperty( listitem, propertyName, "True" )
                     
         if controlID == 404 or controlID in self.customPropertyButtons:
             # Set custom property

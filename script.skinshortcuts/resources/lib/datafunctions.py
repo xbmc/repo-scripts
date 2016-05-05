@@ -276,9 +276,37 @@ class DataFunctions():
             # Get visibility condition
             visibilityCondition = self.checkVisibility( action.text )
             visibilityNode = None
+
             if visibilityCondition != "":
-                visibilityNode = xmltree.SubElement( node, "visibility" )
-                visibilityNode.text = visibilityCondition
+                # Check whether visibility condition is overriden
+                overriddenVisibility = False
+                for override in skinoverrides.findall( "visibleoverride" ):
+                    if override.attrib.get( "condition" ).lower() != visibilityCondition.lower():
+                        # Not overriding this visibility condition
+                        continue
+
+                    if "group" in override.attrib and not override.attrib.get( "group" ) == group:
+                        # Not overriding this group
+                        continue
+
+                    overriddenVisibility = True
+
+                    # It's overriden - add the original action with the visibility condition
+                    originalAction = xmltree.SubElement( node, "override-action" )
+                    originalAction.text = action.text
+                    originalAction.set( "condition", visibilityCondition )
+
+                    # And add the new action with the inverse visibility condition
+                    newaction = xmltree.SubElement( node, "override-action" )
+                    newaction.text = override.text
+                    newaction.set( "condition", "![%s]" %( visibilityCondition ) )
+
+                    break
+
+                if overriddenVisibility == False:
+                    # The skin hasn't overriden the visibility
+                    visibilityNode = xmltree.SubElement( node, "visibility" )
+                    visibilityNode.text = visibilityCondition
             
             # Get action and visibility overrides
             overrideTrees = [useroverrides, skinoverrides]
@@ -386,6 +414,8 @@ class DataFunctions():
         # This function will get any icon overrides based on labelID or group
         if icon is None:
             return
+
+        icon = try_decode( icon )
             
         # If the icon is a VAR or an INFO, we aren't going to override
         if icon.startswith( "$" ):
@@ -411,8 +441,9 @@ class DataFunctions():
                             oldicon = icon
                             newicon = elem.text
         
-        if not xbmc.skinHasImage( newicon ) and setToDefault == True:
+        if not xbmc.skinHasImage( newicon.encode( "utf-8" ) ) and setToDefault == True:
             newicon = self._get_icon_overrides( tree, "DefaultShortcut.png", group, labelID, False )
+
         return newicon
 
         
@@ -510,6 +541,8 @@ class DataFunctions():
                         listProperty[3] = self.local( listProperty[3] )[3]
                     self.currentProperties.append( [listProperty[0], listProperty[1], listProperty[2], listProperty[3]] )
             except:
+                log( "Failed to load current properties" )
+                print_exc()
                 self.currentProperties = [ None ]
         else:
             self.currentProperties = [ None ]
@@ -750,14 +783,16 @@ class DataFunctions():
             
     def checkVisibility ( self, action ):
         # Return whether mainmenu items should be displayed
-        action = action.lower().replace( " ", "" )
+        action = action.lower().replace( " ", "" ).replace( "\"", "" )
 
         # Catch-all for shortcuts to plugins
         if "plugin://" in action:
             return ""
 
         # Video node visibility
-        if action.startswith( "activatewindow(videos,videodb://" ) or action.startswith( "activatewindow(10025,videodb://" ) or action.startswith( "activatewindow(videos,library://video/" ) or action.startswith( "activatewindow(10025,library://video/" ):
+        if action.startswith( ( "activatewindow(videos,videodb://", "activatewindow(videolibrary,videodb://",
+                 "activatewindow(10025,videodb://", "activatewindow(videos,library://video/", 
+                 "activatewindow(videolibrary,library://video", "activatewindow(10025,library://video/" ) ):
             path = action.split( "," )
             if path[ 1 ].endswith( ")" ):
                 path[ 1 ] = path[ 1 ][:-1]
@@ -825,7 +860,7 @@ class DataFunctions():
             return "Library.HasContent(MusicVideos)"
         elif action.startswith( "activatewindow(videos,recentlyaddedmusicvideos" ):
             return "Library.HasContent(MusicVideos)"
-        elif action == "xbmc.playdvd()":
+        elif action == "xbmc.playdvd()" or action == "playdvd":
             return "System.HasMediaDVD"
         elif action.startswith( "activatewindow(eventlog" ):
             return "system.getbool(eventlog.enabled)"
@@ -922,6 +957,12 @@ class DataFunctions():
 
 
     def checkIfMenusShared( self ):
+        # Check if the skin required the menu not to be shared
+        tree = self._get_overrides_skin()
+        if tree is not None:
+            if tree.find( "doNotShareMenu" ) is not None:
+                return False
+
         # Check if the user has asked for their menus not to be shared
         if __addon__.getSetting( "shared_menu" ).lower() == "false":
             return False

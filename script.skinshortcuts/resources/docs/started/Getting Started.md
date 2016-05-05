@@ -48,6 +48,16 @@ Various other properties will be returned if you are using Skin Shortcuts to man
 
 ## Notes
 
+#### Shared menu
+
+One of the features of Skin Shortcuts is that the users custom menu is shared between all skins that use Skin Shortcuts to manage the whole menu. There are some users who prefer not to have this feature, so it is worth being aware that this can be switched off in the skins settings.
+
+Additionally, sometimes a skin uses Skin Shortcuts in a very unusual way which means that it is preferable for its menu's not to be shared with other skins as they wouldn't display properly. In this case, you can add the following to your [overrides.xml](../advanced/overrides.md):-
+
+`<doNotShareMenu />`
+
+However, it is expected that this will only be used in rare circumstances, and it is preferable if there are issues with your skin using the shared menu, for you to work with us to improve the script.
+
 #### script-skinshortcuts-includes.xml
 
 It's important to note that using Skin Shortcuts means the script will write an extra file to your skins directory.
@@ -61,5 +71,13 @@ Skin Shortcuts automatically adds visibility conditions to shortcuts when they a
 One side-effect of using Skin Shortcuts to manage the whole menu is that the user has the possibility to delete any shortcut, including those that they may later decide they do want. In general, this is no issue as they can also add any shortcut, but if they delete a shortcut to settings it can lead to them being unable to edit the menu to add it back.
 
 There are a few methods you can use to prevent (or at least warn) the user deleted settings (see [Advanced Usage](../advanced/Advanced Usage.md)) but it's also worth considering adding alternative access to settings - such as on the shutdown menu - and be prepared to offer support to users who have deleted the link.
+
+#### Don't build individual groups
+
+By default, along with the main and submenu's, skin shortcuts will build `skinshortcuts-group-[groupname]`and `skinshortcuts-group-alt-[groupname]` (to be used depending on whether you want visibility conditions.
+
+If you don't want these groups, you can tell Skin Shortcuts not to build them by including `&amp;options=noGroups` in your build command.
+
+Multiple options can be separated with a pipe - | - symbol.
 
 ***Quick links*** - [Readme](../../../README.md) - [Getting Started](./Getting Started.md) - [Advanced Usage](../advanced/Advanced Usage.md)

@@ -135,17 +135,31 @@ class Main:
 
             # Load library shortcuts in thread
             thread.start_new_thread( LIBRARY.loadAllLibrary, () )
+
+            # Check if we should show the custom option (if the relevant widgetPath skin string is provided and isn't empty)
+            showCustom = False
+            if self.WIDGETPATH and xbmc.getCondVisibility( "!IsEmpty(Skin.String(%s))" %( self.WIDGETPATH ) ):
+                showCustom = True
             
             if self.GROUPING:
                 if self.GROUPING.lower() == "default":
-                    selectedShortcut = LIBRARY.selectShortcut( "", custom = False, showNone = self.NONE )    
+                    selectedShortcut = LIBRARY.selectShortcut( "", custom = showCustom, showNone = self.NONE )    
                 else:
-                    selectedShortcut = LIBRARY.selectShortcut( "", grouping = self.GROUPING, custom = False, showNone = self.NONE )
+                    selectedShortcut = LIBRARY.selectShortcut( "", grouping = self.GROUPING, custom = showCustom, showNone = self.NONE )
             else:
-                selectedShortcut = LIBRARY.selectShortcut( "", grouping = "widget", custom = False, showNone = self.NONE )
+                selectedShortcut = LIBRARY.selectShortcut( "", grouping = "widget", custom = showCustom, showNone = self.NONE )
             
             # Now set the skin strings
-            if selectedShortcut is not None and selectedShortcut.getProperty( "Path" ):
+            if selectedShortcut is None:
+                # The user cancelled
+                return
+
+            elif selectedShortcut.getProperty( "Path" ) and selectedShortcut.getProperty( "custom" ) == "true":
+                # The user updated the path - so we just set that property
+                xbmc.executebuiltin( "Skin.SetString(%s,%s)" %( self.WIDGETPATH, urllib.unquote( selectedShortcut.getProperty( "Path" ) ) ) )
+
+            elif selectedShortcut.getProperty( "Path" ):
+                # The user selected the widget they wanted
                 if self.WIDGET:
                     if selectedShortcut.getProperty( "widget" ):
                         xbmc.executebuiltin( "Skin.SetString(%s,%s)" %( self.WIDGET, selectedShortcut.getProperty( "widget" ) ) )
@@ -172,7 +186,7 @@ class Main:
                     else:
                         xbmc.executebuiltin( "Skin.Reset(%s)" %( self.WIDGETPATH ) )
 
-            elif selectedShortcut is not None and selectedShortcut.getLabel() == "::NONE::":
+            elif selectedShortcut.getLabel() == "::NONE::":
                 # Clear the skin strings
                 if self.WIDGET is not None:
                     xbmc.executebuiltin( "Skin.Reset(" + self.WIDGET + ")" )
@@ -191,6 +205,10 @@ class Main:
                 line1 = "The skin you are using does not support adding items directly to the main menu"
                 xbmcgui.Dialog().ok(__addonname__, line1)
             NODE.addToMenu( self.CONTEXTFILENAME, self.CONTEXTLABEL, self.CONTEXTICON, self.CONTEXTCONTENT, self.CONTEXTWINDOW, DATA )
+
+        if self.TYPE=="setProperty":
+            # External request to set properties of a menu item
+            NODE.setProperties( self.PROPERTIES, self.VALUES, self.LABELID, self.GROUPNAME, DATA )
                 
         if self.TYPE=="resetall":
             # Tell XBMC not to try playing any media
@@ -259,6 +277,11 @@ class Main:
         self.CONTEXTICON = params.get( "icon", "" )
         self.CONTEXTCONTENT = params.get( "content", "" )
         self.CONTEXTWINDOW = params.get( "window", "" )
+
+        # Properties from external request to set properties
+        self.PROPERTIES = urllib.unquote( params.get( "property", "" ) )
+        self.VALUES = urllib.unquote( params.get( "value", "" ) )
+        self.LABELID = params.get( "labelID", "" )
     
     
     # -----------------

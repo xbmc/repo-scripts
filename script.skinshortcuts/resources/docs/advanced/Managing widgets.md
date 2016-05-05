@@ -144,7 +144,7 @@ For example, the list used to display movie content may look like this:-
 			<texture>$INFO[ListItem.Art(poster)]</texture>
 		</control>
 	</focusedlayout>
-	<content target="$INFO[Container(9000).ListItem.Property(widgetTarget)]">$INFO[Contianer(9000).ListItem.Property(widgetPath)]</content>
+	<content target="$INFO[Container(9000).ListItem.Property(widgetTarget)]">$INFO[Container(9000).ListItem.Property(widgetPath)]</content>
 </control>
 ```
 

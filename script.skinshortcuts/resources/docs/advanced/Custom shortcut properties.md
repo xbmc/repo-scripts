@@ -44,7 +44,20 @@ You can optionally use a `<propertySettings />` element in your overrides.xml to
 | showNone `[True/False]` | Yes | A boolean indicating whether a None option will be shown when the user is setting the property. Defaults to True. |
 | imageBrowse `[True/False]` | Yes | A boolean indicating whether the user will be able to browse for an image or folder of images. Defaults to False. |
 
-You can then define multiple options for the user to be able to select from:-
+## Allow user to toggle a property
+
+You can use a `<propertySettings />` element to define a button to toggle a given property between empty and "True"
+
+`<propertySettings toggle="[Property]" buttonID="[buttonID]" requires="[requires]" templateonly="[True/False]" />`
+
+| Property | Optional | Description |
+| :------: | :------: | ----------- |
+| `[Property]` | | The property of the shortcut that will be set |
+| `[buttonID]` | Yes | The ID of the button that will be used to set this property. If ommitted, you must set the window property 'chooseProperty' to `[Property]` and send a click to 404 |
+| `[Requires]` | Yes | The name of another property that must be present in the shortcut for this property to be added to it |
+| `[True/False]` | Yes | A boolean indicating whether a property is only used by templates. If True, the property will not be written to the shortcut in the includes file. Defaults to False. |
+
+You can then use `!IsEmpty(Container(211).ListItem.Property([Property])` as the `<selected />` value for a radio button in your management dialog.
 
 ## Set defaults
 
