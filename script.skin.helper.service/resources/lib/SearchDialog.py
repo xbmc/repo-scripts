@@ -16,17 +16,14 @@ class SearchDialog(xbmcgui.WindowXMLDialog):
         
     def onInit(self):
         self.action_exitkeys_id = [10, 13]
-        
         self.searchThread = BackgroundSearchThread()
         self.searchThread.setDialog(self)
         self.searchThread.start()
         
-
     def onFocus(self, controlId):
         pass
-        
-    def onAction(self, action):
 
+    def onAction(self, action):
         ACTION_CANCEL_DIALOG = ( 9, 10, 92, 216, 247, 257, 275, 61467, 61448, )
         ACTION_SHOW_INFO = ( 11, )
         ACTION_SELECT_ITEM = 7
@@ -37,7 +34,10 @@ class SearchDialog(xbmcgui.WindowXMLDialog):
         
         elif action.getId() in ACTION_SHOW_INFO:
             self.showInfo()
-
+            
+        else:
+            self.onActionTextBox(action)
+            
     def closeDialog(self,action=None):
         self.searchThread.stopRunning()
         self.action = action
@@ -51,10 +51,52 @@ class SearchDialog(xbmcgui.WindowXMLDialog):
                 searchTerm = " "
             else:
                 searchTerm = self.searchString[:-1]
+            self.setFocusId(3056)
             self.getControl(3010).setLabel(searchTerm)
             self.searchString = searchTerm
             self.searchThread.setSearch(searchTerm)
     
+    def onActionTextBox(self, act):
+        ACTION_NUMBER_0 = 58
+        ACTION_NUMBER_9 = 67
+        action = act.getId()
+        button = act.getButtonCode()
+        
+        # Upper-case values
+        if button >= 0x2f041 and button <= 0x2f05b:
+            self.addCharacter(chr(button - 0x2F000))
+
+        # Lower-case values
+        if button >= 0xf041 and button <= 0xf05b:
+            self.addCharacter(chr(button - 0xEFE0))
+
+        # Numbers
+        if action >= ACTION_NUMBER_0 and action <= ACTION_NUMBER_9:
+            self.addCharacter(chr(action - ACTION_NUMBER_0 + 48))
+
+        # Backspace
+        if button == 0xF008:
+            if len(self.searchString) >= 1:
+                self.removeCharacter()
+
+        # Delete
+        if button == 0xF02E:
+            self.clearSearch()
+
+        # Space
+        if button == 0xF020:
+            self.addCharacter(" ")
+
+        if xbmc.getCondVisibility("Window.IsVisible(10111)"):
+            #close shutdown window if visible
+            xbmc.executebuiltin("Dialog.close(10111)")
+            
+            
+    def setCharFocus(self, char):
+        alphanum = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z','0','1','2','3','4','5','6','7','8','9','',' '].index(str(char).upper())
+        self.setFocusId(3020 + alphanum)
+            
+            
     def onClick(self, controlID):
 
         if(controlID == 3020):
@@ -134,10 +176,8 @@ class SearchDialog(xbmcgui.WindowXMLDialog):
         elif(controlID == 3057):
             self.addCharacter(" ")
         elif(controlID == 3058):
-            self.getControl(3010).setLabel(" ")
-            self.searchString = ""
-            self.searchThread.setSearch("")
-        elif(controlID == 3010):
+            self.clearSearch()
+        elif(controlID == 3010):       
             dialog = xbmcgui.Dialog()
             searchTerm = dialog.input(xbmc.getLocalizedString(16017), type=xbmcgui.INPUT_ALPHANUM)
             self.getControl(3010).setLabel(searchTerm)
@@ -159,12 +199,21 @@ class SearchDialog(xbmcgui.WindowXMLDialog):
             path = item.getfilename()
             self.closeDialog('{ "jsonrpc": "2.0", "method": "Player.Open", "params": { "item": { "file": "%s" } }, "id": 1 }' % path)
         
-
+    
+    def clearSearch(self):
+        self.setFocusId(3058)
+        self.getControl(3010).setLabel(" ")
+        self.searchString = ""
+        self.searchThread.setSearch("")
+        
+        
     def addCharacter(self, char):
+        self.setCharFocus(char)
         searchTerm = self.searchString + char
         self.getControl(3010).setLabel(searchTerm)
         self.searchString = searchTerm
         self.searchThread.setSearch(searchTerm)
+    
     
     def showInfo( self ):
         items = []
@@ -244,10 +293,12 @@ class BackgroundSearchThread(threading.Thread):
             path = 'videodb://tvshows/titles/' + tvshowid + '/'
             liz.setPath(path)
             liz.setProperty("path", path)
+            liz.setProperty("isPlayable", "false")
             seriesResultsList.addItem(liz)
 
         # Process episodes
         json_response = getJSON('VideoLibrary.GetEpisodes', '{ "properties": [%s], "limits": {"end":50}, "sort": { "method": "title" }, "filter": {"field": "title", "operator": "contains", "value": "%s"} }' % (fields_episodes,search))
         for item in json_response:
             item = prepareListItem(item)
+            liz = createListItem(item)
             episodeResultsList.addItem(liz)
