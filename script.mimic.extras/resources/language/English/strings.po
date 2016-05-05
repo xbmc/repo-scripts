@@ -1,0 +1,59 @@
+# Kodi Media Center language file
+# Addon Name: Mimic
+# Addon id: script.mimic.extras
+# Addon Provider: braz
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: English (http://www.transifex.com/projects/p/xbmc-addons/language/en/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#Script labels
+
+msgctxt "#32000"
+msgid "View fanart"
+msgstr ""
+
+msgctxt "#32001"
+msgid "Extended info"
+msgstr ""
+
+msgctxt "#32002"
+msgid "Add to SimplePlaylists"
+msgstr ""
+
+msgctxt "#32003"
+msgid "Artwork Downloader"
+msgstr ""
+
+msgctxt "#32004"
+msgid "Artwork Downloader (Manual)"
+msgstr ""
+
+msgctxt "#32005"
+msgid "Update IMDb ratings"
+msgstr ""
+
+msgctxt "#32006"
+msgid "TvTunes"
+msgstr ""
+
+msgctxt "#32007"
+msgid "Cinema Vision"
+msgstr ""
+
+msgctxt "#32008"
+msgid "VideoExtras"
+msgstr ""
+
+msgctxt "#32009"
+msgid "Add to Super Favourites"
+msgstr ""
