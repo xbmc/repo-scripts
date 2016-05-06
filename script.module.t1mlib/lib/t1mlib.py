@@ -58,9 +58,12 @@ class t1mAddon(object):
       pass
 
 
-  def getRequest(self, url, udata=None, headers = httpHeaders):
+  def getRequest(self, url, udata=None, headers = httpHeaders, dopost = False):
     self.log("getRequest URL:"+str(url))
-    req = urllib2.Request(url.encode(UTF8), udata, headers)
+    req = urllib2.Request(url.encode(UTF8), udata, headers)  
+    if dopost == True:
+       method = "POST"
+       req.get_method = lambda: method
     try:
       response = urllib2.urlopen(req)
       page = response.read()
@@ -90,12 +93,12 @@ class t1mAddon(object):
     if self.addon.getSetting('enable_meta') != 'true': return
     with open(self.metafile, 'w') as outfile:
         json.dump(meta, outfile)
-    outfile.close
+    outfile.close()
     self.addon.setSetting(id='init_meta', value='false')
       
   def addMenuItem(self, name, mode, ilist=[], url=None, thumb=None, fanart=None, 
                   videoInfo={}, videoStream=None, audioStream=None,
-                  subtitleStream=None, isFolder=True ):
+                  subtitleStream=None, cm=None, isFolder=True ):
       videoStream = self.defaultVidStream
       audioStream = self.defaultAudStream
       subtitleStream = self.defaultSubStream
@@ -105,8 +108,11 @@ class t1mAddon(object):
       liz.addStreamInfo('video', videoStream)
       liz.addStreamInfo('audio', audioStream)
       liz.addStreamInfo('subtitle', subtitleStream)
+      if cm != None : liz.addContextMenuItems(cm)
       if not isFolder: liz.setProperty('IsPlayable', 'true')
-      u = '%s?mode=%s&name=%s' % (sys.argv[0], mode, qp(name.encode(UTF8)))
+#      u = '%s?mode=%s&name=%s' % (sys.argv[0], mode, qp(name.encode(UTF8,errors='ignore')))
+      u = '%s?mode=%s' % (sys.argv[0], mode)
+
       if url != None: u = u+'&url=%s' % qp(url)
       ilist.append((u, liz, isFolder))
       return(ilist)
@@ -134,11 +140,13 @@ class t1mAddon(object):
       u = uqp(url)
       xbmcplugin.setResolvedUrl(int(sys.argv[1]), True, xbmcgui.ListItem(path = u))
 
+  def doFunction(self,url):
+      return
 
 
 #internal functions for views, cache and directory management
 
-  def procDir(self, dirFunc, url, contentType='files', viewType='default_view', cache2Disc=True):
+  def procDir(self, dirFunc, url, contentType='files', viewType='default_view', cache2Disc=False):
       ilist = []
       xbmcplugin.setContent(int(sys.argv[1]), contentType)
       xbmcplugin.addSortMethod(int(sys.argv[1]),xbmcplugin.SORT_METHOD_UNSORTED)
@@ -165,17 +173,20 @@ class t1mAddon(object):
 
       pg = self.getRequest(suburl)
       if pg != "":
+       try:
         subfile = xbmc.translatePath(os.path.join(profile, 'subtitles.srt'))
         ofile = open(subfile, 'w+')
         captions = re.compile('<p begin="(.+?)" end="(.+?)">(.+?)</p>',re.DOTALL).findall(pg)
         for idx, (cstart, cend, caption) in list(enumerate(captions, start=1)):
           cstart = cstart.replace('.',',')
           cend   = cend.replace('.',',').split('"',1)[0]
-          caption = caption.replace('<br/>','\n')
+          caption = caption.replace('<br/>','\n').strip()
           try:    caption = h.unescape(caption)
           except: pass
+          caption = caption.replace('&apos;', "'").replace('\n\n','\n')
           ofile.write( '%s\n%s --> %s\n%s\n\n' % (idx, cstart, cend, caption))
         ofile.close()
+       except: subfile = ""
     return subfile   
 
 
@@ -201,4 +212,5 @@ class t1mAddon(object):
     elif mode=='GS':  self.procDir(self.getAddonShows,   p('url'), 'tvshows', 'show_view')
     elif mode=='GE':  self.procDir(self.getAddonEpisodes,p('url'), 'episodes', 'episode_view')
     elif mode=='GV':  self.getVideo(p('url'))
+    elif mode=='DF':  self.doFunction(p('url'))
     return(p)
