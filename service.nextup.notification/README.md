@@ -20,6 +20,7 @@ Skinners:
           - 3004 - First Aired
           - 3005 - TV Show Fanart 
           - 3006 - TV Show ClearArt
+          - 3007 - TV Show Title
           - 3008 - Episode Thumb
           - 3009 - TV Show Poster
           - 3010 - TV Show Landscape
