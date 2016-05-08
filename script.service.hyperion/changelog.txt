@@ -1,0 +1,9 @@
+1.0.2
+- Translate to DE and extend description
+- New icon and fanart
+1.0.1
+- Added option to set framerate and capture size
+- Kodi V17 fix thanks to @bimsarck and @iLLiac4
+1.0.0
+- initial addon release
+
