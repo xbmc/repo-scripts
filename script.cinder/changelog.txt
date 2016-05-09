@@ -1,2 +1,6 @@
+v1.0.1 (2016-04-26)
+- Improved random algorithm
+- Added error handling for invalid configuration settings
+- Added ability for finer granularity of user defined percentages
 v1.0.0 (2016-04-07)
 - Initial release

@@ -65,7 +65,28 @@ def main():
 
     # note: additionalSourceList and additionalSourceWeightList must be the same length
 
-    cinderRandomPlayer = CinderRandomPlayer.CinderRandomPlayer(additionalSourceList, additionalSourceWeightList)
+
+    # Change this value to adjust the upper limit of the source weight list. 
+    # If you want finer granularity increase above the default 100. 
+    # For example suppose you want to have a 1 in 1000 chance of watching a given 
+    # source instead of the default minimum of 1 in 100 chance. 
+    # To do this change maximumSourceWeight to 1000. You can pick any positive integer 
+    # between 1 and 1000000 as desired.
+    #  note: Changing this value adjusts all configured sources in a way that is not reflected in the 
+    #        KODI plugin configuration screen. For example assume that you have a
+    #        source weighted at 90% and want it to stay at 90% after bumping maximumSourceWeight 
+    #        up to 1000. You would need to change the corresponding weight entry to
+    #        900 to have it remain at 90%. You also need to scale the weight of every source
+    #        to maintain your desired percentages. You may need to leverage additionalSourceList
+    #        and additionalSourceWeightList above to get the desired behavior.
+    #
+    #             chance of playback = source weight / maximumSourceWeight 
+    #           
+
+    maximumSourceWeight = 100
+
+
+    cinderRandomPlayer = CinderRandomPlayer.CinderRandomPlayer(additionalSourceList, additionalSourceWeightList, maximumSourceWeight)
     cinderRandomPlayer.playRandomEpisodes()
 
 if __name__ == '__main__':
