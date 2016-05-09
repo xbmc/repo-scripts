@@ -234,3 +234,29 @@ msgstr ""
 msgctxt "#32320"
 msgid "Source 20 weight:"
 msgstr ""
+
+
+# Error messages
+msgctxt "#32400"
+msgid "Cinder Error:"
+msgstr ""
+
+msgctxt "#32401"
+msgid "Unable to find episodes. Try 'All videos' mode"
+msgstr ""
+
+msgctxt "#32402"
+msgid "Invalid: "
+msgstr ""
+
+msgctxt "#32403"
+msgid "additionalSourceList and additionalSourceWeightList must be the same length"
+msgstr ""
+
+msgctxt "#32404"
+msgid "maximumSourceWeight must be between 1 and 1000000"
+msgstr ""
+
+msgctxt "#32405"
+msgid "All sources have a weight of 0. Nothing is going to play until you increase at least one."
+msgstr ""
