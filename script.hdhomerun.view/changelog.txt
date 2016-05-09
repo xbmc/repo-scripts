@@ -1,3 +1,7 @@
+** 2016.05.09 **
+
+Added setting 'Load recording at startup if DVR is detected' (default=disabled)
+
 ** 2016.04.30 **
 
 Refresh cached recordings after delete

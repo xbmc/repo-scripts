@@ -1034,6 +1034,9 @@ class GuideOverlay(util.CronReceiver):
 
         self.player = player.HDHRPlayer().init(self,self.devices,self.touchMode)
 
+        if self.hasDVR() and util.getSetting('dvr.skip.livetv', False):
+            return self.windowLoop()
+
         channel = self.getStartChannel()
         if not channel:
             xbmcgui.Dialog().ok(util.T(32018),util.T(32017),'',util.T(32012))
