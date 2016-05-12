@@ -178,6 +178,15 @@ def backup(filterString="",silent=None,promptfilename="false"):
                 
                 with open(text_file_path, 'w') as f:
                     f.write(repr(newlist))
+                    
+                #copy any custom skin images or themes
+                for dir in ["custom_images/","themes/"]:
+                    custom_images_folder = u"special://profile/addon_data/%s/%s" %(xbmc.getSkinDir(),dir)
+                    if xbmcvfs.exists(custom_images_folder):
+                        custom_images_folder_temp = os.path.join(temp_path,dir)
+                        dirs, files = xbmcvfs.listdir(custom_images_folder)
+                        for file in files:
+                            xbmcvfs.copy(os.path.join(custom_images_folder,file), os.path.join(custom_images_folder_temp,file))
             
             #zip the backup
             zip_temp = xbmc.translatePath('special://temp/' + backup_name).decode("utf-8")
@@ -318,6 +327,15 @@ def restoreFull(silent=None):
             skinsettingsfile = os.path.join(temp_path, "guisettings.txt")
             if xbmcvfs.exists(skinsettingsfile):
                 restoreSkinSettings(skinsettingsfile, progressDialog)
+                
+            #restore any custom skin images or themes
+            for dir in ["custom_images/","themes/"]:
+                custom_images_folder = u"special://profile/addon_data/%s/%s" %(xbmc.getSkinDir(),dir)
+                custom_images_folder_temp = os.path.join(temp_path,dir)
+                if xbmcvfs.exists(custom_images_folder_temp):
+                    dirs, files = xbmcvfs.listdir(custom_images_folder_temp)
+                    for file in files:
+                        xbmcvfs.copy(os.path.join(custom_images_folder_temp,file), os.path.join(custom_images_folder,file))
 
             #cleanup temp
             xbmc.Monitor().waitForAbort(0.5)

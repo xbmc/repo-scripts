@@ -400,7 +400,7 @@ def setSkinConstants(settings, values):
         result[setting] = values[count]
     updateSkinConstants(result)
         
-def setSkinSetting(setting="", windowHeader="", sublevel="", curValue="", skipSkinString=False):
+def setSkinSetting(setting="", windowHeader="", sublevel="", curValue="", skipSkinString=False, originalId=""):
     if not curValue:
         curValue = xbmc.getInfoLabel("Skin.String(%s)" %setting).decode("utf-8")
     curValueLabel = xbmc.getInfoLabel("Skin.String(%s.label)" %setting).decode("utf-8")
@@ -422,7 +422,7 @@ def setSkinSetting(setting="", windowHeader="", sublevel="", curValue="", skipSk
             id = item.attributes[ 'id' ].nodeValue
             if id.startswith("$"): id = xbmc.getInfoLabel(id).decode("utf-8")
             label = xbmc.getInfoLabel(item.attributes[ 'label' ].nodeValue).decode("utf-8")
-            if (not sublevel and id.lower() == setting.lower()) or (sublevel and sublevel.lower() == id.lower()):
+            if (not sublevel and id.lower() == setting.lower()) or (sublevel and sublevel.lower() == id.lower()) or (originalId and originalId.lower() == id.lower()):
                 value = item.attributes[ 'value' ].nodeValue
                 if value == "||MULTISELECT||": return multiSelect(item,windowHeader)
                 condition = item.attributes[ 'condition' ].nodeValue
@@ -477,17 +477,9 @@ def setSkinSetting(setting="", windowHeader="", sublevel="", curValue="", skipSk
                 setSkinSetting(setting, windowHeader)
             else:
                 if value == "||BROWSEIMAGE||":
-                    if xbmcgui.Dialog().yesno( label, ADDON.getLocalizedString(32064), yeslabel=ADDON.getLocalizedString(32065), nolabel=ADDON.getLocalizedString(32066) ):
-                        value = xbmcgui.Dialog().browse( 2 , label, 'files', '', True, True, curValue).decode("utf-8")
-                    else:
-                        if not curValue.startswith("$"):
-                            if "\\" in curValue: delim = "\\"
-                            else: delim = "/"
-                            curdir = curValue.rsplit(delim, 1)[0] + delim
-                        else: curdir = ""
-                        value = xbmcgui.Dialog().browse( 0 , ADDON.getLocalizedString(32067), 'files', '', True, True, curdir).decode("utf-8")
+                    value = saveSkinImage(setting,True,label)
                 if value == "||BROWSESINGLEIMAGE||":
-                    value = xbmcgui.Dialog().browse( 2 , label, 'files', '', True, True, curValue).decode("utf-8")
+                    value = saveSkinImage(setting,False,label)
                 if value == "||PROMPTNUMERIC||":
                     value = xbmcgui.Dialog().input( label,curValue, 1).decode("utf-8")
                 if value == "||PROMPTSTRING||":
@@ -513,6 +505,35 @@ def setSkinSetting(setting="", windowHeader="", sublevel="", curValue="", skipSk
                 return (value,label)
         else: return (None,None)
 
+def saveSkinImage(skinstring="",allowMulti=False,header=""):
+    #let the user select an image and save it to addon_data for easy backup
+    curValue = xbmc.getInfoLabel("Skin.String(%s)" %skinstring).decode("utf-8")
+    curValueOrgLocation = xbmc.getInfoLabel("Skin.String(%s.org)" %skinstring).decode("utf-8")
+    if not header: header = xbmc.getLocalizedString(1030)
+    
+    if not allowMulti or xbmcgui.Dialog().yesno( header, ADDON.getLocalizedString(32064), yeslabel=ADDON.getLocalizedString(32065), nolabel=ADDON.getLocalizedString(32066) ):
+        #single image (allow copy to addon_data)
+        value = xbmcgui.Dialog().browse( 2 , header, 'files', '', True, True, curValueOrgLocation).decode("utf-8")
+        if value:
+            ext = value.split(".")[-1]
+            newfile = u"special://profile/addon_data/%s/custom_images/%s.%s" %(xbmc.getSkinDir(),skinstring + time.strftime("%Y%m%d%H%M%S", time.gmtime()),ext)
+            if "special://profile/addon_data/%s/custom_images/"%xbmc.getSkinDir() in curValue:
+                xbmcvfs.delete(curValue)
+            xbmcvfs.copy(value, newfile)
+            xbmc.executebuiltin("Skin.SetString(%s.org,%s)" %(skinstring.encode("utf-8"),value.encode("utf-8")))
+            value = newfile
+    else:
+        #multi image
+        if not curValueOrgLocation.startswith("$"):
+            if "\\" in curValueOrgLocation: delim = "\\"
+            else: delim = "/"
+            curdir = curValueOrgLocation.rsplit(delim, 1)[0] + delim
+        else: curdir = ""
+        value = xbmcgui.Dialog().browse( 0 , ADDON.getLocalizedString(32067), 'files', '', True, True, curdir).decode("utf-8")
+    
+    xbmc.executebuiltin("Skin.SetString(%s,%s)" %(skinstring.encode("utf-8"),value.encode("utf-8")))
+    return value
+    
 def correctSkinSettings():
     #correct any special skin settings
     skinconstants = {}

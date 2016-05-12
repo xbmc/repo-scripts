@@ -5,7 +5,7 @@ import xbmcplugin, xbmcgui, xbmc, xbmcaddon, xbmcvfs
 import os,sys
 import urllib
 from traceback import print_exc
-from datetime import datetime
+from datetime import datetime, timedelta
 import _strptime
 import time
 import datetime as dt
@@ -64,12 +64,14 @@ def getContentPath(libPath):
         libPath = libPath.replace("$INFO[Window(Home).Property(", "")
         libPath = libPath.replace(")]", "")
         libPath = WINDOW.getProperty(libPath)    
-    if "Activate" in libPath:
-        if "ActivateWindow(MusicLibrary," in libPath:
-            libPath = libPath.replace("ActivateWindow(MusicLibrary," ,"musicdb://").lower()
+    if "activate" in libPath.lower():
+        if "activatewindow(musiclibrary," in libPath.lower():
+            libPath = libPath.lower().replace("activatewindow(musiclibrary," ,"musicdb://")
             libPath = libPath.replace(",return","/")
             libPath = libPath.replace(", return","/")
         else:
+            libPath = libPath.lower().replace(",return","")
+            libPath = libPath.lower().replace(", return","")
             if ", " in libPath:
                 libPath = libPath.split(", ",1)[1]
             elif " , " in libPath:
@@ -78,9 +80,7 @@ def getContentPath(libPath):
                 libPath = libPath.split(", ",1)[1]
             elif "," in libPath:
                 libPath = libPath.split(",",1)[1]
-            libPath = libPath.replace(",return","")
-            libPath = libPath.replace(", return","")
-        
+            
         libPath = libPath.replace(")","")
         libPath = libPath.replace("\"","")
         libPath = libPath.replace("musicdb://special://","special://")
@@ -661,38 +661,30 @@ def getCurrentContentType(containerprefix=""):
             contenttype = "tvrecordings"
         elif xbmc.getCondVisibility("SubString(%sListItem.FolderPath,pvr://channels)" %containerprefix):
             contenttype = "tvchannels"
-        elif xbmc.getCondVisibility("StringCompare(%sListItem.Label,%sListItem.Artist)" %(containerprefix,containerprefix)):
-            contenttype = "artists"
-        elif xbmc.getCondVisibility("StringCompare(%sListItem.Label,%sListItem.Album)" %(containerprefix,containerprefix)):
-            contenttype = "albums"
-        elif xbmc.getCondVisibility("!IsEmpty(%sListItem.Artist) + !IsEmpty(%sListItem.Album)" %(containerprefix,containerprefix)):
-            contenttype = "songs"
-        elif xbmc.getCondVisibility("StringCompare(%sListItem.Label,%sListItem.TvShowTitle)" %(containerprefix,containerprefix)):
-            contenttype = "tvshows"
         elif xbmc.getCondVisibility("SubString(%sListItem.FolderPath,flix2kodi) + SubString(%sListItem.Genre,Series)" %(containerprefix,containerprefix)):
             contenttype = "tvshows"
         elif xbmc.getCondVisibility("SubString(%sListItem.FolderPath,flix2kodi)" %(containerprefix)):
             contenttype = "movies"
-        elif xbmc.getCondVisibility("!IsEmpty(%sListItem(1).DBTYPE)" %containerprefix):
-            contenttype = xbmc.getInfoLabel("%sListItem(1).DBTYPE" %containerprefix) + "s"
-        elif xbmc.getCondVisibility("!IsEmpty(%sListItem(1).Property(DBTYPE))" %containerprefix):
-            contenttype = xbmc.getInfoLabel("%sListItem(1).Property(DBTYPE)" %containerprefix) + "s"
-        elif xbmc.getCondVisibility("SubString(%sListItem(1).FileNameAndPath,playrecording) | SubString(%sListItem(1).FileNameAndPath,tvtimer)" %(containerprefix,containerprefix)):
-            contenttype = "tvrecordings"
-        elif xbmc.getCondVisibility("SubString(%sListItem(1).FolderPath,pvr://channels)" %containerprefix):
-            contenttype = "tvchannels"
-        elif xbmc.getCondVisibility("StringCompare(%sListItem(1).Label,%sListItem(1).Artist)" %(containerprefix,containerprefix)):
+        elif xbmc.getCondVisibility("!IsEmpty(%sListItem.Artist) + StringCompare(%sListItem.Label,%sListItem.Artist)" %(containerprefix,containerprefix,containerprefix)):
             contenttype = "artists"
-        elif xbmc.getCondVisibility("StringCompare(%sListItem(1).Label,%sListItem(1).Album)" %(containerprefix,containerprefix)):
+        elif xbmc.getCondVisibility("!IsEmpty(%sListItem.Album) + StringCompare(%sListItem.Label,%sListItem.Album)" %(containerprefix,containerprefix,containerprefix)):
             contenttype = "albums"
-        elif xbmc.getCondVisibility("!IsEmpty(%sListItem(1).Artist) + !IsEmpty(%sListItem(1).Album)" %(containerprefix,containerprefix)):
+        elif xbmc.getCondVisibility("!IsEmpty(%sListItem.Artist) + !IsEmpty(%sListItem.Album)" %(containerprefix,containerprefix)):
             contenttype = "songs"
-        elif xbmc.getCondVisibility("StringCompare(%sListItem(1).Label,%sListItem(1).TvShowTitle)" %(containerprefix,containerprefix)):
+        elif xbmc.getCondVisibility("!IsEmpty(%sListItem.TvShowTitle) + StringCompare(%sListItem.Title,%sListItem.TvShowTitle)" %(containerprefix,containerprefix,containerprefix)):
             contenttype = "tvshows"
-        elif xbmc.getCondVisibility("SubString(%sListItem(1).FolderPath,flix2kodi) + SubString(%sListItem(1).Genre,Series)" %(containerprefix,containerprefix)):
+        elif xbmc.getCondVisibility("!IsEmpty(%sListItem.Property(TotalEpisodes))" %(containerprefix)):
             contenttype = "tvshows"
-        elif xbmc.getCondVisibility("SubString(%sListItem(1).FolderPath,flix2kodi)" %(containerprefix)):
+        elif xbmc.getCondVisibility("!IsEmpty(%sListItem.TvshowTitle) + !IsEmpty(%sListItem.Season)" %(containerprefix,containerprefix)):
+            contenttype = "episodes"
+        elif xbmc.getCondVisibility("IsEmpty(%sListItem.TvshowTitle) + !IsEmpty(%sListItem.Year)" %(containerprefix,containerprefix)):
             contenttype = "movies"
+        elif xbmc.getCondVisibility("SubString(%sListItem.FolderPath,movies)" %containerprefix):
+            contenttype = "movies"
+        elif xbmc.getCondVisibility("SubString(%sListItem.FolderPath,shows)" %containerprefix):
+            contenttype = "tvshows"
+        elif xbmc.getCondVisibility("SubString(%sListItem.FolderPath,episodes)" %containerprefix):
+            contenttype = "episodes"
     
     WINDOW.setProperty("contenttype",contenttype)
     return contenttype
