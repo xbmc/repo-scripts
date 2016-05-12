@@ -1,9 +1,29 @@
 # script.audio.profiles language file
+# Translators:
+# Regss <regss84@gmail.com>, 2016
 msgid ""
 msgstr ""
+"Project-Id-Version: Audio Profiles for KODI\n"
+"PO-Revision-Date: 2016-05-09 08:49+0000\n"
+"Last-Translator: Regss <regss84@gmail.com>\n"
+"Language-Team: Polish (http://www.transifex.com/movielib/audio-profiles-for-kodi/language/pl/)\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: pl\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+
+#: addon.xml
+msgctxt "Addon Summary"
+msgid "Save audio profile and easily switch between them"
+msgstr "Zapisuje profile ustawień audio i łatwo przełącza między nimi"
+
+#: addon.xml
+msgctxt "Addon Description"
+msgid ""
+"To map a key for switch audio profile edit keymap xml file and "
+"add:[CR]RunScript(script.audio.profiles,0) - for switch profile in "
+"loop[CR]RunScript(script.audio.profiles,x) - where x is number of profile"
+msgstr "Aby przypisać przycisk to zmiany profili edytuj plik keymap xml i dodaj:[CR]RunScript(script.audio.profiles,0) - aby przełączać między profilami w pętli[CR]RunScript(script.audio.profiles,x) - gdzie x to numer profilu"
 
 #: Settings
 msgctxt "#32000"
@@ -32,13 +52,23 @@ msgstr "Pokaż menu wyboru strumienia audio podczas startu odtwarzania"
 
 #: Settings
 msgctxt "#32016"
-msgid "Auto close audio profiles select menu"
+msgid "Auto close select menu"
 msgstr "Automatycznie zamknij menu wyboru strumienia audio"
 
 #: Settings
-msgctxt "#32017"
-msgid "Time after which close the menu"
-msgstr "Czas po którym zamknąć menu"
+msgctxt "#32018"
+msgid "Debug"
+msgstr "Debugowanie"
+
+#: Settings
+msgctxt "#32019"
+msgid "Notifications"
+msgstr "Notyfikacje"
+
+#: Settings
+msgctxt "#32020"
+msgid "Debuging"
+msgstr "Debugowanie"
 
 #: Settings
 msgctxt "#32002"
@@ -57,13 +87,13 @@ msgstr "Poziom głośności"
 
 #: Settings
 msgctxt "#32011"
-msgid "Player settings [Video -> Playback]"
-msgstr "Ustawienia odtwarzacza [Video -> Playback]"
+msgid "Player settings"
+msgstr "Ustawienia odtwarzacza"
 
 #: Settings
 msgctxt "#32012"
-msgid "Video settings [System -> Video]"
-msgstr "Ustawienia Wideo [System -> Video]"
+msgid "Video settings"
+msgstr "Ustawienia Wideo"
 
 #: Settings
 msgctxt "#32005"
