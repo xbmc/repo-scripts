@@ -36,13 +36,13 @@ class CinderRandomPlayer(object):
 
         # check for invalid input
         if len(additionalSourceList) != len(additionalSourceWeightList):
-            xbmcgui.Dialog().notification(self.addon.getLocalizedString(32400), \
-                                          self.addon.getLocalizedString(32403), \
+            xbmcgui.Dialog().notification(self.addon.getLocalizedString(32400), 
+                                          self.addon.getLocalizedString(32403), 
                                           xbmcgui.NOTIFICATION_WARNING)
             sys.exit(1)
         if maximumSourceWeight <= 0 or maximumSourceWeight > 1000000:
-            xbmcgui.Dialog().notification(self.addon.getLocalizedString(32400), \
-                                          self.addon.getLocalizedString(32404), \
+            xbmcgui.Dialog().notification(self.addon.getLocalizedString(32400), 
+                                          self.addon.getLocalizedString(32404), 
                                           xbmcgui.NOTIFICATION_WARNING)
             sys.exit(1)
 
@@ -107,8 +107,8 @@ class CinderRandomPlayer(object):
 
         # make sure that the sum of all weights are > 0
         if allWeightsSum == 0:
-            xbmcgui.Dialog().notification(self.addon.getLocalizedString(32400), \
-                                          self.addon.getLocalizedString(32405), \
+            xbmcgui.Dialog().notification(self.addon.getLocalizedString(32400), 
+                                          self.addon.getLocalizedString(32405), 
                                           xbmcgui.NOTIFICATION_WARNING)
             sys.exit(1)
 
@@ -203,8 +203,8 @@ class CinderRandomPlayer(object):
                 # after at least 100 attempts to fill up the playlist cancel the process
                 # the user is probably in 'watched' or 'unwatched' only modes
                 # and the process is not finding anything
-                xbmcgui.Dialog().notification(self.addon.getLocalizedString(32400), \
-                                              self.addon.getLocalizedString(32401), \
+                xbmcgui.Dialog().notification(self.addon.getLocalizedString(32400), 
+                                              self.addon.getLocalizedString(32401), 
                                               xbmcgui.NOTIFICATION_WARNING)
                 xbmc.executebuiltin('Dialog.Close(busydialog)')
                 return
@@ -339,8 +339,8 @@ class CinderRandomPlayer(object):
                     continue
             # we have walked off of the end of the 'files' list so return an empty list
         elif 'error' in jsonResponse:
-            xbmcgui.Dialog().notification(self.addon.getLocalizedString(32400), \
-                                          self.addon.getLocalizedString(32402) + fullpath, \
+            xbmcgui.Dialog().notification(self.addon.getLocalizedString(32400), 
+                                          self.addon.getLocalizedString(32402) + fullpath, 
                                           xbmcgui.NOTIFICATION_WARNING)
             pykodi.log(jsonResponse, xbmc.LOGDEBUG)
             xbmc.executebuiltin('Dialog.Close(busydialog)')
