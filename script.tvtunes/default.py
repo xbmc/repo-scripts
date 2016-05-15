@@ -6,7 +6,6 @@ import xbmc
 # Import the common settings
 from resources.lib.settings import log
 from resources.lib.scraper import TvTunesScraper
-from resources.lib.screensaver import launchScreensaver
 
 ADDON = xbmcaddon.Addon(id='script.tvtunes')
 
@@ -35,10 +34,6 @@ if __name__ == '__main__':
     elif params.get("mode", False) == "solo":
         themeScraper = TvTunesScraper()
         del themeScraper
-
-    elif params.get("screensaver", False):
-        launchScreensaver()
-
     else:
         # Close any open dialogs
         xbmc.executebuiltin("Dialog.Close(all, true)", True)
