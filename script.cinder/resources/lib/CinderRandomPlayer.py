@@ -23,8 +23,29 @@ import sys
 
 class CinderRandomPlayer(object):
 
-    def __init__(self, additionalSourceList, additionalSourceWeightList):
+    def __init__(self, additionalSourceList, additionalSourceWeightList, maximumSourceWeight):
+        self.addon = xbmcaddon.Addon()
         self.configSettings = {}
+
+        self.maximumSourceWeight = maximumSourceWeight
+
+        # seed the random number generator with the current time
+        random.seed()
+
+        pykodi.log("maximumSourceWeight: " + str(self.maximumSourceWeight),  xbmc.LOGDEBUG)
+
+        # check for invalid input
+        if len(additionalSourceList) != len(additionalSourceWeightList):
+            xbmcgui.Dialog().notification(self.addon.getLocalizedString(32400), 
+                                          self.addon.getLocalizedString(32403), 
+                                          xbmcgui.NOTIFICATION_WARNING)
+            sys.exit(1)
+        if maximumSourceWeight <= 0 or maximumSourceWeight > 1000000:
+            xbmcgui.Dialog().notification(self.addon.getLocalizedString(32400), 
+                                          self.addon.getLocalizedString(32404), 
+                                          xbmcgui.NOTIFICATION_WARNING)
+            sys.exit(1)
+
 
         # aquire the users configuration settings
         self.aquireConfigSettings(additionalSourceList, additionalSourceWeightList)
@@ -51,6 +72,7 @@ class CinderRandomPlayer(object):
         self.configSettings['SourceUriList'] = []
         self.configSettings['SourceWeightList'] = []
 
+        allWeightsSum = 0
         for configKey in configKeyList: 
             if configKey.find('Source') == 0:
                 value = settings.getSetting(configKey) 
@@ -67,6 +89,7 @@ class CinderRandomPlayer(object):
                         if modifiedKey in self.configSettings.keys():
                             self.configSettings[configKey] = settings.getSetting(configKey) 
                             self.configSettings['SourceWeightList'].append(value)
+                            allWeightsSum += int(value)
                             pykodi.log(configKey + ": " + value, xbmc.LOGDEBUG)
                         else:
                             pykodi.log(configKey + ": SKIPPING", xbmc.LOGDEBUG)
@@ -80,6 +103,14 @@ class CinderRandomPlayer(object):
             self.configSettings['SourceUriList'].append(additionalSource)
         for additionalSourceWeight in additionalSourceWeightList:
             self.configSettings['SourceWeightList'].append(additionalSourceWeight)
+            allWeightsSum += int(additionalSourceWeight)
+
+        # make sure that the sum of all weights are > 0
+        if allWeightsSum == 0:
+            xbmcgui.Dialog().notification(self.addon.getLocalizedString(32400), 
+                                          self.addon.getLocalizedString(32405), 
+                                          xbmcgui.NOTIFICATION_WARNING)
+            sys.exit(1)
 
 
     # Sets up the random playlist and starts playing it on the first call. Additional calls
@@ -116,7 +147,7 @@ class CinderRandomPlayer(object):
         # let the caller do multiple sweeps
         for index in indexList: 
             showWeight = int(self.configSettings['SourceWeightList'][index])
-            if random.randint(1, 100) > showWeight:
+            if random.randint(1, self.maximumSourceWeight) > showWeight:
                 continue
 
             videos = self.getRandomEpisode(self.configSettings['SourceUriList'][index])
@@ -168,11 +199,13 @@ class CinderRandomPlayer(object):
         while True:
 
             sweepCount += 1
-            if sweepCount > 100:
-                # after 100 attempts to fill up the playlist cancel the process
+            if sweepCount > max(100, self.maximumSourceWeight):
+                # after at least 100 attempts to fill up the playlist cancel the process
                 # the user is probably in 'watched' or 'unwatched' only modes
                 # and the process is not finding anything
-                xbmcgui.Dialog().notification('Cinder Error:', 'Unable to find episodes. Try "All videos" mode', xbmcgui.NOTIFICATION_WARNING)
+                xbmcgui.Dialog().notification(self.addon.getLocalizedString(32400), 
+                                              self.addon.getLocalizedString(32401), 
+                                              xbmcgui.NOTIFICATION_WARNING)
                 xbmc.executebuiltin('Dialog.Close(busydialog)')
                 return
 
@@ -189,7 +222,7 @@ class CinderRandomPlayer(object):
                         continue
 
                 showWeight = int(self.configSettings['SourceWeightList'][index])
-                if random.randint(1, 100) > showWeight:
+                if random.randint(1, self.maximumSourceWeight) > showWeight:
                     index += 1
                     continue
 
@@ -267,21 +300,23 @@ class CinderRandomPlayer(object):
     def getRandomEpisodeRecusive(self, fullpath):
         jsonRequest = pykodi.get_base_json_request('Files.GetDirectory')
         jsonRequest['params'] = {'directory': fullpath, 'media': 'video'}
-        jsonRequest['params']['sort'] = {'method': 'random'}
         jsonRequest['params']['properties'] = ['playcount']
-        jsonRequest['params']['limits'] = {'end': 10}
 
         jsonResponse = pykodi.execute_jsonrpc(jsonRequest)
 
-        pykodi.log(str(jsonResponse), xbmc.LOGDEBUG)
+        # pykodi.log(str(jsonResponse), xbmc.LOGDEBUG)
         if 'result' in jsonResponse and 'files' in jsonResponse['result']:
 
-            # note: for some reason KODI returns the same videos at the front
-            #       of the retuned random list if there is a large number of files. 
-            #       Reverse the returned list to get
-            #       more random results in the case of a lot of files in the
-            #       smb source
-            for fileEntry in list(reversed(jsonResponse['result']['files'])):
+            # leverage pythons random library to shuffle a list of indicies
+            # to get a random file / directory
+            fileEntryList = list(jsonResponse['result']['files'])
+            fileEntryIndexList = range(0, len(fileEntryList))
+            random.shuffle(fileEntryIndexList)
+            random.shuffle(fileEntryIndexList)
+            random.shuffle(fileEntryIndexList)
+
+	    for index in fileEntryIndexList: 
+                fileEntry = fileEntryList[index]
 
                 # recurse down directories
                 if self.isDirectory(fileEntry):
@@ -304,7 +339,9 @@ class CinderRandomPlayer(object):
                     continue
             # we have walked off of the end of the 'files' list so return an empty list
         elif 'error' in jsonResponse:
-            xbmcgui.Dialog().notification('Cinder Error:', 'Invalid: ' + fullpath, xbmcgui.NOTIFICATION_WARNING)
+            xbmcgui.Dialog().notification(self.addon.getLocalizedString(32400), 
+                                          self.addon.getLocalizedString(32402) + fullpath, 
+                                          xbmcgui.NOTIFICATION_WARNING)
             pykodi.log(jsonResponse, xbmc.LOGDEBUG)
             xbmc.executebuiltin('Dialog.Close(busydialog)')
             sys.exit(1)
