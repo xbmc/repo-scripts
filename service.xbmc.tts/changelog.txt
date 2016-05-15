@@ -23,6 +23,19 @@ EXTERNAL TODO:
  OSX installer?
  Android TTS app for android backend
 
+** 1.0.6 **
+
+Fix bug on window where addon window names were being spoken as the path to the window file
+Now puts the addon in first run state if a user installed version is removed when the addon is pre-installed
+Now updates the keymap if the pre-installed version is removed
+
+** 1.0.6b1 **
+
+Add Dutch translation - thanks to leonardder
+Automatically disable if pre-installed
+Fix issues playing informational sounds when addon is pre-installed
+Add ability do enable/disable addon when it's pre-installed
+
 ** 1.0.5 **
 
 Add client=t to Google backend URL to fix 503 errors

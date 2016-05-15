@@ -1,7 +1,12 @@
 # -*- coding: utf-8 -*-
-import sys
+import os, sys, xbmc
 
-if __name__ == '__main__':
+
+def main():
+    if os.path.exists(os.path.join(xbmc.translatePath('special://profile').decode('utf-8'), 'addon_data', 'service.xbmc.tts', 'DISABLED')):
+        xbmc.log('service.xbmc.tts: DISABLED - NOT STARTING')
+        return
+
     arg = None
     if len(sys.argv) > 1:
         arg = sys.argv[1] or False
@@ -27,5 +32,8 @@ if __name__ == '__main__':
         from lib import util
         util.xbmcaddon.Addon().openSettings()
     elif arg is None:
-        from service import TTSService
-        TTSService().start()
+        from service import startService
+        startService()
+
+if __name__ == '__main__':
+    main()

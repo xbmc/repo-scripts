@@ -6,7 +6,7 @@
       <ITEM_EXTRA>XBMC.NotifyAll(service.xbmc.tts,ITEM_EXTRA)</ITEM_EXTRA>
       <STOP>XBMC.NotifyAll(service.xbmc.tts,STOP)</STOP>
       <SETTINGS>XBMC.Addon.OpenSettings(service.xbmc.tts)</SETTINGS>
-      <DISABLE>XBMC.RunScript(special://home/addons/service.xbmc.tts/enabler.py)</DISABLE>
+      <DISABLE>XBMC.RunScript(special://{SPECIAL}/addons/service.xbmc.tts/enabler.py)</DISABLE>
       <VOL_UP>XBMC.NotifyAll(service.xbmc.tts,VOL_UP)</VOL_UP>
       <VOL_DOWN>XBMC.NotifyAll(service.xbmc.tts,VOL_DOWN)</VOL_DOWN>
       <plus mod="ctrl">XBMC.NotifyAll(service.xbmc.tts,VOL_UP)</plus>
