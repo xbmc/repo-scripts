@@ -26,7 +26,7 @@ class NextUpInfo(xbmcgui.WindowXMLDialog):
         landscapeimage = self.item['art'].get('tvshow.landscape', '')
         fanartimage = self.item['art'].get('tvshow.fanart', '')
         overview = self.item['plot']
-        tvshowtitle = self.item['tvshowtitle']
+        tvshowtitle = self.item['showtitle']
         name = self.item['title']
         playcount = self.item['playcount']
 
