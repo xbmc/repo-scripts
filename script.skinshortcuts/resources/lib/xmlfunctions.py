@@ -197,11 +197,15 @@ class XMLFunctions():
             else:
                 pass
 
+        # Check for the hashes file
+        hashesPath = os.path.join( __masterpath__ , xbmc.getSkinDir() + ".hash" )
+        if not xbmcvfs.exists( hashesPath ):
+            log( "Hash list does not exist" )
+            return True
         try:
-            hashes = ast.literal_eval( xbmcvfs.File( os.path.join( __masterpath__ , xbmc.getSkinDir() + ".hash" ) ).read() )
+            hashes = ast.literal_eval( xbmcvfs.File( hashesPath ).read() )
         except:
-            # There is no hash list, return True
-            log( "No hash list" )
+            log( "Unable to parse hash list" )
             print_exc()
             return True
         
@@ -376,6 +380,7 @@ class XMLFunctions():
             
             # Create objects to hold the items
             menuitems = []
+            submenuItems = []
             templateMainMenuItems = xmltree.Element( "includes" )
             
             # If building the main menu, split the mainmenu shortcut nodes into the menuitems list
@@ -386,6 +391,7 @@ class XMLFunctions():
                 hashlist.list.append( ["::FULLMENU::", "True"] )
                 for node in DATA._get_shortcuts( "mainmenu", None, True, profile[0] ).findall( "shortcut" ):
                     menuitems.append( node )
+                    submenuItems.append( node )
                 fullMenu = True
             else:
                 # Clear any skinstring marking that we're providing the whole menu
@@ -463,18 +469,24 @@ class XMLFunctions():
                         submenuVisibilityName = submenu[:-2]
                         
                     # Get the tree's we're going to write the menu to
-                    if submenu in submenuNodes:
-                        justmenuTreeA = submenuNodes[ submenu ][ 0 ]
-                        justmenuTreeB = submenuNodes[ submenu ][ 1 ]
-                    else:
-                        # Create these nodes
-                        justmenuTreeA = xmltree.SubElement( root, "include" )
-                        justmenuTreeB = xmltree.SubElement( root, "include" )
-                        
-                        justmenuTreeA.set( "name", "skinshortcuts-group-" + DATA.slugify( submenu ) )
-                        justmenuTreeB.set( "name", "skinshortcuts-group-alt-" + DATA.slugify( submenu ) )
-                        
-                        submenuNodes[ submenu ] = [ justmenuTreeA, justmenuTreeB ]
+                    if "noGroups" not in options:
+                        if submenu in submenuNodes:
+                            justmenuTreeA = submenuNodes[ submenu ][ 0 ]
+                            justmenuTreeB = submenuNodes[ submenu ][ 1 ]
+                        else:
+                            # Create these nodes
+                            justmenuTreeA = xmltree.SubElement( root, "include" )
+                            justmenuTreeB = xmltree.SubElement( root, "include" )
+
+                            if count != 0:
+                                groupInclude = DATA.slugify( submenu[:-2], convertInteger = True ) + "-" + submenu[-1:]
+                            else:
+                                groupInclude = DATA.slugify( submenu, convertInteger = True )
+                            
+                            justmenuTreeA.set( "name", "skinshortcuts-group-" + groupInclude )
+                            justmenuTreeB.set( "name", "skinshortcuts-group-alt-" + groupInclude )
+                            
+                            submenuNodes[ submenu ] = [ justmenuTreeA, justmenuTreeB ]
                         
                     itemidsubmenu = 0
                     
@@ -550,13 +562,16 @@ class XMLFunctions():
                                 menuitem.remove( allProps[ key ] )
                                 allProps.pop( key )
 
-                        # Add it, with appropriate visibility conditions, to the various submenu includes
-                        justmenuTreeA.append( menuitem )
-
+                        
                         menuitemCopy = Template.copy_tree( menuitem )
-                        visibilityElement = menuitemCopy.find( "visible" )
-                        visibilityElement.text = "[%s] + %s" %( visibilityElement.text, "StringCompare(Window(10000).Property(submenuVisibility)," + DATA.slugify( submenuVisibilityName, convertInteger=True ) + ")" )
-                        justmenuTreeB.append( menuitemCopy )
+                        
+                        if "noGroups" not in options:
+                            # Add it, with appropriate visibility conditions, to the various submenu includes
+                            justmenuTreeA.append( menuitem )
+
+                            visibilityElement = menuitemCopy.find( "visible" )
+                            visibilityElement.text = "[%s] + %s" %( visibilityElement.text, "StringCompare(Window(10000).Property(submenuVisibility)," + DATA.slugify( submenuVisibilityName, convertInteger=True ) + ")" )
+                            justmenuTreeB.append( menuitemCopy )
 
                         if buildMode == "single":
                             # Add the property 'submenuVisibility'
@@ -570,9 +585,19 @@ class XMLFunctions():
                         visibilityElement = menuitemCopy.find( "visible" )
                         visibilityElement.text = "[%s] + %s" %( visibilityElement.text, "StringCompare(Container(" + mainmenuID + ").ListItem.Property(submenuVisibility)," + DATA.slugify( submenuVisibilityName, convertInteger=True ) + ")" )
                         submenuTree.append( menuitemCopy )
+                    if len( submenuitems ) == 0 and "noGroups" not in options:
+                        # There aren't any submenu items, so add a 'description' element to the group includes
+                        # so that Kodi doesn't think they're invalid
+                        newelement = xmltree.Element( "description" )
+                        newelement.text = "No items"
+                        justmenuTreeA.append( newelement )
+                        justmenuTreeB.append( newelement )
                             
                     # Build the template for the submenu
-                    Template.parseItems( "submenu", count, templateSubMenuItems, profile[ 2 ], profile[ 1 ], "StringCompare(Container(" + mainmenuID + ").ListItem.Property(submenuVisibility)," + DATA.slugify( submenuVisibilityName, convertInteger=True ) + ")", item )
+                    buildOthers = False
+                    if item in submenuItems:
+                        buildOthers = True
+                    Template.parseItems( "submenu", count, templateSubMenuItems, profile[ 2 ], profile[ 1 ], "StringCompare(Container(" + mainmenuID + ").ListItem.Property(submenuVisibility)," + DATA.slugify( submenuVisibilityName, convertInteger=True ) + ")", item, None, buildOthers )
                         
                     count += 1
 
@@ -608,7 +633,7 @@ class XMLFunctions():
                     hashlist.list.append( [ "::SKINBOOL::", [ profile[ 1 ], checkForShortcut[ 1 ], checkForShortcut[ 2 ] ] ] )
 
             # Build the template for the main menu
-            Template.parseItems( "mainmenu", 0, templateMainMenuItems, profile[ 2 ], profile[ 1 ], "", "", mainmenuID )
+            Template.parseItems( "mainmenu", 0, templateMainMenuItems, profile[ 2 ], profile[ 1 ], "", "", mainmenuID, True )
 
             # If we haven't built enough main menu items, copy the ones we have
             while itemidmainmenu < minitems and fullMenu and len( mainmenuTree ) != 0:
@@ -670,7 +695,7 @@ class XMLFunctions():
             newelement.set( "id", str( itemid ) )
         idproperty = xmltree.SubElement( newelement, "property" )
         idproperty.set( "name", "id" )
-        idproperty.text = "$NUM[%s]" %( str( itemid ) )
+        idproperty.text = "$NUMBER[%s]" %( str( itemid ) )
         allProps[ "id" ] = idproperty
             
         # Label and label2

@@ -1,3 +1,14 @@
+v1.0.8
+- Ability to set item properties from outside management dialog
+- Ability for skin to specify it doesn't share menu's
+- Ability to specify single/multi background browse options
+- Ability to specify 'none' option for thumbnails
+- New 'visibleoverride'
+- New 'noGroups' build option
+- Template improvements
+- Automatically add a reload parameter to GUI 312 selected widgets
+- Minor fixes
+
 v1.0.7
 - Krypton support
 - More accurately display build progress

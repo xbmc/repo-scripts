@@ -19,7 +19,7 @@ If this file is present Skin Shortcuts will automatically build your templates a
 
 ## Types of templates
 
-Skin Shortcuts supports two types of template - one for sub menu's, and one for any other content based off the properties of the main menu items in the users custom menus.
+Skin Shortcuts supports three types of template - one for sub menu's; one for any other content based off the properties of the main menu items in the users custom menus; one for content based off the properties of a sub menu item in the users custom menus.
 
 #### Sub menu template
 
@@ -91,6 +91,21 @@ The `<controls />` element is where you put your Kodi GUI xml that should be bui
 The `<variables />` element is where you define any variables that should be built by the template. At least one of them must be included. You must include the `<variable>` element, with as many `<value>` sub-elements as needed.
 
 One Other template will be built for each main menu item per [include]. Use different [include]'s to build multiple Other templates.
+
+#### Submenu-other template
+
+Submenu-other templates act just as a regular other template except that they build based on the properties of a submenu item, and they are defined differently.
+
+```
+<submenuOther include="[include]" container="[container]" level="[level]" />
+```
+
+| Property | Optional | Description |
+| :------: | :------: | ----------- |
+| `[container]` | Yes | The ID of the container holding the submenu. This is used to build visibilty conditions and, if ommited, these won't be available. |
+| `[level]` | Yes | If building multiple sub-menu levels, specifies which level this applies to. Omit for the default level (0). |
+
+For usage, see 'Other' templates documentation, above.
 
 ## Condition elements
 
@@ -173,6 +188,24 @@ The `<property />` would be
 
 `<property name="artwork" tag="property" attribute="name|widgetType" value="tvshows">ListItem.Art(tvshow.poster)</property>`
 
+#### Set a property based on multiple elements
+
+You can set a property to a single value based on different matching elements within the menu item. For example:
+
+```
+<property name="leftartwork" propertyValue="5">
+	<rule tag="property" attribute="name|widgetStyle" value="Panel" />
+	<rule tag="property" attribute="name|widgetArt" value="Poster" />
+	<rule tag="property" attribute="name|widgetCase" value="Glass" />
+</property>
+```
+
+Would set the property `$SKINSHORTCUTS[leftartwork]`to the value of `5` if any of the three rules match.
+
+By default, this property will match if any of the rules match. To only match the property if all of the rules match, include `<match>all</match>` as a sub element.
+
+Note, when setting a property based on multiple elements, you /must/ specify the propertyValue you want assigned - you cannot assign the property to the value of the menu items element that you are checking against.
+
 #### Fallback value
 
 If none of the `<property />` elements match, the property will be an empty string. You can set an alternative fallback value by including the following as the final element in a list of `<property />`'s
@@ -198,7 +231,47 @@ You can retrieve the id of the main menu item and place it into a property:-
 
 Once the property has been set, you can use `$SKINSHORTCUTS[propertyName]` in either an attribute or the value of any Kodi GUI element. It will be replaced with the value of the property.
 
-#### Moving properties to an include using $PARAM (KODI 15+)
+## Property Groups
+
+You may find that you have multiple `<property />` elements common to multiple templates. In this case you may consider moving some to a property group.
+
+```
+<propertyGroup name="myPropertyGroup">
+	<property ... />
+	<property ... />
+	<property ... />
+	...
+</propertyGroup>
+```
+
+The property group can then be included in a template with:
+
+`<propertyGroup>myPropertyGroup</propertyGroup>`
+
+Note that property groups are processed after any properties defined in the template directly.
+
+## Get value from Python
+
+It is possible to run very simple Python scripts within the template to evaluate conditions and have the returned value used in your template. All properties that you have pulled out from a menu item are available via their name. For example, if you have pulled out the mainmenuid into a property named 'id':
+
+`<property name="id" tag="mainmenuid" />`
+
+You could adjust the position of an item as follows:
+
+`<top>$PYTHON[100 + (50 * int(id))]</top>`
+
+Another example, it can be useful to know if a widgetPath has a '?' character in it, as appending anything extra to the path would then need prepending with an '&'. A simple Python script - with reference to the note below on the 'in' operator - can return the correct value for you:
+
+`$PYTHON['&amp;' if widgetPath in '?' else '?']`
+
+#### Notes
+
+* All expressions must be valid Python
+* Only basic operators are available. Whilst consideration will be given to requests to enable additional operators, this limitation is for security reasons.
+* Whilst 'in' is available, for technical reasons its operation is reversed, so if you want to know if `x` is in `y`, you'd use `if y in x`.
+* All properties are passed into your Python script as strings. To use them in mathematical expressions, they must be converted to integers.
+
+## Moving properties to an include using `$PARAM` (KODI 15+)
 
 You can move any `$SKINSHORTCUTS[propertyName]` to an include inside your skin's xml files using `$PARAM[paramName]`.
 For more informations about params : [Use params in includes](http://kodi.wiki/view/Skinning_Manual#Use_params_in_includes).

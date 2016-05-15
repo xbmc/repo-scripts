@@ -116,11 +116,11 @@ class NodeFunctions():
                 mediaType = contentNode.text
 
             # Get label and icon
-            label = root.find( "label" ).text
+            label = root.find( "label" ).text.encode( "utf-8" )
             
             icon = root.find( "icon" )
             if icon is not None:
-                icon = icon.text
+                icon = icon.text.encode( "utf-8" )
             else:
                 icon = ""
 
@@ -132,7 +132,7 @@ class NodeFunctions():
                 path = root.find( "path" )
                 if path is not None:
                     # Change the origPath (the url used as the shortcut address) to it
-                    origPath = path.text
+                    origPath = path.text.encode( "utf-8" )
                     
                 # Check for a grouping
                 group = root.find( "group" )
@@ -204,29 +204,46 @@ class NodeFunctions():
 
         # Check whether the node exists - either as a parent node (with an index.xml) or a view node (append .xml)
         # in first custom video nodes, then default video nodes
+        nodeFile = None
         if xbmcvfs.exists( customPath ):
-            path = customPath
-        elif xbmcvfs.exists( customFile ):
-            path = customFile
+            nodeFile = customPath
         elif xbmcvfs.exists( defaultPath ):
-            path = defaultPath
+            nodeFile = defaultPath
+        if xbmcvfs.exists( customFile ):
+            nodeFile = customFile
         elif xbmcvfs.exists( defaultFile ):
-            path = defaultFile
-        else:
-            return ""
-            
-        # Open the file
-        try:
-            # Load the xml file
-            tree = xmltree.parse( path )
-            root = tree.getroot()
+            nodeFile = defaultFile
 
-            if "visible" in root.attrib:
-                return root.attrib.get( "visible" )
-            else:
-                return ""
-        except:
-            return False
+        # Next check if there is a parent node
+        if path.endswith( "/" ): path = path[ :-1 ]
+        path = path.rsplit( "/", 1 )[ 0 ]
+
+        customPath = path.replace( pathStart, os.path.join( xbmc.translatePath( "special://profile".decode('utf-8') ), "library", pathEnd ) ) + "/index.xml"
+        defaultPath = path.replace( pathStart, os.path.join( xbmc.translatePath( "special://xbmc".decode('utf-8') ), "system", "library", pathEnd ) ) + "/index.xml"
+        nodeParent = None
+        if xbmcvfs.exists( customPath ):
+            nodeParent = customPath
+        elif xbmcvfs.exists( defaultPath ):
+            nodeParent = defaultPath
+
+        if not nodeFile and not nodeParent:
+            return ""
+
+        for path in ( nodeFile, nodeParent ):
+            if path is None:
+                continue
+            # Open the file
+            try:
+                # Load the xml file
+                tree = xmltree.parse( path )
+                root = tree.getroot()
+
+                if "visible" in root.attrib:
+                    return root.attrib.get( "visible" )
+            except:
+                pass
+
+        return ""
 
     def get_mediaType( self, path ):
         path = path.replace( "videodb://", "library://video/" )
@@ -284,9 +301,9 @@ class NodeFunctions():
         except:
             return "unknown"
             
-    ############################################
-    # Functions used to add a node to the menu #
-    ############################################
+    ##################################################
+    # Functions to externally add a node to the menu #
+    ##################################################
 
     def addToMenu( self, path, label, icon, content, window, DATA ):
         log( repr( window ) )
@@ -434,6 +451,113 @@ class NodeFunctions():
         if itemID.endswith( "/" ): itemID = itemID[ :-1 ]
         itemID = itemID.rsplit( "/", 1 )[ 1 ]
         return itemID
+
+# ##############################################
+# ### Functions to externally set properties ###
+# ##############################################
+
+    def setProperties( self, properties, values, labelID, group, DATA ):
+        # This function will take a list of properties and values and apply them to the
+        # main menu item with the given labelID
+        if not group:
+            group = "mainmenu"
+
+        # Decode values
+        properties = try_decode( properties )
+        values = try_decode( values )
+        labelID = try_decode( labelID )
+        group = try_decode( group )
+
+        # Split up property names and values
+        propertyNames = properties.split( "|" )
+        propertyValues = values.replace( "::INFO::", "$INFO" ).split( "|" )
+        labelIDValues = labelID.split( "|" )
+        if len( labelIDValues ) == 0:
+            # No labelID passed in, lets assume we were called in error
+            return
+        if len( propertyNames ) == 0:
+            # No values passed in, lets assume we were called in error
+            return
+
+        # Get user confirmation that they want to make these changes
+        message = "Set %s property to %s?" %( propertyNames[ 0 ], propertyValues[ 0 ] )
+        if len( propertyNames ) == 2:
+            message += "[CR](and 1 other property)"
+        elif len( propertyNames ) > 2:
+            message += "[CR](and %d other properties)" %( len( propertyNames ) -1 )
+        shouldRun = xbmcgui.Dialog().yesno( __addon__.getAddonInfo( "name" ), message )
+        if not shouldRun:
+            return
+
+        # Load the properties
+        currentProperties, defaultProperties = DATA._get_additionalproperties( xbmc.translatePath( "special://profile/" ).decode( "utf-8" ) )
+        otherProperties, requires, templateOnly = DATA._getPropertyRequires()
+
+        # If there aren't any currentProperties, use the defaultProperties instead
+        if currentProperties == [None]:
+            currentProperties = defaultProperties
+
+        # Pull out all properties into multi-dimensional dicts
+        allProps = {}
+        allProps[ group ] = {}
+        for currentProperty in currentProperties:
+            # If the group isn't in allProps, add it
+            if currentProperty[ 0 ] not in allProps.keys():
+                allProps[ currentProperty [ 0 ] ] = {}
+            # If the labelID isn't in the allProps[ group ], add it
+            if currentProperty[ 1 ] not in allProps[ currentProperty[ 0 ] ].keys():
+                allProps[ currentProperty[ 0 ] ][ currentProperty[ 1 ] ] = {}
+            # And add the property to allProps[ group ][ labelID ]
+            if currentProperty[ 3 ] is not None:
+                allProps[ currentProperty[ 0 ] ][ currentProperty [ 1 ] ][ currentProperty[ 2 ] ] = currentProperty[ 3 ]
+
+        # Loop through the properties we've been asked to set
+        for count, propertyName in enumerate(propertyNames):
+            # Set the new value
+            log( "Setting %s to %s" %( propertyName, propertyValues[ count ] ) )
+            if len( labelIDValues ) != 1:
+                labelID = labelIDValues[ count ]
+            if labelID not in allProps[ group ].keys():
+                allProps[ group ][ labelID ] = {}
+            allProps[ group ][ labelID ][ propertyName ] = propertyValues[ count ]
+
+            # Remove any properties whose requirements haven't been met
+            for key in otherProperties:
+                if key in allProps[ group ][ labelID ].keys() and key in requires.keys() and requires[ key ] not in allProps[ group ][ labelID ].keys():
+                    # This properties requirements aren't met
+                    log( "Removing value %s" %( key ) )
+                    allProps[ group ][ labelID ].pop( key )
+
+        # Build the list of all properties to save
+        saveData = []
+        for saveGroup in allProps:
+            for saveLabelID in allProps[ saveGroup ]:
+                for saveProperty in allProps[ saveGroup ][ saveLabelID ]:
+                    saveData.append( [ saveGroup, saveLabelID, saveProperty, allProps[ saveGroup ][ saveLabelID ][ saveProperty ] ] )
+        
+        # Save the new properties
+        try:
+            f = xbmcvfs.File( os.path.join( __datapath__ , xbmc.getSkinDir().decode('utf-8') + ".properties" ), 'w' )
+            f.write( repr( saveData ).replace( "],", "],\n" ) )
+            f.close()
+            log( "Properties file saved succesfully" )
+        except:
+            print_exc()
+            log( "### ERROR could not save file %s" % __datapath__ )
+
+        # The properties will only be used if the .DATA.xml file exists in the addon_data folder( otherwise
+        # the script will use the default values), so we're going to open and write the 'group' that has been
+        # passed to us
+        menuitems = DATA._get_shortcuts( group, processShortcuts = False )
+        DATA.indent( menuitems.getroot() )
+        path = xbmc.translatePath( os.path.join( "special://profile", "addon_data", __addonid__, "%s.DATA.xml" %( DATA.slugify( group, True ) ) ).encode('utf-8') )
+        menuitems.write( path, encoding="UTF-8" )
+
+        log( "Properties updated" )
+
+        # Mark that the menu needs to be rebuilt
+        xbmcgui.Window( 10000 ).setProperty( "skinshortcuts-reloadmainmenu", "True" )
+
 
 # ============================
 # === PRETTY SELECT DIALOG ===

@@ -69,6 +69,7 @@
 			<shortcut label="1038" type="32019" thumb="DefaultAddonMusic.png">ActivateWindow(MusicLibrary,Addons,return)</shortcut>
 			<shortcut label="1039" type="32020" thumb="DefaultAddonPicture.png">ActivateWindow(Pictures,Addons,return)</shortcut>
 			<shortcut label="10001" type="32021" thumb="DefaultAddonProgram.png">ActivateWindow(Programs,Addons,return)</shortcut>
+			<shortcut label="20244" type="32021" thumb="DefaultAddonProgram.png" condition="System.Platform.Android">ActivateWindow(Programs,androidapp://sources/apps,return)</shortcut>
 			<content>addon-program</content>
 			<content>addon-video</content>
 			<content>addon-audio</content>
@@ -145,6 +146,7 @@
 		<node label="32007">
 			<node label="32009">
 				<shortcut label="10001" type="32021" icon="DefaultAddonProgram.png">ActivateWindow(Programs,Addons,return)</shortcut>
+				<shortcut label="20244" type="32021" icon="DefaultAddonProgram.png" condition="System.Platform.Android">ActivateWindow(Programs,androidapp://sources/apps,return)</shortcut>
 				<content>addon-program</content>
 			</node>
 			<node label="32010">
@@ -219,6 +221,7 @@
 				<content>addon-image</content>
 			</node>
 			<shortcut label="10001" type="32021" icon="DefaultAddonProgram.png" widget="addon" widgetType="program" widgetTarget="programs">addons://sources/executable</shortcut>
+			<shortcut label="20244" type="32021" icon="DefaultAddonProgram.png" widget="addon" widgetType="program" widgetTarget="programs" condition="System.Platform.Android">androidapp://sources/apps</shortcut>
 			<shortcut label="1037" type="32014" icon="DefaultAddonVideo.png" widget="addon" widgetType="video" widgetTarget="video">addons://sources/video</shortcut>
 			<shortcut label="1038" type="32019" icon="DefaultAddonMusic.png" widget="addon" widgetType="music" widgetTarget="music">addons://sources/audio</shortcut>
 			<shortcut label="1039" type="32020" icon="DefaultAddonPicture.png" widget="addon" widgetType="picture" widgetTarget="pictures">addons://sources/image</shortcut>

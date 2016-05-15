@@ -19,9 +19,14 @@ You can provide a number of default background options in your [overrides.xml](.
 
 You can let the user browse for either a single image or a multi-image, by including the following in the overrides.xml file:-
 
-`<backgroundBrowse default="protocol://path/to/folder">True</backgroundBrowse>`
+`<backgroundBrowse default="[path]">[True/Single/Multi]</backgroundBrowse>`
 
-where default is an optional path to the folder that will be displayed by default in the select dialog.
+| Property | Optional | Description |
+| :------: | :------: | ----------- |
+| `[path]` | Yes | The path that will be displayed by default in the select dialog |
+| `[True]` | | The user can browse for single or multiple images |
+| `[Single]` | | The user can only browse for a single image |
+| `[Multi]` | | The user can only browse for multi-images |
 
 #### Let the user select a playlist for the background
 
