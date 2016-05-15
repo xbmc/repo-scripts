@@ -1,3 +1,6 @@
+v1.4.1 (2016-05-14)
+- Fix screensaver exit when refresh rate changes
+
 v1.4.0 (2016-04-05)
 - Rework screensaver selection and download support
 - Allow custom target download folder to be set

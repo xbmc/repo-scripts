@@ -145,7 +145,13 @@ class ScreensaverWindow(xbmcgui.WindowXMLDialog):
     def onAction(self, action):
         log("Action received: %s" % str(action.getId()))
         # For any action we want to close, as that means activity
-        self.close()
+        if action.getId() in [0, "0"]:
+            # When the refresh rate is set to change it can generate an
+            # action with a zero Id, we need to ignore it as it is not
+            # actually a user action
+            log("Ignoring action %s" % str(action.getId()))
+        else:
+            self.close()
 
     # The user clicked on a control
     def onClick(self, control):
