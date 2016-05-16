@@ -190,7 +190,7 @@ class SubtitleHelper:
 
     def _filter_urls(self, urls, search_string, item):
         filtered = []
-        search_string = regexHelper.sub(' ', search_string.lower())
+        search_string = regexHelper.sub('', search_string.lower())
 
         h = HTMLParser.HTMLParser()
 
@@ -205,9 +205,10 @@ class SubtitleHelper:
                 heb_name = h.unescape(heb_name).replace(' ...', '')
 
                 eng_name = regexHelper.sub(' ', eng_name)
+                eng_name_tmp = regexHelper.sub('', eng_name)
                 heb_name = regexHelper.sub(' ', heb_name)
 
-                if (search_string.startswith(eng_name) or eng_name.startswith(search_string) or
+                if (search_string.startswith(eng_name_tmp) or eng_name_tmp.startswith(search_string) or
                         search_string.startswith(heb_name) or heb_name.startswith(search_string)) and \
                         (item["year"] == '' or
                                  year == '' or
@@ -223,9 +224,10 @@ class SubtitleHelper:
                 heb_name = h.unescape(heb_name).replace(' ...', '')
 
                 eng_name = regexHelper.sub(' ', eng_name)
+                eng_name_tmp = regexHelper.sub('', eng_name)
                 heb_name = regexHelper.sub(' ', heb_name)
 
-                if (search_string.startswith(eng_name) or eng_name.startswith(search_string) or
+                if (search_string.startswith(eng_name_tmp) or eng_name_tmp.startswith(search_string) or
                         search_string.startswith(heb_name) or heb_name.startswith(search_string)):
                     filtered.append({"name": eng_name, "url": urllib.quote(url)})
 

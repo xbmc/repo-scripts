@@ -1,3 +1,6 @@
+3.3.7 - by CaTz (14/05/2016)
+- Improve search string matching
+
 3.3.6 - by CaTz (22/12/2015)
 - Fix cache collisions issues
 
