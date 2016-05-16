@@ -9,7 +9,7 @@ import poplib, imaplib
 import time
 
 author     = "Senufo"
-scriptid   = "service.notifier"
+scriptid   = "service.mailnotifiers"
 scriptname = "Notifier"
 
 Addon          = xbmcaddon.Addon(scriptid)
