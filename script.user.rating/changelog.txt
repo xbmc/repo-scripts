@@ -1,2 +1,12 @@
+[B]1.0.3[/B]
+- Added: sync all ratings from KODI to Sites and conversely
+
+[B]1.0.2[/B]
+- Rewrited: rate dialog to WindowsDialogXML
+
+[B]1.0.1[/B]
+- Added: submitting to metadata websites (TMDB, TVDB, FILMWEB)
+- Added: Second account  for submitting
+
 [B]1.0.0[/B]
 - init

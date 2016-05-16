@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<window>
+    <coordinates>
+        <system>1</system>
+        <posx>380</posx>
+        <posy>260</posy>
+    </coordinates>
+    <controls>
+        <control type="image">
+            <description>BG</description>
+            <posx>0</posx>
+            <posy>0</posy>
+            <width>520</width>
+            <height>200</height>
+            <texture>script-user-rating-bg.png</texture>
+        </control>
+        <control type="group">
+            <control type="label" id="10010">
+                <description>User</description>
+                <posx>20</posx>
+                <posy>22</posy>
+                <width>480</width>
+                <height>20</height>
+                <label></label>
+                <align>center</align>
+                <font>font14</font>
+                <textcolor>blue</textcolor>		
+             </control>
+            <control type="label" id="10011">
+                <description>Label</description>
+                <posx>10</posx>
+                <posy>60</posy>
+                <width>500</width>
+                <height>20</height>
+                <label>[B]$ADDON[script.user.rating 32100][/B]:</label>
+                <align>center</align>
+                <font>font14</font>
+                <textcolor>FF0084ff</textcolor>
+            </control>
+            <control type="label" id="10012">
+                <description>Title</description>
+                <posx>10</posx>
+                <posy>94</posy>
+                <width>500</width>
+                <height>25</height>
+                <label></label>
+                <align>center</align>
+                <font>font13</font>
+                <textcolor>FFFFFFFF</textcolor>
+            </control>
+        </control>
+        <control type="group">
+            <control type="button" id="11020">
+                <description>0 Button</description>
+                <posx>40</posx>
+                <posy>136</posy>
+                <width>30</width>
+                <height>30</height>
+                <texturefocus>script-user-rating-star0f.png</texturefocus>
+                <texturenofocus>script-user-rating-star0.png</texturenofocus>
+                <onup>11021</onup>
+                <onright>11021</onright>
+                <animation effect="zoom" end="115,115" center="auto" time="100">focus</animation>
+            </control>
+            
+            <control type="button" id="11021">
+                <description>1 Button</description>
+                <posx>80</posx>
+                <posy>136</posy>
+                <width>30</width>
+                <height>30</height>
+                <texturefocus>script-user-rating-star2f.png</texturefocus>
+                <texturenofocus>script-user-rating-star1.png</texturenofocus>
+                <onup>11022</onup>
+                <onright>11022</onright>
+                <ondown>11020</ondown>
+                <onleft>11020</onleft>
+                <animation effect="zoom" end="115,115" center="auto" time="100">focus</animation>
+            </control>
+            <control type="image">
+                <description>1 Button active</description>
+                <posx>80</posx>
+                <posy>136</posy>
+                <width>30</width>
+                <height>30</height>
+                <texture>script-user-rating-star2.png</texture>
+                <visible>Control.HasFocus(11022)|Control.HasFocus(11023)|Control.HasFocus(11024)|Control.HasFocus(11025)|Control.HasFocus(11026)|Control.HasFocus(11027)|Control.HasFocus(11028)|Control.HasFocus(11029)|Control.HasFocus(11030)</visible>
+            </control>
+            
+            <control type="button" id="11022">
+                <description>2 Button</description>
+                <posx>120</posx>
+                <posy>136</posy>
+                <width>30</width>
+                <height>30</height>
+                <texturefocus>script-user-rating-star2f.png</texturefocus>
+                <texturenofocus>script-user-rating-star1.png</texturenofocus>
+                <onup>11023</onup>
+                <onright>11023</onright>
+                <ondown>11021</ondown>
+                <onleft>11021</onleft>
+                <animation effect="zoom" end="115,115" center="auto" time="100">focus</animation>
+            </control>
+            <control type="image">
+                <description>2 Button active</description>
+                <posx>120</posx>
+                <posy>136</posy>
+                <width>30</width>
+                <height>30</height>
+                <texture>script-user-rating-star2.png</texture>
+                <visible>Control.HasFocus(11023)|Control.HasFocus(11024)|Control.HasFocus(11025)|Control.HasFocus(11026)|Control.HasFocus(11027)|Control.HasFocus(11028)|Control.HasFocus(11029)|Control.HasFocus(11030)</visible>
+            </control>
+            
+            <control type="button" id="11023">
+                <description>3 Button</description>
+                <posx>160</posx>
+                <posy>136</posy>
+                <width>30</width>
+                <height>30</height>
+                <texturefocus>script-user-rating-star2f.png</texturefocus>
+                <texturenofocus>script-user-rating-star1.png</texturenofocus>
+                <onup>11024</onup>
+                <onright>11024</onright>
+                <ondown>11022</ondown>
+                <onleft>11022</onleft>
+                <animation effect="zoom" end="115,115" center="auto" time="100">focus</animation>
+            </control>
+            <control type="image">
+                <description>3 Button active</description>
+                <posx>160</posx>
+                <posy>136</posy>
+                <width>30</width>
+                <height>30</height>
+                <texture>script-user-rating-star2.png</texture>
+                <visible>Control.HasFocus(11024)|Control.HasFocus(11025)|Control.HasFocus(11026)|Control.HasFocus(11027)|Control.HasFocus(11028)|Control.HasFocus(11029)|Control.HasFocus(11030)</visible>
+            </control>
+            
+            <control type="button" id="11024">
+                <description>4 Button</description>
+                <posx>200</posx>
+                <posy>136</posy>
+                <width>30</width>
+                <height>30</height>
+                <texturefocus>script-user-rating-star2f.png</texturefocus>
+                <texturenofocus>script-user-rating-star1.png</texturenofocus>
+                <onup>11025</onup>
+                <onright>11025</onright>
+                <ondown>11023</ondown>
+                <onleft>11023</onleft>
+                <animation effect="zoom" end="115,115" center="auto" time="100">focus</animation>
+            </control>
+            <control type="image">
+                <description>4 Button active</description>
+                <posx>200</posx>
+                <posy>136</posy>
+                <width>30</width>
+                <height>30</height>
+                <texture>script-user-rating-star2.png</texture>
+                <visible>Control.HasFocus(11025)|Control.HasFocus(11026)|Control.HasFocus(11027)|Control.HasFocus(11028)|Control.HasFocus(11029)|Control.HasFocus(11030)</visible>
+            </control>
+            
+            <control type="button" id="11025">
+                <description>5 Button</description>
+                <posx>240</posx>
+                <posy>136</posy>
+                <width>30</width>
+                <height>30</height>
+                <texturefocus>script-user-rating-star2f.png</texturefocus>
+                <texturenofocus>script-user-rating-star1.png</texturenofocus>
+                <onup>11026</onup>
+                <onright>11026</onright>
+                <ondown>11024</ondown>
+                <onleft>11024</onleft>
+                <animation effect="zoom" end="115,115" center="auto" time="100">focus</animation>
+            </control>
+            <control type="image">
+                <description>5 Button active</description>
+                <posx>240</posx>
+                <posy>136</posy>
+                <width>30</width>
+                <height>30</height>
+                <texture>script-user-rating-star2.png</texture>
+                <visible>Control.HasFocus(11026)|Control.HasFocus(11027)|Control.HasFocus(11028)|Control.HasFocus(11029)|Control.HasFocus(11030)</visible>
+            </control>
+            
+            <control type="button" id="11026">
+                <description>6 Button</description>
+                <posx>280</posx>
+                <posy>136</posy>
+                <width>30</width>
+                <height>30</height>
+                <texturefocus>script-user-rating-star2f.png</texturefocus>
+                <texturenofocus>script-user-rating-star1.png</texturenofocus>
+                <onup>11027</onup>
+                <onright>11027</onright>
+                <ondown>11025</ondown>
+                <onleft>11025</onleft>
+                <animation effect="zoom" end="115,115" center="auto" time="100">focus</animation>
+            </control>
+            <control type="image">
+                <description>6 Button active</description>
+                <posx>280</posx>
+                <posy>136</posy>
+                <width>30</width>
+                <height>30</height>
+                <texture>script-user-rating-star2.png</texture>
+                <visible>Control.HasFocus(11027)|Control.HasFocus(11028)|Control.HasFocus(11029)|Control.HasFocus(11030)</visible>
+            </control>
+            
+            <control type="button" id="11027">
+                <description>7 Button</description>
+                <posx>320</posx>
+                <posy>136</posy>
+                <width>30</width>
+                <height>30</height>
+                <texturefocus>script-user-rating-star2f.png</texturefocus>
+                <texturenofocus>script-user-rating-star1.png</texturenofocus>
+                <onup>11028</onup>
+                <onright>11028</onright>
+                <ondown>11026</ondown>
+                <onleft>11026</onleft>
+                <animation effect="zoom" end="115,115" center="auto" time="100">focus</animation>
+            </control>
+            <control type="image">
+                <description>7 Button active</description>
+                <posx>320</posx>
+                <posy>136</posy>
+                <width>30</width>
+                <height>30</height>
+                <texture>script-user-rating-star2.png</texture>
+                <visible>Control.HasFocus(11028)|Control.HasFocus(11029)|Control.HasFocus(11030)</visible>
+            </control>
+            
+            <control type="button" id="11028">
+                <description>8 Button</description>
+                <posx>360</posx>
+                <posy>136</posy>
+                <width>30</width>
+                <height>30</height>
+                <texturefocus>script-user-rating-star2f.png</texturefocus>
+                <texturenofocus>script-user-rating-star1.png</texturenofocus>
+                <onup>11029</onup>
+                <onright>11029</onright>
+                <ondown>11027</ondown>
+                <onleft>11027</onleft>
+                <animation effect="zoom" end="115,115" center="auto" time="100">focus</animation>
+            </control>
+            <control type="image">
+                <description>8 Button active</description>
+                <posx>360</posx>
+                <posy>136</posy>
+                <width>30</width>
+                <height>30</height>
+                <texture>script-user-rating-star2.png</texture>
+                <visible>Control.HasFocus(11029)|Control.HasFocus(11030)</visible>
+            </control>
+            
+            <control type="button" id="11029">
+                <description>9 Button</description>
+                <posx>400</posx>
+                <posy>136</posy>
+                <width>30</width>
+                <height>30</height>
+                <texturefocus>script-user-rating-star2f.png</texturefocus>
+                <texturenofocus>script-user-rating-star1.png</texturenofocus>
+                <onup>11030</onup>
+                <onright>11030</onright>
+                <ondown>11028</ondown>
+                <onleft>11028</onleft>
+                <animation effect="zoom" end="115,115" center="auto" time="100">focus</animation>
+            </control>
+            <control type="image">
+                <description>9 Button active</description>
+                <posx>400</posx>
+                <posy>136</posy>
+                <width>30</width>
+                <height>30</height>
+                <texture>script-user-rating-star2.png</texture>
+                <visible>Control.HasFocus(11030)</visible>
+            </control>
+            
+            <control type="button" id="11030">
+                <description>10 Button</description>
+                <posx>440</posx>
+                <posy>136</posy>
+                <width>30</width>
+                <height>30</height>
+                <texturefocus>script-user-rating-star2f.png</texturefocus>
+                <texturenofocus>script-user-rating-star1.png</texturenofocus>
+                <ondown>11029</ondown>
+                <onleft>11029</onleft>
+                <animation effect="zoom" end="115,115" center="auto" time="100">focus</animation>
+            </control>
+        </control>
+    </controls>
+</window>

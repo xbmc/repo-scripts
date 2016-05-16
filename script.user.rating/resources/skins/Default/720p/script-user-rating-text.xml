@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<window id="11111">
+    <coordinates>
+        <system>1</system>
+        <posx>380</posx>
+        <posy>110</posy>
+    </coordinates>
+    <controls>
+        <control type="image">
+            <description>BG</description>
+            <posx>0</posx>
+            <posy>0</posy>
+            <width>520</width>
+            <height>550</height>
+            <texture>script-user-rating-bg.png</texture>
+        </control>
+        <control type="label" id="10062">
+            <description>title</description>
+            <posx>20</posx>
+            <posy>20</posy>
+            <width>480</width>
+            <height>40</height>
+            <align>center</align>
+            <font>font14</font>
+            <textcolor>blue</textcolor>
+        </control>
+        <control type="textbox" id="10063">
+            <pagecontrol>10100</pagecontrol>
+            <description>data</description>
+            <posx>20</posx>
+            <posy>60</posy>
+            <width>480</width>
+            <height>300</height>
+            <align>left</align>
+            <font>font12</font>
+        </control>
+        <control type="scrollbar" id="10100">
+            <posx>480</posx>
+            <posy>60</posy>
+            <width>25</width>
+            <height>300</height>
+            <onleft>10050</onleft>
+            <onright>10050</onright>
+            <texturesliderbackground border="0,14,0,14">ScrollBarV.png</texturesliderbackground>
+            <texturesliderbar border="0,14,0,14">ScrollBarV_bar.png</texturesliderbar>
+            <texturesliderbarfocus border="0,14,0,14">ScrollBarV_bar_focus.png</texturesliderbarfocus>
+            <textureslidernib>ScrollBarNib.png</textureslidernib>
+            <textureslidernibfocus>ScrollBarNib.png</textureslidernibfocus>
+            <orientation>vertical</orientation>
+        </control>
+        <control type="list" id="10050">
+            <description>button list</description>
+            <posx>20</posx>
+            <posy>380</posy>
+            <width>480</width>
+            <height>150</height>
+            <onup>10050</onup>
+            <ondown>10050</ondown>
+            <onleft>10100</onleft>
+            <onright>10100</onright>
+            <itemlayout width="480" height="50">
+                <control type="image">
+                    <left>0</left>
+                    <top>0</top>
+                    <width>480</width>
+                    <height>40</height>
+                    <texture border="0,2,0,2">MenuItemNF.png</texture>
+                </control>
+                <control type="label">
+                    <width>480</width>
+                    <height>40</height>
+                    <font>font13</font>
+                    <textcolor>grey2</textcolor>
+                    <align>center</align>
+                    <aligny>center</aligny>
+                    <info>ListItem.Label</info>
+                </control>
+            </itemlayout>
+            <focusedlayout width="480" height="50">
+                <control type="image">
+                    <left>0</left>
+                    <top>0</top>
+                    <width>480</width>
+                    <height>40</height>
+                    <texture border="0,2,0,2">MenuItemFO.png</texture>
+                </control>
+                <control type="label">
+                    <width>480</width>
+                    <height>40</height>
+                    <font>font13</font>
+                    <textcolor>white</textcolor>
+                    <align>center</align>
+                    <aligny>center</aligny>
+                    <info>ListItem.Label</info>
+                </control>
+            </focusedlayout>
+        </control>
+    </controls>
+    <animation effect="fade" time="200">WindowOpen</animation>
+    <animation effect="fade" time="200">WindowClose</animation>
+</window>

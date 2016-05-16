@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addon id="script.user.rating"
     name="User Rating"
-    version="1.0.0"
+    version="1.0.3"
     provider-name="Regss">
     <requires>
         <import addon="xbmc.python" version="2.24.0" />
