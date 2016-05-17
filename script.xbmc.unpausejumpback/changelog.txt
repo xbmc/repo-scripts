@@ -1,3 +1,6 @@
+2.3.5
+- replaced icon with Public domain, royalty free version
+
 2.3.4
 - fixed format of authors tag in addon.xml
 - removed the XBMC from the name
