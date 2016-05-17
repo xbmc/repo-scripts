@@ -1,0 +1,8 @@
+1.0.0
+- Initial Release
+
+2.0.0
+- Features -> Support for new website http://www.traduttorianonimi.it/ instead of http://www.traduttorianonimi.webbly.com/ 
+- Code:
+-  Source Code Cleanup
+-  Now using bs4 from shared module script.module.beautifulsoup4
