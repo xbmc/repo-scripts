@@ -1,0 +1,26 @@
+1.0.0
+- Initial Release
+
+2.0.0
+- Features -> Support for new website http://www.traduttorianonimi.it/ instead of http://www.traduttorianonimi.webbly.com/ 
+- Code:
+-  Source Code Cleanup
+-  Now using bs4 from shared module script.module.beautifulsoup4
+
+2.0.1
+- Feautures -> Nothing
+- Code:
+-  variable name style like "__addon__" replaced with "addon"
+-  added tag source in addon.xml
+
+2.0.2
+- Feautures -> Nothing
+- Code:
+-  Support for unicode(utf-8) TV Shows Name
+-  deleted duplicated functions and variables from service.py and traduttorianonimi.py, now they are shared by util.py
+-  Localized Notfications (Italian,English)
+
+2.0.3
+- Feautures -> Nothing
+- Code:
+    Converted strings.xml to strings.po
