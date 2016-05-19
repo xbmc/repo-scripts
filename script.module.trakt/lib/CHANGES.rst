@@ -1,3 +1,11 @@
+2.6.1 (2016-05-19)
+------------------
+**Changed**
+ - Updated request error messages
+
+**Fixed**
+ - Authorization tokens generated with device authentication wouldn't refresh correctly
+
 2.6.0 (2016-04-15)
 ------------------
 **Added**
