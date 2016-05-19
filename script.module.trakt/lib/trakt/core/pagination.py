@@ -46,7 +46,7 @@ class PaginationIterator(object):
             # Lookup status code in trakt error definitions
             name, desc = ERRORS.get(response.status_code, ("Unknown", "Unknown"))
 
-            log.warning('request failed: %s - "%s" (code: %s)', name, desc, response.status_code)
+            log.warning('Request failed: %s - "%s" (code: %s)', name, desc, response.status_code)
             return None
 
         # Parse response, return data
