@@ -1,7 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <settings>
-    <setting label="32000" type="bool" id="onWatched" default="true" />
-    <setting label="32001" type="bool" id="onlyNotRated" default="false" enable="eq(-1,true)" />
-    <setting type="sep" />
-    <setting label="32010" type="bool" id="debug" default="false" />
+    <category label="32000">
+        <setting label="32001" type="bool" id="onWatchedMovie" default="true" />
+        <setting label="32005" type="bool" id="onWatchedEpisode" default="true" />
+        <setting label="32002" type="bool" id="onlyNotRated" default="false" enable="eq(-2,true)|eq(-1,true)" />
+        <setting type="sep" />
+        <setting label="32003" type="text" id="profileName" default="First Profile" />
+        <setting label="32004" type="text" id="profilNamesec" default="Second Profile" />
+        <setting type="sep" />
+        <setting label="32007" type="bool" id="notify" default="true" />
+        <setting label="32008" type="bool" id="debug" default="false" />
+    </category>
+    <category label="32010">
+        <setting label="32011" type="bool" id="enableTMDBmovie" default="false" />
+        <setting label="32012" type="bool" id="enableTMDBtvshow" default="false" />
+        <setting label="32013" type="bool" id="enableTMDBepisode" default="false" />
+        <setting type="sep" visible="eq(-1,true)|eq(-2,true)|eq(-3,true)" />
+        <setting label="32014" type="text" id="loginTMDB" visible="eq(-2,true)|eq(-3,true)|eq(-4,true)" />
+        <setting label="32015" type="text" id="passTMDB" option="hidden" visible="eq(-3,true)|eq(-4,true)|eq(-5,true)" />
+        <setting type="sep" visible="eq(-4,true)|eq(-5,true)|eq(-6,true)" />
+        <setting label="32016" type="bool" id="enableTMDBsec" default="false" visible="eq(-5,true)|eq(-6,true)|eq(-7,true)" />
+        <setting label="32017" type="text" id="loginTMDBsec" visible="eq(-1,true)" />
+        <setting label="32018" type="text" id="passTMDBsec" option="hidden" visible="eq(-2,true)" />
+    </category>
+    <category label="32020">
+        <setting label="32021" type="bool" id="enableTVDBmovie" default="false" visible="hide" />
+        <setting label="32022" type="bool" id="enableTVDBtvshow" default="false" />
+        <setting label="32023" type="bool" id="enableTVDBepisode" default="false" />
+        <setting type="sep" visible="eq(-1,true)|eq(-2,true)|eq(-3,true)" />
+        <setting label="32024" type="text" id="loginTVDB" visible="eq(-2,true)|eq(-3,true)|eq(-4,true)" />
+        <setting label="32025" type="text" id="keyTVDB" visible="eq(-3,true)|eq(-4,true)|eq(-5,true)" />
+        <setting type="sep" visible="eq(-4,true)|eq(-5,true)|eq(-6,true)" />
+        <setting label="32026" type="bool" id="enableTVDBsec" default="false" visible="eq(-5,true)|eq(-6,true)|eq(-7,true)" />
+        <setting label="32027" type="text" id="loginTVDBsec" visible="eq(-1,true)" />
+        <setting label="32028" type="text" id="keyTVDBsec" visible="eq(-2,true)" />
+    </category>
+    <category label="32030">
+        <setting label="32031" type="bool" id="enableFILMWEBmovie" default="false" />
+        <setting label="32032" type="bool" id="enableFILMWEBtvshow" default="false" visible="hide" />
+        <setting label="32033" type="bool" id="enableFILMWEBepisode" default="false" visible="hide" />
+        <setting type="sep" visible="eq(-1,true)|eq(-2,true)|eq(-3,true)" />
+        <setting label="32034" type="text" id="loginFILMWEB" visible="eq(-2,true)|eq(-3,true)|eq(-4,true)" />
+        <setting label="32035" type="text" id="passFILMWEB" option="hidden" visible="eq(-3,true)|eq(-4,true)|eq(-5,true)" />
+        <setting type="sep" visible="eq(-4,true)|eq(-5,true)|eq(-6,true)" />
+        <setting label="32036" type="bool" id="enableFILMWEBsec" default="false" visible="eq(-5,true)|eq(-6,true)|eq(-7,true)" />
+        <setting label="32037" type="text" id="loginFILMWEBsec" visible="eq(-1,true)" />
+        <setting label="32038" type="text" id="passFILMWEBsec" option="hidden" visible="eq(-2,true)" />
+    </category>
 </settings>

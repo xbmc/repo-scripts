@@ -1,4 +1,4 @@
-# script.filmweb.oceny language file
+# script.user.rating language file
 msgid ""
 msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -7,20 +7,320 @@ msgstr ""
 
 #: Settings
 msgctxt "#32000"
-msgid "Show rating box when marked as watched"
+msgid "General"
 msgstr ""
 
 #: Settings
 msgctxt "#32001"
-msgid "Show only for not rated media"
+msgid "Auto show rating dialog when movie marked as watched"
+msgstr ""
+
+#: Settings
+msgctxt "#32002"
+msgid "Auto show rating dialog only for not rated media"
+msgstr ""
+
+#: Settings
+msgctxt "#32003"
+msgid "Name of master profile (submit locally and to websites)"
+msgstr ""
+
+#: Settings
+msgctxt "#32004"
+msgid "Name of second profile (only submit to websites)"
+msgstr ""
+
+#: Settings
+msgctxt "#32005"
+msgid "Auto show rating dialog when episode marked as watched"
+msgstr ""
+
+#: Settings
+msgctxt "#32007"
+msgid "Notification"
+msgstr ""
+
+#: Settings
+msgctxt "#32008"
+msgid "Debuging"
 msgstr ""
 
 #: Settings
 msgctxt "#32010"
-msgid "Debuging"
+msgid "TMDB"
+msgstr ""
+
+#: Settings
+msgctxt "#32011"
+msgid "Enable submit movies"
+msgstr ""
+
+#: Settings
+msgctxt "#32012"
+msgid "Enable submit tvshows"
+msgstr ""
+
+#: Settings
+msgctxt "#32013"
+msgid "Enable submit episodes"
+msgstr ""
+
+#: Settings
+msgctxt "#32014"
+msgid "TMDB Loign"
+msgstr ""
+
+#: Settings
+msgctxt "#32015"
+msgid "TMDB Password"
+msgstr ""
+
+#: Settings
+msgctxt "#32016"
+msgid "Enable second account for submitting to TMDB"
+msgstr ""
+
+#: Settings
+msgctxt "#32017"
+msgid "TMDB second account Loign"
+msgstr ""
+
+#: Settings
+msgctxt "#32018"
+msgid "TMDB second account Password"
+msgstr ""
+
+#: Settings
+msgctxt "#32020"
+msgid "TVDB"
+msgstr ""
+
+#: Settings
+msgctxt "#32021"
+msgid "Enable submit movies"
+msgstr ""
+
+#: Settings
+msgctxt "#32022"
+msgid "Enable submit tvshows"
+msgstr ""
+
+#: Settings
+msgctxt "#32023"
+msgid "Enable submit episodes"
+msgstr ""
+
+#: Settings
+msgctxt "#32024"
+msgid "TVDB Loign"
+msgstr ""
+
+#: Settings
+msgctxt "#32025"
+msgid "TVDB Key"
+msgstr ""
+
+#: Settings
+msgctxt "#32026"
+msgid "Enable second account for submitting to TVDB"
+msgstr ""
+
+#: Settings
+msgctxt "#32027"
+msgid "TVDB second account Loign"
+msgstr ""
+
+#: Settings
+msgctxt "#32028"
+msgid "TVDB second account Key"
+msgstr ""
+
+#: Settings
+msgctxt "#32030"
+msgid "FILMWEB"
+msgstr ""
+
+#: Settings
+msgctxt "#32031"
+msgid "Enable submit movies"
+msgstr ""
+
+#: Settings
+msgctxt "#32032"
+msgid "Enable submit tvshows"
+msgstr ""
+
+#: Settings
+msgctxt "#32033"
+msgid "Enable submit episodes"
+msgstr ""
+
+#: Settings
+msgctxt "#32034"
+msgid "FILMWEB Loign"
+msgstr ""
+
+#: Settings
+msgctxt "#32035"
+msgid "FILMWEB Password"
+msgstr ""
+
+#: Settings
+msgctxt "#32036"
+msgid "Enable second account for submitting to FILMWEB"
+msgstr ""
+
+#: Settings
+msgctxt "#32037"
+msgid "FILMWEB second account Loign"
+msgstr ""
+
+#: Settings
+msgctxt "#32038"
+msgid "FILMWEB second account Password"
 msgstr ""
 
 #: GUI
 msgctxt "#32100"
 msgid "Your rating"
+msgstr ""
+
+#: GUI
+msgctxt "#32101"
+msgid "Rate sended"
+msgstr ""
+
+#: GUI
+msgctxt "#32102"
+msgid "Can\'t find ID in your database"
+msgstr ""
+
+#: GUI
+msgctxt "#32110"
+msgid "Login Error"
+msgstr ""
+
+#: GUI
+msgctxt "#32120"
+msgid "Select direction"
+msgstr ""
+
+#: GUI
+msgctxt "#32121"
+msgid "Select media type"
+msgstr ""
+
+#: GUI
+msgctxt "#32122"
+msgid "Movies"
+msgstr ""
+
+#: GUI
+msgctxt "#32123"
+msgid "TVShows"
+msgstr ""
+
+#: GUI
+msgctxt "#32124"
+msgid "Episodes"
+msgstr ""
+
+#: GUI
+msgctxt "#32125"
+msgid "Retrive rated"
+msgstr ""
+
+#: GUI
+msgctxt "#32126"
+msgid "No rated"
+msgstr ""
+
+#: GUI
+msgctxt "#32127"
+msgid "from"
+msgstr ""
+
+#: GUI
+msgctxt "#32128"
+msgid "Items"
+msgstr ""
+
+#: GUI
+msgctxt "#32129"
+msgid "with correct"
+msgstr ""
+
+#: GUI
+msgctxt "#32130"
+msgid "IDs that can be synced"
+msgstr ""
+
+#: GUI
+msgctxt "#32131"
+msgid "with not existed rating"
+msgstr ""
+
+#: GUI
+msgctxt "#32132"
+msgid "NEW"
+msgstr ""
+
+#: GUI
+msgctxt "#32133"
+msgid "with existed rating"
+msgstr ""
+
+#: GUI
+msgctxt "#32134"
+msgid "EXIST"
+msgstr ""
+
+#: GUI
+msgctxt "#32135"
+msgid "with missing"
+msgstr ""
+
+#: GUI
+msgctxt "#32136"
+msgid "IDs that can not be synced"
+msgstr ""
+
+#: GUI
+msgctxt "#32137"
+msgid "Sync"
+msgstr ""
+
+#: GUI
+msgctxt "#32138"
+msgid "Replace All"
+msgstr ""
+
+#: GUI
+msgctxt "#32139"
+msgid "Add only not existed"
+msgstr ""
+
+#: GUI
+msgctxt "#32140"
+msgid "Cancel"
+msgstr ""
+
+#: GUI
+msgctxt "#32141"
+msgid "Error connection"
+msgstr ""
+
+#: GUI
+msgctxt "#32142"
+msgid "ratings to"
+msgstr ""
+
+#: GUI
+msgctxt "#32143"
+msgid "SYNC MENU"
+msgstr ""
+
+#: GUI
+msgctxt "#32144"
+msgid "Synced"
 msgstr ""

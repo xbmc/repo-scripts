@@ -1,4 +1,4 @@
-# script.filmweb.oceny language file
+# script.user.rating language file
 msgid ""
 msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -7,20 +7,320 @@ msgstr ""
 
 #: Settings
 msgctxt "#32000"
-msgid "Show rating box when marked as watched"
-msgstr "Pokaż okno oceny po oznaczeniu jako oglądany"
+msgid "General"
+msgstr "Ogólne"
 
 #: Settings
 msgctxt "#32001"
-msgid "Show only for not rated media"
-msgstr "Pokaż tylko dla pozycji nieocenionych"
+msgid "Auto show rating dialog when movie marked as watched"
+msgstr "Automatycznie pokaż okno oceny po oznaczeniu filmu jako oglądany"
+
+#: Settings
+msgctxt "#32002"
+msgid "Auto show rating dialog only for not rated media"
+msgstr "Automatycznie pokaż okno oceny tylko dla pozycji nieocenionych"
+
+#: Settings
+msgctxt "#32003"
+msgid "Name of master profile (submit locally and to websites)"
+msgstr "Nazwa profilu głównego (localnie i do stron)"
+
+#: Settings
+msgctxt "#32004"
+msgid "Name of second profile (only submit to websites)"
+msgstr "Nazwa drugiego profilu (tylko do stron)"
+
+#: Settings
+msgctxt "#32005"
+msgid "Auto show rating dialog when episode marked as watched"
+msgstr "Automatycznie pokaż okno oceny po oznaczeniu episodu jako oglądany"
+
+#: Settings
+msgctxt "#32007"
+msgid "Notification"
+msgstr "Notyfikacje"
+
+#: Settings
+msgctxt "#32008"
+msgid "Debuging"
+msgstr "Debugowanie"
 
 #: Settings
 msgctxt "#32010"
-msgid "Debuging"
-msgstr "Debugowanie"
+msgid "TMDB"
+msgstr "TMDB"
+
+#: Settings
+msgctxt "#32011"
+msgid "Enable submit movies"
+msgstr "Wysyłaj dla filmów"
+
+#: Settings
+msgctxt "#32012"
+msgid "Enable submit tvshows"
+msgstr "Wysyłaj dla seriali"
+
+#: Settings
+msgctxt "#32013"
+msgid "Enable submit episodes"
+msgstr "Wysyłaj dla odcinków"
+
+#: Settings
+msgctxt "#32014"
+msgid "TMDB Loign"
+msgstr "TMDB Loign"
+
+#: Settings
+msgctxt "#32015"
+msgid "TMDB Password"
+msgstr "TMDB Hasło"
+
+#: Settings
+msgctxt "#32016"
+msgid "Enable second account for submitting to TMDB"
+msgstr "Włącz drugie konto do wysyłania do TMDB"
+
+#: Settings
+msgctxt "#32017"
+msgid "TMDB second account Loign"
+msgstr "TMDB drugie konto Loign"
+
+#: Settings
+msgctxt "#32018"
+msgid "TMDB second account Password"
+msgstr "TMDB drugie konto Hasło"
+
+#: Settings
+msgctxt "#32020"
+msgid "TVDB"
+msgstr "TVDB"
+
+#: Settings
+msgctxt "#32021"
+msgid "Enable submit movies"
+msgstr "Wysyłaj dla filmów"
+
+#: Settings
+msgctxt "#32022"
+msgid "Enable submit tvshows"
+msgstr "Wysyłaj dla seriali"
+
+#: Settings
+msgctxt "#32023"
+msgid "Enable submit episodes"
+msgstr "Wysyłaj dla odcinków"
+
+#: Settings
+msgctxt "#32024"
+msgid "TVDB Loign"
+msgstr "TVDB Loign"
+
+#: Settings
+msgctxt "#32025"
+msgid "TVDB Key"
+msgstr "TVDB Klucz"
+
+#: Settings
+msgctxt "#32026"
+msgid "Enable second account for submitting to TVDB"
+msgstr "Włącz drugie konto do wysyłania do TVDB"
+
+#: Settings
+msgctxt "#32027"
+msgid "TVDB second account Loign"
+msgstr "TVDB drugie konto Loign"
+
+#: Settings
+msgctxt "#32028"
+msgid "TVDB second account Key"
+msgstr "TVDB drugie konto klucz"
+
+#: Settings
+msgctxt "#32030"
+msgid "FILMWEB"
+msgstr "FILMWEB"
+
+#: Settings
+msgctxt "#32031"
+msgid "Enable submit movies"
+msgstr "Wysyłaj dla filmów"
+
+#: Settings
+msgctxt "#32032"
+msgid "Enable submit tvshows"
+msgstr "Wysyłaj dla seriali"
+
+#: Settings
+msgctxt "#32033"
+msgid "Enable submit episodes"
+msgstr "Wysyłaj dla odcinków"
+
+#: Settings
+msgctxt "#32034"
+msgid "FILMWEB Loign"
+msgstr "FILMWEB Loign"
+
+#: Settings
+msgctxt "#32035"
+msgid "FILMWEB Password"
+msgstr "FILMWEB Hasło"
+
+#: Settings
+msgctxt "#32036"
+msgid "Enable second account for submitting to FILMWEB"
+msgstr "Włącz drugie konto do wysyłania do FILMWEB"
+
+#: Settings
+msgctxt "#32037"
+msgid "FILMWEB second account Loign"
+msgstr "FILMWEB drugie konto Loign"
+
+#: Settings
+msgctxt "#32038"
+msgid "FILMWEB second account Password"
+msgstr "FILMWEB drugie konto Hasło"
 
 #: GUI
 msgctxt "#32100"
 msgid "Your rating"
 msgstr "Twoja ocena"
+
+#: GUI
+msgctxt "#32101"
+msgid "Rate sended"
+msgstr "Ocena wysłana"
+
+#: GUI
+msgctxt "#32102"
+msgid "Can\'t find ID in your database"
+msgstr "Nie mogę znaleźć ID w twojej bazie danych"
+
+#: GUI
+msgctxt "#32110"
+msgid "Login Error"
+msgstr "Błąd logowania"
+
+#: GUI
+msgctxt "#32120"
+msgid "Select direction"
+msgstr "Kierunek"
+
+#: GUI
+msgctxt "#32121"
+msgid "Select media type"
+msgstr "Typ wideo"
+
+#: GUI
+msgctxt "#32122"
+msgid "Movies"
+msgstr "Filmy"
+
+#: GUI
+msgctxt "#32123"
+msgid "TVShows"
+msgstr "Seriale"
+
+#: GUI
+msgctxt "#32124"
+msgid "Episodes"
+msgstr "Episody"
+
+#: GUI
+msgctxt "#32125"
+msgid "Retrive rated"
+msgstr "Pobieranie ocenionych"
+
+#: GUI
+msgctxt "#32126"
+msgid "No rated"
+msgstr "Brak ocenionych"
+
+#: GUI
+msgctxt "#32127"
+msgid "from"
+msgstr "z"
+
+#: GUI
+msgctxt "#32128"
+msgid "Items"
+msgstr "Pozycji"
+
+#: GUI
+msgctxt "#32129"
+msgid "with correct"
+msgstr "z poprawną"
+
+#: GUI
+msgctxt "#32130"
+msgid "IDs that can be synced"
+msgstr "ID które mogą być zsynchronionizowane"
+
+#: GUI
+msgctxt "#32131"
+msgid "with not existed rating"
+msgstr "z nieistniejącą oceną"
+
+#: GUI
+msgctxt "#32132"
+msgid "NEW"
+msgstr "NOWY"
+
+#: GUI
+msgctxt "#32133"
+msgid "with existed rating"
+msgstr "z istniejącą oceną"
+
+#: GUI
+msgctxt "#32134"
+msgid "EXIST"
+msgstr "JEST"
+
+#: GUI
+msgctxt "#32135"
+msgid "with missing"
+msgstr "z brakującą"
+
+#: GUI
+msgctxt "#32136"
+msgid "IDs that can not be synced"
+msgstr "ID które nie mogą być zsynchroniowane"
+
+#: GUI
+msgctxt "#32137"
+msgid "Sync"
+msgstr "Synchronizacja"
+
+#: GUI
+msgctxt "#32138"
+msgid "Replace All"
+msgstr "Zastąp wszystkie"
+
+#: GUI
+msgctxt "#32139"
+msgid "Add only not existed"
+msgstr "Dodaj tylko nieistniejące"
+
+#: GUI
+msgctxt "#32140"
+msgid "Cancel"
+msgstr "Anuluj"
+
+#: GUI
+msgctxt "#32141"
+msgid "Error connection"
+msgstr "Błąd połączenia"
+
+#: GUI
+msgctxt "#32142"
+msgid "ratings to"
+msgstr "ocen do"
+
+#: GUI
+msgctxt "#32143"
+msgid "SYNC MENU"
+msgstr "MENU SYNCHRONIZACJI"
+
+#: GUI
+msgctxt "#32144"
+msgid "Synced"
+msgstr "Zsynchronizowano"
