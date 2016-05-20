@@ -14,20 +14,14 @@ import shutil
 import unicodedata
 import json
 import re
-from fileinput import filename
 
-__addon__ = xbmcaddon.Addon()
-__author__ = __addon__.getAddonInfo('author')
-__scriptid__ = __addon__.getAddonInfo('id')
-__scriptname__ = __addon__.getAddonInfo('name')
-__version__= __addon__.getAddonInfo('version')
-__language__ = __addon__.getLocalizedString
+addon = xbmcaddon.Addon()
+scriptid = addon.getAddonInfo('id')
+scriptname = addon.getAddonInfo('name')
+language = addon.getLocalizedString
+profile= xbmc.translatePath( addon.getAddonInfo('profile') ).decode("utf-8")
+temp = xbmc.translatePath( os.path.join( profile, 'temp','') ).decode("utf-8")
 
-__cwd__= xbmc.translatePath( __addon__.getAddonInfo('path') ).decode("utf-8")
-__profile__= xbmc.translatePath( __addon__.getAddonInfo('profile') ).decode("utf-8")
-__resource__ = xbmc.translatePath( os.path.join( __cwd__, 'resources', 'lib' ) ).decode("utf-8")
-__temp__ = xbmc.translatePath( os.path.join( __profile__, 'temp','') ).decode("utf-8")
-sys.path.append (__resource__)
 def Search(item):
     if 'ita' in item['3let_language'] and item['tvshow']:
         urlgetid="http://www.subspedia.tv/API/getAllSeries.php"
@@ -58,12 +52,12 @@ def Search(item):
                 content= urllib2.urlopen(linkdownload).read()
                 if content:
                     log('File downloaded')
-                    if xbmcvfs.exists(__temp__):
-                        shutil.rmtree(__temp__)
+                    if xbmcvfs.exists(temp):
+                        shutil.rmtree(temp)
                         #log("elimino temp")
-                    xbmcvfs.mkdirs(__temp__)
+                    xbmcvfs.mkdirs(temp)
                     #log("ricreo temp")
-                    local_tmp_file = os.path.join(__temp__, 'subspedia.xxx')
+                    local_tmp_file = os.path.join(temp, 'subspedia.xxx')
                     try:
                         log("Saving subtitles to '%s'" % local_tmp_file)
                         local_file_handle = open(local_tmp_file, 'wb')
@@ -88,15 +82,15 @@ def Search(item):
                                 packed = False
                                 log('Discovered a non-archive file')
                         myfile.close()
-                        local_tmp_file = os.path.join(__temp__, 'subspedia.' + typeid)
-                        os.rename(os.path.join(__temp__, 'subspedia.xxx'), local_tmp_file)
+                        local_tmp_file = os.path.join(temp, 'subspedia.' + typeid)
+                        os.rename(os.path.join(temp, 'subspedia.xxx'), local_tmp_file)
                         log("Saving to %s" % local_tmp_file)
                     except:
                         #log("Failed to save subtitle to %s" % local_tmp_file)
                         return []
                     if packed:
                         xbmc.sleep(500)
-                        dirtemp=__temp__ +"unpack"
+                        dirtemp=temp+"unpack"
                         #log("dirtemp %s "%dirtemp)
                         if not os.path.exists(dirtemp):
                             os.makedirs(dirtemp)
@@ -106,32 +100,33 @@ def Search(item):
                         xbmc.executebuiltin(('XBMC.Extract(' + local_tmp_file + ',' + dirtemp +')').encode('utf-8'), True)
                         dirs = os.listdir(dirtemp)
                         for file in dirs:
-                            if (os.path.isdir(dirtemp+"\\"+file) and file!="__MACOSX" ):
-                                dirs_rec = os.listdir(dirtemp+"\\"+file)
+                            path_rec=os.path.join(dirtemp,file)
+                            if (os.path.isdir(path_rec) and file!="__MACOSX" ):
+                                dirs_rec = os.listdir(path_rec)
                                 for file_rec in dirs_rec:
                                     filen=cleanName(file_rec)
-                                    url = "plugin://%s/?action=download&file=%s&type=%s" % (__scriptid__,file+"\\"+file_rec,"pack")
+                                    url = "plugin://%s/?action=download&file=%s&type=%s" % (scriptid,os.path.join(file,file_rec),"pack")
                                     xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url=url,listitem=make_listItem(filen),isFolder=False)
                             elif(file!="__MACOSX"):
                                 filen=cleanName(file)      
-                                url = "plugin://%s/?action=download&file=%s&type=%s" % (__scriptid__, file,"pack")
+                                url = "plugin://%s/?action=download&file=%s&type=%s" % (scriptid, file,"pack")
                                 xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url=url,listitem=make_listItem(filen),isFolder=False)
                         
                     else:
                         labeltitle=item['tvshow']+" "+item['season']+"x"+item['episode']+" "+eptitolo            
-                        url = "plugin://%s/?action=download&file=%s&type=%s" % (__scriptid__,local_tmp_file,"unpack")
+                        url = "plugin://%s/?action=download&file=%s&type=%s" % (scriptid,local_tmp_file,"unpack")
                         xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url=url,listitem=make_listItem(labeltitle),isFolder=False)
                 else:
                     log('Failed to download the file')
                     return []
             else:
-                notify(__language__(32004))
+                notify(language(32004))
                 log('Subs not found')
         else:
-            notify(__language__(32003))
+            notify(language(32003))
             log('Tvshow not found')
     else:
-        notify(__language__(32001))
+        notify(language(32001))
         log('Subspedia only works with italian subs. Skipped')
 
 def checkexp(tvshow):
@@ -172,13 +167,13 @@ def cleanName(file):
     return filen
   
 def notify(msg):
-    xbmc.executebuiltin((u'Notification(%s,%s)' % (__scriptname__ , msg)).encode('utf-8'))            
+    xbmc.executebuiltin((u'Notification(%s,%s)' % (scriptname , msg)).encode('utf-8'))            
 
 def Download(link,type):
     subtitle_list = []
     if type=="pack":
-        dirtemp=__temp__ +"unpack\\"
-        link=dirtemp+link      
+        dirtemp=temp+"unpack\\"
+        link=os.path.join(dirtemp,link)    
     subtitle_list.append(link)
     return subtitle_list
  
@@ -225,7 +220,7 @@ if params['action'] == 'search':
             item['season']= infoFromTitle['season']
             item['episode']= infoFromTitle['episode']
         else:
-            notify(__language__(32002))
+            notify(language(32002))
       
     if item['episode'].lower().find("s") > -1:                                      # Check if season is "Special"
         item['season'] = "0"                                                          #
@@ -239,7 +234,7 @@ elif params['action'] == 'manualsearch':
         item['3let_language'] = [xbmc.convertLanguage(lang,xbmc.ISO_639_2) for lang in langstring.split(",")]
         Search(item)
     else:
-        notify(__language__(32002))
+        notify(language(32002))
 elif params['action'] == 'download':
     ## we pickup all our arguments sent from def Search()
     subs = Download(params["file"],params["type"])
