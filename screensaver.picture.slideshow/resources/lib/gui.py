@@ -313,6 +313,9 @@ class Screensaver(xbmcgui.WindowXMLDialog):
             log('items: %s' % len(self.items))
             if not self.items:
                 self.pathfail = True
+                # delete empty cache file
+                if xbmcvfs.exists(CACHEFILE % hexfile):
+                    xbmcvfs.delete(CACHEFILE % hexfile)
 	    # video fanart
         if self.slideshow_type == '0' or self.pathfail:
             methods = [('VideoLibrary.GetMovies', 'movies'), ('VideoLibrary.GetTVShows', 'tvshows')]
