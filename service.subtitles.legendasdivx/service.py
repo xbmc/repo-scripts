@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Service LegendasDivx.com version 0.2.7
+# Service LegendasDivx.com version 0.2.8
 # Code based on Undertext (FRODO) service
 # Coded by HiGhLaNdR@OLDSCHOOL
 # Ported to Gotham by HiGhLaNdR@OLDSCHOOL
@@ -38,7 +38,7 @@ _language   = _addon.getLocalizedString
 _cwd        = xbmc.translatePath(_addon.getAddonInfo('path')).decode("utf-8")
 _profile    = xbmc.translatePath(_addon.getAddonInfo('profile')).decode("utf-8")
 _resource   = xbmc.translatePath(os.path.join(_cwd, 'resources', 'lib' )).decode("utf-8")
-_temp       = xbmc.translatePath(os.path.join(_profile, 'temp')).decode("utf-8")
+_temp       = xbmc.translatePath(os.path.join(_profile, 'temp'))
 
 if os.path.isdir(_temp):shutil.rmtree(_temp)
 xbmcvfs.mkdirs(_temp)
