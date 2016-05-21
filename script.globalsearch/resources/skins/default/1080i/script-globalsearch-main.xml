@@ -3569,7 +3569,7 @@
 											<height>32</height>
 											<fadetime>300</fadetime>
 											<aspectratio align="center">keep</aspectratio>
-											<texture>globalsearch-list-number.png</texture>
+											<texture>globalsearch-list-clock.png</texture>
 										</control>
 										<control type="textbox">
 											<left>0</left>
@@ -3579,7 +3579,7 @@
 											<align>center</align>
 											<font>font_textbox</font>
 											<selectedcolor>white</selectedcolor>
-											<label fallback="-">$INFO[ListItem.Property(ChannelNumber)]</label>
+											<label fallback="-">$INFO[ListItem.Property(Duration)]</label>
 										</control>
 									</control>
 								</control>

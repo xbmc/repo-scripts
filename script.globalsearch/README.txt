@@ -39,8 +39,6 @@ ListItem.Property(Duration)
 ListItem.Property(Starttime)
 ListItem.Property(Endtime)
 ListItem.Property(ChannelName)
-ListItem.Property(ChannelNumber)
-ListItem.Property(Path)
 ListItem.Property(DBID)
 
 

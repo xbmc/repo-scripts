@@ -1393,18 +1393,6 @@
 							<onclick>noop</onclick>
 							<visible>!IsEmpty(Container(100).ListItem.Property(Genre))</visible>
 						</item>
-						<item>
-							<label>$LOCALIZE[19148]:</label>
-							<label2>$INFO[Container(100).ListItem.Property(ChannelNumber)]. $INFO[Container(100).ListItem.Property(ChannelName)]</label2>
-							<onclick>noop</onclick>
-							<visible>!IsEmpty(Container(100).ListItem.Property(ChannelName))</visible>
-						</item>
-						<item>
-							<label>$LOCALIZE[15311]</label>
-							<label2>$INFO[Container(100).ListItem.Property(Path)]</label2>
-							<onclick>noop</onclick>
-							<visible>!IsEmpty(Container(100).ListItem.Property(Path))</visible>
-						</item>
 					</content>
 				</control>
 				<control type="grouplist">

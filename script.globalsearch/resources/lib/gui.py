@@ -2,6 +2,7 @@ import sys, datetime, re
 import xbmc, xbmcgui
 import infodialog
 import json
+import operator
 
 ADDON        = sys.modules[ "__main__" ].ADDON
 ADDONID      = sys.modules[ "__main__" ].ADDONID
@@ -65,7 +66,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
         if self.actors == 'true' and self.ACTORSUPPORT:
             self._fetch_movies('actor', 344, 211)
         if self.epg == 'true' and self.EPGSUPPORT:
-            self._fetch_channels()
+            self._fetch_channelgroups()
         if self.directors == 'true' and self.DIRECTORSUPPORT:
             self._fetch_movies('director', 20348, 231)
         self._check_focus()
@@ -737,38 +738,43 @@ class GUI( xbmcgui.WindowXMLDialog ):
                 self.setFocus( self.getControl( 181 ) )
                 self.focusset = 'true'
 
-    def _fetch_channels( self ):
+    def _fetch_channelgroups( self ):
         self.getControl( 191 ).setLabel( xbmc.getLocalizedString(19069) )
-        # get all channel id's
-        self.channellist = []
-        json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "PVR.GetChannels", "params": {"channelgroupid": 2, "properties": ["thumbnail"]}, "id": 1}')
+        channelgrouplist = []
+        json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "PVR.GetChannelGroups", "params": {"channeltype": "tv"}, "id": 1}')
         json_query = unicode(json_query, 'utf-8', errors='ignore')
         json_response = json.loads(json_query)
+        if (json_response.has_key('result')) and (json_response['result'] != None) and (json_response['result'].has_key('channelgroups')):
+            for item in json_response['result']['channelgroups']:
+                channelgrouplist.append(item['channelgroupid'])
+            if channelgrouplist:
+                self._fetch_channels(channelgrouplist)
 
-        if (json_response.has_key('result')) and (json_response['result'] != None) and (json_response['result'].has_key('channels')):
-            channelids = []
-            for item in json_response['result']['channels']:
-                channelids.append(item['channelid'])
-            channelids.sort()
-            offset = channelids[0] - 1
-            for item in json_response['result']['channels']:
-                channelid = item['channelid']
-                channelname = item['label']
-                channelthumb = item['thumbnail']
-                channelnumber = channelid - offset
-                self.channellist.append([channelid, channelname, channelthumb, channelnumber])
-        if not self.channellist == []:
-            self._fetch_epg()
+    def _fetch_channels( self, channelgrouplist ):
+        # get all channel id's
+        channellist = []
+        for channelgroupid in channelgrouplist:
+            json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "PVR.GetChannels", "params": {"channelgroupid": %i, "properties": ["channel", "thumbnail"]}, "id": 1}' % channelgroupid)
+            json_query = unicode(json_query, 'utf-8', errors='ignore')
+            json_response = json.loads(json_query)
+            if (json_response.has_key('result')) and (json_response['result'] != None) and (json_response['result'].has_key('channels')):
+                for item in json_response['result']['channels']:
+                    channellist.append(item)
+        if channellist:
+            # remove duplicates
+            channels = [dict(tuples) for tuples in set(tuple(item.items()) for item in channellist)]
+            # sort
+            channels.sort(key=operator.itemgetter('channelid'))
+            self._fetch_epg(channels)
 
-    def _fetch_epg( self ):
+    def _fetch_epg( self, channels ):
         listitems = []
         count = 0
         # get all programs for every channel id
-        for channel in self.channellist:
-            channelid = channel[0]
-            channelname = channel[1]
-            channelthumb = channel[2]
-            channelnumber = channel[3]
+        for channel in channels:
+            channelid = channel['channelid']
+            channelname = channel['label']
+            channelthumb = channel['thumbnail']
             json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "PVR.GetBroadcasts", "params": {"channelid": %i, "properties": ["starttime", "endtime", "runtime", "genre", "plot"]}, "id": 1}' % channelid)
             json_query = unicode(json_query, 'utf-8', errors='ignore')
             json_response = json.loads(json_query)
@@ -784,7 +790,6 @@ class GUI( xbmcgui.WindowXMLDialog ):
                         plot = item['plot']
                         starttime = item['starttime']
                         endtime = item['endtime']
-                        path = 'pvr://channels/tv/All channels/%i.pvr' % channelnumber
                         listitem = xbmcgui.ListItem(label=broadcastname, iconImage='DefaultFolder.png', thumbnailImage=channelthumb)
                         listitem.setProperty( "icon", channelthumb )
                         listitem.setProperty( "genre", genre )
@@ -793,8 +798,6 @@ class GUI( xbmcgui.WindowXMLDialog ):
                         listitem.setProperty( "endtime", endtime )
                         listitem.setProperty( "duration", str(duration) )
                         listitem.setProperty( "channelname", channelname )
-                        listitem.setProperty( "channelnumber", str(channelnumber) )
-                        listitem.setProperty( "path", path )
                         listitem.setProperty( "dbid", str(channelid) )
                         listitems.append(listitem)
         self.getControl( 221 ).addItems( listitems )
@@ -1106,10 +1109,6 @@ class GUI( xbmcgui.WindowXMLDialog ):
             self._play_audio(path, listitem)
         if controlId == 211:
             listitem = self.getControl( 211 ).getSelectedItem()
-            path = listitem.getProperty('path')
-            self._play_video(path)
-        elif controlId == 221:
-            listitem = self.getControl( 221 ).getSelectedItem()
             path = listitem.getProperty('path')
             self._play_video(path)
         elif controlId == 231:

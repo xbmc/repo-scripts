@@ -1,3 +1,8 @@
+v7.3.0
+- fix epg section
+- removed channelnumber infolabel for epg items
+- removed path infolabel for epg items
+
 v7.2.4
 - add originaltitle support
 

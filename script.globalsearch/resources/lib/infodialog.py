@@ -35,13 +35,10 @@ class GUI( xbmcgui.WindowXMLDialog ):
     def _show_info( self ):
         self.getControl( 100 ).addItem( self.listitem )
         if self.content == 'epg':
-            self.getControl( 192 ).setLabel( xbmc.getLocalizedString(208) )
-            self.getControl( 193 ).setLabel( xbmc.getLocalizedString(20410) )
             try:
                 self.getControl( 200 ).setVisible( True )
             except:
                 pass
-            self.getControl( 192 ).setVisible( True )
         if self.content == 'movies':
             self.getControl( 192 ).setLabel( xbmc.getLocalizedString(208) )
             self.getControl( 193 ).setLabel( xbmc.getLocalizedString(20410) )
@@ -103,9 +100,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
 
     def onClick( self, controlId ):
         if controlId == 192:
-            if self.content == 'epg':
-                self._close_dialog( 'play_programme' )
-            elif self.content == 'movies':
+            if self.content == 'movies':
                 self._close_dialog( 'play_movie' )
             elif self.content == 'tvshows':
                 self._close_dialog( 'browse_tvshow' )
