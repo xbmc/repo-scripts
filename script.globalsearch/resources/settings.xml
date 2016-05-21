@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <settings>
     <category label="30100">
-       <setting id="test1" type="enum" label="test1" values="11|12|13"/>
-       <setting id="test2" type="enum" label="test2" lvalues="11|12|13"/>
-       <setting id="test3" type="labelenum" label="test3" values="11|12|13"/>
-       <setting id="test4" type="labelenum" label="test4" lvalues="11|12|13"/>
        <setting id="movies" type="bool" label="32001" default="true"/>
        <setting id="actors" type="bool" label="32008" default="false"/>
        <setting id="directors" type="bool" label="32010" default="false"/>

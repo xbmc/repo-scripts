@@ -1,3 +1,6 @@
+v7.3.1
+- remove test settings
+
 v7.3.0
 - fix epg section
 - removed channelnumber infolabel for epg items
