@@ -54,8 +54,8 @@ class Scrapper():
                 pass
                 log("Scrapper: Failed to close connection for %s" % url)
         except:
-            log("Scrapper: ERROR opening page %s" % url, True, xbmc.LOGERROR)
-            log("Scrapper: %s" % traceback.format_exc(), True, xbmc.LOGERROR)
+            log("Scrapper: ERROR opening page %s" % url, xbmc.LOGERROR)
+            log("Scrapper: %s" % traceback.format_exc(), xbmc.LOGERROR)
             return None
         return doc
 
@@ -109,7 +109,7 @@ class Scrapper():
         except:
             log("Scrapper: Failed to strip html text with ElementTree, error: %s" % traceback.format_exc())
             log("Scrapper: Using regex for content handling")
-            plainText = re.sub(r'<[^>]+>', '', plainText, flags=re.DOTALL)
+            plainText = re.sub(r'<[^>]+>', '', plainText)
 
         # Replace any quotes or other escape characters
         plainText = plainText.replace('&quote;', '"')
@@ -126,8 +126,8 @@ class Scrapper():
         plainText = plainText.replace('[/I][/I]', '[/I]')
 
         # Remove empty space between tags, where there is no content
-        plainText = re.sub("\[B]\s*\[/B]", "", plainText, flags=re.DOTALL)
-        plainText = re.sub("\[I\]\s*\[/I\]", "", plainText, flags=re.DOTALL)
+        plainText = re.sub("\[B]\s*\[/B]", "", plainText)
+        plainText = re.sub("\[I\]\s*\[/I\]", "", plainText)
 
         # Remove blank lines at the start of the text
         plainText = plainText.lstrip('\n')
