@@ -194,7 +194,7 @@ class FilmWiseCore():
                 pass
                 log("FilmWiseCore: Failed to close connection for %s" % url)
         except:
-            log("FilmWiseCore: ERROR opening page %s" % url, True, xbmc.LOGERROR)
-            log("FilmWiseCore: %s" % traceback.format_exc(), True, xbmc.LOGERROR)
+            log("FilmWiseCore: ERROR opening page %s" % url, xbmc.LOGERROR)
+            log("FilmWiseCore: %s" % traceback.format_exc(), xbmc.LOGERROR)
             return None
         return doc
