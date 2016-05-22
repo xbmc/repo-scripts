@@ -181,7 +181,7 @@ class ThemeLibrary():
 
         return themeUrls
 
-    # Red the theme details from the library storage
+    # Read the theme details from the library storage
     def _getThemes(self, itemId, isTvShow):
         if itemId in [None, ""]:
             return None

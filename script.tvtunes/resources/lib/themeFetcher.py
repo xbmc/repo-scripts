@@ -1233,6 +1233,8 @@ class SoundcloudListing(DefaultListing):
             progressDialog.updateProgress(offset / 10)
 
             tracks = []
+            # scdl_client_id = '95a4c0ef214f2a4a0852142807b54b35'
+            # alternative_client_id = 'a3e059563d7fd3372b49b37f00a00bcf'
             client = soundcloud.Client(client_id='b45b1aa10f1ac2941910a7f0d10f8e28')
             try:
                 # Max value for limit is 200 entries
@@ -1265,7 +1267,7 @@ class SoundcloudListing(DefaultListing):
                         filesize = ""  # self._convertSize(track.original_content_size)
                         # themeURL = track.download_url or track.permalink_url
                         # themeURL = self._getDownloadLinkFromWaveform(track.waveform_url)
-                        themeURL = "https://api.soundcloud.com/tracks/%s/stream?client_id=22e566527758690e6feb2b5cb300cc43" % str(track.id)
+                        themeURL = "https://api.soundcloud.com/tracks/%s/stream?client_id=95a4c0ef214f2a4a0852142807b54b35" % str(track.id)
                         log("SoundcloudListing: Found %s%s (%s) %s (%s)" % (themeName, duration, themeURL, str(id), track.waveform_url))
                         theme = ThemeItemDetails(themeName, themeURL, duration, filesize)
                         theme_list.append(theme)

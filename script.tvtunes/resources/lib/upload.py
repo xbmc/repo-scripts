@@ -49,11 +49,6 @@ class UploadThemes(ThemeLibrary):
         self.userArg = None
         self.passArg = None
 
-        self.tvShowAudioExcludes = []
-        self.movieAudioExcludes = []
-        self.tvShowVideoExcludes = []
-        self.movieVideoExcludes = []
-
         self.uploadRecord = None
 
     # Loads all of the configuration settings
@@ -108,6 +103,13 @@ class UploadThemes(ThemeLibrary):
             if (isMoviesElem is None) or (isMoviesElem.text != 'true'):
                 log("UploadThemes: Uploads disabled for movies via online settings")
                 self.isMoviesEnabled = False
+
+            # Check if a reset is required
+            isRecordResetElem = uploadSettingET.find('recordreset')
+            if (isRecordResetElem is not None) and (isRecordResetElem.text == 'true'):
+                log("UploadThemes: Clearing local record")
+                if xbmcvfs.exists(self.tvtunesUploadRecord):
+                    xbmcvfs.delete(self.tvtunesUploadRecord)
 
             # Get the details for where themes are uploaded to
             ftpArgElem = uploadSettingET.find('ftp')
@@ -240,15 +242,15 @@ class UploadThemes(ThemeLibrary):
                     continue
 
                 # Check if any of the themes available as suitable for upload
-                requiredThemes = self._getThemesToUpload(target, videoItem['imdbnumber'], themeFileMgr.getThemeLocations())
+                requiredThemes = self._getThemesToUpload(videoItem['imdbnumber'], themeFileMgr.getThemeLocations())
                 if len(requiredThemes) < 1:
                     log("UploadThemes: No Required themes found")
                     continue
 
-                # This video have themes that are needed
+                # This video has themes that are needed
                 videoItem['themes'] = requiredThemes
 
-                # Also check our local record of things that have already been uploaded
+                # Also check our local record of things that have already been done
                 if self.isThemeAlreadyUploaded(videoItem):
                     log("UploadThemes: Theme %s already uploaded" % videoItem['imdbnumber'])
                     continue
@@ -373,7 +375,7 @@ class UploadThemes(ThemeLibrary):
         recordFile.close()
 
     # Filters the theme to work out which are needed
-    def _getThemesToUpload(self, target, id, themes):
+    def _getThemesToUpload(self, id, themes):
         themeList = []
         for theme in themes:
             maxFileSize = 104857600
@@ -381,34 +383,15 @@ class UploadThemes(ThemeLibrary):
                 # Check if all videos are disabled
                 if not self.isVideoEnabled:
                     continue
-
-                # Check to see if this theme should be excluded
-                if target == 'tvshows':
-                    if id in self.tvShowVideoExcludes:
-                        log("UploadThemes: TV Show %s in video exclude list, skipping" % id)
-                        continue
-                elif target == 'movies':
-                    if id in self.movieVideoExcludes:
-                        log("UploadThemes: Movie %s in video exclude list, skipping" % id)
-                        continue
             else:
-                # Check if all videos are disabled
-                if not self.isVideoEnabled:
+                # Check if all audio are disabled
+                if not self.isAudioEnabled:
                     continue
 
                 # Audio files have a smaller limit
                 maxFileSize = 20971520
-                # Check to see if this theme should be excluded
-                if target == 'tvshows':
-                    if id in self.tvShowAudioExcludes:
-                        log("UploadThemes: TV Show %s in audio exclude list, skipping" % id)
-                        continue
-                elif target == 'movies':
-                    if id in self.movieAudioExcludes:
-                        log("UploadThemes: Movie %s in audio exclude list, skipping" % id)
-                        continue
 
-            # Check to make sure the theme file is not too large, anything over 100 meg
+            # Check to make sure the theme file is not too large, anything over 100 megabytes
             # is too large for a theme
             stat = xbmcvfs.Stat(theme)
             themeFileSize = stat.st_size()
@@ -430,6 +413,11 @@ class UploadThemes(ThemeLibrary):
         remoteDirName = videoItem['masterId']
 
         log("UploadThemes: Checking upload for theme directory %s" % remoteDirName)
+
+        # Check to make sure there are themes to process
+        if len(videoItem['themes']) < 1:
+            log("UploadThemes: No themes set to process")
+            return False
 
         ftp = None
         try:
