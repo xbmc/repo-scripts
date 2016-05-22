@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="context.maps.browser.map" name="Maps Browser - Show location" version="1.0.0" provider-name="phil65 (Philipp Temminghoff)">
+  <requires>
+    <import addon="xbmc.python" version="2.24.0"/>
+    <import addon="script.maps.browser" version="1.0.0"/>
+  </requires>
+  <extension point="kodi.context.item">
+    <menu id="kodi.core.main">
+      <item library="addon.py">
+        <label>32000</label>
+        <visible>!IsEmpty(ListItem.PictureGPSLon)</visible>
+      </item>
+    </menu>
+  </extension>
+  <extension point="kodi.addon.metadata">
+    <platform>all</platform>
+    <summary lang="en">Open image location in maps browser from context menu.</summary>
+    <description lang="en">Open image location in maps browser from context menu. Needs script.maps.browser installed and activated.</description>
+    <license>GNU GENERAL PUBLIC LICENSE. Version 3, 29 June 2007</license>
+    <forum></forum>
+    <source>https://github.com/phil65/context.maps.browser.map</source>
+  </extension>
+</addon>

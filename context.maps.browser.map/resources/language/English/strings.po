@@ -1,0 +1,10 @@
+# Kodi Media Center language file
+# Addon Name: Maps Browser - Show on map
+# Addon id: context.maps.browser.map
+msgid ""
+msgstr ""
+
+msgctxt "#32000"
+msgid "Show location in Maps Browser"
+msgstr ""
+
