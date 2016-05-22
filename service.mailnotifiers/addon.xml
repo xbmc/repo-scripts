@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="service.mailnotifiers"
+       name="Mail Notifier"
+       version="0.2.10"
+       provider-name="Senufo">
+  <requires>
+     <import addon="xbmc.python" version="2.19.0"/>
+  </requires>
+  <extension point="xbmc.service"
+             library="notifier.py" start="login">
+  </extension>
+ <extension point="xbmc.addon.metadata">
+    <platform>all</platform>
+    <summary lang="en">Email Notifier</summary>
+    <summary lang="fr">Notification de l'arrivée des mails</summary>
+    <description lang="en">Notify new email[CR]For integration in the skin read README file
+    </description>
+    <description lang="fr">Notification de l'arrivée des mails[CR]Pour l'intégration dans un skin lisez le fichier LISEZMOI
+    </description>
+    <disclaimer lang="en_gb">Feel free to use this script. For information visit the wiki.</disclaimer>
+    <language>en fr</language>
+    <platform>all</platform>
+    <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+    <forum></forum>
+    <website>https://github.com/senufo/xbmc-mailnotifier/wiki</website>
+    <email></email>
+    <source>https://github.com/senufo/xbmc-mailnotifier/archive/v0.2.10.zip</source>
+ </extension>
+</addon>
