@@ -26,10 +26,23 @@ class KuwoBaseIE(InfoExtractor):
     def _get_formats(self, song_id, tolerate_ip_deny=False):
         formats = []
         for file_format in self._FORMATS:
+            headers = {}
+            cn_verification_proxy = self._downloader.params.get('cn_verification_proxy')
+            if cn_verification_proxy:
+                headers['Ytdl-request-proxy'] = cn_verification_proxy
+
+            query = {
+                'format': file_format['ext'],
+                'br': file_format.get('br', ''),
+                'rid': 'MUSIC_%s' % song_id,
+                'type': 'convert_url',
+                'response': 'url'
+            }
+
             song_url = self._download_webpage(
-                'http://antiserver.kuwo.cn/anti.s?format=%s&br=%s&rid=MUSIC_%s&type=convert_url&response=url' %
-                (file_format['ext'], file_format.get('br', ''), song_id),
+                'http://antiserver.kuwo.cn/anti.s',
                 song_id, note='Download %s url info' % file_format['format'],
+                query=query, headers=headers,
             )
 
             if song_url == 'IPDeny' and not tolerate_ip_deny:
@@ -44,18 +57,13 @@ class KuwoBaseIE(InfoExtractor):
                     'abr': file_format.get('abr'),
                 })
 
-        # XXX _sort_formats fails if there are not formats, while it's not the
-        # desired behavior if 'IPDeny' is ignored
-        # This check can be removed if https://github.com/rg3/youtube-dl/pull/8051 is merged
-        if not tolerate_ip_deny:
-            self._sort_formats(formats)
         return formats
 
 
 class KuwoIE(KuwoBaseIE):
     IE_NAME = 'kuwo:song'
     IE_DESC = '酷我音乐'
-    _VALID_URL = r'https?://www\.kuwo\.cn/yinyue/(?P<id>\d+?)'
+    _VALID_URL = r'https?://www\.kuwo\.cn/yinyue/(?P<id>\d+)'
     _TESTS = [{
         'url': 'http://www.kuwo.cn/yinyue/635632/',
         'info_dict': {
@@ -73,7 +81,7 @@ class KuwoIE(KuwoBaseIE):
             'id': '6446136',
             'ext': 'mp3',
             'title': '心',
-            'description': 'md5:b2ab6295d014005bfc607525bfc1e38a',
+            'description': 'md5:5d0e947b242c35dc0eb1d2fce9fbf02c',
             'creator': 'IU',
             'upload_date': '20150518',
         },
@@ -94,18 +102,19 @@ class KuwoIE(KuwoBaseIE):
             raise ExtractorError('this song has been offline because of copyright issues', expected=True)
 
         song_name = self._html_search_regex(
-            r'(?s)class="(?:[^"\s]+\s+)*title(?:\s+[^"\s]+)*".*?<h1[^>]+title="([^"]+)"', webpage, 'song name')
-        singer_name = self._html_search_regex(
-            r'<div[^>]+class="s_img">\s*<a[^>]+title="([^>]+)"',
-            webpage, 'singer name', fatal=False)
+            r'<p[^>]+id="lrcName">([^<]+)</p>', webpage, 'song name')
+        singer_name = remove_start(self._html_search_regex(
+            r'<a[^>]+href="http://www\.kuwo\.cn/artist/content\?name=([^"]+)">',
+            webpage, 'singer name', fatal=False), '歌手')
         lrc_content = clean_html(get_element_by_id('lrcContent', webpage))
         if lrc_content == '暂无':     # indicates no lyrics
             lrc_content = None
 
         formats = self._get_formats(song_id)
+        self._sort_formats(formats)
 
         album_id = self._html_search_regex(
-            r'<p[^>]+class="album"[^<]+<a[^>]+href="http://www\.kuwo\.cn/album/(\d+)/"',
+            r'<a[^>]+href="http://www\.kuwo\.cn/album/(\d+)/"',
             webpage, 'album id', fatal=False)
 
         publish_time = None
@@ -259,7 +268,7 @@ class KuwoCategoryIE(InfoExtractor):
             'title': '八十年代精选',
             'description': '这些都是属于八十年代的回忆！',
         },
-        'playlist_count': 30,
+        'playlist_mincount': 24,
     }
 
     def _real_extract(self, url):
@@ -274,6 +283,8 @@ class KuwoCategoryIE(InfoExtractor):
         category_desc = remove_start(
             get_element_by_id('intro', webpage).strip(),
             '%s简介：' % category_name)
+        if category_desc == '暂无':
+            category_desc = None
 
         jsonm = self._parse_json(self._html_search_regex(
             r'var\s+jsonm\s*=\s*([^;]+);', webpage, 'category songs'), category_id)

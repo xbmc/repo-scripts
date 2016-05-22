@@ -4,9 +4,9 @@ import os.path
 import subprocess
 import sys
 import re
-import time
 
 from .common import FileDownloader
+from ..compat import compat_setenv
 from ..postprocessor.ffmpeg import FFmpegPostProcessor, EXT_TO_OUT_FORMATS
 from ..utils import (
     cli_option,
@@ -25,7 +25,7 @@ class ExternalFD(FileDownloader):
         self.report_destination(filename)
         tmpfilename = self.temp_name(filename)
 
-        retval = self._call_downloader(tmpfilename, filename, info_dict)
+        retval = self._call_downloader(tmpfilename, info_dict)
         if retval == 0:
             fsize = os.path.getsize(encodeFilename(tmpfilename))
             self.to_screen('\r[%s] Downloaded %s bytes' % (self.get_basename(), fsize))
@@ -75,7 +75,7 @@ class ExternalFD(FileDownloader):
     def _configuration_args(self, default=[]):
         return cli_configuration_args(self.params, 'external_downloader_args', default)
 
-    def _call_downloader(self, tmpfilename, filename, info_dict):
+    def _call_downloader(self, tmpfilename, info_dict):
         """ Either overwrite this or implement _make_cmd """
         cmd = [encodeArgument(a) for a in self._make_cmd(tmpfilename, info_dict)]
 
@@ -172,7 +172,7 @@ class FFmpegFD(ExternalFD):
     def available(cls):
         return FFmpegPostProcessor().available
 
-    def _call_downloader(self, tmpfilename, filename, info_dict):
+    def _call_downloader(self, tmpfilename, info_dict):
         url = info_dict['url']
         ffpp = FFmpegPostProcessor(downloader=self)
         if not ffpp.available:
@@ -198,6 +198,18 @@ class FFmpegFD(ExternalFD):
             args += [
                 '-headers',
                 ''.join('%s: %s\r\n' % (key, val) for key, val in headers.items())]
+
+        env = None
+        proxy = self.params.get('proxy')
+        if proxy:
+            if not re.match(r'^[\da-zA-Z]+://', proxy):
+                proxy = 'http://%s' % proxy
+            # Since December 2015 ffmpeg supports -http_proxy option (see
+            # http://git.videolan.org/?p=ffmpeg.git;a=commit;h=b4eb1f29ebddd60c41a2eb39f5af701e38e0d3fd)
+            # We could switch to the following code if we are able to detect version properly
+            # args += ['-http_proxy', proxy]
+            env = os.environ.copy()
+            compat_setenv('HTTP_PROXY', proxy, env=env)
 
         protocol = info_dict.get('protocol')
 
@@ -225,8 +237,8 @@ class FFmpegFD(ExternalFD):
                 args += ['-rtmp_live', 'live']
 
         args += ['-i', url, '-c', 'copy']
-        if protocol == 'm3u8':
-            if self.params.get('hls_use_mpegts', False):
+        if protocol in ('m3u8', 'm3u8_native'):
+            if self.params.get('hls_use_mpegts', False) or tmpfilename == '-':
                 args += ['-f', 'mpegts']
             else:
                 args += ['-f', 'mp4', '-bsf:a', 'aac_adtstoasc']
@@ -240,28 +252,9 @@ class FFmpegFD(ExternalFD):
 
         self._debug_cmd(args)
 
-        proc = subprocess.Popen(args, stdin=subprocess.PIPE)
-        start = time.time()
+        proc = subprocess.Popen(args, stdin=subprocess.PIPE, env=env)
         try:
-            while proc.poll() is None:
-                try:
-                    size = os.path.getsize(tmpfilename)
-                    now = time.time()
-                    speed = self.calc_speed(start, now, size)
-                    self._hook_progress({
-                        'status': 'downloading',
-                        'downloaded_bytes': size,
-                        'tmpfilename': tmpfilename,
-                        'filename': filename,
-                        'speed': speed,
-                        'elapsed': now - start
-                    })
-                except OSError:
-                    # File does not exist yet
-                    pass
-                time.sleep(0.2)
-
-            retval = proc.poll()
+            retval = proc.wait()
         except KeyboardInterrupt:
             # subprocces.run would send the SIGKILL signal to ffmpeg and the
             # mp4 file couldn't be played, but if we ask ffmpeg to quit it

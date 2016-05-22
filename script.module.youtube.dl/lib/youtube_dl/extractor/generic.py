@@ -51,7 +51,7 @@ from .tnaflix import TNAFlixNetworkEmbedIE
 from .vimeo import VimeoIE
 from .dailymotion import DailymotionCloudIE
 from .onionstudios import OnionStudiosIE
-from .snagfilms import SnagFilmsEmbedIE
+from .viewlift import ViewLiftEmbedIE
 from .screenwavemedia import ScreenwaveMediaIE
 from .mtv import MTVServicesEmbeddedIE
 from .pladform import PladformIE
@@ -60,6 +60,8 @@ from .googledrive import GoogleDriveIE
 from .jwplatform import JWPlatformIE
 from .digiteka import DigitekaIE
 from .instagram import InstagramIE
+from .liveleak import LiveLeakIE
+from .threeqsdn import ThreeQSDNIE
 
 
 class GenericIE(InfoExtractor):
@@ -104,7 +106,8 @@ class GenericIE(InfoExtractor):
                 'skip_download': True,  # infinite live stream
             },
             'expected_warnings': [
-                r'501.*Not Implemented'
+                r'501.*Not Implemented',
+                r'400.*Bad Request',
             ],
         },
         # Direct link with incorrect MIME type
@@ -235,6 +238,7 @@ class GenericIE(InfoExtractor):
                 'ext': 'mp4',
                 'title': 'car-20120827-manifest',
                 'formats': 'mincount:9',
+                'upload_date': '20130904',
             },
             'params': {
                 'format': 'bestvideo',
@@ -405,19 +409,6 @@ class GenericIE(InfoExtractor):
             'params': {
                 'skip_download': True,
             },
-        },
-        # multiple ooyala embeds on SBN network websites
-        {
-            'url': 'http://www.sbnation.com/college-football-recruiting/2015/2/3/7970291/national-signing-day-rationalizations-itll-be-ok-itll-be-ok',
-            'info_dict': {
-                'id': 'national-signing-day-rationalizations-itll-be-ok-itll-be-ok',
-                'title': '25 lies you will tell yourself on National Signing Day - SBNation.com',
-            },
-            'playlist_mincount': 3,
-            'params': {
-                'skip_download': True,
-            },
-            'add_ie': ['Ooyala'],
         },
         # embed.ly video
         {
@@ -607,7 +598,11 @@ class GenericIE(InfoExtractor):
                 'id': 'k2mm4bCdJ6CQ2i7c8o2',
                 'ext': 'mp4',
                 'title': 'Le Zap de Spi0n n°216 - Zapping du Web',
+                'description': 'md5:faf028e48a461b8b7fad38f1e104b119',
                 'uploader': 'Spi0n',
+                'uploader_id': 'xgditw',
+                'upload_date': '20140425',
+                'timestamp': 1398441542,
             },
             'add_ie': ['Dailymotion'],
         },
@@ -722,15 +717,18 @@ class GenericIE(InfoExtractor):
         },
         # Wistia embed
         {
-            'url': 'http://education-portal.com/academy/lesson/north-american-exploration-failed-colonies-of-spain-france-england.html#lesson',
-            'md5': '8788b683c777a5cf25621eaf286d0c23',
+            'url': 'http://study.com/academy/lesson/north-american-exploration-failed-colonies-of-spain-france-england.html#lesson',
+            'md5': '1953f3a698ab51cfc948ed3992a0b7ff',
             'info_dict': {
-                'id': '1cfaf6b7ea',
+                'id': '6e2wtrbdaf',
                 'ext': 'mov',
-                'title': 'md5:51364a8d3d009997ba99656004b5e20d',
-                'duration': 643.0,
-                'filesize': 182808282,
-                'uploader': 'education-portal.com',
+                'title': 'paywall_north-american-exploration-failed-colonies-of-spain-france-england',
+                'description': 'a Paywall Videos video from Remilon',
+                'duration': 644.072,
+                'uploader': 'study.com',
+                'timestamp': 1459678540,
+                'upload_date': '20160403',
+                'filesize': 24687186,
             },
         },
         {
@@ -739,10 +737,29 @@ class GenericIE(InfoExtractor):
             'info_dict': {
                 'id': 'uxjb0lwrcz',
                 'ext': 'mp4',
-                'title': 'Conversation about Hexagonal Rails Part 1 - ThoughtWorks',
+                'title': 'Conversation about Hexagonal Rails Part 1',
+                'description': 'a Martin Fowler video from ThoughtWorks',
                 'duration': 1715.0,
                 'uploader': 'thoughtworks.wistia.com',
+                'timestamp': 1401832161,
+                'upload_date': '20140603',
             },
+        },
+        # Wistia standard embed (async)
+        {
+            'url': 'https://www.getdrip.com/university/brennan-dunn-drip-workshop/',
+            'info_dict': {
+                'id': '807fafadvk',
+                'ext': 'mp4',
+                'title': 'Drip Brennan Dunn Workshop',
+                'description': 'a JV Webinars video from getdrip-1',
+                'duration': 4986.95,
+                'timestamp': 1463607249,
+                'upload_date': '20160518',
+            },
+            'params': {
+                'skip_download': True,
+            }
         },
         # Soundcloud embed
         {
@@ -890,6 +907,7 @@ class GenericIE(InfoExtractor):
         # Eagle.Platform embed (generic URL)
         {
             'url': 'http://lenta.ru/news/2015/03/06/navalny/',
+            # Not checking MD5 as sometimes the direct HTTP link results in 404 and HLS is used
             'info_dict': {
                 'id': '227304',
                 'ext': 'mp4',
@@ -904,6 +922,7 @@ class GenericIE(InfoExtractor):
         # ClipYou (Eagle.Platform) embed (custom URL)
         {
             'url': 'http://muz-tv.ru/play/7129/',
+            # Not checking MD5 as sometimes the direct HTTP link results in 404 and HLS is used
             'info_dict': {
                 'id': '12820',
                 'ext': 'mp4',
@@ -992,6 +1011,9 @@ class GenericIE(InfoExtractor):
                 'ext': 'flv',
                 'title': "PFT Live: New leader in the 'new-look' defense",
                 'description': 'md5:65a19b4bbfb3b0c0c5768bed1dfad74e',
+                'uploader': 'NBCU-SPORTS',
+                'upload_date': '20140107',
+                'timestamp': 1389118457,
             },
         },
         # UDN embed
@@ -1044,6 +1066,9 @@ class GenericIE(InfoExtractor):
                 'title': 'SN Presents: Russell Martin, World Citizen',
                 'description': 'To understand why he was the Toronto Blue Jays’ top off-season priority is to appreciate his background and upbringing in Montreal, where he first developed his baseball skills. Written and narrated by Stephen Brunt.',
                 'uploader': 'Rogers Sportsnet',
+                'uploader_id': '1704050871',
+                'upload_date': '20150525',
+                'timestamp': 1432570283,
             },
         },
         # Dailymotion Cloud video
@@ -1135,11 +1160,38 @@ class GenericIE(InfoExtractor):
                 'title': 'The Cardinal Pell Interview',
                 'description': 'Sky News Contributor Andrew Bolt interviews George Pell in Rome, following the Cardinal\'s evidence before the Royal Commission into Child Abuse. ',
                 'uploader': 'GlobeCast Australia - GlobeStream',
+                'uploader_id': '2733773828001',
+                'upload_date': '20160304',
+                'timestamp': 1457083087,
             },
             'params': {
                 # m3u8 downloads
                 'skip_download': True,
             },
+        },
+        # Another form of arte.tv embed
+        {
+            'url': 'http://www.tv-replay.fr/redirection/09-04-16/arte-reportage-arte-11508975.html',
+            'md5': '850bfe45417ddf221288c88a0cffe2e2',
+            'info_dict': {
+                'id': '030273-562_PLUS7-F',
+                'ext': 'mp4',
+                'title': 'ARTE Reportage - Nulle part, en France',
+                'description': 'md5:e3a0e8868ed7303ed509b9e3af2b870d',
+                'upload_date': '20160409',
+            },
+        },
+        # LiveLeak embed
+        {
+            'url': 'http://www.wykop.pl/link/3088787/',
+            'md5': 'ace83b9ed19b21f68e1b50e844fdf95d',
+            'info_dict': {
+                'id': '874_1459135191',
+                'ext': 'mp4',
+                'title': 'Man shows poor quality of new apartment building',
+                'description': 'The wall is like a sand pile.',
+                'uploader': 'Lake8737',
+            }
         },
     ]
 
@@ -1395,7 +1447,8 @@ class GenericIE(InfoExtractor):
         #   Site Name | Video Title
         #   Video Title - Tagline | Site Name
         # and so on and so forth; it's just not practical
-        video_title = self._html_search_regex(
+        video_title = self._og_search_title(
+            webpage, default=None) or self._html_search_regex(
             r'(?s)<title>(.*?)</title>', webpage, 'video title',
             default='video')
 
@@ -1412,6 +1465,9 @@ class GenericIE(InfoExtractor):
         # video uploader is domain name
         video_uploader = self._search_regex(
             r'^(?:https?://)?([^/]*)/.*', url, 'video uploader')
+
+        video_description = self._og_search_description(webpage, default=None)
+        video_thumbnail = self._og_search_thumbnail(webpage, default=None)
 
         # Helper method
         def _playlist_from_matches(matches, getter=None, ie=None):
@@ -1511,20 +1567,25 @@ class GenericIE(InfoExtractor):
                 'url': embed_url,
                 'ie_key': 'Wistia',
                 'uploader': video_uploader,
-                'title': video_title,
-                'id': video_id,
             }
 
         match = re.search(r'(?:id=["\']wistia_|data-wistia-?id=["\']|Wistia\.embed\(["\'])(?P<id>[^"\']+)', webpage)
         if match:
             return {
                 '_type': 'url_transparent',
-                'url': 'http://fast.wistia.net/embed/iframe/{0:}'.format(match.group('id')),
+                'url': 'wistia:%s' % match.group('id'),
                 'ie_key': 'Wistia',
                 'uploader': video_uploader,
-                'title': video_title,
-                'id': match.group('id')
             }
+
+        match = re.search(
+            r'''(?sx)
+                <script[^>]+src=(["'])(?:https?:)?//fast\.wistia\.com/assets/external/E-v1\.js\1[^>]*>.*?
+                <div[^>]+class=(["']).*?\bwistia_async_(?P<id>[a-z0-9]+)\b.*?\2
+            ''', webpage)
+        if match:
+            return self.url_result(self._proto_relative_url(
+                'wistia:%s' % match.group('id')), 'Wistia')
 
         # Look for SVT player
         svt_url = SVTIE._extract_url(webpage)
@@ -1715,7 +1776,7 @@ class GenericIE(InfoExtractor):
 
         # Look for embedded arte.tv player
         mobj = re.search(
-            r'<script [^>]*?src="(?P<url>http://www\.arte\.tv/playerv2/embed[^"]+)"',
+            r'<(?:script|iframe) [^>]*?src="(?P<url>http://www\.arte\.tv/(?:playerv2/embed|arte_vp/index)[^"]+)"',
             webpage)
         if mobj is not None:
             return self.url_result(mobj.group('url'), 'ArteTVEmbed')
@@ -1892,10 +1953,10 @@ class GenericIE(InfoExtractor):
         if onionstudios_url:
             return self.url_result(onionstudios_url)
 
-        # Look for SnagFilms embeds
-        snagfilms_url = SnagFilmsEmbedIE._extract_url(webpage)
-        if snagfilms_url:
-            return self.url_result(snagfilms_url)
+        # Look for ViewLift embeds
+        viewlift_url = ViewLiftEmbedIE._extract_url(webpage)
+        if viewlift_url:
+            return self.url_result(viewlift_url)
 
         # Look for JWPlatform embeds
         jwplatform_url = JWPlatformIE._extract_url(webpage)
@@ -1943,7 +2004,26 @@ class GenericIE(InfoExtractor):
         # Look for Instagram embeds
         instagram_embed_url = InstagramIE._extract_embed_url(webpage)
         if instagram_embed_url is not None:
-            return self.url_result(instagram_embed_url, InstagramIE.ie_key())
+            return self.url_result(
+                self._proto_relative_url(instagram_embed_url), InstagramIE.ie_key())
+
+        # Look for LiveLeak embeds
+        liveleak_url = LiveLeakIE._extract_url(webpage)
+        if liveleak_url:
+            return self.url_result(liveleak_url, 'LiveLeak')
+
+        # Look for 3Q SDN embeds
+        threeqsdn_url = ThreeQSDNIE._extract_url(webpage)
+        if threeqsdn_url:
+            return {
+                '_type': 'url_transparent',
+                'ie_key': ThreeQSDNIE.ie_key(),
+                'url': self._proto_relative_url(threeqsdn_url),
+                'title': video_title,
+                'description': video_description,
+                'thumbnail': video_thumbnail,
+                'uploader': video_uploader,
+            }
 
         def check_video(vurl):
             if YoutubeIE.suitable(vurl):
@@ -2026,6 +2106,7 @@ class GenericIE(InfoExtractor):
 
         entries = []
         for video_url in found:
+            video_url = unescapeHTML(video_url)
             video_url = video_url.replace('\\/', '/')
             video_url = compat_urlparse.urljoin(url, video_url)
             video_id = compat_urllib_parse_unquote(os.path.basename(video_url))

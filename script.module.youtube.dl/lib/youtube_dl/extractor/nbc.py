@@ -27,6 +27,9 @@ class NBCIE(InfoExtractor):
                 'ext': 'mp4',
                 'title': 'Jimmy Fallon Surprises Fans at Ben & Jerry\'s',
                 'description': 'Jimmy gives out free scoops of his new "Tonight Dough" ice cream flavor by surprising customers at the Ben & Jerry\'s scoop shop.',
+                'timestamp': 1424246400,
+                'upload_date': '20150218',
+                'uploader': 'NBCU-COM',
             },
             'params': {
                 # m3u8 download
@@ -50,6 +53,9 @@ class NBCIE(InfoExtractor):
                 'ext': 'mp4',
                 'title': 'Star Wars Teaser',
                 'description': 'md5:0b40f9cbde5b671a7ff62fceccc4f442',
+                'timestamp': 1417852800,
+                'upload_date': '20141206',
+                'uploader': 'NBCU-COM',
             },
             'params': {
                 # m3u8 download
@@ -78,6 +84,7 @@ class NBCIE(InfoExtractor):
             theplatform_url = 'http:' + theplatform_url
         return {
             '_type': 'url_transparent',
+            'ie_key': 'ThePlatform',
             'url': smuggle_url(theplatform_url, {'source_url': url}),
             'id': video_id,
         }
@@ -93,6 +100,9 @@ class NBCSportsVPlayerIE(InfoExtractor):
             'ext': 'flv',
             'description': 'md5:df390f70a9ba7c95ff1daace988f0d8d',
             'title': 'Tyler Kalinoski hits buzzer-beater to lift Davidson',
+            'timestamp': 1426270238,
+            'upload_date': '20150313',
+            'uploader': 'NBCU-SPORTS',
         }
     }, {
         'url': 'http://vplayer.nbcsports.com/p/BxmELC/nbc_embedshare/select/_hqLjQ95yx8Z',
@@ -124,6 +134,9 @@ class NBCSportsIE(InfoExtractor):
             'ext': 'flv',
             'title': 'Tom Izzo, Michigan St. has \'so much respect\' for Duke',
             'description': 'md5:ecb459c9d59e0766ac9c7d5d0eda8113',
+            'uploader': 'NBCU-SPORTS',
+            'upload_date': '20150330',
+            'timestamp': 1427726529,
         }
     }
 
@@ -134,8 +147,35 @@ class NBCSportsIE(InfoExtractor):
             NBCSportsVPlayerIE._extract_url(webpage), 'NBCSportsVPlayer')
 
 
+class CSNNEIE(InfoExtractor):
+    _VALID_URL = r'https?://www\.csnne\.com/video/(?P<id>[0-9a-z-]+)'
+
+    _TEST = {
+        'url': 'http://www.csnne.com/video/snc-evening-update-wright-named-red-sox-no-5-starter',
+        'info_dict': {
+            'id': 'yvBLLUgQ8WU0',
+            'ext': 'mp4',
+            'title': 'SNC evening update: Wright named Red Sox\' No. 5 starter.',
+            'description': 'md5:1753cfee40d9352b19b4c9b3e589b9e3',
+            'timestamp': 1459369979,
+            'upload_date': '20160330',
+            'uploader': 'NBCU-SPORTS',
+        }
+    }
+
+    def _real_extract(self, url):
+        display_id = self._match_id(url)
+        webpage = self._download_webpage(url, display_id)
+        return {
+            '_type': 'url_transparent',
+            'ie_key': 'ThePlatform',
+            'url': self._html_search_meta('twitter:player:stream', webpage),
+            'display_id': display_id,
+        }
+
+
 class NBCNewsIE(ThePlatformIE):
-    _VALID_URL = r'''(?x)https?://(?:www\.)?nbcnews\.com/
+    _VALID_URL = r'''(?x)https?://(?:www\.)?(?:nbcnews|today)\.com/
         (?:video/.+?/(?P<id>\d+)|
         ([^/]+/)*(?P<display_id>[^/?]+))
         '''
@@ -194,6 +234,18 @@ class NBCNewsIE(ThePlatformIE):
             'expected_warnings': ['http-6000 is not available']
         },
         {
+            'url': 'http://www.today.com/video/see-the-aurora-borealis-from-space-in-stunning-new-nasa-video-669831235788',
+            'md5': '118d7ca3f0bea6534f119c68ef539f71',
+            'info_dict': {
+                'id': '669831235788',
+                'ext': 'mp4',
+                'title': 'See the aurora borealis from space in stunning new NASA video',
+                'description': 'md5:74752b7358afb99939c5f8bb2d1d04b1',
+                'upload_date': '20160420',
+                'timestamp': 1461152093,
+            },
+        },
+        {
             'url': 'http://www.nbcnews.com/watch/dateline/full-episode--deadly-betrayal-386250819952',
             'only_matching': True,
         },
@@ -227,7 +279,10 @@ class NBCNewsIE(ThePlatformIE):
                 info = bootstrap['results'][0]['video']
             else:
                 player_instance_json = self._search_regex(
-                    r'videoObj\s*:\s*({.+})', webpage, 'player instance')
+                    r'videoObj\s*:\s*({.+})', webpage, 'player instance', default=None)
+                if not player_instance_json:
+                    player_instance_json = self._html_search_regex(
+                        r'data-video="([^"]+)"', webpage, 'video json')
                 info = self._parse_json(player_instance_json, display_id)
             video_id = info['mpxId']
             title = info['title']
@@ -258,7 +313,7 @@ class NBCNewsIE(ThePlatformIE):
                     formats.extend(tp_formats)
                     subtitles = self._merge_subtitles(subtitles, tp_subtitles)
                 else:
-                    tbr = int_or_none(video_asset.get('bitRate'), 1000)
+                    tbr = int_or_none(video_asset.get('bitRate') or video_asset.get('bitrate'), 1000)
                     format_id = 'http%s' % ('-%d' % tbr if tbr else '')
                     video_url = update_url_query(
                         video_url, {'format': 'redirect'})
@@ -284,10 +339,9 @@ class NBCNewsIE(ThePlatformIE):
                 'id': video_id,
                 'title': title,
                 'description': info.get('description'),
-                'thumbnail': info.get('description'),
                 'thumbnail': info.get('thumbnail'),
                 'duration': int_or_none(info.get('duration')),
-                'timestamp': parse_iso8601(info.get('pubDate')),
+                'timestamp': parse_iso8601(info.get('pubDate') or info.get('pub_date')),
                 'formats': formats,
                 'subtitles': subtitles,
             }
@@ -307,6 +361,7 @@ class MSNBCIE(InfoExtractor):
             'thumbnail': 're:^https?://.*\.jpg$',
             'timestamp': 1406937606,
             'upload_date': '20140802',
+            'uploader': 'NBCU-NEWS',
             'categories': ['MSNBC/Topics/Franchise/Best of last night', 'MSNBC/Topics/General/Congress'],
         },
     }

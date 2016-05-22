@@ -276,7 +276,7 @@ def _isValidMediaExtension(ext):
 def _infoFromListItem(listitem):
     url = listitem.getfilename()
     title = listitem.getProperty('title') or listitem.getLabel()
-    description = listitem.getdescription() or listitem.getLabel2()
+    description = listitem.getLabel2() or ''
     thumbnail = listitem.getProperty('iconImage') or listitem.getProperty('thumbnailImage') or ''  # Not sure if this works
 
     return {'url': url, 'title': title, 'description': description, 'thumbnail': thumbnail}
