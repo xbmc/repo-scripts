@@ -1,3 +1,6 @@
+v6.3.3 (2016-05-22)
+- Fix soundcloud theme fetching
+
 v6.3.2 (2016-05-01)
 - Move Screensaver into separate Addon
 
