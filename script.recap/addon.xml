@@ -10,13 +10,13 @@
 	<extension point="kodi.context.item" library="default.py">
 		<item>
 			<label>32001</label>
-			<visible>IsEmpty(Window(videos).Property("RecapHideContextMenu")) + [Container.Content(tvshows) | Container.Content(seasons) | Container.Content(episodes)]</visible>
+			<visible>IsEmpty(Window(videos).Property("RecapHideContextMenu")) + [StringCompare(ListItem.dbtype,tvshow) | StringCompare(ListItem.dbtype,season) | StringCompare(ListItem.dbtype,episode)]</visible>
 		</item>
 	</extension>
 	<extension point="kodi.context.item" library="previous.py">
 		<item>
 			<label>32011</label>
-			<visible>IsEmpty(Window(videos).Property("RecapPreviousHideContextMenu")) + Container.Content(episodes) + [IntegerGreaterThan(ListItem.Episode,1) | IntegerGreaterThan(ListItem.Season,1)]</visible>
+			<visible>IsEmpty(Window(videos).Property("RecapPreviousHideContextMenu")) + StringCompare(ListItem.dbtype,episode) + [IntegerGreaterThan(ListItem.Episode,1) | IntegerGreaterThan(ListItem.Season,1)]</visible>
 		</item>
 	</extension>
 	<extension point="xbmc.addon.metadata">

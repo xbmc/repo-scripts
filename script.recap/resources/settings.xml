@@ -5,8 +5,6 @@
 		<setting id="showPreviousOnContextMenu" type="bool" label="32013" default="true"/>
     	<setting label="32002" type="lsep"/>
 		<setting id="logEnabled" type="bool" label="32003" default="false"/>
-		<setting label="32015" type="lsep"/>
-		<setting label="32016" type="action" action="RunScript($CWD/confupdate.py)"/>
 	</category>
 	<category label="32024">
 		<setting id="autoSelectSingle" type="bool" label="32025" default="true"/>
