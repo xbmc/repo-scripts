@@ -41,7 +41,7 @@ resource = xbmc.translatePath(os.path.join(cwd, "resources", "lib")).decode("utf
 
 sys.path.append(resource)
 from utils import *
-log=log.getChild("Service")
+#log=log.getChild("Service") #Disabled for android compatibility
 
 import TraduttoriAnonimi
 
@@ -73,7 +73,7 @@ def search(item):
                     subs=download(result["URL"])
                     for sub in subs:
                         listitem = xbmcgui.ListItem(label='Italian',label2=os.path.basename(sub),thumbnailImage='it') #sub["Name"]
-                        xbmcplugin.addDirectoryItem(handle = int(sys.argv[1]), url = "plugin://{}/?action=download&url={}".format(scriptid,sub), listitem = listitem, isFolder = False)#sub["URL"]
+                        xbmcplugin.addDirectoryItem(handle = int(sys.argv[1]), url = "plugin://{0}/?action=download&url={1}".format(scriptid,sub), listitem = listitem, isFolder = False)#sub["URL"]
                     xbmcplugin.endOfDirectory(int(sys.argv[1]))	# send end of directory to XBMC
             else:
                 log.info("NO RESULTS")
@@ -85,7 +85,7 @@ def search(item):
         log.info('TraduttoriAnonimi only works with italian. Skipped')
         
 def download(url):
-    log.debug("Downloading => {}".format(url))
+    log.debug("Downloading => {0}".format(url))
     if (os.path.isfile(url)):
         log.info("url is a local path")
         return [url]
@@ -98,11 +98,11 @@ def download(url):
         tmp=StringIO.StringIO(content) # "with" can't be used because StringIO has not __exit__
         if (content[0]=="P"):
             log.info("ZipFile Detected")
-            with zipfile.ZipFile(tmp) as q:
-                for name in q.namelist():
-                    if (name.split(".")[-1] in exts):
-                        q.extract(name, temp)
-                        out.append(os.path.join(temp,name))
+            q=zipfile.ZipFile(tmp) # "with" can't be used because zipfile has not __exit__ (ANDROID FIX)
+            for name in q.namelist():
+                if (name.split(".")[-1] in exts):
+                    q.extract(name, temp)
+                    out.append(os.path.join(temp,name))
         else:
             log.info("Unpacked file detected")
             if (os.path.basename(url).split(".")[-1] in exts):
@@ -110,11 +110,11 @@ def download(url):
                     q.write(content)
                 out.append(os.path.join(temp,os.path.basename(url)))
             else:
-                log.info("Downloaded File ({}) is not in exts[{}]".format(os.path.basename(url),str(exts)))
+                log.info("Downloaded File ({0}) is not in exts[{1}]".format(os.path.basename(url),str(exts)))
     return out
 
 def main():
-    log.info("Application version: {}".format(version))
+    log.info("Application version: {0}".format(version))
     if (xbmc.Player().isPlayingVideo()):
         params = GetParams()
     

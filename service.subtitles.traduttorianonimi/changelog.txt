@@ -24,3 +24,8 @@
 - Feautures -> Nothing
 - Code:
     Converted strings.xml to strings.po
+
+2.0.4
+- Feautures -> Nothing
+- Code:
+    Fixed errors for android devices
