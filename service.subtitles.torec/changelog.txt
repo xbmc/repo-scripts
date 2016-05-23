@@ -1,13 +1,16 @@
+1.0.9
+- fixed disfunctional addon (@myakove)
+
 1.0.8
-- another fix for TOO MANY DL issue (gklein)
+- another fix for TOO MANY DL issue (@gklein)
 
 1.0.7
-- added support for zip and rar archives (gklein)
+- added support for zip and rar archives (@gklein)
 
 1.0.6
 - bypass for new issue with TOO MANY DL
 - some minor speedups
-- utf-8 issues (zofer1)
+- utf-8 issues (@zofer1)
 
 1.0.5
 - better handling of TOO MANY DL error by performing retries
@@ -17,7 +20,7 @@
 
 1.0.3
 - many cleanups
-- fixed case comparing issues with rating system (matanelgabsi)
+- fixed case comparing issues with rating system (@matanelgabsi)
 - reduced the number of files created during download (and extraction)
 - fastened the download process a bit
 - possible fix for UnicodeDecodeError (#4)
