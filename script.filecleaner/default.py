@@ -2,8 +2,6 @@
 # -*- coding: utf-8 -*-
 
 import json
-
-import xbmcvfs
 from utils import *
 
 
@@ -74,6 +72,7 @@ class Cleaner(object):
     stacking_indicators = ["part", "pt", "cd", "dvd", "disk", "disc"]
 
     progress = xbmcgui.DialogProgress()
+    monitor = xbmc.Monitor()
     silent = True
     exit_status = STATUS_SUCCESS
 
@@ -123,7 +122,7 @@ class Cleaner(object):
         if not self.silent:
             # Cleaning <video type>
             self.progress.update(0, translate(32629).format(type=type_translation[video_type]), *map(translate, (32615, 32615)))
-            monitor.waitForAbort(1)
+            self.monitor.waitForAbort(1)
 
         if video_type == self.TVSHOWS:
             clean_this_video_type = get_setting(clean_tv_shows)
@@ -146,7 +145,7 @@ class Cleaner(object):
                     increment = 1.0 / amount
                 except ZeroDivisionError:
                     self.progress.update(0, *map(translate, (32621, 32622, 32623)))  # No watched videos found
-                    if monitor.waitForAbort(2.5):
+                    if self.monitor.waitForAbort(2.5):
                         pass
 
             for filename, title in expired_videos:
@@ -195,15 +194,17 @@ class Cleaner(object):
                     if not self.silent:
                         progress_percent += increment * 100
                         debug("Progress percent is {percent}, amount is {amount} and increment is {increment}".format(percent=progress_percent, amount=amount, increment=increment))
+                        if isinstance(title, unicode):
+                            title = title.encode("utf-8")
                         self.progress.update(int(progress_percent), translate(32616).format(amount=amount, type=type_translation[video_type]), translate(32617), "[I]{0!s}[/I]".format(title))
-                        monitor.waitForAbort(2)
+                        self.monitor.waitForAbort(2)
                 else:
                     debug("We had {amt!s} {type!s} left to clean.".format(amt=(amount - count), type=type_translation[video_type]))
         else:
             debug("Cleaning of {0!r} is disabled. Skipping.".format(video_type))
             if not self.silent:
                 self.progress.update(0, translate(32624).format(type=type_translation[video_type]), *map(translate, (32625, 32615)))
-                monitor.waitForAbort(2)
+                self.monitor.waitForAbort(2)
 
         return cleaned_files, count, self.exit_status
 
@@ -227,7 +228,7 @@ class Cleaner(object):
             if not self.silent:
                 self.progress.create(ADDON_NAME, *map(translate, (32619, 32615, 32615)))
                 self.progress.update(0)
-                monitor.waitForAbort(2)
+                self.monitor.waitForAbort(2)
             for video_type in [self.MOVIES, self.MUSIC_VIDEOS, self.TVSHOWS]:
                 if not self.__is_canceled():
                     cleaned_files, count, status = self.clean(video_type)
@@ -244,7 +245,7 @@ class Cleaner(object):
 
             # Finally clean the library to account for any deleted videos.
             if get_setting(clean_kodi_library):
-                monitor.waitForAbort(2)  # Sleep 2 seconds to make sure file I/O is done.
+                self.monitor.waitForAbort(2)  # Sleep 2 seconds to make sure file I/O is done.
 
                 if xbmc.getCondVisibility("Library.IsScanningVideo"):
                     debug("The video library is being updated. Skipping library cleanup.", xbmc.LOGWARNING)
@@ -298,12 +299,18 @@ class Cleaner(object):
         by_minimum_rating = {"field": "rating", "operator": "lessthan", "value": "{0:f}".format(get_setting(minimum_rating))}
         by_no_rating = {"field": "rating", "operator": "isnot", "value": "0"}
         by_progress = {"field": "inprogress", "operator": "false", "value": ""}
+        by_exclusion1 = {"field": "path", "operator": "doesnotcontain", "value": get_setting(exclusion1)}
+        by_exclusion2 = {"field": "path", "operator": "doesnotcontain", "value": get_setting(exclusion2)}
+        by_exclusion3 = {"field": "path", "operator": "doesnotcontain", "value": get_setting(exclusion3)}
 
         # link settings and filters together
         settings_and_filters = [
             (get_setting(enable_expiration), by_date_played),
             (get_setting(clean_when_low_rated), by_minimum_rating),
-            (get_setting(not_in_progress), by_progress)
+            (get_setting(not_in_progress), by_progress),
+            (get_setting(exclusion_enabled) and get_setting(exclusion1) is not "", by_exclusion1),
+            (get_setting(exclusion_enabled) and get_setting(exclusion2) is not "", by_exclusion2),
+            (get_setting(exclusion_enabled) and get_setting(exclusion3) is not "", by_exclusion3)
         ]
 
         # Only check not rated videos if checking for video ratings at all
@@ -352,11 +359,6 @@ class Cleaner(object):
             debug("Found {0:d} watched {1} matching your conditions".format(response["limits"]["total"], option))
             debug("JSON Response: " + str(response))
             for video in response[option]:
-                # Test for file exclusions
-                if self.is_excluded(video["file"]):
-                    debug("{0!r} matches an exclusion, not including it in the list of expired videos".format(video))
-                    continue
-
                 # Gather all properties and add it to this video's information
                 temp = []
                 for p in self.properties[option]:
@@ -372,68 +374,6 @@ class Cleaner(object):
         finally:
             debug("Expired videos: {0}".format(expired_videos))
             return expired_videos
-
-    def is_excluded(self, full_path):
-        """Check if the file path is part of the excluded sources.
-
-        :type full_path: str
-        :param full_path: the path to the file that should be checked for exclusion
-        :rtype: bool
-        :return: True if the path matches a user-set excluded path, False otherwise.
-        """
-        if not get_setting(exclusion_enabled):
-            debug("Path exclusion is disabled.")
-            return False
-        elif not full_path:
-            debug("File path is empty and cannot be checked for exclusions")
-            return False
-
-        exclusions = map(get_setting, [exclusion1, exclusion2, exclusion3])
-
-        if r"://" in full_path:
-            debug("Detected a network path")
-            pattern = re.compile("(?:smb|nfs)://(?:(?:.+):(?:.+)@)?(?P<tail>.*)$", flags=re.U | re.I)
-
-            debug("Converting excluded network paths for easier comparison")
-            normalized_exclusions = []
-            for ex in exclusions:
-                # Strip everything but the folder structure
-                try:
-                    if ex and r"://" in ex:
-                        # Only normalize non-empty excluded paths
-                        normalized_exclusions.append(pattern.match(ex).group("tail").lower())
-                except (AttributeError, IndexError, KeyError) as err:
-                    debug("Could not parse the excluded network path {0!r}\n{1}".format(ex, err), xbmc.LOGWARNING)
-                    return True
-
-            debug("Conversion result: {0!r}".format(normalized_exclusions))
-
-            debug("Proceeding to match a file with the exclusion paths")
-            debug("The file to match is {0!r}".format(full_path))
-            result = pattern.match(full_path)
-
-            try:
-                debug("Converting file path for easier comparison.")
-                converted_path = result.group("tail").lower()
-                debug("Result: {0!r}".format(converted_path))
-                for ex in normalized_exclusions:
-                    debug("Checking against exclusion {0!r}.".format(ex))
-                    if converted_path.startswith(ex):
-                        debug("File {0!r} matches excluded path {1!r}.".format(converted_path, ex))
-                        return True
-
-            except (AttributeError, IndexError, KeyError) as err:
-                debug("Error converting {0!r}. No files will be deleted.\n{1}".format(full_path, err), xbmc.LOGWARNING)
-                return True
-        else:
-            debug("Detected a local path")
-            for ex in exclusions:
-                if ex and full_path.startswith(ex):
-                    debug("File {0!r} matches excluded path {1!r}.".format(full_path, ex))
-                    return True
-
-        debug("No match was found with an excluded path.")
-        return False
 
     def unstack(self, path):
         """Unstack path if it is a stacked movie. See http://kodi.wiki/view/File_stacking for more info.
@@ -486,10 +426,6 @@ class Cleaner(object):
 
         paths = self.unstack(location)
         success = []
-
-        if self.is_excluded(paths[0]):
-            debug("Detected a file on an excluded path. Aborting.")
-            return False
 
         for p in paths:
             if xbmcvfs.exists(p):
@@ -625,13 +561,8 @@ class Cleaner(object):
             source = source.encode("utf-8")
 
         paths = self.unstack(source)
-        success = []
         files_moved_successfully = 0
         dest_folder = xbmc.makeLegalFilename(dest_folder)
-
-        if self.is_excluded(paths[0]):
-            debug("Detected a file on an excluded path. Aborting.")
-            return 0
 
         for p in paths:
             debug("Attempting to move {0!r} to {1!r}.".format(p, dest_folder))
@@ -691,7 +622,6 @@ class Cleaner(object):
 
 if __name__ == "__main__":
     cleaner = Cleaner()
-    monitor = xbmc.Monitor()
     if get_setting(default_action) == cleaner.DEFAULT_ACTION_LOG:
         xbmc.executescript("special://home/addons/script.filecleaner/viewer.py")
     else:

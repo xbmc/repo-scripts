@@ -13,13 +13,12 @@ def autostart():
     Starts the cleaning service.
     """
     cleaner = Cleaner()
-    monitor = Monitor()
 
     service_sleep = 4  # Lower than 4 causes too much stress on resource limited systems such as RPi
     ticker = 0
     delayed_completed = False
 
-    while not monitor.abortRequested():
+    while not cleaner.monitor.abortRequested():
         if get_setting(service_enabled):
             scan_interval_ticker = get_setting(scan_interval) * 60 / service_sleep
             delayed_start_ticker = get_setting(delayed_start) * 60 / service_sleep
@@ -34,10 +33,10 @@ def autostart():
                 notify(results)
                 ticker = 0
 
-            monitor.waitForAbort(service_sleep)
+            cleaner.monitor.waitForAbort(service_sleep)
             ticker += 1
         else:
-            monitor.waitForAbort(service_sleep)
+            cleaner.monitor.waitForAbort(service_sleep)
 
     xbmc.log("Abort requested. Terminating.")
     return

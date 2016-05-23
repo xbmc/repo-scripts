@@ -1,3 +1,8 @@
+[B][I]Version 4.2.1[/I][/B]
+- [NEW] Improve exclusion checking by offloading to Kodi via JSON-RPC
+- [FIX] Monitoring issues with running as service
+- [FIX] Showing dialog with titles containing unicode characters
+
 [B][I]Version 4.2.0[/I][/B]
 - [NEW] Jarvis compatibility
 - [NEW] Kodi File Cleaner is now known as Janitor
