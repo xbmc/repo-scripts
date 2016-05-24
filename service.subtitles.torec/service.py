@@ -129,7 +129,7 @@ def download(page_id, subtitle_id, filename, stack=False):
 
     delete_old_subs()
     try:
-        result = downloader.get_download_link(page_id, subtitle_id, False)
+        result = downloader.get_download_link(page_id, subtitle_id)
     except Exception as e:
         log(__name__,"failed to connect to service for subtitle download %s" % e)
         return subtitle_list

@@ -132,9 +132,11 @@ class TorecSubtitlesDownloader(FirefoxURLHandler):
             "current_datetime": current_time
         }
 
-    def _get_user_auth(self):
-        user_auth_text = self.opener.open(self.USER_AUTH_JS_URL).read()
-        return re.search(r"userAuth='(.*)';", user_auth_text).group(1)
+    def _get_user_auth(self, subw_text):
+        return re.search(r"userAuth='(.*)';", subw_text).group(1)
+
+    def _get_time_waited(self, subw_text):
+        return re.search(r"seconds\s+=\s+(\d+);", subw_text).group(1)
 
     def _request_subtitle(self, sub_id):
          params = {
@@ -177,30 +179,19 @@ class TorecSubtitlesDownloader(FirefoxURLHandler):
         subtitle_data = subtitle_data.read()
         return SubtitlePage(id_, movie_name, sub_url, subtitle_data)
 
-    def get_download_link(self, sub_id, option_id, persist=True):        
-        response = None
-        data = None
-        
-        params = {
+    def get_download_link(self, sub_id, option_id):        
+        subw_text = self.opener.open(self.USER_AUTH_JS_URL).read()
+        params    = {
             "sub_id":     sub_id,
             "code":       option_id,
             "sh":         "yes",
             "guest":      self._request_subtitle(sub_id),
-            "timewaited": "11",
-            "userAuth":   self._get_user_auth()
+            "timewaited": self._get_time_waited(subw_text),
+            "userAuth":   self._get_user_auth(subw_text)
         }
 
-        for i in xrange(16):
-            response = self.opener.open(
-                "%s/ajax/sub/downloadun.asp" % self.BASE_URL, urllib.urlencode(params),
-            )
-            data = response.read()
-            if len(data) != 0 or not persist:
-                break
-            time.sleep(1)
-        if data:
-            return data
-        return response
+        response = self.opener.open("%s/ajax/sub/downloadun.asp" % self.BASE_URL, urllib.urlencode(params))
+        return response.read()
 
     def download(self, download_link):
         response = self.opener.open(
