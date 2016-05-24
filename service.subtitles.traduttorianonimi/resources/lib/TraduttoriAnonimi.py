@@ -35,7 +35,7 @@ resource = xbmc.translatePath(os.path.join(cwd, "resources", "lib")).decode("utf
 
 sys.path.append(resource)
 from utils import *
-log=log.getChild("Core")
+#log=log #.getChild("Core") #Disabled for android compatibility
 
 def MagicInt(x): #Cast to integer (if possible) without Errors
     try:
@@ -62,13 +62,13 @@ class SearchableDict(dict):
 
 class TraduttoriAnonimi:
     def __init__(self,BaseURL="http://traduttorianonimi.it"):
-        self.log=log.getChild("TA")
+        self.log=log #.getChild("TA") #Disabled for android compatibility
         
         self.BaseURL=BaseURL
-        self.log.debug("BaseURL=> {}".format(self.BaseURL))
+        self.log.debug("BaseURL=> {0}".format(self.BaseURL))
         
         self.ShowsListURL=urlparse.urljoin(self.BaseURL,"elenco-serie/")
-        self.log.debug("ShowsListURL=> {}".format(self.ShowsListURL))
+        self.log.debug("ShowsListURL=> {0}".format(self.ShowsListURL))
         
         self.ShowsList=SearchableDict()
         self.UpdateShowsList()
@@ -83,7 +83,7 @@ class TraduttoriAnonimi:
         self.ShowsList=SearchableDict()
         for attempt in xrange(100):
             r=RetriveURL(url)
-            self.log.debug("Attempt #{}".format(attempt))
+            self.log.debug("Attempt #{0}".format(attempt))
             if (r!=None):
                 html=r.content
                 parser=BeautifulSoup(html,"html.parser")
@@ -95,7 +95,7 @@ class TraduttoriAnonimi:
                 tmp=parser.find("div",{"class":"pagination" }).find("a",{"class":"next"})
                 if (tmp!=None):
                     url=urlparse.urljoin(self.BaseURL,tmp.attrs["href"])
-                    self.log.debug("Next Page Found. Following => {}".format(url))
+                    self.log.debug("Next Page Found. Following => {0}".format(url))
                 else:
                     self.log.debug("Next Page Not Found. Exiting from loop")
                     break
@@ -119,10 +119,10 @@ class TraduttoriAnonimi:
                         
                 for ep in parser.findAll("td",{"class":"dwn"}):
                     tmp=ep.find("a")
-                    self.log.debug("Analyzing => {}".format(tmp))
+                    self.log.debug("Analyzing => {0}".format(tmp))
                     if (tmp!=None and "title" in tmp.attrs and "href" in tmp.attrs):
                         x=EpisodeRegex.search(tmp.attrs["title"])
-                        self.log.debug("Regex Groups=> {}".format(x.groups()))
+                        self.log.debug("Regex Groups=> {0}".format(x.groups()))
                         if (MagicInt(x.group("season"))==Season and MagicInt(x.group("episode"))==Episode):
                             self.log.info("Subtitle Found")
                             return [{"Name":tmp.attrs["title"],"URL":tmp.attrs["href"]}]

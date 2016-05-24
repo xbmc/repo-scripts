@@ -54,7 +54,7 @@ def notify(message,header=scriptname,icon=NotifyLogo,time=5000):
 
 class LogStream(object):
     def write(self,data):
-        xbmc.log("*** [service.subtiles.traduttorianonimi] -> {}".format(data.encode('utf-8',"ignore")), level = xbmc.LOGNOTICE)
+        xbmc.log("*** [service.subtiles.traduttorianonimi] -> {0}".format(data.encode('utf-8',"ignore")), level = xbmc.LOGNOTICE)
          
 log=logging.getLogger("TraduttoriAnonimi")
 log.setLevel(logging.DEBUG)
@@ -66,9 +66,9 @@ log.addHandler(consoleHandler)
 def RetriveURL(url):
     try:
         headers={"user-agent": "Kodi-SubtitleService-TraduttoriAnonimi"}
-        log.debug("GET Request => HEADERS={} ; URL={}".format(headers,url))
+        log.debug("GET Request => HEADERS={0} ; URL={1}".format(headers,url))
         q=requests.get(url,headers=headers)
-        log.debug("GET Request <= Response HEADERS={}".format(q.headers))
+        log.debug("GET Request <= Response HEADERS={0}".format(q.headers))
         return q
     except:
         log.error("An Error is occurred",exc_info=True)
