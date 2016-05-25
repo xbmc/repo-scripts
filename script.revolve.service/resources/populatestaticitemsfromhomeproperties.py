@@ -17,6 +17,9 @@ def createGenericName(sourcebase):
 def createSongName(sourcebase):
     return xbmclibrary.getItemFromHomeProperty(sourcebase + '.Artist') + ' - ' + xbmclibrary.getItemFromHomeProperty(sourcebase + '.Title')
 
+def createFavouriteName(sourcebase):
+    return xbmclibrary.getItemFromHomeProperty(sourcebase + '.name')
+
 def createGenericSubtitle(sourcebase):
     return xbmclibrary.joinItems(
         xbmclibrary.getItemFromHomeProperty(sourcebase + '.ShowTitle'),
@@ -41,8 +44,12 @@ def createSongSubtitle(sourcebase):
         xbmclibrary.getItemFromHomeProperty(sourcebase + '.Album'),
         xbmclibrary.getNumericValue(xbmclibrary.getItemFromHomeProperty(sourcebase + '.Year')))
 
+def createFavouriteSubtitle(sourcebase):
+    return ''
+
 def createGenericThumbnail(sourcebase):
     result = xbmclibrary.getItemFromHomeProperty(sourcebase + '.Art(poster)')
+    result = xbmclibrary.replaceEmptyItemWithHomeProperty(result, sourcebase + '.thumb')
     result = xbmclibrary.replaceEmptyItemWithHomeProperty(result, sourcebase + '.Thumb')
     result = xbmclibrary.replaceEmptyItemWithHomeProperty(result, sourcebase + '.Icon')
     return result
@@ -52,6 +59,9 @@ def createGenericBackgroundImage(sourcebase):
     result = xbmclibrary.replaceEmptyItemWithHomeProperty(result, sourcebase + '.Property(Fanart_image)')
     result = xbmclibrary.replaceEmptyItemWithHomeProperty(result, sourcebase + '.Fanart')
     return result
+
+def createFavouriteBackgroundImage(sourcebase):
+    return ''
 
 def createGenericAction(sourcebase):
     result = xbmclibrary.getItemFromHomeProperty(sourcebase + '.Play')
@@ -65,11 +75,16 @@ def createGenericAction(sourcebase):
         result = xbmclibrary.addPrefixAndSuffixToItem('PlayMedia("', xbmclibrary.getItemFromHomeProperty(sourcebase + '.Path'), '")')
     return result
 
+def createFavouriteAction(sourcebase):
+    return xbmclibrary.getItemFromHomeProperty(sourcebase + '.path')
+
 
 def determineNameMethod(sourcemask):
     result = createGenericName    
     if 'song' in sourcemask.lower():
         result = createSongName
+    if 'favourite' in sourcemask.lower():
+        result = createFavouriteName
     return result
 
 def determineSubtitleMethod(sourcemask):
@@ -78,16 +93,24 @@ def determineSubtitleMethod(sourcemask):
         result = createEpisodeSubtitle
     if 'song' in sourcemask.lower():
         result = createSongSubtitle
+    if 'favourite' in sourcemask.lower():
+        result = createFavouriteSubtitle
     return result
     
 def determineThumbnailMethod(sourcemask):
     return createGenericThumbnail
     
 def determineBackgroundImageMethod(sourcemask):
-    return createGenericBackgroundImage
+    result = createGenericBackgroundImage
+    if 'favourite' in sourcemask.lower():
+        result = createFavouriteBackgroundImage
+    return result
     
 def determineActionMethod(sourcemask):
-    return createGenericAction
+    result = createGenericAction
+    if 'favourite' in sourcemask.lower():
+        result = createFavouriteAction
+    return result
     
 def copyProperties(sourcemask, targetmask, targetwindow):
     nameMethod = determineNameMethod(sourcemask)

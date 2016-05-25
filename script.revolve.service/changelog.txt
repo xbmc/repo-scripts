@@ -1,4 +1,8 @@
-﻿[B]1.1.0[/B]
+﻿[B]1.1.1[/B]
+
+- Added support for the home properties of the plug-in script.favourites.
+
+[B]1.1.0[/B]
 
 - Updated the dependencies of this script.
 
