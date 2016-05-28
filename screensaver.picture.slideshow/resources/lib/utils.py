@@ -30,13 +30,14 @@ def create_cache(path, hexfile):
     for item in files:
         if item != 'settings.xml':
             xbmcvfs.delete(os.path.join(CACHEFOLDER,item))
-    # create index file
-    try:
-        cache = xbmcvfs.File(CACHEFILE % hexfile, 'w')
-        cache.write(str(images))
-        cache.close()
-    except:
-        log('failed to save cachefile')
+    if images:
+        # create index file
+        try:
+            cache = xbmcvfs.File(CACHEFILE % hexfile, 'w')
+            cache.write(str(images))
+            cache.close()
+        except:
+            log('failed to save cachefile')
 
 def get_excludes():
     regexes = []

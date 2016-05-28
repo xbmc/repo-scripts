@@ -248,7 +248,7 @@ class Screensaver(xbmcgui.WindowXMLDialog):
                         else:
                             ROOT, FOLDER = os.path.split(os.path.dirname(img[0]))
                             NAME = FOLDER + ' / ' + img[1]
-                    self.namelabel.setLabel('[B]' + NAME + '[/B]')
+                    self.namelabel.setLabel(NAME)
                 # set animations
                 if self.slideshow_effect == '0':
                     # add slide anim
@@ -285,8 +285,8 @@ class Screensaver(xbmcgui.WindowXMLDialog):
             items = copy.deepcopy(self.items)
 
     def _get_items(self, update=False):
+        self.slideshow_type   = ADDON.getSetting('type')
         log('slideshow type: %s' % self.slideshow_type)
-        self.pathfail = False
 	    # check if we have an image folder, else fallback to video fanart
         if self.slideshow_type == '2':
             hexfile = checksum(self.slideshow_path) # check if path has changed, so we can create a new cache at startup
@@ -298,15 +298,18 @@ class Screensaver(xbmcgui.WindowXMLDialog):
             self.items = self._read_cache(hexfile)
             log('items: %s' % len(self.items))
             if not self.items:
-                self.pathfail = True
+                self.slideshow_type = '0'
+                # delete empty cache file
+                if xbmcvfs.exists(CACHEFILE % hexfile):
+                    xbmcvfs.delete(CACHEFILE % hexfile)
 	    # video fanart
-        if self.slideshow_type == '0' or self.pathfail:
+        if self.slideshow_type == '0':
             methods = [('VideoLibrary.GetMovies', 'movies'), ('VideoLibrary.GetTVShows', 'tvshows')]
 	    # music fanart
         elif self.slideshow_type == '1':
             methods = [('AudioLibrary.GetArtists', 'artists')]
         # query the db
-        if not self.slideshow_type == '2' or self.pathfail:
+        if not self.slideshow_type == '2':
             self.items = []
             for method in methods:
                 json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "' + method[0] + '", "params": {"properties": ["fanart"]}, "id": 1}')
