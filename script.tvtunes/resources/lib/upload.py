@@ -282,6 +282,13 @@ class UploadThemes(ThemeLibrary):
             log("UploadThemes: No suitable Id found for %s" % videoItem['imdbnumber'])
             return False
 
+        # Check all the IDs to see if this theme is required
+        matchedThemeIds = self._getThemes(masterId, isTvShow)
+
+        if matchedThemeIds not in [None, ""]:
+            log("UploadThemes: Theme %s already in library" % masterId)
+            return False
+
         # Now set the mast id to the one we have just found
         # that will be used from now on
         videoItem['masterId'] = masterId
