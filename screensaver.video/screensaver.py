@@ -83,6 +83,7 @@ class ScreensaverWindow(xbmcgui.WindowXMLDialog):
     TIME_CONTROL = 3002
     DIM_CONTROL = 3003
     OVERLAY_CONTROL = 3004
+    WEATHER_CONTROL = 3005
 
     def __init__(self, *args, **kwargs):
         self.isClosed = False
@@ -126,6 +127,13 @@ class ScreensaverWindow(xbmcgui.WindowXMLDialog):
         # Default is hidden
         timeControl = self.getControl(ScreensaverWindow.TIME_CONTROL)
         timeControl.setVisible(Settings.isShowTime())
+
+        # Check if we need to show the weather
+        weatherControl = self.getControl(ScreensaverWindow.WEATHER_CONTROL)
+        if Settings.getWeatherAddon() not in ["", None]:
+            weatherControl.setVisible(True)
+        else:
+            weatherControl.setVisible(False)
 
         # Set the value of the dimming for the video
         dimLevel = Settings.getDimValue()
@@ -725,6 +733,12 @@ if __name__ == '__main__':
         log("Screensaver started by script with screensaver argument")
         xbmc.executebuiltin('RunScript(%s)' % (os.path.join(CWD, "default.py")))
     else:
+        # Check if we need to load the weather settings
+        weatherAddon = Settings.getWeatherAddon()
+        if weatherAddon not in ["", None]:
+            log("Using weather addon %s" % weatherAddon)
+            xbmc.executebuiltin('RunScript(%s,0)' % weatherAddon, False)
+
         # Before we start, make sure that the settings have been updated correctly
         Settings.cleanAddonSettings()
 

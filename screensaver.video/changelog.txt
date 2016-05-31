@@ -1,3 +1,6 @@
+v1.4.2 (2016-05-31)
+- Add option to display weather details
+
 v1.4.1 (2016-05-14)
 - Fix screensaver exit when refresh rate changes
 

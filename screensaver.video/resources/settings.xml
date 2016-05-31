@@ -14,6 +14,8 @@
 	</category>
 	<category label="32006">
 		<setting id="showTime" type="bool" label="32052" default="false"/>
+		<setting id="showWeather" type="bool" label="32033" default="false"/>
+		<setting id="weatherAddon" visible="eq(-1,true)" type="addon" label="32034" default="" addontype="xbmc.python.weather"  multiselect="false" />
 		<setting id="randomStart" type="bool" label="32053" default="false"/>
 		<setting id="mediaPlayingBlock" type="bool" label="32055" default="true"/>
 		<setting id="alterVolume" type="bool" label="32056" default="false"/>
