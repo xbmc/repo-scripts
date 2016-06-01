@@ -30,6 +30,15 @@ class Main:
             self.image_now = xbmc.getInfoLabel("Player.Art(thumb)")
             self.image_now_fa = xbmc.getInfoLabel("MusicPlayer.Property(Fanart_Image)")
             self.image_now_cfa = xbmc.getInfoLabel("ListItem.Art(fanart)")
+            self.image_now_cpa = xbmc.getInfoLabel("ListItem.Art(poster)")
+            if not HOME.getProperty("cpa_ignore_set") and self.image_now_cpa != self.image_prev_cpa:
+                try:
+                    self.image_prev_cpa = self.image_now_cpa
+                    HOME.setProperty(self.prefix + 'ImageUpdating', '0')
+                    image = Filter_Distort(self.image_now_cpa, self.delta_x, self.delta_y)
+                    HOME.setProperty(self.prefix + 'ImageFiltercpa', image)
+                except:
+                    log("Could not process image for cpa daemon")
             if not HOME.getProperty("cfa_ignore_set") and self.image_now_cfa != self.image_prev_cfa:
                 try:
                     self.image_prev_cfa = self.image_now_cfa
@@ -51,7 +60,7 @@ class Main:
                         HOME.setProperty(self.prefix + 'ImageFiltercfa4', image)
                         HOME.setProperty(self.prefix + "ImageColorcfa4", Random_Color())
                 except:
-                    log("Could not process image for daemon")
+                    log("Could not process image for cfa daemon")
                 HOME.setProperty(self.prefix + 'ImageUpdating', '1')
             if self.image_now != self.image_prev and xbmc.Player().isPlayingAudio():
                 try:
@@ -66,7 +75,7 @@ class Main:
                     HOME.setProperty(self.prefix + 'ImageFilter3', image)
                     HOME.setProperty(self.prefix + "ImageColor3", Random_Color())
                 except:
-                    log("Could not process image for daemon")
+                    log("Could not process image for f daemon")
             if self.image_now_fa != self.image_prev_fa and xbmc.Player().isPlayingAudio():
                 try:
                     self.image_prev_fa = self.image_now_fa
@@ -80,7 +89,7 @@ class Main:
                     HOME.setProperty(self.prefix + 'ImageFilterfa3', image)
                     HOME.setProperty(self.prefix + "ImageColorfa3", Random_Color())
                 except:
-                    log("Could not process image for daemon")
+                    log("Could not process image for fa daemon")
             else:
                 xbmc.sleep(300)
 
@@ -143,9 +152,11 @@ class Main:
         self.image_now = ""
         self.image_now_fa = ""
         self.image_now_cfa = ""
+        self.image_now_cpa = ""
         self.image_prev = ""
         self.image_prev_fa = ""
         self.image_prev_cfa = ""
+        self.image_prev_cpa = ""
         self.autoclose = ""
 
     def _parse_argv(self):

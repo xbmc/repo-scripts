@@ -85,7 +85,11 @@ script.colorbox
   
   Window(home).Property(ImageFiltercfa1|2|3|4) <- available current list item fanart, 1 is blur, 2 pixel, 3 posterize & 4 distort
 
+  Window(home).Property(ImageFiltercpa) <- available current list item poster, distort only
+
   Window(home).Property(cfa_ignore_set) <- set True for daemon to ignore listitem fanart (remember to clear if needed!)
+  
+  Window(home).Property(cpa_ignore_set) <- set True for daemon to ignore listitem poster (remember to clear if needed!)
   
   
 - Daemon:
@@ -106,4 +110,3 @@ script.colorbox
   
   This MUST be used as of now.
   NONE will be processed if not set.
-  Next version will default to ALL being processed if not set!
