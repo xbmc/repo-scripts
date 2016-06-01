@@ -1,3 +1,5 @@
+v1.0.11
+- add current poster to daemon
 v1.0.8
 - add 'distort' - check code for info atm
 v1.0.7
