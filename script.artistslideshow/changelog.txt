@@ -1,3 +1,13 @@
+v.2.0.0
+- separated code for downloads into modules to make it easier to add other services
+- added preferences to allow selection of services and priority for use
+- removed remote MusicBrainz lookup, MBID must now be in Kodi
+- changed default to get bio from Kodi and images from htbackdrops
+- rewrite of cache mechanism to reduce load on external sites
+- changed cache expire range to 12 - 24 weeks (set randomly when cache is refreshed)
+- updated preference strings (only French and English included, other languages
+  will be added back later via Kodi Transifex project)
+
 v.1.8.8
 - updated cache logic to reduce API calls to external sites
 

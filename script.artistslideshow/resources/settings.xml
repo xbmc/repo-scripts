@@ -1,15 +1,12 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <settings>
-    <category label="32000">
-        <setting id="fanarttv" type="bool" label="32008" default="true" />
-        <setting id="fanarttv_clientapikey" type="text" label="32010" visible="eq(-1,true)" default="" />
-        <setting id="fanarttv_all" type="bool" label="32007" visible="eq(-2,true)" default="false" />
-        <setting id="theaudiodb" type="bool" label="32009" default="false" />
-        <setting id="htbackdrops" type="bool" label="32002" default="false" />
-        <setting id="htbackdrops_all" type="bool" label="32007" visible="eq(-1,true)" default="false" />
-        <setting id="artistinfo" type="bool" label="32005" default="false" />
-        <setting id="language" type="enum" label="32006" visible="eq(-1,true)" default="11" lvalues="32901|32902|32903|32904|32905|32906|32907|32908|32909|32910|32911|32912|32913|32947|32914|32915|32916|32917|32918|32919|32920|32921|32922|32924|32925|32926|32927|32928|32929|32930|32932|32933|32934|32935|32936|32937|32938|32939|32940|32942|32943|32944|32945|32946" />
-    </category>
+	<category label="32600">
+		<setting label="32601" type="lsep" />
+		<setting label="32602" type="lsep" />
+		<setting label="32603" type="lsep" />
+		<setting label="32604" type="lsep" />
+		<setting label="32605" type="lsep" />
+	</category>
     <category label="32100">
         <setting id="local_artist_path" type="folder" label="32101" default="" />
         <setting id="priority" type="enum" label="32102" lvalues="32110|32111|32112" default="0" />
@@ -18,6 +15,33 @@
         <setting id="slideshow" type="bool" label="32106" default="false" />
         <setting id="slideshow_path" type="folder" label="32104" default="" visible="eq(-1,true)" />
         <setting id="transparent" type="bool" label="32107" default="false" />
+    </category>
+    <category label="32000">
+        <setting id="fanarttv" type="bool" label="32008" default="false" />
+        <setting id="fanarttv_clientapikey" type="text" label="32010" visible="eq(-1,true)" default="" />
+        <setting id="fanarttv_all" type="bool" label="32007" visible="eq(-2,true)" default="false" />
+        <setting id="theaudiodb" type="bool" label="32009" default="false" />
+        <setting id="htbackdrops" type="bool" label="32002" default="true" />
+        <setting id="htbackdrops_all" type="bool" label="32007" visible="eq(-1,true)" default="false" />
+    </category>
+    <category label="32300">
+        <setting id="ai_theaudiodb" type="bool" label="32302" default="false" />
+        <setting id="ai_priority_theaudiodb" type="slider" label="32301" visible="eq(-1,true)" default="5" range='1,1,10' option='int' />
+        <setting id="ai_lastfm" type="bool" label="32303" default="false" />
+        <setting id="ai_priority_lastfm" type="slider" label="32301" visible="eq(-1,true)" default="5" range='1,1,10' option='int' />
+    </category>
+    <category label="32400">
+        <setting id="language" type="enum" label="32401" default="11" lvalues="32901|32902|32903|32904|32905|32906|32907|32908|32909|32910|32911|32912|32913|32947|32914|32915|32916|32917|32918|32919|32920|32921|32922|32924|32925|32926|32927|32928|32929|32930|32932|32933|32934|32935|32936|32937|32938|32939|32940|32942|32943|32944|32945|32946" />
+        <setting id="ab_kodi" type="bool" label="32402" default="true" />
+        <setting id="ab_priority_kodi" type="slider" label="32301" visible="eq(-1,true)" default="1" range='1,1,10' option='int' />
+        <setting id="ab_theaudiodb" type="bool" label="32403" default="false" />
+        <setting id="ab_priority_theaudiodb" type="slider" label="32301" visible="eq(-1,true)" default="5" range='1,1,10' option='int' />
+        <setting id="ab_lastfm" type="bool" label="32404" default="false" />
+        <setting id="ab_priority_lastfm" type="slider" label="32301" visible="eq(-1,true)" default="5" range='1,1,10' option='int' />
+    </category>
+    <category label="32500">
+        <setting id="sa_lastfm" type="bool" label="32501" default="false" />
+        <setting id="sa_priority_lastfm" type="slider" label="32301" visible="eq(-1,true)" default="5" range='1,1,10' option='int' />
     </category>
     <category label="32200">
         <setting id="restrict_cache" type="bool" label="32201" default="false" />

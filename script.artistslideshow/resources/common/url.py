@@ -1,4 +1,4 @@
-#v.0.2.0
+#v.0.2.1
 
 import socket
 import requests as _requests
@@ -81,15 +81,9 @@ class URL():
     
     
     def _unpack_args( self, kwargs ):
-        try:
-            params = kwargs['params']
-        except:
-            params = {}
-        try:
-            data = kwargs['data']
-        except:
-            if self.returntype == 'json':
-                data = []
-            else:
-                data = ''
+        params = kwargs.get( 'params', {} )
+        if self.returntype == 'json':
+            data = kwargs.get( 'data', [] )
+        else:
+            data = kwargs.get( 'data', '' )
     	return params, data
