@@ -138,7 +138,15 @@ msgctxt "#32032"
 msgid "Limit Session To Single Collection/Folder"
 msgstr ""
 
-#empty strings from id 32033 to 32050
+msgctxt "#32033"
+msgid "Show Weather"
+msgstr ""
+
+msgctxt "#32034"
+msgid "Select Weather Addon"
+msgstr ""
+
+#empty strings from id 32035 to 32050
 
 msgctxt "#32051"
 msgid "Select Video File"

@@ -422,3 +422,10 @@ class Settings():
         if currentDay != Settings.SUNDAY:
             nextDay = currentDay + 1
         return nextDay
+
+    @staticmethod
+    def getWeatherAddon():
+        weatherAddon = None
+        if ADDON.getSetting("showWeather") == 'true':
+            weatherAddon = ADDON.getSetting("weatherAddon")
+        return weatherAddon
