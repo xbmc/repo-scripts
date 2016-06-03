@@ -1,0 +1,397 @@
+# Kodi Media Center language file
+# Addon Name: PinSentry
+# Addon id: script.pinsentry
+# Addon Provider: robwebset
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: Bulgarian (http://www.transifex.com/projects/p/xbmc-addons/language/bg/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: bg\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "Addon Summary"
+msgid "Protect Kodi Content With A Pin Code"
+msgstr "Защитава съдържанието на Kodi с PIN код"
+
+msgctxt "Addon Description"
+msgid "Force users to enter the correct pin code for given content."
+msgstr "Принуждава потребителите да въвеждат определен PIN код за да им бъде предоставен достъп до посочено съдържание."
+
+msgctxt "#32001"
+msgid "Pin Sentry"
+msgstr "Pin Sentry"
+
+msgctxt "#32002"
+msgid "Setup"
+msgstr "Настройване"
+
+msgctxt "#32003"
+msgid "Debugging"
+msgstr "Дебъгване"
+
+msgctxt "#32004"
+msgid "Enable debug logging"
+msgstr "Включи дебъг журнала"
+
+msgctxt "#32005"
+msgid "Operations"
+msgstr "Операции"
+
+msgctxt "#32006"
+msgid "Pin Length"
+msgstr "Дължина на кода"
+
+msgctxt "#32007"
+msgid "Set Pin Value"
+msgstr "Задайте PIN код"
+
+msgctxt "#32008"
+msgid "*** WARNING: PIN NOT SET ***"
+msgstr "*** ВНИМАНИЕ: Не сте задали PIN код ***"
+
+msgctxt "#32009"
+msgid "Invalid Pin Notification"
+msgstr "Известяване за невалиден код"
+
+msgctxt "#32011"
+msgid "Dialog Box"
+msgstr "Диалогов прозорец"
+
+msgctxt "#32012"
+msgid "None"
+msgstr "Без"
+
+msgctxt "#32013"
+msgid "Off"
+msgstr "Изключено"
+
+msgctxt "#32014"
+msgid "On"
+msgstr "Включено"
+
+msgctxt "#32015"
+msgid "For Time Period"
+msgstr "Временно"
+
+msgctxt "#32016"
+msgid "Remember Pin For (Minutes)"
+msgstr "Запомняй кода за (минути)"
+
+msgctxt "#32017"
+msgid "Block Movies Without A Classification"
+msgstr "Блокирай филми без класификация"
+
+msgctxt "#32018"
+msgid "Block TV Shows Without A Classification"
+msgstr "Блокирай ТВ Сериали без класификация"
+
+msgctxt "#32019"
+msgid "Highlight Videos Not Protected By Classifications"
+msgstr "Отличавай видео файлове, които не са защитени чрез класификация"
+
+msgctxt "#32020"
+msgid "Number Of Security Levels"
+msgstr "Брой нива на сигурност"
+
+msgctxt "#32021"
+msgid "Set Pin For Security Level"
+msgstr "PIN код за ниво на сигурност"
+
+msgctxt "#32022"
+msgid "Show Security Level On Permissions Screen"
+msgstr "Показвай нивото на сигурност на екрана за разрешения"
+
+msgctxt "#32023"
+msgid "Allow Direction Keys In Pin Code"
+msgstr "Разреши въвеждане с клавиши за посока в кода"
+
+msgctxt "#32024"
+msgid "*** NOT SET ***"
+msgstr "*** НЕ Е ЗАДАДЕН ***"
+
+msgctxt "#32025"
+msgid "Time Limits"
+msgstr "Времеви ограничения"
+
+msgctxt "#32026"
+msgid "Number Of Limited Users"
+msgstr "Брой ограничени потребители"
+
+msgctxt "#32027"
+msgid "Unrestricted User Access Settings"
+msgstr "Настройки за неограничен достъп"
+
+msgctxt "#32028"
+msgid "User 1 Access Settings"
+msgstr "Настройки за достъп на потребител 1"
+
+msgctxt "#32029"
+msgid "User 2 Access Settings"
+msgstr "Настройки за достъп на потребител 2"
+
+msgctxt "#32030"
+msgid "User 3 Access Settings"
+msgstr "Настройки за достъп на потребител 3"
+
+msgctxt "#32031"
+msgid "User 4 Access Settings"
+msgstr "Настройки за достъп на потребител 4"
+
+msgctxt "#32032"
+msgid "User 5 Access Settings"
+msgstr "Настройки за достъп на потребител 5"
+
+msgctxt "#32033"
+msgid "Daily Viewing Allowance (Minutes)"
+msgstr "Ограничавай възпроизвеждането до (минути на ден)"
+
+msgctxt "#32034"
+msgid "Warn User When Remaining Time Is (Minutes)"
+msgstr "Предупреждавай когато остават (минути)"
+
+msgctxt "#32035"
+msgid "Users Name"
+msgstr "Потребителско име"
+
+msgctxt "#32036"
+msgid "User"
+msgstr "Потребител"
+
+msgctxt "#32101"
+msgid "Backspace"
+msgstr "Backspace"
+
+msgctxt "#32102"
+msgid "Done"
+msgstr "Готово"
+
+msgctxt "#32103"
+msgid "Enter Pin"
+msgstr "Въведете PIN"
+
+msgctxt "#32104"
+msgid "Invalid Pin"
+msgstr "Невалиден PIN"
+
+msgctxt "#32105"
+msgid "Enter Existing Pin"
+msgstr "Въведете съществуващ PIN"
+
+msgctxt "#32106"
+msgid "Enter New Pin"
+msgstr "Въведете нов PIN"
+
+msgctxt "#32107"
+msgid "Reenter New Pin"
+msgstr "Въведете повторно"
+
+msgctxt "#32108"
+msgid "Newly entered pins do not match, pin remains unchanged."
+msgstr "Несъвпадащи PIN кодове. PIN кодът не е променен."
+
+msgctxt "#32109"
+msgid "Incorrect number of digits entered for the pin."
+msgstr "Въвели сте неправилен брой цифри."
+
+msgctxt "#32110"
+msgid "Settings change permitted"
+msgstr "Разрешена промяна на настройки"
+
+msgctxt "#32111"
+msgid "Only Restrict File Sources During Navigation"
+msgstr "Ограничавай само в източниците на файлове при навигиране"
+
+msgctxt "#32112"
+msgid "Entered pin clashes with an existing pin."
+msgstr "Въведеният PIN код е в конфликт вече съществуващ."
+
+msgctxt "#32113"
+msgid "Clean Database"
+msgstr "Почистване на базата данни"
+
+msgctxt "#32114"
+msgid "Set Permissions"
+msgstr "Задайте разрешения"
+
+msgctxt "#32115"
+msgid "Advanced"
+msgstr "Допълнителни"
+
+msgctxt "#32117"
+msgid "Start Time"
+msgstr "Начален час"
+
+msgctxt "#32118"
+msgid "End Time"
+msgstr "Краен час"
+
+msgctxt "#32119"
+msgid "Remember Pin"
+msgstr "Запомняне на кода"
+
+msgctxt "#32120"
+msgid "Background"
+msgstr "Фон"
+
+msgctxt "#32121"
+msgid "Black"
+msgstr "Черен"
+
+msgctxt "#32122"
+msgid "PinSentry"
+msgstr "PinSentry"
+
+msgctxt "#32123"
+msgid "Custom"
+msgstr "Персонализиран"
+
+msgctxt "#32124"
+msgid "Custom Background Image"
+msgstr "Персонално фоново изображение"
+
+msgctxt "#32125"
+msgid "Activity"
+msgstr "Активност"
+
+msgctxt "#32126"
+msgid "Video Playing"
+msgstr "Възпроизвеждане на видео"
+
+msgctxt "#32127"
+msgid "Navigation"
+msgstr "Навигиране"
+
+msgctxt "#32128"
+msgid "Plugins"
+msgstr "Приставки"
+
+msgctxt "#32129"
+msgid "Retry?"
+msgstr "Повторен опит?"
+
+msgctxt "#32131"
+msgid "Allowance Remaining (Minutes)"
+msgstr "Оставащи минути"
+
+msgctxt "#32132"
+msgid "Access Allowed Between"
+msgstr "Достъпът е разрешен между"
+
+msgctxt "#32133"
+msgid "Viewing allowance has been exceeded"
+msgstr "Просрочили сте разрешеното време"
+
+msgctxt "#32134"
+msgid "minutes remaining"
+msgstr "оставащи минути"
+
+msgctxt "#32201"
+msgid "Movies"
+msgstr "Филми"
+
+msgctxt "#32202"
+msgid "TV Shows"
+msgstr "ТВ Сериали"
+
+msgctxt "#32203"
+msgid "Movie Sets"
+msgstr "Филмови поредици"
+
+msgctxt "#32204"
+msgid "File Source"
+msgstr "Източник на файлове"
+
+msgctxt "#32205"
+msgid "Music Videos"
+msgstr "Музикални клипове"
+
+msgctxt "#32206"
+msgid "Classifications"
+msgstr "Класификация"
+
+msgctxt "#32207"
+msgid "Movie Classifications"
+msgstr "Класификация на филми"
+
+msgctxt "#32208"
+msgid "TV Classifications"
+msgstr "Класификация на ТВ Сериали"
+
+msgctxt "#32209"
+msgid "Clear All Security"
+msgstr "Премахни настройките за сигурност"
+
+msgctxt "#32210"
+msgid "Apply Security To All"
+msgstr "Приложи настройките за всички"
+
+msgctxt "#32211"
+msgid "Security Level"
+msgstr "Ниво на сигурност"
+
+msgctxt "#32212"
+msgid "Remove Classification Restriction"
+msgstr "Премахване на ограниченията свързани с класификация"
+
+msgctxt "#32301"
+msgid "UK"
+msgstr "Обединено кралство"
+
+msgctxt "#32302"
+msgid "USA"
+msgstr "САЩ"
+
+msgctxt "#32303"
+msgid "Germany"
+msgstr "Германия"
+
+msgctxt "#32304"
+msgid "Ireland"
+msgstr "Ирландия"
+
+msgctxt "#32305"
+msgid "Netherlands"
+msgstr "Нидерландия"
+
+msgctxt "#32306"
+msgid "Australia"
+msgstr "Австралия"
+
+msgctxt "#32307"
+msgid "Brazil"
+msgstr "Бразилия"
+
+msgctxt "#32308"
+msgid "Hungary"
+msgstr "Унгария"
+
+msgctxt "#32309"
+msgid "Denmark"
+msgstr "Дания"
+
+msgctxt "#32310"
+msgid "Norway"
+msgstr "Норвегия"
+
+msgctxt "#32311"
+msgid "Sweden"
+msgstr "Швеция"
+
+msgctxt "#32312"
+msgid "Finland"
+msgstr "Финландия"
+
+msgctxt "#32313"
+msgid "Canada"
+msgstr "Канада"
+
+msgctxt "#32314"
+msgid "Quebec"
+msgstr "Квебек"

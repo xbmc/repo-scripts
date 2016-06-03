@@ -1,0 +1,77 @@
+# Kodi Media Center language file
+# Addon Name: PinSentry
+# Addon id: script.pinsentry
+# Addon Provider: robwebset
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: Latvian (http://www.transifex.com/projects/p/xbmc-addons/language/lv/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: lv\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : 2);\n"
+
+msgctxt "#32002"
+msgid "Setup"
+msgstr "Iestatīšana"
+
+msgctxt "#32003"
+msgid "Debugging"
+msgstr "Atkļūdošana"
+
+msgctxt "#32004"
+msgid "Enable debug logging"
+msgstr "Ieslēgt atkļūdošanas reģistrēšanu"
+
+msgctxt "#32012"
+msgid "None"
+msgstr "Nav"
+
+msgctxt "#32036"
+msgid "User"
+msgstr "Lietotājs"
+
+msgctxt "#32101"
+msgid "Backspace"
+msgstr "Backspace"
+
+msgctxt "#32102"
+msgid "Done"
+msgstr "Pabeigts"
+
+msgctxt "#32115"
+msgid "Advanced"
+msgstr "Papildus"
+
+msgctxt "#32118"
+msgid "End Time"
+msgstr "Beigu laiks"
+
+msgctxt "#32120"
+msgid "Background"
+msgstr "Fons"
+
+msgctxt "#32121"
+msgid "Black"
+msgstr "Melns"
+
+msgctxt "#32123"
+msgid "Custom"
+msgstr "Pielāgots"
+
+msgctxt "#32201"
+msgid "Movies"
+msgstr "Filmas"
+
+msgctxt "#32202"
+msgid "TV Shows"
+msgstr "TV Šovi"
+
+msgctxt "#32203"
+msgid "Movie Sets"
+msgstr "Filmu Komplekti"

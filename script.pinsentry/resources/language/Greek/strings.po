@@ -1,0 +1,221 @@
+# Kodi Media Center language file
+# Addon Name: PinSentry
+# Addon id: script.pinsentry
+# Addon Provider: robwebset
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: Greek (http://www.transifex.com/projects/p/xbmc-addons/language/el/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: el\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "Addon Summary"
+msgid "Protect Kodi Content With A Pin Code"
+msgstr "Προστασία περιεχομένου Kodi με κωδικό PIN"
+
+msgctxt "#32002"
+msgid "Setup"
+msgstr "Εγκατάσταση"
+
+msgctxt "#32003"
+msgid "Debugging"
+msgstr "Εντοπισμός σφαλμάτων"
+
+msgctxt "#32004"
+msgid "Enable debug logging"
+msgstr "Καταγραφή σφαλμάτων"
+
+msgctxt "#32005"
+msgid "Operations"
+msgstr "Λειτουργίες"
+
+msgctxt "#32006"
+msgid "Pin Length"
+msgstr "Μήκος PIN"
+
+msgctxt "#32008"
+msgid "*** WARNING: PIN NOT SET ***"
+msgstr "*** ΠΡΟΣΟΧΗ: ΤΟ PIN ΔΕΝ ΕΧΕΙ ΟΡΙΣΤΕΙ ***"
+
+msgctxt "#32009"
+msgid "Invalid Pin Notification"
+msgstr "Ειδοποίηση εσφαλμένου PIN"
+
+msgctxt "#32012"
+msgid "None"
+msgstr "Καμία"
+
+msgctxt "#32016"
+msgid "Remember Pin For (Minutes)"
+msgstr "Απομνημόνευση PIN για (Λεπτά)"
+
+msgctxt "#32024"
+msgid "*** NOT SET ***"
+msgstr "*** ΔΕΝ ΕΧΕΙ ΟΡΙΣΤΕΙ ***"
+
+msgctxt "#32025"
+msgid "Time Limits"
+msgstr "Χρονικά Όρια"
+
+msgctxt "#32033"
+msgid "Daily Viewing Allowance (Minutes)"
+msgstr "Ημερήσια Ώρα Θέασης (Λεπτά)"
+
+msgctxt "#32034"
+msgid "Warn User When Remaining Time Is (Minutes)"
+msgstr "Ειδοποίησε τον χρήστη όταν ο εναπομένων χρόνος είναι (Λεπτά)"
+
+msgctxt "#32036"
+msgid "User"
+msgstr "Χρήστης"
+
+msgctxt "#32101"
+msgid "Backspace"
+msgstr "Διαγραφή"
+
+msgctxt "#32102"
+msgid "Done"
+msgstr "Τέλος"
+
+msgctxt "#32103"
+msgid "Enter Pin"
+msgstr "Εισάγετε PIN"
+
+msgctxt "#32104"
+msgid "Invalid Pin"
+msgstr "Εσφαλμένο PIN"
+
+msgctxt "#32105"
+msgid "Enter Existing Pin"
+msgstr "Εισάγετε υπάρχων PIN"
+
+msgctxt "#32106"
+msgid "Enter New Pin"
+msgstr "Εισάγετε καινούργιο PIN"
+
+msgctxt "#32107"
+msgid "Reenter New Pin"
+msgstr "Εισάγετε ξανα το καινούργιο PIN"
+
+msgctxt "#32108"
+msgid "Newly entered pins do not match, pin remains unchanged."
+msgstr "Τα καινούργια PIN δεν ταιριάζουν, το PIN παραμένει ως είχε"
+
+msgctxt "#32113"
+msgid "Clean Database"
+msgstr "Εκκαθάριση Βάσης Δεδομένων"
+
+msgctxt "#32115"
+msgid "Advanced"
+msgstr "Για προχωρημένους"
+
+msgctxt "#32117"
+msgid "Start Time"
+msgstr "Χρόνος Έναρξης"
+
+msgctxt "#32118"
+msgid "End Time"
+msgstr "Χρόνος λήξης"
+
+msgctxt "#32120"
+msgid "Background"
+msgstr "Υπόβαθρο"
+
+msgctxt "#32121"
+msgid "Black"
+msgstr "Μαύρη οθόνη"
+
+msgctxt "#32123"
+msgid "Custom"
+msgstr "Προσαρμογή"
+
+msgctxt "#32126"
+msgid "Video Playing"
+msgstr "Αναπαραγωγή Βίντεο"
+
+msgctxt "#32127"
+msgid "Navigation"
+msgstr "Πλοήγηση"
+
+msgctxt "#32128"
+msgid "Plugins"
+msgstr "Plugin"
+
+msgctxt "#32134"
+msgid "minutes remaining"
+msgstr "λεπτά απομένουν"
+
+msgctxt "#32201"
+msgid "Movies"
+msgstr "Ταινίες"
+
+msgctxt "#32202"
+msgid "TV Shows"
+msgstr "Σειρές"
+
+msgctxt "#32203"
+msgid "Movie Sets"
+msgstr "Ομάδες Ταινιών"
+
+msgctxt "#32301"
+msgid "UK"
+msgstr "H.B."
+
+msgctxt "#32302"
+msgid "USA"
+msgstr "Η.Π.Α"
+
+msgctxt "#32303"
+msgid "Germany"
+msgstr "Γερμανία"
+
+msgctxt "#32304"
+msgid "Ireland"
+msgstr "Ιρλανδία"
+
+msgctxt "#32305"
+msgid "Netherlands"
+msgstr "Ολλανδία"
+
+msgctxt "#32306"
+msgid "Australia"
+msgstr "Αυστραλία"
+
+msgctxt "#32307"
+msgid "Brazil"
+msgstr "Βραζιλία"
+
+msgctxt "#32308"
+msgid "Hungary"
+msgstr "Ουγγαρία"
+
+msgctxt "#32309"
+msgid "Denmark"
+msgstr "Δανία"
+
+msgctxt "#32310"
+msgid "Norway"
+msgstr "Νορβηγία"
+
+msgctxt "#32311"
+msgid "Sweden"
+msgstr "Σουηδία"
+
+msgctxt "#32312"
+msgid "Finland"
+msgstr "Φιλανδία"
+
+msgctxt "#32313"
+msgid "Canada"
+msgstr "Καναδάς"
+
+msgctxt "#32314"
+msgid "Quebec"
+msgstr "Κεμπέκ"

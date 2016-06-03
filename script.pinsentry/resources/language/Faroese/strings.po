@@ -1,0 +1,53 @@
+# Kodi Media Center language file
+# Addon Name: PinSentry
+# Addon id: script.pinsentry
+# Addon Provider: robwebset
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: Faroese (http://www.transifex.com/projects/p/xbmc-addons/language/fo/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: fo\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#32004"
+msgid "Enable debug logging"
+msgstr "Tendra skráseting av handlingum"
+
+msgctxt "#32012"
+msgid "None"
+msgstr "Onki"
+
+msgctxt "#32101"
+msgid "Backspace"
+msgstr "Strika"
+
+msgctxt "#32102"
+msgid "Done"
+msgstr "Liðugt"
+
+msgctxt "#32118"
+msgid "End Time"
+msgstr "Liðugt"
+
+msgctxt "#32120"
+msgid "Background"
+msgstr "Bakgrund"
+
+msgctxt "#32121"
+msgid "Black"
+msgstr "Svart"
+
+msgctxt "#32123"
+msgid "Custom"
+msgstr "Serligt"
+
+msgctxt "#32201"
+msgid "Movies"
+msgstr "Filmar"
