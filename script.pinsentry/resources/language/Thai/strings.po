@@ -1,0 +1,85 @@
+# Kodi Media Center language file
+# Addon Name: PinSentry
+# Addon id: script.pinsentry
+# Addon Provider: robwebset
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: Thai (http://www.transifex.com/projects/p/xbmc-addons/language/th/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: th\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgctxt "#32002"
+msgid "Setup"
+msgstr "ตั้งค่า"
+
+msgctxt "#32003"
+msgid "Debugging"
+msgstr "แก้จุดบกพร่อง"
+
+msgctxt "#32004"
+msgid "Enable debug logging"
+msgstr "Enable debug logging"
+
+msgctxt "#32012"
+msgid "None"
+msgstr "ไม่มี"
+
+msgctxt "#32036"
+msgid "User"
+msgstr "ผู้ใช้"
+
+msgctxt "#32101"
+msgid "Backspace"
+msgstr "Backspace"
+
+msgctxt "#32102"
+msgid "Done"
+msgstr "สำเร็จ"
+
+msgctxt "#32115"
+msgid "Advanced"
+msgstr "ขั้นสูง"
+
+msgctxt "#32118"
+msgid "End Time"
+msgstr "เวลาสิ้นสุด"
+
+msgctxt "#32120"
+msgid "Background"
+msgstr "พื้นหลัง"
+
+msgctxt "#32121"
+msgid "Black"
+msgstr "ดำ"
+
+msgctxt "#32123"
+msgid "Custom"
+msgstr "กำหนดเอง"
+
+msgctxt "#32127"
+msgid "Navigation"
+msgstr "นำทาง"
+
+msgctxt "#32128"
+msgid "Plugins"
+msgstr "ส่วนเสริม"
+
+msgctxt "#32201"
+msgid "Movies"
+msgstr "ภาพยนตร์"
+
+msgctxt "#32202"
+msgid "TV Shows"
+msgstr "รายการทีวี"
+
+msgctxt "#32203"
+msgid "Movie Sets"
+msgstr "ภาพยนตร์ชุด"

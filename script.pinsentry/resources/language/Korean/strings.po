@@ -1,0 +1,177 @@
+# Kodi Media Center language file
+# Addon Name: PinSentry
+# Addon id: script.pinsentry
+# Addon Provider: robwebset
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: Korean (http://www.transifex.com/projects/p/xbmc-addons/language/ko/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ko\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgctxt "Addon Summary"
+msgid "Protect Kodi Content With A Pin Code"
+msgstr "PIN 코드로 Kodi 콘텐츠를 보호합니다"
+
+msgctxt "Addon Description"
+msgid "Force users to enter the correct pin code for given content."
+msgstr "특정 콘텐츠에서 PIN 코드 입력을 요구합니다."
+
+msgctxt "#32001"
+msgid "Pin Sentry"
+msgstr "Pin Sentry"
+
+msgctxt "#32002"
+msgid "Setup"
+msgstr "설정"
+
+msgctxt "#32003"
+msgid "Debugging"
+msgstr "디버깅"
+
+msgctxt "#32004"
+msgid "Enable debug logging"
+msgstr "디버그 로그 사용"
+
+msgctxt "#32005"
+msgid "Operations"
+msgstr "작업"
+
+msgctxt "#32006"
+msgid "Pin Length"
+msgstr "PIN 길이"
+
+msgctxt "#32007"
+msgid "Set Pin Value"
+msgstr "PIN 입력값 설정"
+
+msgctxt "#32008"
+msgid "*** WARNING: PIN NOT SET ***"
+msgstr "*** 경고: PIN 설정되지 않음 ***"
+
+msgctxt "#32009"
+msgid "Invalid Pin Notification"
+msgstr "올바르지 않은 PIN 알람"
+
+msgctxt "#32010"
+msgid "Popup Notification"
+msgstr "팝업 알람"
+
+msgctxt "#32011"
+msgid "Dialog Box"
+msgstr "대화 상자"
+
+msgctxt "#32012"
+msgid "None"
+msgstr "없음"
+
+msgctxt "#32013"
+msgid "Off"
+msgstr "끔"
+
+msgctxt "#32014"
+msgid "On"
+msgstr "켬"
+
+msgctxt "#32036"
+msgid "User"
+msgstr "사용자"
+
+msgctxt "#32101"
+msgid "Backspace"
+msgstr "백스페이스"
+
+msgctxt "#32102"
+msgid "Done"
+msgstr "완료"
+
+msgctxt "#32103"
+msgid "Enter Pin"
+msgstr "PIN 입력"
+
+msgctxt "#32104"
+msgid "Invalid Pin"
+msgstr "올바르지 않은 PIN"
+
+msgctxt "#32105"
+msgid "Enter Existing Pin"
+msgstr "현재 PIN 입력"
+
+msgctxt "#32106"
+msgid "Enter New Pin"
+msgstr "새 PIN 입력"
+
+msgctxt "#32107"
+msgid "Reenter New Pin"
+msgstr "새 PIN 다시 입력"
+
+msgctxt "#32113"
+msgid "Clean Database"
+msgstr "데이터베이스 정리"
+
+msgctxt "#32114"
+msgid "Set Permissions"
+msgstr "권한 설정"
+
+msgctxt "#32115"
+msgid "Advanced"
+msgstr "고급"
+
+msgctxt "#32117"
+msgid "Start Time"
+msgstr "시작 시각"
+
+msgctxt "#32118"
+msgid "End Time"
+msgstr "종료 시각"
+
+msgctxt "#32120"
+msgid "Background"
+msgstr "배경"
+
+msgctxt "#32121"
+msgid "Black"
+msgstr "검정"
+
+msgctxt "#32122"
+msgid "PinSentry"
+msgstr "PinSentry"
+
+msgctxt "#32123"
+msgid "Custom"
+msgstr "사용자 지정"
+
+msgctxt "#32124"
+msgid "Custom Background Image"
+msgstr "사용자 배경 이미지"
+
+msgctxt "#32126"
+msgid "Video Playing"
+msgstr "비디오 재생 중"
+
+msgctxt "#32127"
+msgid "Navigation"
+msgstr "이동"
+
+msgctxt "#32128"
+msgid "Plugins"
+msgstr "플러그인"
+
+msgctxt "#32201"
+msgid "Movies"
+msgstr "영화"
+
+msgctxt "#32202"
+msgid "TV Shows"
+msgstr "TV 쇼"
+
+msgctxt "#32203"
+msgid "Movie Sets"
+msgstr "영화 시리즈"

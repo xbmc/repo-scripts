@@ -1,0 +1,93 @@
+# Kodi Media Center language file
+# Addon Name: PinSentry
+# Addon id: script.pinsentry
+# Addon Provider: robwebset
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: Hungarian (http://www.transifex.com/projects/p/xbmc-addons/language/hu/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: hu\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#32002"
+msgid "Setup"
+msgstr "Beállítás"
+
+msgctxt "#32003"
+msgid "Debugging"
+msgstr "Hibakeresés"
+
+msgctxt "#32004"
+msgid "Enable debug logging"
+msgstr "Naplózás engedélyezése"
+
+msgctxt "#32005"
+msgid "Operations"
+msgstr "Műveletek"
+
+msgctxt "#32012"
+msgid "None"
+msgstr "Nincs"
+
+msgctxt "#32036"
+msgid "User"
+msgstr "Felhasználó"
+
+msgctxt "#32101"
+msgid "Backspace"
+msgstr "Törlés"
+
+msgctxt "#32102"
+msgid "Done"
+msgstr "Rendben"
+
+msgctxt "#32113"
+msgid "Clean Database"
+msgstr "Adatbázis tisztítása"
+
+msgctxt "#32115"
+msgid "Advanced"
+msgstr "Haladó"
+
+msgctxt "#32118"
+msgid "End Time"
+msgstr "Befejezés időpontja"
+
+msgctxt "#32120"
+msgid "Background"
+msgstr "Háttér"
+
+msgctxt "#32121"
+msgid "Black"
+msgstr "Fekete"
+
+msgctxt "#32123"
+msgid "Custom"
+msgstr "Egyéni"
+
+msgctxt "#32127"
+msgid "Navigation"
+msgstr "Navigáció"
+
+msgctxt "#32128"
+msgid "Plugins"
+msgstr "Beépülők"
+
+msgctxt "#32201"
+msgid "Movies"
+msgstr "Filmek"
+
+msgctxt "#32202"
+msgid "TV Shows"
+msgstr "Sorozatok"
+
+msgctxt "#32203"
+msgid "Movie Sets"
+msgstr "Movie Szettek"

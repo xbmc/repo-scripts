@@ -1,0 +1,73 @@
+# Kodi Media Center language file
+# Addon Name: PinSentry
+# Addon id: script.pinsentry
+# Addon Provider: robwebset
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: Indonesian (http://www.transifex.com/projects/p/xbmc-addons/language/id/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: id\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgctxt "#32002"
+msgid "Setup"
+msgstr "Konfigurasi"
+
+msgctxt "#32003"
+msgid "Debugging"
+msgstr "Debugging"
+
+msgctxt "#32004"
+msgid "Enable debug logging"
+msgstr "Mendeteksi  Nilai HDD"
+
+msgctxt "#32012"
+msgid "None"
+msgstr "Tidak Ada"
+
+msgctxt "#32101"
+msgid "Backspace"
+msgstr "Backspace"
+
+msgctxt "#32102"
+msgid "Done"
+msgstr "Selesai"
+
+msgctxt "#32115"
+msgid "Advanced"
+msgstr "Tingkat Lanjut"
+
+msgctxt "#32118"
+msgid "End Time"
+msgstr "Waktu Selesai"
+
+msgctxt "#32120"
+msgid "Background"
+msgstr "Latar belakang"
+
+msgctxt "#32121"
+msgid "Black"
+msgstr "Hitam"
+
+msgctxt "#32123"
+msgid "Custom"
+msgstr "Mendeteksi Informasi Harddisk"
+
+msgctxt "#32126"
+msgid "Video Playing"
+msgstr "Video Dimainkan"
+
+msgctxt "#32201"
+msgid "Movies"
+msgstr "Film"
+
+msgctxt "#32202"
+msgid "TV Shows"
+msgstr "Acara TV"

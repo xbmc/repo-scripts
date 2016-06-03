@@ -1,0 +1,409 @@
+# Kodi Media Center language file
+# Addon Name: PinSentry
+# Addon id: script.pinsentry
+# Addon Provider: robwebset
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: German (http://www.transifex.com/projects/p/xbmc-addons/language/de/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: de\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "Addon Summary"
+msgid "Protect Kodi Content With A Pin Code"
+msgstr "Kodi-Inhalt mit einem PIN-Code sichern"
+
+msgctxt "Addon Description"
+msgid "Force users to enter the correct pin code for given content."
+msgstr "Von Anwendern die Eingabe der korrekten PIN für den angegebenen Inhalt erzwingen."
+
+msgctxt "#32001"
+msgid "Pin Sentry"
+msgstr "PIN-Wachdienst"
+
+msgctxt "#32002"
+msgid "Setup"
+msgstr "Einrichtung"
+
+msgctxt "#32003"
+msgid "Debugging"
+msgstr "Fehlersuche"
+
+msgctxt "#32004"
+msgid "Enable debug logging"
+msgstr "Fehlersuchprotokollierung aktivieren"
+
+msgctxt "#32005"
+msgid "Operations"
+msgstr "Operationen"
+
+msgctxt "#32006"
+msgid "Pin Length"
+msgstr "PIN-Länge"
+
+msgctxt "#32007"
+msgid "Set Pin Value"
+msgstr "PIN-Wert festlegen"
+
+msgctxt "#32008"
+msgid "*** WARNING: PIN NOT SET ***"
+msgstr "*** WARNUNG: PIN NICHT FESTGELEGT ***"
+
+msgctxt "#32009"
+msgid "Invalid Pin Notification"
+msgstr "Ungültige PIN-Benachrichtigung"
+
+msgctxt "#32010"
+msgid "Popup Notification"
+msgstr "Dialog-Benachrichtigung"
+
+msgctxt "#32011"
+msgid "Dialog Box"
+msgstr "Dialogbox"
+
+msgctxt "#32012"
+msgid "None"
+msgstr "Keines"
+
+msgctxt "#32013"
+msgid "Off"
+msgstr "Aus"
+
+msgctxt "#32014"
+msgid "On"
+msgstr "Ein"
+
+msgctxt "#32015"
+msgid "For Time Period"
+msgstr "Für einen Zeitraum"
+
+msgctxt "#32016"
+msgid "Remember Pin For (Minutes)"
+msgstr "PIN merken für (Minuten)"
+
+msgctxt "#32017"
+msgid "Block Movies Without A Classification"
+msgstr "Filme ohne Einstufung blockieren"
+
+msgctxt "#32018"
+msgid "Block TV Shows Without A Classification"
+msgstr "Fernsehserien ohne Einstufung blockieren"
+
+msgctxt "#32019"
+msgid "Highlight Videos Not Protected By Classifications"
+msgstr "Filme ohne Schutz durch Einstufungen hervorheben"
+
+msgctxt "#32020"
+msgid "Number Of Security Levels"
+msgstr "Anzahl an Sicherheitsstufen"
+
+msgctxt "#32021"
+msgid "Set Pin For Security Level"
+msgstr "PIN für Sicherheitsstufe festlegen"
+
+msgctxt "#32022"
+msgid "Show Security Level On Permissions Screen"
+msgstr "Sicherheitsstufe auf dem Berechtigungsbildschirm anzeigen"
+
+msgctxt "#32023"
+msgid "Allow Direction Keys In Pin Code"
+msgstr "Richtungstasten im PIN-Code erlauben"
+
+msgctxt "#32024"
+msgid "*** NOT SET ***"
+msgstr "*** NICHT FESTGELEGT ***"
+
+msgctxt "#32025"
+msgid "Time Limits"
+msgstr "Zeitbeschränkungen"
+
+msgctxt "#32026"
+msgid "Number Of Limited Users"
+msgstr "Anzahl an beschränkten Benutzern"
+
+msgctxt "#32027"
+msgid "Unrestricted User Access Settings"
+msgstr "Unbeschränkte Benutzerzugriffseinstellungen"
+
+msgctxt "#32028"
+msgid "User 1 Access Settings"
+msgstr "Benutzer 1-Zugriffseinstellungen"
+
+msgctxt "#32029"
+msgid "User 2 Access Settings"
+msgstr "Benutzer 2-Zugriffseinstellungen"
+
+msgctxt "#32030"
+msgid "User 3 Access Settings"
+msgstr "Benutzer 3-Zugriffseinstellungen"
+
+msgctxt "#32031"
+msgid "User 4 Access Settings"
+msgstr "Benutzer 4-Zugriffseinstellungen"
+
+msgctxt "#32032"
+msgid "User 5 Access Settings"
+msgstr "Benutzer 5-Zugriffseinstellungen"
+
+msgctxt "#32033"
+msgid "Daily Viewing Allowance (Minutes)"
+msgstr "Tägliches Zeitkontingent (Minuten)"
+
+msgctxt "#32034"
+msgid "Warn User When Remaining Time Is (Minutes)"
+msgstr "Benutzer warnen, wenn die verbleibende Zeit (Minutes) ist"
+
+msgctxt "#32035"
+msgid "Users Name"
+msgstr "Benutzername"
+
+msgctxt "#32036"
+msgid "User"
+msgstr "Benutzer"
+
+msgctxt "#32101"
+msgid "Backspace"
+msgstr "Löschen"
+
+msgctxt "#32102"
+msgid "Done"
+msgstr "Fertig"
+
+msgctxt "#32103"
+msgid "Enter Pin"
+msgstr "PIN eingeben"
+
+msgctxt "#32104"
+msgid "Invalid Pin"
+msgstr "Ungültige PIN"
+
+msgctxt "#32105"
+msgid "Enter Existing Pin"
+msgstr "Vorhandene PIN eingeben"
+
+msgctxt "#32106"
+msgid "Enter New Pin"
+msgstr "Neue PIN eingeben"
+
+msgctxt "#32107"
+msgid "Reenter New Pin"
+msgstr "Neue PIN erneut eingeben"
+
+msgctxt "#32108"
+msgid "Newly entered pins do not match, pin remains unchanged."
+msgstr "Neu eingegebene PINs stimmen nicht überein, PIN verbleibt ungeändert."
+
+msgctxt "#32109"
+msgid "Incorrect number of digits entered for the pin."
+msgstr "Falsche Anzahl an Stellen für die PIN eingegeben."
+
+msgctxt "#32110"
+msgid "Settings change permitted"
+msgstr "Einstellungsänderung erlaubt"
+
+msgctxt "#32111"
+msgid "Only Restrict File Sources During Navigation"
+msgstr "Nur eingeschränkte Dateiquellen während der Navigation"
+
+msgctxt "#32112"
+msgid "Entered pin clashes with an existing pin."
+msgstr "Eingegebener Pin kollidiert mit existierendem Pin."
+
+msgctxt "#32113"
+msgid "Clean Database"
+msgstr "Datenbank aufräumen"
+
+msgctxt "#32114"
+msgid "Set Permissions"
+msgstr "Berechtigungen festlegen"
+
+msgctxt "#32115"
+msgid "Advanced"
+msgstr "Erweitert"
+
+msgctxt "#32116"
+msgid "Only Enforce Pin Between Set Times"
+msgstr "Nur erzwungener Pin zwischen gesetzten Zeiten"
+
+msgctxt "#32117"
+msgid "Start Time"
+msgstr "Startzeit"
+
+msgctxt "#32118"
+msgid "End Time"
+msgstr "Endzeit"
+
+msgctxt "#32119"
+msgid "Remember Pin"
+msgstr "PIN merken"
+
+msgctxt "#32120"
+msgid "Background"
+msgstr "Hintergrund"
+
+msgctxt "#32121"
+msgid "Black"
+msgstr "Schwarz"
+
+msgctxt "#32122"
+msgid "PinSentry"
+msgstr "PINWachdienst"
+
+msgctxt "#32123"
+msgid "Custom"
+msgstr "Eigene"
+
+msgctxt "#32124"
+msgid "Custom Background Image"
+msgstr "Benutzerdefiniertes Hintergrundbild"
+
+msgctxt "#32125"
+msgid "Activity"
+msgstr "Aktivität"
+
+msgctxt "#32126"
+msgid "Video Playing"
+msgstr "Videowiedergabe"
+
+msgctxt "#32127"
+msgid "Navigation"
+msgstr "Navigation"
+
+msgctxt "#32128"
+msgid "Plugins"
+msgstr "Plugins"
+
+msgctxt "#32129"
+msgid "Retry?"
+msgstr "Nochmal?"
+
+msgctxt "#32130"
+msgid "Current time outside users viewing times"
+msgstr "Aktuelle Zeit außerhalb der von Benutzern gesehenen Zeiten."
+
+msgctxt "#32131"
+msgid "Allowance Remaining (Minutes)"
+msgstr "Verbleibendes Zeitkontingent (Minuten)"
+
+msgctxt "#32132"
+msgid "Access Allowed Between"
+msgstr "Zugriff erlaubt zwischen"
+
+msgctxt "#32133"
+msgid "Viewing allowance has been exceeded"
+msgstr "Erlaubnis zum Betrachten abgelaufen"
+
+msgctxt "#32134"
+msgid "minutes remaining"
+msgstr "Minuten verbleiben"
+
+msgctxt "#32201"
+msgid "Movies"
+msgstr "Filme"
+
+msgctxt "#32202"
+msgid "TV Shows"
+msgstr "Fernsehserien"
+
+msgctxt "#32203"
+msgid "Movie Sets"
+msgstr "Filmzusammenstellungen"
+
+msgctxt "#32204"
+msgid "File Source"
+msgstr "Dateiquelle"
+
+msgctxt "#32205"
+msgid "Music Videos"
+msgstr "Musikvideos"
+
+msgctxt "#32206"
+msgid "Classifications"
+msgstr "Einstufungen"
+
+msgctxt "#32207"
+msgid "Movie Classifications"
+msgstr "Filmeinstufungen"
+
+msgctxt "#32208"
+msgid "TV Classifications"
+msgstr "Fernseheinstufungen"
+
+msgctxt "#32209"
+msgid "Clear All Security"
+msgstr "Sicherheit Markierung für alle zurücksetzen"
+
+msgctxt "#32210"
+msgid "Apply Security To All"
+msgstr "Sicherheit für alle übernehmen"
+
+msgctxt "#32211"
+msgid "Security Level"
+msgstr "Sicherheitsstufe"
+
+msgctxt "#32212"
+msgid "Remove Classification Restriction"
+msgstr "Einstufungsbeschränkung entfernen"
+
+msgctxt "#32301"
+msgid "UK"
+msgstr "GB"
+
+msgctxt "#32302"
+msgid "USA"
+msgstr "USA"
+
+msgctxt "#32303"
+msgid "Germany"
+msgstr "Deutschland"
+
+msgctxt "#32304"
+msgid "Ireland"
+msgstr "Irland"
+
+msgctxt "#32305"
+msgid "Netherlands"
+msgstr "Niederlande"
+
+msgctxt "#32306"
+msgid "Australia"
+msgstr "Australien"
+
+msgctxt "#32307"
+msgid "Brazil"
+msgstr "Brasilien"
+
+msgctxt "#32308"
+msgid "Hungary"
+msgstr "Ungarn"
+
+msgctxt "#32309"
+msgid "Denmark"
+msgstr "Dänemark"
+
+msgctxt "#32310"
+msgid "Norway"
+msgstr "Norwegen"
+
+msgctxt "#32311"
+msgid "Sweden"
+msgstr "Schweden"
+
+msgctxt "#32312"
+msgid "Finland"
+msgstr "Finnland"
+
+msgctxt "#32313"
+msgid "Canada"
+msgstr "Kanada"
+
+msgctxt "#32314"
+msgid "Quebec"
+msgstr "Quebec"

@@ -1,0 +1,381 @@
+# Kodi Media Center language file
+# Addon Name: PinSentry
+# Addon id: script.pinsentry
+# Addon Provider: robwebset
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: Hebrew (http://www.transifex.com/projects/p/xbmc-addons/language/he/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: he\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "Addon Summary"
+msgid "Protect Kodi Content With A Pin Code"
+msgstr "להגן על תוכן Kodi באמצעות קוד PIN"
+
+msgctxt "#32002"
+msgid "Setup"
+msgstr "הגדרות"
+
+msgctxt "#32003"
+msgid "Debugging"
+msgstr "ניפוי שגיאות"
+
+msgctxt "#32004"
+msgid "Enable debug logging"
+msgstr "הפעל יומן רישום מורחב"
+
+msgctxt "#32005"
+msgid "Operations"
+msgstr "פעולות"
+
+msgctxt "#32006"
+msgid "Pin Length"
+msgstr "אורך קוד"
+
+msgctxt "#32007"
+msgid "Set Pin Value"
+msgstr "קביעת ערך קוד"
+
+msgctxt "#32008"
+msgid "*** WARNING: PIN NOT SET ***"
+msgstr "*** אזהרה: לא מוגדר קוד ***"
+
+msgctxt "#32009"
+msgid "Invalid Pin Notification"
+msgstr "הודעת PIN לא חוקי"
+
+msgctxt "#32010"
+msgid "Popup Notification"
+msgstr "הודעה קופצת"
+
+msgctxt "#32011"
+msgid "Dialog Box"
+msgstr "תיבת דיאלוג"
+
+msgctxt "#32012"
+msgid "None"
+msgstr "ללא"
+
+msgctxt "#32013"
+msgid "Off"
+msgstr "כבוי"
+
+msgctxt "#32014"
+msgid "On"
+msgstr "פעיל"
+
+msgctxt "#32015"
+msgid "For Time Period"
+msgstr "לתקופת זמן"
+
+msgctxt "#32016"
+msgid "Remember Pin For (Minutes)"
+msgstr "לזכור PIN ל( דקות)"
+
+msgctxt "#32017"
+msgid "Block Movies Without A Classification"
+msgstr " לחסום סרטים  ללא סיווג"
+
+msgctxt "#32018"
+msgid "Block TV Shows Without A Classification"
+msgstr " לחסום סדרות ללא סיווג"
+
+msgctxt "#32019"
+msgid "Highlight Videos Not Protected By Classifications"
+msgstr "סמן את הסרטונים שאינם מוגנים על ידי סיווגים"
+
+msgctxt "#32020"
+msgid "Number Of Security Levels"
+msgstr "מספר רמות אבטחה"
+
+msgctxt "#32021"
+msgid "Set Pin For Security Level"
+msgstr "נקבע PIN לרמת אבטחה"
+
+msgctxt "#32022"
+msgid "Show Security Level On Permissions Screen"
+msgstr "הצג רמת אבטחה במסך הרשאות"
+
+msgctxt "#32023"
+msgid "Allow Direction Keys In Pin Code"
+msgstr "לאפשר מקשי כיוון בPIN הקוד"
+
+msgctxt "#32024"
+msgid "*** NOT SET ***"
+msgstr "*** לא מוגדר ***"
+
+msgctxt "#32025"
+msgid "Time Limits"
+msgstr "מגבלות זמן"
+
+msgctxt "#32026"
+msgid "Number Of Limited Users"
+msgstr "מספר המשתמשים מוגבל"
+
+msgctxt "#32027"
+msgid "Unrestricted User Access Settings"
+msgstr "הגדרות גישה בלתי מוגבל למשתמש"
+
+msgctxt "#32028"
+msgid "User 1 Access Settings"
+msgstr "הגדרות גישה משתמש 1"
+
+msgctxt "#32029"
+msgid "User 2 Access Settings"
+msgstr "הגדרות גישה משתמש 2"
+
+msgctxt "#32030"
+msgid "User 3 Access Settings"
+msgstr "הגדרות גישה משתמש 3"
+
+msgctxt "#32031"
+msgid "User 4 Access Settings"
+msgstr "הגדרות גישה משתמש 4"
+
+msgctxt "#32032"
+msgid "User 5 Access Settings"
+msgstr "הגדרות גישה משתמש 5"
+
+msgctxt "#32033"
+msgid "Daily Viewing Allowance (Minutes)"
+msgstr "קיצבת צפייה יומית (דקות)"
+
+msgctxt "#32034"
+msgid "Warn User When Remaining Time Is (Minutes)"
+msgstr "הזהר משתמש כאשר זמן שנותר הוא (דקות)"
+
+msgctxt "#32035"
+msgid "Users Name"
+msgstr "שמות משתמשים"
+
+msgctxt "#32036"
+msgid "User"
+msgstr "משתמש"
+
+msgctxt "#32101"
+msgid "Backspace"
+msgstr "Backspace"
+
+msgctxt "#32102"
+msgid "Done"
+msgstr "סיום"
+
+msgctxt "#32103"
+msgid "Enter Pin"
+msgstr "יש להזין קוד"
+
+msgctxt "#32104"
+msgid "Invalid Pin"
+msgstr "קוד לא תקף"
+
+msgctxt "#32105"
+msgid "Enter Existing Pin"
+msgstr "יש להזין קוד קיים"
+
+msgctxt "#32106"
+msgid "Enter New Pin"
+msgstr "יש להזין קוד חדש"
+
+msgctxt "#32107"
+msgid "Reenter New Pin"
+msgstr "יש להזין שוב קוד חדש"
+
+msgctxt "#32110"
+msgid "Settings change permitted"
+msgstr " מותר שינוי הגדרות "
+
+msgctxt "#32111"
+msgid "Only Restrict File Sources During Navigation"
+msgstr "הגבל את מקורות קובץ רק במהלך הניווט"
+
+msgctxt "#32113"
+msgid "Clean Database"
+msgstr "איפוס מסד נתונים"
+
+msgctxt "#32114"
+msgid "Set Permissions"
+msgstr "קביעת הרשאות"
+
+msgctxt "#32115"
+msgid "Advanced"
+msgstr "מתקדם"
+
+msgctxt "#32117"
+msgid "Start Time"
+msgstr "זמן התחלה"
+
+msgctxt "#32118"
+msgid "End Time"
+msgstr "זמן סיום"
+
+msgctxt "#32119"
+msgid "Remember Pin"
+msgstr "לזכור את הPIN"
+
+msgctxt "#32120"
+msgid "Background"
+msgstr "רקע"
+
+msgctxt "#32121"
+msgid "Black"
+msgstr "שחור"
+
+msgctxt "#32123"
+msgid "Custom"
+msgstr "מותאם אישית"
+
+msgctxt "#32124"
+msgid "Custom Background Image"
+msgstr "תמונת רקע מותאמת אישית"
+
+msgctxt "#32125"
+msgid "Activity"
+msgstr "פעילות"
+
+msgctxt "#32126"
+msgid "Video Playing"
+msgstr "וידאו מנוגן"
+
+msgctxt "#32127"
+msgid "Navigation"
+msgstr "ניווט"
+
+msgctxt "#32128"
+msgid "Plugins"
+msgstr "הרחבות"
+
+msgctxt "#32129"
+msgid "Retry?"
+msgstr "לנסות שוב?"
+
+msgctxt "#32130"
+msgid "Current time outside users viewing times"
+msgstr "הזמן הנוכחי של המשתמשים מחוץ לזמן לצפייה "
+
+msgctxt "#32131"
+msgid "Allowance Remaining (Minutes)"
+msgstr "קיצבה נותרה (דקות)"
+
+msgctxt "#32132"
+msgid "Access Allowed Between"
+msgstr "גישה מותרת בין"
+
+msgctxt "#32133"
+msgid "Viewing allowance has been exceeded"
+msgstr "קיצבת הצפיה כבר חרגו"
+
+msgctxt "#32134"
+msgid "minutes remaining"
+msgstr "דקות נותרו"
+
+msgctxt "#32201"
+msgid "Movies"
+msgstr "סרטים"
+
+msgctxt "#32202"
+msgid "TV Shows"
+msgstr "סדרות"
+
+msgctxt "#32203"
+msgid "Movie Sets"
+msgstr "מארזי סרטים"
+
+msgctxt "#32204"
+msgid "File Source"
+msgstr "מקור קובץ"
+
+msgctxt "#32205"
+msgid "Music Videos"
+msgstr "קליפים"
+
+msgctxt "#32206"
+msgid "Classifications"
+msgstr "סיווגים"
+
+msgctxt "#32207"
+msgid "Movie Classifications"
+msgstr "סיווג סרט"
+
+msgctxt "#32208"
+msgid "TV Classifications"
+msgstr "סיווג סדרה"
+
+msgctxt "#32209"
+msgid "Clear All Security"
+msgstr "איפוס כל האבטחה"
+
+msgctxt "#32210"
+msgid "Apply Security To All"
+msgstr "החלת אבטחה להכל"
+
+msgctxt "#32211"
+msgid "Security Level"
+msgstr "רמת אבטחה"
+
+msgctxt "#32212"
+msgid "Remove Classification Restriction"
+msgstr "להסיר את הגבלת הסיווג"
+
+msgctxt "#32301"
+msgid "UK"
+msgstr "בריטניה"
+
+msgctxt "#32302"
+msgid "USA"
+msgstr "ארה\"ב"
+
+msgctxt "#32303"
+msgid "Germany"
+msgstr "גרמניה"
+
+msgctxt "#32304"
+msgid "Ireland"
+msgstr "אירלנד"
+
+msgctxt "#32305"
+msgid "Netherlands"
+msgstr "הולנד"
+
+msgctxt "#32306"
+msgid "Australia"
+msgstr "אוסטרליה"
+
+msgctxt "#32307"
+msgid "Brazil"
+msgstr "ברזיל"
+
+msgctxt "#32308"
+msgid "Hungary"
+msgstr "הונגריה"
+
+msgctxt "#32309"
+msgid "Denmark"
+msgstr "דנמרק"
+
+msgctxt "#32310"
+msgid "Norway"
+msgstr "נורבגיה"
+
+msgctxt "#32311"
+msgid "Sweden"
+msgstr "שוודיה"
+
+msgctxt "#32312"
+msgid "Finland"
+msgstr "פינלנד"
+
+msgctxt "#32313"
+msgid "Canada"
+msgstr "קנדה"
+
+msgctxt "#32314"
+msgid "Quebec"
+msgstr "קוויבק"
