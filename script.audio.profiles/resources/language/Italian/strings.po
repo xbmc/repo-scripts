@@ -1,151 +1,161 @@
 # script.audio.profiles language file
+# Translators:
+# ROBY <armando.dabbene@gmail.com>, 2016
 msgid ""
 msgstr ""
+"Project-Id-Version: Audio Profiles for KODI\n"
+"PO-Revision-Date: 2016-05-09 12:19+0000\n"
+"Last-Translator: ROBY <armando.dabbene@gmail.com>\n"
+"Language-Team: Italian (http://www.transifex.com/movielib/audio-profiles-for-kodi/language/it/)\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: en\n"
+"Language: it\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: addon.xml
 msgctxt "Addon Summary"
 msgid "Save audio profile and easily switch between them"
-msgstr ""
+msgstr "Salva il profilo audio e cambia facilmente tra di loro"
 
 #: addon.xml
 msgctxt "Addon Description"
-msgid "To map a key for switch audio profile edit keymap xml file and add:[CR]RunScript(script.audio.profiles,0) - for switch profile in loop[CR]RunScript(script.audio.profiles,x) - where x is number of profile"
-msgstr ""
+msgid ""
+"To map a key for switch audio profile edit keymap xml file and "
+"add:[CR]RunScript(script.audio.profiles,0) - for switch profile in "
+"loop[CR]RunScript(script.audio.profiles,x) - where x is number of profile"
+msgstr "Per assegnare il cambio profilo audio ad un pulsante modifica il file keymap xml e aggiungi:[CR]RunScript(script.audio.profiles,0) - per cambiare  il profilo in ciclo continuo [CR]RunScript(script.audio.profiles,x) dove x è il numero del profilo"
 
 #: Settings
 msgctxt "#32000"
 msgid "Profiles"
-msgstr ""
+msgstr "Profili"
 
 #: Settings
 msgctxt "#32001"
 msgid "Name of profile 1"
-msgstr ""
+msgstr "Nome del profilo 1"
 
 #: Settings
 msgctxt "#32013"
 msgid "Includes Settings"
-msgstr ""
+msgstr "Impostazioni da includere"
 
 #: Settings
 msgctxt "#32014"
 msgid "Other"
-msgstr ""
+msgstr "Altro"
 
 #: Settings
 msgctxt "#32015"
 msgid "Show audio stream select menu on start playing"
-msgstr ""
+msgstr "Mostra menù di selezione stream all'inizio della riproduzione"
 
 #: Settings
 msgctxt "#32016"
 msgid "Auto close select menu"
-msgstr ""
+msgstr "Chiudi automaticamente il menù di selezione"
 
 #: Settings
 msgctxt "#32018"
 msgid "Debug"
-msgstr ""
+msgstr "Debug"
 
 #: Settings
 msgctxt "#32019"
 msgid "Notifications"
-msgstr ""
+msgstr "Notifiche"
 
 #: Settings
 msgctxt "#32020"
 msgid "Debuging"
-msgstr ""
+msgstr "Debuging"
 
 #: Settings
 msgctxt "#32002"
 msgid "Settings"
-msgstr ""
+msgstr "Impostazioni"
 
 #: Settings
 msgctxt "#32003"
 msgid "Name of profile 2"
-msgstr ""
+msgstr "Nome del profilo 2"
 
 #: Settings
 msgctxt "#32004"
 msgid "Volume level"
-msgstr ""
+msgstr "Livello Volume"
 
 #: Settings
 msgctxt "#32011"
 msgid "Player settings"
-msgstr ""
+msgstr "Impostazioni Player"
 
 #: Settings
 msgctxt "#32012"
 msgid "Video settings"
-msgstr ""
+msgstr "Impostazioni Video"
 
 #: Settings
 msgctxt "#32005"
 msgid "Name of profile 3"
-msgstr ""
+msgstr "Nome del profilo 3"
 
 #: Settings
 msgctxt "#32006"
 msgid "Name of profile 4"
-msgstr ""
+msgstr "Nome del profilo 4"
 
 #: Settings
 msgctxt "#32007"
 msgid "Profile 1"
-msgstr ""
+msgstr "Profilo 1"
 
 #: Settings
 msgctxt "#32008"
 msgid "Profile 2"
-msgstr ""
+msgstr "Profilo 2"
 
 #: Settings
 msgctxt "#32009"
 msgid "Profile 3"
-msgstr ""
+msgstr "Profilo 3"
 
 #: Settings
 msgctxt "#32010"
 msgid "Profile 4"
-msgstr ""
+msgstr "Profilo 4"
 
 #: Script
 msgctxt "#32100"
 msgid "Select profile to save settings"
-msgstr ""
+msgstr "Selezionare il profilo dove salvare le impostazioni"
 
 #: Script
 msgctxt "#32106"
 msgid "Select audio profile"
-msgstr ""
+msgstr "Selezionare il profilo audio"
 
 #: Script
 msgctxt "#32103"
 msgid "This profile is disabled"
-msgstr ""
+msgstr "Questo profilo è disabilitato"
 
 #: Script
 msgctxt "#32104"
 msgid "Invalid file for profile"
-msgstr ""
+msgstr "File invalido per il profilo"
 
 #: Script
 msgctxt "#32105"
 msgid "Enable profiles"
-msgstr ""
+msgstr "Abilita i profili"
 
 #: Script
 msgctxt "#32101"
 msgid "Configure profile"
-msgstr ""
+msgstr "Configura profilo"
 
 #: Script
 msgctxt "#32102"
 msgid "Saved as profile"
-msgstr ""
+msgstr "Salvato come profilo"

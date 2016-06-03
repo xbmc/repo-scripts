@@ -19,8 +19,11 @@
         <setting label="32011" type="bool" id="player" default="false" />
         <setting label="32012" type="bool" id="video" default="false" />
         <setting label="32014" type="lsep" />
-        <setting label="32015" type="bool" id="player_choice" default="false" />
-        <setting label="32016" type="bool" id="player_choice_d" default="false" enable="eq(-1,true)" />
-        <setting label="32017" type="labelenum" id="player_choice_t" values="5|10|15|20|25|30|40|50|60" default="10" enable="eq(-1,true)" />
+        <setting label="32015" type="bool" id="player_show" default="false" />
+        <setting label="32016" type="bool" id="player_autoclose" default="false" enable="eq(-1,true)" />
+    </category>
+    <category label="32018">
+        <setting label="32019" type="bool" id="notify" default="true" />
+        <setting label="32020" type="bool" id="debug" default="false" />
     </category>
 </settings>
