@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<window>
+    <defaultcontrol>100</defaultcontrol>
+    <coordinates>
+        <system>1</system>
+        <posx>0</posx>
+        <posy>0</posy>
+    </coordinates>
+    <animation effect="slide" start="-320,0" end="0,0" time="200">WindowOpen</animation>
+    <animation effect="slide" start="0,0" end="-320,0" time="200">WindowClose</animation>
+    <controls>
+        <control type="group">
+            <control type="image">
+                <posx>0</posx>
+                <posy>0</posy>
+                <width>320</width>
+                <height>720</height>
+                <texture>script-tablo-white_square.png</texture>
+                <colordiffuse>FF2F8EC0</colordiffuse>
+            </control>
+
+            <control type="image">
+                <visible>!IsEmpty(Window(10000).Property(script.tablo.WM.busy))</visible>
+                <animation effect="rotate" start="0" end="-36000" center="800,360" time="100000" reversible="false">Visible</animation>
+                <posx>786</posx>
+                <posy>346</posy>
+                <width>28</width>
+                <height>28</height>
+                <texture>spinners/static.png</texture>
+            </control>
+
+            <control type="label">
+                <visible>!IsEmpty(Window(10000).Property(script.tablo.WM.error))</visible>
+                <posx>320</posx>
+                <posy>330</posy>
+                <width>960</width>
+                <height>60</height>
+                <font>font30</font>
+                <textcolor>FFEBEBEB</textcolor>
+                <align>center</align>
+                <aligny>center</aligny>
+                <label>$INFO[Window(10000).Property(script.tablo.WM.error)]</label>
+            </control>
+
+            <control type="group" id="100">
+                <defaultcontrol>101</defaultcontrol>
+                <posx>60</posx>
+                <posy>100</posy>
+
+                <control type="group">
+                    <posx>0</posx>
+                    <posy>0</posy>
+                    <control type="button" id="101">
+                        <ondown>102</ondown>
+                        <hitrect x="0" y="-15" w="250" h="60"/>
+                        <posx>0</posx>
+                        <posy>16</posy>
+                        <width>30</width>
+                        <height>27</height>
+                        <font>font30</font>
+                        <textcolor>FFFFFFFF</textcolor>
+                        <focusedcolor>FFFFFFFF</focusedcolor>
+                        <align>center</align>
+                        <aligny>center</aligny>
+                        <texturefocus>menu/menu_tablo_highlighted_hd.png</texturefocus>
+                        <texturenofocus>menu/menu_tablo_normal_hd.png</texturenofocus>
+                        <textoffsetx>0</textoffsetx>
+                        <textoffsety>0</textoffsety>
+                        <label></label>
+                    </control>
+                    <control type="label">
+                        <visible>Control.HasFocus(101)</visible>
+                        <posx>40</posx>
+                        <posy>0</posy>
+                        <width>190</width>
+                        <height>60</height>
+                        <font>font30</font>
+                        <textcolor>FFEBEBEB</textcolor>
+                        <align>left</align>
+                        <aligny>center</aligny>
+                        <label>[B]$INFO[Window.Property(tablo.name)][/B]</label>
+                    </control>
+                    <control type="label">
+                        <visible>!Control.HasFocus(101)</visible>
+                        <posx>40</posx>
+                        <posy>0</posy>
+                        <width>190</width>
+                        <height>60</height>
+                        <font>font30</font>
+                        <textcolor>C8EBEBEB</textcolor>
+                        <align>left</align>
+                        <aligny>center</aligny>
+                        <label>$INFO[Window.Property(tablo.name)]</label>
+                    </control>
+                </control>
+
+                <control type="group">
+                    <posx>0</posx>
+                    <posy>120</posy>
+                    <control type="button" id="102">
+                        <onup>101</onup>
+                        <ondown>103</ondown>
+                        <hitrect x="0" y="-21" w="250" h="60"/>
+                        <posx>0</posx>
+                        <posy>21</posy>
+                        <width>28</width>
+                        <height>20</height>
+                        <font>font30</font>
+                        <textcolor>FFFFFFFF</textcolor>
+                        <focusedcolor>FFFFFFFF</focusedcolor>
+                        <align>center</align>
+                        <aligny>center</aligny>
+                        <texturefocus>menu/menu_livetv_highlighted_hd.png</texturefocus>
+                        <texturenofocus>menu/menu_livetv_normal_hd.png</texturenofocus>
+                        <textoffsetx>0</textoffsetx>
+                        <textoffsety>0</textoffsety>
+                        <label></label>
+                    </control>
+                    <control type="label">
+                        <visible>Control.HasFocus(102)</visible>
+                        <posx>40</posx>
+                        <posy>0</posy>
+                        <width>190</width>
+                        <height>60</height>
+                        <font>font30</font>
+                        <textcolor>FFEBEBEB</textcolor>
+                        <align>left</align>
+                        <aligny>center</aligny>
+                        <label>[B]$ADDON[script.tablo 32218][/B]</label>
+                    </control>
+                    <control type="label">
+                        <visible>!Control.HasFocus(102)</visible>
+                        <posx>40</posx>
+                        <posy>0</posy>
+                        <width>190</width>
+                        <height>60</height>
+                        <font>font30</font>
+                        <textcolor>C8EBEBEB</textcolor>
+                        <align>left</align>
+                        <aligny>center</aligny>
+                        <label>$ADDON[script.tablo 32218]</label>
+                    </control>
+                </control>
+
+                <control type="group">
+                    <posx>0</posx>
+                    <posy>200</posy>
+                    <control type="button" id="103">
+                        <onup>102</onup>
+                        <ondown>104</ondown>
+                        <hitrect x="0" y="-21" w="250" h="60"/>
+                        <posx>0</posx>
+                        <posy>21</posy>
+                        <width>28</width>
+                        <height>20</height>
+                        <font>font30</font>
+                        <textcolor>FFFFFFFF</textcolor>
+                        <focusedcolor>FFFFFFFF</focusedcolor>
+                        <align>center</align>
+                        <aligny>center</aligny>
+                        <texturefocus>menu/menu_recordings_highlighted_hd.png</texturefocus>
+                        <texturenofocus>menu/menu_recordings_normal_hd.png</texturenofocus>
+                        <textoffsetx>0</textoffsetx>
+                        <textoffsety>0</textoffsety>
+                        <label></label>
+                    </control>
+                    <control type="label">
+                        <visible>Control.HasFocus(103)</visible>
+                        <posx>40</posx>
+                        <posy>0</posy>
+                        <width>190</width>
+                        <height>60</height>
+                        <font>font30</font>
+                        <textcolor>FFEBEBEB</textcolor>
+                        <align>left</align>
+                        <aligny>center</aligny>
+                        <label>[B]$ADDON[script.tablo 32175][/B]</label>
+                    </control>
+                    <control type="label">
+                        <visible>!Control.HasFocus(103)</visible>
+                        <posx>40</posx>
+                        <posy>0</posy>
+                        <width>190</width>
+                        <height>60</height>
+                        <font>font30</font>
+                        <textcolor>C8EBEBEB</textcolor>
+                        <align>left</align>
+                        <aligny>center</aligny>
+                        <label>$ADDON[script.tablo 32175]</label>
+                    </control>
+                </control>
+
+                <control type="group">
+                    <posx>0</posx>
+                    <posy>320</posy>
+                    <control type="button" id="104">
+                        <onup>103</onup>
+                        <ondown>105</ondown>
+                        <hitrect x="0" y="-21" w="250" h="60"/>
+                        <posx>0</posx>
+                        <posy>21</posy>
+                        <width>26</width>
+                        <height>19</height>
+                        <font>font30</font>
+                        <textcolor>FFFFFFFF</textcolor>
+                        <focusedcolor>FFFFFFFF</focusedcolor>
+                        <align>center</align>
+                        <aligny>center</aligny>
+                        <texturefocus>menu/menu_guide_highlighted_hd.png</texturefocus>
+                        <texturenofocus>menu/menu_guide_normal_hd.png</texturenofocus>
+                        <textoffsetx>0</textoffsetx>
+                        <textoffsety>0</textoffsety>
+                        <label></label>
+                    </control>
+                    <control type="label">
+                        <visible>Control.HasFocus(104)</visible>
+                        <posx>40</posx>
+                        <posy>0</posy>
+                        <width>190</width>
+                        <height>60</height>
+                        <font>font30</font>
+                        <textcolor>FFEBEBEB</textcolor>
+                        <align>left</align>
+                        <aligny>center</aligny>
+                        <label>[B]$ADDON[script.tablo 32113][/B]</label>
+                    </control>
+                    <control type="label">
+                        <visible>!Control.HasFocus(104)</visible>
+                        <posx>40</posx>
+                        <posy>0</posy>
+                        <width>190</width>
+                        <height>60</height>
+                        <font>font30</font>
+                        <textcolor>C8EBEBEB</textcolor>
+                        <align>left</align>
+                        <aligny>center</aligny>
+                        <label>$ADDON[script.tablo 32113]</label>
+                    </control>
+                </control>
+
+                <control type="group">
+                    <posx>0</posx>
+                    <posy>400</posy>
+                    <control type="button" id="105">
+                        <onup>104</onup>
+                        <hitrect x="0" y="-17" w="250" h="60"/>
+                        <posx>0</posx>
+                        <posy>17</posy>
+                        <width>27</width>
+                        <height>27</height>
+                        <font>font30</font>
+                        <textcolor>FFFFFFFF</textcolor>
+                        <focusedcolor>FFFFFFFF</focusedcolor>
+                        <align>center</align>
+                        <aligny>center</aligny>
+                        <texturefocus>menu/menu_scheduled_highlighted_hd.png</texturefocus>
+                        <texturenofocus>menu/menu_scheduled_normal_hd.png</texturenofocus>
+                        <textoffsetx>0</textoffsetx>
+                        <textoffsety>0</textoffsety>
+                        <label></label>
+                    </control>
+                    <control type="label">
+                        <visible>Control.HasFocus(105)</visible>
+                        <posx>40</posx>
+                        <posy>0</posy>
+                        <width>190</width>
+                        <height>60</height>
+                        <font>font30</font>
+                        <textcolor>FFEBEBEB</textcolor>
+                        <align>left</align>
+                        <aligny>center</aligny>
+                        <label>[B]$ADDON[script.tablo 32195][/B]</label>
+                    </control>
+                    <control type="label">
+                        <visible>!Control.HasFocus(105)</visible>
+                        <posx>40</posx>
+                        <posy>0</posy>
+                        <width>190</width>
+                        <height>60</height>
+                        <font>font30</font>
+                        <textcolor>C8EBEBEB</textcolor>
+                        <align>left</align>
+                        <aligny>center</aligny>
+                        <label>$ADDON[script.tablo 32195]</label>
+                    </control>
+                </control>
+            </control>
+
+
+
+        </control>
+
+    </controls>
+</window>

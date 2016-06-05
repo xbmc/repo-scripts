@@ -1,0 +1,126 @@
+- 1.0.0
+
+INITIAL RELEASE
+
+- 0.0.26
+
+FIX      Fix for issue #41
+FIX      Issues #25, #36, #40, #42
+
+- 0.0.25
+
+FIX:     Issues #35, #38, #39
+
+- 0.0.24
+
+FIX:     Issue #33
+
+- 0.0.23
+
+FIX:     Issues #20, #32, #34
+FIX:     Issues #26, #31 (Again)
+FIX:     Navigation issue in episode lists
+FIX:     Navigation when using up/down to change episode details after deleting episodes
+
+- 0.0.22
+
+FIX:     Issues #2, #29
+FIX:     Better live tv airing item alignment
+
+- 0.0.21
+
+FIX:     Issue #21
+
+- 0.0.20
+
+FIX:     Issues #3, #6, #7, #12, #27, #30, #31
+
+- 0.0.19
+
+FIX:     Issue #4, #5, #9, #10, #11, #15, #16, #18, #19, #24, #26, #28
+CHANGE:  Player refactoring with workaround for issue #13
+
+- 0.0.18
+
+FIX:     Issue #1 (Fully fixed)
+
+- 0.0.17
+
+FIX:     Issue #1, #8, #14, #17
+
+- 0.0.16
+
+ADD:     Now checks for subscription status and shows a message instead of Guide if no subscription
+ADD:     Now shows subscription info on info screen
+
+- 0.0.15
+
+CHANGE:  Use 1080p image assets
+FIX:     Change schedule buttons for Program items
+
+- 0.0.14
+
+FIX:     Errors when 'Manual' recorded programs are present
+ADD:     Manual option on recordings view
+
+
+- 0.0.13
+
+FIX:     Error caused on 'Tablo' view after a device is removed
+FIX:     Loading now displays until video is playing
+CHANGE:  Pressing esc/back on loading screen now aborts playback
+CHANGE:  Drives are now updated when returning to info screen
+ADD:     Recent recordings
+FIX:     Some spinners broken rotations
+ADD:     Update checking with status display
+
+- 0.0.12
+
+FIX:     Spinners were displaying inconsistently
+FIX:     Episode airing detail now shows the conflict indicator on Live TV
+FIX:     Delete button is now disabled when a recording is protected
+FIX:     Live TV navigation was jumping to bottom row when navigating past the end of a row or holding a right press
+ADD:     Loading screen before live TV plays
+ADD:     When connecting, now tests if device is updating and shows a updating screen or dialog depending on whether there is only 1 device
+
+- 0.0.11
+
+FIX:     Missing spinners everywhere in the add-on
+CHANGE:  Failed connection message now replaces current view (instead of showing dialog)
+CHANGE:  Failure to get server info when connecting to a Tablo device now shows a dialog and remains on the connect screen
+
+- 0.0.10
+
+FIX:     When returning to shows from a details screen the same item now remains selected
+ADD:     Busy dialog when shows are initially loading until first update set
+ADD:     Add busy spinners to relevant show detail/detail card buttons
+ADD:     'Cannot connect to Tablo' dialog on failure to connect when filling a view
+FIX:     Bug causing record button to display when initially showing details dialog for ended airings
+
+- 0.0.9
+
+FIX:     Issue where not all items displayed when there were many items in the EPG timespan for a channel
+ADD:     Indicators for items that start before EPG left time
+FIX:     Navigation onto short items on EPG is now handled properly
+ADD:     Empty content messages to views
+
+- 0.0.8
+
+ADD:     Implement PgUp and PgDn in EPG
+FIX:     Various guide navigation issues
+FIX:     Trick mode progress bar extending past end on short videos
+CHANGE:  Match trick mode progress bar style to style in device view
+FIX:     Fallback to hostname for device name if server info fails
+CHANGE:  Remove * indicator from title in guide/recordings
+CHANGE:  Pressing select on the index bar now jumps to the shows panel at the first item for that letter
+CHANGE:  ESC now behaves the same as backspace, opening the submenu and then menu before confirming exit
+CHANGE:  Pressing right on the main and sub menus now behaves the same as pressing select
+CHANGE:  Selecting an item from the submenu now also closes the submenu
+CHANGE:  On first start the live TV view is now loaded automatically
+CHANGE:  Now remembers the last view and loads that automatically on startup
+ADD:     Added protected indicators to airing list cells and detail view
+CHANGE:  Device view now shows failed message (on version item) on failure to get server info
+
+- 0.0.1
+
+Initial work begins

@@ -1,0 +1,498 @@
+# XBMC Media Center language file
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC-Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: 2013-12-12 22:56+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+
+msgctxt "#32001"
+msgid "Main"
+msgstr ""
+
+msgctxt "#32002"
+msgid "Debug"
+msgstr ""
+
+msgctxt "#32100"
+msgid "'Updating"
+msgstr ""
+
+msgctxt "#32101"
+msgid "{0} is currently updating"
+msgstr ""
+
+msgctxt "#32102"
+msgid "Connection Failure"
+msgstr ""
+
+msgctxt "#32103"
+msgid "Cannot connect to {0}"
+msgstr ""
+
+msgctxt "#32104"
+msgid "Trial Subscription"
+msgstr ""
+
+msgctxt "#32105"
+msgid "Your trial expires in {interval}. Subscribe before {expiration}."
+msgstr ""
+
+msgctxt "#32106"
+msgid "Active Subscription"
+msgstr ""
+
+msgctxt "#32107"
+msgid "Your Tablo has full access to guide data and all features."
+msgstr ""
+
+msgctxt "#32108"
+msgid "No Subscription"
+msgstr ""
+
+msgctxt "#32109"
+msgid "Subscribe now to receive guide data and enable more features."
+msgstr ""
+
+msgctxt "#32110"
+msgid "Failed to get device information"
+msgstr ""
+
+msgctxt "#32111"
+msgid "Used"
+msgstr ""
+
+msgctxt "#32112"
+msgid "Available"
+msgstr ""
+
+msgctxt "#32113"
+msgid "Guide"
+msgstr ""
+
+msgctxt "#32114"
+msgid "This screen requires a Tablo Guide Data Subscription."
+msgstr ""
+
+msgctxt "#32115"
+msgid "Go to www.tablotv.com/subscription for details."
+msgstr ""
+
+msgctxt "#32116"
+msgid "No Shows to Display"
+msgstr ""
+
+msgctxt "#32117"
+msgid "No TV Shows to Display"
+msgstr ""
+
+msgctxt "#32118"
+msgid "No Movies to Display"
+msgstr ""
+
+msgctxt "#32119"
+msgid "No Sports to Display"
+msgstr ""
+
+msgctxt "#32120"
+msgid "All"
+msgstr ""
+
+msgctxt "#32121"
+msgid "TV Shows"
+msgstr ""
+
+msgctxt "#32122"
+msgid "Movies"
+msgstr ""
+
+msgctxt "#32123"
+msgid "Sports"
+msgstr ""
+
+msgctxt "#32124"
+msgid "Guide"
+msgstr ""
+
+msgctxt "#32125"
+msgid "Cannot connect to {0}"
+msgstr ""
+
+msgctxt "#32126"
+msgid "Error"
+msgstr ""
+
+msgctxt "#32127"
+msgid "No Episodes"
+msgstr ""
+
+msgctxt "#32128"
+msgid "No Airings"
+msgstr ""
+
+msgctxt "#32129"
+msgid "No Events"
+msgstr ""
+
+msgctxt "#32130"
+msgid "There are no upcoming episodes for this show."
+msgstr ""
+
+msgctxt "#32131"
+msgid "There are no upcoming airings for this movie."
+msgstr ""
+
+msgctxt "#32132"
+msgid "There are no upcoming airings for this program."
+msgstr ""
+
+msgctxt "#32133"
+msgid "There are no upcoming events for this sport."
+msgstr ""
+
+msgctxt "#32134"
+msgid "Season"
+msgstr ""
+
+msgctxt "#32135"
+msgid "Seasons"
+msgstr ""
+
+msgctxt "#32136"
+msgid "Episode"
+msgstr ""
+
+msgctxt "#32137"
+msgid "Episodes"
+msgstr ""
+
+msgctxt "#32138"
+msgid "Event"
+msgstr ""
+
+msgctxt "#32139"
+msgid "Events"
+msgstr ""
+
+msgctxt "#32140"
+msgid "Watch"
+msgstr ""
+
+msgctxt "#32141"
+msgid "Don't Record {0}"
+msgstr ""
+
+msgctxt "#32142"
+msgid "Record {0}"
+msgstr ""
+
+msgctxt "#32143"
+msgid "Channel {0} {1} on {2} from {3} to {4}"
+msgstr ""
+
+msgctxt "#32144"
+msgid "Ended {0} ago"
+msgstr ""
+
+msgctxt "#32145"
+msgid "Started {0} ago"
+msgstr ""
+
+msgctxt "#32146"
+msgid "Starts in {0}"
+msgstr ""
+
+msgctxt "#32147"
+msgid "Ch. {0} {1} at {2} - {3}"
+msgstr ""
+
+msgctxt "#32148"
+msgid "Automatically schedule airings for this manual program?"
+msgstr ""
+
+msgctxt "#32149"
+msgid "Cancel"
+msgstr ""
+
+msgctxt "#32150"
+msgid "Unschedule Airings"
+msgstr ""
+
+msgctxt "#32151"
+msgid "Record All"
+msgstr ""
+
+msgctxt "#32152"
+msgid "Automatically schedule {0} for this {1}?"
+msgstr ""
+
+msgctxt "#32153"
+msgid "Unschedule Show"
+msgstr ""
+
+msgctxt "#32154"
+msgid "Record New"
+msgstr ""
+
+msgctxt "#32155"
+msgid "Season {0}"
+msgstr ""
+
+msgctxt "#32156"
+msgid "Other Seasons"
+msgstr ""
+
+msgctxt "#32157"
+msgid "Cannot connect to {0}"
+msgstr ""
+
+msgctxt "#32158"
+msgid "Episode {0}"
+msgstr ""
+
+msgctxt "#32159"
+msgid "NEW"
+msgstr ""
+
+msgctxt "#32160"
+msgid "LIVE"
+msgstr ""
+
+msgctxt "#32161"
+msgid "Connection Failure"
+msgstr ""
+
+msgctxt "#32162"
+msgid "Recording failed because no hard drive was detected."
+msgstr ""
+
+msgctxt "#32163"
+msgid "Recording failed because the hard drive was full."
+msgstr ""
+
+msgctxt "#32164"
+msgid "Recording failed because no tuner was available."
+msgstr ""
+
+msgctxt "#32165"
+msgid "Recording failed due to weak signal."
+msgstr ""
+
+msgctxt "#32166"
+msgid "Recording failed due to an unknown error. This is usually caused by poor reception."
+msgstr ""
+
+msgctxt "#32167"
+msgid "Recording failed due to an unknown error."
+msgstr ""
+
+msgctxt "#32168"
+msgid "Remaining: {0} of {1}"
+msgstr ""
+
+msgctxt "#32169"
+msgid "Recording Now..."
+msgstr ""
+
+msgctxt "#32170"
+msgid "Length"
+msgstr ""
+
+msgctxt "#32171"
+msgid "Mark Unwatched"
+msgstr ""
+
+msgctxt "#32172"
+msgid "Mark Watched"
+msgstr ""
+
+msgctxt "#32173"
+msgid "Unprotect"
+msgstr ""
+
+msgctxt "#32174"
+msgid "Protect"
+msgstr ""
+
+msgctxt "#32175"
+msgid "Recordings"
+msgstr ""
+
+msgctxt "#32176"
+msgid "Recent"
+msgstr ""
+
+msgctxt "#32177"
+msgid "Manual"
+msgstr ""
+
+msgctxt "#32178"
+msgid "No Recordings"
+msgstr ""
+
+msgctxt "#32179"
+msgid "No Recorded TV Shows"
+msgstr ""
+
+msgctxt "#32180"
+msgid "No Recorded Movies"
+msgstr ""
+
+msgctxt "#32181"
+msgid "No Recorded Sports"
+msgstr ""
+
+msgctxt "#32182"
+msgid "No Manual Recordings"
+msgstr ""
+
+msgctxt "#32183"
+msgid "You can schedule recordings from the Guide screen."
+msgstr ""
+
+msgctxt "#32184"
+msgid "Today"
+msgstr ""
+
+msgctxt "#32185"
+msgid "Yesterday"
+msgstr ""
+
+msgctxt "#32186"
+msgid "No Recent Recordings"
+msgstr ""
+
+msgctxt "#32187"
+msgid "Delete..."
+msgstr ""
+
+msgctxt "#32188"
+msgid "Permanently delete the following {0}?"
+msgstr ""
+
+msgctxt "#32189"
+msgid "Delete All {0}"
+msgstr ""
+
+msgctxt "#32190"
+msgid "Resume watching at {0}?"
+msgstr ""
+
+msgctxt "#32191"
+msgid "Play From Start"
+msgstr ""
+
+msgctxt "#32192"
+msgid "Resume"
+msgstr ""
+
+msgctxt "#32193"
+msgid "Permanently delete this {0}?"
+msgstr ""
+
+msgctxt "#32194"
+msgid "Delete"
+msgstr ""
+
+msgctxt "#32195"
+msgid "Scheduled"
+msgstr ""
+
+msgctxt "#32196"
+msgid "Failed"
+msgstr ""
+
+msgctxt "#32197"
+msgid "Failed to play channel:"
+msgstr ""
+
+msgctxt "#32198"
+msgid "Recording"
+msgstr ""
+
+msgctxt "#32199"
+msgid "Movie"
+msgstr ""
+
+msgctxt "#32200"
+msgid "Airings"
+msgstr ""
+
+msgctxt "#32201"
+msgid "Airing"
+msgstr ""
+
+msgctxt "#32202"
+msgid "Series"
+msgstr ""
+
+msgctxt "#32203"
+msgid "Sport"
+msgstr ""
+
+msgctxt "#32204"
+msgid "Program"
+msgstr ""
+
+msgctxt "#32205"
+msgid "Updating"
+msgstr ""
+
+msgctxt "#32206"
+msgid "Search Again"
+msgstr ""
+
+msgctxt "#32207"
+msgid "Connect to Tablo"
+msgstr ""
+
+msgctxt "#32208"
+msgid "Disconnect"
+msgstr ""
+
+msgctxt "#32209"
+msgid "Hard Drive"
+msgstr ""
+
+msgctxt "#32210"
+msgid "Tablo Firmware"
+msgstr ""
+
+msgctxt "#32211"
+msgid "Tablo IP Address"
+msgstr ""
+
+msgctxt "#32212"
+msgid "Tablo MAC Address"
+msgstr ""
+
+msgctxt "#32213"
+msgid "Addon Version"
+msgstr ""
+
+msgctxt "#32214"
+msgid "Kodi Version"
+msgstr ""
+
+msgctxt "#32215"
+msgid "Kernel Version"
+msgstr ""
+
+msgctxt "#32216"
+msgid "Loading"
+msgstr ""
+
+msgctxt "#32217"
+msgid "Canceling"
+msgstr ""
+
+msgctxt "#32218"
+msgid "Live TV"
+msgstr ""

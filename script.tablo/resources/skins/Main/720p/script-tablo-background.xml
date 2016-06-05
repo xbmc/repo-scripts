@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<window>
+    <coordinates>
+        <system>1</system>
+        <posx>0</posx>
+        <posy>0</posy>
+    </coordinates>
+    <backgroundcolor>0xff101924</backgroundcolor>
+    <controls>
+        <control type="image">
+            <visible>!IsEmpty(Window.Property(busy))</visible>
+            <animation effect="rotate" start="0" end="-36000" center="640,360" time="100000" reversible="false">Visible</animation>
+            <posx>626</posx>
+            <posy>346</posy>
+            <width>28</width>
+            <height>28</height>
+            <texture>spinners/static.png</texture>
+        </control>
+    </controls>
+</window>

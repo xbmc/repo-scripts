@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.tablo"
+       name="Tablo"
+       version="1.0.0"
+       provider-name="Nuvyyo">
+    <requires>
+        <import addon="xbmc.python" version="2.24.0"/>
+        <import addon="script.module.requests" version="2.3.0"/>
+        <import addon="script.module.m3u8" version="0.2.2"/>
+        <import addon="script.module.pytz" version="2014.2"/>
+        <import addon="script.module.dateutil" version="2.4.2"/>
+    </requires>
+    <extension point="xbmc.python.script" library="default.py">
+        <provides>video</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <summary lang="en">Tablo TV - Live TV and DVR</summary>
+        <description lang="en">Tablo is a DVR that lets you watch, pause and record free OTA TV with Kodi. Enjoy live sports, local news and your favorite network broadcast TV shows in HD through the Tablo add-on. No cable or satellite subscription required. Additional hardware purchase required. For more information visit www.TabloTV.com.
+</description>
+        <disclaimer lang="en">Requires a Tablo device</disclaimer>
+        <license>Apache License 2.0</license>
+        <forum>https://community.tablotv.com</forum>
+        <website>https://www.tablotv.com</website>
+        <source>https://github.com/Nuvyyo/script.tablo</source>
+        <platform>all</platform>
+    </extension>
+</addon>
