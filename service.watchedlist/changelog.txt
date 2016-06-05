@@ -1,3 +1,6 @@
+version 1.1.1 (29.05.2016)
+ * Added fix for non-working python dropbox import
+
 version 1.1.0 (02.04.2016)
  * Added dropbox synchronization for the database
 

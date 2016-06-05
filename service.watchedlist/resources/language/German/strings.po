@@ -352,3 +352,7 @@ msgstr "Dropbox-Export (Filme)"
 msgctxt "#32719"
 msgid "Dropbox-Export (Episodes)"
 msgstr "Dropbox-Export (Episoden)"
+
+msgctxt "#32720"
+msgid "Error importing python Dropbox API. Disable function."
+msgstr "Fehler beim Laden der Dropbox API. Deaktiviere Funktion."

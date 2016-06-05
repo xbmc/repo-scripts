@@ -47,13 +47,16 @@ buggalo.GMAIL_RECIPIENT = "msahadl60@gmail.com"
 
 
 import resources.lib.utils as utils
-
-from dropbox.client import DropboxClient, DropboxOAuth2FlowNoRedirect
-from dropbox.rest import ErrorResponse
-
-DROPBOX_APP_KEY = 'bhd2v8hgsmqwcgt'
-DROPBOX_APP_SECRET = 't2cepoevjqyubnd'
-
+try:
+    from dropbox.client import DropboxClient, DropboxOAuth2FlowNoRedirect
+    from dropbox.rest import ErrorResponse
+    DROPBOX_APP_KEY = 'bhd2v8hgsmqwcgt'
+    DROPBOX_APP_SECRET = 't2cepoevjqyubnd'
+    DROPBBOX_ENABLED = True
+except:
+    DROPBBOX_ENABLED = False
+    if utils.getSetting("dropbox_enabled") == 'true':
+        utils.showNotification(utils.getString(32708), utils.getString(32720))
 if utils.getSetting('dbbackup') == 'true':
     import zipfile
     import datetime
@@ -284,7 +287,7 @@ class WatchedList:
                 return 5
             
             # attempt to merge the database from dropbox
-            if utils.getSetting("dropbox_enabled") == 'true' and self.merge_dropbox_local():
+            if DROPBBOX_ENABLED and utils.getSetting("dropbox_enabled") == 'true' and self.merge_dropbox_local():
                 utils.showNotification(utils.getString(32102), utils.getString(32607))
                 # do not abort execution of the whole addon if dropbox fails (e.g. due to network issues)
                 # return 8
@@ -312,7 +315,7 @@ class WatchedList:
             utils.log(u'runUpdate exited with success', xbmc.LOGDEBUG)
             
             # sync with dropbox
-            if utils.getSetting("dropbox_enabled") == 'true':
+            if DROPBBOX_ENABLED and utils.getSetting("dropbox_enabled") == 'true':
                 if self.merge_local_dropbox() == 0:
                     self.close_db(2) # save the database to file.
                     self.pushToDropbox()
@@ -411,7 +414,7 @@ class WatchedList:
                 self.sqlcursor_wl.execute(QUERY_CREATE_SS_MYSQL)
             
             # check for dropbox
-            if utils.getSetting("dropbox_enabled") == 'true':
+            if DROPBBOX_ENABLED and utils.getSetting("dropbox_enabled") == 'true':
                 # Download Dropbox database only once a day to reduce traffic.
                 if time.time() > self.downloaded_dropbox_timestamp + 3600*24:
                     if self.pullFromDropbox():
