@@ -1,0 +1,458 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<window>
+    <defaultcontrol>100</defaultcontrol>
+    <coordinates>
+        <system>1</system>
+        <posx>0</posx>
+        <posy>0</posy>
+    </coordinates>
+    <backgroundcolor>0xff101924</backgroundcolor>
+    <controls>
+        <control type="group">
+            <animation effect="slide" start="-290,0" end="0,0" time="200" condition="!IsEmpty(Window(10000).Property(script.tablo.menu.visible))">Conditional</animation>
+            <posx>290</posx>
+            <posy>0</posy>
+            <control type="group">
+                <animation effect="slide" start="0,0" end="0,-530" time="200" condition="Control.HasFocus(150)">Conditional</animation>
+                <posx>0</posx>
+                <posy>0</posy>
+                <control type="image">
+                    <posx>360</posx>
+                    <posy>50</posy>
+                    <width>480</width>
+                    <height>175</height>
+                    <texture>tablo/tablo_render_hd.png</texture>
+                </control>
+
+                <control type="label">
+                    <posx>0</posx>
+                    <posy>250</posy>
+                    <width>1280</width>
+                    <height>80</height>
+                    <font>WeatherTemp</font>
+                    <align>center</align>
+                    <aligny>center</aligny>
+                    <textcolor>FFFFFFFF</textcolor>
+                    <label>$INFO[Window.Property(device.name)]</label>
+                </control>
+
+                <control type="group">
+                    <posx>490</posx>
+                    <posy>350</posy>
+                    <control type="button" id="100">
+                        <posx>0</posx>
+                        <posy>0</posy>
+                        <width>300</width>
+                        <height>60</height>
+                        <ondown>150</ondown>
+                        <font>font30</font>
+                        <textcolor>FFFFFFFF</textcolor>
+                        <focusedcolor>FFFFFFFF</focusedcolor>
+                        <align>center</align>
+                        <aligny>center</aligny>
+                        <texturefocus colordiffuse="52FFFFFF" border="8">highlights/highlight_focused.png</texturefocus>
+                        <texturenofocus>-</texturenofocus>
+                        <textoffsetx>0</textoffsetx>
+                        <textoffsety>0</textoffsety>
+                        <label></label>
+                    </control>
+                    <control type="label">
+                        <visible>Control.HasFocus(100)</visible>
+                        <posx>0</posx>
+                        <posy>0</posy>
+                        <width>300</width>
+                        <height>60</height>
+                        <font>font30</font>
+                        <textcolor>FFFFFFFF</textcolor>
+                        <align>center</align>
+                        <aligny>center</aligny>
+                        <label>[B]$ADDON[script.tablo 32208][/B]</label>
+                    </control>
+                    <control type="label">
+                        <visible>!Control.HasFocus(100)</visible>
+                        <posx>0</posx>
+                        <posy>0</posy>
+                        <width>300</width>
+                        <height>60</height>
+                        <font>font30</font>
+                        <textcolor>FFFFFFFF</textcolor>
+                        <align>center</align>
+                        <aligny>center</aligny>
+                        <label>$ADDON[script.tablo 32208]</label>
+                    </control>
+                </control>
+
+                <control type="group">
+                    <posx>300</posx>
+                    <posy>450</posy>
+                    <control type="label">
+                        <posx>0</posx>
+                        <posy>0</posy>
+                        <width>680</width>
+                        <height>40</height>
+                        <font>font16</font>
+                        <textcolor>FFE8E8E8</textcolor>
+                        <align>left</align>
+                        <aligny>center</aligny>
+                        <label>$INFO[Window.Property(subscription.title)]</label>
+                    </control>
+                    <control type="label">
+                        <posx>0</posx>
+                        <posy>40</posy>
+                        <width>680</width>
+                        <height>20</height>
+                        <font>font10</font>
+                        <textcolor>FFE8E8E8</textcolor>
+                        <align>left</align>
+                        <aligny>center</aligny>
+                        <label>$INFO[Window.Property(subscription.description)]</label>
+                    </control>
+                </control>
+
+                <control type="group">
+                    <visible>!IsEmpty(Window.Property(drive.0))</visible>
+                    <posx>300</posx>
+                    <posy>550</posy>
+                    <control type="label">
+                        <posx>0</posx>
+                        <posy>0</posy>
+                        <width>680</width>
+                        <height>40</height>
+                        <font>font16</font>
+                        <textcolor>FFE8E8E8</textcolor>
+                        <align>left</align>
+                        <aligny>center</aligny>
+                        <label>$ADDON[script.tablo 32209]: $INFO[Window.Property(drive.0)]</label>
+                    </control>
+                    <control type="image">
+                        <posx>0</posx>
+                        <posy>50</posy>
+                        <width>680</width>
+                        <height>50</height>
+                        <texture>script-tablo-white_square.png</texture>
+                        <colordiffuse>FFE8E8E8</colordiffuse>
+                    </control>
+                    <control type="image" id="200">
+                        <posx>0</posx>
+                        <posy>50</posy>
+                        <width>1</width>
+                        <height>50</height>
+                        <texture>script-tablo-white_square.png</texture>
+                        <colordiffuse>FF2D8EC0</colordiffuse>
+                    </control>
+                    <control type="image">
+                        <posx>0</posx>
+                        <posy>50</posy>
+                        <width>680</width>
+                        <height>50</height>
+                        <texture border="8">about/hard_disk_overlay_hd.png</texture>
+                    </control>
+                    <control type="grouplist">
+                        <posx>10</posx>
+                        <posy>50</posy>
+                        <width>660</width>
+                        <height>50</height>
+                        <orientation>horizontal</orientation>
+                        <itemgap>10</itemgap>
+                        <control type="label" id="201">
+                            <width>1</width>
+                            <height>50</height>
+                            <font>font14</font>
+                            <textcolor>FFE8E8E8</textcolor>
+                            <align>left</align>
+                            <aligny>center</aligny>
+                            <label>$INFO[Window.Property(drive.0.used)]</label>
+                        </control>
+                        <control type="label">
+                            <visible>IsEmpty(Window.Property(drive.0.almost_full))</visible>
+                            <width min="0" max="660">auto</width>
+                            <height>50</height>
+                            <font>font14</font>
+                            <textcolor>FF000000</textcolor>
+                            <align>left</align>
+                            <aligny>center</aligny>
+                            <label>$INFO[Window.Property(drive.0.left)]</label>
+                        </control>
+                        <control type="label" id="202">
+                            <visible>!IsEmpty(Window.Property(drive.0.almost_full))</visible>
+                            <width>1</width>
+                            <height>50</height>
+                            <font>font14</font>
+                            <textcolor>FFE8E8E8</textcolor>
+                            <align>right</align>
+                            <aligny>center</aligny>
+                            <label>$INFO[Window.Property(drive.0.left)]</label>
+                        </control>
+                    </control>
+                </control>
+
+                <control type="group">
+                    <visible>!IsEmpty(Window.Property(drive.1))</visible>
+                    <posx>300</posx>
+                    <posy>680</posy>
+                    <control type="label">
+                        <posx>0</posx>
+                        <posy>0</posy>
+                        <width>680</width>
+                        <height>40</height>
+                        <font>font16</font>
+                        <textcolor>FFE8E8E8</textcolor>
+                        <align>left</align>
+                        <aligny>center</aligny>
+                        <label>$ADDON[script.tablo 32209]: $INFO[Window.Property(drive.1)]</label>
+                    </control>
+                    <control type="image">
+                        <posx>0</posx>
+                        <posy>50</posy>
+                        <width>680</width>
+                        <height>50</height>
+                        <texture>script-tablo-white_square.png</texture>
+                        <colordiffuse>FFE8E8E8</colordiffuse>
+                    </control>
+                    <control type="image" id="300">
+                        <posx>0</posx>
+                        <posy>50</posy>
+                        <width>1</width>
+                        <height>50</height>
+                        <texture>script-tablo-white_square.png</texture>
+                        <colordiffuse>FF2D8EC0</colordiffuse>
+                    </control>
+                    <control type="image">
+                        <posx>0</posx>
+                        <posy>50</posy>
+                        <width>680</width>
+                        <height>50</height>
+                        <texture border="8">about/hard_disk_overlay_hd.png</texture>
+                    </control>
+                    <control type="grouplist">
+                        <posx>10</posx>
+                        <posy>50</posy>
+                        <width>660</width>
+                        <height>50</height>
+                        <orientation>horizontal</orientation>
+                        <itemgap>10</itemgap>
+                        <control type="label" id="301">
+                            <width>1</width>
+                            <height>50</height>
+                            <font>font14</font>
+                            <textcolor>FFE8E8E8</textcolor>
+                            <align>left</align>
+                            <aligny>center</aligny>
+                            <label>$INFO[Window.Property(drive.1.used)]</label>
+                        </control>
+                        <control type="label">
+                            <visible>IsEmpty(Window.Property(drive.1.almost_full))</visible>
+                            <width min="0" max="660">auto</width>
+                            <height>50</height>
+                            <font>font14</font>
+                            <textcolor>FF000000</textcolor>
+                            <align>left</align>
+                            <aligny>center</aligny>
+                            <label>$INFO[Window.Property(drive.1.left)]</label>
+                        </control>
+                        <control type="label" id="302">
+                            <visible>!IsEmpty(Window.Property(drive.1.almost_full))</visible>
+                            <width>1</width>
+                            <height>50</height>
+                            <font>font14</font>
+                            <textcolor>FFE8E8E8</textcolor>
+                            <align>right</align>
+                            <aligny>center</aligny>
+                            <label>$INFO[Window.Property(drive.1.left)]</label>
+                        </control>
+                    </control>
+                </control>
+
+                <control type="group">
+                    <animation effect="slide" start="0,0" end="0, 100" condition="!IsEmpty(Window.Property(drive.1))">Conditional</animation>
+                    <posx>0</posx>
+                    <posy>700</posy>
+                    <control type="button" id="150">
+                        <posx>0</posx>
+                        <posy>0</posy>
+                        <width>1280</width>
+                        <height>60</height>
+                        <onup>100</onup>
+                        <font>font14</font>
+                        <align>center</align>
+                        <aligny>center</aligny>
+                        <texturefocus>-</texturefocus>
+                        <texturenofocus>-</texturenofocus>
+                        <label> </label>
+                    </control>
+                    <control type="group">
+                        <posx>0</posx>
+                        <posy>0</posy>
+                        <control type="label">
+                            <posx>630</posx>
+                            <posy>0</posy>
+                            <width>630</width>
+                            <height>60</height>
+                            <font>font16</font>
+                            <textcolor>FFE8E8E8</textcolor>
+                            <align>right</align>
+                            <aligny>center</aligny>
+                            <label>$ADDON[script.tablo 32210]</label>
+                        </control>
+                        <control type="label">
+                            <posx>650</posx>
+                            <posy>0</posy>
+                            <width>630</width>
+                            <height>60</height>
+                            <font>font16</font>
+                            <textcolor>FFFFFFFF</textcolor>
+                            <align>left</align>
+                            <aligny>center</aligny>
+                            <label>$INFO[Window.Property(firmware)]</label>
+                        </control>
+                    </control>
+
+                    <control type="group">
+                        <posx>0</posx>
+                        <posy>70</posy>
+                        <control type="label">
+                            <posx>630</posx>
+                            <posy>0</posy>
+                            <width>630</width>
+                            <height>60</height>
+                            <font>font16</font>
+                            <textcolor>FFE8E8E8</textcolor>
+                            <align>right</align>
+                            <aligny>center</aligny>
+                            <label>$ADDON[script.tablo 32211]</label>
+                        </control>
+                        <control type="label">
+                            <posx>650</posx>
+                            <posy>0</posy>
+                            <width>630</width>
+                            <height>60</height>
+                            <font>font16</font>
+                            <textcolor>FFFFFFFF</textcolor>
+                            <align>left</align>
+                            <aligny>center</aligny>
+                            <label>$INFO[Window.Property(ip.address)]</label>
+                        </control>
+                    </control>
+
+                    <control type="group">
+                        <posx>0</posx>
+                        <posy>140</posy>
+                        <control type="label">
+                            <posx>630</posx>
+                            <posy>0</posy>
+                            <width>630</width>
+                            <height>60</height>
+                            <font>font16</font>
+                            <textcolor>FFE8E8E8</textcolor>
+                            <align>right</align>
+                            <aligny>center</aligny>
+                            <label>$ADDON[script.tablo 32212]</label>
+                        </control>
+                        <control type="label">
+                            <posx>650</posx>
+                            <posy>0</posy>
+                            <width>630</width>
+                            <height>60</height>
+                            <font>font16</font>
+                            <textcolor>FFFFFFFF</textcolor>
+                            <align>left</align>
+                            <aligny>center</aligny>
+                            <label>$INFO[Window.Property(mac.address)]</label>
+                        </control>
+                    </control>
+
+                    <control type="group">
+                        <posx>0</posx>
+                        <posy>240</posy>
+                        <control type="label">
+                            <posx>630</posx>
+                            <posy>0</posy>
+                            <width>630</width>
+                            <height>60</height>
+                            <font>font16</font>
+                            <textcolor>FFE8E8E8</textcolor>
+                            <align>right</align>
+                            <aligny>center</aligny>
+                            <label>$ADDON[script.tablo 32213]</label>
+                        </control>
+                        <control type="label">
+                            <posx>650</posx>
+                            <posy>0</posy>
+                            <width>630</width>
+                            <height>60</height>
+                            <font>font16</font>
+                            <textcolor>FFFFFFFF</textcolor>
+                            <align>left</align>
+                            <aligny>center</aligny>
+                            <label>$INFO[Window.Property(addon.version)]</label>
+                        </control>
+                    </control>
+
+                    <control type="group">
+                        <posx>0</posx>
+                        <posy>310</posy>
+                        <control type="label">
+                            <posx>630</posx>
+                            <posy>0</posy>
+                            <width>630</width>
+                            <height>60</height>
+                            <font>font16</font>
+                            <textcolor>FFE8E8E8</textcolor>
+                            <align>right</align>
+                            <aligny>center</aligny>
+                            <label>$ADDON[script.tablo 32214]</label>
+                        </control>
+                        <control type="label">
+                            <posx>650</posx>
+                            <posy>0</posy>
+                            <width>630</width>
+                            <height>60</height>
+                            <font>font16</font>
+                            <textcolor>FFFFFFFF</textcolor>
+                            <align>left</align>
+                            <aligny>center</aligny>
+                            <label>$INFO[System.BuildVersion]</label>
+                        </control>
+                    </control>
+
+                    <control type="group">
+                        <posx>0</posx>
+                        <posy>380</posy>
+                        <control type="label">
+                            <posx>630</posx>
+                            <posy>0</posy>
+                            <width>630</width>
+                            <height>60</height>
+                            <font>font16</font>
+                            <textcolor>FFE8E8E8</textcolor>
+                            <align>right</align>
+                            <aligny>center</aligny>
+                            <label>$ADDON[script.tablo 32215]</label>
+                        </control>
+                        <control type="label">
+                            <posx>650</posx>
+                            <posy>0</posy>
+                            <width>630</width>
+                            <height>60</height>
+                            <font>font16</font>
+                            <textcolor>FFFFFFFF</textcolor>
+                            <align>left</align>
+                            <aligny>center</aligny>
+                            <label>$INFO[System.KernelVersion]</label>
+                        </control>
+                    </control>
+
+                </control>
+            </control>
+
+            <control type="image">
+                <posx>-290</posx>
+                <posy>0</posy>
+                <width>320</width>
+                <height>720</height>
+                <texture>script-tablo-white_square.png</texture>
+                <colordiffuse>FF2F8EC0</colordiffuse>
+            </control>
+        </control>
+    </controls>
+</window>

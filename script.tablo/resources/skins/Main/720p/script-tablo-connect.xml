@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<window>
+    <defaultcontrol>100</defaultcontrol>
+    <coordinates>
+        <system>1</system>
+        <posx>0</posx>
+        <posy>0</posy>
+    </coordinates>
+    <controls>
+        <control type="group">
+            <control type="image">
+                <posx>0</posx>
+                <posy>0</posy>
+                <width>1280</width>
+                <height>720</height>
+                <texture>script-tablo-white_square.png</texture>
+                <colordiffuse>FF101924</colordiffuse>
+            </control>
+
+            <control type="label">
+                <visible>!IsEmpty(Window.Property(updating))</visible>
+                <posx>0</posx>
+                <posy>40</posy>
+                <width>1280</width>
+                <height>80</height>
+                <font>WeatherTemp</font>
+                <align>center</align>
+                <aligny>center</aligny>
+                <textcolor>FFFFFFFF</textcolor>
+                <label>$ADDON[script.tablo 32205] $INFO[Window.Property(updating)]</label>
+            </control>
+
+            <control type="group" id="100">
+                <visible>IsEmpty(Window.Property(updating))</visible>
+                <defaultcontrol>200</defaultcontrol>
+                <control type="fixedlist" id="200">
+                    <focusposition>1</focusposition>
+                    <posx>500</posx>
+                    <posy>430</posy>
+                    <width>280</width>
+                    <height>130</height>
+                    <scrolltime>200</scrolltime>
+                    <orientation>vertical</orientation>
+                    <onup>100</onup>
+                    <ondown>300</ondown>
+                    <itemlayout height="50">
+                       <control type="label">
+                            <left>0</left>
+                            <top>0</top>
+                            <width>280</width>
+                            <height>50</height>
+                            <font>font30</font>
+                            <textcolor>FFFFFFFF</textcolor>
+                            <align>center</align>
+                            <aligny>center</aligny>
+                            <label>$INFO[ListItem.Label]</label>
+                        </control>
+                    </itemlayout>
+
+                    <focusedlayout height="50">
+                        <control type="group">
+                            <visible>Control.HasFocus(200)</visible>
+                            <control type="image">
+                                <posx>0</posx>
+                                <posy>0</posy>
+                                <width>280</width>
+                                <height>50</height>
+                                <texture border="8">highlights/highlight_focused.png</texture>
+                                <colordiffuse>52FFFFFF</colordiffuse>
+                                <aspectratio>stretch</aspectratio>
+                            </control>
+                            <control type="label">
+                                <left>0</left>
+                                <top>0</top>
+                                <width>280</width>
+                                <height>50</height>
+                                <font>font30</font>
+                                <textcolor>FFFFFFFF</textcolor>
+                                <align>center</align>
+                                <aligny>center</aligny>
+                                <label>[B]$INFO[ListItem.Label][/B]</label>
+                            </control>
+                        </control>
+                        <control type="group">
+                            <visible>!Control.HasFocus(200)</visible>
+                            <control type="label">
+                                <left>0</left>
+                                <top>0</top>
+                                <width>280</width>
+                                <height>50</height>
+                                <font>font30</font>
+                                <textcolor>FFFFFFFF</textcolor>
+                                <align>center</align>
+                                <aligny>center</aligny>
+                                <label>$INFO[ListItem.Label]</label>
+                            </control>
+                        </control>
+                    </focusedlayout>
+                </control>
+            </control>
+        </control>
+        <control type="image">
+            <posx>0</posx>
+            <posy>0</posy>
+            <width>1280</width>
+            <height>450</height>
+            <texture>script-tablo-white_square.png</texture>
+            <colordiffuse>FF101924</colordiffuse>
+        </control>
+        <control type="image">
+            <posx>0</posx>
+            <posy>450</posy>
+            <width>1280</width>
+            <height>10</height>
+            <texture>effects/fade_down.png</texture>
+            <colordiffuse>FF101924</colordiffuse>
+        </control>
+        <control type="image">
+            <posx>0</posx>
+            <posy>550</posy>
+            <width>1280</width>
+            <height>10</height>
+            <texture flipy="true">effects/fade_down.png</texture>
+            <colordiffuse>FF101924</colordiffuse>
+        </control>
+
+        <control type="group">
+            <visible>!IsEmpty(Window.Property(initialized)) + IsEmpty(Window.Property(updating))</visible>
+            <posx>500</posx>
+            <posy>560</posy>
+            <control type="button" id="300">
+                <posx>0</posx>
+                <posy>0</posy>
+                <width>280</width>
+                <height>60</height>
+                <onup>200</onup>
+                <font>font30</font>
+                <textcolor>FFFFFFFF</textcolor>
+                <focusedcolor>FFFFFFFF</focusedcolor>
+                <align>center</align>
+                <aligny>center</aligny>
+                <texturefocus colordiffuse="52FFFFFF" border="8">highlights/highlight_focused.png</texturefocus>
+                <texturenofocus>-</texturenofocus>
+                <textoffsetx>0</textoffsetx>
+                <textoffsety>0</textoffsety>
+                <label></label>
+            </control>
+            <control type="image">
+                <visible>IsEmpty(Window.Property(tablo.found)) + !IsEmpty(Window.Property(initialized))</visible>
+                <animation effect="rotate" start="0" end="-360000" center="24,30" time="1000000" reversible="false">Visible</animation>
+                <posx>10</posx>
+                <posy>16</posy>
+                <width>28</width>
+                <height>28</height>
+                <texture>spinners/static.png</texture>
+            </control>
+            <control type="label">
+                <visible>Control.HasFocus(300)</visible>
+                <posx>0</posx>
+                <posy>0</posy>
+                <width>280</width>
+                <height>60</height>
+                <font>font30</font>
+                <textcolor>FFFFFFFF</textcolor>
+                <align>center</align>
+                <aligny>center</aligny>
+                <label>[B]$ADDON[script.tablo 32206][/B]</label>
+            </control>
+            <control type="label">
+                <visible>!Control.HasFocus(300)</visible>
+                <posx>0</posx>
+                <posy>0</posy>
+                <width>280</width>
+                <height>60</height>
+                <font>font30</font>
+                <textcolor>FFFFFFFF</textcolor>
+                <align>center</align>
+                <aligny>center</aligny>
+                <label>$ADDON[script.tablo 32206]</label>
+            </control>
+        </control>
+
+        <control type="label">
+            <visible>IsEmpty(Window.Property(updating))</visible>
+            <posx>0</posx>
+            <posy>40</posy>
+            <width>1280</width>
+            <height>80</height>
+            <font>WeatherTemp</font>
+            <align>center</align>
+            <aligny>center</aligny>
+            <textcolor>FFFFFFFF</textcolor>
+            <label>$ADDON[script.tablo 32207]</label>
+        </control>
+
+        <control type="group">
+            <control type="label">
+                <visible>!IsEmpty(Window.Property(updating))</visible>
+                <posx>0</posx>
+                <posy>40</posy>
+                <width>1280</width>
+                <height>80</height>
+                <font>WeatherTemp</font>
+                <align>center</align>
+                <aligny>center</aligny>
+                <textcolor>FFFFFFFF</textcolor>
+                <label>$INFO[Window.Property(updating)]: $INFO[Window.Property(update.status)]</label>
+            </control>
+            <control type="image">
+                <visible>!IsEmpty(Window.Property(updating))</visible>
+                <animation effect="rotate" start="0" end="-360000" center="640,474" time="1000000" reversible="false">Visible</animation>
+                <posx>626</posx>
+                <posy>460</posy>
+                <width>28</width>
+                <height>28</height>
+                <texture>spinners/static.png</texture>
+            </control>
+        </control>
+
+        <control type="image">
+            <visible>!IsEmpty(Window.Property(tablo.found))</visible>
+            <posx>275</posx>
+            <posy>200</posy>
+            <width>662</width>
+            <height>242</height>
+            <texture>tablo/tablo_render_hd.png</texture>
+            <aspectratio>keep</aspectratio>
+        </control>
+
+        <control type="image">
+            <visible>IsEmpty(Window.Property(initialized))</visible>
+            <animation effect="rotate" start="0" end="-360000" center="640,360" time="1000000" reversible="false">Visible</animation>
+            <posx>626</posx>
+            <posy>346</posy>
+            <width>28</width>
+            <height>28</height>
+            <texture>spinners/static.png</texture>
+        </control>
+
+    </controls>
+</window>
