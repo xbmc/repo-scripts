@@ -92,6 +92,7 @@ def getID3Lyrics(filename, getlrc):
     try:
         data = MP3(filename)
         for tag,value in data.iteritems():
+            text = ''
             if getlrc and tag.startswith('SYLT'):
                 lyr = ''
                 text = data[tag].text
@@ -105,8 +106,9 @@ def getID3Lyrics(filename, getlrc):
                     text = data[tag].text
                 elif tag.lower().endswith('lyrics'): # TXXX tags contain arbitrary info. only accept 'TXXX:lyrics'
                     text = data[tag].text[0]
-                lyr = text.encode("utf-8")
-                return lyr
+                if text:
+                    lyr = text.encode("utf-8")
+                    return lyr
     except:
         return None
 

@@ -1,3 +1,6 @@
+v4.1.11
+- fix embedded lyrics search
+
 v4.1.10
 - fixed lyricwiki scraper
 
