@@ -1,20 +1,16 @@
-------------------------
-Subtitles.gr v1.1.1 (24-Sep-14)
-------------------------
+[B]1.2.0[/B]
+- Cosmetics and code simplification
+- Updated subtitles.gr
+- Updated xsubs.tv
+- Added support for xsubs.tv accounts
+- Updated subztv.gr
 
-- Fixed issue with subtitle query.
+[B]1.1.1[/B]
+- Fixed issue with subtitle query
 
+[B]1.1.0[/B]
+- Added support for subz.blog-spot.gr
+- Added support for xsubs.tv
 
-------------------------
-Subtitles.gr v1.1.0 (3-Jun-14)
-------------------------
-
-- Added support for subz.blog-spot.gr.
-- Added support for xsubs.tv.
-
-
-------------------------
-Subtitles.gr v1.0.0 (12-Mar-14)
-------------------------
-
+[B]1.0.0[/B]
 - Initial version

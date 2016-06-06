@@ -1,4 +1,4 @@
-# XBMC Media Center language file
+# Kodi Media Center language file
 # Addon Name: Subtitles.gr
 # Addon id: service.subtitles.subtitles.gr
 # Addon version: 1.0.0
@@ -14,4 +14,16 @@ msgstr ""
 
 msgctxt "#32002"
 msgid "This service is only for Greek subtitles"
+msgstr ""
+
+msgctxt "#30211"
+msgid "Accounts"
+msgstr ""
+
+msgctxt "#30212"
+msgid "User"
+msgstr ""
+
+msgctxt "#30213"
+msgid "Password"
 msgstr ""
