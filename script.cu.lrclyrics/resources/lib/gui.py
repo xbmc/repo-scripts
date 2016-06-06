@@ -84,7 +84,10 @@ class MAIN():
         log('searching memory for lyrics')
         lyrics = self.get_lyrics_from_memory( song )
         if lyrics:
-            log('found lyrics in memory')
+            if lyrics.lyrics:
+                log('found lyrics in memory')
+            else:
+                log('no lyrics found on previous search')
             return lyrics
         if song.title:
             lyrics = self.find_lyrics( song )
