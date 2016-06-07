@@ -1,3 +1,10 @@
+v1.0.0 (2016-05-29)
+Better po file formatting
+Fixes bug with unicode strings
+Fixes bug with mp3 files with no tags
+Fixes bug in reading windowsids from settings
+Improves onShutdown task
+
 v0.9.9 (2016-03-22)
 Version changed to meet official repo rules
 

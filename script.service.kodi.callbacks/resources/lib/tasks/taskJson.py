@@ -41,7 +41,7 @@ class TaskJsonNotify(AbstractTask):
     ]
 
     def __init__(self):
-        super(TaskJsonNotify, self).__init__()
+        super(TaskJsonNotify, self).__init__(name='TaskJson')
 
     @staticmethod
     def validate(taskKwargs, xlog=KodiLogger.log):
@@ -53,24 +53,26 @@ class TaskJsonNotify(AbstractTask):
         err = False
         msg = ''
         message = str(self.topic)
-        data = str(self.publisherKwargs).replace('\'', '"')
+        data = json.dumps(self.publisherKwargs)
         try:
-            json_query = xbmc.executeJSONRPC('{ "jsonrpc": "2.0", "id": 0, "method": "JSONRPC.NotifyAll", "params": {"sender":"%s", "message":"%s", "data":%s} }' %(self.taskKwargs['jsonnotify'], message, data))
-            json_query = unicode(json_query, 'utf-8', errors='ignore')
+            qs = u'{ "jsonrpc": "2.0", "id": 0, "method": "JSONRPC.NotifyAll", "params": {"sender":"%s", "message":"%s", "data":%s} }' %(self.taskKwargs['jsonnotify'], message, data)
+            qs = qs.encode('utf-8', 'ignore')
+            json_query = xbmc.executeJSONRPC(qs)
+            json_query = unicode(json_query, 'utf-8', 'ignore')
             json_response = json.loads(json_query)
         except Exception:
             e = sys.exc_info()[0]
             err = True
             if hasattr(e, 'message'):
-                msg = str(e.message)
-            msg = msg + '\n' + traceback.format_exc()
+                msg = unicode(e.message)
+            msg = msg + u'\n' + unicode(traceback.format_exc())
         else:
             if json_response.has_key('result'):
                 if json_response['result'] != u'OK':
                     err = True
-                    msg = 'JSON Notify Error %s' % json_response['result']
+                    msg = u'JSON Notify Error %s' % json_response['result']
             else:
                 err = True
-                msg = 'JSON Notify Error: %s' % str(json_response)
+                msg = u'JSON Notify Error: %s' % unicode(json_response)
 
         self.threadReturn(err, msg)

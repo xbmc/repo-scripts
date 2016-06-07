@@ -78,7 +78,7 @@ class WatchdogStartup(Publisher):
                         diff = DirectorySnapshotDiff(oldsnapshot, newsnapshot)
                         changes = self.getChangesFromDiff(diff)
                         if len(changes) > 0:
-                            eh = EventHandler(patterns=setting['ws_patterns'].split(','), ignore_patterns=setting['ws_ignore_patterns'].split(','),
+                            eh = EventHandler(patterns=setting['ws_patterns'].split(u','), ignore_patterns=setting['ws_ignore_patterns'].split(u','),
                                               ignore_directories=setting['ws_ignore_directories'])
                             observer = Observer()
                             try:
@@ -98,7 +98,7 @@ class WatchdogStartup(Publisher):
                                 self.publish(message)
             else:
                 message = Message(Topic('onStartupFileChanges', setting['key']), listOfChanges=[{'DirsDeleted':folder}])
-                log(msg=_('Watchdog Startup folder not found: %s') % folder)
+                log(msg=_(u'Watchdog Startup folder not found: %s') % folder)
                 self.publish(message)
 
     @staticmethod

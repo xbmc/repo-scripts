@@ -106,7 +106,7 @@ class Topic(object):
 
     def __repr__(self):
         if self.has_subtopic():
-            return '%s:%s' % (self.topic, self.subtopic)
+            return u'%s:%s' % (self.topic, self.subtopic)
         else:
             return self.topic
 
@@ -161,6 +161,12 @@ class Dispatcher(threading.Thread):
 
     def abort(self, timeout=0):
         if self.running:
+            while not self._message_q.empty(): #Fixes bug where Shutdown event does not run bc abort called
+                time.sleep(0.1)
+            for subcriber in self.subscribers:
+                for tm in subcriber.taskmanagers:
+                    for task in tm.run_tasks:
+                        task.join(0.1)
             self._abort_evt.set()
             if timeout > 0:
                 self.join(timeout)
@@ -302,15 +308,15 @@ class Subscriber(object):
     def notify(self, message):
         for taskmanager in self.taskmanagers:
             try:
-                self.logger.log(self.loglevel, _('Task starting for %s') % message.topic)
+                self.logger.log(self.loglevel, _(u'Task starting for %s') % message.topic)
                 taskmanager.start(message.topic, **message.kwargs)
             except TaskManagerException_TaskAlreadyRunning as e:
-                self.logger.log(self.loglevel, '%s - %s' % (message.topic, e.message))
+                self.logger.log(self.loglevel, u'%s - %s' % (message.topic, e.message))
             except TaskManagerException_TaskInRefractoryPeriod as e:
-                self.logger.log(self.loglevel, '%s - %s' % (message.topic, e.message))
+                self.logger.log(self.loglevel, u'%s - %s' % (message.topic, e.message))
             except TaskManagerException_TaskCountExceeded as e:
-                self.logger.log(self.loglevel, '%s - %s' % (message.topic, e.message))
+                self.logger.log(self.loglevel, u'%s - %s' % (message.topic, e.message))
             except Exception as e:
                 raise e
             else:
-                self.logger.log(self.loglevel, _('Task finalized for %s') % message.topic)
+                self.logger.log(self.loglevel, _(u'Task finalized for %s') % message.topic)

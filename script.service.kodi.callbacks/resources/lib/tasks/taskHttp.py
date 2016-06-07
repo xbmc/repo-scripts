@@ -79,8 +79,8 @@ class TaskHttp(AbstractTask):
     ]
 
     def __init__(self):
-        super(TaskHttp, self).__init__()
-        self.runtimeargs = ''
+        super(TaskHttp, self).__init__(name='TaskHttp')
+        self.runtimeargs = u''
 
     @staticmethod
     def validate(taskKwargs, xlog=KodiLogger.log):
@@ -92,66 +92,84 @@ class TaskHttp(AbstractTask):
             return False
 
     def sendRequest(self, session, verb, url, postget=False):
-        if postget or verb == 'POST' or verb == 'PUT':
-            url, data = url.split('??', 1)
+        if (postget or verb == 'POST' or verb == 'PUT') and '??' in url:
+            url, data = url.split(u'??', 1)
+            try:
+                data = data.encode('utf-8', 'replace')
+            except UnicodeEncodeError:
+                pass
             if postget:
                 data = None
         else:
             data = None
         req = requests.Request(verb, url, data=data)
-        prepped = session.prepare_request(req)
+        try:
+            prepped = session.prepare_request(req)
+        except httplib.InvalidURL as e:
+            err = True
+            msg = unicode(e, 'utf-8')
+            return err, msg
         if verb == 'POST' or verb == 'PUT':
             prepped.headers['Content-Type'] = self.taskKwargs['content-type']
-        msg = 'Prepped URL: %s\nBody: %s' % (prepped.url, prepped.body)
+        try:
+            pu = prepped.url.decode('utf-8')
+        except (AttributeError, UnicodeDecodeError):
+            pu = u''
+        try:
+            pb = prepped.body.decode('utf-8')
+        except (AttributeError, UnicodeDecodeError):
+            pb = u''
+        msg = u'Prepped URL: %s\nBody: %s' % (pu, pb)
+        sys.exc_clear()
         try:
             resp = session.send(prepped, timeout=20)
-            msg += '\nStatus: %s' % str(resp.status_code)
+            msg += u'\nStatus: %s' % resp.status_code
             resp.raise_for_status()
             err = False
             if resp.text == '':
-                respmsg = 'No response received'
+                respmsg = u'No response received'
             else:
-                respmsg = resp.text
-            msg += '\nResponse for %s: %s' %(verb, respmsg)
+                respmsg = resp.text.decode('unicode_escape', 'ignore')
+            msg += u'\nResponse for %s: %s' %(verb, respmsg)
             resp.close()
-        except requests.ConnectionError as e:
+        except requests.ConnectionError:
             err = True
-            msg = _('Requests Connection Error')
+            msg = _(u'Requests Connection Error')
         except requests.HTTPError as e:
             err = True
-            msg = '%s: %s' %(_('Requests HTTPError'), str(e))
+            msg = u'%s: %s' %(_(u'Requests HTTPError'), str(e))
         except requests.URLRequired as e:
             err = True
-            msg = '%s: %s' %(_('Requests URLRequired Error'), str(e))
+            msg = u'%s: %s' %(_(u'Requests URLRequired Error'), str(e))
         except requests.Timeout as e:
             err = True
-            msg = '%s: %s' %(_('Requests Timeout Error'), str(e))
+            msg = u'%s: %s' %(_(u'Requests Timeout Error'), str(e))
         except requests.RequestException as e:
             err = True
-            msg = '%s: %s' %(_('Generic Requests Error'), str(e))
+            msg = u'%s: %s' %(_(u'Generic Requests Error'), str(e))
         except urllib2.HTTPError, e:
             err = True
-            msg = _('HTTPError = ') + str(e.code)
+            msg = _(u'HTTPError = ') + unicode(e.code)
         except urllib2.URLError, e:
             err = True
-            msg = _('URLError\n') + e.reason
+            msg = _(u'URLError\n') + unicode(e.reason)
         except httplib.BadStatusLine:
             err = False
-            self.log(msg=_('Http Bad Status Line caught and passed'))
+            self.log(msg=_(u'Http Bad Status Line caught and passed'))
         except httplib.HTTPException, e:
             err = True
-            msg = _('HTTPException')
+            msg = _(u'HTTPException')
             if hasattr(e, 'message'):
-                msg = msg + '\n' + e.message
+                msg = msg + u'\n' + unicode(e.message)
         except socket.timeout:
             err = True
-            msg = _('The request timed out, host unreachable')
+            msg = _(u'The request timed out, host unreachable')
         except Exception:
             err = True
             e = sys.exc_info()[0]
             if hasattr(e, 'message'):
-                msg = str(e.message)
-            msg = msg + '\n' + traceback.format_exc()
+                msg = unicode(e.message, errors='ignore')
+            msg = msg + u'\n' + unicode(traceback.format_exc(), errors='ignore')
         return err, msg
 
 
@@ -160,9 +178,9 @@ class TaskHttp(AbstractTask):
             notify(_('Task %s launching for event: %s') % (self.taskId, str(self.topic)))
         if isinstance(self.runtimeargs, list):
             if len(self.runtimeargs) > 0:
-                self.runtimeargs = ''.join(self.runtimeargs)
+                self.runtimeargs = u''.join(self.runtimeargs)
             else:
-                self.runtimeargs = ''
+                self.runtimeargs = u''
         s = requests.Session()
         url = self.taskKwargs['http']+self.runtimeargs
         if self.taskKwargs['user'] != '' and self.taskKwargs['pass'] != '':
@@ -177,7 +195,7 @@ class TaskHttp(AbstractTask):
         if self.taskKwargs['request-type'] == 'POST-GET':
             err2, msg2 = self.sendRequest(s, 'GET', url, postget=True)
             err = err or err2
-            msg = '\n'.join([msg, msg2])
+            msg = u'\n'.join([msg, msg2])
 
         s.close()
         self.threadReturn(err, msg)

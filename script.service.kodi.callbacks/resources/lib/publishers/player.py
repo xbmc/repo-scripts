@@ -113,7 +113,7 @@ class Player(xbmc.Player):
                 tries += 1
             title = xbmc.getInfoLabel('MusicPlayer.Title')
             if title is None or title == '':
-                return 'Kodi cannot detect title'
+                return u'Kodi cannot detect title'
             else:
                 return title
         elif self.isPlayingVideo():
@@ -137,19 +137,19 @@ class Player(xbmc.Player):
                         title = ''
                     else:
                         try:
-                            title = ret['result']['item']['title']
+                            title = ret[u'result'][u'item'][u'title']
                         except KeyError:
-                            title = 'Kodi cannot detect title'
+                            title = u'Kodi cannot detect title'
                         else:
-                            if title == '':
-                                title = ret['result']['item']['label']
-                            if title == '':
-                                title = 'Kodi cannot detect title'
+                            if title == u'':
+                                title = ret[u'result'][u'item'][u'label']
+                            if title == u'':
+                                title = u'Kodi cannot detect title'
                     return title
                 else:
                     return title
         else:
-            return 'Kodi cannot detect title - none playing'
+            return u'Kodi cannot detect title - none playing'
 
     def getAudioInfo(self, playerid):
         try:
@@ -157,26 +157,26 @@ class Player(xbmc.Player):
                 '{"jsonrpc": "2.0", "method": "Player.GetItem", "params": { "properties": ["title", "album",'
                 ' "artist", "duration", "file", "streamdetails"], "playerid": %s }, "id": "AudioGetItem"}'
                 % playerid))['result']['item']
-            if 'artist' in info.keys():
-                t = info['artist']
-                if isinstance(t, list):
-                    info['artist'] = t[0]
+            if u'artist' in info.keys():
+                t = info[u'artist']
+                if isinstance(t, list) and len(t) > 0:
+                    info[u'artist'] = t[0]
                 elif isinstance(t, unicode):
                     if t != u'':
-                        info['artist'] = t
+                        info[u'artist'] = t
                     else:
-                        info['artist'] = u'unknown'
+                        info[u'artist'] = u'unknown'
                 else:
-                    info['artist'] = u'unknown'
+                    info[u'artist'] = u'unknown'
             else:
-                info['artist'] = u'unknown'
-            items = ['duration', 'id', 'label', 'type']
+                info[u'artist'] = u'unknown'
+            items = [u'duration', u'id', u'label', u'type']
             for item in items:
                 try:
                     del info[item]
                 except KeyError:
                     pass
-            info['mediaType'] = 'audio'
+            info[u'mediaType'] = u'audio'
         except RuntimeError:
             self.info = {}
         else:
@@ -191,43 +191,61 @@ class Player(xbmc.Player):
         except RuntimeError:
             self.info = {}
         else:
-            items = ['label', 'id', 'tvshowid']
+            items = [u'label', u'id', u'tvshowid']
             for item in items:
                 try:
                     del info[item]
                 except KeyError:
                     pass
-            items = {'mediaType': 'type', 'fileName': 'file'}
+            items = {u'mediaType': u'type', u'fileName': u'file'}
             for item in items.keys():
                 try:
                     t = items[item]
                     info[item] = info.pop(t, 'unknown')
                 except KeyError:
-                    info[item] = 'unknown'
+                    info[item] = u'unknown'
             if info['mediaType'] != 'musicvideo':
-                items = ['artist', 'album']
+                items = [u'artist', u'album']
                 for item in items:
                     try:
                         del info[item]
                     except KeyError:
                         pass
             else:
-                info['artist'] = info['artist'][0]
-            if 'streamdetails' in info.keys():
-                sd = info.pop('streamdetails', {})
-                info['stereomode'] = sd['video'][0]['stereomode']
-                info['width'] = str(sd['video'][0]['width'])
-                info['height'] = str(sd['video'][0]['height'])
-                info['aspectRatio'] = str(int((sd['video'][0]['aspect'] * 100.0) + 0.5) / 100.0)
-            if info['mediaType'] == u'episode':
-                items = ['episode', 'season']
+                try:
+                    info[u'artist'] = info[u'artist'][0]
+                except (KeyError, IndexError):
+                    info[u'artist'] = u'unknown'
+            if u'streamdetails' in info.keys():
+                sd = info.pop(u'streamdetails', {})
+                try:
+                    info[u'stereomode'] = sd[u'video'][0][u'stereomode']
+                except (KeyError, IndexError):
+                    info[u'stereomode'] = u'unknown'
+                else:
+                    if info[u'stereomode'] == u'':
+                        info[u'stereomode'] = u'unknown'
+                try:
+                    info[u'width'] = unicode(sd[u'video'][0][u'width'])
+                except (KeyError, IndexError):
+                    info[u'width'] = u'unknown'
+                try:
+                    info[u'height'] = unicode(sd[u'video'][0][u'height'])
+                except (KeyError, IndexError):
+                    info[u'height'] = u'unknown'
+                try:
+                    info[u'aspectRatio'] = unicode(int((sd[u'video'][0][u'aspect'] * 100.0) + 0.5) / 100.0)
+                except (KeyError, IndexError):
+                    info[u'aspectRatio'] = u'unknown'
+            if info[u'mediaType'] == u'episode':
+                items = [u'episode', u'season']
                 for item in items:
                     try:
-                        info[item] = str(info[item]).zfill(2)
+                        info[item] = unicode(info[item]).zfill(2)
                     except KeyError:
-                        info[item] = 'unknown'
+                        info[item] = u'unknown'
             else:
-                items = ['episode', 'season', 'showtitle']
+                items = [u'episode', u'season', u'showtitle']
                 for item in items:
                     try:
                         del info[item]
@@ -261,24 +279,24 @@ class Player(xbmc.Player):
             self.info = {}
 
     def rectifyUnknowns(self):
-        items = {'filename': self.getPlayingFileX, 'aspectRatio': self.getAspectRatio, 'height': self.getResoluion,
-                 'title': self.getTitle}
+        items = {u'fileName': self.getPlayingFileX, u'aspectRatio': self.getAspectRatio, u'height': self.getResoluion,
+                 u'title': self.getTitle}
         for item in items.keys():
             if item not in self.info.keys():
                 self.info[item] = items[item]()
             else:
                 try:
-                    if self.info[item] == '' or self.info[item] == 'unknown':
+                    if self.info[item] == '' or self.info[item] == u'unknown':
                         self.info[item] = items[item]()
                 except KeyError:
                     pass
         pt = self.playing_type()
-        if 'mediaType' not in self.info.keys():
-            self.info['mediaType'] = pt
+        if u'mediaType' not in self.info.keys():
+            self.info[u'mediaType'] = pt
         else:
             try:
-                if pt != 'unknown' and self.info['mediaType'] != pt:
-                    self.info['mediaType'] = pt
+                if pt != u'unknown' and self.info[u'mediaType'] != pt:
+                    self.info[u'mediaType'] = pt
             except KeyError:
                 pass
 
@@ -286,27 +304,27 @@ class Player(xbmc.Player):
         try:
             fn = self.getPlayingFile()
         except RuntimeError:
-            fn = 'unknown'
+            fn = u'unknown'
         if fn is None or fn == '':
-            fn = 'unknown'
+            fn = u'unknown'
         return xbmc.translatePath(fn)
 
     @staticmethod
     def getAspectRatio():
         ar = xbmc.getInfoLabel("VideoPlayer.VideoAspect")
         if ar is None:
-            ar = 'unknown'
+            ar = u'unknown'
         elif ar == '':
-            ar = 'unknown'
+            ar = u'unknown'
         return str(ar)
 
     @staticmethod
     def getResoluion():
         vr = xbmc.getInfoLabel("VideoPlayer.VideoResolution")
         if vr is None:
-            vr = 'unknown'
+            vr = u'unknown'
         elif vr == '':
-            vr = 'unknown'
+            vr = u'unknown'
         return str(vr)
 
     def onPlayBackStarted(self):

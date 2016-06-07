@@ -24,13 +24,17 @@ from resources.lib.utils.kodipathtools import translatepath
 
 def process_cmdline(cmd):
     posspaths = []
-    parts = shlex.split(cmd, posix= not sys.platform.startswith('win'))
+    cmds = cmd.encode('utf-8')
+    partss = shlex.split(cmds, posix= not sys.platform.lower().startswith('win'))
+    parts = []
+    for part in partss:
+        parts.append(unicode(part, encoding='utf-8'))
     for i in xrange(0, len(parts)):
         found=-1
         for j in xrange(i+1, len(parts)+1):
-            t = ' '.join(parts[i:j])
+            t = u' '.join(parts[i:j])
             t = translatepath(t)
-            t = t.strip('"')
+            t = t.strip(u'"')
             if os.path.exists(t):
                 if j > found:
                     found = j
@@ -50,15 +54,37 @@ def process_cmdline(cmd):
         for i in xrange(0, len(parts)):
             for j in xrange(0, len(paths)):
                 if i == paths[j][0]:
-                    t = ' '.join(parts[i:paths[j][1]])
+                    t = u' '.join(parts[i:paths[j][1]])
                     t = translatepath(t)
-                    t = t.strip('"')
+                    t = t.strip(u'"')
                     parts[i] = t
                     for k in xrange(i+1, paths[j][1]):
-                        parts[k]=''
+                        parts[k]=u''
         for i in xrange(0, len(parts)):
-            if parts[i] != '':
+            if parts[i] != u'':
                 args.append(parts[i])
     else:
         args = parts
     return args
+
+def fsencode(s):
+    if sys.platform.lower().startswith('win'):
+        try:
+            import ctypes
+            import ctypes.wintypes
+        except ImportError:
+            return s
+        ctypes.windll.kernel32.GetShortPathNameW.argtypes = [
+            ctypes.wintypes.LPCWSTR,  # lpszLongPath
+            ctypes.wintypes.LPWSTR,  # lpszShortPath
+            ctypes.wintypes.DWORD  # cchBuffer
+        ]
+        ctypes.windll.kernel32.GetShortPathNameW.restype = ctypes.wintypes.DWORD
+
+        buf = ctypes.create_unicode_buffer(1024)  # adjust buffer size, if necessary
+        ctypes.windll.kernel32.GetShortPathNameW(s, buf, len(buf))
+
+        short_path = buf.value
+        return short_path
+    else:
+        return s

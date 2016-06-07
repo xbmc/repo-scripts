@@ -23,7 +23,7 @@ import stat
 import subprocess
 import traceback
 from resources.lib.taskABC import AbstractTask, notify, KodiLogger
-from resources.lib.utils.detectPath import process_cmdline
+from resources.lib.utils.detectPath import process_cmdline, fsencode
 import xbmc
 import xbmcvfs
 from resources.lib.utils.poutil import KodiPo
@@ -65,7 +65,7 @@ class TaskScript(AbstractTask):
 
 
     def __init__(self):
-        super(TaskScript, self).__init__()
+        super(TaskScript, self).__init__(name='TaskScript')
 
     @staticmethod
     def validate(taskKwargs, xlog=KodiLogger.log):
@@ -87,7 +87,7 @@ class TaskScript(AbstractTask):
         return True
 
     def run(self):
-        msg = ''
+        msg = u''
         if self.taskKwargs['notify'] is True:
             notify(_('Task %s launching for event: %s') % (self.taskId, str(self.topic)))
         try:
@@ -98,12 +98,19 @@ class TaskScript(AbstractTask):
             wait = self.taskKwargs['waitForCompletion']
         except KeyError:
             wait = True
-        tmpl = process_cmdline(self.taskKwargs['scriptfile'])
+        fse = sys.getfilesystemencoding()
+        if fse is None:
+            fse = 'utf-8'
+        cmd = self.taskKwargs['scriptfile']
+        if sysplat.startswith('win'):
+            if cmd.encode('utf-8') != cmd.encode(fse):
+                cmd = fsencode(self.taskKwargs['scriptfile'])
+        tmpl = process_cmdline(cmd)
         filefound = False
         basedir = None
         sysexecutable = None
         for i, tmp in enumerate(tmpl):
-            tmp = xbmc.translatePath(tmp)
+            tmp = unicode(xbmc.translatePath(tmp), encoding='utf-8')
             if os.path.exists(tmp) and filefound is False:
                 basedir, fn = os.path.split(tmp)
                 basedir = os.path.realpath(basedir)
@@ -112,23 +119,31 @@ class TaskScript(AbstractTask):
                 if i == 0:
                     if os.path.splitext(fn)[1] == u'.sh':
                         if isAndroid:
-                            sysexecutable = '/system/bin/sh'
+                            sysexecutable = u'/system/bin/sh'
                         elif not sysplat.startswith('win'):
-                            sysexecutable = '/bin/bash'
+                            sysexecutable = u'/bin/bash'
             else:
                 tmpl[i] = tmp
-        if sysexecutable == '/system/bin/sh':
-            tmpl.insert(0, 'sh')
-        elif sysexecutable == '/bin/bash':
-            tmpl.insert(0, 'bash')
+        if sysexecutable == u'/system/bin/sh':
+            tmpl.insert(0, u'sh')
+        elif sysexecutable == u'/bin/bash':
+            tmpl.insert(0, u'bash')
 
         cwd = os.getcwd()
-        args = tmpl + self.runtimeargs
+        argsu = tmpl + self.runtimeargs
+
+        args = []
+        for arg in argsu:
+            try:
+                args.append(arg.encode(fse))
+            except UnicodeEncodeError:
+                msg += u'Unicode Encode Error for: "%s" Encoder: %s' % (arg, fse)
         if needs_shell:
             args = ' '.join(args)
         err = False
-        msg += 'taskScript ARGS = %s\n    SYSEXEC = %s\n BASEDIR = %s\n' % (args, sysexecutable, basedir)
+        msg += u'taskScript ARGS = %s\n    SYSEXEC = %s\n BASEDIR = %s\n' % (args, sysexecutable, basedir)
         sys.exc_clear()
+
         try:
             if basedir is not None:
                 os.chdir(basedir)
@@ -145,29 +160,32 @@ class TaskScript(AbstractTask):
             if wait:
                 stdoutdata, stderrdata = p.communicate()
                 if stdoutdata is not None:
-                    stdoutdata = str(stdoutdata).strip()
+                    stdoutdata = stdoutdata.decode(fse, 'ignore').strip()
                     if stdoutdata != '':
-                        msg += _('Process returned data: [%s]\n') % stdoutdata
+                        msg += _(u'Process returned data: [%s]\n') % stdoutdata
                     else:
-                        msg += _('Process returned no data\n')
+                        msg += _(u'Process returned no data\n')
                 else:
-                    msg += _('Process returned no data\n')
+                    msg += _(u'Process returned no data\n')
                 if stderrdata is not None:
-                    stderrdata = str(stderrdata).strip()
+                    stderrdata = stderrdata.decode(fse, 'ignore').strip()
                     if stderrdata != '':
-                        msg += _('Process returned error: %s') % stdoutdata
+                        msg += _(u'Process returned error: %s') % stderrdata
         except ValueError, e:
             err = True
-            msg = str(e)
+            msg = unicode(e)
         except subprocess.CalledProcessError, e:
             err = True
-            msg = e.output
+            if hasattr(e, 'output'):
+                msg = unicode(e.output)
+            else:
+                msg = unicode(e)
         except Exception:
             e = sys.exc_info()[0]
             err = True
             if hasattr(e, 'message'):
-                msg = str(e.message)
-            msg = msg + '\n' + traceback.format_exc()
+                msg = unicode(e.message)
+            msg = msg + u'\n' +traceback.format_exc().decode('utf-8', 'ignore')
         finally:
             os.chdir(cwd)
         self.threadReturn(err, msg)
