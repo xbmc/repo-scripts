@@ -24,6 +24,10 @@ class ListItem(object):
         self.label2 = label2
         self.path = path
         self.size = ""
+        self.videoinfo = []
+        self.audioinfo = []
+        self.subinfo = []
+        self.cast = []
         self._properties = properties if properties else {}
         self._artwork = artwork if artwork else {}
         self._infos = infos if infos else {}
@@ -281,10 +285,6 @@ class VideoItem(ListItem):
 
     def __init__(self, *args, **kwargs):
         self.type = "video"
-        self.videoinfo = []
-        self.audioinfo = []
-        self.subinfo = []
-        self.cast = []
         super(VideoItem, self).__init__(*args, **kwargs)
 
     def __repr__(self):
