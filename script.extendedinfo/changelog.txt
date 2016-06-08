@@ -1,6 +1,11 @@
+v5.5.0
+- moved lot of code to kodi65 library
+- design changes to better match estuary
+- fixes, fixes, fixes
+
 v5.1.0
 - code rework
-- added "Rated episodes" to plugin part
+- added several new plugin nodes
 - fixed several bugs
 
 v5.0.1

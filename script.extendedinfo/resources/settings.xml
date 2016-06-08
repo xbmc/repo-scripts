@@ -7,7 +7,6 @@
         <setting label="32164" type="action" action="RunScript(script.extendedinfo,info=deletecache)"/>
     </category>
     <category label="TheMovieDB">
-        <setting label="32079" type="bool" id="alt_browser_layout"/>
         <setting label="32080" type="bool" id="force_native_layout"/>
         <setting label="32159" type="select" values="bg|cs|da|de|el|en|es|fi|fr|he|hr|hu|it|ja|ko|nl|no|pl|pt|ru|sl|sv|tr|zh" id="LanguageID" default="en"/>
         <setting label="32160" type="text" id="tmdb_username" />

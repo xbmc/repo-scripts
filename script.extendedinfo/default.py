@@ -4,9 +4,11 @@
 # This program is Free Software see LICENSE file for details
 
 import sys
-import xbmc
+
 from resources.lib import process
-from resources.lib import addon
+
+from kodi65 import addon
+from kodi65 import utils
 
 
 def pass_list_to_skin(name, data, prefix="", limit=False):
@@ -28,7 +30,7 @@ def pass_list_to_skin(name, data, prefix="", limit=False):
 class Main:
 
     def __init__(self):
-        xbmc.log("version %s started" % addon.VERSION)
+        utils.log("version %s started" % addon.VERSION)
         addon.set_global("extendedinfo_running", "true")
         self._parse_argv()
         for info in self.infos:
@@ -59,4 +61,4 @@ class Main:
 
 if (__name__ == "__main__"):
     Main()
-xbmc.log('finished')
+utils.log('finished')

@@ -13,26 +13,28 @@ import xbmc
 import xbmcgui
 import xbmcplugin
 
+import Trakt
+import RottenTomatoes
 import LastFM
 import TheAudioDB as AudioDB
 import TheMovieDB as tmdb
-import Utils
-import LocalDB
-import addon
-import YouTube
-import Trakt
-import RottenTomatoes
-import KodiJson
 from WindowManager import wm
-import VideoPlayer
+
+from kodi65 import youtube
+from kodi65 import local_db
+from kodi65 import addon
+from kodi65 import utils
+from kodi65 import busy
+from kodi65 import kodijson
+from kodi65 import favs
 
 
 def start_info_actions(info, params):
     if "artistname" in params:
         params["artistname"] = params.get("artistname", "").split(" feat. ")[0].strip()
-        params["artist_mbid"] = Utils.fetch_musicbrainz_id(params["artistname"])
-    Utils.log(info)
-    Utils.pp(params)
+        params["artist_mbid"] = utils.fetch_musicbrainz_id(params["artistname"])
+    utils.log(info)
+    utils.pp(params)
     if "prefix" in params and not params["prefix"].endswith('.'):
         params["prefix"] = params["prefix"] + '.'
 
@@ -67,32 +69,32 @@ def start_info_actions(info, params):
         return RottenTomatoes.get_movies("dvds/upcoming")
     #  The MovieDB
     elif info == 'incinemamovies':
-        return tmdb.get_tmdb_movies("now_playing")
+        return tmdb.get_movies("now_playing")
     elif info == 'upcomingmovies':
-        return tmdb.get_tmdb_movies("upcoming")
+        return tmdb.get_movies("upcoming")
     elif info == 'topratedmovies':
-        return tmdb.get_tmdb_movies("top_rated")
+        return tmdb.get_movies("top_rated")
     elif info == 'popularmovies':
-        return tmdb.get_tmdb_movies("popular")
+        return tmdb.get_movies("popular")
     elif info == 'ratedmovies':
         return tmdb.get_rated_media_items("movies")
     elif info == 'starredmovies':
         return tmdb.get_fav_items("movies")
     elif info == 'accountlists':
-        account_lists = tmdb.handle_misc(tmdb.get_account_lists())
+        account_lists = tmdb.handle_lists(tmdb.get_account_lists())
         for item in account_lists:
-            item["directory"] = True
+            item.set_property("directory", True)
         return account_lists
     elif info == 'listmovies':
         return tmdb.get_movies_from_list(params["id"])
     elif info == 'airingtodaytvshows':
-        return tmdb.get_tmdb_shows("airing_today")
+        return tmdb.get_tvshows("airing_today")
     elif info == 'onairtvshows':
-        return tmdb.get_tmdb_shows("on_the_air")
+        return tmdb.get_tvshows("on_the_air")
     elif info == 'topratedtvshows':
-        return tmdb.get_tmdb_shows("top_rated")
+        return tmdb.get_tvshows("top_rated")
     elif info == 'populartvshows':
-        return tmdb.get_tmdb_shows("popular")
+        return tmdb.get_tvshows("popular")
     elif info == 'ratedtvshows':
         return tmdb.get_rated_media_items("tv")
     elif info == 'ratedepisodes':
@@ -116,7 +118,7 @@ def start_info_actions(info, params):
         if tmdb_id:
             tvshow_id = tmdb_id
         elif dbid and int(dbid) > 0:
-            tvdb_id = LocalDB.local_db.get_imdb_id("tvshow", dbid)
+            tvdb_id = local_db.get_imdb_id("tvshow", dbid)
             if tvdb_id:
                 tvshow_id = tmdb.get_show_tmdb_id(tvdb_id)
         elif tvdb_id:
@@ -133,12 +135,12 @@ def start_info_actions(info, params):
         if params.get("id"):
             return tmdb.get_company_data(params["id"])
         elif params.get("studio"):
-            company_data = tmdb.search_company(params["studio"])
+            company_data = tmdb.search_companies(params["studio"])
             if company_data:
                 return tmdb.get_company_data(company_data[0]["id"])
     elif info == 'set':
         if params.get("dbid"):
-            name = LocalDB.local_db.get_set_name(params["dbid"])
+            name = local_db.get_set_name(params["dbid"])
             if name:
                 params["setid"] = tmdb.get_set_id(name)
         if params.get("setid"):
@@ -165,13 +167,15 @@ def start_info_actions(info, params):
                                       skip_dialog=True)
         if person and person.get("id"):
             movies = tmdb.get_person_movies(person["id"])
+            if not movies:
+                return None
             for item in movies:
                 del item["credit_id"]
-            return Utils.merge_dict_lists(movies, key="department")
+            return movies.reduce(key="department")
     elif info == 'traktsimilarmovies':
         if params.get("id") or params.get("dbid"):
             if params.get("dbid"):
-                movie_id = LocalDB.local_db.get_imdb_id("movie", params["dbid"])
+                movie_id = local_db.get_imdb_id("movie", params["dbid"])
             else:
                 movie_id = params["id"]
             return Trakt.get_similar("movie", movie_id)
@@ -179,10 +183,10 @@ def start_info_actions(info, params):
         if params.get("id") or params.get("dbid"):
             if params.get("dbid"):
                 if params.get("type") == "episode":
-                    tvshow_id = LocalDB.local_db.get_tvshow_id_by_episode(params["dbid"])
+                    tvshow_id = local_db.get_tvshow_id_by_episode(params["dbid"])
                 else:
-                    tvshow_id = LocalDB.local_db.get_imdb_id(media_type="tvshow",
-                                                             dbid=params["dbid"])
+                    tvshow_id = local_db.get_imdb_id(media_type="tvshow",
+                                                     dbid=params["dbid"])
             else:
                 tvshow_id = params["id"]
             return Trakt.get_similar("show", tvshow_id)
@@ -217,7 +221,7 @@ def start_info_actions(info, params):
     elif info == 'traktboxofficemovies':
         return Trakt.get_movies("boxoffice")
     elif info == 'similarartistsinlibrary':
-        return LocalDB.local_db.get_similar_artists(params.get("artist_mbid"))
+        return local_db.get_similar_artists(params.get("artist_mbid"))
     elif info == 'trackinfo':
         addon.clear_global('%sSummary' % params.get("prefix", ""))
         if params["artistname"] and params["trackname"]:
@@ -225,101 +229,96 @@ def start_info_actions(info, params):
                                                track=params["trackname"])
             addon.set_global('%sSummary' % params.get("prefix", ""), track_info["summary"])
     elif info == 'topartistsnearevents':
-        artists = LocalDB.local_db.get_artists()
+        artists = local_db.get_artists()
         import BandsInTown
         return BandsInTown.get_near_events(artists[0:49])
-    elif info == 'youtubesearch':
+    elif info == 'youtubesearchvideos':
         addon.set_global('%sSearchValue' % params.get("prefix", ""), params.get("id", ""))
         if params.get("id"):
-            listitems = YouTube.search(search_str=params.get("id", ""),
-                                       hd=params.get("hd"),
-                                       orderby=params.get("orderby", "relevance"))
-            return listitems.get("listitems", [])
-    elif info == 'youtubeplaylist':
-        return YouTube.get_playlist_videos(params.get("id", ""))
-    elif info == 'youtubeusersearch':
+            return youtube.search(search_str=params.get("id", ""),
+                                  hd=params.get("hd"),
+                                  orderby=params.get("orderby", "relevance"))
+    elif info == 'youtubeplaylistvideos':
+        return youtube.get_playlist_videos(params.get("id", ""))
+    elif info == 'youtubeusersearchvideos':
         user_name = params.get("id")
         if user_name:
-            playlists = YouTube.get_user_playlists(user_name)
-            return YouTube.get_playlist_videos(playlists["uploads"])
+            playlists = youtube.get_user_playlists(user_name)
+            return youtube.get_playlist_videos(playlists["uploads"])
     elif info == 'favourites':
         if params.get("id"):
-            favs = Utils.get_favs_by_type(params["id"])
+            items = favs.get_favs_by_type(params["id"])
         else:
-            favs = Utils.get_favs()
-            addon.set_global('favourite.count', str(len(favs)))
-            if favs:
-                addon.set_global('favourite.1.name', favs[-1]["Label"])
-        return favs
+            items = favs.get_favs()
+            addon.set_global('favourite.count', str(len(items)))
+            if items:
+                addon.set_global('favourite.1.name', items[-1]["label"])
+        return items
     elif info == 'similarlocalmovies' and "dbid" in params:
-        return LocalDB.local_db.get_similar_movies(params["dbid"])
+        return local_db.get_similar_movies(params["dbid"])
     elif info == 'iconpanel':
-        return Utils.get_icon_panel(int(params["id"])), "IconPanel" + str(params["id"])
+        return favs.get_icon_panel(int(params["id"])), "IconPanel" + str(params["id"])
     # ACTIONS
     if params.get("handle"):
         xbmcplugin.setResolvedUrl(handle=int(params.get("handle")),
                                   succeeded=False,
                                   listitem=xbmcgui.ListItem())
     if info in ['playmovie', 'playepisode', 'playmusicvideo', 'playalbum', 'playsong']:
-        KodiJson.play_media(media_type=info.replace("play", ""),
+        kodijson.play_media(media_type=info.replace("play", ""),
                             dbid=params.get("dbid"),
                             resume=params.get("resume", "true"))
     elif info == "openinfodialog":
         if xbmc.getCondVisibility("System.HasModalDialog"):
             container_id = ""
         else:
-            container_id = "Container(%s)" % Utils.get_infolabel("System.CurrentControlId")
-        dbid = Utils.get_infolabel("%sListItem.DBID" % container_id)
-        db_type = Utils.get_infolabel("%sListItem.DBType" % container_id)
-        if not dbid:
-            dbid = Utils.get_infolabel("%sListItem.Property(dbid)" % container_id)
+            container_id = "Container(%s)" % utils.get_infolabel("System.CurrentControlId")
+        dbid = utils.get_infolabel("%sListItem.DBID" % container_id)
+        db_type = utils.get_infolabel("%sListItem.DBType" % container_id)
         if db_type == "movie":
             params = {"dbid": dbid,
-                      "id": Utils.get_infolabel("%sListItem.Property(id)" % container_id),
-                      "name": Utils.get_infolabel("%sListItem.Title" % container_id)}
+                      "id": utils.get_infolabel("%sListItem.Property(id)" % container_id),
+                      "name": utils.get_infolabel("%sListItem.Title" % container_id)}
             start_info_actions("extendedinfo", params)
         elif db_type == "tvshow":
             params = {"dbid": dbid,
-                      "tvdb_id": Utils.get_infolabel("%sListItem.Property(tvdb_id)" % container_id),
-                      "id": Utils.get_infolabel("%sListItem.Property(id)" % container_id),
-                      "name": Utils.get_infolabel("%sListItem.Title" % container_id)}
+                      "tvdb_id": utils.get_infolabel("%sListItem.Property(tvdb_id)" % container_id),
+                      "id": utils.get_infolabel("%sListItem.Property(id)" % container_id),
+                      "name": utils.get_infolabel("%sListItem.Title" % container_id)}
             start_info_actions("extendedtvinfo", params)
         elif db_type == "season":
-            params = {"tvshow": Utils.get_infolabel("%sListItem.TVShowTitle" % container_id),
-                      "season": Utils.get_infolabel("%sListItem.Season" % container_id)}
+            params = {"tvshow": utils.get_infolabel("%sListItem.TVShowTitle" % container_id),
+                      "season": utils.get_infolabel("%sListItem.Season" % container_id)}
             start_info_actions("seasoninfo", params)
         elif db_type == "episode":
-            params = {"tvshow": Utils.get_infolabel("%sListItem.TVShowTitle" % container_id),
-                      "season": Utils.get_infolabel("%sListItem.Season" % container_id),
-                      "episode": Utils.get_infolabel("%sListItem.Episode" % container_id)}
+            params = {"tvshow": utils.get_infolabel("%sListItem.TVShowTitle" % container_id),
+                      "season": utils.get_infolabel("%sListItem.Season" % container_id),
+                      "episode": utils.get_infolabel("%sListItem.Episode" % container_id)}
             start_info_actions("extendedepisodeinfo", params)
         elif db_type in ["actor", "director"]:
-            params = {"name": Utils.get_infolabel("%sListItem.Label" % container_id)}
+            params = {"name": utils.get_infolabel("%sListItem.Label" % container_id)}
             start_info_actions("extendedactorinfo", params)
         else:
-            Utils.notify("Error", "Could not find valid content type")
+            utils.notify("Error", "Could not find valid content type")
     elif info == "ratedialog":
         if xbmc.getCondVisibility("System.HasModalDialog"):
             container_id = ""
         else:
-            container_id = "Container(%s)" % Utils.get_infolabel("System.CurrentControlId")
-        dbid = Utils.get_infolabel("%sListItem.DBID" % container_id)
-        db_type = Utils.get_infolabel("%sListItem.DBType" % container_id)
-        if not dbid:
-            dbid = Utils.get_infolabel("%sListItem.Property(dbid)" % container_id)
+            container_id = "Container(%s)" % utils.get_infolabel("System.CurrentControlId")
+        dbid = utils.get_infolabel("%sListItem.DBID" % container_id)
+        db_type = utils.get_infolabel("%sListItem.DBType" % container_id)
         if db_type == "movie":
             params = {"dbid": dbid,
-                      "id": Utils.get_infolabel("%sListItem.Property(id)" % container_id),
+                      "id": utils.get_infolabel("%sListItem.Property(id)" % container_id),
                       "type": "movie"}
             start_info_actions("ratemedia", params)
         elif db_type == "tvshow":
             params = {"dbid": dbid,
-                      "id": Utils.get_infolabel("%sListItem.Property(id)" % container_id),
+                      "id": utils.get_infolabel("%sListItem.Property(id)" % container_id),
                       "type": "tv"}
             start_info_actions("ratemedia", params)
         if db_type == "episode":
-            params = {"tvshow": Utils.get_infolabel("%sListItem.TVShowTitle" % container_id),
-                      "season": Utils.get_infolabel("%sListItem.Season" % container_id),
+            params = {"tvshow": utils.get_infolabel("%sListItem.TVShowTitle" % container_id),
+                      "season": utils.get_infolabel("%sListItem.Season" % container_id),
                       "type": "episode"}
             start_info_actions("ratemedia", params)
     elif info == 'youtubebrowser':
@@ -386,10 +385,10 @@ def start_info_actions(info, params):
     elif info == 'albuminfo':
         if params.get("id"):
             album_details = AudioDB.get_album_details(params.get("id"))
-            Utils.pass_dict_to_skin(album_details, params.get("prefix", ""))
+            utils.dict_to_windowprops(album_details, params.get("prefix", ""))
     elif info == 'artistdetails':
         artist_details = AudioDB.get_artist_details(params["artistname"])
-        Utils.pass_dict_to_skin(artist_details, params.get("prefix", ""))
+        utils.dict_to_windowprops(artist_details, params.get("prefix", ""))
     elif info == 'ratemedia':
         media_type = params.get("type")
         if not media_type:
@@ -401,41 +400,45 @@ def start_info_actions(info, params):
                                              dbid=params.get("dbid"),
                                              name=params.get("name"))
         elif media_type == "tv" and params.get("dbid"):
-            tvdb_id = LocalDB.local_db.get_imdb_id(media_type="tvshow",
-                                                   dbid=params["dbid"])
+            tvdb_id = local_db.get_imdb_id(media_type="tvshow",
+                                           dbid=params["dbid"])
             tmdb_id = tmdb.get_show_tmdb_id(tvdb_id=tvdb_id)
         else:
             return False
-        tmdb.set_rating_prompt(media_type=media_type,
-                               media_id=tmdb_id,
-                               dbid=params.get("dbid"))
+        rating = utils.input_userrating()
+        if rating == -1:
+            return None
+        tmdb.set_rating(media_type=media_type,
+                        media_id=tmdb_id,
+                        rating=rating,
+                        dbid=params.get("dbid"))
     elif info == 'action':
         for builtin in params.get("id", "").split("$$"):
             xbmc.executebuiltin(builtin)
     elif info == "youtubevideo":
         xbmc.executebuiltin("Dialog.Close(all,true)")
-        VideoPlayer.PLAYER.play_youtube_video(params.get("id", ""))
+        wm.play_youtube_video(params.get("id", ""))
     elif info == 'playtrailer':
-        xbmc.executebuiltin("ActivateWindow(busydialog)")
+        busy.show_busy()
         if params.get("id"):
             movie_id = params["id"]
         elif int(params.get("dbid", -1)) > 0:
-            movie_id = LocalDB.local_db.get_imdb_id(media_type="movie",
-                                                    dbid=params["dbid"])
+            movie_id = local_db.get_imdb_id(media_type="movie",
+                                            dbid=params["dbid"])
         elif params.get("imdb_id"):
             movie_id = tmdb.get_movie_tmdb_id(params["imdb_id"])
         else:
             movie_id = ""
         if movie_id:
             trailer = tmdb.get_trailer(movie_id)
-            xbmc.executebuiltin("Dialog.Close(busydialog)")
+            busy.hide_busy()
             time.sleep(0.1)
             if trailer:
-                VideoPlayer.PLAYER.play_youtube_video(trailer)
+                wm.play_youtube_video(trailer)
             elif params.get("title"):
                 wm.open_youtube_list(search_str=params["title"])
             else:
-                xbmc.executebuiltin("Dialog.Close(busydialog)")
+                busy.hide_busy()
     elif info == 'deletecache':
         addon.clear_globals()
         for rel_path in os.listdir(addon.DATA_PATH):
@@ -444,8 +447,8 @@ def start_info_actions(info, params):
                 if os.path.isdir(path):
                     shutil.rmtree(path)
             except Exception as e:
-                Utils.log(e)
-        Utils.notify("Cache deleted")
+                utils.log(e)
+        utils.notify("Cache deleted")
     elif info == 'syncwatchlist':
         pass
 
