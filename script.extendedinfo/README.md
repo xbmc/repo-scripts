@@ -282,15 +282,15 @@ Available Properties:
 
 ### YouTube
 ```
-RunScript(script.extendedinfo,info=youtubesearch)           --> YoutubeSearch.%d
+RunScript(script.extendedinfo,info=youtubesearchvideos)
 ```
   - required additional parameters: id=
 ```
-RunScript(script.extendedinfo,info=youtubeplaylist)         --> YoutubePlaylist.%d
+RunScript(script.extendedinfo,info=youtubeplaylistvideos)
 ```
   - required additional parameters: id=
 ```
-RunScript(script.extendedinfo,info=youtubeusersearch)       --> YoutubeUserSearch.%d
+RunScript(script.extendedinfo,info=youtubeusersearchvideos)
 ```
   - required additional parameters: id=
 
@@ -300,25 +300,6 @@ Available Properties:
 - 'Description':  Video Description
 - 'Title':        Video Title
 - 'Date':         Video Upload Date
-
-
-### Misc Images
-```
-RunScript(script.extendedinfo,info=xkcd)          --> XKCD.%d
-```
-- fetches a daily random list of XKCD webcomics
-```
-RunScript(script.extendedinfo,info=cyanide)       --> CyanideHappiness.%d
-```
-- fetches a daily random list of Cyanide & Happiness webcomics
-
-
-Available Properties:
-
-- 'Thumb':        Image
-- 'Title':        Image Title
-- 'Description':  Image Description (only XKCD)
-
 
 
 info=similarlocalmovies
@@ -378,8 +359,8 @@ Please have a look at reference implementation, too much to cover. Consider the 
 
 
 #### List of Built In Controls for add-on dialogs :
- - MOVIES, TVSHOWS, SEASONS, EPISODES: script-ExtendedInfo Script-DialogVideoInfo.xml
- - ACTORS: script-ExtendedInfo Script-DialogInfo.xml
+ - MOVIES, TVSHOWS, SEASONS, EPISODES: script-script.extendedinfo-DialogVideoInfo.xml
+ - ACTORS: script-script.extendedinfo-DialogInfo.xml
 
 | IDS     | MOVIES    | TVSHOWS   | SEASONS   | EPISODES | ACTORS      |
 |---------|-----------|-----------|-----------|----------|-------------|
@@ -430,10 +411,10 @@ Labels of Known Movies list
 - Container(150).ListItem.Property(role) ------------> role in currently slected movie
 - Container(150).ListItem.Property(job) -------------> job in currently slected movie (director / writer / etc)
 - Container(150).ListItem.Premiered -----------------> release date of movie
-- Container(150).ListItem.Year ----------------------> same as year, but not return empty
-- Container(150).ListItem.Property(DBID) ------------> return 1 or empty, if movie exists in library
-- Container(150).ListItem.Property(Playcount) -------> Playcount of movie (default is 0)
-- Container(150).ListItem.Property(file) ------------> media to play
+- Container(150).ListItem.Year ----------------------> production year
+- Container(150).ListItem.DBID ----------------------> returns the dbid, or empty if not available.
+- Container(150).ListItem.PlayCount -----------------> Playcount of movie (default is 0)
+- Container(150).ListItem.File ----------------------> media to play
 
 Labels of thumbs list
 - Container(250).ListItem.Label --------------------> Image résolution (512x720)

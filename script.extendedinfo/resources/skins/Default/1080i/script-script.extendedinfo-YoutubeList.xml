@@ -28,7 +28,7 @@
 			<visible>StringCompare(Window.Property(type),channel)</visible>
 		</control>
 		<control type="image">
-			<texture colordiffuse="$INFO[Window(home).Property(WindowColor)]">diffuseoverlay.png</texture>
+			<texture colordiffuse="FF12B2E7">diffuseoverlay.jpg</texture>
 			<animation effect="fade" start="100" end="85" time="0" condition="true">Conditional</animation>
 			<width>1920</width>
 			<height>1080</height>
@@ -56,7 +56,7 @@
 					<visible>Control.HasFocus(500)</visible>
 					<animation effect="fade" time="320" delay="200">Visible</animation>
 					<animation effect="fade" time="200">Hidden</animation>
-					<texture colordiffuse="$INFO[Window(home).Property(WindowColor)]" border="40">buttons/roundedbutton-focus.png</texture>
+					<texture colordiffuse="FF12B2E7" border="40">buttons/button-fo.png</texture>
 					<animation effect="slide" end="0,410" time="300" tween="cubic" easing="inout" condition="Container.Row(1)">Conditional</animation>
 					<animation effect="slide" end="440,0" time="300" tween="cubic" easing="inout" condition="IntegerGreaterThan(Container.Column,2)">Conditional</animation>
 					<animation effect="slide" end="440,0" time="300" tween="cubic" easing="inout" condition="IntegerGreaterThan(Container.Column,1)">Conditional</animation>
@@ -131,10 +131,10 @@
 							<textcolor>FFBBBBBB</textcolor>
 						</control>
 						<control type="textbox">
-							<left>20</left>
+							<left>30</left>
 							<top>250</top>
 							<height>66</height>
-							<width>400</width>
+							<width>380</width>
 							<label>$INFO[ListItem.Label]</label>
 							<align>center</align>
 							<font>font12</font>
@@ -167,7 +167,7 @@
 							<top>-45</top>
 							<width>440</width>
 							<height>410</height>
-							<texture colordiffuse="FFFFFFFF" border="40">buttons/roundedbutton-focus.png</texture>
+							<texture colordiffuse="FFFFFFFF" border="40">buttons/button-fo.png</texture>
 						</control>-->
 						<control type="image">
 							<left>25</left>
@@ -219,10 +219,10 @@
 							<textcolor>FFBBBBBB</textcolor>
 						</control>
 						<control type="textbox">
-							<left>20</left>
+							<left>30</left>
 							<top>250</top>
 							<height>66</height>
-							<width>400</width>
+							<width>380</width>
 							<align>center</align>
 							<label>$INFO[ListItem.Label]</label>
 							<font>font12</font>
@@ -339,11 +339,11 @@
 				<label>$ADDON[script.extendedinfo 32023]</label>
 			</control>
 			<control type="label">
-				<left>1900</left>
+				<left>0</left>
 				<top>0</top>
 				<height>40</height>
 				<aligny>center</aligny>
-				<width>1920</width>
+				<width>1900</width>
 				<align>right</align>
 				<textcolor>FFFAFAFA</textcolor>
 				<label>$INFO[Window.Property(TotalItems),[COLOR FF999999]$ADDON[script.extendedinfo 32124]:[/COLOR] ]$INFO[Window.Property(CurrentPage),[COLOR FF999999] - $ADDON[script.extendedinfo 32125]: [/COLOR]]$INFO[Window.Property(TotalPages), / ]</label>
@@ -368,25 +368,25 @@
 			</animation>
 			<animation effect="slide" start="0" end="-460" time="320" tween="cubic">WindowClose</animation>
 			<control type="image">
-				<left>-92</left>
+				<left>-88</left>
 				<width>572</width>
 				<height>1080</height>
-				<texture colordiffuse="$INFO[Window(home).Property(WindowColor)]">lists/panel.png</texture>
+				<texture colordiffuse="FF12B2E7">lists/panel.png</texture>
 			</control>
 			<control type="button" id="6000">
 				<label>$LOCALIZE[19140]</label>
 				<left>0</left>
 				<top>40</top>
-				<width>400</width>
+				<width>420</width>
 				<height>110</height>
-				<textoffsetx>40</textoffsetx>
+				<textoffsetx>30</textoffsetx>
 				<textoffsety>35</textoffsety>
 				<textwidth>315</textwidth>
 				<align>left</align>
 				<aligny>top</aligny>
-				<texturefocus border="40" colordiffuse="$INFO[Window(home).Property(WindowColor)]">buttons/roundedbutton-focus.png</texturefocus>
-				<texturenofocus border="40" colordiffuse="$INFO[Window(home).Property(WindowColor)]">buttons/roundedbutton-nofocus.png</texturenofocus>
-				<font>font13</font>
+				<texturefocus border="40" colordiffuse="FF12B2E7">buttons/button-fo.png</texturefocus>
+				<texturenofocus border="40" colordiffuse="FF12B2E7">buttons/button-nofo.png</texturenofocus>
+				<font>font12</font>
 				<textcolor>FF999999</textcolor>
 				<ondown>SetFocus(7000)</ondown>
 				<onright>500</onright>
@@ -406,7 +406,7 @@
 			<control type="radiobutton" id="7000">
 				<left>0</left>
 				<top>135</top>
-				<width>400</width>
+				<width>420</width>
 				<height>110</height>
 				<align>left</align>
 				<aligny>center</aligny>
@@ -414,9 +414,9 @@
 				<onup>6000</onup>
 				<onright>500</onright>
 				<onleft>500</onleft>
-				<textoffsetx>40</textoffsetx>
+				<textoffsetx>30</textoffsetx>
 				<textoffsety>25</textoffsety>
-				<font>font13</font>
+				<font>font12</font>
 				<textwidth>315</textwidth>
 				<label>$ADDON[script.extendedinfo 32024]</label>
 				<textcolor>FF999999</textcolor>
@@ -424,8 +424,8 @@
 				<radiowidth>90</radiowidth>
 				<radioheight>60</radioheight>
 				<radioposx>288</radioposx>
-				<texturefocus border="40" colordiffuse="$INFO[Window(home).Property(WindowColor)]">buttons/roundedbutton-focus.png</texturefocus>
-				<texturenofocus border="40" colordiffuse="$INFO[Window(home).Property(WindowColor)]">buttons/roundedbutton-nofocus.png</texturenofocus>
+				<texturefocus border="40" colordiffuse="FF12B2E7">buttons/button-fo.png</texturefocus>
+				<texturenofocus border="40" colordiffuse="FF12B2E7">buttons/button-nofo.png</texturenofocus>
 				<textureradioonfocus>common/youtube.png</textureradioonfocus>
 				<textureradioofffocus>common/youtube.png</textureradioofffocus>
 				<textureradioonnofocus>common/youtube.png</textureradioonnofocus>
@@ -433,11 +433,10 @@
 			</control>
 			<control type="grouplist" id="9000">
 				<top>250</top>
-				<width>400</width>
+				<width>420</width>
 				<height>830</height>
 				<orientation>vertical</orientation>
 				<scroll>true</scroll>
-				<itemgap>-23</itemgap>
 				<onup>7000</onup>
 				<ondown>9000</ondown>
 				<onright>500</onright>
@@ -447,16 +446,15 @@
 					<label>$LOCALIZE[467]:</label>
 					<!--564-->
 					<label2>[COLOR FFFAFAFA]$INFO[Window.Property(Type)][/COLOR]</label2>
-					<width>400</width>
-					<height>90</height>
-					<textoffsetx>40</textoffsetx>
-					<textoffsety>25</textoffsety>
+					<width>420</width>
+					<height>70</height>
+					<textoffsetx>30</textoffsetx>
 					<textwidth>315</textwidth>
 					<align>left</align>
-					<aligny>top</aligny>
-					<texturefocus border="40" colordiffuse="$INFO[Window(home).Property(WindowColor)]">buttons/roundedbutton-focus.png</texturefocus>
-					<texturenofocus border="40" colordiffuse="$INFO[Window(home).Property(WindowColor)]">buttons/roundedbutton-nofocus.png</texturenofocus>
-					<font>font13</font>
+					<aligny>center</aligny>
+					<texturefocus colordiffuse="FF12B2E7">lists/focus.png</texturefocus>
+					<texturenofocus border="20">lists/separator.png</texturenofocus>
+					<font>font12</font>
 					<textcolor>FF999999</textcolor>
 					<focusedcolor>FFFAFAFA</focusedcolor>
 				</control>
@@ -464,132 +462,138 @@
 					<onup>6000</onup>
 					<label>$ADDON[script.extendedinfo 32104]</label>
 					<label2>[COLOR FFFAFAFA]$INFO[Window.Property(Sort_Label)][/COLOR]</label2>
-					<width>400</width>
-					<height>100</height>
-					<textoffsetx>40</textoffsetx>
-					<textoffsety>30</textoffsety>
+					<width>420</width>
+					<height>70</height>
+					<textoffsetx>30</textoffsetx>
 					<textwidth>315</textwidth>
 					<align>left</align>
-					<aligny>top</aligny>
-					<texturefocus border="40" colordiffuse="$INFO[Window(home).Property(WindowColor)]">buttons/roundedbutton-focus.png</texturefocus>
-					<texturenofocus border="40" colordiffuse="$INFO[Window(home).Property(WindowColor)]">buttons/roundedbutton-nofocus.png</texturenofocus>
-					<font>font13</font>
+					<aligny>center</aligny>
+					<texturefocus colordiffuse="FF12B2E7">lists/focus.png</texturefocus>
+					<texturenofocus border="20">lists/separator.png</texturenofocus>
+					<font>font12</font>
 					<textcolor>FF999999</textcolor>
 					<focusedcolor>FFFAFAFA</focusedcolor>
 				</control>
 				<control type="label" id="5333">
 					<label>$ADDON[script.extendedinfo 32023]</label>
-					<width>400</width>
-					<height>75</height>
+					<width>420</width>
+					<height>120</height>
 					<textoffsetx>25</textoffsetx>
-					<textoffsety>25</textoffsety>
+					<textoffsety>55</textoffsety>
 					<align>left</align>
 					<aligny>top</aligny>
-					<font>font13</font>
+					<font>font12</font>
 					<textcolor>FF999999</textcolor>
 				</control>
 				<control type="button" id="5002">
 					<label>$LOCALIZE[172]</label>
-					<width>400</width>
-					<height>90</height>
-					<textoffsetx>40</textoffsetx>
-					<textoffsety>25</textoffsety>
+					<width>420</width>
+					<height>60</height>
+					<textoffsetx>30</textoffsetx>
 					<textwidth>315</textwidth>
 					<align>left</align>
-					<aligny>top</aligny>
-					<texturefocus border="40" colordiffuse="$INFO[Window(home).Property(WindowColor)]">buttons/roundedbutton-focus.png</texturefocus>
-					<texturenofocus border="40" colordiffuse="$INFO[Window(home).Property(WindowColor)]">buttons/roundedbutton-nofocus.png</texturenofocus>
-					<font>font13</font>
+					<aligny>center</aligny>
+					<texturefocus colordiffuse="FF12B2E7">lists/focus.png</texturefocus>
+					<texturenofocus border="20">lists/separator.png</texturenofocus>
+					<font>font12</font>
 					<textcolor>FF999999</textcolor>
 					<focusedcolor>FFFAFAFA</focusedcolor>
 				</control>
 				<control type="button" id="5003">
 					<label>$LOCALIZE[248]</label>
-					<width>400</width>
-					<height>90</height>
-					<textoffsetx>40</textoffsetx>
-					<textoffsety>25</textoffsety>
+					<width>420</width>
+					<height>60</height>
+					<textoffsetx>30</textoffsetx>
 					<textwidth>315</textwidth>
 					<align>left</align>
-					<aligny>top</aligny>
-					<texturefocus border="40" colordiffuse="$INFO[Window(home).Property(WindowColor)]">buttons/roundedbutton-focus.png</texturefocus>
-					<texturenofocus border="40" colordiffuse="$INFO[Window(home).Property(WindowColor)]">buttons/roundedbutton-nofocus.png</texturenofocus>
-					<font>font13</font>
+					<aligny>center</aligny>
+					<texturefocus colordiffuse="FF12B2E7">lists/focus.png</texturefocus>
+					<texturenofocus border="20">lists/separator.png</texturenofocus>
+					<font>font12</font>
 					<textcolor>FF999999</textcolor>
 					<focusedcolor>FFFAFAFA</focusedcolor>
 				</control>
 				<control type="button" id="5006">
 					<label>$ADDON[script.extendedinfo 32066]</label>
-					<width>400</width>
-					<height>90</height>
-					<textoffsetx>40</textoffsetx>
-					<textoffsety>25</textoffsety>
+					<width>420</width>
+					<height>60</height>
+					<textoffsetx>30</textoffsetx>
 					<textwidth>315</textwidth>
 					<align>left</align>
-					<aligny>top</aligny>
-					<texturefocus border="40" colordiffuse="$INFO[Window(home).Property(WindowColor)]">buttons/roundedbutton-focus.png</texturefocus>
-					<texturenofocus border="40" colordiffuse="$INFO[Window(home).Property(WindowColor)]">buttons/roundedbutton-nofocus.png</texturenofocus>
-					<font>font13</font>
+					<aligny>center</aligny>
+					<texturefocus colordiffuse="FF12B2E7">lists/focus.png</texturefocus>
+					<texturenofocus border="20">lists/separator.png</texturenofocus>
+					<font>font12</font>
 					<textcolor>FF999999</textcolor>
 					<focusedcolor>FFFAFAFA</focusedcolor>
 				</control>
 				<control type="button" id="5008">
 					<label>$LOCALIZE[180]</label>
-					<width>400</width>
-					<height>90</height>
-					<textoffsetx>40</textoffsetx>
-					<textoffsety>25</textoffsety>
+					<width>420</width>
+					<height>60</height>
+					<textoffsetx>30</textoffsetx>
 					<textwidth>315</textwidth>
 					<align>left</align>
-					<aligny>top</aligny>
-					<texturefocus border="40" colordiffuse="$INFO[Window(home).Property(WindowColor)]">buttons/roundedbutton-focus.png</texturefocus>
-					<texturenofocus border="40" colordiffuse="$INFO[Window(home).Property(WindowColor)]">buttons/roundedbutton-nofocus.png</texturenofocus>
-					<font>font13</font>
+					<aligny>center</aligny>
+					<texturefocus colordiffuse="FF12B2E7">lists/focus.png</texturefocus>
+					<texturenofocus border="20">lists/separator.png</texturenofocus>
+					<font>font12</font>
 					<textcolor>FF999999</textcolor>
 					<focusedcolor>FFFAFAFA</focusedcolor>
 				</control>
 				<control type="button" id="5009">
 					<label>$LOCALIZE[287]</label>
-					<width>400</width>
-					<height>90</height>
-					<textoffsetx>40</textoffsetx>
-					<textoffsety>25</textoffsety>
+					<width>420</width>
+					<height>60</height>
+					<textoffsetx>30</textoffsetx>
 					<textwidth>315</textwidth>
 					<align>left</align>
-					<aligny>top</aligny>
-					<texturefocus border="40" colordiffuse="$INFO[Window(home).Property(WindowColor)]">buttons/roundedbutton-focus.png</texturefocus>
-					<texturenofocus border="40" colordiffuse="$INFO[Window(home).Property(WindowColor)]">buttons/roundedbutton-nofocus.png</texturenofocus>
-					<font>font13</font>
+					<aligny>center</aligny>
+					<texturefocus colordiffuse="FF12B2E7">lists/focus.png</texturefocus>
+					<texturenofocus border="20">lists/separator.png</texturenofocus>
+					<font>font12</font>
 					<textcolor>FF999999</textcolor>
 					<focusedcolor>FFFAFAFA</focusedcolor>
 				</control>
 				<control type="button" id="5012">
 					<label>$LOCALIZE[169]</label>
-					<width>400</width>
-					<height>90</height>
-					<textoffsetx>40</textoffsetx>
-					<textoffsety>25</textoffsety>
+					<width>420</width>
+					<height>60</height>
+					<textoffsetx>30</textoffsetx>
 					<textwidth>315</textwidth>
 					<align>left</align>
-					<aligny>top</aligny>
-					<texturefocus border="40" colordiffuse="$INFO[Window(home).Property(WindowColor)]">buttons/roundedbutton-focus.png</texturefocus>
-					<texturenofocus border="40" colordiffuse="$INFO[Window(home).Property(WindowColor)]">buttons/roundedbutton-nofocus.png</texturenofocus>
-					<font>font13</font>
+					<aligny>center</aligny>
+					<texturefocus colordiffuse="FF12B2E7">lists/focus.png</texturefocus>
+					<texturenofocus border="20">lists/separator.png</texturenofocus>
+					<font>font12</font>
+					<textcolor>FF999999</textcolor>
+					<focusedcolor>FFFAFAFA</focusedcolor>
+				</control>
+				<control type="button" id="5013">
+					<label>$LOCALIZE[564]</label>
+					<width>420</width>
+					<height>60</height>
+					<textoffsetx>30</textoffsetx>
+					<textwidth>315</textwidth>
+					<align>left</align>
+					<aligny>center</aligny>
+					<texturefocus colordiffuse="FF12B2E7">lists/focus.png</texturefocus>
+					<texturenofocus border="20">lists/separator.png</texturenofocus>
+					<font>font12</font>
 					<textcolor>FF999999</textcolor>
 					<focusedcolor>FFFAFAFA</focusedcolor>
 				</control>
 				<control type="button" id="5005">
 					<label>$ADDON[script.extendedinfo 32022]</label>
-					<width>400</width>
-					<height>90</height>
-					<textoffsetx>40</textoffsetx>
-					<textoffsety>25</textoffsety>
+					<width>420</width>
+					<height>60</height>
+					<textoffsetx>30</textoffsetx>
 					<textwidth>315</textwidth>
 					<align>left</align>
-					<aligny>top</aligny>
-					<texturefocus border="40" colordiffuse="$INFO[Window(home).Property(WindowColor)]">buttons/roundedbutton-focus.png</texturefocus>
-					<texturenofocus border="40" colordiffuse="$INFO[Window(home).Property(WindowColor)]">buttons/roundedbutton-nofocus.png</texturenofocus>
-					<font>font13</font>
+					<aligny>center</aligny>
+					<texturefocus colordiffuse="FF12B2E7">lists/focus.png</texturefocus>
+					<texturenofocus border="20">lists/separator.png</texturenofocus>
+					<font>font12</font>
 					<textcolor>FF999999</textcolor>
 					<focusedcolor>FFFAFAFA</focusedcolor>
 				</control>

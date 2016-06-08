@@ -4,13 +4,16 @@
 # This program is Free Software see LICENSE file for details
 
 import sys
-import xbmc
+import os
+
 import xbmcplugin
 import xbmcgui
-import routing
-import os
+
 from resources.lib import process
-from resources.lib import addon
+
+from kodi65 import addon
+from kodi65 import utils
+import routing
 
 MOVIEDB_IMAGE = os.path.join(addon.MEDIA_PATH, "moviedb.png")
 RT_IMAGE = os.path.join(addon.MEDIA_PATH, "rottentomatoes.png")
@@ -19,49 +22,16 @@ TRAKT_IMAGE = os.path.join(addon.MEDIA_PATH, "trakt.png")
 plugin = routing.Plugin()
 
 
-def pass_list_to_skin(name, data, handle=None, limit=False):
-    if data and limit and int(limit) < len(data):
-        data = data[:int(limit)]
-    addon.clear_global(name)
-    if data:
-        addon.set_global(name + ".Count", str(len(data)))
-        items = [(i.get_property("path"), i.get_listitem(), bool(i.get_property("directory"))) for i in data]
-        xbmcplugin.addDirectoryItems(handle=handle,
-                                     items=items,
-                                     totalItems=len(items))
-    xbmcplugin.endOfDirectory(handle)
-
-
 class Main:
 
     def __init__(self):
-        xbmc.log("version %s started" % addon.VERSION)
+        utils.log("version %s started" % addon.VERSION)
         addon.set_global("extendedinfo_running", "true")
         self._parse_argv()
         for info in self.infos:
             listitems = process.start_info_actions(info, self.params)
-            if info.endswith("shows"):
-                xbmcplugin.setContent(plugin.handle, 'tvshows')
-                xbmcplugin.addSortMethod(plugin.handle, xbmcplugin.SORT_METHOD_TITLE)
-                xbmcplugin.addSortMethod(plugin.handle, xbmcplugin.SORT_METHOD_VIDEO_YEAR)
-                xbmcplugin.addSortMethod(plugin.handle, xbmcplugin.SORT_METHOD_VIDEO_RATING)
-            elif info.endswith("episodes"):
-                xbmcplugin.setContent(plugin.handle, 'episodes')
-                xbmcplugin.addSortMethod(plugin.handle, xbmcplugin.SORT_METHOD_TITLE)
-                xbmcplugin.addSortMethod(plugin.handle, xbmcplugin.SORT_METHOD_VIDEO_YEAR)
-                xbmcplugin.addSortMethod(plugin.handle, xbmcplugin.SORT_METHOD_VIDEO_RATING)
-
-            elif info.endswith("movies"):
-                xbmcplugin.setContent(plugin.handle, 'movies')
-                xbmcplugin.addSortMethod(plugin.handle, xbmcplugin.SORT_METHOD_TITLE)
-                xbmcplugin.addSortMethod(plugin.handle, xbmcplugin.SORT_METHOD_VIDEO_YEAR)
-                xbmcplugin.addSortMethod(plugin.handle, xbmcplugin.SORT_METHOD_VIDEO_RATING)
-            elif info.endswith("lists"):
-                xbmcplugin.setContent(plugin.handle, 'sets')
-            pass_list_to_skin(name=info,
-                              data=listitems,
-                              handle=plugin.handle,
-                              limit=self.params.get("limit", 20))
+            if listitems:
+                listitems.set_plugin_list(plugin.handle)
             break
         else:
             plugin.run()
@@ -90,19 +60,21 @@ class Main:
 @plugin.route('/rotten_tomatoes')
 def rotten_tomatoes():
     xbmcplugin.setPluginCategory(plugin.handle, "Rotten Tomatoes")
-    items = [("intheatermovies", "%s" % addon.LANG(32042)),
-             ("boxofficemovies", "%s" % addon.LANG(32055)),
-             ("openingmovies", "%s" % addon.LANG(32048)),
-             ("comingsoonmovies", "%s" % addon.LANG(32043)),
-             ("toprentalmovies", "%s" % addon.LANG(32056)),
-             ("currentdvdmovies", "%s" % addon.LANG(32049)),
-             ("newdvdmovies", "%s" % addon.LANG(32053)),
-             ("upcomingdvdmovies", "%s" % addon.LANG(32054))]
+    items = [("intheatermovies", addon.LANG(32042)),
+             ("boxofficemovies", addon.LANG(32055)),
+             ("openingmovies", addon.LANG(32048)),
+             ("comingsoonmovies", addon.LANG(32043)),
+             ("toprentalmovies", addon.LANG(32056)),
+             ("currentdvdmovies", addon.LANG(32049)),
+             ("newdvdmovies", addon.LANG(32053)),
+             ("upcomingdvdmovies", addon.LANG(32054))]
     for key, value in items:
         li = xbmcgui.ListItem(value, thumbnailImage="DefaultFolder.png")
         url = 'plugin://script.extendedinfo?info=%s' % key
-        xbmcplugin.addDirectoryItem(handle=plugin.handle, url=url,
-                                    listitem=li, isFolder=True)
+        xbmcplugin.addDirectoryItem(handle=plugin.handle,
+                                    url=url,
+                                    listitem=li,
+                                    isFolder=True)
     xbmcplugin.endOfDirectory(plugin.handle)
 
 
@@ -126,10 +98,14 @@ def tmdb():
     if addon.setting("tmdb_username") and addon.setting("tmdb_password"):
         items += login
     for key, value in items:
-        li = xbmcgui.ListItem(value, thumbnailImage="DefaultFolder.png")
+        li = xbmcgui.ListItem(label=value,
+                              thumbnailImage="DefaultFolder.png")
         url = 'plugin://script.extendedinfo?info=%s' % key
-        xbmcplugin.addDirectoryItem(handle=plugin.handle, url=url,
-                                    listitem=li, isFolder=True)
+        xbmcplugin.addDirectoryItem(handle=plugin.handle,
+                                    url=url,
+                                    listitem=li,
+                                    isFolder=True)
+    xbmcplugin.addSortMethod(plugin.handle, xbmcplugin.SORT_METHOD_LABEL)
     xbmcplugin.endOfDirectory(plugin.handle)
 
 
@@ -152,24 +128,31 @@ def trakt():
              ("airingepisodes", addon.LANG(32028)),
              ("premiereepisodes", addon.LANG(32029))]
     for key, value in items:
-        li = xbmcgui.ListItem(value, thumbnailImage="DefaultFolder.png")
+        li = xbmcgui.ListItem(label=value,
+                              thumbnailImage="DefaultFolder.png")
         url = 'plugin://script.extendedinfo?info=%s' % key
-        xbmcplugin.addDirectoryItem(handle=plugin.handle, url=url,
-                                    listitem=li, isFolder=True)
+        xbmcplugin.addDirectoryItem(handle=plugin.handle,
+                                    url=url,
+                                    listitem=li,
+                                    isFolder=True)
+    xbmcplugin.addSortMethod(plugin.handle, xbmcplugin.SORT_METHOD_LABEL)
     xbmcplugin.endOfDirectory(plugin.handle)
 
 
 @plugin.route('/')
 def root():
-    # xbmcplugin.setContent(plugin.handle, 'files')
     items = [
-        (plugin.url_for(trakt), xbmcgui.ListItem("Trakt", thumbnailImage=TRAKT_IMAGE), True),
-        (plugin.url_for(rotten_tomatoes), xbmcgui.ListItem("Rotten Tomatoes", thumbnailImage=RT_IMAGE), True),
-        (plugin.url_for(tmdb), xbmcgui.ListItem("TheMovieDB", thumbnailImage=MOVIEDB_IMAGE), True),
+        (plugin.url_for(trakt), xbmcgui.ListItem(label="Trakt",
+                                                 thumbnailImage=TRAKT_IMAGE), True),
+        (plugin.url_for(rotten_tomatoes), xbmcgui.ListItem(label="Rotten Tomatoes",
+                                                           thumbnailImage=RT_IMAGE), True),
+        (plugin.url_for(tmdb), xbmcgui.ListItem(label="TheMovieDB",
+                                                thumbnailImage=MOVIEDB_IMAGE), True),
     ]
+    xbmcplugin.addSortMethod(plugin.handle, xbmcplugin.SORT_METHOD_LABEL)
     xbmcplugin.addDirectoryItems(plugin.handle, items)
     xbmcplugin.endOfDirectory(plugin.handle)
 
 if (__name__ == "__main__"):
     Main()
-xbmc.log('finished')
+utils.log('finished')

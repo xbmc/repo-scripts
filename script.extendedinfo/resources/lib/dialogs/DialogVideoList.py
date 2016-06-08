@@ -5,37 +5,30 @@
 
 import xbmc
 import xbmcgui
-from .. import addon
-from .. import Utils
-from .. import TheMovieDB as tmdb
-from DialogBaseList import DialogBaseList
-from ..WindowManager import wm
-from ActionHandler import ActionHandler
 
-C_MAIN_LIST = [50, 51, 52, 53, 54, 55, 500]
-C_BUTTON_SORT = 5001
-C_BUTTON_ORDER = 5004
-C_BUTTON_ACCOUNT = 7000
+from resources.lib import TheMovieDB as tmdb
+from resources.lib.WindowManager import wm
+
+from kodi65 import addon
+from kodi65 import utils
+from kodi65 import busy
+from kodi65 import confirmdialog
+from kodi65 import selectdialog
+from kodi65 import ActionHandler
+from kodi65 import DialogBaseList
+
+ID_BUTTON_SORT = 5001
+ID_BUTTON_GENREFILTER = 5002
+ID_BUTTON_YEARFILTER = 5003
+ID_BUTTON_ORDER = 5004
+ID_BUTTON_CERTFILTER = 5006
+ID_BUTTON_ACTORFILTER = 5008
+ID_BUTTON_KEYWORDFILTER = 5009
+ID_BUTTON_COMPANYFILTER = 5010
+ID_BUTTON_VOTECOUNTFILTER = 5012
+ID_BUTTON_ACCOUNT = 7000
 
 ch = ActionHandler()
-
-SORTS = {"movie": {"popularity": addon.LANG(32110),
-                   "release_date": addon.LANG(172),
-                   "revenue": addon.LANG(32108),
-                   # "Release Date": "primary_release_date",
-                   "original_title": addon.LANG(20376),
-                   "vote_average": addon.LANG(32112),
-                   "vote_count": addon.LANG(32111)},
-         "tv": {"popularity": addon.LANG(32110),
-                "first_air_date": addon.LANG(20416),
-                "vote_average": addon.LANG(32112),
-                "vote_count": addon.LANG(32111)},
-         "favorites": {"created_at": addon.LANG(32157)},
-         "list": {"created_at": addon.LANG(32157)},
-         "rating": {"created_at": addon.LANG(32157)}}
-TRANSLATIONS = {"movie": addon.LANG(20338),
-                "tv": addon.LANG(20364),
-                "person": addon.LANG(32156)}
 
 include_adult = addon.setting("include_adults").lower()
 
@@ -44,20 +37,53 @@ def get_window(window_type):
 
     class DialogVideoList(DialogBaseList, window_type):
 
-        @Utils.busy_dialog
+        TYPES = ["movie", "tv"]
+
+        FILTERS = {"certification_country": addon.LANG(32153),
+                   "certification": addon.LANG(32127),
+                   "year": addon.LANG(562),
+                   "with_genres": addon.LANG(135),
+                   "with_people": addon.LANG(32156),
+                   "with_companies": addon.LANG(20388),
+                   "with_networks": addon.LANG(32152),
+                   "with_keywords": addon.LANG(32114),
+                   "first_air_date": addon.LANG(20416),
+                   "primary_release_date": addon.LANG(345),
+                   "vote_count": addon.LANG(32111)}
+
+        TRANSLATIONS = {"movie": addon.LANG(20338),
+                        "tv": addon.LANG(20364),
+                        "person": addon.LANG(32156)}
+
+        SORTS = {"movie": {"popularity": addon.LANG(32110),
+                           "release_date": addon.LANG(172),
+                           "revenue": addon.LANG(32108),
+                           # "Release Date": "primary_release_date",
+                           "original_title": addon.LANG(20376),
+                           "vote_average": addon.LANG(32112),
+                           "vote_count": addon.LANG(32111)},
+                 "tv": {"popularity": addon.LANG(32110),
+                        "first_air_date": addon.LANG(20416),
+                        "vote_average": addon.LANG(32112)},
+                 "favorites": {"created_at": addon.LANG(32157)},
+                 "list": {"created_at": addon.LANG(32157)},
+                 "rating": {"created_at": addon.LANG(32157)}}
+
+        LABEL2 = {"popularity": lambda x: x.get_property("popularity"),
+                  "release_date": lambda x: x.get_info("premiered"),
+                  "revenue": lambda x: x.get_info("genre"),
+                  "vote_average": lambda x: x.get_info("rating"),
+                  "vote_count": lambda x: "{} {}".format(x.get_info("votes"), addon.LANG(32082)),
+                  "first_air_date": lambda x: x.get_info("premiered"),
+                  "created_at": lambda x: x.get_property("created_at"),
+                  "original_title": lambda x: x.get_info("originaltitle")}
+
+        @busy.set_busy
         def __init__(self, *args, **kwargs):
-            super(DialogVideoList, self).__init__(*args, **kwargs)
             self.type = kwargs.get('type', "movie")
             self.list_id = kwargs.get("list_id", False)
-            self.sort = kwargs.get('sort', "popularity")
-            self.sort_label = kwargs.get('sort_label', addon.LANG(32110))
-            self.order = kwargs.get('order', "desc")
             self.logged_in = tmdb.Login.check_login()
-            if self.listitem_list:
-                self.listitems = Utils.create_listitems(self.listitem_list)
-                self.total_items = len(self.listitem_list)
-            else:
-                self.update_content(force_update=kwargs.get('force', False))
+            super(DialogVideoList, self).__init__(*args, **kwargs)
 
         def onClick(self, control_id):
             super(DialogVideoList, self).onClick(control_id)
@@ -69,38 +95,44 @@ def get_window(window_type):
 
         def update_ui(self):
             super(DialogVideoList, self).update_ui()
-            self.setProperty("Type", TRANSLATIONS[self.type])
-            self.getControl(5006).setVisible(self.type != "tv")
-            self.getControl(5008).setVisible(self.type != "tv")
-            self.getControl(5009).setVisible(self.type != "tv")
-            self.getControl(5010).setVisible(self.type != "tv")
+            self.getControl(ID_BUTTON_CERTFILTER).setVisible(self.type != "tv")
+            self.getControl(ID_BUTTON_ACTORFILTER).setVisible(self.type != "tv")
+            self.getControl(ID_BUTTON_KEYWORDFILTER).setVisible(self.type != "tv")
+            self.getControl(ID_BUTTON_COMPANYFILTER).setVisible(self.type != "tv")
 
-        @ch.action("contextmenu", C_MAIN_LIST)
-        def context_menu(self):
-            item_id = self.listitem.getProperty("id")
-            listitems = [addon.LANG(32169)] if self.type == "tv" else [addon.LANG(32113)]
+        @ch.context("tvshow")
+        @ch.context("movie")
+        def context_menu(self, control_id):
+            item_id = self.FocusedItem(control_id).getProperty("id")
+            media_type = self.FocusedItem(control_id).getVideoInfoTag().getMediaType()
+            listitems = [addon.LANG(32169)] if media_type == "tvshow" else [addon.LANG(32113)]
             if self.logged_in:
                 listitems += [addon.LANG(14076)]
                 if not self.type == "tv":
                     listitems += [addon.LANG(32107)]
                 if self.mode == "list":
                     listitems += [addon.LANG(32035)]
-            selection = xbmcgui.Dialog().select(heading=addon.LANG(32151),
-                                                list=listitems)
-            if selection == 0:
-                if tmdb.set_rating_prompt(media_type=self.type,
-                                          media_id=item_id,
-                                          dbid=self.listitem.getProperty("dbid")):
+            index = xbmcgui.Dialog().contextmenu(list=listitems)
+            if index == 0:
+                # HACK until we can get userrating from listitem via python
+                rating = utils.get_infolabel("listitem.userrating")
+                rating = utils.input_userrating(preselect=int(rating) if rating.isdigit() else -1)
+                if rating == -1:
+                    return None
+                if tmdb.set_rating(media_type="tv" if media_type == "tvshow" else "movie",
+                                   media_id=item_id,
+                                   rating=rating,
+                                   dbid=self.FocusedItem(control_id).getVideoInfoTag().getDbId()):
                     xbmc.sleep(2000)
                     self.update(force_update=True)
                     self.setCurrentListPosition(self.position)
-            elif selection == 1:
+            elif index == 1:
                 tmdb.change_fav_status(media_id=item_id,
                                        media_type=self.type,
                                        status="true")
-            elif selection == 2:
+            elif index == 2:
                 self.list_dialog(item_id)
-            elif selection == 3:
+            elif index == 3:
                 tmdb.change_list_status(list_id=self.list_id,
                                         movie_id=item_id,
                                         status=False)
@@ -108,67 +140,65 @@ def get_window(window_type):
                 self.setCurrentListPosition(self.position)
 
         def list_dialog(self, movie_id):
-            xbmc.executebuiltin("ActivateWindow(busydialog)")
+            busy.show_busy()
             listitems = [addon.LANG(32139)]
             account_lists = tmdb.get_account_lists()
             listitems += ["%s (%i)" % (i["name"], i["item_count"]) for i in account_lists]
             listitems.append(addon.LANG(32138))
-            xbmc.executebuiltin("Dialog.Close(busydialog)")
+            busy.hide_busy()
             index = xbmcgui.Dialog().select(heading=addon.LANG(32136),
                                             list=listitems)
             if index == 0:
                 listname = xbmcgui.Dialog().input(heading=addon.LANG(32137),
                                                   type=xbmcgui.INPUT_ALPHANUM)
                 if listname:
-                    list_id = tmdb.create_list(listname)
                     xbmc.sleep(1000)
-                    tmdb.change_list_status(list_id=list_id,
+                    tmdb.change_list_status(list_id=tmdb.create_list(listname),
                                             movie_id=movie_id,
                                             status=True)
             elif index == len(listitems) - 1:
-                self.remove_list_dialog(account_lists)
+                tmdb.remove_list_dialog(tmdb.handle_lists(account_lists))
             elif index > 0:
                 tmdb.change_list_status(list_id=account_lists[index - 1]["id"],
                                         movie_id=movie_id,
                                         status=True)
 
-        @ch.click(C_BUTTON_SORT)
-        def get_sort_type(self):
-            sort_key = self.mode if self.mode in ["favorites", "rating", "list"] else self.type
-            listitems = [k for k in self.SORTS[sort_key].values()]
-            sort_strings = [v for v in self.SORTS[sort_key].keys()]
-            index = xbmcgui.Dialog().select(heading=addon.LANG(32104),
-                                            list=listitems)
-            if index == -1:
+        @property
+        def sort_key(self):
+            return self.mode if self.mode in ["favorites", "rating", "list"] else self.type
+
+        @property
+        def default_sort(self):
+            return "created_at" if self.mode in ["favorites", "rating", "list"] else "popularity"
+
+        @ch.click(ID_BUTTON_SORT)
+        def get_sort_type(self, control_id):
+            if not self.choose_sort_method(self.sort_key):
                 return None
-            if sort_strings[index] == "vote_average":
+            if self.sort == "vote_average":
                 self.add_filter(key="vote_count.gte",
                                 value="10",
-                                typelabel="%s (%s)" % (addon.LANG(32111), addon.LANG(21406)),
-                                label="10")
-            self.sort = sort_strings[index]
-            self.sort_label = listitems[index]
+                                label="10",
+                                reset=False)
             self.update()
 
         def add_filter(self, **kwargs):
+            key = kwargs["key"].replace(".gte", "").replace(".lte", "")
+            kwargs["typelabel"] = self.FILTERS[key]
+            if kwargs["key"].endswith(".lte"):
+                kwargs["label"] = "< %s" % kwargs["label"]
+            if kwargs["key"].endswith(".gte"):
+                kwargs["label"] = "> %s" % kwargs["label"]
             super(DialogVideoList, self).add_filter(force_overwrite=kwargs["key"].endswith((".gte", ".lte")),
                                                     **kwargs)
 
-        @ch.click(C_BUTTON_ORDER)
-        def toggle_order(self):
+        @ch.click(ID_BUTTON_ORDER)
+        def toggle_order(self, control_id):
             self.order = "desc" if self.order == "asc" else "asc"
             self.update()
 
-        @ch.click(5007)
-        def toggle_media_type(self):
-            self.filters = []
-            self.page = 1
-            self.mode = "filter"
-            self.type = "movie" if self.type == "tv" else "tv"
-            self.update()
-
-        @ch.click(C_BUTTON_ACCOUNT)
-        def open_account_menu(self):
+        @ch.click(ID_BUTTON_ACCOUNT)
+        def open_account_menu(self, control_id):
             if self.type == "tv":
                 listitems = [addon.LANG(32145)]
                 if self.logged_in:
@@ -177,112 +207,91 @@ def get_window(window_type):
                 listitems = [addon.LANG(32135)]
                 if self.logged_in:
                     listitems.append(addon.LANG(32134))
-            xbmc.executebuiltin("ActivateWindow(busydialog)")
+            busy.show_busy()
             if self.logged_in:
                 account_lists = tmdb.get_account_lists()
                 listitems += ["%s (%i)" % (i["name"], i["item_count"]) for i in account_lists]
-            xbmc.executebuiltin("Dialog.Close(busydialog)")
+            busy.hide_busy()
             index = xbmcgui.Dialog().select(heading=addon.LANG(32136),
                                             list=listitems)
             if index == -1:
                 pass
             elif index == 0:
-                self.mode = "rating"
-                self.sort = "created_at"
-                self.sort_label = addon.LANG(32157)
+                self.set_sort("created_at")
                 self.filters = []
-                self.page = 1
-                self.update()
+                self.reset("rating")
             elif index == 1:
-                self.mode = "favorites"
-                self.sort = "created_at"
-                self.sort_label = addon.LANG(32157)
+                self.set_sort("created_at")
                 self.filters = []
-                self.page = 1
-                self.update()
+                self.reset("favorites")
             else:
                 self.close()
-                dialog = DialogVideoList(u'script-%s-VideoList.xml' % addon.NAME, addon.PATH,
-                                         color=self.color,
-                                         filters=[],
-                                         mode="list",
-                                         list_id=account_lists[index - 2]["id"],
-                                         filter_label=account_lists[index - 2]["name"])
+                dialog = wm.open_video_list(filters=[],
+                                            mode="list",
+                                            list_id=account_lists[index - 2]["id"],
+                                            filter_label=account_lists[index - 2]["name"])
                 dialog.doModal()
 
-        @ch.click(5002)
-        def set_genre_filter(self):
+        @ch.click(ID_BUTTON_GENREFILTER)
+        def set_genre_filter(self, control_id):
             params = {"language": addon.setting("LanguageID")}
             response = tmdb.get_data(url="genre/%s/list" % (self.type),
                                      params=params,
-                                     cache_days=10)
+                                     cache_days=100)
+            selected = [i["id"] for i in self.filters if i["type"] == "with_genres"]
             ids = [item["id"] for item in response["genres"]]
             labels = [item["name"] for item in response["genres"]]
-            index = xbmcgui.Dialog().select(heading=addon.LANG(32151),
-                                            list=labels)
-            if index == -1:
+            preselect = [ids.index(int(i)) for i in selected[0].split(",")] if selected else []
+            indexes = xbmcgui.Dialog().multiselect(heading=addon.LANG(32151),
+                                                   options=labels,
+                                                   preselect=preselect)
+            if indexes is None:
                 return None
-            self.add_filter(key="with_genres",
-                            value=str(ids[index]),
-                            typelabel=addon.LANG(135),
-                            label=labels[index])
-            self.mode = "filter"
-            self.page = 1
-            self.update()
+            self.filters = [i for i in self.filters if i["type"] != "with_genres"]
+            for i in indexes:
+                self.add_filter(key="with_genres",
+                                value=ids[i],
+                                label=labels[i],
+                                reset=False)
+            self.reset()
 
-        @ch.click(5012)
-        def set_vote_count_filter(self):
+        @ch.click(ID_BUTTON_VOTECOUNTFILTER)
+        def set_vote_count_filter(self, control_id):
             ret = True
             if not self.type == "tv":
-                ret = xbmcgui.Dialog().yesno(heading=addon.LANG(32151),
-                                             line1=addon.LANG(32106),
-                                             nolabel=addon.LANG(32150),
-                                             yeslabel=addon.LANG(32149))
+                ret = confirmdialog.open(header=addon.LANG(32151),
+                                         text=addon.LANG(32106),
+                                         nolabel=addon.LANG(32150),
+                                         yeslabel=addon.LANG(32149))
+            if ret == -1:
+                return None
             result = xbmcgui.Dialog().input(heading=addon.LANG(32111),
                                             type=xbmcgui.INPUT_NUMERIC)
             if result:
-                self.add_filter(key="vote_count.lte" if ret else "vote_count.gte",
+                self.add_filter(key="vote_count.lte" if ret == 1 else "vote_count.gte",
                                 value=result,
-                                typelabel=addon.LANG(32111),
-                                label=" < " + result if ret else " > " + result)
-                self.mode = "filter"
-                self.page = 1
-                self.update()
+                                label=result)
 
-        @ch.click(5003)
-        def set_year_filter(self):
-            ret = xbmcgui.Dialog().yesno(heading=addon.LANG(32151),
-                                         line1=addon.LANG(32106),
-                                         nolabel=addon.LANG(32150),
-                                         yeslabel=addon.LANG(32149))
+        @ch.click(ID_BUTTON_YEARFILTER)
+        def set_year_filter(self, control_id):
+            ret = confirmdialog.open(header=addon.LANG(32151),
+                                     text=addon.LANG(32106),
+                                     nolabel=addon.LANG(32150),
+                                     yeslabel=addon.LANG(32149))
+            if ret == -1:
+                return None
             result = xbmcgui.Dialog().input(heading=addon.LANG(345),
                                             type=xbmcgui.INPUT_NUMERIC)
             if not result:
                 return None
-            if ret:
-                order = "lte"
-                value = "%s-12-31" % result
-                label = " < " + result
-            else:
-                order = "gte"
-                value = "%s-01-01" % result
-                label = " > " + result
-            if self.type == "tv":
-                self.add_filter(key="first_air_date.%s" % order,
-                                value=value,
-                                typelabel=addon.LANG(20416),
-                                label=label)
-            else:
-                self.add_filter(key="primary_release_date.%s" % order,
-                                value=value,
-                                typelabel=addon.LANG(345),
-                                label=label)
-            self.mode = "filter"
-            self.page = 1
-            self.update()
+            value = "{}-12-31" if ret == 1 else "{}-01-01"
+            key = "first_air_date" if self.type == "tv" else "primary_release_date"
+            self.add_filter(key="%s.%s" % (key, "lte" if ret == 1 else "gte"),
+                            value=value.format(result),
+                            label=result)
 
-        @ch.click(5008)
-        def set_actor_filter(self):
+        @ch.click(ID_BUTTON_ACTORFILTER)
+        def set_actor_filter(self, control_id):
             result = xbmcgui.Dialog().input(heading=addon.LANG(16017),
                                             type=xbmcgui.INPUT_ALPHANUM)
             if not result or result == -1:
@@ -291,73 +300,69 @@ def get_window(window_type):
             if not response:
                 return None
             self.add_filter(key="with_people",
-                            value=str(response["id"]),
-                            typelabel=addon.LANG(32156),
+                            value=response["id"],
                             label=response["name"])
-            self.mode = "filter"
-            self.page = 1
-            self.update()
 
-        @ch.click(C_MAIN_LIST)
-        def open_media(self):
-            self.last_position = self.control.getSelectedPosition()
-            info = self.listitem.getVideoInfoTag()
-            media_type = info.getMediaType()
-            if media_type == "tvshow":
-                wm.open_tvshow_info(prev_window=self,
-                                    tmdb_id=self.listitem.getProperty("id"),
-                                    dbid=self.listitem.getProperty("dbid"))
-            elif media_type == "movie":
-                wm.open_movie_info(prev_window=self,
-                                   movie_id=self.listitem.getProperty("id"),
-                                   dbid=self.listitem.getProperty("dbid"))
-            elif media_type == "artist":
-                wm.open_actor_info(prev_window=self,
-                                   actor_id=self.listitem.getProperty("id"))
+        @ch.info("movie")
+        @ch.click_by_type("movie")
+        def open_movie(self, control_id):
+            wm.open_movie_info(movie_id=self.FocusedItem(control_id).getProperty("id"),
+                               dbid=self.FocusedItem(control_id).getVideoInfoTag().getDbId())
 
-        @ch.click(5010)
-        def set_company_filter(self):
+        @ch.info("tvshow")
+        @ch.click_by_type("tvshow")
+        def open_tvshow(self, control_id):
+            wm.open_tvshow_info(tmdb_id=self.FocusedItem(control_id).getProperty("id"),
+                                dbid=self.FocusedItem(control_id).getVideoInfoTag().getDbId())
+
+        @ch.info("artist")
+        @ch.click_by_type("artist")
+        def open_media(self, control_id):
+            wm.open_actor_info(actor_id=self.FocusedItem(control_id).getProperty("id"))
+
+        @ch.click(ID_BUTTON_COMPANYFILTER)
+        def set_company_filter(self, control_id):
             result = xbmcgui.Dialog().input(heading=addon.LANG(16017),
                                             type=xbmcgui.INPUT_ALPHANUM)
             if not result or result < 0:
                 return None
-            response = tmdb.search_company(result)
-            if len(response) > 1:
-                selection = xbmcgui.Dialog().select(heading=addon.LANG(32151),
-                                                    list=[i["name"] for i in response])
-                if selection > -1:
-                    response = response[selection]
-            elif response:
-                response = response[0]
+            items = tmdb.search_companies(result)
+            if len(items) > 1:
+                index = selectdialog.open(header=addon.LANG(32151),
+                                          listitems=items)
+                if index > -1:
+                    item = items[index]
+            elif items:
+                item = items[0]
             else:
-                Utils.notify("No company found")
+                utils.notify("No company found")
             self.add_filter(key="with_companies",
-                            value=str(response["id"]),
-                            typelabel=addon.LANG(20388),
-                            label=response["name"])
-            self.mode = "filter"
-            self.page = 1
-            self.update()
+                            value=item.get_property("id"),
+                            label=item.get_label())
 
-        @ch.click(5009)
-        def set_keyword_filter(self):
+        @ch.click(ID_BUTTON_KEYWORDFILTER)
+        def set_keyword_filter(self, control_id):
             result = xbmcgui.Dialog().input(heading=addon.LANG(16017),
                                             type=xbmcgui.INPUT_ALPHANUM)
             if not result or result == -1:
                 return None
-            response = tmdb.get_keyword_id(result)
-            if not response:
+            keywords = tmdb.get_keywords(result)
+            if not keywords:
                 return None
+            if len(keywords) > 1:
+                index = xbmcgui.Dialog().select(heading=addon.LANG(32114),
+                                                list=[item["name"] for item in keywords])
+                keyword = keywords[index] if index > -1 else None
+                if not keyword:
+                    return None
+            else:
+                keyword = keywords[0]
             self.add_filter(key="with_keywords",
-                            value=str(response["id"]),
-                            typelabel=addon.LANG(32114),
-                            label=response["name"])
-            self.mode = "filter"
-            self.page = 1
-            self.update()
+                            value=keyword["id"],
+                            label=keyword["name"])
 
-        @ch.click(5006)
-        def set_certification_filter(self):
+        @ch.click(ID_BUTTON_CERTFILTER)
+        def set_certification_filter(self, control_id):
             response = tmdb.get_certification_list(self.type)
             countries = [key for key in response.keys()]
             index = xbmcgui.Dialog().select(heading=addon.LANG(21879),
@@ -373,101 +378,58 @@ def get_window(window_type):
             cert = certs[index].split("  -  ")[0]
             self.add_filter(key="certification_country",
                             value=country,
-                            typelabel=addon.LANG(32153),
-                            label=country)
+                            label=country,
+                            reset=False)
             self.add_filter(key="certification",
                             value=cert,
-                            typelabel=addon.LANG(32127),
                             label=cert)
-            self.page = 1
-            self.mode = "filter"
-            self.update()
 
         def fetch_data(self, force=False):  # TODO: rewrite
             sort_by = self.sort + "." + self.order
             temp = "tv" if self.type == "tv" else "movies"
             if self.mode == "search":
-                params = {"query": self.search_str,
-                          "include_adult": include_adult,
-                          "page": self.page}
-                url = "search/multi"
                 self.filter_label = addon.LANG(32146) % self.search_str if self.search_str else ""
+                return tmdb.multi_search(search_str=self.search_str,
+                                         page=self.page,
+                                         cache_days=0 if force else 2)
             elif self.mode == "list":
-                params = {"language": addon.setting("LanguageID")}
-                url = "list/%s" % (self.list_id)
-                # self.filter_label = addon.LANG(32036)
+                return tmdb.get_list_movies(list_id=self.list_id,
+                                            force=force)
             elif self.mode == "favorites":
-                params = {"sort_by": sort_by,
-                          "language": addon.setting("LanguageID"),
-                          "page": self.page,
-                          "session_id": tmdb.Login.get_session_id()}
-                url = "account/%s/favorite/%s" % (tmdb.Login.get_account_id(), temp)
                 self.filter_label = addon.LANG(32144) if self.type == "tv" else addon.LANG(32134)
+                return tmdb.get_fav_items(media_type=temp,
+                                          sort_by=sort_by,
+                                          page=self.page)
             elif self.mode == "rating":
-                force = True  # workaround, should be updated after setting rating
-                if self.logged_in:
-                    session_id = tmdb.Login.get_session_id()
-                    if not session_id:
-                        Utils.notify("Could not get session id")
-                        return {"listitems": [],
-                                "results_per_page": 0,
-                                "total_results": 0}
-                    params = {"sort_by": sort_by,
-                              "language": addon.setting("LanguageID"),
-                              "page": self.page,
-                              "session_id": session_id}
-                    url = "account/%s/rated/%s" % (tmdb.Login.get_account_id(), temp)
-                else:
-                    session_id = tmdb.Login.get_guest_session_id()
-                    if not session_id:
-                        Utils.notify("Could not get session id")
-                        return {"listitems": [],
-                                "results_per_page": 0,
-                                "total_results": 0}
-                    params = {"language": addon.setting("LanguageID")}
-                    url = "guest_session/%s/rated_movies" % (session_id)
                 self.filter_label = addon.LANG(32145) if self.type == "tv" else addon.LANG(32135)
+                return tmdb.get_rated_media_items(media_type=temp,
+                                                  sort_by=sort_by,
+                                                  page=self.page,
+                                                  cache_days=0)
             else:
                 self.set_filter_label()
                 params = {"sort_by": sort_by,
                           "language": addon.setting("LanguageID"),
                           "page": self.page,
                           "include_adult": include_adult}
-                filters = dict((item["type"], item["id"]) for item in self.filters)
-                params = Utils.merge_dicts(params, filters)
-                url = "discover/%s" % (self.type)
-            response = tmdb.get_data(url=url,
-                                     params=params,
-                                     cache_days=0 if force else 2)
-            if not response:
-                return None
-            if self.mode == "list":
-                info = {"listitems": tmdb.handle_movies(results=response["items"],
-                                                        local_first=True,
-                                                        sortkey=None),
-                        "results_per_page": 1,
-                        "total_results": len(response["items"])}
-                return info
-            if "results" not in response:
-                # self.close()
-                return {"listitems": [],
-                        "results_per_page": 0,
-                        "total_results": 0}
-            if not response["results"]:
-                Utils.notify(addon.LANG(284))
-            if self.mode == "search":
-                listitems = tmdb.handle_multi_search(response["results"])
-            elif self.type == "movie":
-                listitems = tmdb.handle_movies(results=response["results"],
-                                               local_first=False,
-                                               sortkey=None)
-            else:
-                listitems = tmdb.handle_tvshows(results=response["results"],
-                                                local_first=False,
-                                                sortkey=None)
-            info = {"listitems": listitems,
-                    "results_per_page": response["total_pages"],
-                    "total_results": response["total_results"]}
-            return info
+                filters = {item["type"]: item["id"] for item in self.filters}
+                response = tmdb.get_data(url="discover/%s" % (self.type),
+                                         params=utils.merge_dicts(params, filters),
+                                         cache_days=0 if force else 2)
+
+                if not response["results"]:
+                    utils.notify(addon.LANG(284))
+                    return None
+                if self.type == "movie":
+                    itemlist = tmdb.handle_movies(results=response["results"],
+                                                  local_first=False,
+                                                  sortkey=None)
+                else:
+                    itemlist = tmdb.handle_tvshows(results=response["results"],
+                                                   local_first=False,
+                                                   sortkey=None)
+                itemlist.set_totals(response["total_results"])
+                itemlist.set_total_pages(response["total_pages"])
+                return itemlist
 
     return DialogVideoList

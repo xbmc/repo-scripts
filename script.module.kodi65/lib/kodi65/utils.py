@@ -31,12 +31,6 @@ def log(*args):
                  level=xbmc.LOGDEBUG)
 
 
-def dump_dict(dct):
-    return json.dumps(dct,
-                      sort_keys=True,
-                      indent=4,
-                      separators=(',', ': '))
-
 
 def format_seconds(seconds):
     if not seconds:
@@ -44,6 +38,13 @@ def format_seconds(seconds):
     hours, remainder = divmod(seconds, 3600)
     minutes, seconds = divmod(remainder, 60)
     return '%02d:%02d:%02d' % (hours, minutes, seconds)
+
+
+def dump_dict(dct):
+    return json.dumps(dct,
+                      sort_keys=True,
+                      indent=4,
+                      separators=(',', ': '))
 
 
 def pp(string):
@@ -108,16 +109,6 @@ def contextmenu(options):
     index = xbmcgui.Dialog().contextmenu(list=[i[1] for i in options])
     if index > -1:
         return [i[0] for i in options][index]
-
-
-def convert_youtube_url(raw_string):
-    """
-    get plugin playback URL for URL *raw_string
-    """
-    youtube_id = extract_youtube_id(raw_string)
-    if youtube_id:
-        return 'plugin://script.extendedinfo/?info=youtubevideo&&id=%s' % youtube_id
-    return ""
 
 
 def extract_youtube_id(raw_string):
