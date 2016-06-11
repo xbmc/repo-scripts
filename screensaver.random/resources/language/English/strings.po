@@ -52,7 +52,55 @@ msgctxt "#32007"
 msgid "Excluded Screensavers"
 msgstr ""
 
-#empty strings from id 32008 to 32100
+msgctxt "#32008"
+msgid "Mode"
+msgstr ""
+
+msgctxt "#32009"
+msgid "Random"
+msgstr ""
+
+msgctxt "#32010"
+msgid "Scheduled"
+msgstr ""
+
+msgctxt "#32011"
+msgid "Schedule"
+msgstr ""
+
+msgctxt "#32012"
+msgid "Number Of Schedule Rules"
+msgstr ""
+
+msgctxt "#32013"
+msgid "Rule 1"
+msgstr ""
+
+msgctxt "#32014"
+msgid "Rule 2"
+msgstr ""
+
+msgctxt "#32015"
+msgid "Rule 3"
+msgstr ""
+
+msgctxt "#32016"
+msgid "Rule 4"
+msgstr ""
+
+msgctxt "#32017"
+msgid "Rule 5"
+msgstr ""
+
+msgctxt "#32018"
+msgid "Start Time"
+msgstr ""
+
+msgctxt "#32019"
+msgid "End Time"
+msgstr ""
+
+#empty strings from id 32020 to 32100
 
 msgctxt "#32101"
 msgid "No Supported Screensavers Installed"
