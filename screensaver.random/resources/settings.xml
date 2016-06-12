@@ -1,10 +1,39 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <settings>
 	<category label="32002">
-		<setting id="excludedScreensavers" type="addon" label="Excluded Screensavers" default="" addontype="xbmc.ui.screensaver" multiselect="true" />
+        <setting id="mode" type="enum" label="32008" lvalues="32009|32010" default="0"/>
+		<setting id="excludedScreensavers" visible="eq(-1,0)" subsetting="true" type="addon" label="32007" default="" addontype="xbmc.ui.screensaver" multiselect="true" />
     	<setting label="32003" type="lsep"/>
 		<setting id="logEnabled" type="bool" label="32004" default="false"/>
 		<setting label="32005" type="lsep"/>
 		<setting label="32006" type="action" action="RunScript($CWD/check.py)"/>
+	</category>
+	<category label="32011">
+		<setting id="numberOfSchuleRules" label="32012" type="enum" values="0|1|2|3|4|5" default="0" />
+
+    	<setting label="32013" type="lsep" visible="gt(-1,0)"/>
+		<setting id="rule1StartTime" visible="gt(-2,0)" subsetting="true" type="time" label="32018" default="00:00"/>
+		<setting id="rule1EndTime" visible="gt(-3,0)" subsetting="true" type="time" label="32019" default="23:59"/>
+		<setting id="rule1Screensaver" visible="gt(-4,0)" subsetting="true" type="addon" label="32002" default="" addontype="xbmc.ui.screensaver" multiselect="false" />
+
+    	<setting label="32014" type="lsep" visible="gt(-5,1)"/>
+		<setting id="rule2StartTime" visible="gt(-6,1)" subsetting="true" type="time" label="32018" default="00:00"/>
+		<setting id="rule2EndTime" visible="gt(-7,1)" subsetting="true" type="time" label="32019" default="23:59"/>
+		<setting id="rule2Screensaver" visible="gt(-8,1)" subsetting="true" type="addon" label="32002" default="" addontype="xbmc.ui.screensaver" multiselect="false" />
+
+    	<setting label="32015" type="lsep" visible="gt(-9,2)"/>
+		<setting id="rule3StartTime" visible="gt(-10,2)" subsetting="true" type="time" label="32018" default="00:00"/>
+		<setting id="rule3EndTime" visible="gt(-11,2)" subsetting="true" type="time" label="32019" default="23:59"/>
+		<setting id="rule3Screensaver" visible="gt(-12,2)" subsetting="true" type="addon" label="32002" default="" addontype="xbmc.ui.screensaver" multiselect="false" />
+
+    	<setting label="32016" type="lsep" visible="gt(-13,3)"/>
+		<setting id="rule4StartTime" visible="gt(-14,3)" subsetting="true" type="time" label="32018" default="00:00"/>
+		<setting id="rule4EndTime" visible="gt(-15,3)" subsetting="true" type="time" label="32019" default="23:59"/>
+		<setting id="rule4Screensaver" visible="gt(-16,3)" subsetting="true" type="addon" label="32002" default="" addontype="xbmc.ui.screensaver" multiselect="false" />
+
+    	<setting label="32017" type="lsep" visible="gt(-17,4)"/>
+		<setting id="rule5StartTime" visible="gt(-18,4)" subsetting="true" type="time" label="32018" default="00:00"/>
+		<setting id="rule5EndTime" visible="gt(-19,4)" subsetting="true" type="time" label="32019" default="23:59"/>
+		<setting id="rule5Screensaver" visible="gt(-20,4)" subsetting="true" type="addon" label="32002" default="" addontype="xbmc.ui.screensaver" multiselect="false" />
 	</category>
 </settings>
