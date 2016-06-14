@@ -18,6 +18,7 @@
 #
 import os
 import sys
+import xbmc
 
 class pydevd_dummy(object):
     @staticmethod
@@ -31,11 +32,15 @@ def startdebugger():
     elif sys.platform.lower().startswith('darwin'):
         debugegg = '/Applications/PyCharm.app/Contents/debug-eggs/pycharm-debug.egg'
     elif sys.platform.lower().startswith('linux'):
-        debugegg = os.path.expandvars(os.path.expanduser('~/PyCharm 2016.1/debug-eggs/pycharm-debug.egg'))
+        debugegg = os.path.expandvars(os.path.expanduser('~/Applications/pycharm-2016.1.4/debug-eggs/pycharm-debug.egg'))
     if os.path.exists(debugegg):
         sys.path.append(debugegg)
         try:
             import pydevd
         except ImportError:
+            xbmc.log(msg = 'Debugger import error @: "%s"' % debugegg)
             pydevd = pydevd_dummy
         pydevd.settrace('localhost', port=51234, stdoutToServer=True, stderrToServer=True, suspend=False)
+    else:
+        xbmc.log(msg='Debugger not found @: "%s"' % debugegg)
+

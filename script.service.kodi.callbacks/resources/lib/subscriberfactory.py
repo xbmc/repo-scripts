@@ -29,12 +29,12 @@ _ = kodipo.getLocalizedString
 def returnHandler(taskReturn):
     assert isinstance(taskReturn, TaskReturn)
     if taskReturn.iserror is False:
-        msg = _('Command for Task %s, Event %s completed succesfully!') % (taskReturn.taskId, taskReturn.eventId)
+        msg = _(u'Command for Task %s, Event %s completed succesfully!') % (taskReturn.taskId, taskReturn.eventId)
         if taskReturn.msg.strip() != '':
-            msg += _('\nThe following message was returned: %s') % taskReturn.msg
+            msg += _(u'\nThe following message was returned: %s') % taskReturn.msg
         log(msg=msg)
     else:
-        msg = _('ERROR encountered for Task %s, Event %s\nERROR mesage: %s') % (
+        msg = _(u'ERROR encountered for Task %s, Event %s\nERROR mesage: %s') % (
             taskReturn.taskId, taskReturn.eventId, taskReturn.msg)
         log(loglevel=kl.LOGERROR, msg=msg)
 

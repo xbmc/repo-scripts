@@ -61,22 +61,22 @@ class MessageDialog(xbmcgui.WindowXMLDialog):
 def show_textbox(title, msg):
     _addon_ = xbmcaddon.Addon('script.service.kodi.callbacks')
     _cwd_ = xbmc.translatePath(_addon_.getAddonInfo('path'))
-    msgbox = MessageDialog("DialogTextBox.xml", _cwd_, "Default")
+    msgbox = MessageDialog(u"DialogTextBox.xml", _cwd_, u"Default")
     xt = type(msg)
     if xt is str or xt is unicode:
-        wmsg = '\n'.join(textwrap.wrap(msg, 62))
+        wmsg = u'\n'.join(textwrap.wrap(msg, 62))
     elif xt is list:
         tmsg = []
         for i in msg:
             omsg = textwrap.wrap(i, width=62, break_long_words=True)
             l1 = []
             for i1 in omsg:
-                l1.append('i=%s, len=%s' % (i1, len(i1)))
-            nmsg = '\n'.join(omsg) + '\n'
+                l1.append(u'i=%s, len=%s' % (i1, len(i1)))
+            nmsg = u'\n'.join(omsg) + u'\n'
             tmsg.append(nmsg)
-        wmsg = ''.join(tmsg)
+        wmsg = u''.join(tmsg)
     else:
-        wmsg = ''
+        wmsg = u''
     msgbox.set_text(title, wmsg)
     msgbox.doModal()
     del msg

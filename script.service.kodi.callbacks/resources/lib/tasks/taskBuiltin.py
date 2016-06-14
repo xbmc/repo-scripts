@@ -40,7 +40,7 @@ class TaskBuiltin(AbstractTask):
     ]
 
     def __init__(self):
-        super(TaskBuiltin, self).__init__()
+        super(TaskBuiltin, self).__init__(name='Builtin')
 
     @staticmethod
     def validate(taskKwargs, xlog=KodiLogger.log):

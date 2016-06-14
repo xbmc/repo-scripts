@@ -22,7 +22,7 @@ debug = False  # TODO: check
 testdebug = False  # TODO: check
 testTasks = False  # TODO: check
 branch = 'master'
-build = '1008'
+build = '1018'
 
 from resources.lib.utils.debugger import startdebugger
 
@@ -66,7 +66,7 @@ class MainMonitor(xbmc.Monitor):
 
     def onSettingsChanged(self):
         dialog = xbmcgui.Dialog()
-        msg = _('If improperly implemented, running user tasks can damage your system.\nThe user assumes all risks and liability for running tasks.').split('\\n')
+        msg = _('If improperly implemented, running user tasks can damage your system.\nThe user assumes all risks and liability for running tasks.').split('\n')
         dialog.ok(_('Kodi Callbacks'), line1=msg[0], line2=msg[1])
         log(msg=_('Settings change detected - attempting to restart'))
         abortall()
@@ -134,8 +134,8 @@ def start():
 
 
 def main():
-    xbmc.log(msg=_('$$$ [kodi.callbacks] - Staring kodi.callbacks ver: %s (build %s)') % (str(_addonversion_), build),
-             level=xbmc.LOGNOTICE)
+    msg = _(u'$$$ [kodi.callbacks] - Staring kodi.callbacks ver: %s (%s:build %s) python: %s').encode('utf-8') % (str(_addonversion_), branch, build, sys.version)
+    xbmc.log(msg=msg, level=xbmc.LOGNOTICE)
     if branch != 'master':
         xbmcaddon.Addon().setSetting('installed branch', branch)
     start()
