@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+	<category label="32001">
+		<setting id="showOnContextMenu" type="bool" label="32012" default="true"/>
+		<setting id="showPreviousOnContextMenu" type="bool" label="32013" default="true"/>
+    	<setting label="32002" type="lsep"/>
+		<setting id="logEnabled" type="bool" label="32003" default="false"/>
+	</category>
+	<category label="32024">
+		<setting id="autoSelectSingle" type="bool" label="32025" default="true"/>
+		<setting id="showImageCaptions" type="bool" label="32030" default="true"/>
+		<setting id="loopSlideshow" type="bool" label="32033" default="false"/>
+		<setting id="autoSlideshow" type="bool" label="32031" default="false"/>
+		<setting id="autoSlideshowInterval" visible="eq(-1,true)" label="32032" type="slider" default="1.0" range="0.5,0.5,5" option="float"/>
+		<setting id="autoSlideshowDelay" visible="eq(-2,true)" label="32034" type="slider" default="5" range="0,1,30" option="int"/>
+		<setting id="enableNotificationsForRequests" type="bool" label="32026" default="false"/>
+		<setting id="emailAddress" visible="eq(-1,true)" type="text" label="32027" default=""/>
+	</category>
+</settings>

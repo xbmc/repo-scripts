@@ -1,0 +1,133 @@
+# Kodi Media Center language file
+# Addon Name: Recap
+# Addon id: script.recap
+# Addon Provider: robwebset
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: English (http://www.transifex.com/projects/p/xbmc-addons/language/en/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "Addon Summary"
+msgid "Visual summary of a TV Show"
+msgstr ""
+
+msgctxt "Addon Description"
+msgid "Shows a summary of what has happened in a TV Episode, including images"
+msgstr ""
+
+msgctxt "#32001"
+msgid "Recap"
+msgstr ""
+
+msgctxt "#32002"
+msgid "Debugging"
+msgstr ""
+
+msgctxt "#32003"
+msgid "Enable debug logging"
+msgstr ""
+
+msgctxt "#32004"
+msgid "Select Correct TV Show"
+msgstr ""
+
+msgctxt "#32005"
+msgid "No Match Found For"
+msgstr ""
+
+msgctxt "#32006"
+msgid "Close"
+msgstr ""
+
+msgctxt "#32007"
+msgid "Select Season"
+msgstr ""
+
+msgctxt "#32008"
+msgid "Season"
+msgstr ""
+
+msgctxt "#32009"
+msgid "Episode"
+msgstr ""
+
+msgctxt "#32010"
+msgid "Select Episode"
+msgstr ""
+
+msgctxt "#32011"
+msgid "Recap Previous"
+msgstr ""
+
+msgctxt "#32012"
+msgid "Show Recap On Context Menu (Restart Required)"
+msgstr ""
+
+msgctxt "#32013"
+msgid "Show Recap Previous On Context Menu (Restart Required)"
+msgstr ""
+
+msgctxt "#32014"
+msgid "Enter TV Show Title"
+msgstr ""
+
+msgctxt "#32020"
+msgid "Please check the log for more details"
+msgstr ""
+
+msgctxt "#32023"
+msgid "Send request for show to be added?"
+msgstr ""
+
+msgctxt "#32024"
+msgid "Behaviour"
+msgstr ""
+
+msgctxt "#32025"
+msgid "Show Automatically If Only One Match"
+msgstr ""
+
+msgctxt "#32026"
+msgid "Enable Notifications For Requests"
+msgstr ""
+
+msgctxt "#32027"
+msgid "Email Address"
+msgstr ""
+
+msgctxt "#32028"
+msgid "Submission request failed for"
+msgstr ""
+
+msgctxt "#32029"
+msgid "Submission request complete for"
+msgstr ""
+
+msgctxt "#32030"
+msgid "Show Image Captions"
+msgstr ""
+
+msgctxt "#32031"
+msgid "Automatically Progress Slideshow"
+msgstr ""
+
+msgctxt "#32032"
+msgid "Seconds To Show Each Image"
+msgstr ""
+
+msgctxt "#32033"
+msgid "Loop Slideshow"
+msgstr ""
+
+msgctxt "#32034"
+msgid "Delay Before Start (Seconds)"
+msgstr ""
