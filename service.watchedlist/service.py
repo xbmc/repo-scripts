@@ -172,10 +172,10 @@ class WatchedList:
             utils.footprint()
             
             # wait the delay time after startup
-            delaytime = float(utils.getSetting("delay")) * 60 # in seconds
+            delaytime = float(utils.getSetting("delay")) * 60.0 # in seconds
             utils.log(u'Delay time before execution: %d seconds' % delaytime, xbmc.LOGDEBUG)
             utils.showNotification(utils.getString(32101), utils.getString(32004)%float(utils.getSetting("delay")))
-            if self.monitor.waitForAbort(delaytime):
+            if self.monitor.waitForAbort(1.0+delaytime): # wait at least one second (zero waiting time waits infinitely)
                 return 0
 
             # load all databases
