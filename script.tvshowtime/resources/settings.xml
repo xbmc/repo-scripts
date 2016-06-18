@@ -2,12 +2,22 @@
 <settings>
    <category label="32001">
 	   <setting id="token" type="text" label="token" default="" visible="false" />
-	   <setting type="lsep" label="32301" />
-	   <setting id="facebook" type="bool" label="32302" default="true" />
-	   <setting id="twitter" type="bool" label="32303" default="true" />
-	   <setting type="lsep" label="32401" />
-	   <setting id="notifications" type="bool" label="32402" default="true" />
-	   <setting id="notif_during_playback" type="bool" label="32403" default="true" />
-	   <setting id="notif_scrobbling" type="bool" label="32404" default="true" />
+	   <setting id="user" type="text" label="32301" enable="false" />
+	   <setting id="progress" type="bool" label="32302" default="true" />
+	   <setting id="http" type="bool" label="32303" default="false" />
+	</category>
+	<category label="33001">  
+	   <setting id="notifications" type="bool" label="33301" default="true" />
+	   <setting id="welcome" type="bool" label="33302" default="true" enable="eq(-1,true)" visible="eq(-1,true)" />
+	   <setting id="notif_during_playback" type="bool" label="33303" default="true" enable="eq(-2,true)" visible="eq(-2,true)" />
+	   <setting id="notif_scrobbling" type="bool" label="33304" default="true" enable="eq(-3,true)" visible="eq(-3,true)" />
+	</category>
+	<category label="34001">  	
+	   <setting id="facebook" type="bool" label="34301" default="true" />
+	   <setting id="twitter" type="bool" label="34302" default="true" />
+	</category>
+	<category label="35001"> 
+	   <setting id="emotion" type="bool" label="35301" default="true" />
+	   <setting id="defaultemotion" type="enum" label="35302" lvalues="35311|35312|35313|35314|35316|35317" default="3" />
 	</category>
 </settings>

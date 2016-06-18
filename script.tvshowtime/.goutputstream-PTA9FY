@@ -72,39 +72,51 @@ class Monitor(xbmc.Monitor):
         log('onNotification')
         log('method=%s' % method)
         if (method == 'Player.OnPlay'):
+            log('file=%s' % player.getPlayingFile())
             self._setUp()
             self._total_time = player.getTotalTime()
             self._tracker.start()
             log('Player.OnPlay')
-            if player.http == 'true' and player.getPlayingFile()[:4] == 'http' and re.search(r'[sS][0-9]*[eE][0-9]*', os.path.basename(player.getPlayingFile()), flags=0) :
-                player.http_playing = True
-                player.filename = os.path.basename(player.getPlayingFile())
-                self.startcut = player.filename.find("%5B")
-                self.endcut = player.filename.find("%5D")
-                self.tocut = player.filename[self.startcut:self.endcut]
-                player.filename = player.filename.replace(self.tocut, "")
-                player.filename = player.filename.replace("%5B", "")
-                player.filename = player.filename.replace("%5D", "")
-                player.filename = player.filename.replace("%20", ".")
-                log('tvshowtitle=%s' % player.filename)
-                player.episode = FindEpisode(player.token, 0, player.filename)
-                log('episode.is_found=%s' % player.episode.is_found)
-                if player.episode.is_found:
-                    if player.notifications == 'true':                        
-                        if player.notif_during_playback == 'false' and player.isPlaying() == 1:
-                            return
-                        if player.notif_scrobbling == 'false':
-                            return
-                        notif('%s %s %sx%s' % (__language__(32904), player.episode.showname, player.episode.season_number, player.episode.number), time=2500)
+            response = json.loads(data) 
+            log('%s' % response)
+            if response.get('item').get('type') == 'episode':
+                xbmc_id = response.get('item').get('id')
+                item = self.getEpisodeTVDB(xbmc_id)    
+                log('showtitle=%s' % item['showtitle'])
+                log('season=%s' % item['season'])
+                log('episode=%s' % item['episode'])
+                log('episode_id=%s' % item['episode_id'])
+                if len(item['showtitle']) > 0 and item['season'] > 0 and item['episode'] > 0 and item['episode_id'] > 0:                   
+                    player.filename = '%s.S%.2dE%.2d' % (formatName(item['showtitle']), float(item['season']), float(item['episode']))
+                    log('tvshowtitle=%s' % player.filename)
+                    player.episode = FindEpisode(player.token, item['episode_id'])
+                    log('episode.is_found=%s' % player.episode.is_found)
+                    if player.episode.is_found:
+                        if player.notifications == 'true':                        
+                            if player.notif_during_playback == 'false' and player.isPlaying() == 1:
+                                return
+                            if player.notif_scrobbling == 'false':
+                                return
+                            notif('%s %s %sx%s' % (__language__(32904), player.episode.showname, player.episode.season_number, player.episode.number), time=2500)
+                    else:
+                        if player.notifications == 'true':
+                            if player.notif_during_playback == 'false' and player.isPlaying() == 1:
+                                return
+                            notif(__language__(32905), time=2500)
                 else:
                     if player.notifications == 'true':
                         if player.notif_during_playback == 'false' and player.isPlaying() == 1:
                             return
                         notif(__language__(32905), time=2500)
-            else:
-                player.http_playing = False
-                response = json.loads(data) 
-                log('%s' % response)
+                        
+        if (method == 'Player.OnStop'): 
+            self._tearDown()
+            actual_percent = (self._last_pos/self._total_time)*100
+            log('last_pos / total_time : %s / %s = %s %%' % (self._last_pos, self._total_time, actual_percent)) 
+            log('Player.OnStop')           
+            response = json.loads(data) 
+            log('%s' % response)
+            if player.progress == 'true':
                 if response.get('item').get('type') == 'episode':
                     xbmc_id = response.get('item').get('id')
                     item = self.getEpisodeTVDB(xbmc_id)    
@@ -115,82 +127,9 @@ class Monitor(xbmc.Monitor):
                     if len(item['showtitle']) > 0 and item['season'] > 0 and item['episode'] > 0 and item['episode_id'] > 0:                   
                         player.filename = '%s.S%.2dE%.2d' % (formatName(item['showtitle']), float(item['season']), float(item['episode']))
                         log('tvshowtitle=%s' % player.filename)
-                        player.episode = FindEpisode(player.token, item['episode_id'])
-                        log('episode.is_found=%s' % player.episode.is_found)
-                        if player.episode.is_found:
-                            if player.notifications == 'true':                        
-                                if player.notif_during_playback == 'false' and player.isPlaying() == 1:
-                                    return
-                                if player.notif_scrobbling == 'false':
-                                    return
-                                notif('%s %s %sx%s' % (__language__(32904), player.episode.showname, player.episode.season_number, player.episode.number), time=2500)
-                        else:
-                            if player.notifications == 'true':
-                                if player.notif_during_playback == 'false' and player.isPlaying() == 1:
-                                    return
-                                notif(__language__(32905), time=2500)
-                    else:
-                        if player.notifications == 'true':
-                            if player.notif_during_playback == 'false' and player.isPlaying() == 1:
-                                return
-                            notif(__language__(32905), time=2500)              
-        if (method == 'Player.OnStop'): 
-            self._tearDown()
-            actual_percent = (self._last_pos/self._total_time)*100
-            log('last_pos / total_time : %s / %s = %s %%' % (self._last_pos, self._total_time, actual_percent)) 
-            log('Player.OnStop') 
-            if player.http == 'true' and player.http_playing == True :
-                if player.progress == 'true':
-                    player.episode = FindEpisode(player.token, 0, player.filename)
-                    log('episode.is_found=%s' % player.episode.is_found)
-                    if player.episode.is_found:
-                        log('progress=%s' % self._last_pos)
-                        self.progress = SaveProgress(player.token, player.episode.id, self._last_pos)   
-                        log('progress.is_set:=%s' % self.progress.is_set)  
-                        if actual_percent > 90:
-                            log('MarkAsWatched(*, %s, %s, %s)' % (player.filename, player.facebook, player.twitter))
-                            checkin = MarkAsWatched(player.token, player.episode.id, player.facebook, player.twitter)
-                            log('checkin.is_marked:=%s' % checkin.is_marked)
-                            if checkin.is_marked:
-                                if player.emotion == 'true':
-                                    self.emotion = xbmcgui.Dialog().select('%s: %s %sx%s' % (__language__(33909), player.episode.showname, player.episode.season_number, player.episode.number), [__language__(35311), __language__(35312), __language__(35313), __language__(35314), __language__(35316), __language__(35317)])
-                                    if self.emotion < 0: return
-                                    if self.emotion == 0:
-                                        self.emotion = 1
-                                    elif self.emotion == 1:
-                                        self.emotion = 2
-                                    elif self.emotion == 2:
-                                        self.emotion = 3
-                                    elif self.emotion == 3:
-                                        self.emotion = 4
-                                    elif self.emotion == 4:
-                                        self.emotion = 6
-                                    elif self.emotion == 5:
-                                        self.emotion = 7
-                                    SetEmotion(player.token, player.episode.id, self.emotion)
-                                if player.notifications == 'true':
-                                    if player.notif_during_playback == 'false' and player.isPlaying() == 1:
-                                        return
-                                    if player.notif_scrobbling == 'false':
-                                        return
-                                    notif('%s %s %sx%s' % (__language__(32906), player.episode.showname, player.episode.season_number, player.episode.number), time=2500) 
-            else:       
-                response = json.loads(data) 
-                log('%s' % response)
-                if player.progress == 'true':
-                    if response.get('item').get('type') == 'episode':
-                        xbmc_id = response.get('item').get('id')
-                        item = self.getEpisodeTVDB(xbmc_id)    
-                        log('showtitle=%s' % item['showtitle'])
-                        log('season=%s' % item['season'])
-                        log('episode=%s' % item['episode'])
-                        log('episode_id=%s' % item['episode_id'])
-                        if len(item['showtitle']) > 0 and item['season'] > 0 and item['episode'] > 0 and item['episode_id'] > 0:                   
-                            player.filename = '%s.S%.2dE%.2d' % (formatName(item['showtitle']), float(item['season']), float(item['episode']))
-                            log('tvshowtitle=%s' % player.filename)
-                        log('progress=%s' % self._last_pos)
-                        self.progress = SaveProgress(player.token, item['episode_id'], self._last_pos)   
-                        log('progress.is_set:=%s' % self.progress.is_set)                                
+                    log('progress=%s' % self._last_pos)
+                    self.progress = SaveProgress(player.token, item['episode_id'], self._last_pos)   
+                    log('progress.is_set:=%s' % self.progress.is_set)                                
         if (method == 'VideoLibrary.OnUpdate'):
             log('VideoLibrary.OnUpdate')
             response = json.loads(data) 
@@ -299,8 +238,6 @@ class Player(xbmc.Player):
         self.notif_during_playback = __addon__.getSetting('notif_during_playback')
         self.notif_scrobbling = __addon__.getSetting('notif_scrobbling')
         self.progress = __addon__.getSetting('progress')
-        self.http = __addon__.getSetting('http')
-        self.http_playing = False
         self.emotion = __addon__.getSetting('emotion')
         self.defaultemotion = __addon__.getSetting('defaultemotion')
         if self.token is '':
@@ -346,18 +283,18 @@ def notif(msg, time=5000):
 
 def log(msg):
     xbmc.log("### [%s] - %s" % (__scriptname__, encode(msg), ),
-            level=xbmc.LOGDEBUG) #100 #xbmc.LOGDEBUG
+            level=100) #100 #xbmc.LOGDEBUG
 
 def encode(string):
     result = ''
     try:
         result = string.encode('UTF-8','replace')
     except UnicodeDecodeError:
-        result = 'UTF-8 Error'
+        result = 'Unicode Error'
     return result
 
 def normalizeString(str):
-    return unicodedata.normalize('NFKD', str).encode('ascii','ignore').encode('UTF-8','replace')
+    return unicodedata.normalize('NFKD', str).encode('ascii','ignore').encode('Unicode','replace')
 
 if ( __name__ == "__main__" ):
     player = Player()
