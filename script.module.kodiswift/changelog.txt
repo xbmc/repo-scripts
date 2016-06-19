@@ -1,0 +1,8 @@
+0.0.1
+=====
+
+- Initial fork of xbmcswift2
+- Code cleanup
+- Added art property to ListItem
+- Deprecated non-pythonic ListItem properties in favor of more pythonic ones
+- Re-wrote PersistentStorage and TimedStorage
