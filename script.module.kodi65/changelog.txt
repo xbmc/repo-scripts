@@ -1,3 +1,9 @@
+1.0.2
+
+- Added some calls for kodijson module
+- Adapt to kodi changelog changes
+- Code cleanup
+
 1.0.1
 
 - bugfixes and cleanup
@@ -5,5 +11,3 @@
 1.0.0
 
 - Initial release
-
-

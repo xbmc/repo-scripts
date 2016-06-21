@@ -232,7 +232,7 @@ class DialogBaseList(object):
         if self.listitems:
             for item in self.listitems:
                 item.set_label2(self.LABEL2[self.sort](item))
-                self.addItem(item.get_listitem())
+            self.addItems(item.get_listitem())
             if self.column is not None:
                 self.setCurrentListPosition(self.column)
         # self.setContent(self.listitems.content_type)

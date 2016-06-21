@@ -76,10 +76,11 @@ def check_version():
     """
     check version, open TextViewer if update detected
     """
-    if not addon.setting("changelog_version") == addon.VERSION:
-        xbmcgui.Dialog().textviewer(heading=addon.LANG(24036),
-                                    text=read_from_file(addon.CHANGELOG, True))
-        addon.set_setting("changelog_version", addon.VERSION)
+    pass
+    # if not addon.setting("changelog_version") == addon.VERSION:
+    #     xbmcgui.Dialog().textviewer(heading=addon.LANG(24036),
+    #                                 text=read_from_file(addon.CHANGELOG, True))
+    #     addon.set_setting("changelog_version", addon.VERSION)
 
 
 def get_skin_string(name):

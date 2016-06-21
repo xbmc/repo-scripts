@@ -19,6 +19,7 @@ def get_favs_by_type(fav_type):
 def get_fav_path(fav):
     """
     get builtin for fav according to type
+    *fav: dict from JSON API representing a favourite
     """
     if fav["type"] == "media":
         return "PlayMedia(%s)" % (fav["path"])
@@ -64,3 +65,22 @@ def get_icon_panel(number):
                              'id': "IconPanelitem%i" % (i + offset)})
         items.append(item)
     return items
+
+
+def get_addons_by_author(author_name, installed="all"):
+    """
+    get a list of addons from *author_name
+    *installed: "all", True, False
+    """
+    repo_addons = kodijson.get_addons(installed=installed,
+                                      properties=["installed", "author", "name", "thumbnail", "fanart"])
+    addons = [item for item in repo_addons if item["author"] == author_name]
+    items = ItemList()
+    for item in addons:
+        path = 'InstallAddon(%s)' % item["id"]
+        item = ListItem(label=item["name"],
+                        path="plugin://script.extendedinfo/?info=action&&id=" + path)
+        item.set_artwork({'thumb': item["thumbnail"],
+                          "fanart": item["fanart"]})
+        item.set_properties({'installed': item["installed"]})
+        items.append(item)
