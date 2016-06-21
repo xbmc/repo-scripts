@@ -8,38 +8,41 @@ msgstr ""
 "Project-Id-Version: XBMC-Addons\n"
 "Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
 "POT-Creation-Date: 2014-10-26 17:05+0000\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"PO-Revision-Date: 2016-03-11 15:52+0200\n"
 "Language-Team: LANGUAGE\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: en\n"
-"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+"Language: bg_BG\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Last-Translator: NEOhidra <neohidra@gmail.com>\n"
 
 msgctxt "Addon Summary"
 msgid "ExtendedInfo Script"
 msgstr ""
 
 msgctxt "Addon Description"
-msgid "This script offers various possibilities to display online content inside skins. Used services are themoviedb.org, theaudiodb.org, rottentomatoes.com, Trakt.TV and a lot more. Can also be used for importing / exporting skin settings, adding additional fanart stuff to library and cooking eggs. Needs skin support for most functions."
+msgid ""
+"This script offers various possibilities to display online content inside skins. Used services are themoviedb.org, "
+"theaudiodb.org, rottentomatoes.com, Trakt.TV and a lot more. Can also be used for importing / exporting skin "
+"settings, adding additional fanart stuff to library and cooking eggs. Needs skin support for most functions."
 msgstr ""
 
 msgctxt "#32000"
 msgid "Million"
-msgstr ""
+msgstr "Милион"
 
 msgctxt "#32001"
 msgid "Billion"
-msgstr ""
+msgstr "Милиард"
 
 msgctxt "#32002"
 msgid "Trillion"
-msgstr ""
+msgstr "Трилион"
 
 msgctxt "#32003"
 msgid "Autocompletion language"
-msgstr ""
+msgstr "Език за автоматично завършване"
 
 msgctxt "#32004"
 msgid "Autocompletion provider"
@@ -51,40 +54,40 @@ msgstr ""
 
 msgctxt "#32006"
 msgid "Use as thumbnail"
-msgstr ""
+msgstr "Ползвай като миниатюра"
 
 msgctxt "#32007"
 msgid "Use as fanart"
-msgstr ""
+msgstr "Ползвай като фен-арт"
 
 msgctxt "#32008"
 msgid "Autocompletion"
-msgstr ""
+msgstr "Автоматично завършване"
 
 #: \resources\lib\DialogTVShowInfo.py:101
 msgctxt "#32009"
-msgid "Show person information"
-msgstr ""
+msgid "Show actor information"
+msgstr "Покажи инф. за актьора"
 
 msgctxt "#32010"
 msgid "Filmography"
-msgstr ""
+msgstr "Филмография"
 
 msgctxt "#32011"
 msgid "Known movies"
-msgstr ""
+msgstr "Известни филми"
 
 msgctxt "#32012"
 msgid "Birthday"
-msgstr ""
+msgstr "Роден на"
 
 msgctxt "#32013"
 msgid "Day of death"
-msgstr ""
+msgstr "Починал на"
 
 msgctxt "#32014"
 msgid "Place of birth"
-msgstr ""
+msgstr "Роден в"
 
 msgctxt "#32015"
 msgid "Adult actor"
@@ -92,48 +95,48 @@ msgstr ""
 
 msgctxt "#32016"
 msgid "Also known as"
-msgstr ""
+msgstr "Известен като"
 
 msgctxt "#32017"
 msgid "Homepage"
-msgstr ""
+msgstr "Домашна страница"
 
 msgctxt "#32018"
 msgid "Role"
-msgstr ""
+msgstr "Роля"
 
 msgctxt "#32019"
 msgid "Job"
-msgstr ""
+msgstr "Работа"
 
-#: \resources\skins\Default\1080i\script-script.extendedinfo-DialogInfo.xml:118
+#: \resources\skins\Default\1080i\script-ExtendedInfo Script-DialogInfo.xml:118
 msgctxt "#32020"
 msgid "Age"
-msgstr ""
+msgstr "Възраст"
 
 msgctxt "#32021"
 msgid "In database"
-msgstr ""
+msgstr "В базата данни"
 
 msgctxt "#32022"
 msgid "Clear filters"
-msgstr ""
+msgstr "Изчисти филтрите"
 
 msgctxt "#32023"
 msgid "Filters"
-msgstr ""
+msgstr "Филтри"
 
 msgctxt "#32024"
 msgid "My account"
-msgstr ""
+msgstr "Акаунт"
 
 msgctxt "#32025"
 msgid "Episode index"
-msgstr ""
+msgstr "Списък на епизодите"
 
 msgctxt "#32026"
 msgid "Related movie lists"
-msgstr ""
+msgstr "Списък със свързани филми"
 
 msgctxt "#32027"
 msgid "Select person"
@@ -141,26 +144,26 @@ msgstr ""
 
 #: /plugin.py:56
 msgctxt "#32028"
-msgid "Airing episodes"
-msgstr ""
+msgid "Airing TV shows"
+msgstr "Излъчвани ТВ Сериали"
 
 #: /plugin.py:57
 msgctxt "#32029"
-msgid "Season premiere episodes"
+msgid "Premiere TV shows"
 msgstr ""
 
 msgctxt "#32030"
 msgid "Movie appearances"
-msgstr ""
+msgstr "Появи във филми"
 
 msgctxt "#32031"
 msgid "TV show appearances"
-msgstr ""
+msgstr "Появи във ТВ Сериали"
 
 #: /plugin.py:58
 msgctxt "#32032"
 msgid "Trending TV shows"
-msgstr ""
+msgstr "Налагащи се ТВ Сериали"
 
 msgctxt "#32033"
 msgid "Enter person name"
@@ -172,20 +175,20 @@ msgstr ""
 
 msgctxt "#32035"
 msgid "Remove from list"
-msgstr ""
+msgstr "Премахни от списъка"
 
 msgctxt "#32036"
 msgid "Movie list"
-msgstr ""
+msgstr "Списък с филми"
 
 msgctxt "#32037"
 msgid "Overview"
-msgstr ""
+msgstr "Обща информация"
 
 #: /plugin.py:59
 msgctxt "#32038"
 msgid "TV shows airing today"
-msgstr ""
+msgstr "ТВ Сериали излъчвани днес"
 
 #: /plugin.py:60
 msgctxt "#32039"
@@ -195,42 +198,42 @@ msgstr ""
 #: /plugin.py:61
 msgctxt "#32040"
 msgid "Top rated TV shows"
-msgstr ""
+msgstr "Най-високо оценени ТВ Сериали"
 
-#: /plugin.py:62 /plugin.py:137
+#: /plugin.py:62
 msgctxt "#32041"
 msgid "Popular TV shows"
-msgstr ""
+msgstr "Популярни ТВ Сериали"
 
 #: /plugin.py:36 /plugin.py:45
 msgctxt "#32042"
 msgid "In-cinema movies"
-msgstr ""
+msgstr "Филми в кината"
 
 #: /plugin.py:46 /plugin.py:39
 msgctxt "#32043"
 msgid "Upcoming movies"
-msgstr ""
+msgstr "Предстоящи филми"
 
-#: /plugin.py:48 /plugin.py:128
+#: /plugin.py:48
 msgctxt "#32044"
 msgid "Popular movies"
-msgstr ""
+msgstr "Популярни филми"
 
 #: /plugin.py:49
 msgctxt "#32045"
 msgid "User-created lists"
-msgstr ""
+msgstr "Списъци създадени от потребител"
 
 #: /plugin.py:47
 msgctxt "#32046"
 msgid "Top rated movies"
-msgstr ""
+msgstr "Най-високо оценени филми"
 
 #: /plugin.py:51
 msgctxt "#32047"
 msgid "Trending movies"
-msgstr ""
+msgstr "Налагащи се филми"
 
 #: /plugin.py:38
 msgctxt "#32048"
@@ -244,15 +247,15 @@ msgstr ""
 
 msgctxt "#32050"
 msgid "Online information"
-msgstr ""
+msgstr "Онлайн информация"
 
 msgctxt "#32051"
 msgid "Trailer"
-msgstr ""
+msgstr "Трейлър"
 
 msgctxt "#32052"
 msgid "No trailers found"
-msgstr ""
+msgstr "Не са намерени трейлъри"
 
 #: /plugin.py:42
 msgctxt "#32053"
@@ -264,7 +267,7 @@ msgctxt "#32054"
 msgid "Upcoming DVDs"
 msgstr ""
 
-#: /plugin.py:37 /plugin.py:133
+#: /plugin.py:37
 msgctxt "#32055"
 msgid "Box office"
 msgstr ""
@@ -274,27 +277,27 @@ msgctxt "#32056"
 msgid "Top rentals"
 msgstr ""
 
-#: /resources/lib/dialogs/DialogYoutubeList.py:128
+#: /resources/lib/Utils.py:212
 msgctxt "#32057"
-msgid "Dimensions"
+msgid "Daily babe"
 msgstr ""
 
-#: C:/Kodi/portable_data/addons/script.extendedinfo/resources/lib/dialogs/DialogYoutubeList.py:40
+#: /resources/lib/Utils.py:213
 msgctxt "#32058"
-msgid "Related"
+msgid "Daily babes"
 msgstr ""
 
 #: \resources\lib\DialogVideoInfo.py:297
 msgctxt "#32059"
 msgid "Added movie to CouchPotato"
-msgstr ""
+msgstr "Добавен в CouchPotato"
 
 #: \resources\lib\DialogYoutubeList.py:35 \resources\lib\DialogYoutubeList.py:124
 msgctxt "#32060"
 msgid "Relevance"
 msgstr ""
 
-#: \resources\skins\Default\1080i\script-script.extendedinfo-YoutubeList.xml:113
+#: \resources\skins\Default\1080i\script-ExtendedInfo Script-YoutubeList.xml:113
 msgctxt "#32061"
 msgid "views"
 msgstr ""
@@ -302,52 +305,52 @@ msgstr ""
 #: \resources\lib\DialogYoutubeList.py:131
 msgctxt "#32062"
 msgid "One day"
-msgstr ""
+msgstr "Един ден"
 
 #: \resources\lib\DialogYoutubeList.py:131
 msgctxt "#32063"
 msgid "One week"
-msgstr ""
+msgstr "Една седмица"
 
 #: \resources\lib\DialogYoutubeList.py:131
 msgctxt "#32064"
 msgid "One month"
-msgstr ""
+msgstr "Един месец"
 
 #: \resources\lib\DialogYoutubeList.py:131
 msgctxt "#32065"
 msgid "One year"
-msgstr ""
+msgstr "Една година"
 
-#: \resources\skins\Default\1080i\script-script.extendedinfo-YoutubeList.xml:518
+#: \resources\skins\Default\1080i\script-ExtendedInfo Script-YoutubeList.xml:518
 msgctxt "#32066"
 msgid "2D / 3D"
-msgstr ""
+msgstr "2D / 3D"
 
 #: \resources\lib\DialogYoutubeList.py:59
 msgctxt "#32067"
 msgid "Amount of days"
-msgstr ""
+msgstr "Брой дни"
 
 #: \resources\lib\DialogYoutubeList.py:24
 msgctxt "#32068"
 msgid "Amount of videos"
-msgstr ""
+msgstr "Брой клипове"
 
 #: \resources\lib\DialogYoutubeList.py:191
 msgctxt "#32069"
 msgid "Show similar videos"
-msgstr ""
+msgstr "Покажи подобни клипове"
 
-#: /resources/lib/dialogs/DialogBaseInfo.py:149
+#: \resources\lib\VideoPlayer.py:56 \resources\lib\DialogVideoInfo.py:133 \resources\lib\DialogVideoInfo.py:145
 msgctxt "#32070"
-msgid "Show filmography"
-msgstr ""
+msgid "Youtube video"
+msgstr "Клип в Youtube"
 
 #: \resources\lib\TheMovieDB.py:870
 msgctxt "#32071"
 msgid "Released"
-msgstr ""
+msgstr "Излязъл"
 
 #: \resources\lib\TheMovieDB.py:871
 msgctxt "#32072"
@@ -357,12 +360,12 @@ msgstr ""
 #: \resources\lib\TheMovieDB.py:872
 msgctxt "#32073"
 msgid "In production"
-msgstr ""
+msgstr "В процес на заснемане"
 
 #: \resources\lib\TheMovieDB.py:873
 msgctxt "#32074"
 msgid "Ended"
-msgstr ""
+msgstr "Приключил"
 
 #: \resources\lib\TheMovieDB.py:874
 msgctxt "#32075"
@@ -372,16 +375,21 @@ msgstr ""
 #: \resources\lib\TheMovieDB.py:875
 msgctxt "#32076"
 msgid "Planned"
-msgstr ""
+msgstr "Планиран"
 
 #: \resources\lib\dialogs\DialogBaseList.py:73
 msgctxt "#32077"
 msgid "Remove filter"
-msgstr ""
+msgstr "Премахни филтъра"
 
 #: \resources\lib\dialogs\DialogBaseList.py:74
 msgctxt "#32078"
 msgid "Remove all"
+msgstr "Премахни всички"
+
+#: \resources\settings.xml:10
+msgctxt "#32079"
+msgid "Alternative browser layout (does not affect all skins)"
 msgstr ""
 
 #: \resources\settings.xml:11
@@ -392,76 +400,21 @@ msgstr ""
 #: \resources\lib\dialogs\DialogYoutubeList.py:211
 msgctxt "#32081"
 msgid "More videos from"
-msgstr ""
+msgstr "Още клипове от"
 
-#: /resources/skins/Default/1080i/script-script.extendedinfo-DialogVideoInfo.xml:2925 /resources/lib/dialogs/DialogVideoList.py
+#: /resources/skins/Default/1080i/script-ExtendedInfo Script-DialogVideoInfo.xml:2925
 msgctxt "#32082"
 msgid "votes"
-msgstr ""
+msgstr "гласа"
 
 #: /resources/lib/TheMovieDB.py:266
 msgctxt "#32083"
 msgid "Add movie to list"
-msgstr ""
+msgstr "Добави филм към списък"
 
 #: /resources/settings.xml:7
 msgctxt "#32084"
 msgid "Use classic keyboard for search"
-msgstr ""
-
-#: /plugin.py:138
-msgctxt "#32085"
-msgid "Anticipated TV shows"
-msgstr ""
-
-#: /plugin.py:139
-msgctxt "#32086"
-msgid "Most played TV shows"
-msgstr ""
-
-#: /plugin.py:140
-msgctxt "#32087"
-msgid "Most collected TV shows"
-msgstr ""
-
-#: /plugin.py:141
-msgctxt "#32088"
-msgid "Most watched TV shows"
-msgstr ""
-
-#: /plugin.py:129
-msgctxt "#32089"
-msgid "Most played movies"
-msgstr ""
-
-#: /plugin.py:130
-msgctxt "#32090"
-msgid "Most watched movies"
-msgstr ""
-
-#: /plugin.py:131
-msgctxt "#32091"
-msgid "Most collected movies"
-msgstr ""
-
-#: /plugin.py:132
-msgctxt "#32092"
-msgid "Anticipated movies"
-msgstr ""
-
-#: /plugin.py:128
-msgctxt "#32093"
-msgid "Rated episodes"
-msgstr ""
-
-#: /resources/lib/TheMovieDB.py:55
-msgctxt "#32094"
-msgid "Male"
-msgstr ""
-
-#: /resources/lib/TheMovieDB.py:54
-msgctxt "#32095"
-msgid "Female"
 msgstr ""
 
 msgctxt "#32099"
@@ -486,67 +439,66 @@ msgstr ""
 
 msgctxt "#32104"
 msgid "Sort by"
-msgstr ""
+msgstr "Подредба"
 
 msgctxt "#32105"
 msgid "Filters"
-msgstr ""
+msgstr "Филтри"
 
 msgctxt "#32106"
 msgid "Choose filter behaviour"
-msgstr ""
+msgstr "Изберете критерий за филтриране"
 
 msgctxt "#32107"
 msgid "Add to list"
-msgstr ""
+msgstr "Добави към списък"
 
 msgctxt "#32108"
 msgid "Revenue"
-msgstr ""
+msgstr "Приходи"
 
 msgctxt "#32109"
 msgid "Budget"
-msgstr ""
+msgstr "Бюджет"
 
 #: \resources\lib\DialogVideoList.py:155
 msgctxt "#32110"
 msgid "Popularity"
-msgstr ""
+msgstr "Популярност"
 
 #: \resources\lib\DialogVideoList.py:288
 msgctxt "#32111"
 msgid "Vote count"
-msgstr ""
+msgstr "Брой гласували"
 
 msgctxt "#32112"
 msgid "Vote average"
 msgstr ""
 
-#: /resources/lib/dialogs/DialogBaseInfo.py:120
 msgctxt "#32113"
 msgid "Rate movie"
-msgstr ""
+msgstr "Оценете филма"
 
 msgctxt "#32114"
 msgid "Keyword"
-msgstr ""
+msgstr "Ключова дума"
 
 msgctxt "#32115"
 msgid "Crew"
-msgstr ""
+msgstr "Екип"
 
 msgctxt "#32116"
 msgid "Recommended By TMDB"
-msgstr ""
+msgstr "Препоръчан от TMDB"
 
 msgctxt "#32117"
 msgid "Official videos"
-msgstr ""
+msgstr "Официални клипове"
 
 #: \resources\lib\DialogYoutubeList.py:13
 msgctxt "#32118"
 msgid "YouTube videos"
-msgstr ""
+msgstr "Клипове в YouTube"
 
 msgctxt "#32119"
 msgid "Artwork"
@@ -554,11 +506,11 @@ msgstr ""
 
 msgctxt "#32120"
 msgid "Movie actor roles"
-msgstr ""
+msgstr "Роли във филми"
 
 msgctxt "#32121"
 msgid "TV show roles"
-msgstr ""
+msgstr "Роли в ТВ Сериали"
 
 msgctxt "#32122"
 msgid "Movie crew member"
@@ -570,15 +522,15 @@ msgstr ""
 
 msgctxt "#32124"
 msgid "Items"
-msgstr ""
+msgstr "Елемента"
 
 msgctxt "#32125"
 msgid "Page"
-msgstr ""
+msgstr "Страница"
 
 msgctxt "#32126"
 msgid "Actor / Crew member"
-msgstr ""
+msgstr "Актьор / Член на екипа"
 
 msgctxt "#32127"
 msgid "Certification"
@@ -586,15 +538,15 @@ msgstr ""
 
 msgctxt "#32128"
 msgid "Order"
-msgstr ""
+msgstr "Ред"
 
 msgctxt "#32129"
 msgid "Your rating"
-msgstr ""
+msgstr "Моята оценка"
 
 msgctxt "#32130"
 msgid "Show lists"
-msgstr ""
+msgstr "Списък със сериали"
 
 msgctxt "#32131"
 msgid "Already rated"
@@ -602,11 +554,11 @@ msgstr ""
 
 msgctxt "#32132"
 msgid "Extras"
-msgstr ""
+msgstr "Екстри"
 
 msgctxt "#32133"
 msgid "Manage"
-msgstr ""
+msgstr "Управление"
 
 msgctxt "#32134"
 msgid "Starred movies"
@@ -614,23 +566,23 @@ msgstr ""
 
 msgctxt "#32135"
 msgid "Rated movies"
-msgstr ""
+msgstr "Оценени филми"
 
 msgctxt "#32136"
 msgid "Choose list"
-msgstr ""
+msgstr "Изберете списък"
 
 msgctxt "#32137"
 msgid "Enter list name"
-msgstr ""
+msgstr "Въведете име на списъка"
 
 msgctxt "#32138"
 msgid "Delete movie list"
-msgstr ""
+msgstr "Изтрий списъка"
 
 msgctxt "#32139"
 msgid "New movie list"
-msgstr ""
+msgstr "Нов списък с филми"
 
 msgctxt "#32140"
 msgid "For all features enter your TMDB credentials in addon settings. "
@@ -642,11 +594,11 @@ msgstr ""
 
 msgctxt "#32142"
 msgid "Studios"
-msgstr ""
+msgstr "Студиа"
 
 msgctxt "#32143"
 msgid "Could not find item at MovieDB"
-msgstr ""
+msgstr "В MovieDB няма резултат от търсенето"
 
 msgctxt "#32144"
 msgid "Starred TV shows"
@@ -654,36 +606,36 @@ msgstr ""
 
 msgctxt "#32145"
 msgid "Rated TV shows"
-msgstr ""
+msgstr "Оценени ТВ Сериали"
 
 msgctxt "#32146"
 msgid "Search for '%s'"
-msgstr ""
+msgstr "Търсене за \"%s\""
 
 msgctxt "#32147"
-msgid "Show appearances"
-msgstr ""
+msgid "Show actor TV show appearances"
+msgstr "Покажи изявите на актьора в ТВ Сериали"
 
 msgctxt "#32148"
-msgid "Show information"
-msgstr ""
+msgid "Show TV show information"
+msgstr "Покажи инф. за ТВ Сериал"
 
 msgctxt "#32149"
 msgid "Upper limit"
-msgstr ""
+msgstr "Горна граница"
 
 msgctxt "#32150"
 msgid "Lower limit"
-msgstr ""
+msgstr "Долна граница"
 
 #: /resources/lib/Utils.py:224
 msgctxt "#32151"
 msgid "Choose option"
-msgstr ""
+msgstr "Изберете опция"
 
 msgctxt "#32152"
 msgid "Networks"
-msgstr ""
+msgstr "Мрежи"
 
 msgctxt "#32153"
 msgid "Certification country"
@@ -699,7 +651,7 @@ msgstr ""
 
 msgctxt "#32156"
 msgid "Person"
-msgstr ""
+msgstr "Човек"
 
 msgctxt "#32157"
 msgid "Created at"
@@ -707,19 +659,19 @@ msgstr ""
 
 msgctxt "#32158"
 msgid "Birthday today!"
-msgstr ""
+msgstr "Рожден днес!"
 
 msgctxt "#32159"
 msgid "Language for TheMovieDB requests"
-msgstr ""
+msgstr "Език за заявки към TheMovieDB"
 
 msgctxt "#32160"
 msgid "TheMovieDB username"
-msgstr ""
+msgstr "Потребител за TheMovieDB"
 
 msgctxt "#32161"
 msgid "TheMovieDB password"
-msgstr ""
+msgstr "Парола за TheMovieDB"
 
 msgctxt "#32162"
 msgid "Include adult actors / movies"
@@ -731,15 +683,15 @@ msgstr ""
 
 msgctxt "#32164"
 msgid "Delete cache"
-msgstr ""
+msgstr "Изтрий кеша"
 
 msgctxt "#32165"
 msgid "Add to CouchPotato"
-msgstr ""
+msgstr "Добави в CouchPotato"
 
 msgctxt "#32166"
 msgid "Add to SickBeard"
-msgstr ""
+msgstr "Добави в SickBeard"
 
 msgctxt "#32167"
 msgid "Reviews"
@@ -747,12 +699,8 @@ msgstr ""
 
 msgctxt "#32168"
 msgid "Releases"
-msgstr ""
+msgstr "Издания"
 
 msgctxt "#32169"
 msgid "Rate TV show"
-msgstr ""
-
-msgctxt "#32170"
-msgid "Add to Trakt Watchlist"
-msgstr ""
+msgstr "Оценете ТВ Сериал"

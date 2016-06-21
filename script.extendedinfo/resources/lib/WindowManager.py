@@ -202,7 +202,7 @@ class WindowManager(object):
         """
         from dialogs import DialogYoutubeList
         YouTube = DialogYoutubeList.get_window(windows.DialogXML)
-        dialog = YouTube(u'script-%s-YoutubeList.xml' % addon.NAME, addon.PATH,
+        dialog = YouTube(u'script-%s-YoutubeList.xml' % addon.ID, addon.PATH,
                          search_str=search_str,
                          filters=[] if not filters else filters,
                          type=media_type)
