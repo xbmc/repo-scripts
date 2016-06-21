@@ -1,3 +1,8 @@
+v5.5.1
+- fixed french language
+- fixed issue with Youtube Browser
+- fixed some issues related to error handling
+
 v5.5.0
 - moved lot of code to kodi65 library
 - design changes to better match estuary

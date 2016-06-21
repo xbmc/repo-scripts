@@ -624,7 +624,7 @@ def get_data(url="", params=None, cache_days=14):
     url = "%s%s?%s" % (URL_BASE, url, urllib.urlencode(params))
     response = utils.get_JSON_response(url, cache_days, "TheMovieDB")
     if "status_code" in response:
-        utils.log("TMDB status code: " + response.get("status_code"))
+        utils.log("TMDB status code: %s" % response.get("status_code"))
     return response
 
 
