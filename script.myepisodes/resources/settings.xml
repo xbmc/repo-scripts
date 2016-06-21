@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+	<setting type="lsep" label="32901" />
+	<setting id="Username" type="text" label="32902" default="" />
+	<setting id="Password" type="text" option="hidden" label="32903" default="" />
+	<setting id="watched-percent" type="labelenum" label="32904" default="2" values="70|80|90|100" />
+	<setting id="auto-add" type="bool" label="32905" default="true" />
+	<setting id="ExcludePathOption" type="bool" label="32906" default="false" />
+	<setting id="ExcludePath" type="folder" source="video" label="32907" default="" visible= "eq(-1,true)" enable="eq(-1,true)" />
+	<setting id="ExcludePathOption2" type="bool" label="32906" default="false" visible= "eq(-2,true)" enable="eq(-2,true)" />
+	<setting id="ExcludePath2" type="folder" source="video" label="32907" default="" visible= "eq(-1,true)" enable="eq(-1,true)" />
+	<setting id="ExcludePathOption3" type="bool" label="32906" default="false" visible= "eq(-2,true)" enable="eq(-2,true)" />
+	<setting id="ExcludePath3" type="folder" source="video" label="32907" default="" visible= "eq(-1,true)" enable="eq(-1,true)" />
+</settings>
