@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.module.kodi65" name="Kodi65 Library" version="1.0.2" provider-name="Philipp Temminghoff (phil65)">
+<addon id="script.module.kodi65" name="Kodi65 Library" version="1.0.3" provider-name="Philipp Temminghoff (phil65)">
 	<requires>
 		<import addon="xbmc.python" version="2.25.0"/>
 		<import addon="script.module.youtube.dl" version="14.519.1"/>
@@ -14,6 +14,6 @@
 		<platform>all</platform>
 		<license>GNU GENERAL PUBLIC LICENSE Version 2.1, February 1999</license>
 		<source>https://github.com/phil65/script.module.kodi65</source>
-		<news>Added some calls for kodijson module[CR]Adapt to kodi changelog changes[CR]Code cleanup</news>
+		<news>Fixed: Listitems not appearing for browser windows</news>
 	</extension>
 </addon>

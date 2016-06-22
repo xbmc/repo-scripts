@@ -1,3 +1,7 @@
+1.0.3
+
+- Fixed listitems not appearing for browser windows
+
 1.0.2
 
 - Added some calls for kodijson module
