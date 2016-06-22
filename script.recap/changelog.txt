@@ -1,2 +1,5 @@
+v1.0.1
+- Changes to reduce load on recapguide.com
+
 v1.0.0 (2016-05-22)
 - Initial Version
