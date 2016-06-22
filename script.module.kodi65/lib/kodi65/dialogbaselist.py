@@ -230,9 +230,11 @@ class DialogBaseList(object):
             self.setFocusId(ID_BUTTON_SEARCH)
         self.clearList()
         if self.listitems:
+            items = []
             for item in self.listitems:
                 item.set_label2(self.LABEL2[self.sort](item))
-            self.addItems(item.get_listitem())
+                items.append(item.get_listitem())
+            self.addItems(items)
             if self.column is not None:
                 self.setCurrentListPosition(self.column)
         # self.setContent(self.listitems.content_type)
