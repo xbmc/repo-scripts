@@ -1,7 +1,13 @@
 # -*- coding: utf-8 -*-
+import sys
 import xbmc
 import xbmcaddon
 import xbmcgui
+
+if sys.version_info < (2, 7):
+    import simplejson
+else:
+    import json as simplejson
 
 # Import the common settings
 from settings import log
@@ -10,6 +16,72 @@ from recap import Recap
 from viewer import Viewer
 
 ADDON = xbmcaddon.Addon(id='script.recap')
+
+
+# Makes a request to have a given show added
+def makeAdditionRequest(showName):
+    log("Recap: Making request for %s" % showName)
+    # Only allow submissions for things that are actually also in the Kodi Library
+    # this will prevent lots of junk being sent
+
+    # Start by getting the Id of the TvShow - this will be the ID of the Show, Season or Episode
+    dbid = xbmc.getInfoLabel("ListItem.DBID")
+
+    if dbid in [None, ""]:
+        log("Recap: No DBID set for request")
+        return False
+
+    # Work out which interface the dbid is for
+    cmd = None
+    target = None
+    titletag = 'title'
+    if xbmc.getInfoLabel("ListItem.dbtype") == 'tvshow':
+        cmd = '{"jsonrpc": "2.0", "method": "VideoLibrary.GetTVShowDetails", "params": {"tvshowid":%s, "properties": ["title"]}, "id": 1}'
+        target = 'tvshowdetails'
+    elif xbmc.getInfoLabel("ListItem.dbtype") == 'episode':
+        cmd = '{"jsonrpc": "2.0", "method": "VideoLibrary.GetEpisodeDetails", "params": {"episodeid":%s, "properties": ["showtitle"]}, "id": 1}'
+        target = 'episodedetails'
+        titletag = 'showtitle'
+    else:
+        # There is no interface for the season, so we do not allow requests based on seasons
+        log("Recap: Not a TV Show or Episode set for request")
+        return False
+
+    officialTitle = ""
+
+    # Make the call to check the dbid
+    json_query = xbmc.executeJSONRPC(cmd % str(dbid))
+    json_query = unicode(json_query, 'utf-8', errors='ignore')
+    json_response = simplejson.loads(json_query)
+    log(json_response)
+    if ("result" in json_response) and (target in json_response['result']):
+        officialTitle = json_response['result'][target][titletag]
+        log("Recap: Request for title %s" % str(officialTitle))
+
+    if officialTitle in [None, ""]:
+        return False
+
+    if officialTitle != showName:
+        log("Recap: Show titles do not match - not allowing request")
+        return False
+
+    msg = '%s "%s"' % (ADDON.getLocalizedString(32005), showName)
+    makeRequest = xbmcgui.Dialog().yesno(ADDON.getLocalizedString(32001), msg, ADDON.getLocalizedString(32023))
+
+    # Check if we want to make a request to add the show
+    if makeRequest:
+        recap = Recap()
+        additionResponse = recap.requestAddition(showName)
+
+        # Check if the submission was OK
+        if additionResponse:
+            msg = '%s "%s"' % (ADDON.getLocalizedString(32029), showName)
+            xbmcgui.Dialog().ok(ADDON.getLocalizedString(32001), msg)
+        else:
+            msg = '%s "%s"' % (ADDON.getLocalizedString(32028), showName)
+            xbmcgui.Dialog().ok(ADDON.getLocalizedString(32001), msg, ADDON.getLocalizedString(32020))
+
+    return True
 
 
 #########################
@@ -23,6 +95,7 @@ def runRecap(previous=False):
     if xbmc.getInfoLabel("ListItem.dbtype") in ['tvshow', 'season', 'episode']:
         showName = xbmc.getInfoLabel("ListItem.TVShowTitle")
 
+    autoDetectedShowName = False
     # If there is no video name available prompt for it
     if showName in [None, ""]:
         log("Recap: No TV Show detected, prompting user")
@@ -36,10 +109,11 @@ def runRecap(previous=False):
                 showName = keyboard.getText().decode("utf-8")
             except:
                 showName = keyboard.getText()
+    else:
+        autoDetectedShowName = True
 
     recap = Recap()
     selectedItem = None
-    makeRequest = False
 
     # If we have a TV Show, then we can start the search
     if showName not in [None, ""]:
@@ -65,21 +139,11 @@ def runRecap(previous=False):
                 selectedItem = searchMatches[select]
 
         # If we haven't found anything, then see if we should add it
-        if selectedItem in [None, ""]:
-            msg = '%s "%s"' % (ADDON.getLocalizedString(32005), showName)
-            makeRequest = xbmcgui.Dialog().yesno(ADDON.getLocalizedString(32001), msg, ADDON.getLocalizedString(32023))
-
-            # Check if we want to make a request to add the show
-            if makeRequest:
-                additionResponse = recap.requestAddition(showName)
-
-                # Check if the submission was OK
-                if additionResponse:
-                    msg = '%s "%s"' % (ADDON.getLocalizedString(32029), showName)
-                    xbmcgui.Dialog().ok(ADDON.getLocalizedString(32001), msg)
-                else:
-                    msg = '%s "%s"' % (ADDON.getLocalizedString(32028), showName)
-                    xbmcgui.Dialog().ok(ADDON.getLocalizedString(32001), msg, ADDON.getLocalizedString(32020))
+        if (selectedItem in [None, ""]) and autoDetectedShowName:
+            requestMade = makeAdditionRequest(showName)
+            if not requestMade:
+                msg = '%s "%s"' % (ADDON.getLocalizedString(32005), showName)
+                xbmcgui.Dialog().ok(ADDON.getLocalizedString(32001), msg)
 
     selectedSeason = -1
 

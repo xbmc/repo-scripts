@@ -21,7 +21,7 @@ msgid "Visual summary of a TV Show"
 msgstr ""
 
 msgctxt "Addon Description"
-msgid "Shows a summary of what has happened in a TV Episode, including images"
+msgid "Shows a summary of what has happened in a TV Episode, including images. Recap details provided by recapguide.com"
 msgstr ""
 
 msgctxt "#32001"

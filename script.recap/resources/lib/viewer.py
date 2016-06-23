@@ -27,6 +27,7 @@ class Viewer(xbmcgui.WindowXMLDialog):
         self.title = kwargs.get('title', '')
         self.summary = kwargs.get('summary', '')
         self.slideshow = kwargs.get('slideshow', '')
+        self.alreadyCachedIdx = []
         xbmcgui.WindowXMLDialog.__init__(self)
 
     @staticmethod
@@ -45,14 +46,6 @@ class Viewer(xbmcgui.WindowXMLDialog):
         # Set the initial image
         if len(self.slideshow) > 0:
             self._setSlideshowImage(0)
-
-        # load all the images into the cache
-        for i in range(1, 51):
-            # If we have an image to cache
-            if i <= len(self.slideshow):
-                cacheImageControlId = Viewer.CACHED_IMAGE_OFFSET + i
-                imageControl = self.getControl(cacheImageControlId)
-                imageControl.setImage(self.slideshow[i - 1]["image"])
 
         xbmcgui.WindowXMLDialog.onInit(self)
 
@@ -122,6 +115,10 @@ class Viewer(xbmcgui.WindowXMLDialog):
             log("Viewer: Image looped to first image %d" % idx)
 
         self.currentImage = idx
+
+        # Make sure the images are loaded
+        self._cacheImages()
+
         imageControl = self.getControl(Viewer.IMAGE_ID)
         imageControl.setImage(self.slideshow[idx]["image"])
 
@@ -150,7 +147,7 @@ class Viewer(xbmcgui.WindowXMLDialog):
             else:
                 nextControl.setVisible(True)
 
-        # Hightlight the pre-loaded image to show some form of progress
+        # Highlight the pre-loaded image to show some form of progress
         # load all the images into the cache
         for i in range(1, 51):
             # Default colour is grey
@@ -159,8 +156,21 @@ class Viewer(xbmcgui.WindowXMLDialog):
                 # Highlight in blue
                 colour = 'EE000099'
 
-            # If we have an image to cache
+            # If we have an image to highlight
             if i <= len(self.slideshow):
                 cacheImageControlId = Viewer.CACHED_IMAGE_OFFSET + i
                 imageControl = self.getControl(cacheImageControlId)
                 imageControl.setColorDiffuse(colour)
+
+    # Cache some of the images to speed up browsing
+    def _cacheImages(self):
+        # We need to cache 8 ahead
+        for i in range(1, self.currentImage + 8):
+            cacheImageControlId = i
+            # If we have an image to cache
+            if (i <= len(self.slideshow)) and (i > 0) and (i not in self.alreadyCachedIdx):
+                log("Viewer: Caching image number %d" % i)
+                cacheImageControlId = Viewer.CACHED_IMAGE_OFFSET + i
+                imageControl = self.getControl(cacheImageControlId)
+                imageControl.setImage(self.slideshow[i - 1]["image"])
+                self.alreadyCachedIdx.append(i)

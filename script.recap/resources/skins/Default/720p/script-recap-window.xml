@@ -6,192 +6,334 @@
     <zorder>1</zorder>
  	<coordinates>
 		<system>1</system>
-		<posx>240</posx>
+		<posx>0</posx>
 		<posy>0</posy>
 	</coordinates>
     <controls>
-        <control type="image" id="101">
-            <description>Background</description>
-            <width>800</width>
-            <height>720</height>
-            <visible>true</visible>
-            <colordiffuse>FFFFFFFF</colordiffuse>
-            <texture border="40">DialogBack.png</texture>
+		<control type="image" id="10">
+ 			<posx>0</posx>
+			<posy>-50</posy>
+            <width>200</width>
+            <height>200</height>
+            <texture>recapguide-icon.png</texture>
         </control>
-        <control type="image" id="102">
-            <description>Dialog Header image</description>
-            <posx>10</posx>
-            <posy>10</posy>
-            <width>780</width>
-            <height>50</height>
-            <texture>dialogheader.png</texture>
+        <control type="image" id="11">
+            <posx>0</posx>
+            <posy>150</posy>
+            <width>200</width>
+            <height>200</height>
+            <texture>recapguide-icon.png</texture>
         </control>
-        <control type="image" id="103">
-            <description>Separator</description>
-            <posx>25</posx>
-            <posy>75r</posy>
-            <width>750</width>
-            <height>2</height>
-            <texture>separator.png</texture>
+        <control type="image" id="12">
+            <posx>0</posx>
+            <posy>350</posy>
+            <width>200</width>
+            <height>200</height>
+            <texture>recapguide-icon.png</texture>
         </control>
-        <control type="label" id="201">
-            <description>Window Title</description>
-            <posx>50</posx>
-            <posy>25</posy>
-            <width>700</width>
-            <height>20</height>
-            <aligny>center</aligny>
-			<textcolor>ffffffff</textcolor>		<!-- white -->
+        <control type="image" id="13">
+            <posx>0</posx>
+            <posy>550</posy>
+            <width>200</width>
+            <height>200</height>
+            <texture>recapguide-icon.png</texture>
         </control>
-        <control type="textbox" id="202">
-            <description>Episode Summary</description>
-            <posx>35</posx>
-            <posy>70</posy>
-            <width>730</width>
-            <height>180</height>
-            <align>left</align>
-            <colordiffuse>FFFFFFFF</colordiffuse>
-            <textcolor>CCFFFFFF</textcolor>
-            <pagecontrol>203</pagecontrol>
+		<control type="image" id="21">
+ 			<posx>200</posx>
+			<posy>-150</posy>
+            <width>200</width>
+            <height>200</height>
+            <texture>recapguide-icon.png</texture>
         </control>
-        <control type="scrollbar" id="203">
-            <description>Scrollbar for Summary</description>
-            <posx>760</posx>
-            <posy>65</posy>
-            <width>25</width>
-            <height>190</height>
-            <texturesliderbackground border="0,14,0,14">ScrollBarV.png</texturesliderbackground>
-            <texturesliderbar border="0,14,0,14">ScrollBarV_bar.png</texturesliderbar>
-            <texturesliderbarfocus border="0,14,0,14">ScrollBarV_bar_focus.png</texturesliderbarfocus>
-            <textureslidernib>ScrollBarNib.png</textureslidernib>
-            <textureslidernibfocus>ScrollBarNib.png</textureslidernibfocus>
-            <colordiffuse>FFCCCCCC</colordiffuse>
-            <pulseonselect>True</pulseonselect>
-            <orientation>vertical</orientation>
-            <showonepage>false</showonepage>
-            <onleft>302</onleft>
-            <onright>302</onright>
+        <control type="image" id="22">
+            <posx>200</posx>
+            <posy>50</posy>
+            <width>200</width>
+            <height>200</height>
+            <texture>recapguide-icon.png</texture>
         </control>
-		<control type="image" id="204">
-			<description>Slideshow Image</description>
-			<posx>40</posx>
-			<posy>250</posy>
-			<width>720</width>
-			<height>385</height>
-			<aspectratio>keep</aspectratio>
-			<texture></texture>
+        <control type="image" id="23">
+            <posx>200</posx>
+            <posy>250</posy>
+            <width>200</width>
+            <height>200</height>
+            <texture>recapguide-icon.png</texture>
+        </control>
+        <control type="image" id="24">
+            <posx>200</posx>
+            <posy>450</posy>
+            <width>200</width>
+            <height>200</height>
+            <texture>recapguide-icon.png</texture>
+        </control>
+        <control type="image" id="25">
+            <posx>200</posx>
+            <posy>650</posy>
+            <width>200</width>
+            <height>200</height>
+            <texture>recapguide-icon.png</texture>
+        </control>
+
+		<control type="image" id="31">
+ 			<posx>880</posx>
+			<posy>-150</posy>
+            <width>200</width>
+            <height>200</height>
+            <texture>recapguide-icon.png</texture>
+        </control>
+        <control type="image" id="32">
+            <posx>880</posx>
+            <posy>50</posy>
+            <width>200</width>
+            <height>200</height>
+            <texture>recapguide-icon.png</texture>
+        </control>
+        <control type="image" id="33">
+            <posx>880</posx>
+            <posy>250</posy>
+            <width>200</width>
+            <height>200</height>
+            <texture>recapguide-icon.png</texture>
+        </control>
+        <control type="image" id="34">
+            <posx>880</posx>
+            <posy>450</posy>
+            <width>200</width>
+            <height>200</height>
+            <texture>recapguide-icon.png</texture>
+        </control>
+        <control type="image" id="35">
+            <posx>880</posx>
+            <posy>650</posy>
+            <width>200</width>
+            <height>200</height>
+            <texture>recapguide-icon.png</texture>
+        </control>
+
+		<control type="image" id="40">
+ 			<posx>1080</posx>
+			<posy>-50</posy>
+            <width>200</width>
+            <height>200</height>
+            <texture>recapguide-icon.png</texture>
+        </control>
+        <control type="image" id="41">
+            <posx>1080</posx>
+            <posy>150</posy>
+            <width>200</width>
+            <height>200</height>
+            <texture>recapguide-icon.png</texture>
+        </control>
+        <control type="image" id="42">
+            <posx>1080</posx>
+            <posy>350</posy>
+            <width>200</width>
+            <height>200</height>
+            <texture>recapguide-icon.png</texture>
+        </control>
+        <control type="image" id="43">
+            <posx>1080</posx>
+            <posy>550</posy>
+            <width>200</width>
+            <height>200</height>
+            <texture>recapguide-icon.png</texture>
+        </control>
+		<control type="image" id="50">
+			<description>Dim Control Image</description>
+			<posx>0</posx>
+			<posy>0</posy>
+			<width>1280</width>
+			<height>720</height>
+			<texture>black.png</texture>
+			<colordiffuse>DD000000</colordiffuse>
 		</control>
-        <control type="textbox" id="205">
-            <description>Slideshow Caption</description>
-            <posx>50</posx>
-            <posy>551</posy>
-            <width>700</width>
-            <height>100</height>
-            <align>center</align>
-            <colordiffuse>FFFFFFFF</colordiffuse>
-            <textcolor>CCFFFFFF</textcolor>
-			<font>font13</font>
-			<shadowcolor>CC000000</shadowcolor>
-        </control>
-        <control type="button" id="305">
-            <description>Previous Page Button</description>
-            <posx>40</posx>
-            <posy>60r</posy>
-            <width>100</width>
-            <height>35</height>
-            <align>center</align>
-            <label>&lt;</label>
-            <texturenofocus border="5">button-nofocus.png</texturenofocus>
-            <texturefocus border="5">button-focus.png</texturefocus>
-            <colordiffuse>FF43C6DB</colordiffuse>
-			<textcolor>ffffffff</textcolor>		<!-- white -->
-            <onright>302</onright>
-            <onleft>304</onleft>
-            <onup>203</onup>
-            <ondown>203</ondown>
-        </control>
-        <control type="button" id="302">
-            <description>Close Button</description>
-            <posx>275</posx>
-            <posy>60r</posy>
-            <width>250</width>
-            <height>35</height>
-            <align>center</align>
-            <label>$ADDON[script.recap 32006]</label>
-            <texturenofocus border="5">button-nofocus.png</texturenofocus>
-            <texturefocus border="5">button-focus.png</texturefocus>
-			<textcolor>ffffffff</textcolor>		<!-- white -->
-            <onright>304</onright>
-            <onleft>305</onleft>
-            <onup>203</onup>
-            <ondown>203</ondown>
-        </control>
-        <control type="button" id="304">
-            <description>Next Page Button</description>
-            <posx>620r</posx>
-            <posy>60r</posy>
-            <width>100</width>
-            <height>35</height>
-            <align>center</align>
-            <label>&gt;</label>
-            <texturenofocus border="5">button-nofocus.png</texturenofocus>
-            <texturefocus border="5">button-focus.png</texturefocus>
-			<textcolor>ffffffff</textcolor>		<!-- white -->
-            <onright>305</onright>
-            <onleft>302</onleft>
-            <onup>203</onup>
-            <ondown>203</ondown>
-        </control>
-		<!-- The following are a list of cached images -->
-		<control type="image" id="401"><posx>40</posx><posy>636</posy><width>12</width><height>5</height><texture background="true"></texture></control>
-		<control type="image" id="402"><posx>54</posx><posy>636</posy><width>12</width><height>5</height><texture background="true"></texture></control>
-		<control type="image" id="403"><posx>68</posx><posy>636</posy><width>12</width><height>5</height><texture background="true"></texture></control>
-		<control type="image" id="404"><posx>83</posx><posy>636</posy><width>12</width><height>5</height><texture background="true"></texture></control>
-		<control type="image" id="405"><posx>97</posx><posy>636</posy><width>12</width><height>5</height><texture background="true"></texture></control>
-		<control type="image" id="406"><posx>111</posx><posy>636</posy><width>12</width><height>5</height><texture background="true"></texture></control>
-		<control type="image" id="407"><posx>126</posx><posy>636</posy><width>12</width><height>5</height><texture background="true"></texture></control>
-		<control type="image" id="408"><posx>140</posx><posy>636</posy><width>12</width><height>5</height><texture background="true"></texture></control>
-		<control type="image" id="409"><posx>154</posx><posy>636</posy><width>12</width><height>5</height><texture background="true"></texture></control>
-		<control type="image" id="410"><posx>169</posx><posy>636</posy><width>12</width><height>5</height><texture background="true"></texture></control>
-		<control type="image" id="411"><posx>183</posx><posy>636</posy><width>12</width><height>5</height><texture background="true"></texture></control>
-		<control type="image" id="412"><posx>197</posx><posy>636</posy><width>12</width><height>5</height><texture background="true"></texture></control>
-		<control type="image" id="413"><posx>212</posx><posy>636</posy><width>12</width><height>5</height><texture background="true"></texture></control>
-		<control type="image" id="414"><posx>226</posx><posy>636</posy><width>12</width><height>5</height><texture background="true"></texture></control>
-		<control type="image" id="415"><posx>240</posx><posy>636</posy><width>12</width><height>5</height><texture background="true"></texture></control>
-		<control type="image" id="416"><posx>255</posx><posy>636</posy><width>12</width><height>5</height><texture background="true"></texture></control>
-		<control type="image" id="417"><posx>269</posx><posy>636</posy><width>12</width><height>5</height><texture background="true"></texture></control>
-		<control type="image" id="418"><posx>283</posx><posy>636</posy><width>12</width><height>5</height><texture background="true"></texture></control>
-		<control type="image" id="419"><posx>298</posx><posy>636</posy><width>12</width><height>5</height><texture background="true"></texture></control>
-		<control type="image" id="420"><posx>312</posx><posy>636</posy><width>12</width><height>5</height><texture background="true"></texture></control>
-		<control type="image" id="421"><posx>326</posx><posy>636</posy><width>12</width><height>5</height><texture background="true"></texture></control>
-		<control type="image" id="422"><posx>341</posx><posy>636</posy><width>12</width><height>5</height><texture background="true"></texture></control>
-		<control type="image" id="423"><posx>355</posx><posy>636</posy><width>12</width><height>5</height><texture background="true"></texture></control>
-		<control type="image" id="424"><posx>369</posx><posy>636</posy><width>12</width><height>5</height><texture background="true"></texture></control>
-		<control type="image" id="425"><posx>384</posx><posy>636</posy><width>12</width><height>5</height><texture background="true"></texture></control>
-		<control type="image" id="426"><posx>398</posx><posy>636</posy><width>12</width><height>5</height><texture background="true"></texture></control>
-		<control type="image" id="427"><posx>412</posx><posy>636</posy><width>12</width><height>5</height><texture background="true"></texture></control>
-		<control type="image" id="428"><posx>427</posx><posy>636</posy><width>12</width><height>5</height><texture background="true"></texture></control>
-		<control type="image" id="429"><posx>441</posx><posy>636</posy><width>12</width><height>5</height><texture background="true"></texture></control>
-		<control type="image" id="430"><posx>455</posx><posy>636</posy><width>12</width><height>5</height><texture background="true"></texture></control>
-		<control type="image" id="431"><posx>470</posx><posy>636</posy><width>12</width><height>5</height><texture background="true"></texture></control>
-		<control type="image" id="432"><posx>484</posx><posy>636</posy><width>12</width><height>5</height><texture background="true"></texture></control>
-		<control type="image" id="433"><posx>498</posx><posy>636</posy><width>12</width><height>5</height><texture background="true"></texture></control>
-		<control type="image" id="434"><posx>513</posx><posy>636</posy><width>12</width><height>5</height><texture background="true"></texture></control>
-		<control type="image" id="435"><posx>527</posx><posy>636</posy><width>12</width><height>5</height><texture background="true"></texture></control>
-		<control type="image" id="436"><posx>541</posx><posy>636</posy><width>12</width><height>5</height><texture background="true"></texture></control>
-		<control type="image" id="437"><posx>556</posx><posy>636</posy><width>12</width><height>5</height><texture background="true"></texture></control>
-		<control type="image" id="438"><posx>570</posx><posy>636</posy><width>12</width><height>5</height><texture background="true"></texture></control>
-		<control type="image" id="439"><posx>584</posx><posy>636</posy><width>12</width><height>5</height><texture background="true"></texture></control>
-		<control type="image" id="440"><posx>599</posx><posy>636</posy><width>12</width><height>5</height><texture background="true"></texture></control>
-		<control type="image" id="441"><posx>613</posx><posy>636</posy><width>12</width><height>5</height><texture background="true"></texture></control>
-		<control type="image" id="442"><posx>627</posx><posy>636</posy><width>12</width><height>5</height><texture background="true"></texture></control>
-		<control type="image" id="443"><posx>642</posx><posy>636</posy><width>12</width><height>5</height><texture background="true"></texture></control>
-		<control type="image" id="444"><posx>656</posx><posy>636</posy><width>12</width><height>5</height><texture background="true"></texture></control>
-		<control type="image" id="445"><posx>670</posx><posy>636</posy><width>12</width><height>5</height><texture background="true"></texture></control>
-		<control type="image" id="446"><posx>685</posx><posy>636</posy><width>12</width><height>5</height><texture background="true"></texture></control>
-		<control type="image" id="447"><posx>699</posx><posy>636</posy><width>12</width><height>5</height><texture background="true"></texture></control>
-		<control type="image" id="448"><posx>713</posx><posy>636</posy><width>12</width><height>5</height><texture background="true"></texture></control>
-		<control type="image" id="449"><posx>728</posx><posy>636</posy><width>12</width><height>5</height><texture background="true"></texture></control>
-		<control type="image" id="450"><posx>742</posx><posy>636</posy><width>12</width><height>5</height><texture background="true"></texture></control>
+
+		<control type="group" id="100">
+	 		<posx>240</posx>
+			<posy>0</posy>
+	        <control type="image" id="101">
+	            <description>Background</description>
+	            <width>800</width>
+	            <height>720</height>
+	            <visible>true</visible>
+	            <colordiffuse>FFFFFFFF</colordiffuse>
+	            <texture border="40">DialogBack.png</texture>
+	        </control>
+	        <control type="image" id="102">
+	            <description>Dialog Header image</description>
+	            <posx>10</posx>
+	            <posy>10</posy>
+	            <width>780</width>
+	            <height>50</height>
+	            <texture>dialogheader.png</texture>
+	        </control>
+	        <control type="image" id="103">
+	            <description>Separator</description>
+	            <posx>25</posx>
+	            <posy>75r</posy>
+	            <width>750</width>
+	            <height>2</height>
+	            <texture>separator.png</texture>
+	        </control>
+	        <control type="label" id="201">
+	            <description>Window Title</description>
+	            <posx>50</posx>
+	            <posy>25</posy>
+	            <width>700</width>
+	            <height>20</height>
+	            <aligny>center</aligny>
+				<textcolor>ffffffff</textcolor>		<!-- white -->
+	        </control>
+	        <control type="textbox" id="202">
+	            <description>Episode Summary</description>
+	            <posx>35</posx>
+	            <posy>70</posy>
+	            <width>730</width>
+	            <height>180</height>
+	            <align>left</align>
+	            <colordiffuse>FFFFFFFF</colordiffuse>
+	            <textcolor>CCFFFFFF</textcolor>
+	            <pagecontrol>203</pagecontrol>
+	        </control>
+	        <control type="scrollbar" id="203">
+	            <description>Scrollbar for Summary</description>
+	            <posx>760</posx>
+	            <posy>65</posy>
+	            <width>25</width>
+	            <height>190</height>
+	            <texturesliderbackground border="0,14,0,14">ScrollBarV.png</texturesliderbackground>
+	            <texturesliderbar border="0,14,0,14">ScrollBarV_bar.png</texturesliderbar>
+	            <texturesliderbarfocus border="0,14,0,14">ScrollBarV_bar_focus.png</texturesliderbarfocus>
+	            <textureslidernib>ScrollBarNib.png</textureslidernib>
+	            <textureslidernibfocus>ScrollBarNib.png</textureslidernibfocus>
+	            <colordiffuse>FFCCCCCC</colordiffuse>
+	            <pulseonselect>True</pulseonselect>
+	            <orientation>vertical</orientation>
+	            <showonepage>false</showonepage>
+	            <onleft>302</onleft>
+	            <onright>302</onright>
+	        </control>
+			<control type="image" id="204">
+				<description>Slideshow Image</description>
+				<posx>40</posx>
+				<posy>250</posy>
+				<width>720</width>
+				<height>385</height>
+				<aspectratio>keep</aspectratio>
+				<texture></texture>
+			</control>
+	        <control type="textbox" id="205">
+	            <description>Slideshow Caption</description>
+	            <posx>50</posx>
+	            <posy>551</posy>
+	            <width>700</width>
+	            <height>100</height>
+	            <align>center</align>
+	            <colordiffuse>FFFFFFFF</colordiffuse>
+	            <textcolor>CCFFFFFF</textcolor>
+				<font>font13</font>
+				<shadowcolor>CC000000</shadowcolor>
+	        </control>
+	        <control type="button" id="305">
+	            <description>Previous Page Button</description>
+	            <posx>40</posx>
+	            <posy>60r</posy>
+	            <width>100</width>
+	            <height>35</height>
+	            <align>center</align>
+	            <label>&lt;</label>
+	            <texturenofocus border="5">button-nofocus.png</texturenofocus>
+	            <texturefocus border="5">button-focus.png</texturefocus>
+	            <colordiffuse>FF43C6DB</colordiffuse>
+				<textcolor>ffffffff</textcolor>		<!-- white -->
+	            <onright>302</onright>
+	            <onleft>304</onleft>
+	            <onup>203</onup>
+	            <ondown>203</ondown>
+	        </control>
+	        <control type="button" id="302">
+	            <description>Close Button</description>
+	            <posx>275</posx>
+	            <posy>60r</posy>
+	            <width>250</width>
+	            <height>35</height>
+	            <align>center</align>
+	            <label>$ADDON[script.recap 32006]</label>
+	            <texturenofocus border="5">button-nofocus.png</texturenofocus>
+	            <texturefocus border="5">button-focus.png</texturefocus>
+				<textcolor>ffffffff</textcolor>		<!-- white -->
+	            <onright>304</onright>
+	            <onleft>305</onleft>
+	            <onup>203</onup>
+	            <ondown>203</ondown>
+	        </control>
+	        <control type="button" id="304">
+	            <description>Next Page Button</description>
+	            <posx>655</posx>
+	            <posy>60r</posy>
+	            <width>100</width>
+	            <height>35</height>
+	            <align>center</align>
+	            <label>&gt;</label>
+	            <texturenofocus border="5">button-nofocus.png</texturenofocus>
+	            <texturefocus border="5">button-focus.png</texturefocus>
+				<textcolor>ffffffff</textcolor>		<!-- white -->
+	            <onright>305</onright>
+	            <onleft>302</onleft>
+	            <onup>203</onup>
+	            <ondown>203</ondown>
+	        </control>
+			<!-- The following are a list of cached images -->
+			<control type="image" id="401"><posx>40</posx><posy>636</posy><width>12</width><height>5</height><texture background="true"></texture></control>
+			<control type="image" id="402"><posx>54</posx><posy>636</posy><width>12</width><height>5</height><texture background="true"></texture></control>
+			<control type="image" id="403"><posx>68</posx><posy>636</posy><width>12</width><height>5</height><texture background="true"></texture></control>
+			<control type="image" id="404"><posx>83</posx><posy>636</posy><width>12</width><height>5</height><texture background="true"></texture></control>
+			<control type="image" id="405"><posx>97</posx><posy>636</posy><width>12</width><height>5</height><texture background="true"></texture></control>
+			<control type="image" id="406"><posx>111</posx><posy>636</posy><width>12</width><height>5</height><texture background="true"></texture></control>
+			<control type="image" id="407"><posx>126</posx><posy>636</posy><width>12</width><height>5</height><texture background="true"></texture></control>
+			<control type="image" id="408"><posx>140</posx><posy>636</posy><width>12</width><height>5</height><texture background="true"></texture></control>
+			<control type="image" id="409"><posx>154</posx><posy>636</posy><width>12</width><height>5</height><texture background="true"></texture></control>
+			<control type="image" id="410"><posx>169</posx><posy>636</posy><width>12</width><height>5</height><texture background="true"></texture></control>
+			<control type="image" id="411"><posx>183</posx><posy>636</posy><width>12</width><height>5</height><texture background="true"></texture></control>
+			<control type="image" id="412"><posx>197</posx><posy>636</posy><width>12</width><height>5</height><texture background="true"></texture></control>
+			<control type="image" id="413"><posx>212</posx><posy>636</posy><width>12</width><height>5</height><texture background="true"></texture></control>
+			<control type="image" id="414"><posx>226</posx><posy>636</posy><width>12</width><height>5</height><texture background="true"></texture></control>
+			<control type="image" id="415"><posx>240</posx><posy>636</posy><width>12</width><height>5</height><texture background="true"></texture></control>
+			<control type="image" id="416"><posx>255</posx><posy>636</posy><width>12</width><height>5</height><texture background="true"></texture></control>
+			<control type="image" id="417"><posx>269</posx><posy>636</posy><width>12</width><height>5</height><texture background="true"></texture></control>
+			<control type="image" id="418"><posx>283</posx><posy>636</posy><width>12</width><height>5</height><texture background="true"></texture></control>
+			<control type="image" id="419"><posx>298</posx><posy>636</posy><width>12</width><height>5</height><texture background="true"></texture></control>
+			<control type="image" id="420"><posx>312</posx><posy>636</posy><width>12</width><height>5</height><texture background="true"></texture></control>
+			<control type="image" id="421"><posx>326</posx><posy>636</posy><width>12</width><height>5</height><texture background="true"></texture></control>
+			<control type="image" id="422"><posx>341</posx><posy>636</posy><width>12</width><height>5</height><texture background="true"></texture></control>
+			<control type="image" id="423"><posx>355</posx><posy>636</posy><width>12</width><height>5</height><texture background="true"></texture></control>
+			<control type="image" id="424"><posx>369</posx><posy>636</posy><width>12</width><height>5</height><texture background="true"></texture></control>
+			<control type="image" id="425"><posx>384</posx><posy>636</posy><width>12</width><height>5</height><texture background="true"></texture></control>
+			<control type="image" id="426"><posx>398</posx><posy>636</posy><width>12</width><height>5</height><texture background="true"></texture></control>
+			<control type="image" id="427"><posx>412</posx><posy>636</posy><width>12</width><height>5</height><texture background="true"></texture></control>
+			<control type="image" id="428"><posx>427</posx><posy>636</posy><width>12</width><height>5</height><texture background="true"></texture></control>
+			<control type="image" id="429"><posx>441</posx><posy>636</posy><width>12</width><height>5</height><texture background="true"></texture></control>
+			<control type="image" id="430"><posx>455</posx><posy>636</posy><width>12</width><height>5</height><texture background="true"></texture></control>
+			<control type="image" id="431"><posx>470</posx><posy>636</posy><width>12</width><height>5</height><texture background="true"></texture></control>
+			<control type="image" id="432"><posx>484</posx><posy>636</posy><width>12</width><height>5</height><texture background="true"></texture></control>
+			<control type="image" id="433"><posx>498</posx><posy>636</posy><width>12</width><height>5</height><texture background="true"></texture></control>
+			<control type="image" id="434"><posx>513</posx><posy>636</posy><width>12</width><height>5</height><texture background="true"></texture></control>
+			<control type="image" id="435"><posx>527</posx><posy>636</posy><width>12</width><height>5</height><texture background="true"></texture></control>
+			<control type="image" id="436"><posx>541</posx><posy>636</posy><width>12</width><height>5</height><texture background="true"></texture></control>
+			<control type="image" id="437"><posx>556</posx><posy>636</posy><width>12</width><height>5</height><texture background="true"></texture></control>
+			<control type="image" id="438"><posx>570</posx><posy>636</posy><width>12</width><height>5</height><texture background="true"></texture></control>
+			<control type="image" id="439"><posx>584</posx><posy>636</posy><width>12</width><height>5</height><texture background="true"></texture></control>
+			<control type="image" id="440"><posx>599</posx><posy>636</posy><width>12</width><height>5</height><texture background="true"></texture></control>
+			<control type="image" id="441"><posx>613</posx><posy>636</posy><width>12</width><height>5</height><texture background="true"></texture></control>
+			<control type="image" id="442"><posx>627</posx><posy>636</posy><width>12</width><height>5</height><texture background="true"></texture></control>
+			<control type="image" id="443"><posx>642</posx><posy>636</posy><width>12</width><height>5</height><texture background="true"></texture></control>
+			<control type="image" id="444"><posx>656</posx><posy>636</posy><width>12</width><height>5</height><texture background="true"></texture></control>
+			<control type="image" id="445"><posx>670</posx><posy>636</posy><width>12</width><height>5</height><texture background="true"></texture></control>
+			<control type="image" id="446"><posx>685</posx><posy>636</posy><width>12</width><height>5</height><texture background="true"></texture></control>
+			<control type="image" id="447"><posx>699</posx><posy>636</posy><width>12</width><height>5</height><texture background="true"></texture></control>
+			<control type="image" id="448"><posx>713</posx><posy>636</posy><width>12</width><height>5</height><texture background="true"></texture></control>
+			<control type="image" id="449"><posx>728</posx><posy>636</posy><width>12</width><height>5</height><texture background="true"></texture></control>
+			<control type="image" id="450"><posx>742</posx><posy>636</posy><width>12</width><height>5</height><texture background="true"></texture></control>
+	    </control>
     </controls>
 </window>
