@@ -4,6 +4,7 @@ import os
 import sys
 import xbmc
 import urllib
+import urllib2
 import xbmcvfs
 import xbmcaddon
 import xbmcgui
@@ -33,12 +34,13 @@ sys.path.append(__resource__)
 
 from SubsceneUtilities import log, geturl, get_language_codes, subscene_languages, get_episode_pattern
 
-main_url = "http://subscene.com"
+main_url = "https://subscene.com"
 
 aliases = {
     "marvels agents of shield" : "Agents of Shield",
     "marvels agents of s.h.i.e.l.d" : "Agents of Shield",
-    "marvels jessica jones": "Jessica Jones"
+    "marvels jessica jones": "Jessica Jones",
+    "dcs legends of tomorrow": "Legends of Tomorrow"
 }
 
 # Seasons as strings for searching
@@ -382,15 +384,17 @@ def download(link, episode=""):
             {'__EVENTTARGET': 's$lc$bcr$downloadLink', '__EVENTARGUMENT': '', '__VIEWSTATE': viewstate,
              '__PREVIOUSPAGE': previouspage, 'subtitleId': subtitleid, 'typeId': typeid, 'filmId': filmid})
 
-        class MyOpener(urllib.FancyURLopener):
-            version = ("User-Agent=Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.2.3) "
+        useragent = ("User-Agent=Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.2.3) "
                        "Gecko/20100401 Firefox/3.6.3 ( .NET CLR 3.5.30729)")
-
-        my_urlopener = MyOpener()
-        my_urlopener.addheader('Referer', link)
+        headers = {'User-Agent': useragent, 'Referer': link}
         log(__name__, "Fetching subtitles using url '%s' with referer header '%s' and post parameters '%s'" % (
             downloadlink, link, postparams))
-        response = my_urlopener.open(downloadlink, postparams)
+        request = urllib2.Request(downloadlink, postparams, headers)
+        response = urllib2.urlopen(request)
+
+        if response.getcode() != 200:
+            log(__name__, "Failed to download subtitle file")
+            return subtitle_list
 
         local_tmp_file = os.path.join(tempdir, "subscene.xxx")
         packed = False
