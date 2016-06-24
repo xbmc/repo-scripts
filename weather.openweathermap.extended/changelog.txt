@@ -1,3 +1,6 @@
+v3.2.6
+- fix bug when hourly wind is none
+
 v3.2.5
 - don't capitalize forecast text
 
