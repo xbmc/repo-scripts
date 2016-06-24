@@ -1,3 +1,6 @@
+1.2.8
++ Minor tweaks in the code
++ Fix break with latests update
 1.2.7
 + Better chance to find show name if it contains hyphens
 1.2.6
