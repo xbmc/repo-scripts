@@ -1,0 +1,113 @@
+# Kodi Media Center language file
+# Addon Name: OpenWeatherMap Extended
+# Addon id: weather.openweathermap.extended
+# Addon Provider: ronie
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: German (http://www.transifex.com/projects/p/xbmc-addons/language/de/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: de\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#32000"
+msgid "OpenWeatherMap"
+msgstr "OpenWeatherMap"
+
+msgctxt "#32101"
+msgid "Location setup"
+msgstr "Standorteinstellung"
+
+msgctxt "#32102"
+msgid "Advanced"
+msgstr "Erweitert"
+
+msgctxt "#32103"
+msgid "Expert"
+msgstr "Experte"
+
+msgctxt "#32111"
+msgid "Location 1"
+msgstr "Standort 1"
+
+msgctxt "#32112"
+msgid "Location 2"
+msgstr "Standort 2"
+
+msgctxt "#32113"
+msgid "Location 3"
+msgstr "Standort 3"
+
+msgctxt "#32114"
+msgid "Location 4"
+msgstr "Standort 4"
+
+msgctxt "#32115"
+msgid "Location 5"
+msgstr "Standort 5"
+
+msgctxt "#32116"
+msgid "Location 1 ID"
+msgstr "Standort 1-Kennung"
+
+msgctxt "#32117"
+msgid "Location 2 ID"
+msgstr "Standort 2-Kennung"
+
+msgctxt "#32118"
+msgid "Location 3 ID"
+msgstr "Standort 3-Kennung"
+
+msgctxt "#32119"
+msgid "Location 4 ID"
+msgstr "Standort 4-Kennung"
+
+msgctxt "#32120"
+msgid "Location 5 ID"
+msgstr "Standort 5-Kennung"
+
+msgctxt "#32121"
+msgid "Show lat/lon when searching locations"
+msgstr "Breiten-/Längengrad bei der Suche nach Standorten anzeigen"
+
+msgctxt "#32122"
+msgid "Weekend"
+msgstr "Wochenende"
+
+msgctxt "#32123"
+msgid "Saturday/Sunday"
+msgstr "Samstag/Sonntag"
+
+msgctxt "#32124"
+msgid "Friday/Saturday"
+msgstr "Freitag/Samstag"
+
+msgctxt "#32125"
+msgid "Thursday/Friday"
+msgstr "Donnerstag/Freitag"
+
+msgctxt "#32126"
+msgid "Use personal weather station"
+msgstr "Persönliche Wetterstation verwenden"
+
+msgctxt "#32127"
+msgid "Station ID"
+msgstr "Stationskennung"
+
+msgctxt "#32128"
+msgid "Map zoom level"
+msgstr "Kartenzoomstufe"
+
+msgctxt "#32129"
+msgid "Enable logging"
+msgstr "Protokollierung aktivieren"
+
+msgctxt "#32130"
+msgid "Download weather maps"
+msgstr "Wetterkarten herunterladen"

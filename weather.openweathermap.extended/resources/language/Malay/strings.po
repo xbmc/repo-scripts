@@ -1,0 +1,73 @@
+# Kodi Media Center language file
+# Addon Name: OpenWeatherMap Extended
+# Addon id: weather.openweathermap.extended
+# Addon Provider: ronie
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: Malay (http://www.transifex.com/projects/p/xbmc-addons/language/ms/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ms\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgctxt "#32101"
+msgid "Location setup"
+msgstr "Persediaan lokasi"
+
+msgctxt "#32102"
+msgid "Advanced"
+msgstr "Lanjutan"
+
+msgctxt "#32103"
+msgid "Expert"
+msgstr "Mahir"
+
+msgctxt "#32111"
+msgid "Location 1"
+msgstr "Lokasi 1"
+
+msgctxt "#32112"
+msgid "Location 2"
+msgstr "Lokasi 2"
+
+msgctxt "#32113"
+msgid "Location 3"
+msgstr "Lokasi 3"
+
+msgctxt "#32114"
+msgid "Location 4"
+msgstr "Lokasi 4"
+
+msgctxt "#32115"
+msgid "Location 5"
+msgstr "Lokasi 5"
+
+msgctxt "#32122"
+msgid "Weekend"
+msgstr "Hujung minggu"
+
+msgctxt "#32123"
+msgid "Saturday/Sunday"
+msgstr "Sabtu/Ahad"
+
+msgctxt "#32124"
+msgid "Friday/Saturday"
+msgstr "Jumaat/Sabtu"
+
+msgctxt "#32125"
+msgid "Thursday/Friday"
+msgstr "Khamis/Jumaat"
+
+msgctxt "#32128"
+msgid "Map zoom level"
+msgstr "Aras zum peta"
+
+msgctxt "#32129"
+msgid "Enable logging"
+msgstr "Benarkan pengelogan"

@@ -1,0 +1,117 @@
+v4.0.1
+- fix bug when hourly wind is none
+
+v4.0.0
+- remove simplejson support
+- fix potential error when forecast is None
+
+v3.2.4
+- fix capitalization
+- fix dewpoint calculation
+
+v3.2.3
+- add forecast strings to language file
+
+v3.2.2
+- use longday format for Day%i.Title
+
+v3.2.1
+- fix invalid import (again)
+
+v3.2.0
+- add option for personal api key
+- add caching
+
+v3.1.5
+- fix feelslike temprature calculation
+
+v3.1.4
+- fix invalid import
+
+v3.1.3
+- language update
+- cosmetics
+
+v3.1.2
+- don't crash when current temp is absent
+
+v3.1.1
+- some fixes for personal weather stations
+
+v3.1.0
+- don't hardcode the icon path
+
+v3.0.1
+- more verbose logging
+
+v3.0.0
+- use image resource for weather icons
+
+v2.0.4
+- better handling of key errors
+
+v2.0.3
+- fix crash due to undefined keys
+
+v2.0.2
+- fix unicode error
+
+v2.0.1
+- add proper support for new speed and temp units
+
+v2.0.0
+- bump for isengard
+
+v1.2.1
+- handle newly added speed units
+
+v1.2.0
+- split maps into a separate addon
+
+v1.1.3
+- better visibillity clouds and precip maps
+
+v1.1.2
+- fix missing import
+
+v1.1.1
+- fix crash when logging is enabled
+
+v1.1.0
+- download maps in a separate script
+
+v1.0.4
+- add setting to disable maps
+
+v1.0.3
+- add lat/lon properties
+- fix crash on invalid image files
+
+v1.0.2
+- fix gzip support
+
+v1.0.1
+- disable logging
+
+v1.0.0
+- bump for helix
+
+v0.0.6
+- wrong temperature in F for hourly forecast
+- properly round pressure
+- add space between value and unit
+
+v0.0.5
+- fix maps being cached
+
+v0.0.4
+- use substring location search
+
+v0.0.3
+- fix crash due to empty time value
+
+v0.0.2
+- fix crash due to undefined variable 
+
+v0.0.1
+- initial beta
