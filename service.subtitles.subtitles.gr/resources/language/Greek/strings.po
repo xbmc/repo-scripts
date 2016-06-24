@@ -1,0 +1,29 @@
+# Kodi Media Center language file
+# Addon Name: Subtitles.gr
+# Addon id: service.subtitles.subtitles.gr
+# Addon version: 1.0.0
+# Addon Provider: lambda
+
+msgid ""
+msgstr ""
+
+
+msgctxt "#32001"
+msgid "Error searching for subtitles"
+msgstr "Αδύνατη η εύρεση υποτίτλων"
+
+msgctxt "#32002"
+msgid "This service is only for Greek subtitles"
+msgstr "Υπηρεσία μόνο ελληνικών υποτίτλων"
+
+msgctxt "#32211"
+msgid "Accounts"
+msgstr "Λογαριασμοί"
+
+msgctxt "#32212"
+msgid "User"
+msgstr "Χρήστης"
+
+msgctxt "#32213"
+msgid "Password"
+msgstr "Κωδικός"
