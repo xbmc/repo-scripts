@@ -152,3 +152,11 @@ msgstr ""
 msgctxt "#32035"
 msgid "Message"
 msgstr ""
+
+msgctxt "#32036"
+msgid "Failed"
+msgstr ""
+
+msgctxt "#32037"
+msgid "Failed to move to downloads folder - leaving in temp"
+msgstr ""

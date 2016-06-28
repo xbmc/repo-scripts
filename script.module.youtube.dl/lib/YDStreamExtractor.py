@@ -327,7 +327,9 @@ def _handleDownload(info, path=None, duration=None, bg=False):
         if os.path.exists(part):
             os.rename(part, result.filepath)
 
-    StreamUtils.moveFile(filePath, path, filename=info.get('filename'))
+    if not StreamUtils.moveFile(filePath, path, filename=info.get('filename')):
+        StreamUtils.showMessage(StreamUtils.T(32036), StreamUtils.T(32037), '', result.filepath, bg=bg)
+
     return result
 
 

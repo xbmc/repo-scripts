@@ -39,6 +39,7 @@ from .compat import (
     compat_chr,
     compat_etree_fromstring,
     compat_html_entities,
+    compat_html_entities_html5,
     compat_http_client,
     compat_kwargs,
     compat_parse_qs,
@@ -75,7 +76,7 @@ def register_socks_protocols():
 compiled_regex_type = type(re.compile(''))
 
 std_headers = {
-    'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64; rv:10.0) Gecko/20150101 Firefox/44.0 (Chrome)',
+    'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64; rv:10.0) Gecko/20150101 Firefox/47.0 (Chrome)',
     'Accept-Charset': 'ISO-8859-1,utf-8;q=0.7,*;q=0.7',
     'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
     'Accept-Encoding': 'gzip, deflate',
@@ -105,9 +106,52 @@ KNOWN_EXTENSIONS = (
     'f4f', 'f4m', 'm3u8', 'smil')
 
 # needed for sanitizing filenames in restricted mode
-ACCENT_CHARS = dict(zip('ÂÃÄÀÁÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØŒÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõöøœùúûüýþÿ',
-                        itertools.chain('AAAAAA', ['AE'], 'CEEEEIIIIDNOOOOOO', ['OE'], 'UUUUYP', ['ss'],
-                                        'aaaaaa', ['ae'], 'ceeeeiiiionoooooo', ['oe'], 'uuuuypy')))
+ACCENT_CHARS = dict(zip('ÂÃÄÀÁÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖŐØŒÙÚÛÜŰÝÞßàáâãäåæçèéêëìíîïðñòóôõöőøœùúûüűýþÿ',
+                        itertools.chain('AAAAAA', ['AE'], 'CEEEEIIIIDNOOOOOOO', ['OE'], 'UUUUUYP', ['ss'],
+                                        'aaaaaa', ['ae'], 'ceeeeiiiionooooooo', ['oe'], 'uuuuuypy')))
+
+DATE_FORMATS = (
+    '%d %B %Y',
+    '%d %b %Y',
+    '%B %d %Y',
+    '%b %d %Y',
+    '%b %dst %Y %I:%M',
+    '%b %dnd %Y %I:%M',
+    '%b %dth %Y %I:%M',
+    '%Y %m %d',
+    '%Y-%m-%d',
+    '%Y/%m/%d',
+    '%Y/%m/%d %H:%M:%S',
+    '%Y-%m-%d %H:%M:%S',
+    '%Y-%m-%d %H:%M:%S.%f',
+    '%d.%m.%Y %H:%M',
+    '%d.%m.%Y %H.%M',
+    '%Y-%m-%dT%H:%M:%SZ',
+    '%Y-%m-%dT%H:%M:%S.%fZ',
+    '%Y-%m-%dT%H:%M:%S.%f0Z',
+    '%Y-%m-%dT%H:%M:%S',
+    '%Y-%m-%dT%H:%M:%S.%f',
+    '%Y-%m-%dT%H:%M',
+)
+
+DATE_FORMATS_DAY_FIRST = list(DATE_FORMATS)
+DATE_FORMATS_DAY_FIRST.extend([
+    '%d-%m-%Y',
+    '%d.%m.%Y',
+    '%d.%m.%y',
+    '%d/%m/%Y',
+    '%d/%m/%y',
+    '%d/%m/%Y %H:%M:%S',
+])
+
+DATE_FORMATS_MONTH_FIRST = list(DATE_FORMATS)
+DATE_FORMATS_MONTH_FIRST.extend([
+    '%m-%d-%Y',
+    '%m.%d.%Y',
+    '%m/%d/%Y',
+    '%m/%d/%y',
+    '%m/%d/%Y %H:%M:%S',
+])
 
 
 def preferredencoding():
@@ -456,11 +500,18 @@ def orderedSet(iterable):
     return res
 
 
-def _htmlentity_transform(entity):
+def _htmlentity_transform(entity_with_semicolon):
     """Transforms an HTML entity to a character."""
+    entity = entity_with_semicolon[:-1]
+
     # Known non-numeric HTML entity
     if entity in compat_html_entities.name2codepoint:
         return compat_chr(compat_html_entities.name2codepoint[entity])
+
+    # TODO: HTML5 allows entities without a semicolon. For example,
+    # '&Eacuteric' should be decoded as 'Éric'.
+    if entity_with_semicolon in compat_html_entities_html5:
+        return compat_html_entities_html5[entity_with_semicolon]
 
     mobj = re.match(r'#(x[0-9a-fA-F]+|[0-9]+)', entity)
     if mobj is not None:
@@ -486,7 +537,7 @@ def unescapeHTML(s):
     assert type(s) == compat_str
 
     return re.sub(
-        r'&([^;]+);', lambda m: _htmlentity_transform(m.group(1)), s)
+        r'&([^;]+;)', lambda m: _htmlentity_transform(m.group(1)), s)
 
 
 def get_subprocess_encoding():
@@ -861,9 +912,13 @@ class YoutubeDLHandler(compat_urllib_request.HTTPHandler):
                 # As of RFC 2616 default charset is iso-8859-1 that is respected by python 3
                 if sys.version_info >= (3, 0):
                     location = location.encode('iso-8859-1').decode('utf-8')
+                else:
+                    location = location.decode('utf-8')
                 location_escaped = escape_url(location)
                 if location != location_escaped:
                     del resp.headers['Location']
+                    if sys.version_info < (3, 0):
+                        location_escaped = location_escaped.encode('utf-8')
                     resp.headers['Location'] = location_escaped
         return resp
 
@@ -963,6 +1018,24 @@ class YoutubeDLCookieProcessor(compat_urllib_request.HTTPCookieProcessor):
     https_response = http_response
 
 
+def extract_timezone(date_str):
+    m = re.search(
+        r'^.{8,}?(?P<tz>Z$| ?(?P<sign>\+|-)(?P<hours>[0-9]{2}):?(?P<minutes>[0-9]{2})$)',
+        date_str)
+    if not m:
+        timezone = datetime.timedelta()
+    else:
+        date_str = date_str[:-len(m.group('tz'))]
+        if not m.group('sign'):
+            timezone = datetime.timedelta()
+        else:
+            sign = 1 if m.group('sign') == '+' else -1
+            timezone = datetime.timedelta(
+                hours=sign * int(m.group('hours')),
+                minutes=sign * int(m.group('minutes')))
+    return timezone, date_str
+
+
 def parse_iso8601(date_str, delimiter='T', timezone=None):
     """ Return a UNIX timestamp from the given date """
 
@@ -972,26 +1045,18 @@ def parse_iso8601(date_str, delimiter='T', timezone=None):
     date_str = re.sub(r'\.[0-9]+', '', date_str)
 
     if timezone is None:
-        m = re.search(
-            r'(?:Z$| ?(?P<sign>\+|-)(?P<hours>[0-9]{2}):?(?P<minutes>[0-9]{2})$)',
-            date_str)
-        if not m:
-            timezone = datetime.timedelta()
-        else:
-            date_str = date_str[:-len(m.group(0))]
-            if not m.group('sign'):
-                timezone = datetime.timedelta()
-            else:
-                sign = 1 if m.group('sign') == '+' else -1
-                timezone = datetime.timedelta(
-                    hours=sign * int(m.group('hours')),
-                    minutes=sign * int(m.group('minutes')))
+        timezone, date_str = extract_timezone(date_str)
+
     try:
         date_format = '%Y-%m-%d{0}%H:%M:%S'.format(delimiter)
         dt = datetime.datetime.strptime(date_str, date_format) - timezone
         return calendar.timegm(dt.timetuple())
     except ValueError:
         pass
+
+
+def date_formats(day_first=True):
+    return DATE_FORMATS_DAY_FIRST if day_first else DATE_FORMATS_MONTH_FIRST
 
 
 def unified_strdate(date_str, day_first=True):
@@ -1002,52 +1067,11 @@ def unified_strdate(date_str, day_first=True):
     upload_date = None
     # Replace commas
     date_str = date_str.replace(',', ' ')
-    # %z (UTC offset) is only supported in python>=3.2
-    if not re.match(r'^[0-9]{1,2}-[0-9]{1,2}-[0-9]{4}$', date_str):
-        date_str = re.sub(r' ?(\+|-)[0-9]{2}:?[0-9]{2}$', '', date_str)
     # Remove AM/PM + timezone
     date_str = re.sub(r'(?i)\s*(?:AM|PM)(?:\s+[A-Z]+)?', '', date_str)
+    _, date_str = extract_timezone(date_str)
 
-    format_expressions = [
-        '%d %B %Y',
-        '%d %b %Y',
-        '%B %d %Y',
-        '%b %d %Y',
-        '%b %dst %Y %I:%M',
-        '%b %dnd %Y %I:%M',
-        '%b %dth %Y %I:%M',
-        '%Y %m %d',
-        '%Y-%m-%d',
-        '%Y/%m/%d',
-        '%Y/%m/%d %H:%M:%S',
-        '%Y-%m-%d %H:%M:%S',
-        '%Y-%m-%d %H:%M:%S.%f',
-        '%d.%m.%Y %H:%M',
-        '%d.%m.%Y %H.%M',
-        '%Y-%m-%dT%H:%M:%SZ',
-        '%Y-%m-%dT%H:%M:%S.%fZ',
-        '%Y-%m-%dT%H:%M:%S.%f0Z',
-        '%Y-%m-%dT%H:%M:%S',
-        '%Y-%m-%dT%H:%M:%S.%f',
-        '%Y-%m-%dT%H:%M',
-    ]
-    if day_first:
-        format_expressions.extend([
-            '%d-%m-%Y',
-            '%d.%m.%Y',
-            '%d/%m/%Y',
-            '%d/%m/%y',
-            '%d/%m/%Y %H:%M:%S',
-        ])
-    else:
-        format_expressions.extend([
-            '%m-%d-%Y',
-            '%m.%d.%Y',
-            '%m/%d/%Y',
-            '%m/%d/%y',
-            '%m/%d/%Y %H:%M:%S',
-        ])
-    for expression in format_expressions:
+    for expression in date_formats(day_first):
         try:
             upload_date = datetime.datetime.strptime(date_str, expression).strftime('%Y%m%d')
         except ValueError:
@@ -1055,9 +1079,35 @@ def unified_strdate(date_str, day_first=True):
     if upload_date is None:
         timetuple = email.utils.parsedate_tz(date_str)
         if timetuple:
-            upload_date = datetime.datetime(*timetuple[:6]).strftime('%Y%m%d')
+            try:
+                upload_date = datetime.datetime(*timetuple[:6]).strftime('%Y%m%d')
+            except ValueError:
+                pass
     if upload_date is not None:
         return compat_str(upload_date)
+
+
+def unified_timestamp(date_str, day_first=True):
+    if date_str is None:
+        return None
+
+    date_str = date_str.replace(',', ' ')
+
+    pm_delta = datetime.timedelta(hours=12 if re.search(r'(?i)PM', date_str) else 0)
+    timezone, date_str = extract_timezone(date_str)
+
+    # Remove AM/PM + timezone
+    date_str = re.sub(r'(?i)\s*(?:AM|PM)(?:\s+[A-Z]+)?', '', date_str)
+
+    for expression in date_formats(day_first):
+        try:
+            dt = datetime.datetime.strptime(date_str, expression) - timezone + pm_delta
+            return calendar.timegm(dt.timetuple())
+        except ValueError:
+            pass
+    timetuple = email.utils.parsedate_tz(date_str)
+    if timetuple:
+        return calendar.timegm(timetuple.timetuple())
 
 
 def determine_ext(url, default_ext='unknown_video'):
@@ -1610,6 +1660,10 @@ def float_or_none(v, scale=1, invscale=1, default=None):
         return default
 
 
+def strip_or_none(v):
+    return None if v is None else v.strip()
+
+
 def parse_duration(s):
     if not isinstance(s, compat_basestring):
         return None
@@ -1885,6 +1939,16 @@ def dict_get(d, key_or_keys, default=None, skip_false_values=True):
     return d.get(key_or_keys, default)
 
 
+def try_get(src, getter, expected_type=None):
+    try:
+        v = getter(src)
+    except (AttributeError, KeyError, TypeError, IndexError):
+        pass
+    else:
+        if expected_type is None or isinstance(v, expected_type):
+            return v
+
+
 def encode_compat_str(string, encoding=preferredencoding(), errors='strict'):
     return string if isinstance(string, compat_str) else compat_str(string, encoding, errors)
 
@@ -1907,7 +1971,7 @@ def parse_age_limit(s):
 
 def strip_jsonp(code):
     return re.sub(
-        r'(?s)^[a-zA-Z0-9_.]+\s*\(\s*(.*)\);?\s*?(?://[^\n]*)*$', r'\1', code)
+        r'(?s)^[a-zA-Z0-9_.$]+\s*\(\s*(.*)\);?\s*?(?://[^\n]*)*$', r'\1', code)
 
 
 def js_to_json(code):
@@ -1944,7 +2008,7 @@ def js_to_json(code):
         '(?:[^'\\]*(?:\\\\|\\['"nurtbfx/\n]))*[^'\\]*'|
         /\*.*?\*/|,(?=\s*[\]}])|
         [a-zA-Z_][.a-zA-Z_0-9]*|
-        (?:0[xX][0-9a-fA-F]+|0+[0-7]+)(?:\s*:)?|
+        \b(?:0[xX][0-9a-fA-F]+|0+[0-7]+)(?:\s*:)?|
         [0-9]+(?=\s*:)
         ''', fix_kv, code)
 
@@ -2012,6 +2076,9 @@ def mimetype2ext(mt):
 
     ext = {
         'audio/mp4': 'm4a',
+        # Per RFC 3003, audio/mpeg can be .mp1, .mp2 or .mp3. Here use .mp3 as
+        # it's the most popular one
+        'audio/mpeg': 'mp3',
     }.get(mt)
     if ext is not None:
         return ext
@@ -2823,3 +2890,16 @@ def decode_packed_codes(code):
     return re.sub(
         r'\b(\w+)\b', lambda mobj: symbol_table[mobj.group(0)],
         obfucasted_code)
+
+
+def parse_m3u8_attributes(attrib):
+    info = {}
+    for (key, val) in re.findall(r'(?P<key>[A-Z0-9-]+)=(?P<val>"[^"]+"|[^",]+)(?:,|$)', attrib):
+        if val.startswith('"'):
+            val = val[1:-1]
+        info[key] = val
+    return info
+
+
+def urshift(val, n):
+    return val >> n if val >= 0 else (val + 0x100000000) >> n

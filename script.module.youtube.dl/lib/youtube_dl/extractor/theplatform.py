@@ -14,11 +14,13 @@ from ..compat import (
     compat_urllib_parse_urlparse,
 )
 from ..utils import (
+    determine_ext,
     ExtractorError,
     float_or_none,
     int_or_none,
     sanitized_Request,
     unsmuggle_url,
+    update_url_query,
     xpath_with_ns,
     mimetype2ext,
     find_xpath_attr,
@@ -48,6 +50,12 @@ class ThePlatformBaseIE(OnceIE):
             if OnceIE.suitable(_format['url']):
                 formats.extend(self._extract_once_formats(_format['url']))
             else:
+                media_url = _format['url']
+                if determine_ext(media_url) == 'm3u8':
+                    hdnea2 = self._get_cookies(media_url).get('hdnea2')
+                    if hdnea2:
+                        _format['url'] = update_url_query(media_url, {'hdnea3': hdnea2.value})
+
                 formats.append(_format)
 
         subtitles = self._parse_smil_subtitles(meta, default_ns)
@@ -151,6 +159,22 @@ class ThePlatformIE(ThePlatformBaseIE):
         'only_matching': True,
     }]
 
+    @classmethod
+    def _extract_urls(cls, webpage):
+        m = re.search(
+            r'''(?x)
+                    <meta\s+
+                        property=(["'])(?:og:video(?::(?:secure_)?url)?|twitter:player)\1\s+
+                        content=(["'])(?P<url>https?://player\.theplatform\.com/p/.+?)\2
+            ''', webpage)
+        if m:
+            return [m.group('url')]
+
+        matches = re.findall(
+            r'<(?:iframe|script)[^>]+src=(["\'])((?:https?:)?//player\.theplatform\.com/p/.+?)\1', webpage)
+        if matches:
+            return list(zip(*matches))[1]
+
     @staticmethod
     def _sign_url(url, sig_key, sig_secret, life=600, include_qs=False):
         flags = '10' if include_qs else '00'
@@ -253,9 +277,9 @@ class ThePlatformIE(ThePlatformBaseIE):
 
 
 class ThePlatformFeedIE(ThePlatformBaseIE):
-    _URL_TEMPLATE = '%s//feed.theplatform.com/f/%s/%s?form=json&byGuid=%s'
-    _VALID_URL = r'https?://feed\.theplatform\.com/f/(?P<provider_id>[^/]+)/(?P<feed_id>[^?/]+)\?(?:[^&]+&)*byGuid=(?P<id>[a-zA-Z0-9_]+)'
-    _TEST = {
+    _URL_TEMPLATE = '%s//feed.theplatform.com/f/%s/%s?form=json&%s'
+    _VALID_URL = r'https?://feed\.theplatform\.com/f/(?P<provider_id>[^/]+)/(?P<feed_id>[^?/]+)\?(?:[^&]+&)*(?P<filter>by(?:Gui|I)d=(?P<id>[\w-]+))'
+    _TESTS = [{
         # From http://player.theplatform.com/p/7wvmTC/MSNBCEmbeddedOffSite?guid=n_hardball_5biden_140207
         'url': 'http://feed.theplatform.com/f/7wvmTC/msnbc_video-p-test?form=json&pretty=true&range=-40&byGuid=n_hardball_5biden_140207',
         'md5': '6e32495b5073ab414471b615c5ded394',
@@ -271,32 +295,38 @@ class ThePlatformFeedIE(ThePlatformBaseIE):
             'categories': ['MSNBC/Issues/Democrats', 'MSNBC/Issues/Elections/Election 2016'],
             'uploader': 'NBCU-NEWS',
         },
-    }
+    }]
 
-    def _real_extract(self, url):
-        mobj = re.match(self._VALID_URL, url)
-
-        video_id = mobj.group('id')
-        provider_id = mobj.group('provider_id')
-        feed_id = mobj.group('feed_id')
-
-        real_url = self._URL_TEMPLATE % (self.http_scheme(), provider_id, feed_id, video_id)
-        feed = self._download_json(real_url, video_id)
-        entry = feed['entries'][0]
+    def _extract_feed_info(self, provider_id, feed_id, filter_query, video_id, custom_fields=None, asset_types_query={}):
+        real_url = self._URL_TEMPLATE % (self.http_scheme(), provider_id, feed_id, filter_query)
+        entry = self._download_json(real_url, video_id)['entries'][0]
 
         formats = []
         subtitles = {}
         first_video_id = None
         duration = None
+        asset_types = []
         for item in entry['media$content']:
-            smil_url = item['plfile$url'] + '&mbr=true'
+            smil_url = item['plfile$url']
             cur_video_id = ThePlatformIE._match_id(smil_url)
             if first_video_id is None:
                 first_video_id = cur_video_id
                 duration = float_or_none(item.get('plfile$duration'))
-            cur_formats, cur_subtitles = self._extract_theplatform_smil(smil_url, video_id, 'Downloading SMIL data for %s' % cur_video_id)
-            formats.extend(cur_formats)
-            subtitles = self._merge_subtitles(subtitles, cur_subtitles)
+            for asset_type in item['plfile$assetTypes']:
+                if asset_type in asset_types:
+                    continue
+                asset_types.append(asset_type)
+                query = {
+                    'mbr': 'true',
+                    'formats': item['plfile$format'],
+                    'assetTypes': asset_type,
+                }
+                if asset_type in asset_types_query:
+                    query.update(asset_types_query[asset_type])
+                cur_formats, cur_subtitles = self._extract_theplatform_smil(update_url_query(
+                    smil_url, query), video_id, 'Downloading SMIL data for %s' % asset_type)
+                formats.extend(cur_formats)
+                subtitles = self._merge_subtitles(subtitles, cur_subtitles)
 
         self._sort_formats(formats)
 
@@ -320,5 +350,17 @@ class ThePlatformFeedIE(ThePlatformBaseIE):
             'timestamp': timestamp,
             'categories': categories,
         })
+        if custom_fields:
+            ret.update(custom_fields(entry))
 
         return ret
+
+    def _real_extract(self, url):
+        mobj = re.match(self._VALID_URL, url)
+
+        video_id = mobj.group('id')
+        provider_id = mobj.group('provider_id')
+        feed_id = mobj.group('feed_id')
+        filter_query = mobj.group('filter')
+
+        return self._extract_feed_info(provider_id, feed_id, filter_query, video_id)

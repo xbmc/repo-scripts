@@ -1,3 +1,8 @@
+*** 16.627.0 ***
+
+Updated youtube-dl core to 2016.06.27
+Downloads that fail to copy from temp to downloads now are kept in temp with a message
+
 *** 16.521.0 ***
 
 Updated youtube-dl core to 2016.05.21.2

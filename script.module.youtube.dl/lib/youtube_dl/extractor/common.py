@@ -45,6 +45,7 @@ from ..utils import (
     unescapeHTML,
     unified_strdate,
     url_basename,
+    xpath_element,
     xpath_text,
     xpath_with_ns,
     determine_protocol,
@@ -52,6 +53,7 @@ from ..utils import (
     mimetype2ext,
     update_Request,
     update_url_query,
+    parse_m3u8_attributes,
 )
 
 
@@ -747,10 +749,12 @@ class InfoExtractor(object):
         return self._og_search_property('url', html, **kargs)
 
     def _html_search_meta(self, name, html, display_name=None, fatal=False, **kwargs):
+        if not isinstance(name, (list, tuple)):
+            name = [name]
         if display_name is None:
-            display_name = name
+            display_name = name[0]
         return self._html_search_regex(
-            self._meta_regex(name),
+            [self._meta_regex(n) for n in name],
             html, display_name, fatal=fatal, group='content', **kwargs)
 
     def _dc_search_uploader(self, html):
@@ -874,7 +878,11 @@ class InfoExtractor(object):
                 f['ext'] = determine_ext(f['url'])
 
             if isinstance(field_preference, (list, tuple)):
-                return tuple(f.get(field) if f.get(field) is not None else -1 for field in field_preference)
+                return tuple(
+                    f.get(field)
+                    if f.get(field) is not None
+                    else ('' if field == 'format_id' else -1)
+                    for field in field_preference)
 
             preference = f.get('preference')
             if preference is None:
@@ -987,7 +995,7 @@ class InfoExtractor(object):
 
     def _extract_f4m_formats(self, manifest_url, video_id, preference=None, f4m_id=None,
                              transform_source=lambda s: fix_xml_ampersands(s).strip(),
-                             fatal=True):
+                             fatal=True, m3u8_id=None):
         manifest = self._download_xml(
             manifest_url, video_id, 'Downloading f4m manifest',
             'Unable to download f4m manifest',
@@ -1001,11 +1009,11 @@ class InfoExtractor(object):
 
         return self._parse_f4m_formats(
             manifest, manifest_url, video_id, preference=preference, f4m_id=f4m_id,
-            transform_source=transform_source, fatal=fatal)
+            transform_source=transform_source, fatal=fatal, m3u8_id=m3u8_id)
 
     def _parse_f4m_formats(self, manifest, manifest_url, video_id, preference=None, f4m_id=None,
                            transform_source=lambda s: fix_xml_ampersands(s).strip(),
-                           fatal=True):
+                           fatal=True, m3u8_id=None):
         # currently youtube-dl cannot decode the playerVerificationChallenge as Akamai uses Adobe Alchemy
         akamai_pv = manifest.find('{http://ns.adobe.com/f4m/1.0}pv-2.0')
         if akamai_pv is not None and ';' in akamai_pv.text:
@@ -1029,9 +1037,26 @@ class InfoExtractor(object):
             'base URL', default=None)
         if base_url:
             base_url = base_url.strip()
+
+        bootstrap_info = xpath_element(
+            manifest, ['{http://ns.adobe.com/f4m/1.0}bootstrapInfo', '{http://ns.adobe.com/f4m/2.0}bootstrapInfo'],
+            'bootstrap info', default=None)
+
         for i, media_el in enumerate(media_nodes):
-            if manifest_version == '2.0':
-                media_url = media_el.attrib.get('href') or media_el.attrib.get('url')
+            tbr = int_or_none(media_el.attrib.get('bitrate'))
+            width = int_or_none(media_el.attrib.get('width'))
+            height = int_or_none(media_el.attrib.get('height'))
+            format_id = '-'.join(filter(None, [f4m_id, compat_str(i if tbr is None else tbr)]))
+            # If <bootstrapInfo> is present, the specified f4m is a
+            # stream-level manifest, and only set-level manifests may refer to
+            # external resources.  See section 11.4 and section 4 of F4M spec
+            if bootstrap_info is None:
+                media_url = None
+                # @href is introduced in 2.0, see section 11.6 of F4M spec
+                if manifest_version == '2.0':
+                    media_url = media_el.attrib.get('href')
+                if media_url is None:
+                    media_url = media_el.attrib.get('url')
                 if not media_url:
                     continue
                 manifest_url = (
@@ -1041,19 +1066,37 @@ class InfoExtractor(object):
                 # since bitrates in parent manifest (this one) and media_url manifest
                 # may differ leading to inability to resolve the format by requested
                 # bitrate in f4m downloader
-                if determine_ext(manifest_url) == 'f4m':
-                    formats.extend(self._extract_f4m_formats(
+                ext = determine_ext(manifest_url)
+                if ext == 'f4m':
+                    f4m_formats = self._extract_f4m_formats(
                         manifest_url, video_id, preference=preference, f4m_id=f4m_id,
-                        transform_source=transform_source, fatal=fatal))
+                        transform_source=transform_source, fatal=fatal)
+                    # Sometimes stream-level manifest contains single media entry that
+                    # does not contain any quality metadata (e.g. http://matchtv.ru/#live-player).
+                    # At the same time parent's media entry in set-level manifest may
+                    # contain it. We will copy it from parent in such cases.
+                    if len(f4m_formats) == 1:
+                        f = f4m_formats[0]
+                        f.update({
+                            'tbr': f.get('tbr') or tbr,
+                            'width': f.get('width') or width,
+                            'height': f.get('height') or height,
+                            'format_id': f.get('format_id') if not tbr else format_id,
+                        })
+                    formats.extend(f4m_formats)
                     continue
-            tbr = int_or_none(media_el.attrib.get('bitrate'))
+                elif ext == 'm3u8':
+                    formats.extend(self._extract_m3u8_formats(
+                        manifest_url, video_id, 'mp4', preference=preference,
+                        m3u8_id=m3u8_id, fatal=fatal))
+                    continue
             formats.append({
-                'format_id': '-'.join(filter(None, [f4m_id, compat_str(i if tbr is None else tbr)])),
+                'format_id': format_id,
                 'url': manifest_url,
-                'ext': 'flv',
+                'ext': 'flv' if bootstrap_info is not None else None,
                 'tbr': tbr,
-                'width': int_or_none(media_el.attrib.get('width')),
-                'height': int_or_none(media_el.attrib.get('height')),
+                'width': width,
+                'height': height,
                 'preference': preference,
             })
         return formats
@@ -1114,23 +1157,11 @@ class InfoExtractor(object):
             }]
         last_info = None
         last_media = None
-        kv_rex = re.compile(
-            r'(?P<key>[a-zA-Z_-]+)=(?P<val>"[^"]+"|[^",]+)(?:,|$)')
         for line in m3u8_doc.splitlines():
             if line.startswith('#EXT-X-STREAM-INF:'):
-                last_info = {}
-                for m in kv_rex.finditer(line):
-                    v = m.group('val')
-                    if v.startswith('"'):
-                        v = v[1:-1]
-                    last_info[m.group('key')] = v
+                last_info = parse_m3u8_attributes(line)
             elif line.startswith('#EXT-X-MEDIA:'):
-                last_media = {}
-                for m in kv_rex.finditer(line):
-                    v = m.group('val')
-                    if v.startswith('"'):
-                        v = v[1:-1]
-                    last_media[m.group('key')] = v
+                last_media = parse_m3u8_attributes(line)
             elif line.startswith('#') or not line.strip():
                 continue
             else:
