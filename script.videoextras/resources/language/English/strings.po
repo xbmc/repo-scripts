@@ -176,7 +176,11 @@ msgctxt "#32037"
 msgid "Show VideoExtras On Context Menu (Restart Required)"
 msgstr ""
 
-#empty strings from id 32038 to 32100
+msgctxt "#32038"
+msgid "Show Extras After Movie Completes (Restart Required)"
+msgstr ""
+
+#empty strings from id 32039 to 32100
 
 msgctxt "#32101"
 msgid "Play All"

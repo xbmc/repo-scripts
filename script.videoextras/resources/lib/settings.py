@@ -218,3 +218,7 @@ class Settings():
     @staticmethod
     def disableVimeoSearchSupport():
         ADDON.setSetting("enableVimeoSearchSupport", "false")
+
+    @staticmethod
+    def showExtrasAfterMovie():
+        return ADDON.getSetting("showExtrasAfterMovie") == 'true'
