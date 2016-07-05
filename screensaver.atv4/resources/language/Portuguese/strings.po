@@ -9,88 +9,88 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: en\n"
+"Language: pt\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #settings labels
 
 msgctxt "#32000"
 msgid "Aerial Screensavers"
-msgstr ""
+msgstr "Aerial Screensavers"
 
 msgctxt "#32001"
 msgid "Enable Hawaai"
-msgstr ""
+msgstr "Ativar Hawaai"
 
 msgctxt "#32002"
 msgid "Enable London"
-msgstr ""
+msgstr "Ativar Londres"
 
 msgctxt "#32003"
 msgid "Enable New York"
-msgstr ""
+msgstr "Ativar Nova Iorque"
 
 msgctxt "#32004"
 msgid "Enable San Francisco"
-msgstr ""
+msgstr "Ativar São Francisco"
 
 msgctxt "#32005"
 msgid "Enable China"
-msgstr ""
+msgstr "Ativar China"
 
 msgctxt "#32006"
 msgid "Time of day for videos"
-msgstr ""
+msgstr "Tempo do dia para os videos"
 
 msgctxt "#32007"
 msgid "No videos that match your criteria have been found"
-msgstr ""
+msgstr "Não existem videos que vão de encontro aos critérios de pesquisa"
 
 msgctxt "#32008"
 msgid "Getting video list..."
-msgstr ""
+msgstr "A obter videos..."
 
 msgctxt "#32009"
 msgid "Offline mode"
-msgstr ""
+msgstr "Modo Offline"
 
 msgctxt "#32010"
 msgid "Download folder"
-msgstr ""
+msgstr "Pasta de Transferências"
 
 msgctxt "#32011"
 msgid "Download Videos"
-msgstr ""
+msgstr "Transferir Vídeos"
 
 msgctxt "#32012"
 msgid "No videos found"
-msgstr ""
+msgstr "Não foram encontrados videos"
 
 msgctxt "#32013"
 msgid "You need to define a download folder."
-msgstr ""
+msgstr "É necessário definir a pasta de transferencias"
 
 msgctxt "#32014"
 msgid "Choose locations to download videos for:"
-msgstr ""
+msgstr "Escolher locais para transferencia de videos"
 
 msgctxt "#32015"
 msgid "downloaded"
-msgstr ""
+msgstr "transferidos"
 
 msgctxt "#32016"
 msgid "Time left:"
-msgstr ""
+msgstr "Tempo restante:"
 
 msgctxt "#32017"
 msgid "Instantiated. Please wait..."
-msgstr ""
+msgstr "Iniciado. Por favor aguarde..."
 
 msgctxt "#32018"
 msgid "Show start notification"
-msgstr ""
+msgstr "Mostrar notificação inicial"
 
 msgctxt "#32019"
 msgid "Checking which videos to download..."
-msgstr ""
+msgstr "A verificar que vídeos transferir"
 

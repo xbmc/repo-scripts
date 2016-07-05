@@ -23,6 +23,8 @@ import xbmcaddon
 import xbmcgui
 import os
 import time
+import json
+import hashlib
 from commonatv import *
 
 
@@ -34,10 +36,23 @@ class Downloader:
 
     def downloadall(self,urllist):
         self.dp = xbmcgui.DialogProgress()
-        self.dp.create(translate(32000))
+        self.dp.create(translate(32000),translate(32019))
+        #video checksums - download only the videos that were not downloaded previously
+        f=open(os.path.join(addon_path,"resources","checksums.json"))
+        checksums = f.read()
+        f.close()
+        checksums = json.loads(checksums)
+        print checksums
         for url in urllist:
             if not self.stop:
-                self.download(os.path.join(addon.getSetting("download-folder"),url.split("/")[-1]),url,url.split("/")[-1])
+                video_file = url.split("/")[-1]
+                localfile = os.path.join(addon.getSetting("download-folder"),video_file)
+                if os.path.exists(localfile):
+                    file_checksum = hashlib.md5(open(localfile, 'rb').read()).hexdigest()
+                    if video_file in checksums.keys() and checksums[video_file] != file_checksum:
+                       self.download(localfile,url,url.split("/")[-1]) 
+                else:
+                    self.download(localfile,url,url.split("/")[-1])
             else: break
 
 

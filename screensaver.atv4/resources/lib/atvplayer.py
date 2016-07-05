@@ -22,13 +22,19 @@ import xbmcgui
 import playlist
 
 class ATVPlayer(xbmc.Player):
-	def __init__(self,):
-		xbmc.log(msg='ATV4 Screensaver player has been created', level=xbmc.LOGDEBUG)
-
-	def onPlayBackStarted(self):
-		xbmc.log(msg='ATV4 Screensaver player has started. Toggling repeatAll', level=xbmc.LOGDEBUG)
+    def __init__(self,):
+        xbmc.log(msg='ATV4 Screensaver player has been created', level=xbmc.LOGDEBUG)
+    
+    def onPlayBackStarted(self):
+        xbmc.log(msg='ATV4 Screensaver player has started. Toggling repeatAll', level=xbmc.LOGDEBUG)
         xbmc.executebuiltin("PlayerControl(RepeatAll)")
 
-	def onPlayBackStopped(self):
-		xbmc.log(msg='ATV4 Screensaver player has been stopped', level=xbmc.LOGDEBUG)
-		return
+    def onPlaybackEnded(self):
+        self.onPlayBackStopped()
+
+    def onPlayBackStopped(self):
+        try:
+            xbmc.log(msg='ATV4 Screensaver player has been stopped', level=xbmc.LOGDEBUG)
+            xbmc.executebuiltin("PlayerControl(RepeatOff)", True)
+        except:
+            pass
