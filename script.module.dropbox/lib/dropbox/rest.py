@@ -412,5 +412,9 @@ def params_to_urlencoded(params):
             return o.encode('utf8')
         else:
             return str(o)
-    utf8_params = {encode(k): encode(v) for k, v in params.iteritems()}
+
+    utf8_params = {}
+    for k, v in params.iteritems():
+        utf8_params[encode(k)] = encode(v)
+
     return urllib.urlencode(utf8_params)
