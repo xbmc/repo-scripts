@@ -1,3 +1,7 @@
+[B]Version 2.2.2[/B]
+
+- Fix utf8_params in rest API (affected android only)
+
 [B]Version 2.2.1[/B]
 
 - Fix version numbers
