@@ -225,6 +225,94 @@ def checkVimeoSettings():
             Settings.disableVimeoSearchSupport()
 
 
+# Monitor the video player for completed videos
+class VideoExtrasPlayerMonitor(xbmc.Player):
+    def onPlayBackStopped(self):
+        self.checkIfVideoExtrasDisplay()
+
+    def onPlayBackEnded(self):
+        self.checkIfVideoExtrasDisplay()
+
+    def checkIfVideoExtrasDisplay(self):
+        # Check if the item that was played was a movie
+        if xbmc.getInfoLabel("ListItem.dbtype") != 'movie':
+            log("VideoExtrasPlayerMonitor: Was not a movie playing")
+            return
+
+        dbid = xbmc.getInfoLabel("ListItem.DBID")
+
+        if dbid in [None, ""]:
+            log("VideoExtrasPlayerMonitor: No DBID")
+            return
+
+        # Get the details for the extras
+        title = xbmc.getInfoLabel("ListItem.Title")
+        file = xbmc.getInfoLabel("ListItem.FilenameAndPath")
+        if file in [None, ""]:
+            file = xbmc.getInfoLabel("ListItem.Path")
+        if file in [None, ""]:
+            log("VideoExtrasPlayerMonitor: Unable to find playing file")
+            return
+
+        log("VideoExtrasPlayerMonitor: searching for: %s = %s" % (title, file))
+        videoExtras = VideoExtrasBase(file, Settings.MOVIES, title)
+        # Only checking for the existence of extras - no need for DB or default Fanart
+        firstExtraFile = videoExtras.findExtras(True)
+        del videoExtras
+
+        if not firstExtraFile:
+            log("VideoExtrasPlayerMonitor: No extras for %s" % file)
+            return
+
+        # So there are extras, so now check to see if the movie was actually
+        # completely viewed, we only want to display the extras for the movie
+        # if the whole thing was viewed
+
+        # It can take a little while for the database to be updated, so we need
+        # to keep trying for a little while (3 seconds)
+        playcount = None
+        resumePosition = None
+        lastResumeValue = None
+        i = 30
+        while (i > 0) and (not xbmc.abortRequested):
+            json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetMovieDetails", "params": {"movieid":%s, "properties": ["playcount", "resume"] },  "id": 1}' % str(dbid))
+            json_query = unicode(json_query, 'utf-8', errors='ignore')
+            json_query = simplejson.loads(json_query)
+
+            if ("result" in json_query) and ('moviedetails' in json_query['result']):
+                # Get the movie details from the response
+                movieDetails = json_query['result']['moviedetails']
+                if movieDetails in [None, ""]:
+                    return
+                log("VideoExtrasPlayerMonitor: Database details: %s" % str(movieDetails))
+                # Get the playcount
+                playcount = movieDetails['playcount']
+
+                if playcount not in [None, "", 0, "0"]:
+                    # As well as the playcount, we want to check if there is any resume data
+                    resumePosition = movieDetails['resume']['position']
+                    # May take a little while for the resume to be updated, so we can wait for either
+                    # it changing or the timeout expires
+                    if lastResumeValue in [None, ""]:
+                        lastResumeValue = resumePosition
+                    elif lastResumeValue != resumePosition:
+                        if resumePosition not in ["0", 0]:
+                            playcount = None
+                        break
+
+            i = i - 1
+            xbmc.sleep(100)
+
+        if (playcount in [None, "", 0, "0"]) or (resumePosition not in [None, "0", 0]):
+            log("VideoExtrasPlayerMonitor: Movie was not completed, no need to show extras")
+            return
+
+        # If we reach here, then we should show the extras
+        log("VideoExtras: Showing extras for %s" % file)
+        cmd = 'RunScript(script.videoextras,display,"%s")' % file
+        xbmc.executebuiltin(cmd)
+
+
 ###################################
 # Main of the Video Extras Service
 ###################################
@@ -280,4 +368,9 @@ if __name__ == '__main__':
         # Clean any cached extras
         CacheCleanup.removeAllCachedFiles()
 
-    # Now just let the service exit - it has done it's job
+    # Track if videos finish, and auto display the video extras if required
+    if Settings.showExtrasAfterMovie():
+        playerMonitor = VideoExtrasPlayerMonitor()
+        while not xbmc.abortRequested:
+            xbmc.sleep(1000)
+        del playerMonitor

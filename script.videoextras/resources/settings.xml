@@ -8,6 +8,7 @@
 		<setting id="detailedList" type="bool" label="32025" default="true"/>
 		<setting id="extrasReturn" visible="eq(-1,false)" type="labelenum" label="32006" lvalues="32007|32008|32001|32009" default="32007" />
 		<setting id="detailedReturn" visible="eq(-2,true)" type="labelenum" label="32026" lvalues="32007|32008|32009" default="32007" />
+		<setting id="showExtrasAfterMovie" type="bool" label="32038" default="false"/>
 		<setting label="32023" type="lsep"/>
 		<setting label="32030" type="action" option="close" action="RunScript($CWD/advsettings.py)"/>
 	</category>
