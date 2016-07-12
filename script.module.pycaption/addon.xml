@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.module.pycaption"
+       name="pycaption"
+       version="0.5.5"
+       provider-name="">
+  <requires>
+    <import addon="xbmc.python" version="2.1.0"/>
+    <import addon="script.module.cssutils" version="1.0"/>
+    <import addon="script.module.beautifulsoup4" version="4.3.2"/>
+  </requires>
+  <extension point="xbmc.python.module" library="lib" />
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en">Python caption reading/writing module</summary>
+    <description lang="en">pycaption is a caption reading/writing module. Use one of the given Readers to read content into a CaptionSet object, and then use one of the Writers to output the CaptionSet into captions of your desired format.</description>
+    <disclaimer lang="en"></disclaimer>
+    <language>en</language>
+    <platform>all</platform>
+    <license>Apache License, Version 2.0</license>
+	<forum></forum>
+	<website>https://pypi.python.org/pypi/pycaption</website>
+	<email></email>
+	<source>https://github.com/pbs/pycaption</source>
+  </extension>
+</addon>
