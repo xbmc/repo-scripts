@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.module.cssutils"
+       name="cssutils"
+       version="1.0"
+       provider-name="">
+  <requires>
+    <import addon="xbmc.python" version="2.1.0"/>
+  </requires>
+  <extension point="xbmc.python.module" library="lib" />
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en">A Python package to parse and build CSS Cascading Style Sheets.</summary>
+    <description lang="en">A Python package to parse and build CSS Cascading Style Sheets. DOM only, not any rendering facilities!</description>
+    <disclaimer lang="en"></disclaimer>
+    <language>en</language>
+    <platform>all</platform>
+    <license>LGPLv3</license>
+    <forum></forum>
+    <website>http://cthedot.de/cssutils/</website>
+	<email></email>
+    <source>https://bitbucket.org/cthedot/cssutils/downloads</source>
+  </extension>
+</addon>
