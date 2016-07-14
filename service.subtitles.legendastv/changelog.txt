@@ -1,0 +1,33 @@
+2.3.0
+- Fix: use IMDB to filter results, if possible
+- Add: Use TheTVDB to retrieve tv shows original titles
+
+2.2.5
+- Fix cleanup
+- Fix string in pt_PT (thanks to Mafarricos)
+- Fix manual search not working with tv shows
+- Add batch import of subtitle packs
+
+2.2.4
+- Added login support (thanks to Eduardo Franceschi)
+- Highlights are now displayed correctly
+
+2.2.3
+- Change the way pack's are detected
+
+2.2.2
+- Fix a bug with stream sites not parsing a valid filename (thanks to Mafarricos)
+
+2.2.1
+- Fix: Portuguese subtitles not displayed (tnx to Carlos Correia)
+- Implemented: Changing the language predilection at addon preferences (tnx to Carlos Correia)
+- Fix: small string fix (tnx to Carlos Correia)
+- Fix: Language sorting
+- Implement manual search 
+- Workaround: Android not parsing filesystem encoding
+
+2.2.0
+- Fix: decompressing the downloaded subtitle
+
+2.1.2
+- Move the service out of XBMC Subtitles
