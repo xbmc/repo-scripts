@@ -1,0 +1,285 @@
+# Kodi Media Center language file
+# Addon Name: Matchcenter
+# Addon id: script.matchcenter
+# Addon Provider: enen92
+msgid ""
+msgstr ""
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: pt\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#32000"
+msgid "Match Center"
+msgstr "Match Center"
+
+msgctxt "#32001"
+msgid "Livescores"
+msgstr "Ao vivo"
+
+msgctxt "#32002"
+msgid "Timezone"
+msgstr "Timezone"
+
+msgctxt "#32003"
+msgid "Ignore Leagues"
+msgstr "Ignorar Ligas"
+
+msgctxt "#32004"
+msgid "Livescores update time (min)"
+msgstr "Intervalo de actualização dos resultados ao vivo (min)"
+
+msgctxt "#32005"
+msgid "Hide matches that have not started"
+msgstr "Esconder jogos que não começaram"
+
+msgctxt "#32006"
+msgid "Hide matches that have finished"
+msgstr "Esconder jogos que já terminaram"
+
+msgctxt "#32007"
+msgid "League Tables"
+msgstr "Classificações"
+
+msgctxt "#32008"
+msgid "Use alternative name for teams"
+msgstr "Usar nome alternativo para as equipas"
+
+msgctxt "#32009"
+msgid "Leagues have been enabled/disabled."
+msgstr "As ligas foram activadas/desactivadas."
+
+msgctxt "#32010"
+msgid "Twitter"
+msgstr "Twitter"
+
+msgctxt "#32011"
+msgid "Twitter update time (min)"
+msgstr "Intervalo de actualização das mensagens do twitter (min)"
+
+msgctxt "#32012"
+msgid "Save twitter hashtags when playing media"
+msgstr "Guardar hashtags do twitter quando se encontra a reproduzir ficheiros multimédia"
+
+msgctxt "#32013"
+msgid "Keymap"
+msgstr "Keymap"
+
+msgctxt "#32014"
+msgid "Define a remote keymap to start the addon"
+msgstr "Definir uma keymap do telecomando para iniciar o addon"
+
+msgctxt "#32015"
+msgid "General"
+msgstr "Geral"
+
+msgctxt "#32016"
+msgid "LOADING..."
+msgstr "A CARREGAR..."
+
+msgctxt "#32017"
+msgid "Round"
+msgstr "Jornada"
+
+msgctxt "#32018"
+msgid "No live games at the moment."
+msgstr "Não existem jogos neste momento."
+
+msgctxt "#32019"
+msgid "Finished"
+msgstr "Terminou"
+
+msgctxt "#32020"
+msgid "Halftime"
+msgstr "Intervalo"
+
+msgctxt "#32021"
+msgid "Postponed"
+msgstr "Adiado"
+
+msgctxt "#32022"
+msgid "Not started"
+msgstr "Não começou"
+
+msgctxt "#32023"
+msgid "Referee"
+msgstr "Arbitro"
+
+msgctxt "#32024"
+msgid "Spectators"
+msgstr "Espectadores"
+
+msgctxt "#32025"
+msgid "N/A"
+msgstr "N/D"
+
+msgctxt "#32026"
+msgid "Coach"
+msgstr "Treinador"
+
+msgctxt "#32027"
+msgid "Away Team"
+msgstr "Equipa Visitante"
+
+msgctxt "#32028"
+msgid "Home Team"
+msgstr "Equipa da Casa"
+
+msgctxt "#32029"
+msgid "Squad"
+msgstr "Equipa Principal"
+
+msgctxt "#32030"
+msgid "Substitutes"
+msgstr "Banco"
+
+msgctxt "#32031"
+msgid "Match Details"
+msgstr "Detalhes"
+
+msgctxt "#32032"
+msgid "Home Team Line up"
+msgstr "Formação Visitado"
+
+msgctxt "#32033"
+msgid "Away Team Line up"
+msgstr "Formação Visitante"
+
+msgctxt "#32034"
+msgid "PTS"
+msgstr "PTS"
+
+msgctxt "#32035"
+msgid "GD"
+msgstr "DG"
+
+msgctxt "#32036"
+msgid "GC"
+msgstr "GS"
+
+msgctxt "#32037"
+msgid "GS"
+msgstr "GM"
+
+msgctxt "#32038"
+msgid "L"
+msgstr "D"
+
+msgctxt "#32039"
+msgid "D"
+msgstr "E"
+
+msgctxt "#32040"
+msgid "W"
+msgstr "V"
+
+msgctxt "#32041"
+msgid "T"
+msgstr "T"
+
+msgctxt "#32042"
+msgid "Reset"
+msgstr "Reset"
+
+msgctxt "#32043"
+msgid "Next Matches:"
+msgstr "Próximos jogos:"
+
+msgctxt "#32044"
+msgid "Latest Matches:"
+msgstr "Últimos jogos:"
+
+msgctxt "#32045"
+msgid "Twitter hashtag has been reset."
+msgstr "A hashtag do twitter foi eliminada"
+
+msgctxt "#32046"
+msgid "Enter twitter hashtag:"
+msgstr "Introduza a hashtag:"
+
+msgctxt "#32047"
+msgid "Twitter hashtag cannot be null."
+msgstr "A hashtag não pode ser vazia."
+
+msgctxt "#32048"
+msgid "Setting successfully changed"
+msgstr "Definição alterada com sucesso"
+
+msgctxt "#32049"
+msgid "Please restart Kodi."
+msgstr "Por favor reinicie o Kodi."
+
+msgctxt "#32050"
+msgid "Timeout in"
+msgstr "Timeout em"
+
+msgctxt "#32051"
+msgid "seconds..."
+msgstr "segundos..."
+
+msgctxt "#32052"
+msgid "Confirm"
+msgstr "Confirmar"
+
+msgctxt "#32053"
+msgid "Close"
+msgstr "Fechar"
+
+msgctxt "#32054"
+msgid "ago"
+msgstr "atrás"
+
+msgctxt "#32055"
+msgid "and"
+msgstr "e"
+
+msgctxt "#32056"
+msgid "day"
+msgstr "dia"
+
+msgctxt "#32057"
+msgid "days"
+msgstr "dias"
+
+msgctxt "#32058"
+msgid "hour"
+msgstr "hora"
+
+msgctxt "#32059"
+msgid "hours"
+msgstr "horas"
+
+msgctxt "#32060"
+msgid "minute"
+msgstr "minuto"
+
+msgctxt "#32061"
+msgid "minutes"
+msgstr "minutos"
+
+msgctxt "#32062"
+msgid "second"
+msgstr "segundo"
+
+msgctxt "#32063"
+msgid "seconds"
+msgstr "segundos"
+
+msgctxt "#32064"
+msgid "Match Id does not exist"
+msgstr "Match Id não existe"
+
+msgctxt "#32065"
+msgid "This function allows you to start the addon by pressing a key on your remote control. To use this function you need to use the Keymap Editor addon from the official repository. Match Center will start it automatically for you once you close this dialog. Once the Keymap editor addon starts you need to follow the following instructions.[CR][CR]1) Select edit[CR]2) Select global[CR]3) Select addons [CR]4) Select \"Launch MatchCenter\"[CR]5)Press any key on your remote control[CR]6)Go back three times[CR]7)Hit save[CR][CR]After a Kodi reboot you can start this addon by just pressing the key you selected"
+msgstr "Esta função permite-lhe que inicie o addon pressionando um determinado botão no seu comando. Para utilizar esta funcionalidade necessita de utilizar o addon KeyMap editor disponível no repositório oficial do Kodi. O Match Center irá iniciar esse addon automaticamente assim que fechar a corrente janela. Assim que o Keymap editor addon iniciar faça o seguinte:[CR][CR]1) Seleccione editar[CR]2) Seleccione global[CR]3) Seleccione addons [CR]4) Seleccione \"Iniciar MatchCenter\"[CR]5)Pressione a tecla desejada no seu comando[CR]6)Volte atrás três vezes.[CR]7)Clique em salvar[CR][CR]Após o reboot do Kodi, poderá iniciar este addon apenas pressionando a tecla que escolheu previamente."
+
+msgctxt "#32066"
+msgid "An error has occured. Please provide a log file to the developer."
+msgstr "Ocorreu um erro. Por favor forneca um ficheiro de log ao desenvolvedor para correcao."
+
+msgctxt "#32067"
+msgid "Are you sure you want to define a keymap for this addon?"
+msgstr "Tem a certeza que deseja definir um novo Keymap para este addon?"

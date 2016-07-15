@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.matchcenter" name="Match center" version="2.0.0" provider-name="enen92">
+	<requires>
+		<import addon="xbmc.python" version="2.25.0"/>
+		<import addon="script.module.thesportsdb" version="1.0.1"/>
+		<import addon="script.module.pytz" version="2014.2"/>
+		<import addon="script.module.twitter" version="1.17.1"/>
+		<import addon="script.keymap" version="1.0.10"/>
+	</requires>
+	<extension point="xbmc.python.script" library="main.py" />
+	<extension point="xbmc.addon.metadata">
+		<platform>all</platform>
+		<website>http://www.thesportsdb.com/</website>
+		<source>https://github.com/enen92/script.matchcenter</source>
+		<forum>http://forum.kodi.tv/showthread.php?tid=238039</forum>
+		<summary lang="en">Extended football match information</summary>
+		<summary lang="pt">Informação extra para encontros de futebol</summary>
+		<description lang="en">This addon brings a window that can be mapped to a remote key to show livescores for the current live football games, access match information (goals, cards, subs, lineups) or follow what others are saying about the match in twitter.[CR][CR]Powered by: http://www.thesportsdb.com</description>
+		<description lang="pt">Este addon apresenta uma janela (que pode ser mapeada a um botão do comando) para apresentar os resultados ao vivo dos jogos de futebol, aceder a informação relaccionada com o jogo em questão (golos, cartões, substituições, equipa titular) ou aquilo que os outros estão a dizer acerca do jogo no twitter. [CR][CR]Suportado por: http://www.thesportsdb.com</description>
+    </extension>
+</addon>
