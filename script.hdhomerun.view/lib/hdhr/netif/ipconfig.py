@@ -9,33 +9,34 @@ def parse(data=None):
     sections = []
     while dlist:
         d = dlist.pop(0)
-        if not d:
-            if mode == 'HEADING':
-                mode = 'DATA'
-            else:
-                mode = 'HEADING'
-            continue
-        elif mode == 'HEADING':
-            sections.append({'name':d.strip('.: ')})
-        elif mode == 'DATA':
-            if d.endswith(':'):
-                k = d.strip(':. ')
-                mode = 'VALUE:' + k
-                sections[-1][k] = ''
-            else:
-                k,v = d.split(':',1)
-                k = k.strip(':. ')
-                mode = 'VALUE:' + k
-                v = v.replace('(Preferred)','')
-                sections[-1][k] = v.strip()
-        elif mode and mode.startswith('VALUE:'):
-            if not d.startswith('        '):
-                mode = 'DATA'
-                dlist.insert(0,d)
+        try:
+            if not d:
                 continue
-            k = mode.split(':',1)[-1]
-            v = d.replace('(Preferred)','')
-            sections[-1][k] += ',' + v.strip()
+            elif not d.startswith(' '):
+                sections.append({'name':d.strip('.: ')})
+            elif d.startswith(' '):
+                if d.endswith(':'):
+                    k = d.strip(':. ')
+                    mode = 'VALUE:' + k
+                    sections[-1][k] = ''
+                elif ':' in d:
+                    k,v = d.split(':',1)
+                    k = k.strip(':. ')
+                    mode = 'VALUE:' + k
+                    v = v.replace('(Preferred)','')
+                    sections[-1][k] = v.strip()
+            elif mode and mode.startswith('VALUE:'):
+                if not d.startswith('        '):
+                    mode = None
+                    dlist.insert(0,d)
+                    continue
+                k = mode.split(':',1)[-1]
+                v = d.replace('(Preferred)','')
+                sections[-1][k] += ',' + v.strip()
+        except:
+            print d
+            raise
+
     return sections[1:]
 
 def getStartupInfo():

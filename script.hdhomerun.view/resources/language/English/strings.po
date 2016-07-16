@@ -372,3 +372,19 @@ msgstr ""
 msgctxt "#32842"
 msgid "EPISODE NAME"
 msgstr ""
+
+msgctxt "#32843"
+msgid "Movies"
+msgstr ""
+
+msgctxt "#32844"
+msgid "Sporting Events"
+msgstr ""
+
+msgctxt "#32845"
+msgid "MOVIE NAME"
+msgstr ""
+
+msgctxt "#32846"
+msgid "EVENT NAME"
+msgstr ""

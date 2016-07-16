@@ -70,7 +70,16 @@ class EpisodesDialog(kodigui.BaseDialog):
             self.storageServer.deleteRecording(item.dataSource)
 
     def setWindowProperties(self):
-        self.setProperty('sort.name.label', self.groupID and T(32842) or T(32815))
+        if self.groupID:
+            if self.groupID == 'movie':
+                self.setProperty('sort.name.label', T(32845))
+            elif self.groupID == 'sport':
+                self.setProperty('sort.name.label', T(32845))
+            else:
+                self.setProperty('sort.name.label', T(32842))
+        else:
+            self.setProperty('sort.name.label', T(32815))
+
         self.setProperty('sort.mode',self.sortMode)
         self.setProperty('sort.asc',self.sortASC and '1' or '')
 
@@ -548,7 +557,13 @@ class DVRBase(util.CronReceiver):
                 ct += 1
                 item.setProperty('show.count',str(ct))
             else:
-                item = kodigui.ManagedListItem(r.displayGroupTitle,r.seriesSynopsis,thumbnailImage=r.icon,data_source=r)
+                if r.category == 'movie':
+                    title = T(32843)
+                elif r.category == 'sport':
+                    title = T(32844)
+                else:
+                    title = r.seriesTitle
+                item = kodigui.ManagedListItem(title,r.seriesSynopsis,thumbnailImage=r.icon,data_source=r)
                 item.setProperty('show.count','1')
                 item.setProperty('groupID',r.displayGroupID)
                 groups[r.displayGroupID] = item
@@ -558,8 +573,8 @@ class DVRBase(util.CronReceiver):
                     groupItems.append(item)
 
 
-        groupItems.sort(key=lambda x: util.sortTitle(x.dataSource.displayGroupTitle))
-        seriesItems.sort(key=lambda x: util.sortTitle(x.dataSource.displayGroupTitle))
+        groupItems.sort(key=lambda x: util.sortTitle(x.getLabel()))
+        seriesItems.sort(key=lambda x: util.sortTitle(x.getLabel()))
 
         items = groupItems + seriesItems
 

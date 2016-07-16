@@ -251,16 +251,22 @@ class Recording(guide.Episode):
         return self.get('EpisodeNumber', '')
 
     @property
-    def displayGroupID(self):
-        return self.get('DisplayGroupID')
+    def category(self):
+        return self.get('Category', self.get('DisplayGroupID'))
 
     @property
-    def displayGroupTitle(self):
-        return self.get('DisplayGroupTitle', '')
+    def displayGroupID(self):
+        if self.category:
+            if self.category in ('movie', 'sport'):
+                return self.category
+            else:
+                return self.seriesID
+        else:
+            return self.get('DisplayGroupID')
 
     @property
     def groupIsSeries(self):
-        return self.get('DisplayGroupID') == self.get('SeriesID')
+        return self.category not in ('movie', 'sport')
 
     @property
     def cmdURL(self):

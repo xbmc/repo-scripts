@@ -1,3 +1,8 @@
+** 2016.07.15 **
+
+Update for recordings API change
+Change column headings to 'MOVIE NAME' and 'EVENT NAME' when showing movies or sports respectively
+
 ** 2016.05.09 **
 
 Added setting 'Load recording at startup if DVR is detected' (default=disabled)
