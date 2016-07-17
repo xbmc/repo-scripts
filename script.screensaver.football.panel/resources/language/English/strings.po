@@ -75,3 +75,14 @@ msgstr ""
 msgctxt "#32015"
 msgid "Use alternative team name"
 msgstr ""
+
+msgctxt "#32016"
+msgid "OK"
+msgstr ""
+
+msgctxt "#32017"
+msgid "Cancel"
+msgstr ""
+
+
+

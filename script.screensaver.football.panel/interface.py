@@ -281,8 +281,17 @@ class Main(xbmcgui.WindowXMLDialog):
 		if action.getId() == 92 or action.getId() == 10:
 			self.stopRunning()
 
+def get_params():
+    pairsofparams = []
+    if len(sys.argv) >= 2:
+        params=sys.argv[1]
+        pairsofparams=params.split('/')
+        pairsofparams = [parm for parm in pairsofparams if parm]
+    return pairsofparams
 
-if not sys.argv[0]:
+params=get_params()
+
+if not params:
 	main = Main(
 			'script-livescores-Main.xml',
 			addon_path,
