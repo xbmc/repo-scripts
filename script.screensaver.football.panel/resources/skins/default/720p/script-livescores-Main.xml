@@ -259,10 +259,10 @@
 						<fadetime>0</fadetime>
 					</control>
 					<control type="label">
-						<width>80</width>
+						<width>100</width>
 						<height>20</height>
 						<posx>180</posx>
-						<posy>38</posy>
+						<posy>35</posy>
 						<align>center</align>
 						<font>font10</font>
 						<textcolor>FFF0F0F0</textcolor>
@@ -407,10 +407,10 @@
 						<fadetime>0</fadetime>
 					</control>
 					<control type="label">
-						<width>80</width>
+						<width>100</width>
 						<height>20</height>
 						<posx>180</posx>
-						<posy>38</posy>
+						<posy>35</posy>
 						<align>center</align>
 						<font>font10</font>
 						<textcolor>FFF0F0F0</textcolor>
@@ -566,10 +566,10 @@
 						<fadetime>0</fadetime>
 					</control>
 					<control type="label">
-						<width>80</width>
+						<width>100</width>
 						<height>20</height>
 						<posx>180</posx>
-						<posy>38</posy>
+						<posy>35</posy>
 						<align>center</align>
 						<font>font10</font>
 						<textcolor>FFF0F0F0</textcolor>
@@ -714,10 +714,10 @@
 						<fadetime>0</fadetime>
 					</control>
 					<control type="label">
-						<width>80</width>
+						<width>100</width>
 						<height>20</height>
 						<posx>180</posx>
-						<posy>38</posy>
+						<posy>35</posy>
 						<align>center</align>
 						<font>font10</font>
 						<textcolor>FFF0F0F0</textcolor>

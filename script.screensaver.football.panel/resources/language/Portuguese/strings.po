@@ -75,3 +75,11 @@ msgstr "Não apresentar jogos concluídos"
 msgctxt "#32015"
 msgid "Use alternative team name"
 msgstr "Usar nome alternativo da equipa"
+
+msgctxt "#32016"
+msgid "OK"
+msgstr "OK"
+
+msgctxt "#32017"
+msgid "Cancel"
+msgstr "Cancelar"

@@ -18,7 +18,7 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 '''
-
+import os
 import xbmcgui
 import thesportsdb
 from resources.lib import ssutils
@@ -36,6 +36,11 @@ class Select(xbmcgui.WindowXMLDialog):
 
 	def onInit(self):
 		self.getControl(1).setLabel(translate(32002))
+		#Krypton
+		if int(xbmc.getInfoLabel("System.BuildVersion")[0:2]) >= 17:
+			self.getControl(OPTIONS_OK).setLabel(translate(32016))
+			self.getControl(OPTIONS_CANCEL).setLabel(translate(32017))
+
 		leagues = api.Search().Leagues(sport="Soccer")
 		if leagues:
 			items = []
@@ -78,8 +83,14 @@ class Select(xbmcgui.WindowXMLDialog):
 				if item.getProperty("isIgnored") == "true":
 					ignored_items.append(removeNonAscii(item.getLabel().replace("[COLOR selected]","").replace("[/COLOR]","")))
 			
+			if not os.path.exists(addon_userdata):
+				os.mkdir(addon_userdata)
+
 			ssutils.write_file(ignored_league_list_file,str(ignored_items))
 			
 			self.close()
 			xbmcgui.Dialog().ok(translate(32000),translate(32009))
+
+		elif controlId == OPTIONS_CANCEL:
+			self.close()
 	
