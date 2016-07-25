@@ -24,6 +24,7 @@
         <setting id="maxNumWallImages" type="number" label="32160" default="20"/>
         <setting id="reuseWallBackgrounds" type="bool" label="32128" default="true" visible="eq(-2,true) + Skin.String(SkinHelper.RandomFanartDelay) + !Skin.String(SkinHelper.RandomFanartDelay,0)"/>
         <setting label="32129" type="action" action="RunScript(script.skin.helper.service,action=RESETCACHE,path=wallbackgrounds)"/>
+        <setting id="pvrBackgroundRecordingsOnly" type="bool" label="32196" default="false" visible="Skin.HasSetting(SkinHelper.EnablePVRThumbs) + PVR.HasTVChannels"/>
     </category>
     <category label="32122">
         <setting id="enableMusicArtScraper" type="bool" label="32123" default="true"/>
@@ -39,6 +40,8 @@
     <category label="32163">
         <setting id="enableWidgetsArtworkLookups" type="bool" label="32164" default="true"/>
         <setting id="enableSpecialsInWidgets" type="bool" label="32165" default="false"/>
+        <setting id="hideWatchedItemsInWidgets" type="bool" label="32189" default="true"/>
+        <setting id="nextupInprogressShowsOnly" type="bool" label="32190" default="true"/>
     </category>
     <category label="32179">
         <setting id="enablecontextmenu_music" type="bool" label="32180" default="true"/>

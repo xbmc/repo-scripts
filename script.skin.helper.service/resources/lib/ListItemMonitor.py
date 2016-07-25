@@ -37,6 +37,7 @@ class ListItemMonitor(threading.Thread):
     tmdbinfocache = {}
     omdbinfocache = {}
     imdb_top250 = {}
+    allWindowProps = []
     cachePath = os.path.join(ADDON_DATA_PATH,"librarycache.json")
     ActorImagesCachePath = os.path.join(ADDON_DATA_PATH,"actorimages.json")
     
@@ -66,6 +67,7 @@ class ListItemMonitor(threading.Thread):
         lastListItem = ""
         nextairedActive = False
         screenSaverSetting = None
+        screenSaverDisableActive = False
 
         while (self.exit != True):
         
@@ -89,14 +91,14 @@ class ListItemMonitor(threading.Thread):
                 playerItem = ""
                 lastPlayerItem = ""
             
-            if xbmc.getCondVisibility("Window.IsActive(visualisation) + Skin.HasSetting(SkinHelper.DisableScreenSaverOnFullScreenMusic)"):
-                #disable the screensaver if fullscreen music playback
-                if not screenSaverSetting:
-                    screenSaverSetting = getJSON('Settings.GetSettingValue', '{"setting":"screensaver.mode"}')
-                    if screenSaverSetting: setJSON('Settings.SetSettingValue', '{"setting":"screensaver.mode", "value": ""}')
-            elif screenSaverSetting: 
+            #disable the screensaver if fullscreen music playback
+            if xbmc.getCondVisibility("Window.IsActive(visualisation) + Skin.HasSetting(SkinHelper.DisableScreenSaverOnFullScreenMusic)") and not screenSaverDisableActive:
+                screenSaverSetting = getJSON('Settings.GetSettingValue', '{"setting":"screensaver.mode"}')
+                setJSON('Settings.SetSettingValue', '{"setting":"screensaver.mode", "value": ""}')
+                screenSaverDisableActive = True
+            elif screenSaverSetting and screenSaverDisableActive: 
                 setJSON('Settings.SetSettingValue', '{"setting":"screensaver.mode", "value": "%s"}' %screenSaverSetting)        
-                screenSaverSetting = None
+                screenSaverDisableActive = False
                 
             #auto close OSD after X seconds of inactivity
             if xbmc.getCondVisibility("Window.IsActive(videoosd) | Window.IsActive(musicosd)"):
@@ -139,10 +141,13 @@ class ListItemMonitor(threading.Thread):
                 WINDOW.clearProperty("SkinHelper.PVR.ArtWork")
                 WINDOW.clearProperty("resetPvrArtCache")
             
-            if xbmc.getCondVisibility("[Window.IsMedia | !IsEmpty(Window(Home).Property(SkinHelper.WidgetContainer))]") and not self.exit:
+            if xbmc.getCondVisibility("[Window.IsActive(movieinformation) | Window.IsMedia | !IsEmpty(Window(Home).Property(SkinHelper.WidgetContainer))]") and not self.exit:
                 try:
                     widgetContainer = WINDOW.getProperty("SkinHelper.WidgetContainer").decode('utf-8')
-                    if widgetContainer: 
+                    if xbmc.getCondVisibility("Window.IsActive(movieinformation)"): 
+                        self.widgetContainerPrefix = ""
+                        curFolder = xbmc.getInfoLabel("movieinfo-$INFO[Container.FolderPath]$INFO[Container.NumItems]$INFO[Container.Content]").decode('utf-8')
+                    elif widgetContainer: 
                         self.widgetContainerPrefix = "Container(%s)."%widgetContainer
                         curFolder = xbmc.getInfoLabel("widget-%s-$INFO[Container(%s).NumItems]" %(widgetContainer,widgetContainer)).decode('utf-8')
                     else: 
@@ -171,8 +176,8 @@ class ListItemMonitor(threading.Thread):
                             self.setForcedView()
                             self.setContentHeader()
                             
-                curListItem = curFolder + self.liLabel + self.liTitle
-                WINDOW.setProperty("curListItem",curListItem)
+                curListItem ="%s--%s--%s--%s" %(curFolder, self.liLabel, self.liTitle, self.contentType)
+                WINDOW.setProperty("curListItem",try_encode(curListItem))
 
                 #only perform actions when the listitem has actually changed
                 if curListItem and curListItem != lastListItem and self.contentType:
@@ -196,7 +201,7 @@ class ListItemMonitor(threading.Thread):
                                 logMsg("ERROR in setMusicDetails ! --> " + str(e), 0)
                         
                         # monitor listitem props for video content
-                        elif self.contentType in ["movies","setmovies","tvshows","seasons","episodes","sets"]:
+                        elif self.contentType in ["movies","setmovies","tvshows","seasons","episodes","sets","musicvideos"]:
                             try:
                                 self.liDbId = xbmc.getInfoLabel("%sListItem.DBID"%self.widgetContainerPrefix).decode('utf-8')
                                 if not self.liDbId or self.liDbId == "-1": self.liDbId = xbmc.getInfoLabel("%sListItem.Property(DBID)"%self.widgetContainerPrefix).decode('utf-8')
@@ -299,7 +304,10 @@ class ListItemMonitor(threading.Thread):
         if data.has_key("SetsCache"):
             self.moviesetCache = data["SetsCache"]
         if data.has_key("tmdbinfocache"):
-            self.tmdbinfocache = data["tmdbinfocache"]
+            #we only want movies older than 2 years from the permanent tmdb cache...
+            for key, value in data["tmdbinfocache"].iteritems():
+                if value.get("release_year") and int(value["release_year"]) < datetime.now().year -1:
+                    self.tmdbinfocache[key] = value
             
         #actorimagescache
         data = getDataFromCacheFile(self.ActorImagesCachePath)
@@ -381,139 +389,9 @@ class ListItemMonitor(threading.Thread):
         WINDOW.setProperty("SkinHelper.TotalRadioChannels",str(allRadioChannelsCount))        
                
     def resetWindowProps(self):
-        #reset all window props provided by the script...
-        WINDOW.clearProperty("SkinHelper.ListItemStudioLogo")
-        WINDOW.clearProperty("SkinHelper.ListItemStudioLogoColor")
-        WINDOW.clearProperty("SkinHelper.ListItemStudio")
-        WINDOW.clearProperty("SkinHelper.ListItemStudios")
-        WINDOW.clearProperty('SkinHelper.ListItemDuration')
-        WINDOW.clearProperty('SkinHelper.ListItemDuration.Hours')
-        WINDOW.clearProperty('SkinHelper.ListItemDuration.Minutes')
-        WINDOW.clearProperty('SkinHelper.ListItemSubtitles')
-        WINDOW.clearProperty('SkinHelper.ListItemSubtitles.Count')
-        WINDOW.clearProperty('SkinHelper.ListItemAllAudioStreams')
-        WINDOW.clearProperty('SkinHelper.ListItemAllAudioStreams.Count')
-        WINDOW.clearProperty('SkinHelper.ListItemLanguages')
-        WINDOW.clearProperty('SkinHelper.ListItemLanguages.Count')
-        WINDOW.clearProperty('SkinHelper.ListItemAudioStreams.Count')
-        WINDOW.clearProperty('SkinHelper.ListItemGenres')
-        WINDOW.clearProperty('SkinHelper.ListItemDirectors')
-        WINDOW.clearProperty('SkinHelper.ListItemVideoHeight')
-        WINDOW.clearProperty('SkinHelper.ListItemVideoWidth')
-        WINDOW.clearProperty('SkinHelper.ListItemTags')
-        WINDOW.clearProperty("SkinHelper.ExtraFanArtPath")
-        WINDOW.clearProperty("SkinHelper.Music.Banner") 
-        WINDOW.clearProperty("SkinHelper.Music.ClearLogo") 
-        WINDOW.clearProperty("SkinHelper.Music.DiscArt")
-        WINDOW.clearProperty("SkinHelper.Music.FanArt")
-        WINDOW.clearProperty("SkinHelper.Music.Thumb")
-        WINDOW.clearProperty("SkinHelper.Music.ArtistThumb")
-        WINDOW.clearProperty("SkinHelper.Music.AlbumThumb")
-        WINDOW.clearProperty("SkinHelper.Music.Info")
-        WINDOW.clearProperty("SkinHelper.Music.TrackList")
-        WINDOW.clearProperty("SkinHelper.Music.SongCount")
-        WINDOW.clearProperty("SkinHelper.Music.albumCount")
-        WINDOW.clearProperty("SkinHelper.Music.AlbumList")
-        WINDOW.clearProperty("SkinHelper.Music.ExtraFanArt")
-        WINDOW.clearProperty("SkinHelper.PVR.Thumb") 
-        WINDOW.clearProperty("SkinHelper.PVR.FanArt") 
-        WINDOW.clearProperty("SkinHelper.PVR.ChannelLogo")
-        WINDOW.clearProperty("SkinHelper.PVR.Poster")
-        WINDOW.clearProperty("SkinHelper.PVR.Landscape")
-        WINDOW.clearProperty("SkinHelper.PVR.ClearArt")
-        WINDOW.clearProperty("SkinHelper.PVR.CharacterArt") 
-        WINDOW.clearProperty("SkinHelper.PVR.ClearLogo")
-        WINDOW.clearProperty("SkinHelper.PVR.Banner")
-        WINDOW.clearProperty("SkinHelper.PVR.DiscArt")
-        WINDOW.clearProperty("SkinHelper.PVR.Plot")
-        WINDOW.clearProperty("SkinHelper.PVR.Channel")
-        WINDOW.clearProperty("SkinHelper.PVR.Genre")
-        WINDOW.clearProperty("SkinHelper.PVR.ExtraFanArt")
-        WINDOW.clearProperty("SkinHelper.Player.AddonName")
-        WINDOW.clearProperty("SkinHelper.ForcedView")
-        WINDOW.clearProperty('SkinHelper.MovieSet.Title')
-        WINDOW.clearProperty('SkinHelper.MovieSet.Runtime')
-        WINDOW.clearProperty('SkinHelper.MovieSet.Duration')
-        WINDOW.clearProperty('SkinHelper.MovieSet.Duration.Hours')
-        WINDOW.clearProperty('SkinHelper.MovieSet.Duration.Minutes')
-        WINDOW.clearProperty('SkinHelper.MovieSet.Writer')
-        WINDOW.clearProperty('SkinHelper.MovieSet.Director')
-        WINDOW.clearProperty('SkinHelper.MovieSet.Genre')
-        WINDOW.clearProperty('SkinHelper.MovieSet.Country')
-        WINDOW.clearProperty('SkinHelper.MovieSet.Studio')
-        WINDOW.clearProperty('SkinHelper.MovieSet.Years')
-        WINDOW.clearProperty('SkinHelper.MovieSet.Year')
-        WINDOW.clearProperty('SkinHelper.MovieSet.Count')
-        WINDOW.clearProperty('SkinHelper.MovieSet.Plot')
-        WINDOW.clearProperty('SkinHelper.MovieSet.ExtendedPlot')
-        WINDOW.clearProperty('SkinHelper.RottenTomatoesMeter')
-        WINDOW.clearProperty('SkinHelper.RottenTomatoesRating')
-        WINDOW.clearProperty('SkinHelper.RottenTomatoesAudienceRating')
-        WINDOW.clearProperty('SkinHelper.RottenTomatoesAudienceReviews')
-        WINDOW.clearProperty('SkinHelper.RottenTomatoesAudienceMeter')
-        WINDOW.clearProperty('SkinHelper.RottenTomatoesConsensus')
-        WINDOW.clearProperty('SkinHelper.RottenTomatoesAwards')
-        WINDOW.clearProperty('SkinHelper.RottenTomatoesBoxOffice')
-        WINDOW.clearProperty('SkinHelper.RottenTomatoesFresh')
-        WINDOW.clearProperty('SkinHelper.RottenTomatoesRotten')
-        WINDOW.clearProperty('SkinHelper.RottenTomatoesImage')
-        WINDOW.clearProperty('SkinHelper.RottenTomatoesReviews')
-        WINDOW.clearProperty('SkinHelper.RottenTomatoesDVDRelease')
-        WINDOW.clearProperty('SkinHelper.MetaCritic.Rating')
-        WINDOW.clearProperty('SkinHelper.IMDB.Rating')
-        WINDOW.clearProperty('SkinHelper.IMDB.Votes')
-        WINDOW.clearProperty('SkinHelper.IMDB.MPAA')
-        WINDOW.clearProperty('SkinHelper.IMDB.Runtime')
-        WINDOW.clearProperty('SkinHelper.IMDB.Top250')
-        WINDOW.clearProperty('SkinHelper.TMDB.Budget')
-        WINDOW.clearProperty('SkinHelper.Budget.formatted')
-        WINDOW.clearProperty('SkinHelper.TMDB.Budget.mln')
-        WINDOW.clearProperty('SkinHelper.TMDB.Revenue')
-        WINDOW.clearProperty('SkinHelper.TMDB.Revenue.mln')
-        WINDOW.clearProperty('SkinHelper.TMDB.Revenue.formatted')
-        WINDOW.clearProperty('SkinHelper.TMDB.Tagline')
-        WINDOW.clearProperty('SkinHelper.TMDB.Homepage')
-        WINDOW.clearProperty('SkinHelper.TMDB.Status')
-        WINDOW.clearProperty('SkinHelper.TMDB.Popularity')
-        WINDOW.clearProperty('SkinHelper.AnimatedPoster')
-        WINDOW.clearProperty('SkinHelper.AnimatedFanart')
-        
-        totalNodes = 50
-        for i in range(totalNodes):
-            if not WINDOW.getProperty('SkinHelper.MovieSet.' + str(i) + '.Title'): break
-            WINDOW.clearProperty('SkinHelper.MovieSet.' + str(i) + '.Title')
-            WINDOW.clearProperty('SkinHelper.MovieSet.' + str(i) + '.Plot')
-            WINDOW.clearProperty('SkinHelper.MovieSet.' + str(i) + '.FanArt')
-            WINDOW.clearProperty('SkinHelper.MovieSet.' + str(i) + '.Poster')
-            WINDOW.clearProperty('SkinHelper.MovieSet.' + str(i) + '.Landscape')
-            WINDOW.clearProperty('SkinHelper.MovieSet.' + str(i) + '.DiscArt')
-            WINDOW.clearProperty('SkinHelper.MovieSet.' + str(i) + '.ClearLogo')
-            WINDOW.clearProperty('SkinHelper.MovieSet.' + str(i) + '.ClearArt')
-            WINDOW.clearProperty('SkinHelper.MovieSet.' + str(i) + '.Banner')
-            WINDOW.clearProperty('SkinHelper.MovieSet.' + str(i) + '.Rating')
-            WINDOW.clearProperty('SkinHelper.MovieSet.' + str(i) + '.Year')
-            WINDOW.clearProperty('SkinHelper.MovieSet.' + str(i) + '.DBID')
-            WINDOW.clearProperty('SkinHelper.MovieSet.' + str(i) + '.Duration')			
-            WINDOW.clearProperty('SkinHelper.MovieSet.' + str(i) + '.Resolution')
-            WINDOW.clearProperty('SkinHelper.MovieSet.' + str(i) + '.AspectRatio')
-            WINDOW.clearProperty('SkinHelper.MovieSet.' + str(i) + '.Codec')
-            WINDOW.clearProperty('SkinHelper.MovieSet.' + str(i) + '.AudioCodec')
-            WINDOW.clearProperty('SkinHelper.MovieSet.' + str(i) + '.AudioChannels')
-            WINDOW.clearProperty('SkinHelper.MovieSet.' + str(i) + '.AudioLanguage')
-            WINDOW.clearProperty('SkinHelper.MovieSet.' + str(i) + '.Subtitle')
-        for i in range(totalNodes):
-            if not WINDOW.getProperty('SkinHelper.ListItemGenre.' + str(i)): break
-            WINDOW.clearProperty('SkinHelper.ListItemGenre.' + str(i))
-        for i in range(totalNodes):
-            if not WINDOW.getProperty('SkinHelper.ListItemAudioStreams.%d.AudioCodec' % i): break
-            WINDOW.clearProperty('SkinHelper.ListItemAudioStreams.%d.Language' % i)
-            WINDOW.clearProperty('SkinHelper.ListItemAudioStreams.%d.AudioCodec' % i)
-            WINDOW.clearProperty('SkinHelper.ListItemAudioStreams.%d.AudioChannels' % i)
-            WINDOW.clearProperty('SkinHelper.ListItemAudioStreams.%d'%i)
-        for i in range(totalNodes):
-            if not WINDOW.getProperty('SkinHelper.ExtraFanArt.' + str(i)):
-                break
-            WINDOW.clearProperty('SkinHelper.ExtraFanArt.' + str(i))
+        #reset all window props set by the script...
+        for prop in self.allWindowProps:
+            WINDOW.clearProperty(try_encode(prop))
     
     def resetGlobalWidgetWindowProps(self):
         WINDOW.setProperty("widgetreload2", time.strftime("%Y%m%d%H%M%S", time.gmtime()))
@@ -533,6 +411,11 @@ class ListItemMonitor(threading.Thread):
         WINDOW.setProperty("SkinHelper.Player.Music.albumCount","") 
         WINDOW.setProperty("SkinHelper.Player.Music.AlbumList","")
         WINDOW.setProperty("SkinHelper.Player.Music.ExtraFanArt","")
+    
+    def setWindowProp(self,key,value):
+        if not key in self.allWindowProps:
+            self.allWindowProps.append(key)
+        WINDOW.setProperty(try_encode(key),try_encode(value))
     
     def setMovieSetDetails(self):
         #get movie set details -- thanks to phil65 - used this idea from his skin info script
@@ -675,9 +558,9 @@ class ListItemMonitor(threading.Thread):
                 if item[0] == "SkinHelper.MovieSet.Extrafanarts":
                     if xbmc.getCondVisibility("Skin.HasSetting(SkinHelper.EnableExtraFanart)"):
                         efaProp = 'EFA_FROMWINDOWPROP_' + cacheStr
-                        WINDOW.setProperty(efaProp, try_encode(item[1]))
-                        WINDOW.setProperty('SkinHelper.ExtraFanArtPath', "plugin://script.skin.helper.service/?action=EXTRAFANART&path=%s" %single_urlencode(try_encode(efaProp)))
-                else: WINDOW.setProperty(item[0],try_encode(item[1]))
+                        self.setWindowProp(efaProp, try_encode(item[1]))
+                        self.setWindowProp('SkinHelper.ExtraFanArtPath', "plugin://script.skin.helper.service/?action=EXTRAFANART&path=%s" %single_urlencode(try_encode(efaProp)))
+                else: self.setWindowProp(item[0],try_encode(item[1]))
             
     def setContentHeader(self):
         WINDOW.clearProperty("SkinHelper.ContentHeader")
@@ -713,7 +596,7 @@ class ListItemMonitor(threading.Thread):
             if (xbmc.getCondVisibility("Container.Content(plugins) | !IsEmpty(Container.PluginName)")):
                 AddonName = xbmc.getInfoLabel('Container.PluginName').decode('utf-8')
                 AddonName = xbmcaddon.Addon(AddonName).getAddonInfo('name')
-                WINDOW.setProperty("SkinHelper.Player.AddonName", AddonName)
+                self.setWindowProp("SkinHelper.Player.AddonName", AddonName)
     
     def setGenre(self,genre=""):
         if not genre: genre = xbmc.getInfoLabel('%sListItem.Genre' %self.widgetContainerPrefix).decode('utf-8')
@@ -722,10 +605,10 @@ class ListItemMonitor(threading.Thread):
             genres = genre.split(" / ")
         else:
             genres.append(genre)
-        WINDOW.setProperty('SkinHelper.ListItemGenres', "[CR]".join(genres))
+        self.setWindowProp('SkinHelper.ListItemGenres', "[CR]".join(genres))
         count = 0
         for genre in genres:
-            WINDOW.setProperty("SkinHelper.ListItemGenre." + str(count),genre)
+            self.setWindowProp("SkinHelper.ListItemGenre." + str(count),genre)
             count +=1
     
     def setDirector(self, director=""):
@@ -736,7 +619,7 @@ class ListItemMonitor(threading.Thread):
         else:
             directors.append(director)
         
-        WINDOW.setProperty('SkinHelper.ListItemDirectors', "[CR]".join(directors))
+        self.setWindowProp('SkinHelper.ListItemDirectors', "[CR]".join(directors))
        
     def setPVRThumbs(self, multiThreaded=False):
         if WINDOW.getProperty("artworkcontextmenu"): return        
@@ -772,7 +655,7 @@ class ListItemMonitor(threading.Thread):
         
         #set window props
         for key, value in artwork.iteritems():
-            WINDOW.setProperty("SkinHelper.PVR." + key,value)
+            self.setWindowProp("SkinHelper.PVR." + key,value)
 
     def setStudioLogo(self,studio=""):
         
@@ -781,17 +664,17 @@ class ListItemMonitor(threading.Thread):
         studios = []
         if "/" in studio:
             studios = studio.split(" / ")
-            WINDOW.setProperty("SkinHelper.ListItemStudio", studios[0])
-            WINDOW.setProperty('SkinHelper.ListItemStudios', "[CR]".join(studios))    
+            self.setWindowProp("SkinHelper.ListItemStudio", studios[0])
+            self.setWindowProp('SkinHelper.ListItemStudios', "[CR]".join(studios))    
         else:
             studios.append(studio)
-            WINDOW.setProperty("SkinHelper.ListItemStudio", studio)
-            WINDOW.setProperty("SkinHelper.ListItemStudios", studio)
+            self.setWindowProp("SkinHelper.ListItemStudio", studio)
+            self.setWindowProp("SkinHelper.ListItemStudios", studio)
 
         studiologo = matchStudioLogo(studio, self.allStudioLogos)
         studiologoColor = matchStudioLogo(studio, self.allStudioLogosColor)
-        WINDOW.setProperty("SkinHelper.ListItemStudioLogo", studiologo)        
-        WINDOW.setProperty("SkinHelper.ListItemStudioLogoColor", studiologoColor)        
+        self.setWindowProp("SkinHelper.ListItemStudioLogo", studiologo)        
+        self.setWindowProp("SkinHelper.ListItemStudioLogoColor", studiologoColor)        
         
         return studiologo
                 
@@ -851,9 +734,9 @@ class ListItemMonitor(threading.Thread):
         if currentDuration:
             durationString = self.getDurationString(currentDuration)
             if durationString:
-                WINDOW.setProperty('SkinHelper.ListItemDuration', durationString[2])
-                WINDOW.setProperty('SkinHelper.ListItemDuration.Hours', durationString[0])
-                WINDOW.setProperty('SkinHelper.ListItemDuration.Minutes', durationString[1])
+                self.setWindowProp('SkinHelper.ListItemDuration', durationString[2])
+                self.setWindowProp('SkinHelper.ListItemDuration.Hours', durationString[0])
+                self.setWindowProp('SkinHelper.ListItemDuration.Minutes', durationString[1])
         
     def getDurationString(self, duration):
         if duration == None or duration == 0:
@@ -906,7 +789,7 @@ class ListItemMonitor(threading.Thread):
 
         #set properties
         for key, value in artwork.iteritems():
-            WINDOW.setProperty("SkinHelper.Player.Music." + key,value.encode("utf-8"))
+            WINDOW.setProperty("SkinHelper.Player.Music.%s" %key, value.encode("utf-8"))
     
     def setMusicDetails(self,multiThreaded=False):
         artwork = {}
@@ -925,13 +808,14 @@ class ListItemMonitor(threading.Thread):
         
         #set properties
         for key, value in artwork.iteritems():
-            WINDOW.setProperty("SkinHelper.Music." + key,value)
+            self.setWindowProp("SkinHelper.Music." + key,value)
               
     def setStreamDetails(self):
         streamdetails = {}
         if not self.liDbId: return
         
         cacheStr = self.liDbId + self.contentType
+        
         if self.streamdetailsCache.get(cacheStr):
             #get data from cache
             streamdetails = self.streamdetailsCache[cacheStr]
@@ -943,7 +827,7 @@ class ListItemMonitor(threading.Thread):
             elif self.contentType == "episodes" and self.liDbId:
                 json_result = getJSON('VideoLibrary.GetEpisodeDetails', '{ "episodeid": %d, "properties": [ "title", "streamdetails" ] }' %int(self.liDbId))
             elif self.contentType == "musicvideos" and self.liDbId:
-                json_result = getJSON('VideoLibrary.GetMusicVideoDetails', '{ "musicvideoid": %d, "properties": [ "title", "streamdetails" ] }' %int(self.liDbId))       
+                json_result = getJSON('VideoLibrary.GetMusicVideoDetails', '{ "musicvideoid": %d, "properties": [ "title", "streamdetails" ] }' %int(self.liDbId))
             if json_result.has_key("streamdetails"):
                 audio = json_result["streamdetails"]['audio']
                 subtitles = json_result["streamdetails"]['subtitle']
@@ -1006,7 +890,7 @@ class ListItemMonitor(threading.Thread):
         if streamdetails:
             #set the window properties
             for key, value in streamdetails.iteritems():
-                WINDOW.setProperty(key,value)
+                self.setWindowProp(key,value)
           
     def setForcedView(self):
         currentForcedView = xbmc.getInfoLabel("Skin.String(SkinHelper.ForcedViews.%s)" %self.contentType)
@@ -1041,10 +925,10 @@ class ListItemMonitor(threading.Thread):
             if self.extraFanartCache[cachePath][0] == "None":
                 return
             else:
-                WINDOW.setProperty("SkinHelper.ExtraFanArtPath",self.extraFanartCache[cachePath][0])
+                self.setWindowProp("SkinHelper.ExtraFanArtPath",self.extraFanartCache[cachePath][0])
                 count = 0
                 for file in self.extraFanartCache[cachePath][1]:
-                    WINDOW.setProperty("SkinHelper.ExtraFanArt." + str(count),file)
+                    self.setWindowProp("SkinHelper.ExtraFanArt." + str(count),file)
                     count +=1  
                 return
         
@@ -1078,12 +962,12 @@ class ListItemMonitor(threading.Thread):
                     for file in files:
                         if file.lower().endswith(".jpg"):
                             efaFound = True
-                            WINDOW.setProperty("SkinHelper.ExtraFanArt." + str(count),efaPath+file)
+                            self.setWindowProp("SkinHelper.ExtraFanArt." + str(count),efaPath+file)
                             extraFanArtfiles.append(efaPath+file)
                             count +=1  
        
         if (efaPath != None and efaFound == True):
-            WINDOW.setProperty("SkinHelper.ExtraFanArtPath",efaPath)
+            self.setWindowProp("SkinHelper.ExtraFanArtPath",efaPath)
             self.extraFanartCache[cachePath] = [efaPath, extraFanArtfiles]     
         else:
             self.extraFanartCache[cachePath] = ["None",[]]
@@ -1101,7 +985,7 @@ class ListItemMonitor(threading.Thread):
                 if multiThreaded and not liImdb == self.liImdb:
                     return
                 if image != "None":
-                    WINDOW.setProperty("SkinHelper.Animated%s"%type,image)
+                    self.setWindowProp("SkinHelper.Animated%s"%type,image)
        
     def setOmdbInfo(self,multiThreaded=False,liImdb=""):
         result = {}
@@ -1135,7 +1019,7 @@ class ListItemMonitor(threading.Thread):
                         if key == "tomatoRating": result["SkinHelper.RottenTomatoesRating"] = value
                         elif key == "tomatoMeter": result["SkinHelper.RottenTomatoesMeter"] = value
                         elif key == "tomatoFresh": result["SkinHelper.RottenTomatoesFresh"] = value
-                        elif key == "tomatoReviews": result["SkinHelper.RottenTomatoesReviews"] = value
+                        elif key == "tomatoReviews": result["SkinHelper.RottenTomatoesReviews"] = intWithCommas(value)
                         elif key == "tomatoRotten": result["SkinHelper.RottenTomatoesRotten"] = value
                         elif key == "tomatoImage": result["SkinHelper.RottenTomatoesImage"] = value
                         elif key == "tomatoConsensus": result["SkinHelper.RottenTomatoesConsensus"] = value
@@ -1144,9 +1028,11 @@ class ListItemMonitor(threading.Thread):
                         elif key == "DVD": result["SkinHelper.RottenTomatoesDVDRelease"] = value
                         elif key == "tomatoUserMeter": result["SkinHelper.RottenTomatoesAudienceMeter"] = value
                         elif key == "tomatoUserRating": result["SkinHelper.RottenTomatoesAudienceRating"] = value
-                        elif key == "tomatoUserReviews": result["SkinHelper.RottenTomatoesAudienceReviews"] = value
+                        elif key == "tomatoUserReviews": result["SkinHelper.RottenTomatoesAudienceReviews"] = intWithCommas(value)
                         elif key == "Metascore": result["SkinHelper.MetaCritic.Rating"] = value
-                        elif key == "imdbRating": result["SkinHelper.IMDB.Rating"] = value
+                        elif key == "imdbRating": 
+                            result["SkinHelper.IMDB.Rating"] = value
+                            result["SkinHelper.IMDB.Rating.Percent"] = str(int(float(value)) * 10)
                         elif key == "imdbVotes": result["SkinHelper.IMDB.Votes"] = value
                         elif key == "Rated": result["SkinHelper.IMDB.MPAA"] = value
                         elif key == "Runtime": result["SkinHelper.IMDB.Runtime"] = value
@@ -1163,7 +1049,7 @@ class ListItemMonitor(threading.Thread):
             
         #set properties
         for key, value in result.iteritems():
-            WINDOW.setProperty(key,value)
+            self.setWindowProp(key,value)
     
     def setTmdbInfo(self,multiThreaded=False,liImdb=""):
         result = {}
@@ -1203,6 +1089,12 @@ class ListItemMonitor(threading.Thread):
                         result["homepage"] = data.get("homepage","")
                         result["status"] = data.get("status","")
                         result["popularity"] = str(data.get("popularity",""))
+                        
+                        #we only want movies older than 2 years in the permanent cache so we store the year
+                        release_date = data["release_date"]
+                        release_year = release_date.split("-")[0]
+                        result["release_date"] = release_date
+                        result["release_year"] = release_year
                 
                 #save to cache
                 if result: self.tmdbinfocache[self.liImdb] = result
@@ -1213,7 +1105,7 @@ class ListItemMonitor(threading.Thread):
             
             #set properties
             for key, value in result.iteritems():
-                WINDOW.setProperty("SkinHelper.TMDB." + key,value)
+                self.setWindowProp("SkinHelper.TMDB." + key,value)
     
     def setAddonDetails(self, multiThreaded=False):
         #try to lookup additional artwork and properties for plugin content
@@ -1244,7 +1136,7 @@ class ListItemMonitor(threading.Thread):
                 
         #set window props
         for key, value in artwork.iteritems():
-            WINDOW.setProperty("SkinHelper.PVR." + key,value)
+            self.setWindowProp("SkinHelper.PVR." + key,value)
             
         #set extended movie details
         if (self.contentType == "movies" or self.contentType == "setmovies") and artwork.get("imdb_id"):

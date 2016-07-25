@@ -99,6 +99,7 @@ Some additional window properties that can be used in the video library.
 |Window(Home).Property(SkinHelper.RottenTomatoesDVDRelease) | date of DVD release |
 |Window(Home).Property(SkinHelper.MetaCritic.Rating) | rating from metacritic |
 |Window(Home).Property(SkinHelper.IMDB.Rating) | rating on IMDB |
+|Window(Home).Property(SkinHelper.IMDB.Rating.Percent) | rating on IMDB as percentage |
 |Window(Home).Property(SkinHelper.IMDB.Votes) | No. of votes for rating on IMDB |
 |Window(Home).Property(SkinHelper.IMDB.MPAA) | MPAA rating on IMDB |
 |Window(Home).Property(SkinHelper.IMDB.Runtime) | Runtime on IMDB |
@@ -250,6 +251,10 @@ The artwork is detected in the music paths automatically. Also in the addon sett
 | Window(Home).Property(SkinHelper.Music.Albums.Formatted) | Same as Albums, but prefixed with a • character|
 | Window(Home).Property(SkinHelper.Music.SongCount) | Returns the number of songs for the selected artist or album |
 | Window(Home).Property(SkinHelper.Music.AlbumCount) | Returns the number of albums for the selected artist |
+| Window(Home).Property(SkinHelper.Music.AlbumsArtistCount) | Returns the number of albums (without compilations) for the selected artist |
+| Window(Home).Property(SkinHelper.Music.AlbumsArtist) | Returns the albums (without compilations) for the selected artist |
+| Window(Home).Property(SkinHelper.Music.AlbumsCompilationsCount) | Returns the number of compilation albums the artist appears on for the selected artist |
+| Window(Home).Property(SkinHelper.Music.AlbumsCompilations) | Returns the compilation albums the artist appears on for the selected artist |
 
 Note: If you also want to have the Music Properties for your homescreen widgets, you need to set a Window Property "SkinHelper.WidgetContainer" with the ID of your widget container:
 For example in home.xml: <onload>SetProperty(SkinHelper.WidgetContainer,301)</onload>
@@ -296,6 +301,16 @@ The properties will also be available for your homescreen widgets if you set the
 | Window(Home).Property(SkinHelper.PVR.Banner) | Will return the Banner for the currently selected show/movie (only if found) |
 | Window(Home).Property(SkinHelper.PVR.ChannelLogo) | Will return the channel logo for the currently selected channel (only if found) |
 | Window(Home).Property(SkinHelper.PVR.ExtraFanArt) | Will return the ExtraFanArt path (if exists) for the current selected item in the list, to be used in a multiimage control. |
+| Window(Home).Property(SkinHelper.PVR.Rating) | Will return the rating for the currently selected show/movie (only if found) |
+| Window(Home).Property(SkinHelper.PVR.tmdb_type) | Will return the type for the currently selected show/movie (only if found) |
+| Window(Home).Property(SkinHelper.PVR.Revenue) | Will return the revenue for the currently selected show/movie (only if found) |
+| Window(Home).Property(SkinHelper.PVR.Plot) | Will return the plot for the currently selected show/movie (only if found) |
+| Window(Home).Property(SkinHelper.PVR.Status) | Will return the status for the currently selected show/movie (only if found) |
+| Window(Home).Property(SkinHelper.PVR.IMDBID) | Will return the IMDBID for the currently selected show/movie (only if found) |
+| Window(Home).Property(SkinHelper.PVR.Studio) | Will return the studio for the currently selected show/movie (only if found) |
+| Window(Home).Property(SkinHelper.PVR.Genre) | Will return the genre for the currently selected show/movie (only if found) |
+| Window(Home).Property(SkinHelper.PVR.Trailer) | Will return the trailer-url for the currently selected show/movie (only if found) |
+
 
 NOTE: The images will only be scraped if you have set the following Skin Bool to true --> SkinHelper.EnablePVRThumbs
 
@@ -348,7 +363,6 @@ Set it to 0 or clear the string to disable the backgrounds.
 | Window(Home).Property(SkinHelper.UnwatchedMoviesBackground) | Random fanart of unwatched movies|
 | Window(Home).Property(SkinHelper.InProgressShowsBackground) | Random fanart of in progress tv shows|
 | Window(Home).Property(SkinHelper.RecentEpisodesBackground) | Random fanart of recently added episodes|
-| Window(Home).Property(SkinHelper.GlobalFanartBackground) | Random fanart of all media types|
 | Window(Home).Property(SkinHelper.AllVideosBackground) | Random videos background (movie/show/musicvideo)|
 | Window(Home).Property(SkinHelper.RecentVideosBackground) | Recent videos background (movie or tvshow)|
 | Window(Home).Property(SkinHelper.InProgressVideosBackground) | In progress videos background (movie or tvshow)|
@@ -363,8 +377,8 @@ Set it to 0 or clear the string to disable the backgrounds.
 | Window(Home).Property(SkinHelper.AllMusicSongsBackground.Wall) | Collection of Song/Album cover images (from the library) as wall prebuilt by the script|
 | Window(Home).Property(SkinHelper.AllTvShowsBackground.Wall) | Collection of Tv show fanart images (from the library) as wall prebuilt by the script|
 | Window(Home).Property(SkinHelper.AllTvShowsBackground.Wall.BW) | Collection of Tv show fanart images (from the library) as wall (black and white) prebuilt by the script|
-| Window(Home).Property(SkinHelper.AllTvShowsBackground.Wall.Poster) | Collection of Tv show poster images (from the library) as wall prebuilt by the script|
-| Window(Home).Property(SkinHelper.AllTvShowsBackground.Wall.Poster.BW) | Collection of Tv show poster images (from the library) as wall (black and white) prebuilt by the script|
+| Window(Home).Property(SkinHelper.AllTvShowsBackground.Poster.Wall) | Collection of Tv show poster images (from the library) as wall prebuilt by the script|
+| Window(Home).Property(SkinHelper.AllTvShowsBackground.Poster.Wall.BW) | Collection of Tv show poster images (from the library) as wall (black and white) prebuilt by the script|
 
 Additional properties available for the backgrounds (e.g. SkinHelper.AllMoviesBackground.Poster)
 
@@ -783,6 +797,35 @@ You must supply the name of the setting as can be found in guisettings.xml or th
     <selected>system.getbool(lookandfeel.enablerssfeeds)</selected>
 </control>
 ```
+
+________________________________________________________________________________________________________
+
+#### Set Kodi setting
+Can be used to set a specific Kodi system setting (boolean/string/int).
+
+```
+RunScript(script.skin.helper.service,action=setkodisetting,setting=[NAME OF THE SETTING IN GUISETTINGS],value=[VALUE FOR THE SETTING])             
+```
+You must supply the name of the setting as can be found in guisettings.xml or the Json API and the value.
+
+Example: Set the skin's sound addon
+```
+XBMC.RunScript(script.skin.helper.service,action=togglekodisetting,setting=lookandfeel.soundskin,value=resource.uisounds.titan.modern)
+```
+
+________________________________________________________________________________________________________
+
+#### Save skin image
+The Kodi builtin Skin.SetImage() only links to a image on a external location, good enough for most situations.
+If skin settings are transfered this is a bit inconvenient as the image is lost.
+The method in this script will save the image that the user selects to the skin's folder in addon_data, that way the image is preserved.
+Also when a skin backup is made by using this script's backup feature, the image will also be copied.
+
+```
+RunScript(script.skin.helper.service,action=saveskinimage,skinstring=[THE SKIN STRING TO SET],multi=[OPTIONAL: true/false],header=[OPTIONAL: header for select window])             
+```
+You must supply the name of the skin string that must be set with the result (path will be stored as special://)
+Optional you can specify if you allow image folders to be selected (multiimage) or a custom dialog header.
 
 ________________________________________________________________________________________________________
 
