@@ -221,9 +221,25 @@ class Settings():
 
     @staticmethod
     def reloadSettings():
+        # Before loading the new settings save off the length of the pin
+        # this means that if the length of the pin has changed and the actual
+        # pin value has not, we can clear the pin value
+        pinLength = Settings.getPinLength()
+        pinValue = ADDON.getSetting("pinValue")
+
         # Force the reload of the settings to pick up any new values
         global ADDON
         ADDON = xbmcaddon.Addon(id='script.pinsentry')
+
+        if Settings.isPinSet():
+            if pinLength != Settings.getPinLength():
+                if pinValue == ADDON.getSetting("pinValue"):
+                    for i in range(1, 6):
+                        Settings.setPinValue("", i)
+                        userId = "user%dPin" % i
+                        Settings.setUserPinValue("", userId)
+                    # Display the warning in the settings
+                    ADDON.setSetting("pinValueSet", "false")
 
     @staticmethod
     def setPinValue(newPin, pinLevel=1):

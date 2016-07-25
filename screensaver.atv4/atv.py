@@ -40,9 +40,8 @@ class Screensaver(xbmcgui.WindowXMLDialog):
         if self.videoplaylist:
             xbmc.executebuiltin("ClearProperty(loading,Home)")
             self.atv4player = atvplayer.ATVPlayer()
-            if not xbmc.getCondVisibility("Player.HasMedia"):
-                self.blackbackground()
-                self.atv4player.play(self.videoplaylist,windowed=True)
+            self.blackbackground()
+            self.atv4player.play(self.videoplaylist,windowed=True)
         else:
             self.novideos()            
 
@@ -57,6 +56,7 @@ class Screensaver(xbmcgui.WindowXMLDialog):
     def onAction(self,action):
         try: xbmc.PlayList(1).clear()
         except: pass
+        xbmc.executebuiltin("PlayerControl(RepeatOff)", True)
         xbmc.executebuiltin("PlayerControl(Stop)")
         try: self.close()
         except: pass
@@ -94,26 +94,39 @@ except: params = []
 
 
 if not params:
+    
+    exitMon = ScreensaverExitMonitor()
     #Thanks to videoscreensaver. Hit a key, wait for monitor.onDeactivate, start the "screensaver" after that.
     xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "Input.ContextMenu", "id": 1}')
     if addon.getSetting("show-notifications") == "true":
         xbmc.executebuiltin("Notification(%s,%s,%i,%s)" % (translate(32000), translate(32017),1,os.path.join(addon_path,"icon.png")))
 
-    exitMon = ScreensaverExitMonitor()
-    maxWait = 50
+    
+    maxWait = 30
 
-    while (not exitMon.isStopScreensaver()) and (maxWait > 0):
+    if not xbmc.getCondVisibility("Player.HasMedia"):
+        start_screensaver = True
+    else:
+        start_screensaver = False
+
+    while not exitMon.isStopScreensaver():
+        if (maxWait > 0):
+            xbmc.sleep(100)
+            maxWait = maxWait - 1
+        else:
+            start_screensaver = False
+            break
+
+    if start_screensaver:
+        screensaver = Screensaver(
+            'screensaver-atv4.xml',
+            addon_path,
+            'default',
+            '',
+        )
+        screensaver.doModal()
         xbmc.sleep(100)
-        maxWait = maxWait - 1
-
-    screensaver = Screensaver(
-        'screensaver-atv4.xml',
-        addon_path,
-        'default',
-        '',
-    )
-    screensaver.doModal()
-    del screensaver
+        del screensaver
 else:
     if params[0] == "offline":
         off.offline()

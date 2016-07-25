@@ -1,3 +1,9 @@
+4.4.2 - by CaTz (14/05/2016)
+- Fix search strings matching improvement
+
+4.4.1 - by CaTz (14/05/2016)
+- Improve search string matching
+
 4.4.0 - by CaTz (22/01/2016)
 - Change addon name to Ktuvit.com
 - Fix url changes

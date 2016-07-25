@@ -73,9 +73,14 @@ class AtvPlaylist:
 
 					#check if file exists on disk
 					movie = url.split("/")[-1]
-					localfile = os.path.join(addon.getSetting("download-folder"),movie)
-					if os.path.exists(localfile):
-						url = localfile
+					localfilemov = os.path.join(addon.getSetting("download-folder"),movie)
+					if os.path.exists(localfilemov):
+						url = localfilemov
+
+					#check for existence of the trancoded file .mp4 only
+					localfilemp4 = os.path.join(addon.getSetting("download-folder"),movie.replace('.mov','.mp4'))
+					if os.path.exists(localfilemp4):
+						url = localfilemp4
 
 					if video['accessibilityLabel'].lower() == "hawaii" and addon.getSetting("enable-hawaii") == "true":
 						if video['timeOfDay'] == 'day':

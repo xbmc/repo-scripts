@@ -15,7 +15,7 @@ msgstr ""
 #settings labels
 
 msgctxt "#32000"
-msgid "ATV4 Screensavers"
+msgid "Aerial Screensavers"
 msgstr ""
 
 msgctxt "#32001"
@@ -88,5 +88,9 @@ msgstr ""
 
 msgctxt "#32018"
 msgid "Show start notification"
+msgstr ""
+
+msgctxt "#32019"
+msgid "Checking which videos to download..."
 msgstr ""
 

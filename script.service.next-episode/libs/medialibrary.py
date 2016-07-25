@@ -153,20 +153,22 @@ def get_now_played():
     return send_json_rpc('Player.GetItem', params)['item']
 
 
-def get_playcount(id_, type):
+def get_item_details(id_, type):
     """
-    Get video item playcount
+    Get video item details
 
     :param id_: movie or episode Kodi database ID
     :type id_: int
     :param type: items's type -- 'movie' or 'episode'
     :type type: str
-    :return: playcount
-    :rtype: int
+    :return: item details
+    :rtype: dict
     """
+    params = {type + 'id': id_, 'properties': ['playcount']}
     if type == 'movie':
         method = 'VideoLibrary.GetMovieDetails'
+        params['properties'] += ['imdbnumber']
     else:
         method = 'VideoLibrary.GetEpisodeDetails'
-    params = {type + 'id': id_, 'properties': ['playcount']}
-    return send_json_rpc(method, params)[type + 'details']['playcount']
+        params['properties'] += ['tvshowid', 'season', 'episode']
+    return send_json_rpc(method, params)[type + 'details']

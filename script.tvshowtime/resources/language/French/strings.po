@@ -12,7 +12,7 @@ msgstr ""
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Type: text/plain; charset=Unicode\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: en\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
@@ -29,37 +29,85 @@ msgctxt "#32001"
 msgid "General"
 msgstr "Général"
 
-msgctxt "#32102"
-msgid "Token"
-msgstr "Jeton"
-
 msgctxt "#32301"
-msgid "Social networks"
-msgstr "Réseaux sociaux"
+msgid "User"
+msgstr "Utilisateur"
 
 msgctxt "#32302"
-msgid "Publish on Facebook"
-msgstr "Publier sur Facebook"
+msgid "Save watched episode's progress"
+msgstr "Sauver votre progression sur un épisode"
 
 msgctxt "#32303"
-msgid "Publish on Twitter"
-msgstr "Publier sur Twitter"
+msgid "Mark the http streams"
+msgstr "Marquer les flux http"
 
-msgctxt "#32401"
+msgctxt "#33001"
 msgid "Notifications"
 msgstr "Notifications"
 
-msgctxt "#32402"
+msgctxt "#33301"
 msgid "Show notifications"
 msgstr "Afficher les notifications"
 
-msgctxt "#32403"
+msgctxt "#33302"
+msgid "Say welcome"
+msgstr "Souhaiter la bienvenue"
+
+msgctxt "#33303"
 msgid "Show during playback"
 msgstr "Afficher pendant la lecture"
 
-msgctxt "#32404"
+msgctxt "#33304"
 msgid "Show notification on scrobble"
 msgstr "Afficher une notification lors du scrobble"
+
+msgctxt "#34001"
+msgid "Social networks"
+msgstr "Réseaux sociaux"
+
+msgctxt "#34301"
+msgid "Publish on Facebook"
+msgstr "Publier sur Facebook"
+
+msgctxt "#34302"
+msgid "Publish on Twitter"
+msgstr "Publier sur Twitter"
+
+msgctxt "#35001"
+msgid "Emotions"
+msgstr "Émotions"
+
+msgctxt "#35301"
+msgid "Set Emotion after watching"
+msgstr "Définir votre Émotion après la lecture"
+
+msgctxt "#35302"
+msgid "Default Emotion"
+msgstr "Émotion par défaut"
+
+msgctxt "#35311"
+msgid "Good"
+msgstr "Bien"
+
+msgctxt "#35312"
+msgid "Funk"
+msgstr "Effrayant"
+
+msgctxt "#35313"
+msgid "Wow"
+msgstr "Sensationnel"
+
+msgctxt "#35314"
+msgid "Sad"
+msgstr "triste"
+
+msgctxt "#35316"
+msgid "Soso"
+msgstr "Mitigé"
+
+msgctxt "#35317"
+msgid "Bad"
+msgstr "Mauvais"
 
 msgctxt "#32901"
 msgid "Please login"
@@ -158,5 +206,9 @@ msgid "Finished"
 msgstr "Terminé"
 
 msgctxt "#33908"
-msgid "Sleep 60 secs."
-msgstr "Pause de 60 secs."
+msgid "Syncing"
+msgstr "Synchronisation"
+
+msgctxt "#33909"
+msgid "Votre Émotion"
+msgstr ""

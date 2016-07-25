@@ -1,3 +1,6 @@
+v1.3.2 (2016-05-26)
+- Clear pin settings if length changes
+
 v1.3.1 (2016-04-05)
 - Tidy up import, globals and plugin provides
 

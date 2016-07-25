@@ -12,7 +12,7 @@ msgstr ""
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Type: text/plain; charset=Unicode\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: en\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
@@ -29,36 +29,84 @@ msgctxt "#32001"
 msgid "General"
 msgstr ""
 
-msgctxt "#32102"
-msgid "Token"
-msgstr ""
-
 msgctxt "#32301"
-msgid "Social networks"
+msgid "User"
 msgstr ""
 
 msgctxt "#32302"
-msgid "Publish on Facebook"
+msgid "Save watched episode's progress"
 msgstr ""
 
 msgctxt "#32303"
-msgid "Publish on Twitter"
+msgid "Mark the http streams"
 msgstr ""
 
-msgctxt "#32401"
+msgctxt "#33001"
 msgid "Notifications"
 msgstr ""
 
-msgctxt "#32402"
+msgctxt "#33301"
 msgid "Show notifications"
 msgstr ""
 
-msgctxt "#32403"
+msgctxt "#33302"
+msgid "Say welcome"
+msgstr ""
+
+msgctxt "#33303"
 msgid "Show during playback"
 msgstr ""
 
-msgctxt "#32404"
+msgctxt "#33304"
 msgid "Show notification on scrobble"
+msgstr ""
+
+msgctxt "#34001"
+msgid "Social networks"
+msgstr ""
+
+msgctxt "#34301"
+msgid "Publish on Facebook"
+msgstr ""
+
+msgctxt "#34302"
+msgid "Publish on Twitter"
+msgstr ""
+
+msgctxt "#35001"
+msgid "Emotions"
+msgstr ""
+
+msgctxt "#35301"
+msgid "Set Emotion after watching"
+msgstr ""
+
+msgctxt "#35302"
+msgid "Default Emotion"
+msgstr ""
+
+msgctxt "#35311"
+msgid "Good"
+msgstr ""
+
+msgctxt "#35312"
+msgid "Funk"
+msgstr ""
+
+msgctxt "#35313"
+msgid "Wow"
+msgstr ""
+
+msgctxt "#35314"
+msgid "Sad"
+msgstr ""
+
+msgctxt "#35316"
+msgid "Soso"
+msgstr ""
+
+msgctxt "#35317"
+msgid "Bad"
 msgstr ""
 
 msgctxt "#32901"
@@ -114,7 +162,7 @@ msgid "Logout ?"
 msgstr ""
 
 msgctxt "#33806"
-msgid "Go to"
+msgid "TVShow Time Authorization"
 msgstr ""
 
 msgctxt "#33807"
@@ -158,5 +206,9 @@ msgid "Finished"
 msgstr ""
 
 msgctxt "#33908"
-msgid "Sleep 60 secs."
+msgid "Syncing"
+msgstr ""
+
+msgctxt "#33909"
+msgid "Set Emotion"
 msgstr ""
