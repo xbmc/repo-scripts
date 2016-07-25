@@ -1,0 +1,16 @@
+v1.0.0 (2016-07-24)
+- Text cleanup before official repo inclusion
+v0.7.0 (2016-02-25)
+- Grab missing chapters from the ChapterDb
+- Skinned notification by default, optional simple notification
+- Fix issue with Python 2.6
+v0.6.0 (2016-01-21)
+- Add an optional skinnable window
+- Add a once-off option to grab stinger tags for all movies
+v0.5.3 (2015-12-31)
+- Nope, compatible with Helix and up
+v0.5.2 (2015-12-31)
+- Compatible with Gotham and up
+- Add a different message for movies with scenes during and after the credits
+v0.5.1 (2015-12-30)
+- Fix dependency error

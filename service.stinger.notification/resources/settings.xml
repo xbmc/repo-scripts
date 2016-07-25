@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<settings>
+	<category label="128">
+		<setting id="use_simplenotification" label="32900" type="bool" default="false" />
+		<setting id="timeremaining_notification" label="32901" type="slider" option="int" default="10" range="5,1,30" />
+		<setting id="query_chapterdb" label="32902" type="bool" default="true" />
+	</category>
+	<category label="$LOCALIZE[10038]">
+		<setting id="preferredfps" label="32903" type="labelenum" default="23.976" values="23.976|25|29.97" />
+		<setting label="32999" type="lsep" />
+		<setting id="duringcreditsstinger_tag" label="duringcreditsstinger" type="text" default="" />
+		<setting id="aftercreditsstinger_tag" label="aftercreditsstinger" type="text" default="" />
+		<setting id="fulllibrary_tagschecked" type="bool" visible="false" default="false" />
+		<setting label="32998" type="lsep" visible="eq(-1,false)" />
+		<setting id="tagcheck_action" label="32400" type="action" action="NotifyAll(service.stinger.notification, TagCheck)" visible="eq(-2,false)" />
+	</category>
+</settings>
