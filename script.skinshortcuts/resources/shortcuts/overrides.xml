@@ -35,6 +35,16 @@
 	</versionEquivalency>
 
 
+	<contextmenu>
+		<!-- Enable context menu on control 211 -->
+		<enableon>211</enableon>
+
+		<!-- Add enable/disable controls -->
+		<item control="313" condition="String.IsEqual(Container(211).ListItem.Property(skinshortcuts-disabled),False)">$LOCALIZE[24021]</item>
+		<item control="313" condition="String.IsEqual(Container(211).ListItem.Property(skinshortcuts-disabled),True)">$LOCALIZE[24022]</item>
+	</contextmenu>
+
+
 	<flatgroupings>
 		<node label="32029">
 			<content>common</content>

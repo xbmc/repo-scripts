@@ -1,3 +1,12 @@
+v1.0.10
+- Support context menu in management dialog (Krypton only)
+- Support disabling menu items
+- Icons for all available shortcuts
+- Krypton changes and fixes
+- Icon overrides now respected for available shortcut nodes
+- Only build main menu into single mode include
+- Minor fixes
+
 v1.0.8
 - Ability to set item properties from outside management dialog
 - Ability for skin to specify it doesn't share menu's

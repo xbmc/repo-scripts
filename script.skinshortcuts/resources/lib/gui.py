@@ -22,28 +22,27 @@ if sys.version_info < (2, 7):
 else:
     import json as simplejson
 
-__addon__        = sys.modules[ "__main__" ].__addon__
-__addonid__      = sys.modules[ "__main__" ].__addonid__
-__addonversion__ = sys.modules[ "__main__" ].__addonversion__
-__cwd__          = __addon__.getAddonInfo('path').decode("utf-8")
-__datapath__     = os.path.join( xbmc.translatePath( "special://profile/addon_data/" ).decode('utf-8'), __addonid__ )
-__skinpath__     = xbmc.translatePath( "special://skin/shortcuts/" ).decode('utf-8')
-__defaultpath__  = xbmc.translatePath( os.path.join( __cwd__, 'resources', 'shortcuts').encode("utf-8") ).decode("utf-8")
-__language__     = __addon__.getLocalizedString
-__cwd__          = sys.modules[ "__main__" ].__cwd__
-__xbmcversion__  = xbmc.getInfoLabel( "System.BuildVersion" ).split(".")[0]
+ADDON        = sys.modules[ "__main__" ].ADDON
+ADDONID      = sys.modules[ "__main__" ].ADDONID
+CWD          = sys.modules[ "__main__" ].CWD
+DATAPATH     = os.path.join( xbmc.translatePath( "special://profile/addon_data/" ).decode('utf-8'), ADDONID )
+SKINPATH     = xbmc.translatePath( "special://skin/shortcuts/" ).decode('utf-8')
+DEFAULTPATH  = xbmc.translatePath( os.path.join( CWD, 'resources', 'shortcuts').encode("utf-8") ).decode("utf-8")
+LANGUAGE     = ADDON.getLocalizedString
+KODIVERSION  = xbmc.getInfoLabel( "System.BuildVersion" ).split(".")[0]
 
 ACTION_CANCEL_DIALOG = ( 9, 10, 92, 216, 247, 257, 275, 61467, 61448, )
+ACTION_CONTEXT_MENU = ( 101, 117, )
 
-if not xbmcvfs.exists(__datapath__):
-    xbmcvfs.mkdir(__datapath__)
+if not xbmcvfs.exists(DATAPATH):
+    xbmcvfs.mkdir(DATAPATH)
 
 def log(txt):
-    if __addon__.getSetting( "enable_logging" ) == "true":
+    if ADDON.getSetting( "enable_logging" ) == "true":
         try:
             if isinstance (txt,str):
                 txt = txt.decode('utf-8')
-            message = u'%s: %s' % (__addonid__, txt)
+            message = u'%s: %s' % (ADDONID, txt)
             xbmc.log(msg=message.encode('utf-8'), level=xbmc.LOGDEBUG)
         except:
             pass
@@ -89,6 +88,10 @@ class GUI( xbmcgui.WindowXMLDialog ):
         self.customPropertyButtons = {}
         self.customToggleButtons = {}
 
+        # Context menu
+        self.contextControls = []
+        self.contextItems = []
+
         self.windowProperties = {}
         
         self.changeMade = False
@@ -108,6 +111,9 @@ class GUI( xbmcgui.WindowXMLDialog ):
             # Load widget and background names
             self._load_overrides()
 
+            # Load context menu options
+            self._load_overrides_context()
+
             # Load additional button ID's we'll handle for custom properties
             self._load_customPropertyButtons()
 
@@ -118,11 +124,11 @@ class GUI( xbmcgui.WindowXMLDialog ):
             try:
                 if self.getControl( 500 ).getLabel() == "":
                     if self.group == "mainmenu":
-                        self.getControl( 500 ).setLabel( __language__(32071) )
+                        self.getControl( 500 ).setLabel( LANGUAGE(32071) )
                     elif self.groupname is not None:
-                        self.getControl( 500 ).setLabel( __language__(32080).replace( "::MENUNAME::", self.groupname ) )
+                        self.getControl( 500 ).setLabel( LANGUAGE(32080).replace( "::MENUNAME::", self.groupname ) )
                     else:
-                        self.getControl( 500 ).setLabel( __language__(32072) )
+                        self.getControl( 500 ).setLabel( LANGUAGE(32072) )
             except:
                 pass
                 
@@ -149,69 +155,69 @@ class GUI( xbmcgui.WindowXMLDialog ):
             if self.nolabels == "false":
                 try:
                     if self.getControl( 301 ).getLabel() == "":
-                        self.getControl( 301 ).setLabel( __language__(32000) )
+                        self.getControl( 301 ).setLabel( LANGUAGE(32000) )
                 except:
                     log( "No add shortcut button on GUI (id 301)" )
                 try:
                     if self.getControl( 302 ).getLabel() == "":
-                        self.getControl( 302 ).setLabel( __language__(32001) )
+                        self.getControl( 302 ).setLabel( LANGUAGE(32001) )
                 except:
                     log( "No delete shortcut button on GUI (id 302)" )
                 try:
                     if self.getControl( 303 ).getLabel() == "":
-                        self.getControl( 303 ).setLabel( __language__(32002) )
+                        self.getControl( 303 ).setLabel( LANGUAGE(32002) )
                 except:
                     log( "No move shortcut up button on GUI (id 303)" )
                 try:
                     if self.getControl( 304 ).getLabel() == "":
-                        self.getControl( 304 ).setLabel( __language__(32003) )
+                        self.getControl( 304 ).setLabel( LANGUAGE(32003) )
                 except:
                     log( "No move shortcut down button on GUI (id 304)" )
                 
                 try:
                     if self.getControl( 305 ).getLabel() == "":
-                        self.getControl( 305 ).setLabel( __language__(32025) )
+                        self.getControl( 305 ).setLabel( LANGUAGE(32025) )
                 except:
                     log( "Not set label button on GUI (id 305)" )
                     
                 try:
                     if self.getControl( 306 ).getLabel() == "":
-                        self.getControl( 306 ).setLabel( __language__(32026) )
+                        self.getControl( 306 ).setLabel( LANGUAGE(32026) )
                 except:
                     log( "No edit thumbnail button on GUI (id 306)" )
                     
                 try:
                     if self.getControl( 307 ).getLabel() == "":
-                        self.getControl( 307 ).setLabel( __language__(32027) )
+                        self.getControl( 307 ).setLabel( LANGUAGE(32027) )
                 except:
                     log( "Not edit action button on GUI (id 307)" )
                     
                 try:
                     if self.getControl( 308 ).getLabel() == "":
-                        self.getControl( 308 ).setLabel( __language__(32028) )
+                        self.getControl( 308 ).setLabel( LANGUAGE(32028) )
                 except:
                     log( "No reset shortcuts button on GUI (id 308)" )
                     
                 try:
                     if self.getControl( 309 ).getLabel() == "":
-                        self.getControl( 309 ).setLabel( __language__(32044) )
+                        self.getControl( 309 ).setLabel( LANGUAGE(32044) )
                     log( "Warning: Deprecated widget button (id 309)" )
                 except:
                     pass
                 try:
                     if self.getControl( 310 ).getLabel() == "":
-                        self.getControl( 310 ).setLabel( __language__(32045) )
+                        self.getControl( 310 ).setLabel( LANGUAGE(32045) )
                 except:
                     log( "No background button on GUI (id 310)" )
                 try:
                     if self.getControl( 312 ).getLabel() == "":
-                        self.getControl( 312 ).setLabel( __language__(32044) )
+                        self.getControl( 312 ).setLabel( LANGUAGE(32044) )
                 except:
                     log( "No widget button on GUI (id 309)" )
                     
                 try:
                     if self.getControl( 401 ).getLabel() == "":
-                        self.getControl( 401 ).setLabel( __language__(32048) )
+                        self.getControl( 401 ).setLabel( LANGUAGE(32048) )
                 except:
                     log( "No widget button on GUI (id 401)" )
                     
@@ -282,7 +288,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
 
         # If there are no shortcuts, add a blank one
         if visible == False:
-            listitem = xbmcgui.ListItem( __language__(32013), iconImage = "DefaultShortcut.png" )
+            listitem = xbmcgui.ListItem( LANGUAGE(32013), iconImage = "DefaultShortcut.png" )
             listitem.setProperty( "Path", 'noop' )
             listitem.setProperty( "icon", "DefaultShortcut.png" )
             listitem.setProperty( "skinshortcuts-orderindex", str( count ) )
@@ -335,6 +341,12 @@ class GUI( xbmcgui.WindowXMLDialog ):
         
         listitem.setProperty( "path", action )
         listitem.setProperty( "displayPath", action )
+
+        # Set the disabled property
+        if item.find( "disabled" ) is not None:
+            listitem.setProperty( "skinshortcuts-disabled", "True" )
+        else:
+            listitem.setProperty( "skinshortcuts-disabled", "False" )
         
         # If there's an overriden icon, use it
         overridenIcon = item.find( "override-icon" )
@@ -549,16 +561,16 @@ class GUI( xbmcgui.WindowXMLDialog ):
             if weEnabledSystemDebug:
                 json_query = xbmc.executeJSONRPC('{ "jsonrpc": "2.0", "id": 0, "method":"Settings.setSettingValue", "params": {"setting":"debug.showloginfo", "value":false} } ' )
             if weEnabledScriptDebug:
-                __addon__.setSetting( "enable_logging", "false" )
+                ADDON.setSetting( "enable_logging", "false" )
 
             if xbmc.getCondVisibility( "System.HasAddon( script.xbmc.debug.log )" ):
                 # Offer to upload a debug log
-                ret = xbmcgui.Dialog().yesno( __addon__.getAddonInfo( "name" ), __language__( 32097 ), __language__( 32093 ) )
+                ret = xbmcgui.Dialog().yesno( ADDON.getAddonInfo( "name" ), LANGUAGE( 32097 ), LANGUAGE( 32093 ) )
                 if ret:
                     xbmc.executebuiltin( "RunScript(script.xbmc.debug.log)" )
             else:
                 # Inform user menu couldn't be saved
-                xbmcgui.Dialog().ok( __addon__.getAddonInfo( "name" ), __language__( 32097 ), __language__( 32094 ) )
+                xbmcgui.Dialog().ok( ADDON.getAddonInfo( "name" ), LANGUAGE( 32097 ), LANGUAGE( 32094 ) )
 
             # We're done
             return
@@ -577,8 +589,8 @@ class GUI( xbmcgui.WindowXMLDialog ):
                         json_query = xbmc.executeJSONRPC('{ "jsonrpc": "2.0", "id": 0, "method":"Settings.setSettingValue", "params": {"setting":"debug.showloginfo", "value":true} } ' )
                         enabledSystemDebug = True
         
-        if __addon__.getSetting( "enable_logging" ) != "true":
-            __addon__.setSetting( "enable_logging", "true" )
+        if ADDON.getSetting( "enable_logging" ) != "true":
+            ADDON.setSetting( "enable_logging", "true" )
             enabledScriptDebug = True
             
         if enabledSystemDebug or enabledScriptDebug:
@@ -587,12 +599,12 @@ class GUI( xbmcgui.WindowXMLDialog ):
         else:
             if xbmc.getCondVisibility( "System.HasAddon( script.xbmc.debug.log )" ):
                 # Offer to upload a debug log
-                ret = xbmcgui.Dialog().yesno( __addon__.getAddonInfo( "name" ), __language__( 32097 ), __language__( 32093 ) )
+                ret = xbmcgui.Dialog().yesno( ADDON.getAddonInfo( "name" ), LANGUAGE( 32097 ), LANGUAGE( 32093 ) )
                 if ret:
                     xbmc.executebuiltin( "RunScript(script.xbmc.debug.log)" )
             else:
                 # Inform user menu couldn't be saved
-                xbmcgui.Dialog().ok( __addon__.getAddonInfo( "name" ), __language__( 32097 ), __language__( 32094 ) )                 
+                xbmcgui.Dialog().ok( ADDON.getAddonInfo( "name" ), LANGUAGE( 32097 ), LANGUAGE( 32094 ) )                 
             
     def _save_shortcuts_function( self ):
         # Save shortcuts
@@ -613,7 +625,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
             for listitem in self.allListItems:
                 
                 # If the item has a label or an action...
-                if try_decode( listitem.getLabel() ) != __language__(32013) or listitem.getProperty( "path" ) != "noop":
+                if try_decode( listitem.getLabel() ) != LANGUAGE(32013) or listitem.getProperty( "path" ) != "noop":
                     # Generate labelID, and mark if it has changed
                     labelID = listitem.getProperty( "labelID" )
                     newlabelID = labelID
@@ -659,6 +671,10 @@ class GUI( xbmcgui.WindowXMLDialog ):
                     # Visible
                     if listitem.getProperty( "visible-condition" ):
                         xmltree.SubElement( shortcut, "visible" ).text = listitem.getProperty( "visible-condition" )
+
+                    # Disabled
+                    if listitem.getProperty( "skinshortcuts-disabled" ) == "True":
+                        xmltree.SubElement( shortcut, "disabled" ).text = "True"
                     
                     # Locked
                     if listitem.getProperty( "LOCKED" ):
@@ -675,7 +691,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
                         
             # Save the shortcuts
             DATA.indent( root )
-            path = os.path.join( __datapath__ , DATA.slugify( self.group, True ) + ".DATA.xml" )
+            path = os.path.join( DATAPATH , DATA.slugify( self.group, True ) + ".DATA.xml" )
             path = try_decode( path )
             
             tree.write( path.replace( ".shortcuts", ".DATA.xml" ), encoding="UTF-8"  )
@@ -707,11 +723,11 @@ class GUI( xbmcgui.WindowXMLDialog ):
                 # Make the change (0 - the main sub-menu, 1-5 - additional submenus )
                 for i in range( 0, 6 ):
                     if i == 0:
-                        paths = [[os.path.join( __datapath__, DATA.slugify( labelIDFrom, True ) + ".DATA.xml" ).encode( "utf-8" ), "Move"], [os.path.join( __skinpath__, DATA.slugify( defaultIDFrom ) + ".DATA.xml" ).encode( "utf-8" ), "Copy"], [os.path.join( __defaultpath__, DATA.slugify( defaultIDFrom ) + ".DATA.xml" ).encode( "utf-8" ), "Copy"], [None, "New"]]
-                        target = os.path.join( __datapath__, DATA.slugify( labelIDTo, True ) + ".DATA.xml" ).encode( "utf-8" )
+                        paths = [[os.path.join( DATAPATH, DATA.slugify( labelIDFrom, True ) + ".DATA.xml" ).encode( "utf-8" ), "Move"], [os.path.join( SKINPATH, DATA.slugify( defaultIDFrom ) + ".DATA.xml" ).encode( "utf-8" ), "Copy"], [os.path.join( DEFAULTPATH, DATA.slugify( defaultIDFrom ) + ".DATA.xml" ).encode( "utf-8" ), "Copy"], [None, "New"]]
+                        target = os.path.join( DATAPATH, DATA.slugify( labelIDTo, True ) + ".DATA.xml" ).encode( "utf-8" )
                     else:
-                        paths = [[os.path.join( __datapath__, DATA.slugify( labelIDFrom, True ) + "." + str( i ) + ".DATA,xml" ).encode( "utf-8" ), "Move"], [os.path.join( __skinpath__, DATA.slugify( defaultIDFrom ) + "." + str( i ) + ".DATA.xml" ).encode( "utf-8" ), "Copy"], [os.path.join( __defaultpath__, DATA.slugify( defaultIDFrom ) + "." + str( i ) + ".DATA.xml" ).encode( "utf-8" ), "Copy"]]
-                        target = os.path.join( __datapath__, DATA.slugify( labelIDTo, True ) + "." + str( i ) + ".DATA.xml" ).encode( "utf-8" )
+                        paths = [[os.path.join( DATAPATH, DATA.slugify( labelIDFrom, True ) + "." + str( i ) + ".DATA,xml" ).encode( "utf-8" ), "Move"], [os.path.join( SKINPATH, DATA.slugify( defaultIDFrom ) + "." + str( i ) + ".DATA.xml" ).encode( "utf-8" ), "Copy"], [os.path.join( DEFAULTPATH, DATA.slugify( defaultIDFrom ) + "." + str( i ) + ".DATA.xml" ).encode( "utf-8" ), "Copy"]]
+                        target = os.path.join( DATAPATH, DATA.slugify( labelIDTo, True ) + "." + str( i ) + ".DATA.xml" ).encode( "utf-8" )
                         
                     target = try_decode( target )
                     
@@ -762,7 +778,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
         currentProperties = []
         
         # Get previously loaded properties
-        path = os.path.join( __datapath__ , xbmc.getSkinDir().decode('utf-8') + ".properties" )
+        path = os.path.join( DATAPATH , xbmc.getSkinDir().decode('utf-8') + ".properties" )
         if xbmcvfs.exists( path ):
             # The properties file exists, load from it
             listProperties = eval( xbmcvfs.File( path ).read() )
@@ -794,12 +810,12 @@ class GUI( xbmcgui.WindowXMLDialog ):
         
         # Try to save the file
         try:
-            f = xbmcvfs.File( os.path.join( __datapath__ , xbmc.getSkinDir().decode('utf-8') + ".properties" ), 'w' )
+            f = xbmcvfs.File( os.path.join( DATAPATH , xbmc.getSkinDir().decode('utf-8') + ".properties" ), 'w' )
             f.write( repr( saveData ).replace( "],", "],\n" ) )
             f.close()
         except:
             print_exc()
-            log( "### ERROR could not save file %s" % __datapath__ )                
+            log( "### ERROR could not save file %s" % DATAPATH )                
     
     def _load_overrides( self ):
         # Load various overrides from the skin, most notably backgrounds and thumbnails
@@ -853,6 +869,45 @@ class GUI( xbmcgui.WindowXMLDialog ):
         # Are there any controls we don't close the window on 'back' for?
         for elem in tree.findall( "onback" ):
             self.onBack[ int( elem.text ) ] = int( elem.attrib.get( "to" ) )
+
+    def _load_overrides_context( self ):
+        # Load context menu settings from overrides
+
+        # Check we're running Krypton or later - we don't support the context menu on earlier versions
+        if int( KODIVERSION ) <= 16:
+            return
+        
+        for overrideType in [ "skin", "script" ]:
+            # Load overrides
+            if overrideType == "skin":
+                tree = DATA._get_overrides_skin()
+            else:
+                tree = DATA._get_overrides_script()
+
+            # Check if context menu overrides in tree
+            elem = tree.find( "contextmenu" )
+            if elem is None:
+                # It isn't
+                continue
+
+            # Get which controls the context menu is enabled on
+            for control in elem.findall( "enableon" ):
+                self.contextControls.append( int( control.text ) )
+
+            # Get the context menu items
+            for item in elem.findall( "item" ):
+                if "control" not in item.attrib:
+                    # There's no control specified, so it's no use to us
+                    continue
+
+                condition = None
+                if "condition" in item.attrib:
+                    condition = item.attrib.get( "condition" )
+
+                self.contextItems.append( ( int( item.attrib.get( "control" ) ), condition, item.text ) )
+
+            # If we get here, we've loaded context options, so we're done
+            return
 
     def _load_backgrounds_thumbnails( self ):
         # Load backgrounds (done in background thread)
@@ -988,7 +1043,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
                 if not ">" in path or "VideoLibrary" in path:
                     # Give the user the choice of playing or displaying the playlist
                     dialog = xbmcgui.Dialog()
-                    userchoice = dialog.yesno( __language__( 32040 ), __language__( 32060 ), "", "", __language__( 32061 ), __language__( 32062 ) )
+                    userchoice = dialog.yesno( LANGUAGE( 32040 ), LANGUAGE( 32060 ), "", "", LANGUAGE( 32061 ), LANGUAGE( 32062 ) )
                     # False: Display
                     # True: Play
                     if not userchoice:
@@ -1000,7 +1055,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
                 elif ">" in path:
                     # Give the user the choice of playing, displaying or party more for the playlist
                     dialog = xbmcgui.Dialog()
-                    userchoice = dialog.select( __language__( 32060 ), [ __language__( 32061 ), __language__( 32062 ), xbmc.getLocalizedString( 589 ) ] )
+                    userchoice = dialog.select( LANGUAGE( 32060 ), [ LANGUAGE( 32061 ), LANGUAGE( 32062 ), xbmc.getLocalizedString( 589 ) ] )
                     # 0 - Display
                     # 1 - Play
                     # 2 - Party mode
@@ -1038,7 +1093,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
             orderIndex = int( listControl.getListItem( num ).getProperty( "skinshortcuts-orderindex" ) ) + 1
             
             # Set default label and action
-            listitem = xbmcgui.ListItem( __language__(32013) )
+            listitem = xbmcgui.ListItem( LANGUAGE(32013) )
             listitem.setProperty( "Path", 'noop' )
             listitem.setProperty( "additionalListItemProperties", "[]" )
 
@@ -1150,7 +1205,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
             oldlabelID = listitem.getProperty( "labelID" )
             
             # If the item is blank, set the current label to empty
-            if try_decode( label ) == __language__(32013):
+            if try_decode( label ) == LANGUAGE(32013):
                 label = ""
                 
             # Get new label from keyboard dialog
@@ -1161,7 +1216,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
             if ( keyboard.isConfirmed() ):
                 label = keyboard.getText()
                 if label == "":
-                    label = __language__(32013)
+                    label = LANGUAGE(32013)
             else:
                 return
                 
@@ -1227,7 +1282,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
             # Update the action
             listitem.setProperty( "path", action )
             listitem.setProperty( "displaypath", action )
-            listitem.setLabel2( __language__(32024) )
+            listitem.setLabel2( LANGUAGE(32024) )
             listitem.setProperty( "shortcutType", "32024" )
             
         elif controlID == 308:
@@ -1247,9 +1302,9 @@ class GUI( xbmcgui.WindowXMLDialog ):
                 # No skin override, so let user decide to restore or reset
                 if not DATA.checkIfMenusShared():
                     # Also offer to import from another skin
-                    response = xbmcgui.Dialog().select( __language__(32102), [ __language__(32103), __language__(32104), "Import from compatible skin" ] )
+                    response = xbmcgui.Dialog().select( LANGUAGE(32102), [ LANGUAGE(32103), LANGUAGE(32104), "Import from compatible skin" ] )
                 else:
-                    response = xbmcgui.Dialog().select( __language__(32102), [ __language__(32103), __language__(32104) ] )
+                    response = xbmcgui.Dialog().select( LANGUAGE(32102), [ LANGUAGE(32103), LANGUAGE(32104) ] )
             
             if response == -1:
                 # User cancelled
@@ -1279,11 +1334,11 @@ class GUI( xbmcgui.WindowXMLDialog ):
                         restoreItems.append( item[1] )
 
                 if len( restoreItems ) == 0:
-                    xbmcgui.Dialog().ok( __language__(32103), __language__(32105) )
+                    xbmcgui.Dialog().ok( LANGUAGE(32103), LANGUAGE(32105) )
                     return
 
                 # Let the user select a shortcut to restore
-                w = library.ShowDialog( "DialogSelect.xml", __cwd__, listing=restorePretty, windowtitle=__language__(32103) )
+                w = library.ShowDialog( "DialogSelect.xml", CWD, listing=restorePretty, windowtitle=LANGUAGE(32103) )
                 w.doModal()
                 restoreShortcut = w.result
                 del w
@@ -1320,11 +1375,11 @@ class GUI( xbmcgui.WindowXMLDialog ):
                 skinList, sharedFiles = DATA.getSharedSkinList()
                 
                 if len( skinList ) == 0:
-                    xbmcgui.Dialog().ok( __language__(32110), __language__(32109) )
+                    xbmcgui.Dialog().ok( LANGUAGE(32110), LANGUAGE(32109) )
                     return
 
                 # Let the user select a shortcut to restore
-                importMenu = xbmcgui.Dialog().select( __language__(32110), skinList )
+                importMenu = xbmcgui.Dialog().select( LANGUAGE(32110), skinList )
 
                 if importMenu == -1:
                     # User cancelled
@@ -1369,7 +1424,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
             
             # Generate list of widgets for select dialog
             widget = [""]
-            widgetLabel = [__language__(32053)]
+            widgetLabel = [LANGUAGE(32053)]
             widgetName = [""]
             widgetType = [ None ]
             for key in LIBRARY.dictionaryGroupings[ "widgets-classic" ]:
@@ -1378,7 +1433,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
                 widgetType.append( key[2] )
                 
                 if key[0] == defaultWidget:
-                    widgetLabel.append( key[1] + " (%s)" %( __language__(32050) ) )
+                    widgetLabel.append( key[1] + " (%s)" %( LANGUAGE(32050) ) )
                 else:
                     widgetLabel.append( key[1] )
                 
@@ -1400,7 +1455,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
                     widgetType.append( self.widgetPlaylistsType )
                     
             # Show the dialog
-            selectedWidget = xbmcgui.Dialog().select( __language__(32044), widgetLabel )
+            selectedWidget = xbmcgui.Dialog().select( LANGUAGE(32044), widgetLabel )
             
             if selectedWidget == -1:
                 # User cancelled
@@ -1421,11 +1476,11 @@ class GUI( xbmcgui.WindowXMLDialog ):
                         self._set_label( listitem, widgetName[selectedWidget] )
                         self.currentWindow.clearProperty( "useWidgetNameAsLabel" )
                 else:
-                    self._add_additionalproperty( listitem, "widgetName" + widgetID, widgetLabel[selectedWidget].replace( " (%s)" %( __language__(32050) ), "" ) )
+                    self._add_additionalproperty( listitem, "widgetName" + widgetID, widgetLabel[selectedWidget].replace( " (%s)" %( LANGUAGE(32050) ), "" ) )
                     self._add_additionalproperty( listitem, "widget" + widgetID, widget[selectedWidget] )
                     self._remove_additionalproperty( listitem, "widgetPlaylist" + widgetID )
                     if self.currentWindow.getProperty( "useWidgetNameAsLabel" ) == "true" and widgetID == "":
-                        self._set_label( listitem, widgetLabel[selectedWidget].replace( " (%s)" %( __language__(32050) ), "" ) )
+                        self._set_label( listitem, widgetLabel[selectedWidget].replace( " (%s)" %( LANGUAGE(32050) ), "" ) )
                         self.currentWindow.clearProperty( "useWidgetNameAsLabel" )
                 
                 if widgetType[ selectedWidget ] is not None:
@@ -1525,22 +1580,22 @@ class GUI( xbmcgui.WindowXMLDialog ):
             if self.backgroundBrowse == "true":
                 log( "Adding both browse options" )
                 background = ["", "", ""]         
-                backgroundLabel = [__language__(32053), __language__(32051), __language__(32052)]
-                backgroundPretty = [ LIBRARY._create(["", __language__(32053), "", { "icon": "DefaultAddonNone.png" }] ), LIBRARY._create(["", __language__(32051), "", { "icon": "DefaultFile.png" }] ), LIBRARY._create(["", __language__(32052), "", { "icon": "DefaultFolder.png" }] ) ]
+                backgroundLabel = [LANGUAGE(32053), LANGUAGE(32051), LANGUAGE(32052)]
+                backgroundPretty = [ LIBRARY._create(["", LANGUAGE(32053), "", { "icon": "DefaultAddonNone.png" }] ), LIBRARY._create(["", LANGUAGE(32051), "", { "icon": "DefaultFile.png" }] ), LIBRARY._create(["", LANGUAGE(32052), "", { "icon": "DefaultFolder.png" }] ) ]
             elif self.backgroundBrowse == "single":
                 log( "Adding single browse option" )
                 background = ["", ""]         
-                backgroundLabel = [__language__(32053), __language__(32051)]
-                backgroundPretty = [ LIBRARY._create(["", __language__(32053), "", { "icon": "DefaultAddonNone.png" }] ), LIBRARY._create(["", __language__(32051), "", { "icon": "DefaultFile.png" }] ) ]
+                backgroundLabel = [LANGUAGE(32053), LANGUAGE(32051)]
+                backgroundPretty = [ LIBRARY._create(["", LANGUAGE(32053), "", { "icon": "DefaultAddonNone.png" }] ), LIBRARY._create(["", LANGUAGE(32051), "", { "icon": "DefaultFile.png" }] ) ]
             elif self.backgroundBrowse == "multi":
                 log( "Adding multi browse option" )
                 background = ["", ""]         
-                backgroundLabel = [__language__(32053), __language__(32052)]
-                backgroundPretty = [ LIBRARY._create(["", __language__(32053), "", { "icon": "DefaultAddonNone.png" }] ), LIBRARY._create(["", __language__(32052), "", { "icon": "DefaultFolder.png" }] ) ]
+                backgroundLabel = [LANGUAGE(32053), LANGUAGE(32052)]
+                backgroundPretty = [ LIBRARY._create(["", LANGUAGE(32053), "", { "icon": "DefaultAddonNone.png" }] ), LIBRARY._create(["", LANGUAGE(32052), "", { "icon": "DefaultFolder.png" }] ) ]
             else:
                 background = [""]                         
-                backgroundLabel = [__language__(32053)]
-                backgroundPretty = [ LIBRARY._create(["", __language__(32053), "", { "icon": "DefaultAddonNone.png" }] ) ]
+                backgroundLabel = [LANGUAGE(32053)]
+                backgroundPretty = [ LIBRARY._create(["", LANGUAGE(32053), "", { "icon": "DefaultAddonNone.png" }] ) ]
 
             # Wait to ensure that all backgrounds are loaded
             count = 0
@@ -1577,7 +1632,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
                         label = xbmc.getInfoLabel( label )
 
                     if defaultBackground == key[ 0 ]:
-                        label = "%s (%s)" %( label, __language__( 32050 ) )
+                        label = "%s (%s)" %( label, LANGUAGE( 32050 ) )
 
                     backgroundLabel.append( label )
                     if xbmc.skinHasImage( key[ 0 ] ) or virtualImage:
@@ -1587,13 +1642,13 @@ class GUI( xbmcgui.WindowXMLDialog ):
                         backgroundPretty.append( LIBRARY._create(["", label, "", {} ] ) )
             
             if usePrettyDialog:
-                w = library.ShowDialog( "DialogSelect.xml", __cwd__, listing=backgroundPretty, windowtitle=__language__(32045) )
+                w = library.ShowDialog( "DialogSelect.xml", CWD, listing=backgroundPretty, windowtitle=LANGUAGE(32045) )
                 w.doModal()
                 selectedBackground = w.result
                 del w
             else:
                 # Show the dialog
-                selectedBackground = xbmcgui.Dialog().select( __language__(32045), backgroundLabel )
+                selectedBackground = xbmcgui.Dialog().select( LANGUAGE(32045), backgroundLabel )
             
             if selectedBackground == -1:
                 # User cancelled
@@ -1635,7 +1690,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
                 else:
                     # User has selected a normal background
                     self._add_additionalproperty( listitem, "background", background[selectedBackground] )
-                    self._add_additionalproperty( listitem, "backgroundName", backgroundLabel[selectedBackground].replace( " (%s)" %( __language__(32050) ), "" ) )
+                    self._add_additionalproperty( listitem, "backgroundName", backgroundLabel[selectedBackground].replace( " (%s)" %( LANGUAGE(32050) ), "" ) )
                     self._remove_additionalproperty( listitem, "backgroundPlaylist" )
                     self._remove_additionalproperty( listitem, "backgroundPlaylistName" )
             
@@ -1649,7 +1704,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
             
             # Create lists for the select dialog
             thumbnail = [""]                     
-            thumbnailLabel = [LIBRARY._create(["", __language__(32096), "", {}] )]
+            thumbnailLabel = [LIBRARY._create(["", LANGUAGE(32096), "", {}] )]
 
             # Add a None option if the skin specified it
             if self.thumbnailNone:
@@ -1672,7 +1727,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
                 thumbnailLabel.append( LIBRARY._create(["", key[ 1 ], "", {"icon": key[ 0 ] }] ) )
             
             # Show the dialog
-            w = library.ShowDialog( "DialogSelect.xml", __cwd__, listing=thumbnailLabel, windowtitle="Select thumbnail" )
+            w = library.ShowDialog( "DialogSelect.xml", CWD, listing=thumbnailLabel, windowtitle="Select thumbnail" )
             w.doModal()
             selectedThumbnail = w.result
             del w
@@ -1706,6 +1761,22 @@ class GUI( xbmcgui.WindowXMLDialog ):
                 # User has selected a normal thumbnail
                 listitem.setThumbnailImage( thumbnail[ selectedThumbnail ] )
                 listitem.setProperty( "thumbnail", thumbnail[ selectedThumbnail ] )
+            self.changeMade = True
+
+        elif controlID == 313:
+            # Toggle disabled
+            log( "Toggle disabled (313)" )
+            listControl = self.getControl( 211 )
+            listitem = listControl.getSelectedItem()
+
+            # Retrieve and toggle current disabled state
+            disabled = listitem.getProperty( "skinshortcuts-disabled" )
+            if disabled == "True":
+                listitem.setProperty( "skinshortcuts-disabled", "False" )
+            else:
+                # Toggle to true, add highlighting to label
+                listitem.setProperty( "skinshortcuts-disabled", "True" )
+                
             self.changeMade = True
         
         elif controlID == 401:
@@ -1824,7 +1895,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
             # Execute the script
             self.currentWindow.setProperty( "additionalDialog", "True" )
             import gui
-            ui= gui.GUI( "script-skinshortcuts.xml", __cwd__, "default", group=launchGroup, defaultGroup=launchDefaultGroup, nolabels=self.nolabels, groupname=groupName )
+            ui= gui.GUI( "script-skinshortcuts.xml", CWD, "default", group=launchGroup, defaultGroup=launchDefaultGroup, nolabels=self.nolabels, groupname=groupName )
             ui.doModal()
             del ui
             self.currentWindow.clearProperty( "additionalDialog" )
@@ -1888,7 +1959,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
                 tree = DATA._get_overrides_skin()
 
                 # Set options
-                dialogTitle = __language__(32101)
+                dialogTitle = LANGUAGE(32101)
                 showNone = True
                 imageBrowse = False
                 browseSingle = False
@@ -1912,13 +1983,13 @@ class GUI( xbmcgui.WindowXMLDialog ):
                 if showNone:
                     # Add a 'None' option to the list
                     property.append( "" )
-                    propertyLabel.append( __language__(32053) )
-                    propertyPretty.append( LIBRARY._create(["", __language__(32053), "", { "icon": "DefaultAddonNone.png" }] ) )
+                    propertyLabel.append( LANGUAGE(32053) )
+                    propertyPretty.append( LIBRARY._create(["", LANGUAGE(32053), "", { "icon": "DefaultAddonNone.png" }] ) )
                 if imageBrowse:
                     # Add browse single/multi options to the list
                     property.extend( [ "", "" ] )
-                    propertyLabel.extend( [ __language__(32051), __language__(32052) ] )
-                    propertyPretty.extend( [ LIBRARY._create(["", __language__(32051), "", { "icon": "DefaultFile.png" }] ), LIBRARY._create(["", __language__(32052), "", { "icon": "DefaultFolder.png" }] ) ] )
+                    propertyLabel.extend( [ LANGUAGE(32051), LANGUAGE(32052) ] )
+                    propertyPretty.extend( [ LIBRARY._create(["", LANGUAGE(32051), "", { "icon": "DefaultFile.png" }] ), LIBRARY._create(["", LANGUAGE(32052), "", { "icon": "DefaultFolder.png" }] ) ] )
                 
                 # Get all the skin-defined properties
                 for elem in tree.findall( "property" ):
@@ -1947,7 +2018,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
                 
                 # Show the dialog
                 if usePrettyDialog:
-                    w = library.ShowDialog( "DialogSelect.xml", __cwd__, listing=propertyPretty, windowtitle=dialogTitle )
+                    w = library.ShowDialog( "DialogSelect.xml", CWD, listing=propertyPretty, windowtitle=dialogTitle )
                     w.doModal()
                     selectedProperty = w.result
                     del w
@@ -2024,6 +2095,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
         listitemCopy.setProperty( "thumbnail", listitem.getProperty("thumbnail") )
         listitemCopy.setProperty( "localizedString", listitem.getProperty("localizedString") )
         listitemCopy.setProperty( "shortcutType", listitem.getProperty("shortcutType") )
+        listitemCopy.setProperty( "skinshortcuts-disabled", listitem.getProperty( "skinshortcuts-disabled" ) )
                 
         if listitem.getProperty( "LOCKED" ):
             listitemCopy.setProperty( "LOCKED", listitem.getProperty( "LOCKED" ) )
@@ -2220,24 +2292,60 @@ class GUI( xbmcgui.WindowXMLDialog ):
             
         # If there's no label2, set it to custom shortcut
         if not listitem.getLabel2():
-            listitem.setLabel2( __language__(32024) )
+            listitem.setLabel2( LANGUAGE(32024) )
             listitem.setProperty( "shortcutType", "32024" )
-            
-    # ====================
-    # === CLOSE WINDOW ===
-    # ====================
     
     def onAction( self, action ):
         currentFocus = self.getFocusId()
         if action.getId() in ACTION_CANCEL_DIALOG:
+            # Close action
+
             if currentFocus and currentFocus in self.onBack:
+                # Action overriden to return to a control
                 self.setFocusId( self.onBack[ currentFocus ] )
                 return
+
+            # Close window
             self._save_shortcuts()
             xbmcgui.Window(self.window_id).clearProperty('groupname')
             self._close()
-        elif currentFocus == 211:
+
+        elif currentFocus in self.contextControls and action.getId() in ACTION_CONTEXT_MENU:
+            # Context menu action
+            self._display_Context_Menu()
+
+        if currentFocus == 211:
+            # Changed highlighted item, update window properties
             self._add_additional_properties()
+
+    def _display_Context_Menu( self ):
+        # Displays a context menu
+
+        contextActions = []
+        contextItems = []
+
+        # Find active context menu items
+        for item in self.contextItems:
+            # Check any condition
+            if item[ 1 ] is None or xbmc.getCondVisibility( item[ 1 ] ):
+                # Add the items
+                contextActions.append( item[ 0 ] )
+                contextItems.append( item[ 2 ] )
+
+        # Check that there are some items to display
+        if len( contextItems ) == 0:
+            log( "Context menu called, but no items to display" )
+            return
+
+        # Display the context menu
+        selectedItem = xbmcgui.Dialog().contextmenu( list=contextItems )
+
+        if selectedItem == -1:
+            # Nothing selected
+            return
+
+        # Call the control associated with the selected item
+        self.onClick( contextActions[ selectedItem ] )
 
     def _close( self ):
         self.close()

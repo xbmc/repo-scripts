@@ -13,18 +13,14 @@ from unicodeutils import try_decode
 import nodefunctions
 NODE = nodefunctions.NodeFunctions()
 
-__addon__        = xbmcaddon.Addon()
-__addonid__      = __addon__.getAddonInfo('id').decode( 'utf-8' )
-__addonversion__ = __addon__.getAddonInfo('version')
-__xbmcversion__  = xbmc.getInfoLabel( "System.BuildVersion" ).split(".")[0]
-__language__     = __addon__.getLocalizedString
-__cwd__          = __addon__.getAddonInfo('path').decode("utf-8")
-__addonname__    = __addon__.getAddonInfo('name').decode("utf-8")
-__resource__   = xbmc.translatePath( os.path.join( __cwd__, 'resources', 'lib' ) ).decode("utf-8")
-__datapath__     = os.path.join( xbmc.translatePath( "special://profile/addon_data/" ).decode('utf-8'), __addonid__ )
-__profilepath__  = xbmc.translatePath( "special://profile/" ).decode('utf-8')
-__skinpath__     = xbmc.translatePath( "special://skin/shortcuts/" ).decode('utf-8')
-__defaultpath__  = xbmc.translatePath( os.path.join( __cwd__, 'resources', 'shortcuts').encode("utf-8") ).decode("utf-8")
+ADDON        = xbmcaddon.Addon()
+ADDONID      = ADDON.getAddonInfo('id').decode( 'utf-8' )
+KODIVERSION  = xbmc.getInfoLabel( "System.BuildVersion" ).split(".")[0]
+LANGUAGE     = ADDON.getLocalizedString
+CWD          = ADDON.getAddonInfo('path').decode("utf-8")
+DATAPATH     = os.path.join( xbmc.translatePath( "special://profile/addon_data/" ).decode('utf-8'), ADDONID )
+SKINPATH     = xbmc.translatePath( "special://skin/shortcuts/" ).decode('utf-8')
+DEFAULTPATH  = xbmc.translatePath( os.path.join( CWD, 'resources', 'shortcuts').encode("utf-8") ).decode("utf-8")
 
 # character entity reference
 CHAR_ENTITY_REXP = re.compile('&(%s);' % '|'.join(name2codepoint))
@@ -40,11 +36,11 @@ REPLACE2_REXP = re.compile(r'[^-a-z0-9]+')
 REMOVE_REXP = re.compile('-{2,}')
 
 def log(txt):
-    if __addon__.getSetting( "enable_logging" ) == "true":
+    if ADDON.getSetting( "enable_logging" ) == "true":
         try:
             if isinstance (txt,str):
                 txt = txt.decode('utf-8')
-            message = u'%s: %s' % (__addonid__, txt)
+            message = u'%s: %s' % (ADDONID, txt)
             xbmc.log(msg=message.encode('utf-8'), level=xbmc.LOGDEBUG)
         except:
             pass
@@ -67,11 +63,11 @@ class DataFunctions():
                 "otherProperties": [], "requires": None, "templateOnly": None }
         
     
-    def _get_labelID( self, labelID, action, getDefaultID = False, includeAddOnID = True ):
+    def _get_labelID( self, labelID, action, getDefaultID = False, includeAddOnID = True, noNonLocalized = False ):
         # This gets the unique labelID for the item we've been passed. We'll also store it, to make sure
         # we don't give it to any other item.
         
-        labelID = self.createNiceName( self.slugify( labelID.replace( " ", "" ).lower() ) )
+        labelID = self.createNiceName( self.slugify( labelID.replace( " ", "" ).lower() ), noNonLocalized )
         
         if includeAddOnID:
             addon_labelID = self._get_addon_labelID( action )
@@ -138,12 +134,12 @@ class DataFunctions():
         if profileDir is None:
             profileDir = xbmc.translatePath( "special://profile/" ).decode( "utf-8" )
         
-        userShortcuts = os.path.join( profileDir, "addon_data", __addonid__, self.slugify( group, True ) + ".DATA.xml" )
-        skinShortcuts = os.path.join( __skinpath__ , self.slugify( group ) + ".DATA.xml")
-        defaultShortcuts = os.path.join( __defaultpath__ , self.slugify( group ) + ".DATA.xml" )
+        userShortcuts = os.path.join( profileDir, "addon_data", ADDONID, self.slugify( group, True ) + ".DATA.xml" )
+        skinShortcuts = os.path.join( SKINPATH , self.slugify( group ) + ".DATA.xml")
+        defaultShortcuts = os.path.join( DEFAULTPATH , self.slugify( group ) + ".DATA.xml" )
         if defaultGroup is not None:
-            skinShortcuts = os.path.join( __skinpath__ , self.slugify( defaultGroup ) + ".DATA.xml")
-            defaultShortcuts = os.path.join( __defaultpath__ , self.slugify( defaultGroup ) + ".DATA.xml" )
+            skinShortcuts = os.path.join( SKINPATH , self.slugify( defaultGroup ) + ".DATA.xml")
+            defaultShortcuts = os.path.join( DEFAULTPATH , self.slugify( defaultGroup ) + ".DATA.xml" )
 
         if defaultsOnly:
             paths = [skinShortcuts, defaultShortcuts ]
@@ -194,7 +190,7 @@ class DataFunctions():
         
         # Iterate through all <shortcut/> nodes
         for node in tree.getroot().findall( "shortcut" ):
-            # If not user shortcuts, remove locked and defaultid nodes (in case of naughty skinners!)
+            # If not user shortcuts, remove locked nodes (in case of naughty skinners!)
             if isUserShortcuts == False:
                 searchNode = node.find( "locked" )
                 if searchNode is not None:
@@ -233,10 +229,14 @@ class DataFunctions():
             # Check that any version node matches current XBMC version
             version = node.find( "version" )
             if version is not None:
-                if __xbmcversion__ != version.text and self.checkVersionEquivalency( version.text, node.find( "action" ) ) == False:
+                if KODIVERSION != version.text and self.checkVersionEquivalency( version.text, node.find( "action" ) ) == False:
                     tree.getroot().remove( node )
                     self._pop_labelID()
                     continue
+
+            # Get any disabled element
+            if node.find( "disabled" ) is not None:
+                xmltree.SubElement( node, "disabled" ).text = "True"
                     
             # Load additional properties
             additionalProperties = self.checkAdditionalProperties( group, labelID, defaultID, isUserShortcuts, profileDir )
@@ -326,7 +326,7 @@ class DataFunctions():
                         if ( elem.attrib.get( "action" ) == action.text and ( checkGroup is None or checkGroup == group ) ) or ( elem.attrib.get( "action" ) == "globaloverride" and ( checkGroup is None or checkGroup == group ) ):
                             # Check the XBMC version matches
                             if "version" in elem.attrib:
-                                if elem.attrib.get( "version" ) != __xbmcversion__:
+                                if elem.attrib.get( "version" ) != KODIVERSION:
                                     continue
                                 
                             hasOverriden = True
@@ -452,7 +452,7 @@ class DataFunctions():
         if "script" in self.overrides:
             return self.overrides[ "script" ]
 
-        overridePath = os.path.join( __defaultpath__, "overrides.xml" )
+        overridePath = os.path.join( DEFAULTPATH, "overrides.xml" )
         try:
             tree = xmltree.parse( overridePath )
             self._save_hash( overridePath, xbmcvfs.File( overridePath ).read() )
@@ -473,7 +473,7 @@ class DataFunctions():
         if "skin" in self.overrides:
             return self.overrides[ "skin" ]
 
-        overridePath = os.path.join( __skinpath__, "overrides.xml" )
+        overridePath = os.path.join( SKINPATH, "overrides.xml" )
         try:
             tree = xmltree.parse( overridePath )
             self._save_hash( overridePath, xbmcvfs.File( overridePath ).read() )
@@ -520,8 +520,8 @@ class DataFunctions():
         self.currentProperties = []
         self.defaultProperties = []
         
-        path = os.path.join( profileDir, "addon_data", __addonid__, xbmc.getSkinDir().decode('utf-8') + ".properties" ).encode( "utf-8" )
-        #path = os.path.join( __datapath__ , xbmc.getSkinDir().decode('utf-8') + ".properties" )
+        path = os.path.join( profileDir, "addon_data", ADDONID, xbmc.getSkinDir().decode('utf-8') + ".properties" ).encode( "utf-8" )
+        #path = os.path.join( DATAPATH , xbmc.getSkinDir().decode('utf-8') + ".properties" )
         if xbmcvfs.exists( path ):
             # The properties file exists, load from it
             try:
@@ -631,7 +631,7 @@ class DataFunctions():
                                 self.defaultProperties.append( [ elem.attrib.get( "group" ), labelID, "widgetTarget", elem.attrib.get( "target" ), defaultID ] )
 
         # Load icons out of mainmenu.DATA.xml
-        path = os.path.join( __skinpath__ , "mainmenu.DATA.xml")
+        path = os.path.join( SKINPATH , "mainmenu.DATA.xml")
         if xbmcvfs.exists( path ):
             file = xbmcvfs.File( path ).read()
             self._save_hash( path, file )
@@ -673,8 +673,12 @@ class DataFunctions():
                     # This particular property is a matched property
                     attribName = elem.attrib.get( "attribute" )
                     attribValue = elem.attrib.get( "value" )
+                # Upgrade widgetTarget where value is video to videos
+                value = elem.text
+                if propertyName.startswith( "widgetTarget" ) and value == "video":
+                    value = "videos"
                 # Save details
-                fallbacks[ propertyName ].append( ( elem.text, attribName, attribValue ) )
+                fallbacks[ propertyName ].append( ( value, attribName, attribValue ) )
         # Save all the results for this group
         self.propertyInformation[ "fallbackProperties" ][ group ] = fallbackProperties
         self.propertyInformation[ "fallbacks" ][ group ] = fallbacks
@@ -752,34 +756,35 @@ class DataFunctions():
             xbmc.executebuiltin( "Skin.Reset(skinshortcuts-background-" + elem.text + ")" )
                 
     
-    def createNiceName ( self, item ):
+    def createNiceName ( self, item, noNonLocalized = False ):
         # Translate certain localized strings into non-localized form for labelID
-        if item == "10006":
-            return "videos"
-        if item == "342":
-            return "movies"
-        if item == "20343":
-            return "tvshows"
-        if item == "32022":
-            return "livetv"
-        if item == "10005":
-            return "music"
-        if item == "20389":
-            return "musicvideos"
-        if item == "10002":
-            return "pictures"
-        if item == "12600":
-            return "weather"
-        if item == "10001":
-            return "programs"
-        if item == "32032":
-            return "dvd"
-        if item == "10004":
-            return "settings"
-        if item == "32087":
-            return "radio"
-        else:
-            return item.lower( ).replace( " ", "" )
+        if noNonLocalized == False:
+            if item == "10006":
+                return "videos"
+            if item == "342":
+                return "movies"
+            if item == "20343":
+                return "tvshows"
+            if item == "32022":
+                return "livetv"
+            if item == "10005":
+                return "music"
+            if item == "20389":
+                return "musicvideos"
+            if item == "10002":
+                return "pictures"
+            if item == "12600":
+                return "weather"
+            if item == "10001":
+                return "programs"
+            if item == "32032":
+                return "dvd"
+            if item == "10004":
+                return "settings"
+            if item == "32087":
+                return "radio"
+        
+        return item.lower( ).replace( " ", "" )
             
     def checkVisibility ( self, action ):
         # Return whether mainmenu items should be displayed
@@ -842,11 +847,11 @@ class DataFunctions():
         # General visibilities
         elif action == "activatewindow(weather)":
             return "!IsEmpty(Weather.Plugin)"
-        elif action.startswith( "activatewindowandfocus(mypvr" ) or action.startswith( "playpvr" ) and __addon__.getSetting( "donthidepvr" ) == "false":
+        elif action.startswith( "activatewindowandfocus(mypvr" ) or action.startswith( "playpvr" ) and ADDON.getSetting( "donthidepvr" ) == "false":
             return "system.getbool(pvrmanager.enabled)"
-        elif action.startswith( "activatewindow(tv" ) and __addon__.getSetting( "donthidepvr" ) == "false":
+        elif action.startswith( "activatewindow(tv" ) and ADDON.getSetting( "donthidepvr" ) == "false":
             return "PVR.HasTVChannels"
-        elif action.startswith( "activatewindow(radio" ) and __addon__.getSetting( "donthidepvr" ) == "false":
+        elif action.startswith( "activatewindow(radio" ) and ADDON.getSetting( "donthidepvr" ) == "false":
             return "PVR.HasRadioChannels"
         elif action.startswith( "activatewindow(videos,movie" ):
             return "Library.HasContent(Movies)"
@@ -894,7 +899,7 @@ class DataFunctions():
                 if elem.attrib.get( findAttrib ) is not None and elem.attrib.get( findAttrib ).lower() != action.lower():
                     # Action's don't match
                     continue
-                if int( elem.attrib.get( "version" ) ) > int( __xbmcversion__ ):
+                if int( elem.attrib.get( "version" ) ) > int( KODIVERSION ):
                     # This version of Kodi is older than the shortcut is intended for
                     continue
 
@@ -903,7 +908,7 @@ class DataFunctions():
                 if elem.text == "All":
                     # This shortcut matches all newer versions
                     return True
-                elif int( elem.text ) >= int( __xbmcversion__ ):
+                elif int( elem.text ) >= int( KODIVERSION ):
                     return True
 
                 # The version didn't match
@@ -933,13 +938,12 @@ class DataFunctions():
             # currentProperty[3] = Property value
             # currentProperty[4] = defaultID
             if labelID is not None and currentProperty[0] == group and currentProperty[1] == labelID:
-                returnProperties.append( [ currentProperty[2], currentProperty[3] ] )
+                returnProperties.append( self.upgradeAdditionalProperties( currentProperty[2], currentProperty[3] ) )
             elif len( currentProperty ) is not 4:
                 if defaultID is not None and currentProperty[0] == group and currentProperty[4] == defaultID:
-                    returnProperties.append( [ currentProperty[2], currentProperty[3] ] )
+                    returnProperties.append( self.upgradeAdditionalProperties( currentProperty[2], currentProperty[3] ) )
                 
         return returnProperties
-            
         
     def checkShortcutLabelOverride( self, action ):
         tree = self._get_overrides_skin()
@@ -964,7 +968,7 @@ class DataFunctions():
                 return False
 
         # Check if the user has asked for their menus not to be shared
-        if __addon__.getSetting( "shared_menu" ).lower() == "false":
+        if ADDON.getSetting( "shared_menu" ).lower() == "false":
             return False
         return True
 
@@ -972,12 +976,12 @@ class DataFunctions():
         # This will return a list of skins the user can import the menu from
         skinNames = []
         skinFiles = []
-        for files in xbmcvfs.listdir( __datapath__ ):
+        for files in xbmcvfs.listdir( DATAPATH ):
             # Try deleting all shortcuts
             if files:
                 for file in files:
                     if file.endswith( ".hash" ) and not file.startswith( "%s-" %( xbmc.getSkinDir() ) ):
-                        canImport, skinName = self.parseHashFile( os.path.join( __datapath__, file.decode( 'utf-8' ) ).encode( 'utf-8' ) )
+                        canImport, skinName = self.parseHashFile( os.path.join( DATAPATH, file.decode( 'utf-8' ) ).encode( 'utf-8' ) )
                         if canImport == True:
                             skinNames.append( skinName )
                     elif file.endswith( ".DATA.xml" ) and not file.startswith( "%s-" %( xbmc.getSkinDir() ) ):
@@ -1002,14 +1006,14 @@ class DataFunctions():
 
         # If there are any files left in skinFiles, we have a shared menu
         if len( skinFiles ) != 0:
-            skinNames.insert( 0, __language__(32111) )
+            skinNames.insert( 0, LANGUAGE(32111) )
 
         return (skinNames, skinFiles)
 
     def getFilesForSkin( self, skinName ):
         # This will return a list of all menu files for a particular skin
         skinFiles = []
-        for files in xbmcvfs.listdir( __datapath__ ):
+        for files in xbmcvfs.listdir( DATAPATH ):
             # Try deleting all shortcuts
             if files:
                 for file in files:
@@ -1047,14 +1051,14 @@ class DataFunctions():
                 newFile = oldFile.replace( skinName, xbmc.getSkinDir() )
             else:
                 newFile = "%s-%s" %( xbmc.getSkinDir(), oldFile )
-            oldPath = os.path.join( __datapath__, oldFile.decode( 'utf-8' ) ).encode( 'utf-8' )
-            newPath = os.path.join( __datapath__, newFile.decode( 'utf-8' ) ).encode( 'utf-8' )
+            oldPath = os.path.join( DATAPATH, oldFile.decode( 'utf-8' ) ).encode( 'utf-8' )
+            newPath = os.path.join( DATAPATH, newFile.decode( 'utf-8' ) ).encode( 'utf-8' )
 
             # Copy file
             xbmcvfs.copy( oldPath, newPath )
 
         # Delete any .properties file
-        propFile = os.path.join( __datapath__, "%s.properties" %( xbmc.getSkinDir() ) ).encode( 'utf-8' )
+        propFile = os.path.join( DATAPATH, "%s.properties" %( xbmc.getSkinDir() ) ).encode( 'utf-8' )
         if xbmcvfs.exists( propFile ):
             xbmcvfs.delete( propFile )
 
@@ -1138,7 +1142,7 @@ class DataFunctions():
                 
             elif int( data ) >= 32000 and int( data ) < 33000:
                 # A number from the script
-                return [ data, "$ADDON[script.skinshortcuts " + data + "]", __language__( int( data ) ), data ]
+                return [ data, "$ADDON[script.skinshortcuts " + data + "]", LANGUAGE( int( data ) ), data ]
                 
             else:
                 # A number from XBMC itself (probably)
@@ -1273,8 +1277,10 @@ class DataFunctions():
     def upgradeAction( self, action ):
         # This function looks for actions used in a previous version of Kodi, and upgrades them to the current action
 
+        if not action.lower().startswith( "activatewindow(" ): return action
+
         # Isengard + earlier music addons
-        if int( __xbmcversion__ ) <= 15:
+        if int( KODIVERSION ) <= 15:
             # Shortcut to addon section
             if action.lower().startswith( "activatewindow(musiclibrary,addons" ) and xbmc.getCondVisibility( "!Library.HasContent(Music)" ):
                 return( "ActivateWindow(MusicFiles,Addons,return)" )
@@ -1298,16 +1304,31 @@ class DataFunctions():
 
 
         # Jarvis + later music windows
-        if action.lower() == "activatewindow(musicfiles)" and int( __xbmcversion__ ) >= 16:
+        if action.lower() == "activatewindow(musicfiles)" and int( KODIVERSION ) >= 16:
             return "ActivateWindow(Music,Files,Return)"
 
-        if "," not in action: return action
+        if action.lower().startswith("activatewindow(musiclibrary") and int( KODIVERSION ) >= 16:
+            if "," in action:
+                return "ActivateWindow(Music," + action.split( ",", 1 )[ 1 ]
+            else:
+                return "ActivateWindow(Music)"
 
-        if action.lower().startswith("activatewindow(musiclibrary") and int( __xbmcversion__ ) >= 16:
-            return "ActivateWindow(Music," + action.split( ",", 1 )[ 1 ]
+        # Isengard + later (all supported versions) video windows
+        if action.lower().startswith( "activatewindow(videolibrary"):
+            if "," in action:
+                return "ActivateWindow(Videos," + action.split( ",", 1 )[ 1 ]
+            else:
+                return "ActivateWindow(Videos)"
 
         # No matching upgrade
         return action
+
+    def upgradeAdditionalProperties( self, propertyName, propertyValue ):
+        # This function fixes any changes to additional properties between Kodi versions
+        if propertyName.startswith( "widgetTarget" ) and propertyValue == "video":
+            propertyValue = "videos"
+        
+        return [ propertyName, propertyValue ]
 
     def buildReplacementMusicAddonAction( self, action, window ):
         # Builds a replacement action for an Isengard or earlier shortcut to a specific music addon

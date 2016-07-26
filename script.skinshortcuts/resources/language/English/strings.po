@@ -161,7 +161,6 @@ msgid "Choose which items to display on the Main Menu"
 msgstr ""
 
 #. ::MENUNAME:: is used internally and should NOT be translated :)
-
 msgctxt "#32036"
 msgid "Choose shortcuts for ::MENUNAME::"
 msgstr ""
@@ -175,7 +174,6 @@ msgid "Are you sure you want to reset all menu items back to default?"
 msgstr ""
 
 #. ::MENUNAME:: is used internally and should NOT be translated :)
-
 msgctxt "#32039"
 msgid "Pick widget for ::MENUNAME::"
 msgstr ""
@@ -341,7 +339,6 @@ msgid "Files view"
 msgstr ""
 
 #. ::MENUNAME:: is used internally and should NOT be translated :)
-
 msgctxt "#32080"
 msgid "Edit ::MENUNAME:: Submenu"
 msgstr ""
@@ -480,4 +477,14 @@ msgstr ""
 
 msgctxt "#32114"
 msgid "Where should menu item be created"
+msgstr ""
+
+#: /resources/lib/nodefunctions.py
+msgctxt "#32115"
+msgid "Unable to get directory listings[CR][CR]See log for details"
+msgstr ""
+
+#: /default.py
+msgctxt "#32116"
+msgid "The skin you are using does not support adding items directly to the main menu"
 msgstr ""

@@ -8,17 +8,16 @@ from traceback import print_exc
 import simpleeval, operator, ast
 from simpleeval import simple_eval
 
-__addon__        = xbmcaddon.Addon()
-__addonid__      = __addon__.getAddonInfo('id').decode( 'utf-8' )
-__xbmcversion__  = xbmc.getInfoLabel( "System.BuildVersion" ).split(".")[0]
-__skinpath__     = xbmc.translatePath( "special://skin/shortcuts/" ).decode('utf-8')
+ADDON        = xbmcaddon.Addon()
+ADDONID      = ADDON.getAddonInfo('id').decode( 'utf-8' )
+SKINPATH     = xbmc.translatePath( "special://skin/shortcuts/" ).decode('utf-8')
 
 def log(txt):
-    if __addon__.getSetting( "enable_logging" ) == "true":
+    if ADDON.getSetting( "enable_logging" ) == "true":
         try:
             if isinstance (txt,str):
                 txt = txt.decode('utf-8')
-            message = u'%s: %s' % (__addonid__, txt)
+            message = u'%s: %s' % (ADDONID, txt)
             xbmc.log(msg=message.encode('utf-8'), level=xbmc.LOGDEBUG)
         except:
             pass
@@ -26,7 +25,7 @@ def log(txt):
 class Template():
     def __init__( self ):
         # Load the skins template.xml file
-        templatepath = os.path.join( __skinpath__ , "template.xml" )
+        templatepath = os.path.join( SKINPATH , "template.xml" )
         self.otherTemplates = []
         try:
             self.tree = xmltree.parse( templatepath )

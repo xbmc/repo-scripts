@@ -1,11 +1,19 @@
-#Skin Shortcuts - 1.0.8
+#Skin Shortcuts - 1.0.10
 
 script.skinshortcuts was written with the intention of making user customizable shortcuts on the home page easier for skinners.
 
 
 ## What's New for Skinners
 
-#### Version 1.0.8 - Git version
+#### Version 1.0.10 - repo version
+
+- Ability to move controls from management dialog to context menu (Krypton only) - [Read More](./resources/docs/advanced/Context menu.md)
+- Ability to disable menu items via GUI 313 - Please note this control is made available by default on the context menu - [Read More](./resources/docs/started/Management Dialog.md)
+- Default icons for all available shortcuts in the Common, Commands and Settings available shortcut groupings - [Read More](./resources/docs/advanced/Overriding icons.md)
+- Behaviour change: When using mode=single, only the main menu (and corresponding submenu's) will be added to the allmenus include - additional groups that are being built will no longer be added
+- Please be aware of the removal of deprecated window names in Krypton. The script will attempt to update VideoLibrary and MusicLibrary to Videos and Music respectively, but you should ensure that any default shortcuts you provide with your skin are up to date as this behaviour may change in the future.
+
+#### Version 1.0.8 - previous version
 
 - Ability to set additional properties of menu items from outside of the management dialog - [Read More](./resources/docs/advanced/External editing.md#change-properties-of-menu-items)
 - Skinner can now set that their skin should not use the users shared menu - [Read More](./resources/docs/started/Getting Started.md#shared-menu)
@@ -20,10 +28,6 @@ script.skinshortcuts was written with the intention of making user customizable 
  - New submenuOther templates - [Read More](./resources/docs/advanced/Templates.md#types-of-templates)
  - Get value from Python - [Read More](./resources/docs/advanced/Templates.md#get-value-from-python)
 - Plugin-based widgets selected via the GUI 312 method will now have a reload parameter added to them automatically. This means that they will update after media has been played. (Requires Skin Helper Service)
-
-#### Version 1.0.7 - repo version
-
-- Additional properties of the currently selected menu item are now available via window properties in the management dialog - accessing them this way may help in cases where Kodi's property limit is reached - [Read More](./resources/docs/started/Management Dialog.md#label-and-label2)
  
 ## With Thanks - Because their names don't deserve to be at the bottom :)
 

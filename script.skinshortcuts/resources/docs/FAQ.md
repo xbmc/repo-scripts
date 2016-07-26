@@ -79,4 +79,6 @@ Most common causes for this is either the skin has been installed to a read-only
 
 ## Cannot hide a menu entry
 
-Whilst the behaviour may change in the future, if a good way of implementing it is found, at present it is not possible to hide a menu entry - only to delete it. Note that in most skins, it is possible to re-add any original menu entry via the 'Restore menu items' button.
+Version 1.0.9 of the script introduces a new control for the management dialog - GUI 313 - which can be used to disable a menu entry.
+
+In many skins, the script is able to automatically enable this control by adding it to the context menu for GUI 211 (the list of menu items in the custom menu), but we are not able to do this on all skins, and so some skins will need manually updating to support it.

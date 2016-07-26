@@ -120,4 +120,10 @@ Details of methods available for customising menu items outside of the managemen
 
 [Read More](./External editing.md)
 
+## Context menu
+
+Details of how to enable and customise the context menu within the management dialog.
+
+[Read More](./Context menu.md)
+
 ***Quick links*** - [Readme](../../../README.md) - [Getting Started](../started/Getting Started.md) - [Advanced Usage](./Advanced Usage.md)
