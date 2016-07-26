@@ -75,7 +75,7 @@ class Kodi_Monitor(xbmc.Monitor):
             data = eval(data.replace("true","True").replace("false","False"))
             type = data.get("type","")
 
-        if (type in ["song","artist","album"] or resetAll):
+        if (type in ["song","artist","album"] or resetAll and not utils.WINDOW.getProperty("SkinHelperShutdownRequested")):
             artutils.updateMusicArt(type,data.get("id"))
             if not xbmc.getCondVisibility("Library.IsScanningMusic"):
                 utils.logMsg("Music database changed - type: %s - resetAll: %s, refreshing widgets...." %(type,resetAll))

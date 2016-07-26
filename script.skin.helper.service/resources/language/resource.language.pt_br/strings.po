@@ -377,8 +377,8 @@ msgid "Reset persistant cache"
 msgstr "Redefinição de cache persistente"
 
 msgctxt "#32090"
-msgid "Are you sure you want to reset the permanent cache ? \nWarning: This will delete all contents of the folder "
-msgstr "Tem certeza de que deseja redefinir o cache permanente? \ nAviso: Isto irá apagar todo o conteúdo da pasta "
+msgid "Are you sure you want to reset the permanent cache ? Warning: This will delete all contents of the folder "
+msgstr "Tem certeza de que deseja redefinir o cache permanente ? \nAviso: Isto irá apagar todo o conteúdo da pasta "
 
 msgctxt "#32091"
 msgid "The action completed sucesfully"
@@ -655,3 +655,143 @@ msgstr "Tem certeza que deseja continuar? isto pode levar algum tempo, dependend
 msgctxt "#32159"
 msgid "Allow existing artwork to be overwritten with better quality"
 msgstr "Permitir que artes existentes sejam sobrepostas com artes de melhor qualidade"
+
+msgctxt "#32160"
+msgid "Maximum number of wall images to create for each background"
+msgstr ""
+
+msgctxt "#32161"
+msgid "Black & White"
+msgstr "Preto & Branco"
+
+msgctxt "#32162"
+msgid "Similar Media"
+msgstr "Mídia Similar"
+
+msgctxt "#32163"
+msgid "Widgets"
+msgstr "Widgets"
+
+msgctxt "#32164"
+msgid "Enable artwork lookups for music/pvr widgets"
+msgstr "Ativar procura de artes para widgets de música/pvr"
+
+msgctxt "#32165"
+msgid "Show specials in episode widgets"
+msgstr "Mostrar especiais nos widgets de episódios"
+
+msgctxt "#32166"
+msgid "Browse albums instead of playing for album widgets"
+msgstr "Navegar em álbuns ao invés de reproduzir via widgets álbum"
+
+msgctxt "#32167"
+msgid "In-progress episodes"
+msgstr "Episódios em progresso"
+
+msgctxt "#32168"
+msgid "In-progress movies"
+msgstr "Filmes em progresso"
+
+msgctxt "#32169"
+msgid "In-progress and recommended movies"
+msgstr "Filmes em progresso e recomendado"
+
+msgctxt "#32170"
+msgid "PVR - TV Channels (with artwork)"
+msgstr "PVR - Canais de TV (com arte)"
+
+msgctxt "#32171"
+msgid "PVR - Next unwatched recordings (reversed)"
+msgstr "PVR - Próximas gravações não vistas (reverso)"
+
+msgctxt "#32172"
+msgid "Precache all artwork"
+msgstr "Precache todas artes"
+
+msgctxt "#32173"
+msgid "Manual select Animated Poster"
+msgstr ""
+
+msgctxt "#32174"
+msgid "Manual select Animated fanart"
+msgstr "Seleção manual de fanart animado"
+
+msgctxt "#32175"
+msgid "Select Animated artwork"
+msgstr "Selecione arte animada"
+
+msgctxt "#32176"
+msgid "Browse for image..."
+msgstr "Procurar por imagem..."
+
+msgctxt "#32177"
+msgid "Custom folder with music artwork"
+msgstr "Pasta customizada para artes em músicas"
+
+msgctxt "#32178"
+msgid "Lookup artwork in custom folder"
+msgstr "Verificar artes em pasta customizada"
+
+msgctxt "#32179"
+msgid "Contextmenu"
+msgstr "Menu de Contexto"
+
+msgctxt "#32180"
+msgid "Show contextmenu for music artwork"
+msgstr "Mostrar menu de contexto para artes em músicas"
+
+msgctxt "#32181"
+msgid "Show contextmenu for pvr artwork"
+msgstr "Mostrar menu de contexto para PVR artes"
+
+msgctxt "#32182"
+msgid "Show contextmenu for animated artwork"
+msgstr "Mostrar menu de contexto para artes animadas"
+
+msgctxt "#32183"
+msgid "Show series-level button in contextmenu"
+msgstr "Mostrar botão no menu de contexto para o nível-seriados"
+
+msgctxt "#32184"
+msgid "Skip online lookup if all artwork is found locally"
+msgstr "pular procura online se todas as artes existirem localmente"
+
+msgctxt "#32185"
+msgid "Random movies"
+msgstr "Filmes randômicos"
+
+msgctxt "#32186"
+msgid "In-progress and random movies"
+msgstr "Filmes em progresso e randômico"
+
+msgctxt "#32187"
+msgid "Random albums"
+msgstr "Álbuns randômicos"
+
+msgctxt "#32188"
+msgid "Random songs"
+msgstr "Músicas randômicas"
+
+msgctxt "#32189"
+msgid "Hide watched items in video widgets"
+msgstr "Ocultar itens assistidos nos widgets de vídeo"
+
+msgctxt "#32190"
+msgid "Only use in-progress shows in next episodes widget"
+msgstr "Somente use seriados em progresso no widget próximos episódios"
+
+msgctxt "#32191"
+msgid "Recommended Tv Shows"
+msgstr "Seriados recomendados"
+
+msgctxt "#32192"
+msgid "Recently added movies"
+msgstr "Filmes adicionados recentemente"
+
+msgctxt "#32193"
+msgid "Recently added episodes"
+msgstr "Episódios adicionados recentemente"
+
+msgctxt "#32194"
+msgid "Recently added musicvideos"
+msgstr "Concertos adicionados recentemente"

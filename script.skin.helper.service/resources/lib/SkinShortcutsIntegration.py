@@ -152,7 +152,9 @@ def getWidgets(itemstoInclude = None):
         else: widgets = getAddonWidgetListing(widgetType)
         for widget in widgets:
             type = widget[2]
-            if len(widget) > 3:
+            if type == "folder":
+                isFolder = True
+            elif len(widget) > 3:
                 isFolder = widget[3]
             else: isFolder = False
             if type == "movies":

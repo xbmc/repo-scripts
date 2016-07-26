@@ -900,15 +900,11 @@ def getGoogleImages(terms,**kwargs):
         if div.get("id") == "images":
             for a in div.findAll("a"):
                 page = a.get("href")
-                html = requests.get(page, headers={'User-agent': 'Mozilla/4.0 (compatible; MSIE 7.0; Windows Phone OS 7.0; Trident/3.1; IEMobile/7.0; LG; GW910)'}, timeout=5).text
-                soup = BeautifulSoup.BeautifulSoup(html)
-                for div in soup.findAll('div'):
-                    if div.get("id") == "img_details":
-                        img_details = div
-                        links = img_details.findAll('a')
-                        if len(links) == 2:
-                            img = links[1].get("href")
-                            results.append( img )
+                try:
+                    img = page.split("imgurl=")[-1]
+                    img = img.split("&imgrefurl=")[0]
+                    results.append( img )
+                except: pass
 
     return results
 
@@ -944,6 +940,9 @@ def getImdbTop250():
     return results
     
 def searchYoutubeImage(searchphrase, searchphrase2=""):
+    if not xbmc.getCondVisibility("System.HasAddon(plugin.video.youtube)"):
+        return ""
+        
     image = ""
     if searchphrase2:
         searchphrase = searchphrase + " " + searchphrase2
@@ -1011,7 +1010,7 @@ def getMusicBrainzId(artist, album="", track=""):
     #use theaudiodb as fallback
     try:
         if (not artistid or not albumid) and album:
-            audiodb_url = 'http://www.theaudiodb.com/api/v1/json/193621276b2d731671156g/searchalbum.php'
+            audiodb_url = 'http://www.theaudiodb.com/api/v1/json/32176f5352254d85853778/searchalbum.php'
             params = {'s' : artist, 'a': album}
             response = requests.get(audiodb_url, params=params)
             if response and response.content:
@@ -1024,7 +1023,7 @@ def getMusicBrainzId(artist, album="", track=""):
                         albumid = adbdetails.get("strMusicBrainzID","")
                         artistid = adbdetails.get("strMusicBrainzArtistID","")
         if (not artistid or not albumid) and artist and track:
-            audiodb_url = 'http://www.theaudiodb.com/api/v1/json/193621276b2d731671156g/searchtrack.php'
+            audiodb_url = 'http://www.theaudiodb.com/api/v1/json/32176f5352254d85853778/searchtrack.php'
             params = {'s' : artist, 't': track}
             response = requests.get(audiodb_url, params=params)
             if response and response.content:
@@ -1043,7 +1042,7 @@ def getMusicBrainzId(artist, album="", track=""):
     if (not artistid or not albumid) and artist and album:
         try:
             lastfm_url = 'http://ws.audioscrobbler.com/2.0/'
-            params = {'method': 'album.getInfo', 'format': 'json', 'artist' : artist, 'album': album, 'api_key': '1869cecbff11c2715934b45b721e6fb0'}
+            params = {'method': 'album.getInfo', 'format': 'json', 'artist' : artist, 'album': album, 'api_key': '822eb03d95f45fbab2137d646aaf798'}
             response = requests.get(lastfm_url, params=params)
             if response and response.content:
                 data = json.loads(response.content.decode('utf-8','replace'))
@@ -1063,7 +1062,7 @@ def getMusicBrainzId(artist, album="", track=""):
     if not artistid and artist:
         try:
             lastfm_url = 'http://ws.audioscrobbler.com/2.0/'
-            params = {'method': 'artist.getInfo', 'format': 'json', 'artist' : artist, 'api_key': '1869cecbff11c2715934b45b721e6fb0'}
+            params = {'method': 'artist.getInfo', 'format': 'json', 'artist' : artist, 'api_key': '822eb03d95f45fbab2137d646aaf798'}
             response = requests.get(lastfm_url, params=params)
             if response and response.content:
                 data = json.loads(response.content.decode('utf-8','replace'))
@@ -1097,7 +1096,7 @@ def getArtistArtwork(musicbrainzartistid, artwork=None, allowoverwrite=True):
     #get audiodb info for artist  (and use as spare for artwork)
     try:
         response = None
-        audiodb_url = 'http://www.theaudiodb.com/api/v1/json/193621276b2d731671156g/artist-mb.php?i=%s' %musicbrainzartistid
+        audiodb_url = 'http://www.theaudiodb.com/api/v1/json/32176f5352254d85853778/artist-mb.php?i=%s' %musicbrainzartistid
         response = requests.get(audiodb_url)
     except Exception as e:
         logMsg("getMusicArtwork AudioDb lookup failed --> " + str(e), 0)
@@ -1120,7 +1119,7 @@ def getArtistArtwork(musicbrainzartistid, artwork=None, allowoverwrite=True):
     if not artwork.get("info") or not artwork.get("artistthumb"):
         try:
             response = None
-            lastfm_url = 'http://ws.audioscrobbler.com/2.0/?method=artist.getInfo&format=json&api_key=1869cecbff11c2715934b45b721e6fb0&mbid=%s' %musicbrainzartistid
+            lastfm_url = 'http://ws.audioscrobbler.com/2.0/?method=artist.getInfo&format=json&api_key=822eb03d95f45fbab2137d646aaf798&mbid=%s' %musicbrainzartistid
             response = requests.get(lastfm_url)
         except Exception as e:
             logMsg("getMusicArtwork LastFM lookup failed --> " + str(e), 0)
@@ -1159,7 +1158,7 @@ def getAlbumArtwork(musicbrainzalbumid, artwork=None, allowoverwrite=True):
     #get album info on theaudiodb (and use as spare for artwork)
     try:
         response = None
-        audiodb_url = 'http://www.theaudiodb.com/api/v1/json/193621276b2d731671156g/album-mb.php?i=%s' %musicbrainzalbumid
+        audiodb_url = 'http://www.theaudiodb.com/api/v1/json/32176f5352254d85853778/album-mb.php?i=%s' %musicbrainzalbumid
         response = requests.get(audiodb_url)
     except Exception as e:
         logMsg("getMusicArtwork AudioDB lookup failed --> " + str(e), 0)
@@ -1177,7 +1176,7 @@ def getAlbumArtwork(musicbrainzalbumid, artwork=None, allowoverwrite=True):
     #get lastFM info for artist  (and use as spare for artwork)
     if (not artwork.get("info") or not artwork.get("folder")) and artwork.get("artistname") and artwork.get("albumname"):
         try:
-            lastfm_url = 'http://ws.audioscrobbler.com/2.0/?method=album.getInfo&format=json&api_key=1869cecbff11c2715934b45b721e6fb0&artist=%s&album=%s' %(artwork["artistname"],artwork["albumname"])
+            lastfm_url = 'http://ws.audioscrobbler.com/2.0/?method=album.getInfo&format=json&api_key=822eb03d95f45fbab2137d646aaf798&artist=%s&album=%s' %(artwork["artistname"],artwork["albumname"])
             response = requests.get(lastfm_url)
         except Exception as e:
             logMsg("getMusicArtwork LastFM lookup failed --> " + str(e), 0)
@@ -1231,15 +1230,16 @@ def getCustomFolderPath(path, foldername):
     else: delim = "/"
     dirs, files = xbmcvfs.listdir(path)
     pathfound = ""
-    for dir in dirs:
-        dir = dir.decode("utf-8")
-        curpath = os.path.join(path,dir) + delim
-        match =  SM(None, foldername, dir).ratio()
-        if match >= 0.70: 
-            return curpath
-        elif not pathfound:
-            pathfound = getCustomFolderPath(curpath,foldername)
-        if pathfound: break
+    for strictness in [1, 0.95, 0.9, 0.8, 0.7]:
+        for dir in dirs:
+            dir = dir.decode("utf-8")
+            curpath = os.path.join(path,dir) + delim
+            match =  SM(None, foldername, dir).ratio()
+            if match >= strictness: 
+                return curpath
+            elif not pathfound:
+                pathfound = getCustomFolderPath(curpath,foldername)
+            if pathfound: break
     return pathfound
 
 def getSongDurationString(seconds):
@@ -1353,6 +1353,8 @@ def getMusicArtwork(artistName, albumName="", trackName="", ignoreCache=False):
         songcount = 0
         albumcount = 0
         albums = []
+        albumsartist = []
+        albumscompilations = []
         tracklist = []
         tracklistwithduration = []
         json_response = None
@@ -1377,7 +1379,7 @@ def getMusicArtwork(artistName, albumName="", trackName="", ignoreCache=False):
                     # skip multi artist song in artist listing
                     continue
                 if not trackName: trackName = song.get("label","")
-                if json_response["artistid"] in song["albumartistid"] and not path2 and song.get("file"):
+                if song.get("albumartistid") and song.get("file") and json_response["artistid"] in song["albumartistid"] and not path2:
                     #set additional path to prevent artist lookups in compilations
                     path2 = song.get("file")
                 if song.get("album"):
@@ -1388,9 +1390,15 @@ def getMusicArtwork(artistName, albumName="", trackName="", ignoreCache=False):
                     if song["album"] not in albums:
                         albumcount +=1
                         albums.append(song["album"])
+                        if song.get("albumartistid") and json_response["artistid"] in song["albumartistid"]:
+                            albumsartist.append(song["album"])
+                        else:
+                            albumscompilations.append(song["album"])
             
             #make sure that our results are strings
             artistartwork["albums"] = u"[CR]".join(albums)
+            artistartwork["albumsartist"] = u"[CR]".join(albumsartist)
+            artistartwork["albumscompilations"] = u"[CR]".join(albumscompilations)
             artistartwork["albums.formatted"] = ""
             for albumitem in albums:
                 artistartwork["albums.formatted"] += u"• %s[CR]" %albumitem
@@ -1401,6 +1409,8 @@ def getMusicArtwork(artistName, albumName="", trackName="", ignoreCache=False):
             artistartwork["tracklistwithduration"] = u"[CR]".join(tracklistwithduration)
             artistartwork["albumcount"] = "%s"%albumcount
             artistartwork["songcount"] = "%s"%songcount
+            artistartwork["AlbumsArtistCount"] = str(len(albumsartist))
+            artistartwork["AlbumsCompilationsCount"] = str(len(albumscompilations))
             if not albumartwork.get("artistname"): albumartwork["artistname"] = artistName
             if not albumartwork.get("albumname"): albumartwork["albumname"] = albumName
             if isinstance(artistartwork.get("musicbrainzartistid",""), list):
@@ -1412,39 +1422,38 @@ def getMusicArtwork(artistName, albumName="", trackName="", ignoreCache=False):
         else: delim = "/"
         
         #try to locate the artist folder recursively...
-        artistpath = getCustomFolderPath(custommusiclookuppath, artistName)
-        if artistpath:
+        artist_path = getCustomFolderPath(custommusiclookuppath, artistName)
+        if artist_path:
             #lookup local artist artwork
-            logMsg("getMusicArtwork - lookup artwork in custom folder for artist: %s - using path: %s" %(artistName,artistpath))
-            artistartwork["custompath"] = artistpath
+            logMsg("getMusicArtwork - lookup artwork in custom folder for artist: %s - using path: %s" %(artistName,artist_path))
+            artistartwork["custompath"] = artist_path
             for artType in KodiArtTypes:
-                artpath = os.path.join(artistpath,artType[1])
+                artpath = os.path.join(artist_path,artType[1])
                 if xbmcvfs.exists(artpath) and not artistartwork.get(artType[0]):
                     artistartwork[artType[0]] = artpath
                     logMsg("getMusicArtwork - %s found on disk for %s" %(artType[0],artistName))
             #lookup local album artwork
             if albumName:
-                albumpath = getCustomFolderPath(artistpath, albumName)
-                if xbmcvfs.exists(albumpath):
+                album_path = getCustomFolderPath(artist_path, albumName)
+                if xbmcvfs.exists(album_path):
                     #get sublevels (if disclevel in use)...
-                    dirs, files = xbmcvfs.listdir(albumpath)
-                    albumpaths = [albumpath]
+                    dirs, files = xbmcvfs.listdir(album_path)
+                    albumpaths = [album_path]
                     for dir in dirs:
-                        albumpaths.append(os.path.join(albumpath,dir.decode("utf-8")) + delim)
-                    for albumpath in albumpaths:
-                        logMsg("getMusicArtwork - lookup artwork in custom folder for album: %s - using path: %s" %(albumName,albumpath))
-                        albumartwork["custompath"] = albumpath
+                        albumpaths.append(os.path.join(album_path,dir.decode("utf-8")) + delim)
+                    for album_path in albumpaths:
+                        logMsg("getMusicArtwork - lookup artwork in custom folder for album: %s - using path: %s" %(albumName,album_path))
+                        albumartwork["custompath"] = album_path
                         #lookup existing artwork in the paths
                         for artType in KodiArtTypes:
-                            artpath = os.path.join(albumpath,artType[1])
+                            artpath = os.path.join(album_path,artType[1])
                             if xbmcvfs.exists(artpath) and not albumartwork.get(artType[0]):
                                 albumartwork[artType[0]] = artpath
                                 logMsg("getMusicArtwork - %s found on disk for %s" %(artType[0],albumName))
                 else:
-                    logMsg("getMusicArtwork - lookup artwork in custom folder SKIPPED for album: %s - using path: %s -- path not found!" %(albumName,albumpath))
+                    logMsg("getMusicArtwork - lookup artwork in custom folder SKIPPED for album: %s - using path: %s -- path not found!" %(albumName,album_path))
         else:
             logMsg("getMusicArtwork - lookup artwork in custom folder SKIPPED for artist: %s -- path not found in custom music artwork folder!" %(artistName))
-            artistpath = ""
             
     #LOOKUP LOCAL ARTWORK PATH PASED ON SONG FILE PATH
     if (path or path2) and enableLocalMusicArtLookup and (not artistCacheFound or (albumName and not albumCacheFound)):
@@ -1505,6 +1514,10 @@ def getMusicArtwork(artistName, albumName="", trackName="", ignoreCache=False):
                   
     #online lookup for details
     if enableMusicArtScraper and (not artistCacheFound or (albumName and not albumCacheFound)):
+        
+        if WINDOW.getProperty("SkinHelperShutdownRequested"):
+            return {}
+        
         #lookup details in musicbrainz
         #retrieve album id and artist id with a combined query of album name, track name and artist name to get an accurate result
         if not albumartwork.get("musicbrainzalbumid") or not artistartwork.get("musicbrainzartistid") or ignoreCache:
@@ -1518,6 +1531,8 @@ def getMusicArtwork(artistName, albumName="", trackName="", ignoreCache=False):
         if artistartwork.get("musicbrainzartistid") and not artistCacheFound:
             artistartwork = getArtistArtwork(artistartwork.get("musicbrainzartistid"), artistartwork, allowoverwrite)
             #download images if we want them local
+            if artistartwork.get("custompath"):
+                artistpath = artistartwork["custompath"]
             if downloadMusicArt and artistpath:
                 for artType in KodiArtTypes:
                     if artistartwork.has_key(artType[0]): artistartwork[artType[0]] = downloadImage(artistartwork[artType[0]],artistpath,artType[1],allowoverwrite)
@@ -1580,9 +1595,10 @@ def updateMusicArt(type,id):
     WINDOW.setProperty("updateMusicArt.busy","busy")
     if type == "song" and id:
         item = getJSON('AudioLibrary.GetSongDetails','{ "songid": %s, "properties": [ "title","album","artist" ] }' %id)
-        logMsg("updateMusicArt - update detected for song " + item["title"])
-        for artist in item["artist"]:
-            getMusicArtwork(artist,item["album"],item["title"],True)
+        if item and item.get("title"):
+            logMsg("updateMusicArt - update detected for song " + item["title"])
+            for artist in item["artist"]:
+                getMusicArtwork(artist,item["album"],item["title"],True)
     elif type == "artist" and id:
         item = getJSON('AudioLibrary.GetArtistDetails','{ "artistid": %s }' %id)
         logMsg("updateMusicArt - update detected for artist " + item["label"])

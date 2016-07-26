@@ -373,7 +373,24 @@ class BackgroundsUpdater(threading.Thread):
             for key, value in image.iteritems():
                 if key == "fanart": WINDOW.setProperty(windowProp, value)
                 else: WINDOW.setProperty(windowProp + "." + key, value)
-       
+    
+    def getPVRArtworkPersistantCacheFiles(self):
+        pvrthumbspath = WINDOW.getProperty("SkinHelper.pvrthumbspath").decode("utf-8")
+        allcachefiles = []
+        if pvrthumbspath:
+            dirs, files = xbmcvfs.listdir(pvrthumbspath)
+            for dir in dirs:
+                cachefile = os.path.join(pvrthumbspath, dir.decode("utf-8"), "pvrdetails.xml")
+                if xbmcvfs.exists( cachefile ):
+                    allcachefiles.append(cachefile)
+                else:
+                    dirs, files = xbmcvfs.listdir(dir)
+                    for dir2 in dirs:
+                        cachefile = os.path.join(pvrthumbspath, dir.decode("utf-8"), dir2.decode("utf-8"), "pvrdetails.xml")
+                        if xbmcvfs.exists( cachefile ):
+                            allcachefiles.append(cachefile)
+        return allcachefiles
+    
     def setPvrBackground(self,windowProp):
         images = []
         if not xbmc.getCondVisibility("Skin.HasSetting(SkinHelper.EnablePVRThumbs) + PVR.HasTVChannels"):
@@ -383,20 +400,31 @@ class BackgroundsUpdater(threading.Thread):
             images = self.allBackgrounds[windowProp]
         else:
             images = []
-            allTitles = []
             if not WINDOW.getProperty("SkinHelper.pvrthumbspath"): 
                 setAddonsettings()
                 
             #only get pvr images from recordings
-            json_query = getJSON('PVR.GetRecordings', '{ "properties": [ %s ]}' %( fields_pvrrecordings))
-            for item in json_query:
-                if not item["title"] in allTitles:
-                    allTitles.append(item["title"])
+            if SETTING("pvrBackgroundRecordingsOnly") == "true":
+                json_query = getJSON('PVR.GetRecordings', '{ "properties": [ %s ]}' %( fields_pvrrecordings))
+                for item in json_query:
                     genre = " / ".join(item["genre"])
                     artwork = artutils.getPVRThumbs(item["title"],item["channel"],"recordings",item["file"],genre)
                     fanart = getCleanImage(artwork.get("fanart",""))
-                    if fanart and xbmcvfs.exists(fanart): images.append({"fanart": fanart, "title": artwork.get("title",""), "landscape": artwork.get("landscape",""), "poster": artwork.get("poster",""), "clearlogo": artwork.get("clearlogo","")})
-                    del artwork
+                    if fanart and xbmcvfs.exists(fanart): 
+                        images.append({"fanart": fanart, "title": artwork.get("title",""), "landscape": artwork.get("landscape",""), "poster": artwork.get("poster",""), "clearlogo": artwork.get("clearlogo","")})
+                    
+            #grab max 50 random images from persistant pvr cache files
+            if not SETTING("pvrBackgroundRecordingsOnly") == "true":
+                cachefiles = self.getPVRArtworkPersistantCacheFiles()
+                random.shuffle(cachefiles)
+                count = 0
+                for cachefile in cachefiles:
+                    artwork = artutils.getArtworkFromCacheFile(cachefile)
+                    fanart = getCleanImage(artwork.get("fanart",""))
+                    if fanart and xbmcvfs.exists(fanart):
+                        count += 1
+                        images.append({"fanart": fanart, "title": artwork.get("title",""), "landscape": artwork.get("landscape",""), "poster": artwork.get("poster",""), "clearlogo": artwork.get("clearlogo","")})
+                    if count >= 50: break
                 
             #store images in the cache
             self.allBackgrounds[windowProp] = images
@@ -494,23 +522,23 @@ class BackgroundsUpdater(threading.Thread):
             elif WINDOW.getProperty("emby.nodes.total"):
                 embyProperty = WINDOW.getProperty("emby.nodes.total")
                 contentStrings = ["", ".recent", ".inprogress", ".unwatched", ".recentepisodes", ".inprogressepisodes", ".nextepisodes", "recommended"]
-                if embyProperty:
-                    nodes = []
-                    totalNodes = int(embyProperty)
-                    for i in range(totalNodes):
-                        #stop if shutdown requested in the meanwhile
-                        if self.exit: return
-                        for contentString in contentStrings:
-                            key = "emby.nodes.%s%s"%(str(i),contentString)
-                            path = WINDOW.getProperty("emby.nodes.%s%s.path"%(str(i),contentString))
-                            label = WINDOW.getProperty("emby.nodes.%s%s.title"%(str(i),contentString))
-                            if path:
-                                nodes.append( (key, label, path ) )
-                                self.setImageFromPath("emby.nodes.%s%s.image"%(str(i),contentString),path)
-                                if contentString == "": 
-                                    if not "emby.nodes.%s"%i in self.smartShortcuts["allSmartShortcuts"]: self.smartShortcuts["allSmartShortcuts"].append("emby.nodes.%s"%i )
-                                    createSmartShortcutSubmenu("emby.nodes.%s"%i,"special://home/addons/plugin.video.emby/icon.png")
-                    self.smartShortcuts["emby"] = nodes
+                nodes = []
+                totalNodes = int(embyProperty)
+                for i in range(totalNodes):
+                    #stop if shutdown requested in the meanwhile
+                    if self.exit: return
+                    for contentString in contentStrings:
+                        key = "emby.nodes.%s%s"%(str(i),contentString)
+                        path = WINDOW.getProperty("emby.nodes.%s%s.path"%(str(i),contentString))
+                        label = WINDOW.getProperty("emby.nodes.%s%s.title"%(str(i),contentString))
+                        if path:
+                            nodes.append( (key, label, path ) )
+                            self.setImageFromPath("emby.nodes.%s%s.image"%(str(i),contentString),path)
+                            if contentString == "": 
+                                if not "emby.nodes.%s"%i in self.smartShortcuts["allSmartShortcuts"]: self.smartShortcuts["allSmartShortcuts"].append("emby.nodes.%s"%i )
+                                createSmartShortcutSubmenu("emby.nodes.%s"%i,"special://home/addons/plugin.video.emby/icon.png")
+                self.smartShortcuts["emby"] = nodes
+                logMsg("Generated smart shortcuts for emby nodes: %s" %nodes)
         
         #stop if shutdown requested in the meanwhile
         if self.exit: return
@@ -552,6 +580,7 @@ class BackgroundsUpdater(threading.Thread):
                         except: 
                             logMsg("Error while processing smart shortcuts for playlist %s  --> This file seems to be corrupted, please remove it from your system to prevent any further errors."%item["file"], 0)
                 self.smartShortcuts["playlists"] = playlists
+                logMsg("Generated smart shortcuts for playlists: %s" %playlists)
             
             for playlist in playlists:
                 self.setImageFromPath("playlist." + str(playlist[0]) + ".image",playlist[3])
@@ -582,17 +611,20 @@ class BackgroundsUpdater(threading.Thread):
                             #check if this is a valid path with content
                             if not "script://" in content.lower() and not "mode=9" in content.lower() and not "search" in content.lower() and not "play" in content.lower():
                                 path = "ActivateWindow(%s,%s,return)" %(fav["window"],content)
-                                if "&" in content and "?" in content and "=" in content and not content.endswith("/"): content += "&widget=true"
+                                if "&" in content and "?" in content and "=" in content and not content.endswith("/"): 
+                                    content += "&widget=true"
                                 type = detectPluginContent(content)
                                 if type:
-                                    if not "favorite."%count in self.smartShortcuts["allSmartShortcuts"]: self.smartShortcuts["allSmartShortcuts"].append("favorite."%count )
-                                    favourites.append( (count, label, path, content, type) )
+                                    if not "favorite.%s" %count in self.smartShortcuts["allSmartShortcuts"]: 
+                                        self.smartShortcuts["allSmartShortcuts"].append("favorite.%s" %count )
+                                    favourites.append( (count, fav["title"], path, content, type) )
                 except Exception as e:
                     #something wrong so disable the smartshortcuts for this section for now
                     xbmc.executebuiltin("Skin.Reset(SmartShortcuts.favorites)")
                     logMsg("Error while processing smart shortcuts for favourites - set disabled.... ",0)
                     logMsg(str(e),0)
                 self.smartShortcuts["favourites"] = favourites
+                logMsg("Generated smart shortcuts for favourites: %s" %favourites)
                     
             for favourite in favourites:
                 self.setImageFromPath("favorite." + str(favourite[0]) + ".image",favourite[2])
@@ -617,6 +649,7 @@ class BackgroundsUpdater(threading.Thread):
                 #build the plex listing...
                 nodes = self.getPlexNodes()
                 self.smartShortcuts["plex"] = nodes
+                logMsg("Generated smart shortcuts for plex: %s" %nodes)
             for node in nodes:
                 #randomize background image from cache
                 self.setImageFromPath(node[0] + ".image",node[3])
@@ -658,8 +691,7 @@ class BackgroundsUpdater(threading.Thread):
                         WINDOW.setProperty(key + ".type", node[3])
 
         #store all smart shortcuts for exchange with skinshortcuts
-        if buildSmartshortcuts or not self.smartShortcutsFirstRunDone:
-            WINDOW.setProperty("allSmartShortcuts", repr(self.smartShortcuts["allSmartShortcuts"]))
+        WINDOW.setProperty("allSmartShortcuts", repr(self.smartShortcuts["allSmartShortcuts"]))
             
         self.smartShortcutsFirstRunDone = True
     

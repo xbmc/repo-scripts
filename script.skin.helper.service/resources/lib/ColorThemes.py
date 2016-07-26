@@ -110,7 +110,7 @@ class ColorThemes(xbmcgui.WindowXMLDialog):
         activetheme = xbmc.getInfoLabel("$INFO[Skin.String(SkinHelper.LastColorTheme)]").decode("utf-8")
         
         #add import and create items on top of the list
-        listitem = xbmcgui.ListItem(label=ADDON.getLocalizedString(32079), iconImage="-")
+        listitem = xbmcgui.ListItem(label=ADDON.getLocalizedString(32079), iconImage="DefaultAddonSkin.png")
         desc = ADDON.getLocalizedString(32080)
         listitem.setProperty("description",desc)
         listitem.setProperty("Addon.Summary",desc)
@@ -118,7 +118,7 @@ class ColorThemes(xbmcgui.WindowXMLDialog):
         listitem.setProperty("type","add")
         self.themesList.addItem(listitem)
         
-        listitem = xbmcgui.ListItem(label=ADDON.getLocalizedString(32081), iconImage="-")
+        listitem = xbmcgui.ListItem(label=ADDON.getLocalizedString(32081), iconImage="DefaultAddonSkin.png")
         desc = ADDON.getLocalizedString(32082)
         listitem.setProperty("description",desc)
         listitem.setProperty("Addon.Summary",desc)
@@ -185,8 +185,12 @@ class ColorThemes(xbmcgui.WindowXMLDialog):
         self.themesList = self.getControl(6)
         
         self.getControl(1).setLabel(ADDON.getLocalizedString(32014))
+        self.getControl(5).setLabel(xbmc.getLocalizedString(186))
         self.getControl(5).setVisible(True)
         self.getControl(3).setVisible(False)
+        try:
+            self.getControl(7).setVisible(False)
+        except: pass
         
         list = self.refreshListing()
         xbmc.executebuiltin("Control.SetFocus(6)")
