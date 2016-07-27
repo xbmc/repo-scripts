@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<window>
+	<animation effect="fade" time="200">WindowOpen</animation>
+	<animation effect="fade" time="200">WindowClose</animation>
+	<controls>
+		<control type="group">
+			<right>48</right>
+			<bottom>10</bottom>
+			<width>200</width>
+			<height>200</height>
+			<control type="image">
+				<texture>special://home/addons/service.stinger.notification/resources/media/logo.png</texture>
+				<colordiffuse>FFFFFFFF</colordiffuse>
+				<aspectratio align="right" aligny="bottom">keep</aspectratio>
+				<visible>StringCompare(Window(fullscreenvideo).Property(stinger), aftercreditsstinger)</visible>
+			</control>
+			<control type="image">
+				<texture>special://home/addons/service.stinger.notification/resources/media/logo.png</texture>
+				<colordiffuse>9FFFFFFF</colordiffuse>
+				<aspectratio align="right" aligny="bottom">keep</aspectratio>
+				<visible>SubString(Window(fullscreenvideo).Property(stinger), duringcreditsstinger)</visible>
+			</control>
+		</control>
+		<control type="group">
+			<right>278</right>
+			<bottom>10</bottom>
+			<width>650</width>
+			<height>165</height>
+			<control type="label" id="100">
+				<description>Localized stinger type</description>
+			</control>
+			<control type="label" id="101">
+				<description>Stinger message</description>
+				<wrapmultiline>true</wrapmultiline>
+				<top>35</top>
+			</control>
+			<visible>false</visible>
+		</control>
+	</controls>
+</window>
