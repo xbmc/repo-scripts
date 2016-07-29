@@ -141,7 +141,8 @@ class WindowShowing():
 
     @staticmethod
     def isVideoLibrary():
-        return xbmc.getCondVisibility("Window.IsVisible(videolibrary)") or WindowShowing.isTvTunesOverrideTvShows() or WindowShowing.isTvTunesOverrideMovie() or WindowShowing.isTvTunesOverrideContinuePlaying()
+        # For now check for both videolibrary (before v17) and videos (v17 onwards)
+        return xbmc.getCondVisibility("Window.IsVisible(videos)") or xbmc.getCondVisibility("Window.IsVisible(videolibrary)") or WindowShowing.isTvTunesOverrideTvShows() or WindowShowing.isTvTunesOverrideMovie() or WindowShowing.isTvTunesOverrideContinuePlaying()
 
     @staticmethod
     def isMovieInformation():
