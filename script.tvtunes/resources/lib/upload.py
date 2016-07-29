@@ -44,6 +44,7 @@ class UploadThemes(ThemeLibrary):
         self.isAudioEnabled = True
         self.isTvShowsEnabled = True
         self.isMoviesEnabled = True
+        self.skipMultipleThemes = False
 
         self.ftpArg = None
         self.userArg = None
@@ -104,6 +105,11 @@ class UploadThemes(ThemeLibrary):
                 log("UploadThemes: Uploads disabled for movies via online settings")
                 self.isMoviesEnabled = False
 
+            isSkipMultipleElem = uploadSettingET.find('skipmultiple')
+            if (isSkipMultipleElem is None) or (isSkipMultipleElem.text != 'false'):
+                log("UploadThemes: Skip Multiple enabled via online settings")
+                self.skipMultipleThemes = True
+
             # Check if a reset is required
             isRecordResetElem = uploadSettingET.find('recordreset')
             if (isRecordResetElem is not None) and (isRecordResetElem.text == 'true'):
@@ -130,7 +136,12 @@ class UploadThemes(ThemeLibrary):
             self.uploadsDisabled = True
 
         # Now also load the existing elements that are in the library
-        self.loadLibraryContents()
+        loadOK = self.loadLibraryContents()
+
+        # If we failed to load then disable everything
+        if not loadOK:
+            log("UploadThemes: Disabling as load library failed")
+            self.uploadsDisabled = True
 
         # Check if the upload record file exists, if it does read it in
         if xbmcvfs.exists(self.tvtunesUploadRecord):
@@ -153,7 +164,8 @@ class UploadThemes(ThemeLibrary):
                 root.attrib['machineid'] = Settings.getTvTunesId()
                 tvshows = ET.Element('tvshows')
                 movies = ET.Element('movies')
-                root.extend((tvshows, movies))
+                root.append(tvshows)
+                root.append(movies)
                 self.uploadRecord = ET.ElementTree(root)
             except:
                 log("UploadThemes: Failed to create XML Content %s" % traceback.format_exc(), xbmc.LOGERROR)
@@ -241,6 +253,10 @@ class UploadThemes(ThemeLibrary):
                 if not themeFileMgr.hasThemes():
                     continue
 
+                if (len(themeFileMgr.getThemeLocations()) > 1) and self.skipMultipleThemes:
+                    log("UploadThemes: Skipping multiple themes")
+                    continue
+
                 # Check if any of the themes available as suitable for upload
                 requiredThemes = self._getThemesToUpload(videoItem['imdbnumber'], themeFileMgr.getThemeLocations())
                 if len(requiredThemes) < 1:
@@ -277,6 +293,11 @@ class UploadThemes(ThemeLibrary):
         masterId = checkedIdDetails['imdb']
         if isTvShow:
             masterId = checkedIdDetails['tvdb']
+        else:
+            # For movies we want the tmdb value as well as imdb
+            if checkedIdDetails['tmdb'] in [None, ""]:
+                log("UploadThemes: No TMDB id found for %s" % videoItem['imdbnumber'])
+                return False
 
         if masterId in [None, ""]:
             log("UploadThemes: No suitable Id found for %s" % videoItem['imdbnumber'])
@@ -289,7 +310,7 @@ class UploadThemes(ThemeLibrary):
             log("UploadThemes: Theme %s already in library" % masterId)
             return False
 
-        # Now set the mast id to the one we have just found
+        # Now set the master id to the one we have just found
         # that will be used from now on
         videoItem['masterId'] = masterId
 
