@@ -73,6 +73,30 @@ You only need to do this once.
 
 ##Configuring the Cinder Plug-in
 
+###"Run Cinder from here" context menu option -
+
+If you right-click on a TV Show series title you will see a pop-up menu. One of the options is
+"Run Cinder from here". If you click on it Cinder will run from that level and deeper. Doing so will not alter
+your configuration in any way and will provide you a quick way to randomly watch a specific show or season.
+This can be done for any TV Show series either inside or outside of your configured sources.
+Basically anything in your library can be randomized without any configuration.
+
+For example if you were to click "Run Cinder from here" for a show title Cinder will randomly select 
+episodes from all season folders below it for only that show.
+Suppose you drill deeper by first clicking on the show title and then right-click "Season 1" followed
+by "Run Cinder from here". In this case Cinder will randomly queue up episodes from only Season 1
+of the given show.
+
+Some of your configured options will still apply. 
+
+Namely, Your Queue length will be the same (if it's set to 10 you will still get 10 episodes queued up).
+Select episodes from: All videos, Watched, and Unwatched will still apply as well.
+Bootstrap playback will still apply. If enabled Cinder will start playback as soon as possible.
+
+The rest of the options including your sources and weights will be ignored because you are effectively
+overriding them by using the "Run Cinder from here" context menu option.
+
+
 ###Making a big Cinder Button
 
 I'm lazy.. If your anything like me you want a big button called Cinder that you click on once 

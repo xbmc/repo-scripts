@@ -9,6 +9,10 @@ msgctxt "#32000"
 msgid "General"
 msgstr ""
 
+msgctxt "#32004"
+msgid "Run Cinder from here"
+msgstr ""
+
 msgctxt "#32100"
 msgid "Select random episodes by watched status"
 msgstr ""
@@ -260,3 +264,7 @@ msgstr ""
 msgctxt "#32405"
 msgid "All sources have a weight of 0. Nothing is going to play until you increase at least one."
 msgstr ""
+
+msgctxt "#32406"
+msgid "Select a show title or season"
+msgstr "

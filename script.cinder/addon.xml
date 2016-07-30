@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.cinder" name="Cinder" version="1.0.1" provider-name="Justin Rush">
+<addon id="script.cinder" name="Cinder" version="1.0.2" provider-name="Justin Rush">
 	<requires>
 		<import addon="xbmc.python" version="2.24.0"/>
 		<import addon="script.module.simplejson" version="3.3.0"/>
@@ -12,5 +12,13 @@
 		<license>GPLv3</license>
 		<email>cinder.kodi@gmail.com</email>
                 <source>https://github.com/jpr679/stript.cinder</source>
+	</extension>
+	<extension point="kodi.context.item">
+		<menu id="kodi.core.main">
+			<item library="scriptcontextmenuoption.py">
+				<label>32004</label>
+				<visible>StringCompare(ListItem.dbtype,tvshow) | StringCompare(ListItem.dbtype,season)</visible>
+			</item>
+		</menu>
 	</extension>
 </addon>

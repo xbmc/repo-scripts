@@ -23,11 +23,11 @@ import sys
 
 class CinderRandomPlayer(object):
 
-    def __init__(self, additionalSourceList, additionalSourceWeightList, maximumSourceWeight):
+    def __init__(self, additionalSourceList, additionalSourceWeightList, maximumSourceWeight, contextMenuSource=None):
         self.addon = xbmcaddon.Addon()
         self.configSettings = {}
-
         self.maximumSourceWeight = maximumSourceWeight
+        self.contextMenuSource = contextMenuSource
 
         # seed the random number generator with the current time
         random.seed()
@@ -133,6 +133,20 @@ class CinderRandomPlayer(object):
     # Finds a random episode and starts playing it as soon as possible. Returns True if the first source
     # should be skipped based on configuration settings
     def bootstrapPlayback(self):
+        # if the user invoked Cinder from the context menu option "Run Cinder from here" 
+        # pick a random episode from the source or deeper and bootstrap playback
+        if self.contextMenuSource: 
+            videos = self.getRandomEpisode(self.contextMenuSource)
+
+            # skip duplicate videos
+            if self.isDuplicate(videos): 
+                # should not hit this since its the first episode queued up
+                # need to call isDuplicate to have it added to in internal
+                # list
+                pass
+            self.playRandomPlaylist(videos)
+            return False
+
         skipFirstSource = True
 
         indexList = range(0, len(self.configSettings['SourceUriList']))
@@ -209,40 +223,57 @@ class CinderRandomPlayer(object):
                 xbmc.executebuiltin('Dialog.Close(busydialog)')
                 return
 
-            index = 0
-            for sourceEntry in self.configSettings['SourceUriList']:
-                if skipFirstSource == True:
-                    index += 1
-                    skipFirstSource = False
-                    continue
+            # if the user invoked Cinder from the context menu option "Run Cinder from here" 
+            # pick random episodes from the source or deeper and build up the playlist
+            if self.contextMenuSource: 
+                videos = self.getRandomEpisode(self.contextMenuSource)
 
-                if self.configSettings['SkipSources'] == "true":
-                    if random.randint(0, 1) == 0:
+                # skip duplicate videos
+                if not self.isDuplicate(videos): 
+                    for videoEntry in videos:
+                        episodeList.append(videoEntry) 
+
+                        # once the list is the right length short circuit the process
+                        if len(episodeList) >= numberOfShows:
+                            if self.configSettings['ShufflePlaylist'] == "true":
+                                random.shuffle(episodeList)
+                            self.playRandomPlaylist(episodeList)
+                            return
+            else:
+                index = 0
+                for sourceEntry in self.configSettings['SourceUriList']:
+                    if skipFirstSource == True:
+                        index += 1
+                        skipFirstSource = False
+                        continue
+
+                    if self.configSettings['SkipSources'] == "true":
+                        if random.randint(0, 1) == 0:
+                            index += 1
+                            continue
+
+                    showWeight = int(self.configSettings['SourceWeightList'][index])
+                    if random.randint(1, self.maximumSourceWeight) > showWeight:
                         index += 1
                         continue
 
-                showWeight = int(self.configSettings['SourceWeightList'][index])
-                if random.randint(1, self.maximumSourceWeight) > showWeight:
                     index += 1
-                    continue
 
-                index += 1
+                    videos = self.getRandomEpisode(sourceEntry)
 
-                videos = self.getRandomEpisode(sourceEntry)
+                    # skip duplicate videos
+                    if self.isDuplicate(videos): 
+                        continue
 
-                # skip duplicate videos
-                if self.isDuplicate(videos): 
-                    continue
+                    for videoEntry in videos:
+                        episodeList.append(videoEntry) 
 
-                for videoEntry in videos:
-                    episodeList.append(videoEntry) 
-
-                    # once the list is the right length short circuit the process
-                    if len(episodeList) >= numberOfShows:
-                        if self.configSettings['ShufflePlaylist'] == "true":
-                            random.shuffle(episodeList)
-                        self.playRandomPlaylist(episodeList)
-                        return
+                        # once the list is the right length short circuit the process
+                        if len(episodeList) >= numberOfShows:
+                            if self.configSettings['ShufflePlaylist'] == "true":
+                                random.shuffle(episodeList)
+                            self.playRandomPlaylist(episodeList)
+                            return
 
 
     # Gets a random episode from the given SBM share
