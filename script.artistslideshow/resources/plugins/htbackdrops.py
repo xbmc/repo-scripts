@@ -45,11 +45,10 @@ class objectConfig():
             url_params['default_operator'] = 'and'
             url_params['fields'] = 'title'
             url_params['keywords'] = img_params.get( 'artist', '').replace( '&','%26' ) 
-        rawxml = self._get_data( filepath, cachefilepath, url_params )
-        if rawxml:
-            xmldata = _xmltree.fromstring( rawxml )
-        else:
-            return [], self.loglines
+        try:
+           xmldata = _xmltree.fromstring( self._get_data( filepath, cachefilepath, url_params ) )
+        except:
+          return [], self.loglines
         match = False
         for element in xmldata.getiterator():
             if element.tag == "id":

@@ -44,11 +44,16 @@
         <setting id="sa_priority_lastfm" type="slider" label="32301" visible="eq(-1,true)" default="5" range='1,1,10' option='int' />
     </category>
     <category label="32200">
+        <setting id="disable_multiartist" type="bool" label="32210" default="false" />
         <setting id="restrict_cache" type="bool" label="32201" default="false" />
         <setting id="max_cache_size" label="32202" type="labelenum" values="128|256|512|768|1024|2048|3072|4096" visible="eq(-1,true)" default="1024" />
         <setting id="show_progress" type="enum" label="32203" lvalues="32206|32207|32208" default="0" />
-        <setting id="progress_path" type="folder" label="32204" default="" enable="eq(-1,2)"/>
+        <setting id="progress_path" type="folder" label="32204" default="" visible="eq(-1,2)"/>
 		<setting id="fanart_folder" type="text" label="32205" default="" />
+        <setting id="enable_fuzzysearch" type="bool" label="32211" default="false" />
+        <setting id="storage_target" type="enum" label="32212" default="0" lvalues="32215|32217|32216" visible="eq(-1,true)" />
+        <setting id="illegal_replace" type="text" label=" 32213" default="_" visible="eq(-2,true)"/>
+        <setting id="end_replace" type="text" label="32214" default="" visible="eq(-3,true) + eq(-2,0)" />		
         <setting id="logging" type="bool" label="32209" default="false" />
     </category>
 </settings>

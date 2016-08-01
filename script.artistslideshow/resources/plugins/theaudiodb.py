@@ -1,4 +1,4 @@
-#v.0.1.0
+#v.0.1.1
 
 import os, time, sys, random, xbmc
 from ..common.url import URL
@@ -22,12 +22,16 @@ class objectConfig():
     def __init__( self ):
         url = 'http://www.theaudiodb.com/api/v1/json/%s/' % clowncar.decode( 'base64' )
         secsinweek = int( 7*24*60*60 )
-        self.ARTISTURL = url + 'artist-mb.php'
+        self.ARTISTMBIDURL = url + 'artist-mb.php'
+        self.ARTISTSEARCHURL = url + 'search.php'
+        self.ARTISTTADBIDURL = url + 'artist.php'
         self.ALBUMURL = url + 'album.php'
+        self.ALBUMSEARCHURL = url + 'searchalbum.php'
         self.ARTISTFILENAME = 'theaudiodbartistbio.nfo'
         self.ALBUMFILENAME = 'theaudiodbartistsalbums.nfo'
         self.IDFILENAME = 'theaudiodbid.nfo'
         self.CACHETIMEFILENAME = 'theaudiodbcachetime.nfo'
+        self.ALBUMCACHETIMEFILENAME = 'theaudiodbalbumcachetime.nfo'
         self.CACHEEXPIRE = {}
         self.CACHEEXPIRE['low'] = int( 12*secsinweek )
         self.CACHEEXPIRE['high'] = int( 24*secsinweek )
@@ -41,17 +45,13 @@ class objectConfig():
 
     def getAlbumList( self, album_params ):
         self.loglines = []
+        self._set_filepaths( album_params )
         url_params = {}
         albums = []
         json_data = ''
-        artistfilepath = os.path.join( album_params.get( 'infodir', '' ), self.ARTISTFILENAME )
-        idfilepath = os.path.join( album_params.get( 'infodir', '' ), self.IDFILENAME )
-        audiodbid = self._get_audiodbid( idfilepath, artistfilepath )
-        if audiodbid:
-            cachefilepath = os.path.join( album_params.get( 'infodir', '' ), self.CACHETIMEFILENAME )
-            filepath = os.path.join( album_params.get( 'infodir', '' ), self.ALBUMFILENAME )
-            url_params['i'] = audiodbid
-            json_data = self._get_data( filepath, cachefilepath, self.ALBUMURL, url_params )
+        url, url_params = self._determine_url( album_params, '', self.ALBUMURL, self.ALBUMSEARCHURL )
+        if url:
+            json_data = self._get_data( self.ALBUMFILEPATH, self.ALBUMCACHEFILEPATH, url, url_params )
         if json_data:
             rawalbums = json_data.get( 'album' )
             if rawalbums is not None:
@@ -62,13 +62,14 @@ class objectConfig():
         
     def getBio( self, bio_params ):
         self.loglines = []
+        self._set_filepaths( bio_params )
         url_params = {}
         bio = ''
-        filepath = os.path.join( bio_params.get( 'infodir', '' ), self.ARTISTFILENAME )
-        cachefilepath = os.path.join( bio_params.get( 'infodir', '' ), self.CACHETIMEFILENAME )
-        url_params['i'] = bio_params.get( 'mbid', '' )
-        json_data = self._get_data( filepath, cachefilepath, self.ARTISTURL, url_params )
-        self.loglines.extend( ['the json data is:', json_data] )
+        json_data = ''
+        url, url_params = self._determine_url( bio_params, self.ARTISTMBIDURL, self.ARTISTTADBIDURL, self.ARTISTSEARCHURL )
+        if url:
+            json_data = self._get_data( self.ARTISTFILEPATH, self.CACHEFILEPATH, url, url_params )
+            self.loglines.extend( ['the json data is:', json_data] )
         if json_data:
             artist = json_data.get( 'artists' )
             if artist is not None:
@@ -78,12 +79,13 @@ class objectConfig():
         
     def getImageList( self, img_params ):
         self.loglines = []
+        self._set_filepaths( img_params )
         url_params = {}
         images = []
-        filepath = os.path.join( img_params.get( 'infodir', '' ), self.ARTISTFILENAME )
-        cachefilepath = os.path.join( img_params.get( 'infodir', '' ), self.CACHETIMEFILENAME )
-        url_params['i'] = img_params.get( 'mbid', '' )
-        json_data = self._get_data( filepath, cachefilepath, self.ARTISTURL, url_params )
+        json_data = ''
+        url, url_params = self._determine_url( img_params, self.ARTISTMBIDURL, self.ARTISTTADBIDURL, self.ARTISTSEARCHURL )
+        if url:
+            json_data = self._get_data( self.ARTISTFILEPATH, self.CACHEFILEPATH, url, url_params )
         if json_data:
             artist = json_data.get( 'artists' )
             if artist is not None:
@@ -98,27 +100,48 @@ class objectConfig():
         if images == []:
             return [], self.loglines
         else: 
-            return self._remove_exclusions( images, img_params.get( 'exclusionsfile', '' ) ), self.loglines
+            return self._remove_exclusions( images ), self.loglines
         
-        
-    def _get_audiodbid( self, idfilepath, filepath ):
+
+    def _determine_url( self, params, mbidurl, tadbidurl, nameurl ):
+        url_params = {}
+        if mbidurl:
+            mbid = params.get( 'mbid', '' )
+            if mbid:
+                url_params['i'] = params.get( 'mbid', '' )
+                self.loglines.append( 'found mbid, using mbidurl to get information from theaudiodb' )
+                return mbidurl, url_params
+        if tadbidurl:
+            tadbid = self._get_audiodbid( )
+            if tadbid:
+                url_params['i'] = tadbid
+                self.loglines.append( 'found tadbid, using tadbidurl to get information from theaudiodb' )
+                return tadbidurl, url_params
+        if nameurl:
+            url_params['s'] = params.get( 'artist', '' ).replace( '&','%26' ) 
+            self.loglines.append( 'no mbid or tadbid found, using artist name to get information from theaudiodb' )
+            return nameurl, url_params
+        return '', ''
+
+
+    def _get_audiodbid( self ):
         audiodbid = ''
-        exists, cloglines = checkPath( idfilepath, False )
+        exists, cloglines = checkPath( self.IDFILEPATH, False )
         self.loglines.extend( cloglines )
         if not exists:
-            exists, cloglines = checkPath( filepath, False )
+            exists, cloglines = checkPath( self.ARTISTFILEPATH, False )
             self.loglines.extend( cloglines )
             if exists:
-                rloglines, rawdata = readFile( filepath )
+                rloglines, rawdata = readFile( self.ARTISTFILEPATH )
                 self.loglines.extend( rloglines )
                 json_data = _json.loads( rawdata )
                 artist = json_data.get( 'artists' )
                 if artist is not None:
                     audiodbid = artist[0].get( 'idArtist', '' )
                 if audiodbid:
-                    success, wloglines = writeFile( audiodbid, idfilepath )
+                    success, wloglines = writeFile( audiodbid, self.IDFILEPATH )
                     self.loglines.extend( wloglines )
-        rloglines, audiodbid = readFile( idfilepath )
+        rloglines, audiodbid = readFile( self.IDFILEPATH )
         self.loglines.extend( rloglines )
         return audiodbid    
 
@@ -152,6 +175,7 @@ class objectConfig():
         exists, cloglines = checkPath( filepath, False )
         self.loglines.extend( cloglines )
         if exists:
+            self._get_audiodbid( ) # this is to generate the id file if it doesn't exist
             rloglines, rawdata = readFile( filepath )
             self.loglines.extend( rloglines )
             try:
@@ -171,9 +195,9 @@ class objectConfig():
         return success
 
 
-    def _remove_exclusions( self, image_list, exclusionfilepath ):
+    def _remove_exclusions( self, image_list ):
         images = []
-        rloglines, rawdata = readFile( exclusionfilepath )
+        rloglines, rawdata = readFile( self.EXCLUSIONFILEPATH )
         self.loglines.extend( rloglines )
         if not rawdata:
             return image_list
@@ -185,15 +209,24 @@ class objectConfig():
         return images
 
 
+    def _set_filepaths( self, params ):
+        self.ARTISTFILEPATH = os.path.join( params.get( 'infodir', '' ), self.ARTISTFILENAME )
+        self.CACHEFILEPATH = os.path.join( params.get( 'infodir', '' ), self.CACHETIMEFILENAME )
+        self.ALBUMCACHEFILEPATH = os.path.join( params.get( 'infodir', '' ), self.ALBUMCACHETIMEFILENAME )
+        self.ALBUMFILEPATH = os.path.join( params.get( 'infodir', '' ), self.ALBUMFILENAME )
+        self.IDFILEPATH = os.path.join( params.get( 'infodir', '' ), self.IDFILENAME )
+        self.EXCLUSIONFILEPATH = params.get( 'exclusionsfile', '' )
+
+
     def _update_cache( self, filepath, cachefilepath ):
         exists, cloglines = checkPath( filepath, False )
         self.loglines.extend( cloglines )
         if exists:
             if time.time() - os.path.getmtime( filepath ) < self._get_cache_time( cachefilepath ):
-                self.loglines.append( 'cached artist info found for theaudiodb' )
+                self.loglines.append( 'cached info found for theaudiodb' )
                 return False
             else:
-                self.loglines.append( 'outdated cached artist info found for theaudiodb' )
+                self.loglines.append( 'outdated cached info found for theaudiodb' )
                 return self._put_cache_time( cachefilepath )
         else:
             self.loglines.append( 'no theaudiodb cachetime file found, creating it' )

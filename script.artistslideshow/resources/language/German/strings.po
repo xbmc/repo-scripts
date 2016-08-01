@@ -40,17 +40,18 @@ msgctxt "#30305"
 msgid "All artist images downloaded"
 msgstr "Alle Künstlerbilder runtergeladen."
 
+
 msgctxt "#32000"
-msgid "Download"
-msgstr "Herunterladen"
+msgid "Images"
+msgstr "Bilder"
 
 msgctxt "#32001"
 msgid "Download images from last.fm"
 msgstr "Lade Bilder von Last.fm"
 
 msgctxt "#32002"
-msgid "Download images from htbackdrops.com"
-msgstr "Lade Bilder von htbackdrops.com"
+msgid "Download images from htbackdrops.org"
+msgstr "Lade Bilder von htbackdrops.org"
 
 msgctxt "#32003"
 msgid "  Minimal image width"
@@ -69,8 +70,8 @@ msgid "  Preferred language for artist information"
 msgstr "Bevorzugte Sprache für Künstlerinformationen"
 
 msgctxt "#32007"
-msgid "  Download only 16:9 images"
-msgstr "Nur 16:9 Bilder herunterladen"
+msgid "  Download all images regardless of resolution"
+msgstr "Lade alle Bilder, egal welche Auflösung"
 
 msgctxt "#32008"
 msgid "Download images from fanart.tv"
@@ -79,7 +80,13 @@ msgstr "Bilder von fanart.tv herunterladen"
 msgctxt "#32009"
 msgid "Download images from theaudiodb.com"
 msgstr "Bilder von theaudiodb.com herunterladen"
+msgstr ""
 
+msgctxt "#32010"
+msgid "  Client API key"
+msgstr "API key"
+
+#empty strings from id 32011 to 32099
 msgctxt "#32100"
 msgid "Slideshow"
 msgstr "Diashow"
@@ -94,11 +101,11 @@ msgstr "Bildpriorität"
 
 msgctxt "#32103"
 msgid "Fallback folder"
-msgstr "Ausweich-Slideshow Ordner"
+msgstr "Ausweich Ordner"
 
 msgctxt "#32104"
 msgid "Override folder"
-msgstr "Überschreibe Slideshowordner"
+msgstr "Alternativer Ordner"
 
 msgctxt "#32105"
 msgid "Use fallback slideshow"
@@ -106,8 +113,12 @@ msgstr "Ausweich-Diashowordner verwenden"
 
 msgctxt "#32106"
 msgid "Use override slideshow"
-msgstr "Überschriebene Diashowbilder verwenden"
+msgstr "Alternative Diashowbilder verwenden"
+msgstr ""
 
+msgctxt "#32107"
+msgid "Use transparent background when no artist images found"
+msgstr "Transparenter Hintergrund wenn keine Bilder gefunden werden"
 msgctxt "#32110"
 msgid "Use remote images first"
 msgstr "Nutze externe Bilder zuerst"
@@ -119,6 +130,7 @@ msgstr "Nutze interne Bilder zuerst"
 msgctxt "#32112"
 msgid "Use both local and remote images"
 msgstr "Nutze interne und externe Bilder"
+
 
 msgctxt "#32200"
 msgid "Advanced"
@@ -159,7 +171,88 @@ msgstr "Spezielle Bilder"
 msgctxt "#32209"
 msgid "Enable debug logging"
 msgstr "Debug-Logging aktivieren"
+msgstr ""
 
+#empty strings from id 32210 to 32299
+
+msgctxt "#32300"
+msgid "Album Info"
+msgstr "Album Info"
+
+msgctxt "#32301"
+msgid "  Priority"
+msgstr "Priorität"
+
+msgctxt "#32302"
+msgid "Download album info from the audiodb.com"
+msgstr "Lade album indo von theaudiodb.com"
+
+msgctxt "#32303"
+msgid "Download album info from the last.fm"
+msgstr "Lade album info von Last.fm"
+
+#empty strings from id 32304 to 32399
+
+msgctxt "#32400"
+msgid "Artist Bio"
+msgstr "Künstler Bio"
+
+msgctxt "#32401"
+msgid "Preferred language for artist bio"
+msgstr "Bevorzugte sprache für Künstler Bio"
+
+msgctxt "#32402"
+msgid "Get artist bio from Kodi"
+msgstr "Hole Künstler Bio von Kodi"
+
+msgctxt "#32403"
+msgid "Download artist bio from theaudiodb.com"
+msgstr "Lade Künstler Bio von theaudiodb.com"
+
+msgctxt "#32404"
+msgid "Download artist bio from last.fm"
+msgstr "Lade Künstler Bio von Last.fm"
+
+#empty strings from id 32404 to 32499
+
+msgctxt "#32500"
+msgid "Similar Artists"
+msgstr "Ähnliche Künstler"
+
+msgctxt "#32501"
+msgid "Download similar artists from last.fm"
+msgstr "Lade ähnliche Künstler von Last.fm"
+
+#empty strings from id 32502 to 32599
+
+msgctxt "#32600"
+msgid "Instructions"
+msgstr "Anleitung"
+
+msgctxt "#32601"
+msgid "Some services allow you to set a priority for use."
+msgstr "Bei einigen Einstellungen kann man die Priorität ändern"
+
+msgctxt "#32602"
+msgid "In those cases priority 1 will be used first and 10 last."
+msgstr "Priorität 1 wird zuerst benutzt, 10 als letztes"
+
+msgctxt "#32603"
+msgid " "
+msgstr ""
+
+msgctxt "#32604"
+msgid "Certain services require your music to be tagged with the MusicBrainz ID"
+msgstr "für einige Funktionen benötigt die Musik einen MusicBrainz ID Tag  "
+
+msgctxt "#32605"
+msgid "see http://kodi.wiki/view/Add-on:Artist_Slideshow for more information"
+msgstr "für mehr informationen http://kodi.wiki/view/Add-on:Artist_Slideshow "
+
+
+#empty strings from id 32606 to 32900
+
+#Languages
 msgctxt "#32901"
 msgid "Albanian"
 msgstr "Albanisch"
@@ -248,6 +341,7 @@ msgctxt "#32922"
 msgid "Indonesian"
 msgstr "Indonesisch"
 
+
 msgctxt "#32924"
 msgid "Italian"
 msgstr "Italienisch"
@@ -275,6 +369,7 @@ msgstr "Mazedonisch"
 msgctxt "#32930"
 msgid "Norwegian"
 msgstr "Norwegisch"
+
 
 msgctxt "#32932"
 msgid "Polish"

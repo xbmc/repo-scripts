@@ -45,11 +45,10 @@ class objectConfig():
         additionalparams = {'artist': album_params.get( 'artist', '' )}  
         url_params = dict( self.ALBUMPARAMS.items() + additionalparams.items() )
         self.loglines.append( 'trying to get artist albums from ' + self.URL )
-        rawxml = self._get_data( filepath, cachefilepath, url_params )
-        if rawxml:
-            xmldata = _xmltree.fromstring( rawxml )
-        else:
-            return [], self.loglines
+        try:
+           xmldata = _xmltree.fromstring( self._get_data( filepath, cachefilepath, url_params ) )
+        except:
+          return [], self.loglines
         match = False
         for element in xmldata.getiterator():
             if element.tag == "name":
@@ -82,11 +81,10 @@ class objectConfig():
         additionalparams = {'artist': bio_params.get( 'artist', '' ), 'lang':bio_params.get( 'lang', '' )}  
         url_params = dict( self.ARTISTPARAMS.items() + additionalparams.items() )
         self.loglines.append( 'trying to get artist bio from ' + self.URL )
-        rawxml = self._get_data( filepath, cachefilepath, url_params )
-        if rawxml:
-            xmldata = _xmltree.fromstring( rawxml )
-        else:
-            return '', self.loglines
+        try:
+           xmldata = _xmltree.fromstring( self._get_data( filepath, cachefilepath, url_params ) )
+        except:
+          return '', self.loglines
         for element in xmldata.getiterator():
             if element.tag == "content":
                 bio = element.text
@@ -106,11 +104,10 @@ class objectConfig():
         additionalparams = {'artist': sim_params.get( 'artist', '' )}  
         url_params = dict( self.SIMILARPARAMS.items() + additionalparams.items() )
         self.loglines.append( 'trying to get similar artists from ' + self.URL )
-        rawxml = self._get_data( filepath, cachefilepath, url_params )
-        if rawxml:
-            xmldata = _xmltree.fromstring( rawxml )
-        else:
-            return [], self.loglines
+        try:
+           xmldata = _xmltree.fromstring( self._get_data( filepath, cachefilepath, url_params ) )
+        except:
+          return [], self.loglines
         match = False
         for element in xmldata.getiterator():
             if element.tag == "name":
