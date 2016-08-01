@@ -6,7 +6,7 @@
 from __future__ import division
 import xbmc, xbmcaddon, xbmcvfs
 from xbmcgui import DialogProgressBG
-import os, sys
+import os, platform, sys
 if sys.version_info >= (2, 7):
     import json as _json
     from collections import OrderedDict as _ordereddict
@@ -19,16 +19,16 @@ from resources.common.xlogger import Logger
 from resources.common.fileops import checkPath, writeFile
 from resources.common.transforms import itemHash
 
-__addon__        = xbmcaddon.Addon()
-__addonname__    = __addon__.getAddonInfo('id')
-__addonversion__ = __addon__.getAddonInfo('version')
-__addonpath__    = __addon__.getAddonInfo('path').decode('utf-8')
-__addonicon__    = xbmc.translatePath('%s/icon.png' % __addonpath__ )
-__language__     = __addon__.getLocalizedString
-__preamble__     = '[Artist Slideshow Helper]'
-__logdebug__     = __addon__.getSetting( "logging" ) 
+addon        = xbmcaddon.Addon()
+addonname    = addon.getAddonInfo('id')
+addonversion = addon.getAddonInfo('version')
+addonpath    = addon.getAddonInfo('path').decode('utf-8')
+addonicon    = xbmc.translatePath('%s/icon.png' % addonpath )
+language     = addon.getLocalizedString
+preamble     = '[Artist Slideshow Helper]'
+logdebug     = addon.getSetting( "logging" ) 
 
-lw = Logger( preamble=__preamble__, logdebug=__logdebug__ )
+lw = Logger( preamble=preamble, logdebug=logdebug )
 
 
 class Main:
@@ -37,18 +37,18 @@ class Main:
         self._get_settings()
         self._make_dirs()
         if self.HASHLIST == 'false' and self.MIGRATE == 'false':
-            command = 'XBMC.Notification(%s, %s, %s, %s)' % (smartUTF8(__language__(30350)), smartUTF8(__language__(30351)), 5000, smartUTF8(__addonicon__))
+            command = 'XBMC.Notification(%s, %s, %s, %s)' % (smartUTF8(language(30350)), smartUTF8(language(30351)), 5000, smartUTF8(addonicon))
             xbmc.executebuiltin(command)
             return        
         if self.HASHLIST == 'true' and self.HASHLISTFOLDER:
             self._generate_hashlist()
         elif self.HASHLIST == 'true' and not self.HASHLISTFOLDER:
-            command = 'XBMC.Notification(%s, %s, %s, %s)' % (smartUTF8(__language__(30340)), smartUTF8(__language__(30341)), 5000, smartUTF8(__addonicon__))
+            command = 'XBMC.Notification(%s, %s, %s, %s)' % (smartUTF8(language(30340)), smartUTF8(language(30341)), 5000, smartUTF8(addonicon))
             xbmc.executebuiltin(command)
         if self.MIGRATE == 'true' and self.MIGRATEFOLDER:
             self._migrate()
         elif self.MIGRATE == 'true' and not self.MIGRATEFOLDER:
-            command = 'XBMC.Notification(%s, %s, %s, %s)' % (smartUTF8(__language__(30320)), smartUTF8(__language__(30321)), 5000, smartUTF8(__addonicon__))
+            command = 'XBMC.Notification(%s, %s, %s, %s)' % (smartUTF8(language(30320)), smartUTF8(language(30321)), 5000, smartUTF8(addonicon))
             xbmc.executebuiltin(command)
 
 
@@ -60,16 +60,16 @@ class Main:
         success, log_line = writeFile( hashmap_str, self.HASHLISTFILE )
         if success:
             lw.log( log_line )
-            message = smartUTF8( __language__(30311) )
+            message = smartUTF8( language(30311) )
         else:
             lw.log( ['unable to write has list file out to disk'] )
-            message = smartUTF8( __language__(30312) )
+            message = smartUTF8( language(30312) )
 
 
     def _get_artists_hashmap( self ):
         #gets a list of all the artists from XBMC
         pDialog = DialogProgressBG()
-        pDialog.create( smartUTF8(__language__(32001)), smartUTF8(__language__(30301)) )
+        pDialog.create( smartUTF8(language(32001)), smartUTF8(language(30301)) )
         hashmap = _ordereddict()
         response = xbmc.executeJSONRPC ( '{"jsonrpc":"2.0", "method":"AudioLibrary.GetArtists", "params":{"albumartistsonly":false, "sort":{"order":"ascending", "ignorearticle":true, "method":"artist"}},"id": 1}}' )
         try:
@@ -83,9 +83,10 @@ class Main:
             total = len( artists_info )
             count = 1
             for artist_info in artists_info:
+                lw.log( ["getting hash for artist %s" % artist_info['artist']] )
             	artist_hash = itemHash( artist_info['artist'] )
                 hashmap[artist_hash] = artist_info['artist']
-                pDialog.update(int(100*(count/total)), smartUTF8( __language__(32001) ), smartUTF8( artist_info['artist'] ) )
+                pDialog.update(int(100*(count/total)), smartUTF8( language(32001) ), smartUTF8( artist_info['artist'] ) )
                 count += 1
             hashmap[itemHash( "Various Artists" )] = "Various Artists" 
         pDialog.close()
@@ -93,14 +94,14 @@ class Main:
 
 
     def _get_settings( self ):
-        self.HASHLIST = __addon__.getSetting( "hashlist" )
+        self.HASHLIST = addon.getSetting( "hashlist" )
         if self.HASHLIST == 'true':
-            self.HASHLISTFOLDER = __addon__.getSetting( "hashlist_path" ).decode('utf-8')
+            self.HASHLISTFOLDER = addon.getSetting( "hashlist_path" ).decode('utf-8')
             lw.log( ['set hash list path to %s' % self.HASHLISTFOLDER] )
             self.HASHLISTFILE = os.path.join( self.HASHLISTFOLDER, 'as_hashlist.txt' )
-        self.MIGRATE = __addon__.getSetting( "migrate" )
+        self.MIGRATE = addon.getSetting( "migrate" )
         if self.MIGRATE == 'true':
-            mtype = __addon__.getSetting( "migrate_type" )
+            mtype = addon.getSetting( "migrate_type" )
             if mtype == '2':
                 self.MIGRATETYPE = 'copy'
             elif mtype == '1':
@@ -108,13 +109,28 @@ class Main:
             elif mtype == '0':
                 self.MIGRATETYPE = 'test'
             lw.log( ['raw migrate type is %s, so migrate type is %s' % (mtype, self.MIGRATETYPE)] )
-            if __addon__.getSetting( "migrate_path" ):
-                self.MIGRATEFOLDER = __addon__.getSetting( "migrate_path" ).decode('utf-8')
+            if addon.getSetting( "migrate_path" ):
+                self.MIGRATEFOLDER = addon.getSetting( "migrate_path" ).decode('utf-8')
                 lw.log( ['set migrate folder to %s' % self.MIGRATEFOLDER] )
             else:
                 self.MIGRATEFOLDER = ''
                 lw.log( ['no migration folder set'] )
-            
+            self.ENABLEFUZZYSEARCH = addon.getSetting( "enable_fuzzysearch" )
+            lw.log( ['fuzzy search is ' + self.ENABLEFUZZYSEARCH] )
+        if self.ENABLEFUZZYSEARCH == 'true':
+            pl = addon.getSetting( "storage_target" )
+            lw.log( ['the target is ' + pl] )
+            if pl == "0":
+                self.ENDREPLACE = addon.getSetting( "end_replace" )
+                self.ILLEGALCHARS = list( '<>:"/\|?*' )
+            elif pl == "2":
+                self.ENDREPLACE = '.'
+                self.ILLEGALCHARS = [':']
+            else:
+                self.ENDREPLACE = '.'
+                self.ILLEGALCHARS = [os.path.sep]
+            self.ILLEGALREPLACE = addon.getSetting( "illegal_replace" )
+        
 
     def _init_vars( self ):
         self.HASHLIST = ''
@@ -127,7 +143,7 @@ class Main:
 
 
     def _make_dirs( self ):
-        exists, loglines = checkPath( xbmc.translatePath('special://profile/addon_data/%s' % __addonname__ ).decode('utf-8') )
+        exists, loglines = checkPath( os.path.join( xbmc.translatePath('special://profile/addon_data/%s' % addonname ).decode('utf-8'), '' ) )
         lw.log( loglines )
         if self.HASHLISTFOLDER:
             exists, loglines = checkPath( self.HASHLISTFOLDER )
@@ -150,24 +166,35 @@ class Main:
             lw.log( ['unexpected error while getting directory list', e] )
             return
         pDialog = DialogProgressBG()
-        pDialog.create( smartUTF8(__language__(32003)), smartUTF8(__language__(30301)) )
+        pDialog.create( smartUTF8(language(32003)), smartUTF8(language(30301)) )
         total = len( folders )
         count = 1
         for folder in folders:
             try:
-                artist_name = hashmap[folder]
+                artist_start = hashmap[folder]
             except KeyError:
                 lw.log( ['no matching artist folder for: ' + folder] )
-                artist_name = ''
+                artist_start = ''
             except Exception, e:
                 lw.log( ['unexpected error while finding matching artist for ' + folder, e] )
-                artist_name = ''
-            if artist_name and not (artist_name.find('/') != -1):
-                pDialog.update(int(100*(count/total)), smartUTF8( __language__(32003) ), smartUTF8( artist_name ) )
+                artist_start = ''
+            if artist_start:
+                pDialog.update(int(100*(count/total)), smartUTF8( language(32003) ), smartUTF8( artist_start ) )
+                if self.ENABLEFUZZYSEARCH == 'true':
+                    artist_name = ''
+                    lw.log( ['the illegal characters are ', self.ILLEGALCHARS, 'the replacement is ' + self.ILLEGALREPLACE] )
+                    for c in list( self._remove_trailing_dot( artist_start ) ):
+                        if c in self.ILLEGALCHARS:
+                            artist_name = artist_name + self.ILLEGALREPLACE
+                        else:
+                            artist_name = artist_name + c  
+                else:
+                    artist_name = artist_start
                 old_folder = os.path.join( self.ASCACHEFOLDER, folder )
                 new_folder = os.path.join( self.MIGRATEFOLDER, artist_name, 'extrafanart' )
                 if self.MIGRATETYPE == 'copy' or self.MIGRATETYPE == 'move':
                     exists, loglines = checkPath( new_folder )
+                    
                     lw.log( loglines )
                 try:
                     throwaway, files = xbmcvfs.listdir( old_folder )
@@ -197,10 +224,17 @@ class Main:
         pDialog.close()
 
 
+    def _remove_trailing_dot( self, thename ):
+        if thename[-1] == '.' and len( thename ) > 1:
+            return self._remove_trailing_dot( thename[:-1] + self.ENDREPLACE )
+        else:
+            return thename
+
+
 if ( __name__ == "__main__" ):
-    lw.log( ['script version %s started' % __addonversion__], xbmc.LOGNOTICE )
-    lw.log( ['debug logging set to %s' % __logdebug__], xbmc.LOGNOTICE )
+    lw.log( ['script version %s started' % addonversion], xbmc.LOGNOTICE )
+    lw.log( ['debug logging set to %s' % logdebug], xbmc.LOGNOTICE )
     Main()
-    command = 'XBMC.Notification(%s, %s, %s, %s)' % (smartUTF8(__language__(30330)), smartUTF8(__language__(30331)), 3000, smartUTF8(__addonicon__))
+    command = 'XBMC.Notification(%s, %s, %s, %s)' % (smartUTF8(language(30330)), smartUTF8(language(30331)), 3000, smartUTF8(addonicon))
     xbmc.executebuiltin( command )
 lw.log( ['script stopped'], xbmc.LOGNOTICE )

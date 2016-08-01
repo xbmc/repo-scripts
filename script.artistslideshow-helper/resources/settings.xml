@@ -5,5 +5,9 @@
     <setting id="migrate" type="bool" label="32003" default="false" />
     <setting id="migrate_path" type="folder" label="32004" default="" enable="eq(-1,true)" />
 	<setting id="migrate_type" type="enum" label="32005" lvalues="32006|32007|32008" default="0" enable="eq(-2,true)" />
+    <setting id="enable_fuzzysearch" type="bool" label="32211" default="false" />
+    <setting id="storage_target" type="enum" label="32212" default="0" lvalues="32215|32217|32216" visible="eq(-1,true)" />
+    <setting id="illegal_replace" type="text" label=" 32213" default="_" visible="eq(-2,true)"/>
+    <setting id="end_replace" type="text" label="32214" default="" visible="eq(-3,true) + eq(-2,0)" />		
     <setting id="logging" type="bool" label="32209" default="false" />
 </settings>

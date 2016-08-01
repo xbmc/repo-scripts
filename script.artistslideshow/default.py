@@ -395,12 +395,45 @@ class Main:
             featured_artists = self._get_featured_artists( self._get_infolabel(self.SKININFO['title']) )
         if featured_artists:
             for one_artist in featured_artists:
-                artist_names.append( one_artist.strip(' ()') )            
+                artist_names.append( one_artist.strip(' ()') )
+        lw.log( ['starting with the following artists', artist_names] )
+        lw.log( ['disable multi artist is set to ' + self.DISABLEMULTIARTIST] )
+        if self.DISABLEMULTIARTIST == 'true':
+            if len( artist_names ) > 1:
+                lw.log( ['deleting extra artists'] )
+                del artist_names[1:]
+            if len( mbids ) > 1:
+                lw.log( ['deleting extra MBIDs'] )
+                del mbids[1:]
+        lw.log( ['left with', artist_names] )
         for artist_name, mbid in itertools.izip_longest( artist_names, mbids, fillvalue='' ):
             if artist_name:
                 artists_info.append( (artist_name, self._get_musicbrainz_id( artist_name, mbid )) )
         return artists_info
 
+
+    def _get_directory_list( self, trynum='first' ):
+        lw.log( ['checking %s for artist images' % self.CacheDir] )
+        try:
+            dirs, files = xbmcvfs.listdir( self.CacheDir )
+        except OSError:
+            files = []
+        except Exception, e:
+            lw.log( ['unexpected error getting directory list', e] )
+            files = []
+        if not files and trynum == 'first' and self.ENABLEFUZZYSEARCH == 'true':
+            s_name = ''
+            lw.log( ['the illegal characters are ', self.ILLEGALCHARS, 'the replacement is ' + self.ILLEGALREPLACE] )
+            for c in list( self._remove_trailing_dot( self.NAME ) ):
+                if c in self.ILLEGALCHARS:
+                    s_name = s_name + self.ILLEGALREPLACE
+                else:
+                    s_name = s_name + c  
+            lw.log( ['did not work with %s, trying %s' % (self.NAME, s_name)] )           
+            self.CacheDir = os.path.join( self.LOCALARTISTPATH, smartUTF8(s_name).decode('utf-8'), self.FANARTFOLDER )
+            files = self._get_directory_list( 'second' )
+        return files
+        
 
     def _get_featured_artists( self, data ):
         the_split = data.replace('ft.','feat.').split('feat.')
@@ -454,13 +487,7 @@ class Main:
             return
         self.CacheDir = os.path.join( self.LOCALARTISTPATH, smartUTF8(self.NAME).decode('utf-8'), self.FANARTFOLDER )
         lw.log( ['cachedir = %s' % self.CacheDir] )
-        try:
-            dirs, files = xbmcvfs.listdir( self.CacheDir )
-        except OSError:
-            files = []
-        except Exception, e:
-            lw.log( ['unexpected error getting directory list', e] )
-            files = []
+        files = self._get_directory_list()
         for file in files:
             if file.lower().endswith('tbn') or file.lower().endswith('jpg') or file.lower().endswith('jpeg') or file.lower().endswith('gif') or file.lower().endswith('png'):
                 self.LocalImagesFound = True
@@ -537,6 +564,7 @@ class Main:
         self.USEOVERRIDE = addon.getSetting( "slideshow" )
         self.OVERRIDEPATH = addon.getSetting( "slideshow_path" ).decode('utf-8')
         self.RESTRICTCACHE = addon.getSetting( "restrict_cache" )
+        self.DISABLEMULTIARTIST = addon.getSetting( "disable_multiartist" )
         try:
             self.maxcachesize = int( addon.getSetting( "max_cache_size" ) ) * 1000000
         except ValueError:
@@ -555,6 +583,21 @@ class Main:
             lw.log( ['set fanart folder to %s' % self.FANARTFOLDER] )
         else:
             self.FANARTFOLDER = 'extrafanart'
+        self.ENABLEFUZZYSEARCH = addon.getSetting( "enable_fuzzysearch" )
+        lw.log( ['fuzzy search is ' + self.ENABLEFUZZYSEARCH] )
+        if self.ENABLEFUZZYSEARCH == 'true':
+            pl = addon.getSetting( "storage_target" )
+            lw.log( ['the target is ' + pl] )
+            if pl == "0":
+                self.ENDREPLACE = addon.getSetting( "end_replace" )
+                self.ILLEGALCHARS = list( '<>:"/\|?*' )
+            elif pl == "2":
+                self.ENDREPLACE = '.'
+                self.ILLEGALCHARS = [':']
+            else:
+                self.ENDREPLACE = '.'
+                self.ILLEGALCHARS = [os.path.sep]
+            self.ILLEGALREPLACE = addon.getSetting( "illegal_replace" )
 
 
     def _init_vars( self ):
@@ -619,7 +662,9 @@ class Main:
         dirs, files = xbmcvfs.listdir(self.CacheDir)
         for file in files:
             if(file.lower().endswith('tbn') or file.lower().endswith('jpg') or file.lower().endswith('jpeg') or file.lower().endswith('gif') or file.lower().endswith('png')):
-                xbmcvfs.copy(os.path.join(self.CacheDir, smartUTF8(file).decode('utf-8')), os.path.join(self.MergeDir, smartUTF8(file).decode('utf-8')))                
+                img_source = os.path.join( self.CacheDir, smartUTF8( file ).decode( 'utf-8' ) )
+                img_dest = os.path.join( self.MergeDir, itemHash( img_source ) + getImageType( img_source ) )               
+                xbmcvfs.copy( img_source, img_dest )                
         if self.ARTISTNUM == self.TOTALARTISTS:
             wait_elapsed = time.time() - self.LASTARTISTREFRESH
             if( wait_elapsed > self.MINREFRESH ):
@@ -750,6 +795,13 @@ class Main:
             lw.log( ['switching slideshow to ' + self.TransitionDir] )
         self.LASTARTISTREFRESH = time.time()
         lw.log( ['Last slideshow refresh time is ' + str(self.LASTARTISTREFRESH)] )
+
+
+    def _remove_trailing_dot( self, thename ):
+        if thename[-1] == '.' and len( thename ) > 1:
+            return self._remove_trailing_dot( thename[:-1] + self.ENDREPLACE )
+        else:
+            return thename
 
 
     def _rename_tbn_files( self, loc, type ):
@@ -961,6 +1013,7 @@ class Main:
     def _use_correct_artwork( self ):
         self.ALLARTISTS = self._get_current_artists()
         self.ARTISTNUM = 0
+        # if multiartist off then set totalartists to 1
         self.TOTALARTISTS = len( self.ALLARTISTS )
         self.MergedImagesFound = False
         for artist, mbid in self._get_current_artists_info( ):

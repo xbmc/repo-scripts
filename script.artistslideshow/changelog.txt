@@ -1,3 +1,10 @@
+v.2.0.1
+- added option for fuzzy local path search replacing illegal path characters
+- added option to search theaudiodb.com using artist name if mbid unavailable
+- fixed issue when merging separate artist images with same file name
+- added option to turn off featured or multi-artist image merge
+- fixed crash if htbackdrops or last.fm are unresponsive
+
 v.2.0.0
 - separated code for downloads into modules to make it easier to add other services
 - added preferences to allow selection of services and priority for use
