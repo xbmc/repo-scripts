@@ -1,3 +1,7 @@
+v.0.4.3
+- added logic from AS for fixing illegal characters in artist names
+- additional debug logging
+
 v.0.4.2
 - updated for Helix
 

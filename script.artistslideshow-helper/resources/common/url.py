@@ -1,4 +1,4 @@
-#v.0.1.9
+#v.0.2.0
 
 import socket
 import requests as _requests
@@ -32,11 +32,11 @@ class URL():
         urldata = ''
         try:
             if urltype == "get":
-                urldata = _requests.get( url, params=params, timeout=self.timeout )
+                urldata = _requests.get( url, params=params, timeout=self.timeout, verify=False )
             elif urltype == "post":
-                urldata = _requests.post( url, params=params, data=data, headers=self.headers, timeout=self.timeout )
+                urldata = _requests.post( url, params=params, data=data, headers=self.headers, timeout=self.timeout, verify=False )
             elif urltype == "delete":
-                urldata = _requests.delete( url, params=params, data=data, headers=self.headers, timeout=self.timeout )
+                urldata = _requests.delete( url, params=params, data=data, headers=self.headers, timeout=self.timeout, verify=False )
             loglines.append( "the url is: " + urldata.url )
             loglines.append( 'the params are: ')
             loglines.append( params )

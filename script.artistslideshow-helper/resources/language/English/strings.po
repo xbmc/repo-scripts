@@ -119,4 +119,32 @@ msgctxt "#32209"
 msgid "Enable debug logging"
 msgstr ""
 
+msgctxt "#32211"
+msgid "Enable fuzzy local artist image paths"
+msgstr ""
+
+msgctxt "#32212"
+msgid "  Platform for image storage"
+msgstr ""
+
+msgctxt "#32213"
+msgid "  Replace illegal path characters in artist name with"
+msgstr ""
+
+msgctxt "#32214"
+msgid "  Replace trailing period in artist name with"
+msgstr ""
+
+msgctxt "#32215"
+msgid "Windows"
+msgstr ""
+
+msgctxt "#32216"
+msgid "MacOS"
+msgstr ""
+
+msgctxt "#32217"
+msgid "Other"
+msgstr ""
+
 
