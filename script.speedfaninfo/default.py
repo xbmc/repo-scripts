@@ -101,10 +101,6 @@ class Main( xbmcgui.WindowXMLDialog ):
     def _parse_log( self ):
         #parse the log for information, see readme for how to setup SpeedFan output so that the script
         lw.log( ['started parsing log'] );
-        if __addon__.getSetting( 'temp_scale' ) == 'Celcius':
-            temp_scale = 'C'
-        else:
-            temp_scale = 'F'
         lw.log( ['read the log file'] )
         first, last = self._read_log_file()
         temps = []
@@ -129,7 +125,10 @@ class Main( xbmcgui.WindowXMLDialog ):
                     s_value = str( int( round( float( s_value.rstrip().replace(',', '.') ) ) ) )
             if item_type == "temp":
                 lw.log( ['put the information in the temperature array'] )
-                temps.append( [item_text + ':', s_value + temp_scale] )
+                if __addon__.getSetting( 'temp_scale' ) == 'Celcius':
+                    temps.append( [item_text + ':', s_value + 'C'] )
+                else:
+                    temps.append( [item_text + ':', str( int( round( ( float( s_value ) * 1.8 ) + 32 ) ) ) + 'F'] ) 
             elif item_type == "speed":
                 lw.log( ['put the information in the speed array'] )
                 speeds.append( [item_text + ':', s_value + 'rpm'] )
