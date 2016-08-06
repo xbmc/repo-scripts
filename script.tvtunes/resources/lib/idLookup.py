@@ -142,7 +142,7 @@ class IdLookup():
         query = '?t=%s' % clean_name
 
         if year not in [None, '']:
-            query = '%s&y==%s' % (query, str(year))
+            query = '%s&y=%s' % (query, str(year))
 
         url = "%s%s" % (self.imdb_url_prefix, query)
         json_details = self._makeCall(url)
