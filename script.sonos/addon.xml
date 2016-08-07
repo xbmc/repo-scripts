@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.sonos" name="Sonos" version="2.0.0" provider-name="robwebset">
+	<requires>
+		<import addon="xbmc.python" version="2.19.0"/>
+		<import addon="script.module.requests" version="2.3.0"/>
+		<import addon="script.module.simplejson" version="3.3.0"/>
+		<import addon="script.artistslideshow" version="2.0.1"/>
+		<import addon="script.cu.lrclyrics" version="3.2.3"/>
+	</requires>
+	<extension point="xbmc.python.script" library="default.py"/>
+	<extension point="xbmc.service" library="service.py" start="login"/>
+	<extension point="xbmc.python.pluginsource" library="plugin.py">
+		<provides>audio</provides>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+	
+		<summary lang="de">Sonos Controller</summary>
+	
+		<summary lang="el">Χειριστήριο Sonos</summary>
+	
+		<summary lang="en">Sonos Controller</summary>
+	
+		<summary lang="en_NZ">Sonos Controller</summary>
+	
+		<summary lang="en_US">Sonos Controller</summary>
+	
+		<summary lang="es">Controlador Sonos</summary>
+	
+		<summary lang="fr">Contrôleur Sonos</summary>
+	
+		<summary lang="fr_CA">Contrôleur Sonos</summary>
+	
+		<summary lang="gl">Controlador Sonos</summary>
+	
+		<summary lang="he">בקר Sonos</summary>
+	
+		<summary lang="hu">Sonos Vezérlő</summary>
+	
+		<summary lang="it">Controller Sonos</summary>
+	
+		<summary lang="lt">Sonos vadiklis</summary>
+	
+		<summary lang="nl">Sonos controller</summary>
+	
+		<summary lang="no">Sonos Kontroller</summary>
+	
+		<summary lang="pl">Kontroler systemu głośników Sonos</summary>
+	
+		<summary lang="pt">Controlador Sonos</summary>
+	
+		<summary lang="pt_BR">Controlar Sonos</summary>
+	
+		<summary lang="sv">Sonos Kontroll</summary>
+	
+		<description lang="de">Unterstützt einfache Sonos-Befehle und Benachrichtigungen aus Kodi heraus. Mehr Details finden sich im Wiki.</description>
+	
+		<description lang="el">Υποστηρίζεται απλός χειρισμός Sonos, και ειδοποιήσεις από το Kodi. Ελέγξτε την ιστοσελίδα του wiki για περισσότερες πληροφορίες.</description>
+	
+		<description lang="en">Supports simple Sonos Controls and notifications from Kodi. Look at the wiki for more details.</description>
+	
+		<description lang="en_NZ">Supports simple Sonos Controls and notifications from Kodi. Look at the wiki for more details.</description>
+	
+		<description lang="en_US">Supports simple Sonos Controls and notifications from Kodi. Look at the wiki for more details.</description>
+	
+		<description lang="es">Soporta controles simples de Sonos y avisos de Kodi. Mirar Wiki para más detalles.</description>
+	
+		<description lang="fr">Gère le contrôle simple de Sonos et les notifications à partie de Kodi. Voir le Wiki pour plus de détails.</description>
+	
+		<description lang="fr_CA">Prend en charge des contrôles simples et des notifications Sonos depuis Kodi. Consulter le wiki pour plus de détails.</description>
+	
+		<description lang="gl">Soporta Controis simples de Sonos e notificacións do Kodi. Para máis detalles ir á wiki.</description>
+	
+		<description lang="hu">Támogatja az egyszerű Sonos Vezérléseket és értesítéseket az Kodi-ből. Tekintse meg a wikit a részletekért.</description>
+	
+		<description lang="it">Supporta semplici Controller Sonos e le notifiche da Kodi. Consulta la wiki per maggiori dettagli.</description>
+	
+		<description lang="lt">Palaiko paprastą Sonos valdymą ir pranešimus iš Kodi. Peržiūrėkite wiki puslapį norėdami gauti daugiau informacijos.</description>
+	
+		<description lang="nl">Ondersteund simpele Sonos bedieningen en notificaties van Kodi. Kijk op de wiki voor meer details.</description>
+	
+		<description lang="no">Støtter enkle Sonos Kontroll og notiser fra Kodi. Les wiki for fler detaljer.</description>
+	
+		<description lang="pl">Obsługuje proste sterowanie systemem Sonos oraz powiadomienia z Kodi.  Więcej szczegółów znajdziesz w na stronach Wiki dodatku.</description>
+	
+		<description lang="pt">Suporta Controlo Sonos simples e notificações através do Kodi. Verifique o wiki para mais detalhes.</description>
+	
+		<description lang="pt_BR">Suporta simples controles do Sonos e notificações via Kodi. Leia o wiki para maiores detalhes.</description>
+	
+		<description lang="sv">Stöder enkla Sonos kontroller och notifieringar i Kodi. Se wiki för fler detaljer.</description>
+	
+		<language></language>
+	
+		<platform>all</platform>
+	
+		<license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+	
+		<forum>http://forum.kodi.tv/showthread.php?tid=183020</forum>
+	
+		<source>https://github.com/robwebset/script.sonos</source>
+	</extension>
+</addon>

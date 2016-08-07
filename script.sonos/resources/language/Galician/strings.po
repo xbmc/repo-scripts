@@ -1,0 +1,265 @@
+# Kodi Media Center language file
+# Addon Name: Sonos
+# Addon id: script.sonos
+# Addon Provider: robwebset
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: Galician (http://www.transifex.com/projects/p/xbmc-addons/language/gl/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: gl\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "Addon Description"
+msgid "Supports simple Sonos Controls and notifications from Kodi. Look at the wiki for more details."
+msgstr "Soporta Controis simples de Sonos e notificacións do Kodi. Para máis detalles ir á wiki."
+
+msgctxt "#32001"
+msgid "Sonos"
+msgstr "Sonos"
+
+msgctxt "#32002"
+msgid "IP Address"
+msgstr "Enderezo IP"
+
+msgctxt "#32003"
+msgid "Enable Notifications (Restart Required)"
+msgstr "Activar Notificacións (Requírese Reiniciar)"
+
+msgctxt "#32004"
+msgid "Display Notification For (Seconds)"
+msgstr "Amosar Notificacións durante (Segundos)"
+
+msgctxt "#32005"
+msgid "Notification Check Frequency (Seconds)"
+msgstr "Frecuencia de Verificación das Notificacións (Segundos)"
+
+msgctxt "#32006"
+msgid "Do Not Display Notification If Video Is Playing"
+msgstr "Non Amosar Notificacións ó Reproducir Vídeos"
+
+msgctxt "#32007"
+msgid "Use Default Kodi Notification Dialog"
+msgstr "Usar o Diálogo de Notificacións Predefinido do Kodi"
+
+msgctxt "#32008"
+msgid "Debugging"
+msgstr "Depurado"
+
+msgctxt "#32009"
+msgid "Enable debug logging"
+msgstr "Activar rexistro de depurado"
+
+msgctxt "#32010"
+msgid "Speaker"
+msgstr "Altofalante"
+
+msgctxt "#32011"
+msgid "Notifications"
+msgstr "Notificacións"
+
+msgctxt "#32012"
+msgid "Debugging"
+msgstr "Depurado"
+
+msgctxt "#32013"
+msgid "Search For Sonos Speakers..."
+msgstr "Buscar Altofalantes Sonos..."
+
+msgctxt "#32014"
+msgid "No speakers found, please enter your IP address manually"
+msgstr "Non se atoparon altofalantes, por favor insira o enderezo IP manualmente"
+
+msgctxt "#32015"
+msgid "Controller"
+msgstr "Controlador"
+
+msgctxt "#32016"
+msgid "Controller Refresh Interval (Seconds)"
+msgstr "Intervalo de Refresco do Controlador (Segundos)"
+
+msgctxt "#32018"
+msgid "Plugin"
+msgstr "Plugin"
+
+msgctxt "#32019"
+msgid "Batch Size"
+msgstr "Tamaño do Batch"
+
+msgctxt "#32020"
+msgid "Maximum Entries In Displayed Lists (0 = Unlimited)"
+msgstr "Máximo de Entradas na Parte Visíbel das Listaxes (0 = Sen Limite)"
+
+msgctxt "#32021"
+msgid "Display Artist Information"
+msgstr "Amosar Información do Artista"
+
+msgctxt "#32022"
+msgid "Avoid Duplicate Key Presses (Seconds)"
+msgstr "Evitar a pulsación de Teclas Duplicadas (Segundos)"
+
+msgctxt "#32023"
+msgid "Link Kodi Volume With Sonos Speaker (Restart Required)"
+msgstr "Ligar o Volume do Kodi co Altofalante Sonos (Requírese Reiniciar)"
+
+msgctxt "#32025"
+msgid "Volume Change Increments"
+msgstr "Incrementar Cambios no Volume"
+
+msgctxt "#32026"
+msgid "Automatically Pause Sonos When Kodi Plays Media (Restart Required)"
+msgstr "Pausar Sonos automaticamente Cando o Kodi Reproduce Musica (Requírese Reiniciar)"
+
+msgctxt "#32027"
+msgid "Automatically Resume Sonos (Seconds) [0 = Off]"
+msgstr "Reanudar Sonos automaticamente (Segundos) [0 = Apagado]"
+
+msgctxt "#32028"
+msgid "Zone Name (Optional)"
+msgstr "Nome da Zona (Opcional)"
+
+msgctxt "#32029"
+msgid "Automatically Update IP Address On Startup"
+msgstr "Actualizar Automaticamente o Enderezo IP no Inicio"
+
+msgctxt "#32035"
+msgid "Layout"
+msgstr "Deseño"
+
+msgctxt "#32042"
+msgid "Hide Sonos Logo"
+msgstr "Agochar o Logo"
+
+msgctxt "#32060"
+msgid "The following setting in ArtistSlideshow must be enabled"
+msgstr "O seguinte axuste do ArtistSlideshow debe estar activado"
+
+msgctxt "#32061"
+msgid "Would you like this automatically enabled?"
+msgstr "Quere activalo automaticamente?"
+
+msgctxt "#32062"
+msgid "Next"
+msgstr "Seguinte"
+
+msgctxt "#32064"
+msgid "Library Update Started"
+msgstr "Iniciada a actualización da biblioteca"
+
+msgctxt "#32065"
+msgid "Library Update Already In Progress"
+msgstr "Actualización da biblioteca en curso"
+
+msgctxt "#32067"
+msgid "IP Address Not Set"
+msgstr "Enderezo IP non estabelecido"
+
+msgctxt "#32068"
+msgid "Error"
+msgstr "Erro"
+
+msgctxt "#32100"
+msgid "Music Library"
+msgstr "Biblioteca de Música"
+
+msgctxt "#32101"
+msgid "Queue"
+msgstr "Cola"
+
+msgctxt "#32102"
+msgid "Radio Stations"
+msgstr "Emisoras de Radio"
+
+msgctxt "#32103"
+msgid "Launch Sonos Controller"
+msgstr "Iniciar o Controlador de Sonos"
+
+msgctxt "#32110"
+msgid "Artists"
+msgstr "Artistas"
+
+msgctxt "#32111"
+msgid "Albums"
+msgstr "Álbums"
+
+msgctxt "#32112"
+msgid "Composers"
+msgstr "Compositores"
+
+msgctxt "#32113"
+msgid "Genres"
+msgstr "Xéneros"
+
+msgctxt "#32114"
+msgid "Tracks"
+msgstr "Pistas"
+
+msgctxt "#32115"
+msgid "Imported Playlists"
+msgstr "Listaxes importadas"
+
+msgctxt "#32150"
+msgid "Open Sonos Player"
+msgstr "Reprodutor Open Sonos"
+
+msgctxt "#32151"
+msgid "Play Track"
+msgstr "Reproducir Pista"
+
+msgctxt "#32152"
+msgid "Remove Track"
+msgstr "Eliminar Pista"
+
+msgctxt "#32153"
+msgid "Clear Queue"
+msgstr "Limpar Cola"
+
+msgctxt "#32154"
+msgid "Play Now"
+msgstr "Reproducir Agora"
+
+msgctxt "#32155"
+msgid "Add To Queue"
+msgstr "Engadir á Cola"
+
+msgctxt "#32156"
+msgid "Replace Queue"
+msgstr "Substituír Cola"
+
+msgctxt "#32157"
+msgid "Update Music Library"
+msgstr "Actualizar biblioteca de música"
+
+msgctxt "#32220"
+msgid "The time is %time"
+msgstr "Son as %time"
+
+msgctxt "#32221"
+msgid "Today is %day"
+msgstr "Hoxe é %day"
+
+msgctxt "#32222"
+msgid "Todays date is %date"
+msgstr "Hoxe é %date"
+
+msgctxt "#32223"
+msgid "Good Morning"
+msgstr "Bos días"
+
+msgctxt "#32224"
+msgid "Good Afternon"
+msgstr "Boas tardes"
+
+msgctxt "#32225"
+msgid "Good Evening"
+msgstr "Boas noites"
+
+msgctxt "#32226"
+msgid "The time is %time"
+msgstr "Son as %time"

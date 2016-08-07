@@ -1,0 +1,141 @@
+# Kodi Media Center language file
+# Addon Name: Sonos
+# Addon id: script.sonos
+# Addon Provider: robwebset
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: Hebrew (http://www.transifex.com/projects/p/xbmc-addons/language/he/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: he\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#32001"
+msgid "Sonos"
+msgstr "Sonos"
+
+msgctxt "#32002"
+msgid "IP Address"
+msgstr "כתובת IP"
+
+msgctxt "#32008"
+msgid "Debugging"
+msgstr "ניפוי שגיאות"
+
+msgctxt "#32009"
+msgid "Enable debug logging"
+msgstr "הפעל רישום שגיאות"
+
+msgctxt "#32010"
+msgid "Speaker"
+msgstr "רמקול"
+
+msgctxt "#32011"
+msgid "Notifications"
+msgstr "התראות"
+
+msgctxt "#32012"
+msgid "Debugging"
+msgstr "ניפוי שגיאות"
+
+msgctxt "#32015"
+msgid "Controller"
+msgstr "בקר"
+
+msgctxt "#32018"
+msgid "Plugin"
+msgstr "הרחבה"
+
+msgctxt "#32028"
+msgid "Zone Name (Optional)"
+msgstr "שם אזור (רשות)"
+
+msgctxt "#32034"
+msgid "Automation"
+msgstr "אוטומציה"
+
+msgctxt "#32035"
+msgid "Layout"
+msgstr "פריסה"
+
+msgctxt "#32039"
+msgid "Slideshow Only"
+msgstr "מצגת בלבד"
+
+msgctxt "#32062"
+msgid "Next"
+msgstr "הבא"
+
+msgctxt "#32068"
+msgid "Error"
+msgstr "שגיאה"
+
+msgctxt "#32100"
+msgid "Music Library"
+msgstr "ספריית מוזיקה "
+
+msgctxt "#32101"
+msgid "Queue"
+msgstr "הוספה לתור"
+
+msgctxt "#32102"
+msgid "Radio Stations"
+msgstr "תחנות רדיו"
+
+msgctxt "#32104"
+msgid "Sonos Playlists"
+msgstr "רשימות ניגון Sonos"
+
+msgctxt "#32105"
+msgid "Speech"
+msgstr "דיבור"
+
+msgctxt "#32110"
+msgid "Artists"
+msgstr "אמנים"
+
+msgctxt "#32111"
+msgid "Albums"
+msgstr "אלבומים"
+
+msgctxt "#32112"
+msgid "Composers"
+msgstr "מלחינים"
+
+msgctxt "#32113"
+msgid "Genres"
+msgstr "סגנונות"
+
+msgctxt "#32114"
+msgid "Tracks"
+msgstr "רצועות"
+
+msgctxt "#32155"
+msgid "Add To Queue"
+msgstr "הוספה לתור"
+
+msgctxt "#32156"
+msgid "Replace Queue"
+msgstr "החלפת תור"
+
+msgctxt "#32157"
+msgid "Update Music Library"
+msgstr "עדכן ספריית המוזיקה"
+
+msgctxt "#32223"
+msgid "Good Morning"
+msgstr "בוקר טוב"
+
+msgctxt "#32224"
+msgid "Good Afternon"
+msgstr "אחה\"צ טובים"
+
+msgctxt "#32225"
+msgid "Good Evening"
+msgstr "ערב טוב"

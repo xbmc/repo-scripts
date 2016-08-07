@@ -1,0 +1,377 @@
+# Kodi Media Center language file
+# Addon Name: Sonos
+# Addon id: script.sonos
+# Addon Provider: robwebset
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: French (Canada) (http://www.transifex.com/projects/p/xbmc-addons/language/fr_CA/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: fr_CA\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+msgctxt "Addon Description"
+msgid "Supports simple Sonos Controls and notifications from Kodi. Look at the wiki for more details."
+msgstr "Prend en charge des contrôles simples et des notifications Sonos depuis Kodi. Consulter le wiki pour plus de détails."
+
+msgctxt "#32001"
+msgid "Sonos"
+msgstr "Sonos"
+
+msgctxt "#32002"
+msgid "IP Address"
+msgstr "Adresse IP"
+
+msgctxt "#32003"
+msgid "Enable Notifications (Restart Required)"
+msgstr "Activer les notifications (redémarrage exigé)"
+
+msgctxt "#32004"
+msgid "Display Notification For (Seconds)"
+msgstr "Afficher les notifications pendant (secondes)"
+
+msgctxt "#32005"
+msgid "Notification Check Frequency (Seconds)"
+msgstr "Fréquence de la vérification des notifications (secondes)"
+
+msgctxt "#32006"
+msgid "Do Not Display Notification If Video Is Playing"
+msgstr "Ne pas afficher de notification si une vidéo est en cours de lecture"
+
+msgctxt "#32007"
+msgid "Use Default Kodi Notification Dialog"
+msgstr "Utiliser la notification par défaut de Kodi"
+
+msgctxt "#32008"
+msgid "Debugging"
+msgstr "Débogage"
+
+msgctxt "#32009"
+msgid "Enable debug logging"
+msgstr "Activer la journalisation de débogage"
+
+msgctxt "#32010"
+msgid "Speaker"
+msgstr "Haut-parleur"
+
+msgctxt "#32011"
+msgid "Notifications"
+msgstr "Notifications"
+
+msgctxt "#32012"
+msgid "Debugging"
+msgstr "Débogage"
+
+msgctxt "#32013"
+msgid "Search For Sonos Speakers..."
+msgstr "Rechercher des haut-parleurs Sonos..."
+
+msgctxt "#32014"
+msgid "No speakers found, please enter your IP address manually"
+msgstr "Aucun haut-parleur trouvé. Veuillez saisir votre adresse IP manuellement"
+
+msgctxt "#32015"
+msgid "Controller"
+msgstr "Contrôleur"
+
+msgctxt "#32016"
+msgid "Controller Refresh Interval (Seconds)"
+msgstr "Intervalle de rafraîchissement du contrôleur (secondes)"
+
+msgctxt "#32018"
+msgid "Plugin"
+msgstr "Plugiciel"
+
+msgctxt "#32019"
+msgid "Batch Size"
+msgstr "Taille du lot"
+
+msgctxt "#32020"
+msgid "Maximum Entries In Displayed Lists (0 = Unlimited)"
+msgstr "Nombre maximum d'entrées dans les listes affichées (0 = illimité)"
+
+msgctxt "#32021"
+msgid "Display Artist Information"
+msgstr "Afficher les informations sur l'artiste"
+
+msgctxt "#32022"
+msgid "Avoid Duplicate Key Presses (Seconds)"
+msgstr "Éviter la frappe à répétition des touches (secondes)"
+
+msgctxt "#32023"
+msgid "Link Kodi Volume With Sonos Speaker (Restart Required)"
+msgstr "Lier le volume de Kodi aux haut-parleur Sonos (redémarrage exigé)"
+
+msgctxt "#32024"
+msgid "Switch Sonos To Line-In On Kodi Startup (Restart Required)"
+msgstr "Basculer les Sonos sur Entrée de ligne au démarrage de Kodi (redémarrage exigé)"
+
+msgctxt "#32025"
+msgid "Volume Change Increments"
+msgstr "Incréments du changement de volume"
+
+msgctxt "#32026"
+msgid "Automatically Pause Sonos When Kodi Plays Media (Restart Required)"
+msgstr "Mettre en pause Sonos automatiquement lorsque Kodi lit un média (redémarrage exigé)"
+
+msgctxt "#32027"
+msgid "Automatically Resume Sonos (Seconds) [0 = Off]"
+msgstr "Reprendre Sonos automatiquement (secondes) [0 = arrêt]"
+
+msgctxt "#32028"
+msgid "Zone Name (Optional)"
+msgstr "Nom du champ (optionnel)"
+
+msgctxt "#32029"
+msgid "Automatically Update IP Address On Startup"
+msgstr "Mettre à jour l'adresse IP automatiquement lors du démarrage"
+
+msgctxt "#32030"
+msgid "Switch Sonos To Line-In On Media Start (Restart Required)"
+msgstr "Basculer les Sonos sur Entrée de ligne au démarrage du média (redémarrage exigé)"
+
+msgctxt "#32031"
+msgid "Coordinator"
+msgstr "Coordinateur"
+
+msgctxt "#32032"
+msgid "is not the group coordinator for zone"
+msgstr "n'est pas le coordinateur du groupe pour la zone"
+
+msgctxt "#32033"
+msgid "Some functions may not work correctly if the speaker is not a coordinator"
+msgstr "Certaines fonctions pourraient ne pas fonctionner correctement si le haut-parleur n'est par un coordinateur"
+
+msgctxt "#32034"
+msgid "Automation"
+msgstr "Automatisation"
+
+msgctxt "#32035"
+msgid "Layout"
+msgstr "Disposition"
+
+msgctxt "#32036"
+msgid "Controller,Slideshow,Bio,Albums"
+msgstr "Contrôleur,Diaporama,Bio,Albums"
+
+msgctxt "#32037"
+msgid "Controller,Slideshow"
+msgstr "Contrôleur,Diaporama"
+
+msgctxt "#32038"
+msgid "Use Skin Icons Instead Of Sonos Icons"
+msgstr "Utiliser les icônes de l'habillage au lieu de celles de Sonos"
+
+msgctxt "#32039"
+msgid "Slideshow Only"
+msgstr "Diaporama uniquement"
+
+msgctxt "#32040"
+msgid "Do Not Display Notification If Controller Is Showing"
+msgstr "Ne pas afficher les notifications si le contrôleur est affiché"
+
+msgctxt "#32041"
+msgid "Controller,Slideshow,Lyrics"
+msgstr "Contrôleur,Diaporama,Paroles"
+
+msgctxt "#32042"
+msgid "Hide Sonos Logo"
+msgstr "Cacher le logo Sonos"
+
+msgctxt "#32043"
+msgid "Make Artist Slideshow Image Full Screen"
+msgstr "Image du diaporama des artistes en plein écran"
+
+msgctxt "#32044"
+msgid "Launch Controller On Kodi Startup"
+msgstr "Lancer le contrôleur au démarrage de Kodi"
+
+msgctxt "#32060"
+msgid "The following setting in ArtistSlideshow must be enabled"
+msgstr "Le paramètre suivant doit être activé dans le diaporama des artistes"
+
+msgctxt "#32061"
+msgid "Would you like this automatically enabled?"
+msgstr "Voulez-vous qu'il soit activé automatiquement?"
+
+msgctxt "#32062"
+msgid "Next"
+msgstr "Suivant"
+
+msgctxt "#32063"
+msgid "Failed To Process Sonos Update Event"
+msgstr "Impossible de traiter l'événement de mise à jour Sonos"
+
+msgctxt "#32064"
+msgid "Library Update Started"
+msgstr "La mise à jour de la médiathèque a commencé"
+
+msgctxt "#32065"
+msgid "Library Update Already In Progress"
+msgstr "La mise à jour de la médiathèque est déjà en cours"
+
+msgctxt "#32066"
+msgid "Error From Speaker %s"
+msgstr "Erreur du haut-parleur %s"
+
+msgctxt "#32067"
+msgid "IP Address Not Set"
+msgstr "Adresse IP non définie"
+
+msgctxt "#32068"
+msgid "Error"
+msgstr "Erreur"
+
+msgctxt "#32069"
+msgid "Failed to perform lookup %s (%s)"
+msgstr "Échec lors de la recherche %s (%s)"
+
+msgctxt "#32070"
+msgid "Failed to perform queue lookup"
+msgstr "Échec lors de recherche de file d'attente"
+
+msgctxt "#32071"
+msgid "Failed to perform radio station lookup"
+msgstr "Échec lors de la recherche de station radio"
+
+msgctxt "#32072"
+msgid "Failed to perform radio shows lookup"
+msgstr "Échec lors de la recherche d'émissions radio"
+
+msgctxt "#32073"
+msgid "Failed to perform action %s"
+msgstr "Échec lors de l'action %s"
+
+msgctxt "#32100"
+msgid "Music Library"
+msgstr "Bibliothèque de musique"
+
+msgctxt "#32101"
+msgid "Queue"
+msgstr "File d'attente"
+
+msgctxt "#32102"
+msgid "Radio Stations"
+msgstr "Stations radio"
+
+msgctxt "#32103"
+msgid "Launch Sonos Controller"
+msgstr "Lancer le contrôleur Sonos"
+
+msgctxt "#32104"
+msgid "Sonos Playlists"
+msgstr "Listes de lectures Sonos"
+
+msgctxt "#32105"
+msgid "Speech"
+msgstr "Parole"
+
+msgctxt "#32110"
+msgid "Artists"
+msgstr "Artistes"
+
+msgctxt "#32111"
+msgid "Albums"
+msgstr "Albums"
+
+msgctxt "#32112"
+msgid "Composers"
+msgstr "Compositeurs"
+
+msgctxt "#32113"
+msgid "Genres"
+msgstr "Genres"
+
+msgctxt "#32114"
+msgid "Tracks"
+msgstr "Pistes"
+
+msgctxt "#32115"
+msgid "Imported Playlists"
+msgstr "Listes de lectures importées"
+
+msgctxt "#32150"
+msgid "Open Sonos Player"
+msgstr "Ouvrir le lecteur Sonos"
+
+msgctxt "#32151"
+msgid "Play Track"
+msgstr "Jouer la piste"
+
+msgctxt "#32152"
+msgid "Remove Track"
+msgstr "Supprimer la piste"
+
+msgctxt "#32153"
+msgid "Clear Queue"
+msgstr "Vider la file d'attente"
+
+msgctxt "#32154"
+msgid "Play Now"
+msgstr "Jouer maintenant"
+
+msgctxt "#32155"
+msgid "Add To Queue"
+msgstr "Ajouter à la file d'attente"
+
+msgctxt "#32156"
+msgid "Replace Queue"
+msgstr "Remplacer la file d'attente"
+
+msgctxt "#32157"
+msgid "Update Music Library"
+msgstr "Mise à jour de l'audiothèque"
+
+msgctxt "#32200"
+msgid "Enter Speech Text To Play ..."
+msgstr "Saisir le texte à lire..."
+
+msgctxt "#32201"
+msgid "Speech messages are limited to 100 characters"
+msgstr "Les messages parlés sont limités à 100 caractères"
+
+msgctxt "#32202"
+msgid "No message specified"
+msgstr "Aucun message de spécifié"
+
+msgctxt "#32203"
+msgid "Enter Speech Text To Save ..."
+msgstr "Saisir le texte à enregistrer..."
+
+msgctxt "#32204"
+msgid "Remove Saved Text"
+msgstr "Supprimer le texte enregistré"
+
+msgctxt "#32220"
+msgid "The time is %time"
+msgstr "Il est %time"
+
+msgctxt "#32221"
+msgid "Today is %day"
+msgstr "Nous sommes %day"
+
+msgctxt "#32222"
+msgid "Todays date is %date"
+msgstr "Nous sommes le %date"
+
+msgctxt "#32223"
+msgid "Good Morning"
+msgstr "Bon matin"
+
+msgctxt "#32224"
+msgid "Good Afternon"
+msgstr "Bonjour"
+
+msgctxt "#32225"
+msgid "Good Evening"
+msgstr "Bonsoir"
+
+msgctxt "#32226"
+msgid "The time is %time"
+msgstr "Il est %time"

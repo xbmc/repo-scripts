@@ -1,0 +1,69 @@
+# Kodi Media Center language file
+# Addon Name: Sonos
+# Addon id: script.sonos
+# Addon Provider: robwebset
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: Slovenian (http://www.transifex.com/projects/p/xbmc-addons/language/sl/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: sl\n"
+"Plural-Forms: nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3);\n"
+
+msgctxt "#32002"
+msgid "IP Address"
+msgstr "IP-naslov"
+
+msgctxt "#32008"
+msgid "Debugging"
+msgstr "Razhroščevanje"
+
+msgctxt "#32009"
+msgid "Enable debug logging"
+msgstr "Vključi zapisovanje razhroščevanja"
+
+msgctxt "#32011"
+msgid "Notifications"
+msgstr "Obvestila"
+
+msgctxt "#32012"
+msgid "Debugging"
+msgstr "Razhroščevanje"
+
+msgctxt "#32062"
+msgid "Next"
+msgstr "Naslednji"
+
+msgctxt "#32068"
+msgid "Error"
+msgstr "Napaka"
+
+msgctxt "#32101"
+msgid "Queue"
+msgstr "V vrsto"
+
+msgctxt "#32110"
+msgid "Artists"
+msgstr "Izvajalci"
+
+msgctxt "#32111"
+msgid "Albums"
+msgstr "Albumi"
+
+msgctxt "#32113"
+msgid "Genres"
+msgstr "Žanri"
+
+msgctxt "#32114"
+msgid "Tracks"
+msgstr "Skladbe"
+
+msgctxt "#32157"
+msgid "Update Music Library"
+msgstr "Posodobi glasbeno knjižnico"
