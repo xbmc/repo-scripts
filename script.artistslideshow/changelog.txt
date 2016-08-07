@@ -1,3 +1,7 @@
+v.2.0.2
+- fixed crash when using fuzzy local path with non-Windows option
+- updated German strings
+
 v.2.0.1
 - added option for fuzzy local path search replacing illegal path characters
 - added option to search theaudiodb.com using artist name if mbid unavailable

@@ -16,6 +16,7 @@ msgstr ""
 "Language: de\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
+#Dialog Text
 msgctxt "#30300"
 msgid "Downloading"
 msgstr "Lade herunter"
@@ -40,6 +41,8 @@ msgctxt "#30305"
 msgid "All artist images downloaded"
 msgstr "Alle Künstlerbilder runtergeladen."
 
+#empty strings from id 30306 to 31999
+#Settings
 
 msgctxt "#32000"
 msgid "Images"
@@ -80,7 +83,6 @@ msgstr "Bilder von fanart.tv herunterladen"
 msgctxt "#32009"
 msgid "Download images from theaudiodb.com"
 msgstr "Bilder von theaudiodb.com herunterladen"
-msgstr ""
 
 msgctxt "#32010"
 msgid "  Client API key"
@@ -114,11 +116,13 @@ msgstr "Ausweich-Diashowordner verwenden"
 msgctxt "#32106"
 msgid "Use override slideshow"
 msgstr "Alternative Diashowbilder verwenden"
-msgstr ""
 
 msgctxt "#32107"
 msgid "Use transparent background when no artist images found"
 msgstr "Transparenter Hintergrund wenn keine Bilder gefunden werden"
+
+#empty strings from id 32108 to 32109
+
 msgctxt "#32110"
 msgid "Use remote images first"
 msgstr "Nutze externe Bilder zuerst"
@@ -131,6 +135,7 @@ msgctxt "#32112"
 msgid "Use both local and remote images"
 msgstr "Nutze interne und externe Bilder"
 
+#empty strings from id 32113 to 32199
 
 msgctxt "#32200"
 msgid "Advanced"
@@ -171,7 +176,38 @@ msgstr "Spezielle Bilder"
 msgctxt "#32209"
 msgid "Enable debug logging"
 msgstr "Debug-Logging aktivieren"
-msgstr ""
+
+msgctxt "#32210"
+msgid "Disable secondary and featured artist images"
+msgstr "Deaktiviere Zweit und featured Artist Bilder"
+
+msgctxt "#32211"
+msgid "Enable fuzzy local artist image paths"
+msgstr "Korrigieren des lokalen Künstler Bildpfade Aktiviere"
+
+msgctxt "#32212"
+msgid "  Platform for image storage"
+msgstr "Betriebssystem des Image Speicher"
+
+msgctxt "#32213"
+msgid "  Replace illegal path characters in artist name with"
+msgstr "Ersetze illegale Pfad Zeichen im Künstlernamen mit"
+
+msgctxt "#32214"
+msgid "  Replace trailing period in artist name with"
+msgstr "Ersetze Letzten Punkt im Künstlernamen mit"
+
+msgctxt "#32215"
+msgid "Windows"
+msgstr "Windows"
+
+msgctxt "#32216"
+msgid "MacOS"
+msgstr "MacOS"
+
+msgctxt "#32217"
+msgid "Other"
+msgstr "Anders"
 
 #empty strings from id 32210 to 32299
 

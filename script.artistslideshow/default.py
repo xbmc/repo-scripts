@@ -798,7 +798,7 @@ class Main:
 
 
     def _remove_trailing_dot( self, thename ):
-        if thename[-1] == '.' and len( thename ) > 1:
+        if thename[-1] == '.' and len( thename ) > 1 and self.ENDREPLACE <> '.':
             return self._remove_trailing_dot( thename[:-1] + self.ENDREPLACE )
         else:
             return thename
