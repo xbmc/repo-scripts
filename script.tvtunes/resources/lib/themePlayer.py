@@ -126,7 +126,7 @@ class ThemePlayer(xbmc.Player):
         self.repeatOneSet = False
 
         # Only stop if playing audio
-        if self.isPlaying():
+        if self.isPlaying() and self.isPlayingTheme():
             xbmc.Player.stop(self)
         self.restoreSettings()
 
