@@ -239,7 +239,7 @@ class MenuNavigator():
                 try:
                     videoItem['title'] = item['title'].encode("utf-8")
                 except:
-                    log("setVideoList: Failed to encode title %s" % title)
+                    log("setVideoList: Failed to encode title %s" % item['title'])
                     videoItem['title'] = item['title']
 
                 if item['thumbnail'] in [None, ""]:
