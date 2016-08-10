@@ -10,6 +10,7 @@ from resources.lib.settings import Settings
 from resources.lib.numberpad import NumberPad
 from resources.lib.database import PinSentryDB
 from resources.lib.background import Background
+from resources.lib.mpaaLookup import MpaaLookup
 
 ADDON = xbmcaddon.Addon(id='script.pinsentry')
 ICON = ADDON.getAddonInfo('icon')
@@ -150,8 +151,23 @@ class PinSentryPlayer(xbmc.Player):
         if not PinSentry.isPinSentryEnabled():
             return
 
+        # Get the path of the file being played
+        filePath = xbmc.getInfoLabel("Player.Folderpath")
+        if filePath in [None, ""]:
+            filePath = xbmc.getInfoLabel("Player.Filenameandpath")
+        if filePath in [None, ""]:
+            filePath = xbmc.getInfoLabel("ListItem.FolderPath")
+        if filePath in [None, ""]:
+            filePath = xbmc.getInfoLabel("ListItem.FileNameAndPath")
+        log("PinSentryPlayer: File being played is: %s" % filePath)
+
         isMusicVideo = False
         isTvShow = False
+
+        # Check if this is a pvr file, in which case we set it as TV
+        if filePath.startswith("pvr://"):
+            isTvShow = True
+
         # Get the information for what is currently playing
         # http://kodi.wiki/view/InfoLabels#Video_player
         title = xbmc.getInfoLabel("VideoPlayer.TVShowTitle")
@@ -202,16 +218,6 @@ class PinSentryPlayer(xbmc.Player):
         # Now perform the check that restricts if a file is in a file source
         # that should not be played
         if securityLevel < 1 and Settings.isActiveFileSource() and Settings.isActiveFileSourcePlaying():
-            # Get the path of the file being played
-            filePath = xbmc.getInfoLabel("Player.Folderpath")
-            if filePath in [None, ""]:
-                filePath = xbmc.getInfoLabel("Player.Filenameandpath")
-            if filePath in [None, ""]:
-                filePath = xbmc.getInfoLabel("ListItem.FolderPath")
-            if filePath in [None, ""]:
-                filePath = xbmc.getInfoLabel("ListItem.FileNameAndPath")
-            log("PinSentryPlayer: Checking file path: %s" % filePath)
-
             # Get all the sources that are protected
             pinDB = PinSentryDB()
             securityDetails = pinDB.getAllFileSourcesPathsSecurity()
@@ -226,8 +232,19 @@ class PinSentryPlayer(xbmc.Player):
         # Now check to see if this item has a certificate restriction
         if securityLevel < 1:
             cert = xbmc.getInfoLabel("VideoPlayer.mpaa")
-            if cert in [None, ""]:
+            if cert in [None, "", "N/A"]:
                 cert = xbmc.getInfoLabel("ListItem.Mpaa")
+
+            # If there is no MPAA rating, then perform a lookup to find it using the
+            # title of the program
+            if (title not in [None, ""]) and (cert in [None, "", "N/A"]):
+                # Get the year if it is set, as that will help
+                year = xbmc.getInfoLabel("VideoPlayer.Year")
+                if year in [None, ""]:
+                    year = xbmc.getInfoLabel("ListItem.Year")
+                mpaaLookup = MpaaLookup()
+                cert = mpaaLookup.getMpaaRatings(title, year)
+                del mpaaLookup
 
             if cert not in [None, ""]:
                 log("PinSentryPlayer: Checking for certification restrictions: %s" % str(cert))
@@ -236,10 +253,10 @@ class PinSentryPlayer(xbmc.Player):
                 cert = cert.strip().split(':')[-1]
                 cert = cert.strip().split()[-1]
                 pinDB = PinSentryDB()
-                if isTvShow:
+                if isTvShow or filePath.startswith("pvr://"):
                     # Look up the TV Shows Certificate to see if it is restricted
                     securityLevel = pinDB.getTvClassificationSecurityLevel(cert)
-                else:
+                if (securityLevel < 1) and ((not isTvShow) or filePath.startswith("pvr://")):
                     # Look up the Movies Certificate to see if it is restricted
                     securityLevel = pinDB.getMovieClassificationSecurityLevel(cert)
                 del pinDB
@@ -696,6 +713,80 @@ class NavigationRestrictions():
             # The pin dalog will be automatically re-opened as the window property has not been cleared
 
 
+# Class to detect when using the PVR if the channel changes
+class PvrMonitor():
+    def __init__(self):
+        self.lastPvrChannelNumber = None
+        self.lastPlayedTitle = None
+
+    def hasPvrChannelChanged(self):
+        # Only need to handle PVR if we are configured to check playing videos
+        if (not Settings.isActiveVideoPlaying()) or (not xbmc.Player().isPlayingVideo()):
+            self.lastPvrChannelNumber = None
+            self.lastPlayedTitle = None
+            return False
+
+        # Get the channel that is currently being played
+        channelNumber = xbmc.getInfoLabel("VideoPlayer.ChannelNumber")
+
+        # If there is no channel, then this is not PVR and there is nothing to do
+        if channelNumber in [None, ""]:
+            self.lastPvrChannelNumber = None
+            self.lastPlayedTitle = None
+            return False
+
+        # Get the path of the file being played
+        filePath = xbmc.getInfoLabel("Player.Folderpath")
+        if filePath in [None, ""]:
+            filePath = xbmc.getInfoLabel("Player.Filenameandpath")
+        if filePath in [None, ""]:
+            # No file currently playing, skip
+            self.lastPvrChannelNumber = None
+            self.lastPlayedTitle = None
+            return False
+
+        # Check if this is a pvr file
+        if not filePath.startswith("pvr://"):
+            self.lastPvrChannelNumber = None
+            self.lastPlayedTitle = None
+            return False
+
+        # At this point we must be playing something using the PVR so get the title
+        title = xbmc.getInfoLabel("VideoPlayer.TVShowTitle")
+        if title in [None, ""]:
+            # Not a TvShow, so check for the Movie Title
+            title = xbmc.getInfoLabel("VideoPlayer.Title")
+
+        # Now we want to check if the channel has changed, if this is the first
+        # item played, then we do not want to do anything as that will be picked
+        # up my the normal player notifications
+        if self.lastPvrChannelNumber in [None, ""]:
+            log("PvrMonitor: Channel number selected is %s" % str(channelNumber))
+            self.lastPvrChannelNumber = channelNumber
+            self.lastPlayedTitle = title
+            return False
+
+        # If the channel being played is the same as the current channel, then
+        # there is nothing to do unless what is playing on that channel has changed
+        if self.lastPvrChannelNumber == channelNumber:
+            programHasChanged = False
+            # Check if there has been a change in what is being played
+            if (self.lastPlayedTitle not in [None, ""]) and (title not in [None, ""]):
+                if self.lastPlayedTitle != title:
+                    # So we are on the same channel and the program has changed
+                    log("PvrMonitor: Channel remained on %s but program changed" % str(channelNumber))
+                    programHasChanged = True
+            self.lastPlayedTitle = title
+            return programHasChanged
+
+        # If we reach here then we have a different channel being played so we
+        # need to force the check to see if the pin should be displayed
+        log("PvrMonitor: Channel number changed from %s to %s" % (str(self.lastPvrChannelNumber), str(channelNumber)))
+        self.lastPvrChannelNumber = channelNumber
+        self.lastPlayedTitle = title
+        return True
+
+
 # Class the handle user control
 class UserPinControl():
     def __init__(self):
@@ -919,6 +1010,7 @@ if __name__ == '__main__':
     playerMonitor = PinSentryPlayer()
     systemMonitor = PinSentryMonitor()
     navRestrictions = NavigationRestrictions()
+    pvrMonitor = PvrMonitor()
 
     # Check if we need to prompt for the pin when the system starts
     if Settings.isPromptForPinOnStartup():
@@ -956,7 +1048,14 @@ if __name__ == '__main__':
             # Check if the dialog is being forced to display
             navRestrictions.checkForcedDisplay()
 
+            # Check if the PVR channel has changed
+            if pvrMonitor.hasPvrChannelChanged():
+                # Need to force the notification for the player as changing
+                # channel will not do this
+                playerMonitor.onPlayBackStarted()
+
     log("Stopping Pin Sentry Service")
+    del pvrMonitor
     del userCtrl
     del navRestrictions
     del playerMonitor
