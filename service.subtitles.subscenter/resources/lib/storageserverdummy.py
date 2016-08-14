@@ -5,6 +5,8 @@
 
 
 class StorageServer:
+    storage = {}
+
     def __init__(self, table, timeout=24):
         return None
 
@@ -12,9 +14,12 @@ class StorageServer:
         return funct(*args)
 
     def set(self, name, data):
+        self.storage[name] = data
         return ""
 
     def get(self, name):
+        if name in self.storage.keys():
+            return self.storage[name]
         return ""
 
     def setMulti(self, name, data):

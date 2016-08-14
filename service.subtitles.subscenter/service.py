@@ -24,7 +24,7 @@ __temp__ = unicode(xbmc.translatePath(os.path.join(__profile__, 'temp')), 'utf-8
 
 sys.path.append(__resource__)
 
-from SUBUtilities import SubscenterHelper, log, normalizeString, clear_cache, parse_rls_title, clean_title
+from SUBUtilities import SubscenterHelper, log, normalizeString, clear_store, parse_rls_title, clean_title
 
 
 def search(item):
@@ -95,8 +95,8 @@ def get_params(string=""):
 params = get_params()
 
 if params['action'] in ['search', 'manualsearch']:
-    log(__scriptname__, "Version: '%s'" % (__version__,))
-    log(__scriptname__, "action '%s' called" % (params['action']))
+    log("Version: '%s'" % (__version__,))
+    log("Action '%s' called" % (params['action']))
 
     if params['action'] == 'manualsearch':
         params['searchstring'] = urllib.unquote(params['searchstring'])
@@ -115,7 +115,7 @@ if params['action'] in ['search', 'manualsearch']:
     item['preferredlanguage'] = xbmc.convertLanguage(item['preferredlanguage'], xbmc.ISO_639_2)
 
     if item['title'] == "":
-        log(__scriptname__, "VideoPlayer.OriginalTitle not found")
+        log("VideoPlayer.OriginalTitle not found")
         item['title'] = normalizeString(xbmc.getInfoLabel("VideoPlayer.Title"))  # no original title, get just Title
 
     if params['action'] == 'manualsearch':
@@ -127,7 +127,7 @@ if params['action'] in ['search', 'manualsearch']:
     for lang in unicode(urllib.unquote(params['languages']), 'utf-8').split(","):
         item['3let_language'].append(xbmc.convertLanguage(lang, xbmc.ISO_639_2))
 
-    log(__scriptname__, "Item before cleaning: \n    %s" % item)
+    log("Item before cleaning: \n    %s" % item)
 
     # clean title + tvshow params
     clean_title(item)
@@ -147,7 +147,7 @@ if params['action'] in ['search', 'manualsearch']:
     elif item['file_original_path'].find("stack://") > -1:
         stackPath = item['file_original_path'].split(" , ")
         item['file_original_path'] = stackPath[0][8:]
-    log(__scriptname__, "%s" % item)
+    log("%s" % item)
     search(item)
 
 
@@ -158,7 +158,12 @@ elif params['action'] == 'download':
     for sub in subs:
         listitem = xbmcgui.ListItem(label=sub)
         xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=sub, listitem=listitem, isFolder=False)
-elif params['action'] == 'clear_cache':
-    clear_cache()
+elif params['action'] == 'clear_store':
+    clear_store()
+
+elif params['action'] == 'login':
+    helper = SubscenterHelper()
+    helper.login(True)
+    __addon__.openSettings()
 
 xbmcplugin.endOfDirectory(int(sys.argv[1]))  ## send end of directory to XBMC

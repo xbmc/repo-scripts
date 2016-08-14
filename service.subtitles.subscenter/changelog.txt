@@ -1,3 +1,9 @@
+4.0.1 - by CaTz (06/08/2016)
+- Allow checking login status in Settings
+
+4.0.0 - by CaTz (25/06/2016)
+- Start using Subscenter API
+
 3.3.7 - by CaTz (14/05/2016)
 - Improve search string matching
 
