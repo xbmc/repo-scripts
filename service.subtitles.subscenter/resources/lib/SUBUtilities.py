@@ -135,35 +135,39 @@ class SubscenterHelper:
         search_string = re.split(r'\s\(\w+\)$', item["tvshow"])[0] if item["tvshow"] else item["title"]
         user_token = self.get_user_token()
 
-        query = {"q": search_string.encode("utf-8"), "user": user_token["user"], "token": user_token["token"]}
-        if item["tvshow"]:
-            query["type"] = "series"
-            query["season"] = item["season"]
-            query["episode"] = item["episode"]
-        else:
-            query["type"] = "movies"
-            query["year_start"] = int(item["year"])-1
-            query["year_end"] = int(item["year"])
+        if user_token:
+            query = {"q": search_string.encode("utf-8"), "user": user_token["user"], "token": user_token["token"]}
+            if item["tvshow"]:
+                query["type"] = "series"
+                query["season"] = item["season"]
+                query["episode"] = item["episode"]
+            else:
+                query["type"] = "movies"
+                query["year_start"] = int(item["year"]) - 1
+                query["year_end"] = int(item["year"])
 
-        search_result = self.urlHandler.request(self.BASE_URL + "search/", query)
-
-        if search_result is not None and search_result["result"] == "failed":
-            # Update cached token
-            user_token = self.get_user_token(True)
-            query["token"] = user_token["token"]
             search_result = self.urlHandler.request(self.BASE_URL + "search/", query)
 
-        if search_result is not None and search_result["result"] == "failed":
+            if search_result is not None and search_result["result"] == "failed":
+                # Update cached token
+                user_token = self.get_user_token(True)
+                query["token"] = user_token["token"]
+                search_result = self.urlHandler.request(self.BASE_URL + "search/", query)
+
+            if search_result is not None and search_result["result"] == "failed":
+                notify(32009)
+                return results
+
+            log("Results: %s" % search_result)
+
+            if search_result is None or search_result["result"] != "success" or search_result["count"] < 1:
+                return results  # return empty set
+
+            results = self._filter_results(search_result["data"], search_string, item)
+            log("Filtered: %s" % results)
+
+        else:
             notify(32009)
-            return results
-
-        log("Results: %s" % search_result)
-
-        if search_result is None or search_result["result"] != "success" or search_result["count"] < 1:
-            return results  # return empty set
-
-        results = self._filter_results(search_result["data"], search_string, item)
-        log("Filtered: %s" % results)
 
         return results
 
@@ -299,7 +303,8 @@ class SubscenterHelper:
             results = json.loads(results)
         else:
             results = self.login()
-            store.set('credentials', json.dumps(results))
+            if results:
+                store.set('credentials', json.dumps(results))
 
         return results
 

@@ -1,3 +1,6 @@
+4.0.2 - by CaTz (17/08/2016)
+- Fix first time login scenario.
+
 4.0.1 - by CaTz (06/08/2016)
 - Allow checking login status in Settings
 
