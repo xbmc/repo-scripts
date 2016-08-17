@@ -1,3 +1,9 @@
+v4.2.3
+- fix sunrise/sunset format
+
+v4.2.2
+- handle keys with value null
+
 v4.2.1
 - bugfix
 
