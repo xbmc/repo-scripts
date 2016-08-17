@@ -1,3 +1,6 @@
+v3.3.1
+- fix sunrise/sunset format
+
 v3.3.0
 - bugfix
 

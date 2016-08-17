@@ -202,7 +202,7 @@ def props_dewpoint(condition, atmosphere):
         set_property('Current.DewPoint'      , '')
 
 def props_astronomy(astronomy):
-    ftime   = xbmc.getRegion('time').replace(":%S","")
+    ftime   = xbmc.getRegion('time').replace(":%S","").replace("%H%H","%H")
     sunrise = time.strptime(astronomy['sunrise'], "%I:%M %p")
     sunset  = time.strptime(astronomy['sunset'], "%I:%M %p")
     set_property('Today.Sunrise'             , time.strftime(ftime, sunrise))
