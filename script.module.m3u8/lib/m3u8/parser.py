@@ -3,11 +3,17 @@
 # Use of this source code is governed by a MIT License
 # license that can be found in the LICENSE file.
 
-import arrow
+import iso8601
 import datetime
 import itertools
 import re
 from m3u8 import protocol
+
+try:
+    import exceptions
+    ExceptionBaseClass = exceptions.Exception
+except ImportError:
+    ExceptionBaseClass = object
 
 '''
 http://tools.ietf.org/html/draft-pantos-http-live-streaming-08#section-3.2
@@ -16,16 +22,29 @@ http://stackoverflow.com/questions/2785755/how-to-split-but-ignore-separators-in
 ATTRIBUTELISTPATTERN = re.compile(r'''((?:[^,"']|"[^"]*"|'[^']*')+)''')
 
 def cast_date_time(value):
-    return arrow.get(value).datetime
+    return iso8601.parse_date(value)
 
-def parse(content):
+def format_date_time(value):
+    return value.isoformat()
+
+class ParseError(ExceptionBaseClass):
+    def __init__(self, lineno, line):
+        self.lineno = lineno
+        self.line = line
+
+    def __str__(self):
+        return 'Syntax error in manifest on line %d: %s' % (self.lineno, self.line)
+
+def parse(content, strict=False):
     '''
     Given a M3U8 playlist content returns a dictionary with all data found
     '''
     data = {
+        'media_sequence': 0,
         'is_variant': False,
         'is_endlist': False,
         'is_i_frames_only': False,
+        'is_independent_segments': False,
         'playlist_type': None,
         'playlists': [],
         'iframe_playlists': [],
@@ -38,34 +57,38 @@ def parse(content):
         'expect_playlist': False,
         }
 
+    lineno = 0
     for line in string_to_lines(content):
+        lineno += 1
         line = line.strip()
 
         if line.startswith(protocol.ext_x_byterange):
             _parse_byterange(line, state)
             state['expect_segment'] = True
 
-        elif state['expect_segment']:
-            _parse_ts_chunk(line, data, state)
-            state['expect_segment'] = False
-
-        elif state['expect_playlist']:
-            _parse_variant_playlist(line, data, state)
-            state['expect_playlist'] = False
-
         elif line.startswith(protocol.ext_x_targetduration):
             _parse_simple_parameter(line, data, float)
+
         elif line.startswith(protocol.ext_x_media_sequence):
             _parse_simple_parameter(line, data, int)
+
         elif line.startswith(protocol.ext_x_program_date_time):
             _, program_date_time = _parse_simple_parameter_raw_value(line, cast_date_time)
             if not data.get('program_date_time'):
                 data['program_date_time'] = program_date_time
             state['current_program_date_time'] = program_date_time
+
         elif line.startswith(protocol.ext_x_discontinuity):
             state['discontinuity'] = True
+
+        elif line.startswith(protocol.ext_x_cue_out):
+            _parse_cueout(line, state)
+            state['cue_out'] = True
+            state['cue_start'] = True
+
         elif line.startswith(protocol.ext_x_version):
             _parse_simple_parameter(line, data)
+
         elif line.startswith(protocol.ext_x_allow_cache):
             _parse_simple_parameter(line, data)
 
@@ -93,8 +116,30 @@ def parse(content):
         elif line.startswith(protocol.ext_i_frames_only):
             data['is_i_frames_only'] = True
 
+        elif line.startswith(protocol.ext_is_independent_segments):
+            data['is_independent_segments'] = True
+
         elif line.startswith(protocol.ext_x_endlist):
             data['is_endlist'] = True
+
+        elif line.startswith('#'):
+            # comment
+            pass
+
+        elif line.strip() == '':
+            # blank lines are legal
+            pass
+
+        elif state['expect_segment']:
+            _parse_ts_chunk(line, data, state)
+            state['expect_segment'] = False
+
+        elif state['expect_playlist']:
+            _parse_variant_playlist(line, data, state)
+            state['expect_playlist'] = False
+
+        elif strict:
+            raise ParseError(lineno, line)
 
     return data
 
@@ -108,7 +153,10 @@ def _parse_key(line):
 
 def _parse_extinf(line, data, state):
     duration, title = line.replace(protocol.extinf + ':', '').split(',')
-    state['segment'] = {'duration': float(duration), 'title': remove_quotes(title)}
+    if 'segment' not in state:
+        state['segment'] = {}
+    state['segment']['duration'] = float(duration)
+    state['segment']['title'] = remove_quotes(title)
 
 def _parse_ts_chunk(line, data, state):
     segment = state.pop('segment')
@@ -116,6 +164,10 @@ def _parse_ts_chunk(line, data, state):
         segment['program_date_time'] = state['current_program_date_time']
         state['current_program_date_time'] += datetime.timedelta(seconds=segment['duration'])
     segment['uri'] = line
+    segment['cue_out'] = state.pop('cue_out', False)
+    if state.get('current_cue_out_scte35'):
+        segment['scte35'] = state['current_cue_out_scte35']
+        segment['scte35_duration'] = state['current_cue_out_duration'] 
     segment['discontinuity'] = state.pop('discontinuity', False)
     if state.get('current_key'):
       segment['key'] = state['current_key']
@@ -138,9 +190,11 @@ def _parse_attribute_list(prefix, line, atribute_parser):
 
 def _parse_stream_inf(line, data, state):
     data['is_variant'] = True
+    data['media_sequence'] = None
     atribute_parser = remove_quotes_parser('codecs', 'audio', 'video', 'subtitles')
     atribute_parser["program_id"] = int
     atribute_parser["bandwidth"] = int
+    atribute_parser["average_bandwidth"] = int
     state['stream_info'] = _parse_attribute_list(protocol.ext_x_stream_inf, line, atribute_parser)
 
 def _parse_i_frame_stream_inf(line, data):
@@ -165,6 +219,8 @@ def _parse_variant_playlist(line, data, state):
     data['playlists'].append(playlist)
 
 def _parse_byterange(line, state):
+    if 'segment' not in state:
+        state['segment'] = {}
     state['segment']['byterange'] = line.replace(protocol.ext_x_byterange + ':', '')
 
 def _parse_simple_parameter_raw_value(line, cast_to=str, normalize=False):
@@ -181,6 +237,13 @@ def _parse_and_set_simple_parameter_raw_value(line, data, cast_to=str, normalize
 
 def _parse_simple_parameter(line, data, cast_to=str):
     return _parse_and_set_simple_parameter_raw_value(line, data, cast_to, True)
+
+def _parse_cueout(line, state):
+    param, value = line.split(':', 1)
+    res = re.match('.*Duration=(.*),SCTE35=(.*)$', value)
+    if res:
+        state['current_cue_out_duration'] = res.group(1)
+        state['current_cue_out_scte35'] = res.group(2)
 
 def string_to_lines(string):
     return string.strip().replace('\r\n', '\n').split('\n')
