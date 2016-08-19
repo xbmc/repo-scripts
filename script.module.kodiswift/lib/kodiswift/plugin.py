@@ -1,4 +1,4 @@
-# -*- code: utf-8 -*-
+# -*- coding: utf-8 -*-
 """
 kodiswift.plugin
 -----------------
@@ -113,14 +113,19 @@ class Plugin(XBMCMixin):
 
     @property
     def log(self):
-        """The log instance for the plugin. Returns an instance of the
-        stdlib's ``logging.Logger``. This log will print to STDOUT when running
-        in CLI mode and will forward messages to Kodi's log when running in
-        Kodi. Some examples::
+        """The log instance for the plugin.
 
-            plugin.log.debug('Debug message')
-            plugin.log.warning('Warning message')
-            plugin.log.error('Error message')
+        Returns an instance of the stdlib's ``logging.Logger``.
+        This log will print to STDOUT when running in CLI mode and will
+        forward messages to Kodi's log when running in Kodi.
+
+        Examples:
+            ``plugin.log.debug('Debug message')``
+            ``plugin.log.warning('Warning message')``
+            ``plugin.log.error('Error message')``
+
+        Returns:
+            logging.Logger:
         """
         return self._log
 

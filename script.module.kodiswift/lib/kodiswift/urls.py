@@ -1,4 +1,4 @@
-# -*- code: utf-8 -*-
+# -*- coding: utf-8 -*-
 """
 kodiswift.urls
 ---------------
@@ -27,24 +27,29 @@ class NotFoundException(Exception):
 
 
 class UrlRule(object):
-    """This object stores the various properties related to a routing URL rule.
-    It also provides a few methods to create URLs from the rule or to match a
-    given URL against a rule.
-
-    :param url_rule: The relative url pattern for the rule. It may include
-                     <var_name> to denote where dynamic variables should be
-                     matched.
-    :param view_func: The function that should be bound to this rule. This
-                      should be an actual function object.
-
-                      .. warning:: The function signature should match any
-                                   variable names in the provided url_rule.
-    :param name: The name of the url rule. This is used in the reverse process
-                 of creating urls for a given rule.
-    :param options: A dict containing any default values for the url rule.
+    """A class the encapsulates a URL
     """
 
     def __init__(self, url_rule, view_func, name, options):
+        """Stores the various properties related to a routing URL rule.
+
+        It also provides a few methods to create URLs from the rule or to
+        match a given URL against a rule.
+
+        Args:
+            url_rule: The relative url pattern for the rule.
+                It may include <var_name> to denote where dynamic variables
+                should be matched.
+            view_func: The function that should be bound to this rule.
+                This should be an actual function object.
+            name: The name of the url rule. This is used in the reverse
+                process of creating urls for a given rule.
+            options: A dict containing any default values for the url rule.
+
+        Warnings:
+            view_func: The function signature should match any variable
+                names in the provided url_rule.
+        """
         self._name = name
         self._url_rule = url_rule
         self._view_func = view_func
@@ -81,13 +86,18 @@ class UrlRule(object):
         return not self == other
 
     def match(self, path):
-        """Attempts to match a url to the given path. If successful, a tuple is
-        returned. The first item is the matchd function and the second item is
-        a dictionary containing items to be passed to the function parsed from
-        the provided path.
+        """Attempts to match a url to the given path.
 
-        If the provided path does not match this url rule then a
-        NotFoundException is raised.
+        If successful, a tuple is returned. The first item is the matched
+        function and the second item is a dictionary containing items to be
+        passed to the function parsed from the provided path.
+
+        Args:
+            path (str): The URL path.
+
+        Raises:
+            NotFoundException: If the provided path does not match this
+                url rule.
         """
         m = self._regex.search(path)
         if not m:
@@ -102,7 +112,7 @@ class UrlRule(object):
 
         # We need to update our dictionary with default values provided in
         # options if the keys don't already exist.
-        _ = [items.setdefault(key, val) for key, val in self._options.items()]
+        [items.setdefault(key, val) for key, val in self._options.items()]
         return self._view_func, items
 
     def _make_path(self, items):
