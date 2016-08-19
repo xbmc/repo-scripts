@@ -1,5 +1,5 @@
-v2.1.0 (2016-08-10)
-- Add support for Classification checks for Live TV/PVR
+v2.0.1 (2016-08-19)
+- PinSentry Addon Relocated to robwebset repository
 
 v2.0.0 (2016-06-03)
 - Clean up number pad

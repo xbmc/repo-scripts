@@ -14,9 +14,9 @@
 		<setting id="numberOfLevels" label="32020" type="enum" values="1|2|3|4|5" default="0" />
 		<setting id="showSecurityInfo" type="bool" visible="!eq(-1,0)" subsetting="true" label="32022" default="true" />
     	<setting label="32005" type="lsep"/>
-		<setting label="32007" type="action" option="close" action="RunScript($CWD/setpin.py)"/>
-		<setting label="32114" type="action" option="close" action="RunAddon(script.pinsentry)"/>
-		<setting label="32113" type="action" action="RunScript($CWD/cleanup.py)"/>
+		<setting label="32007" type="action" option="close" action="RunScript($CWD/default.py)"/>
+		<setting label="32114" type="action" option="close" action="RunScript($CWD/default.py)"/>
+		<setting label="32113" type="action" action="RunScript($CWD/default.py)"/>
 	</category>
 	<category label="32125">
 		<setting id="activityVideoPlaying" type="bool" label="32126" default="true" />
@@ -49,13 +49,13 @@
 		<setting id="unrestrictedUserPinSet" type="bool" visible="false" option="hidden" label="Pin Value Set" default="false" />
 		<setting id="unrestrictedUserPin" type="text" visible="false" option="hidden" label="Pin Value" default="" />
 		<setting id="unrestrictedUserPinWarning" subsetting="true" enable="false" visible="eq(-2,false) + gt(-4,0)" type="text" label="32008" default="" />
-		<setting label="32007" subsetting="true" visible="gt(-5,0)" type="action" option="close" action="RunScript($CWD/setpin.py,unrestrictedUserPin)"/>
+		<setting label="32007" subsetting="true" visible="gt(-5,0)" type="action" option="close" action="RunScript($CWD/default.py)"/>
 
     	<setting label="32028" type="lsep" visible="gt(-6,0)"/>
 		<setting id="user1PinSet" type="bool" visible="false" option="hidden" label="Pin Value Set" default="false" />
 		<setting id="user1Pin" type="text" visible="false" option="hidden" label="Pin Value" default="" />
 		<setting id="user1PinWarning" subsetting="true" enable="false" visible="eq(-2,false) + gt(-9,0)" type="text" label="32008" default="" />
-		<setting label="32007" subsetting="true" visible="gt(-10,0)" type="action" option="close" action="RunScript($CWD/setpin.py,user1Pin)"/>
+		<setting label="32007" subsetting="true" visible="gt(-10,0)" type="action" option="close" action="RunScript($CWD/default.py)"/>
 		<setting id="user1PinName" type="text" visible="gt(-11,0)" subsetting="true" label="32035" default="User 1" />
 		<setting id="user1PinStartTime" visible="gt(-12,0)" subsetting="true" type="time" label="32117" default="00:00"/>
 		<setting id="user1PinEndTime" visible="gt(-13,0)" subsetting="true" type="time" label="32118" default="23:59"/>
@@ -67,7 +67,7 @@
 		<setting id="user2PinSet" type="bool" visible="false" option="hidden" label="Pin Value Set" default="false" />
 		<setting id="user2Pin" type="text" visible="false" option="hidden" label="Pin Value" default="" />
 		<setting id="user2PinWarning" subsetting="true" enable="false" visible="eq(-2,false) + gt(-20,1)" type="text" label="32008" default="" />
-		<setting label="32007" subsetting="true" visible="gt(-21,1)" type="action" option="close" action="RunScript($CWD/setpin.py,user2Pin)"/>
+		<setting label="32007" subsetting="true" visible="gt(-21,1)" type="action" option="close" action="RunScript($CWD/default.py)"/>
 		<setting id="user2PinName" type="text" visible="gt(-22,1)" subsetting="true" label="32035" default="User 2" />
 		<setting id="user2PinStartTime" visible="gt(-23,1)" subsetting="true" type="time" label="32117" default="00:00"/>
 		<setting id="user2PinEndTime" visible="gt(-24,1)" subsetting="true" type="time" label="32118" default="23:59"/>
@@ -79,7 +79,7 @@
 		<setting id="user3PinSet" type="bool" visible="false" option="hidden" label="Pin Value Set" default="false" />
 		<setting id="user3Pin" type="text" visible="false" option="hidden" label="Pin Value" default="" />
 		<setting id="user3PinWarning" subsetting="true" enable="false" visible="eq(-2,false) + gt(-31,2)" type="text" label="32008" default="" />
-		<setting label="32007" subsetting="true" visible="gt(-32,2)" type="action" option="close" action="RunScript($CWD/setpin.py,user3Pin)"/>
+		<setting label="32007" subsetting="true" visible="gt(-32,2)" type="action" option="close" action="RunScript($CWD/default.py)"/>
 		<setting id="user3PinName" type="text" visible="gt(-33,2)" subsetting="true" label="32035" default="User 3" />
 		<setting id="user3PinStartTime" visible="gt(-34,2)" subsetting="true" type="time" label="32117" default="00:00"/>
 		<setting id="user3PinEndTime" visible="gt(-35,2)" subsetting="true" type="time" label="32118" default="23:59"/>
@@ -91,7 +91,7 @@
 		<setting id="user4PinSet" type="bool" visible="false" option="hidden" label="Pin Value Set" default="false" />
 		<setting id="user4Pin" type="text" visible="false" option="hidden" label="Pin Value" default="" />
 		<setting id="user4PinWarning" subsetting="true" enable="false" visible="eq(-2,false) + gt(-42,3)" type="text" label="32008" default="" />
-		<setting label="32007" subsetting="true" visible="gt(-43,3)" type="action" option="close" action="RunScript($CWD/setpin.py,user4Pin)"/>
+		<setting label="32007" subsetting="true" visible="gt(-43,3)" type="action" option="close" action="RunScript($CWD/default.py)"/>
 		<setting id="user4PinName" type="text" visible="gt(-44,3)" subsetting="true" label="32035" default="User 4" />
 		<setting id="user4PinStartTime" visible="gt(-45,3)" subsetting="true" type="time" label="32117" default="00:00"/>
 		<setting id="user4PinEndTime" visible="gt(-46,3)" subsetting="true" type="time" label="32118" default="23:59"/>
@@ -103,7 +103,7 @@
 		<setting id="user5PinSet" type="bool" visible="false" option="hidden" label="Pin Value Set" default="false" />
 		<setting id="user5Pin" type="text" visible="false" option="hidden" label="Pin Value" default="" />
 		<setting id="user5PinWarning" subsetting="true" enable="false" visible="eq(-2,false) + gt(-53,4)" type="text" label="32008" default="" />
-		<setting label="32007" subsetting="true" visible="gt(-54,4)" type="action" option="close" action="RunScript($CWD/setpin.py,user5Pin)"/>
+		<setting label="32007" subsetting="true" visible="gt(-54,4)" type="action" option="close" action="RunScript($CWD/default.py)"/>
 		<setting id="user5PinName" type="text" visible="gt(-55,4)" subsetting="true" label="32035" default="User 5" />
 		<setting id="user5PinStartTime" visible="gt(-56,4)" subsetting="true" type="time" label="32117" default="00:00"/>
 		<setting id="user5PinEndTime" visible="gt(-57,4)" subsetting="true" type="time" label="32118" default="23:59"/>
