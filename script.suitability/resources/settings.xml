@@ -7,7 +7,7 @@
     	<setting label="32002" type="lsep"/>
 		<setting id="logEnabled" type="bool" label="32003" default="false"/>
 		<setting label="32015" type="lsep"/>
-		<setting label="32016" type="action" action="RunScript($CWD/confupdate.py)"/>
+		<setting label="32016" type="action" action="RunScript($CWD/default.py)"/>
 	</category>
 	<category label="32026">
 		<setting id="commonSenseMediaPosition" type="enum" label="32008" lvalues="32027|32028|32029|32030|32031" default="1" />
