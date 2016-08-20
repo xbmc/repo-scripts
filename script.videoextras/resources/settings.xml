@@ -10,7 +10,7 @@
 		<setting id="detailedReturn" visible="eq(-2,true)" type="labelenum" label="32026" lvalues="32007|32008|32009" default="32007" />
 		<setting id="showExtrasAfterMovie" type="bool" label="32038" default="false"/>
 		<setting label="32023" type="lsep"/>
-		<setting label="32030" type="action" option="close" action="RunScript($CWD/advsettings.py)"/>
+		<setting label="32030" type="action" option="close" action="RunScript($CWD/default.py)"/>
 	</category>
 	<category label="32010">
 	    <setting label="32011" type="lsep"/>
@@ -25,7 +25,7 @@
 	<category label="32021">
 		<setting id="enableDB" type="bool" label="32022" default="true"/>
 		<setting label="32023" type="lsep"/>
-		<setting enable="eq(-2,true)" label="32024" type="action" action="RunScript($CWD/cleanup.py)"/>
+		<setting enable="eq(-2,true)" label="32024" type="action" action="RunScript($CWD/default.py)"/>
 		<setting label="32028" option="close" type="action" action="RunScript($CWD/default.py)"/>
 	</category>
 	<category label="32016">
@@ -39,6 +39,6 @@
 		<setting id="overlayImage" label="32033" subsetting="true" visible="eq(-1,true)" type="image"/>
 		<setting id="listImage" label="32034" subsetting="true" visible="eq(-2,true)" type="image"/>
 		<setting label="32023" type="lsep"/>
-		<setting label="32031" type="action" action="RunScript($CWD/confupdate.py)"/>
+		<setting label="32031" type="action" action="RunScript($CWD/default.py)"/>
 	</category>
 </settings>
