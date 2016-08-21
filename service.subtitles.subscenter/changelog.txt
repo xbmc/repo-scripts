@@ -1,3 +1,7 @@
+4.0.3 - by CaTz (21/08/2016)
+- Clear cache on login check - fixes 'null' cache token
+- Added Hebrew translations
+
 4.0.2 - by CaTz (17/08/2016)
 - Fix first time login scenario.
 

@@ -162,6 +162,7 @@ elif params['action'] == 'clear_store':
     clear_store()
 
 elif params['action'] == 'login':
+    clear_store(False)
     helper = SubscenterHelper()
     helper.login(True)
     __addon__.openSettings()
