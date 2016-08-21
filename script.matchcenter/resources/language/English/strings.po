@@ -1,0 +1,285 @@
+# Kodi Media Center language file
+# Addon Name: MatchCenter
+# Addon id: script.matchcenter
+# Addon Provider: enen92
+msgid ""
+msgstr ""
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#32000"
+msgid "Match Center"
+msgstr ""
+
+msgctxt "#32001"
+msgid "Livescores"
+msgstr ""
+
+msgctxt "#32002"
+msgid "Timezone"
+msgstr ""
+
+msgctxt "#32003"
+msgid "Ignore Leagues"
+msgstr ""
+
+msgctxt "#32004"
+msgid "Livescores update time (min)"
+msgstr ""
+
+msgctxt "#32005"
+msgid "Hide matches that have not started"
+msgstr ""
+
+msgctxt "#32006"
+msgid "Hide matches that have finished"
+msgstr ""
+
+msgctxt "#32007"
+msgid "League Tables"
+msgstr ""
+
+msgctxt "#32008"
+msgid "Use alternative name for teams"
+msgstr ""
+
+msgctxt "#32009"
+msgid "Leagues have been enabled/disabled."
+msgstr ""
+
+msgctxt "#32010"
+msgid "Twitter"
+msgstr ""
+
+msgctxt "#32011"
+msgid "Twitter update time (min)"
+msgstr ""
+
+msgctxt "#32012"
+msgid "Save twitter hashtags when playing media"
+msgstr ""
+
+msgctxt "#32013"
+msgid "Keymap"
+msgstr ""
+
+msgctxt "#32014"
+msgid "Define a remote keymap to start the addon"
+msgstr ""
+
+msgctxt "#32015"
+msgid "General"
+msgstr ""
+
+msgctxt "#32016"
+msgid "LOADING..."
+msgstr ""
+
+msgctxt "#32017"
+msgid "Round"
+msgstr ""
+
+msgctxt "#32018"
+msgid "No live games at the moment."
+msgstr ""
+
+msgctxt "#32019"
+msgid "Finished"
+msgstr ""
+
+msgctxt "#32020"
+msgid "Halftime"
+msgstr ""
+
+msgctxt "#32021"
+msgid "Postponed"
+msgstr ""
+
+msgctxt "#32022"
+msgid "Not started"
+msgstr ""
+
+msgctxt "#32023"
+msgid "Referee"
+msgstr ""
+
+msgctxt "#32024"
+msgid "Spectators"
+msgstr ""
+
+msgctxt "#32025"
+msgid "N/A"
+msgstr ""
+
+msgctxt "#32026"
+msgid "Coach"
+msgstr ""
+
+msgctxt "#32027"
+msgid "Away Team"
+msgstr ""
+
+msgctxt "#32028"
+msgid "Home Team"
+msgstr ""
+
+msgctxt "#32029"
+msgid "Squad"
+msgstr ""
+
+msgctxt "#32030"
+msgid "Substitutes"
+msgstr ""
+
+msgctxt "#32031"
+msgid "Match Details"
+msgstr ""
+
+msgctxt "#32032"
+msgid "Home Team Line up"
+msgstr ""
+
+msgctxt "#32033"
+msgid "Away Team Line up"
+msgstr ""
+
+msgctxt "#32034"
+msgid "PTS"
+msgstr ""
+
+msgctxt "#32035"
+msgid "GD"
+msgstr ""
+
+msgctxt "#32036"
+msgid "GC"
+msgstr ""
+
+msgctxt "#32037"
+msgid "GS"
+msgstr ""
+
+msgctxt "#32038"
+msgid "L"
+msgstr ""
+
+msgctxt "#32039"
+msgid "D"
+msgstr ""
+
+msgctxt "#32040"
+msgid "W"
+msgstr ""
+
+msgctxt "#32041"
+msgid "T"
+msgstr ""
+
+msgctxt "#32042"
+msgid "Reset"
+msgstr ""
+
+msgctxt "#32043"
+msgid "Next Matches:"
+msgstr ""
+
+msgctxt "#32044"
+msgid "Latest Matches:"
+msgstr ""
+
+msgctxt "#32045"
+msgid "Twitter hashtag has been reset."
+msgstr ""
+
+msgctxt "#32046"
+msgid "Enter twitter hashtag:"
+msgstr ""
+
+msgctxt "#32047"
+msgid "Twitter hashtag cannot be null."
+msgstr ""
+
+msgctxt "#32048"
+msgid "Setting successfully changed"
+msgstr ""
+
+msgctxt "#32049"
+msgid "Please restart Kodi."
+msgstr ""
+
+msgctxt "#32050"
+msgid "Timeout in"
+msgstr ""
+
+msgctxt "#32051"
+msgid "seconds..."
+msgstr ""
+
+msgctxt "#32052"
+msgid "Confirm"
+msgstr ""
+
+msgctxt "#32053"
+msgid "Close"
+msgstr ""
+
+msgctxt "#32054"
+msgid "ago"
+msgstr ""
+
+msgctxt "#32055"
+msgid "and"
+msgstr ""
+
+msgctxt "#32056"
+msgid "day"
+msgstr ""
+
+msgctxt "#32057"
+msgid "days"
+msgstr ""
+
+msgctxt "#32058"
+msgid "hour"
+msgstr ""
+
+msgctxt "#32059"
+msgid "hours"
+msgstr ""
+
+msgctxt "#32060"
+msgid "minute"
+msgstr ""
+
+msgctxt "#32061"
+msgid "minutes"
+msgstr ""
+
+msgctxt "#32062"
+msgid "second"
+msgstr ""
+
+msgctxt "#32063"
+msgid "seconds"
+msgstr ""
+
+msgctxt "#32064"
+msgid "Match Id does not exist"
+msgstr ""
+
+msgctxt "#32065"
+msgid "This function allows you to start the addon by pressing a key on your remote control. To use this function you need to use the Keymap Editor addon from the official repository. Match Center will start it automatically for you once you close this dialog. Once the Keymap editor addon starts you need to follow the following instructions.[CR][CR]1) Select edit[CR]2) Select global[CR]3) Select addons [CR]4) Select \"Launch MatchCenter\"[CR]5)Press any key on your remote control[CR]6)Go back three times[CR]7)Hit save[CR][CR]After a Kodi reboot you can start this addon by just pressing the key you selected"
+msgstr ""
+
+msgctxt "#32066"
+msgid "An error has occured. Please provide a log file to the developer."
+msgstr ""
+
+msgctxt "#32067"
+msgid "Are you sure you want to define a keymap for this addon?"
+msgstr ""
