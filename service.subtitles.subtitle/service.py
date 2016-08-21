@@ -159,4 +159,9 @@ elif params['action'] == 'download':
 elif params['action'] == 'clear_cache':
     clear_cache()
 
+elif params['action'] == 'login':
+    helper = SubtitleHelper()
+    helper.login(True, True)
+    __addon__.openSettings()
+
 xbmcplugin.endOfDirectory(int(sys.argv[1]))  ## send end of directory to XBMC
