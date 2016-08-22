@@ -245,7 +245,7 @@ class Main(xbmcgui.WindowXMLDialog):
 							#Convert event time to user timezone
 							if livegame.Time.lower() == "not started":
 								try:
-									db_time = pytz.timezone(str(pytz.timezone("Europe/London"))).localize(livegame.DateTime)
+									db_time = pytz.timezone(str(pytz.timezone("Etc/UTC"))).localize(livegame.DateTime)
 									my_location=pytz.timezone(pytz.all_timezones[int(my_timezone)])
 									converted_time=db_time.astimezone(my_location)
 									starttime=converted_time.strftime("%H:%M")
