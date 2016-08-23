@@ -12,7 +12,7 @@
 	<category label="32011">
 		<setting id="buttonSelection" label="32012" type="enum" lvalues="32013|32014|32015|32017" default="0"/>
 		<setting id="automaticSetup" type="bool" label="32016"  visible="eq(-1,3)" default="true"/>
-		<setting visible="eq(-2,3) + eq(-1,true)" label="32027" option="close" type="action" action="RunScript($CWD/detect.py)"/>
+		<setting visible="eq(-2,3) + eq(-1,true)" label="32027" option="close" type="action" action="RunScript($CWD/default.py)"/>
 		<setting id="controlEntryType" label="32024" subsetting="true" visible="eq(-3,3) + eq(-2,false)" type="enum" lvalues="32025|32026" default="0"/>
 		<setting label="32018" type="lsep" subsetting="true" visible="eq(-4,3) + eq(-3,false)"/>
 		<setting id="keyboardName" label="32019" visible="eq(-5,3) + eq(-4,false)" subsetting="true" type="text" default="" />
