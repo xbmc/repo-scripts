@@ -34,8 +34,8 @@
 		<setting id="enableUploads" type="bool" label="32097" default="true"/>
 		<setting label="32022" type="lsep"/>
 		<setting label="32023" type="action" option="close" action="RunScript($CWD/default.py)"/>
-		<setting label="32091" type="action" option="close" action="RunScript($CWD/advsettings.py)"/>
-		<setting label="32140" type="action" option="close" action="RunScript($CWD/confupdate.py)"/>
+		<setting label="32091" type="action" option="close" action="RunScript($CWD/default.py)"/>
+		<setting label="32140" type="action" option="close" action="RunScript($CWD/default.py)"/>
 	</category>
 	<category label="32993">
 		<setting id="smb_share" type="bool" label="32003" default="false"/>
