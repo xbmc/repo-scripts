@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.xbmc.debug.log" name="Kodi Log Uploader" version="14.1.0" provider-name="Tristan Fischer (sphere@dersphere.de)">
+<addon id="script.xbmc.debug.log" name="Kodi Log Uploader" version="14.2.0" provider-name="Tristan Fischer (sphere@dersphere.de)">
     <requires>
         <import addon="xbmc.python" version="2.12.0"/>
     </requires>
@@ -74,5 +74,6 @@
         <description lang="sv">Detta tillägg laddar upp dina loggar till Kodilogs.com[CR]DU får ett epostmeddelande med separata länkar till dom uppladdade loggfilerna</description>
         <description lang="tr">Bu eklenti kayıt defterinizi Kodilogs.com a gönderir[CR]Gönderilen kayıt defterlerine linklenen adreslerin bulunduğu bir email alacaksınız</description>
         <description lang="zh">此插件将上传日志到 Kodilogs.com[CR]你会收到一份含上传日志文件链接的邮件</description>
+        <broken>Upload website is no longer functional</broken>
     </extension>
 </addon>
