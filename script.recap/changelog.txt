@@ -1,3 +1,6 @@
+v1.0.2
+- Recap Addon Relocated to robwebset repository
+
 v1.0.1
 - Changes to reduce load on recapguide.com
 
