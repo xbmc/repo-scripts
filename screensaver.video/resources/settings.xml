@@ -10,7 +10,7 @@
 		<setting id="overlayImage" type="enum" label="32200" lvalues="32202|32204|32205|32206|32203" default="0"/>
 		<setting id="overlayImageFile" label="32201" subsetting="true" visible="eq(-1,5)" type="image"/>
     	<setting label="32011" type="lsep"/>
-		<setting label="32012" type="action" option="close" action="RunScript($CWD/launchplugin.py)"/>
+		<setting label="32012" type="action" option="close" action="RunScript($CWD/default.py)"/>
 	</category>
 	<category label="32006">
 		<setting id="showTime" type="bool" label="32052" default="false"/>
