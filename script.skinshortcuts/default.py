@@ -304,22 +304,11 @@ class Main:
         if homeWindow.getProperty( "skinshortcuts-loading" ) and int( calendar.timegm( gmtime() ) ) - int( homeWindow.getProperty( "skinshortcuts-loading" ) ) <= 5:
             return
 
-        # Get current Super Favourites context menu status
-        sfMenu = None
-        if xbmc.getCondVisibility( "System.HasAddon(plugin.program.super.favourites)" ):
-            sfMenu = xbmcaddon.Addon( "plugin.program.super.favourites" ).getSetting( "CONTEXT" )
-            # Set it to disabled
-            xbmcaddon.Addon( "plugin.program.super.favourites" ).setSetting( "CONTEXT", "false" )
-
         homeWindow.setProperty( "skinshortcuts-loading", str( calendar.timegm( gmtime() ) ) )
         import gui
         ui= gui.GUI( "script-skinshortcuts.xml", CWD, "default", group=group, defaultGroup=defaultGroup, nolabels=nolabels, groupname=groupname )
         ui.doModal()
-        del ui
-
-        # Reset Super Favourites context menu
-        if xbmc.getCondVisibility( "System.HasAddon(plugin.program.super.favourites)" ):
-            xbmcaddon.Addon( "plugin.program.super.favourites" ).setSetting( "CONTEXT", sfMenu )        
+        del ui   
         
         # Update home window property (used to automatically refresh type=settings)
         homeWindow.setProperty( "skinshortcuts",strftime( "%Y%m%d%H%M%S",gmtime() ) )
