@@ -101,6 +101,9 @@ def parse_rls_title(item):
 def log(module, msg):
     xbmc.log((u"### [%s] - %s" % (module, msg,)).encode('utf-8'), level=xbmc.LOGDEBUG)
 
+def notify(msg_id):
+    xbmc.executebuiltin((u'Notification(%s,%s)' % (__scriptname__, __language__(msg_id))).encode('utf-8'))
+
 
 def get_cache_key(prefix="", str=""):
     str = re.sub(r'[\'\(\)\.\-\]\[ ]+', '_', str).lower()
@@ -109,7 +112,7 @@ def get_cache_key(prefix="", str=""):
 
 def clear_cache():
     cache.delete("tv-show%")
-    xbmc.executebuiltin((u'Notification(%s,%s)' % (__scriptname__, __language__(32007))).encode('utf-8'))
+    notify(32007)
 
 
 # Returns the corresponding script language name for the Hebrew unicode language
@@ -377,7 +380,7 @@ class SubtitleHelper:
         return round(rating, 1)
 
     def download(self, id, zip_filename):
-        # # Cleanup temp dir, we recomend you download/unzip your subs in temp folder and
+        # # Cleanup temp dir, we recommend you download/unzip your subs in temp folder and
         # # pass that to XBMC to copy and activate
         if xbmcvfs.exists(__temp__):
             shutil.rmtree(__temp__)
@@ -402,16 +405,19 @@ class SubtitleHelper:
         else:
             return None
 
-    def login(self):
+    def login(self, notify_success=False, force_clean=False):
         email = __addon__.getSetting("SUBemail")
         password = __addon__.getSetting("SUBpassword")
         post_data = {'email': email, 'password': password, 'Login': 'התחבר'}
-        content = self.urlHandler.request(self.BASE_URL + "/login.php", None, post_data)
+        cookie = '' if force_clean else None
+        content = self.urlHandler.request(self.BASE_URL + "/login.php", data=post_data, cookie=cookie)
         if re.search(r'<form action="/login\.php"', content):
-            xbmc.executebuiltin((u'Notification(%s,%s)' % (__scriptname__, __language__(32005))).encode('utf-8'))
+            notify(32005)
             return None
         else:
             self.urlHandler.save_cookie()
+            if notify_success:
+                notify(32010)
             return True
 
 
@@ -430,7 +436,7 @@ class URLHandler():
                                   ('User-Agent',
                                    'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.111 Safari/537.36')]
 
-    def request(self, url, query_string=None, data=None, decode_zlib=True, ajax=False, referrer=None, cookie=None):
+    def request(self, url, query_string=None, data=None, ajax=False, referrer=None, cookie=None, decode_zlib=True):
         if data is not None:
             data = urllib.urlencode(data)
         if query_string is not None:

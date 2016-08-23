@@ -98,9 +98,11 @@ def parse_rls_title(item):
             log("MOVIE Parsed Item: %s" % (item,))
 
 
-def clear_store():
+def clear_store(notify_success=True):
     store.delete("%")
-    notify(32004)
+
+    if notify_success:
+        notify(32004)
 
 
 def get_store_key(prefix="", str=""):
@@ -278,14 +280,14 @@ class SubscenterHelper:
 
         xbmc.executebuiltin(('XBMC.Extract("%s","%s")' % (zip_filename, __temp__,)).encode('utf-8'), True)
 
-    def login(self, isFromSettings=False):
+    def login(self, notify_success=False):
         email = __addon__.getSetting("Email")
         password = __addon__.getSetting("Password")
         post_data = {'username': email, 'password': password}
         content = self.urlHandler.request(self.BASE_URL + "login/", post_data)
 
         if content['result'] == 'success':
-            if isFromSettings:
+            if notify_success:
                 notify(32010)
 
             del content["result"]

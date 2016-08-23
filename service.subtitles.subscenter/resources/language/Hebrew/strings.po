@@ -12,44 +12,44 @@ msgstr ""
 "Language: en\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#English
+#Hebrew
 
 msgctxt "#32001"
-msgid "Error searching for subtitles"
-msgstr ""
+msgid "Error while searching subtitles"
+msgstr "שגיאה בעת חיפוש כתוביות"
 
 msgctxt "#32002"
-msgid "Email"
-msgstr ""
+msgid "Cache settings"
+msgstr "הגדרות קאש"
 
 msgctxt "#32003"
-msgid "Password"
-msgstr ""
+msgid "Clear addon`s local cache"
+msgstr "אפס את נתוני הקאש של התוסף"
 
 msgctxt "#32004"
-msgid "Login Details"
-msgstr ""
+msgid "Addon`s local cache was cleared successfully"
+msgstr "נתוני הקאש של התוסף אופסו בהצלחה"
 
 msgctxt "#32005"
-msgid "Wrong email or password"
-msgstr ""
+msgid "Email"
+msgstr "אימייל"
 
 msgctxt "#32006"
-msgid "Clear addon`s local cache"
-msgstr ""
+msgid "Password"
+msgstr "סיסמא"
 
 msgctxt "#32007"
-msgid "Addon`s local cache was cleared successfully"
-msgstr ""
+msgid "Login Details"
+msgstr "פרטי התחברות"
 
 msgctxt "#32008"
-msgid "Cache settings"
-msgstr ""
+msgid "Check login details"
+msgstr "בדוק פרטי התחברות"
 
 msgctxt "#32009"
-msgid "Check login details"
-msgstr ""
+msgid "Wrong email or password"
+msgstr "הזנת פרטי התחברות שגויים"
 
 msgctxt "#32010"
 msgid "Logged in successfully"
-msgstr ""
+msgstr "התחברת בהצלחה"
