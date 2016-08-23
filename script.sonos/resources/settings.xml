@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <settings>
 	<category label="32010">
-		<setting label="32013" type="action" action="RunScript($CWD/discovery.py)"/>
+		<setting label="32013" type="action" action="RunScript($CWD/default.py)"/>
 		<setting id="ipAddress" type="ipaddress" label="32002" default="0.0.0.0"/>
 		<setting id="zoneName" type="text" label="32028" default=""/>
 		<setting id="autoIPUpdate" subsetting="true" enable="!eq(-1,)" type="bool" label="32029" default="false"/>
