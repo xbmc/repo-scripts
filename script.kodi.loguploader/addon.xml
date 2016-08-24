@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.kodi.loguploader" name="Kodi Logfile Uploader" version="0.0.1" provider-name="Team Kodi">
+	<requires>
+		<import addon="xbmc.python" version="2.24.0"/>
+	</requires>
+	<extension point="xbmc.python.script" library="default.py">
+		<provides>executable</provides>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<summary lang="en">Uploads your kodi.log file.</summary>
+		<description lang="en">Uploads your kodi.log file and returns an url you can post on http://forum.kodi.tv/</description>
+		<language></language>
+		<platform>all</platform>
+		<license>GNU GENERAL PUBLIC LICENSE Version 2</license>
+		<forum>http://forum.kodi.tv/</forum>
+		<website>http://kodi.tv/</website>
+		<email></email>
+		<source>https://github.com/XBMC-Addons//script.kodi.loguploader/</source>
+	</extension>
+</addon>
