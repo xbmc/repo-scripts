@@ -164,7 +164,7 @@ def getJSON(method,params):
         else:
             return {}
     else:
-        logMsg("getJson - invalid result for Method %s - params: %s - response: %s" %(method,params, str(jsonobject)),0) 
+        logMsg("getJson - invalid result for Method %s - params: %s - response: %s" %(method,params, str(jsonobject))) 
         return {}
 
 def checkFolders():
@@ -452,8 +452,9 @@ def prepareListItem(item):
         properties["Date"] = fulldate
         properties["StartDateTime"] = starttime[0] + " " + starttime[1]
         item["date"] = starttime[0]
-    if item.get("channellogo"): properties["channellogo"] = item.get("channellogo","")
-    if item.get("channellogo"): properties["channelicon"] = item.get("channellogo","")
+    if item.get("channellogo"): 
+        properties["channellogo"] = item["channellogo"]
+        properties["channelicon"] = item["channellogo"]
     if item.get("episodename"): properties["episodename"] = item.get("episodename","")
     if item.get("channel"): properties["channel"] = item.get("channel","")
     if item.get("channel"): properties["channelname"] = item.get("channel","")
@@ -484,7 +485,7 @@ def detectPluginContent(plugin):
     #based on the properties in the listitem we try to detect the content
     
     #load from cache first
-    cacheStr = "skinhelper-widgetcontenttype-%s" %plugin
+    cacheStr = try_encode("skinhelper-widgetcontenttype-%s" %plugin)
     contentType = WINDOW.getProperty(cacheStr).decode("utf-8")
 
     #no cache, we need to detect the contenttype
@@ -527,7 +528,10 @@ def detectPluginContent(plugin):
             logMsg("detectPluginContent probing contenttype for: " + plugin)
             media_array = getJSON('Files.GetDirectory','{ "directory": "%s", "media": "files", "properties": ["title", "file", "thumbnail", "episode", "showtitle", "season", "album", "artist", "imdbnumber", "firstaired", "mpaa", "trailer", "studio", "art"], "limits": {"end":1} }' %plugin)
             for item in media_array:
-                if not item.has_key("showtitle") and not item.has_key("artist"):
+                if item.get("filetype","") == "directory":
+                    contentType = "folder"
+                    break
+                elif not item.has_key("showtitle") and not item.has_key("artist"):
                     #these properties are only returned in the json response if we're looking at actual file content...
                     # if it's missing it means this is a main directory listing and no need to scan the underlying listitems.
                     contentType = "files"
@@ -652,7 +656,7 @@ def getCurrentContentType(containerprefix=""):
         elif xbmc.getCondVisibility("Container.Content(files)"):
             contenttype = "files"
     #last resort: try to determine type by the listitem properties
-    if not contenttype:
+    if not contenttype and (containerprefix or xbmc.getCondVisibility("Window.IsActive(movieinformation)")):
         if xbmc.getCondVisibility("!IsEmpty(%sListItem.DBTYPE)" %containerprefix):
             contenttype = xbmc.getInfoLabel("%sListItem.DBTYPE" %containerprefix) + "s"
         elif xbmc.getCondVisibility("!IsEmpty(%sListItem.Property(DBTYPE))" %containerprefix):
@@ -893,4 +897,16 @@ def getCompareString(string,optionalreplacestring=""):
     string = try_decode(string)
     string = normalize_string(string)
     return string
+    
+def intWithCommas(x):
+    try:
+        x = int(x)
+        if x < 0:
+            return '-' + intWithCommas(-x)
+        result = ''
+        while x >= 1000:
+            x, r = divmod(x, 1000)
+            result = ",%03d%s" % (r, result)
+        return "%d%s" % (x, result)
+    except: return ""
     

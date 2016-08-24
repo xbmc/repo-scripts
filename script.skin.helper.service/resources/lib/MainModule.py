@@ -458,7 +458,7 @@ def setSkinSetting(setting="", windowHeader="", sublevel="", curValue="", skipSk
                 w = dialogs.DialogSelectBig( "DialogSelect.xml", ADDON_PATH, listing=allValues, windowtitle=windowHeader,multiselect=False )
             else:
                 w = dialogs.DialogSelectSmall( "DialogSelect.xml", ADDON_PATH, listing=allValues, windowtitle=windowHeader,multiselect=False )
-            if selectId > 0 and sublevel: selectId += 1
+            if selectId >= 0 and sublevel: selectId += 1
             w.autoFocusId = selectId
             w.doModal()
             selectedItem = w.result
@@ -627,6 +627,21 @@ def toggleKodiSetting(settingname):
     else:
         newValue = "true"
     xbmc.executeJSONRPC('{"jsonrpc":"2.0", "id":1, "method":"Settings.SetSettingValue","params":{"setting":"%s","value":%s}}' %(settingname,newValue))
+    
+def setKodiSetting(settingname, value):
+    #set kodi setting
+    isInt = False    
+    try: 
+        valueint = int(value)
+        isInt = True
+    except: pass
+    if value.lower() == "true":
+        value = 'true'
+    elif value.lower() == "false":
+        value = 'false'
+    elif isInt==False:
+        value = '"%s"' %value
+    xbmc.executeJSONRPC('{"jsonrpc":"2.0", "id":1, "method":"Settings.SetSettingValue","params":{"setting":"%s","value":%s}}' %(settingname,value))
      
 def show_splash(file,duration=5):
     logMsg("show_splash --> " + file)

@@ -100,6 +100,11 @@ class Main:
             elif action == "TOGGLEKODISETTING":
                 kodisetting = params.get("SETTING")
                 mainmodule.toggleKodiSetting(kodisetting)
+                
+            elif action == "SETKODISETTING":
+                kodisetting = params.get("SETTING")
+                value = params.get("VALUE")
+                mainmodule.setKodiSetting(kodisetting,value)
             
             elif action == "ENABLEVIEWS":
                 mainmodule.enableViews()

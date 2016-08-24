@@ -763,3 +763,43 @@ msgstr ""
 msgctxt "#32186"
 msgid "In-progress and random movies"
 msgstr ""
+
+msgctxt "#32187"
+msgid "Random albums"
+msgstr ""
+
+msgctxt "#32188"
+msgid "Random songs"
+msgstr ""
+
+msgctxt "#32189"
+msgid "Hide watched items in video widgets"
+msgstr ""
+
+msgctxt "#32190"
+msgid "Only use in-progress shows in next episodes widget"
+msgstr ""
+
+msgctxt "#32191"
+msgid "Recommended Tv Shows"
+msgstr ""
+
+msgctxt "#32192"
+msgid "Recently added movies"
+msgstr ""
+
+msgctxt "#32193"
+msgid "Recently added episodes"
+msgstr ""
+
+msgctxt "#32194"
+msgid "Recently added musicvideos"
+msgstr ""
+
+msgctxt "#32195"
+msgid "Random Tv Shows"
+msgstr ""
+
+msgctxt "#32196"
+msgid "Only use images from recordings for random PVR background"
+msgstr ""

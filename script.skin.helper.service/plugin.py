@@ -46,9 +46,11 @@ class Main:
             elif action == "LAUNCH":
                 xbmcplugin.setResolvedUrl(handle=int(sys.argv[1]), succeeded=False, listitem=xbmcgui.ListItem())
                 path = sys.argv[2].split("&path=")[1]
+                xbmc.sleep(150)
                 xbmc.executebuiltin(path)
             elif action == "PLAYALBUM":
                 xbmcplugin.setResolvedUrl(handle=int(sys.argv[1]), succeeded=False, listitem=xbmcgui.ListItem())
+                xbmc.sleep(150)
                 xbmc.executeJSONRPC('{ "jsonrpc": "2.0", "method": "Player.Open", "params": { "item": { "albumid": %d } }, "id": 1 }' % int(path))
             elif action == "SMARTSHORTCUTS":
                 skinshortcuts.getSmartShortcuts(path)
