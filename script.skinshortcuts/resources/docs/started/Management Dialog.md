@@ -30,6 +30,7 @@ Where [groupname] is the identified of the menu you wish to edit. To edit the ma
 | 310 | Button | 32045 | Change background |
 | 311 | Button | | Select skin-provided thumbnail |
 | 312 | Button | 32044 | Change widget (See "Advanced Usage") |
+| 313 | Button | | Disable menu item |
 | 401 | Button | 32048 | Select shortcut via select dialog |
 | 404 | Button | | Set a custom property |
 | 405 | Button | | Launch management dialog for submenu / additional menus |
@@ -100,5 +101,19 @@ By default, any attempt to go 'back' will close the management dialog. You may w
 `<onback to="[id to focus]">[id currently focused]</onback>`
 
 where `[id currently focused]` is the id of control you are specifying the onback behaviour for and `[id to focus]` is the id of the control that will be focused.
+
+## Disable shortcut (gui 313)
+
+Control 313 allows the user to disable a shortcut, removing it from their menu without actually deleting it.
+
+It's worth bearing in mind that the disabling is a universal setting, which is to say if the user disables a menu in one compatible skin, it will still be disabled if the user switches to another compatible skin.
+
+To avoid a situation where the user can't re-enable a shortcut they disabled on another skin, it's highly encouraged for this control to be included in your management dialog - either directly or via the context menu.
+
+As such, unless the context menu is customised by the skin, the script includes this by default in the context menu for control 211 on Krypton and above.
+
+#### Use via radiobutton
+
+The control can be accessed via a radiobutton control - you can check against the property 'skinshortcuts-disabled' of the selected shortcut. It's value will be 'True' if the shortcut is disabled, 'False' if it is enabled.
 
 ***Quick links*** - [Readme](../../../README.md) - [Getting Started](./Getting Started.md) - [Advanced Usage](../advanced/Advanced Usage.md)

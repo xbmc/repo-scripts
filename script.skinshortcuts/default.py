@@ -18,21 +18,17 @@ if sys.version_info < (2, 7):
 else:
     import json as simplejson
 
-__addon__        = xbmcaddon.Addon()
-__addonid__      = __addon__.getAddonInfo('id').decode( 'utf-8' )
-__addonversion__ = __addon__.getAddonInfo('version')
-__language__     = __addon__.getLocalizedString
-__cwd__          = __addon__.getAddonInfo('path').decode("utf-8")
-__addonname__    = __addon__.getAddonInfo('name').decode("utf-8")
-__resource__     = xbmc.translatePath( os.path.join( __cwd__, 'resources', 'lib' ) ).decode("utf-8")
-__datapath__     = os.path.join( xbmc.translatePath( "special://profile/" ).decode( 'utf-8' ), "addon_data", __addonid__ )
-__masterpath__   = os.path.join( xbmc.translatePath( "special://masterprofile/" ).decode( 'utf-8' ), "addon_data", __addonid__ )
-__profilepath__  = xbmc.translatePath( "special://profile/" ).decode('utf-8')
-__skinpath__     = xbmc.translatePath( "special://skin/shortcuts/" ).decode('utf-8')
-__defaultpath__  = xbmc.translatePath( os.path.join( __cwd__, 'resources', 'shortcuts').encode("utf-8") ).decode("utf-8")
-__xbmcversion__  = xbmc.getInfoLabel( "System.BuildVersion" ).split(".")[0]
+ADDON        = xbmcaddon.Addon()
+ADDONID      = ADDON.getAddonInfo('id').decode( 'utf-8' )
+ADDONVERSION = ADDON.getAddonInfo('version')
+LANGUAGE     = ADDON.getLocalizedString
+CWD          = ADDON.getAddonInfo('path').decode("utf-8")
+ADDONNAME    = ADDON.getAddonInfo('name').decode("utf-8")
+RESOURCE     = xbmc.translatePath( os.path.join( CWD, 'resources', 'lib' ) ).decode("utf-8")
+DATAPATH     = os.path.join( xbmc.translatePath( "special://profile/" ).decode( 'utf-8' ), "addon_data", ADDONID )
+MASTERPATH   = os.path.join( xbmc.translatePath( "special://masterprofile/" ).decode( 'utf-8' ), "addon_data", ADDONID )
 
-sys.path.append(__resource__)
+sys.path.append(RESOURCE)
 
 import xmlfunctions, datafunctions, library, nodefunctions
 XML = xmlfunctions.XMLFunctions()
@@ -43,10 +39,10 @@ NODE = nodefunctions.NodeFunctions()
 hashlist = []
 
 def log(txt):
-    if __addon__.getSetting( "enable_logging" ) == "true":
+    if ADDON.getSetting( "enable_logging" ) == "true":
         if isinstance (txt,str):
             txt = txt.decode('utf-8')
-        message = u'%s: %s' % (__addonid__, txt)
+        message = u'%s: %s' % (ADDONID, txt)
         xbmc.log(msg=message.encode('utf-8'), level=xbmc.LOGDEBUG)
         
 class Main:
@@ -56,15 +52,15 @@ class Main:
         self.WINDOW = xbmcgui.Window(10000)
         
         # Create data and master paths if not exists
-        if not xbmcvfs.exists(__datapath__):
-            xbmcvfs.mkdir(__datapath__)
-        if not xbmcvfs.exists(__masterpath__):
-            xbmcvfs.mkdir(__masterpath__)
+        if not xbmcvfs.exists(DATAPATH):
+            xbmcvfs.mkdir(DATAPATH)
+        if not xbmcvfs.exists(MASTERPATH):
+            xbmcvfs.mkdir(MASTERPATH)
         
         # Perform action specified by user
         if not self.TYPE:
             line1 = "This addon is for skin developers, and requires skin support"
-            xbmcgui.Dialog().ok(__addonname__, line1)
+            xbmcgui.Dialog().ok(ADDONNAME, line1)
             
         if self.TYPE=="buildxml":
             XML.buildMenu( self.MENUID, self.GROUP, self.LEVELS, self.MODE, self.OPTIONS, self.MINITEMS )
@@ -96,9 +92,10 @@ class Main:
             
             # Now set the skin strings
             if selectedShortcut is not None and selectedShortcut.getProperty( "Path" ):
-                path = urllib.unquote( selectedShortcut.getProperty( "Path" ) )
+                path = selectedShortcut.getProperty( "Path" )
+
                 if selectedShortcut.getProperty( "chosenPath" ):
-                    path = urllib.unquote( selectedShortcut.getProperty( "chosenPath" ) )
+                    path = selectedShortcut.getProperty( "chosenPath" )
 
                 if path.startswith( "pvr-channel://" ):
                     path = "RunScript(script.skinshortcuts,type=launchpvr&channel=" + path.replace( "pvr-channel://", "" ) + ")"
@@ -202,9 +199,9 @@ class Main:
         if self.TYPE=="context":
             # Context menu addon asking us to add a folder to the menu
             if not xbmc.getCondVisibility( "Skin.HasSetting(SkinShortcuts-FullMenu)" ):
-                line1 = "The skin you are using does not support adding items directly to the main menu"
-                xbmcgui.Dialog().ok(__addonname__, line1)
-            NODE.addToMenu( self.CONTEXTFILENAME, self.CONTEXTLABEL, self.CONTEXTICON, self.CONTEXTCONTENT, self.CONTEXTWINDOW, DATA )
+                xbmcgui.Dialog().ok(ADDONNAME, ADDON.getLocalizedString(32116))
+            else:
+                NODE.addToMenu( self.CONTEXTFILENAME, self.CONTEXTLABEL, self.CONTEXTICON, self.CONTEXTCONTENT, self.CONTEXTWINDOW, DATA )
 
         if self.TYPE=="setProperty":
             # External request to set properties of a menu item
@@ -309,9 +306,9 @@ class Main:
 
         homeWindow.setProperty( "skinshortcuts-loading", str( calendar.timegm( gmtime() ) ) )
         import gui
-        ui= gui.GUI( "script-skinshortcuts.xml", __cwd__, "default", group=group, defaultGroup=defaultGroup, nolabels=nolabels, groupname=groupname )
+        ui= gui.GUI( "script-skinshortcuts.xml", CWD, "default", group=group, defaultGroup=defaultGroup, nolabels=nolabels, groupname=groupname )
         ui.doModal()
-        del ui
+        del ui   
         
         # Update home window property (used to automatically refresh type=settings)
         homeWindow.setProperty( "skinshortcuts",strftime( "%Y%m%d%H%M%S",gmtime() ) )
@@ -333,12 +330,12 @@ class Main:
         
         # Ask the user if they're sure they want to do this
         if shouldRun is None:
-            shouldRun = dialog.yesno( __language__( 32037 ), __language__( 32038 ) )
+            shouldRun = dialog.yesno( LANGUAGE( 32037 ), LANGUAGE( 32038 ) )
         
         if shouldRun:
             isShared = DATA.checkIfMenusShared()
             log( repr( isShared ) )
-            for files in xbmcvfs.listdir( __datapath__ ):
+            for files in xbmcvfs.listdir( DATAPATH ):
                 # Try deleting all shortcuts
                 if files:
                     for file in files:
@@ -352,7 +349,7 @@ class Main:
 
                         #if file != "settings.xml" and ( not isShared or file.startswith( "%s-" %( xbmc.getSkinDir() ) ) ) or file == "%s.properties" %( xbmc.getSkinDir() ):
                         if deleteFile:
-                            file_path = os.path.join( __datapath__, file.decode( 'utf-8' ) ).encode( 'utf-8' )
+                            file_path = os.path.join( DATAPATH, file.decode( 'utf-8' ) ).encode( 'utf-8' )
                             if xbmcvfs.exists( file_path ):
                                 try:
                                     xbmcvfs.delete( file_path )
@@ -389,10 +386,10 @@ class Main:
         xbmc.executebuiltin( urllib.unquote( action ) )
         
 if ( __name__ == "__main__" ):
-    log('script version %s started' % __addonversion__)
+    log('script version %s started' % ADDONVERSION)
     
     # Profiling
-    #filename = os.path.join( __datapath__, strftime( "%Y%m%d%H%M%S",gmtime() ) + "-" + str( random.randrange(0,100000) ) + ".log" )
+    #filename = os.path.join( DATAPATH, strftime( "%Y%m%d%H%M%S",gmtime() ) + "-" + str( random.randrange(0,100000) ) + ".log" )
     #cProfile.run( 'Main()', filename )
     
     #stream = open( filename + ".txt", 'w')

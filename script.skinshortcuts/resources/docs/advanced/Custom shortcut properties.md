@@ -100,7 +100,7 @@ Note:- This will be applied to all shortcuts when the menu is built, and will sh
 
 ## Let user choose a property
 
-If using a `<propertySettings />` you can define the ID of the button that will allow the user to select the custom property. Just include a button with the ID you specify in your Management Dialog..
+If using a `<propertySettings />` you can define the ID of the button that will allow the user to select the custom property. Just include a button with the ID you specify in your Management Dialog or include it in the [context menu](./Context menu.md).
 
 Otherwise, you need to include button 404 in your Management Dialog, then set the window property `chooseProperty` to the `[Property]` you want to set, and send a click to 404.
 

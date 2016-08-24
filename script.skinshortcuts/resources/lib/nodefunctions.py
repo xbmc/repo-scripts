@@ -15,18 +15,12 @@ if sys.version_info < (2, 7):
 else:
     import json as simplejson
 
-__addon__        = xbmcaddon.Addon()
-__addonid__      = __addon__.getAddonInfo('id').decode( 'utf-8' )
-__addonversion__ = __addon__.getAddonInfo('version')
-__xbmcversion__  = xbmc.getInfoLabel( "System.BuildVersion" ).split(".")[0]
-__language__     = __addon__.getLocalizedString
-__cwd__          = __addon__.getAddonInfo('path').decode("utf-8")
-__addonname__    = __addon__.getAddonInfo('name').decode("utf-8")
-__resource__   = xbmc.translatePath( os.path.join( __cwd__, 'resources', 'lib' ) ).decode("utf-8")
-__datapath__     = os.path.join( xbmc.translatePath( "special://profile/addon_data/" ).decode('utf-8'), __addonid__ )
-__profilepath__  = xbmc.translatePath( "special://profile/" ).decode('utf-8')
-__skinpath__     = xbmc.translatePath( "special://skin/shortcuts/" ).decode('utf-8')
-__defaultpath__  = xbmc.translatePath( os.path.join( __cwd__, 'resources', 'shortcuts').encode("utf-8") ).decode("utf-8")
+ADDON        = xbmcaddon.Addon()
+ADDONID      = ADDON.getAddonInfo('id').decode( 'utf-8' )
+KODIVERSION  = xbmc.getInfoLabel( "System.BuildVersion" ).split(".")[0]
+LANGUAGE     = ADDON.getLocalizedString
+CWD          = ADDON.getAddonInfo('path').decode("utf-8")
+DATAPATH     = os.path.join( xbmc.translatePath( "special://profile/addon_data/" ).decode('utf-8'), ADDONID )
 
 # character entity reference
 CHAR_ENTITY_REXP = re.compile('&(%s);' % '|'.join(name2codepoint))
@@ -42,11 +36,11 @@ REPLACE2_REXP = re.compile(r'[^-a-z0-9]+')
 REMOVE_REXP = re.compile('-{2,}')
 
 def log(txt):
-    if __addon__.getSetting( "enable_logging" ) == "true":
+    if ADDON.getSetting( "enable_logging" ) == "true":
         try:
             if isinstance (txt,str):
                 txt = txt.decode('utf-8')
-            message = u'%s: %s' % (__addonid__, txt)
+            message = u'%s: %s' % (ADDONID, txt)
             xbmc.log(msg=message.encode('utf-8'), level=xbmc.LOGDEBUG)
         except:
             pass
@@ -312,11 +306,13 @@ class NodeFunctions():
         log( repr( content ) )
         # Show a waiting dialog
         dialog = xbmcgui.DialogProgress()
-        dialog.create( path, __language__( 32063 ) )
+        dialog.create( path, LANGUAGE( 32063 ) )
 
         # Work out if it's a single item, or a node
         isNode = False
-        json_query = xbmc.executeJSONRPC('{ "jsonrpc": "2.0", "id": 0, "method": "Files.GetDirectory", "params": { "properties": ["title", "file", "thumbnail"], "directory": "' + path + '", "media": "files" } }')
+        jsonPath = path.replace( "\\", "\\\\" )
+
+        json_query = xbmc.executeJSONRPC('{ "jsonrpc": "2.0", "id": 0, "method": "Files.GetDirectory", "params": { "properties": ["title", "file", "thumbnail"], "directory": "' + jsonPath + '", "media": "files" } }')
         json_query = unicode(json_query, 'utf-8', errors='ignore')
         json_response = simplejson.loads(json_query)
 
@@ -331,7 +327,7 @@ class NodeFunctions():
         
         # Add all directories returned by the json query
         if json_response.has_key('result') and json_response['result'].has_key('files') and json_response['result']['files'] is not None:
-            labels = [ __language__(32058) ]
+            labels = [ LANGUAGE(32058) ]
             paths = [ "ActivateWindow(%s,%s,return)" %( window, path ) ]
             for item in json_response['result']['files']:
                 if item[ "filetype" ] == "directory":
@@ -339,7 +335,12 @@ class NodeFunctions():
                     labels.append( item[ "label" ] )
                     nodePaths.append( "ActivateWindow(%s,%s,return)" %( window, item[ "file" ] ) )
         else:
+            # Unable to add to get directory listings
             log( "Invalid JSON response returned" )
+            log( repr( simplejson ) )
+            # And tell the user it failed
+            xbmcgui.Dialog().ok( ADDON.getAddonInfo( "name" ), ADDON.getLocalizedString(32115) )
+            return
 
         # Add actions based on content
         if content == "albums":
@@ -358,10 +359,10 @@ class NodeFunctions():
             labels.append( "Play" )
             paths.append( "PlayMedia(%s)" %( path ) )
 
-        allMenuItems = [ xbmcgui.ListItem(label=__language__( 32112 )) ] # Main menu
+        allMenuItems = [ xbmcgui.ListItem(label=LANGUAGE( 32112 )) ] # Main menu
         allLabelIDs = [ "mainmenu" ]
         if isNode:
-            allMenuItems.append( xbmcgui.ListItem(label=__language__( 32113 ) ) ) # Main menu + autofill submenu
+            allMenuItems.append( xbmcgui.ListItem(label=LANGUAGE( 32113 ) ) ) # Main menu + autofill submenu
             allLabelIDs.append( "mainmenu" )
 
         # Get main menu items
@@ -376,7 +377,7 @@ class NodeFunctions():
         dialog.close()
 
         # Show a select dialog so the user can pick where in the menu to add the item
-        w = ShowDialog( "DialogSelect.xml", __cwd__, listing=allMenuItems, windowtitle=__language__( 32114 ) )
+        w = ShowDialog( "DialogSelect.xml", CWD, listing=allMenuItems, windowtitle=LANGUAGE( 32114 ) )
         w.doModal()
         selectedMenu = w.result
         del w
@@ -392,7 +393,7 @@ class NodeFunctions():
 
         if len( paths ) > 1:
             # There are multiple actions to choose from
-            selectedAction = xbmcgui.Dialog().select( __language__( 32095 ), labels )
+            selectedAction = xbmcgui.Dialog().select( LANGUAGE( 32095 ), labels )
             
             if selectedAction == -1 or selectedAction is None:
                 # User cancelled
@@ -417,7 +418,7 @@ class NodeFunctions():
         xmltree.SubElement( newelement, "action" ).text = action
         
         DATA.indent( menuitems.getroot() )
-        path = xbmc.translatePath( os.path.join( "special://profile", "addon_data", __addonid__, "%s.DATA.xml" %( DATA.slugify( allLabelIDs[ selectedMenu ], True ) ) ).encode('utf-8') )
+        path = xbmc.translatePath( os.path.join( "special://profile", "addon_data", ADDONID, "%s.DATA.xml" %( DATA.slugify( allLabelIDs[ selectedMenu ], True ) ) ).encode('utf-8') )
         menuitems.write( path, encoding="UTF-8" )
 
         if isNode and selectedMenu == 1:
@@ -434,14 +435,14 @@ class NodeFunctions():
                     xmltree.SubElement( newelement, "action" ).text = "ActivateWindow(%s,%s,return)" %( window, item[ "file" ] )
                 
             DATA.indent( menuitems.getroot() )
-            path = xbmc.translatePath( os.path.join( "special://profile", "addon_data", __addonid__, DATA.slugify( newLabelID, True ) + ".DATA.xml" ).encode('utf-8') )
+            path = xbmc.translatePath( os.path.join( "special://profile", "addon_data", ADDONID, DATA.slugify( newLabelID, True ) + ".DATA.xml" ).encode('utf-8') )
             menuitems.write( path, encoding="UTF-8" )
         
         # Mark that the menu needs to be rebuilt
         xbmcgui.Window( 10000 ).setProperty( "skinshortcuts-reloadmainmenu", "True" )
         
         # And tell the user it all worked
-        xbmcgui.Dialog().ok( __addon__.getAddonInfo( "name" ), __language__(32090) )
+        xbmcgui.Dialog().ok( ADDON.getAddonInfo( "name" ), LANGUAGE(32090) )
 
     def extractID( self, path ):
         # Extract the ID of an item from its path
@@ -485,7 +486,7 @@ class NodeFunctions():
             message += "[CR](and 1 other property)"
         elif len( propertyNames ) > 2:
             message += "[CR](and %d other properties)" %( len( propertyNames ) -1 )
-        shouldRun = xbmcgui.Dialog().yesno( __addon__.getAddonInfo( "name" ), message )
+        shouldRun = xbmcgui.Dialog().yesno( ADDON.getAddonInfo( "name" ), message )
         if not shouldRun:
             return
 
@@ -537,20 +538,20 @@ class NodeFunctions():
         
         # Save the new properties
         try:
-            f = xbmcvfs.File( os.path.join( __datapath__ , xbmc.getSkinDir().decode('utf-8') + ".properties" ), 'w' )
+            f = xbmcvfs.File( os.path.join( DATAPATH , xbmc.getSkinDir().decode('utf-8') + ".properties" ), 'w' )
             f.write( repr( saveData ).replace( "],", "],\n" ) )
             f.close()
             log( "Properties file saved succesfully" )
         except:
             print_exc()
-            log( "### ERROR could not save file %s" % __datapath__ )
+            log( "### ERROR could not save file %s" % DATAPATH )
 
         # The properties will only be used if the .DATA.xml file exists in the addon_data folder( otherwise
         # the script will use the default values), so we're going to open and write the 'group' that has been
         # passed to us
         menuitems = DATA._get_shortcuts( group, processShortcuts = False )
         DATA.indent( menuitems.getroot() )
-        path = xbmc.translatePath( os.path.join( "special://profile", "addon_data", __addonid__, "%s.DATA.xml" %( DATA.slugify( group, True ) ) ).encode('utf-8') )
+        path = xbmc.translatePath( os.path.join( "special://profile", "addon_data", ADDONID, "%s.DATA.xml" %( DATA.slugify( group, True ) ) ).encode('utf-8') )
         menuitems.write( path, encoding="UTF-8" )
 
         log( "Properties updated" )
@@ -586,7 +587,7 @@ class ShowDialog( xbmcgui.WindowXMLDialog ):
         self.getControl(1).setLabel(self.windowtitle)
 
         # Set Cancel label (Kodi 17+)
-        if int( __xbmcversion__ ) >= 17:
+        if int( KODIVERSION ) >= 17:
             try:
                 self.getControl(7).setLabel(xbmc.getLocalizedString(222))
             except:

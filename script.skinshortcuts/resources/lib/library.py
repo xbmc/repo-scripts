@@ -17,24 +17,19 @@ if sys.version_info < (2, 7):
 else:
     import json as simplejson
 
-__addon__        = sys.modules[ "__main__" ].__addon__
-__addonid__      = sys.modules[ "__main__" ].__addonid__
-__addonversion__ = sys.modules[ "__main__" ].__addonversion__
-__cwd__          = __addon__.getAddonInfo('path').decode("utf-8")
-__datapath__     = os.path.join( xbmc.translatePath( "special://profile/addon_data/" ).decode('utf-8'), __addonid__ )
-__datapathalt__  = os.path.join( "special://profile/", "addon_data", __addonid__ )
-__skinpath__     = xbmc.translatePath( "special://skin/shortcuts/" ).decode('utf-8')
-__defaultpath__  = xbmc.translatePath( os.path.join( __cwd__, 'resources', 'shortcuts').encode("utf-8") ).decode("utf-8")
-__language__     = sys.modules[ "__main__" ].__language__
-__cwd__          = sys.modules[ "__main__" ].__cwd__
-__xbmcversion__  = xbmc.getInfoLabel( "System.BuildVersion" ).split(".")[0]
+ADDON        = sys.modules[ "__main__" ].ADDON
+ADDONID      = sys.modules[ "__main__" ].ADDONID
+CWD          = sys.modules[ "__main__" ].CWD
+DATAPATH     = os.path.join( xbmc.translatePath( "special://profile/addon_data/" ).decode('utf-8'), ADDONID )
+LANGUAGE     = sys.modules[ "__main__" ].LANGUAGE
+KODIVERSION  = xbmc.getInfoLabel( "System.BuildVersion" ).split(".")[0]
 
 def log(txt):
-    if __addon__.getSetting( "enable_logging" ) == "true":
+    if ADDON.getSetting( "enable_logging" ) == "true":
         try:
             if isinstance (txt,str):
                 txt = txt.decode('utf-8')
-            message = u'%s: %s' % (__addonid__, txt)
+            message = u'%s: %s' % (ADDONID, txt)
             xbmc.log(msg=message.encode('utf-8'), level=xbmc.LOGDEBUG)
         except:
             pass
@@ -229,7 +224,7 @@ class LibraryFunctions():
                         continue
                 if "version" in node.attrib:
                     version = node.attrib.get( "version" )
-                    if __xbmcversion__ != version and DATA.checkVersionEquivalency( version, node.attrib.get( "condition" ), "groupings" ) == False:
+                    if KODIVERSION != version and DATA.checkVersionEquivalency( version, node.attrib.get( "condition" ), "groupings" ) == False:
                         group += 1
                         continue
                 if "installWidget" in node.attrib and node.attrib.get( "installWidget" ).lower() == "true":
@@ -247,9 +242,9 @@ class LibraryFunctions():
             if group == "":
                 # We're going to get the root nodes
                 self.installWidget = False
-                windowTitle = __language__(32048)
+                windowTitle = LANGUAGE(32048)
                 if grouping == "widget":
-                    windowTitle = __language__(32044)
+                    windowTitle = LANGUAGE(32044)
                 return [ windowTitle, self.buildNodeListing( nodes, False ) ]
             else:
                 groups = group.split( "," )
@@ -271,7 +266,7 @@ class LibraryFunctions():
                     continue
             if "version" in subnode.attrib:
                 version = subnode.attrib.get( "version" )
-                if __xbmcversion__ != version and DATA.checkVersionEquivalency( version, subnode.attrib.get( "condition" ), "groupings" ) == False:
+                if KODIVERSION != version and DATA.checkVersionEquivalency( version, subnode.attrib.get( "condition" ), "groupings" ) == False:
                     number += 1
                     continue
             if "installWidget" in subnode.attrib and subnode.attrib.get( "installWidget" ).lower() == "true":
@@ -292,7 +287,7 @@ class LibraryFunctions():
                     continue
             if "version" in node.attrib:
                 version = node.attrib.get( "version" )
-                if __xbmcversion__ != version and DATA.checkVersionEquivalency( version, node.attrib.get( "condition" ), "groupings" ) == False:
+                if KODIVERSION != version and DATA.checkVersionEquivalency( version, node.attrib.get( "condition" ), "groupings" ) == False:
                     continue
             count += 1
             if node.tag == "content":
@@ -320,6 +315,11 @@ class LibraryFunctions():
             if node.tag == "node" and flat == False:
                 returnList.append( self._create( ["||NODE||" + str( count ), node.attrib.get( "label" ), "", {"icon": "DefaultFolder.png"}] ) )
                 
+        # Override icons
+        tree = DATA._get_overrides_skin()
+        for item in returnList:
+            item = self._get_icon_overrides( tree, item, None )
+
         return returnList
                 
     def retrieveContent( self, content ):
@@ -349,7 +349,7 @@ class LibraryFunctions():
                     listitem.setProperty( "widget", "Library" )
                     if content == "video":
                         listitem.setProperty( "widgetType", "video" )
-                        listitem.setProperty( "widgetTarget", "video" )
+                        listitem.setProperty( "widgetTarget", "videos" )
                     else:
                         listitem.setProperty( "widgetType", "audio" )
                         listitem.setProperty( "widgetTarget", "music" )
@@ -387,7 +387,7 @@ class LibraryFunctions():
     def loadGrouping( self, content ):
         # Display a busy dialog
         dialog = xbmcgui.DialogProgress()
-        dialog.create( "Skin Shortcuts", __language__( 32063 ) )
+        dialog.create( "Skin Shortcuts", LANGUAGE( 32063 ) )
 
         # We'll be called if the data for a wanted group hasn't been loaded yet
         if content == "common":
@@ -435,7 +435,7 @@ class LibraryFunctions():
                 if not xbmc.getCondVisibility( node.attrib.get( "condition" ) ):
                     continue
             if "version" in node.attrib:
-                if __xbmcversion__ != node.attrib.get( "version" ):
+                if KODIVERSION != node.attrib.get( "version" ):
                     continue
                     
             count += 1
@@ -546,10 +546,8 @@ class LibraryFunctions():
                     displayLabel2 = DATA.local( replacementLabel[1] )[2]
                     shortcutType = DATA.local( replacementLabel[1] )[0]
                     
-        
         # Try localising it
         displayLabel = DATA.local( localLabel )[2]
-        labelID = DATA.createNiceName( DATA.local( localLabel )[0] )
         
         if displayLabel.startswith( "$NUMBER[" ):
             displayLabel = displayLabel[8:-1]
@@ -565,8 +563,16 @@ class LibraryFunctions():
             displayLabel2 = xbmc.getInfoLabel( displayLabel2 )
             
         # If this launches our explorer, append a notation to the displayLabel
+        noNonLocalized = False
         if item[0].startswith( "||" ):
             displayLabel = displayLabel + "  >"
+            # We'll also mark that we don't want to use a non-localised labelID, as this
+            # causes issues with some folders picking up overriden icons incorrectly
+            noNonLocalized = True
+
+        # Get the items labelID
+        DATA._clear_labelID()
+        labelID = DATA._get_labelID( DATA.createNiceName( DATA.local( localLabel )[0], noNonLocalized = noNonLocalized ), item[0], noNonLocalized = noNonLocalized )
             
         # Retrieve icon and thumbnail
         if item[3]:
@@ -609,10 +615,6 @@ class LibraryFunctions():
         if icon.startswith( "$" ):
             displayIcon = xbmc.getInfoLabel( icon )
             iconIsVar = True
-        
-        # Get a temporary labelID
-        DATA._clear_labelID()
-        labelID = DATA._get_labelID( labelID, item[0] )
                         
         # If the skin doesn't have the icon, replace it with DefaultShortcut.png
         if ( not displayIcon or not xbmc.skinHasImage( displayIcon ) ) and not iconIsVar:
@@ -704,7 +706,7 @@ class LibraryFunctions():
             prefix = "library://video"
             action = "||VIDEO||"
         elif library == "music":
-            windowID = "MusicLibrary"
+            windowID = "music"
             prefix = "library://music"
             action = "||AUDIO||"
 
@@ -770,69 +772,74 @@ class LibraryFunctions():
 
         listitems.append( self._create(["ActivateWindow(Videos,videodb://musicvideos/titles/,return)", "20389", "32034", {"icon": "DefaultMusicVideos.png"} ] ) )
         listitems.append( self._create(["ActivateWindow(Pictures)", "10002", "32034", {"icon": "DefaultPicture.png"} ] ) )
-        listitems.append( self._create(["ActivateWindow(Weather)", "12600", "32034", {} ]) )
+        listitems.append( self._create(["ActivateWindow(Weather)", "12600", "32034", {"icon": "Weather.png"} ]) )
         listitems.append( self._create(["ActivateWindow(Programs,Addons,return)", "10001", "32034", {"icon": "DefaultProgram.png"} ] ) )
 
         listitems.append( self._create(["PlayDVD", "32032", "32034", {"icon": "DefaultDVDFull.png"} ] ) )
         listitems.append( self._create(["EjectTray()", "32033", "32034", {"icon": "DefaultDVDFull.png"} ] ) )
                 
-        listitems.append( self._create(["ActivateWindow(Settings)", "10004", "32034", {} ]) )
+        listitems.append( self._create(["ActivateWindow(Settings)", "10004", "32034", {"icon": "Settings.png"} ]) )
         listitems.append( self._create(["ActivateWindow(FileManager)", "7", "32034", {"icon": "DefaultFolder.png"} ] ) )
         listitems.append( self._create(["ActivateWindow(Profiles)", "13200", "32034", {"icon": "UnknownUser.png"} ] ) )
-        listitems.append( self._create(["ActivateWindow(SystemInfo)", "10007", "32034", {} ]) )
+        listitems.append( self._create(["ActivateWindow(SystemInfo)", "10007", "32034", {"icon": "SystemInfo.png"} ]) )
 
-        if int( __xbmcversion__ ) >= 16:
-            listitems.append( self._create(["ActivateWindow(EventLog,events://,return)", "14111", "32034", {} ]) )            
+        if int( KODIVERSION ) >= 16:
+            listitems.append( self._create(["ActivateWindow(EventLog,events://,return)", "14111", "32034", {"icon": "Events.png"} ]) )
         
-        listitems.append( self._create(["ActivateWindow(Favourites)", "1036", "32034", {} ]) )
+        listitems.append( self._create(["ActivateWindow(Favourites)", "1036", "32034", {"icon": "Favourites.png"} ]) )
             
         self.addToDictionary( "common", listitems )
         
     def more( self ):
         listitems = []
         
-        listitems.append( self._create(["Reboot", "13013", "32054", {} ]) )
-        listitems.append( self._create(["ShutDown", "13005", "32054", {} ]) )
-        listitems.append( self._create(["PowerDown", "13016", "32054", {} ]) )
-        listitems.append( self._create(["Quit", "13009", "32054", {} ]) )
+        listitems.append( self._create(["Reboot", "13013", "32054", {"icon": "Reboot.png"} ]) )
+        listitems.append( self._create(["ShutDown", "13005", "32054", {"icon": "Shutdown.png"} ]) )
+        listitems.append( self._create(["PowerDown", "13016", "32054", {"icon": "PowerDown.png"} ]) )
+        listitems.append( self._create(["Quit", "13009", "32054", {"icon": "Quit.png"} ]) )
         if (xbmc.getCondVisibility( "System.Platform.Windows" ) or xbmc.getCondVisibility( "System.Platform.Linux" )) and not xbmc.getCondVisibility( "System.Platform.Linux.RaspberryPi" ):
-            listitems.append( self._create(["RestartApp", "13313", "32054", {} ]) )
-        listitems.append( self._create(["Hibernate", "13010", "32054", {} ]) )
-        listitems.append( self._create(["Suspend", "13011", "32054", {} ]) )
-        listitems.append( self._create(["AlarmClock(shutdowntimer,XBMC.Shutdown())", "19026", "32054", {} ]) )
-        listitems.append( self._create(["CancelAlarm(shutdowntimer)", "20151", "32054", {} ]) )
+            listitems.append( self._create(["RestartApp", "13313", "32054", {"icon": "RestartApp.png"} ]) )
+        listitems.append( self._create(["Hibernate", "13010", "32054", {"icon": "Hibernate.png"} ]) )
+        listitems.append( self._create(["Suspend", "13011", "32054", {"icon": "Suspend.png"} ]) )
+        listitems.append( self._create(["AlarmClock(shutdowntimer,XBMC.Shutdown())", "19026", "32054", {"icon": "ShutdownTimer.png"} ]) )
+        listitems.append( self._create(["CancelAlarm(shutdowntimer)", "20151", "32054", {"icon": "CancelShutdownTimer.png"} ]) )
         if xbmc.getCondVisibility( "System.HasLoginScreen" ):
-            listitems.append( self._create(["System.LogOff", "20126", "32054", {} ]) )
-        listitems.append( self._create(["ActivateScreensaver", "360", "32054", {} ]) )
-        listitems.append( self._create(["Minimize", "13014", "32054", {} ]) )
+            listitems.append( self._create(["System.LogOff", "20126", "32054", {"icon": "LogOff.png"} ]) )
+        listitems.append( self._create(["ActivateScreensaver", "360", "32054", {"icon": "ActivateScreensaver.png"} ]) )
+        listitems.append( self._create(["Minimize", "13014", "32054", {"icon": "Minimize.png"} ]) )
 
-        listitems.append( self._create(["Mastermode", "20045", "32054", {} ]) )
+        listitems.append( self._create(["Mastermode", "20045", "32054", {"icon": "Mastermode.png"} ]) )
         
-        listitems.append( self._create(["RipCD", "600", "32054", {} ]) )
+        listitems.append( self._create(["RipCD", "600", "32054", {"icon": "RipCD.png"} ]) )
 
-        listitems.append( self._create(["UpdateLibrary(video,,true)", "32046", "32054", {} ]) )
-        listitems.append( self._create(["UpdateLibrary(music,,true)", "32047", "32054", {} ]) )
+        listitems.append( self._create(["UpdateLibrary(video,,true)", "32046", "32054", {"icon": "UpdateVideoLibrary.png"} ]) )
+        listitems.append( self._create(["UpdateLibrary(music,,true)", "32047", "32054", {"icon": "UpdateMusicLibrary.png"} ]) )
 
-        listitems.append( self._create(["CleanLibrary(video,true)", "32055", "32054", {} ]) )
-        listitems.append( self._create(["CleanLibrary(music,true)", "32056", "32054", {} ]) )
+        listitems.append( self._create(["CleanLibrary(video,true)", "32055", "32054", {"icon": "CleanVideoLibrary.png"} ]) )
+        listitems.append( self._create(["CleanLibrary(music,true)", "32056", "32054", {"icon": "CleanMusicLibrary.png"} ]) )
         
         self.addToDictionary( "commands", listitems )
         
     def settings( self ):
         listitems = []
         
-        listitems.append( self._create(["ActivateWindow(Settings)", "10004", "10004", {} ]) )
-        
-        listitems.append( self._create(["ActivateWindow(AppearanceSettings)", "480", "10004", {} ]) )
-        listitems.append( self._create(["ActivateWindow(VideosSettings)", "3", "10004", {} ]) )
-        listitems.append( self._create(["ActivateWindow(PVRSettings)", "19020", "10004", {} ]) )
-        listitems.append( self._create(["ActivateWindow(MusicSettings)", "2", "10004", {} ]) )
-        listitems.append( self._create(["ActivateWindow(PicturesSettings)", "1", "10004", {} ]) )
-        listitems.append( self._create(["ActivateWindow(WeatherSettings)", "8", "10004", {} ]) )
-        listitems.append( self._create(["ActivateWindow(AddonBrowser)", "24001", "10004", {} ]) )
-        listitems.append( self._create(["ActivateWindow(ServiceSettings)", "14036", "10004", {} ]) )
-        listitems.append( self._create(["ActivateWindow(SystemSettings)", "13000", "10004", {} ]) )
-        listitems.append( self._create(["ActivateWindow(SkinSettings)", "20077", "10004", {} ]) )
+        listitems.append( self._create(["ActivateWindow(Settings)", "10004", "10004", {"icon": "Settings.png"} ]) )
+        listitems.append( self._create(["ActivateWindow(PVRSettings)", "19020", "10004", {"icon": "PVRSettings.png"} ]) )
+        listitems.append( self._create(["ActivateWindow(AddonBrowser)", "24001", "10004", {"icon": "DefaultAddon.png"} ]) )
+        listitems.append( self._create(["ActivateWindow(ServiceSettings)", "14036", "10004", {"icon": "ServiceSettings.png"} ]) )
+        listitems.append( self._create(["ActivateWindow(SystemSettings)", "13000", "10004", {"icon": "SystemSettings.png"} ]) )
+        listitems.append( self._create(["ActivateWindow(SkinSettings)", "20077", "10004", {"icon": "SkinSettings.png"} ]) )
+
+        if int( KODIVERSION ) <= 16:
+            listitems.append( self._create(["ActivateWindow(VideosSettings)", "3", "10004", {"icon": "VideoSettings.png"} ]) )
+            listitems.append( self._create(["ActivateWindow(MusicSettings)", "2", "10004", {"icon": "MusicSettings.png"} ]) )
+            listitems.append( self._create(["ActivateWindow(PicturesSettings)", "1", "10004", {"icon": "PictureSettings.png"} ]) )
+            listitems.append( self._create(["ActivateWindow(AppearanceSettings)", "480", "10004", {"icon": "AppearanceSettings.png"} ]) )
+            listitems.append( self._create(["ActivateWindow(WeatherSettings)", "8", "10004", {"icon": "WeatherSettings.png"} ]) )
+        else:
+            listitems.append( self._create(["ActivateWindow(PlayerSettings)", "14200", "10004", {"icon": "PlayerSettings.png"} ]) )
+            listitems.append( self._create(["ActivateWindow(LibrarySettings)", "14202", "10004", {"icon": "LibrarySettings.png"} ]) )
+            listitems.append( self._create(["ActivateWindow(InterfaceSettings)", "14206", "10004", {"icon": "InterfaceSettings.png"} ]) )
         
         self.addToDictionary( "settings", listitems )
     
@@ -844,7 +851,7 @@ class LibraryFunctions():
         listitems.append( self._create(["ActivateWindow(TVGuide)", "22020", "32017", {"icon": "DefaultTVShows.png"} ] ) )
         listitems.append( self._create(["ActivateWindow(TVRecordings)", "19163", "32017", {"icon": "DefaultTVShows.png"} ] ) )
         listitems.append( self._create(["ActivateWindow(TVTimers)", "19040", "32017", {"icon": "DefaultTVShows.png"} ] ) )
-        if int( __xbmcversion__ ) >= 17:
+        if int( KODIVERSION ) >= 17:
             listitems.append( self._create(["ActivateWindow(TVTimerRules)", "19138", "32017", {"icon": "DefaultTVShows.png"} ] ) )
         listitems.append( self._create(["ActivateWindow(TVSearch)", "137", "32017", {"icon": "DefaultTVShows.png"} ] ) )
         
@@ -888,7 +895,7 @@ class LibraryFunctions():
         listitems.append( self._create(["ActivateWindow(RadioGuide)", "22020", "32087", {"icon": "DefaultAudio.png"} ] ) )
         listitems.append( self._create(["ActivateWindow(RadioRecordings)", "19163", "32087", {"icon": "DefaultAudio.png"} ] ) )
         listitems.append( self._create(["ActivateWindow(RadioTimers)", "19040", "32087", {"icon": "DefaultAudio.png"} ] ) )
-        if int( __xbmcversion__ ) >= 17:
+        if int( KODIVERSION ) >= 17:
             listitems.append( self._create(["ActivateWindow(RadioTimerRules)", "19138", "32087", {"icon": "DefaultAudio.png"} ] ) )
         listitems.append( self._create(["ActivateWindow(RadioSearch)", "137", "32087", {"icon": "DefaultAudio.png"} ] ) )
         
@@ -899,49 +906,28 @@ class LibraryFunctions():
 
         
     def musiclibrary( self ):
-        if int( __xbmcversion__ ) >= 15:
-            # Isengard or later - load audio nodes
-            # Try loading custom nodes first
-            try:
-                if self._parse_libraryNodes( "music", "custom" ) == False:
-                    log( "Failed to load custom music nodes" )
-                    self._parse_libraryNodes( "music", "default" )
-            except:
+        # Try loading custom nodes first
+        try:
+            if self._parse_libraryNodes( "music", "custom" ) == False:
                 log( "Failed to load custom music nodes" )
+                self._parse_libraryNodes( "music", "default" )
+        except:
+            log( "Failed to load custom music nodes" )
+            print_exc()
+            try:
+                # Try loading default nodes
+                self._parse_libraryNodes( "music", "default" )
+            except:
+                # Empty library
+                log( "Failed to load default music nodes" )
                 print_exc()
-                try:
-                    # Try loading default nodes
-                    self._parse_libraryNodes( "music", "default" )
-                except:
-                    # Empty library
-                    log( "Failed to load default music nodes" )
-                    print_exc()
-
-        else:
-            # Gotham or earlier - load static entries
-            listitems = []
-                        
-            # Music
-            listitems.append( self._create(["ActivateWindow(MusicFiles)", "744", "32019", {"icon": "DefaultFolder.png"} ]) )
-            listitems.append( self._create(["ActivateWindow(MusicLibrary,MusicLibrary,return)", "15100", "32019", {"icon": "DefaultFolder.png"} ] ) )
-            listitems.append( self._create(["ActivateWindow(MusicLibrary,Genres,return)", "135", "32019", {"icon": "DefaultMusicGenres.png"} ] ) )
-            listitems.append( self._create(["ActivateWindow(MusicLibrary,Artists,return)", "133", "32019", {"icon": "DefaultMusicArtists.png"} ] ) )
-            listitems.append( self._create(["ActivateWindow(MusicLibrary,Albums,return)", "132", "32019", {"icon": "DefaultMusicAlbums.png"} ] ) )
-            listitems.append( self._create(["ActivateWindow(MusicLibrary,Songs,return)", "134", "32019", {"icon": "DefaultMusicSongs.png"} ] ) )
-            listitems.append( self._create(["ActivateWindow(MusicLibrary,Years,return)", "652", "32019", {"icon": "DefaultMusicYears.png"} ] ) )
-            listitems.append( self._create(["ActivateWindow(MusicLibrary,Top100,return)", "271", "32019", {"icon": "DefaultMusicTop100.png"} ] ) )
-            listitems.append( self._create(["ActivateWindow(MusicLibrary,Top100Songs,return)", "10504", "32019", {"icon": "DefaultMusicTop100Songs.png"} ] ) )
-            listitems.append( self._create(["ActivateWindow(MusicLibrary,Top100Albums,return)", "10505", "32019", {"icon": "DefaultMusicTop100Albums.png"} ] ) )
-            listitems.append( self._create(["ActivateWindow(MusicLibrary,RecentlyAddedAlbums,return)", "359", "32019", {"icon": "DefaultMusicRecentlyAdded.png"} ] ) )
-            listitems.append( self._create(["ActivateWindow(MusicLibrary,RecentlyPlayedAlbums,return)", "517", "32019", {"icon": "DefaultMusicRecentlyPlayed.png"} ] ) )
-            listitems.append( self._create(["ActivateWindow(MusicLibrary,Playlists,return)", "136", "32019", {"icon": "DefaultMusicPlaylists.png"} ] ) )
+        
+        # Do a JSON query for upnp sources (so that they'll show first time the user asks to see them)
+        if self.loaded[ "upnp" ][ 0 ] == False:
+            json_query = xbmc.executeJSONRPC('{ "jsonrpc": "2.0", "id": 0, "method": "Files.GetDirectory", "params": { "properties": ["title", "file", "thumbnail"], "directory": "upnp://", "media": "files" } }')
+            self.loaded[ "upnp" ][ 0 ] = True
             
-            # Do a JSON query for upnp sources (so that they'll show first time the user asks to see them)
-            if self.loaded[ "upnp" ][ 0 ] == False:
-                json_query = xbmc.executeJSONRPC('{ "jsonrpc": "2.0", "id": 0, "method": "Files.GetDirectory", "params": { "properties": ["title", "file", "thumbnail"], "directory": "upnp://", "media": "files" } }')
-                self.loaded[ "upnp" ][ 0 ] = True
-                
-            self.addToDictionary( "music", listitems )
+        self.addToDictionary( "music", listitems )
     
     def librarysources( self ):
         # Add video sources
@@ -989,7 +975,7 @@ class LibraryFunctions():
     def playlists( self ):
         audiolist = []
         videolist = []
-        paths = [['special://videoplaylists/','32004','VideoLibrary'], ['special://musicplaylists/','32005','MusicLibrary'], ["special://skin/playlists/",'32059',None], ["special://skin/extras/",'32059',None]]
+        paths = [['special://videoplaylists/','32004','Videos'], ['special://musicplaylists/','32005','Music'], ["special://skin/playlists/",'32059',None], ["special://skin/extras/",'32059',None]]
         for path in paths:
             count = 0
             if not xbmcvfs.exists(path[0]): continue
@@ -1009,10 +995,10 @@ class LibraryFunctions():
                             if line.tag == "smartplaylist":
                                 mediaType = line.attrib['type']
                                 if mediaType == "movies" or mediaType == "tvshows" or mediaType == "seasons" or mediaType == "episodes" or mediaType == "musicvideos" or mediaType == "sets":
-                                    mediaLibrary = "VideoLibrary"
+                                    mediaLibrary = "Videos"
                                     mediaContent = "video"
                                 elif mediaType == "albums" or mediaType == "artists" or mediaType == "songs":
-                                    mediaLibrary = "MusicLibrary"
+                                    mediaLibrary = "Music"
                                     mediaContent = "music"
                                 
                             if line.tag == "name" and mediaLibrary is not None:
@@ -1032,12 +1018,12 @@ class LibraryFunctions():
                                 listitem.setProperty( "widgetName", name )
                                 listitem.setProperty( "widgetPath", playlist )
                                 
-                                if mediaLibrary == "VideoLibrary":
+                                if mediaLibrary == "Videos":
                                     videolist.append( listitem )
                                 else:
                                     audiolist.append( listitem )
                                 # Save it for the widgets list
-                                self.widgetPlaylistsList.append( [playlist, "(" + __language__( int( path[1] ) ) + ") " + name, name] )
+                                self.widgetPlaylistsList.append( [playlist, "(" + LANGUAGE( int( path[1] ) ) + ") " + name, name] )
                                 
                                 count += 1
                                 break
@@ -1053,9 +1039,9 @@ class LibraryFunctions():
                         listitem.setProperty( "widget", "Playlist" )
                         listitem.setProperty( "widgetName", name )
                         listitem.setProperty( "widgetPath", playlist )
-                        if path[2] == "VideoLibrary":
+                        if path[2] == "Videos":
                             listitem.setProperty( "widgetType", "videos" )
-                            listitem.setProperty( "widgetTarget", "video" )
+                            listitem.setProperty( "widgetTarget", "videos" )
                             videolist.append( listitem )
                         else:
                             listitem.setProperty( "widgetType", "songs" )
@@ -1078,7 +1064,7 @@ class LibraryFunctions():
         returnPlaylists = []
         try:
             log('Loading script generated playlists...')
-            path = "special://profile/addon_data/" + __addonid__ + "/"
+            path = "special://profile/addon_data/" + ADDONID + "/"
             count = 0
             for file in kodiwalk( path ):
                 playlist = file['path']
@@ -1151,16 +1137,16 @@ class LibraryFunctions():
         for contenttype, listitems in contenttypes:
             #listitems = {}
             if contenttype == "executable":
-                contentlabel = __language__(32009)
+                contentlabel = LANGUAGE(32009)
                 shortcutType = "::SCRIPT::32009"
             elif contenttype == "video":
-                contentlabel = __language__(32010)
+                contentlabel = LANGUAGE(32010)
                 shortcutType = "::SCRIPT::32010"
             elif contenttype == "audio":
-                contentlabel = __language__(32011)
+                contentlabel = LANGUAGE(32011)
                 shortcutType = "::SCRIPT::32011"
             elif contenttype == "image":
-                contentlabel = __language__(32012)
+                contentlabel = LANGUAGE(32012)
                 shortcutType = "::SCRIPT::32012"
                 
             json_query = xbmc.executeJSONRPC('{ "jsonrpc": "2.0", "id": 0, "method": "Addons.Getaddons", "params": { "content": "%s", "properties": ["name", "path", "thumbnail", "enabled"] } }' % contenttype)
@@ -1374,7 +1360,7 @@ class LibraryFunctions():
             
         # Show a waiting dialog, then get the listings for the directory
         dialog = xbmcgui.DialogProgress()
-        dialog.create( dialogLabel, __language__( 32063 ) )
+        dialog.create( dialogLabel, LANGUAGE( 32063 ) )
         
         #we retrieve a whole bunch of properties, needed to guess the content type properly
         json_query = xbmc.executeJSONRPC('{ "jsonrpc": "2.0", "id": 0, "method": "Files.GetDirectory", "params": { "properties": ["title", "file", "thumbnail", "episode", "showtitle", "season", "album", "artist", "imdbnumber", "firstaired", "mpaa", "trailer", "studio", "art"], "directory": "' + location + '", "media": "files" } }')
@@ -1401,10 +1387,10 @@ class LibraryFunctions():
                         windowID = "Videos"
                         if widgetType == "unknown":
                             widgetType = "video"
-                        widgetTarget = "video"
+                        widgetTarget = "videos"
                     else:
                         # Audio node
-                        windowID = "MusicLibrary"
+                        windowID = "Music"
                         if widgetType == "unknown":
                             widgetType = "audio"
                         widgetTarget = "music"
@@ -1448,7 +1434,7 @@ class LibraryFunctions():
                     if smartShortCutsData["type"] == "music" or smartShortCutsData["type"] == "artists" or smartShortCutsData["type"] == "albums" or smartShortCutsData["type"] == "songs":
                         listitem.setProperty( "widgetTarget", "music" )
                     else:
-                        listitem.setProperty( "widgetTarget", "video" )
+                        listitem.setProperty( "widgetTarget", "videos" )
                     listitem.setProperty( "widgetPath", smartShortCutsData["list"] )
                     listings.append( self._get_icon_overrides( tree, listitem, "" ) )
                     
@@ -1474,7 +1460,7 @@ class LibraryFunctions():
 
         # Show select dialog
         getMore = self._allow_install_widget_provider( location, isWidget )
-        w = ShowDialog( "DialogSelect.xml", __cwd__, listing=listings, windowtitle=dialogLabel, getmore=getMore )
+        w = ShowDialog( "DialogSelect.xml", CWD, listing=listings, windowtitle=dialogLabel, getmore=getMore )
         w.doModal()
         selectedItem = w.result
         del w
@@ -1503,9 +1489,9 @@ class LibraryFunctions():
                 
                 # Build the action
                 if itemType in [ "32010", "32014", "32069" ]:
-                    action = 'ActivateWindow(VideoLibrary,"' + location + '",return)'
-                    listitem.setProperty( "windowID", "VideoLibrary" )
-                    listitem.setProperty( "widgetType", "video" )
+                    action = 'ActivateWindow(Videos,"' + location + '",return)'
+                    listitem.setProperty( "windowID", "Videos" )
+                    listitem.setProperty( "widgetType", "videos" )
 
                     # Add widget details
                     if isLibrary:
@@ -1519,13 +1505,13 @@ class LibraryFunctions():
                     if addonType is not None:
                         listitem.setProperty( "widgetType", addonType)
 
-                    listitem.setProperty( "widgetTarget", "video" )
+                    listitem.setProperty( "widgetTarget", "videos" )
                     listitem.setProperty( "widgetName", dialogLabel )
                     listitem.setProperty( "widgetPath", location )
 
                 elif itemType in [ "32011", "32019", "32073" ]:
-                    action = 'ActivateWindow(MusicLibrary,"' + location + '",return)'
-                    listitem.setProperty( "windowID", "MusicLibrary" )
+                    action = 'ActivateWindow(Music,"' + location + '",return)'
+                    listitem.setProperty( "windowID", "Music" )
 
                     # Add widget details
                     listitem.setProperty( "widgetType", "audio" )
@@ -1625,7 +1611,7 @@ class LibraryFunctions():
                     providerLabel.append( widgetProvider[ 2 ] )
 
         # Ask user to select widget provider to install
-        selectedProvider = xbmcgui.Dialog().select( __language__(32106), providerLabel )
+        selectedProvider = xbmcgui.Dialog().select( LANGUAGE(32106), providerLabel )
 
         if selectedProvider != -1:
             # User has selected a widget provider for us to install
@@ -1648,7 +1634,7 @@ class LibraryFunctions():
                     providerLabel.append( widgetProvider[ 2 ] )
 
         # Ask user to select widget provider to install
-        selectedProvider = xbmcgui.Dialog().select( __language__(32106), providerLabel )
+        selectedProvider = xbmcgui.Dialog().select( LANGUAGE(32106), providerLabel )
 
         if selectedProvider != -1:
             # User has selected a widget provider for us to install
@@ -1684,18 +1670,23 @@ class LibraryFunctions():
         return False
 
     def _install_widget_provider( self, provider ):
-        xbmc.executebuiltin( "RunPlugin(plugin://%s)" %( provider ) )
+        if int( KODIVERSION ) >= 17:
+            executeAndObserve = ("InstallAddon(%s)", "DialogConfirm.xml", "DialogConfirm.xml" )
+        else:
+            executeAndObserve = ("RunPlugin(plugin://%s)", "DialogYesNo.xml", "DialogProgress.xml" )
+
+        xbmc.executebuiltin( executeAndObserve[ 0 ] %( provider ) )
 
         if xbmc.Monitor().waitForAbort(0.5):
             return
-        while xbmc.getCondVisibility( "Window.IsActive(DialogYesNo.xml)" ):
+        while xbmc.getCondVisibility( "Window.IsActive(%s)" %( executeAndObserve[ 1 ] ) ):
             if xbmc.Monitor().waitForAbort(0.5):
                 return
 
         # Stage 2 - progress dialog
         if xbmc.Monitor().waitForAbort(0.5):
             return
-        while xbmc.getCondVisibility( "Window.IsActive(DialogProgress.xml)" ):
+        while xbmc.getCondVisibility( "Window.IsActive(%s)" %( executeAndObserve[ 2 ] ) ):
             if xbmc.Monitor().waitForAbort(0.5):
                 return
 
@@ -1712,9 +1703,9 @@ class LibraryFunctions():
         mediaType = None
         windowID = selectedShortcut.getProperty( "windowID" )
         # Check if we're going to display this in the files view, or the library view
-        if windowID == "VideoLibrary":
-            # Video library                                    Files view           Movies                TV Shows             Music videos         !Movies               !TV Shows            !Music Videos
-            userChoice = dialog.select( __language__(32078), [__language__(32079), __language__(32015), __language__(32016), __language__(32018), __language__(32081), __language__(32082), __language__(32083) ] )            
+        if windowID == "Videos":
+            # Video library                               Files view       Movies           TV Shows         Music videos     Movies           TV Shows         Music Videos
+            userChoice = dialog.select( LANGUAGE(32078), [LANGUAGE(32079), LANGUAGE(32015), LANGUAGE(32016), LANGUAGE(32018), LANGUAGE(32081), LANGUAGE(32082), LANGUAGE(32083) ] )            
             if userChoice == -1:
                 return None
             elif userChoice == 0:
@@ -1742,9 +1733,9 @@ class LibraryFunctions():
             elif userChoice == 6:
                 mediaType = "musicvideo"
                 negative = True
-        elif windowID == "MusicLibrary":
-            # Music library                                    Files view           Songs                          Albums                         Mixed                           !Songs               !Albums               !Mixed
-            userChoice = dialog.select( __language__(32078), [__language__(32079), xbmc.getLocalizedString(134), xbmc.getLocalizedString(132), xbmc.getLocalizedString(20395), __language__(32084), __language__(32085), __language__(32086) ] )            
+        elif windowID == "Music":
+            # Music library                               Files view       Songs                         Albums                        Mixed                           Songs            Albums           Mixed
+            userChoice = dialog.select( LANGUAGE(32078), [LANGUAGE(32079), xbmc.getLocalizedString(134), xbmc.getLocalizedString(132), xbmc.getLocalizedString(20395), LANGUAGE(32084), LANGUAGE(32085), LANGUAGE(32086) ] )            
             if userChoice == -1:
                 return None
             elif userChoice == 0:
@@ -1780,7 +1771,7 @@ class LibraryFunctions():
                 negative = True
         else:
             # Pictures                                         Files view           Slideshow                     Slideshow (random)                                                             Recursive slideshow             Recursive slideshow (random)    
-            userChoice = dialog.select( __language__(32078), [ __language__(32079), xbmc.getLocalizedString(108), "%s (%s)" %( xbmc.getLocalizedString( 108 ), xbmc.getLocalizedString( 590 ) ), xbmc.getLocalizedString( 361 ), "%s (%s)" %( xbmc.getLocalizedString( 361 ), xbmc.getLocalizedString( 590 ) ) ] )
+            userChoice = dialog.select( LANGUAGE(32078), [ LANGUAGE(32079), xbmc.getLocalizedString(108), "%s (%s)" %( xbmc.getLocalizedString( 108 ), xbmc.getLocalizedString( 590 ) ), xbmc.getLocalizedString( 361 ), "%s (%s)" %( xbmc.getLocalizedString( 361 ), xbmc.getLocalizedString( 590 ) ) ] )
             if userChoice == -1:
                 return None
             elif userChoice == 0:
@@ -1805,7 +1796,7 @@ class LibraryFunctions():
             
         # We're going to display it in the library
         filename = self._build_playlist( selectedShortcut.getProperty( "location" ), mediaType, selectedShortcut.getLabel(), negative )
-        newAction = "ActivateWindow(" + windowID + "," +"special://profile/addon_data/" + __addonid__ + "/" + filename + ",return)"
+        newAction = "ActivateWindow(" + windowID + "," +"special://profile/addon_data/" + ADDONID + "/" + filename + ",return)"
         selectedShortcut.setProperty( "Path", newAction )
         selectedShortcut.setProperty( "displayPath", newAction )
         return selectedShortcut
@@ -1845,18 +1836,18 @@ class LibraryFunctions():
                 xmltree.SubElement( rule, "value" ).text = item
         
         id = 1
-        while xbmcvfs.exists( os.path.join( __datapath__, str( id ) + ".xsp" ) ) :
+        while xbmcvfs.exists( os.path.join( DATAPATH, str( id ) + ".xsp" ) ) :
             id += 1
                 
         # Write playlist we'll link to the menu item
         DATA.indent( tree.getroot() )
-        tree.write( os.path.join( __datapath__, str( id ) + ".xsp" ), encoding="utf-8" )
+        tree.write( os.path.join( DATAPATH, str( id ) + ".xsp" ), encoding="utf-8" )
         
         # Add a random property, and save this for use in playlists/backgrounds
         order = xmltree.SubElement( root, "order" )
         order.text = "random"
         DATA.indent( tree.getroot() )
-        tree.write( os.path.join( __datapath__, str( id ) + "-randomversion.xsp" ), encoding="utf-8" )
+        tree.write( os.path.join( DATAPATH, str( id ) + "-randomversion.xsp" ), encoding="utf-8" )
         
         return str( id ) + ".xsp"
         
@@ -1867,7 +1858,7 @@ class LibraryFunctions():
             try:
                 elements = target.split( "," )
                 if len( elements ) > 1:
-                    if elements[1].startswith( "special://profile/addon_data/" + __addonid__ + "/" ) and elements[1].endswith( ".xsp" ):
+                    if elements[1].startswith( "special://profile/addon_data/" + ADDONID + "/" ) and elements[1].endswith( ".xsp" ):
                         xbmcvfs.delete( xbmc.translatePath( elements[1] ) )
                         xbmcvfs.delete( xbmc.translatePath( elements[1].replace( ".xsp", "-randomversion.xsp" ) ) )                        
             except:
@@ -1885,7 +1876,7 @@ class LibraryFunctions():
                 return
                     
             try:
-                if elements[1].startswith( "special://profile/addon_data/" + __addonid__ + "/" ) and elements[1].endswith( ".xsp" ):
+                if elements[1].startswith( "special://profile/addon_data/" + ADDONID + "/" ) and elements[1].endswith( ".xsp" ):
                     filename =  xbmc.translatePath( elements[1] )
                 else:
                     return
@@ -1955,10 +1946,10 @@ class LibraryFunctions():
             availableShortcuts = self.checkForFolder( availableShortcuts )
             
         if showNone is not False and group == "":
-            availableShortcuts.insert( 0, self._create(["::NONE::", __language__(32053), "", {"icon":"DefaultAddonNone.png"}] ) )
+            availableShortcuts.insert( 0, self._create(["::NONE::", LANGUAGE(32053), "", {"icon":"DefaultAddonNone.png"}] ) )
             
         if custom is not False and group == "":
-            availableShortcuts.append( self._create(["||CUSTOM||", __language__(32024), "", {}] ) )
+            availableShortcuts.append( self._create(["||CUSTOM||", LANGUAGE(32024), "", {}] ) )
 
         if group != "":
             # Add a link to go 'up'
@@ -1966,7 +1957,7 @@ class LibraryFunctions():
 
         # Show select dialog
         getMore = self._allow_install_widget_provider( None, isWidget, self.allowWidgetInstall )
-        w = ShowDialog( "DialogSelect.xml", __cwd__, listing=availableShortcuts, windowtitle=windowTitle )
+        w = ShowDialog( "DialogSelect.xml", CWD, listing=availableShortcuts, windowtitle=windowTitle )
         w.doModal()
         number = w.result
         del w
@@ -2039,10 +2030,10 @@ class LibraryFunctions():
                 if isWidget:
                     # Return actionShow as chosenPath
                     selectedShortcut.setProperty( "chosenPath", selectedShortcut.getProperty( "action-show" ) )
-                elif not ">" in path or "VideoLibrary" in path:
+                elif not ">" in path or "Videos" in path:
                     # Give the user the choice of playing or displaying the playlist
                     dialog = xbmcgui.Dialog()
-                    userchoice = dialog.yesno( __language__( 32040 ), __language__( 32060 ), "", "", __language__( 32061 ), __language__( 32062 ) )
+                    userchoice = dialog.yesno( LANGUAGE( 32040 ), LANGUAGE( 32060 ), "", "", LANGUAGE( 32061 ), LANGUAGE( 32062 ) )
                     # False: Display
                     # True: Play
                     if not userchoice:
@@ -2052,7 +2043,7 @@ class LibraryFunctions():
                 elif ">" in path:
                     # Give the user the choice of playing, displaying or party more for the playlist
                     dialog = xbmcgui.Dialog()
-                    userchoice = dialog.select( __language__( 32060 ), [ __language__( 32061 ), __language__( 32062 ), xbmc.getLocalizedString( 589 ) ] )
+                    userchoice = dialog.select( LANGUAGE( 32060 ), [ LANGUAGE( 32061 ), LANGUAGE( 32062 ), xbmc.getLocalizedString( 589 ) ] )
                     # 0 - Display
                     # 1 - Play
                     # 2 - Party mode
@@ -2073,14 +2064,14 @@ class LibraryFunctions():
                    
             elif path == "||CUSTOM||":
                 # Let the user type a command
-                keyboard = xbmc.Keyboard( currentAction, __language__(32027), False )
+                keyboard = xbmc.Keyboard( currentAction, LANGUAGE(32027), False )
                 keyboard.doModal()
                 
                 if ( keyboard.isConfirmed() ):
                     action = keyboard.getText()
                     if action != "":
                         # Create a really simple listitem to return
-                        selectedShortcut = xbmcgui.ListItem( None, __language__(32024) )
+                        selectedShortcut = xbmcgui.ListItem( None, LANGUAGE(32024) )
                         selectedShortcut.setProperty( "Path", action )
                         selectedShortcut.setProperty( "custom", "true" )
                     else:
@@ -2150,7 +2141,7 @@ class ShowDialog( xbmcgui.WindowXMLDialog ):
         self.getControl(1).setLabel(self.windowtitle)
 
         # Set Cancel label (Kodi 17+)
-        if int( __xbmcversion__ ) >= 17:
+        if int( KODIVERSION ) >= 17:
             try:
                 self.getControl(7).setLabel(xbmc.getLocalizedString(222))
             except:
