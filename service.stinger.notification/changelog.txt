@@ -1,3 +1,5 @@
+v1.0.1 (2016-08-26)
+- Fix basic add-on text display in add-on info
 v1.0.0 (2016-07-24)
 - Text cleanup before official repo inclusion
 v0.7.0 (2016-02-25)

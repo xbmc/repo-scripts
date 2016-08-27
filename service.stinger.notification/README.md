@@ -1,10 +1,16 @@
 # Stinger scene notification
 
 This add-on notifies you of stinger scenes in the current movie. It pops up a notification
-when the credits roll (or at least towards the end). It uses tags to identify movies
-that have a stinger, which can be automatically added by the [Universal Movie Scraper]
-from [The Movie Database], as aftercreditsstinger and duringcreditsstinger.
+when the credits roll (or at least towards the end).
 
+**Stinger scene notification** can be [installed] from the official Kodi add-on repository,
+under "Services", for Kodi 16 Jarvis and up.
+
+[installed]: http://kodi.wiki/view/HOW-TO:Install_add-ons
+
+It uses tags to identify movies that have a stinger scene, which can be automatically
+added by the [Universal Movie Scraper] from [The Movie Database], as 'aftercreditsstinger'
+and 'duringcreditsstinger'.
 If there are no chapters on your media file, the add-on searches for them on the
 [ChapterDb]. If chapters are available, the notification pops up when the last chapter
 starts, which is generally the credits, otherwise 10 (configurable) minutes before
@@ -19,7 +25,6 @@ the movie ends.
 
 ### Adding tags
 
-It looks for the tags 'aftercreditsstinger' and 'duringcreditsstinger' in your Kodi library.
 To add these tags to new movies automatically, use a movie scraper that can set tags
 from The Movie Database. The Universal Movie Scraper can be configured with a setting.
 
