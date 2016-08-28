@@ -1,4 +1,4 @@
-# -*- code: utf-8 -*-
+# -*- coding: utf-8 -*-
 """
 kodiswift.listitem
 ------------------
@@ -28,7 +28,7 @@ class ListItem(object):
         """Defaults are an emtpy string since xbmcgui.ListItem will not
         accept None.
         """
-        self._listitem = xbmcgui.ListItem(label, label2, path)
+        self._listitem = xbmcgui.ListItem(label=label, label2=label2, path=path)
 
         # The docs have the thumbnail property set as thumb
         # http://mirrors.kodi.tv/docs/python-docs/16.x-jarvis/xbmcgui.html#ListItem-setArt

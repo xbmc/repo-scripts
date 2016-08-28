@@ -1,3 +1,32 @@
+0.0.5
+=====
+
+- Add xbmcvfs mock
+- Added listdir to xbmcvfs
+- Exclude tests from distribute package
+- Fix issue when path sets as icon for listitem object
+- Add test for plugin.set_resolved_url()
+- Add check of played
+- set_resolved_url test check playable
+- Improve mock of xbmc, to use xbmc libraries addons in python path
+- Fixed failing TestResolvedUrl test
+
+0.0.4
+=====
+
+- Merge pull request #6 More robust test before manipulation of item
+- Merge pull request #8 Fix notify
+
+0.0.3
+=====
+
+- Merge pull request #5 fix storage error on Windows
+
+0.0.2
+=====
+
+- Merge pull request #3 fix set_setting
+
 0.0.1
 =====
 

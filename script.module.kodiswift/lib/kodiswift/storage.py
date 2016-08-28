@@ -1,4 +1,4 @@
-# -*- code: utf-8 -*-
+# -*- coding: utf-8 -*-
 """
 kodiswift.storage
 -----------------
@@ -14,6 +14,7 @@ import collections
 import json
 import os
 import time
+import shutil
 from datetime import datetime
 
 try:
@@ -96,8 +97,7 @@ class PersistentStorage(collections.MutableMapping):
                         break
                     except pickle.UnpicklingError:
                         pass
-            # If we weren't able to load the file and it exists,
-            # raise an error.
+            # If the file exists and wasn't able to be loaded, raise an error.
             if not self._loaded:
                 raise UnknownFormat('Failed to load file')
         return self._loaded
@@ -120,7 +120,7 @@ class PersistentStorage(collections.MutableMapping):
             if os.path.exists(temp_file):
                 os.remove(temp_file)
             raise
-        os.rename(temp_file, self.file_path)
+        shutil.move(temp_file, self.file_path)
 
 
 class TimedStorage(PersistentStorage):
@@ -158,3 +158,6 @@ class TimedStorage(PersistentStorage):
             except KeyError:
                 pass
         return items
+
+    def sync(self):
+        super(TimedStorage, self).sync()
