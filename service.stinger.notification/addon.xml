@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="service.stinger.notification" name="Stinger scene notification" version="1.0.0" provider-name="rmrector">
+<addon id="service.stinger.notification" name="Stinger scene notification" version="1.0.1" provider-name="rmrector">
 	<requires>
 		<import addon="xbmc.python" version="2.19.0" />
 		<import addon="script.module.simplejson" version="3.3.0" />
@@ -7,9 +7,9 @@
 	</requires>
 	<extension point="xbmc.service" start="login" library="service.py" />
 	<extension point="xbmc.addon.metadata">
-		<summary lang="en_US">This service notifies you of stinger scenes in the currently playing movie.</summary>
-		<description lang="en_US">This add-on notifies you of stinger scenes in the current movie, popping up a notification when the credits roll. It uses tags to identify movies that have a stinger scene, which can be automatically added by the Universal Movie Scraper from The Movie Database. It can also query the ChapterDb if the media file does not have chapters to better identify the end credits.</description>
-		<disclaimer lang="en_US">This add-on requires the tags 'aftercreditsstinger' and/or 'duringcreditsstinger' on movies with a stinger scene.</disclaimer>
+		<summary lang="en">This service notifies you of stinger scenes in the currently playing movie.</summary>
+		<description lang="en">This add-on notifies you of stinger scenes in the current movie, popping up a notification when the credits roll. It uses tags to identify movies that have a stinger scene, which can be automatically added by the Universal Movie Scraper from The Movie Database. It can also query the ChapterDb if the media file does not have chapters to better identify the end credits.</description>
+		<disclaimer lang="en">This add-on requires the tags 'aftercreditsstinger' and/or 'duringcreditsstinger' on movies with a stinger scene.</disclaimer>
 		<source>https://github.com/rmrector/service.stinger.notification</source>
 		<forum>http://forum.kodi.tv/showthread.php?tid=254004</forum>
 		<license>The MIT License</license>
