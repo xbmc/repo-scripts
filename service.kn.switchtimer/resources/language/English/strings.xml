@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<strings>
+    <string id="30000">Switch Timer Service</string>
+    <!-- settings -->
+    <string id="30001">Show Notice or Countdown before Channel will switched</string>
+    <string id="30002">Duration of Notification or Countdown</string>
+    <string id="30003">Show Confirmation if Timer is set</string>
+    <string id="30004">Ignore Timers older than</string>
+    <!-- Info -->
+    <string id="30010">Currently active Timers</string>
+    <string id="30011">Delete all Timers</string>
+    <string id="30012">Use Countdown Timer</string>
+    <!-- Messages -->
+    <string id="30020">Date/Time of Timer could not calculated</string>
+    <string id="30021">Timer added</string>
+    <string id="30022">Timer is in the past</string>
+    <string id="30023">Timer for this time already set</string>
+    <string id="30024">Timer Limit exceed, no free Slots</string>
+    <string id="30025">Could not switch to %s</string>
+    <string id="30026">Switching now to '%s'.</string>
+    <string id="30027">Broadcast on '%s' starts now</string>
+    <string id="30028">Channel Switch requested</string>
+    <string id="30029">%s Seconds left to abort</string>
+    <string id="30030">This Addon is a part of the KN switchtimer service and cannot use as a standalone application.</string>
+    <!-- Labels -->
+    <string id="30040">Add switchtimer</string>
+    <string id="30041">Reset all switchtimers</string>
+</strings>
