@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<strings>
+    <string id="30000">Switch Timer Service</string>
+    <!-- settings -->
+    <string id="30001">Toon melding of Aftelprocedure voor er van kanaal gewisseld wordt</string>
+    <string id="30002">Tijdsduur of Melding of Aftelprocedure</string>
+    <string id="30003">Toon bevestiging als timer is aangemaakt</string>
+    <string id="30004">Negeer timers ouder dan</string>
+    <!-- Info -->
+    <string id="30010">Huidige actieve timers</string>
+    <string id="30011">Verwijder alle timers</string>
+    <string id="30012">Gebruik aftelprocedure</string>
+    <!-- Messages -->
+    <string id="30020">Datum/Tijd van timer kan niet berekend worden</string>
+    <string id="30021">Timer toegevoegd</string>
+    <string id="30022">Timer is in het verleden</string>
+    <string id="30023">Timer voor deze tijd bestaat al</string>
+    <string id="30024">Timer limiet bereikt, geen vrije plaatsen over</string>
+    <string id="30025">Kan niet overschakelen naar %s</string>
+    <string id="30026">Schakel nu over naar '%s'.</string>
+    <string id="30027">Uitzending op '%s' begint nu</string>
+    <string id="30028">Kanaal overschakelen aangevraagd</string>
+    <string id="30029">%s Seconden resterend om af te breken</string>
+    <string id="30030">Deze addon is onderdeel van KN switchtimer service en kan niet gebruikt worden als losstaande applicatie.</string>
+    <!-- Labels -->
+    <string id="30040">Voeg overschakel timer toe</string>
+    <string id="30041">Reset alle timers</string>
+</strings>

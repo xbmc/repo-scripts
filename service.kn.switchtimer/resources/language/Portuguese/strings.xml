@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<strings>
+    <string id="30000">Serviço de Sintonização Agendada</string>
+    <!-- settings -->
+    <string id="30001">Mostrar Notificação ou Contagem decrescente antes de sintonizar o canal</string>
+    <string id="30002">Duração da Notificação ou Contagem decrescente</string>
+    <string id="30003">Mostrar confirmação se o temporizador estiver definido</string>
+    <string id="30004">Ignorar temporizadores com mais de</string>
+    <!-- Info -->
+    <string id="30010">Temporizadores atualmente ativos</string>
+    <string id="30011">Eliminar todos os temporizadores</string>
+    <string id="30012">Usar temporizador com contagem decrescente</string>
+    <!-- Messages -->
+    <string id="30020">Não foi possível calcular a data/hora do temporizador</string>
+    <string id="30021">Temporizador adicionado</string>
+    <string id="30022">A data/hora de ínicio já passou</string>
+    <string id="30023">Já existe um temporizador para esta hora</string>
+    <string id="30024">Limite de temporizadores atingido, não existem vagas</string>
+    <string id="30025">Não foi possível sintonizar %s</string>
+    <string id="30026">A sintonizar '%s'.</string>
+    <string id="30027">A emissão '%s' começa agora</string>
+    <string id="30028">Sintonização agendada de canal</string>
+    <string id="30029">%s segundos restantes</string>
+    <string id="30030">Este add-on faz parte do serviço KN switchtimer e não pode ser usado diretamente.</string>
+    <!-- Labels -->
+    <string id="30040">Novo temporizador de sintonização</string>
+    <string id="30041">Reiniciar temporizadores de sintonização</string>
+</strings>
