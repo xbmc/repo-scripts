@@ -16,6 +16,7 @@
 '''
 
 
+import xbmc
 import urllib,urlparse,re,os
 
 from lamlib import cache
@@ -136,7 +137,6 @@ class subztvgr:
 
             with open(f, 'wb') as subFile:
                 subFile.write(result)
-            subFile.close()
 
             dirs, files = control.listDir(path)
 
@@ -148,6 +148,7 @@ class subztvgr:
                 try:
                     dirs, files = control.listDir(path)
                     if len(files) > 1: break
+                    if xbmc.abortRequested == True: break
                     control.sleep(1000)
                 except:
                     pass
