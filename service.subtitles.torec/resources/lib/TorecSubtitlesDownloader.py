@@ -7,6 +7,7 @@ import urllib2
 import zlib
 
 import bs4
+
 import xbmc
 import xbmcaddon
 
@@ -113,7 +114,7 @@ class FirefoxURLHandler(object):
 
 class TorecSubtitlesDownloader(FirefoxURLHandler):
     DEFAULT_SEPERATOR = " "
-    BASE_URL          = "http://www.torec.net"
+    BASE_URL          = "http://www.xn--9dbf0cd.net"
     SUBTITLE_PATH     = "sub.asp?sub_id="
     USER_AUTH_JS_URL  = "http://www.torec.net/gjs/subw.js"
     DEFAULT_COOKIE    = (
@@ -127,7 +128,7 @@ class TorecSubtitlesDownloader(FirefoxURLHandler):
     def _build_default_cookie(self, sub_id):
         current_time = datetime.datetime.now().strftime("%m/%d/%Y+%I:%M:%S+%p")
         return self.DEFAULT_COOKIE % {
-            "screen_width": 1760,
+            "screen_width": 1440,
             "subId": sub_id,
             "current_datetime": current_time
         }
@@ -139,12 +140,15 @@ class TorecSubtitlesDownloader(FirefoxURLHandler):
         return re.search(r"seconds\s+=\s+(\d+);", subw_text).group(1)
 
     def _request_subtitle(self, sub_id):
-         params = {
+        params = {
             "sub_id"  : sub_id, 
             "s"       : 1440
-         }
+        }
 
-         return self.opener.open("%s/ajax/sub/guest_time.asp" % self.BASE_URL, urllib.urlencode(params)).read()
+        response = self.opener.open("%s/ajax/sub/guest_time.asp" % self.BASE_URL, urllib.urlencode(params))
+        data     = response.read()
+
+        return data
 
     def search(self, movie_name):
         santized_name = self.sanitize(movie_name)
@@ -194,6 +198,10 @@ class TorecSubtitlesDownloader(FirefoxURLHandler):
         return response.read()
 
     def download(self, download_link):
+        if not download_link:
+            log(__name__, "no download link found")
+            return None, None
+
         response = self.opener.open(
             "%s%s" % (self.BASE_URL, download_link)
         )
