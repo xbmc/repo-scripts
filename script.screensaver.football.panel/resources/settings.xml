@@ -44,4 +44,8 @@
 		<setting id="rss-url" type="text" label="32007" default="http://uefa.com/rssfeed/news/rss.xml"/>
 		<setting label="32008" type="slider" id="rss-update-time" default="10" range="10,5,120" option="int" />
 	</category>
+	<category label="32018">
+		<setting id="new_request_interval" type="enum" label="32019" values="24h|48h|96h|1w|2w" default="4"/>
+		<setting label="32020" type="action" action="RunScript(script.screensaver.football.panel, removecache)"/>
+	</category>
 </settings>
