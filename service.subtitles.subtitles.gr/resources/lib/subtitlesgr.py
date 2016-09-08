@@ -16,6 +16,7 @@
 '''
 
 
+import xbmc
 import urllib,urllib2,urlparse,zipfile,StringIO,re,os
 
 from lamlib import client
@@ -119,7 +120,6 @@ class subtitlesgr:
 
                 with open(subtitle, 'wb') as subFile:
                     subFile.write(result)
-                subFile.close()
 
                 return subtitle
 
@@ -132,7 +132,6 @@ class subtitlesgr:
 
                 with open(f, 'wb') as subFile:
                     subFile.write(result)
-                subFile.close()
 
                 dirs, files = control.listDir(path)
 
@@ -144,6 +143,7 @@ class subtitlesgr:
                     try:
                         dirs, files = control.listDir(path)
                         if len(files) > 1: break
+                        if xbmc.abortRequested == True: break
                         control.sleep(1000)
                     except:
                         pass

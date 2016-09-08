@@ -141,7 +141,6 @@ class xsubstv:
 
             with open(subtitle, 'wb') as subFile:
                 subFile.write(result)
-            subFile.close()
 
             return subtitle
         except:
