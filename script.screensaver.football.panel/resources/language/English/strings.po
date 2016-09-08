@@ -84,5 +84,24 @@ msgctxt "#32017"
 msgid "Cancel"
 msgstr ""
 
+msgctxt "#32018"
+msgid "Cache"
+msgstr ""
+
+msgctxt "#32019"
+msgid "Only request new team and league logos after..."
+msgstr ""
+
+msgctxt "#32020"
+msgid "Remove all cached data"
+msgstr ""
+
+msgctxt "#32021"
+msgid "All cached data was removed!"
+msgstr ""
+
+msgctxt "#32022"
+msgid "No cached data available to remove!"
+msgstr ""
 
 

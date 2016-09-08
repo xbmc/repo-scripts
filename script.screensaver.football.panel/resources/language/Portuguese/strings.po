@@ -83,3 +83,23 @@ msgstr "OK"
 msgctxt "#32017"
 msgid "Cancel"
 msgstr "Cancelar"
+
+msgctxt "#32018"
+msgid "Cache"
+msgstr "Cache"
+
+msgctxt "#32019"
+msgid "Only request new team and league logos after..."
+msgstr "Apenas pedir novos logos após"
+
+msgctxt "#32020"
+msgid "Remove all cached data"
+msgstr "Remover todos os dados em cache"
+
+msgctxt "#32021"
+msgid "All cached data was removed!"
+msgstr "Todos os dados em cache foram removidos"
+
+msgctxt "#32022"
+msgid "No cached data available to remove!"
+msgstr "Nao existem dados em cache para remover!"

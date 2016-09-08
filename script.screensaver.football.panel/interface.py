@@ -30,6 +30,7 @@ import pytz
 import datetime
 from resources.lib import ignoreleagues
 from resources.lib import ssutils
+from resources.lib.cache import AddonCache
 from resources.lib.common_addon import *
 
 api = thesportsdb.Api("7723457519235")
@@ -59,6 +60,7 @@ class Main(xbmcgui.WindowXMLDialog):
 		
 		self.table_index = -1
 		self.teamObjs = {}
+		self.cache_object = AddonCache()
 
 	def onInit(self):
 		xbmc.log(msg="[Football Panel] Script started", level=xbmc.LOGDEBUG)
@@ -141,20 +143,59 @@ class Main(xbmcgui.WindowXMLDialog):
 		if self.table_index > (len(self.tables)-1):
 			self.table_index = 0
 
-		league = api.Lookups().League(self.tables[self.table_index])[0]
-		table = api.Lookups().Table(self.tables[self.table_index],objects=True)
+		leagueid = self.tables[self.table_index]
+		table = api.Lookups().Table(leagueid)
+
+		#Look for cached data first
+		t2 = datetime.datetime.now()
+		hoursList = [24, 48, 96, 168, 336]
+		interval = int(addon.getSetting("new_request_interval"))
+
+		#league data
+		update_league_data = True
+		if self.cache_object.isCachedLeague(leagueid):
+			update_league_data = abs(t2 - self.cache_object.getCachedLeagueTimeStamp(leagueid)) > datetime.timedelta(hours=hoursList[interval])
+
+		if update_league_data:
+			xbmc.log(msg="[Football Panel] Timedelta was reached for league %s new request to be made..." % (str(leagueid)), level=xbmc.LOGDEBUG)
+			league = api.Lookups().League(self.tables[self.table_index])[0]
+			self.cache_object.cacheLeague(leagueid=leagueid,league_obj=league)
+		else:
+			xbmc.log(msg="[Football Panel] Using cached object for league %s" % (str(leagueid)), level=xbmc.LOGDEBUG)
+			league = self.cache_object.getcachedLeague(leagueid)
+
+		#team data
+		update_team_data = True
+		if self.cache_object.isCachedTeams(leagueid):
+			update_team_data = abs(t2 - self.cache_object.getCachedTeamsTimeStamp(leagueid)) > datetime.timedelta(hours=hoursList[interval])
+
+		if update_team_data:
+			xbmc.log(msg="[Football Panel] Timedelta was reached for teams in league %s new request to be made..." % (str(leagueid)), level=xbmc.LOGDEBUG)
+			teams_in_league = api.Lookups().Team(leagueid=self.tables[self.table_index])
+			self.cache_object.cacheLeagueTeams(leagueid=leagueid,team_obj_list=teams_in_league)
+		else:
+			xbmc.log(msg="[Football Panel] Using cached object for teams in league %s" % (str(leagueid)), level=xbmc.LOGDEBUG)
+			teams_in_league = self.cache_object.getcachedLeagueTeams(leagueid)
 		
+		#Finnaly set the table
+
 		self.table = []
 		for tableentry in table:
 			try:
 				if show_alternative == "false":
 					item = xbmcgui.ListItem(tableentry.name)
-				else:
-					item = xbmcgui.ListItem(tableentry.Team.AlternativeNameFirst)
-				item.setArt({ 'thumb': tableentry.Team.strTeamBadge })
+
+				for team in teams_in_league:
+					if tableentry.teamid == team.idTeam:
+						item.setArt({ 'thumb': team.strTeamBadge })
+						if show_alternative == "true":
+							item.setLabel(team.AlternativeNameFirst)
+
 				item.setProperty('points',str(tableentry.total))
 				self.table.append(item)
-			except:pass
+			except Exception, e:
+				xbmc.log(msg="[Football Panel] Exception: %s" % (str(e)), level=xbmc.LOGDEBUG)
+
 		
 		self.getControl(LEAGUETABLES_LIST_CONTROL).reset()
 		if league.strLogo:
@@ -302,11 +343,14 @@ if not params:
 	del main
 
 else:
-	ignoreWindow = ignoreleagues.Select(
-			'DialogSelect.xml',
-			addon_path,
-			'default',
-			'',
-			)
-	ignoreWindow.doModal()
-	del ignoreWindow
+	if "ignoreleagues" in params:
+		ignoreWindow = ignoreleagues.Select(
+				'DialogSelect.xml',
+				addon_path,
+				'default',
+				'',
+				)
+		ignoreWindow.doModal()
+		del ignoreWindow
+	elif "removecache" in params:
+		AddonCache.removeCachedData()
