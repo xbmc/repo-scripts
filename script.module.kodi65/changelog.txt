@@ -1,3 +1,7 @@
+1.1.0
+
+- Added: merged t9 browser module
+
 1.0.4
 
 - Fixed: Adapt to latest Kodi changes

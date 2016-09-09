@@ -412,3 +412,31 @@ class FunctionThread(threading.Thread):
     def run(self):
         self.listitems = self.function(self.param)
         return True
+
+
+def reset_color(item):
+    label = item.getLabel2()
+    label = label.replace("[COLOR=FFFF3333]", "").replace("[/COLOR]", "")
+    item.setLabel2(label)
+
+
+def dict_to_listitems(data=None):
+    if not data:
+        return []
+    itemlist = []
+    for (count, result) in enumerate(data):
+        listitem = xbmcgui.ListItem('%s' % (str(count)))
+        for (key, value) in result.iteritems():
+            if not value:
+                continue
+            value = unicode(value)
+            if key.lower() in ["name", "label"]:
+                listitem.setLabel(value)
+            elif key.lower() in ["label2"]:
+                listitem.setLabel2(value)
+            elif key.lower() in ["path"]:
+                listitem.setPath(path=value)
+            listitem.setProperty('%s' % (key), value)
+        listitem.setProperty("index", str(count))
+        itemlist.append(listitem)
+    return itemlist
