@@ -166,16 +166,16 @@
 		<control type="image" id="32540">
 			<description>Busy animation</description>
 			<posx>450</posx>
-			<posy>270</posy>
+			<posy>290</posy>
 			<width>120</width>
 			<height>120</height>
 			<texture></texture>
 			<aspectratio>keep</aspectratio>
-			<animation effect="rotate" start="0" end="360" center="510,330" time="1200" loop="true" condition="true">conditional</animation>
+			<animation effect="rotate" start="0" end="360" center="510,350" time="1200" loop="true" condition="true">conditional</animation>
 			<visible>!IsEmpty(Window(home).Property(loading))</visible>
 		</control>
 		<control type="label">
-			<top>280</top>
+			<top>300</top>
 			<left>350</left>
 			<width>650</width>
 			<height>90</height>

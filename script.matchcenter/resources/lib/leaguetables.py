@@ -23,7 +23,9 @@
 import xbmcgui
 import xbmc
 import thesportsdb
+import datetime
 import matchhistory
+from resources.lib.utilities.cache import AddonCache
 from resources.lib.utilities.common_addon import *
 
 api = thesportsdb.Api("7723457519235")
@@ -33,6 +35,7 @@ class detailsDialog(xbmcgui.WindowXMLDialog):
 	def __init__( self, *args, **kwargs ):
 		self.leagueid = kwargs["leagueid"]
 		self.teamObjs = {}
+		self.cache_object = AddonCache()
 
 	def onInit(self):
 		self.getControl(32540).setImage(os.path.join(addon_path,"resources","img","goal.png"))
@@ -40,25 +43,62 @@ class detailsDialog(xbmcgui.WindowXMLDialog):
 		self.setTable()
 		xbmc.executebuiltin("ClearProperty(loadingtables,Home)")
 
-	def setTable(self):
+	def updateCacheTimes(self):
+		self.t2 = datetime.datetime.now()
+		self.hoursList = [168, 336, 504, 672, 840]
+		self.interval = int(addon.getSetting("new_request_interval"))
+		return
 
-		league = api.Lookups().League(leagueid=self.leagueid)[0]
+	def setTable(self):
+		self.updateCacheTimes()
+
+		#league data
+		update_league_data = True
+		if self.cache_object.isCachedLeague(self.leagueid):
+			update_league_data = abs(self.t2 - self.cache_object.getCachedLeagueTimeStamp(self.leagueid)) > datetime.timedelta(hours=self.hoursList[self.interval])
+
+		if update_league_data:
+			xbmc.log(msg="[Match Center] Timedelta was reached for league %s new request to be made..." % (str(self.leagueid)), level=xbmc.LOGDEBUG)
+			league = api.Lookups().League(self.leagueid)[0]
+			self.cache_object.cacheLeague(leagueid=self.leagueid,league_obj=league)
+		else:
+			xbmc.log(msg="[Match Center] Using cached object for league %s" % (str(self.leagueid)), level=xbmc.LOGDEBUG)
+			league = self.cache_object.getcachedLeague(self.leagueid)
+
 		if league:
 			self.getControl(32500).setLabel(league.strLeague)
 
-		table = api.Lookups().Table(leagueid=self.leagueid,objects=True)
+		table = api.Lookups().Table(leagueid=self.leagueid)
+
 		if table:
+			#team data
+			update_team_data = True
+			if self.cache_object.isCachedLeagueTeams(self.leagueid):
+				update_team_data = abs(self.t2 - self.cache_object.getCachedLeagueTeamsTimeStamp(self.leagueid)) > datetime.timedelta(hours=self.hoursList[self.interval])
+
+			if update_team_data:
+				xbmc.log(msg="[Match Center] Timedelta was reached for teams in league %s new request to be made..." % (str(self.leagueid)), level=xbmc.LOGDEBUG)
+				teams_in_league = api.Lookups().Team(leagueid=self.leagueid)
+				self.cache_object.cacheLeagueTeams(leagueid=self.leagueid,team_obj_list=teams_in_league)
+			else:
+				xbmc.log(msg="[Match Center] Using cached object for teams in league %s" % (str(self.leagueid)), level=xbmc.LOGDEBUG)
+				teams_in_league = self.cache_object.getcachedLeagueTeams(self.leagueid)
+
+
 			self.table = []
 			position = 1
 			for tableentry in table:
 				try:
-					if show_alternative == "false":
-						item = xbmcgui.ListItem(tableentry.name)
-					else:
-						item = xbmcgui.ListItem(tableentry.Team.AlternativeNameFirst)
-					item.setProperty('position','[B]'+str(position)+ ' - [/B]' )
-					item.setProperty('teambadge',tableentry.Team.strTeamBadge)
-					item.setProperty('teamid',tableentry.Team.idTeam)
+					item = xbmcgui.ListItem(tableentry.name)
+					for team in teams_in_league:
+						if tableentry.teamid == team.idTeam:
+							item.setArt({ 'thumb': team.strTeamBadge })
+
+							if show_alternative == "true":
+								item.setLabel(team.AlternativeNameFirst)
+							item.setProperty('teamid',team.idTeam)
+					
+					item.setProperty('position','[B]'+str(position)+ ' - [/B]' )		
 					item.setProperty('totalgames',str(tableentry.played))
 					item.setProperty('totalwins',str(tableentry.win))
 					item.setProperty('totaldraws',str(tableentry.draw))
@@ -69,7 +109,8 @@ class detailsDialog(xbmcgui.WindowXMLDialog):
 					item.setProperty('points',str(tableentry.total))
 					position += 1
 					self.table.append(item)
-				except: pass
+				except Exception, e:
+					xbmc.log(msg="[Match Center] Exception: %s" % (str(e)), level=xbmc.LOGDEBUG)
 
 			self.getControl(32501).addItems(self.table)
 			self.setFocusId(32501)

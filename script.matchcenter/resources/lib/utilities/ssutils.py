@@ -131,15 +131,3 @@ def get_seconds_string(seconds):
 		return translate(32062)
 	else:
 		return translate(32063)
-
-def write_file(file,data):
-	f = open(file,"w")
-	f.write(data)
-	f.close()
-	return
-
-def read_file(file):
-	f = open(file,"r")
-	contents = f.read()
-	f.close()
-	return contents

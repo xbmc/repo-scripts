@@ -27,10 +27,11 @@ import json
 import mainmenu
 import os
 from resources.lib.utilities import tweet
+from resources.lib.utilities.addonfileio import FileIO
 from resources.lib.utilities import ssutils
 from resources.lib.utilities.common_addon import *
 
-class detailsDialog(xbmcgui.WindowXMLDialog):
+class TwitterDialog(xbmcgui.WindowXMLDialog):
 		
 	def __init__( self, *args, **kwargs ):
 		self.isRunning = True
@@ -72,15 +73,6 @@ class detailsDialog(xbmcgui.WindowXMLDialog):
 			self.setFocusId(32501)
 		return
 
-	def savecurrenthash(self):
-		media_file = xbmc.getInfoLabel('Player.Filenameandpath')
-		media_dict = {"file" : media_file, "hash":self.hash}
-		if not os.path.exists(tweet_file):
-			if not os.path.exists(addon_userdata):
-				os.mkdir(addon_userdata)
-		ssutils.write_file(tweet_file,json.dumps(media_dict))
-		return
-
 	def reset(self):
 		if os.path.exists(tweet_file):
 			os.remove(tweet_file)
@@ -105,34 +97,34 @@ class detailsDialog(xbmcgui.WindowXMLDialog):
 			self.reset()
 
 def start(twitterhash=None, standalone=False):
-	if twitterhash == None:
+	if not twitterhash:
+		userInput = True
 		if os.path.exists(tweet_file):
-			twitter_data = json.loads(ssutils.read_file(tweet_file))
+			twitter_data = json.loads(FileIO.fileread(tweet_file))
 			twitterhash = twitter_data["hash"]
 			twitter_mediafile = twitter_data["file"]
 			if twitter_mediafile == xbmc.getInfoLabel('Player.Filenameandpath'):
 				userInput = False
-				main = detailsDialog('script-matchcenter-Twitter.xml', addon_path, getskinfolder(), '', hash=twitterhash)
-				main.doModal()
-				del main
-			else:
-				userInput = True
-		else:
-			userInput = True
-
-		if userInput:
-			dialog = xbmcgui.Dialog()
-			twitterhash = dialog.input(translate(32046), type=xbmcgui.INPUT_ALPHANUM)
-			if len(twitterhash) != 0:
-				main = detailsDialog('script-matchcenter-Twitter.xml', addon_path, getskinfolder(), '', hash=twitterhash.replace("#",""), standalone=standalone)
-				if xbmc.getCondVisibility("Player.HasMedia") and save_hashes_during_playback == 'true':
-					main.savecurrenthash()
-				main.doModal()
-				del main
-			else:
-				xbmcgui.Dialog().ok(translate(32000), translate(32047))
-				mainmenu.start()
 	else:
-		main = detailsDialog('script-matchcenter-Twitter.xml', addon_path, getskinfolder(), '', hash=twitterhash, standalone=standalone)
+		userInput = False
+
+	if userInput:
+		dialog = xbmcgui.Dialog()
+		twitterhash = dialog.input(translate(32046), type=xbmcgui.INPUT_ALPHANUM)
+		if len(twitterhash) != 0:
+			twitterhash = twitterhash.replace("#","")
+		else:
+			xbmcgui.Dialog().ok(translate(32000), translate(32047))
+			mainmenu.start()
+
+	if twitterhash:
+		#Save twitter hashtag
+		if twitter_history_enabled == 'true':
+			tweet.add_hashtag_to_twitter_history(twitterhash)
+		if xbmc.getCondVisibility("Player.HasMedia") and save_hashes_during_playback == 'true':
+			tweet.savecurrenthash(twitterhash)
+		
+		main = TwitterDialog('script-matchcenter-Twitter.xml', addon_path, getskinfolder(), '', hash=twitterhash, standalone=standalone)
 		main.doModal()
-		del main	
+		del main
+

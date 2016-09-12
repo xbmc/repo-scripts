@@ -30,10 +30,16 @@ addon_path = addon.getAddonInfo('path')
 addon_userdata = xbmc.translatePath(addon.getAddonInfo('profile')).decode('utf-8')
 addon_name = addon.getAddonInfo('name')
 
+#cache folders
+addon_userdata_cached_leagues = os.path.join(addon_userdata,"leagues")
+addon_userdata_cached_leagueteams = os.path.join(addon_userdata,"leagueteams")
+addon_userdata_cached_teams = os.path.join(addon_userdata,"teams")
+
 ignored_league_list_file = os.path.join(addon_userdata,"ignored.txt") 
 livescores_update_time = int(addon.getSetting("livescores-update-time"))
 twitter_update_time = int(addon.getSetting("twitter-update-time"))
 save_hashes_during_playback = addon.getSetting("save_hashes_during_playback")
+twitter_history_enabled = addon.getSetting("twitter_history_enabled")
 my_timezone = addon.getSetting("timezone")
 my_location = pytz.timezone(pytz.all_timezones[int(my_timezone)])
 hide_notstarted = addon.getSetting("hide-notstarted")
@@ -41,6 +47,8 @@ hide_finished = addon.getSetting("hide-finished")
 show_alternative = addon.getSetting("use-alternative-name")
 json_formations = os.path.join(addon_path,"resources","formations.dict")
 tweet_file = os.path.join(addon_userdata,"twitter.txt")
+twitter_history_file = os.path.join(addon_userdata,"twitter_history.txt")
+
 
 def getskinfolder():
     #if "skin.aeon.nox" in xbmc.getSkinDir(): return "skin.aeon.nox.5"

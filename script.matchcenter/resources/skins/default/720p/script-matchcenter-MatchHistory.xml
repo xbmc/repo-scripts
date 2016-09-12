@@ -163,7 +163,7 @@
 						<width>40</width>
 						<height>35</height>
 						<label>[B]VS[/B]</label>
-						<font>font16</font>
+						<font>font14</font>
 						<align>left</align>
 						<textcolor>white</textcolor>
 						<shadowcolor>AA000000</shadowcolor>
@@ -258,7 +258,7 @@
 						<width>40</width>
 						<height>35</height>
 						<label>[B]VS[/B]</label>
-						<font>font16</font>
+						<font>font14</font>
 						<align>left</align>
 						<textcolor>white</textcolor>
 						<shadowcolor>AA000000</shadowcolor>
@@ -356,7 +356,7 @@
 						<width>40</width>
 						<height>35</height>
 						<label>$INFO[ListItem.Property(result)]</label>
-						<font>font16</font>
+						<font>font14</font>
 						<align>left</align>
 						<textcolor>white</textcolor>
 						<shadowcolor>AA000000</shadowcolor>
@@ -451,7 +451,7 @@
 						<width>40</width>
 						<height>35</height>
 						<label>$INFO[ListItem.Property(result)]</label>
-						<font>font16</font>
+						<font>font14</font>
 						<align>left</align>
 						<textcolor>white</textcolor>
 						<shadowcolor>AA000000</shadowcolor>

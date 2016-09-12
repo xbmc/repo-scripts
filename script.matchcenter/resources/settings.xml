@@ -43,8 +43,15 @@
 	<category label="32010">
 		<setting label="32011" type="slider" id="twitter-update-time" default="2" range="1,1,30" option="int" />
 		<setting id="save_hashes_during_playback" type="bool" label="32012" default="true" />
+		<setting id="twitter_history_enabled" type="bool" label="32073" default="true" />
+		<setting label="32074" type="action" action="RunScript(script.matchcenter, removetwitterhistory)" enable="eq(-1,true)"/>
 	</category>
 	<category label="32013">
 		<setting label="32014" type="action" action="RunScript(script.matchcenter, keymapeditor)"/>
 	</category>
+	<category label="32068">
+		<setting id="new_request_interval" type="enum" label="32069" values="1w|2w|3w|4w|5w" default="3"/>
+		<setting label="32070" type="action" action="RunScript(script.matchcenter, removecache)"/>
+	</category>
+
 </settings>

@@ -33,7 +33,9 @@ from resources.lib import tweets
 from resources.lib import leagueselection
 from resources.lib import eventdetails
 from resources.lib import matchhistory
+from resources.lib.utilities.cache import AddonCache
 from resources.lib.utilities import keymapeditor
+from resources.lib.utilities import tweet
 from resources.lib.utilities.common_addon import *
  
 def get_params():
@@ -47,7 +49,8 @@ def get_params():
 params=get_params()
 
 if not params:
-    mainmenu.start()
+    if "script-matchcenter-MainMenu.xml" not in xbmc.getInfoLabel('Window.Property(xmlfile)'):
+        mainmenu.start()
 else:
     #Integration patterns below
     '''
@@ -58,6 +61,10 @@ else:
         ignoreleagues.start()
     elif params[0] == 'keymapeditor':
         keymapeditor.run()
+    elif params[0] == 'removecache':
+        AddonCache.removeCachedData()
+    elif params[0] == 'removetwitterhistory':
+        tweet.remove_twitter_hashtag_history()
     elif params[0] == 'livescores':
         livescores.start(standalone=True)
     elif params[0] == 'twitter':

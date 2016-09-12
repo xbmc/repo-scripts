@@ -31,6 +31,7 @@ import re
 import ignoreleagues
 from resources.lib.utilities import positions
 from resources.lib.utilities import ssutils
+from resources.lib.utilities.addonfileio import FileIO
 from resources.lib.utilities.common_addon import *
 
 api = thesportsdb.Api("7723457519235")
@@ -339,7 +340,7 @@ class detailsDialog(xbmcgui.WindowXMLDialog):
 		pitchWidth = pitch.getWidth()
 
 		if self.formationlabel:
-			formationsjson = eval(ssutils.read_file(json_formations))
+			formationsjson = eval(FileIO.fileread(json_formations))
 			formation = formationsjson[self.formationlabel]
 		else:
 			formation = None

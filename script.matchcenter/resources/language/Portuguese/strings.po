@@ -283,3 +283,39 @@ msgstr "Ocorreu um erro. Por favor forneca um ficheiro de log ao desenvolvedor p
 msgctxt "#32067"
 msgid "Are you sure you want to define a keymap for this addon?"
 msgstr "Tem a certeza que deseja definir um novo Keymap para este addon?"
+
+msgctxt "#32068"
+msgid "Cache"
+msgstr "Cache"
+
+msgctxt "#32069"
+msgid "Only request new team and league logos after..."
+msgstr "Apenas pedir novos logos para equipas e ligas após..."
+
+msgctxt "#32070"
+msgid "Remove all cached data"
+msgstr "Remover todos os dados em cache"
+
+msgctxt "#32071"
+msgid "All cached data was removed!"
+msgstr "Todos os dados em cache foram removidos!"
+
+msgctxt "#32072"
+msgid "No cached data available to remove!"
+msgstr "Nao existem dados em cache para remover!"
+
+msgctxt "#32073"
+msgid "Enable Twitter hashtag history (context menu)"
+msgstr "Activar historico de hashtags para o Twitter (menu de contexto)"
+
+msgctxt "#32074"
+msgid "Delete Twitter hashtag history"
+msgstr "Eliminar historico de hashtags do Twitter"
+
+msgctxt "#32075"
+msgid "No twitter history available."
+msgstr "Sem historico do twitter disponivel."
+
+msgctxt "#32076"
+msgid "Please choose an hashtag from history:"
+msgstr "Por favor escolha uma hashtag do historico:"
