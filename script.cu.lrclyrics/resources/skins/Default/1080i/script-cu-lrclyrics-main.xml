@@ -91,7 +91,7 @@
 			<textureradioonnofocus colordiffuse="EEFFFFFF">culrc-logo.png</textureradioonnofocus>
 			<onclick>Action(close)</onclick>
 		</control>
-		<!-- ** Required ** Do not change <id> or <type> (Smooth scrolling list for lyrics) -->
+		<!-- ** Required ** Do not change <id> or <type> (Lyrics, will autoscroll if lrc based lyrics are shown) -->
 		<control type="list" id="110">
 			<left>10</left>
 			<top>110</top>
@@ -156,7 +156,7 @@
 			<shadowcolor>black</shadowcolor>
 			<visible>Control.IsVisible(120) + !Control.IsVisible(110)</visible>
 		</control>
-		<!-- ** Required ** Do not change <id> or <type> (Lyrics Chooser if it gets it wrong) -->
+		<!-- ** Required ** Do not change <id> or <type> (Lyrics Chooser, if multiple lyrics are available) -->
 		<control type="list" id="120">
 			<left>10</left>
 			<top>110</top>

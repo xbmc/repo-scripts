@@ -67,6 +67,8 @@ class MAIN():
                     WIN.setProperty('culrc.force','FALSE')
                     self.current_lyrics = Lyrics()
                     self.myPlayerChanged()
+                elif xbmc.getCondVisibility("Player.IsInternetStream"):
+                    self.myPlayerChanged()
             else:
                 # we may have exited the music visualization screen
                 self.triggered = False
@@ -75,6 +77,7 @@ class MAIN():
             xbmc.sleep(1000)
         WIN.clearProperty('culrc.quit')
         WIN.clearProperty('culrc.lyrics')
+        WIN.clearProperty('culrc.islrc')
         WIN.clearProperty('culrc.source')
         WIN.clearProperty('culrc.haslist')
         WIN.clearProperty('culrc.running')
@@ -227,9 +230,11 @@ class MAIN():
 
     def myPlayerChanged(self):
         global lyrics
+        songchanged = False
         for cnt in range( 5 ):
             song = Song.current()
             if ( song and ( self.current_lyrics.song != song ) ):
+                songchanged = True
                 log("Current Song: %s - %s" % (song.artist, song.title))
                 lyrics = self.get_lyrics( song )
                 self.current_lyrics = lyrics
@@ -249,7 +254,8 @@ class MAIN():
                         xbmc.executebuiltin((u'Notification(%s,%s,%i)' % (ADDONNAME + ": " + LANGUAGE(32001), song.artist.decode("utf-8") + " - " + song.title.decode("utf-8"), 2000)).encode('utf-8', 'ignore'))
                 break
             xbmc.sleep( 50 )
-        if xbmc.getCondVisibility('MusicPlayer.HasNext'):
+        # only search for next lyrics if current song has changed
+        if xbmc.getCondVisibility('MusicPlayer.HasNext') and songchanged:
             next_song = Song.next()
             if next_song:
                 log("Next Song: %s - %s" % (next_song.artist, next_song.title))
@@ -287,6 +293,7 @@ class MAIN():
 
     def clear(self):
         WIN.clearProperty('culrc.lyrics')
+        WIN.clearProperty('culrc.islrc')
         WIN.clearProperty('culrc.source')
         WIN.clearProperty('culrc.haslist')
 
@@ -324,6 +331,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
             self.show_lyrics(self.lyrics)
         else:
             WIN.setProperty('culrc.lyrics', LANGUAGE( 32001 ))
+            WIN.clearProperty('culrc.islrc')
         self.getControl( 120 ).reset()
         if self.lyrics.list:
             WIN.setProperty('culrc.haslist', 'true')
@@ -428,12 +436,14 @@ class GUI( xbmcgui.WindowXMLDialog ):
             source = lyrics.source
         self.getControl( 200 ).setLabel( source )
         if lyrics.lrc:
+            WIN.setProperty('culrc.islrc', 'true')
             self.parser_lyrics( lyrics.lyrics )
             for time, line in self.pOverlay:
                 listitem = xbmcgui.ListItem(line)
                 listitem.setProperty('time', str(time))
                 self.getControl( 110 ).addItem( listitem )
         else:
+            WIN.clearProperty('culrc.islrc')
             splitLyrics = lyrics.lyrics.splitlines()
             for x in splitLyrics:
                self.getControl( 110 ).addItem( x )
@@ -486,6 +496,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
         self.getControl( 110 ).reset()
         self.getControl( 200 ).setLabel('')
         WIN.clearProperty('culrc.lyrics')
+        WIN.clearProperty('culrc.islrc')
         WIN.clearProperty('culrc.source')
 
     def exit_gui(self, action):

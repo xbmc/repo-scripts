@@ -1,3 +1,9 @@
+v5.0.5
+- add support for internet streams
+
+v5.0.4
+- add lrc window property
+
 v5.0.3
 - fix embedded lyrics search
 

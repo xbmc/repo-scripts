@@ -29,6 +29,7 @@ Window(Home).Property(culrc.lyrics)  - shows the current lyrics, including timin
 Window(Home).Property(culrc.source)  - source or scraper that was used to find the current lyrics.
 Window(Home).Property(culrc.haslist) - will be 'true' if multiple lyrics are available, empty if not.
 Window(Home).Property(culrc.running) - returns 'true' when the lyrics script is running, empty if not.
+Window(Home).Property(culrc.islrc)   - returns 'true' when the lyrics are lrc based, empty if not.
 
 If you wish to retrieve lyrics for a specific track (Which is not currently playing) then you can use the
 following properties:
