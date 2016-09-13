@@ -27,10 +27,13 @@ import thesportsdb
 import random
 import threading
 import pytz
+import datetime
 import eventdetails
 import ignoreleagues
 import mainmenu
 from utilities import ssutils
+from utilities.addonfileio import FileIO
+from utilities.cache import AddonCache
 from utilities.common_addon import *
 
 api = thesportsdb.Api("7723457519235")
@@ -41,11 +44,12 @@ class Main(xbmcgui.WindowXMLDialog):
 		self.isRunning = True
 		self.standalone = kwargs["standalone"]
 		self.teamObjs = {}
+		self.cache_object = AddonCache()
 
 	def onInit(self):
 		xbmc.log(msg="[Match Center] Script started", level=xbmc.LOGDEBUG)
 		if os.path.exists(ignored_league_list_file):
-			self.ignored_leagues = eval(ssutils.read_file(ignored_league_list_file))
+			self.ignored_leagues = [league.lower() for league in eval(FileIO.fileread(ignored_league_list_file)) if league] 
 		else:
 			self.ignored_leagues = []
 		xbmc.executebuiltin("ClearProperty(no-games,Home)")
@@ -61,8 +65,15 @@ class Main(xbmcgui.WindowXMLDialog):
 			i += 1
 		xbmc.log(msg="[Match Center] Script stopped", level=xbmc.LOGDEBUG)
 
+	def updateCacheTimes(self):
+		self.t2 = datetime.datetime.now()
+		self.hoursList = [168, 336, 504, 672, 840]
+		self.interval = int(addon.getSetting("new_request_interval"))
+		return
+
 	def livescoresThread(self):
 		self.getLivescores()
+		self.updateCacheTimes()
 		self.setLivescores()
 		return
 
@@ -81,7 +92,7 @@ class Main(xbmcgui.WindowXMLDialog):
 		self.livecopy = []
 		if self.livescoresdata:
 			for livegame in self.livescoresdata:
-				if removeNonAscii(livegame.League) not in str(self.ignored_leagues):
+				if removeNonAscii(livegame.League).strip().lower() not in str(self.ignored_leagues):
 					#decide to add the match or not
 					if (livegame.Time.lower() != "not started") and (livegame.Time.lower() != "finished") and (livegame.Time.lower() != "postponed"):
 						add = True
@@ -100,29 +111,32 @@ class Main(xbmcgui.WindowXMLDialog):
 					if add == True:
 						#Get only the team objects for the games that will be added (avoid unecessary requests)
 						#Append to self.teamObjs
-						if not livegame.HomeTeam in self.teamObjs.keys():
-							try:
-								hometeamobj = api.Lookups().Team(teamid=livegame.HomeTeam_Id)[0]
-								livegame.setHomeTeamObj(hometeamobj)
-								self.teamObjs[livegame.HomeTeam] = hometeamobj
-							except:
-								hometeamobj = None
-						else:
-							hometeamobj = self.teamObjs[livegame.HomeTeam]
-							livegame.setHomeTeamObj(hometeamobj)
-						if not livegame.AwayTeam in self.teamObjs.keys():
-							try:
-								awayteamobj = api.Lookups().Team(teamid=livegame.AwayTeam_Id)[0]
-								livegame.setAwayTeamObj(awayteamobj)
-								self.teamObjs[livegame.AwayTeam] = awayteamobj
-							except:
-								awayteamobj = None
-						else:
-							awayteamobj = self.teamObjs[livegame.AwayTeam]
-							livegame.setAwayTeamObj(awayteamobj)
 
+						id_teams = [livegame.HomeTeam_Id,livegame.AwayTeam_Id]
+						index = 0 #To distinguish home (0) from away team (1)
+						for id_team in id_teams:
+							update_team_data = True
+							if self.cache_object.isCachedTeam(id_team):
+								update_team_data = abs(self.t2 - self.cache_object.getCachedTeamTimeStamp(id_team)) > datetime.timedelta(hours=self.hoursList[self.interval])
+		                    
+							if update_team_data:
+								try:
+									teamobject = api.Lookups().Team(teamid=id_team)[0]
+									self.cache_object.cacheTeam(teamid=id_team,team_obj=teamobject)
+									xbmc.log(msg="[Match Center] Timedelta was reached for team %s new request to be made..." % (str(id_team)), level=xbmc.LOGDEBUG)
+								except: 
+									teamobject = None
+							else:
+								teamobject = self.cache_object.getcachedTeam(id_team)
+								xbmc.log(msg="[Match Center] Used cached data for team %s..." % (str(id_team)), level=xbmc.LOGDEBUG)
+		                    
+							if index == 0:
+								livegame.setHomeTeamObj(obj=teamobject)
+							else:
+								livegame.setAwayTeamObj(obj=teamobject)
+							index += 1
 
-						if awayteamobj and hometeamobj:
+						if livegame.HomeTeamObj and livegame.AwayTeamObj:
 							item = xbmcgui.ListItem(livegame.HomeTeam+livegame.AwayTeam)
 							item.setProperty('result',str(livegame.HomeGoals)+"-"+str(livegame.AwayGoals))
 							

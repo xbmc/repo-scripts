@@ -27,6 +27,7 @@ import os
 import livescores
 import leagueselection
 import tweets
+from utilities import tweet
 from utilities import ssutils
 from utilities.common_addon import *
 
@@ -64,6 +65,23 @@ class Main(xbmcgui.WindowXMLDialog):
 				self.close()
 				tweets.start()
 
+	def onAction(self,action):
+		#exit
+		if action.getId() == 92 or action.getId() == 10:
+			self.close()
+		#contextmenu
+		if action.getId() == 117:
+			identifier = self.getControl(32500).getSelectedItem().getProperty("identifier")
+			if identifier == "twitter":
+				twitter_history = tweet.get_twitter_history()
+				if twitter_history:
+					twitter_history = list(reversed(twitter_history))
+					choice = xbmcgui.Dialog().select(translate(32076), twitter_history)
+					if choice > -1:
+						self.close()
+						tweets.start(twitterhash=twitter_history[choice])
+				else:
+					xbmcgui.Dialog().ok(translate(32000),translate(32075))
 
 def start():
 	main = Main(

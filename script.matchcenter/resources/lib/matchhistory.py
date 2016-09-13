@@ -23,11 +23,13 @@
 import xbmcgui
 import xbmc
 import sys
+import datetime
 import thesportsdb
 import ignoreleagues
 import eventdetails
 from resources.lib.utilities import positions
 from resources.lib.utilities import ssutils
+from resources.lib.utilities.cache import AddonCache
 from resources.lib.utilities.common_addon import *
 
 api = thesportsdb.Api("7723457519235")
@@ -39,13 +41,21 @@ class detailsDialog(xbmcgui.WindowXMLDialog):
 		self.teamid = kwargs["teamid"]
 		self.teamObjs = {}
 		self.eventObjs = {}
+		self.cache_object = AddonCache()
 
 	def onInit(self):
 		self.setHistory(self.teamid)
 
+	def updateCacheTimes(self):
+		self.t2 = datetime.datetime.now()
+		self.hoursList = [168, 336, 504, 672, 840]
+		self.interval = int(addon.getSetting("new_request_interval"))
+		return
+
 	def setHistory(self,teamid):
 		self.getControl(32540).setImage(os.path.join(addon_path,"resources","img","goal.png"))
 		xbmc.executebuiltin("SetProperty(loading,1,home)")
+		self.updateCacheTimes()
 		if teamid:
 			self.teamid = teamid
 		panel_ids = [32502,32503]
@@ -57,38 +67,46 @@ class detailsDialog(xbmcgui.WindowXMLDialog):
 			events = event_listall[i]
 			if events:
 				for event in events:
-					item = xbmcgui.ListItem(event.strHomeTeam + "|" + event.strAwayTeam)
-					if not event.strHomeTeam in self.teamObjs.keys():
-						try:
-							hometeamobject = api.Lookups().Team(teamid=event.idHomeTeam)[0]
-							self.teamObjs[event.strHomeTeam] = hometeamobject
-						except: hometeamobject = None
-					else:
-						hometeamobject = self.teamObjs[event.strHomeTeam]
-					event.setHomeTeamObj(obj=hometeamobject)
+					id_teams = [event.idHomeTeam,event.idAwayTeam]
+					index = 0
+					for id_team in id_teams:
+						update_team_data = True
+						if self.cache_object.isCachedTeam(id_team):
+							update_team_data = abs(self.t2 - self.cache_object.getCachedTeamTimeStamp(id_team)) > datetime.timedelta(hours=self.hoursList[self.interval])
+						if update_team_data:
+							try:
+								teamobject = api.Lookups().Team(teamid=id_team)[0]
+								self.cache_object.cacheTeam(teamid=id_team,team_obj=teamobject)
+								xbmc.log(msg="[Match Center] Timedelta was reached for team %s new request to be made..." % (str(id_team)), level=xbmc.LOGDEBUG)
+							except: 
+								teamobject = None
+						else:
+							teamobject = self.cache_object.getcachedTeam(id_team)
+							xbmc.log(msg="[Match Center] Used cached data for team %s..." % (str(id_team)), level=xbmc.LOGDEBUG)
+	                    
+						if index == 0:
+							event.setHomeTeamObj(obj=teamobject)
+						else:
+							event.setAwayTeamObj(obj=teamobject)
+						index += 1
 
-					if not event.strAwayTeam in self.teamObjs.keys():
-						try:
-							awayteamobject = api.Lookups().Team(teamid=event.idAwayTeam)[0]							
-							self.teamObjs[event.strAwayTeam] = awayteamobject
-						except: awayteamobject = None 
-					else:
-						awayteamobject = self.teamObjs[event.strAwayTeam]
-					event.setAwayTeamObj(obj=awayteamobject)
-
+					#Append to event objects to move the event information between windows. Avoid making
+					#another request
 					self.eventObjs[event.idEvent] = event
 
-					if hometeamobject and awayteamobject:
+	                #create listitem
+					item = xbmcgui.ListItem(event.strHomeTeam + "|" + event.strAwayTeam)
+					if event.HomeTeamObj and event.AwayTeamObj:
 						if show_alternative == "true":
-							item.setProperty('hometeamname',hometeamobject.AlternativeNameFirst)
-							item.setProperty('awayteamname',awayteamobject.AlternativeNameFirst)
+							item.setProperty('hometeamname',event.HomeTeamObj.AlternativeNameFirst)
+							item.setProperty('awayteamname',event.AwayTeamObj.AlternativeNameFirst)
 						else:
 							item.setProperty('hometeamname',event.strHomeTeam)
 							item.setProperty('awayteamname',event.strAwayTeam)
 
 						item.setProperty('competitionandround',event.strLeague + " - " + "Round" + " " +  str(event.intRound))
-						item.setProperty('hometeambadge',hometeamobject.strTeamBadge)
-						item.setProperty('awayteambadge',awayteamobject.strTeamBadge)
+						item.setProperty('hometeambadge',event.HomeTeamObj.strTeamBadge)
+						item.setProperty('awayteambadge',event.AwayTeamObj.strTeamBadge)
 						item.setProperty('eventid',event.idEvent)
 
 						#Set event time

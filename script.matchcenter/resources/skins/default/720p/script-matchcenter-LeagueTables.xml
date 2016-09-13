@@ -209,7 +209,7 @@
 							<top>3</top>
 							<width>50</width>
 							<height>50</height>
-							<texture>$INFO[ListItem.Property(teambadge)]</texture>
+							<texture>$INFO[ListItem.Thumb]</texture>
 						</control>
 						<control type="textbox">
 							<description>Team Position</description>
@@ -366,7 +366,7 @@
 							<top>3</top>
 							<width>50</width>
 							<height>50</height>
-							<texture>$INFO[ListItem.Property(teambadge)]</texture>
+							<texture>$INFO[ListItem.Thumb]</texture>
 						</control>
 						<control type="label">
 							<description>Team Name</description>

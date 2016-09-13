@@ -283,3 +283,41 @@ msgstr ""
 msgctxt "#32067"
 msgid "Are you sure you want to define a keymap for this addon?"
 msgstr ""
+
+msgctxt "#32068"
+msgid "Cache"
+msgstr ""
+
+msgctxt "#32069"
+msgid "Only request new team and league logos after..."
+msgstr ""
+
+msgctxt "#32070"
+msgid "Remove all cached data"
+msgstr ""
+
+msgctxt "#32071"
+msgid "All cached data was removed!"
+msgstr ""
+
+msgctxt "#32072"
+msgid "No cached data available to remove!"
+msgstr ""
+
+msgctxt "#32073"
+msgid "Enable Twitter hashtag history (context menu)"
+msgstr ""
+
+msgctxt "#32074"
+msgid "Delete Twitter hashtag history"
+msgstr ""
+
+msgctxt "#32075"
+msgid "No twitter history available."
+msgstr ""
+
+msgctxt "#32076"
+msgid "Please choose an hashtag from history:"
+msgstr ""
+
+
