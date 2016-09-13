@@ -1,3 +1,7 @@
+Version 1.4.1 (12/9/2016)
+-Extended cache to individual teams
+-Fix issue with alternative name for teams
+
 Version 1.4.0 (8/9/2016)
 -Implement cache mechanisms for league and team logos to reduce the load on the database
 

@@ -125,9 +125,22 @@ class Main(xbmcgui.WindowXMLDialog):
 
 	def set_no_games(self):
 		images = []
+		self.updateCacheTimes()
 		league_id = ssutils.get_league_id_no_games()
-		teams = api.Lookups().Team(leagueid=league_id)
-		for team in teams:
+
+		update_team_data = True
+		if self.cache_object.isCachedLeagueTeams(league_id):
+			update_team_data = abs(self.t2 - self.cache_object.getCachedLeagueTeamsTimeStamp(league_id)) > datetime.timedelta(hours=self.hoursList[self.interval])
+
+		if update_team_data:
+			xbmc.log(msg="[Football Panel] Timedelta was reached for teams in league %s new request to be made..." % (str(league_id)), level=xbmc.LOGDEBUG)
+			teams_in_league = api.Lookups().Team(leagueid=league_id)
+			self.cache_object.cacheLeagueTeams(leagueid=league_id,team_obj_list=teams_in_league)
+		else:
+			xbmc.log(msg="[Football Panel] Using cached object for teams in league %s" % (str(league_id)), level=xbmc.LOGDEBUG)
+			teams_in_league = self.cache_object.getcachedLeagueTeams(league_id)
+
+		for team in teams_in_league:
 			if team.strTeamFanart3: images.append(team.strTeamFanart3)
 			if team.strTeamFanart4: images.append(team.strTeamFanart4)
 		
@@ -135,6 +148,12 @@ class Main(xbmcgui.WindowXMLDialog):
 			random_photo = images[random.randint(0,len(images)-1)]
 			self.getControl(NO_GAMES).setImage(random_photo)
 		xbmc.executebuiltin("SetProperty(no-games,1,home)")
+		return
+
+	def updateCacheTimes(self):
+		self.t2 = datetime.datetime.now()
+		self.hoursList = [24, 48, 96, 168, 336]
+		self.interval = int(addon.getSetting("new_request_interval"))
 		return
 
 	def getLeagueTable(self):
@@ -147,14 +166,12 @@ class Main(xbmcgui.WindowXMLDialog):
 		table = api.Lookups().Table(leagueid)
 
 		#Look for cached data first
-		t2 = datetime.datetime.now()
-		hoursList = [24, 48, 96, 168, 336]
-		interval = int(addon.getSetting("new_request_interval"))
+		self.updateCacheTimes()
 
 		#league data
 		update_league_data = True
 		if self.cache_object.isCachedLeague(leagueid):
-			update_league_data = abs(t2 - self.cache_object.getCachedLeagueTimeStamp(leagueid)) > datetime.timedelta(hours=hoursList[interval])
+			update_league_data = abs(self.t2 - self.cache_object.getCachedLeagueTimeStamp(leagueid)) > datetime.timedelta(hours=self.hoursList[self.interval])
 
 		if update_league_data:
 			xbmc.log(msg="[Football Panel] Timedelta was reached for league %s new request to be made..." % (str(leagueid)), level=xbmc.LOGDEBUG)
@@ -166,8 +183,8 @@ class Main(xbmcgui.WindowXMLDialog):
 
 		#team data
 		update_team_data = True
-		if self.cache_object.isCachedTeams(leagueid):
-			update_team_data = abs(t2 - self.cache_object.getCachedTeamsTimeStamp(leagueid)) > datetime.timedelta(hours=hoursList[interval])
+		if self.cache_object.isCachedLeagueTeams(leagueid):
+			update_team_data = abs(self.t2 - self.cache_object.getCachedLeagueTeamsTimeStamp(leagueid)) > datetime.timedelta(hours=self.hoursList[self.interval])
 
 		if update_team_data:
 			xbmc.log(msg="[Football Panel] Timedelta was reached for teams in league %s new request to be made..." % (str(leagueid)), level=xbmc.LOGDEBUG)
@@ -182,9 +199,7 @@ class Main(xbmcgui.WindowXMLDialog):
 		self.table = []
 		for tableentry in table:
 			try:
-				if show_alternative == "false":
-					item = xbmcgui.ListItem(tableentry.name)
-
+				item = xbmcgui.ListItem(tableentry.name)
 				for team in teams_in_league:
 					if tableentry.teamid == team.idTeam:
 						item.setArt({ 'thumb': team.strTeamBadge })
@@ -206,6 +221,7 @@ class Main(xbmcgui.WindowXMLDialog):
 		
 	def setLivescores(self):
 		items = []
+		self.updateCacheTimes()
 		if self.livescoresdata:
 			for livegame in self.livescoresdata:
 				if removeNonAscii(livegame.League) not in str(self.ignored_leagues):
@@ -221,6 +237,7 @@ class Main(xbmcgui.WindowXMLDialog):
 							add = False
 						else:
 							add = True
+					
 					#Avoid adding matches that have no score defined
 					if not livegame.HomeGoals.strip() and not livegame.AwayGoals.strip():
 						add = False
@@ -229,28 +246,32 @@ class Main(xbmcgui.WindowXMLDialog):
 
 						#Get only the team objects for the games that will be added (avoid unecessary requests)
 						#Append to self.teamObjs
-						if not livegame.HomeTeam in self.teamObjs.keys():
-							try:
-								hometeamobj = api.Lookups().Team(teamid=livegame.HomeTeam_Id)[0]
-								livegame.setHomeTeamObj(hometeamobj)
-								self.teamObjs[livegame.HomeTeam] = hometeamobj
-							except:
-								hometeamobj = None
-						else:
-							hometeamobj = self.teamObjs[livegame.HomeTeam]
-							livegame.setHomeTeamObj(hometeamobj)
-						if not livegame.AwayTeam in self.teamObjs.keys():
-							try:
-								awayteamobj = api.Lookups().Team(teamid=livegame.AwayTeam_Id)[0]
-								livegame.setAwayTeamObj(awayteamobj)
-								self.teamObjs[livegame.AwayTeam] = awayteamobj
-							except:
-								awayteamobj = None
-						else:
-							awayteamobj = self.teamObjs[livegame.AwayTeam]
-							livegame.setAwayTeamObj(awayteamobj)
 
-						if hometeamobj and awayteamobj:
+						id_teams = [livegame.HomeTeam_Id,livegame.AwayTeam_Id]
+						index = 0 #To distinguish home (0) from away team (1)
+						for id_team in id_teams:
+							update_team_data = True
+							if self.cache_object.isCachedTeam(id_team):
+								update_team_data = abs(self.t2 - self.cache_object.getCachedTeamTimeStamp(id_team)) > datetime.timedelta(hours=self.hoursList[self.interval])
+		                    
+							if update_team_data:
+								try:
+									teamobject = api.Lookups().Team(teamid=id_team)[0]
+									self.cache_object.cacheTeam(teamid=id_team,team_obj=teamobject)
+									xbmc.log(msg="[Football Panel] Timedelta was reached for team %s new request to be made..." % (str(id_team)), level=xbmc.LOGDEBUG)
+								except: 
+									teamobject = None
+							else:
+								teamobject = self.cache_object.getcachedTeam(id_team)
+								xbmc.log(msg="[Football Panel] Used cached data for team %s..." % (str(id_team)), level=xbmc.LOGDEBUG)
+		                    
+							if index == 0:
+								livegame.setHomeTeamObj(obj=teamobject)
+							else:
+								livegame.setAwayTeamObj(obj=teamobject)
+							index += 1
+
+						if livegame.HomeTeamObj and livegame.AwayTeamObj:
 							item = xbmcgui.ListItem(livegame.HomeTeam+livegame.AwayTeam)
 							item.setProperty('result',str(livegame.HomeGoals)+"-"+str(livegame.AwayGoals))
 							item.setProperty('home_team_logo',livegame.HomeTeamObj.strTeamBadge)
