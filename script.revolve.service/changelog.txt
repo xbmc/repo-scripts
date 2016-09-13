@@ -1,4 +1,8 @@
-﻿[B]1.1.1[/B]
+﻿[B]1.1.2[/B]
+
+- Fixed bug (inproper escaping of Windows-folders in script.favourites properties).
+
+[B]1.1.1[/B]
 
 - Added support for the home properties of the plug-in script.favourites.
 

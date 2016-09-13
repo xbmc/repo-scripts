@@ -68,15 +68,15 @@ def createGenericAction(sourcebase):
     if result == '':
         result = xbmclibrary.getItemFromHomeProperty(sourcebase + '.LibraryPath')
         if 'videodb' in result.lower():
-            result = xbmclibrary.addPrefixAndSuffixToItem("ActivateWindow(videos,", result, ",return)")
+            result = xbmclibrary.addPrefixAndSuffixToItem('ActivateWindow(videos,', result, ',return)')
         if 'musicdb' in result.lower():
-            result = xbmclibrary.addPrefixAndSuffixToItem("ActivateWindow(music,", result, ",return)")
+            result = xbmclibrary.addPrefixAndSuffixToItem('ActivateWindow(music,', result, ',return)')
     if result == '':
         result = xbmclibrary.addPrefixAndSuffixToItem('PlayMedia("', xbmclibrary.getItemFromHomeProperty(sourcebase + '.Path'), '")')
     return result
 
 def createFavouriteAction(sourcebase):
-    return xbmclibrary.getItemFromHomeProperty(sourcebase + '.path')
+    return baselibrary.escapePath(xbmclibrary.getItemFromHomeProperty(sourcebase + '.path'))
 
 
 def determineNameMethod(sourcemask):

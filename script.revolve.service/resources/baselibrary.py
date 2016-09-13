@@ -14,3 +14,6 @@ def extractArgument(arguments, index, defaultvalue):
 
 def getTimeInMilliseconds():
     return int(round(time.time() * 1000))
+
+def escapePath(path):
+    return path.replace('\\\\', '\\').replace('\\', '\\\\\\\\')
