@@ -37,7 +37,7 @@ class Main(xbmcgui.WindowXMLDialog):
 
 	def onInit(self):
 		self.getControl(32540).setImage(os.path.join(addon_path,"resources","img","goal.png"))
-		xbmc.executebuiltin("SetProperty(loading,1,home)")
+		xbmc.executebuiltin("SetProperty(loading-script-matchcenter-leagueselection,1,home)")
 		leagues = api.Search().Leagues(sport="Soccer")
 		leagues_to_be_shown = ssutils.get_league_tables_ids()
 		items = []
@@ -48,8 +48,11 @@ class Main(xbmcgui.WindowXMLDialog):
 					item.setProperty("thumb",str(league.strBadge))
 					item.setProperty("identifier",str(league.idLeague))
 					items.append(item)
-		xbmc.executebuiltin("ClearProperty(loading,Home)")
+		xbmc.executebuiltin("ClearProperty(loading-script-matchcenter-leagueselection,Home)")
 		self.getControl(32500).addItems(items)
+		if len(items) <= 9:
+			self.getControl(32541).setWidth(962)
+			self.getControl(32542).setWidth(962)
 
 	def onAction(self,action):
 		if action.getId() == 10 or action.getId() == 92:

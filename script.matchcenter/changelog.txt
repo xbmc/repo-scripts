@@ -1,3 +1,11 @@
+V.2.1.1 (18/9/2016)
+-Do not show dialog while livescores are loading
+-Fix english league 1 table
+-Group substitutions
+-Allow match info display even if no teams match against the database
+-Resize windows if scrollbar is not visible
+-Ignore leagues through the context menu of the livescores dialog
+
 V.2.1.0 (12/9/2016):
 -Implemented cache for leagues, leagueteams and individual teams to speed things up and minimize requests
 -Fix score in match history xml

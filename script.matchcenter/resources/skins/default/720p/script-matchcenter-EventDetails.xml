@@ -276,7 +276,8 @@
 							<description>Description</description>
 							<posx>90</posx>
 							<posy>7</posy>
-							<width>340</width>
+							<width>430</width>
+							<scroll>true</scroll>
 							<height>40</height>
 							<label>$INFO[ListItem.Property(eventlabel)]</label>
 							<font>font13_title</font>
@@ -318,7 +319,8 @@
 							<description>Description</description>
 							<posx>90</posx>
 							<posy>7</posy>
-							<width>340</width>
+							<width>430</width>
+							<scroll>true</scroll>
 							<height>40</height>
 							<label>$INFO[ListItem.Property(eventlabel)]</label>
 							<font>font13_title</font>
@@ -362,7 +364,8 @@
 							<description>Description</description>
 							<posx>90</posx>
 							<posy>7</posy>
-							<width>340</width>
+							<width>430</width>
+							<scroll>true</scroll>
 							<height>40</height>
 							<label>$INFO[ListItem.Property(eventlabel)]</label>
 							<font>font13_title</font>
@@ -404,7 +407,8 @@
 							<description>Description</description>
 							<posx>90</posx>
 							<posy>7</posy>
-							<width>340</width>
+							<width>430</width>
+							<scroll>true</scroll>
 							<height>40</height>
 							<label>$INFO[ListItem.Property(eventlabel)]</label>
 							<font>font13_title</font>

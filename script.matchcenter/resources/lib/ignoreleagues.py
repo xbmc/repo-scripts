@@ -40,18 +40,28 @@ class Select(xbmcgui.WindowXMLDialog):
 		self.getControl(1).setLabel(translate(32003))
 		self.getControl(3).setVisible(False)
 		leagues = api.Search().Leagues(sport="Soccer")
+		ignored_through_context_menu = self.already_ignored
 		if leagues:
 			items = []
-
 			for league in leagues:
 				if removeNonAscii(league.strLeague) in self.already_ignored:
 					item = xbmcgui.ListItem("[COLOR selected]" + league.strLeague + "[/COLOR]")
 					item.setProperty("isIgnored","true")
+					ignored_through_context_menu.remove(removeNonAscii(league.strLeague))
 				else:
 					item = xbmcgui.ListItem(league.strLeague)
 					item.setProperty("isIgnored","false")
 				item.setArt({"thumb":league.strBadge})
 				items.append(item)
+			
+			#ignore the ones ignored through context menu
+			if ignored_through_context_menu:
+				for league_ign in ignored_through_context_menu:
+					item = xbmcgui.ListItem("[COLOR selected]" + league_ign + "[/COLOR]")
+					item.setProperty("isIgnored","true")
+					item.setArt({"thumb":os.path.join(addon_path,"resources","img","nobadge_placeholder.png")})
+					items.append(item)
+
 			self.getControl(6).addItems(items)
 			self.setFocusId(6)
 			#Krypton
@@ -84,9 +94,9 @@ class Select(xbmcgui.WindowXMLDialog):
 				item = self.getControl(6).getListItem(i)
 				if item.getProperty("isIgnored") == "true":
 					ignored_items.append(removeNonAscii(item.getLabel().replace("[COLOR selected]","").replace("[/COLOR]","")))
+					addon.setSetting("manually-ignored-leagues",addon.getSetting("manually-ignored-leagues").replace("<league>"+removeNonAscii(item.getLabel().replace("[COLOR selected]","").replace("[/COLOR]",""))+"</league>",""))
 			
 			FileIO.filewrite(ignored_league_list_file,str(ignored_items))
-			
 			self.close()
 			xbmcgui.Dialog().ok(translate(32000),translate(32009))
 

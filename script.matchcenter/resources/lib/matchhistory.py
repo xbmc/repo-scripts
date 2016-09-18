@@ -54,7 +54,7 @@ class detailsDialog(xbmcgui.WindowXMLDialog):
 
 	def setHistory(self,teamid):
 		self.getControl(32540).setImage(os.path.join(addon_path,"resources","img","goal.png"))
-		xbmc.executebuiltin("SetProperty(loading,1,home)")
+		xbmc.executebuiltin("SetProperty(loading-script-matchcenter-history,1,home)")
 		self.updateCacheTimes()
 		if teamid:
 			self.teamid = teamid
@@ -127,7 +127,7 @@ class detailsDialog(xbmcgui.WindowXMLDialog):
 					items.append(item)
 			self.getControl(panel_ids[i]).addItems(items)
 
-		xbmc.executebuiltin("ClearProperty(loading,Home)")
+		xbmc.executebuiltin("ClearProperty(loading-script-matchcenter-history,Home)")
 		xbmc.executebuiltin("SetProperty(has_history,1,home)")
 
 	def onClick(self,controlId):

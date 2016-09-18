@@ -46,6 +46,7 @@ def get_league_tables_ids():
 	if addon.getSetting("t-china") == "true": tables.append(4359)
 	if addon.getSetting("t-sweden1") == "true": tables.append(4347)
 	if addon.getSetting("t-echampionship") == "true": tables.append(4329)
+	if addon.getSetting("t-eleague1") == "true": tables.append(4396)
 	if addon.getSetting("t-eleague2") == "true": tables.append(4397)
 	if addon.getSetting("t-sadelante") == "true": tables.append(4400)
 	if addon.getSetting("t-fleague2") == "true": tables.append(4401)
