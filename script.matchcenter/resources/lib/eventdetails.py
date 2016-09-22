@@ -108,22 +108,37 @@ class detailsDialog(xbmcgui.WindowXMLDialog):
 
 		self.getControl(32500).setLabel(header)
 		
-		if self.match.HomeTeamObj.strTeamBadge:
-			self.getControl(32501).setImage(self.match.HomeTeamObj.strTeamBadge)
-		if self.match.HomeTeamObj.strTeamJersey:
-			self.getControl(32502).setImage(self.match.HomeTeamObj.strTeamJersey)
-
-		if show_alternative == "true":
-			self.getControl(32503).setLabel(self.match.HomeTeamObj.AlternativeNameFirst)
-			self.getControl(32506).setLabel(self.match.AwayTeamObj.AlternativeNameFirst)
+		if self.match.HomeTeamObj:
+			if self.match.HomeTeamObj.strTeamBadge:
+				self.getControl(32501).setImage(self.match.HomeTeamObj.strTeamBadge)
+			else:
+				self.getControl(32501).setImage(os.path.join(addon_path,"resources","img","nobadge_placeholder.png"))
+			if self.match.HomeTeamObj.strTeamJersey:
+				self.getControl(32502).setImage(self.match.HomeTeamObj.strTeamJersey)
+			else:
+				self.getControl(32502).setImage(os.path.join(addon_path,"resources","img","nokit_placeholder.png"))
 		else:
-			self.getControl(32503).setLabel(self.match.HomeTeamObj.strTeam)
-			self.getControl(32506).setLabel(self.match.AwayTeamObj.strTeam)
+			self.getControl(32501).setImage(os.path.join(addon_path,"resources","img","nobadge_placeholder.png"))
+			self.getControl(32502).setImage(os.path.join(addon_path,"resources","img","nokit_placeholder.png"))
 
-		if self.match.AwayTeamObj.strTeamBadge:
-			self.getControl(32504).setImage(self.match.AwayTeamObj.strTeamBadge)
-		if self.match.AwayTeamObj.strTeamJersey:
-			self.getControl(32505).setImage(self.match.AwayTeamObj.strTeamJersey)
+		self.getControl(32503).setLabel(self.match.HomeTeam)
+		self.getControl(32506).setLabel(self.match.AwayTeam)
+		if show_alternative == "true":
+			if self.match.HomeTeamObj: self.getControl(32503).setLabel(self.match.HomeTeamObj.AlternativeNameFirst)
+			if self.match.AwayTeamObj: self.getControl(32506).setLabel(self.match.AwayTeamObj.AlternativeNameFirst)			
+
+		if self.match.AwayTeamObj:
+			if self.match.AwayTeamObj.strTeamBadge:
+				self.getControl(32504).setImage(self.match.AwayTeamObj.strTeamBadge)
+			else:
+				self.getControl(32504).setImage(os.path.join(addon_path,"resources","img","nobadge_placeholder.png"))
+			if self.match.AwayTeamObj.strTeamJersey:
+				self.getControl(32505).setImage(self.match.AwayTeamObj.strTeamJersey)
+			else:
+				self.getControl(32505).setImage(os.path.join(addon_path,"resources","img","nokit_placeholder.png"))
+		else:
+			self.getControl(32504).setImage(os.path.join(addon_path,"resources","img","nobadge_placeholder.png"))
+			self.getControl(32505).setImage(os.path.join(addon_path,"resources","img","nokit_placeholder.png"))
 		
 		if matchHomeGoals and matchAwayGoals:
 			self.getControl(32507).setLabel(str(matchHomeGoals)+"-"+str(matchAwayGoals))
@@ -149,6 +164,7 @@ class detailsDialog(xbmcgui.WindowXMLDialog):
 		#Home Team Event Details
 		vars = [("goal",matchHomeGoalDetails),("redcard",matchHomeTeamRedCardDetails),("yellowcard",matchHomeTeamYellowCardDetails),("sub",matchHomeSubDetails)]
 		hometeamevents = {}
+		home_subs = {}
 		for key,var in vars:
 			if key and var:
 				if ";" in var:
@@ -158,13 +174,42 @@ class detailsDialog(xbmcgui.WindowXMLDialog):
 							stringregex = re.findall("(\d+)'\:(.*)", event)
 							if stringregex:
 								for time,strevent in stringregex:
-									if not int(time) in hometeamevents.keys():
-										hometeamevents[int(time)] = [(key,strevent)]
+									if key == "sub":
+										if time in home_subs.keys():
+											if strevent.strip().startswith("in"):
+												home_subs[time]["in"] = strevent
+												if "out" in home_subs[time].keys():
+													if not int(time) in hometeamevents.keys():
+														hometeamevents[int(time)] = [(key,home_subs[time]["out"] + " |" + home_subs[time]["in"])]
+													else:
+														hometeamevents[int(time)].append((key,home_subs[time]["out"] + " |" + home_subs[time]["in"]))				
+													#Remove item from dict (we might have more than one sub associated to a given minute)
+													home_subs.pop(time, None)
+													
+											elif strevent.strip().startswith("out"):
+												home_subs[time]["out"] = strevent
+												if "in" in home_subs[time].keys():
+													if not int(time) in hometeamevents.keys():
+														hometeamevents[int(time)] = [(key,home_subs[time]["out"] + " |" + home_subs[time]["in"])]
+													else:
+														hometeamevents[int(time)].append((key,home_subs[time]["out"] + " |" + home_subs[time]["in"]))
+													#Remove item from dict (we might have more than one sub associated to a given minute)
+													home_subs.pop(time, None)
+										else:
+											home_subs[time] = {}
+											if strevent.strip().startswith("in"):
+												home_subs[time]["in"] = strevent
+											elif strevent.strip().startswith("out"):
+												home_subs[time]["out"] = strevent
 									else:
-										hometeamevents[int(time)].append((key,strevent))
+										if not int(time) in hometeamevents.keys():
+											hometeamevents[int(time)] = [(key,strevent)]
+										else:
+											hometeamevents[int(time)].append((key,strevent))
 		#Away Team Event Details
 		vars = [("goal",matchAwayGoalDetails),("redcard",matchAwayTeamRedCardDetails),("yellowcard",matchAwayTeamYellowCardDetails),("sub",matchAwaySubDetails)]
 		awayteamevents = {}
+		away_subs = {}
 		for key,var in vars:
 			if key and var:
 				if ";" in var:
@@ -174,11 +219,39 @@ class detailsDialog(xbmcgui.WindowXMLDialog):
 							stringregex = re.findall("(\d+)'\:(.*)", event)
 							if stringregex:
 								for time,strevent in stringregex:
-									if not strevent: strevent = translate(32025)
-									if not int(time) in awayteamevents.keys():
-										awayteamevents[int(time)] = [(key,strevent)]
+									if key == "sub":
+										if time in away_subs.keys():
+											if strevent.strip().startswith("in"):
+												away_subs[time]["in"] = strevent
+												if "out" in away_subs[time].keys():
+													if not int(time) in awayteamevents.keys():
+														awayteamevents[int(time)] = [(key,away_subs[time]["out"] + " |" + away_subs[time]["in"])]
+													else:
+														awayteamevents[int(time)].append((key,away_subs[time]["out"] + " |" + away_subs[time]["in"]))				
+													#Remove item from dict (we might have more than one sub associated to a given minute)
+													away_subs.pop(time, None)
+													
+											elif strevent.strip().startswith("out"):
+												away_subs[time]["out"] = strevent
+												if "in" in away_subs[time].keys():
+													if not int(time) in awayteamevents.keys():
+														awayteamevents[int(time)] = [(key,away_subs[time]["out"] + " |" + away_subs[time]["in"])]
+													else:
+														awayteamevents[int(time)].append((key,away_subs[time]["out"] + " |" + away_subs[time]["in"]))
+													#Remove item from dict (we might have more than one sub associated to a given minute)
+													away_subs.pop(time, None)													
+										else:
+											away_subs[time] = {}
+											if strevent.strip().startswith("in"):
+												away_subs[time]["in"] = strevent	
+											elif strevent.strip().startswith("out"):
+												away_subs[time]["out"] = strevent
 									else:
-										awayteamevents[int(time)].append((key,strevent))
+										if not strevent: strevent = translate(32025)
+										if not int(time) in awayteamevents.keys():
+											awayteamevents[int(time)] = [(key,strevent.strip())]
+										else:
+											awayteamevents[int(time)].append((key,strevent.strip()))
 
 		#set home and away event details
 		#set home
@@ -224,7 +297,9 @@ class detailsDialog(xbmcgui.WindowXMLDialog):
 		
 		if team == "home":
 			if 'idEvent' not in self.match.__dict__.keys():
-				self.LineUpTeamObj = self.match.HomeTeamObj
+				if self.match.HomeTeamObj: self.LineUpTeamObj = self.match.HomeTeamObj
+				else: self.LineUpTeamObj = None
+				self.teamname = self.match.HomeTeam
 				self.formationlabel = self.match.HomeTeamFormation
 				self.lineupgoalkeeper = self.match.HomeLineupGoalkeeper
 				self.lineupdefenders = self.match.HomeLineupDefense
@@ -247,7 +322,9 @@ class detailsDialog(xbmcgui.WindowXMLDialog):
 			self.getControl(32527).setLabel(translate(32027))
 		else:
 			if 'idEvent' not in self.match.__dict__.keys():
-				self.LineUpTeamObj = self.match.AwayTeamObj
+				if self.match.AwayTeamObj: self.LineUpTeamObj = self.match.AwayTeamObj
+				else: self.LineUpTeamObj = None
+				self.teamname = self.match.AwayTeam
 				self.formationlabel = self.match.AwayTeamFormation
 				self.lineupgoalkeeper = self.match.AwayLineupGoalkeeper
 				self.lineupdefenders = self.match.AwayLineupDefense
@@ -273,15 +350,21 @@ class detailsDialog(xbmcgui.WindowXMLDialog):
 		self.getControl(32522).setLabel(translate(32029) + ":")
 		self.getControl(32523).setLabel(translate(32030) + ":")
 
-		#Set team Name
-		if show_alternative == "true":
-			self.getControl(32521).setLabel(self.LineUpTeamObj.AlternativeNameFirst)
+		#Set team information
+		#Name
+		self.getControl(32521).setLabel(self.teamname)
+		if self.LineUpTeamObj:
+			if show_alternative == "true":
+				self.getControl(32521).setLabel(self.LineUpTeamObj.AlternativeNameFirst)
+			
+			#Set team Badge
+			if self.LineUpTeamObj.strTeamBadge:
+				self.getControl(32520).setImage(self.LineUpTeamObj.strTeamBadge)
+			else:
+				self.getControl(32520).setImage(os.path.join(addon_path,"resources","img","nobadge_placeholder.png"))
 		else:
-			self.getControl(32521).setLabel(self.LineUpTeamObj.strTeam)
+			self.getControl(32520).setImage(os.path.join(addon_path,"resources","img","nobadge_placeholder.png"))
 
-		#Set team Badge
-		if self.LineUpTeamObj.strTeamBadge:
-			self.getControl(32520).setImage(self.LineUpTeamObj.strTeamBadge)
 		#Set team formation label
 		if self.formationlabel:
 			self.getControl(32518).setLabel(self.formationlabel)
@@ -351,11 +434,12 @@ class detailsDialog(xbmcgui.WindowXMLDialog):
 			image_size = positions.getShirtHeight(pitchHeight,goalkeeper[1])
 			image_x = int(goalkeeper[0]*float(pitchWidth))+int(0.15*image_size)
 			image_y =  int(goalkeeper[1]*float(pitchHeight))+int(0.15*image_size)
-			if self.LineUpTeamObj.strTeamJersey:
+			if self.LineUpTeamObj and self.LineUpTeamObj.strTeamJersey:
 				image = xbmcgui.ControlImage(image_x,image_y,image_size,image_size, self.LineUpTeamObj.strTeamJersey )
 				self.controls.append(image)
 			else:
-				image = xbmcgui.ControlImage(image_x,image_y,image_size,image_size, "" )
+				image = xbmcgui.ControlImage(image_x,image_y,image_size,image_size, os.path.join(addon_path,"resources","img","nokit_placeholder.png") )
+				self.controls.append(image)
 			label = positions.getLabel(image, "[B]" + self.lineupgoalkeeper + "[/B]")
 			self.controls.append(label)
 			#defenders
@@ -366,11 +450,12 @@ class detailsDialog(xbmcgui.WindowXMLDialog):
 					image_size = positions.getShirtHeight(pitchHeight,defender[1])
 					image_x = int(defender[0]*float(pitchWidth))+int(0.15*image_size)
 					image_y =  int(defender[1]*float(pitchHeight))+int(0.15*image_size)
-					if self.LineUpTeamObj.strTeamJersey:
+					if self.LineUpTeamObj and self.LineUpTeamObj.strTeamJersey:
 						image = xbmcgui.ControlImage(image_x,image_y,image_size,image_size, self.LineUpTeamObj.strTeamJersey)
 						self.controls.append(image)
 					else:
-						image = xbmcgui.ControlImage(image_x,image_y,image_size,image_size, "" )
+						image = xbmcgui.ControlImage(image_x,image_y,image_size,image_size, os.path.join(addon_path,"resources","img","nokit_placeholder.png") )
+						self.controls.append(image)
 					label = positions.getLabel(image,"[B]" + self.lineupdefenders[i] + "[/B]")
 					self.controls.append(label)
 					i += 1
@@ -382,11 +467,12 @@ class detailsDialog(xbmcgui.WindowXMLDialog):
 					image_size = positions.getShirtHeight(pitchHeight,midfielder[1])
 					image_x = int(midfielder[0]*float(pitchWidth))+int(0.15*image_size)
 					image_y =  int(midfielder[1]*float(pitchHeight))+int(0.15*image_size)
-					if self.LineUpTeamObj.strTeamJersey:
+					if self.LineUpTeamObj and self.LineUpTeamObj.strTeamJersey:
 						image = xbmcgui.ControlImage(image_x,image_y,image_size,image_size, self.LineUpTeamObj.strTeamJersey)
 						self.controls.append(image)
 					else:
-						image = xbmcgui.ControlImage(image_x,image_y,image_size,image_size, "" )
+						image = xbmcgui.ControlImage(image_x,image_y,image_size,image_size, os.path.join(addon_path,"resources","img","nokit_placeholder.png") )
+						self.controls.append(image)
 					label = positions.getLabel(image,"[B]" + self.lineupmidfielders[i] + "[/B]")
 					self.controls.append(label)
 					i += 1
@@ -398,11 +484,12 @@ class detailsDialog(xbmcgui.WindowXMLDialog):
 					image_size = positions.getShirtHeight(pitchHeight,forwarder[1])
 					image_x = int(forwarder[0]*float(pitchWidth))+int(0.15*image_size)
 					image_y =  int(forwarder[1]*float(pitchHeight))+int(0.15*image_size)
-					if self.LineUpTeamObj.strTeamJersey:
+					if self.LineUpTeamObj and self.LineUpTeamObj.strTeamJersey:
 						image = xbmcgui.ControlImage(image_x,image_y,image_size,image_size, self.LineUpTeamObj.strTeamJersey)
 						self.controls.append(image)
 					else:
-						image = xbmcgui.ControlImage(image_x,image_y,image_size,image_size, "" )
+						image = xbmcgui.ControlImage(image_x,image_y,image_size,image_size, os.path.join(addon_path,"resources","img","nokit_placeholder.png") )
+						self.controls.append(image)
 					label = positions.getLabel(image,"[B]" + self.lineupforwarders[i] + "[/B]")
 					self.controls.append(label)
 					i += 1

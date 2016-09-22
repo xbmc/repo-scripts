@@ -80,7 +80,7 @@
 			</control>
 		</control>
 		<control type="group">
-			<visible>!IsEmpty(Window(home).Property(has_history))+IsEmpty(Window(home).Property(loading))</visible>
+			<visible>!IsEmpty(Window(home).Property(has_history))+IsEmpty(Window(home).Property(loading-script-matchcenter-history))</visible>
 			<control type="label">
 				<description>Next Matches</description>
 				<posx>75</posx>
@@ -502,7 +502,7 @@
 			<texture></texture>
 			<aspectratio>keep</aspectratio>
 			<animation effect="rotate" start="0" end="360" center="510,370" time="1200" loop="true" condition="true">conditional</animation>
-			<visible>!IsEmpty(Window(home).Property(loading))</visible>
+			<visible>!IsEmpty(Window(home).Property(loading-script-matchcenter-history))</visible>
 		</control>
 		<control type="label">
 			<top>330</top>
@@ -514,7 +514,7 @@
 			<aligny>center</aligny>
 			<align>center</align>
 			<label>$ADDON[script.matchcenter 32016]</label>
-			<visible>!IsEmpty(Window(home).Property(loading))</visible>
+			<visible>!IsEmpty(Window(home).Property(loading-script-matchcenter-history))</visible>
 		</control>
 	</controls>
 </window>

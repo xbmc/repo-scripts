@@ -42,9 +42,9 @@ class TwitterDialog(xbmcgui.WindowXMLDialog):
 	def onInit(self):
 		xbmc.log(msg="[Match Center] Twitter cycle started", level=xbmc.LOGDEBUG)
 		self.getControl(32540).setImage(os.path.join(addon_path,"resources","img","goal.png"))
-		xbmc.executebuiltin("SetProperty(loading,1,home)")
+		xbmc.executebuiltin("SetProperty(loading-script-matchcenter-twitter,1,home)")
 		self.getTweets()
-		xbmc.executebuiltin("ClearProperty(loading,Home)")
+		xbmc.executebuiltin("ClearProperty(loading-script-matchcenter-twitter,Home)")
 		i=0
 		while self.isRunning:
 			if (float(i*200)/(twitter_update_time*60*1000)).is_integer() and ((i*200)/(3*60*1000)) != 0:

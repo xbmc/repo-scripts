@@ -14,14 +14,14 @@
 		<control type="group">
 			<left>144</left>
 			<top>10</top>
-			<control type="image">
+			<control type="image" id="32541">
 				<left>0</left>
 				<top>0</top>
 				<width>979</width>
 				<height>698</height>
 				<texture border="2">dialog-bg-solid.png</texture>
 			</control>
-			<control type="image">
+			<control type="image" id="32542">
 				<left>0</left>
 				<top>0</top>
 				<width>979</width>
@@ -60,7 +60,7 @@
 				<onclick>noop</onclick>
 			</control>
 			<control type="radiobutton" id="22000">
-				<left>915</left>
+				<left>900</left>
 				<top>11</top>
 				<width>48</width>
 				<height>48</height>
@@ -158,7 +158,7 @@
 					<onright>32500</onright>
 					<ondown>32500</ondown>
 					<onup>32500</onup>
-					<visible>IsEmpty(Window(home).Property(no-games))+IsEmpty(Window(home).Property(loading))</visible>
+					<visible>IsEmpty(Window(home).Property(no-games))+IsEmpty(Window(home).Property(loading-script-matchcenter-leagueselection))</visible>
 				</control>
 			</control>
 		</control>
@@ -172,7 +172,7 @@
 			<texture></texture>
 			<aspectratio>keep</aspectratio>
 			<animation effect="rotate" start="0" end="360" center="510,350" time="1200" loop="true" condition="true">conditional</animation>
-			<visible>!IsEmpty(Window(home).Property(loading))</visible>
+			<visible>!IsEmpty(Window(home).Property(loading-script-matchcenter-leagueselection))</visible>
 		</control>
 		<control type="label">
 			<top>300</top>
@@ -184,7 +184,7 @@
 			<aligny>center</aligny>
 			<align>center</align>
 			<label>$ADDON[script.matchcenter 32016]</label>
-			<visible>!IsEmpty(Window(home).Property(loading))</visible>
+			<visible>!IsEmpty(Window(home).Property(loading-script-matchcenter-leagueselection))</visible>
 		</control>	
 	</controls>
 </window>

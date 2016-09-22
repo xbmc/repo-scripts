@@ -39,9 +39,9 @@ class detailsDialog(xbmcgui.WindowXMLDialog):
 
 	def onInit(self):
 		self.getControl(32540).setImage(os.path.join(addon_path,"resources","img","goal.png"))
-		xbmc.executebuiltin("SetProperty(loadingtables,1,home)")
+		xbmc.executebuiltin("SetProperty(loading-script-matchcenter-tables,1,home)")
 		self.setTable()
-		xbmc.executebuiltin("ClearProperty(loadingtables,Home)")
+		xbmc.executebuiltin("ClearProperty(loading-script-matchcenter-tables,Home)")
 
 	def updateCacheTimes(self):
 		self.t2 = datetime.datetime.now()

@@ -82,7 +82,7 @@
 				</control>
 			</control>
 			<control type="group">
-				<visible>IsEmpty(Window(home).Property(loadingtables))</visible>
+				<visible>IsEmpty(Window(home).Property(loading-script-matchcenter-tables))</visible>
 				<top>10</top>
 				<control type="label">
 					<description>Total Points</description>
@@ -182,7 +182,7 @@
 				</control>
 			</control>
 			<control type="group">
-				<visible>IsEmpty(Window(home).Property(loadingtables))</visible>
+				<visible>IsEmpty(Window(home).Property(loading-script-matchcenter-tables))</visible>
 				<control type="list" id="32501">
 					<left>-55</left>
 					<top>126</top>
@@ -508,7 +508,7 @@
 			<texture></texture>
 			<aspectratio>keep</aspectratio>
 			<animation effect="rotate" start="0" end="360" center="510,370" time="1200" loop="true" condition="true">conditional</animation>
-			<visible>!IsEmpty(Window(home).Property(loadingtables))</visible>
+			<visible>!IsEmpty(Window(home).Property(loading-script-matchcenter-tables))</visible>
 		</control>
 		<control type="label">
 			<top>330</top>
@@ -520,7 +520,7 @@
 			<aligny>center</aligny>
 			<align>center</align>
 			<label>$ADDON[script.matchcenter 32016]</label>
-			<visible>!IsEmpty(Window(home).Property(loadingtables))</visible>
+			<visible>!IsEmpty(Window(home).Property(loading-script-matchcenter-tables))</visible>
 		</control>
 	</controls>
 </window>

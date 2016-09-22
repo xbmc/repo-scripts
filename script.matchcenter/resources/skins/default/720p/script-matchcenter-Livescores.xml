@@ -11,17 +11,18 @@
 		<effect type="fade" start="100" end="0" time="240" />
 	</animation>
 	<controls>
-		<control type="image">
+		<control type="image" id="32502">
 			<left>158</left>
 			<top>24</top>
 			<width>966</width>
 			<height>663</height>
+			<visible>IsEmpty(Window(home).Property(loading-script-matchcenter-livescores))</visible>
 			<texture border="2">dialog-bg-solid.png</texture>
 		</control>
 		<control type="group">
 			<control type="group">
-				<control type="list" id="32500">
-					<left>40</left>
+				<control type="panel" id="32500">
+					<left>160</left>
 					<top>26</top>
 					<width>950</width>
 					<height>660</height>
@@ -30,8 +31,6 @@
 					<onleft>62</onleft>
 					<onright>61</onright>
 					<pagecontrol>61</pagecontrol>
-					<animation effect="slide" start="0,0" end="10,0" time="0" condition="!Control.IsVisible(61)">Conditional</animation>
-					<animation effect="slide" end="120,0" time="0" condition="!Control.IsVisible(5)">Conditional</animation>
 					<itemlayout height="165" width="945">
 						<control type="image">
 							<top>-20</top>
@@ -519,26 +518,34 @@
 					<onright>32500</onright>
 					<ondown>32500</ondown>
 					<onup>32500</onup>
-					<visible>IsEmpty(Window(home).Property(no-games))+IsEmpty(Window(home).Property(loading))</visible>
+					<visible>IsEmpty(Window(home).Property(no-games))+IsEmpty(Window(home).Property(loading-script-matchcenter-livescores))</visible>
 					<animation effect="slide" end="120,0" time="0" condition="!Control.IsVisible(5)">Conditional</animation>
 				</control>
 			</control>
 		</control>
 		<!--Busy control-->
+		<control type="image">
+			<left>680</left>
+			<top>550</top>
+			<width>550</width>
+			<height>150</height>
+			<visible>!IsEmpty(Window(home).Property(loading-script-matchcenter-livescores))</visible>
+			<texture border="2">dialog-bg-solid.png</texture>
+		</control>
 		<control type="image" id="32540">
 			<description>Busy animation</description>
-			<posx>450</posx>
-			<posy>270</posy>
+			<posx>750</posx>
+			<posy>560</posy>
 			<width>120</width>
 			<height>120</height>
 			<texture></texture>
 			<aspectratio>keep</aspectratio>
-			<animation effect="rotate" start="0" end="360" center="510,330" time="1200" loop="true" condition="true">conditional</animation>
-			<visible>!IsEmpty(Window(home).Property(loading))</visible>
+			<animation effect="rotate" start="0" end="360" center="810,620" time="1200" loop="true" condition="true">conditional</animation>
+			<visible>!IsEmpty(Window(home).Property(loading-script-matchcenter-livescores))</visible>
 		</control>
 		<control type="label">
-			<top>280</top>
-			<left>400</left>
+			<top>580</top>
+			<left>700</left>
 			<width>650</width>
 			<height>90</height>
 			<font>font35_title</font>
@@ -546,7 +553,7 @@
 			<aligny>center</aligny>
 			<align>center</align>
 			<label>$ADDON[script.matchcenter 32016]</label>
-			<visible>!IsEmpty(Window(home).Property(loading))</visible>
+			<visible>!IsEmpty(Window(home).Property(loading-script-matchcenter-livescores))</visible>
 		</control>	
 		<!--No games-->
 		<control type="image" id="32541">
