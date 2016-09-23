@@ -1,3 +1,6 @@
+4.0.4 - by CaTz (23/09/2016)
+- Ignore year field if there is no year
+
 4.0.3 - by CaTz (21/08/2016)
 - Clear cache on login check - fixes 'null' cache token
 - Added Hebrew translations
