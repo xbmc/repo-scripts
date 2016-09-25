@@ -145,8 +145,9 @@ class SubscenterHelper:
                 query["episode"] = item["episode"]
             else:
                 query["type"] = "movies"
-                query["year_start"] = int(item["year"]) - 1
-                query["year_end"] = int(item["year"])
+                if item["year"]:
+                    query["year_start"] = int(item["year"]) - 1
+                    query["year_end"] = int(item["year"])
 
             search_result = self.urlHandler.request(self.BASE_URL + "search/", query)
 
