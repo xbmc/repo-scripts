@@ -134,8 +134,16 @@ class objectConfig():
             if exists:
                 rloglines, rawdata = readFile( self.ARTISTFILEPATH )
                 self.loglines.extend( rloglines )
-                json_data = _json.loads( rawdata )
-                artist = json_data.get( 'artists' )
+                try:
+                    gotData = True
+                    json_data = _json.loads( rawdata )
+                except ValueError:
+                    self.loglines.append( 'no valid JSON data returned from theaudiodb.com, setting artist to None' )
+                    gotData = False
+                if gotData:
+                    artist = json_data.get( 'artists' )
+                else:
+                    artist = None
                 if artist is not None:
                     audiodbid = artist[0].get( 'idArtist', '' )
                 if audiodbid:

@@ -1,3 +1,7 @@
+v.2.0.3
+- removed support for htbackdrops.org (API access no longer available)
+- fix for crash when theaudiodb.com doesn't respond with valid JSON
+
 v.2.0.2
 - fixed crash when using fuzzy local path with non-Windows option
 - updated German strings

@@ -155,6 +155,7 @@ LANGUAGES = (
 
 
 class Main:
+
     def __init__( self ):
         self._parse_argv()
         self._init_window()
