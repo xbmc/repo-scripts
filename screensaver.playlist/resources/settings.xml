@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<settings>
+	<category label="30000">
+		<setting label="30001" type="file" id="playlist"/>
+		<setting label="30002" type="bool" id="random" default="false"/>
+	</category>
+</settings>

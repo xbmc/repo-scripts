@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="screensaver.playlist" name="Playlist Screensaver" version="0.0.1" provider-name="BigNoid">
+	<requires>
+		<import addon="xbmc.python" version="2.25.0"/>
+	</requires>
+	<extension point="xbmc.ui.screensaver" library="default.py"/>
+	<extension point="xbmc.addon.metadata">
+		<summary lang="en">Screensaver that plays a user defined (smart) playlist</summary>
+		<description lang="en">The Playlist Screensaver plays media from a (smart) playlist as screensaver. As it opens the default player it is required to press 'Stop' to exit the screensaver. .m3u and .xsp are the supported file types.</description>
+		<disclaimer lang="en">Enable 'Use dim if paused during video playback' when selecting this screensaver</disclaimer>
+		<language />
+		<platform>all</platform>
+		<license>GNU GENERAL PUBLIC LICENSE Version 2</license>
+		<forum />
+		<website />
+		<email>big.noid@kodi.tv</email>
+		<source>https://github.com/BigNoid/screensaver.playlist</source>
+		<assets>
+			<icon>resources/icon.png</icon>
+			<fanart>resources/fanart.jpg</fanart>
+		</assets>
+	</extension>
+</addon>
