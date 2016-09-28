@@ -63,6 +63,8 @@ class Screensaver(xbmcgui.WindowXMLDialog):
         self.adj_time = int(101000 * speedup)
         # get the images
         self._get_items()
+        if self.slideshow_type == '2' and self.slideshow_random == 'false' and self.slideshow_resume == 'true':
+            self._get_offset()
         if self.items:
             # hide startup splash
             self._set_prop('Splash', 'hide')
@@ -76,6 +78,7 @@ class Screensaver(xbmcgui.WindowXMLDialog):
         self.Monitor  = MyMonitor(action = self._exit)
         self.stop     = False
         self.startup  = True
+        self.offset   = 0
 
     def _get_settings(self):
         # read addon settings
@@ -86,6 +89,7 @@ class Screensaver(xbmcgui.WindowXMLDialog):
         # convert float to hex value usable by the skin
         self.slideshow_dim    = hex(int('%.0f' % (float(100 - int(ADDON.getSetting('level'))) * 2.55)))[2:] + 'ffffff'
         self.slideshow_random = ADDON.getSetting('random')
+        self.slideshow_resume = ADDON.getSetting('resume')
         self.slideshow_scale  = ADDON.getSetting('scale')
         self.slideshow_name   = ADDON.getSetting('label')
         self.slideshow_date   = ADDON.getSetting('date')
@@ -132,8 +136,10 @@ class Screensaver(xbmcgui.WindowXMLDialog):
         order = [1,2]
         # loop until onScreensaverDeactivated is called
         while (not self.Monitor.abortRequested()) and (not self.stop):
+            # keep track of image position, needed to save the offset
+            self.position = self.offset
             # iterate through all the images
-            for img in items:
+            for img in items[self.offset:]:
                 # cache file may be outdated
                 if self.slideshow_type == '2' and not xbmcvfs.exists(img[0]):
                     continue
@@ -282,6 +288,8 @@ class Screensaver(xbmcgui.WindowXMLDialog):
                 # break out of the for loop if onScreensaverDeactivated is called
                 if  self.stop or self.Monitor.abortRequested():
                     break
+                self.position += 1
+            self.offset = 0
             items = copy.deepcopy(self.items)
 
     def _get_items(self, update=False):
@@ -323,7 +331,24 @@ class Screensaver(xbmcgui.WindowXMLDialog):
         if self.slideshow_random == 'true':
             random.seed()
             random.shuffle(self.items, random.random)
-        return self.items
+
+    def _get_offset(self):
+        try:
+            offset = xbmcvfs.File(RESUMEFILE)
+            self.offset = int(offset.read())
+            offset.close()
+        except:
+            self.offset = 0
+
+    def _save_offset(self):
+        if not xbmcvfs.exists(CACHEFOLDER):
+            xbmcvfs.mkdir(CACHEFOLDER)
+        try:
+            offset = xbmcvfs.File(RESUMEFILE, 'w')
+            offset.write(str(self.position))
+            offset.close()
+        except:
+            log('failed to save resume point')
 
     def _read_cache(self, hexfile):
         images = ''
@@ -404,6 +429,9 @@ class Screensaver(xbmcgui.WindowXMLDialog):
         self._clear_prop('Music')
         self._clear_prop('Splash')
         self._clear_prop('Background')
+        # save the current position  to file
+        if self.slideshow_type == '2' and self.slideshow_random == 'false' and self.slideshow_resume == 'true':
+            self._save_offset()
         self.close()
 
 

@@ -111,8 +111,13 @@ msgstr ""
 msgctxt "#30025"
 msgid "Additional"
 msgstr ""
+msgstr ""
 
-#empty strings from id 30026 to 30028
+msgctxt "#30026"
+msgid "Resume slideshow from last position"
+msgstr ""
+
+#empty strings from id 30027 to 30028
 
 msgctxt "#30029"
 msgid "Display background picture"

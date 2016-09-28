@@ -10,6 +10,7 @@ LANGUAGE = sys.modules[ '__main__' ].LANGUAGE
 IMAGE_TYPES = ('.jpg', '.jpeg', '.png', '.tif', '.tiff', '.gif', '.pcx', '.bmp', '.tga', '.ico', '.nef')
 CACHEFOLDER = xbmc.translatePath(xbmcaddon.Addon().getAddonInfo('profile')).decode('utf-8')
 CACHEFILE   = os.path.join(CACHEFOLDER, '%s')
+RESUMEFILE  = os.path.join(CACHEFOLDER, 'offset')
 ASFILE      = xbmc.translatePath('special://profile/advancedsettings.xml').decode('utf-8')
 
 def log(txt):
