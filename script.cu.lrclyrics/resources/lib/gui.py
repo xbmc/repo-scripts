@@ -378,7 +378,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
         listitem = xbmcgui.ListItem()
         while xbmc.getInfoLabel('Container(110).NumPages') != '2':
             self.getControl(110).addItem(listitem)
-            xbmc.sleep(10)
+            xbmc.sleep(50)
         lines = self.getControl( 110 ).size() - 1
         return lines
 
@@ -455,7 +455,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
 
     def parser_lyrics(self, lyrics):
         self.pOverlay = []
-        tag = re.compile('\[(\d+):(\d\d)([\.:]\d+|)\]')
+        tag = re.compile('\[(\d+):(\d\d)[\.:](\d\d)\]')
         lyrics = lyrics.replace( "\r\n" , "\n" )
         sep = "\n"
         for x in lyrics.split( sep ):
@@ -463,8 +463,8 @@ class GUI( xbmcgui.WindowXMLDialog ):
             times = []
             if ( match1 ):
                 while ( match1 ):
-                    times.append( float(match1.group(1)) * 60 + float(match1.group(2)) )
-                    y = 5 + len(match1.group(1)) + len(match1.group(3))
+                    times.append( float(match1.group(1)) * 60 + float(match1.group(2)) + (float(match1.group(3))/100) )
+                    y = 6 + len(match1.group(1)) + len(match1.group(3))
                     x = x[y:]
                     match1 = tag.match( x )
                 for time in times:
