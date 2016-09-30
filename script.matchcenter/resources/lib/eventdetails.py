@@ -121,8 +121,14 @@ class detailsDialog(xbmcgui.WindowXMLDialog):
 			self.getControl(32501).setImage(os.path.join(addon_path,"resources","img","nobadge_placeholder.png"))
 			self.getControl(32502).setImage(os.path.join(addon_path,"resources","img","nokit_placeholder.png"))
 
-		self.getControl(32503).setLabel(self.match.HomeTeam)
-		self.getControl(32506).setLabel(self.match.AwayTeam)
+		#Default values for team names. It depends if it is a live object or simple a past event
+		if ("HomeTeam" in self.match.__dict__.keys() and "AwayTeam" in self.match.__dict__.keys()):
+			self.getControl(32503).setLabel(self.match.HomeTeam)
+			self.getControl(32506).setLabel(self.match.AwayTeam)
+		else:
+			self.getControl(32503).setLabel(self.match.strHomeTeam)
+			self.getControl(32506).setLabel(self.match.strAwayTeam)
+
 		if show_alternative == "true":
 			if self.match.HomeTeamObj: self.getControl(32503).setLabel(self.match.HomeTeamObj.AlternativeNameFirst)
 			if self.match.AwayTeamObj: self.getControl(32506).setLabel(self.match.AwayTeamObj.AlternativeNameFirst)			
@@ -310,6 +316,7 @@ class detailsDialog(xbmcgui.WindowXMLDialog):
 					self.lineupcoach = self.match.HomeLineupCoach.replace(";","")
 				else: self.lineupcoach = {}
 			else:
+				self.teamname = self.match.strHomeTeam
 				self.LineUpTeamObj = self.match.HomeTeamObj
 				self.formationlabel = self.match.strHomeFormation
 				self.lineupgoalkeeper = self.match.strHomeLineupGoalkeeper
@@ -335,6 +342,7 @@ class detailsDialog(xbmcgui.WindowXMLDialog):
 					self.lineupcoach = self.match.AwayLineupCoach.replace(";","")
 				else: self.lineupcoach = {}
 			else:
+				self.teamname = self.match.strAwayTeam
 				self.LineUpTeamObj = self.match.AwayTeamObj
 				self.formationlabel = self.match.strAwayFormation
 				self.lineupgoalkeeper = self.match.strAwayLineupGoalkeeper
