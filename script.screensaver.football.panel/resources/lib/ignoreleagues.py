@@ -22,6 +22,7 @@ import os
 import xbmcgui
 import thesportsdb
 from resources.lib import ssutils
+from resources.lib.addonfileio import FileIO
 from resources.lib.common_addon import *
 
 api = thesportsdb.Api("7723457519235")
@@ -30,7 +31,7 @@ class Select(xbmcgui.WindowXMLDialog):
 	
 	def __init__( self, *args, **kwargs ):
 		if os.path.exists(ignored_league_list_file):
-			self.already_ignored = eval(ssutils.read_file(ignored_league_list_file))
+			self.already_ignored = eval(FileIO.fileread(ignored_league_list_file))
 		else:
 			self.already_ignored = []
 
@@ -86,7 +87,7 @@ class Select(xbmcgui.WindowXMLDialog):
 			if not os.path.exists(addon_userdata):
 				os.mkdir(addon_userdata)
 
-			ssutils.write_file(ignored_league_list_file,str(ignored_items))
+			FileIO.filewrite(ignored_league_list_file,str(ignored_items))
 			
 			self.close()
 			xbmcgui.Dialog().ok(translate(32000),translate(32009))
