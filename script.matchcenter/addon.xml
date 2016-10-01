@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.matchcenter" name="Match center" version="2.1.1" provider-name="enen92">
+<addon id="script.matchcenter" name="Match center" version="2.1.2" provider-name="enen92">
 	<requires>
 		<import addon="xbmc.python" version="2.25.0"/>
 		<import addon="script.module.thesportsdb" version="1.0.1"/>
@@ -12,7 +12,7 @@
 		<platform>all</platform>
 		<website>http://www.thesportsdb.com/</website>
 		<source>https://github.com/enen92/script.matchcenter</source>
-		<forum>http://forum.kodi.tv/showthread.php?tid=238039</forum>
+		<forum>http://forum.kodi.tv/showthread.php?tid=259894</forum>
 		<summary lang="en">Extended football match information</summary>
 		<summary lang="pt">Informação extra para encontros de futebol</summary>
 		<description lang="en">This addon brings a window that can be mapped to a remote key to show livescores for the current live football games, access match information (goals, cards, subs, lineups) or follow what others are saying about the match in twitter.[CR][CR]Powered by: http://www.thesportsdb.com</description>
