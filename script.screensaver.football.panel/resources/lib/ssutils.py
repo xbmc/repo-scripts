@@ -44,6 +44,7 @@ def get_league_tables_ids():
 	if addon.getSetting("t-china") == "true": tables.append(4359)
 	if addon.getSetting("t-sweden1") == "true": tables.append(4347)
 	if addon.getSetting("t-echampionship") == "true": tables.append(4329)
+	if addon.getSetting("t-eleague1") == "true": tables.append(4396)
 	if addon.getSetting("t-eleague2") == "true": tables.append(4397)
 	if addon.getSetting("t-sadelante") == "true": tables.append(4400)
 	if addon.getSetting("t-fleague2") == "true": tables.append(4401)
@@ -79,18 +80,6 @@ def get_league_id_no_games():
 	if addon.getSetting("no-livescores-league") == "23": return 4400
 	if addon.getSetting("no-livescores-league") == "24": return 4401
 	if addon.getSetting("no-livescores-league") == "25": return 4403
-
-def write_file(file,data):
-	f = open(file,"w")
-	f.write(data)
-	f.close()
-	return
-
-def read_file(file):
-	f = open(file,"r")
-	contents = f.read()
-	f.close()
-	return contents
 
 class HTMLStripper(HTMLParser):
     def __init__(self):

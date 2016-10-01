@@ -30,6 +30,7 @@ import pytz
 import datetime
 from resources.lib import ignoreleagues
 from resources.lib import ssutils
+from resources.lib.addonfileio import FileIO
 from resources.lib.cache import AddonCache
 from resources.lib.common_addon import *
 
@@ -51,7 +52,7 @@ class Main(xbmcgui.WindowXMLDialog):
 	def __init__( self, *args, **kwargs ):
 		self.exit_monitor = self.ExitMonitor(self.stopRunning)
 		if os.path.exists(ignored_league_list_file):
-			self.ignored_leagues = eval(ssutils.read_file(ignored_league_list_file))
+			self.ignored_leagues = eval(FileIO.fileread(ignored_league_list_file))
 		else:
 			self.ignored_leagues = []
 		
