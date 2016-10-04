@@ -1,5 +1,0 @@
-[B]2.4.2[/B]
-- fix namespace declaration
-
-[B]2.4.1[/B]
-- initial Release for XBMC
