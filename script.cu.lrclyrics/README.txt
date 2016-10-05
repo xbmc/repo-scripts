@@ -23,6 +23,12 @@ depending on which options you've enabled, the script searches for lyrics in thi
 when the scripts downloads lyrics through one of the scrapers,
 you can optionally save them to a file for future use.
 
+properties for skins:
+Container(110).ListItem.Property(part1)    - first word of the current line
+Container(110).ListItem.Property(part2)    - second word of the current line
+Container(110).ListItem.Property(part3)    - third word of the current line
+Container(110).ListItem.Property(part4)    - rest of the current line
+Container(110).ListItem.Property(duration) - time the current line will be shown
 
 properties for other addons:
 Window(Home).Property(culrc.lyrics)  - shows the current lyrics, including timing info in case of lrc lyrics.

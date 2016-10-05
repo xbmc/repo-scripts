@@ -1,3 +1,10 @@
+v5.0.8
+- fix genius scraper
+- add more accurate matching to genius scraper
+
+v5.0.7
+- add additional listitem properties for external use
+
 v5.0.6
 - fix focussed line selection
 - more accurate time syncing
