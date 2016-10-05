@@ -88,13 +88,15 @@ class Main:
             elif xbmc.getCondVisibility('system.platform.android'):
                 self.showResult(LANGUAGE(32024))
             if crashlog_path and os.path.isdir(crashlog_path):
+                lastcrash = None
                 dirs, files = xbmcvfs.listdir(crashlog_path)
                 for item in files:
                     if filematch in item and os.path.isfile(os.path.join(crashlog_path, item)):
                         items.append(os.path.join(crashlog_path, item))
                         items.sort(key=lambda f: os.path.getmtime(f))
                         lastcrash = items[-1]
-                        logfiles.append(['crashlog', lastcrash])
+                if lastcrash:
+                    logfiles.append(['crashlog', lastcrash])
             if len(items) == 0:
                 self.showResult(LANGUAGE(32022))
         return logfiles

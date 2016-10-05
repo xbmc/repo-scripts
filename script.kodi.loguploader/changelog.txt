@@ -1,0 +1,8 @@
+v0.0.3
+- prevent crashlogs from being posted multiple times
+
+v0.0.2
+- cosmetics
+
+v0.0.1
+- initial release

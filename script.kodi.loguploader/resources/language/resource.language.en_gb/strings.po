@@ -73,7 +73,7 @@ msgid "crashlog"
 msgstr ""
 
 msgctxt "#32005"
-msgid "Post this paste url for your %s, together with a problem description, on the kodi support forum:[CR]%s"
+msgid "Post this paste url for your %s, together with a problem description, on the Kodi support forum:[CR]%s"
 msgstr ""
 
 msgctxt "#32501"
@@ -85,7 +85,7 @@ msgid "Additional logfiles to post"
 msgstr ""
 
 msgctxt "#32503"
-msgid "Post the old logfile, from the last time kodi ran"
+msgid "Post the old logfile, from the last time Kodi ran"
 msgstr ""
 
 msgctxt "#32504"
