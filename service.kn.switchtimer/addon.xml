@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes'?>
+<addon id="service.kn.switchtimer" name="KN Switchtimer Service" provider-name="Birger Jesch" version="1.2.4">
+    <requires>
+        <import addon="xbmc.addon" version="16.0.0"/>
+        <import addon="xbmc.python" version="2.24.0"/>
+        <import addon="xbmc.json" version="6.32.4"/>
+    </requires>
+    <extension point="xbmc.service" library="service.py" start="login" />
+    <extension point="xbmc.python.script" library="handler.py" />
+    <extension point="kodi.context.item">
+        <menu id="kodi.core.main">
+            <item library="addtimer.py">
+                <label>30040</label>
+                <visible>Window.IsVisible(tvguide)</visible>
+            </item>
+            <item library="deltimer.py">
+                <label>30041</label>
+                <visible>Window.IsVisible(tvguide)</visible>
+            </item>
+        </menu>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <summary lang="en">A switch timer for the PVR module of Kodi</summary>
+        <summary lang="de">Ein Umschalttimer für das PVR-Modul von Kodi</summary>
+        <description lang="en">Switching with the KN switchtimer from every point of view inside Kodi to a tv or radio broadcast at a given time - no more miss your favorite shows or sports events on tv.</description>
+        <description lang="de">Mit dem KN Switchtimer schaltest Du auf Deine programmierte Sendung zur richtigen Zeit um - egal wo Du Dich gerade befindest. Nie wieder die Lieblingssendung oder wichtige Sportereignisse verpassen.</description>
+        <disclaimer lang="en">Use at your own risk.</disclaimer>
+        <disclaimer lang="de">Benutzung auf eigene Gefahr</disclaimer>
+        <platform>all</platform>
+        <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+        <website>http://vdr4bj1.no-ip.org</website>
+        <source>https://github.com/b-jesch/service.kn.switchtimer</source>
+        <email>Birger.Jesch@gmail.com</email>
+        <language/>
+    </extension>
+</addon>

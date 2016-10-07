@@ -1,0 +1,40 @@
+CHANGELOG
+
+1.2.4
+- updated to new python api and context menu syntax in Jarvis
+
+1.2.3
+- Dutch translation
+
+1.2.2
+- Bug in countdown dialog fixed
+
+1.2.1
+- merge from pull request of W. Heisenberg:
+  - Countdown dialog added
+  - Notification or countdown dialog selectable
+
+1.2.0
+- adding context menu items of PVROSDGuide using the extension
+  point kodi.context.item of Isengard
+
+1.1.2
+- Internationalization even for skin labels
+
+1.1.1
+- Channel switch could be aborted by pressing any key while
+  switch message is displayed on screen
+
+1.1.0
+- complete rewrite, refactoring and optimization of code
+- timer t0-t9 now sorted by datetime (t0: nearest)
+
+1.0.12
+- Channelicon property added (t0:icon ... t9:icon)
+
+1.0.11
+- some JSONRPC Errors fixed
+- changelog added
+
+1.0.0
+- intial commit

@@ -1,0 +1,114 @@
+# XBMC Media Center language file
+# Addon Name: KN Switchtimer Service
+# Addon id: service.kn.switchtimer
+# Addon version: 1.2.4
+# Addon Provider: Birger Jesch
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC-Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: 2016-09-02 05:43+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: de\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+
+msgctxt "Addon Summary"
+msgid "A switch timer for the PVR module of Kodi"
+msgstr "Ein Umschalttimer für das PVR-Modul von Kodi"
+
+msgctxt "Addon Description"
+msgid "Switching with the KN switchtimer from every point of view inside Kodi to a tv or radio broadcast at a given time - no more miss your favorite shows or sports events on tv."
+msgstr "Mit dem KN Switchtimer schaltest Du auf Deine programmierte Sendung zur richtigen Zeit um - egal wo Du Dich gerade befindest. Nie wieder die Lieblingssendung oder wichtige Sportereignisse verpassen."
+
+msgctxt "Addon Disclaimer"
+msgid "Use at your own risk."
+msgstr "Benutzung auf eigene Gefahr"
+
+msgctxt "#30000"
+msgid "Switch Timer Service"
+msgstr "Switch Timer Service"
+
+msgctxt "#30001"
+msgid "Show Notice or Countdown before Channel will switched"
+msgstr "Zeige Hinweis oder Countdown, wenn Kanalwechsel bevor steht"
+
+msgctxt "#30002"
+msgid "Duration of Notification or Countdown"
+msgstr "Anzeigedauer der Hinweismeldung oder des Countdowns"
+
+msgctxt "#30003"
+msgid "Show Confirmation if Timer is set"
+msgstr "Zeige Bestätigung für gesetzten Timer"
+
+msgctxt "#30004"
+msgid "Ignore Timers older than"
+msgstr "Ignoriere Timer, die älter sind als"
+
+msgctxt "#30010"
+msgid "Currently active Timers"
+msgstr "Anzahl aktuell aktiver Timer"
+
+msgctxt "#30011"
+msgid "Delete all Timers"
+msgstr "Alle Timer löschen"
+
+msgctxt "#30012"
+msgid "Use Countdown Timer"
+msgstr "Benutze Countdown Timer"
+
+msgctxt "#30020"
+msgid "Date/Time of Timer could not calculated"
+msgstr "Datum/Zeit des Timers kann nicht ermittelt werden"
+
+msgctxt "#30021"
+msgid "Timer added"
+msgstr "Timer wurde aktiviert"
+
+msgctxt "#30022"
+msgid "Timer is in the past"
+msgstr "Timer liegt in der Vergangenheit"
+
+msgctxt "#30023"
+msgid "Timer for this time already set"
+msgstr "Timer für diesen Zeitpunkt bereits aktiv"
+
+msgctxt "#30024"
+msgid "Timer Limit exceed, no free Slots"
+msgstr "max. Anzahl Timer erreicht, kein freier Speicher"
+
+msgctxt "#30025"
+msgid "Could not switch to %s"
+msgstr "Kann nicht umschalten zu '%s'"
+
+msgctxt "#30026"
+msgid "Switching now to '%s'."
+msgstr "Umschaltung zu '%s' erfolgt jetzt."
+
+msgctxt "#30027"
+msgid "Broadcast on '%s' starts now"
+msgstr "Sendung auf '%s' beginnt jetzt"
+
+msgctxt "#30028"
+msgid "Channel Switch requested"
+msgstr "Kanalumschaltung steht bevor"
+
+msgctxt "#30029"
+msgid "%s Seconds left to abort"
+msgstr "%s Sekunden verbleibend, um abzubrechen"
+
+msgctxt "#30030"
+msgid "This Addon is a part of the KN switchtimer service and cannot use as a standalone application."
+msgstr "Dieses Addon ist Bestandteil des KN Switchtimer Services und kann nicht als eigenständiges Programm aufgerufen werden."
+
+msgctxt "#30040"
+msgid "Add switchtimer"
+msgstr "Umschalttimer setzen"
+
+msgctxt "#30041"
+msgid "Reset all switchtimers"
+msgstr "alle Umschalttimer löschen"
