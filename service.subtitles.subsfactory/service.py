@@ -62,7 +62,8 @@ def checkexp(tvshow):
          ["NCIS: Los Angeles","NCIS Los Angeles"],
          ["Castle (2009)","Castle"],
          ["Marvel's Jessica Jones","Jessica Jones"],
-         ["The Flash (2014)","The Flash"]]
+         ["The Flash (2014)","The Flash"],
+         ["Marvel's Luke Cage","Luke Cage"]]
     for expl in exp:
         if tvshow == expl[0]:
             return expl[1]
