@@ -1,3 +1,5 @@
+1.0.4 (2016-10-07)
+- fixed for some TV show
 1.0.3 (2016-04-24)
 - bugfix on linux subdir
 1.0.2 (2016-03-23)
