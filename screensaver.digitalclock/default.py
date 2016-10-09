@@ -25,11 +25,9 @@ from datetime import datetime
 
 Addon = xbmcaddon.Addon('screensaver.digitalclock')
 
-#__scriptname__ = Addon.getAddonInfo('name')
-__path__ = Addon.getAddonInfo('path')
-__location__ = xbmc.getSkinDir()
-#__scriptname__='main.xml'
-__scriptname__ = __location__ + '.xml'
+path = Addon.getAddonInfo('path')
+location = xbmc.getSkinDir()
+scriptname = location + '.xml'
 
 class Screensaver(xbmcgui.WindowXMLDialog):
 
@@ -207,7 +205,7 @@ class Screensaver(xbmcgui.WindowXMLDialog):
 
 		#setting weather icon set
         self.weathericonset = ['Hide weather icon','set1','set2','set3','set4']
-        self.weathericon_control.setImage(os.path.join(__path__,"resources/skins/default/weathericons/",self.weathericonset[int(self.weathericonf)],xbmc.getInfoLabel('Window(Weather).Property(Current.FanartCode)')) + ".png")
+        self.weathericon_control.setImage(os.path.join(path,"resources/skins/default/weathericons/",self.weathericonset[int(self.weathericonf)],xbmc.getInfoLabel('Window(Weather).Property(Current.FanartCode)')) + ".png")
 		
 		#setting up the time format
         self.timeformat = ['%H','%I','%I']
@@ -348,7 +346,7 @@ class Screensaver(xbmcgui.WindowXMLDialog):
         if self.informationtype != 0:
             self.information_control.setLabel(self.information)
         if self.weathericonf != '0': 			
-            self.weathericon_control.setImage(os.path.join(__path__,"resources/skins/default/weathericons/",self.weathericonset[int(self.weathericonf)],xbmc.getInfoLabel('Window(Weather).Property(Current.FanartCode)')) + ".png")
+            self.weathericon_control.setImage(os.path.join(path,"resources/skins/default/weathericons/",self.weathericonset[int(self.weathericonf)],xbmc.getInfoLabel('Window(Weather).Property(Current.FanartCode)')) + ".png")
         self.hour_colorcontrol.setLabel(self.hourcolor)
         self.colon_colorcontrol.setLabel(self.coloncolor)   			
         self.minute_colorcontrol.setLabel(self.minutecolor)
@@ -434,10 +432,10 @@ if __name__ == '__main__':
         screensaver = Screensaver('script-screensaver-digitalclock-custom.xml', xbmc.translatePath('special://skin/16x9/'), 'default')
     elif(os.path.isfile(xbmc.translatePath('special://skin/4x3Hirez/script-screensaver-digitalclock-custom.xml'))):
         screensaver = Screensaver('script-screensaver-digitalclock-custom.xml', xbmc.translatePath('special://skin/4x3Hirez/'), 'default')
-    elif(os.path.isfile(os.path.join(__path__,"resources/skins/default/720p/",__scriptname__))):
-        screensaver = Screensaver(__scriptname__, __path__, 'default')
+    elif(os.path.isfile(os.path.join(path,"resources/skins/default/720p/",scriptname))):
+        screensaver = Screensaver(scriptname, path, 'default')
     else:
-        screensaver = Screensaver('skin.default.xml', __path__, 'default')	
+        screensaver = Screensaver('skin.default.xml', path, 'default')	
     screensaver.doModal()
     del screensaver
     sys.modules.clear()
