@@ -1,5 +1,5 @@
 """
-PyXBMCt framework module
+PyXBMCt framework package
 
 PyXBMCt is a mini-framework for creating Kodi (XBMC) Python addons
 with arbitrary UI made of Controls - decendants of xbmcgui.Control class.
@@ -9,11 +9,9 @@ Licence: GPL v.3 http://www.gnu.org/licenses/gpl.html
 """
 
 from addonwindow import *
-
-version = '1.1.7'
+from addonskin import BaseSkin
 
 __all__ = [
-    'version',
     'ALIGN_LEFT',
     'ALIGN_RIGHT',
     'ALIGN_CENTER_X',
@@ -46,4 +44,7 @@ __all__ = [
     'BlankDialogWindow',
     'AddonDialogWindow',
     'AddonFullWindow',
+    'Skin',
+    'skin',
+    'BaseSkin'
 ]
