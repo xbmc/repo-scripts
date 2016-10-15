@@ -1,3 +1,13 @@
+v4.2.0
+- fix genius scraper
+- add more accurate matching to genius scraper
+- add additional listitem properties for external use
+- fix focussed line selection
+- more accurate time syncing
+- add support for internet streams
+- add lrc window property
+- fix embedded lyrics search
+
 v4.1.11
 - fix embedded lyrics search
 
