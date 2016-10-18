@@ -1,3 +1,6 @@
+1.1.0
+- updated the addon to support Torec website version 7.0
+
 1.0.10
 - fixed a breaking change from torec.net -> http://www.xn--9dbf0cd.net leading to addon download malfunction
 

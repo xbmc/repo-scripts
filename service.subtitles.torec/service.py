@@ -39,37 +39,24 @@ xbmcvfs.mkdirs(__temp__)
 
 sys.path.append(__resource__)
 
-from SubtitleHelper import log, build_search_string, normalize_string
+from SubtitleHelper import log, normalize_string, convert_to_utf
 from TorecSubtitlesDownloader import TorecSubtitlesDownloader
-
-
-def convert_to_utf(file_):
-    """
-    Convert a file in cp1255 encoding to utf-8
-
-    :param file_: file to converted from CP1255 to UTF8
-    """
-    try:
-        with codecs.open(file_, "r", "cp1255") as f:
-            srt_data = f.read()
-
-        with codecs.open(file_, 'w', 'utf-8') as output:
-            output.write(srt_data)
-    except UnicodeDecodeError:
-        log(__name__, "got unicode decode error with reading subtitle data")
-
 
 def search(item):
     best_match_id = None
     downloader = TorecSubtitlesDownloader()
-    search_data = None
+    subtitles_options = None
     
     start_time = time.time()
 
     try:
         search_start_time = time.time()
-        search_string = build_search_string(item)
-        search_data = downloader.search(search_string)
+        if item['tvshow'] != "":
+            subtitles_options = downloader.search_tvshow(item['tvshow'], item['season'], item['episode'])
+        else:
+            title, year = xbmc.getCleanMovieTitle(item['title'])
+            subtitles_options = downloader.search_movie(title)
+                    
         log(__name__, "search took %f" % (time.time() - search_start_time))
     except Exception as e:
         log(
@@ -82,24 +69,24 @@ def search(item):
         return
     
     list_items = []
-    if search_data:
-        best_match_id = downloader.get_best_match_id(
-            os.path.basename(item['file_original_path']), search_data
+    if subtitles_options:
+        best_match_option_id = downloader.get_best_match_id(
+            os.path.basename(item['file_original_path']), subtitles_options
         )
 
-        for item_data in search_data.options:
+        for item_data in subtitles_options:
             listitem = xbmcgui.ListItem(
                 label="Hebrew", label2=item_data.name, iconImage="0",
                 thumbnailImage="he"
             )
             url = (
-                "plugin://%s/?action=download&page_id=%s&subtitle_id="
+                "plugin://%s/?action=download&sub_id=%s&option_id="
                 "%s&filename=%s" % (
-                    __scriptid__, search_data.id, item_data.id, item_data.name
+                    __scriptid__, item_data.sub_id, item_data.option_id, item_data.name
                 )
             )
 
-            if best_match_id is not None and item_data.id == best_match_id:
+            if item_data.option_id == best_match_option_id:
                 log(
                     __name__, "Found most relevant option to be : %s" %
                               item_data.name
@@ -120,7 +107,7 @@ def delete_old_subs():
         os.remove(f)
 
 
-def download(page_id, subtitle_id, filename, stack=False):
+def download(sub_id, option_id, filename, stack=False):
     result = None
     subtitle_list = []
     exts = [".srt", ".sub"]
@@ -128,8 +115,9 @@ def download(page_id, subtitle_id, filename, stack=False):
     start_time = time.time()
 
     delete_old_subs()
+
     try:
-        result = downloader.get_download_link(page_id, subtitle_id)
+        result = downloader.get_download_link(sub_id, option_id)
     except Exception as e:
         log(__name__,"failed to connect to service for subtitle download %s" % e)
         return subtitle_list
@@ -238,9 +226,7 @@ if params['action'] == 'search' or params['action'] == 'manualsearch':
     search(item)
 
 elif params['action'] == 'download':
-    subs = download(
-        params["page_id"], params["subtitle_id"], params["filename"]
-    )
+    subs = download(params["sub_id"], params["option_id"], params["filename"])
     for sub in subs:
         listitem = xbmcgui.ListItem(label=sub)
         xbmcplugin.addDirectoryItem(
