@@ -1,3 +1,6 @@
+1.1.1
+- some minor bug fixes
+
 1.1.0
 - updated the addon to support Torec website version 7.0
 
