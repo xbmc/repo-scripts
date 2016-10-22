@@ -1,3 +1,11 @@
+2.3.2
+- Fix: addon version mismatch 
+
+2.3.1
+- Fix: subtitles not downloading
+- Fix: better error handling
+- Add: Search Using Original Title option
+
 2.3.0
 - Fix: use IMDB to filter results, if possible
 - Add: Use TheTVDB to retrieve tv shows original titles

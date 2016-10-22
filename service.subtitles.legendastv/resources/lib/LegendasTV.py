@@ -93,13 +93,15 @@ class LegendasTV:
         self.RegThreads = []
         self.cookie = ""
     
-    def Log(self, message):
-        print "####  %s" % message.encode("utf-8")
+    def Log(self, message, logtype = "NOTICE"):
+        print "####  %s: %s" % (logtype, message.encode("utf-8"))
         
     def _urlopen(self, request):
         try:
-            return urllib2.urlopen(request).read()
-        except urllib2.HTTPError:
+            self.Log("Opening URL: (%s)" % request, "DEBUG" )
+            return urllib2.urlopen(request, timeout=15)
+        except urllib2.URLError as e:
+            self.Log("Website (%s) could not be reached due to error: %s" % (request, str(e)), "ERROR" )
             return ""
 
     def login(self, username, password):
@@ -112,7 +114,7 @@ class LegendasTV:
             opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(self.cookie))
             urllib2.install_opener(opener)
             login_data = urllib.urlencode({'_method':'POST', 'data[User][username]':username, 'data[User][password]':password})
-            request = urllib2.Request("http://minister.legendas.tv/login/", login_data)
+            request = urllib2.Request("http://legendas.tv/login", login_data)
             response = normalizeString(urllib2.urlopen(request).read())
             if response.__contains__(u'Usuário ou senha inválidos'):
                 self.Log( u" Login Failed. Check your data at the addon configuration.")
@@ -210,19 +212,20 @@ class LegendasTV:
             fromEnd   = " ".join(SearchElements[-x:])
             # print "fromBegin[%s] fromEnd[%s]" % (fromBegin, fromEnd)
             for search in [ fromBegin, fromEnd]:
-                url     = "http://legendas.tv/legenda/sugestao/" + urllib.quote_plus(search)
-                current = FuncThread(target=self._urlopen, args=(url,))
-                current.start()
-                self.RegThreads.append(current)
+                if len(search):
+                    url     = "http://legendas.tv/legenda/sugestao/" + urllib.quote_plus(search)
+                    current = FuncThread(target=self._urlopen, args=(url,))
+                    current.start()
+                    self.RegThreads.append(current)
             # Wait for all threads to finish
             for thread in self.RegThreads:
                 try:
                     # Try if thread result is a valid JSON string
-                    contents = simplejson.loads(unicode(thread.join(), 'utf-8', errors='ignore'))
+                    contents = simplejson.loads(unicode(thread.join().read(), 'utf-8', errors='ignore'))
                     for content in contents:
                         JSONContent.append(content)
                 except:
-                    # Continue if thread result i an invalud JSON string
+                    # Continue if thread result is an invalid JSON string
                     pass
 
         for R in JSONContent:
@@ -233,7 +236,7 @@ class LegendasTV:
                 if filter(lambda id: id['id'] == ContentID, discardedResults) or filter(lambda id: id['id'] == ContentID, allResults):
                     continue
                 Source    = R["_source"]
-                LTVSeason = Source["temporada"] if Source["tipo"] == "S" else 0
+                LTVSeason = Source["temporada"] if Source["tipo"] == "S" and Source["temporada"] else 0
                 LTVTitle  = self.CleanLTVTitle(Source['dsc_nome'])
                 TitleBR   = self.CleanLTVTitle(Source['dsc_nome_br'])
                 LTVYear   = Source["dsc_data_lancamento"] if Source["dsc_data_lancamento"].isdigit() else 0
@@ -253,7 +256,7 @@ class LegendasTV:
         # Extend with the older version
         if not len(allResults):
             self.Log("Extending results...")
-            Response = self._urlopen("http://minister.legendas.tv/util/busca_titulo/" + urllib.quote_plus(SearchString))
+            Response = self._urlopen("http://minister.legendas.tv/util/busca_titulo/" + urllib.quote_plus(SearchString)).read()
             Response =  simplejson.loads(unicode(Response, 'utf-8', errors='ignore'))
             # Load the results
             # Parse and filter the results
@@ -320,13 +323,13 @@ class LegendasTV:
         self.Log("Message: Retrieving page [%s] for Movie[%s], Id[%s]." % (Page, MainID["title"], MainID["id"]))
         
 #        Response = self._urlopen("http://minister.legendas.tv/util/carrega_legendas_busca/page:%s/id_filme:%s" % (Page, MainID["id"]))
-        Response = self._urlopen("http://legendas.tv/util/carrega_legendas_busca_filme/%s/-/-/%s" % (MainID["id"], Page))
+        Response = self._urlopen("http://legendas.tv/util/carrega_legendas_busca_filme/%s/-/-/%s" % (MainID["id"], Page)).read()
         if not re.findall(regex_1, Response, re.IGNORECASE | re.DOTALL):
             self.Log("Error: Failed retrieving page [%s] for Movie[%s], Id[%s]." % (Page, MainID["title"], MainID["id"]))
         else:
             for x, content in enumerate(re.findall(regex_1, Response, re.IGNORECASE | re.DOTALL), start=1):
                 LanguageName, LanguageFlag, LanguagePreference = "", "", 0
-                download_id = "%s%s" % ("http://minister.legendas.tv", content[1])
+                download_id = "%s%s" % ("http://legendas.tv", content[1])
                 release_type = content[0] if not content[0] == "" else "zero"
                 title = normalizeString(content[2])
                 release = normalizeString(content[2])
@@ -366,11 +369,11 @@ class LegendasTV:
 
 
     def Download(self, url):
-        Response = urllib2.urlopen(url).read()
+        Response = self._urlopen(url).read()
         downloadID = re.findall(regex_3, Response)[0] if re.search(regex_3, Response) else 0
         if not downloadID:
-            return None
-        Response = urllib2.urlopen(urllib2.Request("http://minister.legendas.tv%s" % downloadID))
+            return None, None
+        Response = self._urlopen("http://legendas.tv%s" % downloadID)
         Sub = Response.read()
         Type = 'rar' if Response.url.__contains__('.rar') else 'zip'
         return Sub, Type

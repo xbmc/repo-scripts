@@ -2,7 +2,7 @@
 # Copyright, 2010, Guilherme Jardim.
 # This program is distributed under the terms of the GNU General Public License, version 3.
 # http://www.gnu.org/licenses/gpl.txt
-# Rev. 2.3.0
+# Rev. 2.3.2
 
 import os
 import sys
@@ -14,7 +14,7 @@ import xbmcvfs
 import xbmcaddon
 import xbmcgui,xbmcplugin
 
-__addon__ = xbmcaddon.Addon()
+__addon__      = xbmcaddon.Addon()
 __author__     = __addon__.getAddonInfo('author')
 __scriptid__   = __addon__.getAddonInfo('id')
 __scriptname__ = __addon__.getAddonInfo('name')
@@ -27,11 +27,11 @@ __resource__   = xbmc.translatePath( os.path.join( __cwd__, 'resources', 'lib' )
 __temp__       = xbmc.translatePath( os.path.join( __profile__, 'temp', '') ).decode("utf-8")
 
 sys.path.append (__resource__)
-__search__ = __addon__.getSetting( 'SEARCH' )
+__search__   = __addon__.getSetting( 'SEARCH' )
 __username__ = __addon__.getSetting( 'USERNAME' )
 __password__ = __addon__.getSetting( 'PASSWORD' )
 
-from LTVutilities import log, xbmcOriginalTitle, cleanDirectory, isStacked, getMovieId, getShowIMDB, getShowId
+from LTVutilities import log, cleanDirectory, isStacked, getMovieIMDB, getShowIMDB, getShowId, getTVShowOrginalTitle, getMovieOriginalTitle, safeFilename
 from LegendasTV import *
 
 LTV = LegendasTV()
@@ -50,7 +50,7 @@ def Search(item):  # standard input
                                imdb=item['imdb'])
     except:
         import traceback
-        log("\n%s" % traceback.format_exc())
+        log("\n%s" % traceback.format_exc(), "ERROR")
         return 1 
 
     if subtitles:
@@ -77,16 +77,36 @@ def Search(item):  # standard input
                                                                                                 it["language_name"] )
 
             xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url=url,listitem=listitem,isFolder=False)
+    
+    if item['original_title'] != "true":
+        listitem = xbmcgui.ListItem(label="", label2=__language__( 32011 ).encode("utf-8"), iconImage="", thumbnailImage="")
+        searchstring = "&searchstring=%s" % item['searchstring'] if item.has_key("searchstring") else ""
+        url = "plugin://%s/?action=search&original_title=true&languages=%s%s" % ( __scriptid__, 
+                                                                                  urllib.quote(",".join(item["languages"])), 
+                                                                                  urllib.quote(searchstring)
+                                                                                )
+        xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url=url,listitem=listitem,isFolder=False)
 
-def xbmc_walk(path, out = [] ):
-    dirs, files =  xbmcvfs.listdir(path)
-    for f in files:
-        f = "%s/%s" % (path, f)
-        if xbmcvfs.exists(f): out.append(f)
-    for d in dirs:
-        d = "%s/%s/" % (path, d)
-        if xbmcvfs.exists(d): out.extend(xbmc_walk(d, out) )
-    return out
+# def xbmc_walk(path, out = [] ):
+#     dirs, files =  xbmcvfs.listdir(path)
+#     for f in files:
+#         f =  u"%s/%s" % (path,f.decode("utf-8"))
+#         out.append(f)
+#     for d in dirs:
+#         d = "%s/%s/" % (path, d)
+#         if xbmcvfs.exists(d): out.extend(xbmc_walk(d, out) )
+#     return out
+
+def xbmc_walk(DIR):
+    LIST = []
+    dirs, files = xbmcvfs.listdir(DIR)
+    for file in files:
+        LIST.append(os.path.join( DIR, file ))
+    for dir in dirs:
+        LIST.extend(list(xbmc_walk(os.path.join( DIR, dir ))))
+    return LIST
+
+
 
 
 def Download(url, filename, pack, language): #standard input
@@ -114,17 +134,20 @@ def Download(url, filename, pack, language): #standard input
                 dirfile = os.path.join(root, file)
                 
                 # Sanitize filenames - converting them to ASCII - and remove them from folders
+                log("Opening file: "+dirfile, "DEBUG")
 
-                f = xbmcvfs.File(dirfile)
-                temp = f.read()
-                f.close()
+                with open(dirfile,'rb') as f: 
+                    FileContent = f.read()
                 xbmcvfs.delete(dirfile)
+
                 dirfile_with_path_name = normalizeString(os.path.relpath(dirfile, extractPath))
                 dirname, basename = os.path.split(dirfile_with_path_name)
                 dirname = re.sub(r"[/\\]{1,10}","-", dirname)
                 dirfile_with_path_name = "(%s) %s" % (dirname, basename) if len(dirname) else basename
-                new_dirfile = os.path.join(extractPath, dirfile_with_path_name)
-                with open(new_dirfile, "w") as f: f.write(temp)
+                new_dirfile = os.path.join(extractPath, safeFilename(dirfile_with_path_name))
+                with open(new_dirfile, "w") as f: 
+                    log("Writing file: "+new_dirfile, "DEBUG")
+                    f.write(FileContent)
                 
                 # Get the file extension
                 ext = os.path.splitext(new_dirfile)[1][1:].lower()
@@ -170,6 +193,7 @@ def Download(url, filename, pack, language): #standard input
                 for f in xbmc_walk(dir):
                     if os.path.splitext(f)[1] in [".mkv", ".avi", ".vob", ".mov", ".mp4"]:
                         for x, s in subtitles:
+                            se, fe = 0, 1
                             if re.search("s\d{2}e\d{2}", s.lower()): se = re.findall("s\d{2}e\d{2}", s.lower())[0]
                             if re.search("s\d{2}e\d{2}", f.lower()): fe = re.findall("s\d{2}e\d{2}", f.lower())[0]
                             if se == fe:
@@ -215,27 +239,35 @@ if params['action'] == 'search' or params['action'] == 'manualsearch':
     item['year']                = xbmc.getInfoLabel("VideoPlayer.Year")                              # Year
     item['season']              = str(xbmc.getInfoLabel("VideoPlayer.Season"))                       # Season
     item['episode']             = str(xbmc.getInfoLabel("VideoPlayer.Episode"))                      # Episode
-    item['tvshow']              = xbmcOriginalTitle(xbmc.getInfoLabel("VideoPlayer.TVshowtitle"))    # Show
-    item['title']               = xbmcOriginalTitle(xbmc.getInfoLabel("VideoPlayer.OriginalTitle"))  # try to get original title
+    item['tvshow']              = normalizeString(xbmc.getInfoLabel("VideoPlayer.TVshowtitle"))      # Show
+    item['title']               = normalizeString(xbmc.getInfoLabel("VideoPlayer.OriginalTitle"))    # try to get original title
     item['file_original_path']  = urllib.unquote(xbmc.Player().getPlayingFile().decode('utf-8'))     # Full path of a playing file
     item['languages']           = [] #['scc','eng']
     item["languages"].extend(urllib.unquote(params['languages']).decode('utf-8').split(","))
+    item["original_title"]      = "true" if params.has_key("original_title") else "false"
+
+    if not item['title']:
+        log( "VideoPlayer.OriginalTitle not found")        
+        item['title']  = normalizeString(xbmc.getInfoLabel("VideoPlayer.Title"))
 
     if item['tvshow']:
         item["imdb"] = getShowIMDB()
     else:
-        item["imdb"] = getMovieId()
+        item["imdb"] = getMovieIMDB()
 
-    if not item['title']:
-        # no original title, get just Title
-        log( "VideoPlayer.OriginalTitle not found")        
-        item['title']  = normalizeString(xbmc.getInfoLabel("VideoPlayer.Title"))
+
+    if item["original_title"] == "true":
+        if item['tvshow']: 
+            item['tvshow'] = getTVShowOrginalTitle(item["tvshow"], getShowId())
+        else:
+            item['title'] = getMovieOriginalTitle(item["title"], item["imdb"])
 
     if 'searchstring' in params:
+        item["searchstring"] = urllib.unquote(params['searchstring'])
         if item['tvshow']: 
-            item['tvshow'] = urllib.unquote(params['searchstring'])
+            item['tvshow']   = item["searchstring"]
         elif item['title']: 
-            item['title'] = urllib.unquote(params['searchstring'])
+            item['title']    = item["searchstring"]
 
     langtemp = []
     for lang in item["languages"]:
