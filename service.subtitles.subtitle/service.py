@@ -8,6 +8,7 @@ import xbmcvfs
 import xbmcaddon
 import xbmcgui
 import xbmcplugin
+from requests import post
 
 
 __addon__ = xbmcaddon.Addon()
@@ -90,11 +91,29 @@ def get_params(string=""):
 
     return param
 
+def mirror_sub(id, filename, sub_file):
+    values = {}
+    values['id'] = id
+    values['versioname'] = filename
+    values['source'] = 'ktuvit'
+    values['year'] = xbmc.getInfoLabel("VideoPlayer.Year")
+    values['season'] = str(xbmc.getInfoLabel("VideoPlayer.Season"))
+    values['episode'] = str(xbmc.getInfoLabel("VideoPlayer.Episode"))
+    values['imdb'] = str(xbmc.getInfoLabel("VideoPlayer.IMDBNumber"))
+    values['tvshow'] = normalizeString(xbmc.getInfoLabel("VideoPlayer.TVshowtitle"))
+    values['title'] = normalizeString(xbmc.getInfoLabel("VideoPlayer.OriginalTitle"))
+    values['file_original_path'] = urllib.unquote(unicode(xbmc.Player().getPlayingFile(), 'utf-8'))
+    url = 'http://subs.thewiz.info/send.php'
+    try:
+        post(url, files={'sub': open(sub_file, 'rb')}, data=values)
+    except:
+        pass
+
 
 params = get_params()
 if params['action'] in ['search', 'manualsearch']:
-    log(__scriptname__, "Version: '%s'" % (__version__))
-    log(__scriptname__, "action '%s' called" % (params['action']))
+    log("Version: '%s'" % (__version__))
+    log("action '%s' called" % (params['action']))
 
     if params['action'] == 'manualsearch':
         params['searchstring'] = urllib.unquote(params['searchstring'])
@@ -113,7 +132,7 @@ if params['action'] in ['search', 'manualsearch']:
     item['preferredlanguage'] = xbmc.convertLanguage(item['preferredlanguage'], xbmc.ISO_639_2)
 
     if item['title'] == "":
-        log(__scriptname__, "VideoPlayer.OriginalTitle not found")
+        log("VideoPlayer.OriginalTitle not found")
         item['title'] = normalizeString(xbmc.getInfoLabel("VideoPlayer.Title"))  # no original title, get just Title
 
     if params['action'] == 'manualsearch':
@@ -125,7 +144,7 @@ if params['action'] in ['search', 'manualsearch']:
     for lang in unicode(urllib.unquote(params['languages']), 'utf-8').split(","):
         item['3let_language'].append(xbmc.convertLanguage(lang, xbmc.ISO_639_2))
 
-    log(__scriptname__, "Item before cleaning: \n    %s" % item)
+    log("Item before cleaning: \n    %s" % item)
 
     # clean title + tvshow params
     clean_title(item)
@@ -145,7 +164,7 @@ if params['action'] in ['search', 'manualsearch']:
     elif item['file_original_path'].find("stack://") > -1:
         stackPath = item['file_original_path'].split(" , ")
         item['file_original_path'] = stackPath[0][8:]
-    log(__scriptname__, "%s" % item)
+    log("%s" % item)
     search(item)
 
 elif params['action'] == 'download':
@@ -153,6 +172,9 @@ elif params['action'] == 'download':
     subs = download(params["id"], params["filename"])
     ## we can return more than one subtitle for multi CD versions, for now we are still working out how to handle that in XBMC core
     for sub in subs:
+        if params["language"] == 'he':
+            mirror_sub(params["id"], params["filename"], sub)
+
         listitem = xbmcgui.ListItem(label=sub)
         xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=sub, listitem=listitem, isFolder=False)
 

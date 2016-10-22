@@ -86,7 +86,7 @@ def parse_rls_title(item):
         item["tvshow"] = regexHelper.sub(' ', title).strip()
         item["season"] = str(int(season))
         item["episode"] = str(int(episode))
-        log(__scriptname__, "TV Parsed Item: %s" % (item,))
+        log("TV Parsed Item: %s" % (item,))
 
     else:
         groups = re.findall(r"(.*?)(\d{4})", item["title"], re.I)
@@ -95,11 +95,11 @@ def parse_rls_title(item):
             item["title"] = regexHelper.sub(' ', title).strip()
             item["year"] = groups[0][1] if len(groups[0]) == 2 else item["year"]
 
-            log(__scriptname__, "MOVIE Parsed Item: %s" % (item,))
+            log("MOVIE Parsed Item: %s" % (item,))
 
 
-def log(module, msg):
-    xbmc.log((u"### [%s] - %s" % (module, msg,)).encode('utf-8'), level=xbmc.LOGDEBUG)
+def log(msg):
+    xbmc.log((u"### [%s] - %s" % (__scriptname__, msg,)).encode('utf-8'), level=xbmc.LOGDEBUG)
 
 def notify(msg_id):
     xbmc.executebuiltin((u'Notification(%s,%s)' % (__scriptname__, __language__(msg_id))).encode('utf-8'))
@@ -197,7 +197,7 @@ class SubtitleHelper:
 
         h = HTMLParser.HTMLParser()
 
-        log(__scriptname__, "urls: %s" % urls)
+        log("urls: %s" % urls)
 
         if not item["tvshow"]:
             for (id, heb_name, eng_name, year) in urls:
@@ -228,13 +228,13 @@ class SubtitleHelper:
 
                 eng_name = regexHelper.sub(' ', eng_name)
                 eng_name_tmp = regexHelper.sub('', eng_name)
-                heb_name = regexHelper.sub(' ', heb_name)
+                heb_name = regexHelper.sub('', heb_name)
 
                 if (search_string.startswith(eng_name_tmp) or eng_name_tmp.startswith(search_string) or
                         search_string.startswith(heb_name) or heb_name.startswith(search_string)):
                     filtered.append({"name": eng_name, "url": urllib.quote(url)})
 
-        log(__scriptname__, "filtered: %s" % filtered)
+        log("filtered: %s" % filtered)
         return filtered
 
     def _build_movie_subtitle_list(self, search_results, item):
@@ -360,7 +360,7 @@ class SubtitleHelper:
         subsfile = re.sub('\W+', '.', subsfile).lower()
         file_name = re.sub('\W+', '.', file_name).lower()
         folder_name = re.sub('\W+', '.', folder_name).lower()
-        log(__scriptname__, "# Comparing Releases:\n [subtitle-rls] %s \n [filename-rls] %s \n [folder-rls] %s" % (
+        log("# Comparing Releases:\n [subtitle-rls] %s \n [filename-rls] %s \n [folder-rls] %s" % (
             subsfile, file_name, folder_name))
 
         subsfile = subsfile.split('.')
@@ -374,8 +374,7 @@ class SubtitleHelper:
             diff_folder = list(set(folder_name) - set(subsfile))
             rating = (1 - (len(diff_folder) / float(len(folder_name)))) * 5
 
-        log(__scriptname__,
-            "\n rating: %f (by %s)" % (round(rating, 1), "file" if len(file_name) > len(folder_name) else "folder"))
+        log("\n rating: %f (by %s)" % (round(rating, 1), "file" if len(file_name) > len(folder_name) else "folder"))
 
         return round(rating, 1)
 
@@ -450,7 +449,7 @@ class URLHandler():
             self.opener.addheaders += [('Cookie', cookie)]
 
         content = None
-        log(__scriptname__, "Getting url: %s" % (url))
+        log("Getting url: %s" % (url))
         try:
             response = self.opener.open(url, data)
 
@@ -464,7 +463,7 @@ class URLHandler():
 
             response.close()
         except Exception as e:
-            log(__scriptname__, "Failed to get url: %s\n%s" % (url, e))
+            log("Failed to get url: %s\n%s" % (url, e))
             # Second parameter is the filename
         return content
 
