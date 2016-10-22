@@ -11,7 +11,6 @@ from os.path import join as pjoin
 import os.path
 from pprint import pformat
 import re
-import shutil
 import sys
 import tempfile
 import time
@@ -42,7 +41,7 @@ __addon__ = xbmcaddon.Addon()
 __author__     = __addon__.getAddonInfo('author')
 __scriptid__   = __addon__.getAddonInfo('id')
 __scriptname__ = __addon__.getAddonInfo('name')
-__version__    = __addon__.getAddonInfo('version')
+__version__    = '0.2.4'
 __language__   = __addon__.getLocalizedString
 
 __cwd__        = xbmc.translatePath(__addon__.getAddonInfo('path')).decode("utf-8")
@@ -100,6 +99,21 @@ def is_subs_file(fn):
     """Detect if the file has an extension we recognise as subtitle."""
     ext = fn.split('.')[-1]
     return ext.upper() in [e.upper() for e in SUB_EXTS]
+
+
+def is_compressed_file(fname=None, contents=None):
+    if contents is None:
+        assert fname is not None
+        contents = open(fname, 'rb').read()
+    assert len(contents) > 4
+    header = contents[:4]
+    if header == 'Rar!':
+        compression_type = 'RAR'
+    elif header == 'PK\x03\x04':
+        compression_type = 'ZIP'
+    else:
+        compression_type = None
+    return compression_type
 
 
 def log(msg, level=LOGDEBUG):
@@ -306,6 +320,9 @@ def _wait_for_extract(workdir, base_filecount, base_mtime, limit):
 
 
 def _handle_compressed_subs(workdir, compressed_file):
+    """
+    Uncompressed 'compressed_file' in  'workdir'.
+    """
     MAX_UNZIP_WAIT = 15
     files = os.listdir(workdir)
     filecount = len(files)
@@ -348,20 +365,18 @@ def _handle_compressed_subs(workdir, compressed_file):
 
 
 def _save_subtitles(workdir, content):
-    header = content[:4]
-    if header == 'Rar!':
-        type = '.rar'
-        is_compressed = True
-    elif header == 'PK\x03\x04':
-        type = '.zip'
-        is_compressed = True
-    else:
-        # Never found/downloaded an unpacked subtitles file, but just to be
-        # sure ...
-        # Assume unpacked sub file is a '.srt'
-        type = '.srt'
-        is_compressed = False
-    tmp_fname = pjoin(workdir, "subdivx" + type)
+    """
+    Save dowloaded file whose content is in 'content' to a temporary file
+    If it's a compressed one then uncompress it.
+
+    Returns filename of saved file or None.
+    """
+    ctype = is_compressed_file(contents=content)
+    is_compressed = ctype is not None
+    # Never found/downloaded an unpacked subtitles file, but just to be sure ...
+    # Assume unpacked sub file is a '.srt'
+    cfext = {'RAR': '.rar', 'ZIP': '.zip'}.get(ctype, '.srt')
+    tmp_fname = pjoin(workdir, "subdivx" + cfext)
     log(u"Saving subtitles to '%s'" % tmp_fname)
     try:
         with open(tmp_fname, "wb") as fh:
@@ -420,6 +435,7 @@ def Download(subdivx_id, workdir):
 
 
 def _double_dot_fix_hack(video_filename):
+    """Corrects filename of downloaded subtitle from Foo-Blah..srt to Foo-Blah.es.srt"""
 
     log(u"video_filename = %s" % video_filename)
 
@@ -439,7 +455,7 @@ def _double_dot_fix_hack(video_filename):
         if xbmcvfs.exists(bad):
             log(u"%s exists" % bad)
             if xbmcvfs.exists(old):
-                log(u"%s exists, renaming" % old)
+                log(u"%s exists, removing" % old)
                 xbmcvfs.delete(old)
             log(u"renaming %s to %s" % (bad, old))
             xbmcvfs.rename(bad, old)
@@ -484,7 +500,7 @@ def get_params(argv):
 
 def debug_dump_path(victim, name):
     t = type(victim)
-    xbmc.log("%s (%s): %s" % (name, t, victim), level=LOGDEBUG)
+    xbmc.log("SUBDIVX - %s (%s): %s" % (name, t, victim), level=LOGDEBUG)
 
 
 def main():
@@ -492,7 +508,7 @@ def main():
     # Get parameters from XBMC and launch actions
     params = get_params(sys.argv)
     action = params.get('action', 'Unknown')
-    xbmc.log(u"SUBDIVX - Version: %s -- Action: %s" % (__version__, action), level=LOGINFO)
+    xbmc.log(u"SUBDIVX - Version: %s -- Action: %s" % (__version__, action), level=LOGNOTICE)
 
     if action in ('search', 'manualsearch'):
         item = {

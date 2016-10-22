@@ -1,3 +1,16 @@
+0.2.4
+- Logging: Fix misleading phrasing.
+- Internals: Factor out detection of compressed files. Initial maintainer
+  docs. Better docstrings.
+
+0.2.3
+- Logging: Use our prefix in paths debug log for searchability.
+- Internals: Remove unused import.
+
+0.2.2
+- Logging: Log our version, do it using LOGNOTICE level.
+- (Version 0.2.1 skipped to avoid clashing with unofficial fork.)
+
 0.2.0
 - Make intermediate page optional. Thanks Juan Redondo and Adrián Suárez.
 
