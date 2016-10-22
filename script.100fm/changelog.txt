@@ -1,3 +1,6 @@
+v0.2.3
+- UI fine-tuning
+
 v0.2.0
 - Official 100FM Radius radio station add-on
 - Redesign
