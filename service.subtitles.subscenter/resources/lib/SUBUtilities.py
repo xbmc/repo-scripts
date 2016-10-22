@@ -264,7 +264,7 @@ class SubscenterHelper:
             shutil.rmtree(__temp__)
         xbmcvfs.mkdirs(__temp__)
 
-        query = {"v": filename,
+        query = {"v": ''.join(hex(ord(chr))[2:] for chr in filename),
                  "key": key,
                  "sub_id": id}
 

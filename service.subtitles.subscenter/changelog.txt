@@ -1,3 +1,7 @@
+4.0.5 - by CaTz (23/10/2016)
+- Add mirroring subs to TheWiz servers.
+- Fix download API.
+
 4.0.4 - by CaTz (23/09/2016)
 - Ignore year field if there is no year
 

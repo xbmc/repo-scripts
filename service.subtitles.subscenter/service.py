@@ -8,6 +8,7 @@ import xbmcvfs
 import xbmcaddon
 import xbmcgui
 import xbmcplugin
+from requests import post
 
 
 __addon__ = xbmcaddon.Addon()
@@ -52,7 +53,7 @@ def search(item):
             xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=url, listitem=listitem, isFolder=False)
 
 
-def download(id, language, key, filename, stack=False):
+def download(id, language, key, filename):
     subtitle_list = []
     exts = [".srt", ".sub"]
 
@@ -91,6 +92,23 @@ def get_params(string=""):
 
     return param
 
+def mirror_sub(id, filename, sub_file):
+    values = {}
+    values['id'] = id
+    values['versioname'] = filename
+    values['source'] = 'subscenter'
+    values['year'] = xbmc.getInfoLabel("VideoPlayer.Year")
+    values['season'] = str(xbmc.getInfoLabel("VideoPlayer.Season"))
+    values['episode'] = str(xbmc.getInfoLabel("VideoPlayer.Episode"))
+    values['imdb'] = str(xbmc.getInfoLabel("VideoPlayer.IMDBNumber"))
+    values['tvshow'] = normalizeString(xbmc.getInfoLabel("VideoPlayer.TVshowtitle"))
+    values['title'] = normalizeString(xbmc.getInfoLabel("VideoPlayer.OriginalTitle"))
+    values['file_original_path'] = urllib.unquote(unicode(xbmc.Player().getPlayingFile(), 'utf-8'))
+    url = 'http://subs.thewiz.info/send.php'
+    try:
+        post(url, files={'sub': open(sub_file, 'rb')}, data=values)
+    except:
+        pass
 
 params = get_params()
 
@@ -156,8 +174,11 @@ elif params['action'] == 'download':
     subs = download(params["id"], params["language"], params["link"], params["filename"])
     ## we can return more than one subtitle for multi CD versions, for now we are still working out how to handle that in XBMC core
     for sub in subs:
+        if params["language"] == 'he':
+            mirror_sub(params["id"], params["filename"], sub)
         listitem = xbmcgui.ListItem(label=sub)
         xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=sub, listitem=listitem, isFolder=False)
+
 elif params['action'] == 'clear_store':
     clear_store()
 
