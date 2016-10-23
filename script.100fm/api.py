@@ -27,7 +27,11 @@ class API(object):
         Returns a list of all digital radio stations
         :return:
         """
-        root = ET.fromstring(self.get_file_content(config['urls']['radius_data_file']).encode('utf-8'))
+        xml = self.get_file_content(config['urls']['radius_data_file'])
+        if not xml:
+            return []
+
+        root = ET.fromstring(xml.encode('utf-8'))
 
         return [{
                     'name': channel.find('name').text.encode('utf-8'),
@@ -43,7 +47,11 @@ class API(object):
         Returns current song details
         :return:
         """
-        root = ET.fromstring(self.get_file_content('{0}?rand={1}'.format(url, str(time.time()))).encode('utf-8'))
+        xml = self.get_file_content('{0}?rand={1}'.format(url, str(time.time())))
+        if not xml:
+            return {}
+
+        root = ET.fromstring(xml.encode('utf-8'))
 
         return {
             'name': root.find('name').text.encode('utf-8') if root.find('name').text else '',

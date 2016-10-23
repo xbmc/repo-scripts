@@ -26,7 +26,8 @@ player_window_id = getCurrentWindowDialogId()
 while getCondVisibility('Window.IsActive({0})'.format(player_window_id)):
     if player_window.getProperty('current') != '':
         song = api.get_current_song(player_window.getProperty('current'))
-        player_window.song.setLabel('[CAPITALIZE][B]{0}[/B][/CAPITALIZE]'.format(song['name']))
-        player_window.artist.setLabel('[CAPITALIZE]{0}[/CAPITALIZE]'.format(song['artist']))
+        if song:
+            player_window.song.setLabel('[CAPITALIZE][B]{0}[/B][/CAPITALIZE]'.format(song['name']))
+            player_window.artist.setLabel('[CAPITALIZE]{0}[/CAPITALIZE]'.format(song['artist']))
     sleep(4000)
 del player_window

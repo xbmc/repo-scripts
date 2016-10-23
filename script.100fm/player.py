@@ -53,8 +53,8 @@ class PlayerWindow(xbmcgui.WindowDialog):
                                           noFocusTexture='special://home/addons/{0}/resources/media/play.png'.format(
                                               ADDON_ID))
         # now playing
-        now_playing = xbmcgui.ControlLabel(500, 60, 300, 30, '[I]{0}[/I]'.format(ADDON.getLocalizedString(32011)),
-                                           textColor='0xffF8F301')
+        # now_playing = xbmcgui.ControlLabel(500, 60, 300, 30, '[I]{0}[/I]'.format(ADDON.getLocalizedString(32011)),
+        #                                    textColor='0xffF8F301')
 
         # current track:
         # self.current = xbmcgui.ControlImage(0, 0,
@@ -80,10 +80,10 @@ class PlayerWindow(xbmcgui.WindowDialog):
         # self.description = xbmcgui.ControlLabel(-400, 350, 2320, 30, '', textColor='0xff132f54', alignment=2)
 
         # record
-        record = xbmcgui.ControlImage(1540, -70, 322, 340,
+        record = xbmcgui.ControlImage(1540, -70, 340, 340,
                                       'special://home/addons/{0}/resources/media/record.png'.format(ADDON_ID))
         # pointer
-        pointer = xbmcgui.ControlImage(1880, 20, 30, 200,
+        pointer = xbmcgui.ControlImage(1885, 10, 30, 200,
                                        'special://home/addons/{0}/resources/media/pointer.png'.format(ADDON_ID))
         # channel name
         self.channel = xbmcgui.ControlImage(1640, 60, 120, 50, '')
@@ -119,7 +119,7 @@ class PlayerWindow(xbmcgui.WindowDialog):
         # add all controls:
         self.addControls((overlay, topbar, topbar_shadow, eq, logo, logo_text, self.pause, self.play, time,
                           # self.description, self.channel_name,
-                          now_playing, record, pointer, self.song, self.artist, self.channel, slogan,
+                          record, pointer, self.song, self.artist, self.channel, slogan,
                           self.prev, self.next))
 
         self.draw_channels()
@@ -129,12 +129,12 @@ class PlayerWindow(xbmcgui.WindowDialog):
         self.pause.setVisibleCondition('[Player.Playing]', True)
 
         # set animations:
-        pointer.setAnimations([('Conditional', 'effect=rotate end=-30 time=2000 center=1880,0 reversible=true \
+        pointer.setAnimations([('Conditional', 'effect=rotate end=-27 time=2000 center=1895,10 reversible=true \
             condition=Player.Playing')])
-        record.setAnimations([('Conditional', 'effect=rotate end=359 time=3000 center=1700,100 loop=True \
+        record.setAnimations([('Conditional', 'effect=rotate end=359 time=3000 center=1710,100 loop=True \
             condition=Player.Playing')])
         # self.description.setAnimations([('WindowOpen', 'effect=zoom end=70 center=1400,350')])
-        now_playing.setAnimations([('WindowOpen', 'effect=zoom end=70')])
+        # now_playing.setAnimations([('WindowOpen', 'effect=zoom end=70')])
         time.setAnimations([('WindowOpen', 'effect=zoom end=70')])
         self.song.setAnimations([('WindowOpen', 'effect=zoom end=130')])
 
