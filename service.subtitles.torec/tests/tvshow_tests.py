@@ -32,16 +32,28 @@ class TVShowTests(unittest.TestCase):
 		options = self.downloader.search_tvshow(item['tvshow'], item['season'], item['episode'])
 		self.assertIsNone(options)
 
+	def test_search_existing_tvshow_with_no_subtitles(self):
+		item = {
+			'tvshow': 'Cowboy Bebop',
+			'season': '1',
+			'episode': '1'
+		}
+
+		options = self.downloader.search_tvshow(item['tvshow'], item['season'], item['episode'])
+		self.assertIsNone(options)	
+
 	def test_download_tvshow_sanity(self):
 		item    = self._create_test_valid_item()
 		options = self.downloader.search_tvshow(item['tvshow'], item['season'], item['episode'])
 
-		option      = options[0]
+		option      = options[-1]
 		page_id     = option.sub_id
 		subtitle_id = option.option_id
 
-		result                 = self.downloader.get_download_link(page_id, subtitle_id)
-		subtitleData, fileName = self.downloader.download(result)
+		download_link = self.downloader.get_download_link(page_id, subtitle_id)
+		self.assertTrue(len(download_link) != 0)
+
+		subtitleData, fileName = self.downloader.download(download_link)
 		self.assertIsNotNone(subtitleData)
 
 		self._assert_subtitle_data(subtitleData, fileName)

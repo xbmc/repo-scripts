@@ -3,7 +3,6 @@
 import cookielib
 import datetime
 import re
-import time
 import urllib
 import urllib2
 import zlib
@@ -11,6 +10,7 @@ import json
 
 import bs4
 
+import xbmc
 from SubtitleHelper import log
 
 class SubtitleOption(object):
@@ -33,12 +33,11 @@ class TVShowPage():
 
     def fetch_url(self, season_number, episode_number):
         subtitle_soup = bs4.BeautifulSoup(self.data, "html.parser")
-        episode_options = subtitle_soup(
-            "div", {
-                'id': 'tabs4-season%s' % season_number
-            }
-        )[0].findAll("a")
+        season_div    = subtitle_soup("div", { 'id': 'tabs4-season%s' % season_number })
+        if not season_div:
+            return None
 
+        episode_options = season_div[0].findAll("a")
         episode_option = next((episode_option for episode_option in episode_options if (episode_option.contents[0] == u'פרק %s' % episode_number)), None)
         if not episode_option:
             return None
@@ -86,8 +85,7 @@ class FirefoxURLHandler(object):
         self.opener.addheaders = [
             (
                 'User-agent', (
-                    'Mozilla/4.0 (compatible; MSIE 6.0; '
-                    'Windows NT 5.2; .NET CLR 1.1.4322)'
+                    'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.143 Safari/537.36'
                 ),
 
             )
@@ -111,6 +109,8 @@ class FirefoxURLHandler(object):
         return username in content
 
 class TorecSubtitlesDownloader(FirefoxURLHandler):
+    MAXIMUM_WAIT_TIME_MSEC = 13 * 1000
+
     DEFAULT_SEPERATOR = " "
     BASE_URL          = "http://www.xn--9dbf0cd.net"
     SUBTITLE_PATH     = "sub.asp?sub_id="
@@ -129,21 +129,6 @@ class TorecSubtitlesDownloader(FirefoxURLHandler):
             "subId": sub_id,
             "current_datetime": current_time
         }
-
-    def _get_user_auth(self, subw_text):
-        return re.search(r"userAuth='(.*)';", subw_text).group(1)
-
-    def _get_time_waited(self, subw_text):
-        return re.search(r"seconds\s+=\s+(\d+);", subw_text).group(1)
-
-    def _request_subtitle(self, sub_id):
-        params = {
-            "sub_id"  : sub_id, 
-            "s"       : 1440
-        }
-
-        response = self.opener.open("%s/ajax/sub/guest_time.asp" % self.BASE_URL, urllib.urlencode(params))
-        return response.read()
 
     def _fetch_main_url(self, name):
         log(__name__, "fetching main url for name %s" % name)
@@ -198,17 +183,43 @@ class TorecSubtitlesDownloader(FirefoxURLHandler):
 
         return self._fetch_subtitles_options(main_url)
 
-    def get_download_link(self, sub_id, option_id):
-        params    = {
-            "sub_id":     sub_id,
-            "code":       option_id,
-            "sh":         "yes",
-            "guest":      self._request_subtitle(sub_id),
-            "timewaited": 9
+    def _request_subtitle(self, sub_id):
+        params = {
+            "sub_id"  : sub_id, 
+            "s"       : 1440
         }
 
-        response = self.opener.open("%s/ajax/sub/downloadun.asp" % self.BASE_URL, urllib.urlencode(params))
+        response = self.opener.open("%s/ajax/sub/guest_time.asp" % self.BASE_URL, urllib.urlencode(params))
         return response.read()
+
+    def get_download_link(self, sub_id, option_id):
+        guest_token    = self._request_subtitle(sub_id)
+        encoded_params = urllib.urlencode({
+                "sub_id":     sub_id,
+                "code":       option_id,
+                "sh":         "yes",
+                "guest":      guest_token,
+                "timewaited": 13
+        })
+
+        download_link  = None
+        waited_msec    = 0.0
+
+        # Torec website may delay download up to 13 seconds
+        while (not xbmc.abortRequested) and (waited_msec < self.MAXIMUM_WAIT_TIME_MSEC):
+            response = self.opener.open("%s/ajax/sub/downloadun.asp" % self.BASE_URL, encoded_params)
+            download_link = response.read()
+
+            if download_link:
+                break
+        
+            xbmc.sleep(500)
+            waited_msec += 500
+        
+        log(__name__, "received link after sleeping %f seconds" % (waited_msec / 1000.0))
+
+        return download_link
+        
 
     def download(self, download_link):
         if not download_link:
