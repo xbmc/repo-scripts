@@ -67,6 +67,8 @@ class MAIN():
                     WIN.setProperty('culrc.force','FALSE')
                     self.current_lyrics = Lyrics()
                     self.myPlayerChanged()
+                elif xbmc.getCondVisibility("Player.IsInternetStream"):
+                    self.myPlayerChanged()
             else:
                 # we may have exited the music visualization screen
                 self.triggered = False
@@ -85,7 +87,10 @@ class MAIN():
         log('searching memory for lyrics')
         lyrics = self.get_lyrics_from_memory( song )
         if lyrics:
-            log('found lyrics in memory')
+            if lyrics.lyrics:
+                log('found lyrics in memory')
+            else:
+                log('no lyrics found on previous search')
             return lyrics
         if song.title:
             lyrics = self.find_lyrics( song )
@@ -94,8 +99,9 @@ class MAIN():
                     fulltext = lyrics.lyrics.decode("utf-8")
                 else:
                     fulltext = lyrics.lyrics
-                strip_k = re.sub(ur"[\u1100-\u11ff]+", "", fulltext)
-                strip_c = re.sub(ur"[\u3000-\u9fff]+", "", strip_k)
+                strip_k1 = re.sub(ur"[\u1100-\u11ff]+", "", fulltext)
+                strip_k2 = re.sub(ur"[\uAC00-\uD7A3]+", "", strip_k1)
+                strip_c = re.sub(ur"[\u3000-\u9fff]+", "", strip_k2)
                 lyrics.lyrics = strip_c.encode("utf-8")
         else:
             lyrics = Lyrics()
@@ -225,9 +231,11 @@ class MAIN():
 
     def myPlayerChanged(self):
         global lyrics
+        songchanged = False
         for cnt in range( 5 ):
             song = Song.current()
             if ( song and ( self.current_lyrics.song != song ) ):
+                songchanged = True
                 log("Current Song: %s - %s" % (song.artist, song.title))
                 lyrics = self.get_lyrics( song )
                 self.current_lyrics = lyrics
@@ -237,7 +245,7 @@ class MAIN():
                     # check if gui is already running
                     if not WIN.getProperty('culrc.guirunning') == 'TRUE':
                         WIN.setProperty('culrc.guirunning', 'TRUE')
-                        gui = guiThread(mode=self.mode)
+                        gui = guiThread(mode=self.mode, save=self.save_lyrics_to_file)
                         gui.start()
                 else:
                     # signal gui thread to exit
@@ -247,7 +255,8 @@ class MAIN():
                         xbmc.executebuiltin((u'Notification(%s,%s,%i)' % (ADDONNAME + ": " + LANGUAGE(32001), song.artist.decode("utf-8") + " - " + song.title.decode("utf-8"), 2000)).encode('utf-8', 'ignore'))
                 break
             xbmc.sleep( 50 )
-        if xbmc.getCondVisibility('MusicPlayer.HasNext'):
+        # only search for next lyrics if current song has changed
+        if xbmc.getCondVisibility('MusicPlayer.HasNext') and songchanged:
             next_song = Song.next()
             if next_song:
                 log("Next Song: %s - %s" % (next_song.artist, next_song.title))
@@ -294,9 +303,10 @@ class guiThread(threading.Thread):
     def __init__(self, *args, **kwargs):
         threading.Thread.__init__(self)
         self.mode = kwargs[ "mode" ]
+        self.save = kwargs[ "save" ]
 
     def run(self):
-        ui = GUI( "script-cu-lrclyrics-main.xml" , CWD, "Default", mode=self.mode )
+        ui = GUI( "script-cu-lrclyrics-main.xml" , CWD, "Default", mode=self.mode, save=self.save )
         ui.doModal()
         del ui
         WIN.clearProperty('culrc.guirunning')
@@ -305,6 +315,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
     def __init__(self, *args, **kwargs):
         xbmcgui.WindowXMLDialog.__init__(self)
         self.mode = kwargs[ "mode" ]
+        self.save = kwargs[ "save" ]
         self.Monitor = MyMonitor(function = None)
        
     def onInit(self):
@@ -463,21 +474,45 @@ class GUI( xbmcgui.WindowXMLDialog ):
 
     def parser_lyrics(self, lyrics):
         self.pOverlay = []
-        tag = re.compile('\[(\d+):(\d\d)[\.:](\d\d)\]')
+        tag1 = re.compile('\[(\d+):(\d\d)[\.:](\d\d)\]')
+        tag2 = re.compile('\[(\d+):(\d\d)([\.:]\d+|)\]')
         lyrics = lyrics.replace( "\r\n" , "\n" )
         sep = "\n"
         for x in lyrics.split( sep ):
-            match1 = tag.match( x )
+            match1 = tag1.match( x )
+            match2 = tag2.match( x )
             times = []
             if ( match1 ):
-                while ( match1 ):
+                while ( match1 ): # [xx:yy.zz]
                     times.append( float(match1.group(1)) * 60 + float(match1.group(2)) + (float(match1.group(3))/100) )
                     y = 6 + len(match1.group(1)) + len(match1.group(3))
                     x = x[y:]
-                    match1 = tag.match( x )
+                    match1 = tag1.match( x )
+                for time in times:
+                    self.pOverlay.append( (time, x) )
+            elif ( match2 ): # [xx:yy]
+                while ( match2 ):
+                    times.append( float(match2.group(1)) * 60 + float(match2.group(2)) )
+                    y = 5 + len(match2.group(1)) + len(match2.group(3))
+                    x = x[y:]
+                    match2 = tag2.match( x )
                 for time in times:
                     self.pOverlay.append( (time, x) )
         self.pOverlay.sort( cmp=lambda x,y: cmp(x[0], y[0]) )
+        if ADDON.getSetting( 'strip' ) == "true":
+            poplist = []
+            prev_time = []
+            prev_line = ''
+            for num, (time, line) in enumerate(self.pOverlay):
+                if time == prev_time:
+                    if len(line) > len(prev_line):
+                        poplist.append(num - 1)
+                    else:
+                        poplist.append(num)
+                prev_time = time
+                prev_line = line
+            for i in reversed(poplist):
+                self.pOverlay.pop(i)
 
     def prepare_list(self, list):
         listitems = []
@@ -498,7 +533,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
             self.selected = False
             self.getControl( 110 ).reset()
             self.show_lyrics( self.lyrics )
-#           self.save_lyrics_to_file( self.lyrics ) #FIXME
+            self.save( self.lyrics )
 
     def reset_controls(self):
         self.getControl( 110 ).reset()

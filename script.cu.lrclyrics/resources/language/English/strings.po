@@ -36,7 +36,11 @@ msgctxt "#32004"
 msgid "Searching lyrics..."
 msgstr ""
 
-#empty strings from id 32005 to 32100
+msgctxt "#32005"
+msgid "Select lyrics:"
+msgstr ""
+
+#empty strings from id 32006 to 32100
 #Settings labels
 
 msgctxt "#32101"
