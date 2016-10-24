@@ -1,3 +1,8 @@
+v5.0.9
+- improve stripping of korean text
+- fix parsing lrc timestamps
+- strip lines with duplicate timestamps
+
 v5.0.8
 - fix genius scraper
 - add more accurate matching to genius scraper

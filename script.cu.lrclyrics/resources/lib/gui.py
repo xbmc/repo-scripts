@@ -99,8 +99,9 @@ class MAIN():
                     fulltext = lyrics.lyrics.decode("utf-8")
                 else:
                     fulltext = lyrics.lyrics
-                strip_k = re.sub(ur"[\u1100-\u11ff]+", "", fulltext)
-                strip_c = re.sub(ur"[\u3000-\u9fff]+", "", strip_k)
+                strip_k1 = re.sub(ur"[\u1100-\u11ff]+", "", fulltext)
+                strip_k2 = re.sub(ur"[\uAC00-\uD7A3]+", "", strip_k1)
+                strip_c = re.sub(ur"[\u3000-\u9fff]+", "", strip_k2)
                 lyrics.lyrics = strip_c.encode("utf-8")
         else:
             lyrics = Lyrics()
@@ -473,21 +474,45 @@ class GUI( xbmcgui.WindowXMLDialog ):
 
     def parser_lyrics(self, lyrics):
         self.pOverlay = []
-        tag = re.compile('\[(\d+):(\d\d)[\.:](\d\d)\]')
+        tag1 = re.compile('\[(\d+):(\d\d)[\.:](\d\d)\]')
+        tag2 = re.compile('\[(\d+):(\d\d)([\.:]\d+|)\]')
         lyrics = lyrics.replace( "\r\n" , "\n" )
         sep = "\n"
         for x in lyrics.split( sep ):
-            match1 = tag.match( x )
+            match1 = tag1.match( x )
+            match2 = tag2.match( x )
             times = []
             if ( match1 ):
-                while ( match1 ):
+                while ( match1 ): # [xx:yy.zz]
                     times.append( float(match1.group(1)) * 60 + float(match1.group(2)) + (float(match1.group(3))/100) )
                     y = 6 + len(match1.group(1)) + len(match1.group(3))
                     x = x[y:]
-                    match1 = tag.match( x )
+                    match1 = tag1.match( x )
+                for time in times:
+                    self.pOverlay.append( (time, x) )
+            elif ( match2 ): # [xx:yy]
+                while ( match2 ):
+                    times.append( float(match2.group(1)) * 60 + float(match2.group(2)) )
+                    y = 5 + len(match2.group(1)) + len(match2.group(3))
+                    x = x[y:]
+                    match2 = tag2.match( x )
                 for time in times:
                     self.pOverlay.append( (time, x) )
         self.pOverlay.sort( cmp=lambda x,y: cmp(x[0], y[0]) )
+        if ADDON.getSetting( 'strip' ) == "true":
+            poplist = []
+            prev_time = []
+            prev_line = ''
+            for num, (time, line) in enumerate(self.pOverlay):
+                if time == prev_time:
+                    if len(line) > len(prev_line):
+                        poplist.append(num - 1)
+                    else:
+                        poplist.append(num)
+                prev_time = time
+                prev_line = line
+            for i in reversed(poplist):
+                self.pOverlay.pop(i)
 
     def prepare_list(self, list):
         listitems = []
