@@ -1,3 +1,13 @@
+0.0.7
+=====
+
+- Made `listitem.playable` use it's own property to allow `is_folder` and `playable` to be independent
+
+0.0.6
+=====
+
+- Make sure list item has 'as_tuple' method
+
 0.0.5
 =====
 

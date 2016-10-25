@@ -38,6 +38,7 @@ class ListItem(object):
         self._thumbnail = thumbnail
         self._context_menu_items = []
         self._played = False
+        self._playable = False
         self.is_folder = True
 
     def get_context_menu_items(self):
@@ -189,27 +190,27 @@ class ListItem(object):
 
     @property
     def playable(self):
-        return not self.is_folder
+        return self._playable
 
     @playable.setter
     def playable(self, value):
-        self.is_folder = not value
-        is_playable = 'true' if value else 'false'
+        self._playable = value
+        is_playable = 'true' if self._playable else 'false'
         self.set_property('isPlayable', is_playable)
 
     def get_is_playable(self):
         warnings.warn('get_is_playable is deprecated, use playable property',
                       DeprecationWarning)
-        return not self.is_folder
+        return self._playable
 
     def set_is_playable(self, is_playable):
         warnings.warn('set_is_playable is deprecated, use playable property',
                       DeprecationWarning)
+        self._playable = is_playable
         value = 'false'
         if is_playable:
             value = 'true'
         self.set_property('isPlayable', value)
-        self.is_folder = not is_playable
 
     @property
     def played(self):

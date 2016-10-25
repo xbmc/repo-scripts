@@ -381,7 +381,7 @@ class XBMCMixin(object):
             kodiswift.ListItem: The list of ListItems.
         """
         _items = [self._listitemify(item) for item in items]
-        tuples = [item.as_tuple() for item in _items]
+        tuples = [item.as_tuple() for item in _items if hasattr(item, 'as_tuple')]
         xbmcplugin.addDirectoryItems(self.handle, tuples, len(tuples))
 
         # We need to keep track internally of added items so we can return them
