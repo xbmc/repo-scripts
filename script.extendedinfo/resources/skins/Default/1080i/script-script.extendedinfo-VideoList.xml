@@ -602,7 +602,7 @@
 				<texturenofocus border="20">lists/separator.png</texturenofocus>
 			</control>
 			<control type="grouplist" id="9000">
-				<top>310</top>
+				<top>290</top>
 				<width>438</width>
 				<height>830</height>
 				<orientation>vertical</orientation>
@@ -665,17 +665,18 @@
 				<control type="label" id="5333">
 					<label>$ADDON[script.extendedinfo 32023]</label>
 					<width>438</width>
-					<height>75</height>
+					<height>65</height>
 					<textoffsetx>25</textoffsetx>
 					<align>left</align>
-					<aligny>center</aligny>
+					<textoffsety>20</textoffsety>
+					<aligny>top</aligny>
 					<font>font12</font>
 					<textcolor>FF12B2E7</textcolor>
 				</control>
 				<control type="button" id="5002">
 					<label>$LOCALIZE[515]</label>
 					<width>438</width>
-					<height>60</height>
+					<height>55</height>
 					<textoffsetx>40</textoffsetx>
 					<textwidth>315</textwidth>
 					<align>left</align>
@@ -689,7 +690,7 @@
 				<control type="button" id="5003">
 					<label>$LOCALIZE[172]</label>
 					<width>438</width>
-					<height>60</height>
+					<height>55</height>
 					<textoffsetx>40</textoffsetx>
 					<textwidth>315</textwidth>
 					<align>left</align>
@@ -703,7 +704,7 @@
 				<control type="button" id="5006">
 					<label>$ADDON[script.extendedinfo 32127]</label>
 					<width>438</width>
-					<height>60</height>
+					<height>55</height>
 					<textoffsetx>40</textoffsetx>
 					<textwidth>315</textwidth>
 					<align>left</align>
@@ -717,7 +718,7 @@
 				<control type="button" id="5008">
 					<label>$ADDON[script.extendedinfo 32126]</label>
 					<width>438</width>
-					<height>60</height>
+					<height>55</height>
 					<textoffsetx>40</textoffsetx>
 					<textwidth>315</textwidth>
 					<align>left</align>
@@ -731,7 +732,7 @@
 				<control type="button" id="5009">
 					<label>$ADDON[script.extendedinfo 32114]</label>
 					<width>438</width>
-					<height>60</height>
+					<height>55</height>
 					<textoffsetx>40</textoffsetx>
 					<textwidth>315</textwidth>
 					<align>left</align>
@@ -745,7 +746,21 @@
 				<control type="button" id="5010">
 					<label>$LOCALIZE[572]</label>
 					<width>438</width>
-					<height>60</height>
+					<height>55</height>
+					<textoffsetx>40</textoffsetx>
+					<textwidth>315</textwidth>
+					<align>left</align>
+					<aligny>center</aligny>
+					<texturefocus colordiffuse="FF12B2E7">lists/focus.png</texturefocus>
+					<texturenofocus border="20">lists/separator.png</texturenofocus>
+					<font>font12</font>
+					<textcolor>FFBBBBBB</textcolor>
+					<focusedcolor>FFFAFAFA</focusedcolor>
+				</control>
+				<control type="button" id="5011">
+					<label>$LOCALIZE[2050]</label>
+					<width>438</width>
+					<height>55</height>
 					<textoffsetx>40</textoffsetx>
 					<textwidth>315</textwidth>
 					<align>left</align>
@@ -759,7 +774,7 @@
 				<control type="button" id="5012">
 					<label>$ADDON[script.extendedinfo 32111]</label>
 					<width>438</width>
-					<height>60</height>
+					<height>55</height>
 					<textoffsetx>40</textoffsetx>
 					<textwidth>315</textwidth>
 					<align>left</align>
@@ -773,7 +788,7 @@
 				<control type="button" id="5005">
 					<label>$ADDON[script.extendedinfo 32022]</label>
 					<width>438</width>
-					<height>60</height>
+					<height>55</height>
 					<textoffsetx>40</textoffsetx>
 					<textwidth>315</textwidth>
 					<align>left</align>

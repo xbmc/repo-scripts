@@ -5,6 +5,7 @@
 
 import datetime
 import urllib
+import TheMovieDB as tmdb
 
 from kodi65 import addon
 from kodi65 import utils
@@ -30,7 +31,7 @@ def get_episodes(content):
     elif content == "premieres":
         url = 'calendars/shows/premieres/%s/14' % datetime.date.today()
     results = get_data(url=url,
-                       params={"extended": "full,images"},
+                       params={"extended": "full"},
                        cache_days=0.3)
     count = 1
     if not results:
@@ -53,7 +54,7 @@ def get_episodes(content):
                             'tvshowtitle': tv["title"],
                             'mediatype': "episode",
                             'year': tv.get("year"),
-                            'duration': tv["runtime"] * 60,
+                            'duration': tv["runtime"] * 60 if tv["runtime"] else "",
                             'studio': tv["network"],
                             'plot': tv["overview"],
                             'country': tv["country"],
@@ -67,12 +68,10 @@ def get_episodes(content):
                                  'id': ep["ids"]["tvdb"],
                                  'imdb_id': ep["ids"]["imdb"],
                                  'homepage': tv["homepage"]})
-            show.set_artwork({'thumb': ep["images"]["screenshot"]["thumb"],
-                              'poster': tv["images"]["poster"]["full"],
-                              'banner': tv["images"]["banner"]["full"],
-                              'clearart': tv["images"]["clearart"]["full"],
-                              'clearlogo': tv["images"]["logo"]["full"],
-                              'fanart': tv["images"]["fanart"]["full"]})
+            if tv["ids"].get("tmdb"):
+                art_info = tmdb.get_tvshow(tv["ids"]["tmdb"], light=True)
+                show.set_artwork(tmdb.get_image_urls(poster=art_info.get("poster_path"),
+                                                     fanart=art_info.get("backdrop_path")))
             shows.append(show)
             count += 1
             if count > 20:
@@ -89,7 +88,7 @@ def handle_movies(results):
         movie = VideoItem(label=item["title"],
                           path=PLUGIN_BASE + path % item["ids"]["tmdb"])
         movie.set_infos({'title': item["title"],
-                         'duration': item["runtime"] * 60,
+                         'duration': item["runtime"] * 60 if item["runtime"] else "",
                          'tagline': item["tagline"],
                          'mediatype': "movie",
                          'trailer': trailer,
@@ -107,12 +106,9 @@ def handle_movies(results):
                               'watchers': item.get("watchers"),
                               'language': item.get("language"),
                               'homepage': item.get("homepage")})
-        movie.set_artwork({'poster': item["images"]["poster"]["full"],
-                           'fanart': item["images"]["fanart"]["full"],
-                           'clearlogo': item["images"]["logo"]["full"],
-                           'clearart': item["images"]["clearart"]["full"],
-                           'banner': item["images"]["banner"]["full"],
-                           'thumb': item["images"]["poster"]["thumb"]})
+        art_info = tmdb.get_movie(item["ids"]["tmdb"], light=True)
+        movie.set_artwork(tmdb.get_image_urls(poster=art_info.get("poster_path"),
+                                              fanart=art_info.get("backdrop_path")))
         movies.append(movie)
     movies = local_db.merge_with_local(media_type="movie",
                                        items=movies,
@@ -130,7 +126,7 @@ def handle_tvshows(results):
                          path='%sextendedtvinfo&&tvdb_id=%s' % (PLUGIN_BASE, item['ids']["tvdb"]))
         show.set_infos({'mediatype': "tvshow",
                         'title': item["title"],
-                        'duration': item["runtime"] * 60,
+                        'duration': item["runtime"] * 60 if item["runtime"] else "",
                         'year': item["year"],
                         'premiered': item["first_aired"][:10],
                         'country': item["country"],
@@ -153,12 +149,9 @@ def handle_tvshows(results):
                              'airday': airs.get("day"),
                              'airshorttime': airs.get("time"),
                              'watchers': item.get("watchers")})
-        show.set_artwork({'poster': item["images"]["poster"]["full"],
-                          'banner': item["images"]["banner"]["full"],
-                          'clearart': item["images"]["clearart"]["full"],
-                          'clearlogo': item["images"]["logo"]["full"],
-                          'fanart': item["images"]["fanart"]["full"],
-                          'thumb': item["images"]["poster"]["thumb"]})
+        art_info = tmdb.get_tvshow(item["ids"]["tmdb"], light=True)
+        show.set_artwork(tmdb.get_image_urls(poster=art_info.get("poster_path"),
+                                             fanart=art_info.get("backdrop_path")))
         shows.append(show)
     shows = local_db.merge_with_local(media_type="tvshow",
                                       items=shows,
@@ -169,25 +162,25 @@ def handle_tvshows(results):
 
 def get_shows(show_type):
     results = get_data(url='shows/%s' % show_type,
-                       params={"extended": "full,images"})
+                       params={"extended": "full"})
     return handle_tvshows(results) if results else []
 
 
 def get_shows_from_time(show_type, period="monthly"):
     results = get_data(url='shows/%s/%s' % (show_type, period),
-                       params={"extended": "full,images"})
+                       params={"extended": "full"})
     return handle_tvshows(results) if results else []
 
 
 def get_movies(movie_type):
     results = get_data(url='movies/%s' % movie_type,
-                       params={"extended": "full,images"})
+                       params={"extended": "full"})
     return handle_movies(results) if results else []
 
 
 def get_movies_from_time(movie_type, period="monthly"):
     results = get_data(url='movies/%s/%s' % (movie_type, period),
-                       params={"extended": "full,images"})
+                       params={"extended": "full"})
     return handle_movies(results) if results else []
 
 
@@ -195,7 +188,7 @@ def get_similar(media_type, imdb_id):
     if not imdb_id or not media_type:
         return None
     results = get_data(url='%ss/%s/related' % (media_type, imdb_id),
-                       params={"extended": "full,images"})
+                       params={"extended": "full"})
     if not results:
         return None
     if media_type == "show":
@@ -206,7 +199,7 @@ def get_similar(media_type, imdb_id):
 
 def get_data(url, params=None, cache_days=10):
     params = params if params else {}
-    params["limit"] = 20
+    params["limit"] = 10
     url = "%s%s?%s" % (BASE_URL, url, urllib.urlencode(params))
     return utils.get_JSON_response(url=url,
                                    folder="Trakt",

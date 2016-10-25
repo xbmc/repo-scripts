@@ -25,6 +25,7 @@ ID_BUTTON_CERTFILTER = 5006
 ID_BUTTON_ACTORFILTER = 5008
 ID_BUTTON_KEYWORDFILTER = 5009
 ID_BUTTON_COMPANYFILTER = 5010
+ID_BUTTON_RUNTIMEFILTER = 5011
 ID_BUTTON_VOTECOUNTFILTER = 5012
 ID_BUTTON_ACCOUNT = 7000
 
@@ -48,6 +49,7 @@ def get_window(window_type):
                    "with_networks": addon.LANG(32152),
                    "with_keywords": addon.LANG(32114),
                    "first_air_date": addon.LANG(20416),
+                   "with_runtime": xbmc.getLocalizedString(2050),
                    "primary_release_date": addon.LANG(345),
                    "vote_count": addon.LANG(32111)}
 
@@ -289,6 +291,22 @@ def get_window(window_type):
             self.add_filter(key="%s.%s" % (key, "lte" if ret == 1 else "gte"),
                             value=value.format(result),
                             label=result)
+
+        @ch.click(ID_BUTTON_RUNTIMEFILTER)
+        def set_runtime_filter(self, control_id):
+            ret = confirmdialog.open(header=addon.LANG(32151),
+                                     text=addon.LANG(32106),
+                                     nolabel=addon.LANG(32150),
+                                     yeslabel=addon.LANG(32149))
+            if ret == -1:
+                return None
+            result = xbmcgui.Dialog().input(heading=xbmc.getLocalizedString(2050),
+                                            type=xbmcgui.INPUT_NUMERIC)
+            if not result:
+                return None
+            self.add_filter(key="with_runtime.%s" % ("lte" if ret == 1 else "gte"),
+                            value=result,
+                            label="{} min".format(result))
 
         @ch.click(ID_BUTTON_ACTORFILTER)
         def set_actor_filter(self, control_id):

@@ -15,7 +15,7 @@ from kodi65 import utils
 from kodi65 import ActionHandler
 
 
-BUTTONS = [8, 9, 10, 6001, 6002, 6003, 6005, 6006]
+BUTTONS = {8, 9, 10, 6001, 6002, 6003, 6005, 6006}
 
 ID_BUTTON_PLOT = 132
 ID_BUTTON_MANAGE = 445

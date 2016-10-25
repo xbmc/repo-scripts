@@ -18,10 +18,11 @@ AUDIO_DB_KEY = '58353d43204d68753987fl'
 BASE_URL = 'http://www.theaudiodb.com/api/v1/json/%s/' % (AUDIO_DB_KEY)
 PLUGIN_BASE = 'plugin://script.extendedinfo/?info='
 
+
 def handle_albums(results):
     albums = ItemList(content_type="albums")
     if not results.get('album'):
-        return None
+        return albums
     local_desc = 'strDescription' + xbmc.getLanguage(xbmc.ISO_639_1).upper()
     for item in results['album']:
         desc = ""

@@ -46,7 +46,7 @@
 				<effect type="fade" start="100" end="0" time="240" />
 			</animation>
 			<control type="group">
-				<visible>IntegerGreaterThan(Container.NumItems,0)</visible>
+				<visible>IntegerGreaterThan(Container(500).NumItems,0)</visible>
 				<animation effect="fade" time="320" delay="300">Visible</animation>
 				<control type="image">
 					<left>75</left>
@@ -57,10 +57,10 @@
 					<animation effect="fade" time="320" delay="200">Visible</animation>
 					<animation effect="fade" time="200">Hidden</animation>
 					<texture colordiffuse="FF12B2E7" border="40">buttons/button-fo.png</texture>
-					<animation effect="slide" end="0,410" time="300" tween="cubic" easing="inout" condition="Container.Row(1)">Conditional</animation>
-					<animation effect="slide" end="440,0" time="300" tween="cubic" easing="inout" condition="IntegerGreaterThan(Container.Column,2)">Conditional</animation>
-					<animation effect="slide" end="440,0" time="300" tween="cubic" easing="inout" condition="IntegerGreaterThan(Container.Column,1)">Conditional</animation>
-					<animation effect="slide" end="440,0" time="300" tween="cubic" easing="inout" condition="IntegerGreaterThan(Container.Column,0)">Conditional</animation>
+					<animation effect="slide" end="0,410" time="300" tween="cubic" easing="inout" condition="Container(500).Row(1)">Conditional</animation>
+					<animation effect="slide" end="440,0" time="300" tween="cubic" easing="inout" condition="IntegerGreaterThan(Container(500).Column,2)">Conditional</animation>
+					<animation effect="slide" end="440,0" time="300" tween="cubic" easing="inout" condition="IntegerGreaterThan(Container(500).Column,1)">Conditional</animation>
+					<animation effect="slide" end="440,0" time="300" tween="cubic" easing="inout" condition="IntegerGreaterThan(Container(500).Column,0)">Conditional</animation>
 				</control>
 			</control>
 			<control type="panel" id="500">
