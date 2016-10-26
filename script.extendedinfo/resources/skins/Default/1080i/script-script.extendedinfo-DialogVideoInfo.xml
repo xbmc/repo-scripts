@@ -46,7 +46,7 @@
 					<left>800</left>
 					<top>184</top>
 					<itemgap>20</itemgap>
-					<ondown>-</ondown>
+					<ondown>noop</ondown>
 					<animation type="Conditional" condition="!IsEmpty(Window.Property(Bounce.Down))" reversible="false">
 						<effect type="slide" end="0,20" time="60" tween="sine" />
 						<effect type="slide" end="0,-20" time="180" tween="sine" delay="80" />
@@ -236,7 +236,7 @@
 									<width>280</width>
 									<textoffsetx>0</textoffsetx>
 									<textoffsety>0</textoffsety>
-									<font>font30_title</font>
+									<font>font45_title</font>
 									<textcolor>FFFAFAFA</textcolor>
 									<animation effect="fade" start="100" end="70" time="0" condition="!Control.HasFocus(6001)">Conditional</animation>
 									<label>$INFO[Window.Property(rated)]</label>
@@ -2780,7 +2780,7 @@
 								<width>1018</width>
 								<height>50</height>
 								<label>$INFO[Window.Property(season),,x]$INFO[Window.Property(episode),,: ]$INFO[Window.Property(Title)]</label>
-								<font>font30_title</font>
+								<font>font45_title</font>
 								<scroll>true</scroll>
 							</control>
 						</control>
@@ -2834,6 +2834,7 @@
 									<width>155</width>
 									<height>38</height>
 									<align>center</align>
+									<textcolor>FFFAFAFA</textcolor>
 									<label fallback="?">[B]$INFO[Window.Property(Rating)][/B]</label>
 									<font>font13</font>
 								</control>
@@ -2844,6 +2845,7 @@
 									<height>38</height>
 									<align>center</align>
 									<aligny>center</aligny>
+									<textcolor>FFFAFAFA</textcolor>
 									<label fallback="563">$INFO[Window.Property(Votes),, $ADDON[script.extendedinfo 32082]]</label>
 									<font>font10</font>
 								</control>
@@ -2864,6 +2866,7 @@
 									<width>155</width>
 									<height>38</height>
 									<align>center</align>
+									<textcolor>FFFAFAFA</textcolor>
 									<label>[B]$INFO[Window.Property(duration)][/B]</label>
 									<font>font13</font>
 								</control>
@@ -2874,6 +2877,7 @@
 									<height>38</height>
 									<align>center</align>
 									<aligny>center</aligny>
+									<textcolor>FFFAFAFA</textcolor>
 									<label>$LOCALIZE[12391]</label>
 									<font>font10</font>
 								</control>
@@ -2895,6 +2899,7 @@
 									<width>220</width>
 									<height>38</height>
 									<align>center</align>
+									<textcolor>FFFAFAFA</textcolor>
 									<label fallback="?">[B]$INFO[Window.Property(Premiered)][/B]</label>
 									<font>font13</font>
 								</control>
@@ -2905,6 +2910,7 @@
 									<height>38</height>
 									<align>center</align>
 									<aligny>center</aligny>
+									<textcolor>FFFAFAFA</textcolor>
 									<label fallback="172">$INFO[Window.Property(Status)]</label>
 									<font>font10</font>
 								</control>
@@ -2926,6 +2932,7 @@
 									<width>220</width>
 									<height>38</height>
 									<align>center</align>
+									<textcolor>FFFAFAFA</textcolor>
 									<label>[B]$INFO[Window.Property(Budget),$][/B]</label>
 									<font>font13</font>
 								</control>
@@ -2936,6 +2943,7 @@
 									<height>38</height>
 									<align>center</align>
 									<aligny>center</aligny>
+									<textcolor>FFFAFAFA</textcolor>
 									<label>$ADDON[script.extendedinfo 32109]</label>
 									<font>font10</font>
 								</control>
@@ -2957,6 +2965,7 @@
 									<width>220</width>
 									<height>38</height>
 									<align>center</align>
+									<textcolor>FFFAFAFA</textcolor>
 									<label fallback="?">[B]$INFO[Window.Property(Revenue),$][/B]</label>
 									<font>font13</font>
 								</control>
@@ -2967,6 +2976,7 @@
 									<height>38</height>
 									<align>center</align>
 									<aligny>center</aligny>
+									<textcolor>FFFAFAFA</textcolor>
 									<label>$ADDON[script.extendedinfo 32108]</label>
 									<font>font10</font>
 								</control>
@@ -2988,6 +2998,7 @@
 									<width>220</width>
 									<height>38</height>
 									<align>center</align>
+									<textcolor>FFFAFAFA</textcolor>
 									<label fallback="?">[B]$INFO[Container(2000).NumItems][/B]</label>
 									<font>font13</font>
 								</control>
@@ -2998,6 +3009,7 @@
 									<height>38</height>
 									<align>center</align>
 									<aligny>center</aligny>
+									<textcolor>FFFAFAFA</textcolor>
 									<label>$LOCALIZE[20453]</label>
 									<font>font10</font>
 								</control>

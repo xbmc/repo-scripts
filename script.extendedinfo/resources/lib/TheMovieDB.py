@@ -362,7 +362,7 @@ def handle_episodes(results):
                             'aired': item.get('air_date'),
                             'episode': item.get('episode_number'),
                             'season': item.get('season_number'),
-                            'code': item["production_code"],
+                            'code': item.get("production_code"),
                             'userrating': item.get('rating'),
                             'plot': item.get('overview'),
                             'rating': round(item['vote_average'], 1) if item.get('vote_average') else "",
@@ -623,7 +623,10 @@ def get_data(url="", params=None, cache_days=14):
     params = {k: unicode(v).encode('utf-8') for k, v in params.iteritems() if v}
     url = "%s%s?%s" % (URL_BASE, url, urllib.urlencode(params))
     response = utils.get_JSON_response(url, cache_days, "TheMovieDB")
-    if "status_code" in response:
+    if not response:
+        utils.log("No response from TMDB")
+        return None
+    elif "status_code" in response:
         utils.log("TMDB status code: %s" % response.get("status_code"))
     return response
 
@@ -720,11 +723,14 @@ def get_show_id(tmdb_id=None, return_id="imdb_id"):
     return response["external_ids"][return_id]
 
 
-def get_trailer(movie_id):
+def get_movie_videos(movie_id):
+    '''
+    get trailers / teasers for movie with *movie_id
+    '''
     response = get_movie(movie_id)
     if response and "videos" in response and response['videos']['results']:
-        return response['videos']['results'][0]['key']
-    utils.notify("Could not get trailer")
+        return response['videos']['results']
+    utils.notify("Could not get movie videos")
     return None
 
 

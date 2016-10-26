@@ -22,7 +22,7 @@ msgid "ExtendedInfo Script"
 msgstr ""
 
 msgctxt "Addon Description"
-msgid "This script offers various possibilities to display online content inside skins. Used services are themoviedb.org, theaudiodb.org, rottentomatoes.com, Trakt.TV and a lot more. Can also be used for importing / exporting skin settings, adding additional fanart stuff to library and cooking eggs. Needs skin support for most functions."
+msgid "This script offers various possibilities to display online content inside skins. Used services are themoviedb.org, theaudiodb.org, Trakt.TV and a lot more. Can also be used for importing / exporting skin settings, adding additional fanart stuff to library and cooking eggs. Needs skin support for most functions."
 msgstr ""
 
 msgctxt "#32000"

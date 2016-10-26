@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.extendedinfo" name="ExtendedInfo Script" version="5.5.1" provider-name="phil65 (Philipp Temminghoff)">
+<addon id="script.extendedinfo" name="ExtendedInfo Script" version="5.5.2" provider-name="phil65 (Philipp Temminghoff)">
 	<requires>
 		<import addon="xbmc.python" version="2.25.0"/>
 		<import addon="resource.images.studios.white" version="0.0.5"/>
@@ -16,12 +16,21 @@
 	<extension point="xbmc.addon.metadata">
 		<language/>
 		<summary lang="en">ExtendedInfo Script</summary>
-		<description lang="en">This script offers various possibilities to display online content inside skins as well as a complete MovieDB browser including info dialogs for various media types. Used services are themoviedb.org, theaudiodb.org, rottentomatoes.com, Trakt.TV, omdbapi.com and a lot more. Needs skin implementation for lot of functions.</description>
+		<description lang="en">This script offers various possibilities to display online content inside skins as well as a complete MovieDB browser including info dialogs for various media types. Used services are themoviedb.org, theaudiodb.org, Trakt.TV, omdbapi.com and a lot more. Needs skin implementation for lot of functions.</description>
 		<platform>all</platform>
 		<license>GNU GENERAL PUBLIC LICENSE Version 2, June 1991</license>
 		<forum>http://forum.kodi.tv/showthread.php?tid=160558</forum>
 		<source>https://github.com/phil65/script.extendedinfo</source>
 		<email>phil65@kodi.tv</email>
-		<news>Fixed: French language[CR]Fixed: Issue with Youtube Browser[CR]Fixed: Some issues related to error handling</news>
+		<news>Added: filter movies / tv shows by runtime[CR]Added: plugin path to show trailers within skins[CR]Misc fixes</news>
+		<assets>
+			<icon>resources/icon.png</icon>
+			<fanart>resources/fanart.jpg</fanart>
+			<screenshot>resources/screenshot-01.jpg</screenshot>
+			<screenshot>resources/screenshot-02.jpg</screenshot>
+			<screenshot>resources/screenshot-03.jpg</screenshot>
+			<screenshot>resources/screenshot-04.jpg</screenshot>
+			<screenshot>resources/screenshot-05.jpg</screenshot>
+		</assets>
 	</extension>
 </addon>
