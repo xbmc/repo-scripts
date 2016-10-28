@@ -1,4 +1,4 @@
-# encoding: utf-8
+# coding: utf-8
 from __future__ import unicode_literals
 
 import re
@@ -410,6 +410,22 @@ class ArteTVEmbedIE(ArteTVPlus7IE):
         return self._extract_from_json_url(json_url, video_id, lang)
 
 
+class TheOperaPlatformIE(ArteTVPlus7IE):
+    IE_NAME = 'theoperaplatform'
+    _VALID_URL = r'https?://(?:www\.)?theoperaplatform\.eu/(?P<lang>fr|de|en|es)/(?P<id>[^/?#&]+)'
+
+    _TESTS = [{
+        'url': 'http://www.theoperaplatform.eu/de/opera/verdi-otello',
+        'md5': '970655901fa2e82e04c00b955e9afe7b',
+        'info_dict': {
+            'id': '060338-009-A',
+            'ext': 'mp4',
+            'title': 'Verdi - OTELLO',
+            'upload_date': '20160927',
+        },
+    }]
+
+
 class ArteTVPlaylistIE(ArteTVBaseIE):
     IE_NAME = 'arte.tv:playlist'
     _VALID_URL = r'https?://(?:www\.)?arte\.tv/guide/(?P<lang>fr|de|en|es)/[^#]*#collection/(?P<id>PL-\d+)'
@@ -419,6 +435,7 @@ class ArteTVPlaylistIE(ArteTVBaseIE):
         'info_dict': {
             'id': 'PL-013263',
             'title': 'Areva & Uramin',
+            'description': 'md5:a1dc0312ce357c262259139cfd48c9bf',
         },
         'playlist_mincount': 6,
     }, {

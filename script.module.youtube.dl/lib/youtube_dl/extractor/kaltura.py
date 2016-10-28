@@ -6,7 +6,6 @@ import base64
 
 from .common import InfoExtractor
 from ..compat import (
-    compat_urllib_parse_urlencode,
     compat_urlparse,
     compat_parse_qs,
 )
@@ -15,6 +14,7 @@ from ..utils import (
     ExtractorError,
     int_or_none,
     unsmuggle_url,
+    smuggle_url,
 )
 
 
@@ -34,7 +34,14 @@ class KalturaIE(InfoExtractor):
                         )(?:/(?P<path>[^?]+))?(?:\?(?P<query>.*))?
                 )
                 '''
-    _API_BASE = 'http://cdnapi.kaltura.com/api_v3/index.php?'
+    _SERVICE_URL = 'http://cdnapi.kaltura.com'
+    _SERVICE_BASE = '/api_v3/index.php'
+    # See https://github.com/kaltura/server/blob/master/plugins/content/caption/base/lib/model/enums/CaptionType.php
+    _CAPTION_TYPES = {
+        1: 'srt',
+        2: 'ttml',
+        3: 'vtt',
+    }
     _TESTS = [
         {
             'url': 'kaltura:269692:1_1jc2y3e4',
@@ -61,6 +68,32 @@ class KalturaIE(InfoExtractor):
         {
             'url': 'https://cdnapisec.kaltura.com/html5/html5lib/v2.30.2/mwEmbedFrame.php/p/1337/uiconf_id/20540612/entry_id/1_sf5ovm7u?wid=_243342',
             'only_matching': True,
+        },
+        {
+            # video with subtitles
+            'url': 'kaltura:111032:1_cw786r8q',
+            'only_matching': True,
+        },
+        {
+            # video with ttml subtitles (no fileExt)
+            'url': 'kaltura:1926081:0_l5ye1133',
+            'info_dict': {
+                'id': '0_l5ye1133',
+                'ext': 'mp4',
+                'title': 'What Can You Do With Python?',
+                'upload_date': '20160221',
+                'uploader_id': 'stork',
+                'thumbnail': 're:^https?://.*/thumbnail/.*',
+                'timestamp': int,
+                'subtitles': {
+                    'en': [{
+                        'ext': 'ttml',
+                    }],
+                },
+            },
+            'params': {
+                'skip_download': True,
+            },
         }
     ]
 
@@ -72,34 +105,42 @@ class KalturaIE(InfoExtractor):
                     kWidget\.(?:thumb)?[Ee]mbed\(
                     \{.*?
                         (?P<q1>['\"])wid(?P=q1)\s*:\s*
-                        (?P<q2>['\"])_?(?P<partner_id>[^'\"]+)(?P=q2),.*?
+                        (?P<q2>['\"])_?(?P<partner_id>(?:(?!(?P=q2)).)+)(?P=q2),.*?
                         (?P<q3>['\"])entry_?[Ii]d(?P=q3)\s*:\s*
-                        (?P<q4>['\"])(?P<id>[^'\"]+)(?P=q4),
+                        (?P<q4>['\"])(?P<id>(?:(?!(?P=q4)).)+)(?P=q4),
                 """, webpage) or
             re.search(
                 r'''(?xs)
                     (?P<q1>["\'])
-                        (?:https?:)?//cdnapi(?:sec)?\.kaltura\.com/.*?(?:p|partner_id)/(?P<partner_id>\d+).*?
+                        (?:https?:)?//cdnapi(?:sec)?\.kaltura\.com/(?:(?!(?P=q1)).)*(?:p|partner_id)/(?P<partner_id>\d+)(?:(?!(?P=q1)).)*
                     (?P=q1).*?
                     (?:
                         entry_?[Ii]d|
                         (?P<q2>["\'])entry_?[Ii]d(?P=q2)
                     )\s*:\s*
-                    (?P<q3>["\'])(?P<id>.+?)(?P=q3)
+                    (?P<q3>["\'])(?P<id>(?:(?!(?P=q3)).)+)(?P=q3)
                 ''', webpage))
         if mobj:
-            return 'kaltura:%(partner_id)s:%(id)s' % mobj.groupdict()
+            embed_info = mobj.groupdict()
+            url = 'kaltura:%(partner_id)s:%(id)s' % embed_info
+            escaped_pid = re.escape(embed_info['partner_id'])
+            service_url = re.search(
+                r'<script[^>]+src=["\']((?:https?:)?//.+?)/p/%s/sp/%s00/embedIframeJs' % (escaped_pid, escaped_pid),
+                webpage)
+            if service_url:
+                url = smuggle_url(url, {'service_url': service_url.group(1)})
+            return url
 
-    def _kaltura_api_call(self, video_id, actions, *args, **kwargs):
+    def _kaltura_api_call(self, video_id, actions, service_url=None, *args, **kwargs):
         params = actions[0]
         if len(actions) > 1:
             for i, a in enumerate(actions[1:], start=1):
                 for k, v in a.items():
                     params['%d:%s' % (i, k)] = v
 
-        query = compat_urllib_parse_urlencode(params)
-        url = self._API_BASE + query
-        data = self._download_json(url, video_id, *args, **kwargs)
+        data = self._download_json(
+            (service_url or self._SERVICE_URL) + self._SERVICE_BASE,
+            video_id, query=params, *args, **kwargs)
 
         status = data if len(actions) == 1 else data[0]
         if status.get('objectType') == 'KalturaAPIException':
@@ -108,20 +149,7 @@ class KalturaIE(InfoExtractor):
 
         return data
 
-    def _get_kaltura_signature(self, video_id, partner_id):
-        actions = [{
-            'apiVersion': '3.1',
-            'expiry': 86400,
-            'format': 1,
-            'service': 'session',
-            'action': 'startWidgetSession',
-            'widgetId': '_%s' % partner_id,
-        }]
-        return self._kaltura_api_call(
-            video_id, actions, note='Downloading Kaltura signature')['ks']
-
-    def _get_video_info(self, video_id, partner_id):
-        signature = self._get_kaltura_signature(video_id, partner_id)
+    def _get_video_info(self, video_id, partner_id, service_url=None):
         actions = [
             {
                 'action': 'null',
@@ -129,22 +157,34 @@ class KalturaIE(InfoExtractor):
                 'clientTag': 'kdp:v3.8.5',
                 'format': 1,  # JSON, 2 = XML, 3 = PHP
                 'service': 'multirequest',
-                'ks': signature,
+            },
+            {
+                'expiry': 86400,
+                'service': 'session',
+                'action': 'startWidgetSession',
+                'widgetId': '_%s' % partner_id,
             },
             {
                 'action': 'get',
                 'entryId': video_id,
                 'service': 'baseentry',
-                'version': '-1',
+                'ks': '{1:result:ks}',
             },
             {
                 'action': 'getbyentryid',
                 'entryId': video_id,
                 'service': 'flavorAsset',
+                'ks': '{1:result:ks}',
+            },
+            {
+                'action': 'list',
+                'filter:entryIdEqual': video_id,
+                'service': 'caption_captionasset',
+                'ks': '{1:result:ks}',
             },
         ]
         return self._kaltura_api_call(
-            video_id, actions, note='Downloading video info JSON')
+            video_id, actions, service_url, note='Downloading video info JSON')
 
     def _real_extract(self, url):
         url, smuggled_data = unsmuggle_url(url, {})
@@ -152,8 +192,9 @@ class KalturaIE(InfoExtractor):
         mobj = re.match(self._VALID_URL, url)
         partner_id, entry_id = mobj.group('partner_id', 'id')
         ks = None
+        captions = None
         if partner_id and entry_id:
-            info, flavor_assets = self._get_video_info(entry_id, partner_id)
+            _, info, flavor_assets, captions = self._get_video_info(entry_id, partner_id, smuggled_data.get('service_url'))
         else:
             path, query = mobj.group('path', 'query')
             if not path and not query:
@@ -172,7 +213,7 @@ class KalturaIE(InfoExtractor):
                 raise ExtractorError('Invalid URL', expected=True)
             if 'entry_id' in params:
                 entry_id = params['entry_id'][0]
-                info, flavor_assets = self._get_video_info(entry_id, partner_id)
+                _, info, flavor_assets, captions = self._get_video_info(entry_id, partner_id)
             elif 'uiconf_id' in params and 'flashvars[referenceId]' in params:
                 reference_id = params['flashvars[referenceId]'][0]
                 webpage = self._download_webpage(url, reference_id)
@@ -182,6 +223,17 @@ class KalturaIE(InfoExtractor):
                     reference_id)['entryResult']
                 info, flavor_assets = entry_data['meta'], entry_data['contextData']['flavorAssets']
                 entry_id = info['id']
+                # Unfortunately, data returned in kalturaIframePackageData lacks
+                # captions so we will try requesting the complete data using
+                # regular approach since we now know the entry_id
+                try:
+                    _, info, flavor_assets, captions = self._get_video_info(
+                        entry_id, partner_id)
+                except ExtractorError:
+                    # Regular scenario failed but we already have everything
+                    # extracted apart from captions and can process at least
+                    # with this
+                    pass
             else:
                 raise ExtractorError('Invalid URL', expected=True)
             ks = params.get('flashvars[ks]', [None])[0]
@@ -201,12 +253,25 @@ class KalturaIE(InfoExtractor):
                 unsigned_url += '?referrer=%s' % referrer
             return unsigned_url
 
+        data_url = info['dataUrl']
+        if '/flvclipper/' in data_url:
+            data_url = re.sub(r'/flvclipper/.*', '/serveFlavor', data_url)
+
         formats = []
         for f in flavor_assets:
             # Continue if asset is not ready
-            if f['status'] != 2:
+            if f.get('status') != 2:
                 continue
-            video_url = sign_url('%s/flavorId/%s' % (info['dataUrl'], f['id']))
+            # Original format that's not available (e.g. kaltura:1926081:0_c03e1b5g)
+            # skip for now.
+            if f.get('fileExt') == 'chun':
+                continue
+            video_url = sign_url(
+                '%s/flavorId/%s' % (data_url, f['id']))
+            # audio-only has no videoCodecId (e.g. kaltura:1926081:0_c03e1b5g
+            # -f mp4-56)
+            vcodec = 'none' if 'videoCodecId' not in f and f.get(
+                'frameRate') == 0 else f.get('videoCodecId')
             formats.append({
                 'format_id': '%(fileExt)s-%(bitrate)s' % f,
                 'ext': f.get('fileExt'),
@@ -214,22 +279,39 @@ class KalturaIE(InfoExtractor):
                 'fps': int_or_none(f.get('frameRate')),
                 'filesize_approx': int_or_none(f.get('size'), invscale=1024),
                 'container': f.get('containerFormat'),
-                'vcodec': f.get('videoCodecId'),
+                'vcodec': vcodec,
                 'height': int_or_none(f.get('height')),
                 'width': int_or_none(f.get('width')),
                 'url': video_url,
             })
-        m3u8_url = sign_url(info['dataUrl'].replace('format/url', 'format/applehttp'))
-        formats.extend(self._extract_m3u8_formats(
-            m3u8_url, entry_id, 'mp4', 'm3u8_native', m3u8_id='hls', fatal=False))
+        if '/playManifest/' in data_url:
+            m3u8_url = sign_url(data_url.replace(
+                'format/url', 'format/applehttp'))
+            formats.extend(self._extract_m3u8_formats(
+                m3u8_url, entry_id, 'mp4', 'm3u8_native',
+                m3u8_id='hls', fatal=False))
 
-        self._check_formats(formats, entry_id)
         self._sort_formats(formats)
+
+        subtitles = {}
+        if captions:
+            for caption in captions.get('objects', []):
+                # Continue if caption is not ready
+                if f.get('status') != 2:
+                    continue
+                if not caption.get('id'):
+                    continue
+                caption_format = int_or_none(caption.get('format'))
+                subtitles.setdefault(caption.get('languageCode') or caption.get('language'), []).append({
+                    'url': '%s/api_v3/service/caption_captionasset/action/serve/captionAssetId/%s' % (self._SERVICE_URL, caption['id']),
+                    'ext': caption.get('fileExt') or self._CAPTION_TYPES.get(caption_format) or 'ttml',
+                })
 
         return {
             'id': entry_id,
             'title': info['name'],
             'formats': formats,
+            'subtitles': subtitles,
             'description': clean_html(info.get('description')),
             'thumbnail': info.get('thumbnailUrl'),
             'duration': info.get('duration'),

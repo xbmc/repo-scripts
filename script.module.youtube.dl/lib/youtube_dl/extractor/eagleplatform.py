@@ -51,6 +51,27 @@ class EaglePlatformIE(InfoExtractor):
     }]
 
     @staticmethod
+    def _extract_url(webpage):
+        # Regular iframe embedding
+        mobj = re.search(
+            r'<iframe[^>]+src=(["\'])(?P<url>(?:https?:)?//.+?\.media\.eagleplatform\.com/index/player\?.+?)\1',
+            webpage)
+        if mobj is not None:
+            return mobj.group('url')
+        # Basic usage embedding (see http://dultonmedia.github.io/eplayer/)
+        mobj = re.search(
+            r'''(?xs)
+                    <script[^>]+
+                        src=(?P<q1>["\'])(?:https?:)?//(?P<host>.+?\.media\.eagleplatform\.com)/player/player\.js(?P=q1)
+                    .+?
+                    <div[^>]+
+                        class=(?P<q2>["\'])eagleplayer(?P=q2)[^>]+
+                        data-id=["\'](?P<id>\d+)
+            ''', webpage)
+        if mobj is not None:
+            return 'eagleplatform:%(host)s:%(id)s' % mobj.groupdict()
+
+    @staticmethod
     def _handle_error(response):
         status = int_or_none(response.get('status', 200))
         if status != 200:

@@ -16,6 +16,7 @@ from ..utils import (
     sanitized_Request,
     str_to_int,
     unescapeHTML,
+    mimetype2ext,
 )
 
 
@@ -93,7 +94,8 @@ class DailymotionIE(DailymotionBaseInfoExtractor):
                 'title': 'Leanna Decker - Cyber Girl Of The Year Desires Nude [Playboy Plus]',
                 'uploader': 'HotWaves1012',
                 'age_limit': 18,
-            }
+            },
+            'skip': 'video gone',
         },
         # geo-restricted, player v5
         {
@@ -110,6 +112,13 @@ class DailymotionIE(DailymotionBaseInfoExtractor):
             'only_matching': True,
         }
     ]
+
+    @staticmethod
+    def _extract_urls(webpage):
+        # Look for embedded Dailymotion player
+        matches = re.findall(
+            r'<(?:(?:embed|iframe)[^>]+?src=|input[^>]+id=[\'"]dmcloudUrlEmissionSelect[\'"][^>]+value=)(["\'])(?P<url>(?:https?:)?//(?:www\.)?dailymotion\.com/(?:embed|swf)/video/.+?)\1', webpage)
+        return list(map(lambda m: unescapeHTML(m[1]), matches))
 
     def _real_extract(self, url):
         video_id = self._match_id(url)
@@ -136,7 +145,8 @@ class DailymotionIE(DailymotionBaseInfoExtractor):
         player_v5 = self._search_regex(
             [r'buildPlayer\(({.+?})\);\n',  # See https://github.com/rg3/youtube-dl/issues/7826
              r'playerV5\s*=\s*dmp\.create\([^,]+?,\s*({.+?})\);',
-             r'buildPlayer\(({.+?})\);'],
+             r'buildPlayer\(({.+?})\);',
+             r'var\s+config\s*=\s*({.+?});'],
             webpage, 'player v5', default=None)
         if player_v5:
             player = self._parse_json(player_v5, video_id)
@@ -153,18 +163,19 @@ class DailymotionIE(DailymotionBaseInfoExtractor):
                     type_ = media.get('type')
                     if type_ == 'application/vnd.lumberjack.manifest':
                         continue
-                    ext = determine_ext(media_url)
-                    if type_ == 'application/x-mpegURL' or ext == 'm3u8':
+                    ext = mimetype2ext(type_) or determine_ext(media_url)
+                    if ext == 'm3u8':
                         formats.extend(self._extract_m3u8_formats(
                             media_url, video_id, 'mp4', preference=-1,
                             m3u8_id='hls', fatal=False))
-                    elif type_ == 'application/f4m' or ext == 'f4m':
+                    elif ext == 'f4m':
                         formats.extend(self._extract_f4m_formats(
                             media_url, video_id, preference=-1, f4m_id='hds', fatal=False))
                     else:
                         f = {
                             'url': media_url,
                             'format_id': 'http-%s' % quality,
+                            'ext': ext,
                         }
                         m = re.search(r'H264-(?P<width>\d+)x(?P<height>\d+)', media_url)
                         if m:
@@ -322,7 +333,9 @@ class DailymotionPlaylistIE(DailymotionBaseInfoExtractor):
 
             for video_id in re.findall(r'data-xid="(.+?)"', webpage):
                 if video_id not in video_ids:
-                    yield self.url_result('http://www.dailymotion.com/video/%s' % video_id, 'Dailymotion')
+                    yield self.url_result(
+                        'http://www.dailymotion.com/video/%s' % video_id,
+                        DailymotionIE.ie_key(), video_id)
                     video_ids.add(video_id)
 
             if re.search(self._MORE_PAGES_INDICATOR, webpage) is None:
@@ -383,7 +396,7 @@ class DailymotionUserIE(DailymotionPlaylistIE):
 
 
 class DailymotionCloudIE(DailymotionBaseInfoExtractor):
-    _VALID_URL_PREFIX = r'http://api\.dmcloud\.net/(?:player/)?embed/'
+    _VALID_URL_PREFIX = r'https?://api\.dmcloud\.net/(?:player/)?embed/'
     _VALID_URL = r'%s[^/]+/(?P<id>[^/?]+)' % _VALID_URL_PREFIX
     _VALID_EMBED_URL = r'%s[^/]+/[^\'"]+' % _VALID_URL_PREFIX
 

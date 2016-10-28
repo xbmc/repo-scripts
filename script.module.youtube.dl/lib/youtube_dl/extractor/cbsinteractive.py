@@ -63,7 +63,7 @@ class CBSInteractiveIE(ThePlatformIE):
         webpage = self._download_webpage(url, display_id)
 
         data_json = self._html_search_regex(
-            r"data-(?:cnet|zdnet)-video(?:-uvp)?-options='([^']+)'",
+            r"data-(?:cnet|zdnet)-video(?:-uvp(?:js)?)?-options='([^']+)'",
             webpage, 'data json')
         data = self._parse_json(data_json, display_id)
         vdata = data.get('video') or data['videos'][0]
@@ -80,9 +80,6 @@ class CBSInteractiveIE(ThePlatformIE):
 
         media_guid_path = 'media/guid/%d/%s' % (self.MPX_ACCOUNTS[site], vdata['mpxRefId'])
         formats, subtitles = [], {}
-        if site == 'cnet':
-            formats, subtitles = self._extract_theplatform_smil(
-                self.TP_RELEASE_URL_TEMPLATE % media_guid_path, video_id)
         for (fkey, vid) in vdata['files'].items():
             if fkey == 'hls_phone' and 'hls_tablet' in vdata['files']:
                 continue
@@ -94,7 +91,7 @@ class CBSInteractiveIE(ThePlatformIE):
             subtitles = self._merge_subtitles(subtitles, tp_subtitles)
         self._sort_formats(formats)
 
-        info = self.get_metadata('kYEXFC/%s' % media_guid_path, video_id)
+        info = self._extract_theplatform_metadata('kYEXFC/%s' % media_guid_path, video_id)
         info.update({
             'id': video_id,
             'display_id': display_id,

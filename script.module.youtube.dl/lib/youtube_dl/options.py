@@ -2,6 +2,7 @@ from __future__ import unicode_literals
 
 import os.path
 import optparse
+import re
 import sys
 
 from .downloader.external import list_external_downloaders
@@ -26,9 +27,11 @@ def parseOpts(overrideArguments=None):
         except IOError:
             return default  # silently skip if file is not present
         try:
-            res = []
-            for l in optionf:
-                res += compat_shlex_split(l, comments=True)
+            # FIXME: https://github.com/rg3/youtube-dl/commit/dfe5fa49aed02cf36ba9f743b11b0903554b5e56
+            contents = optionf.read()
+            if sys.version_info < (3,):
+                contents = contents.decode(preferredencoding())
+            res = compat_shlex_split(contents, comments=True)
         finally:
             optionf.close()
         return res
@@ -91,8 +94,18 @@ def parseOpts(overrideArguments=None):
         setattr(parser.values, option.dest, value.split(','))
 
     def _hide_login_info(opts):
-        opts = list(opts)
-        for private_opt in ['-p', '--password', '-u', '--username', '--video-password']:
+        PRIVATE_OPTS = ['-p', '--password', '-u', '--username', '--video-password', '--ap-password', '--ap-username']
+        eqre = re.compile('^(?P<key>' + ('|'.join(re.escape(po) for po in PRIVATE_OPTS)) + ')=.+$')
+
+        def _scrub_eq(o):
+            m = eqre.match(o)
+            if m:
+                return m.group('key') + '=PRIVATE'
+            else:
+                return o
+
+        opts = list(map(_scrub_eq, opts))
+        for private_opt in PRIVATE_OPTS:
             try:
                 i = opts.index(private_opt)
                 opts[i + 1] = 'PRIVATE'
@@ -212,10 +225,15 @@ def parseOpts(overrideArguments=None):
         help='Make all connections via IPv6 (experimental)',
     )
     network.add_option(
+        '--geo-verification-proxy',
+        dest='geo_verification_proxy', default=None, metavar='URL',
+        help='Use this proxy to verify the IP address for some geo-restricted sites. '
+        'The default proxy specified by --proxy (or none, if the options is not present) is used for the actual downloading. (experimental)'
+    )
+    network.add_option(
         '--cn-verification-proxy',
         dest='cn_verification_proxy', default=None, metavar='URL',
-        help='Use this proxy to verify the IP address for some Chinese sites. '
-        'The default proxy specified by --proxy (or none, if the options is not present) is used for the actual downloading. (experimental)'
+        help=optparse.SUPPRESS_HELP,
     )
 
     selection = optparse.OptionGroup(parser, 'Video Selection')
@@ -333,6 +351,24 @@ def parseOpts(overrideArguments=None):
         dest='videopassword', metavar='PASSWORD',
         help='Video password (vimeo, smotri, youku)')
 
+    adobe_pass = optparse.OptionGroup(parser, 'Adobe Pass Options')
+    adobe_pass.add_option(
+        '--ap-mso',
+        dest='ap_mso', metavar='MSO',
+        help='Adobe Pass multiple-system operator (TV provider) identifier, use --ap-list-mso for a list of available MSOs')
+    adobe_pass.add_option(
+        '--ap-username',
+        dest='ap_username', metavar='USERNAME',
+        help='Multiple-system operator account login')
+    adobe_pass.add_option(
+        '--ap-password',
+        dest='ap_password', metavar='PASSWORD',
+        help='Multiple-system operator account password. If this option is left out, youtube-dl will ask interactively.')
+    adobe_pass.add_option(
+        '--ap-list-mso',
+        action='store_true', dest='ap_list_mso', default=False,
+        help='List all supported multiple-system operators')
+
     video_format = optparse.OptionGroup(parser, 'Video Format Options')
     video_format.add_option(
         '-f', '--format',
@@ -405,7 +441,15 @@ def parseOpts(overrideArguments=None):
     downloader.add_option(
         '--fragment-retries',
         dest='fragment_retries', metavar='RETRIES', default=10,
-        help='Number of retries for a fragment (default is %default), or "infinite" (DASH only)')
+        help='Number of retries for a fragment (default is %default), or "infinite" (DASH and hlsnative only)')
+    downloader.add_option(
+        '--skip-unavailable-fragments',
+        action='store_true', dest='skip_unavailable_fragments', default=True,
+        help='Skip unavailable fragments (DASH and hlsnative only)')
+    general.add_option(
+        '--abort-on-unavailable-fragment',
+        action='store_false', dest='skip_unavailable_fragments',
+        help='Abort downloading when some fragment is not available')
     downloader.add_option(
         '--buffer-size',
         dest='buffersize', metavar='SIZE', default='1024',
@@ -481,9 +525,20 @@ def parseOpts(overrideArguments=None):
         dest='bidi_workaround', action='store_true',
         help='Work around terminals that lack bidirectional text support. Requires bidiv or fribidi executable in PATH')
     workarounds.add_option(
-        '--sleep-interval', metavar='SECONDS',
+        '--sleep-interval', '--min-sleep-interval', metavar='SECONDS',
         dest='sleep_interval', type=float,
-        help='Number of seconds to sleep before each download.')
+        help=(
+            'Number of seconds to sleep before each download when used alone '
+            'or a lower bound of a range for randomized sleep before each download '
+            '(minimum possible number of seconds to sleep) when used along with '
+            '--max-sleep-interval.'))
+    workarounds.add_option(
+        '--max-sleep-interval', metavar='SECONDS',
+        dest='max_sleep_interval', type=float,
+        help=(
+            'Upper bound of a range for randomized sleep before each download '
+            '(maximum possible number of seconds to sleep). Must only be used '
+            'along with --min-sleep-interval.'))
 
     verbosity = optparse.OptionGroup(parser, 'Verbosity / Simulation Options')
     verbosity.add_option(
@@ -599,22 +654,7 @@ def parseOpts(overrideArguments=None):
     filesystem.add_option(
         '-o', '--output',
         dest='outtmpl', metavar='TEMPLATE',
-        help=('Output filename template. Use %(title)s to get the title, '
-              '%(uploader)s for the uploader name, %(uploader_id)s for the uploader nickname if different, '
-              '%(autonumber)s to get an automatically incremented number, '
-              '%(ext)s for the filename extension, '
-              '%(format)s for the format description (like "22 - 1280x720" or "HD"), '
-              '%(format_id)s for the unique id of the format (like YouTube\'s itags: "137"), '
-              '%(upload_date)s for the upload date (YYYYMMDD), '
-              '%(extractor)s for the provider (youtube, metacafe, etc), '
-              '%(id)s for the video id, '
-              '%(playlist_title)s, %(playlist_id)s, or %(playlist)s (=title if present, ID otherwise) for the playlist the video is in, '
-              '%(playlist_index)s for the position in the playlist. '
-              '%(height)s and %(width)s for the width and height of the video format. '
-              '%(resolution)s for a textual description of the resolution of the video format. '
-              '%% for a literal percent. '
-              'Use - to output to stdout. Can also be used to download to a different directory, '
-              'for example with -o \'/my/downloads/%(uploader)s/%(title)s-%(id)s.%(ext)s\' .'))
+        help=('Output filename template, see the "OUTPUT TEMPLATE" for all the info'))
     filesystem.add_option(
         '--autonumber-size',
         dest='autonumber_size', metavar='NUMBER',
@@ -791,6 +831,7 @@ def parseOpts(overrideArguments=None):
     parser.add_option_group(video_format)
     parser.add_option_group(subtitles)
     parser.add_option_group(authentication)
+    parser.add_option_group(adobe_pass)
     parser.add_option_group(postproc)
 
     if overrideArguments is not None:
@@ -809,11 +850,11 @@ def parseOpts(overrideArguments=None):
             system_conf = []
             user_conf = []
         else:
-            system_conf = compat_conf(_readOptions('/etc/youtube-dl.conf'))
+            system_conf = _readOptions('/etc/youtube-dl.conf')
             if '--ignore-config' in system_conf:
                 user_conf = []
             else:
-                user_conf = compat_conf(_readUserConf())
+                user_conf = _readUserConf()
         argv = system_conf + user_conf + command_line_conf
 
         opts, args = parser.parse_args(argv)

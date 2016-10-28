@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
+# coding: utf-8
 
 from __future__ import unicode_literals
 
@@ -42,11 +42,13 @@ from .compat import (
     compat_html_entities_html5,
     compat_http_client,
     compat_kwargs,
+    compat_os_name,
     compat_parse_qs,
     compat_shlex_quote,
     compat_socket_create_connection,
     compat_str,
     compat_struct_pack,
+    compat_struct_unpack,
     compat_urllib_error,
     compat_urllib_parse,
     compat_urllib_parse_urlencode,
@@ -90,6 +92,13 @@ ENGLISH_MONTH_NAMES = [
     'January', 'February', 'March', 'April', 'May', 'June',
     'July', 'August', 'September', 'October', 'November', 'December']
 
+MONTH_NAMES = {
+    'en': ENGLISH_MONTH_NAMES,
+    'fr': [
+        'janvier', 'février', 'mars', 'avril', 'mai', 'juin',
+        'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre'],
+}
+
 KNOWN_EXTENSIONS = (
     'mp4', 'm4a', 'm4p', 'm4b', 'm4r', 'm4v', 'aac',
     'flv', 'f4v', 'f4a', 'f4b',
@@ -121,6 +130,7 @@ DATE_FORMATS = (
     '%Y %m %d',
     '%Y-%m-%d',
     '%Y/%m/%d',
+    '%Y/%m/%d %H:%M',
     '%Y/%m/%d %H:%M:%S',
     '%Y-%m-%d %H:%M:%S',
     '%Y-%m-%d %H:%M:%S.%f',
@@ -132,6 +142,8 @@ DATE_FORMATS = (
     '%Y-%m-%dT%H:%M:%S',
     '%Y-%m-%dT%H:%M:%S.%f',
     '%Y-%m-%dT%H:%M',
+    '%b %d %Y at %H:%M',
+    '%b %d %Y at %H:%M:%S',
 )
 
 DATE_FORMATS_DAY_FIRST = list(DATE_FORMATS)
@@ -152,6 +164,8 @@ DATE_FORMATS_MONTH_FIRST.extend([
     '%m/%d/%y',
     '%m/%d/%Y %H:%M:%S',
 ])
+
+PACKED_CODES_RE = r"}\('(.+)',(\d+),(\d+),'([^']+)'\.split\('\|'\)"
 
 
 def preferredencoding():
@@ -310,8 +324,16 @@ def get_element_by_id(id, html):
     return get_element_by_attribute('id', id, html)
 
 
-def get_element_by_attribute(attribute, value, html):
+def get_element_by_class(class_name, html):
+    return get_element_by_attribute(
+        'class', r'[^\'"]*\b%s\b[^\'"]*' % re.escape(class_name),
+        html, escape_value=False)
+
+
+def get_element_by_attribute(attribute, value, html, escape_value=True):
     """Return the content of the tag with the specified attribute in the passed HTML document"""
+
+    value = re.escape(value) if escape_value else value
 
     m = re.search(r'''(?xs)
         <([a-zA-Z0-9:._-]+)
@@ -321,7 +343,7 @@ def get_element_by_attribute(attribute, value, html):
         \s*>
         (?P<content>.*?)
         </\1>
-    ''' % (re.escape(attribute), re.escape(value)), html)
+    ''' % (re.escape(attribute), value), html)
 
     if not m:
         return None
@@ -758,6 +780,26 @@ class ContentTooShortError(Exception):
         self.expected = expected
 
 
+class XAttrMetadataError(Exception):
+    def __init__(self, code=None, msg='Unknown error'):
+        super(XAttrMetadataError, self).__init__(msg)
+        self.code = code
+        self.msg = msg
+
+        # Parsing code and msg
+        if (self.code in (errno.ENOSPC, errno.EDQUOT) or
+                'No space left' in self.msg or 'Disk quota excedded' in self.msg):
+            self.reason = 'NO_SPACE'
+        elif self.code == errno.E2BIG or 'Argument list too long' in self.msg:
+            self.reason = 'VALUE_TOO_LONG'
+        else:
+            self.reason = 'NOT_SUPPORTED'
+
+
+class XAttrUnavailableError(Exception):
+    pass
+
+
 def _create_http_connection(ydl_handler, http_class, is_https, *args, **kwargs):
     # Working around python 2 bug (see http://bugs.python.org/issue17849) by limiting
     # expected HTTP responses to meet HTTP/1.0 or later (see also
@@ -1093,7 +1135,7 @@ def unified_timestamp(date_str, day_first=True):
 
     date_str = date_str.replace(',', ' ')
 
-    pm_delta = datetime.timedelta(hours=12 if re.search(r'(?i)PM', date_str) else 0)
+    pm_delta = 12 if re.search(r'(?i)PM', date_str) else 0
     timezone, date_str = extract_timezone(date_str)
 
     # Remove AM/PM + timezone
@@ -1101,13 +1143,13 @@ def unified_timestamp(date_str, day_first=True):
 
     for expression in date_formats(day_first):
         try:
-            dt = datetime.datetime.strptime(date_str, expression) - timezone + pm_delta
+            dt = datetime.datetime.strptime(date_str, expression) - timezone + datetime.timedelta(hours=pm_delta)
             return calendar.timegm(dt.timetuple())
         except ValueError:
             pass
     timetuple = email.utils.parsedate_tz(date_str)
     if timetuple:
-        return calendar.timegm(timetuple.timetuple())
+        return calendar.timegm(timetuple) + pm_delta * 3600
 
 
 def determine_ext(url, default_ext='unknown_video'):
@@ -1444,6 +1486,8 @@ def shell_quote(args):
 def smuggle_url(url, data):
     """ Pass additional data in a URL for internal use. """
 
+    url, idata = unsmuggle_url(url, {})
+    data.update(idata)
     sdata = compat_urllib_parse_urlencode(
         {'__youtubedl_smuggle': json.dumps(data)})
     return url + '#' + sdata
@@ -1492,38 +1536,63 @@ def parse_filesize(s):
     _UNIT_TABLE = {
         'B': 1,
         'b': 1,
+        'bytes': 1,
         'KiB': 1024,
         'KB': 1000,
         'kB': 1024,
         'Kb': 1000,
+        'kb': 1000,
+        'kilobytes': 1000,
+        'kibibytes': 1024,
         'MiB': 1024 ** 2,
         'MB': 1000 ** 2,
         'mB': 1024 ** 2,
         'Mb': 1000 ** 2,
+        'mb': 1000 ** 2,
+        'megabytes': 1000 ** 2,
+        'mebibytes': 1024 ** 2,
         'GiB': 1024 ** 3,
         'GB': 1000 ** 3,
         'gB': 1024 ** 3,
         'Gb': 1000 ** 3,
+        'gb': 1000 ** 3,
+        'gigabytes': 1000 ** 3,
+        'gibibytes': 1024 ** 3,
         'TiB': 1024 ** 4,
         'TB': 1000 ** 4,
         'tB': 1024 ** 4,
         'Tb': 1000 ** 4,
+        'tb': 1000 ** 4,
+        'terabytes': 1000 ** 4,
+        'tebibytes': 1024 ** 4,
         'PiB': 1024 ** 5,
         'PB': 1000 ** 5,
         'pB': 1024 ** 5,
         'Pb': 1000 ** 5,
+        'pb': 1000 ** 5,
+        'petabytes': 1000 ** 5,
+        'pebibytes': 1024 ** 5,
         'EiB': 1024 ** 6,
         'EB': 1000 ** 6,
         'eB': 1024 ** 6,
         'Eb': 1000 ** 6,
+        'eb': 1000 ** 6,
+        'exabytes': 1000 ** 6,
+        'exbibytes': 1024 ** 6,
         'ZiB': 1024 ** 7,
         'ZB': 1000 ** 7,
         'zB': 1024 ** 7,
         'Zb': 1000 ** 7,
+        'zb': 1000 ** 7,
+        'zettabytes': 1000 ** 7,
+        'zebibytes': 1024 ** 7,
         'YiB': 1024 ** 8,
         'YB': 1000 ** 8,
         'yB': 1024 ** 8,
         'Yb': 1000 ** 8,
+        'yb': 1000 ** 8,
+        'yottabytes': 1000 ** 8,
+        'yobibytes': 1024 ** 8,
     }
 
     return lookup_unit_table(_UNIT_TABLE, s)
@@ -1550,11 +1619,13 @@ def parse_count(s):
     return lookup_unit_table(_UNIT_TABLE, s)
 
 
-def month_by_name(name):
+def month_by_name(name, lang='en'):
     """ Return the number of a month by (locale-independently) English name """
 
+    month_names = MONTH_NAMES.get(lang, MONTH_NAMES['en'])
+
     try:
-        return ENGLISH_MONTH_NAMES.index(name) + 1
+        return month_names.index(name) + 1
     except ValueError:
         return None
 
@@ -1623,6 +1694,11 @@ def url_basename(url):
 class HEADRequest(compat_urllib_request.Request):
     def get_method(self):
         return 'HEAD'
+
+
+class PUTRequest(compat_urllib_request.Request):
+    def get_method(self):
+        return 'PUT'
 
 
 def int_or_none(v, scale=1, default=None, get_attr=None, invscale=1):
@@ -1742,8 +1818,12 @@ def get_exe_version(exe, args=['--version'],
     """ Returns the version of the specified executable,
     or False if the executable is not present """
     try:
+        # STDIN should be redirected too. On UNIX-like systems, ffmpeg triggers
+        # SIGTTOU if youtube-dl is run in the background.
+        # See https://github.com/rg3/youtube-dl/issues/955#issuecomment-209789656
         out, _ = subprocess.Popen(
             [encodeArgument(exe)] + args,
+            stdin=subprocess.PIPE,
             stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()
     except OSError:
         return False
@@ -1920,7 +2000,13 @@ def update_Request(req, url=None, data=None, headers={}, query={}):
     req_headers.update(headers)
     req_data = data or req.data
     req_url = update_url_query(url or req.get_full_url(), query)
-    req_type = HEADRequest if req.get_method() == 'HEAD' else compat_urllib_request.Request
+    req_get_method = req.get_method()
+    if req_get_method == 'HEAD':
+        req_type = HEADRequest
+    elif req_get_method == 'PUT':
+        req_type = PUTRequest
+    else:
+        req_type = compat_urllib_request.Request
     new_req = req_type(
         req_url, data=req_data, headers=req_headers,
         origin_req_host=req.origin_req_host, unverifiable=req.unverifiable)
@@ -1962,11 +2048,27 @@ US_RATINGS = {
 }
 
 
+TV_PARENTAL_GUIDELINES = {
+    'TV-Y': 0,
+    'TV-Y7': 7,
+    'TV-G': 0,
+    'TV-PG': 0,
+    'TV-14': 14,
+    'TV-MA': 17,
+}
+
+
 def parse_age_limit(s):
-    if s is None:
+    if type(s) == int:
+        return s if 0 <= s <= 21 else None
+    if not isinstance(s, compat_basestring):
         return None
     m = re.match(r'^(?P<age>\d{1,2})\+?$', s)
-    return int(m.group('age')) if m else US_RATINGS.get(s)
+    if m:
+        return int(m.group('age'))
+    if s in US_RATINGS:
+        return US_RATINGS[s]
+    return TV_PARENTAL_GUIDELINES.get(s)
 
 
 def strip_jsonp(code):
@@ -1991,14 +2093,14 @@ def js_to_json(code):
             }.get(m.group(0), m.group(0)), v[1:-1])
 
         INTEGER_TABLE = (
-            (r'^0[xX][0-9a-fA-F]+', 16),
-            (r'^0+[0-7]+', 8),
+            (r'^(0[xX][0-9a-fA-F]+)\s*:?$', 16),
+            (r'^(0+[0-7]+)\s*:?$', 8),
         )
 
         for regex, base in INTEGER_TABLE:
             im = re.match(regex, v)
             if im:
-                i = int(im.group(0), base)
+                i = int(im.group(1), base)
                 return '"%d":' % i if v.endswith(':') else '%d' % i
 
         return '"%s"' % v
@@ -2084,6 +2186,7 @@ def mimetype2ext(mt):
         return ext
 
     _, _, res = mt.rpartition('/')
+    res = res.split(';')[0].strip().lower()
 
     return {
         '3gpp': '3gp',
@@ -2095,7 +2198,52 @@ def mimetype2ext(mt):
         'x-flv': 'flv',
         'x-mp4-fragmented': 'mp4',
         'x-ms-wmv': 'wmv',
+        'mpegurl': 'm3u8',
+        'x-mpegurl': 'm3u8',
+        'vnd.apple.mpegurl': 'm3u8',
+        'dash+xml': 'mpd',
+        'f4m': 'f4m',
+        'f4m+xml': 'f4m',
+        'hds+xml': 'f4m',
+        'vnd.ms-sstr+xml': 'ism',
+        'quicktime': 'mov',
     }.get(res, res)
+
+
+def parse_codecs(codecs_str):
+    # http://tools.ietf.org/html/rfc6381
+    if not codecs_str:
+        return {}
+    splited_codecs = list(filter(None, map(
+        lambda str: str.strip(), codecs_str.strip().strip(',').split(','))))
+    vcodec, acodec = None, None
+    for full_codec in splited_codecs:
+        codec = full_codec.split('.')[0]
+        if codec in ('avc1', 'avc2', 'avc3', 'avc4', 'vp9', 'vp8', 'hev1', 'hev2', 'h263', 'h264', 'mp4v'):
+            if not vcodec:
+                vcodec = full_codec
+        elif codec in ('mp4a', 'opus', 'vorbis', 'mp3', 'aac', 'ac-3'):
+            if not acodec:
+                acodec = full_codec
+        else:
+            write_string('WARNING: Unknown codec %s' % full_codec, sys.stderr)
+    if not vcodec and not acodec:
+        if len(splited_codecs) == 2:
+            return {
+                'vcodec': vcodec,
+                'acodec': acodec,
+            }
+        elif len(splited_codecs) == 1:
+            return {
+                'vcodec': 'none',
+                'acodec': vcodec,
+            }
+    else:
+        return {
+            'vcodec': vcodec or 'none',
+            'acodec': acodec or 'none',
+        }
+    return {}
 
 
 def urlhandle_detect_ext(url_handle):
@@ -2326,6 +2474,8 @@ def dfxp2srt(dfxp_data):
 
 def cli_option(params, command_option, param):
     param = params.get(param)
+    if param:
+        param = compat_str(param)
     return [command_option, param] if param is not None else []
 
 
@@ -2873,9 +3023,7 @@ def encode_base_n(num, n, table=None):
 
 
 def decode_packed_codes(code):
-    mobj = re.search(
-        r"}\('(.+)',(\d+),(\d+),'([^']+)'\.split\('\|'\)",
-        code)
+    mobj = re.search(PACKED_CODES_RE, code)
     obfucasted_code, base, count, symbols = mobj.groups()
     base = int(base)
     count = int(count)
@@ -2903,3 +3051,194 @@ def parse_m3u8_attributes(attrib):
 
 def urshift(val, n):
     return val >> n if val >= 0 else (val + 0x100000000) >> n
+
+
+# Based on png2str() written by @gdkchan and improved by @yokrysty
+# Originally posted at https://github.com/rg3/youtube-dl/issues/9706
+def decode_png(png_data):
+    # Reference: https://www.w3.org/TR/PNG/
+    header = png_data[8:]
+
+    if png_data[:8] != b'\x89PNG\x0d\x0a\x1a\x0a' or header[4:8] != b'IHDR':
+        raise IOError('Not a valid PNG file.')
+
+    int_map = {1: '>B', 2: '>H', 4: '>I'}
+    unpack_integer = lambda x: compat_struct_unpack(int_map[len(x)], x)[0]
+
+    chunks = []
+
+    while header:
+        length = unpack_integer(header[:4])
+        header = header[4:]
+
+        chunk_type = header[:4]
+        header = header[4:]
+
+        chunk_data = header[:length]
+        header = header[length:]
+
+        header = header[4:]  # Skip CRC
+
+        chunks.append({
+            'type': chunk_type,
+            'length': length,
+            'data': chunk_data
+        })
+
+    ihdr = chunks[0]['data']
+
+    width = unpack_integer(ihdr[:4])
+    height = unpack_integer(ihdr[4:8])
+
+    idat = b''
+
+    for chunk in chunks:
+        if chunk['type'] == b'IDAT':
+            idat += chunk['data']
+
+    if not idat:
+        raise IOError('Unable to read PNG data.')
+
+    decompressed_data = bytearray(zlib.decompress(idat))
+
+    stride = width * 3
+    pixels = []
+
+    def _get_pixel(idx):
+        x = idx % stride
+        y = idx // stride
+        return pixels[y][x]
+
+    for y in range(height):
+        basePos = y * (1 + stride)
+        filter_type = decompressed_data[basePos]
+
+        current_row = []
+
+        pixels.append(current_row)
+
+        for x in range(stride):
+            color = decompressed_data[1 + basePos + x]
+            basex = y * stride + x
+            left = 0
+            up = 0
+
+            if x > 2:
+                left = _get_pixel(basex - 3)
+            if y > 0:
+                up = _get_pixel(basex - stride)
+
+            if filter_type == 1:  # Sub
+                color = (color + left) & 0xff
+            elif filter_type == 2:  # Up
+                color = (color + up) & 0xff
+            elif filter_type == 3:  # Average
+                color = (color + ((left + up) >> 1)) & 0xff
+            elif filter_type == 4:  # Paeth
+                a = left
+                b = up
+                c = 0
+
+                if x > 2 and y > 0:
+                    c = _get_pixel(basex - stride - 3)
+
+                p = a + b - c
+
+                pa = abs(p - a)
+                pb = abs(p - b)
+                pc = abs(p - c)
+
+                if pa <= pb and pa <= pc:
+                    color = (color + a) & 0xff
+                elif pb <= pc:
+                    color = (color + b) & 0xff
+                else:
+                    color = (color + c) & 0xff
+
+            current_row.append(color)
+
+    return width, height, pixels
+
+
+def write_xattr(path, key, value):
+    # This mess below finds the best xattr tool for the job
+    try:
+        # try the pyxattr module...
+        import xattr
+
+        if hasattr(xattr, 'set'):  # pyxattr
+            # Unicode arguments are not supported in python-pyxattr until
+            # version 0.5.0
+            # See https://github.com/rg3/youtube-dl/issues/5498
+            pyxattr_required_version = '0.5.0'
+            if version_tuple(xattr.__version__) < version_tuple(pyxattr_required_version):
+                # TODO: fallback to CLI tools
+                raise XAttrUnavailableError(
+                    'python-pyxattr is detected but is too old. '
+                    'youtube-dl requires %s or above while your version is %s. '
+                    'Falling back to other xattr implementations' % (
+                        pyxattr_required_version, xattr.__version__))
+
+            setxattr = xattr.set
+        else:  # xattr
+            setxattr = xattr.setxattr
+
+        try:
+            setxattr(path, key, value)
+        except EnvironmentError as e:
+            raise XAttrMetadataError(e.errno, e.strerror)
+
+    except ImportError:
+        if compat_os_name == 'nt':
+            # Write xattrs to NTFS Alternate Data Streams:
+            # http://en.wikipedia.org/wiki/NTFS#Alternate_data_streams_.28ADS.29
+            assert ':' not in key
+            assert os.path.exists(path)
+
+            ads_fn = path + ':' + key
+            try:
+                with open(ads_fn, 'wb') as f:
+                    f.write(value)
+            except EnvironmentError as e:
+                raise XAttrMetadataError(e.errno, e.strerror)
+        else:
+            user_has_setfattr = check_executable('setfattr', ['--version'])
+            user_has_xattr = check_executable('xattr', ['-h'])
+
+            if user_has_setfattr or user_has_xattr:
+
+                value = value.decode('utf-8')
+                if user_has_setfattr:
+                    executable = 'setfattr'
+                    opts = ['-n', key, '-v', value]
+                elif user_has_xattr:
+                    executable = 'xattr'
+                    opts = ['-w', key, value]
+
+                cmd = ([encodeFilename(executable, True)] +
+                       [encodeArgument(o) for o in opts] +
+                       [encodeFilename(path, True)])
+
+                try:
+                    p = subprocess.Popen(
+                        cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, stdin=subprocess.PIPE)
+                except EnvironmentError as e:
+                    raise XAttrMetadataError(e.errno, e.strerror)
+                stdout, stderr = p.communicate()
+                stderr = stderr.decode('utf-8', 'replace')
+                if p.returncode != 0:
+                    raise XAttrMetadataError(p.returncode, stderr)
+
+            else:
+                # On Unix, and can't find pyxattr, setfattr, or xattr.
+                if sys.platform.startswith('linux'):
+                    raise XAttrUnavailableError(
+                        "Couldn't find a tool to set the xattrs. "
+                        "Install either the python 'pyxattr' or 'xattr' "
+                        "modules, or the GNU 'attr' package "
+                        "(which contains the 'setfattr' tool).")
+                else:
+                    raise XAttrUnavailableError(
+                        "Couldn't find a tool to set the xattrs. "
+                        "Install either the python 'xattr' module, "
+                        "or the 'xattr' binary.")
