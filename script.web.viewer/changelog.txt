@@ -1,9 +1,35 @@
-Web Viewer Changelog 
+Web Viewer Changelog
 
 TODO:
 	Handle more video types
 
-Current Version : 0.9.15
+Current Version : 0.9.21
+
+*** 0.9.21 ***
+
+Fix default page
+Fix for pages failing to display on Kodi 17
+
+*** 0.9.20 ***
+
+Internal modifications to match youtube-dl module refactoring
+
+*** 0.9.19 ***
+
+Added the ability to download videos
+
+*** 0.9.18 ***
+
+Move video functions out to separate addon module
+Added import for script.module.youtube.dl to addon.xml
+
+*** 0.9.17 ***
+
+Now uses youtube-dl to detect video URLs and extract video streams
+
+*** 0.9.16 ***
+
+Now provides youtube-dl video URL extraction in video.getVideoURL()
 
 *** 0.9.15 ***
 
@@ -129,7 +155,7 @@ Fixed bug with link list failing to display link images with relative URLs
 Fixed a bug with improperly identifying links URLs with imbedded image URLs as being links to images
 Improved message/error logging
 Added fanart.jpg:   (anyone wants to make something better, feel free =] )
-  Made with some free images - attribution: 
+  Made with some free images - attribution:
     Image: Danilo Rizzuti / FreeDigitalPhotos.net
     Image: suphakit73 / FreeDigitalPhotos.net
 
@@ -168,7 +194,7 @@ Changed 'Preferences' to 'Settings' under 'Options' on context menu
 Added 'View' source to 'Options' on context menu
 
 *** 0.7.5 ***
-	
+
 Fixed a bug with default link icon
 Fixed a bug with some form controls
 Reduced number of empty lines in page display
@@ -180,7 +206,7 @@ Added 'Submit' button to forms without it
 Added settings option to disable this behaviour
 Improved handling of forms labels and some other tags
 getWebResult(): Modified autoForms - index must match if specified
-getWebResult(): Added autoClose parameter 
+getWebResult(): Added autoClose parameter
 
 *** 0.7.3 ***
 
