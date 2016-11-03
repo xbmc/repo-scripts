@@ -19,6 +19,10 @@
 		<setting type="lsep" label="32107"/>
 		<setting id="source" type="bool" label="32015" default="false"/>
 		<setting id="path" type="folder" label="32016" subsetting="true" enable="eq(-1,true)"/>
+		<setting type="lsep" label="32109"/>
+		<setting id="split_media_sources" type="bool" label="32017" default="false" />
+		<setting id="split_movies_sources" type="bool" label="32018" subsetting="true" enable="eq(-1,true)"/>
+		<setting id="split_tvshows_sources" type="bool" label="32019" subsetting="true" enable="eq(-2,true)"/>
 	</category>
 	<category label="32103">
 		<setting type="lsep" label="32104"/>

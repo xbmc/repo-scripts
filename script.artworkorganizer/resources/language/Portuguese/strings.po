@@ -76,6 +76,18 @@ msgctxt "#32016"
 msgid "Path"
 msgstr "Localização"
 
+msgctxt "#32017"
+msgid "Split Artwork by Media Sources"
+msgstr "Separar Artwork por fonte de media"
+
+msgctxt "#32018"
+msgid "Split Movies Artwork"
+msgstr "Dividir Artwork de Filmes"
+
+msgctxt "#32019"
+msgid "Split TV Artwork"
+msgstr "Dividir Artwork de Séries de TV"
+
 msgctxt "#32101"
 msgid "General"
 msgstr "Geral"
@@ -107,3 +119,8 @@ msgstr "procurar artwork numa pasta personalizada"
 msgctxt "#32108"
 msgid "select a custom folder where the addon should store the artwork"
 msgstr "seleccionar uma pasta personalizada para o addon armazenar o artwork"
+
+msgctxt "#32109"
+msgid "select if you want artwork split by source name"
+msgstr "seleccionar se pretender armazenar o artwork em pastas separadas por fonte"
+

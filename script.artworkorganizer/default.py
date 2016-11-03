@@ -1,9 +1,8 @@
 import os, shutil, re, unicodedata
 import xbmc, xbmcgui, xbmcaddon, xbmcvfs
-if sys.version_info < (2, 7):
-    import simplejson
-else:
-    import json as simplejson
+import json
+import lib.library as video_library
+from collections import namedtuple
 
 ADDON = xbmcaddon.Addon()
 ADDONID = ADDON.getAddonInfo('id')
@@ -28,6 +27,9 @@ class Main:
         self._load_settings()
         self._init_variables()
         self._delete_directories()
+        # get media sources if setting is defined
+        if  self.split_media_sources == "true" and (self.split_movies_sources == "true" or self.split_tvshows_sources == "true"):
+            self._get_media_sources_and_content()
         self._create_directories()
         if self.directoriescreated == 'true':
             self._copy_artwork()
@@ -51,6 +53,14 @@ class Main:
         else:
             self.path = ''
         self.directory = ADDON.getSetting( "directory" ).decode("utf-8")
+        # Option to separate artwork by media sources types (movies, tvshows) by path
+        self.split_media_sources = ADDON.getSetting( "split_media_sources" )
+        if self.split_media_sources == "true":
+            self.split_movies_sources = ADDON.getSetting( "split_movies_sources" )
+            self.split_tvshows_sources = ADDON.getSetting( "split_tvshows_sources" )
+        else:
+            self.split_movies_sources = "false"
+            self.split_tvshows_sources = "false"
 
     def _init_variables( self ):
         self.moviefanartdir = 'MovieFanart'
@@ -119,6 +129,25 @@ class Main:
                 except:
                     pass
 
+    def _get_media_sources_and_content ( self ):
+        # retrieve both movies and tvshows sources
+        if self.split_movies_sources == "true" and self.split_tvshows_sources == "true":
+            self.movies_sources, self.tvshows_sources, self.movies_content, self.tvshows_content = video_library._identify_source_content()
+        # retrieve movies sources
+        elif self.split_movies_sources == "true":
+            self.movies_sources = video_library.get_movie_sources()
+            self.movies_content = video_library.get_movie_content()
+        # retrieve tvshows sources
+        elif self.split_tvshows_sources == "true":
+            self.tvshows_sources = video_library.get_tv_sources()
+            self.tvshows_content = video_library.get_tv_content()
+        else:
+            self.movies_sources = []
+            self.tvshows_sources = []
+            self.movies_content = {}
+            self.tvshows_content = {}
+            log("No video sources were retrieved from your sources.xml file")
+
     def _create_directories( self ):
         if not xbmcvfs.exists( self.directory ):
             try:
@@ -133,6 +162,35 @@ class Main:
                 except:
                     self.directoriescreated = 'false'
                     log( 'failed to create directories' )
+        # Create media type based directories if defined by user (movies, tvshows)
+        # media source format: [(name, path, content)]
+        if self.directoriescreated == 'true':
+            if self.split_movies_sources == "true" and (self.moviefanart == "true" or self.moviethumbs == 'true'):
+                for ms_name in [m_s.name for m_s in self.movies_sources]:
+                    try:
+                        if self.moviefanart == "true":
+                            xbmcvfs.mkdir( os.path.join( self.moviefanartpath, ms_name ) )
+                        if self.moviethumbs == "true":
+                            xbmcvfs.mkdir( os.path.join( self.moviethumbspath, ms_name ) )
+                    except:
+                        self.directoriescreated = 'false'
+                        log( 'failed to create directories for movies content type' )
+            if self.split_tvshows_sources == "true" and (self.tvshowfanart == 'true' or self.tvshowbanners == 'true' or self.tvshowposters == 'true' or self.seasonthumbs == 'true' or self.episodethumbs == 'true'):
+                for tvs_name in [tv_s.name for tv_s in self.tvshows_sources]:
+                    try:
+                        if self.tvshowfanart == 'true':
+                            xbmcvfs.mkdir( os.path.join( self.tvshowfanartpath, tvs_name ) )
+                        if self.tvshowbanners == 'true':
+                            xbmcvfs.mkdir( os.path.join( self.tvshowbannerspath, tvs_name ) )
+                        if self.tvshowposters == 'true':
+                            xbmcvfs.mkdir( os.path.join( self.tvshowposterspath, tvs_name ) )
+                        if self.seasonthumbs == 'true':
+                            xbmcvfs.mkdir( os.path.join( self.seasonthumbspath, tvs_name ) )
+                        if self.episodethumbs == 'true':
+                            xbmcvfs.mkdir( os.path.join( self.episodethumbspath, tvs_name ) )
+                    except:
+                        self.directoriescreated = 'false'
+                        log( 'failed to create directories for tvshows content type' )
 
     def _copy_artwork( self ):
         self.dialog.create( ADDONNAME )
@@ -180,7 +238,7 @@ class Main:
         processeditems = 0
         json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetMovies", "params": {"properties": ["file", "title", "fanart", "year"], "filter": {"field": "path", "operator": "contains", "value": "%s"}}, "id": 1}' % self.path)
         json_query = unicode(json_query, 'utf-8', errors='ignore')
-        json_response = simplejson.loads(json_query)
+        json_response = json.loads(json_query)
         if json_response.has_key('result') and (json_response['result'] != None) and (json_response['result'].has_key('movies')):
             totalitems = len( json_response['result']['movies'] )
             for item in json_response['result']['movies']:
@@ -194,9 +252,14 @@ class Main:
                 artwork = item['fanart']
                 tmp_filename = name + ' (' + year + ')' + '.jpg'
                 filename = clean_filename( tmp_filename )
+                # test file path with movie_content to find source name
+                moviefanartpath = self.moviefanartpath
+                log("moviefanartpath: %s" % moviefanartpath)
+                if self.split_movies_sources == "true" and self.movies_content.has_key(str(item['file'])):
+                    moviefanartpath = os.path.join( self.moviefanartpath, self.movies_content[str(item['file'])])
                 if artwork != '':
                     try:
-                        xbmcvfs.copy( xbmc.translatePath( artwork ), os.path.join( self.moviefanartpath, filename ) )
+                        xbmcvfs.copy( xbmc.translatePath( artwork ), os.path.join( moviefanartpath, filename ) )
                         count += 1
                     except:
                         log( 'failed to copy moviefanart' )
@@ -205,9 +268,9 @@ class Main:
     def _copy_tvshowfanart( self ):
         count = 0
         processeditems = 0
-        json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetTVShows", "params": {"properties": ["title", "fanart"], "filter": {"field": "path", "operator": "contains", "value": "%s"}}, "id": 1}' % self.path)
+        json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetTVShows", "params": {"properties": ["file", "title", "fanart"], "filter": {"field": "path", "operator": "contains", "value": "%s"}}, "id": 1}' % self.path)
         json_query = unicode(json_query, 'utf-8', errors='ignore')
-        json_response = simplejson.loads(json_query)
+        json_response = json.loads(json_query)
         if json_response.has_key('result') and (json_response['result'] != None) and (json_response['result'].has_key('tvshows')):
             totalitems = len( json_response['result']['tvshows'] )
             for item in json_response['result']['tvshows']:
@@ -220,9 +283,16 @@ class Main:
                 artwork = item['fanart']
                 tmp_filename = name + '.jpg'
                 filename = clean_filename( tmp_filename )
+                # test file path with tv_content to find source name
+                tvshowfanartpath = self.tvshowfanartpath
+                if self.split_tvshows_sources == "true":
+                    for tv_file_path, source_name in self.tvshows_content.items():
+                        if tv_file_path.startswith(item['file']):
+                            tvshowfanartpath = os.path.join( self.tvshowfanartpath, source_name )
+                            break
                 if artwork != '':
                     try:
-                        xbmcvfs.copy( xbmc.translatePath( artwork ), os.path.join( self.tvshowfanartpath, filename ) )
+                        xbmcvfs.copy( xbmc.translatePath( artwork ), os.path.join( tvshowfanartpath, filename ) )
                         count += 1
                     except:
                         log( 'failed to copy tvshowfanart' )
@@ -233,7 +303,7 @@ class Main:
         processeditems = 0
         json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetMusicVideos", "params": {"properties": ["title", "fanart", "artist"], "filter": {"field": "path", "operator": "contains", "value": "%s"}}, "id": 1}' % self.path)
         json_query = unicode(json_query, 'utf-8', errors='ignore')
-        json_response = simplejson.loads(json_query)
+        json_response = json.loads(json_query)
         if json_response.has_key('result') and (json_response['result'] != None) and (json_response['result'].has_key('musicvideos')):
             totalitems = len( json_response['result']['musicvideos'] )
             for item in json_response['result']['musicvideos']:
@@ -263,7 +333,7 @@ class Main:
         processeditems = 0
         json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "AudioLibrary.GetArtists", "params": {"properties": ["fanart"]}, "id": 1}')
         json_query = unicode(json_query, 'utf-8', errors='ignore')
-        json_response = simplejson.loads(json_query)
+        json_response = json.loads(json_query)
         if json_response.has_key('result') and (json_response['result'] != None) and (json_response['result'].has_key('artists')):
             totalitems = len( json_response['result']['artists'] )
             for item in json_response['result']['artists']:
@@ -287,9 +357,9 @@ class Main:
     def _copy_moviethumbs( self ):
         count = 0
         processeditems = 0
-        json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetMovies", "params": {"properties": ["title", "thumbnail", "year"], "filter": {"field": "path", "operator": "contains", "value": "%s"}}, "id": 1}' % self.path)
+        json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetMovies", "params": {"properties": ["file", "title", "thumbnail", "year"], "filter": {"field": "path", "operator": "contains", "value": "%s"}}, "id": 1}' % self.path)
         json_query = unicode(json_query, 'utf-8', errors='ignore')
-        json_response = simplejson.loads(json_query)
+        json_response = json.loads(json_query)
         if json_response.has_key('result') and (json_response['result'] != None) and (json_response['result'].has_key('movies')):
             totalitems = len( json_response['result']['movies'] )
             for item in json_response['result']['movies']:
@@ -303,9 +373,13 @@ class Main:
                 artwork = item['thumbnail']
                 tmp_filename = name + ' (' + year + ')' + '.jpg'
                 filename = clean_filename( tmp_filename )
+                # test file path with movie_content to find source name
+                moviethumbspath = self.moviethumbspath
+                if self.split_movies_sources == "true" and self.movies_content.has_key(str(item['file'])):
+                    moviethumbspath = os.path.join( self.moviethumbspath, self.movies_content[str(item['file'])])
                 if artwork != '':
                     try:
-                        xbmcvfs.copy( xbmc.translatePath( artwork ), os.path.join( self.moviethumbspath, filename ) )
+                        xbmcvfs.copy( xbmc.translatePath( artwork ), os.path.join( moviethumbspath, filename ) )
                         count += 1
                     except:
                         log( 'failed to copy moviethumb' )
@@ -314,9 +388,9 @@ class Main:
     def _copy_tvshowbanners( self ):
         count = 0
         processeditems = 0
-        json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetTVShows", "params": {"properties": ["title", "art"], "filter": {"field": "path", "operator": "contains", "value": "%s"}}, "id": 1}' % self.path)
+        json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetTVShows", "params": {"properties": ["file", "title", "art"], "filter": {"field": "path", "operator": "contains", "value": "%s"}}, "id": 1}' % self.path)
         json_query = unicode(json_query, 'utf-8', errors='ignore')
-        json_response = simplejson.loads(json_query)
+        json_response = json.loads(json_query)
         if json_response.has_key('result') and (json_response['result'] != None) and (json_response['result'].has_key('tvshows')):
             totalitems = len( json_response['result']['tvshows'] )
             for item in json_response['result']['tvshows']:
@@ -329,9 +403,16 @@ class Main:
                 artwork = item['art'].get('banner')
                 tmp_filename = name + '.jpg'
                 filename = clean_filename( tmp_filename )
+                # test tvshow path in tv_content to find source name
+                tvshowbannerspath = self.tvshowbannerspath
+                if self.split_tvshows_sources == "true":
+                    for tv_file_path, source_name in self.tvshows_content.items():
+                        if tv_file_path.startswith(item['file']):
+                            tvshowbannerspath = os.path.join( self.tvshowbannerspath, source_name )
+                            break
                 if artwork != '':
                     try:
-                        xbmcvfs.copy( xbmc.translatePath( artwork ), os.path.join( self.tvshowbannerspath, filename ) )
+                        xbmcvfs.copy( xbmc.translatePath( artwork ), os.path.join( tvshowbannerspath, filename ) )
                         count += 1
                     except:
                         log( 'failed to copy tvshowbanner' )
@@ -340,9 +421,9 @@ class Main:
     def _copy_tvshowposters( self ):
         count = 0
         processeditems = 0
-        json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetTVShows", "params": {"properties": ["title", "art"], "filter": {"field": "path", "operator": "contains", "value": "%s"}}, "id": 1}' % self.path)
+        json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetTVShows", "params": {"properties": ["file", "title", "art"], "filter": {"field": "path", "operator": "contains", "value": "%s"}}, "id": 1}' % self.path)
         json_query = unicode(json_query, 'utf-8', errors='ignore')
-        json_response = simplejson.loads(json_query)
+        json_response = json.loads(json_query)
         if json_response.has_key('result') and (json_response['result'] != None) and (json_response['result'].has_key('tvshows')):
             totalitems = len( json_response['result']['tvshows'] )
             for item in json_response['result']['tvshows']:
@@ -355,32 +436,40 @@ class Main:
                 artwork = item['art'].get('poster')
                 tmp_filename = name + '.jpg'
                 filename = clean_filename( tmp_filename )
+                # test file path with tv_content to find source name
+                tvshowposterspath = self.tvshowposterspath
+                if self.split_tvshows_sources == "true":
+                    for tv_file_path, source_name in self.tvshows_content.items():
+                        if tv_file_path.startswith(item['file']):
+                            tvshowposterspath = os.path.join( self.tvshowposterspath, source_name )
+                            break
                 if artwork != '':
                     try:
-                        xbmcvfs.copy( xbmc.translatePath( artwork ), os.path.join( self.tvshowposterspath, filename ) )
+                        xbmcvfs.copy( xbmc.translatePath( artwork ), os.path.join( tvshowposterspath, filename ) )
                         count += 1
                     except:
                         log( 'failed to copy tvshowposter' )
         log( 'tvshowposters copied: %s' % count )
 
     def _copy_seasonthumbs( self ):
+        _TVShow_ = namedtuple('TVShow', ['id', 'path'])
         count = 0
-        tvshowids = []
-        json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetTVShows", "params": {"filter": {"field": "path", "operator": "contains", "value": "%s"}}, "id": 1}' % self.path)
+        tvshows = []
+        json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetTVShows", "params": {"properties": ["file"], "filter": {"field": "path", "operator": "contains", "value": "%s"}}, "id": 1}' % self.path)
         json_query = unicode(json_query, 'utf-8', errors='ignore')
-        json_response = simplejson.loads(json_query)
+        json_response = json.loads(json_query)
         if json_response.has_key('result') and (json_response['result'] != None) and (json_response['result'].has_key('tvshows')):
             for item in json_response['result']['tvshows']:
                 if self.dialog.iscanceled():
                     log('script cancelled')
                     return
-                tvshowid = item['tvshowid']
-                tvshowids.append(tvshowid)
-            for tvshowid in tvshowids:
+                tvshow = _TVShow_(int(item['tvshowid']), str(item['file']))
+                tvshows.append(tvshow)
+            for tvshow in tvshows:
                 processeditems = 0
-                json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetSeasons", "params": {"properties": ["thumbnail", "showtitle"], "tvshowid":%s}, "id": 1}' % tvshowid)
+                json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetSeasons", "params": {"properties": ["thumbnail", "showtitle"], "tvshowid":%s}, "id": 1}' % tvshow.id )
                 json_query = unicode(json_query, 'utf-8', errors='ignore')
-                json_response = simplejson.loads(json_query)
+                json_response = json.loads(json_query)
                 if json_response.has_key('result') and (json_response['result'] != None) and (json_response['result'].has_key('seasons')):
                     totalitems = len( json_response['result']['seasons'] )
                     for item in json_response['result']['seasons']:
@@ -390,13 +479,20 @@ class Main:
                         processeditems = processeditems + 1
                         self.dialog.update( int( float( processeditems ) / float( totalitems ) * 100), LANGUAGE(32007) + ': ' + str( count + 1 ) )
                         name = item['label']
-                        tvshow = item['showtitle']
+                        tvshow_title = item['showtitle']
                         artwork = item['thumbnail']
-                        tmp_filename = tvshow + ' - ' + name + '.jpg'
+                        tmp_filename = tvshow_title + ' - ' + name + '.jpg'
                         filename = clean_filename( tmp_filename )
+                        # test file path with tv_content to find source name
+                        seasonthumbspath = self.seasonthumbspath
+                        if self.split_tvshows_sources == "true":
+                            for tv_file_path, source_name in self.tvshows_content.items():
+                                if tv_file_path.startswith(tvshow.path):
+                                    seasonthumbspath = os.path.join( self.seasonthumbspath, source_name )
+                                    break
                         if artwork != '':
                             try:
-                                xbmcvfs.copy( xbmc.translatePath( artwork ), os.path.join( self.seasonthumbspath, filename ) )
+                                xbmcvfs.copy( xbmc.translatePath( artwork ), os.path.join( seasonthumbspath, filename ) )
                                 count += 1
                             except:
                                 log( 'failed to copy seasonthumb' )
@@ -405,9 +501,9 @@ class Main:
     def _copy_episodethumbs( self ):
         count = 0
         processeditems = 0
-        json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetEpisodes", "params": {"properties": ["title", "thumbnail", "season", "episode", "showtitle"], "filter": {"field": "path", "operator": "contains", "value": "%s"}}, "id": 1}' % self.path)
+        json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetEpisodes", "params": {"properties": ["file", "title", "thumbnail", "season", "episode", "showtitle"], "filter": {"field": "path", "operator": "contains", "value": "%s"}}, "id": 1}' % self.path)
         json_query = unicode(json_query, 'utf-8', errors='ignore')
-        json_response = simplejson.loads(json_query)
+        json_response = json.loads(json_query)
         if json_response.has_key('result') and (json_response['result'] != None) and (json_response['result'].has_key('episodes')):
             totalitems = len( json_response['result']['episodes'] )
             for item in json_response['result']['episodes']:
@@ -424,9 +520,13 @@ class Main:
                 episodenumber = "s%.2d%.2d" % (int( season ), int( episode ))
                 tmp_filename = tvshow + ' - ' + episodenumber + ' - ' + name + '.jpg'
                 filename = clean_filename( tmp_filename )
+                # test file path with tv_content to find source name
+                episodethumbspath = self.episodethumbspath
+                if self.split_tvshows_sources == "true" and self.tvshows_content.has_key(str(item['file'])):
+                    episodethumbspath = os.path.join( self.episodethumbspath, self.tvshows_content[str(item['file'])])
                 if artwork != '':
                     try:
-                        xbmcvfs.copy( xbmc.translatePath( artwork ), os.path.join( self.episodethumbspath, filename ) )
+                        xbmcvfs.copy( xbmc.translatePath( artwork ), os.path.join( episodethumbspath, filename ) )
                         count += 1
                     except:
                         log( 'failed to copy episodethumb' )
@@ -437,7 +537,7 @@ class Main:
         processeditems = 0
         json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetMusicVideos", "params": {"properties": ["title", "thumbnail", "artist"], "filter": {"field": "path", "operator": "contains", "value": "%s"}}, "id": 1}' % self.path)
         json_query = unicode(json_query, 'utf-8', errors='ignore')
-        json_response = simplejson.loads(json_query)
+        json_response = json.loads(json_query)
         if json_response.has_key('result') and (json_response['result'] != None) and (json_response['result'].has_key('musicvideos')):
             totalitems = len( json_response['result']['musicvideos'] )
             for item in json_response['result']['musicvideos']:
@@ -467,7 +567,7 @@ class Main:
         processeditems = 0
         json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "AudioLibrary.GetArtists", "params": {"properties": ["thumbnail"]}, "id": 1}')
         json_query = unicode(json_query, 'utf-8', errors='ignore')
-        json_response = simplejson.loads(json_query)
+        json_response = json.loads(json_query)
         if json_response.has_key('result') and (json_response['result'] != None) and (json_response['result'].has_key('artists')):
             totalitems = len( json_response['result']['artists'] )
             for item in json_response['result']['artists']:
@@ -493,7 +593,7 @@ class Main:
         processeditems = 0
         json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "AudioLibrary.GetAlbums", "params": {"properties": ["title", "thumbnail", "artist"]}, "id": 1}')
         json_query = unicode(json_query, 'utf-8', errors='ignore')
-        json_response = simplejson.loads(json_query)
+        json_response = json.loads(json_query)
         if json_response.has_key('result') and (json_response['result'] != None) and (json_response['result'].has_key('albums')):
             totalitems = len( json_response['result']['albums'] )
             for item in json_response['result']['albums']:

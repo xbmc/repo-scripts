@@ -36,8 +36,6 @@ msgctxt "#32005"
 msgid "Copy Movie Thumbs"
 msgstr ""
 
-#empty string with id 32006
-
 msgctxt "#32007"
 msgid "Copy Season Thumbs"
 msgstr ""
@@ -78,7 +76,17 @@ msgctxt "#32016"
 msgid "Path"
 msgstr ""
 
-#empty strings from id 32017 to 32100
+msgctxt "#32017"
+msgid "Split Artwork by Media Sources"
+msgstr ""
+
+msgctxt "#32018"
+msgid "Split Movies Artwork by Media Sources"
+msgstr ""
+
+msgctxt "#32019"
+msgid "Split TV Artwork by Media Sources"
+msgstr ""
 
 msgctxt "#32101"
 msgid "General"
@@ -110,4 +118,8 @@ msgstr ""
 
 msgctxt "#32108"
 msgid "select a custom folder where the addon should store the artwork"
+msgstr ""
+
+msgctxt "#32109"
+msgid "select if you want artwork split by source name"
 msgstr ""

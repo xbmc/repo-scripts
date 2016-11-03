@@ -1,3 +1,10 @@
+v5.0.0
+- simplejson no longer needed on kodi krypton
+
+v4.0.0
+- possible to split artwork by media sources
+- language update
+
 v3.0.5
 - cosmetics
 - language update
