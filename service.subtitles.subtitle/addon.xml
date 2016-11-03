@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?><addon id="service.subtitles.subtitle" name="Ktuvit.com" version="4.4.5" provider-name="CaTz">
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?><addon id="service.subtitles.subtitle" name="Ktuvit.com" version="4.5.0" provider-name="CaTz">
     <requires>
         <import addon="xbmc.python" version="2.14.0"/>
         <import addon="script.common.plugin.cache" version="0.9.1"/>
