@@ -69,67 +69,34 @@ class Main:
             return 'png', 'false'
 
     def _select(self, addonlist, category, string):
-        w = Gui('DialogSelect.xml', CWD, listing=addonlist, category=category, string=string)
-        w.doModal()
-        del w
-
-class Gui(xbmcgui.WindowXMLDialog):
-    def __init__(self, *args, **kwargs):
-        xbmcgui.WindowXMLDialog.__init__(self)
-        self.listing = kwargs.get('listing')
-        self.type = kwargs.get('category')
-        self.property = kwargs.get('string')
-
-    def onInit(self):
-        self.container = self.getControl(6)
-        self.button = self.getControl(5)
-        self.cancel = self.getControl(7)
-        self.getControl(3).setVisible(False)
-        self.getControl(1).setLabel(xbmc.getLocalizedString(20464) % xbmc.getLocalizedString(536))
-        self.button.setLabel(xbmc.getLocalizedString(21452))
-        self.cancel.setLabel(xbmc.getLocalizedString(222))
-        listitem = xbmcgui.ListItem(label=xbmc.getLocalizedString(15109), iconImage='DefaultAddon.png')
-        self.container.addItem(listitem)
-        self.container.addItems(self.listing)
-        self.setFocus(self.container)
-
-    def onAction(self, action):
-        if action.getId() in (9, 10, 92, 216, 247, 257, 275, 61467, 61448,):
-            self.close()
-
-    def onClick(self, controlID):
-        if controlID == 6:
-            num = self.container.getSelectedPosition()
-            if num == 0:
-                xbmc.executebuiltin('Skin.Reset(%s)' % (self.property + '.name'))
-                xbmc.executebuiltin('Skin.Reset(%s)' % (self.property + '.path'))
-                xbmc.executebuiltin('Skin.Reset(%s)' % (self.property + '.ext'))
-                xbmc.executebuiltin('Skin.Reset(%s)' % (self.property + '.multi'))
+        listitem = xbmcgui.ListItem(xbmc.getLocalizedString(15109), iconImage='DefaultAddon.png')
+        addonlist.insert(0, listitem)
+        listitem = xbmcgui.ListItem(xbmc.getLocalizedString(21452))
+        listitem.setProperty('more', 'true')
+        addonlist.append(listitem)
+        num = xbmcgui.Dialog().select(xbmc.getLocalizedString(20464) % xbmc.getLocalizedString(536), addonlist, useDetails=True)
+        if num == 0:
+            xbmc.executebuiltin('Skin.Reset(%s)' % (string + '.name'))
+            xbmc.executebuiltin('Skin.Reset(%s)' % (string + '.path'))
+            xbmc.executebuiltin('Skin.Reset(%s)' % (string + '.ext'))
+            xbmc.executebuiltin('Skin.Reset(%s)' % (string + '.multi'))
+        elif num > 0:
+            item = addonlist[num]
+            if item.getProperty('more') == 'true':
+                xbmc.executebuiltin('ActivateWindow(AddonBrowser, addons://repository.xbmc.org/kodi.resource.images/,return)')
             else:
-                item = self.container.getSelectedItem()
                 name = item.getLabel()
                 addonid = item.getLabel2()
                 extension = '.%s' % item.getProperty('extension')
                 subfolders = item.getProperty('subfolders')
-                xbmc.executebuiltin('Skin.SetString(%s,%s)' % ((self.property + '.name'), name))
-                xbmc.executebuiltin('Skin.SetString(%s,%s)' % ((self.property + '.path'), 'resource://%s/' % addonid))
-                xbmc.executebuiltin('Skin.SetString(%s,%s)' % ((self.property + '.ext'), extension))
+                xbmc.executebuiltin('Skin.SetString(%s,%s)' % ((string + '.name'), name))
+                xbmc.executebuiltin('Skin.SetString(%s,%s)' % ((string + '.path'), 'resource://%s/' % addonid))
                 if subfolders == 'true':
-                    xbmc.executebuiltin('Skin.SetBool(%s)' % (self.property + '.multi'))
+                    xbmc.executebuiltin('Skin.SetBool(%s)' % (string + '.multi'))
+                    xbmc.executebuiltin('Skin.Reset(%s,%s)' % (string + '.ext'))
                 else:
-                    xbmc.executebuiltin('Skin.Reset(%s)' % (self.property + '.multi'))
-            xbmc.sleep(100)
-            self.close()
-        elif controlID == 5:
-            xbmc.executebuiltin('ActivateWindow(AddonBrowser, addons://repository.xbmc.org/kodi.resource.images/,return)')
-            xbmc.sleep(100)
-            self.close()
-        elif controlID == 7:
-            self.close()
-
-    def onFocus(self, controlID):
-        pass
-
+                    xbmc.executebuiltin('Skin.Reset(%s)' % (string + '.multi'))
+                    xbmc.executebuiltin('Skin.SetString(%s,%s)' % ((string + '.ext'), extension))
 
 if (__name__ == '__main__'):
     log('script version %s started' % ADDONVERSION)

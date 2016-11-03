@@ -1,3 +1,9 @@
+v2.0.0
+- don't set extention if we have subfolders
+
+v1.1.0
+- use select dialog
+
 v1.0.1
 - fix broken window history when clickin "get more"
 
