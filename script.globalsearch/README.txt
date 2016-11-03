@@ -68,7 +68,13 @@ ListItem.Property(AudioCodec)
 ListItem.Property(AudioChannels)
 ListItem.Property(Path)
 ListItem.Property(DBID)
-
+ListItem.Property(art(poster))
+ListItem.Property(art(fanart))
+ListItem.Property(art(clearart))
+ListItem.Property(art(clearlogo))
+ListItem.Property(art(disc))
+ListItem.Property(art(banner))
+ListItem.Property(art(landscape))
 
 TV SHOWS:
 ListItem.Label
@@ -88,6 +94,13 @@ ListItem.Property(UserRating)
 ListItem.Property(Playcount)
 ListItem.Property(Path)
 ListItem.Property(DBID)
+ListItem.Property(art(poster))
+ListItem.Property(art(fanart))
+ListItem.Property(art(clearart))
+ListItem.Property(art(clearlogo))
+ListItem.Property(art(disc))
+ListItem.Property(art(banner))
+ListItem.Property(art(landscape))
 
 
 SEASONS:
@@ -100,6 +113,13 @@ ListItem.Property(Playcount)
 ListItem.Property(UserRating)
 ListItem.Property(Path)
 ListItem.Property(DBID)
+ListItem.Property(art(poster))
+ListItem.Property(art(fanart))
+ListItem.Property(art(clearart))
+ListItem.Property(art(clearlogo))
+ListItem.Property(art(disc))
+ListItem.Property(art(banner))
+ListItem.Property(art(landscape))
 
 
 EPISODES:
@@ -123,6 +143,13 @@ ListItem.Property(AudioCodec)
 ListItem.Property(AudioChannels)
 ListItem.Property(Path)
 ListItem.Property(DBID)
+ListItem.Property(art(poster))
+ListItem.Property(art(fanart))
+ListItem.Property(art(clearart))
+ListItem.Property(art(clearlogo))
+ListItem.Property(art(disc))
+ListItem.Property(art(banner))
+ListItem.Property(art(landscape))
 
 
 MUSIC VIDEOS:
@@ -147,6 +174,13 @@ ListItem.Property(AudioCodec)
 ListItem.Property(AudioChannels)
 ListItem.Property(Path)
 ListItem.Property(DBID)
+ListItem.Property(art(poster))
+ListItem.Property(art(fanart))
+ListItem.Property(art(clearart))
+ListItem.Property(art(clearlogo))
+ListItem.Property(art(disc))
+ListItem.Property(art(banner))
+ListItem.Property(art(landscape))
 
 
 ARTISTS:

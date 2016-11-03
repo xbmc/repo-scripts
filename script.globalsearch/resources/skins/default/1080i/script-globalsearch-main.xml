@@ -1210,7 +1210,7 @@
 											<texture>globalsearch-list-number.png</texture>
 										</control>
 										<control type="label">
-											<right>41</right>
+											<top>35</top>
 											<left>0</left>
 											<width>70</width>
 											<height>32</height>

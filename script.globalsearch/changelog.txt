@@ -1,3 +1,7 @@
+v7.4.0
+- add resume option
+- add art labels
+
 v7.3.1
 - remove test settings
 

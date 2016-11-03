@@ -29,6 +29,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
         self.params = kwargs[ "params" ]
         log('script version %s started' % ADDONVERSION)
         self.nextsearch = False
+        self.selectaction = self._getSelect_Action()
 
     def onInit( self ):
         if self.searchstring == '':
@@ -156,7 +157,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
             rule = '{"or": [{"field": "title", "operator": "contains", "value": "%s"}, {"field": "originaltitle", "operator": "contains", "value": "%s"}]}' % (self.searchstring, self.searchstring) 
         else:
             rule = '{"field":"%s", "operator":"contains", "value":"%s"}' % (query, self.searchstring)
-        json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetMovies", "params": {"properties": ["title", "streamdetails", "genre", "studio", "year", "tagline", "plot", "plotoutline", "runtime", "fanart", "thumbnail", "file", "trailer", "playcount", "rating", "userrating", "mpaa", "director", "writer", "originaltitle"], "sort": { "method": "label" }, "filter": %s }, "id": 1}' % rule)
+        json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetMovies", "params": {"properties": ["title", "streamdetails", "genre", "studio", "year", "tagline", "plot", "plotoutline", "runtime", "fanart", "thumbnail", "file", "trailer", "playcount", "rating", "userrating", "mpaa", "director", "writer", "originaltitle", "resume","art"], "sort": { "method": "label" }, "filter": %s }, "id": 1}' % rule)
         json_query = unicode(json_query, 'utf-8', errors='ignore')
         json_response = json.loads(json_query)
         if json_response.has_key('result') and (json_response['result'] != None) and json_response['result'].has_key('movies'):
@@ -166,7 +167,6 @@ class GUI( xbmcgui.WindowXMLDialog ):
                 count = count + 1
                 director = " / ".join(item['director'])
                 writer = " / ".join(item['writer'])
-                fanart = item['fanart']
                 path = item['file']
                 genre = " / ".join(item['genre'])
                 mpaa = item['mpaa']
@@ -181,9 +181,17 @@ class GUI( xbmcgui.WindowXMLDialog ):
                 studio = " / ".join(item['studio'])
                 tagline = item['tagline']
                 thumb = item['thumbnail']
+                fanart = item['fanart']
+                poster = item['art'].get('poster', '')
+                clearart = item['art'].get('clearart', '')
+                clearlogo = item['art'].get('clearlogo', '')
+                disc = item['art'].get('disc', '')
+                banner = item['art'].get('banner', '')
+                landscape = item['art'].get('landscape', '')
                 trailer = item['trailer']
                 originaltitle = item['originaltitle']
                 year = str(item['year'])
+                resume = str(item['resume']['position'])
                 if item['streamdetails']['audio'] != []:
                     audiochannels = str(item['streamdetails']['audio'][0]['channels'])
                     audiocodec = str(item['streamdetails']['audio'][0]['codec'])
@@ -221,9 +229,17 @@ class GUI( xbmcgui.WindowXMLDialog ):
                     videocodec = ''
                     videoaspect = ''
                     videoresolution = ''
+
                 listitem = xbmcgui.ListItem(label=movie, iconImage='DefaultVideo.png', thumbnailImage=thumb)
                 listitem.setProperty( "icon", thumb )
                 listitem.setProperty( "fanart", fanart )
+                listitem.setProperty( "art(poster)", poster )
+                listitem.setProperty( "art(fanart)", fanart )
+                listitem.setProperty( "art(clearart)", clearart )
+                listitem.setProperty( "art(clearlogo)", clearlogo )
+                listitem.setProperty( "art(disc)", disc )
+                listitem.setProperty( "art(banner)", banner )
+                listitem.setProperty( "art(landscape)", landscape )
                 listitem.setProperty( "originaltitle", originaltitle )
                 listitem.setProperty( "genre", genre )
                 listitem.setProperty( "plot", plot )
@@ -246,6 +262,8 @@ class GUI( xbmcgui.WindowXMLDialog ):
                 listitem.setProperty( "audiochannels", audiochannels )
                 listitem.setProperty( "path", path )
                 listitem.setProperty( "dbid", movieid )
+                listitem.setProperty( "resume", resume )
+                listitem.setProperty( "title", movie )
                 listitems.append(listitem)
         self.getControl( control ).addItems( listitems )
         if count > 0:
@@ -268,7 +286,6 @@ class GUI( xbmcgui.WindowXMLDialog ):
                 tvshow = item['title']
                 count = count + 1
                 episode = str(item['episode'])
-                fanart = item['fanart']
                 genre = " / ".join(item['genre'])
                 mpaa = item['mpaa']
                 playcount = str(item['playcount'])
@@ -280,19 +297,27 @@ class GUI( xbmcgui.WindowXMLDialog ):
                     userrating = ''
                 studio = " / ".join(item['studio'])
                 thumb = item['thumbnail']
-                banner = item['art'].get('banner', '')
+                fanart = item['fanart']
                 poster = item['art'].get('poster', '')
+                clearart = item['art'].get('clearart', '')
+                clearlogo = item['art'].get('clearlogo', '')
+                banner = item['art'].get('banner', '')
+                landscape = item['art'].get('landscape', '')
                 tvshowid = str(item['tvshowid'])
                 path = path = 'videodb://tvshows/titles/' + tvshowid + '/'
                 year = str(item['year'])
                 listitem = xbmcgui.ListItem(label=tvshow, iconImage='DefaultVideo.png', thumbnailImage=thumb)
                 listitem.setProperty( "icon", thumb )
-                listitem.setProperty( "art(banner)", banner )
+                listitem.setProperty( "fanart", fanart )
                 listitem.setProperty( "art(poster)", poster )
+                listitem.setProperty( "art(fanart)", fanart )
+                listitem.setProperty( "art(clearart)", clearart )
+                listitem.setProperty( "art(clearlogo)", clearlogo )
+                listitem.setProperty( "art(banner)", banner )
+                listitem.setProperty( "art(landscape)", landscape )
                 listitem.setProperty( "episode", episode )
                 listitem.setProperty( "mpaa", mpaa )
                 listitem.setProperty( "year", year )
-                listitem.setProperty( "fanart", fanart )
                 listitem.setProperty( "genre", genre )
                 listitem.setProperty( "plot", plot )
                 listitem.setProperty( "premiered", premiered )
@@ -316,7 +341,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
         listitems = []
         self.getControl( 191 ).setLabel( xbmc.getLocalizedString(20343) )
         count = 0
-        json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetSeasons", "params": {"properties": ["showtitle", "season", "fanart", "thumbnail", "playcount", "episode", "userrating"], "sort": { "method": "label" }, "tvshowid":%s }, "id": 1}' % self.tvshowid)
+        json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetSeasons", "params": {"properties": ["showtitle", "season", "fanart", "thumbnail", "playcount", "episode", "userrating", "art"], "sort": { "method": "label" }, "tvshowid":%s }, "id": 1}' % self.tvshowid)
         json_query = unicode(json_query, 'utf-8', errors='ignore')
         json_response = json.loads(json_query)
         if json_response.has_key('result') and (json_response['result'] != None) and json_response['result'].has_key('seasons'):
@@ -325,6 +350,12 @@ class GUI( xbmcgui.WindowXMLDialog ):
                 count = count + 1
                 episode = str(item['episode'])
                 fanart = item['fanart']
+                poster = item['art'].get('tvshow.poster', '')
+                clearart = item['art'].get('tvshow.clearart', '')
+                clearlogo = item['art'].get('tvshow.clearlogo', '')
+                banner = item['art'].get('tvshow.banner', '')
+                landscape = item['art'].get('tvshow.landscape', '')
+                sPoster = item['art'].get('season.poster', '')
                 path = 'videodb://tvshows/titles/' + self.tvshowid + '/' + str(item['season']) + '/'
                 season = item['label']
                 playcount = str(item['playcount'])
@@ -334,8 +365,15 @@ class GUI( xbmcgui.WindowXMLDialog ):
                 thumb = item['thumbnail']
                 listitem = xbmcgui.ListItem(label=season, iconImage='DefaultVideo.png', thumbnailImage=thumb)
                 listitem.setProperty( "icon", thumb )
-                listitem.setProperty( "episode", episode )
                 listitem.setProperty( "fanart", fanart )
+                listitem.setProperty( "art(poster)", poster )
+                listitem.setProperty( "art(fanart)", fanart )
+                listitem.setProperty( "art(clearart)", clearart )
+                listitem.setProperty( "art(clearlogo)", clearlogo )
+                listitem.setProperty( "art(banner)", banner )
+                listitem.setProperty( "art(landscape)", landscape )
+                listitem.setProperty( "art(season.poster)", sPoster )
+                listitem.setProperty( "episode", episode )
                 listitem.setProperty( "tvshowtitle", tvshow )
                 listitem.setProperty( "playcount", playcount )
                 listitem.setProperty( "userrating", userrating )
@@ -357,9 +395,9 @@ class GUI( xbmcgui.WindowXMLDialog ):
         self.getControl( 191 ).setLabel( xbmc.getLocalizedString(20360) )
         count = 0
         if self.fetch_seasonepisodes == 'true':
-            json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetEpisodes", "params": { "properties": ["title", "streamdetails", "plot", "firstaired", "runtime", "season", "episode", "showtitle", "thumbnail", "fanart", "file", "playcount", "director", "rating", "userrating"], "sort": { "method": "title" }, "tvshowid":%s }, "id": 1}' % self.tvshowid)
+            json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetEpisodes", "params": { "properties": ["title", "streamdetails", "plot", "firstaired", "runtime", "season", "episode", "showtitle", "thumbnail", "fanart", "file", "playcount", "director", "rating", "userrating", "resume", "art"], "sort": { "method": "title" }, "tvshowid":%s }, "id": 1}' % self.tvshowid)
         else:
-            json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetEpisodes", "params": { "properties": ["title", "streamdetails", "plot", "firstaired", "runtime", "season", "episode", "showtitle", "thumbnail", "fanart", "file", "playcount", "director", "rating", "userrating"], "sort": { "method": "title" }, "filter": {"field": "title", "operator": "contains", "value": "%s"} }, "id": 1}' % self.searchstring)
+            json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetEpisodes", "params": { "properties": ["title", "streamdetails", "plot", "firstaired", "runtime", "season", "episode", "showtitle", "thumbnail", "fanart", "file", "playcount", "director", "rating", "userrating", "resume", "art"], "sort": { "method": "title" }, "filter": {"field": "title", "operator": "contains", "value": "%s"} }, "id": 1}' % self.searchstring)
         json_query = unicode(json_query, 'utf-8', errors='ignore')
         json_response = json.loads(json_query)
         if json_response.has_key('result') and (json_response['result'] != None) and json_response['result'].has_key('episodes'):
@@ -390,6 +428,13 @@ class GUI( xbmcgui.WindowXMLDialog ):
                 playcount = str(item['playcount'])
                 thumb = item['thumbnail']
                 fanart = item['fanart']
+                poster = item['art'].get('tvshow.poster', '')
+                clearart = item['art'].get('tvshow.clearart', '')
+                clearlogo = item['art'].get('tvshow.clearlogo', '')
+                banner = item['art'].get('tvshow.banner', '')
+                landscape = item['art'].get('tvshow.landscape', '')
+                sPoster = item['art'].get('season.poster', '')
+                resume = str(item['resume']['position'])
                 if item['streamdetails']['audio'] != []:
                     audiochannels = str(item['streamdetails']['audio'][0]['channels'])
                     audiocodec = str(item['streamdetails']['audio'][0]['codec'])
@@ -429,12 +474,19 @@ class GUI( xbmcgui.WindowXMLDialog ):
                     videoresolution = ''
                 listitem = xbmcgui.ListItem(label=episode, iconImage='DefaultVideo.png', thumbnailImage=thumb)
                 listitem.setProperty( "icon", thumb )
+                listitem.setProperty( "fanart", fanart )
+                listitem.setProperty( "art(poster)", poster )
+                listitem.setProperty( "art(fanart)", fanart )
+                listitem.setProperty( "art(clearart)", clearart )
+                listitem.setProperty( "art(clearlogo)", clearlogo )
+                listitem.setProperty( "art(banner)", banner )
+                listitem.setProperty( "art(landscape)", landscape )
+                listitem.setProperty( "art(season.poster)", sPoster )
                 listitem.setProperty( "episode", episodenumber )
                 listitem.setProperty( "plot", plot )
                 listitem.setProperty( "rating", rating )
                 listitem.setProperty( "userrating", userrating )
                 listitem.setProperty( "director", director )
-                listitem.setProperty( "fanart", fanart )
                 listitem.setProperty( "season", seasonnumber )
                 listitem.setProperty( "duration", runtime )
                 listitem.setProperty( "tvshowtitle", tvshowname )
@@ -447,6 +499,8 @@ class GUI( xbmcgui.WindowXMLDialog ):
                 listitem.setProperty( "audiochannels", audiochannels )
                 listitem.setProperty( "path", path )
                 listitem.setProperty( "dbid", episodeid )
+                listitem.setProperty( "resume", resume )
+                listitem.setProperty( "title", episode )
                 listitems.append(listitem)
         self.getControl( 141 ).addItems( listitems )
         if count > 0:
@@ -461,7 +515,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
         listitems = []
         self.getControl( 191 ).setLabel( xbmc.getLocalizedString(20389) )
         count = 0
-        json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetMusicVideos", "params": {"properties": ["title", "streamdetails", "runtime", "genre", "studio", "artist", "album", "year", "plot", "fanart", "thumbnail", "file", "playcount", "director", "rating", "userrating"], "sort": { "method": "label" }, "filter": {"field": "title", "operator": "contains", "value": "%s"} }, "id": 1}' % self.searchstring)
+        json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetMusicVideos", "params": {"properties": ["title", "streamdetails", "runtime", "genre", "studio", "artist", "album", "year", "plot", "fanart", "thumbnail", "file", "playcount", "director", "rating", "userrating", "art"], "sort": { "method": "label" }, "filter": {"field": "title", "operator": "contains", "value": "%s"} }, "id": 1}' % self.searchstring)
         json_query = unicode(json_query, 'utf-8', errors='ignore')
         json_response = json.loads(json_query)
         if json_response.has_key('result') and (json_response['result'] != None) and json_response['result'].has_key('musicvideos'):
@@ -473,6 +527,10 @@ class GUI( xbmcgui.WindowXMLDialog ):
                 artist = " / ".join(item['artist'])
                 director = " / ".join(item['director'])
                 fanart = item['fanart']
+                poster = item['art'].get('poster', '')
+                clearart = item['art'].get('clearart', '')
+                clearlogo = item['art'].get('clearlogo', '')
+                disc = item['art'].get('disc', '')
                 path = item['file']
                 genre = " / ".join(item['genre'])
                 plot = item['plot']
@@ -529,9 +587,14 @@ class GUI( xbmcgui.WindowXMLDialog ):
                     duration = ''
                 listitem = xbmcgui.ListItem(label=musicvideo, iconImage='DefaultVideo.png', thumbnailImage=thumb)
                 listitem.setProperty( "icon", thumb )
+                listitem.setProperty( "fanart", fanart )
+                listitem.setProperty( "art(poster)", poster )
+                listitem.setProperty( "art(fanart)", fanart )
+                listitem.setProperty( "art(clearart)", clearart )
+                listitem.setProperty( "art(clearlogo)", clearlogo )
+                listitem.setProperty( "art(disc)", disc )
                 listitem.setProperty( "album", album )
                 listitem.setProperty( "artist", artist )
-                listitem.setProperty( "fanart", fanart )
                 listitem.setProperty( "director", director )
                 listitem.setProperty( "genre", genre )
                 listitem.setProperty( "plot", plot )
@@ -869,9 +932,26 @@ class GUI( xbmcgui.WindowXMLDialog ):
         self._check_focus()
         self.fetch_songalbum = 'false'
 
-    def _play_video( self, path ):
-        self._close()
+    def _getSelect_Action( self ):
+        json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "Settings.GetSettingValue","params":{"setting":"myvideos.selectaction"}, "id": 1}')
+        json_query = unicode(json_query, 'utf-8', errors='ignore')
+        json_response = json.loads(json_query)
+        if json_response.has_key('result') and (json_response['result'] != None) and json_response['result'].has_key('value'):
+            return {0: 'choose', 1: 'play', 2: 'resume',3: 'info'}[json_response['result']['value']]
+   
+    def _play_video( self, path , title='' , resume=0 ):
+        if resume > 0:
+            if self.selectaction == 'choose':
+                minutes, seconds = divmod(resume, 60) ; hours, minutes = divmod( minutes , 60 )
+                if xbmcgui.Dialog().yesno( title , '' , '' , '%s %02d:%02d:%02d' % ( LANGUAGE(32212), hours, minutes, seconds ) , LANGUAGE(32213) , LANGUAGE(32214) ) == True:
+                    resume = 0
+            elif self.selectaction == 'play':
+                resume = 0
+            elif self.selectaction == 'info':
+                return
+        self.Player.resume = resume
         xbmc.Player().play( path )
+        self.close()
 
     def _play_audio( self, path, listitem ):
         self._close()
@@ -973,7 +1053,6 @@ class GUI( xbmcgui.WindowXMLDialog ):
             if selection >= 0:
                 functions[ selection ]()
 
-
     def _showInfo( self ):
         items = []
         controlId = self.getFocusId()
@@ -1010,7 +1089,9 @@ class GUI( xbmcgui.WindowXMLDialog ):
             elif info_dialog.action == 'play_movie':
                 listitem = self.getControl( 111 ).getSelectedItem()
                 path = listitem.getProperty('path')
-                self._play_video(path)
+                title = listitem.getProperty('title')
+                resume = int(listitem.getProperty('resume'))
+                self._play_video(path, title, resume)
             elif info_dialog.action == 'play_trailer':
                 listitem = self.getControl( 111 ).getSelectedItem()
                 self.trailer = listitem.getProperty('trailer')
@@ -1026,7 +1107,9 @@ class GUI( xbmcgui.WindowXMLDialog ):
             elif info_dialog.action == 'play_episode':
                 listitem = self.getControl( 141 ).getSelectedItem()
                 path = listitem.getProperty('path')
-                self._play_video(path)
+                title = listitem.getProperty('title')
+                resume = int(listitem.getProperty('resume'))
+                self._play_video(path, title, resume)
             elif info_dialog.action == 'play_musicvideo':
                 listitem = self.getControl( 151 ).getSelectedItem()
                 path = listitem.getProperty('path')
@@ -1078,7 +1161,9 @@ class GUI( xbmcgui.WindowXMLDialog ):
         if controlId == 111:
             listitem = self.getControl( 111 ).getSelectedItem()
             path = listitem.getProperty('path')
-            self._play_video(path)
+            title = listitem.getProperty('title')
+            resume = int(listitem.getProperty('resume'))
+            self._play_video(path, title, resume)
         elif controlId == 121:
             listitem = self.getControl( 121 ).getSelectedItem()
             path = listitem.getProperty('path')
@@ -1090,7 +1175,9 @@ class GUI( xbmcgui.WindowXMLDialog ):
         elif controlId == 141:
             listitem = self.getControl( 141 ).getSelectedItem()
             path = listitem.getProperty('path')
-            self._play_video(path)
+            title = listitem.getProperty('title')
+            resume = int(listitem.getProperty('resume'))
+            self._play_video(path, title, resume)
         elif controlId == 151:
             listitem = self.getControl( 151 ).getSelectedItem()
             path = listitem.getProperty('path')
@@ -1149,9 +1236,13 @@ class GUI( xbmcgui.WindowXMLDialog ):
 class MyPlayer(xbmc.Player):
     def __init__(self):
         xbmc.Player.__init__( self )
+        self.resume = 0
 
     def onPlayBackEnded( self ):
         self.gui._trailerstopped()
 
     def onPlayBackStopped( self ):
         self.gui._trailerstopped()
+
+    def onPlayBackStarted( self ):   
+        self.seekTime( float( self.resume ) )

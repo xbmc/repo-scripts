@@ -97,5 +97,17 @@ msgid "Movies starring"
 msgstr "Movies starring"
 
 msgctxt "#32299"
-msgid "NEW SEARCH"
-msgstr "NEW SEARCH"
+msgid "New search"
+msgstr "New search"
+
+msgctxt "#32212"
+msgid "Resume from"
+msgstr "Resume from"
+
+msgctxt "#32213"
+msgid "Resume"
+msgstr "Resume"
+
+msgctxt "#32214"
+msgid "Start from beginning"
+msgstr "Start from beginning"
