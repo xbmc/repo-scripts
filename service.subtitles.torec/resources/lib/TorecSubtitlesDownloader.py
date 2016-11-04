@@ -210,7 +210,7 @@ class TorecSubtitlesDownloader(FirefoxURLHandler):
             response = self.opener.open("%s/ajax/sub/downloadun.asp" % self.BASE_URL, encoded_params)
             download_link = response.read()
 
-            if download_link and download_link != "err":
+            if download_link and "sdls.asp" in download_link:
                 break
         
             xbmc.sleep(500)
