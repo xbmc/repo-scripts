@@ -14,9 +14,10 @@ import sys
 import os
 
 from six import string_types, PY3
+from ._common import tzname_in_python2
 
 try:
-    from dateutil.tzwin import tzwin, tzwinlocal
+    from .win import tzwin, tzwinlocal
 except ImportError:
     tzwin = tzwinlocal = None
 
@@ -24,26 +25,8 @@ relativedelta = None
 parser = None
 rrule = None
 
-__all__ = ["tzutc", "tzoffset", "tzlocal", "tzfile", "tzrange",
-           "tzstr", "tzical", "tzwin", "tzwinlocal", "gettz"]
-
-
-def tzname_in_python2(myfunc):
-    """Change unicode output into bytestrings in Python 2
-
-    tzname() API changed in Python 3. It used to return bytes, but was changed
-    to unicode strings
-    """
-    def inner_func(*args, **kwargs):
-        if PY3:
-            return myfunc(*args, **kwargs)
-        else:
-            return myfunc(*args, **kwargs).encode()
-    return inner_func
-
 ZERO = datetime.timedelta(0)
 EPOCHORDINAL = datetime.datetime.utcfromtimestamp(0).toordinal()
-
 
 class tzutc(datetime.tzinfo):
 
@@ -102,14 +85,17 @@ class tzoffset(datetime.tzinfo):
 
 
 class tzlocal(datetime.tzinfo):
-
-    _std_offset = datetime.timedelta(seconds=-time.timezone)
-    if time.daylight:
-        _dst_offset = datetime.timedelta(seconds=-time.altzone)
-    else:
-        _dst_offset = _std_offset
+    def __init__(self):
+        self._std_offset = datetime.timedelta(seconds=-time.timezone)
+        if time.daylight:
+            self._dst_offset = datetime.timedelta(seconds=-time.altzone)
+        else:
+            self._dst_offset = self._std_offset
 
     def utcoffset(self, dt):
+        if dt is None:
+            return dt
+
         if self._isdst(dt):
             return self._dst_offset
         else:
@@ -157,11 +143,9 @@ class tzlocal(datetime.tzinfo):
         return time.localtime(timestamp+time.timezone).tm_isdst
 
     def __eq__(self, other):
-        if not isinstance(other, tzlocal):
-            return False
-        return (self._std_offset == other._std_offset and
-                self._dst_offset == other._dst_offset)
-        return True
+        return (isinstance(other, tzlocal) and
+                (self._std_offset == other._std_offset and
+                 self._dst_offset == other._dst_offset))
 
     def __ne__(self, other):
         return not self.__eq__(other)
@@ -323,10 +307,10 @@ class tzfile(datetime.tzinfo):
             # The pairs of values are sorted in ascending order
             # by time.
 
-            # Not used, for now
-            # if leapcnt:
-            #    leap = struct.unpack(">%dl" % (leapcnt*2),
-            #                         fileobj.read(leapcnt*8))
+            # Not used, for now (but read anyway for correct file position)
+            if leapcnt:
+                leap = struct.unpack(">%dl" % (leapcnt*2),
+                                     fileobj.read(leapcnt*8))
 
             # Then there are tzh_ttisstdcnt standard/wall
             # indicators, each stored as a one-byte value;
@@ -456,6 +440,9 @@ class tzfile(datetime.tzinfo):
             return self._trans_idx[idx-1]
 
     def utcoffset(self, dt):
+        if dt is None:
+            return None
+
         if not self._ttinfo_std:
             return ZERO
         return self._find_ttinfo(dt).delta
@@ -535,6 +522,9 @@ class tzrange(datetime.tzinfo):
             self._end_delta = end
 
     def utcoffset(self, dt):
+        if dt is None:
+            return None
+
         if self._isdst(dt):
             return self._dst_offset
         else:
@@ -716,6 +706,9 @@ class _tzicalvtz(datetime.tzinfo):
         return lastcomp
 
     def utcoffset(self, dt):
+        if dt is None:
+            return None
+
         return self._find_comp(dt).tzoffsetto
 
     def dst(self, dt):
