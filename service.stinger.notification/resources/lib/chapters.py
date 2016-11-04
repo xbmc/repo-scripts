@@ -21,7 +21,6 @@ class ChaptersFile(object):
         return xbmcvfs.exists(self.path)
 
     def load(self):
-        self.lastchapterstart = None
         if self.exists:
             with closing(xbmcvfs.File(self.path)) as chaptersfile:
                 self.lastchapterstart = find_lastchapterstart(chaptersfile.read())

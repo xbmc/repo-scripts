@@ -1,4 +1,10 @@
+import xbmc
+
 import requests
+from requests import Timeout, ConnectionError, HTTPError
+
+def log(message, level=xbmc.LOGDEBUG):
+    xbmc.log('[service.stinger.notification:themoviedb] %s' % (message), level)
 
 class TheMovieDatabase(object):
     # username for this key: rmrector.kodistinger
@@ -11,7 +17,10 @@ class TheMovieDatabase(object):
         self.monitor = None
 
     def _get_request(self, mediaid):
-        result = self.session.get(self.apiurl % mediaid, params={'api_key': self.apikey}, timeout=15)
+        try:
+            result = self.session.get(self.apiurl % mediaid, params={'api_key': self.apikey}, timeout=15)
+        except (Timeout, ConnectionError):
+            return None
         errcount = 0
         while result.status_code == requests.codes.too_many_requests:
             if errcount > 2:
@@ -23,11 +32,18 @@ class TheMovieDatabase(object):
                 wait = 10
             if self.monitor.waitForAbort(wait):
                 return None
-            result = self.session.get(self.apiurl % mediaid, params={'api_key': self.apikey}, timeout=15)
+            try:
+                result = self.session.get(self.apiurl % mediaid, params={'api_key': self.apikey}, timeout=15)
+            except (Timeout, ConnectionError):
+                return None
 
-        if not result or result.status_code == requests.codes.not_found:
+        if result.status_code == requests.codes.not_found:
             return None
-        result.raise_for_status()
+        try:
+            result.raise_for_status()
+        except HTTPError as ex:
+            log('HTTP Error: {0}'.format(ex.message), xbmc.LOGWARNING)
+            return None
         return result
 
     def get_stingertags(self, mediaid):
