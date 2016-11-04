@@ -1,3 +1,7 @@
+v1.0.2 (2016-11-03)
+- Add an option to set amount of time to display the notification
+- Don't allow errors from web services to prevent the stinger notification
+
 v1.0.1 (2016-08-26)
 - Fix basic add-on text display in add-on info
 v1.0.0 (2016-07-24)

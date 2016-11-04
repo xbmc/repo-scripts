@@ -54,7 +54,7 @@ msgid "Use simple notification message"
 msgstr ""
 
 msgctxt "#32901"
-msgid "Notify xx minutes before the end if no chapters available"
+msgid "If no chapters available, display notification "
 msgstr ""
 
 msgctxt "#32902"
@@ -63,4 +63,16 @@ msgstr ""
 
 msgctxt "#32903"
 msgid "Preferred FPS for ChapterDb queries"
+msgstr ""
+
+msgctxt "#32904"
+msgid "Display notification message for "
+msgstr ""
+
+msgctxt "#32905"
+msgid "%2.0f seconds"
+msgstr ""
+
+msgctxt "#32906"
+msgid "%2.0f minutes before end"
 msgstr ""
