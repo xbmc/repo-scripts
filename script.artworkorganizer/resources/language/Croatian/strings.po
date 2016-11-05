@@ -1,0 +1,109 @@
+# Kodi Media Center language file
+# Addon Name: Artwork Organizer
+# Addon id: script.artworkorganizer
+# Addon Provider: ronie
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: Croatian (http://www.transifex.com/projects/p/xbmc-addons/language/hr/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: hr\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+
+msgctxt "#32001"
+msgid "Copy Movie Fanart"
+msgstr "Kopiraj sliku omota filma"
+
+msgctxt "#32002"
+msgid "Copy TV Show Fanart"
+msgstr "Kopiraj sliku omota TV serije"
+
+msgctxt "#32003"
+msgid "Copy Music Video Fanart"
+msgstr "Kopiraj sliku omota glazbenog spota"
+
+msgctxt "#32004"
+msgid "Copy Artist Fanart"
+msgstr "Kopiraj sliku omota izvođača"
+
+msgctxt "#32005"
+msgid "Copy Movie Thumbs"
+msgstr "Kopiraj minijaturu filma"
+
+msgctxt "#32007"
+msgid "Copy Season Thumbs"
+msgstr "Kopiraj minijaturu sezone"
+
+msgctxt "#32008"
+msgid "Copy Episode Thumbs"
+msgstr "Kopiraj minijaturu epizode"
+
+msgctxt "#32009"
+msgid "Copy Music Video Thumbs"
+msgstr "Kopiraj minijaturu glazbenog spota"
+
+msgctxt "#32010"
+msgid "Copy Artist Thumbs"
+msgstr "Kopiraj minijaturu izvođača"
+
+msgctxt "#32011"
+msgid "Copy Album Thumbs"
+msgstr "Kopiraj minijaturu albuma"
+
+msgctxt "#32012"
+msgid "Destination directory"
+msgstr "Direktorij odredišta"
+
+msgctxt "#32013"
+msgid "Copy TV Show Banners"
+msgstr "Kopiraj transparente TV serije"
+
+msgctxt "#32014"
+msgid "Copy TV Show Posters"
+msgstr "Kopiraj postere TV serije"
+
+msgctxt "#32015"
+msgid "Custom source"
+msgstr "Prilagođeni izvor"
+
+msgctxt "#32016"
+msgid "Path"
+msgstr "Putanja"
+
+msgctxt "#32101"
+msgid "General"
+msgstr "Općenito"
+
+msgctxt "#32102"
+msgid "Advanced"
+msgstr "Napredno"
+
+msgctxt "#32103"
+msgid "Expert"
+msgstr "Naprednije"
+
+msgctxt "#32104"
+msgid "DO NOT TOUCH UNLESS YOU KNOW WHAT YOU ARE DOING"
+msgstr "NE DIRAJTE UKOLIKO NE ZNATE ŠTO RADITE"
+
+msgctxt "#32105"
+msgid "THIS CAN POTENTIALLY WIPE YOUR ENTIRE HARDDRIVE"
+msgstr "OVO MOŽE POTPUNO OBRISATI VAŠ KOMPLETAN TVRDI DISK"
+
+msgctxt "#32106"
+msgid "select which artwork should be copied"
+msgstr "odaberite koja će se slika omota kopirati"
+
+msgctxt "#32107"
+msgid "search a custom folder for artwork"
+msgstr "pretraži prilagođenu mapu slika omota"
+
+msgctxt "#32108"
+msgid "select a custom folder where the addon should store the artwork"
+msgstr "odaberite prilagođenu mapu gdje će dodatak spremati sliku omota"

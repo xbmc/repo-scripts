@@ -1,0 +1,109 @@
+# Kodi Media Center language file
+# Addon Name: Artwork Organizer
+# Addon id: script.artworkorganizer
+# Addon Provider: ronie
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: Indonesian (http://www.transifex.com/projects/p/xbmc-addons/language/id/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: id\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgctxt "#32001"
+msgid "Copy Movie Fanart"
+msgstr "Salin Fanart Film"
+
+msgctxt "#32002"
+msgid "Copy TV Show Fanart"
+msgstr "Salin Fanart Acara TV"
+
+msgctxt "#32003"
+msgid "Copy Music Video Fanart"
+msgstr "Salin Fanart Video Musik"
+
+msgctxt "#32004"
+msgid "Copy Artist Fanart"
+msgstr "Salin Fanart Artis"
+
+msgctxt "#32005"
+msgid "Copy Movie Thumbs"
+msgstr "Salin Gambar Kecil Film"
+
+msgctxt "#32007"
+msgid "Copy Season Thumbs"
+msgstr "Salin Gambar Kecil Sesi"
+
+msgctxt "#32008"
+msgid "Copy Episode Thumbs"
+msgstr "Salin Gambar Kecil Episode"
+
+msgctxt "#32009"
+msgid "Copy Music Video Thumbs"
+msgstr "Salin Gambar Kecil Video Musik"
+
+msgctxt "#32010"
+msgid "Copy Artist Thumbs"
+msgstr "Salin Gambar Kecil Artis"
+
+msgctxt "#32011"
+msgid "Copy Album Thumbs"
+msgstr "Salin Gambar Kecil Album"
+
+msgctxt "#32012"
+msgid "Destination directory"
+msgstr "Direktori tujuan"
+
+msgctxt "#32013"
+msgid "Copy TV Show Banners"
+msgstr "Salin Umbul-umbul Acara TV"
+
+msgctxt "#32014"
+msgid "Copy TV Show Posters"
+msgstr "Salin Poster Acara TV"
+
+msgctxt "#32015"
+msgid "Custom source"
+msgstr "Sumber lain"
+
+msgctxt "#32016"
+msgid "Path"
+msgstr "Path"
+
+msgctxt "#32101"
+msgid "General"
+msgstr "Umum"
+
+msgctxt "#32102"
+msgid "Advanced"
+msgstr "Tingkat Lanjut"
+
+msgctxt "#32103"
+msgid "Expert"
+msgstr "Mahir"
+
+msgctxt "#32104"
+msgid "DO NOT TOUCH UNLESS YOU KNOW WHAT YOU ARE DOING"
+msgstr "JANGAN DISENTUH KECUALI ANDA TAHU APA YANG ANDA LAKUKAN"
+
+msgctxt "#32105"
+msgid "THIS CAN POTENTIALLY WIPE YOUR ENTIRE HARDDRIVE"
+msgstr "HAL INI BERPOTENSI MENGHAPUS SELURUH ISI CAKRAM PENYIMPANAN ANDA"
+
+msgctxt "#32106"
+msgid "select which artwork should be copied"
+msgstr "pilih karya seni mana yang akan disalin"
+
+msgctxt "#32107"
+msgid "search a custom folder for artwork"
+msgstr "cari karya seni di folder lain"
+
+msgctxt "#32108"
+msgid "select a custom folder where the addon should store the artwork"
+msgstr "pilih folder lain di mana addon akan menyimpan karya seni"

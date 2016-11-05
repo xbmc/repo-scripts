@@ -1,0 +1,109 @@
+# Kodi Media Center language file
+# Addon Name: Artwork Organizer
+# Addon id: script.artworkorganizer
+# Addon Provider: ronie
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: Spanish (http://www.transifex.com/projects/p/xbmc-addons/language/es/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: es\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#32001"
+msgid "Copy Movie Fanart"
+msgstr "Copiar Fanart de Películas"
+
+msgctxt "#32002"
+msgid "Copy TV Show Fanart"
+msgstr "Copiar Fanart de Programas de TV"
+
+msgctxt "#32003"
+msgid "Copy Music Video Fanart"
+msgstr "Copiar Fanart de Videoclips"
+
+msgctxt "#32004"
+msgid "Copy Artist Fanart"
+msgstr "Copiar Fanart de Intérpretes"
+
+msgctxt "#32005"
+msgid "Copy Movie Thumbs"
+msgstr "Copiar Miniaturas de Películas"
+
+msgctxt "#32007"
+msgid "Copy Season Thumbs"
+msgstr "Copiar Miniaturas de Temporadas"
+
+msgctxt "#32008"
+msgid "Copy Episode Thumbs"
+msgstr "Copiar Miniaturas de Episodios"
+
+msgctxt "#32009"
+msgid "Copy Music Video Thumbs"
+msgstr "Copiar Miniaturas de Videoclips"
+
+msgctxt "#32010"
+msgid "Copy Artist Thumbs"
+msgstr "Copiar Miniaturas de Intérpretes"
+
+msgctxt "#32011"
+msgid "Copy Album Thumbs"
+msgstr "Copiar Miniaturas de Álbumes"
+
+msgctxt "#32012"
+msgid "Destination directory"
+msgstr "Carpeta de destino"
+
+msgctxt "#32013"
+msgid "Copy TV Show Banners"
+msgstr "Copiar banners de Programas de TV"
+
+msgctxt "#32014"
+msgid "Copy TV Show Posters"
+msgstr "Copiar posters de Programas de TV"
+
+msgctxt "#32015"
+msgid "Custom source"
+msgstr "Fuente personalizada"
+
+msgctxt "#32016"
+msgid "Path"
+msgstr "Ruta"
+
+msgctxt "#32101"
+msgid "General"
+msgstr "General"
+
+msgctxt "#32102"
+msgid "Advanced"
+msgstr "Avanzado"
+
+msgctxt "#32103"
+msgid "Expert"
+msgstr "Experto"
+
+msgctxt "#32104"
+msgid "DO NOT TOUCH UNLESS YOU KNOW WHAT YOU ARE DOING"
+msgstr "NO TOQUES SI NO SABES LO QUE ESTÁS HACIENDO"
+
+msgctxt "#32105"
+msgid "THIS CAN POTENTIALLY WIPE YOUR ENTIRE HARDDRIVE"
+msgstr "ESTO PUEDE BORRAR TU DISCO DURO COMPLETAMENTE"
+
+msgctxt "#32106"
+msgid "select which artwork should be copied"
+msgstr "Selecciona las ilustraciones a copiar"
+
+msgctxt "#32107"
+msgid "search a custom folder for artwork"
+msgstr "Selecciona la carpeta para guardar las ilustraciones"
+
+msgctxt "#32108"
+msgid "select a custom folder where the addon should store the artwork"
+msgstr "Selecciona la carpeta donde el add-on debe guardar las ilustraciones"

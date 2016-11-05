@@ -1,0 +1,109 @@
+# Kodi Media Center language file
+# Addon Name: Artwork Organizer
+# Addon id: script.artworkorganizer
+# Addon Provider: ronie
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: Swedish (http://www.transifex.com/projects/p/xbmc-addons/language/sv/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: sv\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#32001"
+msgid "Copy Movie Fanart"
+msgstr "Kopiera filmfanart"
+
+msgctxt "#32002"
+msgid "Copy TV Show Fanart"
+msgstr "Kopiera TV-Seriefanart"
+
+msgctxt "#32003"
+msgid "Copy Music Video Fanart"
+msgstr "Kopiera musikvideofanart"
+
+msgctxt "#32004"
+msgid "Copy Artist Fanart"
+msgstr "Kopiera artistfanart"
+
+msgctxt "#32005"
+msgid "Copy Movie Thumbs"
+msgstr "Kopiera film-miniatyrer"
+
+msgctxt "#32007"
+msgid "Copy Season Thumbs"
+msgstr "Kopiera säsongsminiatyrer"
+
+msgctxt "#32008"
+msgid "Copy Episode Thumbs"
+msgstr "Kopiera avsnittsminiatyrer"
+
+msgctxt "#32009"
+msgid "Copy Music Video Thumbs"
+msgstr "Kopiera musikvideo-miniatyrer"
+
+msgctxt "#32010"
+msgid "Copy Artist Thumbs"
+msgstr "Kopiera artistminiatyrer"
+
+msgctxt "#32011"
+msgid "Copy Album Thumbs"
+msgstr "Kopiera album-miniatyrer"
+
+msgctxt "#32012"
+msgid "Destination directory"
+msgstr "Destinationskatalog"
+
+msgctxt "#32013"
+msgid "Copy TV Show Banners"
+msgstr "Kopiera TV-Seriebanners"
+
+msgctxt "#32014"
+msgid "Copy TV Show Posters"
+msgstr "Kopiera TV-Serieposters"
+
+msgctxt "#32015"
+msgid "Custom source"
+msgstr "Egen källa"
+
+msgctxt "#32016"
+msgid "Path"
+msgstr "Sökväg"
+
+msgctxt "#32101"
+msgid "General"
+msgstr "Allmänna"
+
+msgctxt "#32102"
+msgid "Advanced"
+msgstr "Avancerad"
+
+msgctxt "#32103"
+msgid "Expert"
+msgstr "Expert"
+
+msgctxt "#32104"
+msgid "DO NOT TOUCH UNLESS YOU KNOW WHAT YOU ARE DOING"
+msgstr "RÖR EJ IFALL DU INTE VET VAD GÖR"
+
+msgctxt "#32105"
+msgid "THIS CAN POTENTIALLY WIPE YOUR ENTIRE HARDDRIVE"
+msgstr "DETTA KAN ORSAKA ATT HELA DIN HÅRDDISK BLIR RADERAD"
+
+msgctxt "#32106"
+msgid "select which artwork should be copied"
+msgstr "välj vilket bildmaterial som ska kopieras"
+
+msgctxt "#32107"
+msgid "search a custom folder for artwork"
+msgstr "sök en anpassad mapp efter bildmaterial"
+
+msgctxt "#32108"
+msgid "select a custom folder where the addon should store the artwork"
+msgstr "välj en anpassad mapp där tillägget ska lagra bildmaterial"
