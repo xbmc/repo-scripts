@@ -93,7 +93,7 @@ class Main:
                 xbmc.executebuiltin('Skin.SetString(%s,%s)' % ((string + '.path'), 'resource://%s/' % addonid))
                 if subfolders == 'true':
                     xbmc.executebuiltin('Skin.SetBool(%s)' % (string + '.multi'))
-                    xbmc.executebuiltin('Skin.Reset(%s,%s)' % (string + '.ext'))
+                    xbmc.executebuiltin('Skin.Reset(%s)' % (string + '.ext'))
                 else:
                     xbmc.executebuiltin('Skin.Reset(%s)' % (string + '.multi'))
                     xbmc.executebuiltin('Skin.SetString(%s,%s)' % ((string + '.ext'), extension))
