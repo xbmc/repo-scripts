@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<strings>
+	<string id="31000">This month</string>
+	<string id="31001">January</string>
+	<string id="31002">February</string>
+	<string id="31003">March</string>
+	<string id="31004">April</string>
+	<string id="31005">May</string>
+	<string id="31006">June</string>
+	<string id="31007">July</string>
+	<string id="31008">August</string>
+	<string id="31009">September</string>
+	<string id="31010">October</string>
+	<string id="31011">November</string>
+	<string id="31012">December</string>
+	
+	<string id="31013">Sunday</string>
+	<string id="31014">Monday</string>
+	<string id="31015">Tuesday</string>
+	<string id="31016">Wednesday</string>
+	<string id="31017">Thursday</string>
+	<string id="31018">Friday</string>
+	<string id="31019">Saturday</string>
+	
+	<string id="31020">Today</string>
+	<string id="31021">Yesterday</string>
+	
+	<string id="31030">New</string>
+	<string id="31031">Most viewed</string>
+	<string id="31032">Shows by A-Z</string>
+	<string id="31033">Shows by date</string>
+	<string id="31034">Rubrics</string>
+	<string id="31035">Topics</string>
+	<string id="31039">Search</string>
+	
+	<string id="31040">More Entries</string>
+
+
+	<!-- messages -->
+</strings>

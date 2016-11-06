@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.module.libMediathek2" 
+	     name="libMediathek2" 
+	     version="1.2.0" 
+	     provider-name="membrane">
+  <requires>
+    <import addon="xbmc.python" version="2.1.0" />
+  </requires>
+  <extension point="xbmc.python.module" library="lib" />
+  <extension point="xbmc.addon.metadata">
+    <platform>all</platform>
+    <summary lang="en">Supplementary lib for Mediathek add-ons.</summary>
+    <description lang="en">This lib is a mini framework. It is used in following "Mediathek" Scrapers: 3sat, ARD, BR, Das Erste, MDR, SR, SWR, WDR, ZDF. It is also used in the add-ons Funk Mediathek, NHL Videocenter and Phoenix Mediathek.</description>
+  </extension>
+</addon>
