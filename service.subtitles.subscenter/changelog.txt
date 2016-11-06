@@ -1,3 +1,9 @@
+4.1.1 - by CaTz (30/10/2016)
+- Fix empty state when using not in playing mode
+
+4.1.0 - by CaTz (28/10/2016)
+- Handle download error when not in player
+
 4.0.5 - by CaTz (23/10/2016)
 - Add mirroring subs to TheWiz servers.
 - Fix download API.
