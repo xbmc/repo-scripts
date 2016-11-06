@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.favourites" name="Favourites script" version="7.1.1" provider-name="ronie, `Black">
+	<requires>
+		<import addon="xbmc.python" version="2.25.0"/>
+	</requires>
+	<extension point="xbmc.python.library" library="default.py"/>
+	<extension point="xbmc.addon.metadata">
+		<summary lang="be">Favourites script</summary>
+		<summary lang="bg">Скрипт "Любими"</summary>
+		<summary lang="ca">Script Preferit</summary>
+		<summary lang="cs">Script pro Oblíbené</summary>
+		<summary lang="da">Favoritscript</summary>
+		<summary lang="de">Favoriten-Skript</summary>
+		<summary lang="el">Script Αγαπημένων</summary>
+		<summary lang="en">Favourites script</summary>
+		<summary lang="en_NZ">Favourites script</summary>
+		<summary lang="en_US">Favorites script</summary>
+		<summary lang="es">Script de Favoritos</summary>
+		<summary lang="es_AR">Favoritos</summary>
+		<summary lang="fi">Suosikit skripti</summary>
+		<summary lang="fr">Script Favoris</summary>
+		<summary lang="fr_CA">Le script des favoris</summary>
+		<summary lang="gl">Script de Favoritos</summary>
+		<summary lang="he">סקריפט מועדפים</summary>
+		<summary lang="hr">Omiljene skripte</summary>
+		<summary lang="hu">Kedvencek script</summary>
+		<summary lang="id">Script favorit</summary>
+		<summary lang="it">Script preferiti</summary>
+		<summary lang="ko">즐겨찾기 스크립트</summary>
+		<summary lang="lt">Mėgstamiausių skriptas</summary>
+		<summary lang="nl">Favourietenscript</summary>
+		<summary lang="no">Favorittskript</summary>
+		<summary lang="pl">Skrypt ulubionych</summary>
+		<summary lang="pt">Script de Favoritos</summary>
+		<summary lang="pt_BR">Script Favoritos</summary>
+		<summary lang="ro">Script Favorite</summary>
+		<summary lang="ru">Скрипт "Избранное"</summary>
+		<summary lang="sv">Favoritskript</summary>
+		<summary lang="tr">Sık kullanılanlar betiği</summary>
+		<summary lang="zh">收藏夹脚本</summary>
+		<description lang="be">Fetches item from your Kodi favourites to populate Home menu/submenu with custom buttons.</description>
+		<description lang="bg">Извлича информация от вашето меню "Любими" и показва допълнителни бутони в главното меню и подменюто.</description>
+		<description lang="ca">Obtenir els temes Preferits dels seus Kodi per omplir el menú Inici / submenú amb botons personalitzats.</description>
+		<description lang="cs">Přenese položky z Oblíbených do Home menu/submenu pod vlastní tlačítka. </description>
+		<description lang="da">Henter elementer fra din Kodi-favoritter til at fylde Hjemmemenu/undermenu med brugerbestemte knapper.</description>
+		<description lang="de">Stellt die Einträge aus der Kodi-Favoriten-Liste für benutzerdefinierte Verknüpfungen auf dem Startbildschirm zur Verfügung.</description>
+		<description lang="el">Χρησιμοποιεί αντικείμενα από τα αγαπημένα σας του Kodi για να συμπληρώσει τα προσαρμοσμένα πλήκτρα μενού/υπομενού της Αρχικής Οθόνης</description>
+		<description lang="en">Fetches item from your Kodi favourites to populate Home menu/submenu with custom buttons.</description>
+		<description lang="en_NZ">Fetches item from your Kodi favourites to populate Home menu/submenu with custom buttons.</description>
+		<description lang="en_US">Fetches item from your Kodi favorites to populate Home menu/submenu with custom buttons.</description>
+		<description lang="es">Usar ítems de tus favoritos de Kodi para crear menús y submenús personalizados</description>
+		<description lang="es_AR">Obtiene medios de sus favoritos en Kodi para enriquecer su menu inicio y sub carpetas con botones personalizados</description>
+		<description lang="fi">Hakee Kodin suosikeista kohteita ja populoi sillä Koti-valikon / alivalikon muokatuilla napeilla.</description>
+		<description lang="fr">Récupère l'élément depuis les favoris Kodi pour remplir le menu/sous-menu de la page d'accueil avec des boutons personnalisés.</description>
+		<description lang="fr_CA">Récupère l'élément de vos favoris Kodi pour remplir le menu d'accueil/le sous-menu avec des boutons personnalisés.</description>
+		<description lang="gl">Obtén o elemento dos favoritos para estabelecer botóns personalizados no Menú Principal/Submenú</description>
+		<description lang="he">מייבא פריט מהמועדפים שלך לאכלוס תפריט/תת תפריט עם לחצנים מותאמים אישית במסך הבית.</description>
+		<description lang="hr">Dohvaća stavke iz vašeg Kodi 'Omiljeno' izbornika i popunjava Početni izbornik/podizbornik s prilagođenim tipkama.</description>
+		<description lang="hu">Összegyűjti az elemeket az Kodi kedvencek közül és a központi menü almenüjébe helyezi egyedi gombokkal.</description>
+		<description lang="id">Ambil item dari favorit Kodi Anda untuk mengisi menu/submenu Beranda dengan tombol suka-suka.</description>
+		<description lang="it">Preleva elementi dai tuoi preferiti per popolare il menù principale ed i sottomenù con bottoni personalizzato.</description>
+		<description lang="ko">Kodi 즐겨찾기에서 항목을 가져와 사용자 설정 버튼으로 홈 메뉴/서브메뉴에 표시합니다.</description>
+		<description lang="lt">Paima elementus iš Kodi mėgstamiausiųjų, kad užpildytų pagrindinio meniu/submeniu individualiais mygtukais.</description>
+		<description lang="nl">Haalt item van je Kodi favorieten op om in het Home menu/submenu te plaatsen via losse buttons.</description>
+		<description lang="no">Henter oppføringer fra favorittene dine i Kodi for å befolke hovedmenyen og undermenyen med egendefinerte knapper.</description>
+		<description lang="pl">Pobiera pozycje z twoich ulubionych w celu zapełnienia menu/podmenu niestandardowymi przyciskami.</description>
+		<description lang="pt">Obtém itens dos seus favoritos do Kodi para povoar o Menu Principal/submenu com botões personalizados.</description>
+		<description lang="pt_BR">Compila itens dos seus favoritos do Kodi para ocupar menus e submenus da tela inicial com botões personalizados.</description>
+		<description lang="ru">Извлекает информацию из Вашего меню "Избранное" и отображает дополнительные кнопки в главном меню и подменю.</description>
+		<description lang="sv">Hämtar objekt från dina Kodi-favoriter för att fylla ut hem-menyn med egna knappar.</description>
+		<description lang="zh">将 Kodi 收藏夹项目用于主界面菜单/子菜单的自定义按钮。</description>
+		<disclaimer lang="be">Needs skin support for it to be used properly</disclaimer>
+		<disclaimer lang="bg">Необходима е поддръжка от страна на облика за коректно функциониране</disclaimer>
+		<disclaimer lang="ca">Necessita Suport de la pell perquè sigui utilitzat correctament</disclaimer>
+		<disclaimer lang="cs">Pro správné použití je potřeba podpora skinu.</disclaimer>
+		<disclaimer lang="da">Behøver skinsupport for at blive brugt ordentligt</disclaimer>
+		<disclaimer lang="de">Benötigt Skin-Support um korrekt genutzt zu werden</disclaimer>
+		<disclaimer lang="el">Απαιτείται υποστήριξη από το κέλυφος για να χρησιμοποιηθεί σωστά</disclaimer>
+		<disclaimer lang="en">Needs skin support for it to be used properly</disclaimer>
+		<disclaimer lang="en_NZ">Needs skin support for it to be used properly</disclaimer>
+		<disclaimer lang="en_US">Needs skin support for it to be used properly</disclaimer>
+		<disclaimer lang="es">Necesita ser soportado por el skin para poder funcionar correctamente</disclaimer>
+		<disclaimer lang="es_AR">Necesita soporte de mascara para ser usada correctamente</disclaimer>
+		<disclaimer lang="fi">Toimiakseen kunnolla, skinin tulee tukea tätä</disclaimer>
+		<disclaimer lang="fr">Nécessite le support du thème pour qu'il soit utilisé correctement</disclaimer>
+		<disclaimer lang="fr_CA">Le prise en charge de l'habillage est nécessaire pour qu'il soit utilisé correctement</disclaimer>
+		<disclaimer lang="gl">Precisa da axuda da pel para que sexa utilizado correctamente</disclaimer>
+		<disclaimer lang="he">להפעלה כראוי נדרשת תמיכה במעטפת</disclaimer>
+		<disclaimer lang="hr">Zahtijeva podršku presvlake za ispravno korištenje</disclaimer>
+		<disclaimer lang="hu">Felszín támogatás szükséges a helyes működéshez</disclaimer>
+		<disclaimer lang="id">Memerlukan dukungan kulit untuk dapat digunakan dengan baik</disclaimer>
+		<disclaimer lang="it">E' necessario che lo skin supporti lo script per funzionare correttamente</disclaimer>
+		<disclaimer lang="ko">스킨에서 지원해야 합니다</disclaimer>
+		<disclaimer lang="lt">Reikalingas teminės išvaizdos palaikymas tinkamam naudojimui</disclaimer>
+		<disclaimer lang="nl">Heeft skinondersteuning nodig om correct te werken</disclaimer>
+		<disclaimer lang="no">Krever skallstøtte for å fungere riktig</disclaimer>
+		<disclaimer lang="pl">Wymagane wsparcie skórki w celu poprawnego działania</disclaimer>
+		<disclaimer lang="pt">Necessita de um tema compatível para funcionar correctamente.</disclaimer>
+		<disclaimer lang="pt_BR">Necessita de suporte da skin para ser usado adequadamente</disclaimer>
+		<disclaimer lang="ro">Necesită suport din partea costumului pentru a fi folosit cum trebuie</disclaimer>
+		<disclaimer lang="ru">Необходима поддержка скинов для корректного отображения</disclaimer>
+		<disclaimer lang="sl">Potrebuje podporo preobleke, da bo uporabljeno pravilno.</disclaimer>
+		<disclaimer lang="sv">Behöver skalsupport för att kunna användas riktigt</disclaimer>
+		<disclaimer lang="tr">Düzgün kullanılabilmesi için dış görünüm desteğine ihtiyacınız var</disclaimer>
+		<disclaimer lang="zh">正常使用需要皮肤支持</disclaimer>
+		<language></language>
+		<platform>all</platform>
+		<license>GNU GENERAL PUBLIC LICENSE Version 2</license>
+		<forum>http://forum.kodi.tv/showthread.php?tid=114671</forum>
+		<website></website>
+		<email></email>
+		<source>https://github.com/ronie/script.favourites</source>
+	</extension>
+</addon>

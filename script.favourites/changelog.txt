@@ -1,0 +1,110 @@
+v7.1.1
+- clear properties
+
+v7.1.0
+- use select dialog
+
+v7.0.0
+- add cancel button
+
+v6.0.3
+- cleanup
+
+v6.0.2
+- update language files from Transifex
+
+v6.0.1
+- update language files from Transifex
+
+v6.0.0
+- kodi name change
+
+v5.0.4
+- don't add return to pvr paths
+
+v5.0.3
+- language update
+
+v5.0.2
+- fixed launching of android apps
+
+v5.0.1
+- no reason
+
+v5.0.0
+- gotham release
+
+v4.0.9
+- fix encoding issue
+
+v4.0.8
+- added 'no action' item to the end of the list
+
+v4.0.7
+- add favourite.count window property
+
+v4.0.6
+- fix crash when favourites file was not found
+
+v4.0.5
+- fix icon not showing up
+- fix folders added as a favourite didn't work
+
+v4.0.4
+- fix encoding issue
+
+v4.0.3
+- re-add setting home window properties
+
+v4.0.2
+- fix change title option
+
+v4.0.1
+- fix encoding issues
+
+v4.0.0
+- remove the old way of passing strings
+
+v3.2.7
+- use action.getId() instead of action
+
+v3.2.6
+- localize hard-coded string
+
+v3.2.5
+- fixed: don't escape apastrophes in the path
+
+v3.2.4
+- revert adding slash at the end of the path
+
+v3.2.3
+- added option to change favourite label
+
+v3.2.2
+- added icon images for reset and playlist items
+
+v3.2.1
+- use select dialog with id 6
+- added french translation
+- bugfixes
+
+v3.2.0
+- added readme
+- added french localization (thanks to Rififi77)
+- select dialog now uses id 6
+- fixed escape problems with paths on Windows
+
+v3.1.0
+- added clear setting
+
+v3.0.0
+- added set favourites dialog
+
+v2.0.1
+- fixed: don't add return before each bracket
+
+v2.0.0
+- version bump for eden
+
+v1.0.6
+- use xbmc.translatePath
