@@ -1090,7 +1090,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
                 listitem = self.getControl( 111 ).getSelectedItem()
                 path = listitem.getProperty('path')
                 title = listitem.getProperty('title')
-                resume = int(listitem.getProperty('resume'))
+                resume = int(float(listitem.getProperty('resume')))
                 self._play_video(path, title, resume)
             elif info_dialog.action == 'play_trailer':
                 listitem = self.getControl( 111 ).getSelectedItem()
@@ -1108,7 +1108,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
                 listitem = self.getControl( 141 ).getSelectedItem()
                 path = listitem.getProperty('path')
                 title = listitem.getProperty('title')
-                resume = int(listitem.getProperty('resume'))
+                resume = int(float(listitem.getProperty('resume')))
                 self._play_video(path, title, resume)
             elif info_dialog.action == 'play_musicvideo':
                 listitem = self.getControl( 151 ).getSelectedItem()
@@ -1162,7 +1162,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
             listitem = self.getControl( 111 ).getSelectedItem()
             path = listitem.getProperty('path')
             title = listitem.getProperty('title')
-            resume = int(listitem.getProperty('resume'))
+            resume = int(float(listitem.getProperty('resume')))
             self._play_video(path, title, resume)
         elif controlId == 121:
             listitem = self.getControl( 121 ).getSelectedItem()
@@ -1176,7 +1176,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
             listitem = self.getControl( 141 ).getSelectedItem()
             path = listitem.getProperty('path')
             title = listitem.getProperty('title')
-            resume = int(listitem.getProperty('resume'))
+            resume = int(float(listitem.getProperty('resume')))
             self._play_video(path, title, resume)
         elif controlId == 151:
             listitem = self.getControl( 151 ).getSelectedItem()
