@@ -1,0 +1,18 @@
+# Kodi Media Center language file
+# Addon Name: Play Trailer
+# Addon id: context.trailer
+msgid ""
+msgstr ""
+
+msgctxt "#32000"
+msgid "Play trailer"
+msgstr ""
+
+msgctxt "#32001"
+msgid "General"
+msgstr ""
+
+msgctxt "#32002"
+msgid "Play trailer in a window"
+msgstr ""
+
