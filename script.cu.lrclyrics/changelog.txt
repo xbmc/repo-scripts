@@ -1,3 +1,6 @@
+v5.3.0
+- fix broken text scrapers
+
 v4.2.2
 - add support for internet streams
 - save lyrics after selecting different lyrics
