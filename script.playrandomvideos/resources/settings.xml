@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <settings>
 	<category label="32900">
-    <setting type="lsep" label="32010" />
+		<setting id="hidebusydialog" label="32905" type="bool" default="false" />
+		<setting label="32101" type="action" action="Skin.ToggleSetting(disablecontext:script.playrandomvideos)" visible="!Skin.HasSetting(disablecontext:script.playrandomvideos)" />
+		<setting label="32102" type="action" action="Skin.ToggleSetting(disablecontext:script.playrandomvideos)" visible="Skin.HasSetting(disablecontext:script.playrandomvideos)" />
+		<setting type="lsep" label="32010" />
 		<setting label="32901" type="enum" id="watchmodemovies" default="0" lvalues="16100|16101|16102|36521" />
 		<setting label="32902" type="enum" id="watchmodetvshows" default="0" lvalues="16100|16101|16102|36521" />
 		<setting label="32903" type="enum" id="watchmodemusicvideos" default="0" lvalues="16100|16101|16102|36521" />
+		<setting label="32904" type="enum" id="watchmodeother" default="0" lvalues="16100|16101|16102|36521" />
 	</category>
 </settings>

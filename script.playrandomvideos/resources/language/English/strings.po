@@ -1,6 +1,6 @@
 # Kodi Media Center language file
 # Addon Name: Play Random Videos
-# Addon id: script.playrandomvideo
+# Addon id: script.playrandomvideos
 msgid ""
 msgstr ""
 
@@ -9,12 +9,33 @@ msgctxt "#32100"
 msgid "Play Random"
 msgstr ""
 
+msgctxt "#32101"
+msgid "Disable 'Play Random' context item [I](per skin)[/I]"
+msgstr ""
+
+msgctxt "#32102"
+msgid "Enable 'Play Random' context item [I](per skin)[/I]"
+msgstr ""
+
 # Headings
 msgctxt "#32010"
 msgid "Filter random selection by watched status"
 msgstr ""
 
+msgctxt "#32011"
+msgid "Can not play from non-permanent video source"
+msgstr ""
+
+# {0} = path to selected directory
+msgctxt "#32012"
+msgid "Add this or a higher directory as a permanent video source and try again.[CR]{0}"
+msgstr ""
+
 # Settings
+msgctxt "#32905"
+msgid "Hide busy notification before first video"
+msgstr ""
+
 #  heading
 msgctxt "#32900"
 msgid "Watched Filters"
@@ -30,4 +51,8 @@ msgstr ""
 
 msgctxt "#32903"
 msgid "Filter music videos by:"
+msgstr ""
+
+msgctxt "#32904"
+msgid "Filter other videos by:"
 msgstr ""
