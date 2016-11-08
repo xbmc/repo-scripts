@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="context.playrandomvideo" name="Play Random Video" version="1.0.4" provider-name="rmrector">
+<addon id="context.playrandomvideo" name="Play Random Video" version="1.0.6" provider-name="rmrector">
 	<requires>
 		<import addon="xbmc.addon" version="15.0.0" />
 		<import addon="xbmc.python" version="2.20.0" />
@@ -12,8 +12,9 @@
 		</item>
 	</extension>
 	<extension point="kodi.addon.metadata">
-		<summary lang="en">Plays a random video from the selected item.</summary>
-		<description lang="en">Plays a random video from the selected item. It can play random episodes from TV shows, movies from genres/sets/years/tags, and videos from playlists, the filesystem, and just about anything else, other than plugins.</description>
+		<broken lang="en">Context menu has been merged into the script, a separate add-on is no longer needed.</broken>
+		<summary lang="en">Plays random videos from the selected list.</summary>
+		<description lang="en">Plays random videos from the selected list. It can play random episodes from TV shows, movies from genres/sets/years/tags, and videos from playlists, the filesystem, and just about anything else, other than plugins.</description>
 		<disclaimer lang="en" />
 		<platform>all</platform>
 		<source>https://github.com/rmrector/context.playrandomvideo</source>
