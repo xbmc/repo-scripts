@@ -58,6 +58,16 @@ Additionally, sometimes a skin uses Skin Shortcuts in a very unusual way which m
 
 However, it is expected that this will only be used in rare circumstances, and it is preferable if there are issues with your skin using the shared menu, for you to work with us to improve the script.
 
+#### Shared additional submenu
+
+It is possible to use the additional sub-menu's in a way that means that they shouldn't be shared with other skins - for example, using them to manage a list of widgets rather than a list of shortcuts.
+
+In this case you can indicate that the additional submenu's shouldn't be shared with other skins by adding the following to your :-
+
+<doNotShareLevels />
+
+However, it is expected that this will only be used when you are using the additional menu's in an unusual way, and it is preferable if there are issues with your skin using the shared additional submenu's for you to work with us to improve the script.
+
 #### script-skinshortcuts-includes.xml
 
 It's important to note that using Skin Shortcuts means the script will write an extra file to your skins directory.

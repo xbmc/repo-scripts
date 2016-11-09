@@ -25,15 +25,20 @@ Skin Shortcuts supports three types of template - one for sub menu's; one for an
 
 ```
 <submenu include="[include]" level="[level]" name="[name]">
+	<property />
 	<controls>
 		<your>
 			<kodi>
 				<controls and="tags">
-					<skinshortcuts>items</skinshortcuts>
+					<skinshortcuts insert="insert">items</skinshortcuts>
 				</controls>
 			</kodi>
 		</your>
 	</controls>
+	<items insert="[insert]">
+		<property />
+		<controls />
+	</items>
 </submenu>
 ```
 
@@ -42,8 +47,11 @@ Skin Shortcuts supports three types of template - one for sub menu's; one for an
 | `[include]` | Yes | The name of the include this will be added to, appended to skinshortcuts-templates-. If ommitted, it will be added to skinshortcuts-template |
 | `[level]` | Yes | If building multiple sub-menu levels, specifies which level this applies to. Omit for the default level (0). |
 | `[name]` | Yes | For use with additional groups, the name of the group |
+| `<property />` | Yes | [Read More](#property-elements). Note that properties in the main template will be generated from the main menu item. Properties in the sub-template (`<items />`) will be generated from the submenu item |
 | `<skinshortcuts>items</skinshortcuts>` | | This will be replaced with the items the user has chosen for the main menu |
+| `[insert]` | Yes | Rather than including all menu items directly, you can build your own list from a sub-template. In this case, the `[insert]` is the id of the sub-template whose content will be inserted. See below for more details |
 | `<skinshortcuts>visibility</skinshortcuts>` | | This will be replaced with a visibility condition based on the focus of the main menu |
+| `<item />` | Yes | Defines a sub-template to be inserted into the main template. See below for more details |
 
 For each sub-menu that is built, a separate set of controls will be generated based on the template. You can include multiple templates with different level/name attributes.
 
@@ -51,6 +59,17 @@ If the level or name attributes are specified, the script will match the first t
 
 The `<controls />` element must be included. Put your gui xml within.
 
+##### Sub-Template
+
+It's possible to include one or more additional templates within your submenu template, the results of which are inserted into the submenu template itself.
+
+The submenu template itself builds once for each submenu you have. The sub-templates will build once for each menu item within that submenu, allowing you to customise what information from the submenu items you wish to use within the template.
+
+They are defined within a submenu template with an `<items insert="[insert]" />` element, where `[insert]` is the ID that you identify the sub-template from.
+
+They inherit all properties defined by the primary submenu template - all of which are based on the main menu item associated with the submenu. You can then define additional properties, which will be based on the individual submenu item that the template is being built for.
+
+They are inserted into the submenu template by including `<skinshortcuts insert="[insert]">items</skinshortcuts>`, where `[insert]` is the id you have assigned to the sub-template.
 
 #### Other template
 

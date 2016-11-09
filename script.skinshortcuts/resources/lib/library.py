@@ -926,8 +926,6 @@ class LibraryFunctions():
         if self.loaded[ "upnp" ][ 0 ] == False:
             json_query = xbmc.executeJSONRPC('{ "jsonrpc": "2.0", "id": 0, "method": "Files.GetDirectory", "params": { "properties": ["title", "file", "thumbnail"], "directory": "upnp://", "media": "files" } }')
             self.loaded[ "upnp" ][ 0 ] = True
-            
-        self.addToDictionary( "music", listitems )
     
     def librarysources( self ):
         # Add video sources

@@ -32,7 +32,7 @@ LANGUAGE     = ADDON.getLocalizedString
 KODIVERSION  = xbmc.getInfoLabel( "System.BuildVersion" ).split(".")[0]
 
 ACTION_CANCEL_DIALOG = ( 9, 10, 92, 216, 247, 257, 275, 61467, 61448, )
-ACTION_CONTEXT_MENU = ( 101, 117, )
+ACTION_CONTEXT_MENU = ( 117, )
 
 if not xbmcvfs.exists(DATAPATH):
     xbmcvfs.mkdir(DATAPATH)
@@ -76,7 +76,10 @@ class GUI( xbmcgui.WindowXMLDialog ):
         self.widgetPlaylists = False
         self.widgetPlaylistsType = None
         self.widgetRename = True
+        
+        # Variables for overrides
         self.onBack = {}
+        self.saveWithProperty = []
 
         # Has skin overriden GUI 308
         self.alwaysReset = False
@@ -243,9 +246,13 @@ class GUI( xbmcgui.WindowXMLDialog ):
     def load_shortcuts( self, includeUserShortcuts = True, addShortcutsToWindow = True ):
         log( "Loading shortcuts" )
         DATA._clear_labelID()
+
+        isSubLevel = False
+        if "." in self.group and int( self.group.rsplit( ".", 1 )[ 1 ] ) in range( 1, 6 ):
+            isSubLevel = True
         
         if includeUserShortcuts:
-            shortcuts = DATA._get_shortcuts( self.group, defaultGroup = self.defaultGroup )
+            shortcuts = DATA._get_shortcuts( self.group, defaultGroup = self.defaultGroup, isSubLevel = isSubLevel )
         else:
             shortcuts = DATA._get_shortcuts( self.group, defaultGroup = self.defaultGroup, defaultsOnly = True )
         
@@ -563,11 +570,11 @@ class GUI( xbmcgui.WindowXMLDialog ):
             if weEnabledScriptDebug:
                 ADDON.setSetting( "enable_logging", "false" )
 
-            if xbmc.getCondVisibility( "System.HasAddon( script.xbmc.debug.log )" ):
+            if xbmc.getCondVisibility( "System.HasAddon( script.kodi.loguploader)" ):
                 # Offer to upload a debug log
                 ret = xbmcgui.Dialog().yesno( ADDON.getAddonInfo( "name" ), LANGUAGE( 32097 ), LANGUAGE( 32093 ) )
                 if ret:
-                    xbmc.executebuiltin( "RunScript(script.xbmc.debug.log)" )
+                    xbmc.executebuiltin( "RunScript(script.kodi.loguploader)" )
             else:
                 # Inform user menu couldn't be saved
                 xbmcgui.Dialog().ok( ADDON.getAddonInfo( "name" ), LANGUAGE( 32097 ), LANGUAGE( 32094 ) )
@@ -597,11 +604,11 @@ class GUI( xbmcgui.WindowXMLDialog ):
             # We enabled one or more of the debug options, re-run this function
             self._save_shortcuts( enabledSystemDebug, enabledScriptDebug )
         else:
-            if xbmc.getCondVisibility( "System.HasAddon( script.xbmc.debug.log )" ):
+            if xbmc.getCondVisibility( "System.HasAddon( script.kodi.loguploader )" ):
                 # Offer to upload a debug log
                 ret = xbmcgui.Dialog().yesno( ADDON.getAddonInfo( "name" ), LANGUAGE( 32097 ), LANGUAGE( 32093 ) )
                 if ret:
-                    xbmc.executebuiltin( "RunScript(script.xbmc.debug.log)" )
+                    xbmc.executebuiltin( "RunScript(script.kodi.loguploader)" )
             else:
                 # Inform user menu couldn't be saved
                 xbmcgui.Dialog().ok( ADDON.getAddonInfo( "name" ), LANGUAGE( 32097 ), LANGUAGE( 32094 ) )                 
@@ -624,8 +631,8 @@ class GUI( xbmcgui.WindowXMLDialog ):
             
             for listitem in self.allListItems:
                 
-                # If the item has a label or an action...
-                if try_decode( listitem.getLabel() ) != LANGUAGE(32013) or listitem.getProperty( "path" ) != "noop":
+                # If the item has a label or an action, or a specified property from the override is present
+                if try_decode( listitem.getLabel() ) != LANGUAGE(32013) or listitem.getProperty( "path" ) != "noop" or self.hasSaveWithProperty( listitem ):
                     # Generate labelID, and mark if it has changed
                     labelID = listitem.getProperty( "labelID" )
                     newlabelID = labelID
@@ -689,14 +696,20 @@ class GUI( xbmcgui.WindowXMLDialog ):
                             additionalProperties.append( [ "thumb", thumb ] )
                         properties.append( [ newlabelID, additionalProperties ] )
                         
+            # Check whether this is an additional level
+            isSubLevel = False
+            if "." in self.group and int( self.group.rsplit( ".", 1 )[ 1 ] ) in range( 1, 6 ):
+                isSubLevel = True
+
             # Save the shortcuts
             DATA.indent( root )
-            path = os.path.join( DATAPATH , DATA.slugify( self.group, True ) + ".DATA.xml" )
+            path = os.path.join( DATAPATH , DATA.slugify( self.group, True, isSubLevel = isSubLevel ) + ".DATA.xml" )
             path = try_decode( path )
             
             tree.write( path.replace( ".shortcuts", ".DATA.xml" ), encoding="UTF-8"  )
             
             # Now make any labelID changes
+            copyDefaultProperties = []
             while not len( labelIDChanges ) == 0:
                 # Get the first labelID change, and check that we're not changing anything from that
                 labelIDFrom = labelIDChanges[0][0]
@@ -723,11 +736,13 @@ class GUI( xbmcgui.WindowXMLDialog ):
                 # Make the change (0 - the main sub-menu, 1-5 - additional submenus )
                 for i in range( 0, 6 ):
                     if i == 0:
+                        groupName = labelIDFrom
                         paths = [[os.path.join( DATAPATH, DATA.slugify( labelIDFrom, True ) + ".DATA.xml" ).encode( "utf-8" ), "Move"], [os.path.join( SKINPATH, DATA.slugify( defaultIDFrom ) + ".DATA.xml" ).encode( "utf-8" ), "Copy"], [os.path.join( DEFAULTPATH, DATA.slugify( defaultIDFrom ) + ".DATA.xml" ).encode( "utf-8" ), "Copy"], [None, "New"]]
                         target = os.path.join( DATAPATH, DATA.slugify( labelIDTo, True ) + ".DATA.xml" ).encode( "utf-8" )
                     else:
-                        paths = [[os.path.join( DATAPATH, DATA.slugify( labelIDFrom, True ) + "." + str( i ) + ".DATA,xml" ).encode( "utf-8" ), "Move"], [os.path.join( SKINPATH, DATA.slugify( defaultIDFrom ) + "." + str( i ) + ".DATA.xml" ).encode( "utf-8" ), "Copy"], [os.path.join( DEFAULTPATH, DATA.slugify( defaultIDFrom ) + "." + str( i ) + ".DATA.xml" ).encode( "utf-8" ), "Copy"]]
-                        target = os.path.join( DATAPATH, DATA.slugify( labelIDTo, True ) + "." + str( i ) + ".DATA.xml" ).encode( "utf-8" )
+                        groupName = "%s.%s" %( labelIDFrom, str( i ) )
+                        paths = [[os.path.join( DATAPATH, DATA.slugify( "%s.%s" %( labelIDFrom, str( i )), True, isSubLevel = True ) + ".DATA.xml" ).encode( "utf-8" ), "Move"], [os.path.join( SKINPATH, DATA.slugify( "%s.%s" %( defaultIDFrom, str( i ) ), isSubLevel = True ) + ".DATA.xml" ).encode( "utf-8" ), "Copy"], [os.path.join( DEFAULTPATH, DATA.slugify( "%s.%s" %( defaultIDFrom, str( i ) ), isSubLevel = True ) + ".DATA.xml" ).encode( "utf-8" ), "Copy"]]
+                        target = os.path.join( DATAPATH, DATA.slugify( "%s.%s" %( labelIDTo, str( i ) ), True, isSubLevel = True ) + ".DATA.xml" ).encode( "utf-8" )
                         
                     target = try_decode( target )
                     
@@ -761,17 +776,26 @@ class GUI( xbmcgui.WindowXMLDialog ):
                                 DATA.indent( newtree.getroot() )
                                 newtree.write( target, encoding="utf-8" )
                                 log( "Copying " + path[0] + " > " + target )
+
+                                # We'll need to import it's default properties, so save the groupName
+                                copyDefaultProperties.append( groupName )
                             break
                         
                 labelIDChanges.pop( 0 )
                 
             # Save widgets, backgrounds and custom properties
-            self._save_properties( properties, labelIDChangesDict )
+            self._save_properties( properties, labelIDChangesDict, copyDefaultProperties )
             
             # Note that we've saved stuff
             xbmcgui.Window( 10000 ).setProperty( "skinshortcuts-reloadmainmenu", "True" )
+
+    def hasSaveWithProperty( self, listitem ):
+        for propertyName in self.saveWithProperty:
+            if listitem.getProperty( propertyName ) != "":
+                return True
+        return False
                     
-    def _save_properties( self, properties, labelIDChanges ):
+    def _save_properties( self, properties, labelIDChanges, copyDefaults ):
         # Save all additional properties (widgets, backgrounds, custom)
         log( "Saving properties" )
         
@@ -797,6 +821,11 @@ class GUI( xbmcgui.WindowXMLDialog ):
             if not property[0] == self.group:
                 if property[0] in labelIDChanges.keys():
                     property[0] = labelIDChanges[property[0]]
+                elif "." in property[0]:
+                    # Additional menu
+                    groupName, groupValue = property[ 0 ].rsplit( ".", 1 )
+                    if groupName in labelIDChanges.keys() and int( groupValue ) in range( 1, 6 ):
+                        property[0] = "%s.%s" %( labelIDChanges[ groupName ], groupValue )
                 saveData.append( property )
         
         # Add all the properties we've been passed
@@ -807,6 +836,13 @@ class GUI( xbmcgui.WindowXMLDialog ):
                 # toSave[1] = property value
                 
                 saveData.append( [ self.group, property[0], toSave[0], toSave[1] ] )
+
+        # Add any default properties
+        for group in copyDefaults:
+            for defaultProperty in DATA.defaultProperties:
+                #[ groupname, itemLabelID, property, value ]
+                if defaultProperty[ 0 ] == group:
+                    saveData.append( [ group, defaultProperty[ 1 ], defaultProperty[ 2 ], defaultProperty[ 3 ] ] )
         
         # Try to save the file
         try:
@@ -815,7 +851,10 @@ class GUI( xbmcgui.WindowXMLDialog ):
             f.close()
         except:
             print_exc()
-            log( "### ERROR could not save file %s" % DATAPATH )                
+            log( "### ERROR could not save file %s" % DATAPATH )
+
+        # Clear saved properties in DATA, so it will pick up any new ones next time we load a file
+        DATA.currentProperties = None
     
     def _load_overrides( self ):
         # Load various overrides from the skin, most notably backgrounds and thumbnails
@@ -869,6 +908,11 @@ class GUI( xbmcgui.WindowXMLDialog ):
         # Are there any controls we don't close the window on 'back' for?
         for elem in tree.findall( "onback" ):
             self.onBack[ int( elem.text ) ] = int( elem.attrib.get( "to" ) )
+
+        # Are there any custom properties that shortcuts should be saved if present
+        for elem in tree.findall( "saveWithProperty" ):
+            self.saveWithProperty.append( elem.text )
+            
 
     def _load_overrides_context( self ):
         # Load context menu settings from overrides
@@ -1107,7 +1151,6 @@ class GUI( xbmcgui.WindowXMLDialog ):
         elif controlID == 302:
             # Delete an item
             log( "Delete item (302)" )
-            self.changeMade = True
             
             listControl = self.getControl( 211 )
             num = listControl.getSelectedPosition()
@@ -1774,6 +1817,10 @@ class GUI( xbmcgui.WindowXMLDialog ):
             if disabled == "True":
                 listitem.setProperty( "skinshortcuts-disabled", "False" )
             else:
+                # Display any warning  
+                if self.warnonremoval( listitem ) == False:
+                    return
+                
                 # Toggle to true, add highlighting to label
                 listitem.setProperty( "skinshortcuts-disabled", "True" )
                 
