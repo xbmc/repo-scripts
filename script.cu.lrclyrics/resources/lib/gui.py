@@ -583,7 +583,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
         elif ( actionId in ACTION_OSD ):
             xbmc.executebuiltin("ActivateWindow(10120)")
         elif ( actionId in ACTION_CODEC ):
-            xbmc.executebuiltin("Action(codecinfo)")
+            xbmc.executebuiltin("Action(PlayerProcessInfo)")
 
 class MyPlayer(xbmc.Player):
     def __init__(self, *args, **kwargs):

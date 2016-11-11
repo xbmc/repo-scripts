@@ -1,3 +1,10 @@
+v5.1.1
+- fix baidu lrc scraper
+- fix alsong lrc scraper
+
+v5.1.0
+- fix broken text scrapers
+
 v5.0.9
 - improve stripping of korean text
 - fix parsing lrc timestamps

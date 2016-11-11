@@ -45,18 +45,17 @@ class LyricsFetcher:
     def __init__( self ):
         self.base_url = "http://newlyrics.gomtv.com/"
 
-    def get_lyrics(self, song):
+    def get_lyrics(self, song, key=None, ext=None):
         log( "%s: searching lyrics for %s - %s" % (__title__, song.artist, song.title))
         lyrics = Lyrics()
         lyrics.song = song
         lyrics.source = __title__
         lyrics.lrc = __lrc__
-
-        key = None
         try:
-            ext = os.path.splitext(song.filepath.decode("utf-8"))[1].lower()
+            if not ext:
+               ext = os.path.splitext(song.filepath.decode("utf-8"))[1].lower()
             sup_ext = ['.mp3', '.ogg', '.wma', '.flac', '.ape', '.wav']
-            if ext in sup_ext:
+            if ext in sup_ext and key == None:
                 key = gomClient.GetKeyFromFile( song.filepath )
             if not key:
                 return None

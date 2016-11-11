@@ -7,9 +7,11 @@ import xbmc, xbmcvfs, xbmcgui
 import json
 
 ADDON     = sys.modules[ "__main__" ].ADDON
+ADDONNAME = sys.modules[ "__main__" ].ADDONNAME
 ADDONID   = sys.modules[ "__main__" ].ADDONID
 PROFILE   = sys.modules[ "__main__" ].PROFILE
 CWD       = sys.modules[ "__main__" ].CWD
+LANGUAGE  = sys.modules[ "__main__" ].LANGUAGE
 
 CANCEL_DIALOG = ( 9, 10, 92, 216, 247, 257, 275, 61467, 61448, )
 ACTION_OSD = ( 107, 163, )

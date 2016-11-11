@@ -11,7 +11,7 @@ import re;
 from utilities import *
 
 __title__ = "darklyrics"
-__priority__ = '230';
+__priority__ = '250';
 __lrc__ = False;
 
 class LyricsFetcher:

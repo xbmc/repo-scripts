@@ -115,7 +115,11 @@ msgctxt "#32118"
 msgid "Debugging"
 msgstr ""
 
-#empty strings from id 32119 to 32149
+#empty strings from id 32119 to 32148
+
+msgctxt "#32149"
+msgid "Expert"
+msgstr ""
 
 msgctxt "#32150"
 msgid "Scrapers"
@@ -163,6 +167,22 @@ msgstr ""
 
 msgctxt "#32161"
 msgid "Remove Chinese/Korean text from lyrics"
+msgstr ""
+
+msgctxt "#32162"
+msgid "Scraper test"
+msgstr ""
+
+msgctxt "#32163"
+msgid "Testing: %s"
+msgstr ""
+
+msgctxt "#32164"
+msgid "All scrapers are working ok"
+msgstr ""
+
+msgctxt "#32165"
+msgid "Failed scrapers: %s"
 msgstr ""
 
 #empty strings from id 32161 to 32198

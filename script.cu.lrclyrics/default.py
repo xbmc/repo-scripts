@@ -18,7 +18,7 @@ BASE_RESOURCE_PATH = os.path.join(CWD, 'resources', 'lib')
 sys.path.append (BASE_RESOURCE_PATH)
 
 from utilities import *
-
+from scrapertest import *
 log('script version %s started' % ADDONVERSION)
 
 def culrc_run(mode):
@@ -44,7 +44,10 @@ if ( __name__ == "__main__" ):
             log('service not enabled')
     # manually started
     else:
-        if service == "true":
+        if len(sys.argv) == 2 and sys.argv[1] == 'test':
+            
+            test_scrapers()
+        elif service == "true":
             culrc_run('service')
         else:
             culrc_run('manual')
