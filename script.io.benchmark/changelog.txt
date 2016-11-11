@@ -1,0 +1,7 @@
+v.1.0.0 - INIT
+v.1.0.1 - Android old python .format fix
+v.1.0.2 - Added cancel return
+v.1.0.3 - .format removed auto switched to manual field
+v.1.0.4 - Parameters added
+v.1.0.5 - Misc tweaks
+v.1.0.6 - Misc tweaks

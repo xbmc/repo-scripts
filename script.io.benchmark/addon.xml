@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.io.benchmark" name="I/O Benchmark" version="1.0.7" provider-name="Lunatixz">
+    <requires>
+        <import addon="xbmc.python" version="2.1.0"/>
+    </requires>
+    <extension point="xbmc.python.pluginsource" library="default.py">
+        <provides>executable</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <summary lang="en">Test your devices read/write performance.</summary>
+        <description lang="en"></description>
+        <license>The MIT License (MIT)</license>
+        <platform>all</platform>
+        <source>https://github.com/Lunatixz/XBMC_Addons/tree/master/script.io.benchmark</source>
+        <email>pseudotvlive@gmail.com</email>
+        <forum>http://forum.kodi.tv/</forum>
+    </extension>
+</addon>
