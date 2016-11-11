@@ -6,9 +6,11 @@
 		<setting id="search_file" type="bool" label="32153" default="true"/>
 		<setting type="sep" />
 		<setting label="32154" type="lsep"/>
+		<setting id="minilyrics" type="bool" label="MiniLyrics" default="true"/>
 		<setting id="ttplayer" type="bool" label="TTPlayer" default="true"/>
 		<setting id="baidu" type="bool" label="Baidu" default="true"/>
 		<setting id="gomaudio" type="bool" label="GomAudio" default="true"/>
+		<setting id="alsong" type="bool" label="Alsong" default="true"/>
 		<setting type="sep" />
 		<setting label="32155" type="lsep"/>
 		<setting id="lyricwiki" type="bool" label="LyricWiki" default="true"/>

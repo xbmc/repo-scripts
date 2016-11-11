@@ -2,7 +2,7 @@
 """
 Scraper for http://www.baidu.com
 
-taxigps
+ronie
 """
 
 import urllib
@@ -20,8 +20,8 @@ socket.setdefaulttimeout(10)
 
 class LyricsFetcher:
     def __init__( self ):
-        self.BASE_URL = 'http://box.zhangmen.baidu.com/x?op=12&count=1&title=%s$$%s$$$$'
-        self.LRC_URL = 'http://box.zhangmen.baidu.com/bdlrc/%d/%d.lrc'
+        self.BASE_URL = 'http://music.baidu.com/search/lrc?key=%s-%s'
+        self.LRC_URL = 'http://music.baidu.com%s'
 
     def get_lyrics(self, song):
         log( "%s: searching lyrics for %s - %s" % (__title__, song.artist, song.title))
@@ -29,24 +29,21 @@ class LyricsFetcher:
         lyrics.song = song
         lyrics.source = __title__
         lyrics.lrc = __lrc__
-
         try:
             url = self.BASE_URL % (song.title, song.artist)
-            xml_str = urllib.urlopen(url).read()
-            lrcid_pattern = re.compile(r'<lrcid>(.+?)</lrcid>')
-            lrcid = int(re.search(lrcid_pattern, xml_str).group(1))
-            if lrcid == 0:
-                return None
-            lrc_url = self.LRC_URL % (lrcid/100, lrcid)
-            lyr = urllib.urlopen(lrc_url).read()
+            data = urllib.urlopen(url).read()
+            songmatch = re.search('song-title.*?<em>(.*?)</em>', data, flags=re.DOTALL)
+            track = songmatch.group(1)
+            artistmatch = re.search('artist-title.*?<em>(.*?)</em>', data, flags=re.DOTALL)
+            name = artistmatch.group(1)
+            urlmatch = re.search("down-lrc-btn.*?':'(.*?)'", data, flags=re.DOTALL)
+            found_url = urlmatch.group(1)
+            if (difflib.SequenceMatcher(None, song.artist.lower(), name.lower()).ratio() > 0.8) and (difflib.SequenceMatcher(None, song.title.lower(), track.lower()).ratio() > 0.8):
+                lyr = urllib.urlopen(self.LRC_URL % found_url).read()
+            else:
+                return
         except:
-            log( "%s: %s::%s (%d) [%s]" % (
-                   __title__, self.__class__.__name__,
-                   sys.exc_info()[ 2 ].tb_frame.f_code.co_name,
-                   sys.exc_info()[ 2 ].tb_lineno,
-                   sys.exc_info()[ 1 ]
-                   ))
-            return None
+            return
 
         enc = chardet.detect(lyr)
         lyr = lyr.decode(enc['encoding'], 'ignore')
