@@ -183,6 +183,7 @@ class Widgets_Player(xbmc.Player):
             self.action(self.type)
         self.type = ""
 
+
 log('service version %s started' % __addonversion__)
 Main()
 log('service version %s stopped' % __addonversion__)

@@ -33,12 +33,16 @@ Available tags:
 -   recentalbums
 -   recommendedalbums
 -	playliststats
+-	movie
+-	episode
+-	song
+-	actors
 
 Available infolabels:
 
 ListItem.Property(type) shows with what option the script was run.
 
-Movies:
+### Movies:
 -	ListItem.Title
 -	ListItem.OriginalTitle
 -	ListItem.Year
@@ -77,7 +81,7 @@ Movies:
 -	ListItem.AudioLanguage
 -	ListItem.SubtitleLanguage
 
-Episodes:
+### Episodes:
 -	ListItem.Title
 -	ListItem.Episode
 -	ListItem.Season
@@ -107,7 +111,7 @@ Episodes:
 -	ListItem.Art(tvshow.landscape)
 -	ListItem.Art(fanart)
 
-Songs:
+### Songs:
 -	ListItem.Title
 -	ListItem.Artist
 -	ListItem.Genre
@@ -119,7 +123,7 @@ Songs:
 -	ListItem.Property(fanart_image)
 -	ListItem.Property(dbid)
 
-Albums:
+### Albums:
 -	ListItem.Title
 -	ListItem.Artist
 -	ListItem.Genre
@@ -136,10 +140,11 @@ Albums:
 -	ListItem.Property(fanart_image)
 -	ListItem.Property(dbid)
 
+### Playliststats
 Playliststats is used when a playlist or videonode is set as the onclick action in the (Home) menu.
 Example:
 Put a list in your Home.xml:
-```xml
+```
 <control type="list" id="43260">
 	<posx>0</posx>
 	<posy>0</posy>
@@ -161,5 +166,27 @@ The following properties are available when the menu item containing the playlis
 -	Window(Home).Property(PlaylistEpisodes)
 -	Window(Home).Property(PlaylistEpisodesUnWatched)
 
+### Single item
+movie/episode/song tags need an additional dbid tag with the specified databaseid. 
+It will fill a list with the specified item. May be useful to open an infodialog in places it's not supported (eg Fullscreen media).
+Example:
+```
+plugin://service.library.data.provider?type=$INFO[ListItem.DBType]&amp;dbid=$INFO[ListItem.DBID]
+```
+
+### Actors
+Fill a list with the actors from the specified library item.
+ - ListItem.Label - Name
+ - ListItem.Label2 - Role
+ - ListItem.Icon - Actor thumbnail `DefaultActor.png`
+
+Additional parameters:
+- dbid (database id)
+- dbtype (optional, `movie`, `tvshow`, `episode` or `musicvideo`) 
+For use in fullscreen video, omit the dbtype parameter.
+Example:
+```
+plugin://service.library.data.provider?type=actors&amp;dbid=$INFO[ListItem.DBID]&amp;dbtype=$INFO[ListItem.DBType]
+```
 
 
