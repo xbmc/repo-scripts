@@ -1,3 +1,6 @@
+v0.1.0
+- qr code support
+
 v0.0.3
 - prevent crashlogs from being posted multiple times
 

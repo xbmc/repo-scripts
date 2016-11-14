@@ -72,8 +72,8 @@ msgctxt "#32033"
 msgid "crashlog"
 msgstr ""
 
-msgctxt "#32005"
-msgid "Post this paste url for your %s, together with a problem description, on the Kodi support forum:[CR]%s"
+msgctxt "#32006"
+msgid "Post this url or scan QRcode for your %s, together with a problem description, on the Kodi support forum: %s"
 msgstr ""
 
 msgctxt "#32501"

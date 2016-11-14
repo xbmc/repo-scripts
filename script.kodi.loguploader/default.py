@@ -1,6 +1,7 @@
 import os
 import re
 import socket
+import pyqrcode
 from urllib import urlencode
 from urllib import FancyURLopener
 import xbmc
@@ -13,6 +14,7 @@ ADDONID      = ADDON.getAddonInfo('id')
 ADDONNAME    = ADDON.getAddonInfo('name')
 ADDONVERSION = ADDON.getAddonInfo('version')
 CWD          = ADDON.getAddonInfo('path').decode('utf-8')
+PROFILE      = ADDON.getAddonInfo('profile').decode('utf-8')
 LANGUAGE     = ADDON.getLocalizedString
 
 socket.setdefaulttimeout(5)
@@ -28,6 +30,28 @@ def log(txt):
         txt = txt.decode('utf-8')
     message = u'%s: %s' % (ADDONID, txt)
     xbmc.log(msg=message.encode('utf-8'), level=xbmc.LOGDEBUG)
+
+
+class QRCode(xbmcgui.WindowXMLDialog):
+    def __init__(self, *args, **kwargs):
+        self.image = kwargs["image"]
+        self.text = kwargs["text"]
+
+    def onInit(self):
+        self.imagecontrol = 501
+        self.textbox = 502
+        self.okbutton = 503
+        self.showdialog()
+
+    def showdialog(self):
+        self.getControl(self.imagecontrol).setImage(self.image)
+        self.getControl(self.textbox).setText(self.text)
+        self.setFocus(self.getControl(self.okbutton))
+
+    def onClick(self, controlId):
+        if (controlId == self.okbutton):
+            self.close()
+
 
 # Custom urlopener to set user-agent
 class pasteURLopener(FancyURLopener):
@@ -53,7 +77,7 @@ class Main:
                 content = self.cleanLog(data)
                 succes, result = self.postLog(content)
                 if succes:
-                    self.showResult(LANGUAGE(32005) % (name, result))
+                    self.showResult(LANGUAGE(32006) % (name, result), result)
                 else:
                     self.showResult('%s[CR]%s' % (error, result))
             else:
@@ -126,7 +150,7 @@ class Main:
         params['content'] = data
         params['syntax'] = 'text'
         params = urlencode(params)
-
+        # return True, 'http://test.com/123456/'#TEST
         url_opener = pasteURLopener()
 
         try:
@@ -143,9 +167,18 @@ class Main:
             log('unable to retrieve the paste url')
             return False, LANGUAGE(32004)
 
-    def showResult(self, message):
-        dialog = xbmcgui.Dialog()
-        confirm = dialog.ok(ADDONNAME, message)
+    def showResult(self, message, url=None):
+        if url:
+            imagefile = os.path.join(xbmc.translatePath(PROFILE),'%s.png'%str(url.split('/')[-2]))
+            qrIMG = pyqrcode.create(url)
+            qrIMG.png(imagefile, scale=10)
+            qr = QRCode( "script-loguploader-main.xml" , CWD, "default", image=imagefile, text=message)
+            qr.doModal()
+            del qr
+            xbmcvfs.delete(imagefile)
+        else:
+            dialog = xbmcgui.Dialog()
+            confirm = dialog.ok(ADDONNAME, message)
 
 if ( __name__ == '__main__' ):
     log('script version %s started' % ADDONVERSION)
