@@ -1,3 +1,10 @@
+v5.2.0
+- add lyrics.com scraper
+- add letssingit scraper
+
+v5.1.2
+- fix minilyrics scraper
+
 v5.1.1
 - fix baidu lrc scraper
 - fix alsong lrc scraper
