@@ -16,7 +16,7 @@ from SubtitleHelper import log
 class SubtitleOption(object):
     def __init__(self, subtitle_option_row):
         onclick_action_string = subtitle_option_row.find("td", { "class" : "desktop" }).find("button").get("onclick")
-        params_match = re.match("downloadSub\(\'(?P<option_id>\w*)\',(?P<sub_id>\d+),", onclick_action_string)
+        params_match = re.search("\((?P<sub_id>\d+),\'(?P<option_id>\w*)\',", onclick_action_string)
         if not params_match:
             return
 
