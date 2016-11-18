@@ -481,3 +481,11 @@ msgstr "Nouvel élément sur le menu principal (éléments de sous-menu automati
 msgctxt "#32114"
 msgid "Where should menu item be created"
 msgstr "Où l’élément du menu doit être créé"
+
+msgctxt "#32115"
+msgid "Unable to get directory listings[CR][CR]See log for details"
+msgstr "Impossible d'obtenir les listes des répertoires.[CR][CR]Voir le log pour plus de détails."
+
+msgctxt "#32116"
+msgid "The skin you are using does not support adding items directly to the main menu"
+msgstr "Le thème que vous utilisez ne prend pas en charge l'ajout d'éléments directement sur le menu principal."

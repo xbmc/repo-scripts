@@ -1,33 +1,25 @@
-#Skin Shortcuts - 1.0.10
+#Skin Shortcuts - 1.0.12
 
 script.skinshortcuts was written with the intention of making user customizable shortcuts on the home page easier for skinners.
 
 
 ## What's New for Skinners
 
-#### Version 1.0.10 - repo version
+#### Version 1.0.12 - repo version
+
+- Skinners can now set that their skin should not use the users shared additional submenus - [Read More](./resources/docs/started/Getting Started.md#shared-additioanl-submenu)
+- Submenu template improvements - [Read More](./resources/docs/advanced/Templates.md#sub-menu-template)
+- Please be aware that:-
+  - Warnings on deleting a shortcut are now shown when disabling a shortcut
+  - The processing of overrides has been adjusted so that visibilityoverrides will themselves be overriden by any additional overrides which match
+
+#### Version 1.0.10 - previous version
 
 - Ability to move controls from management dialog to context menu (Krypton only) - [Read More](./resources/docs/advanced/Context menu.md)
 - Ability to disable menu items via GUI 313 - Please note this control is made available by default on the context menu - [Read More](./resources/docs/started/Management Dialog.md)
 - Default icons for all available shortcuts in the Common, Commands and Settings available shortcut groupings - [Read More](./resources/docs/advanced/Overriding icons.md)
 - Behaviour change: When using mode=single, only the main menu (and corresponding submenu's) will be added to the allmenus include - additional groups that are being built will no longer be added
 - Please be aware of the removal of deprecated window names in Krypton. The script will attempt to update VideoLibrary and MusicLibrary to Videos and Music respectively, but you should ensure that any default shortcuts you provide with your skin are up to date as this behaviour may change in the future.
-
-#### Version 1.0.8 - previous version
-
-- Ability to set additional properties of menu items from outside of the management dialog - [Read More](./resources/docs/advanced/External editing.md#change-properties-of-menu-items)
-- Skinner can now set that their skin should not use the users shared menu - [Read More](./resources/docs/started/Getting Started.md#shared-menu)
-- backgroundbrowse override can now be used to specify whether only a single or multi image should be selected - [Read More](./resources/docs/advanced/Managing backgrounds.md#let-the-user-browse-for-a-background-image)
-- Ability to add a 'None' option when using GUI 311 to select thumbnail - [Read More](./resources/docs/advanced/Provide thumbnails.md)
-- Ability to override an action based on its automatic visibility condition - [Read More](./resources/docs/advanced/Overriding an action.md#run-a-different-command-based-on-automatic-visibility-condition)
-- Ability to define a control ID to toggle a custom property - [Read More](./resources/docs/advanced/Custom shortcut properties.md#allow-user-to-toggle-a-property)
-- Build option to not build `skinshortcuts-group-[name]` includes - [Read More](./resources/docs/started/Getting Started.md#don't-build-individual-groups)
-- Template improvements
- - Match multiple properties to a single value - [Read More](./resources/docs/advanced/Templates.md#set-a-property-based-on-multiple-elements)
- - Property groups shared between templates - [Read More](./resources/docs/advanced/Templates.md#property-groups)
- - New submenuOther templates - [Read More](./resources/docs/advanced/Templates.md#types-of-templates)
- - Get value from Python - [Read More](./resources/docs/advanced/Templates.md#get-value-from-python)
-- Plugin-based widgets selected via the GUI 312 method will now have a reload parameter added to them automatically. This means that they will update after media has been played. (Requires Skin Helper Service)
  
 ## With Thanks - Because their names don't deserve to be at the bottom :)
 

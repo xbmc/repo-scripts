@@ -1,3 +1,13 @@
+v1.0.12
+- Fix for context menu add-on
+- Remove SuperFavourites workaround
+- Honour skin warnings when disabling a menu item
+- Switch to using new Kodi Log Uploader on menu build/save failure
+- Various PVR visibility updates
+- Adjust processing of visibilityoverrides so that other overrides are then applied to them
+- Template improvements
+- Minor fixes, including to loading additional submenu's
+
 v1.0.10
 - Support context menu in management dialog (Krypton only)
 - Support disabling menu items

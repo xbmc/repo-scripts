@@ -116,10 +116,10 @@ class XMLFunctions():
                     ADDON.setSetting( "enable_logging", "false" )
                     
                 # Offer to upload a debug log
-                if xbmc.getCondVisibility( "System.HasAddon( script.xbmc.debug.log )" ):
+                if xbmc.getCondVisibility( "System.HasAddon( script.kodi.loguploader )" ):
                     ret = xbmcgui.Dialog().yesno( ADDON.getAddonInfo( "name" ), LANGUAGE( 32092 ), LANGUAGE( 32093 ) )
                     if ret:
-                        xbmc.executebuiltin( "RunScript(script.xbmc.debug.log)" )
+                        xbmc.executebuiltin( "RunScript(script.kodi.loguploader)" )
                 else:
                     xbmcgui.Dialog().ok( ADDON.getAddonInfo( "name" ), LANGUAGE( 32092 ), LANGUAGE( 32094 ) )
                     
@@ -148,10 +148,10 @@ class XMLFunctions():
                     self.buildMenu( mainmenuID, groups, numLevels, buildMode, options, minitems, enabledSystemDebug, enabledScriptDebug )
                 else:
                     # Offer to upload a debug log
-                    if xbmc.getCondVisibility( "System.HasAddon( script.xbmc.debug.log )" ):
+                    if xbmc.getCondVisibility( "System.HasAddon( script.kodi.loguploader )" ):
                         ret = xbmcgui.Dialog().yesno( ADDON.getAddonInfo( "name" ), LANGUAGE( 32092 ), LANGUAGE( 32093 ) )
                         if ret:
-                            xbmc.executebuiltin( "RunScript(script.xbmc.debug.log)" )
+                            xbmc.executebuiltin( "RunScript(script.kodi.loguploader)" )
                     else:
                         xbmcgui.Dialog().ok( ADDON.getAddonInfo( "name" ), LANGUAGE( 32092 ), LANGUAGE( 32094 ) )
         
@@ -422,6 +422,7 @@ class XMLFunctions():
                 progress.update( int( currentProgress ) )
                 Template.current = currentProgress
                 submenuDefaultID = None
+                templateCurrentMainMenuItem = None
 
                 if not isinstance( item, basestring ):
                     # This is a main menu item (we know this because it's an element, not a string)
@@ -432,6 +433,7 @@ class XMLFunctions():
 
                     # Save a copy for the template
                     templateMainMenuItems.append( Template.copy_tree( menuitem ) )
+                    templateCurrentMainMenuItem = Template.copy_tree( menuitem )
 
                     # Get submenu defaultID
                     submenuDefaultID = item.find( "defaultID" ).text
@@ -497,7 +499,7 @@ class XMLFunctions():
                     if count == 0:
                         submenudata = DATA._get_shortcuts( submenu, submenuDefaultID, True, profile[0] )
                     else:
-                        submenudata = DATA._get_shortcuts( submenu, None, True, profile[0] )
+                        submenudata = DATA._get_shortcuts( submenu, None, True, profile[0], isSubLevel = True )
                         
                     if type( submenudata ) == list:
                         submenuitems = submenudata
@@ -549,7 +551,7 @@ class XMLFunctions():
                     for submenuItem in submenuitems:
                         itemidsubmenu += 1
                         # Build the item without any visibility conditions
-                        menuitem, allProps = self.buildElement( submenuItem, submenu, None, profile[1], itemid = itemidsubmenu, options = options )
+                        menuitem, allProps = self.buildElement( submenuItem, submenu, None, profile[1], itemid = itemidsubmenu, mainmenuid = itemidmainmenu, options = options )
                         isSubMenuElement = xmltree.SubElement( menuitem, "property" )
                         isSubMenuElement.set( "name", "isSubmenu" )
                         isSubMenuElement.text = "True"
@@ -600,7 +602,7 @@ class XMLFunctions():
                     buildOthers = False
                     if item in submenuItems:
                         buildOthers = True
-                    Template.parseItems( "submenu", count, templateSubMenuItems, profile[ 2 ], profile[ 1 ], "StringCompare(Container(" + mainmenuID + ").ListItem.Property(submenuVisibility)," + DATA.slugify( submenuVisibilityName, convertInteger=True ) + ")", item, None, buildOthers )
+                    Template.parseItems( "submenu", count, templateSubMenuItems, profile[ 2 ], profile[ 1 ], "StringCompare(Container(" + mainmenuID + ").ListItem.Property(submenuVisibility)," + DATA.slugify( submenuVisibilityName, convertInteger=True ) + ")", item, None, buildOthers, mainmenuitems = templateCurrentMainMenuItem )
                         
                     count += 1
 
@@ -688,7 +690,7 @@ class XMLFunctions():
         file.close()
         
         
-    def buildElement( self, item, groupName, visibilityCondition, profileVisibility, submenuVisibility = None, itemid=-1, options=[] ):
+    def buildElement( self, item, groupName, visibilityCondition, profileVisibility, submenuVisibility = None, itemid = -1, mainmenuid = None, options=[] ):
         # This function will build an element for the passed Item in
 
         # Create the element
@@ -702,6 +704,13 @@ class XMLFunctions():
         idproperty.set( "name", "id" )
         idproperty.text = "$NUMBER[%s]" %( str( itemid ) )
         allProps[ "id" ] = idproperty
+
+        # Set main menu id
+        if mainmenuid:
+            mainmenuidproperty = xmltree.SubElement( newelement, "property" )
+            mainmenuidproperty.set( "name", "mainmenuid" )
+            mainmenuidproperty.text = "%s" %( str( mainmenuid ) )
+            allProps[ mainmenuid ] = mainmenuidproperty
             
         # Label and label2
         xmltree.SubElement( newelement, "label" ).text = DATA.local( item.find( "label" ).text )[1]

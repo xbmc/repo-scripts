@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.skinshortcuts" name="Skin Shortcuts" version="1.0.10" provider-name="BigNoid,marcelveldt">
+<addon id="script.skinshortcuts" name="Skin Shortcuts" version="1.0.12" provider-name="BigNoid,marcelveldt">
 	<requires>
 		<import addon="xbmc.python" version="2.20.0"/>
 		<import addon="script.module.simplejson" version="3.3.0"/>
@@ -7,7 +7,7 @@
 	</requires>
 	<extension point="xbmc.python.library" library="default.py"/>
 	<extension point="xbmc.addon.metadata">
-		<news>New features for skinners including context menu in management dialog, icon override and build improvements. New features for users including ability to disable a menu item and Krypton fixes.</news>
+		<news>Template improvements and bug fixes</news>
 		<description lang="bg">Добавка за облици, която осигурява просто управление и списък с потребителски преки пътища (изисква поддръжка от облика)</description>
 		<description lang="de">Add-on für Skins für einfache Bearbeitung und Auflistung von benutzerdefinierten Verknüpfungen (erfordert Skin-Unterstützung)</description>
 		<description lang="el">Πρόσθετο για κελύφη, το οποίο παρέχει έναν απλό τρόπο διαχείρισης και κατηγοριοποίησης των συντομεύσεων του χρήστη (πρέπει να υποστηρίζεται από το κέλυφος)</description>
@@ -38,8 +38,4 @@
 		<email></email>
 		<source>https://github.com/BigNoid/script.skinshortcuts</source>
 	</extension>
-	<assets>
-		<icon>icon.png</icon>
-		<fanart>fanart.jpg</fanart>
-	</assets>
 </addon>

@@ -3,7 +3,6 @@ import os, sys
 import xbmc, xbmcaddon, xbmcgui, xbmcplugin, urllib, xbmcvfs
 import xml.etree.ElementTree as xmltree
 import cPickle as pickle
-import cProfile
 import pstats
 import random
 import time
@@ -12,6 +11,9 @@ import thread
 from time import gmtime, strftime
 from datetime import datetime
 from traceback import print_exc
+
+# Uncomment when profiling performance
+# import cProfile
 
 if sys.version_info < (2, 7):
     import simplejson
@@ -334,7 +336,6 @@ class Main:
         
         if shouldRun:
             isShared = DATA.checkIfMenusShared()
-            log( repr( isShared ) )
             for files in xbmcvfs.listdir( DATAPATH ):
                 # Try deleting all shortcuts
                 if files:
@@ -388,7 +389,7 @@ class Main:
 if ( __name__ == "__main__" ):
     log('script version %s started' % ADDONVERSION)
     
-    # Profiling
+    # Uncomment when profiling performance
     #filename = os.path.join( DATAPATH, strftime( "%Y%m%d%H%M%S",gmtime() ) + "-" + str( random.randrange(0,100000) ) + ".log" )
     #cProfile.run( 'Main()', filename )
     
@@ -397,7 +398,7 @@ if ( __name__ == "__main__" ):
     #p.sort_stats( "cumulative" )
     #p.print_stats()
     
-    # No profiling
+    # Comment out the following line when profiling performance
     Main()
     
     log('script stopped')

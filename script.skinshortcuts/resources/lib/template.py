@@ -70,7 +70,7 @@ class Template():
         self.simple_eval = simpleeval.SimpleEval()
         self.simple_eval.operators[ast.In] = operator.contains
             
-    def parseItems( self, menuType, level, items, profile, profileVisibility, visibilityCondition, menuName, mainmenuID = None, buildOthers = False ):
+    def parseItems( self, menuType, level, items, profile, profileVisibility, visibilityCondition, menuName, mainmenuID = None, buildOthers = False, mainmenuitems = None ):
         # This will build an item in our includes for a menu
         if self.includes is None or self.tree is None:
             return
@@ -99,9 +99,14 @@ class Template():
             
             treeRoot = self.getInclude( self.includes, includeName, profileVisibility, profile )
             includeTree = self.getInclude( self.includes, includeName + "-%s" %( profile ), None, None )
+
+            # If we've been passed any mainmenu items, retrieve their properties
+            properties = {}
+            if mainmenuitems is not None:
+                properties = self.getProperties( template, mainmenuitems )
             
             # Now replace all <skinshortcuts> elements with correct data
-            self.replaceElements( template, visibilityCondition, profileVisibility, items )
+            self.replaceElements( template.find( "controls" ), visibilityCondition, profileVisibility, items, properties, customitems = template.findall( "items" ) )
             
             # Add the template to the includes
             for child in template.find( "controls" ):
@@ -110,6 +115,12 @@ class Template():
         # Now we want to see if any of the main menu items match a template
         if not buildOthers or len( self.otherTemplates ) == 0:
             return
+
+        # If we've been passed any mainmenu items, retrieve the id of the main menu item
+        rootID = None
+        if mainmenuitems is not None:
+            rootID = mainmenuitems.attrib.get( "id" )
+
         progressCount = 0
         numTemplates = 0
         if menuType == "mainmenu":
@@ -142,7 +153,7 @@ class Template():
 
             # Now find a matching template - if one matches, it will be saved to be processed
             # at the end (when we have all visibility conditions)
-            numTemplates += self.findOther( item, profile, profileVisibility, finalVisibility, menuType )
+            numTemplates += self.findOther( item, profile, profileVisibility, visibilityCondition, finalVisibility, menuType, rootID )
             if menuType == "mainmenu":
                 self.progress.update( int( self.current + ( ( float( self.percent ) / float( len( items ) ) ) * progressCount ) ) )
         if numTemplates != 0:
@@ -354,7 +365,7 @@ class Template():
         if returnElem is None: return None            
         return self.copy_tree( returnElem )
         
-    def findOther( self, item, profile, profileVisibility, visibilityCondition, menuType ):
+    def findOther( self, item, profile, profileVisibility, simpleVisibility, visibilityCondition, menuType, rootID ):
         # Find a template matching the item we have been passed
         foundTemplateIncludes = []
         numTemplates = 0
@@ -390,7 +401,7 @@ class Template():
                 if "container" in elem.attrib:
                     finalVisibility = visibilityCondition.replace( "::SUBMENUCONTAINER::", elem.attrib.get( "container" ) )
                 else:
-                    finalVisibility = ""
+                    finalVisibility = simpleVisibility
 
             # Check whether the skinner has set the match type (whether all conditions need to match, or any)
             matchType = "all"
@@ -427,6 +438,8 @@ class Template():
                 
             # All the rules matched, so next we'll get any properties
             properties = self.getProperties( template, item )
+            if rootID is not None:
+                properties[ "auto-rootID" ] = rootID
             
             # Next up, we do any replacements - EXCEPT for visibility, which
             # we'll store for later (in case multiple items would have an
@@ -689,8 +702,18 @@ class Template():
                         log( "Invalid template - cannot set property directly to menu item elements value when using multiple rules for single property")
         
         return properties
+
+    def combineProperties( self, elem, items, currentProperties ):
+        # Combines an existing set of properties with additional properties
+        newProperties = self.getProperties( elem, items )
+        for propertyName in newProperties:
+            if propertyName in currentProperties.keys():
+                continue
+            currentProperties[ propertyName ] = newProperties[ propertyName ]
+
+        return currentProperties  
     
-    def replaceElements( self, tree, visibilityCondition, profileVisibility, items, properties = {} ):
+    def replaceElements( self, tree, visibilityCondition, profileVisibility, items, properties = {}, customitems = None ):
         if tree is None: return
         for elem in tree:
             # <tag skinshortcuts="visible" /> -> <tag condition="[condition]" />
@@ -820,6 +843,10 @@ class Template():
                     newelement.text = visibilityCondition
                     # Insert it
                     tree.insert( index, newelement )
+                elif type == "items" and customitems is not None and elem.attrib.get( "insert" ):
+                    for elem in self.buildSubmenuCustomItems( customitems, items.findall( "item" ), elem.attrib.get( "insert" ), properties ):
+                        for child in elem:
+                            tree.insert( index, child )
                 elif type == "items":
                     # Firstly, go through and create an array of all items in reverse order, without
                     # their existing visible element, if it matches our visibilityCondition
@@ -841,9 +868,31 @@ class Template():
                         for elem in newelements:
                             # Insert them into the template
                             tree.insert( index, elem )
+
             else:
                 # Iterate through tree
-                self.replaceElements( elem, visibilityCondition, profileVisibility, items, properties )
+                self.replaceElements( elem, visibilityCondition, profileVisibility, items, properties, customitems = customitems )
+
+    def buildSubmenuCustomItems( self, template, items, insert, currentProperties ):
+        # Builds an 'items' template within a submenu template
+
+        # Find the template with the correct insert attribute
+        itemTemplate = None
+        for testTemplate in template:
+            if testTemplate.attrib.get( "insert" ) == insert:
+                itemTemplate = testTemplate
+                break
+
+        if itemTemplate is None:
+            # Couldn't find a template
+            return []
+
+        newelements = []
+        for item in items:
+            newElement = self.copy_tree( itemTemplate.find( "controls" ) )
+            self.replaceElements( newElement, None, None, [], self.combineProperties( itemTemplate, item, currentProperties.copy() ) )
+            newelements.insert( 0, newElement )
+        return newelements
             
     def _save_hash( self, filename, file ):
         if file is not None:
