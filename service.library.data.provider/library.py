@@ -45,10 +45,10 @@ class LibraryFunctions():
 
     def _get_data(self, query_type, useCache):
         # Check if data is being refreshed elsewhere
-        if self.WINDOW.getProperty(query_type+"-data") == "LOADING":
+        if self.WINDOW.getProperty(query_type + "-data") == "LOADING":
             for count in range(30):
                 xbmc.sleep(100)
-                data = self.WINDOW.getProperty(query_type+"-data")
+                data = self.WINDOW.getProperty(query_type + "-data")
                 if data != "LOADING":
                     return data
 
@@ -67,11 +67,11 @@ class LibraryFunctions():
         data = self._get_data(prefix, useCache)
         if data is not None:
             return data
-        self.WINDOW.setProperty(prefix+"-data", "LOADING")
+        self.WINDOW.setProperty(prefix + "-data", "LOADING")
 
         rv = queryFunc()  # Must return a unicode string (json-encoded data)
 
-        self.WINDOW.setProperty(prefix+"-data", rv)
+        self.WINDOW.setProperty(prefix + "-data", rv)
         self.WINDOW.setProperty(prefix, strftime("%Y%m%d%H%M%S", gmtime()))
         return rv
 
