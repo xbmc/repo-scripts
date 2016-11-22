@@ -1,3 +1,6 @@
+4.1.2 - by TheWiz (22/11/2016)
+- Fix IMDB id fetching
+
 4.1.1 - by CaTz (30/10/2016)
 - Fix empty state when using not in playing mode
 
