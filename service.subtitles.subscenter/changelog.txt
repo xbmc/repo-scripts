@@ -1,3 +1,7 @@
+4.1.2 - by CaTz (24/11/2016)
+- Fix fetching IMDB id - by TheWiz
+- Fetch list item data for external search - by burekas7
+
 4.1.1 - by CaTz (30/10/2016)
 - Fix empty state when using not in playing mode
 

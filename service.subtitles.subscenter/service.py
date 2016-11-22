@@ -8,6 +8,7 @@ import xbmcvfs
 import xbmcaddon
 import xbmcgui
 import xbmcplugin
+import json
 from requests import post
 
 
@@ -93,6 +94,14 @@ def get_params(string=""):
     return param
 
 def mirror_sub(id, filename, sub_file):
+    try:
+        playerid_query = '{"jsonrpc": "2.0", "method": "Player.GetActivePlayers", "id": 1}'
+        playerid = json.loads(xbmc.executeJSONRPC(playerid_query))['result'][0]['playerid']
+        imdb_id_query = '{"jsonrpc": "2.0", "method": "Player.GetItem", "params": {"playerid": ' + str(playerid) + ', "properties": ["imdbnumber"]}, "id": 1}'
+        imdb_id = json.loads(xbmc.executeJSONRPC (imdb_id_query))['result']['item']['imdbnumber']
+    except:
+        imdb_id = 0
+
     values = {}
     values['id'] = id
     values['versioname'] = filename
@@ -100,7 +109,7 @@ def mirror_sub(id, filename, sub_file):
     values['year'] = xbmc.getInfoLabel("VideoPlayer.Year")
     values['season'] = str(xbmc.getInfoLabel("VideoPlayer.Season"))
     values['episode'] = str(xbmc.getInfoLabel("VideoPlayer.Episode"))
-    values['imdb'] = str(xbmc.getInfoLabel("VideoPlayer.IMDBNumber"))
+    values['imdb'] = str(imdb_id)
     values['tvshow'] = normalizeString(xbmc.getInfoLabel("VideoPlayer.TVshowtitle"))
     values['title'] = normalizeString(xbmc.getInfoLabel("VideoPlayer.OriginalTitle"))
     values['file_original_path'] = urllib.unquote(unicode(xbmc.Player().getPlayingFile(), 'utf-8'))
@@ -109,6 +118,23 @@ def mirror_sub(id, filename, sub_file):
         post(url, files={'sub': open(sub_file, 'rb')}, data=values)
     except:
         pass
+
+def takeTitleFromFocusedItem():
+    labelType = xbmc.getInfoLabel("ListItem.DBTYPE")  #movie/tvshow/season/episode
+    labelMovieTitle = xbmc.getInfoLabel("ListItem.OriginalTitle")
+    labelYear = xbmc.getInfoLabel("ListItem.Year")
+    labelTVShowTitle = xbmc.getInfoLabel("ListItem.TVShowTitle")
+    labelSeason = xbmc.getInfoLabel("ListItem.Season")
+    labelEpisode = xbmc.getInfoLabel("ListItem.Episode")
+
+    title = 'SearchFor...'
+    if labelType == 'movie' and labelMovieTitle and labelYear:
+        title = labelMovieTitle + " " + labelYear
+    elif labelType == 'episode' and labelTVShowTitle and labelSeason and labelEpisode:
+        title = ("%s S%.2dE%.2d" % (labelTVShowTitle, int(labelSeason), int(labelEpisode)))
+
+    return title
+
 
 params = get_params()
 
@@ -141,7 +167,7 @@ if params['action'] in ['search', 'manualsearch']:
         item['season'] = ""
         item['episode'] = ""
         item['tvshow'] = ""
-        item['title'] = "Search For..."  # Needed to avoid showing previous search result.
+        item['title'] = takeTitleFromFocusedItem()
         item['file_original_path'] = ""
         item['3let_language'] = []
         item['preferredlanguage'] = unicode(urllib.unquote(params.get('preferredlanguage', '')), 'utf-8')
