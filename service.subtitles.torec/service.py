@@ -14,7 +14,6 @@ import xbmcgui
 import xbmcplugin
 import xbmcvfs
 
-
 __addon__ = xbmcaddon.Addon()
 __author__ = __addon__.getAddonInfo('author')
 __scriptid__ = __addon__.getAddonInfo('id')
@@ -39,7 +38,7 @@ xbmcvfs.mkdirs(__temp__)
 
 sys.path.append(__resource__)
 
-from SubtitleHelper import log, normalize_string, convert_to_utf
+from SubtitleHelper import log, normalize_string, convert_to_utf, check_and_parse_if_title_is_TVshow
 from TorecSubtitlesDownloader import TorecSubtitlesDownloader
 
 def search(item):
@@ -51,12 +50,22 @@ def search(item):
 
     try:
         search_start_time = time.time()
-        if item['tvshow'] != "":
-            subtitles_options = downloader.search_tvshow(item['tvshow'], item['season'], item['episode'])
+        
+        if (item['mansearch'] == False):
+            if item['tvshow'] != "":
+                subtitles_options = downloader.search_tvshow(item['tvshow'], item['season'], item['episode'])
+            else:              
+                title, year = xbmc.getCleanMovieTitle(item['title'])
+                subtitles_options = downloader.search_movie(title)
         else:
-            title, year = xbmc.getCleanMovieTitle(item['title'])
-            subtitles_options = downloader.search_movie(title)
-                    
+            item['tvshow'], item['season'], item['episode'] = check_and_parse_if_title_is_TVshow(item['title'])
+            if (item['tvshow'] == "NotTVShow"):
+                item['title'] = item['title'].replace("%20", "%2b") # " " to "+"
+                title, year = xbmc.getCleanMovieTitle(item['title'])
+                subtitles_options = downloader.search_movie(title)
+            else:
+                subtitles_options = downloader.search_tvshow(item['tvshow'], int(item['season']), int(item['episode']))
+                                    
         log(__name__, "search took %f" % (time.time() - search_start_time))
     except Exception as e:
         log(
@@ -173,37 +182,43 @@ params = get_params()
 if params['action'] == 'search' or params['action'] == 'manualsearch':
     log(__name__, "action '%s' called" % params['action'])
     item = dict()
-    item['temp'] = False
-    item['rar'] = False
-    item['mansearch'] = False
-    item['year'] = xbmc.getInfoLabel("VideoPlayer.Year")  # Year
-    item['season'] = str(xbmc.getInfoLabel("VideoPlayer.Season"))  # Season
-    item['episode'] = str(xbmc.getInfoLabel("VideoPlayer.Episode"))  # Episode
-    item['tvshow'] = normalize_string(xbmc.getInfoLabel(
-        "VideoPlayer.TVshowtitle")
-    )  # Show
-    item['title'] = normalize_string(xbmc.getInfoLabel(
-        "VideoPlayer.OriginalTitle")
-    )  # try to get original title
-    item['file_original_path'] = urllib.unquote(
-        xbmc.Player().getPlayingFile().decode('utf-8')
-    )  # Full path of a playing file
-    item['3let_language'] = []
 
-    if 'searchstring' in params:
-        item['mansearch'] = True
-        item['mansearchstr'] = params['searchstring']
-
-    for lang in urllib.unquote(params['languages']).decode('utf-8').split(","):
-        item['3let_language'].append(
-            xbmc.convertLanguage(lang, xbmc.ISO_639_2)
-        )
+    if xbmc.Player().isPlaying():
+        item['temp'] = False
+        item['rar'] = False
+        item['mansearch'] = False
+        item['year'] = xbmc.getInfoLabel("VideoPlayer.Year")  # Year
+        item['season'] = str(xbmc.getInfoLabel("VideoPlayer.Season"))  # Season
+        item['episode'] = str(xbmc.getInfoLabel("VideoPlayer.Episode"))  # Episode
+        item['tvshow'] = normalize_string(xbmc.getInfoLabel(
+            "VideoPlayer.TVshowtitle")
+        )  # Show
+        item['title'] = normalize_string(xbmc.getInfoLabel(
+            "VideoPlayer.OriginalTitle")
+        )  # try to get original title
+        item['file_original_path'] = urllib.unquote(
+            xbmc.Player().getPlayingFile().decode('utf-8')
+        )  # Full path of a playing file
+        item['3let_language'] = []
+    else:
+        item['temp'] = False
+        item['rar'] = False
+        item['mansearch'] = False
+        item['year'] = ""
+        item['season'] = ""
+        item['episode'] = ""
+        item['tvshow'] = ""
+        item['title'] = "SearchFor..." # Needed to avoid showing previous search result.
+        item['file_original_path'] = ""
+        item['3let_language'] = []
 
     if item['title'] == "":
         log(__name__, "VideoPlayer.OriginalTitle not found")
-        item['title'] = normalize_string(
-            xbmc.getInfoLabel("VideoPlayer.Title")
-        ) # no original title, get just Title
+        item['title'] = normalize_string(xbmc.getInfoLabel("VideoPlayer.Title"))  # no original title, get just Title
+
+    if 'searchstring' in params:
+        item['mansearch'] = True
+        item['title'] = params['searchstring']
 
     if item['episode'].lower().find("s") > -1:  # Check if season is "Special"
         item['season'] = "0"
