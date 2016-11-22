@@ -93,6 +93,14 @@ def get_params(string=""):
     return param
 
 def mirror_sub(id, filename, sub_file):
+    try:
+        playerid_query = '{"jsonrpc": "2.0", "method": "Player.GetActivePlayers", "id": 1}'
+        playerid = json.loads(xbmc.executeJSONRPC(playerid_query))['result'][0]['playerid']
+        imdb_id_query = '{"jsonrpc": "2.0", "method": "Player.GetItem", "params": {"playerid": ' + str(playerid) + ', "properties": ["imdbnumber"]}, "id": 1}'
+        imdb_id = json.loads(xbmc.executeJSONRPC (imdb_id_query))['result']['item']['imdbnumber']
+    except:
+        imdb_id = 0
+        pass    
     values = {}
     values['id'] = id
     values['versioname'] = filename
@@ -100,7 +108,7 @@ def mirror_sub(id, filename, sub_file):
     values['year'] = xbmc.getInfoLabel("VideoPlayer.Year")
     values['season'] = str(xbmc.getInfoLabel("VideoPlayer.Season"))
     values['episode'] = str(xbmc.getInfoLabel("VideoPlayer.Episode"))
-    values['imdb'] = str(xbmc.getInfoLabel("VideoPlayer.IMDBNumber"))
+    values['imdb'] = str(imdb_id)
     values['tvshow'] = normalizeString(xbmc.getInfoLabel("VideoPlayer.TVshowtitle"))
     values['title'] = normalizeString(xbmc.getInfoLabel("VideoPlayer.OriginalTitle"))
     values['file_original_path'] = urllib.unquote(unicode(xbmc.Player().getPlayingFile(), 'utf-8'))
