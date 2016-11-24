@@ -1,3 +1,7 @@
+4.5.1 - by CaTz (23/11/2016)
+- Fix fetching IMDB id - by TheWiz
+- Fetch list item data for external search - by burekas7
+
 4.5.0 - by burekas7 (03/11/2016)
 - Add the option for using the addon when kodi isn't playing
 
