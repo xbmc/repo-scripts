@@ -1,3 +1,6 @@
+v5.2.1
+- sync lrc lyrics with streaming radio
+
 v5.2.0
 - add lyrics.com scraper
 - add letssingit scraper

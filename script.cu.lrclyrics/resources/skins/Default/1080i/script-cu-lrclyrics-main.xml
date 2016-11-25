@@ -47,7 +47,7 @@
 			<top>0</top>
 			<width>1320</width>
 			<height>70</height>
-			<font>font20_title</font>
+			<font>font32_title</font>
 			<label>$ADDON[script.cu.lrclyrics 32199]</label>
 			<align>left</align>
 			<aligny>center</aligny>
@@ -151,7 +151,7 @@
 			<height>70</height>
 			<align>center</align>
 			<aligny>center</aligny>
-			<font>font20_title</font>
+			<font>font32_title</font>
 			<label>$ADDON[script.cu.lrclyrics 32005]</label>
 			<shadowcolor>black</shadowcolor>
 			<visible>Control.IsVisible(120) + !Control.IsVisible(110)</visible>
@@ -237,7 +237,7 @@
 			<width>1300</width>
 			<height>30</height>
 			<label>$LOCALIZE[21870]: $INFO[Control.GetLabel(200)]</label>
-			<font>font12_title</font>
+			<font>font12</font>
 			<align>right</align>
 			<aligny>center</aligny>
 			<textcolor>FF999999</textcolor>

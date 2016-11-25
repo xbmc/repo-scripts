@@ -2,6 +2,7 @@
 import sys
 import os
 import re
+import time
 import thread, threading
 import xbmc, xbmcgui, xbmcvfs
 from threading import Timer
@@ -30,6 +31,8 @@ class MAIN():
         self.current_lyrics = Lyrics()
         self.MyPlayer = MyPlayer(function=self.myPlayerChanged, clear=self.clear)
         self.Monitor = MyMonitor(function=self.update_settings)
+        self.customtimer = False
+        self.starttime = 0
 
     def cleanup_main(self):
         # Clean up the monitor and Player classes on exit
@@ -57,7 +60,7 @@ class MAIN():
             elif xbmc.getCondVisibility("Window.IsVisible(12006)") and xbmcgui.Window(10025).getProperty("PlayingBackgroundMedia") in [None, ""]:
                 if not self.triggered:
                     self.triggered = True
-                    # notify user the script is running
+                    # notify user the script is searching for lyrics
                     if ADDON.getSetting( "silent" ) == 'false':
                         xbmc.executebuiltin((u'Notification(%s,%s,%i)' % (ADDONNAME , LANGUAGE(32004), 2000)).encode('utf-8', 'ignore'))
                     # start fetching lyrics
@@ -74,7 +77,7 @@ class MAIN():
                 self.triggered = False
                 # reset current lyrics so we show them again when re-entering the visualization screen
                 self.current_lyrics = Lyrics()
-            xbmc.sleep(1000)
+            xbmc.sleep(100)
         WIN.clearProperty('culrc.quit')
         WIN.clearProperty('culrc.lyrics')
         WIN.clearProperty('culrc.islrc')
@@ -236,6 +239,12 @@ class MAIN():
             song = Song.current()
             if ( song and ( self.current_lyrics.song != song ) ):
                 songchanged = True
+                if xbmc.getCondVisibility("Player.IsInternetStream") and not xbmc.getInfoLabel("MusicPlayer.TimeRemaining"):
+                    # internet stream that does not provide time, we need our own timer to sync lrc lyrics
+                    self.starttime = time.time()
+                    self.customtimer = True
+                else:
+                    self.customtimer = False
                 log("Current Song: %s - %s" % (song.artist, song.title))
                 lyrics = self.get_lyrics( song )
                 self.current_lyrics = lyrics
@@ -245,7 +254,7 @@ class MAIN():
                     # check if gui is already running
                     if not WIN.getProperty('culrc.guirunning') == 'TRUE':
                         WIN.setProperty('culrc.guirunning', 'TRUE')
-                        gui = guiThread(mode=self.mode, save=self.save_lyrics_to_file)
+                        gui = guiThread(mode=self.mode, save=self.save_lyrics_to_file, function=self.return_time)
                         gui.start()
                 else:
                     # signal gui thread to exit
@@ -298,15 +307,19 @@ class MAIN():
         WIN.clearProperty('culrc.source')
         WIN.clearProperty('culrc.haslist')
 
+    def return_time(self):
+        return self.customtimer, self.starttime
+
 
 class guiThread(threading.Thread):
     def __init__(self, *args, **kwargs):
         threading.Thread.__init__(self)
         self.mode = kwargs[ "mode" ]
         self.save = kwargs[ "save" ]
+        self.function = kwargs[ "function" ]
 
     def run(self):
-        ui = GUI( "script-cu-lrclyrics-main.xml" , CWD, "Default", mode=self.mode, save=self.save )
+        ui = GUI( "script-cu-lrclyrics-main.xml" , CWD, "Default", mode=self.mode, save=self.save, function=self.function )
         ui.doModal()
         del ui
         WIN.clearProperty('culrc.guirunning')
@@ -316,9 +329,11 @@ class GUI( xbmcgui.WindowXMLDialog ):
         xbmcgui.WindowXMLDialog.__init__(self)
         self.mode = kwargs[ "mode" ]
         self.save = kwargs[ "save" ]
+        self.function = kwargs[ "function" ]
         self.Monitor = MyMonitor(function = None)
        
     def onInit(self):
+        self.getControl( 120 ).setVisible( False )
         self.setup_gui()
         self.process_lyrics()
         self.gui_loop()
@@ -368,7 +383,6 @@ class GUI( xbmcgui.WindowXMLDialog ):
         self.timer = None
         self.allowtimer = True
         self.refreshing = False
-        self.selected = False
         self.controlId = -1
         self.pOverlay = []
         self.scroll_line = int(self.get_page_lines() / 2)
@@ -385,9 +399,13 @@ class GUI( xbmcgui.WindowXMLDialog ):
 
     def refresh(self):
         self.lock.acquire()
+        #Maybe Kodi is not playing any media file
         try:
-            #May be Kodi is not playing any media file
-            cur_time = xbmc.Player().getTime()
+            customtimer, starttime = self.function()
+            if customtimer:
+                cur_time = time.time() - starttime
+            else:
+                cur_time = xbmc.Player().getTime()
             nums = self.getControl( 110 ).size()
             pos = self.getControl( 110 ).getSelectedPosition()
             if (cur_time < self.pOverlay[pos][0]):
@@ -528,12 +546,6 @@ class GUI( xbmcgui.WindowXMLDialog ):
             self.getControl( 120 ).selectItem( 0 )
             self.stop_refresh()
             self.show_control( 120 )
-            while not self.selected:
-                xbmc.sleep(50)
-            self.selected = False
-            self.getControl( 110 ).reset()
-            self.show_lyrics( self.lyrics )
-            self.save( self.lyrics )
 
     def reset_controls(self):
         self.getControl( 110 ).reset()
@@ -568,7 +580,9 @@ class GUI( xbmcgui.WindowXMLDialog ):
             exec ( "from culrcscrapers.%s import lyricsScraper as lyricsScraper_%s" % (source, source))
             scraper = eval('lyricsScraper_%s.LyricsFetcher()' % source)
             self.lyrics.lyrics = scraper.get_lyrics_from_list( lyric )
-            self.selected = True
+            self.getControl( 110 ).reset()
+            self.show_lyrics( self.lyrics )
+            self.save( self.lyrics )
 
     def onFocus(self, controlId):
         self.controlId = controlId
