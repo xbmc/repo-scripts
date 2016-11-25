@@ -248,7 +248,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
         DATA._clear_labelID()
 
         isSubLevel = False
-        if "." in self.group and int( self.group.rsplit( ".", 1 )[ 1 ] ) in range( 1, 6 ):
+        if "." in self.group and self.group.rsplit( ".", 1)[ 1 ].isdigit() and int( self.group.rsplit( ".", 1 )[ 1 ] ) in range( 1, 6 ):
             isSubLevel = True
         
         if includeUserShortcuts:
@@ -698,7 +698,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
                         
             # Check whether this is an additional level
             isSubLevel = False
-            if "." in self.group and int( self.group.rsplit( ".", 1 )[ 1 ] ) in range( 1, 6 ):
+            if "." in self.group and self.group.rsplit( ".", 1 )[ 1 ].isdigit() and int( self.group.rsplit( ".", 1 )[ 1 ] ) in range( 1, 6 ):
                 isSubLevel = True
 
             # Save the shortcuts
@@ -821,7 +821,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
             if not property[0] == self.group:
                 if property[0] in labelIDChanges.keys():
                     property[0] = labelIDChanges[property[0]]
-                elif "." in property[0]:
+                elif "." in property[0] and property[ 0 ].rsplit( ".", 1 )[ 1 ].isdigit():
                     # Additional menu
                     groupName, groupValue = property[ 0 ].rsplit( ".", 1 )
                     if groupName in labelIDChanges.keys() and int( groupValue ) in range( 1, 6 ):

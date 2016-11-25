@@ -1,4 +1,4 @@
-v1.0.12
+v1.0.13
 - Fix for context menu add-on
 - Remove SuperFavourites workaround
 - Honour skin warnings when disabling a menu item
