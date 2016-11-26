@@ -190,7 +190,7 @@
 				<animation effect="fade" start="100" end="0" time="200" condition="Window.IsVisible(script-globalsearch-infodialog.xml)">Conditional</animation>
 				<control type="image">
 					<left>-5</left>
-					<top>-5</top>
+					<top>-105</top>
 					<width>472</width>
 					<height>1090</height>
 					<texture>globalsearch-panel.png</texture>
