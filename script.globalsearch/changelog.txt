@@ -1,3 +1,6 @@
+v7.4.4
+- fix textbox alignment
+
 v7.4.3
 - fix menu panel position
 
