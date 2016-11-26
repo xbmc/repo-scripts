@@ -1,9 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <window>
-	<coordinates>
-		<left>0</left>
-		<top>80</top>
-	</coordinates>
 	<animation effect="fade" time="400">WindowOpen</animation>
 	<animation effect="fade" time="400">WindowClose</animation>
 	<controls>
@@ -45,16 +41,24 @@
 				<left>0</left>
 				<top>0</top>
 				<width>1920</width>
-				<height>920</height>
-				<texture>globalsearch-background.jpg</texture>
+				<height>1080</height>
 				<aspectratio>scale</aspectratio>
+				<texture colordiffuse="FF006699">globalsearch-background.jpg</texture>
 			</control>
 			<control type="image">
 				<left>0</left>
 				<top>0</top>
 				<width>1920</width>
-				<height>920</height>
-				<texture background="true" colordiffuse="40FFFFFF">$INFO[Container(111).ListItem.Property(Fanart)]</texture>
+				<height>1080</height>
+				<aspectratio>scale</aspectratio>
+				<texture colordiffuse="4D24CCA2">globalsearch-overlay.png</texture>
+			</control>
+			<control type="image">
+				<left>0</left>
+				<top>0</top>
+				<width>1920</width>
+				<height>1080</height>
+				<texture background="true" colordiffuse="40FFFFFF">$INFO[Container(111).ListItem.Art(fanart)]</texture>
 				<aspectratio>scale</aspectratio>
 				<fadetime>400</fadetime>
 				<animation effect="fade" time="400">Visible</animation>
@@ -65,8 +69,8 @@
 				<left>0</left>
 				<top>0</top>
 				<width>1920</width>
-				<height>920</height>
-				<texture background="true" colordiffuse="40FFFFFF">$INFO[Container(121).ListItem.Property(Fanart)]</texture>
+				<height>1080</height>
+				<texture background="true" colordiffuse="40FFFFFF">$INFO[Container(121).ListItem.Art(fanart)]</texture>
 				<aspectratio>scale</aspectratio>
 				<fadetime>400</fadetime>
 				<animation effect="fade" time="400">Visible</animation>
@@ -77,8 +81,8 @@
 				<left>0</left>
 				<top>0</top>
 				<width>1920</width>
-				<height>920</height>
-				<texture background="true" colordiffuse="40FFFFFF">$INFO[Container(131).ListItem.Property(Fanart)]</texture>
+				<height>1080</height>
+				<texture background="true" colordiffuse="40FFFFFF">$INFO[Container(131).ListItem.Property(fanart)]</texture>
 				<aspectratio>scale</aspectratio>
 				<fadetime>400</fadetime>
 				<animation effect="fade" time="400">Visible</animation>
@@ -89,8 +93,8 @@
 				<left>0</left>
 				<top>0</top>
 				<width>1920</width>
-				<height>920</height>
-				<texture background="true" colordiffuse="40FFFFFF">$INFO[Container(141).ListItem.Property(Fanart)]</texture>
+				<height>1080</height>
+				<texture background="true" colordiffuse="40FFFFFF">$INFO[Container(141).ListItem.Property(fanart)]</texture>
 				<aspectratio>scale</aspectratio>
 				<fadetime>400</fadetime>
 				<animation effect="fade" time="400">Visible</animation>
@@ -101,8 +105,8 @@
 				<left>0</left>
 				<top>0</top>
 				<width>1920</width>
-				<height>920</height>
-				<texture background="true" colordiffuse="40FFFFFF">$INFO[Container(151).ListItem.Property(Fanart)]</texture>
+				<height>1080</height>
+				<texture background="true" colordiffuse="40FFFFFF">$INFO[Container(151).ListItem.Property(fanart)]</texture>
 				<aspectratio>scale</aspectratio>
 				<fadetime>400</fadetime>
 				<animation effect="fade" time="400">Visible</animation>
@@ -113,8 +117,8 @@
 				<left>0</left>
 				<top>0</top>
 				<width>1920</width>
-				<height>920</height>
-				<texture background="true" colordiffuse="40FFFFFF">$INFO[Container(161).ListItem.Property(Fanart)]</texture>
+				<height>1080</height>
+				<texture background="true" colordiffuse="40FFFFFF">$INFO[Container(161).ListItem.Property(fanart)]</texture>
 				<aspectratio>scale</aspectratio>
 				<fadetime>400</fadetime>
 				<animation effect="fade" time="400">Visible</animation>
@@ -125,8 +129,8 @@
 				<left>0</left>
 				<top>0</top>
 				<width>1920</width>
-				<height>920</height>
-				<texture background="true" colordiffuse="40FFFFFF">$INFO[Container(171).ListItem.Property(Fanart)]</texture>
+				<height>1080</height>
+				<texture background="true" colordiffuse="40FFFFFF">$INFO[Container(171).ListItem.Property(fanart)]</texture>
 				<aspectratio>scale</aspectratio>
 				<fadetime>400</fadetime>
 				<animation effect="fade" time="400">Visible</animation>
@@ -137,8 +141,8 @@
 				<left>0</left>
 				<top>0</top>
 				<width>1920</width>
-				<height>920</height>
-				<texture background="true" colordiffuse="40FFFFFF">$INFO[Container(181).ListItem.Property(Fanart)]</texture>
+				<height>1080</height>
+				<texture background="true" colordiffuse="40FFFFFF">$INFO[Container(181).ListItem.Property(fanart)]</texture>
 				<aspectratio>scale</aspectratio>
 				<fadetime>400</fadetime>
 				<animation effect="fade" time="400">Visible</animation>
@@ -149,8 +153,8 @@
 				<left>0</left>
 				<top>0</top>
 				<width>1920</width>
-				<height>920</height>
-				<texture background="true" colordiffuse="40FFFFFF">$INFO[Container(211).ListItem.Property(Fanart)]</texture>
+				<height>1080</height>
+				<texture background="true" colordiffuse="40FFFFFF">$INFO[Container(211).ListItem.Property(fanart)]</texture>
 				<aspectratio>scale</aspectratio>
 				<fadetime>400</fadetime>
 				<animation effect="fade" time="400">Visible</animation>
@@ -161,8 +165,8 @@
 				<left>0</left>
 				<top>0</top>
 				<width>1920</width>
-				<height>920</height>
-				<texture background="true" colordiffuse="40FFFFFF">$INFO[Container(221).ListItem.Property(Fanart)]</texture>
+				<height>1080</height>
+				<texture background="true" colordiffuse="40FFFFFF">$INFO[Container(221).ListItem.Property(fanart)]</texture>
 				<aspectratio>scale</aspectratio>
 				<fadetime>400</fadetime>
 				<animation effect="fade" time="400">Visible</animation>
@@ -173,8 +177,8 @@
 				<left>0</left>
 				<top>0</top>
 				<width>1920</width>
-				<height>920</height>
-				<texture background="true" colordiffuse="40FFFFFF">$INFO[Container(231).ListItem.Property(Fanart)]</texture>
+				<height>1080</height>
+				<texture background="true" colordiffuse="40FFFFFF">$INFO[Container(231).ListItem.Property(fanart)]</texture>
 				<aspectratio>scale</aspectratio>
 				<fadetime>400</fadetime>
 				<animation effect="fade" time="400">Visible</animation>
@@ -182,191 +186,149 @@
 				<visible>Control.HasFocus(231)</visible>
 			</control>
 			<control type="group">
+				<top>100</top>
 				<animation effect="fade" start="100" end="0" time="200" condition="Window.IsVisible(script-globalsearch-infodialog.xml)">Conditional</animation>
-				<control type="radiobutton">
-					<left>37</left>
-					<top>14</top>
-					<width>420</width>
-					<height>110</height>
-					<font>-</font>
-					<label>-</label>
-					<radioposx>338</radioposx>
-					<textoffsetx>40</textoffsetx>
-					<radioposy>0</radioposy>
-					<radiowidth>40</radiowidth>
-					<radioheight>40</radioheight>
-					<texturefocus border="40">globalsearch-button-focus.png</texturefocus>
-					<texturenofocus border="40">globalsearch-button-nofocus.png</texturenofocus>
-					<textureradioonfocus>globalsearch-search.png</textureradioonfocus>
-					<textureradioonnofocus>globalsearch-search.png</textureradioonnofocus>
-					<textureradioofffocus>globalsearch-search.png</textureradioofffocus>
-					<textureradiooffnofocus>globalsearch-search.png</textureradiooffnofocus>
-					<visible>!Control.IsVisible(198)</visible>
+				<control type="image">
+					<left>-5</left>
+					<top>-5</top>
+					<width>472</width>
+					<height>1090</height>
+					<texture>globalsearch-panel.png</texture>
+					<bordertexture border="6">globalsearch-panel-shadow.png</bordertexture>
+					<bordersize>5</bordersize>
+				</control>
+				<control type="image">
+					<left>333</left>
+					<top>1</top>
+					<width>118</width>
+					<height>118</height>
+					<texture colordiffuse="FF12B2E7">globalsearch-roundbutton.png</texture>
+					<visible>Control.HasFocus(198)</visible>
+				</control>
+				<control type="image">
+					<left>372</left>
+					<top>40</top>
+					<width>40</width>
+					<height>40</height>
+					<texture colordiffuse="FFA0A0A0">globalsearch-search.png</texture>
+					<visible>!Control.HasFocus(198)</visible>
+				</control>
+				<control type="image">
+					<left>372</left>
+					<top>40</top>
+					<width>40</width>
+					<height>40</height>
+					<texture colordiffuse="FFF0F0F0">globalsearch-search.png</texture>
+					<visible>Control.HasFocus(198)</visible>
 				</control>
 				<control type="label" id="190">
 					<left>77</left>
-					<top>23</top>
+					<top>20</top>
 					<width>380</width>
 					<height>55</height>
 					<aligny>center</aligny>
 					<font>font13</font>
-					<label>-</label>
+					<label></label>
 				</control>
 				<control type="label" id="191">
 					<left>77</left>
-					<top>53</top>
+					<top>50</top>
 					<width>380</width>
 					<height>55</height>
 					<aligny>center</aligny>
 					<font>font13</font>
-					<label>-</label>
+					<label></label>
 				</control>
-				<control type="radiobutton" id="198">
-					<left>37</left>
-					<top>14</top>
-					<width>420</width>
-					<height>110</height>
+				<control type="button" id="198">
+					<left>77</left>
+					<top>0</top>
+					<width>500</width>
+					<height>120</height>
+					<align>left</align>
+					<aligny>center</aligny>
+					<font>font14</font>
+					<texturefocus></texturefocus>
+					<texturenofocus></texturenofocus>
 					<onup>9000</onup>
 					<ondown>9000</ondown>
 					<onleft>101</onleft>
 					<onright>101</onright>
-					<aligny>center</aligny>
-					<font>font14</font>
-					<label>-</label>
-					<radioposx>338</radioposx>
-					<textoffsetx>40</textoffsetx>
-					<radioposy>0</radioposy>
-					<radiowidth>40</radiowidth>
-					<radioheight>40</radioheight>
-					<texturefocus border="40">globalsearch-button-focus.png</texturefocus>
-					<texturenofocus border="40">globalsearch-button-nofocus.png</texturenofocus>
-					<textureradioonfocus>globalsearch-search.png</textureradioonfocus>
-					<textureradioonnofocus>globalsearch-search.png</textureradioonnofocus>
-					<textureradioofffocus>globalsearch-search.png</textureradioofffocus>
-					<textureradiooffnofocus>globalsearch-search.png</textureradiooffnofocus>
 				</control>
 				<control type="group">
-					<left>53</left>
-					<top>124</top>
-					<control type="image">
-						<left>-20</left>
-						<top>-20</top>
-						<width>424</width>
-						<height>711</height>
-						<texture border="22">globalsearch-menu.png</texture>
-					</control>
-					<control type="list" id="9000">
-						<left>1</left>
-						<top>1</top>
-						<width>382</width>
-						<height>671</height>
-						<onleft>101</onleft>
-						<onright>101</onright>
+					<control type="fixedlist" id="9000">
+						<left>0</left>
+						<top>140</top>
+						<width>462</width>
+						<height>840</height>
+						<movement>6</movement>
 						<onup>198</onup>
 						<ondown>198</ondown>
+						<onleft>101</onleft>
+						<onright>101</onright>
 						<scrolltime tween="cubic" easing="out">500</scrolltime>
-						<itemlayout height="74">
-							<control type="image">
-								<left>0</left>
-								<top>0</top>
-								<width>390</width>
-								<height>75</height>
-								<texture border="90,3,90,3">globalsearch-separator.png</texture>
-							</control>
-							<control type="label">
-								<left>74</left>
-								<top>0</top>
-								<height>70</height>
-								<width>560</width>
-								<aligny>center</aligny>
-								<font>font14</font>
-								<label>$INFO[ListItem.Label]</label>
-								<shadowcolor>22000000</shadowcolor>
-							</control>
+						<itemlayout height="95">
 							<control type="image">
 								<left>-3</left>
 								<top>1</top>
-								<width>70</width>
-								<height>70</height>
-								<texture>$INFO[ListItem.Art(thumb)]</texture>
+								<width>95</width>
+								<height>95</height>
+								<texture colordiffuse="44FFFFFF">$INFO[ListItem.Art(thumb)]</texture>
+							</control>
+							<control type="label">
+								<left>104</left>
+								<top>0</top>
+								<height>95</height>
+								<width>560</width>
+								<aligny>center</aligny>
+								<font>font37</font>
+								<label>$INFO[ListItem.Label]</label>
+								<shadowcolor>22000000</shadowcolor>
 							</control>
 						</itemlayout>
-						<focusedlayout height="74">
-							<control type="image">
-								<left>0</left>
-								<top>0</top>
-								<width>390</width>
-								<height>75</height>
-								<texture border="90,3,90,3">globalsearch-separator.png</texture>
-							</control>
+						<focusedlayout height="95">
 							<control type="group">
 								<animation effect="fade" start="100" end="0" time="0">UnFocus</animation>
 								<control type="image">
 									<left>0</left>
 									<top>0</top>
-									<width>390</width>
-									<height>73</height>
-									<texture>globalsearch-focus.png</texture>
-									<animation effect="fade" start="100" end="0" time="0" condition="!Control.HasFocus(9000) + !Control.HasFocus(198)">Conditional</animation>
+									<width>462</width>
+									<height>95</height>
+									<texture colordiffuse="FF12B2E7">globalsearch-focus.png</texture>
+									<animation effect="fade" start="100" end="0" time="0" condition="!Control.HasFocus(9000)">Conditional</animation>
 								</control>
 								<control type="image">
 									<left>-3</left>
 									<top>1</top>
-									<width>70</width>
-									<height>70</height>
+									<width>95</width>
+									<height>95</height>
 									<texture colordiffuse="FF12B2E7">$INFO[ListItem.Art(thumb)]</texture>
-									<animation effect="fade" start="0" end="100" time="300" delay="0" reversible="false">Focus</animation>
+									<animation effect="fade" start="0" end="100" time="300" reversible="false">Focus</animation>
 								</control>
 								<control type="image">
-									<left>-5</left>
+									<left>0</left>
 									<top>0</top>
-									<width>68</width>
-									<height>74</height>
+									<width>95</width>
+									<height>95</height>
 									<texture colordiffuse="51FFFFFF">globalsearch-black.png</texture>
-									<animation effect="fade" start="100" end="0" time="0" condition="!Control.HasFocus(9000) + !Control.HasFocus(198)">Conditional</animation>
+									<animation effect="fade" start="100" end="0" time="0" condition="!Control.HasFocus(9000)">Conditional</animation>
 								</control>
 							</control>
 							<control type="image">
 								<left>-3</left>
 								<top>1</top>
-								<width>70</width>
-								<height>70</height>
+								<width>95</width>
+								<height>95</height>
 								<texture>$INFO[ListItem.Art(thumb)]</texture>
 							</control>
-							<control type="image">
-								<left>-3</left>
-								<top>1</top>
-								<width>70</width>
-								<height>70</height>
-								<texture colordiffuse="FF12B2E7">$INFO[ListItem.Art(thumb)]</texture>
-								<animation effect="fade" start="0" end="100" time="300" delay="0" reversible="false">Focus</animation>
-								<visible>!Control.HasFocus(9000) + !Control.HasFocus(198)</visible>
-							</control>
 							<control type="label">
-								<left>74</left>
+								<left>104</left>
 								<top>0</top>
-								<height>70</height>
+								<height>95</height>
 								<width>560</width>
 								<aligny>center</aligny>
-								<font>font14</font>
+								<font>font37</font>
 								<label>$INFO[ListItem.Label]</label>
 								<shadowcolor>22000000</shadowcolor>
-								<animation effect="slide" start="0,0" end="0,-13" time="150" delay="400">Focus</animation>
-								<animation effect="slide" start="0,-13" end="0,0" time="300" delay="200">UnFocus</animation>
-							</control>
-							<control type="label">
-								<left>74</left>
-								<top>17</top>
-								<height>70</height>
-								<width>560</width>
-								<aligny>center</aligny>
-								<font>font10</font>
-								<label>$INFO[ListItem.Label2]</label>
-								<shadowcolor>22000000</shadowcolor>
-								<visible>Control.HasFocus(9000)</visible>
-								<animation effect="fade" time="300" condition="Control.HasFocus(9000) | Control.HasFocus(198) | ControlGroup(101).HasFocus">VisibleChange</animation>
-								<animation effect="fade" start="0" end="100" time="150" delay="500">Focus</animation>
-								<animation effect="fade" start="100" end="0" time="300">UnFocus</animation>
 							</control>
 						</focusedlayout>
 						<content>
@@ -451,7 +413,7 @@
 					</control>
 				</control>
 				<control type="group" id="101">
-					<left>500</left>
+					<left>512</left>
 					<top>92</top>
 					<control type="group" id="119">
 						<control type="panel" id="111">
@@ -461,8 +423,8 @@
 							<height>720</height>
 							<onleft>9000</onleft>
 							<onright>531</onright>
-							<onup>500</onup>
-							<ondown>500</ondown>
+							<onup>101</onup>
+							<ondown>101</ondown>
 							<viewtype label="31102">icon</viewtype>
 							<preloaditems>4</preloaditems>
 							<pagecontrol>531</pagecontrol>
@@ -490,7 +452,7 @@
 								<control type="textbox">
 									<left>15</left>
 									<top>275</top>
-									<width>196</width>
+									<width>192</width>
 									<height>65</height>
 									<font>font10</font>
 									<align>center</align>
@@ -514,7 +476,7 @@
 										<align>center</align>
 										<width>50</width>
 										<height>32</height>
-										<textcolor>white</textcolor>
+										<textcolor>FFF0F0F0</textcolor>
 										<font>font10_title</font>
 										<label>$INFO[ListItem.Property(UserRating)]</label>
 									</control>
@@ -567,7 +529,7 @@
 											<align>center</align>
 											<width>50</width>
 											<height>32</height>
-											<textcolor>white</textcolor>
+											<textcolor>FFF0F0F0</textcolor>
 											<font>font10_title</font>
 											<label>$INFO[ListItem.Property(UserRating)]</label>
 										</control>
@@ -620,7 +582,7 @@
 											<height>32</height>
 											<align>center</align>
 											<font>font_textbox</font>
-											<selectedcolor>white</selectedcolor>
+											<selectedcolor>FFF0F0F0</selectedcolor>
 											<label fallback="-">$INFO[ListItem.Property(Rating)]</label>
 										</control>
 									</control>
@@ -642,7 +604,7 @@
 											<height>32</height>
 											<align>center</align>
 											<font>font_textbox</font>
-											<selectedcolor>white</selectedcolor>
+											<selectedcolor>FFF0F0F0</selectedcolor>
 											<label fallback="-">$INFO[ListItem.Property(Year)]</label>
 										</control>
 									</control>
@@ -707,7 +669,7 @@
 							<animation effect="fade" start="100" end="0" time="300">WindowClose</animation>
 							<orientation>horizontal</orientation>
 							<align>right</align>
-							<top>775</top>
+							<top>795</top>
 							<right>24</right>
 							<width>1200</width>
 							<itemgap>10</itemgap>
@@ -786,8 +748,8 @@
 							<height>720</height>
 							<onleft>9000</onleft>
 							<onright>531</onright>
-							<onup>500</onup>
-							<ondown>500</ondown>
+							<onup>101</onup>
+							<ondown>101</ondown>
 							<viewtype label="31102">icon</viewtype>
 							<preloaditems>4</preloaditems>
 							<pagecontrol>531</pagecontrol>
@@ -815,7 +777,7 @@
 								<control type="textbox">
 									<left>15</left>
 									<top>275</top>
-									<width>196</width>
+									<width>192</width>
 									<height>65</height>
 									<font>font10</font>
 									<align>center</align>
@@ -839,7 +801,7 @@
 										<align>center</align>
 										<width>50</width>
 										<height>32</height>
-										<textcolor>white</textcolor>
+										<textcolor>FFF0F0F0</textcolor>
 										<font>font10_title</font>
 										<label>$INFO[ListItem.Property(UserRating)]</label>
 									</control>
@@ -892,10 +854,24 @@
 											<align>center</align>
 											<width>50</width>
 											<height>32</height>
-											<textcolor>white</textcolor>
+											<textcolor>FFF0F0F0</textcolor>
 											<font>font10_title</font>
 											<label>$INFO[ListItem.Property(UserRating)]</label>
 										</control>
+									</control>
+								</control>
+								<control type="group">
+									<top>15</top>
+									<animation type="Focus">
+										<effect type="slide" start="0,0" end="-40,0" time="300" />
+										<effect type="fade" start="0" end="100" time="300" />
+									</animation>
+									<animation effect="fade" start="100" end="0" time="0">UnFocus</animation>
+									<control type="image">
+										<left>1</left>
+										<width>220</width>
+										<height>330</height>
+										<texture border="8" colordiffuse="FF12B2E7">globalsearch-thumbnail-focus.png</texture>
 									</control>
 								</control>
 								<control type="image">
@@ -931,7 +907,7 @@
 											<height>32</height>
 											<align>center</align>
 											<font>font_textbox</font>
-											<selectedcolor>white</selectedcolor>
+											<selectedcolor>FFF0F0F0</selectedcolor>
 											<label fallback="-">$INFO[ListItem.Property(Rating)]</label>
 										</control>
 									</control>
@@ -953,7 +929,7 @@
 											<height>32</height>
 											<align>center</align>
 											<font>font_textbox</font>
-											<selectedcolor>white</selectedcolor>
+											<selectedcolor>FFF0F0F0</selectedcolor>
 											<label fallback="-">$INFO[ListItem.Property(Year)]</label>
 										</control>
 									</control>
@@ -1018,7 +994,7 @@
 							<animation effect="fade" start="100" end="0" time="300">WindowClose</animation>
 							<orientation>horizontal</orientation>
 							<align>right</align>
-							<top>775</top>
+							<top>795</top>
 							<right>24</right>
 							<width>1200</width>
 							<itemgap>10</itemgap>
@@ -1049,8 +1025,8 @@
 							<height>720</height>
 							<onleft>9000</onleft>
 							<onright>531</onright>
-							<onup>500</onup>
-							<ondown>500</ondown>
+							<onup>101</onup>
+							<ondown>101</ondown>
 							<viewtype label="31102">icon</viewtype>
 							<preloaditems>4</preloaditems>
 							<pagecontrol>531</pagecontrol>
@@ -1078,7 +1054,7 @@
 								<control type="textbox">
 									<left>15</left>
 									<top>275</top>
-									<width>196</width>
+									<width>192</width>
 									<height>65</height>
 									<font>font10</font>
 									<align>center</align>
@@ -1102,7 +1078,7 @@
 										<align>center</align>
 										<width>50</width>
 										<height>32</height>
-										<textcolor>white</textcolor>
+										<textcolor>FFF0F0F0</textcolor>
 										<font>font10_title</font>
 										<label>$INFO[ListItem.Property(UserRating)]</label>
 									</control>
@@ -1155,10 +1131,24 @@
 											<align>center</align>
 											<width>50</width>
 											<height>32</height>
-											<textcolor>white</textcolor>
+											<textcolor>FFF0F0F0</textcolor>
 											<font>font10_title</font>
 											<label>$INFO[ListItem.Property(UserRating)]</label>
 										</control>
+									</control>
+								</control>
+								<control type="group">
+									<top>15</top>
+									<animation type="Focus">
+										<effect type="slide" start="0,0" end="-40,0" time="300" />
+										<effect type="fade" start="0" end="100" time="300" />
+									</animation>
+									<animation effect="fade" start="100" end="0" time="0">UnFocus</animation>
+									<control type="image">
+										<left>1</left>
+										<width>220</width>
+										<height>330</height>
+										<texture border="8" colordiffuse="FF12B2E7">globalsearch-thumbnail-focus.png</texture>
 									</control>
 								</control>
 								<control type="image">
@@ -1194,7 +1184,7 @@
 											<height>32</height>
 											<align>center</align>
 											<font>font_textbox</font>
-											<selectedcolor>white</selectedcolor>
+											<selectedcolor>FFF0F0F0</selectedcolor>
 											<label fallback="-">$INFO[ListItem.Property(Rating)]</label>
 										</control>
 									</control>
@@ -1216,7 +1206,7 @@
 											<height>32</height>
 											<align>center</align>
 											<font>font_textbox</font>
-											<selectedcolor>white</selectedcolor>
+											<selectedcolor>FFF0F0F0</selectedcolor>
 											<label fallback="-">$INFO[ListItem.Property(Episode)]</label>
 										</control>
 									</control>
@@ -1281,7 +1271,7 @@
 							<animation effect="fade" start="100" end="0" time="300">WindowClose</animation>
 							<orientation>horizontal</orientation>
 							<align>right</align>
-							<top>775</top>
+							<top>795</top>
 							<right>24</right>
 							<width>1200</width>
 							<itemgap>10</itemgap>
@@ -1312,8 +1302,8 @@
 							<height>720</height>
 							<onleft>9000</onleft>
 							<onright>531</onright>
-							<onup>500</onup>
-							<ondown>500</ondown>
+							<onup>101</onup>
+							<ondown>101</ondown>
 							<viewtype label="31102">icon</viewtype>
 							<preloaditems>4</preloaditems>
 							<pagecontrol>531</pagecontrol>
@@ -1328,8 +1318,8 @@
 									<height>250</height>
 									<texture border="2" fallback="DefaultVideo.png" background="true">$INFO[ListItem.Icon]</texture>
 									<aspectratio>scale</aspectratio>
-									<bordertexture colordiffuse="60FFFFFF">globalsearch-black.png</bordertexture>
-									<bordersize>4</bordersize>
+									<bordertexture border="6">globalsearch-panel-shadow.png</bordertexture>
+									<bordersize>5</bordersize>
 								</control>
 								<control type="image">
 									<left>1</left>
@@ -1337,6 +1327,8 @@
 									<width>380</width>
 									<height>80</height>
 									<texture colordiffuse="B0FFFFFF">globalsearch-black.png</texture>
+									<bordertexture border="6">globalsearch-panel-shadow.png</bordertexture>
+									<bordersize>5</bordersize>
 								</control>
 								<control type="label">
 									<left>15</left>
@@ -1346,7 +1338,7 @@
 									<font>font10</font>
 									<align>center</align>
 									<aligny>center</aligny>
-									<selectedcolor>white</selectedcolor>
+									<selectedcolor>FFF0F0F0</selectedcolor>
 									<label>[B]$INFO[ListItem.Property(TvShowTitle)][/B]</label>
 								</control>
 								<control type="label">
@@ -1357,7 +1349,7 @@
 									<font>font10</font>
 									<align>center</align>
 									<aligny>center</aligny>
-									<selectedcolor>white</selectedcolor>
+									<selectedcolor>FFF0F0F0</selectedcolor>
 									<label>$INFO[ListItem.Label]</label>
 								</control>
 								<control type="group">
@@ -1377,7 +1369,7 @@
 										<align>center</align>
 										<width>50</width>
 										<height>32</height>
-										<textcolor>white</textcolor>
+										<textcolor>FFF0F0F0</textcolor>
 										<font>font10_title</font>
 										<label>$INFO[ListItem.Property(UserRating)]</label>
 									</control>
@@ -1394,8 +1386,8 @@
 										<height>250</height>
 										<texture border="2" fallback="DefaultVideo.png" background="true">$INFO[ListItem.Icon]</texture>
 										<aspectratio>scale</aspectratio>
-										<bordertexture colordiffuse="60FFFFFF">globalsearch-black.png</bordertexture>
-										<bordersize>4</bordersize>
+										<bordertexture border="6">globalsearch-panel-shadow.png</bordertexture>
+										<bordersize>5</bordersize>
 									</control>
 									<control type="image">
 										<left>1</left>
@@ -1403,6 +1395,8 @@
 										<width>380</width>
 										<height>80</height>
 										<texture colordiffuse="B0FFFFFF">globalsearch-black.png</texture>
+										<bordertexture border="6">globalsearch-panel-shadow.png</bordertexture>
+										<bordersize>5</bordersize>
 									</control>
 									<control type="label">
 										<left>15</left>
@@ -1412,7 +1406,7 @@
 										<font>font10</font>
 										<align>center</align>
 										<aligny>center</aligny>
-										<selectedcolor>white</selectedcolor>
+										<selectedcolor>FFF0F0F0</selectedcolor>
 										<label>[B]$INFO[ListItem.Property(TvShowTitle)][/B]</label>
 									</control>
 									<control type="label">
@@ -1423,7 +1417,7 @@
 										<font>font10</font>
 										<align>center</align>
 										<aligny>center</aligny>
-										<selectedcolor>white</selectedcolor>
+										<selectedcolor>FFF0F0F0</selectedcolor>
 										<label>$INFO[ListItem.Label]</label>
 									</control>
 									<control type="group">
@@ -1443,7 +1437,7 @@
 											<align>center</align>
 											<width>50</width>
 											<height>32</height>
-											<textcolor>white</textcolor>
+											<textcolor>FFF0F0F0</textcolor>
 											<font>font10_title</font>
 											<label>$INFO[ListItem.Property(UserRating)]</label>
 										</control>
@@ -1489,7 +1483,7 @@
 											<height>32</height>
 											<align>center</align>
 											<font>font_textbox</font>
-											<selectedcolor>white</selectedcolor>
+											<selectedcolor>FFF0F0F0</selectedcolor>
 											<label fallback="-">$INFO[ListItem.Property(Rating)]</label>
 										</control>
 									</control>
@@ -1511,7 +1505,7 @@
 											<height>32</height>
 											<align>center</align>
 											<font>font_textbox</font>
-											<selectedcolor>white</selectedcolor>
+											<selectedcolor>FFF0F0F0</selectedcolor>
 											<label fallback="-">$INFO[ListItem.Property(Season)]</label>
 										</control>
 									</control>
@@ -1576,7 +1570,7 @@
 							<animation effect="fade" start="100" end="0" time="300">WindowClose</animation>
 							<orientation>horizontal</orientation>
 							<align>right</align>
-							<top>775</top>
+							<top>795</top>
 							<right>24</right>
 							<width>1200</width>
 							<itemgap>10</itemgap>
@@ -1655,8 +1649,8 @@
 							<height>720</height>
 							<onleft>9000</onleft>
 							<onright>531</onright>
-							<onup>500</onup>
-							<ondown>500</ondown>
+							<onup>101</onup>
+							<ondown>101</ondown>
 							<viewtype label="31102">icon</viewtype>
 							<preloaditems>4</preloaditems>
 							<pagecontrol>531</pagecontrol>
@@ -1671,8 +1665,8 @@
 									<height>250</height>
 									<texture border="2" fallback="DefaultVideo.png" background="true">$INFO[ListItem.Icon]</texture>
 									<aspectratio>scale</aspectratio>
-									<bordertexture colordiffuse="60FFFFFF">globalsearch-black.png</bordertexture>
-									<bordersize>4</bordersize>
+									<bordertexture border="6">globalsearch-panel-shadow.png</bordertexture>
+									<bordersize>5</bordersize>
 								</control>
 								<control type="image">
 									<left>1</left>
@@ -1680,6 +1674,8 @@
 									<width>380</width>
 									<height>80</height>
 									<texture colordiffuse="B0FFFFFF">globalsearch-black.png</texture>
+									<bordertexture border="6">globalsearch-panel-shadow.png</bordertexture>
+									<bordersize>5</bordersize>
 								</control>
 								<control type="label">
 									<left>15</left>
@@ -1689,7 +1685,7 @@
 									<font>font10</font>
 									<align>center</align>
 									<aligny>center</aligny>
-									<selectedcolor>white</selectedcolor>
+									<selectedcolor>FFF0F0F0</selectedcolor>
 									<label>[B]$INFO[ListItem.Property(Artist)][/B]</label>
 								</control>
 								<control type="label">
@@ -1700,7 +1696,7 @@
 									<font>font10</font>
 									<align>center</align>
 									<aligny>center</aligny>
-									<selectedcolor>white</selectedcolor>
+									<selectedcolor>FFF0F0F0</selectedcolor>
 									<label>$INFO[ListItem.Label]</label>
 								</control>
 								<control type="group">
@@ -1720,7 +1716,7 @@
 										<align>center</align>
 										<width>50</width>
 										<height>32</height>
-										<textcolor>white</textcolor>
+										<textcolor>FFF0F0F0</textcolor>
 										<font>font10_title</font>
 										<label>$INFO[ListItem.Property(UserRating)]</label>
 									</control>
@@ -1737,8 +1733,8 @@
 										<height>250</height>
 										<texture border="2" fallback="DefaultVideo.png" background="true">$INFO[ListItem.Icon]</texture>
 										<aspectratio>scale</aspectratio>
-										<bordertexture colordiffuse="60FFFFFF">globalsearch-black.png</bordertexture>
-										<bordersize>4</bordersize>
+										<bordertexture border="6">globalsearch-panel-shadow.png</bordertexture>
+										<bordersize>5</bordersize>
 									</control>
 									<control type="image">
 										<left>1</left>
@@ -1746,6 +1742,8 @@
 										<width>380</width>
 										<height>80</height>
 										<texture colordiffuse="B0FFFFFF">globalsearch-black.png</texture>
+										<bordertexture border="6">globalsearch-panel-shadow.png</bordertexture>
+										<bordersize>5</bordersize>
 									</control>
 									<control type="label">
 										<left>15</left>
@@ -1755,7 +1753,7 @@
 										<font>font10</font>
 										<align>center</align>
 										<aligny>center</aligny>
-										<selectedcolor>white</selectedcolor>
+										<selectedcolor>FFF0F0F0</selectedcolor>
 										<label>[B]$INFO[ListItem.Property(Artist)][/B]</label>
 									</control>
 									<control type="label">
@@ -1766,7 +1764,7 @@
 										<font>font10</font>
 										<align>center</align>
 										<aligny>center</aligny>
-										<selectedcolor>white</selectedcolor>
+										<selectedcolor>FFF0F0F0</selectedcolor>
 										<label>$INFO[ListItem.Label]</label>
 									</control>
 									<control type="group">
@@ -1786,7 +1784,7 @@
 											<align>center</align>
 											<width>50</width>
 											<height>32</height>
-											<textcolor>white</textcolor>
+											<textcolor>FFF0F0F0</textcolor>
 											<font>font10_title</font>
 											<label>$INFO[ListItem.Property(UserRating)]</label>
 										</control>
@@ -1832,7 +1830,7 @@
 											<height>32</height>
 											<align>center</align>
 											<font>font_textbox</font>
-											<selectedcolor>white</selectedcolor>
+											<selectedcolor>FFF0F0F0</selectedcolor>
 											<label fallback="-">$INFO[ListItem.Property(Rating)]</label>
 										</control>
 									</control>
@@ -1854,7 +1852,7 @@
 											<height>32</height>
 											<align>center</align>
 											<font>font_textbox</font>
-											<selectedcolor>white</selectedcolor>
+											<selectedcolor>FFF0F0F0</selectedcolor>
 											<label fallback="-">$INFO[ListItem.Property(Year)]</label>
 										</control>
 									</control>
@@ -1919,7 +1917,7 @@
 							<animation effect="fade" start="100" end="0" time="300">WindowClose</animation>
 							<orientation>horizontal</orientation>
 							<align>right</align>
-							<top>775</top>
+							<top>795</top>
 							<right>24</right>
 							<width>1200</width>
 							<itemgap>10</itemgap>
@@ -1998,8 +1996,8 @@
 							<height>720</height>
 							<onleft>9000</onleft>
 							<onright>531</onright>
-							<onup>500</onup>
-							<ondown>500</ondown>
+							<onup>101</onup>
+							<ondown>101</ondown>
 							<viewtype label="31102">icon</viewtype>
 							<preloaditems>4</preloaditems>
 							<pagecontrol>531</pagecontrol>
@@ -2014,8 +2012,8 @@
 									<height>300</height>
 									<texture border="2" fallback="DefaultVideo.png" background="true">$INFO[ListItem.Icon]</texture>
 									<aspectratio>scale</aspectratio>
-									<bordertexture colordiffuse="60FFFFFF">globalsearch-black.png</bordertexture>
-									<bordersize>4</bordersize>
+									<bordertexture border="6">globalsearch-panel-shadow.png</bordertexture>
+									<bordersize>5</bordersize>
 								</control>
 								<control type="image">
 									<left>1</left>
@@ -2023,6 +2021,8 @@
 									<width>300</width>
 									<height>58</height>
 									<texture colordiffuse="B0FFFFFF">globalsearch-black.png</texture>
+									<bordertexture border="6">globalsearch-panel-shadow.png</bordertexture>
+									<bordersize>5</bordersize>
 								</control>
 								<control type="textbox">
 									<left>15</left>
@@ -2032,7 +2032,7 @@
 									<font>font10</font>
 									<align>center</align>
 									<aligny>center</aligny>
-									<selectedcolor>white</selectedcolor>
+									<selectedcolor>FFF0F0F0</selectedcolor>
 									<label>$INFO[ListItem.Label]</label>
 								</control>
 								<control type="group">
@@ -2052,7 +2052,7 @@
 										<align>center</align>
 										<width>50</width>
 										<height>32</height>
-										<textcolor>white</textcolor>
+										<textcolor>FFF0F0F0</textcolor>
 										<font>font10_title</font>
 										<label>$INFO[ListItem.Property(UserRating)]</label>
 									</control>
@@ -2069,8 +2069,8 @@
 										<height>300</height>
 										<texture border="2" fallback="DefaultVideo.png" background="true">$INFO[ListItem.Icon]</texture>
 										<aspectratio>scale</aspectratio>
-										<bordertexture colordiffuse="60FFFFFF">globalsearch-black.png</bordertexture>
-										<bordersize>4</bordersize>
+										<bordertexture border="6">globalsearch-panel-shadow.png</bordertexture>
+										<bordersize>5</bordersize>
 									</control>
 									<control type="image">
 										<left>1</left>
@@ -2078,6 +2078,8 @@
 										<width>300</width>
 										<height>58</height>
 										<texture colordiffuse="B0FFFFFF">globalsearch-black.png</texture>
+										<bordertexture border="6">globalsearch-panel-shadow.png</bordertexture>
+										<bordersize>5</bordersize>
 									</control>
 									<control type="textbox">
 										<left>15</left>
@@ -2087,7 +2089,7 @@
 										<font>font10</font>
 										<align>center</align>
 										<aligny>center</aligny>
-										<selectedcolor>white</selectedcolor>
+										<selectedcolor>FFF0F0F0</selectedcolor>
 										<label>$INFO[ListItem.Label]</label>
 									</control>
 									<control type="group">
@@ -2107,7 +2109,7 @@
 											<align>center</align>
 											<width>50</width>
 											<height>32</height>
-											<textcolor>white</textcolor>
+											<textcolor>FFF0F0F0</textcolor>
 											<font>font10_title</font>
 											<label>$INFO[ListItem.Property(UserRating)]</label>
 										</control>
@@ -2153,7 +2155,7 @@
 											<height>32</height>
 											<align>center</align>
 											<font>font_textbox</font>
-											<selectedcolor>white</selectedcolor>
+											<selectedcolor>FFF0F0F0</selectedcolor>
 											<label fallback="-">$INFO[ListItem.Property(Artist_Formed)]</label>
 										</control>
 									</control>
@@ -2175,7 +2177,7 @@
 											<height>32</height>
 											<align>center</align>
 											<font>font_textbox</font>
-											<selectedcolor>white</selectedcolor>
+											<selectedcolor>FFF0F0F0</selectedcolor>
 											<label fallback="-">$INFO[ListItem.Property(Artist_Disbanded)]</label>
 										</control>
 									</control>
@@ -2221,7 +2223,7 @@
 							<animation effect="fade" start="100" end="0" time="300">WindowClose</animation>
 							<orientation>horizontal</orientation>
 							<align>right</align>
-							<top>775</top>
+							<top>795</top>
 							<right>24</right>
 							<width>1200</width>
 							<itemgap>10</itemgap>
@@ -2252,8 +2254,8 @@
 							<height>720</height>
 							<onleft>9000</onleft>
 							<onright>531</onright>
-							<onup>500</onup>
-							<ondown>500</ondown>
+							<onup>101</onup>
+							<ondown>101</ondown>
 							<viewtype label="31102">icon</viewtype>
 							<preloaditems>4</preloaditems>
 							<pagecontrol>531</pagecontrol>
@@ -2268,8 +2270,8 @@
 									<height>300</height>
 									<texture border="2" fallback="DefaultVideo.png" background="true">$INFO[ListItem.Icon]</texture>
 									<aspectratio>scale</aspectratio>
-									<bordertexture colordiffuse="60FFFFFF">globalsearch-black.png</bordertexture>
-									<bordersize>4</bordersize>
+									<bordertexture border="6">globalsearch-panel-shadow.png</bordertexture>
+									<bordersize>5</bordersize>
 								</control>
 								<control type="image">
 									<left>1</left>
@@ -2277,6 +2279,8 @@
 									<width>300</width>
 									<height>58</height>
 									<texture colordiffuse="B0FFFFFF">globalsearch-black.png</texture>
+									<bordertexture border="6">globalsearch-panel-shadow.png</bordertexture>
+									<bordersize>5</bordersize>
 								</control>
 								<control type="label">
 									<left>15</left>
@@ -2286,7 +2290,7 @@
 									<font>font10</font>
 									<align>center</align>
 									<aligny>center</aligny>
-									<selectedcolor>white</selectedcolor>
+									<selectedcolor>FFF0F0F0</selectedcolor>
 									<label>[B]$INFO[ListItem.Property(Artist)][/B]</label>
 								</control>
 								<control type="label">
@@ -2297,7 +2301,7 @@
 									<font>font10</font>
 									<align>center</align>
 									<aligny>center</aligny>
-									<selectedcolor>white</selectedcolor>
+									<selectedcolor>FFF0F0F0</selectedcolor>
 									<label>$INFO[ListItem.Label]</label>
 								</control>
 								<control type="group">
@@ -2317,7 +2321,7 @@
 										<align>center</align>
 										<width>50</width>
 										<height>32</height>
-										<textcolor>white</textcolor>
+										<textcolor>FFF0F0F0</textcolor>
 										<font>font10_title</font>
 										<label>$INFO[ListItem.Property(UserRating)]</label>
 									</control>
@@ -2334,8 +2338,8 @@
 										<height>300</height>
 										<texture border="2" fallback="DefaultVideo.png" background="true">$INFO[ListItem.Icon]</texture>
 										<aspectratio>scale</aspectratio>
-										<bordertexture colordiffuse="60FFFFFF">globalsearch-black.png</bordertexture>
-										<bordersize>4</bordersize>
+										<bordertexture border="6">globalsearch-panel-shadow.png</bordertexture>
+										<bordersize>5</bordersize>
 									</control>
 									<control type="image">
 										<left>1</left>
@@ -2343,6 +2347,8 @@
 										<width>300</width>
 										<height>58</height>
 										<texture colordiffuse="B0FFFFFF">globalsearch-black.png</texture>
+										<bordertexture border="6">globalsearch-panel-shadow.png</bordertexture>
+										<bordersize>5</bordersize>
 									</control>
 									<control type="label">
 										<left>15</left>
@@ -2352,7 +2358,7 @@
 										<font>font10</font>
 										<align>center</align>
 										<aligny>center</aligny>
-										<selectedcolor>white</selectedcolor>
+										<selectedcolor>FFF0F0F0</selectedcolor>
 										<label>[B]$INFO[ListItem.Property(Artist)][/B]</label>
 									</control>
 									<control type="label">
@@ -2363,7 +2369,7 @@
 										<font>font10</font>
 										<align>center</align>
 										<aligny>center</aligny>
-										<selectedcolor>white</selectedcolor>
+										<selectedcolor>FFF0F0F0</selectedcolor>
 										<label>$INFO[ListItem.Label]</label>
 									</control>
 									<control type="group">
@@ -2383,7 +2389,7 @@
 											<align>center</align>
 											<width>50</width>
 											<height>32</height>
-											<textcolor>white</textcolor>
+											<textcolor>FFF0F0F0</textcolor>
 											<font>font10_title</font>
 											<label>$INFO[ListItem.Property(UserRating)]</label>
 										</control>
@@ -2429,7 +2435,7 @@
 											<height>32</height>
 											<align>center</align>
 											<font>font_textbox</font>
-											<selectedcolor>white</selectedcolor>
+											<selectedcolor>FFF0F0F0</selectedcolor>
 											<label fallback="-">$INFO[ListItem.Property(Album_Rating)]</label>
 										</control>
 									</control>
@@ -2451,7 +2457,7 @@
 											<height>32</height>
 											<align>center</align>
 											<font>font_textbox</font>
-											<selectedcolor>white</selectedcolor>
+											<selectedcolor>FFF0F0F0</selectedcolor>
 											<label fallback="-">$INFO[ListItem.Property(Year)]</label>
 										</control>
 									</control>
@@ -2497,7 +2503,7 @@
 							<animation effect="fade" start="100" end="0" time="300">WindowClose</animation>
 							<orientation>horizontal</orientation>
 							<align>right</align>
-							<top>775</top>
+							<top>795</top>
 							<right>24</right>
 							<width>1200</width>
 							<itemgap>10</itemgap>
@@ -2528,8 +2534,8 @@
 							<height>720</height>
 							<onleft>9000</onleft>
 							<onright>531</onright>
-							<onup>500</onup>
-							<ondown>500</ondown>
+							<onup>101</onup>
+							<ondown>101</ondown>
 							<viewtype label="31102">icon</viewtype>
 							<preloaditems>4</preloaditems>
 							<pagecontrol>531</pagecontrol>
@@ -2544,8 +2550,8 @@
 									<height>300</height>
 									<texture border="2" fallback="DefaultVideo.png" background="true">$INFO[ListItem.Icon]</texture>
 									<aspectratio>scale</aspectratio>
-									<bordertexture colordiffuse="60FFFFFF">globalsearch-black.png</bordertexture>
-									<bordersize>4</bordersize>
+									<bordertexture border="6">globalsearch-panel-shadow.png</bordertexture>
+									<bordersize>5</bordersize>
 								</control>
 								<control type="image">
 									<left>1</left>
@@ -2553,6 +2559,8 @@
 									<width>300</width>
 									<height>58</height>
 									<texture colordiffuse="B0FFFFFF">globalsearch-black.png</texture>
+									<bordertexture border="6">globalsearch-panel-shadow.png</bordertexture>
+									<bordersize>5</bordersize>
 								</control>
 								<control type="label">
 									<left>15</left>
@@ -2562,7 +2570,7 @@
 									<font>font10</font>
 									<align>center</align>
 									<aligny>center</aligny>
-									<selectedcolor>white</selectedcolor>
+									<selectedcolor>FFF0F0F0</selectedcolor>
 									<label>[B]$INFO[ListItem.Property(Artist)][/B]</label>
 								</control>
 								<control type="label">
@@ -2573,7 +2581,7 @@
 									<font>font10</font>
 									<align>center</align>
 									<aligny>center</aligny>
-									<selectedcolor>white</selectedcolor>
+									<selectedcolor>FFF0F0F0</selectedcolor>
 									<label>$INFO[ListItem.Label]</label>
 								</control>
 								<control type="group">
@@ -2593,7 +2601,7 @@
 										<align>center</align>
 										<width>50</width>
 										<height>32</height>
-										<textcolor>white</textcolor>
+										<textcolor>FFF0F0F0</textcolor>
 										<font>font10_title</font>
 										<label>$INFO[ListItem.Property(UserRating)]</label>
 									</control>
@@ -2610,8 +2618,8 @@
 										<height>300</height>
 										<texture border="2" fallback="DefaultVideo.png" background="true">$INFO[ListItem.Icon]</texture>
 										<aspectratio>scale</aspectratio>
-										<bordertexture colordiffuse="60FFFFFF">globalsearch-black.png</bordertexture>
-										<bordersize>4</bordersize>
+										<bordertexture border="6">globalsearch-panel-shadow.png</bordertexture>
+										<bordersize>5</bordersize>
 									</control>
 									<control type="image">
 										<left>1</left>
@@ -2619,6 +2627,8 @@
 										<width>300</width>
 										<height>58</height>
 										<texture colordiffuse="B0FFFFFF">globalsearch-black.png</texture>
+										<bordertexture border="6">globalsearch-panel-shadow.png</bordertexture>
+										<bordersize>5</bordersize>
 									</control>
 									<control type="label">
 										<left>15</left>
@@ -2628,7 +2638,7 @@
 										<font>font10</font>
 										<align>center</align>
 										<aligny>center</aligny>
-										<selectedcolor>white</selectedcolor>
+										<selectedcolor>FFF0F0F0</selectedcolor>
 										<label>[B]$INFO[ListItem.Property(Artist)][/B]</label>
 									</control>
 									<control type="label">
@@ -2639,7 +2649,7 @@
 										<font>font10</font>
 										<align>center</align>
 										<aligny>center</aligny>
-										<selectedcolor>white</selectedcolor>
+										<selectedcolor>FFF0F0F0</selectedcolor>
 										<label>$INFO[ListItem.Label]</label>
 									</control>
 									<control type="group">
@@ -2659,7 +2669,7 @@
 											<align>center</align>
 											<width>50</width>
 											<height>32</height>
-											<textcolor>white</textcolor>
+											<textcolor>FFF0F0F0</textcolor>
 											<font>font10_title</font>
 											<label>$INFO[ListItem.Property(UserRating)]</label>
 										</control>
@@ -2705,7 +2715,7 @@
 											<height>32</height>
 											<align>center</align>
 											<font>font_textbox</font>
-											<selectedcolor>white</selectedcolor>
+											<selectedcolor>FFF0F0F0</selectedcolor>
 											<label fallback="-">$INFO[ListItem.Property(Rating)]</label>
 										</control>
 									</control>
@@ -2727,7 +2737,7 @@
 											<height>32</height>
 											<align>center</align>
 											<font>font_textbox</font>
-											<selectedcolor>white</selectedcolor>
+											<selectedcolor>FFF0F0F0</selectedcolor>
 											<label fallback="-">$INFO[ListItem.Property(Year)]</label>
 										</control>
 									</control>
@@ -2792,7 +2802,7 @@
 							<animation effect="fade" start="100" end="0" time="300">WindowClose</animation>
 							<orientation>horizontal</orientation>
 							<align>right</align>
-							<top>775</top>
+							<top>795</top>
 							<right>24</right>
 							<width>1200</width>
 							<itemgap>10</itemgap>
@@ -2823,8 +2833,8 @@
 							<height>720</height>
 							<onleft>9000</onleft>
 							<onright>531</onright>
-							<onup>500</onup>
-							<ondown>500</ondown>
+							<onup>101</onup>
+							<ondown>101</ondown>
 							<viewtype label="31102">icon</viewtype>
 							<preloaditems>4</preloaditems>
 							<pagecontrol>531</pagecontrol>
@@ -2852,7 +2862,7 @@
 								<control type="textbox">
 									<left>15</left>
 									<top>275</top>
-									<width>196</width>
+									<width>192</width>
 									<height>65</height>
 									<font>font10</font>
 									<align>center</align>
@@ -2876,7 +2886,7 @@
 										<align>center</align>
 										<width>50</width>
 										<height>32</height>
-										<textcolor>white</textcolor>
+										<textcolor>FFF0F0F0</textcolor>
 										<font>font10_title</font>
 										<label>$INFO[ListItem.Property(UserRating)]</label>
 									</control>
@@ -2929,10 +2939,24 @@
 											<align>center</align>
 											<width>50</width>
 											<height>32</height>
-											<textcolor>white</textcolor>
+											<textcolor>FFF0F0F0</textcolor>
 											<font>font10_title</font>
 											<label>$INFO[ListItem.Property(UserRating)]</label>
 										</control>
+									</control>
+								</control>
+								<control type="group">
+									<top>15</top>
+									<animation type="Focus">
+										<effect type="slide" start="0,0" end="-40,0" time="300" />
+										<effect type="fade" start="0" end="100" time="300" />
+									</animation>
+									<animation effect="fade" start="100" end="0" time="0">UnFocus</animation>
+									<control type="image">
+										<left>1</left>
+										<width>220</width>
+										<height>330</height>
+										<texture border="8" colordiffuse="FF12B2E7">globalsearch-thumbnail-focus.png</texture>
 									</control>
 								</control>
 								<control type="image">
@@ -2968,7 +2992,7 @@
 											<height>32</height>
 											<align>center</align>
 											<font>font_textbox</font>
-											<selectedcolor>white</selectedcolor>
+											<selectedcolor>FFF0F0F0</selectedcolor>
 											<label fallback="-">$INFO[ListItem.Property(Rating)]</label>
 										</control>
 									</control>
@@ -2990,7 +3014,7 @@
 											<height>32</height>
 											<align>center</align>
 											<font>font_textbox</font>
-											<selectedcolor>white</selectedcolor>
+											<selectedcolor>FFF0F0F0</selectedcolor>
 											<label fallback="-">$INFO[ListItem.Property(Year)]</label>
 										</control>
 									</control>
@@ -3055,7 +3079,7 @@
 							<animation effect="fade" start="100" end="0" time="300">WindowClose</animation>
 							<orientation>horizontal</orientation>
 							<align>right</align>
-							<top>775</top>
+							<top>795</top>
 							<right>24</right>
 							<width>1200</width>
 							<itemgap>10</itemgap>
@@ -3134,8 +3158,8 @@
 							<height>720</height>
 							<onleft>9000</onleft>
 							<onright>531</onright>
-							<onup>500</onup>
-							<ondown>500</ondown>
+							<onup>101</onup>
+							<ondown>101</ondown>
 							<viewtype label="31102">icon</viewtype>
 							<preloaditems>4</preloaditems>
 							<pagecontrol>531</pagecontrol>
@@ -3163,7 +3187,7 @@
 								<control type="textbox">
 									<left>15</left>
 									<top>275</top>
-									<width>196</width>
+									<width>192</width>
 									<height>65</height>
 									<font>font10</font>
 									<align>center</align>
@@ -3187,7 +3211,7 @@
 										<align>center</align>
 										<width>50</width>
 										<height>32</height>
-										<textcolor>white</textcolor>
+										<textcolor>FFF0F0F0</textcolor>
 										<font>font10_title</font>
 										<label>$INFO[ListItem.Property(UserRating)]</label>
 									</control>
@@ -3240,10 +3264,24 @@
 											<align>center</align>
 											<width>50</width>
 											<height>32</height>
-											<textcolor>white</textcolor>
+											<textcolor>FFF0F0F0</textcolor>
 											<font>font10_title</font>
 											<label>$INFO[ListItem.Property(UserRating)]</label>
 										</control>
+									</control>
+								</control>
+								<control type="group">
+									<top>15</top>
+									<animation type="Focus">
+										<effect type="slide" start="0,0" end="-40,0" time="300" />
+										<effect type="fade" start="0" end="100" time="300" />
+									</animation>
+									<animation effect="fade" start="100" end="0" time="0">UnFocus</animation>
+									<control type="image">
+										<left>1</left>
+										<width>220</width>
+										<height>330</height>
+										<texture border="8" colordiffuse="FF12B2E7">globalsearch-thumbnail-focus.png</texture>
 									</control>
 								</control>
 								<control type="image">
@@ -3279,7 +3317,7 @@
 											<height>32</height>
 											<align>center</align>
 											<font>font_textbox</font>
-											<selectedcolor>white</selectedcolor>
+											<selectedcolor>FFF0F0F0</selectedcolor>
 											<label fallback="-">$INFO[ListItem.Property(Rating)]</label>
 										</control>
 									</control>
@@ -3301,7 +3339,7 @@
 											<height>32</height>
 											<align>center</align>
 											<font>font_textbox</font>
-											<selectedcolor>white</selectedcolor>
+											<selectedcolor>FFF0F0F0</selectedcolor>
 											<label fallback="-">$INFO[ListItem.Property(Year)]</label>
 										</control>
 									</control>
@@ -3366,7 +3404,7 @@
 							<animation effect="fade" start="100" end="0" time="300">WindowClose</animation>
 							<orientation>horizontal</orientation>
 							<align>right</align>
-							<top>775</top>
+							<top>795</top>
 							<right>24</right>
 							<width>1200</width>
 							<itemgap>10</itemgap>
@@ -3445,8 +3483,8 @@
 							<height>720</height>
 							<onleft>9000</onleft>
 							<onright>531</onright>
-							<onup>500</onup>
-							<ondown>500</ondown>
+							<onup>101</onup>
+							<ondown>101</ondown>
 							<viewtype label="31102">icon</viewtype>
 							<preloaditems>4</preloaditems>
 							<pagecontrol>531</pagecontrol>
@@ -3479,7 +3517,7 @@
 									<font>font10</font>
 									<align>center</align>
 									<aligny>center</aligny>
-									<selectedcolor>white</selectedcolor>
+									<selectedcolor>FFF0F0F0</selectedcolor>
 									<label>[B]$INFO[ListItem.Property(ChannelName)][/B]</label>
 								</control>
 								<control type="label">
@@ -3490,7 +3528,7 @@
 									<font>font10</font>
 									<align>center</align>
 									<aligny>center</aligny>
-									<selectedcolor>white</selectedcolor>
+									<selectedcolor>FFF0F0F0</selectedcolor>
 									<label>$INFO[ListItem.Label]</label>
 								</control>
 							</itemlayout>
@@ -3523,7 +3561,7 @@
 										<font>font10</font>
 										<align>center</align>
 										<aligny>center</aligny>
-										<selectedcolor>white</selectedcolor>
+										<selectedcolor>FFF0F0F0</selectedcolor>
 										<label>[B]$INFO[ListItem.Property(ChannelName)][/B]</label>
 									</control>
 									<control type="label">
@@ -3534,7 +3572,7 @@
 										<font>font10</font>
 										<align>center</align>
 										<aligny>center</aligny>
-										<selectedcolor>white</selectedcolor>
+										<selectedcolor>FFF0F0F0</selectedcolor>
 										<label>$INFO[ListItem.Label]</label>
 									</control>
 									<control type="image">
@@ -3578,7 +3616,7 @@
 											<height>32</height>
 											<align>center</align>
 											<font>font_textbox</font>
-											<selectedcolor>white</selectedcolor>
+											<selectedcolor>FFF0F0F0</selectedcolor>
 											<label fallback="-">$INFO[ListItem.Property(Duration)]</label>
 										</control>
 									</control>
@@ -3652,12 +3690,67 @@
 					<left>436</left>
 					<top>0</top>
 					<width>1484</width>
-					<height>920</height>
+					<height>1080</height>
 					<align>center</align>
 					<aligny>center</aligny>
 					<font>font_MainMenu</font>
 					<label>$LOCALIZE[284]</label>
 				</control>
+			</control>
+			<control type="image">
+				<left>0</left>
+				<top>0</top>
+				<width>1920</width>
+				<height>115</height>
+				<texture>globalsearch-header.png</texture>
+			</control>
+			<control type="group">
+				<top>30</top>
+				<left>90</left>
+				<control type="image">
+					<aspectratio>keep</aspectratio>
+					<width>56</width>
+					<height>56</height>
+					<texture colordiffuse="FF12B2E7">globalsearch-logo.png</texture>
+				</control>
+				<control type="image">
+					<left>40</left>
+					<top>10</top>
+					<aspectratio>keep</aspectratio>
+					<width>192</width>
+					<height>36</height>
+					<texture>globalsearch-logo-text.png</texture>
+				</control>
+			</control>
+			<control type="label">
+				<top>0</top>
+				<align>right</align>
+				<right>20</right>
+				<height>200</height>
+				<width>900</width>
+				<font>font_clock</font>
+				<shadowcolor>22000000</shadowcolor>
+				<label>$INFO[System.Time]</label>
+			</control>
+			<control type="image">
+				<left>0</left>
+				<top>965</top>
+				<width>1920</width>
+				<height>115</height>
+				<texture flipy="true">globalsearch-header.png</texture>
+			</control>
+			<control type="rss">
+				<left>0</left>
+				<top>1041</top>
+				<height>39</height>
+				<width>1920</width>
+				<font>font12</font>
+				<urlset>1</urlset>
+				<hitrect x="-100" y="0" w="1" h="1" />
+				<titlecolor>FF12B2E7</titlecolor>
+				<shadowcolor>22000000</shadowcolor>
+				<headlinecolor>FFC0C0C0</headlinecolor>
+				<textcolor>FFF0F0F0</textcolor>
 			</control>
 		</control>
 	</controls>

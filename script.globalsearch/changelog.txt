@@ -1,3 +1,6 @@
+v7.4.2
+- redesign
+
 v7.4.1
 - resume bugfix
 
