@@ -28,7 +28,7 @@
 			<width>1340</width>
 			<label>$ADDON[script.xbmc.audio.mixer 30001]</label>
 			<height>70</height>
-			<font>font20_title</font>
+			<font>font32_title</font>
 			<align>left</align>
 			<aligny>center</aligny>
 			<shadowcolor>black</shadowcolor>
