@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.kodi.loguploader" name="Kodi Logfile Uploader" version="0.1.0" provider-name="Team Kodi">
+<addon id="script.kodi.loguploader" name="Kodi Logfile Uploader" version="0.1.1" provider-name="Team Kodi">
 	<requires>
 		<import addon="xbmc.python" version="2.24.0"/>
 		<import addon="script.module.pyqrcode" version="0.0.1"/>

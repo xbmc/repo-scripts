@@ -60,6 +60,8 @@ class pasteURLopener(FancyURLopener):
 class Main:
     def __init__(self):
         self.getSettings()
+        if not xbmcvfs.exists(PROFILE):
+            xbmcvfs.mkdirs(PROFILE)
         files = self.getFiles()
         for item in files:
             filetype = item[0]
