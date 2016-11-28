@@ -29,3 +29,7 @@ msgstr ""
 msgctxt "#32004"
 msgid "Login Details"
 msgstr ""
+
+msgctxt "#32005"
+msgid "Your opensubtitles.org username or password is empty or not valid"
+msgstr ""
