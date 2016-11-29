@@ -40,7 +40,7 @@ LIBRARY = library.LibraryFunctions()
 
 def get_playlist_stats(path):
     WINDOW = xbmcgui.Window(10000)
-    if ("activatewindow" in path) and ("://" in path) and ("," in path):
+    if ("activatewindow" in path.lower()) and ("://" in path) and ("," in path):
         if ("\"" in path):
             # remove &quot; from path (gets added by favorites)
             path = path.translate(None, '\"')
