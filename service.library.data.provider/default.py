@@ -169,7 +169,7 @@ class Main:
         self.TYPE = params.get("?type", "")
         self.ALBUM = params.get("album", "")
         self.USECACHE = params.get("reload", False)
-        self.path = params.get("id", "").lower()
+        self.path = params.get("id", "")
         if self.USECACHE is not False:
             self.USECACHE = True
         self.LIMIT = int(params.get("limit", "-1"))
