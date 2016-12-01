@@ -1,11 +1,11 @@
-#Skin Shortcuts - 1.0.12
+#Skin Shortcuts - 1.0.13
 
 script.skinshortcuts was written with the intention of making user customizable shortcuts on the home page easier for skinners.
 
 
 ## What's New for Skinners
 
-#### Version 1.0.12 - repo version
+#### Version 1.0.13 - repo version
 
 - Skinners can now set that their skin should not use the users shared additional submenus - [Read More](./resources/docs/started/Getting Started.md#shared-additioanl-submenu)
 - Submenu template improvements - [Read More](./resources/docs/advanced/Templates.md#sub-menu-template)
