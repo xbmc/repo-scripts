@@ -3,8 +3,8 @@
 import xbmc
 import xbmcaddon
 
-__addon__               = xbmcaddon.Addon()
-__addon_id__            = __addon__.getAddonInfo('id')
+ADDON               = xbmcaddon.Addon()
+ADDON_ID            = ADDON.getAddonInfo('id')
 
 class Player(xbmc.Player):
 
@@ -12,8 +12,8 @@ class Player(xbmc.Player):
         xbmc.Player.__init__(self) 
         
     def onPlayBackStarted(self):
-        if 'true' in __addon__.getSetting('player_show'):
-            xbmc.executebuiltin('XBMC.RunScript(' + __addon_id__ + ', service)')
+        if 'true' in ADDON.getSetting('player_show'):
+            xbmc.executebuiltin('XBMC.RunScript(' + ADDON_ID + ', service)')
 
 player = Player()
 

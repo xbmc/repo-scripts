@@ -5,14 +5,14 @@ import xbmcgui
 import xbmc
 import os
 
-__addon__               = xbmcaddon.Addon()
-__addon_id__            = __addon__.getAddonInfo('id')
-__addonpath__           = xbmc.translatePath(__addon__.getAddonInfo('path'))
+ADDON               = xbmcaddon.Addon()
+ADDON_ID            = ADDON.getAddonInfo('id')
+ADDON_PATH          = xbmc.translatePath(ADDON.getAddonInfo('path'))
 
 class DIALOG:
     def start(self, xml_file, labels={}, textboxes={}, buttons=[], list=0):
         
-        display = SHOW(xml_file, __addonpath__, labels=labels,  textboxes=textboxes, buttons=buttons, list=list)
+        display = SHOW(xml_file, ADDON_PATH, labels=labels,  textboxes=textboxes, buttons=buttons, list=list)
         
         display.doModal()
         ret = display.ret
@@ -48,7 +48,7 @@ class SHOW(xbmcgui.WindowXMLDialog):
         self.setFocus(self.listitem)
         
         # set amount of buttons for background height
-        xbmcgui.Window(10000).setProperty(__addon_id__ + '_items',str(len(self.buttons)))
+        xbmcgui.Window(10000).setProperty(ADDON_ID + '_items',str(len(self.buttons)))
         
     def onClick(self, controlID):
         # return selected button

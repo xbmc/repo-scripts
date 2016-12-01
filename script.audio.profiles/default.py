@@ -8,33 +8,33 @@ import json
 import os
 import sys
 
-__addon__               = xbmcaddon.Addon()
-__addon_id__            = __addon__.getAddonInfo('id')
-__addonname__           = __addon__.getAddonInfo('name')
-__icon__                = __addon__.getAddonInfo('icon')
-__addonpath__           = xbmc.translatePath(__addon__.getAddonInfo('path'))
-__datapath__            = xbmc.translatePath(os.path.join('special://profile/addon_data/', __addon_id__)).replace('\\', '/') + '/'
-__lang__                = __addon__.getLocalizedString
-__path__                = os.path.join(__addonpath__, 'resources', 'lib' )
-__path_img__            = os.path.join(__addonpath__, 'resources', 'media' )
+ADDON               = xbmcaddon.Addon()
+ADDON_ID            = ADDON.getAddonInfo('id')
+ADDON_NAME          = ADDON.getAddonInfo('name')
+ADDON_ICON          = ADDON.getAddonInfo('icon')
+ADDON_PATH          = xbmc.translatePath(ADDON.getAddonInfo('path'))
+ADDON_PATH_DATA     = xbmc.translatePath(os.path.join('special://profile/addon_data/', ADDON_ID)).replace('\\', '/') + '/'
+ADDON_PATH_LIB      = os.path.join(ADDON_PATH, 'resources', 'lib' )
+ADDON_PATH_MEDIA    = os.path.join(ADDON_PATH, 'resources', 'media' )
+ADDON_LANG          = ADDON.getLocalizedString
 
-sys.path.append(__path__)
+sys.path.append(ADDON_PATH_LIB)
 
 import dialog
 import debug
 
 # set vars
 sName = {
-    1: __addon__.getSetting('name1'),
-    2: __addon__.getSetting('name2'),
-    3: __addon__.getSetting('name3'),
-    4: __addon__.getSetting('name4')
+    1: ADDON.getSetting('name1'),
+    2: ADDON.getSetting('name2'),
+    3: ADDON.getSetting('name3'),
+    4: ADDON.getSetting('name4')
 }
 sProfile = {
-    1: __addon__.getSetting('profile1'),
-    2: __addon__.getSetting('profile2'),
-    3: __addon__.getSetting('profile3'),
-    4: __addon__.getSetting('profile4')
+    1: ADDON.getSetting('profile1'),
+    2: ADDON.getSetting('profile2'),
+    3: ADDON.getSetting('profile3'),
+    4: ADDON.getSetting('profile4')
 }
 
 class PROFILES:
@@ -51,12 +51,12 @@ class PROFILES:
         self.start(mode)
         
     def start(self, mode):
-        xbmcgui.Window(10000).clearProperty(__addon_id__ + '_autoclose')
+        xbmcgui.Window(10000).clearProperty(ADDON_ID + '_autoclose')
         
         # check is profiles is set
         if 'true' not in sProfile.values():
-            debug.notify(__lang__(32105))
-            xbmcaddon.Addon(id=__addon_id__).openSettings()
+            debug.notify(ADDON_LANG(32105))
+            xbmcaddon.Addon(id=ADDON_ID).openSettings()
         
         if mode is False:
             self.save()
@@ -64,8 +64,8 @@ class PROFILES:
         
         if mode == 'service':
             enabledProfiles = self.getEnabledProfiles()
-            xbmcgui.Window(10000).setProperty(__addon_id__ + '_autoclose', '1' if 'true' in __addon__.getSetting('player_autoclose') else '0')
-            ret = dialog.DIALOG().start('script-audio-profiles-menu.xml', labels={10071: __lang__(32106)}, buttons=enabledProfiles[1], list=10070)
+            xbmcgui.Window(10000).setProperty(ADDON_ID + '_autoclose', '1' if 'true' in ADDON.getSetting('player_autoclose') else '0')
+            ret = dialog.DIALOG().start('script-audio-profiles-menu.xml', labels={10071: ADDON_LANG(32106)}, buttons=enabledProfiles[1], list=10070)
             if ret is not None:
                 self.profile(str(enabledProfiles[0][ret]))
             return
@@ -80,7 +80,7 @@ class PROFILES:
                 self.profile(mode)
             return
             
-        debug.debug('Wrong arg, use like RunScript("' + __addon_id__ + ',x") x - number of profile')
+        debug.debug('Wrong arg, use like RunScript("' + ADDON_ID + ',x") x - number of profile')
 
     def getEnabledProfiles(self):
         enabledProfileKey = []
@@ -97,7 +97,7 @@ class PROFILES:
         debug.debug('[XBMC VERSION]: ' + str(xbmc_version))
         
         enabledProfiles = self.getEnabledProfiles()
-        ret = dialog.DIALOG().start('script-audio-profiles-menu.xml', labels={10071: __lang__(32100)}, buttons=enabledProfiles[1], list=10070)
+        ret = dialog.DIALOG().start('script-audio-profiles-menu.xml', labels={10071: ADDON_LANG(32100)}, buttons=enabledProfiles[1], list=10070)
         if ret is None:
             return False
         else:
@@ -154,15 +154,15 @@ class PROFILES:
         jsonToWrite = json.dumps(settingsToSave)
         
         # create dir in addon data if not exist
-        if not xbmcvfs.exists(__datapath__):
-            xbmcvfs.mkdir(__datapath__)
+        if not xbmcvfs.exists(ADDON_PATH_DATA):
+            xbmcvfs.mkdir(ADDON_PATH_DATA)
         
         # save profile file
-        f = xbmcvfs.File(__datapath__ + 'profile' + str(button) + '.json', 'w')
+        f = xbmcvfs.File(ADDON_PATH_DATA + 'profile' + str(button) + '.json', 'w')
         result = f.write(jsonToWrite)
         f.close()
         
-        debug.notify(__lang__(32102) + ' ' + str(button) + ' (' + sName[button] + ')')
+        debug.notify(ADDON_LANG(32102) + ' ' + str(button) + ' (' + sName[button] + ')')
 
     def check(self, mode):
         # check profile config
@@ -170,26 +170,26 @@ class PROFILES:
         
         # stop if selected (mode) profile are disabled
         if mode != '0' and 'false' in sProfile[int(mode)]:
-            debug.notify(__lang__(32103) + ' (' + sName[int(mode)] + ')')
+            debug.notify(ADDON_LANG(32103) + ' (' + sName[int(mode)] + ')')
             debug.debug('[CHECK]: This profile is dosabled in addon settings - ' + str(mode))
             return False
         
         # check if profile have settings file
         for key in sProfile:
             if 'true' in sProfile[key]:
-                if not xbmcvfs.exists(__datapath__ + 'profile' + str(key) + '.json'):
-                    debug.notify(__lang__(32101) + ' ' + str(key) + ' (' + sName[key] + ')')
+                if not xbmcvfs.exists(ADDON_PATH_DATA + 'profile' + str(key) + '.json'):
+                    debug.notify(ADDON_LANG(32101) + ' ' + str(key) + ' (' + sName[key] + ')')
                     debug.debug('[PROFILE FILE]: not exist for profile - ' + str(key))
                     return False
                 self.aProfile.append(str(key))
         
     def toggle(self, mode):
         # create profile file
-        if not xbmcvfs.exists(__datapath__):
-            xbmcvfs.mkdir(__datapath__)
+        if not xbmcvfs.exists(ADDON_PATH_DATA):
+            xbmcvfs.mkdir(ADDON_PATH_DATA)
         # try read last active profile
         try:
-            f = xbmcvfs.File(__datapath__ + 'profile')
+            f = xbmcvfs.File(ADDON_PATH_DATA + 'profile')
             profile = f.read()
             f.close()
             if (len(self.aProfile) == 1) or (profile not in self.aProfile):
@@ -207,18 +207,18 @@ class PROFILES:
         
     def profile(self, profile):
         # read addon settings
-        sVolume        = __addon__.getSetting('volume')
-        sPlayer        = __addon__.getSetting('player')
-        sVideo         = __addon__.getSetting('video')
+        sVolume        = ADDON.getSetting('volume')
+        sPlayer        = ADDON.getSetting('player')
+        sVideo         = ADDON.getSetting('video')
         
         # read settings from profile
-        f = xbmcvfs.File(__datapath__ + 'profile' + profile + '.json', 'r')
+        f = xbmcvfs.File(ADDON_PATH_DATA + 'profile' + profile + '.json', 'r')
         result = f.read()
         try:
             jsonResult = json.loads(result)
             f.close()
         except:
-            debug.notify(__lang__(32104) + ' ' + profile + ' (' + sName[int(profile)] + ')')
+            debug.notify(ADDON_LANG(32104) + ' ' + profile + ' (' + sName[int(profile)] + ')')
             debug.debug('[LOAD JSON FROM FILE]: Error reading from profile - ' + str(profile))
             return False
         
@@ -247,10 +247,10 @@ class PROFILES:
             else:
                 xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "Settings.SetSettingValue", "params": {"setting": "' + setName + '", "value": ' + setValue.encode('utf-8') + '}, "id": 1}')
         
-        debug.notify(sName[int(profile)])
+        debug.notify(sName[int(profile)].decode('utf-8'))
         
         # write curent profile
-        f = xbmcvfs.File(__datapath__ + 'profile', 'w')
+        f = xbmcvfs.File(ADDON_PATH_DATA + 'profile', 'w')
         f.write(profile)
         f.close()
 

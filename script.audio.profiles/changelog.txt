@@ -1,3 +1,6 @@
+[B]1.1.1[/B]
+- fix: unicode characters for profiles name
+
 [B]1.1.0[/B]
 - fix: compatibility with KODI 17 Krypton 
 - fix: rewrite window dialog to use WindowXML
