@@ -12,7 +12,7 @@ import unicodedata
 
 __addon__      = xbmcaddon.Addon()
 __version__    = __addon__.getAddonInfo('version') # Module version
-__scriptname__ = "XBMC Subtitles"
+__scriptname__ = "XBMC Subtitles Login"
 
 BASE_URL_XMLRPC = u"http://api.opensubtitles.org/xml-rpc"
 
@@ -20,7 +20,8 @@ class OSDBServer:
   def __init__( self, *args, **kwargs ):
     self.server = xmlrpclib.Server( BASE_URL_XMLRPC, verbose=0 )
     login = self.server.LogIn(__addon__.getSetting( "OSuser" ), __addon__.getSetting( "OSpass" ), "en", "%s_v%s" %(__scriptname__.replace(" ","_"),__version__))
-    self.osdb_token  = login[ "token" ]
+    if (login["status"] == "200 OK"):
+      self.osdb_token  = login[ "token" ]
 
   def searchsubtitles( self, item):
     if ( self.osdb_token ) :
