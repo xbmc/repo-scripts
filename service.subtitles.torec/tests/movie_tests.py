@@ -20,7 +20,7 @@ class MovieTests(unittest.TestCase):
 		item    = self._create_test_valid_item()
 		options = self.downloader.search_movie(item['title'])
 		self.assertIsNotNone(options)
-		self.assertEqual(len(options), 1)
+		self.assertEqual(len(options), 22)
 
 	def test_search_inexisting_movie(self):
 		item = {

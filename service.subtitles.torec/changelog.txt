@@ -1,3 +1,7 @@
+1.2.0
+- added support for the new download code screen
+- fix Manual Search, Empty Title&Kodi isn't playing (@burekas7)
+
 1.1.4
 - fixed broken search due to site API change
 
