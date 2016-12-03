@@ -8,10 +8,13 @@ import xbmcaddon
 import xbmc
 
 import re
+import os
 
 __addon__ = xbmcaddon.Addon()
 __version__ = __addon__.getAddonInfo('version')  # Module version
 __scriptname__ = __addon__.getAddonInfo('name')
+
+regexHelper = re.compile('\W+', re.UNICODE)
 
 def log(module, msg):
     xbmc.log((u"### [%s] - %s" % (module, msg,)).encode('utf-8'), level=xbmc.LOGDEBUG)
@@ -62,3 +65,72 @@ def check_and_parse_if_title_is_TVshow(manualTitle):
 
     except:
         return ["NotTVShow", "0", "0"]
+
+def take_title_from_focused_item():
+    labelType = xbmc.getInfoLabel("ListItem.DBTYPE")  #movie/tvshow/season/episode
+    labelMovieTitle = xbmc.getInfoLabel("ListItem.OriginalTitle")
+    labelYear = xbmc.getInfoLabel("ListItem.Year")
+    labelTVShowTitle = xbmc.getInfoLabel("ListItem.TVShowTitle")
+    labelSeason = xbmc.getInfoLabel("ListItem.Season")
+    labelEpisode = xbmc.getInfoLabel("ListItem.Episode")
+
+    title = 'SearchFor ...'
+    if labelType == 'movie' and labelMovieTitle and labelYear:
+        title = labelMovieTitle + " " + labelYear
+    elif labelType == 'episode' and labelTVShowTitle and labelSeason and labelEpisode:
+        title = ("%s S%.2dE%.2d" % (labelTVShowTitle, int(labelSeason), int(labelEpisode))).replace(" ", "%20")
+
+    return title
+
+def parse_rls_title(item):
+    title = regexHelper.sub(' ', item["title"])
+    tvshow = regexHelper.sub(' ', item["tvshow"])
+
+    groups = re.findall(r"(.*?) (\d{4})? ?(?:s|season|)(\d{1,2})(?:e|episode|x|\n)(\d{1,2})", title, re.I)
+
+    if len(groups) == 0:
+        groups = re.findall(r"(.*?) (\d{4})? ?(?:s|season|)(\d{1,2})(?:e|episode|x|\n)(\d{1,2})", tvshow, re.I)
+
+    if len(groups) > 0 and len(groups[0]) >= 3:
+        title, year, season, episode = groups[0]
+        item["year"] = str(int(year)) if len(year) == 4 else year
+
+        item["tvshow"] = regexHelper.sub(' ', title).strip()
+        item["season"] = str(int(season))
+        item["episode"] = str(int(episode))
+        log(__name__, "TV Parsed Item: %s" % (item,))
+
+    else:
+        groups = re.findall(r"(.*?)(\d{4})", item["title"], re.I)
+        if len(groups) > 0 and len(groups[0]) >= 1:
+            title = groups[0][0]
+            item["title"] = regexHelper.sub(' ', title).strip()
+            item["year"] = groups[0][1] if len(groups[0]) == 2 else item["year"]
+
+            log(__name__, "MOVIE Parsed Item: %s" % (item,))
+
+def clean_title(item):
+    title = os.path.splitext(os.path.basename(item["title"]))
+    tvshow = os.path.splitext(os.path.basename(item["tvshow"]))
+
+    if len(title) > 1:
+        if re.match(r'^\.[a-z]{2,4}$', title[1], re.IGNORECASE):
+            item["title"] = title[0]
+        else:
+            item["title"] = ''.join(title)
+    else:
+        item["title"] = title[0]
+
+    if len(tvshow) > 1:
+        if re.match(r'^\.[a-z]{2,4}$', tvshow[1], re.IGNORECASE):
+            item["tvshow"] = tvshow[0]
+        else:
+            item["tvshow"] = ''.join(tvshow)
+    else:
+        item["tvshow"] = tvshow[0]
+
+    item["title"] = unicode(item["title"], "utf-8")
+    item["tvshow"] = unicode(item["tvshow"], "utf-8")
+    # Removes country identifier at the end
+    item["title"] = re.sub(r'\([^\)]+\)\W*$', '', item["title"]).strip()
+    item["tvshow"] = re.sub(r'\([^\)]+\)\W*$', '', item["tvshow"]).strip()

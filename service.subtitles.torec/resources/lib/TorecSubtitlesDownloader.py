@@ -41,7 +41,7 @@ class TVShowPage():
             return None
 
         episode_options = season_div[0].findAll("a")
-        episode_option = next((episode_option for episode_option in episode_options if (episode_option.contents[0] == u'פרק %s' % episode_number)), None)
+        episode_option = next((episode_option for episode_option in episode_options if ((episode_option.contents[0] == u'פרק %s' % episode_number) or (episode_option.contents[0] == u'פרק %s - אחרון לעונה' % episode_number))), None)
         if not episode_option:
             return None
 

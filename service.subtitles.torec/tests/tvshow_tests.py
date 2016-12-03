@@ -22,6 +22,17 @@ class TVShowTests(unittest.TestCase):
 		self.assertIsNotNone(options)
 		self.assertGreaterEqual(len(options), 5)
 
+	def test_search_tvshow_last_season_episode(self):
+		item    = {
+			'tvshow': 'house of cards',
+			'season': '3',
+			'episode': '13'
+		}
+
+		options = self.downloader.search_tvshow(item['tvshow'], item['season'], item['episode'])
+		self.assertIsNotNone(options)
+		self.assertGreaterEqual(len(options), 5)
+
 	def test_search_inexisting_tvshow(self):
 		item = {
 			'tvshow': 'house of lards',

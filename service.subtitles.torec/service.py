@@ -38,7 +38,7 @@ xbmcvfs.mkdirs(__temp__)
 
 sys.path.append(__resource__)
 
-from SubtitleHelper import log, normalize_string, convert_to_utf, check_and_parse_if_title_is_TVshow
+from SubtitleHelper import log, normalize_string, convert_to_utf, check_and_parse_if_title_is_TVshow, take_title_from_focused_item, parse_rls_title, clean_title
 from TorecSubtitlesDownloader import TorecSubtitlesDownloader
 
 def search(item):
@@ -203,12 +203,12 @@ if params['action'] == 'search' or params['action'] == 'manualsearch':
     else:
         item['temp'] = False
         item['rar'] = False
-        item['mansearch'] = False
         item['year'] = ""
         item['season'] = ""
         item['episode'] = ""
         item['tvshow'] = ""
-        item['title'] = "SearchFor..." # Needed to avoid showing previous search result.
+        item['title'] = take_title_from_focused_item()
+        item['mansearch'] = True
         item['file_original_path'] = ""
         item['3let_language'] = []
 
@@ -219,6 +219,15 @@ if params['action'] == 'search' or params['action'] == 'manualsearch':
     if 'searchstring' in params:
         item['mansearch'] = True
         item['title'] = params['searchstring']
+
+    for lang in unicode(urllib.unquote(params['languages']), 'utf-8').split(","):
+        item['3let_language'].append(xbmc.convertLanguage(lang, xbmc.ISO_639_2))
+
+    if xbmc.Player().isPlaying():
+        log(__name__, "Item before cleaning: \n    %s" % item)
+        # clean title + tvshow params
+        clean_title(item)
+        parse_rls_title(item)
 
     if item['episode'].lower().find("s") > -1:  # Check if season is "Special"
         item['season'] = "0"

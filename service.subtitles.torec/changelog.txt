@@ -1,3 +1,8 @@
+1.2.1 
+- Improvement for the option of using the addon when kodi is not playing (@burekas7)
+- Add support for local tvshow content (@burekas7)
+- Fix bug for last episode in a season that didn't return results. (@burekas7)
+
 1.2.0
 - added support for the new download code screen
 - fix Manual Search, Empty Title&Kodi isn't playing (@burekas7)
