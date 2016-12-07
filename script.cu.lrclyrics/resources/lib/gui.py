@@ -491,6 +491,10 @@ class GUI( xbmcgui.WindowXMLDialog ):
         return result
 
     def parser_lyrics(self, lyrics):
+        offset = 0.00
+        found = re.search('\[offset:(.*?)\]', lyrics, flags=re.DOTALL)
+        if found:
+            offset = float(found.group(1)) / 1000
         self.pOverlay = []
         tag1 = re.compile('\[(\d+):(\d\d)[\.:](\d\d)\]')
         tag2 = re.compile('\[(\d+):(\d\d)([\.:]\d+|)\]')
@@ -502,7 +506,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
             times = []
             if ( match1 ):
                 while ( match1 ): # [xx:yy.zz]
-                    times.append( float(match1.group(1)) * 60 + float(match1.group(2)) + (float(match1.group(3))/100) )
+                    times.append( float(match1.group(1)) * 60 + float(match1.group(2)) + (float(match1.group(3))/100) + offset)
                     y = 6 + len(match1.group(1)) + len(match1.group(3))
                     x = x[y:]
                     match1 = tag1.match( x )
@@ -510,7 +514,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
                     self.pOverlay.append( (time, x) )
             elif ( match2 ): # [xx:yy]
                 while ( match2 ):
-                    times.append( float(match2.group(1)) * 60 + float(match2.group(2)) )
+                    times.append( float(match2.group(1)) * 60 + float(match2.group(2)) + offset)
                     y = 5 + len(match2.group(1)) + len(match2.group(3))
                     x = x[y:]
                     match2 = tag2.match( x )
