@@ -36,7 +36,8 @@ def handle_albums(results):
             desc += "[CR][CR][B]%s:[/B][CR][CR]%s" % (addon.LANG(185), item['strReview'])
         album = AudioItem(label=item['strAlbum'],
                           path="")
-        album.set_infos({'artist': [item['strArtist']],
+        album.set_infos({'artist': item['strArtist'],
+                         'album': item['strAlbum'],
                          'mediatype': "album",
                          'genre': item['strGenre'],
                          'year': item['intYearReleased']})
@@ -72,10 +73,10 @@ def handle_tracks(results):
                           path="%syoutubevideo&&id=%s" % (PLUGIN_BASE, youtube_id))
         track.set_infos({'title': item['strTrack'],
                          'album': item['strAlbum'],
-                         'artist': [item['strArtist']],
+                         'artist': item['strArtist'],
                          'mediatype': "song"})
         track.set_properties({'mbid': item['strMusicBrainzID']})
-        track.set_art({'thumb': "http://i.ytimg.com/vi/%s/0.jpg" % youtube_id})
+        track.set_artwork({'thumb': "http://i.ytimg.com/vi/%s/0.jpg" % youtube_id})
         tracks.append(track)
     return tracks
 
@@ -92,7 +93,7 @@ def handle_musicvideos(results):
                         'plot': item['strDescriptionEN'],
                         'mediatype': "musicvideo"})
         mvid.set_properties({'id': item['idTrack']})
-        mvid.set_art({'thumb': "http://i.ytimg.com/vi/%s/0.jpg" % youtube_id})
+        mvid.set_artwork({'thumb': "http://i.ytimg.com/vi/%s/0.jpg" % youtube_id})
         mvids.append(mvid)
     return mvids
 

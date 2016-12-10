@@ -31,7 +31,8 @@ from kodi65 import favs
 def start_info_actions(info, params):
     if "artistname" in params:
         params["artistname"] = params.get("artistname", "").split(" feat. ")[0].strip()
-        params["artist_mbid"] = utils.fetch_musicbrainz_id(params["artistname"])
+        if not params.get("artist_mbid"):
+            params["artist_mbid"] = utils.fetch_musicbrainz_id(params["artistname"])
     utils.log(info)
     utils.pp(params)
     if "prefix" in params and not params["prefix"].endswith('.'):
@@ -243,6 +244,8 @@ def start_info_actions(info, params):
             if items:
                 addon.set_global('favourite.1.name', items[-1]["label"])
         return items
+    elif info == "addonsbyauthor":
+        items = favs.get_addons_by_author(params.get("id"))
     elif info == 'similarlocalmovies' and "dbid" in params:
         return local_db.get_similar_movies(params["dbid"])
     elif info == 'iconpanel':
@@ -257,7 +260,7 @@ def start_info_actions(info, params):
                             dbid=params.get("dbid"),
                             resume=params.get("resume", "true"))
     elif info == "openinfodialog":
-        if xbmc.getCondVisibility("System.HasModalDialog"):
+        if xbmc.getCondVisibility("System.HasActiveModalDialog"):
             container_id = ""
         else:
             container_id = "Container(%s)" % utils.get_infolabel("System.CurrentControlId")
@@ -323,6 +326,7 @@ def start_info_actions(info, params):
             if result and result > -1:
                 search_str = result
             else:
+                addon.clear_global('infodialogs.active')
                 return None
         wm.open_video_list(search_str=search_str,
                            mode="search")
@@ -438,6 +442,8 @@ def start_info_actions(info, params):
             except Exception as e:
                 utils.log(e)
         utils.notify("Cache deleted")
+    elif info == 'tmdbpassword':
+        addon.set_password_prompt("tmdb_password")
     elif info == 'syncwatchlist':
         pass
 

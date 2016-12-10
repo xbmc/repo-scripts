@@ -18,13 +18,13 @@ MOVIE_PROPS = ["title", "genre", "year", "rating", "director", "trailer",
                "playcount", "writer", "studio", "mpaa", "cast", "country",
                "imdbnumber", "runtime", "set", "showlink", "streamdetails",
                "top250", "votes", "file", "sorttitle",
-               "resume", "setid", "dateadded", "tag", "art", "userrating", "ratings"]
+               "resume", "setid", "dateadded", "tag", "art", "userrating", "ratings", "uniqueid"]
 TV_PROPS = ["title", "genre", "year", "rating", "plot",
             "studio", "mpaa", "cast", "playcount", "episode",
             "imdbnumber", "premiered", "votes", "lastplayed",
             "file", "originaltitle",
             "sorttitle", "episodeguide", "season", "watchedepisodes",
-            "dateadded", "tag", "art", "userrating", "ratings", "runtime"]
+            "dateadded", "tag", "art", "userrating", "ratings", "uniqueid", "runtime"]
 
 
 class LocalDB(object):
@@ -387,6 +387,15 @@ class LocalDB(object):
             data = kodijson.get_json(method="VideoLibrary.GetMovieSetDetails",
                                      params={"setid": set_dbid})
             return data['result']['setdetails'].get('label')
+
+    def get_artist_mbid(self, dbid):
+        """
+        get mbid of artist with *dbid
+        """
+        data = kodijson.get_json(method="MusicLibrary.GetArtistDetails",
+                                 params={"properties": ["musicbrainzartistid"], "artistid": dbid})
+        mbid = data['result']['artistdetails'].get('musicbrainzartistid')
+        return mbid if mbid else None
 
     def get_imdb_id(self, media_type, dbid):
         if not dbid:
