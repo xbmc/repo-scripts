@@ -79,6 +79,8 @@ class Main:
         self.Player = Widgets_Player(action = self._update)
         self.Monitor = Widgets_Monitor(update_listitems = self._update, update_settings = self._on_change)
         self.LIMIT = 20
+        self.RANDOMITEMS_UNPLAYED = False
+        self.RECENTITEMS_UNPLAYED = False
 
     def _on_change(self):
         clearlist_groups = ['Recommended','Random','Recent']
