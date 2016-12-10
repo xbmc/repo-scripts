@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <window>
 	<onload condition="IsEmpty(Window(home).Property(WindowColor))">SetProperty(WindowColor,FFFFFFFF,home)</onload>
-	<!--
-	<onload condition="IsEmpty(Window(home).Property(WindowColor))">SetProperty(WindowColor,$VAR[AreaColorVar],home)</onload>-->
 	<onunload>ClearProperty(WindowColor,home)</onunload>
 	<defaultcontrol always="true">500</defaultcontrol>
 	<views>500</views>
@@ -36,7 +34,6 @@
 			<animation effect="fade" start="100" end="0" time="250">WindowClose</animation>
 		</control>
 		<control type="group">
-			<top>0</top>
 			<animation type="WindowOpen" reversible="false">
 				<effect type="zoom" start="80" end="100" center="960,540" delay="500" tween="back" time="240" />
 				<effect type="fade" delay="500" end="100" time="240" />
@@ -149,8 +146,7 @@
 							<aligny>center</aligny>
 							<label>$INFO[ListItem.Premiered]</label>
 							<font>font10</font>
-<!--                             <shadowcolor>FF222222</shadowcolor>
- -->                            <textcolor>FFBBBBBB</textcolor>
+							<textcolor>FFBBBBBB</textcolor>
 						</control>
 					</control>
 				</itemlayout>
@@ -162,13 +158,6 @@
 							<effect type="zoom" time="150" start="95" end="100" center="245,260" />
 							<effect type="zoom" time="150" start="105" end="100" delay="150" center="245,260" />
 						</animation>
-						<!--
-						<control type="image">
-							<top>-45</top>
-							<width>440</width>
-							<height>410</height>
-							<texture colordiffuse="FFFFFFFF" border="40">buttons/button-fo.png</texture>
-						</control>-->
 						<control type="image">
 							<left>25</left>
 							<width>390</width>
@@ -237,8 +226,7 @@
 							<aligny>center</aligny>
 							<label>$INFO[ListItem.Premiered]</label>
 							<font>font10</font>
-<!--                             <shadowcolor>FF222222</shadowcolor>
- -->                            <textcolor>FFBBBBBB</textcolor>
+							<textcolor>FFBBBBBB</textcolor>
 						</control>
 					</control>
 				</focusedlayout>
@@ -257,7 +245,6 @@
 			</control>
 		</control>
 		<control type="group">
-			<top>0</top>
 			<animation type="WindowOpen" reversible="false">
 				<effect type="zoom" start="80" end="100" center="960,540" delay="500" tween="back" time="240" />
 				<effect type="fade" delay="500" end="100" time="240" />
@@ -266,67 +253,46 @@
 				<effect type="zoom" start="100" end="80" center="960,540" easing="in" tween="back" time="240" />
 				<effect type="fade" start="100" end="0" time="240" />
 			</animation>
-			<!--
-			<control type="image">
-				<width>1920</width>
-				<height>40</height>
-				<texture>common/black.png</texture>
-				<left>0</left>
-				<top>0</top>
-			</control>-->
-			<control type="image">
-				<texture flipy="true">fade.png</texture>
-				<left>0</left>
-				<top>0</top>
-				<!--
-				<animation effect="fade" start="100" end="80" time="0" condition="true">Conditional</animation>-->
-				<width>1920</width>
-				<height>100</height>
-				<animation effect="fade" end="100" time="360">WindowOpen</animation>
-				<animation effect="fade" start="100" end="0" time="250">WindowClose</animation>
-			</control>
-			<control type="image">
-				<texture>fade.png</texture>
-				<left>0</left>
-				<!--
-				<animation effect="fade" start="100" end="80" time="0" condition="true">Conditional</animation>-->
-				<top>980</top>
-				<width>1920</width>
-				<height>100</height>
-				<animation effect="fade" end="100" time="360">WindowOpen</animation>
-				<animation effect="fade" start="100" end="0" time="250">WindowClose</animation>
-			</control>
-			<control type="image">
-				<texture>arrowdown.png</texture>
-				<left>900</left>
-				<animation effect="fade" time="250">VisibleChange</animation>
-				<top>1040</top>
-				<width>120</width>
-				<height>30</height>
-				<animation effect="fade" end="100" time="360">WindowOpen</animation>
-				<animation effect="fade" start="100" end="0" time="250">WindowClose</animation>
-				<visible>!IsEmpty(Window.Property(ArrowDown)) | Container(500).HasNext</visible>
-			</control>
-			<control type="image">
-				<texture flipy="true">arrowdown.png</texture>
-				<left>900</left>
-				<animation effect="fade" time="250">VisibleChange</animation>
-				<top>10</top>
-				<width>120</width>
-				<height>30</height>
-				<animation effect="fade" end="100" time="360">WindowOpen</animation>
-				<animation effect="fade" start="100" end="0" time="250">WindowClose</animation>
-				<visible>!IsEmpty(Window.Property(ArrowUp)) | Container(500).HasPrevious</visible>
-			</control>
-			<control type="image">
-				<texture flipx="true">arrowright.png</texture>
-				<left>10</left>
-				<animation effect="fade" time="250">VisibleChange</animation>
-				<top>1050</top>
-				<width>25</width>
-				<height>25</height>
-				<animation effect="fade" end="100" time="360">WindowOpen</animation>
-				<animation effect="fade" start="100" end="0" time="250">WindowClose</animation>
+			<control type="group">
+				<control type="image">
+					<texture flipy="true">fade.png</texture>
+					<left>0</left>
+					<top>0</top>
+					<width>1920</width>
+					<height>100</height>
+				</control>
+				<control type="image">
+					<texture>fade.png</texture>
+					<left>0</left>
+					<top>980</top>
+					<width>1920</width>
+					<height>100</height>
+				</control>
+				<control type="image">
+					<texture>arrowdown.png</texture>
+					<left>900</left>
+					<animation effect="fade" time="250">VisibleChange</animation>
+					<top>1040</top>
+					<width>120</width>
+					<height>30</height>
+					<visible>!IsEmpty(Window.Property(ArrowDown)) | Container(500).HasNext</visible>
+				</control>
+				<control type="image">
+					<texture flipy="true">arrowdown.png</texture>
+					<left>900</left>
+					<animation effect="fade" time="250">VisibleChange</animation>
+					<top>10</top>
+					<width>120</width>
+					<height>30</height>
+					<visible>!IsEmpty(Window.Property(ArrowUp)) | Container(500).HasPrevious</visible>
+				</control>
+				<control type="image">
+					<texture flipx="true">arrowright.png</texture>
+					<left>10</left>
+					<top>1050</top>
+					<width>25</width>
+					<height>25</height>
+				</control>
 			</control>
 			<control type="label">
 				<left>50</left>
@@ -358,18 +324,18 @@
 				<textcolor>FFFAFAFA</textcolor>
 				<label>$INFO[Window.Property(Filter_Label)]</label>
 				<animation type="Conditional" condition="!ControlGroup(9000).HasFocus + !Control.HasFocus(6000) + !Control.HasFocus(7000)">
-					<effect type="slide" end="-420" time="320" easing="in" tween="cubic" />
+					<effect type="slide" end="-438" time="320" easing="in" tween="cubic" />
 				</animation>
 			</control>
 		</control>
 		<control type="group">
 			<animation type="Conditional" condition="!ControlGroup(9000).HasFocus + !Control.HasFocus(6000) + !Control.HasFocus(7000)">
-				<effect type="slide" end="-420" time="320" easing="in" tween="cubic" />
+				<effect type="slide" end="-438" time="320" easing="in" tween="cubic" />
 			</animation>
 			<animation effect="slide" start="0" end="-460" time="320" tween="cubic">WindowClose</animation>
 			<control type="image">
-				<left>-88</left>
-				<width>572</width>
+				<left>-112</left>
+				<width>550</width>
 				<height>1080</height>
 				<texture colordiffuse="FF12B2E7">lists/panel.png</texture>
 			</control>
@@ -377,15 +343,15 @@
 				<label>$LOCALIZE[19140]</label>
 				<left>0</left>
 				<top>40</top>
-				<width>420</width>
-				<height>110</height>
+				<width>438</width>
+				<height>100</height>
 				<textoffsetx>30</textoffsetx>
 				<textoffsety>35</textoffsety>
 				<textwidth>315</textwidth>
 				<align>left</align>
 				<aligny>top</aligny>
-				<texturefocus border="40" colordiffuse="FF12B2E7">buttons/button-fo.png</texturefocus>
-				<texturenofocus border="40" colordiffuse="FF12B2E7">buttons/button-nofo.png</texturenofocus>
+				<texturefocus colordiffuse="FF12B2E7">lists/focus.png</texturefocus>
+				<texturenofocus />
 				<font>font12</font>
 				<textcolor>FF999999</textcolor>
 				<ondown>SetFocus(7000)</ondown>
@@ -406,8 +372,8 @@
 			<control type="radiobutton" id="7000">
 				<left>0</left>
 				<top>135</top>
-				<width>420</width>
-				<height>110</height>
+				<width>438</width>
+				<height>100</height>
 				<align>left</align>
 				<aligny>center</aligny>
 				<ondown>9000</ondown>
@@ -424,8 +390,8 @@
 				<radiowidth>90</radiowidth>
 				<radioheight>60</radioheight>
 				<radioposx>288</radioposx>
-				<texturefocus border="40" colordiffuse="FF12B2E7">buttons/button-fo.png</texturefocus>
-				<texturenofocus border="40" colordiffuse="FF12B2E7">buttons/button-nofo.png</texturenofocus>
+				<texturefocus colordiffuse="FF12B2E7">lists/focus.png</texturefocus>
+				<texturenofocus />
 				<textureradioonfocus>common/youtube.png</textureradioonfocus>
 				<textureradioofffocus>common/youtube.png</textureradioofffocus>
 				<textureradioonnofocus>common/youtube.png</textureradioonnofocus>
@@ -433,7 +399,7 @@
 			</control>
 			<control type="grouplist" id="9000">
 				<top>250</top>
-				<width>420</width>
+				<width>438</width>
 				<height>830</height>
 				<orientation>vertical</orientation>
 				<scroll>true</scroll>
@@ -444,9 +410,8 @@
 				<onback>500</onback>
 				<control type="button" id="5007">
 					<label>$LOCALIZE[467]:</label>
-					<!--564-->
 					<label2>[COLOR FFFAFAFA]$INFO[Window.Property(Type)][/COLOR]</label2>
-					<width>420</width>
+					<width>438</width>
 					<height>70</height>
 					<textoffsetx>30</textoffsetx>
 					<textwidth>315</textwidth>
@@ -462,7 +427,7 @@
 					<onup>6000</onup>
 					<label>$ADDON[script.extendedinfo 32104]</label>
 					<label2>[COLOR FFFAFAFA]$INFO[Window.Property(Sort_Label)][/COLOR]</label2>
-					<width>420</width>
+					<width>438</width>
 					<height>70</height>
 					<textoffsetx>30</textoffsetx>
 					<textwidth>315</textwidth>
@@ -476,7 +441,7 @@
 				</control>
 				<control type="label" id="5333">
 					<label>$ADDON[script.extendedinfo 32023]</label>
-					<width>420</width>
+					<width>438</width>
 					<height>120</height>
 					<textoffsetx>25</textoffsetx>
 					<textoffsety>55</textoffsety>
@@ -487,7 +452,7 @@
 				</control>
 				<control type="button" id="5002">
 					<label>$LOCALIZE[172]</label>
-					<width>420</width>
+					<width>438</width>
 					<height>60</height>
 					<textoffsetx>30</textoffsetx>
 					<textwidth>315</textwidth>
@@ -501,7 +466,7 @@
 				</control>
 				<control type="button" id="5003">
 					<label>$LOCALIZE[248]</label>
-					<width>420</width>
+					<width>438</width>
 					<height>60</height>
 					<textoffsetx>30</textoffsetx>
 					<textwidth>315</textwidth>
@@ -515,7 +480,7 @@
 				</control>
 				<control type="button" id="5006">
 					<label>$ADDON[script.extendedinfo 32066]</label>
-					<width>420</width>
+					<width>438</width>
 					<height>60</height>
 					<textoffsetx>30</textoffsetx>
 					<textwidth>315</textwidth>
@@ -529,7 +494,7 @@
 				</control>
 				<control type="button" id="5008">
 					<label>$LOCALIZE[180]</label>
-					<width>420</width>
+					<width>438</width>
 					<height>60</height>
 					<textoffsetx>30</textoffsetx>
 					<textwidth>315</textwidth>
@@ -543,7 +508,7 @@
 				</control>
 				<control type="button" id="5009">
 					<label>$LOCALIZE[287]</label>
-					<width>420</width>
+					<width>438</width>
 					<height>60</height>
 					<textoffsetx>30</textoffsetx>
 					<textwidth>315</textwidth>
@@ -557,7 +522,7 @@
 				</control>
 				<control type="button" id="5012">
 					<label>$LOCALIZE[169]</label>
-					<width>420</width>
+					<width>438</width>
 					<height>60</height>
 					<textoffsetx>30</textoffsetx>
 					<textwidth>315</textwidth>
@@ -571,7 +536,7 @@
 				</control>
 				<control type="button" id="5013">
 					<label>$LOCALIZE[564]</label>
-					<width>420</width>
+					<width>438</width>
 					<height>60</height>
 					<textoffsetx>30</textoffsetx>
 					<textwidth>315</textwidth>
@@ -585,7 +550,7 @@
 				</control>
 				<control type="button" id="5005">
 					<label>$ADDON[script.extendedinfo 32022]</label>
-					<width>420</width>
+					<width>438</width>
 					<height>60</height>
 					<textoffsetx>30</textoffsetx>
 					<textwidth>315</textwidth>

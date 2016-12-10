@@ -1,3 +1,14 @@
+v5.5.3
+- fixed non-workin search after it was cancelled earlier
+- fix TheAudioDB listitem infolabels
+- Cleanup
+
+v5.5.2
+- Added: runtime filter for movies & tvshows
+- Added: "movie videos" listing for skins
+- Adjusted Trakt stuff to use TMDB images (because of API changes)
+- Removed: RottenTomatoes functionality (API is too shitty)
+
 v5.5.1
 - fixed french language
 - fixed issue with Youtube Browser

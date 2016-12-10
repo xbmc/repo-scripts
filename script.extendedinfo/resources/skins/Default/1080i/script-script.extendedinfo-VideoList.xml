@@ -522,7 +522,7 @@
 			<animation effect="slide" start="0" end="-460" time="320" tween="cubic">WindowClose</animation>
 			<control type="image">
 				<left>-112</left>
-				<width>620</width>
+				<width>550</width>
 				<height>1080</height>
 				<texture colordiffuse="FF12B2E7">lists/panel.png</texture>
 			</control>

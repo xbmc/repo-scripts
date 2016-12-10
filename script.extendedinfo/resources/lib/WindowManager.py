@@ -260,23 +260,4 @@ class WindowManager(object):
             player.wait_for_video_end()
             self.active_dialog.doModal()
 
-
-# class SettingsMonitor(xbmc.Monitor):
-
-#     def __init__(self):
-#         xbmc.Monitor.__init__(self)
-
-#     def onSettingsChanged(self):
-#         addon.reload_addon()
-#         username = addon.setting("tmdb_username")
-#         password = addon.setting("tmdb_password")
-#         if username and password:
-#             tmdb.Login = tmdb.LoginProvider(username=username,
-#                                                         password=password)
-#         if wm.active_dialog:
-#             wm.active_dialog.close()
-#             wm.active_dialog.update_states()
-#             wm.active_dialog.doModal()
-
-
 wm = WindowManager()
