@@ -17,7 +17,9 @@ ID_PROGRESS = 20
 
 
 class ConfirmDialog(xbmcgui.WindowXMLDialog):
-
+    """
+    open yesnodialog, return -1 for cancelled, otherwise index (0-2)
+    """
     def __init__(self, *args, **kwargs):
         xbmcgui.WindowXMLDialog.__init__(self)
         self.yeslabel = kwargs.get('yeslabel')

@@ -4,6 +4,7 @@
 # This program is Free Software see LICENSE file for details
 
 import xbmcgui
+import xbmc
 from kodi65 import utils
 
 
@@ -16,12 +17,12 @@ class ListItem(object):
     ICON_OVERLAY_WATCHED = 5    # For seen files
     ICON_OVERLAY_HD = 6         # Is on hard disk stored
 
-    def __init__(self, label="", label2="", path="", infos=None, properties=None, size="", artwork=None):
+    def __init__(self, label="", label2="", path="", infos=None, properties=None, size="", artwork=None, ratings=None, ids=None):
         """
         Kodi listitem, based on built-in datatypes
         """
-        self.label = label
-        self.label2 = label2
+        self.set_label(label)
+        self.set_label2(label2)
         self.path = path
         self.size = ""
         self.videoinfo = []
@@ -30,6 +31,8 @@ class ListItem(object):
         self.cast = []
         self._properties = properties if properties else {}
         self._artwork = artwork if artwork else {}
+        self._ratings = ratings if ratings else []
+        self._ids = ids if ids else {}
         self._infos = infos if infos else {}
         self.specials = {}
 
@@ -189,6 +192,7 @@ class ListItem(object):
                                     path=self.path)
         props = {k: unicode(v) for k, v in self._properties.iteritems() if v}
         infos = {k.lower(): v for k, v in self._infos.iteritems() if v}
+        infos["path"] = self.path
         if "duration" in infos:
             props['duration(h)'] = utils.format_time(infos["duration"], "h")
             props['duration(m)'] = utils.format_time(infos["duration"], "m")
@@ -201,13 +205,6 @@ class ListItem(object):
             listitem.setArt(artwork)
         if infos:
             listitem.setInfo(self.type, infos)
-        for item in self.videoinfo:
-            listitem.addStreamInfo("video", item)
-        for item in self.audioinfo:
-            listitem.addStreamInfo("audio", item)
-        for item in self.subinfo:
-            listitem.addStreamInfo("subtitle", item)
-        listitem.setInfo("video", {"castandrole": [(i["name"], i["role"]) for i in self.cast]})
         return listitem
 
     def to_windowprops(self, prefix="", window_id=10000):
@@ -226,6 +223,32 @@ class AudioItem(ListItem):
     """
     Kodi audio listitem, based on built-in datatypes
     """
+    props = ["id",
+             "artist_instrument",
+             "artist_style",
+             "artist_mood",
+             "artist_born",
+             "artist_formed",
+             "artist_description",
+             "artist_genre",
+             "artist_died",
+             "artist_disbanded",
+             "artist_yearsactive",
+             "artist_born",
+             "artist_died",
+             "album_description",
+             "album_theme",
+             "album_mood",
+             "album_style",
+             "album_type",
+             "album_label",
+             "album_artist",
+             "album_genre",
+             "album_title",
+             "album_rating",
+             "album_userrating",
+             "album_votes",
+             "album_releasetype"]
 
     def __init__(self, *args, **kwargs):
         self.type = "music"
@@ -249,33 +272,26 @@ class AudioItem(ListItem):
                        "listeners": info.getListeners(),
                        "playcount": info.getPlayCount(),
                        "year": info.getReleaseDate()}
-        props = ["id",
-                 "artist_instrument",
-                 "artist_style",
-                 "artist_mood",
-                 "artist_born",
-                 "artist_formed",
-                 "artist_description",
-                 "artist_genre",
-                 "artist_died",
-                 "artist_disbanded",
-                 "artist_yearsactive",
-                 "artist_born",
-                 "artist_died",
-                 "album_description",
-                 "album_theme",
-                 "album_mood",
-                 "album_style",
-                 "album_type",
-                 "album_label",
-                 "album_artist",
-                 "album_genre",
-                 "album_title",
-                 "album_rating",
-                 "album_userrating",
-                 "album_votes",
-                 "album_releasetype"]
-        self._properties = {key: listitem.getProperty(key) for key in props}
+        self._properties = {key: listitem.getProperty(key) for key in self.props}
+
+    def from_infolabels(self):
+        self.label = xbmc.getInfoLabel("ListItem.Label")
+        self.path = xbmc.getInfoLabel("ListItem.Path")
+        self._infos = {"dbid": xbmc.getInfoLabel("ListItem.Label"),
+                       "mediatype": xbmc.getInfoLabel("ListItem.DBType"),
+                       "title": xbmc.getInfoLabel("ListItem.Title"),
+                       "votes": xbmc.getInfoLabel("ListItem.Votes"),
+                       "rating": xbmc.getInfoLabel("ListItem.Rating"),
+                       "userrating": xbmc.getInfoLabel("ListItem.UserRating"),
+                       "file": xbmc.getInfoLabel("ListItem.FileNameAndPath"),
+                       "comment": xbmc.getInfoLabel("ListItem.Comment"),
+                       "lyrics": xbmc.getInfoLabel("ListItem.Lyrics"),
+                       "genre": xbmc.getInfoLabel("ListItem.Genre"),
+                       "lastplayed": xbmc.getInfoLabel("ListItem.Label"),
+                       "listeners": xbmc.getInfoLabel("ListItem.Listeners"),
+                       "playcount": xbmc.getInfoLabel("ListItem.Playcount"),
+                       "year": xbmc.getInfoLabel("ListItem.Year")}
+        self._properties = {key: xbmc.getInfoLabel("ListItem.Property({}".format(key)) for key in self.props}
 
 
 class VideoItem(ListItem):
@@ -293,6 +309,8 @@ class VideoItem(ListItem):
                           "Cast:", utils.dump_dict(self.cast),
                           "VideoStreams:", utils.dump_dict(self.videoinfo),
                           "AudioStreams:", utils.dump_dict(self.audioinfo),
+                          "Ratings:", utils.dump_dict(self._ratings),
+                          "Ids:", utils.dump_dict(self._ids),
                           "Subs:", utils.dump_dict(self.subinfo),
                           "", ""])
 
@@ -300,6 +318,8 @@ class VideoItem(ListItem):
         info = listitem.getVideoInfoTag()
         self.label = listitem.getLabel().decode("utf-8")
         self.path = info.getPath().decode("utf-8")
+        for provider in {"tmdb", "imdb", "trakt"}:
+            self._ratings[provider] = listitem.getRating(provider)
         self._infos = {"dbid": info.getDbId(),
                        "mediatype": info.getMediaType(),
                        "plot": info.getPlot().decode("utf-8"),
@@ -314,6 +334,7 @@ class VideoItem(ListItem):
                        "pictureurl": info.getPictureURL(),
                        "cast": info.getCast(),
                        "file": info.getFile().decode("utf-8"),
+                       "trailer": info.getTrailer().decode("utf-8"),
                        "originaltitle": info.getOriginalTitle().decode("utf-8"),
                        "tagline": info.getTagLine().decode("utf-8"),
                        "genre": info.getGenre().decode("utf-8"),
@@ -334,6 +355,20 @@ class VideoItem(ListItem):
         self.set_audioinfos(listitem.audioinfo)
         self.set_subinfos(listitem.subinfo)
         self.set_cast(listitem.cast)
+
+    def get_listitem(self):
+        listitem = super(VideoItem, self).get_listitem()
+        for item in self.videoinfo:
+            listitem.addStreamInfo("video", item)
+        for item in self.audioinfo:
+            listitem.addStreamInfo("audio", item)
+        for item in self.subinfo:
+            listitem.addStreamInfo("subtitle", item)
+        for item in self._ratings:
+            listitem.setRating(item["type"], item["rating"], item["votes"], item["def"])
+        listitem.setUniqueIDs(self._ids)
+        listitem.setCast(self.cast)
+        return listitem
 
     def add_videoinfo(self, info):
         self.videoinfo.append(info)
@@ -358,6 +393,24 @@ class VideoItem(ListItem):
 
     def set_subinfos(self, infos):
         self.subinfo = infos
+
+    def get_rating(self, provider):
+        for item in self._ratings:
+            if item["provider"] == provider.lower():
+                return item
+        return None
+
+    def add_rating(self, provider, rating, votes=None, default=None):
+        self._ratings.append({"provider": provider.lower(),
+                              "rating": rating,
+                              "votes": int(votes),
+                              "default": bool(default)})
+
+    def set_id(self, provider, uid):
+        self._ids[provider] = uid
+
+    def get_id(self):
+        return self._ids
 
     def movie_from_dbid(self, dbid):
         from LocalDB import local_db

@@ -187,6 +187,13 @@ class DialogBaseList(object):
         """
         self.position = self.getCurrentListPosition()
 
+        @ch.info("video")
+        # @ch.click_by_type("movie")
+        def open_video(self, control_id):
+            self.close()
+            xbmcgui.Dialog().info(self.FocusedItem(control_id))
+            self.doModal()
+
     def search(self, label):
         """
         set search string and update the container

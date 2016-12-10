@@ -7,7 +7,7 @@ import xbmc
 import xbmcgui
 
 from kodi65 import busy
-import YDStreamExtractor
+from kodi65 import utils
 
 
 class VideoPlayer(xbmc.Player):
@@ -27,9 +27,7 @@ class VideoPlayer(xbmc.Player):
 
     @busy.set_busy
     def youtube_info_by_id(self, youtube_id):
-        YDStreamExtractor.disableDASHVideo(True)
-        vid = YDStreamExtractor.getVideoInfo(youtube_id,
-                                             quality=1)
+        vid = utils.get_youtube_info(youtube_id)
         if not vid:
             return None, None
         listitem = xbmcgui.ListItem(label=vid.title,

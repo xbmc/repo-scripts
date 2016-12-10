@@ -3,6 +3,9 @@
 # Copyright (C) 2016 - Philipp Temminghoff <phil65@kodi.tv>
 # This program is Free Software see LICENSE file for details
 
+from kodiaddon import Addon
+addon = Addon()
+
 from listitem import ListItem, VideoItem, AudioItem
 from itemlist import ItemList
 from actionhandler import ActionHandler

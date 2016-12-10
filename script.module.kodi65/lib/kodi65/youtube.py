@@ -56,6 +56,7 @@ def handle_videos(results, extended=False):
             dislikes = stats.get('dislikeCount')
             item.update_infos({"duration": get_duration_in_seconds(details['duration'])})
             props = {"duration": details['duration'][2:].lower(),
+                     "formatted_duration": get_formatted_duration(details['duration']),
                      "dimension": details['dimension'],
                      "definition": details['definition'],
                      "caption": details['caption'],
@@ -77,11 +78,24 @@ def get_duration_in_seconds(duration):
     """
     duration = duration[2:-1].replace("H", "M").split("M")
     if len(duration) == 3:
-        return int(duration[0]) * 3600 + int(duration[1]) * 60 + int(duration[0])
+        return int(duration[0]) * 3600 + int(duration[1]) * 60 + int(duration[2])
     elif len(duration) == 2:
         return int(duration[0]) * 60 + int(duration[1])
     else:
         return int(duration[0])
+
+
+def get_formatted_duration(duration):
+    """
+    convert youtube duration string to formatted duration
+    """
+    duration = duration[2:-1].replace("H", "M").split("M")
+    if len(duration) == 3:
+        return "{}:{}:{}".format(duration[0].zfill(2), duration[1].zfill(2), duration[2].zfill(2))
+    elif len(duration) == 2:
+        return "{}:{}".format(duration[0].zfill(2), duration[1].zfill(2))
+    else:
+        return "00:{}".format(duration[0].zfill(2))
 
 
 def handle_playlists(results):
