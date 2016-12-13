@@ -1,0 +1,61 @@
+[- 0.0.95 -]
+
+Now remembers unwatched filter state and sorting selection on library views (Issue #44)
+Fix: Local media was being treated as remote media for playback decisions
+Added a dialog to search for when selected playlists are not accessible by the current user (Issue #42)
+Fixed font issues on episode/movie pre-plays and settings screens (Issue #45)
+
+[- 0.0.94 -]
+
+Fix: Filtering for unwatched movies was causing nothing to be displayed (regression)
+Fix (Issue #41): Incorrect strings were being displayed on the episode pre-play delete dialog
+Playlists now load in progressively in the background (Issue #35)
+Added a dialog on failure to connect when getting sign-in pin (Issue #32)
+Change posters view so that two rows are always visible
+
+[- 0.0.93 -]
+
+Fix: (Issue #20) Filtering by unwatched still showed watched items
+Fix: (Issue #33) Photo directories were failing to open from the Home screen
+Fix: (Issue #33) Some photos failed to open from the Home screen
+Fix: Disabling the 'Allow HEVC' setting had no effect
+Added a busy indicator while photos are loading
+Fixes for DVR episodes without episode numbers
+
+[- 0.0.92 -]
+
+Official Kodi repo submission
+Only change audio streams when necessary
+
+[- 0.0.91 -]
+
+Fix (Issue #23): Pressing a play on a show was not starting on the first unwatched or in progress episode
+Implement (Issue #30): Decision endpoint handling for proper interaaction with streaming brain - fixes related failed playback issues
+Various minor bug fixes causing fanart screen stalls, etc
+
+[- 0.0.90 -]
+
+Fix: (Issue #13) Errors caused by encoding issues in episodes pre-play and track playback
+Fix: Player settings dialog would sometimes not close without some user input
+Fix: (Issue #25) Increased music playback thumbnail resolution - affects add-on player screen and skin views outside the addon
+Fix: (Issue #24) Items in movie playlists were not playable
+Change: Player settings dialog now puts focus on the selected setting when displaying setting lists
+Change: (Issue #21) Now back button only jumps to top bar when top bar is off screen
+
+[- 0.0.89 -]
+
+Fix: Selecting non plex pass not managed users caused sign out on addon restart
+Fix: Playlists view showed empty space when no audio playlists were present and prevented focus
+
+[- 0.0.88 -]
+
+Fix: Starting a video while audio was playing triggered an error causing issues with OSD/control
+Fix: Selected audio track was not being played with direct play
+
+[- 0.0.87 -]
+
+Initial public beta
+
+[- 0.0.1 -]
+
+Initial development
