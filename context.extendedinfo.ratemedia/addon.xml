@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="context.extendedinfo.ratemedia" name="ExtendedInfo Script - Rate media items" version="1.0.1" provider-name="phil65">
+<addon id="context.extendedinfo.ratemedia" name="ExtendedInfo Script - Rate media items" version="1.0.2" provider-name="phil65">
   <requires>
     <import addon="xbmc.python" version="2.25.0"/>
     <import addon="script.extendedinfo" version="4.5.0"/>
@@ -8,7 +8,7 @@
     <menu id="kodi.core.main">
       <item library="addon.py">
         <label>32000</label>
-        <visible>StringCompare(ListItem.dbtype,movie) | StringCompare(ListItem.dbtype,tvshow) | StringCompare(ListItem.dbtype,episode)</visible>
+        <visible>String.IsEqual(ListItem.dbtype,movie) | String.IsEqual(ListItem.dbtype,tvshow) | String.IsEqual(ListItem.dbtype,episode)</visible>
       </item>
     </menu>
   </extension>
