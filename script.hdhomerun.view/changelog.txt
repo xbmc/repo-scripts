@@ -1,3 +1,7 @@
+** 2016.12.14 **
+
+Change rules URL to not use the test server
+
 ** 2016.07.15 **
 
 Update for recordings API change

@@ -11,7 +11,7 @@ MY = 'my'
 HIDE_SERIES_URL = 'http://%s.hdhomerun.com/api/search_hide?DeviceAuth={deviceAuth}&SeriesID={seriesID}' % MY
 SUGGEST_URL = 'http://%s.hdhomerun.com/api/suggest?DeviceAuth={deviceAuth}&Cmd={command}&SeriesID={seriesID}' % MY
 
-RULES_URL = 'http://%s.hdhomerun.com/api/recording_rules?DeviceAuth={deviceAuth}' % 'mytest'
+RULES_URL = 'http://%s.hdhomerun.com/api/recording_rules?DeviceAuth={deviceAuth}' % MY
 
 RULES_ADD_URL = RULES_URL + '&Cmd=add&SeriesID={seriesID}'
 RULES_ADD_TEAM_URL = RULES_URL + '&Cmd=add&TeamOnly={team}'

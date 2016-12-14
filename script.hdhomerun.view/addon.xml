@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addon id="script.hdhomerun.view"
        name="HDHomeRun"
-       version="2016.07.15"
+       version="2016.12.14"
        provider-name="SiliconDust">
     <requires>
         <import addon="xbmc.python" version="2.1.0"/>
