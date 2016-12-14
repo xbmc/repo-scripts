@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <window>
-	<onload condition="IsEmpty(Window(home).Property(WindowColor))">SetProperty(WindowColor,FFFFFFFF,home)</onload>
+	<onload condition="String.IsEmpty(Window(home).Property(WindowColor))">SetProperty(WindowColor,FFFFFFFF,home)</onload>
 	<onunload>ClearProperty(WindowColor,home)</onunload>
 	<defaultcontrol always="true">500</defaultcontrol>
 	<views>500</views>
@@ -13,7 +13,7 @@
 			<animation effect="fade" end="100" time="560">WindowOpen</animation>
 			<animation effect="fade" start="100" end="0" time="200">WindowClose</animation>
 			<animation effect="fade" start="0" end="100" time="200">VisibleChange</animation>
-			<visible>!StringCompare(Window.Property(type),channel)</visible>
+			<visible>!String.IsEqual(Window.Property(type),channel)</visible>
 		</control>
 		<control type="image">
 			<texture background="true" fallback="common/white.png" colordiffuse="FFAAAAAA">$INFO[ListItem.Art(fanart)]</texture>
@@ -23,7 +23,7 @@
 			<animation effect="fade" end="100" time="560">WindowOpen</animation>
 			<animation effect="fade" start="100" end="0" time="200">WindowClose</animation>
 			<animation effect="fade" start="0" end="100" time="200">VisibleChange</animation>
-			<visible>StringCompare(Window.Property(type),channel)</visible>
+			<visible>String.IsEqual(Window.Property(type),channel)</visible>
 		</control>
 		<control type="image">
 			<texture colordiffuse="FF12B2E7">diffuseoverlay.jpg</texture>
@@ -43,7 +43,7 @@
 				<effect type="fade" start="100" end="0" time="240" />
 			</animation>
 			<control type="group">
-				<visible>IntegerGreaterThan(Container(500).NumItems,0)</visible>
+				<visible>Integer.IsGreater(Container(500).NumItems,0)</visible>
 				<animation effect="fade" time="320" delay="300">Visible</animation>
 				<control type="image">
 					<left>75</left>
@@ -55,9 +55,9 @@
 					<animation effect="fade" time="200">Hidden</animation>
 					<texture colordiffuse="FF12B2E7" border="40">buttons/button-fo.png</texture>
 					<animation effect="slide" end="0,410" time="300" tween="cubic" easing="inout" condition="Container(500).Row(1)">Conditional</animation>
-					<animation effect="slide" end="440,0" time="300" tween="cubic" easing="inout" condition="IntegerGreaterThan(Container(500).Column,2)">Conditional</animation>
-					<animation effect="slide" end="440,0" time="300" tween="cubic" easing="inout" condition="IntegerGreaterThan(Container(500).Column,1)">Conditional</animation>
-					<animation effect="slide" end="440,0" time="300" tween="cubic" easing="inout" condition="IntegerGreaterThan(Container(500).Column,0)">Conditional</animation>
+					<animation effect="slide" end="440,0" time="300" tween="cubic" easing="inout" condition="Integer.IsGreater(Container(500).Column,2)">Conditional</animation>
+					<animation effect="slide" end="440,0" time="300" tween="cubic" easing="inout" condition="Integer.IsGreater(Container(500).Column,1)">Conditional</animation>
+					<animation effect="slide" end="440,0" time="300" tween="cubic" easing="inout" condition="Integer.IsGreater(Container(500).Column,0)">Conditional</animation>
 				</control>
 			</control>
 			<control type="panel" id="500">
@@ -69,7 +69,7 @@
 				<viewtype label="31234">icon</viewtype>
 				<pagecontrol>72</pagecontrol>
 				<preloaditems>2</preloaditems>
-				<scrolltime tween="quadratic">300</scrolltime>
+				<scrolltime tween="cubic" easing="out">500</scrolltime>
 				<onleft>9000</onleft>
 				<onright>72</onright>
 				<onup>700</onup>
@@ -275,7 +275,7 @@
 					<top>1040</top>
 					<width>120</width>
 					<height>30</height>
-					<visible>!IsEmpty(Window.Property(ArrowDown)) | Container(500).HasNext</visible>
+					<visible>!String.IsEmpty(Window.Property(ArrowDown)) | Container(500).HasNext</visible>
 				</control>
 				<control type="image">
 					<texture flipy="true">arrowdown.png</texture>
@@ -284,7 +284,7 @@
 					<top>10</top>
 					<width>120</width>
 					<height>30</height>
-					<visible>!IsEmpty(Window.Property(ArrowUp)) | Container(500).HasPrevious</visible>
+					<visible>!String.IsEmpty(Window.Property(ArrowUp)) | Container(500).HasPrevious</visible>
 				</control>
 				<control type="image">
 					<texture flipx="true">arrowright.png</texture>
