@@ -17,7 +17,7 @@ BASE_URL = 'http://ws.audioscrobbler.com/2.0/?'
 def handle_albums(results):
     albums = ItemList(content_type="albums")
     if not results:
-        return []
+        return albums
     if 'topalbums' in results and "album" in results['topalbums']:
         for album in results['topalbums']['album']:
             albums.append({'artist': album['artist']['name'],
@@ -33,7 +33,7 @@ def handle_albums(results):
 def handle_artists(results):
     artists = ItemList(content_type="artists")
     if not results:
-        return []
+        return artists
     for artist in results['artist']:
         if 'name' not in artist:
             continue
@@ -55,7 +55,7 @@ def get_top_artists():
 
 def get_artist_albums(artist_mbid):
     if not artist_mbid:
-        return []
+        return ItemList(content_type="albums")
     results = get_data(method="Artist.getTopAlbums",
                        params={"mbid": artist_mbid})
     return handle_albums(results)
@@ -63,7 +63,7 @@ def get_artist_albums(artist_mbid):
 
 def get_similar_artists(artist_mbid):
     if not artist_mbid:
-        return []
+        return ItemList(content_type="artists")
     params = {"mbid": artist_mbid,
               "limit": "400"}
     results = get_data(method="Artist.getSimilar",
@@ -74,7 +74,7 @@ def get_similar_artists(artist_mbid):
 
 def get_track_info(artist_name="", track=""):
     if not artist_name or not track:
-        return []
+        return {}
     params = {"artist": artist_name,
               "track": track}
     results = get_data(method="track.getInfo",

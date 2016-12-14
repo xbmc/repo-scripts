@@ -1,3 +1,8 @@
+v5.6.0
+- Fix support for Kodi L* nightlies
+- Browser window improvements
+- Fixes for TADB/LastFM
+
 v5.5.3
 - fixed non-workin search after it was cancelled earlier
 - fix TheAudioDB listitem infolabels

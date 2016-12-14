@@ -66,7 +66,7 @@ def handle_albums(results):
 def handle_tracks(results):
     tracks = ItemList(content_type="songs")
     if not results.get('track'):
-        return None
+        return tracks
     for item in results['track']:
         youtube_id = utils.extract_youtube_id(item.get('strMusicVid', ''))
         track = AudioItem(label=item['strTrack'],
@@ -82,9 +82,9 @@ def handle_tracks(results):
 
 
 def handle_musicvideos(results):
-    if not results.get('mvids'):
-        return []
     mvids = ItemList(content_type="musicvideos")
+    if not results.get('mvids'):
+        return mvids
     for item in results['mvids']:
         youtube_id = utils.extract_youtube_id(item.get('strMusicVid', ''))
         mvid = VideoItem(label=item['strTrack'],
@@ -145,7 +145,7 @@ def extended_artist_info(results):
 
 def get_artist_discography(search_str):
     if not search_str:
-        return []
+        return ItemList(content_type="albums")
     params = {"s": search_str}
     results = get_data("searchalbum", params)
     return handle_albums(results)
@@ -153,7 +153,7 @@ def get_artist_discography(search_str):
 
 def get_artist_details(search_str):
     if not search_str:
-        return []
+        return ItemList(content_type="artists")
     params = {"s": search_str}
     results = get_data("search", params)
     return extended_artist_info(results)
@@ -187,7 +187,7 @@ def get_album_details(audiodb_id="", mbid=""):
 
 def get_musicvideos(audiodb_id):
     if not audiodb_id:
-        return []
+        return ItemList(content_type="musicvideos")
     params = {"i": audiodb_id}
     results = get_data("mvid", params)
     return handle_musicvideos(results)
@@ -195,7 +195,7 @@ def get_musicvideos(audiodb_id):
 
 def get_track_details(audiodb_id):
     if not audiodb_id:
-        return []
+        return ItemList(content_type="songs")
     params = {"m": audiodb_id}
     results = get_data("track", params)
     return handle_tracks(results)
