@@ -1,3 +1,9 @@
+v5.2.4
+- offset needs to be substracted from the timestamp
+
+v5.2.3
+- cosmetics
+
 v5.2.2
 - add support for lrc offset
 

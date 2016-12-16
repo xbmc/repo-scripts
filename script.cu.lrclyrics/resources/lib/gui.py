@@ -506,7 +506,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
             times = []
             if ( match1 ):
                 while ( match1 ): # [xx:yy.zz]
-                    times.append( float(match1.group(1)) * 60 + float(match1.group(2)) + (float(match1.group(3))/100) + offset)
+                    times.append( float(match1.group(1)) * 60 + float(match1.group(2)) + (float(match1.group(3))/100) - offset)
                     y = 6 + len(match1.group(1)) + len(match1.group(3))
                     x = x[y:]
                     match1 = tag1.match( x )
@@ -514,7 +514,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
                     self.pOverlay.append( (time, x) )
             elif ( match2 ): # [xx:yy]
                 while ( match2 ):
-                    times.append( float(match2.group(1)) * 60 + float(match2.group(2)) + offset)
+                    times.append( float(match2.group(1)) * 60 + float(match2.group(2)) - offset)
                     y = 5 + len(match2.group(1)) + len(match2.group(3))
                     x = x[y:]
                     match2 = tag2.match( x )

@@ -228,7 +228,7 @@
 			<width>64</width>
 			<height>64</height>
 			<texture>culrc-contextmenu.png</texture>
-			<visible>!IsEmpty(Window(Home).Property(culrc.haslist))</visible>
+			<visible>!String.IsEmpty(Window(Home).Property(culrc.haslist))</visible>
 		</control>
 		<control type="label">
 			<description>Scraper label</description>
