@@ -26,14 +26,14 @@
 			<posx>460</posx>
 			<posy>290</posy>
 			<width>360</width>
-			<height>270</height>
+			<height>280</height>
 			<visible>true</visible>
 			<control type="image" id="30021">
 				<description>Weathericon</description>
-				<posx>115</posx>
-				<posy>150</posy>
-				<width>130</width>
-				<height>130</height>
+				<posx>120</posx>
+				<posy>160</posy>
+				<width>120</width>
+				<height>120</height>
 				<align>center</align>
 				<aligny>center</aligny>				
 				<aspectratio>keep</aspectratio>
