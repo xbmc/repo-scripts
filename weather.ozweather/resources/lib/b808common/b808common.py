@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 
 ### Common Code for bossanova808 addons
-### By bossanova808 2013
+### By bossanova808 2015
 ### Free in all senses....
 
-### VERSION 0.1.6
+### VERSION 0.2.2
 
 import xbmc
 import xbmcaddon
@@ -30,19 +30,24 @@ from traceback import format_exc
 # call logNotice() is you want print out regardless of debug settings
 
 def log(message, inst=None, level=xbmc.LOGDEBUG):
+    
     if isinstance (message,str):
         message = message.decode("utf-8")
         message = u'### %s - %s ### %s' % (ADDONNAME,VERSION, message)
+    else:
+        message = u'### %s - %s ### %s' % (ADDONNAME,VERSION, message)
+
     if inst is None:
       xbmc.log(message.encode("utf-8"), level )
     else:
       xbmc.log(message.encode("utf-8"), level )
       xbmc.log("### " + ADDONNAME + "-" + VERSION +  " ### Exception:" + format_exc(inst), level )
 
-#log something even if debug logging is off - for important stuff!
+#log something even if debug logging is off - for important stuff only!
 
 def logNotice(message, inst=None):
     log(message, inst, level = xbmc.LOGNOTICE)
+
 
 ################################################################################
 # Trigger a toast pop up on screen
@@ -61,7 +66,12 @@ def footprints(startup=True):
 
   if startup:
     logNotice( ADDONNAME + " (Author: " + AUTHOR + ") Starting ...")
-    logNotice( "Called as: " + str(sys.argv))
+    #log the detemined system type
+    logNotice("uname is: " + str(uname))
+    logNotice("System is " + SYSTEM)
+    logNotice("Kodi Version #: " + str(VERSION_NUMBER))      
+    logNotice("Kodi Version  : " + XBMC_VERSION)    
+    logNotice( "Addon arguments as: " + str(sys.argv))
   else:
     logNotice( ADDONNAME + " (Author: " + AUTHOR + ") Exiting ....")
 
@@ -71,7 +81,7 @@ def footprints(startup=True):
 ### MIXED UTILITY FUNCTIONS
 
 ################################################################################
-# Log the users local IP address
+# Log the users local IP address if possible
 
 def logLocalIP():
     #log the local IP address
@@ -79,13 +89,13 @@ def logLocalIP():
         s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         #connect to google DNS as it's always up...
         s.connect(('8.8.8.8',80))
-        log("Local IP is " + str(s.getsockname()[0]))
+        logNotice("Local IP is " + str(s.getsockname()[0]))
         s.close()
     except:
         pass
 
 ################################################################################
-# front pad a string with 0s out to 9 chars long
+# Front pad a string with 0s out to 9 chars long
 
 def frontPadTo9Chars(shortStr):
     while len(shortStr)<9:
@@ -109,7 +119,7 @@ def sendXBMCJSON (humanDescription, jsonstr):
      log("JSON result: "  + str(result))
 
 ##############################################################################
-# helper function - convert number of seconds to summat nice for screen 00:00 etc
+# Convert number of seconds to summat nice for screen 00:00 etc
 
 def getInHMS(seconds):
     hours = seconds / 3600
@@ -176,19 +186,22 @@ def buildPluginURL(params):
     return PLUGINSTUB + urllib.urlencode(params)
 
 ################################################################################
-# strip given chararacters from all members of a given list
+# Strip given chararacters from all members of a given list
 
 def stripList(l, chars):
     return([x.strip(chars) for x in l])
 
 ################################################################################
-# Just sets window properties we can refer to later in the MyWeather.xml skin file
-# to clear a property, leave the value blank
+# Set a property on a window.
+# To clear a property, provide a blank value ""
 
 def setProperty(window, name, value = ""):
-    log("Setting property - Name: [" + name + "] - Value:[" + value +"]")
     window.setProperty(name, value)
+    log("Set property name: [%s] - value:[%s]" % (name,value))
 
+################################################################################
+# Try and sett the window mode to thumbnail mode....
+# This is increasing less useful....
 
 def getThumbnailModeID():
     VIEW_MODES = {
@@ -238,7 +251,6 @@ LANGUAGE    = ADDON.getLocalizedString
 USERAGENT   = "Mozilla/5.0 (Windows; U; Windows NT 5.1; fr; rv:1.9.0.1) Gecko/2008070208 Firefox/3.6"
 
 
-
 # Set up the paths
 RESOURCES_PATH = xbmc.translatePath( os.path.join( CWD, 'resources' ))
 LIB_PATH = xbmc.translatePath(os.path.join( RESOURCES_PATH, "lib" ))
@@ -271,23 +283,38 @@ elif xbmc.getCondVisibility( "System.Platform.ATV2" ):
   SYSTEM = "atv2"
 elif xbmc.getCondVisibility( "System.Platform.Windows" ):
   SYSTEM = "windows"
-#hack for Raspberry Pi until System.Platform.Arm comes along...
-elif "raspbmc" in uname or "armv6l" in uname:
+elif xbmc.getCondVisibility( "System.Platform.Linux.RaspberryPi" ):
   SYSTEM = "arm"
+elif xbmc.getCondVisibility( "System.Platform.Android" ):
+  SYSTEM = "android"
 
-#log the detemined system type
-log("uname is: " + str(uname))
-log("System is " + SYSTEM)
 
-XBMC_VERSION = "Frodo"
-log(xbmcaddon.Addon('xbmc.addon').getAddonInfo('version')[0:4])
-version_number = float(xbmcaddon.Addon('xbmc.addon').getAddonInfo('version')[0:4])
-if version_number >= 12.9:
-    XBMC_VERSION = "Gotham" 
-if version_number >= 13.9:
-    XBMC_VERSION = "Helix" 
-if version_number >= 14.9:
+XBMC_VERSION = None
+VERSION_NUMBER = None
+
+VERSION_NUMBER = float(xbmcaddon.Addon('xbmc.addon').getAddonInfo('version')[0:4])
+if VERSION_NUMBER >= 12.9:
+    XBMC_VERSION = "G*" 
+if VERSION_NUMBER >= 13.9:
+    XBMC_VERSION = "H*" 
+if VERSION_NUMBER >= 14.9:
     XBMC_VERSION = "I*" 
-log("Kodi Version is " + XBMC_VERSION)
+if VERSION_NUMBER >= 15.9:
+    XBMC_VERSION = "J*"
+if VERSION_NUMBER >= 16.9:
+    XBMC_VERSION = "K*" 
+if VERSION_NUMBER >= 17.9:
+    XBMC_VERSION = "L*"     
+if VERSION_NUMBER >= 18.9:
+    XBMC_VERSION = "M*"
+if VERSION_NUMBER >= 19.9:
+    XBMC_VERSION = "N*"
+if VERSION_NUMBER >= 20.9:
+    XBMC_VERSION = "O*"
+if VERSION_NUMBER >= 21.9:
+    XBMC_VERSION = "P*"        
+if VERSION_NUMBER >= 22.9:
+    XBMC_VERSION = ">P" 
+
 
 
