@@ -30,11 +30,9 @@ import time
 import weakref
 from socket import gethostname
 from threading import Thread, Event, RLock
-try:
-    import queue
-except ImportError:
-    import Queue as queue
-from wsgiref.simple_server import make_server, WSGIRequestHandler
+import Queue as queue
+from SocketServer import ThreadingMixIn
+from wsgiref.simple_server import make_server, WSGIServer, WSGIRequestHandler
 import xbmc
 from xbmcaddon import Addon
 from xbmcgui import DialogProgressBG
@@ -54,6 +52,12 @@ class SilentWSGIRequestHandler(WSGIRequestHandler):
     """WSGI request handler with logging disabled"""
     def log_message(self, format, *args):
         pass
+
+
+class ThreadedWSGIServer(ThreadingMixIn, WSGIServer):
+    """Multi-Threaded WSGI server"""
+    daemon_threads = True
+    allow_reuse_address = True
 
 
 class ThreadSafeBuffer(object):
@@ -115,7 +119,9 @@ class WebConsole(object):
         app.globals = self._globals
         app.locals = self._locals
         app.frame_data = self._frame_data
-        httpd = make_server(host, port, app, handler_class=SilentWSGIRequestHandler)
+        httpd = make_server(host, port, app,
+                            server_class=ThreadedWSGIServer,
+                            handler_class=SilentWSGIRequestHandler)
         httpd.timeout = 0.1
         hostname = gethostname()
         xbmc.log('Web-PDB: starting web-server on {0}:{1}...'.format(hostname, port),
