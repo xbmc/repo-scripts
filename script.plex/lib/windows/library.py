@@ -177,12 +177,14 @@ class LibrarySettings(object):
         self._loadSettings()
 
     def _loadSettings(self):
-        jsonString = util.getSetting('library.settings.{0}'.format(self.serverID))
+        jsonString = util.getSetting('library.settings.{0}'.format(self.serverID), '')
+        self._settings = {}
         try:
             self._settings = json.loads(jsonString)
+        except ValueError:
+            pass
         except:
             util.ERROR()
-            self._settings = {}
 
     def _saveSettings(self):
         jsonString = json.dumps(self._settings)
@@ -252,7 +254,10 @@ class LibraryWindow(kodigui.MultiWindow, windowutils.UtilMixin):
 
             self.setTitle()
             self.fill()
-            self.setFocusId(self.POSTERS_PANEL_ID)
+            if self.getProperty('no.content') or self.getProperty('no.content.filtered'):
+                self.setFocusId(self.HOME_BUTTON_ID)
+            else:
+                self.setFocusId(self.POSTERS_PANEL_ID)
 
     def onAction(self, action):
         try:
@@ -691,6 +696,8 @@ class LibraryWindow(kodigui.MultiWindow, windowutils.UtilMixin):
 
     @busy.dialog()
     def fillShows(self):
+        self.setBoolProperty('no.content', False)
+        self.setBoolProperty('no.content.filtered', False)
         items = []
         jitems = []
         self.keyItems = {}
@@ -700,6 +707,13 @@ class LibraryWindow(kodigui.MultiWindow, windowutils.UtilMixin):
         jumpList = self.section.jumpList(filter_=self.getFilterOpts(), sort=self.getSortOpts(), unwatched=self.filterUnwatched)
         idx = 0
         fallback = 'script.plex/thumb_fallbacks/{0}.png'.format(TYPE_KEYS.get(self.section.type, TYPE_KEYS['movie'])['fallback'])
+
+        if not jumpList:
+            if self.filter or self.filterUnwatched:
+                self.setBoolProperty('no.content.filtered', True)
+            else:
+                self.setBoolProperty('no.content', True)
+            return
 
         for kidx, ji in enumerate(jumpList):
             mli = kodigui.ManagedListItem(ji.title, data_source=ji.key)
@@ -785,6 +799,8 @@ class LibraryWindow(kodigui.MultiWindow, windowutils.UtilMixin):
 
     @busy.dialog()
     def fillPhotos(self):
+        self.setBoolProperty('no.content', False)
+        self.setBoolProperty('no.content.filtered', False)
         items = []
         keys = []
         self.firstOfKeyItems = {}
@@ -802,6 +818,13 @@ class LibraryWindow(kodigui.MultiWindow, windowutils.UtilMixin):
         self.setProperty('background', photo.art.asTranscodedImageURL(self.width, self.height, blur=128, opacity=60, background=colors.noAlpha.Background))
         thumbDim = TYPE_KEYS.get(self.section.type, TYPE_KEYS['movie'])['thumb_dim']
         fallback = 'script.plex/thumb_fallbacks/{0}.png'.format(TYPE_KEYS.get(self.section.type, TYPE_KEYS['movie'])['fallback'])
+
+        if not photos:
+            if self.filter or self.filterUnwatched:
+                self.setBoolProperty('no.content.filtered', True)
+            else:
+                self.setBoolProperty('no.content', True)
+            return
 
         for photo in photos:
             title = photo.title

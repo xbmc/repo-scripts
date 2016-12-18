@@ -11,6 +11,8 @@ import search
 import dropdown
 import windowutils
 import optionsdialog
+import preplayutils
+
 from plexnet import plexplayer, media
 
 from lib import colors
@@ -173,6 +175,9 @@ class PrePlayWindow(kodigui.ControlledWindow, windowutils.UtilMixin):
         # if xbmc.getCondVisibility('Player.HasAudio + MusicPlayer.HasNext'):
         #     options.append({'key': 'play_next', 'display': 'Play Next'})
 
+        if len(self.video.media) > 1:
+            options.append({'key': 'play_version', 'display': T(32451, 'Play Version...')})
+
         if self.video.isWatched:
             options.append({'key': 'mark_unwatched', 'display': T(32318, 'Mark Unwatched')})
         else:
@@ -203,7 +208,9 @@ class PrePlayWindow(kodigui.ControlledWindow, windowutils.UtilMixin):
         if not choice:
             return
 
-        if choice['key'] == 'play_next':
+        if choice['key'] == 'play_version':
+            self.playVideo(play_version=True)
+        elif choice['key'] == 'play_next':
             xbmc.executebuiltin('PlayerControl(Next)')
         elif choice['key'] == 'mark_watched':
             self.video.markWatched()
@@ -364,10 +371,16 @@ class PrePlayWindow(kodigui.ControlledWindow, windowutils.UtilMixin):
         x = ((focus + 1) * 304) - 100
         return x, y
 
-    def playVideo(self):
+    def playVideo(self, play_version=False):
         if not self.video.available():
             util.messageDialog(T(32312, 'Unavailable'), T(32313, 'This item is currently unavailable.'))
             return
+
+        if play_version:
+            if not preplayutils.chooseVersion(self.video):
+                return
+        else:
+            preplayutils.resetVersion(self.video)
 
         resume = False
         if self.video.viewOffset.asInt():
