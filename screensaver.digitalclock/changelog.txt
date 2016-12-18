@@ -1,3 +1,8 @@
+[B]3.8.0[/B]
+- Repacked the options
+- Added custom position option and showing of thumbnail for now playing media
+- Fixed up a slideshow bug
+
 [B]3.7.0[/B]
 - Fixed up the code a bit and added support for estouchy skin and estuary skin
 
