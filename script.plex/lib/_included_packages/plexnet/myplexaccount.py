@@ -196,6 +196,7 @@ class MyPlexAccount(object):
         # Booleans
         self.isSignedIn = False
         self.isPlexPass = False
+        self.adminHasPlexPass = False
         self.isManaged = False
         self.isSecure = False
         self.isExpired = expired
@@ -214,7 +215,7 @@ class MyPlexAccount(object):
         self.saveState()
 
     def hasPlexPass(self):
-        if self.hasPlexPass or self.isManaged:
+        if self.isPlexPass or self.isManaged:
             return True
 
         return self.adminHasPlexPass
