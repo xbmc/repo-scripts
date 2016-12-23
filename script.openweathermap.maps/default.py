@@ -9,20 +9,17 @@ ADDONVERSION = ADDON.getAddonInfo('version')
 CWD          = ADDON.getAddonInfo('path').decode("utf-8")
 RESOURCE     = xbmc.translatePath( os.path.join( CWD, 'resources', 'lib' ).encode("utf-8") ).decode("utf-8")
 PROFILE      = xbmc.translatePath(ADDON.getAddonInfo('profile')).decode('utf-8')
-MAINADDON    = xbmcaddon.Addon('weather.openweathermap.extended')
 
 sys.path.append(RESOURCE)
 
 from utils import *
-
-ZOOM = int(MAINADDON.getSetting('Zoom')) + 2
 
 socket.setdefaulttimeout(10)
 
 class Main:
     def __init__(self):
         set_property('Map.IsFetched', 'true')
-        lat, lon = self._parse_argv()
+        lat, lon, zoom = self._parse_argv()
         clear_property('Map.1.Area')
         clear_property('Map.2.Area')
         clear_property('Map.3.Area')
@@ -38,7 +35,7 @@ class Main:
         clear_property('Map.3.Heading')
         clear_property('Map.4.Heading')
         clear_property('Map.5.Heading')
-        self._get_maps(lat, lon)
+        self._get_maps(lat, lon, zoom)
 
     def _parse_argv(self):
         try:
@@ -47,12 +44,13 @@ class Main:
             params = {}
         lat = params.get('lat', '')
         lon = params.get('lon', '')
-        return lat, lon
+        zoom = int(params.get('zoom', ''))
+        return lat, lon, zoom
 
-    def _get_maps(self, lat, lon):
+    def _get_maps(self, lat, lon, zoom):
         md5 = hashlib.md5()
         locationdeg = [lat, lon]
-        md5.update(str(locationdeg) + str(ZOOM))
+        md5.update(str(locationdeg) + str(zoom))
         tag = md5.hexdigest()
         streetthread_created = False
         stamp = int(time.time())
@@ -72,10 +70,10 @@ class Main:
         pressurecntrmapdir = os.path.join(PROFILE, 'maps', 'pressurecntrmap', '')
         lat = float(lat)
         lon = float(lon)
-        x, y = GET_TILE(lat, lon, ZOOM)
+        x, y = GET_TILE(lat, lon, zoom)
         imgs = [[x-1,y-1], [x,y-1], [x+1,y-1], [x-1,y], [x,y], [x+1,y], [x-1,y+1], [x,y+1], [x+1,y+1]]
         # adjust for locations on the edge of the map
-        tile_max = 2**ZOOM - 1
+        tile_max = 2**zoom - 1
         if x == 0:
             imgs = [[tile_max,y-1], [x,y-1], [x+1,y-1], [tile_max,y], [x,y], [x+1,y], [tile_max,y+1], [x,y+1], [x+1,y+1]]
         elif x == tile_max:
@@ -104,32 +102,32 @@ class Main:
             xbmcvfs.mkdirs(streetmapdir)
         # download the streetmap once, unless location or zoom has changed
         if not xbmcvfs.exists(os.path.join(streetmapdir, 'streetmap.png')):
-            thread_street = get_tiles(streetmapdir, 'streetmap.png', stamp, imgs, street_url)
+            thread_street = get_tiles(streetmapdir, 'streetmap.png', zoom, stamp, imgs, street_url)
             thread_street.start()
             streetthread_created = True
         if not xbmcvfs.exists(precipmapdir):
             xbmcvfs.mkdirs(precipmapdir)
-        thread_precip = get_tiles(precipmapdir, 'precipmap-%s.png', stamp, imgs, precip_url)
+        thread_precip = get_tiles(precipmapdir, 'precipmap-%s.png', zoom, stamp, imgs, precip_url)
         thread_precip.start()
         if not xbmcvfs.exists(cloudsmapdir):
             xbmcvfs.mkdirs(cloudsmapdir)
-        thread_clouds = get_tiles(cloudsmapdir, 'cloudsmap-%s.png', stamp, imgs, clouds_url)
+        thread_clouds = get_tiles(cloudsmapdir, 'cloudsmap-%s.png', zoom, stamp, imgs, clouds_url)
         thread_clouds.start()
         if not xbmcvfs.exists(tempmapdir):
             xbmcvfs.mkdirs(tempmapdir)
-        thread_temp = get_tiles(tempmapdir, 'tempmap-%s.png', stamp, imgs, temp_url)
+        thread_temp = get_tiles(tempmapdir, 'tempmap-%s.png', zoom, stamp, imgs, temp_url)
         thread_temp.start()
         if not xbmcvfs.exists(windmapdir):
             xbmcvfs.mkdirs(windmapdir)
-        thread_wind = get_tiles(windmapdir, 'windmap-%s.png', stamp, imgs, wind_url)
+        thread_wind = get_tiles(windmapdir, 'windmap-%s.png', zoom, stamp, imgs, wind_url)
         thread_wind.start()
         if not xbmcvfs.exists(pressuremapdir):
             xbmcvfs.mkdirs(pressuremapdir)
-        thread_pressure = get_tiles(pressuremapdir, 'pressuremap-%s.png', stamp, imgs, pressure_url)
+        thread_pressure = get_tiles(pressuremapdir, 'pressuremap-%s.png', zoom, stamp, imgs, pressure_url)
         thread_pressure.start()
         if not xbmcvfs.exists(pressurecntrmapdir):
             xbmcvfs.mkdirs(pressurecntrmapdir)
-        thread_pressurecntr = get_tiles(pressurecntrmapdir, 'pressurecntrmap-%s.png', stamp, imgs, pressurecntr_url)
+        thread_pressurecntr = get_tiles(pressurecntrmapdir, 'pressurecntrmap-%s.png', zoom, stamp, imgs, pressurecntr_url)
         thread_pressurecntr.start()
         if streetthread_created:
             thread_street.join()
@@ -180,9 +178,10 @@ class Main:
 
 
 class get_tiles(threading.Thread):
-    def __init__(self, mapdir, mapfile, stamp, imgs, url):
+    def __init__(self, mapdir, mapfile, zoom, stamp, imgs, url):
         self.mapdir = mapdir
         self.mapfile = mapfile
+        self.zoom = zoom
         self.stamp = stamp
         self.imgs = imgs
         self.url = url
@@ -190,16 +189,16 @@ class get_tiles(threading.Thread):
         threading.Thread.__init__(self)
  
     def run(self):
-        self.fetch_tiles(self.imgs, self.mapdir)
+        self.fetch_tiles(self.imgs, self.mapdir, self.zoom)
         self.merge_tiles()
 
-    def fetch_tiles(self, imgs, mapdir):
+    def fetch_tiles(self, imgs, mapdir, zoom):
         count = 1
         success = True
         failed = []
         for img in imgs:
             data = []
-            query = self.url % (ZOOM, img[0], img[1])
+            query = self.url % (zoom, img[0], img[1])
             req = urllib2.Request(query)
             try:
                 response = urllib2.urlopen(req, timeout=10)
@@ -244,7 +243,7 @@ class get_tiles(threading.Thread):
             self.loop += 1
             if MONITOR.waitForAbort(10):
                 return
-            self.fetch_tiles(failed, mapdir)
+            self.fetch_tiles(failed, mapdir, zoom)
 
     def merge_tiles(self):
         out = Image.new("RGBA", (756, 756), None)

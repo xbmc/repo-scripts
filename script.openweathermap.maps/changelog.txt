@@ -1,3 +1,6 @@
+v0.0.14
+- use arg instead of accessing main settings
+
 v0.0.13
 - fix deletion of old maps
 - remove gzip download as it's not supported by the server
