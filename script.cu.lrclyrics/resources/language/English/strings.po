@@ -185,6 +185,10 @@ msgctxt "#32165"
 msgid "Failed scrapers: %s"
 msgstr ""
 
+msgctxt "#32166"
+msgid "Time offset for synchronised lyrics"
+msgstr ""
+
 #empty strings from id 32161 to 32198
 #Skin labels
 

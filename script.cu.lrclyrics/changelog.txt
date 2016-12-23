@@ -1,3 +1,6 @@
+v5.2.5
+- add global offset option
+
 v5.2.4
 - offset needs to be substracted from the timestamp
 

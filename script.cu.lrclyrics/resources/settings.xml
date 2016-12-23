@@ -43,6 +43,7 @@
 	<category label="32149">
 		<setting label="32118" type="lsep"/>
 		<setting id="log_enabled" type="bool" label="32159" default="false"/>
+		<setting id="offset" type="slider" label="32166" default="0.00" range="-5.00,0.10,5.00" option="float" />
 		<setting id="scraper_test" type="action" label="32162" action="RunScript($ID,test)"/>
 	</category>
 </settings>
