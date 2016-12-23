@@ -1,3 +1,9 @@
+v4.1.0
+- add geoip support
+
+v4.0.2
+- pass zoom factor to script
+
 v4.0.1
 - fix bug when hourly wind is none
 

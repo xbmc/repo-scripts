@@ -19,7 +19,7 @@
 	</category>
 	<category label="32102">
 		<setting id="Weekend" label="32122" type="enum" lvalues="32123|32124|32125" default="0"/>
-		<setting id="Map" label="32130" type="bool" default="true"/>
+		<setting id="Map" label="32130" type="bool" default="false"/>
 		<setting id="Zoom" label="32128" type="slider" option="int" range="1,10" default="4" subsetting="true" enable="eq(-1,true)" />
 		<setting id="LatLon" label="32121" type="bool" default="false"/>
 		<setting id="Debug" label="32129" type="bool" default="false"/>

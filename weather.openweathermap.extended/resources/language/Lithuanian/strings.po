@@ -26,11 +26,11 @@ msgstr "Vietovės nustatymas"
 
 msgctxt "#32102"
 msgid "Advanced"
-msgstr "Pažangus"
+msgstr "Papildomi"
 
 msgctxt "#32103"
 msgid "Expert"
-msgstr "Ekspertas"
+msgstr "Ekspertams"
 
 msgctxt "#32111"
 msgid "Location 1"
@@ -74,7 +74,7 @@ msgstr "Vietovės 5 ID"
 
 msgctxt "#32121"
 msgid "Show lat/lon when searching locations"
-msgstr "Rodyti plat./ilg., kai ieškoma vietovių"
+msgstr "Rodyti platumą/ilgumą ieškant vietovių"
 
 msgctxt "#32122"
 msgid "Weekend"
@@ -111,3 +111,325 @@ msgstr "Įjungti žurnalo rašymą"
 msgctxt "#32130"
 msgid "Download weather maps"
 msgstr "Atsisiųsti orų žemėlapius"
+
+msgctxt "#32131"
+msgid "Get an api key at: http://openweathermap.org/appid"
+msgstr "Gaukite API raktą čia: http://openweathermap.org/appid"
+
+msgctxt "#32132"
+msgid "and enter it in the addon settings,"
+msgstr "ir įveskite jį priedo nustatymuose"
+
+msgctxt "#32133"
+msgid "or disable this addon."
+msgstr "arba išjunkite šį priedą."
+
+msgctxt "#32134"
+msgid "Recommended: get an api key at: http://openweathermap.org/appid"
+msgstr "Rekomenduojama gauti API raktą iš http://openweathermap.org/appid"
+
+#empty strings from id 32135 to 32200
+
+msgctxt "#32201"
+msgid "Thunderstorm with light rain"
+msgstr "Perkūnija su lengvu lietumi"
+
+msgctxt "#32202"
+msgid "Thunderstorm with rain"
+msgstr "Perkūnija su lietumi"
+
+msgctxt "#32203"
+msgid "Thunderstorm with heavy rain"
+msgstr "Perkūnija su smarkiu lietumi"
+
+msgctxt "#32204"
+msgid "Light thunderstorm"
+msgstr "Nedidelė perkūnija"
+
+msgctxt "#32205"
+msgid "Thunderstorm"
+msgstr "Perkūnija"
+
+msgctxt "#32206"
+msgid "Heavy thunderstorm"
+msgstr "Smarki perkūnija"
+
+msgctxt "#32207"
+msgid "Ragged thunderstorm"
+msgstr "Vietomis perkūnija"
+
+msgctxt "#32208"
+msgid "Thunderstorm with light drizzle"
+msgstr "Perkūnija su lengva dulksna"
+
+msgctxt "#32209"
+msgid "Thunderstorm with rrizzle"
+msgstr "Perkūnija su dulksna"
+
+msgctxt "#32210"
+msgid "Thunderstorm with heavy drizzle"
+msgstr "Perkūnija su stipria dulksna"
+
+msgctxt "#32211"
+msgid "Light intensity drizzle"
+msgstr "Lengva dulksna"
+
+msgctxt "#32212"
+msgid "Drizzle"
+msgstr "Dulksna"
+
+msgctxt "#32213"
+msgid "Heavy intensity drizzle"
+msgstr "Smarki dulksna"
+
+msgctxt "#32214"
+msgid "Light intensity drizzle rain"
+msgstr "Lengvas dulkiantis lietus"
+
+msgctxt "#32215"
+msgid "Drizzle rain"
+msgstr "Dulkiantis lietus"
+
+msgctxt "#32216"
+msgid "Heavy intensity drizzle rain"
+msgstr "Smarkus dulkiantis lietus"
+
+msgctxt "#32217"
+msgid "Shower rain and drizzle"
+msgstr "Lietus ir dulksna"
+
+msgctxt "#32218"
+msgid "Heavy shower rain and drizzle"
+msgstr "Stiprus lietus ir dulksna"
+
+msgctxt "#32219"
+msgid "Shower drizzle"
+msgstr "Dulksna"
+
+msgctxt "#32220"
+msgid "Light rain"
+msgstr "Lengvas lietus"
+
+msgctxt "#32221"
+msgid "Moderate rain"
+msgstr "Nedidelis lietus"
+
+msgctxt "#32222"
+msgid "Heavy intensity rain"
+msgstr "Smarkus lietus"
+
+msgctxt "#32223"
+msgid "Very heavy rain"
+msgstr "Labai smarkus lietus"
+
+msgctxt "#32224"
+msgid "Extreme rain"
+msgstr "Ekstremalus lietus"
+
+msgctxt "#32225"
+msgid "Freezing rain"
+msgstr "Stingdantis lietus"
+
+msgctxt "#32226"
+msgid "Light intensity shower rain"
+msgstr "Lengvas lietus"
+
+msgctxt "#32227"
+msgid "Shower rain"
+msgstr "Lietus"
+
+msgctxt "#32228"
+msgid "Heavy intensity shower rain"
+msgstr "Smarkus lietus"
+
+msgctxt "#32229"
+msgid "Ragged shower rain"
+msgstr "Vietomis lietus"
+
+msgctxt "#32230"
+msgid "Light snow"
+msgstr "Lengvas sniegas"
+
+msgctxt "#32231"
+msgid "Snow"
+msgstr "Sniegas"
+
+msgctxt "#32232"
+msgid "Heavy snow"
+msgstr "Smarkus sniegas"
+
+msgctxt "#32233"
+msgid "Sleet"
+msgstr "Šlapdriba"
+
+msgctxt "#32234"
+msgid "Shower sleet"
+msgstr "Šlapdriba"
+
+msgctxt "#32235"
+msgid "Light rain and snow"
+msgstr "Lengvas lietus su sniegu"
+
+msgctxt "#32236"
+msgid "Rain and snow"
+msgstr "Lietus su sniegu"
+
+msgctxt "#32237"
+msgid "Light shower snow"
+msgstr "Lengvas sniegas"
+
+msgctxt "#32238"
+msgid "Shower snow"
+msgstr "Sniegas"
+
+msgctxt "#32239"
+msgid "Heavy shower snow"
+msgstr "Smarkus sniegas"
+
+msgctxt "#32240"
+msgid "Mist"
+msgstr "Migla"
+
+msgctxt "#32241"
+msgid "Smoke"
+msgstr "Smogas"
+
+msgctxt "#32242"
+msgid "Haze"
+msgstr "Migla"
+
+msgctxt "#32243"
+msgid "Sand, dust whirls"
+msgstr "Smėlis, dulkių sūkuriai"
+
+msgctxt "#32244"
+msgid "Fog"
+msgstr "Rūkas"
+
+msgctxt "#32245"
+msgid "Sand"
+msgstr "Smėlis"
+
+msgctxt "#32246"
+msgid "Dust"
+msgstr "Dulkės"
+
+msgctxt "#32247"
+msgid "Volcanic ash"
+msgstr "Vulkaniniai pelenai"
+
+msgctxt "#32248"
+msgid "Squalls"
+msgstr "Škvalas"
+
+msgctxt "#32249"
+msgid "Tornado"
+msgstr "Tornadas"
+
+msgctxt "#32250"
+msgid "Clear sky"
+msgstr "Giedra"
+
+msgctxt "#32251"
+msgid "Few clouds"
+msgstr "Keli debesys"
+
+msgctxt "#32252"
+msgid "Scattered clouds"
+msgstr "Mažai debesuota"
+
+msgctxt "#32253"
+msgid "Broken clouds"
+msgstr "Debesuota su pragrieduliais"
+
+msgctxt "#32254"
+msgid "Overcast clouds"
+msgstr "Debesuota"
+
+msgctxt "#32255"
+msgid "Tornado"
+msgstr "Tornadas"
+
+msgctxt "#32256"
+msgid "Tropical storm"
+msgstr "Tropinė audra"
+
+msgctxt "#32257"
+msgid "Hurricane"
+msgstr "Uraganas"
+
+msgctxt "#32258"
+msgid "Cold"
+msgstr "Šalta"
+
+msgctxt "#32259"
+msgid "Hot"
+msgstr "Karšta"
+
+msgctxt "#32260"
+msgid "Windy"
+msgstr "Vėjuota"
+
+msgctxt "#32261"
+msgid "Hail"
+msgstr "Kruša"
+
+msgctxt "#32262"
+msgid "Calm"
+msgstr "Štilis"
+
+msgctxt "#32263"
+msgid "Light breeze"
+msgstr "Lengvas vėjas"
+
+msgctxt "#32264"
+msgid "Gentle breeze"
+msgstr "Švelnus vėjas"
+
+msgctxt "#32265"
+msgid "Moderate breeze"
+msgstr "Nedidelis vėjas"
+
+msgctxt "#32266"
+msgid "Fresh breeze"
+msgstr "Gaivus vėjas"
+
+msgctxt "#32267"
+msgid "Strong breeze"
+msgstr "Stiprus vėjas"
+
+msgctxt "#32268"
+msgid "High wind, near gale"
+msgstr "Stiprus vėjas, beveik audra"
+
+msgctxt "#32269"
+msgid "Gale"
+msgstr "Gūsiai"
+
+msgctxt "#32270"
+msgid "Severe gale"
+msgstr "Smarkūs gūsiai"
+
+msgctxt "#32271"
+msgid "Storm"
+msgstr "Audra"
+
+msgctxt "#32272"
+msgid "Violent storm"
+msgstr "Didelė audra"
+
+msgctxt "#32273"
+msgid "Hurricane"
+msgstr "Uraganas"
+
+msgctxt "#32274"
+msgid "Clear"
+msgstr "Giedra"
+
+msgctxt "#32275"
+msgid "Clouds"
+msgstr "Debesuota"
+
+msgctxt "#32276"
+msgid "Rain"
+msgstr "Lietus"
