@@ -342,7 +342,213 @@ def getWeatherData(urlPath, extendedFeatures = True, XBMC_VERSION=17.0):
     except Exception as inst:
         weatherData["Current.ConditionLong"] = "?"
 
-    # Current Conditions - split in to two sides
+    
+    # 7 Day Forecast & UV
+    try:
+
+        #We have to store these, and then set at the end...as we need to process two rows to get all the info..
+
+        windSpeeds9am = []
+        windSpeeds3pm = []
+        windDirections9am = []
+        windDirections3pm = []
+
+        forecastTable = soup.find("table", id="forecast-table")
+        
+        for index, row in enumerate(forecastTable.find_all("tr")):
+            
+            # Days and dates
+            if index is 0:
+                
+                    for i, day in enumerate(row.find_all("span", class_="bold")):
+                        try:
+                            fullDay = DAYS[day.text]
+                            setKey(i, "ShortDay", day.text)
+                            setKey(i, "Title", fullDay)
+                            setKey(i, "LongDay", fullDay)
+
+                        except Exception as inst:
+                            print(str(inst))
+                            setKey(i, "ShortDay", "?")
+                            setKey(i, "Title", "?")  
+                            setKey(i, "LongDay", "?")                      
+       
+                    for i, date in enumerate(row.find_all("span", class_="text_blue")):
+                        try:
+                            setKey(i, "ShortDate", date.text[3:])
+                
+                        except Exception as inst:
+                            print(str(inst))
+                            setKey(i, "ShortDate", "?")
+    
+            
+            # Outlook = Short Descriptions & Corresponding Icons
+            if index is 1:
+
+                    for i, shortDesc in enumerate(row.find_all("span")):
+
+                        try:
+                            setKey(i, "Outlook", cleanShortDescription(shortDesc.text))
+                            setKey(i, "Condition", cleanShortDescription(shortDesc.text))
+                        except Exception as inst:
+                            print(str(inst))
+                            setKey(i, "Outlook", "?")
+                            setKey(i, "Condition", "?")
+                       
+                        try:
+                            now = datetime.datetime.now()
+                            
+                            sunriseTime = weatherData['Today.Sunrise'].split(" ")
+                            sunriseHour = sunriseTime[0].split(":")[0]
+                            sunriseMinutes = sunriseTime[0].split(":")[1]
+
+                            sunsetTime = weatherData['Today.Sunset'].split(" ")
+                            sunsetHour = sunsetTime[0].split(":")[0]
+                            sunsetMinutes = sunsetTime[0].split(":")[1]
+ 
+                            todaySunrise = now.replace(hour=int(sunriseHour), minute=int(sunriseMinutes), second=0, microsecond=0)
+                            todaySunset = now.replace(hour=int(sunsetHour), minute=int(sunsetMinutes), second=0, microsecond=0)
+
+                            if i==0 and (now > todaySunset or now < todaySunrise):
+                                weathercode = WEATHER_CODES_NIGHT[cleanShortDescription(shortDesc.text)]
+                            else:                                
+                                weathercode = WEATHER_CODES[cleanShortDescription(shortDesc.text)]
+                        
+                        except Exception as inst:
+                            print(str(inst))
+                            try:    
+                                weathercode = WEATHER_CODES[cleanShortDescription(shortDesc.text)]
+                            except Exception as inst:
+                                print(str(inst))
+                                weathercode = 'na'
+                        
+                        value = '%s.png' % weathercode
+                        setKeys(i, ["OutlookIcon","ConditionIcon"], value)
+                        setKeys(i, ["FanartCode"], value.replace(".png",""))
+
+
+            # Maximums
+            if index is 2:
+
+                for i, td in enumerate(row.find_all("td")):
+                    try:
+                        value = '%s' % td.text[:-2]
+                        setKeys(i, ["HighTemp","HighTemperature"], value)
+                    except Exception as inst:
+                        print(str(inst))
+                        setKeys(i, ["HighTemp","HighTemperature"], "?")                   
+ 
+            # Minimums
+            if index is 3:
+
+                for i, td in enumerate(row.find_all("td")):
+                    try:
+                        value = '%s' % td.text[:-2]
+                        setKeys(i, ["LowTemp","LowTemperature"], value)
+                    except Exception as inst:
+                        print(str(inst))
+                        setKeys(i, ["LowTemp","LowTemperature"], "?")                   
+
+            # Chance of rain
+            if index is 4:
+
+                for i, td in enumerate(row.find_all("td")):
+                    try:
+                        value = '%s' % td.text[:-1]
+                        setKey(i, "ChancePrecipitation", value)
+                        setKey(i, "RainChance", value)
+                    except Exception as inst:
+                        print(str(inst))
+                        setKey(i, "ChancePrecipitation", "?") 
+                        setKey(i, "RainChance", "?")                  
+
+            # Amount of rain
+            if index is 5:
+
+                for i, td in enumerate(row.find_all("td")):
+                    try:
+                        value = '%s' % td.text
+                        setKey(i, "Precipitation", value)
+                        setKey(i, "RainChanceAmount", value)
+                    except Exception as inst:
+                        print(str(inst))
+                        setKey(i, "Precipitation", "?")
+                        setKey(i, "RainChanceAmount", "?")
+            # UV
+            if index is 6:
+
+                try:
+                    tds = row.find_all("td")
+                    span = tds[0].find("span")
+                    weatherData["Current.UVIndex"] = "%s (%s)" % (span.text, span.get('title'))
+                except Exception as inst:
+                    print(str(inst))
+                    weatherData["Current.UVIndex"] = "?"
+
+            # Wind speed and direction - there are two values per day here...
+            # and, sigh, they can appear as rows 10 and 11 or 9 and 10, depending on if there is a pollen row...
+
+
+            # Wind Speed 
+            if index is 9 or 10:
+
+                try:
+                    header = row.find("th")
+                    if header is not None and header.text == "Wind Speed":
+
+                        windSpeedData = row.find_all("td")
+                        for i in xrange(0,len(windSpeedData),2):
+                            windSpeeds9am.append(windSpeedData[i].text)
+                            windSpeeds3pm.append(windSpeedData[i+1].text)
+                except Exception as inst:
+                    print(str(inst))
+                    windSpeeds9am.append("?")
+                    windSpeeds9am.append("?")
+             
+
+            # # Wind Direction
+            if index is 10 or 11:
+
+                try:
+                    header = row.find("th")
+                    if header is not None and header.text == "Wind Direction":
+
+                        windDirectionData = row.find_all("td")            
+                        for i in xrange(0,len(windDirectionData),2):
+                            windDirections9am.append(windDirectionData[i].text.replace("\n",""))
+                            windDirections3pm.append(windDirectionData[i+1].text.replace("\n",""))
+                except Exception as inst:
+                    print(str(inst))
+                    windDirections9am.append("?")
+                    windDirections3pm.append("?")
+
+        # Now join the stored wind data and set it...
+        for i in xrange(0,len(windSpeeds9am)):
+            # setKey(i, "WindSpeed", "9am - " + windSpeeds9am[i] + ", 3pm - " + windSpeeds3pm[i])
+            setKey(i, "WindSpeed", windSpeeds3pm[i])
+            # setKey(i, "WindDirection", "9am - " + windDirections9am[i] + ", 3pm - " + windDirections3pm[i])
+            setKey(i, "WindDirection", windDirections3pm[i])
+
+    except Exception as inst:
+        print("Exception processing forecast rows data from " + SCHEMA + WEATHERZONE_URL + urlPath + "\n" + str(inst))
+        raise
+
+
+    # Moonphase
+    try:
+        astronomyTable = soup.find("table", class_="astronomy")
+        tds = astronomyTable.find_all("td")
+        value = tds[4].find("img").get('title').title()
+        weatherData['Today.moonphase'] = value
+        weatherData['Today.Moonphase'] = value
+
+    except Exception as inst:
+        print("Exception processing astronomy data from " + SCHEMA + WEATHERZONE_URL + urlPath + "\n" + str(inst))
+        weatherData['Today.moonphase'] = "?"
+        weatherData['Today.Moonphase'] = "?"
+ 
+
+     # Current Conditions - split in to two sides
     try:
         
         divCurrentDetailsLHS = soup.find("div", class_="details_lhs")
@@ -440,159 +646,7 @@ def getWeatherData(urlPath, extendedFeatures = True, XBMC_VERSION=17.0):
     except Exception as inst:
         print("Exception processing current conditions data from " + SCHEMA + WEATHERZONE_URL + urlPath + "\n" + str(inst))
         raise
-       
 
-    # 7 Day Forecast & UV
-    try:
-        forecastTable = soup.find("table", id="forecast-table")
-        
-        for index, row in enumerate(forecastTable.find_all("tr")):
-            
-            # Days and dates
-            if index is 0:
-                
-                    for i, day in enumerate(row.find_all("span", class_="bold")):
-                        try:
-                            fullDay = DAYS[day.text]
-                            setKey(i, "ShortDay", day.text)
-                            setKey(i, "Title", fullDay)
-                            setKey(i, "LongDay", fullDay)
-
-                        except Exception as inst:
-                            print(str(inst))
-                            setKey(i, "ShortDay", "?")
-                            setKey(i, "Title", "?")  
-                            setKey(i, "LongDay", "?")                      
-       
-                    for i, date in enumerate(row.find_all("span", class_="text_blue")):
-                        try:
-                            setKey(i, "ShortDate", date.text[3:])
-                
-                        except Exception as inst:
-                            print(str(inst))
-                            setKey(i, "ShortDate", "?")
-    
-            
-            # Outlook = Short Descriptions & Corresponding Icons
-            if index is 1:
-
-                    for i, shortDesc in enumerate(row.find_all("span")):
-
-                        try:
-                            setKey(i, "Outlook", cleanShortDescription(shortDesc.text))
-                            setKey(i, "Condition", cleanShortDescription(shortDesc.text))
-                        except Exception as inst:
-                            print(str(inst))
-                            setKey(i, "Outlook", "?")
-                            setKey(i, "Condition", "?")
-                       
-                        try:
-                            now = datetime.datetime.now()
-                            
-                            sunriseTime = weatherData['Today.Sunrise'].split(" ")
-                            sunriseHour = sunriseTime[0].split(":")[0]
-                            sunriseMinutes = sunriseTime[0].split(":")[1]
-
-                            sunsetTime = weatherData['Today.Sunset'].split(" ")
-                            sunsetHour = sunsetTime[0].split(":")[0]
-                            sunsetMinutes = sunsetTime[0].split(":")[1]
- 
-                            todaySunrise = now.replace(hour=int(sunriseHour), minute=int(sunriseMinutes), second=0, microsecond=0)
-                            todaySunset = now.replace(hour=int(sunsetHour), minute=int(sunsetMinutes), second=0, microsecond=0)
-
-                            if i==0 and (now > todaySunset or now < todaySunrise):
-                                weathercode = WEATHER_CODES_NIGHT[cleanShortDescription(shortDesc.text)]
-                            else:                                
-                                weathercode = WEATHER_CODES[cleanShortDescription(shortDesc.text)]
-                        
-                        except Exception as inst:
-                            print(str(inst))
-                            try:    
-                                weathercode = WEATHER_CODES[cleanShortDescription(shortDesc.text)]
-                            except Exception as inst:
-                                print(str(inst))
-                                weathercode = 'na'
-                        
-                        value = '%s.png' % weathercode
-                        setKeys(i, ["OutlookIcon","ConditionIcon"], value)
-
-
-            # Maximums
-            if index is 2:
-
-                for i, td in enumerate(row.find_all("td")):
-                    try:
-                        value = '%s' % td.text[:-2]
-                        setKeys(i, ["HighTemp","HighTemperature"], value)
-                    except Exception as inst:
-                        print(str(inst))
-                        setKeys(i, ["HighTemp","HighTemperature"], "?")                   
- 
-            # Minimums
-            if index is 3:
-
-                for i, td in enumerate(row.find_all("td")):
-                    try:
-                        value = '%s' % td.text[:-2]
-                        setKeys(i, ["LowTemp","LowTemperature"], value)
-                    except Exception as inst:
-                        print(str(inst))
-                        setKeys(i, ["LowTemp","LowTemperature"], "?")                   
-
-            # Chance of rain
-            if index is 4:
-
-                for i, td in enumerate(row.find_all("td")):
-                    try:
-                        value = '%s' % td.text[:-1]
-                        setKey(i, "ChancePrecipitation", value)
-                        setKey(i, "RainChance", value)
-                    except Exception as inst:
-                        print(str(inst))
-                        setKey(i, "ChancePrecipitation", "?") 
-                        setKey(i, "RainChance", "?")                  
-
-            # Amount of rain
-            if index is 5:
-
-                for i, td in enumerate(row.find_all("td")):
-                    try:
-                        value = '%s' % td.text
-                        setKey(i, "Precipitation", value)
-                        setKey(i, "RainChanceAmount", value)
-                    except Exception as inst:
-                        print(str(inst))
-                        setKey(i, "Precipitation", "?")
-                        setKey(i, "RainChanceAmount", "?")
-            # UV
-            if index is 6:
-
-                try:
-                    tds = row.find_all("td")
-                    span = tds[0].find("span")
-                    weatherData["Current.UVIndex"] = "%s (%s)" % (span.text, span.get('title'))
-                except Exception as inst:
-                    print(str(inst))
-                    weatherData["Current.UVIndex"] = "?"
-
-    except Exception as inst:
-        print("Exception processing forecast rows data from " + SCHEMA + WEATHERZONE_URL + urlPath + "\n" + str(inst))
-        raise
-
-
-    # Moonphase
-    try:
-        astronomyTable = soup.find("table", class_="astronomy")
-        tds = astronomyTable.find_all("td")
-        value = tds[4].find("img").get('title').title()
-        weatherData['Today.moonphase'] = value
-        weatherData['Today.Moonphase'] = value
-
-    except Exception as inst:
-        print("Exception processing astronomy data from " + SCHEMA + WEATHERZONE_URL + urlPath + "\n" + str(inst))
-        weatherData['Today.moonphase'] = "?"
-        weatherData['Today.Moonphase'] = "?"
-            
 
     return weatherData
 
@@ -613,6 +667,8 @@ if __name__ == "__main__":
     print(getLocationsForPostcodeOrSuburb("Kyneton"))
 
     print("\n\nGet weather data for /vic/central/kyneton:")
+    
+
     weatherData = getWeatherData("/vic/central/kyneton", True)
 
     for key in sorted(weatherData):
@@ -621,6 +677,8 @@ if __name__ == "__main__":
         print("%s: %s" % (key, weatherData[key]))
 
     print("\n\nGet weather data for /vic/melbourne/ascot-vale:")
+    
+
     weatherData = getWeatherData("/vic/melbourne/ascot-vale", True)
 
     for key in sorted(weatherData):
