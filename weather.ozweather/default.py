@@ -91,7 +91,7 @@ def clearProperties():
 
 
         #and all the properties for the forecast
-        for count in range(0,7):
+        for count in range(0,8):
             setProperty(WEATHER_WINDOW, 'Day%i.Title'                           % count)
             setProperty(WEATHER_WINDOW, 'Day%i.RainChance'                      % count)
             setProperty(WEATHER_WINDOW, 'Day%i.RainChanceAmount'                % count)
@@ -200,6 +200,8 @@ def oldKodiWeatherData(weatherData):
 
             weatherData['Day' + str(index) + '.' + key] = value
             weatherData['Day' + str(index) + '.' + key] = value
+            weatherData['Daily.' + str(index+1) + '.' + key] = value
+            weatherData['Daily.' + str(index+1) + '.' + key] = value
 
     return weatherData
 
@@ -227,7 +229,7 @@ def forecast(urlPath, radarCode):
     # Get all the weather & forecast data from weatherzone
     log("Get the forecast data from http://weatherzone.com.au" + urlPath)
     weatherData = getWeatherData(urlPath, extendedFeatures, VERSION_NUMBER)
-    if VERSION_NUMBER < 16.9:
+    if VERSION_NUMBER < 15.9:
         weatherData = oldKodiWeatherData(weatherData)
 
     for key in sorted(weatherData):

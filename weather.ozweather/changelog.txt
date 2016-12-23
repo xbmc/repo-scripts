@@ -1,3 +1,6 @@
+V0.8.8
+- Release of below after a few further bugfixes to icons mainly
+
 V0.8.5
 - Release of below after a few bugfixes...
 
