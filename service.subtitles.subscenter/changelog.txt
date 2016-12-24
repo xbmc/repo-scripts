@@ -1,3 +1,6 @@
+4.1.3 - by CaTz (24/12/2016)
+- Prevent filtering by year for tvshows
+
 4.1.2 - by CaTz (24/11/2016)
 - Fix fetching IMDB id - by TheWiz
 - Fetch list item data for external search - by burekas7
