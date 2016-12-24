@@ -1,3 +1,6 @@
+v3.3.2
+- don't crash on empty result
+
 v3.3.1
 - fix sunrise/sunset format
 

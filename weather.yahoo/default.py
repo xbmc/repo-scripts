@@ -145,7 +145,7 @@ def properties(response,loc):
     condition = ''
     wind = ''
     atmosphere = ''
-    if response and ('query' in response) and ('results' in response['query']) and ('channel' in response['query']['results']):
+    if response and response.get('query',None) and response['query'].get('results',None) and response['query']['results'].get('channel',None):
         data = response['query']['results']['channel']
         if 'wind' in data:
             wind = data['wind']
