@@ -188,7 +188,8 @@ class SubscenterHelper:
 
             if (search_string.startswith(eng_name_tmp) or eng_name_tmp.startswith(search_string) or
                     search_string.startswith(heb_name) or heb_name.startswith(search_string)) and \
-                    (item["year"] == '' or
+                    (item["tvshow"] or
+                             item["year"] == '' or
                              result["year"] == '' or
                                  (int(result["year"]) - 1) <= int(item["year"]) <= (int(result["year"]) + 1) or
                                  (int(item["year"]) - 1) <= int(result["year"]) <= (int(item["year"]) + 1)):
