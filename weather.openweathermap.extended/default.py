@@ -169,20 +169,20 @@ def location(locstr):
                 location = string.capwords(locstr)
             else:
                 location   = item['name']
-            locationid = item['id']
-            locationlat = item['coord']['lat']
-            locationlon = item['coord']['lon']
+            locationid = str(item['id'])
+            locationlat = str(item['coord']['lat'])
+            locationlon = str(item['coord']['lon'])
             locdeg = [locationlat,locationlon]
             locationcountry = item['sys']['country']
             if LATLON == 'true':
-                locs.append(location + ' (' + locationcountry + ') - lat/lon:' + str(locationlat) + '/' + str(locationlon))
+                locs.append(location + ' (' + locationcountry + ') - lat/lon:' + locationlat + '/' + locationlon)
             else:
                 locs.append(location + ' (' + locationcountry + ')')
             locids.append(locationid)
             locdegs.append(locdeg)
-    log('locs' % locs)
-    log('locids' % locids)
-    log('locdegs' % locdegs)
+    log('locs: %s' % str(locs))
+    log('locids: %s' % str(locids))
+    log('locdegs: %s' % str(locdegs))
     return locs, locids, locdegs
 
 def forecast(loc,locid,locationdeg):
@@ -903,7 +903,7 @@ if sys.argv[1].startswith('Location'):
             selected = dialog.select(xbmc.getLocalizedString(396), locations)
             if selected != -1:
                 ADDON.setSetting(sys.argv[1], locations[selected].split(' - ')[0])
-                ADDON.setSetting(sys.argv[1] + 'ID', str(locationids[selected]))
+                ADDON.setSetting(sys.argv[1] + 'ID', locationids[selected])
                 ADDON.setSetting(sys.argv[1] + 'deg', str(locationdeg[selected]))
                 log('selected location: %s' % locations[selected])
                 log('selected location id: %s' % locationids[selected])
@@ -925,9 +925,11 @@ else:
         if locationstring:
             locations, locationids, locationdeg = location(locationstring.encode("utf-8"))
             ADDON.setSetting('Location1', locations[0].split(' - ')[0])
-            ADDON.setSetting('Location1ID', str(locationids[0]))
+            ADDON.setSetting('Location1ID', locationids[0])
             ADDON.setSetting('Location1deg', str(locationdeg[0]))
+            locationname = locations[0]
             locationid = str(locationids[0])
+            locationdeg = str(locationdeg[0])
     if not locationid == '':
         ADDON.setSetting('oldloc', str(locationid))
         ADDON.setSetting('oldtime', str(int(time.time())))
