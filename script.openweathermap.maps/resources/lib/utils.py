@@ -22,6 +22,9 @@ def log(txt):
 def set_property(name, value):
     WEATHER_WINDOW.setProperty(name, value)
 
+def clear_property(name):
+    WEATHER_WINDOW.clearProperty(name)
+
 # http://wiki.openstreetmap.org/wiki/Slippy_map_tilenames#Lon..2Flat._to_tile_numbers
 def GET_TILE(lat_deg, lon_deg, zoom):
   lat_rad = math.radians(lat_deg)
