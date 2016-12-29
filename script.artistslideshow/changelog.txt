@@ -1,3 +1,10 @@
+v.2.0.4
+- added option to use local fanart and folder image outside extrafanart folder
+- added MusicBrainz ID extraction from theaudiodb.com information
+- added ArtistSlideshow.SimilarCount and ArtistSlideshow.AlbumCount to skin properties
+- fix for theaudiodb lookup when artists have ampersands in their name
+- fix for artist name separation leaving extra spaces
+
 v.2.0.3
 - removed support for htbackdrops.org (API access no longer available)
 - fix for crash when theaudiodb.com doesn't respond with valid JSON

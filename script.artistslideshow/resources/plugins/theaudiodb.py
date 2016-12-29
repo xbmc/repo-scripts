@@ -118,7 +118,7 @@ class objectConfig():
                 self.loglines.append( 'found tadbid, using tadbidurl to get information from theaudiodb' )
                 return tadbidurl, url_params
         if nameurl:
-            url_params['s'] = params.get( 'artist', '' ).replace( '&','%26' ) 
+            url_params['s'] = params.get( 'artist', '' ) 
             self.loglines.append( 'no mbid or tadbid found, using artist name to get information from theaudiodb' )
             return nameurl, url_params
         return '', ''

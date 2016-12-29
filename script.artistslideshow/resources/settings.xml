@@ -10,6 +10,8 @@
     <category label="32100">
         <setting id="local_artist_path" type="folder" label="32101" default="" />
         <setting id="priority" type="enum" label="32102" lvalues="32110|32111|32112" default="0" />
+		<setting id="include_fanartjpg" type="bool" label="32108" default="false" />
+		<setting id="include_folderjpg" type="bool" label="32109" default="false" />
         <setting id="fallback" type="bool" label="32105" default="false" />
         <setting id="fallback_path" type="folder" label="32103" default="" visible="eq(-1,true)" />
         <setting id="slideshow" type="bool" label="32106" default="false" />
@@ -21,8 +23,6 @@
         <setting id="fanarttv_clientapikey" type="text" label="32010" visible="eq(-1,true)" default="" />
         <setting id="fanarttv_all" type="bool" label="32007" visible="eq(-2,true)" default="false" />
         <setting id="theaudiodb" type="bool" label="32009" default="false" />
-<!--        <setting id="htbackdrops" type="bool" label="32002" default="true" />
-        <setting id="htbackdrops_all" type="bool" label="32007" visible="eq(-1,true)" default="false" /> -->
     </category>
     <category label="32300">
         <setting id="ai_theaudiodb" type="bool" label="32302" default="false" />
