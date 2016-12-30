@@ -123,7 +123,13 @@ msgctxt "#32107"
 msgid "Use transparent background when no artist images found"
 msgstr ""
 
-#empty strings from id 32108 to 32109
+msgctxt "#32108"
+msgid "Include root level fanart.jpg"
+msgstr ""
+
+msgctxt "#32109"
+msgid "Include root level folder.jpg"
+msgstr ""
 
 msgctxt "#32110"
 msgid "Use remote images first"

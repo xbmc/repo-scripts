@@ -342,6 +342,18 @@ class Main:
 
 
     def _get_current_artists( self ):
+        if( xbmc.Player().isPlayingAudio() == True ):
+            try:
+                playing_file = xbmc.Player().getPlayingFile() + ' - ' + xbmc.Player().getMusicInfoTag().getArtist() + ' - ' + xbmc.Player().getMusicInfoTag().getTitle()
+            except RuntimeError:
+                playing_file = ''
+            except Exception, e:
+                lw.log( ['unexpected error getting playing file back from XBMC', e] )
+                playing_file = ''
+            if playing_file == self.LASTPLAYINGFILE:
+                # if the same file is playing, nothing has changed
+                return self.ALLARTISTS
+            self.LASTPLAYINGFILE = playing_file
         current_artists = []
         for artist, mbid in self._get_current_artists_info( ):
             current_artists.append( artist )
@@ -354,20 +366,7 @@ class Main:
         artists_info = []
         mbids = []
         if( xbmc.Player().isPlayingAudio() == True ):
-            try:
-                playing_file = xbmc.Player().getPlayingFile() + ' - ' + xbmc.Player().getMusicInfoTag().getArtist() + ' - ' + xbmc.Player().getMusicInfoTag().getTitle()
-            except RuntimeError:
-                return artists_info
-            except Exception, e:
-                lw.log( ['unexpected error getting playing file back from XBMC', e] )
-                return artists_info
-            if playing_file != self.LASTPLAYINGFILE:
-                # if the same file is playing, use cached JSON response instead of doing a new query
-                response = xbmc.executeJSONRPC ( '{"jsonrpc":"2.0", "method":"Player.GetItem", "params":{"playerid":0, "properties":["artist", "musicbrainzartistid"]},"id":1}' )
-                self.LASTPLAYINGFILE = playing_file
-                self.LASTJSONRESPONSE = response
-            else:
-                response = self.LASTJSONRESPONSE
+            response = xbmc.executeJSONRPC ( '{"jsonrpc":"2.0", "method":"Player.GetItem", "params":{"playerid":0, "properties":["artist", "musicbrainzartistid"]},"id":1}' )
             artist_names = _json.loads(response).get( 'result', {} ).get( 'item', {} ).get( 'artist', [] )
             mbids = _json.loads(response).get( 'result', {} ).get( 'item', {} ).get( 'musicbrainzartistid', [] )
             try:
@@ -469,6 +468,7 @@ class Main:
             image_list, loglines = image_plugins['objs'][plugin_name[1]].getImageList( image_params )
             lw.log( loglines )
             images.extend( image_list )
+            image_params['mbid'] = self._get_musicbrainz_id( self.NAME, self.MBID ) 
         return images
 
 
@@ -486,8 +486,20 @@ class Main:
         if not self.NAME:
             lw.log( ['no artist name provided'] )
             return
-        self.CacheDir = os.path.join( self.LOCALARTISTPATH, smartUTF8(self.NAME).decode('utf-8'), self.FANARTFOLDER )
+        artist_path = os.path.join( self.LOCALARTISTPATH, smartUTF8(self.NAME).decode('utf-8') )
+        self.CacheDir = os.path.join( artist_path, self.FANARTFOLDER )
         lw.log( ['cachedir = %s' % self.CacheDir] )
+        copy_files = []
+        if self.INCLUDEFANARTJPG == 'true':
+           copy_files.append( 'fanart.jpg' )
+           copy_files.append( 'fanart.png' )
+        if self.INCLUDEFOLDERJPG == 'true':
+            copy_files.append( 'folder.jpg' )
+            copy_files.append( 'folder.png' )
+        for one_file in copy_files:
+            result, loglines = checkPath( self.CacheDir )
+            lw.log( loglines )
+            xbmcvfs.copy( os.path.join( artist_path, one_file ), os.path.join( self.CacheDir, one_file ) )
         files = self._get_directory_list()
         for file in files:
             if file.lower().endswith('tbn') or file.lower().endswith('jpg') or file.lower().endswith('jpeg') or file.lower().endswith('gif') or file.lower().endswith('png'):
@@ -501,23 +513,43 @@ class Main:
                self._merge_images()
 
 
-    def _get_musicbrainz_id ( self, theartist, mbid ):
+    def _get_musicbrainz_id( self, theartist, mbid ):
+        self._set_infodir( theartist )
+        lw.log( ['Looking for a musicbrainz ID for artist ' + theartist] )
+        if mbid:
+            lw.log( ['returning ' + mbid] )
+            return mbid
+        mbid = self._get_musicbrainz_from_file( 'theaudiodbartistbio.nfo' )
         if mbid:
             return mbid
-        lw.log( ['Looking for a musicbrainz ID for artist ' + theartist, 'Looking for musicbrainz ID in the musicbrainz.nfo file'] )
-        self._set_infodir( theartist )
-        filename = os.path.join( self.InfoDir, 'musicbrainz.nfo' )
+        return self._get_musicbrainz_from_file( 'musicbrainz.nfo' )
+
+
+    def _get_musicbrainz_from_file( self, mbid_file ):
+        lw.log( ['Looking for musicbrainz ID in the %s file' % mbid_file] )
+        filename = os.path.join( self.InfoDir, mbid_file )
         if xbmcvfs.exists( filename ):
-            loglines, mbid = readFile( filename )
+            loglines, rawdata = readFile( filename )
             lw.log( loglines )
-            if not mbid:
-                lw.log( ['no musicbrainz ID found in musicbrainz.nfo file'] )
+            if mbid_file == 'musicbrainz.nfo':
+                if not rawdata:
+                    lw.log( ['no musicbrainz ID found in %s file' % mbid_file] )
+                    return ''
+                else:
+                    lw.log( ['musicbrainz ID found in %s file' % mbid_file] )
+                    return rawdata
+            try:
+                json_data = _json.loads( rawdata )
+            except ValueError:
+                self.loglines.append( 'no valid JSON data returned from ' + mbid_file )
                 return ''
-            else:
-                lw.log( ['musicbrainz ID found in musicbrainz.nfo file'] )
-                return mbid
+            lw.log( ['musicbrainz ID found in %s file' % mbid_file] )
+            try:
+                return json_data.get( 'artists' )[0].get( 'strMusicBrainzID', '' )
+            except TypeError:
+                return ''
         else:
-            lw.log( ['no musicbrainz.nfo file found'] )
+            lw.log( ['no %s file found' % mbid_file] )
             return ''
 
 
@@ -566,6 +598,8 @@ class Main:
         self.OVERRIDEPATH = addon.getSetting( "slideshow_path" ).decode('utf-8')
         self.RESTRICTCACHE = addon.getSetting( "restrict_cache" )
         self.DISABLEMULTIARTIST = addon.getSetting( "disable_multiartist" )
+        self.INCLUDEFANARTJPG = addon.getSetting( "include_fanartjpg" )
+        self.INCLUDEFOLDERJPG = addon.getSetting( "include_folderjpg" )
         try:
             self.maxcachesize = int( addon.getSetting( "max_cache_size" ) ) * 1000000
         except ValueError:
@@ -761,24 +795,6 @@ class Main:
             lw.log( ['daemonizing'] )
 
 
-    def _parse_musicbrainz_info( self, type, mbid, playing_thing, query_times ):
-        if self._playback_stopped_or_changed():
-            return False
-        lw.log( ["checking this artist's " + type + "s against currently playing " + type] )
-        mboptions = {"artist":mbid, "limit":"100", "fmt":"json"}
-        for thing in self._get_musicbrainz_info( mboptions, '', type + 's', type + 's', query_times ):
-            title = smartUTF8( thing['title'] )
-            if playing_thing.rfind('(') > 0:
-                playing_title = smartUTF8( playing_thing[:playing_thing.rfind('(')-2] )
-            else:
-                playing_title = smartUTF8( playing_thing )
-            lw.log( ['comparing musicbrainz %s: %s with local %s: %s' % (type, title, type, playing_title)] )
-            if title.lower().startswith( playing_title.lower() ) or playing_title.lower().startswith( title.lower() ):
-                lw.log( ['found matching %s, this should be the right artist' % type] )
-                return True
-        return False
-
-
     def _playback_stopped_or_changed( self ):
         if set( self.ALLARTISTS ) <> set( self._get_current_artists() ) or self.EXTERNALCALLSTATUS != self._get_infolabel( self.EXTERNALCALL ):
             self._clear_properties()
@@ -850,14 +866,20 @@ class Main:
 
 
     def _set_properties( self ):
-      self._set_property("ArtistSlideshow.ArtistBiography", self.biography)
-      for count, item in enumerate( self.similar ):
-          self._set_property("ArtistSlideshow.%d.SimilarName" % ( count + 1 ), item[0])
-          self._set_property("ArtistSlideshow.%d.SimilarThumb" % ( count + 1 ), item[1])
-      for count, item in enumerate( self.albums ):
-          self._set_property("ArtistSlideshow.%d.AlbumName" % ( count + 1 ), item[0])
-          self._set_property("ArtistSlideshow.%d.AlbumThumb" % ( count + 1 ), item[1])
-
+        similar_total = ''
+        album_total = ''
+        self._set_property( "ArtistSlideshow.ArtistBiography", self.biography )
+        for count, item in enumerate( self.similar ):
+            self._set_property( "ArtistSlideshow.%d.SimilarName" % ( count + 1 ), item[0] )
+            self._set_property( "ArtistSlideshow.%d.SimilarThumb" % ( count + 1 ), item[1] )
+            similar_total = str( count )
+        for count, item in enumerate( self.albums ):
+            self._set_property( "ArtistSlideshow.%d.AlbumName" % ( count + 1 ), item[0] )
+            self._set_property( "ArtistSlideshow.%d.AlbumThumb" % ( count + 1 ), item[1] )
+            album_total = str( count )
+        self._set_property( "ArtistSlideshow.SimilarCount", similar_total )
+        self._set_property( "ArtistSlideshow.AlbumCount", album_total )
+        
 
     def _set_property( self, property_name, value=""):
         #sets a property (or clears it if no value is supplied)
@@ -878,7 +900,7 @@ class Main:
 
 
     def _split_artists( self, response):
-        return response.replace('ft.',' / ').replace('feat.',' / ').split(' / ')
+        return response.replace(' ft. ',' / ').replace(' feat. ',' / ').split(' / ')
 
 
     def _start_download( self ):

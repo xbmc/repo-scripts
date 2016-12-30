@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.artistslideshow" name="Artist Slideshow" version="2.0.3" provider-name="pkscout,ronie">
+<addon id="script.artistslideshow" name="Artist Slideshow" version="2.0.4" provider-name="pkscout,ronie">
 	<requires>
 		<import addon="xbmc.python" version="2.19.0"/>
 		<import addon="xbmc.addon" version="14.0.0"/>
@@ -10,8 +10,11 @@
 		<provides>executable</provides>
 	</extension>
 	<extension point="xbmc.addon.metadata">
-		<news>2.0.3
-		- removed support for htbackdrops.org (API access no longer avaialble)</news>
+		<news>2.0.4
+		- added MusicBrainz ID extraction from theaudiodb.com information
+		- added option to use local fanart and folder art outside extrafanart folder
+		- added new skin properties (ArtistSlideshow.SimilarCount and ArtistSlideshow.AlbumCount)
+		- various bug fixes (see changelog for more information)</news>
 		<summary lang="ar">حمل المزيد من الصور والمعلومات عن الفنان الذى يُغنِى حالياً</summary>
 		<summary lang="be">Download images and additional info of the currently playing artist</summary>
 		<summary lang="bg">Сваля изображения и допълнителна инф. за изпълнителя на текущата песен</summary>
