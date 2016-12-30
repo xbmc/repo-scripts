@@ -1,15 +1,22 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <settings>
     <category label="32000">
-        <setting label="32100" type="enum" id="movementtype" default="1" lvalues="32101|32102|32103|32104"/>
-		<setting label="32110" type="enum" id="movementspeed" subsetting="true" visible="eq(-1,1)" default="1" lvalues="32111|32112|32113"/>
-		<setting label="32120" type="slider" id="stayinplace" subsetting="true" visible="eq(-2,0)" default="10" range="5,5,60" option="int"/>
-        <setting label="32121" type="lsep" visible="eq(-3,2) | eq(-3,3)"/>		
-		<setting label="32150" type="number" id="customx" subsetting="true" visible="eq(-4,3)" default="1" option="int"/>
-		<setting label="32160" type="number" id="customy" subsetting="true" visible="eq(-5,3)" default="1" option="int"/>
-		<setting id="timeformat" type="select" label="32130" default="0" lvalues="32131|32132|32133"/>
-		<setting id="dateformat" type="select" label="32140" default="1" lvalues="32141|32142|32143|32144"/>
+        <setting label="32100" type="select" id="movementtype" default="1" lvalues="32101|32102|32103|32104"/>
+		<setting label="32110" type="enum" id="movementspeed" subsetting="true" visible="eq(-1,Bounce)" default="1" lvalues="32111|32112|32113"/>
+		<setting label="32120" type="slider" id="stayinplace" subsetting="true" visible="eq(-2,Random position)" default="10" range="5,5,60" option="int"/>
+        <setting label="32121" type="lsep" visible="eq(-3,Fixed in the center) | eq(-3,Custom fixed position)"/>		
+		<setting label="32150" type="number" id="customx" subsetting="true" visible="eq(-4,Custom fixed position)" default="1" option="int"/>
+		<setting label="32160" type="number" id="customy" subsetting="true" visible="eq(-5,Custom fixed position)" default="1" option="int"/>
     </category>
+		<category label="32001">	
+		<setting id="timeformat" type="select" label="32130" default="0" lvalues="32131|32132|32133"/>
+		<setting label="32139" type="bool" id="colonblink" default="true"/>		
+		<setting id="dateformat" type="select" label="32140" default="1" lvalues="32141|32142|32143|32144|32145"/>
+		<setting label="32170" type="text" id="customdateformat" subsetting="true" visible="eq(-1,Custom)"/>		
+		<setting label="32171" type="lsep" visible="eq(-2,Custom)"/>
+		<setting label="32172" type="lsep" visible="eq(-3,Custom)"/>
+		<setting label="32173" type="lsep" visible="eq(-4,Custom)"/>
+    </category>	
     <category label="32005">
 		<setting label="32200" type="bool" id="additionalinformation" default="false"/>
 		<setting label="32210" type="slider" id="infoswitch" subsetting="true" visible="eq(-1,true)" default="5" range="5,5,30" option="int"/>		
@@ -40,13 +47,15 @@
 		</category>
     <category label="32020">
 		<setting id="shadowformat" type="select" label="32500" default="0" lvalues="32501|32502|32503|32504"/>
-		<setting id="backgroundchoice" type="enum" label="32510" default="0" lvalues="32511|32512|32513"/>
+		<setting id="backgroundchoice" type="enum" label="32510" default="0" lvalues="32511|32512|32513|32514"/>
 		<setting id="image" type="select" label="32520" visible="eq(-1,0)" default="5" lvalues="32311|32312|32313|32314|32315|32316"/>
         <setting label="32531" type="lsep" visible="eq(-2,1)"/>
-		<setting label="32530" type="file" id="file" subsetting="true" visible="eq(-3,1)" default="images" source="pictures"/>
+		<setting label="32530" type="image" id="file" subsetting="true" visible="eq(-3,1)" default="images" source="pictures"/>
 		<setting label="32540" type="folder" id="folder" subsetting="true" visible="eq(-4,2)" default="images" source="pictures"/>
 		<setting label="32550" type="bool" id="randomimages" subsetting="true" visible="eq(-5,2)" default="false"/>
-		<setting id="imagetimer" type="select" label="32560" subsetting="true" visible="eq(-6,2)" default="0" lvalues="32561|32562|32563|32564|32565|32566|32567|32568|32569|32570|32571|32572"/>
+		<setting label="32579" type="lsep" visible="eq(-6,3)"/>
+		<setting id="skinhelper" type="select" label="32580" subsetting="true" visible="eq(-7,3)" default="3" lvalues="32581|32582|32583|32584"/>
+		<setting id="imagetimer" type="select" label="32560" subsetting="true" visible="eq(-8,2) | eq(-8,3)" default="0" lvalues="32561|32562|32563|32564|32565|32566|32567|32568|32569|32570|32571|32572"/>
 	</category>
     <category label="32025">
         <setting id="zoomlevel" type="select" label="32600" default="100" values="100|110|120|130|140|150|160|170|180|190|200" />		

@@ -5,17 +5,22 @@ Digital clock screensaver with date, now playing information, weather informatio
 
 These are the options:
 
-General
-- Movement on the screen (Random position and bounce movement)
+Movement
+- Movement on the screen (Random position, Bounce movement, Fixed in the center, Custom position)
 - Bounce movement speed
 - Number of seconds to stay in place (Number of seconds that the clock will stay in place before moving to a random location)
+
+Format
 - Time format
-- Date format
+- Date format (Includes custom format)
+
+Additional Information
 - Enable additional information
 - Number of seconds for information switch (Number of seconds before the information will be switched with another one, i.e. Artist - Song - Weather information)
 - Enable now playing information
 - Enable weather information
 - Weather icons
+- Enable album art
 
 Colors (Users can choose either to have a random color every time the clock moves or one from the list)
 - Random color
@@ -25,7 +30,7 @@ Colors (Users can choose either to have a random color every time the clock move
 - AM/PM color
 - Date color
 - Additional information color
-- Weather icon color
+- Icon color
 
 Transparency (Users can choose either to have a random transparency every time the clock moves or one from the list)
 - Random transparency
@@ -35,17 +40,19 @@ Transparency (Users can choose either to have a random transparency every time t
 - AM/PM transparency
 - Date transparency
 - Additional information transparency
-- Weather icon transparency
+- Icon transparency
 
 Background
 - Text shadow color
-- Enable slideshow (Users can have a slideshow of their images for background)
+- Choose background (One color, Single image, Slideshow, Skin Helper)
+- Choose color
+- Choose image
 - Choose slideshow directory
-- Change background picture every
 - Random images (Screensaver chooses a random image from the folder for the background)
-- Background image (Users can select one colored background image from the list)
+- Change background picture every
+- Choose Skin Helper background (Movie random fanart, TV show random fanart, Music artist random fanart, Random fanart of all media types) 
 
-Element size increase (Users can increase the size of text and icons)
+Element Size Increase (Users can increase the size of text and icons)
 - Size (%)
 
 This screensaver is configured for every skin separately since it has to use Fonts defined by the skin!
@@ -99,3 +106,6 @@ Possible issues:
 Depending on your language and selected date format the date text might become ... that means that the text for the date is too long, I can fix that easily, just let me know if it happens. (Screenshot would be great including which language you are using and how many letters are supposed to be on the screen).
 
 Everything else should work just fine, let me know if you encounter any bugs or issues.
+
+We're on Transifex!
+Feel free to translate screensaver.digitalclock to your language: https://www.transifex.com/teamxbmc/kodi-...italclock/

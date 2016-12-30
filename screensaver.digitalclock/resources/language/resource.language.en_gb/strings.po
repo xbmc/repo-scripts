@@ -4,43 +4,59 @@
 # Addon Provider: Vojislav Vlasic
 msgid ""
 msgstr ""
-"Project-Id-Version: XBMC Main Translation Project (Frodo)\n"
-"Report-Msgid-Bugs-To: http://trac.xbmc.org/\n"
+"Project-Id-Version: KODI Addons\n"
+"Report-Msgid-Bugs-To: http://trac.kodi.tv/\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: XBMC Translation Team\n"
-"Language-Team: English (http://www.transifex.com/projects/p/XBMC-Main-Frodo/language/en/)\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: English (United Kingdom) (http://www.transifex.com/projects/p/kodi-addons/language/en_GB/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: en\n"
+"Language: en_GB\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #settings labels
 
 msgctxt "#32000"
-msgid "Movement | Format"
+msgid "Movement"
 msgstr ""
+
+msgctxt "#32001"
+msgid "Format"
+msgstr ""
+
+#empty strings from id 32002 to 32004
 
 msgctxt "#32005"
 msgid "Additional Information"
 msgstr ""
 
+#empty strings from id 32006 to 32009
+
 msgctxt "#32010"
 msgid "Colors"
 msgstr ""
+
+#empty strings from id 32011 to 32014
 
 msgctxt "#32015"
 msgid "Transparency"
 msgstr ""
 
+#empty strings from id 32016 to 32019
+
 msgctxt "#32020"
 msgid "Background"
 msgstr ""
 
+#empty strings from id 32021 to 32024
+
 msgctxt "#32025"
 msgid "Element Size Increase"
 msgstr ""
+
+#empty strings from id 32026 to 32099
 
 msgctxt "#32100"
 msgid "Movement on the screen"
@@ -62,6 +78,8 @@ msgctxt "#32104"
 msgid "Custom fixed position"
 msgstr ""
 
+#empty strings from id 32105 to 32109
+
 msgctxt "#32110"
 msgid "Movement speed"
 msgstr ""
@@ -78,6 +96,8 @@ msgctxt "#32113"
 msgid "Fast"
 msgstr ""
 
+#empty strings from id 32114 to 32119
+
 msgctxt "#32120"
 msgid "Number of seconds to stay in place"
 msgstr ""
@@ -85,6 +105,8 @@ msgstr ""
 msgctxt "#32121"
 msgid "Warning! Having static text on your screen can cause a burn in!"
 msgstr ""
+
+#empty strings from id 32122 to 32129
 
 msgctxt "#32130"
 msgid "Time format"
@@ -100,6 +122,12 @@ msgstr ""
 
 msgctxt "#32133"
 msgid "05:14 PM"
+msgstr ""
+
+#empty strings from id 32134 to 32138
+
+msgctxt "#32139"
+msgid "Colon blink"
 msgstr ""
 
 msgctxt "#32140"
@@ -122,29 +150,65 @@ msgctxt "#32144"
 msgid "05.30.2015"
 msgstr ""
 
+msgctxt "#32145"
+msgid "Custom"
+msgstr ""
+
+#empty strings from id 32146 to 32149
+
 msgctxt "#32150"
 msgid "Custom value for X position (1-1280)"
 msgstr ""
+
+#empty strings from id 32151 to 32159
 
 msgctxt "#32160"
 msgid "Custom value for Y position (1-720)"
 msgstr ""
 
+#empty strings from id 32161 to 32169
+
+msgctxt "#32170"
+msgid "Enter custom date format (Empty=Regional settings):"
+msgstr ""
+
+msgctxt "#32171"
+msgid "Day: d(1-31) dd(01-31) ddd(Mon-Sun) DDD(Monday-Sunday)"
+msgstr ""
+
+msgctxt "#32172"
+msgid "Month: m(1-12) mm(01-12) mmm(Jan-Dec) MMM(January-December)"
+msgstr ""
+
+msgctxt "#32173"
+msgid "Year: yy(2-digit year) yyyy(4-digit year)"
+msgstr ""
+
+#empty strings from id 32174 to 32199
+
 msgctxt "#32200"
 msgid "Enable additional information"
 msgstr ""
+
+#empty strings from id 32201 to 32209
 
 msgctxt "#32210"
 msgid "Number of seconds for information switch"
 msgstr ""
 
+#empty strings from id 32211 to 32219
+
 msgctxt "#32220"
 msgid "Enable now playing information"
 msgstr ""
 
+#empty strings from id 32221 to 32229
+
 msgctxt "#32230"
 msgid "Enable weather information"
 msgstr ""
+
+#empty strings from id 32231 to 32239
 
 msgctxt "#32240"
 msgid "Weather icons"
@@ -170,13 +234,19 @@ msgctxt "#32245"
 msgid "Icon set 4"
 msgstr ""
 
+#empty strings from id 32246 to 32249
+
 msgctxt "#32250"
 msgid "Enable album art"
 msgstr ""
 
+#empty strings from id 32251 to 32299
+
 msgctxt "#32300"
 msgid "Random color"
 msgstr ""
+
+#empty strings from id 32301 to 32309
 
 msgctxt "#32310"
 msgid "Hour color"
@@ -206,33 +276,49 @@ msgctxt "#32316"
 msgid "Black"
 msgstr ""
 
+#empty strings from id 32317 to 32319
+
 msgctxt "#32320"
 msgid "Colon color"
 msgstr ""
+
+#empty strings from id 32321 to 32329
 
 msgctxt "#32330"
 msgid "Minute color"
 msgstr ""
 
+#empty strings from id 32331 to 32339
+
 msgctxt "#32340"
 msgid "AM/PM color"
 msgstr ""
+
+#empty strings from id 32341 to 32349
 
 msgctxt "#32350"
 msgid "Date color"
 msgstr ""
 
+#empty strings from id 32351 to 32359
+
 msgctxt "#32360"
 msgid "Additional information color"
 msgstr ""
+
+#empty strings from id 32361 to 32369
 
 msgctxt "#32370"
 msgid "Icon color"
 msgstr ""
 
+#empty strings from id 32371 to 32399
+
 msgctxt "#32400"
 msgid "Random transparency"
 msgstr ""
+
+#empty strings from id 32401 to 32409
 
 msgctxt "#32410"
 msgid "Hour transparency"
@@ -282,29 +368,43 @@ msgctxt "#32421"
 msgid "100%"
 msgstr ""
 
+#empty strings from id 32422 to 32429
+
 msgctxt "#32430"
 msgid "Colon transparency"
 msgstr ""
+
+#empty strings from id 32431 to 32439
 
 msgctxt "#32440"
 msgid "Minute transparency"
 msgstr ""
 
+#empty strings from id 32441 to 32449
+
 msgctxt "#32450"
 msgid "AM/PM transparency"
 msgstr ""
+
+#empty strings from id 32451 to 32459
 
 msgctxt "#32460"
 msgid "Date transparency"
 msgstr ""
 
+#empty strings from id 32461 to 32469
+
 msgctxt "#32470"
 msgid "Additional information transparency"
 msgstr ""
 
+#empty strings from id 32471 to 32479
+
 msgctxt "#32480"
 msgid "Icon transparency"
 msgstr ""
+
+#empty strings from id 32481 to 32499
 
 msgctxt "#32500"
 msgid "Text shadow color"
@@ -326,6 +426,8 @@ msgctxt "#32504"
 msgid "Black"
 msgstr ""
 
+#empty strings from id 32505 to 32509
+
 msgctxt "#32510"
 msgid "Choose background"
 msgstr ""
@@ -342,9 +444,17 @@ msgctxt "#32513"
 msgid "Slideshow"
 msgstr ""
 
+msgctxt "#32514"
+msgid "Skin Helper Backgrounds"
+msgstr ""
+
+#empty strings from id 32515 to 32519
+
 msgctxt "#32520"
 msgid "Choose color"
 msgstr ""
+
+#empty strings from id 32521 to 32529
 
 msgctxt "#32530"
 msgid "Choose image"
@@ -354,13 +464,19 @@ msgctxt "#32531"
 msgid "Warning! Having only one image on your screen can cause a burn in!"
 msgstr ""
 
+#empty strings from id 32532 to 32539
+
 msgctxt "#32540"
 msgid "Choose slideshow directory"
 msgstr ""
 
+#empty strings from id 32541 to 32549
+
 msgctxt "#32550"
 msgid "Random images"
 msgstr ""
+
+#empty strings from id 32551 to 32559
 
 msgctxt "#32560"
 msgid "Change background picture every:"
@@ -413,6 +529,34 @@ msgstr ""
 msgctxt "#32572"
 msgid "10 min"
 msgstr ""
+
+#empty strings from id 32573 to 32578
+
+msgctxt "#32579"
+msgid "Requires Skin Helper Service!"
+msgstr ""
+
+msgctxt "#32580"
+msgid "Choose Skin Helper background"
+msgstr ""
+
+msgctxt "#32581"
+msgid "Movie random fanart"
+msgstr ""
+
+msgctxt "#32582"
+msgid "TV show random fanart"
+msgstr ""
+
+msgctxt "#32583"
+msgid "Music artist random fanart"
+msgstr ""
+
+msgctxt "#32584"
+msgid "Random fanart of all media types"
+msgstr ""
+
+#empty strings from id 32585 to 32599
 
 msgctxt "#32600"
 msgid "Size (%)"

@@ -1,3 +1,9 @@
+[B]3.9.0[/B]
+- Got the screensaver to transifex
+- Fixed the zoom bug (when part of the information gets off the screen)
+- Added custom date format
+- Added Skin Helper background option
+
 [B]3.8.0[/B]
 - Repacked the options
 - Added custom position option and showing of thumbnail for now playing media
