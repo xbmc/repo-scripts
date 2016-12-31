@@ -25,9 +25,10 @@ from datetime import datetime
 
 Addon = xbmcaddon.Addon('screensaver.digitalclock')
 
-path = Addon.getAddonInfo('path')
+path = Addon.getAddonInfo('path').decode("utf-8")
 location = xbmc.getSkinDir()
 scriptname = location + '.xml'
+Addonversion = Addon.getAddonInfo('version')
 
 class Screensaver(xbmcgui.WindowXMLDialog):
 
@@ -70,6 +71,8 @@ class Screensaver(xbmcgui.WindowXMLDialog):
         self.movementspeed = int(Addon.getSetting('movementspeed'))
         self.stayinplace = int(Addon.getSetting('stayinplace'))
         self.datef=Addon.getSetting('dateformat')
+        self.customdateformat=Addon.getSetting('customdateformat')		
+        self.colonblink=Addon.getSetting('colonblink')		
         self.timef=Addon.getSetting('timeformat')
         self.shadowf=Addon.getSetting('shadowformat')		
         self.ampm_control.setVisible(False)
@@ -81,6 +84,7 @@ class Screensaver(xbmcgui.WindowXMLDialog):
         self.infoswitch = int(Addon.getSetting('infoswitch'))				
         self.background = Addon.getSetting('backgroundchoice')
         self.randomimages = Addon.getSetting('randomimages')
+        self.skinhelper = int(Addon.getSetting('skinhelper'))
         self.randomcolor = Addon.getSetting('randomcolor')
         self.randomtr = Addon.getSetting('randomtr')
         self.trh = int(Addon.getSetting('hourtr'))
@@ -108,17 +112,17 @@ class Screensaver(xbmcgui.WindowXMLDialog):
         self.monitor = xbmc.Monitor()
 			
 		#setting up background and slideshow
+        self.timer = ['15','30','60','120','180','240','300','360','420','480','540','600']
+        self.slideshowcounter = 0		
         if self.background == '0':
             self.image = ['white.png','red.png','green.png','blue.png','yellow.png','black.png']		
             self.image_control.setImage(self.image[int(Addon.getSetting('image'))])
         elif self.background == '1':
             self.image_control.setImage(Addon.getSetting('file'))
-        else:
+        elif self.background == '2':
             self.folder = Addon.getSetting('folder')
-            self.timer = ['15','30','60','120','180','240','300','360','420','480','540','600']		
             self.imagetimer = int(self.timer[int(Addon.getSetting('imagetimer'))])
             self.number = len(os.walk(self.folder).next()[2])-1
-            self.slideshowcounter = 0
             self.files = os.walk(self.folder).next()[2]
             self.files.sort()
             self.nextfile = 0
@@ -129,6 +133,18 @@ class Screensaver(xbmcgui.WindowXMLDialog):
             if self.nextfile > self.number:
                 self.nextfile = 0
             self.image_control.setImage(self.path)
+        else:
+            self.imagetimer = int(self.timer[int(Addon.getSetting('imagetimer'))])		
+            xbmc.executebuiltin('Skin.SetString(SkinHelper.RandomFanartDelay,%s)' %self.imagetimer)
+            if self.skinhelper == 0:
+                self.skinhelperimage = "$INFO[Window(Home).Property(SkinHelper.AllMoviesBackground)]"
+            elif self.skinhelper == 1:
+                self.skinhelperimage = "$INFO[Window(Home).Property(SkinHelper.AllTvShowsBackground)]"			
+            elif self.skinhelper == 2:
+                self.skinhelperimage = "$INFO[Window(Home).Property(SkinHelper.AllMusicBackground)]"
+            else:
+                self.skinhelperimage = "$INFO[Window(Home).Property(SkinHelper.GlobalFanartBackground)]"			
+            self.image_control.setImage(xbmc.getInfoLabel(self.skinhelperimage))
 			
 		#setting up color transparency
         self.transparency = ['FF','E5','CC','B2','99','7F','66','4C','33','19','00']
@@ -172,43 +188,46 @@ class Screensaver(xbmcgui.WindowXMLDialog):
                 if self.informationtype != 0:
                     self.information_control.setPosition(0, 85)				
                     if ((self.weathericonf != '0' and xbmc.getInfoLabel('Weather.Location')) or (self.albumartshow =='true' and xbmc.getInfoLabel('MusicPlayer.Artist'))):
-                        self.icon_control.setPosition(115, 110)					
-                        self.container.setHeight(240)
+                        self.icon_control.setPosition(115, 120)					
+                        self.container.setHeight(int(240 + 30 * (self.zoom / 100 - 1)))
                     else:
-                        self.container.setHeight(130)
+                        self.container.setHeight(int(150 + 50 * (self.zoom / 100 - 1)))
                         self.icon_control.setVisible(False)						
                 else:
                     if ((self.weathericonf != '0' and xbmc.getInfoLabel('Weather.Location')) or (self.albumartshow =='true' and xbmc.getInfoLabel('MusicPlayer.Artist'))):
-                        self.icon_control.setPosition(115, 70)					
-                        self.container.setHeight(200)
+                        self.icon_control.setPosition(115, 90)					
+                        self.container.setHeight(int(210 + 50 * (self.zoom / 100 - 1)))
                     else:
-                        self.container.setHeight(90)
+                        self.container.setHeight(int(90 + 110 * (self.zoom / 100 - 1)))
                         self.icon_control.setVisible(False)				
                     self.information_control.setVisible(False)					
             else:
-                self.container.setHeight(90)
+                self.container.setHeight(int(100 + 110 * (self.zoom / 100 - 1)))
                 self.icon_control.setVisible(False)					
                 self.information_control.setVisible(False)
         else:
             if self.informationshow == 'true':
                 if self.informationtype != 0:
                     if not((self.weathericonf != '0' and xbmc.getInfoLabel('Weather.Location')) or (self.albumartshow =='true' and xbmc.getInfoLabel('MusicPlayer.Artist'))):
-                        self.container.setHeight(170)
+                        self.container.setHeight(int(160 + 70 * (self.zoom / 100 - 1)))
                         self.icon_control.setVisible(False)						
                 else:
                     if ((self.weathericonf != '0' and xbmc.getInfoLabel('Weather.Location')) or (self.albumartshow =='true' and xbmc.getInfoLabel('MusicPlayer.Artist'))):
-                        self.icon_control.setPosition(115, 110)					
-                        self.container.setHeight(240)
+                        self.icon_control.setPosition(115, 120)					
+                        self.container.setHeight(int(240 + 30 * (self.zoom / 100 - 1)))
                     else:
-                        self.container.setHeight(130)
+                        self.container.setHeight(int(140 + 50 * (self.zoom / 100 - 1)))
                         self.icon_control.setVisible(False)				
                     self.information_control.setVisible(False)					
             else:
-                self.container.setHeight(130)
+                self.container.setHeight(int(150 + 50 * (self.zoom / 100 - 1)))
                 self.icon_control.setVisible(False)					
                 self.information_control.setVisible(False)			
 				
-        self.date = self.dateformat[int(self.datef)]
+        if int(self.datef) == 4:		
+            self.date = ('$INFO[System.Date(%s)]' %self.customdateformat)
+        else:				
+            self.date = self.dateformat[int(self.datef)]
 
 		#setting weather icon set
         self.weathericonset = ['Hide weather icon','set1','set2','set3','set4']
@@ -247,8 +266,8 @@ class Screensaver(xbmcgui.WindowXMLDialog):
 		#setting up the screen size
         self.height = self.container.getHeight()
         self.width = self.container.getWidth()
-        self.screeny = 720 - self.height * self.zoom / 100
-        self.screenx = 1280 - self.width * self.zoom / 100
+        self.screeny = int(720 + 120 * (self.zoom / 100 - 1) - self.height * self.zoom / 100)
+        self.screenx = int(1280 - self.width * self.zoom / 100)
 		
 		#combining transparency and color
         self.setCTR()
@@ -267,8 +286,8 @@ class Screensaver(xbmcgui.WindowXMLDialog):
                 #random movement
                 self.waitcounter += 1			
                 if self.waitcounter == (self.multiplier*self.stayinplace):
-                    new_x = random.randint(int(self.width * (self.zoom / 100 - 1)),self.screenx)
-                    new_y = random.randint(int(self.height * (self.zoom / 100 - 1)),self.screeny)
+                    new_x = random.randint(int(360 * (self.zoom / 100 - 1)),self.screenx)
+                    new_y = random.randint(int(280 * (self.zoom / 100 - 1) - 18 * (self.zoom / 100 - 1)),self.screeny)
                     self.container.setPosition(new_x,new_y)
                     self.waitcounter = 0
                     self.setCTR()
@@ -277,11 +296,11 @@ class Screensaver(xbmcgui.WindowXMLDialog):
                 self.currentposition = self.container.getPosition()
                 new_x = self.currentposition[0] + self.dx
                 new_y = self.currentposition[1] + self.dy
-                if new_x >= self.screenx or new_x <= int(self.width * (self.zoom / 100 - 1)):
+                if new_x >= self.screenx or new_x <= int(360 * (self.zoom / 100 - 1)):
                     self.dx = self.dx*-1
                     new_x = self.currentposition[0] + self.dx					
                     self.setCTR()					
-                if new_y >= self.screeny or new_y <= int(self.height * (self.zoom / 100 - 1)):
+                if new_y >= self.screeny or new_y <= int(280 * (self.zoom / 100 - 1) - 18 * (self.zoom / 100 - 1)):
                     self.dy = self.dy*-1
                     new_y = self.currentposition[1] + self.dy					
                     self.setCTR()					
@@ -301,14 +320,24 @@ class Screensaver(xbmcgui.WindowXMLDialog):
                     self.nextfile +=1
                     self.slideshowcounter = 0
                     if self.nextfile > self.number:
-                        self.nextfile = 0				
+                        self.nextfile = 0
+
+			#skin helper
+            if self.background == '3':
+                self.slideshowcounter +=1
+                if self.slideshowcounter == (self.multiplier*self.imagetimer):
+                    self.image_control.setImage(xbmc.getInfoLabel(self.skinhelperimage))
+                    self.slideshowcounter = 0
 				
 			#colon blink
-            if datetime.now().second%2==0:
+            if self.colonblink == 'true':			
+                if datetime.now().second%2==0:
+                    self.colon_control.setVisible(True)
+                else:
+                    self.colon_control.setVisible(False)
+            else:					
                 self.colon_control.setVisible(True)
-            else:
-                self.colon_control.setVisible(False)
-
+				
             self.monitor.waitForAbort(self.waittimer)
 			
         if self.abort_requested:
@@ -450,6 +479,7 @@ class Screensaver(xbmcgui.WindowXMLDialog):
         xbmc.log(u'Digital Clock Screensaver: %s' % msg)
 
 if __name__ == '__main__':
+    xbmc.log('Digital Clock Screensaver version %s started' % Addonversion)
     if(os.path.isfile(xbmc.translatePath('special://skin/1080i/script-screensaver-digitalclock-custom.xml'))):
         screensaver = Screensaver('script-screensaver-digitalclock-custom.xml', xbmc.translatePath('special://skin/1080i/'), 'default')
     elif(os.path.isfile(xbmc.translatePath('special://skin/720p/script-screensaver-digitalclock-custom.xml'))):
@@ -466,4 +496,5 @@ if __name__ == '__main__':
         screensaver = Screensaver('skin.default.xml', path, 'default')	
     screensaver.doModal()
     del screensaver
+    xbmc.log('Digital Clock Screensaver stopped')	
     sys.modules.clear()

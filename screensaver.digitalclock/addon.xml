@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addon id="screensaver.digitalclock"
         name="Digital Clock Screensaver"
-        version="3.8.0"
+        version="3.9.0"
         provider-name="Vojislav Vlasic">
         <requires>
         	<import addon="xbmc.python" version="2.20.0"/>
   	</requires>
-  	<extension point="xbmc.ui.screensaver" library="default.py" />
+  	<extension point="xbmc.ui.screensaver" library="default.py"/>
   	<extension point="xbmc.addon.metadata">
+    		<summary lang="en_GB">Digital clock screensaver</summary>
+    		<summary lang="sr_RS@latin">Čuvar ekrana digitalni sat</summary>
+    		<description lang="en_GB">Digital clock screensaver with date, now playing information, weather information, image slideshow and several options.</description>
+    		<description lang="sr_RS@latin">Čuvar ekrana digitalni sat sa datumom, podacima o trenutnoj reprodukciji, podacima o vremenskoj prognozi, reprodukcijom slajdova slika i nekoliko opcija.</description>
+    		<disclaimer lang="en_GB">For bugs, requests or general questions visit the Digital clock screensaver thread on the Kodi forum.</disclaimer>
+    		<disclaimer lang="sr_RS@latin">Za probleme, zahteve ili opšta pitanja posetite Digital clock screensaver temu na Kodi forumu.</disclaimer>
     		<platform>all</platform>
     		<license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
     		<forum>http://forum.kodi.tv/showthread.php?tid=237338</forum>
     		<source>https://github.com/vdb86/screensaver.digitalclock</source>
-    		<summary lang="en">Digital clock screensaver.</summary>
-    		<summary lang="sr">Čuvar ekrana digitalni sat.</summary>
-    		<description lang="en">Digital clock screensaver with date, now playing information, weather information, image slideshow and several options.</description>
-		<description lang="sr">Čuvar ekrana digitalni sat sa datumom, podacima o trenutnoj reprodukciji, podacima o vremenskoj prognozi, reprodukcijom slajdova slika i nekoliko opcija.</description>
-		<disclaimer lang="en">For bugs, requests or general questions visit the Digital clock screensaver thread on the Kodi forum.</disclaimer>
-		<disclaimer lang="sr">Za probleme, zahteve ili opšta pitanja posetite Digital clock screensaver temu na Kodi forumu.</disclaimer>
   	</extension>
 </addon>
