@@ -25,3 +25,7 @@ msgstr ""
 msgctxt "#32503"
 msgid "Season pack"
 msgstr ""
+
+msgctxt "#32504"
+msgid "Select subtitle:"
+msgstr ""
