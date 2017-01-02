@@ -1,3 +1,8 @@
+** 2017.1.2 **
+
+Fix channel icon scaling
+Fix fonts for Estuary
+
 ** 2016.12.14 **
 
 Change rules URL to not use the test server
