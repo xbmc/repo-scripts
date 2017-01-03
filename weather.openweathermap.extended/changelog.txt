@@ -1,3 +1,6 @@
+v4.2.0
+- disable weather maps
+
 v4.1.1
 - fix geoip support
 

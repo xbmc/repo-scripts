@@ -23,7 +23,7 @@ BASE_URL       = 'http://api.openweathermap.org/data/2.5/%s'
 LATLON         = ADDON.getSetting('LatLon')
 WEEKEND        = ADDON.getSetting('Weekend')
 STATION        = ADDON.getSetting('Station')
-MAP            = ADDON.getSetting('Map')
+MAPS           = ADDON.getSetting('Maps')
 ZOOM           = str(int(ADDON.getSetting('Zoom')) + 2)
 WEATHER_ICON   = xbmc.translatePath('%s.png').decode("utf-8")
 DATEFORMAT     = xbmc.getRegion('dateshort')
@@ -191,7 +191,7 @@ def forecast(loc,locid,locationdeg):
     log('weather location deg: %s' % locationdeg)
     if LIMIT:
         log('using cached data')
-    if MAP == 'true' and xbmc.getCondVisibility('System.HasAddon(script.openweathermap.maps)'):
+    if MAPS == 'true' and xbmc.getCondVisibility('System.HasAddon(script.openweathermap.maps)'):
         lat = float(eval(locationdeg)[0])
         lon = float(eval(locationdeg)[1])
         xbmc.executebuiltin('XBMC.RunAddon(script.openweathermap.maps,lat=%s&lon=%s&zoom=%s)' % (lat, lon, ZOOM))
