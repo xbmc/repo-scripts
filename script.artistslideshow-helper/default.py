@@ -115,8 +115,8 @@ class Main:
             else:
                 self.MIGRATEFOLDER = ''
                 lw.log( ['no migration folder set'] )
-            self.ENABLEFUZZYSEARCH = addon.getSetting( "enable_fuzzysearch" )
-            lw.log( ['fuzzy search is ' + self.ENABLEFUZZYSEARCH] )
+        self.ENABLEFUZZYSEARCH = addon.getSetting( "enable_fuzzysearch" )
+        lw.log( ['fuzzy search is ' + self.ENABLEFUZZYSEARCH] )
         if self.ENABLEFUZZYSEARCH == 'true':
             pl = addon.getSetting( "storage_target" )
             lw.log( ['the target is ' + pl] )
@@ -225,7 +225,7 @@ class Main:
 
 
     def _remove_trailing_dot( self, thename ):
-        if thename[-1] == '.' and len( thename ) > 1:
+        if thename[-1] == '.' and len( thename ) > 1 and self.ENDREPLACE <> '.':
             return self._remove_trailing_dot( thename[:-1] + self.ENDREPLACE )
         else:
             return thename
