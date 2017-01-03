@@ -1,3 +1,11 @@
+v.0.7.5
+- added option to run external script to generate log file
+- added 'Other' option to sensor display
+- added advanced setting for line read size
+
+v.0.7.4
+- internal release
+
 v.0.7.3
 - convert Celcius in Speedfan log to Fahrenheit when Fahrenheit is selected in settings
 
