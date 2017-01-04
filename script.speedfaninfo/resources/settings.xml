@@ -17,4 +17,10 @@
         <setting id="log_title3" type="text" enable="eq(-1,true)" label="30020" default="" />
         <setting id="log_location3" type="folder" enable="eq(-2,true)" label="30021" default="" />
     </category>
+    <category label="30030">
+        <setting id="read_size" type="number" label="30031" default="256" />
+        <setting id="use_external_script" type="bool" label="30034" default="false" />
+        <setting id="external_script" type="file" label="30032" visible="eq(-1,true)" enable="eq(-1,true)" default="" />
+        <setting id="external_timeout" type="number" label="30033" visible="eq(-2,true)" enable="eq(-2,true)" default="10" />
+    </category>
 </settings>
