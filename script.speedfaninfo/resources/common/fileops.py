@@ -1,5 +1,6 @@
-# v.0.3.4
+# v.0.3.5
 
+import subprocess, time
 try:
     import xbmcvfs
     isXBMC = True
@@ -93,6 +94,26 @@ def renameFile ( filename, newfilename ):
     else:
         log_lines.append( '%s does not exist' % filename )
         return False, log_lines
+
+
+def popenWithTimeout( command, timeout ):
+    log_lines = []
+    try:
+        p = subprocess.Popen( command, stdout=subprocess.PIPE, stderr=subprocess.PIPE )
+    except OSError:
+        log_lines.append( 'error finding external script, terminating' )
+        return False, log_lines
+    except Exception, e:
+        log_lines.append( 'unknown error while attempting to rename %s' % filename )
+        log_lines.append( e )
+        return False, log_lines
+    for t in xrange( timeout * 4 ):
+        time.sleep( 0.25 )
+        if p.poll() is not None:
+            return p.communicate(), ''
+    p.kill()
+    log_lines.append( 'script took too long to run, terminating' )
+    return False, log_lines
 
 
 def writeFile( data, filename ):
