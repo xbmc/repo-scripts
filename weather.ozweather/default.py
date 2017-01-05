@@ -185,7 +185,7 @@ def refresh_locations():
 # Set any weather values to the old style, e.g. hardcoded icon paths
 def oldKodiWeatherData(weatherData):
 
-    print("Modifying weather data for kodi version " + str(VERSION_NUMBER))
+    log("Modifying weather data for kodi version " + str(VERSION_NUMBER))
     
     for index in range(0,7):
 
@@ -317,7 +317,7 @@ if __name__ == "__main__":
         radar = ADDON.getSetting('Radar%s' % sys.argv[1])
         # If we don't have a radar code, get the national radar by default
         if radar == "":
-            log("Radar code empty for location " + location +" so using default radar code IDR00004 (national radar)")
+            log("Radar code empty for location " + locationUrlPath +" so using default radar code IDR00004 (national radar)")
             radar = "IDR00004"
         
         # Now scrape the weather data & radar images
