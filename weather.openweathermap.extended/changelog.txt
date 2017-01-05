@@ -1,3 +1,6 @@
+v3.2.7
+- gracefully handle api errors
+
 v3.2.6
 - fix bug when hourly wind is none
 

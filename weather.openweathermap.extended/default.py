@@ -305,6 +305,8 @@ def station_props(data,loc):
             set_property('Current.Pressure'     , str(data['last']['main']['pressure']) + ' mb')
 
 def current_props(data,loc):
+    if not 'weather' in data:
+        return
 # standard properties
     code = str(data['weather'][0].get('id',''))
     icon = data['weather'][0].get('icon','')
@@ -430,6 +432,8 @@ def current_props(data,loc):
         set_property('Today.Sunset'            , '')
 
 def daily_props(data):
+    if not 'list' in data:
+        return
 # standard properties
     for count, item in enumerate(data['list']):
         code = str(item['weather'][0].get('id',''))
@@ -669,6 +673,8 @@ def daily_props(data):
             return daynum
 
 def hourly_props(data, daynum):
+    if not 'list' in data:
+        return
 # extended properties
     for count, item in enumerate(data['list']):
         code = str(item['weather'][0].get('id',''))
