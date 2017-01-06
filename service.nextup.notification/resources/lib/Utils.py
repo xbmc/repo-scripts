@@ -15,14 +15,14 @@ def logMsg(title, msg, level=1):
     if logLevel >= level:
         if logLevel == 2:  # inspect.stack() is expensive
             try:
-                xbmc.log(title + " -> " + inspect.stack()[1][3] + " : " + str(msg))
+                xbmc.log(title + " -> " + inspect.stack()[1][3] + " : " + str(msg),level=xbmc.LOGNOTICE)
             except UnicodeEncodeError:
-                xbmc.log(title + " -> " + inspect.stack()[1][3] + " : " + str(msg.encode('utf-8')))
+                xbmc.log(title + " -> " + inspect.stack()[1][3] + " : " + str(msg.encode('utf-8')),level=xbmc.LOGNOTICE)
         else:
             try:
-                xbmc.log(title + " -> " + str(msg))
+                xbmc.log(title + " -> " + str(msg),level=xbmc.LOGNOTICE)
             except UnicodeEncodeError:
-                xbmc.log(title + " -> " + str(msg.encode('utf-8')))
+                xbmc.log(title + " -> " + str(msg.encode('utf-8')),level=xbmc.LOGNOTICE)
 
 def getJSON(method,params):
     json_response = xbmc.executeJSONRPC('{ "jsonrpc": "2.0", "method" : "%s", "params": %s, "id":1 }' %(method, try_encode(params)))
