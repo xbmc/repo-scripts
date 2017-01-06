@@ -1,3 +1,11 @@
+v.2.0.6
+- removed some logging causing a unicode problem
+- fix for crash when no valid JSON returned from theaudiodb.com
+
+v.2.0.5
+- reverted to old logic for checking for start of new artist (more reliable)
+- fix for creation of empty artist folders when using fanart.jpg option
+
 v.2.0.4
 - added option to use local fanart and folder image outside extrafanart folder
 - added MusicBrainz ID extraction from theaudiodb.com information

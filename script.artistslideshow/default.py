@@ -342,18 +342,6 @@ class Main:
 
 
     def _get_current_artists( self ):
-        if( xbmc.Player().isPlayingAudio() == True ):
-            try:
-                playing_file = xbmc.Player().getPlayingFile() + ' - ' + xbmc.Player().getMusicInfoTag().getArtist() + ' - ' + xbmc.Player().getMusicInfoTag().getTitle()
-            except RuntimeError:
-                playing_file = ''
-            except Exception, e:
-                lw.log( ['unexpected error getting playing file back from XBMC', e] )
-                playing_file = ''
-            if playing_file == self.LASTPLAYINGFILE:
-                # if the same file is playing, nothing has changed
-                return self.ALLARTISTS
-            self.LASTPLAYINGFILE = playing_file
         current_artists = []
         for artist, mbid in self._get_current_artists_info( ):
             current_artists.append( artist )
@@ -366,7 +354,20 @@ class Main:
         artists_info = []
         mbids = []
         if( xbmc.Player().isPlayingAudio() == True ):
-            response = xbmc.executeJSONRPC ( '{"jsonrpc":"2.0", "method":"Player.GetItem", "params":{"playerid":0, "properties":["artist", "musicbrainzartistid"]},"id":1}' )
+            try:
+                playing_file = xbmc.Player().getPlayingFile() + ' - ' + xbmc.Player().getMusicInfoTag().getArtist() + ' - ' + xbmc.Player().getMusicInfoTag().getTitle()
+            except RuntimeError:
+                return artists_info
+            except Exception, e:
+                lw.log( ['unexpected error getting playing file back from XBMC', e] )
+                return artists_info
+            if playing_file != self.LASTPLAYINGFILE:
+                # if the same file is playing, use cached JSON response instead of doing a new query
+                response = xbmc.executeJSONRPC ( '{"jsonrpc":"2.0", "method":"Player.GetItem", "params":{"playerid":0, "properties":["artist", "musicbrainzartistid"]},"id":1}' )
+                self.LASTPLAYINGFILE = playing_file
+                self.LASTJSONRESPONSE = response
+            else:
+                response = self.LASTJSONRESPONSE
             artist_names = _json.loads(response).get( 'result', {} ).get( 'item', {} ).get( 'artist', [] )
             mbids = _json.loads(response).get( 'result', {} ).get( 'item', {} ).get( 'musicbrainzartistid', [] )
             try:
@@ -489,11 +490,12 @@ class Main:
         artist_path = os.path.join( self.LOCALARTISTPATH, smartUTF8(self.NAME).decode('utf-8') )
         self.CacheDir = os.path.join( artist_path, self.FANARTFOLDER )
         lw.log( ['cachedir = %s' % self.CacheDir] )
+        artist_path_exists, loglines = checkPath( os.path.join( artist_path, '' ), False )
         copy_files = []
-        if self.INCLUDEFANARTJPG == 'true':
+        if self.INCLUDEFANARTJPG == 'true' and artist_path_exists:
            copy_files.append( 'fanart.jpg' )
            copy_files.append( 'fanart.png' )
-        if self.INCLUDEFOLDERJPG == 'true':
+        if self.INCLUDEFOLDERJPG == 'true' and artist_path_exists:
             copy_files.append( 'folder.jpg' )
             copy_files.append( 'folder.png' )
         for one_file in copy_files:
@@ -541,7 +543,7 @@ class Main:
             try:
                 json_data = _json.loads( rawdata )
             except ValueError:
-                self.loglines.append( 'no valid JSON data returned from ' + mbid_file )
+                lw.log( 'no valid JSON data returned from ' + mbid_file )
                 return ''
             lw.log( ['musicbrainz ID found in %s file' % mbid_file] )
             try:
@@ -1036,11 +1038,9 @@ class Main:
     def _use_correct_artwork( self ):
         self.ALLARTISTS = self._get_current_artists()
         self.ARTISTNUM = 0
-        # if multiartist off then set totalartists to 1
         self.TOTALARTISTS = len( self.ALLARTISTS )
         self.MergedImagesFound = False
         for artist, mbid in self._get_current_artists_info( ):
-            lw.log( ['current artist is %s with a mbid of %s' % (artist, mbid)] )
             self.ARTISTNUM += 1
             self.NAME = artist
             self.MBID = mbid
