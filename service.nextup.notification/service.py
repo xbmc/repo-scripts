@@ -95,6 +95,12 @@ class Service():
                             if (totalTime - playTime <= 10) and totalTime != 0:
                                 self.logMsg("Calling post playback", 2)
                                 player.postPlayPlayback()
+                            if (int(playTime) >= int(randomunwatchedtime)) and (int(playTime) < int(int(randomunwatchedtime)+100))  and displayrandomunwatched and (
+                                            lastUnwatchedFile is None or lastUnwatchedFile != currentFile):
+                                self.logMsg("Calling display unwatched", 2)
+                                lastUnwatchedFile = currentFile
+                                player.displayRandomUnwatched()
+
 
                 except Exception as e:
                     self.logMsg("Exception in Playback Monitor Service: %s" % e)
