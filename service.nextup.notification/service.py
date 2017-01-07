@@ -76,30 +76,25 @@ class Service():
                     displayrandomunwatched = addonSettings.getSetting("displayRandomUnwatched") == "true"
                     showpostplay = addonSettings.getSetting("showPostPlay") == "true"
 
+                    if xbmcgui.Window(10000).getProperty("PseudoTVRunning") != "True" and not nextUpDisabled:
 
-                    if xbmcgui.Window(10000).getProperty("PseudoTVRunning") != "True" and not nextUpDisabled and not showpostplay:
-                            if (totalTime - playTime <= int(notificationtime) and (
-                                    lastFile is None or lastFile != currentFile)) and totalTime != 0:
-                                lastFile = currentFile
-                                self.logMsg("Calling autoplayback totaltime - playtime is %s" % (totalTime - playTime), 2)
-                                player.autoPlayPlayback()
-                                self.logMsg("Netflix style autoplay succeeded.", 2)
-                            self.logMsg("playtime is %s" % (int(playTime)), 2)
+                        if not showpostplay and (totalTime - playTime <= int(notificationtime) and (
+                                        lastFile is None or lastFile != currentFile)) and totalTime != 0:
+                            lastFile = currentFile
+                            self.logMsg("Calling autoplayback totaltime - playtime is %s" % (totalTime - playTime), 2)
+                            player.autoPlayPlayback()
+                            self.logMsg("Netflix style autoplay succeeded.", 2)
+
+                        if showpostplay and (totalTime - playTime <= 10) and totalTime != 0:
+                            self.logMsg("Calling post playback", 2)
+                            player.postPlayPlayback()
+
+                        if displayrandomunwatched and (int(playTime) >= int(randomunwatchedtime)) and (int(playTime) < int(int(randomunwatchedtime)+100)) and (
+                                        lastUnwatchedFile is None or lastUnwatchedFile != currentFile):
                             self.logMsg("randomunwatchedtime is %s" % (int(randomunwatchedtime)), 2)
-                            if (int(playTime) >= int(randomunwatchedtime)) and (int(playTime) < int(int(randomunwatchedtime)+100))  and displayrandomunwatched and (
-                                            lastUnwatchedFile is None or lastUnwatchedFile != currentFile):
-                                self.logMsg("Calling display unwatched", 2)
-                                lastUnwatchedFile = currentFile
-                                player.displayRandomUnwatched()
-                    elif xbmcgui.Window(10000).getProperty("PseudoTVRunning") != "True" and not nextUpDisabled and showpostplay:
-                            if (totalTime - playTime <= 10) and totalTime != 0:
-                                self.logMsg("Calling post playback", 2)
-                                player.postPlayPlayback()
-                            if (int(playTime) >= int(randomunwatchedtime)) and (int(playTime) < int(int(randomunwatchedtime)+100))  and displayrandomunwatched and (
-                                            lastUnwatchedFile is None or lastUnwatchedFile != currentFile):
-                                self.logMsg("Calling display unwatched", 2)
-                                lastUnwatchedFile = currentFile
-                                player.displayRandomUnwatched()
+                            self.logMsg("Calling display unwatched", 2)
+                            lastUnwatchedFile = currentFile
+                            player.displayRandomUnwatched()
 
 
                 except Exception as e:

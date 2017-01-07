@@ -332,10 +332,10 @@ class Player(xbmc.Player):
                     # I am a STRM ###
                     tvshowid, episodeid = self.iStream_fix(tvshowid, currentshowtitle, currentepisodenumber, currentseasonid)
                     currentepisodeid = episodeid
-                else:
-                    # wtf am i doing here error.. ####
-                    self.logMsg("Error: cannot determine if episode", 1)
-                    return
+            else:
+                # wtf am i doing here error.. ####
+                self.logMsg("Error: cannot determine if episode", 1)
+                return
 
             self.currentepisodeid = currentepisodeid
             self.logMsg("Getting details of next up episode for tvshow id: " + str(tvshowid), 1)
@@ -548,10 +548,10 @@ class Player(xbmc.Player):
                     # I am a STRM ###
                     tvshowid, episodeid = self.iStream_fix(tvshowid, currentshowtitle, currentepisodenumber, currentseasonid)
                     currentepisodeid = episodeid
-                else:
-                    # wtf am i doing here error.. ####
-                    self.logMsg("Error: cannot determine if episode", 1)
-                    return
+            else:
+                # wtf am i doing here error.. ####
+                self.logMsg("Error: cannot determine if episode", 1)
+                return
 
             self.currentepisodeid = currentepisodeid
             self.logMsg("Getting details of next up episode for tvshow id: " + str(tvshowid), 1)
