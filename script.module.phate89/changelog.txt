@@ -1,4 +1,5 @@
+1.0.1
+- Added simplejson requirement
+
 1.0.0
 - Initial release
-
-
