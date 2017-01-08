@@ -1,0 +1,51 @@
+1.1.6 - 18 Dec 2016
+Cautare manuala dupa sezon si episod, exemplu: house s01e03 va returna corect sezonul 01 si episodul 03
+
+1.1.5 - 12 Dec 2016
+Fix selectie subtitrare cand se descarca pachet complet sezon
+
+1.1.4 - 7 Dec 2016
+Fix cautare manuala
+Small fixes
+
+1.1.2 - 6 Dec 2016
+username si parola nu mai sunt obligatorii, multumiri echipei IT RegieLive pentru colaborare
+
+1.1.1 - 1 Dec 2016
+preluare primele doua rezultate daca e nevoie, imbunatatire cautare dupa nume fisier
+
+1.1.0 - 28 Nov 2016
+Servicii regielive stanga sus, fara background
+
+1.0.9 - 23 Nov 2016
+Username si parola obligatorii, afisare servicii regielive din continut arhiva, la incarcarea subtitrarii
+
+1.0.8
+Message received, fix spatiu
+
+1.0.7
+Curatenie
+
+1.0.6
+imbunatatire cautare serial dupa nume fisier
+
+1.0.5
+fix cautare manuala
+
+1.0.4
+eliminat random useragent: probleme cu set-up boxes si android
+
+1.0.3
+Adaugat random user-agent
+
+1.0.2
+
+Imbunatatit cautare dupa numele fisierului daca nu este in baza de date
+
+1.0.1
+
+Adaugat Username si Parola pentru cont regielive. Fara ele nu veti mai putea descarca mai mult de 10 subtitrari pe zi, decat daca va veti schimba ip-ul
+
+1.0.0
+
+Primul release
