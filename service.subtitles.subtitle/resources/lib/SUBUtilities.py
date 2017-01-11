@@ -18,10 +18,12 @@ try:
     import xbmc
     import xbmcvfs
     import xbmcaddon
+    import xbmcgui
 except ImportError:
     from stubs import xbmc
     from stubs import xbmcvfs
     from stubs import xbmcaddon
+    from stubs import xbmcgui
 
 __addon__ = xbmcaddon.Addon()
 __version__ = __addon__.getAddonInfo('version')  # Module version
@@ -39,7 +41,7 @@ regexHelper = re.compile('\W+', re.UNICODE)
 # ===============================================================================
 def normalizeString(str):
     return unicodedata.normalize(
-            'NFKD', unicode(unicode(str, 'utf-8'))
+        'NFKD', unicode(unicode(str, 'utf-8'))
     ).encode('utf-8', 'ignore')
 
 
@@ -101,6 +103,7 @@ def parse_rls_title(item):
 def log(msg):
     xbmc.log((u"### [%s] - %s" % (__scriptname__, msg,)).encode('utf-8'), level=xbmc.LOGDEBUG)
 
+
 def notify(msg_id):
     xbmc.executebuiltin((u'Notification(%s,%s)' % (__scriptname__, __language__(msg_id))).encode('utf-8'))
 
@@ -160,8 +163,8 @@ class SubtitleHelper:
                 return results  # return empty set
 
             urls = re.findall(
-                    u'<a href="(?P<url>/tt\d+/[^/]+/)[^"]*" itemprop="url">([^<]+)</a></div><div style="direction:ltr;" class="smtext">([^<]+)</div>',
-                    search_result)
+                u'<a href="(?P<url>/tt\d+/[^/]+/)[^"]*" itemprop="url">([^<]+)</a></div><div style="direction:ltr;" class="smtext">([^<]+)</div>',
+                search_result)
 
             results = self._filter_urls(urls, search_string, item)
             if results:
@@ -185,8 +188,8 @@ class SubtitleHelper:
             return results  # return empty set
 
         urls = re.findall(
-                u'<a href="/tt1(?P<id>\d+)/[^"]+" itemprop="url">(?P<heb_name>[^<]+)</a></div><div style="direction:ltr;" class="smtext">(?P<eng_name>[^<]+)</div><span class="smtext">(?P<year>\d{4})</span>',
-                search_result)
+            u'<a href="/tt1(?P<id>\d+)/[^"]+" itemprop="url">(?P<heb_name>[^<]+)</a></div><div style="direction:ltr;" class="smtext">(?P<eng_name>[^<]+)</div><span class="smtext">(?P<year>\d{4})</span>',
+            search_result)
 
         results = self._filter_urls(urls, search_string, item)
         return results
@@ -335,22 +338,22 @@ class SubtitleHelper:
                     subtitle_rate = self._calc_rating(title, item["file_original_path"])
                     total_downloads += int(downloads.replace(",", ""))
                     ret.append(
-                            {'lang_index': item["3let_language"].index(
-                                    xbmc.convertLanguage(heb_to_eng(language), xbmc.ISO_639_2)),
-                                'filename': title,
-                                'link': subtitle_id,
-                                'language_name': xbmc.convertLanguage(heb_to_eng(language),
-                                                                      xbmc.ENGLISH_NAME),
-                                'language_flag': xbmc.convertLanguage(heb_to_eng(language),
-                                                                      xbmc.ISO_639_1),
-                                'id': subtitle_id,
-                                'rating': int(downloads.replace(",", "")),
-                                'sync': subtitle_rate >= 3.8,
-                                'hearing_imp': 0,
-                                'is_preferred':
-                                    xbmc.convertLanguage(heb_to_eng(language), xbmc.ISO_639_2) == item[
-                                        'preferredlanguage']
-                            })
+                        {'lang_index': item["3let_language"].index(
+                            xbmc.convertLanguage(heb_to_eng(language), xbmc.ISO_639_2)),
+                            'filename': title,
+                            'link': subtitle_id,
+                            'language_name': xbmc.convertLanguage(heb_to_eng(language),
+                                                                  xbmc.ENGLISH_NAME),
+                            'language_flag': xbmc.convertLanguage(heb_to_eng(language),
+                                                                  xbmc.ISO_639_1),
+                            'id': subtitle_id,
+                            'rating': int(downloads.replace(",", "")),
+                            'sync': subtitle_rate >= 3.8,
+                            'hearing_imp': 0,
+                            'is_preferred':
+                                xbmc.convertLanguage(heb_to_eng(language), xbmc.ISO_639_2) == item[
+                                    'preferredlanguage']
+                        })
         return ret, total_downloads
 
     def _calc_rating(self, subsfile, file_original_path):
@@ -399,15 +402,25 @@ class SubtitleHelper:
 
         if content is not None and content.find('עליך להיות משתמש כדי לצפות בתוכן זה') == -1:  # check if logged in
             return content
-        elif self.login():
-            return self.urlHandler.request(url, query_string)
         else:
             return None
 
+    def ask_for_captcha(self):
+        content = self.urlHandler.request(
+            "https://www.google.com/recaptcha/api/noscript?k=6LfK1LsSAAAAACdKnQfBi_xCdaMxyd2I9qL5PRH8")
+        challenge = re.findall("value=\"([^\"]+)\"", content)[0]
+
+        cd = CaptchaDialog(captcha='https://www.google.com/recaptcha/api/image?c=%s' % (challenge))
+        solution = cd.get()
+
+        return {'recaptcha_challenge_field': challenge, 'recaptcha_response_field': solution}
+
     def login(self, notify_success=False, force_clean=False):
+        captcha = self.ask_for_captcha()
         email = __addon__.getSetting("SUBemail")
         password = __addon__.getSetting("SUBpassword")
         post_data = {'email': email, 'password': password, 'Login': 'התחבר'}
+        post_data.update(captcha)
         cookie = '' if force_clean else None
         content = self.urlHandler.request(self.BASE_URL + "/login.php", data=post_data, cookie=cookie)
         if re.search(r'<form action="/login\.php"', content):
@@ -420,7 +433,27 @@ class SubtitleHelper:
             return True
 
 
-class URLHandler():
+class CaptchaDialog(xbmcgui.WindowDialog):
+    def __init__(self, **kwargs):
+        self.cptloc = kwargs.get('captcha')
+        img_width = 300
+        img_pos_x = (self.getWidth() / 2) - (img_width - 80)
+        self.img = xbmcgui.ControlImage(img_pos_x, 30, img_width, 55, self.cptloc)
+        self.addControl(self.img)
+        self.kbd = xbmc.Keyboard()
+
+    def get(self):
+        self.show()
+        self.kbd.doModal()
+        if (self.kbd.isConfirmed()):
+            text = self.kbd.getText()
+            self.close()
+            return text
+        self.close()
+        return False
+
+
+class URLHandler:
     def __init__(self):
         self.cookie_filename = os.path.join(__profile__, "cookiejar.txt")
         self.cookie_jar = cookielib.LWPCookieJar(self.cookie_filename)
@@ -468,4 +501,7 @@ class URLHandler():
         return content
 
     def save_cookie(self):
+        # extend cookie expiration
+        for cookie in self.cookie_jar:
+            cookie.expires += 2 * 12 * 30 * 24 * 60 * 60
         self.cookie_jar.save()
