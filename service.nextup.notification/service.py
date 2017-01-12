@@ -25,8 +25,6 @@ class Service():
         self.logMsg("========  START %s  ========" % addonName, 0)
         self.logMsg("KODI Version: %s" % xbmc.getInfoLabel("System.BuildVersion"), 0)
         self.logMsg("%s Version: %s" % (addonName, self.clientInfo.getVersion()), 0)
-        self.logMsg("Platform: %s" % (self.clientInfo.getPlatform()), 0)
-
 
     def logMsg(self, msg, lvl=1):
         className = self.__class__.__name__
