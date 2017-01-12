@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<strings>
+    <string id="30001">Numero di secondi per mostrare la notifica prima della fine</string>
+    <string id="30002">Livello di Log:</string>
+    <string id="30003">Impostazioni</string>
+    <string id="30004">Avanzate</string>
+    <string id="30005">Azione predefinita quando niente è selezionato</string>
+    <string id="30006">Guarda Ora</string>
+    <string id="30007">Premi cancella per fermare la riproduzione automatica dell'episodio successivo...</string>
+    <string id="30008">Successivo</string>
+    <string id="30009">Numero di episodi prima della domanda 'Guarda ancora'</string>
+    <string id="30010">Continua a vedere?</string>
+    <string id="30012">Ci sei ancora? Premi 'Guarda ancora' per vedere i prossimi episodi</string>
+    <string id="30013">Includi episodi già visti</string>
+    <string id="30014">Disabilita NextUp (richiede riavvio)</string>
+    <string id="30015">Numero di secondi prima di visualizzare la notifica di non visti casuali</string>
+    <string id="30016">Visualizza la notifica di non visti casuali</string>
+    <string id="30017">Riproduci automaticamente video brevi</string>
+    <string id="30018">Lunghezza massima per la riproduzione automatica di video brevi (in minuti)</string>
+    <string id="30019">Mostra la notifica sullo schermo durante la riproduzione automatica di video brevi</string>
+</strings>

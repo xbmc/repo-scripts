@@ -1,5 +1,10 @@
 import xbmc
 import xbmcaddon
+import xbmcgui
+import xbmcvfs
+
+import os
+from uuid import uuid4 as uuid4
 
 import Utils as utils
 
@@ -23,22 +28,12 @@ class ClientInformation():
         # Useful for logging
         return self.addon.getAddonInfo('name').upper()
 
+    def getPlayMode(self):
+        if self.addon.getSetting("showPostPlay") == "true":
+            return "PostPlay"
+        else:
+            return "PrePlay"
+
     def getVersion(self):
         return self.addon.getAddonInfo('version')
 
-    def getPlatform(self):
-
-        if xbmc.getCondVisibility('system.platform.osx'):
-            return "OSX"
-        elif xbmc.getCondVisibility('system.platform.atv2'):
-            return "ATV2"
-        elif xbmc.getCondVisibility('system.platform.ios'):
-            return "iOS"
-        elif xbmc.getCondVisibility('system.platform.windows'):
-            return "Windows"
-        elif xbmc.getCondVisibility('system.platform.linux'):
-            return "Linux/RPi"
-        elif xbmc.getCondVisibility('system.platform.android'):
-            return "Linux/Android"
-
-        return "Unknown"

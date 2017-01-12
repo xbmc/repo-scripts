@@ -18,4 +18,10 @@
     <string id="30017">Automatically play short videos</string>
     <string id="30018">Maximum length for automatic short video play (in minutes)</string>
     <string id="30019">Show on-screen notification during short video autoplay</string>
+    <string id="30020">Previous</string>
+    <string id="30021">Playing Next</string>
+    <string id="30022">Show postplay screen</string>
+    <string id="30023">Show plot on postplay screen</string>
+    <string id="30024">Still There?</string>
+    <string id="30025">Enable analytic metric logging</string>
 </strings>

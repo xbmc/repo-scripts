@@ -1,0 +1,796 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<window>
+	<coordinates>
+		<system>1</system>
+		<posx>0</posx>
+		<posy>0</posy>
+	</coordinates>
+	<controls>
+		<control type="group">
+			<control type="group">
+				<control type="image">
+					<aspectratio>scale</aspectratio>
+					<depth>-0.80</depth>
+					<posx>0</posx>
+					<posy>0</posy>
+					<width>1920</width>
+					<height>1080</height>
+					<texture colordiffuse="FF006699">primary.jpg</texture>
+				</control>
+				<control type="image">
+					<depth>-0.80</depth>
+					<posx>0</posx>
+					<posy>0</posy>
+					<width>1920</width>
+					<height>1080</height>
+					<aspectratio>scale</aspectratio>
+					<texture colordiffuse="80A6111F">secondary1.png</texture>
+				</control>
+				<control type="image">
+					<posx>0</posx>
+					<posy>0</posy>
+					<width>1920</width>
+					<height>1080</height>
+					<fadetime>400</fadetime>
+					<animation effect="fade" time="400">VisibleChange</animation>
+					<texture background="true" colordiffuse="37FFFFFF">$INFO[Window.Property(background)]</texture>
+				</control>
+			</control>
+
+			<control type="group" id="50">
+				<animation effect="fade" start="0" end="100" time="2000" condition="true">Conditional</animation>
+
+				<posx>0</posx>
+				<posy>135</posy>
+				<defaultcontrol>102</defaultcontrol>
+
+				<control type="image">
+					<posx>60</posx>
+					<posy>0</posy>
+					<width>1800</width>
+					<height>2</height>
+					<texture>white.png</texture>
+					<colordiffuse>FF387ef5</colordiffuse>
+				</control>
+
+				<control type="label">
+					<scroll>false</scroll>
+					<posx>60</posx>
+					<posy>37</posy>
+					<width>462</width>
+					<height>40</height>
+					<font>font12</font>
+					<align>left</align>
+					<aligny>center</aligny>
+					<textcolor>A0FFFFFF</textcolor>
+					<shadowcolor>22000000</shadowcolor>
+					<label>[UPPERCASE]$ADDON[service.nextup.notification 30020][/UPPERCASE]</label>
+				</control>
+
+				<control type="group" id="100">
+					<defaultcontrol>102</defaultcontrol>
+					<control type="group">
+						<posx>0</posx>
+						<posy>0</posy>
+						<width>1920</width>
+						<height>580</height>
+						<control type="group">
+							<posx>60</posx>
+							<posy>111</posy>
+							<control type="group">
+								<animation effect="zoom" start="100" end="110" time="100" center="231,129.5" reversible="true" condition="Control.HasFocus(101)">Conditional</animation>
+								<posx>0</posx>
+								<posy>0</posy>
+								<control type="image">
+									<visible>Control.HasFocus(101)</visible>
+									<posx>-45</posx>
+									<posy>-45</posy>
+									<width>552</width>
+									<height>349</height>
+									<texture border="42">drop-shadow.png</texture>
+								</control>
+								<control type="group">
+									<posx>0</posx>
+									<posy>0</posy>
+									<control type="image">
+										<posx>0</posx>
+										<posy>0</posy>
+										<width>462</width>
+										<height>259</height>
+										<texture background="true">$INFO[Window.Property(previous.thumb)]</texture>
+										<aspectratio>stretch</aspectratio>
+                                        <visible>!IsEmpty(Window.Property(showplot))</visible>
+                                    </control>
+                                    <control type="image">
+                                        <posx>0</posx>
+                                        <posy>0</posy>
+                                        <width>462</width>
+                                        <height>259</height>
+                                        <texture background="true">$INFO[Window.Property(previous.landscape)]</texture>
+                                        <aspectratio>stretch</aspectratio>
+                                        <visible>IsEmpty(Window.Property(showplot)) + !IsEmpty(Window.Property(previous.landscape))</visible>
+                                    </control>
+                                    <control type="image">
+                                        <posx>0</posx>
+                                        <posy>0</posy>
+                                        <width>462</width>
+                                        <height>259</height>
+                                        <texture background="true">$INFO[Window.Property(background)]</texture>
+                                        <aspectratio>stretch</aspectratio>
+                                        <visible>IsEmpty(Window.Property(showplot)) + IsEmpty(Window.Property(previous.landscape))</visible>
+                                    </control>
+									<control type="group">
+										<posx>193</posx>
+										<posy>91.5</posy>
+										<control type="image">
+											<posx>0</posx>
+											<posy>0</posy>
+											<width>76</width>
+											<height>76</height>
+											<texture colordiffuse="99000000">indicators/circle-152.png</texture>
+										</control>
+										<control type="image">
+											<posx>15</posx>
+											<posy>15</posy>
+											<width>46</width>
+											<height>46</height>
+											<texture>indicators/replay.png</texture>
+											<visible>!Control.HasFocus(101)</visible>
+										</control>
+										<control type="image">
+											<posx>15</posx>
+											<posy>15</posy>
+											<width>46</width>
+											<height>46</height>
+											<texture colordiffuse="FFEC407A">indicators/replay.png</texture>
+											<visible>Control.HasFocus(101)</visible>
+										</control>
+									</control>
+									<control type="label">
+										<scroll>false</scroll>
+										<posx>0</posx>
+										<posy>269</posy>
+										<width>462</width>
+										<height>35</height>
+										<font>font10</font>
+										<align>center</align>
+										<textcolor>FFFFFFFF</textcolor>
+										<label>$INFO[Window.Property(previous.title)]</label>
+									</control>
+									<control type="label">
+										<scroll>false</scroll>
+										<posx>0</posx>
+										<posy>301</posy>
+										<width>462</width>
+										<height>35</height>
+										<font>font10</font>
+										<align>center</align>
+										<textcolor>FFFFFFFF</textcolor>
+										<label>$INFO[Window.Property(previous.season)]$INFO[Window.Property(previous.episode),[COLOR =FFEC407A]x[/COLOR],]</label>
+									</control>
+								</control>
+								<control type="button" id="101">
+									<posx>-5</posx>
+									<posy>-5</posy>
+									<width>472</width>
+									<height>269</height>
+									<onup>200</onup>
+									<ondown>400</ondown>
+									<onright>102</onright>
+									<texturefocus colordiffuse="FF387ef5" border="10">thumbnail_focused.png</texturefocus>
+									<texturenofocus>-</texturenofocus>
+								</control>
+							</control>
+						</control>
+
+						<control type="group">
+							<visible>!IsEmpty(Window.Property(has.next))</visible>
+							<control type="label">
+								<scroll>false</scroll>
+								<posx>572</posx>
+								<posy>37</posy>
+								<width>462</width>
+								<height>40</height>
+								<font>font12</font>
+								<align>left</align>
+								<aligny>center</aligny>
+								<textcolor>FFFFFFFF</textcolor>
+								<shadowcolor>22000000</shadowcolor>
+								<label>[UPPERCASE]$ADDON[service.nextup.notification 30021][/UPPERCASE]</label>
+								<visible>IsEmpty(Window.Property(stillwatching))</visible>
+							</control>
+							<control type="label">
+								<scroll>false</scroll>
+								<posx>572</posx>
+								<posy>37</posy>
+								<width>462</width>
+								<height>40</height>
+								<font>font12</font>
+								<align>left</align>
+								<aligny>center</aligny>
+								<textcolor>FFFFFFFF</textcolor>
+								<shadowcolor>22000000</shadowcolor>
+								<label>[UPPERCASE]$ADDON[service.nextup.notification 30024][/UPPERCASE]</label>
+								<visible>!IsEmpty(Window.Property(stillwatching))</visible>
+							</control>
+							<control type="group">
+								<posx>582</posx>
+								<posy>111</posy>
+								<control type="group">
+									<animation effect="zoom" start="100" end="110" time="100" center="268.5,151.5" reversible="true" condition="Control.HasFocus(102)">Conditional</animation>
+									<posx>0</posx>
+									<posy>0</posy>
+									<control type="image">
+										<visible>Control.HasFocus(102)</visible>
+										<posx>-45</posx>
+										<posy>-45</posy>
+										<width>627</width>
+										<height>393</height>
+										<texture border="42">drop-shadow.png</texture>
+									</control>
+									<control type="group">
+										<posx>0</posx>
+										<posy>0</posy>
+										<control type="image">
+											<posx>0</posx>
+											<posy>0</posy>
+											<width>537</width>
+											<height>303</height>
+											<texture background="true">$INFO[Window.Property(next.thumb)]</texture>
+											<aspectratio>stretch</aspectratio>
+                                            <visible>!IsEmpty(Window.Property(showplot))</visible>
+										</control>
+                                        <control type="image">
+                                            <posx>0</posx>
+                                            <posy>0</posy>
+                                            <width>537</width>
+                                            <height>303</height>
+                                            <texture background="true">$INFO[Window.Property(next.landscape)]</texture>
+                                            <aspectratio>stretch</aspectratio>
+                                            <visible>IsEmpty(Window.Property(showplot)) + !IsEmpty(Window.Property(next.landscape))</visible>
+                                        </control>
+                                        <control type="image">
+                                            <posx>0</posx>
+                                            <posy>0</posy>
+                                            <width>537</width>
+                                            <height>303</height>
+                                            <texture background="true">$INFO[Window.Property(background)]</texture>
+                                            <aspectratio>stretch</aspectratio>
+                                            <visible>IsEmpty(Window.Property(showplot)) + IsEmpty(Window.Property(next.landscape))</visible>
+                                        </control>
+										<control type="group">
+											<visible>!IsEmpty(Window.Property(countdown)) + IntegerGreaterThan(Window.Property(countdown),-1)</visible>
+											<posx>192.5</posx>
+											<posy>75.5</posy>
+											<control type="image">
+												<posx>0</posx>
+												<posy>0</posy>
+												<width>152</width>
+												<height>152</height>
+												<texture colordiffuse="99000000">indicators/circle-152.png</texture>
+											</control>
+											<control type="image">
+												<posx>8</posx>
+												<posy>8</posy>
+												<width>136</width>
+												<height>136</height>
+												<texture colordiffuse="FFEC407A">postplayicons/$INFO[Window.Property(countdown)].png</texture>
+											</control>
+										</control>
+										<control type="label">
+											<scroll>false</scroll>
+											<posx>0</posx>
+											<posy>313</posy>
+											<width>537</width>
+											<height>30</height>
+											<font>font10</font>
+											<align>center</align>
+											<textcolor>FFFFFFFF</textcolor>
+											<label>$INFO[Window.Property(next.title)]</label>
+										</control>
+										<control type="label">
+											<scroll>false</scroll>
+											<posx>0</posx>
+											<posy>345</posy>
+											<width>537</width>
+											<height>30</height>
+											<font>font10</font>
+											<align>center</align>
+											<textcolor>FFFFFFFF</textcolor>
+											<label>$INFO[Window.Property(next.season)]$INFO[Window.Property(next.episode),[COLOR =FFEC407A]x[/COLOR],]</label>
+										</control>
+									</control>
+									<control type="button" id="102">
+										<posx>-5</posx>
+										<posy>-5</posy>
+										<width>547</width>
+										<height>313</height>
+										<onup>200</onup>
+										<ondown>400</ondown>
+										<onleft>101</onleft>
+										<texturefocus colordiffuse="FF387ef5" border="10">thumbnail_focused.png</texturefocus>
+										<texturenofocus>-</texturenofocus>
+									</control>
+								</control>
+							</control>
+						</control>
+					</control>
+
+					<control type="group">
+						<visible>!IsEmpty(Window.Property(has.next)) + !Control.HasFocus(101)</visible>
+                        <control type="label">
+                            <scroll>false</scroll>
+                            <posx>1177</posx>
+                            <posy>100</posy>
+                            <width>683</width>
+                            <height>43</height>
+                            <font>font14</font>
+                            <align>left</align>
+                            <aligny>center</aligny>
+                            <textcolor>FFFFFFFF</textcolor>
+                            <label>$INFO[Window.Property(next.season)]$INFO[Window.Property(next.episode),[COLOR =FFEC407A]x[/COLOR],]</label>
+                        </control>
+						<control type="label">
+							<scroll>false</scroll>
+							<posx>1177</posx>
+							<posy>140</posy>
+							<width>683</width>
+							<height>43</height>
+							<font>font13</font>
+							<align>left</align>
+							<aligny>center</aligny>
+							<textcolor>FFFFFFFF</textcolor>
+							<label>[B]$INFO[Window.Property(next.title)][/B]</label>
+						</control>
+						<control type="label">
+							<scroll>false</scroll>
+							<posx>1177</posx>
+							<posy>180</posy>
+							<width>683</width>
+							<height>32</height>
+							<font>font12</font>
+							<align>left</align>
+							<aligny>center</aligny>
+							<textcolor>A0FFFFFF</textcolor>
+							<label>$INFO[Window.Property(next.duration),, min]</label>
+						</control>
+						<control type="textbox">
+							<scroll>false</scroll>
+							<posx>1177</posx>
+							<posy>250</posy>
+							<width>683</width>
+							<height>250</height>
+							<font>font12</font>
+							<align>left</align>
+							<textcolor>FFFFFFFF</textcolor>
+							<label>$INFO[Window.Property(next.plot)]</label>
+                            <visible>!IsEmpty(Window.Property(showplot))</visible>
+						</control>
+					</control>
+
+					<control type="group">
+						<visible>IsEmpty(Window.Property(has.next)) | Control.HasFocus(101)</visible>
+                        <control type="label">
+                            <scroll>false</scroll>
+                            <posx>1177</posx>
+                            <posy>100</posy>
+                            <width>683</width>
+                            <height>43</height>
+                            <font>font14</font>
+                            <align>left</align>
+                            <aligny>center</aligny>
+                            <textcolor>FFFFFFFF</textcolor>
+                            <label>$INFO[Window.Property(previous.season)]$INFO[Window.Property(previous.episode),[COLOR =FFEC407A]x[/COLOR],]</label>
+                        </control>
+						<control type="label">
+							<scroll>false</scroll>
+							<posx>1177</posx>
+							<posy>140</posy>
+							<width>683</width>
+							<height>43</height>
+							<font>font13</font>
+							<align>left</align>
+							<aligny>center</aligny>
+							<textcolor>FFFFFFFF</textcolor>
+							<label>[B]$INFO[Window.Property(previous.title)][/B]</label>
+						</control>
+						<control type="label">
+							<scroll>false</scroll>
+							<posx>1177</posx>
+							<posy>180</posy>
+							<width>683</width>
+							<height>32</height>
+							<font>font12</font>
+							<align>left</align>
+							<aligny>center</aligny>
+							<textcolor>A0FFFFFF</textcolor>
+							<label>$INFO[Window.Property(previous.duration),, min]</label>
+						</control>
+						<control type="textbox">
+							<scroll>false</scroll>
+							<posx>1177</posx>
+							<posy>250</posy>
+							<width>683</width>
+							<height>250</height>
+							<font>font12</font>
+							<align>left</align>
+							<textcolor>FFFFFFFF</textcolor>
+							<label>$INFO[Window.Property(previous.plot)]</label>
+                            <visible>!IsEmpty(Window.Property(showplot))</visible>
+						</control>
+					</control>
+				</control>
+
+				<control type="grouplist" id="60">
+					<posx>0</posx>
+					<posy>500</posy>
+					<width>1920</width>
+					<height>1610</height>
+
+					<onup>300</onup>
+					<itemgap>0</itemgap>
+
+					<control type="group" id="500">
+						<visible>IntegerGreaterThan(Container(400).NumItems,0)</visible>
+						<height>580</height>
+						<width>1920</width>
+						<control type="label">
+							<posx>60</posx>
+							<posy>-24</posy>
+							<width>800</width>
+							<height>80</height>
+							<font>font12</font>
+							<align>left</align>
+							<aligny>center</aligny>
+							<textcolor>DDFFFFFF</textcolor>
+							<shadowcolor>22000000</shadowcolor>
+							<label>[UPPERCASE]$ADDON[service.nextup.notification 30008][/UPPERCASE]</label>
+						</control>
+						<control type="list" id="400">
+							<posx>0</posx>
+							<posy>25</posy>
+							<width>1920</width>
+							<height>486</height>
+							<onup>100</onup>
+							<scrolltime>200</scrolltime>
+							<orientation>horizontal</orientation>
+							<preloaditems>4</preloaditems>
+							<itemlayout width="810" height="486" condition="!IsEmpty(Window.Property(showplot))">
+								<control type="group">
+									<left>68</left>
+									<top>10</top>
+									<control type="image">
+										<top>10</top>
+										<left>20</left>
+										<right>0</right>
+										<height>360</height>
+										<texture colordiffuse="FFbbbbbb" diffuse="diffuse/roundedposter.png" background="true">white.png</texture>
+									</control>
+									<control type="image">
+										<left>0</left>
+										<top>10</top>
+										<width>360</width>
+										<height>360</height>
+										<texture fallback="DefaultTVShows.png" diffuse="diffuse/roundedposterleftonly.png">$INFO[ListItem.Art(tvshow.poster)]</texture>
+										<aspectratio aligny="center" align="center">stretch</aspectratio>
+									</control>
+									<control type="group">
+										<left>390</left>
+										<control type="label">
+											<top>30</top>
+											<label>$INFO[ListItem.Season]$INFO[ListItem.Episode,[COLOR =FFEC407A]x[/COLOR],]</label>
+											<textcolor>BB000000</textcolor>
+											<font>font13</font>
+										</control>
+										<control type="textbox">
+											<top>75</top>
+											<label>$INFO[ListItem.Label]</label>
+											<textcolor>DD000000</textcolor>
+											<font>font12</font>
+											<right>5</right>
+											<height>70</height>
+										</control>
+										<control type="textbox">
+											<top>165</top>
+											<height>185</height>
+											<right>10</right>
+											<textcolor>aa000000</textcolor>
+											<label>$INFO[ListItem.Plot]</label>
+											<font>font10</font>
+                                        </control>
+									</control>
+								</control>
+							</itemlayout>
+                            <itemlayout width="368" height="468" condition="IsEmpty(Window.Property(showplot))">
+                                <control type="group">
+                                    <left>68</left>
+                                    <top>38</top>
+                                    <control type="image">
+                                        <texture fallback="DefaultTVShows.png" diffuse="diffuse/roundedposter.png">$INFO[ListItem.Art(tvshow.poster)]</texture>
+                                        <aspectratio aligny="center" align="center">stretch</aspectratio>
+                                        <height>300</height>
+                                    </control>
+                                    <control type="group">
+                                        <top>310</top>
+                                        <height>130</height>
+                                        <control type="label">
+                                            <label>$INFO[ListItem.Label]</label>
+                                            <scroll>false</scroll>
+                                            <width>300</width>
+                                            <height>35</height>
+                                            <font>font10</font>
+                                            <align>center</align>
+                                            <textcolor>FFFFFFFF</textcolor>
+                                        </control>
+                                        <control type="label">
+                                            <top>33</top>
+                                            <label>$INFO[ListItem.Season]$INFO[ListItem.Episode,[COLOR =FFEC407A]x[/COLOR],]</label>
+                                            <scroll>false</scroll>
+                                            <width>300</width>
+                                            <height>30</height>
+                                            <font>font10</font>
+                                            <align>center</align>
+                                            <textcolor>FFFFFFFF</textcolor>
+                                        </control>
+                                    </control>
+                                </control>
+                            </itemlayout>
+							<focusedlayout width="810" height="486" condition="!IsEmpty(Window.Property(showplot))">
+								<control type="group">
+									<depth>0.10</depth>
+									<left>68</left>
+									<top>10</top>
+									<animation type="Focus">
+										<effect type="zoom" start="100" end="110" time="200" tween="sine" easing="inout" center="230,130" />
+									</animation>
+									<animation type="Unfocus">
+										<effect type="zoom" start="110" end="100" time="200" tween="sine" easing="inout" center="230,130" />
+									</animation>
+									<control type="image">
+										<top>10</top>
+										<left>20</left>
+										<right>0</right>
+										<height>360</height>
+										<texture colordiffuse="FFbbbbbb" diffuse="diffuse/roundedposter.png" background="true">white.png</texture>
+										<visible>!Control.HasFocus(400)</visible>
+									</control>
+									<control type="image">
+										<top>10</top>
+										<left>20</left>
+										<right>0</right>
+										<height>360</height>
+										<texture colordiffuse="FF387ef5" diffuse="diffuse/roundedposter.png" background="true">white.png</texture>
+										<visible>Control.HasFocus(400)</visible>
+									</control>
+									<control type="image">
+										<left>0</left>
+										<top>10</top>
+										<width>360</width>
+										<height>360</height>
+										<texture fallback="DefaultTVShows.png" diffuse="diffuse/roundedposterleftonly.png">$INFO[ListItem.Art(tvshow.poster)]</texture>
+										<aspectratio aligny="center" align="center">stretch</aspectratio>
+									</control>
+									<control type="group">
+										<visible>Control.HasFocus(400)</visible>
+										<left>390</left>
+										<control type="label">
+											<top>30</top>
+											<label>$INFO[ListItem.Season]$INFO[ListItem.Episode,[COLOR =FFEC407A]x[/COLOR],]</label>
+											<textcolor>DDFFFFFF</textcolor>
+											<font>font13</font>
+										</control>
+										<control type="textbox">
+											<top>75</top>
+											<label>$INFO[ListItem.Label]</label>
+											<textcolor>FFFFFFFF</textcolor>
+											<font>font12</font>
+											<right>5</right>
+											<height>70</height>
+										</control>
+										<control type="textbox">
+											<top>165</top>
+											<height>185</height>
+											<right>10</right>
+											<textcolor>bbFFFFFF</textcolor>
+											<label>$INFO[ListItem.Plot]</label>
+											<autoscroll time="3000" delay="7000" repeat="5000"/>
+											<font>font10</font>
+                                        </control>
+									</control>
+									<control type="group">
+										<visible>!Control.HasFocus(400)</visible>
+										<left>390</left>
+										<control type="label">
+											<top>30</top>
+											<label>$INFO[ListItem.Season]$INFO[ListItem.Episode,[COLOR =FFEC407A]x[/COLOR],]</label>
+											<textcolor>BB000000</textcolor>
+											<font>font13</font>
+										</control>
+										<control type="textbox">
+											<top>75</top>
+											<label>$INFO[ListItem.Label]</label>
+											<textcolor>DD000000</textcolor>
+											<font>font12</font>
+											<right>5</right>
+											<height>70</height>
+										</control>
+										<control type="textbox">
+											<top>165</top>
+											<height>185</height>
+											<right>10</right>
+											<textcolor>AA000000</textcolor>
+											<label>$INFO[ListItem.Plot]</label>
+											<autoscroll time="3000" delay="7000" repeat="5000"/>
+											<font>font10</font>
+                                        </control>
+									</control>
+								</control>
+							</focusedlayout>
+                            <focusedlayout width="368" height="468" condition="IsEmpty(Window.Property(showplot))">
+                                <control type="group">
+                                    <depth>0.10</depth>
+                                    <left>68</left>
+                                    <top>38</top>
+                                    <animation type="Focus">
+                                        <effect type="zoom" start="100" end="110" time="200" tween="sine" easing="inout" center="230,130" />
+                                    </animation>
+                                    <animation type="Unfocus">
+                                        <effect type="zoom" start="110" end="100" time="200" tween="sine" easing="inout" center="230,130" />
+                                    </animation>
+                                    <control type="label">
+                                        <top>-39</top>
+                                        <label>$INFO[ListItem.Season]$INFO[ListItem.Episode,[COLOR =FFEC407A]x[/COLOR],]</label>
+                                        <scroll>false</scroll>
+                                        <width>300</width>
+                                        <height>30</height>
+                                        <font>font10</font>
+                                        <align>center</align>
+                                        <textcolor>FFFFFFFF</textcolor>
+                                        <visible>Control.HasFocus(400)</visible>
+                                    </control>
+                                    <control type="image">
+                                        <top>-3</top>
+                                        <left>-3</left>
+                                        <width>306</width>
+                                        <height>306</height>
+                                        <texture colordiffuse="primary" diffuse="diffuse/roundedposter.png" background="true">colors/white.png</texture>
+                                        <visible>Control.HasFocus(400)</visible>
+                                    </control>
+                                    <control type="image">
+                                        <texture fallback="DefaultTVShows.png" diffuse="diffuse/roundedposter.png">$INFO[ListItem.Art(tvshow.poster)]</texture>
+                                        <aspectratio aligny="center" align="center">stretch</aspectratio>
+                                        <height>300</height>
+                                    </control>
+                                    <control type="group">
+                                        <top>310</top>
+                                        <height>130</height>
+                                        <control type="label">
+                                            <label>$INFO[ListItem.Label]</label>
+                                            <scroll>false</scroll>
+                                            <width>300</width>
+                                            <height>35</height>
+                                            <font>font10</font>
+                                            <align>center</align>
+                                            <textcolor>FFFFFFFF</textcolor>
+                                        </control>
+                                        <control type="label">
+                                            <top>33</top>
+                                            <label>$INFO[ListItem.Season]$INFO[ListItem.Episode,[COLOR =FFEC407A]x[/COLOR],]</label>
+                                            <scroll>false</scroll>
+                                            <width>300</width>
+                                            <height>30</height>
+                                            <font>font10</font>
+                                            <align>center</align>
+                                            <textcolor>FFFFFFFF</textcolor>
+                                            <visible>!Control.HasFocus(400)</visible>
+                                        </control>
+                                    </control>
+                                </control>
+                            </focusedlayout>
+						</control>
+					</control>
+				</control>
+			</control>
+
+			<control type="group" id="200">
+                <defaultcontrol always="true">201</defaultcontrol>
+                <posx>0</posx>
+				<posy>0</posy>
+				<width>1920</width>
+				<height>135</height>
+				<control type="grouplist">
+					<posx>60</posx>
+					<posy>47.5</posy>
+					<width>1000</width>
+					<height>40</height>
+					<align>left</align>
+					<itemgap>60</itemgap>
+					<orientation>horizontal</orientation>
+					<ondown>50</ondown>
+					<control type="group">
+						<width>40</width>
+						<height>40</height>
+						<control type="button" id="201">
+							<animation effect="zoom" start="100" end="177" time="100" center="20,20" reversible="false">Focus</animation>
+							<animation effect="zoom" start="177" end="100" time="100" center="20,20" reversible="false">UnFocus</animation>
+							<width>40</width>
+							<height>40</height>
+							<onright>202</onright>
+							<ondown>50</ondown>
+							<font>font12</font>
+							<focusedcolor>FF000000</focusedcolor>
+							<texturefocus colordiffuse="FF387ef5">home-focus.png</texturefocus>
+							<texturenofocus colordiffuse="99FFFFFF">home.png</texturenofocus>
+							<label> </label>
+						</control>
+					</control>
+					<control type="label">
+						<width max="500">auto</width>
+						<height>40</height>
+						<font>font12</font>
+						<align>left</align>
+						<aligny>center</aligny>
+						<textcolor>eeFFFFFF</textcolor>
+						<label>$ADDON[service.nextup.notification 30008]</label>
+						<shadowcolor>22000000</shadowcolor>
+					</control>
+					<control type="group">
+						<width>40</width>
+						<height>40</height>
+						<control type="radiobutton" id="202">
+							<animation effect="zoom" start="100" end="177" time="100" center="20,20" reversible="false">Focus</animation>
+							<animation effect="zoom" start="177" end="100" time="100" center="20,20" reversible="false">UnFocus</animation>
+							<width>40</width>
+							<height>40</height>
+							<onleft>201</onleft>
+							<ondown>50</ondown>
+							<font>font12</font>
+							<focusedcolor>FF000000</focusedcolor>
+							<texturefocus>-</texturefocus>
+							<texturenofocus>-</texturenofocus>
+							<label> </label>
+                            <radioposx>0</radioposx>
+                            <radioposy>0</radioposy>
+                            <radiowidth>40</radiowidth>
+                            <radioheight>40</radioheight>
+                            <textureradioonfocus colordiffuse="FF387ef5">show.png</textureradioonfocus>
+                            <textureradioonnofocus colordiffuse="99FFFFFF">show.png</textureradioonnofocus>
+                            <textureradioofffocus colordiffuse="FF387ef5">hide.png</textureradioofffocus>
+                            <textureradiooffnofocus colordiffuse="99FFFFFF">hide.png</textureradiooffnofocus>
+
+                        </control>
+					</control>
+				</control>
+				<control type="image">
+					<left>0</left>
+					<top>35</top>
+					<width>1920</width>
+					<height>65</height>
+					<texture>$INFO[Window.Property(clearlogo)]</texture>
+					<aspectratio aligny="top" align="center">keep</aspectratio>
+				</control>
+
+				<control type="label">
+					<right>140</right>
+					<posy>35</posy>
+					<width>300</width>
+					<height>65</height>
+					<font>font13</font>
+					<align>right</align>
+					<aligny>center</aligny>
+					<textcolor>FFFFFFFF</textcolor>
+					<label>$INFO[System.Date(DDD),, ]$INFO[System.Time]</label>
+					<shadowcolor>22000000</shadowcolor>
+				</control>
+
+				<control type="image">
+					<posx>90r</posx>
+					<posy>54</posy>
+					<width>30</width>
+					<height>30</height>
+					<texture>nextup.png</texture>
+				</control>
+			</control>
+		</control>
+	</controls>
+</window>
