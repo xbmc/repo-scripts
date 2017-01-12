@@ -126,11 +126,13 @@ def takeTitleFromFocusedItem():
     labelTVShowTitle = xbmc.getInfoLabel("ListItem.TVShowTitle")
     labelSeason = xbmc.getInfoLabel("ListItem.Season")
     labelEpisode = xbmc.getInfoLabel("ListItem.Episode")
+    isItMovie = xbmc.getCondVisibility("Container.Content(movies)") or labelType == 'movie'
+    isItEpisode = xbmc.getCondVisibility("Container.Content(episodes)") or labelType == 'episode'
 
     title = 'SearchFor...'
-    if labelType == 'movie' and labelMovieTitle and labelYear:
+    if isItMovie and labelMovieTitle and labelYear:
         title = labelMovieTitle + " " + labelYear
-    elif labelType == 'episode' and labelTVShowTitle and labelSeason and labelEpisode:
+    elif isItEpisode and labelTVShowTitle and labelSeason and labelEpisode:
         title = ("%s S%.2dE%.2d" % (labelTVShowTitle, int(labelSeason), int(labelEpisode)))
 
     return title
