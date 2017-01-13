@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- Indonesian language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/id/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
+<strings>
+    <string id="30010">Pencadangan XBMC</string>
+    <string id="30011">Umum</string>
+    <string id="30012">Pilih Berkas</string>
+    <string id="30013">Penjadwalan</string>
+    <string id="30016">Cadangan</string>
+    <string id="30017">Pengembalian</string>
+    <string id="30018">Ramban Lokasi</string>
+    <string id="30019">Lokasi Tipe</string>
+    <string id="30020">Ramban Lokasi Jarak Jauh</string>
+    <string id="30021">Nama Folder Cadangan</string>
+    <string id="30023">Mode</string>
+    <string id="30024">Lokasi Tipe Jarak Jauh</string>
+    <string id="30025">Tipe Lokasi Jarak Jauh</string>
+    <string id="30026">Cadangan untuk disimpan (0 untuk seluruhnya)</string>
+    <string id="30027">Dropbox</string>
+    <string id="30028">Kunci Dropbox</string>
+    <string id="30029">Rahasia Dropbox</string>
+    <string id="30030">Addon Pengguna</string>
+    <string id="30031">Data Addon</string>
+    <string id="30032">Basis Data</string>
+    <string id="30033">Daftar Main</string>
+    <string id="30034">Gambar Kecil/Fanart</string>
+    <string id="30035">Berkas Konfigurasi</string>
+    <string id="30036">Direktori Lain 1</string>
+    <string id="30037">Direktori Lain 2</string>
+    <string id="30038">Terdeteksi Pengaturan Lanjutan</string>
+    <string id="30039">Berkas pengaturan lanjutan perlu dikembalikan terlebih dulu</string>
+    <string id="30040">Pilih Ya untuk mengembalikan berkas ini dan menjalankan ulang XBMC</string>
+    <string id="30041">Pilih Tidak untuk melanjutkan</string>
+    <string id="30042">Lanjutkan pengembalian</string>
+    <string id="30043">Pencadangan XBMC mendeteksi ada pengembalian yang belum selesai</string>
+    <string id="30044">Apakah Anda ingin melanjutkan?</string>
+    <string id="30045">Kesalahan: Lokasi jarak jauh tidak ada</string>
+    <string id="30046">Memulai</string>
+    <string id="30047">Direktori Lokal</string>
+    <string id="30048">Direktori Jarak Jauh</string>
+    <string id="30049">Mengumpulkan daftar berkas</string>
+    <string id="30050">Lokasi jarak jauh ada - mungkin berisi berkas lama di dalamnya!</string>
+    <string id="30051">Membuat Daftar Berkas</string>
+    <string id="30052">Menulis berkas</string>
+    <string id="30053">Memulai pencadangan terjadwal</string>
+    <string id="30054">Menghapus cadangan</string>
+    <string id="30056">Periksa log untuk URL otorisasi Dropbox</string>
+    <string id="30057">Klik OK ketika sudah terotorisasi</string>
+    <string id="30058">Kode Pengembang Dropbox Diperlukan</string>
+    <string id="30059">Kunjungi https://www.dropbox.com/developers</string>
+    <string id="30060">Mengaktifkan Penjadwalan</string>
+    <string id="30061">Jadwal</string>
+    <string id="30062">Jam</string>
+    <string id="30063">Hari</string>
+    <string id="30064">Jadwal Cron</string>
+    <string id="30065">Minggu</string>
+    <string id="30066">Senin</string>
+    <string id="30067">Selasa</string>
+    <string id="30068">Rabu</string>
+    <string id="30069">Kamis</string>
+    <string id="30070">Jumat</string>
+    <string id="30071">Sabtu</string>
+    <string id="30072">Setiap Hari</string>
+    <string id="30073">Setiap Minggu</string>
+    <string id="30074">Hari Pertama Setiap Bulan</string>
+    <string id="30075">Jadwal Lain</string>
+    <string id="30076">Matikan Setelah Pencadangan</string>
+    <string id="30077">Jalankan Ulang XBMC</string>
+    <string id="30078">Anda perlu menjalankan ulang XBMC untuk melanjutkan</string>
+    <string id="30079">Hanya Hari Ini</string>
+    <string id="30080">Profil</string>
+</strings>

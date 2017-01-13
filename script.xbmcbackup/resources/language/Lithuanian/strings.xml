@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- Lithuanian language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/lt/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
+<strings>
+    <string id="30010">XBMC atsarginė kopija</string>
+    <string id="30011">Pagrindinis</string>
+    <string id="30012">Failo parinkimas</string>
+    <string id="30013">Planavimas</string>
+    <string id="30016">Atsarginė kopija</string>
+    <string id="30017">Atkurti</string>
+    <string id="30018">Naršymo kelias</string>
+    <string id="30019">Tipo/rūšies kelias</string>
+    <string id="30020">Nuotolinio kelio peržiūra</string>
+    <string id="30021">Atsarginių kopijų aplanko pavadinimas</string>
+    <string id="30022">Progreso atvaizdavimas</string>
+    <string id="30023">Režimas</string>
+    <string id="30024">Įveskite nuotolinį vadymo kelią</string>
+    <string id="30025">Nuotolinį vadymo kelio tipas</string>
+    <string id="30026">Atsarginių kopijų saugojimas (0 visiems)</string>
+    <string id="30027">Dropbox</string>
+    <string id="30028">Dropbox raktas</string>
+    <string id="30029">Dropbox paslaptis</string>
+    <string id="30030">Vartotojo komplektacija</string>
+    <string id="30031">Priedo duomenys</string>
+    <string id="30032">Duomenų bazė</string>
+    <string id="30033">Grojaraštis</string>
+    <string id="30034">Miniatiūros/FanArt</string>
+    <string id="30035">Konfigūracijos failai</string>
+    <string id="30036">Pasirinktinis katalogas 1</string>
+    <string id="30037">Pasirinktinis katalogas 2</string>
+    <string id="30038">Papildomi nustatymai aptikti</string>
+    <string id="30039">Nustatymai 'Išplėstinė byla turėtų būti atkurta'</string>
+    <string id="30040">Pasirinkite Taip, jei norite atkurti šį failą ir perkraukite XBMC</string>
+    <string id="30041">Pasirinkite Ne, jei norite tęsti</string>
+    <string id="30042">Atnaujinti Atkurti</string>
+    <string id="30043">XBMC aptiko nebaigtą atkurti atsarginę kopiją</string>
+    <string id="30044">Ar norite tęsti?</string>
+    <string id="30045">Klaida: Nuotolinis kelias neegzistuoja</string>
+    <string id="30046">Paleidimas</string>
+    <string id="30047">Vietos kryptis</string>
+    <string id="30048">Nuotolinio valdymo kryptis</string>
+    <string id="30049">Gauti failų sąrašą</string>
+    <string id="30050">Nuotolinio valdymo Kelias egzistuoja - jame gali būti senų failų!</string>
+    <string id="30051">Sukurti failų sąrašą</string>
+    <string id="30052">Kūrti/rašyti failą</string>
+    <string id="30053">Paleiti suplanuotą atsarginę kopiją</string>
+    <string id="30054">Pa6alinti atsarginę kopiją</string>
+    <string id="30056">Patikrinti URL prisijungimą prie Dropbox</string>
+    <string id="30057">Spauskite OK, kai leidžiama</string>
+    <string id="30058">Dropbox programuotojo kodas</string>
+    <string id="30059">Apsilankykite https://www.dropbox.com/developers</string>
+    <string id="30060">Įjungti planavimą</string>
+    <string id="30061">Planuoti</string>
+    <string id="30062">Diena ir valanda</string>
+    <string id="30063">Savaitės diena</string>
+    <string id="30064">Planuoti 'Cron'</string>
+    <string id="30065">Sekmadienis</string>
+    <string id="30066">Pirmadienis</string>
+    <string id="30067">Antradienis</string>
+    <string id="30068">Trečiadienis</string>
+    <string id="30069">Ketvirtadienis</string>
+    <string id="30070">Penktadienis</string>
+    <string id="30071">Šeštadienis</string>
+    <string id="30072">Kasdien</string>
+    <string id="30073">Kiekvieną savaitę</string>
+    <string id="30074">Pirmą mėnesio dieną</string>
+    <string id="30075">Individualus tvarkaraštis</string>
+    <string id="30076">Išjungti kompiuterį baigus atsarginę kopiją</string>
+    <string id="30077">Perkrauti XBMC</string>
+    <string id="30078">Jūs turite iš naujo paleisti XBMC</string>
+    <string id="30079">Tiesiog šiandien</string>
+    <string id="30080">Profiliai</string>
+    <string id="30081">Tvarkaraštis bus paleisti dar kartą</string>
+    <string id="30082">Progreso juosta</string>
+    <string id="30083">Foninė progreso juosta</string>
+    <string id="30084">Joks (Tylus)</string>
+    <string id="30085">Versijos įspėjimas</string>
+    <string id="30086">Ši XBMC versija skiriasi nuot tos, kuri naudota kuriant archyvą</string>
+</strings>

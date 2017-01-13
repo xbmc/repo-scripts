@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- Chinese (Simple) language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/zh/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
+<strings>
+    <string id="30010">XBMC 备份</string>
+    <string id="30011">常规</string>
+    <string id="30012">文件选择</string>
+    <string id="30013">计划任务</string>
+    <string id="30016">备份</string>
+    <string id="30017">恢复</string>
+    <string id="30018">浏览目录</string>
+    <string id="30019">输入目录</string>
+    <string id="30020">浏览远程目录</string>
+    <string id="30021">备份文件夹名</string>
+    <string id="30022">进度显示</string>
+    <string id="30023">模式</string>
+    <string id="30024">输入远程目录</string>
+    <string id="30025">远程目录类型</string>
+    <string id="30026">保留备份数（0为全部）</string>
+    <string id="30027">Dropbox</string>
+    <string id="30028">Dropbox 用户</string>
+    <string id="30029">Dropbox 密码</string>
+    <string id="30030">用户插件</string>
+    <string id="30031">插件数据</string>
+    <string id="30032">数据库</string>
+    <string id="30033">播放列表</string>
+    <string id="30034">缩略图/同人画</string>
+    <string id="30035">配置文件</string>
+    <string id="30036">自定义目录1</string>
+    <string id="30037">自定义目录2</string>
+    <string id="30038">检测到高级设置</string>
+    <string id="30039">将先恢复高级设置文件</string>
+    <string id="30040">选“是”恢复此文件并重启 XBMC</string>
+    <string id="30041">选“否”继续</string>
+    <string id="30042">继续恢复</string>
+    <string id="30043">XBMC 备份检测到未完成的恢复</string>
+    <string id="30044">要继续吗？</string>
+    <string id="30045">错误：远程目录不存在</string>
+    <string id="30046">开始</string>
+    <string id="30047">本地目录</string>
+    <string id="30048">远程目录</string>
+    <string id="30049">获取文件列表</string>
+    <string id="30050">远程目录存在 - 可能有旧文件留存！</string>
+    <string id="30051">创建文件列表</string>
+    <string id="30052">写入文件</string>
+    <string id="30053">启动计划备份</string>
+    <string id="30054">删除备份</string>
+    <string id="30056">检查 Dropbox 授权 URL 日志</string>
+    <string id="30057">授权后点“确定”</string>
+    <string id="30058">需要 Dropbox 开发者 Code</string>
+    <string id="30059">访问 https://www.dropbox.com/developers</string>
+    <string id="30060">启用计划任务</string>
+    <string id="30061">时间安排</string>
+    <string id="30062">时刻</string>
+    <string id="30063">星期</string>
+    <string id="30064">Cron 计划任务</string>
+    <string id="30065">星期日</string>
+    <string id="30066">星期一</string>
+    <string id="30067">星期二</string>
+    <string id="30068">星期三</string>
+    <string id="30069">星期四</string>
+    <string id="30070">星期五</string>
+    <string id="30071">星期六</string>
+    <string id="30072">每天</string>
+    <string id="30073">每周</string>
+    <string id="30074">每月初</string>
+    <string id="30075">自定义计划</string>
+    <string id="30076">备份完成后关机</string>
+    <string id="30077">重启 XBMC</string>
+    <string id="30078">需要重启 XBMC 以继续</string>
+    <string id="30079">就在今天</string>
+    <string id="30080">用户配置</string>
+    <string id="30081">计划任务将再次执行于</string>
+    <string id="30082">进度条</string>
+    <string id="30083">后台进度条</string>
+    <string id="30084">无（静默）</string>
+    <string id="30085">版本警告</string>
+    <string id="30086">当前 XBMC 版本与创建备份时的版本不同</string>
+</strings>

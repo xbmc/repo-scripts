@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- Maltese language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/mt/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
+<strings>
+    <string id="30011">Ġenerali</string>
+    <string id="30023">Mode:</string>
+    <string id="30032">Database</string>
+    <string id="30033">Playlist</string>
+    <string id="30065">Il-Ħadd</string>
+    <string id="30066">It-Tnejn</string>
+    <string id="30067">It-Tlieta</string>
+    <string id="30068">L-Erbgħa</string>
+    <string id="30069">Il-Ħamis</string>
+    <string id="30070">Il-Ġimgħa</string>
+    <string id="30071">Is-Sibt</string>
+    <string id="30080">Profil</string>
+</strings>

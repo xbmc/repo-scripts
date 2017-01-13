@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- Basque language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/eu/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
+<strings>
+    <string id="30010">XBMC Babes-kopia</string>
+    <string id="30011">Orokorra</string>
+    <string id="30012">Fitxategi hautapena</string>
+    <string id="30013">Plangintza</string>
+    <string id="30016">Babes-kopia</string>
+    <string id="30017">Berrezarri</string>
+    <string id="30018">Arakatu bidea</string>
+    <string id="30021">Babes-kopia karpeta izena</string>
+    <string id="30023">Modua</string>
+    <string id="30024">Idatzi Urruneko bidea</string>
+    <string id="30025">Urruneko bide mota</string>
+    <string id="30026">Mantentzeko babes-kopiak (0 denentzat)</string>
+    <string id="30030">Erabiltzaile gehigarriak</string>
+    <string id="30031">Gehigarri data</string>
+    <string id="30032">Datu basea</string>
+    <string id="30033">Zerrenda</string>
+    <string id="30035">Konfigurazio fitxategiak</string>
+    <string id="30045">Errorea: Urruneko bidea ez dago</string>
+    <string id="30046">Abiarazten</string>
+    <string id="30047">Karpeta lokala</string>
+    <string id="30048">Urruneko karpeta</string>
+    <string id="30049">Fitxategi zerrenda biltzen</string>
+    <string id="30050">Urruneko bidea badago - fitxategi zaharrak eduki ditzake!</string>
+    <string id="30051">Fitxategi zerrenda sortzen</string>
+    <string id="30052">Fitxategia idazten</string>
+    <string id="30053">Plangintzadun babes-kopia abiarazten</string>
+    <string id="30054">Babeskopia ezabatzen</string>
+    <string id="30060">Gaitu plangintza</string>
+    <string id="30061">Plangintza</string>
+    <string id="30062">Eguneko ordua</string>
+    <string id="30063">Asteko eguna</string>
+    <string id="30064">Cron plangintza</string>
+    <string id="30065">Igandea</string>
+    <string id="30066">Astelehena</string>
+    <string id="30067">Asteartea</string>
+    <string id="30068">Asteazkena</string>
+    <string id="30069">Osteguna</string>
+    <string id="30070">Ostirala</string>
+    <string id="30071">Larunbata</string>
+    <string id="30072">Egunero</string>
+    <string id="30073">Astero</string>
+    <string id="30074">Hilabeteko lehen egunean</string>
+    <string id="30075">Plangintza pertsonalizatua</string>
+    <string id="30080">Profilak</string>
+</strings>

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- Slovak language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/sk/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
+<strings>
+    <string id="30010">XBMC Backup</string>
+    <string id="30011">Všeobecné</string>
+    <string id="30012">Voľba súboru</string>
+    <string id="30013">Plánovač</string>
+    <string id="30016">Záloha</string>
+    <string id="30017">Obnova</string>
+    <string id="30018">Prehliadať cestu</string>
+    <string id="30019">Zadať cestu</string>
+    <string id="30020">Prehliadať vzdialenú cestu</string>
+    <string id="30021">Meno priečinku zálohy</string>
+    <string id="30023">Režim</string>
+    <string id="30024">Zadať vzdialenú cestu</string>
+    <string id="30025">Druh vzdialenej cesty</string>
+    <string id="30026">Koľko záloh zachovať (0 pre všetky)</string>
+    <string id="30027">Dropbox</string>
+    <string id="30028">Dropbox kľúč</string>
+    <string id="30029">Dropbox Secret</string>
+    <string id="30030">Užívateľské doplnky</string>
+    <string id="30031">Dáta Doplnkov</string>
+    <string id="30032">Databáza</string>
+    <string id="30033">Playlist</string>
+    <string id="30034">Náhlady/Fanarty</string>
+    <string id="30035">Konfiguračné súbory</string>
+    <string id="30045">Chyba: Vzdialená cesta neexistuje</string>
+    <string id="30046">Začiatok</string>
+    <string id="30047">Miestny priečinok</string>
+    <string id="30048">Vzdialený priečinok</string>
+    <string id="30049">Zbieram zoznam súborov</string>
+    <string id="30050">Vzdialená cesta existuje - môže obsahovať staré súbory!</string>
+    <string id="30051">Vytvára sa zoznam súborov</string>
+    <string id="30052">Zapisuje sa súbor</string>
+    <string id="30053">Začiatok plánovanej zálohy</string>
+    <string id="30054">Odstránenie zálohy</string>
+    <string id="30056">Skontrolujte log pre Dropbox autorizačné URL</string>
+    <string id="30057">Kliknite OK po získaní oprávnenia</string>
+    <string id="30058">Potrebný Dropbox vývojársky kód</string>
+    <string id="30059">Navštívte https://www.dropbox.com/developers</string>
+    <string id="30060">Povoliť plánovač</string>
+    <string id="30061">Plán</string>
+    <string id="30062">Hodina v dni</string>
+    <string id="30063">Deň v týždni</string>
+    <string id="30064">'Cron' plán</string>
+    <string id="30065">Nedeľa</string>
+    <string id="30066">Pondelok</string>
+    <string id="30067">Utorok</string>
+    <string id="30068">Streda</string>
+    <string id="30069">Štvrtok</string>
+    <string id="30070">Piatok</string>
+    <string id="30071">Sobota</string>
+    <string id="30072">Každý den</string>
+    <string id="30073">Každý týždeň</string>
+    <string id="30074">Prvý deň mesiaca</string>
+    <string id="30075">Vlastný plán</string>
+    <string id="30076">Vypnúť po skončení zálohy</string>
+    <string id="30077">Reštartovať XBMC</string>
+    <string id="30080">Profily</string>
+</strings>

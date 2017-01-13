@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- Bosnian language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/bs/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
+<strings>
+    <string id="30011">Opšte</string>
+    <string id="30023">Režim</string>
+    <string id="30032">Baza podataka</string>
+    <string id="30033">Spisak za rep.</string>
+    <string id="30065">Nedjelja</string>
+    <string id="30066">Ponedjeljak</string>
+    <string id="30067">Utorak</string>
+    <string id="30068">Srijeda</string>
+    <string id="30069">Četvrtak</string>
+    <string id="30070">Petak</string>
+    <string id="30071">Subota</string>
+    <string id="30080">Profili</string>
+</strings>

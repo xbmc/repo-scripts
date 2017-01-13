@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- Swedish language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/sv/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
+<strings>
+    <string id="30010">XBMC Backupp</string>
+    <string id="30011">Allmänt</string>
+    <string id="30012">Filval</string>
+    <string id="30013">Schemaläggning</string>
+    <string id="30016">Backupp</string>
+    <string id="30017">Återställ</string>
+    <string id="30018">Bläddra efter sökväg</string>
+    <string id="30019">Skriv sökväg</string>
+    <string id="30020">Bläddra efter fjärrsökväg</string>
+    <string id="30021">Backuppmappsnamn</string>
+    <string id="30022">Förlopp</string>
+    <string id="30023">Läge</string>
+    <string id="30024">Skriv fjärrsökväg</string>
+    <string id="30025">Fjärrsökvägstyp</string>
+    <string id="30026">Backupper att behålla (0 för alla)</string>
+    <string id="30027">Dropbox</string>
+    <string id="30028">Dropbox Nyckel</string>
+    <string id="30029">Dropbox Hemlighet</string>
+    <string id="30030">Användartillägg</string>
+    <string id="30031">Tilläggsdata</string>
+    <string id="30032">Databas</string>
+    <string id="30033">Spellista</string>
+    <string id="30034">Miniatyrer/fanart</string>
+    <string id="30035">Konfigurationsfiler</string>
+    <string id="30036">Egen mapp 1</string>
+    <string id="30037">Egen mapp 2</string>
+    <string id="30038">Avancerade inställningar upptäcktes</string>
+    <string id="30039">Filen för avancerade inställningar bör återställas först</string>
+    <string id="30040">Välj Ja för att återställa denna fil och starta om XBMC</string>
+    <string id="30041">Välj Nej för att fortsätta</string>
+    <string id="30042">Återuppta återställning</string>
+    <string id="30043">XBMC Backup har upptäckt en ofärdig återställning</string>
+    <string id="30044">Vill du fortsätta?</string>
+    <string id="30045">Fel: Fjärrsökväg existerar inte</string>
+    <string id="30046">Startar</string>
+    <string id="30047">Lokalmapp</string>
+    <string id="30048">Fjärrmapp</string>
+    <string id="30049">Samlar fillista</string>
+    <string id="30050">Fjärrsökväg existerar - kan innehålla gamla filer!</string>
+    <string id="30051">Skapar fillista</string>
+    <string id="30052">Skriver fil</string>
+    <string id="30053">Startar schemalagd backupp</string>
+    <string id="30054">Tar bort backupper</string>
+    <string id="30056">Kontrollera loggen efter adress för Dropbox-inloggning</string>
+    <string id="30057">Klicka OK när du är inloggad</string>
+    <string id="30058">Dropbox utvecklarkod krävs</string>
+    <string id="30059">Besök https://www.dropbox.com/developers</string>
+    <string id="30060">Aktivera schemaläggare</string>
+    <string id="30061">Schemalägg</string>
+    <string id="30062">Timme av dagen</string>
+    <string id="30063">Dag av veckan</string>
+    <string id="30064">Cronschema</string>
+    <string id="30065">Söndag</string>
+    <string id="30066">Måndag</string>
+    <string id="30067">Tisdag</string>
+    <string id="30068">Onsdag</string>
+    <string id="30069">Torsdag</string>
+    <string id="30070">Fredag</string>
+    <string id="30071">Lördag</string>
+    <string id="30072">Varje dag</string>
+    <string id="30073">Varje vecka</string>
+    <string id="30074">Första dagen i månaden</string>
+    <string id="30075">Eget schema</string>
+    <string id="30076">Stäng av efter Backup</string>
+    <string id="30077">Starta om XBMC</string>
+    <string id="30078">Du borde starta om XBMC för att fortsätta</string>
+    <string id="30079">Bara idag</string>
+    <string id="30080">Profiles</string>
+    <string id="30081">Schemaläggaren kommer köras igen</string>
+    <string id="30082">Förloppsindikator</string>
+    <string id="30083">Bakgroundsförloppsindikator</string>
+    <string id="30084">Ingen (tyst)</string>
+    <string id="30085">Version varning</string>
+    <string id="30086">Den här versionen av XBMC är annorlunda än den som användes vid skapandet av arkivet</string>
+</strings>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- Macedonian language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/mk/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
+<strings>
+    <string id="30011">Општо</string>
+    <string id="30023">Режим</string>
+    <string id="30032">База на податоци</string>
+    <string id="30033">Список за реп.</string>
+    <string id="30065">Недела</string>
+    <string id="30066">Понеделник</string>
+    <string id="30067">Вторник</string>
+    <string id="30068">Среда</string>
+    <string id="30069">Четврток</string>
+    <string id="30070">Петок</string>
+    <string id="30071">Сабота</string>
+    <string id="30080">Профили</string>
+</strings>

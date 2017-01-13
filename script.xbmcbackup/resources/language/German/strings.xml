@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- German language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/de/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
+<strings>
+    <string id="30010">XBMC Backup</string>
+    <string id="30011">Allgemein</string>
+    <string id="30012">Datenauswahl</string>
+    <string id="30013">Zeitplan</string>
+    <string id="30016">Sichern</string>
+    <string id="30017">Wiederherstellen</string>
+    <string id="30018">Verzeichnis wählen</string>
+    <string id="30019">Verzeichnis eintippen</string>
+    <string id="30020">Entferntes Verzeichnis wählen</string>
+    <string id="30021">Sicherungsverzeichnisname</string>
+    <string id="30022">Im Hintergrund arbeiten</string>
+    <string id="30023">Modus</string>
+    <string id="30024">Entferntes Verzeichnis</string>
+    <string id="30025">Typ Entferntes Verzeichnis</string>
+    <string id="30026">Zu behaltende Sicherheitskopien (0 für alle)</string>
+    <string id="30027">Dropbox</string>
+    <string id="30028">Dropbox Schlüssel</string>
+    <string id="30029">Dropbox Secret</string>
+    <string id="30030">Benutzer Addons</string>
+    <string id="30031">Addon Daten</string>
+    <string id="30032">Datenbanken</string>
+    <string id="30033">Playlisten</string>
+    <string id="30034">Thumbnails/Fanart</string>
+    <string id="30035">Config Dateien</string>
+    <string id="30036">Benutzerdefiniertes Verzeichnis 1</string>
+    <string id="30037">Benutzerdefiniertes Verzeichnis 2</string>
+    <string id="30038">Erweiterte Einstellungen entdeckt</string>
+    <string id="30039">Die Erweiterte Einstellungsdatei sollte zuerst wiederhergestellt werden</string>
+    <string id="30040">Wähle ja um diese Datei wiederherzustellen und XBMC neuzustarten</string>
+    <string id="30041">Wähle Nein um fortzufahren</string>
+    <string id="30042">Wiederherstellung fortsetzen</string>
+    <string id="30043">XBMC Backup hat eine nicht komplette Wiederherstellung entdeckt</string>
+    <string id="30044">Möchtest du fortfahren?</string>
+    <string id="30045">Fehler: Entferntes Verzeichnis nicht konfiguriert</string>
+    <string id="30046">Starte</string>
+    <string id="30047">Lokales Verzeichnis</string>
+    <string id="30048">Entferntes Verzeichnis</string>
+    <string id="30049">Dateiliste wird erzeugt</string>
+    <string id="30050">Entferntes Verzeichnis existiert - es könnte bereits Dateien beinhalten!</string>
+    <string id="30051">Dateiliste wird erzeugt</string>
+    <string id="30052">Schreibe Datei</string>
+    <string id="30053">Starte geplantes backup</string>
+    <string id="30054">Sicherheitskopie entfernen</string>
+    <string id="30056">Überprüfe den Log für die Dropbox-Autorisierungs URL.</string>
+    <string id="30057">Klicke OK, sobald du autorisiert bist.</string>
+    <string id="30058">Dropbox Developer Code benötigt</string>
+    <string id="30059">Besuche https://www.dropbox.com/developers</string>
+    <string id="30060">Zeitplaner einschalten</string>
+    <string id="30061">Zeitplan</string>
+    <string id="30062">Stunde</string>
+    <string id="30063">Wochentag</string>
+    <string id="30064">Cron Plan</string>
+    <string id="30065">Sonntag</string>
+    <string id="30066">Montag</string>
+    <string id="30067">Dienstag</string>
+    <string id="30068">Mittwoch</string>
+    <string id="30069">Donnerstag</string>
+    <string id="30070">Freitag</string>
+    <string id="30071">Samstag</string>
+    <string id="30072">Jeden Tag</string>
+    <string id="30073">Jede Woche</string>
+    <string id="30074">Erster Tag eines Monats</string>
+    <string id="30075">Benutzerdefiniert</string>
+    <string id="30076">Herunterfahren nach Backup</string>
+    <string id="30077">XBMC neu starten</string>
+    <string id="30078">Du solltest XBMC neu starten, um fortzufahren</string>
+    <string id="30079">Nur heute</string>
+    <string id="30080">Profile</string>
+    <string id="30081">Arbeitsplaner wird nochmal ausgeführt am:</string>
+    <string id="30082">Fortschrittsbalken</string>
+    <string id="30083">Hintergrund Fortsschrittsbalken</string>
+    <string id="30084">Keine (Still)</string>
+    <string id="30085">Versionswarnung</string>
+</strings>

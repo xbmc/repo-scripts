@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- Vietnamese language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/vi/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
+<strings>
+    <string id="30011">Tổng Quan</string>
+    <string id="30023">Chế độ</string>
+    <string id="30032">Cơ sở dữ liệu</string>
+    <string id="30033">Playlist</string>
+    <string id="30065">Chủ Nhật</string>
+    <string id="30066">Thứ Hai</string>
+    <string id="30067">Thứ Ba</string>
+    <string id="30068">Thứ Tư</string>
+    <string id="30069">Thứ Năm</string>
+    <string id="30070">Thứ Sáu</string>
+    <string id="30071">Thứ Bảy</string>
+    <string id="30080">Tài khoản</string>
+</strings>

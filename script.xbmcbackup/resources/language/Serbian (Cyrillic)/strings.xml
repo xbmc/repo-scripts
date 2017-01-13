@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- Serbian (Cyrillic) language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/sr_RS/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
+<strings>
+    <string id="30011">Опште</string>
+    <string id="30023">Режим</string>
+    <string id="30032">База података</string>
+    <string id="30033">Списак за реп.</string>
+    <string id="30065">Недеља</string>
+    <string id="30066">Понедељак</string>
+    <string id="30067">Уторак</string>
+    <string id="30068">Среда</string>
+    <string id="30069">Четвртак</string>
+    <string id="30070">Петак</string>
+    <string id="30071">Субота</string>
+    <string id="30080">Профили</string>
+</strings>

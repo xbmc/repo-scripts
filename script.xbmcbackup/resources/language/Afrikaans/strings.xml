@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- Afrikaans language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/af/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
+<strings>
+    <string id="30010">XBMC Rugsteun</string>
+    <string id="30011">Algemeen</string>
+    <string id="30012">Lêer Seleksie</string>
+    <string id="30013">Skedulering</string>
+    <string id="30016">Rugsteun</string>
+    <string id="30017">Herstel</string>
+    <string id="30023">Modus</string>
+    <string id="30027">Dropbox</string>
+    <string id="30028">Dropbox Sleutel</string>
+    <string id="30029">Dropbox Geheim</string>
+    <string id="30032">Databasis</string>
+    <string id="30033">Speellys</string>
+    <string id="30036">Verpersoonlikte Gids 1</string>
+    <string id="30037">Verpersoonlikte Gids 2</string>
+    <string id="30059">Besoek https://www.dropbox.com/developers</string>
+    <string id="30062">Uur van Dag</string>
+    <string id="30063">Dag van Week</string>
+    <string id="30064">Cron Skedule</string>
+    <string id="30065">Sondag</string>
+    <string id="30066">Maandag</string>
+    <string id="30067">Dinsdag</string>
+    <string id="30068">Woensdag</string>
+    <string id="30069">Donderdag</string>
+    <string id="30070">Vrydag</string>
+    <string id="30071">Saterdag</string>
+    <string id="30072">Elke Dag</string>
+    <string id="30073">Elke Week</string>
+    <string id="30074">Eerste Dag van Maand</string>
+    <string id="30075">Pasgemaakte Skedule</string>
+    <string id="30079">Net Vandag</string>
+    <string id="30080">Profiele</string>
+    <string id="30085">Weergawe Waarskuwing</string>
+</strings>

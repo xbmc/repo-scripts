@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- Greek language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/el/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
+<strings>
+    <string id="30010">Αντίγραφο Ασφαλείας XBMC</string>
+    <string id="30011">Γενικά</string>
+    <string id="30012">Επιλογή Αρχείου</string>
+    <string id="30013">Προγραμματισμός</string>
+    <string id="30016">Δημιουργία Αντιγράφου</string>
+    <string id="30017">Επαναφορά</string>
+    <string id="30018">Εντοπισμός της Διαδρομής</string>
+    <string id="30019">Πληκτρολόγηση της Διαδρομής</string>
+    <string id="30020">Εντοπισμός Απομακρυσμένης Διαδρομής</string>
+    <string id="30021">Όνομα Φακέλου Αντιγράφου Ασφαλείας</string>
+    <string id="30022">Απεικόνιση Εξέλιξης</string>
+    <string id="30023">Μέθοδος</string>
+    <string id="30024">Πληκτρολόγηση Απομακρυσμένης Διαδρομής</string>
+    <string id="30025">Τύπος Απομακρυσμένης Διαδρομής</string>
+    <string id="30026">Πόσα αντίγραφα να διατηρηθούν (0 για όλα)</string>
+    <string id="30027">Dropbox</string>
+    <string id="30028">Κλειδί Dropbox</string>
+    <string id="30029">Μυστικό Dropbox</string>
+    <string id="30030">Πρόσθετα Χρήστη</string>
+    <string id="30031">Δεδομένα Πρόσθετου</string>
+    <string id="30032">Βάση δεδομένων</string>
+    <string id="30033">Λίστα Αναπαραγωγής</string>
+    <string id="30034">Μικρογραφίες/Fanart</string>
+    <string id="30035">Αρχεία Ρυθμίσεων</string>
+    <string id="30036">Προσαρμοσμένος Φάκελος 1</string>
+    <string id="30037">Προσαρμοσμένος Φάκελος 2</string>
+    <string id="30038">Εντοπίστηκαν Προηγμένες Ρυθμίσεις (Advanced Settings)</string>
+    <string id="30039">Το αρχείο advancedsettings πρέπει να επαναφερθεί πρώτο</string>
+    <string id="30040">Select Yes to restore this file and restart XBMC</string>
+    <string id="30041">Επιλέξτε Όχι για να συνεχίσετε</string>
+    <string id="30042">Συνέχιση Επαναφοράς</string>
+    <string id="30043">Το XBMC Backup εντόπισε μια μη ολοκληρωμένη επαναφορά</string>
+    <string id="30044">Επιθυμείτε να συνεχίσετε;</string>
+    <string id="30045">Σφάλμα: Δεν υπάρχει η απομακρυσμένη διαδρομή</string>
+    <string id="30046">Έναρξη</string>
+    <string id="30047">Τοπικός Φάκελος</string>
+    <string id="30048">Απομακρυσμένος Φάκελος</string>
+    <string id="30049">Συγκέντρωση λίστας αρχείων</string>
+    <string id="30050">Η Απομακρυσμένη Διαδρομή υπάρχει - μπορεί να έχει ήδη αρχεία μέσα!</string>
+    <string id="30051">Δημιουργία Λίστας Αρχείων</string>
+    <string id="30052">Εγγραφή αρχείου</string>
+    <string id="30053">Έναρξη προγραμματισμένου αντιγράφου ασφαλείας</string>
+    <string id="30054">Αφαίρεση αντιγράφου</string>
+    <string id="30056">Ελέγξτε το αρχείο καταγραφής για τη διεύθυνση URL έγκρισης του Dropbox</string>
+    <string id="30057">Πιέστε 'Επιλογή' κατά την έγκριση</string>
+    <string id="30058">Απαιτείται Κωδικός Προγραμματιστή Dropbox</string>
+    <string id="30059">Επισκεφθείτε το https://www.dropbox.com/developers</string>
+    <string id="30060">Ενεργοποίηση Προγραμματισμού</string>
+    <string id="30061">Προγραμματισμός</string>
+    <string id="30062">Ώρα της Μέρας</string>
+    <string id="30063">Μέρα της Εβδομάδας</string>
+    <string id="30064">Προγραμματισμός Cron</string>
+    <string id="30065">Κυριακή</string>
+    <string id="30066">Δευτέρα</string>
+    <string id="30067">Τρίτη</string>
+    <string id="30068">Τετάρτη</string>
+    <string id="30069">Πέμπτη</string>
+    <string id="30070">Παρασκευή</string>
+    <string id="30071">Σάββατο</string>
+    <string id="30072">Κάθε Μέρα</string>
+    <string id="30073">Κάθε Εβδομάδα</string>
+    <string id="30074">Πρώτη του Μηνός</string>
+    <string id="30075">Προσαρμοσμένος Προγραμματισμός</string>
+    <string id="30076">Τερματισμός μετά τη δημιουργία Αντιγράφου</string>
+    <string id="30077">Επανεκκίνηση XBMC</string>
+    <string id="30078">Πρέπει να επανεκκινήσετε το XBMC για να συνεχίσετε</string>
+    <string id="30079">Μόνο Σήμερα</string>
+    <string id="30080">Προφίλ</string>
+    <string id="30081">Ο προγραμματισμός θα γίνει ξανά στις</string>
+    <string id="30082">Μπάρα Εξέλιξης</string>
+    <string id="30083">Μπάρα Εξέλιξης Υποβάθρου</string>
+    <string id="30084">Κανένα (Αθόρυβο)</string>
+    <string id="30085">Προειδοποίηση Έκδοσης</string>
+    <string id="30086">Η έκδοση του XBMC δεν είναι αυτή που χρησιμοποιήθηκε για τη δημιουργία του αρχείου</string>
+</strings>

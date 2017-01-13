@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- Catalan language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/ca/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
+<strings>
+    <string id="30010">XBMC Backup</string>
+    <string id="30011">General</string>
+    <string id="30012">Sel·lecció de fitxers</string>
+    <string id="30013">Planificació</string>
+    <string id="30016">Còpia de seguretat</string>
+    <string id="30017">Restauració</string>
+    <string id="30018">Navega per la ruta</string>
+    <string id="30019">Tipus de ruta</string>
+    <string id="30020">Navega per la ruta remota</string>
+    <string id="30021">Nom de la carpeta de la còpia de seguretat</string>
+    <string id="30023">Mode</string>
+    <string id="30024">Tipus de ruta remota</string>
+    <string id="30025">Tipus de ruta remota</string>
+    <string id="30026">Còpies de seguretat a mantenir (0 per totes)</string>
+    <string id="30027">Dropbox</string>
+    <string id="30028">Dropbox Key</string>
+    <string id="30029">Dropbox Secret</string>
+    <string id="30030">Complements d'usuari</string>
+    <string id="30031">Dades del complement</string>
+    <string id="30032">Base de dades</string>
+    <string id="30033">Llista de reproducció</string>
+    <string id="30034">Miniatures/Fanart</string>
+    <string id="30035">Fitxers de configuració</string>
+    <string id="30036">Directori personalitzat 1</string>
+    <string id="30037">Directori personalitzat 2</string>
+    <string id="30038">S'ha detectat la configuració avançada</string>
+    <string id="30039">El fitxer de configuració avançada s'ha de restaurar primer</string>
+    <string id="30040">Seleccioneu «Sí» per restaurar aquest fitxer i reiniciar l'XBMC</string>
+    <string id="30041">Seleccioneu «No» per continuar</string>
+    <string id="30042">Repren la restauració</string>
+    <string id="30043">L'XBMC Backup ha detectat una restauració inacabada</string>
+    <string id="30044">Voleu continuar?</string>
+    <string id="30045">Error: La ruta remota no existeix</string>
+    <string id="30046">S'està iniciant</string>
+    <string id="30047">Directori local</string>
+    <string id="30048">Directori remot</string>
+    <string id="30049">S'està recopilant la llista de fitxers</string>
+    <string id="30050">La ruta remota existeix - hi pot haver fitxers antics!</string>
+    <string id="30051">S'està creant la llista de fitxers</string>
+    <string id="30052">S'està escrivint el fitxer</string>
+    <string id="30053">S'està iniciant la còpia de seguretat planificada</string>
+    <string id="30054">S'està eliminant la còpia de seguretat</string>
+    <string id="30056">Comproveu el registre per la URL d'autorització del Dropbox</string>
+    <string id="30057">Feu clic a «D'acord» quan hagi estat autoritzat</string>
+    <string id="30058">Es necessita el codi de desenvolupador del Dropbox</string>
+    <string id="30059">Visiteu https://www.dropbox.com/developers</string>
+    <string id="30060">Habilita el planificador</string>
+    <string id="30061">Planificació</string>
+    <string id="30062">Hora del dia</string>
+    <string id="30063">Dia de la setmana</string>
+    <string id="30064">Planificació Cron</string>
+    <string id="30065">Diumenge</string>
+    <string id="30066">Dilluns</string>
+    <string id="30067">Dimarts</string>
+    <string id="30068">Dimecres</string>
+    <string id="30069">Dijous</string>
+    <string id="30070">Divendres</string>
+    <string id="30071">Dissabte</string>
+    <string id="30072">Cada dia</string>
+    <string id="30073">Cada setmana</string>
+    <string id="30074">Primer dia del mes</string>
+    <string id="30075">Planificació personalitzada</string>
+    <string id="30076">Apaga després de la còpia de seguretat</string>
+    <string id="30077">Reinicieu l'XBMC</string>
+    <string id="30078">És recomanable que reinicieu l'XBMC per continuar</string>
+    <string id="30079">Només avui</string>
+    <string id="30080">Perfils</string>
+    <string id="30081">El planificador de tasques s'executarà de nou</string>
+    <string id="30082">Barra de progrés</string>
+    <string id="30084">Cap (Silenciós)</string>
+    <string id="30086">Aquesta versió d'XBMC és diferent que la utilitzada per crear el fitxer</string>
+</strings>

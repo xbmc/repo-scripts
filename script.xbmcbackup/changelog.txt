@@ -1,0 +1,287 @@
+Version 1.0.8
+
+bug fixes
+updated dropbox api
+
+Version 1.0.7
+
+updated google client api version
+
+Version 1.0.6
+
+fix for custom directories not working recursively
+added progress for zip extraction - hopefully helps with extract errors
+
+Version 1.0.5
+
+added google drive support
+make compression setting compatible with python 2.6 and above
+added settings dialog option - thanks ed_davidson
+fix for growing backups - thanks brokeh
+
+Version 1.0.4
+
+exit if we can't delete the old archive, non recoverable
+
+Version 1.0.3
+
+added "delete auth" dialog to delete oauth files in settings
+
+Version 1.0.2
+
+updated xbmc.python version to 2.19.0 - should be helix only
+
+Version 1.0.0
+
+rebranded as "Backup"
+removed XBMC references and replaced with Kodi
+tweaked file walking for Helix
+
+Version 0.5.9
+
+fixed dropbox unicode error
+create restored version of guisettings for easy local restoration
+
+Version 0.5.8.7
+
+allow limited updating of guisettings file through json
+
+Version 0.5.8.6
+
+show notification if some files failed
+check if destination is writeable - thanks war59312
+
+Version 0.5.8.5
+
+added custom library nodes to config backup options - thanks Ned Scott
+
+Version 0.5.8.4
+
+backup compression should use zip64 as sizes may be over 2GB
+need to expand out path -bugfix
+
+Version 0.5.8
+
+fixes path substitution errors
+
+Version 0.5.7
+
+added option to compress backups, uses local source for staging the zip before sending to remote
+
+Version 0.5.6
+
+fix dropbox delete recursion error - thanks durd
+updated language files
+
+Version 0.5.5
+
+fix for dropbox errors during repeated file upload attempts
+
+Version 0.5.4
+
+check xbmc version when doing a restore
+
+Version 0.5.3
+
+updated python version
+
+Version 0.5.2
+
+added additional script and window parameters, thanks Samu-rai
+
+critical error in backup rotation
+
+updated progress bar display
+
+Version 0.5.1
+
+updated for new Gotham xbmc python updates
+
+Version 0.5.0
+
+New Version for Gotham
+
+Version 0.4.6
+
+modified backup folder names to include time, also modified display listing
+
+Version 0.4.5
+
+added version info to logs
+
+added try/catch for unicode errors
+
+Version 0.4.4
+
+modified the check for invalid file types
+
+Version 0.4.3
+
+added error message if remote directory is blank
+
+added license tag
+
+Version 0.4.2
+
+Added support for userdata/profiles folder - thanks TUSSFC
+
+Version 0.4.1
+
+added encode() around notifications
+
+Version 0.4.0
+
+fixed settings display error - thanks zer04c
+
+Version 0.3.9
+
+added "just once" scheduler for one-off type backups
+show notification on scheduler update
+updated language files from Transifex
+
+Version 0.3.8
+
+added advancedsettings check on restore. prompts user to restore only this file and restart xbmc to continue. This fixes issues where path substitution was not working during restores - thanks ctrlbru
+
+Version 0.3.7
+
+added optional addon.xml tags
+
+update language files from Transifex
+
+Version 0.3.6
+
+added up to 2 custom directories, can be toggled on/off
+
+added a check for backup verification before rotation - no more deleting non backup related files
+
+use monitor class for onSettingsChanged method
+
+Version 0.3.5
+
+test of custom directories - only 1 at the moment
+
+Version 0.3.4
+
+added ability to take parameters via RunScript() or JSONRPC.Addons.ExecuteAddon()
+
+Version 0.3.3
+
+updated xbmc python version (2.1.0)
+
+Version 0.3.2
+
+added settings for user provided Dropbox key and secret
+
+Version 0.3.1
+
+added try/except for multiple character encodings
+
+remove token.txt file if Dropbox Authorization is revoked
+
+can shutdown xbmc after scheduled backup
+
+Version 0.3.0
+
+major vfs rewrite 
+
+Added Dropbox as storage target
+
+updated gui/removed settings - thanks SFX Group for idea!
+
+Version 0.2.3
+
+first official frodo build
+
+Version 0.2.2
+
+fix for backup rotation sort
+
+Version 0.2.1
+
+added ability to rotate backups, keeping a set number of days
+
+Version 0.2.0
+
+removed the vfs.py helper library
+
+default.py file now uses xbmcvfs python library exclusively for listing directories and copy operations
+
+Version 0.1.7
+
+minor bug fixes and translations updates
+
+Version 0.1.6
+
+merged scheduler branch with master, can now schedule backups on an interval
+
+Version 0.1.5
+
+pulled xbmcbackup class into separate library
+
+Version 0.1.4
+
+added more verbose error message for incorrect paths
+
+Version 0.1.3
+
+backup folder format - thanks zeroram
+
+added German translations - thanks dersphere
+
+removed need for separate verbose logging setting
+
+updated utf-8 encoding for all logging
+
+backup now uses date as folder name, restore allows user to type date of last backup
+
+Version 0.1.2
+
+added French language translation - thanks mikebzh44
+
+added some utf-8 encoding tags to filenames
+
+Version 0.1.1
+
+added check for key in vfs.py - Thanks Martijn!
+
+Version 0.1.0
+
+removed transparency from icon.png
+
+Version 0.0.9 
+
+modified vfs.py again to filter out xsp files (smart playlists). Created running list for these types of compressed files
+
+added enable/disable logging toggle in settings
+
+Version 0.0.8
+
+modified vfs.py script to exclude handling zip files as directories, added keymap and peripheral data folders in the "config" section
+
+Version 0.0.7
+
+removed "restore.txt" file and now write file listing to memory list instead
+
+Version 0.0.6
+
+Added the vfs module created by paddycarey
+File Selection is now followed for both backup and restore options
+
+Version 0.0.5
+
+Added option to manually type a path rather than browse for one (only one used)
+Show progress bar right away so you know this is doing something
+
+Version 0.0.4
+
+Finished code for restore mode. 
+
+Version 0.0.3
+
+Added progress bar and "silent" option for running on startup or as a script
+
+Version 0.0.2
+
+First version, should backup directories as needed
+

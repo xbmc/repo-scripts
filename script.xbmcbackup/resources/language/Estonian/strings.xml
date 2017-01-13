@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- Estonian language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/et/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
+<strings>
+    <string id="30011">Üldine</string>
+    <string id="30023">Režiim</string>
+    <string id="30032">Andmebaas</string>
+    <string id="30033">Mängukava</string>
+    <string id="30061">Ajakava</string>
+    <string id="30065">pühapäev</string>
+    <string id="30066">esmaspäev</string>
+    <string id="30067">teisipäev</string>
+    <string id="30068">kolmapäev</string>
+    <string id="30069">neljapäev</string>
+    <string id="30070">reede</string>
+    <string id="30071">laupäev</string>
+    <string id="30077">Taaskäivita XBMC</string>
+    <string id="30080">Profiilid</string>
+</strings>
