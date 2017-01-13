@@ -3,13 +3,13 @@
 	<zorder>6</zorder>
 	<controls>
 		<control type="group">
-			<animation type="Conditional" condition="StringCompare(Window.Property(SlideView.Splash),hide)">
+			<animation type="Conditional" condition="String.IsEqual(Window.Property(SlideView.Splash),hide)">
 				<effect type="fade" start="0" end="100" time="500"/>
 			</animation>
 			<control type="group">
-				<visible>StringCompare(Window.Property(SlideView.Background),show)</visible>
+				<visible>String.IsEqual(Window.Property(SlideView.Background),show)</visible>
 				<control type="group">
-					<animation type="Conditional" condition="StringCompare(Window.Property(SlideView.Fade11),1)">
+					<animation type="Conditional" condition="String.IsEqual(Window.Property(SlideView.Fade11),1)">
 						<effect type="fade" start="100" end="0" time="1000"/>
 					</animation>
 					<control type="image" id="5">
@@ -23,7 +23,7 @@
 					</control>
 				</control>
 				<control type="group">
-					<animation type="Conditional" condition="StringCompare(Window.Property(SlideView.Fade12),1)">
+					<animation type="Conditional" condition="String.IsEqual(Window.Property(SlideView.Fade12),1)">
 						<effect type="fade" start="100" end="0" time="1000"/>
 					</animation>
 					<control type="image" id="6">
@@ -46,7 +46,7 @@
 				</control>
 			</control>
 			<control type="group">
-				<animation type="Conditional" condition="StringCompare(Window.Property(SlideView.Fade1),1)">
+				<animation type="Conditional" condition="String.IsEqual(Window.Property(SlideView.Fade1),1)">
 					<effect type="fade" start="100" end="0" time="1000"/>
 				</animation>
 				<control type="image" id="1">
@@ -57,16 +57,16 @@
 					<texture background="true"></texture>
 					<aspectratio>keep</aspectratio>
 					<fadetime>0</fadetime>
-					<animation type="Conditional" condition="StringCompare(Window.Property(SlideView.Slide1),0)" reversible="false">
+					<animation type="Conditional" condition="String.IsEqual(Window.Property(SlideView.Slide1),0)" reversible="false">
 						<effect type="slide" tween="cubic" easing="inout" start="1280,0" end="0,0" time="500"/>
 					</animation>
-					<animation type="Conditional" condition="StringCompare(Window.Property(SlideView.Slide1),1)" reversible="false">
+					<animation type="Conditional" condition="String.IsEqual(Window.Property(SlideView.Slide1),1)" reversible="false">
 						<effect type="slide" tween="cubic" easing="inout" start="0,0" end="-1280,0" time="500"/>
 					</animation>
 				</control>
 			</control>
 			<control type="group">
-				<animation type="Conditional" condition="StringCompare(Window.Property(SlideView.Fade2),1)">
+				<animation type="Conditional" condition="String.IsEqual(Window.Property(SlideView.Fade2),1)">
 					<effect type="fade" start="100" end="0" time="1000"/>
 				</animation>
 				<control type="image" id="2">
@@ -77,16 +77,16 @@
 					<texture background="true"></texture>
 					<aspectratio>keep</aspectratio>
 					<fadetime>0</fadetime>
-					<animation type="Conditional" condition="StringCompare(Window.Property(SlideView.Slide2),0)" reversible="false">
+					<animation type="Conditional" condition="String.IsEqual(Window.Property(SlideView.Slide2),0)" reversible="false">
 						<effect type="slide" tween="cubic" easing="inout" start="1280,0" end="0,0" time="500"/>
 					</animation>
-					<animation type="Conditional" condition="StringCompare(Window.Property(SlideView.Slide2),1)" reversible="false">
+					<animation type="Conditional" condition="String.IsEqual(Window.Property(SlideView.Slide2),1)" reversible="false">
 						<effect type="slide" tween="cubic" easing="inout" start="0,0" end="-1280,0" time="500"/>
 					</animation>
 				</control>
 			</control>
 			<control type="group">
-				<animation type="Conditional" condition="StringCompare(Window.Property(SlideView.Fade1),1)">
+				<animation type="Conditional" condition="String.IsEqual(Window.Property(SlideView.Fade1),1)">
 					<effect type="fade" start="100" end="0" time="1000"/>
 				</animation>
 				<control type="image" id="3">
@@ -97,16 +97,16 @@
 					<texture background="true"></texture>
 					<aspectratio>scale</aspectratio>
 					<fadetime>0</fadetime>
-					<animation type="Conditional" condition="StringCompare(Window.Property(SlideView.Slide1),0)" reversible="false">
+					<animation type="Conditional" condition="String.IsEqual(Window.Property(SlideView.Slide1),0)" reversible="false">
 						<effect type="slide" tween="cubic" easing="inout" start="1280,0" end="0,0" time="500"/>
 					</animation>
-					<animation type="Conditional" condition="StringCompare(Window.Property(SlideView.Slide1),1)" reversible="false">
+					<animation type="Conditional" condition="String.IsEqual(Window.Property(SlideView.Slide1),1)" reversible="false">
 						<effect type="slide" tween="cubic" easing="inout" start="0,0" end="-1280,0" time="500"/>
 					</animation>
 				</control>
 			</control>
 			<control type="group">
-				<animation type="Conditional" condition="StringCompare(Window.Property(SlideView.Fade2),1)">
+				<animation type="Conditional" condition="String.IsEqual(Window.Property(SlideView.Fade2),1)">
 					<effect type="fade" start="100" end="0" time="1000"/>
 				</animation>
 				<control type="image" id="4">
@@ -117,10 +117,10 @@
 					<texture background="true"></texture>
 					<aspectratio>scale</aspectratio>
 					<fadetime>0</fadetime>
-					<animation type="Conditional" condition="StringCompare(Window.Property(SlideView.Slide2),0)" reversible="false">
+					<animation type="Conditional" condition="String.IsEqual(Window.Property(SlideView.Slide2),0)" reversible="false">
 						<effect type="slide" tween="cubic" easing="inout" start="1280,0" end="0,0" time="500"/>
 					</animation>
-					<animation type="Conditional" condition="StringCompare(Window.Property(SlideView.Slide2),1)" reversible="false">
+					<animation type="Conditional" condition="String.IsEqual(Window.Property(SlideView.Slide2),1)" reversible="false">
 						<effect type="slide" tween="cubic" easing="inout" start="0,0" end="-1280,0" time="500"/>
 					</animation>
 				</control>
@@ -162,7 +162,7 @@
 				<posx>20</posx>
 				<posy>575</posy>
 				<animation effect="fade" start="80" end="80" time="0" condition="true">Conditional</animation>
-				<visible>Player.HasAudio + StringCompare(Window.Property(SlideView.Music),show)</visible>
+				<visible>Player.HasAudio + String.IsEqual(Window.Property(SlideView.Music),show)</visible>
 				<control type="image">
 					<posx>0</posx>
 					<posy>-5</posy>
@@ -259,7 +259,7 @@
 			<animation type="WindowOpen">
 				<effect type="fade" start="0" end="100" time="1000" delay="500"/>
 			</animation>
-			<animation type="Conditional" condition="StringCompare(Window.Property(SlideView.Splash),hide)">
+			<animation type="Conditional" condition="String.IsEqual(Window.Property(SlideView.Splash),hide)">
 				<effect type="fade" start="100" end="0" time="500"/>
 			</animation>
 		</control>
