@@ -1,0 +1,136 @@
+# KODI Media Center language file
+# Addon Name: libmediathek3
+# Addon id: script.module.libmediathek3
+# Addon version: 1.2.1
+# Addon Provider: membrane
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Main\n"
+
+msgctxt "#31000"
+msgid "This month"
+msgstr "Dieser Monat"
+
+msgctxt "#31001"
+msgid "January"
+msgstr "Januar"
+
+msgctxt "#31002"
+msgid "February"
+msgstr "Februar"
+
+msgctxt "#31003"
+msgid "March"
+msgstr "März"
+
+msgctxt "#31004"
+msgid "April"
+msgstr "April"
+
+msgctxt "#31005"
+msgid "May"
+msgstr "Mai"
+
+msgctxt "#31006"
+msgid "June"
+msgstr "Juni"
+
+msgctxt "#31007"
+msgid "July"
+msgstr "Juli"
+
+msgctxt "#31008"
+msgid "August"
+msgstr "August"
+
+msgctxt "#31009"
+msgid "September"
+msgstr "September"
+
+msgctxt "#31010"
+msgid "October"
+msgstr "Oktober"
+
+msgctxt "#31011"
+msgid "November"
+msgstr "November"
+
+msgctxt "#31012"
+msgid "December"
+msgstr "Dezember"
+
+msgctxt "#31013"
+msgid "Sunday"
+msgstr "Sonntag"
+
+msgctxt "#31014"
+msgid "Monday"
+msgstr "Montag"
+
+msgctxt "#31015"
+msgid "Tuesday"
+msgstr "Dienstag"
+
+msgctxt "#31016"
+msgid "Wednesday"
+msgstr "Mittwoch"
+
+msgctxt "#31017"
+msgid "Thursday"
+msgstr "Donnerstag"
+
+msgctxt "#31018"
+msgid "Friday"
+msgstr "Freitag"
+
+msgctxt "#31019"
+msgid "Saturday"
+msgstr "Samstag"
+
+msgctxt "#31020"
+msgid "Today"
+msgstr "Heute"
+
+msgctxt "#31021"
+msgid "Yesterday"
+msgstr "Gestern"
+
+msgctxt "#31022"
+msgid "Choose date"
+msgstr "Datum aussuchen"
+
+msgctxt "#31030"
+msgid "New"
+msgstr "Neu"
+
+msgctxt "#31031"
+msgid "Most viewed"
+msgstr "Meistgesehen"
+
+msgctxt "#31032"
+msgid "Shows by A-Z"
+msgstr "Sendungen nach A-Z"
+
+msgctxt "#31033"
+msgid "Shows by date"
+msgstr "Sendungen nach Datum"
+
+msgctxt "#31034"
+msgid "Rubrics"
+msgstr "Rubriken"
+
+msgctxt "#31035"
+msgid "Topics"
+msgstr "Themen"
+
+msgctxt "#31039"
+msgid "Search"
+msgstr "Suche"
+
+msgctxt "#31040"
+msgid "More Entries"
+msgstr "Weitere Beiträge"
+
+msgctxt "#31041"
+msgid "Archive"
+msgstr "Archiv"
