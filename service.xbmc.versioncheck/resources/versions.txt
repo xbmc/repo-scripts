@@ -167,6 +167,15 @@
         ],
         "releasecandidate": [
             {
+                "major": "17",
+                "minor": "0",
+                "tag": "releasecandidate",
+                "tagversion":"3",
+                "revision": "20170111-4d93228",
+                "extrainfo": "RC3",
+                "addon_support": "yes"
+            },
+            {
                 "major": "16",
                 "minor": "0",
                 "tag": "releasecandidate",
