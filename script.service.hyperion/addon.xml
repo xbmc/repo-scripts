@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.service.hyperion" name="Hyperion Ambilight" version="1.0.2" provider-name="hyperion-project">
+  <requires>
+    <import addon="xbmc.python" version="2.1.0"/>
+  </requires>
+  <extension point="xbmc.service" library="addon.py" start="login"></extension>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en">Capture and send your current Kodi-picture to your Hyperion-Ambilight.</summary>
+	<summary lang="de">Übermittle das aktuelle Kodi-Bild an dein Hyperion-Ambilight.</summary>
+    <description lang="en">Hyperion is an open source ambilight clone which runs on many devices.[CR]This addon sends through the Hyperion PROTO-port your current picture to your Hyperion deamon for further processing like black border detection or smoothing.[CR][CR][B][COLOR red]ATTENTION:[/B][/COLOR][CR]1. This addon is not for RPi`s.[CR]2. Don´t use this Addon with enabled hardware acceleration on Android boxes/systems! It won´t work!</description>
+    <description lang="de">Hyperion ist ein Ambilight-Klon, welcher auf vielen Plattformen lauffähig ist.[CR]Dieses Addon sendet über den PROTO-Port laufend Bilder an Hyperion.[CR][CR][B][COLOR red]ACHTUNG:[/B][/COLOR][CR]1. Benutze dieses Addon nicht auf einem RaspberryPi.[CR]2. Benutze dieses Addon nicht mit aktivierter Hardwarebeschleunigung auf Android Boxen/Systemen! Es funktioniert nicht!</description>
+    <disclaimer lang="en">If issues occurs, please visit the Hyperion wiki/forum (wiki.hyperion-project.org).</disclaimer>
+	<disclaimer lang="de">Bei Problemen findet ihr Hilfe im Hyperion Wiki/Forum (wiki.hyperion-project.org).</disclaimer>
+	<language>en de</language>
+	<platform>all</platform>
+	<website>www.hyperion-project.org</website>
+	<forum>forum.hyperion-project.org</forum>
+	<source>https://github.com/hyperion-project/script.service.hyperion</source>
+	<license>MIT</license>
+  </extension>
+</addon>
