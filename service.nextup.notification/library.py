@@ -19,16 +19,10 @@
 #    This script is based on service.skin.widgets
 #    Thanks to the original authors
 
-import sys
 import xbmc
 import xbmcgui
 import xbmcaddon
-from time import gmtime, strftime
-
-if sys.version_info < (2, 7):
-    import simplejson as json
-else:
-    import json
+import json
 
 __addon__ = xbmcaddon.Addon()
 
