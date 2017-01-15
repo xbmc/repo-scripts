@@ -3,9 +3,14 @@
 	<category label="32000">
 		<setting id="enable-hawaii" type="bool" label="32001" default="true" />
 		<setting id="enable-london" type="bool" label="32002" default="true" />
-		<setting id="enable-nyork" type="bool" label="32003" default="true" />
-		<setting id="enable-sfrancisco" type="bool" label="32004" default="true" />
+		<setting id="enable-newyorkcity" type="bool" label="32003" default="true" />
+		<setting id="enable-sanfrancisco" type="bool" label="32004" default="true" />
 		<setting id="enable-china" type="bool" label="32005" default="true" />
+		<setting id="enable-greenland" type="bool" label="32020" default="true" />
+		<setting id="enable-dubai" type="bool" label="32021" default="true" />
+		<setting id="enable-losangeles" type="bool" label="32022" default="true" />
+		<setting id="enable-liwa" type="bool" label="32023" default="true" />
+		<setting id="enable-hongkong" type="bool" label="32024" default="true" />
 		<setting id="time-of-day" type="enum" values="All|Day only|Night only|Smart" label="32006" visible="true" default="0"/>
 		<setting label="" type="lsep" />
 		<setting id="show-notifications" type="bool" label="32018" default="true" />

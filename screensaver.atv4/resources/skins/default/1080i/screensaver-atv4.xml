@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<window type="window">
+    <controls>
+
+        <control type="image" id="1">
+            <description>Background image</description>
+            <posx>0</posx>
+            <posy>0</posy>
+            <colordiffuse>FF555555</colordiffuse>
+            <aspectratio scalediffuse="false" align="center" aligny="center">scale</aspectratio>
+            <width>1920</width>
+            <height>1080</height>
+            <texture>sanfrancisco.jpg</texture>
+        </control>
+        <control type="videowindow" id="2">
+			<description>VideoWindow</description>
+		    <posx>0</posx>
+		    <posy>0</posy>
+		    <width>1920</width>
+		    <height>1080</height>
+		    <visible>true</visible>
+		</control>
+		<control type="image">
+				<description>Busy animation</description>
+				<posx>40</posx>
+				<posy>1000</posy>
+				<width>30</width>
+				<height>30</height>
+				<texture>busy.png</texture>
+				<aspectratio>keep</aspectratio>
+				<animation effect="rotate" start="0" end="360" center="55,1015" time="1200" loop="true" condition="true">conditional</animation>
+				<visible>!IsEmpty(Window(home).Property(loading))</visible>
+			</control>
+		
+		<control type="label" id ="4">
+				<top>975</top>
+				<left>90</left>
+				<width>600</width>
+				<height>90</height>
+				<font>font11</font>
+				<textcolor>88FFFFFF</textcolor>
+				<aligny>center</aligny>
+				<align>left</align>
+				<label></label>
+				<visible>!IsEmpty(Window(home).Property(loading))</visible>
+		</control>
+		<control type="label" id="3">
+				<top>975</top>
+				<left>40</left>
+				<width>600</width>
+				<height>90</height>
+				<font>font11</font>
+				<textcolor>88FFFFFF</textcolor>
+				<aligny>center</aligny>
+				<align>left</align>
+				<label></label>
+				<visible>false</visible>
+		</control>
+		
+   </controls>
+</window>

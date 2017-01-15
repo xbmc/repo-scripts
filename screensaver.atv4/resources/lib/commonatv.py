@@ -19,10 +19,16 @@
 
 import xbmcaddon
 import xbmcgui
+import os
 
 addon = xbmcaddon.Addon('screensaver.atv4')
 addon_path = addon.getAddonInfo('path')
 dialog = xbmcgui.Dialog()
+
+applefeed = "http://a1.phobos.apple.com/us/r1000/000/Features/atv/AutumnResources/videos/entries.json"
+applelocalfeed = os.path.join(addon_path,"resources","entries.json")
+places = ["All", "London", "Hawaii", "New York City", "San Francisco", "China", "Greenland", "Dubai", "Los Angeles", "Liwa", "Hong Kong"]
+
 
 def translate(text):
 	return addon.getLocalizedString(text).encode('utf-8')
