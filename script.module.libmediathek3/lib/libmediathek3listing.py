@@ -78,7 +78,6 @@ def addEntries(l):
 		if 'rating' in d:
 			ilabels['rating'] = d['rating']
 		if 'type' in d and d['type'] != 'nextPage':
-			xbmc.log('type')
 			if d['type'] == 'video' or d['type'] == 'live' or d['type'] == 'date' or d['type'] == 'clip':
 				ilabels['mediatype'] = 'video'
 			elif d['type'] == 'shows' or d['type'] == 'season':
@@ -101,22 +100,22 @@ def addEntries(l):
 		art['icon'] = d.get('channelLogo','')
 		liz.setArt(art)
 		
-		#if d['type'] == 'clip':
-		if False:
-			xbmc.log('ignoring clip')
-		elif d.get('type',None) == 'video' or d.get('type',None) == 'live' or d.get('type',None) == 'date' or d.get('type',None) == 'clip' or d.get('type',None) == 'episode':
-			xbmcplugin.setContent( handle=int( sys.argv[ 1 ] ), content="episodes" )
+		if d.get('type',None) == 'video' or d.get('type',None) == 'live' or d.get('type',None) == 'date' or d.get('type',None) == 'clip' or d.get('type',None) == 'episode':
+			#xbmcplugin.setContent( handle=int( sys.argv[ 1 ] ), content="episodes" )
 			liz.setProperty('IsPlayable', 'true')
 			lists.append([u,liz,False])
-		elif 'type' in d and d['type'] == 'nextPage':
-			xbmcplugin.setContent( handle=int( sys.argv[ 1 ] ), content="files" )
+		else:
 			lists.append([u,liz,True])
-		elif d['type'] == 'shows' or d['type'] == 'season':
+		
+
+	if len(l) > 0:
+		type = l[0]['_type']
+		if type == 'video' or type == 'live' or type == 'date' or type == 'clip' or type == 'episode':
+			xbmcplugin.setContent( handle=int( sys.argv[ 1 ] ), content="episodes" )
+		elif type == 'shows' or type == 'season':
 			xbmcplugin.setContent( handle=int( sys.argv[ 1 ] ), content="tvshows" )
-			lists.append([u,liz,True])
 		else:
 			xbmcplugin.setContent( handle=int( sys.argv[ 1 ] ), content="files" )
-			lists.append([u,liz,True])
 			
 	xbmcplugin.addDirectoryItems(int(sys.argv[1]), lists)
 
