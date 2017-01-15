@@ -21,6 +21,7 @@ import urllib2
 import xbmc
 import xbmcaddon
 import xbmcgui
+import xbmcvfs
 import os
 import time
 import json
@@ -38,17 +39,20 @@ class Downloader:
         self.dp = xbmcgui.DialogProgress()
         self.dp.create(translate(32000),translate(32019))
         #video checksums - download only the videos that were not downloaded previously
-        f=open(os.path.join(addon_path,"resources","checksums.json"))
-        checksums = f.read()
-        f.close()
+        with open(os.path.join(addon_path,"resources","checksums.json")) as f:
+            checksums = f.read()
+        
         checksums = json.loads(checksums)
-        print checksums
         for url in urllist:
             if not self.stop:
                 video_file = url.split("/")[-1]
                 localfile = os.path.join(addon.getSetting("download-folder"),video_file)
-                if os.path.exists(localfile):
-                    file_checksum = hashlib.md5(open(localfile, 'rb').read()).hexdigest()
+
+                if xbmcvfs.exists(localfile):
+                    f = xbmcvfs.File(xbmc.translatePath(localfile))
+                    file_checksum = hashlib.md5(f.read()).hexdigest()
+                    f.close()
+            
                     if video_file in checksums.keys() and checksums[video_file] != file_checksum:
                        self.download(localfile,url,url.split("/")[-1]) 
                 else:
@@ -57,22 +61,39 @@ class Downloader:
 
 
     def download(self,path,url,name):
-        try:
-            if os.path.isfile(path) is True:
-                while os.path.exists(path): 
-                    os.remove(path); break
-        except: pass
+        if xbmcvfs.exists(path):
+            xbmcvfs.delete(path)
+
         self.dp.update(0,name)
-        self.path = path
+        self.path = xbmc.translatePath(path)
         xbmc.sleep(500)
         start_time = time.time()
-        try: 
-            urllib.urlretrieve(url, path, lambda nb, bs, fs: self.dialogdown(name,nb, bs, fs, self.dp, start_time))
-            self.total_downloaded += 1
-            return True
-        except:
-            return False
-            
+
+        u = urllib2.urlopen(url)
+        meta = u.info()
+        meta_func = meta.getheaders if hasattr(meta, 'getheaders') else meta.get_all
+        meta_length = meta_func("Content-Length")
+        file_size = None
+        block_sz = 8192
+        if meta_length:
+            file_size = int(meta_length[0])
+        
+        file_size_dl = 0
+        f = xbmcvfs.File(self.path, 'wb')
+        numblocks = 0
+
+        while not self.stop:
+            buffer = u.read(block_sz)
+            if not buffer:
+                break
+
+            f.write(buffer)
+            file_size_dl += len(buffer)
+            numblocks += 1
+            self.dialogdown(name,numblocks,block_sz,file_size,self.dp,start_time)
+
+        f.close()
+        return
 
     def dialogdown(self,name,numblocks, blocksize, filesize, dp, start_time):
         try:
@@ -90,13 +111,11 @@ class Downloader:
         except: 
             percent = 100 
             dp.update(percent) 
+
         if dp.iscanceled():
             self.stop = True
             dp.close()
-            try: os.remove(self.path)
-            except: pass
-            raise StopDownloading('Stopped Downloading')
+            try: xbmcvfs.delete(self.path)
+            except: xbmc.log(msg='[Aerial ScreenSavers] Could not remove file', level=xbmc.LOGERROR)
+            xbmc.log(msg='[Aerial ScreenSavers] Download canceled', level=xbmc.LOGDEBUG)
             
-class StopDownloading(Exception):
-    def __init__(self, value): self.value = value 
-    def __str__(self): return repr(self.value)

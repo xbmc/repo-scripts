@@ -94,3 +94,22 @@ msgctxt "#32019"
 msgid "Checking which videos to download..."
 msgstr "A verificar que vídeos transferir"
 
+msgctxt "#32020"
+msgid "Enable Greenland"
+msgstr "Ativar Gronelandia"
+
+msgctxt "#32021"
+msgid "Enable Dubai"
+msgstr "Ativar Dubai"
+
+msgctxt "#32022"
+msgid "Enable Los Angeles"
+msgstr "Ativar Los Angeles"
+
+msgctxt "#32023"
+msgid "Enable Liwa"
+msgstr "Ativar Liwa"
+
+msgctxt "#32024"
+msgid "Enable Hong Kong"
+msgstr "Ativar Hong Kong"

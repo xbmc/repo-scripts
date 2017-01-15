@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="screensaver.atv4" name="Aerial" version="1.3.2" provider-name="enen92">
+<addon id="screensaver.atv4" name="Aerial" version="1.3.3" provider-name="enen92">
 	<requires>
 		<import addon="xbmc.python" version="2.19.0"/>
 	</requires>
@@ -12,4 +12,19 @@
 		<summary lang="en">Apple TV 4 Screensavers in Kodi</summary>
 		<description lang="en">This screensaver addon enables the new Apple TV4 aerial screensavers in Kodi</description>
     </extension>
+    <news>v1.3.3  (2017-1-15) [CR]
+		- Added new videos from Apple [CR]
+		- Added new automated script [CR]
+		- Change downloaded function to support xbmc vfs [CR]
+		- Added 1080i interface [CR]
+		- Added Screenshots [CR]
+	</news>
+    <assets>
+	    <icon>icon.png</icon>
+	    <fanart>fanart.jpg</fanart>
+	    <screenshot>resources/screenshots/screenshot-01.jpg</screenshot>
+	    <screenshot>resources/screenshots/screenshot-02.jpg</screenshot>
+	    <screenshot>resources/screenshots/screenshot-03.jpg</screenshot>
+	    <screenshot>resources/screenshots/screenshot-04.jpg</screenshot>
+	</assets>
 </addon>
