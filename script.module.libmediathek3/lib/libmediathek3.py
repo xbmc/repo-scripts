@@ -14,15 +14,6 @@ from libmediathek3dialogs import *
 	
 #translation = xbmcaddon.Addon(id='script.module.libmediathek3').getLocalizedString
 
-def searchWorkaroundWrite(searchword):
-	f_write(pathUserdata('/search.lock'),searchword)
-def searchWorkaroundRead():
-	return f_open(pathUserdata('/search.lock'))
-def searchWorkaroundExists():
-	return f_exists(pathUserdata('/search.lock'))
-def searchWorkaroundRemove():
-	log('###Krypton workaround: removing lock...')
-	f_remove(pathUserdata('/search.lock'))
 
 def play(d,external=False):
 	listitem = xbmcgui.ListItem(path=d['media'][0]['url'])

@@ -87,19 +87,16 @@ def f_exists(path):
 		return False
 	else:
 		return True
-"""
-def f_open(path):
-	f = xbmcvfs.File(path)
-	result = f.read()
-	f.close()
-	return result
-
-def f_write(path,data):
-	f = xbmcvfs.File(path, 'w')
-	result = f.write(data)
-	f.close()
-	return True
-"""
 	
 def f_mkdir(path):
 	return xbmcvfs.mkdir(path)
+	
+def searchWorkaroundWrite(searchword):
+	f_write(pathUserdata('/search.lock'),searchword)
+def searchWorkaroundRead():
+	return f_open(pathUserdata('/search.lock'))
+def searchWorkaroundExists():
+	return f_exists(pathUserdata('/search.lock'))
+def searchWorkaroundRemove():
+	log('###Krypton workaround: removing lock...')
+	f_remove(pathUserdata('/search.lock'))
