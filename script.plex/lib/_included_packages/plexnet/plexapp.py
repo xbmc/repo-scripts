@@ -49,10 +49,6 @@ class App(signalsmixin.SignalsMixin):
         if started:
             requestID = context.request.getIdentity()
             self.pendingRequests[requestID] = context
-
-            if context.timeout:
-                request.timer = createTimer(context.timeout, callback.Callable(self.onRequestTimeout, forcedArgs=[context]))
-                self.addTimer(request.timer)
         elif context.callback:
             context.callback(None, context)
 
@@ -66,7 +62,7 @@ class App(signalsmixin.SignalsMixin):
 
         context.request.cancel()
 
-        util.WARN_LOG("Request to {0} timed out after {1} ms".format(context.request.url, context.timeout))
+        util.WARN_LOG("Request to {0} timed out after {1} sec".format(util.cleanToken(context.request.url), context.timeout))
 
         if context.callback:
             context.callback(None, context)
@@ -105,14 +101,18 @@ class App(signalsmixin.SignalsMixin):
         import http
         http.HttpRequest._cancel = True
         if self.pendingRequests:
-            util.DEBUG_LOG('Closing down {0} App() requests'.format(len(self.pendingRequests)))
+            util.DEBUG_LOG('Closing down {0} App() requests...'.format(len(self.pendingRequests)))
             for p in self.pendingRequests.values():
                 if p:
                     p.request.cancel()
 
         if self.timers:
-            util.DEBUG_LOG('Canceling App() timers')
+            util.DEBUG_LOG('Canceling App() timers...')
             self.cancelAllTimers()
+
+        if SERVERMANAGER.selectedServer:
+            util.DEBUG_LOG('Closing server...')
+            SERVERMANAGER.selectedServer.close()
 
     def shutdown(self):
         if self.timers:
@@ -393,17 +393,23 @@ class Timer(object):
 
     def run(self):
         util.DEBUG_LOG('Timer {0}: {1}'.format(repr(self.function), self._reset and 'RESET'or 'STARTED'))
-        while not self.event.isSet() and not self.shouldAbort():
-            while not self.event.wait(self.timeout) and not self.shouldAbort():
-                if self._reset:
-                    self._reset = False
-                    return
+        try:
+            while not self.event.isSet() and not self.shouldAbort():
+                while not self.event.wait(self.timeout) and not self.shouldAbort():
+                    if self._reset:
+                        return
 
-                self.function(*self.args, **self.kwargs)
-                if not self.repeat:
-                    return
+                    self.function(*self.args, **self.kwargs)
+                    if not self.repeat:
+                        return
+        finally:
+            if not self._reset:
+                if self in APP.timers:
+                    APP.timers.remove(self)
 
-        util.DEBUG_LOG('Timer {0}: FINISHED'.format(repr(self.function)))
+                util.DEBUG_LOG('Timer {0}: FINISHED'.format(repr(self.function)))
+
+            self._reset = False
 
     def cancel(self):
         self.event.set()
@@ -457,6 +463,11 @@ def setApp(app):
 def setUserAgent(agent):
     util.USER_AGENT = agent
     util.BASE_HEADERS = util.resetBaseHeaders()
+
+
+def setAbortFlagFunction(func):
+    import asyncadapter
+    asyncadapter.ABORT_FLAG_FUNCTION = func
 
 
 def refreshResources(force=False):

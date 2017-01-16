@@ -7,6 +7,7 @@ import plexapp
 import myplexrequest
 import locks
 import callback
+import asyncadapter
 
 import util
 
@@ -99,10 +100,20 @@ class MyPlexAccount(object):
         if self.authToken:
             request = myplexrequest.MyPlexRequest("/users/account")
             context = request.createRequestContext("account", callback.Callable(self.onAccountResponse))
-            context.timeout = 10000
             plexapp.APP.startRequest(request, context)
         else:
             plexapp.APP.clearInitializer("myplex")
+
+    def logState(self):
+        util.LOG("Authenticated as {0}:{1}".format(self.ID, repr(self.title)))
+        util.LOG("SignedIn: {0}".format(self.isSignedIn))
+        util.LOG("Offline: {0}".format(self.isOffline))
+        util.LOG("Authenticated: {0}".format(self.isAuthenticated))
+        util.LOG("PlexPass: {0}".format(self.isPlexPass))
+        util.LOG("Managed: {0}".format(self.isManaged))
+        util.LOG("Protected: {0}".format(self.isProtected))
+        util.LOG("Admin: {0}".format(self.isAdmin))
+        util.LOG("AdminPlexPass: {0}".format(self.adminHasPlexPass))
 
     def onAccountResponse(self, request, response, context):
         oldId = self.ID
@@ -149,15 +160,7 @@ class MyPlexAccount(object):
             if not self.isAuthenticated and not self.isProtected and len(self.homeUsers) <= 1:
                 self.isAuthenticated = True
 
-            util.LOG("Authenticated as {0}:{1}".format(self.ID, self.title))
-            util.LOG("SignedIn: {0}".format(self.isSignedIn))
-            util.LOG("Offline: {0}".format(self.isOffline))
-            util.LOG("Authenticated: {0}".format(self.isAuthenticated))
-            util.LOG("PlexPass: {0}".format(self.isPlexPass))
-            util.LOG("Managed: {0}".format(self.isManaged))
-            util.LOG("Protected: {0}".format(self.isProtected))
-            util.LOG("Admin: {0}".format(self.isAdmin))
-            util.LOG("AdminPlexPass: {0}".format(self.adminHasPlexPass))
+            self.logState()
 
             self.saveState()
             plexapp.MANAGER.publish()
@@ -169,6 +172,7 @@ class MyPlexAccount(object):
         else:
             # Unexpected error, keep using whatever we read from the registry
             util.WARN_LOG("Unexpected response from plex.tv ({0}), switching to OFFLINE mode".format(response.getStatus()))
+            self.logState()
             self.isOffline = True
             # consider a single, unprotected user authenticated
             if not self.isAuthenticated and not self.isProtected:
@@ -226,8 +230,14 @@ class MyPlexAccount(object):
 
         request = myplexrequest.MyPlexRequest("/users/sign_in.xml")
         context = request.createRequestContext("sign_in", callback.Callable(self.onAccountResponse))
-        context.timeout = self.isOffline and 1000 or 10000
+        if self.isOffline:
+            context.timeout = self.isOffline and asyncadapter.AsyncTimeout(1).setConnectTimeout(1)
         plexapp.APP.startRequest(request, context, {})
+
+    def refreshAccount(self):
+        if not self.authToken:
+            return
+        self.validateToken(self.authToken, False)
 
     def updateHomeUsers(self):
         # Ignore request and clear any home users we are not signed in
@@ -248,7 +258,7 @@ class MyPlexAccount(object):
             return
 
         req = myplexrequest.MyPlexRequest("/api/home/users")
-        xml = req.getToStringWithTimeout(10)
+        xml = req.getToStringWithTimeout()
         data = ElementTree.fromstring(xml)
         if data.attrib.get('size') and data.find('User') is not None:
             self.homeUsers = []
@@ -282,7 +292,7 @@ class MyPlexAccount(object):
             # build path and post to myplex to swith the user
             path = '/api/home/users/{0}/switch'.format(userId)
             req = myplexrequest.MyPlexRequest(path)
-            xml = req.postToStringWithTimeout({'pin': pin}, 10)
+            xml = req.postToStringWithTimeout({'pin': pin})
             data = ElementTree.fromstring(xml)
 
             if data.attrib.get('authenticationToken'):

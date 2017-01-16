@@ -249,9 +249,9 @@ class HomeWindow(kodigui.BaseWindow, util.CronReceiver):
         'playlists.video': {'index': 6, 'text2lines': True, 'ar16x9': True, 'title': T(32053, 'Video')},
     }
 
-    THUMB_POSTER_DIM = (287, 425)
-    THUMB_AR16X9_DIM = (619, 348)
-    THUMB_SQUARE_DIM = (425, 425)
+    THUMB_POSTER_DIM = (244, 361)
+    THUMB_AR16X9_DIM = (532, 299)
+    THUMB_SQUARE_DIM = (244, 244)
 
     def __init__(self, *args, **kwargs):
         kodigui.BaseWindow.__init__(self, *args, **kwargs)
@@ -314,6 +314,7 @@ class HomeWindow(kodigui.BaseWindow, util.CronReceiver):
         plexapp.SERVERMANAGER.on('reachable:server', self.onReachableServer)
 
         plexapp.APP.on('change:selectedServer', self.onSelectedServerChange)
+        plexapp.APP.on('account:response', self.displayServerAndUser)
 
         player.PLAYER.on('session.ended', self.updateOnDeckHubs)
         util.MONITOR.on('changed.watchstatus', self.updateOnDeckHubs)
@@ -324,6 +325,7 @@ class HomeWindow(kodigui.BaseWindow, util.CronReceiver):
         plexapp.SERVERMANAGER.off('reachable:server', self.onReachableServer)
 
         plexapp.APP.off('change:selectedServer', self.onSelectedServerChange)
+        plexapp.APP.off('account:response', self.displayServerAndUser)
 
         player.PLAYER.off('session.ended', self.updateOnDeckHubs)
         util.MONITOR.off('changed.watchstatus', self.updateOnDeckHubs)
@@ -548,9 +550,11 @@ class HomeWindow(kodigui.BaseWindow, util.CronReceiver):
         self.tasks.append(task)
         backgroundthread.BGThreader.addTask(task)
 
-    def displayServerAndUser(self):
-        self.setProperty('user.name', plexapp.ACCOUNT.title or plexapp.ACCOUNT.username)
+    def displayServerAndUser(self, **kwargs):
+        title = plexapp.ACCOUNT.title or plexapp.ACCOUNT.username or ' '
+        self.setProperty('user.name', title)
         self.setProperty('user.avatar', plexapp.ACCOUNT.thumb)
+        self.setProperty('user.avatar.letter', title[0].upper())
 
         if plexapp.SERVERMANAGER.selectedServer:
             self.setProperty('server.name', plexapp.SERVERMANAGER.selectedServer.name)
@@ -1024,10 +1028,16 @@ class HomeWindow(kodigui.BaseWindow, util.CronReceiver):
 
     def showUserMenu(self, mouse=False):
         items = []
-        if len(plexapp.ACCOUNT.homeUsers) > 1:
-            items.append(kodigui.ManagedListItem(T(32342, 'Switch User'), data_source='switch'))
+        if plexapp.ACCOUNT.isSignedIn:
+            if len(plexapp.ACCOUNT.homeUsers) > 1:
+                items.append(kodigui.ManagedListItem(T(32342, 'Switch User'), data_source='switch'))
         items.append(kodigui.ManagedListItem(T(32343, 'Settings'), data_source='settings'))
-        items.append(kodigui.ManagedListItem(T(32344, 'Sign Out'), data_source='signout'))
+        if plexapp.ACCOUNT.isSignedIn:
+            items.append(kodigui.ManagedListItem(T(32344, 'Sign Out'), data_source='signout'))
+        elif plexapp.ACCOUNT.isOffline:
+            items.append(kodigui.ManagedListItem(T(32456, 'Offline Mode'), data_source='go_online'))
+        else:
+            items.append(kodigui.ManagedListItem(T(32457, 'Sign In'), data_source='signin'))
 
         if len(items) > 1:
             items[0].setProperty('first', '1')
@@ -1055,6 +1065,8 @@ class HomeWindow(kodigui.BaseWindow, util.CronReceiver):
         if option == 'settings':
             import settings
             settings.openWindow()
+        elif option == 'go_online':
+            plexapp.ACCOUNT.refreshAccount()
         else:
             self.closeOption = option
             self.doClose()
