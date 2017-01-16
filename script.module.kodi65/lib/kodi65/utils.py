@@ -22,8 +22,23 @@ import YDStreamExtractor
 from kodi65 import addon
 
 
+def youtube_info_by_id(youtube_id):
+    vid = get_youtube_info(youtube_id)
+    if not vid:
+        return None, None
+    url = vid.streamURL()
+    listitem = xbmcgui.ListItem(label=vid.title,
+                                thumbnailImage=vid.thumbnail,
+                                path=url)
+    listitem.setInfo(type='video',
+                     infoLabels={"genre": vid.sourceName,
+                                 "path": url,
+                                 "plot": vid.description})
+    listitem.setProperty("isPlayable", "true")
+    return url, listitem
+
+
 def get_youtube_info(youtube_id):
-    YDStreamExtractor.disableDASHVideo(True)
     return YDStreamExtractor.getVideoInfo(youtube_id,
                                           quality=1)
 
@@ -394,7 +409,7 @@ def fetch_musicbrainz_id(artist, artist_id=-1):
     uses musicbrainz.org
     """
     base_url = "http://musicbrainz.org/ws/2/artist/?fmt=json"
-    url = '&query=artist:%s' % urllib.quote_plus(artist)
+    url = '&query=artist:%s' % urllib.quote_plus(artist.encode('utf-8'))
     results = get_JSON_response(url=base_url + url,
                                 cache_days=30,
                                 folder="MusicBrainz")

@@ -35,6 +35,7 @@ class ListItem(object):
         self._ids = ids if ids else {}
         self._infos = infos if infos else {}
         self.specials = {}
+        self._is_folder = False
 
     def __setitem__(self, key, value):
         self._properties[key] = value
@@ -59,7 +60,7 @@ class ListItem(object):
         elif key == "path":
             return self.path
         else:
-            raise KeyError
+            raise KeyError(str(key))
 
     def __repr__(self):
         return "\n".join(["Label:", self.label,
@@ -123,6 +124,18 @@ class ListItem(object):
 
     def set_resumetime(self, value):
         self.specials["resumetime"] = value
+
+    def set_playable(self, value):
+        self.specials["isPlayable"] = value
+
+    def is_playable(self):
+        return bool(self.specials.get("isPlayable"))
+
+    def set_folder(self, value):
+        self._is_folder = value
+
+    def is_folder(self):
+        return bool(self._is_folder)
 
 # playlist_starting_track isspecial item_start isplayable
 
@@ -365,7 +378,7 @@ class VideoItem(ListItem):
         for item in self.subinfo:
             listitem.addStreamInfo("subtitle", item)
         for item in self._ratings:
-            listitem.setRating(item["type"], item["rating"], item["votes"], item["def"])
+            listitem.setRating(item["type"], item["rating"], item["votes"], item["default"])
         listitem.setUniqueIDs(self._ids)
         listitem.setCast(self.cast)
         return listitem
@@ -400,6 +413,9 @@ class VideoItem(ListItem):
                 return item
         return None
 
+    def get_ratings(self):
+        return self._ratings
+
     def add_rating(self, provider, rating, votes=None, default=None):
         self._ratings.append({"provider": provider.lower(),
                               "rating": rating,
@@ -417,3 +433,14 @@ class VideoItem(ListItem):
         if not dbid:
             return None
         self.update_from_listitem(local_db.get_movie(dbid))
+
+
+class GameItem(ListItem):
+    """
+    Kodi game listitem, based on built-in datatypes
+    """
+
+    def __init__(self, *args, **kwargs):
+        self.type = "game"
+        super(GameItem, self).__init__(*args, **kwargs)
+

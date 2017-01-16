@@ -75,6 +75,9 @@ class ItemList(object):
     def __getitem__(self, key):
         return self._items[key]
 
+    def __cmp__(self, other):
+        return len(self) - len(other)
+
     def __nonzero__(self):
         return len(self._items) > 0
 
@@ -163,7 +166,7 @@ class ItemList(object):
             xbmcplugin.addSortMethod(handle, SORTS[item])
         if self.content_type:
             xbmcplugin.setContent(handle, self.content_type)
-        items = [(i.get_path(), i.get_listitem(), bool(i.get_property("directory"))) for i in self._items]
+        items = [(i.get_path(), i.get_listitem(), i.is_folder()) for i in self._items]
         xbmcplugin.addDirectoryItems(handle=handle,
                                      items=items,
                                      totalItems=len(items))
