@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.module.streamlink"
+       name="streamlink"
+       version="0.2.0"
+       provider-name="Sjoerd Ophof">
+  <requires>
+    <import addon="xbmc.python" version="2.1.0"/>
+    <import addon="script.module.requests" version="2.9.1"/>
+    <import addon="script.module.singledispatch" version="3.4.0.3"/>
+    <import addon="script.module.futures" version="2.2.0"/>
+  </requires>
+  <extension point="xbmc.python.module"
+             library="lib"/>
+  <extension point="xbmc.addon.metadata">
+    <summary>Streamlink extracts streams from various services</summary>
+    <description>Streamlink is a command-line utility that pipes video streams from various services into a video player, such as VLC. The main purpose of Streamlink is to allow the user to avoid buggy and CPU heavy flash plugins but still be able to enjoy various streamed content. There is also an API available for developers who want access to the video stream data. This project was forked from Livestreamer, which is no longer maintained.</description>
+    <platform>all</platform>
+    <license>Simplified BSD</license>
+    <source>https://github.com/streamlink/streamlink.git</source>
+    <website>https://streamlink.github.io/</website>
+  </extension>
+</addon>
