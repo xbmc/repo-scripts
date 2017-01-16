@@ -25,7 +25,7 @@ def populateDirAZ(mode,ignore=[]):
 		d = {}
 		d['mode'] = mode
 		d['name'] = "#"
-		d['type'] = 'dir'
+		d['_type'] = 'dir'
 		l.append(d)
 	letters = [chr(i) for i in xrange(ord('a'), ord('z')+1)]
 	for letter in letters:
@@ -34,6 +34,7 @@ def populateDirAZ(mode,ignore=[]):
 			d['mode'] = mode
 			letter = letter.upper()
 			d['name'] = letter
+			d['_type'] = 'dir'
 			l.append(d)
 	return l
 	
@@ -41,20 +42,19 @@ def populateDirDate(mode,channel=False,dateChooser=False):
 	l = []
 	d = {}
 	d['mode'] = mode
-	d['type'] = 'dir'
+	d['_type'] = 'dir'
 	if channel: d['channel'] = channel
-	d['name'] = getTranslation(31020)
+	d['_name'] = getTranslation(31020)
 	d['datum'] = '0'
 	d['yyyymmdd'] = _calcyyyymmdd(0)
-	
 	
 	l.append(d)
 	
 	d = {}
 	d['mode'] = mode
-	d['type'] = 'dir'
+	d['_type'] = 'dir'
 	if channel: d['channel'] = channel
-	d['name'] = getTranslation(31021)
+	d['_name'] = getTranslation(31021)
 	d['datum']  = '1'
 	d['yyyymmdd'] = _calcyyyymmdd(1)
 	l.append(d)
@@ -63,10 +63,10 @@ def populateDirDate(mode,channel=False,dateChooser=False):
 	while i <= 6:
 		d = {}
 		day = date.today() - timedelta(i)
-		d['name'] = weekdayDict[day.strftime("%w")]
+		d['_name'] = weekdayDict[day.strftime("%w")]
 		d['datum']  = str(i)
 		d['mode'] = mode
-		d['type'] = 'dir'
+		d['_type'] = 'dir'
 		if channel: d['channel'] = channel
 		d['yyyymmdd'] = _calcyyyymmdd(i)
 		l.append(d)
@@ -74,7 +74,7 @@ def populateDirDate(mode,channel=False,dateChooser=False):
 	if dateChooser:
 		d = {}
 		d['mode'] = mode
-		d['type'] = 'dir'
+		d['_type'] = 'dir'
 		if channel: d['channel'] = channel
 		d['name'] = getTranslation(31022)
 		l.append(d)
