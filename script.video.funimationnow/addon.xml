@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.video.funimationnow" version="0.1.0" name="FunimationNOW" provider-name="Protocol-X">
+    <requires>
+        <import addon="xbmc.python" version="2.19.0" />
+        <import addon="script.module.dateutil" version="2.4.2"/>
+        <import addon="script.module.pil" version="1.1.7"/>
+    </requires>
+    <extension point="xbmc.python.script" library="default.py">
+        <provides>video</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <summary lang="en_gb">Funimation|Now - Stream the latest English-dubbed anime ad-free in HD.</summary>
+        <website>https://github.com/Protocol-X/script.video.funimationnow</website>
+        <source>https://github.com/Protocol-X/script.video.funimationnow</source>
+        <email></email>
+        <description lang="en_gb">Funimation &amp; Crunchyroll[CR]Working Together to Give You More![CR]A bigger selection, a growing community, and the world's best English dubs.
+        </description>
+        <disclaimer lang="en_gb">Some parts of this addon may not be legal in your country of residence - please check with your local laws before installing.</disclaimer>
+        <news>[B]0.1.0[/B][CR]- Initial Beta Release Custom GUI Release[CR]- Converted to new FunimationNOW API[CR]- Custom UI to match unified cross platform apps[CR]- Bugs:[CR]    - Android Send E-Mail
+        </news>
+        <platform>all</platform>
+        <language />
+        <forum>http://forum.kodi.tv/showthread.php?tid=304346</forum>
+        <assets>
+            <icon>resources/icon.png</icon>
+            <fanart>resources/fanart.jpg</fanart>
+            <screenshot>resources/screenshot000.png</screenshot>
+            <screenshot>resources/screenshot001.png</screenshot>
+            <screenshot>resources/screenshot002.png</screenshot>
+            <screenshot>resources/screenshot003.png</screenshot>
+        </assets>
+    </extension>
+</addon>

@@ -1,0 +1,509 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<window>
+    <!--<backgroundcolor>0x440397</backgroundcolor>-->
+    <!--<allowoverlay>no</allowoverlay>-->
+    <height>720</height>
+    <width>1280</width>
+    <defaultcontrol always="true">80001</defaultcontrol>
+
+    <coordinates>
+        <system>1</system>
+        <posx>0</posx>
+        <posy>0</posy>
+        <left>0</left>
+        <top>0</top>
+    </coordinates>
+    <animation type="WindowOpen" reversible="false">
+        <effect type="zoom" start="80" end="100" center="640,360" easing="out" tween="back" time="300" />
+        <effect type="fade" start="0" end="100" time="300" />
+    </animation>
+    <animation type="WindowClose" reversible="false">
+        <effect type="zoom" start="100" end="80" center="640,360" easing="in" tween="back" time="300" />
+        <effect type="fade" start="100" end="0" time="300" />
+    </animation>
+    <controls>
+        <!-- Window Background -->
+        <control type="image">
+            <description>background image</description>
+            <width>1280</width>
+            <height>720</height>
+            <texture>white_background.jpg</texture>
+            <aspectratio align="center" aligny="center">stretch</aspectratio>
+        </control>
+        <control type="group" id="99">
+
+            <!-- Genre Select Group -->
+            <control type="group" id="100">
+                <posx>0</posx>
+                <posy>0</posy>
+                <width>145.5</width>
+                <height>16</height>
+                <centertop>10%</centertop>
+                <centerleft>50%</centerleft>
+                <control type="image" id="1000">
+                    <description>sort selection</description>
+                    <left>0.5</left>
+                    <width>145.5</width>
+                    <height>16</height>
+                    <texture background="false" fallback="select_control_bg.jpg">select_control_bg.png</texture>
+                    <aspectratio align="center" aligny="center">stretch</aspectratio>
+                </control>
+                <control type="button" id="1001">
+                    <width>145.5</width>
+                    <height>16</height>
+                    <texturefocus>opaque_overlay.png</texturefocus>
+                    <texturenofocus>clear_overlay.png</texturenofocus>
+                    <pulseonselect>true</pulseonselect>
+                    <onup>110100</onup>
+                    <ondown>80001</ondown>
+                    <onright>100100</onright>
+                    <onleft>110000</onleft>
+                </control>
+            </control>
+
+            <control type="group" id="8001">
+                <top>90</top>
+                <left>80</left>
+                <height>650</height>
+                <width>1280</width>
+                <control type="panel" id="80001">
+                    <width>1280</width>
+                    <height>650</height>
+                    <orientation>vertical</orientation>
+                    <viewtype>icon</viewtype>
+                    <preloaditems>2</preloaditems>
+                    <!--<itemlayout width="177.6" height="136">-->
+                    <itemlayout width="222" height="190">
+                        <control type="group">
+                            <control type="image">
+                                <posx>0</posx>
+                                <posy>0</posy>
+                                <top>0</top>
+                                <height>170</height>
+                                <right>0</right>
+                                <!--<height>380</height>
+                                <width>444</width>-->
+                                <aspectratio align="left" aligny="top">scale</aspectratio>
+                                <bordersize>6</bordersize>
+                                <texture background="false">$INFO[ListItem.ActualIcon]</texture>
+                                <!--<texture background="false" fallback="DefaultShortcut.png">$INFO[ListItem.Icon]</texture>-->
+                            </control>
+                            <control type="image">
+                                <posx>0</posx>
+                                <posy>0</posy>
+                                <height>170</height>
+                                <aspectratio align="top" aligny="top">stretch</aspectratio>
+                                <bordersize>6</bordersize>
+                                <texture>cover-text-overlay.png</texture>                               
+                                <!--<texture background="false" fallback="DefaultShortcut.png">$INFO[ListItem.Icon]</texture>-->
+                            </control>
+                            <control type="image">
+                                <posx>0</posx>
+                                <posy>0</posy>
+                                <right>3</right>
+                                <top>3</top>
+                                <width>40</width>
+                                <height>40</height>
+                                <bordersize>6</bordersize>
+                                <aspectratio align="center" aligny="top">keep</aspectratio>
+                                <!--<texture>remove_queue_nofocus.png</texture>-->
+                                <texture>$INFO[ListItem.Property(qtexture)].png</texture>
+                            </control>
+                            <control type="image">
+                                <description>My First label</description>
+                                <left>10</left>
+                                <top>-12</top>
+                                <width>200</width>
+                                <height>170</height>
+                                <visible>true</visible>
+                                <aspectratio align="left" aligny="bottom">keep</aspectratio>
+                                <texture background="false">$INFO[ListItem.Property(ctitle)]</texture>
+                                <!--<texture background="false">f_pk=19373.png</texture>-->
+                            </control>
+                            <control type="image">
+                                <posx>0</posx>
+                                <posy>0</posy>
+                                <bottom>6</bottom>
+                                <right>5</right>
+                                <height>16</height>
+                                <width>75</width>
+                                <onleft>8910</onleft>
+                                <aspectratio align="right" aligny="top">keep</aspectratio>
+                                <colordiffuse>FFA9A9A9</colordiffuse>
+                                <texture background="false">flagging/rating/$INFO[ListItem.Property(starrating)]_c.png</texture>
+                            </control>
+                            <control type="image">
+                                <posx>0</posx>
+                                <posy>0</posy>
+                                <left>5</left>
+                                <bottom>11</bottom>
+                                <height>13</height>
+                                <width>700</width>
+                                <onleft>8910</onleft>
+                                <aspectratio align="left" aligny="top">keep</aspectratio>
+                                <texture background="false">$INFO[ListItem.Property(subtitle)]</texture>
+                            </control>
+                            <control type="image">
+                                <posx>0</posx>
+                                <posy>0</posy>
+                                <left>5</left>
+                                <bottom>1</bottom>
+                                <height>11</height>
+                                <width>700</width>
+                                <onleft>8910</onleft>
+                                <aspectratio align="left" aligny="top">keep</aspectratio>
+                                <texture background="false">$INFO[ListItem.Property(addedon)]</texture>
+                            </control>
+                        </control>
+                    </itemlayout>
+                    <focusedlayout width="222" height="190">
+                        <control type="group">
+                            <control type="image">
+                                <posx>0</posx>
+                                <posy>0</posy>
+                                <height>170</height>
+                                <onleft>8910</onleft>
+                                <aspectratio align="center" aligny="bottom">scale</aspectratio>
+                                <bordertexture border="4">fun_list_border.png</bordertexture>
+                                <bordersize>6</bordersize>
+                                <colordiffuse>FFE6E6E6</colordiffuse>
+                                <texture background="false">$INFO[ListItem.Thumb]</texture>
+                            </control>
+                            <control type="image">
+                                <posx>0</posx>
+                                <posy>0</posy>
+                                <bottom>6</bottom>
+                                <right>5</right>
+                                <height>16</height>
+                                <width>75</width>
+                                <onleft>8910</onleft>
+                                <aspectratio align="right" aligny="top">keep</aspectratio>
+                                <colordiffuse>FFA9A9A9</colordiffuse>
+                                <texture background="false">flagging/rating/$INFO[ListItem.Property(starrating)]_c.png</texture>
+                            </control>
+                                <control type="image">
+                                <posx>0</posx>
+                                <posy>0</posy>
+                                <left>5</left>
+                                <bottom>11</bottom>
+                                <height>13</height>
+                                <width>700</width>
+                                <onleft>8910</onleft>
+                                <aspectratio align="left" aligny="top">keep</aspectratio>
+                                <texture background="false">$INFO[ListItem.Property(subtitle)]</texture>
+                            </control>
+                            <control type="image">
+                                <posx>0</posx>
+                                <posy>0</posy>
+                                <left>5</left>
+                                <bottom>2</bottom>
+                                <height>10</height>
+                                <width>700</width>
+                                <onleft>8910</onleft>
+                                <aspectratio align="left" aligny="top">keep</aspectratio>
+                                <texture background="false">$INFO[ListItem.Property(addedon)]</texture>
+                            </control>
+                            <animation reversible="false" effect="zoom" end="106" center="auto" time="150">Focus</animation>
+                        </control>
+                        <control type="image">
+                            <posx>0</posx>
+                            <posy>0</posy>
+                            <height>170</height>
+                            <aspectratio align="top" aligny="top">stretch</aspectratio>
+                            <bordertexture border="2">fun_button_nofocus.png</bordertexture>
+                            <bordersize>6</bordersize>
+                            <texture>cover-text-overlay.png</texture>
+                            <animation reversible="false" effect="zoom" end="106" center="auto" time="150">Focus</animation>
+                            <!--<texture background="false" fallback="DefaultShortcut.png">$INFO[ListItem.Icon]</texture>-->
+                        </control>
+                        <control type="image">
+                            <posx>0</posx>
+                            <posy>0</posy>
+                            <right>3</right>
+                            <top>3</top>
+                            <width>40</width>
+                            <height>40</height>
+                            <bordersize>6</bordersize>
+                            <aspectratio align="center" aligny="top">keep</aspectratio>
+                            <texture>$INFO[ListItem.Property(qtexture)].png</texture>
+                        </control>
+                        <control type="image">
+                            <description>My First label</description>
+                            <left>15</left>
+                            <top>-12</top>
+                            <width>200</width>
+                            <height>170</height>
+                            <visible>true</visible>
+                            <animation reversible="false" effect="zoom" end="106" center="auto" time="150">Focus</animation>
+                            <aspectratio align="left" aligny="bottom">keep</aspectratio>
+                            <texture background="false">$INFO[ListItem.Property(ctitle)]</texture>    
+                        </control>
+                    </focusedlayout>
+                    <onup>100</onup>
+                    <ondown>80001</ondown>
+                    <onright>100100</onright>
+                    <onleft>110000</onleft>
+                </control>
+            </control>
+
+        </control>
+
+        <!-- List Loading Overlay -->
+        <control type="group" id="90000">
+            <posx>0</posx>
+            <posy>0</posy>
+            <width>1280</width>
+            <height>720</height>
+            <control type="button">
+                <description>List Loading Overlay</description>
+                <posx>0</posx>
+                <posy>0</posy>
+                <width>1280</width>
+                <height>720</height>
+                <texturenofocus>75_opaque_overlay.png</texturenofocus>
+                <texturefocus>75_opaque_overlay.png</texturefocus>
+                <pulseonselect>false</pulseonselect>
+                <onclick>-</onclick>
+                <onfocus>-</onfocus>
+                <onunfocus>-</onunfocus>
+            </control>
+            <control type="image">
+                <description>List Loading Gif</description>
+                <posx>0</posx>
+                <posy>0</posy>
+                <centertop>40%</centertop>
+                <centerleft>50%</centerleft>
+                <width>34</width>
+                <height>34</height>
+                <texture>episode_loader_128.gif</texture>
+                <aspectratio align="center" aligny="center">keep</aspectratio>
+            </control>
+        </control>
+
+        <!-- Menu Slideout Screen -->
+        <control type="group" id="10000">
+            <control type="group" id="100000">
+                <visible allowhiddenfocus="true">true</visible>
+                <posx>0</posx>
+                <posy>0</posy>                  
+                <control type="image">
+                    <description>Splash Header Background</description>
+                    <posx>0</posx>
+                    <posy>0</posy>
+                    <width>1280</width>
+                    <height>50</height>
+                    <texture>purple.png</texture>
+                </control>
+                <control type="button" id="100100">                   
+                    <description>Search Button</description>
+                    <posx>0</posx>
+                    <posy>0</posy>
+                    <right>5</right>
+                    <top>5</top>
+                    <width>40</width>
+                    <height>40</height>
+                    <visible>true</visible>
+                    <texturefocus>search_icon.scale-focus_200.png</texturefocus>
+                    <texturenofocus>search_icon.scale-200.png</texturenofocus>
+                    <align>center</align>
+                    <aligny>center</aligny>
+                    <textoffsetx></textoffsetx>
+                    <textoffsety></textoffsety>
+                    <pulseonselect></pulseonselect>
+                    <onup>100100</onup>
+                    <ondown>99</ondown>
+                    <onleft>110100</onleft>
+                    <onright>100100</onright>
+                </control>
+                <control type="image">
+                    <description>Splash Header Logo</description>
+                    <posx>0</posx>
+                    <posy>0</posy>
+                    <centerleft>50%</centerleft>
+                    <width>1240</width>
+                    <height>50</height>
+                    <texture>splash.scale-200.png</texture>
+                    <aspectratio align="center" aligny="center">keep</aspectratio>
+                </control>
+            </control>
+            <control type="group" id="110000">
+                <description>Menu Slideout Group</description>
+                <onright>99</onright>
+                <control type="button" id="110100">
+                    <description>Menu Button</description>
+                    <posx>0</posx>
+                    <posy>0</posy>
+                    <left>5</left>
+                    <top>5</top>
+                    <width>40</width>
+                    <height>40</height>
+                    <visible>true</visible>
+                    <texturefocus>menu_icon.scale_focus-200.png</texturefocus>
+                    <texturenofocus>menu_icon.scale-200.png</texturenofocus>
+                    <align>center</align>
+                    <aligny>center</aligny>
+                    <textoffsetx></textoffsetx>
+                    <textoffsety></textoffsety>
+                    <pulseonselect></pulseonselect>
+                    <onup>110100</onup>
+                    <ondown>110101</ondown>
+                    <onleft>110100</onleft>
+                    <onright>100100</onright>
+                </control>
+                <control type="group">
+                    <top>50</top>
+                    <control type="image">
+                        <description>Menu Overlay, Darkens the background view</description>
+                        <left>0</left>
+                        <width>1280</width>
+                        <height>720</height>
+                        <texture>menu-50-overlay.png</texture>
+                        <visible>ControlGroup(110000).HasFocus</visible>
+                        <aspectratio align="center" aligny="center">stretch</aspectratio>
+                    </control>
+                </control>
+                <control type="group">
+                    <top>50</top>
+                    <control type="button">
+                        <description>Menu Focus Background</description>
+                        <posx>0</posx>
+                        <posy>0</posy>
+                        <left>-200</left>
+                        <width>200</width>
+                        <height>720</height>
+                        <texturefocus>purple.png</texturefocus>
+                        <texturenofocus>purple.png</texturenofocus>
+                    </control>
+                    <control type="button" id="110101">
+                        <description>Menu Button 1</description>
+                        <left>-200</left>
+                        <top>20</top>
+                        <onup>110100</onup>
+                        <onleft>110101</onleft>
+                        <ondown>110102</ondown>
+                        <onright>99</onright>
+                        <height>30</height>
+                        <width>200</width>
+                        <visible>true</visible>
+                        <texturefocus>special://profile/addon_data/script.video.funimationnow/media/buttons/menu-focus-button1.png</texturefocus>
+                        <texturenofocus>special://profile/addon_data/script.video.funimationnow/media/buttons/menu-no-focus-button1.png</texturenofocus>
+                    </control>
+                    <control type="button" id="110102">
+                        <description>Menu Button 2</description>
+                        <left>-200</left>
+                        <top>50</top>
+                        <onup>110101</onup>
+                        <onleft>110102</onleft>
+                        <ondown>110103</ondown>
+                        <onright>99</onright>
+                        <height>30</height>
+                        <width>200</width>
+                        <visible>true</visible>
+                        <texturefocus>special://profile/addon_data/script.video.funimationnow/media/buttons/menu-focus-button2.png</texturefocus>
+                        <texturenofocus>special://profile/addon_data/script.video.funimationnow/media/buttons/menu-no-focus-button2.png</texturenofocus>
+                    </control>
+                    <control type="button" id="110103">
+                        <description>Menu Button 3</description>
+                        <left>-200</left>
+                        <top>80</top>
+                        <onup>110102</onup>
+                        <onleft>110103</onleft>
+                        <ondown>110104</ondown>
+                        <onright>99</onright>
+                        <height>30</height>
+                        <width>200</width>
+                        <visible>true</visible>
+                        <texturefocus>special://profile/addon_data/script.video.funimationnow/media/buttons/menu-focus-button3.png</texturefocus>
+                        <texturenofocus>special://profile/addon_data/script.video.funimationnow/media/buttons/menu-no-focus-button3.png</texturenofocus>
+                    </control>
+                    <control type="button" id="110104">
+                        <description>Menu Button 4</description>
+                        <left>-200</left>
+                        <top>110</top>
+                        <onup>110103</onup>
+                        <onleft>110104</onleft>
+                        <ondown>110105</ondown>
+                        <onright>99</onright>
+                        <height>30</height>
+                        <width>200</width>
+                        <visible>true</visible>
+                        <texturefocus>special://profile/addon_data/script.video.funimationnow/media/buttons/menu-focus-button4.png</texturefocus>
+                        <texturenofocus>special://profile/addon_data/script.video.funimationnow/media/buttons/menu-no-focus-button4.png</texturenofocus>
+                    </control>
+                    <control type="button" id="110105">
+                        <description>Menu Button 5</description>
+                        <left>-200</left>
+                        <top>140</top>
+                        <onup>110104</onup>
+                        <onleft>110105</onleft>
+                        <ondown>110106</ondown>
+                        <onright>99</onright>
+                        <height>30</height>
+                        <width>200</width>
+                        <visible>true</visible>
+                        <texturefocus>special://profile/addon_data/script.video.funimationnow/media/buttons/menu-focus-button5.png</texturefocus>
+                        <texturenofocus>special://profile/addon_data/script.video.funimationnow/media/buttons/menu-no-focus-button5.png</texturenofocus>
+                    </control>
+                    <control type="button" id="110106">
+                        <description>Menu Button 6</description>
+                        <left>-200</left>
+                        <top>200</top>
+                        <onup>110105</onup>
+                        <onleft>110106</onleft>
+                        <ondown>110107</ondown>
+                        <onright>99</onright>
+                        <height>20</height>
+                        <width>200</width>
+                        <visible>true</visible>
+                        <texturefocus>special://profile/addon_data/script.video.funimationnow/media/buttons/menu-focus-button6.png</texturefocus>
+                        <texturenofocus>special://profile/addon_data/script.video.funimationnow/media/buttons/menu-no-focus-button6.png</texturenofocus>
+                    </control>
+                    <control type="button" id="110107">
+                        <description>Menu Button 7</description>
+                        <left>-200</left>
+                        <top>220</top>
+                        <onup>110106</onup>
+                        <onleft>110107</onleft>
+                        <ondown>110108</ondown>
+                        <onright>99</onright>
+                        <height>20</height>
+                        <width>200</width>
+                        <visible>true</visible>
+                        <texturefocus>special://profile/addon_data/script.video.funimationnow/media/buttons/menu-focus-button7.png</texturefocus>
+                        <texturenofocus>special://profile/addon_data/script.video.funimationnow/media/buttons/menu-no-focus-button7.png</texturenofocus>
+                    </control>
+                    <control type="button" id="110108">
+                        <description>Menu Button 8</description>
+                        <left>-200</left>
+                        <top>240</top>
+                        <onup>110107</onup>
+                        <onleft>110108</onleft>
+                        <ondown>110108</ondown>
+                        <onright>99</onright>
+                        <height>20</height>
+                        <width>200</width>
+                        <visible>true</visible>
+                        <texturefocus>special://profile/addon_data/script.video.funimationnow/media/buttons/menu-focus-button8.png</texturefocus>
+                        <texturenofocus>special://profile/addon_data/script.video.funimationnow/media/buttons/menu-no-focus-button8.png</texturenofocus>
+                    </control>
+                    <!--<control type="button" id="110109">
+                        <description>Menu Button 9</description>
+                        <left>-200</left>
+                        <top>270</top>
+                        <onup>110108</onup>
+                        <onleft>110109</onleft>
+                        <onright>80001</onright>
+                        <ondown>110101</ondown>
+                        <height>20</height>
+                        <width>200</width>
+                        <visible>true</visible>
+                        <texturefocus>special://profile/addon_data/script.video.funimationnow/media/buttons/menu-focus-button9.png</texturefocus>
+                        <texturenofocus>special://profile/addon_data/script.video.funimationnow/media/buttons/menu-no-focus-button9.png</texturenofocus>
+                    </control>-->
+                    <animation effect="slide" start="0,0" end="200,0" delay="0" time="200" tween="quadratic" easing="out" condition="ControlGroup(110000).HasFocus">Conditional</animation>
+                    <animation effect="slide" start="0,0" end="0,0" delay="0" time="200" tween="quadratic" easing="out" condition="!ControlGroup(110000).HasFocus">Conditional</animation>
+                </control>
+            </control>
+        </control>
+    </controls>
+</window>

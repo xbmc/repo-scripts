@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<window>
+    <!--<backgroundcolor>0x440397</backgroundcolor>-->
+    <width>1280</width>
+    <height>720</height>
+    <defaultcontrol always="true">20</defaultcontrol>
+    <coordinates>
+        <system>1</system>
+        <posx>0</posx>
+        <posy>0</posy>
+        <left>0</left>
+        <top>0</top>
+    </coordinates>
+    <animation type="WindowOpen" reversible="false">
+        <effect type="slide" start="0,0" end="0,0" easing="out" tween="back" time="0" />
+    </animation>
+    <animation type="WindowClose" reversible="false">
+        <effect type="slide" start="0,0" end="0,0" easing="out" tween="back" time="0" />
+    </animation>
+    <controls>
+        <control type="button" id="1000">
+            <posx>0</posx>
+            <posy>0</posy>
+            <width>1280</width>
+            <height>720</height>
+            <texturefocus>clear_overlay.png</texturefocus>
+            <texturenofocus>clear_overlay.png</texturenofocus>
+            <pulseonselect>true</pulseonselect>
+        </control>
+        <control type="list" id="20">
+            <posx>0</posx>
+            <posy>0</posy>
+            <width>145.5</width>
+            <height>400</height>
+            <orientation>vertical</orientation>
+            <viewtype>icon</viewtype>
+            <preloaditems>2</preloaditems>
+            <itemlayout width="145.5" height="15">
+                <control type="image">
+                    <posx>0</posx>
+                    <posy>0</posy>
+                    <width>145.5</width>
+                    <height>15</height>
+                    <aspectratio align="left" aligny="center">stretch</aspectratio>
+                    <texture background="false">select_bg.png</texture>
+                </control>
+                <control type="image">
+                    <posx>0</posx>
+                    <posy>0</posy>
+                    <top>4</top>
+                    <left>5</left>
+                    <width>145.5</width>
+                    <height>8</height>
+                    <aspectratio align="left" aligny="center">keep</aspectratio>
+                    <texture background="false">$INFO[ListItem.ActualIcon]</texture>
+                </control>
+            </itemlayout>
+            <focusedlayout width="145.5" height="15">
+                <control type="image">
+                    <posx>0</posx>
+                    <posy>0</posy>
+                    <width>145.5</width>
+                    <height>15</height>
+                    <colordiffuse>FFA1C5E3</colordiffuse>
+                    <aspectratio align="left" aligny="center">stretch</aspectratio>
+                    <texture background="false">select_bg.png</texture>
+                </control>
+                <control type="image">
+                    <posx>0</posx>
+                    <posy>0</posy>
+                    <top>4</top>
+                    <left>5</left>
+                    <width>145.5</width>
+                    <height>8</height>
+                    <colordiffuse>FFA1C5E3</colordiffuse>
+                    <aspectratio align="left" aligny="center">keep</aspectratio>
+                    <texture background="false">$INFO[ListItem.ActualIcon]</texture>
+                </control>
+            </focusedlayout>
+        </control>
+    </controls>
+</window>

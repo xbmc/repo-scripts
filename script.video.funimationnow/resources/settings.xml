@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+    <!-- Accounts -->
+    <category label="30000">
+        <setting type="lsep" label="30001" />
+        <setting id="fn.userName" type="text" label="30002" visible="true" enable="false" default="" />
+        <setting id="fn.userType" type="text" label="30003" visible="true" enable="false" default="FunimationUser" />
+        <setting id="fn.userRole" type="text" label="30004" enable="false" default="Non-Subscriber" />
+        <setting id="fn.territory" type="text" label="30005" enable="false" default="US" />
+    </category>
+    <!-- General -->
+    <category label="30100">
+        <setting id="fn.video_quality" type="slider" label="30101" default="10" range="0,1,10" option="int" />
+        <setting id="fn.image_quality" type="slider" label="30102" default="60" range="0,10,100" option="int" />
+        <setting id="fn.splash_screen" type="bool" label="30103" default="true" />
+        <setting id="fn.background_sync" type="bool" label="30104" default="true" />
+    </category>
+    <!-- Advanced -->
+    <category label="30200">
+        <setting id="loglvl" type="enum" label="30201" lvalues="30202|30203|30204|30205" default="1" />
+        <setting type="sep" />
+        <setting type="lsep" label="30206" />
+        <setting id="fn.territory_override" type="bool" label="30207" default="false" />
+        <setting label="30208" type="action" action="RunScript(&quot;script.video.funimationnow&quot;, cleanup)"/>
+    </category>
+
+</settings>

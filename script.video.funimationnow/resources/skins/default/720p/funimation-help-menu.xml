@@ -1,0 +1,508 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<window>
+    <!--<backgroundcolor>0x440397</backgroundcolor>-->
+    <!--<allowoverlay>no</allowoverlay>-->
+    <height>720</height>
+    <width>1280</width>
+    <defaultcontrol always="true">110201</defaultcontrol>
+
+    <coordinates>
+        <system>1</system>
+        <posx>0</posx>
+        <posy>0</posy>
+        <left>0</left>
+        <top>0</top>
+    </coordinates>
+    <animation type="WindowOpen" reversible="false">
+        <effect type="zoom" start="80" end="100" center="640,360" easing="out" tween="back" time="300" />
+        <effect type="fade" start="0" end="100" time="300" />
+    </animation>
+    <animation type="WindowClose" reversible="false">
+        <effect type="zoom" start="100" end="80" center="640,360" easing="in" tween="back" time="300" />
+        <effect type="fade" start="100" end="0" time="300" />
+    </animation>
+    <controls>
+        <!-- Window Background -->
+        <control type="image">
+            <description>background image</description>
+            <width>1280</width>
+            <height>720</height>
+            <texture>white_background.jpg</texture>
+            <aspectratio align="center" aligny="center">stretch</aspectratio>
+        </control>
+
+        <!-- Settings List Group -->
+        <control type="group" id ="100">
+            <description>My List Group</description>
+            <posx>0</posx>
+            <posy>0</posy>
+            <width>1280</width>
+            <height>500</height>
+            <top>50</top>
+            <control type="list" id="1000">
+                <description>About List</description>
+                <width>1280</width>
+                <height>500</height>
+                <orientation>vertical</orientation>
+                <viewtype>icon</viewtype>
+                <preloaditems>2</preloaditems>
+                <itemlayout width="1280" height="35">
+                    <control type="group">
+                        <posx>0</posx>
+                        <posy>0</posy>
+                        <control type="image">
+                            <posx>0</posx>
+                            <posy>0</posy>
+                            <bottom>0</bottom>
+                            <height>1</height>
+                            <aspectratio align="left" aligny="bottom">stretch</aspectratio>
+                            <texture background="false">help_list_border.png</texture>
+                        </control>
+                        <control type="image">
+                            <description>Episode Title</description>
+                            <posx>0</posx>
+                            <posy>0</posy>
+                            <top>5</top>
+                            <left>0</left>
+                            <width>1280</width>
+                            <height>25</height>
+                            <aspectratio align="center" aligny="center">keep</aspectratio>
+                            <texture background="false">$INFO[ListItem.ActualIcon]</texture>
+                        </control>
+                    </control>
+                </itemlayout>
+                <focusedlayout width="1280" height="35">
+                    <control type="group">
+                        <posx>0</posx>
+                        <posy>0</posy>
+                        <control type="image">
+                            <posx>0</posx>
+                            <posy>0</posy>
+                            <bottom>0</bottom>
+                            <height>1</height>
+                            <aspectratio align="left" aligny="bottom">stretch</aspectratio>
+                            <texture background="false">help_list_border.png</texture>
+                        </control>
+                        <control type="image">
+                            <description>Episode Title</description>
+                            <posx>0</posx>
+                            <posy>0</posy>
+                            <top>5</top>
+                            <left>0</left>
+                            <width>1280</width>
+                            <height>25</height>
+                            <aspectratio align="center" aligny="center">keep</aspectratio>
+                            <texture background="false">$INFO[ListItem.ActualIcon]</texture>
+                        </control>
+                    </control>
+                </focusedlayout>
+                <onup>1101001</onup>
+                <ondown>100</ondown>
+                <onright>100</onright>
+                <onleft>10000</onleft>
+            </control>
+            <control type="list" id="1001">
+                <description>About List</description>
+                <width>1280</width>
+                <height>670</height>
+                <orientation>vertical</orientation>
+                <viewtype>icon</viewtype>
+                <preloaditems>2</preloaditems>
+                <pagecontrol>2001</pagecontrol>
+                <itemlayout width="1280" height="600">
+                    <control type="group">
+                        <posx>0</posx>
+                        <posy>0</posy>
+                        <height>$INFO[ListItem.Property(eptitle)]</height>
+                        <control type="image">
+                            <description>Episode Title</description>
+                            <posx>0</posx>
+                            <posy>0</posy>
+                            <top>5</top>
+                            <left>0</left>
+                            <width>1280</width>
+                            <height>600</height>
+                            <aspectratio align="left" aligny="top">keep</aspectratio>
+                            <texture background="false">$INFO[ListItem.ActualIcon]</texture>
+                        </control>
+                    </control>
+                </itemlayout>
+                <focusedlayout width="1280" height="600">
+                    <control type="group">
+                        <posx>0</posx>
+                        <posy>0</posy>
+                        <height>$INFO[ListItem.Property(eptitle)]</height>
+                        <control type="image">
+                            <description>Episode Title</description>
+                            <posx>0</posx>
+                            <posy>0</posy>
+                            <top>5</top>
+                            <left>0</left>
+                            <width>1280</width>
+                            <height>600</height>
+                            <aspectratio align="left" aligny="top">keep</aspectratio>
+                            <texture background="false">$INFO[ListItem.ActualIcon]</texture>
+                        </control>
+                    </control>
+                </focusedlayout>
+                <onup>1101001</onup>
+                <ondown>100</ondown>
+                <onright>100</onright>
+                <onleft>10000</onleft>
+            </control>
+            <control type="scrollbar" id="2001">
+                <description>Message Scrollbar</description>
+                <posx>0</posx>
+                <posy>0</posy>
+                <top>0</top>
+                <right>0</right>
+                <width>20</width>
+                <height>670</height>
+                <visible>Control.IsVisible(1001)</visible>
+                <texturesliderbackground>texturesliderbackground.png</texturesliderbackground>
+                <texturesliderbar>texturesliderbar.png</texturesliderbar>
+                <texturesliderbarfocus>texturesliderbarfocus.png</texturesliderbarfocus>
+                <textureslidernib>-</textureslidernib>
+                <textureslidernibfocus>-</textureslidernibfocus>
+                <orientation>vertical</orientation>
+            </control>
+            <control type="list" id="1003">
+                <description>About List</description>
+                <width>1280</width>
+                <height>670</height>
+                <orientation>vertical</orientation>
+                <viewtype>icon</viewtype>
+                <preloaditems>2</preloaditems>
+                <pagecontrol>2003</pagecontrol>
+                <itemlayout width="1280" height="670">
+                    <control type="group">
+                        <posx>0</posx>
+                        <posy>0</posy>
+                        <height>$INFO[ListItem.Property(eptitle)]</height>
+                        <control type="image">
+                            <description>Episode Title</description>
+                            <posx>0</posx>
+                            <posy>0</posy>
+                            <top>5</top>
+                            <left>0</left>
+                            <width>1280</width>
+                            <height>670</height>
+                            <aspectratio align="left" aligny="top">keep</aspectratio>
+                            <texture background="false">$INFO[ListItem.ActualIcon]</texture>
+                        </control>
+                    </control>
+                </itemlayout>
+                <focusedlayout width="1280" height="670">
+                    <control type="group">
+                        <posx>0</posx>
+                        <posy>0</posy>
+                        <height>$INFO[ListItem.Property(eptitle)]</height>
+                        <control type="image">
+                            <description>Episode Title</description>
+                            <posx>0</posx>
+                            <posy>0</posy>
+                            <top>5</top>
+                            <left>0</left>
+                            <width>1280</width>
+                            <height>670</height>
+                            <aspectratio align="left" aligny="top">keep</aspectratio>
+                            <texture background="false">$INFO[ListItem.ActualIcon]</texture>
+                        </control>
+                    </control>
+                </focusedlayout>
+                <onup>1101001</onup>
+                <ondown>100</ondown>
+                <onright>100</onright>
+                <onleft>10000</onleft>
+            </control>
+            <control type="scrollbar" id="2003">
+                <description>Message Scrollbar</description>
+                <posx>0</posx>
+                <posy>0</posy>
+                <top>0</top>
+                <right>0</right>
+                <width>20</width>
+                <height>670</height>
+                <visible>Control.IsVisible(1003)</visible>
+                <texturesliderbackground>texturesliderbackground.png</texturesliderbackground>
+                <texturesliderbar>texturesliderbar.png</texturesliderbar>
+                <texturesliderbarfocus>texturesliderbarfocus.png</texturesliderbarfocus>
+                <textureslidernib>-</textureslidernib>
+                <textureslidernibfocus>-</textureslidernibfocus>
+                <orientation>vertical</orientation>
+            </control>
+            <control type="list" id="1004">
+                <description>About List</description>
+                <width>1280</width>
+                <height>670</height>
+                <orientation>vertical</orientation>
+                <viewtype>icon</viewtype>
+                <preloaditems>2</preloaditems>
+                <pagecontrol>2004</pagecontrol>
+                <itemlayout width="1280" height="670">
+                    <control type="group">
+                        <posx>0</posx>
+                        <posy>0</posy>
+                        <height>$INFO[ListItem.Property(eptitle)]</height>
+                        <control type="image">
+                            <description>Episode Title</description>
+                            <posx>0</posx>
+                            <posy>0</posy>
+                            <top>5</top>
+                            <left>0</left>
+                            <width>1280</width>
+                            <height>670</height>
+                            <aspectratio align="left" aligny="top">keep</aspectratio>
+                            <texture background="false">$INFO[ListItem.ActualIcon]</texture>
+                        </control>
+                    </control>
+                </itemlayout>
+                <focusedlayout width="1280" height="670">
+                    <control type="group">
+                        <posx>0</posx>
+                        <posy>0</posy>
+                        <height>$INFO[ListItem.Property(eptitle)]</height>
+                        <control type="image">
+                            <description>Episode Title</description>
+                            <posx>0</posx>
+                            <posy>0</posy>
+                            <top>5</top>
+                            <left>0</left>
+                            <width>1280</width>
+                            <height>670</height>
+                            <aspectratio align="left" aligny="top">keep</aspectratio>
+                            <texture background="false">$INFO[ListItem.ActualIcon]</texture>
+                        </control>
+                    </control>
+                </focusedlayout>
+                <onup>1101001</onup>
+                <ondown>100</ondown>
+                <onright>100</onright>
+                <onleft>10000</onleft>
+            </control>
+            <control type="scrollbar" id="2004">
+                <description>Message Scrollbar</description>
+                <posx>0</posx>
+                <posy>0</posy>
+                <top>0</top>
+                <right>0</right>
+                <width>20</width>
+                <height>670</height>
+                <visible>Control.IsVisible(1004)</visible>
+                <texturesliderbackground>texturesliderbackground.png</texturesliderbackground>
+                <texturesliderbar>texturesliderbar.png</texturesliderbar>
+                <texturesliderbarfocus>texturesliderbarfocus.png</texturesliderbarfocus>
+                <textureslidernib>-</textureslidernib>
+                <textureslidernibfocus>-</textureslidernibfocus>
+                <orientation>vertical</orientation>
+            </control>
+            <onup>1101001</onup>
+            <ondown>100</ondown>
+            <onright>100</onright>
+            <onleft>10000</onleft>
+        </control>
+
+        <!-- List Loading Overlay -->
+        <control type="group" id="90000">
+            <posx>0</posx>
+            <posy>0</posy>
+            <width>1280</width>
+            <height>720</height>
+            <control type="button">
+                <description>List Loading Overlay</description>
+                <posx>0</posx>
+                <posy>0</posy>
+                <width>1280</width>
+                <height>720</height>
+                <texturenofocus>75_opaque_overlay.png</texturenofocus>
+                <texturefocus>75_opaque_overlay.png</texturefocus>
+                <pulseonselect>false</pulseonselect>
+                <onclick>-</onclick>
+                <onfocus>-</onfocus>
+                <onunfocus>-</onunfocus>
+            </control>
+            <control type="image">
+                <description>List Loading Gif</description>
+                <posx>0</posx>
+                <posy>0</posy>
+                <centertop>40%</centertop>
+                <centerleft>50%</centerleft>
+                <width>34</width>
+                <height>34</height>
+                <texture>episode_loader_128.gif</texture>
+                <aspectratio align="center" aligny="center">keep</aspectratio>
+            </control>
+        </control>
+        <!-- Menu Slideout Screen -->
+        <control type="group" id="10000">
+            <control type="group" id="100000">
+                <visible allowhiddenfocus="true">true</visible>
+                <posx>0</posx>
+                <posy>0</posy>                  
+                <control type="image">
+                    <description>Splash Header Background</description>
+                    <posx>0</posx>
+                    <posy>0</posy>
+                    <width>1280</width>
+                    <height>50</height>
+                    <texture>purple.png</texture>
+                </control>
+                <control type="image">
+                    <description>Splash Header Logo</description>
+                    <posx>0</posx>
+                    <posy>0</posy>
+                    <centerleft>50%</centerleft>
+                    <width>1240</width>
+                    <height>50</height>
+                    <texture>splash.scale-200.png</texture>
+                    <aspectratio align="center" aligny="center">keep</aspectratio>
+                </control>
+            </control>
+            <control type="group" id="110000">
+                <description>Menu Slideout Group</description>
+                <control type="group" id="110100">
+                    <control type="button" id="1101000">
+                        <description>Menu Button</description>
+                        <posx>0</posx>
+                        <posy>0</posy>
+                        <left>5</left>
+                        <top>5</top>
+                        <width>40</width>
+                        <height>40</height>
+                        <visible allowhiddenfocus="true">!ControlGroup(110000).HasFocus</visible>
+                        <texturefocus>menu_icon.scale_focus-200.png</texturefocus>
+                        <texturenofocus>menu_icon.scale-200.png</texturenofocus>
+                        <align>center</align>
+                        <aligny>center</aligny>
+                        <textoffsetx></textoffsetx>
+                        <textoffsety></textoffsety>
+                        <pulseonselect></pulseonselect>
+                        <onup>110100</onup>
+                        <ondown>110201</ondown>
+                        <onleft>110100</onleft>
+                        <onright>100</onright>
+                    </control>
+                    <control type="button" id="1101001">
+                        <description>Menu Button</description>
+                        <posx>0</posx>
+                        <posy>0</posy>
+                        <left>5</left>
+                        <top>5</top>
+                        <width>40</width>
+                        <height>40</height>
+                        <visible allowhiddenfocus="true">ControlGroup(110000).HasFocus</visible>
+                        <texturefocus>menu_back_icon.scale-200.png</texturefocus>
+                        <texturenofocus>menu_back_icon.scale-200.png</texturenofocus>
+                        <align>center</align>
+                        <aligny>center</aligny>
+                        <textoffsetx></textoffsetx>
+                        <textoffsety></textoffsety>
+                        <pulseonselect></pulseonselect>
+                        <onup>1101001</onup>
+                        <ondown>110201</ondown>
+                        <onleft>1101001</onleft>
+                        <onright>100</onright>
+                    </control>
+                </control>
+                <control type="group">
+                    <top>50</top>
+                    <control type="image">
+                        <description>Menu Overlay, Darkens the background view</description>
+                        <left>0</left>
+                        <width>1280</width>
+                        <height>720</height>
+                        <texture>menu-50-overlay.png</texture>
+                        <visible>ControlGroup(110000).HasFocus</visible>
+                        <aspectratio align="center" aligny="center">stretch</aspectratio>
+                    </control>
+                </control>
+                <control type="group">
+                    <top>50</top>
+                    <control type="button">
+                        <description>Menu Focus Background</description>
+                        <posx>0</posx>
+                        <posy>0</posy>
+                        <left>-200</left>
+                        <width>200</width>
+                        <height>720</height>
+                        <texturefocus>purple.png</texturefocus>
+                        <texturenofocus>purple.png</texturenofocus>
+                    </control>
+                    <control type="button" id="110201">
+                        <description>Menu Button 1</description>
+                        <left>-200</left>
+                        <top>20</top>
+                        <onup>1101001</onup>
+                        <onleft>110201</onleft>
+                        <ondown>110202</ondown>
+                        <onright>100</onright>
+                        <height>30</height>
+                        <width>200</width>
+                        <visible>true</visible>
+                        <texturefocus>special://profile/addon_data/script.video.funimationnow/media/buttons/menu-focus-button-110201.png</texturefocus>
+                        <texturenofocus>special://profile/addon_data/script.video.funimationnow/media/buttons/menu-no-focus-button-110201.png</texturenofocus>
+                    </control>
+                    <control type="button" id="110202">
+                        <description>Menu Button 2</description>
+                        <left>-200</left>
+                        <top>50</top>
+                        <onup>110201</onup>
+                        <onleft>110202</onleft>
+                        <ondown>110203</ondown>
+                        <onright>100</onright>
+                        <height>30</height>
+                        <width>200</width>
+                        <visible>true</visible>
+                        <texturefocus>special://profile/addon_data/script.video.funimationnow/media/buttons/menu-focus-button-110202.png</texturefocus>
+                        <texturenofocus>special://profile/addon_data/script.video.funimationnow/media/buttons/menu-no-focus-button-110202.png</texturenofocus>
+                    </control>
+                    <control type="button" id="110203">
+                        <description>Menu Button 3</description>
+                        <left>-200</left>
+                        <top>80</top>
+                        <onup>110202</onup>
+                        <onleft>110203</onleft>
+                        <ondown>110204</ondown>
+                        <onright>100</onright>
+                        <height>30</height>
+                        <width>200</width>
+                        <visible>true</visible>
+                        <texturefocus>special://profile/addon_data/script.video.funimationnow/media/buttons/menu-focus-button-110203.png</texturefocus>
+                        <texturenofocus>special://profile/addon_data/script.video.funimationnow/media/buttons/menu-no-focus-button-110203.png</texturenofocus>
+                    </control>
+                    <control type="button" id="110204">
+                        <description>Menu Button 4</description>
+                        <left>-200</left>
+                        <top>110</top>
+                        <onup>110203</onup>
+                        <onleft>110204</onleft>
+                        <ondown>110205</ondown>
+                        <onright>100</onright>
+                        <height>30</height>
+                        <width>200</width>
+                        <visible>true</visible>
+                        <texturefocus>special://profile/addon_data/script.video.funimationnow/media/buttons/menu-focus-button-110204.png</texturefocus>
+                        <texturenofocus>special://profile/addon_data/script.video.funimationnow/media/buttons/menu-no-focus-button-110204.png</texturenofocus>
+                    </control>
+                    <control type="button" id="110205">
+                        <description>Menu Button 5</description>
+                        <left>-200</left>
+                        <top>140</top>
+                        <onup>110204</onup>
+                        <onleft>110205</onleft>
+                        <ondown>110205</ondown>
+                        <onright>100</onright>
+                        <height>30</height>
+                        <width>200</width>
+                        <visible>true</visible>
+                        <texturefocus>special://profile/addon_data/script.video.funimationnow/media/buttons/menu-focus-button-110205.png</texturefocus>
+                        <texturenofocus>special://profile/addon_data/script.video.funimationnow/media/buttons/menu-no-focus-button-110205.png</texturenofocus>
+                    </control>
+                    <animation effect="slide" start="0,0" end="200,0" delay="0" time="200" tween="quadratic" easing="out" condition="ControlGroup(110000).HasFocus">Conditional</animation>
+                    <animation effect="slide" start="0,0" end="0,0" delay="0" time="200" tween="quadratic" easing="out" condition="!ControlGroup(110000).HasFocus">Conditional</animation>
+                </control>
+                <onright>100</onright>
+            </control>
+        </control>
+    </controls>
+</window>

@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<window>
+    <backgroundcolor>0x440397</backgroundcolor>
+    <!--<allowoverlay>no</allowoverlay>-->
+    <height>720</height>
+    <width>1280</width>
+    <defaultcontrol always="true">100</defaultcontrol>
+
+    <coordinates>
+        <system>1</system>
+        <posx>0</posx>
+        <posy>0</posy>
+        <left>0</left>
+        <top>0</top>
+    </coordinates>
+    <animation type="WindowOpen" reversible="false">
+        <effect type="zoom" start="80" end="100" center="640,360" easing="out" tween="back" time="300" />
+        <effect type="fade" start="0" end="100" time="300" />
+    </animation>
+    <animation type="WindowClose" reversible="false">
+        <effect type="zoom" start="100" end="80" center="640,360" easing="in" tween="back" time="300" />
+        <effect type="fade" start="100" end="0" time="300" />
+    </animation>
+    <controls>
+        <control type="image">
+            <description>background image</description>
+            <posx>0</posx>
+            <posy>0</posy>
+            <top>0</top>
+            <left>0</left>
+            <width>1280</width>
+            <height>720</height>
+            <texture>background.jpg</texture>
+            <aspectratio align="center" aligny="center">stretch</aspectratio>
+        </control>
+        <control type="group" id="100">
+            <description>Funimation Log In Screen</description>
+            <width>1280</width>
+            <height>720</height>
+            <control type="image">
+                <description>Log In Screen Background</description>
+                <posx>0</posx>
+                <posy>0</posy>
+                <width>1280</width>
+                <height>720</height>
+                <texture>purple.png</texture>
+                <aspectratio align="center" aligny="center">scale</aspectratio>
+            </control>
+            <control type="image">
+                <description>Log In Screen Logo</description>
+                <posx>0</posx>
+                <posy>0</posy>
+                <centertop>15%</centertop>
+                <centerleft>50%</centerleft>
+                <width>620</width>
+                <height>96</height>
+                <texture>splash.scale-200.png</texture>
+                <aspectratio align="center" aligny="top">keep</aspectratio>
+            </control>
+            <control type="button" id="1000">
+                <description>Log In Screen Exit</description>
+                <posx>0</posx>
+                <posy>0</posy>
+                <top>0</top>
+                <left>0</left>
+                <width>49</width>
+                <height>32</height>
+                <onup>1000</onup>
+                <ondown>1002</ondown>
+                <onright>1002</onright>
+                <onleft>1000</onleft>
+                <texturenofocus>back-button-no-focus.png</texturenofocus>
+                <texturefocus>back-button-focus.png</texturefocus>
+                <pulseonselect>true</pulseonselect>
+                <onclick>-</onclick>
+                <onfocus>-</onfocus>
+                <onunfocus>-</onunfocus>
+            </control>
+            <control type="image" id="1001">
+                <description>Log In Screen Description</description>
+                <posx>0</posx>
+                <posy>0</posy>
+                <centertop>43%</centertop>
+                <centerleft>50%</centerleft>
+                <width>437</width>
+                <height>23</height>
+                <texture>special://profile/addon_data/script.video.funimationnow/media/login/30620.png</texture>
+                <aspectratio align="center" aligny="top">keep</aspectratio>
+            </control>
+            <control type="edit" id="1002">
+                <description>Log In Email Input</description>
+                <posx>0</posx>
+                <posy>0</posy>
+                <centertop>49.4%</centertop>
+                <centerleft>50%</centerleft>
+                <width>416</width>
+                <height>40</height>
+                <onup>1000</onup>
+                <ondown>1004</ondown>
+                <onright>1002</onright>
+                <onleft>1000</onleft>
+                <aligny>center</aligny>
+                <!--<hinttext>$LOCALIZE[32912]</hinttext>-->
+                <hinttext>[COLOR FF392A4D][I]$ADDON[script.video.funimationnow 30400][/I][/COLOR]</hinttext>
+                <font>font10</font>
+                <textoffsetx>10</textoffsetx>
+                <textcolor>FF000000</textcolor>
+                <disabledcolor>FFFFFFFF</disabledcolor>
+                <invalidcolor>FFFFFFFF</invalidcolor>
+                <texturefocus>edit-focus.png</texturefocus>
+                <texturenofocus>edit-no-focus.png</texturenofocus>
+                <pulseonselect>no</pulseonselect>
+            </control>
+            <control type="edit" id="1003">
+                <description>Log In Password Input</description>
+                <posx>0</posx>
+                <posy>0</posy>
+                <centertop>56.3%</centertop>
+                <centerleft>50%</centerleft>
+                <width>416</width>
+                <height>40</height>
+                <onup>1002</onup>
+                <ondown>1005</ondown>
+                <onright>1004</onright>
+                <onleft>1000</onleft>
+                <aligny>center</aligny>
+                <!--<hinttext>[COLOR FF392A4D][I]$ADDON[script.video.funimationnow 32912][/I][/COLOR]</hinttext>-->
+                <font>font10</font>
+                <textoffsetx>10</textoffsetx>
+                <textcolor>FF000000</textcolor>
+                <disabledcolor>FF000000</disabledcolor>
+                <invalidcolor>FFFFFFFF</invalidcolor>
+                <texturefocus>edit-focus.png</texturefocus>
+                <texturenofocus>edit-no-focus.png</texturenofocus>
+                <pulseonselect>no</pulseonselect>
+            </control>
+            <control type="edit" id="1004">
+                <description>Log In Password Input</description>
+                <posx>0</posx>
+                <posy>0</posy>
+                <centertop>56.3%</centertop>
+                <centerleft>50%</centerleft>
+                <width>416</width>
+                <height>40</height>
+                <onup>1002</onup>
+                <ondown>1005</ondown>
+                <onright>1004</onright>
+                <onleft>1000</onleft>
+                <aligny>center</aligny>
+                <hinttext>[COLOR FF392A4D][I]$ADDON[script.video.funimationnow 30401][/I][/COLOR]</hinttext>
+                <font>font10</font>
+                <textoffsetx>10</textoffsetx>
+                <textcolor>00000000</textcolor>
+                <disabledcolor>FF000000</disabledcolor>
+                <invalidcolor>00FFFFFF</invalidcolor>
+                <texturefocus>edit-focus-mask.png</texturefocus>
+                <texturenofocus>clear_overlay.png</texturenofocus>
+                <pulseonselect>no</pulseonselect>
+            </control>
+            <control type="button" id="1005">
+                <description>Log In Button</description>
+                <posx>0</posx>
+                <posy>0</posy>
+                <centertop>64.5%</centertop>
+                <centerleft>50%</centerleft>
+                <width>125</width>
+                <height>35</height>
+                <onup>1004</onup>
+                <ondown>1007</ondown>
+                <onright>1005</onright>
+                <onleft>1000</onleft>
+                <texturenofocus>special://profile/addon_data/script.video.funimationnow/media/login/30621a.png</texturenofocus>
+                <texturefocus>special://profile/addon_data/script.video.funimationnow/media/login/30621b.png</texturefocus>
+                <pulseonselect>true</pulseonselect>
+                <onclick>-</onclick>
+                <onfocus>-</onfocus>
+                <onunfocus>-</onunfocus>
+            </control>
+            <control type="button" id="10055">
+                <description>Log In Button Mask</description>
+                <posx>0</posx>
+                <posy>0</posy>
+                <centertop>64.5%</centertop>
+                <centerleft>50%</centerleft>
+                <width>125</width>
+                <height>35</height>
+                <onup>1004</onup>
+                <ondown>1007</ondown>
+                <onright>1005</onright>
+                <onleft>1000</onleft>
+                <texturenofocus>special://profile/addon_data/script.video.funimationnow/media/login/30621c.png</texturenofocus>
+                <texturefocus>special://profile/addon_data/script.video.funimationnow/media/login/30621c.png</texturefocus>
+                <pulseonselect>true</pulseonselect>
+                <onclick>-</onclick>
+                <onfocus>-</onfocus>
+                <onunfocus>-</onunfocus>
+            </control>
+            <control type="image" id="1006">
+                <description>Log In Status</description>
+                <posx>0</posx>
+                <posy>0</posy>
+                <centertop>71%</centertop>
+                <centerleft>50%</centerleft>
+                <width>168</width>
+                <height>23</height>
+                <texture>special://profile/addon_data/script.video.funimationnow/media/login/30623.png</texture>
+                <aspectratio align="center" aligny="top">keep</aspectratio>
+            </control>
+            <control type="button" id="1007">
+                <description>Forgot Password Button</description>
+                <posx>0</posx>
+                <posy>0</posy>
+                <centertop>97%</centertop>
+                <centerleft>50%</centerleft>
+                <width>183</width>
+                <height>23</height>
+                <onup>1005</onup>
+                <ondown>1007</ondown>
+                <onright>1007</onright>
+                <onleft>1000</onleft>
+                <texturenofocus>special://profile/addon_data/script.video.funimationnow/media/login/30622a.png</texturenofocus>
+                <texturefocus>special://profile/addon_data/script.video.funimationnow/media/login/30622b.png</texturefocus>
+                <pulseonselect>true</pulseonselect>
+                <onclick>-</onclick>
+                <onfocus>-</onfocus>
+                <onunfocus>-</onunfocus>
+            </control>
+        </control>
+    </controls>
+</window>
