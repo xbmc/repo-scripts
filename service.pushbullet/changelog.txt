@@ -1,5 +1,8 @@
+0.8.26
+- Mark as broken until someone has time to fix it
+
 0.8.22
--Official repository release
+- Official repository release
 
 0.8.22b
 - Added auto dismiss pushes on setting (issue #22)
