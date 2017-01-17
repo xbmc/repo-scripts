@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<window>
+    <backgroundcolor>0x440397</backgroundcolor>
+    <!--<allowoverlay>no</allowoverlay>-->
+    <height>720</height>
+    <width>1280</width>
+    <defaultcontrol always="true">1006</defaultcontrol>
+
+    <coordinates>
+        <system>1</system>
+        <posx>0</posx>
+        <posy>0</posy>
+        <left>0</left>
+        <top>0</top>
+    </coordinates>
+    <animation type="WindowOpen" reversible="false">
+        <effect type="zoom" start="80" end="100" center="640,360" easing="out" tween="back" time="300" />
+        <effect type="fade" start="0" end="100" time="300" />
+    </animation>
+    <animation type="WindowClose" reversible="false">
+        <effect type="zoom" start="100" end="80" center="640,360" easing="in" tween="back" time="300" />
+        <effect type="fade" start="100" end="0" time="300" />
+    </animation>
+    <controls>
+        <control type="image">
+            <description>background image</description>
+            <posx>0</posx>
+            <posy>0</posy>
+            <top>0</top>
+            <left>0</left>
+            <width>1280</width>
+            <height>720</height>
+            <texture>background.jpg</texture>
+            <aspectratio align="center" aligny="center">stretch</aspectratio>
+        </control>
+        <control type="group" id="100">
+            <description>Start Free Trial Screen</description>
+            <width>1280</width>
+            <height>720</height>
+            <control type="image">
+                <description>Free Trial Backgorund</description>
+                <posx>0</posx>
+                <posy>0</posy>
+                <width>1280</width>
+                <height>720</height>
+                <texture>bg-tablet.scale-200.png</texture>
+                <aspectratio align="center" aligny="center">scale</aspectratio>
+            </control>
+            <control type="image">
+                <description>Free Trial Logo</description>
+                <posx>0</posx>
+                <posy>0</posy>
+                <centertop>15%</centertop>
+                <centerleft>50%</centerleft>
+                <!--<top>50</top>-->
+                <!--<left>330</left>-->
+                <width>620</width>
+                <height>96</height>
+                <texture>splash.scale-200.png</texture>
+                <aspectratio align="center" aligny="top">keep</aspectratio>
+            </control>
+            <control type="button" id="1000">
+                <description>Free Trial Exit Button</description>
+                <posx>0</posx>
+                <posy>0</posy>
+                <top>0</top>
+                <left>0</left>
+                <width>49</width>
+                <height>32</height>
+                <onup>1000</onup>
+                <ondown>1004</ondown>
+                <onright>1004</onright>
+                <onleft>1000</onleft>
+                <texturenofocus>back-button-no-focus.png</texturenofocus>
+                <texturefocus>back-button-focus.png</texturefocus>
+                <pulseonselect>true</pulseonselect>
+                <onclick>-</onclick>
+                <onfocus>-</onfocus>
+                <onunfocus>-</onunfocus>
+            </control>
+            <control type="image" id="1001">
+                <description>Free Trial Description</description>
+                <posx>0</posx>
+                <posy>0</posy>
+                <centertop>56%</centertop>
+                <centerleft>50%</centerleft>
+                <width>426</width>
+                <height>23</height>
+                <texture>special://profile/addon_data/script.video.funimationnow/media/trial/30600.png</texture>
+                <aspectratio align="center" aligny="top">keep</aspectratio>
+            </control>
+            <control type="image" id="1002">
+                <description>Expire Description</description>
+                <posx>0</posx>
+                <posy>0</posy>
+                <centertop>53.5%</centertop>
+                <centerleft>50%</centerleft>
+                <width>560.5</width>
+                <height>23</height>
+                <texture>special://profile/addon_data/script.video.funimationnow/media/trial/30604.png</texture>
+                <aspectratio align="center" aligny="top">keep</aspectratio>
+            </control>
+            <control type="image" id="1003">
+                <description>Expire Description</description>
+                <posx>0</posx>
+                <posy>0</posy>
+                <centertop>56%</centertop>
+                <centerleft>50%</centerleft>
+                <width>504</width>
+                <height>23</height>
+                <texture>special://profile/addon_data/script.video.funimationnow/media/trial/30605.png</texture>
+                <aspectratio align="center" aligny="top">keep</aspectratio>
+            </control>
+            <control type="button" id="1004">
+                <description>Launch Free Trial Webpage</description>
+                <posx>0</posx>
+                <posy>0</posy>
+                <centertop>64%</centertop>
+                <centerleft>50%</centerleft>
+                <width>240</width>
+                <height>35</height>
+                <onup>1000</onup>
+                <ondown>1006</ondown>
+                <onright>1006</onright>
+                <onleft>1000</onleft>
+                <texturenofocus>special://profile/addon_data/script.video.funimationnow/media/trial/30601a.png</texturenofocus>
+                <texturefocus>special://profile/addon_data/script.video.funimationnow/media/trial/30601b.png</texturefocus>
+                <pulseonselect>true</pulseonselect>
+                <onclick>-</onclick>
+                <onfocus>-</onfocus>
+                <onunfocus>-</onunfocus>
+            </control>
+            <control type="image" id="1005">
+                <description>Free Trial Log In Description</description>
+                <posx>0</posx>
+                <posy>0</posy>
+                <centertop>97%</centertop>
+                <centerleft>47.5%</centerleft>
+                <width>172</width>
+                <height>23</height>
+                <texture>special://profile/addon_data/script.video.funimationnow/media/trial/30602.png</texture>
+                <aspectratio align="center" aligny="bottom">keep</aspectratio>
+            </control>
+            <control type="group" id="1006">
+                <control type="button" id="10000">
+                    <description>Free Trial Login Button</description>
+                    <posx>0</posx>
+                    <posy>0</posy>
+                    <centertop>97%</centertop>
+                    <centerleft>56.7%</centerleft>
+                    <width>60</width>
+                    <height>23</height>
+                    <onup>1004</onup>
+                    <ondown>1006</ondown>
+                    <onright>1006</onright>
+                    <onleft>1000</onleft>
+                    <texturenofocus>special://profile/addon_data/script.video.funimationnow/media/trial/30603a.png</texturenofocus>
+                    <texturefocus>special://profile/addon_data/script.video.funimationnow/media/trial/30603b.png</texturefocus>
+                    <pulseonselect>true</pulseonselect>
+                    <onclick>-</onclick>
+                    <onfocus>-</onfocus>
+                    <onunfocus>-</onunfocus>
+                </control>
+                <control type="button" id="10001">
+                    <description>Free Trial Log Out Button</description>
+                    <posx>0</posx>
+                    <posy>0</posy>
+                    <centertop>97%</centertop>
+                    <centerleft>50%</centerleft>
+                    <width>73</width>
+                    <height>23</height>
+                    <onup>1004</onup>
+                    <ondown>1006</ondown>
+                    <onright>1006</onright>
+                    <onleft>1000</onleft>
+                    <texturenofocus>special://profile/addon_data/script.video.funimationnow/media/trial/30606a.png</texturenofocus>
+                    <texturefocus>special://profile/addon_data/script.video.funimationnow/media/trial/30606b.png</texturefocus>
+                    <pulseonselect>true</pulseonselect>
+                    <onclick>-</onclick>
+                    <onfocus>-</onfocus>
+                    <onunfocus>-</onunfocus>
+                </control>
+            </control>
+        </control>
+    </controls>
+</window>

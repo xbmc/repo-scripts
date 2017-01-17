@@ -1,0 +1,310 @@
+# Addon Name: Funimation|Now
+# Addon id: plugin.video.funimation
+# Addon Provider: Funimationnow
+msgid ""
+msgstr ""
+
+# 30000 - 30999
+
+# Account Settings [30000-30099]
+--------------------------------
+
+msgctxt "#30000"
+msgid "Accounts"
+msgstr "Accounts"
+
+msgctxt "#30001"
+msgid "Account Details"
+msgstr "Account Details"
+
+msgctxt "#30002"
+msgid "User"
+msgstr "User"
+
+msgctxt "#30003"
+msgid "Type"
+msgstr "Type"
+
+msgctxt "#30004"
+msgid "Role"
+msgstr "Role"
+
+msgctxt "#30005"
+msgid "Territory"
+msgstr "Territory"
+
+
+# General Settings [30100-30199]
+--------------------------------
+
+msgctxt "#30100"
+msgid "General"
+msgstr "General"
+
+msgctxt "#30101"
+msgid "Video Quality (0 = Prompt)"
+msgstr "Video Quality (0 = Prompt)"
+
+msgctxt "#30102"
+msgid "Image Quality (60% = Default)"
+msgstr "Image Quality (60% = Default)"
+
+msgctxt "#30103"
+msgid "Splash Screen Enabled"
+msgstr "Splash Screen Enabled"
+
+msgctxt "#30104"
+msgid "Prefetch Show Information"
+msgstr "Prefetch Show Information"
+
+
+# Advanced Settings [30200-30299]
+---------------------------------
+
+msgctxt "#30200"
+msgid "Advanced"
+msgstr "Advanced"
+
+msgctxt "#30201"
+msgid "Log Level"
+msgstr "Log Level"
+
+msgctxt "#30202"
+msgid "Error"
+msgstr "Error"
+
+msgctxt "#30203"
+msgid "Warn"
+msgstr "Warn"
+
+msgctxt "#30204"
+msgid "Info"
+msgstr "Info"
+
+msgctxt "#30205"
+msgid "Debug"
+msgstr "Debug"
+
+msgctxt "#30206"
+msgid "[COLOR blue]Troubleshooting[/COLOR]"
+msgstr "[COLOR blue]Troubleshooting[/COLOR]"
+
+msgctxt "#30207"
+msgid "Override Territory to ([COLOR green]US[/COLOR]) ([COLOR red]Requires Clear User Data[/COLOR])"
+msgstr "Override Territory to ([COLOR green]US[/COLOR])([COLOR red]Requires Clear User Data[/COLOR])"
+
+msgctxt "#30208"
+msgid "Clear User Data"
+msgstr "Clear User Data"
+
+
+# Notifications Settings [30300-30399]
+--------------------------------------
+
+msgctxt "#30300"
+msgid "Error in Authentication"
+msgstr "Error in Authentication"
+
+msgctxt "#30301"
+msgid "Application Error"
+msgstr "Application Error"
+
+msgctxt "#30302"
+msgid "Internal Server Error. Using cached data if it exists."
+msgstr "Internal Server Error. Using cached data if it exists."
+
+msgctxt "#30303"
+msgid "Internal Server Error."
+msgstr "Internal Server Error."
+
+msgctxt "#30304"
+msgid "No results for chosen filter."
+msgstr "No results for chosen filter."
+
+msgctxt "#30305"
+msgid "Internal Server Error. Failed to %s item from queue."
+msgstr "Internal Server Error. Failed to %s item from queue."
+
+msgctxt "#30306"
+msgid "Internal Server Error. Failed to update user rating"
+msgstr "Internal Server Error. Failed to update user rating"
+
+msgctxt "#30307"
+msgid "Internal Server Error. Failed to update video progress"
+msgstr "Internal Server Error. Failed to update video progress"
+
+
+# Login Screen [30400 - 30419]
+------------------------------
+
+msgctxt "#30400"
+msgid "Email Address"
+msgstr "Email Address"
+
+msgctxt "#30401"
+msgid "Password"
+msgstr "Password"
+
+
+# Home Navigation [30500-30520]
+-------------------------------
+
+msgctxt "#30500"
+msgid " FEATURED   "
+msgstr " FEATURED   "
+
+msgctxt "#30501"
+msgid " CONTINUE WATCHING   "
+msgstr " CONTINUE WATCHING   "
+
+msgctxt "#30502"
+msgid " MY QUEUE   "
+msgstr " MY QUEUE   "
+
+msgctxt "#30503"
+msgid " SIMULDUBS™   "
+msgstr " SIMULDUBS™   "
+
+msgctxt "#30504"
+msgid " ALL SHOWS   "
+msgstr " ALL SHOWS   "
+
+msgctxt "#30505"
+msgid " ACTION / ADVENTURE   "
+msgstr " ACTION / ADVENTURE   "
+
+msgctxt "#30506"
+msgid " SCI FI   "
+msgstr " SCI FI   "
+
+msgctxt "#30507"
+msgid " FAN SERVICE   "
+msgstr " FAN SERVICE   "
+
+msgctxt "#30508"
+msgid " SLICE OF LIFE   "
+msgstr " SLICE OF LIFE   "
+
+
+# Menu Navigation [30521-30540]
+-------------------------------
+
+msgctxt "#30521"
+msgid "Home"
+msgstr "Home"
+
+msgctxt "#30522"
+msgid "My Queue"
+msgstr "My Queue"
+
+msgctxt "#30523"
+msgid "All Shows"
+msgstr "All Shows"
+
+msgctxt "#30524"
+msgid "SimulDubs™"
+msgstr "SimulDubs™"
+
+msgctxt "#30525"
+msgid "Genres"
+msgstr "Genres"
+
+msgctxt "#30526"
+msgid "Settings"
+msgstr "Settings"
+
+msgctxt "#30527"
+msgid "Help"
+msgstr "Help"
+
+msgctxt "#30528"
+msgid "Log Out"
+msgstr "Log Out"
+
+
+# Help Menu Navigation [30531-30550]
+------------------------------------
+
+msgctxt "#30531"
+msgid "About"
+msgstr "About"
+
+msgctxt "#30532"
+msgid "FAQ"
+msgstr "FAQ"
+
+msgctxt "#30533"
+msgid "Contact Support"
+msgstr "Contact Support"
+
+msgctxt "#30534"
+msgid "Privacy Policy"
+msgstr "Privacy Policy"
+
+msgctxt "#30535"
+msgid "Terms"
+msgstr "Terms"
+
+
+# Trial Screen [30600-30619]
+----------------------------
+
+msgctxt "#30600"
+msgid " Stream the latest English-dubbed anime ad-free in HD. "
+msgstr " Stream the latest English-dubbed anime ad-free in HD. "
+
+msgctxt "#30601"
+msgid " Start Your Free Trial Now "
+msgstr " Start Your Free Trial Now "
+
+msgctxt "#30602"
+msgid " Already a subscriber? "
+msgstr " Already a subscriber? "
+
+msgctxt "#30603"
+msgid " Log In "
+msgstr " Log In "
+
+msgctxt "#30604"
+msgid " In order to watch the latest anime simulcasts, English Dubs, and movies, "
+msgstr " In order to watch the latest anime simulcasts, English Dubs, and movies, "
+
+msgctxt "#30605"
+msgid " upgrade to a subscribtion plan now at Funimation.com/upgrade. "
+msgstr " upgrade to a subscribtion plan now at Funimation.com/upgrade. "
+
+msgctxt "#30606"
+msgid " Log Out "
+msgstr " Log Out "
+
+
+# Log In Screen [30620-30639]
+-----------------------------
+
+msgctxt "#30620"
+msgid " Please enter your email address and password to log in. "
+msgstr " Please enter your email address and password to log in. "
+
+msgctxt "#30621"
+msgid " Log In "
+msgstr " Log In "
+
+msgctxt "#30622"
+msgid " Forgot your password? "
+msgstr " Forgot your password? "
+
+msgctxt "#30623"
+msgid " Authentication Failure! "
+msgstr " Authentication Failure! "
+
+
+# Dialog Text [30900-30999]
+---------------------------
+
+msgctxt "#30900"
+msgid "Rate This Show"
+msgstr "Rate This Show"
+
+msgctxt "#30901"
+msgid "Cancel"
+msgstr "Cancel"
