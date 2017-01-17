@@ -1,0 +1,15 @@
+[B]0.1.0[/B]
+- Initial Beta Release Custom GUI Release
+- Converted to new FunimationNOW API
+- Custom UI to match unified cross platform apps
+- Bugs:
+   - Android Send E-Mail
+
+[B]0.0.3[/B]
+- Initial Beta Release
+
+[B]0.0.2[/B]
+- Fixed dict references for p2/3 issue
+
+[B]0.0.1[/B]
+- Initial version

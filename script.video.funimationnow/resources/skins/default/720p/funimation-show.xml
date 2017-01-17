@@ -1,0 +1,1025 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<window>
+    <!--<backgroundcolor>0x440397</backgroundcolor>-->
+    <width>1280</width>
+    <height>720</height>
+    <defaultcontrol always="true">4005</defaultcontrol>
+    <coordinates>
+        <system>1</system>
+        <posx>0</posx>
+        <posy>0</posy>
+        <left>0</left>
+        <top>0</top>
+    </coordinates>
+    <animation type="WindowOpen" reversible="false">
+        <effect type="zoom" start="80" end="100" center="640,360" easing="out" tween="back" time="300" />
+        <effect type="fade" start="0" end="100" time="300" />
+    </animation>
+    <animation type="WindowClose" reversible="false">
+        <effect type="zoom" start="100" end="80" center="640,360" easing="in" tween="back" time="300" />
+        <effect type="fade" start="100" end="0" time="300" />
+    </animation>
+    <controls>
+        <control type="group" id="100">
+            <control type="group">
+                <visible allowhiddenfocus="true">true</visible>
+                <posx>0</posx>
+                <posy>0</posy>
+                <control type="image">
+                    <description>header background</description>
+                    <posx>0</posx>
+                    <posy>0</posy>
+                    <width>1280</width>
+                    <height>50</height>
+                    <texture>purple.png</texture>
+                </control>
+                <control type="image">
+                    <description>header logo</description>
+                    <posx>0</posx>
+                    <posy>0</posy>
+                    <width>1240</width>
+                    <height>50</height>
+                    <texture>splash.scale-200.png</texture>
+                    <aspectratio align="center" aligny="center">keep</aspectratio>
+                </control>
+                <control type="button" id="1000">                   
+                    <description>Search Button</description>
+                    <posx>0</posx>
+                    <posy>0</posy>
+                    <right>5</right>
+                    <top>5</top>
+                    <width>40</width>
+                    <height>40</height>
+                    <visible>true</visible>
+                    <texturefocus>search_icon.scale-focus_200.png</texturefocus>
+                    <texturenofocus>search_icon.scale-200.png</texturenofocus>
+                    <align>center</align>
+                    <aligny>center</aligny>
+                    <textoffsetx></textoffsetx>
+                    <textoffsety></textoffsety>
+                    <pulseonselect></pulseonselect>
+                    <onup>1000</onup>
+                    <ondown>9011</ondown>
+                    <onleft>4005</onleft>
+                    <onright>1000</onright>
+                </control>
+                <control type="button" id="1001">
+                    <description>Shows exit button</description>
+                    <posx>0</posx>
+                    <posy>0</posy>
+                    <top>0</top>
+                    <left>0</left>
+                    <width>49</width>
+                    <height>32</height>
+                    <texturenofocus>back-button-no-focus.png</texturenofocus>
+                    <texturefocus>back-button-focus.png</texturefocus>
+                    <pulseonselect>true</pulseonselect>
+                    <onclick>-</onclick>
+                    <onfocus>-</onfocus>
+                    <onunfocus>-</onunfocus>
+                    <onup>1001</onup>
+                    <ondown>3002</ondown>
+                    <onright>4005</onright>
+                    <onleft>1000</onleft>
+                </control>
+            </control>
+        </control>
+        <control type="image" id="200">
+            <description>Show backgdrop (4096 x 1500)</description>
+            <top>50</top>
+            <width>580</width>
+            <height>720</height>
+            <texture fallback="fanart.jpg">fanart.jpg</texture>
+            <aspectratio align="center" aligny="center">scale</aspectratio>
+        </control>
+        <control type="group" id="300">
+            <posx>0</posx>
+            <posy>0</posy>
+            <bottom>0</bottom>
+            <width>580</width>
+            <height>180</height>
+            <control type="image">
+                <description>background image</description>
+                <posx>0</posx>
+                <posy>0</posy>
+                <bottom>0</bottom>
+                <height>180</height>
+                <texture>new_overlay_test.png</texture>
+                <aspectratio align="center" aligny="center">stretch</aspectratio>
+            </control>
+            <control type="image" id="3000">
+                <description>Show Title</description>
+                <posx>0</posx>
+                <posy>0</posy>
+                <top>10</top>
+                <left>10</left>
+                <width>450</width>
+                <height>40</height>
+                <texture background="true"></texture>
+                <aspectratio align="left" aligny="left">keep</aspectratio>
+            </control>
+            <control type="image" id="3001">
+                <description>Show Rating</description>
+                <posx>0</posx>
+                <posy>0</posy>
+                <top>50</top>
+                <left>10</left>
+                <width>200</width>
+                <height>40</height>
+                <texture background="false">flagging/rating/0_overlay.png</texture>
+                <aspectratio align="center" aligny="center">stretch</aspectratio>
+            </control>
+            <control type="button" id="3002">
+                <description>Star rating control</description>
+                <left>10</left>
+                <top>50</top>
+                <width>200</width>
+                <height>40</height>
+                <visible>true</visible>
+                <colordiffuse>FF9961E0</colordiffuse>
+                <texturefocus>flagging/rating/r_overlay.png</texturefocus>
+                <texturenofocus>clear-overlay.png</texturenofocus>
+                <pulseonselect>true</pulseonselect>
+                <onclick>-</onclick>
+                <onfocus>-</onfocus>
+                <onunfocus>-</onunfocus>
+                <onup>1001</onup>
+                <ondown>3002</ondown>
+                <onright>3006</onright>
+                <onleft>80001</onleft>
+            </control>
+            <control type="image" id="3003">
+                <description>Show Rating</description>
+                <posx>0</posx>
+                <posy>0</posy>
+                <top>50</top>
+                <left>10</left>
+                <width>200</width>
+                <height>40</height>
+                <texture background="false">flagging/rating/r0.0.png</texture>
+                <aspectratio align="center" aligny="center">stretch</aspectratio>
+            </control>
+            <control type="image" id="3004">
+                <description>Quality, ratings</description>
+                <posx>0</posx>
+                <posy>0</posy>
+                <top>90</top>
+                <left>10</left>
+                <width>500</width>
+                <height>15</height>
+                <texture background="false"></texture>
+                <aspectratio align="left" aligny="left">keep</aspectratio>
+            </control>
+            <control type="image" id="3005">
+                <description>Show Description</description>
+                <posx>0</posx>
+                <posy>0</posy>
+                <top>120</top>
+                <left>10</left>
+                <width>500</width>
+                <height>155</height>
+                <texture background="false"></texture>
+                <aspectratio align="top" aligny="top">keep</aspectratio>
+            </control>
+            <control type="radiobutton" id="3006">
+                <description>Show Remove Queue</description>
+                <type>radiobutton</type>
+                <posx>0</posx>
+                <posy>0</posy>
+                <radioposx>0</radioposx>
+                <centerleft>96%</centerleft>
+                <centertop>20%</centertop>
+                <width>40</width>
+                <height>40</height>
+                <radiowidth>40</radiowidth>
+                <radioheight>40</radioheight>
+                <visible>true</visible>
+                <texturefocus>clear-overlay.png</texturefocus>
+                <texturenofocus>clear-overlay.png</texturenofocus>
+                <textureradioonfocus>add_queue_focus.png</textureradioonfocus>
+                <textureradioonnofocus>1.png</textureradioonnofocus>
+                <textureradioofffocus>remove_queue_focus.png</textureradioofffocus>
+                <textureradiooffnofocus>0.png</textureradiooffnofocus>
+                <label></label>
+                <font></font>
+                <align></align>
+                <aligny></aligny>
+                <pulseonselect>true</pulseonselect>
+                <onfocus>-</onfocus>
+                <onunfocus>-</onunfocus>
+                <onup>1001</onup>
+                <ondown>3006</ondown>
+                <onright>4010</onright>
+                <onleft>3002</onleft>
+            </control>
+        </control>
+        <control type="group">
+            <top>50</top>
+            <left>930</left>
+            <width>350</width>
+            <height>720</height>
+            <control type="image">
+                <description>background image</description>
+                <texture>white_background.jpg</texture>
+                <aspectratio align="center" aligny="center">stretch</aspectratio>
+            </control>
+        </control>
+        <control type="group" id="400">
+            <top>50</top>
+            <left>580</left>
+            <width>350</width>
+            <height>720</height>
+            <control type="image">
+                <description>background image</description>
+                <texture>white_background.jpg</texture>
+                <aspectratio align="center" aligny="center">stretch</aspectratio>
+            </control>
+            <control type="image" id="4000">
+                <description>Show Name</description>
+                <posx>0</posx>
+                <posy>0</posy>
+                <top>2</top>
+                <left>50</left>
+                <width>296</width>
+                <height>18</height>
+                <texture background="false"></texture>
+                <aspectratio align="left" aligny="top">keep</aspectratio>
+            </control>
+            <control type="image" id="4001">
+                <description>Show Title</description>
+                <posx>0</posx>
+                <posy>0</posy>
+                <top>20</top>
+                <left>50</left>
+                <width>256</width>
+                <height>12</height>
+                <texture background="false"></texture>
+                <aspectratio align="left" aligny="top">keep</aspectratio>
+            </control>
+            <control type="image" id="4002">
+                <description>Show Duration</description>
+                <posx>0</posx>
+                <posy>0</posy>
+                <top>20</top>
+                <left>306</left>
+                <width>40</width>
+                <height>12</height>
+                <texture background="false"></texture>
+                <aspectratio align="right" aligny="center">keep</aspectratio>
+            </control>
+            <control type="image" id="4003">
+                <description>Show Image</description>
+                <posx>0</posx>
+                <posy>0</posy>
+                <top>38</top>
+                <width>296</width>
+                <height>168</height>
+                <left>50</left>
+                <texture background="false"></texture>
+                <aspectratio align="center" aligny="center">stretch</aspectratio>
+            </control>
+            <control type="image" id="4004">
+                <description>Show Progrss</description>
+                <posx>0</posx>
+                <posy>0</posy>
+                <left>55</left>
+                <bottom>517</bottom>
+                <width>286</width>
+                <height>3</height>
+                <visible>true</visible>
+                <texture background="false">flagging/progress/0.png</texture>
+                <aspectratio align="left" aligny="left">stretch</aspectratio>
+            </control>
+            <control type="button" id="4005">
+                <description>Show Play Button</description>
+                <posx>0</posx>
+                <posy>0</posy>
+                <top>105</top>
+                <left>180.5</left>
+                <width>35</width>
+                <height>35</height>
+                <hitrect x="50" y="38" w="296" h="168" />
+                <texturefocus>show_play_focus.png</texturefocus>
+                <texturenofocus>show_play_nofocus.png</texturenofocus>
+                <pulseonselect>true</pulseonselect>
+                <onup>1001</onup>
+                <ondown>10000</ondown>
+                <onright>1000</onright>
+                <onleft>1001</onleft>
+            </control>
+            <control type="group" id="10000">
+                <control type="image" id="4006">
+                    <description>version selection</description>
+                    <posx>0</posx>
+                    <posy>0</posy>
+                    <top>211</top>
+                    <left>50</left>
+                    <width>145.5</width>
+                    <height>16</height>
+                    <texture background="false" fallback="select_control_bg.jpg">select_control_bg.png</texture>
+                    <aspectratio align="center" aligny="center">stretch</aspectratio>
+                </control>
+                <control type="button" id="4007">
+                    <posx>0</posx>
+                    <posy>0</posy>
+                    <top>211</top>
+                    <left>50</left>
+                    <width>145.5</width>
+                    <height>16</height>
+                    <texturefocus>opaque_overlay.png</texturefocus>
+                    <texturenofocus>clear_overlay.png</texturenofocus>
+                    <pulseonselect>true</pulseonselect>
+                    <onup>4005</onup>
+                    <ondown>4010</ondown>
+                    <onright>4009</onright>
+                    <onleft>1001</onleft>
+                </control>
+                <control type="image" id="4008">
+                    <description>season selection</description>
+                    <posx>0</posx>
+                    <posy>0</posy>
+                    <top>211</top>
+                    <left>201</left>
+                    <width>145.5</width>
+                    <height>16</height>
+                    <texture background="false" fallback="select_control_bg.jpg">select_control_bg.png</texture>
+                    <aspectratio align="center" aligny="center">stretch</aspectratio>
+                </control>
+                <control type="button" id="4009">
+                    <posx>0</posx>
+                    <posy>0</posy>
+                    <top>211</top>
+                    <left>201</left>
+                    <width>145.5</width>
+                    <height>16</height>
+                    <texturefocus>opaque_overlay.png</texturefocus>
+                    <texturenofocus>clear_overlay.png</texturenofocus>
+                    <pulseonselect>true</pulseonselect>
+                    <onup>4005</onup>
+                    <ondown>4010</ondown>
+                    <onright>1000</onright>
+                    <onleft>4007</onleft>
+                </control>
+            </control>
+            <control type="list" id="4010">
+                <top>236</top>
+                <width>296</width>
+                <height>280</height>
+                <left>50</left>
+                <!--<centerleft>50%</centerleft>-->
+                <orientation>vertical</orientation>
+                <viewtype>icon</viewtype>
+                <preloaditems>2</preloaditems>
+                <itemlayout width="296" height="40">
+                    <control type="group">
+                        <posx>0</posx>
+                        <posy>0</posy>
+                        <control type="image">
+                            <top>0</top>
+                            <height>0.5</height>
+                            <aspectratio align="left" aligny="top">stretch</aspectratio>
+                            <texture background="false">show_list_border.png</texture>
+                        </control>
+                        <control type="image">
+                            <top>1</top>
+                            <aspectratio align="left" aligny="center">stretch</aspectratio>
+                            <texture background="false">show_list_bg.png</texture>
+                        </control>
+                        <control type="image">
+                            <posx>0</posx>
+                            <posy>0</posy>
+                            <width>20</width>
+                            <height>14</height>
+                            <centertop>50%</centertop>
+                            <right>1</right>
+                            <aspectratio align="right" aligny="center">keep</aspectratio>
+                            <texture background="false">QuickPlay.scale-200.png</texture>
+                        </control>
+                        <control type="image">
+                            <description>Episode Number</description>
+                            <posx>0</posx>
+                            <posy>0</posy>
+                            <top>4</top>
+                            <left>1</left>
+                            <width>20</width>
+                            <height>10</height>
+                            <aspectratio align="left" aligny="top">keep</aspectratio>
+                            <texture background="false">$INFO[ListItem.Property(epnumber)]</texture>
+                        </control>
+                        <control type="image">
+                            <description>Episode Title</description>
+                            <posx>0</posx>
+                            <posy>0</posy>
+                            <top>4</top>
+                            <left>20</left>
+                            <width>260</width>
+                            <height>10</height>
+                            <aspectratio align="left" aligny="top">keep</aspectratio>
+                            <texture background="false">$INFO[ListItem.Property(eptitle)]</texture>
+                        </control>
+                        <control type="image">
+                            <description>Episode Subtitle</description>
+                            <posx>0</posx>
+                            <posy>0</posy>
+                            <top>14</top>
+                            <left>20</left>
+                            <width>260</width>
+                            <height>9</height>
+                            <aspectratio align="left" aligny="top">keep</aspectratio>
+                            <texture background="false">$INFO[ListItem.Property(epsubtitle)]</texture>
+                        </control>
+                        <control type="image">
+                            <posx>0</posx>
+                            <posy>0</posy>
+                            <centertop>63%</centertop>
+                            <left>20</left>
+                            <width>258</width>
+                            <height>3</height>
+                            <aspectratio align="left" aligny="top">stretch</aspectratio>
+                            <texture background="false">flagging/progress/showprogress/$INFO[ListItem.Property(progress)].png</texture>
+                        </control>
+                        <control type="image">
+                            <description>Episode Language</description>
+                            <posx>0</posx>
+                            <posy>0</posy>
+                            <centertop>79%</centertop>
+                            <left>20</left>
+                            <width>130</width>
+                            <height>9</height>
+                            <aspectratio align="left" aligny="top">keep</aspectratio>
+                            <texture background="false">$INFO[ListItem.Property(eplanguage)]</texture>
+                        </control>
+                        <control type="image">
+                            <description>Episode Duration</description>
+                            <posx>0</posx>
+                            <posy>0</posy>
+                            <centertop>79%</centertop>
+                            <left>227</left>
+                            <width>50</width>
+                            <height>9</height>
+                            <aspectratio align="right" aligny="center">keep</aspectratio>
+                            <texture background="false">$INFO[ListItem.Property(epduration)]</texture>
+                        </control>
+                    </control>
+                </itemlayout>
+                <focusedlayout width="296" height="40">
+                    <control type="group">
+                        <posx>0</posx>
+                        <posy>0</posy>
+                        <control type="image">
+                            <top>0</top>
+                            <height>1</height>
+                            <aspectratio align="left" aligny="top">stretch</aspectratio>
+                            <texture background="false">show_list_border.png</texture>
+                        </control>
+                        <control type="image">
+                            <top>1</top>
+                            <colordiffuse>FFE6E6E6</colordiffuse>
+                            <aspectratio align="left" aligny="center">stretch</aspectratio>
+                            <texture background="false" diffuse="FFE6E6E6">show_list_bg.png</texture>
+                            <!--<texture background="false" diffuse="FFE6E6E6">show_list_bg.png</texture>-->
+                        </control>
+                        <control type="image">
+                            <posx>0</posx>
+                            <posy>0</posy>
+                            <width>20</width>
+                            <height>14</height>
+                            <centertop>50%</centertop>
+                            <right>1</right>
+                            <aspectratio align="right" aligny="center">keep</aspectratio>
+                            <texture background="false">QuickPlay.scale-200.png</texture>
+                        </control>
+                        <control type="image">
+                            <description>Episode Number</description>
+                            <posx>0</posx>
+                            <posy>0</posy>
+                            <top>4</top>
+                            <left>1</left>
+                            <width>20</width>
+                            <height>10</height>
+                            <colordiffuse>FFE6E6E6</colordiffuse>
+                            <aspectratio align="left" aligny="top">keep</aspectratio>
+                            <texture background="false">$INFO[ListItem.Property(epnumber)]</texture>
+                        </control>
+                        <control type="image">
+                            <description>Episode Title</description>
+                            <posx>0</posx>
+                            <posy>0</posy>
+                            <top>4</top>
+                            <left>20</left>
+                            <width>260</width>
+                            <height>10</height>
+                            <colordiffuse>FFE6E6E6</colordiffuse>
+                            <aspectratio align="left" aligny="top">keep</aspectratio>
+                            <texture background="false">$INFO[ListItem.Property(eptitle)]</texture>
+                        </control>
+                        <control type="image">
+                            <description>Episode Subtitle</description>
+                            <posx>0</posx>
+                            <posy>0</posy>
+                            <top>14</top>
+                            <left>20</left>
+                            <width>260</width>
+                            <height>9</height>
+                            <colordiffuse>FFE6E6E6</colordiffuse>
+                            <aspectratio align="left" aligny="top">keep</aspectratio>
+                            <texture background="false">$INFO[ListItem.Property(epsubtitle)]</texture>
+                        </control>
+                        <control type="image">
+                            <posx>0</posx>
+                            <posy>0</posy>
+                            <centertop>63%</centertop>
+                            <left>20</left>
+                            <width>258</width>
+                            <height>3</height>
+                            <aspectratio align="left" aligny="top">stretch</aspectratio>
+                            <texture background="false">flagging/progress/showprogress/$INFO[ListItem.Property(progress)].png</texture>
+                        </control>
+                        <control type="image">
+                            <description>Episode Language</description>
+                            <posx>0</posx>
+                            <posy>0</posy>
+                            <centertop>79%</centertop>
+                            <left>20</left>
+                            <width>130</width>
+                            <height>9</height>
+                            <colordiffuse>FFE6E6E6</colordiffuse>
+                            <aspectratio align="left" aligny="top">keep</aspectratio>
+                            <texture background="false">$INFO[ListItem.Property(eplanguage)]</texture>
+                        </control>
+                        <control type="image">
+                            <description>Episode Duration</description>
+                            <posx>0</posx>
+                            <posy>0</posy>
+                            <centertop>79%</centertop>
+                            <left>227</left>
+                            <width>50</width>
+                            <height>9</height>
+                            <colordiffuse>FFE6E6E6</colordiffuse>
+                            <aspectratio align="right" aligny="center">keep</aspectratio>
+                            <texture background="false">$INFO[ListItem.Property(epduration)]</texture>
+                        </control>
+                    </control>
+                </focusedlayout>
+                <onup>10000</onup>
+                <ondown>80001</ondown>
+                <onright>9009</onright>
+                <onleft>3006</onleft>
+            </control>
+            <control type="group" id="4200">
+                <posx>0</posx>
+                <posy>0</posy>
+                <top>210</top>
+                <width>1280</width>
+                <height>510</height>
+                <control type="button">
+                    <description>episode loading background</description>
+                    <posx>0</posx>
+                    <posy>0</posy>
+                    <width>700</width>
+                    <height>720</height>
+                    <texturenofocus>75_opaque_overlay.png</texturenofocus>
+                    <texturefocus>75_opaque_overlay.png</texturefocus>
+                    <pulseonselect>false</pulseonselect>
+                    <onclick>-</onclick>
+                    <onfocus>-</onfocus>
+                    <onunfocus>-</onunfocus>
+                </control>
+                <control type="image">
+                    <description>episode loading background</description>
+                    <posx>0</posx>
+                    <posy>0</posy>
+                    <centertop>20%</centertop>
+                    <centerleft>27%</centerleft>
+                    <width>34</width>
+                    <height>34</height>
+                    <texture>episode_loader_128.gif</texture>
+                    <aspectratio align="center" aligny="center">keep</aspectratio>
+                </control>
+            </control>
+        </control>
+        <control type="group" id="800">
+            <posx>0</posx>
+            <posy>0</posy>
+            <centertop>93%</centertop>
+            <left>590</left>
+            <width>350</width>
+            <height>200</height>
+            <control type="image" id="8000">
+                <description>Related Shows</description>
+                <posx>0</posx>
+                <posy>0</posy>
+                <top>2</top>
+                <left>1</left>
+                <width>74.5</width>
+                <height>10</height>
+                <aspectratio align="left" aligny="top">keep</aspectratio>
+                <texture></texture>
+            </control>
+            <control type="group" id="8001">
+                <top>14</top>
+                <height>170</height>
+                <width>700</width>
+                <control type="fixedlist" id="80001">
+                    <width>700</width>
+                    <height>170</height>
+                    <orientation>horizontal</orientation>
+                    <viewtype>icon</viewtype>
+                    <preloaditems>2</preloaditems>
+                    <itemlayout width="177.6" height="136">
+                        <control type="group">
+                            <control type="image">
+                                <posx>0</posx>
+                                <posy>0</posy>
+                                <top>0</top>
+                                <right>0</right>
+                                <!--<height>380</height>
+                                <width>444</width>-->
+                                <aspectratio align="left" aligny="top">scale</aspectratio>
+                                <bordersize>4</bordersize>
+                                <texture background="false">$INFO[ListItem.ActualIcon]</texture>
+                                <!--<texture background="false" fallback="DefaultShortcut.png">$INFO[ListItem.Icon]</texture>-->
+                            </control>
+                            <control type="image">
+                                <posx>0</posx>
+                                <posy>0</posy>
+                                <aspectratio align="top" aligny="top">stretch</aspectratio>
+
+                                <bordersize>4</bordersize>
+                                <texture>cover-text-overlay.png</texture>                               
+                                <!--<texture background="false" fallback="DefaultShortcut.png">$INFO[ListItem.Icon]</texture>-->
+                            </control>
+                            <control type="image">
+                                <posx>0</posx>
+                                <posy>0</posy>
+                                <right>3</right>
+                                <top>3</top>
+                                <width>40</width>
+                                <height>40</height>
+                                <bordersize>4</bordersize>
+                                <aspectratio align="center" aligny="top">keep</aspectratio>
+                                <!--<texture>remove_queue_nofocus.png</texture>-->
+                                <texture>$INFO[ListItem.Property(qtexture)].png</texture>
+                            </control>
+                            <control type="image">
+                                <description>My First label</description>
+                                <left>10</left>
+                                <top>-12</top>
+                                <width>156.6</width>
+                                <height>136</height>
+                                <visible>true</visible>
+                                <aspectratio align="left" aligny="bottom">keep</aspectratio>
+                                <texture background="false">$INFO[ListItem.Property(ctitle)]</texture>
+                                <!--<texture background="false">f_pk=19373.png</texture>-->
+                            </control>
+                        </control>
+                    </itemlayout>
+                    <focusedlayout width="177.6" height="136">
+                        <control type="group">
+                            <control type="image">
+                                <posx>0</posx>
+                                <posy>0</posy>
+                                <onleft>8910</onleft>
+                                <aspectratio align="center" aligny="bottom">scale</aspectratio>
+                                <bordertexture border="4">fun_list_border.png</bordertexture>
+                                <bordersize>4</bordersize>
+                                <colordiffuse>FFE6E6E6</colordiffuse>
+                                <texture background="false">$INFO[ListItem.Thumb]</texture>
+                                <animation reversible="false" effect="zoom" end="106" center="auto" time="150">Focus</animation>
+                            </control>
+                        </control>
+                        <control type="image">
+                            <posx>0</posx>
+                            <posy>0</posy>
+                            <aspectratio align="top" aligny="top">stretch</aspectratio>
+                            <bordertexture border="2">fun_button_nofocus.png</bordertexture>
+                            <bordersize>4</bordersize>
+                            <texture>cover-text-overlay.png</texture>
+                            <animation reversible="false" effect="zoom" end="106" center="auto" time="150">Focus</animation>
+                            <!--<texture background="false" fallback="DefaultShortcut.png">$INFO[ListItem.Icon]</texture>-->
+                        </control>
+                        <control type="image">
+                            <posx>0</posx>
+                            <posy>0</posy>
+                            <right>3</right>
+                            <top>3</top>
+                            <width>40</width>
+                            <height>40</height>
+                            <bordersize>4</bordersize>
+                            <aspectratio align="center" aligny="top">keep</aspectratio>
+                            <texture>$INFO[ListItem.Property(qtexture)].png</texture>
+                        </control>
+                        <control type="image">
+                            <description>My First label</description>
+                            <left>15</left>
+                            <top>-12</top>
+                            <width>156.6</width>
+                            <height>136</height>
+                            <visible>true</visible>
+                            <animation reversible="false" effect="zoom" end="106" center="auto" time="150">Focus</animation>
+                            <aspectratio align="left" aligny="bottom">keep</aspectratio>
+                            <texture background="false">$INFO[ListItem.Property(ctitle)]</texture>    
+                        </control>
+                    </focusedlayout>
+                    <onup>80002</onup>
+                    <ondown>80001</ondown>
+                    <onright>80001</onright>
+                    <onleft>3006</onleft>
+                </control>
+                <control type="radiobutton" id="80002">
+                    <description>My first radiobutton control</description>
+                    <type>radiobutton</type>
+                    <posx>0</posx>
+                    <posy>0</posy>
+                    <radioposx>-1</radioposx>
+                    <radioposy>-0.2</radioposy>
+                    <left>140</left>
+                    <top>6</top>
+                    <width>31</width>
+                    <height>33</height>
+                    <radiowidth>31</radiowidth>
+                    <radioheight>35</radioheight>
+                    <visible>true</visible>
+                    <colordiffuse>FFFFFFFF</colordiffuse>
+                    <texturefocus>clear-overlay.png</texturefocus>
+                    <texturenofocus>clear-overlay.png</texturenofocus>
+                    <textureradioonfocus>add_queue_focus.png</textureradioonfocus>
+                    <textureradioonnofocus>clear-overlay.png</textureradioonnofocus>
+                    <textureradioofffocus>remove_queue_focus.png</textureradioofffocus>
+                    <textureradiooffnofocus>clear-overlay.png</textureradiooffnofocus>
+                    <label></label>
+                    <font>font12</font>
+                    <align>center</align>
+                    <aligny>center</aligny>
+                    <pulseonselect>true</pulseonselect>
+                    <onfocus>-</onfocus>
+                    <onunfocus>-</onunfocus>
+                    <onup>4010</onup>
+                    <ondown>80001</ondown>
+                    <onright>80001</onright>
+                    <onleft>80001</onleft>
+                </control>
+            </control>
+        </control>
+        <control type="group" id="900">
+            <description>Episode Preview Screen</description>
+            <posx>0</posx>
+            <posy>0</posy>
+            <top>286</top>
+            <left>925</left>
+            <width>345</width>
+            <height>280</height>
+            <control type="image">
+                <description>list description background</description>
+                <width>320</width>
+                <height>280</height>
+                <texture>list_desc_bg.png</texture>
+                <aspectratio align="center" aligny="center">stretch</aspectratio>
+            </control>
+            <control type="image" id="9000">
+                <description>Episode Number</description>
+                <posx>0</posx>
+                <posy>0</posy>
+                <top>4</top>
+                <left>1</left>
+                <width>20</width>
+                <height>10</height>
+                <colordiffuse>FFE6E6E6</colordiffuse>
+                <aspectratio align="left" aligny="top">keep</aspectratio>
+                <texture></texture>
+                <!--<texture background="false">$INFO[ListItem.Property(epnumber)]</texture>-->
+            </control>
+            <control type="image" id="9001">
+                <description>Episode Title</description>
+                <posx>0</posx>
+                <posy>0</posy>
+                <top>4</top>
+                <left>20</left>
+                <width>260</width>
+                <height>10</height>
+                <colordiffuse>FFE6E6E6</colordiffuse>
+                <aspectratio align="left" aligny="top">keep</aspectratio>
+                <texture></texture>
+                <!--<texture background="false">$INFO[ListItem.Property(eptitle)]</texture>-->
+            </control>
+            <control type="image" id="9002">
+                <description>Episode Subtitle</description>
+                <posx>0</posx>
+                <posy>0</posy>
+                <top>14</top>
+                <left>20</left>
+                <width>260</width>
+                <height>9</height>
+                <colordiffuse>FFE6E6E6</colordiffuse>
+                <aspectratio align="left" aligny="top">keep</aspectratio>
+                <texture></texture>
+                <!--<texture background="false">$INFO[ListItem.Property(epsubtitle)]</texture>-->
+            </control>
+            <control type="image" id="9003">
+                <description>Episode Language</description>
+                <posx>0</posx>
+                <posy>0</posy>
+                <top>23</top>
+                <left>20</left>
+                <width>130</width>
+                <height>9</height>
+                <colordiffuse>FFE6E6E6</colordiffuse>
+                <aspectratio align="left" aligny="top">keep</aspectratio>
+                <texture></texture>
+                <!--<texture background="false">$INFO[ListItem.Property(epsubtitle)]</texture>-->
+            </control>
+            <control type="image" id="9004">
+                <description>Episode Duration</description>
+                <posx>0</posx>
+                <posy>0</posy>
+                <top>30</top>
+                <right>32</right>
+                <width>50</width>
+                <height>9</height>
+                <colordiffuse>FFE6E6E6</colordiffuse>
+                <aspectratio align="right" aligny="center">keep</aspectratio>
+                <texture></texture>
+                <!--<texture background="false">$INFO[ListItem.Property(epsubtitle)]</texture>-->
+            </control>
+            <control type="image" id="9005">
+                <description>Episode Quality and Rating</description>
+                <posx>0</posx>
+                <posy>0</posy>
+                <top>35</top>
+                <left>20</left>
+                <width>260</width>
+                <height>10</height>
+                <colordiffuse>FFE6E6E6</colordiffuse>
+                <aspectratio align="left" aligny="top">keep</aspectratio>
+                <texture></texture>
+                <!--<texture background="false">$INFO[ListItem.Property(eptitle)]</texture>-->
+            </control>
+            <control type="image" id="9006">
+                <description>Episode Description</description>
+                <posx>0</posx>
+                <posy>0</posy>
+                <top>53</top>
+                <left>18</left>
+                <width>275</width>
+                <height>40</height>
+                <colordiffuse>FFE6E6E6</colordiffuse>
+                <aspectratio align="left" aligny="top">keep</aspectratio>
+                <texture></texture>
+                <!--<texture background="false">$INFO[ListItem.Property(eptitle)]</texture>-->
+            </control>
+            <control type="image" id="9007">
+                <description>List Show Image</description>
+                <posx>0</posx>
+                <posy>0</posy>
+                <top>100</top>
+                <left>33.15</left>
+                <width>253.7</width>
+                <height>144</height>
+                <texture background="false"></texture>
+                <aspectratio align="center" aligny="center">stretch</aspectratio>
+            </control>
+            <control type="image" id="9008">
+                <description>Show Progrss</description>
+                <posx>0</posx>
+                <posy>0</posy>
+                <left>38.15</left>
+                <top>238</top>
+                <width>243.7</width>
+                <height>3</height>
+                <texture background="false">flagging/progress/0.png</texture>
+                <aspectratio align="left" aligny="left">stretch</aspectratio>
+            </control>
+            <control type="button" id="9009">
+                <description>List Play Button</description>
+                <posx>0</posx>
+                <posy>0</posy>
+                <top>157</top>
+                <left>145</left>
+                <width>30</width>
+                <height>30</height>
+                <hitrect x="0" y="0" w="320" h="286" />
+                <texturefocus>show_play_focus.png</texturefocus>
+                <texturenofocus>show_play_nofocus.png</texturenofocus>
+                <pulseonselect>true</pulseonselect>
+                <onup>9011</onup>
+                <ondown>9014</ondown>
+                <onright>9011</onright>
+                <onleft>4010</onleft>
+            </control>
+            <control type="image" id="9010">
+                <description>Show Rating</description>
+                <posx>0</posx>
+                <posy>0</posy>
+                <top>14</top>
+                <left>250</left>
+                <width>66.66</width>
+                <height>13.33</height>
+                <texture background="false">flagging/rating/0_overlay.png</texture>
+                <aspectratio align="center" aligny="center">stretch</aspectratio>
+            </control>
+            <control type="button" id="9011">
+                <description>Star rating control</description>
+                <left>250</left>
+                <top>14</top>
+                <width>66.66</width>
+                <height>13.33</height>
+                <visible>true</visible>
+                <colordiffuse>FF9961E0</colordiffuse>
+                <texturefocus>flagging/rating/r_overlay.png</texturefocus>
+                <texturenofocus>clear-overlay.png</texturenofocus>
+                <pulseonselect>true</pulseonselect>
+                <onclick>-</onclick>
+                <onfocus>-</onfocus>
+                <onunfocus>-</onunfocus>
+                <onup>1000</onup>
+                <ondown>9009</ondown>
+                <onright>1000</onright>
+                <onleft>9009</onleft>
+            </control>
+            <control type="image" id="9012">
+                <description>Show Rating</description>
+                <posx>0</posx>
+                <posy>0</posy>
+                <top>14</top>
+                <left>250</left>
+                <width>66.66</width>
+                <height>13.33</height>
+                <texture background="false">flagging/rating/r0.0.png</texture>
+                <aspectratio align="center" aligny="center">stretch</aspectratio>
+            </control>
+            <control type="image">
+                <description>Audio Title</description>
+                <posx>0</posx>
+                <posy>0</posy>
+                <bottom>22</bottom>
+                <left>20</left>
+                <width>260</width>
+                <height>10</height>
+                <colordiffuse>FFE6E6E6</colordiffuse>
+                <aspectratio align="left" aligny="top">keep</aspectratio>
+                <texture>audio.png</texture>
+                <!--<texture background="false">$INFO[ListItem.Property(eptitle)]</texture>-->
+            </control>
+            <control type="image" id="9013">
+                <description>Language Selection BG</description>
+                <posx>0</posx>
+                <posy>0</posy>
+                <top>258</top>
+                <left>20</left>
+                <width>145.5</width>
+                <height>16</height>
+                <texture background="false" fallback="select_control_bg.jpg">select_control_bg.png</texture>
+                <aspectratio align="center" aligny="center">stretch</aspectratio>
+            </control>
+            <control type="button" id="9014">
+                <description>Language Selection Button</description>
+                <posx>0</posx>
+                <posy>0</posy>
+                <top>258</top>
+                <left>20</left>
+                <width>145.5</width>
+                <height>16</height>
+                <texturefocus>opaque_overlay.png</texturefocus>
+                <texturenofocus>clear_overlay.png</texturenofocus>
+                <pulseonselect>true</pulseonselect>
+                <onup>9009</onup>
+                <ondown>4010</ondown>
+                <onright>9009</onright>
+                <onleft>4010</onleft>
+            </control>
+            <animation effect="fade" start="0" end="100" time="200" condition="[Control.HasFocus(4010) | ControlGroup(900).HasFocus]">Conditional</animation>
+            <animation effect="fade" start="100" end="0" delay="20" time="200" condition="[!Control.HasFocus(4010) + !ControlGroup(900).HasFocus]">Conditional</animation>
+        </control>
+        <control type="group" id="500">
+            <posx>0</posx>
+            <posy>0</posy>
+            <width>1280</width>
+            <height>720</height>
+            <control type="button">
+                <description>show loading background</description>
+                <posx>0</posx>
+                <posy>0</posy>
+                <top>50</top>
+                <width>1280</width>
+                <height>720</height>
+                <texturenofocus>show_view_loading.png</texturenofocus>
+                <texturefocus>show_view_loading.png</texturefocus>
+                <pulseonselect>false</pulseonselect>
+                <onclick>-</onclick>
+                <onfocus>-</onfocus>
+                <onunfocus>-</onunfocus>
+            </control>
+            <control type="image">
+                <description>show loading background</description>
+                <posx>0</posx>
+                <posy>0</posy>
+                <centertop>50%</centertop>
+                <centerleft>50%</centerleft>
+                <width>42</width>
+                <height>42</height>
+                <texture>show_view_loading.gif</texture>
+                <aspectratio align="center" aligny="center">keep</aspectratio>
+            </control>
+        </control>
+    </controls>
+</window>
