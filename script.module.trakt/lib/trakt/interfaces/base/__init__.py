@@ -1,5 +1,5 @@
-from trakt.core.errors import ERRORS
-from trakt.core.exceptions import ServerError, ClientError
+from trakt.core.errors import log_request_error
+from trakt.core.exceptions import RequestFailedError, ServerError, ClientError
 from trakt.core.helpers import try_convert
 from trakt.core.pagination import PaginationIterator
 from trakt.helpers import setdefault
@@ -14,7 +14,8 @@ log = logging.getLogger(__name__)
 def authenticated(func):
     @wraps(func)
     def wrap(*args, **kwargs):
-        kwargs['authenticated'] = True
+        if 'authenticated' not in kwargs:
+            kwargs['authenticated'] = True
 
         return func(*args, **kwargs)
 
@@ -58,6 +59,10 @@ class Interface(object):
 
     def get_data(self, response, exceptions=False, pagination=False, parse=True):
         if response is None:
+            if exceptions:
+                raise RequestFailedError('No response available')
+
+            log.warn('Request failed (no response returned)')
             return None
 
         # Return response, if parse=False
@@ -68,13 +73,10 @@ class Interface(object):
         error = False
 
         if response.status_code < 200 or response.status_code >= 300:
-            # Lookup status code in trakt error definitions
-            name, desc = ERRORS.get(response.status_code, ("Unknown", "Unknown"))
+            log_request_error(log, response)
 
-            log.warning('Request failed: %s - "%s" (code: %s)', name, desc, response.status_code)
-
+            # Raise an exception (if enabled)
             if exceptions:
-                # Raise an exception (including the response for further processing)
                 if response.status_code >= 500:
                     raise ServerError(response)
                 else:
@@ -94,7 +96,10 @@ class Interface(object):
             if pagination:
                 return PaginationIterator(self.client, response)
 
-            warnings.warn('Unhandled pagination response, more pages can be returned with `pagination=True`', stacklevel=3)
+            warnings.warn(
+                'Unhandled pagination response, more pages can be returned with `pagination=True`',
+                stacklevel=3
+            )
 
         # Parse response, return data
         content_type = response.headers.get('content-type')

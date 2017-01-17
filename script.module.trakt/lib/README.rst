@@ -10,7 +10,17 @@ trakt.py
 .. image:: https://img.shields.io/github/release/fuzeman/trakt.py.svg
     :target: https://github.com/fuzeman/trakt.py/releases/latest
 
+.. image:: https://img.shields.io/pypi/v/trakt.py.svg
+    :target: https://pypi.python.org/pypi/trakt.py
+
 Python interface for the trakt.tv API
+
+Install
+-------
+
+.. code-block:: bash
+
+    pip install trakt.py
 
 Examples
 --------
