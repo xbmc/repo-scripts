@@ -33,6 +33,7 @@ def handle_videos(results, extended=False):
                          'mediatype': "video",
                          'premiered': snippet["publishedAt"][:10]})
         video.set_artwork({'thumb': thumb})
+        video.set_playable(True)
         video.set_properties({'channel_title': snippet["channelTitle"],
                               'channel_id': snippet["channelId"],
                               'type': "video",
