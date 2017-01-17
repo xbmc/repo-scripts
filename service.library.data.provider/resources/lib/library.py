@@ -19,18 +19,12 @@
 #    This script is based on service.skin.widgets
 #    Thanks to the original authors
 
-import sys
 import xbmc
 import xbmcgui
 import xbmcaddon
+import json
 from time import gmtime, strftime
 
-if sys.version_info < (2, 7):
-    import simplejson as json
-else:
-    import json
-
-__addon__ = xbmcaddon.Addon()
 
 PLOT_ENABLE = True
 
@@ -38,10 +32,10 @@ PLOT_ENABLE = True
 class LibraryFunctions():
     def __init__(self):
         self.WINDOW = xbmcgui.Window(10000)
-        self.LIMIT = int(__addon__.getSetting("limit"))
-        self.RECENTITEMS_UNPLAYED = __addon__.getSetting("recentitems_unplayed") == 'true'
-        self.RANDOMITEMS_UNPLAYED = __addon__.getSetting("randomitems_unplayed") == 'true'
-        self.INCLUDE_SPECIALS = __addon__.getSetting("include_specials") == 'true'
+        self.LIMIT = int(xbmcaddon.Addon().getSetting("limit"))
+        self.RECENTITEMS_UNPLAYED = xbmcaddon.Addon().getSetting("recentitems_unplayed") == 'true'
+        self.RANDOMITEMS_UNPLAYED = xbmcaddon.Addon().getSetting("randomitems_unplayed") == 'true'
+        self.INCLUDE_SPECIALS = xbmcaddon.Addon().getSetting("include_specials") == 'true'
 
     def _get_data(self, query_type, useCache):
         # Check if data is being refreshed elsewhere

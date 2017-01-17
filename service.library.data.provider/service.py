@@ -19,28 +19,21 @@
 #    This script is based on service.skin.widgets
 #    Thanks to the original authors
 
-import sys
 import xbmc
 import xbmcgui
 import xbmcaddon
 import datetime
-import library
+from resources.lib import library
 LIBRARY = library.LibraryFunctions()
 
-if sys.version_info < (2, 7):
-    import simplejson
-else:
-    import json as simplejson
 
-__addon__ = xbmcaddon.Addon()
-__addonversion__ = __addon__.getAddonInfo('version')
-__addonid__ = __addon__.getAddonInfo('id')
-__addonname__ = __addon__.getAddonInfo('name')
-__localize__ = __addon__.getLocalizedString
+ADDON = xbmcaddon.Addon()
+ADDON_VERSION = ADDON.getAddonInfo('version')
+ADDON_NAME = ADDON.getAddonInfo('name')
 
 
 def log(txt):
-    message = '%s: %s' % (__addonname__, txt.encode('ascii', 'ignore'))
+    message = '%s: %s' % (ADDON_NAME, txt.encode('ascii', 'ignore'))
     xbmc.log(msg=message, level=xbmc.LOGDEBUG)
 
 
@@ -184,6 +177,6 @@ class Widgets_Player(xbmc.Player):
         self.type = ""
 
 
-log('service version %s started' % __addonversion__)
+log('service version %s started' % ADDON_VERSION)
 Main()
-log('service version %s stopped' % __addonversion__)
+log('service version %s stopped' % ADDON_VERSION)
