@@ -25,13 +25,12 @@ import xbmcgui
 import xbmcplugin
 import xbmcaddon
 from resources.lib import data
+from resources.lib import router
 
 ADDON = xbmcaddon.Addon()
 ADDON_VERSION = ADDON.getAddonInfo('version')
 ADDON_NAME = ADDON.getAddonInfo('name')
 ADDON_LANGUAGE = ADDON.getLocalizedString
-
-PLOT_ENABLE = True
 
 
 def log(txt):
@@ -44,68 +43,70 @@ class Main:
     def __init__(self):
         self._init_vars()
         self._parse_argv()
+        if not self.TYPE:
+            router.run()
         for content_type in self.TYPE.split("+"):
             full_liz = list()
             if content_type == "randommovies":
                 xbmcplugin.setContent(int(sys.argv[1]), 'movies')
-                data.parse_movies('randommovies', 32004, full_liz, self.USECACHE, PLOT_ENABLE, self.LIMIT)
+                data.parse_movies('randommovies', 32004, full_liz, self.USECACHE, self.PLOT_ENABLE, self.LIMIT)
                 xbmcplugin.addDirectoryItems(int(sys.argv[1]), full_liz)
             elif content_type == "recentmovies":
                 xbmcplugin.setContent(int(sys.argv[1]), 'movies')
-                data.parse_movies('recentmovies', 32005, full_liz, self.USECACHE, PLOT_ENABLE, self.LIMIT)
+                data.parse_movies('recentmovies', 32005, full_liz, self.USECACHE, self.PLOT_ENABLE, self.LIMIT)
                 xbmcplugin.addDirectoryItems(int(sys.argv[1]), full_liz)
             elif content_type == "recommendedmovies":
                 xbmcplugin.setContent(int(sys.argv[1]), 'movies')
-                data.parse_movies('recommendedmovies', 32006, full_liz, self.USECACHE, PLOT_ENABLE, self.LIMIT)
+                data.parse_movies('recommendedmovies', 32006, full_liz, self.USECACHE, self.PLOT_ENABLE, self.LIMIT)
                 xbmcplugin.addDirectoryItems(int(sys.argv[1]), full_liz)
             elif content_type == "recommendedepisodes":
                 xbmcplugin.setContent(int(sys.argv[1]), 'episodes')
-                data.parse_tvshows_recommended('recommendedepisodes', 32010, full_liz, self.USECACHE, PLOT_ENABLE, self.LIMIT)
+                data.parse_tvshows_recommended('recommendedepisodes', 32010, full_liz, self.USECACHE, self.PLOT_ENABLE, self.LIMIT)
                 xbmcplugin.addDirectoryItems(int(sys.argv[1]), full_liz)
             elif content_type == "favouriteepisodes":
                 xbmcplugin.setContent(int(sys.argv[1]), 'episodes')
-                data.parse_tvshows_favourite('favouriteepisodes', 32020, full_liz, self.USECACHE, PLOT_ENABLE, self.LIMIT)
+                data.parse_tvshows_favourite('favouriteepisodes', 32020, full_liz, self.USECACHE, self.PLOT_ENABLE, self.LIMIT)
                 xbmcplugin.addDirectoryItems(int(sys.argv[1]), full_liz)
             elif content_type == "recentepisodes":
                 xbmcplugin.setContent(int(sys.argv[1]), 'episodes')
-                data.parse_tvshows('recentepisodes', 32008, full_liz, self.USECACHE, PLOT_ENABLE, self.LIMIT)
+                data.parse_tvshows('recentepisodes', 32008, full_liz, self.USECACHE, self.PLOT_ENABLE, self.LIMIT)
                 xbmcplugin.addDirectoryItems(int(sys.argv[1]), full_liz)
             elif content_type == "randomepisodes":
                 xbmcplugin.setContent(int(sys.argv[1]), 'episodes')
-                data.parse_tvshows('randomepisodes', 32007, full_liz, self.USECACHE, PLOT_ENABLE, self.LIMIT)
+                data.parse_tvshows('randomepisodes', 32007, full_liz, self.USECACHE, self.PLOT_ENABLE, self.LIMIT)
                 xbmcplugin.addDirectoryItems(int(sys.argv[1]), full_liz)
             elif content_type == "recentvideos":
                 listA = []
                 listB = []
                 dateListA = []
                 dateListB = []
-                data.parse_movies('recentmovies', 32005, listA, dateListA, "dateadded", self.USECACHE, PLOT_ENABLE, self.LIMIT)
-                data.parse_tvshows('recentepisodes', 32008, listB, dateListB, "dateadded", self.USECACHE, PLOT_ENABLE, self.LIMIT)
+                data.parse_movies('recentmovies', 32005, listA, dateListA, "dateadded", self.USECACHE, self.PLOT_ENABLE, self.LIMIT)
+                data.parse_tvshows('recentepisodes', 32008, listB, dateListB, "dateadded", self.USECACHE, self.PLOT_ENABLE, self.LIMIT)
                 full_liz = data._combine_by_date(listA, dateListA, listB, dateListB, self.LIMIT, self.SETTINGLIMIT)
                 xbmcplugin.addDirectoryItems(int(sys.argv[1]), full_liz)
             elif content_type == "randomalbums":
                 xbmcplugin.setContent(int(sys.argv[1]), 'albums')
-                data.parse_albums('randomalbums', 32016, full_liz, self.USECACHE, PLOT_ENABLE, self.LIMIT)
+                data.parse_albums('randomalbums', 32016, full_liz, self.USECACHE, self.PLOT_ENABLE, self.LIMIT)
                 xbmcplugin.addDirectoryItems(int(sys.argv[1]), full_liz)
             elif content_type == "recentalbums":
                 xbmcplugin.setContent(int(sys.argv[1]), 'albums')
-                data.parse_albums('recentalbums', 32017, full_liz, self.USECACHE, PLOT_ENABLE, self.LIMIT)
+                data.parse_albums('recentalbums', 32017, full_liz, self.USECACHE, self.PLOT_ENABLE, self.LIMIT)
                 xbmcplugin.addDirectoryItems(int(sys.argv[1]), full_liz)
             elif content_type == "recommendedalbums":
                 xbmcplugin.setContent(int(sys.argv[1]), 'albums')
-                data.parse_albums('recommendedalbums', 32018, full_liz, self.USECACHE, PLOT_ENABLE, self.LIMIT)
+                data.parse_albums('recommendedalbums', 32018, full_liz, self.USECACHE, self.PLOT_ENABLE, self.LIMIT)
                 xbmcplugin.addDirectoryItems(int(sys.argv[1]), full_liz)
             elif content_type == "randomsongs":
                 xbmcplugin.setContent(int(sys.argv[1]), 'songs')
-                data.parse_song('randomsongs', 32015, full_liz, self.USECACHE, PLOT_ENABLE, self.LIMIT)
+                data.parse_song('randomsongs', 32015, full_liz, self.USECACHE, self.PLOT_ENABLE, self.LIMIT)
                 xbmcplugin.addDirectoryItems(int(sys.argv[1]), full_liz)
             elif content_type == "randommusicvideos":
                 xbmcplugin.setContent(int(sys.argv[1]), 'musicvideos')
-                data.parse_musicvideos('randommusicvideos', 32022, full_liz, self.USECACHE, PLOT_ENABLE, self.LIMIT)
+                data.parse_musicvideos('randommusicvideos', 32022, full_liz, self.USECACHE, self.PLOT_ENABLE, self.LIMIT)
                 xbmcplugin.addDirectoryItems(int(sys.argv[1]), full_liz)
             elif content_type == "recentmusicvideos":
                 xbmcplugin.setContent(int(sys.argv[1]), 'musicvideos')
-                data.parse_musicvideos('recentmusicvideos', 32023, full_liz, self.USECACHE, PLOT_ENABLE, self.LIMIT)
+                data.parse_musicvideos('recentmusicvideos', 32023, full_liz, self.USECACHE, self.PLOT_ENABLE, self.LIMIT)
                 xbmcplugin.addDirectoryItems(int(sys.argv[1]), full_liz)
             elif content_type == "movie":
                 xbmcplugin.setContent(int(sys.argv[1]), 'movies')
@@ -130,35 +131,12 @@ class Main:
             elif content_type == "play_album":
                 data.play_album(self.ALBUM)
                 return
-
-        if not self.TYPE:
-            # Show a root menu
-            full_liz = list()
-            items = [[32004, "randommovies"],
-                     [32005, "recentmovies"],
-                     [32006, "recommendedmovies"],
-                     [32007, "randomepisodes"],
-                     [32008, "recentepisodes"],
-                     [32010, "recommendedepisodes"],
-                     [32020, "favouriteepisodes"],
-                     [32019, "recentvideos"],
-                     [32016, "randomalbums"],
-                     [32017, "recentalbums"],
-                     [32018, "recommendedalbums"],
-                     [32015, "randomsongs"],
-                     [32022, "randommusicvideos"],
-                     [32023, "recentmusicvideos"]]
-            for item in items:
-                liz = xbmcgui.ListItem(ADDON_LANGUAGE(item[0]), iconImage='DefaultFolder.png')
-                full_liz.append(("plugin://service.library.data.provider?type=" + item[1], liz, True))
-            xbmcplugin.addDirectoryItems(int(sys.argv[1]), full_liz)
         xbmcplugin.endOfDirectory(handle=int(sys.argv[1]))
 
     def _init_vars(self):
         self.WINDOW = xbmcgui.Window(10000)
         self.SETTINGSLIMIT = int(ADDON.getSetting("limit"))
-        global PLOT_ENABLE
-        PLOT_ENABLE = ADDON.getSetting("plot_enable") == 'true'
+        self.PLOT_ENABLE = ADDON.getSetting("plot_enable") == 'true'
         self.RANDOMITEMS_UNPLAYED = ADDON.getSetting("randomitems_unplayed") == 'true'
 
     def _parse_argv(self):
