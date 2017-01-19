@@ -1,13 +1,14 @@
-import experience
-import kodiutil
-import cvutil
-import kodigui
 import xbmc
 import xbmcgui
-
+import kodigui
+import kodiutil
 from kodiutil import T
 
 kodiutil.checkAPILevel()
+
+import experience  # noqa E402
+import cvutil  # noqa E402
+
 
 CHANNEL_STRINGS = {
     0: '0.0',
@@ -67,6 +68,9 @@ def begin(movieid=None, episodeid=None, selection=False, args=None):
     else:
         seqPath = cvutil.getSequencePath(for_3D=e.has3D)
         kodiutil.DEBUG_LOG('Loading sequence for {0}: {1}'.format(e.has3D and '3D' or '2D', repr(seqPath)))
+
+    if xbmc.getCondVisibility('Window.IsVisible(MovieInformation)'):
+        xbmc.executebuiltin('Dialog.Close(MovieInformation)')
 
     e.start(seqPath)
 

@@ -15,20 +15,20 @@ except:
 mutagen.setFileOpener(util.vfs.File)
 
 TYPE_IDS = {
-    '3D Intro':       '3D.intro',
-    '3D Outro':       '3D.outro',
-    'Countdown':      'countdown',
-    'Courtesy':       'courtesy',
-    'Feature Intro':  'feature.intro',
-    'Feature Outro':  'feature.outro',
-    'Intermission':   'intermission',
-    'Short Film':     'short.film',
-    'Theater Intro':  'theater.intro',
-    'Theater Outro':  'theater.outro',
+    '3D Intro': '3D.intro',
+    '3D Outro': '3D.outro',
+    'Countdown': 'countdown',
+    'Courtesy': 'courtesy',
+    'Feature Intro': 'feature.intro',
+    'Feature Outro': 'feature.outro',
+    'Intermission': 'intermission',
+    'Short Film': 'short.film',
+    'Theater Intro': 'theater.intro',
+    'Theater Outro': 'theater.outro',
     'Trailers Intro': 'trailers.intro',
     'Trailers Outro': 'trailers.outro',
-    'Trivia Intro':   'trivia.intro',
-    'Trivia Outro':   'trivia.outro'
+    'Trivia Intro': 'trivia.intro',
+    'Trivia Outro': 'trivia.outro'
 }
 
 CONTENT_3D_RE = '\([^\)]*3D[^\)]*\)'
@@ -174,20 +174,28 @@ class UserContent:
         self._fixTriviaSlidesDir()
         self._addDirectory(self._contentDirectory, self._tree)
 
+    @DB.session
     def clean(self):
         self.logHeading('CLEANING DATABASE')
-        cleaned = self.musicHandler.clean()
-        cleaned = cleaned or self.triviaDirectoryHandler.clean()
+        cleaned = self.musicHandler.clean(self._contentDirectory)
+        cleaned = self.triviaDirectoryHandler.clean(self._contentDirectory) or cleaned
+        cleaned = self.cleanBumpers() or cleaned
+
+        if not cleaned:
+            self.log('Database clean - unchanged')
+
+    def cleanBumpers(self):
+        cleaned = False
         for bumper, name in ((DB.AudioFormatBumpers, 'AudioFormatBumper'), (DB.VideoBumpers, 'VideoBumper'), (DB.RatingsBumpers, 'RatingBumper')):
+            self.log('Cleaning: {0}'.format(name))
             for b in bumper.select():
                 path = b.path
-                if not util.vfs.exists(path):
+                if not path.startswith(self._contentDirectory) or not util.vfs.exists(path):
                     cleaned = True
                     b.delete_instance()
                     self.log('{0} Missing: {1} - REMOVED'.format(util.strRepr(name), util.strRepr(path)))
 
-        if not cleaned:
-            self.log('Database clean - unchanged')
+        return cleaned
 
     def loadContent(self):
         self.loadMusic()
@@ -210,7 +218,7 @@ class UserContent:
 
         total = float(len(paths))
         for ct, sub in enumerate(paths):
-            pct = 20 + int((ct/total)*20)
+            pct = 20 + int((ct / total) * 20)
             if not self._callback(pct=pct):
                 break
             path = os.path.join(basePath, sub)
@@ -251,7 +259,7 @@ class UserContent:
         total = float(len(paths))
 
         for ct, sub in enumerate(paths):
-            pct = pct_start + int((ct/total)*20)
+            pct = pct_start + int((ct / total) * 20)
             if not self._callback(pct=pct):
                 break
 
@@ -383,7 +391,7 @@ class UserContent:
                                 is3D=t.is3D,
                                 verified=True
                             )
-                        pct = int((allct/total)*100)
+                        pct = int((allct / total) * 100)
                         self._callback(t.title, pct=pct)
 
                     rows = DB.Trailers.delete().where(
@@ -407,7 +415,7 @@ class MusicHandler:
 
         total = float(len(names))
         for ct, file in enumerate(names):
-            pct = int((ct/total)*20)
+            pct = int((ct / total) * 20)
             if not self.owner._callback(pct=pct):
                 break
             self.addSongs(basePath, file)
@@ -448,12 +456,12 @@ class MusicHandler:
                     duration=duration
                 )
 
-    @DB.session
-    def clean(self):
+    def clean(self, base):
         cleaned = False
+        self.owner.log('Cleaning: Music')
         for s in DB.Song.select():
             path = s.path
-            if not util.vfs.exists(path):
+            if not path.startswith(base) or not util.vfs.exists(path):
                 cleaned = True
                 s.delete_instance()
                 self.owner.log('Song Missing: {0} - REMOVED'.format(util.strRepr(path)))
@@ -468,9 +476,9 @@ class TriviaDirectoryHandler:
     _clueNA = ('clue', 'format')
     _answerNA = ('answer', 'format')
 
-    _defaultQRegEx = '_q\.(?:jpg|png|gif|bmp)'
-    _defaultCRegEx = '_c(\d)?\.(?:jpg|png|gif|bmp)'
-    _defaultARegEx = '_a\.(?:jpg|png|gif|bmp)'
+    _defaultQRegEx = '(?i)_q\.(?:jpg|png|gif|bmp)'
+    _defaultCRegEx = '(?i)_c(\d)?\.(?:jpg|png|gif|bmp)'
+    _defaultARegEx = '(?i)_a\.(?:jpg|png|gif|bmp)'
 
     def __init__(self, callback=None):
         self._callback = callback
@@ -578,17 +586,17 @@ class TriviaDirectoryHandler:
 
             if questionPath:
                 ttype = 'QA'
-                self._callback('Loading Trivia(QA): [ {0} ]'.format(util.strRepr(name)))
+                self._callback('Loading Trivia (QA): [ {0} ]'.format(util.strRepr(name)))
             else:
                 ttype = 'fact'
-                self._callback('Loading Trivia(single): [ {0} ]'.format(util.strRepr(name)))
+                self._callback('Loading Trivia (single): [ {0} ]'.format(util.strRepr(name)))
 
             defaults = {
-                    'type': ttype,
-                    'TID': u'{0}:{1}'.format(prefix, name),
-                    'name': name,
-                    'rating': rating,
-                    'questionPath': questionPath
+                'type': ttype,
+                'TID': u'{0}:{1}'.format(prefix, name),
+                'name': name,
+                'rating': rating,
+                'questionPath': questionPath
             }
 
             for ct, key in enumerate(sorted(data['c'].keys())):
@@ -636,14 +644,14 @@ class TriviaDirectoryHandler:
                 return
 
             DB.Trivia.get_or_create(
-                    answerPath=path,
-                    defaults={
-                        'type': ttype,
-                        'TID': u'{0}:{1}'.format(pack, name),
-                        'name': name,
-                        'duration': duration
-                    }
-                )
+                answerPath=path,
+                defaults={
+                    'type': ttype,
+                    'TID': u'{0}:{1}'.format(pack, name),
+                    'name': name,
+                    'duration': duration
+                }
+            )
 
     def getNodeAttribute(self, node, sub_node_name, attr_name):
         subNode = node.find(sub_node_name)
@@ -651,12 +659,12 @@ class TriviaDirectoryHandler:
             return subNode.attrib.get(attr_name)
         return None
 
-    @DB.session
-    def clean(self):
+    def clean(self, base):
         cleaned = False
+        self._callback('Cleaning: Trivia')
         for t in DB.Trivia.select():
             path = t.answerPath
-            if not util.vfs.exists(path):
+            if not path.startswith(base) or not util.vfs.exists(path):
                 cleaned = True
                 t.delete_instance()
                 self._callback('Trivia Missing: {0} - REMOVED'.format(util.strRepr(path)))

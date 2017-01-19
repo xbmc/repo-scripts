@@ -37,7 +37,7 @@ def session(func):
     def inner(*args, **kwargs):
         try:
             DB.connect()
-            with DB.transaction():
+            with DB.atomic():
                 return func(*args, **kwargs)
         finally:
             DB.close()
@@ -48,7 +48,7 @@ def sessionW(func):
     def inner(*args, **kwargs):
         try:
             W_DB.connect()
-            with W_DB.transaction():
+            with W_DB.atomic():
                 return func(*args, **kwargs)
         finally:
             W_DB.close()

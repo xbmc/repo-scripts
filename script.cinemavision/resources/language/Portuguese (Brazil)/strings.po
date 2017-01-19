@@ -1,1010 +1,1009 @@
-# XBMC Media Center language file
+# Translators:
+# Wanilton Campos <>, 2016
 msgid ""
 msgstr ""
-"Project-Id-Version: XBMC-Addons\n"
-"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
-"POT-Creation-Date: 2013-12-12 22:56+0000\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE\n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"Language: en\n"
-"Plural-Forms: nplurals=2; plural=(n != 1)\n"
-
-msgctxt "#32000"
-msgid "CinemaVision"
-msgstr ""
+"Last-Translator: Wanilton Campos <>, 2016\n"
+"Language-Team: Portuguese (Brazil) (https://www.transifex.com/waniltoncampos/teams/16819/pt_BR/)\n"
+"Language: pt_BR\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 msgctxt "#32001"
 msgid "General"
-msgstr ""
+msgstr "Geral"
 
 msgctxt "#32002"
 msgid "Sequence"
-msgstr ""
+msgstr "Sequencia"
 
 msgctxt "#32003"
 msgid "2D sequence"
-msgstr ""
+msgstr "Sequencia 2D"
 
 msgctxt "#32004"
 msgid "3D sequence"
-msgstr ""
+msgstr "Sequencia 3D"
 
 msgctxt "#32005"
 msgid "3D tag detection regex"
-msgstr ""
+msgstr "Regex deteccao etiqueta 3D"
 
 msgctxt "#32006"
 msgid "Fallback to 2D bumper"
-msgstr ""
+msgstr "Reserva para 2D bumper"
 
 msgctxt "#32007"
 msgid "Content"
-msgstr ""
+msgstr "Conteudo"
 
 msgctxt "#32008"
 msgid "Content path"
-msgstr ""
+msgstr "Caminho conteudo"
 
 msgctxt "#32009"
 msgid "Update content"
-msgstr ""
+msgstr "Atualizar conteudo"
 
 msgctxt "#32010"
 msgid "Auto update when editor starts"
-msgstr ""
+msgstr "Auto atualizar quando editor inicializar"
 
 msgctxt "#32011"
 msgid "Content Scrapers"
-msgstr ""
+msgstr "Scrapers de conteúdos"
 
 msgctxt "#32012"
 msgid "Trailers: CV Trailers Folder"
-msgstr ""
+msgstr "Trailers: Diretorio trailers CV"
 
 msgctxt "#32013"
 msgid "Trailers: Kodi Database"
-msgstr ""
+msgstr "Trailers: Banco de Dados Kodi"
 
 msgctxt "#32014"
 msgid "Ignore YouTube trailers"
-msgstr ""
+msgstr "Ignorar trailers do Youtube"
 
 msgctxt "#32015"
 msgid "Mark watched if movie is watched"
-msgstr ""
+msgstr "Marcar como assistido se filme tiver sido visto"
 
 msgctxt "#32016"
 msgid "Trailers: Apple iTunes"
-msgstr ""
+msgstr "Trailers: Apple iTunes"
 
 msgctxt "#32017"
 msgid "Trailers: StereoscopyNews.com"
-msgstr ""
+msgstr "Trailers: StereoscopyNews.com"
 
 msgctxt "#32018"
 msgid "Playback"
-msgstr ""
+msgstr "Reproduzir"
 
 msgctxt "#32019"
 msgid "Hide queue editor"
-msgstr ""
+msgstr "Ocultar editor de fila"
 
 msgctxt "#32020"
 msgid "If only one item queued"
-msgstr ""
+msgstr "Se somente um item enfileirado"
 
 msgctxt "#32021"
 msgid "Allow video skipping"
-msgstr ""
+msgstr "Permitir escapar do video"
 
 msgctxt "#32022"
 msgid "Video delay (milliseconds)"
-msgstr ""
+msgstr "Atraso no video (milisegundos)"
 
 msgctxt "#32023"
 msgid "Video"
-msgstr ""
+msgstr "Video"
 
 msgctxt "#32024"
 msgid "Module Defaults"
-msgstr ""
+msgstr "Modulos padroes"
 
 msgctxt "#32025"
 msgid "Volume (% of current)"
-msgstr ""
+msgstr "Volume (% do atual)"
 
 msgctxt "#32026"
 msgid "Trivia"
-msgstr ""
+msgstr "Trivia"
 
 msgctxt "#32027"
 msgid "Music"
-msgstr ""
+msgstr "Musica"
 
 msgctxt "#32028"
 msgid "Fade in (seconds)"
-msgstr ""
+msgstr "Esmaecer ao entrar (segundos)"
 
 msgctxt "#32029"
 msgid "Fade out (seconds)"
-msgstr ""
+msgstr "Esmaecer ao sair (segundos)"
 
 msgctxt "#32030"
 msgid "Format"
-msgstr ""
+msgstr "Formato"
 
 msgctxt "#32031"
 msgid "Duration (minutes)"
-msgstr ""
+msgstr "Tempo (minutos)"
 
 msgctxt "#32032"
 msgid "Question duration (seconds)"
-msgstr ""
+msgstr "Tempo da pergunta (segundos)"
 
 msgctxt "#32033"
 msgid "Clue duration (seconds)"
-msgstr ""
+msgstr "Tempo da dica (segundos)"
 
 msgctxt "#32034"
 msgid "Answer duration (seconds)"
-msgstr ""
+msgstr "Tempo da resposta (segundos)"
 
 msgctxt "#32035"
 msgid "Single duration (seconds)"
-msgstr ""
+msgstr "Tempo unico (segundos)"
 
 msgctxt "#32036"
 msgid "Transition"
-msgstr ""
+msgstr "Transicao"
 
 msgctxt "#32037"
 msgid "None"
-msgstr ""
+msgstr "Nenhum"
 
 msgctxt "#32038"
 msgid "Fade"
-msgstr ""
+msgstr "Esmaecer"
 
 msgctxt "#32039"
 msgid "Slide Left"
-msgstr ""
+msgstr "Slide Esquerda"
 
 msgctxt "#32040"
 msgid "Slide Right"
-msgstr ""
+msgstr "Slide Direita"
 
 msgctxt "#32041"
 msgid "Slide Up"
-msgstr ""
+msgstr "Slice Acima"
 
 msgctxt "#32042"
 msgid "Slide Down"
-msgstr ""
+msgstr "Slide para Baixo"
 
 msgctxt "#32043"
 msgid "Transition: Duration (milliseconds)"
-msgstr ""
+msgstr "Transicao: Tempo (milisegundos)"
 
 msgctxt "#32044"
 msgid "Music: Path"
-msgstr ""
+msgstr "Musica: Caminho"
 
 msgctxt "#32045"
 msgid "Music: File"
-msgstr ""
+msgstr "Musica: Arquivo"
 
 msgctxt "#32046"
 msgid "Slide"
-msgstr ""
+msgstr "Slide"
 
 msgctxt "#32047"
 msgid "Directory"
-msgstr ""
+msgstr "Diretorio"
 
 msgctxt "#32048"
 msgid "File"
-msgstr ""
+msgstr "Arquivo"
 
 msgctxt "#32049"
 msgid "Trailers"
-msgstr ""
+msgstr "Trailers"
 
 msgctxt "#32050"
 msgid "Prefer unwatched over priority"
-msgstr ""
+msgstr "Prioridade para itens não vistos"
 
 msgctxt "#32051"
 msgid "Clear trailers watched status"
-msgstr ""
+msgstr "Limpar estatus de trailers vistos"
 
 msgctxt "#32052"
 msgid "Source"
-msgstr ""
+msgstr "Fonte"
 
 msgctxt "#32053"
 msgid "Single File"
-msgstr ""
+msgstr "Arquivo unico"
 
 msgctxt "#32054"
 msgid "Source: Content filter (scrapers)"
-msgstr ""
+msgstr "Fonte: Filtro de Conteudo (scrapers)"
 
 msgctxt "#32055"
 msgid "Source: Content order"
-msgstr ""
+msgstr "Fonte: Ordernar Conteudos"
 
 msgctxt "#32056"
 msgid "Newest"
-msgstr ""
+msgstr "Novissimos"
 
 msgctxt "#32057"
 msgid "Random"
-msgstr ""
+msgstr "Randomico"
 
 msgctxt "#32058"
 msgid "Source: Directory"
-msgstr ""
+msgstr "Fonte: Diretorio"
 
 msgctxt "#32059"
 msgid "Source: File"
-msgstr ""
+msgstr "Fonte: Arquivo"
 
 msgctxt "#32060"
 msgid "Count"
-msgstr ""
+msgstr "Quantidade"
 
 msgctxt "#32061"
 msgid "Rating limit"
-msgstr ""
+msgstr "Limite de Classificacao"
 
 msgctxt "#32062"
 msgid "Max"
-msgstr ""
+msgstr "Max"
 
 msgctxt "#32063"
 msgid "Match Features"
-msgstr ""
+msgstr "Recurso de Combinacao"
 
 msgctxt "#32064"
 msgid "Max (needs Content path set and updated)"
-msgstr ""
+msgstr "Max (necessario definir caminho para o conteudo atualizado)"
 
 msgctxt "#32065"
 msgid "Match feature genres"
-msgstr ""
+msgstr "Recurso de bater os generos"
 
 msgctxt "#32066"
 msgid "Filter for 3D based on feature"
-msgstr ""
+msgstr "Filtrar por 3D baseado no recurso"
 
 msgctxt "#32067"
 msgid "Quality"
-msgstr ""
+msgstr "Qualidade"
 
 msgctxt "#32068"
 msgid "Method"
-msgstr ""
+msgstr "Metodo"
 
 msgctxt "#32069"
 msgid "Auto-detect from source"
-msgstr ""
+msgstr "Auto-detectar via fonte"
 
 msgctxt "#32070"
 msgid "Choose format"
-msgstr ""
+msgstr "Escolher formato"
 
 msgctxt "#32071"
 msgid "Choose file"
-msgstr ""
+msgstr "Escolher arquivo"
 
 msgctxt "#32072"
 msgid "Fallback"
-msgstr ""
+msgstr "Reserva"
 
 msgctxt "#32073"
 msgid "Features"
-msgstr ""
+msgstr "Recursos"
 
 msgctxt "#32074"
 msgid "Audio Format"
-msgstr ""
+msgstr "Formato de audio"
 
 msgctxt "#32075"
 msgid "Default rating system"
-msgstr ""
+msgstr "Sistema de classificacao padrão"
 
 msgctxt "#32076"
 msgid "Default rating system (needs Content path set and updated)"
 msgstr ""
+"Sistema padrao de classificacao (necessario definir caminho para o conteudo "
+"atualizado)"
 
 msgctxt "#32077"
 msgid "Rating bumper"
-msgstr ""
+msgstr "Classificacao Indicativa"
 
 msgctxt "#32078"
 msgid "Image"
-msgstr ""
+msgstr "Imagem"
 
 msgctxt "#32079"
 msgid "Style"
-msgstr ""
+msgstr "Estilo"
 
 msgctxt "#32080"
 msgid "Rating style selection"
-msgstr ""
+msgstr "Selecao de Estilo de Classificacao"
 
 msgctxt "#32081"
 msgid "Rating style"
-msgstr ""
+msgstr "Estilo de Classificacao"
 
 msgctxt "#32082"
 msgid "Rating style (needs Content path set and updated)"
 msgstr ""
+"Estilo de Classificacao (Necessario definir caminho para o conteudo "
+"atualizado)"
 
 msgctxt "#32083"
 msgid "Actions"
-msgstr ""
+msgstr "Acoes"
 
 msgctxt "#32084"
 msgid "Execute action on sequence pause"
-msgstr ""
+msgstr "Executar acao na sequencia de pausa"
 
 msgctxt "#32085"
 msgid "Action file path"
-msgstr ""
+msgstr "Caminho do arquivo para agir"
 
 msgctxt "#32086"
 msgid "Execute action on sequence resume"
-msgstr ""
+msgstr "Executar acao ao retomar sequencia"
 
 msgctxt "#32087"
 msgid "Last"
-msgstr ""
+msgstr "Ultimo"
 
 msgctxt "#32088"
 msgid "Execute action on sequence abort"
-msgstr ""
+msgstr "Executar acao na sequencia de abortar"
 
 msgctxt "#32089"
 msgid "Test"
-msgstr ""
+msgstr "Teste"
 
 msgctxt "#32090"
 msgid "Not Set"
-msgstr ""
+msgstr "Nada Definido"
 
 msgctxt "#32091"
 msgid "Advanced"
-msgstr ""
+msgstr "Avancado"
 
 msgctxt "#32092"
 msgid "Scope (requires add-on restart)"
-msgstr ""
+msgstr "Escopo (requer reinicialização do addon)"
 
 msgctxt "#32093"
 msgid "Logging"
-msgstr ""
+msgstr "Depurando"
 
 msgctxt "#32094"
 msgid "Debug logging"
-msgstr ""
+msgstr "log de depuração"
 
 msgctxt "#32095"
 msgid "Paste my kodi.log to pastebin"
-msgstr ""
+msgstr "Copiar meu kodi.log para o pastebin"
 
 msgctxt "#32096"
 msgid "Pastebin user (necessary to paste as user)"
-msgstr ""
+msgstr "Usuário Pastebin (necessário para copiar como usuário)"
 
 msgctxt "#32097"
 msgid "Delete Pastebin user key"
-msgstr ""
+msgstr "Deletar chave do usuário no Pastebin"
 
 msgctxt "#32098"
 msgid "Debugging"
-msgstr ""
+msgstr "Depurando"
 
 msgctxt "#32099"
 msgid "Reset content database"
-msgstr ""
+msgstr "Resetar banco de dados de conteúdo"
 
 msgctxt "#32100"
 msgid "Clear trailers broken status"
-msgstr ""
+msgstr "Limpar estatus de quebrados dos trailers"
 
 msgctxt "#32101"
 msgid "Extras"
-msgstr ""
+msgstr "Extras"
 
 msgctxt "#32102"
 msgid "Install context menu add-on"
-msgstr ""
+msgstr "Instalar addon de menu contextual"
 
 msgctxt "#32103"
 msgid "Context menu add-on installed"
-msgstr ""
+msgstr "Addon de menu contextual instalado"
 
 msgctxt "#32104"
 msgid "Ignore Kodi playlist with only one item if there is a selection"
-msgstr ""
+msgstr "Ignorar playlist do Kodi quando somente um item estiver na selecao"
 
-
-#Sequence
 msgctxt "#32300"
 msgid "3D Intro"
-msgstr ""
+msgstr "3D Intro"
 
 msgctxt "#32301"
 msgid "3D Outro"
-msgstr ""
+msgstr "3D Outro"
 
 msgctxt "#32302"
 msgid "Countdown"
-msgstr ""
+msgstr "Contador"
 
 msgctxt "#32303"
 msgid "Courtesy"
-msgstr ""
+msgstr "Cortesia"
 
 msgctxt "#32304"
 msgid "Feature Intro"
-msgstr ""
+msgstr "Recurso Intro"
 
 msgctxt "#32305"
 msgid "Feature Outro"
-msgstr ""
+msgstr "Outro Recurso"
 
 msgctxt "#32306"
 msgid "Intermission"
-msgstr ""
+msgstr "Intermissao"
 
 msgctxt "#32307"
 msgid "Short Film"
-msgstr ""
+msgstr "Filme Curto"
 
 msgctxt "#32308"
 msgid "Theater Intro"
-msgstr ""
+msgstr "Cinema Intro"
 
 msgctxt "#32309"
 msgid "Theater Outro"
-msgstr ""
+msgstr "Cinema Outro"
 
 msgctxt "#32310"
 msgid "Trailers Intro"
-msgstr ""
+msgstr "Trailers Intro"
 
 msgctxt "#32311"
 msgid "Trailers Outro"
-msgstr ""
+msgstr "Trailers Outro"
 
 msgctxt "#32312"
 msgid "Trivia Intro"
-msgstr ""
+msgstr "Trivia Intro"
 
 msgctxt "#32313"
 msgid "Trivia Outro"
-msgstr ""
+msgstr "Trivia Outro"
 
 msgctxt "#32314"
 msgid "Back"
-msgstr ""
+msgstr "Retornar"
 
 msgctxt "#32315"
 msgid "Skip"
-msgstr ""
+msgstr "Pular"
 
 msgctxt "#32316"
 msgid "Feature queue is full"
-msgstr ""
+msgstr "Recurso de fila esta completo"
 
 msgctxt "#32317"
 msgid "Feature queue is empty"
-msgstr ""
+msgstr "Recurso de fila esta vazio"
 
 msgctxt "#32318"
 msgid "Kodi Database"
-msgstr ""
+msgstr "Banco de Dados Kodi"
 
 msgctxt "#32319"
 msgid "Scrapers"
-msgstr ""
+msgstr "Scrapers"
 
 msgctxt "#32320"
 msgid "Yes"
-msgstr ""
+msgstr "Sim"
 
 msgctxt "#32321"
 msgid "No"
-msgstr ""
+msgstr "Não"
 
 msgctxt "#32322"
 msgid "Default"
-msgstr ""
+msgstr "Padrão"
 
 msgctxt "#32323"
 msgid "Scrapers filter (scrapers)"
-msgstr ""
+msgstr "Filtro Scrapers (scraper)"
 
 msgctxt "#32324"
 msgid "Content order"
-msgstr ""
+msgstr "Ordem Conteúdo"
 
 msgctxt "#32325"
 msgid "Path"
-msgstr ""
+msgstr "Caminho"
 
 msgctxt "#32326"
 msgid "CV Trailers Folder"
-msgstr ""
+msgstr "Pasta de Trailers CV"
 
 msgctxt "#32327"
 msgid "Type"
-msgstr ""
+msgstr "Tipo"
 
 msgctxt "#32328"
 msgid "Play 3D If 3D Feature"
-msgstr ""
+msgstr "Reproduzir 3D se o Recurso for 3D"
 
 msgctxt "#32329"
 msgid "Audio Format Bumper"
-msgstr ""
+msgstr "Formatos trilha de audio"
 
 msgctxt "#32330"
 msgid "This action is not set or not yet applied."
-msgstr ""
+msgstr "Esta acao não foi definida ou nao foi aplicada ainda."
 
 msgctxt "#32331"
 msgid "Command"
-msgstr ""
+msgstr "Comando"
 
 msgctxt "#32332"
 msgid "Argument"
-msgstr ""
+msgstr "Argumento"
 
 msgctxt "#32333"
 msgid "Condition"
-msgstr ""
+msgstr "Condicoes"
 
 msgctxt "#32334"
 msgid "Video Bumpers"
-msgstr ""
-
-#Dialogs, etc.
+msgstr "Tipos de Videos"
 
 msgctxt "#32500"
 msgid "Not Found"
-msgstr ""
+msgstr "Nao Encontrada"
 
 msgctxt "#32501"
 msgid "No sequences found."
-msgstr ""
+msgstr "Nenhuma sequencia encontrada."
 
 msgctxt "#32502"
 msgid "Choose Sequence"
-msgstr ""
+msgstr "Escolher Sequencia"
 
 msgctxt "#32503"
 msgid "No Content Path"
-msgstr ""
+msgstr "Sem caminho para conteudos"
 
 msgctxt "#32504"
 msgid "Content path not set or not applied"
-msgstr ""
+msgstr "Caminho para o conteúdo não definido ou não aplicado"
 
 msgctxt "#32505"
 msgid "Loading Content"
-msgstr ""
+msgstr "Carregando Conteudo"
 
 msgctxt "#32506"
 msgid "Download"
-msgstr ""
+msgstr "Transferir"
 
 msgctxt "#32507"
 msgid "Downloading demo content"
-msgstr ""
+msgstr "Transferindo arquivos demos"
 
 msgctxt "#32508"
 msgid "No Content"
-msgstr ""
+msgstr "Sem conteúdo"
 
 msgctxt "#32509"
 msgid "No content found for current rating system."
-msgstr ""
+msgstr "Nenhum conteúdo localizado para o sistema de classificação corrente."
 
 msgctxt "#32510"
 msgid "Select Style"
-msgstr ""
+msgstr "Selecionar Estilo"
 
 msgctxt "#32511"
 msgid "None found"
-msgstr ""
+msgstr "Nada encontrado"
 
 msgctxt "#32512"
 msgid "No action file(s) set"
-msgstr ""
+msgstr "Nenhum arquivo(s) de ação definido"
 
 msgctxt "#32513"
 msgid "MISSING!"
-msgstr ""
+msgstr "AUSENTE!"
 
 msgctxt "#32514"
 msgid "Parser Messages"
-msgstr ""
+msgstr "Mensagens de Análise"
 
 msgctxt "#32515"
 msgid "Done"
-msgstr ""
+msgstr "Pronto"
 
 msgctxt "#32516"
 msgid "Action file(s) parsed OK"
-msgstr ""
+msgstr "Arquivo(s) Acao analisados e OK"
 
 msgctxt "#32517"
 msgid "Change Path"
-msgstr ""
+msgstr "Alterar Caminho"
 
 msgctxt "#32518"
 msgid "Choose a new path or clear the current path?"
-msgstr ""
+msgstr "Escolha um novo caminho ou limpar o caminho atual?"
 
 msgctxt "#32519"
 msgid "Choose"
-msgstr ""
+msgstr "Escolher"
 
 msgctxt "#32520"
 msgid "Clear"
-msgstr ""
+msgstr "Limpar"
 
 msgctxt "#32521"
 msgid "Select File"
-msgstr ""
+msgstr "Selecionar Arquivo"
 
 msgctxt "#32522"
 msgid "No matching content found."
-msgstr ""
+msgstr "Nenhum conteudo correspondente encontrado."
 
 msgctxt "#32523"
 msgid "Options"
-msgstr ""
+msgstr "Opções"
 
 msgctxt "#32524"
 msgid "Select Directory"
-msgstr ""
+msgstr "Selecionar Diretorio"
 
 msgctxt "#32525"
 msgid "No Options"
-msgstr ""
+msgstr "Sem opções"
 
 msgctxt "#32526"
 msgid "No options found."
-msgstr ""
+msgstr "Nenhuma opção encontrada"
 
 msgctxt "#32527"
 msgid "Confirm"
-msgstr ""
+msgstr "Confirmar"
 
 msgctxt "#32528"
 msgid "Sequence was modified."
-msgstr ""
+msgstr "Sequência foi modificada."
 
 msgctxt "#32529"
 msgid "Do you really want to exit without saving changes?"
-msgstr ""
+msgstr "Deseja realmente sair sem salvar as alterações?"
 
 msgctxt "#32530"
 msgid "Add"
-msgstr ""
+msgstr "Adicionar"
 
 msgctxt "#32531"
 msgid "Edit"
-msgstr ""
+msgstr "Editar"
 
 msgctxt "#32532"
 msgid "Rename"
-msgstr ""
+msgstr "Renomear"
 
 msgctxt "#32533"
 msgid "Copy"
-msgstr ""
+msgstr "Copiar"
 
 msgctxt "#32534"
 msgid "Move"
-msgstr ""
+msgstr "Mover"
 
 msgctxt "#32535"
 msgid "Disable"
-msgstr ""
+msgstr "Desabilitar"
 
 msgctxt "#32536"
 msgid "Remove"
-msgstr ""
+msgstr "Remover"
 
 msgctxt "#32537"
 msgid "Do you really want to remove this module?"
-msgstr ""
+msgstr "Deseja realmente remover este módulo?"
 
 msgctxt "#32538"
 msgid "Enabled"
-msgstr ""
+msgstr "Ativado"
 
 msgctxt "#32539"
 msgid "Enter a name for this item"
-msgstr ""
+msgstr "Entre com um nome para este item"
 
 msgctxt "#32540"
 msgid "Add-on settings"
-msgstr ""
+msgstr "Ajustes do Addon"
 
 msgctxt "#32541"
 msgid "New"
-msgstr ""
+msgstr "Nova"
 
 msgctxt "#32542"
 msgid "Save"
-msgstr ""
+msgstr "Salvar"
 
 msgctxt "#32543"
 msgid "Save as..."
-msgstr ""
+msgstr "Salvar como..."
 
 msgctxt "#32544"
 msgid "Load"
-msgstr ""
+msgstr "Carregar"
 
 msgctxt "#32545"
 msgid "Import"
-msgstr ""
+msgstr "Importar"
 
 msgctxt "#32546"
 msgid "Export"
-msgstr ""
+msgstr "Exportar"
 
 msgctxt "#32547"
 msgid "Play"
-msgstr ""
+msgstr "Reproduzir"
 
 msgctxt "#32548"
 msgid "Sequence Options"
-msgstr ""
+msgstr "Opções Sequêncial"
 
 msgctxt "#32549"
 msgid "Sequence is modified."
-msgstr ""
+msgstr "Sequência foi modificada."
 
 msgctxt "#32550"
 msgid "This will delete all changes."
-msgstr ""
+msgstr "Isto irá deletar todas as alterações"
 
 msgctxt "#32551"
 msgid "Do you really want to do this?"
-msgstr ""
+msgstr "Deseja realmente prosseguir?"
 
 msgctxt "#32552"
 msgid "Select Save Directory"
-msgstr ""
+msgstr "Selecione Diretório para Salvar"
 
 msgctxt "#32553"
 msgid "Please set the content path in addon settings."
-msgstr ""
+msgstr "Por favor sete o caminho para os conteúdos nos ajustes do addon"
 
 msgctxt "#32554"
 msgid "Enter name for file"
-msgstr ""
+msgstr "Entre com o nome para o arquivo"
 
 msgctxt "#32555"
 msgid "Set Default"
-msgstr ""
+msgstr "Definir como padrão"
 
 msgctxt "#32556"
 msgid "Would you like to set this as the default for playback?"
-msgstr ""
+msgstr "Deseja definir como padrão para reprodução?"
 
 msgctxt "#32557"
 msgid "For 2D or 3D?"
-msgstr ""
+msgstr "Para 2D ou 3D?"
 
 msgctxt "#32558"
 msgid "Missing"
-msgstr ""
+msgstr "Ausente"
 
 msgctxt "#32559"
 msgid "Previous save not found."
-msgstr ""
+msgstr "Salvo anteriormente não localizado."
 
 msgctxt "#32560"
 msgid "Load the default or start a new sequence?"
-msgstr ""
+msgstr "Carregar padrão ou iniciar uma nova sequência?"
 
 msgctxt "#32561"
 msgid "No Features"
-msgstr ""
+msgstr "Sem Recursos"
 
 msgctxt "#32562"
 msgid "No movies are in the Queue."
-msgstr ""
+msgstr "Sem filmes enfileirados."
 
 msgctxt "#32563"
 msgid "Please queue some features and try again."
-msgstr ""
+msgstr "Por favor enfilere alguns recursos e tente novamente."
 
 msgctxt "#32564"
 msgid "Removed watched status from all trailers."
-msgstr ""
+msgstr "Remover estatus assistido de todos os trailers."
 
 msgctxt "#32565"
 msgid "Removed broken status from all trailers."
-msgstr ""
+msgstr "Estatus de quebrado removido de todos os trailers."
 
 msgctxt "#32566"
 msgid "Would you like to paste the current old log?"
-msgstr ""
+msgstr "Aonde deseja colar o antigo log corrente?"
 
 msgctxt "#32567"
 msgid "Paste the old log if you are in a new session, ie. after a Kodi crash."
 msgstr ""
+"Cole o antigo lof se estiver em uma nova sessão, ie. após o Kodi crashear."
 
 msgctxt "#32568"
 msgid "Current"
-msgstr ""
+msgstr "Atual"
 
 msgctxt "#32569"
 msgid "Old"
-msgstr ""
+msgstr "Antigo"
 
 msgctxt "#32570"
 msgid "No Log"
-msgstr ""
+msgstr "Sem Log"
 
 msgctxt "#32571"
 msgid "That log file does not exist!"
-msgstr ""
+msgstr "O arquivo de log inexiste!"
 
 msgctxt "#32572"
 msgid "Enter Pastebin password (only needed 1st time - NOT stored)"
 msgstr ""
+"Entre senha do Pastebin (comente necessário primeira vez - não armazenado)"
 
 msgctxt "#32573"
 msgid "Failed"
-msgstr ""
+msgstr "Falhou"
 
 msgctxt "#32574"
 msgid "Failed to create paste as user"
-msgstr ""
+msgstr "Falhou para criar o colar como usuário"
 
 msgctxt "#32575"
 msgid "Aborted"
-msgstr ""
+msgstr "Abortado"
 
 msgctxt "#32576"
 msgid "Paste aborted!"
-msgstr ""
+msgstr "Colar abortado!"
 
 msgctxt "#32577"
 msgid "Creating paste..."
-msgstr ""
+msgstr "Criando colar..."
 
 msgctxt "#32578"
 msgid "Paste created at:"
-msgstr ""
+msgstr "Colar criado em:"
 
 msgctxt "#32579"
 msgid "OK"
-msgstr ""
+msgstr "OK"
 
 msgctxt "#32580"
 msgid "Show QR Code"
-msgstr ""
+msgstr "Mostrar Código QR"
 
 msgctxt "#32581"
 msgid "Failed to create paste:"
-msgstr ""
+msgstr "Falhou ao criar o colar:"
 
 msgctxt "#32582"
 msgid "QR Code"
-msgstr ""
+msgstr "Código QR"
 
 msgctxt "#32583"
 msgid "Creating QR code..."
-msgstr ""
+msgstr "Criando código QR..."
 
 msgctxt "#32584"
 msgid "Database reset."
-msgstr ""
+msgstr "Resetar bando de dados."
 
 msgctxt "#32585"
 msgid "User key deleted."
-msgstr ""
+msgstr "Chave do usuário deletada."
 
 msgctxt "#32586"
 msgid "USE DEFAULT"
-msgstr ""
+msgstr "USAR PADRÃO"
 
 msgctxt "#32587"
 msgid "Cancel"
-msgstr ""
+msgstr "Cancelar"
 
 msgctxt "#32588"
 msgid "Apply to queue"
-msgstr ""
+msgstr "Aplicar para fila"
 
 msgctxt "#32589"
 msgid "Click an item to start a move."
-msgstr ""
+msgstr "Clique no item para iniciar um movimento."
 
 msgctxt "#32590"
-msgid "Click the context menu button or delete key on a keyboard to remove an item."
+msgid ""
+"Click the context menu button or delete key on a keyboard to remove an item."
 msgstr ""
+"Clique o botão de menu contextual ou delete chave no teclado para remover um"
+" item."
 
 msgctxt "#32591"
 msgid "DEMO MODE"
-msgstr ""
+msgstr "Modo Demo"
 
 msgctxt "#32592"
 msgid "Set Content path in settings"
-msgstr ""
+msgstr "Setar caminho dos conteúdos ns ajustes"
 
 msgctxt "#32593"
 msgid "Execute abort action after tests"
-msgstr ""
+msgstr "Executar ação abortar após testes"
 
 msgctxt "#32594"
 msgid "Never"
-msgstr ""
+msgstr "Nunca"
 
 msgctxt "#32595"
 msgid "Always"
-msgstr ""
+msgstr "Sempre"
 
 msgctxt "#32596"
 msgid "Ask"
-msgstr ""
+msgstr "Perguntar"
 
 msgctxt "#32597"
 msgid "Cleanup"
-msgstr ""
+msgstr "Limpar"
 
 msgctxt "#32598"
 msgid "Run abort action?"
-msgstr ""
+msgstr "Rodar aborta ação?"
 
 msgctxt "#32599"
 msgid "Default 2D"
-msgstr ""
+msgstr "2D padrão"
 
 msgctxt "#32600"
 msgid "Default 3D"
-msgstr ""
+msgstr "3D padrão"
 
 msgctxt "#32601"
 msgid "ERROR"
-msgstr ""
+msgstr "ERRO"
 
 msgctxt "#32602"
 msgid "Error parsing sequence"
-msgstr ""
+msgstr "Sequência de análise de erro"
 
 msgctxt "#32603"
 msgid "No Feature"
-msgstr ""
+msgstr "Sem Recurso"
 
 msgctxt "#32604"
-msgid "Sequence does not have a feature module, which is required to play items selected in Kodi."
+msgid ""
+"Sequence does not have a feature module, which is required to play items "
+"selected in Kodi."
 msgstr ""
+"Sequência não contém um módulo de recurso, que é requerido para reproduzir "
+"os itens selecionados no Kodi."
 
 msgctxt "#32605"
 msgid "Continue?"
-msgstr ""
+msgstr "continuar?"
 
 msgctxt "#32606"
 msgid "Failed to write sequence file!"
-msgstr ""
+msgstr "Falhou ao escrever a sequencia no arquivo!"
 
 msgctxt "#32607"
 msgid "Kodi may be unable to write to this location."
-msgstr ""
+msgstr "Kodi pode nao conseguir escrever neste local."
