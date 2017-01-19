@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addon id="service.subtitles.subdivx"
        name="Subdivx.com"
-       version="0.2.4"
+       version="0.2.5"
        provider-name="cramm">
   <requires>
     <import addon="xbmc.python" version="2.14.0"/>
+    <import addon="script.module.html2text" version="2015.6.21"/>
   </requires>
   <extension point="xbmc.subtitle.module"
              library="service.py" />
