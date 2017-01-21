@@ -1,3 +1,6 @@
+v4.3.1
+- retry to fetch weather a few times
+
 v4.3.0
 - cache weather data
 

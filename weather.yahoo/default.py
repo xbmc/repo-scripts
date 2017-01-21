@@ -91,11 +91,20 @@ def parse_data(reply):
 def forecast(loc, locid):
     log('weather location: %s' % locid)
     retry = 0
-    while (retry < 6) and (not MONITOR.abortRequested()):
+    while (retry < 10) and (not MONITOR.abortRequested()):
         query = get_weather(locid)
         if query:
-            retry = 6
+            # response
+            data = parse_data(query)
+            if data['query']['results']:
+                retry = 10
+            else:
+                # response = null
+                retry += 1
+                xbmc.sleep(1000)
+                log('no weather data, retry')
         else:
+            # no response
             retry += 1
             xbmc.sleep(10000)
             log('weather download failed')
