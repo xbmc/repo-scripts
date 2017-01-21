@@ -1,3 +1,7 @@
+4.6.0 - by CaTz (11/01/2017)
+- Add CAPTCH support
+- Check item's media type
+
 4.5.1 - by CaTz (23/11/2016)
 - Fix fetching IMDB id - by TheWiz
 - Fetch list item data for external search - by burekas7
