@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<window>
+    <backgroundcolor>0x440397</backgroundcolor>
+    <!--<allowoverlay>no</allowoverlay>-->
+    <height>720</height>
+    <width>1280</width>
+    <defaultcontrol always="true">100</defaultcontrol>
+    <coordinates>
+        <system>1</system>
+        <posx>0</posx>
+        <posy>0</posy>
+        <left>0</left>
+        <top>0</top>
+    </coordinates>
+    <animation type="WindowOpen" reversible="false">
+        <effect type="zoom" start="80" end="100" center="640,360" easing="out" tween="back" time="300" />
+        <effect type="fade" start="0" end="100" time="300" />
+    </animation>
+    <animation type="WindowClose" reversible="false">
+        <effect type="zoom" start="100" end="80" center="640,360" easing="in" tween="back" time="300" />
+        <effect type="fade" start="100" end="0" time="300" />
+    </animation>
+    <controls>
+        <control type="image">
+            <description>background image</description>
+            <posx>0</posx>
+            <posy>0</posy>
+            <top>0</top>
+            <left>0</left>
+            <width>1280</width>
+            <height>720</height>
+            <texture>background.jpg</texture>
+            <aspectratio align="center" aligny="center">stretch</aspectratio>
+        </control>
+        <control type="group" id="100">
+            <width>1280</width>
+            <height>720</height>
+            <visible>Player.Playing</visible>
+            <control type="image">
+                <description>video skirt</description>
+                <posx>0</posx>
+                <posy>0</posy>
+                <width>1280</width>
+                <height>720</height>
+                <texture>purple.png</texture>
+                <aspectratio align="center" aligny="center">stretch</aspectratio>
+            </control>
+            <control type="videowindow">
+                <posx>0</posx>
+                <posy>0</posy>
+                <top>0</top>
+                <left>0</left>
+                <!--<animation type="Conditional" condition="!Control.IsVisible(100)">
+                    <effect type="zoom" end="100" center="822,45" time="500" />
+                </animation>-->
+            </control>
+        </control>
+    </controls>
+</window>

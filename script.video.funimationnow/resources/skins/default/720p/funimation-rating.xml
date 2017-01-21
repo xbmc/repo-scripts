@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<window>
+    <width>1280</width>
+    <height>720</height>
+    <defaultcontrol always="true">100</defaultcontrol>
+    <coordinates>
+        <posx>0</posx>
+        <posy>0</posy>
+    </coordinates>
+    <controls>
+        <control type="image">
+            <posx>0</posx>
+            <posy>0</posy>
+            <width>1280</width>
+            <height>720</height>
+            <texture>menu-50-overlay.png</texture>
+            <aspectratio align="center" aligny="center">stretch</aspectratio>
+        </control>
+        <control type="group">
+            <posx>0</posx>
+            <posy>0</posy>
+            <centertop>50%</centertop>
+            <centerleft>50%</centerleft>
+            <width>200</width>
+            <height>150</height>
+            <control type="image">
+                <description>Fade</description>
+                <texture>white_background.jpg</texture>
+            </control>  
+            <control type="image">
+                <description>Star Rating</description>
+                <posx>0</posx>
+                <posy>0</posy>
+                <centertop>50%</centertop>
+                <centerleft>50%</centerleft>
+                <left>15</left>
+                <width>172</width>
+                <height>35</height>
+                <texture>flagging/rating/r0.0.png</texture>
+                <aspectratio align="center" aligny="center">stretch</aspectratio>
+            </control>
+            <control type="image">
+                <description>Star Rating Title</description>
+                <posx>0</posx>
+                <posy>0</posy>
+                <centertop>20%</centertop>
+                <centerleft>20%</centerleft>
+                <left>15</left>
+                <width>100</width>
+                <height>35</height>
+                <texture>special://profile/addon_data/script.video.funimationnow/media/dialog/title_rating.png</texture>
+                <aspectratio align="left" aligny="center">keep</aspectratio>
+            </control>
+            <control type="button" id="100">
+                <description>Star Rating Cancel button</description>
+                <posx>0</posx>
+                <posy>0</posy>
+                <centertop>80%</centertop>
+                <centerleft>50%</centerleft>
+                <width>100</width>
+                <height>25</height>
+                <texturefocus>special://profile/addon_data/script.video.funimationnow/media/dialog/focus_rating.png</texturefocus>
+                <texturenofocus>special://profile/addon_data/script.video.funimationnow/media/dialog/nofocus_rating.png</texturenofocus>
+                <ondown>2001</ondown>
+                <onup>2001</onup>
+                <onleft>2001</onleft>
+                <onright>2001</onright>
+            </control>
+            <control type="group" id="200">
+                <control type="button" id="2001">
+                    <description>1 Button</description>
+                    <posx>15</posx>
+                    <posy>0</posy>
+                    <centertop>50%</centertop>
+                    <width>35</width>
+                    <height>35</height>
+                    <texturefocus>flagging/rating/rs100.png</texturefocus>
+                    <texturenofocus>flagging/rating/rs00.png</texturenofocus>
+                    <align>center</align>
+                    <aligny>center</aligny>
+                    <ondown>100</ondown>
+                    <onup>100</onup>
+                    <onleft>2005</onleft>
+                    <onright>2002</onright>
+                    <animation effect="zoom" end="115,115" center="auto" time="100">focus</animation>
+                </control>
+                <control type="group">
+                    <control type="image">
+                        <description>1 Button Placeholder</description>
+                        <posx>15</posx>
+                        <posy>0</posy>
+                        <centertop>50%</centertop>
+                        <width>35</width>
+                        <height>35</height>
+                        <texture>flagging/rating/rs100.png</texture>
+                        <aspectratio align="center" aligny="center">stretch</aspectratio>
+                        <visible>Control.HasFocus(2001)|Control.HasFocus(2002)|Control.HasFocus(2003)|Control.HasFocus(2004)|Control.HasFocus(2005)</visible>
+                    </control>
+                    <animation type="WindowOpen" reversible="false">
+                        <effect type="zoom" start="50" end="100" center="-640,-360" easing="out" tween="back" time="640" />
+                        <effect type="fade" start="0" end="100" time="175" />
+                    </animation>
+                    <animation type="WindowClose" reversible="false">
+                        <effect type="zoom" start="100" end="50" center="-640,360" easing="in" tween="back" time="320" />
+                        <effect type="fade" start="100" end="0" delay="200" time="100" />
+                    </animation>
+                </control>
+                <control type="button" id="2002">
+                    <description>2 Button</description>
+                    <posx>49</posx>
+                    <posy>0</posy>
+                    <centertop>50%</centertop>
+                    <width>35</width>
+                    <height>35</height>
+                    <label></label>
+                    <texturefocus>flagging/rating/rs100.png</texturefocus>
+                    <texturenofocus>flagging/rating/rs00.png</texturenofocus>
+                    <align>center</align>
+                    <aligny>center</aligny>
+                    <ondown>100</ondown>
+                    <onup>100</onup>
+                    <onleft>2001</onleft>
+                    <onright>2003</onright>
+                    <visible allowhiddenfocus="true">!Control.HasFocus(2001)|!Control.HasFocus(2003)</visible>
+                    <animation effect="zoom" end="115,115" center="auto" time="100">focus</animation>
+                </control>
+                <control type="group">
+                    <control type="image">
+                        <description>2 Button Placeholder</description>
+                        <posx>49</posx>
+                        <posy>0</posy>
+                        <centertop>50%</centertop>
+                        <width>35</width>
+                        <height>35</height>
+                        <texture>flagging/rating/rs100.png</texture>
+                        <aspectratio align="center" aligny="center">stretch</aspectratio>
+                        <visible>Control.HasFocus(2002)|Control.HasFocus(2003)|Control.HasFocus(2004)|Control.HasFocus(2005)</visible>
+                    </control>
+                    <animation type="WindowOpen" reversible="false">
+                        <effect type="zoom" start="50" end="100" center="-300,-360" easing="out" tween="back" time="640" />
+                        <effect type="fade" start="0" end="100" time="175" />
+                    </animation>
+                    <animation type="WindowClose" reversible="false">
+                        <effect type="zoom" start="100" end="50" center="-300,360" easing="in" tween="back" time="320" />
+                        <effect type="fade" start="100" end="0" delay="200" time="100" />
+                    </animation>
+                </control>
+                <control type="button" id="2003">
+                    <description>3 Button</description>
+                    <posx>83.5</posx>
+                    <posy>0</posy>
+                    <centertop>50%</centertop>
+                    <width>35</width>
+                    <height>35</height>
+                    <label></label>
+                    <texturefocus>flagging/rating/rs100.png</texturefocus>
+                    <texturenofocus>flagging/rating/rs00.png</texturenofocus>
+                    <align>center</align>
+                    <aligny>center</aligny>
+                    <ondown>100</ondown>
+                    <onup>100</onup>
+                    <onleft>2002</onleft>
+                    <onright>2004</onright>
+                    <visible allowhiddenfocus="true">!Control.HasFocus(2001)|!Control.HasFocus(2002)</visible>
+                    <animation effect="zoom" end="115,115" center="auto" time="100">focus</animation>
+                </control>
+                <control type="group">
+                    <control type="image">
+                        <description>3 Button Placeholder</description>
+                        <posx>83.5</posx>
+                        <posy>0</posy>
+                        <centertop>50%</centertop>
+                        <width>35</width>
+                        <height>35</height>
+                        <texture>flagging/rating/rs100.png</texture>
+                        <aspectratio align="center" aligny="center">stretch</aspectratio>
+                        <visible>Control.HasFocus(2003)|Control.HasFocus(2004)|Control.HasFocus(2005)</visible>
+                    </control>
+                    <animation type="WindowOpen" reversible="false">
+                        <effect type="zoom" start="50" end="100" center="0,-360" easing="out" tween="back" time="640" />
+                        <effect type="fade" start="0" end="100" time="175" />
+                    </animation>
+                    <animation type="WindowClose" reversible="false">
+                        <effect type="zoom" start="100" end="50" center="0,360" easing="in" tween="back" time="320" />
+                        <effect type="fade" start="100" end="0" delay="200" time="100" />
+                    </animation>
+                </control>
+                <control type="button" id="2004">
+                    <description>4 Button</description>
+                    <posx>118</posx>
+                    <posy>0</posy>
+                    <centertop>50%</centertop>
+                    <width>35</width>
+                    <height>35</height>
+                    <label></label>
+                    <texturefocus>flagging/rating/rs100.png</texturefocus>
+                    <texturenofocus>flagging/rating/rs00.png</texturenofocus>
+                    <align>center</align>
+                    <aligny>center</aligny>
+                    <ondown>100</ondown>
+                    <onup>100</onup>
+                    <onleft>2003</onleft>
+                    <onright>2005</onright>
+                    <visible allowhiddenfocus="true">!Control.HasFocus(2001)|!Control.HasFocus(2002)|!Control.HasFocus(2003)</visible>
+                    <animation effect="zoom" end="115,115" center="auto" time="100">focus</animation>
+                </control>
+                <control type="group">
+                    <control type="image">
+                        <description>4 Button Placeholder</description>
+                        <posx>118</posx>
+                        <posy>0</posy>
+                        <centertop>50%</centertop>
+                        <width>35</width>
+                        <height>35</height>
+                        <texture>flagging/rating/rs100.png</texture>
+                        <aspectratio align="center" aligny="center">stretch</aspectratio>
+                        <visible>Control.HasFocus(2004)|Control.HasFocus(2005)</visible>
+                    </control>
+                    <animation type="WindowOpen" reversible="false">
+                        <effect type="zoom" start="50" end="100" center="300,-360" easing="out" tween="back" time="640" />
+                        <effect type="fade" start="0" end="100" time="175" />
+                    </animation>
+                    <animation type="WindowClose" reversible="false">
+                        <effect type="zoom" start="100" end="50" center="300,360" easing="in" tween="back" time="320" />
+                        <effect type="fade" start="100" end="0" delay="200" time="100" />
+                    </animation>
+                </control>
+                <control type="button" id="2005">
+                    <description>5 Button</description>
+                    <posx>152.5</posx>
+                    <posy>0</posy>
+                    <centertop>50%</centertop>
+                    <width>35</width>
+                    <height>35</height>
+                    <texturefocus>flagging/rating/rs100.png</texturefocus>
+                    <texturenofocus>flagging/rating/rs00.png</texturenofocus>
+                    <align>center</align>
+                    <aligny>center</aligny>
+                    <ondown>100</ondown>
+                    <onup>100</onup>
+                    <onleft>2004</onleft>
+                    <onright>2001</onright>
+                    <visible allowhiddenfocus="true">!Control.HasFocus(2001)|!Control.HasFocus(2002)|!Control.HasFocus(2003)|!Control.HasFocus(2004)</visible>
+                    <animation effect="zoom" end="115,115" center="auto" time="100">focus</animation>
+                </control>
+                <control type="group">
+                    <control type="image">
+                        <description>5 Button Placeholder</description>
+                        <posx>152.5</posx>
+                        <posy>0</posy>
+                        <centertop>50%</centertop>
+                        <width>35</width>
+                        <height>35</height>
+                        <texture>flagging/rating/rs100.png</texture>
+                        <aspectratio align="center" aligny="center">stretch</aspectratio>
+                        <visible>Control.HasFocus(2005)</visible>
+                    </control>
+                    <animation type="WindowOpen" reversible="false">
+                        <effect type="zoom" start="50" end="100" center="640,-360" easing="out" tween="back" time="640" />
+                        <effect type="fade" start="0" end="100" time="175" />
+                    </animation>
+                    <animation type="WindowClose" reversible="false">
+                        <effect type="zoom" start="100" end="50" center="640,360" easing="in" tween="back" time="320" />
+                        <effect type="fade" start="100" end="0" delay="200" time="100" />
+                    </animation>
+                </control>
+                <!--<animation type="WindowOpen" reversible="false">
+                    <effect type="zoom" start="75" end="100" center="640,360" easing="out" tween="back" time="320" />
+                    <effect type="fade" start="0" end="100" time="175" />
+                </animation>
+                <animation type="WindowClose" reversible="false">
+                    <effect type="zoom" start="100" end="75" center="640,360" easing="in" tween="back" time="320" />
+                    <effect type="fade" start="100" end="0" delay="200" time="100" />
+                </animation>-->
+            </control>
+        </control>
+    </controls>
+</window>
