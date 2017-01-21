@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- Danish language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/da/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
+<strings>
+    <string id="30010">XBMC Sikkerhedskopi</string>
+    <string id="30011">Generelt</string>
+    <string id="30012">Filvalg</string>
+    <string id="30013">Planlægning</string>
+    <string id="30016">Backup</string>
+    <string id="30017">Genopret</string>
+    <string id="30018">Gennemse mapper</string>
+    <string id="30019">Indtast Sti</string>
+    <string id="30020">Gennemse netværksmapper</string>
+    <string id="30021">Navngiv mappe til sikkerhedskopi</string>
+    <string id="30023">Tilstand</string>
+    <string id="30024">Indtast netværkssti</string>
+    <string id="30025">Type af netværkssti</string>
+    <string id="30026">Sikkerhedskopier der skal gemmes (0 for alle)</string>
+    <string id="30027">Dropbox</string>
+    <string id="30028">Dropbox kodeord</string>
+    <string id="30029">Dropbox hemmeligt</string>
+    <string id="30030">Bruger-Addons</string>
+    <string id="30031">Addon-data</string>
+    <string id="30032">Database</string>
+    <string id="30033">Afspilningsliste</string>
+    <string id="30034">Miniaturer/Fankunst</string>
+    <string id="30035">Konfigurationsfil</string>
+    <string id="30036">Brugerdefineret mappe 1</string>
+    <string id="30037">Brugerdefineret mappe 2</string>
+    <string id="30038">Udvidet indstilling opdaget</string>
+    <string id="30039">Udvidede indstillings-fil bør gendannes først</string>
+    <string id="30040">Vælg Ja for at gendanne denne fil og genstarte XBMC</string>
+    <string id="30041">Vælg Nej for at fortsætte</string>
+    <string id="30042">Genoptag gendannelse</string>
+    <string id="30043">XBMC Backup har fundet en ufærdiggjort gendannelse</string>
+    <string id="30044">Vil du fortsætte?</string>
+    <string id="30045">Fejl: Netværksstien findes ikke</string>
+    <string id="30046">Starter</string>
+    <string id="30047">Lokal mappe</string>
+    <string id="30048">Netværksmappe</string>
+    <string id="30049">Indsamler filliste</string>
+    <string id="30050">Netværksstien findes - indeholder muligvis ældre filer!</string>
+    <string id="30051">Opbygger filliste</string>
+    <string id="30052">Skriver fil</string>
+    <string id="30053">Starter planlagt sikkerhedskopi</string>
+    <string id="30054">Fjerner sikkerhedskopi</string>
+    <string id="30056">Tjek log for autoriserings-URL til Dropbox</string>
+    <string id="30057">Tryk OK efter autorisering</string>
+    <string id="30058">Dropbox udviklerkode krævet</string>
+    <string id="30059">Besøg https://www.dropbox.com/developers</string>
+    <string id="30060">Aktivér Tidsplan</string>
+    <string id="30061">Tidsplan</string>
+    <string id="30062">Tid på dagen</string>
+    <string id="30063">Ugedag</string>
+    <string id="30064">Cron tidsplan</string>
+    <string id="30065">Søndag</string>
+    <string id="30066">Mandag</string>
+    <string id="30067">Tirsdag</string>
+    <string id="30068">Onsdag</string>
+    <string id="30069">Torsdag</string>
+    <string id="30070">Fredag</string>
+    <string id="30071">Lørdag</string>
+    <string id="30072">Hver dag</string>
+    <string id="30073">Hver uge</string>
+    <string id="30074">Første dag i måneden</string>
+    <string id="30075">Brugerdefineret tidsplan</string>
+    <string id="30076">Luk ned efter Sikkerhedskopiering</string>
+    <string id="30077">Genstart XBMC</string>
+    <string id="30078">Du skal genstarte XBMC for at fortsætte</string>
+    <string id="30079">Kun Idag</string>
+    <string id="30080">Profiler</string>
+</strings>

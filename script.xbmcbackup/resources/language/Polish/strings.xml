@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- Polish language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/pl/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
+<strings>
+    <string id="30010">Kopia bezpieczeństwa XBMC</string>
+    <string id="30011">Ogólne</string>
+    <string id="30012">Wybór pliku</string>
+    <string id="30013">Harmonogram</string>
+    <string id="30016">Kopia bezpieczeństwa</string>
+    <string id="30017">Przywracanie</string>
+    <string id="30018">Przeglądaj ścieżkę</string>
+    <string id="30019">Wpisz ścieżkę</string>
+    <string id="30020">Przeglądaj zdalną ścieżkę</string>
+    <string id="30021">Nazwa folderu Kopii Bezpieczeństwa</string>
+    <string id="30022">Wyświetlaj postęp </string>
+    <string id="30023">Tryb</string>
+    <string id="30024">Wpisz ścieżkę zdalną</string>
+    <string id="30025">Typ zdalnej ścieżki</string>
+    <string id="30026">Kopie bezpieczeństwa do przechowywania (0 dla wszystkich)</string>
+    <string id="30027">Dropbox</string>
+    <string id="30028">Dropbox Key</string>
+    <string id="30029">Dropbox Secret</string>
+    <string id="30030">Dodatki użytkownika</string>
+    <string id="30031">Dane dodatków</string>
+    <string id="30032">Baza danych</string>
+    <string id="30033">Playlista</string>
+    <string id="30034">Miniatury/Tapety</string>
+    <string id="30035">Pliki koniguracyjne</string>
+    <string id="30036">Własny katalog 1</string>
+    <string id="30037">Własny katalog 2</string>
+    <string id="30038">Wykryto Ustawienia Zaawansowane</string>
+    <string id="30039">Plik advancedsettings powinien być najpierw zrestartowany</string>
+    <string id="30040">Zaznacz Tak  by odtworzyć ten plik i zrestartować XBMC</string>
+    <string id="30041">Wybierz Nie by kontykuować</string>
+    <string id="30042">Wznów Przywracanie</string>
+    <string id="30043">XBMC Backup wykrył niedokończone przyrwacanie</string>
+    <string id="30044">Czy chciałbyś kontynuować?</string>
+    <string id="30045">Błąd: Zdalna ścieżka nie istnieje</string>
+    <string id="30046">Uruchamiam</string>
+    <string id="30047">Lokalny katalog</string>
+    <string id="30048">Zdalny katalog</string>
+    <string id="30049">Zbieram liste plików</string>
+    <string id="30050">Zdalna ścieżka istnieje - może zawierać stare dane!</string>
+    <string id="30051">Tworzę liste plików</string>
+    <string id="30052">Zapisuję plik</string>
+    <string id="30053">Uruchamiam zaplanowaną kopię bezpieczeństwa</string>
+    <string id="30054">Usuwanie kopii bezpieczeństwa</string>
+    <string id="30056">Sprawdź logi aby zobaczyć adres autoryzacji Dropbox </string>
+    <string id="30057">Po zautoryzowaniu naciśnij OK</string>
+    <string id="30058">Potrzebny Dropbox Developer Code</string>
+    <string id="30059">Odwiedź https://www.dropbox.com/developers</string>
+    <string id="30060">Uruchom planowanie</string>
+    <string id="30061">Plan</string>
+    <string id="30062">Godzina dnia</string>
+    <string id="30063">Dzień tygodnia</string>
+    <string id="30064">Plan chronologiczny</string>
+    <string id="30065">Niedziela</string>
+    <string id="30066">Poniedziałek</string>
+    <string id="30067">Wtorek</string>
+    <string id="30068">Środa</string>
+    <string id="30069">Czwartek</string>
+    <string id="30070">Piątek</string>
+    <string id="30071">Sobota</string>
+    <string id="30072">Każdy dzień</string>
+    <string id="30073">Każdy tydzień</string>
+    <string id="30074">Pierwszy dzień miesiąca</string>
+    <string id="30075">Własny plan</string>
+    <string id="30076">Wyłącz system po zrobieniu kopii zapasowej</string>
+    <string id="30077">Restartuj XBMC</string>
+    <string id="30078">Powinieneś zrestartować XBMC by kontynuować</string>
+    <string id="30079">Tylko Dzisiaj </string>
+    <string id="30080">Profile</string>
+    <string id="30081">Harmonogram zostanie uruchomiony ponownie </string>
+    <string id="30082">Pasek postępu</string>
+    <string id="30083">Pasek postępu w tle</string>
+    <string id="30084">Brak (w tle)</string>
+    <string id="30085"> Ostrzeżenie o wersji</string>
+    <string id="30086">Ta wersja XBMC jest inna niż użyta do utworzenia archiwum</string>
+</strings>

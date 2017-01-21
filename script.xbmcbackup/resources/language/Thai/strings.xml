@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- Thai language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/th/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
+<strings>
+    <string id="30011">ทั่วไป</string>
+    <string id="30023">โหมด</string>
+    <string id="30032">ฐานข้อมูล</string>
+    <string id="30033">รายการเพลง</string>
+    <string id="30061">ตารางงาน</string>
+    <string id="30065">อาทิตย์</string>
+    <string id="30066">จันทร์</string>
+    <string id="30067">อังคาร</string>
+    <string id="30068">พุธ</string>
+    <string id="30069">พฤหัสบดี</string>
+    <string id="30070">ศกร์</string>
+    <string id="30071">เสาร์</string>
+    <string id="30077">เริ่ม XBMC ใหม่</string>
+    <string id="30080">ข้อมูลส่วนตัว</string>
+</strings>

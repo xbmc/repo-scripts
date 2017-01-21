@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- Japanese language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/ja/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
+<strings>
+    <string id="30010">XBMC バックアップ</string>
+    <string id="30011">一般</string>
+    <string id="30012">ファイル選択</string>
+    <string id="30013">スケジューリング</string>
+    <string id="30016">バックアップ</string>
+    <string id="30017">リストア</string>
+    <string id="30018">パスをブラウズ</string>
+    <string id="30019">パスを入力</string>
+    <string id="30020">リモートパスをブラウズ</string>
+    <string id="30021">バックアップフォルダ名</string>
+    <string id="30023">モード</string>
+    <string id="30024">リモートパスを入力</string>
+    <string id="30025">リモートパスのタイプ</string>
+    <string id="30026">保持するバックアップ (0 = 全部)</string>
+    <string id="30027">Dropbox</string>
+    <string id="30028">ドロップボックスのキー</string>
+    <string id="30029">Dropboxシークレット</string>
+    <string id="30030">ユーザーアドオン</string>
+    <string id="30031">アドオンのデータ</string>
+    <string id="30032">データベース</string>
+    <string id="30033">プレイリスト</string>
+    <string id="30034">サムネール／ファンアート</string>
+    <string id="30035">設定ファイル</string>
+    <string id="30036">カスタムディレクトリ1</string>
+    <string id="30037">カスタムディレクトリ2</string>
+    <string id="30038">詳細設定が検出されました</string>
+    <string id="30039">Advanced設定ファイルは先に復元したほうが良い</string>
+    <string id="30040">このファイル復元とXBMCの再起動する場合は「はい」を選択してください</string>
+    <string id="30041">続けるにはいいえを選択してください</string>
+    <string id="30042">復元を再開する</string>
+    <string id="30043">XBMCバックアップが未完成の復元を検出しました</string>
+    <string id="30044">続行しますか</string>
+    <string id="30045">エラー：リモートパスが存在しません</string>
+    <string id="30046">開始中</string>
+    <string id="30047">ローカルディレクトリ</string>
+    <string id="30048">リモートディレクトリ</string>
+    <string id="30049">ファイル一覧を取得中</string>
+    <string id="30050">リモートパスが存在します - 古いファイルが残っているのかも！</string>
+    <string id="30051">ファイルリストを作成中</string>
+    <string id="30052">ファイル書き込み中</string>
+    <string id="30053">スケジュールバックアップを開始中</string>
+    <string id="30054">バックアップを削除中</string>
+    <string id="30056">Dropbox の認証URL はログを確認してください</string>
+    <string id="30057">認証が済んだらOKをクリックしてください</string>
+    <string id="30058">Dropbox開発用コードが必要</string>
+    <string id="30059">https://www.dropbox.com/developersをご覧ください</string>
+    <string id="30060">スケジューラを有効にする</string>
+    <string id="30061">スケジュール</string>
+    <string id="30062">時刻</string>
+    <string id="30063">曜日</string>
+    <string id="30064">Cron スケジュール</string>
+    <string id="30065">日曜日</string>
+    <string id="30066">月曜日</string>
+    <string id="30067">火曜日</string>
+    <string id="30068">水曜日</string>
+    <string id="30069">木曜日</string>
+    <string id="30070">金曜日</string>
+    <string id="30071">土曜日</string>
+    <string id="30072">毎日</string>
+    <string id="30073">毎週</string>
+    <string id="30074">毎月1日</string>
+    <string id="30075">カスタムスケジュール</string>
+    <string id="30076">バックアップ後にシャットダウン</string>
+    <string id="30077">XBMCを再起動</string>
+    <string id="30078">続けるため、XBMCを再起動したほうがいい</string>
+    <string id="30079">ちょうど今日</string>
+    <string id="30080">プロファイル</string>
+</strings>

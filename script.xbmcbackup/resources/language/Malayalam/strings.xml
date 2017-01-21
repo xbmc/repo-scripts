@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- Malayalam language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/ml/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
+<strings>
+    <string id="30011">പോതുവായത്</string>
+    <string id="30062">ദിവസത്തില്‍ ഒരു മണിക്കൂര്‍</string>
+    <string id="30063">ആഴ്ചയില്‍ ഒരു ദിവസം</string>
+    <string id="30065">ഞായര്‍</string>
+    <string id="30066">തിങ്കള്‍</string>
+    <string id="30067">ചൊവ്വ</string>
+    <string id="30068">ബുധന്‍</string>
+    <string id="30069">വ്യാഴം</string>
+    <string id="30070">വെള്ളി</string>
+    <string id="30071">ശനി</string>
+    <string id="30072">എല്ലാ ദിവസവും</string>
+    <string id="30073">എല്ലാ ആഴ്ചയും</string>
+</strings>

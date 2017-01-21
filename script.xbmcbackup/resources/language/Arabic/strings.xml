@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- Arabic language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/ar/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
+<strings>
+    <string id="30010">نسخ إكس بى إم سى اﻹحتياطى</string>
+    <string id="30011">عام</string>
+    <string id="30012">تحديد الملف</string>
+    <string id="30016">نسخ إحتياطى</string>
+    <string id="30017">إسترجاع</string>
+    <string id="30018">إستعرض المسار</string>
+    <string id="30019">نوع المسار</string>
+    <string id="30020">إستعراض مسار بعيد</string>
+    <string id="30021">إسم مجلد النسخ اﻹحتياطى</string>
+    <string id="30023">الوضع</string>
+    <string id="30024"> مسار نوع خارجي</string>
+    <string id="30025">نوع مسار خارجي</string>
+    <string id="30027">صندوق اﻹسقاط</string>
+    <string id="30030">ملحقات المُستخدم</string>
+    <string id="30032">قاعدة البيانات</string>
+    <string id="30033">قائمة التشغيل</string>
+    <string id="30040">إختر "نعم" ﻹسترجاع هذا الملف ثم إعاده تشغيل إكس بى إم سى</string>
+    <string id="30041">إختر "لا" للمتابعه</string>
+    <string id="30042">إستكمال اﻹسترجاع</string>
+    <string id="30043">نسخ إكس بى إم سى اﻹحتياطى إكتشف وجود حاله إسترجاع غير مُنتهيه</string>
+    <string id="30044">أترغب بالمتابعه ؟</string>
+    <string id="30051">يُنشِئ قائمه بالملفات</string>
+    <string id="30053">يبدأ النسخ اﻹحتياطى المجدول</string>
+    <string id="30054">يَحَذِف ملفات النسخ اﻹحتياطى</string>
+    <string id="30059">تفضل بزياره موقع https://www.dropbox.com/developers</string>
+    <string id="30060">تفعيل الجدوله</string>
+    <string id="30065">الاحد</string>
+    <string id="30066">الاثنين</string>
+    <string id="30067">الثلاثاء</string>
+    <string id="30068">الاربعاء</string>
+    <string id="30069">الخميس</string>
+    <string id="30070">الجمعة</string>
+    <string id="30071">السبت</string>
+    <string id="30072">يومياً</string>
+    <string id="30073">إسبوعياً</string>
+    <string id="30074">أول يوم فى الشهر</string>
+    <string id="30076">أطفئ بعد النسخ اﻹحتياطى</string>
+    <string id="30077">أعد تشغيل إكس بى إم سى</string>
+    <string id="30078">يتوجب عليك إعاده تشغيل إكس بى إم سى للمتابعه</string>
+    <string id="30080">الملفات الشخصية</string>
+</strings>

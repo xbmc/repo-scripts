@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- Finnish language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/fi/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
+<strings>
+    <string id="30011">Yleiset</string>
+    <string id="30016">Varmuuskopio</string>
+    <string id="30023">Tila</string>
+    <string id="30032">Tietokanta</string>
+    <string id="30033">Toistolista</string>
+    <string id="30061">Ajastus</string>
+    <string id="30065">sunnuntai</string>
+    <string id="30066">maanantai</string>
+    <string id="30067">tiistai</string>
+    <string id="30068">keskiviikko</string>
+    <string id="30069">torstai</string>
+    <string id="30070">perjantai</string>
+    <string id="30071">lauantai</string>
+    <string id="30077">Käynnistä XBMC uudelleen</string>
+    <string id="30080">Käyttäjäprofiilit</string>
+</strings>

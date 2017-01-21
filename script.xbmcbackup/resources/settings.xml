@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<settings>
+	<category id="general" label="30011">
+		<setting id="remote_selection" type="enum" lvalues="30018|30019|30027|30098" default="0" label="30025"/>
+		<setting id="remote_path_2" type="text" label="30024" default="" visible="eq(-1,1)" />
+		<setting id="remote_path" type="folder" label="30020" visible="eq(-2,0)" />
+		<setting id="dropbox_key" type="text" label="30028" visible="eq(-3,2)" default="" />
+		<setting id="dropbox_secret" type="text" label="30029" visible="eq(-4,2)" default="" />
+		<setting id="google_drive_id" type="text" label="Client ID" visible="eq(-5,3)" default="" />
+		<setting id="google_drive_secret" type="text" label="Client Secret" visible="eq(-6,3)" default="" />
+		<setting id="remove_auth_button" type="action" label="30093" action="RunScript(special://home/addons/script.xbmcbackup/remove_auth.py)" visible="gt(-7,1)"/>
+		<setting id="compress_backups" type="bool" label="30087" default="false" />
+		<setting id="backup_rotation" type="number" label="30026" default="0" />
+		<setting id="progress_mode" type="enum" label="30022" lvalues="30082|30083|30084" default="0" />
+	</category>
+	<category id="selection" label="30012">
+		<setting id="backup_addons" type="bool" label="30030" default="true" />
+		<setting id="backup_addon_data" type="bool" label="30031" default="false" />
+		<setting id="backup_database" type="bool" label="30032" default="true" />
+		<setting id="backup_playlists" type="bool" label="30033" default="true" />
+		<setting id="backup_profiles" type="bool" label="30080" default="false" />
+		<setting id="backup_thumbnails" type="bool" label="30034" default="true" />
+		<setting id="backup_config" type="bool" label="30035" default="true" />
+		<setting id="custom_dir_1_enable" type="bool" label="30036" default="false" />
+		<setting id="backup_custom_dir_1" type="folder" label="30018" default="" visible="eq(-1,true)"/>
+		<setting id="custom_dir_2_enable" type="bool" label="30037" default="false" />
+		<setting id="backup_custom_dir_2" type="folder" label="30018" default="" visible="eq(-1,true)"/>
+	</category>
+	<category id="scheduling" label="30013">
+		<setting id="enable_scheduler" type="bool" label="30060" default="false" />
+		<setting id="schedule_interval" type="enum" label="30061" lvalues="30079|30072|30073|30074|30075" default="1" enable="eq(-1,true)"/>
+		<setting id="schedule_time" type="labelenum" label="30062" values="00:00|01:00|02:00|03:00|04:00|05:00|06:00|07:00|08:00|09:00|10:00|11:00|12:00|13:00|14:00|15:00|16:00|17:00|18:00|19:00|20:00|21:00|22:00|23:00" default="00:00" visible="!eq(-1,4)"  enable="eq(-2,true)"/>
+		<setting id="day_of_week" type="enum" label="30063" lvalues="30065|30066|30067|30068|30069|30070|30071" default="0" visible="eq(-2,2)"  enable="eq(-3,true)"/>
+		<setting id="cron_schedule" type="text" label="30064" default="0 0 * * *" visible="eq(-3,4)"  enable="eq(-4,true)"/>
+		<setting id="cron_shutdown" type="bool" label="30076" default="false" enable="eq(-5,true)" />
+	</category>
+</settings>

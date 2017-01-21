@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- Romanian language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/ro/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
+<strings>
+    <string id="30011">General</string>
+    <string id="30023">Mod</string>
+    <string id="30032">Bază de date</string>
+    <string id="30033">Listă de redare</string>
+    <string id="30065">Duminică</string>
+    <string id="30066">Luni</string>
+    <string id="30067">Marți</string>
+    <string id="30068">Miercuri</string>
+    <string id="30069">Joi</string>
+    <string id="30070">Vineri</string>
+    <string id="30071">Sâmbătă</string>
+    <string id="30080">Profile</string>
+</strings>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- Albanian language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/sq/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
+<strings>
+    <string id="30011">I përgjithsëm</string>
+    <string id="30023">Mënyra</string>
+    <string id="30032">Baza e të dhënave</string>
+    <string id="30033">Lista e Lojës</string>
+    <string id="30065">E Diel</string>
+    <string id="30066">E Hënë</string>
+    <string id="30067">E Martë</string>
+    <string id="30068">E Mërkurë</string>
+    <string id="30069">E Ejnte</string>
+    <string id="30070">E Premte</string>
+    <string id="30071">E Shtunë</string>
+    <string id="30080">Profile</string>
+</strings>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- Tamil (India) language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/ta_IN/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
+<strings>
+    <string id="30010">XBMC மறுபிரதி</string>
+    <string id="30011">பொதுவானது</string>
+    <string id="30012">கோப்பு தேர்வு</string>
+    <string id="30013">திட்டமிடல்</string>
+    <string id="30016">மறுபிரதி</string>
+    <string id="30017">மீட்டெடு</string>
+    <string id="30018">பாதை உலாவு</string>
+    <string id="30019">பாதை உள்ளிடு</string>
+    <string id="30020">தொலை பாதை உலாவு</string>
+    <string id="30021">மறுபிரதி கோப்புறை பெயர்</string>
+    <string id="30023">முறை</string>
+    <string id="30024">தொலை பாதை உள்ளிடு</string>
+    <string id="30025">தொலை பாதை உள்ளிடு</string>
+    <string id="30026">வைக்கவேண்டிய மறுபிரதிகள் (0 - அனைத்திற்கும்)</string>
+    <string id="30030">பயனர் துணை பயன்கள்</string>
+    <string id="30031">துணை பயன் தகவல்</string>
+    <string id="30032">தரவுத்தளம்</string>
+    <string id="30033">பட்டியல்</string>
+    <string id="30034">சிறுபடம்/விசிறிபடம்</string>
+    <string id="30035">அமைப்பு கோப்புகள்</string>
+    <string id="30045">பிழை: தொலை பாதை இல்லை</string>
+    <string id="30046">தொடங்குகிறது</string>
+    <string id="30047">உள்ளூர் கோப்புறை</string>
+    <string id="30048">தொலை கோப்புறை</string>
+    <string id="30049">கோப்பு பட்டியலை சேகரித்தல்</string>
+    <string id="30050">தொலை பாதை உள்ளது - அதில் பழைய கோப்புகள் இருக்கலாம்</string>
+    <string id="30051">கோப்பு பட்டியல உருவாக்குதல்</string>
+    <string id="30052">கோப்பில் எழுதப்படுகிறது</string>
+    <string id="30053">திட்டமிட்ட மறுபிரதியை தொடங்குகிறது</string>
+    <string id="30054">மறுபிரதியை நீக்கு</string>
+    <string id="30060">திட்டமிடுநர் செயல்படுத்து</string>
+    <string id="30061">திட்டமிடு</string>
+    <string id="30064">கிரான் திட்டமிடு</string>
+    <string id="30065">ஞாயிறு </string>
+    <string id="30066">திங்கள்</string>
+    <string id="30067">செவ்வாய்</string>
+    <string id="30068">புதன்</string>
+    <string id="30069">வியாழன்</string>
+    <string id="30070">வெள்ளி</string>
+    <string id="30071">சனி</string>
+    <string id="30072">ஒவ்வொரு நாளும்</string>
+    <string id="30073">ஒவ்வொரு வாரமும்</string>
+    <string id="30074">மாதத்தின் முதல் நாள்</string>
+    <string id="30075">தனிப்பயன் திட்டமிடு</string>
+    <string id="30080">சுயவிவரங்கள்</string>
+</strings>
