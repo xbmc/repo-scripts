@@ -35,15 +35,14 @@
 		<setting id="save_lyrics1" type="bool" label="32101" default="true"/>
 		<setting id="save_lyrics_path" type="folder" enable="eq(-1,true)" source="files" label="32102" default="" />
 		<setting id="save_filename_format" type="enum" enable="eq(-2,true)" label="32103" default="0" lvalues="32105|32108"/>
-		<setting type="sep" />
 		<setting id="save_lyrics2" type="bool" label="32113" default="false"/>
 		<setting id="save_subfolder" type="bool" enable="eq(-1,true)" label="32111" default="false"/>
 		<setting id="save_subfolder_path" type="text" enable="eq(-1,true)" label="32112" default="lyrics"/>
 	</category>
 	<category label="32149">
+		<setting id="offset" type="slider" label="32166" default="0.00" range="-5.00,0.10,5.00" option="float" />
 		<setting label="32118" type="lsep"/>
 		<setting id="log_enabled" type="bool" label="32159" default="false"/>
-		<setting id="offset" type="slider" label="32166" default="0.00" range="-5.00,0.10,5.00" option="float" />
 		<setting id="scraper_test" type="action" label="32162" action="RunScript($ID,test)"/>
 	</category>
 </settings>

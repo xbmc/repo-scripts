@@ -1,3 +1,22 @@
+v5.3.4
+- filter 'attribution' lines from lyrics
+
+v5.3.3
+- added option to delete lyrics file
+
+v5.3.2
+- save manual sync offset to lrc file
+
+v5.3.1
+- silence notifications
+- highlight selected lyric in list
+
+v5.3.0
+- add manual sync option
+
+v5.2.6
+- fix incorrect results from gomaudio for streaming audio
+
 v5.2.5
 - add global offset option
 

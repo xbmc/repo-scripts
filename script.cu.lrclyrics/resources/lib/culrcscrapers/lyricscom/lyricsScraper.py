@@ -15,11 +15,11 @@ __lrc__ = False
 socket.setdefaulttimeout(10)
 
 class LyricsFetcher:
-    def __init__( self ):
+    def __init__(self):
         self.url = 'http://www.lyrics.com/serp.php?st=%s&qtype=2'
 
     def get_lyrics(self, song):
-        log( "%s: searching lyrics for %s - %s" % (__title__, song.artist, song.title))
+        log('%s: searching lyrics for %s - %s' % (__title__, song.artist, song.title))
         lyrics = Lyrics()
         lyrics.song = song
         lyrics.source = __title__

@@ -1,9 +1,9 @@
 #-*- coding: UTF-8 -*-
-"""
+'''
 Scraper for http://www.viewlyrics.com
 
 PedroHLC
-"""
+'''
 
 import urllib
 import urllib2
@@ -14,7 +14,7 @@ import difflib
 import chardet
 from utilities import *
 
-__title__ = "MiniLyrics"
+__title__ = 'MiniLyrics'
 __priority__ = '100'
 __lrc__ = True
 
@@ -56,15 +56,15 @@ class MiniLyrics(object):
             else:
                 encddata[i] = ord(data[i]) ^ magickey
         try:
-            result = "\x02" + chr(magickey) + "\x04\x00\x00\x00" + str(hasheddata) + bytearray(encddata).decode("utf-8")
+            result = '\x02' + chr(magickey) + '\x04\x00\x00\x00' + str(hasheddata) + bytearray(encddata).decode('utf-8')
         except UnicodeDecodeError:
-            result = "\x02" + chr(magickey) + "\x04\x00\x00\x00" + str(hasheddata) + bytearray(encddata)
+            result = '\x02' + chr(magickey) + '\x04\x00\x00\x00' + str(hasheddata) + bytearray(encddata)
         return result
 
     @staticmethod
     def vl_dec(data):
         magickey = data[1]
-        result = ""
+        result = ''
         i = 22
         datalen = len(data)
         if isinstance(magickey, int):
@@ -79,7 +79,7 @@ class MiniLyrics(object):
         return result
 
 class LyricsFetcher:
-    def __init__( self ):
+    def __init__(self):
         self.proxy = None
 
     def htmlDecode(self,string):
@@ -109,16 +109,16 @@ class LyricsFetcher:
         return ret
 
     def get_lyrics(self, song):
-        log( "%s: searching lyrics for %s - %s" % (__title__, song.artist, song.title))
+        log('%s: searching lyrics for %s - %s' % (__title__, song.artist, song.title))
         lyrics = Lyrics()
         lyrics.song = song
         lyrics.source = __title__
         lyrics.lrc = __lrc__
-        search_url = "http://search.crintsoft.com/searchlyrics.htm"
+        search_url = 'http://search.crintsoft.com/searchlyrics.htm'
         search_query_base = u"<?xml version='1.0' encoding='utf-8' standalone='yes' ?><searchV1 client=\"ViewLyricsOpenSearcher\" artist=\"{artist}\" title=\"{title}\" OnlyMatched=\"1\" />"
-        search_useragent = "MiniLyrics"
-        search_md5watermark = b"Mlv1clt4.0"
-        search_encquery = MiniLyrics.vl_enc(search_query_base.format(artist=song.artist.decode("utf-8"), title=song.title.decode("utf-8")).encode("utf-8"), search_md5watermark)
+        search_useragent = 'MiniLyrics'
+        search_md5watermark = b'Mlv1clt4.0'
+        search_encquery = MiniLyrics.vl_enc(search_query_base.format(artist=song.artist.decode('utf-8'), title=song.title.decode('utf-8')).encode('utf-8'), search_md5watermark)
         headers = {"User-Agent": "{ua}".format(ua=search_useragent),
                    "Content-Length": "{content_length}".format(content_length=len(search_encquery)),
                    "Connection": "Keep-Alive",
@@ -136,7 +136,7 @@ class LyricsFetcher:
         links = []
         for x in lrcList:
             if (difflib.SequenceMatcher(None, song.artist.lower(), x[0].lower()).ratio() > 0.8) and (difflib.SequenceMatcher(None, song.title.lower(), x[1].lower()).ratio() > 0.8):
-                links.append( ( x[0] + ' - ' + x[1], x[2], x[0], x[1] ) )
+                links.append((x[0] + ' - ' + x[1], x[2], x[0], x[1]))
         if len(links) == 0:
             return None
         elif len(links) > 1:

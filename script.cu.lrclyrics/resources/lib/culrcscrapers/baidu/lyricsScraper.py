@@ -1,9 +1,9 @@
 ﻿#-*- coding: UTF-8 -*-
-"""
+'''
 Scraper for http://www.baidu.com
 
 ronie
-"""
+'''
 
 import urllib
 import socket
@@ -12,19 +12,19 @@ import chardet
 import difflib
 from utilities import *
 
-__title__ = "Baidu"
+__title__ = 'Baidu'
 __priority__ = '120'
 __lrc__ = True
 
 socket.setdefaulttimeout(10)
 
 class LyricsFetcher:
-    def __init__( self ):
+    def __init__(self):
         self.BASE_URL = 'http://music.baidu.com/search/lrc?key=%s-%s'
         self.LRC_URL = 'http://music.baidu.com%s'
 
     def get_lyrics(self, song):
-        log( "%s: searching lyrics for %s - %s" % (__title__, song.artist, song.title))
+        log('%s: searching lyrics for %s - %s' % (__title__, song.artist, song.title))
         lyrics = Lyrics()
         lyrics.song = song
         lyrics.source = __title__

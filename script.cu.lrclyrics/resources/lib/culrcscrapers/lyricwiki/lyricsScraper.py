@@ -1,6 +1,11 @@
 #-*- coding: UTF-8 -*-
-import sys, re, urllib2, socket, HTMLParser
-import xbmc, xbmcaddon
+import sys
+import re
+import urllib2
+import socket
+import HTMLParser
+import xbmc
+import xbmcaddon
 import json
 from utilities import *
 
@@ -13,11 +18,11 @@ LIC_TXT = 'we are not licensed to display the full lyrics for this song at the m
 socket.setdefaulttimeout(10)
 
 class LyricsFetcher:
-    def __init__( self ):
+    def __init__(self):
         self.url = 'http://lyrics.wikia.com/api.php?func=getSong&artist=%s&song=%s&fmt=realjson'
 
     def get_lyrics(self, song):
-        log( "%s: searching lyrics for %s - %s" % (__title__, song.artist, song.title))
+        log('%s: searching lyrics for %s - %s' % (__title__, song.artist, song.title))
         lyrics = Lyrics()
         lyrics.song = song
         lyrics.source = __title__
@@ -34,7 +39,7 @@ class LyricsFetcher:
         except:
             return None
         if not self.page.endswith('action=edit'):
-            log( "%s: search url: %s" % (__title__, self.page))
+            log('%s: search url: %s' % (__title__, self.page))
             try:
                 req = urllib2.urlopen(self.page)
                 response = req.read()

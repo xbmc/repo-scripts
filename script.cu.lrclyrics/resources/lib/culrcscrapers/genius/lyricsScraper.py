@@ -1,6 +1,11 @@
 #-*- coding: UTF-8 -*-
-import sys, re, urllib2, socket, HTMLParser
-import xbmc, xbmcaddon
+import sys
+import re
+import urllib2
+import socket
+import HTMLParser
+import xbmc
+import xbmcaddon
 import json
 import difflib
 from utilities import *
@@ -12,11 +17,11 @@ __lrc__ = False
 socket.setdefaulttimeout(10)
 
 class LyricsFetcher:
-    def __init__( self ):
+    def __init__(self):
         self.url = 'http://api.genius.com/search?q=%s%s%s&access_token=Rq_cyNZ6fUOQr4vhyES6vu1iw3e94RX85ju7S8-0jhM-gftzEvQPG7LJrrnTji11'
 
     def get_lyrics(self, song):
-        log( "%s: searching lyrics for %s - %s" % (__title__, song.artist, song.title))
+        log('%s: searching lyrics for %s - %s' % (__title__, song.artist, song.title))
         lyrics = Lyrics()
         lyrics.song = song
         lyrics.source = __title__
@@ -39,7 +44,7 @@ class LyricsFetcher:
                 return None
         except:
             return None
-        log( "%s: search url: %s" % (__title__, self.page))
+        log('%s: search url: %s' % (__title__, self.page))
         try:
             request = urllib2.Request(self.page)
             request.add_header('User-Agent', 'Mozilla/5.0 (Windows NT 6.1; rv:25.0) Gecko/20100101 Firefox/25.0')
@@ -50,7 +55,7 @@ class LyricsFetcher:
         req.close()
         htmlparser = HTMLParser.HTMLParser()
         response = htmlparser.unescape(response.decode('utf-8'))
-        matchcode = re.search('{"lyrics_data":{"body":{"html":"(.*?)"}', response, flags=re.DOTALL)
+        matchcode = re.search('<lyrics.*?>(.*?)</lyrics>', response, flags=re.DOTALL)
         try:
             lyricscode = (matchcode.group(1))
             lyr = re.sub('<[^<]+?>', '', lyricscode)

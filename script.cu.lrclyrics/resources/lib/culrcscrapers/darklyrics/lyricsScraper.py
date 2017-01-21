@@ -1,35 +1,35 @@
 #-*- coding: UTF-8 -*-
-"""
+'''
 Scraper for http://www.darklyrics.com/ - the largest metal lyrics archive on the Web.
 
 scraper by smory
-"""
+'''
 
-import hashlib;
-import urllib2;
-import re;
+import hashlib
+import urllib2
+import re
 from utilities import *
 
-__title__ = "darklyrics"
+__title__ = 'darklyrics'
 __priority__ = '250';
 __lrc__ = False;
 
 class LyricsFetcher:
     
-    def __init__( self ):
-        self.base_url = "http://www.darklyrics.com/"
-        self.searchUrl = "http://www.darklyrics.com/search?q=%term%"
+    def __init__(self):
+        self.base_url = 'http://www.darklyrics.com/'
+        self.searchUrl = 'http://www.darklyrics.com/search?q=%term%'
         
     def search(self, artist, title):
-        term = urllib2.quote((artist if artist else "") + " " + (title if title else ""));
+        term = urllib2.quote((artist if artist else '') + ' ' + (title if title else ''));
         
         try:
-            request = urllib2.urlopen(self.searchUrl.replace("%term%", term))
+            request = urllib2.urlopen(self.searchUrl.replace('%term%', term))
             searchResponse = request.read();
         except:
             return None
 
-        searchResult = re.findall("<h2><a\shref=\"(.*?#([0-9]+))\".*?>(.*?)</a></h2>", searchResponse);
+        searchResult = re.findall('<h2><a\shref="(.*?#([0-9]+))".*?>(.*?)</a></h2>', searchResponse);
         
         if len(searchResult) == 0:
             return None;
@@ -39,7 +39,7 @@ class LyricsFetcher:
         i = 0;
         for result in searchResult:
             a = [];
-            a.append(result[2] + ( " " + self.getAlbumName(self.base_url + result[0]) if i < 6 else "")); # title from server + album nane
+            a.append(result[2] + (' ' + self.getAlbumName(self.base_url + result[0]) if i < 6 else '')); # title from server + album nane
             a.append(self.base_url + result[0]);  # url with lyrics
             a.append(artist);
             a.append(title);
@@ -56,17 +56,17 @@ class LyricsFetcher:
         except:
             return None
         
-        pattern = "<a\sname=\"%index%\">(.*?)(?:<h3>|<div)";  # require multi line and dot all mode
-        pattern = pattern.replace("%index%", index);
+        pattern = '<a\sname="%index%">(.*?)(?:<h3>|<div)';  # require multi line and dot all mode
+        pattern = pattern.replace('%index%', index);
         
         match = re.search(pattern, res, re.MULTILINE | re.DOTALL);
         if match:  
             s = match.group(1);
-            s = s.replace("<br />", "");
-            s = s.replace("<i>", "");
-            s = s.replace("</i>", "");
-            s = s.replace("</a>", "");
-            s = s.replace("</h3>", "");
+            s = s.replace('<br />', '');
+            s = s.replace('<i>', '');
+            s = s.replace('</i>', '');
+            s = s.replace('</a>', '');
+            s = s.replace('</h3>', '');
             return s;
         else:
             return None;
@@ -76,17 +76,17 @@ class LyricsFetcher:
             request = urllib2.urlopen(url);
             res = request.read();
         except:
-            return "";
+            return '';
              
-        match = re.search("<h2>(?:album|single|ep|live):?\s?(.*?)</h2>", res, re.IGNORECASE);
+        match = re.search('<h2>(?:album|single|ep|live):?\s?(.*?)</h2>', res, re.IGNORECASE);
         
         if match:
-            return ("(" + match.group(1) + ")").replace("\"", "");
+            return ('(' + match.group(1) + ')').replace('\'', '');
         else:
-            return "";        
+            return '';        
 
     def get_lyrics(self, song):
-        log( "%s: searching lyrics for %s - %s" % (__title__, song.artist, song.title))
+        log('%s: searching lyrics for %s - %s' % (__title__, song.artist, song.title))
         lyrics = Lyrics();
         lyrics.song = song;
         lyrics.source = __title__;

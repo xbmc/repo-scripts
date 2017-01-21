@@ -1,19 +1,16 @@
-# main import's 
 import sys
 import os
 import xbmc
 import xbmcaddon
 
-# Script constants 
-ADDON        = xbmcaddon.Addon()
-ADDONID      = ADDON.getAddonInfo('id')
-ADDONNAME    = ADDON.getAddonInfo('name')
+ADDON = xbmcaddon.Addon()
+ADDONID = ADDON.getAddonInfo('id')
+ADDONNAME = ADDON.getAddonInfo('name')
 ADDONVERSION = ADDON.getAddonInfo('version')
-CWD          = xbmc.translatePath(ADDON.getAddonInfo('path')).decode("utf-8")
-PROFILE      = xbmc.translatePath(ADDON.getAddonInfo('profile')).decode("utf-8")
-LANGUAGE     = ADDON.getLocalizedString
+CWD = xbmc.translatePath(ADDON.getAddonInfo('path')).decode('utf-8')
+PROFILE = xbmc.translatePath(ADDON.getAddonInfo('profile')).decode('utf-8')
+LANGUAGE = ADDON.getLocalizedString
 
-# Shared resources
 BASE_RESOURCE_PATH = os.path.join(CWD, 'resources', 'lib')
 sys.path.append (BASE_RESOURCE_PATH)
 
@@ -31,24 +28,25 @@ def culrc_run(mode):
         WIN.setProperty('culrc.force','TRUE')
     else:
         log('script already running')
-        if ADDON.getSetting( "silent" ) == 'false':
-            xbmc.executebuiltin((u'Notification(%s,%s,%i)' % (ADDONNAME , LANGUAGE(32158), 2000)).encode('utf-8', 'ignore'))
+        if ADDON.getSetting('silent') == 'false':
+            dialog = xbmcgui.Dialog()
+            dialog.notification(ADDONNAME, LANGUAGE(32158), time=2000, sound=False)
 
-if ( __name__ == "__main__" ):
-    service = ADDON.getSetting( "service" )
+if (__name__ == '__main__'):
+    service = ADDON.getSetting('service')
     # started as a service
     if sys.argv == ['']:
-        if service == "true":
+        if service == 'true':
             culrc_run('service')
         else:
             log('service not enabled')
     # manually started
     else:
         if len(sys.argv) == 2 and sys.argv[1] == 'test':
-            
             test_scrapers()
-        elif service == "true":
+        elif service == 'true':
             culrc_run('service')
         else:
             culrc_run('manual')
+
 log('script version %s ended' % ADDONVERSION)

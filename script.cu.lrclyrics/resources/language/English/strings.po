@@ -30,7 +30,9 @@ msgctxt "#32002"
 msgid "Embedded"
 msgstr ""
 
-#empty string with id 32003
+msgctxt "#32003"
+msgid "Lyrics offset"
+msgstr ""
 
 msgctxt "#32004"
 msgid "Searching lyrics..."
@@ -40,7 +42,23 @@ msgctxt "#32005"
 msgid "Select lyrics:"
 msgstr ""
 
-#empty strings from id 32006 to 32100
+msgctxt "#32006"
+msgid "Select different lyrics"
+msgstr ""
+
+msgctxt "#32007"
+msgid "Manually sync lyrics"
+msgstr ""
+
+msgctxt "#32008"
+msgid "Delayed by: %ss"
+msgstr ""
+
+msgctxt "#32009"
+msgid "Ahead by: %ss"
+msgstr ""
+
+#empty strings from id 32010 to 32100
 #Settings labels
 
 msgctxt "#32101"
@@ -115,7 +133,7 @@ msgctxt "#32118"
 msgid "Debugging"
 msgstr ""
 
-#empty strings from id 32119 to 32148
+#empty strings from id 32120 to 32148
 
 msgctxt "#32149"
 msgid "Expert"
@@ -189,7 +207,11 @@ msgctxt "#32166"
 msgid "Time offset for synchronised lyrics"
 msgstr ""
 
-#empty strings from id 32161 to 32198
+msgctxt "#32167"
+msgid "Delete lyrics"
+msgstr ""
+
+#empty strings from id 32168 to 32198
 #Skin labels
 
 msgctxt "#32199"

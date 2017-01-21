@@ -48,7 +48,7 @@ class ttpClient(object):
         tmp1 = (Id & 0x0000FF00) >> 8                                                   #右移8位后为x0000015F
 
             #tmp1 0x0000005F
-        if ( (Id & 0x00FF0000) == 0 ):
+        if ((Id & 0x00FF0000) == 0):
             tmp3 = 0x000000FF & ~tmp1                                                   #CL 0x000000E7
         else:
             tmp3 = 0x000000FF & ((Id & 0x00FF0000) >> 16)                               #右移16后为x00000001
@@ -57,7 +57,7 @@ class ttpClient(object):
         tmp3 = tmp3 << 8                                                                #tmp3 0x00180100
         tmp3 = tmp3 | (0x000000FF & tmp1)                                               #tmp3 0x0018015F
         tmp3 = tmp3 << 8                                                                #tmp3 0x18015F00
-        if ( (Id & 0xFF000000) == 0 ) :
+        if ((Id & 0xFF000000) == 0) :
             tmp3 = tmp3 | (0x000000FF & (~Id))                                          #tmp3 0x18015FE7
         else :
             tmp3 = tmp3 | (0x000000FF & (Id >> 24))                                     #右移24位后为0x00000000
@@ -111,12 +111,12 @@ class ttpClient(object):
 
 
 class LyricsFetcher:
-    def __init__( self ):
+    def __init__(self):
         self.LIST_URL = 'http://ttlrccnc.qianqian.com/dll/lyricsvr.dll?sh?Artist=%s&Title=%s&Flags=0'
         self.LYRIC_URL = 'http://ttlrccnc.qianqian.com/dll/lyricsvr.dll?dl?Id=%d&Code=%d&uid=01&mac=%012x'
 
     def get_lyrics(self, song):
-        log( "%s: searching lyrics for %s - %s" % (__title__, song.artist, song.title))
+        log("%s: searching lyrics for %s - %s" % (__title__, song.artist, song.title))
         lyrics = Lyrics()
         lyrics.song = song
         lyrics.source = __title__
@@ -146,19 +146,19 @@ class LyricsFetcher:
             f = urllib.urlopen(url)
             Page = f.read()
         except:
-            log( "%s: %s::%s (%d) [%s]" % (
+            log("%s: %s::%s (%d) [%s]" % (
                    __title__, self.__class__.__name__,
-                   sys.exc_info()[ 2 ].tb_frame.f_code.co_name,
-                   sys.exc_info()[ 2 ].tb_lineno,
-                   sys.exc_info()[ 1 ]
-                   ))
+                   sys.exc_info()[2].tb_frame.f_code.co_name,
+                   sys.exc_info()[2].tb_lineno,
+                   sys.exc_info()[1]
+                  ))
             return None
         links_query = re.compile('<lrc id=\"(.*?)\" artist=\"(.*?)\" title=\"(.*?)\"></lrc>')
         urls = re.findall(links_query, Page)
         links = []
         for x in urls:
             if (difflib.SequenceMatcher(None, artist.lower(), x[1].lower()).ratio() > 0.8) and (difflib.SequenceMatcher(None, title.lower(), x[2].lower()).ratio() > 0.8):
-                links.append( ( x[1] + ' - ' + x[2], x[0], x[1], x[2] ) )
+                links.append((x[1] + ' - ' + x[2], x[0], x[1], x[2]))
         if len(links) == 0:
             return None
         elif len(links) > 1:
@@ -178,12 +178,12 @@ class LyricsFetcher:
             f = urllib.urlopen(url)
             Page = f.read()
         except:
-            log( "%s: %s::%s (%d) [%s]" % (
+            log("%s: %s::%s (%d) [%s]" % (
                    __title__, self.__class__.__name__,
-                   sys.exc_info()[ 2 ].tb_frame.f_code.co_name,
-                   sys.exc_info()[ 2 ].tb_lineno,
-                   sys.exc_info()[ 1 ]
-                   ))
+                   sys.exc_info()[2].tb_frame.f_code.co_name,
+                   sys.exc_info()[2].tb_lineno,
+                   sys.exc_info()[1]
+                  ))
             return None
         # ttplayer occasionally returns incorrect lyrics. if we have an 'ar' tag with a value we can check if the artist matches
         if Page.startswith('[ti:'):

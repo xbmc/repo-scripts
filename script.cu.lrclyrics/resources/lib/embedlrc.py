@@ -7,14 +7,14 @@ from mutagen_culrc.mp4 import MP4
 import xbmcvfs
 from utilities import *
 
-LANGUAGE  = sys.modules[ "__main__" ].LANGUAGE
+LANGUAGE  = sys.modules['__main__'].LANGUAGE
 
 def getEmbedLyrics(song, getlrc):
     lyrics = Lyrics()
     lyrics.song = song
-    lyrics.source = LANGUAGE( 32002 )
+    lyrics.source = LANGUAGE(32002)
     lyrics.lrc = getlrc
-    filename = song.filepath.decode("utf-8")
+    filename = song.filepath.decode('utf-8')
     ext = os.path.splitext(filename)[1].lower()
     lry = None
     if ext == '.mp3':
@@ -35,34 +35,34 @@ def getEmbedLyrics(song, getlrc):
     lyrics.lyrics = lry
     return lyrics
 
-"""
+'''
 Get lyrics embed with Lyrics3/Lyrics3V2 format
 See: http://id3.org/Lyrics3
      http://id3.org/Lyrics3v2
-"""
+'''
 def getLyrics3(filename, getlrc):
     f = xbmcvfs.File(filename)
     f.seek(-128-9, os.SEEK_END)
     buf = f.read(9)
-    if (buf != "LYRICS200" and buf != "LYRICSEND"):
+    if (buf != 'LYRICS200' and buf != 'LYRICSEND'):
         f.seek(-9, os.SEEK_END)
         buf = f.read(9)
-    if (buf == "LYRICSEND"):
-        """ Find Lyrics3v1 """
+    if (buf == 'LYRICSEND'):
+        ''' Find Lyrics3v1 '''
         f.seek(-5100-9-11, os.SEEK_CUR)
         buf = f.read(5100+11)
         f.close();
-        start = buf.find("LYRICSBEGIN")
+        start = buf.find('LYRICSBEGIN')
         content = buf[start+11:]
         if (getlrc and isLRC(content)) or (not getlrc and not isLRC(content)):
             return content
-    elif (buf == "LYRICS200"):
-        """ Find Lyrics3v2 """
+    elif (buf == 'LYRICS200'):
+        ''' Find Lyrics3v2 '''
         f.seek(-9-6, os.SEEK_CUR)
         size = int(f.read(6))
         f.seek(-size-6, os.SEEK_CUR)
         buf = f.read(11)
-        if(buf == "LYRICSBEGIN"):
+        if(buf == 'LYRICSBEGIN'):
             buf = f.read(size-11)
             tags=[]
             while buf!= '':
@@ -77,16 +77,16 @@ def getLyrics3(filename, getlrc):
     return None
 
 def ms2timestamp(ms):
-    mins = "0%s" % int(ms/1000/60)
-    sec = "0%s" % int((ms/1000)%60)
-    msec = "0%s" % int((ms%1000)/10)
-    timestamp = "[%s:%s.%s]" % (mins[-2:],sec[-2:],msec[-2:])
+    mins = '0%s' % int(ms/1000/60)
+    sec = '0%s' % int((ms/1000)%60)
+    msec = '0%s' % int((ms%1000)/10)
+    timestamp = '[%s:%s.%s]' % (mins[-2:],sec[-2:],msec[-2:])
     return timestamp
 
-"""
+'''
 Get USLT/SYLT/TXXX lyrics embed with ID3v2 format
 See: http://id3.org/id3v2.3.0
-"""
+'''
 def getID3Lyrics(filename, getlrc):
     codecs = ['latin_1', 'utf-16', 'utf16-be', 'utf-8']
     try:
@@ -97,9 +97,9 @@ def getID3Lyrics(filename, getlrc):
                 lyr = ''
                 text = data[tag].text
                 for line in text:
-                    txt = line[0].encode("utf-8").strip()
+                    txt = line[0].encode('utf-8').strip()
                     stamp = ms2timestamp(line[1])
-                    lyr += "%s%s\r\n" % (stamp, txt)
+                    lyr += '%s%s\r\n' % (stamp, txt)
                 return lyr
             if not getlrc and (tag.startswith('USLT') or tag.startswith('TXXX')):
                 if tag.startswith('USLT'):
@@ -107,7 +107,7 @@ def getID3Lyrics(filename, getlrc):
                 elif tag.lower().endswith('lyrics'): # TXXX tags contain arbitrary info. only accept 'TXXX:lyrics'
                     text = data[tag].text[0]
                 if text:
-                    lyr = text.encode("utf-8")
+                    lyr = text.encode('utf-8')
                     return lyr
     except:
         return None

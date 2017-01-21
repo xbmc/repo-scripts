@@ -125,21 +125,8 @@
 					<aligny>center</aligny>
 					<align>center</align>
 					<shadowcolor>black</shadowcolor>
-					<label fallback="--">$INFO[ListItem.Label]</label>
-					<visible>!Control.HasFocus(110)</visible>
-				</control>
-				<control type="label">
-					<left>0</left>
-					<top>0</top>
-					<width>1300</width>
-					<height>60</height>
-					<font>font14</font>
-					<aligny>center</aligny>
-					<align>center</align>
-					<shadowcolor>black</shadowcolor>
 					<textcolor>FF12B2E7</textcolor>
 					<label fallback="--">$INFO[ListItem.Label]</label>
-					<visible>Control.HasFocus(110)</visible>
 				</control>
 			</focusedlayout>
 		</control>
@@ -243,6 +230,7 @@
 			<textcolor>FF999999</textcolor>
 			<shadowcolor>black</shadowcolor>
 		</control>
+		<!-- ** Required ** Do not change <id> or <type> (name of the used scraper and optionally the number of found lyrics) -->
 		<control type="label" id="200">
 			<description>Scraper label</description>
 			<visible>false</visible>

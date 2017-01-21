@@ -11,12 +11,12 @@ __lrc__ = False
 class LyricsFetcher:
 
     def get_lyrics(self, song):
-        log( "%s: searching lyrics for %s - %s" % (__title__, song.artist, song.title))
+        log('%s: searching lyrics for %s - %s' % (__title__, song.artist, song.title))
         lyrics = Lyrics()
         lyrics.song = song
         artist = deAccent(song.artist)
         title = deAccent(song.title)
-        url = "http://www.lyricsmode.com/lyrics/%s/%s/%s.html" % (artist.lower()[:1], artist.lower().replace("&","and").replace(" ","_"), title.lower().replace("&","and").replace(" ","_"))
+        url = 'http://www.lyricsmode.com/lyrics/%s/%s/%s.html' % (artist.lower()[:1], artist.lower().replace('&','and').replace(' ','_'), title.lower().replace('&','and').replace(' ','_'))
         result = self.direct_url(url)
         if not result:
             result = self.search_url(artist, title)
@@ -27,16 +27,16 @@ class LyricsFetcher:
 
     def direct_url(self, url):
         try:
-            log( "%s: search url: %s" % (__title__, url))
+            log('%s: search url: %s' % (__title__, url))
             song_search = urllib.urlopen(url).read()
             if song_search.find('ui-annotatable">') >= 0:
                 return song_search
         except:
-            log("error in direct url")
+            log('error in direct url')
 
     def search_url(self, artist, title):
         try:
-            url = "http://www.lyricsmode.com/search.php?search=" + urllib.quote_plus(artist.lower() + ' ' + title.lower())
+            url = 'http://www.lyricsmode.com/search.php?search=' + urllib.quote_plus(artist.lower() + ' ' + title.lower())
             song_search = urllib.urlopen(url).read()
             matchcode = re.search('d><a href="(.*?)"', song_search, flags=re.DOTALL)
             try:
@@ -47,4 +47,4 @@ class LyricsFetcher:
             except:
                 return
         except:
-            log("error in search url")
+            log('error in search url')
