@@ -1,0 +1,30 @@
+1.0.0
+- Code cleanup
+0.2.3
+- Code cleanup
+0.2.2
+- improved date selection
+0.2.1
+- Fixed search
+0.2.0
+- Upgraded to libmediathek3
+- Changed name to libwdr
+0.1.7
+- Misc improvements
+0.1.6
+- Version bump
+0.1.5
+- Fixed thumbnail of some shows
+0.1.4
+- Added search
+0.1.3
+- Fixed exeption if a show had no plot
+0.1.2
+- Enabled every tv show
+- Fixed playback for some videos
+0.1.1
+- Added "list by date"
+0.1.0
+- Switched to RSS interface
+0.0.1
+- Initial release
