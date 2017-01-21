@@ -1,3 +1,6 @@
+v3.3.3
+- retry a few times if no valid weather data is returned
+
 v3.3.2
 - don't crash on empty result
 
