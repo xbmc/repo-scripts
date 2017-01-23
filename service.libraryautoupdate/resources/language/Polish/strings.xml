@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- Polish language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/pl/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
+<strings>
+    <string id="30000">Automatyczna aktualizacja biblioteki XBMC</string>
+    <string id="30001">Ogólne</string>
+    <string id="30002">Wideo</string>
+    <string id="30003">Muzyka</string>
+    <string id="30004">Aktualizacja biblioteki wideo</string>
+    <string id="30005">Aktualizacja biblioteki muzyki</string>
+    <string id="30006">Pokaż powiadomienia</string>
+    <string id="30007">Uruchoma podczas odtwarzania</string>
+    <string id="30008">Opóźnienie uruchamiania (w minutach)</string>
+    <string id="30009">Używany zaawansowany harmonogram</string>
+    <string id="30010">Odstęp czasu między aktualizacjami (godziny)</string>
+    <string id="30011">Formuła cron</string>
+    <string id="30012">Aktualizacja biblioteki wideo</string>
+    <string id="30013">Aktualizacja biblioteki muzyki</string>
+    <string id="30014">Uruchamiaj tylko w trybie bezczynności</string>
+
+    <!-- specific paths -->
+    <string id="30020">Aktualizuj specyficzną ścieżkę 1</string>
+    <string id="30021">Aktualizuj specyficzną ścieżkę 2</string>
+    <string id="30022">Aktualizuj specyficzną ścieżkę 3</string>
+    <string id="30023">Ścieżka wideo</string>
+
+    <!-- disclaimer -->
+    <string id="30030">Czytaj warunki</string>
+    <string id="30031">Warunek ścieżki wideo</string>
+    <string id="30032">Ścieżka musi być źródłem wideo z zawartością</string>
+    <string id="30033">Ścieżka do skanowania musi dokładnie pasować do ścieżki źródłowej</string>
+
+    <!-- cleaning -->
+    <string id="30040">Czyszczenie</string>
+    <string id="30041">Wyczyść biblioteki</string>
+    <string id="30042">Weryfikuj źródła przed czyszczeniem</string>
+    <string id="30043">Częstotliwość</string>
+    <string id="30044">Po zakończeniu aktualizacji</string>
+    <string id="30045">Raz dziennie</string>
+    <string id="30046">Raz w tygodniu</string>
+    <string id="30047">Raz w miesiącu</string>
+    <string id="30048">Wyczyść bibliotekę wideo</string>
+    <string id="30049">Wyczyść bibliotekę muzyki</string>
+    <string id="30050">Błąd czyszczenia bazy</string>
+    <string id="30051">Pytaj przed czyszczeniem biblioteki</string>
+    <string id="30052">Czyszczenie bazy zaplanowane do uruchomienia</string>
+    <string id="30053">Uruchomić teraz?</string>
+    <string id="30054">Biblioteka do czyszczenia</string>
+    <string id="30055">Oba</string>
+    <string id="30056">Formuła cron dla wideo</string>
+    <string id="30057">Formuła cron dla muzyki</string>
+
+    <!-- manual run -->
+    <string id="30060">Aktualizacja rozpocznie się ponownie</string>
+    <string id="30061">Chcesz ręcznie uruchomić aktualizację?</string>
+</strings>

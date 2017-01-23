@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- English (New Zealand) language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/en_NZ/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
+<strings>
+    <string id="30000">XBMC Library Auto Update</string>
+    <string id="30001">General</string>
+    <string id="30002">Video</string>
+    <string id="30003">Music</string>
+    <string id="30004">Update Video Library</string>
+    <string id="30005">Update Music Library</string>
+    <string id="30006">Show Notifications</string>
+    <string id="30007">Run during playback</string>
+    <string id="30008">Startup Delay (minutes)</string>
+    <string id="30009">Used Advanced Timer</string>
+    <string id="30010">Amount of time between updates (hours)</string>
+    <string id="30011">Cron Expression</string>
+    <string id="30012">Update Video Library</string>
+    <string id="30013">Update Music Library</string>
+
+    <!-- specific paths -->
+    <string id="30020">Update Specific Path 1</string>
+    <string id="30021">Update Specific Path 2</string>
+    <string id="30022">Update Specific Path 3</string>
+    <string id="30023">Video Path</string>
+
+    <!-- disclaimer -->
+    <string id="30030">Read Disclaimer</string>
+    <string id="30031">Video Paths Disclaimer</string>
+    <string id="30032">Path must already be a video source with content</string>
+    <string id="30033">Path must match source path exactly to scan</string>
+
+    <!-- cleaning -->
+    <string id="30040">Cleaning</string>
+    <string id="30041">Clean Libraries</string>
+    <string id="30042">Verify Sources Before Clean</string>
+    <string id="30043">Frequency</string>
+    <string id="30044">After Update</string>
+    <string id="30045">Once Per Day</string>
+    <string id="30046">Once Per Week</string>
+    <string id="30047">Once Per Month</string>
+    <string id="30048">Clean Video Library</string>
+    <string id="30049">Clean Music Library</string>
+    <string id="30050">Error Cleaning Database</string>
+    <string id="30051">Prompt User Before Cleaning Library</string>
+    <string id="30052">A database clean is scheduled to run</string>
+    <string id="30053">Would you like to run it now?</string>
+    <string id="30054">Library to clean</string>
+    <string id="30055">Both</string>
+    <string id="30056">Video Cron Expression</string>
+    <string id="30057">Music Cron Expression</string>
+
+    <!-- manual run -->
+    <string id="30060">Update will run again </string>
+    <string id="30061">Do you wish to manually run an update?</string>
+</strings>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- French language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/fr/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
+<strings>
+    <string id="30000">XBMC Médiathèque mise à jour automatique</string>
+    <string id="30001">Général</string>
+    <string id="30002">Vidéo</string>
+    <string id="30003">Musique</string>
+    <string id="30004">Mise à jour médiathèque</string>
+    <string id="30005">Mise à jour bibliothèque musical</string>
+    <string id="30006">Afficher les notifications</string>
+    <string id="30007">Exécuter pendant la lecture</string>
+    <string id="30008">Délai de démarrage (minutes)</string>
+    <string id="30009">Utiliser minuterie avancée</string>
+    <string id="30010">Temps entre les mises à jour (heures)</string>
+    <string id="30011">Cron Expression</string>
+    <string id="30012">Mise à jour médiathèque</string>
+    <string id="30013">Mise à jour bibliothèque musical</string>
+    <string id="30014">Exécuter uniquement en cas d'inactivité</string>
+
+    <!-- specific paths -->
+    <string id="30020">Mise à jour chemin spécifique 1</string>
+    <string id="30021">Mise à jour chemin spécifique 2</string>
+    <string id="30022">Mise à jour chemin spécifique 3</string>
+    <string id="30023">Chemin vidéo</string>
+
+    <!-- disclaimer -->
+    <string id="30030">Lire Avertissement</string>
+    <string id="30031">Avertissement chemins vidéo</string>
+    <string id="30032">Le chemin doit être une source vidéo avec du contenu</string>
+    <string id="30033">Le chemin doit correspondre au chemin source pour l'analyse</string>
+
+    <!-- cleaning -->
+    <string id="30040">Nettoyage</string>
+    <string id="30041">Nettoyer la médiathèques</string>
+    <string id="30042">Vérifier les sources avant de nettoyer</string>
+    <string id="30043">Fréquence</string>
+    <string id="30044">Après mise à jour</string>
+    <string id="30045">Une fois par jour</string>
+    <string id="30046">Une fois par semaine</string>
+    <string id="30047">Une fois par mois</string>
+    <string id="30048">Nettoyage bibliothèque vidéo</string>
+    <string id="30049">Nettoyage bibliothèque musicale</string>
+    <string id="30050">Erreur de nettoyage de la base de données</string>
+    <string id="30051">Demander à l'utilisateur avant de nettoyer la bibliothèque</string>
+    <string id="30052">Un nettoyage de la base de données est planifié pour s'exécuter</string>
+    <string id="30053">Voulez-vous le faire maintenant ?</string>
+    <string id="30054">Nettoyer bibliothèque</string>
+    <string id="30055">Les deux</string>
+    <string id="30056">Expression pour la crontab Vidéo</string>
+    <string id="30057">Expression pour la crontab Musique</string>
+
+    <!-- manual run -->
+    <string id="30060">Une mise à jour aura lieu de nouveau dans </string>
+    <string id="30061">Souhaitez exécuter une mise à jour manuellement ?</string>
+</strings>

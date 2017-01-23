@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- Czech language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/cs/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
+<strings>
+    <string id="30000">Automatická aktualizace knihovny XBMC</string>
+    <string id="30001">Obecné</string>
+    <string id="30002">Video</string>
+    <string id="30003">Hudba</string>
+    <string id="30004">Aktualizovat knihovnu videí</string>
+    <string id="30005">Aktualizovat hudební knihovnu</string>
+    <string id="30006">Zobrazit oznámení</string>
+    <string id="30012">Aktualizovat knihovnu videí</string>
+    <string id="30013">Aktualizovat hudební knihovnu</string>
+    <string id="30041">Vyčistit knihovny...</string>
+    <string id="30043">Frekvence</string>
+</strings>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- Korean language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/ko/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
+<strings>
+    <string id="30000">XBMC Library Auto Update</string>
+    <string id="30001">일반</string>
+    <string id="30002">비디오</string>
+    <string id="30003">음악</string>
+    <string id="30004">비디오 라이브러리 업데이트</string>
+    <string id="30005">음악 라이브러리 업데이트</string>
+    <string id="30006">알림 보기</string>
+    <string id="30007">재생중 실행</string>
+    <string id="30008">시작 지연 (분)</string>
+    <string id="30009">고급 타이머 사용</string>
+    <string id="30010">업데이트 간격 (시간)</string>
+    <string id="30011">Cron Expression</string>
+    <string id="30012">비디오 라이브러리 업데이트</string>
+    <string id="30013">음악 라이브러리 업데이트</string>
+    <string id="30014">유휴상태일 때만 실행</string>
+
+    <!-- specific paths -->
+    <string id="30020">지정한 경로 1 업데이트</string>
+    <string id="30021">지정한 경로 2 업데이트</string>
+    <string id="30022">지정한 경로 3 업데이트</string>
+    <string id="30023">비디오 경로</string>
+
+    <!-- disclaimer -->
+    <string id="30030">주의사항 읽기</string>
+    <string id="30031">비디오 경로 주의사항</string>
+    <string id="30032">경로는 콘텐츠가 있는 비디오 소스여야 합니다</string>
+    <string id="30033">경로는 소스 경로와 정확히 일치해야 합니다</string>
+
+    <!-- cleaning -->
+    <string id="30040">정리</string>
+    <string id="30041">라이브러리 정리</string>
+    <string id="30042">정리 전에 소스 확인</string>
+    <string id="30043">주기</string>
+    <string id="30044">업데이트 후</string>
+    <string id="30045">하루 한 번</string>
+    <string id="30046">매주 한 번</string>
+    <string id="30047">매월 한 번</string>
+    <string id="30048">비디오 라이브러리 정리</string>
+    <string id="30049">음악 라이브러리 정리</string>
+    <string id="30050">라이브러리 정리 에러</string>
+    <string id="30051">라이브러리 정리 전에 확인</string>
+    <string id="30052">데이터베이스 정리가 예약되었습니다</string>
+    <string id="30053">지금 실행하겠습니까?</string>
+    <string id="30054">정리할 라이브러리</string>
+    <string id="30055">모두</string>
+    <string id="30056">비디오 Cron 표현식</string>
+    <string id="30057">음악 Cron 표현식</string>
+
+    <!-- manual run -->
+    <string id="30060">업데이트가 다시 실행됩니다</string>
+    <string id="30061">업데이트를 수동으로 시작하겠습니까?</string>
+</strings>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- Greek language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/el/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
+<strings>
+    <string id="30000">Αυτόματη Ενημέρωση Συλλογής XBMC</string>
+    <string id="30001">Γενικά</string>
+    <string id="30002">Βίντεο</string>
+    <string id="30003">Μουσική</string>
+    <string id="30004">Ενημέρωση Συλλογής Βίντεο</string>
+    <string id="30005">Ενημέρωση Μουσικής Συλλογής</string>
+    <string id="30006">Εμφάνιση Ειδοποιήσεων</string>
+    <string id="30007">Εκτέλεση κατά την αναπαραγωγή</string>
+    <string id="30008">Καθυστέρηση Έναρξης (λεπτά)</string>
+    <string id="30009">Χρήση Προηγμένου Χρονοδιακόπτη</string>
+    <string id="30010">Διάστημα μεταξύ των ενημερώσεων (ώρες)</string>
+    <string id="30011">Έκφραση Cron</string>
+    <string id="30012">Ενημέρωση Συλλογής Βίντεο</string>
+    <string id="30013">Ενημέρωση Μουσικής Συλλογής</string>
+    <string id="30014">Εκτέλεση μόνο κατά την αδράνεια</string>
+
+    <!-- specific paths -->
+    <string id="30020">Ενημέρωση Συγκεκριμένης Διαδρομής 1</string>
+    <string id="30021">Ενημέρωση Συγκεκριμένης Διαδρομής 2</string>
+    <string id="30022">Ενημέρωση Συγκεκριμένης Διαδρομής 3</string>
+    <string id="30023">Διαδρομή Βίντεο</string>
+
+    <!-- disclaimer -->
+    <string id="30030">Διαβάστε την Αποποίηση Ευθυνών</string>
+    <string id="30031">Αποποίηση Ευθυνών Διαδρομών Βίντεο</string>
+    <string id="30032">Η διαδρομή πρέπει να είναι ήδη μία πηγή βίντεο με περιεχόμενο</string>
+    <string id="30033">Η διαδρομή πρέπει να ταυτίζεται με τη διαδρομή της πηγής για να γίνει σάρωση</string>
+
+    <!-- cleaning -->
+    <string id="30040">Γίνεται εκκαθάριση</string>
+    <string id="30041">Εκκαθάριση Συλλογών</string>
+    <string id="30042">Επαλήθευση Πηγών πριν την Εκκαθάριση</string>
+    <string id="30043">Συχνότητα</string>
+    <string id="30044">Μετά την Ενημέρωση</string>
+    <string id="30045">Ημερησίως</string>
+    <string id="30046">Εβδομαδιαία</string>
+    <string id="30047">Μηνιαία</string>
+    <string id="30048">Εκκαθάριση Συλλογής Βίντεο</string>
+    <string id="30049">Εκκαθάριση Μουσικής Συλλογής</string>
+    <string id="30050">Σφάλμα Εκκαθάρισης Βάσης Δεδομένων</string>
+    <string id="30051">Ειδοποίηση του χρήστη πριν την Εκκαθάριση της Συλλογής</string>
+    <string id="30052">Είναι προγραμματισμένη μία εκκαθάριση της βάσης δεδομένων</string>
+    <string id="30053">Να εκτελεστεί τώρα;</string>
+    <string id="30054">Προς εκκαθάριση Συλλογή</string>
+    <string id="30055">Και οι δύο</string>
+    <string id="30056">Έκφραση Cron Βίντεο</string>
+    <string id="30057">Έκφραση Cron Μουσικής</string>
+
+    <!-- manual run -->
+    <string id="30060">Η ενημέρωση θα γίνει ξανά</string>
+    <string id="30061">Να γίνει η ενημέρωση χειροκίνητα;</string>
+</strings>
