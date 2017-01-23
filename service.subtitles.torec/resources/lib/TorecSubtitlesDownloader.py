@@ -7,6 +7,7 @@ import urllib
 import urllib2
 import zlib
 import json
+import itertools
 
 import bs4
 
@@ -110,6 +111,28 @@ class FirefoxURLHandler(object):
         response = self.opener.open(login_url, login_data)
         content = ''.join(response.readlines())
         return username in content
+
+class TorecGuestTokenGenerator():
+    def __init__(self, sub_id):
+        self.sub_id = sub_id
+
+    def generate_ticket(self):
+        return self._gen_fake_encoded_ticket(self.sub_id, 90)
+
+    def _gen_plain_ticket(self, sub_id, secs_ago):
+        t = datetime.datetime.now() - datetime.timedelta(seconds=secs_ago)
+        st = t.strftime("%m/%d/%Y %-I:%M:%S %p")
+        st = re.sub("(^|/| )0", r"\1", st)
+        return "{}_sub{}".format(st, sub_id)
+
+    def _encode_ticket(self, plain_ticket):
+        return ''.join(
+            format(ord(p) + ord(o), 'X')
+            for p, o in zip(plain_ticket, itertools.cycle("imet"))
+            )
+
+    def _gen_fake_encoded_ticket(self, sub_id, secs_ago):
+        return self._encode_ticket(self._gen_plain_ticket(sub_id, secs_ago))
 
 class TorecSubtitlesDownloader(FirefoxURLHandler):
     MAXIMUM_WAIT_TIME_MSEC = 13 * 1000
@@ -235,7 +258,7 @@ class TorecSubtitlesDownloader(FirefoxURLHandler):
     def get_download_link(self, sub_id, option_id):
         self._confirm_download_code(sub_id, option_id)
 
-        guest_token    = self._request_subtitle(sub_id)
+        guest_token    = TorecGuestTokenGenerator(sub_id).generate_ticket()
         encoded_params = urllib.urlencode({
                 "sub_id":     sub_id,
                 "code":       option_id,
