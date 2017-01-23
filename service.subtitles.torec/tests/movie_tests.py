@@ -70,8 +70,6 @@ class MovieTests(unittest.TestCase):
 			temp.write(data)
 			temp.flush()
 
-			out = convert_to_utf(temp.name)
-
 			self.assertIsNotNone(temp.read())
 			break
 
