@@ -1,0 +1,13 @@
+------------------------
+WIP (WORK IN PROGRESS)--
+------------------------
+
+------------------------
+Featherence Service v0.1.38 (07-Feb-16)
+------------------------
+- Major addon cleanup.
+
+------------------------
+Featherence Service v0.1.0 (09-Dec-15)
+------------------------
+- First release.

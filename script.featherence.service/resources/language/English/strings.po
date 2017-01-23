@@ -1,0 +1,1945 @@
+msgid ""
+msgstr ""
+
+#Widget"
+msgctxt "#32001"
+msgid "Recommended"
+msgstr ""
+
+msgctxt "#32002"
+msgid "Random Items"
+msgstr ""
+
+msgctxt "#32004"
+msgid "Randomize time (minutes)"
+msgstr ""
+
+msgctxt "#32005"
+msgid "Use season folders"
+msgstr ""
+
+msgctxt "#32006"
+msgid "Use timer"
+msgstr ""
+
+msgctxt "#32007"
+msgid "After database update"
+msgstr ""
+
+msgctxt "#32008"
+msgid "Update method"
+msgstr ""
+
+msgctxt "#32009"
+msgid "Recent Items"
+msgstr ""
+
+msgctxt "#32010"
+msgid "Update each time you enter the home screen"
+msgstr ""
+
+msgctxt "#32011"
+msgid "Only unplayed and unfinished"
+msgstr ""
+
+msgctxt "#32012"
+msgid "General"
+msgstr ""
+
+msgctxt "#32013"
+msgid "Show plot for unwatched items"
+msgstr ""
+
+msgctxt "#32014"
+msgid "* Hidden to prevent spoilers *"
+msgstr ""
+
+msgctxt "#32015"
+msgid "Volume Level on Startup"
+msgstr ""
+
+msgctxt "#32016"
+msgid "Enable Widget"
+msgstr ""
+
+msgctxt "#32017"
+msgid ""
+msgstr ""
+
+msgctxt "#32018"
+msgid ""
+msgstr ""
+
+msgctxt "#32019"
+msgid ""
+msgstr ""
+
+msgctxt "#32020"
+msgid ""
+msgstr ""
+
+#Remote"
+msgctxt "#32021"
+msgid "Press to test the remote configuration"
+msgstr ""
+
+msgctxt "#32022"
+msgid "The new remote"
+msgstr ""
+
+msgctxt "#32023"
+msgid "Testing time in seconds"
+msgstr ""
+
+msgctxt "#32024"
+msgid "You didn't set your TV remote yet"
+msgstr ""
+
+msgctxt "#32025"
+msgid "configure TV remote"
+msgstr ""
+
+msgctxt "#32026"
+msgid "TV Remote type"
+msgstr ""
+
+msgctxt "#32027"
+msgid "Note: You may change this setting at anytime."
+msgstr ""
+
+msgctxt "#32028"
+msgid "The new remote"
+msgstr ""
+
+msgctxt "#32029"
+msgid "Would you like to save this setting?"
+msgstr ""
+
+msgctxt "#32030"
+msgid "TV remote not selected."
+msgstr ""
+
+msgctxt "#32031"
+msgid "The system has found out that your hardware support this service"
+msgstr ""
+
+msgctxt "#32032"
+msgid "The system has found out that your hardware doesn't support this service"
+msgstr ""
+
+msgctxt "#32033"
+msgid "Support tv remote (IR)"
+msgstr ""
+
+msgctxt "#32034"
+msgid "You have changed the TV remote settings today"
+msgstr ""
+
+msgctxt "#32035"
+msgid "Note: You may change this setting at anytime in the settings button"
+msgstr ""
+
+msgctxt "#32036"
+msgid "- Make sure you have IR adapter!", "-Make sure your OS is supported!"
+msgstr ""
+
+msgctxt "#32037"
+msgid "Control your OpenELEC with TV remote"
+msgstr ""
+
+msgctxt "#32038"
+msgid "Support Featherence Skin"
+msgstr ""
+
+msgctxt "#32039"
+msgid "Launch widget now"
+msgstr ""
+
+#Others addons settings"
+msgctxt "#32040"
+msgid ""
+msgstr ""
+
+msgctxt "#32041"
+msgid "Setup default volume level on startup."
+msgstr ""
+
+msgctxt "#32042"
+msgid "Allow auto library update and cleanup.[CR]If enable, the library will be updated once a day and cleaned once a week, respectably.[CR]The action occur when the user idle for one-two hours."
+msgstr ""
+
+msgctxt "#32043"
+msgid "Choose your prefered languages of speak.[CR]The contents availability is effected by this setting!"
+msgstr ""
+
+msgctxt "#32044"
+msgid "In order to add more contents, you may visit Featherence Github[CR]and make your changes there.[CR]"
+msgstr ""
+
+msgctxt "#32045"
+msgid "If you don't know how to do that, it's quite [B]easy!![/B][CR]and we will be happy to teach you!"
+msgstr ""
+
+msgctxt "#32046"
+msgid "Search History"
+msgstr ""
+
+msgctxt "#32047"
+msgid "Maximum search items to keep in history"
+msgstr ""
+
+msgctxt "#32048"
+msgid "Need support? Want to say thanks?[CR]"
+msgstr ""
+
+msgctxt "#32049"
+msgid "Note: You must join featherence group with your associated email account."
+msgstr ""
+
+msgctxt "#32050"
+msgid "TV Mode Quality"
+msgstr ""
+
+#Message"
+msgctxt "#32060"
+msgid "Having a good time using Featherence? Would love to hear you!"
+msgstr ""
+
+msgctxt "#32061"
+msgid "Do you want to contribute?"
+msgstr ""
+
+msgctxt "#32062"
+msgid "Have an idea for new addon?"
+msgstr ""
+
+msgctxt "#32063"
+msgid "Looking for support?"
+msgstr ""
+
+msgctxt "#32064"
+msgid "Having a question? Ask us!"
+msgstr ""
+
+msgctxt "#32065"
+msgid "Choose YES to continue"
+msgstr ""
+
+msgctxt "#32071"
+msgid "[B][COLOR=blue]Github[/COLOR][/B]: www.github.com/finalmakerr/featherence[CR]"
+msgstr ""
+
+msgctxt "#32072"
+msgid "[B][COLOR=blue]YouTube[/COLOR][/B]: www.youtube.com/user/finalmakerr[CR]"
+msgstr ""
+
+msgctxt "#32073"
+msgid "Post on Facebook!"
+msgstr ""
+
+msgctxt "#32074"
+msgid "Enable/Disable customs backgrounds for categories.[CR]If disable, the backgrounds will always be as default."
+msgstr ""
+
+msgctxt "#32075"
+msgid "Add a custom background to a category by pressing the menu button and "Set Custom Fanart"."
+msgstr ""
+
+msgctxt "#32076"
+msgid "Featherence YouTube Channel"
+msgstr ""
+
+msgctxt "#32077"
+msgid "Featherence Github Server"
+msgstr ""
+
+msgctxt "#32078"
+msgid "Featherence Facebook Group Website"
+msgstr ""
+
+msgctxt "#32079"
+msgid "[B][COLOR=yellow]Featherence[/COLOR][/B][CR]"
+msgstr ""
+
+
+#Custom start here!"
+msgctxt "#32080"
+msgid "Main language has been changed to:"
+msgstr ""
+
+msgctxt "#32081"
+msgid "The addon will provide contents in your choosen languages.[CR]See addon settings."
+msgstr ""
+
+msgctxt "#32082"
+msgid "Watch varied of channels in %s"
+msgstr ""
+
+msgctxt "#32083"
+msgid "in"
+msgstr ""
+
+msgctxt "#32084"
+msgid "Main Language"
+msgstr ""
+
+msgctxt "#32085"
+msgid "Choose your main language"
+msgstr ""
+
+msgctxt "#32086"
+msgid "Your current secondary language is %s"
+msgstr ""
+
+msgctxt "#32087"
+msgid "You may receive contents for up to 3 different languages!"
+msgstr ""
+
+msgctxt "#32088"
+msgid "Check addon settings for more information."
+msgstr ""
+
+msgctxt "#32089"
+msgid "TV Channels in %s"
+msgstr ""
+
+msgctxt "#32090"
+msgid "Uploading file %s to xbmclogs.com"
+msgstr ""
+
+msgctxt "#32091"
+msgid "Most recent updates"
+msgstr ""
+
+msgctxt "#32092"
+msgid "Operation Failed!"
+msgstr ""
+
+msgctxt "#32093"
+msgid "Progress (%s/%s)"
+msgstr ""
+
+msgctxt "#32094"
+msgid "Preparing the post"
+msgstr ""
+
+msgctxt "#32095"
+msgid "Connecting to Facebook"
+msgstr ""
+
+msgctxt "#32096"
+msgid "Your message has been sent!"
+msgstr ""
+
+msgctxt "#32097"
+msgid "Doing so will create a post on Featherence facebook group"
+msgstr ""
+
+msgctxt "#32098"
+msgid "Choose YES to continue"
+msgstr ""
+
+msgctxt "#32099"
+msgid "Watch varied of videos about %s."
+msgstr ""
+
+msgctxt "#32100"
+msgid "Your email provider isn't supported."
+msgstr ""
+
+msgctxt "#32101"
+msgid "Contact us for support!"
+msgstr ""
+
+msgctxt "#32102"
+msgid "%s has been successfully saved!"
+msgstr ""
+
+msgctxt "#32103"
+msgid "Would you like to remove %s save?"
+msgstr ""
+
+msgctxt "#32104"
+msgid "Your current language is %s"
+msgstr ""
+
+msgctxt "#32105"
+msgid "Are the buttons in %s?"
+msgstr ""
+
+msgctxt "#32106"
+msgid "Extras folder found!"
+msgstr ""
+
+msgctxt "#32107"
+msgid "Choose YES to proceed (Optional)"
+msgstr ""
+
+msgctxt "#32108"
+msgid "[B][COLOR=blue]Facebook[/COLOR][/B]: www.facebook.com/groups/featherence[CR]"
+msgstr ""
+
+msgctxt "#32109"
+msgid "Sub Button Name"
+msgstr ""
+
+msgctxt "#32110"
+msgid "Button Name"
+msgstr ""
+
+msgctxt "#32111"
+msgid "Input color code"
+msgstr ""
+
+msgctxt "#32112"
+msgid "Multi Files"
+msgstr ""
+
+msgctxt "#32113"
+msgid "Email is not valid!"
+msgstr ""
+
+msgctxt "#32114"
+msgid "Email Password"
+msgstr ""
+
+msgctxt "#32115"
+msgid "Email (related to facebook)"
+msgstr ""
+
+msgctxt "#32116"
+msgid "Your %s is too big!"
+msgstr ""
+
+msgctxt "#32117"
+msgid "You should restart your Kodi and try again!"
+msgstr ""
+
+msgctxt "#32118"
+msgid "Turn it ON _ONLY_ if you're aware of the risks!![CR]"
+msgstr ""
+
+msgctxt "#32119"
+msgid "Save Email password"
+msgstr ""
+
+msgctxt "#32120"
+msgid "You better keep the DEBUG button off if you're not a developer!"
+msgstr ""
+
+msgctxt "#32121"
+msgid "Read file and display results"
+msgstr ""
+
+msgctxt "#32122"
+msgid "Overwrite All buttons?"
+msgstr ""
+
+msgctxt "#32123"
+msgid "Remove All Buttons?"
+msgstr ""
+
+msgctxt "#32124"
+msgid "My Button"
+msgstr ""
+
+msgctxt "#32125"
+msgid "Enter YouTube URL"
+msgstr ""
+
+msgctxt "#32126"
+msgid "No trailer found!"
+msgstr ""
+
+msgctxt "#32127"
+msgid "Create a save session first!"
+msgstr ""
+
+msgctxt "#32128"
+msgid "%s is missing!"
+msgstr ""
+
+msgctxt "#32129"
+msgid "Check your zip file!"
+msgstr ""
+
+msgctxt "#32130"
+msgid "Url saved!"
+msgstr ""
+
+msgctxt "#32131"
+msgid "This action may take a while.. be patient!"
+msgstr ""
+
+msgctxt "#32132"
+msgid "Cannot create new buttons"
+msgstr ""
+
+msgctxt "#32133"
+msgid "Delete some first!"
+msgstr ""
+
+msgctxt "#32134"
+msgid "This action will also reset"
+msgstr ""
+
+msgctxt "#32135"
+msgid "New color selected!"
+msgstr ""
+
+msgctxt "#32136"
+msgid "Widget Error"
+msgstr ""
+
+msgctxt "#32137"
+msgid "Your OS is missing json module!"
+msgstr ""
+
+msgctxt "#32138"
+msgid " - Confirm Download"
+msgstr ""
+
+msgctxt "#32139"
+msgid "Complete file is %dMB"
+msgstr ""
+
+msgctxt "#32140"
+msgid "Continue with download?"
+msgstr ""
+
+msgctxt "#32141"
+msgid "Removing"
+msgstr ""
+
+msgctxt "#32142"
+msgid "OS not supported!"
+msgstr ""
+
+msgctxt "#32143"
+msgid "1. Save a button using the [B]Save One[/B] button.[CR]2. Locate the saved zip file in:[CR][B]special://userdata/addon_data/"+addonID+"/[/B][CR]3. Share the file with your friends."
+msgstr ""
+
+msgctxt "#32144"
+msgid "Invalid File!"
+msgstr ""
+
+msgctxt "#32145"
+msgid "Error ID"
+msgstr ""
+
+msgctxt "#32146"
+msgid "Choose this option in order to sync remote tv to this device."
+msgstr ""
+
+msgctxt "#32147"
+msgid "This button is locked but you haven't set a password!"
+msgstr "כפתור זה נעול אך טרם הגדרת סיסמא!"
+
+msgctxt "#32148"
+msgid ""
+msgstr ""
+
+msgctxt "#32149"
+msgid ""
+msgstr ""
+
+msgctxt "#32150"
+msgid ""
+msgstr ""
+
+msgctxt "#32151"
+msgid ""
+msgstr ""
+
+msgctxt "#32152"
+msgid ""
+msgstr ""
+
+msgctxt "#32153"
+msgid ""
+msgstr ""
+
+msgctxt "#32154"
+msgid ""
+msgstr ""
+
+msgctxt "#32155"
+msgid ""
+msgstr ""
+
+msgctxt "#32156"
+msgid ""
+msgstr ""
+
+msgctxt "#32157"
+msgid ""
+msgstr ""
+
+msgctxt "#32158"
+msgid ""
+msgstr ""
+
+msgctxt "#32159"
+msgid ""
+msgstr ""
+
+msgctxt "#32160"
+msgid ""
+msgstr ""
+
+msgctxt "#32161"
+msgid ""
+msgstr ""
+
+msgctxt "#32162"
+msgid ""
+msgstr ""
+
+msgctxt "#32163"
+msgid ""
+msgstr ""
+
+msgctxt "#32164"
+msgid ""
+msgstr ""
+
+msgctxt "#32165"
+msgid ""
+msgstr ""
+
+msgctxt "#32166"
+msgid ""
+msgstr ""
+
+msgctxt "#32167"
+msgid ""
+msgstr ""
+
+msgctxt "#32168"
+msgid ""
+msgstr ""
+
+msgctxt "#32169"
+msgid ""
+msgstr ""
+
+msgctxt "#32170"
+msgid ""
+msgstr ""
+
+msgctxt "#32171"
+msgid ""
+msgstr ""
+
+msgctxt "#32172"
+msgid ""
+msgstr ""
+
+msgctxt "#32173"
+msgid ""
+msgstr ""
+
+msgctxt "#32174"
+msgid ""
+msgstr ""
+
+msgctxt "#32175"
+msgid ""
+msgstr ""
+
+msgctxt "#32176"
+msgid ""
+msgstr ""
+
+msgctxt "#32177"
+msgid ""
+msgstr ""
+
+msgctxt "#32178"
+msgid ""
+msgstr ""
+
+msgctxt "#32179"
+msgid ""
+msgstr ""
+
+msgctxt "#32180"
+msgid ""
+msgstr ""
+
+msgctxt "#32181"
+msgid ""
+msgstr ""
+
+msgctxt "#32182"
+msgid ""
+msgstr ""
+
+msgctxt "#32183"
+msgid ""
+msgstr ""
+
+msgctxt "#32184"
+msgid ""
+msgstr ""
+
+msgctxt "#32185"
+msgid ""
+msgstr ""
+
+msgctxt "#32186"
+msgid ""
+msgstr ""
+
+msgctxt "#32187"
+msgid ""
+msgstr ""
+
+msgctxt "#32188"
+msgid ""
+msgstr ""
+
+msgctxt "#32189"
+msgid ""
+msgstr ""
+
+msgctxt "#32190"
+msgid ""
+msgstr ""
+
+msgctxt "#32191"
+msgid ""
+msgstr ""
+
+msgctxt "#32192"
+msgid ""
+msgstr ""
+
+msgctxt "#32193"
+msgid ""
+msgstr ""
+
+msgctxt "#32194"
+msgid ""
+msgstr ""
+
+msgctxt "#32195"
+msgid ""
+msgstr ""
+
+msgctxt "#32196"
+msgid ""
+msgstr ""
+
+msgctxt "#32197"
+msgid ""
+msgstr ""
+
+msgctxt "#32198"
+msgid ""
+msgstr ""
+
+msgctxt "#32199"
+msgid ""
+msgstr ""
+
+msgctxt "#32200"
+msgid ""
+msgstr ""
+
+msgctxt "#32201"
+msgid ""
+msgstr ""
+
+msgctxt "#32202"
+msgid ""
+msgstr ""
+
+msgctxt "#32203"
+msgid ""
+msgstr ""
+
+msgctxt "#32204"
+msgid ""
+msgstr ""
+
+msgctxt "#32205"
+msgid ""
+msgstr ""
+
+msgctxt "#32206"
+msgid ""
+msgstr ""
+
+msgctxt "#32207"
+msgid ""
+msgstr ""
+
+msgctxt "#32208"
+msgid ""
+msgstr ""
+
+msgctxt "#32209"
+msgid ""
+msgstr ""
+
+msgctxt "#32210"
+msgid ""
+msgstr ""
+
+msgctxt "#32211"
+msgid ""
+msgstr ""
+
+msgctxt "#32212"
+msgid ""
+msgstr ""
+
+msgctxt "#32213"
+msgid ""
+msgstr ""
+
+msgctxt "#32214"
+msgid ""
+msgstr ""
+
+msgctxt "#32215"
+msgid ""
+msgstr ""
+
+msgctxt "#32216"
+msgid ""
+msgstr ""
+
+msgctxt "#32217"
+msgid ""
+msgstr ""
+
+msgctxt "#32218"
+msgid ""
+msgstr ""
+
+msgctxt "#32219"
+msgid ""
+msgstr ""
+
+msgctxt "#32220"
+msgid ""
+msgstr ""
+
+msgctxt "#32221"
+msgid ""
+msgstr ""
+
+msgctxt "#32222"
+msgid ""
+msgstr ""
+
+msgctxt "#32223"
+msgid ""
+msgstr ""
+
+msgctxt "#32224"
+msgid ""
+msgstr ""
+
+msgctxt "#32225"
+msgid ""
+msgstr ""
+
+msgctxt "#32226"
+msgid ""
+msgstr ""
+
+msgctxt "#32227"
+msgid ""
+msgstr ""
+
+msgctxt "#32228"
+msgid ""
+msgstr ""
+
+msgctxt "#32229"
+msgid ""
+msgstr ""
+
+msgctxt "#32230"
+msgid ""
+msgstr ""
+
+msgctxt "#32231"
+msgid ""
+msgstr ""
+
+msgctxt "#32232"
+msgid ""
+msgstr ""
+
+msgctxt "#32233"
+msgid ""
+msgstr ""
+
+msgctxt "#32234"
+msgid ""
+msgstr ""
+
+msgctxt "#32235"
+msgid ""
+msgstr ""
+
+msgctxt "#32236"
+msgid ""
+msgstr ""
+
+msgctxt "#32237"
+msgid ""
+msgstr ""
+
+msgctxt "#32238"
+msgid ""
+msgstr ""
+
+msgctxt "#32239"
+msgid ""
+msgstr ""
+
+msgctxt "#32240"
+msgid ""
+msgstr ""
+
+msgctxt "#32241"
+msgid ""
+msgstr ""
+
+msgctxt "#32242"
+msgid ""
+msgstr ""
+
+msgctxt "#32243"
+msgid ""
+msgstr ""
+
+msgctxt "#32244"
+msgid ""
+msgstr ""
+
+msgctxt "#32245"
+msgid ""
+msgstr ""
+
+msgctxt "#32246"
+msgid ""
+msgstr ""
+
+msgctxt "#32247"
+msgid ""
+msgstr ""
+
+msgctxt "#32248"
+msgid ""
+msgstr ""
+
+msgctxt "#32249"
+msgid ""
+msgstr ""
+
+msgctxt "#32250"
+msgid ""
+msgstr ""
+
+msgctxt "#32251"
+msgid ""
+msgstr ""
+
+msgctxt "#32252"
+msgid ""
+msgstr ""
+
+msgctxt "#32253"
+msgid ""
+msgstr ""
+
+msgctxt "#32254"
+msgid ""
+msgstr ""
+
+msgctxt "#32255"
+msgid ""
+msgstr ""
+
+msgctxt "#32256"
+msgid ""
+msgstr ""
+
+msgctxt "#32257"
+msgid ""
+msgstr ""
+
+msgctxt "#32258"
+msgid ""
+msgstr ""
+
+msgctxt "#32259"
+msgid ""
+msgstr ""
+
+msgctxt "#32260"
+msgid ""
+msgstr ""
+
+msgctxt "#32261"
+msgid ""
+msgstr ""
+
+msgctxt "#32262"
+msgid ""
+msgstr ""
+
+msgctxt "#32263"
+msgid ""
+msgstr ""
+
+msgctxt "#32264"
+msgid ""
+msgstr ""
+
+msgctxt "#32265"
+msgid ""
+msgstr ""
+
+msgctxt "#32266"
+msgid ""
+msgstr ""
+
+msgctxt "#32267"
+msgid ""
+msgstr ""
+
+msgctxt "#32268"
+msgid ""
+msgstr ""
+
+msgctxt "#32269"
+msgid ""
+msgstr ""
+
+msgctxt "#32270"
+msgid ""
+msgstr ""
+
+msgctxt "#32271"
+msgid ""
+msgstr ""
+
+msgctxt "#32272"
+msgid ""
+msgstr ""
+
+msgctxt "#32273"
+msgid ""
+msgstr ""
+
+msgctxt "#32274"
+msgid ""
+msgstr ""
+
+msgctxt "#32275"
+msgid ""
+msgstr ""
+
+msgctxt "#32276"
+msgid ""
+msgstr ""
+
+msgctxt "#32277"
+msgid ""
+msgstr ""
+
+msgctxt "#32278"
+msgid ""
+msgstr ""
+
+msgctxt "#32279"
+msgid ""
+msgstr ""
+
+msgctxt "#32280"
+msgid ""
+msgstr ""
+
+msgctxt "#32281"
+msgid ""
+msgstr ""
+
+msgctxt "#32282"
+msgid ""
+msgstr ""
+
+msgctxt "#32283"
+msgid ""
+msgstr ""
+
+msgctxt "#32284"
+msgid ""
+msgstr ""
+
+msgctxt "#32285"
+msgid ""
+msgstr ""
+
+msgctxt "#32286"
+msgid ""
+msgstr ""
+
+msgctxt "#32287"
+msgid ""
+msgstr ""
+
+msgctxt "#32288"
+msgid ""
+msgstr ""
+
+msgctxt "#32289"
+msgid ""
+msgstr ""
+
+msgctxt "#32290"
+msgid ""
+msgstr ""
+
+msgctxt "#32291"
+msgid ""
+msgstr ""
+
+msgctxt "#32292"
+msgid ""
+msgstr ""
+
+msgctxt "#32293"
+msgid ""
+msgstr ""
+
+msgctxt "#32294"
+msgid ""
+msgstr ""
+
+msgctxt "#32295"
+msgid ""
+msgstr ""
+
+msgctxt "#32296"
+msgid ""
+msgstr ""
+
+msgctxt "#32297"
+msgid ""
+msgstr ""
+
+msgctxt "#32298"
+msgid ""
+msgstr ""
+
+msgctxt "#32299"
+msgid ""
+msgstr ""
+
+msgctxt "#32300"
+msgid ""
+msgstr ""
+
+msgctxt "#32301"
+msgid ""
+msgstr ""
+
+msgctxt "#32302"
+msgid ""
+msgstr ""
+
+msgctxt "#32303"
+msgid ""
+msgstr ""
+
+msgctxt "#32304"
+msgid ""
+msgstr ""
+
+msgctxt "#32305"
+msgid ""
+msgstr ""
+
+msgctxt "#32306"
+msgid ""
+msgstr ""
+
+msgctxt "#32307"
+msgid ""
+msgstr ""
+
+msgctxt "#32308"
+msgid ""
+msgstr ""
+
+msgctxt "#32309"
+msgid ""
+msgstr ""
+
+msgctxt "#32310"
+msgid ""
+msgstr ""
+
+msgctxt "#32311"
+msgid ""
+msgstr ""
+
+msgctxt "#32312"
+msgid ""
+msgstr ""
+
+msgctxt "#32313"
+msgid ""
+msgstr ""
+
+msgctxt "#32314"
+msgid ""
+msgstr ""
+
+msgctxt "#32315"
+msgid ""
+msgstr ""
+
+msgctxt "#32316"
+msgid ""
+msgstr ""
+
+msgctxt "#32317"
+msgid ""
+msgstr ""
+
+msgctxt "#32318"
+msgid ""
+msgstr ""
+
+msgctxt "#32319"
+msgid ""
+msgstr ""
+
+msgctxt "#32320"
+msgid ""
+msgstr ""
+
+msgctxt "#32321"
+msgid ""
+msgstr ""
+
+msgctxt "#32322"
+msgid ""
+msgstr ""
+
+msgctxt "#32323"
+msgid ""
+msgstr ""
+
+msgctxt "#32324"
+msgid ""
+msgstr ""
+
+msgctxt "#32325"
+msgid ""
+msgstr ""
+
+msgctxt "#32326"
+msgid ""
+msgstr ""
+
+msgctxt "#32327"
+msgid ""
+msgstr ""
+
+msgctxt "#32328"
+msgid ""
+msgstr ""
+
+msgctxt "#32329"
+msgid ""
+msgstr ""
+
+msgctxt "#32330"
+msgid ""
+msgstr ""
+
+msgctxt "#32331"
+msgid ""
+msgstr ""
+
+msgctxt "#32332"
+msgid ""
+msgstr ""
+
+msgctxt "#32333"
+msgid ""
+msgstr ""
+
+msgctxt "#32334"
+msgid ""
+msgstr ""
+
+msgctxt "#32335"
+msgid ""
+msgstr ""
+
+msgctxt "#32336"
+msgid ""
+msgstr ""
+
+msgctxt "#32337"
+msgid ""
+msgstr ""
+
+msgctxt "#32338"
+msgid ""
+msgstr ""
+
+msgctxt "#32339"
+msgid ""
+msgstr ""
+
+msgctxt "#32340"
+msgid ""
+msgstr ""
+
+msgctxt "#32341"
+msgid ""
+msgstr ""
+
+msgctxt "#32342"
+msgid ""
+msgstr ""
+
+msgctxt "#32343"
+msgid ""
+msgstr ""
+
+msgctxt "#32344"
+msgid ""
+msgstr ""
+
+msgctxt "#32345"
+msgid ""
+msgstr ""
+
+msgctxt "#32346"
+msgid ""
+msgstr ""
+
+msgctxt "#32347"
+msgid ""
+msgstr ""
+
+msgctxt "#32348"
+msgid ""
+msgstr ""
+
+msgctxt "#32349"
+msgid ""
+msgstr ""
+
+msgctxt "#32350"
+msgid ""
+msgstr ""
+
+msgctxt "#32351"
+msgid ""
+msgstr ""
+
+msgctxt "#32352"
+msgid ""
+msgstr ""
+
+msgctxt "#32353"
+msgid ""
+msgstr ""
+
+msgctxt "#32354"
+msgid ""
+msgstr ""
+
+msgctxt "#32355"
+msgid ""
+msgstr ""
+
+msgctxt "#32356"
+msgid ""
+msgstr ""
+
+msgctxt "#32357"
+msgid ""
+msgstr ""
+
+msgctxt "#32358"
+msgid ""
+msgstr ""
+
+msgctxt "#32359"
+msgid ""
+msgstr ""
+
+msgctxt "#32360"
+msgid ""
+msgstr ""
+
+msgctxt "#32361"
+msgid ""
+msgstr ""
+
+msgctxt "#32362"
+msgid ""
+msgstr ""
+
+msgctxt "#32363"
+msgid ""
+msgstr ""
+
+msgctxt "#32364"
+msgid ""
+msgstr ""
+
+msgctxt "#32365"
+msgid ""
+msgstr ""
+
+msgctxt "#32366"
+msgid ""
+msgstr ""
+
+msgctxt "#32367"
+msgid ""
+msgstr ""
+
+msgctxt "#32368"
+msgid ""
+msgstr ""
+
+msgctxt "#32369"
+msgid ""
+msgstr ""
+
+msgctxt "#32370"
+msgid ""
+msgstr ""
+
+msgctxt "#32371"
+msgid ""
+msgstr ""
+
+msgctxt "#32372"
+msgid ""
+msgstr ""
+
+msgctxt "#32373"
+msgid ""
+msgstr ""
+
+msgctxt "#32374"
+msgid ""
+msgstr ""
+
+msgctxt "#32375"
+msgid ""
+msgstr ""
+
+msgctxt "#32376"
+msgid ""
+msgstr ""
+
+msgctxt "#32377"
+msgid ""
+msgstr ""
+
+msgctxt "#32378"
+msgid ""
+msgstr ""
+
+msgctxt "#32379"
+msgid ""
+msgstr ""
+
+msgctxt "#32380"
+msgid ""
+msgstr ""
+
+msgctxt "#32381"
+msgid ""
+msgstr ""
+
+msgctxt "#32382"
+msgid ""
+msgstr ""
+
+msgctxt "#32383"
+msgid ""
+msgstr ""
+
+msgctxt "#32384"
+msgid ""
+msgstr ""
+
+msgctxt "#32385"
+msgid ""
+msgstr ""
+
+msgctxt "#32386"
+msgid ""
+msgstr ""
+
+msgctxt "#32387"
+msgid ""
+msgstr ""
+
+msgctxt "#32388"
+msgid ""
+msgstr ""
+
+msgctxt "#32389"
+msgid ""
+msgstr ""
+
+msgctxt "#32390"
+msgid ""
+msgstr ""
+
+msgctxt "#32391"
+msgid ""
+msgstr ""
+
+msgctxt "#32392"
+msgid ""
+msgstr ""
+
+msgctxt "#32393"
+msgid ""
+msgstr ""
+
+msgctxt "#32394"
+msgid ""
+msgstr ""
+
+msgctxt "#32395"
+msgid ""
+msgstr ""
+
+msgctxt "#32396"
+msgid ""
+msgstr ""
+
+msgctxt "#32397"
+msgid ""
+msgstr ""
+
+msgctxt "#32398"
+msgid ""
+msgstr ""
+
+msgctxt "#32399"
+msgid ""
+msgstr ""
+
+msgctxt "#32400"
+msgid "Check internet connection!"
+msgstr ""
+
+msgctxt "#32401"
+msgid "Check network connection!"
+msgstr ""
+
+msgctxt "#32402"
+msgid "Addon is missing!"
+msgstr ""
+
+msgctxt "#32403"
+msgid "Trying to download addon"
+msgstr ""
+
+msgctxt "#32405"
+msgid "Please wait few minutes in patient."
+msgstr ""
+
+msgctxt "#32406"
+msgid "Active download in background"
+msgstr ""
+
+msgctxt "#32407"
+msgid "No support for this OS"
+msgstr ""
+
+msgctxt "#32408"
+msgid "No TV Mode support for this content!"
+msgstr ""
+
+msgctxt "#32409"
+msgid "Play it as normal instead"
+msgstr ""
+
+msgctxt "#32410"
+msgid "Yesterday"
+msgstr ""
+
+msgctxt "#32411"
+msgid "This Week"
+msgstr ""
+
+msgctxt "#32412"
+msgid "Activate TV Mode?"
+msgstr ""
+
+msgctxt "#32413"
+msgid "Choose this option to play contents at random and in sequence!"
+msgstr ""
+
+msgctxt "#32414"
+msgid "Processing"
+msgstr ""
+
+msgctxt "#32415"
+msgid "No changes were made"
+msgstr ""
+
+msgctxt "#32416"
+msgid "Search %s by name"
+msgstr ""
+
+msgctxt "#32417"
+msgid "Show TV Mode dialog"
+msgstr ""
+
+msgctxt "#32418"
+msgid "Allow Random TV Mode"
+msgstr ""
+
+msgctxt "#32419"
+msgid "ChangeLog will appear once on every Kodi session[CR] (If recent update has occured)."
+msgstr ""
+
+msgctxt "#32420"
+msgid "Total days for displaying Recent Updates"
+msgstr ""
+
+msgctxt "#32421"
+msgid "Update Succesfully!"
+msgstr ""
+
+msgctxt "#32422"
+msgid "Allow Backgrounds"
+msgstr ""
+
+msgctxt "#32423"
+msgid "Choose an option from the list"
+msgstr ""
+
+msgctxt "#32424"
+msgid "Add Description"
+msgstr ""
+
+msgctxt "#32425"
+msgid "Edit Description"
+msgstr ""
+
+msgctxt "#32426"
+msgid "Add Fanart"
+msgstr ""
+
+msgctxt "#32427"
+msgid "Remove Fanart"
+msgstr ""
+
+msgctxt "#32428"
+msgid "Add Thumb"
+msgstr ""
+
+msgctxt "#32429"
+msgid "Remove Thumb"
+msgstr ""
+
+msgctxt "#32430"
+msgid "Edit URL"
+msgstr ""
+
+msgctxt "#32431"
+msgid "Remove URL"
+msgstr ""
+
+msgctxt "#32432"
+msgid "Add URL"
+msgstr ""
+
+msgctxt "#32433"
+msgid "Rename Button"
+msgstr ""
+
+msgctxt "#32434"
+msgid "View URL"
+msgstr ""
+
+msgctxt "#32435"
+msgid "Removed Succesfully!"
+msgstr ""
+
+msgctxt "#32436"
+msgid "URL"
+msgstr ""
+
+msgctxt "#32437"
+msgid "Button Name"
+msgstr ""
+
+msgctxt "#32438"
+msgid "New %s"
+msgstr ""
+
+msgctxt "#32439"
+msgid "New %s"
+msgstr ""
+
+msgctxt "#32440"
+msgid "Added Succesfully!"
+msgstr ""
+
+msgctxt "#32441"
+msgid "Added Succesfully!"
+msgstr ""
+
+msgctxt "#32442"
+msgid "Load"
+msgstr ""
+
+msgctxt "#32443"
+msgid "One"
+msgstr ""
+
+msgctxt "#32444"
+msgid "Saved Succesfully!"
+msgstr ""
+
+msgctxt "#32445"
+msgid "Note: Random play isn't enabled!"
+msgstr ""
+
+msgctxt "#32446"
+msgid "Your input is empty!"
+msgstr ""
+
+msgctxt "#32447"
+msgid "Choose this option to play contents in sequence"
+msgstr ""
+
+msgctxt "#32448"
+msgid "Button Action"
+msgstr ""
+
+msgctxt "#32449"
+msgid "Would you like to try again?"
+msgstr ""
+
+msgctxt "#32450"
+msgid "New %s Button.."
+msgstr ""
+
+msgctxt "#32451"
+msgid "Choose this option to create a smart playlist of your own."
+msgstr ""
+
+msgctxt "#32452"
+msgid "[CR][CR]You may also use the context menu button in order to save,load or reset your entire settings."
+msgstr ""
+
+msgctxt "#32453"
+msgid "[CR]Note: You may create unlimited number of links in a single playlist!"
+msgstr ""
+
+msgctxt "#32454"
+msgid "URL Error occured.[CR]You should remove the URL and Add new one."
+msgstr ""
+
+msgctxt "#32455"
+msgid "Otherwise you may add additionals links and remove the other one afterwards."
+msgstr ""
+
+msgctxt "#32456"
+msgid "Warning: Choose YES to remove your button"
+msgstr ""
+
+msgctxt "#32457"
+msgid "Duplicated URL found!"
+msgstr ""
+
+msgctxt "#32458"
+msgid "Choose YES to learn how to share Your button"
+msgstr ""
+
+msgctxt "#32459"
+msgid "Share %s buttons"
+msgstr ""
+
+msgctxt "#32800"
+msgid "Easily create " share your own addon.[CR]Support only YouTube links atm."
+msgstr ""
+
+msgctxt "#32801"
+msgid "Try again"
+msgstr ""
+
+msgctxt "#32802"
+msgid "Examine your URL for errors"
+msgstr ""
+
+msgctxt "#32803"
+msgid "Documentary"
+msgstr "דוקומנטרי"
+
+#Languages"
+msgctxt "#32900"
+msgid "Hebrew"
+msgstr ""
+
+msgctxt "#32901"
+msgid "English"
+msgstr ""
+
+msgctxt "#32902"
+msgid "Dutch"
+msgstr ""
+
+msgctxt "#32903"
+msgid "Ukrainian"
+msgstr ""
+
+msgctxt "#32904"
+msgid "French"
+msgstr ""
+
+msgctxt "#32905"
+msgid "Russian"
+msgstr ""
+
+msgctxt "#32906"
+msgid "Georgian"
+msgstr ""
+
+msgctxt "#32907"
+msgid "Chinese"
+msgstr ""
+
+msgctxt "#32908"
+msgid "Spanish"
+msgstr ""
+
+msgctxt "#32909"
+msgid "Italian"
+msgstr ""
+
+msgctxt "#32910"
+msgid "Thai"
+msgstr ""
+
+msgctxt "#32911"
+msgid "Japanese"
+msgstr ""
+
+msgctxt "#32912"
+msgid "Irish"
+msgstr ""
+
+msgctxt "#32913"
+msgid "Korean"
+msgstr ""
+
+msgctxt "#32914"
+msgid "Romanian"
+msgstr ""
+
+msgctxt "#32915 #Croatian"
+msgid "Serbian"
+msgstr ""
+
+msgctxt "#32916"
+msgid "Turkish"
+msgstr ""
+
+msgctxt "#32917"
+msgid "Slovak"
+msgstr ""
+
+msgctxt "#32918"
+msgid "Portuguese"
+msgstr ""
+
+msgctxt "#32919"
+msgid "Catalan"
+msgstr ""
+
+msgctxt "#32920"
+msgid "German"
+msgstr ""
+
+msgctxt "#32921"
+msgid "Hungarian"
+msgstr ""
+
+msgctxt "#32922"
+msgid "Polish"
+msgstr ""
+
+msgctxt "#32923"
+msgid "Hindi"
+msgstr ""
+
+msgctxt "#32924"
+msgid "Haitian"
+msgstr ""
+
+msgctxt "#32925"
+msgid "Finnish"
+msgstr ""
+
+msgctxt "#32926"
+msgid "Arabic"
+msgstr ""
+
+msgctxt "#32927"
+msgid "Indonesian"
+msgstr ""
+
+msgctxt "#32928"
+msgid "Bulgarian"
+msgstr ""
+
+msgctxt "#32929"
+msgid "Uzbek"
+msgstr ""
+
+msgctxt "#32930"
+msgid "Kazakh"
+msgstr ""
+
+msgctxt "#32931"
+msgid "Greek"
+msgstr ""
+
+msgctxt "#32932"
+msgid "Swedish"
+msgstr ""
+
+msgctxt "#32933"
+msgid "Dansk"
+msgstr ""
+
+msgctxt "#32934"
+msgid "Czech"
+msgstr ""
+
+msgctxt "#32935"
+msgid ""
+msgstr ""
+
+msgctxt "#32999"
+msgid ""
+msgstr ""
