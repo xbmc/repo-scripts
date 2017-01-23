@@ -694,17 +694,24 @@ class ExperiencePlayer(xbmc.Player):
     def getDBTypeAndID(self):
         return xbmc.getInfoLabel('ListItem.DBTYPE'), xbmc.getInfoLabel('ListItem.DBID')
 
-    def addFromID(self, movieid=None, episodeid=None, selection=False):
-        DEBUG_LOG('Adding from id: movieid={0} episodeid={1} selection={2}'.format(movieid, episodeid, selection))
-
+    def addFromID(self, movieid=None, episodeid=None, selection=False, dbtype=None, dbid=None):
         if selection:
+            DEBUG_LOG('Adding from selection')
             stype, ID = self.getDBTypeAndID()
             if stype == 'movie':
                 movieid = ID
-            elif stype == 'tvshow':
+            elif stype in ('tvshow', 'episode'):
                 episodeid = ID
             else:
                 return False
+        elif dbtype:
+            DEBUG_LOG('Adding from DB: dbtype={0} dbid={1}'.format(dbtype, dbid))
+            if dbtype == 'movie':
+                movieid = dbid
+            elif dbtype in ('tvshow', 'episode'):
+                episodeid = dbid
+        else:
+            DEBUG_LOG('Adding from id: movieid={0} episodeid={1}'.format(movieid, episodeid))
 
         self.features = []
 
@@ -740,6 +747,9 @@ class ExperiencePlayer(xbmc.Player):
             return False
 
         return True
+
+    def addDBFeature(self, dbtype, dbid):
+        return self.addFromID(dbtype=dbtype, dbid=dbid)
 
     def addSelectedFeature(self, movieid=None, episodeid=None, selection=False):
         if selection or movieid or episodeid:

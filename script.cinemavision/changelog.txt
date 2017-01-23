@@ -1,5 +1,9 @@
 Changelog for CinemaVision
 
+[- 1.0.13 -]
+
+- add:     Now has the ability to accept dbtype and dbid args for skin integration
+
 [- 1.0.12 -]
 
 - fix:     Broken iTunes scraper
