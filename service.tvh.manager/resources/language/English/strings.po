@@ -1,0 +1,389 @@
+# XBMC Media Center language file
+# Addon Name: TVHeadend Power and Recording Management
+# Addon id: script.program.pvrmanager
+# Addon version: 0.1.8
+# Addon Provider: _BJ1, based on nmcaullays PVR-Uptime
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC-Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: 2014-04-16 15:38+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+
+msgctxt "Addon Summary"
+msgid "TVHeadend Power Management"
+msgstr ""
+
+msgctxt "Addon Description"
+msgid "Poweroff management for current active recordings and wakeup procedures for future schedules using the XML-Interface of TVHeadend. This plugin delivers optional Emails via SMTP if an automatic scheduled Recording ended successfully. The plugin starts the system periodically on an user defined cycle and time for e.g. EPG-Updates if there is a longer inactivity time of the system."
+msgstr ""
+
+
+msgctxt "#30000"
+msgid "Booting Time until System is ready"
+msgstr ""
+
+msgctxt "#30001"
+msgid "Time for Shutdown"
+msgstr ""
+
+msgctxt "#30002"
+msgid "Hardware Timer"
+msgstr ""
+
+msgctxt "#30003"
+msgid "Display Time for Shutdown-Confirmation"
+msgstr ""
+
+msgctxt "#30004"
+msgid "Connection attempts to TVH before giving up"
+msgstr ""
+
+msgctxt "#30007"
+msgid "Show Info about next schedule at shutdown"
+msgstr ""
+
+msgctxt "#30008"
+msgid "Shutdown performed by"
+msgstr ""
+
+msgctxt "#30009"
+msgid "Shutdown requires admin privileges"
+msgstr ""
+
+msgctxt "#30010"
+msgid "Shutdown in Progress"
+msgstr ""
+
+msgctxt "#30011"
+msgid "System will shut down in %s seconds."
+msgstr ""
+
+msgctxt "#30012"
+msgid "XBMC/Kodi"
+msgstr ""
+
+msgctxt "#30013"
+msgid "Operating System"
+msgstr ""
+
+msgctxt "#30014"
+msgid "System will shutdown now"
+msgstr ""
+
+msgctxt "#30015"
+msgid "Shutdown aborted"
+msgstr ""
+
+msgctxt "#30016"
+msgid "upcoming Recording"
+msgstr ""
+
+msgctxt "#30017"
+msgid "Next schedule"
+msgstr ""
+
+msgctxt "#30018"
+msgid "%s - Recording file"
+msgstr ""
+
+msgctxt "#30019"
+msgid "%s - EPG-Update"
+msgstr ""
+
+msgctxt "#30020"
+msgid "running or upcoming Recording"
+msgstr ""
+
+msgctxt "#30021"
+msgid "EPG-Update still active"
+msgstr ""
+
+msgctxt "#30022"
+msgid "At least one monitored Process active"
+msgstr ""
+
+msgctxt "#30023"
+msgid "At least one active network connection"
+msgstr ""
+
+msgctxt "#30024"
+msgid "Setting next timer at"
+msgstr ""
+
+#empty strings from id 30025 to 30029
+
+msgctxt "#30030"
+msgid "Communication Error"
+msgstr ""
+
+msgctxt "#30031"
+msgid "Can't connect to TVHeadend"
+msgstr ""
+
+msgctxt "#30032"
+msgid "TVHeadend HTSP Client inactive or not installed"
+msgstr ""
+
+msgctxt "#30034"
+msgid "Check for established network connections"
+msgstr ""
+
+msgctxt "#30035"
+msgid "Wait until monitored Tasks has finished"
+msgstr ""
+
+msgctxt "#30036"
+msgid "List of monitored Tasks"
+msgstr ""
+
+msgctxt "#30037"
+msgid "Exclude ports from monitoring"
+msgstr ""
+
+#empty strings from id 30038 to 30039
+
+msgctxt "#30040"
+msgid "Send Email after Recording"
+msgstr ""
+
+msgctxt "#30041"
+msgid "SMTP-Mailserver"
+msgstr ""
+
+msgctxt "#30042"
+msgid "Username"
+msgstr ""
+
+msgctxt "#30043"
+msgid "Password"
+msgstr ""
+
+msgctxt "#30044"
+msgid "Email of Sender"
+msgstr ""
+
+msgctxt "#30045"
+msgid "Email of Recipient"
+msgstr ""
+
+msgctxt "#30046"
+msgid "PVR Notification from %s"
+msgstr ""
+
+msgctxt "#30047"
+msgid "%s has recording of '%s' successful completed."
+msgstr ""
+
+msgctxt "#30048"
+msgid "Charset"
+msgstr ""
+
+msgctxt "#30049"
+msgid "Use Encryption"
+msgstr ""
+
+msgctxt "#30050"
+msgid "General"
+msgstr ""
+
+#empty strings from id 30051 to 30051
+
+msgctxt "#30052"
+msgid "Mail"
+msgstr ""
+
+msgctxt "#30053"
+msgid "EPG Update"
+msgstr ""
+
+msgctxt "#30054"
+msgid "Check Settings (deliver Email)"
+msgstr ""
+
+#empty strings from id 30055 to 30057
+
+msgctxt "#30058"
+msgid "PyEPG/XMLTV socket"
+msgstr ""
+
+msgctxt "#30059"
+msgid "Store epg.xml in folder"
+msgstr ""
+
+msgctxt "#30060"
+msgid "Grab EPG Data from external Provider (XMLTV)"
+msgstr ""
+
+msgctxt "#30061"
+msgid "Wakeup for EPG Updates"
+msgstr ""
+
+msgctxt "#30062"
+msgid "Wakeup at"
+msgstr ""
+
+msgctxt "#30063"
+msgid "Duration of EPG Update until shutdown"
+msgstr ""
+
+msgctxt "#30064"
+msgid "Store EPG Data additionally in file epg.xml"
+msgstr ""
+
+msgctxt "#30065"
+msgid "%s: This mail indicates that you have created your setup for delivering mails successfully. PVR-manager will use these settings for future notifications."
+msgstr ""
+
+msgctxt "#30066"
+msgid "Mail delivered"
+msgstr ""
+
+msgctxt "#30067"
+msgid "Mail not delivered"
+msgstr ""
+
+msgctxt "#30068"
+msgid "Mail was successfully delivered to %s. Your setup seems to be ok for further notifications."
+msgstr ""
+
+msgctxt "#30069"
+msgid "An error occured while delivering mail to %s. Check your settings and your logfile for errors and try again."
+msgstr ""
+
+msgctxt "#30070"
+msgid "00:00 o'Clock"
+msgstr ""
+
+msgctxt "#30071"
+msgid "01:00 o'Clock"
+msgstr ""
+
+msgctxt "#30072"
+msgid "02:00 o'Clock"
+msgstr ""
+
+msgctxt "#30073"
+msgid "03:00 o'Clock"
+msgstr ""
+
+msgctxt "#30074"
+msgid "04:00 o'Clock"
+msgstr ""
+
+msgctxt "#30075"
+msgid "05:00 o'Clock"
+msgstr ""
+
+msgctxt "#30076"
+msgid "06:00 o'Clock"
+msgstr ""
+
+msgctxt "#30077"
+msgid "07:00 o'Clock"
+msgstr ""
+
+msgctxt "#30078"
+msgid "08:00 o'Clock"
+msgstr ""
+
+msgctxt "#30079"
+msgid "09:00 o'Clock"
+msgstr ""
+
+msgctxt "#30080"
+msgid "10:00 o'Clock"
+msgstr ""
+
+msgctxt "#30081"
+msgid "11:00 o'Clock"
+msgstr ""
+
+msgctxt "#30082"
+msgid "12:00 o'Clock"
+msgstr ""
+
+msgctxt "#30083"
+msgid "13:00 o'Clock"
+msgstr ""
+
+msgctxt "#30084"
+msgid "14:00 o'Clock"
+msgstr ""
+
+msgctxt "#30085"
+msgid "15:00 o'Clock"
+msgstr ""
+
+msgctxt "#30086"
+msgid "16:00 o'Clock"
+msgstr ""
+
+msgctxt "#30087"
+msgid "17:00 o'Clock"
+msgstr ""
+
+msgctxt "#30088"
+msgid "18:00 o'Clock"
+msgstr ""
+
+msgctxt "#30089"
+msgid "19:00 o'Clock"
+msgstr ""
+
+msgctxt "#30090"
+msgid "20:00 o'Clock"
+msgstr ""
+
+msgctxt "#30091"
+msgid "21:00 o'Clock"
+msgstr ""
+
+msgctxt "#30092"
+msgid "22:00 o'Clock"
+msgstr ""
+
+msgctxt "#30093"
+msgid "23:00 o'Clock"
+msgstr ""
+
+#empty strings from id 30094 to 30099
+
+msgctxt "#30100"
+msgid "off"
+msgstr ""
+
+msgctxt "#30101"
+msgid "every Day"
+msgstr ""
+
+msgctxt "#30102"
+msgid "2 Days"
+msgstr ""
+
+msgctxt "#30103"
+msgid "3 Days"
+msgstr ""
+
+msgctxt "#30104"
+msgid "4 Days"
+msgstr ""
+
+msgctxt "#30105"
+msgid "5 Days"
+msgstr ""
+
+msgctxt "#30106"
+msgid "6 Days"
+msgstr ""
+
+msgctxt "#30107"
+msgid "7 Days"
+msgstr ""

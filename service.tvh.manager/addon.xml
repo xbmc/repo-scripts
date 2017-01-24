@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="service.tvh.manager" name="TVHeadend Power and Recording Management" version="0.3.20" provider-name="Birger Jesch">
+  <requires>
+    <import addon="xbmc.python" version="2.20.0" />
+    <import addon="xbmc.addon" version="15.0.0" />
+  </requires>
+  <extension point="xbmc.service" library="default.py" start="[login|startup]" />
+  <extension point="xbmc.python.script" library="default.py" />
+  <extension point="xbmc.addon.metadata">
+    <platform>linux</platform>
+    <language>en de pl</language>
+    <summary lang="en">TVHeadend Power Management</summary>
+    <summary lang="de">Power-Management für TVHeadend</summary>
+    <summary lang="pl">TVHeadend Power Management</summary>
+    <description lang="en">Poweroff management for current active recordings and wakeup procedures for future schedules using the XML-Interface of TVHeadend. This plugin delivers optional Emails via SMTP if an automatic scheduled Recording ended successfully. The plugin starts the system periodically on an user defined cycle and time for e.g. EPG-Updates if there is a longer inactivity time of the system.</description>
+    <description lang="de">PowerOff-Management für aktuell laufende Aufnahmen und Aufweckmechanismen für spätere timergesteuerte Aufnahmen unter Nutzung des XML-Interfaces von TVHeadend. Das Plugin versendet optional Emails via SMTP, wenn eine automatische Aufnahme erfolgreich abgeschlossen wurde. Zusätzlich wird das System zyklisch zu einer einstellbaren Zeit aufgeweckt, um z.B das EPG zu aktualisieren.</description>
+    <description lang="pl">Program zarządzający włączeniem i wyłączeniem systemu dla bieżących aktywnych nagrań ustawionych w harmonogramie interfejsu XML programu : TVHeadend. Wtyczka oferuje opcjonalnie wysłanie wiadomości e-mail za pośrednictwem protokołu SMTP, jeśli automatyczne nagrywanie zakończyło się powodzeniem. Wtyczka może także uruchamiać system okresowo w czasie zdefiniowanym przez użytkownika dla uaktualnienia EPG, jeśli jest dłuższy czas braku aktywności systemu.</description>
+    <disclaimer lang="de">Benutzung auf eigene Gefahr. Keine Haftung für nicht gesetzte Timer, nicht durchgeführte Aufnahmen und andere Seiteneffekte!</disclaimer>
+    <disclaimer lang="en">Use at your own risk. No liability for not set timers, lack of recording and other side effects!</disclaimer>
+    <disclaimer lang="pl">Używasz na własne ryzyko. Nie ponosimy odpowiedzialności za nieprawidłowe nastawienia czasu nagrania, braku nagrania i innych skutków ubocznych!</disclaimer>
+    <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+    <forum>http://forum.xbmc.org/showthread.php?tid=115758</forum>
+    <website>http://vdr4bj1.no-ip.org</website>
+    <email>birger.jesch@gmail.com</email>
+    <source>https://github.com/b-jesch/service.tvh.manager</source>
+    <assets>
+      <icon>resources/icon.png</icon>
+      <fanart>resources/fanart.jpg</fanart>
+      <screenshot>resources/screenshot-01.jpg</screenshot>
+      <screenshot>resources/screenshot-02.jpg</screenshot>
+      <screenshot>resources/screenshot-03.jpg</screenshot>
+    </assets>
+  </extension>
+</addon>
