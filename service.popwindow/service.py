@@ -46,7 +46,7 @@ def debug(content):
 def notice(content):
     log(content, xbmc.LOGNOTICE)
 
-def log(msg, level=xbmc.LOGNOTICE):
+def log(msg, level=xbmc.LOGDEBUG):
     addon = xbmcaddon.Addon()
     addonID = addon.getAddonInfo('id')
     xbmc.log('%s: %s' % (addonID, msg), level) 
