@@ -12,7 +12,7 @@
 		<description lang="en">This project provides first-class OAuth library support for Requests.</description>
 		<disclaimer lang="en">This project provides first-class OAuth library support for Requests.</disclaimer>
 		<license>ISC</license>
-		<website>https://pypi.python.org/pypi/oauthlib</website>
-		<source>https://pypi.python.org/pypi/oauthlib</source>
+		<website>https://pypi.python.org/pypi/requests-oauthlib</website>
+		<source>https://pypi.python.org/pypi/requests-oauthlib</source>
 	</extension>
 </addon>
