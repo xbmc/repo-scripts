@@ -10,7 +10,7 @@
 		<summary lang="en">Part of CPython 3.7.0</summary>
 		<description lang="en">Part of Cpyton 3.7.0</description>
 		<disclaimer lang="en">Part of Cpyton 3.7.0</disclaimer>
-		<license>Copyright 2013-2016 Python Charmers Pty Ltd, Australia. The software is distributed under an MIT licence. See LICENSE.txt</license>
+		<license>PYTHON SOFTWARE FOUNDATION LICENSE VERSION 2</license>
 		<website>https://github.com/python/cpython/tree/master/Lib/lib2to3</website>
 		<source>https://github.com/python/cpython/tree/master/Lib/lib2to3</source>
 	</extension>
