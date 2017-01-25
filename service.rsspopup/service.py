@@ -34,7 +34,7 @@ def debug(content):
 def notice(content):
     log(content, xbmc.LOGNOTICE)
 
-def log(msg, level=xbmc.LOGNOTICE):
+def log(msg, level=xbmc.LOGDEBUG):
     addon = xbmcaddon.Addon()
     addonID = addon.getAddonInfo('id')
     xbmc.log('%s: %s' % (addonID, msg), level) 
@@ -60,22 +60,19 @@ def addrss():
     d = dialog.input("Url des Feeds", type=xbmcgui.INPUT_ALPHANUM)
     filename       = xbmc.translatePath( os.path.join( temp, 'urlliste.txt') ).decode("utf-8")
     if xbmcvfs.exists(filename) :
-      fp=open(filename,"r") 
-      content=fp.read()
-      fp.close()    
+      with open(filename,"r") as fp:
+        content=fp.read()
       content=content+"\n"+d
     else :
        content=d
-    fp = open(filename, 'w')    
-    fp.write(content)
-    fp.close()    
+    with open(filename,"w") as fp:
+       fp.write(content)
       
 def deleterss():
    filename       = xbmc.translatePath( os.path.join( temp, 'urlliste.txt') ).decode("utf-8")
    if xbmcvfs.exists(filename) :
-      fp=open(filename,"r") 
-      content=fp.read()
-      fp.close()          
+      with open(filename,"r") as fp:
+        content=fp.read()
       liste=content.split("\n")
       dialog = xbmcgui.Dialog()
       nr=dialog.select(translation(30001), liste)
@@ -136,9 +133,8 @@ if __name__ == '__main__':
       filename       = xbmc.translatePath( os.path.join( temp, 'urlliste.txt') ).decode("utf-8")
       gesamtliste=[]
       if xbmcvfs.exists(filename) :
-        fp=open(filename,"r") 
-        content=fp.read()
-        fp.close()          
+        with open(filename,"r") as fp:
+           content=fp.read()
         liste=content.split("\n")                
         for Feed in liste:                                
             feed = feedparser.parse(Feed)      
