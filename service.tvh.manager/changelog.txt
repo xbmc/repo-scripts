@@ -1,0 +1,159 @@
+0.3.20
+- Improved shutdown handling
+
+0.3.19
+- EPG handling and download of external EPG providers improved
+
+0.3.18
+- added option to store EPG data grabbed from xmltv on local file system
+
+0.3.17
+- Message handling improved
+
+0.3.16
+- Bugfix
+
+0.3.15
+- Password encryption/decryption added. If you're using email
+  delivering, renew your password and store your settings first
+  before you check your email settings.
+
+0.3.13/14
+- Code optimizations
+
+0.3.12
+- Polish language file updated
+
+0.3.11
+- Command option in network detection removed
+
+0.3.10
+- improved handling if TVH HTSP Client is'nt present
+
+0.3.9
+- add option to set/unset root privileges for the shutdown wrapper
+
+0.3.8
+- README.pdf updated
+
+0.3.7
+- digest authentication of tvheadend implemented
+
+0.3.6
+- Bugfix: Fix exception if pvr.hts isn't installed or inactive
+
+0.3.5
+- more robust polling cycle
+
+0.3.4
+- settings fixed, unused settings removed
+
+0.3.3
+- use connection settings of TVHeadend PVR client
+- new Icons
+
+0.3.2
+- Bugfix
+- minor code adjustments
+
+0.3.1
+- new event handling on startup|login|poweroff|restart with process parameters
+- IMPORTANT: changes to remote.xml! See README.pdf for additional needed parameters.
+- unused code removed
+- procedures for addon-id.ctl removed
+- additional logging into separate logfile removed
+
+0.2.14
+- Translations updated
+
+0.2.13
+- Index bug fixed when using NVRAM as wakeup (rarely used)
+
+0.2.12
+- mechanism for interoperability between addons implemented. Powermanagement
+  now creates an addon-id.ctl file that signals an active state of the addon.
+
+0.2.11
+- addon id changed. IMPORTANT: Follow the instructions in README.pdf
+  and check/verify the remote.xml again!
+
+0.2.10
+- Bugfixes, Enhancements in addon.xml
+
+0.2.9
+- reactivate old shutdown method performed by OS (safe shutdown) and
+  make it selectable in settings
+
+0.2.8
+- added an option to execute several external EPG-Grabbers (XMLTV)
+  when a timeslot of  EPG-Update is active and external grabbing is
+  enabled and configured. Configuration is described in the
+  subdirectory/file '/resources/lib/epggrab_ext.sh' of this addon.
+
+0.2.7
+- ability to exclude network ports from network monitoring added
+- shutdown handling excecutes now by xbmc/kodi itself
+
+0.2.6
+- button/option for testing of correct email preferences added
+
+0.2.5
+- major changes in addon structure - script-id is now 'service.TVH.Manager'
+- check visudo, remote.xml and settings if you update from earlier versions.
+
+0.2.4
+- Ready for Helix (Kodi)
+- polish translation
+- revised README as PDF - take a look into the zip
+
+0.2.2
+- compatible now with OpenELEC without modifications on source code.
+
+0.2.1
+- minor changes to mail handling
+
+0.2.0
+- complete software redesign/refactoring. PVRManager has now a more object
+  orientated behaviour and is ready for future enhancements.
+- Mail notifications use now an optional encryption (SSL/TLS/STARTTLS)
+  required from several providers.
+- As there are some important settings has changed, PLEASE RESET ALL SETTINGS
+  TO DEFAULT AND ADAPT NEW THEN.
+
+0.1.8
+- check for established network connections before shutdown. Use this
+  option with care because if a NAS connected 24/7 xbmc will never shut down
+  
+0.1.7
+- try multiple connects to tvheadend if there is no response at first time
+  (e.g. at startup). This and the time between connection attempts can
+  adjusted in the configuration dialog.
+
+0.1.6
+- some small improvements and bugfixes
+- add an option to wait for multiple postprocessing scripts or commands
+  (e.g. Comskip or Markad) after a recording or poweroff before shutdown
+  the system.
+  
+0.1.5
+- Add a mechanism for a periodic wakeup at a defined time. This is
+  useful for updating EPG and in this case for updating the automatic
+  recorder if the user is absent for a longer time.
+  
+0.1.4
+- Sending emails over SMTP after successfull automatic schedule
+  NOTE: This works only if no user activity occurs while recording
+  e.g. PVR wakes up by a schedule and the user is absent all the time.
+
+0.1.3
+- Enhancements and cleanups for settings
+- implement missing margin-time for startup schedules
+- replace icon for addon
+
+0.1.2
+- Code cleanup
+- Errorhandling if TVHeadend is disconnected
+- correct some important typos in README
+
+0.1.1
+- Initial Release

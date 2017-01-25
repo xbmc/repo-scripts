@@ -1,0 +1,378 @@
+# XBMC Media Center language file
+# Addon Name: TVHeadend Power and Recording Management
+# Addon id: script.program.pvrmanager
+# Addon version: 0.1.8
+# Addon Provider: _BJ1, based on nmcaullays PVR-Uptime
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC-Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: 2014-04-16 15:38+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: pl\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+
+msgctxt "Addon Summary"
+msgid "TVHeadend Power Management"
+msgstr "Power-Management für TVHeadend"
+
+msgctxt "Addon Description"
+msgid "Poweroff management for current active recordings and wakeup procedures for future schedules using the XML-Interface of TVHeadend. This plugin delivers optional Emails via SMTP if an automatic scheduled Recording ended successfully. The plugin starts the system periodically on an user defined cycle and time for e.g. EPG-Updates if there is a longer inactivity time of the system."
+msgstr "PowerOff-Management für aktuell laufende Aufnahmen und Aufweckmechanismen für spätere timergesteuerte Aufnahmen unter Nutzung des XML-Interfaces von TVHeadend. Das Plugin versendet optional Emails via SMTP, wenn eine automatische Aufnahme erfolgreich abgeschlossen wurde. Zusätzlich wird das System zyklisch zu einer einstellbaren Zeit aufgeweckt, um z.B das EPG zu aktualisieren."
+
+msgctxt "#30000"
+msgid "Booting Time until System is ready"
+msgstr "Czas uruchamiania po którym system jest gotowy"
+
+msgctxt "#30001"
+msgid "Time for Shutdown"
+msgstr "Czas do wyłączenia systemu po nagraniu"
+
+msgctxt "#30002"
+msgid "Hardware Timer"
+msgstr "Zegar sprzętowy"
+
+msgctxt "#30003"
+msgid "Display Time for Shutdown-Confirmation"
+msgstr "Wyświetlanie czasu przy wyłączeniu"
+
+msgctxt "#30004"
+msgid "Connection attempts to TVH before giving up"
+msgstr "Liczba prób połączeń"
+
+msgctxt "#30007"
+msgid "Show Info about next schedule at shutdown"
+msgstr "Pokaż informacje o kolejnym nagraniu przy wyłączeniu systemu"
+
+msgctxt "#30008"
+msgid "Shutdown performed by"
+msgstr "Metoda Zamknięcia / Wyłączenia"
+
+msgctxt "#30009"
+msgid "Shutdown requires admin privileges"
+msgstr "Zamknięcie wymaga uprawnień Administratora"
+
+msgctxt "#30010"
+msgid "Shutdown in Progress"
+msgstr "Wyłączanie systemu w toku"
+
+msgctxt "#30011"
+msgid "System will shut down in %s seconds."
+msgstr "System zostanie zamknięty za %s sekund."
+
+msgctxt "#30012"
+msgid "XBMC/Kodi"
+msgstr "XBMC/Kodi"
+
+msgctxt "#30013"
+msgid "Operating System"
+msgstr "System Operacyjny"
+
+msgctxt "#30014"
+msgid "System will shutdown now"
+msgstr "Teraz system będzie wyłączony"
+
+msgctxt "#30015"
+msgid "Shutdown aborted"
+msgstr "Zamknięcie PRZERWANE !!!"
+
+msgctxt "#30016"
+msgid "upcoming Recording"
+msgstr "Nagrywanie wkrótce"
+
+msgctxt "#30017"
+msgid "Next schedule"
+msgstr "Nagrywanie TV ustawione !"
+
+msgctxt "#30018"
+msgid "%s - Recording file"
+msgstr "%s - Nagranie"
+
+msgctxt "#30019"
+msgid "%s - EPG-Update"
+msgstr "%s - EPG-Uaktualnienie"
+
+msgctxt "#30020"
+msgid "running or upcoming Recording"
+msgstr "Nagrywanie w toku ! lub oczekiwanie na nagranie"
+
+msgctxt "#30021"
+msgid "EPG-Update still active"
+msgstr "EPG-Uaktualnienie nadal aktywne"
+
+msgctxt "#30022"
+msgid "At least one monitored Process active"
+msgstr "Przynajmniej jeden monitorowany Process aktywny"
+
+msgctxt "#30023"
+msgid "At least one active network connection"
+msgstr "Co najmniej jedno aktywne połączenia z siecią"
+
+msgctxt "#30024"
+msgid "Setting next timer at"
+msgstr "Ustawienie nagrania na następny"
+
+msgctxt "#30030"
+msgid "Communication Error"
+msgstr "Błąd komunikacji"
+
+msgctxt "#30031"
+msgid "Can't connect to TVHeadend"
+msgstr "Nie można połączyć się z TVHeadend"
+
+msgctxt "#30034"
+msgid "Check for established network connections"
+msgstr "Sprawdzanie aktywnych połączeń sieciowych"
+
+msgctxt "#30035"
+msgid "Wait until monitored Tasks has finished"
+msgstr "Poczekaj, aż zakończy się monitorowanie zadań"
+
+msgctxt "#30036"
+msgid "List of monitored Tasks"
+msgstr "Lista monitorowanych Zadań"
+
+msgctxt "#30037"
+msgid "Exclude ports from monitoring"
+msgstr "wyłączenie portów z monitoringu"
+
+msgctxt "#30040"
+msgid "Send Email after Recording"
+msgstr "Wyślij e-mail po zakończeniu nagrywania"
+
+msgctxt "#30041"
+msgid "SMTP-Mailserver"
+msgstr "Serwer poczty SMTP"
+
+msgctxt "#30042"
+msgid "Username"
+msgstr "Nazwa użytkownika"
+
+msgctxt "#30043"
+msgid "Password"
+msgstr "Hasło"
+
+msgctxt "#30044"
+msgid "Email of Sender"
+msgstr "E-mail nadawcy"
+
+msgctxt "#30045"
+msgid "Email of Recipient"
+msgstr "E-mail odbiorcy"
+
+msgctxt "#30046"
+msgid "PVR Notification from %s"
+msgstr "Powiadomienie PVR %s"
+
+msgctxt "#30047"
+msgid "%s has recording of '%s' successful completed."
+msgstr "%s Nagranie '%s' zakończone sukcesem."
+
+msgctxt "#30048"
+msgid "Charset"
+msgstr "zestaw znaków"
+
+msgctxt "#30049"
+msgid "Use Encryption"
+msgstr "Użyj szyfrowania"
+
+msgctxt "#30050"
+msgid "General"
+msgstr "Ogólne"
+
+msgctxt "#30052"
+msgid "Mail"
+msgstr "E-Mail"
+
+msgctxt "#30053"
+msgid "EPG Update"
+msgstr "EPG-Uaktualnienie"
+
+msgctxt "#30054"
+msgid "Check Settings (deliver Email)"
+msgstr "Sprawdź Ustawienia (dostarczyć E-mail)"
+
+msgctxt "#30057"
+msgid "%s: This mail indicates that you have created your setup for delivering mails successfully. PVR-manager will use these settings for future notifications."
+msgstr "%s: Ten e-mail oznacza, że utworzono konfigurację do dostarczania wiadomości z powodzeniem. PVR-menedżer wykorzysta te ustawienia dla przyszłych powiadomień."
+
+msgctxt "#30058"
+msgid "PyEPG/XMLTV socket path"
+msgstr "PyEPG/XMLTV gniazdo"
+
+msgctxt "#30059"
+msgid "Store epg.xml in folder"
+msgstr "Sklep 'epg.xml' w folderze"
+
+msgctxt "#30060"
+msgid "Grab EPG Data from external Provider (XMLTV)"
+msgstr "Wykryte dane EPG od zewnętrznych dostawców (XMLTV)"
+
+msgctxt "#30061"
+msgid "Wakeup for EPG Updates"
+msgstr "Cykl aktualizacji EPG"
+
+msgctxt "#30062"
+msgid "Wakeup at"
+msgstr "Włączyć o:"
+
+msgctxt "#30063"
+msgid "Duration of EPG Update until shutdown"
+msgstr "System wyłączy się po:"
+
+msgctxt "#30064"
+msgid "Store EPG Data additionally in file epg.xml"
+msgstr "Przechowywać EPG danych dodatkowo w pliku 'epg.xml'"
+
+msgctxt "#30065"
+msgid "%s: This mail indicates that your setup is ok and works for future notifications."
+msgstr "%%s: Wiadomość oznacza, że konfiguracja jest ok i działa dla przyszłych powiadomień"
+
+msgctxt "#30066"
+msgid "Mail delivered"
+msgstr "Elektronicznej dostarczane"
+
+msgctxt "#30067"
+msgid "Mail not delivered"
+msgstr "E-mail nie dostarczone"
+
+msgctxt "#30068"
+msgid "Mail was successfully delivered to %s. Your setup seems to be ok for further notifications."
+msgstr "E-mail został odebrany %s. Twoja konfiguracja wydaje się być w porządku do dalszych powiadomień."
+
+msgctxt "#30069"
+msgid "An error occured while delivering mail to %s. Check your settings and your logfile for errors and try again."
+msgstr "Wystąpił błąd podczas dostarczania wiadomości e-mail, aby %s. Sprawdź plik dziennika za błędy i spróbuj ponownie."
+
+msgctxt "#30070"
+msgid "00:00 o'Clock"
+msgstr "00:00 godz"
+
+msgctxt "#30071"
+msgid "01:00 o'Clock"
+msgstr "01:00 godz"
+
+msgctxt "#30072"
+msgid "02:00 o'Clock"
+msgstr "02:00 godz"
+
+msgctxt "#30073"
+msgid "03:00 o'Clock"
+msgstr "03:00 godz"
+
+msgctxt "#30074"
+msgid "04:00 o'Clock"
+msgstr "04:00 godz"
+
+msgctxt "#30075"
+msgid "05:00 o'Clock"
+msgstr "05:00 godz"
+
+msgctxt "#30076"
+msgid "06:00 o'Clock"
+msgstr "06:00 godz"
+
+msgctxt "#30077"
+msgid "07:00 o'Clock"
+msgstr "07:00 godz"
+
+msgctxt "#30078"
+msgid "08:00 o'Clock"
+msgstr "08:00 godz"
+
+msgctxt "#30079"
+msgid "09:00 o'Clock"
+msgstr "09:00 godz"
+
+msgctxt "#30080"
+msgid "10:00 o'Clock"
+msgstr "10:00 godz"
+
+msgctxt "#30081"
+msgid "11:00 o'Clock"
+msgstr "11:00 godz"
+
+msgctxt "#30082"
+msgid "12:00 o'Clock"
+msgstr "12:00 godz"
+
+msgctxt "#30083"
+msgid "13:00 o'Clock"
+msgstr "13:00 godz"
+
+msgctxt "#30084"
+msgid "14:00 o'Clock"
+msgstr "14:00 godz"
+
+msgctxt "#30085"
+msgid "15:00 o'Clock"
+msgstr "15:00 godz"
+
+msgctxt "#30086"
+msgid "16:00 o'Clock"
+msgstr "16:00 godz"
+
+msgctxt "#30087"
+msgid "17:00 o'Clock"
+msgstr "17:00 godz"
+
+msgctxt "#30088"
+msgid "18:00 o'Clock"
+msgstr "18:00 godz"
+
+msgctxt "#30089"
+msgid "19:00 o'Clock"
+msgstr "19:00 godz"
+
+msgctxt "#30090"
+msgid "20:00 o'Clock"
+msgstr "20:00 godz"
+
+msgctxt "#30091"
+msgid "21:00 o'Clock"
+msgstr "21:00 godz"
+
+msgctxt "#30092"
+msgid "22:00 o'Clock"
+msgstr "22:00 godz"
+
+msgctxt "#30093"
+msgid "23:00 o'Clock"
+msgstr "23:00 godz"
+
+msgctxt "#30100"
+msgid "off"
+msgstr "wyłączone"
+
+msgctxt "#30101"
+msgid "every Day"
+msgstr "codziennie"
+
+msgctxt "#30102"
+msgid "2 Days"
+msgstr "2 Dni"
+
+msgctxt "#30103"
+msgid "3 Days"
+msgstr "3 Dni"
+
+msgctxt "#30104"
+msgid "4 Days"
+msgstr "4 Dni"
+
+msgctxt "#30105"
+msgid "5 Days"
+msgstr "5 Dni"
+
+msgctxt "#30106"
+msgid "6 Days"
+msgstr "6 Dni"
+
+msgctxt "#30107"
+msgid "7 Days"
+msgstr "7 Dni"

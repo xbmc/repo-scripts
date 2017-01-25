@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<settings>
+	<!-- GENERAL -->
+	<category label="30050">
+		<setting id="conn_attempts" type="labelenum" label="30004" values="1|2|3|4|5|6|7|8|9" default="5" />
+		<setting id="separator" type="sep" />
+		<setting id="margin_start" type="labelenum" label="30000" values="1 min|2 min|3 min|4 min|5 min" default="2 min" />
+		<setting id="margin_stop" type="labelenum" label="30001" values="1 min|2 min|3 min|4 min|5 min" default="1 min" />
+		<setting id="wakeup_method" type="labelenum" label="30002" values="ACPI|NVRAM" default="ACPI" />
+		<setting id="notification_counter" type="labelenum" label="30003" values="15 sec|30 sec|45 sec|60 sec|75 sec|90 sec|105 sec|120 sec|135 sec|150 sec|165 sec|180 sec" default="60 sec" />
+		<setting id="shutdown_method" type="enum" label="30008" lvalues="30012|30013" default="0"/>
+		<setting id="sudo" type="bool" label="30009" default="true" />
+		<setting id="separator" type="sep" />
+        <setting id="next_schedule" type="bool" label="30007" default="false" />
+		<setting id="separator" type="sep" />
+		<setting id="network" type="bool" label="30034" default="false" />
+		<setting id="excluded_ports" type="text" label="30037" enable="eq(-1,true)" default="" />
+		<setting id="separator" type="sep" />
+		<setting id="postprocessor_enable" type="bool" label="30035" default="false" />
+		<setting id="processor_list" type="text" label="30036" enable="eq(-1,true)" default="" />
+	</category>
+	<!-- MAIL SETTINGS -->
+	<category label="30052">
+		<setting id="smtp_sendmail" type="bool" label="30040" default="false" />
+		<setting id="separator" type="sep" />
+		<setting id="smtp_server" type="text" label="30041" enable="eq(-2,true)" default="" />
+		<setting id="smtp_user" type="text" label="30042" enable="eq(-3,true)" default="" />
+		<setting id="smtp_passwd" type="text" option="hidden" label="30043" enable="eq(-4,true)" default="" />
+		<setting id="smtp_encryption" type="labelenum" label="30049" enable="eq(-5,true)" values="STARTTLS|SSL/TLS|None" default="SSL/TLS" />
+		<setting id="separator" type="sep" />
+        <setting id="smtp_from" type="text" label="30044" enable="eq(-7,true)" default="" />
+		<setting id="smtp_to" type="text" label="30045" enable="eq(-8,true)" default="" />
+		<setting id="charset" type="text" label="30048" enable="eq(-9,true)" default="ISO-8859-1" />
+		<setting id="checksettings" type="action" label="30054" option="close" action="RunScript(service.tvh.manager,checkmailsettings)" enable="eq(-10,true)" default="" />
+	</category>
+	<!-- EPG-DATA SETTINGS -->
+	<category label="30053">
+		<setting id="epgtimer_interval" type="enum" label="30061" lvalues="30100|30101|30102|30103|30104|30105|30106|30107" default="2" />
+		<setting id="epgtimer_time" type="enum" label="30062" lvalues="30070|30071|30072|30073|30074|30075|30076|30077|30078|30079|30080|30081|30082|30083|30084|30085|30086|30087|30088|30089|30090|30091|30092|30093|" default="3" />
+		<setting id="epgtimer_duration" type="labelenum" label="30063" values="10 min|15 min|20 min|25 min|30 min|35 min|40 min|45 min" default="20 min" />
+		<setting id="separator" type="sep" />
+		<setting id="epg_grab_ext" type="bool" label="30060" default="false" />
+		<setting id="epg_socket_path" type="text" label="30058" default="/home/hts/.hts/tvheadend/epggrab/pyepg.sock" enable="eq(-1,true)" />
+		<setting id="store_epg" type="bool" label="30064" default="false" enable="eq(-2,true)" />
+		<setting id="epg_path" type="folder" label="30059" option="writeable" enable="eq(-3,true) + eq(-1,true)" />
+	</category>
+</settings>
