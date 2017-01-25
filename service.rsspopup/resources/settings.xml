@@ -1,0 +1,22 @@
+<settings>
+   <category label="3009">       
+		<setting label="30012" type="slider" id="lesezeit" default="6" range="1,1,60" option="int" />
+		<setting label="30013" type="bool" id="greyout" default="true"  />
+        <setting label="30008" type="bool" id="bild" default="true"  />
+		<setting label="30014" type="action" action="RunPlugin(plugin://service.rsspopup/?mode=addrss)"/>
+		<setting label="30015" type="action" action="RunPlugin(plugin://service.rsspopup/?mode=deleterss)"/>
+    </category>
+     <category label="30101">
+	  <setting label="30102" type="bool" id="custom" default="false" />
+	  <setting label="30103" type="text" id="font" default="font13" enable='eq(-1,true)'/>
+	  <setting label="30104" type="text" id="fontcolor" default="FFFFFFFF" enable='eq(-2,true)'/>
+	  <setting label="30105" type="number" id="x-message" default="5" enable='eq(-3,true)'/>        
+	  <setting label="30106" type="number" id="y-message" default="5" enable='eq(-4,true)'/>        	  
+	  <setting label="30107" type="number" id="breite-message" default="1280" enable='eq(-5,true)'/>
+      <setting label="30108" type="number" id="hoehe-message" default="100" enable='eq(-6,true)'/>        	  	  
+	  <setting label="30109" type="number" id="breite-bild" default="100" enable='eq(-7,true)' />        
+	  <setting label="30110" type="number" id="hoehe-bild" default="100" enable='eq(-8,true)'/>        
+	</category>
+   
+</settings>
+ 
