@@ -40,7 +40,6 @@ def log(msg, level=xbmc.LOGDEBUG):
     xbmc.log('%s: %s' % (addonID, msg), level) 
     
     
-# Einlesen von Parametern, Notwendig fuer Reset der Twitter API
 def parameters_string_to_dict(parameters):
 	paramDict = {}
 	if parameters:
@@ -87,7 +86,6 @@ def deleterss():
       
    
    
-# Soll Twitter Api Resetter Werden
 if len(sys.argv) > 1:
     params = parameters_string_to_dict(sys.argv[2])
     mode = urllib.unquote_plus(params.get('mode', ''))
@@ -107,7 +105,7 @@ def geturl(url):
     
 if __name__ == '__main__':
     cimg=""
-    xbmc.log("Twitter:  Starte Plugin")
+    debug("RSS Plugin Started")
 
     schown=[]
     monitor = xbmc.Monitor()   
