@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<strings>
+  <string id="30008">Picture</string> 
+  <string id="30009">generel</string> 
+  <string id="30012">Reading Time</string>
+  <string id="30013">Grey Out</string>  
+  <string id="30014">Rss Feed Add</string>
+  <string id="30015">Rss Feed Delete</string>
+  <string id="30101">Advanced Settings</string>
+  <string id="30102">Advanced (Only If you know what you are doing)</string>
+  <string id="30103">Font</string>
+  <string id="30104">FontColor</string>
+  <string id="30105">X Postition of Message</string>
+  <string id="30106">Y Postition of Message</string>
+  <string id="30107">Width of the Message</string>
+  <string id="30108">Height of the Message</string>
+  <string id="30109">Width of the Image</string>
+  <string id="30110">Height of the Image</string>
+</strings>
+ 

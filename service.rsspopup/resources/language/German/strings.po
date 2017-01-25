@@ -1,0 +1,90 @@
+# XBMC Media Center language file
+# Addon Name: Rss Popus
+# Addon id: service.rsspopup
+# Addon version: 0.3.8
+# Addon Provider: L0RE
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC-Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: 2017-01-25 15:11+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: de\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+
+msgctxt "Addon Summary"
+msgid "Shows RSS Feed in Overlay Message"
+msgstr "Zeigt Rss Updates in Pupup Nachricht"
+
+msgctxt "Addon Description"
+msgid "Shows RSS Feed in Overlay Message, Now you can Watch your Favorite TV show, and get a Message when something is Posted in your favorit Forum(when rss is avaible), or somthing happens in the world (You favorite RSS Newsfeed) "
+msgstr "Zeigt Rss Updates in Pupup Nachrichten an. Entlich kann man Fenssehen und bleibt auf dem Laufenden was im lieblings Forum oder in den Nachrichten Passiert (Solange sie ein RSS Feed Haben)"
+
+msgctxt "#30008"
+msgid "Picture"
+msgstr "Bilder"
+
+msgctxt "#30009"
+msgid "generel"
+msgstr "Generell"
+
+msgctxt "#30012"
+msgid "Reading Time"
+msgstr "Reading Time"
+
+msgctxt "#30013"
+msgid "Grey Out"
+msgstr "Grey Out"
+
+msgctxt "#30014"
+msgid "Rss Feed Add"
+msgstr "Rss Feed"
+
+msgctxt "#30015"
+msgid "Rss Feed Delete"
+msgstr "Rss Feed loeschen"
+
+msgctxt "#30101"
+msgid "Advanced Settings"
+msgstr "Erweiterte Einstellungen"
+
+msgctxt "#30102"
+msgid "Advanced (Only If you know what you are doing)"
+msgstr "Erweiterte Einstellungen (Nur wenn du weißt was du tust"
+
+msgctxt "#30103"
+msgid "Font"
+msgstr "Schrift"
+
+msgctxt "#30104"
+msgid "FontColor"
+msgstr "Schriftfarbe"
+
+msgctxt "#30105"
+msgid "X Postition of Message"
+msgstr "X Postition der Meldung"
+
+msgctxt "#30106"
+msgid "Y Postition of Message"
+msgstr "Y Postition der Meldung"
+
+msgctxt "#30107"
+msgid "Width of the Message"
+msgstr "Breite der Meldung"
+
+msgctxt "#30108"
+msgid "Height of the Message"
+msgstr "Höhe der Meldung"
+
+msgctxt "#30109"
+msgid "Width of the Image"
+msgstr "Breite des Bildes"
+
+msgctxt "#30110"
+msgid "Height of the Image"
+msgstr "Höhe des Bildes"
