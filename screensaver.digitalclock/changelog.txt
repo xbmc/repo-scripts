@@ -1,3 +1,15 @@
+[B]4.0.0[/B]
+- Added log out option
+- Added support for script.skin.helper.colorpicker (Thanks Marcel!)
+- Rewritten color and transparency options, now users can pick their color instead of choosing one of the few predefined ones
+- Added additional information:
+- CPU usage
+- Battery level
+- Free memory
+- Movie library info (Total, Watched, Unwatched)
+- TV Show library info (Total, Watched, Unwatched)
+- Music library info (Artists, Albums, Songs)
+ 
 [B]3.9.0[/B]
 - Got the screensaver to transifex
 - Fixed the zoom bug (when part of the information gets off the screen)
