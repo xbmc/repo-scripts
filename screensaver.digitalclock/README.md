@@ -19,42 +19,54 @@ Additional Information
 - Enable additional information
 - Number of seconds for information switch (Number of seconds before the information will be switched with another one, i.e. Artist - Song - Weather information)
 - Enable now playing information
+- Enable CPU usage information
+- Enable battery level information
+- Enable free memory information
+- Enable movie library information (Total, Watched, Unwatched)
+- Enable TV show library information (Total, Watched, Unwatched)
+- Enable music library information (Artists, Albums, Songs)
 - Enable weather information
 - Weather icons
 - Enable album art
 
-Colors (Users can choose either to have a random color every time the clock moves or one from the list)
-- Random color
-- Hour color
-- Colon color
-- Minute color color
-- AM/PM color
-- Date color
-- Additional information color
-- Icon color
-
-Transparency (Users can choose either to have a random transparency every time the clock moves or one from the list)
-- Random transparency
-- Hour transparency
-- Colon transparency
-- Minute color transparency
-- AM/PM transparency
-- Date transparency
-- Additional information transparency
-- Icon transparency
+Color | Opacity (Users can choose color and opacity for every element, along with random color and random opacity) - Implemented using script.skin.helper.colorpicker - Thanks Marcel!
+- Choose hour color and opacity
+- Random hour color
+- Random hour opacity
+- Choose colon color and opacity
+- Random colon color
+- Random colon opacity
+- Choose minute color and opacity
+- Random minute color
+- Random minute opacity
+- Choose AM/PM color and opacity
+- Random AM/PM color
+- Random AM/PM opacity
+- Choose date color and opacity
+- Random date color
+- Random date opacity
+- Choose additional information color and opacity
+- Random additional information color
+- Random additional information opacity
+- Choose icon color and opacity
+- Random icon color
+- Random icon opacity
 
 Background
-- Text shadow color
+- Choose text shadow color
 - Choose background (One color, Single image, Slideshow, Skin Helper)
-- Choose color
+- Choose background color
 - Choose image
 - Choose slideshow directory
 - Random images (Screensaver chooses a random image from the folder for the background)
 - Change background picture every
-- Choose Skin Helper background (Movie random fanart, TV show random fanart, Music artist random fanart, Random fanart of all media types) 
+- Choose Skin Helper background (Movie random fanart, TV show random fanart, Music artist random fanart, Random fanart of all media types)
 
-Element Size Increase (Users can increase the size of text and icons)
-- Size (%)
+Extra Options
+- Element Size Increase (%) (Users can increase the size of text and icons)
+- Log out
+- Stop now playing media
+- Log out after (minutes)
 
 This screensaver is configured for every skin separately since it has to use Fonts defined by the skin!
 
@@ -101,7 +113,7 @@ If the skin is not on the list screensaver will use default font names from conf
 
 If your skin is not on the list, and you would like it to be - send me a message.
 
-I have tested this screensaver with a couple of languages and on two systems, windows 7 laptop and Raspberry Pi 2 running Openelec.
+I have tested this screensaver with a couple of languages and on two systems, windows 7 laptop and Raspberry Pi 2 running OSMC.
 
 Possible issues:
 Depending on your language and selected date format the date text might become ... that means that the text for the date is too long, I can fix that easily, just let me know if it happens. (Screenshot would be great including which language you are using and how many letters are supposed to be on the screen).
@@ -109,4 +121,10 @@ Depending on your language and selected date format the date text might become .
 Everything else should work just fine, let me know if you encounter any bugs or issues.
 
 We're on Transifex!
-Feel free to translate screensaver.digitalclock to your language: https://www.transifex.com/teamxbmc/kodi-...italclock/
+Feel free to translate screensaver.digitalclock to your language: https://www.transifex.com/teamxbmc/kodi-addons/screensaver-digitalclock/
+
+__Support__
+
+If this screensaver is on your screen consider buying me a beer :)
+
+[![Support](https://www.paypalobjects.com/en_US/i/btn/btn_donate_SM.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=UUQXBVL8H44X8&lc=US&item_name=screensaver%2edigitalclock&item_number=screensaver%2edigitalclock&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted)

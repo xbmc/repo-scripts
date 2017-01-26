@@ -24,7 +24,6 @@ import os
 from datetime import datetime
 
 Addon = xbmcaddon.Addon('screensaver.digitalclock')
-
 path = Addon.getAddonInfo('path').decode("utf-8")
 location = xbmc.getSkinDir()
 scriptname = location + '.xml'
@@ -33,9 +32,10 @@ Addonversion = Addon.getAddonInfo('version')
 class Screensaver(xbmcgui.WindowXMLDialog):
 
 	#setting up zoom
-    window = xbmcgui.Window(12900)	
+    window = xbmcgui.Window(12900)
     window.setProperty("zoomamount",Addon.getSetting('zoomlevel'))
-	
+    del window
+
     class ExitMonitor(xbmc.Monitor):
 
         def __init__(self, exit_callback):
@@ -45,7 +45,7 @@ class Screensaver(xbmcgui.WindowXMLDialog):
             self.exit_callback()
 
     def onInit(self):
-        self.log('INIT')
+        xbmc.log('Digital Clock Screensaver %s: Initialising' %Addonversion)
         self.abort_requested = False
         self.started = False
         self.exit_monitor = self.ExitMonitor(self.exit)
@@ -54,54 +54,10 @@ class Screensaver(xbmcgui.WindowXMLDialog):
         self.colon_control = self.getControl(30102)
         self.minute_control = self.getControl(30103)
         self.ampm_control = self.getControl(30104)
-        self.information_control = self.getControl(30110)		
+        self.information_control = self.getControl(30110)
         self.container = self.getControl(30002)
         self.image_control = self.getControl(30020)
-        self.icon_control = self.getControl(30021)	
-        self.waitcounter = 0
-        self.switchcounter = 0
-        self.iconswitchcounter = 0
-        self.updateweather = 0
-        self.switch = 0
-        self.iconswitch = 0
-        self.switchlimit = 2		
-        self.informationtype = 0
-        self.weather = 0
-        self.movementtype = int(Addon.getSetting('movementtype'))
-        self.movementspeed = int(Addon.getSetting('movementspeed'))
-        self.stayinplace = int(Addon.getSetting('stayinplace'))
-        self.datef=Addon.getSetting('dateformat')
-        self.customdateformat=Addon.getSetting('customdateformat')		
-        self.colonblink=Addon.getSetting('colonblink')		
-        self.timef=Addon.getSetting('timeformat')
-        self.shadowf=Addon.getSetting('shadowformat')		
-        self.ampm_control.setVisible(False)
-        self.informationshow = Addon.getSetting('additionalinformation')	
-        self.nowplayinginfoshow = Addon.getSetting('nowplayinginfoshow')		
-        self.weatherinfoshow = Addon.getSetting('weatherinfoshow')
-        self.albumartshow = Addon.getSetting('albumartshow')		
-        self.weathericonf=Addon.getSetting('weathericonformat')		
-        self.infoswitch = int(Addon.getSetting('infoswitch'))				
-        self.background = Addon.getSetting('backgroundchoice')
-        self.randomimages = Addon.getSetting('randomimages')
-        self.skinhelper = int(Addon.getSetting('skinhelper'))
-        self.randomcolor = Addon.getSetting('randomcolor')
-        self.randomtr = Addon.getSetting('randomtr')
-        self.trh = int(Addon.getSetting('hourtr'))
-        self.trc = int(Addon.getSetting('colontr'))
-        self.trm = int(Addon.getSetting('minutetr'))
-        self.trampm = int(Addon.getSetting('ampmtr'))
-        self.trd = int(Addon.getSetting('datetr'))
-        self.tri = int(Addon.getSetting('informationtr'))
-        self.trw = int(Addon.getSetting('icontr'))		
-        self.ch = int(Addon.getSetting('hourcolor'))
-        self.cc = int(Addon.getSetting('coloncolor'))
-        self.cm = int(Addon.getSetting('minutecolor'))
-        self.campm = int(Addon.getSetting('ampmcolor'))
-        self.cd = int(Addon.getSetting('datecolor'))
-        self.ci = int(Addon.getSetting('informationcolor'))
-        self.cw = int(Addon.getSetting('iconcolor'))
-        self.zoom = float(Addon.getSetting('zoomlevel'))
+        self.icon_control = self.getControl(30021)
         self.hour_colorcontrol = self.getControl(30105)
         self.colon_colorcontrol = self.getControl(30106)
         self.minute_colorcontrol = self.getControl(30107)
@@ -109,14 +65,90 @@ class Screensaver(xbmcgui.WindowXMLDialog):
         self.date_colorcontrol = self.getControl(30109)
         self.information_colorcontrol = self.getControl(30111)
         self.shadow_colorcontrol = self.getControl(30112)
+        self.waitcounter = 0
+        self.switchcounter = 0
+        self.iconswitchcounter = 0
+        self.logoutcounter = 0
+        self.switch = 0
+        self.iconswitch = 0
+        self.movementtype = int(Addon.getSetting('movementtype'))
+        self.movementspeed = int(Addon.getSetting('movementspeed'))
+        self.stayinplace = int(Addon.getSetting('stayinplace'))
+        self.datef = Addon.getSetting('dateformat')
+        self.customdateformat = Addon.getSetting('customdateformat')
+        self.colonblink = Addon.getSetting('colonblink')
+        self.timef = Addon.getSetting('timeformat')
+        self.ampm_control.setVisible(False)
+        self.informationshow = Addon.getSetting('additionalinformation')
+        self.nowplayinginfoshow = Addon.getSetting('nowplayinginfoshow')
+        self.cpuusage = Addon.getSetting('cpuusage')
+        self.batterylevel = Addon.getSetting('batterylevel')
+        self.freememory = Addon.getSetting('freememory')
+        self.movies = Addon.getSetting('movies')
+        self.tvshows = Addon.getSetting('tvshows')
+        self.music = Addon.getSetting('music')
+        self.weatherinfoshow = Addon.getSetting('weatherinfoshow')
+        self.albumartshow = Addon.getSetting('albumartshow')
+        self.weathericonf = Addon.getSetting('weathericonformat')
+        self.infoswitch = int(Addon.getSetting('infoswitch'))	
+        self.background = Addon.getSetting('backgroundchoice')
+        self.randomimages = Addon.getSetting('randomimages')
+        self.skinhelper = int(Addon.getSetting('skinhelper'))
+        self.hourcolor = xbmc.getInfoLabel("Skin.String(screensaver.digitalclock.hourcolor)")
+        self.coloncolor = xbmc.getInfoLabel("Skin.String(screensaver.digitalclock.coloncolor)")
+        self.minutecolor = xbmc.getInfoLabel("Skin.String(screensaver.digitalclock.minutecolor)")
+        self.ampmcolor = xbmc.getInfoLabel("Skin.String(screensaver.digitalclock.ampmcolor)")
+        self.datecolor = xbmc.getInfoLabel("Skin.String(screensaver.digitalclock.datecolor)")
+        self.informationcolor = xbmc.getInfoLabel("Skin.String(screensaver.digitalclock.informationcolor)")
+        self.iconcolor = xbmc.getInfoLabel("Skin.String(screensaver.digitalclock.iconcolor)")
+        self.shadowcolor = xbmc.getInfoLabel("Skin.String(screensaver.digitalclock.shadowcolor)")
+        self.backgroundcolor = xbmc.getInfoLabel("Skin.String(screensaver.digitalclock.backgroundcolor)")
+        self.trh = Addon.getSetting('hourtr')
+        self.trc = Addon.getSetting('colontr')
+        self.trm = Addon.getSetting('minutetr')
+        self.trampm = Addon.getSetting('ampmtr')
+        self.trd = Addon.getSetting('datetr')
+        self.tri = Addon.getSetting('informationtr')
+        self.trw = Addon.getSetting('icontr')
+        self.ch = Addon.getSetting('hourcolor')
+        self.cc = Addon.getSetting('coloncolor')
+        self.cm = Addon.getSetting('minutecolor')
+        self.campm = Addon.getSetting('ampmcolor')
+        self.cd = Addon.getSetting('datecolor')
+        self.ci = Addon.getSetting('informationcolor')
+        self.cw = Addon.getSetting('iconcolor')
+        self.zoom = float(Addon.getSetting('zoomlevel'))
+        self.logout = Addon.getSetting('logout')
+        self.logoutplaying = Addon.getSetting('logoutplaying')
+        self.logouttime = int(Addon.getSetting('logouttime'))
         self.monitor = xbmc.Monitor()
-			
+
+		#setting up colors if they haven't been set up in settings
+        if not(self.backgroundcolor):
+             self.backgroundcolor = 'FF000000'
+        if not(self.shadowcolor):
+             self.shadowcolor = '00000000'
+        if not(self.hourcolor):
+             self.hourcolor = 'FFFFFFFF'
+        if not(self.coloncolor):
+             self.coloncolor = 'FFFFFFFF'
+        if not(self.minutecolor):
+             self.minutecolor = 'FFFFFFFF'
+        if not(self.ampmcolor):
+             self.ampmcolor = 'FFFFFFFF'
+        if not(self.datecolor):
+             self.datecolor = 'FFFFFFFF'
+        if not(self.informationcolor):
+             self.informationcolor = 'FFFFFFFF'
+        if not(self.iconcolor):
+             self.iconcolor = 'FFFFFFFF'
+
 		#setting up background and slideshow
         self.timer = ['15','30','60','120','180','240','300','360','420','480','540','600']
-        self.slideshowcounter = 0		
+        self.slideshowcounter = 0
         if self.background == '0':
-            self.image = ['white.png','red.png','green.png','blue.png','yellow.png','black.png']		
-            self.image_control.setImage(self.image[int(Addon.getSetting('image'))])
+            self.image_control.setImage(os.path.join(path,"resources/media/white.png"))
+            self.image_control.setColorDiffuse(self.backgroundcolor)
         elif self.background == '1':
             self.image_control.setImage(Addon.getSetting('file'))
         elif self.background == '2':
@@ -134,119 +166,129 @@ class Screensaver(xbmcgui.WindowXMLDialog):
                 self.nextfile = 0
             self.image_control.setImage(self.path)
         else:
-            self.imagetimer = int(self.timer[int(Addon.getSetting('imagetimer'))])		
+            self.imagetimer = int(self.timer[int(Addon.getSetting('imagetimer'))])
             xbmc.executebuiltin('Skin.SetString(SkinHelper.RandomFanartDelay,%s)' %self.imagetimer)
             if self.skinhelper == 0:
                 self.skinhelperimage = "$INFO[Window(Home).Property(SkinHelper.AllMoviesBackground)]"
             elif self.skinhelper == 1:
-                self.skinhelperimage = "$INFO[Window(Home).Property(SkinHelper.AllTvShowsBackground)]"			
+                self.skinhelperimage = "$INFO[Window(Home).Property(SkinHelper.AllTvShowsBackground)]"	
             elif self.skinhelper == 2:
                 self.skinhelperimage = "$INFO[Window(Home).Property(SkinHelper.AllMusicBackground)]"
             else:
-                self.skinhelperimage = "$INFO[Window(Home).Property(SkinHelper.GlobalFanartBackground)]"			
+                self.skinhelperimage = "$INFO[Window(Home).Property(SkinHelper.GlobalFanartBackground)]"	
             self.image_control.setImage(xbmc.getInfoLabel(self.skinhelperimage))
-			
-		#setting up color transparency
-        self.transparency = ['FF','E5','CC','B2','99','7F','66','4C','33','19','00']
-		
-		#setting up colors
-        self.color = ['FFFFFF','FF0000','00FF00','0000FF','FFFF00','000000']
-		
-		#setting up shadow colors
-        self.shadowcolor = ['00000000','FFFFFFFF','FF808080','FF000000']
-        self.shadow_colorcontrol.setLabel(self.shadowcolor[int(self.shadowf)])
-     
+
+		#setting up shadow color
+        self.shadow_colorcontrol.setLabel(self.shadowcolor)
+
         #setting up information
-        if self.informationshow == 'true':		
+        self.informationlist = []
+        if self.informationshow == 'true':
             if self.nowplayinginfoshow == 'true':
                 if xbmc.getInfoLabel('MusicPlayer.Artist') and xbmc.getInfoLabel('MusicPlayer.Title'):
-                    self.informationtype = 1
-                    self.information = '$INFO[MusicPlayer.Artist]'
-                elif xbmc.getInfoLabel('VideoPlayer.TVShowTitle') and xbmc.getInfoLabel('VideoPlayer.Title'):
-                    self.informationtype = 2
-                    self.information = '$INFO[MusicPlayer.TVShowTitle]'
-                elif xbmc.getInfoLabel('VideoPlayer.Title'):
-                    self.informationtype = 3
-                    self.information = '$INFO[VideoPlayer.Title]'
-                elif xbmc.getInfoLabel('MusicPlayer.Title'):
-                    self.informationtype = 4
-                    self.split = xbmc.getInfoLabel('MusicPlayer.Title').split(' - ')
-                    self.information = self.split[0]			
-            if self.weatherinfoshow == 'true':
-                if xbmc.getInfoLabel('Weather.Location'):
-                    self.weather = 1
-                    self.switchlimit = 3					
-                    if self.informationtype == 0:
-                        self.informationtype = 5						
-                        self.information = xbmc.getInfoLabel('Weather.Temperature') + ' - ' + xbmc.getInfoLabel('Weather.Conditions')				
+                    self.informationlist.append('$INFO[MusicPlayer.Artist]')
+                    self.informationlist.append('$INFO[MusicPlayer.Title]')
+                if xbmc.getInfoLabel('VideoPlayer.TVShowTitle'):
+                    self.informationlist.append('$INFO[VideoPlayer.TVShowTitle]')
+                if xbmc.getInfoLabel('VideoPlayer.Title'):
+                    self.informationlist.append('$INFO[VideoPlayer.Title]')
+            if self.cpuusage == 'true' and xbmc.getInfoLabel('System.CpuUsage'):
+                if xbmc.getInfoLabel('System.CpuUsage').count('%') > 1:
+                    self.informationlist.append("$INFO[System.CpuUsage]")
+                else:
+                    self.informationlist.append("$ADDON[screensaver.digitalclock 32280] $INFO[System.CpuUsage]")					
+            if self.batterylevel == 'true' and xbmc.getInfoLabel('System.BatteryLevel'):
+                self.informationlist.append("$ADDON[screensaver.digitalclock 32281] $INFO[System.BatteryLevel]")
+            if self.freememory == 'true' and xbmc.getInfoLabel('System.FreeMemory'):
+                self.informationlist.append("$ADDON[screensaver.digitalclock 32282] $INFO[System.FreeMemory] ($INFO[System.Memory(free.percent)])")
+            if self.movies == 'true' and xbmc.getInfoLabel('Window(Home).Property(Movies.Count)'):
+                self.informationlist.append("$ADDON[screensaver.digitalclock 32283] $INFO[Window(Home).Property(Movies.Count)]")
+                self.informationlist.append("$ADDON[screensaver.digitalclock 32284] $INFO[Window(Home).Property(Movies.Watched)]")
+                self.informationlist.append("$ADDON[screensaver.digitalclock 32285] $INFO[Window(Home).Property(Movies.UnWatched)]")
+            if self.tvshows == 'true' and xbmc.getInfoLabel('Window(Home).Property(TVShows.Count)'):
+                self.informationlist.append("$ADDON[screensaver.digitalclock 32286] $INFO[Window(Home).Property(TVShows.Count)]")
+                self.informationlist.append("$ADDON[screensaver.digitalclock 32287] $INFO[Window(Home).Property(Episodes.Count)]")
+                self.informationlist.append("$ADDON[screensaver.digitalclock 32288] $INFO[Window(Home).Property(TVShows.Watched)]")
+                self.informationlist.append("$ADDON[screensaver.digitalclock 32289] $INFO[Window(Home).Property(Episodes.Watched)]")
+                self.informationlist.append("$ADDON[screensaver.digitalclock 32290] $INFO[Window(Home).Property(TVShows.UnWatched)]")
+                self.informationlist.append("$ADDON[screensaver.digitalclock 32291] $INFO[Window(Home).Property(Episodes.UnWatched)]")
+            if self.music == 'true' and xbmc.getInfoLabel('Window(Home).Property(Music.SongsCount)'):
+                self.informationlist.append("$ADDON[screensaver.digitalclock 32292] $INFO[Window(Home).Property(Music.ArtistsCount)]")
+                self.informationlist.append("$ADDON[screensaver.digitalclock 32293] $INFO[Window(Home).Property(Music.AlbumsCount)]")
+                self.informationlist.append("$ADDON[screensaver.digitalclock 32294] $INFO[Window(Home).Property(Music.SongsCount)]")
+            if self.weatherinfoshow == 'true' and xbmc.getInfoLabel('Weather.Location'):
+                self.informationlist.append("$INFO[Weather.Temperature] - $INFO[Weather.Conditions]")
+            if len(self.informationlist) != 0:
+                self.information = self.informationlist[0]
 
 		#setting up the date format and positions
-        self.dateformat = ['Hide date','$INFO[System.Date(DDD dd. MMM yyyy)]','$INFO[System.Date(dd.mm.yyyy)]','$INFO[System.Date(mm.dd.yyyy)]']		
+        self.dateformat = ['Hide date','$INFO[System.Date(DDD dd. MMM yyyy)]','$INFO[System.Date(dd.mm.yyyy)]','$INFO[System.Date(mm.dd.yyyy)]']
         if self.datef == '0':
             self.date_control.setVisible(False)
             if self.informationshow == 'true':
-                if self.informationtype != 0:
-                    self.information_control.setPosition(0, 85)				
+                if len(self.informationlist) != 0:
+                    self.information_control.setPosition(0, 85)
                     if ((self.weathericonf != '0' and xbmc.getInfoLabel('Weather.Location')) or (self.albumartshow =='true' and xbmc.getInfoLabel('MusicPlayer.Artist'))):
-                        self.icon_control.setPosition(115, 120)					
+                        self.icon_control.setPosition(115, 120)
                         self.container.setHeight(int(240 + 30 * (self.zoom / 100 - 1)))
                     else:
                         self.container.setHeight(int(150 + 50 * (self.zoom / 100 - 1)))
-                        self.icon_control.setVisible(False)						
+                        self.icon_control.setVisible(False)
                 else:
                     if ((self.weathericonf != '0' and xbmc.getInfoLabel('Weather.Location')) or (self.albumartshow =='true' and xbmc.getInfoLabel('MusicPlayer.Artist'))):
-                        self.icon_control.setPosition(115, 90)					
+                        self.icon_control.setPosition(115, 90)
                         self.container.setHeight(int(210 + 50 * (self.zoom / 100 - 1)))
                     else:
                         self.container.setHeight(int(90 + 110 * (self.zoom / 100 - 1)))
-                        self.icon_control.setVisible(False)				
-                    self.information_control.setVisible(False)					
+                        self.icon_control.setVisible(False)
+                    self.information_control.setVisible(False)
             else:
                 self.container.setHeight(int(100 + 110 * (self.zoom / 100 - 1)))
-                self.icon_control.setVisible(False)					
+                self.icon_control.setVisible(False)
                 self.information_control.setVisible(False)
         else:
             if self.informationshow == 'true':
-                if self.informationtype != 0:
+                if len(self.informationlist) != 0:
                     if not((self.weathericonf != '0' and xbmc.getInfoLabel('Weather.Location')) or (self.albumartshow =='true' and xbmc.getInfoLabel('MusicPlayer.Artist'))):
-                        self.container.setHeight(int(160 + 70 * (self.zoom / 100 - 1)))
-                        self.icon_control.setVisible(False)						
+                        self.container.setHeight(int(180 + 50 * (self.zoom / 100 - 1)))
+                        self.icon_control.setVisible(False)
                 else:
                     if ((self.weathericonf != '0' and xbmc.getInfoLabel('Weather.Location')) or (self.albumartshow =='true' and xbmc.getInfoLabel('MusicPlayer.Artist'))):
-                        self.icon_control.setPosition(115, 120)					
+                        self.icon_control.setPosition(115, 120)
                         self.container.setHeight(int(240 + 30 * (self.zoom / 100 - 1)))
                     else:
                         self.container.setHeight(int(140 + 50 * (self.zoom / 100 - 1)))
-                        self.icon_control.setVisible(False)				
-                    self.information_control.setVisible(False)					
+                        self.icon_control.setVisible(False)
+                    self.information_control.setVisible(False)
             else:
                 self.container.setHeight(int(150 + 50 * (self.zoom / 100 - 1)))
-                self.icon_control.setVisible(False)					
-                self.information_control.setVisible(False)			
-				
-        if int(self.datef) == 4:		
+                self.icon_control.setVisible(False)
+                self.information_control.setVisible(False)
+
+		#setting up custom format
+        if int(self.datef) == 4:
             self.date = ('$INFO[System.Date(%s)]' %self.customdateformat)
-        else:				
+        else:
             self.date = self.dateformat[int(self.datef)]
 
 		#setting weather icon set
         self.weathericonset = ['Hide weather icon','set1','set2','set3','set4']
-	
+
 		#setting the icon image
         if self.weathericonf != '0':
-            self.icon = os.path.join(path,"resources/skins/default/weathericons/",self.weathericonset[int(self.weathericonf)],xbmc.getInfoLabel('Window(Weather).Property(Current.FanartCode)')) + ".png"
+            self.icon = os.path.join(path,"resources/weathericons/",self.weathericonset[int(self.weathericonf)],xbmc.getInfoLabel('Window(Weather).Property(Current.FanartCode)')) + ".png"
         elif self.albumartshow == 'true':
             self.icon = xbmc.getInfoLabel('Player.art(thumb)')
         else:
-            self.icon_control.setImage(os.path.join(path,"resources/skins/default/weathericons/",self.weathericonset[int(self.weathericonf)],xbmc.getInfoLabel('Window(Weather).Property(Current.FanartCode)')) + ".png")
-			
+            self.icon_control.setImage(os.path.join(path,"resources/weathericons/",self.weathericonset[int(self.weathericonf)],xbmc.getInfoLabel('Window(Weather).Property(Current.FanartCode)')) + ".png")
+
 		#setting up the time format
         self.timeformat = ['%H','%I','%I']
         if self.timef == '2':
            self.ampm_control.setVisible(True)
         self.time = self.timeformat[int(self.timef)]
-		
-		#setting up movement type and wait timer	
+
+		#setting up movement type and wait timer
         if self.movementtype == 0:
             self.waittimer = 0.5
             self.multiplier = 2
@@ -258,36 +300,38 @@ class Screensaver(xbmcgui.WindowXMLDialog):
         elif self.movementtype == 3:
             self.waittimer = 0.5
             self.multiplier = 2
-            self.container.setPosition(int(Addon.getSetting('customx')),int(Addon.getSetting('customy')))			
+            self.container.setPosition(int(Addon.getSetting('customx')),int(Addon.getSetting('customy')))
         else:
             self.waittimer = 0.5
             self.multiplier = 2
-		
+
 		#setting up the screen size
         self.height = self.container.getHeight()
         self.width = self.container.getWidth()
-        self.screeny = int(720 + 120 * (self.zoom / 100 - 1) - self.height * self.zoom / 100)
-        self.screenx = int(1280 - self.width * self.zoom / 100)
-		
+        self.screenye = int(720 + 120 * (self.zoom / 100 - 1) - self.height * self.zoom / 100)
+        self.screenys = int(280 * (self.zoom / 100 - 1) - 18 * (self.zoom / 100 - 1))
+        self.screenxe = int(1280 - self.width * self.zoom / 100)
+        self.screenxs = int(360 * (self.zoom / 100 - 1))
+
 		#combining transparency and color
         self.setCTR()
         self.Display()
-		
+
         self.DisplayTime()
-        
+
     def DisplayTime(self):
-        while not self.abort_requested:				
-		
-            #switching information	
+        while not self.abort_requested:
+
+            #switching information
             self.Switch()
 
 			#movement
-            if self.movementtype == 0:			
+            if self.movementtype == 0:
                 #random movement
-                self.waitcounter += 1			
-                if self.waitcounter == (self.multiplier*self.stayinplace):
-                    new_x = random.randint(int(360 * (self.zoom / 100 - 1)),self.screenx)
-                    new_y = random.randint(int(280 * (self.zoom / 100 - 1) - 18 * (self.zoom / 100 - 1)),self.screeny)
+                self.waitcounter += 1
+                if self.waitcounter >= (self.multiplier*self.stayinplace):
+                    new_x = random.randint(self.screenxs,self.screenxe)
+                    new_y = random.randint(self.screenys,self.screenye)
                     self.container.setPosition(new_x,new_y)
                     self.waitcounter = 0
                     self.setCTR()
@@ -296,27 +340,27 @@ class Screensaver(xbmcgui.WindowXMLDialog):
                 self.currentposition = self.container.getPosition()
                 new_x = self.currentposition[0] + self.dx
                 new_y = self.currentposition[1] + self.dy
-                if new_x >= self.screenx or new_x <= int(360 * (self.zoom / 100 - 1)):
+                if new_x >= self.screenxe or new_x <= self.screenxs:
                     self.dx = self.dx*-1
-                    new_x = self.currentposition[0] + self.dx					
-                    self.setCTR()					
-                if new_y >= self.screeny or new_y <= int(280 * (self.zoom / 100 - 1) - 18 * (self.zoom / 100 - 1)):
+                    new_x = self.currentposition[0] + self.dx		
+                    self.setCTR()
+                if new_y >= self.screenye or new_y <= self.screenys:
                     self.dy = self.dy*-1
-                    new_y = self.currentposition[1] + self.dy					
-                    self.setCTR()					
+                    new_y = self.currentposition[1] + self.dy
+                    self.setCTR()
                 self.container.setPosition(new_x,new_y)
 
 		    #display time
-            self.Display()			
-				
+            self.Display()
+
 			#slideshow
             if self.background == '2':
                 self.slideshowcounter +=1
-                if self.slideshowcounter == (self.multiplier*self.imagetimer):
+                if self.slideshowcounter >= (self.multiplier*self.imagetimer):
                     if self.randomimages =='true':
                         self.nextfile = random.randint(0,self.number)
                     self.path = self.folder + self.files[self.nextfile]
-                    self.image_control.setImage(self.path)	
+                    self.image_control.setImage(self.path)
                     self.nextfile +=1
                     self.slideshowcounter = 0
                     if self.nextfile > self.number:
@@ -325,161 +369,127 @@ class Screensaver(xbmcgui.WindowXMLDialog):
 			#skin helper
             if self.background == '3':
                 self.slideshowcounter +=1
-                if self.slideshowcounter == (self.multiplier*self.imagetimer):
+                if self.slideshowcounter >= (self.multiplier*self.imagetimer):
                     self.image_control.setImage(xbmc.getInfoLabel(self.skinhelperimage))
                     self.slideshowcounter = 0
-				
+
 			#colon blink
-            if self.colonblink == 'true':			
+            if self.colonblink == 'true':	
                 if datetime.now().second%2==0:
                     self.colon_control.setVisible(True)
                 else:
                     self.colon_control.setVisible(False)
-            else:					
+            else:
                 self.colon_control.setVisible(True)
-				
+
+			#log out
+            if self.logout == 'true' and xbmc.getCondVisibility('Window.Previous(loginscreen)') == 0:
+                self.logoutcounter +=1
+                if self.logoutcounter >= (self.multiplier*self.logouttime*60):
+                    if xbmc.getCondVisibility('Player.HasMedia') == 1:
+                        if self.logoutplaying == 'true':
+                            xbmc.executebuiltin("PlayerControl(Stop)")
+                            xbmc.log('Digital Clock Screensaver %s: Stopping media' %Addonversion)
+                            xbmc.executebuiltin("System.LogOff")
+                            xbmc.log('Digital Clock Screensaver %s: Logging out' %Addonversion)
+                            self.logoutcounter = 0
+                    else:
+                        xbmc.executebuiltin("System.LogOff")
+                        xbmc.log('Digital Clock Screensaver %s: Logging out' %Addonversion)
+                        self.logoutcounter = 0
+
             self.monitor.waitForAbort(self.waittimer)
-			
-        if self.abort_requested:
-            self.log('Digital Clock abort_requested')
-            self.exit()
-            return
-			
+
     def setCTR(self):
-        if self.randomcolor == 'false' and self.randomtr == 'false':
-            self.hourcolor = self.transparency[self.trh] + self.color[self.ch]
-            self.coloncolor = self.transparency[self.trc] + self.color[self.cc]
-            self.minutecolor = self.transparency[self.trm] + self.color[self.cm]
-            self.ampmcolor = self.transparency[self.trampm] + self.color[self.campm]
-            self.datecolor = self.transparency[self.trd] + self.color[self.cd]
-            self.informationcolor = self.transparency[self.tri] + self.color[self.ci]
-            self.iconcolor = self.transparency[self.trw] + self.color[self.cw]		
-        elif self.randomcolor == 'true' and self.randomtr == 'false':
-            self.rc = str("%06x" % random.randint(0, 0xFFFFFF))
-            self.hourcolor = self.transparency[self.trh] + self.rc
-            self.coloncolor = self.transparency[self.trc] + self.rc
-            self.minutecolor = self.transparency[self.trm] + self.rc
-            self.ampmcolor = self.transparency[self.trampm] + self.rc
-            self.datecolor = self.transparency[self.trd] + self.rc
-            self.informationcolor = self.transparency[self.tri] + self.rc
-            self.iconcolor = self.transparency[self.trw] + self.rc			
-        elif self.randomcolor == 'false' and self.randomtr == 'true':
-            self.rtr = str("%02x" % random.randint(0x4C, 0xFF))
-            self.hourcolor = self.rtr + self.color[self.ch]
-            self.coloncolor = self.rtr + self.color[self.cc]
-            self.minutecolor = self.rtr + self.color[self.cm]
-            self.ampmcolor = self.rtr + self.color[self.campm]
-            self.datecolor = self.rtr + self.color[self.cd]
-            self.informationcolor = self.rtr + self.color[self.ci]
-            self.iconcolor = self.rtr + self.color[self.cw]			
-        elif self.randomcolor == 'true' and self.randomtr == 'true':
-            self.rc = str("%06x" % random.randint(0, 0xFFFFFF))
-            self.rtr = str("%02x" % random.randint(0x4C, 0xFF))
-            self.hourcolor = self.rtr + self.rc
-            self.coloncolor = self.rtr + self.rc
-            self.minutecolor = self.rtr + self.rc
-            self.ampmcolor = self.rtr + self.rc
-            self.datecolor = self.rtr + self.rc
-            self.informationcolor = self.rtr + self.rc
-            self.iconcolor = self.rtr + self.rc		
+        self.rc = str("%06x" % random.randint(0, 0xFFFFFF))
+        self.rtr = str("%02x" % random.randint(0, 0xFF))
+		#random color
+        if self.ch == 'true':
+            self.hourcolor = self.hourcolor[:2] + self.rc
+        if self.cc == 'true':
+            self.coloncolor = self.coloncolor[:2] + self.rc
+        if self.cm == 'true':
+            self.minutecolor = self.minutecolor[:2] + self.rc
+        if self.campm == 'true':
+            self.ampmcolor = self.ampmcolor[:2] + self.rc
+        if self.cd == 'true':
+            self.datecolor = self.datecolor[:2] + self.rc
+        if self.ci == 'true':
+            self.informationcolor = self.informationcolor[:2] + self.rc
+        if self.cw == 'true':
+            self.iconcolor = self.iconcolor[:2] + self.rc
+		#random transparency
+        if self.trh == 'true':
+            self.hourcolor = self.rtr + self.hourcolor[2:]
+            self.shadowcolor = self.rtr + self.shadowcolor[2:]
+        if self.trc == 'true':
+            self.coloncolor = self.rtr + self.coloncolor[2:]
+            self.shadowcolor = self.rtr + self.shadowcolor[2:]
+        if self.trm == 'true':
+            self.minutecolor = self.rtr + self.minutecolor[2:]
+            self.shadowcolor = self.rtr + self.shadowcolor[2:]
+        if self.trampm == 'true':
+            self.ampmcolor = self.rtr + self.ampmcolor[2:]
+            self.shadowcolor = self.rtr + self.shadowcolor[2:]
+        if self.trd == 'true':
+            self.datecolor = self.rtr + self.datecolor[2:]
+            self.shadowcolor = self.rtr + self.shadowcolor[2:]
+        if self.tri == 'true':
+            self.informationcolor = self.rtr + self.informationcolor[2:]
+            self.shadowcolor = self.rtr + self.shadowcolor[2:]
+        if self.trw == 'true':
+            self.iconcolor = self.rtr + self.iconcolor[2:]
+            self.shadowcolor = self.rtr + self.shadowcolor[2:]
 
     def Display(self):
         self.hour_control.setLabel(datetime.now().strftime(self.time))
-        self.colon_control.setLabel(" : ")   			
+        self.colon_control.setLabel(" : ")
         self.minute_control.setLabel(datetime.now().strftime("%M"))
         self.ampm_control.setLabel(datetime.now().strftime("%p"))
         self.date_control.setLabel(self.date)
-        if self.informationtype != 0:
+        if len(self.informationlist) != 0:
             self.information_control.setLabel(self.information)
         if self.weathericonf != '0' or self.albumartshow == 'true':
             self.icon_control.setImage(self.icon)
         self.hour_colorcontrol.setLabel(self.hourcolor)
-        self.colon_colorcontrol.setLabel(self.coloncolor)   			
+        self.colon_colorcontrol.setLabel(self.coloncolor)
         self.minute_colorcontrol.setLabel(self.minutecolor)
         self.ampm_colorcontrol.setLabel(self.ampmcolor)
         self.date_colorcontrol.setLabel(self.datecolor)
         self.information_colorcontrol.setLabel(self.informationcolor)
-        self.icon_control.setColorDiffuse(self.iconcolor)		
+        self.icon_control.setColorDiffuse(self.iconcolor)
+        self.shadow_colorcontrol.setLabel(self.shadowcolor)
 
     def Switch(self):
-        if self.informationtype == 1:
-            self.split = xbmc.getInfoLabel('MusicPlayer.Title').split(' (')		
+        if len(self.informationlist) > 1:
             self.switchcounter += 1
             if self.switchcounter == (self.multiplier*self.infoswitch):
                 self.switch += 1
                 self.switchcounter = 0
-                if self.switch == self.switchlimit:
-                    self.switch = 0
-            if self.switch == 0:
-                self.information = '$INFO[MusicPlayer.Artist]'
-            elif self.switch == 1:
-                self.information = self.split[0]
-            else:
-                self.information = xbmc.getInfoLabel('Weather.Temperature') + ' - ' + xbmc.getInfoLabel('Weather.Conditions')			
-        elif self.informationtype == 2:
-            self.switchcounter += 1		
-            if self.switchcounter == (self.multiplier*self.infoswitch):
-                self.switch += 1
-                self.switchcounter = 0
-                if self.switch == self.switchlimit:
-                    self.switch = 0
-            if self.switch == 0:
-                self.information = '$INFO[VideoPlayer.TVShowTitle]'
-            elif self.switch == 1:
-                self.information = '$INFO[VideoPlayer.Title]'
-            else:
-                self.information = xbmc.getInfoLabel('Weather.Temperature') + ' - ' + xbmc.getInfoLabel('Weather.Conditions')
-        elif self.informationtype == 3:
-            if self.switchlimit-1 == 2:		
-                self.switchcounter += 1		
-                if self.switchcounter == (self.multiplier*self.infoswitch):
-                    self.switch += 1
-                    self.switchcounter = 0
-                    if self.switch == self.switchlimit-1:
-                        self.switch = 0
-                if self.switch == 0:
-                    self.information = '$INFO[VideoPlayer.Title]'
-                else:
-                    self.information = xbmc.getInfoLabel('Weather.Temperature') + ' - ' + xbmc.getInfoLabel('Weather.Conditions')					
-        elif self.informationtype == 4:
-            self.split = xbmc.getInfoLabel('MusicPlayer.Title').split(' - ')			
-            self.switchcounter += 1		
-            if self.switchcounter == (self.multiplier*self.infoswitch):
-                self.switch += 1
-                self.switchcounter = 0
-                if self.switch == self.switchlimit:
-                    self.switch = 0
-            if self.switch == 0:
-                self.information = self.split[0]
-            elif self.switch == 1:
-                self.information = self.split[1]
-            else:
-                self.information = xbmc.getInfoLabel('Weather.Temperature') + ' - ' + xbmc.getInfoLabel('Weather.Conditions')
-        elif self.informationtype == 5:
-            self.information = xbmc.getInfoLabel('Weather.Temperature') + ' - ' + xbmc.getInfoLabel('Weather.Conditions')
+                self.information = self.informationlist[self.switch]
+                if self.switch == len(self.informationlist)-1:
+                    self.switch = -1
+
         if self.weathericonf != '0' and self.albumartshow == 'true' and xbmc.getInfoLabel('Player.art(thumb)'):
             self.iconswitchcounter += 1
             if self.iconswitchcounter == (self.multiplier*self.infoswitch):
                 self.iconswitch += 1
                 self.iconswitchcounter = 0
-                if self.iconswitch == self.switchlimit:
+                if self.iconswitch == 2:
                     self.iconswitch = 0
             if self.iconswitch == 0:
-                self.icon = os.path.join(path,"resources/skins/default/weathericons/",self.weathericonset[int(self.weathericonf)],xbmc.getInfoLabel('Window(Weather).Property(Current.FanartCode)')) + ".png"
+                self.icon = os.path.join(path,"resources/weathericons/",self.weathericonset[int(self.weathericonf)],xbmc.getInfoLabel('Window(Weather).Property(Current.FanartCode)')) + ".png"
             else:
-                self.icon = xbmc.getInfoLabel('Player.art(thumb)')			
-		
+                self.icon = xbmc.getInfoLabel('Player.art(thumb)')
+
     def exit(self):
         self.abort_requested = True
         self.exit_monitor = None
-        self.log('exit')
+        xbmc.log('Digital Clock Screensaver %s: Abort requested' %Addonversion)
         self.close()
 
-    def log(self, msg):
-        xbmc.log(u'Digital Clock Screensaver: %s' % msg)
-
 if __name__ == '__main__':
-    xbmc.log('Digital Clock Screensaver version %s started' % Addonversion)
+    xbmc.log('Digital Clock Screensaver %s: Started' %Addonversion)
     if(os.path.isfile(xbmc.translatePath('special://skin/1080i/script-screensaver-digitalclock-custom.xml'))):
         screensaver = Screensaver('script-screensaver-digitalclock-custom.xml', xbmc.translatePath('special://skin/1080i/'), 'default')
     elif(os.path.isfile(xbmc.translatePath('special://skin/720p/script-screensaver-digitalclock-custom.xml'))):
@@ -493,8 +503,9 @@ if __name__ == '__main__':
     elif(os.path.isfile(os.path.join(path,"resources/skins/default/720p/",scriptname))):
         screensaver = Screensaver(scriptname, path, 'default')
     else:
-        screensaver = Screensaver('skin.default.xml', path, 'default')	
+        screensaver = Screensaver('skin.default.xml', path, 'default')
     screensaver.doModal()
+    screensaver.close()
     del screensaver
-    xbmc.log('Digital Clock Screensaver stopped')	
+    xbmc.log('Digital Clock Screensaver %s: Stopped' %Addonversion)
     sys.modules.clear()
