@@ -109,7 +109,7 @@ class Player(xbmc.Player):
         if self.postplaywindow is not None:
            self.showPostPlay()
 
-    def iStream_fix(self, show_npid, showtitle, episode_np, season_np):
+    def checkStrms(self, show_npid, showtitle, episode_np, season_np):
 
         # streams from iStream dont provide the showid and epid for above
         # they come through as tvshowid = -1, but it has episode no and season no and show name
@@ -326,7 +326,7 @@ class Player(xbmc.Player):
                     currentepisodeid = result["result"]["item"]["id"]
                 elif tvshowid == -1:
                     # I am a STRM ###
-                    tvshowid, episodeid = self.iStream_fix(tvshowid, currentshowtitle, currentepisodenumber, currentseasonid)
+                    tvshowid, episodeid = self.checkStrms(tvshowid, currentshowtitle, currentepisodenumber, currentseasonid)
                     currentepisodeid = episodeid
             else:
                 # wtf am i doing here error.. ####
@@ -540,7 +540,7 @@ class Player(xbmc.Player):
                     currentepisodeid = result["result"]["item"]["id"]
                 elif tvshowid == -1:
                     # I am a STRM ###
-                    tvshowid, episodeid = self.iStream_fix(tvshowid, currentshowtitle, currentepisodenumber, currentseasonid)
+                    tvshowid, episodeid = self.checkStrms(tvshowid, currentshowtitle, currentepisodenumber, currentseasonid)
                     currentepisodeid = episodeid
             else:
                 # wtf am i doing here error.. ####

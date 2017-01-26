@@ -25,14 +25,14 @@
 					<right>0</right>
 					<top>0</top>
 					<height>90</height>
-					<texture border="5" colordiffuse="af000000">white.png</texture>
+					<texture border="5" colordiffuse="af000000">nextupwhite.png</texture>
 				</control>
 				<control type="image">
 					<left>0</left>
 					<right>0</right>
 					<bottom>0</bottom>
 					<height>30</height>
-					<texture border="5" colordiffuse="cf000000">common/white.png</texture>
+					<texture border="5" colordiffuse="cf000000">nextupwhite.png</texture>
 				</control>
 				<control type="image">
 					<visible>!Control.HasFocus(3012)</visible>

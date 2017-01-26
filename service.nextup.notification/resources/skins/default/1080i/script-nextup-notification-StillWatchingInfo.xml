@@ -130,7 +130,7 @@
                     <width>630</width>
                     <bottom>10</bottom>
                     <height>8</height>
-                    <texture colordiffuse="1F000000">white.png</texture>
+                    <texture colordiffuse="1F000000">nextupwhite.png</texture>
                 </control>
                 <control type="progress" description="cache">
                     <left>230</left>
