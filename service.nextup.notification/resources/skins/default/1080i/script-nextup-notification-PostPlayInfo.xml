@@ -49,7 +49,7 @@
 					<posy>0</posy>
 					<width>1800</width>
 					<height>2</height>
-					<texture>white.png</texture>
+					<texture>nextupwhite.png</texture>
 					<colordiffuse>FF387ef5</colordiffuse>
 				</control>
 
@@ -464,59 +464,67 @@
 										<left>20</left>
 										<right>0</right>
 										<height>360</height>
-										<texture colordiffuse="FFbbbbbb" diffuse="diffuse/roundedposter.png" background="true">white.png</texture>
+										<texture colordiffuse="FFbbbbbb" diffuse="diffuse/roundedposter.png" background="true">nextupwhite.png</texture>
 									</control>
 									<control type="image">
 										<left>0</left>
-										<top>10</top>
-										<width>360</width>
-										<height>360</height>
-										<texture fallback="DefaultTVShows.png" diffuse="diffuse/roundedposterleftonly.png">$INFO[ListItem.Art(tvshow.poster)]</texture>
-										<aspectratio aligny="center" align="center">stretch</aspectratio>
+										<top>-10</top>
+										<width>290</width>
+										<height>400</height>
+										<texture fallback="DefaultTvShows.png" diffuse="diffuse/roundedposterleftonly.png" background="true">$INFO[ListItem.Art(tvshow.poster)]</texture>
+										<aspectratio>scale</aspectratio>
+										<bordertexture border="21">overlays/shadow.png</bordertexture>
+										<bordersize>20</bordersize>
 									</control>
 									<control type="group">
-										<left>390</left>
-										<control type="label">
+										<left>300</left>
+										<control type="textbox">
 											<top>30</top>
 											<label>$INFO[ListItem.Season]$INFO[ListItem.Episode,[COLOR =FFEC407A]x[/COLOR],]</label>
 											<textcolor>BB000000</textcolor>
 											<font>font13</font>
+											<height>45</height>
 										</control>
 										<control type="textbox">
 											<top>75</top>
 											<label>$INFO[ListItem.Label]</label>
-											<textcolor>DD000000</textcolor>
+											<textcolor>BB000000</textcolor>
 											<font>font12</font>
-											<right>5</right>
-											<height>70</height>
+											<height>80</height>
 										</control>
 										<control type="textbox">
-											<top>165</top>
-											<height>185</height>
+											<top>160</top>
+											<height>190</height>
 											<right>10</right>
 											<textcolor>aa000000</textcolor>
 											<label>$INFO[ListItem.Plot]</label>
 											<font>font10</font>
-                                        </control>
+										</control>
 									</control>
 								</control>
 							</itemlayout>
-                            <itemlayout width="368" height="468" condition="IsEmpty(Window.Property(showplot))">
+                            <itemlayout width="310" height="486" condition="IsEmpty(Window.Property(showplot))">
                                 <control type="group">
                                     <left>68</left>
-                                    <top>38</top>
-                                    <control type="image">
-                                        <texture fallback="DefaultTVShows.png" diffuse="diffuse/roundedposter.png">$INFO[ListItem.Art(tvshow.poster)]</texture>
-                                        <aspectratio aligny="center" align="center">stretch</aspectratio>
-                                        <height>300</height>
-                                    </control>
+                                    <top>10</top>
+									<top>10</top>
+									<control type="image">
+										<left>15</left>
+										<top>-10</top>
+										<width>290</width>
+										<height>370</height>
+										<texture fallback="DefaultTvShows.png" background="true">$INFO[ListItem.Art(tvshow.poster)]</texture>
+										<aspectratio>scale</aspectratio>
+										<bordertexture border="21">overlays/shadow.png</bordertexture>
+										<bordersize>20</bordersize>
+									</control>
                                     <control type="group">
-                                        <top>310</top>
-                                        <height>130</height>
+                                        <top>337</top>
+                                        <height>100</height>
                                         <control type="label">
                                             <label>$INFO[ListItem.Label]</label>
                                             <scroll>false</scroll>
-                                            <width>300</width>
+                                            <width>290</width>
                                             <height>35</height>
                                             <font>font10</font>
                                             <align>center</align>
@@ -526,7 +534,7 @@
                                             <top>33</top>
                                             <label>$INFO[ListItem.Season]$INFO[ListItem.Episode,[COLOR =FFEC407A]x[/COLOR],]</label>
                                             <scroll>false</scroll>
-                                            <width>300</width>
+                                            <width>290</width>
                                             <height>30</height>
                                             <font>font10</font>
                                             <align>center</align>
@@ -551,7 +559,7 @@
 										<left>20</left>
 										<right>0</right>
 										<height>360</height>
-										<texture colordiffuse="FFbbbbbb" diffuse="diffuse/roundedposter.png" background="true">white.png</texture>
+										<texture colordiffuse="FFbbbbbb" diffuse="diffuse/roundedposter.png" background="true">nextupwhite.png</texture>
 										<visible>!Control.HasFocus(400)</visible>
 									</control>
 									<control type="image">
@@ -559,39 +567,41 @@
 										<left>20</left>
 										<right>0</right>
 										<height>360</height>
-										<texture colordiffuse="FF387ef5" diffuse="diffuse/roundedposter.png" background="true">white.png</texture>
+										<texture colordiffuse="FF387ef5" diffuse="diffuse/roundedposter.png" background="true">nextupwhite.png</texture>
 										<visible>Control.HasFocus(400)</visible>
 									</control>
 									<control type="image">
 										<left>0</left>
-										<top>10</top>
-										<width>360</width>
-										<height>360</height>
-										<texture fallback="DefaultTVShows.png" diffuse="diffuse/roundedposterleftonly.png">$INFO[ListItem.Art(tvshow.poster)]</texture>
-										<aspectratio aligny="center" align="center">stretch</aspectratio>
+										<top>-10</top>
+										<width>290</width>
+										<height>400</height>
+										<texture fallback="DefaultTVShows.png" diffuse="diffuse/roundedposterleftonly.png" background="true">$INFO[ListItem.Art(tvshow.poster)]</texture>
+										<aspectratio>scale</aspectratio>
+										<bordertexture border="21">overlays/shadow.png</bordertexture>
+										<bordersize>20</bordersize>
 									</control>
 									<control type="group">
 										<visible>Control.HasFocus(400)</visible>
-										<left>390</left>
+										<left>300</left>
 										<control type="label">
 											<top>30</top>
 											<label>$INFO[ListItem.Season]$INFO[ListItem.Episode,[COLOR =FFEC407A]x[/COLOR],]</label>
 											<textcolor>DDFFFFFF</textcolor>
 											<font>font13</font>
+											<height>45</height>
 										</control>
 										<control type="textbox">
 											<top>75</top>
 											<label>$INFO[ListItem.Label]</label>
 											<textcolor>FFFFFFFF</textcolor>
 											<font>font12</font>
-											<right>5</right>
-											<height>70</height>
+											<height>80</height>
 										</control>
 										<control type="textbox">
-											<top>165</top>
-											<height>185</height>
+											<top>160</top>
+											<height>190</height>
 											<right>10</right>
-											<textcolor>bbFFFFFF</textcolor>
+											<textcolor>ddFFFFFF</textcolor>
 											<label>$INFO[ListItem.Plot]</label>
 											<autoscroll time="3000" delay="7000" repeat="5000"/>
 											<font>font10</font>
@@ -599,75 +609,64 @@
 									</control>
 									<control type="group">
 										<visible>!Control.HasFocus(400)</visible>
-										<left>390</left>
-										<control type="label">
+										<left>300</left>
+										<control type="textbox">
 											<top>30</top>
 											<label>$INFO[ListItem.Season]$INFO[ListItem.Episode,[COLOR =FFEC407A]x[/COLOR],]</label>
 											<textcolor>BB000000</textcolor>
 											<font>font13</font>
+											<height>45</height>
 										</control>
 										<control type="textbox">
 											<top>75</top>
 											<label>$INFO[ListItem.Label]</label>
-											<textcolor>DD000000</textcolor>
+											<textcolor>BB000000</textcolor>
 											<font>font12</font>
-											<right>5</right>
-											<height>70</height>
+											<height>80</height>
 										</control>
 										<control type="textbox">
-											<top>165</top>
-											<height>185</height>
+											<top>160</top>
+											<height>190</height>
 											<right>10</right>
-											<textcolor>AA000000</textcolor>
+											<textcolor>aa000000</textcolor>
 											<label>$INFO[ListItem.Plot]</label>
-											<autoscroll time="3000" delay="7000" repeat="5000"/>
 											<font>font10</font>
-                                        </control>
+										</control>
 									</control>
 								</control>
 							</focusedlayout>
-                            <focusedlayout width="368" height="468" condition="IsEmpty(Window.Property(showplot))">
+                            <focusedlayout width="310" height="486" condition="IsEmpty(Window.Property(showplot))">
                                 <control type="group">
                                     <depth>0.10</depth>
                                     <left>68</left>
-                                    <top>38</top>
-                                    <animation type="Focus">
-                                        <effect type="zoom" start="100" end="110" time="200" tween="sine" easing="inout" center="230,130" />
-                                    </animation>
-                                    <animation type="Unfocus">
-                                        <effect type="zoom" start="110" end="100" time="200" tween="sine" easing="inout" center="230,130" />
-                                    </animation>
-                                    <control type="label">
-                                        <top>-39</top>
-                                        <label>$INFO[ListItem.Season]$INFO[ListItem.Episode,[COLOR =FFEC407A]x[/COLOR],]</label>
-                                        <scroll>false</scroll>
-                                        <width>300</width>
-                                        <height>30</height>
-                                        <font>font10</font>
-                                        <align>center</align>
-                                        <textcolor>FFFFFFFF</textcolor>
-                                        <visible>Control.HasFocus(400)</visible>
-                                    </control>
+                                    <top>10</top>
                                     <control type="image">
-                                        <top>-3</top>
-                                        <left>-3</left>
-                                        <width>306</width>
-                                        <height>306</height>
-                                        <texture colordiffuse="primary" diffuse="diffuse/roundedposter.png" background="true">colors/white.png</texture>
-                                        <visible>Control.HasFocus(400)</visible>
+										<left>15</left>
+										<top>-10</top>
+										<width>290</width>
+										<height>370</height>
+										<texture fallback="DefaultTVShows.png" background="true">$INFO[ListItem.Art(tvshow.poster)]</texture>
+										<aspectratio>scale</aspectratio>
+										<bordertexture border="21">overlays/shadow.png</bordertexture>
+										<bordersize>20</bordersize>
                                     </control>
-                                    <control type="image">
-                                        <texture fallback="DefaultTVShows.png" diffuse="diffuse/roundedposter.png">$INFO[ListItem.Art(tvshow.poster)]</texture>
-                                        <aspectratio aligny="center" align="center">stretch</aspectratio>
-                                        <height>300</height>
-                                    </control>
+
+									<control type="image">
+										<left>32</left>
+										<top>7</top>
+										<width>256</width>
+										<height>336</height>
+										<texture border="8" colordiffuse="FF387ef5">thumbnail_focused.png</texture>
+										<visible>Control.HasFocus(400)</visible>
+									</control>
+
                                     <control type="group">
-                                        <top>310</top>
-                                        <height>130</height>
+										<top>337</top>
+										<height>100</height>
                                         <control type="label">
                                             <label>$INFO[ListItem.Label]</label>
                                             <scroll>false</scroll>
-                                            <width>300</width>
+                                            <width>290</width>
                                             <height>35</height>
                                             <font>font10</font>
                                             <align>center</align>
@@ -677,12 +676,11 @@
                                             <top>33</top>
                                             <label>$INFO[ListItem.Season]$INFO[ListItem.Episode,[COLOR =FFEC407A]x[/COLOR],]</label>
                                             <scroll>false</scroll>
-                                            <width>300</width>
+                                            <width>290</width>
                                             <height>30</height>
                                             <font>font10</font>
                                             <align>center</align>
                                             <textcolor>FFFFFFFF</textcolor>
-                                            <visible>!Control.HasFocus(400)</visible>
                                         </control>
                                     </control>
                                 </control>
