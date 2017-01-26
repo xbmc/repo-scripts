@@ -755,7 +755,6 @@
                             <textureradioonnofocus colordiffuse="99FFFFFF">show.png</textureradioonnofocus>
                             <textureradioofffocus colordiffuse="FF387ef5">hide.png</textureradioofffocus>
                             <textureradiooffnofocus colordiffuse="99FFFFFF">hide.png</textureradiooffnofocus>
-
                         </control>
 					</control>
 				</control>
