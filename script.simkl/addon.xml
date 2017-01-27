@@ -21,6 +21,6 @@
       <icon>resources/icon.png</icon>
       <fanart>resources/fanart.png</fanart>
     </assets>
-    <language>en es</language>
+    <language></language>
   </extension>
 </addon>
