@@ -35,16 +35,10 @@ msgstr ""
 #empty strings from id 32006 to 32009
 
 msgctxt "#32010"
-msgid "Colors"
+msgid "Color | Opacity"
 msgstr ""
 
-#empty strings from id 32011 to 32014
-
-msgctxt "#32015"
-msgid "Transparency"
-msgstr ""
-
-#empty strings from id 32016 to 32019
+#empty strings from id 32011 to 32019
 
 msgctxt "#32020"
 msgid "Background"
@@ -53,7 +47,7 @@ msgstr ""
 #empty strings from id 32021 to 32024
 
 msgctxt "#32025"
-msgid "Element Size Increase"
+msgid "Extra Options"
 msgstr ""
 
 #empty strings from id 32026 to 32099
@@ -240,193 +234,199 @@ msgctxt "#32250"
 msgid "Enable album art"
 msgstr ""
 
-#empty strings from id 32251 to 32299
+#empty strings from id 32251 to 32259
 
-msgctxt "#32300"
-msgid "Random color"
+msgctxt "#32260"
+msgid "Enable CPU usage information"
 msgstr ""
 
-#empty strings from id 32301 to 32309
+msgctxt "#32261"
+msgid "Enable battery level information"
+msgstr ""
+
+msgctxt "#32262"
+msgid "Enable free memory information"
+msgstr ""
+
+msgctxt "#32263"
+msgid "Enable movie library information"
+msgstr ""
+
+msgctxt "#32264"
+msgid "Enable TV show library information"
+msgstr ""
+
+msgctxt "#32265"
+msgid "Enable music library information"
+msgstr ""
+
+#empty strings from id 32266 to 32279
+
+msgctxt "#32280"
+msgid "CPU:"
+msgstr ""
+
+msgctxt "#32281"
+msgid "Battery:"
+msgstr ""
+
+msgctxt "#32282"
+msgid "Free memory:"
+msgstr ""
+
+msgctxt "#32283"
+msgid "Total movies:"
+msgstr ""
+
+msgctxt "#32284"
+msgid "Watched movies:"
+msgstr ""
+
+msgctxt "#32285"
+msgid "Unwatched movies:"
+msgstr ""
+
+msgctxt "#32286"
+msgid "Total TV shows:"
+msgstr ""
+
+msgctxt "#32287"
+msgid "Total episodes:"
+msgstr ""
+
+msgctxt "#32288"
+msgid "Watched TV shows:"
+msgstr ""
+
+msgctxt "#32289"
+msgid "Watched episodes:"
+msgstr ""
+
+msgctxt "#32290"
+msgid "Unwatched TV shows:"
+msgstr ""
+
+msgctxt "#32291"
+msgid "Unwatched episodes:"
+msgstr ""
+
+msgctxt "#32292"
+msgid "Artists:"
+msgstr ""
+
+msgctxt "#32293"
+msgid "Albums:"
+msgstr ""
+
+msgctxt "#32294"
+msgid "Songs:"
+msgstr ""
+
+#empty strings from id 32295 to 32309
 
 msgctxt "#32310"
-msgid "Hour color"
+msgid "Choose hour color and opacity  - [COLOR $INFO[Skin.String(screensaver.digitalclock.hourcolor)]]($INFO[Skin.String(screensaver.digitalclock.hourcolor.name)])[/COLOR]"
 msgstr ""
 
 msgctxt "#32311"
-msgid "White"
+msgid "Random hour color"
 msgstr ""
 
 msgctxt "#32312"
-msgid "Red"
+msgid "Random hour opacity"
 msgstr ""
 
-msgctxt "#32313"
-msgid "Green"
-msgstr ""
-
-msgctxt "#32314"
-msgid "Blue"
-msgstr ""
-
-msgctxt "#32315"
-msgid "Yellow"
-msgstr ""
-
-msgctxt "#32316"
-msgid "Black"
-msgstr ""
-
-#empty strings from id 32317 to 32319
+#empty strings from id 32313 to 32319
 
 msgctxt "#32320"
-msgid "Colon color"
+msgid "Choose colon color and opacity - [COLOR $INFO[Skin.String(screensaver.digitalclock.coloncolor)]]($INFO[Skin.String(screensaver.digitalclock.coloncolor.name)])[/COLOR]"
 msgstr ""
 
-#empty strings from id 32321 to 32329
+msgctxt "#32321"
+msgid "Random colon color"
+msgstr ""
+
+msgctxt "#32322"
+msgid "Random colon opacity"
+msgstr ""
+
+#empty strings from id 32323 to 32329
 
 msgctxt "#32330"
-msgid "Minute color"
+msgid "Choose minute color and opacity - [COLOR $INFO[Skin.String(screensaver.digitalclock.minutecolor)]]($INFO[Skin.String(screensaver.digitalclock.minutecolor.name)])[/COLOR]"
 msgstr ""
 
-#empty strings from id 32331 to 32339
+msgctxt "#32331"
+msgid "Random minute color"
+msgstr ""
+
+msgctxt "#32332"
+msgid "Random minute opacity"
+msgstr ""
+
+#empty strings from id 32333 to 32339
 
 msgctxt "#32340"
-msgid "AM/PM color"
+msgid "Choose AM/PM color and opacity - [COLOR $INFO[Skin.String(screensaver.digitalclock.ampmcolor)]]($INFO[Skin.String(screensaver.digitalclock.ampmcolor.name)])[/COLOR]"
 msgstr ""
 
-#empty strings from id 32341 to 32349
+msgctxt "#32341"
+msgid "Random AM/PM color"
+msgstr ""
+
+msgctxt "#32342"
+msgid "Random AM/PM opacity"
+msgstr ""
+
+#empty strings from id 32343 to 32349
 
 msgctxt "#32350"
-msgid "Date color"
+msgid "Choose date color and opacity - [COLOR $INFO[Skin.String(screensaver.digitalclock.datecolor)]]($INFO[Skin.String(screensaver.digitalclock.datecolor.name)])[/COLOR]"
 msgstr ""
 
-#empty strings from id 32351 to 32359
+msgctxt "#32351"
+msgid "Random date color"
+msgstr ""
+
+msgctxt "#32352"
+msgid "Random date opacity"
+msgstr ""
+
+#empty strings from id 32353 to 32359
 
 msgctxt "#32360"
-msgid "Additional information color"
+msgid "Choose additional information color and opacity - [COLOR $INFO[Skin.String(screensaver.digitalclock.informationcolor)]]($INFO[Skin.String(screensaver.digitalclock.informationcolor.name)])[/COLOR]"
 msgstr ""
 
-#empty strings from id 32361 to 32369
+msgctxt "#32361"
+msgid "Random additional information color"
+msgstr ""
+
+msgctxt "#32362"
+msgid "Random additional information opacity"
+msgstr ""
+
+#empty strings from id 32363 to 32369
 
 msgctxt "#32370"
-msgid "Icon color"
+msgid "Choose icon color and opacity - [COLOR $INFO[Skin.String(screensaver.digitalclock.iconcolor)]]($INFO[Skin.String(screensaver.digitalclock.iconcolor.name)])[/COLOR]"
 msgstr ""
 
-#empty strings from id 32371 to 32399
-
-msgctxt "#32400"
-msgid "Random transparency"
+msgctxt "#32371"
+msgid "Random icon color"
 msgstr ""
 
-#empty strings from id 32401 to 32409
-
-msgctxt "#32410"
-msgid "Hour transparency"
+msgctxt "#32372"
+msgid "Random icon opacity"
 msgstr ""
 
-msgctxt "#32411"
-msgid "0%"
-msgstr ""
-
-msgctxt "#32412"
-msgid "10%"
-msgstr ""
-
-msgctxt "#32413"
-msgid "20%"
-msgstr ""
-
-msgctxt "#32414"
-msgid "30%"
-msgstr ""
-
-msgctxt "#32415"
-msgid "40%"
-msgstr ""
-
-msgctxt "#32416"
-msgid "50%"
-msgstr ""
-
-msgctxt "#32417"
-msgid "60%"
-msgstr ""
-
-msgctxt "#32418"
-msgid "70%"
-msgstr ""
-
-msgctxt "#32419"
-msgid "80%"
-msgstr ""
-
-msgctxt "#32420"
-msgid "90%"
-msgstr ""
-
-msgctxt "#32421"
-msgid "100%"
-msgstr ""
-
-#empty strings from id 32422 to 32429
-
-msgctxt "#32430"
-msgid "Colon transparency"
-msgstr ""
-
-#empty strings from id 32431 to 32439
-
-msgctxt "#32440"
-msgid "Minute transparency"
-msgstr ""
-
-#empty strings from id 32441 to 32449
-
-msgctxt "#32450"
-msgid "AM/PM transparency"
-msgstr ""
-
-#empty strings from id 32451 to 32459
-
-msgctxt "#32460"
-msgid "Date transparency"
-msgstr ""
-
-#empty strings from id 32461 to 32469
-
-msgctxt "#32470"
-msgid "Additional information transparency"
-msgstr ""
-
-#empty strings from id 32471 to 32479
-
-msgctxt "#32480"
-msgid "Icon transparency"
-msgstr ""
-
-#empty strings from id 32481 to 32499
+#empty strings from id 32373 to 32499
 
 msgctxt "#32500"
-msgid "Text shadow color"
+msgid "Chose text shadow color and opacity - [COLOR $INFO[Skin.String(screensaver.digitalclock.shadowcolor)]]($INFO[Skin.String(screensaver.digitalclock.shadowcolor.name)])[/COLOR]"
 msgstr ""
 
-msgctxt "#32501"
-msgid "None"
-msgstr ""
-
-msgctxt "#32502"
-msgid "White"
-msgstr ""
-
-msgctxt "#32503"
-msgid "Gray"
-msgstr ""
-
-msgctxt "#32504"
-msgid "Black"
-msgstr ""
-
-#empty strings from id 32505 to 32509
+#empty strings from id 32501 to 32509
 
 msgctxt "#32510"
 msgid "Choose background"
@@ -451,7 +451,7 @@ msgstr ""
 #empty strings from id 32515 to 32519
 
 msgctxt "#32520"
-msgid "Choose color"
+msgid "Choose background color - [COLOR $INFO[Skin.String(screensaver.digitalclock.backgroundcolor)]]($INFO[Skin.String(screensaver.digitalclock.backgroundcolor.name)])[/COLOR]"
 msgstr ""
 
 #empty strings from id 32521 to 32529
@@ -559,5 +559,17 @@ msgstr ""
 #empty strings from id 32585 to 32599
 
 msgctxt "#32600"
-msgid "Size (%)"
+msgid "Element size increase (%)"
+msgstr ""
+
+msgctxt "#32610"
+msgid "Log out"
+msgstr ""
+
+msgctxt "#32611"
+msgid "Stop now playing media"
+msgstr ""
+
+msgctxt "#32612"
+msgid "Log out after (minutes)"
 msgstr ""
