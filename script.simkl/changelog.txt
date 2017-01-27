@@ -1,0 +1,26 @@
+v 1.0.0 [17/01/25]:
+- Ready for submiting to the Kodi repositories
+
+v 0.2.5 [17/01/22]:
+- When Scrobbled using filename, get data from Simkl. Fix #11
+
+v 0.2.4 [17/01/15]:
+- Fixed #7. Rescrobbling duplicate.
+- Fixed a settings button (#8)
+- Fixed SSL Timed out (#9)
+- Enhanced login (#5)
+
+v 0.2.3 [17/01/04]:
+- Fixed bubbles (#4)
+
+v 0.2.2 [17/01/03]:
+- Fixed Reescrobbling (#3)
+
+v 0.2.1 [17/01/01]:
+- Working w/ Kodi for Windows
+
+v0.1.1 [16/12/24]:
+- Auto scrobbles
+- Shows a bubble
+- Nothing more
+- It works (I think)[on Linux]
