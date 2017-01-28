@@ -23,12 +23,12 @@
         <language />
         <forum>http://forum.kodi.tv/showthread.php?tid=304479</forum>
         <assets>
-            <icon>resources/icon.png</icon>
-            <fanart>resources/fanart.jpg</fanart>
-            <screenshot>resources/screenshot000.png</screenshot>
-            <screenshot>resources/screenshot001.png</screenshot>
-            <screenshot>resources/screenshot002.png</screenshot>
-            <screenshot>resources/screenshot003.png</screenshot>
+            <icon>icon.png</icon>
+            <fanart>fanart.jpg</fanart>
+            <screenshot>screenshot000.png</screenshot>
+            <screenshot>screenshot001.png</screenshot>
+            <screenshot>screenshot002.png</screenshot>
+            <screenshot>screenshot003.png</screenshot>
         </assets>
     </extension>
 </addon>
