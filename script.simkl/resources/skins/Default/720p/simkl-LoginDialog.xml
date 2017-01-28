@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<window id="9999">
+  <defaultcontrol always="true">203</defaultcontrol>
+  <animation effect="fade" time="500">WindowOpen</animation>
+  <animation effect="fade" time="500">WindowClose</animation>
+  <coordinates>
+    <posx>240</posx>
+    <posy>170</posy>
+  </coordinates>
+  <controls>
+    <!-- THE BACKGROUND -->
+    <control type="group">
+      <control type="image">
+        <description>Background</description>
+        <posx>0</posx>
+        <posy>0</posy>
+        <width>800</width>
+        <height>400</height>
+        <texture>bg_simkl.jpg</texture>
+      </control>
+      <!-- Remember to pass all the labels to the .po file -->
+      <control type="label">
+        <description>Header</description>
+        <posx>0</posx>
+        <posy>20</posy>
+        <width>800</width>
+        <height>25</height>
+        <!-- Structure: $ADDON[script.simkl <STRID>] -->
+        <label>SIMKL account authorization</label>
+        <align>center</align>
+        <aligny>center</aligny>
+        <textcolor>FFa7a7a7</textcolor>
+      </control>
+      <control type="label" id="201">
+        <description>PIN</description>
+        <posx>0</posx>
+        <posy>55</posy>
+        <width>800</width>
+        <height>80</height>
+        <label> - </label>
+        <font>font_MainMenu</font>
+        <align>center</align>
+        <aligny>center</aligny>
+        <textcolor>FFFFFFFF</textcolor>
+      </control>
+    </control>
+
+    <control type="group">
+      <control type="label" id="202">
+        <description>Instructions</description>
+        <posx>0</posx>
+        <posy>210</posy>
+        <width>800</width>
+        <height>50</height>
+        <label> Instructions </label>
+        <font>font16</font>
+        <align>center</align>
+        <aligny>center</aligny>
+        <textcolor>FFf0f0f0</textcolor>
+      </control>
+      <control type="button" id="203">
+        <description>Cancel</description>
+        <align>center</align>
+        <posx>325</posx>
+        <posy>340</posy>
+        <width>150</width>
+        <height>30</height>
+        <label>Cancel</label>
+        <textcolor>FFededed</textcolor>
+        <focusedcolor>FFededed</focusedcolor>
+        <texturenofocus>button_nofocus.png</texturenofocus>
+        <texturefocus>button_focus.png</texturefocus>
+        <onclick>PreviousMenu</onclick>
+        <!-- Not visible if using a remote (press back) -->
+        <visible>system.getbool(input.enablemouse)</visible>
+      </control>
+    </control>
+  </controls>
+</window>

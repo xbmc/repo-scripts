@@ -1,0 +1,103 @@
+# Kodi Media Center language file
+# Addon Name: Simkl TV Tracker
+# Addon id: script.services.simkl
+
+msgid ""
+msgstr ""
+"Project-Id-Version: Kodi Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: David Davó\n"
+"Language-Team: English\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#Settings
+
+msgctxt "#32001"
+msgid "Please click to Log In"
+msgstr ""
+
+msgctxt "#32002"
+msgid "Other options"
+msgstr ""
+
+msgctxt "#32003"
+msgid "Sync library"
+msgstr ""
+
+msgctxt "#32006"
+msgid "Scrobble at percentage"
+msgstr ""
+
+msgctxt "#32007"
+msgid "Checkin percentage"
+msgstr ""
+
+msgctxt "#32008"
+msgid "Show bubble when scrobbled"
+msgstr ""
+
+#Up to 32020 to settings. 32021-2024 to login dialog
+
+msgctxt "#32021"
+msgid "Simkl login"
+msgstr ""
+
+msgctxt "#32022"
+msgid "Please visit {0} on \nyour device and enter this code"
+msgstr ""
+
+msgctxt "#32023"
+msgid "Remaining time: {0}/{1}"
+msgstr ""
+
+# Blahblahblah
+
+msgctxt "#32025"
+msgid "Hello again, {0}"
+msgstr ""
+
+msgctxt "#32026"
+msgid "Please Log In in addon settings"
+msgstr ""
+
+msgctxt "#32027"
+msgid "You don't have internet"
+msgstr ""
+
+msgctxt "#32028"
+msgid "Scrobbling {0}"
+msgstr ""
+
+msgctxt "#32029"
+msgid "Error at scrobbling. Retrying ({0})"
+msgstr ""
+
+msgctxt "#32030"
+msgid "Login successful, {0}"
+msgstr ""
+
+msgctxt "#32031"
+msgid "Couldn't log in"
+msgstr ""
+
+msgctxt "#32032"
+msgid "You are alredy logged in as {0}"
+msgstr ""
+
+msgctxt "#32033"
+msgid "Continue"
+msgstr ""
+
+msgctxt "#32034"
+msgid "Cancel"
+msgstr ""
+
+#msgctxt "#"
+#msgid ""
+#msgstr ""
