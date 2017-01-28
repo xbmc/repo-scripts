@@ -14,21 +14,25 @@ __addon__ = interface.__addon__
 def getstr(strid): return interface.getstr(strid)
 
 REDIRECT_URI = "http://simkl.com"
-USERFILE     = xbmc.translatePath(__addon__.getAddonInfo("profile")).decode("utf-8") + "simkl_key"
+USERFILE     = os.path.join(xbmc.translatePath(__addon__.getAddonInfo("profile")).decode("utf-8"), "simkl_key")
 xbmc.translatePath("special://profile/simkl_key")
 
 if not os.path.exists(USERFILE):
-    with open(USERFILE, "w") as f:
+    with open(USERFILE, "w+") as f:
         f.write("")
 else:
     with open(USERFILE, "r") as f:
-        xbmc.log("Simkl Userfile " + str(f.read()))
+        xbmc.log("Simkl: Userfile " + str(f.read()))
 
-with open(os.path.dirname(os.path.realpath(__file__)).strip("lib") + "data/apikey") as f:
-    d = json.loads(f.read())
+APIFILE = os.path.join(os.path.dirname(os.path.realpath(__file__)).strip("lib"), "data", "apikey")
+xbmc.log("Simkl: APIFILE: {0}".format(APIFILE))
+with open(APIFILE, "r") as f:
+    rd = f.read()
+    d = json.loads(rd)
     APIKEY = d["apikey"]
     SECRET = d["secret"]
-    xbmc.log("APIKEY: {}".format(APIKEY))
+    xbmc.log("Simkl: {0}".format(rd))
+    xbmc.log("Simkl: APIKEY: {0}".format(APIKEY))
 ATOKEN = 0 #Get atoken from file
 headers = {"Content-Type": "application-json",
     "simkl-api-key": APIKEY}
@@ -49,7 +53,7 @@ class API:
             if not os.path.exists(USERFILE):
                 api.login()
         except Exception:
-            xbmc.log("Simkl: {}".format("No INTERNET"))
+            xbmc.log("Simkl: {0}".format("No INTERNET"))
             interface.notify(getstr(32027))
             self.internet = False
 
@@ -117,13 +121,13 @@ class API:
         xbmc.log("Duration: %s" %duration)
         exp = self.scrobbled_dict
         exp[fname] = int(time.time() + (105 - float(__addon__.getSetting("scr-pct"))) / 100 * duration)
-        xbmc.log("Simkl: Locking {}".format(exp))
+        xbmc.log("Simkl: Locking {0}".format(exp))
         self.scrobbled_dict = {fname:exp[fname]} #So there is always only one entry on the dict
 
     def is_locked(self, fname):
         exp = self.scrobbled_dict
         if not (fname in exp.keys()): return 0
-        xbmc.log("Time: {}, exp: {}, Dif: {}".format(int(time.time()), exp[fname], int(exp[fname]-time.time())))
+        xbmc.log("Time: {0}, exp: {1}, Dif: {2}".format(int(time.time()), exp[fname], int(exp[fname]-time.time())))
         #When Dif reaches 0, scrobble.
         if time.time() < exp[fname]:
             xbmc.log("Simkl: Can't scrobble, file locked (alredy scrobbled)")
@@ -144,13 +148,13 @@ class API:
                     toappend = {"ids":{"imdb":filename}, "watched_at":date}
                     media = mediadict[mediatype]
                 else:
-                    xbmc.log("Simkl: Filename - {}".format(filename))
+                    xbmc.log("Simkl: Filename - {0}".format(filename))
                     values = {"file":filename}
                     values = json.dumps(values)
-                    xbmc.log("Simkl: Query: {}".format(values))
+                    xbmc.log("Simkl: Query: {0}".format(values))
                     con.request("GET", "/search/file/", body=values, headers=headers)
                     r1 = con.getresponse().read()#.decode("utf-8")
-                    xbmc.log("Simkl: Response: {}".format(r1))
+                    xbmc.log("Simkl: Response: {0}".format(r1))
                     r = json.loads(str(r1))
                     self.lastwatched = r
                     if r == []:
@@ -164,10 +168,10 @@ class API:
                 tosend[media].append(toappend)
                 tosend = json.dumps(tosend)
 
-                xbmc.log("Simkl: values {}".format(tosend))
+                xbmc.log("Simkl: values {0}".format(tosend))
                 con.request("GET", "/sync/history/", body=tosend, headers=headers)
                 r = con.getresponse().read().decode("utf-8")
-                xbmc.log("Simkl: {}".format(r))
+                xbmc.log("Simkl: {0}".format(r))
 
                 success = max(json.loads(r)["added"].values())
                 if success:
@@ -176,7 +180,7 @@ class API:
                 return success
 
             except httplib.BadStatusLine:
-                xbmc.log("Simkl: {}".format("ERROR: httplib.BadStatusLine"))
+                xbmc.log("Simkl: {0}".format("ERROR: httplib.BadStatusLine"))
             except SSLError: #Fix #8
                 xbmc.log("Simkl: ERROR: SSLError, retrying?")
                 if cnt == 0: interface.notify(getstr(32029).format(cnt+1))

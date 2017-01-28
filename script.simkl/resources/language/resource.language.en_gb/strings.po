@@ -49,17 +49,17 @@ msgid "Simkl login"
 msgstr ""
 
 msgctxt "#32022"
-msgid "Please visit {} on \nyour device and enter this code"
+msgid "Please visit {0} on \nyour device and enter this code"
 msgstr ""
 
 msgctxt "#32023"
-msgid "Remaining time: {}/{}"
+msgid "Remaining time: {0}/{1}"
 msgstr ""
 
 # Blahblahblah
 
 msgctxt "#32025"
-msgid "Hello again, {}"
+msgid "Hello again, {0}"
 msgstr ""
 
 msgctxt "#32026"
@@ -71,15 +71,15 @@ msgid "You don't have internet"
 msgstr ""
 
 msgctxt "#32028"
-msgid "Scrobbling {}"
+msgid "Scrobbling {0}"
 msgstr ""
 
 msgctxt "#32029"
-msgid "Error at scrobbling. Retrying ({})"
+msgid "Error at scrobbling. Retrying ({0})"
 msgstr ""
 
 msgctxt "#32030"
-msgid "Login successful, {}"
+msgid "Login successful, {0}"
 msgstr ""
 
 msgctxt "#32031"
@@ -87,7 +87,7 @@ msgid "Couldn't log in"
 msgstr ""
 
 msgctxt "#32032"
-msgid "You are alredy logged in as {}"
+msgid "You are alredy logged in as {0}"
 msgstr ""
 
 msgctxt "#32033"

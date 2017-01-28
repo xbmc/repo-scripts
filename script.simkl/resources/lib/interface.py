@@ -43,11 +43,11 @@ class loginDialog(xbmcgui.WindowXMLDialog):
 
     def threaded(self):
         """ A loop threaded function, so you can do another things meanwhile """
-        xbmc.log("Simkl: threaded: {}".format(self))
+        xbmc.log("Simkl: threaded: {0}".format(self))
         cnt = 0
         while self.waiting:
             if cnt % (self.inter+1) == 0 and cnt>1:
-                xbmc.log("Simkl: Still waiting... {}".format(cnt))
+                xbmc.log("Simkl: Still waiting... {0}".format(cnt))
                 if self.check_login(self.pin, self.log):
 
                     xbmc.log(str(self.api.USERSETTINGS))
@@ -70,7 +70,7 @@ class loginDialog(xbmcgui.WindowXMLDialog):
         instruction.setLabel(
             getstr(32022).format("[COLOR ffffbf00]" + self.url + "[/COLOR]"))
         self.getControl(PIN_LABEL).setLabel(self.pin)
-        xbmc.log("Simkl: Visible: {}".format(self.getProperty("visible")))
+        xbmc.log("Simkl: Visible: {0}".format(self.getProperty("visible")))
 
         t = threading.Thread(target=self.threaded)
         t.start()
@@ -80,8 +80,8 @@ class loginDialog(xbmcgui.WindowXMLDialog):
             username = API.USERSETTINGS["user"]["name"]
             ret = dialog.yesno("Simkl LogIn Warning", getstr(32032).format(username),
                 nolabel=getstr(32034), yeslabel=getstr(32033), autoclose=30000)
-            #xbmc.log("Ret: {}".format(ret))
-            xbmc.log("Simkl:ret: {}".format(ret))
+            #xbmc.log("Ret: {0}".format(ret))
+            xbmc.log("Simkl:ret: {0}".format(ret))
             if ret == 1: pass
             elif ret == 0:
                 self.onClick(CANCEL_BUTTON)
@@ -98,6 +98,6 @@ class loginDialog(xbmcgui.WindowXMLDialog):
             self.close()
 
     def onClick(self, controlID):
-        xbmc.log("Simkl: onclick {}, {}".format(controlID, self))
+        xbmc.log("Simkl: onclick {0}, {1}".format(controlID, self))
         if controlID == CANCEL_BUTTON:
             self.canceled = True

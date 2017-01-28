@@ -41,7 +41,7 @@ class Engine:
     #   },
     #   "id": "libMovies"
     # }))
-    # xbmc.log("Simkl: Ret: {}".format(kodilibrary))
+    # xbmc.log("Simkl: Ret: {0}".format(kodilibrary))
     # kodilibrary = json.loads(kodilibrary)
 
     # if kodilibrary["result"]["limits"]["total"] > 0:
@@ -87,15 +87,15 @@ class Player(xbmc.Player):
       thing = xbmc.executeJSONRPC(json.dumps({"jsonrpc": "2.0", "method": "Player.GetItem",
         "params": { "properties": [ "showtitle", "title", "season", "episode", "file", "imdbnumber", "genre" ]
         , "playerid": 1 }, "id": "VideoGetItem"}))
-      xbmc.log("Simkl: Full: {}".format(thing))
+      xbmc.log("Simkl: Full: {0}".format(thing))
       item = json.loads(thing)["result"]["item"]
       #imdb  = movie.getIMDBNumber().strip(" ")
       #fname = self.getPlayingFile()
       imdb = item["imdbnumber"]
       fname = item["file"]
       media = item["type"]
-      xbmc.log("Simkl: IMDb: {}".format(imdb))
-      xbmc.log("Simkl: Genre: {}".format(item["genre"]))
+      xbmc.log("Simkl: IMDb: {0}".format(imdb))
+      xbmc.log("Simkl: Genre: {0}".format(item["genre"]))
       xbmc.log("Simkl: MediaType: " + str(media))
 
       percentage = 100 * self.getTime() / self.getTotalTime()
@@ -103,13 +103,13 @@ class Player(xbmc.Player):
 
       if 99 > percentage > pctconfig:
         bubble = __addon__.getSetting("bubble")
-        xbmc.log("Simkl: Bubble == {}".format(bubble))
-        xbmc.log("Percentage: {}, pctconfig {}".format(percentage, pctconfig))
+        xbmc.log("Simkl: Bubble == {0}".format(bubble))
+        xbmc.log("Percentage: {0}, pctconfig {1}".format(percentage, pctconfig))
 
-        xbmc.log("Simkl: Ready to scrobble {}".format(movie.getTitle()))
+        xbmc.log("Simkl: Ready to scrobble {0}".format(movie.getTitle()))
         if imdb == "":
         #if True:
-          xbmc.log("Simkl: No imdb - Fname: {}".format(fname))
+          xbmc.log("Simkl: No imdb - Fname: {0}".format(fname))
           r = self.api.watched(fname, media, self.getTotalTime())
         else:
           xbmc.log("Simkl: IMDB: " + str(imdb))

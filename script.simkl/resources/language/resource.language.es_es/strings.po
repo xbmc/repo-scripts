@@ -49,18 +49,18 @@ msgid "Simkl login"
 msgstr "Inicio de sesión en Simkl"
 
 msgctxt "#32022"
-msgid "Please visit {} on \nyour device and enter this code"
-msgstr "Por favor visita {}\n en tu dispositivo e introduce el código"
+msgid "Please visit {0} on \nyour device and enter this code"
+msgstr "Por favor visita {0}\n en tu dispositivo e introduce el código"
 
 msgctxt "#32023"
-msgid "Remaining time: {}/{}"
-msgstr "Tiempo restante: {}/{}"
+msgid "Remaining time: {0}/{1}"
+msgstr "Tiempo restante: {0}/{1}"
 
 # Blahblahblah
 
 msgctxt "#32025"
-msgid "Hello again, {}"
-msgstr "Hola de nuevo, {}"
+msgid "Hello again, {0}"
+msgstr "Hola de nuevo, {0}"
 
 msgctxt "#32026"
 msgid "Please Log In in addon settings"
@@ -71,24 +71,24 @@ msgid "You don't have internet"
 msgstr "No tienes conexión a internet"
 
 msgctxt "#32028"
-msgid "Scrobbling {}"
-msgstr "Scrobbling {}"
+msgid "Scrobbling {0}"
+msgstr "Scrobbling {0}"
 
 msgctxt "#32029"
-msgid "Error at scrobbling. Retrying ({})"
-msgstr "Error en scrobbling. Reintentando ({})"
+msgid "Error at scrobbling. Retrying ({0})"
+msgstr "Error en scrobbling. Reintentando ({0})"
 
 msgctxt "#32030"
-msgid "Login successful, {}"
-msgstr "Sesión iniciada, {}"
+msgid "Login successful, {0}"
+msgstr "Sesión iniciada, {0}"
 
 msgctxt "#32031"
 msgid "Couldn't log in"
 msgstr "No se ha podido autentificar"
 
 msgctxt "#32032"
-msgid "You are alredy logged in as {}"
-msgstr "Ya has iniciado sesión como '{}'"
+msgid "You are alredy logged in as {0}"
+msgstr "Ya has iniciado sesión como '{0}'"
 
 msgctxt "#32033"
 msgid "Continue"
