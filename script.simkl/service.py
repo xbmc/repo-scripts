@@ -16,12 +16,12 @@ interface.__addon__ = __addon__
 autoscrobble = __addon__.getSetting("autoscrobble")
 def getstr(strid): return __addon__.getLocalizedString(strid)
 
-#try:
-compdatefile = os.path.join(__addon__.getAddonInfo("path").decode("utf-8"), "resources/data/compdate.txt")
-with open(xbmc.translatePath(compdatefile), "r") as f:
-    __compdate__ = f.read()
-#except:
-#    __compdate__ = "ERROR: No such file or directory"
+try:
+    compdatefile = os.path.join(__addon__.getAddonInfo("path").decode("utf-8"), "resources/data/compdate.txt")
+    with open(xbmc.translatePath(compdatefile), "r") as f:
+        __compdate__ = f.read()
+except:
+    __compdate__ = "ERROR: No such file or directory"
 
 if __name__ == "__main__":
     xbmc.log("Simkl dir: " + str(xbmc.translatePath("special://home")))

@@ -5,13 +5,11 @@
        provider-name="David Davó / Simkl">
   <requires>
     <import addon="xbmc.python" version="2.6"/>
-    <import addon="script.module.simplejson"/>
-    <import addon="script.module.xbmcutil"/>
   </requires>
   <extension point="xbmc.service" library="service.py" start="login" />
   <extension point="xbmc.addon.metadata">
     <summary lang="en_gb">Simkl Scrobbler with AI file detection system</summary>
-    <disclaimer lang="en_gb">Currently under development</disclaimer>
+    <disclaimer lang="en_gb">Not tested on Android</disclaimer>
     <description lang="en_gb">Automatically set Movies and TV Shows\Anime as watched on Simkl.com. Simkl knows what you're watching, tells you episodes you've missed, and connects you to what your friends are into.</description>
     <platform>all</platform>
     <license>GPLv3</license>
