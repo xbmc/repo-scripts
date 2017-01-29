@@ -1,5 +1,3 @@
-import json
-
 import xbmcaddon
 import xbmc
 import xbmcgui
@@ -11,6 +9,12 @@ from NextUpInfo import NextUpInfo
 from StillWatchingInfo import StillWatchingInfo
 from UnwatchedInfo import UnwatchedInfo
 from PostPlayInfo import PostPlayInfo
+import sys
+
+if sys.version_info < (2, 7):
+    import simplejson as json
+else:
+    import json
 
 LIBRARY = library.LibraryFunctions()
 # service class for playback monitoring

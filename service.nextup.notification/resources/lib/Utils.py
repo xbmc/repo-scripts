@@ -2,7 +2,11 @@ import xbmc
 import xbmcgui
 import xbmcaddon
 import inspect
-import json
+import sys
+if sys.version_info < (2, 7):
+    import simplejson as json
+else:
+    import json
 
 addonSettings = xbmcaddon.Addon(id='service.nextup.notification')
 language = addonSettings.getLocalizedString
