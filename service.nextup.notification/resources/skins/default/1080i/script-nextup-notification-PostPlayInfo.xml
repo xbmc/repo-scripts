@@ -755,7 +755,6 @@
                             <textureradioonnofocus colordiffuse="99FFFFFF">show.png</textureradioonnofocus>
                             <textureradioofffocus colordiffuse="FF387ef5">hide.png</textureradioofffocus>
                             <textureradiooffnofocus colordiffuse="99FFFFFF">hide.png</textureradiooffnofocus>
-
                         </control>
 					</control>
 				</control>
@@ -771,7 +770,7 @@
 				<control type="label">
 					<right>140</right>
 					<posy>35</posy>
-					<width>300</width>
+					<width>500</width>
 					<height>65</height>
 					<font>font13</font>
 					<align>right</align>

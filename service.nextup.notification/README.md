@@ -19,34 +19,36 @@ Skinners (PostPlayMode):
          - 202 - Spoilers Button
          
          - Various Window Propertys are available including
-           - Window.getProperty('background') - tvshow fanart
-           - Window.getProperty('clearlogo') - tvshow clearlogo
-           - Window.getProperty('next.poster') - next episode tvshow poster
-           - Window.getProperty('next.thumb') - next episode thumb
-           - Window.getProperty('next.clearart') - next episode tvshow clearart
-           - Window.getProperty('next.landscape') - next episode landscape
-           - Window.getProperty('next.plot') - next episode plot
-           - Window.getProperty('next.tvshowtitle') - next episode tvshow title
-           - Window.getProperty('next.title') - next episode title
-           - Window.getProperty('next.season') - next episode season number
-           - Window.getProperty('next.episode') - next episode episode number
-           - Window.getProperty('next.year') - next episode preimiered year
-           - Window.getProperty('next.rating') - next episode rating
-           - Window.getProperty('next.duration') - next episode duration
-           - Window.getProperty('previous.poster') - previous episode tvshow poster
-           - Window.getProperty('previous.thumb') - previous episode thumb
-           - Window.getProperty('previous.clearart') - previous episode tvshow clearart
-           - Window.getProperty('previous.landscape') - previous episode landscape
-           - Window.getProperty('previous.plot') - previous episode plot
-           - Window.getProperty('previous.tvshowtitle') - previous episode tvshow title
-           - Window.getProperty('previous.title') - previous episode title
-           - Window.getProperty('previous.season') - previous episode season number
-           - Window.getProperty('previous.episode') - previous episode episode number
-           - Window.getProperty('previous.year') - previous episode preimiered year
-           - Window.getProperty('previous.rating') - previous episode rating
-           - Window.getProperty('previous.duration') - previous episode duration
-           - Window.getProperty('showplot') - not empy when should show plot
-           - Window.getProperty('stillwatching') - not empty when entered still watching mode                                        
+           - Window.Property(background) - tvshow fanart
+           - Window.Property(clearlogo) - tvshow clearlogo
+           - Window.Property(banner) - tvshow banner
+           - Window.Property(characterart) - tvshow characterart
+           - Window.Property(next.poster) - next episode tvshow poster
+           - Window.Property(next.thumb) - next episode thumb
+           - Window.Property(next.clearart) - next episode tvshow clearart
+           - Window.Property(next.landscape) - next episode landscape
+           - Window.Property(next.plot) - next episode plot
+           - Window.Property(next.tvshowtitle) - next episode tvshow title
+           - Window.Property(next.title) - next episode title
+           - Window.Property(next.season) - next episode season number
+           - Window.Property(next.episode) - next episode episode number
+           - Window.Property(next.year) - next episode preimiered year
+           - Window.Property(next.rating) - next episode rating
+           - Window.Property(next.duration) - next episode duration
+           - Window.Property(previous.poster) - previous episode tvshow poster
+           - Window.Property(previous.thumb) - previous episode thumb
+           - Window.Property(previous.clearart) - previous episode tvshow clearart
+           - Window.Property(previous.landscape) - previous episode landscape
+           - Window.Property(previous.plot) - previous episode plot
+           - Window.Property(previous.tvshowtitle) - previous episode tvshow title
+           - Window.Property(previous.title) - previous episode title
+           - Window.Property(previous.season) - previous episode season number
+           - Window.Property(previous.episode) - previous episode episode number
+           - Window.Property(previous.year) - previous episode preimiered year
+           - Window.Property(previous.rating) - previous episode rating
+           - Window.Property(previous.duration) - previous episode duration
+           - Window.Property(showplot) - not empy when should show plot
+           - Window.Property(stillwatching) - not empty when entered still watching mode                                        
 
 Skinners (Non PostPlayMode):
   

@@ -101,6 +101,10 @@ class PostPlayInfo(xbmcgui.WindowXML):
                 self.setProperty(
                     'background',self.item['art'].get('tvshow.fanart', ''))
                 self.setProperty(
+                    'banner',self.item['art'].get('tvshow.banner', ''))
+                self.setProperty(
+                    'characterart',self.item['art'].get('tvshow.characterart', ''))
+                self.setProperty(
                     'next.poster',self.item['art'].get('tvshow.poster', ''))
                 self.setProperty(
                     'next.thumb',self.item['art'].get('thumb', ''))
