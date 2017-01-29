@@ -1,0 +1,63 @@
+2.0.0
+- Code cleanup
+1.10.6
+- Code cleanup
+1.10.5
+- Disabled WebVTT subtitles for now
+1.10.4
+- Removed 3sat
+1.10.3
+- Added "Most viewed" shortcut for the unithek
+1.10.2
+- Removed relict that required libMediathek
+1.10.1
+- Fixed "By date"
+- Added search by date
+1.10.0
+- Upgraded to libmediathek3
+- changed name to libzdf
+- Fixed some API quirks
+1.9.5
+- Improvements for external cals
+1.9.4
+- Added function to get the m3u8 from the html
+1.9.3
+- Added "Search"
+- Removed unused modules
+- Cleaned up the add-on
+1.9.2
+- Fixed error
+1.9.1
+- Added "Shows by date"
+1.9.0
+- Rewrote everything to use the new JSON API
+- Switched ro libMediathek2
+- Using Gzip for url requests now
+1.1.0
+- Added preparation for external xmlservice
+- Added support for show name
+- Added support for channel name
+- Added support for episode numbers
+- Added support for season numbers
+- Added support for aired date
+1.0.6
+- Added subtitle support
+- Removed "Olympia 2016" special
+1.0.5
+- Added thumbnails to "Olympia 2016" special
+- Impoved show thumbnails
+1.0.4
+- Added "Olympia 2016" special
+- Removed "EM 2016" special
+1.0.3
+- Improved PVR support
+1.0.2
+- Added "EM 2016" special
+1.0.1
+- Limited "New"/"Most viewed" to 150 entries
+- Switched to akkumulative lists
+- Switched to HLS only
+- RTMP streams are disabled (for now)
+- Various other fixes and improvements
+1.0.0
+- Initial release
