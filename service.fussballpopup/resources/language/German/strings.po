@@ -1,0 +1,258 @@
+# XBMC Media Center language file
+# Addon Name: Fussball Ticker
+# Addon id: service.fussballpopup
+# Addon version: 0.3.9
+# Addon Provider: L0RE
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC-Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: 2017-01-30 16:29+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: de\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+
+msgctxt "Addon Summary"
+msgid "Shows Football Games Messages Feed in Overlay WIndows"
+msgstr "Zeigt Fussball SPiele Nachrichten Updates in PupupFensterann"
+
+msgctxt "Addon Description"
+msgid "Shows Fussball Feed in Overlay WIndows"
+msgstr "Zeigt Fussball Updates in PupupFensterann"
+
+msgctxt "#30001"
+msgid "generel"
+msgstr "Generell"
+
+msgctxt "#30002"
+msgid "Reading Time"
+msgstr "Reading Time"
+
+msgctxt "#30003"
+msgid "Grey Out"
+msgstr "Grey Out"
+
+msgctxt "#30004"
+msgid "Picture"
+msgstr "Bilder"
+
+msgctxt "#30005"
+msgid "Number of Messages"
+msgstr "Anazhl von Meldungen"
+
+msgctxt "#30006"
+msgid "Filter"
+msgstr "Filter"
+
+msgctxt "#30007"
+msgid "Games Messages (Like Helftime)"
+msgstr "Spielzeit Meldungen (z.b. Halbzeit)"
+
+msgctxt "#30008"
+msgid "Card Messages (Red/Yellow)"
+msgstr "Karten Meldungen (Rot/Gelb)"
+
+msgctxt "#30009"
+msgid "Goal Messages"
+msgstr "Tor Meldungen"
+
+msgctxt "#30010"
+msgid "11Meter Goal Shooting"
+msgstr "11Meter Schiessen"
+
+msgctxt "#30011"
+msgid "Player Change"
+msgstr "Spieler Wechsel"
+
+msgctxt "#30012"
+msgid "Old Messages"
+msgstr "Alte Meldungen"
+
+msgctxt "#30013"
+msgid "Advanced Settings"
+msgstr "Erweiterte Einstellungen"
+
+msgctxt "#30014"
+msgid "Advances Sttings(Only if you know what you are doing)"
+msgstr "Erweiterte Einstellungen (Nur wenn du weißt was du tust"
+
+msgctxt "#30015"
+msgid "Fontt"
+msgstr "Schrift"
+
+msgctxt "#30016"
+msgid "Font Color"
+msgstr "Schriftfarbe"
+
+msgctxt "#30017"
+msgid "X Postition of the Message"
+msgstr "X Postition der Meldung"
+
+msgctxt "#30018"
+msgid "Y Postition of the Message"
+msgstr "Y Postition der Meldung"
+
+msgctxt "#30019"
+msgid "Width of the Message"
+msgstr "Breite der Meldung"
+
+msgctxt "#30020"
+msgid "Height of the Message"
+msgstr "Höhe der Meldung"
+
+msgctxt "#30021"
+msgid "Width of the Image Left"
+msgstr "Breite des Bildes"
+
+msgctxt "#30022"
+msgid "Height of the Image Left"
+msgstr "Höhe des Bildes"
+
+msgctxt "#30023"
+msgid "Width of the Image Right"
+msgstr "Breite des Bildes Rechts"
+
+msgctxt "#30024"
+msgid "Hight of the Image Right"
+msgstr "Höhe des Bildes Rechts"
+
+msgctxt "#30025"
+msgid " Minute: "
+msgstr " Minute: "
+
+msgctxt "#30026"
+msgid " switches "
+msgstr " tauscht "
+
+msgctxt "#30028"
+msgid "Elf Meter Shooting Missed from"
+msgstr "Elf Meter Schiessen Verfehl von"
+
+msgctxt "#30029"
+msgid " for "
+msgstr " für "
+
+msgctxt "#30030"
+msgid "Elf Meter shooting goal for"
+msgstr "Elf Meter Schiessen Tor von "
+
+msgctxt "#30031"
+msgid "Goal !#n#"
+msgstr "TOOR !#n#"
+
+msgctxt "#30032"
+msgid "Minute: Player "
+msgstr "Minute: Spieler "
+
+msgctxt "#30033"
+msgid " shoots a Goal for "
+msgstr " schiesst ein Tor fuer "
+
+msgctxt "#30034"
+msgid ". Result is now : "
+msgstr ". Es steht nun : "
+
+msgctxt "#30035"
+msgid " Minute: Goal throuh penalty kick of "
+msgstr " Minute: Tor durch Strafstoss von "
+
+msgctxt "#30036"
+msgid " of "
+msgstr " von "
+
+msgctxt "#30037"
+msgid ". The Result is now "
+msgstr ". Es steht "
+
+msgctxt "#30038"
+msgid " Minute: Red Card for "
+msgstr " Minute: Rote Karte fuer "
+
+msgctxt "#30039"
+msgid " Minute: yellow Card for "
+msgstr " Minute: Gelbe Karte fuer "
+
+msgctxt "#30040"
+msgid "The Elfmeter shooting of the game "
+msgstr "Das Elfmeter Schiesse des Spiels "
+
+msgctxt "#30041"
+msgid " against "
+msgstr " gegen "
+
+msgctxt "#30042"
+msgid " has started. The Result is now "
+msgstr " hat begonnen. Es steht "
+
+msgctxt "#30043"
+msgid "The Second Half of the  extra time "
+msgstr "Die Zweite Hälfte der Verlaengerung des Spiels "
+
+msgctxt "#30045"
+msgid "The first Half of the  extra time"
+msgstr "Die Erste Hälfte der Verlaengerung des Spiels "
+
+msgctxt "#30047"
+msgid "The Second Part of the Game"
+msgstr "Die Zweite Halbzeit des Spiels "
+
+msgctxt "#30048"
+msgid "The first Part of the Game"
+msgstr "Die Erste Halbzeit des Spiels "
+
+msgctxt "#30049"
+msgid " The Game "
+msgstr " Das Spiel "
+
+msgctxt "#30050"
+msgid " has endet. The Result is "
+msgstr " ist zuende. Es steht "
+
+msgctxt "#30051"
+msgid " has started. The Result is "
+msgstr " hat begonnen. Es steht "
+
+msgctxt "#30052"
+msgid " has started"
+msgstr " hat Begonnen"
+
+msgctxt "#30053"
+msgid " endet with"
+msgstr " Endete mit "
+
+msgctxt "#30054"
+msgid "International Club Contests"
+msgstr "Internationale Klub-Wettbewerbe"
+
+msgctxt "#30055"
+msgid "International Copetition"
+msgstr "Internationale Turniere"
+
+msgctxt "#30056"
+msgid "Internationale League and Cup competitions"
+msgstr "Internationale Ligen und Pokalwettbewerbe"
+
+msgctxt "#30057"
+msgid "Nationale League"
+msgstr "Nationale Liegen"
+
+msgctxt "#30058"
+msgid "Top Games"
+msgstr "Top Spiele"
+
+msgctxt "#30059"
+msgid "Settings"
+msgstr "Settings"
+
+msgctxt "#30060"
+msgid "Delete Game"
+msgstr "Spiel Loeschen"
+
+msgctxt "#30061"
+msgid "Add Game"
+msgstr "Spiel Eintragen"

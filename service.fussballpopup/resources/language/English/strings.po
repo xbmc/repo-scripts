@@ -1,0 +1,265 @@
+# XBMC Media Center language file
+# Addon Name: Fussball Ticker
+# Addon id: service.fussballpopup
+# Addon version: 0.3.9
+# Addon Provider: L0RE
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC-Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: 2017-01-30 16:29+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+
+msgctxt "Addon Summary"
+msgid "Shows Football Games Messages Feed in Overlay WIndows"
+msgstr ""
+
+msgctxt "Addon Description"
+msgid "Shows Fussball Feed in Overlay WIndows"
+msgstr ""
+
+
+msgctxt "#30001"
+msgid "generel"
+msgstr ""
+
+msgctxt "#30002"
+msgid "Reading Time"
+msgstr ""
+
+msgctxt "#30003"
+msgid "Grey Out"
+msgstr ""
+
+msgctxt "#30004"
+msgid "Picture"
+msgstr ""
+
+msgctxt "#30005"
+msgid "Number of Messages"
+msgstr ""
+
+msgctxt "#30006"
+msgid "Filter"
+msgstr ""
+
+msgctxt "#30007"
+msgid "Games Messages (Like Helftime)"
+msgstr ""
+
+msgctxt "#30008"
+msgid "Card Messages (Red/Yellow)"
+msgstr ""
+
+msgctxt "#30009"
+msgid "Goal Messages"
+msgstr ""
+
+msgctxt "#30010"
+msgid "11Meter Goal Shooting"
+msgstr ""
+
+msgctxt "#30011"
+msgid "Player Change"
+msgstr ""
+
+msgctxt "#30012"
+msgid "Old Messages"
+msgstr ""
+
+msgctxt "#30013"
+msgid "Advanced Settings"
+msgstr ""
+
+msgctxt "#30014"
+msgid "Advances Sttings(Only if you know what you are doing)"
+msgstr ""
+
+msgctxt "#30015"
+msgid "Fontt"
+msgstr ""
+
+msgctxt "#30016"
+msgid "Font Color"
+msgstr ""
+
+msgctxt "#30017"
+msgid "X Postition of the Message"
+msgstr ""
+
+msgctxt "#30018"
+msgid "Y Postition of the Message"
+msgstr ""
+
+msgctxt "#30019"
+msgid "Width of the Message"
+msgstr ""
+
+msgctxt "#30020"
+msgid "Height of the Message"
+msgstr ""
+
+msgctxt "#30021"
+msgid "Width of the Image Left"
+msgstr ""
+
+msgctxt "#30022"
+msgid "Height of the Image Left"
+msgstr ""
+
+msgctxt "#30023"
+msgid "Width of the Image Right"
+msgstr ""
+
+msgctxt "#30024"
+msgid "Hight of the Image Right"
+msgstr ""
+
+msgctxt "#30025"
+msgid " Minute: "
+msgstr ""
+
+msgctxt "#30026"
+msgid " switches "
+msgstr ""
+
+#empty string with id 30027
+
+msgctxt "#30028"
+msgid "Elf Meter Shooting Missed from"
+msgstr ""
+
+msgctxt "#30029"
+msgid " for "
+msgstr ""
+
+msgctxt "#30030"
+msgid "Elf Meter shooting goal for"
+msgstr ""
+
+msgctxt "#30031"
+msgid "Goal !#n#"
+msgstr ""
+
+msgctxt "#30032"
+msgid "Minute: Player "
+msgstr ""
+
+msgctxt "#30033"
+msgid " shoots a Goal for "
+msgstr ""
+
+msgctxt "#30034"
+msgid ". Result is now : "
+msgstr ""
+
+msgctxt "#30035"
+msgid " Minute: Goal throuh penalty kick of "
+msgstr ""
+
+msgctxt "#30036"
+msgid " of "
+msgstr ""
+
+msgctxt "#30037"
+msgid ". The Result is now "
+msgstr ""
+
+msgctxt "#30038"
+msgid " Minute: Red Card for "
+msgstr ""
+
+msgctxt "#30039"
+msgid " Minute: yellow Card for "
+msgstr ""
+
+msgctxt "#30040"
+msgid "The Elfmeter shooting of the game "
+msgstr ""
+
+msgctxt "#30041"
+msgid " against "
+msgstr ""
+
+msgctxt "#30042"
+msgid " has started. The Result is now "
+msgstr ""
+
+msgctxt "#30043"
+msgid "The Second Half of the  extra time "
+msgstr ""
+
+#empty string with id 30044
+
+msgctxt "#30045"
+msgid "The first Half of the  extra time"
+msgstr ""
+
+#empty string with id 30046
+
+msgctxt "#30047"
+msgid "The Second Part of the Game"
+msgstr ""
+
+msgctxt "#30048"
+msgid "The first Part of the Game"
+msgstr ""
+
+msgctxt "#30049"
+msgid " The Game "
+msgstr ""
+
+msgctxt "#30050"
+msgid " has endet. The Result is "
+msgstr ""
+
+msgctxt "#30051"
+msgid " has started. The Result is "
+msgstr ""
+
+msgctxt "#30052"
+msgid " has started"
+msgstr ""
+
+msgctxt "#30053"
+msgid " endet with"
+msgstr ""
+
+msgctxt "#30054"
+msgid "International Club Contests"
+msgstr ""
+
+msgctxt "#30055"
+msgid "International Copetition"
+msgstr ""
+
+msgctxt "#30056"
+msgid "Internationale League and Cup competitions"
+msgstr ""
+
+msgctxt "#30057"
+msgid "Nationale League"
+msgstr ""
+
+msgctxt "#30058"
+msgid "Top Games"
+msgstr ""
+
+msgctxt "#30059"
+msgid "Settings"
+msgstr ""
+
+msgctxt "#30060"
+msgid "Delete Game"
+msgstr ""
+
+msgctxt "#30061"
+msgid "Add Game"
+msgstr ""
