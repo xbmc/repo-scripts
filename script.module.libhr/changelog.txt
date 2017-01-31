@@ -1,0 +1,8 @@
+1.0.0
+- Added support for subtitles
+- Code cleanup
+0.0.2
+- Code cleanup
+- Jump into date view at start
+0.0.1
+- Initial release
