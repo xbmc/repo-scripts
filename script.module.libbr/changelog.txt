@@ -1,0 +1,26 @@
+1.0.0
+- Code cleanup
+0.4.1
+- Code cleanup
+0.4.0
+- Renamed to libbr
+- Misc fixes 
+0.3.3
+- Added "Most viewed"
+- Added subtitle support
+0.3.2
+- Fixed exception when viewing empty shows
+0.3.1
+- Added search
+0.3.0
+- Improved thumbnail support
+- Improved metadata scraping
+- Added "next page" support
+0.2.1
+- Added support for PVR ReLive ARD-Alpha
+- Added Search
+0.2.0
+- Finalised support for a standalone add-on
+0.1.0
+- Improved PVR support
+- Added code for a standalone add-on
