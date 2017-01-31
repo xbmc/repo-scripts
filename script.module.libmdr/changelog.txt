@@ -1,0 +1,20 @@
+1.0.0
+- Code cleanup
+0.3.2
+- Code cleanup
+0.3.1
+- Added duration to "By date" entries
+0.3.0
+- Added "By date" entry
+- Misc improvements
+0.2.1
+- Improved thumbnail fetching
+- Small improvements
+0.2.0
+- Renamed to libmdr
+- Fixed AZ
+0.1.0
+- Upgraded to libmediathek3
+- Fixed some parsing errors
+0.0.1
+- Initial release
