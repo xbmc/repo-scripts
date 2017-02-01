@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.playalbum" name="Play Album Script" version="3.0.1" provider-name="ronie">
+	<requires>
+		<import addon="xbmc.python" version="2.25.0"/>
+	</requires>
+	<extension point="xbmc.python.library" library="default.py" />
+	<extension point="xbmc.addon.metadata">	
+		<language></language>
+		<summary lang="en">Play Album Script</summary>
+		<description lang="en">Script will play a full album when executed in the album info dialog.</description>
+		<platform>all</platform>
+		<forum>http://forum.kodi.tv/showthread.php?tid=104189</forum>
+		<source>https://github.com/ronie/script.playalbum</source>
+		<license>GNU GENERAL PUBLIC LICENSE Version 2</license>
+		<website></website>
+		<email></email>
+	</extension>
+</addon>

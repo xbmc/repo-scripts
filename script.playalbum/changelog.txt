@@ -1,0 +1,58 @@
+v3.0.1
+- simplify code
+
+v3.0.0
+- remove simplejson support
+
+v2.0.2
+- cosmetics
+
+v2.0.1
+- cosmetics
+
+v2.0.0
+- kodi name change
+
+v1.0.2
+- additional addon tags
+
+v1.0.1
+- no reason
+
+v1.0.0
+- gotham release
+
+v0.1.3
+- added tracknr property
+
+v0.1.2
+- python version bump
+
+v0.1.1
+- use listitem.dbid
+
+v0.1.0
+- update code for frodo
+
+v0.0.7
+- fix encoding issues
+
+v0.0.6:
+- adjust code to work with $ESCINFO
+
+v0.0.5:
+- use title instead of label
+
+v0.0.4:
+- use json if python 2.7 is available
+
+v0.0.3:
+- use simplejson
+- fix fetching album id
+- add logging
+
+v0.0.2:
+- adjusted to latest json-rpc changes
+
+v 0.0.1:
+- initial release
