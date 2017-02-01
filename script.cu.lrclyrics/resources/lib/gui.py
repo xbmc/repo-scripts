@@ -384,7 +384,7 @@ class GUI(xbmcgui.WindowXMLDialog):
         self.Monitor = MyMonitor(function = None)
        
     def onInit(self):
-        self.matchlist = ['@', 'www\.(.*?)\.(.*?)', 'QQ(.*?)[1-9]', 'artist ?: ?.', 'album ?: ?.', 'title ?: ?.', 'song ?: ?.']
+        self.matchlist = ['@', 'www\.(.*?)\.(.*?)', 'QQ(.*?)[1-9]', 'artist ?: ?.', 'album ?: ?.', 'title ?: ?.', 'song ?: ?.', 'by ?: ?.']
         self.text = self.getControl(110)
         self.list = self.getControl(120)
         self.label = self.getControl(200)

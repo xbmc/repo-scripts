@@ -23,8 +23,6 @@ BASE_URL       = 'http://api.openweathermap.org/data/2.5/%s'
 LATLON         = ADDON.getSetting('LatLon')
 WEEKEND        = ADDON.getSetting('Weekend')
 STATION        = ADDON.getSetting('Station')
-MAPS           = ADDON.getSetting('Maps')
-ZOOM           = str(int(ADDON.getSetting('Zoom')) + 2)
 WEATHER_ICON   = xbmc.translatePath('%s.png').decode("utf-8")
 DATEFORMAT     = xbmc.getRegion('dateshort')
 TIMEFORMAT     = xbmc.getRegion('meridiem')
@@ -144,9 +142,9 @@ def geoip():
         log('failed to retrieve geoip location')
     if response:
         data = json.loads(response)
-        if data and data.has_key('city') and data.has_key('country_code'):
-            city, country = data['city'], data['country_code']
-            return '%s,%s' % (city, country)
+        if data and data.has_key('city') and data.has_key('country_name'):
+            city, country = data['city'], data['country_name']
+            return '%s, %s' % (city, country)
 
 def location(locstr):
     locs    = []
@@ -158,11 +156,14 @@ def location(locstr):
     search_string = 'find?q=%s&type=like&APPID=%s' % (urllib2.quote(loc), APPID)
     query = get_data(search_string, 'location')
     log('location data: %s' % query)
+    if not query:
+        log('failed to retrieve location data')
+        return None, None, None
     try:
         data = json.loads(query)
     except:
         log('failed to parse location data')
-        data = ''
+        return None, None, None
     if data != '' and 'list' in data:
         for item in data['list']:
             if item['name'] == '': # bug? test by searching for california
@@ -191,17 +192,7 @@ def forecast(loc,locid,locationdeg):
     log('weather location deg: %s' % locationdeg)
     if LIMIT:
         log('using cached data')
-    if MAPS == 'true' and xbmc.getCondVisibility('System.HasAddon(script.openweathermap.maps)'):
-        lat = float(eval(locationdeg)[0])
-        lon = float(eval(locationdeg)[1])
-        xbmc.executebuiltin('XBMC.RunAddon(script.openweathermap.maps,lat=%s&lon=%s&zoom=%s)' % (lat, lon, ZOOM))
-    else:
-        set_property('Map.IsFetched', '')
-        for count in range (1, 6):
-            set_property('Map.%i.Layer' % count, '')
-            set_property('Map.%i.Area' % count, '')
-            set_property('Map.%i.Heading' % count, '')
-            set_property('Map.%i.Legend' % count, '')
+    set_property('Map.IsFetched', '')
     try:
         lang = LANG[KODILANGUAGE]
         if lang == '':
@@ -930,12 +921,13 @@ else:
         locationstring = geoip()
         if locationstring:
             locations, locationids, locationdeg = location(locationstring.encode("utf-8"))
-            ADDON.setSetting('Location1', locations[0].split(' - ')[0])
-            ADDON.setSetting('Location1ID', locationids[0])
-            ADDON.setSetting('Location1deg', str(locationdeg[0]))
-            locationname = locations[0]
-            locationid = str(locationids[0])
-            locationdeg = str(locationdeg[0])
+            if locations:
+                ADDON.setSetting('Location1', locations[0].split(' - ')[0])
+                ADDON.setSetting('Location1ID', locationids[0])
+                ADDON.setSetting('Location1deg', str(locationdeg[0]))
+                locationname = locations[0]
+                locationid = str(locationids[0])
+                locationdeg = str(locationdeg[0])
     if not locationid == '':
         ADDON.setSetting('oldloc', str(locationid))
         ADDON.setSetting('oldtime', str(int(time.time())))

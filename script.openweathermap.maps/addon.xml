@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.openweathermap.maps" name="OpenWeatherMap Maps" version="0.1.1" provider-name="ronie">
+<addon id="script.openweathermap.maps" name="OpenWeatherMap Maps" version="0.1.2" provider-name="ronie">
 	<requires>
 		<import addon="xbmc.python" version="2.25.0"/>
-		<import addon="script.module.pil" version="1.1.7"/>
 	</requires>
 	<extension point="xbmc.python.library" library="default.py"/>
 	<extension point="xbmc.addon.metadata">
@@ -15,6 +14,7 @@
 		<website>http://forum.kodi.tv/showthread.php?tid=207110</website>
 		<email></email>
 		<source>https://github.com/ronie/weather.openweathermap.maps/</source>
+		<broken>broken due to website issues</broken>
 	</extension>
 </addon>
 

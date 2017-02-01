@@ -1,3 +1,6 @@
+v5.3.5
+- filter more lines
+
 v5.3.4
 - filter 'attribution' lines from lyrics
 
