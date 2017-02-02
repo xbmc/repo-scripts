@@ -1,3 +1,12 @@
+[- 0.0.101 -]
+
+Fix (Issue #68): Artist screen options button was showing Mark Unwatched
+Fix (Issue #65): When returning from playback episode pre-play did not update the selected episode
+Fix: Codec info button ('o') handling on Krypton+
+Remove mkv/hls testing option in add-on Kodi settings
+Add Debug Logging option to Advanced Settings
+Fix: Post-play after the last item in the playlist was replaying the last item instead of the displayed up next item
+
 [- 0.0.100 -]
 
 Fix some stability issues

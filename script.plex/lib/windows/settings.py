@@ -8,13 +8,6 @@ from lib.util import T
 
 import plexnet
 
-'''
-    <setting id="transcode_format" label="32023" type="labelenum" values="mkv|hls" default="0" />
-    <setting id="playback_directplay_force" type="bool" label="32027" default="false" enable="eq(-1,true)" subsetting="true" />
-    <setting id="burn_subtitles" label="32031" type="enum" lvalues="32028|32029|32030" default="0" />
-    <setting id="allow_insecure" label="32032" type="enum" lvalues="32033|32034|32035" default = "0" />
-'''
-
 
 class Setting(object):
     type = None
@@ -238,6 +231,7 @@ class Settings(object):
                 ),
                 BoolSetting('gdm_discovery', T(32042, 'Server Discovery (GDM)'), True),
                 BoolSetting('kiosk.mode', T(32043, 'Start Plex On Kodi Startup'), False),
+                BoolSetting('debug', T(32024, 'Debug Logging'), False),
             )
         ),
         'manual': (
