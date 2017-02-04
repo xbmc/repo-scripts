@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.module.mediathekxmlservice" 
+	     name="mediathekxmlservice" 
+	     version="1.0.0" 
+	     provider-name="membrane">
+  <requires>
+    <import addon="xbmc.python" version="2.25.0" />
+    <import addon="script.module.libmediathek3" version="1.3.1"/>
+  </requires>
+  <extension point="xbmc.python.module" library="lib" />
+  <extension point="xbmc.addon.metadata">
+    <platform>all</platform>
+    <summary lang="en">Lib for XML framework of german public tv stations.</summary>
+    <description lang="en">Lib for XML framework of german public tv stations.</description>
+  </extension>
+</addon>
