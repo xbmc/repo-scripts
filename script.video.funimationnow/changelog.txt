@@ -1,3 +1,6 @@
+[B]0.1.2[/B]
+- Update fix to address the new change in the API for device specific content.
+
 [B]0.1.1[/B]
 - Minor bug fixes for resource locations
 
