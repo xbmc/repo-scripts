@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+    <category label="32000" visible="Skin.String(SkinHelper.RandomFanartDelay)">
+        <setting id="pvr_bg_recordingsonly" type="bool" label="32004" default="false"/>
+        <setting id="enable_custom_images_path" type="bool" label="32005" default=""/>
+        <setting id="custom_images_path" type="folder" label="32006" default="" visible="eq(-1,true)"/>
+    </category>
+    <category label="32001" visible="Skin.HasSetting(SkinHelper.EnableWallBackgrounds)">
+        <setting id="wallimages_delay" type="number" label="32003" default="60"/>
+        <setting id="max_wallimages" type="number" label="32007" default="10" visible="gt(-1,0)"/>
+        <setting label="32008" type="action" visible="gt(-2,0)" action="RunScript(script.skin.helper.service,action=DELETEDIR,path=special://profile/addon_data/script.skin.helper.backgrounds/wall_backgrounds/)"/>
+    </category>
+</settings>
