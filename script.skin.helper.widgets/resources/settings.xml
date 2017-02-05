@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+    <!-- common-->
+    <category label="32163">
+        <setting id="hide_watched" type="bool" label="32035" default="false"/>
+        <setting id="hide_watched_recent" type="bool" label="32067" default="true"/>
+        <setting id="default_limit" type="number" label="32053" default="25"/>
+    </category>
+    <!-- episodes -->
+    <category label="$LOCALIZE[20360]">
+        <setting id="episodes_enable_specials" type="bool" label="32025" default="false"/>
+        <setting id="nextup_inprogressonly" type="bool" label="32036" default="true"/>
+        <setting id="episodes_grouping" type="bool" label="32050" default="false"/>
+    </category>
+    <!-- PVR -->
+    <category label="32054">
+        <setting id="pvr_enable_artwork" type="bool" label="32024" default="true"/>
+    </category>
+    <!-- Music -->
+    <category label="$LOCALIZE[1211]">
+        <setting id="music_enable_artwork" type="bool" label="32024" default="false"/>
+        <setting id="music_browse_album" type="bool" label="32026" default="false"/>
+    </category>
+    
+    
+</settings>

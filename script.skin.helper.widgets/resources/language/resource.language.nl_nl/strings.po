@@ -1,0 +1,233 @@
+# Kodi language file
+# Addon Name: Skin Helper Widgets
+# Addon id: script.skin.helper.widgets
+# Addon Provider: marcelveldt
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC-Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: 2014-10-26 17:05+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE\n"
+"Language: nl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+
+msgctxt "#32000"
+msgid "Favourites"
+msgstr "Favorieten"
+
+msgctxt "#32001"
+msgid "Favourite Media"
+msgstr "Favoriete media"
+
+msgctxt "#32002"
+msgid "Next Episodes"
+msgstr "Volgende afleveringen"
+
+msgctxt "#32003"
+msgid "Recommended Movies"
+msgstr "Aanbevolen films"
+
+msgctxt "#32004"
+msgid "Recommended Media"
+msgstr "Aanbevolen media"
+
+msgctxt "#32005"
+msgid "Recent Media"
+msgstr "Recent toegevoegde media"
+
+msgctxt "#32006"
+msgid "Similar Movies"
+msgstr "Vergelijkbare films"
+
+msgctxt "#32007"
+msgid "In progress and Recommended Media"
+msgstr "Hervatbare en aanbevolen media"
+
+msgctxt "#32008"
+msgid "Random Episodes"
+msgstr "Willekeurige afleveringen"
+
+msgctxt "#32009"
+msgid "Recommended Episodes"
+msgstr "Aanbevolen afleveringen"
+
+msgctxt "#32010"
+msgid "In progress and recommended Episodes"
+msgstr "Hervatbare en aanbevolen afleveringen"
+
+msgctxt "#32011"
+msgid "In progress Media"
+msgstr "Hervatbare media"
+
+msgctxt "#32012"
+msgid "Recently added songs"
+msgstr "Recent toegevoegde liedjes"
+
+msgctxt "#32013"
+msgid "Recently played songs"
+msgstr "Recent afgespeelde liedjes"
+
+msgctxt "#32014"
+msgid "Similar TV Shows"
+msgstr "Vergelijkbare TV series"
+
+msgctxt "#32015"
+msgid "Recommended albums"
+msgstr "Aanbevolen albums"
+
+msgctxt "#32016"
+msgid "Recommended songs"
+msgstr "Aanbevolen liedjes"
+
+msgctxt "#32017"
+msgid "PVR Channel groups"
+msgstr "PVR Kanaalgroepen"
+
+msgctxt "#32018"
+msgid "Recent recordings"
+msgstr "Recente opnames"
+
+msgctxt "#32019"
+msgid "Next unwatched recordings"
+msgstr "Volgende onbekeken opnames"
+
+msgctxt "#32020"
+msgid "TV Channels"
+msgstr "TV kanalen"
+
+msgctxt "#32021"
+msgid "Timers"
+msgstr "Ingeplande opnames"
+
+msgctxt "#32022"
+msgid "Similar Media"
+msgstr "Vergelijkbare media"
+
+msgctxt "#32023"
+msgid "Widgets"
+msgstr "Widgets"
+
+msgctxt "#32024"
+msgid "Enable artwork lookups"
+msgstr "Artwork opzoeken"
+
+msgctxt "#32025"
+msgid "Show specials in episode widgets"
+msgstr "Toon specials in widgets voor afleveringen"
+
+msgctxt "#32026"
+msgid "Browse albums instead of playing for album widgets"
+msgstr "Album bladeren in plaats van afspelen voor album widgets"
+
+msgctxt "#32027"
+msgid "In-progress episodes"
+msgstr "Hervatbare afleveringen"
+
+msgctxt "#32028"
+msgid "In-progress movies"
+msgstr "Hervatbare films"
+
+msgctxt "#32029"
+msgid "In-progress and recommended movies"
+msgstr "Hervatbare en aanbevolen films"
+
+msgctxt "#32030"
+msgid "TV Channels (with artwork)"
+msgstr "TV kanalen (met artwork)"
+
+msgctxt "#32031"
+msgid "Next unwatched recordings (reversed)"
+msgstr "Volgende onbekeken opnames (omgekeerde volgorde)"
+
+msgctxt "#32032"
+msgid "In-progress and random movies"
+msgstr "Hervatbare en willekeurige films"
+
+msgctxt "#32033"
+msgid "Random albums"
+msgstr "Willekeurige albums"
+
+msgctxt "#32034"
+msgid "Random songs"
+msgstr "Willekeurige liedjes"
+
+msgctxt "#32035"
+msgid "Hide watched items in video widgets"
+msgstr "Verberg bekeken items in video widgets"
+
+msgctxt "#32036"
+msgid "Only use in-progress shows in next episodes widget"
+msgstr "Toon alleen volgende afleveringen voor TV series die ik al bekijk"
+
+msgctxt "#32037"
+msgid "Recommended Tv Shows"
+msgstr "Aanbevolen TV series"
+
+msgctxt "#32038"
+msgid "Recently added movies"
+msgstr "Recent toegevoegde films"
+
+msgctxt "#32039"
+msgid "Recently added episodes"
+msgstr "Recent toegevoegde afleveringen"
+
+msgctxt "#32040"
+msgid "Recently added musicvideos"
+msgstr "Recent toegevoegde muziekvideo's"
+
+msgctxt "#32041"
+msgid "Random Tv Shows"
+msgstr "Willekeurige TV series"
+
+msgctxt "#32042"
+msgid "Unaired episodes"
+msgstr "Nog niet uitgezonden afleveringen"
+
+msgctxt "#32043"
+msgid "Next airing episodes"
+msgstr "Binnenkort uitgezonden afleveringen"
+
+msgctxt "#32044"
+msgid "In progress TV shows"
+msgstr "Bekeken Tv series"
+
+msgctxt "#32045"
+msgid "Recently added TV shows"
+msgstr "Recent toegevoegde Tv series"
+
+msgctxt "#32046"
+msgid "IMDB Top 250 movies in library"
+msgstr "IMDB Top 250 Films in de bibliotheek"
+
+msgctxt "#32047"
+msgid "IMDB Top 250 Tv shows in library"
+msgstr "IMDB Top 250 TV series in de bibliotheek"
+
+msgctxt "#32048"
+msgid "Random movies"
+msgstr "Willekeurige films"
+
+msgctxt "#32049"
+msgid "In progress and random Episodes"
+msgstr "Hervatbare en willekeurige afleveringen"
+
+msgctxt "#32050"
+msgid "Group items in recent episodes widget"
+msgstr "Groupeer items in recente afleveringen widget"
+
+msgctxt "#32051"
+msgid "Browse TV Show"
+msgstr "Blader TV serie"
+
+msgctxt "#32052"
+msgid "Browse Season"
+msgstr "Blader seizoen"
+
+msgctxt "#32053"
+msgid "Default number of items to show in widget"
+msgstr "Standaard aantal items die getoond worden in widgets"
