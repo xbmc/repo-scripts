@@ -260,7 +260,31 @@ msgctxt "#32265"
 msgid "Enable music library information"
 msgstr ""
 
-#empty strings from id 32266 to 32279
+msgctxt "#32266"
+msgid "Enable CPU temperature"
+msgstr ""
+
+msgctxt "#32267"
+msgid "Enable GPU temperature"
+msgstr ""
+
+msgctxt "#32268"
+msgid "Enable HDD temperature"
+msgstr ""
+
+msgctxt "#32269"
+msgid "Enable FPS"
+msgstr ""
+
+msgctxt "#32270"
+msgid "Enable current uptime"
+msgstr ""
+
+msgctxt "#32271"
+msgid "Enable total uptime"
+msgstr ""
+
+#empty strings from id 32272 to 32279
 
 msgctxt "#32280"
 msgid "CPU:"
@@ -322,7 +346,31 @@ msgctxt "#32294"
 msgid "Songs:"
 msgstr ""
 
-#empty strings from id 32295 to 32309
+msgctxt "#32295"
+msgid "CPU temperature:"
+msgstr ""
+
+msgctxt "#32296"
+msgid "GPU temperature:"
+msgstr ""
+
+msgctxt "#32297"
+msgid "HDD temperature:"
+msgstr ""
+
+msgctxt "#32298"
+msgid "FPS:"
+msgstr ""
+
+msgctxt "#32299"
+msgid "Current uptime:"
+msgstr ""
+
+msgctxt "#32300"
+msgid "Total uptime:"
+msgstr ""
+
+#empty strings from id 32301 to 32309
 
 msgctxt "#32310"
 msgid "Choose hour color and opacity  - [COLOR $INFO[Skin.String(screensaver.digitalclock.hourcolor)]]($INFO[Skin.String(screensaver.digitalclock.hourcolor.name)])[/COLOR]"
@@ -426,7 +474,21 @@ msgctxt "#32500"
 msgid "Chose text shadow color and opacity - [COLOR $INFO[Skin.String(screensaver.digitalclock.shadowcolor)]]($INFO[Skin.String(screensaver.digitalclock.shadowcolor.name)])[/COLOR]"
 msgstr ""
 
-#empty strings from id 32501 to 32509
+#empty strings from id 32501 to 32504
+
+msgctxt "#32505"
+msgid "Chose background image aspect ratio:"
+msgstr ""
+
+msgctxt "#32506"
+msgid "Fill the screen"
+msgstr ""
+
+msgctxt "#32507"
+msgid "Original size"
+msgstr ""
+
+#empty strings from id 32508 to 32509
 
 msgctxt "#32510"
 msgid "Choose background"

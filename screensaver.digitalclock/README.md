@@ -1,27 +1,33 @@
 Digital clock screensaver
 =================
 
-Digital clock screensaver with date, now playing information, weather information, image slideshow and several options.
+Digital clock screensaver with a lot of options.
 
 These are the options:
 
-Movement
+__Movement__
 - Movement on the screen (Random position, Bounce movement, Fixed in the center, Custom position)
 - Bounce movement speed
 - Number of seconds to stay in place (Number of seconds that the clock will stay in place before moving to a random location)
 
-Format
+__Format__
 - Time format
 - Colon blink
 - Date format (Includes custom format)
 
-Additional Information
+__Additional Information__
 - Enable additional information
 - Number of seconds for information switch (Number of seconds before the information will be switched with another one, i.e. Artist - Song - Weather information)
 - Enable now playing information
 - Enable CPU usage information
 - Enable battery level information
 - Enable free memory information
+- CPU temperature (Depends on the system if it will work or not)
+- GPU temperature (Depends on the system if it will work or not)
+- HDD temperature (Depends on the system if it will work or not)
+- FPS
+- Current uptime
+- Total uptime
 - Enable movie library information (Total, Watched, Unwatched)
 - Enable TV show library information (Total, Watched, Unwatched)
 - Enable music library information (Artists, Albums, Songs)
@@ -29,7 +35,7 @@ Additional Information
 - Weather icons
 - Enable album art
 
-Color | Opacity (Users can choose color and opacity for every element, along with random color and random opacity) - Implemented using script.skin.helper.colorpicker - Thanks Marcel!
+__Color | Opacity__ (Users can choose color and opacity for every element, along with random color and random opacity) - Implemented using script.skin.helper.colorpicker - Thanks Marcel!
 - Choose hour color and opacity
 - Random hour color
 - Random hour opacity
@@ -52,8 +58,9 @@ Color | Opacity (Users can choose color and opacity for every element, along wit
 - Random icon color
 - Random icon opacity
 
-Background
+__Background__
 - Choose text shadow color
+- Chose background image aspect ratio
 - Choose background (One color, Single image, Slideshow, Skin Helper)
 - Choose background color
 - Choose image
@@ -62,7 +69,7 @@ Background
 - Change background picture every
 - Choose Skin Helper background (Movie random fanart, TV show random fanart, Music artist random fanart, Random fanart of all media types)
 
-Extra Options
+__Extra Options__
 - Element Size Increase (%) (Users can increase the size of text and icons)
 - Log out
 - Stop now playing media
@@ -70,9 +77,9 @@ Extra Options
 
 This screensaver is configured for every skin separately since it has to use Fonts defined by the skin!
 
-Skin developers have an option to use script-screensaver-digitalclock-custom.xml in their skins 1080i,720p... folder.
+Skin developers have an option to use script-screensaver-digitalclock-custom.xml in their skins 1080i, 720p... folder.
 They should provide and maintain that xml file with their skin!
-Screensaver will check for skin folders in this order: 1080i,720p, 21x9 16x9, 4x3Hirez.
+Screensaver will check for skin folders in this order: 1080i, 720p, 21x9, 16x9, 4x3Hirez.
 If no script-screensaver-digitalclock-custom.xml is found screensaver will look for an appropriate xml file within screensavers folder.
 If there is no appropriate xml file it will use skin.default.xml
 

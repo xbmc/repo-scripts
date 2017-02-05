@@ -1,3 +1,16 @@
+[B]4.0.2[/B]
+- Added background image aspect ratio control
+- Added additional information:
+- CPU temperature (Depends on the system if it will work or not)
+- GPU temperature (Depends on the system if it will work or not)
+- HDD temperature (Depends on the system if it will work or not)
+- FPS
+- Current uptime
+- Total uptime
+
+[B]4.0.1[/B]
+- Fixing my dependecies error...
+
 [B]4.0.0[/B]
 - Added log out option
 - Added support for script.skin.helper.colorpicker (Thanks Marcel!)

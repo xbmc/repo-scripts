@@ -1,44 +1,44 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addon id="screensaver.digitalclock"
-        name="Digital Clock Screensaver"
-        version="4.0.1"
-        provider-name="Vojislav Vlasic">
-        <requires>
-        <import addon="xbmc.python" version="2.20.0"/>
+	name="Digital Clock Screensaver"
+	version="4.0.2"
+	provider-name="Vojislav Vlasic">
+	<requires>
+		<import addon="xbmc.python" version="2.20.0"/>
 		<import addon="script.skin.helper.service" version="1.0.100"/>
 		<import addon="script.skin.helper.colorpicker" version="1.0.1"/>
-  	</requires>
-  	<extension point="xbmc.ui.screensaver" library="default.py"/>
-  	<extension point="xbmc.addon.metadata">
-    		<summary lang="en_GB">Digital clock screensaver</summary>
-    		<summary lang="sr_RS@latin">Čuvar ekrana digitalni sat</summary>
-    		<description lang="en_GB">Digital clock screensaver with date, now playing information, weather information, image slideshow and several options.</description>
-    		<description lang="en_NZ">Digital clock screensaver with date, now playing information, weather information, image slideshow and several options.</description>
-    		<description lang="es_ES">Salvapantallas reloj digital con fecha, información de la reproducción actual, información meteorológica, imágenes y más opciones</description>
-    		<description lang="fr_CA">Économiseur d'écran affichant une horloge numérique avec la date, des informations sur la lecture en cours, la météo, un diaporama d'images et plusieurs options.</description>
-    		<description lang="fr_FR">Économiseur d'écran horloge numérique avec date, informations de lecture, informations météo, avec diaporama d'images et plusieurs options.</description>
-    		<description lang="it_IT">Screensaver orologio digitale con data, informazioni su elementi in riproduzione, meteo, presentazione immagini e altre opzioni.</description>
-    		<description lang="lt_LT">Skaitmeninio laikrodžio ekrano užsklanda su data, šiuo metu atkuriamo įrašo bei orų informacija, skaidrių demonstracija ar keletu kitų parinkčių</description>
-    		<description lang="ms_MY">Penyelamat skrin jam digital dengan tarikh, maklumat kini dimainkan, maklumat cuaca, paparan slaid imej dan beberapa pilihan lain.</description>
-    		<description lang="pl_PL">Wygaszacz ekranu wyświetlający cyfrowy zegar z datą, informacjami o aktualnie odtwarzanych mediach, o pogodzie, pokaz slajdów i kilkoma innymi opcjami.</description>
-    		<description lang="sr_RS">Чувар екрана дигитални сат са датумом, подацима о тренутној репродукцији, подацима о временској прогнози, репродукцијом слајдова слика и неколико опција.</description>
-    		<description lang="sr_RS@latin">Čuvar ekrana digitalni sat sa datumom, podacima o trenutnoj reprodukciji, podacima o vremenskoj prognozi, reprodukcijom slajdova slika i nekoliko opcija.</description>
-    		<description lang="tr_TR">Dijital saat ekran koruyucu, tarih ve saatin yanı sıra şimdi oynatılıyor bilgisi, hava durumu bilgisi, resim slayt gösterisi gibi çeşitli seçenekler sunar.</description>
-    		<disclaimer lang="en_GB">For bugs, requests or general questions visit the Digital clock screensaver thread on the Kodi forum.</disclaimer>
-    		<disclaimer lang="en_NZ">For bugs, requests or general questions visit the Digital clock screensaver thread on the Kodi forum.</disclaimer>
-    		<disclaimer lang="es_ES">Para errores, peticiones o cuestiones generales visite el hilo Salvapantallas reloj digital en el foro de Kodi</disclaimer>
-    		<disclaimer lang="fr_CA">Concernant les bogues ou pour des questions générales, visitez le fil « Digital clock screensaver » du forum de Kodi.</disclaimer>
-    		<disclaimer lang="fr_FR">Pour les bogues, demandes ou questions générales, merci de visiter le fil de discussion de l'économiseur d'écran horloge numérique, Digital clock screensaver, sur le forum Kodi.</disclaimer>
-    		<disclaimer lang="it_IT">Per bug, richieste o domande generali visita il thread dello Screensaver orologio digitale sul forum Kodi.</disclaimer>
-    		<disclaimer lang="lt_LT">Norėdami pranešti apie klaidą, pateikti prašymą ar tiesiog paklausti, aplankykite skaitmeninio laikrodžio ekrano užsklandos temą Kodi forume.</disclaimer>
-    		<disclaimer lang="ms_MY">Jika ada pepijat, permintaan atau persoalan umum sila lawati bebenang Digital clock screensaver di dalam forum Kodi.</disclaimer>
-    		<disclaimer lang="pl_PL">Odwiedź dedykowany wygaszaczowi wątek na forum Kodi, aby zgłosić błędy, prośbę o funkcje albo zadać ogólne pytanie.</disclaimer>
-    		<disclaimer lang="sr_RS">За проблеме, захтеве или општа питања посетите Digital clock screensaver тему на Kodi форуму.</disclaimer>
-    		<disclaimer lang="sr_RS@latin">Za probleme, zahteve ili opšta pitanja posetite Digital clock screensaver temu na Kodi forumu.</disclaimer>
-    		<disclaimer lang="tr_TR">Hata bildirme, istek ve genel sorularınız için Kodi forumunda dijital saat ekran koruyucu başlığını ziyaret edebilirsiniz.</disclaimer>
-    		<platform>all</platform>
-    		<license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
-    		<forum>http://forum.kodi.tv/showthread.php?tid=237338</forum>
-    		<source>https://github.com/vdb86/screensaver.digitalclock</source>
-  	</extension>
+	</requires>
+	<extension point="xbmc.ui.screensaver" library="default.py"/>
+	<extension point="xbmc.addon.metadata">
+		<summary lang="en_GB">Digital clock screensaver</summary>
+		<summary lang="sr_RS@latin">Čuvar ekrana digitalni sat</summary>
+		<description lang="en_GB">Digital clock screensaver with date, now playing information, weather information, image slideshow and several options.</description>
+		<description lang="en_NZ">Digital clock screensaver with date, now playing information, weather information, image slideshow and several options.</description>
+		<description lang="es_ES">Salvapantallas reloj digital con fecha, información de la reproducción actual, información meteorológica, imágenes y más opciones</description>
+		<description lang="fr_CA">Économiseur d'écran affichant une horloge numérique avec la date, des informations sur la lecture en cours, la météo, un diaporama d'images et plusieurs options.</description>
+		<description lang="fr_FR">Économiseur d'écran horloge numérique avec date, informations de lecture, informations météo, avec diaporama d'images et plusieurs options.</description>
+		<description lang="it_IT">Screensaver orologio digitale con data, informazioni su elementi in riproduzione, meteo, presentazione immagini e altre opzioni.</description>
+		<description lang="lt_LT">Skaitmeninio laikrodžio ekrano užsklanda su data, šiuo metu atkuriamo įrašo bei orų informacija, skaidrių demonstracija ar keletu kitų parinkčių</description>
+		<description lang="ms_MY">Penyelamat skrin jam digital dengan tarikh, maklumat kini dimainkan, maklumat cuaca, paparan slaid imej dan beberapa pilihan lain.</description>
+		<description lang="pl_PL">Wygaszacz ekranu wyświetlający cyfrowy zegar z datą, informacjami o aktualnie odtwarzanych mediach, o pogodzie, pokaz slajdów i kilkoma innymi opcjami.</description>
+		<description lang="sr_RS">Чувар екрана дигитални сат са датумом, подацима о тренутној репродукцији, подацима о временској прогнози, репродукцијом слајдова слика и неколико опција.</description>
+		<description lang="sr_RS@latin">Čuvar ekrana digitalni sat sa datumom, podacima o trenutnoj reprodukciji, podacima o vremenskoj prognozi, reprodukcijom slajdova slika i nekoliko opcija.</description>
+		<description lang="tr_TR">Dijital saat ekran koruyucu, tarih ve saatin yanı sıra şimdi oynatılıyor bilgisi, hava durumu bilgisi, resim slayt gösterisi gibi çeşitli seçenekler sunar.</description>
+		<disclaimer lang="en_GB">For bugs, requests or general questions visit the Digital clock screensaver thread on the Kodi forum.</disclaimer>
+		<disclaimer lang="en_NZ">For bugs, requests or general questions visit the Digital clock screensaver thread on the Kodi forum.</disclaimer>
+		<disclaimer lang="es_ES">Para errores, peticiones o cuestiones generales visite el hilo Salvapantallas reloj digital en el foro de Kodi</disclaimer>
+		<disclaimer lang="fr_CA">Concernant les bogues ou pour des questions générales, visitez le fil « Digital clock screensaver » du forum de Kodi.</disclaimer>
+		<disclaimer lang="fr_FR">Pour les bogues, demandes ou questions générales, merci de visiter le fil de discussion de l'économiseur d'écran horloge numérique, Digital clock screensaver, sur le forum Kodi.</disclaimer>
+		<disclaimer lang="it_IT">Per bug, richieste o domande generali visita il thread dello Screensaver orologio digitale sul forum Kodi.</disclaimer>
+		<disclaimer lang="lt_LT">Norėdami pranešti apie klaidą, pateikti prašymą ar tiesiog paklausti, aplankykite skaitmeninio laikrodžio ekrano užsklandos temą Kodi forume.</disclaimer>
+		<disclaimer lang="ms_MY">Jika ada pepijat, permintaan atau persoalan umum sila lawati bebenang Digital clock screensaver di dalam forum Kodi.</disclaimer>
+		<disclaimer lang="pl_PL">Odwiedź dedykowany wygaszaczowi wątek na forum Kodi, aby zgłosić błędy, prośbę o funkcje albo zadać ogólne pytanie.</disclaimer>
+		<disclaimer lang="sr_RS">За проблеме, захтеве или општа питања посетите Digital clock screensaver тему на Kodi форуму.</disclaimer>
+		<disclaimer lang="sr_RS@latin">Za probleme, zahteve ili opšta pitanja posetite Digital clock screensaver temu na Kodi forumu.</disclaimer>
+		<disclaimer lang="tr_TR">Hata bildirme, istek ve genel sorularınız için Kodi forumunda dijital saat ekran koruyucu başlığını ziyaret edebilirsiniz.</disclaimer>
+		<platform>all</platform>
+		<license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+		<forum>http://forum.kodi.tv/showthread.php?tid=237338</forum>
+		<source>https://github.com/vdb86/screensaver.digitalclock</source>
+	</extension>
 </addon>
