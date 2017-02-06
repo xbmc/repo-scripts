@@ -11,6 +11,15 @@
 			<fadetime>500</fadetime>
 			<aspectratio>scale</aspectratio>
 		</control>
+		<control type="image" id="30022">
+			<description>Background</description>
+			<posx>0</posx>
+			<posy>0</posy>
+			<width>1280</width>
+			<height>720</height>
+			<fadetime>500</fadetime>
+			<aspectratio>keep</aspectratio>
+		</control>
 		<control type="group" id="30002">
 			<description>Clock and Date</description>
 			<animation effect="zoom" end="110" center="auto" time="" condition="StringCompare(Window(12900).Property(zoomamount),110)">WindowOpen</animation>
