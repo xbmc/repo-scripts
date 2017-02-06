@@ -32,7 +32,7 @@ msgstr ""
 
 #: Settings
 msgctxt "#32014"
-msgid "Other"
+msgid "Automatic Switch"
 msgstr ""
 
 #: Settings
@@ -72,17 +72,17 @@ msgstr ""
 
 #: Settings
 msgctxt "#32004"
-msgid "Volume level"
+msgid "Include volume level"
 msgstr ""
 
 #: Settings
 msgctxt "#32011"
-msgid "Player settings"
+msgid "Include player settings"
 msgstr ""
 
 #: Settings
 msgctxt "#32012"
-msgid "Video settings"
+msgid "Include video settings"
 msgstr ""
 
 #: Settings
@@ -113,6 +113,56 @@ msgstr ""
 #: Settings
 msgctxt "#32010"
 msgid "Profile 4"
+msgstr ""
+
+#: Settings
+msgctxt "#32021"
+msgid "Auto load profile for GUI"
+msgstr ""
+
+#: Settings
+msgctxt "#32022"
+msgid "Auto load profile for Movies"
+msgstr ""
+
+#: Settings
+msgctxt "#32023"
+msgid "Auto load profile for TVShows"
+msgstr ""
+
+#: Settings
+msgctxt "#32024"
+msgid "Auto load profile for PVR"
+msgstr ""
+
+#: Settings
+msgctxt "#32025"
+msgid "Auto load profile for Music"
+msgstr ""
+
+#: Settings
+msgctxt "#32026"
+msgid "None"
+msgstr ""
+
+#: Settings
+msgctxt "#32027"
+msgid "Send HDMI-CEC command when profile activated"
+msgstr ""
+
+#: Settings
+msgctxt "#32028"
+msgid "Wake Up"
+msgstr ""
+
+#: Settings
+msgctxt "#32029"
+msgid "StandBy"
+msgstr ""
+
+#: Settings
+msgctxt "#32030"
+msgid "Toggle state"
 msgstr ""
 
 #: Script
