@@ -1,11 +1,12 @@
 # script.audio.profiles language file
 # Translators:
+# Alex T <axlt2002@yahoo.it>, 2017
 # ROBY <armando.dabbene@gmail.com>, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: Audio Profiles for KODI\n"
-"PO-Revision-Date: 2016-05-09 12:19+0000\n"
-"Last-Translator: ROBY <armando.dabbene@gmail.com>\n"
+"PO-Revision-Date: 2017-02-01 10:23+0000\n"
+"Last-Translator: Alex T <axlt2002@yahoo.it>\n"
 "Language-Team: Italian (http://www.transifex.com/movielib/audio-profiles-for-kodi/language/it/)\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -23,7 +24,7 @@ msgid ""
 "To map a key for switch audio profile edit keymap xml file and "
 "add:[CR]RunScript(script.audio.profiles,0) - for switch profile in "
 "loop[CR]RunScript(script.audio.profiles,x) - where x is number of profile"
-msgstr "Per assegnare il cambio profilo audio ad un pulsante modifica il file keymap xml e aggiungi:[CR]RunScript(script.audio.profiles,0) - per cambiare  il profilo in ciclo continuo [CR]RunScript(script.audio.profiles,x) dove x è il numero del profilo"
+msgstr "Per assegnare il cambio profilo audio ad un pulsante modifica il file keymap xml e aggiungi:[CR]RunScript(script.audio.profiles,0) - per cambiare  il profilo in ciclo continuo [CR]RunScript(script.audio.profiles,x) - dove x è il numero del profilo"
 
 #: Settings
 msgctxt "#32000"
@@ -33,27 +34,27 @@ msgstr "Profili"
 #: Settings
 msgctxt "#32001"
 msgid "Name of profile 1"
-msgstr "Nome del profilo 1"
+msgstr "Nome del Profilo 1"
 
 #: Settings
 msgctxt "#32013"
 msgid "Includes Settings"
-msgstr "Impostazioni da includere"
+msgstr "Includi impostazioni"
 
 #: Settings
 msgctxt "#32014"
-msgid "Other"
-msgstr "Altro"
+msgid "Automatic Switch"
+msgstr "Cambio automatico"
 
 #: Settings
 msgctxt "#32015"
 msgid "Show audio stream select menu on start playing"
-msgstr "Mostra menù di selezione stream all'inizio della riproduzione"
+msgstr "Mostra menu di selezione stream all'inizio della riproduzione"
 
 #: Settings
 msgctxt "#32016"
 msgid "Auto close select menu"
-msgstr "Chiudi automaticamente il menù di selezione"
+msgstr "Chiudi automaticamente il menu di selezione"
 
 #: Settings
 msgctxt "#32018"
@@ -68,7 +69,7 @@ msgstr "Notifiche"
 #: Settings
 msgctxt "#32020"
 msgid "Debuging"
-msgstr "Debuging"
+msgstr "Debugging"
 
 #: Settings
 msgctxt "#32002"
@@ -78,32 +79,32 @@ msgstr "Impostazioni"
 #: Settings
 msgctxt "#32003"
 msgid "Name of profile 2"
-msgstr "Nome del profilo 2"
+msgstr "Nome del Profilo 2"
 
 #: Settings
 msgctxt "#32004"
-msgid "Volume level"
-msgstr "Livello Volume"
+msgid "Include volume level"
+msgstr "Includi livello volume"
 
 #: Settings
 msgctxt "#32011"
-msgid "Player settings"
-msgstr "Impostazioni Player"
+msgid "Include player settings"
+msgstr "Includi impostazioni player"
 
 #: Settings
 msgctxt "#32012"
-msgid "Video settings"
-msgstr "Impostazioni Video"
+msgid "Include video settings"
+msgstr "Includi impostazioni video"
 
 #: Settings
 msgctxt "#32005"
 msgid "Name of profile 3"
-msgstr "Nome del profilo 3"
+msgstr "Nome del Profilo 3"
 
 #: Settings
 msgctxt "#32006"
 msgid "Name of profile 4"
-msgstr "Nome del profilo 4"
+msgstr "Nome del Profilo 4"
 
 #: Settings
 msgctxt "#32007"
@@ -125,15 +126,65 @@ msgctxt "#32010"
 msgid "Profile 4"
 msgstr "Profilo 4"
 
+#: Settings
+msgctxt "#32021"
+msgid "Auto load profile for GUI"
+msgstr "Profilo automatico per la GUI"
+
+#: Settings
+msgctxt "#32022"
+msgid "Auto load profile for Movies"
+msgstr "Profilo automatico per i Film"
+
+#: Settings
+msgctxt "#32023"
+msgid "Auto load profile for TVShows"
+msgstr "Profilo automatico per le Serie TV"
+
+#: Settings
+msgctxt "#32024"
+msgid "Auto load profile for PVR"
+msgstr "Profilo automatico per la TV"
+
+#: Settings
+msgctxt "#32025"
+msgid "Auto load profile for Music"
+msgstr "Profilo automatico per la Musica"
+
+#: Settings
+msgctxt "#32026"
+msgid "None"
+msgstr "Nessuno"
+
+#: Settings
+msgctxt "#32027"
+msgid "Send HDMI-CEC command when profile activated"
+msgstr "Invia comando HDMI-CEC quando il profilo è attivato"
+
+#: Settings
+msgctxt "#32028"
+msgid "Wake Up"
+msgstr "Wake up"
+
+#: Settings
+msgctxt "#32029"
+msgid "StandBy"
+msgstr "Stanby"
+
+#: Settings
+msgctxt "#32030"
+msgid "Toggle state"
+msgstr "Cambia stato"
+
 #: Script
 msgctxt "#32100"
 msgid "Select profile to save settings"
-msgstr "Selezionare il profilo dove salvare le impostazioni"
+msgstr "Seleziona il profilo dove salvare le impostazioni"
 
 #: Script
 msgctxt "#32106"
 msgid "Select audio profile"
-msgstr "Selezionare il profilo audio"
+msgstr "Seleziona il profilo audio"
 
 #: Script
 msgctxt "#32103"
