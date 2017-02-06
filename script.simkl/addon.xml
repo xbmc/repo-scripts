@@ -2,9 +2,9 @@
 <addon id="script.simkl"
        name="Simkl TV Tracker"
        version="1.0.4"
-       provider-name="David Davó / Simkl">
+       provider-name="David Davó, Simkl">
   <requires>
-    <import addon="xbmc.python" version="2.6"/>
+    <import addon="xbmc.python" version="2.24.0"/>
   </requires>
   <extension point="xbmc.service" library="service.py" start="login" />
   <extension point="xbmc.addon.metadata">
