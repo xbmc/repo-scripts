@@ -29,3 +29,8 @@
 - Feautures -> Nothing
 - Code:
     Fixed errors for android devices
+
+2.1.0
+- Feautures -> Partial Sync check (more work to do)
+- Code:
+    Code Cleanup
