@@ -95,7 +95,7 @@ msgid "Could not switch to %s"
 msgstr ""
 
 msgctxt "#30026"
-msgid "Switching now to '%s'."
+msgid "Switching to '%s' in a few seconds"
 msgstr ""
 
 msgctxt "#30027"
@@ -111,11 +111,15 @@ msgid "%s Seconds left to abort"
 msgstr ""
 
 msgctxt "#30030"
-msgid "This Addon is a part of the KN switchtimer service and cannot use as a standalone application."
+msgid "Please use the PVR OSD Guide context menue to set or reset switch timers"
+msgstr ""
+
+msgctxt "#30031"
+msgid "Timer for this time already set (%s, %s). Would You replace this timer with new new one instead?"
 msgstr ""
 
 #Labels
-#empty strings from id 30031 to 30039
+#empty strings from id 30032 to 30039
 
 msgctxt "#30040"
 msgid "Add switchtimer"
