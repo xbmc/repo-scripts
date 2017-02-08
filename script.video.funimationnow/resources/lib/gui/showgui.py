@@ -727,8 +727,6 @@ class ShowViewUI(xbmcgui.WindowXML):
                         starRatingParams = utils.parseValue(item, ['starRating', 'data', 'params']);
                         starRating = utils.parseValue(item, ['starRating', 'rating']);
 
-                        self.logger.error(spotThumbnail)
-
                         if pointers:
                             if not isinstance(pointers, list):
                                 pointers = list([pointers]);
@@ -866,7 +864,6 @@ class ShowViewUI(xbmcgui.WindowXML):
                 self.getControl(SPOTLIGHT_DURATION).setImage(spotDurationImg, False);
 
             if progress is not None:
-                self.logger.error('flagging/progress/%s.png' % progress)
                 self.getControl(SPOTLIGHT_PROGRESS).setImage('flagging/progress/%s.png' % progress, False);
 
 
@@ -1692,10 +1689,12 @@ class ShowViewUI(xbmcgui.WindowXML):
                     'episodeDesc', 
                     'episode', 
                     None, 
-                    loadDisplay=False
+                    loadDisplay=True
                 );
 
                 if epContent:
+
+                    self.logger.error(epContent)
 
                     videourl = epContent.get('videourl', None);
 
@@ -1758,13 +1757,14 @@ class ShowViewUI(xbmcgui.WindowXML):
                     'episodeDesc', 
                     'episode', 
                     None, 
-                    loadDisplay=False
+                    loadDisplay=True
                 );
 
 
                 if epContent:
 
                     videourl = epContent.get('videourl', None);
+                    closedCaptionUrl = epContent.get('closedCaptionUrl', None);
 
                     if videourl:
 
@@ -1784,6 +1784,9 @@ class ShowViewUI(xbmcgui.WindowXML):
                                     pbListItem.setProperty('pDuration', str(pDuration));
                                     pbListItem.setProperty('pAdd', str(pAdd));
 
+                                    if closedCaptionUrl:
+                                        pbListItem.setSubtitles([closedCaptionUrl]);
+
 
                         except:
                             pass;
@@ -1797,6 +1800,9 @@ class ShowViewUI(xbmcgui.WindowXML):
 
         if videourl is not None and pbListItem is not None:
             player().run(videourl, pbListItem);
+
+        else:
+            self.logger.error('NO VIDEO URL')
 
 
     def clearCurrentLists(self, cLists):

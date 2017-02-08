@@ -22,6 +22,7 @@
 
 import xbmc;
 import logging;
+import re;
 
 from resources.lib.modules import funimationnow;
 from resources.lib.modules import utils;
@@ -48,6 +49,13 @@ class player(xbmc.Player):
             self.item = listitem;
             self.startPosition = self.item.getProperty('startPosition');
             self.usecurrentprogress = 1;
+            self.show_subtitles = utils.setting('fn.show_subtitles');
+
+            if self.show_subtitles is None or self.show_subtitles in ('true', 'True', True):
+                self.show_subtitles = True;
+
+            else:
+                self.show_subtitles = False;
 
 
             if self.startPosition:
@@ -73,10 +81,11 @@ class player(xbmc.Player):
 
             if self.usecurrentprogress >= 0:
 
+                videourl = re.sub(r'&amp;', '&', videourl);
                 videourl = utils.resolutionPicker(videourl);
 
                 if videourl:
-                    
+
                     self.play(videourl, listitem, False);
                     self.keepPlaybackAlive();
 
@@ -94,6 +103,8 @@ class player(xbmc.Player):
         for i in range(0, 240):
 
             if self.isPlayingVideo() or self.isPlaying(): 
+                self.showSubtitles(self.show_subtitles);
+
                 break;
 
             xbmc.sleep(1000);

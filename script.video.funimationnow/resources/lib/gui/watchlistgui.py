@@ -486,6 +486,7 @@ class WatchListUI(xbmcgui.WindowXML):
                     if sDetails:
                     
                         videourl = sDetails.get('videourl', None);
+                        closedCaptionUrl = sDetails.get('closedCaptionUrl', None);
 
                         if videourl:
 
@@ -506,6 +507,9 @@ class WatchListUI(xbmcgui.WindowXML):
                                         listitem.setProperty('pStart', str(pStart));
                                         listitem.setProperty('pDuration', str(pDuration));
                                         listitem.setProperty('pAdd', str(pAdd));
+
+                                        if closedCaptionUrl:
+                                            listitem.setSubtitles([closedCaptionUrl]);
 
                             except:
                                 pass;

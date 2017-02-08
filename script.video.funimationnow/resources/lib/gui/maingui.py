@@ -264,6 +264,7 @@ class FunimationNowUI(xbmcgui.WindowXML):
 
             videourl = listitem.getProperty('videourl');
             viewtype = listitem.getProperty('viewtype');
+            closedCaptionUrl = listitem.getProperty('closedCaptionUrl');
 
             if videourl:
 
@@ -285,8 +286,10 @@ class FunimationNowUI(xbmcgui.WindowXML):
                             listitem.setProperty('pDuration', str(pDuration));
                             listitem.setProperty('pAdd', str(pAdd));
 
-                            self.logger.debug(pAdd);
+                            if closedCaptionUrl:
+                                listitem.setSubtitles([closedCaptionUrl]);
 
+                            self.logger.debug(pAdd);
 
                 except:
                     pass;
@@ -609,7 +612,8 @@ class FunimationNowUI(xbmcgui.WindowXML):
                         
                         funType = utils.parseValue(pointer, ['funType']);
 
-                        if funType == 'carousel_hero mobile-spotlight':
+                        #if funType == 'carousel_hero mobile-spotlight':
+                        if funType == 'carousel_hero mobile-spotlight-android':
                             itemset = funimationnow.contentCarousel(pointer, idx);
 
                         else:
