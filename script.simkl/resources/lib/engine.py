@@ -13,7 +13,7 @@ class Engine:
     self.player = player
     player.engine = self
     player.api    = api
-    self.synclibrary()
+    #self.synclibrary()
 
   def synclibrary(self):
     ### UPLOAD ###
@@ -109,7 +109,7 @@ class Player(xbmc.Player):
         xbmc.log("Simkl: Ready to scrobble {0}".format(movie.getTitle()))
         if imdb == "":
         #if True:
-          xbmc.log("Simkl: No imdb - Fname: {0}".format(fname))
+          #xbmc.log("Simkl: No imdb - Fname: {0}".format(fname))
           r = self.api.watched(fname, media, self.getTotalTime())
         else:
           xbmc.log("Simkl: IMDB: " + str(imdb))

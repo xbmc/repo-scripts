@@ -18,6 +18,7 @@ USERFILE     = os.path.join(xbmc.translatePath(__addon__.getAddonInfo("profile")
 xbmc.translatePath("special://profile/simkl_key")
 
 if not os.path.exists(USERFILE):
+    os.mkdir(os.path.dirname(USERFILE))
     with open(USERFILE, "w+") as f:
         f.write("")
 else:
