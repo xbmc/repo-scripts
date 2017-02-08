@@ -52,33 +52,13 @@ msgctxt "#32011"
 msgid "Cannot parse ID from link"
 msgstr ""
 
-
-msgctxt "#30012"
-msgid "Randomly play all"
+#YTDL dialogProgressBG message 
+msgctxt "#32012"
+msgid "Checking link.."
 msgstr ""
 
-msgctxt "#30013"
-msgid "Automatically play videos"
-msgstr ""
-
-msgctxt "#30014"
-msgid "Randomly play unwatched"
-msgstr ""
-
-msgctxt "#30015"
-msgid "Randomly play unfinished"
-msgstr ""
-
-msgctxt "#30016"
-msgid "Play all"
-msgstr ""
-
-msgctxt "#30017"
-msgid "Play unwatched"
-msgstr ""
-
-msgctxt "#30018"
-msgid "Play unfinished"
+msgctxt "#32013"
+msgid "Playing"
 msgstr ""
 
 
@@ -119,6 +99,14 @@ msgstr ""
 #Play all - from here
 msgctxt "#32057"
 msgid "from here"
+msgstr ""
+
+msgctxt "#32058"
+msgid "View using html2text"
+msgstr ""
+
+msgctxt "#32059"
+msgid "Read Comments"
 msgstr ""
 
 
@@ -178,8 +166,13 @@ msgctxt "#32072"
 msgid "cmts"
 msgstr ""
 
+msgctxt "#32073"
+msgid "Search"
+msgstr ""
 
-
+msgctxt "#32074"
+msgid "Reload"
+msgstr ""
 
 
 #settings screen settings.xml
@@ -214,7 +207,7 @@ msgid "Comments threshold"
 msgstr ""
 
 msgctxt "#32107"
-msgid "Enable NSFW content"
+msgid "Hide NSFW content"
 msgstr ""
 
 msgctxt "#32108"
@@ -234,6 +227,10 @@ msgstr ""
 # Have the youtube_dl add-on attempt to play unknown/unsupported links in comments
 msgctxt "#32114"
 msgid "All links in comments are enabled and youtube_dl add-on will attempt to play unsupported types"
+msgstr ""
+
+msgctxt "#32115"
+msgid "Repeat gif playback"
 msgstr ""
 
 

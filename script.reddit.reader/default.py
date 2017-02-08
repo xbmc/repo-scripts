@@ -16,31 +16,35 @@ import xbmcplugin
 import xbmcgui
 import xbmcaddon
 import urlparse
-#import SimpleDownloader
 import requests
 
 
 import threading
 from Queue import Queue, Empty
 
+#this used to be a plugin. not that we're a script, we don't get free sys.argv's
+#this import for the youtube_dl addon causes our addon to start slower. we'll import it when we need to playYTDLVideo
 if len(sys.argv) > 1:
     a=['mode=playYTDLVideo','mode=autoPlay']
     if any(x in sys.argv[1] for x in a):
-        import YDStreamExtractor
-      
+        import YDStreamExtractor      #note: you can't just add this import in code, you need to re-install the addon with <import addon="script.module.youtube.dl"        version="16.521.0"/> in addon.xml
 else:
     pass 
 
-
+#YDStreamExtractor.disableDASHVideo(True) #Kodi (XBMC) only plays the video for DASH streams, so you don't want these normally. Of course these are the only 1080p streams on YouTube
+from urllib import urlencode
 reload(sys)
 sys.setdefaultencoding("utf-8")
 
 addon         = xbmcaddon.Addon()
-addonID       = addon.getAddonInfo('id')
-addon_path    = addon.getAddonInfo('path')
-profile_path  = addon.getAddonInfo('profile')
+addonID       = addon.getAddonInfo('id')  #script.reddit.reader
+addon_path    = addon.getAddonInfo('path')     #where the addon resides
+profile_path  = addon.getAddonInfo('profile')   #where user settings are stored
 
 WINDOW        = xbmcgui.Window(10000)
+#technique borrowed from LazyTV. 
+#  WINDOW is like a mailbox for passing data from caller to callee. 
+#    e.g.: addLink() needs to pass "image description" to viewImage()
 
 osWin         = xbmc.getCondVisibility('system.platform.windows')
 osOsx         = xbmc.getCondVisibility('system.platform.osx')
@@ -69,31 +73,23 @@ urlMain = "https://www.reddit.com"
 default_frontpage    = addon.getSetting("default_frontpage") 
 no_index_page        = addon.getSetting("no_index_page") == "true"
 
-show_nsfw            = addon.getSetting("show_nsfw") == "true"
+hide_nsfw            = addon.getSetting("hide_nsfw") == "true"
 domain_filter        = addon.getSetting("domain_filter")
 subreddit_filter     = addon.getSetting("subreddit_filter")
 main_gui_skin        = addon.getSetting("main_gui_skin")
 
 sitemsPerPage        = addon.getSetting("itemsPerPage")
-try: itemsPerPage = int(sitemsPerPage)
+try: itemsPerPage    = ["10", "25", "50", "75", "100"][ int(sitemsPerPage) ]
 except: itemsPerPage = 50    
-
-itemsPerPage          = ["10", "25", "50", "75", "100"][itemsPerPage]
-TitleAddtlInfo        = addon.getSetting("TitleAddtlInfo") == "true"   #Show additional post info on title</string>
 
 #--- settings related to context menu "Show Comments"
 CommentTreshold          = addon.getSetting("CommentTreshold") 
 try: int_CommentTreshold = int(CommentTreshold)
 except: int_CommentTreshold = -1000    #if CommentTreshold can't be converted to int, show all comments 
 
-ll_qualiy  = int(addon.getSetting("ll_qualiy"))
-ll_qualiy  = ["480p", "720p"][ll_qualiy]
-ll_downDir = str(addon.getSetting("ll_downDir"))
-
-istreamable_quality =int(addon.getSetting("streamable_quality"))  #values 0 or 1
+try:istreamable_quality=int(addon.getSetting("streamable_quality"))  #values 0 or 1
+except:istreamable_quality=0
 streamable_quality  =["full", "mobile"][istreamable_quality]       #https://streamable.com/documentation
-
-gfy_downDir = str(addon.getSetting("gfy_downDir"))
 
 use_ytdl_for_unknown = addon.getSetting("use_ytdl_for_unknown") == "true" 
 use_ytdl_for_unknown_in_comments= addon.getSetting("use_ytdl_for_unknown_in_comments") == "true"
@@ -102,7 +98,9 @@ addonUserDataFolder = xbmc.translatePath("special://profile/addon_data/"+addonID
 subredditsFile      = xbmc.translatePath("special://profile/addon_data/"+addonID+"/subreddits")
 nsfwFile            = xbmc.translatePath("special://profile/addon_data/"+addonID+"/nsfw")
 
+#ytdl_psites_file         = xbmc.translatePath(profile_path+"/ytdl_sites_porn")
 default_ytdl_psites_file = xbmc.translatePath(  addon_path+"/resources/ytdl_sites_porn" )
+#ytdl_sites_file          = xbmc.translatePath(profile_path+"/ytdl_sites")
 default_ytdl_sites_file  = xbmc.translatePath(  addon_path+"/resources/ytdl_sites" )
 
 #last slash at the end is important
@@ -114,14 +112,10 @@ if not os.path.isdir(addonUserDataFolder):
 if not os.path.isdir(SlideshowCacheFolder):
     os.mkdir(SlideshowCacheFolder)
 
-
-if show_nsfw:
-    nsfw = ""
-else:
-    nsfw = "nsfw:no+"
-
-def log(message, level=xbmc.LOGNOTICE):
-    xbmc.log("reddit_reader:"+message, level=level)
+def log(message, level=xbmc.LOGDEBUG):
+    t=threading.currentThread()
+    
+    xbmc.log("reddit_reader {0}:{1}".format(t.name, message), level=level)
 
 def manage_subreddits(subreddit, name, type):
     log('manage_subreddits(%s, %s, %s)' %(subreddit, name, type) )
@@ -133,6 +127,10 @@ def manage_subreddits(subreddit, name, type):
     #elected_index = dialog.select(subreddit, ['add new subreddi', 'edit   subreddit', 'remove subreddit'])
     selected_index = dialog.select(subreddit, [translation(32001), translation(32003), translation(32002)])
 
+    #the if statements below is not as elegant as autoselecting the func from funcs but more flexible in the case with add subreddit where we should not send a subreddit parameter
+    #    func = funcs[selected_index]
+    #     #assign item from funcs to func
+    #    func(subreddit, name, type)    
     log('selected_index ' + str(selected_index))
     if selected_index == 0:       # 0->first item
         addSubreddit('','','')
@@ -146,7 +144,10 @@ def manage_subreddits(subreddit, name, type):
     else:                         #-1 -> escape pressed or [cancel]
         pass
     
-    xbmc.executebuiltin( "Dialog.Close(busydialog)" )
+    xbmc_busy(False)
+    #this is a hack to force the subreddit listing to refresh.
+    #   the calling gui needs to close after calling this function 
+    #   after we are done editing the subreddits file, we call index() (the start of program) again. 
     index("","","")
 
     
@@ -170,8 +171,11 @@ def addSubreddit(subreddit, name, type):
                 fh.write(subreddit+'\n')
                 #fh.close()
     else:
-
-        keyboard = xbmc.Keyboard('', translation(30001))
+        #dialog = xbmcgui.Dialog()
+        #ok = dialog.ok('Add subreddit', 'Add a subreddit (videos)','or  Multiple subreddits (music+listentothis)','or  Multireddit (/user/.../m/video)')
+        #would be great to have some sort of help to show first time user here
+        
+        keyboard = xbmc.Keyboard('', translation(32001))
         keyboard.doModal()
         if keyboard.isConfirmed() and keyboard.getText():
             subreddit = keyboard.getText()
@@ -217,7 +221,7 @@ def editSubreddit(subreddit, name, type):
         
     contentNew = ""
 
-    keyboard = xbmc.Keyboard(subreddit, translation(30003))
+    keyboard = xbmc.Keyboard(subreddit, translation(32003))
     keyboard.doModal()
     if keyboard.isConfirmed() and keyboard.getText():
         newsubreddit = keyboard.getText()
@@ -252,7 +256,6 @@ def index(url,name,type):
     if no_index_page:   
         log( "   default_frontpage " +default_frontpage )
         if default_frontpage:
-            #log( "   ssssssss " + assemble_reddit_filter_string("","")  )
             listSubReddit( assemble_reddit_filter_string("",default_frontpage) , default_frontpage, "") 
         else:
             listSubReddit( assemble_reddit_filter_string("","") , "Reddit-Frontpage", "") #https://www.reddit.com/.json?&&limit=10
@@ -269,18 +272,15 @@ def index(url,name,type):
     
 #MODE listSubReddit(url, name, type)  
 def listSubReddit(url, title_bar_name, type):
-    from resources.lib.domains import parse_filename_and_ext_from_url
-    from resources.lib.utils import unescape, pretty_datediff, post_excluded_from, determine_if_video_media_from_reddit_json, has_multiple_subreddits
+    from resources.lib.utils import unescape, pretty_datediff, post_is_filtered_out, determine_if_video_media_from_reddit_json, has_multiple_subreddits
     from resources.lib.utils import assemble_reddit_filter_string,build_script,compose_list_item
     
-    #show_listSubReddit_debug=False
     show_listSubReddit_debug=True
     credate = ""
     is_a_video=False
     title_line2=""
 
-    thumb_w=0
-    thumb_h=0
+    thumb_w=0; thumb_h=0
 
     #the +'s got removed by url conversion 
     title_bar_name=title_bar_name.replace(' ','+')
@@ -296,11 +296,21 @@ def listSubReddit(url, title_bar_name, type):
 
     currentUrl = url
     xbmc_busy()    
-    content = reddit_request(url)
+
+    dialog_progress = xbmcgui.DialogProgressBG()
+    dialog_progress_heading='Loading'
+    dialog_progress.create(dialog_progress_heading )
+    dialog_progress.update(0,dialog_progress_heading, title_bar_name  )
+    
+    content = reddit_request(url)  #content = opener.open(url).read()
     
     if not content:
         xbmc_busy(False)
         return
+    
+    threads = []
+    #q_posts = Queue() #input queue for worker(json entry of a single post)
+    q_liz = Queue()   #output queue (listitem)
     
     #7-15-2016  removed the "replace(..." statement below cause it was causing error
     #content = json.loads(content.replace('\\"', '\''))
@@ -323,6 +333,138 @@ def listSubReddit(url, title_bar_name, type):
 
     for idx, entry in enumerate(content['data']['children']):
         try:
+            if post_is_filtered_out( entry ):
+                continue
+            
+            #have threads process each reddit post
+            t = threading.Thread(target=reddit_post_worker, args=(idx, entry,q_liz), name='#t%.2d'%idx)
+            threads.append(t)
+            t.start()
+
+        except Exception as e:
+            log(" EXCEPTION:="+ str( sys.exc_info()[0]) + "  " + str(e) )
+            pass
+
+
+    #wait for all threads to finish before collecting the list items
+    for idx, t in enumerate(threads):
+        #log('    joining %s' %t.getName())
+        t.join(timeout=20)    
+        loading_percentage=int((float(idx)/posts_count)*100)
+        dialog_progress.update( loading_percentage,dialog_progress_heading  )
+
+    xbmc_busy(False)
+    
+    #compare the number of entries to the returned results
+    #log( "queue:%d entries:%d" %( q_liz.qsize() , len(content['data']['children'] ) ) )
+    if q_liz.qsize() != len(content['data']['children']):
+        log('some threads did not return a listitem')
+
+    #for t in threads: log('isAlive %s %s' %(t.getName(), repr(t.isAlive()) )  )
+
+    #liu=[ qi for qi in sorted(q_liz.queue) ]
+    li=[ liz for idx,liz in sorted(q_liz.queue) ]
+    #log(repr(li))
+    
+    #empty the queue. 
+    with q_liz.mutex:
+        q_liz.queue.clear()    
+
+    dialog_progress.update( 100,dialog_progress_heading  )
+    dialog_progress.close() #it is important to close xbmcgui.DialogProgressBG
+
+    try:
+        #this part makes sure that you load the next page instead of just the first
+        after=""
+        after = content['data']['after']
+        if after: 
+            if "&after=" in currentUrl:
+                nextUrl = currentUrl[:currentUrl.find("&after=")]+"&after="+after
+            else:
+                nextUrl = currentUrl+"&after="+after
+            
+            # plot shows up on estuary. etc. ( avoids the "No information available" message on description ) 
+            info_label={ "plot": translation(32004) } 
+             
+            #addDir(translation(32004), nextUrl, 'listSubReddit', "", subreddit,info_label)   #Next Page
+            liz = compose_list_item( translation(32004), "", "DefaultFolderNextSquare.png", "script", build_script("listSubReddit",nextUrl,title_bar_name,after), {'plot': translation(32004)} )
+            
+            li.append(liz)
+            
+    except Exception as e:
+        log(" EXCEPTzION:="+ str( sys.exc_info()[0]) + "  " + str(e) )
+        
+        pass
+    
+    xbmc_busy(False)
+    
+    title_bar_name=urllib.unquote_plus(title_bar_name)
+    ui=skin_launcher('listSubReddit', title_bar_name=title_bar_name, li=li,subreddits_file=subredditsFile, currentUrl=currentUrl)
+    #set properties to the window(to be retrieved by gui methods)
+    ui.setProperty('actual_url_used_to_generate_these_posts',url)    #used by reload function - specially done for r/random and r/randnsfw (could have used currentUrl)
+    ui.doModal()
+    del ui
+    #ui.show()  #<-- interesting possibilities. you have to handle the actions outside of the gui class. 
+    #xbmc.sleep(8000)
+
+def listSubReddit_old(url, title_bar_name, type):
+    #this is the old version of listSubReddit. it is kept here for debugging purposes.  
+    from resources.lib.utils import unescape, pretty_datediff, post_is_filtered_out, determine_if_video_media_from_reddit_json, has_multiple_subreddits
+    from resources.lib.utils import assemble_reddit_filter_string,build_script,compose_list_item
+    
+    show_listSubReddit_debug=True
+    credate = ""
+    is_a_video=False
+    title_line2=""
+
+    thumb_w=0; thumb_h=0
+
+    #the +'s got removed by url conversion 
+    title_bar_name=title_bar_name.replace(' ','+')
+    #log("  title_bar_name %s " %(title_bar_name) )
+
+    log("listSubReddit r/%s url=%s" %(title_bar_name,url) )
+    t_on = translation(32071)  #"on"
+    #t_pts = u"\U0001F4AC"  # translation(30072) #"cmnts"  comment bubble symbol. doesn't work
+    t_pts = u"\U00002709"  # translation(30072)   envelope symbol
+    t_up = u"\U000025B4"  #u"\U00009650"(up arrow)   #upvote symbol
+    
+    li=[]
+
+    currentUrl = url
+    xbmc_busy()    
+    content = reddit_request(url)  #content = opener.open(url).read()
+    
+    if not content:
+        xbmc_busy(False)
+        return
+    
+    threads = []
+    #q_posts = Queue() #input queue for worker(json entry of a single post)
+    q_liz = Queue()   #output queue (listitem)
+    
+    content = json.loads(content) 
+    
+    #log("query returned %d items " % len(content['data']['children']) )
+    posts_count=len(content['data']['children'])
+    
+    hms = has_multiple_subreddits(content['data']['children'])
+    
+    if hms==False:
+        #r/random and r/randnsfw returns a random subreddit. we need to use the name of this subreddit for the "next page" link. 
+        try: g=content['data']['children'][0]['data']['subreddit']
+        except: g=""
+        if g:
+            title_bar_name=g
+            #preserve the &after string so that functions like play slideshow and play all videos can 'play' the correct page 
+            #  extract the &after string from currentUrl -OR- send it with the 'type' argument when calling this function.
+            currentUrl=assemble_reddit_filter_string('',g) + '&after=' + type
+
+    for idx, entry in enumerate(content['data']['children']):
+        try:
+            if post_is_filtered_out( j_entry ):
+                continue
+            
             title = unescape(entry['data']['title'].encode('utf-8'))
             is_a_video = determine_if_video_media_from_reddit_json(entry)
             if show_listSubReddit_debug : log("  POST%cTITLE%.2d=%s" %( ("v" if is_a_video else " "), idx, title ))
@@ -346,10 +488,7 @@ def listSubReddit(url, title_bar_name, type):
             try:
                 aaa = entry['data']['created_utc']
                 credate = datetime.datetime.utcfromtimestamp( aaa )
-                #log("creation_date="+str(credate))
-                
                 now_utc = datetime.datetime.utcnow()
-
                 pretty_date=pretty_datediff(now_utc, credate)
                 credate = str(credate)
             except:
@@ -358,19 +497,12 @@ def listSubReddit(url, title_bar_name, type):
 
             subreddit=entry['data']['subreddit'].encode('utf-8')
             
-            if post_excluded_from( subreddit_filter, subreddit ):
-                log( '    r/%s excluded by subreddit_filter' %subreddit )
-                continue;
-            
             try: author = entry['data']['author'].encode('utf-8')
             except: author = ""
             
             try: domain= entry['data']['domain'].encode('utf-8')
             except: domain = ""
             #log("     DOMAIN%.2d=%s" %(idx,domain))
-            if post_excluded_from( domain_filter, domain ):
-                log( '    %s excluded by domain_filter' %domain )
-                continue;
             
             ups = entry['data']['score']       #downs not used anymore
             try:num_comments = entry['data']['num_comments']
@@ -384,7 +516,6 @@ def listSubReddit(url, title_bar_name, type):
             #media_url=media_url.lower()  #!!! note: do not lowercase!!!     
             
             thumb = entry['data']['thumbnail'].encode('utf-8')
-            #if show_listSubReddit_debug : log("       THUMB%.2d=%s" %( idx, thumb ))
             
             if thumb in ['nsfw','default','self']:  #reddit has a "default" thumbnail (alien holding camera with "?")
                 thumb=""               
@@ -396,7 +527,7 @@ def listSubReddit(url, title_bar_name, type):
             try:
                 #collect_thumbs(entry)
                 preview=entry['data']['preview']['images'][0]['source']['url'].encode('utf-8').replace('&amp;','&')
-
+                
                 try:
                     thumb_h = float( entry['data']['preview']['images'][0]['source']['height'] )
                     thumb_w = float( entry['data']['preview']['images'][0]['source']['width'] )
@@ -453,6 +584,8 @@ def listSubReddit(url, title_bar_name, type):
         except Exception as e:
             log(" EXCEPTION:="+ str( sys.exc_info()[0]) + "  " + str(e) )
             pass
+        
+    #**end loop for each reddit post
     
     try:
         #this part makes sure that you load the next page instead of just the first
@@ -467,6 +600,8 @@ def listSubReddit(url, title_bar_name, type):
             # plot shows up on estuary. etc. ( avoids the "No information available" message on description ) 
             info_label={ "plot": translation(32004) } 
              
+            #addDir(translation(32004), nextUrl, 'listSubReddit', "", subreddit,info_label)   #Next Page
+            
             liz = compose_list_item( translation(32004), "", "DefaultFolderNextSquare.png", "script", build_script("listSubReddit",nextUrl,title_bar_name,after), {'plot': translation(32004)} )
             
             li.append(liz)
@@ -480,33 +615,40 @@ def listSubReddit(url, title_bar_name, type):
     xbmc_busy(False)
     
     title_bar_name=urllib.unquote_plus(title_bar_name)
-    skin_launcher('listSubReddit', title_bar_name=title_bar_name, li=li,subreddits_file=subredditsFile, currentUrl=currentUrl)    
-    
+    ui=skin_launcher('listSubReddit', title_bar_name=title_bar_name, li=li,subreddits_file=subredditsFile, currentUrl=currentUrl)    
+    ui.doModal()
+    del ui
     #ui.show()  #<-- interesting possibilities. you have to handle the actions outside of the gui class. 
     #xbmc.sleep(8000)
 
+
 def skin_launcher(mode,**kwargs ):
-    
+    #launches the gui using .xml file defined in settings (incomplete)
     from resources.lib.utils import xbmcVersion
     from resources.lib.guis import listSubRedditGUI
         
+    #kodi_version = xbmcVersion()
+    #log( ' kodi version:%f' % kodi_version )
+    #if kodi_version >= 17:  #krypton
+    #    pass
+    
     title_bar_text=kwargs.get('title_bar_name')
     li=kwargs.get('li')
     subreddits_file=kwargs.get('subreddits_file')
     currentUrl=kwargs.get('currentUrl')
-    try:
+    #log('********************* ' + repr(currentUrl))
+    try:    
         ui = listSubRedditGUI(main_gui_skin , addon_path, defaultSkin='Default', defaultRes='1080i', listing=li, subreddits_file=subreddits_file, id=55)
         ui.title_bar_text='[B]'+ title_bar_text + '[/B]'
         ui.reddit_query_of_this_gui=currentUrl
-
-        ui.doModal()
-        del ui
+        #ui.include_parent_directory_entry=True
+        #ui.doModal()
+        #del ui
+        return ui
     except Exception as e:
         log('  skin_launcher:%s(%s)' %( str(e), main_gui_skin ) )
         xbmc.executebuiltin('XBMC.Notification("%s","%s[CR](%s)")' %(  translation(32108), str(e), main_gui_skin)  )
         
-
-
 def addLink(title, title_line2, iconimage, previewimage,preview_w,preview_h,domain, description, credate, reddit_says_is_video, site, subreddit, link_url, over_18, posted_by="", num_comments=0,post_id='', post_index=1,post_total=1,many_subreddit=False ):
     from resources.lib.utils import ret_info_type_icon, assemble_reddit_filter_string,build_script
     from resources.lib.domains import parse_reddit_link, sitesBase
@@ -526,7 +668,6 @@ def addLink(title, title_line2, iconimage, previewimage,preview_w,preview_h,doma
         title_line2 = "[COLOR red][NSFW][/COLOR] "+title_line2
     else:
         mpaa=""
-        #il_description = h+"[CR]" + "[COLOR grey]" + description + "[/COLOR]"
 
     post_title=title
     if len(post_title) > 40:
@@ -536,16 +677,12 @@ def addLink(title, title_line2, iconimage, previewimage,preview_w,preview_h,doma
 
     il={ "title": post_title, "plot": il_description, "Aired": credate, "mpaa": mpaa, "Genre": "r/"+subreddit, "studio": domain, "director": posted_by }   #, "duration": 1271}   (duration uses seconds for titan skin
     
-    #log( "  PLOT:" +il_description )
     liz=xbmcgui.ListItem(label=post_title
                          ,label2=title_line2
                          ,iconImage=""
                          ,thumbnailImage=''
                          ,path='')   #path not used by gui.
 
-    if preview_ar>0 and preview_ar < 0.7 and preview_h > 1090 :   #vertical image taken by 16:9 camera will have 0.5625 aspect ratio. anything narrower than that, we will zoom_n_slide
-        pass
-        
     if preview_ar>1.25:   #this measurement is related to control id 203's height
         #log('    ar and description criteria met') 
         #the gui checks for this: String.IsEmpty(Container(55).ListItem.Property(preview_ar))  to show/hide preview and description
@@ -560,8 +697,7 @@ def addLink(title, title_line2, iconimage, previewimage,preview_w,preview_h,doma
     liz.setProperty('post_id', post_id )
     
     liz.setInfo(type='video', infoLabels=il)
-    #
-    
+
     #use clearart to indicate if link is video, album or image. here, we default to unsupported.
     clearart=ret_info_type_icon('', '')
     liz.setArt({ "clearart": clearart  })
@@ -574,6 +710,7 @@ def addLink(title, title_line2, iconimage, previewimage,preview_w,preview_h,doma
     if previewimage: needs_preview=False  
     else:            needs_preview=True  #reddit has no thumbnail for this link. please get one
     
+    
     ld=parse_reddit_link(link_url,reddit_says_is_video, needs_preview, False, preview_ar  )
 
     if previewimage=="":
@@ -581,8 +718,15 @@ def addLink(title, title_line2, iconimage, previewimage,preview_w,preview_h,doma
     else:
         liz.setArt({"thumb": iconimage, "banner":previewimage,  })
         
+    #log( '          reddit thumb[%s] ' %(iconimage ))
+    #log( '          reddit preview[%s] ar=%f %dx%d' %(previewimage, preview_ar, preview_w,preview_h ))
+    #if ld: log( '          new-thumb[%s] poster[%s] ' %( ld.thumb, ld.poster ))
 
     if ld:
+        #log('###' + repr(ld.playable_url) )
+        #url_for_DirectoryItem = build_script(ld.link_action, ld.playable_url, post_title , previewimage )
+        #log('  ##is supported')
+
         #use clearart to indicate the type of link(video, album, image etc.)
         clearart=ret_info_type_icon(ld.media_type, ld.link_action, domain )
         liz.setArt({ "clearart": clearart  })
@@ -591,17 +735,19 @@ def addLink(title, title_line2, iconimage, previewimage,preview_w,preview_h,doma
         if iconimage in ["","nsfw", "default"]:
             iconimage=ld.thumb
 
+        #link_action set in domains.py - parse_reddit_link
         if ld.link_action == sitesBase.DI_ACTION_PLAYABLE:
             property_link_type=ld.link_action
             DirectoryItem_url =ld.playable_url
         else:
             property_link_type='script'
-            if ld.link_action=='viewTallImage' : #viewTallImage take different args
+            if ld.link_action=='viewTallImage' : #viewTallImage take different args  
                 DirectoryItem_url = build_script(mode=ld.link_action, 
                                                  url=ld.playable_url,
                                                  name=str(preview_w),
                                                  type=str(preview_h) ) 
             else:  
+                #log( '****' + repr( ld.dictlist ))
                 DirectoryItem_url = build_script(mode=ld.link_action, 
                                                  url=ld.playable_url, 
                                                  name=post_title , 
@@ -612,23 +758,165 @@ def addLink(title, title_line2, iconimage, previewimage,preview_w,preview_h,doma
         liz.setProperty('item_type',property_link_type)
         #liz.setProperty('onClick_action',DirectoryItem_url)
         liz.setProperty('onClick_action',DirectoryItem_url)
-        
+        liz.setProperty('album_images', json.dumps(ld.dictlist) ) # dictlist=json.loads(string)
+        #log( liz.getProperty('album_images'))
     else:
         #unsupported type here:
         pass
 
     return liz
 
+def reddit_post_worker(idx, entry, q_out):
+    from resources.lib.utils import unescape, pretty_datediff, determine_if_video_media_from_reddit_json, has_multiple_subreddits
+    from resources.lib.utils import assemble_reddit_filter_string,build_script,compose_list_item
 
+    try:
+        credate = ""
+        is_a_video=False
+        title_line2=""
+    
+        thumb_w=0
+        thumb_h=0
+    
+        t_on = translation(32071)  #"on"
+        #t_pts = u"\U0001F4AC"  # translation(30072) #"cmnts"  comment bubble symbol. doesn't work
+        t_pts = u"\U00002709"  # translation(30072)   envelope symbol
+        t_up = u"\U000025B4"  #u"\U00009650"(up arrow)   #upvote symbol
+        
+        data=entry.get('data')
+        
+        show_listSubReddit_debug=True
+        
+        if data:
+            title = unescape(data.get('title').encode('utf-8'))
+        
+            is_a_video = determine_if_video_media_from_reddit_json(entry)
+            if show_listSubReddit_debug : log("  POST%cTITLE%.2d=%s" %( ("v" if is_a_video else " "), idx, title ))
+        
+            post_id = entry['kind'] + '_' + data.get('id')  #same as entry['data']['name']      
+            #log('  %s  %s ' % (post_id, entry['data']['name'] ))
+            
+            try:    description = unescape(entry['data']['media']['oembed']['description'].encode('utf-8'))
+            except: description = ''
+            #log('    description  [%s]' %description)
+            try:    post_selftext=unescape(data.get('selftext').encode('utf-8'))
+            except: post_selftext=''
+            #log('    post_selftext[%s]' %post_selftext)
+            
+            description=post_selftext+'[CR]'+description if post_selftext else description
+            #log('    combined     [%s]' %description)
+                
+            commentsUrl = urlMain+data.get('permalink').encode('utf-8')
+            #log("commentsUrl"+str(idx)+"="+commentsUrl)
+            
+            try:
+                aaa = data.get('created_utc')
+                credate = datetime.datetime.utcfromtimestamp( aaa )
+                now_utc = datetime.datetime.utcnow()
+                pretty_date=pretty_datediff(now_utc, credate)
+                credate = str(credate)
+            except:
+                credate = ""
+                credateTime = ""
+    
+            subreddit=data.get('subreddit').encode('utf-8')
+            
+            try: author = data.get('author').encode('utf-8')
+            except: author = ""
+            
+            try: domain= data.get('domain').encode('utf-8')
+            except: domain = ""
+            #log("     DOMAIN%.2d=%s" %(idx,domain))
+            
+            ups = data.get('score')       #downs not used anymore
+            try:num_comments = data.get('num_comments')
+            except:num_comments = 0
+            
+            #log("DESCRIPTION"+str(idx)+"=["+description+"]")
+            try:
+                media_url = data.get('url').encode('utf-8')
+            except:
+                media_url = data.get('media')['oembed']['url'].encode('utf-8')
+                
+            thumb = data.get('thumbnail').encode('utf-8')
+            #log("       THUMB%.2d=%s" %( idx, thumb ))
+            
+            if thumb in ['nsfw','default','self']:  #reddit has a "default" thumbnail (alien holding camera with "?")
+                thumb=""               
+    
+            if thumb=="":
+                try: thumb = data.get('data')['media']['oembed']['thumbnail_url'].encode('utf-8').replace('&amp;','&')
+                except: pass
+            
+            try:
+                preview=data.get('preview')['images'][0]['source']['url'].encode('utf-8').replace('&amp;','&')
+                
+                try:
+                    thumb_h = float( data.get('preview')['images'][0]['source']['height'] )
+                    thumb_w = float( data.get('preview')['images'][0]['source']['width'] )
+                except:
+                    thumb_w=0
+                    thumb_h=0
+    
+            except Exception as e:
+                #log("   getting preview image EXCEPTION:="+ str( sys.exc_info()[0]) + "  " + str(e) )
+                thumb_w=0
+                thumb_h=0
+                preview="" #a blank preview image will be replaced with poster_url from parse_reddit_link() for domains that support it
+    
+            #preview images are 'keep' stretched to fit inside 1080x1080. 
+            #  if preview image is smaller than the box we have for thumbnail, we'll use that as thumbnail and not have a bigger stretched image  
+            if thumb_w > 0 and thumb_w < 280:
+                #log('*******preview is small ')
+                thumb=preview
+                thumb_w=0
+                thumb_h=0
+                preview=""
+    
+            try:
+                over_18 = data.get('over_18')
+            except:
+                over_18 = False
+    
+            title_line2=""
+            title_line2 = "[I][COLOR dimgrey]%d%c %s %s [COLOR teal]r/%s[/COLOR] (%d) %s[/COLOR][/I]" %(ups,t_up,pretty_date,t_on, subreddit,num_comments, t_pts)
+        
+            liz=addLink(title=title, 
+                    title_line2=title_line2,
+                    iconimage=thumb, 
+                    previewimage=preview,
+                    preview_w=thumb_w,
+                    preview_h=thumb_h,
+                    domain=domain,
+                    description=description, 
+                    credate=credate, 
+                    reddit_says_is_video=is_a_video, 
+                    site=commentsUrl, 
+                    subreddit=subreddit, 
+                    link_url=media_url, 
+                    over_18=over_18,
+                    posted_by=author,
+                    num_comments=num_comments,
+                    post_id=post_id,
+                    #post_index=idx,
+                    #post_total=0,
+                    #many_subreddit=hms
+                    )
+        
+            q_out.put( [idx, liz] )  #we put the idx back for easy sorting
+        
+    except Exception:
+        self.log( '  #reddit_post_workerf EXCEPTION:' + repr(sys.exc_info()) )
+        
 q = Queue()
-
 def autoPlay(url, name, type):
-    from resources.lib.domains import sitesBase, parse_reddit_link 
-    from resources.lib.utils import unescape, pretty_datediff, post_excluded_from, determine_if_video_media_from_reddit_json, remove_duplicates
+    from resources.lib.domains import sitesBase, parse_reddit_link, ydtl_get_playable_url, setting_gif_repeat_count
+    from resources.lib.utils import unescape, pretty_datediff, post_is_filtered_out, determine_if_video_media_from_reddit_json, remove_duplicates
     #collect a list of title and urls as entries[] from the j_entries obtained from reddit
     #then create a playlist from those entries
     #then play the playlist
 
+    gif_repeat_count=setting_gif_repeat_count()
     entries = []
     watchdog_counter=0
     playlist = xbmc.PlayList(xbmc.PLAYLIST_VIDEO)
@@ -661,31 +949,36 @@ def autoPlay(url, name, type):
             ld=parse_reddit_link(link_url=media_url, assume_is_video=False, needs_preview=False, get_playable_url=True )
 
             if ld:
-                
                 log('      type:%s %s' %( ld.media_type, ld.link_action)   )
-                if ld.media_type in [sitesBase.TYPE_VIDEO, sitesBase.TYPE_VIDS, sitesBase.TYPE_MIXED]:
-                    if type.startswith("UNWATCHED_") and getPlayCount(url) < 0:
-                        #log("      UNWATCHED_" )
-                        entries.append([title,ld.playable_url, ld.link_action])
-                    elif type.startswith("UNFINISHED_") and getPlayCount(url) == 0:
-                        #log("      UNFINISHED_" )
-                        entries.append([title,ld.playable_url, ld.link_action])
-                    else:  # type.startswith("ALL_")
-                        #log("      ALL_" )
-                        entries.append([title,ld.playable_url, ld.link_action])
+                if ld.media_type in [sitesBase.TYPE_VIDEO, sitesBase.TYPE_GIF, sitesBase.TYPE_VIDS, sitesBase.TYPE_MIXED]:
                     
+                    if ld.media_type==sitesBase.TYPE_GIF:
+                        entries.append([title,ld.playable_url, sitesBase.DI_ACTION_PLAYABLE])
+                        for x in range( 0, gif_repeat_count ):
+                            entries.append([title,ld.playable_url, sitesBase.DI_ACTION_PLAYABLE])
+                    else:
+                        entries.append([title,ld.playable_url, ld.link_action])
+            else:
+                #log('    checking if ytdl supports %s' %media_url )
+                playable_video_url=ydtl_get_playable_url(media_url)
+                if playable_video_url:
+                    for u in playable_video_url:
+                        entries.append([title, u, sitesBase.DI_ACTION_PLAYABLE])
                 
         except Exception as e:
             log( '  autoPlay exception:' + str(e) )
             pass
     
     #for i,e in enumerate(entries): log('  e1-%d %s:' %(i, e[1]) )
-    def k2(x): return x[1]
-    entries=remove_duplicates(entries, k2)
+    #def k2(x): return x[1]
+    #entries=remove_duplicates(entries, k2)   #***disable removal of duplicates because it will also remove looping for gif videos 
     #for i,e in enumerate(entries): log('  e2-%d %s:' %(i, e[1]) )
 
     for i,e in enumerate(entries): 
-        log('  possible playable items(%d) %s...%s' %(i, e[0].ljust(15)[:15], e[1]) )
+        try:
+            log('  possible playable items(%.2d) %s...%s (%s)' %(i, e[0].ljust(15)[:15], e[1],e[2]) )
+        except:
+            pass
         
     if len(entries)==0:
         log('  Play All: no playable items' )
@@ -698,6 +991,9 @@ def autoPlay(url, name, type):
         entries_to_buffer=len(entries)
         #log('entries to buffer reduced to %d' %entries_to_buffer )
 
+    #for title, url in entries:
+    #    log("  added to playlist:"+ title + "  " + url )
+
     log("**********autoPlay*************")
     
     #play_list=[]
@@ -708,11 +1004,17 @@ def autoPlay(url, name, type):
     t.start()
     #t.run()
 
+    #wait for worker to finish processing 1st item
+    #e.wait(200)
+    
     while True:
         #log( '  c-wait+get buffer(%d) wdt=%d ' %(playlist.size(), watchdog_counter)  )
         try:
+            #playable_url = q.get(True, 10)
             playable_entry = q.get(True, 10)
+            #playable_url=playable_entry[1]
             q.task_done()
+            #play_list.append(playable_entry[1])
             playlist.add(playable_entry[1], xbmcgui.ListItem(playable_entry[0]))
             log( '    c-buffered(%d):%s...%s' %(playlist.size(), playable_entry[0].ljust(15)[:15], playable_entry[1])  )
 
@@ -738,7 +1040,10 @@ def autoPlay(url, name, type):
     
     watchdog_counter=0
     while True:
-        try:
+        #log( '  c-get buffer(%d) wdt=%d ' %(playlist.size(), watchdog_counter)  )
+        #q.join()  
+        #log( ' c- join-ed, get... '  )
+        try:        
             #playable_url = q.get(True,10)
             playable_entry = q.get(True,10)
             q.task_done()
@@ -763,6 +1068,14 @@ def autoPlay(url, name, type):
 
     log( ' c-all done '  )
 
+    #for e in play_list: log( str(e) )
+        
+#     for title, url in entries:
+#         listitem = xbmcgui.ListItem(title)
+#         playlist.add(url, listitem)
+#     xbmc.Player().play(playlist)
+
+    
 class Worker(threading.Thread):
     def __init__(self, entries, queue, ev):
         threading.Thread.__init__(self)
@@ -794,37 +1107,40 @@ class Worker(threading.Thread):
                 time.sleep(0.1)
 
     def do_work(self):
-
+        from resources.lib.domains import sitesBase, ydtl_get_playable_url
+        #log( ' wor-ker (%(threadName)-10s)')
+        
+        url_to_check=""
+        #for url in self.work_list:
+        #    log('  worker task list:' + title.ljust(15)[:15] +'... '+ url )
+        
         #for title, w_url, modecommand in self.work_list:
         for entry in self.work_list:
             #work  
             #xbmc.sleep(2000)
             title=entry[0]
             url_to_check=entry[1]
+            action=entry[2]
+            
             if url_to_check.startswith('plugin://'):
-                playable_url=url_to_check
-                pass
-            else:
+                self.queue.put( [title, url_to_check] )
+            elif action==sitesBase.DI_ACTION_PLAYABLE:
+                self.queue.put( [title, url_to_check] )
+            elif action==sitesBase.DI_ACTION_YTDL:
                 playable_url = ydtl_get_playable_url( url_to_check )  #<-- will return a playable_url or a list of playable urls
-            #playable_url= '(worked)' + title.ljust(15)[:15] + '... '+ w_url
-            #work
-            if playable_url:
-                if isinstance(playable_url, basestring):
-                    entry[1]=playable_url
-                    log('    p-%d %s... %s' %(self.queue.qsize(), title.ljust(15)[:15], playable_url)  )
-                    self.queue.put(entry)
-                else:
+                
+                if playable_url:
                     for u in playable_url:
                         log('    p-(multiple)%d %s... %s' %(self.queue.qsize(), title.ljust(15)[:15], u)  )
                         self.queue.put( [title, u] )
-            else:
-                log('      p-(ytdl-failed) %s' %( title )  )
+                else:
+                    log('      p-(ytdl-failed) %s' %( title )  )
 
 
+#MODE playVideo       - name, type not used
 def playVideo(url, name, type):
-    xbmc.executebuiltin( "Dialog.Close(busydialog)" )
-    #log("playVideo:"+url)
-    
+    xbmc_busy(False)
+
     if url : #sometimes url is a list of url or just a single string
         if isinstance(url, basestring):
             pl = xbmc.PlayList(xbmc.PLAYLIST_VIDEO)
@@ -844,44 +1160,26 @@ def playVideo(url, name, type):
     else:
         log("playVideo(url) url is blank")
         
-def ydtl_get_playable_url( url_to_check ):
-    from resources.lib.utils import link_url_is_playable
-    #log('ydtl_get_playable_url:' +url_to_check )
-    if link_url_is_playable(url_to_check)=='video':
-        return url_to_check
-
-    choices = []
-    
-    if YDStreamExtractor.mightHaveVideo(url_to_check,resolve_redirects=True):
-        log('      YDStreamExtractor.mightHaveVideo[true]=' + url_to_check)
-        #xbmc_busy()
-        #https://github.com/ruuk/script.module.youtube.dl/blob/master/lib/YoutubeDLWrapper.py
-        vid = YDStreamExtractor.getVideoInfo(url_to_check,0,True)  #quality is 0=SD, 1=720p, 2=1080p and is a maximum
-        if vid:
-            log("        getVideoInfo playableURL="+vid.streamURL())
-            #log("        %s  %s %s" %( vid.sourceName , vid.description, vid.thumbnail ))   #usually just 'generic' and blank on everything else
-            if vid.hasMultipleStreams():
-                #vid.info  <-- The info property contains the original youtube-dl info
-                log("          vid hasMultipleStreams %d" %len(vid._streams) )
-                for s in vid.streams():
-                    title = s['title']
-                    #log('            choices: %s... %s' %( title.ljust(15)[:15], s['xbmc_url']  )   )
-                    choices.append(s['xbmc_url'])
-                #index = some_function_asking_the_user_to_choose(choices)
-                #vid.selectStream(0) #You can also pass in the the dict for the chosen stream
-                return choices  #vid.streamURL()   
-    
-            return vid.streamURL()                         #This is what Kodi (XBMC) will play    
-        
 def playYTDLVideo(url, name, type):
+    #url = "http://www.youtube.com/watch?v=_yVv9dx88x0"   #a youtube ID will work as well and of course you could pass the url of another site
+    #log("playYTDLVideo="+url)
+    #url='https://www.youtube.com/shared?ci=W8n3GMW5RCY'
+
+    from resources.lib.domains import sitesBase, parse_reddit_link, ydtl_get_playable_url
+    from urlparse import urlparse
 
     xbmc_busy()
-    from urlparse import urlparse
+
     parsed_uri = urlparse( url )
     domain = '{uri.netloc}'.format(uri=parsed_uri)
 
+    dialog_progress_YTDL = xbmcgui.DialogProgressBG()
+    dialog_progress_YTDL.create('YTDL' )
+    dialog_progress_YTDL.update(10,'YTDL',translation(32012)  )
+
     try:
         stream_url = ydtl_get_playable_url(url)
+        dialog_progress_YTDL.update(80,'YTDL',translation(32013)  )
         #log( ' ytdl stream url ' + repr(stream_url ))
         #if len(stream_url) == 1:
         #    playVideo(stream_url, name, type)
@@ -893,11 +1191,13 @@ def playYTDLVideo(url, name, type):
             #log("getVideoInfo failed==" )
             xbmc.executebuiltin('XBMC.Notification("%s", "%s (YTDL)" )'  %( translation(32010), domain )  )  
 
-    
     except Exception as e:
         #log( "zz   " + str(e) )
         xbmc.executebuiltin('XBMC.Notification("%s(YTDL)","%s")' %(  domain, str(e))  )
 
+    finally:
+        dialog_progress_YTDL.update(100,'YTDL' ) #not sure if necessary to set to 100 before closing dialogprogressbg
+        dialog_progress_YTDL.close()
 
 def listLinksInComment(url, name, type):
     from resources.lib.domains import parse_reddit_link, sitesBase
@@ -916,9 +1216,28 @@ def listLinksInComment(url, name, type):
     else:
         using_custom_gui=True
         
-    url=  urllib.quote_plus(url,safe=':/')
+    #sometimes the url has a query string. we discard it coz we add .json at the end
+    #url=url.split('?', 1)[0]+'.json'
+
+    #url='https://www.reddit.com/r/Music/comments/4k02t1/bonnie_tyler_total_eclipse_of_the_heart_80s_pop/' + '.json'
+    #only get up to "https://www.reddit.com/r/Music/comments/4k02t1". 
+    #   do not include                                            "/bonnie_tyler_total_eclipse_of_the_heart_80s_pop/"
+    #   because we'll have problem when it looks like this: "https://www.reddit.com/r/Overwatch/comments/4nx91h/ever_get_that_feeling_dÃ©jÃ _vu/"
+    #url=re.findall(r'(.*/comments/[A-Za-z0-9]+)',url)[0]
+    #UPDATE you need to convert this: https://www.reddit.com/r/redditviewertesting/comments/4x8v1k/test_test_what_is_déjà_vu/
+    #                        to this: https://www.reddit.com/r/redditviewertesting/comments/4x8v1k/test_test_what_is_d%C3%A9j%C3%A0_vu/
+    #
+    #use safe='' argument in quoteplus to encode only the weird chars part 
+    
+    url=  urllib.quote_plus(url,safe=':/') 
     url+= '.json'
     xbmc_busy()
+
+    dialog_progress = xbmcgui.DialogProgressBG()
+    dialog_progress_heading='Loading'
+    dialog_progress.create(dialog_progress_heading )
+    dialog_progress.update(0,dialog_progress_heading, 'Comments'  )
+    
     content = reddit_request(url)        
     if not content: return
     #content = r''
@@ -936,16 +1255,32 @@ def listLinksInComment(url, name, type):
         try:submitter=content[0]['data']['children'][0]['data']['author']
         except: submitter=''
         
-        
         #the post title is provided in json, we'll just use that instead of messages from addLink()
         try:post_title=content[0]['data']['children'][0]['data']['title']
         except:post_title=''
-
+    
         #harvest links in the post itself    
         r_linkHunter(content[1]['data']['children'])
-
+    
+        #for i, h in enumerate(harvest):
+        #    log( '  %d %s %d -%s   link[%s]' % ( i, h[7].ljust(8)[:8], h[0], h[3].ljust(20)[:20],h[2] ) )
+    
+#         h[0]=score, 
+#         h[1]=link_desc, 
+#         h[2]=link_http, 
+#         h[3]=post_text, 
+#         h[4]=post_html, 
+#         h[5]=d, 
+#         h[6]="t1",
+#         h[7]=author,
+#         h[8]=created_utc,
+    
         comment_score=0
         for i, h in enumerate(harvest):
+            
+            loading_percentage=int((float(i)/len(harvest))*100)
+            dialog_progress.update( loading_percentage,dialog_progress_heading  )
+
             #log(str(i)+"  score:"+ str(h[0]).zfill(5)+" "+ h[1] +'|'+ h[3] )
             comment_score=h[0]
             #log("score %d < %d (%s)" %(comment_score,int_CommentTreshold, CommentTreshold) )
@@ -974,9 +1309,6 @@ def listLinksInComment(url, name, type):
                 
             ld=parse_reddit_link(link_url=link_url, assume_is_video=False, needs_preview=True, get_playable_url=True )
 
-
-            
-            
             if author==submitter:#add a submitter tag
                 author="[COLOR cadetblue][B]%s[/B][/COLOR][S]" %author 
             else:
@@ -987,7 +1319,6 @@ def listLinksInComment(url, name, type):
             elif kind=='t3':
                 t_prepend=r"[B]Post text:[/B]"
     
-
             #helps the the textbox control treat [url description] and (url) as separate words. so that they can be separated into 2 lines 
             plot=h[3].replace('](', '] (')
             plot= markdown_to_bbcode(plot)
@@ -1000,6 +1331,8 @@ def listLinksInComment(url, name, type):
     
             liz.setInfo( type="Video", infoLabels={ "Title": h[1], "plot": plot, "studio": domain, "votes": str(comment_score), "director": author } )
 
+            
+            #force all links to ytdl to see if it can be played
             if link_url:
                 #log('      there is a link from %s' %domain)
                 if not ld: 
@@ -1018,6 +1351,8 @@ def listLinksInComment(url, name, type):
 
             
             if ld:
+                #use clearart to indicate if link is video, album or image. here, we default to unsupported.
+                #clearart=ret_info_type_icon(setInfo_type, mode_type)
                 clearart=ret_info_type_icon(ld.media_type, ld.link_action, domain )
                 liz.setArt({ "clearart": clearart  })
             
@@ -1031,7 +1366,17 @@ def listLinksInComment(url, name, type):
                                                      name='' , 
                                                      type='' ) 
                 
-                #turn link green
+                #(score, link_desc, link_http, post_text, post_html, d, )
+                #list_item_name=str(h[0]).zfill(3)
+                
+                #log(str(i)+"  score:"+ str(h[0]).zfill(5)+" desc["+ h[1] +']|text:['+ h[3]+']' +link_url + '  videoID['+videoID+']' + 'playable:'+ setProperty_IsPlayable )
+                #log( h[4] + ' -- videoID['+videoID+']' )
+                #log("sss:"+ supportedPluginUrl )
+                
+                #fl= re.compile('\[(.*?)\]\(.*?\)',re.IGNORECASE) #match '[...](...)' with a capture group inside the []'s as capturegroup1
+                #result = fl.sub(r"[B]\1[/B]", h[3])              #replace the match with [B] [/B] with capturegroup1 in the middle of the [B]'s
+    
+                #turn link green  
                 if DirectoryItem_url:          
                     plot= "[COLOR greenyellow][%s] %s"%(domain, plot )  + "[/COLOR]"
                     liz.setLabel(tab+plot)
@@ -1050,17 +1395,15 @@ def listLinksInComment(url, name, type):
             else:
                 #this section are for comments that have no links or unsupported links
                 if not ShowOnlyCommentsWithlink:
-                    #liz.setInfo( type="Video", infoLabels={ "Title": h[1], "plot": plot, "studio": domain, "votes": str(h[0]), "director": author } )
-                    #liz.setProperty('IsPlayable', 'false')
-                    
                     directory_items.append( ("", liz, ) )
-                    #xbmcplugin.addDirectoryItem(handle=pluginhandle,url="",listitem=liz,isFolder=False)
                 
                 #END section are for comments that have no links or unsupported links
     
     except Exception as e:
         log('  ' + str(e) )
-        #xbmc.executebuiltin('XBMC.Notification("%s", "%s" )' %( e, 'Flickr' )  )        
+
+    dialog_progress.update( 100,dialog_progress_heading  )
+    dialog_progress.close()
         
     xbmc_busy(False)
     #for di in directory_items:
@@ -1073,6 +1416,13 @@ def listLinksInComment(url, name, type):
         #log( '   %s-%s'  %(di[1].getLabel(), di[1].getProperty('onClick_action') ) )
         li.append( di[1] )
     
+#     li.sort( key=getKey )
+#     log("  sorted")
+#     
+#     for l in li:
+#         log( '   %s-%s'  %(l.getLabel(), l.getProperty('onClick_action') ) )
+            
+        
     ui = commentsGUI('view_461_comments.xml' , addon_path, defaultSkin='Default', defaultRes='1080i', listing=li, id=55)
     #NOTE: the subreddit selection screen and comments screen use the same gui. there is a button that is only for the comments screen
     ui.setProperty('comments', 'yes')   #i cannot get the links button to show/hide in the gui class. I resort to setting a property and having the button xml check for this property to show/hide
@@ -1100,6 +1450,8 @@ def r_linkHunter(json_node,d=0):
             #log("replyid:"+str(d)+" "+e['data']['id'])
             body=e['data']['body'].encode('utf-8')
     
+            #log("reply:"+str(d)+" "+body.replace('\n','')[0:80])
+            
             try: replies=e['data']['replies']['data']['children']
             except: replies=""
             
@@ -1119,6 +1471,10 @@ def r_linkHunter(json_node,d=0):
             try: author=e['data']['author'].encode('utf-8')
             except: author=""
     
+            #i initially tried to search for [link description](https:www.yhotuve.com/...) in the post_text but some posts do not follow this convention
+            #prog = re.compile('\[(.*?)\]\((https?:\/\/.*?)\)')   
+            #result = prog.findall(post_text)
+            
             result = prog.findall(post_html)
             if result:
                 #store the post by itself and then a separate one for each link.
@@ -1158,12 +1514,20 @@ def r_linkHunter(json_node,d=0):
                 if len(self_text) > 0: #don't post an empty titles
                     harvest.append((score, link_desc, link_http, self_text, self_text_html, d, "t3",author,created_utc,)   )    
 
+#MODE queueVideo       -type not used
+#def queueVideo(url, name, type):
+#    playlist = xbmc.PlayList(xbmc.PLAYLIST_VIDEO)
+#    listitem = xbmcgui.ListItem(name)
+#    playlist.add(url, listitem)
+
 def translation(id):
     return addon.getLocalizedString(id).encode('utf-8')
 
 def viewTallImage(image_url, width, height):
     from resources.lib.utils import unescape
     log( 'viewTallImage %s: %sx%s' %(image_url, width, height))
+    #image_url=unescape(image_url) #special case for handling reddituploads urls
+    #log( 'viewTallImage %s: %sx%s' %(image_url, width, height))
 
     xbmc_busy(False)
         
@@ -1225,6 +1589,7 @@ def viewTallImage(image_url, width, height):
                                     ]  )
         xbmc.sleep(scroll_time*2)
         useWindow.removeControls( [img_control,img_loading] )
+
     
 def zoom_n_slide(image, width, height):
     from resources.lib.utils import calculate_zoom_slide
@@ -1255,37 +1620,17 @@ def zoom_n_slide(image, width, height):
         del newWindow
     except Exception as e:
         log("  EXCEPTION zoom_n_slide:="+ str( sys.exc_info()[0]) + "  " + str(e) )    
-    
 
-def callwebviewer(url, name, type):
-    log( " callwebviewer")
-
-    import resources.pyxbmct as pyxbmct
-
-    # Create a window instance.
-    window = pyxbmct.AddonFullWindow('Hello, World!')
-    # Set the window width, height and the grid resolution: 2 rows, 3 columns.
-    window.setGeometry(1920, 1080, 9, 16)
-    
-    #image is 1200x2220
-    image=pyxbmct.Image('http://i.imgur.com/lYdRVRi.png', aspectRatio=2)
-    
-    window.placeControl(image, 0, 0, 9, 16 )
-    
-    #doesn't work. leaving it alone for now (7/27/2016)
-    image.setAnimations([('WindowOpen', 'effect type="zoom" end="150" center="0" time="1800"')])
-    
-    # Connect a key action to a function.
-    window.connect(pyxbmct.ACTION_NAV_BACK, window.close)
-    # Show the created window.
-    window.doModal()
-    # Delete the window instance when it is no longer used.
-    del window 
-
-    log( " done callwebviewer")
+def parse_and_play(url, name, type):
+    #this mode is intended to receive links from a modified kore remote
+    #i don't think this is allowed per http://forum.kodi.tv/showthread.php?tid=178881
+    #
+    pass
 
 def reddit_request( url ):
-
+    #this function replaces     content = opener.open(url).read()
+    #  for calls to reddit  
+    
     #if there is a refresh_token, we use oauth.reddit.com instead of www.reddit.com
     if reddit_refresh_token:
         url=url.replace('www.reddit.com','oauth.reddit.com' )
@@ -1340,9 +1685,16 @@ def reddit_get_refresh_token(url, name, type):
     #this function gets a refresh_token from reddit and keep it in our addon. this refresh_token is used to get 1-hour access tokens.
     #  getting a refresh_token is a one-time step
     
+    #1st: use any webbrowser to  
+    #  https://www.reddit.com/api/v1/authorize?client_id=hXEx62LGqxLj8w&response_type=code&state=RS&redirect_uri=http://localhost:8090/&duration=permanent&scope=read,mysubreddits
+    #2nd: click allow and copy the code provided after reddit redirects the user 
+    #  save this code in add-on settings.  A one-time use code that may be exchanged for a bearer token.
     code = addon.getSetting("reddit_code")
-
+    #log("  user refresh token:"+reddit_refresh_token)
+    #log("  user          code:"+code)
+    
     if reddit_refresh_token and code:
+        #log("  user already have refresh token:"+reddit_refresh_token)
         dialog = xbmcgui.Dialog()
         if dialog.yesno(translation(32411), translation(32412), translation(32413), translation(32414) ):
             pass
@@ -1379,7 +1731,24 @@ def reddit_get_refresh_token(url, name, type):
         else:
             r2="Requesting a reddit permanent token"
             xbmc.executebuiltin("XBMC.Notification(%s, %s)"  %( status, r2)  )     
+            
 
+#    This is a 2nd option reddit oauth. user needs to request access token every hour
+#         #user enters this on their webbrowser. note that there is no duration=permanent response_type=token instead of code 
+#         request_url='https://www.reddit.com/api/v1/authorize?client_id=hXEx62LGqxLj8w&response_type=token&state=RS&redirect_uri=http://localhost:8090/&scope=read,identity'
+#         #click on "Allow"
+#         #copy the redirect url code    #enters it on settings. e.g.: LVQu8vitbEXfMPcK1sGlVVQZEpM
+# 
+#         #u='https://oauth.reddit.com/new.json'
+#         u='https://oauth.reddit.com//api/v1/me.json'
+# 
+#         req = urllib2.Request(u)
+#         #req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.8.1.14) Gecko/20080404 Firefox/2.0.0.14')
+#         req.add_header('User-Agent', reddit_userAgent)
+#         req.add_header('Authorization','bearer LVQu8vitbEXfMPcK1sGlVVQZEpM')
+#         page = read,identity.urlopen(req)
+#         response=page.read();page.close()
+    
     except urllib2.HTTPError, err:
         xbmc.executebuiltin('XBMC.Notification("%s %s", "%s" )' %( err.code, err.msg, u)  )
         log( err.reason )         
@@ -1410,6 +1779,10 @@ def reddit_get_access_token(url="", name="", type=""):
         status=reddit_set_addon_setting_from_response(response)
         
         if status=='ok':
+            #log( '    ok new access token '+ reddit_access_token )
+            #r1="Click 'OK' when done"
+            #r2="Settings will not be saved"
+            #xbmc.executebuiltin("XBMC.Notification(%s, %s)"  %( r1, r2)  )
             return True
         else:
             r2="Requesting 1-hour token"
@@ -1481,6 +1854,9 @@ def reddit_revoke_refresh_token(url, name, type):
         #no response for success. 
         log( "response:" + response )
 
+        #response = json.loads(response.replace('\\"', '\''))
+        #log( json.dumps(response, indent=4) )
+
         addon.setSetting('reddit_refresh_token', "")
         addon.setSetting('reddit_access_token', "")
         addon.setSetting('reddit_access_token_scope', "")
@@ -1498,32 +1874,19 @@ def reddit_revoke_refresh_token(url, name, type):
         xbmc.executebuiltin('XBMC.Notification("%s", "%s" )' %( str(e), 'Revoking refresh token' )  )
         log("  Revoking refresh token EXCEPTION:="+ str( sys.exc_info()[0]) + "  " + str(e) )    
     
-    
 def xbmc_busy(busy=True):
     if busy:
         xbmc.executebuiltin("ActivateWindow(busydialog)")
     else:
         xbmc.executebuiltin( "Dialog.Close(busydialog)" )
         
-    
-def downloadurl( source_url, destination=""):
-    try:
-        filename,ext=parse_filename_and_ext_from_url(source_url)
-        if destination=="":
-            urllib.urlretrieve(source_url, filename+"."+ext)
-        else:
-            urllib.urlretrieve(source_url, destination)
-        
-    except:
-        log("download ["+source_url+"] failed")
-
-
 def dump(obj):
     for attr in dir(obj):
         if hasattr( obj, attr ):
             log( "obj.%s = %s" % (attr, getattr(obj, attr)))
 
 def parameters_string_to_dict(parameters):
+    #log('   ######' + str( urlparse.parse_qsl(parameters) )  )
     return dict( urlparse.parse_qsl(parameters) )
 
 
@@ -1531,15 +1894,33 @@ if __name__ == '__main__':
 
     if len(sys.argv) > 1: 
         params=parameters_string_to_dict(sys.argv[1])
+        #log("sys.argv[1]="+sys.argv[1]+"  ")        
     else: params={}
 
     mode   = params.get('mode', '')
     url    = params.get('url', '')
-    typez  = params.get('type', '') 
+    typez  = params.get('type', '') #type is a python function, try not to use a variable name same as function
     name   = params.get('name', '')
+    #xbmc supplies this additional parameter if our <provides> in addon.xml has more than one entry e.g.: <provides>video image</provides>
+    #xbmc only does when the add-on is started. we have to pass it along on subsequent calls   
+    # if our plugin is called as a pictures add-on, value is 'image'. 'video' for video 
+    #content_type=urllib.unquote_plus(params.get('content_type', ''))   
+    #ctp = "&content_type="+content_type   #for the lazy
+    #log("content_type:"+content_type)
+    
+    #log("params="+sys.argv[1]+"  ")
+#    log( repr(sys.argv))
+#    log("----------------------")
+#    log("params="+ str(params))
+#    log("mode="+ mode)
+#    log("type="+ typez) 
+#    log("name="+ name)
+#    log("url="+  url)
+#    log("-----------------------")
 
-    from resources.lib.domains import viewImage, listAlbum
+    from resources.lib.domains import viewImage, listAlbum, playURLRVideo,loopedPlayback
     from resources.lib.slideshow import autoSlideshow
+    from resources.lib.converthtml import readHTML
     
     if mode=='':mode='index'  #default mode is to list start page (index)
     #plugin_modes holds the mode string and the function that will be called given the mode
@@ -1553,16 +1934,24 @@ if __name__ == '__main__':
                     ,'autoSlideshow'        : autoSlideshow                           
                     ,'listAlbum'            : listAlbum        #slideshowAlbum
                     ,'viewImage'            : viewImage
-                    ,'viewTallImage'        : viewTallImage                    
+                    ,'viewTallImage'        : viewTallImage
+                    ,'readHTML'             : readHTML        
                     ,'listLinksInComment'   : listLinksInComment
                     ,'playYTDLVideo'        : playYTDLVideo
+                    ,'playURLRVideo'        : playURLRVideo
+                    ,'loopedPlayback'       : loopedPlayback
+                    ,'play'                 : parse_and_play
                     ,'zoom_n_slide'         : zoom_n_slide
                     ,'manage_subreddits'    : manage_subreddits
-                    ,'callwebviewer'        : callwebviewer
                     ,'get_refresh_token'    : reddit_get_refresh_token
                     ,'get_access_token'     : reddit_get_access_token
                     ,'revoke_refresh_token' : reddit_revoke_refresh_token
                     }
+    
+    #'playYTDLVideo','listLinksInComment' takes a long time to complete. when these modes are called from the gui, a long xbmc.executebuiltin("ActivateWindow(busydialog)") is run
+    #   we close the busy dialog if running other modes 
+    #if not mode in ['playYTDLVideo','listLinksInComment']:
+    #    xbmc.executebuiltin( "Dialog.Close(busydialog)" )
     
     #whenever a list item is clicked, this part handles it.
     plugin_modes[mode](url,name,typez)

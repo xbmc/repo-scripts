@@ -21,11 +21,14 @@ import os
 import re
 import sys
 import urllib
+import json
 
 import xbmc
 import xbmcaddon
 import xbmcgui
 from xbmcgui import ControlButton
+
+
 #import xbmcplugin
 
 addon = xbmcaddon.Addon()
@@ -36,6 +39,17 @@ def dump(obj):
     for attr in dir(obj):
         if hasattr( obj, attr ):
             log( "obj.%s = %s" % (attr, getattr(obj, attr)))
+
+class ExitMonitor(xbmc.Monitor):
+    def __init__(self, exit_callback):
+        self.exit_callback = exit_callback
+
+#     def onScreensaverDeactivated(self):
+#         self.exit_callback()
+
+    def abortRequested(self):
+        self.exit_callback()
+
 
 class cGUI(xbmcgui.WindowXML):
     # view_461_comments.xml   
@@ -62,6 +76,7 @@ class cGUI(xbmcgui.WindowXML):
         #important to reset the listbox. when control comes back to this GUI(after calling another gui). 
         #  kodi will "onInit" this GUI again. we end up adding items in gui_listbox
         self.gui_listbox.reset()
+        self.exit_monitor = ExitMonitor(self.close_gui)#monitors for abortRequested and calls close on the gui
         
         if self.title_bar_text:
             self.ctl_title_bar = self.getControl(1)
@@ -117,10 +132,13 @@ class cGUI(xbmcgui.WindowXML):
             elif item_type=='script':
                 #"script.web.viewer, http://m.reddit.com/login"
                 #log(  di_url )
-                xbmc.executebuiltin("ActivateWindow(busydialog)")
-                xbmc.executebuiltin( di_url  )
-                xbmc.sleep(5000)
-                xbmc.executebuiltin( "Dialog.Close(busydialog)" )
+                
+                #xbmc.executebuiltin("ActivateWindow(busydialog)")
+                #xbmc.executebuiltin( di_url  )
+                #xbmc.sleep(5000)
+                #xbmc.executebuiltin( "Dialog.Close(busydialog)" )
+                
+                self.busy_execute_sleep(di_url, 3000, close=False)   #note: setting close to false seems to cause kodi not to close properly (will wait on this thread) 
                 
                 #modes=['listImgurAlbum','viewImage','listLinksInComment','playTumblr','playInstagram','playFlickr' ]
                 #if any(x in di_url for x in modes):
@@ -188,6 +206,11 @@ class cGUI(xbmcgui.WindowXML):
             xbmc.executebuiltin( "Dialog.Close(busydialog)" )
         pass
 
+    def close_gui(self):
+        log('  close gui via exit monitor')
+        self.close()
+        pass
+    
 class indexGui(cGUI):
     #this is the gui that handles the initial screen. 
     
@@ -256,7 +279,13 @@ class listSubRedditGUI(cGUI):
     BTN_ZOOM_N_SLIDE=6053
     BTN_PLAY_ALL=6054
     BTN_SLIDESHOW=6055
+    BTN_READ_HTML=6056
     BTN_PLAY_FROM_HERE=6057
+    BTN_COMMENTS=6058
+    BTN_SEARCH=6059
+    BTN_RELOAD=6060
+    IMG_POST_PREVIEW=201
+    IMG_POST_PREVIEW2=203
     
     def onInit(self):
         cGUI.onInit(self)
@@ -271,22 +300,21 @@ class listSubRedditGUI(cGUI):
     
     def onAction(self, action):
         
-        if action in [ xbmcgui.ACTION_PREVIOUS_MENU, xbmcgui.ACTION_NAV_BACK ]:
-            self.close()
-
         try:focused_control=self.getFocusId()
         except:focused_control=0
         #log( "  onAction focused control=" +  str(focused_control) + " " + str( self.a ))
         
         if focused_control==self.main_control_id:  #main_control_id is the listbox
+
+            if action in [ xbmcgui.ACTION_PREVIOUS_MENU, xbmcgui.ACTION_NAV_BACK ]:
+                self.close()
         
             self.gui_listbox_SelectedPosition  = self.gui_listbox.getSelectedPosition()
             item = self.gui_listbox.getSelectedItem()
 
             item_type   =item.getProperty('item_type').lower()
             
-                        
-            if action == xbmcgui.ACTION_MOVE_LEFT:
+            if action in [ xbmcgui.ACTION_MOVE_LEFT, xbmcgui.ACTION_CONTEXT_MENU ] :                        
                 #show side menu panel
                 self.setFocusId(self.SIDE_SLIDE_PANEL)
                 
@@ -298,6 +326,25 @@ class listSubRedditGUI(cGUI):
                 #xbmc.executebuiltin( "RunAddon(script.reddit.reader, ?mode=molest_xml)"  )
                 
             if action == xbmcgui.ACTION_MOVE_RIGHT:
+                #liz.setProperty('album_images', json.dumps(ld.dictlist) ) # dictlist=json.loads(string)
+                #this is set in addlink() default.py
+                #dictlist defined in lib/domains.py
+#                dictlist=json.loads(item.getProperty('album_images'))
+#                #log( repr(dictlist)) 
+#                if dictlist:
+#                    img_ctl=self.getControl( self.IMG_POST_PREVIEW2 )
+#                    #log(repr(img_ctl))
+#                    img_ctl.setVisible(False)
+#                    
+#                    log( repr(dictlist[1].get('DirectoryItem_url')))
+#                    next_img=dictlist[1].get('DirectoryItem_url')
+#                    
+#                    item.setArt({'banner',next_img, })
+#                    #img_ctl.setImage(next_img)
+#                    xbmc.sleep(500)
+#                    img_ctl.setVisible(True)
+#                    return
+                
                 comments_action=item.getProperty('comments_action')
                 log( "   RIGHT(comments) pressed  %d IsPlayable=%s  url=%s " %(  self.gui_listbox_SelectedPosition, item_type, comments_action )   )
                 if comments_action:
@@ -305,9 +352,10 @@ class listSubRedditGUI(cGUI):
                     self.busy_execute_sleep(comments_action,3000,False )
                 
 
-        if focused_control in [self.SIDE_SLIDE_PANEL,self.SUBREDDITS_LIST,self.BTN_GOTO_SUBREDDIT,self.BTN_ZOOM_N_SLIDE,self.BTN_SLIDESHOW]:   
-            if action == xbmcgui.ACTION_MOVE_RIGHT:
+        if focused_control in [self.SIDE_SLIDE_PANEL,self.SUBREDDITS_LIST,self.BTN_GOTO_SUBREDDIT,self.BTN_ZOOM_N_SLIDE,self.BTN_SLIDESHOW, self.BTN_READ_HTML, self.BTN_COMMENTS, self.BTN_SEARCH, self.BTN_RELOAD]:   
+            if action in [xbmcgui.ACTION_MOVE_RIGHT, xbmcgui.ACTION_PREVIOUS_MENU, xbmcgui.ACTION_NAV_BACK ]:
                 self.setFocusId(self.main_control_id)
+
 
             if focused_control==self.SUBREDDITS_LIST and ( action in [ xbmcgui.ACTION_MOVE_LEFT, xbmcgui.ACTION_CONTEXT_MENU ]  ) :
                 item = self.subreddits_listbox.getSelectedItem()
@@ -321,7 +369,7 @@ class listSubRedditGUI(cGUI):
         pass 
 
     def onClick(self, controlID):
-        from utils import build_script
+        from utils import build_script, assemble_reddit_filter_string
         #log( ' clicked on control id %d'  %controlID )
         
         listbox_selected_item=self.gui_listbox.getSelectedItem()
@@ -418,6 +466,59 @@ class listSubRedditGUI(cGUI):
             log('  SLIDESHOW '+ action)
             self.busy_execute_sleep(action, 1000,False)
             pass
+
+        elif controlID == self.BTN_READ_HTML:
+            #action='RunAddon(script.reddit.reader,mode=autoPlay&url=%s&name=&type=)' % self.reddit_query_of_this_gui
+            #build_script( mode, url, name="", type="", script_to_call=addonID)
+            #action=build_script('autoSlideshow', self.reddit_query_of_this_gui,'','')
+            link=listbox_selected_item.getProperty('link_url')
+            action=build_script('readHTML', link,'','')
+            log('  READ_HTML '+ action)
+            self.busy_execute_sleep(action, 1000,False)
+            pass
+
+        elif controlID == self.BTN_COMMENTS:
+            action=listbox_selected_item.getProperty('comments_action')
+            log('  BTN_COMMENTS '+ action)
+            if action:
+                #if there are no comments, the comments_action property is not created for this listitem
+                self.busy_execute_sleep(action,3000,False )
+            pass
+
+        elif controlID == self.BTN_SEARCH:
+            from default import translation
+            
+            #this    https://www.reddit.com/r/Art/.json?&nsfw:no+&limit=10
+            #becomes https://www.reddit.com/r/Art/search.json?&nsfw:no+&limit=10&q=SEARCHTERM&restrict_sr=on&sort=relevance&t=all
+            pos=self.reddit_query_of_this_gui.find('/.json')
+            if pos != -1 and pos > 22:
+                pos+=1  #insert 'search' between '/' and '.json'
+                search_query=self.reddit_query_of_this_gui[:pos] + 'search' + self.reddit_query_of_this_gui[pos:]
+            
+                keyboard = xbmc.Keyboard('', translation(32073))
+                keyboard.doModal()
+                if keyboard.isConfirmed() and keyboard.getText():
+                    search_text=keyboard.getText() 
+                    
+                    #restrict_sr = limit result to subreddit   
+                    #sort & t not changeable for now
+                    search_query=search_query+'&q=' + urllib.unquote_plus(search_text) + '&restrict_sr=on&sort=relevance&t=all'
+                    
+                    action=build_script("listSubReddit", search_query,'Search Result' ) 
+                    log('  BTN_SEARCH '+ action)
+                    if action:
+                        self.busy_execute_sleep(action,3000,False )
+            pass
+
+        elif controlID == self.BTN_RELOAD:
+            #log( self.reddit_query_of_this_gui)  #<-- r/random will return a random subredddit. 
+            #actual_url_ will tell us whether r/random was used to generate this list
+            actual_query_of_this_gui=self.getProperty('actual_url_used_to_generate_these_posts')  
+            action=build_script("listSubReddit", actual_query_of_this_gui ) 
+            log('  BTN_RELOAD '+ action)
+            if action:
+                self.busy_execute_sleep(action,3000,False )
+            pass
             
 class commentsGUI(cGUI):
     
@@ -496,7 +597,7 @@ class commentsGUI(cGUI):
         self.links_on_top=False
 
 
-def log(message, level=xbmc.LOGNOTICE):
+def log(message, level=xbmc.LOGDEBUG):
     xbmc.log("reddit_viewer GUI:"+message, level=level)
 
 

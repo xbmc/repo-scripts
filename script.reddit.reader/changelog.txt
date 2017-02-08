@@ -1,3 +1,31 @@
+0.7.1
+ - update fanart image
+
+0.7.0
+ - add timeout to url requests  
+ 
+0.6.9
+ - Added option to repeat playback of gif video
+0.6.8
+ - add loading indicator
+ - use URLResolver to check some links  
+ 
+0.6.7
+ - remove liveleak quality setting (no longer needed)
+
+0.6.6
+ - add ytdl parsing for unknown links in autoplay
+ - add search and reload on context menu 
+ 
+0.6.5
+ - bugfixes
+
+0.6.4  (11-05-2016)
+ - add html2text parsing- for those sites that you just gotta read  
+ 
+0.6.3  (11-04-2016)
+ - use multiple threads to parse/process reddit post
+
 0.6.2  (10-12-2016)
  - cleanup
 
