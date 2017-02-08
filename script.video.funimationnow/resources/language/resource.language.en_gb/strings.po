@@ -50,10 +50,14 @@ msgid "Image Quality (60% = Default)"
 msgstr "Image Quality (60% = Default)"
 
 msgctxt "#30103"
+msgid "Enable Subtitles (During Japanese Audio Playback)"
+msgstr "Enable Subtitles (During Japanese Audio Playback)"
+
+msgctxt "#30104"
 msgid "Splash Screen Enabled"
 msgstr "Splash Screen Enabled"
 
-msgctxt "#30104"
+msgctxt "#30105"
 msgid "Prefetch Show Information"
 msgstr "Prefetch Show Information"
 

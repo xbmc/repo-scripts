@@ -150,9 +150,11 @@ def getHeaders(data=None):
                 'Accept': '*/*',
                 'Accept-Encoding': 'gzip, deflate',
                 'clientVersion': utils.getAddonInfo('version'),
-                'deviceCategory': 'Console',
+                'deviceCategory': 'App',
+                #'deviceCategory': 'Console',
                 #'deviceType': 'Kodi Box', #Might need to hardcode Win8 due to header check
-                'deviceType': 'Win8', #They seem to be intentionally slowing down this Query with the new API url when using Kodi Box
+                #'deviceType': 'Win8', #They seem to be intentionally slowing down this Query with the new API url when using Kodi Box
+                'deviceType': 'Android Phone',
                 'territory': hvalues[1],
                 'User-Agent': hvalues[0], #They appear to have removed the need for an Agent, but incase they bring it back we are leaving it here
             });
@@ -232,7 +234,7 @@ def login(uid, pwd):
 
             try:
 
-                result = parse(tailorResult(result));
+                result = parse(result);
 
                 if 'error' in result['authentication']:
 
@@ -303,7 +305,7 @@ def menu():
 
             try:
 
-                result = parse(tailorResult(result));
+                result = parse(result);
 
                 if 'error' in result['menu']:
 
@@ -368,7 +370,7 @@ def helpMenu():
 
             try:
 
-                result = parse(tailorResult(result));
+                result = parse(result);
 
                 if 'error' in result['menu']:
 
@@ -438,7 +440,7 @@ def actionBar(path, params):
 
                 try:
 
-                    result = parse(tailorResult(result));
+                    result = parse(result);
 
                     if 'error' in result['content']:
 
@@ -796,11 +798,11 @@ def getHistoryConfig():
 
             try:
 
-                #logger.debug(parse(tailorResult(result)));
-                #logger.debug(json.dumps(parse(tailorResult(result))));
+                #logger.debug(parse(result));
+                #logger.debug(json.dumps(parse(result)));
                 #logger.debug(json.dumps(parse(result, process_namespaces=True)));
 
-                result = parse(tailorResult(result));
+                result = parse(result);
 
                 if 'error' in result['history']:
 
@@ -874,7 +876,7 @@ def getHistoryItems(hconfig):
 
                 try:
 
-                    result = parse(tailorResult(result));
+                    result = parse(result);
 
                     if 'error' in result['watchlist']:
 
@@ -946,7 +948,7 @@ def getHistory(hconfig):
 
                 try:
 
-                    result = parse(tailorResult(result));
+                    result = parse(result);
 
                     if 'error' in result['watchlist']:
 
@@ -1177,7 +1179,7 @@ def getMyQueueConfig():
 
             try:
 
-                result = parse(tailorResult(result));
+                result = parse(result);
 
                 if 'error' in result['toggle']:
 
@@ -1250,7 +1252,7 @@ def getMyQueueItems(mqconfig):
 
                 try:
 
-                    result = parse(tailorResult(result));
+                    result = parse(result);
 
                     if 'error' in result['watchlist']:
 
@@ -1321,7 +1323,7 @@ def getMyQueue(mqconfig):
 
                 try:
 
-                    result = parse(tailorResult(result));
+                    result = parse(result);
 
                     if 'error' in result['watchlist']:
 
@@ -1410,7 +1412,7 @@ def getRatingsConfig():
 
             try:
 
-                result = parse(tailorResult(result));
+                result = parse(result);
 
                 logger.debug(json.dumps(result));
                 
@@ -1479,7 +1481,7 @@ def getMyRatings(rconfig):
 
                 try:
 
-                    result = parse(tailorResult(result));
+                    result = parse(result);
 
                     if 'error' in result['watchlist']:
 
@@ -1726,7 +1728,7 @@ def detail(path, params, desc, viewtype, idx, loadDisplay=False):
 
                 try:
 
-                    result = parse(tailorResult(result));
+                    result = parse(result);
 
                     if 'error' in result['list2d']:
 
@@ -1769,12 +1771,13 @@ def player(path, params, desc, viewtype, idx, loadDisplay=False):
     if path and params:
 
         params = re.sub(r'\{.*\}', 'OFF', params);
+        params = re.sub(r'audio=ja', 'audio=2', params);
         params = quoteplus(params);
 
         try:
 
             url = getUrl(None, path);
-           
+
             headers = getHeaders();
 
             for key in utils.setting('fn.Headers').split(','):
@@ -1797,12 +1800,26 @@ def player(path, params, desc, viewtype, idx, loadDisplay=False):
 
                 try:
 
-                    result = parse(tailorResult(result));
+                    try:
+                        result = parse(result);
+                    
+                    except:
 
-                    if 'error' in result['player']:
+                        import gzip;
 
-                        error = result['player'].get('error', 30302);
-                        
+                        from StringIO import StringIO;
+
+                        buf = StringIO(result);
+                        gzip_f = gzip.GzipFile(fileobj=buf);
+                        result = gzip_f.read();
+
+                        result = parse(result);
+
+                    if 'error' in result:
+
+                        error = result['error'].get('userErrorMessage', 30302);
+                        error = re.sub(r',', '!', error);
+
                         if loadDisplay:
                             utils.sendNotification(error, 7000);
 
@@ -1867,7 +1884,7 @@ def getSeries(path, params, loadDisplay=True):
 
                 try:
 
-                    result = parse(tailorResult(result));
+                    result = parse(result);
 
                     if 'error' in result['list2d']:
 
@@ -1937,7 +1954,7 @@ def getLongList(path, params, loadDisplay=True):
 
                 try:
 
-                    result = parse(tailorResult(result));
+                    result = parse(result);
 
                     if 'error' in result['longList']:
 
@@ -2008,10 +2025,10 @@ def getSeriesDetails(path, params, loadDisplay=True):
                 try:
 
                     #lets keep this solution arround for pure JSON no ordered dict
-                    #logger.debug(json.dumps(parse(tailorResult(result))));
+                    #logger.debug(json.dumps(parse(result)));
                     #logger.debug(json.dumps(parse(result, process_namespaces=True)));
 
-                    result = parse(tailorResult(result));
+                    result = parse(result);
 
                     if 'error' in result['items']:
 
@@ -2193,6 +2210,13 @@ def episodeDesc(result, viewtype, idx, loadDisplay=False):
                             break;
 
 
+                logger.debug(json.dumps(item));
+
+                closedCaptionUrl = utils.parseValue(item, ['hls', 'closedCaptionUrl', '#text']);
+
+                if closedCaptionUrl is None:
+                    utils.parseValue(item, ['hls', 'closedCaptionUrl']);
+
                 desc.update({
                     'title': utils.parseValue(video, ['title']),
                     'subtitle': utils.parseValue(video, ['subtitle']),
@@ -2207,6 +2231,7 @@ def episodeDesc(result, viewtype, idx, loadDisplay=False):
                     'path': utils.parseValue(related, ['path']),
                     'params': utils.parseValue(related, ['params']),
                     'videourl': utils.parseValue(item, ['hls', 'url']),
+                    'closedCaptionUrl': closedCaptionUrl,
                     'description': description
                 });
 
@@ -2259,7 +2284,7 @@ def getGenres(path, params, loadDisplay=True):
 
                 try:
 
-                    result = parse(tailorResult(result));
+                    result = parse(result);
 
                     if 'error' in result['longList']:
 
@@ -2331,7 +2356,7 @@ def getPage(path, params, loadDisplay=True):
 
                 try:
 
-                    result = parse(tailorResult(result));
+                    result = parse(result);
 
                     # need to do None checks before checking for error on all of these.
 
@@ -2412,7 +2437,7 @@ def getWatchListSet(path, params, loadDisplay=True):
 
                 try:
 
-                    result = parse(tailorResult(result));
+                    result = parse(result);
 
                     # need to do None checks before checking for error on all of these.
 
@@ -2493,7 +2518,7 @@ def getEpisodeDetailExtras(path, params, loadDisplay=False):
 
                 try:
 
-                    result = parse(tailorResult(result));
+                    result = parse(result);
 
                     if 'error' in result['longList']:
 
@@ -2602,7 +2627,7 @@ def updateQueue(path, params, qstate):
                             try:
 
                                 # Old API
-                                resultxml = parse(tailorResult(result));
+                                resultxml = parse(result);
 
                                 if 'error' in resultxml['authentication']:
 
@@ -2727,7 +2752,7 @@ def updateProgess(litem, currentTime, totalTime):
 
                     else:
 
-                        result = parse(tailorResult(result));
+                        result = parse(result);
 
                         if 'error' in result['authentication']:
 
@@ -2809,7 +2834,7 @@ def updateRating(sRating, sLookup, sPath, sParams):
 
                             #Old API
 
-                            resultxml = parse(tailorResult(result));
+                            resultxml = parse(result);
 
                             if 'error' in resultxml['authentication']:
 

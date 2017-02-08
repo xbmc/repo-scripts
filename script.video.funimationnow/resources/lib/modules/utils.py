@@ -1192,7 +1192,7 @@ def resolutionPicker(videourl):
                     else:
                         newurl = None;
 
-                logger.error('NEWURL %s' % newurl)
+                logger.debug('NEWURL %s' % newurl)
 
             else:
                 newurl = videourl;

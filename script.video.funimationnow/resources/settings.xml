@@ -12,8 +12,9 @@
     <category label="30100">
         <setting id="fn.video_quality" type="slider" label="30101" default="10" range="0,1,10" option="int" />
         <setting id="fn.image_quality" type="slider" label="30102" default="60" range="0,10,100" option="int" />
-        <setting id="fn.splash_screen" type="bool" label="30103" default="true" />
-        <setting id="fn.background_sync" type="bool" label="30104" default="true" />
+        <setting id="fn.show_subtitles" type="bool" label="30103" default="true" />
+        <setting id="fn.splash_screen" type="bool" label="30104" default="true" />
+        <setting id="fn.background_sync" type="bool" label="30105" default="true" />
     </category>
     <!-- Advanced -->
     <category label="30200">
