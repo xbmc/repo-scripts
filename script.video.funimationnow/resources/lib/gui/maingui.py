@@ -264,6 +264,7 @@ class FunimationNowUI(xbmcgui.WindowXML):
 
             videourl = listitem.getProperty('videourl');
             viewtype = listitem.getProperty('viewtype');
+            closedCaptionUrl = listitem.getProperty('closedCaptionUrl');
 
             if videourl:
 
@@ -285,8 +286,10 @@ class FunimationNowUI(xbmcgui.WindowXML):
                             listitem.setProperty('pDuration', str(pDuration));
                             listitem.setProperty('pAdd', str(pAdd));
 
-                            self.logger.debug(pAdd);
+                            if closedCaptionUrl:
+                                listitem.setSubtitles([closedCaptionUrl]);
 
+                            self.logger.debug(pAdd);
 
                 except:
                     pass;
@@ -587,8 +590,9 @@ class FunimationNowUI(xbmcgui.WindowXML):
         #syshandle = int(sys.argv[1]);
 
         threads = [];
+        idx = 0;
 
-        for idx, pointer in enumerate(pointers, 0):
+        for tidx, pointer in enumerate(pointers, 0):
 
             try:
 
@@ -603,7 +607,17 @@ class FunimationNowUI(xbmcgui.WindowXML):
                 qid = int('206%02d' % idx);
 
                 if 'themes' in pointer:
-                    itemset = funimationnow.contentCarousel(pointer, idx);
+
+                    if 'funType' in pointer: #API Keeps changing, it appears they are adding device specific content in a poor fashion
+                        
+                        funType = utils.parseValue(pointer, ['funType']);
+
+                        #if funType == 'carousel_hero mobile-spotlight':
+                        if funType == 'carousel_hero mobile-spotlight-android':
+                            itemset = funimationnow.contentCarousel(pointer, idx);
+
+                        else:
+                            continue;
 
                 elif 'longList' in pointer:
 
@@ -683,6 +697,8 @@ class FunimationNowUI(xbmcgui.WindowXML):
 
             except Exception as inst:
                 self.logger.error(inst);
+
+            idx += 1;
 
         #See Line 696 & 812.  This is assigned to something, and should not be marked as an error
         [i.start() for i in threads];

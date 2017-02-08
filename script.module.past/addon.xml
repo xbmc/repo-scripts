@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.module.past" name="past" version="0.16.0" provider-name="Ed Schofield <ed@pythoncharmers.com>">
+<addon id="script.module.past" name="past" version="0.16.0" provider-name="Ed Schofield">
 	<requires>
 		<import addon="xbmc.python" version="2.24.0"/>
 	</requires>

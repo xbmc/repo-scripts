@@ -150,9 +150,11 @@ def getHeaders(data=None):
                 'Accept': '*/*',
                 'Accept-Encoding': 'gzip, deflate',
                 'clientVersion': utils.getAddonInfo('version'),
-                'deviceCategory': 'Console',
+                'deviceCategory': 'App',
+                #'deviceCategory': 'Console',
                 #'deviceType': 'Kodi Box', #Might need to hardcode Win8 due to header check
-                'deviceType': 'Win8', #They seem to be intentionally slowing down this Query with the new API url when using Kodi Box
+                #'deviceType': 'Win8', #They seem to be intentionally slowing down this Query with the new API url when using Kodi Box
+                'deviceType': 'Android Phone',
                 'territory': hvalues[1],
                 'User-Agent': hvalues[0], #They appear to have removed the need for an Agent, but incase they bring it back we are leaving it here
             });
@@ -503,7 +505,7 @@ def homescreenmenu(hurl):
 
             try:
 
-                result = parse(result);
+                result = parse(tailorResult(result));
 
                 if 'error' in result['list2d']:
 
@@ -1769,12 +1771,13 @@ def player(path, params, desc, viewtype, idx, loadDisplay=False):
     if path and params:
 
         params = re.sub(r'\{.*\}', 'OFF', params);
+        params = re.sub(r'audio=ja', 'audio=2', params);
         params = quoteplus(params);
 
         try:
 
             url = getUrl(None, path);
-           
+
             headers = getHeaders();
 
             for key in utils.setting('fn.Headers').split(','):
@@ -1797,12 +1800,26 @@ def player(path, params, desc, viewtype, idx, loadDisplay=False):
 
                 try:
 
-                    result = parse(result);
+                    try:
+                        result = parse(result);
+                    
+                    except:
 
-                    if 'error' in result['player']:
+                        import gzip;
 
-                        error = result['player'].get('error', 30302);
-                        
+                        from StringIO import StringIO;
+
+                        buf = StringIO(result);
+                        gzip_f = gzip.GzipFile(fileobj=buf);
+                        result = gzip_f.read();
+
+                        result = parse(result);
+
+                    if 'error' in result:
+
+                        error = result['error'].get('userErrorMessage', 30302);
+                        error = re.sub(r',', '!', error);
+
                         if loadDisplay:
                             utils.sendNotification(error, 7000);
 
@@ -2193,6 +2210,13 @@ def episodeDesc(result, viewtype, idx, loadDisplay=False):
                             break;
 
 
+                logger.debug(json.dumps(item));
+
+                closedCaptionUrl = utils.parseValue(item, ['hls', 'closedCaptionUrl', '#text']);
+
+                if closedCaptionUrl is None:
+                    utils.parseValue(item, ['hls', 'closedCaptionUrl']);
+
                 desc.update({
                     'title': utils.parseValue(video, ['title']),
                     'subtitle': utils.parseValue(video, ['subtitle']),
@@ -2207,6 +2231,7 @@ def episodeDesc(result, viewtype, idx, loadDisplay=False):
                     'path': utils.parseValue(related, ['path']),
                     'params': utils.parseValue(related, ['params']),
                     'videourl': utils.parseValue(item, ['hls', 'url']),
+                    'closedCaptionUrl': closedCaptionUrl,
                     'description': description
                 });
 
@@ -2925,6 +2950,22 @@ def quoteplus(params):
 
     except:
         return params;
+
+
+def tailorResult(result):
+
+    rslt = None;
+
+    try:
+        rslt = re.sub(r'-->', '</funType>', re.sub(r'<!--', '<funType>', result));
+
+    except Exception as inst:
+        logger.error(inst);
+
+        rslt = None;
+
+
+    return rslt;
 
 
 def execute(test):
