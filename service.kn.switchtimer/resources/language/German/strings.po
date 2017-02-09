@@ -86,8 +86,8 @@ msgid "Could not switch to %s"
 msgstr "Kann nicht umschalten zu '%s'"
 
 msgctxt "#30026"
-msgid "Switching now to '%s'."
-msgstr "Umschaltung zu '%s' erfolgt jetzt."
+msgid "Switching to '%s' in a few seconds"
+msgstr "Umschaltung zu '%s' erfolgt in wenigen Sekunden"
 
 msgctxt "#30027"
 msgid "Broadcast on '%s' starts now"
@@ -102,8 +102,12 @@ msgid "%s Seconds left to abort"
 msgstr "%s Sekunden verbleibend, um abzubrechen"
 
 msgctxt "#30030"
-msgid "This Addon is a part of the KN switchtimer service and cannot use as a standalone application."
-msgstr "Dieses Addon ist Bestandteil des KN Switchtimer Services und kann nicht als eigenständiges Programm aufgerufen werden."
+msgid "Please use the PVR OSD Guide context menue to set or reset switch timers"
+msgstr "Benutze das Kontextmenü der EPG-Zeitleiste, um Umschalttimer zu setzen oder zu löschen."
+
+msgctxt "#30031"
+msgid "Timer for this time already set (%s, %s). Would You replace this timer with new new one instead?"
+msgstr "Ein Timer für diesen Zeitpunkt ist bereits aktiv (%s, %s). Möchtest Du diesen Timer mit dem neuen Timer ersetzen?"
 
 msgctxt "#30040"
 msgid "Add switchtimer"
