@@ -33,7 +33,7 @@
             <align>right</align>
             <aligny>top</aligny>
             <colordiffuse>FFFFFFFF</colordiffuse>
-            <font>font11</font>
+            <font>font45</font>
             <textcolor>88FFFFFF</textcolor>
             <shadowcolor>88000000</shadowcolor>
             <label>$INFO[System.Time]</label>
@@ -209,6 +209,36 @@
 				</control>
 			</focusedlayout>
 		</control>
+	</control>
+	<control type="button" id="32502">
+	      <description>Back</description>
+	      <left>1200</left>
+	      <top>650</top>
+	      <width>60</width>
+	      <height>60</height>
+	      <visible>true</visible>
+	      <colordiffuse>FFFFFFFF</colordiffuse>
+	      <texturefocus border="40">buttons/roundedbutton-focus.png</texturefocus>
+	      <texturenofocus border="40">buttons/roundedbutton-nofocus.png</texturenofocus>
+	      <align></align>
+	      <label>-</label>
+	      <aligny></aligny>
+	      <textoffsetx></textoffsetx>
+	      <textoffsety></textoffsety>
+	      <pulseonselect></pulseonselect>
+	      <onclick>Action(back)</onclick>
+	      <onfocus>-</onfocus>
+	      <onunfocus>-</onunfocus>
+	      <visible>true</visible>
+	</control>
+	<control type="image" id="32503">
+		<left>1224</left>
+	    <top>673</top>
+		<width>30</width>
+		<height>30</height>
+		<texture>buttons/arrowback.png</texture>
+		<aspectratio aligny="center">scale</aspectratio>
+		<visible>true</visible>
 	</control>
    </controls>
 </window>

@@ -37,6 +37,8 @@ drinksublabel = 32604
 drinkrecipe = 32606
 INGREDIENT_PANEL_CONTROL = 32607
 FICTIONAL_PANEL_CONTROL = 32608
+BACK_BACKGROUND_CONTROL = 32609
+BACK_ICON_CONTROL = 32610
 
 
 class Screensaver(xbmcgui.WindowXMLDialog):
@@ -50,7 +52,11 @@ class Screensaver(xbmcgui.WindowXMLDialog):
 			self.screensaver_mode = True
 	
 	def onInit(self):
-	
+		#Enable back button for touch devices
+		if addon.getSetting('enable-back') == "false":
+			self.getControl(BACK_BACKGROUND_CONTROL).setVisible(False)
+			self.getControl(BACK_ICON_CONTROL).setVisible(False)
+			
 		#initiate fictional controler
 		ingredient = xbmcgui.ListItem('scipt.screensaver.cocktail')
 		self.getControl(FICTIONAL_PANEL_CONTROL).addItem(ingredient)
