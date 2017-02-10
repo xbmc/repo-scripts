@@ -3,6 +3,7 @@
 	<category label="32015">
 		<setting id="ingredient-switch" type="enum" label="32016" values="Slow|Fast" default="0" />
 		<setting id="youtube-max-results" label="32017" type="slider" default="6" range="6,3,50" option="int" />
+		<setting id="enable-back" type="bool" label="32030" default="false" />
 	</category>
 	<category label="32018">
 		<setting id="enable-instructions" type="bool" label="32019" default="true" />
