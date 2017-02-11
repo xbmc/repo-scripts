@@ -22,7 +22,7 @@
 # Import Python System Modules
 import os
 import time
-import functools
+import xbmcplugin
 
 # Import Custom Modules
 from xbmcutil import plugin
@@ -32,7 +32,7 @@ class ListItem(plugin.xbmcgui.ListItem):
 		A wrapper for the xbmcgui.ListItem class. The class keeps track
 		of any set properties
 	"""
-	_sortMethods = set((10,))
+	_sortMethods = set((xbmcplugin.SORT_METHOD_TITLE_IGNORE_THE,))
 	_sortAdd = _sortMethods.add
 	_plugin = plugin
 	_strptime = time.strptime
@@ -87,32 +87,32 @@ class ListItem(plugin.xbmcgui.ListItem):
 	def setSize(self, value):
 		""" Set size info : string digit or long integer """
 		self.infoLabels["size"] = long(value)
-		self._sortAdd(4) # sort_method_size
+		self._sortAdd(xbmcplugin.SORT_METHOD_SIZE)
 	
 	def setGenre(self, value):
 		""" Set genre info : string or unicode """
 		self.infoLabels["genre"] = value
-		self._sortAdd(15) # sort_method_genre
+		self._sortAdd(xbmcplugin.SORT_METHOD_GENRE)
 	
 	def setStudio(self, value):
 		""" Set studio info : string or unicode """
 		self.infoLabels["studio"] = value
-		self._sortAdd(31) # sort_method_studio_ignore_the
+		self._sortAdd(xbmcplugin.SORT_METHOD_STUDIO_IGNORE_THE)
 	
 	def setCount(self, value):
 		""" Set count info : string digit or integer """
 		self.infoLabels["count"] = int(value)
-		self._sortAdd(20) # sort_method_program_count
+		self._sortAdd(xbmcplugin.SORT_METHOD_PROGRAM_COUNT)
 	
 	def setRating(self, value):
 		""" Set rating info : string Float or Float """
 		self.infoLabels["rating"] = float(value)
-		self._sortAdd(18) # sort_method_video_rating
+		self._sortAdd(xbmcplugin.SORT_METHOD_VIDEO_RATING)
 	
 	def setEpisode(self, value):
 		""" Set episode info : string digit or integer """
 		self.infoLabels["episode"] = int(value)
-		self._sortAdd(22) # sort_method_episode
+		self._sortAdd(xbmcplugin.SORT_METHOD_EPISODE)
 	
 	def setDate(self, date, dateFormat):
 		""" Sets Date Info Label
@@ -125,8 +125,8 @@ class ListItem(plugin.xbmcgui.ListItem):
 		self.infoLabels["aired"] = self._strftime("%Y-%m-%d", convertedDate)
 		self.infoLabels["year"] = self._strftime("%Y", convertedDate)
 		self.infoLabels["dateadded"] = self._strftime("%Y-%m-%d %H-%M-%S", convertedDate)
-		self._sortAdd(3) # sort_method_date
-	
+		self._sortAdd(xbmcplugin.SORT_METHOD_DATE)
+
 	def setDuration(self, duration):
 		""" Sets Date duration Label """
 		if isinstance(duration, basestring):
@@ -147,7 +147,7 @@ class ListItem(plugin.xbmcgui.ListItem):
 		
 		# Set Duration
 		self.streamInfo["duration"] = duration
-		self._sortAdd(29) # sort_method_video_runtime
+		self._sortAdd(xbmcplugin.SORT_METHOD_VIDEO_RUNTIME)
 	
 	def setIcon(self, image):
 		""" Set icon : string or unicode - image filename """
