@@ -212,10 +212,16 @@ class Screensaver(xbmcgui.WindowXMLDialog):
                 if xbmc.getInfoLabel('VideoPlayer.Title'):
                     self.informationlist.append('$INFO[VideoPlayer.Title]')
             if self.cpuusage == 'true' and xbmc.getInfoLabel('System.CpuUsage'):
-                if xbmc.getInfoLabel('System.CpuUsage').count('%') > 1:
-                    self.informationlist.append("$INFO[System.CpuUsage]")
-                else:
-                    self.informationlist.append("$ADDON[screensaver.digitalclock 32280] $INFO[System.CpuUsage]")					
+                self.corenumber = xbmc.getInfoLabel('System.CpuUsage').count('%')
+                if self.corenumber == 1:
+                    self.informationlist.append("$ADDON[screensaver.digitalclock 32280] $INFO[System.CoreUsage(0)]%")
+                if self.corenumber == 2:
+                    self.informationlist.append("$ADDON[screensaver.digitalclock 32280] $INFO[System.CoreUsage(0)]% $INFO[System.CoreUsage(1)]%")
+                if self.corenumber == 4:
+                    self.informationlist.append("$ADDON[screensaver.digitalclock 32280] $INFO[System.CoreUsage(0)]% $INFO[System.CoreUsage(1)]% $INFO[System.CoreUsage(2)]% $INFO[System.CoreUsage(3)]%")
+                if self.corenumber == 8:
+                    self.informationlist.append("$ADDON[screensaver.digitalclock 32280] $INFO[System.CoreUsage(0)]% $INFO[System.CoreUsage(1)]% $INFO[System.CoreUsage(2)]% $INFO[System.CoreUsage(3)]%")
+                    self.informationlist.append("$ADDON[screensaver.digitalclock 32280] $INFO[System.CoreUsage(4)]% $INFO[System.CoreUsage(5)]% $INFO[System.CoreUsage(6)]% $INFO[System.CoreUsage(7)]%")					
             if self.batterylevel == 'true' and xbmc.getInfoLabel('System.BatteryLevel'):
                 self.informationlist.append("$ADDON[screensaver.digitalclock 32281] $INFO[System.BatteryLevel]")
             if self.freememory == 'true' and xbmc.getInfoLabel('System.FreeMemory'):
