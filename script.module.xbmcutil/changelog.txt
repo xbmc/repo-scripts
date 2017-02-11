@@ -1,5 +1,5 @@
-TODO:
-- Add code to fetch kodi setting for "Ignore articles when sorting (e.g "the")" So to auto set the sort methods to use "title" sort or "the titte" sort
+[B]Version 3.0.3[/B] 2017-02-11
+- Switch to using kodi constants variable for sort instead of hard coding them
 
 [B]Version 3.0.2[/B] 2016-01-04
 - Added option to disable url caching from the add-on settings.
