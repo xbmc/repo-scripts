@@ -1,3 +1,7 @@
+[B][I]Version 4.2.2[/I][/B]
+- Dropping support for Kodi 16 and lower. Please upgrade to Kodi 17 or higher
+to continue using Janitor.
+
 [B][I]Version 4.2.1[/I][/B]
 - [NEW] Improve exclusion checking by offloading to Kodi via JSON-RPC
 - [FIX] Monitoring issues with running as service
