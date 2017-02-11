@@ -1,3 +1,6 @@
+[B]4.0.3[/B]
+- Better representation of CPU usage on multiple core systems
+
 [B]4.0.2[/B]
 - Added background image aspect ratio control
 - Added additional information:
