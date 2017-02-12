@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.module.itsdangerous"
+       name="itsdangerous"
+       version="0.24"
+       provider-name="itsdangerous">
+  <requires>
+    <import addon="xbmc.python" version="2.14.0"/>
+  </requires>
+  <extension point="xbmc.python.module" library="lib" />
+  <extension point="xbmc.addon.metadata">
+    <summary>itsdangerous</summary>
+    <description>Various helpers to pass trusted data to untrusted environments and back.</description>
+    <platform>all</platform>
+    <language></language>
+    <license>BSD</license>
+    <forum></forum>
+    <website>http://github.com/mitsuhiko/itsdangerous</website>
+    <source>https://pypi.python.org/packages/dc/b4/a60bcdba945c00f6d608d8975131ab3f25b22f2bcfe1dab221165194b2d4/itsdangerous-0.24.tar.gz#md5=a3d55aa79369aef5345c036a8a26307f</source>
+    <email></email>
+  </extension>
+</addon>
