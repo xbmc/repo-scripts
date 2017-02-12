@@ -9,93 +9,34 @@ import re,md5
 import socket, cookielib
 import feedparser
 import HTMLParser,xbmcplugin
+import functions
+import popupwindow
+
 from dateutil import parser
 from django.utils.encoding import smart_str
-import popupwindow
+from resources.lib.funktionen import *
 
 __addon__ = xbmcaddon.Addon()
 __addonname__ = __addon__.getAddonInfo('name')
 __addondir__    = xbmc.translatePath( __addon__.getAddonInfo('path') )
-background = os.path.join(__addondir__,"bg.png")
 
 profile    = xbmc.translatePath( __addon__.getAddonInfo('profile') ).decode("utf-8")
 temp       = xbmc.translatePath( os.path.join( profile, 'temp', '') ).decode("utf-8")
-translation = __addon__.getLocalizedString
+
+def translation(text):
+  text=__addon__.getLocalizedString(text).encode("utf-8")
+  return text
 
 
-  
-icon = xbmc.translatePath( os.path.join(xbmcaddon.Addon().getAddonInfo('path'),'icon.png')).decode('utf-8')
 yellow = xbmc.translatePath( os.path.join(xbmcaddon.Addon().getAddonInfo('path'),'grafix','yellow.png')).decode('utf-8')
 
-defaultBackground = ""
-defaultThumb = ""
 
-
-def geturl(url):
-   debug("geturl url : "+url)
-   cj = cookielib.CookieJar()
-   opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cj))
-   req = urllib2.Request(url)
-   inhalt = urllib2.urlopen(req).read()   
-   return inhalt
    
-def debug(content):
-    log(content, xbmc.LOGDEBUG)
-    
-def notice(content):
-    log(content, xbmc.LOGNOTICE)
-
-def log(msg, level=xbmc.LOGNOTICE):
-    addon = xbmcaddon.Addon()
-    addonID = addon.getAddonInfo('id')
-    xbmc.log('%s: %s' % (addonID, msg), level) 
-    
 debug("YELLOW :" + yellow)    
-# Einlesen von Parametern, Notwendig für Reset der Twitter API
-def parameters_string_to_dict(parameters):
-  paramDict = {}
-  if parameters:
-    paramPairs = parameters[1:].split("&")
-    for paramsPair in paramPairs:
-      paramSplits = paramsPair.split('=')
-      if (len(paramSplits)) == 2:
-        paramDict[paramSplits[0]] = paramSplits[1]
-  return paramDict
 
 if not xbmcvfs.exists(temp):
    xbmcvfs.mkdirs(temp)
-
-
-
-def addDir(name, url, mode, iconimage, desc=""):
-    u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)
-    ok = True
-    liz = xbmcgui.ListItem(name, iconImage=icon, thumbnailImage=iconimage)
-    liz.setInfo(type="Video", infoLabels={"Title": name, "Plot": desc})  
-    if not iconimage or iconimage==icon or iconimage==defaultThumb:
-        iconimage = defaultBackground
-        liz.setProperty("fanart_image", iconimage)
-    else:
-        liz.setProperty("fanart_image", defaultBackground)
-    ok = xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u, listitem=liz, isFolder=True)
-    return ok
-  
-def addLink(name, url, mode, iconimage, duration="", desc="", genre=''):
-    u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)
-    ok = True
-    liz = xbmcgui.ListItem(name, iconImage=defaultThumb, thumbnailImage=iconimage)
-    liz.setInfo(type="Video", infoLabels={"Title": name, "Plot": desc, "Genre": genre})
-    liz.setProperty('IsPlayable', 'true')
-    liz.addStreamInfo('video', { 'duration' : duration })
-    liz.setProperty("fanart_image", iconimage)
-    #liz.setProperty("fanart_image", defaultBackground)
-    xbmcplugin.setContent(int(sys.argv[1]), 'tvshows')
-    ok = xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u, listitem=liz)
-    return ok
-    
-         
-    
-
+   
 def ersetze(text):
 # 
     text=text.replace("<br>","").replace("<b>","").replace("</b>","").replace("<br/>","")
@@ -142,9 +83,8 @@ def delspiel(ids,liste):
          fileinhalt=fileinhalt+"\n"+zeile          
     else:
          debug("Delete Line"+ zeile)
-  fp = open(filename, 'w')    
-  fp.write(fileinhalt)
-  fp.close()    
+  with open(filename, 'w') as fp :
+    fp.write(fileinhalt)
 
    
 if __name__ == '__main__':
@@ -153,7 +93,7 @@ if __name__ == '__main__':
 
     schown=[]
     monitor = xbmc.Monitor()   
-    oldi=0
+    oldi=1
     while not monitor.abortRequested():
       titlelist=[]
       cimglist1=[]
@@ -167,7 +107,7 @@ if __name__ == '__main__':
       anzal_meldungen=[]        
       foto1=""      
       foto2=""      
-      xbmc.log("Hole Umgebung")
+      xbmc.log("Get Enviroment")
       bild=__addon__.getSetting("bild") 
       lesezeit=__addon__.getSetting("lesezeit")
       greyout=__addon__.getSetting("greyout")
@@ -192,9 +132,8 @@ if __name__ == '__main__':
       filename       = xbmc.translatePath( os.path.join( temp, 'spiel.txt') ).decode("utf-8")
       gesamtliste=[]
       if xbmcvfs.exists(filename) :
-        fp=open(filename,"r") 
-        contentf=fp.read()
-        fp.close()          
+        with open(filename, 'r') as fp :        
+          contentf=fp.read()        
         liste=contentf.split("\n")                
         
         
@@ -261,7 +200,7 @@ if __name__ == '__main__':
             liegadone.append(liga)
             debug("Hole LiegA")            
             if oldi==1:
-              day="2"
+              day="1"
             nurl="https://api.sport1.de/api/sports/matches-by-season/co"+liga+"/se/md"+day
             debug("NURL :"+nurl)
             debug("_----------")
@@ -271,7 +210,11 @@ if __name__ == '__main__':
             debug(spielnr)               
             content=geturl(nurl)           
             struktur = json.loads(content)
-            tage=struktur["round"] 
+            try:
+              tage=struktur["round"] 
+            except:
+               debug("Fehler")
+               continue
             # Jeden Tagin derLiega            
             for tag in tage:
               debug("Neuer Tag")            
@@ -284,9 +227,12 @@ if __name__ == '__main__':
                  debug("liga :"+liga)
                  ende=spiel["finished"] 
                  #Wenn das Spiel Oder die Ganze Liega ausgewählt wurde
+                 debug("Spielnr :" +str(spielnr))
                  if str(id) in spielnr or liga in ganzeliega: 
+                    debug("Spiel Ausgewaelt")
                     #Spiel Zuende? und keine Liega
                     if not ende=="no" and liga not in ganzeliega and oldi==0:
+                      debug("Spiel zuende")
                       #Spiel Zuende? und keine Liega
                       delliste.append(id)
                       debug("Delete :"+id)
@@ -338,9 +284,9 @@ if __name__ == '__main__':
         debug("spiellisteneu")
         debug(spiellisteneu)
         for nr in spiellisteneu: 
-          debug(" : SPIEL :")
+          debug(" : SPIEL ::")
           debug(nr)         
-          debug ("Array")
+          debug ("ArrayY")
           debug(inn)
           in_spieler=""
           in_id=""

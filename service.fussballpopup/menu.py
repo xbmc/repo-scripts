@@ -9,57 +9,38 @@ import re,md5
 import socket, cookielib
 import feedparser
 import HTMLParser,xbmcplugin
-from dateutil import parser
-from django.utils.encoding import smart_str
+from resources.lib.funktionen import *
 
-xbmcplugin.addSortMethod(int(sys.argv[1]), xbmcplugin.SORT_METHOD_VIDEO_SORT_TITLE)
-xbmcplugin.addSortMethod(int(sys.argv[1]), xbmcplugin.SORT_METHOD_TRACKNUM)
+from dateutil import parser
+from resources.lib.django.utils.encoding import smart_str
+
+
 
 
 __addon__ = xbmcaddon.Addon()
 __addonname__ = __addon__.getAddonInfo('name')
 __addondir__    = xbmc.translatePath( __addon__.getAddonInfo('path') )
-background = os.path.join(__addondir__,"fanart.jpg")
+
+xbmcplugin.addSortMethod(int(sys.argv[1]), xbmcplugin.SORT_METHOD_TRACKNUM)
+xbmcplugin.addSortMethod(int(sys.argv[1]), xbmcplugin.SORT_METHOD_VIDEO_SORT_TITLE)
+
+
+
 
 profile    = xbmc.translatePath( __addon__.getAddonInfo('profile') ).decode("utf-8")
 temp       = xbmc.translatePath( os.path.join( profile, 'temp', '') ).decode("utf-8")
-translation = __addon__.getLocalizedString
+
 
 popupaddon=xbmcaddon.Addon("service.popwindow")
 popupprofile    = xbmc.translatePath( popupaddon.getAddonInfo('profile') ).decode("utf-8")
 popuptemp       = xbmc.translatePath( os.path.join( popupprofile, 'temp', '') ).decode("utf-8")
   
-icon = xbmc.translatePath(xbmcaddon.Addon().getAddonInfo('path')+'/icon.png').decode('utf-8')
 
-defaultBackground = background
-defaultThumb = ""
-
-
+def translation(text):
+  text=__addon__.getLocalizedString(text).encode("utf-8")
+  return text
 
 
-        
-def debug(content):
-    log(content, xbmc.LOGDEBUG)
-    
-def notice(content):
-    log(content, xbmc.LOGNOTICE)
-
-def log(msg, level=xbmc.LOGNOTICE):
-    addon = xbmcaddon.Addon()
-    addonID = addon.getAddonInfo('id')
-    xbmc.log('%s: %s' % (addonID, msg), level) 
-    
-    
-# Einlesen von Parametern, Notwendig für Reset der Twitter API
-def parameters_string_to_dict(parameters):
-  paramDict = {}
-  if parameters:
-    paramPairs = parameters[1:].split("&")
-    for paramsPair in paramPairs:
-      paramSplits = paramsPair.split('=')
-      if (len(paramSplits)) == 2:
-        paramDict[paramSplits[0]] = paramSplits[1]
-  return paramDict
 
 if not xbmcvfs.exists(temp):
    xbmcvfs.mkdirs(temp)
@@ -96,42 +77,10 @@ def ersetze(text):
     text = text.strip()
     return text
 
-def addDir(name, url, mode, iconimage, desc="",sortname=""):
-    u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&name="+urllib.quote_plus(name)
-    ok = True
-    liz = xbmcgui.ListItem(name, iconImage=icon, thumbnailImage=iconimage)
-    liz.setInfo(type="Video", infoLabels={"Title": name, "Plot": desc,"TrackNumber":sortname})  
-    if not iconimage or iconimage==icon or iconimage==defaultThumb:
-        iconimage = defaultBackground
-        liz.setProperty("fanart_image", iconimage)
-    else:
-        liz.setProperty("fanart_image", defaultBackground)
-    ok = xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u, listitem=liz, isFolder=True)
-    return ok
-  
-def addLink(name, url, mode, iconimage, duration="", desc="", genre=''):
-    u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)
-    ok = True
-    liz = xbmcgui.ListItem(name, iconImage=defaultThumb, thumbnailImage=iconimage)
-    liz.setInfo(type="Video", infoLabels={"Title": name, "Plot": desc, "Genre": genre})    
-    liz.setProperty('IsPlayable', 'true')
-    liz.addStreamInfo('video', { 'duration' : duration })
-    liz.setProperty("fanart_image", iconimage)
-    #liz.setProperty("fanart_image", defaultBackground)
-    xbmcplugin.setContent(int(sys.argv[1]), 'tvshows')
-    ok = xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u, listitem=liz)
-    return ok
-    
-def geturl(url):
-   debug("geturl url : "+url)
-   cj = cookielib.CookieJar()
-   opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cj))
-   req = urllib2.Request(url)
-   inhalt = urllib2.urlopen(req).read()   
-   return inhalt
+
   
 def liega(lieganr,nname):
-   oldi=0
+   oldi=1
    content=geturl("https://api.sport1.de/api/sports/competition/co"+lieganr)
    struktur = json.loads(content) 
    debug("Liega Matchday Content :"+ content)
@@ -144,9 +93,8 @@ def liega(lieganr,nname):
    
    filename       = xbmc.translatePath( os.path.join( temp, 'spiel.txt') ).decode("utf-8")
    if xbmcvfs.exists(filename) :
-      fp=open(filename,"r") 
-      spielfile=fp.read()
-      fp.close()   
+      with open(filename, 'r') as fp :
+        spielfile=fp.read()      
    else:
       spielfile="" 
    if not "Alle Spiele "+nname in spielfile:
@@ -169,8 +117,9 @@ def liega(lieganr,nname):
           match_time=""     
       id=spiel["id"]      
       name=match_date +" "+ match_time +" : "+ins +" - "+ aus 
+      debug("NAME :"+name)
       url=str(id) 
-      debug("   ende : "+ende)      
+      debug("   end : "+ende)      
       debug("   live_status : "+live_status)
       if ende=="no" and not live_status=="none" and not live_status=="result" or oldi==1:
        url=name+"##"+live_status +"##"+ str(lieganr) +"##"+ str(day) +"##"+str(id)+"##"+aus+"##"+ins+"##"+match_date+"##"+match_time       
@@ -183,15 +132,13 @@ def savespiel(zeile)  :
     debug("savespiel start")
     filename       = xbmc.translatePath( os.path.join( temp, 'spiel.txt') ).decode("utf-8")
     if xbmcvfs.exists(filename) :
-      fp=open(filename,"r") 
-      content=fp.read()
-      fp.close()   
+      with open(filename, 'r') as fp :
+        content=fp.read()      
       content=content+"\n"+zeile      
     else :
        content=zeile   
-    fp = open(filename, 'w')    
-    fp.write(content)
-    fp.close()   
+    with open(filename, 'w') as fp :
+        fp.write(content)
     xbmc.executebuiltin("Container.Refresh")    
  
 def add_game(url):
@@ -218,9 +165,8 @@ def add_game(url):
 def delgame():
     filename       = xbmc.translatePath( os.path.join( temp, 'spiel.txt') ).decode("utf-8")
     if xbmcvfs.exists(filename) :
-        fp=open(filename,"r") 
-        spielfile=fp.read()
-        fp.close()               
+        with open(filename, 'r') as fp :
+          spielfile=fp.read()        
         if "##" in spielfile:
             lines=spielfile.split("\n")
             for line in lines:
@@ -240,17 +186,15 @@ def delgame():
     xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True) 
 def delspiel(zeile)   :
     filename       = xbmc.translatePath( os.path.join( temp, 'spiel.txt') ).decode("utf-8")
-    fp=open(filename,"r") 
-    spielfile=fp.read()
-    fp.close()       
+    with open(filename, 'r') as fp :
+      spielfile=fp.read()    
     lines=spielfile.split("\n")
     fileinhalt=""
     for line in lines:
        if not zeile==line and "##" in line:
          fileinhalt=fileinhalt+"\n"+line          
-    fp = open(filename, 'w')    
-    fp.write(fileinhalt)
-    fp.close()    
+    with open(filename, 'w') as fp :
+      fp.write(fileinhalt)    
 def menu1():    
     debug("Start Menu")
     addDir(name=translation(30061), url="", mode="menu2", iconimage="" )
@@ -279,12 +223,9 @@ def savemessage(message,image,grey,lesezeit)  :
     debug("popuptemp :"+popuptemp)
     debug("lesezeit :"+str(lesezeit))
     filename=md5.new(message).hexdigest()  
-    f = open(popuptemp+"/"+filename, 'w')    
-    f.write(message+"###"+image+"###"+grey+"###"+str(lesezeit))
-    f.close()   
-    
-
-  
+    with open(os.path.join(popuptemp,filename), 'w') as fp :  
+      fp.write(message+"###"+image+"###"+grey+"###"+str(lesezeit))
+      
 addon = xbmcaddon.Addon()
 addon_handle = int(sys.argv[1])
 params = parameters_string_to_dict(sys.argv[2])

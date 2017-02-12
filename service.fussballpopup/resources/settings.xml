@@ -15,7 +15,7 @@
     </category>
 	  <category label="30013">
       <setting label="30014" type="bool" id="custom" default="false" />
-      <setting label="30015" type="text" id="font" default="font13" enable='eq(-1,true)'/>
+      <setting label="30015" type="text" id="font" default="font12" enable='eq(-1,true)'/>
       <setting label="30016" type="text" id="fontcolor" default="FFFFFFFF" enable='eq(-2,true)'/>
       <setting label="30017" type="number" id="x-message" default="5" enable='eq(-3,true)'/>        
       <setting label="30018" type="number" id="y-message" default="5" enable='eq(-4,true)'/>        	  

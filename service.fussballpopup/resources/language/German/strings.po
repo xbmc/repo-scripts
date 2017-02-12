@@ -1,4 +1,4 @@
-# XBMC Media Center language file
+﻿# XBMC Media Center language file
 # Addon Name: Fussball Ticker
 # Addon id: service.fussballpopup
 # Addon version: 0.3.9
@@ -26,7 +26,7 @@ msgid "Shows Fussball Feed in Overlay WIndows"
 msgstr "Zeigt Fussball Updates in PupupFensterann"
 
 msgctxt "#30001"
-msgid "generel"
+msgid "general"
 msgstr "Generell"
 
 msgctxt "#30002"
@@ -78,11 +78,11 @@ msgid "Advanced Settings"
 msgstr "Erweiterte Einstellungen"
 
 msgctxt "#30014"
-msgid "Advances Sttings(Only if you know what you are doing)"
+msgid "Advanced  Sttings(Only if you know what you are doing)"
 msgstr "Erweiterte Einstellungen (Nur wenn du weißt was du tust"
 
 msgctxt "#30015"
-msgid "Fontt"
+msgid "Font"
 msgstr "Schrift"
 
 msgctxt "#30016"
@@ -118,7 +118,7 @@ msgid "Width of the Image Right"
 msgstr "Breite des Bildes Rechts"
 
 msgctxt "#30024"
-msgid "Hight of the Image Right"
+msgid "height of the Image Right"
 msgstr "Höhe des Bildes Rechts"
 
 msgctxt "#30025"
@@ -129,8 +129,12 @@ msgctxt "#30026"
 msgid " switches "
 msgstr " tauscht "
 
+msgctxt "#30027"
+msgid " with "
+msgstr " gegen "
+
 msgctxt "#30028"
-msgid "Elf Meter Shooting Missed from"
+msgid "Elf Meter Shooting Missed from "
 msgstr "Elf Meter Schiessen Verfehl von"
 
 msgctxt "#30029"
@@ -174,7 +178,7 @@ msgid " Minute: Red Card for "
 msgstr " Minute: Rote Karte fuer "
 
 msgctxt "#30039"
-msgid " Minute: yellow Card for "
+msgid " Minute: Yellow Card for "
 msgstr " Minute: Gelbe Karte fuer "
 
 msgctxt "#30040"
@@ -190,7 +194,7 @@ msgid " has started. The Result is now "
 msgstr " hat begonnen. Es steht "
 
 msgctxt "#30043"
-msgid "The Second Half of the  extra time "
+msgid "The Second Half of the extra time "
 msgstr "Die Zweite Hälfte der Verlaengerung des Spiels "
 
 msgctxt "#30045"
@@ -198,11 +202,11 @@ msgid "The first Half of the  extra time"
 msgstr "Die Erste Hälfte der Verlaengerung des Spiels "
 
 msgctxt "#30047"
-msgid "The Second Part of the Game"
+msgid "The second Half of the Game "
 msgstr "Die Zweite Halbzeit des Spiels "
 
 msgctxt "#30048"
-msgid "The first Part of the Game"
+msgid "The first Half of the Game "
 msgstr "Die Erste Halbzeit des Spiels "
 
 msgctxt "#30049"
@@ -210,7 +214,7 @@ msgid " The Game "
 msgstr " Das Spiel "
 
 msgctxt "#30050"
-msgid " has endet. The Result is "
+msgid " has ended. The Result is "
 msgstr " ist zuende. Es steht "
 
 msgctxt "#30051"
@@ -222,7 +226,7 @@ msgid " has started"
 msgstr " hat Begonnen"
 
 msgctxt "#30053"
-msgid " endet with"
+msgid " ended with "
 msgstr " Endete mit "
 
 msgctxt "#30054"
@@ -230,15 +234,15 @@ msgid "International Club Contests"
 msgstr "Internationale Klub-Wettbewerbe"
 
 msgctxt "#30055"
-msgid "International Copetition"
+msgid "International Competition"
 msgstr "Internationale Turniere"
 
 msgctxt "#30056"
-msgid "Internationale League and Cup competitions"
+msgid "International League and Cup competitions"
 msgstr "Internationale Ligen und Pokalwettbewerbe"
 
 msgctxt "#30057"
-msgid "Nationale League"
+msgid "National League"
 msgstr "Nationale Liegen"
 
 msgctxt "#30058"

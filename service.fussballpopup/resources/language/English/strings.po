@@ -22,12 +22,12 @@ msgid "Shows Football Games Messages Feed in Overlay WIndows"
 msgstr ""
 
 msgctxt "Addon Description"
-msgid "Shows Fussball Feed in Overlay WIndows"
+msgid "Shows football Feed in Overlay WIndows"
 msgstr ""
 
 
 msgctxt "#30001"
-msgid "generel"
+msgid "general"
 msgstr ""
 
 msgctxt "#30002"
@@ -79,11 +79,11 @@ msgid "Advanced Settings"
 msgstr ""
 
 msgctxt "#30014"
-msgid "Advances Sttings(Only if you know what you are doing)"
+msgid "Advanced  Sttings(Only if you know what you are doing)"
 msgstr ""
 
 msgctxt "#30015"
-msgid "Fontt"
+msgid "Font"
 msgstr ""
 
 msgctxt "#30016"
@@ -119,7 +119,7 @@ msgid "Width of the Image Right"
 msgstr ""
 
 msgctxt "#30024"
-msgid "Hight of the Image Right"
+msgid "height of the Image Right"
 msgstr ""
 
 msgctxt "#30025"
@@ -130,10 +130,15 @@ msgctxt "#30026"
 msgid " switches "
 msgstr ""
 
+msgctxt "#30027"
+msgid " with "
+msgstr ""
+
+
 #empty string with id 30027
 
 msgctxt "#30028"
-msgid "Elf Meter Shooting Missed from"
+msgid "Elf Meter Shooting Missed from "
 msgstr ""
 
 msgctxt "#30029"
@@ -177,7 +182,7 @@ msgid " Minute: Red Card for "
 msgstr ""
 
 msgctxt "#30039"
-msgid " Minute: yellow Card for "
+msgid " Minute: Yellow Card for "
 msgstr ""
 
 msgctxt "#30040"
@@ -193,7 +198,7 @@ msgid " has started. The Result is now "
 msgstr ""
 
 msgctxt "#30043"
-msgid "The Second Half of the  extra time "
+msgid "The Second Half of the extra time "
 msgstr ""
 
 #empty string with id 30044
@@ -205,11 +210,11 @@ msgstr ""
 #empty string with id 30046
 
 msgctxt "#30047"
-msgid "The Second Part of the Game"
+msgid "The second Half of the Game "
 msgstr ""
 
 msgctxt "#30048"
-msgid "The first Part of the Game"
+msgid "The first Half of the Game "
 msgstr ""
 
 msgctxt "#30049"
@@ -217,7 +222,7 @@ msgid " The Game "
 msgstr ""
 
 msgctxt "#30050"
-msgid " has endet. The Result is "
+msgid " has ended. The Result is "
 msgstr ""
 
 msgctxt "#30051"
@@ -229,7 +234,7 @@ msgid " has started"
 msgstr ""
 
 msgctxt "#30053"
-msgid " endet with"
+msgid " ended with "
 msgstr ""
 
 msgctxt "#30054"
@@ -237,15 +242,15 @@ msgid "International Club Contests"
 msgstr ""
 
 msgctxt "#30055"
-msgid "International Copetition"
+msgid "International Competition"
 msgstr ""
 
 msgctxt "#30056"
-msgid "Internationale League and Cup competitions"
+msgid "International League and Cup competitions"
 msgstr ""
 
 msgctxt "#30057"
-msgid "Nationale League"
+msgid "National League"
 msgstr ""
 
 msgctxt "#30058"
