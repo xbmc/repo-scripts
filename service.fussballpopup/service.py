@@ -93,7 +93,7 @@ if __name__ == '__main__':
 
     schown=[]
     monitor = xbmc.Monitor()   
-    oldi=1
+    oldi=0
     while not monitor.abortRequested():
       titlelist=[]
       cimglist1=[]
