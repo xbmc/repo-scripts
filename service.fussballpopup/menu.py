@@ -80,7 +80,7 @@ def ersetze(text):
 
   
 def liega(lieganr,nname):
-   oldi=1
+   oldi=0
    content=geturl("https://api.sport1.de/api/sports/competition/co"+lieganr)
    struktur = json.loads(content) 
    debug("Liega Matchday Content :"+ content)
