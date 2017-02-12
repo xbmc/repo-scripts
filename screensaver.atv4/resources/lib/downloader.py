@@ -39,22 +39,27 @@ class Downloader:
         self.dp = xbmcgui.DialogProgress()
         self.dp.create(translate(32000),translate(32019))
         #video checksums - download only the videos that were not downloaded previously
-        with open(os.path.join(addon_path,"resources","checksums.json")) as f:
-            checksums = f.read()
+        if addon.getSetting("enable-checksums") == "true":
+            with open(os.path.join(addon_path,"resources","checksums.json")) as f:
+                checksums = f.read()
         
-        checksums = json.loads(checksums)
+            checksums = json.loads(checksums)
+
         for url in urllist:
             if not self.stop:
                 video_file = url.split("/")[-1]
                 localfile = os.path.join(addon.getSetting("download-folder"),video_file)
 
                 if xbmcvfs.exists(localfile):
-                    f = xbmcvfs.File(xbmc.translatePath(localfile))
-                    file_checksum = hashlib.md5(f.read()).hexdigest()
-                    f.close()
-            
-                    if video_file in checksums.keys() and checksums[video_file] != file_checksum:
-                       self.download(localfile,url,url.split("/")[-1]) 
+                    if addon.getSetting("enable-checksums") == "true":
+                        f = xbmcvfs.File(xbmc.translatePath(localfile))
+                        file_checksum = hashlib.md5(f.read()).hexdigest()
+                        f.close()
+                
+                        if video_file in checksums.keys() and checksums[video_file] != file_checksum:
+                           self.download(localfile,url,url.split("/")[-1])
+                    else:
+                        self.download(localfile,url,url.split("/")[-1])
                 else:
                     self.download(localfile,url,url.split("/")[-1])
             else: break

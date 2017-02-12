@@ -16,22 +16,7 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 '''
+from resources.lib.commonatv import *
 
-import xbmc
-import xbmcgui
-import playlist
-
-class ATVPlayer(xbmc.Player):
-    def __init__(self,):
-        xbmc.log(msg='ATV4 Screensaver player has been created', level=xbmc.LOGDEBUG)
-
-    def onPlayBackStarted(self):
-        xbmc.log(msg='ATV4 Screensaver player has started. Toggling repeatAll', level=xbmc.LOGDEBUG)
-        xbmc.executebuiltin("PlayerControl(RepeatAll)")
-
-    def onPlaybackEnded(self):
-        self.onPlayBackStopped()
-
-    def onPlayBackStopped(self):
-        xbmc.log(msg='ATV4 Screensaver player has been stopped', level=xbmc.LOGDEBUG)
-        xbmc.executebuiltin("PlayerControl(RepeatOff)", True)
+#set locked setting back to false on startup just in case kodi had crashed during playback
+addon.setSetting("is_locked","false")

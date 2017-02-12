@@ -1,4 +1,19 @@
-v1.3.3 - 15/1/2017-1-15
+v1.4.0  11/2/2007 (thanks graysky2)
+- Improve DPMS logic [CR]
+- New settings for DPMS  [CR]
+- Fix windows [CR]
+- Video part turned into video addon [CR]
+- New screensaver init logic [CR]
+- Added service [CR]
+
+v1.3.4 - 18/1/2017
+-New initialization logic - screensaver/script
+- Added DPMS settings
+- Redesign settings
+- Changes to interface
+- New settings
+
+v1.3.3 - 15/1/2017
 - Added new videos from Apple
 - Added new automated script
 - Change downloaded function to support xbmc vfs
