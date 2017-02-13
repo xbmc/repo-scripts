@@ -106,8 +106,12 @@ msgid "Please use the PVR OSD Guide context menue to set or reset switch timers"
 msgstr "Benutze das Kontextmenü der EPG-Zeitleiste, um Umschalttimer zu setzen oder zu löschen."
 
 msgctxt "#30031"
-msgid "Timer for this time already set (%s, %s). Would You replace this timer with new new one instead?"
+msgid "Timer for this time already set (%s, %s). Would You replace this timer with the new one instead?"
 msgstr "Ein Timer für diesen Zeitpunkt ist bereits aktiv (%s, %s). Möchtest Du diesen Timer mit dem neuen Timer ersetzen?"
+
+msgctxt "#30032"
+msgid "Channel Switch aborted"
+msgstr "Kanalumschaltung abgebrochen"
 
 msgctxt "#30040"
 msgid "Add switchtimer"

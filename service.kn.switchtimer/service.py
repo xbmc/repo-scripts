@@ -177,6 +177,7 @@ class Service(XBMCMonitor):
                                     xbmc.sleep(1000)
                                     idleTime += 1
                                     secs += 1
+                                if switchAborted: handler.notifyOSD(__LS__(30000), __LS__(30032))
 
                             if switchAborted: handler.notifyLog('Channelswitch cancelled by user')
                             else:

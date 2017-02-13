@@ -1,5 +1,9 @@
 CHANGELOG
 
+2.0.2
+- create settings path if not exists. This avoids IOExceptions when writing timers and the addon
+  wasn't configured yet.
+
 2.0.1
 - Profile paths for timer.json considered
 
