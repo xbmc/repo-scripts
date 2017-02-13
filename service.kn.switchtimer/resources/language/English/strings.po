@@ -115,11 +115,15 @@ msgid "Please use the PVR OSD Guide context menue to set or reset switch timers"
 msgstr ""
 
 msgctxt "#30031"
-msgid "Timer for this time already set (%s, %s). Would You replace this timer with new new one instead?"
+msgid "Timer for this time already set (%s, %s). Would You replace this timer with the new one instead?"
+msgstr ""
+
+msgctxt "#30032"
+msgid "Channel Switch aborted"
 msgstr ""
 
 #Labels
-#empty strings from id 30032 to 30039
+#empty strings from id 30033 to 30039
 
 msgctxt "#30040"
 msgid "Add switchtimer"

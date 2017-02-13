@@ -2,10 +2,10 @@
 <settings>
     <!-- Service Addon settings -->
     <setting id="showNoticeBeforeSw" type="bool" label="30001" default="true" />
-    <setting id="dispTime" type="labelenum" label="30002" values="3 sec|4 sec|5 sec|6 sec|7 sec|8 sec|9 sec|10 sec|20 sec|30 sec" default="5 sec" enable="eq(-1,true)" />
+    <setting id="dispTime" type="labelenum" label="30002" values="3 sec|4 sec|5 sec|6 sec|7 sec|8 sec|9 sec|10 sec|15 sec|20 sec" default="5 sec" enable="eq(-1,true)" />
     <setting id="useCountdownTimer" type="bool" label="30012" default="false" enable="eq(-2,true)" />
     <setting id="confirmTmrAdded" type="bool" label="30003" default="true" />
-    <setting id="discardOldTmr" type="labelenum" label="30004" values="5 min|10 min|15 min|20 min|30 min|45 min|60 min|120 min" default="10 min" />
+    <setting id="discardOldTmr" type="labelenum" label="30004" values="5 min|10 min|15 min|20 min|30 min|45 min|60 min|90 min" default="10 min" />
     <setting type="sep" />
     <setting type="action" label="30011" action="RunScript(service.kn.switchtimer,action=delall)" option="close" />
 </settings>
