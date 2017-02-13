@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- Galician language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/gl/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
+<strings>
+    <string id="30000">Actualización automática da biblioteca de XBMC</string>
+    <string id="30001">Xeral</string>
+    <string id="30002">Vídeo</string>
+    <string id="30003">Música</string>
+    <string id="30004">Actualizar biblioteca de vídeo</string>
+    <string id="30005">Actualizar biblioteca de música</string>
+    <string id="30006">Amosar Notificacións</string>
+    <string id="30007">Executar durante a reprodución</string>
+    <string id="30008">Atraso antes de Iniciar (minutos)</string>
+    <string id="30009">Usar Temporizador Avanzado</string>
+    <string id="30010">Tempo entre actualizacións (horas)</string>
+    <string id="30011">Expresión Cron</string>
+    <string id="30012">Actualizar biblioteca de vídeo</string>
+    <string id="30013">Actualizar biblioteca de música</string>
+    <string id="30014">Executar só cando estea inactivo</string>
+
+    <!-- specific paths -->
+    <string id="30020">Actualizar Camiño Especifico 1</string>
+    <string id="30021">Actualizar Camiño Especifico 2</string>
+    <string id="30022">Actualizar Camiño Especifico 3</string>
+    <string id="30023">Camiño do Vídeo</string>
+
+    <!-- disclaimer -->
+    <string id="30030">Ler o Aviso Legal</string>
+    <string id="30031">Aviso Legal dos Camiños de Vídeo</string>
+    <string id="30032">O camiño ten de corresponder a unha fonte de vídeo con contido</string>
+    <string id="30033">O camiño ten de coincidir ca fonte para buscar</string>
+
+    <!-- cleaning -->
+    <string id="30040">Limpando</string>
+    <string id="30041">Limpar Bibliotecas</string>
+    <string id="30042">Verificar fontes antes de limpar</string>
+    <string id="30043">Frecuencia</string>
+    <string id="30044">Despois da actualización</string>
+    <string id="30045">Unha vez ao día</string>
+    <string id="30046">Unha vez á semana</string>
+    <string id="30047">Unha vez por mes</string>
+    <string id="30048">Limpar biblioteca de vídeo</string>
+    <string id="30049">Limpar biblioteca de música</string>
+    <string id="30050">Houbo un erro ao limpar a Base de datos</string>
+    <string id="30051">Preguntar ao usuario antes de limpar a biblioteca</string>
+    <string id="30052">A limpeza da base de datos está programada para executarse</string>
+    <string id="30053">Quere executalo agora?</string>
+    <string id="30054">Biblioteca a limpar</string>
+    <string id="30055">Ambos</string>
+    <string id="30056">Expresión Cron de Vídeo</string>
+    <string id="30057">Expresión Cron de Música</string>
+
+    <!-- manual run -->
+    <string id="30060">A actualización executarase de novo</string>
+    <string id="30061">Quere executar manualmente unha actualización?</string>
+</strings>

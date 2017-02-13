@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- Slovak language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/sk/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
+<strings>
+    <string id="30000">Automatická aktualizácia XBMC knižnice</string>
+    <string id="30001">Všeobecné</string>
+    <string id="30002">Video</string>
+    <string id="30003">Hudba</string>
+    <string id="30004">Aktualizovať Video knižnicu</string>
+    <string id="30005">Aktualizovať Hudobnú knižnicu</string>
+    <string id="30006">Ukázať notifikácie</string>
+    <string id="30007">Spustiť počas prehrávania</string>
+    <string id="30008">Odklad štartu (minúty)</string>
+    <string id="30009">Použiť Pokročilý časovač</string>
+    <string id="30010">Čas medzi aktualizáciami (hodiny)</string>
+    <string id="30011">Zadanie v Cron formáte</string>
+    <string id="30012">Aktualizovať Video knižnicu</string>
+    <string id="30013">Aktualizovať Hudobnú knižnicu</string>
+
+    <!-- specific paths -->
+    <string id="30020">Aktualizovať špecifickú cestu 1</string>
+    <string id="30021">Aktualizovať špecifickú cestu 2</string>
+    <string id="30022">Aktualizovať špecifickú cestu 3</string>
+    <string id="30023">Video cesta</string>
+
+    <!-- disclaimer -->
+    <string id="30030">Prečítať odvolanie</string>
+    <string id="30031">Odvolanie pre Video cestu</string>
+    <string id="30032">Zadaná cesta musí byť (neprázdnym) Zdrojom Videa </string>
+    <string id="30033">Pre aktualizáciu sa zadaná cesta musí zhodovať s cestou Zdroja</string>
+
+    <!-- cleaning -->
+    <string id="30040">Čistenie</string>
+    <string id="30041">Čistenie Knižníc</string>
+    <string id="30042">Overiť Zdroje pred aktualizáciou</string>
+    <string id="30043">Frekvencia</string>
+    <string id="30044">Po aktualizácii</string>
+    <string id="30045">Raz za deň</string>
+    <string id="30046">Raz za týždeň</string>
+    <string id="30047">Raz za mesiac</string>
+    <string id="30048">Vyčistiť Video knižnicu</string>
+    <string id="30049">Vyčistiť Hudobnú knižnicu</string>
+    <string id="30050">Chyba pri čistení databázy</string>
+    <string id="30051">Vyzvať užívateľa pred čistením knižnice</string>
+    <string id="30052">Je naplánované spustenie čistenia databázy</string>
+    <string id="30053">Chceli by ste ho spustiť teraz?</string>
+    <string id="30054">Vyčistiť knižnicu</string>
+    <string id="30055">Oboje</string>
+    <string id="30056">Cron výraz pre Video</string>
+    <string id="30057">Cron výraz pre Hudbu</string>
+
+    <!-- manual run -->
+    <string id="30060">Aktualizácia bude znovu spustená</string>
+    <string id="30061">Prajete si manuálne spustiť aktualizáciu?</string>
+</strings>

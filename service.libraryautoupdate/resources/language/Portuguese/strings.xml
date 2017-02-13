@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- Portuguese language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/pt/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
+<strings>
+    <string id="30000">Auto-actualizar biblioteca do XBMC</string>
+    <string id="30001">Geral</string>
+    <string id="30002">Vídeo</string>
+    <string id="30003">Música</string>
+    <string id="30004">Actualizar Biblioteca de Vídeo</string>
+    <string id="30005">Actualizar Biblioteca de Música</string>
+    <string id="30006">Exibir Notificações</string>
+    <string id="30007">Executar durante reprodução</string>
+    <string id="30008">Atraso da iniciação (em minutos)</string>
+    <string id="30009">Uso de Temporizador Avançado</string>
+    <string id="30010">Tempo entre actualizações (em horas)</string>
+    <string id="30011">Expressão Cron</string>
+    <string id="30012">Actualizar Biblioteca de Vídeo</string>
+    <string id="30013">Actualizar Biblioteca de Música</string>
+    <string id="30014">Executar apenas quando inactivo</string>
+
+    <!-- specific paths -->
+    <string id="30020">Actualizar Localização Específica 1</string>
+    <string id="30021">Actualizar Localização Específica 2</string>
+    <string id="30022">Actualizar Localização Específica 3</string>
+    <string id="30023">Localização de Vídeo</string>
+
+    <!-- disclaimer -->
+    <string id="30030">Ler o Documento de Responsabilidade</string>
+    <string id="30031">Documento de Responsabilidade das Localizações Vídeo</string>
+    <string id="30032">A localização tem de corresponder a uma fonte de vídeo com conteúdos</string>
+    <string id="30033">A localização deve corresponder exactamente à fonte para procurar</string>
+
+    <!-- cleaning -->
+    <string id="30040">Limpeza</string>
+    <string id="30041">Limpar Bibliotecas</string>
+    <string id="30042">Verificar Fontes Antes de Limpar</string>
+    <string id="30043">Frequência</string>
+    <string id="30044">Após Actualização</string>
+    <string id="30045">Uma vez por dia</string>
+    <string id="30046">Uma vez por semana</string>
+    <string id="30047">Uma vez por mês</string>
+    <string id="30048">Limpar Biblioteca de Vídeo</string>
+    <string id="30049">Limpar Biblioteca de Música</string>
+    <string id="30050">Erro ao limpar a base de dados</string>
+    <string id="30051">Perguntar ao Utilizador Antes de Limpar Biblioteca</string>
+    <string id="30052">Uma limpeza de biblioteca está agendada.</string>
+    <string id="30053">Quer executá-la agora?</string>
+    <string id="30054">Biblioteca a limpar</string>
+    <string id="30055">Ambos</string>
+    <string id="30056">Expressão Cron de vídeo</string>
+    <string id="30057">Expressão Cron de música</string>
+
+    <!-- manual run -->
+    <string id="30060">A biblioteca voltará a ser actualizada</string>
+    <string id="30061">Quer iniciar manualmente uma actualização?</string>
+</strings>

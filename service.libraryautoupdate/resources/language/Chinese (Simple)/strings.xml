@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- Chinese (Simple) language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/zh/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
+<strings>
+    <string id="30000">XBMC资料库自动更新</string>
+    <string id="30001">常用</string>
+    <string id="30002">视频</string>
+    <string id="30003">音乐</string>
+    <string id="30004">更新视频资料库</string>
+    <string id="30005">更新音乐资料库</string>
+    <string id="30006">显示通知</string>
+    <string id="30007">播放时更新</string>
+    <string id="30008">延迟启动（分）</string>
+    <string id="30009">使用过的高级定时器</string>
+    <string id="30010">更新的间隔（小时）</string>
+    <string id="30011">Cron表达式</string>
+    <string id="30012">更新视频资料库</string>
+    <string id="30013">更新音乐资料库</string>
+
+    <!-- specific paths -->
+    <string id="30020">更新指定的路径 1</string>
+    <string id="30021">更新指定的路径 2</string>
+    <string id="30022">更新指定的路径 3</string>
+    <string id="30023">视频路径</string>
+
+    <!-- disclaimer -->
+    <string id="30030">读取免责声明</string>
+    <string id="30031">视频路径免责声明</string>
+    <string id="30032">路径必须是一个有内容的视频源</string>
+    <string id="30033">路径</string>
+
+    <!-- cleaning -->
+    <string id="30040">清理中</string>
+    <string id="30041">清理资料库</string>
+    <string id="30042">清理前验证来源</string>
+    <string id="30043">频率</string>
+    <string id="30044">更新后</string>
+    <string id="30045">每天一次</string>
+    <string id="30046">每周一次</string>
+    <string id="30047">每月一次</string>
+    <string id="30048">清理视频资料</string>
+    <string id="30049">清理音乐资料库</string>
+    <string id="30050">清理资料库发生错误</string>
+    <string id="30051">清理资料库前提示用户</string>
+    <string id="30052">已设定一个数据库清理任务</string>
+    <string id="30053">您想限制运行它吗？</string>
+    <string id="30054">要清理的资料库</string>
+    <string id="30055">两者都</string>
+    <string id="30056">视频Cron表达式</string>
+    <string id="30057">音乐Cron表达式</string>
+
+    <!-- manual run -->
+    <string id="30060">会再次更新</string>
+    <string id="30061">您愿意手动更新？</string>
+</strings>

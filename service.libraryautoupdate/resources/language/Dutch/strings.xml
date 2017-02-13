@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- Dutch language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/nl/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
+<strings>
+    <string id="30000">XBMC bibiliotheek automatisch bijwerken</string>
+    <string id="30001">Algemeen</string>
+    <string id="30002">Video</string>
+    <string id="30003">Muziek</string>
+    <string id="30004">Video bibliotheek bijwerken</string>
+    <string id="30005">Muziek bibliotheek bijwerken</string>
+    <string id="30006">Toon meldingen</string>
+    <string id="30007">Uitvoeren tijdens afspelen</string>
+    <string id="30008">Uitstel bij opstarten (in minuten)</string>
+    <string id="30009">Uitgebreide timer gebruiken</string>
+    <string id="30010">Tijd tussen bijwerken (in uren)</string>
+    <string id="30011">Cron Expression</string>
+    <string id="30012">Video bibliotheek bijwerken</string>
+    <string id="30013">Muziek bibliotheek bijwerken</string>
+    <string id="30014">Alleen uitvoeren bij inactiviteit</string>
+
+    <!-- specific paths -->
+    <string id="30020">Bijwerken van specifieke loctaie 1</string>
+    <string id="30021">Bijwerken van specifieke locatie 2</string>
+    <string id="30022">Bijwerken van specifieke locatie 3</string>
+    <string id="30023">Video locatie</string>
+
+    <!-- disclaimer -->
+    <string id="30030">Disclaimer lezen</string>
+    <string id="30031">Video Locaties Disclaimer</string>
+    <string id="30032">Locatie moet al een video bron zijn met inhoud</string>
+    <string id="30033">Locatie moet exact overeenkomen met bronlocatie om te scannen</string>
+
+    <!-- cleaning -->
+    <string id="30040">Opschonen</string>
+    <string id="30041">Bibliotheek opschonen</string>
+    <string id="30042">Bronnen verifiëren voor opschoning</string>
+    <string id="30043">Frequentie</string>
+    <string id="30044">Na bijwerken</string>
+    <string id="30045">Dagelijks</string>
+    <string id="30046">Wekelijks</string>
+    <string id="30047">Maandelijks</string>
+    <string id="30048">Video bibliotheek opschonen</string>
+    <string id="30049">Muziek bibliotheek opschonen</string>
+    <string id="30050">Fout tijdens opschonen bibliotheek</string>
+    <string id="30051">Vragen voor opschonen bibliotheek</string>
+    <string id="30052">Een opschoning van de bibliotheek is gepland</string>
+    <string id="30053">Wil je de opschoning nu uitvoeren?</string>
+    <string id="30054">Op te schonen bibliotheek</string>
+    <string id="30055">Beide</string>
+    <string id="30056">Video Cron Mededeling</string>
+    <string id="30057">Muziek Cron Mededeling</string>
+
+    <!-- manual run -->
+    <string id="30060">Opnieuw bijwerken</string>
+    <string id="30061">Wil je manueel bijwerken?</string>
+</strings>
