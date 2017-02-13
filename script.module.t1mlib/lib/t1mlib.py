@@ -33,22 +33,7 @@ UTF8 = 'utf-8'
 class t1mAddon(object):
 
   def __init__(self, aName):
-    self.addon       = xbmcaddon.Addon('plugin.video.%s' % aName)
-    self.addonName   = self.addon.getAddonInfo('name')
-    self.localLang   = self.addon.getLocalizedString
-    self.homeDir     = self.addon.getAddonInfo('path').decode(UTF8)
-    self.addonIcon   = xbmc.translatePath(os.path.join(self.homeDir, 'icon.png'))
-    self.addonFanart = xbmc.translatePath(os.path.join(self.homeDir, 'fanart.jpg'))
-
-    self.defaultHeaders = httpHeaders
-    self.defaultVidStream = { 'codec': 'h264', 
-                              'width' : 1280, 
-                              'height' : 720, 
-                              'aspect' : 1.78 }
-
-    self.defaultAudStream = { 'codec': 'aac', 'language' : 'en'}
-    self.defaultSubStream = { 'language' : 'en'}
-
+    return('')
 
   def log(self, txt):
     try:
@@ -58,137 +43,59 @@ class t1mAddon(object):
       pass
 
 
-  def getRequest(self, url, udata=None, headers = httpHeaders, dopost = False):
-    self.log("getRequest URL:"+str(url))
-    req = urllib2.Request(url.encode(UTF8), udata, headers)  
-    if dopost == True:
-       method = "POST"
-       req.get_method = lambda: method
-    try:
-      response = urllib2.urlopen(req)
-      page = response.read()
-      if response.info().getheader('Content-Encoding') == 'gzip':
-         self.log("Content Encoding == gzip")
-         page = zlib.decompress(page, zlib.MAX_WBITS + 16)
-    except:
-      page = ""
-    return(page)
+  def getRequest(self, url, udata=None, headers = httpHeaders, dopost = False, rmethod = None):
+    return('')
 
   def getAddonMeta(self):
-    if self.addon.getSetting('enable_meta') != 'true': return({})
-    profile = self.addon.getAddonInfo('profile').decode(UTF8)
-    pdir  = xbmc.translatePath(os.path.join(profile))
-    if not os.path.isdir(pdir):
-      os.makedirs(pdir)
-    self.metafile = xbmc.translatePath(os.path.join(profile, 'meta.json'))
-    meta = {}
-    if self.addon.getSetting('init_meta') != 'true':
-      try:
-         with open(self.metafile) as infile:
-             meta = json.load(infile)
-      except: pass
-    return(meta)
+    return('')
 
   def updateAddonMeta(self, meta):
-    if self.addon.getSetting('enable_meta') != 'true': return
-    with open(self.metafile, 'w') as outfile:
-        json.dump(meta, outfile)
-    outfile.close()
-    self.addon.setSetting(id='init_meta', value='false')
+
       
   def addMenuItem(self, name, mode, ilist=[], url=None, thumb=None, fanart=None, 
                   videoInfo={}, videoStream=None, audioStream=None,
                   subtitleStream=None, cm=None, isFolder=True ):
-      videoStream = self.defaultVidStream
-      audioStream = self.defaultAudStream
-      subtitleStream = self.defaultSubStream
-      liz=xbmcgui.ListItem(name)
-      liz.setArt({'thumb': thumb, 'fanart': fanart})
-      liz.setInfo( 'Video', videoInfo)
-      liz.addStreamInfo('video', videoStream)
-      liz.addStreamInfo('audio', audioStream)
-      liz.addStreamInfo('subtitle', subtitleStream)
-      if cm != None : liz.addContextMenuItems(cm)
-      if not isFolder: liz.setProperty('IsPlayable', 'true')
-#      u = '%s?mode=%s&name=%s' % (sys.argv[0], mode, qp(name.encode(UTF8,errors='ignore')))
-      u = '%s?mode=%s' % (sys.argv[0], mode)
-
-      if url != None: u = u+'&url=%s' % qp(url)
-      ilist.append((u, liz, isFolder))
-      return(ilist)
+      return('')
 
 #override or extend these functions in the specific addon default.py
 
   def getAddonMenu(self,url,ilist):
-      return(ilist)
+      return('')
 
   def getAddonCats(self,url,ilist):
-      return(ilist)
+      return('')
 
   def getAddonMovies(self,url,ilist):
-      return(ilist)
+      return('')
 
   def getAddonShows(self,url,ilist):
       ilist = []
-      return(ilist)
+      return('')
 
   def getAddonEpisodes(self,url,ilist):
       ilist = []
-      return(ilist)
+      return('')
 
   def getAddonVideo(self, url):
-      u = uqp(url)
-      xbmcplugin.setResolvedUrl(int(sys.argv[1]), True, xbmcgui.ListItem(path = u))
+      return('')
 
   def doFunction(self,url):
-      return
+      return('')
 
 
 #internal functions for views, cache and directory management
 
   def procDir(self, dirFunc, url, contentType='files', viewType='default_view', cache2Disc=True):
-      ilist = []
-      xbmcplugin.setContent(int(sys.argv[1]), contentType)
-      xbmcplugin.addSortMethod(int(sys.argv[1]),xbmcplugin.SORT_METHOD_UNSORTED)
-      xbmcplugin.addSortMethod(int(sys.argv[1]),xbmcplugin.SORT_METHOD_TITLE)
-      xbmcplugin.addSortMethod(int(sys.argv[1]),xbmcplugin.SORT_METHOD_EPISODE)
-
-      ilist = dirFunc(url, ilist)
-      if len(ilist) > 0:
-         xbmcplugin.addDirectoryItems(int(sys.argv[1]), ilist, len(ilist))
-         if self.addon.getSetting('enable_views') == 'true':
-           xbmc.executebuiltin("Container.SetViewMode(%s)" % self.addon.getSetting(viewType))
-         xbmcplugin.endOfDirectory(int(sys.argv[1]), cacheToDisc=cache2Disc)
+      return('')
 
   def getVideo(self,url):
-      self.getAddonVideo(url)
+      return('')
+          
+  def doResolve(self, liz, subtitles = []):
+      return('')
 
   def procConvertSubtitles(self, suburl):
-    subfile = ""
-    if (suburl != ""):
-      profile = self.addon.getAddonInfo('profile').decode(UTF8)
-      prodir  = xbmc.translatePath(os.path.join(profile))
-      if not os.path.isdir(prodir):
-         os.makedirs(prodir)
-
-      pg = self.getRequest(suburl)
-      if pg != "":
-       try:
-        subfile = xbmc.translatePath(os.path.join(profile, 'subtitles.srt'))
-        ofile = open(subfile, 'w+')
-        captions = re.compile('<p begin="(.+?)" end="(.+?)">(.+?)</p>',re.DOTALL).findall(pg)
-        for idx, (cstart, cend, caption) in list(enumerate(captions, start=1)):
-          cstart = cstart.replace('.',',')
-          cend   = cend.replace('.',',').split('"',1)[0]
-          caption = caption.replace('<br/>','\n').strip()
-          try:    caption = h.unescape(caption)
-          except: pass
-          caption = caption.replace('&apos;', "'").replace('\n\n','\n')
-          ofile.write( '%s\n%s --> %s\n%s\n\n' % (idx, cstart, cend, caption))
-        ofile.close()
-       except: subfile = ""
-    return subfile   
-
+      return('')
 
   def getAddonParms(self):
     parms = {}

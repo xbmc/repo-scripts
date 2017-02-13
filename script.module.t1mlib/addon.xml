@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8' standalone='yes'?>
-<addon id="script.module.t1mlib" name="t1m Library Routines" provider-name="t1m" version="1.0.15">
+<addon id="script.module.t1mlib" name="t1m Library Routines" provider-name="t1m" version="1.4.44">
   <requires>
     <import addon="xbmc.python" version="2.20.0" />
   </requires>
@@ -15,5 +15,6 @@
         <forum>http://forum.kodi.tv/showthread.php?tid=247163</forum>
         <source>https://github.com/learningit/Kodi-plugins-source/tree/master/script.module.t1mlib</source>
         <language></language>
+        <broken>This Add-on is no longer supported by the original author</broken>
    </extension>
 </addon>

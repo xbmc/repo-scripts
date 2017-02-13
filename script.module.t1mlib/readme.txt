@@ -3,6 +3,7 @@ script.module.t1mlib
 
 Library of support routines for t1m addons
 
+V1.0.18 increased urlopen timeout for Kodi 17 on Android
 V1.0.15 change default cacheToDisc parm to False
 V1.0.14 another unicode fix
 V1.0.13 fix outfile.close()
