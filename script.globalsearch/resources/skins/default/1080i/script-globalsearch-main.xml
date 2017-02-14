@@ -43,7 +43,7 @@
 				<width>1920</width>
 				<height>1080</height>
 				<aspectratio>scale</aspectratio>
-				<texture colordiffuse="FF006699">globalsearch-background.jpg</texture>
+				<texture colordiffuse="FF0E597E">globalsearch-background.jpg</texture>
 			</control>
 			<control type="image">
 				<left>0</left>
@@ -51,7 +51,7 @@
 				<width>1920</width>
 				<height>1080</height>
 				<aspectratio>scale</aspectratio>
-				<texture colordiffuse="4D24CCA2">globalsearch-overlay.png</texture>
+				<texture colordiffuse="330BAA8E">globalsearch-overlay.png</texture>
 			</control>
 			<control type="image">
 				<left>0</left>
@@ -202,7 +202,7 @@
 					<top>1</top>
 					<width>118</width>
 					<height>118</height>
-					<texture colordiffuse="FF12B2E7">globalsearch-roundbutton.png</texture>
+					<texture colordiffuse="FF12A0C7">globalsearch-roundbutton.png</texture>
 					<visible>Control.HasFocus(198)</visible>
 				</control>
 				<control type="image">
@@ -293,7 +293,7 @@
 									<top>0</top>
 									<width>462</width>
 									<height>95</height>
-									<texture colordiffuse="FF12B2E7">globalsearch-focus.png</texture>
+									<texture colordiffuse="FF12A0C7">globalsearch-focus.png</texture>
 									<animation effect="fade" start="100" end="0" time="0" condition="!Control.HasFocus(9000)">Conditional</animation>
 								</control>
 								<control type="image">
@@ -301,7 +301,7 @@
 									<top>1</top>
 									<width>95</width>
 									<height>95</height>
-									<texture colordiffuse="FF12B2E7">$INFO[ListItem.Art(thumb)]</texture>
+									<texture colordiffuse="FF12A0C7">$INFO[ListItem.Art(thumb)]</texture>
 									<animation effect="fade" start="0" end="100" time="300" reversible="false">Focus</animation>
 								</control>
 								<control type="image">
@@ -469,7 +469,7 @@
 										<width>36</width>
 										<height>36</height>
 										<aspectratio>keep</aspectratio>
-										<texture colordiffuse="FF12B2E7">globalsearch-list-circle.png</texture>
+										<texture colordiffuse="FF12A0C7">globalsearch-list-circle.png</texture>
 									</control>
 									<control type="label">
 										<top>6</top>
@@ -522,7 +522,7 @@
 											<width>36</width>
 											<height>36</height>
 											<aspectratio>keep</aspectratio>
-											<texture colordiffuse="FF12B2E7">globalsearch-list-circle.png</texture>
+											<texture colordiffuse="FF12A0C7">globalsearch-list-circle.png</texture>
 										</control>
 										<control type="label">
 											<top>6</top>
@@ -546,7 +546,7 @@
 										<left>1</left>
 										<width>220</width>
 										<height>330</height>
-										<texture border="8" colordiffuse="FF12B2E7">globalsearch-thumbnail-focus.png</texture>
+										<texture border="8" colordiffuse="FF12A0C7">globalsearch-thumbnail-focus.png</texture>
 									</control>
 								</control>
 								<control type="image">
@@ -555,7 +555,7 @@
 									<width>70</width>
 									<height>330</height>
 									<fadetime>300</fadetime>
-									<texture colordiffuse="FF12B2E7">globalsearch-white.png</texture>
+									<texture colordiffuse="FF12A0C7">globalsearch-white.png</texture>
 									<animation effect="zoom" start="0,100" end="100,100" time="250" center="auto">Focus</animation>
 									<animation effect="zoom" start="100,100" end="0,100" time="125" center="auto" delay="50">UnFocus</animation>
 								</control>
@@ -637,8 +637,8 @@
 								<top>-38</top>
 								<width>48</width>
 								<height>24</height>
-								<texturefocus colordiffuse="FF12B2E7" flipy="true">globalsearch-arrowdown.png</texturefocus>
-								<texturenofocus colordiffuse="FF12B2E7" flipy="true">globalsearch-arrowdown.png</texturenofocus>
+								<texturefocus colordiffuse="FF12A0C7" flipy="true">globalsearch-arrowdown.png</texturefocus>
+								<texturenofocus colordiffuse="FF12A0C7" flipy="true">globalsearch-arrowdown.png</texturenofocus>
 								<animation effect="zoom" start="100,0" end="100,100" center="auto" time="200" delay="10">VisibleChange</animation>
 								<animation effect="zoom" start="100,0" end="100,100" delay="500" center="auto" time="200">WindowOpen</animation>
 								<animation effect="zoom" start="100,100" end="100,0" center="auto" time="200">WindowClose</animation>
@@ -652,8 +652,8 @@
 								<top>738</top>
 								<width>48</width>
 								<height>24</height>
-								<texturefocus colordiffuse="FF12B2E7">globalsearch-arrowdown.png</texturefocus>
-								<texturenofocus colordiffuse="FF12B2E7">globalsearch-arrowdown.png</texturenofocus>
+								<texturefocus colordiffuse="FF12A0C7">globalsearch-arrowdown.png</texturefocus>
+								<texturenofocus colordiffuse="FF12A0C7">globalsearch-arrowdown.png</texturenofocus>
 								<animation effect="zoom" start="100,0" end="100,100" center="auto" time="200" delay="10">VisibleChange</animation>
 								<animation effect="zoom" start="100,0" end="100,100" delay="500" center="auto" time="200">WindowOpen</animation>
 								<animation effect="zoom" start="100,100" end="100,0" center="auto" time="200">WindowClose</animation>
@@ -686,7 +686,7 @@
 								<width>54</width>
 								<height>44</height>
 								<aspectratio>keep</aspectratio>
-								<texture colordiffuse="FF12B2E7">globalsearch-itemcount.png</texture>
+								<texture colordiffuse="FF12A0C7">globalsearch-itemcount.png</texture>
 								<animation effect="fade" time="200">VisibleChange</animation>
 								<xvisible>!IsEmpty(Container(111).NumItems)</xvisible>
 							</control>
@@ -794,7 +794,7 @@
 										<width>36</width>
 										<height>36</height>
 										<aspectratio>keep</aspectratio>
-										<texture colordiffuse="FF12B2E7">globalsearch-list-circle.png</texture>
+										<texture colordiffuse="FF12A0C7">globalsearch-list-circle.png</texture>
 									</control>
 									<control type="label">
 										<top>6</top>
@@ -847,7 +847,7 @@
 											<width>36</width>
 											<height>36</height>
 											<aspectratio>keep</aspectratio>
-											<texture colordiffuse="FF12B2E7">globalsearch-list-circle.png</texture>
+											<texture colordiffuse="FF12A0C7">globalsearch-list-circle.png</texture>
 										</control>
 										<control type="label">
 											<top>6</top>
@@ -871,7 +871,7 @@
 										<left>1</left>
 										<width>220</width>
 										<height>330</height>
-										<texture border="8" colordiffuse="FF12B2E7">globalsearch-thumbnail-focus.png</texture>
+										<texture border="8" colordiffuse="FF12A0C7">globalsearch-thumbnail-focus.png</texture>
 									</control>
 								</control>
 								<control type="image">
@@ -880,7 +880,7 @@
 									<width>70</width>
 									<height>330</height>
 									<fadetime>300</fadetime>
-									<texture colordiffuse="FF12B2E7">globalsearch-white.png</texture>
+									<texture colordiffuse="FF12A0C7">globalsearch-white.png</texture>
 									<animation effect="zoom" start="0,100" end="100,100" time="250" center="auto">Focus</animation>
 									<animation effect="zoom" start="100,100" end="0,100" time="125" center="auto" delay="50">UnFocus</animation>
 								</control>
@@ -962,8 +962,8 @@
 								<top>-38</top>
 								<width>48</width>
 								<height>24</height>
-								<texturefocus colordiffuse="FF12B2E7" flipy="true">globalsearch-arrowdown.png</texturefocus>
-								<texturenofocus colordiffuse="FF12B2E7" flipy="true">globalsearch-arrowdown.png</texturenofocus>
+								<texturefocus colordiffuse="FF12A0C7" flipy="true">globalsearch-arrowdown.png</texturefocus>
+								<texturenofocus colordiffuse="FF12A0C7" flipy="true">globalsearch-arrowdown.png</texturenofocus>
 								<animation effect="zoom" start="100,0" end="100,100" center="auto" time="200" delay="10">VisibleChange</animation>
 								<animation effect="zoom" start="100,0" end="100,100" delay="500" center="auto" time="200">WindowOpen</animation>
 								<animation effect="zoom" start="100,100" end="100,0" center="auto" time="200">WindowClose</animation>
@@ -977,8 +977,8 @@
 								<top>738</top>
 								<width>48</width>
 								<height>24</height>
-								<texturefocus colordiffuse="FF12B2E7">globalsearch-arrowdown.png</texturefocus>
-								<texturenofocus colordiffuse="FF12B2E7">globalsearch-arrowdown.png</texturenofocus>
+								<texturefocus colordiffuse="FF12A0C7">globalsearch-arrowdown.png</texturefocus>
+								<texturenofocus colordiffuse="FF12A0C7">globalsearch-arrowdown.png</texturenofocus>
 								<animation effect="zoom" start="100,0" end="100,100" center="auto" time="200" delay="10">VisibleChange</animation>
 								<animation effect="zoom" start="100,0" end="100,100" delay="500" center="auto" time="200">WindowOpen</animation>
 								<animation effect="zoom" start="100,100" end="100,0" center="auto" time="200">WindowClose</animation>
@@ -1011,7 +1011,7 @@
 								<width>54</width>
 								<height>44</height>
 								<aspectratio>keep</aspectratio>
-								<texture colordiffuse="FF12B2E7">globalsearch-itemcount.png</texture>
+								<texture colordiffuse="FF12A0C7">globalsearch-itemcount.png</texture>
 								<animation effect="fade" time="200">VisibleChange</animation>
 								<xvisible>!IsEmpty(Container(121).NumItems)</xvisible>
 							</control>
@@ -1071,7 +1071,7 @@
 										<width>36</width>
 										<height>36</height>
 										<aspectratio>keep</aspectratio>
-										<texture colordiffuse="FF12B2E7">globalsearch-list-circle.png</texture>
+										<texture colordiffuse="FF12A0C7">globalsearch-list-circle.png</texture>
 									</control>
 									<control type="label">
 										<top>6</top>
@@ -1124,7 +1124,7 @@
 											<width>36</width>
 											<height>36</height>
 											<aspectratio>keep</aspectratio>
-											<texture colordiffuse="FF12B2E7">globalsearch-list-circle.png</texture>
+											<texture colordiffuse="FF12A0C7">globalsearch-list-circle.png</texture>
 										</control>
 										<control type="label">
 											<top>6</top>
@@ -1148,7 +1148,7 @@
 										<left>1</left>
 										<width>220</width>
 										<height>330</height>
-										<texture border="8" colordiffuse="FF12B2E7">globalsearch-thumbnail-focus.png</texture>
+										<texture border="8" colordiffuse="FF12A0C7">globalsearch-thumbnail-focus.png</texture>
 									</control>
 								</control>
 								<control type="image">
@@ -1157,7 +1157,7 @@
 									<width>70</width>
 									<height>330</height>
 									<fadetime>300</fadetime>
-									<texture colordiffuse="FF12B2E7">globalsearch-white.png</texture>
+									<texture colordiffuse="FF12A0C7">globalsearch-white.png</texture>
 									<animation effect="zoom" start="0,100" end="100,100" time="250" center="auto">Focus</animation>
 									<animation effect="zoom" start="100,100" end="0,100" time="125" center="auto" delay="50">UnFocus</animation>
 								</control>
@@ -1239,8 +1239,8 @@
 								<top>-38</top>
 								<width>48</width>
 								<height>24</height>
-								<texturefocus colordiffuse="FF12B2E7" flipy="true">globalsearch-arrowdown.png</texturefocus>
-								<texturenofocus colordiffuse="FF12B2E7" flipy="true">globalsearch-arrowdown.png</texturenofocus>
+								<texturefocus colordiffuse="FF12A0C7" flipy="true">globalsearch-arrowdown.png</texturefocus>
+								<texturenofocus colordiffuse="FF12A0C7" flipy="true">globalsearch-arrowdown.png</texturenofocus>
 								<animation effect="zoom" start="100,0" end="100,100" center="auto" time="200" delay="10">VisibleChange</animation>
 								<animation effect="zoom" start="100,0" end="100,100" delay="500" center="auto" time="200">WindowOpen</animation>
 								<animation effect="zoom" start="100,100" end="100,0" center="auto" time="200">WindowClose</animation>
@@ -1254,8 +1254,8 @@
 								<top>738</top>
 								<width>48</width>
 								<height>24</height>
-								<texturefocus colordiffuse="FF12B2E7">globalsearch-arrowdown.png</texturefocus>
-								<texturenofocus colordiffuse="FF12B2E7">globalsearch-arrowdown.png</texturenofocus>
+								<texturefocus colordiffuse="FF12A0C7">globalsearch-arrowdown.png</texturefocus>
+								<texturenofocus colordiffuse="FF12A0C7">globalsearch-arrowdown.png</texturenofocus>
 								<animation effect="zoom" start="100,0" end="100,100" center="auto" time="200" delay="10">VisibleChange</animation>
 								<animation effect="zoom" start="100,0" end="100,100" delay="500" center="auto" time="200">WindowOpen</animation>
 								<animation effect="zoom" start="100,100" end="100,0" center="auto" time="200">WindowClose</animation>
@@ -1288,7 +1288,7 @@
 								<width>54</width>
 								<height>44</height>
 								<aspectratio>keep</aspectratio>
-								<texture colordiffuse="FF12B2E7">globalsearch-itemcount.png</texture>
+								<texture colordiffuse="FF12A0C7">globalsearch-itemcount.png</texture>
 								<animation effect="fade" time="200">VisibleChange</animation>
 								<xvisible>!IsEmpty(Container(131).NumItems)</xvisible>
 							</control>
@@ -1362,7 +1362,7 @@
 										<width>36</width>
 										<height>36</height>
 										<aspectratio>keep</aspectratio>
-										<texture colordiffuse="FF12B2E7">globalsearch-list-circle.png</texture>
+										<texture colordiffuse="FF12A0C7">globalsearch-list-circle.png</texture>
 									</control>
 									<control type="label">
 										<top>6</top>
@@ -1430,7 +1430,7 @@
 											<width>36</width>
 											<height>36</height>
 											<aspectratio>keep</aspectratio>
-											<texture colordiffuse="FF12B2E7">globalsearch-list-circle.png</texture>
+											<texture colordiffuse="FF12A0C7">globalsearch-list-circle.png</texture>
 										</control>
 										<control type="label">
 											<top>6</top>
@@ -1447,7 +1447,7 @@
 										<top>11</top>
 										<width>380</width>
 										<height>333</height>
-										<texture border="8" colordiffuse="FF12B2E7">globalsearch-thumbnail-focus.png</texture>
+										<texture border="8" colordiffuse="FF12A0C7">globalsearch-thumbnail-focus.png</texture>
 									</control>
 								</control>
 								<control type="image">
@@ -1456,7 +1456,7 @@
 									<width>70</width>
 									<height>330</height>
 									<fadetime>300</fadetime>
-									<texture colordiffuse="FF12B2E7">globalsearch-white.png</texture>
+									<texture colordiffuse="FF12A0C7">globalsearch-white.png</texture>
 									<animation effect="zoom" start="0,100" end="100,100" time="250" center="auto">Focus</animation>
 									<animation effect="zoom" start="100,100" end="0,100" time="125" center="auto" delay="50">UnFocus</animation>
 								</control>
@@ -1538,8 +1538,8 @@
 								<top>-38</top>
 								<width>48</width>
 								<height>24</height>
-								<texturefocus colordiffuse="FF12B2E7" flipy="true">globalsearch-arrowdown.png</texturefocus>
-								<texturenofocus colordiffuse="FF12B2E7" flipy="true">globalsearch-arrowdown.png</texturenofocus>
+								<texturefocus colordiffuse="FF12A0C7" flipy="true">globalsearch-arrowdown.png</texturefocus>
+								<texturenofocus colordiffuse="FF12A0C7" flipy="true">globalsearch-arrowdown.png</texturenofocus>
 								<animation effect="zoom" start="100,0" end="100,100" center="auto" time="200" delay="10">VisibleChange</animation>
 								<animation effect="zoom" start="100,0" end="100,100" delay="500" center="auto" time="200">WindowOpen</animation>
 								<animation effect="zoom" start="100,100" end="100,0" center="auto" time="200">WindowClose</animation>
@@ -1553,8 +1553,8 @@
 								<top>738</top>
 								<width>48</width>
 								<height>24</height>
-								<texturefocus colordiffuse="FF12B2E7">globalsearch-arrowdown.png</texturefocus>
-								<texturenofocus colordiffuse="FF12B2E7">globalsearch-arrowdown.png</texturenofocus>
+								<texturefocus colordiffuse="FF12A0C7">globalsearch-arrowdown.png</texturefocus>
+								<texturenofocus colordiffuse="FF12A0C7">globalsearch-arrowdown.png</texturenofocus>
 								<animation effect="zoom" start="100,0" end="100,100" center="auto" time="200" delay="10">VisibleChange</animation>
 								<animation effect="zoom" start="100,0" end="100,100" delay="500" center="auto" time="200">WindowOpen</animation>
 								<animation effect="zoom" start="100,100" end="100,0" center="auto" time="200">WindowClose</animation>
@@ -1587,7 +1587,7 @@
 								<width>54</width>
 								<height>44</height>
 								<aspectratio>keep</aspectratio>
-								<texture colordiffuse="FF12B2E7">globalsearch-itemcount.png</texture>
+								<texture colordiffuse="FF12A0C7">globalsearch-itemcount.png</texture>
 								<animation effect="fade" time="200">VisibleChange</animation>
 								<xvisible>!IsEmpty(Container(141).NumItems)</xvisible>
 							</control>
@@ -1709,7 +1709,7 @@
 										<width>36</width>
 										<height>36</height>
 										<aspectratio>keep</aspectratio>
-										<texture colordiffuse="FF12B2E7">globalsearch-list-circle.png</texture>
+										<texture colordiffuse="FF12A0C7">globalsearch-list-circle.png</texture>
 									</control>
 									<control type="label">
 										<top>6</top>
@@ -1777,7 +1777,7 @@
 											<width>36</width>
 											<height>36</height>
 											<aspectratio>keep</aspectratio>
-											<texture colordiffuse="FF12B2E7">globalsearch-list-circle.png</texture>
+											<texture colordiffuse="FF12A0C7">globalsearch-list-circle.png</texture>
 										</control>
 										<control type="label">
 											<top>6</top>
@@ -1794,7 +1794,7 @@
 										<top>11</top>
 										<width>380</width>
 										<height>333</height>
-										<texture border="8" colordiffuse="FF12B2E7">globalsearch-thumbnail-focus.png</texture>
+										<texture border="8" colordiffuse="FF12A0C7">globalsearch-thumbnail-focus.png</texture>
 									</control>
 								</control>
 								<control type="image">
@@ -1803,7 +1803,7 @@
 									<width>70</width>
 									<height>330</height>
 									<fadetime>300</fadetime>
-									<texture colordiffuse="FF12B2E7">globalsearch-white.png</texture>
+									<texture colordiffuse="FF12A0C7">globalsearch-white.png</texture>
 									<animation effect="zoom" start="0,100" end="100,100" time="250" center="auto">Focus</animation>
 									<animation effect="zoom" start="100,100" end="0,100" time="125" center="auto" delay="50">UnFocus</animation>
 								</control>
@@ -1885,8 +1885,8 @@
 								<top>-38</top>
 								<width>48</width>
 								<height>24</height>
-								<texturefocus colordiffuse="FF12B2E7" flipy="true">globalsearch-arrowdown.png</texturefocus>
-								<texturenofocus colordiffuse="FF12B2E7" flipy="true">globalsearch-arrowdown.png</texturenofocus>
+								<texturefocus colordiffuse="FF12A0C7" flipy="true">globalsearch-arrowdown.png</texturefocus>
+								<texturenofocus colordiffuse="FF12A0C7" flipy="true">globalsearch-arrowdown.png</texturenofocus>
 								<animation effect="zoom" start="100,0" end="100,100" center="auto" time="200" delay="10">VisibleChange</animation>
 								<animation effect="zoom" start="100,0" end="100,100" delay="500" center="auto" time="200">WindowOpen</animation>
 								<animation effect="zoom" start="100,100" end="100,0" center="auto" time="200">WindowClose</animation>
@@ -1900,8 +1900,8 @@
 								<top>738</top>
 								<width>48</width>
 								<height>24</height>
-								<texturefocus colordiffuse="FF12B2E7">globalsearch-arrowdown.png</texturefocus>
-								<texturenofocus colordiffuse="FF12B2E7">globalsearch-arrowdown.png</texturenofocus>
+								<texturefocus colordiffuse="FF12A0C7">globalsearch-arrowdown.png</texturefocus>
+								<texturenofocus colordiffuse="FF12A0C7">globalsearch-arrowdown.png</texturenofocus>
 								<animation effect="zoom" start="100,0" end="100,100" center="auto" time="200" delay="10">VisibleChange</animation>
 								<animation effect="zoom" start="100,0" end="100,100" delay="500" center="auto" time="200">WindowOpen</animation>
 								<animation effect="zoom" start="100,100" end="100,0" center="auto" time="200">WindowClose</animation>
@@ -1934,7 +1934,7 @@
 								<width>54</width>
 								<height>44</height>
 								<aspectratio>keep</aspectratio>
-								<texture colordiffuse="FF12B2E7">globalsearch-itemcount.png</texture>
+								<texture colordiffuse="FF12A0C7">globalsearch-itemcount.png</texture>
 								<animation effect="fade" time="200">VisibleChange</animation>
 								<xvisible>!IsEmpty(Container(151).NumItems)</xvisible>
 							</control>
@@ -2045,7 +2045,7 @@
 										<width>36</width>
 										<height>36</height>
 										<aspectratio>keep</aspectratio>
-										<texture colordiffuse="FF12B2E7">globalsearch-list-circle.png</texture>
+										<texture colordiffuse="FF12A0C7">globalsearch-list-circle.png</texture>
 									</control>
 									<control type="label">
 										<top>6</top>
@@ -2102,7 +2102,7 @@
 											<width>36</width>
 											<height>36</height>
 											<aspectratio>keep</aspectratio>
-											<texture colordiffuse="FF12B2E7">globalsearch-list-circle.png</texture>
+											<texture colordiffuse="FF12A0C7">globalsearch-list-circle.png</texture>
 										</control>
 										<control type="label">
 											<top>6</top>
@@ -2119,7 +2119,7 @@
 										<top>11</top>
 										<width>300</width>
 										<height>300</height>
-										<texture border="8" colordiffuse="FF12B2E7">globalsearch-thumbnail-focus.png</texture>
+										<texture border="8" colordiffuse="FF12A0C7">globalsearch-thumbnail-focus.png</texture>
 									</control>
 								</control>
 								<control type="image">
@@ -2128,7 +2128,7 @@
 									<width>70</width>
 									<height>300</height>
 									<fadetime>300</fadetime>
-									<texture colordiffuse="FF12B2E7">globalsearch-white.png</texture>
+									<texture colordiffuse="FF12A0C7">globalsearch-white.png</texture>
 									<animation effect="zoom" start="0,100" end="100,100" time="250" center="auto">Focus</animation>
 									<animation effect="zoom" start="100,100" end="0,100" time="125" center="auto" delay="50">UnFocus</animation>
 								</control>
@@ -2191,8 +2191,8 @@
 								<top>-38</top>
 								<width>48</width>
 								<height>24</height>
-								<texturefocus colordiffuse="FF12B2E7" flipy="true">globalsearch-arrowdown.png</texturefocus>
-								<texturenofocus colordiffuse="FF12B2E7" flipy="true">globalsearch-arrowdown.png</texturenofocus>
+								<texturefocus colordiffuse="FF12A0C7" flipy="true">globalsearch-arrowdown.png</texturefocus>
+								<texturenofocus colordiffuse="FF12A0C7" flipy="true">globalsearch-arrowdown.png</texturenofocus>
 								<animation effect="zoom" start="100,0" end="100,100" center="auto" time="200" delay="10">VisibleChange</animation>
 								<animation effect="zoom" start="100,0" end="100,100" delay="500" center="auto" time="200">WindowOpen</animation>
 								<animation effect="zoom" start="100,100" end="100,0" center="auto" time="200">WindowClose</animation>
@@ -2206,8 +2206,8 @@
 								<top>738</top>
 								<width>48</width>
 								<height>24</height>
-								<texturefocus colordiffuse="FF12B2E7">globalsearch-arrowdown.png</texturefocus>
-								<texturenofocus colordiffuse="FF12B2E7">globalsearch-arrowdown.png</texturenofocus>
+								<texturefocus colordiffuse="FF12A0C7">globalsearch-arrowdown.png</texturefocus>
+								<texturenofocus colordiffuse="FF12A0C7">globalsearch-arrowdown.png</texturenofocus>
 								<animation effect="zoom" start="100,0" end="100,100" center="auto" time="200" delay="10">VisibleChange</animation>
 								<animation effect="zoom" start="100,0" end="100,100" delay="500" center="auto" time="200">WindowOpen</animation>
 								<animation effect="zoom" start="100,100" end="100,0" center="auto" time="200">WindowClose</animation>
@@ -2240,7 +2240,7 @@
 								<width>54</width>
 								<height>44</height>
 								<aspectratio>keep</aspectratio>
-								<texture colordiffuse="FF12B2E7">globalsearch-itemcount.png</texture>
+								<texture colordiffuse="FF12A0C7">globalsearch-itemcount.png</texture>
 								<animation effect="fade" time="200">VisibleChange</animation>
 								<xvisible>!IsEmpty(Container(161).NumItems)</xvisible>
 							</control>
@@ -2314,7 +2314,7 @@
 										<width>36</width>
 										<height>36</height>
 										<aspectratio>keep</aspectratio>
-										<texture colordiffuse="FF12B2E7">globalsearch-list-circle.png</texture>
+										<texture colordiffuse="FF12A0C7">globalsearch-list-circle.png</texture>
 									</control>
 									<control type="label">
 										<top>6</top>
@@ -2382,7 +2382,7 @@
 											<width>36</width>
 											<height>36</height>
 											<aspectratio>keep</aspectratio>
-											<texture colordiffuse="FF12B2E7">globalsearch-list-circle.png</texture>
+											<texture colordiffuse="FF12A0C7">globalsearch-list-circle.png</texture>
 										</control>
 										<control type="label">
 											<top>6</top>
@@ -2399,7 +2399,7 @@
 										<top>11</top>
 										<width>300</width>
 										<height>300</height>
-										<texture border="8" colordiffuse="FF12B2E7">globalsearch-thumbnail-focus.png</texture>
+										<texture border="8" colordiffuse="FF12A0C7">globalsearch-thumbnail-focus.png</texture>
 									</control>
 								</control>
 								<control type="image">
@@ -2408,7 +2408,7 @@
 									<width>70</width>
 									<height>300</height>
 									<fadetime>300</fadetime>
-									<texture colordiffuse="FF12B2E7">globalsearch-white.png</texture>
+									<texture colordiffuse="FF12A0C7">globalsearch-white.png</texture>
 									<animation effect="zoom" start="0,100" end="100,100" time="250" center="auto">Focus</animation>
 									<animation effect="zoom" start="100,100" end="0,100" time="125" center="auto" delay="50">UnFocus</animation>
 								</control>
@@ -2471,8 +2471,8 @@
 								<top>-38</top>
 								<width>48</width>
 								<height>24</height>
-								<texturefocus colordiffuse="FF12B2E7" flipy="true">globalsearch-arrowdown.png</texturefocus>
-								<texturenofocus colordiffuse="FF12B2E7" flipy="true">globalsearch-arrowdown.png</texturenofocus>
+								<texturefocus colordiffuse="FF12A0C7" flipy="true">globalsearch-arrowdown.png</texturefocus>
+								<texturenofocus colordiffuse="FF12A0C7" flipy="true">globalsearch-arrowdown.png</texturenofocus>
 								<animation effect="zoom" start="100,0" end="100,100" center="auto" time="200" delay="10">VisibleChange</animation>
 								<animation effect="zoom" start="100,0" end="100,100" delay="500" center="auto" time="200">WindowOpen</animation>
 								<animation effect="zoom" start="100,100" end="100,0" center="auto" time="200">WindowClose</animation>
@@ -2486,8 +2486,8 @@
 								<top>738</top>
 								<width>48</width>
 								<height>24</height>
-								<texturefocus colordiffuse="FF12B2E7">globalsearch-arrowdown.png</texturefocus>
-								<texturenofocus colordiffuse="FF12B2E7">globalsearch-arrowdown.png</texturenofocus>
+								<texturefocus colordiffuse="FF12A0C7">globalsearch-arrowdown.png</texturefocus>
+								<texturenofocus colordiffuse="FF12A0C7">globalsearch-arrowdown.png</texturenofocus>
 								<animation effect="zoom" start="100,0" end="100,100" center="auto" time="200" delay="10">VisibleChange</animation>
 								<animation effect="zoom" start="100,0" end="100,100" delay="500" center="auto" time="200">WindowOpen</animation>
 								<animation effect="zoom" start="100,100" end="100,0" center="auto" time="200">WindowClose</animation>
@@ -2520,7 +2520,7 @@
 								<width>54</width>
 								<height>44</height>
 								<aspectratio>keep</aspectratio>
-								<texture colordiffuse="FF12B2E7">globalsearch-itemcount.png</texture>
+								<texture colordiffuse="FF12A0C7">globalsearch-itemcount.png</texture>
 								<animation effect="fade" time="200">VisibleChange</animation>
 								<xvisible>!IsEmpty(Container(171).NumItems)</xvisible>
 							</control>
@@ -2594,7 +2594,7 @@
 										<width>36</width>
 										<height>36</height>
 										<aspectratio>keep</aspectratio>
-										<texture colordiffuse="FF12B2E7">globalsearch-list-circle.png</texture>
+										<texture colordiffuse="FF12A0C7">globalsearch-list-circle.png</texture>
 									</control>
 									<control type="label">
 										<top>6</top>
@@ -2662,7 +2662,7 @@
 											<width>36</width>
 											<height>36</height>
 											<aspectratio>keep</aspectratio>
-											<texture colordiffuse="FF12B2E7">globalsearch-list-circle.png</texture>
+											<texture colordiffuse="FF12A0C7">globalsearch-list-circle.png</texture>
 										</control>
 										<control type="label">
 											<top>6</top>
@@ -2679,7 +2679,7 @@
 										<top>11</top>
 										<width>300</width>
 										<height>300</height>
-										<texture border="8" colordiffuse="FF12B2E7">globalsearch-thumbnail-focus.png</texture>
+										<texture border="8" colordiffuse="FF12A0C7">globalsearch-thumbnail-focus.png</texture>
 									</control>
 								</control>
 								<control type="image">
@@ -2688,7 +2688,7 @@
 									<width>70</width>
 									<height>300</height>
 									<fadetime>300</fadetime>
-									<texture colordiffuse="FF12B2E7">globalsearch-white.png</texture>
+									<texture colordiffuse="FF12A0C7">globalsearch-white.png</texture>
 									<animation effect="zoom" start="0,100" end="100,100" time="250" center="auto">Focus</animation>
 									<animation effect="zoom" start="100,100" end="0,100" time="125" center="auto" delay="50">UnFocus</animation>
 								</control>
@@ -2770,8 +2770,8 @@
 								<top>-38</top>
 								<width>48</width>
 								<height>24</height>
-								<texturefocus colordiffuse="FF12B2E7" flipy="true">globalsearch-arrowdown.png</texturefocus>
-								<texturenofocus colordiffuse="FF12B2E7" flipy="true">globalsearch-arrowdown.png</texturenofocus>
+								<texturefocus colordiffuse="FF12A0C7" flipy="true">globalsearch-arrowdown.png</texturefocus>
+								<texturenofocus colordiffuse="FF12A0C7" flipy="true">globalsearch-arrowdown.png</texturenofocus>
 								<animation effect="zoom" start="100,0" end="100,100" center="auto" time="200" delay="10">VisibleChange</animation>
 								<animation effect="zoom" start="100,0" end="100,100" delay="500" center="auto" time="200">WindowOpen</animation>
 								<animation effect="zoom" start="100,100" end="100,0" center="auto" time="200">WindowClose</animation>
@@ -2785,8 +2785,8 @@
 								<top>738</top>
 								<width>48</width>
 								<height>24</height>
-								<texturefocus colordiffuse="FF12B2E7">globalsearch-arrowdown.png</texturefocus>
-								<texturenofocus colordiffuse="FF12B2E7">globalsearch-arrowdown.png</texturenofocus>
+								<texturefocus colordiffuse="FF12A0C7">globalsearch-arrowdown.png</texturefocus>
+								<texturenofocus colordiffuse="FF12A0C7">globalsearch-arrowdown.png</texturenofocus>
 								<animation effect="zoom" start="100,0" end="100,100" center="auto" time="200" delay="10">VisibleChange</animation>
 								<animation effect="zoom" start="100,0" end="100,100" delay="500" center="auto" time="200">WindowOpen</animation>
 								<animation effect="zoom" start="100,100" end="100,0" center="auto" time="200">WindowClose</animation>
@@ -2819,7 +2819,7 @@
 								<width>54</width>
 								<height>44</height>
 								<aspectratio>keep</aspectratio>
-								<texture colordiffuse="FF12B2E7">globalsearch-itemcount.png</texture>
+								<texture colordiffuse="FF12A0C7">globalsearch-itemcount.png</texture>
 								<animation effect="fade" time="200">VisibleChange</animation>
 								<xvisible>!IsEmpty(Container(181).NumItems)</xvisible>
 							</control>
@@ -2879,7 +2879,7 @@
 										<width>36</width>
 										<height>36</height>
 										<aspectratio>keep</aspectratio>
-										<texture colordiffuse="FF12B2E7">globalsearch-list-circle.png</texture>
+										<texture colordiffuse="FF12A0C7">globalsearch-list-circle.png</texture>
 									</control>
 									<control type="label">
 										<top>6</top>
@@ -2932,7 +2932,7 @@
 											<width>36</width>
 											<height>36</height>
 											<aspectratio>keep</aspectratio>
-											<texture colordiffuse="FF12B2E7">globalsearch-list-circle.png</texture>
+											<texture colordiffuse="FF12A0C7">globalsearch-list-circle.png</texture>
 										</control>
 										<control type="label">
 											<top>6</top>
@@ -2956,7 +2956,7 @@
 										<left>1</left>
 										<width>220</width>
 										<height>330</height>
-										<texture border="8" colordiffuse="FF12B2E7">globalsearch-thumbnail-focus.png</texture>
+										<texture border="8" colordiffuse="FF12A0C7">globalsearch-thumbnail-focus.png</texture>
 									</control>
 								</control>
 								<control type="image">
@@ -2965,7 +2965,7 @@
 									<width>70</width>
 									<height>330</height>
 									<fadetime>300</fadetime>
-									<texture colordiffuse="FF12B2E7">globalsearch-white.png</texture>
+									<texture colordiffuse="FF12A0C7">globalsearch-white.png</texture>
 									<animation effect="zoom" start="0,100" end="100,100" time="250" center="auto">Focus</animation>
 									<animation effect="zoom" start="100,100" end="0,100" time="125" center="auto" delay="50">UnFocus</animation>
 								</control>
@@ -3047,8 +3047,8 @@
 								<top>-38</top>
 								<width>48</width>
 								<height>24</height>
-								<texturefocus colordiffuse="FF12B2E7" flipy="true">globalsearch-arrowdown.png</texturefocus>
-								<texturenofocus colordiffuse="FF12B2E7" flipy="true">globalsearch-arrowdown.png</texturenofocus>
+								<texturefocus colordiffuse="FF12A0C7" flipy="true">globalsearch-arrowdown.png</texturefocus>
+								<texturenofocus colordiffuse="FF12A0C7" flipy="true">globalsearch-arrowdown.png</texturenofocus>
 								<animation effect="zoom" start="100,0" end="100,100" center="auto" time="200" delay="10">VisibleChange</animation>
 								<animation effect="zoom" start="100,0" end="100,100" delay="500" center="auto" time="200">WindowOpen</animation>
 								<animation effect="zoom" start="100,100" end="100,0" center="auto" time="200">WindowClose</animation>
@@ -3062,8 +3062,8 @@
 								<top>738</top>
 								<width>48</width>
 								<height>24</height>
-								<texturefocus colordiffuse="FF12B2E7">globalsearch-arrowdown.png</texturefocus>
-								<texturenofocus colordiffuse="FF12B2E7">globalsearch-arrowdown.png</texturenofocus>
+								<texturefocus colordiffuse="FF12A0C7">globalsearch-arrowdown.png</texturefocus>
+								<texturenofocus colordiffuse="FF12A0C7">globalsearch-arrowdown.png</texturenofocus>
 								<animation effect="zoom" start="100,0" end="100,100" center="auto" time="200" delay="10">VisibleChange</animation>
 								<animation effect="zoom" start="100,0" end="100,100" delay="500" center="auto" time="200">WindowOpen</animation>
 								<animation effect="zoom" start="100,100" end="100,0" center="auto" time="200">WindowClose</animation>
@@ -3096,7 +3096,7 @@
 								<width>54</width>
 								<height>44</height>
 								<aspectratio>keep</aspectratio>
-								<texture colordiffuse="FF12B2E7">globalsearch-itemcount.png</texture>
+								<texture colordiffuse="FF12A0C7">globalsearch-itemcount.png</texture>
 								<animation effect="fade" time="200">VisibleChange</animation>
 								<xvisible>!IsEmpty(Container(211).NumItems)</xvisible>
 							</control>
@@ -3204,7 +3204,7 @@
 										<width>36</width>
 										<height>36</height>
 										<aspectratio>keep</aspectratio>
-										<texture colordiffuse="FF12B2E7">globalsearch-list-circle.png</texture>
+										<texture colordiffuse="FF12A0C7">globalsearch-list-circle.png</texture>
 									</control>
 									<control type="label">
 										<top>6</top>
@@ -3257,7 +3257,7 @@
 											<width>36</width>
 											<height>36</height>
 											<aspectratio>keep</aspectratio>
-											<texture colordiffuse="FF12B2E7">globalsearch-list-circle.png</texture>
+											<texture colordiffuse="FF12A0C7">globalsearch-list-circle.png</texture>
 										</control>
 										<control type="label">
 											<top>6</top>
@@ -3281,7 +3281,7 @@
 										<left>1</left>
 										<width>220</width>
 										<height>330</height>
-										<texture border="8" colordiffuse="FF12B2E7">globalsearch-thumbnail-focus.png</texture>
+										<texture border="8" colordiffuse="FF12A0C7">globalsearch-thumbnail-focus.png</texture>
 									</control>
 								</control>
 								<control type="image">
@@ -3290,7 +3290,7 @@
 									<width>70</width>
 									<height>330</height>
 									<fadetime>300</fadetime>
-									<texture colordiffuse="FF12B2E7">globalsearch-white.png</texture>
+									<texture colordiffuse="FF12A0C7">globalsearch-white.png</texture>
 									<animation effect="zoom" start="0,100" end="100,100" time="250" center="auto">Focus</animation>
 									<animation effect="zoom" start="100,100" end="0,100" time="125" center="auto" delay="50">UnFocus</animation>
 								</control>
@@ -3372,8 +3372,8 @@
 								<top>-38</top>
 								<width>48</width>
 								<height>24</height>
-								<texturefocus colordiffuse="FF12B2E7" flipy="true">globalsearch-arrowdown.png</texturefocus>
-								<texturenofocus colordiffuse="FF12B2E7" flipy="true">globalsearch-arrowdown.png</texturenofocus>
+								<texturefocus colordiffuse="FF12A0C7" flipy="true">globalsearch-arrowdown.png</texturefocus>
+								<texturenofocus colordiffuse="FF12A0C7" flipy="true">globalsearch-arrowdown.png</texturenofocus>
 								<animation effect="zoom" start="100,0" end="100,100" center="auto" time="200" delay="10">VisibleChange</animation>
 								<animation effect="zoom" start="100,0" end="100,100" delay="500" center="auto" time="200">WindowOpen</animation>
 								<animation effect="zoom" start="100,100" end="100,0" center="auto" time="200">WindowClose</animation>
@@ -3387,8 +3387,8 @@
 								<top>738</top>
 								<width>48</width>
 								<height>24</height>
-								<texturefocus colordiffuse="FF12B2E7">globalsearch-arrowdown.png</texturefocus>
-								<texturenofocus colordiffuse="FF12B2E7">globalsearch-arrowdown.png</texturenofocus>
+								<texturefocus colordiffuse="FF12A0C7">globalsearch-arrowdown.png</texturefocus>
+								<texturenofocus colordiffuse="FF12A0C7">globalsearch-arrowdown.png</texturenofocus>
 								<animation effect="zoom" start="100,0" end="100,100" center="auto" time="200" delay="10">VisibleChange</animation>
 								<animation effect="zoom" start="100,0" end="100,100" delay="500" center="auto" time="200">WindowOpen</animation>
 								<animation effect="zoom" start="100,100" end="100,0" center="auto" time="200">WindowClose</animation>
@@ -3421,7 +3421,7 @@
 								<width>54</width>
 								<height>44</height>
 								<aspectratio>keep</aspectratio>
-								<texture colordiffuse="FF12B2E7">globalsearch-itemcount.png</texture>
+								<texture colordiffuse="FF12A0C7">globalsearch-itemcount.png</texture>
 								<animation effect="fade" time="200">VisibleChange</animation>
 								<xvisible>!IsEmpty(Container(231).NumItems)</xvisible>
 							</control>
@@ -3580,7 +3580,7 @@
 										<top>11</top>
 										<width>300</width>
 										<height>300</height>
-										<texture border="8" colordiffuse="FF12B2E7">globalsearch-thumbnail-focus.png</texture>
+										<texture border="8" colordiffuse="FF12A0C7">globalsearch-thumbnail-focus.png</texture>
 									</control>
 								</control>
 								<control type="image">
@@ -3589,7 +3589,7 @@
 									<width>70</width>
 									<height>300</height>
 									<fadetime>300</fadetime>
-									<texture colordiffuse="FF12B2E7">globalsearch-white.png</texture>
+									<texture colordiffuse="FF12A0C7">globalsearch-white.png</texture>
 									<animation effect="zoom" start="0,100" end="100,100" time="250" center="auto">Focus</animation>
 									<animation effect="zoom" start="100,100" end="0,100" time="125" center="auto" delay="50">UnFocus</animation>
 								</control>
@@ -3630,8 +3630,8 @@
 								<top>-38</top>
 								<width>48</width>
 								<height>24</height>
-								<texturefocus colordiffuse="FF12B2E7" flipy="true">globalsearch-arrowdown.png</texturefocus>
-								<texturenofocus colordiffuse="FF12B2E7" flipy="true">globalsearch-arrowdown.png</texturenofocus>
+								<texturefocus colordiffuse="FF12A0C7" flipy="true">globalsearch-arrowdown.png</texturefocus>
+								<texturenofocus colordiffuse="FF12A0C7" flipy="true">globalsearch-arrowdown.png</texturenofocus>
 								<animation effect="zoom" start="100,0" end="100,100" center="auto" time="200" delay="10">VisibleChange</animation>
 								<animation effect="zoom" start="100,0" end="100,100" delay="500" center="auto" time="200">WindowOpen</animation>
 								<animation effect="zoom" start="100,100" end="100,0" center="auto" time="200">WindowClose</animation>
@@ -3645,8 +3645,8 @@
 								<top>738</top>
 								<width>48</width>
 								<height>24</height>
-								<texturefocus colordiffuse="FF12B2E7">globalsearch-arrowdown.png</texturefocus>
-								<texturenofocus colordiffuse="FF12B2E7">globalsearch-arrowdown.png</texturenofocus>
+								<texturefocus colordiffuse="FF12A0C7">globalsearch-arrowdown.png</texturefocus>
+								<texturenofocus colordiffuse="FF12A0C7">globalsearch-arrowdown.png</texturenofocus>
 								<animation effect="zoom" start="100,0" end="100,100" center="auto" time="200" delay="10">VisibleChange</animation>
 								<animation effect="zoom" start="100,0" end="100,100" delay="500" center="auto" time="200">WindowOpen</animation>
 								<animation effect="zoom" start="100,100" end="100,0" center="auto" time="200">WindowClose</animation>
@@ -3679,7 +3679,7 @@
 								<width>54</width>
 								<height>44</height>
 								<aspectratio>keep</aspectratio>
-								<texture colordiffuse="FF12B2E7">globalsearch-itemcount.png</texture>
+								<texture colordiffuse="FF12A0C7">globalsearch-itemcount.png</texture>
 								<animation effect="fade" time="200">VisibleChange</animation>
 								<xvisible>!IsEmpty(Container(221).NumItems)</xvisible>
 							</control>
@@ -3711,7 +3711,7 @@
 					<aspectratio>keep</aspectratio>
 					<width>56</width>
 					<height>56</height>
-					<texture colordiffuse="FF12B2E7">globalsearch-logo.png</texture>
+					<texture colordiffuse="FF12A0C7">globalsearch-logo.png</texture>
 				</control>
 				<control type="image">
 					<left>40</left>
@@ -3747,7 +3747,7 @@
 				<font>font12</font>
 				<urlset>1</urlset>
 				<hitrect x="-100" y="0" w="1" h="1" />
-				<titlecolor>FF12B2E7</titlecolor>
+				<titlecolor>FF12A0C7</titlecolor>
 				<shadowcolor>22000000</shadowcolor>
 				<headlinecolor>FFC0C0C0</headlinecolor>
 				<textcolor>FFF0F0F0</textcolor>

@@ -976,13 +976,13 @@ class GUI( xbmcgui.WindowXMLDialog ):
 
     def _browse_audio( self, path ):
         self._close()
-        xbmc.executebuiltin('ActivateWindow(MusicLibrary,' + path + ',return)')
+        xbmc.executebuiltin('ActivateWindow(Music,' + path + ',return)')
 
     def _browse_album( self ):
         listitem = self.getControl( 171 ).getSelectedItem()
         path = listitem.getProperty('path')
         self._close()
-        xbmc.executebuiltin('ActivateWindow(MusicLibrary,' + path + ',return)')
+        xbmc.executebuiltin('ActivateWindow(Music,' + path + ',return)')
 
     def _check_focus( self ):
         self.getControl( 190 ).setLabel( '' )
