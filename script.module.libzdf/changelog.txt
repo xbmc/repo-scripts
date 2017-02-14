@@ -1,3 +1,5 @@
+2.0.1
+- Changed API key
 2.0.0
 - Code cleanup
 1.10.6

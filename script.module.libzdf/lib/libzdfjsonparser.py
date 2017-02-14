@@ -6,7 +6,8 @@ import libmediathek3 as libMediathek
 base = 'https://api.zdf.de'
 playerId = 'ngplayer_2_3'
 log = libMediathek.log
-auth = '23a1db22b51b13162bd0b86b24e556c8c6b6272d reraeB'
+#auth = '23a1db22b51b13162bd0b86b24e556c8c6b6272d reraeB'
+auth = '2691892bd1523017a49138324c186711af18ab4f reraeB'
 
 getheader = {'Api-Auth': auth[::-1]}
 
