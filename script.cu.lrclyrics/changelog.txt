@@ -1,3 +1,6 @@
+v5.3.6
+- search local file even without song title
+
 v5.3.5
 - filter more lines
 
