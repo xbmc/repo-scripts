@@ -113,3 +113,71 @@ msgstr "Ativar Liwa"
 msgctxt "#32024"
 msgid "Enable Hong Kong"
 msgstr "Ativar Hong Kong"
+
+msgctxt "#32025"
+msgid "Initializing..."
+msgstr "A inicializar..."
+
+msgctxt "#32026"
+msgid "DPMS*"
+msgstr "DPMS*"
+
+msgctxt "#32027"
+msgid "DPMS"
+msgstr "DPMS"
+
+msgctxt "#32028"
+msgid "Toggle display off"
+msgstr "Desligar monitor"
+
+msgctxt "#32029"
+msgid "Put playing device on standby via a CEC"
+msgstr "Colocar dispositivo em standby via CEC"
+
+msgctxt "#32030"
+msgid "Disable checksum verification"
+msgstr "Desactivar verficação de checksums"
+
+msgctxt "#32031"
+msgid "Videos"
+msgstr "Vídeos"
+
+msgctxt "#32032"
+msgid "General Settings"
+msgstr "Definições gerais"
+
+msgctxt "#32033"
+msgid "* DPMS will check for the Power Saving Kodi settings and stop the screensaver"
+msgstr "* O DPMS irá verificar as definiçoes de gestão de energia do kodi e parar o screensaver"
+
+msgctxt "#32034"
+msgid "if the maximum allowed time to put the display to sleep is exceeded"
+msgstr "se o tempo máximo permitido para desligar o monitor for atingido"
+
+msgctxt "#32035"
+msgid "Off"
+msgstr "Desligado"
+
+msgctxt "#32036"
+msgid "Kodi"
+msgstr "Kodi"
+
+msgctxt "#32037"
+msgid "Manual"
+msgstr "Manual"
+
+msgctxt "#32038"
+msgid "Manual timeout to activate DPMS (min)"
+msgstr "Timeout para ativar o DPMS manual (min)"
+
+msgctxt "#32039"
+msgid "DPMS action"
+msgstr "Acção após DPMS"
+
+msgctxt "#32040"
+msgid "Pause Video"
+msgstr "Pausar Video"
+
+msgctxt "#32041"
+msgid "Stop Video"
+msgstr "Parar Video"

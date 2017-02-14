@@ -16,22 +16,27 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 '''
-
 import xbmc
-import xbmcgui
-import playlist
+import sys
+from resources.lib.commonatv import *
 
-class ATVPlayer(xbmc.Player):
-    def __init__(self,):
-        xbmc.log(msg='ATV4 Screensaver player has been created', level=xbmc.LOGDEBUG)
 
-    def onPlayBackStarted(self):
-        xbmc.log(msg='ATV4 Screensaver player has started. Toggling repeatAll', level=xbmc.LOGDEBUG)
-        xbmc.executebuiltin("PlayerControl(RepeatAll)")
+class ScreensaverTrans(xbmcgui.WindowXMLDialog):
+    
+    class ExitMonitor(xbmc.Monitor):
 
-    def onPlaybackEnded(self):
-        self.onPlayBackStopped()
+        def __init__(self, activated_callback):
+            self.activated_callback = activated_callback
 
-    def onPlayBackStopped(self):
-        xbmc.log(msg='ATV4 Screensaver player has been stopped', level=xbmc.LOGDEBUG)
-        xbmc.executebuiltin("PlayerControl(RepeatOff)", True)
+        def onScreensaverDeactivated(self):
+            self.activated_callback()
+
+    def onInit(self):
+        self.exit_monitor = self.ExitMonitor(self.exit)
+
+    def exit(self):
+        addon.setSetting("is_locked","false")
+        self.close()
+
+    def onAction(self,action):
+        self.exit()

@@ -113,3 +113,72 @@ msgstr ""
 msgctxt "#32024"
 msgid "Enable Hong Kong"
 msgstr ""
+
+msgctxt "#32025"
+msgid "Initializing..."
+msgstr ""
+
+msgctxt "#32026"
+msgid "DPMS*"
+msgstr ""
+
+msgctxt "#32027"
+msgid "DPMS"
+msgstr ""
+
+msgctxt "#32028"
+msgid "Toggle display off"
+msgstr ""
+
+msgctxt "#32029"
+msgid "Put playing device on standby via a CEC"
+msgstr ""
+
+msgctxt "#32030"
+msgid "Disable checksum verification"
+msgstr ""
+
+msgctxt "#32031"
+msgid "Videos"
+msgstr ""
+
+msgctxt "#32032"
+msgid "General Settings"
+msgstr ""
+
+msgctxt "#32033"
+msgid "* DPMS will check for the Power Saving Kodi settings and stop the screensaver"
+msgstr ""
+
+msgctxt "#32034"
+msgid "if the maximum allowed time to put the display to sleep is exceeded"
+msgstr ""
+
+msgctxt "#32035"
+msgid "Off"
+msgstr ""
+
+msgctxt "#32036"
+msgid "Kodi"
+msgstr ""
+
+msgctxt "#32037"
+msgid "Manual"
+msgstr ""
+
+msgctxt "#32038"
+msgid "Manual timeout to activate DPMS (min)"
+msgstr ""
+
+msgctxt "#32039"
+msgid "DPMS action"
+msgstr ""
+
+msgctxt "#32040"
+msgid "Pause Video"
+msgstr ""
+
+msgctxt "#32041"
+msgid "Stop Video"
+msgstr ""
+
