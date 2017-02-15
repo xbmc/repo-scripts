@@ -217,28 +217,29 @@ def properties(data,loc,locid):
     set_property('Forecast.City'             , data['current_observation']['display_location']['city'])
     set_property('Forecast.State'            , data['current_observation']['display_location']['state_name'])
     set_property('Forecast.Country'          , data['current_observation']['display_location']['country'])
-    update = time.localtime(float(data['current_observation']['observation_epoch']))
-    local = time.localtime(float(data['current_observation']['local_epoch']))
-    if DATEFORMAT[1] == 'd':
-        updatedate = WEEKDAY[update[6]] + ' ' + str(update[2]) + ' ' + MONTH[update[1]] + ' ' + str(update[0])
-        localdate = WEEKDAY[local[6]] + ' ' + str(local[2]) + ' ' + MONTH[local[1]] + ' ' + str(local[0])
-    elif DATEFORMAT[1] == 'm':
-        updatedate = WEEKDAY[update[6]] + ' ' + MONTH[update[1]] + ' ' + str(update[2]) + ', ' + str(update[0])
-        localdate = WEEKDAY[local[6]] + ' ' + str(local[2]) + ' ' + MONTH[local[1]] + ' ' + str(local[0])
-    else:
-        updatedate = WEEKDAY[update[6]] + ' ' + str(update[0]) + ' ' + MONTH[update[1]] + ' ' + str(update[2])
-        localdate = WEEKDAY[local[6]] + ' ' + str(local[0]) + ' ' + MONTH[local[1]] + ' ' + str(local[2])
-    if TIMEFORMAT != '/':
-        updatetime = time.strftime('%I:%M%p', update)
-        localtime = time.strftime('%I:%M%p', local)
-    else:
-        updatetime = time.strftime('%H:%M', update)
-        localtime = time.strftime('%H:%M', local)
-    set_property('Forecast.Updated'          , updatedate + ' - ' + updatetime)
+    if data['current_observation']['observation_epoch']:
+        update = time.localtime(float(data['current_observation']['observation_epoch']))
+        local = time.localtime(float(data['current_observation']['local_epoch']))
+        if DATEFORMAT[1] == 'd':
+            updatedate = WEEKDAY[update[6]] + ' ' + str(update[2]) + ' ' + MONTH[update[1]] + ' ' + str(update[0])
+            localdate = WEEKDAY[local[6]] + ' ' + str(local[2]) + ' ' + MONTH[local[1]] + ' ' + str(local[0])
+        elif DATEFORMAT[1] == 'm':
+            updatedate = WEEKDAY[update[6]] + ' ' + MONTH[update[1]] + ' ' + str(update[2]) + ', ' + str(update[0])
+            localdate = WEEKDAY[local[6]] + ' ' + str(local[2]) + ' ' + MONTH[local[1]] + ' ' + str(local[0])
+        else:
+            updatedate = WEEKDAY[update[6]] + ' ' + str(update[0]) + ' ' + MONTH[update[1]] + ' ' + str(update[2])
+            localdate = WEEKDAY[local[6]] + ' ' + str(local[0]) + ' ' + MONTH[local[1]] + ' ' + str(local[2])
+        if TIMEFORMAT != '/':
+            updatetime = time.strftime('%I:%M%p', update)
+            localtime = time.strftime('%I:%M%p', local)
+        else:
+            updatetime = time.strftime('%H:%M', update)
+            localtime = time.strftime('%H:%M', local)
+        set_property('Forecast.Updated'          , updatedate + ' - ' + updatetime)
 # current properties
+        set_property('Current.LocalTime'         , localtime)
+        set_property('Current.LocalDate'         , localdate)
     set_property('Current.IsFetched'         , 'true')
-    set_property('Current.LocalTime'         , localtime)
-    set_property('Current.LocalDate'         , localdate)
     set_property('Current.WindDegree'        , str(data['current_observation']['wind_degrees']) + u'°')
     set_property('Current.SolarRadiation'    , str(data['current_observation']['solarradiation']))
     if 'F' in TEMPUNIT:
