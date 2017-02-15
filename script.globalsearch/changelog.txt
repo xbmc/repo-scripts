@@ -1,3 +1,6 @@
+v7.4.6
+- fix movie and tvshow fanart
+
 v7.4.5
 - fix browse artist / album
 

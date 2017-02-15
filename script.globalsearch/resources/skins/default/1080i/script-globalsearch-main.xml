@@ -58,7 +58,7 @@
 				<top>0</top>
 				<width>1920</width>
 				<height>1080</height>
-				<texture background="true" colordiffuse="40FFFFFF">$INFO[Container(111).ListItem.Art(fanart)]</texture>
+				<texture background="true" colordiffuse="40FFFFFF">$INFO[Container(111).ListItem.Property(fanart)]</texture>
 				<aspectratio>scale</aspectratio>
 				<fadetime>400</fadetime>
 				<animation effect="fade" time="400">Visible</animation>
@@ -70,7 +70,7 @@
 				<top>0</top>
 				<width>1920</width>
 				<height>1080</height>
-				<texture background="true" colordiffuse="40FFFFFF">$INFO[Container(121).ListItem.Art(fanart)]</texture>
+				<texture background="true" colordiffuse="40FFFFFF">$INFO[Container(121).ListItem.Property(fanart)]</texture>
 				<aspectratio>scale</aspectratio>
 				<fadetime>400</fadetime>
 				<animation effect="fade" time="400">Visible</animation>
