@@ -972,7 +972,7 @@ class FacebookSession:
                 items.append(self.getPagingItem('prev', photos.previous, 'photos', paging,uid=uid))
 
             for p in photos:
-                tn = p.picture('') + '?fix=' + str(time.time()) #why does this work? I have no idea. Why did I try it. I have no idea :)
+                tn = p.picture('') + ('?' in p.picture('') and '&fix=' or '?fix=') + str(time.time()) #why does this work? I have no idea. Why did I try it. I have no idea :)
                 #tn = re.sub('/hphotos-\w+-\w+/\w+\.\w+/','/hphotos-ak-snc1/hs255.snc1/',tn) # this seems to get better results then using the random server
                 item = xbmcgui.ListItem()
                 item.setLabel(DONOTHING(self.removeCRLF(p.name(p.id))))
@@ -1053,7 +1053,7 @@ class FacebookSession:
             for v in videos:
                 item = xbmcgui.ListItem()
                 item.setProperty('ispagingitem','no')
-                tn = v.picture('') + '?fix=' + str(time.time()) #why does this work? I have no idea. Why did I try it. I have no idea :)
+                tn = v.picture('') + ('?' in v.picture('') and '&fix=' or '?fix=') + str(time.time()) #why does this work? I have no idea. Why did I try it. I have no idea :)
                 #tn = re.sub('/hphotos-\w+-\w+/\w+\.\w+/','/hphotos-ak-snc1/hs255.snc1/',tn)
                 caption = self.makeCaption(v, uid)
                 item.setPath(v.source(''))
@@ -1852,11 +1852,11 @@ def openWindow(window_name,session=None,**kwargs):
         windowFile = 'facebook-media-main-%s.xml' % CURRENT_SKIN
         windowFilePath = os.path.join(xbmc.translatePath(__addon__.getAddonInfo('path')),'resources','skins',THEME,'720p',windowFile)
         if not os.path.exists(windowFilePath):
-            try:
-                createWindowFile(CURRENT_SKIN)
-            except:
-                ERROR('ERROR GENERATING WINDOW FILE FOR SKIN: %s' % CURRENT_SKIN)
-                windowFile = 'facebook-media-main-skin.confluence.xml'
+            # try:
+            #     createWindowFile(CURRENT_SKIN)
+            # except:
+            #     ERROR('ERROR GENERATING WINDOW FILE FOR SKIN: %s' % CURRENT_SKIN)
+            windowFile = 'facebook-media-main-skin.confluence.xml'
         w = MainWindow(windowFile , xbmc.translatePath(__addon__.getAddonInfo('path')), THEME)
     elif window_name == 'auth':
         w = AuthWindow(windowFile , xbmc.translatePath(__addon__.getAddonInfo('path')), THEME,session=session,**kwargs)
