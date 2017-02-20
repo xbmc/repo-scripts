@@ -6,6 +6,10 @@ from addon import player
 
 from addon import utils
 
+
+class Action: NOTHING, MUTE, PAUSE, VOLUME = range(4)
+
+
 @mpr.s_url('/call/started/')
 def on_call_started(data):
     utils.log('Received call start event')
@@ -17,7 +21,7 @@ def on_call_started(data):
         volume = data['volume']
         addon.setSetting('saved_volume', str(volume))
 
-    action = 0
+    action = Action.NOTHING
     volume = 0
     if player.isPlayingAudio():
         action = int(addon.getSetting('music.on_call'))
@@ -28,15 +32,15 @@ def on_call_started(data):
         volume = int(addon.getSetting('video.volume'))
 
 
-    if action == 1:
+    if action == Action.MUTE:
         if not xbmc.getCondVisibility('Player.Muted'):
             xbmc.executebuiltin('Mute')
 
-    elif action == 2:
+    elif action == Action.PAUSE:
         if not xbmc.getCondVisibility('Player.Paused'):
             player.pause()
 
-    elif action == 3 and volume:
+    elif action == Action.VOLUME and volume:
         xbmc.executebuiltin('XBMC.SetVolume(%d, showvolumebar)' % (volume))
 
     return True
@@ -46,6 +50,7 @@ def on_call_ended(data):
     utils.log('Received call end event')
 
 
+    action = Action.NOTHING
     reset_vol = False
     if player.isPlayingAudio():
         action = int(addon.getSetting('music.on_call'))
@@ -62,11 +67,11 @@ def on_call_ended(data):
         reset_vol  = addon.getSetting('video.reset_volume') == 'true'
 
 
-    if action == 1 and unmute:
+    if action == Action.MUTE and unmute:
         if xbmc.getCondVisibility('Player.Muted'):
             xbmc.executebuiltin('Mute')
 
-    elif action == 2 and play_after:
+    elif action == Action.PAUSE and play_after:
         if xbmc.getCondVisibility('Player.Paused'):
             player.pause()
 
