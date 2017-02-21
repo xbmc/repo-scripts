@@ -22,8 +22,9 @@ def getEmbedLyrics(song, getlrc):
         if not lry:
             try:
                 text = getLyrics3(filename, getlrc)
-                enc = chardet.detect(text)
-                lry = text.decode(enc['encoding'])
+                if text:
+                    enc = chardet.detect(text)
+                    lry = text.decode(enc['encoding'])
             except:
                 pass
     elif  ext == '.flac':
@@ -64,6 +65,7 @@ def getLyrics3(filename, getlrc):
         buf = f.read(11)
         if(buf == 'LYRICSBEGIN'):
             buf = f.read(size-11)
+            f.close();
             tags=[]
             while buf!= '':
                 tag = buf[:3]
@@ -73,8 +75,6 @@ def getLyrics3(filename, getlrc):
                     if (getlrc and isLRC(content)) or (not getlrc and not isLRC(content)):
                         return content
                 buf = buf[8+length:]
-    f.close();
-    return None
 
 def ms2timestamp(ms):
     mins = '0%s' % int(ms/1000/60)
@@ -88,29 +88,27 @@ Get USLT/SYLT/TXXX lyrics embed with ID3v2 format
 See: http://id3.org/id3v2.3.0
 '''
 def getID3Lyrics(filename, getlrc):
-    codecs = ['latin_1', 'utf-16', 'utf16-be', 'utf-8']
     try:
         data = MP3(filename)
+        lyr = ''
         for tag,value in data.iteritems():
-            text = ''
             if getlrc and tag.startswith('SYLT'):
-                lyr = ''
-                text = data[tag].text
-                for line in text:
+                for line in data[tag].text:
                     txt = line[0].encode('utf-8').strip()
                     stamp = ms2timestamp(line[1])
                     lyr += '%s%s\r\n' % (stamp, txt)
-                return lyr
-            if not getlrc and (tag.startswith('USLT') or tag.startswith('TXXX')):
-                if tag.startswith('USLT'):
-                    text = data[tag].text
-                elif tag.lower().endswith('lyrics'): # TXXX tags contain arbitrary info. only accept 'TXXX:lyrics'
-                    text = data[tag].text[0]
-                if text:
+            elif not getlrc and tag.startswith('USLT'):
+                if data[tag].text:
                     lyr = text.encode('utf-8')
-                    return lyr
+            elif tag.startswith('TXXX'):
+                if getlrc and tag.upper().endswith('SYNCEDLYRICS'): # TXXX tags contain arbitrary info. only accept 'TXXX:SYNCEDLYRICS'
+                    lyr = data[tag].text[0]
+                elif not getlrc and tag.upper().endswith('LYRICS'): # TXXX tags contain arbitrary info. only accept 'TXXX:LYRICS'
+                    lyr = data[tag].text[0]
+            if lyr:
+                return lyr
     except:
-        return None
+        return
 
 def getFlacLyrics(filename, getlrc):
     try:
@@ -121,7 +119,7 @@ def getFlacLyrics(filename, getlrc):
             if (getlrc and match) or ((not getlrc) and (not match)):
                 return lyr
     except:
-        return None
+        return
 
 def getMP4Lyrics(filename, getlrc):
     try:
@@ -132,11 +130,9 @@ def getMP4Lyrics(filename, getlrc):
             if (getlrc and match) or ((not getlrc) and (not match)):
                 return lyr
     except:
-        return None
+        return
 
 def isLRC(lyr):
     match = re.compile('\[(\d+):(\d\d)(\.\d+|)\]').search(lyr)
     if match:
         return True
-    else:
-        return False

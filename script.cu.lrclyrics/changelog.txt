@@ -1,3 +1,6 @@
+v5.3.7
+- add support for synced lyrics in txxx tag
+
 v5.3.6
 - search local file even without song title
 
