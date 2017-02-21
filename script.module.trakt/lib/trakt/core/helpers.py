@@ -1,30 +1,20 @@
-import arrow
 import functools
 import logging
 import warnings
 
+try:
+    import arrow
+except ImportError:
+    arrow = None
+
 log = logging.getLogger(__name__)
 
 
-def from_iso8601(value):
-    if value is None:
-        return None
+def clean_username(username):
+    if not username:
+        return username
 
-    # Parse ISO8601 datetime
-    dt = arrow.get(value)
-
-    # Convert to UTC
-    dt = dt.to('UTC')
-
-    # Return datetime object
-    return dt.datetime
-
-
-def to_iso8601(value):
-    if value is None:
-        return None
-
-    return value.strftime('%Y-%m-%dT%H:%M:%S') + '.000-00:00'
+    return username.replace('.', '-')
 
 
 def deprecated(message):
@@ -38,6 +28,18 @@ def deprecated(message):
         return wrapped
 
     return wrap
+
+
+def popitems(d, keys):
+    result = {}
+
+    for key in keys:
+        value = d.pop(key, None)
+
+        if value is not None:
+            result[key] = value
+
+    return result
 
 
 def synchronized(f_lock, mode='full'):
@@ -79,3 +81,69 @@ def synchronized(f_lock, mode='full'):
         return wrapped
 
     return wrap
+
+
+def try_convert(value, value_type, default=None):
+    try:
+        return value_type(value)
+    except (ValueError, TypeError):
+        return default
+
+
+#
+# Date/Time Conversion
+#
+
+@deprecated('`from_iso8601(value)` has been renamed to `from_iso8601_datetime(value)`')
+def from_iso8601(value):
+    return from_iso8601_datetime(value)
+
+
+def from_iso8601_date(value):
+    if value is None:
+        return None
+
+    if arrow is None:
+        raise Exception('"arrow" module is not available')
+
+    # Parse ISO8601 datetime
+    dt = arrow.get(value)
+
+    # Return date object
+    return dt.date()
+
+
+def from_iso8601_datetime(value):
+    if value is None:
+        return None
+
+    if arrow is None:
+        raise Exception('"arrow" module is not available')
+
+    # Parse ISO8601 datetime
+    dt = arrow.get(value)
+
+    # Convert to UTC
+    dt = dt.to('UTC')
+
+    # Return datetime object
+    return dt.datetime
+
+
+@deprecated('`to_iso8601(value)` has been renamed to `to_iso8601_datetime(value)`')
+def to_iso8601(value):
+    return to_iso8601_datetime(value)
+
+
+def to_iso8601_date(value):
+    if value is None:
+        return None
+
+    return value.strftime('%Y-%m-%d')
+
+
+def to_iso8601_datetime(value):
+    if value is None:
+        return None
+
+    return value.strftime('%Y-%m-%dT%H:%M:%S') + '.000-00:00'

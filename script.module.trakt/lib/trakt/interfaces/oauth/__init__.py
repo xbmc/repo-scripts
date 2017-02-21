@@ -2,6 +2,18 @@ from trakt.core.helpers import deprecated
 from trakt.helpers import build_url
 from trakt.interfaces.base import Interface
 
+import requests
+
+# Import child interfaces
+from trakt.interfaces.oauth.device import DeviceOAuthInterface
+from trakt.interfaces.oauth.pin import PinOAuthInterface
+
+__all__ = [
+    'OAuthInterface',
+    'DeviceOAuthInterface',
+    'PinOAuthInterface'
+]
+
 
 class OAuthInterface(Interface):
     path = 'oauth'
@@ -24,22 +36,15 @@ class OAuthInterface(Interface):
             username=username
         )
 
+    @deprecated("Trakt['oauth'].pin_url() method has been moved to Trakt['oauth/pin'].url()")
     def pin_url(self):
-        app_id = self.client.configuration['app.id']
-
-        if not app_id:
-            raise ValueError('"app.id" configuration parameter is required to generate the PIN authentication url')
-
-        return build_url(
-            self.client.site_url,
-            'pin', app_id
-        )
+        return self.client['oauth/pin'].url()
 
     @deprecated("Trakt['oauth'].token() method has been moved to Trakt['oauth'].token_exchange()")
     def token(self, code=None, redirect_uri=None, grant_type='authorization_code'):
         return self.token_exchange(code, redirect_uri, grant_type)
 
-    def token_exchange(self, code=None, redirect_uri=None, grant_type='authorization_code'):
+    def token_exchange(self, code=None, redirect_uri=None, grant_type='authorization_code', **kwargs):
         client_id = self.client.configuration['client.id']
         client_secret = self.client.configuration['client.secret']
 
@@ -59,14 +64,17 @@ class OAuthInterface(Interface):
             authenticated=False
         )
 
-        data = self.get_data(response)
+        data = self.get_data(response, **kwargs)
+
+        if isinstance(data, requests.Response):
+            return data
 
         if not data:
             return None
 
         return data
 
-    def token_refresh(self, refresh_token=None, redirect_uri=None, grant_type='refresh_token'):
+    def token_refresh(self, refresh_token=None, redirect_uri=None, grant_type='refresh_token', **kwargs):
         client_id = self.client.configuration['client.id']
         client_secret = self.client.configuration['client.secret']
 
@@ -86,7 +94,10 @@ class OAuthInterface(Interface):
             authenticated=False
         )
 
-        data = self.get_data(response)
+        data = self.get_data(response, **kwargs)
+
+        if isinstance(data, requests.Response):
+            return data
 
         if not data:
             return None
