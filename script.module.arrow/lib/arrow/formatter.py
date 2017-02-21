@@ -9,7 +9,7 @@ from arrow import util, locales
 
 class DateTimeFormatter(object):
 
-    _FORMAT_RE = re.compile('(YYY?Y?|MM?M?M?|DD?D?D?|d?dd?d?|HH?|hh?|mm?|ss?|SS?S?S?S?S?|ZZ?|a|A|X)')
+    _FORMAT_RE = re.compile('(YYY?Y?|MM?M?M?|Do|DD?D?D?|d?dd?d?|HH?|hh?|mm?|ss?|SS?S?S?S?S?|ZZ?|a|A|X)')
 
     def __init__(self, locale='en_us'):
 
@@ -22,9 +22,9 @@ class DateTimeFormatter(object):
     def _format_token(self, dt, token):
 
         if token == 'YYYY':
-            return '{0:04d}'.format(dt.year)
+            return self.locale.year_full(dt.year)
         if token == 'YY':
-            return '{0:04d}'.format(dt.year)[2:]
+            return self.locale.year_abbreviation(dt.year)
 
         if token == 'MMMM':
             return self.locale.month_name(dt.month)
@@ -43,6 +43,9 @@ class DateTimeFormatter(object):
             return '{0:02d}'.format(dt.day)
         if token == 'D':
             return str(dt.day)
+
+        if token == 'Do':
+            return self.locale.ordinal_number(dt.day)
 
         if token == 'dddd':
             return self.locale.day_name(dt.isoweekday())
@@ -91,7 +94,7 @@ class DateTimeFormatter(object):
             tz = dateutil_tz.tzutc() if dt.tzinfo is None else dt.tzinfo
             total_minutes = int(util.total_seconds(tz.utcoffset(dt)) / 60)
 
-            sign = '+' if total_minutes > 0 else '-'
+            sign = '+' if total_minutes >= 0 else '-'
             total_minutes = abs(total_minutes)
             hour, minute = divmod(total_minutes, 60)
 
