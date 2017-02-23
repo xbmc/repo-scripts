@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.module.subtitles.helper"
+	name="Subtitle Helper"
+	version="0.0.1"
+	provider-name="amet">
+	<requires>
+	<import addon="xbmc.python" 
+			version="2.1.0"/>
+	</requires>
+	<extension point="xbmc.python.module"
+			 library="lib" />
+	<extension point="xbmc.addon.metadata">
+		<summary lang="en"></summary>
+		<description lang="en"></description>
+		<disclaimer lang="en"></disclaimer>
+		<forum></forum>
+		<website></website>
+		<license>GPL2</license>
+		<platform>all</platform>
+		<source>https://github.com/amet</source>
+	</extension>
+</addon>
