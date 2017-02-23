@@ -1,4 +1,4 @@
-from trakt.objects import Movie, Show, Episode, Season, CustomList
+from trakt.objects import Movie, Show, Episode, Season, CustomList, Comment, Person
 
 IDENTIFIERS = {
     'movie': [
@@ -34,6 +34,14 @@ IDENTIFIERS = {
     'custom_list': [
         'trakt',
         'slug'
+    ],
+    'person': [
+        'tmdb',
+        'imdb',
+        'tvrage',
+
+        'slug',
+        'trakt'
     ]
 }
 
@@ -55,14 +63,24 @@ class Mapper(object):
 
             keys.append((key, str(value)))
 
-        if media == 'season':
+        if media == 'season' and 'number' in item:
             keys.insert(0, item.get('number'))
 
         if media == 'episode':
+            # Special seasons are typically represented as Season '0'
+            # so using a simple 'or' condition to use parent will result
+            # in an attribute error if parent is None
+            season_no = item.get('season')
+            if season_no is None and parent is not None:
+                season_no = parent.pk
+
             keys.insert(0, (
-                item.get('season') or parent.pk,
+                season_no,
                 item.get('number')
             ))
+
+        if media == 'comment':
+            keys.insert(0, ('trakt', item.get('id')))
 
         if not len(keys):
             return None, []
@@ -86,7 +104,13 @@ class Mapper(object):
         if media == 'episode':
             return Episode._construct(client, keys, item, **kwargs)
 
+        if media == 'comment':
+            return Comment._construct(client, keys, item, **kwargs)
+
         if media == 'custom_list':
             return CustomList._construct(client, keys, item, **kwargs)
+
+        if media == 'person':
+            return Person._construct(client, keys, item, **kwargs)
 
         raise ValueError('Unknown media type provided')
