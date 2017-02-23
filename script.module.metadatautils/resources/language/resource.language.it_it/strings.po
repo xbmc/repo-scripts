@@ -1,0 +1,189 @@
+# Kodi language file
+# Addon Name: Metadata and Artwork module
+# Addon id: script.module.metadatautils
+# Addon Provider: marcelveldt
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC-Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: 2014-10-26 17:05+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE\n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+
+msgctxt "#32000"
+msgid "PVR Artwork"
+msgstr "Artwork PVR"
+
+msgctxt "#32001"
+msgid "PVR metadata/artwork scraper - needs skin or addon support!"
+msgstr "Scraper metadata/artwork PVR - Necessita il supporto di skin o addon!"
+
+msgctxt "#32002"
+msgid "Enable PVR artwork/metadata only for TV recordings"
+msgstr "Abilita artwork/metadata PVR solo per le registrazioni TV"
+
+msgctxt "#32003"
+msgid "Enable online scraper (tvdb,tmdb,fanart.tv)"
+msgstr "Abilita lo Scraper online (tvdb,tmdb,fanart.tv)"
+
+msgctxt "#32004"
+msgid "Allow Google Images as fallback for thumbs if primary scraping fails"
+msgstr "Permetti 'Google Immagini' come riserva per le vignette se lo scraper primario fallisce"
+
+msgctxt "#32005"
+msgid "Lookup artwork in a custom folder (e.g. recordings folder)"
+msgstr "Ricerca artwork in una cartella personalizzata (es: cartella delle registrazioni)"
+
+msgctxt "#32006"
+msgid "Path to the custom folder"
+msgstr "Percorso della cartella personalizzata"
+
+msgctxt "#32007"
+msgid "Download artwork to my custom folder"
+msgstr "Scarica artwork sulla mia cartella personalizzata"
+
+msgctxt "#32008"
+msgid "Advanced section: finetune the scraper"
+msgstr "Sezione avanzata: affina lo scraper"
+
+msgctxt "#32009"
+msgid "Use | as delimiter to enter multiple values"
+msgstr "Usa | come delimitatore per immettere valori multipli"
+
+msgctxt "#32010"
+msgid "Channels to ignore"
+msgstr "Canali da ignorare"
+
+msgctxt "#32011"
+msgid "Titles to ignore"
+msgstr "Titoli da ignorare"
+
+msgctxt "#32012"
+msgid "Split title on character (use only first part)"
+msgstr "Suddividere il titolo per carattere (usa solo la prima parte)"
+
+msgctxt "#32013"
+msgid "Characters to replace by space in title"
+msgstr "Caratteri nel titolo da sostituire con lo spazio"
+
+msgctxt "#32014"
+msgid "Characters to strip from title"
+msgstr "Caratteri da rimuovere dal titolo"
+
+msgctxt "#32015"
+msgid "Music Artwork"
+msgstr "Artowok Musica"
+
+msgctxt "#32016"
+msgid "Provides rich metadata and artwork for skins and addons"
+msgstr "Fornisce ricchi metadata e artwork per skin e addon"
+
+msgctxt "#32017"
+msgid "Works with both library and online sources (radio)"
+msgstr "Funziona sia con libreria che con le sorgenti online (radio)"
+
+msgctxt "#32018"
+msgid "Enable online scraper (musicbrainz/audiodb/fanart/last.fm)"
+msgstr "Abilita lo scraper online (musicbrainz/audiodb/fanart/last.fm)"
+
+msgctxt "#32019"
+msgid "Lookup artwork in a custom folder (e.g. recordings folder)"
+msgstr "Ricerca artwork in una cartella personalizzata (es: cartella delle registrazioni)"
+
+msgctxt "#32020"
+msgid "Path to the custom folder"
+msgstr "Percorso della cartella personalizzata"
+
+msgctxt "#32021"
+msgid "Lookup artwork in my music folders (library)"
+msgstr "Ricerca artwork nella mia cartella musica (libreria)"
+
+msgctxt "#32022"
+msgid "Download (missing) artwork to my music folders"
+msgstr "Scarica (i mancanti) artwork sulla mia cartella musica"
+
+msgctxt "#32023"
+msgid "Download (missing) artwork to my custom folder"
+msgstr "Scarica (i mancanti) artwork sulla mia cartella personalizzata"
+
+msgctxt "#32024"
+msgid "Use custom Musicbrainz mirror"
+msgstr "Usa mirror personalizzato di Musicbrainz"
+
+msgctxt "#32025"
+msgid "Skip if genre contains any of these genres"
+msgstr "Ignora se il genere contiene uno di questi generi"
+
+msgctxt "#32026"
+msgid "Skip news/weather/sports/commercial etc. (depends on correct epg info)"
+msgstr "Ignora notizie/sport/commerciale etc. (dipende se le info EPG sono corrette)"
+
+msgctxt "#32027"
+msgid "One or more filters are active for this item. Are you sure you want to proceed ?"
+msgstr "Uno o più filtri sono attivi per questo elemento. Sei sicuro che vuoi procedere?"
+
+msgctxt "#32028"
+msgid "Refresh (auto lookup)"
+msgstr "Ricarica (ricerca automatica)"
+
+msgctxt "#32029"
+msgid "Refresh (manual lookup)"
+msgstr "Ricarica (ricerca manuale)"
+
+msgctxt "#32030"
+msgid "Remove channel from ignore list"
+msgstr "Rimuovi canale dalla lista ignora"
+
+msgctxt "#32031"
+msgid "Add channel to ignore list"
+msgstr "Aggiungi canale alla lista ignora"
+
+msgctxt "#32032"
+msgid "Remove title from ignore list"
+msgstr "Rimuovi il titolo dalla lista ignora"
+
+msgctxt "#32033"
+msgid "Add title to ignore list"
+msgstr "Aggiungi il titolo dalla lista ignora"
+
+msgctxt "#32034"
+msgid "Configure advanced settings"
+msgstr "Configura impostazioni avanzate"
+
+msgctxt "#32035"
+msgid "Settings for PVR artwork"
+msgstr "Impostazioni per artwork PVR"
+
+msgctxt "#32036"
+msgid "Manual configure artwork"
+msgstr "Configura artwork manualmente"
+
+msgctxt "#32037"
+msgid "Continuing"
+msgstr "In corso"
+
+msgctxt "#32038"
+msgid "Ended"
+msgstr "Finito"
+
+msgctxt "#32040"
+msgid "Released"
+msgstr "Rilasciato"
+
+msgctxt "#32041"
+msgid "Is the selected PVR Title a movie or tvshow ?"
+msgstr "Il Titolo PVR selezionato è un Film o Serie TV?"
+
+msgctxt "#32042"
+msgid "Movie"
+msgstr "Film"
+
+msgctxt "#32043"
+msgid "Tvshow"
+msgstr "Serie TV"

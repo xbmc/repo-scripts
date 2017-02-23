@@ -1,0 +1,177 @@
+# Kodi language file
+# Addon Name: Metadata and Artwork module
+# Addon id: script.module.metadatautils
+# Addon Provider: marcelveldt
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC-Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: 2014-10-26 17:05+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE\n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+
+msgctxt "#32000"
+msgid "PVR Artwork"
+msgstr ""
+
+msgctxt "#32001"
+msgid "PVR metadata/artwork scraper - needs skin or addon support!"
+msgstr ""
+
+msgctxt "#32002"
+msgid "Enable PVR artwork/metadata only for TV recordings"
+msgstr ""
+
+msgctxt "#32003"
+msgid "Enable online scraper (tvdb,tmdb,fanart.tv)"
+msgstr ""
+
+msgctxt "#32004"
+msgid "Allow Google Images as fallback for thumbs if primary scraping fails"
+msgstr ""
+
+msgctxt "#32005"
+msgid "Lookup artwork in a custom folder (e.g. recordings folder)"
+msgstr ""
+
+msgctxt "#32006"
+msgid "Path to the custom folder"
+msgstr ""
+
+msgctxt "#32007"
+msgid "Download artwork to my custom folder"
+msgstr ""
+
+msgctxt "#32008"
+msgid "Advanced section: finetune the scraper"
+msgstr ""
+
+msgctxt "#32009"
+msgid "Use | as delimiter to enter multiple values"
+msgstr ""
+
+msgctxt "#32010"
+msgid "Channels to ignore"
+msgstr ""
+
+msgctxt "#32011"
+msgid "Titles to ignore"
+msgstr ""
+
+msgctxt "#32012"
+msgid "Split title on character (use only first part)"
+msgstr ""
+
+msgctxt "#32013"
+msgid "Characters to replace by space in title"
+msgstr ""
+
+msgctxt "#32014"
+msgid "Characters to strip from title"
+msgstr ""
+
+msgctxt "#32015"
+msgid "Music Artwork"
+msgstr ""
+
+msgctxt "#32016"
+msgid "Provides rich metadata and artwork for skins and addons"
+msgstr ""
+
+msgctxt "#32017"
+msgid "Works with both library and online sources (radio)"
+msgstr ""
+
+msgctxt "#32018"
+msgid "Enable online scraper (musicbrainz/audiodb/fanart/last.fm)"
+msgstr ""
+
+msgctxt "#32019"
+msgid "Lookup artwork in a custom folder"
+msgstr ""
+
+msgctxt "#32020"
+msgid "Path to the custom folder"
+msgstr ""
+
+msgctxt "#32021"
+msgid "Lookup artwork in my music folders (library)"
+msgstr ""
+
+msgctxt "#32022"
+msgid "Download (missing) artwork to my music folders"
+msgstr ""
+
+msgctxt "#32023"
+msgid "Download (missing) artwork to my custom folder"
+msgstr ""
+
+msgctxt "#32024"
+msgid "Use custom Musicbrainz mirror"
+msgstr ""
+
+msgctxt "#32025"
+msgid "Skip if genre contains any of these genres"
+msgstr ""
+
+msgctxt "#32026"
+msgid "Skip news/weather/sports/commercial etc. (depends on correct epg info)"
+msgstr ""
+
+msgctxt "#32027"
+msgid "One or more filters are active for this item. Are you sure you want to proceed ?"
+msgstr ""
+
+msgctxt "#32028"
+msgid "Refresh (auto lookup)"
+msgstr ""
+
+msgctxt "#32029"
+msgid "Refresh (manual lookup)"
+msgstr ""
+
+msgctxt "#32030"
+msgid "Remove channel from ignore list"
+msgstr ""
+
+msgctxt "#32031"
+msgid "Add channel to ignore list"
+msgstr ""
+
+msgctxt "#32032"
+msgid "Remove title from ignore list"
+msgstr ""
+
+msgctxt "#32033"
+msgid "Add title to ignore list"
+msgstr ""
+
+msgctxt "#32034"
+msgid "Configure advanced settings"
+msgstr ""
+
+msgctxt "#32035"
+msgid "Settings for PVR artwork"
+msgstr ""
+
+msgctxt "#32036"
+msgid "Manual configure artwork"
+msgstr ""
+
+msgctxt "#32037"
+msgid "Continuing"
+msgstr "Terugkerend"
+
+msgctxt "#32038"
+msgid "Ended"
+msgstr "Beëindigd"
+
+msgctxt "#32040"
+msgid "Released"
+msgstr "Uitgegeven"
