@@ -1,3 +1,9 @@
+v.2.0.7
+- added last.fm bio file as option for finding Musicbrainz ID
+- moved all Musicbrainz ID functions into plugins
+- fix so featured artist parsing from song name is case insensitive
+- strip errant linefeed from readfile on musicbrainz.nfo (where manually created)
+
 v.2.0.6
 - removed some logging causing a unicode problem
 - fix for crash when no valid JSON returned from theaudiodb.com
