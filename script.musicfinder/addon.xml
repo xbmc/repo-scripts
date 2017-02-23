@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes'?>
+<addon id="script.musicfinder" name="Music Finder Script" provider-name="theDeadMan" version="1.0.0">
+    <requires>
+        <import addon="xbmc.python" version="2.25.0"/>
+        <import addon="script.module.simplejson" version="2.0.10"/>
+    </requires>
+    <extension point="xbmc.python.library" library="default.py" />
+    <extension point="xbmc.addon.metadata">
+        <summary lang="en">A simple script for skinners that lets them assign buttons to move directly to the currently playing artist or album's listing</summary>
+        <platform>all</platform>
+        <language />
+    </extension>
+</addon>
