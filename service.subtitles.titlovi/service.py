@@ -285,7 +285,7 @@ if params['action'] == 'search':
 elif params['action'] == 'download':
 
     osdb_server = OSDBServer()
-    url_base = "http://en.titlovi.com/downloads/default.ashx?type=1&mediaid=%s"
+    url_base = "http://titlovi.com/download/?type=1&mediaid=%s"
     url = url_base % params["ID"]
     log(__name__, 'link: %s' % url)
     # Serbian
