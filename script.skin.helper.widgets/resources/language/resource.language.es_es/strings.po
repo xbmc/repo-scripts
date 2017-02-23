@@ -1,0 +1,182 @@
+# Kodi language file
+# Addon Name: Skin Helper Widgets
+# Addon id: script.skin.helper.widgets
+# Addon Provider: marcelveldt
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC-Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: 2014-10-26 17:05+0000\n"
+"PO-Revision-Date: 2016-09-28 11:10-0400\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: es_ES\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 1.8.8\n"
+
+msgctxt "#32000"
+msgid "Favourites"
+msgstr "Favoritos"
+
+msgctxt "#32001"
+msgid "Favourite Media"
+msgstr "Medios Favoritos"
+
+msgctxt "#32002"
+msgid "Next Episodes"
+msgstr "Próximos Episodios"
+
+msgctxt "#32003"
+msgid "Recommended Movies"
+msgstr "Películas Recomendadas"
+
+msgctxt "#32004"
+msgid "Recommended Media"
+msgstr "Medios Recomendados"
+
+msgctxt "#32005"
+msgid "Recent Media"
+msgstr "Medios Recientes"
+
+msgctxt "#32006"
+msgid "Similar Movies"
+msgstr "Películas Similares"
+
+msgctxt "#32007"
+msgid "In progress and Recommended Media"
+msgstr "Medios En Progreso y Recomendados"
+
+msgctxt "#32011"
+msgid "In progress Media"
+msgstr "Medios En Progreso"
+
+msgctxt "#32012"
+msgid "Recently added songs"
+msgstr "Canciones añadidas recientemente"
+
+msgctxt "#32013"
+msgid "Recently played songs"
+msgstr "Canciones reproducidas recientemente"
+
+msgctxt "#32014"
+msgid "Similar TV Shows"
+msgstr "Series de TV Similares"
+
+msgctxt "#32015"
+msgid "Recommended albums"
+msgstr "Álbumes Recomendados"
+
+msgctxt "#32016"
+msgid "Recommended songs"
+msgstr "Canciones Recomendadas"
+
+msgctxt "#32017"
+msgid "PVR Channel groups"
+msgstr "grupos de Canales de PVR"
+
+msgctxt "#32018"
+msgid "Recent recordings"
+msgstr "Grabaciones Recientes"
+
+msgctxt "#32019"
+msgid "Next unwatched recordings"
+msgstr "Próximas grabaciones no vistas"
+
+msgctxt "#32020"
+msgid "TV Channels"
+msgstr "Canales de TV"
+
+msgctxt "#32021"
+msgid "Timers"
+msgstr "Temporizadores"
+
+msgctxt "#32022"
+msgid "Similar Media"
+msgstr "Medios Similares"
+
+msgctxt "#32023"
+msgid "Widgets"
+msgstr "Widgets"
+
+msgctxt "#32024"
+msgid "Enable artwork lookups"
+msgstr "Activar búsquedas de arte"
+
+msgctxt "#32025"
+msgid "Show specials in episode widgets"
+msgstr "Mostrar especiales en widgets de episodios"
+
+msgctxt "#32026"
+msgid "Browse albums instead of playing for album widgets"
+msgstr "Explorar álbumes en vz de reproducirlos en widgets de álbumes"
+
+msgctxt "#32027"
+msgid "In-progress episodes"
+msgstr "Episodios En Progreso"
+
+msgctxt "#32028"
+msgid "In-progress movies"
+msgstr "Películas En Progreso"
+
+msgctxt "#32029"
+msgid "In-progress and recommended movies"
+msgstr "Películas En Progreso y Recomendadas"
+
+msgctxt "#32030"
+msgid "TV Channels (with artwork)"
+msgstr "Canales de TV (con arte)"
+
+msgctxt "#32031"
+msgid "Next unwatched recordings (reversed)"
+msgstr "Próximas grabaciones no vistas (reversadas)"
+
+msgctxt "#32032"
+msgid "In-progress and random movies"
+msgstr "Películas En Progreso y Aleatorias"
+
+msgctxt "#32033"
+msgid "Random albums"
+msgstr "Álbumes al azar"
+
+msgctxt "#32034"
+msgid "Random songs"
+msgstr "Canciones al azar"
+
+msgctxt "#32035"
+msgid "Hide watched items in video widgets"
+msgstr "Esconder ítems ya vistos en widgets de vídeo"
+
+msgctxt "#32036"
+msgid "Only use in-progress shows in next episodes widget"
+msgstr "Sólo utilizar series en progreso en widget de próximos episodios"
+
+msgctxt "#32037"
+msgid "Recommended Tv Shows"
+msgstr "Series Recomendadas"
+
+msgctxt "#32038"
+msgid "Recently added movies"
+msgstr "Películas Añadidas Recientemente"
+
+msgctxt "#32039"
+msgid "Recently added episodes"
+msgstr "Episodios Añadidos Recientemente"
+
+msgctxt "#32040"
+msgid "Recently added musicvideos"
+msgstr "Videoclips Añadidos Recientemente"
+
+msgctxt "#32041"
+msgid "Random Tv Shows"
+msgstr "Series al azar"
+
+msgctxt "#32042"
+msgid "Unaired episodes"
+msgstr "Episodios sin estrenar"
+
+msgctxt "#32043"
+msgid "Next airing episodes"
+msgstr "Episodios de próximo estreno"
