@@ -24,7 +24,7 @@ class Main(object):
 
             #special action when we want to set our chosen color into a skinshortcuts property
             if propname and not isinstance(color_picker.result, int):
-                wait_for_skinshortcuts_window()
+                self.wait_for_skinshortcuts_window()
                 xbmc.sleep(400)
                 current_window = xbmcgui.Window( xbmcgui.getCurrentWindowDialogId() )
                 current_window.setProperty("customProperty", propname)
