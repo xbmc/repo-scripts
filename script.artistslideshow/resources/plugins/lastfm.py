@@ -33,7 +33,7 @@ class objectConfig():
 
 
     def provides( self ):
-        return ['bio', 'albums', 'similar']
+        return ['bio', 'albums', 'similar', 'mbid']
 
 
     def getAlbumList( self, album_params ):
@@ -130,7 +130,29 @@ class objectConfig():
         else:
             return similar_artists, self.loglines
 
-        
+
+    def getMBID( self, mbid_params ):
+        self.loglines = []
+        filepath = os.path.join( mbid_params.get( 'infodir', '' ), self.BIOFILENAME )
+        exists, cloglines = checkPath( filepath, False )
+        self.loglines.extend( cloglines )
+        if exists:
+            rloglines, rawxml = readFile( filepath )
+            self.loglines.extend( rloglines )
+            try:
+                xmldata = _xmltree.fromstring( rawxml )
+            except:
+                self.loglines.append( 'error reading musicbrainz ID from ' + filepath )
+                return '', self.loglines
+            for element in xmldata.getiterator():
+                if element.tag == "mbid":
+                    return element.text, self.loglines
+            self.loglines.append( 'no mbid found in' + filepath )
+            return '', self.loglines
+        else:
+            return '', self.loglines
+
+
     def _get_cache_time( self, cachefilepath ):
         rawdata = ''
         self.loglines.append( 'getting the cache timeout information for last.fm' )

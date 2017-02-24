@@ -2,7 +2,7 @@
 
 import os
 import xml.etree.ElementTree as _xmltree
-from ..common.fileops import readFile
+from ..common.fileops import readFile, checkPath
 from ..common.fix_utf8 import smartUTF8
 
 
@@ -15,7 +15,7 @@ class objectConfig():
 
 
     def provides( self ):
-        return ['bio', 'albums', 'similar']
+        return ['bio', 'albums', 'similar', 'mbid']
         
 
     def getAlbumList( self, album_params ):
@@ -67,8 +67,21 @@ class objectConfig():
             return '', self.loglines
         else:
             return bio, self.loglines
-        
-        
+
+
+    def getMBID( self, mbid_params ):
+        self.loglines = []
+        filename = os.path.join( mbid_params.get( 'infodir', '' ), 'musicbrainz.nfo' )
+        exists, cloglines = checkPath( filename, False )
+        self.loglines.extend( cloglines )
+        if exists:
+            cloglines, rawdata = readFile( filename )
+            self.loglines.extend( cloglines )
+            return rawdata.rstrip( '\n' ), self.loglines
+        else:
+            return '', self.loglines
+
+
     def getSimilarArtists( self, sim_params ):
         self.loglines = []
         similar_artists = []

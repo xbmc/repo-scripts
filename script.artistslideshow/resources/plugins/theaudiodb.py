@@ -40,7 +40,7 @@ class objectConfig():
 
 
     def provides( self ):
-        return ['bio', 'albums', 'images']
+        return ['bio', 'albums', 'images', 'mbid']
 
 
     def getAlbumList( self, album_params ):
@@ -101,6 +101,29 @@ class objectConfig():
             return [], self.loglines
         else: 
             return self._remove_exclusions( images ), self.loglines
+
+
+    def getMBID( self, mbid_params ):
+        self.loglines = []
+        self._set_filepaths( mbid_params )
+        exists, cloglines = checkPath( self.ARTISTFILEPATH, False )
+        self.loglines.extend( cloglines )
+        if exists:
+            cloglines, rawdata = readFile( self.ARTISTFILEPATH )
+            self.loglines.extend( cloglines )
+            try:
+                json_data = _json.loads( rawdata )
+            except ValueError:
+                self.loglines.append( 'no valid JSON data returned from ' + self.ARTISTFILEPATH )
+                return '', self.loglines
+            self.loglines.append( 'musicbrainz ID found in %s file' % self.ARTISTFILEPATH )
+            try:
+                return json_data.get( 'artists' )[0].get( 'strMusicBrainzID', '' ), self.loglines
+            except TypeError:
+                self.loglines.append( 'error reading musicbrainz ID from ' + self.ARTISTFILEPATH )
+                return '', self.loglines
+        else:
+            return '', self.loglines
         
 
     def _determine_url( self, params, mbidurl, tadbidurl, nameurl ):
