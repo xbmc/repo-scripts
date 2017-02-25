@@ -1,0 +1,17 @@
+<settings>
+  <category label="30000"><!---Anzeigeeinstellung--->
+	<setting id="ardLimit" type="slider" label="30001" subsetting="true" default="20" range="5,5,50" option="int" />
+	<setting id="arteLimit" type="slider" label="30002" subsetting="true" default="10" range="5,5,20" option="int" />
+	<setting id="zdfLimit" type="slider" label="30003" subsetting="true" default="20" range="5,5,50" option="int" />
+	<setting id="showIconFanart" type="bool" label="30004" default="true"/>
+    <setting type="sep"/>
+	<setting id="showSubtitles" type="bool" label="30005" default="false"/>
+	<setting id="hideAudioDisa" type="bool" label="30006" default="true"/>
+    <!---<setting type="sep"/>
+	<setting id="description" type="bool" label="30201" default="true"/>
+	<setting id="debug" type="bool" label="30200" default="false"/>
+	<setting id="back_hidden" type="bool" label="30202" default="false"/>
+	<setting id="show_score" type="bool" label="30203" default="true"/>
+	<setting id="firstrun" option="hidden" type="bool" visible="false" default="true" />--->
+  </category>
+</settings>
