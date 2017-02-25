@@ -145,7 +145,7 @@ def _search_movie(medianame,year=''):
     for char in illegal_char:
         medianame = medianame.replace( char , '+' ).replace( '++', '+' ).replace( '+++', '+' )
 
-    search_url = 'http://api.themoviedb.org/3/search/movie?query=%s&api_key=%s&year=%s' %( medianame, API_KEY, year )
+    search_url = 'http://api.themoviedb.org/3/search/movie?query=%s+%s&api_key=%s' %( medianame, year, API_KEY )
     tmdb_id = ''
     log('TMDB API search:   %s ' % search_url)
     try:
