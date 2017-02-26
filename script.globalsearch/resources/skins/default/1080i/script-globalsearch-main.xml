@@ -462,7 +462,7 @@
 								<control type="group">
 									<left>170</left>
 									<top>20</top>
-									<visible>!IsEmpty(ListItem.Property(UserRating))</visible>
+									<visible>!String.IsEmpty(ListItem.Property(UserRating))</visible>
 									<control type="image">
 										<left>8</left>
 										<top>2</top>
@@ -515,7 +515,7 @@
 									<control type="group">
 										<left>170</left>
 										<top>20</top>
-										<visible>!IsEmpty(ListItem.Property(UserRating))</visible>
+										<visible>!String.IsEmpty(ListItem.Property(UserRating))</visible>
 										<control type="image">
 											<left>8</left>
 											<top>2</top>
@@ -688,7 +688,7 @@
 								<aspectratio>keep</aspectratio>
 								<texture colordiffuse="FF12A0C7">globalsearch-itemcount.png</texture>
 								<animation effect="fade" time="200">VisibleChange</animation>
-								<xvisible>!IsEmpty(Container(111).NumItems)</xvisible>
+								<xvisible>!String.IsEmpty(Container(111).NumItems)</xvisible>
 							</control>
 						</control>
 						<control type="group">
@@ -787,7 +787,7 @@
 								<control type="group">
 									<left>170</left>
 									<top>20</top>
-									<visible>!IsEmpty(ListItem.Property(UserRating))</visible>
+									<visible>!String.IsEmpty(ListItem.Property(UserRating))</visible>
 									<control type="image">
 										<left>8</left>
 										<top>2</top>
@@ -840,7 +840,7 @@
 									<control type="group">
 										<left>170</left>
 										<top>20</top>
-										<visible>!IsEmpty(ListItem.Property(UserRating))</visible>
+										<visible>!String.IsEmpty(ListItem.Property(UserRating))</visible>
 										<control type="image">
 											<left>8</left>
 											<top>2</top>
@@ -1013,7 +1013,7 @@
 								<aspectratio>keep</aspectratio>
 								<texture colordiffuse="FF12A0C7">globalsearch-itemcount.png</texture>
 								<animation effect="fade" time="200">VisibleChange</animation>
-								<xvisible>!IsEmpty(Container(121).NumItems)</xvisible>
+								<xvisible>!String.IsEmpty(Container(121).NumItems)</xvisible>
 							</control>
 						</control>
 					</control>
@@ -1064,7 +1064,7 @@
 								<control type="group">
 									<left>170</left>
 									<top>20</top>
-									<visible>!IsEmpty(ListItem.Property(UserRating))</visible>
+									<visible>!String.IsEmpty(ListItem.Property(UserRating))</visible>
 									<control type="image">
 										<left>8</left>
 										<top>2</top>
@@ -1117,7 +1117,7 @@
 									<control type="group">
 										<left>170</left>
 										<top>20</top>
-										<visible>!IsEmpty(ListItem.Property(UserRating))</visible>
+										<visible>!String.IsEmpty(ListItem.Property(UserRating))</visible>
 										<control type="image">
 											<left>8</left>
 											<top>2</top>
@@ -1290,7 +1290,7 @@
 								<aspectratio>keep</aspectratio>
 								<texture colordiffuse="FF12A0C7">globalsearch-itemcount.png</texture>
 								<animation effect="fade" time="200">VisibleChange</animation>
-								<xvisible>!IsEmpty(Container(131).NumItems)</xvisible>
+								<xvisible>!String.IsEmpty(Container(131).NumItems)</xvisible>
 							</control>
 						</control>
 					</control>
@@ -1353,9 +1353,9 @@
 									<label>$INFO[ListItem.Label]</label>
 								</control>
 								<control type="group">
-									<left>170</left>
+									<left>325</left>
 									<top>20</top>
-									<visible>!IsEmpty(ListItem.Property(UserRating))</visible>
+									<visible>!String.IsEmpty(ListItem.Property(UserRating))</visible>
 									<control type="image">
 										<left>8</left>
 										<top>2</top>
@@ -1421,9 +1421,9 @@
 										<label>$INFO[ListItem.Label]</label>
 									</control>
 									<control type="group">
-										<left>170</left>
+										<left>325</left>
 										<top>20</top>
-										<visible>!IsEmpty(ListItem.Property(UserRating))</visible>
+										<visible>!String.IsEmpty(ListItem.Property(UserRating))</visible>
 										<control type="image">
 											<left>8</left>
 											<top>2</top>
@@ -1589,7 +1589,7 @@
 								<aspectratio>keep</aspectratio>
 								<texture colordiffuse="FF12A0C7">globalsearch-itemcount.png</texture>
 								<animation effect="fade" time="200">VisibleChange</animation>
-								<xvisible>!IsEmpty(Container(141).NumItems)</xvisible>
+								<xvisible>!String.IsEmpty(Container(141).NumItems)</xvisible>
 							</control>
 						</control>
 						<control type="group">
@@ -1700,9 +1700,9 @@
 									<label>$INFO[ListItem.Label]</label>
 								</control>
 								<control type="group">
-									<left>170</left>
+									<left>325</left>
 									<top>20</top>
-									<visible>!IsEmpty(ListItem.Property(UserRating))</visible>
+									<visible>!String.IsEmpty(ListItem.Property(UserRating))</visible>
 									<control type="image">
 										<left>8</left>
 										<top>2</top>
@@ -1768,9 +1768,9 @@
 										<label>$INFO[ListItem.Label]</label>
 									</control>
 									<control type="group">
-										<left>170</left>
+										<left>325</left>
 										<top>20</top>
-										<visible>!IsEmpty(ListItem.Property(UserRating))</visible>
+										<visible>!String.IsEmpty(ListItem.Property(UserRating))</visible>
 										<control type="image">
 											<left>8</left>
 											<top>2</top>
@@ -1936,7 +1936,7 @@
 								<aspectratio>keep</aspectratio>
 								<texture colordiffuse="FF12A0C7">globalsearch-itemcount.png</texture>
 								<animation effect="fade" time="200">VisibleChange</animation>
-								<xvisible>!IsEmpty(Container(151).NumItems)</xvisible>
+								<xvisible>!String.IsEmpty(Container(151).NumItems)</xvisible>
 							</control>
 						</control>
 						<control type="group">
@@ -2038,7 +2038,7 @@
 								<control type="group">
 									<left>250</left>
 									<top>20</top>
-									<visible>!IsEmpty(ListItem.Property(UserRating))</visible>
+									<visible>!String.IsEmpty(ListItem.Property(UserRating))</visible>
 									<control type="image">
 										<left>8</left>
 										<top>2</top>
@@ -2095,7 +2095,7 @@
 									<control type="group">
 										<left>250</left>
 										<top>20</top>
-										<visible>!IsEmpty(ListItem.Property(UserRating))</visible>
+										<visible>!String.IsEmpty(ListItem.Property(UserRating))</visible>
 										<control type="image">
 											<left>8</left>
 											<top>2</top>
@@ -2242,7 +2242,7 @@
 								<aspectratio>keep</aspectratio>
 								<texture colordiffuse="FF12A0C7">globalsearch-itemcount.png</texture>
 								<animation effect="fade" time="200">VisibleChange</animation>
-								<xvisible>!IsEmpty(Container(161).NumItems)</xvisible>
+								<xvisible>!String.IsEmpty(Container(161).NumItems)</xvisible>
 							</control>
 						</control>
 					</control>
@@ -2307,7 +2307,7 @@
 								<control type="group">
 									<left>250</left>
 									<top>20</top>
-									<visible>!IsEmpty(ListItem.Property(UserRating))</visible>
+									<visible>!String.IsEmpty(ListItem.Property(UserRating))</visible>
 									<control type="image">
 										<left>8</left>
 										<top>2</top>
@@ -2375,7 +2375,7 @@
 									<control type="group">
 										<left>250</left>
 										<top>20</top>
-										<visible>!IsEmpty(ListItem.Property(UserRating))</visible>
+										<visible>!String.IsEmpty(ListItem.Property(UserRating))</visible>
 										<control type="image">
 											<left>8</left>
 											<top>2</top>
@@ -2522,7 +2522,7 @@
 								<aspectratio>keep</aspectratio>
 								<texture colordiffuse="FF12A0C7">globalsearch-itemcount.png</texture>
 								<animation effect="fade" time="200">VisibleChange</animation>
-								<xvisible>!IsEmpty(Container(171).NumItems)</xvisible>
+								<xvisible>!String.IsEmpty(Container(171).NumItems)</xvisible>
 							</control>
 						</control>
 					</control>
@@ -2587,7 +2587,7 @@
 								<control type="group">
 									<left>250</left>
 									<top>20</top>
-									<visible>!IsEmpty(ListItem.Property(UserRating))</visible>
+									<visible>!String.IsEmpty(ListItem.Property(UserRating))</visible>
 									<control type="image">
 										<left>8</left>
 										<top>2</top>
@@ -2655,7 +2655,7 @@
 									<control type="group">
 										<left>250</left>
 										<top>20</top>
-										<visible>!IsEmpty(ListItem.Property(UserRating))</visible>
+										<visible>!String.IsEmpty(ListItem.Property(UserRating))</visible>
 										<control type="image">
 											<left>8</left>
 											<top>2</top>
@@ -2821,7 +2821,7 @@
 								<aspectratio>keep</aspectratio>
 								<texture colordiffuse="FF12A0C7">globalsearch-itemcount.png</texture>
 								<animation effect="fade" time="200">VisibleChange</animation>
-								<xvisible>!IsEmpty(Container(181).NumItems)</xvisible>
+								<xvisible>!String.IsEmpty(Container(181).NumItems)</xvisible>
 							</control>
 						</control>
 					</control>
@@ -2872,7 +2872,7 @@
 								<control type="group">
 									<left>170</left>
 									<top>20</top>
-									<visible>!IsEmpty(ListItem.Property(UserRating))</visible>
+									<visible>!String.IsEmpty(ListItem.Property(UserRating))</visible>
 									<control type="image">
 										<left>8</left>
 										<top>2</top>
@@ -2925,7 +2925,7 @@
 									<control type="group">
 										<left>170</left>
 										<top>20</top>
-										<visible>!IsEmpty(ListItem.Property(UserRating))</visible>
+										<visible>!String.IsEmpty(ListItem.Property(UserRating))</visible>
 										<control type="image">
 											<left>8</left>
 											<top>2</top>
@@ -3098,7 +3098,7 @@
 								<aspectratio>keep</aspectratio>
 								<texture colordiffuse="FF12A0C7">globalsearch-itemcount.png</texture>
 								<animation effect="fade" time="200">VisibleChange</animation>
-								<xvisible>!IsEmpty(Container(211).NumItems)</xvisible>
+								<xvisible>!String.IsEmpty(Container(211).NumItems)</xvisible>
 							</control>
 						</control>
 						<control type="group">
@@ -3197,7 +3197,7 @@
 								<control type="group">
 									<left>170</left>
 									<top>20</top>
-									<visible>!IsEmpty(ListItem.Property(UserRating))</visible>
+									<visible>!String.IsEmpty(ListItem.Property(UserRating))</visible>
 									<control type="image">
 										<left>8</left>
 										<top>2</top>
@@ -3250,7 +3250,7 @@
 									<control type="group">
 										<left>170</left>
 										<top>20</top>
-										<visible>!IsEmpty(ListItem.Property(UserRating))</visible>
+										<visible>!String.IsEmpty(ListItem.Property(UserRating))</visible>
 										<control type="image">
 											<left>8</left>
 											<top>2</top>
@@ -3423,7 +3423,7 @@
 								<aspectratio>keep</aspectratio>
 								<texture colordiffuse="FF12A0C7">globalsearch-itemcount.png</texture>
 								<animation effect="fade" time="200">VisibleChange</animation>
-								<xvisible>!IsEmpty(Container(231).NumItems)</xvisible>
+								<xvisible>!String.IsEmpty(Container(231).NumItems)</xvisible>
 							</control>
 						</control>
 						<control type="group">
@@ -3681,7 +3681,7 @@
 								<aspectratio>keep</aspectratio>
 								<texture colordiffuse="FF12A0C7">globalsearch-itemcount.png</texture>
 								<animation effect="fade" time="200">VisibleChange</animation>
-								<xvisible>!IsEmpty(Container(221).NumItems)</xvisible>
+								<xvisible>!String.IsEmpty(Container(221).NumItems)</xvisible>
 							</control>
 						</control>
 					</control>
