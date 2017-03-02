@@ -5,7 +5,7 @@
        provider-name="Leonard Richardson (leonardr@segfault.org)">
   <requires>
     <import addon="xbmc.python" 
-             version="2.14.0"/>
+             version="2.25.0"/>
   </requires>
   <extension point="xbmc.python.module"
              library="lib" />
