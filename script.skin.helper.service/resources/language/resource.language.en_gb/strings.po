@@ -1,0 +1,125 @@
+# Kodi language file
+# Addon Name: Skin Helper Service
+# Addon id: script.skin.helper.service
+# Addon Provider: marcelveldt
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC-Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: 2014-10-26 17:05+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE\n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+
+msgctxt "#32000"
+msgid "Custom Image"
+msgstr ""
+
+msgctxt "#32001"
+msgid "None"
+msgstr ""
+
+msgctxt "#32002"
+msgid "Background overlay texture"
+msgstr ""
+
+msgctxt "#32003"
+msgid "Browse custom image for background overlay"
+msgstr ""
+
+msgctxt "#32004"
+msgid "Custom single image"
+msgstr ""
+
+msgctxt "#32005"
+msgid "Custom multi image (folder)"
+msgstr ""
+
+msgctxt "#32006"
+msgid "Select busy spinner"
+msgstr ""
+
+msgctxt "#32007"
+msgid "%s missing!"
+msgstr ""
+
+msgctxt "#32008"
+msgid "To get the most out of this skin, it is suggested to install a image resource addon for %s. \n Do you want to select and install this image resource addon now ?"
+msgstr ""
+
+msgctxt "#32009"
+msgid "Custom path"
+msgstr ""
+
+msgctxt "#32010"
+msgid "Select resource addon or custom folder"
+msgstr ""
+
+msgctxt "#32011"
+msgid "Not installed"
+msgstr ""
+
+msgctxt "#32012"
+msgid "Select view"
+msgstr ""
+
+msgctxt "#32013"
+msgid "Enable/disable views"
+msgstr ""
+
+msgctxt "#32014"
+msgid "The action completed sucesfully"
+msgstr ""
+
+msgctxt "#32015"
+msgid "The action completed with errors"
+msgstr ""
+
+msgctxt "#32016"
+msgid "Do you want to setup a single background or a folder with multiple backgrounds ?"
+msgstr ""
+
+msgctxt "#32017"
+msgid "Single"
+msgstr ""
+
+msgctxt "#32018"
+msgid "Multiple"
+msgstr ""
+
+msgctxt "#32019"
+msgid "Random fanart from movie with genre"
+msgstr ""
+
+msgctxt "#32020"
+msgid "Select image"
+msgstr ""
+
+msgctxt "#32021"
+msgid "Available image resource addons"
+msgstr ""
+
+msgctxt "#32022"
+msgid "There are no (more) resource addons available for this type"
+msgstr ""
+
+msgctxt "#32023"
+msgid "Artwork options"
+msgstr ""
+
+msgctxt "#32024"
+msgid "Select Animated Art"
+msgstr ""
+
+msgctxt "#32025"
+msgid "Use submenu as widget"
+msgstr ""
+
+msgctxt "#32025"
+msgid "RCB Most played games"
+msgstr ""
