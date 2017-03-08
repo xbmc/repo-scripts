@@ -74,7 +74,7 @@ class Main:
         listitem = xbmcgui.ListItem(xbmc.getLocalizedString(21452))
         listitem.setProperty('more', 'true')
         addonlist.append(listitem)
-        num = xbmcgui.Dialog().select(xbmc.getLocalizedString(20464) % xbmc.getLocalizedString(536), addonlist, useDetails=True)
+        num = xbmcgui.Dialog().select(xbmc.getLocalizedString(424), addonlist, useDetails=True)
         if num == 0:
             xbmc.executebuiltin('Skin.Reset(%s)' % (string + '.name'))
             xbmc.executebuiltin('Skin.Reset(%s)' % (string + '.path'))
