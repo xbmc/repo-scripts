@@ -378,7 +378,7 @@ def handleDownload(info, duration=None, bg=False, path=None):
     Returns a DownloadResult object for foreground transfers.
     """
     info = _convertInfo(info)
-    path = StreamUtils.getDownloadPath()
+    path = path or StreamUtils.getDownloadPath()
     if bg:
         servicecontrol.ServiceControl().download(info, path, duration)
     else:

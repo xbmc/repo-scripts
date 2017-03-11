@@ -204,7 +204,7 @@ class YoutubeDLWrapper(youtube_dl.YoutubeDL):
         # 'eta': eta,
         # 'speed': speed
         sofar = info.get('downloaded_bytes')
-        total = info.get('total_bytes')
+        total = info.get('total_bytes') or info.get('total_bytes_estimate')
         if info.get('filename'):
             self._lastDownloadedFilePath = info.get('filename')
         pct = ''
