@@ -14,7 +14,7 @@
         <setting id="next_schedule" type="bool" label="30007" default="false" />
 		<setting id="separator" type="sep" />
 		<setting id="network" type="bool" label="30034" default="false" />
-		<setting id="excluded_ports" type="text" label="30037" enable="eq(-1,true)" default="" />
+		<setting id="monitored_ports" type="text" label="30037" enable="eq(-1,true)" default="" />
 		<setting id="separator" type="sep" />
 		<setting id="postprocessor_enable" type="bool" label="30035" default="false" />
 		<setting id="processor_list" type="text" label="30036" enable="eq(-1,true)" default="" />

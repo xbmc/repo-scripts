@@ -44,8 +44,9 @@ OSD = xbmcgui.Dialog()
 
 PLATFORM_OE = any(dist for dist in ('LIBREELEC', 'OPENELEC') if dist in ', '.join(platform.uname()).upper())
 if PLATFORM_OE:
-    writeLog('OS seems to be LibreELEC or OpenELEC, reset sudo in settings')
-    if __addon__.getSetting('sudo').upper() == 'TRUE': __addon__.setSetting('sudo', 'false')
+    if __addon__.getSetting('sudo').upper() == 'TRUE':
+        __addon__.setSetting('sudo', 'false')
+        writeLog('OS seems to be LibreELEC or OpenELEC, reset sudo in settings')
 
 # binary Flags
 
@@ -69,7 +70,7 @@ class Manager(object):
         self.__wakeUpUT = None
         self.__wakeUpStrOffset = None
         self.__wakeUpMessage = ''
-        self.__excluded_ports = ''
+        self.__monitored_ports = ''
         self.__ScreensaverActive = None
         self.__windowID = None
         self.rndProcNum = random.randint(1, 1024)
@@ -131,9 +132,8 @@ class Manager(object):
         # check for network activity
         self.__network = True if __addon__.getSetting('network').upper() == 'TRUE' else False
 
-        # transform possible ugly userinput (e.g. 'p1, p2,,   p3 p4  ') to a shapely list, calculate excluded ports
-        _np = ' '.join(__addon__.getSetting('excluded_ports').replace(',',' ').split()).split()
-        for _item in _np: self.__excluded_ports += (' | grep -v ":%s"' % (_item))
+        # transform possible ugly userinput (e.g. 'p1, p2,,   p3 p4  ') to a shapely list
+        self.__monitored_ports = ' '.join(__addon__.getSetting('monitored_ports').replace(',',' ').split()).split()
 
         # check for processes
         self.__pp_enabled = True if __addon__.getSetting('postprocessor_enable').upper() == 'TRUE' else False
@@ -292,13 +292,12 @@ class Manager(object):
 
         # Check for active network connection(s)
         if self.__network and Net:
-            nwc = subprocess.Popen('netstat -an | grep ESTABLISHED | grep -v "127.0.0.1" %s' % self.__excluded_ports,
-                                   stdout=subprocess.PIPE, shell=True).communicate()
-            nwc = nwc[0].strip()
-            if nwc and len(nwc.split('\n')) > 0:
-                bState |= isNET
-                _nc = nwc.split('\n')
-                for _conn in _nc: writeLog('Establ. nc: %s <-> %s' % (_conn.split()[3], _conn.split()[4]))
+            for port in self.__monitored_ports:
+                nwc = subprocess.Popen('netstat -an | grep ESTABLISHED | grep -v "127.0.0.1" | grep ":%s "' % port, stdout=subprocess.PIPE, shell=True).communicate()
+                nwc = nwc[0].strip()
+                if nwc and len(nwc.split('\n')) > 0:
+                    bState |= isNET
+                    writeLog('Connection on port %s established and active' % (port))
 
         # Check if screensaver is running
         self.__ScScreensaverActive = xbmc.getCondVisibility('System.ScreenSaverActive')
