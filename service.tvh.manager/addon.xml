@@ -2,7 +2,6 @@
 <addon id="service.tvh.manager" name="TVHeadend Power and Recording Management" version="0.3.21" provider-name="Birger Jesch">
   <requires>
     <import addon="xbmc.python" version="2.20.0" />
-    <import addon="xbmc.addon" version="15.0.0" />
   </requires>
   <extension point="xbmc.service" library="default.py" start="[login|startup]" />
   <extension point="xbmc.python.script" library="default.py" />
@@ -22,5 +21,12 @@
     <website>http://vdr4bj1.no-ip.org</website>
     <email>birger.jesch@gmail.com</email>
     <source>https://github.com/b-jesch/service.tvh.manager</source>
+    <assets>
+      <icon>icon.png</icon>
+      <fanart>fanart.jpg</fanart>
+      <screenshot>resources/screenshot-01.jpg</screenshot>
+      <screenshot>resources/screenshot-02.jpg</screenshot>
+      <screenshot>resources/screenshot-03.jpg</screenshot>
+    </assets>
   </extension>
 </addon>
