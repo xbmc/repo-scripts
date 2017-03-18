@@ -138,8 +138,8 @@ msgid "List of monitored Tasks"
 msgstr "Lista monitorowanych Zadań"
 
 msgctxt "#30037"
-msgid "Exclude ports from monitoring"
-msgstr "wyłączenie portów z monitoringu"
+msgid "Monitored Ports"
+msgstr "Lista monitorowanych Portów"
 
 msgctxt "#30040"
 msgid "Send Email after Recording"

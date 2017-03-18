@@ -145,7 +145,7 @@ msgid "List of monitored Tasks"
 msgstr ""
 
 msgctxt "#30037"
-msgid "Exclude ports from monitoring"
+msgid "Monitored Ports"
 msgstr ""
 
 #empty strings from id 30038 to 30039
