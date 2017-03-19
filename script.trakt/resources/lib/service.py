@@ -2,20 +2,20 @@
 import threading
 import logging
 import xbmc
-import globals
-import sqlitequeue
-import utilities
-import kodiUtilities
+from resources.lib import globals
+from resources.lib import sqlitequeue
+from resources.lib import utilities
+from resources.lib import kodiUtilities
 import time
 import xbmcgui
 import json
 import re
 import AddonSignals
 
-from rating import rateMedia
-from scrobbler import Scrobbler
-from sync import Sync
-from traktapi import traktAPI
+from resources.lib.rating import rateMedia
+from resources.lib.scrobbler import Scrobbler
+from resources.lib.sync import Sync
+from resources.lib.traktapi import traktAPI
 
 logger = logging.getLogger(__name__)
 
@@ -389,8 +389,11 @@ class traktPlayer(xbmc.Player):
         # only do anything if we're playing a video
         if self.isPlayingVideo():
             # get item data from json rpc
+            activePlayers = kodiUtilities.kodiJsonRequest({"jsonrpc": "2.0", "method": "Player.GetActivePlayers", "id": 1})
+            logger.debug("[traktPlayer] onPlayBackStarted() - activePlayers: %s" % activePlayers)
+            playerId = int(activePlayers[0]['playerid'])
             logger.debug("[traktPlayer] onPlayBackStarted() - Doing Player.GetItem kodiJsonRequest")
-            result = kodiUtilities.kodiJsonRequest({'jsonrpc': '2.0', 'method': 'Player.GetItem', 'params': {'playerid': 1}, 'id': 1})
+            result = kodiUtilities.kodiJsonRequest({'jsonrpc': '2.0', 'method': 'Player.GetItem', 'params': {'playerid': playerId}, 'id': 1})
             if result:
                 logger.debug("[traktPlayer] onPlayBackStarted() - %s" % result)
                 # check for exclusion
