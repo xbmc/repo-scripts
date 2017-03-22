@@ -5,8 +5,7 @@
   </requires>
   <extension point="xbmc.python.module" library="lib" />
   <extension point="xbmc.addon.metadata">
-    <platform>all</platform>
-    <language>en</language>
+    <platform>all</platform>    
     <summary lang="en_GB">Simplify authentication to services that use adobe pass</summary>
     <description lang="en_GB">Simplify Logins authentication services that use adobe pass</description>
     <disclaimer lang="en_GB"></disclaimer>
