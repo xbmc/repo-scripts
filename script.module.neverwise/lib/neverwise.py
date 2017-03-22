@@ -1,173 +1,190 @@
 #!/usr/bin/python
-import sys, urllib, urllib2, urlparse, xbmcplugin, xbmcgui, xbmcaddon, gzip, StringIO, json
+import gzip, HTMLParser, json, os, re, StringIO, sys, urllib, urllib2, urlparse, xbmc, xbmcaddon, xbmcgui, xbmcplugin
 from BeautifulSoup import BeautifulSoup
 
-class Util(object):
+_idPlugin = 'script.module.neverwise'
+addon = xbmcaddon.Addon()
+addonName = addon.getAddonInfo('name')
+icon_path = os.path.join(addon.getAddonInfo('path'), 'icon.png')
 
-  _idPlugin = 'script.module.neverwise'
-  _addonName = xbmcaddon.Addon().getAddonInfo('name')
+
+def getResponseJson(url, headers = {}):
+
+  result = getResponse(url, headers)
+
+  if result.isSucceeded and len(result.body) > 0:
+    result.body = json.loads(result.body)
+  else:
+    result.isSucceeded = False
+
+  return result
 
 
-  @staticmethod
-  def getResponseJson(url, headers = {}):
+def getResponseBS(url, headers = {}):
 
-    result = Util.getResponse(url, headers)
+  result = getResponse(url, headers)
 
-    if result.isSucceeded and len(result.body) > 0:
-      result.body = json.loads(result.body)
-    else:
+  if result.isSucceeded:
+    result.body = result.body.replace('&nbsp;', ' ')
+    result.body = normalizeResponse(result.body)
+    result.body = BeautifulSoup(result.body, convertEntities = BeautifulSoup.HTML_ENTITIES) # For BS 3, in BS 4, entities get decoded automatically.
+
+  return result
+
+
+def getResponseForRegEx(url, headers = {}):
+
+  result = getResponse(url, headers)
+
+  if result.isSucceeded:
+    result.body = htmlDecode(result.body)
+    result.body = normalizeResponse(result.body)
+
+  return result
+
+
+def getResponse(url, headers = {}):
+
+  defaultHeaders = {
+    'User-Agent' : 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:50.0) Gecko/20100101 Firefox/50.0',
+    'Accept-Encoding' : 'gzip, deflate'
+  }
+
+  for key, value in defaultHeaders.iteritems():
+    if key not in headers:
+      headers[key] = value
+
+  req = urllib2.Request(url, headers = headers)
+
+  result = Response()
+  try:
+    response = urllib2.urlopen(req)
+  except:
+    result.isSucceeded = False
+    showConnectionError()
+  else:
+    result.body = response.read()
+    encoding = response.info().get('Content-Encoding')
+    if encoding == 'gzip':
+      result.body = gzip.GzipFile(fileobj = StringIO.StringIO(result.body)).read()
+    elif encoding == 'deflate':
+      result.body = zlib.decompress(result.body)
+
+    charset = response.headers.getparam('charset')
+    if charset != None:
+      result.body = result.body.decode(charset)
+
+    response.close()
+
+    if result.body.find(b'\0') > -1: # null bytes, if there's, the response is wrong.
       result.isSucceeded = False
+      showResponseError()
 
-    return result
-
-  @staticmethod
-  def getResponseBS(url, headers = {}):
-
-    result = Util.getResponseForRegEx(url, headers)
-
-    if result.isSucceeded:
-      result.body = BeautifulSoup(result.body, convertEntities = BeautifulSoup.HTML_ENTITIES) # For BS 3, in BS 4, entities get decoded automatically.
-
-    return result
-
-  @staticmethod
-  def getResponseForRegEx(url, headers = {}):
-
-    result = Util.getResponse(url, headers)
-
-    if result.isSucceeded:
-      result.body = result.body.replace('\t', '').replace('\r\n', '').replace('\n', '').replace('\r', '').replace('" />', '"/>')
-      while result.body.find('  ') > -1: result.body = result.body.replace('  ', ' ')
-
-    return result
-
-  @staticmethod
-  def getResponse(url, headers = {}):
-
-    defaultHeaders = {
-      'User-Agent' : 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:44.0) Gecko/20100101 Firefox/44.0',
-      'Accept-Encoding' : 'gzip, deflate'
-    }
-
-    for key, value in defaultHeaders.iteritems():
-      if key not in headers:
-        headers[key] = value
-
-    req = urllib2.Request(url, headers = headers)
-
-    result = Response()
-    try:
-      response = urllib2.urlopen(req, timeout = 60)
-    except:
-      result.isSucceeded = False
-      Util.showConnectionErrorDialog()
-    else:
-      result.body = response.read()
-      ce = response.info().get('Content-Encoding')
-      if ce == 'gzip':
-        result.body = gzip.GzipFile(fileobj = StringIO.StringIO(result.body)).read()
-      elif ce == 'deflate':
-        result.body = zlib.decompress(result.body)
-
-      response.close()
-
-      if result.body.find(b'\0') > -1: # null bytes, if there's, the response is wrong.
-        result.isSucceeded = False
-        Util.showResponseErrorDialog()
-
-    return result
+  return result
 
 
-  @staticmethod
-  def showConnectionErrorDialog():
-    xbmcgui.Dialog().ok(Util._addonName, Util.getTranslation(33001, Util._idPlugin))
+def normalizeResponse(body):
+  body = re.sub('\s+', ' ', body)
+  return body.replace('" />', '"/>')
 
 
-  @staticmethod
-  def showVideoNotAvailableDialog():
-    xbmcgui.Dialog().ok(Util._addonName, Util.getTranslation(33002, Util._idPlugin))
+def showNotification(message, time = 5000, header = addonName, image = icon_path):
+  notify = u'XBMC.Notification({0},{1},{2},{3})'.format(header, message, time, image)
+  xbmc.executebuiltin(notify.encode('utf-8'))
 
 
-  @staticmethod
-  def showResponseErrorDialog():
-    xbmcgui.Dialog().ok(Util._addonName, Util.getTranslation(33003, Util._idPlugin))
+def showConnectionError():
+  showNotification(getTranslation(33001, _idPlugin))
 
 
-  @staticmethod
-  def getTranslation(translationId, addonId = ''):
-    return xbmcaddon.Addon(addonId).getLocalizedString(translationId)
+def showVideoNotAvailable():
+  showNotification(getTranslation(33002, _idPlugin))
 
 
-  # Convert parameters encoded in a URL to a dict.
-  @staticmethod
-  def urlParametersToDict(parameters):
-    if len(parameters) > 0 and parameters[0] == '?':
-      parameters = parameters[1:]
-    return dict(urlparse.parse_qsl(parameters))
+def showResponseError():
+  showNotification(getTranslation(33003, _idPlugin))
 
 
-  @staticmethod
-  def createListItem(label, label2 = '', iconImage = None, thumbnailImage = None, path = None, fanart = None, streamtype = None, infolabels = None, duration = '', isPlayable = False):
-    li = xbmcgui.ListItem(label, label2)
-
-    if iconImage:
-      li.setIconImage(iconImage)
-
-    if thumbnailImage:
-      li.setThumbnailImage(thumbnailImage)
-
-    if path:
-      li.setPath(path)
-
-    if fanart:
-      li.setProperty('fanart_image', fanart)
-
-    if streamtype:
-      li.setInfo(streamtype, infolabels)
-
-    if streamtype == 'video' and duration:
-      li.addStreamInfo(streamtype, {'duration': duration})
-
-    if isPlayable:
-      li.setProperty('IsPlayable', 'true')
-
-    return li
+def getTranslation(translationId, addonId = ''):
+  return xbmcaddon.Addon(addonId).getLocalizedString(translationId)
 
 
-  @staticmethod
-  def formatUrl(parameters, domain = sys.argv[0]):
-    return '{0}?{1}'.format(domain, urllib.urlencode(Util.encodeDict(parameters)))
+# Convert parameters encoded in a URL to a dict.
+def urlParametersToDict(parameters):
+  if len(parameters) > 0 and parameters[0] == '?':
+    parameters = parameters[1:]
+  return dict(urlparse.parse_qsl(parameters))
 
 
-  @staticmethod
-  def createNextPageItem(handle, pageNum, urlDictParams):
-    title = '{0} {1} >'.format(Util.getTranslation(33000, Util._idPlugin), pageNum)
-    xbmcplugin.addDirectoryItem(handle, Util.formatUrl(urlDictParams), Util.createListItem(title, thumbnailImage = 'DefaultVideoPlaylists.png'), True)
+def createListItem(label, label2 = '', iconImage = None, thumbnailImage = None, path = None, fanart = None, streamtype = None, infolabels = None, duration = '', isPlayable = False):
+  li = xbmcgui.ListItem(label, label2)
+
+  if iconImage:
+    li.setIconImage(iconImage)
+
+  if thumbnailImage:
+    li.setThumbnailImage(thumbnailImage)
+
+  if path:
+    li.setPath(path)
+
+  if fanart:
+    li.setProperty('fanart_image', fanart)
+
+  if streamtype:
+    li.setInfo(streamtype, infolabels)
+
+  if streamtype == 'video' and duration:
+    li.addStreamInfo(streamtype, {'duration': duration})
+
+  if isPlayable:
+    li.setProperty('IsPlayable', 'true')
+
+  return li
 
 
-  @staticmethod
-  def createAudioVideoItems(handle):
-    xbmcplugin.addDirectoryItem(handle, Util.formatUrl({ 'content_type' : 'video' }), Util.createListItem(Util.getTranslation(33004, Util._idPlugin), thumbnailImage = 'DefaultMovies.png'), True)
-    xbmcplugin.addDirectoryItem(handle, Util.formatUrl({ 'content_type' : 'audio' }), Util.createListItem(Util.getTranslation(33005, Util._idPlugin), thumbnailImage = 'DefaultMusicSongs.png'), True)
+def formatUrl(parameters, domain = sys.argv[0]):
+  return '{0}?{1}'.format(domain, urllib.urlencode(encodeDict(parameters)))
 
 
-  @staticmethod
-  def encodeDict(oldDict):
-    newDict = {}
-    for k, v in oldDict.iteritems():
-      if isinstance(v, unicode):
-        v = v.encode('utf8')
-      elif isinstance(v, str):
-        # Must be encoded in UTF-8
-        v.decode('utf8')
-      newDict[k] = v
-    return newDict
+def createNextPageItem(handle, pageNum, urlDictParams):
+  title = '{0} {1} >'.format(getTranslation(33000, _idPlugin), pageNum)
+  xbmcplugin.addDirectoryItem(handle, formatUrl(urlDictParams), createListItem(title, thumbnailImage = 'DefaultVideoPlaylists.png'), True)
 
 
-  @staticmethod
-  def playStream(handle, label, thumbnailImage = None, path = None, streamtype = None, infolabels = None):
-    li = Util.createListItem(label, thumbnailImage = thumbnailImage, path = path, streamtype = streamtype, infolabels = infolabels)
-    xbmcplugin.setResolvedUrl(handle, True, li)
+def createAudioVideoItems(handle):
+  xbmcplugin.addDirectoryItem(handle, formatUrl({ 'content_type' : 'video' }), createListItem(getTranslation(33004, _idPlugin), thumbnailImage = 'DefaultMovies.png'), True)
+  xbmcplugin.addDirectoryItem(handle, formatUrl({ 'content_type' : 'audio' }), createListItem(getTranslation(33005, _idPlugin), thumbnailImage = 'DefaultMusicSongs.png'), True)
+
+
+def encodeDict(oldDict):
+  newDict = {}
+  for k, v in oldDict.iteritems():
+    if isinstance(v, unicode):
+      v = v.encode('utf8')
+    elif isinstance(v, str):
+      # Must be encoded in UTF-8
+      v.decode('utf8')
+    newDict[k] = v
+  return newDict
+
+
+def playStream(handle, label, thumbnailImage = None, path = None, streamtype = None, infolabels = None):
+  li = createListItem(label, thumbnailImage = thumbnailImage, path = path, streamtype = streamtype, infolabels = infolabels)
+  xbmcplugin.setResolvedUrl(handle, True, li)
+
+
+def stripTags(text):
+  text = re.sub('<[^<]+?>', '', text)
+  return text.strip()
+
+
+def htmlDecode(text):
+  try:
+    text = text.decode('utf-8')
+  except:
+    pass
+  return HTMLParser.HTMLParser().unescape(text)
 
 
 class Response(object):

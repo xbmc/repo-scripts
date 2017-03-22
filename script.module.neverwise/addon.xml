@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.module.neverwise" name="NeverWise XBMC toolkit" version="1.0.7" provider-name="NeverWise">
+<addon id="script.module.neverwise" name="NeverWise Kodi toolkit" version="1.0.9" provider-name="NeverWise">
   <requires>
     <import addon="xbmc.python" version="2.14.0"/>
     <import addon="script.module.beautifulsoup" version="3.2.1"/>
@@ -7,12 +7,12 @@
   <extension library="lib" point="xbmc.python.module"/>
   <extension point="xbmc.addon.metadata">
     <platform>all</platform>
-    <summary lang="it">Strumenti per i plugins di xbmc.</summary>
-    <summary lang="en">Toolkit for xbmc plugins.</summary>
-    <description lang="it">Strumenti utilizzati dai componenti aggiuntivi per XBMC del NeverWise repository.</description>
-    <description lang="en">Toolkit used in the add-ons for XBMC of the NeverWise repository.</description>
+    <summary lang="it">Strumenti per gli addons audio/video di Kodi.</summary>
+    <summary lang="en">Toolkit for Kodi audio/video addons.</summary>
+    <description lang="it">Questi strumenti sono utilizzati negli addons per Kodi sviluppati da NeverWise.</description>
+    <description lang="en">These toolkit are used in the addons for Kodi developed by NeverWise.</description>
     <language>it</language>
-    <license>GNU GENERAL PUBLIC LICENSE. Version 3, 29 June 2007</license>
+    <license>GNU LESSER GENERAL PUBLIC LICENSE. Version 3, 29 June 2007</license>
     <forum></forum>
     <website></website>
     <email></email>
