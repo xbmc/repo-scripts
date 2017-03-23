@@ -7,7 +7,7 @@
 <!--- If you're unsure about any of these, don't hesitate to ask. We're here to help! -->
 - [ ] My code follows the [add-on rules](http://kodi.wiki/view/Add-on_rules) and [piracy stance](http://kodi.wiki/view/Official:Forum_rules#Piracy_Policy) of this project. 
 - [ ] I have read the [CONTRIBUTING](https://github.com/xbmc/repo-scripts/blob/master/CONTRIBUTING.md) document
-- [ ] Each add-on submission should be a single commit with using the following style: [sciprt.foo.bar] v1.0.0
+- [ ] Each add-on submission should be a single commit with using the following style: [script.foo.bar] v1.0.0
 
 Additional information :
 - Submitting your add-on to this specific branch makes it available to any Kodi version equal or higher than the branch name with the applicable Kodi dependencies limits.
