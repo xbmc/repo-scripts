@@ -1,3 +1,7 @@
+0.0.8
+=====
+- Set `listitem.is_folder` to `False` when setting `listitem.is_playable` to `True`.
+
 0.0.7
 =====
 

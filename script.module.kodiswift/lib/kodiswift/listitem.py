@@ -195,6 +195,8 @@ class ListItem(object):
     @playable.setter
     def playable(self, value):
         self._playable = value
+        if value:
+            self.is_folder = False
         is_playable = 'true' if self._playable else 'false'
         self.set_property('isPlayable', is_playable)
 
@@ -285,7 +287,6 @@ class ListItem(object):
         the properties in a dict and then use the **dct to call this
         method.
         """
-        # TODO(Sinap): Should this just use **kwargs? or should art be a dict?
         listitem = cls(label, label2, path=path)
         listitem.art = {
             'icon': icon,
