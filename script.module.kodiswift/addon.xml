@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.module.kodiswift" name="kodiswift" provider-name="Aaron Frase (Sinap)" version="0.0.7">
+<addon id="script.module.kodiswift" name="kodiswift" provider-name="Aaron Frase (Sinap)" version="0.0.8">
   <requires>
     <import addon="xbmc.python" version="2.24.0"/>
   </requires>
@@ -9,7 +9,7 @@
     <description lang="en">A micro framework to enable rapid development of Kodi plugins.</description>
     <platform>all</platform>
     <license>GNU General Public License v3 (GPL-3)</license>
-    <source>https://github.com/Sinap/kodiswift</source>
+    <source>https://github.com/afrase/kodiswift</source>
     <email>afrase91@gmail.com</email>
     <language/>
     <website/>
