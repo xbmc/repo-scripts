@@ -3,6 +3,24 @@
     "releases": {
         "stable": [
             {
+                "major": "17",
+                "minor": "1",
+                "tag": "stable",
+                "tagversion":"",
+                "revision": "20170320-fc1619b",
+                "extrainfo": "final",
+                "addon_support": "yes"
+            },
+            {
+                "major": "17",
+                "minor": "0",
+                "tag": "stable",
+                "tagversion":"",
+                "revision": "20170201-a10c504",
+                "extrainfo": "final",
+                "addon_support": "yes"
+            },
+            {
                 "major": "16",
                 "minor": "1",
                 "tag": "stable",
