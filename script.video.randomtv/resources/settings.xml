@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+    <setting id="IncludeUnwatched" label="Include Unwatched" type="bool" default="false"/>
+    <setting id="UpdatePlayCount" label="Update Play Count" type="bool" default="false"/>
+	<setting id="RepeatPlaylist" label="Repeat Playlist" type="bool" default="true"/>
+	<setting id="ShuffleOnRepeat" label="Shuffle On Repeat" type="bool" default="true" visible="eq(-1,true)" enable="eq(-1,true)" subsetting="true"/>
+    <setting id="ShowNotifications" label="Show Notifications" type="bool" default="true"/>
+	<setting type="sep"/>
+	<setting id="IncludeAll" label="Include All TV Shows" type="bool" default="true"/>
+	<setting id="SelectShowsAction" label="Select TV Shows" type="action" action="RunScript(script.video.randomtv, SelectShows)" visible="eq(-1,false)" enable="eq(-1,false)" subsetting="true" option="close"/>
+</settings>
