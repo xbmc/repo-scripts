@@ -1,0 +1,209 @@
+# Kodi language file
+# Addon Name: Skin Helper Backgrounds
+# Addon id: script.skin.helper.backgrounds
+# Addon Provider: marcelveldt
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC-Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: 2014-10-26 17:05+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: Guilouz\n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+
+msgctxt "#32000"
+msgid "Backgrounds"
+msgstr "Arrière-plans"
+
+msgctxt "#32001"
+msgid "Wall Backgrounds"
+msgstr "Arrière-plans du mur"
+
+msgctxt "#32002"
+msgid "Interval in seconds for rotating backgrounds (0 to disable)"
+msgstr "Intervalle en secondes pour la rotation des arrière-plans (0 pour désactiver)"
+
+msgctxt "#32003"
+msgid "Interval in seconds for rotating wall images (0 to disable)"
+msgstr "Intervalle en secondes pour la rotation des images du mur (0 pour désactiver)"
+
+msgctxt "#32004"
+msgid "Only use images from recordings for random PVR background"
+msgstr "Utiliser uniquement les images des enregistrements pour l'arrière-plan PVR aléatoire"
+
+msgctxt "#32005"
+msgid "Use custom path for random pictures background"
+msgstr "Utiliser un chemin personnalisé pour les images d'arrière-plans aléatoires"
+
+msgctxt "#32006"
+msgid "Custom path:"
+msgstr "Chemin personnalisé :"
+
+msgctxt "#32007"
+msgid "Maximum number of wall images to create for each background"
+msgstr "Nombre maximal d'images du mur à créer pour chaque arrière-plan"
+
+msgctxt "#32008"
+msgid "Clear cache (rebuild all wall images)"
+msgstr "Supprimer le cache (reconstruit toutes les images du mur)"
+
+msgctxt "#32009"
+msgid "Global media fanart background"
+msgstr "Arrière-plan global du média"
+
+msgctxt "#32010"
+msgid "Random movies background"
+msgstr "Arrière-plans de films aléatoires"
+
+msgctxt "#32011"
+msgid "Recent movies background"
+msgstr "Arrière-plans de fims récents"
+
+msgctxt "#32012"
+msgid "In progress movies background"
+msgstr "Arrière-plans de fims en cours"
+
+msgctxt "#32013"
+msgid "Unwatched movies background"
+msgstr "Arrière-plans de fims non vus"
+
+msgctxt "#32014"
+msgid "Random Tv Shows background"
+msgstr "Arrière-plans de séries TV aléatoires"
+
+msgctxt "#32015"
+msgid "Recent episodes background"
+msgstr "Arrière-plans d'épisodes récents"
+
+msgctxt "#32016"
+msgid "In progress Tv Shows background"
+msgstr "Arrière-plans d'épisodes en cours"
+
+msgctxt "#32017"
+msgid "Random pictures background"
+msgstr "Arrière-plans d'images aléatoires"
+
+msgctxt "#32018"
+msgid "Random music videos background"
+msgstr "Arrière-plans de clips vidéos aléatoires"
+
+msgctxt "#32019"
+msgid "Random music artists background"
+msgstr "Arrière-plans d'artistes de musique aléatoires"
+
+msgctxt "#32020"
+msgid "Top rated Movies (extendedinfo)"
+msgstr "Films les mieux notés (extendedinfo)"
+
+msgctxt "#32021"
+msgid "Top Rated tvshows (extendedinfo)"
+msgstr "Séries TV les mieux notées (extendedinfo)"
+
+msgctxt "#32022"
+msgid "Random songs background"
+msgstr "Arrière-plans de chansons aléatoires"
+
+msgctxt "#32023"
+msgid "Recent albums background"
+msgstr "Arrière-plans d'albums récents"
+
+msgctxt "#32024"
+msgid "Random PVR background"
+msgstr "Arrière-plans de PVR aléatoires"
+
+msgctxt "#32025"
+msgid "Global videos background"
+msgstr "Arrière-plan global de la vidéo"
+
+msgctxt "#32026"
+msgid "Global Movies & TvShows background"
+msgstr "Arrière-plans globals des films et séries TV"
+
+msgctxt "#32027"
+msgid "Recent videos background"
+msgstr "Arrière-plans des vidéos récentes"
+
+msgctxt "#32028"
+msgid "In-progress videos background"
+msgstr "Arrière-plans des vidéos en cours"
+
+msgctxt "#32029"
+msgid "Wall"
+msgstr "Mur"
+
+msgctxt "#32030"
+msgid "Poster Wall"
+msgstr "Mur de posters"
+
+msgctxt "#32031"
+msgid "Black & White"
+msgstr "Noir & Blanc"
+
+msgctxt "#32032"
+msgid "Error while writing changes. Make sure you have filled in all fields correctly."
+msgstr "Erreur lors de l'écriture des changements. Assurez-vous d'avoir rempli correctement tous les champs."
+
+msgctxt "#32058"
+msgid "Please enter a name for your conditional background"
+msgstr "Veuillez entrer un nom pour votre arrière-plan conditionnel"
+
+msgctxt "#32061"
+msgid "Please select a background image"
+msgstr "Veuillez sélectionner une image d'arrière-plan"
+
+msgctxt "#32064"
+msgid "Do you want to setup a single background or a folder with multiple backgrounds ?"
+msgstr "Vous voulez configurer un arrière-plan unique ou un dossier d’arrière-plans multiples ?"
+
+msgctxt "#32065"
+msgid "Single"
+msgstr "Unique"
+
+msgctxt "#32066"
+msgid "Multiple"
+msgstr "Multiples"
+
+msgctxt "#32067"
+msgid "Select image folder path"
+msgstr "Sélection du chemin du dossier d’image"
+
+msgctxt "#32070"
+msgid "Conditional backgrounds"
+msgstr "Arrière-plans conditionnels"
+
+msgctxt "#32071"
+msgid "Configure conditional backgrounds"
+msgstr "Configurer les arrière-plans conditionnels"
+
+msgctxt "#32072"
+msgid "Setup backgrounds that will be activated on specified dates"
+msgstr "Configurer les arrière-plans qui seront activés à des dates spécifiées"
+
+msgctxt "#32073"
+msgid "Add new condition..."
+msgstr "Ajouter une nouvelle condition..."
+
+msgctxt "#32074"
+msgid "Add a new condition to activate a custom background on a selected timespan"
+msgstr "Ajouter une nouvelle condition pour activer un arrière-plan personnalisé sur un intervalle de temps sélectionné"
+
+msgctxt "#32075"
+msgid "Delete or change ?"
+msgstr "Supprimer ou remplacer ?"
+
+msgctxt "#32076"
+msgid "Do you want to delete or change the existing entry ?"
+msgstr "Voulez-vous supprimer ou remplacer l'entrée existante ?"
+
+msgctxt "#32077"
+msgid "Change"
+msgstr "Remplacer"
+
+msgctxt "#32078"
+msgid "Delete"
+msgstr "Supprimer"

@@ -1,0 +1,137 @@
+﻿# Kodi language file
+# Addon Name: Skin Helper Widgets
+# Addon id: script.skin.helper.widgets
+# Addon Provider: marcelveldt
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC-Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: 2014-10-26 17:05+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: tomer953 <tomer953@gmail.com>\n"
+"Language-Team: LANGUAGE\n"
+"Language: he\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+
+msgctxt "#32000"
+msgid "Favourites"
+msgstr "מועדפים"
+
+msgctxt "#32001"
+msgid "Favourite Media"
+msgstr "מדיה מהמועדפים"
+
+msgctxt "#32002"
+msgid "Next Episodes"
+msgstr "פרקים הבאים"
+
+msgctxt "#32003"
+msgid "Recommended Movies"
+msgstr "סרטים מומלצים"
+
+msgctxt "#32004"
+msgid "Recommended Media"
+msgstr "פריטים מומלצים"
+
+msgctxt "#32005"
+msgid "Recent Media"
+msgstr "פריטים חדשים"
+
+msgctxt "#32006"
+msgid "Similar Movies"
+msgstr "סרטים דומים"
+
+msgctxt "#32007"
+msgid "In progress and Recommended Media"
+msgstr "מדיה בתהליך ומדיה מומלצת"
+
+msgctxt "#32011"
+msgid "In progress Media"
+msgstr "פריטים בתהליך"
+
+msgctxt "#32012"
+msgid "Recently added songs"
+msgstr "שירים שנוספו לאחרונה"
+
+msgctxt "#32013"
+msgid "Recently played songs"
+msgstr "שירים שנוגנו לאחרונה"
+
+msgctxt "#32014"
+msgid "Similar TV Shows"
+msgstr "סדרות דומות"
+
+msgctxt "#32015"
+msgid "Recommended albums"
+msgstr "אלבומים מומלצים"
+
+msgctxt "#32016"
+msgid "Recommended songs"
+msgstr "שירים מומלצים"
+
+msgctxt "#32017"
+msgid "PVR Channel groups"
+msgstr ""
+
+msgctxt "#32018"
+msgid "Recent recordings"
+msgstr ""
+
+msgctxt "#32019"
+msgid "Next unwatched recordings"
+msgstr ""
+
+msgctxt "#32020"
+msgid "TV Channels"
+msgstr ""
+
+msgctxt "#32021"
+msgid "Timers"
+msgstr ""
+
+msgctxt "#32022"
+msgid "Similar Media"
+msgstr "מדיה דומה"
+
+msgctxt "#32023"
+msgid "Widgets"
+msgstr "יישומונים"
+
+msgctxt "#32024"
+msgid "Enable artwork lookups"
+msgstr ""
+
+msgctxt "#32025"
+msgid "Show specials in episode widgets"
+msgstr "הצג פרקי ספיישל עבור סדרות ביישומונים"
+
+msgctxt "#32026"
+msgid "Browse albums instead of playing for album widgets"
+msgstr "צפה באלבומים במקום לנגן אלבום ביישומונים"
+
+msgctxt "#32027"
+msgid "In-progress episodes"
+msgstr "פרקים בתהליך"
+
+msgctxt "#32028"
+msgid "In-progress movies"
+msgstr "סרטים בתהליך"
+
+msgctxt "#32029"
+msgid "In-progress and recommended movies"
+msgstr "סרטים בתהליך וסרטים מומלצים"
+
+msgctxt "#32030"
+msgid "TV Channels (with artwork)"
+msgstr ""
+
+msgctxt "#32031"
+msgid "Next unwatched recordings (reversed)"
+msgstr ""
+
+msgctxt "#32032"
+msgid "In-progress and random movies"
+msgstr "סרטים בתהליך וסרטים אקראיים"

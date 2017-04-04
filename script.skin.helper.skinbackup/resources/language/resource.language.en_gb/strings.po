@@ -1,0 +1,174 @@
+# Kodi language file
+# Addon Name: Skin Helper Skinbackup
+# Addon id: script.skin.helper.skinbackup
+# Addon Provider: marcelveldt
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC-Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: 2014-10-26 17:05+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE\n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+
+msgctxt "#32000"
+msgid "General"
+msgstr ""
+
+msgctxt "#32001"
+msgid "Default backup path"
+msgstr ""
+
+msgctxt "#32002"
+msgid "Select location to store skin backups"
+msgstr ""
+
+msgctxt "#32003"
+msgid "Please enter a name for the backup"
+msgstr ""
+
+msgctxt "#32004"
+msgid "Backup the skin settings"
+msgstr ""
+
+msgctxt "#32005"
+msgid "Backupfile was succesfully created!"
+msgstr ""
+
+msgctxt "#32006"
+msgid "Restore the skin settings"
+msgstr ""
+
+msgctxt "#32007"
+msgid "Restoring..."
+msgstr ""
+
+msgctxt "#32008"
+msgid "Select skin backup file"
+msgstr ""
+
+msgctxt "#32009"
+msgid "Your backup is succesfully restored!"
+msgstr ""
+
+msgctxt "#32010"
+msgid "Reset the skin to default settings"
+msgstr ""
+
+msgctxt "#32011"
+msgid "Are you sure you want to reset the skin to default settings ?"
+msgstr ""
+
+msgctxt "#32012"
+msgid "Settings"
+msgstr ""
+
+msgctxt "#32013"
+msgid "Create new backup"
+msgstr ""
+
+msgctxt "#32014"
+msgid "Select backup from file"
+msgstr ""
+
+msgctxt "#32015"
+msgid "Restore"
+msgstr ""
+
+msgctxt "#32016"
+msgid "Manage skin backups"
+msgstr ""
+
+msgctxt "#32017"
+msgid "Please enter the time that this theme should be activated (hh:mm in 24-hours format)"
+msgstr ""
+
+msgctxt "#32018"
+msgid "Did you enter the time in the correct format ?"
+msgstr ""
+
+msgctxt "#32019"
+msgid "Activates every day at "
+msgstr ""
+
+msgctxt "#32020"
+msgid "Manage Color themes"
+msgstr ""
+
+msgctxt "#32021"
+msgid "Apply this Color Theme"
+msgstr ""
+
+msgctxt "#32022"
+msgid "Export this theme to file"
+msgstr ""
+
+msgctxt "#32023"
+msgid "Enter a name for your color theme"
+msgstr ""
+
+msgctxt "#32024"
+msgid "Screenshot of color theme (optional)"
+msgstr ""
+
+msgctxt "#32025"
+msgid "User defined color theme"
+msgstr ""
+
+msgctxt "#32026"
+msgid "Color theme created succesfully"
+msgstr ""
+
+msgctxt "#32027"
+msgid "Your color theme is now available in the list of available themes"
+msgstr ""
+
+msgctxt "#32028"
+msgid "Enter a name for the theme"
+msgstr ""
+
+msgctxt "#32029"
+msgid "Select location to store export"
+msgstr ""
+
+msgctxt "#32030"
+msgid "Select skin theme backup file"
+msgstr ""
+
+msgctxt "#32031"
+msgid "Select Color theme"
+msgstr ""
+
+msgctxt "#32032"
+msgid "Enable automatic daily backups"
+msgstr ""
+
+msgctxt "#32033"
+msgid "Restoring..."
+msgstr ""
+
+msgctxt "#32034"
+msgid "Maximum number of historic backups to keep"
+msgstr ""
+
+msgctxt "#32035"
+msgid "Create Color Theme"
+msgstr ""
+
+msgctxt "#32036"
+msgid "Create new custom color theme based on your current skin color settings."
+msgstr ""
+
+msgctxt "#32037"
+msgid "Import Color Theme"
+msgstr ""
+
+msgctxt "#32038"
+msgid "Import a color theme from file."
+msgstr ""
+

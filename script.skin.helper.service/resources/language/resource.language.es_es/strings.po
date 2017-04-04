@@ -1,0 +1,147 @@
+# Kodi language file
+# Addon Name: Skin Helper Service
+# Addon id: script.skin.helper.service
+# Addon Provider: marcelveldt
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC-Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: 2014-10-26 17:05+0000\n"
+"PO-Revision-Date: 2016-12-06 17:07-0400\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: es_ES\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 1.8.11\n"
+
+msgctxt "#32000"
+msgid "Custom Image"
+msgstr "Imagen Personalizada"
+
+msgctxt "#32001"
+msgid "None"
+msgstr "Ninguno"
+
+msgctxt "#32002"
+msgid "Background overlay texture"
+msgstr "Textura de capa sobrepuesta de fondo"
+
+msgctxt "#32003"
+msgid "Browse custom image for background overlay"
+msgstr "Explorar imagen personalizada para capa sobrepuesta de fondo"
+
+msgctxt "#32004"
+msgid "Custom single image"
+msgstr "Imagen personalizada única"
+
+msgctxt "#32005"
+msgid "Custom multi image (folder)"
+msgstr "Imagen personalizada múltiple (folder)"
+
+msgctxt "#32006"
+msgid "Select busy spinner"
+msgstr "Seleccione el spinner de espera"
+
+msgctxt "#32007"
+msgid "%s missing!"
+msgstr "% faltantes!"
+
+msgctxt "#32008"
+msgid ""
+"To get the most out of this skin, it is suggested to install a image "
+"resource addon for %s. \n"
+" Do you want to select and install this image resource addon now ?"
+msgstr ""
+"Para obtener lo mejor de este skin, se recomienda instalar un complemento "
+"de recurso de imágenes para %s.\n"
+"¿Desea seleccionar e instalar este complemento de recurso de imágenes ahora?"
+
+msgctxt "#32009"
+msgid "Custom path"
+msgstr "Ruta personalizada"
+
+msgctxt "#32010"
+msgid "Select resource addon or custom folder"
+msgstr "Seleccione complemento de recursos o folder personalizado"
+
+msgctxt "#32011"
+msgid "Not installed"
+msgstr "No está instalado"
+
+msgctxt "#32012"
+msgid "Select view"
+msgstr "Seleccione vista"
+
+msgctxt "#32013"
+msgid "Enable/disable views"
+msgstr "Active/Desactive vistas"
+
+msgctxt "#32014"
+msgid "The action completed sucesfully"
+msgstr "La acción completó exitosamente"
+
+msgctxt "#32015"
+msgid "The action completed with errors"
+msgstr "La acción completó con errores"
+
+msgctxt "#32016"
+msgid ""
+"Do you want to setup a single background or a folder with multiple "
+"backgrounds ?"
+msgstr "¿Desea establecer un solo fondo o un folder con múltiples fondos?"
+
+msgctxt "#32017"
+msgid "Single"
+msgstr "Único"
+
+msgctxt "#32018"
+msgid "Multiple"
+msgstr "Múltiple"
+
+msgctxt "#32019"
+msgid "Random fanart from movie with genre"
+msgstr "Fanart aleatorio de película con género"
+
+msgctxt "#32020"
+msgid "Select image"
+msgstr "Seleccione imagen"
+
+msgctxt "#32021"
+msgid "Available image resource addons"
+msgstr "Complementos disponibles de recursos de imágenes"
+
+msgctxt "#32022"
+msgid "There are no (more) resource addons available for this type"
+msgstr "No hay (más) complementos de recursos disponibles para este tipo"
+
+msgctxt "#32023"
+msgid "Artwork options"
+msgstr "Opciones de arte"
+
+msgctxt "#32024"
+msgid "Select Animated Art"
+msgstr "Seleccionar Arte Animada"
+
+#~ msgctxt "#32008"
+#~ msgid ""
+#~ "To get the most out of this skin, it is suggested to install a resource "
+#~ "addon for %s. \n"
+#~ " Please install the resource addon(s) to your preference in the next "
+#~ "dialog. You can always change your preference later in the skin settings."
+#~ msgstr ""
+#~ "Para obtener el máximo de este skin, se sugiere instalar un complemento "
+#~ "de recursos para %s. \n"
+#~ " Por favor instale el (los) complemento(s) de recursos a su elección en "
+#~ "el próximo diálogo.  Siempre podrá cambiar su elección más tarde en los "
+#~ "ajustes del skin."
+
+#~ msgctxt "#32004"
+#~ msgid "Custom single image (gif)"
+#~ msgstr "Imagen personalizada única (gif)"
+
+#~ msgctxt "#32005"
+#~ msgid "Custom multi image (path)"
+#~ msgstr "Imágenes personalizadas múltiples (ruta)"

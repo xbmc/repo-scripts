@@ -1,0 +1,133 @@
+# Kodi language file
+# Addon Name: Skin Helper Widgets
+# Addon id: script.skin.helper.widgets
+# Addon Provider: marcelveldt
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC-Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: 2014-10-26 17:05+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Angelinas <logo.kanala@gmail.com>\n"
+"Language-Team: Serbian (Serbia)\n"
+"Language: sr_RS\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+
+msgctxt "#32000"
+msgid "Favourites"
+msgstr "Фаворити"
+
+msgctxt "#32001"
+msgid "Favourite Media"
+msgstr "Фаворити Медија"
+
+msgctxt "#32002"
+msgid "Next Episodes"
+msgstr "Следећа Епизода"
+
+msgctxt "#32003"
+msgid "Recommended Movies"
+msgstr "Препоручени Филмови"
+
+msgctxt "#32004"
+msgid "Recommended Media"
+msgstr "Препоручени Медији"
+
+msgctxt "#32005"
+msgid "Recent Media"
+msgstr "Скорашњи Медији"
+
+msgctxt "#32006"
+msgid "Similar Movies"
+msgstr "Слични Филмови"
+
+msgctxt "#32007"
+msgid "In progress and Recommended Media"
+msgstr "У репродукцији и Препоручени Медији"
+
+msgctxt "#32011"
+msgid "In progress Media"
+msgstr "Медији у репродукцији"
+
+msgctxt "#32012"
+msgid "Recently added songs"
+msgstr "Скоро додане песме"
+
+msgctxt "#32013"
+msgid "Recently played songs"
+msgstr "Скоро емитоване песме"
+
+msgctxt "#32014"
+msgid "Similar TV Shows"
+msgstr "Сличне Серије"
+
+msgctxt "#32015"
+msgid "Recommended albums"
+msgstr "Препоручени албуми"
+
+msgctxt "#32016"
+msgid "Recommended songs"
+msgstr "Препоручене нумере"
+
+msgctxt "#32017"
+msgid "PVR Channel groups"
+msgstr "Група канала за ПВР"
+
+msgctxt "#32018"
+msgid "Recent recordings"
+msgstr "ПВР - скоро снимано"
+
+msgctxt "#32019"
+msgid "Next unwatched recordings"
+msgstr "ПВР - Следећи неодгледани снимак"
+
+msgctxt "#32020"
+msgid "TV Channels"
+msgstr "ПВР - Канал"
+
+msgctxt "#32021"
+msgid "Timers"
+msgstr "ПВР - Тајмер"
+
+msgctxt "#32022"
+msgid "Similar Media"
+msgstr "Слични Медији"
+
+msgctxt "#32023"
+msgid "Widgets"
+msgstr "Виџгети"
+
+msgctxt "#32024"
+msgid "Enable artwork lookups"
+msgstr "Омогући слике за Музику/ПВР"
+
+msgctxt "#32025"
+msgid "Show specials in episode widgets"
+msgstr "Прикажи Специјале у виџгетима за Епизоде"
+
+msgctxt "#32026"
+msgid "Browse albums instead of playing for album widgets"
+msgstr "Отвори у листи уместо да репродукујеш албуме"
+
+msgctxt "#32027"
+msgid "In-progress episodes"
+msgstr "У емитовању Епизоде"
+
+msgctxt "#32028"
+msgid "In-progress movies"
+msgstr "У емитовању Филмови"
+
+msgctxt "#32029"
+msgid "In-progress and recommended movies"
+msgstr "У емитовању и препоручени Филмови"
+
+msgctxt "#32030"
+msgid "TV Channels (with artwork)"
+msgstr "ПВР - Канали (са сликама)"
+
+msgctxt "#32031"
+msgid "Next unwatched recordings (reversed)"
+msgstr "ПВР - Следећи неодгледани снимак"
