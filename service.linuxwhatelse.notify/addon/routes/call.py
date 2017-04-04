@@ -75,7 +75,7 @@ def on_call_ended(data):
         if xbmc.getCondVisibility('Player.Paused'):
             player.pause()
 
-    elif action == 3 and reset_vol:
+    elif action == Action.VOLUME and reset_vol:
         try:
             volume = int(addon.getSetting('saved_volume'))
             xbmc.executebuiltin('XBMC.SetVolume(%d, showvolumebar)' % (volume))
