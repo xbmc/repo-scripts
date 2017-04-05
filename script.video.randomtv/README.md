@@ -8,6 +8,8 @@ I'm a little anal when it comes to watched status and stuff in my library with t
 There are a couple options in the setting menu:
 - Include Unwatched (only includes watched by default)
 - Update Play Count (does not update by default)
+- Repeat Playlist
+- Shuffle On Repeat
 - Show Notifications
 - Include All TV Shows or Select certain TV Shows
 
