@@ -13,8 +13,8 @@
   </extension>
   <extension point="kodi.addon.metadata">
     <platform>all</platform>
-    <summary lang="en">Manage tags for the selected item from the context menu</summary>
-    <description lang="en">Adds a context menu entry for movies and tvShows (under manage) to allow the selection of tags</description>
+    <summary lang="en_GB">Manage tags for the selected item from the context menu</summary>
+    <description lang="en_GB">Adds a context menu entry for movies and tvShows (under manage) to allow the selection of tags</description>
     <license>GNU GENERAL PUBLIC LICENSE. Version 3, 29 June 2007</license>
     <forum>http://forum.kodi.tv/showthread.php?tid=310752</forum>
     <source>https://github.com/zosky/kodi.context.tags</source>
