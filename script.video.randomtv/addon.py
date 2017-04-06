@@ -171,7 +171,7 @@ else:
 #
 
 
-while (not xbmc.abortRequested):
+while (not xbmc.Monitor().abortRequested()):
 	if player.mediaStarted:
 		log("--------- mediaStarted")
 		busyDiag.close()
