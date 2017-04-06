@@ -1,0 +1,14 @@
+# Kodi Media Center language file
+# Addon Name: tag context
+# Addon id: context.tags
+msgid ""
+msgstr ""
+
+msgctxt "#32000"
+msgid "Tags"
+msgstr ""
+
+msgctxt "#32001"
+msgid "Select Tags"
+msgstr ""
+
