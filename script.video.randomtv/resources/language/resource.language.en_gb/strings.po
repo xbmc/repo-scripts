@@ -1,0 +1,58 @@
+# Kodi Media Center language file
+# Addon Name: RandomTV
+# Addon id: script.video.randomtv
+
+msgid ""
+msgstr ""
+
+msgctxt "#32000"
+msgid "Include Unwatched"
+msgstr ""
+
+msgctxt "#32001"
+msgid "Update Play Count"
+msgstr ""
+
+msgctxt "#32002"
+msgid "Repeat Playlist"
+msgstr ""
+
+msgctxt "#32003"
+msgid "Shuffle On Repeat"
+msgstr ""
+
+msgctxt "#32004"
+msgid "Show Notifications"
+msgstr ""
+
+msgctxt "#32005"
+msgid "Include All TV Shows"
+msgstr ""
+
+msgctxt "#32006"
+msgid "Select TV Shows"
+msgstr ""
+
+msgctxt "#32007"
+msgid "Starting"
+msgstr ""
+
+msgctxt "#32008"
+msgid "No available episodes to play"
+msgstr ""
+
+msgctxt "#32009"
+msgid "Please check your settings"
+msgstr ""
+
+msgctxt "#32010"
+msgid "Shuffling Playlist"
+msgstr ""
+
+msgctxt "#32011"
+msgid "Stopping"
+msgstr ""
+
+msgctxt "#32012"
+msgid "Select TV Shows"
+msgstr ""
