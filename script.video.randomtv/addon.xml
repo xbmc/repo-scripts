@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.video.randomtv" name="RandomTV" version="1.0.1" provider-name="gmccauley">
+  <requires>
+    <import addon="xbmc.python" version="2.25.0"/>
+  </requires>
+  <extension point="xbmc.python.script" library="addon.py">
+    <provides>video</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en_GB">RandomTV</summary>
+    <description lang="en_GB">RandomTV plays random TV episodes from your library. There are a few options: Include unwatched episodes (only watched will be included by default), Update Play Count, Repeat Playlist, Shuffle On Repeat, Show Notifications, Include All TV Shows or Select TV Shows</description>
+    <disclaimer lang="en_GB">My First Add-On.  Please by gentle</disclaimer>
+    <language></language>
+    <platform>all</platform>
+    <license>GNU General Public License, v2</license>
+    <forum>http://forum.kodi.tv/showthread.php?tid=310494</forum>
+    <website></website>
+    <email></email>
+    <source>https://github.com/gmccauley/script.video.randomtv</source>
+    <news>
+v1.0.1 (6 April 2017)
+  - Updated lang tag in addon.xml
+  - Added Localization
+  - Replaced deprecated xbmc.abortRequested
+v1.0.0 (1 April 2017)
+  - Public Release
+  - Added Settings for Repeat Playlist and Shuffle On Repeat
+  - Changed Playlist Repeat logic to restart playlist instead of changing Repeat Mode
+v0.2.1 (29 March 2017)
+  - Fixed condition where "Include All TV Shows"=true and "Include Unwatched"=false would result in Unwatched Episodes being included
+  - Added DialogBusy when starting and loading episode data
+v0.2 (26 March 2017)
+  - Bummed Code
+  - Changed Logic
+  - Set Repeat Mode back to what it was before addon changed it to all
+v0.1 (25 March 2017)
+  - Initial Build (Alpha)
+	</news>
+    <assets>
+        <icon>resources/icon.png</icon>
+        <fanart>resources/fanart.jpg</fanart>
+        <screenshot></screenshot>
+    </assets>
+  </extension>
+</addon>
