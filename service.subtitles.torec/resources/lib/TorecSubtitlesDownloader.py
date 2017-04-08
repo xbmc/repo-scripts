@@ -113,14 +113,18 @@ class FirefoxURLHandler(object):
         return username in content
 
 class TorecGuestTokenGenerator():
-    def __init__(self, sub_id):
+    def __init__(self, sub_id, handle_daylight_saving_skew):
         self.sub_id = sub_id
+        self.handle_daylight_saving_skew = handle_daylight_saving_skew
 
     def generate_ticket(self):
         return self._gen_fake_encoded_ticket(self.sub_id, 90)
 
     def _gen_plain_ticket(self, sub_id, secs_ago):
         t = datetime.datetime.now() - datetime.timedelta(seconds=secs_ago)
+        if self.handle_daylight_saving_skew:
+            t -= datetime.timedelta(hours = 1)
+
         st = t.strftime("%m/%d/%Y %-I:%M:%S %p")
         st = re.sub("(^|/| )0", r"\1", st)
         return "{}_sub{}".format(st, sub_id)
@@ -129,6 +133,14 @@ class TorecGuestTokenGenerator():
         return ''.join(
             format(ord(p) + ord(o), 'X')
             for p, o in zip(plain_ticket, itertools.cycle("imet"))
+            )
+
+    def _decode_ticket(self, ticket): 
+        split_ticket = re.findall('..', ticket)
+
+        return ''.join(
+            chr(int(p, 16) - ord(o))
+            for p, o in zip(split_ticket, itertools.cycle("imet"))
             )
 
     def _gen_fake_encoded_ticket(self, sub_id, secs_ago):
@@ -151,7 +163,7 @@ class TorecSubtitlesDownloader(FirefoxURLHandler):
     def _build_default_cookie(self, sub_id):
         current_time = datetime.datetime.now().strftime("%m/%d/%Y+%I:%M:%S+%p")
         return self.DEFAULT_COOKIE % {
-            "screen_width": 1440,
+            "screen_width": 1680,
             "subId": sub_id,
             "current_datetime": current_time
         }
@@ -255,10 +267,7 @@ class TorecSubtitlesDownloader(FirefoxURLHandler):
         response      = self.opener.open("%s/ajax/sub/t7/guest_dl_code.asp" % self.BASE_URL, urllib.urlencode(params))
         response_data = response.read()
 
-    def get_download_link(self, sub_id, option_id):
-        self._confirm_download_code(sub_id, option_id)
-
-        guest_token    = TorecGuestTokenGenerator(sub_id).generate_ticket()
+    def _try_get_download_link(self, sub_id, option_id, guest_token):
         encoded_params = urllib.urlencode({
                 "sub_id":     sub_id,
                 "code":       option_id,
@@ -267,23 +276,50 @@ class TorecSubtitlesDownloader(FirefoxURLHandler):
                 "timewaited": 13
         })
 
+        response = self.opener.open("%s/ajax/sub/t7/downloadun.asp" % self.BASE_URL, encoded_params)
+
+        download_link = response.read()
+        if download_link and "sdls.asp" in download_link:
+            return download_link
+        else:
+            return None
+
+    def _get_download_link_with_regular_token(self, sub_id, option_id):
+        guest_token = self._request_subtitle(sub_id)
+
         download_link  = None
         waited_msec    = 0.0
 
         # Torec website may delay download up to 13 seconds
         while (not xbmc.abortRequested) and (waited_msec < self.MAXIMUM_WAIT_TIME_MSEC):
-            response = self.opener.open("%s/ajax/sub/t7/downloadun.asp" % self.BASE_URL, encoded_params)
-            download_link = response.read()
-
-            if download_link and "sdls.asp" in download_link:
+            download_link = self._try_get_download_link(sub_id, option_id, guest_token) 
+            if download_link:
                 break
-        
+
             xbmc.sleep(500)
             waited_msec += 500
         
         log(__name__, "received link after sleeping %f seconds" % (waited_msec / 1000.0))
 
         return download_link
+
+    def get_download_link(self, sub_id, option_id):
+        self._confirm_download_code(sub_id, option_id)
+
+        log(__name__, "trying to retrieve download link with skewed generated guest token")
+        generated_time_skewed_guest_token = TorecGuestTokenGenerator(sub_id, True).generate_ticket()
+        download_link = self._try_get_download_link(sub_id, option_id, generated_time_skewed_guest_token)
+        if download_link:
+            return download_link
+
+        log(__name__, "trying to retrieve download link with generated guest token")
+        generated_guest_token = TorecGuestTokenGenerator(sub_id, False).generate_ticket()
+        download_link = self._try_get_download_link(sub_id, option_id, generated_guest_token)
+        if download_link:
+            return download_link
+
+        log(__name__, "trying to retrieve download link with guest token request")
+        return self._get_download_link_with_regular_token(sub_id, option_id)
         
 
     def download(self, download_link):

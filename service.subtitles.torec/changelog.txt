@@ -1,3 +1,6 @@
+1.3.1
+- Fixed broken download due to site changes and added some future changes protection
+
 1.3.0
 - Added fake token generation support - download speed should much improve (@yosi-dediashvili)
 - Improved Checking item's media type (@burekas7)
