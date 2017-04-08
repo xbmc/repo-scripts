@@ -1,0 +1,40 @@
+<!--
+SHOULD ONLY BE PRESENT WHEN SONOS IS RUNNING !!
+Created when Sonos Controller starts, deleted when it finishes
+If Sonos addon crashes...this may have been left behind, so just delete this file
+& restart XBMC and your keymap should go back to normal...
+(or just start Sonos Controller and exit it)
+
+http://wiki.xbmc.org/?title=HOW-TO:Modify_keyboard.xml
+-->
+<keymap>
+  <global>
+    <keyboard>
+      <minus>PageDown</minus>
+      <plus>PageUp</plus>
+      <equals>PageUp</equals>
+      <numpadminus>PageDown</numpadminus>
+      <numpadplus>PageUp</numpadplus>
+      <volume_down>PageDown</volume_down>
+      <volume_up>PageUp</volume_up>
+      <volume_mute>ToggleWatched</volume_mute>
+      <f10>PageUp</f10>                 <!-- MCE Vol up -->
+      <f9>PageDown</f9>                 <!-- MCE Vol down -->
+      <f8>ToggleWatched</f8>            <!-- MCE mute -->
+      <next_track>FirstPage</next_track>
+      <prev_track>LastPage</prev_track>
+      <period>FirstPage</period>
+      <comma>LastPage</comma>
+      <f mod="ctrl">FirstPage</f>
+      <b mod="ctrl">LastPage</b>
+    </keyboard>
+    <remote>
+      <volumeplus>PageUp</volumeplus>
+      <volumeminus>PageDown</volumeminus>
+      <pageplus>FirstPage</pageplus>
+      <pageminus>LastPage</pageminus>
+      <skipplus>FirstPage</skipplus>
+      <skipminus>LastPage</skipminus>
+    </remote>
+  </global>
+</keymap>

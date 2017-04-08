@@ -1,0 +1,365 @@
+# Kodi Media Center language file
+# Addon Name: Sonos
+# Addon id: script.sonos
+# Addon Provider: robwebset
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: Greek (http://www.transifex.com/projects/p/xbmc-addons/language/el/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: el\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "Addon Description"
+msgid "Supports simple Sonos Controls and notifications from Kodi. Look at the wiki for more details."
+msgstr "Υποστηρίζεται απλός χειρισμός Sonos, και ειδοποιήσεις από το Kodi. Ελέγξτε την ιστοσελίδα του wiki για περισσότερες πληροφορίες."
+
+msgctxt "#32001"
+msgid "Sonos"
+msgstr "Sonos"
+
+msgctxt "#32002"
+msgid "IP Address"
+msgstr "Διεύθυνση IP"
+
+msgctxt "#32003"
+msgid "Enable Notifications (Restart Required)"
+msgstr "Ενεργοποίηση Ειδοποιήσεων (Απαιτείται Επανεκκίνηση)"
+
+msgctxt "#32004"
+msgid "Display Notification For (Seconds)"
+msgstr "Εμφάνιση Ειδοποίησης Για (Δευτ.)"
+
+msgctxt "#32005"
+msgid "Notification Check Frequency (Seconds)"
+msgstr "Συχνότητα Ειδοποιήσεων Ελέγχου (Δευτ.)"
+
+msgctxt "#32006"
+msgid "Do Not Display Notification If Video Is Playing"
+msgstr "Να Μην Εμφανίζονται Ειδοποιήσεις κατά την Αναπαραγωγή Βίντεο"
+
+msgctxt "#32007"
+msgid "Use Default Kodi Notification Dialog"
+msgstr "Χρήση Προεπιλεγμένων Ειδοποιήσεων του Kodi"
+
+msgctxt "#32008"
+msgid "Debugging"
+msgstr "Εντοπισμός σφαλμάτων"
+
+msgctxt "#32009"
+msgid "Enable debug logging"
+msgstr "Καταγραφή σφαλμάτων"
+
+msgctxt "#32010"
+msgid "Speaker"
+msgstr "Ηχείο"
+
+msgctxt "#32011"
+msgid "Notifications"
+msgstr "Ειδοποιήσεις"
+
+msgctxt "#32012"
+msgid "Debugging"
+msgstr "Εντοπισμός σφαλμάτων"
+
+msgctxt "#32013"
+msgid "Search For Sonos Speakers..."
+msgstr "Αναζήτηση Για Ηχεία Sonos..."
+
+msgctxt "#32014"
+msgid "No speakers found, please enter your IP address manually"
+msgstr "Δε βρέθηκαν ηχεία, εισαγάγετε τη διεύθυνση IP χειροκίνητα"
+
+msgctxt "#32015"
+msgid "Controller"
+msgstr "Χειριστήριο"
+
+msgctxt "#32016"
+msgid "Controller Refresh Interval (Seconds)"
+msgstr "Χρονικό Διάστημα Ενημέρωσης Χειριστηρίου (Δευτ)"
+
+msgctxt "#32018"
+msgid "Plugin"
+msgstr "Plugin"
+
+msgctxt "#32019"
+msgid "Batch Size"
+msgstr "Μέγεθος Δέσμης"
+
+msgctxt "#32020"
+msgid "Maximum Entries In Displayed Lists (0 = Unlimited)"
+msgstr "Μέγιστος Αριθμός Καταχωρίσεων στις Λίστες [0 = Απεριόριστες]"
+
+msgctxt "#32021"
+msgid "Display Artist Information"
+msgstr "Εμφάνιση Πληροφοριών Καλλιτέχνη"
+
+msgctxt "#32022"
+msgid "Avoid Duplicate Key Presses (Seconds)"
+msgstr "Αποφυγή Διπλότυπων Πιέσεων Πλήκτρων (Δευτ)"
+
+msgctxt "#32023"
+msgid "Link Kodi Volume With Sonos Speaker (Restart Required)"
+msgstr "Σύνδεση της Έντασης Ήχου του Kodi με το Ηχείο Sonos (απαιτείται επανεκκίνηση)"
+
+msgctxt "#32025"
+msgid "Volume Change Increments"
+msgstr "Βήματα Έντασης Ήχου"
+
+msgctxt "#32026"
+msgid "Automatically Pause Sonos When Kodi Plays Media (Restart Required)"
+msgstr "Παύση του Sonos όταν το Kodi παίζει πολυμέσα (απαιτείται επανεκκίνηση)"
+
+msgctxt "#32027"
+msgid "Automatically Resume Sonos (Seconds) [0 = Off]"
+msgstr "Αυτόματη Συνέχιση του Sonos (Δευτ) [0 = Ανενεργό]"
+
+msgctxt "#32028"
+msgid "Zone Name (Optional)"
+msgstr "Όνομα Ζώνης (Προαιρετικό)"
+
+msgctxt "#32029"
+msgid "Automatically Update IP Address On Startup"
+msgstr "Αυτόματη Ενημέρωση Διεύθυνσης IP κατά την Εκκίνηση"
+
+msgctxt "#32031"
+msgid "Coordinator"
+msgstr "Διαχειριστής"
+
+msgctxt "#32032"
+msgid "is not the group coordinator for zone"
+msgstr "δεν είναι ο συντονιστής του γκρουπ για τη ζώνη"
+
+msgctxt "#32033"
+msgid "Some functions may not work correctly if the speaker is not a coordinator"
+msgstr "Ενδέχεται να μη δουλέψουν όλα σωστά αν το ηχείο δεν είναι συντονιστής"
+
+msgctxt "#32034"
+msgid "Automation"
+msgstr "Αυτοματοποίηση"
+
+msgctxt "#32035"
+msgid "Layout"
+msgstr "Διάταξη"
+
+msgctxt "#32036"
+msgid "Controller,Slideshow,Bio,Albums"
+msgstr "Χειριστήριο,Παρ.Διαφανειών,Βιογραφία,Άλμπουμ"
+
+msgctxt "#32037"
+msgid "Controller,Slideshow"
+msgstr "Χειριστήριο,Παρ.Διαφανειών"
+
+msgctxt "#32038"
+msgid "Use Skin Icons Instead Of Sonos Icons"
+msgstr "Χρήση Εικονιδίων Κελύφους Αντί Αυτών Του Sonos"
+
+msgctxt "#32039"
+msgid "Slideshow Only"
+msgstr "Μόνο Παρουσίαση Διαφανειών"
+
+msgctxt "#32040"
+msgid "Do Not Display Notification If Controller Is Showing"
+msgstr "Να Μην Εμφανίζονται Ειδοποιήσεις Με Τα Χειριστήρια"
+
+msgctxt "#32041"
+msgid "Controller,Slideshow,Lyrics"
+msgstr "Χειριστήριο,Παρουσίαση,Στίχοι"
+
+msgctxt "#32042"
+msgid "Hide Sonos Logo"
+msgstr "Απόκρυψη Λογότυπου Sonos"
+
+msgctxt "#32043"
+msgid "Make Artist Slideshow Image Full Screen"
+msgstr "Η Παρ. Διαφανειών Καλλιτέχνη σε Πλήρη Οθόνη"
+
+msgctxt "#32060"
+msgid "The following setting in ArtistSlideshow must be enabled"
+msgstr "Η ακόλουθη ρύθμιση στο ArtistSlideshow πρέπει να ενεργοποιηθεί"
+
+msgctxt "#32061"
+msgid "Would you like this automatically enabled?"
+msgstr "Επιθυμείτε να ενεργοποιείται αυτόματα;"
+
+msgctxt "#32062"
+msgid "Next"
+msgstr "Επόμενο"
+
+msgctxt "#32063"
+msgid "Failed To Process Sonos Update Event"
+msgstr "Αποτυχία Ενημέρωσης του Sonos"
+
+msgctxt "#32064"
+msgid "Library Update Started"
+msgstr "Ξεκίνησε η Ενημέρωση Συλλογής"
+
+msgctxt "#32065"
+msgid "Library Update Already In Progress"
+msgstr "Η Ενημέρωση Συλλογής Είναι Σε Εξέλιξη"
+
+msgctxt "#32066"
+msgid "Error From Speaker %s"
+msgstr "Σφάλμα Από Το Ηχείο %s"
+
+msgctxt "#32067"
+msgid "IP Address Not Set"
+msgstr "Δεν Ορίστηκε Διεύθυνση IP"
+
+msgctxt "#32068"
+msgid "Error"
+msgstr "Σφάλμα"
+
+msgctxt "#32069"
+msgid "Failed to perform lookup %s (%s)"
+msgstr "Αδυναμία αναζήτησης %s (%s)"
+
+msgctxt "#32070"
+msgid "Failed to perform queue lookup"
+msgstr "Αδυναμία αναζήτησης των σε αναμονή"
+
+msgctxt "#32071"
+msgid "Failed to perform radio station lookup"
+msgstr "Αδυναμία αναζήτησης ραδ. σταθμού"
+
+msgctxt "#32072"
+msgid "Failed to perform radio shows lookup"
+msgstr "Αδυναμία αναζήτησης ραδ. εκπομπών"
+
+msgctxt "#32073"
+msgid "Failed to perform action %s"
+msgstr "Αδυναμία εκτέλεσης ενέργειας %s"
+
+msgctxt "#32100"
+msgid "Music Library"
+msgstr "Μουσική Συλλογή"
+
+msgctxt "#32101"
+msgid "Queue"
+msgstr "Σε Αναμονή"
+
+msgctxt "#32102"
+msgid "Radio Stations"
+msgstr "Ραδιοφωνικοί Σταθμοί"
+
+msgctxt "#32103"
+msgid "Launch Sonos Controller"
+msgstr "Έναρξη του Χειριστηρίου Sonos"
+
+msgctxt "#32104"
+msgid "Sonos Playlists"
+msgstr "Λίστες Αναπ/γής Sonos"
+
+msgctxt "#32105"
+msgid "Speech"
+msgstr "Ομιλία"
+
+msgctxt "#32110"
+msgid "Artists"
+msgstr "Καλλιτέχνες"
+
+msgctxt "#32111"
+msgid "Albums"
+msgstr "Άλμπουμ"
+
+msgctxt "#32112"
+msgid "Composers"
+msgstr "Συνθέτες"
+
+msgctxt "#32113"
+msgid "Genres"
+msgstr "Είδος"
+
+msgctxt "#32114"
+msgid "Tracks"
+msgstr "Κομμάτια"
+
+msgctxt "#32115"
+msgid "Imported Playlists"
+msgstr "Εισηγμένες Λίστες Αναπ/γής"
+
+msgctxt "#32150"
+msgid "Open Sonos Player"
+msgstr "Άνοιγμα Αναπαραγωγέα Sonos"
+
+msgctxt "#32151"
+msgid "Play Track"
+msgstr "Αναπαραγωγή Κομματιού"
+
+msgctxt "#32152"
+msgid "Remove Track"
+msgstr "Αφαίρεση Κομματιού"
+
+msgctxt "#32153"
+msgid "Clear Queue"
+msgstr "Εκκαθάριση Αναμονής"
+
+msgctxt "#32154"
+msgid "Play Now"
+msgstr "Αναπαραγωγή Τώρα"
+
+msgctxt "#32155"
+msgid "Add To Queue"
+msgstr "Προσθήκη Στην Αναμονή"
+
+msgctxt "#32156"
+msgid "Replace Queue"
+msgstr "Αντικατάσταση Αναμονής"
+
+msgctxt "#32157"
+msgid "Update Music Library"
+msgstr "Ενημέρωση Μουσικής Συλλογής"
+
+msgctxt "#32200"
+msgid "Enter Speech Text To Play ..."
+msgstr "Εισαγωγή Κειμένου για Ομιλία ..."
+
+msgctxt "#32201"
+msgid "Speech messages are limited to 100 characters"
+msgstr "Τα μηνύματα ομιλίας περιορίζονται στους 100 χαρακτήρες"
+
+msgctxt "#32202"
+msgid "No message specified"
+msgstr "Δεν ορίστηκε μήνυμα"
+
+msgctxt "#32203"
+msgid "Enter Speech Text To Save ..."
+msgstr "Εισαγωγή Κειμένου για Αποθήκευση ..."
+
+msgctxt "#32204"
+msgid "Remove Saved Text"
+msgstr "Αφαίρεση Αποθηκευμένου Κειμένου"
+
+msgctxt "#32220"
+msgid "The time is %time"
+msgstr "Η ώρα είναι %time"
+
+msgctxt "#32221"
+msgid "Today is %day"
+msgstr "Σήμερα είναι %day"
+
+msgctxt "#32222"
+msgid "Todays date is %date"
+msgstr "Η ημερομηνία είναι %date"
+
+msgctxt "#32223"
+msgid "Good Morning"
+msgstr "Καλημέρα"
+
+msgctxt "#32224"
+msgid "Good Afternon"
+msgstr "Καλό Απόγευμα"
+
+msgctxt "#32225"
+msgid "Good Evening"
+msgstr "Καλό Βράδυ"
+
+msgctxt "#32226"
+msgid "The time is %time"
+msgstr "Η ώρα είναι %time"

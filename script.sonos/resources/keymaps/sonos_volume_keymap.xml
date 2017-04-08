@@ -1,0 +1,30 @@
+<!--
+SHOULD ONLY BE PRESENT WHEN SONOS IS RUNNING !!
+Created when Sonos Service starts, deleted when it finishes
+If Sonos addon crashes...this may have been left behind, so just delete this file
+& restart XBMC and your keymap should go back to normal...
+(or just start Kodi and exit it)
+
+http://wiki.xbmc.org/?title=HOW-TO:Modify_keyboard.xml
+-->
+<keymap>
+  <global>
+    <keyboard>
+      <minus>SetProperty(SonosVolumeRedirect, Down, 10000)</minus>
+      <plus>SetProperty(SonosVolumeRedirect, Up, 10000)</plus>
+      <equals>SetProperty(SonosVolumeRedirect, Up, 10000)</equals>
+      <numpadminus>SetProperty(SonosVolumeRedirect, Down, 10000)</numpadminus>
+      <numpadplus>SetProperty(SonosVolumeRedirect, Up, 10000)</numpadplus>
+      <volume_down>SetProperty(SonosVolumeRedirect, Down, 10000)</volume_down>
+      <volume_up>SetProperty(SonosVolumeRedirect, Up, 10000)</volume_up>
+      <volume_mute>SetProperty(SonosVolumeRedirect, Mute, 10000)</volume_mute>
+      <f10>SetProperty(SonosVolumeRedirect, Up, 10000)</f10>            <!-- MCE Vol up -->
+      <f9>SetProperty(SonosVolumeRedirect, Down, 10000)</f9>            <!-- MCE Vol down -->
+      <f8>SetProperty(SonosVolumeRedirect, Mute, 10000)</f8>            <!-- MCE mute -->
+    </keyboard>
+    <remote>
+      <volumeplus>SetProperty(SonosVolumeRedirect, Up, 10000)</volumeplus>
+      <volumeminus>SetProperty(SonosVolumeRedirect, Down, 10000)</volumeminus>
+    </remote>
+  </global>
+</keymap>

@@ -1,0 +1,317 @@
+# Kodi Media Center language file
+# Addon Name: Sonos
+# Addon id: script.sonos
+# Addon Provider: robwebset
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: Italian (http://www.transifex.com/projects/p/xbmc-addons/language/it/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: it\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "Addon Description"
+msgid "Supports simple Sonos Controls and notifications from Kodi. Look at the wiki for more details."
+msgstr "Supporta semplici Controller Sonos e le notifiche da Kodi. Consulta la wiki per maggiori dettagli."
+
+msgctxt "#32001"
+msgid "Sonos"
+msgstr "Sonos"
+
+msgctxt "#32002"
+msgid "IP Address"
+msgstr "Indirizzo IP"
+
+msgctxt "#32003"
+msgid "Enable Notifications (Restart Required)"
+msgstr "Abilita Notifiche (Riavvio richiesto)"
+
+msgctxt "#32004"
+msgid "Display Notification For (Seconds)"
+msgstr "Visualizza notifiche per (Secondi)"
+
+msgctxt "#32005"
+msgid "Notification Check Frequency (Seconds)"
+msgstr "Frequenza di controllo delle notifiche (secondi)"
+
+msgctxt "#32006"
+msgid "Do Not Display Notification If Video Is Playing"
+msgstr "Non mostrare notifiche durante l'esecuzione di video"
+
+msgctxt "#32007"
+msgid "Use Default Kodi Notification Dialog"
+msgstr "Usa la finestra di notifica predefinita di Kodi"
+
+msgctxt "#32008"
+msgid "Debugging"
+msgstr "Debugging"
+
+msgctxt "#32009"
+msgid "Enable debug logging"
+msgstr "Attiva il debug logging"
+
+msgctxt "#32010"
+msgid "Speaker"
+msgstr "Altoparlante"
+
+msgctxt "#32011"
+msgid "Notifications"
+msgstr "Notifiche"
+
+msgctxt "#32012"
+msgid "Debugging"
+msgstr "Debugging"
+
+msgctxt "#32013"
+msgid "Search For Sonos Speakers..."
+msgstr "Ricerca altoparlante Sonos in corso..."
+
+msgctxt "#32014"
+msgid "No speakers found, please enter your IP address manually"
+msgstr "Nessun altroparlante trovato, per favore inserisci l'IP manualmente"
+
+msgctxt "#32015"
+msgid "Controller"
+msgstr "Controller"
+
+msgctxt "#32016"
+msgid "Controller Refresh Interval (Seconds)"
+msgstr "Intervallo aggiornamento controller (in secondi)"
+
+msgctxt "#32018"
+msgid "Plugin"
+msgstr "Plugin"
+
+msgctxt "#32019"
+msgid "Batch Size"
+msgstr "Dimenzione batch"
+
+msgctxt "#32020"
+msgid "Maximum Entries In Displayed Lists (0 = Unlimited)"
+msgstr "Numero massimo di voci nelle viste visualizzate (0 = Illimitate)"
+
+msgctxt "#32021"
+msgid "Display Artist Information"
+msgstr "Mostra informazioni artista"
+
+msgctxt "#32022"
+msgid "Avoid Duplicate Key Presses (Seconds)"
+msgstr "Evita doppio pressioni dei tasti (in secondi)"
+
+msgctxt "#32023"
+msgid "Link Kodi Volume With Sonos Speaker (Restart Required)"
+msgstr "Collega il volume di Kodi con gli speaker Sonor (richiede riavvio)"
+
+msgctxt "#32025"
+msgid "Volume Change Increments"
+msgstr "Incremento cambiamento volume"
+
+msgctxt "#32026"
+msgid "Automatically Pause Sonos When Kodi Plays Media (Restart Required)"
+msgstr "Interrompi automaticamente Sonos quanto Kodi riproduzione un media (Riavvio richiesto)"
+
+msgctxt "#32027"
+msgid "Automatically Resume Sonos (Seconds) [0 = Off]"
+msgstr "Riprendi automaticamente Sonos (Secondi) [0=Off]"
+
+msgctxt "#32028"
+msgid "Zone Name (Optional)"
+msgstr "Nome zona (opzionale)"
+
+msgctxt "#32029"
+msgid "Automatically Update IP Address On Startup"
+msgstr "Aggiorna Automaticamente l'indirizzo IP all'avvio"
+
+msgctxt "#32031"
+msgid "Coordinator"
+msgstr "Coordinatore"
+
+msgctxt "#32032"
+msgid "is not the group coordinator for zone"
+msgstr "non è il coordinatore di gruppo per la zona"
+
+msgctxt "#32033"
+msgid "Some functions may not work correctly if the speaker is not a coordinator"
+msgstr "Alcuni funziona potrebbero non funzionare correttamente se lo speaker non è un coordinatore"
+
+msgctxt "#32034"
+msgid "Automation"
+msgstr "Automazione"
+
+msgctxt "#32035"
+msgid "Layout"
+msgstr "Impaginazione"
+
+msgctxt "#32036"
+msgid "Controller,Slideshow,Bio,Albums"
+msgstr "Controller,Slideshow,Bio,Albums"
+
+msgctxt "#32037"
+msgid "Controller,Slideshow"
+msgstr "Controller,Slideshow"
+
+msgctxt "#32038"
+msgid "Use Skin Icons Instead Of Sonos Icons"
+msgstr "Usa le icone della skin invece di quelle di Sonos"
+
+msgctxt "#32039"
+msgid "Slideshow Only"
+msgstr "Solo slideshow"
+
+msgctxt "#32040"
+msgid "Do Not Display Notification If Controller Is Showing"
+msgstr "Non mostra la notifica se il controller è in mostra"
+
+msgctxt "#32041"
+msgid "Controller,Slideshow,Lyrics"
+msgstr "Controller,Slideshow,Lyrics"
+
+msgctxt "#32042"
+msgid "Hide Sonos Logo"
+msgstr "Nascondi logo Sonos"
+
+msgctxt "#32043"
+msgid "Make Artist Slideshow Image Full Screen"
+msgstr "Imposta l'immagine dell'artista a schermo intero"
+
+msgctxt "#32060"
+msgid "The following setting in ArtistSlideshow must be enabled"
+msgstr "La seguente impostazione in ArtistSlideShow deve essere abilitata"
+
+msgctxt "#32061"
+msgid "Would you like this automatically enabled?"
+msgstr "Desideri che sia abilitata automaticamente?"
+
+msgctxt "#32062"
+msgid "Next"
+msgstr "Successivo"
+
+msgctxt "#32064"
+msgid "Library Update Started"
+msgstr "Aggiornamento libreria iniziato"
+
+msgctxt "#32065"
+msgid "Library Update Already In Progress"
+msgstr "Aggiornamento libreria già in atto"
+
+msgctxt "#32067"
+msgid "IP Address Not Set"
+msgstr "Indirizzo IP non specificato"
+
+msgctxt "#32068"
+msgid "Error"
+msgstr "Errore"
+
+msgctxt "#32073"
+msgid "Failed to perform action %s"
+msgstr "Impossibile effettuare l'azione %s"
+
+msgctxt "#32100"
+msgid "Music Library"
+msgstr "Libreria Musicale"
+
+msgctxt "#32101"
+msgid "Queue"
+msgstr "Coda"
+
+msgctxt "#32102"
+msgid "Radio Stations"
+msgstr "Stazioni radio"
+
+msgctxt "#32103"
+msgid "Launch Sonos Controller"
+msgstr "Lancia il controller Sonos"
+
+msgctxt "#32104"
+msgid "Sonos Playlists"
+msgstr "Playlist Sonos"
+
+msgctxt "#32110"
+msgid "Artists"
+msgstr "Artisti"
+
+msgctxt "#32111"
+msgid "Albums"
+msgstr "Album"
+
+msgctxt "#32112"
+msgid "Composers"
+msgstr "Compositori"
+
+msgctxt "#32113"
+msgid "Genres"
+msgstr "Generi"
+
+msgctxt "#32114"
+msgid "Tracks"
+msgstr "Tracce"
+
+msgctxt "#32150"
+msgid "Open Sonos Player"
+msgstr "Apri player Sonos"
+
+msgctxt "#32151"
+msgid "Play Track"
+msgstr "Esegui traccia"
+
+msgctxt "#32152"
+msgid "Remove Track"
+msgstr "Rimuovi tracci"
+
+msgctxt "#32153"
+msgid "Clear Queue"
+msgstr "Svuota la coda"
+
+msgctxt "#32154"
+msgid "Play Now"
+msgstr "Esegui ora"
+
+msgctxt "#32155"
+msgid "Add To Queue"
+msgstr "Aggiungi alla coda"
+
+msgctxt "#32156"
+msgid "Replace Queue"
+msgstr "Sostituisci la coda"
+
+msgctxt "#32157"
+msgid "Update Music Library"
+msgstr "Aggiorna Libreria Musicale"
+
+msgctxt "#32202"
+msgid "No message specified"
+msgstr "Nessun messaggio specificato"
+
+msgctxt "#32204"
+msgid "Remove Saved Text"
+msgstr "Rimuovi testo salvato"
+
+msgctxt "#32220"
+msgid "The time is %time"
+msgstr "Sono le %time"
+
+msgctxt "#32221"
+msgid "Today is %day"
+msgstr "Oggi è %day"
+
+msgctxt "#32223"
+msgid "Good Morning"
+msgstr "Buongiorno"
+
+msgctxt "#32224"
+msgid "Good Afternon"
+msgstr "Buon pomeriggio"
+
+msgctxt "#32225"
+msgid "Good Evening"
+msgstr "Buonasera"
+
+msgctxt "#32226"
+msgid "The time is %time"
+msgstr "Sono le %time"

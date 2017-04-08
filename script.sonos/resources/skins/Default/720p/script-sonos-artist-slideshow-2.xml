@@ -1,0 +1,452 @@
+<?xml version="1.0" encoding="utf-8"?>
+<window id="3002">
+	<defaultcontrol always="true">100</defaultcontrol>
+	<include>dialogeffect</include>
+	<coordinates>
+		<system>1</system>
+		<posx>0</posx>
+		<posy>0</posy>
+	</coordinates>
+	<controls>
+		<control type="image">
+			<description>Main Background</description>
+			<posx>0</posx>
+			<posy>0</posy>
+			<width>1280</width>
+			<height>720</height>
+			<colordiffuse>CCFFFFFF</colordiffuse>
+			<texture border="20">msNowPlayingBg_ipad.png</texture>
+		</control>
+		<control type="button" id="900">
+			<description>Close Window button</description>
+			<posx>84r</posx>
+			<posy>0</posy>
+			<width>64</width>
+			<height>32</height>
+			<label>-</label>
+			<font>-</font>
+			<onclick>back</onclick>
+			<texturefocus>DialogCloseButton-focus.png</texturefocus>
+			<texturenofocus>DialogCloseButton.png</texturenofocus>
+			<onleft>100</onleft>
+			<onright>100</onright>
+			<onup>622</onup>
+			<ondown>100</ondown>
+			<visible>system.getbool(input.enablemouse)</visible>
+		</control>
+
+		<control type="image">
+			<description>Artist Slideshow Panel Background</description>
+			<posx>230</posx>
+			<posy>5</posy>
+			<width>820</width>
+			<height>470</height>
+			<colordiffuse>CCFFFFFF</colordiffuse>
+			<texture border="20">npServiceRatingBg@2x.png</texture>
+			<visible>IsEmpty(Window().Property("SonosAddonSlideshowFullscreen"))</visible>
+		</control>
+
+		<control type="multiimage">
+			<description>Artist Slideshow Windowed Size</description>
+		    <posx>240</posx>
+		    <posy>15</posy>
+		    <width>800</width>
+		    <height>450</height>
+		    <imagepath background="true">$INFO[Window.Property(ArtistSlideshow)]</imagepath>
+		    <timeperimage>5000</timeperimage>
+		    <fadetime>1000</fadetime>
+		    <randomize>true</randomize>
+			<visible>IsEmpty(Window().Property("SonosAddonSlideshowFullscreen"))</visible>
+		</control>
+
+		<control type="multiimage">
+			<description>Artist Slideshow Full Screen</description>
+		    <posx>0</posx>
+		    <posy>0</posy>
+		    <width>1280</width>
+		    <height>720</height>
+		    <imagepath background="true">$INFO[Window.Property(ArtistSlideshow)]</imagepath>
+		    <timeperimage>5000</timeperimage>
+		    <fadetime>1000</fadetime>
+		    <randomize>true</randomize>
+			<visible>!IsEmpty(Window().Property("SonosAddonSlideshowFullscreen"))</visible>
+		</control>
+
+		<control type="image">
+			<description>Sonos Logo</description>
+			<posx>1190</posx>
+			<posy>630</posy>
+			<width>80</width>
+			<height>80</height>
+			<texture>$INFO[Window.Property(SonosAddonIcon)]</texture>
+		</control>
+
+		<!-- Music Info -->
+		<control type="group">
+		    <posx>320</posx>
+		    <posy>450</posy>
+			<control type="image">
+				<description>Controller Panel Background</description>
+				<posx>60</posx>
+				<posy>30</posy>
+				<width>520</width>
+				<height>230</height>
+				<colordiffuse>CCFFFFFF</colordiffuse>
+				<texture border="20">npServiceRatingBg@2x.png</texture>
+			</control>
+			<control type="image">
+				<description>Controller Panel Inset Background</description>
+				<posx>70</posx>
+				<posy>40</posy>
+				<width>500</width>
+				<height>210</height>
+				<colordiffuse>CCFFFFFF</colordiffuse>
+				<texture border="20">msNowPlayingBg_ipad.png</texture>
+			</control>
+		
+			<control type="group" id="300">
+				<control type="image" id="801">
+					<description>Cover image</description>
+					<posx>90</posx>
+					<posy>50</posy>
+					<width>130</width>
+					<height>130</height>
+				</control>
+				<control type="fadelabel" id="802">
+					<description>Artist label</description>
+					<posx>230</posx>
+					<posy>53</posy>
+					<height>30</height>
+					<width>325</width>
+					<align>left</align>
+					<aligny>center</aligny>
+					<font>font12_title</font>
+					<textcolor>FF999999</textcolor>		<!-- grey2 -->
+					<shadowcolor>FF000000</shadowcolor> <!-- black -->
+					<scrollout>false</scrollout>
+					<pauseatend>2000</pauseatend>
+				</control>
+				<control type="fadelabel" id="803">
+					<description>Title label</description>
+					<posx>230</posx>
+					<posy>76</posy>
+					<height>30</height>
+					<width>325</width>
+					<align>left</align>
+					<aligny>center</aligny>
+					<font>font13_title</font>
+					<textcolor>ffffffff</textcolor>		<!-- white -->
+					<shadowcolor>FF000000</shadowcolor> <!-- black -->
+					<scrollout>false</scrollout>
+					<pauseatend>2000</pauseatend>
+				</control>
+				<control type="fadelabel" id="804">
+					<description>Album Label</description>
+					<posx>230</posx>
+					<posy>103</posy>
+					<height>30</height>
+					<width>325</width>
+					<align>left</align>
+					<aligny>center</aligny>
+					<font>font12</font>
+					<textcolor>ffffffff</textcolor>		<!-- white -->
+					<shadowcolor>FF000000</shadowcolor> <!-- black -->
+					<scrollout>false</scrollout>
+					<pauseatend>2000</pauseatend>
+				</control>
+				<control type="fadelabel" id="805">
+					<description>Next Label</description>
+					<posx>230</posx>
+					<posy>133</posy>
+					<height>30</height>
+					<width>325</width>
+					<align>right</align>
+					<aligny>center</aligny>
+					<font>font12</font>
+					<textcolor>7fffffff</textcolor>		<!-- grey -->
+					<shadowcolor>FF000000</shadowcolor> <!-- black -->
+					<scrollout>false</scrollout>
+					<pauseatend>2000</pauseatend>
+				</control>
+				<control type="label" id="810">
+					<description>Current Time Position Label</description>
+					<posx>230</posx>
+					<posy>163</posy>
+					<height>15</height>
+					<width>60</width>
+					<label>-</label>
+					<align>center</align>
+					<aligny>center</aligny>
+					<font>font10</font>
+					<textcolor>ffffffff</textcolor>		<!-- white -->
+					<shadowcolor>FF000000</shadowcolor> <!-- black -->
+					<!-- Only display the start time if there is a duration set -->
+					<visible>Control.IsVisible(812)</visible>
+				</control>
+				<control type="slider" id="811">
+					<description>Seek Slider</description>
+					<posx>290</posx>
+					<posy>168</posy>
+					<width>215</width>
+					<height>5</height>
+					<texturefocus>-</texturefocus>
+					<texturenofocus>-</texturenofocus>
+					<texturesliderbar>pmProgressTrackBar.png</texturesliderbar>
+					<textureslidernib>pmProgressTrackBarFillStretch.png</textureslidernib>
+					<textureslidernibfocus>pmProgressTrackBarFillStretch.png</textureslidernibfocus>
+					<onup>100</onup>
+					<ondown>900</ondown>
+					<!-- Only display the slider if there is a duration set -->
+					<visible>Control.IsVisible(812)</visible>
+				</control>
+				<control type="label" id="812">
+					<description>Duration Label</description>
+					<posx>505</posx>
+					<posy>166</posy>
+					<height>15</height>
+					<width>60</width>
+					<label>-</label>
+					<align>center</align>
+					<aligny>center</aligny>
+					<font>font10</font>
+					<textcolor>ffffffff</textcolor>		<!-- white -->
+					<shadowcolor>FF000000</shadowcolor> <!-- black -->
+					<visible>True</visible>
+				</control>
+			</control>
+	
+			<control type="image">
+				<description>Background For the controls</description>
+				<posx>80</posx>
+				<posy>190</posy>
+				<width>480</width>
+				<height>53</height>
+				<colordiffuse>DDFFFFFF</colordiffuse>
+				<texture flipy="false" border="20,20,20,2">custom_button@2x.png</texture>
+			</control>
+			<control type="group" id="100">
+				<posx>95</posx>
+				<posy>197</posy>
+				<defaultcontrol always="true">603</defaultcontrol>
+				<control type="button" id="600">
+					<description>Previous Button</description>
+					<posx>0</posx>
+					<posy>10</posy>
+					<width>20</width>
+					<height>20</height>
+					<label>-</label>
+					<texturefocus>control_buttons/tbTransportBack_sel.png</texturefocus>
+					<texturenofocus>control_buttons/tbTransportBack.png</texturenofocus>
+					<onleft>102</onleft>
+					<onright>101</onright>
+					<onup>900</onup>
+					<ondown>622</ondown>
+				</control>
+				<!-- Group for the Play Pause Button to allow keyboard navigation -->
+				<control type="group" id="101">
+					<control type="button" id="601">
+						<description>Play Button</description>
+						<posx>40</posx>
+						<posy>10</posy>
+						<width>20</width>
+						<height>20</height>
+						<label>-</label>
+						<texturefocus>control_buttons/tbPlay_sel.png</texturefocus>
+						<texturenofocus>control_buttons/tbPlay.png</texturenofocus>
+						<onleft>600</onleft>
+						<onright>603</onright>
+						<onup>900</onup>
+						<ondown>622</ondown>
+						<visible>True</visible>
+					</control>
+					<control type="button" id="602">
+						<description>Pause Button</description>
+						<posx>40</posx>
+						<posy>10</posy>
+						<width>20</width>
+						<height>20</height>
+						<label>-</label>
+						<texturefocus>control_buttons/tbPause_sel.png</texturefocus>
+						<texturenofocus>control_buttons/tbPause.png</texturenofocus>
+						<onleft>600</onleft>
+						<onright>603</onright>
+						<onup>900</onup>
+						<ondown>622</ondown>
+						<visible>!Control.IsVisible(601)</visible>
+					</control>
+				</control>
+				<control type="button" id="603">
+					<description>Stop Button</description>
+					<posx>80</posx>
+					<posy>10</posy>
+					<width>20</width>
+					<height>20</height>
+					<label>-</label>
+					<texturefocus>control_buttons/tbStop_sel.png</texturefocus>
+					<texturenofocus>control_buttons/tbStop.png</texturenofocus>
+					<onleft>101</onleft>
+					<onright>604</onright>
+					<onup>900</onup>
+					<ondown>622</ondown>
+				</control>
+				<control type="button" id="604">
+					<description>Next Button</description>
+					<posx>120</posx>
+					<posy>10</posy>
+					<width>20</width>
+					<height>20</height>
+					<label>-</label>
+					<texturefocus>control_buttons/tbTransportForward_sel.png</texturefocus>
+					<texturenofocus>control_buttons/tbTransportForward.png</texturenofocus>
+					<onleft>603</onleft>
+					<onright>104</onright>
+					<onup>900</onup>
+					<ondown>622</ondown>
+				</control>
+				<!-- Group the Repeat Buttons -->
+				<control type="group" id="104">
+					<control type="button" id="605">
+						<description>Repeat Button</description>
+						<posx>190</posx>
+						<posy>10</posy>
+						<width>25</width>
+						<height>20</height>
+						<label>-</label>
+						<texturefocus>control_buttons/tbRepeat_sel.png</texturefocus>
+						<texturenofocus>control_buttons/tbRepeat.png</texturenofocus>
+						<onleft>604</onleft>
+						<onright>103</onright>
+						<onup>900</onup>
+						<ondown>622</ondown>
+					</control>
+					<control type="button" id="606">
+						<description>Repeat Button Enabled</description>
+						<posx>190</posx>
+						<posy>10</posy>
+						<width>25</width>
+						<height>20</height>
+						<label>-</label>
+						<texturefocus>control_buttons/tbRepeatActive_sel.png</texturefocus>
+						<texturenofocus>control_buttons/tbRepeatActive.png</texturenofocus>
+						<onleft>604</onleft>
+						<onright>103</onright>
+						<onup>900</onup>
+						<visible>!Control.IsVisible(605)</visible>
+						<ondown>622</ondown>
+					</control>
+				</control>
+				<!-- Group the Random Buttons -->
+				<control type="group" id="103">
+					<control type="button" id="607">
+						<description>Random Button</description>
+						<posx>220</posx>
+						<posy>10</posy>
+						<width>25</width>
+						<height>20</height>
+						<label>-</label>
+						<texturefocus>control_buttons/tbShuffle_sel.png</texturefocus>
+						<texturenofocus>control_buttons/tbShuffle.png</texturenofocus>
+						<onleft>104</onleft>
+						<onright>105</onright>
+						<onup>900</onup>
+						<ondown>622</ondown>
+					</control>
+					<control type="button" id="608">
+						<description>Random Button Enabled</description>
+						<posx>220</posx>
+						<posy>10</posy>
+						<width>25</width>
+						<height>20</height>
+						<label>-</label>
+						<texturefocus>control_buttons/tbShuffleActive_sel.png</texturefocus>
+						<texturenofocus>control_buttons/tbShuffleActive.png</texturenofocus>
+						<onleft>104</onleft>
+						<onright>105</onright>
+						<onup>900</onup>
+						<ondown>622</ondown>
+						<visible>!Control.IsVisible(607)</visible>
+					</control>
+				</control>
+				<!-- Group the Crossfade Buttons -->
+				<control type="group" id="105">
+					<control type="button" id="609">
+						<description>Crossfade Button</description>
+						<posx>250</posx>
+						<posy>10</posy>
+						<width>25</width>
+						<height>20</height>
+						<label>-</label>
+						<texturefocus>control_buttons/tbCrossfade_sel.png</texturefocus>
+						<texturenofocus>control_buttons/tbCrossfade.png</texturenofocus>
+						<onleft>103</onleft>
+						<onright>102</onright>
+						<onup>900</onup>
+						<ondown>622</ondown>
+					</control>
+					<control type="button" id="610">
+						<description>Crossfade Button Enabled</description>
+						<posx>250</posx>
+						<posy>10</posy>
+						<width>25</width>
+						<height>20</height>
+						<label>-</label>
+						<texturefocus>control_buttons/tbCrossfadeActive_sel.png</texturefocus>
+						<texturenofocus>control_buttons/tbCrossfadeActive.png</texturenofocus>
+						<onleft>103</onleft>
+						<onright>102</onright>
+						<onup>900</onup>
+						<ondown>622</ondown>
+						<visible>!Control.IsVisible(609)</visible>
+					</control>
+				</control>
+				<!-- Group for the Sound and mute Button to allow keyboard navigation -->
+				<control type="group" id="102">
+					<control type="button" id="620">
+						<description>Sound Volume Button</description>
+						<posx>310</posx>
+						<posy>10</posy>
+						<width>20</width>
+						<height>20</height>
+						<label>-</label>
+						<texturefocus>control_buttons/tbVolume_sel.png</texturefocus>
+						<texturenofocus>control_buttons/tbVolume.png</texturenofocus>
+						<onleft>105</onleft>
+						<onright>600</onright>
+						<onup>900</onup>
+						<ondown>622</ondown>
+						<visible>True</visible>
+					</control>
+					<control type="button" id="621">
+						<description>Sound Mute Button</description>
+						<posx>310</posx>
+						<posy>10</posy>
+						<width>20</width>
+						<height>20</height>
+						<label>-</label>
+						<texturefocus>control_buttons/tbVolumeMute_sel.png</texturefocus>
+						<texturenofocus>control_buttons/tbVolumeMute.png</texturenofocus>
+						<onleft>105</onleft>
+						<onright>600</onright>
+						<onup>900</onup>
+						<ondown>622</ondown>
+						<visible>!Control.IsVisible(620)</visible>
+					</control>
+				</control>
+				<control type="slider" id="622">
+					<description>Volume Slider</description>
+					<posx>330</posx>
+					<posy>12</posy>
+					<width>120</width>
+					<height>15</height>
+					<texturefocus>-</texturefocus>
+					<texturenofocus>-</texturenofocus>
+					<texturesliderbar>control_buttons/volumeSliderbar.png</texturesliderbar>
+					<textureslidernib>control_buttons/tbVolumeScrubber.png</textureslidernib>
+					<textureslidernibfocus>control_buttons/tbVolumeScrubber_sel.png</textureslidernibfocus>
+					<onup>100</onup>
+					<ondown>900</ondown>
+				</control>
+			</control>
+		</control>
+	</controls>
+ </window>

@@ -1,0 +1,329 @@
+# Kodi Media Center language file
+# Addon Name: Sonos
+# Addon id: script.sonos
+# Addon Provider: robwebset
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: Norwegian (http://www.transifex.com/projects/p/xbmc-addons/language/no/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: no\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "Addon Description"
+msgid "Supports simple Sonos Controls and notifications from Kodi. Look at the wiki for more details."
+msgstr "Støtter enkle Sonos Kontroll og notiser fra Kodi. Les wiki for fler detaljer."
+
+msgctxt "#32001"
+msgid "Sonos"
+msgstr "Sonos"
+
+msgctxt "#32002"
+msgid "IP Address"
+msgstr "IP-adresse"
+
+msgctxt "#32003"
+msgid "Enable Notifications (Restart Required)"
+msgstr "Aktiver varslinger (Omstart kreves)"
+
+msgctxt "#32004"
+msgid "Display Notification For (Seconds)"
+msgstr "Vis varsling i (sekunder)"
+
+msgctxt "#32005"
+msgid "Notification Check Frequency (Seconds)"
+msgstr "Frekvens for varslingssjekk (sekunder)"
+
+msgctxt "#32006"
+msgid "Do Not Display Notification If Video Is Playing"
+msgstr "Ikke vis varsling om video spilles"
+
+msgctxt "#32007"
+msgid "Use Default Kodi Notification Dialog"
+msgstr "Bruk Kodi standard varslingsdialog"
+
+msgctxt "#32008"
+msgid "Debugging"
+msgstr "Feilsøking"
+
+msgctxt "#32009"
+msgid "Enable debug logging"
+msgstr "Aktiver feilsøkingslogg"
+
+msgctxt "#32010"
+msgid "Speaker"
+msgstr "Høytaler"
+
+msgctxt "#32011"
+msgid "Notifications"
+msgstr "Varslinger"
+
+msgctxt "#32012"
+msgid "Debugging"
+msgstr "Feilsøking"
+
+msgctxt "#32013"
+msgid "Search For Sonos Speakers..."
+msgstr "Søk etter Sonos høytalere..."
+
+msgctxt "#32014"
+msgid "No speakers found, please enter your IP address manually"
+msgstr "Ingen høytalere funnet, vennligst skriv inn din IP adresse manuellt."
+
+msgctxt "#32015"
+msgid "Controller"
+msgstr "Kontroller"
+
+msgctxt "#32016"
+msgid "Controller Refresh Interval (Seconds)"
+msgstr "Oppdateringsinterval for kontroller (sekunder)"
+
+msgctxt "#32018"
+msgid "Plugin"
+msgstr "Tillegg"
+
+msgctxt "#32019"
+msgid "Batch Size"
+msgstr "Batch størrelse"
+
+msgctxt "#32020"
+msgid "Maximum Entries In Displayed Lists (0 = Unlimited)"
+msgstr "Maksimalt antall innlegg vist i listen (0 = ubegrenset)"
+
+msgctxt "#32021"
+msgid "Display Artist Information"
+msgstr "Vi artistinformasjon"
+
+msgctxt "#32022"
+msgid "Avoid Duplicate Key Presses (Seconds)"
+msgstr "Unngå duplikerte tastetrykk (sekunder)"
+
+msgctxt "#32023"
+msgid "Link Kodi Volume With Sonos Speaker (Restart Required)"
+msgstr "Link Kodi volum med Sonos høytaler (Omstart påkrevd)"
+
+msgctxt "#32025"
+msgid "Volume Change Increments"
+msgstr "Økning av volumnivå"
+
+msgctxt "#32026"
+msgid "Automatically Pause Sonos When Kodi Plays Media (Restart Required)"
+msgstr "Sett Sonos automatisk på pause når Kodi spiller media (Omstart kreves)"
+
+msgctxt "#32027"
+msgid "Automatically Resume Sonos (Seconds) [0 = Off]"
+msgstr "Automatisk gjennoppta Sonos (sekunder) [0 = Av]"
+
+msgctxt "#32028"
+msgid "Zone Name (Optional)"
+msgstr "Sonenavn (Valgfritt)"
+
+msgctxt "#32029"
+msgid "Automatically Update IP Address On Startup"
+msgstr "Automatisk oppdater IP adresse ved oppstart"
+
+msgctxt "#32031"
+msgid "Coordinator"
+msgstr "Koordinator"
+
+msgctxt "#32032"
+msgid "is not the group coordinator for zone"
+msgstr "er ikke grupperkoordinatoren for sone"
+
+msgctxt "#32033"
+msgid "Some functions may not work correctly if the speaker is not a coordinator"
+msgstr "Noen funksjoner vil kanskje ikke virke som de skal hvis høyttaleren ikke er en koordinator"
+
+msgctxt "#32034"
+msgid "Automation"
+msgstr "Automasjon"
+
+msgctxt "#32035"
+msgid "Layout"
+msgstr "Utforming"
+
+msgctxt "#32036"
+msgid "Controller,Slideshow,Bio,Albums"
+msgstr "Kontroller,Bildefremvisning,Bio,Album"
+
+msgctxt "#32037"
+msgid "Controller,Slideshow"
+msgstr "Kontroller,Bildefremvisning"
+
+msgctxt "#32038"
+msgid "Use Skin Icons Instead Of Sonos Icons"
+msgstr "Bruk skin-ikoner i stedet for sonos-ikoner"
+
+msgctxt "#32039"
+msgid "Slideshow Only"
+msgstr "Kun bildefremvisning"
+
+msgctxt "#32040"
+msgid "Do Not Display Notification If Controller Is Showing"
+msgstr "Ikke vis varsler hvis kontroller vises"
+
+msgctxt "#32041"
+msgid "Controller,Slideshow,Lyrics"
+msgstr "Kontroller,Bildefremvisning,Sangtekster"
+
+msgctxt "#32042"
+msgid "Hide Sonos Logo"
+msgstr "Gjem Sonos-logoen"
+
+msgctxt "#32043"
+msgid "Make Artist Slideshow Image Full Screen"
+msgstr "Gjør artistbildefremvisning til fullskjerm"
+
+msgctxt "#32060"
+msgid "The following setting in ArtistSlideshow must be enabled"
+msgstr "Følgende innstilling i ArtistSlideshow må være aktivert"
+
+msgctxt "#32061"
+msgid "Would you like this automatically enabled?"
+msgstr "Vil du at dette skal være automatisk aktivert?"
+
+msgctxt "#32062"
+msgid "Next"
+msgstr "Neste"
+
+msgctxt "#32063"
+msgid "Failed To Process Sonos Update Event"
+msgstr "Kunne ikke behandle Sonos oppdateringsevent"
+
+msgctxt "#32068"
+msgid "Error"
+msgstr "Feil"
+
+msgctxt "#32100"
+msgid "Music Library"
+msgstr "Musikkbibliotek"
+
+msgctxt "#32101"
+msgid "Queue"
+msgstr "Kø"
+
+msgctxt "#32102"
+msgid "Radio Stations"
+msgstr "Radiostasjoner"
+
+msgctxt "#32103"
+msgid "Launch Sonos Controller"
+msgstr "Åpne Sonos Kontroller"
+
+msgctxt "#32104"
+msgid "Sonos Playlists"
+msgstr "Sonos spilleliste"
+
+msgctxt "#32105"
+msgid "Speech"
+msgstr "Tale"
+
+msgctxt "#32110"
+msgid "Artists"
+msgstr "Artister"
+
+msgctxt "#32111"
+msgid "Albums"
+msgstr "Album"
+
+msgctxt "#32112"
+msgid "Composers"
+msgstr "Komponister"
+
+msgctxt "#32113"
+msgid "Genres"
+msgstr "Sjanger"
+
+msgctxt "#32114"
+msgid "Tracks"
+msgstr "Spor"
+
+msgctxt "#32115"
+msgid "Imported Playlists"
+msgstr "Importerte spillelister"
+
+msgctxt "#32150"
+msgid "Open Sonos Player"
+msgstr "Åpne Sonos spiller"
+
+msgctxt "#32151"
+msgid "Play Track"
+msgstr "Spill sang"
+
+msgctxt "#32152"
+msgid "Remove Track"
+msgstr "Fjern sang"
+
+msgctxt "#32153"
+msgid "Clear Queue"
+msgstr "Tøm kø"
+
+msgctxt "#32154"
+msgid "Play Now"
+msgstr "Spill nå"
+
+msgctxt "#32155"
+msgid "Add To Queue"
+msgstr "Legg til i kø"
+
+msgctxt "#32156"
+msgid "Replace Queue"
+msgstr "Erstatt kø"
+
+msgctxt "#32157"
+msgid "Update Music Library"
+msgstr "Oppdater bibliotek for Musikk"
+
+msgctxt "#32200"
+msgid "Enter Speech Text To Play ..."
+msgstr "Legg inn taletekst til avspilling ..."
+
+msgctxt "#32201"
+msgid "Speech messages are limited to 100 characters"
+msgstr "Taletekst-meldinger er begrenset til 100 tegn"
+
+msgctxt "#32202"
+msgid "No message specified"
+msgstr "Ingen melding angitt"
+
+msgctxt "#32203"
+msgid "Enter Speech Text To Save ..."
+msgstr "Legg til taletekst til lagring"
+
+msgctxt "#32204"
+msgid "Remove Saved Text"
+msgstr "Fjern lagret tekst"
+
+msgctxt "#32220"
+msgid "The time is %time"
+msgstr "Klokka er %time"
+
+msgctxt "#32221"
+msgid "Today is %day"
+msgstr "I dag er det %day"
+
+msgctxt "#32222"
+msgid "Todays date is %date"
+msgstr "Datoen i dag er %date"
+
+msgctxt "#32223"
+msgid "Good Morning"
+msgstr "God morgen"
+
+msgctxt "#32224"
+msgid "Good Afternon"
+msgstr "God ettermiddag"
+
+msgctxt "#32225"
+msgid "Good Evening"
+msgstr "God kveld"
+
+msgctxt "#32226"
+msgid "The time is %time"
+msgstr "Klokka er %time"
