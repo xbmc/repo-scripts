@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<shortcuts>
+	<shortcut>
+		<label>7</label>
+		<label2>32034</label2>
+		<icon>DefaultFolder.png</icon>
+		<thumb />
+		<action>ActivateWindow(FileManager)</action>
+	</shortcut>
+	<shortcut>
+		<label>13200</label>
+		<label2>32034</label2>
+		<icon>UnknownUser.png</icon>
+		<thumb />
+		<action>ActivateWindow(Profiles)</action>
+	</shortcut>
+	<shortcut>
+		<label>10007</label>
+		<label2>32034</label2>
+		<icon>DefaultShortcut.png</icon>
+		<thumb />
+		<action>ActivateWindow(SystemInfo)</action>
+	</shortcut>
+	<shortcut>
+		<label>14111</label>
+		<label2>32034</label2>
+		<icon>UnknownUser.png</icon>
+		<thumb />
+		<action>ActivateWindow(EventLog,events://,return)</action>
+	</shortcut>
+</shortcuts>

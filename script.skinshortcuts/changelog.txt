@@ -1,0 +1,225 @@
+v1.0.13
+- Fix for context menu add-on
+- Remove SuperFavourites workaround
+- Honour skin warnings when disabling a menu item
+- Switch to using new Kodi Log Uploader on menu build/save failure
+- Various PVR visibility updates
+- Adjust processing of visibilityoverrides so that other overrides are then applied to them
+- Template improvements
+- Minor fixes, including to loading additional submenu's
+
+v1.0.10
+- Support context menu in management dialog (Krypton only)
+- Support disabling menu items
+- Icons for all available shortcuts
+- Krypton changes and fixes
+- Icon overrides now respected for available shortcut nodes
+- Only build main menu into single mode include
+- Minor fixes
+
+v1.0.8
+- Ability to set item properties from outside management dialog
+- Ability for skin to specify it doesn't share menu's
+- Ability to specify single/multi background browse options
+- Ability to specify 'none' option for thumbnails
+- New 'visibleoverride'
+- New 'noGroups' build option
+- Template improvements
+- Automatically add a reload parameter to GUI 312 selected widgets
+- Minor fixes
+
+v1.0.7
+- Krypton support
+- More accurately display build progress
+- Additional properties available via window properties in management dialog
+- Fix for add-on shortcut visibility conditions
+
+v1.0.6
+- Option not to share menus between skins; never hide PVR shortcuts
+- Icons and thumbs are saved on a per-skin basis
+- mtime of files is used to determine if they have changed
+- New icon element for background overrides
+- Support building variables in templates
+- Add conditional custom property fallback override
+- Add requires and templateOnly elements to properties
+- Various language changes
+- Speed improvements
+- Minor fixes
+
+v1.0.2
+- Fix for music addon shortcuts on Isengard
+- New artwork - thanks schimi2k
+- Template improvements
+- Management dialog improvements
+- Minor fixes
+
+v1.0.0
+- Enable 'Get More...' installation of widget providers
+- Return to using json to enable/disable Kodi debug logging
+- Jarvis shortcut changes
+- Load skin-playlists from subdirectories
+- Ability to set custom property fallback value
+- Cleanup
+- Minor fixes
+
+v0.6.6
+- Template improvements
+- Widget selection improvements
+- Custom property selection improvements
+- Fix properties being applied to wrong profile
+- Just Select Widget method
+- [aqab0N] Unicode fix
+- Ability to restore deleted shortcut via 308
+- Global override adjustments
+- Fix clonebackground/clonewidgets; add cloneproperties
+- [tomer953] Remove requirement for ::ACTION:: in action override to be the only text in element
+- [tomer953] Management dialog - Insert new menu in the current location instead of add them at the end
+- [tomer953] RTL Support - reverse string before inserting them to the keyboard dialog as a workaround to a kodi bug.
+- Minor bug fixes
+
+v0.6.0
+- Version bump for Isengard repo.
+
+v0.5.4
+- Rollback for Helix repo - fixes incompatiblitly with some Helix skins.
+
+v0.5.3
+- [HitcherUK] Add shutdown timer functions
+- Support for conditional group overrides
+- [bambi73] Add default thumbnail browse option
+- [bambi73] Add support for <propertypattern />
+- Templates
+- Path property for using shortcut as widgets
+- Switch to audio nodes for Isengard
+- Change action function
+- New widget selection options
+- Global overrides
+- [roee88] Unicode fixes
+- Speed improvements
+- Minor bug fixes
+
+v0.4.5
+- [marcelveldt] fixed issues with assign thumbnail dialog.
+
+v0.4.4
+- [phate89] Use files.getDirectory to list playlists
+- Just Select method - option to show 'None'
+- New management dialog button 311 - select from defined thumbnails
+- Conditions for available widgets and backgrounds
+- Ability to check for shortcuts
+- Speed improvements loading management dialog
+- Fixes
+- Updated language files from Transifex (from 8th December 2014)
+
+v0.4.2
+- [robweber] Fix for profiles shared via path substitution
+- Integration with plugin.program.video.node.editor
+- Change how submenuVisibility property is generated
+- Skin and script default shortcuts now loaded from defaultID property
+- Ability to set background and widget defaults based on defaultID
+- Ability to skip warning when resetting all shortcuts
+- Skin settings set to identify which backgrounds and widgets have been selected by user
+- Window property to identify when additional management dialog has been launched
+- Custom visibility properties are now honoured by management dialog
+- Shortcuts always use video nodes (where appropriate) rather than library links
+- Updated language files from Transifex (from 19th October 2014)
+
+v0.4.0
+- New localisation code
+- New XML data store
+- Removal of Gotham list-filling methods
+- [bambi73] - Ability to replace label with widgetName
+- Ability to create shortcuts to library sources not showing content from source selected
+- Ability to choose random version of auto-generated source playlists as widget or background
+- Ability to clone widget and background properties from main menu to submenu items
+- Ability to force Settings link in menu
+- Ability to return thumbnail as icon for available shortcuts
+- New management dialog controls to show management dialog for additional sub-menus
+- New available shortcut grouping - picture sources
+- Improved labelID's for add-ons
+- Indicator for default background and widget
+- Menu rebuilt on changes to script-skinshortcuts-includes.xml file
+- Auto-enable debug logging and offer to upload debug log on menu build failure (requires XBMC Log Uploader on system)
+- Code cleanup
+- Fixes
+ > Fix for setting skin thumbnail property when using Just Select method
+ > Fix for menus failing to build when the action for a shortcut contains a unicode character
+ > Dirty fix for situations where a playlist in a menu will cause that menu to appear empty
+ > Return skin playlists via special:// protocol (current skin only)
+ - Updated language files from Transifex (from 11th June 2014)
+
+v0.3.4
+- XML files are formatted (includes.xml, auto-generated playlists), includes now have an id property
+- New 'Settings' available shortcut grouping
+- Ability to override available shortcuts type, widget type
+- Ability to build main menu and standalone menus
+- A couple of small fixes and improvements
+- Fix: Work around XBMC translating numering labelID's to their localised string, causing sub-menus not to show
+
+v0.3.3
+- Available shortcuts in management dialog improvements:
+ > Improved and customisable groupings
+ > Control over location and visibility of skin-provided shortcuts
+ > UPnP and video sources explorer, including linking to library limited-by-source
+ > More PVR options including playing individual channels
+ > When using select dialog, now displays label2's and thumbnails
+ > Correct thumbnail/icon usage
+ > Addition of skin-required shortcuts which can't be deleted
+ > Ability to warn user before deleting shortcuts to select actions
+- Improved labelID generation
+- Add option to tell management dialog not to fill label's on management dialog controls, additional label 500 for window title
+- Ability to override shortcut actions based on XBMC version
+- Skinners can now only override icons, not thumbnails
+- Fix for crash when no profiles.xml file
+- Fix for single-list xml method to return to main menu item when hiding submenu
+- Fix for action sometimes not showing in label2 in management dialog
+- Updated language files from Transifex
+
+v0.3.1
+- Fixes: No favourites showing in management dialog
+         Script crash on choosing empty group in skin-managed selection dialog
+		 Remove visibility condition for Eject Tray shortcut
+
+v0.3.0
+- Fix escaping of main menu items (includes method)
+- Fix for custom nodes when using profiles
+- Fix for includes method when using multiple profiles
+- Load skin-provided playlists and playlists from sub-folders
+- Ability to browse a plugin from the management dialog
+- Ability to provide recommended shortcuts in management dialog
+- Ability to choose to play or display a playlist
+- Improved method of managing additional properties
+- Method to list menu and submenus in a single include
+- Ability to allow a user to select a shortcut, then pass this to the skin to manage
+- Library/playlists/addon/favourites loading code moved to separate module, loaded threaded
+- Menu now be rebuilt on skin or script version and profile changes (includes method)
+- Updated language files from Transifex
+
+v0.2.4
+- Fix listing individual groups with <include> method
+- Parse favourites.xml directly
+- Add XBMC Commands shortcut group
+- Updated language files from Transifex
+
+v0.2.2
+- New optional method of listing shortcuts via includes file
+- Option to allow user to browse for image or use playlist as background
+- Option to allow user to choose playlist as widget
+- Overrides and defaults now limitable by groupname
+- Fix for custom video nodes
+- Bug fixes and stability improvements
+- Updated language files from Transifex
+
+v0.2.0
+- Removed check for settings shortcut (skins are now recommended to always provide alternative settings access)
+- Video library shortcuts are loaded from video library node files (test)
+- Video and music playlists are now grouped together
+- Live TV renamed to PVR
+- Support for managing widgets, backgrounds, custom properties
+- Shortcuts with overriden images and override files are kept in memory to speed up listings
+- Submenu shortcuts are now all loaded at once, with visibility conditions for switching lists
+- Improved utf-8 support
+- Bug fixes
+
+v0.1.0
+- Initial release
