@@ -15,7 +15,7 @@ HOME =              xbmcgui.Window(10000)
 
 sys.path.append(xbmc.translatePath(os.path.join(ADDON_PATH, 'resources', 'lib')))
 
-from Utils import *
+from Utils import log, blur, pixelate, shiftblock, pixelnone, pixelwaves, pixelrandom, pixelfile, pixelfedges, pixeledges, fakelight, twotone, posterize, distort, set_pixelsize, set_bitsize, set_blursize, set_black, set_white, set_quality, Color_Only, Show_Percentage, Load_Colors_Dict, Color_Only_Manual
 
 ColorBox_function_map = {
         'blur':         blur,
@@ -54,7 +54,8 @@ class ColorBoxMain:
         if self.control == "plugin":
             xbmcplugin.endOfDirectory(self.handle)
         Load_Colors_Dict()
-        while self.daemon and not xbmc.abortRequested:
+        monitor = xbmc.Monitor()
+        while self.daemon and not monitor.abortRequested():
             if xbmc.getInfoLabel("ListItem.Property(WatchedEpisodes)") != self.show_watched:
                 self.show_watched = xbmc.getInfoLabel("ListItem.Property(WatchedEpisodes)")
                 Show_Percentage()
@@ -153,7 +154,7 @@ class ColorBoxMain:
                         tm4.start()
                     except:
                         log("Could not process image for EIGHT daemon")
-            xbmc.sleep(200)
+            monitor.waitForAbort(0.2)
 
     def _StartInfoActions(self):
         for info in self.infos:
@@ -226,16 +227,8 @@ class ColorBoxMain:
             arg = arg.replace("'\"", "").replace("\"'", "")
             if arg == 'script.colorbox':
                 continue
-            elif arg.startswith('info='):
-                self.infos.append(arg[5:])
-            elif arg.startswith('id='):
-                self.id = Remove_Quotes(arg[3:])
             elif arg.startswith('daemon='):
                 self.daemon = True
-            elif arg.startswith('prefix='):
-                self.prefix = arg[7:]
-                if not self.prefix.endswith("."):
-                    self.prefix = self.prefix + "."
 
 class ColorBoxMonitor(xbmc.Monitor):
 
@@ -252,6 +245,11 @@ class ColorBoxMonitor(xbmc.Monitor):
 
 
 if __name__ == "__main__":
-    ColorBoxMain()
-        
-log('finished')
+    args = sys.argv
+    infos = []
+    for arg in args:
+        arg = arg.replace("'\"", "").replace("\"'", "")
+        if arg == 'script.colorbox':
+            continue
+        elif arg.startswith('daemon='):
+            ColorBoxMain()
