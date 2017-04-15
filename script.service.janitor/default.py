@@ -296,6 +296,8 @@ class Cleaner(object):
         by_exclusion1 = {"field": "path", "operator": "doesnotcontain", "value": get_setting(exclusion1)}
         by_exclusion2 = {"field": "path", "operator": "doesnotcontain", "value": get_setting(exclusion2)}
         by_exclusion3 = {"field": "path", "operator": "doesnotcontain", "value": get_setting(exclusion3)}
+        by_exclusion4 = {"field": "path", "operator": "doesnotcontain", "value": get_setting(exclusion4)}
+        by_exclusion5 = {"field": "path", "operator": "doesnotcontain", "value": get_setting(exclusion5)}
 
         # link settings and filters together
         settings_and_filters = [
@@ -304,7 +306,9 @@ class Cleaner(object):
             (get_setting(not_in_progress), by_progress),
             (get_setting(exclusion_enabled) and get_setting(exclusion1) is not "", by_exclusion1),
             (get_setting(exclusion_enabled) and get_setting(exclusion2) is not "", by_exclusion2),
-            (get_setting(exclusion_enabled) and get_setting(exclusion3) is not "", by_exclusion3)
+            (get_setting(exclusion_enabled) and get_setting(exclusion3) is not "", by_exclusion3),
+            (get_setting(exclusion_enabled) and get_setting(exclusion3) is not "", by_exclusion4),
+            (get_setting(exclusion_enabled) and get_setting(exclusion3) is not "", by_exclusion5)
         ]
 
         # Only check not rated videos if checking for video ratings at all
@@ -516,11 +520,11 @@ class Cleaner(object):
             debug("Attempting to match related files in {0!r} with prefix {1!r}".format(path, name))
             for extra_file in xbmcvfs.listdir(path)[1]:
                 if isinstance(path, unicode):
-                    path = path.encode()
+                    path = path.encode("utf-8")
                 if isinstance(extra_file, unicode):
-                    extra_file = extra_file.encode()
+                    extra_file = extra_file.encode("utf-8")
                 if isinstance(name, unicode):
-                    name = name.encode()
+                    name = name.encode("utf-8")
 
                 if extra_file.startswith(name):
                     debug("{0!r} starts with {1!r}.".format(extra_file, name))
@@ -552,7 +556,7 @@ class Cleaner(object):
         :return: 1 if (all stacked) files were moved, 0 if not, -1 if errors occurred
         """
         if isinstance(source, unicode):
-            source = source.encode()
+            source = source.encode("utf-8")
 
         paths = self.unstack(source)
         files_moved_successfully = 0

@@ -262,6 +262,6 @@ def debug(message, level=xbmc.LOGDEBUG):
     """
     if get_setting(debugging_enabled):
         if isinstance(message, unicode):
-            message = message.encode()
+            message = message.encode("utf-8")
         for line in message.splitlines():
             xbmc.log(msg="{0!s}: {1!s}".format(ADDON_NAME, line), level=level)

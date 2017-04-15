@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.service.janitor" name="Janitor" version="4.3.0" provider-name="Anthirian, drewzh">
+<addon id="script.service.janitor" name="Janitor" version="4.3.1" provider-name="Anthirian, drewzh">
     <requires>
         <import addon="xbmc.python" version="2.25.0" />
         <import addon="xbmc.json" version="7.0.0" />
@@ -36,10 +36,9 @@ Deze addon kan in een keer je hele videocollectie verwijderen! Zorg dat je preci
         <website/>
         <email/>
         <news>
-[B][I]Version 4.3.0[/I][/B]
-- [NEW] Krypton compatibility
-- [NEW] Clean files that are not hard linked (mainly for seeding torrents)
-- [NEW] Allow more excluded paths
+[B][I]Version 4.3.1[/I][/B]
+- [FIX] Better unicode support
+- [FIX] Obey all exclusions
         </news>
         <assets>
             <icon>resources/icon.png</icon>

@@ -1,3 +1,12 @@
+[B][I]Version 4.3.1[/I][/B]
+- [FIX] Better unicode support
+- [FIX] Obey all exclusions
+
+[B][I]Version 4.3.0[/I][/B]
+- [NEW] Krypton compatibility
+- [NEW] Clean files that are not hard linked (mainly for seeding torrents)
+- [NEW] Allow more excluded paths
+
 [B][I]Version 4.2.1[/I][/B]
 - [NEW] Krypton compatibility
 - [NEW] Clean files that are not hard linked (mainly for seeding torrents)
