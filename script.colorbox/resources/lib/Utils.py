@@ -48,9 +48,9 @@ colors_dict =       {}
 def set_quality(new_value):
     global quality
     quality = int(new_value)
-    file = open(ADDON_SETTINGS + "quality",'w')
-    file.write(str(new_value))
-    file.close()
+    #file = open(ADDON_SETTINGS + "quality",'w')
+    #file.write(str(new_value))
+    #file.close()
     xbmc.executebuiltin('Skin.SetString(colorbox_quality,'+str(new_value)+')')
 def set_blursize(new_value):
     global radius
