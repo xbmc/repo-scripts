@@ -37,10 +37,6 @@ msgctxt "#30002"
 msgid "Database"
 msgstr "Datenbank"
 
-msgctxt "#30010"
-msgid "Debug mode"
-msgstr "Debug-Modus"
-
 msgctxt "#30011"
 msgid "Update movies watched state"
 msgstr "Aktualisiere Gesehen-Status von Filmen"
@@ -78,8 +74,8 @@ msgid "Database filename (SQLite Database, *.db)"
 msgstr "Dateiname (*.db)"
 
 msgctxt "#30020"
-msgid "Backup copy before accessing database file"
-msgstr "Sicherungskopie vor Datenbankzugriff"
+msgid "number_backup_copies"
+msgstr "Anzahl an Sicherungskopien (-1=unendlich)"
 
 msgctxt "#30021"
 msgid "Start with Kodi (autorun)"
@@ -92,6 +88,30 @@ msgstr "Gesehen-Änderungen laufend überwachen"
 msgctxt "#30023"
 msgid "Dropbox Auth Code"
 msgstr "Dropbox Autorisierungs-Code"
+
+msgctxt "#30024"
+msgid "verbosity"
+msgstr "Grad der Benutzerinformation"
+
+msgctxt "#30025"
+msgid "loglevel_all"
+msgstr "Alle"
+
+msgctxt "#30026"
+msgid "loglevel_info"
+msgstr "Nur Infos"
+
+msgctxt "#30027"
+msgid "loglevel_warning"
+msgstr "Nur Warnungen"
+
+msgctxt "#30028"
+msgid "loglevel_error"
+msgstr "Nur Fehler"
+
+msgctxt "#30029"
+msgid "loglevel_suppress"
+msgstr "Keine"
 
 msgctxt "#30030"
 msgid "no update"
@@ -228,6 +248,10 @@ msgstr "Datenbank '%s' existiert nicht"
 msgctxt "#32210"
 msgid "Access denied (user '%s', DB '%s')"
 msgstr "Zugriff verweigert (Benutzer '%s', DB '%s')"
+
+msgctxt "#32297"
+msgid "tvshow_has_no_imdbid"
+msgstr "TV-Show %s (ID %d) hat keine imdb-Nummer. Keine Verarbeitung mit WL möglich."
 
 msgctxt "#32298"
 msgid "%d movies and %d episodes read from WL."

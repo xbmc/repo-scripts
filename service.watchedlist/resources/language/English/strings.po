@@ -39,12 +39,6 @@ msgctxt "#30002"
 msgid "Database"
 msgstr ""
 
-#empty strings from id 30003 to 30009
-
-msgctxt "#30010"
-msgid "Debug mode"
-msgstr ""
-
 msgctxt "#30011"
 msgid "Update movies watched state"
 msgstr ""
@@ -82,8 +76,8 @@ msgid "Database filename (SQLite Database, *.db)"
 msgstr ""
 
 msgctxt "#30020"
-msgid "Backup copy before accessing database file"
-msgstr ""
+msgid "number_backup_copies"
+msgstr "Number of backup copies (-1=infinite)"
 
 msgctxt "#30021"
 msgid "Start with Kodi (autorun)"
@@ -97,7 +91,29 @@ msgctxt "#30023"
 msgid "Dropbox Auth Code"
 msgstr ""
 
-#empty strings from id 30024 to 30029
+msgctxt "#30024"
+msgid "verbosity"
+msgstr "Amount of User Information"
+
+msgctxt "#30025"
+msgid "loglevel_all"
+msgstr "All"
+
+msgctxt "#30026"
+msgid "loglevel_info"
+msgstr "Only Info"
+
+msgctxt "#30027"
+msgid "loglevel_warning"
+msgstr "Only Warning"
+
+msgctxt "#30028"
+msgid "loglevel_error"
+msgstr "Only Error"
+
+msgctxt "#30029"
+msgid "loglevel_suppress"
+msgstr "Suppress all"
 
 msgctxt "#30030"
 msgid "no update"
@@ -247,7 +263,11 @@ msgctxt "#32210"
 msgid "Access denied (user '%s', DB '%s')"
 msgstr ""
 
-#empty strings from id 32211 to 32297
+#empty strings from id 32211 to 32296
+
+msgctxt "#32297"
+msgid "tvshow_has_no_imdbid"
+msgstr "TV-Show %s (ID %d) has no imdb-number. No processing with WL possible. Try rescraping."
 
 msgctxt "#32298"
 msgid "%d movies and %d episodes read from WL."

@@ -17,10 +17,10 @@ if __remotedebug__:
     except ImportError:
         sys.stderr.write("Error: " +
             "You must add org.python.pydev.debug.pysrc to your PYTHONPATH.")
-        utils.showNotification('WatchedList Error', 'remote debug could not be imported.')
+        utils.showNotification('WatchedList Error', 'remote debug could not be imported.', xbmc.LOGFATAL)
         sys.exit(1)
     except:
-        utils.showNotification('WatchedList Error', 'remote debug in pydev is activated, but remote server not responding.')
+        utils.showNotification('WatchedList Error', 'remote debug in pydev is activated, but remote server not responding.', xbmc.LOGERROR)
         sys.exit(1)
 
 
@@ -31,5 +31,4 @@ if (not utils.getSetting("autostart") == 'true') or xbmcgui.Dialog().yesno( util
     # Check if we should run updates (only ask if autostart is on)
     # run the program
     utils.log("Update Library Manual Run.")
-    # WL.runProgram() # function executed on autostart. For Test purpose
     WL.runUpdate(True) # one time update
