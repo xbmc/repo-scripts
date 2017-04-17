@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.io.benchmark" name="I/O Benchmark" version="1.1.0" provider-name="Lunatixz">
+    <requires>
+        <import addon="xbmc.python" version="2.25.0"/>
+    </requires>
+    <extension point="xbmc.python.pluginsource" library="default.py">
+        <provides>executable</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <summary lang="en_GB">Test your devices read/write performance.</summary>
+        <description lang="en_GB">How fast does your device read and write?</description>
+        <license>The MIT License (MIT)</license>
+        <platform>all</platform>
+        <source>https://github.com/Lunatixz/XBMC_Addons/tree/master/script.io.benchmark</source>
+        <news></news>
+        <assets>
+            <icon>icon.png</icon>
+            <fanart>fanart.jpg</fanart>
+        </assets>
+    </extension>
+</addon>
