@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.module.click"
+       name="click"
+       version="6.7"
+       provider-name="click">
+  <requires>
+    <import addon="xbmc.python" version="2.14.0"/>
+  </requires>
+  <extension point="xbmc.python.module" library="lib" />
+  <extension point="xbmc.addon.metadata">
+    <summary>Click</summary>
+    <description>A simple wrapper around optparse for powerful command line utilities</description>
+    <platform>all</platform>
+    <language></language>
+    <license>BSD</license>
+    <forum></forum>
+    <website>http://github.com/mitsuhiko/click</website>
+    <source>https://pypi.python.org/packages/95/d9/c3336b6b5711c3ab9d1d3a80f1a3e2afeb9d8c02a7166462f6cc96570897/click-6.7.tar.gz#md5=fc4cc00c4863833230d3af92af48abd4</source>
+    <email></email>
+  </extension>
+</addon>
