@@ -20,7 +20,7 @@ ADDON_ID =          ADDON.getAddonInfo('id')
 ADDON_LANGUAGE =    ADDON.getLocalizedString
 ADDON_DATA_PATH =   os.path.join(xbmc.translatePath("special://profile/addon_data/%s" % ADDON_ID))
 ADDON_COLORS =      os.path.join(ADDON_DATA_PATH, "colors.txt")
-ADDON_SETTINGS =    os.path.join(ADDON_DATA_PATH, "settings.")
+#ADDON_SETTINGS =    os.path.join(ADDON_DATA_PATH, "settings.")
 HOME =              xbmcgui.Window(10000)
 black_pixel =       (0, 0, 0, 255)
 white_pixel =       (255, 255, 255, 255)
@@ -48,44 +48,26 @@ colors_dict =       {}
 def set_quality(new_value):
     global quality
     quality = int(new_value)
-    #file = open(ADDON_SETTINGS + "quality",'w')
-    #file.write(str(new_value))
-    #file.close()
     xbmc.executebuiltin('Skin.SetString(colorbox_quality,'+str(new_value)+')')
 def set_blursize(new_value):
     global radius
     radius = int(new_value)
-    #file = open(ADDON_SETTINGS + "radius",'w')
-    #file.write(str(new_value))
-    #file.close()
     xbmc.executebuiltin('Skin.SetString(colorbox_blursize,'+str(new_value)+')')
 def set_bitsize(new_value):
     global bits
     bits = int(new_value)
-    #file = open(ADDON_SETTINGS + "bits",'w')
-    #file.write(str(new_value))
-    #file.close()
     xbmc.executebuiltin('Skin.SetString(colorbox_bitsize,'+str(new_value)+')')
 def set_pixelsize(new_value):
     global pixelsize
     pixelsize = int(new_value)
-    #file = open(ADDON_SETTINGS + "pixelsize",'w')
-    #file.write(str(new_value))
-    #file.close()
     xbmc.executebuiltin('Skin.SetString(colorbox_pixelsize,'+str(pixelsize)+')')
 def set_black(new_value):
     global black
     black = "#" + str(new_value)
-    #file = open(ADDON_SETTINGS + "black",'w')
-    #file.write(str(new_value))
-    #file.close()
     xbmc.executebuiltin('Skin.SetString(colorbox_black,'+str(new_value)+')')
 def set_white(new_value):
     global white
     white = "#" + str(new_value)
-    #file = open(ADDON_SETTINGS + "white",'w')
-    #file.write(str(new_value))
-    #file.close()
     xbmc.executebuiltin('Skin.SetString(colorbox_white,'+str(new_value)+')')
 def Random_Color():
     return "ff" + "%06x" % random.randint(0, 0xFFFFFF)
@@ -212,14 +194,15 @@ def pixelate(filterimage):
     return targetfile
 def shiftblock(filterimage):
     md5 = hashlib.md5(filterimage).hexdigest()
-    filename = md5 + "shiftblock" + str(blockSize) + str(sigma) + str(iterations) + ".png"
+    filename = md5 + "shiftblock" + str(blockSize) + str(sigma) + str(iterations) + str(quality) + ".png"
     targetfile = os.path.join(ADDON_DATA_PATH, filename)
     if not xbmcvfs.exists(targetfile):
         Img = Check_XBMC_Internal(targetfile, filterimage)
         if Img == "":
             return ""
+        qiterations = iterations / quality
         img = Image.open(Img)
-        img = Shiftblock_Image(img, blockSize, sigma, iterations)
+        img = Shiftblock_Image(img, blockSize, sigma, qiterations)
         img.save(targetfile)
     return targetfile
 def pixelnone(filterimage):
@@ -336,20 +319,17 @@ def Check_XBMC_Internal(targetfile, filterimage):
     xbmc_cache_file = os.path.join("special://profile/Thumbnails/", cachedthumb[0], cachedthumb[:-4] + ".jpg")
     img = None
     for i in range(1, 4):
-        try:
-            if xbmcvfs.exists(xbmc_cache_file):
-                return xbmc.translatePath(xbmc_cache_file)
-            elif xbmcvfs.exists(xbmc_vid_cache_file):
-                return xbmc.translatePath(xbmc_vid_cache_file)
-            else:
-                filterimage = urllib.unquote(filterimage.replace("image://", "")).decode('utf8')
-                if filterimage.endswith("/"):
-                    filterimage = filterimage[:-1]
-                xbmcvfs.copy(filterimage, targetfile)
-                return targetfile
-                #return filterimage
-        except:
-            xbmc.sleep(200)
+        if xbmcvfs.exists(xbmc_cache_file):
+            return xbmc.translatePath(xbmc_cache_file)
+        elif xbmcvfs.exists(xbmc_vid_cache_file):
+            return xbmc.translatePath(xbmc_vid_cache_file)
+        else:
+            filterimage = urllib.unquote(filterimage.replace("image://", "")).decode('utf8')
+            if filterimage.endswith("/"):
+                filterimage = filterimage[:-1]
+            xbmcvfs.copy(filterimage, targetfile)
+            return targetfile
+            #return filterimage
     if not img:
         return ""
 def Get_Frequent_Color(img):

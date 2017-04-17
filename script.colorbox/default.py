@@ -25,16 +25,14 @@ ColorBox_function_map = {
         'fakelight':    Utils.fakelight,
         'twotone':      Utils.twotone,
         'posterize':    Utils.posterize,
-        'distort':      Utils.distort
-}
+        'distort':      Utils.distort}
 ColorBox_settings_map = {
         'pixelsize':        Utils.set_pixelsize,
         'bitsize':          Utils.set_bitsize,
         'blursize':         Utils.set_blursize,
         'black':            Utils.set_black,
         'white':            Utils.set_white,
-        'quality':          Utils.set_quality
-}
+        'quality':          Utils.set_quality}
 class ColorBoxMain:
     def __init__(self):
         Utils.log("version %s started" % ADDON_VERSION)
@@ -178,23 +176,8 @@ class ColorBoxMain:
         self.window =           xbmcgui.Window(10000)  # Home Window
         self.control =          None
         self.id =               ""
-        self.dbid =             ""
-        self.ptype =            "none"
         self.prefix =           ""
-        self.radius =           10
-        self.bits =             2
-        self.pixels =           20
-        self.container =        518
-        self.black =            "#000000"
-        self.white =            "#FFFFFF"
-        self.delta_x =          50
-        self.delta_y =          90
-        self.blocksize =        192
-        self.sigma =            0.05
-        self.iterations =       1920
         self.daemon =           False
-        self.show_now =         ""
-        self.show_prev =        ""
         self.show_watched =     ""
         self.image_now_FIVE =   ""
         self.image_now_cfa =    ""
