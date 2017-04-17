@@ -55,7 +55,7 @@ def showNotification(title,message,loglevel, time=4000):
     """
     # Check log level
     if getSetting('verbosity') == '1' and loglevel < xbmc.LOGINFO:
-        return ""
+        return
     elif getSetting('verbosity') == '2' and loglevel < xbmc.LOGWARNING:
         return
     elif getSetting('verbosity') == '3' and loglevel < xbmc.LOGERROR:
