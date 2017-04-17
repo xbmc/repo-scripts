@@ -1,0 +1,3 @@
+[B]Version 0.24[/B]
+
+- itsdangerous v0.24
