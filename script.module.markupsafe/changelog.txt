@@ -1,0 +1,3 @@
+[B]Version 0.23[/B]
+
+- marksupsafe v0.23

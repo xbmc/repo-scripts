@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.module.markupsafe"
+       name="markupsafe"
+       version="0.23"
+       provider-name="markupsafe">
+  <requires>
+    <import addon="xbmc.python" version="2.14.0"/>
+  </requires>
+  <extension point="xbmc.python.module" library="lib" />
+  <extension point="xbmc.addon.metadata">
+    <summary>markupsafe</summary>
+    <description>Implements a XML/HTML/XHTML Markup safe string for Python</description>
+    <platform>all</platform>
+    <language></language>
+    <license>BSD</license>
+    <forum></forum>
+    <website>http://github.com/mitsuhiko/markupsafe</website>
+    <source>https://pypi.python.org/packages/c0/41/bae1254e0396c0cc8cf1751cb7d9afc90a602353695af5952530482c963f/MarkupSafe-0.23.tar.gz#md5=f5ab3deee4c37cd6a922fb81e730da6e</source>
+    <email></email>
+  </extension>
+</addon>
