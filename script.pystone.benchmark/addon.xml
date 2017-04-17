@@ -12,12 +12,9 @@
         <license>The MIT License (MIT)</license>
         <platform>all</platform>
         <source>https://github.com/Lunatixz/XBMC_Addons/tree/master/script.pystone.benchmark</source>
-        <email>pseudotvlive@gmail.com</email>
-        <forum>http://forum.kodi.tv/</forum>
         <news></news>
         <assets>
             <icon>icon.png</icon>
-            <fanart>fanart.jpg</fanart>
         </assets>
     </extension>
 </addon>

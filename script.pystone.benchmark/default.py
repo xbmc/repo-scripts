@@ -16,24 +16,27 @@ LOOPS          = 50000
 def main(loops=LOOPS):
     benchtime, stones = pystone.pystones(loops)
     stones = int(round(stones))
-    stones = stones//10 if len(str(stones)) > 5 else stones
-    REAL_SETTINGS.setSetting("cpuBench",str(stones))
+    REAL_SETTINGS.setSetting("pystone",str(stones))
     plat = '[COLOR=%s]%s[/COLOR]'% ('blue', detectPlatform())
+    pyver = '[COLOR=%s]v%s[/COLOR]'% ('blue', str(platform.python_version()))
+    pystver = '[COLOR=%s]v%s[/COLOR]'% ('blue', str(1.1))
     
-    # http://www.cpubenchmark.net/cpu_list.php
-    maxm = 9732 if plat.startswith(('Raspberry','ARM','Unknown')) else 25236
-    minn = 58 if plat.startswith(('Raspberry','ARM','Unknown')) else 79
+    ADDON_VERSION
+    # http://tiborsimko.org/python-speed-amd-vs-intel.html , https://pybenchmarks.org/u64q/performance.php?test=pystone
+    maxm = 200000 #Intel i7
+    minn = 5000  #ARM rPI
     med  = (maxm - minn) // 2
+    qrt  = (maxm - minn) // 4
     msg = 'Top ' if stones > med else 'Bottom '
     
-    if stones >= maxm:
+    if stones >= med + qrt:
         color = 'green'
-    elif stones < maxm and stones > med:
+    elif stones > med:
         color = 'yellow'
-    elif stones < maxm and stones < med:
-        color = 'orange'
-    else:
+    elif stones <= med - qrt:
         color = 'red'
+    else:
+        color = 'orange'
         
     stat = '[COLOR=%s]%g[/COLOR]'% (color, stones)
     avg  = ((stones - minn) * 100) // maxm
@@ -41,8 +44,9 @@ def main(loops=LOOPS):
     space2 = repeat_to_length(' ',avg-1)
     space3 = repeat_to_length(' ',(100 - avg) - len(msg))
     arrow = '%s^%s[CR]%s%s[COLOR=%s]%d%s[/COLOR]%s'%(space1,space2,space3,msg,color,avg,'%',space2)
-    back = '[I] Back [/I] or [I]Okay [/I] to exit'
-    showText("Pystone (v%s) time for %d passes = %g [CR]This machine [ %s ] [CR]benchmarks at %s pystones/second [CR][CR][COLOR=green]-------------------------[/COLOR][COLOR=yellow]-------------------------[/COLOR][COLOR=orange]-------------------------[/COLOR][COLOR=red]-------------------------[/COLOR][CR]%s[CR][CR]%s"%(ADDON_VERSION,loops, benchtime, plat, stat, arrow, back))
+    back = '[COLOR=dimgrey][I] Back [/I] or [I]Okay [/I] to exit[/COLOR]'
+    results = 'Python 2.7 Comparison[CR]Intel - i7 [140000] | i3 [70000] | Core2 DUO [50000][CR]AMD - Athlon XP 2500+ [30000][CR]ARM - v7 [10000] | v6 [5000]'
+    showText("Pystone (%s) time for %d passes = %g [CR]This machine [ %s ][CR]Python [%s] benchmarks at %s pystones/second [CR][CR][COLOR=green]-------------------------[/COLOR][COLOR=yellow]-------------------------[/COLOR][COLOR=orange]-------------------------[/COLOR][COLOR=red]-------------------------[/COLOR][CR]%s[CR][CR]%s[CR]%s"%(pystver ,loops, benchtime, plat, pyver, stat, arrow, results, back))
 
 def log(msg, level = xbmc.LOGDEBUG):
     xbmc.log(ADDON_ID + '-' + ADDON_VERSION + '-' + str(msg), level)
