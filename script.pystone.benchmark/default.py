@@ -1,3 +1,20 @@
+#   Copyright (C) 2017 Lunatixz
+#
+#
+# This file is part of CPU Benchmark.
+#
+# CPU Benchmark is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# CPU Benchmark is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with CPU Benchmark.  If not, see <http://www.gnu.org/licenses/>.
 
 import os, re, sys, platform, pystone
 import xbmc, xbmcgui, xbmcplugin, xbmcvfs, xbmcaddon
@@ -21,31 +38,28 @@ def main(loops=LOOPS):
     pyver = '[COLOR=%s]v%s[/COLOR]'% ('blue', str(platform.python_version()))
     pystver = '[COLOR=%s]v%s[/COLOR]'% ('blue', str(1.1))
     
-    ADDON_VERSION
     # http://tiborsimko.org/python-speed-amd-vs-intel.html , https://pybenchmarks.org/u64q/performance.php?test=pystone
-    maxm = 200000 #Intel i7
-    minn = 5000  #ARM rPI
-    med  = (maxm - minn) // 2
-    qrt  = (maxm - minn) // 4
-    msg = 'Top ' if stones > med else 'Bottom '
+    maxm = 200000
+    minn = 2000
+    avg  = ((stones - minn) * 100) // maxm
+    msg = 'Top ' if avg > 50 else 'Bottom '
     
-    if stones >= med + qrt:
+    if avg >= 75:
         color = 'green'
-    elif stones > med:
+    elif avg >= 50:
         color = 'yellow'
-    elif stones <= med - qrt:
+    elif avg <= 25:
         color = 'red'
     else:
         color = 'orange'
         
     stat = '[COLOR=%s]%g[/COLOR]'% (color, stones)
-    avg  = ((stones - minn) * 100) // maxm
     space1 = repeat_to_length(' ',100 - avg)
     space2 = repeat_to_length(' ',avg-1)
     space3 = repeat_to_length(' ',(100 - avg) - len(msg))
     arrow = '%s^%s[CR]%s%s[COLOR=%s]%d%s[/COLOR]%s'%(space1,space2,space3,msg,color,avg,'%',space2)
     back = '[COLOR=dimgrey][I] Back [/I] or [I]Okay [/I] to exit[/COLOR]'
-    results = 'Python 2.7 Comparison[CR]Intel - i7 [140000] | i3 [70000] | Core2 DUO [50000][CR]AMD - Athlon XP 2500+ [30000][CR]ARM - v7 [10000] | v6 [5000]'
+    results = 'Python 2.7 Comparison[CR]Intel - i7 [[COLOR=blue]%d[/COLOR]] | i3 [[COLOR=blue]%d[/COLOR]] | Core2 DUO [[COLOR=blue]%d[/COLOR]][CR]AMD - Athlon XP 2500+ [[COLOR=blue]%d[/COLOR]][CR]ARM - v7 [[COLOR=blue]%d[/COLOR]] | v6 [[COLOR=blue]%d[/COLOR]]'%(140000,70000,50000,30000,10000,5000)
     showText("Pystone (%s) time for %d passes = %g [CR]This machine [ %s ][CR]Python [%s] benchmarks at %s pystones/second [CR][CR][COLOR=green]-------------------------[/COLOR][COLOR=yellow]-------------------------[/COLOR][COLOR=orange]-------------------------[/COLOR][COLOR=red]-------------------------[/COLOR][CR]%s[CR][CR]%s[CR]%s"%(pystver ,loops, benchtime, plat, pyver, stat, arrow, results, back))
 
 def log(msg, level = xbmc.LOGDEBUG):
