@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- This file contains the mapping of keys (gamepad, remote, and keyboard) to actions within XBMC -->
+<!-- The <global> section is a fall through - they will only be used if the button is not          -->
+<!-- used in the current window's section.  Note that there is only handling                       -->
+<!-- for a single action per button at this stage.                                                 -->
+<!-- For joystick/gamepad configuration under linux/win32, see below as it differs from xbox       -->
+<!-- gamepads.                                                                                     -->
+
+<!-- The format is:                      -->
+<!--    <device>                         -->
+<!--      <button>action</button>        -->
+<!--    </device>                        -->
+
+<!-- To map keys from other remotes using the RCA protocol, you may add <universalremote> blocks -->
+<!-- In this case, the tags used are <obc#> where # is the original button code (OBC) of the key -->
+<!-- You set it up by adding a <universalremote> block to the window or <global> section:       -->
+<!--    <universalremote>             -->
+<!--       <obc45>Stop</obc45>         -->
+<!--    </universalremote>            -->
+
+<!-- Note that the action can be a built-in function.                 -->
+<!--  eg <B>XBMC.ActivateWindow(MyMusic)</B>                         -->
+<!-- would automatically go to My Music on the press of the B button. -->
+
+<!-- Joysticks / Gamepads:                                                                    -->
+<!--   See the sample PS3 controller configuration below for the format.                      -->
+<!--                                                                                          -->
+<!--  Joystick Name:                                                                          -->
+<!--   Do 'cat /proc/bus/input/devices' or see your xbmc log file  to find the names of       -->
+<!--   detected joysticks. The name used in the configuration should match the detected name. -->
+<!--                                                                                          -->
+<!--  Button Ids:                                                                             -->
+<!--   'id' is the button ID used by SDL. Joystick button ids of connected joysticks appear   -->
+<!--   in xbmc.log when they are pressed. Use your log to map custom buttons to actions.      -->
+<!--                                                                                          -->
+<!--  Axis Ids / Analog Controls                                                              -->
+<!--   Coming soon.                                                                           -->
+<!--videoosd   XBMC.ActivateWindow(windowid)   XBMC.ActivateWindow(Home)   ContextMenu   VolumeUp   VolumeDown   Play   Rewind   FastForward   PreviousMenu (Go back to the previous menu screen.)   ParentDir (Go up a folder to the parent folder.)   CodecInfo      -->
+<keymap>
+  <global>
+    <joystick name="Wireless Controller">
+      <altname>PLAYSTATION(R)4 Controller</altname>
+      <altname>PS4 Controller</altname>
+      <!--<button id="13" description="Ps button">XBMC.ActivateWindow(home)</button>-->
+	  <button id="1" description="Y button (left)">Back</button>
+      <button id="2" description="B button (down)">Select</button>
+      <button id="3" description="A button (right)"></button>	  
+	  <button id="4" description="X button (top)">ContextMenu</button>
+	  <button id="5" description="L button (shoulder)">Rewind</button>      
+	  <button id="6" description="R button (shoulder)">FastForward</button>
+      <button id="7" description="L2 button (trigger)">VolumeDown</button>	        
+	  <button id="8" description="R2 button (trigger)">VolumeUp</button>
+	  <button id="9" description="Share button">FullScreen</button>
+	  <button id="10" description="Options button">OSD</button>
+	  <button id="11" description="L3 button (thumb)">CodecInfo</button>
+	  <button id="12" description="R3 button (thumb)">Mute</button>
+      <hat id="1" position="left" description="Left D-pad">Left</hat>
+      <hat id="1" position="down" description="Down D-pad">Down</hat>	  
+      <hat id="1" position="right" description="Right D-pad">Right</hat>
+	  <hat id="1" position="up" description="Up D-pad">Up</hat>	  
+	  <axis limit="+1" id="1" description="L Left"></axis>
+	  <axis limit="-1" id="1" description="L Right"></axis>
+      <axis limit="+1" id="2" description="L Up"></axis>
+	  <axis limit="-1" id="2" description="L Down"></axis>
+      <axis limit="+1" id="3" description="R Left"></axis>
+	  <axis limit="-1" id="3" description="R Left"></axis>
+      <axis limit="+1" id="4" description="R Up">VolumeDown</axis>
+	  <axis limit="-1" id="4" description="R Down">VolumeUp</axis>
+      
+    </joystick>
+  </global>
+  <FullscreenVideo>
+    <joystick name="Wireless Controller">
+      <altname>PLAYSTATION(R)4 Controller</altname>
+      <altname>PS4 Controller</altname>
+	  <button id="2" description="B button (down)">Pause</button>	  
+	  <button id="3" description="A button (right)">ShowSubtitles</button>
+	  <button id="4" description="Y button (top)">OSD</button>
+      <hat id="1" position="left" description="Left D-pad">StepBack</hat>      
+	  <hat id="1" position="down" description="Down D-pad">BigStepBack</hat>	  
+	  <hat id="1" position="right" description="Right D-pad">StepForward</hat>
+      <hat id="1" position="up" description="Up D-pad">BigStepForward</hat>	  
+	</joystick>
+  </FullscreenVideo>
+  <SlideShow>
+    <joystick name="Wireless Controller">
+      <altname>PLAYSTATION(R)4 Controller</altname>
+      <altname>PS4 Controller</altname>
+      <button id="2" description="B button (down)">Pause</button>
+	  <button id="4" description="X button (top)">Rotate</button>	  
+      <button id="6" description="R button (shoulder)">NextPicture</button>
+      <button id="5" description="L button (shoulder)">PreviousPicture</button>		  
+	</joystick>
+  </SlideShow>
+  <Home>
+    <joystick name="Wireless Controller">
+      <altname>PLAYSTATION(R)4 Controller</altname>
+      <altname>PS4 Controller</altname>
+	  <button id="13" description="Ps button">noop</button>    
+	</joystick>
+  </Home>
+  <VirtualKeyboard>
+    <joystick name="Wireless Controller">
+      <altname>PLAYSTATION(R)4 Controller</altname>
+      <altname>PS4 Controller</altname>
+      <button id="1" description="Y button (left)">BackSpace</button>
+	  <button id="3" description="A button (right)">Shift</button>
+      <button id="4" description="X button (top)">Symbols</button>
+	  <button id="5" description="L button (shoulder)">Rewind</button>
+	  <button id="6" description="R button (shoulder)">CursorRight</button>
+      <button id="10" description="Options button">Enter</button>
+    </joystick>
+  </VirtualKeyboard>
+  <ContextMenu>
+    <joystick name="Wireless Controller">
+      <altname>PLAYSTATION(R)4 Controller</altname>
+      <altname>PS4 Controller</altname>
+      <button id="1" description="Y button (left)">Close</button>
+    </joystick>
+  </ContextMenu>
+  <AddonInformation>
+    <joystick name="Wireless Controller">
+      <altname>PLAYSTATION(R)4 Controller</altname>
+      <altname>PS4 Controller</altname>
+      <button id="1" description="Y button (left)">Close</button>
+    </joystick>
+  </AddonInformation>
+  <AddonSettings>
+    <joystick name="Wireless Controller">
+      <altname>PLAYSTATION(R)4 Controller</altname>
+      <altname>PS4 Controller</altname>
+      <button id="1" description="Y button (left)">Close</button>
+    </joystick>
+  </AddonSettings>
+</keymap>

@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- This file contains the mapping of keys (gamepad, remote, and keyboard) to actions within XBMC -->
+<!-- The <global> section is a fall through - they will only be used if the button is not          -->
+<!-- used in the current window's section.  Note that there is only handling                       -->
+<!-- for a single action per button at this stage.                                                 -->
+<!-- For joystick/gamepad configuration under linux/win32, see below as it differs from xbox       -->
+<!-- gamepads.                                                                                     -->
+
+<!-- The format is:                      -->
+<!--    <device>                         -->
+<!--      <button>action</button>        -->
+<!--    </device>                        -->
+
+<!-- To map keys from other remotes using the RCA protocol, you may add <universalremote> blocks -->
+<!-- In this case, the tags used are <obc#> where # is the original button code (OBC) of the key -->
+<!-- You set it up by adding a <universalremote> block to the window or <global> section:       -->
+<!--    <universalremote>             -->
+<!--       <obc45>Stop</obc45>         -->
+<!--    </universalremote>            -->
+
+<!-- Note that the action can be a built-in function.                 -->
+<!--  eg <B>XBMC.ActivateWindow(MyMusic)</B>                         -->
+<!-- would automatically go to My Music on the press of the B button. -->
+
+<!-- Joysticks / Gamepads:                                                                    -->
+<!--   See the sample PS3 controller configuration below for the format.                      -->
+<!--                                                                                          -->
+<!--  Joystick Name:                                                                          -->
+<!--   Do 'cat /proc/bus/input/devices' or see your xbmc log file  to find the names of       -->
+<!--   detected joysticks. The name used in the configuration should match the detected name. -->
+<!--                                                                                          -->
+<!--  Button Ids:                                                                             -->
+<!--   'id' is the button ID used by SDL. Joystick button ids of connected joysticks appear   -->
+<!--   in xbmc.log when they are pressed. Use your log to map custom buttons to actions.      -->
+<!--                                                                                          -->
+<!--  Axis Ids / Analog Controls                                                              -->
+<!--   Coming soon.                                                                           -->
+<!--videoosd   XBMC.ActivateWindow(windowid)   XBMC.ActivateWindow(Home)   ContextMenu   VolumeUp   VolumeDown   Play   Rewind   FastForward   PreviousMenu (Go back to the previous menu screen.)   ParentDir (Go up a folder to the parent folder.)   CodecInfo      -->
+<keymap>
+  <global>
+    <joystick name="Sony PLAYSTATION(R)3 Controller">
+      <altname>PLAYSTATION(R)3 Controller</altname>
+      <altname>PS3 Controller</altname>
+      <altname>Sony Computer Entertainment Wireless Controller</altname>
+      <button id="17" description="Ps button">XBMC.ActivateWindow(home)</button>
+	  <button id="16" description="Y button (left)">Back</button>
+      <button id="15" description="B button (down)">Select</button>
+      <button id="14" description="A button (right)"></button>
+	  <button id="13" description="X button (top)">ContextMenu</button>
+      <button id="12" description="R button (shoulder)">FastForward</button>
+	  <button id="11" description="L button (shoulder)">Rewind</button>
+      <button id="10" description="R2 button (trigger)">VolumeUp</button>
+      <button id="9" description="L2 button (trigger)">VolumeDown</button>	  
+      <button id="8" description="Left D-pad">Left</button>
+	  <button id="7" description="Down D-pad">Down</button>
+	  <button id="6" description="Right D-pad">Right</button>
+      <button id="5" description="Up D-pad">Up</button>	  
+      <button id="4" description="Start button">OSD</button>
+      <button id="3" description="R3 button (thumb)">Mute</button>
+	  <button id="2" description="L3 button (thumb)">CodecInfo</button>
+	  <button id="1" description="Select button">FullScreen</button>
+	  
+	  <axis limit="-1" id="1" rest="0" description="L Left">noop</axis>
+	  <axis limit="+1" id="1" rest="0" description="L Right">noop</axis>
+      <axis limit="-1" id="2" rest="0" description="L Up">noop</axis>
+	  <axis limit="+1" id="2" rest="0" description="L Down">noop</axis>
+	  
+	  <axis limit="-1" id="3" rest="-32768" description="R Left">noop</axis>
+	  <axis limit="+1" id="3" rest="0" description="R Right">noop</axis>
+      <axis limit="-1" id="4" rest="0" description="R Up">ScrollUp</axis>
+	  <axis limit="+1" id="4" rest="0" description="R Down">ScrollDown</axis>
+	  
+      <!-- ignore other buttons (mapped to axes) -->
+      <axis id="5" rest="-32768" description="?">noop</axis>
+      <axis id="6" rest="-32768" description="?">noop</axis>
+      <axis id="7" rest="-32768" description="?">noop</axis>
+      <axis id="8" rest="-32768" description="?">noop</axis>
+      <axis id="9" rest="-32768" description="Up D-pad">noop</axis>
+      <axis id="10" rest="-32768" description="Right D-pad">noop</axis>
+      <axis id="11" rest="-32768" description="Down D-pad">noop</axis>
+      <axis id="12" rest="-32768" description="Left D-pad">noop</axis>
+	  <axis id="13" rest="-32768" description="L2 button (shoulder)">noop</axis>
+      <axis id="14" rest="-32768" description="R2 button (shoulder)">noop</axis>
+      <axis id="15" rest="-32768" description="L button (shoulder)">noop</axis>
+      <axis id="16" rest="-32768" description="R button (shoulder)">noop</axis>
+      <axis id="17" rest="-32768" description="X button (top)">noop</axis>
+      <axis id="18" rest="-32768" description="A button (right)">noop</axis>
+      <axis id="19" rest="-32768" description="B button (down)">noop</axis>
+      <axis id="20" rest="-32768" description="Y button (left)">noop</axis>
+      <axis id="21" rest="-32768" description="?">noop</axis>
+      <axis id="22" rest="-32768" description="?">noop</axis>
+      <axis id="23" rest="-32768" description="?">noop</axis>
+	  
+	 
+    </joystick>
+  </global>
+  <FullscreenVideo>
+    <joystick name="Sony PLAYSTATION(R)3 Controller">
+      <altname>PLAYSTATION(R)3 Controller</altname>
+      <altname>PS3 Controller</altname>
+      <altname>Sony Computer Entertainment Wireless Controller</altname>
+	  <button id="17" description="Ps button">XBMC.ActivateWindow(home)</button>
+	  <button id="16" description="Y button (left)">Back</button>
+	  <button id="15" description="B button (down)">OSD</button>	  
+	  <button id="14" description="A button (right)">ShowSubtitles</button>
+	  <button id="13" description="X button (top)">OSD</button>
+	  <button id="12" description="R button (shoulder)">FastForward</button>
+	  <button id="11" description="L button (shoulder)">Rewind</button>
+	  <button id="4" description="Start button">Pause</button>
+      <button id="8" description="Left D-pad">StepBack</button>      
+	  <button id="7" description="Down D-pad">BigStepBack</button>	  
+	  <button id="6" description="Right D-pad">StepForward</button>
+      <button id="5" description="Up D-pad">BigStepForward</button>
+	  <button id="3" description="R3 button (thumb)">Mute</button>
+	  <button id="2" description="L3 button (thumb)">CodecInfo</button>
+	  <button id="1" description="Select button">FullScreen</button>
+	  <!-- ignore other buttons (mapped to axes) -->
+	  <axis id="13" rest="-32768" description="L2 button (shoulder)">noop</axis>
+      <axis id="14" rest="-32768" description="R2 button (shoulder)">noop</axis>
+	</joystick>
+  </FullscreenVideo>
+  <FullscreenInfo>
+    <joystick name="Sony PLAYSTATION(R)3 Controller">
+      <altname>PLAYSTATION(R)3 Controller</altname>
+      <altname>PS3 Controller</altname>
+      <altname>Sony Computer Entertainment Wireless Controller</altname>
+	  
+	  <!-- ignore other buttons (mapped to axes) -->
+	  <axis id="13" rest="-32768" description="L2 button (shoulder)">noop</axis>
+      <axis id="14" rest="-32768" description="R2 button (shoulder)">noop</axis>
+	</joystick>
+  </FullscreenInfo>
+  <FullscreenLiveTV>
+    <joystick name="Sony PLAYSTATION(R)3 Controller">
+      <altname>PLAYSTATION(R)3 Controller</altname>
+      <altname>PS3 Controller</altname>
+      <altname>Sony Computer Entertainment Wireless Controller</altname>      
+      <button id="5" description="ChannelUp">noop</button>
+      <button id="7" description="ChannelDown">noop</button>
+      <button id="8" description="PreviousChannelGroup">noop</button>
+      <button id="6" description="NextChannelGroup">noop</button>
+    </joystick>
+  </FullscreenLiveTV>
+  <Visualisation>
+    <joystick name="Sony PLAYSTATION(R)3 Controller">
+      <altname>PLAYSTATION(R)3 Controller</altname>
+      <altname>PS3 Controller</altname>
+      <altname>Sony Computer Entertainment Wireless Controller</altname>
+	  
+	  <!-- ignore other buttons (mapped to axes) -->
+	  <axis id="13" rest="-32768" description="L2 button (shoulder)">noop</axis>
+      <axis id="14" rest="-32768" description="R2 button (shoulder)">noop</axis>
+	</joystick>
+  </Visualisation>
+  <SlideShow>
+    <joystick name="Sony PLAYSTATION(R)3 Controller">
+      <altname>PLAYSTATION(R)3 Controller</altname>
+      <altname>PS3 Controller</altname>
+      <altname>Sony Computer Entertainment Wireless Controller</altname>
+	  <button id="17" description="Ps button"></button>
+      <button id="15" description="B button (down)">Pause</button>
+	  <button id="13" description="X button (top)">Rotate</button>	  
+      <button id="12" description="R button (shoulder)">NextPicture</button>
+      <button id="9" description="L button (shoulder)">PreviousPicture</button>		  
+	</joystick>
+  </SlideShow>
+  <Home>
+    <joystick name="Sony PLAYSTATION(R)3 Controller">
+      <altname>PLAYSTATION(R)3 Controller</altname>
+      <altname>PS3 Controller</altname>
+      <altname>Sony Computer Entertainment Wireless Controller</altname>
+	  <button id="17" description="Ps button">noop</button>    
+	</joystick>
+  </Home>
+  <MyVideoLibrary>
+    <joystick name="Sony PLAYSTATION(R)3 Controller">
+	  <altname>PLAYSTATION(R)3 Controller</altname>
+      <altname>PS3 Controller</altname>
+      <altname>Sony Computer Entertainment Wireless Controller</altname>
+    </joystick>
+  </MyVideoLibrary>
+  <MyMusicLibrary>
+    <joystick name="Sony PLAYSTATION(R)3 Controller">
+	  <altname>PLAYSTATION(R)3 Controller</altname>
+      <altname>PS3 Controller</altname>
+      <altname>Sony Computer Entertainment Wireless Controller</altname>
+    </joystick>
+  </MyMusicLibrary>
+  <MyPictures>
+    <joystick name="Sony PLAYSTATION(R)3 Controller">
+	  <altname>PLAYSTATION(R)3 Controller</altname>
+      <altname>PS3 Controller</altname>
+      <altname>Sony Computer Entertainment Wireless Controller</altname>
+    </joystick>
+  </MyPictures>
+  <MyPrograms>
+    <joystick name="Sony PLAYSTATION(R)3 Controller">
+	  <altname>PLAYSTATION(R)3 Controller</altname>
+      <altname>PS3 Controller</altname>
+      <altname>Sony Computer Entertainment Wireless Controller</altname>
+	  <button id="17" description="Ps button">noop</button>
+	  <button id="16" description="Y button (left)">Back</button>
+    </joystick>
+  </MyPrograms>
+  <MyFiles>
+    <joystick name="Sony PLAYSTATION(R)3 Controller">
+	  <altname>PLAYSTATION(R)3 Controller</altname>
+      <altname>PS3 Controller</altname>
+      <altname>Sony Computer Entertainment Wireless Controller</altname>
+	  <button id="1" description="Select button">Highlight</button>
+	  <button id="2" description="L3 button (thumb)">Rename</button>
+      <button id="3" description="R3 button (thumb)">Delete</button>
+	  <button id="11" description="L button (shoulder)">noop</button>
+    </joystick>
+  </MyFiles>
+  <VirtualKeyboard>
+    <joystick name="Sony PLAYSTATION(R)3 Controller">
+      <altname>PLAYSTATION(R)3 Controller</altname>
+      <altname>PS3 Controller</altname>
+      <altname>Sony Computer Entertainment Wireless Controller</altname>
+	  <button id="2" description="L3 button (thumb)">noop</button>
+	  <button id="3" description="R3 button (thumb)">Shift</button>
+	  <button id="4" description="Start button">Enter</button>
+	  <button id="9" description="L button (shoulder)">CursorLeft</button>
+	  <button id="12" description="R button (shoulder)">CursorRight</button>
+	  <button id="11" description="L button (shoulder)">noop</button>
+      <button id="13" description="X button (top)">Symbols</button>
+	  <button id="14" description="A button (right)">noop</button>
+	  <button id="16" description="Y button (left)">BackSpace</button>
+	  <button id="17" description="Ps button">Back</button>
+    </joystick>
+  </VirtualKeyboard>
+  <ContextMenu>
+    <joystick name="Sony PLAYSTATION(R)3 Controller">
+      <altname>PLAYSTATION(R)3 Controller</altname>
+      <altname>PS3 Controller</altname>
+      <altname>Sony Computer Entertainment Wireless Controller</altname>
+      <button id="16" description="Y button (left)">Close</button>
+    </joystick>
+  </ContextMenu>
+  <AddonInformation>
+    <joystick name="Sony PLAYSTATION(R)3 Controller">
+      <altname>PLAYSTATION(R)3 Controller</altname>
+      <altname>PS3 Controller</altname>
+      <altname>Sony Computer Entertainment Wireless Controller</altname>
+      <button id="16" description="Y button (left)">Close</button>
+    </joystick>
+  </AddonInformation>
+  <AddonSettings>
+    <joystick name="Sony PLAYSTATION(R)3 Controller">
+      <altname>PLAYSTATION(R)3 Controller</altname>
+      <altname>PS3 Controller</altname>
+      <altname>Sony Computer Entertainment Wireless Controller</altname>
+      <button id="16" description="Y button (left)">Close</button>
+    </joystick>
+  </AddonSettings>
+</keymap>
