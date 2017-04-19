@@ -43,20 +43,20 @@ WRITE_BLOCK_KB = 1024   # KBs in each write block
 READ_BLOCK_B   = 512    # bytes in each read block (high values may lead to
                         # invalid results because of system I/O scheduler        
                         # file must be at drive under test
-  
-if __name__ == '__main__':
-    def repeat_to_length(string_to_expand, length):
-       return (string_to_expand * ((length/len(string_to_expand))+1))[:length]
+
+def repeat_to_length(string_to_expand, length):
+   return (string_to_expand * ((length/len(string_to_expand))+1))[:length]
+ 
+def log(msg, level = xbmc.LOGDEBUG):
+    xbmc.log(ADDON_ID + '-' + ADDON_VERSION + '-' + str(msg), level)
+    
+def showText(text, header=ADDON_NAME):
+    xbmcgui.Dialog().textviewer(header, text)
      
-    def log(msg, level = xbmc.LOGDEBUG):
-        xbmc.log(ADDON_ID + '-' + ADDON_VERSION + '-' + str(msg), level)
-        
-    def showText(text, header=ADDON_NAME):
-        xbmcgui.Dialog().textviewer(header, text)
-         
-    def okay(line1= '', line2= '', line3= '', header=ADDON_NAME):
-        xbmcgui.Dialog().ok(header, line1, line2, line3)
+def okay(line1= '', line2= '', line3= '', header=ADDON_NAME):
+    xbmcgui.Dialog().ok(header, line1, line2, line3)
        
+if __name__ == '__main__':
     try:
         params = dict( arg.split( '=' ) for arg in sys.argv[ 1 ].split( '&' ) )
     except:
