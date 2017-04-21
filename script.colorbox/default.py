@@ -46,8 +46,8 @@ class ColorBoxMain:
         Utils.Load_Colors_Dict()
         monitor = xbmc.Monitor()
         while self.daemon and not monitor.abortRequested():
-            if xbmc.getInfoLabel("ListItem.Property(WatchedEpisodes)") != self.show_watched:
-                self.show_watched = xbmc.getInfoLabel("ListItem.Property(WatchedEpisodes)")
+            if xbmc.getInfoLabel("ListItem.Property(UnWatchedEpisodes)") != self.show_watched:
+                self.show_watched = xbmc.getInfoLabel("ListItem.Property(UnWatchedEpisodes)")
                 Utils.Show_Percentage()
             self.prefix_now_NINE = HOME.getProperty("NINE_manual_set")
             if self.prefix_now_NINE != '' and self.prefix_now_NINE != self.prefix_prev_NINE or HOME.getProperty("NINE_daemon_fire"):
