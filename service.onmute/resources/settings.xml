@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+    <setting id="enableDebug" type="bool" label="32001" default="false" />
+    <setting id="enableCC" label="32002" type="bool" default="false"/>
+    <setting id="searchSub" label="32003" type="bool" default="false"/>
+</settings>
