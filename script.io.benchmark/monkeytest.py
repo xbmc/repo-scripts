@@ -1,4 +1,4 @@
-#   Copyright (C) 2017 Lunatixz
+#   Copyright (C) 2017 Lunatixz, thodnev
 #
 #
 # This file is part of I/O Benchmark.
