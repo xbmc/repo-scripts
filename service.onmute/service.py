@@ -91,7 +91,10 @@ class Player(xbmc.Player):
 class Monitor(xbmc.Monitor):
     def __init__(self):
         xbmc.Monitor.__init__(self, xbmc.Monitor())
-      
+        self.searchSub = REAL_SETTINGS.getSetting('searchSub') == "true"
+        self.enableCC =  REAL_SETTINGS.getSetting('enableCC') == "true"
+        
+        
     def onSettingsChanged(self):
         log("onSettingsChanged")
         self.searchSub = REAL_SETTINGS.getSetting('searchSub') == "true"
@@ -105,8 +108,6 @@ class Service():
         self.Monitor = Monitor()
         self.autoSub = False
         self.Player.subFound = False
-        self.Monitor.searchSub = REAL_SETTINGS.getSetting('searchSub') == "true"
-        self.Monitor.enableCC =  REAL_SETTINGS.getSetting('enableCC') == "true"
         self.searchSub = self.Monitor.searchSub
         self.start()
 
@@ -125,7 +126,7 @@ class Service():
          
     def setSubtitle(self, state):
         log("setSubtitle = " + str(state))
-        Player().showSubtitles(state)
+        self.Player.showSubtitles(state)
          
          
     def hasSubtitle(self):

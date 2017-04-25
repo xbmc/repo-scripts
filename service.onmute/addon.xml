@@ -4,6 +4,7 @@
         <import addon="xbmc.python" version="2.25.0"/>
         <import addon="script.module.simplejson" version="3.3.0"/>
     </requires>
+    <extension point="xbmc.python.script" library="settings.py"/>
     <extension point="xbmc.service" library="service.py" start="startup"/>
     <extension point="xbmc.addon.metadata">
         <summary lang="en_GB">Enable closed captioning and subtitles "OnMute".</summary>
