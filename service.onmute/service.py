@@ -143,12 +143,12 @@ class Service():
         
     def setMute(self, state):
         log("setMute = " + str(state))
-        bailout = 0
-        while self.isMute() != bool(state) and bailout < 13:
-            bailout += 1
+        if self.isMute() != bool(state):
             json_query = '{"jsonrpc":"2.0","method":"Application.SetMute","params":{"mute":%s},"id":1}' %str(state).lower()
-            sendJSON(json_query)
-            xbmc.sleep(500)
+            json_responce = loadJson(sendJSON(json_query))
+            if json_responce and 'result' in json_responce and json_responce['result'] == state:
+                return
+            self.setMute(state)
             
               
     def getCC(self):
@@ -206,7 +206,7 @@ class Service():
                     self.autoSub = False
                     self.setSubtitle(False)
                     
-            if self.Monitor.waitForAbort(1):
+            if self.Monitor.waitForAbort(2):
                 break
              
         # restore users closed caption preference .
