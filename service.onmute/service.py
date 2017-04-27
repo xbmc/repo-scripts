@@ -191,6 +191,7 @@ class Service():
                 '''
                 # check if user has subs already enabled.
                 if (self.isSubtitle() + self.hasSubtitle()) > 1 and self.isMute() == True and self.autoSub == False:
+                    xbmc.sleep(2000)
                     continue
                     
                 # on mute if subs are disabled, enable them.
