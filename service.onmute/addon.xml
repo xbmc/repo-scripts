@@ -2,7 +2,6 @@
 <addon id="service.onmute" version="0.0.1" name="OnMute" provider-name="Lunatixz">
     <requires>
         <import addon="xbmc.python" version="2.25.0"/>
-        <import addon="script.module.simplejson" version="3.3.0"/>
     </requires>
     <extension point="xbmc.python.script" library="settings.py"/>
     <extension point="xbmc.service" library="service.py" start="startup"/>

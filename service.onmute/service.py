@@ -22,10 +22,7 @@ import xbmc, xbmcplugin, xbmcaddon, xbmcgui
 # Plugin Info
 ADDON_ID = 'service.onmute'
 REAL_SETTINGS = xbmcaddon.Addon(id=ADDON_ID)
-ADDON_NAME = REAL_SETTINGS.getAddonInfo('name')
-ADDON_PATH = REAL_SETTINGS.getAddonInfo('path').decode('utf-8')
 ADDON_VERSION = REAL_SETTINGS.getAddonInfo('version')
-LANGUAGE = REAL_SETTINGS.getLocalizedString
 DEBUG = REAL_SETTINGS.getSetting('enableDebug') == "true"
 
 def log(msg, level = xbmc.LOGDEBUG):
@@ -140,17 +137,7 @@ class Service():
         log("isMute = " + str(state))
         return state
 
-        
-    def setMute(self, state):
-        log("setMute = " + str(state))
-        if self.isMute() != bool(state):
-            json_query = '{"jsonrpc":"2.0","method":"Application.SetMute","params":{"mute":%s},"id":1}' %str(state).lower()
-            json_responce = loadJson(sendJSON(json_query))
-            if json_responce and 'result' in json_responce and json_responce['result'] == state:
-                return
-            self.setMute(state)
-            
-              
+
     def getCC(self):
         # save user parsecaptions settings prior to change
         state = False

@@ -19,6 +19,5 @@
 import xbmcaddon
 
 # Plugin Info
-ADDON_ID = 'service.onmute'
-REAL_SETTINGS = xbmcaddon.Addon(id=ADDON_ID)
+REAL_SETTINGS = xbmcaddon.Addon()
 REAL_SETTINGS.openSettings() 
