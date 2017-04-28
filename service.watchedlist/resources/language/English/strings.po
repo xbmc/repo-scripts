@@ -266,8 +266,8 @@ msgstr ""
 #empty strings from id 32211 to 32296
 
 msgctxt "#32297"
-msgid "tvshow_has_no_imdbid"
-msgstr "TV-Show %s (ID %d) has no imdb-number. No processing with WL possible. Try rescraping."
+msgid "TV-Show \"%s\" (ID %d) has no imdb-number. No processing with WL possible. Try rescraping."
+msgstr ""
 
 msgctxt "#32298"
 msgid "%d movies and %d episodes read from WL."
