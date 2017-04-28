@@ -177,7 +177,7 @@ class Service():
                     compare with hasSubtitle to detect true status.
                 '''
                 # check if user has subs already enabled.
-                if (self.isSubtitle() + self.hasSubtitle()) > 1 and self.isMute() == True and self.autoSub == False:
+                if self.isSubtitle() == True and self.hasSubtitle() == True and self.isMute() == True and self.autoSub == False:
                     xbmc.sleep(2000)
                     continue
                     
