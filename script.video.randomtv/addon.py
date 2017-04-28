@@ -180,7 +180,7 @@ else:
 #
 
 
-while (not xbmc.Monitor().waitForAbort(0.1)):
+while (not xbmc.Monitor().waitForAbort(1)):
 	if int(time.time()) >= AutoStopCheckTime:
 		log("-- Auto Stop Timer Reached")
 		AutoStopDialog.create(name, xbmcaddon.Addon().getLocalizedString(32015))
