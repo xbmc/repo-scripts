@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.service.kodi.callbacks" name="Kodi Callbacks" version="0.9.9" provider-name="KenV99">
+  <requires>
+    <import addon="xbmc.python" version="2.19.0"/>
+    <import addon="script.module.requests" version="2.3.0"/>
+  </requires>
+  <extension point="xbmc.service" library="default.py" start="startup">
+  </extension>
+  <extension point="xbmc.python.library" library="script.py">
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en">Callbacks for Kodi</summary>
+    <description lang="en">Provides user definable actions for specific events within Kodi. Credit to Yesudeep Mangalapilly (gorakhargosh on github) and contributors for watchdog and pathtools modules.
+    </description>
+    <disclaimer lang="en">For bugs, requests or general questions visit the Kodi forums.</disclaimer>
+    <platform>all</platform>
+    <source>https://github.com/KenV99/script.service.kodi.callbacks</source>
+    <website>http://kodi.wiki/view/Add-on:Kodi_Callbacks</website>
+    <forum>http://forum.kodi.tv/showthread.php?tid=256170</forum>
+    <license>GNU GENERAL PUBLIC LICENSE. Version 3, June 2007</license>
+	<language>en</language>
+	<email></email>
+  </extension>
+</addon>
