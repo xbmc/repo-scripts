@@ -6,10 +6,12 @@ infokey_map = {
     'track': 'tracknumber',
     'runtime': 'duration',
     'showtitle': 'tvshowtitle',
-    'imdbnumber': 'code',
-    'uniqueid': 'code',
     'firstaired': 'aired'
 }
+
+mediatype_map = {'episodeid': 'episode',
+    'movieid': 'movie',
+    'musicvideoid': 'musicvideo'}
 
 def build_video_listitem(item):
     result = xbmcgui.ListItem(item.get('label'))
@@ -20,16 +22,12 @@ def build_video_listitem(item):
     for key, value in item.iteritems():
         if isinstance(value, collections.Mapping):
             continue
-        if key in (infokey_map.keys()):
+        if key in infokey_map:
             infolabels[infokey_map[key]] = value
+        elif key in mediatype_map:
+            infolabels['dbid'] = value
+            infolabels['mediatype'] = mediatype_map[key]
 
-        infolabels[key] = value
-        if isinstance(value, basestring):
-            result.setProperty(key, value)
-        elif isinstance(value, collections.Iterable):
-            result.setProperty(key, list_to_str(value))
-        else:
-            result.setProperty(key, str(value))
     result.setInfo('video', infolabels)
 
     if 'file' in item:
