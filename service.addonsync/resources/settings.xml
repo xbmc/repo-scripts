@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+	<category label="32001">
+		<setting id="isFirstUse" type="bool" visible="false" option="hidden" label="First Use" default="true" />
+		<setting id="installationType" type="enum" label="32007" lvalues="32008|32009" default="0" />
+		<setting id="centralStoreLocation" type="folder" label="32004" default="" />
+		<setting id="runOnStartup" type="bool" label="32018" default="true" />
+        <setting id="checkInterval" label="32010" visible="eq(-1,true)" type="slider" default="0" range="0,1,10" option="int"/>
+		<setting id="restartUpdatedServiceAddons" type="bool" label="32023" visible="eq(-4,1)" default="false" />
+		<setting label="32002" type="lsep"/>
+		<setting id="logEnabled" type="bool" label="32003" default="false"/>
+		<setting label="32021" type="lsep"/>
+		<setting label="32022" type="action" option="close" action="RunScript($CWD/default.py)"/>
+	</category>
+	<category label="32012">
+		<setting id="filterType" type="enum" label="32016" lvalues="32013|32014|32015" default="0" />
+		<setting visible="eq(-1,1)|eq(-1,2)" label="32017" option="close" type="action" action="RunScript($CWD/filter.py)"/>
+		<setting id="excludedAddons" type="text" visible="false" option="hidden" label="Excluded Addons" default="" />
+		<setting id="includedAddons" type="text" visible="false" option="hidden" label="Included Addons" default="" />
+	</category>
+</settings>
