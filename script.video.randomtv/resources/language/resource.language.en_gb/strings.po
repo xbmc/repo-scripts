@@ -56,3 +56,23 @@ msgstr ""
 msgctxt "#32012"
 msgid "Select TV Shows"
 msgstr ""
+
+msgctxt "#32013"
+msgid "Enable Auto Stop"
+msgstr ""
+
+msgctxt "#32014"
+msgid "Auto Stop Timer (Minutes)"
+msgstr ""
+
+msgctxt "#32015"
+msgid "Are You Still There?"
+msgstr ""
+
+msgctxt "#32016"
+msgid "seconds left until Auto Stop..."
+msgstr ""
+
+msgctxt "#32017"
+msgid "Time To Wait For Response (Minutes)"
+msgstr ""

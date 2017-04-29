@@ -5,6 +5,7 @@ import json
 import random
 import threading
 import sys
+import time
 
 
 def log(msg):
@@ -23,7 +24,7 @@ def buildPlaylist(myEpisodes):
 
 
 def ResetPlayCount(myEpisode):
-	xbmc.sleep(5000)
+	xbmc.Monitor().waitForAbort(5)
 	log("--------- ResetPlayCount")
 	log("-- Episode Id: " + str(myEpisode['episodeId']))
 	log("-- Episode Name: " + str(myEpisode['episodeName']))
@@ -152,7 +153,16 @@ if len(myEpisodes) == 0:
 	quit()
 else:
 	log("--------- Episodes Found")
-	
+	# Get Auto Stop Check Time - Current Time + Auto Stop Check Timer
+	if addon.getSetting("AutoStop") == "true":
+		log("-- Auto Stop Enabled")
+		log("-- Auto Stop Timer: " + addon.getSetting("AutoStopTimer"))
+		log("-- Auto Stop Wait: " + addon.getSetting("AutoStopWait"))
+		AutoStopCheckTime = int(time.time()) + (int(addon.getSetting("AutoStopTimer")) * 60)
+		AutoStopWait = (int(addon.getSetting("AutoStopWait")) * 60)
+		AutoStopDialog = xbmcgui.DialogProgress()
+	#
+
 	# Initialize our Player
 	player = MyPlayer()
 	
@@ -167,11 +177,33 @@ else:
 
 	# Start Player
 	player.play(item=myPlaylist)
-	xbmc.sleep(100)
 #
 
 
-while (not xbmc.Monitor().abortRequested()):
+while (not xbmc.Monitor().waitForAbort(1)):
+	if int(time.time()) >= AutoStopCheckTime:
+		log("-- Auto Stop Timer Reached")
+		AutoStopDialog.create(name, xbmcaddon.Addon().getLocalizedString(32015))
+		while int(time.time()) < AutoStopCheckTime + AutoStopWait:
+			AutoStopDialog.update(int(int(time.time() - AutoStopCheckTime) * 100 / AutoStopWait), xbmcaddon.Addon().getLocalizedString(32015), str(AutoStopWait - int(time.time() - AutoStopCheckTime)) + " " + xbmcaddon.Addon().getLocalizedString(32016))
+			if AutoStopDialog.iscanceled():
+				log("-- Dialog Cancelled - Breaking")
+				break
+			#
+			xbmc.Monitor().waitForAbort(0.1)
+		#
+		if AutoStopDialog.iscanceled():
+			log("-- Dialog Cancelled")
+			AutoStopCheckTime = int(time.time()) + (int(addon.getSetting("AutoStopTimer")) * 60)
+		#
+		else:
+			log("-- Dialog Not Cancelled")
+			xbmc.executebuiltin('PlayerControl(Stop)')
+		#
+		AutoStopDialog.close()
+		xbmc.Monitor().waitForAbort(0.2)
+	#
+
 	if player.mediaStarted:
 		log("--------- mediaStarted")
 		busyDiag.close()
@@ -209,7 +241,6 @@ while (not xbmc.Monitor().abortRequested()):
 
 			log("-- Restarting Playlist")
 			player.play(item=myPlaylist)
-			xbmc.sleep(100)
 		else:
 			player.scriptStopped = True
 
@@ -225,8 +256,6 @@ while (not xbmc.Monitor().abortRequested()):
 			thread.start()
 		break
 	#
-
-	xbmc.sleep(100)
 #
 
 
