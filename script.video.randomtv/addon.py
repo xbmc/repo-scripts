@@ -113,6 +113,8 @@ if addon.getSetting("ShowNotifications") == "true": xbmc.executebuiltin('Notific
 log("-------------------------------------------------------------------------")
 log("Starting")
 busyDiag.create()
+backWindow = xbmcgui.Window()
+backWindow.show()
 
 
 # Get TV Episodes
@@ -229,20 +231,26 @@ while (not xbmc.Monitor().waitForAbort(1)):
 
 	if player.mediaEnded:
 		log("--------- mediaEnded")
+		log("-- Playlist Position: " + str(myPlaylist.getposition()))
 		
-		if addon.getSetting("RepeatPlaylist") == "true":
-			if addon.getSetting("ShuffleOnRepeat") == "true":
-				busyDiag.create()
-				log("-- Shuffling Playlist")
-				if addon.getSetting("ShowNotifications") == "true": xbmc.executebuiltin('Notification(%s, %s, %d, %s)'%(name, xbmcaddon.Addon().getLocalizedString(32010), 5000, icon))
-				random.shuffle(myEpisodes)
-				buildPlaylist(myEpisodes)
-			#
+		if myPlaylist.getposition() < 0:
+			log("-- Playlist Finished")
+			if addon.getSetting("RepeatPlaylist") == "true":
+				if addon.getSetting("ShuffleOnRepeat") == "true":
+					busyDiag.create()
+					log("-- Shuffling Playlist")
+					if addon.getSetting("ShowNotifications") == "true": xbmc.executebuiltin('Notification(%s, %s, %d, %s)'%(name, xbmcaddon.Addon().getLocalizedString(32010), 5000, icon))
+					random.shuffle(myEpisodes)
+					buildPlaylist(myEpisodes)
+				#
 
-			log("-- Restarting Playlist")
-			player.play(item=myPlaylist)
+				log("-- Restarting Playlist")
+				player.play(item=myPlaylist)
+			else:
+				player.scriptStopped = True
 		else:
-			player.scriptStopped = True
+			log("-- Playlist still going")
+		#
 
 		player.mediaEnded = False
 	#
@@ -261,5 +269,6 @@ while (not xbmc.Monitor().waitForAbort(1)):
 
 # Display Stopping Notification
 if addon.getSetting("ShowNotifications") == "true": xbmc.executebuiltin('Notification(%s, %s, %d, %s)'%(name, xbmcaddon.Addon().getLocalizedString(32011), 2000, icon))
+backWindow.close()
 log("Stopping")
 log("-------------------------------------------------------------------------")
