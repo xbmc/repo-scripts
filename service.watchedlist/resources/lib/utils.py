@@ -55,13 +55,13 @@ def showNotification(title,message,loglevel, time=4000):
     """
     # Check log level
     if getSetting('verbosity') == '1' and loglevel < xbmc.LOGINFO:
-        return
+        return # setting "only infos"
     elif getSetting('verbosity') == '2' and loglevel < xbmc.LOGWARNING:
-        return
+        return # setting "only warnings"
     elif getSetting('verbosity') == '3' and loglevel < xbmc.LOGERROR:
-        return
+        return # setting "only errors"
     elif getSetting('verbosity') == '4':
-        return
+        return # setting "None"
     _addoniconpath = os.path.join(addon_dir(),"icon.png")
     log(u'Notification. %s: %s' % (title, message) )
     if xbmc.Player().isPlaying() == False: # do not show the notification, if a video is being played.

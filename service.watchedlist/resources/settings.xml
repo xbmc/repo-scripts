@@ -11,7 +11,7 @@
 		<setting id="interval" type="slider" label="30014" default="24" range="3,3,96" option="int" enable="eq(-1,2)+eq(-3,true)" />
 		<setting id="watch_user" type="bool" label="30022" default="true" enable="eq(-4,true)" />
 		<setting id="progressdialog" type="bool" label="30016" default="true" />
-		<setting id="verbosity" type="enum" label="30024" lvalues="30025|30026|30027|30028" default="1" />
+		<setting id="verbosity" type="enum" label="30024" lvalues="30025|30026|30027|30028|30029" default="1" />
 	</category>
 
 	<category label="30002">
