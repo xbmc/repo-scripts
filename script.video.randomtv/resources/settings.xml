@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <settings>
+	<setting id="IncludeAll" label="32005" type="bool" default="true"/>
+	<setting id="SelectShowsAction" label="32006" type="action" action="RunScript(script.video.randomtv, SelectShows)" visible="eq(-1,false)" enable="eq(-1,false)" subsetting="true" option="close"/>
+	<setting type="sep"/>
     <setting id="IncludeUnwatched" label="32000" type="bool" default="false"/>
     <setting id="UpdatePlayCount" label="32001" type="bool" default="false"/>
 	<setting id="RepeatPlaylist" label="32002" type="bool" default="true"/>
@@ -9,7 +12,4 @@
 	<setting id="AutoStop" label="32013" type="bool" default="true"/>
 	<setting id="AutoStopTimer" label="32014" type="slider" option="int" default="240" range="30,30,480" visible="eq(-1,true)" enable="eq(-1,true)" subsetting="true"/>
 	<setting id="AutoStopWait" label="32017" type="slider" option="int" default="5" range="1,1,15" visible="eq(-2,true)" enable="eq(-2,true)" subsetting="true"/>
-	<setting type="sep"/>
-	<setting id="IncludeAll" label="32005" type="bool" default="true"/>
-	<setting id="SelectShowsAction" label="32006" type="action" action="RunScript(script.video.randomtv, SelectShows)" visible="eq(-1,false)" enable="eq(-1,false)" subsetting="true" option="close"/>
 </settings>

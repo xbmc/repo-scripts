@@ -103,7 +103,7 @@ if len(sys.argv) > 1:
 			addon.setSetting("includedShows", includedShows)
 
 		xbmc.executebuiltin('Addon.OpenSettings(%s)' % addonid)
-		xbmc.executebuiltin('SetFocus(205)')
+		xbmc.executebuiltin('SetFocus(201)')
 	quit()
 #
 
@@ -113,6 +113,8 @@ if addon.getSetting("ShowNotifications") == "true": xbmc.executebuiltin('Notific
 log("-------------------------------------------------------------------------")
 log("Starting")
 busyDiag.create()
+backWindow = xbmcgui.Window()
+backWindow.show()
 
 
 # Get TV Episodes
@@ -181,29 +183,32 @@ else:
 
 
 while (not xbmc.Monitor().waitForAbort(1)):
-	if int(time.time()) >= AutoStopCheckTime:
-		log("-- Auto Stop Timer Reached")
-		AutoStopDialog.create(name, xbmcaddon.Addon().getLocalizedString(32015))
-		while int(time.time()) < AutoStopCheckTime + AutoStopWait:
-			AutoStopDialog.update(int(int(time.time() - AutoStopCheckTime) * 100 / AutoStopWait), xbmcaddon.Addon().getLocalizedString(32015), str(AutoStopWait - int(time.time() - AutoStopCheckTime)) + " " + xbmcaddon.Addon().getLocalizedString(32016))
-			if AutoStopDialog.iscanceled():
-				log("-- Dialog Cancelled - Breaking")
-				break
+	if addon.getSetting("AutoStop") == "true":
+		if int(time.time()) >= AutoStopCheckTime:
+			log("-- Auto Stop Timer Reached")
+			AutoStopDialog.create(name, xbmcaddon.Addon().getLocalizedString(32015))
+			while int(time.time()) < AutoStopCheckTime + AutoStopWait:
+				AutoStopDialog.update(int(int(time.time() - AutoStopCheckTime) * 100 / AutoStopWait), xbmcaddon.Addon().getLocalizedString(32015), str(AutoStopWait - int(time.time() - AutoStopCheckTime)) + " " + xbmcaddon.Addon().getLocalizedString(32016))
+				if AutoStopDialog.iscanceled():
+					log("-- Dialog Cancelled - Breaking")
+					break
+				#
+				xbmc.Monitor().waitForAbort(0.1)
 			#
-			xbmc.Monitor().waitForAbort(0.1)
+			if AutoStopDialog.iscanceled():
+				log("-- Dialog Cancelled")
+				AutoStopCheckTime = int(time.time()) + (int(addon.getSetting("AutoStopTimer")) * 60)
+			#
+			else:
+				log("-- Dialog Not Cancelled")
+				xbmc.executebuiltin('PlayerControl(Stop)')
+			#
+			AutoStopDialog.close()
+			xbmc.Monitor().waitForAbort(0.2)
 		#
-		if AutoStopDialog.iscanceled():
-			log("-- Dialog Cancelled")
-			AutoStopCheckTime = int(time.time()) + (int(addon.getSetting("AutoStopTimer")) * 60)
-		#
-		else:
-			log("-- Dialog Not Cancelled")
-			xbmc.executebuiltin('PlayerControl(Stop)')
-		#
-		AutoStopDialog.close()
-		xbmc.Monitor().waitForAbort(0.2)
 	#
 
+	
 	if player.mediaStarted:
 		log("--------- mediaStarted")
 		busyDiag.close()
@@ -229,20 +234,26 @@ while (not xbmc.Monitor().waitForAbort(1)):
 
 	if player.mediaEnded:
 		log("--------- mediaEnded")
+		log("-- Playlist Position: " + str(myPlaylist.getposition()))
 		
-		if addon.getSetting("RepeatPlaylist") == "true":
-			if addon.getSetting("ShuffleOnRepeat") == "true":
-				busyDiag.create()
-				log("-- Shuffling Playlist")
-				if addon.getSetting("ShowNotifications") == "true": xbmc.executebuiltin('Notification(%s, %s, %d, %s)'%(name, xbmcaddon.Addon().getLocalizedString(32010), 5000, icon))
-				random.shuffle(myEpisodes)
-				buildPlaylist(myEpisodes)
-			#
+		if myPlaylist.getposition() < 0:
+			log("-- Playlist Finished")
+			if addon.getSetting("RepeatPlaylist") == "true":
+				if addon.getSetting("ShuffleOnRepeat") == "true":
+					busyDiag.create()
+					log("-- Shuffling Playlist")
+					if addon.getSetting("ShowNotifications") == "true": xbmc.executebuiltin('Notification(%s, %s, %d, %s)'%(name, xbmcaddon.Addon().getLocalizedString(32010), 5000, icon))
+					random.shuffle(myEpisodes)
+					buildPlaylist(myEpisodes)
+				#
 
-			log("-- Restarting Playlist")
-			player.play(item=myPlaylist)
+				log("-- Restarting Playlist")
+				player.play(item=myPlaylist)
+			else:
+				player.scriptStopped = True
 		else:
-			player.scriptStopped = True
+			log("-- Playlist still going")
+		#
 
 		player.mediaEnded = False
 	#
@@ -261,5 +272,6 @@ while (not xbmc.Monitor().waitForAbort(1)):
 
 # Display Stopping Notification
 if addon.getSetting("ShowNotifications") == "true": xbmc.executebuiltin('Notification(%s, %s, %d, %s)'%(name, xbmcaddon.Addon().getLocalizedString(32011), 2000, icon))
+backWindow.close()
 log("Stopping")
 log("-------------------------------------------------------------------------")
