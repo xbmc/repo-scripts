@@ -1,3 +1,12 @@
+4.2.0
+- intense refactoring and cleanup of code, this is the preparation for the new features to come
+
+4.1.2
+- support for fanart.tv personal API key, thanks MhhhxX
+
+4.1.1
+- Fix: fanart.tv deprecated non-hd-clearart for artists, causing the download to crash under certain circumstances
+
 4.1.0
 - first "official" release by stef.an
 - compatible with Helix and newer releases of Kodi
