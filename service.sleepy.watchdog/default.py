@@ -1,10 +1,8 @@
 # -*- coding: utf-8 -*-
 
 import os
-import sys
 import subprocess
 import platform
-import traceback
 import re
 import time, datetime
 import xbmc, xbmcgui, xbmcaddon
