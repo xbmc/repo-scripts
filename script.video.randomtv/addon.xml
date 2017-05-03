@@ -18,9 +18,8 @@
     <email></email>
     <source>https://github.com/gmccauley/script.video.randomtv</source>
     <news>
-v1.1.2 (30 April 2017)
+v1.1.2 (2 May 2017)
   - Fixed Bugs in AutoStop Feature
-v1.1.1 (29 April 2017)
   - Fixed Bug where Playlist would be shuffled after each video ended
   - Added Empty Window to prevent Kodi from being displayed between Playlist Shuffles
 v1.1.0 (28 April 2017)
