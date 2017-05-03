@@ -107,8 +107,9 @@ class SleepyWatchdog(XBMCMonitor):
         notifyLog('max. idle time:           %s' % (self.maxIdleTime))
         notifyLog('Action:                   %s' % (self.action))
         notifyLog('Jump to main menue:       %s' % (self.jumpMainMenu))
-        notifyLog('keep alive:               %s' % (self.keepAlive))
-        notifyLog('run addon:                %s' % (self.addon_id))
+        notifyLog('Keep alive:               %s' % (self.keepAlive))
+        notifyLog('Run addon:                %s' % (self.addon_id))
+        notifyLog('Test configuration:       %s' % (self.testConfig))
 
         # following commented code are preparations for actions within an alternate timeframe,
         # don't shure if I ever implement this...
@@ -126,7 +127,7 @@ class SleepyWatchdog(XBMCMonitor):
             self.maxIdleTime = 60 + int(self.notifyUser)*self.notificationTime
             notifyLog('running in test mode for %s secs' % (self.maxIdleTime))
 
-    def activeTimeFrame(self, debug=False):
+    def activeTimeFrame(self, log=False):
 
         if not self.timeframe: return True
 
@@ -135,7 +136,7 @@ class SleepyWatchdog(XBMCMonitor):
         if _currframe < self.currframe: _currframe += 86400
         self.currframe = _currframe
 
-        if debug: notifyLog('checking time frames: start: %s - current: %s - end: %s' % (self.act_start, self.currframe, self.act_stop))
+        if log == True: notifyLog('checking time frames: start-current-end: %s-%s-%s' % (self.act_start, self.currframe, self.act_stop))
         if self.act_start <= self.currframe <= self.act_stop: return True
         return False
 
@@ -210,7 +211,7 @@ class SleepyWatchdog(XBMCMonitor):
 
             # Check if GlobalIdle longer than maxIdle and we're in a time frame
 
-            if self.activeTimeFrame(debug=True):
+            if self.activeTimeFrame(log=True) or self.testConfig:
                 if _currentIdleTime > (_maxIdleTime - int(self.notifyUser)*self.notificationTime):
 
                     notifyLog('max idle time reached, ready to perform some action')
@@ -222,8 +223,8 @@ class SleepyWatchdog(XBMCMonitor):
 
                         while (self.notificationTime - count > 0):
                             notifyUser(__LS__(32115) % (__LS__(self.action), self.notificationTime - count))
-                            xbmc.sleep(9000)
-                            count += 9
+                            if xbmc.Monitor.waitForAbort(self, 10): break
+                            count += 10
                             if _currentIdleTime > xbmc.getGlobalIdleTime():
                                 self.actionCanceled = True
                                 break
@@ -265,11 +266,10 @@ class SleepyWatchdog(XBMCMonitor):
                 notifyLog('no active timeframe yet')
 
             #
-            _loop = 1
-            while not xbmc.Monitor.abortRequested(self):
-                xbmc.sleep(1000)
-                _loop += 1
-                if self.activeTimeFrame(): _currentIdleTime += 1
+            _loop = 0
+            while not xbmc.Monitor.waitForAbort(self, 5):
+                _loop += 5
+                _currentIdleTime += 5
 
                 if self.SettingsChanged:
                     notifyLog('settings changed')
@@ -277,7 +277,7 @@ class SleepyWatchdog(XBMCMonitor):
                     _maxIdleTime = self.maxIdleTime
                     break
 
-                if self.testConfig or _currentIdleTime > xbmc.getGlobalIdleTime() or _loop > 60: break
+                if self.testConfig or _currentIdleTime > xbmc.getGlobalIdleTime() or _loop >= 60: break
 
 # MAIN #
 
