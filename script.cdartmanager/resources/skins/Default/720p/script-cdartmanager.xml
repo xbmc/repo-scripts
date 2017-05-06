@@ -2149,7 +2149,6 @@ id      | description
                 <label>$ADDON[script.cdartmanager 32045]</label>
                 <aligny>center</aligny>
                 <align>center</align>
-                <label></label>
             </control>
             <control type="label" id="112"> <!-- cdART count -->
                 <description>Local CDArt Count</description>

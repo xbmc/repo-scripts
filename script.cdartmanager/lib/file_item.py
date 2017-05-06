@@ -23,7 +23,6 @@ print thumbnails.get_cached_plugin_thumbs( "plugin type", "plugin name" )# tuple
 """
 
 import os
-import sys
 
 import xbmc
 

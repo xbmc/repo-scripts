@@ -786,3 +786,19 @@ msgstr "     Delay between MusicBrainz Server requests(100's of Milliseconds)"
 msgctxt "#32191"
 msgid "Refresh fanart.tv data"
 msgstr "Refresh fanart.tv data"
+
+msgctxt "#32250"
+msgid "Personal API Key"
+msgstr "Personal API Key"
+
+msgctxt "#32251"
+msgid "Enter Personal API Key"
+msgstr "Enter Personal API Key"
+
+msgctxt "#32252"
+msgid "Get a Personal API Key"
+msgstr "To get a Personal API Key, make sure being logged in at fanart.tv"
+
+msgctxt "#32253"
+msgid "Get a Personal API Key1"
+msgstr "and go to this site: https://fanart.tv/get-an-api-key/"
