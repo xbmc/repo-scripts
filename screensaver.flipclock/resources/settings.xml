@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+    <setting id="ClockMode"   type="enum"    label="32001" default="0" values="12 Hour|24 Hour"/>
+    <setting id="ImageSource" type="enum"    label="32002" default="0" values="Single Image|Multi Image"/>
+    <setting id="BackImage"   type="image"   label="32003" default=""  source="auto" subsetting="true" visible="eq(-1,0)"/>
+    <setting id="BackFolder"  type="folder"  label="32004" default=""  source="auto" subsetting="true" visible="eq(-2,1)"/>
+</settings>
+        
