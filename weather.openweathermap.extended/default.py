@@ -23,6 +23,8 @@ BASE_URL       = 'http://api.openweathermap.org/data/2.5/%s'
 LATLON         = ADDON.getSetting('LatLon')
 WEEKEND        = ADDON.getSetting('Weekend')
 STATION        = ADDON.getSetting('Station')
+MAPS           = ADDON.getSetting('Maps')
+ZOOM           = str(int(ADDON.getSetting('Zoom')) + 2)
 WEATHER_ICON   = xbmc.translatePath('%s.png').decode("utf-8")
 DATEFORMAT     = xbmc.getRegion('dateshort')
 TIMEFORMAT     = xbmc.getRegion('meridiem')
@@ -192,7 +194,17 @@ def forecast(loc,locid,locationdeg):
     log('weather location deg: %s' % locationdeg)
     if LIMIT:
         log('using cached data')
-    set_property('Map.IsFetched', '')
+    if MAPS == 'true' and xbmc.getCondVisibility('System.HasAddon(script.openweathermap.maps)'):
+        lat = float(eval(locationdeg)[0])
+        lon = float(eval(locationdeg)[1])
+        xbmc.executebuiltin('XBMC.RunAddon(script.openweathermap.maps,lat=%s&lon=%s&zoom=%s&api=%s)' % (lat, lon, ZOOM, APPID))
+    else:
+        set_property('Map.IsFetched', '')
+        for count in range (1, 6):
+            set_property('Map.%i.Layer' % count, '')
+            set_property('Map.%i.Area' % count, '')
+            set_property('Map.%i.Heading' % count, '')
+            set_property('Map.%i.Legend' % count, '')
     try:
         lang = LANG[KODILANGUAGE]
         if lang == '':
@@ -896,7 +908,7 @@ if sys.argv[1].startswith('Location'):
         text = keyboard.getText()
         locations, locationids, locationdeg = location(text)
         dialog = xbmcgui.Dialog()
-        if locations != []:
+        if locations and locations != []:
             selected = dialog.select(xbmc.getLocalizedString(396), locations)
             if selected != -1:
                 ADDON.setSetting(sys.argv[1], locations[selected].split(' - ')[0])

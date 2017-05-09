@@ -1,4 +1,10 @@
-v4.3.0
+4.4.0
+- re-enable maps
+
+4.3.1
+- don't crash when an invalid api key is used
+
+4.3.0
 - remove maps functionality
 
 v4.2.3

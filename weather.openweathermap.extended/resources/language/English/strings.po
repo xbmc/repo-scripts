@@ -108,13 +108,17 @@ msgctxt "#32127"
 msgid "Station ID"
 msgstr ""
 
-#empty string with id 32128
+msgctxt "#32128"
+msgid "Map zoom level"
+msgstr ""
 
 msgctxt "#32129"
 msgid "Enable logging"
 msgstr ""
 
-#empty string with id 32130
+msgctxt "#32130"
+msgid "Download weather maps"
+msgstr ""
 
 msgctxt "#32131"
 msgid "Get an api key at: http://openweathermap.org/appid"
