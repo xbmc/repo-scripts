@@ -1,5 +1,5 @@
-v0.1.2
-- broken. website unreachable
+v0.2.0
+- re-enable
 
 v0.0.14
 - use arg instead of accessing main settings
