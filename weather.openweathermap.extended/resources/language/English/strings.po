@@ -34,6 +34,10 @@ msgctxt "#32103"
 msgid "Expert"
 msgstr ""
 
+msgctxt "#32104"
+msgid "Maps"
+msgstr ""
+
 #empty strings from id 32104 to 32109
 
 msgctxt "#32110"
@@ -132,11 +136,13 @@ msgctxt "#32133"
 msgid "or disable this addon."
 msgstr ""
 
-msgctxt "#32134"
-msgid "Recommended: get an api key at: http://openweathermap.org/appid"
+#empty strings with id 32134
+
+msgctxt "#32135"
+msgid "To use maps, get an api key at: http://openweathermap.org/appid"
 msgstr ""
 
-#empty strings from id 32135 to 32200
+#empty strings from id 32136 to 32200
 
 msgctxt "#32201"
 msgid "Thunderstorm with light rain"

@@ -1,3 +1,6 @@
+4.4.1
+- disable maps by default again
+
 4.4.0
 - re-enable maps
 

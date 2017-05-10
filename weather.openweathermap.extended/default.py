@@ -23,7 +23,10 @@ BASE_URL       = 'http://api.openweathermap.org/data/2.5/%s'
 LATLON         = ADDON.getSetting('LatLon')
 WEEKEND        = ADDON.getSetting('Weekend')
 STATION        = ADDON.getSetting('Station')
-MAPS           = ADDON.getSetting('Maps')
+if APPID:
+    MAPS = ADDON.getSetting('WMaps')
+else:
+    MAPS = False
 ZOOM           = str(int(ADDON.getSetting('Zoom')) + 2)
 WEATHER_ICON   = xbmc.translatePath('%s.png').decode("utf-8")
 DATEFORMAT     = xbmc.getRegion('dateshort')
