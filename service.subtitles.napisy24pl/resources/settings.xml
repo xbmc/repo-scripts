@@ -5,6 +5,6 @@
         <setting id="password" type="text" option = "hidden" label="32003" default=""/>
     </category>
     <category label="32008">
-        <setting id="subs_format" type="enum" lvalues="32009|32010|32011|32012" label="32006" default="0"/>
+        <setting id="subs_format" type="enum" lvalues="32009|32010|32011|32012|32013" label="32006" default="0"/>
     </category>
 </settings>

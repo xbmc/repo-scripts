@@ -1,3 +1,10 @@
+2.0.1 - by CaTz (22/04/2017)
+- Added title parse & clean up
+
+2.0.0 - by CaTz (25/03/2017)
+- Complete re-write
+- Make TV-Show search much faster
+
 1.0.11 - by CaTz(29/05/2015)
 - Fix for Android os
 
