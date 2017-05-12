@@ -22,7 +22,7 @@
 __author__ = "ShellAddicted"
 __copyright__ = "Copyright 2017, ShellAddicted"
 __license__ = "GPL"
-__version__ = "2.1.0"
+__version__ = "2.1.1"
 __maintainer__ = "ShellAddicted"
 __email__ = "shelladdicted@gmail.com"
 __status__ = "Development"
@@ -35,9 +35,8 @@ import xbmcplugin
 import os
 import sys
 try:
-    import urllib
-    unquote=urllib.unquote
-except (ImportError,AttributeError):
+    from urllib import unquote
+except (ImportError, AttributeError):
     from urllib.parse import unquote
 
 import requests
@@ -110,7 +109,7 @@ def retriveURL(url, headers=HEADERS):
         return None
 
 def overrideRetriveURL(self, url, headers=HEADERS):
-    return retriveURL(url, headers);
+    return retriveURL(url, headers)
 
 def ovverideLogging(self):
     self.log = log
@@ -234,9 +233,9 @@ def main():
 
             if "searchstring" in params:
                 item["mansearch"] = True
-                item["mansearchstr"] = urllib.unquote(params["searchstring"])
+                item["mansearchstr"] = unquote(params["searchstring"])
 
-            for lang in urllib.unquote(params["languages"]).decode("utf-8").split(","):
+            for lang in unquote(params["languages"]).decode("utf-8").split(","):
                 item["languages"].append(xbmc.convertLanguage(lang, xbmc.ISO_639_2))
 
             if item["episode"].lower().find("s") > -1:  # Check if season is "Special"
