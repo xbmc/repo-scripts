@@ -23,7 +23,7 @@
 __author__ = "ShellAddicted"
 __copyright__ = "Copyright 2017, ShellAddicted"
 __license__ = "GPL"
-__version__ = "1.0.0"
+__version__ = "1.0.1"
 __maintainer__ = "ShellAddicted"
 __email__ = "shelladdicted@gmail.com"
 __status__ = "Development"
@@ -146,7 +146,11 @@ class TraduttoriAnonimi:
                     showName = self._magicUnicode(showTag.find("img").attrs["title"])
                     self._showsList[showName] = showTag.attrs["href"]
 
-                tmp = parser.find("div", {"class": "pagination"}).find("a", {"class": "next"})
+                try:
+                    tmp = parser.find("div", {"class": "pagination"}).find("a", {"class": "next"})
+                except AttributeError:
+                    tmp = None
+
                 if tmp is not None:
                     url = urlparse.urljoin(self._baseURL, tmp.attrs["href"])
                     self.log.debug("Next Page Found. Following => {0}".format(url))

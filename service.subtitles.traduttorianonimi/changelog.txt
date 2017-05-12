@@ -34,3 +34,6 @@
 - Feautures -> Partial Sync check (more work to do)
 - Code:
     Code Cleanup
+
+2.1.1
+- BugFix
