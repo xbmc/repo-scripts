@@ -5,8 +5,6 @@ __author__ = "Aaron Swartz (me@aaronsw.com)"
 __copyright__ = "(C) 2004-2008 Aaron Swartz. GNU GPL 3."
 __contributors__ = ["Martin 'Joey' Schulze", "Ricardo Reyes", "Kevin Jay North"]
 
-# TODO:
-#   Support decoded entities with unifiable.
 
 try:
     True
@@ -35,33 +33,24 @@ import optparse, re, sys, codecs, types
 try: from textwrap import wrap
 except: pass
 
-# Use Unicode characters instead of their ascii psuedo-replacements
 UNICODE_SNOB = 0
 
-# Escape all special characters.  Output is less readable, but avoids corner case formatting issues.
 ESCAPE_SNOB = 0
 
-# Put the links after each paragraph instead of at the end.
 LINKS_EACH_PARAGRAPH = 0
 
-# Wrap long lines at position. 0 for no wrapping. (Requires Python 2.3.)
 BODY_WIDTH = 78
 
-# Don't show internal links (href="#local-anchor") -- corresponding link targets
-# won't be visible in the plain text file anyway.
 SKIP_INTERNAL_LINKS = True
 
-# Use inline, rather than reference, formatting for images and links
 INLINE_LINKS = True
 
-# Number of pixels Google indents nested lists
 GOOGLE_LIST_INDENT = 36
 
 IGNORE_ANCHORS = False
 IGNORE_IMAGES = False
 IGNORE_EMPHASIS = False
 
-### Entity Nonsense ###
 
 def name2cp(k):
     if k == 'apos': return ord("'")
@@ -87,7 +76,6 @@ unifiable_n = {}
 for k in unifiable.keys():
     unifiable_n[name2cp(k)] = unifiable[k]
 
-### End Entity Nonsense ###
 
 def onlywhite(line):
     """Return true if the line does only consist of whitespace characters."""
@@ -109,14 +97,13 @@ def dumb_property_dict(style):
 
 def dumb_css_parser(data):
     """returns a hash of css selectors, each of which contains a hash of css attributes"""
-    # remove @import sentences
+
     data += ';'
     importIndex = data.find('@import')
     while importIndex != -1:
         data = data[0:importIndex] + data[data.find(';', importIndex) + 1:]
         importIndex = data.find('@import')
 
-    # parse the css. reverted from dictionary compehension in order to support older pythons
     elements =  [x.split('{') for x in data.split('}') if '{' in x.strip()]
     try:
         elements = dict([(a.strip(), dumb_property_dict(b)) for a, b in elements])
@@ -182,7 +169,6 @@ class HTML2Text(HTMLParser.HTMLParser):
     def __init__(self, out=None, baseurl=''):
         HTMLParser.HTMLParser.__init__(self)
 
-        # Config options
         self.unicode_snob = UNICODE_SNOB
         self.escape_snob = ESCAPE_SNOB
         self.links_each_paragraph = LINKS_EACH_PARAGRAPH
@@ -316,7 +302,6 @@ class HTML2Text(HTMLParser.HTMLParser):
         tag_emphasis = google_text_emphasis(tag_style)
         parent_emphasis = google_text_emphasis(parent_style)
 
-        # handle Google's text emphasis
         strikethrough =  'line-through' in tag_emphasis and self.hide_strikethrough
         bold = 'bold' in tag_emphasis and not 'bold' in parent_emphasis
         italic = 'italic' in tag_emphasis and not 'italic' in parent_emphasis
@@ -324,8 +309,7 @@ class HTML2Text(HTMLParser.HTMLParser):
                 google_fixed_width_font(parent_style) and not self.pre
 
         if start:
-            # crossed-out text must be handled before other attributes
-            # in order not to output qualifiers unnecessarily
+
             if bold or italic or fixed:
                 self.emphasis += 1
             if strikethrough:
@@ -342,13 +326,13 @@ class HTML2Text(HTMLParser.HTMLParser):
                 self.code = True
         else:
             if bold or italic or fixed:
-                # there must not be whitespace before closing emphasis mark
+
                 self.emphasis -= 1
                 self.space = 0
                 self.outtext = self.outtext.rstrip()
             if fixed:
                 if self.drop_white_space:
-                    # empty emphasis, drop it
+
                     self.drop_last(1)
                     self.drop_white_space -= 1
                 else:
@@ -356,36 +340,33 @@ class HTML2Text(HTMLParser.HTMLParser):
                 self.code = False
             if bold:
                 if self.drop_white_space:
-                    # empty emphasis, drop it
+
                     self.drop_last(2)
                     self.drop_white_space -= 1
                 else:
                     self.o(self.strong_mark)
             if italic:
                 if self.drop_white_space:
-                    # empty emphasis, drop it
+
                     self.drop_last(1)
                     self.drop_white_space -= 1
                 else:
                     self.o(self.emphasis_mark)
-            # space is only allowed after *all* emphasis marks
+
             if (bold or italic) and not self.emphasis:
                     self.o(" ")
             if strikethrough:
                 self.quiet -= 1
 
     def handle_tag(self, tag, attrs, start):
-        #attrs = fixattrs(attrs)
+
         if attrs is None:
             attrs = {}
         else:
             attrs = dict(attrs)
 
         if self.google_doc:
-            # the attrs parameter is empty for a closing tag. in addition, we
-            # need the attributes of the parent nodes in order to get a
-            # complete style description for the current element. we assume
-            # that google docs export well formed html.
+
             parent_style = {}
             if start:
                 if self.tag_stack:
@@ -451,7 +432,7 @@ class HTML2Text(HTMLParser.HTMLParser):
 
         if self.google_doc:
             if not self.inheader:
-                # handle some font attributes, but leave headers clean
+
                 self.handle_emphasis(start, tag_style, parent_style)
 
         if tag in ["code", "tt"] and not self.pre: self.o('`') #TODO: `` `this` ``
@@ -518,7 +499,7 @@ class HTML2Text(HTMLParser.HTMLParser):
         if tag == 'dd' and not start: self.pbr()
 
         if tag in ["ol", "ul"]:
-            # Google Docs create sub lists as top level lists
+
             if (not self.list) and (not self.lastWasList):
                 self.p()
             if start:
@@ -578,7 +559,7 @@ class HTML2Text(HTMLParser.HTMLParser):
 
         if not self.quiet:
             if self.google_doc:
-                # prevent white space immediately after 'begin emphasis' marks ('**' and '_')
+
                 lstripped_data = data.lstrip()
                 if self.drop_white_space and not (self.pre or self.code):
                     data = lstripped_data
@@ -593,7 +574,7 @@ class HTML2Text(HTMLParser.HTMLParser):
             if not data and not force: return
 
             if self.startpre:
-                #self.out(" :") #TODO: not output when already one there
+
                 if not data.startswith("\n"):  # <pre>stuff...
                     data = "\n" + data
 
@@ -603,7 +584,7 @@ class HTML2Text(HTMLParser.HTMLParser):
             if self.pre:
                 if not self.list:
                     bq += "    "
-                #else: list content is already partially indented
+
                 for i in xrange(len(self.list)):
                     bq += "    "
                 data = data.replace("\n", "\n"+bq)
@@ -619,7 +600,7 @@ class HTML2Text(HTMLParser.HTMLParser):
                 self.start = 0
 
             if force == 'end':
-                # It's the end.
+
                 self.p_p = 0
                 self.out("\n")
                 self.space = 0
@@ -771,7 +752,7 @@ md_dash_matcher = re.compile(r"""
     (\s*)
     (-)
     (?=\s|\-)     # followed by whitespace (bullet list, or spaced out hr)
-                  # or another dash (header or hr)
+
     """, flags=re.MULTILINE | re.VERBOSE)
 slash_chars = r'\`*_{}[]()#+-.!'
 md_backslash_matcher = re.compile(r'''
@@ -781,21 +762,17 @@ md_backslash_matcher = re.compile(r'''
     flags=re.VERBOSE)
 
 def skipwrap(para):
-    # If the text begins with four spaces or one tab, it's a code block; don't wrap
+
     if para[0:4] == '    ' or para[0] == '\t':
         return True
-    # If the text begins with only two "--", possibly preceded by whitespace, that's
-    # an emdash; so wrap.
+
     stripped = para.lstrip()
     if stripped[0:2] == "--" and len(stripped) > 2 and stripped[2] != "-":
         return False
-    # I'm not sure what this is for; I thought it was to detect lists, but there's
-    # a <br>-inside-<span> case in one of the tests that also depends upon it.
+
     if stripped[0:1] == '-' or stripped[0:1] == '*':
         return True
-    # If the text begins with a single -, *, or +, followed by a space, or an integer,
-    # followed by a ., followed by a space (in either case optionally preceeded by
-    # whitespace), it's a list; don't wrap.
+
     if ordered_list_matcher.match(stripped) or unordered_list_matcher.match(stripped):
         return True
     return False
@@ -858,7 +835,6 @@ def main():
         default=False, help="Escape all special characters.  Output is less readable, but avoids corner case formatting issues.")
     (options, args) = p.parse_args()
 
-    # process input
     encoding = "utf-8"
     if len(args) > 0:
         file_ = args[0]
@@ -892,7 +868,7 @@ def main():
 
     data = data.decode(encoding)
     h = HTML2Text(baseurl=baseurl)
-    # handle options
+
     if options.ul_style_dash: h.ul_item_mark = '-'
     if options.em_style_asterisk:
         h.emphasis_mark = '*'

@@ -36,7 +36,7 @@
 	<!--BEGIN include name="UpDownArrows"-->
 		<control type="button" id="55588">
 			<left>30</left>
-			<top>910</top>
+			<top>950</top>
 			<width>48</width>
 			<height>24</height>
 			<texturefocus colordiffuse="FF12A8DA">srr_arrowdown.png</texturefocus>
@@ -51,7 +51,7 @@
 		</control>
 		<control type="button" id="55589">
 			<left>30</left>
-			<top>134</top>
+			<top>114</top>
 			<width>48</width>
 			<height>24</height>
 			<texturefocus colordiffuse="FF12A8DA" flipy="true">srr_arrowdown.png</texturefocus>
@@ -66,30 +66,30 @@
 		</control>
 	<!--END include name="UpDownArrows"-->
 	
-		<control type="group">
+		<control type="group"><description>tall listbox on left</description>
 			<!-- OpenClose_Left - OpenClose_FadeSlide_Left --><animation type="WindowOpen"><effect type="fade" start="0" end="100" time="300" tween="sine" easing="out" /><effect type="slide" start="-320" end="0" time="400" tween="cubic" easing="out" /></animation><animation type="WindowClose"><effect type="fade" start="100" end="0" time="300" tween="sine" easing="out" /><effect type="slide" start="0" end="-320" time="300" tween="cubic" easing="out" /></animation>
 			<!-- Visible_Left - Vis_FadeSlide_Left --><animation type="Visible" reversible="False"><effect type="fade" start="0" end="100" time="300" tween="sine" easing="out" /><effect type="slide" start="-320" end="0" time="400" tween="cubic" easing="out" /></animation><animation type="Hidden" reversible="False"><effect type="fade" start="100" end="0" time="300" tween="sine" easing="out" /><effect type="slide" start="0" end="-320" time="300" tween="cubic" easing="out" /></animation>
-			<left>93</left>
-			<top>122</top>
+			<left>23</left>
+			<top>100</top>
 			<visible>true</visible>
 			<control type="image">
 				<description>background image</description>
 				<left>-20</left>
 				<top>-20</top>
 				<width>498</width>
-				<height>870</height>
+				<height>920</height>
 				<texture border="22">srr_dialog-bg.png</texture>
 			</control>
 			<control type="list" id="55">
 				<left>2</left>
 				<top>3</top>
 				<width>430</width>
-				<height>820</height>
+				<height>874</height>
 				<scrolltime tween="cubic" easing="out">500</scrolltime>
 				<orientation>vertical</orientation>
 				<pagecontrol>55600</pagecontrol>
-				<onleft>9000</onleft>
-				<onright>55600</onright>
+				<onleft>55600</onleft>
+				<onright>17</onright>
 				<onup>55</onup>
 				<ondown>55</ondown>
 				<visible>true</visible>
@@ -192,94 +192,173 @@
 				</itemlayout>
 			</control>
 			<control type="scrollbar" id="55600">
-				<left>457</left>
+				<left>-5</left>
 				<top>0</top>
-				<width>12</width>
-				<height>830</height>
+				<width>5</width>
+				<height>880</height>
 				<onleft>55</onleft>
 				<onright>55</onright>
 				<orientation>vertical</orientation>
 			</control>
 
-			<control type="button" id="6771"><description>button to sort links on top</description>
-				<visible>!IsEmpty(Window.Property(comments))</visible>
-					<top>200</top>
-					<left>-80</left>
-					<width>80</width>
-					<height>360</height>
-					<angle>90</angle>
-					<font>font12</font>
-					<align>center</align>
-					<aligny>center</aligny>
-					<texturefocus border="40" colordiffuse="FF12A8DA">srr_dialogbutton-fo.png</texturefocus>
-					<texturenofocus colordiffuse="71FFFFFF" border="40">srr_button-alt-nofo.png</texturenofocus>
-					<textoffsetx>20</textoffsetx>
-					<textwidth>320</textwidth>
-					<textcolor>white</textcolor>
-					<invalidcolor>invalid</invalidcolor>
-				<label>$ADDON[script.reddit.reader 32015]</label>
-				<onclick></onclick>
-			</control>
-
-			
 		</control>
 	<!--END include>View_55_WideList</include -->
-
+		
 		<control type="group"><description>Right side panel. this is where the comment and preview is shown</description>
 			<!-- OpenClose_Right - OpenClose_FadeSlide_Right --><animation type="WindowOpen"><effect type="fade" start="0" end="100" time="300" tween="sine" easing="out" /><effect type="slide" start="320" end="0" time="400" tween="cubic" easing="out" /></animation><animation type="WindowClose"><effect type="fade" start="100" end="0" time="300" tween="sine" easing="out" /><effect type="slide" start="0" end="320" time="300" tween="cubic" easing="out" /></animation>
 			<!-- Visible_Right - Vis_FadeSlide_Right--><animation type="Visible" reversible="False"><effect type="fade" start="0" end="100" time="300" tween="sine" easing="out"/><effect type="slide" start="320" end="0" time="400" tween="cubic" easing="out" /></animation><animation type="Hidden" reversible="False"><effect type="fade" start="100" end="0" time="300" tween="sine" easing="out" /><effect type="slide" start="0" end="320" time="300" tween="cubic" easing="out" /></animation>
 			<visible>true</visible>
 				
 				<control type="image">
-					<left>580</left>
-					<top>102</top>
-					<width>1270</width>
-					<height>870</height>
+					<left>480</left>
+					<top>80</top>
+					<width>1430</width>
+					<height>920</height>
 					<texture border="22">srr_dialog-bg.png</texture>
 				</control>
-				
-				<control type="textbox" id="65591">
-					<description>if thumb is empty this bigger textbox is visible</description>
-					<left>612</left>
-					<top>128</top>
-					<width>1210</width>
-					<height>810</height>
-					<font>font14</font>
-					<autoscroll delay="10000" time="2000" repeat="10000">true</autoscroll>
-					<visible>isEmpty(Container(55).ListItem.Art(thumb))</visible>
-					<visible>!Player.HasMedia</visible>
-					<label>$INFO[Container(55).ListItem.Plot]</label>					<!-- label>$INFO[ListItem.Label]</label-->
+
+				<control type="scrollbar" id="17"><description>scroll control for grouplist(204)</description>
+				      <left>1912</left>
+				      <top>80</top>
+				      <width>5</width>
+				      <height>900</height>
+				      <onleft>55</onleft>
+				      <visible allowhiddenfocus="false">true</visible>
+				      <orientation>vertical</orientation>
+				      <showonepage>false</showonepage>
 				</control>
-				
+
+				<control type="grouplist" id="204"><description>comments</description>
+					<left>518</left>
+					<top>94</top>
+					<width>1202</width>
+					<height>880</height>
+					<orientation>vertical</orientation>
+					<defaultcontrol>999</defaultcontrol>
+					<visible>isEmpty(Container(55).ListItem.Property(link_url))</visible>
+					<scrolltime tween="sine" easing="inout">500</scrolltime>
+					<usecontrolcoords>true</usecontrolcoords>
+					<pagecontrol>17</pagecontrol>
+					<align>top</align><!-- this is aligny -->
+
+					<control type="button" id="999"><!-- hidden button. when this gets focus, grouplist204 will scroll to top-->
+						<height>1</height><!-- setting this to 0 defaults to something about 18 -->
+						<texturenofocus>transparent_1x1.png</texturenofocus>
+						<label></label>
+						<!--onright>17</onright-->
+						<!--onleft>55</onleft-->
+					</control>
+					
+					<control type="textbox" id="1000"><height>auto</height><font>font14</font></control>
+					<control type="textbox" id="1001"><height>auto</height><font>font14</font><textcolor>99FFFFFF</textcolor></control>
+					<control type="textbox" id="1002"><height>auto</height><font>font14</font></control>
+					<control type="textbox" id="1003"><height>auto</height><font>font14</font><textcolor>99FFFFFF</textcolor></control>
+					<control type="textbox" id="1004"><height>auto</height><font>font14</font></control>
+					<control type="textbox" id="1005"><height>auto</height><font>font14</font><textcolor>99FFFFFF</textcolor></control>
+					<control type="textbox" id="1006"><height>auto</height><font>font14</font></control>
+					<control type="textbox" id="1007"><height>auto</height><font>font14</font><textcolor>99FFFFFF</textcolor></control>
+					<control type="textbox" id="1008"><height>auto</height><font>font14</font></control>
+					<control type="textbox" id="1009"><height>auto</height><font>font14</font><textcolor>99FFFFFF</textcolor></control>
+					<control type="textbox" id="1010"><height>auto</height><font>font14</font></control>
+					<control type="textbox" id="1011"><height>auto</height><font>font14</font><textcolor>99FFFFFF</textcolor></control>
+					<control type="textbox" id="1012"><height>auto</height><font>font14</font></control>
+					<control type="textbox" id="1013"><height>auto</height><font>font14</font><textcolor>99FFFFFF</textcolor></control>
+					<control type="textbox" id="1014"><height>auto</height><font>font14</font></control>
+					<control type="textbox" id="1015"><height>auto</height><font>font14</font><textcolor>99FFFFFF</textcolor></control>
+					<control type="textbox" id="1016"><height>auto</height><font>font14</font></control>
+					<control type="textbox" id="1017"><height>auto</height><font>font14</font><textcolor>99FFFFFF</textcolor></control>
+					<control type="textbox" id="1018"><height>auto</height><font>font14</font></control>
+					<control type="textbox" id="1019"><height>auto</height><font>font14</font><textcolor>99FFFFFF</textcolor></control>
+					<control type="textbox" id="1020"><height>auto</height><font>font14</font></control>
+					<control type="textbox" id="1021"><height>auto</height><font>font14</font><textcolor>99FFFFFF</textcolor></control>
+					<control type="textbox" id="1022"><height>auto</height><font>font14</font></control>
+					<control type="textbox" id="1023"><height>auto</height><font>font14</font><textcolor>99FFFFFF</textcolor></control>
+					<control type="textbox" id="1024"><height>auto</height><font>font14</font></control>
+					<control type="textbox" id="1025"><height>auto</height><font>font14</font><textcolor>99FFFFFF</textcolor></control>
+					<control type="textbox" id="1026"><height>auto</height><font>font14</font></control>
+					<control type="textbox" id="1027"><height>auto</height><font>font14</font><textcolor>99FFFFFF</textcolor></control>
+					<control type="textbox" id="1028"><height>auto</height><font>font14</font></control>
+					<control type="textbox" id="1029"><height>auto</height><font>font14</font><textcolor>99FFFFFF</textcolor></control>
+					<control type="textbox" id="1030"><height>auto</height><font>font14</font></control>
+					<control type="textbox" id="1031"><height>auto</height><font>font14</font><textcolor>99FFFFFF</textcolor></control>
+					<control type="textbox" id="1032"><height>auto</height><font>font14</font></control>
+					<control type="textbox" id="1033"><height>auto</height><font>font14</font><textcolor>99FFFFFF</textcolor></control>
+					<control type="textbox" id="1034"><height>auto</height><font>font14</font></control>
+					<control type="textbox" id="1035"><height>auto</height><font>font14</font><textcolor>99FFFFFF</textcolor></control>
+					<control type="textbox" id="1036"><height>auto</height><font>font14</font></control>
+					<control type="textbox" id="1037"><height>auto</height><font>font14</font><textcolor>99FFFFFF</textcolor></control>
+					<control type="textbox" id="1038"><height>auto</height><font>font14</font></control>
+					<control type="textbox" id="1039"><height>auto</height><font>font14</font><textcolor>99FFFFFF</textcolor></control>
+					<control type="textbox" id="1040"><height>auto</height><font>font14</font></control>
+					<control type="textbox" id="1041"><height>auto</height><font>font14</font><textcolor>99FFFFFF</textcolor></control>
+					<control type="textbox" id="1042"><height>auto</height><font>font14</font></control>
+					<control type="textbox" id="1043"><height>auto</height><font>font14</font><textcolor>99FFFFFF</textcolor></control>
+					<control type="textbox" id="1044"><height>auto</height><font>font14</font></control>
+					<control type="textbox" id="1045"><height>auto</height><font>font14</font><textcolor>99FFFFFF</textcolor></control>
+					<control type="textbox" id="1046"><height>auto</height><font>font14</font></control>
+					<control type="textbox" id="1047"><height>auto</height><font>font14</font><textcolor>99FFFFFF</textcolor></control>
+					<control type="textbox" id="1048"><height>auto</height><font>font14</font></control>
+					<control type="textbox" id="1049"><height>auto</height><font>font14</font><textcolor>99FFFFFF</textcolor></control>
+					<control type="textbox" id="1050"><height>auto</height><font>font14</font></control>
+					<control type="textbox" id="1051"><height>auto</height><font>font14</font><textcolor>99FFFFFF</textcolor></control>
+					<control type="textbox" id="1052"><height>auto</height><font>font14</font></control>
+					<control type="textbox" id="1053"><height>auto</height><font>font14</font><textcolor>99FFFFFF</textcolor></control>
+					<control type="textbox" id="1054"><height>auto</height><font>font14</font></control>
+					<control type="textbox" id="1055"><height>auto</height><font>font14</font><textcolor>99FFFFFF</textcolor></control>
+					<control type="textbox" id="1056"><height>auto</height><font>font14</font></control>
+					<control type="textbox" id="1057"><height>auto</height><font>font14</font><textcolor>99FFFFFF</textcolor></control>
+					<control type="textbox" id="1058"><height>auto</height><font>font14</font></control>
+					<control type="textbox" id="1059"><height>auto</height><font>font14</font><textcolor>99FFFFFF</textcolor></control>
+					<control type="textbox" id="1060"><height>auto</height><font>font14</font></control>
+					<control type="textbox" id="1061"><height>auto</height><font>font14</font><textcolor>99FFFFFF</textcolor></control>
+					<control type="textbox" id="1062"><height>auto</height><font>font14</font></control>
+					<control type="textbox" id="1063"><height>auto</height><font>font14</font><textcolor>99FFFFFF</textcolor></control>
+					<control type="textbox" id="1064"><height>auto</height><font>font14</font></control>
+					<control type="textbox" id="1065"><height>auto</height><font>font14</font><textcolor>99FFFFFF</textcolor></control>
+					<control type="textbox" id="1066"><height>auto</height><font>font14</font></control>
+					<control type="textbox" id="1067"><height>auto</height><font>font14</font><textcolor>99FFFFFF</textcolor></control>
+					<control type="textbox" id="1068"><height>auto</height><font>font14</font></control>
+					<control type="textbox" id="1069"><height>auto</height><font>font14</font><textcolor>99FFFFFF</textcolor></control>
+					<control type="textbox" id="1070"><height>auto</height><font>font14</font></control>
+				</control>
+
 				<control type="textbox" id="65592">
-					<left>612</left>
-					<top>128</top>
+					<left>518</left>
+					<top>98</top>
 					<width>1210</width>
 					<height>156</height>
-					<font>font13</font>
+					<font>font14</font>
 					<autoscroll delay="8000" time="2000" repeat="10000">true</autoscroll>
-					<!--visible>!isEmpty(Container(55).ListItem.Art(thumb)</visible-->
-					<visible>!Control.IsVisible(65591)</visible>
-					
+					<visible>!isEmpty(Container(55).ListItem.Property(link_url))</visible>
 					<label>$INFO[Container(55).ListItem.Plot]</label>					
 				</control>
 				
 				<control type="image">
-					<left>602</left>
+					<left>860</left>
+					<top>383</top>
+					<width>683</width>
+					<height>378</height>
+					<aspectratio>keep</aspectratio>
+					<visible>!isEmpty(Container(55).ListItem.Art(thumb))+isEmpty(Container(55).ListItem.Art(banner))</visible>
+					<visible>!Player.HasMedia</visible>
+					<texture>$INFO[Container(55).ListItem.Art(thumb)]</texture>
+				</control>
+				<control type="image">
+					<left>518</left>
 					<top>194</top>
-					<width>1226</width>
+					<width>1366</width>
 					<height>756</height>
 					<aspectratio>keep</aspectratio>
-					<fadetime>300</fadetime>
-					<visible>!isEmpty(Container(55).ListItem.Art(thumb))</visible>
+					<visible>!isEmpty(Container(55).ListItem.Art(banner))</visible>
 					<visible>!Player.HasMedia</visible>
-					<texture fallback="colors/black.png">$INFO[Container(55).ListItem.Art(thumb)]</texture>
+					<texture>$INFO[Container(55).ListItem.Art(banner)]</texture>
 				</control>
+
 				<control type="videowindow">
-					<left>602</left>
-					<top>184</top>
-					<width>1226</width>
-					<height>766</height>
+					<left>518</left>
+					<top>194</top>
+					<width>1366</width>
+					<height>756</height>
 					<!-- doesnt work aligny>bottom</aligny-->
 				</control>
 				
@@ -319,14 +398,13 @@
 					<texturenofocus>-</texturenofocus>
 				</control-->
 
-				<control type="label" id="1">
-					<top>10</top>
+				<control type="textbox" id="1">
+					<top>0</top>
 					<left>85</left>
-					<height>66</height>
+					<height>76</height>
 					<width>1500</width>
-					<scroll>true</scroll>
-					<scrollspeed>50</scrollspeed>
-       				<scrollsuffix>           - </scrollsuffix>						
+					<autoscroll delay="3000" time="2000" repeat="4000">!Container(55).OnNext+!Container(55).OnPrevious</autoscroll>
+					<aligny>center</aligny>
        				<label></label>
 				</control>
 
@@ -515,6 +593,8 @@
 				</control>
 			</control>
 		<!--END include name="BottomBar"-->
+
+
 
 	</controls>
 </window>

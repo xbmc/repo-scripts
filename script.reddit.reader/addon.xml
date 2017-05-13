@@ -2,14 +2,12 @@
 <addon
     id="script.reddit.reader"
     name="Reddit Reader"
-    version="0.7.1"
+    version="0.9.6"
     provider-name="gedisony">
     <requires>
         <import addon="xbmc.python"                     version="2.25.0"/>
-        <import addon="script.module.simple.downloader" version="1.0.0"/>
 	    <import addon="script.module.requests"          version="1.1.0"/>
 	    <import addon="script.module.youtube.dl"        version="16.521.0"/>
-	    <import addon="script.module.beautifulsoup4"    version="4.3.1"/>
 	    <import addon="script.module.urlresolver"                      />
     </requires>
 
@@ -20,16 +18,14 @@
     
     <extension point="xbmc.addon.metadata">
         <platform>all</platform>
-        <summary lang="en">Browse Reddit on Kodi</summary>
+        <summary lang="en_GB">Browse Reddit on Kodi</summary>
         <language></language>
-        <description lang="en">Reddit is a social news and entertainment website where users share and vote on content they find funny and interesting.[CR]View Reddit video and images on Kodi[CR][CR]Original by: AddonscriptorDE and rasjani [CR]Forked from https://github.com/rasjani/plugin.video.reddit_tv[CR]</description>
+        <description lang="en_GB">Reddit is a social news and entertainment website where users share and vote on content they find funny and interesting.[CR]View Reddit video and images on Kodi[CR][CR]Original by: AddonscriptorDE and rasjani [CR]Forked from https://github.com/rasjani/plugin.video.reddit_tv[CR]</description>
         <website>http://www.reddit.com</website>
         <source>https://github.com/gedisony/script.reddit.reader</source>
         <forum>http://forum.kodi.tv/showthread.php?tid=287355</forum>
         <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
         <email>gediso+ny at gmail dot com</email>
-		<news>v0.6.9  (2017-1-13)
-              - Added option to repeat playback of gif video</news>        
 		<disclaimer>This add-on is not published nor endorsed by reddit inc.</disclaimer>
 		<assets>
 			<icon>icon.png</icon>
