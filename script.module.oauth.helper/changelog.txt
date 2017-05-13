@@ -1,5 +1,9 @@
 Changelog for OAuth Helper
 
+*** 0.0.8 ***
+
+Fix timeout dialog
+
 *** 0.0.7 ***
 
 Change from using requests2-2.2.1 module to requests-2.3.0
