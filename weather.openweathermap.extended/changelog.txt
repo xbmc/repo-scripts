@@ -1,5 +1,9 @@
+4.4.2
+- new api keys
+
 4.4.1
 - disable maps by default again
+- make personal api key mandetory for maps
 
 4.4.0
 - re-enable maps
