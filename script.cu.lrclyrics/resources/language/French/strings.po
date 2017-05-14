@@ -22,27 +22,53 @@ msgstr "Fichier"
 
 msgctxt "#32001"
 msgid "No lyrics found!"
-msgstr "Aucunes paroles n'ont été trouvées !"
+msgstr "Aucun fichier de paroles n'a été trouvé !"
 
 msgctxt "#32002"
 msgid "Embedded"
 msgstr "Intégrées"
 
+msgctxt "#32003"
+msgid "Lyrics offset"
+msgstr "Décalage des paroles"
+
 msgctxt "#32004"
 msgid "Searching lyrics..."
 msgstr "Recherche de paroles..."
 
+msgctxt "#32005"
+msgid "Select lyrics:"
+msgstr "Sélectionner paroles :"
+
+msgctxt "#32006"
+msgid "Select different lyrics"
+msgstr "Sélectionner des paroles différentes"
+
+msgctxt "#32007"
+msgid "Manually sync lyrics"
+msgstr "Synchroniser les paroles manuellement"
+
+msgctxt "#32008"
+msgid "Delayed by: %ss"
+msgstr "Retardées de %ss"
+
+msgctxt "#32009"
+msgid "Ahead by: %ss"
+msgstr "Avancées de %ss"
+
+#empty strings from id 32010 to 32100
+
 msgctxt "#32101"
-msgid "Save lyrics to lyrics folder"
-msgstr "Dossier de sauvegarde des paroles"
+msgid "Search and save lyrics in separate lyrics folder"
+msgstr "Rechercher et sauvegarder les paroles dans un dossier de paroles séparé"
 
 msgctxt "#32102"
 msgid "- Lyrics folder"
 msgstr "- Dossier de sauvegarde"
 
 msgctxt "#32103"
-msgid "- Save format"
-msgstr "- Format de sauvegarde"
+msgid "- Filename format"
+msgstr "- Format du nom du fichier"
 
 msgctxt "#32104"
 msgid "%N %A - %T"
@@ -73,20 +99,42 @@ msgid "%A\\%B\\%N %T"
 msgstr "Artiste\\Album\\Piste Chanson.ext"
 
 msgctxt "#32111"
-msgid "Same name lyrics saved in sub folder"
-msgstr "Même nom de paroles sauvées dans le sous-dossier"
+msgid "Lyrics are in a subfolder"
+msgstr "Les paroles sont dans un sous-dossier"
 
 msgctxt "#32112"
-msgid "- Sub folder name"
+msgid "- Subfolder name"
 msgstr "- Nom du sous-dossier"
 
 msgctxt "#32113"
-msgid "Save lyrics to song folder"
-msgstr "Sauver les paroles dans le dossier des chansons"
+msgid "Search and save lyrics in song folder"
+msgstr "Rechercher et sauvegarder les paroles dans le dossier de la chanson"
+
+msgctxt "#32114"
+msgid "%N - %A - %T"
+msgstr "%N - %A - %T"
+
+msgctxt "#32115"
+msgid "Display options"
+msgstr "Options d'affichage"
+
+msgctxt "#32116"
+msgid "Search options"
+msgstr "Options de recherche"
+
+msgctxt "#32117"
+msgid "Lyrics files"
+msgstr "Fichiers de paroles"
+
+msgctxt "#32118"
+msgid "Debugging"
+msgstr "Débogage"
+
+#empty strings from id 32119 to 32149
 
 msgctxt "#32150"
 msgid "Scrapers"
-msgstr "Collecteurs"
+msgstr "Fournisseurs"
 
 msgctxt "#32151"
 msgid "Options"
@@ -102,11 +150,11 @@ msgstr "Chercher des fichiers locaux de paroles"
 
 msgctxt "#32154"
 msgid "Synchronised lyrics scrapers"
-msgstr "Collecteurs pour paroles synchronisées"
+msgstr "Fournisseurs des paroles synchronisées"
 
 msgctxt "#32155"
 msgid "Regular lyrics scrapers"
-msgstr "Collecteurs pour paroles habituelles"
+msgstr "Fournisseurs des paroles classiques"
 
 msgctxt "#32156"
 msgid "Display lyrics automatically"
@@ -127,6 +175,37 @@ msgstr "Activer le mode débogage"
 msgctxt "#32160"
 msgid "Hide notifications"
 msgstr "Masquer les notifications"
+
+msgctxt "#32161"
+msgid "Remove Chinese/Korean text from lyrics"
+msgstr "Supprimer les textes Chinois/Coréens des paroles"
+
+msgctxt "#32162"
+msgid "Scraper test"
+msgstr "Test des fournisseurs"
+
+msgctxt "#32163"
+msgid "Testing: %s"
+msgstr "Test : %s"
+
+msgctxt "#32164"
+msgid "All scrapers are working ok"
+msgstr "Tous les fournisseurs fonctionnent correctement"
+
+msgctxt "#32165"
+msgid "Failed scrapers: %s"
+msgstr "Fournisseurs en échec : %s"
+
+msgctxt "#32166"
+msgid "Time offset for synchronised lyrics"
+msgstr "Durée de décalage pour les paroles synchronisées"
+
+msgctxt "#32167"
+msgid "Delete lyrics"
+msgstr "Supprimer les paroles"
+
+#empty strings from id 32168 to 32198
+#Skin labels
 
 msgctxt "#32199"
 msgid "CU LRC Lyrics"

@@ -12,7 +12,7 @@ PROFILE = xbmc.translatePath(ADDON.getAddonInfo('profile')).decode('utf-8')
 LANGUAGE = ADDON.getLocalizedString
 
 BASE_RESOURCE_PATH = os.path.join(CWD, 'resources', 'lib')
-sys.path.append (BASE_RESOURCE_PATH)
+sys.path.append(BASE_RESOURCE_PATH)
 
 from utilities import *
 from scrapertest import *

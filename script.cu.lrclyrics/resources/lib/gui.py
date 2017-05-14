@@ -229,7 +229,11 @@ class MAIN():
             found = re.search('\[offset:(.*?)\]', lyr, flags=re.DOTALL)
             if found:
                 # get the sum of both values
-                adjust = int(found.group(1)) + adjust
+                try:
+                    adjust = int(found.group(1)) + adjust
+                except:
+                    # offset tag without value
+                    pass
                 # remove the existing offset tag
                 lyr = lyr.replace(found.group(0) + '\n','')
             # write our new offset tag
@@ -561,7 +565,7 @@ class GUI(xbmcgui.WindowXMLDialog):
 
     def parser_lyrics(self, lyrics):
         offset = 0.00
-        found = re.search('\[offset:(.*?)\]', lyrics, flags=re.DOTALL)
+        found = re.search('\[offset:(\d+)\]', lyrics)
         if found:
             offset = float(found.group(1)) / 1000
         self.pOverlay = []

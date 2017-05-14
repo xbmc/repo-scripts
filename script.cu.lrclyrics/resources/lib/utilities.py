@@ -160,9 +160,8 @@ class Song:
         match = regex.match(song.title)
         if match:
             song.title = song.title[4:]
-        if not song.artist and not xbmc.getInfoLabel('MusicPlayer.TimeRemaining'):
-            # no artist and infinite playing time ? We probably listen to a radio
-            # which usually set the song title as 'Artist - Title' (via ICY StreamTitle)
+        if not song.artist and xbmc.getCondVisibility('Player.IsInternetStream'):
+            # We probably listen to a radio which usually set the song title as 'Artist - Title' (via ICY StreamTitle)
             song.analyze_safe = False
             sep = song.title.find('-')
             if sep > 1:
@@ -170,7 +169,7 @@ class Song:
                 song.title = song.title[sep + 1:].strip()
                 # The title in the radio often contains some additional
                 # bracketed information at the end:
-                #  Radio version, short version, year of the song...
+                # Radio version, short version, year of the song...
                 # It often disturbs the lyrics search so we remove it
                 song.title = re.sub(r'\([^\)]*\)$', '', song.title)
         if (song.filepath and ((not song.title) or (not song.artist) or (ADDON.getSetting('read_filename') == 'true'))):

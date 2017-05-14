@@ -1,3 +1,11 @@
+v5.3.9
+- fix letssingitscraper
+- fix getting song title from internet streams
+- don't crash on offset tags without value
+
+v5.3.8
+- cosmetics
+
 v5.3.7
 - add support for synced lyrics in txxx tag
 
