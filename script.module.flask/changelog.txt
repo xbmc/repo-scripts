@@ -1,0 +1,3 @@
+[B]Version 0.12[/B]
+
+- flask v0.12
