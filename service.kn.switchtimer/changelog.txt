@@ -1,5 +1,8 @@
 CHANGELOG
 
+2.0.3
+- Module dateutil included.
+
 2.0.2
 - create settings path if not exists. This avoids IOExceptions when writing timers and the addon
   wasn't configured yet.

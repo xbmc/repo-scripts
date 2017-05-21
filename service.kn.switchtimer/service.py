@@ -41,7 +41,6 @@ class Service(XBMCMonitor):
 
     def __init__(self, *args):
         XBMCMonitor.__init__(self)
-        self.__dateFormat = None
         self.getSettings()
         handler.notifyLog('Init Service %s %s' % (__addonname__, __version__))
 
@@ -59,7 +58,6 @@ class Service(XBMCMonitor):
         self.__dispMsgTime = int(re.match('\d+', handler.getSetting('dispTime')).group())*1000
         self.__discardTmr = int(re.match('\d+', handler.getSetting('discardOldTmr')).group())*60
         self.__confirmTmrAdded = True if handler.getSetting('confirmTmrAdded').upper() == 'TRUE' else False
-        self.__dateFormat = handler.getDateFormat()
 
         self.SettingsChanged = False
 

@@ -3,7 +3,7 @@
 
 import sys
 import time
-import datetime
+from dateutil import parser
 import xbmc, xbmcaddon, xbmcgui
 import os
 import operator
@@ -39,7 +39,6 @@ def putTimer(timers):
     with open(__timer__, 'w') as handle:
         json.dump(timers, handle)
     HOME.setProperty('SwitchTimerActiveItems', str(len(timers)))
-    notifyLog('timer.json located @:%s' % __timer__, xbmc.LOGDEBUG)
     notifyLog('%s timer(s) written' % (len(timers)), xbmc.LOGNOTICE)
 
 def getTimer():
@@ -53,47 +52,31 @@ def getTimer():
 def getSetting(setting):
     return __addon__.getSetting(setting)
 
-def getDateFormat():
-    df = xbmc.getRegion('dateshort')
-    tf = xbmc.getRegion('time').split(':')
-
-    try:
-        # time format is 12h with am/pm
-        return df + ' ' + tf[0][0:2] + ':' + tf[1] + ' ' + tf[2].split()[1]
-    except IndexError:
-        # time format is 24h with or w/o leading zero
-        return df + ' ' + tf[0][0:2] + ':' + tf[1]
-
 def notifyLog(message, level=xbmc.LOGDEBUG):
     xbmc.log('[%s]: %s' % (__addonid__, message.encode('utf-8')), level)
 
 def notifyOSD(header, message, icon=__IconDefault__, time=5000):
     OSD.notification(header.encode('utf-8'), message.encode('utf-8'), icon, time)
 
-def date2timeStamp(date, format=getDateFormat()):
-    try:
-        dtime = datetime.datetime.strptime(date, format)
-    except TypeError:
-        try:
-            dtime = datetime.datetime.fromtimestamp(time.mktime(time.strptime(date, format)))
-        except ValueError:
-            notifyLog('Couldn\'t parse date: %s' % (date), xbmc.LOGERROR)
-            notifyOSD(__LS__(30000), __LS__(30020), icon=__IconAlert__)
-            return False
-    except Exception:
-        notifyLog('Couldn\'t parse date: %s' % (date), xbmc.LOGERROR)
-        notifyOSD(__LS__(30000), __LS__(30020), icon=__IconAlert__)
-        return False
-    return int(time.mktime(dtime.timetuple()))
+def date2timeStamp(pdate, dayfirst=True):
+    df=xbmc.getRegion('dateshort')
+    notifyLog(pdate + ' ' + df)
+    dtt = parser.parse(pdate, fuzzy=True, dayfirst=dayfirst).timetuple()
+    return int(time.mktime(dtt))
 
 def setTimer(params):
     utime = date2timeStamp(params['date'])
+    notifyLog(str(utime) + ' ' + str(time.time()))
     if not utime: return False
 
-    if int(time.time()) > utime:
-        notifyLog('Timer date is in the past', xbmc.LOGNOTICE)
-        notifyOSD(__LS__(30000), __LS__(30022), icon=__IconAlert__)
-        return False
+    _now = int(time.time())
+    if _now > utime:
+        notifyLog('Timer date possibly in the past, trying another date format', xbmc.LOGNOTICE)
+        utime =date2timeStamp(params['date'], dayfirst=False)
+        if _now > utime:
+            notifyLog('Timer date in the past or couldn\'t determine date format', xbmc.LOGNOTICE)
+            notifyOSD(__LS__(30000), __LS__(30022), icon=__IconAlert__)
+            return False
 
     timers = getTimer()
     for timer in timers:
@@ -167,10 +150,11 @@ if __name__ ==  '__main__':
             for par in pars:
                 try:
                     item, value = par.split('=')
-                    args[item] = value.replace(',', '&comma;')
+                    args[item] = value.replace(',', '&comma;').decode('utf-8')
                     notifyLog('Provided parameter %s: %s' % (item, args[item]))
                 except ValueError:
                     args[item] += ', ' + par
+
             if args['action'] == 'add':
                 if not setTimer(args):
                     notifyLog('Timer couldn\'t or wouldn\'t set', xbmc.LOGERROR)
