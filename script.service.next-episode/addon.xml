@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<addon id="script.service.next-episode"
+   name="Next Episode (next-episode.net)"
+   version="1.1.1"
+   provider-name="next-episode.net">
+  <requires>
+    <import addon="xbmc.python" version="2.20.0" />
+    <import addon="script.module.pyxbmct" version="1.1.0" />
+    <import addon="script.module.requests" version="2.9.0" />
+  </requires>
+  <extension point="xbmc.service" library="service.py" start="[login|startup]" />
+  <extension point="xbmc.python.script" library="main.py">
+    <provides>executable</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <platform>all</platform>
+    <summary lang="en">A service for Next Episode (next-episode.net) website.</summary>
+    <description lang="en">The next-episode.net service for Kodi allows to add your movies and TV episodes from media library to your inventory on next-episode.net. The service also monitors video playback and updates 'watched' status of your movies and episodes on next-episode.net.[CR][B]Note:[/B] The addon works only with Kodi medialibrary!</description>
+    <summary lang="ru">Служба для сайта Next Episode (next-episode.net).</summary>
+    <description lang="ru">Служба next-episode.net для Kodi позволяет добавлять фильмы и сериалы из меедиатеки в ваш список на next-episode.net. Служба также отслеживает проигрывание видео и обновляет состояние "просмотрено" на next-episode.net.[CR][B]Внимание![/B] Дополнение работает только с медиатекой Kodi.</description>
+    <summary lang="uk">Служба для сайта Next Episode (next-episode.net).</summary>
+    <description lang="uk">Служба next-episode.net для Kodi дозволяє додавати фільми та серіали з медіатеки у ваш список на next-episode.net. Служба також відстежує перегляд відео та оновлює статус "переглянуто" на next-episode.net.[CR][B]Увага![/B] Надбудова працює лише з медіатекою Kodi.</description>
+    <license>GNU GPL v.3</license>
+    <forum></forum>
+    <website>http://next-episode.net</website>
+    <email>romanvm@yandex.ua</email>
+    <source>https://github.com/santah/next-episode-kodi</source>
+  </extension>
+</addon>
