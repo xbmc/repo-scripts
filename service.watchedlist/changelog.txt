@@ -1,3 +1,7 @@
+version 1.2 (21.05.2017)
+* Added API and python module to use this addon in other addons
+* minor fixes
+
 version 1.1.4 (28.04.2017)
  * Fixed error in English language file
 
