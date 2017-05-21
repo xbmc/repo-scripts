@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addon id="service.watchedlist"
 	name="WatchedList"
-	version="1.1.4"
+	version="1.2"
 	provider-name="schapplm">
 	<requires>
 		<import addon="xbmc.python" version="2.20.0"/>
@@ -12,10 +12,10 @@
 		<import addon="script.module.dropbox" version="2.2.2"/> <!-- For Dropbox synchronisation -->
 	</requires>
 	<extension point="xbmc.python.script" library="manual.py"> <!--Python code for manual start in the addons menu-->
-		<provides>executable</provides> <!-- Addon is shown under Programs -->
+	  <provides>executable</provides> <!-- Addon is shown under Programs -->
 	</extension>
-	<extension point="xbmc.service" library="default.py" start="login"> <!-- Python code for autostart -->
-	</extension>
+	<extension point="xbmc.service" library="default.py" start="login" /> <!-- Python code for autostart -->
+  <extension point="xbmc.python.module" library="lib" /> <!-- entry to access the WatchedList from other addons -->
 	<extension point="xbmc.addon.metadata">
 		<summary lang="en">Save watched Movies and TV Episodes independent from filenames</summary>
 		<summary lang="de">Gesehen-Status von Filmen und Serien-Episoden unabhängig von Dateinamen speichern</summary>

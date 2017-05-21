@@ -1,9 +1,9 @@
 """
-This file is entry point for automatic start via XBMC
+This file is entry point for automatic start via Kodi
 """
 
-import resources.lib.utils as utils
-from service import WatchedList
+import lib.watchedlist.utils as utils
+from lib.watchedlist.watchedlist import WatchedList
 import xbmc
 
 __remotedebug__ = False

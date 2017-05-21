@@ -2,9 +2,9 @@
 This file is entry point for manual start via the programs menu
 """
 
-import xbmcgui
-import resources.lib.utils as utils
-from service import WatchedList
+import lib.watchedlist.utils as utils
+from lib.watchedlist.watchedlist import WatchedList
+import xbmc, xbmcgui
 
 __remotedebug__ = False
 # append pydev remote debugger
@@ -23,12 +23,8 @@ if __remotedebug__:
         utils.showNotification('WatchedList Error', 'remote debug in pydev is activated, but remote server not responding.', xbmc.LOGERROR)
         sys.exit(1)
 
-
-# Create WatchedList Class
-WL = WatchedList()
-
 if (not utils.getSetting("autostart") == 'true') or xbmcgui.Dialog().yesno( utils.getString(32101),utils.getString(32001) ):
     # Check if we should run updates (only ask if autostart is on)
     # run the program
     utils.log("Update Library Manual Run.")
-    WL.runUpdate(True) # one time update
+    WatchedList().runUpdate(True) # one time update

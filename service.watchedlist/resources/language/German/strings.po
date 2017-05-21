@@ -221,6 +221,10 @@ msgctxt "#32108"
 msgid "Watchedlist: MySQL Error (WL DB)"
 msgstr "Watchedlist: MySQL Fehler (WL DB)"
 
+msgctxt "#32109"
+msgid "Watchedlist: SQLite Error (WL DB)"
+msgstr "Watchedlist: SQLite Fehler (WL DB)"
+
 msgctxt "#32202"
 msgid "Addon movie database"
 msgstr "Gesehen-Datenbank (Filme)"
