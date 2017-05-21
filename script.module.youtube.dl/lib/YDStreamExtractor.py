@@ -86,7 +86,11 @@ def _selectVideoQuality(r, quality=None):
                 if disable_dash and 'dash' in fdata.get('format_note', '').lower():
                     continue
                 h = fdata['height']
+                if h == None:
+                   h = 1	
                 p = fdata.get('preference', 1)
+                if p == None:
+                   p = 1
                 if h >= minHeight and h <= maxHeight:
                     if (h >= prefMax and p > prefPref) or (h > prefMax and p >= prefPref):
                         prefMax = h

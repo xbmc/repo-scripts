@@ -171,14 +171,15 @@ class CrunchyrollIE(CrunchyrollBaseIE):
         'info_dict': {
             'id': '727589',
             'ext': 'mp4',
-            'title': "KONOSUBA -God's blessing on this wonderful world! 2 Episode 1 – Give Me Deliverance from this Judicial Injustice!",
+            'title': "KONOSUBA -God's blessing on this wonderful world! 2 Episode 1 – Give Me Deliverance From This Judicial Injustice!",
             'description': 'md5:cbcf05e528124b0f3a0a419fc805ea7d',
             'thumbnail': r're:^https?://.*\.jpg$',
             'uploader': 'Kadokawa Pictures Inc.',
             'upload_date': '20170118',
             'series': "KONOSUBA -God's blessing on this wonderful world!",
+            'season': "KONOSUBA -God's blessing on this wonderful world! 2",
             'season_number': 2,
-            'episode': 'Give Me Deliverance from this Judicial Injustice!',
+            'episode': 'Give Me Deliverance From This Judicial Injustice!',
             'episode_number': 1,
         },
         'params': {
@@ -220,6 +221,23 @@ class CrunchyrollIE(CrunchyrollBaseIE):
         },
         'params': {
             # just test metadata extraction
+            'skip_download': True,
+        },
+    }, {
+        # A video with a vastly different season name compared to the series name
+        'url': 'http://www.crunchyroll.com/nyarko-san-another-crawling-chaos/episode-1-test-590532',
+        'info_dict': {
+            'id': '590532',
+            'ext': 'mp4',
+            'title': 'Haiyoru! Nyaruani (ONA) Episode 1 – Test',
+            'description': 'Mahiro and Nyaruko talk about official certification.',
+            'uploader': 'TV TOKYO',
+            'upload_date': '20120305',
+            'series': 'Nyarko-san: Another Crawling Chaos',
+            'season': 'Haiyoru! Nyaruani (ONA)',
+        },
+        'params': {
+            # Just test metadata extraction
             'skip_download': True,
         },
     }]
@@ -372,7 +390,9 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
         else:
             webpage_url = 'http://www.' + mobj.group('url')
 
-        webpage = self._download_webpage(self._add_skip_wall(webpage_url), video_id, 'Downloading webpage')
+        webpage = self._download_webpage(
+            self._add_skip_wall(webpage_url), video_id,
+            headers=self.geo_verification_headers())
         note_m = self._html_search_regex(
             r'<div class="showmedia-trailer-notice">(.+?)</div>',
             webpage, 'trailer-notice', default='')
@@ -491,7 +511,8 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
         # webpage provide more accurate data than series_title from XML
         series = self._html_search_regex(
             r'id=["\']showmedia_about_episode_num[^>]+>\s*<a[^>]+>([^<]+)',
-            webpage, 'series', default=xpath_text(metadata, 'series_title'))
+            webpage, 'series', fatal=False)
+        season = xpath_text(metadata, 'series_title')
 
         episode = xpath_text(metadata, 'episode_title')
         episode_number = int_or_none(xpath_text(metadata, 'episode_number'))
@@ -508,6 +529,7 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
             'uploader': video_uploader,
             'upload_date': video_upload_date,
             'series': series,
+            'season': season,
             'season_number': season_number,
             'episode': episode,
             'episode_number': episode_number,
@@ -545,7 +567,9 @@ class CrunchyrollShowPlaylistIE(CrunchyrollBaseIE):
     def _real_extract(self, url):
         show_id = self._match_id(url)
 
-        webpage = self._download_webpage(self._add_skip_wall(url), show_id)
+        webpage = self._download_webpage(
+            self._add_skip_wall(url), show_id,
+            headers=self.geo_verification_headers())
         title = self._html_search_regex(
             r'(?s)<h1[^>]*>\s*<span itemprop="name">(.*?)</span>',
             webpage, 'title')

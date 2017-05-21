@@ -18,10 +18,14 @@ DownloadError  # Hides IDE warnings
 ###############################################################################
 # FIX: xbmcout instance in sys.stderr does not have isatty(), so we add it
 ###############################################################################
+
 class replacement_stderr(sys.stderr.__class__):
-    def isatty(self): return False
+    def isatty(self):
+        return False
+
 
 sys.stderr.__class__ = replacement_stderr
+
 ###############################################################################
 
 try:
@@ -35,26 +39,39 @@ updater.saveVersion(coreVersion)
 util.LOG('youtube_dl core version: {0}'.format(coreVersion))
 
 ###############################################################################
-# FIXES: datetime.datetime.strptime evaluating as None?
+# FIXES: datetime.datetime.strptime evaluating as None in Kodi
 ###############################################################################
-_utils_unified_strdate = youtube_dl.utils.unified_strdate
-_utils_date_from_str = youtube_dl.utils.date_from_str
+
+try:
+    datetime.datetime.strptime('0', '%H')
+except TypeError:
+    # Fix for datetime issues with XBMC/Kodi
+    class new_datetime(datetime.datetime):
+        @classmethod
+        def strptime(cls, dstring, dformat):
+            return datetime.datetime(*(time.strptime(dstring, dformat)[0:6]))
+
+    datetime.datetime = new_datetime
+
+# _utils_unified_strdate = youtube_dl.utils.unified_strdate
+# _utils_date_from_str = youtube_dl.utils.date_from_str
 
 
-def _unified_strdate_wrap(date_str):
-    try:
-        return _utils_unified_strdate(date_str)
-    except:
-        return '00000000'
-youtube_dl.utils.unified_strdate = _unified_strdate_wrap
+# def _unified_strdate_wrap(date_str):
+#     try:
+#         return _utils_unified_strdate(date_str)
+#     except:
+#         return '00000000'
+# youtube_dl.utils.unified_strdate = _unified_strdate_wrap
 
 
-def _date_from_str_wrap(date_str):
-    try:
-        return _utils_date_from_str(date_str)
-    except:
-        return datetime.datetime.now().date()
-youtube_dl.utils.date_from_str = _date_from_str_wrap
+# def _date_from_str_wrap(date_str):
+#     try:
+#         return _utils_date_from_str(date_str)
+#     except:
+#         return datetime.datetime.now().date()
+# youtube_dl.utils.date_from_str = _date_from_str_wrap
+
 ###############################################################################
 
 _YTDL = None
@@ -247,12 +264,12 @@ class YoutubeDLWrapper(youtube_dl.YoutubeDL):
         if ie.IE_NAME in _BLACKLIST:
             return
         # Fix ##################################################################
-        module = sys.modules.get(ie.__module__)
-        if module:
-            if hasattr(module, 'unified_strdate'):
-                module.unified_strdate = _unified_strdate_wrap
-            if hasattr(module, 'date_from_str'):
-                module.date_from_str = _date_from_str_wrap
+        # module = sys.modules.get(ie.__module__)
+        # if module:
+        #     if hasattr(module, 'unified_strdate'):
+        #         module.unified_strdate = _unified_strdate_wrap
+        #     if hasattr(module, 'date_from_str'):
+        #         module.date_from_str = _date_from_str_wrap
         ########################################################################
         youtube_dl.YoutubeDL.add_info_extractor(self, ie)
 

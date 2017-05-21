@@ -1,7 +1,9 @@
 # coding: utf-8
 from __future__ import unicode_literals
 
+import functools
 import itertools
+import operator
 # import os
 import re
 
@@ -18,6 +20,7 @@ from ..utils import (
     js_to_json,
     orderedSet,
     # sanitized_Request,
+    remove_quotes,
     str_to_int,
 )
 # from ..aes import (
@@ -30,7 +33,7 @@ class PornHubIE(InfoExtractor):
     _VALID_URL = r'''(?x)
                     https?://
                         (?:
-                            (?:[a-z]+\.)?pornhub\.com/(?:view_video\.php\?viewkey=|embed/)|
+                            (?:[a-z]+\.)?pornhub\.com/(?:(?:view_video\.php|video/show)\?viewkey=|embed/)|
                             (?:www\.)?thumbzilla\.com/video/
                         )
                         (?P<id>[\da-z]+)
@@ -94,6 +97,9 @@ class PornHubIE(InfoExtractor):
     }, {
         'url': 'https://www.thumbzilla.com/video/ph56c6114abd99a/horny-girlfriend-sex',
         'only_matching': True,
+    }, {
+        'url': 'http://www.pornhub.com/video/show?viewkey=648719015',
+        'only_matching': True,
     }]
 
     @staticmethod
@@ -129,9 +135,32 @@ class PornHubIE(InfoExtractor):
 
         tv_webpage = dl_webpage('tv')
 
-        video_url = self._search_regex(
-            r'<video[^>]+\bsrc=(["\'])(?P<url>(?:https?:)?//.+?)\1', tv_webpage,
-            'video url', group='url')
+        assignments = self._search_regex(
+            r'(var.+?mediastring.+?)</script>', tv_webpage,
+            'encoded url').split(';')
+
+        js_vars = {}
+
+        def parse_js_value(inp):
+            inp = re.sub(r'/\*(?:(?!\*/).)*?\*/', '', inp)
+            if '+' in inp:
+                inps = inp.split('+')
+                return functools.reduce(
+                    operator.concat, map(parse_js_value, inps))
+            inp = inp.strip()
+            if inp in js_vars:
+                return js_vars[inp]
+            return remove_quotes(inp)
+
+        for assn in assignments:
+            assn = assn.strip()
+            if not assn:
+                continue
+            assn = re.sub(r'var\s+', '', assn)
+            vname, value = assn.split('=', 1)
+            js_vars[vname] = parse_js_value(value)
+
+        video_url = js_vars['mediastring']
 
         title = self._search_regex(
             r'<h1>([^>]+)</h1>', tv_webpage, 'title', default=None)
