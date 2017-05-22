@@ -45,7 +45,7 @@ class LyricsFetcher:
                 except:
                     return
                 req.close()
-                match = re.search('id=lyrics>(.*?)<DIV', resp, flags=re.DOTALL)
+                match = re.search('id=lyrics style="display:table-cell;vertical-align:top;">(.*?)<DIV', resp, flags=re.DOTALL)
                 if match:
                     lyrics.lyrics = match.group(1).replace('<BR>', '')
                     return lyrics

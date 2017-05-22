@@ -55,7 +55,7 @@ class LyricsFetcher:
         req.close()
         htmlparser = HTMLParser.HTMLParser()
         response = htmlparser.unescape(response.decode('utf-8'))
-        matchcode = re.search('<lyrics.*?>(.*?)</lyrics>', response, flags=re.DOTALL)
+        matchcode = re.search('<div class="lyrics">(.*?)</div>', response, flags=re.DOTALL)
         try:
             lyricscode = (matchcode.group(1))
             lyr = re.sub('<[^<]+?>', '', lyricscode)

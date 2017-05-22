@@ -1,5 +1,10 @@
 v5.3.9
-- fix letssingitscraper
+- gomaudio: fix handling of accented characters
+- fix letssingit scraper
+- fix genius scraper
+
+v5.3.9
+- fix letssingit scraper
 - fix getting song title from internet streams
 - don't crash on offset tags without value
 

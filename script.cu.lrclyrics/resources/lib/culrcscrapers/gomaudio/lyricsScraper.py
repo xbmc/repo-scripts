@@ -10,6 +10,7 @@ import socket
 import hashlib
 import urllib
 import re
+import unicodedata
 from utilities import *
 from audiofile import AudioFile
 
@@ -20,6 +21,11 @@ __lrc__ = True
 socket.setdefaulttimeout(10)
 
 GOM_URL = 'http://newlyrics.gomtv.com/cgi-bin/lyrics.cgi?cmd=find_get_lyrics&file_key=%s&title=%s&artist=%s&from=gomaudio_local'
+
+def remove_accents(data):
+    nfkd_data = unicodedata.normalize('NFKD', data)
+    return u"".join([c for c in nfkd_data if not unicodedata.combining(c)])
+
 
 class gomClient(object):
     '''
@@ -62,7 +68,7 @@ class LyricsFetcher:
                 key = gomClient.GetKeyFromFile(song.filepath)
             if not key:
                 return None
-            url = GOM_URL %(key, urllib.quote(song.title.decode('utf-8').encode('euc-kr')), urllib.quote(song.artist.decode('utf-8').encode('euc-kr')))
+            url = GOM_URL %(key, urllib.quote(remove_accents(song.title.decode('utf-8')).encode('euc-kr')), (remove_accents(song.artist.decode('utf-8')).encode('euc-kr')))
             response = urllib.urlopen(url)
             Page = response.read()
         except:
@@ -73,7 +79,6 @@ class LyricsFetcher:
                     sys.exc_info()[1]
                ))
             return None
-
         if Page[:Page.find('>')+1] != '<lyrics_reply result="0">':
             return None
         syncs = re.compile('<sync start="(\d+)">([^<]*)</sync>').findall(Page)
