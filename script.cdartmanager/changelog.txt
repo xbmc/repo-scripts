@@ -1,3 +1,6 @@
+4.2.1
+- Bugfix: no cdART was found in JSON
+
 4.2.0
 - intense refactoring and cleanup of code, this is the preparation for the new features to come
 

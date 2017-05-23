@@ -879,13 +879,13 @@ class GUI(xbmcgui.WindowXMLDialog):
                 artistthumb = " "
                 musicbanner = " "
                 line = ""
-                fanart_path = os.path.join(__cfg__.path_music_path(), artist["name"], "fanart.jpg")\
+                fanart_path = os.path.join(__cfg__.path_music_path(), artist["name"], FileName.FANART)\
                     .replace("\\\\", "\\")
-                clearlogo_path = os.path.join(__cfg__.path_music_path(), artist["name"], "logo.png")\
+                clearlogo_path = os.path.join(__cfg__.path_music_path(), artist["name"], FileName.LOGO)\
                     .replace("\\\\", "\\")
-                artistthumb_path = os.path.join(__cfg__.path_music_path(), artist["name"], "folder.jpg")\
+                artistthumb_path = os.path.join(__cfg__.path_music_path(), artist["name"], FileName.FOLDER)\
                     .replace("\\\\", "\\")
-                musicbanner_path = os.path.join(__cfg__.path_music_path(), artist["name"], "banner.jpg")\
+                musicbanner_path = os.path.join(__cfg__.path_music_path(), artist["name"], FileName.BANNER)\
                     .replace("\\\\", "\\")
                 if xbmcvfs.exists(fanart_path):
                     fanart = "X"

@@ -11,7 +11,7 @@ import xbmc
 import xbmcvfs
 
 import cdam
-from cdam import Def
+from cdam import Def, ArtType
 from db import store_lalist, store_local_artist_table, store_fanarttv_datecode, retrieve_fanarttv_datecode
 from utils import get_html_source, log, dialog_msg
 
@@ -32,11 +32,11 @@ def remote_cdart_list(artist_menu):
             album_artwork = art[5]["artwork"]
             if album_artwork:
                 for artwork in album_artwork:
-                    for cdart in artwork["cdart"]:
+                    for cdart in artwork[ArtType.CDART]:
                         album = {"artistl_id": artist_menu["local_id"],
                                  "artistd_id": artist_menu["musicbrainz_artistid"],
                                  "musicbrainz_albumid": artwork["musicbrainz_albumid"], "disc": cdart["disc"],
-                                 "size": cdart["size"], "picture": cdart["cdart"], "thumb_art": cdart["cdart"]}
+                                 "size": cdart["size"], "picture": cdart[ArtType.CDART], "thumb_art": cdart[ArtType.CDART]}
                         try:
                             album["local_name"] = album["artist"] = artist_menu["name"]
                         except KeyError:
@@ -59,11 +59,11 @@ def remote_coverart_list(artist_menu):
             album_artwork = art[5]["artwork"]
             if album_artwork:
                 for artwork in album_artwork:
-                    if artwork["cover"]:
+                    if artwork[ArtType.COVER]:
                         album = {"artistl_id": artist_menu["local_id"],
                                  "artistd_id": artist_menu["musicbrainz_artistid"], "local_name": artist_menu["name"],
                                  "artist": artist_menu["name"], "musicbrainz_albumid": artwork["musicbrainz_albumid"],
-                                 "size": 1000, "picture": artwork["cover"], "thumb_art": artwork["cover"]}
+                                 "size": 1000, "picture": artwork[ArtType.COVER], "thumb_art": artwork[ArtType.COVER]}
                         coverart_url.append(album)
                         # log( "cdart_url: %s " % cdart_url )
     except Exception as e:
@@ -184,29 +184,29 @@ def retrieve_fanarttv_json(id_):
                     if art == "albums" and not albums:
                         # for album_id in data[artist]["albums"]:
                         for album_id, album in data["albums"].iteritems():
-                            album_artwork = {"musicbrainz_albumid": album_id, "cdart": [], "cover": ""}
-                            if "cdart" in album:
-                                for subitem in album["cdart"]:
+                            album_artwork = {"musicbrainz_albumid": album_id, ArtType.CDART: [], ArtType.COVER: ""}
+                            if ArtType.CDART in album:
+                                for subitem in album[ArtType.CDART]:
                                     cdart = {}
                                     if "disc" in subitem:
                                         cdart["disc"] = int(subitem["disc"])
                                     else:
                                         cdart["disc"] = 1
-                                    if url in subitem:
-                                        cdart["cdart"] = subitem["url"]
+                                    if "url" in subitem:
+                                        cdart[ArtType.CDART] = subitem["url"]
                                     else:
-                                        cdart["cdart"] = ""
+                                        cdart[ArtType.CDART] = ""
                                     if "size" in subitem:
                                         cdart["size"] = int(subitem["size"])
-                                    album_artwork["cdart"].append(cdart)
+                                    album_artwork[ArtType.CDART].append(cdart)
                             try:
                                 if "albumcover" in album:
                                     # if len(album["albumcover"]) < 2:
                                     # we should download the first hit here if there are multiple covers
-                                    album_artwork["cover"] = album["albumcover"][0]["url"]
+                                    album_artwork[ArtType.COVER] = album["albumcover"][0]["url"]
                             except Exception as e:
                                 log(e.message)
-                                album_artwork["cover"] = ""
+                                album_artwork[ArtType.COVER] = ""
                             albums.append(album_artwork)
     except Exception as e:
         log(e.message, xbmc.LOGERROR)
