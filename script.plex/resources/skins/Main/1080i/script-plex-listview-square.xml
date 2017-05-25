@@ -619,15 +619,6 @@
             <posy>0</posy>
             <width>1920</width>
             <height>135</height>
-            <control type="image">
-                <visible>ControlGroup(200).HasFocus(0) + IntegerGreaterThan(Container(101).ListItem.Property(index),5)</visible>
-                <posx>0</posx>
-                <posy>0</posy>
-                <width>1920</width>
-                <height>135</height>
-                <texture>script.plex/white-square.png</texture>
-                <colordiffuse>C0000000</colordiffuse>
-            </control>
             <control type="grouplist">
                 <posx>60</posx>
                 <posy>47.5</posy>
@@ -823,6 +814,7 @@
                     <label>[UPPERCASE]$INFO[Window.Property(filter1.display)][/UPPERCASE]</label>
                 </control>
                 <control type="button" id="310">
+                    <visible>!StringCompare(Window.Property(media),artist)</visible>
                     <enable>false</enable>
                     <width max="300">auto</width>
                     <height>65</height>
@@ -832,9 +824,25 @@
                     <disabledcolor>FFFFFFFF</disabledcolor>
                     <align>center</align>
                     <aligny>center</aligny>
-                    <texturefocus>-</texturefocus>
                     <texturenofocus>-</texturenofocus>
-                    <textoffsetx>0</textoffsetx>
+                    <texturenofocus>-</texturenofocus>
+                    <textoffsetx>20</textoffsetx>
+                    <textoffsety>0</textoffsety>
+                    <label>[UPPERCASE]$INFO[Window.Property(media.type)][/UPPERCASE]</label>
+                </control>
+                <control type="button" id="312">
+                    <visible>StringCompare(Window.Property(media),artist)</visible>
+                    <width max="300">auto</width>
+                    <height>65</height>
+                    <font>font12</font>
+                    <textcolor>FFFFFFFF</textcolor>
+                    <focusedcolor>FF000000</focusedcolor>
+                    <disabledcolor>FFFFFFFF</disabledcolor>
+                    <align>center</align>
+                    <aligny>center</aligny>
+                    <texturefocus colordiffuse="FFE5A00D" border="10">script.plex/white-square-rounded.png</texturefocus>
+                    <texturenofocus>-</texturenofocus>
+                    <textoffsetx>20</textoffsetx>
                     <textoffsety>0</textoffsety>
                     <label>[UPPERCASE]$INFO[Window.Property(media.type)][/UPPERCASE]</label>
                 </control>
