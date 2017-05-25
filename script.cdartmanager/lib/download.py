@@ -265,7 +265,7 @@ def auto_download(type_, artist_list, background=False):
                             fanart_number = len(fanart_files)
                             if fanart_number == __cfg__.fanart_limit():
                                 continue
-                        if not xbmcvfs.exists(os.path.join(path, "fanart.jpg").replace("\\\\", "\\")):
+                        if not xbmcvfs.exists(os.path.join(path, FileName.FANART).replace("\\\\", "\\")):
                             message, d_success, final_destination, is_canceled = download_art(art[0], temp_art,
                                                                                               ArtType.FANART,
                                                                                               "single", background)
@@ -298,7 +298,7 @@ def auto_download(type_, artist_list, background=False):
                         d_success = 0
                         final_destination = None
                         if type_ == ArtType.THUMB:
-                            if xbmcvfs.exists(os.path.join(auto_art["path"], "folder.jpg")):
+                            if xbmcvfs.exists(os.path.join(auto_art["path"], FileName.FOLDER)):
                                 log("Artist Thumb already exists, skipping")
                                 continue
                             else:
@@ -306,7 +306,7 @@ def auto_download(type_, artist_list, background=False):
                                                                                                   ArtType.THUMB,
                                                                                                   "auto", background)
                         elif type_ == ArtType.CLEARLOGO:
-                            if xbmcvfs.exists(os.path.join(auto_art["path"], "logo.png")):
+                            if xbmcvfs.exists(os.path.join(auto_art["path"], FileName.LOGO)):
                                 log("ClearLOGO already exists, skipping")
                                 continue
                             else:
@@ -314,7 +314,7 @@ def auto_download(type_, artist_list, background=False):
                                                                                                   ArtType.CLEARLOGO,
                                                                                                   "auto", background)
                         elif type_ == ArtType.BANNER:
-                            if xbmcvfs.exists(os.path.join(auto_art["path"], "banner.jpg")):
+                            if xbmcvfs.exists(os.path.join(auto_art["path"], FileName.BANNER)):
                                 log("Music Banner already exists, skipping")
                                 continue
                             else:
@@ -379,9 +379,9 @@ def auto_download(type_, artist_list, background=False):
                                 else:
                                     pass
                             else:
-                                log("ALBUM NOT MATCHED ON FANART.TV")
+                                log("ALBUM NOT MATCHED ON FANART.TV INTERNAL")
                         else:
-                            log("ALBUM NOT MATCHED ON FANART.TV")
+                            log("ALBUM NOT MATCHED ON FANART.TV EXTERNAL")
                     else:
                         log("%s artwork file already exists, skipping..." % key_label)
         dialog_msg("close", background=background)

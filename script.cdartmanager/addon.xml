@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addon id="script.cdartmanager"
        name="cdART Manager"
-       version="4.2.0"
+       version="4.2.1"
        provider-name="stef.an">
     <requires>
         <import addon="xbmc.python" version="2.19.0"/>

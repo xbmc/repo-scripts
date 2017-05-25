@@ -10,7 +10,7 @@ import xbmc
 import xbmcgui
 import xbmcvfs
 from lib import cdam, db, download, ftv_scraper, gui, jsonrpc_calls, utils
-from lib.cdam import Def, MediaType, ArtType
+from lib.cdam import Def, MediaType, ArtType, FileName
 from lib.utils import log, dialog_msg
 
 __cdam__ = cdam.CDAM()
@@ -103,10 +103,6 @@ def thumbnail_copy(art_path, thumb_path, type_="artwork"):
 
 def update_xbmc_thumbnails(background=False):
     log("Updating Thumbnails/fanart Images", xbmc.LOGNOTICE)
-    fanart = "fanart.jpg"
-    artistthumb_temp = "artist.jpg"
-    artistthumb = "folder.jpg"
-    albumthumb = "folder.jpg"
     xbmc.sleep(1000)
     dialog_msg("create", heading=__lng__(32042), background=background)
     # Artists
@@ -131,12 +127,12 @@ def update_xbmc_thumbnails(background=False):
         xbmc_thumbnail_path = ""
         xbmc_fanart_path = ""
         fanart_path = os.path.join(__cfg__.path_music_path(),
-                                   utils.change_characters(artist_["name"]), fanart).replace("\\\\", "\\")
+                                   utils.change_characters(artist_["name"]), FileName.FANART).replace("\\\\", "\\")
         artistthumb_path = os.path.join(__cfg__.path_music_path(),
-                                        utils.change_characters(artist_["name"]), artistthumb).replace("\\\\", "\\")
+                                        utils.change_characters(artist_["name"]), FileName.FOLDER).replace("\\\\", "\\")
         artistthumb_rename = os.path.join(__cfg__.path_music_path(),
                                           utils.change_characters(artist_["name"]),
-                                          artistthumb_temp).replace("\\\\", "\\")
+                                          "artist.jpg").replace("\\\\", "\\")
         if xbmcvfs.exists(artistthumb_rename):
             xbmcvfs.rename(artistthumb_rename, artistthumb_path)
         if xbmcvfs.exists(fanart_path):
@@ -162,7 +158,7 @@ def update_xbmc_thumbnails(background=False):
         dialog_msg("update", percent=percent, line1=__lng__(32042), line2=__lng__(32112),
                    line3=" %s %s" % (__lng__(32039), utils.get_unicode(album_["title"])), background=background)
         xbmc_thumbnail_path = ""
-        coverart_path = os.path.join(album_["path"], albumthumb).replace("\\\\", "\\")
+        coverart_path = os.path.join(album_["path"], FileName.FOLDER).replace("\\\\", "\\")
         if xbmcvfs.exists(coverart_path):
             xbmc_thumbnail_path = jsonrpc_calls.get_thumbnail_path(album_["local_id"], "album")
         if xbmc_thumbnail_path:
