@@ -54,7 +54,9 @@ def _getQualityLimits(quality):
 def _selectVideoQuality(r, quality=None):
         if quality is None:
             quality = util.getSetting('video_quality', 1)
+
         disable_dash = util.getSetting('disable_dash_video', True)
+        skip_no_audio = util.getSetting('skip_no_audio', True)
 
         entries = r.get('entries') or [r]
 
@@ -81,13 +83,18 @@ def _selectVideoQuality(r, quality=None):
             fallback = formats[index[keys[0]]]
             for fmt in keys:
                 fdata = formats[index[fmt]]
+                util.LOG(fdata)
+
                 if 'height' not in fdata:
                     continue
-                if disable_dash and 'dash' in fdata.get('format_note', '').lower():
+                elif disable_dash and 'dash' in fdata.get('format_note', '').lower():
                     continue
+                elif skip_no_audio and fdata.get('acodec', '').lower() == 'none':
+                    continue
+
                 h = fdata['height']
                 if h == None:
-                   h = 1	
+                   h = 1
                 p = fdata.get('preference', 1)
                 if p == None:
                    p = 1

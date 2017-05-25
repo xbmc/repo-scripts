@@ -160,3 +160,7 @@ msgstr ""
 msgctxt "#32037"
 msgid "Failed to move to downloads folder - leaving in temp"
 msgstr ""
+
+msgctxt "#32038"
+msgid "Skip Videos Without Audio"
+msgstr ""

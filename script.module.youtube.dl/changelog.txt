@@ -1,3 +1,7 @@
+*** 17.518.1 ***
+
+Added setting 'Skip Videos Without Audio' to force choosing videos with audio
+
 *** 17.518.0 ***
 
 Updated youtube-dl core to 2017.05.18.1
