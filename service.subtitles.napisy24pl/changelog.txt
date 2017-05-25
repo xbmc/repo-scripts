@@ -1,0 +1,42 @@
+2.0.1 - by CaTz (22/04/2017)
+- Added title parse & clean up
+
+2.0.0 - by CaTz (25/03/2017)
+- Complete re-write
+- Make TV-Show search much faster
+
+1.0.11 - by CaTz(29/05/2015)
+- Fix for Android os
+
+1.0.10 - by CaTz(14/04/2015)
+- Fix for rmtree function bug
+
+1.0.9 - by DaM 13/01/2014
+- Fix for parsing rating and video_file_size
+
+1.0.8 - by DaM 06/01/2014
+- Fix for changes in HTML
+
+1.0.7 - by DaM 15/12/2014
+- Code rewritten for new layout of napisy24.pl
+
+1.0.6 - by CaTz 08/11/2014
+- Bug fix, add slash or backslash at the end of path (fix xbmcvfs.exists in Helix)
+
+1.0.5 - by CaTz 16/07/2014
+- Add manual search support for tv-shows and movies
+
+1.0.4 - by struart 10/05/2014
+- Translation of the addons text to Polish
+
+1.0.3 - by CaTz 09/05/2014
+- Fix dependency import
+
+1.0.2 - by CaTz 07/05/2014
+- Added missing dependency in Addon.xml
+
+1.0.1 - by CaTz 04/05/2014
+- Bug fix, handle empty rows
+
+1.0.0 - by CaTz 02/05/2014
+- Redesign the code to support Gotham version
