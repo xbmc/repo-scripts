@@ -1,6 +1,6 @@
 # XBMC Media Center language file
-# Addon Name: Flip Clock
-# Addon id: screensaver.flipclock
+# Addon Name: Video ScreenSaver
+# Addon id: screensaver.video
 # Addon Provider: Lunatixz
 msgid ""
 msgstr ""
