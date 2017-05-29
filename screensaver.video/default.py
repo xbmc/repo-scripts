@@ -182,7 +182,7 @@ class Start():
         if REAL_SETTINGS.getSetting("TraktDisable") == 'true':
             xbmcgui.Window(10000).setProperty('script.trakt.paused','true')
             
-        xbmc.Player().play(playList)
+        Player().play(playList)
         self.background.doModal()
 
 if __name__ == '__main__':
