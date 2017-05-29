@@ -1,4 +1,7 @@
-v5.3.9
+v5.4.1
+- fix letssingit scraper
+
+v5.4.0
 - gomaudio: fix handling of accented characters
 - fix letssingit scraper
 - fix genius scraper
