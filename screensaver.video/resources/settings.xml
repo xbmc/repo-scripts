@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+    <setting id="VideoSource"  type="enum"      label="32002" default="0" values="Single Video|Multiple Videos"/>
+    <setting id="VideoFile"    type="video"     label="32003" default="library://video/" source="auto" subsetting="true" visible="eq(-1,0)"/>
+    <setting id="VideoFolder"  type="folder"    label="32004" default="library://video/" source="auto" subsetting="true" visible="eq(-2,1)"/>
+    <setting id="VideoLimit"   type="labelenum" label="32005" default="5" values="5|25|50|100|250|500" subsetting="true" visible="eq(-3,1)"/>
+    <setting id="VideoRandom"  type="bool"      label="32006" default="false"                          subsetting="true" visible="eq(-4,1)"/>
+    <setting id="TraktDisable" type="bool"      label="32007" default="true"/>
+    <setting id="LockAction"   type="bool"      label="32008" default="false"/>
+</settings>
+        
