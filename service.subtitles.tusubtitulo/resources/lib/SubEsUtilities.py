@@ -57,7 +57,7 @@ def getAllSubInfo(url, tvshow, season, episode):
 
     for version in versions:
         ver = dict()
-        verName = version.find_all(class_="title-sub")[0].get_text().strip().replace("ó".decode("utf-8"), "o")
+        verName = version.find_all(class_="title-sub")[0].get_text().strip().replace("ó".decode("utf-8"), "o").strip("Version").strip()
         temp = []
         for i in range(len(verName)-16):
             temp.append(verName[i])
@@ -82,28 +82,31 @@ def getAllSubInfo(url, tvshow, season, episode):
         ver = episodeData[i]
         for sub in ver["subs"]:
             lang = sub["lang"]
-            filename = tvshow.replace(" ", ".") + "." + str(season) + "x" + str(episode)
+            #filename = tvshow.replace(" ", ".") + "." + str(season) + "x" + str(episode)
+            filename = tvshow + " " + str(season) + "x" + str(episode)
             #filename = "Prueba"
             if lang in languages:
                 languageshort = languages[lang][1]
                 languagelong = languages[lang][0]
-                filename = filename + ".(%s)" % languages[lang][2]
+                #filename = filename + " (" + ver["name"] + ").(%s)" % languages[lang][2]
+                filename = filename + " (" + ver["name"] + ")"
                 server = filename
                 order = 1 + languages[lang][3]
             else:
                 lang = "Unknown"
                 languageshort = languages[lang][1]
                 languagelong = languages[lang][0]
-                filename = filename + ".(%s)" % languages[lang][2]
+                #filename = filename + " (" + ver["name"] + ").(%s)" % languages[lang][2]
+                filename = filename + " (" + ver["name"] + ")"
                 server = filename
                 order = 1 + languages[lang][3]
             data = dict()
             id = sub["link"]
-            data["rating"] = "0"
+            data["rating"] = "5"
             data["no_files"] = 1
             data["filename"] = filename
             data["server"] = server
-            data["sync"] = False
+            data["sync"] = True
             data["id"] = id
             data["language_flag"] = languageshort + '.gif'
             data["language_name"] = languagelong

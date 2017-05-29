@@ -1,4 +1,4 @@
-# service.subtitles.tusubtitulo
+# TuSubtitulo.com provider
 
 ----------
 
