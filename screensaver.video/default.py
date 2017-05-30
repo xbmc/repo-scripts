@@ -32,13 +32,13 @@ ACTION_STOP    = 13
 class BackgroundWindow(xbmcgui.WindowXMLDialog):
     def __init__(self, *args, **kwargs):
         xbmcgui.WindowXMLDialog.__init__(self, *args, **kwargs)
-        Player()
+        self.myPlayer = Player()
         
         
     def onAction(self, act):
         if REAL_SETTINGS.getSetting("LockAction") == 'true' and act.getId() != ACTION_STOP:
             return
-        xbmc.Player().stop()        
+        self.myPlayer.stop()        
         self.close()
         
         
@@ -51,6 +51,7 @@ class Player(xbmc.Player):
         
 class Start():
     def __init__(self):
+        self.myPlayer      = Player()
         self.singleVideo   = int(REAL_SETTINGS.getSetting("VideoSource")) == 0
         self.smartPlaylist = REAL_SETTINGS.getSetting("VideoFile")[-3:] == 'xsp' 
         self.videoRandom   = REAL_SETTINGS.getSetting("VideoRandom") == "true"
@@ -182,7 +183,7 @@ class Start():
         if REAL_SETTINGS.getSetting("TraktDisable") == 'true':
             xbmcgui.Window(10000).setProperty('script.trakt.paused','true')
             
-        Player().play(playList)
+        self.myPlayer.play(playList)
         self.background.doModal()
 
 if __name__ == '__main__':
