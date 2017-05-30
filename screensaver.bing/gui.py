@@ -24,6 +24,7 @@ from simplecache import use_cache, SimpleCache
 ADDON_ID       = 'screensaver.bing'
 REAL_SETTINGS  = xbmcaddon.Addon(id=ADDON_ID)
 ADDON_NAME     = REAL_SETTINGS.getAddonInfo('name')
+ADDON_VERSION  = REAL_SETTINGS.getAddonInfo('version')
 ADDON_PATH     = (REAL_SETTINGS.getAddonInfo('path').decode('utf-8'))
 SETTINGS_LOC   = REAL_SETTINGS.getAddonInfo('profile').decode('utf-8')
 SAVE_LOC       = os.path.join(SETTINGS_LOC, 'cache','')
@@ -38,6 +39,10 @@ class GUI(xbmcgui.WindowXMLDialog):
         self.isExiting = False
         
         
+    def log(self, msg, level=xbmc.LOGDEBUG):
+        xbmc.log(ADDON_ID + '-' + ADDON_VERSION + '-' + msg, xbmc.LOGERROR)
+            
+            
     def onInit( self ):
         self.PanelItems = self.getControl(101)
         self.PanelItems.addItems(self.prepareImages(self.openURL(BASE_URL + POTD_JSON)))
@@ -96,9 +101,9 @@ class GUI(xbmcgui.WindowXMLDialog):
             page = urllib2.urlopen(request, timeout = 15)
             return self.loadJson(page.read())
         except urllib2.URLError, e:
-            print ("openURL Failed! " + str(e), xbmc.LOGERROR)
+            self.log("openURL Failed! " + str(e), xbmc.LOGERROR)
         except socket.timeout, e:
-            print ("openURL Failed! " + str(e), xbmc.LOGERROR)
+            self.log("openURL Failed! " + str(e), xbmc.LOGERROR)
         return {}
         
      
