@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <settings>
     <setting id="RotateTime" type="enum" label="32001" default="0" values="30s|60s|120s|240s"/>
+    <setting id="Randomize"  type="bool" label="32002" default="false"/>
 </settings>
         

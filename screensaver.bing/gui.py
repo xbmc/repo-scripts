@@ -16,7 +16,7 @@
 # You should have received a copy of the GNU General Public License
 # along with Bing ScreenSaver.  If not, see <http://www.gnu.org/licenses/>.
 
-import urllib, urllib2, socket, json, os
+import urllib, urllib2, socket, json, os, random
 import xbmc, xbmcaddon, xbmcvfs, xbmcgui
 from simplecache import use_cache, SimpleCache
 
@@ -32,6 +32,7 @@ BASE_URL       = 'https://www.bing.com'
 POTD_JSON      = '/HPImageArchive.aspx?format=js&idx=0&n=8&mkt=en-US'
 KODI_MONITOR   = xbmc.Monitor()
 TIMER          = [30,60,120,240][int(REAL_SETTINGS.getSetting("RotateTime"))]
+RANDOM         = REAL_SETTINGS.getSetting("Randomize") == 'true'
 
 class GUI(xbmcgui.WindowXMLDialog):
     def __init__( self, *args, **kwargs ):
@@ -54,7 +55,8 @@ class GUI(xbmcgui.WindowXMLDialog):
             xbmc.executebuiltin('SetFocus(101)')
             if KODI_MONITOR.waitForAbort(TIMER) == True or self.isExiting == True:
                 break
-            xbmc.executebuiltin("Control.Move(101,1)")
+            seek = str(random.randint(1,8)) if RANDOM == True else '1'
+            xbmc.executebuiltin("Control.Move(101,%s)"%seek)
         
         
     def onFocus( self, controlId ):

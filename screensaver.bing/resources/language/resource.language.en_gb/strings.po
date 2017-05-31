@@ -19,3 +19,7 @@ msgstr ""
 msgctxt "#32001"
 msgid "Rotate Image Every"
 msgstr ""
+
+msgctxt "#32002"
+msgid "Randomize"
+msgstr ""
