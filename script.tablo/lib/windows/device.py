@@ -20,6 +20,7 @@ class DeviceWindow(kodigui.BaseWindow):
 
     def onFirstInit(self):
         self.setProperty('device.name', tablo.API.device.displayName)
+        self.setProperty('board.type', tablo.API.device.boardType)
 
         if tablo.API.hasSubscription():
             if tablo.API.subscription.get('state') == 'trial':

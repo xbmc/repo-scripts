@@ -1,3 +1,8 @@
+- 1.0.1
+
+Add use device rendering for duo where relevant
+Filter out new incompatible discovered devices
+
 - 1.0.0
 
 INITIAL RELEASE

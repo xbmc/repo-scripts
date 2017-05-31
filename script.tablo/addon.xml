@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addon id="script.tablo"
        name="Tablo"
-       version="1.0.0"
+       version="1.0.1"
        provider-name="Nuvyyo">
     <requires>
-        <import addon="xbmc.python" version="2.24.0"/>
+        <import addon="xbmc.python" version="2.14.0"/>
         <import addon="script.module.requests" version="2.3.0"/>
         <import addon="script.module.m3u8" version="0.2.2"/>
         <import addon="script.module.pytz" version="2014.2"/>
@@ -23,5 +23,8 @@
         <website>https://www.tablotv.com</website>
         <source>https://github.com/Nuvyyo/script.tablo</source>
         <platform>all</platform>
+        <news>
+Support for new Tablo Dual hardware
+        </news>
     </extension>
 </addon>

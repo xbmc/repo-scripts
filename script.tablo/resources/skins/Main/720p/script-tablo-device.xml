@@ -16,12 +16,26 @@
                 <animation effect="slide" start="0,0" end="0,-530" time="200" condition="Control.HasFocus(150)">Conditional</animation>
                 <posx>0</posx>
                 <posy>0</posy>
-                <control type="image">
-                    <posx>360</posx>
-                    <posy>50</posy>
-                    <width>480</width>
-                    <height>175</height>
-                    <texture>tablo/tablo_render_hd.png</texture>
+
+                <control type="group">
+                    <control type="image">
+                        <visible>!StringCompare(Window.Property(board.type),duo)</visible>
+                        <posx>360</posx>
+                        <posy>50</posy>
+                        <width>480</width>
+                        <height>175</height>
+                        <texture>tablo/tablo_render_hd.png</texture>
+                    </control>
+
+                    <control type="image">
+                        <visible>StringCompare(Window.Property(board.type),duo)</visible>
+                        <posx>441</posx>
+                        <posy>20</posy>
+                        <width>398</width>
+                        <height>253</height>
+                        <texture>tablo/tablo_render_hd-duo.png</texture>
+                        <aspectratio>keep</aspectratio>
+                    </control>
                 </control>
 
                 <control type="label">

@@ -59,7 +59,7 @@ LOCALIZED_RECORDING_TYPES_PLURAL = {  # TODO: Actually localize these :)
 
 
 def LOG(msg):
-    xbmc.log('script.tablo: {0}'.format(msg))
+    xbmc.log('script.tablo: {0}'.format(msg), xbmc.LOGNOTICE)
 
 
 def DEBUG_LOG(msg):

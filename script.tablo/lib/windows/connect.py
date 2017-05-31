@@ -102,7 +102,9 @@ class ConnectWindow(kodigui.BaseWindow):
         device = tablo.discovery.TabloDevice({'private_ip': ip})
         device.port = port
         device.name = 'TEST'
-        device.updateInfoFromDevice()
+        device.boardType = 'duo'
+        device.version = '9.0.0'
+        # device.updateInfoFromDevice()
 
         tablo.API.devices.tablos.append(device)
 
@@ -114,6 +116,9 @@ class ConnectWindow(kodigui.BaseWindow):
 
         return True
 
+    def deviceTypeAllowed(self, device):
+        return device.boardType != "android"
+
     def showDevices(self):
         self.setProperty('tablo.found', '')
         self.deviceList.reset()
@@ -123,11 +128,16 @@ class ConnectWindow(kodigui.BaseWindow):
             if not self.deviceVersionAllowed(device):
                 util.DEBUG_LOG('Skipping device because of low version: {0}'.format(device))
                 continue
-            self.deviceList.addItem(kodigui.ManagedListItem(device.displayName, data_source=device))
+            if not self.deviceTypeAllowed(device):
+                util.DEBUG_LOG('Skipping device because of type: {0}'.format(device))
+                continue
+
+            self.deviceList.addItem(kodigui.ManagedListItem(device.displayName, device.boardType, data_source=device))
 
         self.setProperty('initialized', '1')
 
         self.setProperty('tablo.found', '1')
+
         if self.deviceList.size():
             self.setFocusId(200)
         else:
