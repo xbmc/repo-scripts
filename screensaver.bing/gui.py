@@ -41,7 +41,7 @@ class GUI(xbmcgui.WindowXMLDialog):
         
         
     def log(self, msg, level=xbmc.LOGDEBUG):
-        xbmc.log(ADDON_ID + '-' + ADDON_VERSION + '-' + msg, xbmc.LOGERROR)
+        xbmc.log(ADDON_ID + '-' + ADDON_VERSION + '-' + msg, level)
             
             
     def onInit( self ):
