@@ -1,0 +1,1132 @@
+# Kodi Media Center language file
+# Addon Name: Miracle
+# Addon id: script.service.miracle
+# Addon Provider: VertoLab
+msgid ""
+msgstr ""
+"Project-Id-Version: Kodi Addons\n"
+"Report-Msgid-Bugs-To: info@vertolab.com\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: English (http://www.transifex.com/projects/p/xbmc-addons/language/en/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#32001"
+msgid "Pairing"
+msgstr ""
+
+msgctxt "#32002"
+msgid "Pair"
+msgstr ""
+
+msgctxt "#32020"
+msgid "Miracle - Kodi & Alexa pairing"
+msgstr ""
+
+msgctxt "#32021"
+msgid "How to pair Alexa with Kodi?"
+msgstr ""
+
+#empty string with id 32003
+
+msgctxt "#32022"
+msgid "Ask Alexa for me"
+msgstr ""
+
+msgctxt "#32023"
+msgid "I'll ask Alexa"
+msgstr ""
+
+msgctxt "#32024"
+msgid "Could not connect to server"
+msgstr ""
+
+msgctxt "#32025"
+msgid "Please check your internet connection and try again."
+msgstr ""
+
+msgctxt "#32026"
+msgid "Step 1 - Saying: "Alexa, enable Miracle skill""
+msgstr ""
+
+msgctxt "#32027"
+msgid "Wait for Miracle skill to become available."
+msgstr ""
+
+msgctxt "#32028"
+msgid "Once skill is available, click OK to pair"
+msgstr ""
+
+msgctxt "#32029"
+msgid "Kodi already paired with Alexa"
+msgstr ""
+
+msgctxt "#32030"
+msgid "Would you like to pair again?"
+msgstr ""
+
+msgctxt "#32031"
+msgid "Please say: \"Alexa, enable Miracle skill\""
+msgstr ""
+
+msgctxt "#32032"
+msgid "Then, wait for Miracle skill to become available"
+msgstr ""
+
+msgctxt "#32033"
+msgid "Once Miracle skill is available, continue."
+msgstr ""
+
+msgctxt "#32034"
+msgid "Step 2 - Saying: \"Alexa, ask Miracle to pair with code %s %s\""
+msgstr ""
+
+msgctxt "#32035"
+msgid "Once Miracle skill is available, continue."
+msgstr ""
+
+msgctxt "#32036"
+msgid "Please, say \"Alexa, ask Miracle to pair with code %s %s\""
+msgstr ""
+
+msgctxt "#32037"
+msgid "Paired with Alexa"
+msgstr ""
+
+msgctxt "#32038"
+msgid "Unpaired from Alexa"
+msgstr ""
+
+msgctxt "#32039"
+msgid "Not paired with Alexa"
+msgstr ""
+
+msgctxt "#32040"
+msgid "Looking for new episodes of %s"
+msgstr ""
+
+
+msgctxt "#32041"
+msgid "There is one unseen episode of %(real_show)s."
+msgstr ""
+
+
+msgctxt "#32042"
+msgid "There are %(num)d unseen episodes of %(real_show)s."
+msgstr ""
+
+
+msgctxt "#32043"
+msgid "There are no unseen episodes of %(real_show)s."
+msgstr ""
+
+
+msgctxt "#32044"
+msgid "real_show"
+msgstr ""
+
+
+msgctxt "#32045"
+msgid "Can\'t find %s"
+msgstr ""
+
+
+msgctxt "#32046"
+msgid "Can\'t find %s"
+msgstr ""
+
+
+msgctxt "#32047"
+msgid "Currently playing item"
+msgstr ""
+
+
+msgctxt "#32048"
+msgid "The current"
+msgstr ""
+
+
+msgctxt "#32049"
+msgid "ly playing item is unknown"
+msgstr ""
+
+
+msgctxt "#32050"
+msgid "There is nothing current"
+msgstr ""
+
+
+msgctxt "#32051"
+msgid "ly playing"
+msgstr ""
+
+
+msgctxt "#32052"
+msgid " TV show is"
+msgstr ""
+
+
+msgctxt "#32053"
+msgid " unknown"
+msgstr ""
+
+
+msgctxt "#32054"
+msgid " season %s,"
+msgstr ""
+
+
+msgctxt "#32055"
+msgid " episode %s,"
+msgstr ""
+
+
+msgctxt "#32056"
+msgid " song is"
+msgstr ""
+
+
+msgctxt "#32058"
+msgid " on the album %s"
+msgstr ""
+
+
+msgctxt "#32059"
+msgid " movie is"
+msgstr ""
+
+
+msgctxt "#32061"
+msgid "Time left on currently playing item"
+msgstr ""
+
+
+msgctxt "#32062"
+msgid "It is nearly over."
+msgstr ""
+
+
+msgctxt "#32063"
+msgid "There is one minute remaining."
+msgstr ""
+
+
+msgctxt "#32064"
+msgid "There are %d minutes remaining"
+msgstr ""
+
+
+msgctxt "#32065"
+msgid "; and it will end at %s."
+msgstr ""
+
+
+msgctxt "#32066"
+msgid "Playing or pausing"
+msgstr ""
+
+
+msgctxt "#32067"
+msgid "Play/Pause"
+msgstr ""
+
+
+msgctxt "#32068"
+msgid "Stopping playback"
+msgstr ""
+
+
+msgctxt "#32069"
+msgid "Playback stopped"
+msgstr ""
+
+
+msgctxt "#32070"
+msgid "Stepping forward"
+msgstr ""
+
+
+msgctxt "#32071"
+msgid "Stepping backward"
+msgstr ""
+
+
+msgctxt "#32072"
+msgid "Big Step forward"
+msgstr ""
+
+
+msgctxt "#32073"
+msgid "Big Step backward"
+msgstr ""
+
+
+msgctxt "#32074"
+msgid "Playing music by %s"
+msgstr ""
+
+
+msgctxt "#32075"
+msgid "Playing %s"
+msgstr ""
+
+
+msgctxt "#32076"
+msgid "Can\'t find %s"
+msgstr ""
+
+
+msgctxt "#32077"
+msgid "Can\'t find %s"
+msgstr ""
+
+
+msgctxt "#32078"
+msgid "Playing album %s by %s"
+msgstr ""
+
+
+msgctxt "#32079"
+msgid "Playing album %s"
+msgstr ""
+
+
+msgctxt "#32080"
+msgid "Can\'t find album %s by %s"
+msgstr ""
+
+
+msgctxt "#32081"
+msgid "Playing album %s by %s"
+msgstr ""
+
+
+msgctxt "#32082"
+msgid "Can\'t find album %s by %s"
+msgstr ""
+
+
+msgctxt "#32083"
+msgid "Can\'t find album %s by %s"
+msgstr ""
+
+
+msgctxt "#32084"
+msgid "Can\'t find artist %s"
+msgstr ""
+
+
+msgctxt "#32085"
+msgid "Can\'t find album %s"
+msgstr ""
+
+
+msgctxt "#32086"
+msgid "Playing album %s"
+msgstr ""
+
+
+msgctxt "#32087"
+msgid "Can\'t find album %s"
+msgstr ""
+
+
+msgctxt "#32088"
+msgid "Playing song %s by %s"
+msgstr ""
+
+
+msgctxt "#32089"
+msgid "Playing song %s"
+msgstr ""
+
+
+msgctxt "#32090"
+msgid "Can\'t find song %s by %s"
+msgstr ""
+
+
+msgctxt "#32091"
+msgid "Playing song %s by %s"
+msgstr ""
+
+
+msgctxt "#32092"
+msgid "Can\'t find song %s by %s"
+msgstr ""
+
+
+msgctxt "#32093"
+msgid "Can\'t find song %s by %s"
+msgstr ""
+
+
+msgctxt "#32094"
+msgid "Can\'t find song %s by %s"
+msgstr ""
+
+
+msgctxt "#32095"
+msgid "Can\'t find song %s"
+msgstr ""
+
+
+msgctxt "#32096"
+msgid "Playing song %s"
+msgstr ""
+
+
+msgctxt "#32097"
+msgid "Can\'t find song %s"
+msgstr ""
+
+
+msgctxt "#32099"
+msgid "Playing song %s by %s"
+msgstr ""
+
+
+msgctxt "#32100"
+msgid "Can\'t find %s by %s"
+msgstr ""
+
+
+msgctxt "#32101"
+msgid "Can\'t find %s by %s"
+msgstr ""
+
+
+msgctxt "#32102"
+msgid "Can\'t find %s by %s"
+msgstr ""
+
+
+msgctxt "#32103"
+msgid "Can\'t find %s by %s"
+msgstr ""
+
+
+msgctxt "#32105"
+msgid "Playing recently added songs"
+msgstr ""
+
+
+msgctxt "#32106"
+msgid "Playing recently added songs"
+msgstr ""
+
+
+msgctxt "#32107"
+msgid "No recently added songs found"
+msgstr ""
+
+
+msgctxt "#32108"
+msgid "Shuffling"
+msgstr ""
+
+
+msgctxt "#32109"
+msgid "Playing"
+msgstr ""
+
+
+msgctxt "#32110"
+msgid "%s audio playlist "
+msgstr ""
+
+
+msgctxt "#32111"
+msgid "%s playlist %s"
+msgstr ""
+
+
+msgctxt "#32112"
+msgid "Can\'t find a playlist named %s"
+msgstr ""
+
+
+msgctxt "#32113"
+msgid "Party Mode"
+msgstr ""
+
+
+msgctxt "#32114"
+msgid "Starting party play"
+msgstr ""
+
+
+msgctxt "#32115"
+msgid "Error parsing results"
+msgstr ""
+
+
+msgctxt "#32116"
+msgid "Starting current item over"
+msgstr ""
+
+
+msgctxt "#32117"
+msgid "Starting over"
+msgstr ""
+
+
+msgctxt "#32118"
+msgid "Playing next item"
+msgstr ""
+
+
+msgctxt "#32119"
+msgid "Skip"
+msgstr ""
+
+
+msgctxt "#32120"
+msgid "Playing previous item"
+msgstr ""
+
+
+msgctxt "#32121"
+msgid "Previous"
+msgstr ""
+
+
+msgctxt "#32122"
+msgid "Toggling fullscreen"
+msgstr ""
+
+
+msgctxt "#32123"
+msgid "Fullscreen toggled"
+msgstr ""
+
+
+msgctxt "#32124"
+msgid "Muting or unmuting"
+msgstr ""
+
+
+msgctxt "#32125"
+msgid "Mute toggled"
+msgstr ""
+
+
+msgctxt "#32126"
+msgid "Turning volume up"
+msgstr ""
+
+
+msgctxt "#32127"
+msgid "Volume set to %d%%."
+msgstr ""
+
+
+msgctxt "#32128"
+msgid "Turning volume down"
+msgstr ""
+
+
+msgctxt "#32130"
+msgid "Adjusting volume"
+msgstr ""
+
+
+msgctxt "#32131"
+msgid "Volume set to %d%%."
+msgstr ""
+
+
+msgctxt "#32132"
+msgid "Couldn't catch the volume requested"
+msgstr ""
+
+
+msgctxt "#32135"
+msgid "Couldn't catch the volume percent"
+msgstr ""
+
+
+msgctxt "#32136"
+msgid "Enabling subtitles"
+msgstr ""
+
+
+msgctxt "#32137"
+msgid "Disabling subtitles"
+msgstr ""
+
+
+msgctxt "#32138"
+msgid "Switching to next subtitles"
+msgstr ""
+
+
+msgctxt "#32139"
+msgid "Switching to next audio stream"
+msgstr ""
+
+
+msgctxt "#32140"
+msgid "Navigate: Context Menu"
+msgstr ""
+
+
+msgctxt "#32141"
+msgid "Opening menu"
+msgstr ""
+
+
+msgctxt "#32142"
+msgid "Navigate: Home"
+msgstr ""
+
+
+msgctxt "#32143"
+msgid "Home screen"
+msgstr ""
+
+
+msgctxt "#32144"
+msgid "Navigate: Select"
+msgstr ""
+
+
+msgctxt "#32145"
+msgid "Selecting"
+msgstr ""
+
+
+msgctxt "#32146"
+msgid "Navigate: Page up"
+msgstr ""
+
+
+msgctxt "#32147"
+msgid "Page up"
+msgstr ""
+
+
+msgctxt "#32148"
+msgid "Navigate: Page down"
+msgstr ""
+
+
+msgctxt "#32149"
+msgid "Page down"
+msgstr ""
+
+
+msgctxt "#32150"
+msgid "Navigate: Left"
+msgstr ""
+
+
+msgctxt "#32151"
+msgid "Left"
+msgstr ""
+
+
+msgctxt "#32152"
+msgid "Navigate: Right"
+msgstr ""
+
+
+msgctxt "#32153"
+msgid "Right"
+msgstr ""
+
+
+msgctxt "#32154"
+msgid "Navigate: Up"
+msgstr ""
+
+
+msgctxt "#32155"
+msgid "Up"
+msgstr ""
+
+
+msgctxt "#32156"
+msgid "Navigate: Down"
+msgstr ""
+
+
+msgctxt "#32157"
+msgid "Down"
+msgstr ""
+
+
+msgctxt "#32158"
+msgid "Navigate: Back"
+msgstr ""
+
+
+msgctxt "#32159"
+msgid "Back"
+msgstr ""
+
+
+msgctxt "#32160"
+msgid "Hibernating"
+msgstr ""
+
+
+msgctxt "#32161"
+msgid "Hibernating system"
+msgstr ""
+
+
+msgctxt "#32162"
+msgid "Rebooting"
+msgstr ""
+
+
+msgctxt "#32163"
+msgid "Rebooting system"
+msgstr ""
+
+
+msgctxt "#32164"
+msgid "Shutting down"
+msgstr ""
+
+
+msgctxt "#32165"
+msgid "Shutting down system"
+msgstr ""
+
+
+msgctxt "#32166"
+msgid "Suspending"
+msgstr ""
+
+
+msgctxt "#32167"
+msgid "Suspending system"
+msgstr ""
+
+
+msgctxt "#32168"
+msgid "Ejecting media"
+msgstr ""
+
+
+msgctxt "#32169"
+msgid "Ejecting media"
+msgstr ""
+
+
+msgctxt "#32170"
+msgid "Cleaning video library"
+msgstr ""
+
+
+msgctxt "#32171"
+msgid "Cleaning video library"
+msgstr ""
+
+
+msgctxt "#32172"
+msgid "Updating video library"
+msgstr ""
+
+
+msgctxt "#32173"
+msgid "Updating video library"
+msgstr ""
+
+
+msgctxt "#32174"
+msgid "Cleaning audio library"
+msgstr ""
+
+
+msgctxt "#32175"
+msgid "Cleaning audio library"
+msgstr ""
+
+
+msgctxt "#32176"
+msgid "Updating audio library"
+msgstr ""
+
+
+msgctxt "#32177"
+msgid "Updating audio library"
+msgstr ""
+
+
+msgctxt "#32178"
+msgid "Opening the addon %s"
+msgstr ""
+
+
+msgctxt "#32179"
+msgid "Opening %s"
+msgstr ""
+
+
+msgctxt "#32180"
+msgid "Can\'t find an addon called %s"
+msgstr ""
+
+
+msgctxt "#32181"
+msgid "Can\'t find an addon called %s"
+msgstr ""
+
+
+msgctxt "#32182"
+msgid "Search"
+msgstr ""
+
+
+msgctxt "#32183"
+msgid "Searching for %s"
+msgstr ""
+
+
+msgctxt "#32184"
+msgid "Couldn't find anything matching that phrase"
+msgstr ""
+
+
+msgctxt "#32185"
+msgid "Playing a random %s movie"
+msgstr ""
+
+
+msgctxt "#32186"
+msgid "Playing a random movie"
+msgstr ""
+
+
+msgctxt "#32187"
+msgid "Playing the %s movie %s"
+msgstr ""
+
+
+msgctxt "#32188"
+msgid "Playing %s"
+msgstr ""
+
+
+msgctxt "#32189"
+msgid "No movies"
+msgstr ""
+
+
+msgctxt "#32190"
+msgid "Playing the movie %s"
+msgstr ""
+
+
+msgctxt "#32191"
+msgid "Resuming"
+msgstr ""
+
+
+msgctxt "#32192"
+msgid "Playing"
+msgstr ""
+
+
+msgctxt "#32193"
+msgid "Can\'t find a movie called %s"
+msgstr ""
+
+
+msgctxt "#32194"
+msgid "Can\'t find a movie called %s"
+msgstr ""
+
+
+msgctxt "#32195"
+msgid "Playing a random episode of %s"
+msgstr ""
+
+
+msgctxt "#32196"
+msgid "Playing season %d episode %d of %s"
+msgstr ""
+
+
+msgctxt "#32197"
+msgid "Can\'t find a show named %s"
+msgstr ""
+
+
+msgctxt "#32198"
+msgid "Show not found"
+msgstr ""
+
+
+msgctxt "#32199"
+msgid "Playing an episode of %s"
+msgstr ""
+
+
+msgctxt "#32200"
+msgid "Resuming"
+msgstr ""
+
+
+msgctxt "#32201"
+msgid "Playing"
+msgstr ""
+
+
+msgctxt "#32202"
+msgid "%s season %s episode %s of %s"
+msgstr ""
+
+
+msgctxt "#32203"
+msgid "Can\'t find season %s episode %s of %s"
+msgstr ""
+
+
+msgctxt "#32204"
+msgid "Can\'t find a show named %s"
+msgstr ""
+
+
+msgctxt "#32206"
+msgid "Playing the next unwatched episode of %s"
+msgstr ""
+
+
+msgctxt "#32209"
+msgid "%s season %d episode %d of %s"
+msgstr ""
+
+
+msgctxt "#32210"
+msgid "No new episodes for %s"
+msgstr ""
+
+
+msgctxt "#32212"
+msgid "Can\'t find a show named %s"
+msgstr ""
+
+
+msgctxt "#32213"
+msgid "Playing the newest episode of %s"
+msgstr ""
+
+
+msgctxt "#32218"
+msgid "Can\'t find %s"
+msgstr ""
+
+
+msgctxt "#32220"
+msgid "Playing the next unwatched episode of the last show watched"
+msgstr ""
+
+
+msgctxt "#32223"
+msgid "%s season %d episode %d of %s"
+msgstr ""
+
+
+msgctxt "#32224"
+msgid "No new episodes for %s"
+msgstr ""
+
+
+msgctxt "#32228"
+msgid "%s video playlist "
+msgstr ""
+
+
+msgctxt "#32231"
+msgid "Shuffling playlist "
+msgstr ""
+
+
+msgctxt "#32232"
+msgid "Shuffling video playlist %s"
+msgstr ""
+
+
+msgctxt "#32233"
+msgid "Shuffling audio playlist %s"
+msgstr ""
+
+
+msgctxt "#32236"
+msgid " Maybe you should go to the movies."
+msgstr ""
+
+
+msgctxt "#32237"
+msgid " Maybe you'd like to read a book."
+msgstr ""
+
+
+msgctxt "#32238"
+msgid " Time to go for a bike ride?"
+msgstr ""
+
+
+msgctxt "#32239"
+msgid " You probably have chores to do anyway."
+msgstr ""
+
+
+msgctxt "#32240"
+msgid "Newly added albums"
+msgstr ""
+
+
+msgctxt "#32241"
+msgid "%s by %s"
+msgstr ""
+
+
+msgctxt "#32242"
+msgid "You don't have any new albums to listen to."
+msgstr ""
+
+
+msgctxt "#32243"
+msgid "There are no new albums to listen to."
+msgstr ""
+
+
+msgctxt "#32244"
+msgid ", and more"
+msgstr ""
+
+
+msgctxt "#32245"
+msgid ", and "
+msgstr ""
+
+
+msgctxt "#32246"
+msgid "You have %(album_list)s."
+msgstr ""
+
+
+msgctxt "#32247"
+msgid "Newly added %s movies"
+msgstr ""
+
+
+msgctxt "#32248"
+msgid "Newly added movies"
+msgstr ""
+
+
+msgctxt "#32249"
+msgid "You don't have any new movies to watch."
+msgstr ""
+
+
+msgctxt "#32250"
+msgid "There are no new movies to watch."
+msgstr ""
+
+
+msgctxt "#32252"
+msgid ", and "
+msgstr ""
+
+
+msgctxt "#32253"
+msgid "You have %(movie_list)s."
+msgstr ""
+
+
+msgctxt "#32254"
+msgid "Newly added shows"
+msgstr ""
+
+
+msgctxt "#32255"
+msgid "You don't have any new shows to watch."
+msgstr ""
+
+
+msgctxt "#32256"
+msgid "There are no new shows to watch."
+msgstr ""
+
+
+msgctxt "#32257"
+msgid "There is a single new episode of %(show)s."
+msgstr ""
+
+
+msgctxt "#32258"
+msgid "There is one new episode of %(show)s."
+msgstr ""
+
+
+msgctxt "#32259"
+msgid "There are a couple new episodes of %(show)s"
+msgstr ""
+
+
+msgctxt "#32260"
+msgid "There are two new episodes of %(show)s"
+msgstr ""
+
+
+msgctxt "#32261"
+msgid "There are lots and lots of new episodes of %(show)s"
+msgstr ""
+
+
+msgctxt "#32262"
+msgid "There are %(count)d new episodes of %(show)s"
+msgstr ""
+
+
+msgctxt "#32263"
+msgid "You have a few new episodes of %(show)s"
+msgstr ""
+
+
+msgctxt "#32265"
+msgid " and more"
+msgstr ""
+
+
+msgctxt "#32266"
+msgid " and "
+msgstr ""
+
+
+msgctxt "#32267"
+msgid "There are new episodes of %(show_list)s."
+msgstr ""
+
+
+msgctxt "#32268"
+msgid "Albums by %s"
+msgstr ""
+
+
+msgctxt "#32269"
+msgid ", and "
+msgstr ""
+
+
+msgctxt "#32270"
+msgid "You have %s"
+msgstr ""
+
+
+msgctxt "#32271"
+msgid "You have no albums by %s"
+msgstr ""
+

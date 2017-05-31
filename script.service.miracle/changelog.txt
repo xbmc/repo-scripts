@@ -1,0 +1,2 @@
+1.0.1 Move icon and fanart to root for backwards compatibility
+1.0.0 Initial Release
