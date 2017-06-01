@@ -20,7 +20,7 @@ import urllib, json, os
 import xbmc, xbmcaddon, xbmcvfs, xbmcgui
 
 # Plugin Info
-ADDON_ID       = 'screensaver.video'
+ADDON_ID       = 'screensaver.videosaver'
 REAL_SETTINGS  = xbmcaddon.Addon(id=ADDON_ID)
 ADDON_NAME     = REAL_SETTINGS.getAddonInfo('name')
 ADDON_PATH     = (REAL_SETTINGS.getAddonInfo('path').decode('utf-8'))

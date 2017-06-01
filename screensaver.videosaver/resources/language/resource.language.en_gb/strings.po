@@ -1,6 +1,6 @@
 # XBMC Media Center language file
 # Addon Name: Video ScreenSaver
-# Addon id: screensaver.video
+# Addon id: screensaver.videosaver
 # Addon Provider: Lunatixz
 msgid ""
 msgstr ""
