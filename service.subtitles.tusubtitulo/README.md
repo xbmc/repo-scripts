@@ -24,7 +24,8 @@ Fast forward to now, the previus supporters have stopped giving updates and I'm 
 
 ## Installation
 
-[Pending]
+You can either download it from the releases page of this repository or look for it in the official kodi repository from within kodi itself.
+Note: since they have to manually accept updates it is possible that this one is, at times, more updated than the other one
 
 
 ## Features
