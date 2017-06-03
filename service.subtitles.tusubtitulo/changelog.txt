@@ -1,3 +1,6 @@
+1.2.0
+- Version bump above the old, unsupported addon, language tag updated to reflect all languages.
+
 1.1.0- Addon now maintained by josecurioso after 2 years without support
 - Implemented a new, cleaner way to access Tusubtitulo.com using Beautifulsoup4
 - Todo:
