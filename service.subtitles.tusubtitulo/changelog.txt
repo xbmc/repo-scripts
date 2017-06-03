@@ -1,8 +1,7 @@
-1.0.0- Addon now maintained by josecurioso after 2 years without support
+1.1.0- Addon now maintained by josecurioso after 2 years without support
 - Implemented a new, cleaner way to access Tusubtitulo.com using Beautifulsoup4
 - Todo:
     - Code cleanup
-    - Version handling (WEB-DL, KILLERS, etc)
     - Implement rating (no actual rating on tusubtitulo.com so I'll figure something)
 0.0.6
 - Changed host to http://tusubtitulo.com
