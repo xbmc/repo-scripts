@@ -1,3 +1,6 @@
+1.1.0
+- Addon marked as broken
+
 1.0.0
 - Port from Subtitulos.es XBMC subtitles plugin by m0r3
 - Fixed recursive expresion to find the url link of subtitles
