@@ -83,7 +83,6 @@ def _selectVideoQuality(r, quality=None):
             fallback = formats[index[keys[0]]]
             for fmt in keys:
                 fdata = formats[index[fmt]]
-                util.LOG(fdata)
 
                 if 'height' not in fdata:
                     continue
