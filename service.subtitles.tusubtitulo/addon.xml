@@ -6,6 +6,7 @@
   <requires>
     <import addon="xbmc.python" version="2.1.0"/>
   </requires>
+  <broken>deprecated</broken>
   <extension point="xbmc.subtitle.module"
              library="service.py" />
   <extension point="xbmc.addon.metadata">
