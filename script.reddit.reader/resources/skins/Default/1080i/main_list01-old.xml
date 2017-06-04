@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <window>
 	<defaultcontrol always="true">55</defaultcontrol>
-	<backgroundcolor>0</backgroundcolor>
+	<backgroundcolor>black</backgroundcolor>
 
 	<menucontrol>9000</menucontrol>
     	
 	<controls>
 	
+
 	
 		<!--BEGIN include name="DefaultBackground"-->
+		
 			<control type="group"><description>Right side panel</description>
 
 			<!-- OpenClose_Right - OpenClose_FadeSlide_Right --><animation type="WindowOpen"><effect type="fade" start="0" end="100" time="300" tween="sine" easing="out" /><effect type="slide" start="320" end="0" time="400" tween="cubic" easing="out" /></animation><animation type="WindowClose"><effect type="fade" start="100" end="0" time="300" tween="sine" easing="out" /><effect type="slide" start="0" end="320" time="300" tween="cubic" easing="out" /></animation>
@@ -99,6 +101,7 @@
 					<width>1000</width>
 					<height>1080</height>
 					<texture>focus_f3.png</texture>
+					<visible>True</visible>
 				</control>
 
 				<control type="textbox" id="65592"><description>partner with id 203</description>
