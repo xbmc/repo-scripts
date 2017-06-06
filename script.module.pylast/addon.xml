@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.module.pylast" version="1.8.0" name="pyLastFM" provider-name="Lunatixz, hugovk, Amr Hassan">
+    <requires>
+        <import addon="xbmc.python" version="2.25.0" />
+        <import addon="script.module.six" version="0.0.1" />
+    </requires>
+    <extension library="lib" point="xbmc.python.module" />
+    <extension point="xbmc.addon.metadata">
+        <summary lang="en_GB">A Python interface to Last.fm and Libre.fm</summary>
+        <description lang="en_GB">A Python interface to Last.fm and Libre.fm</description>
+        <forum></forum>
+        <website>https://pypi.python.org/pypi/pylast</website>
+        <license>Apache2</license>
+        <platform>all</platform>
+        <source>https://github.com/pylast/pylast</source>
+        <news></news>
+		<assets>
+			<icon>icon.png</icon>
+		</assets>
+    </extension>
+</addon>
