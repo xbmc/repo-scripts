@@ -1,0 +1,238 @@
+0.9.9 (06-06-2017)
+  - prep for Leia
+    - isEmpty() is now String.IsEmpty()
+    - add search shortcut on index page
+    - language files moved
+    - stop using %s in strings.po
+    - make requests-cache a module dependency
+0.9.8
+  - add parsing for instagram profile page (album)
+  - get youtube channel video list from a userid
+  - add/show thumbnails on links in youtube description
+  - resolve shortened urls
+0.9.7
+  - context menu for links in youtube description
+0.9.6
+  - context menu for youtube links in comments gui
+  - recognize youtube channel url, parse channelID and use appropriate context menu
+  - default action for clicking on a youtube channel link is to show the videos on that channel
+0.9.5
+  - ability to customize context menu entries
+  - specify youtube api key
+  - update youtube videoid parsing to include plugin.video.youtube urls
+  - open links in web browser
+  - search reddit for youtube videoid
+  - move context menu functions to a separate file
+0.9.4 (05-11-2017)
+  - youtube posts: context menu; more videos from this channel, more related videos
+  - updated youtube parsing
+  - new initial screen(index) ui
+  - ability to delete cache, subreddit image cache and subreddit shortcuts in setting
+
+  - add requests-cache
+  - add ability to filter out comment links
+  - comment grouplist in view comments gui now scrolls back to top
+  - album mode on main screen:
+    - can call viewImage on individual images
+    - trick kodi to pre-load next album image
+  - update the viewAlbum gui to also pre-load next image
+0.9.3
+ - comments gui update test
+
+0.9.2
+ - view image album on main screen
+0.9.1
+ - gui tweaks
+ - update thumbnail parsing
+ - update instagram parsing
+0.9.0
+ - more gui tweaks
+ - have subreddit icon/banner show up on gui
+ - update og:image parsing
+ 0.8.9 (04-14-2017)
+ - more gui tweaks
+ - update og:image parsing
+ - new default list reddits gui
+0.8.8 (04-11-2017)
+ - fix some comment links error
+ - get comment body for r/bestof posts
+0.8.7 (04-09-2017)
+ - bugfix
+   - urlresolver links sent to youtube_dl
+ - add urlresolver progress dialog during parse/playback
+ - update og:image get routine
+ - new gui (mainlist04.xml)
+ 
+0.8.6 (04-03-2017)
+ - add option to use liveleak addon
+ - add youtube_dl quality settings
+ - reorganize settings
+0.8.5 (04-02-2017)
+ - imgur parsing update
+ - cleanup
+ 0.8.4 (03-27-2017)
+ - prettify loading indicator
+ - imgur parsing update
+ - screensaver bugfix
+0.8.3 (03-25-2017)
+ - redo context menu.
+ - remove left side panel
+ - new context menu items:
+    - add domain/subreddit to filter
+    - More posts by user
+    - More posts by domain
+
+0.8.2 (03-21-2017)
+ - can add a users saved posts as a subreddit shortcut
+ - transfer over reddit_viewer functions
+
+0.8.1 (03-20-2017)
+ - screensaver bugfix
+ - cleanup
+
+0.8.0 (03-19-2017)
+ - major code reorganize
+
+0.7.8 (03-11-2017)
+ - improve reddit link parsing in comments
+ - code cleanup codacity suggestions
+ 
+0.7.7 (03-09-2017)
+ - fix slideshow bug
+ - add acidcow.com album parsing
+ - add a patch for youtube_dl utils.py
+ - apply patch during youtube dl update 
+
+0.7.6 (03-07-2017)
+ - recognize time skip
+ - code cleanup codacity suggestions
+
+0.7.5 (03-05-2017)
+ - urlresolver parsing returned
+
+0.7.4 (03-04-2017)
+ - add ability to download latest youtube-dl core
+
+0.7.3 (03-01-2017)
+ - add error notification when link is 404 etc.
+ - update several parsing routines
+ 
+0.7.2 (02-20-2017)
+ - add support for imgflip.com links
+ 
+0.7.1
+ - update fanart image
+
+0.7.0
+ - add timeout to url requests  
+ 
+0.6.9
+ - Added option to repeat playback of gif video
+0.6.8
+ - add loading indicator
+ - use URLResolver to check some links  
+ 
+0.6.7
+ - remove liveleak quality setting (no longer needed)
+
+0.6.6
+ - add ytdl parsing for unknown links in autoplay
+ - add search and reload on context menu 
+ 
+0.6.5
+ - bugfixes
+
+0.6.4  (11-05-2016)
+ - add html2text parsing- for those sites that you just gotta read  
+ 
+0.6.3  (11-04-2016)
+ - use multiple threads to parse/process reddit post
+
+0.6.2  (10-12-2016)
+ - cleanup
+
+0.6.1  (10-02-2016)
+ - cleanup
+ - remove youtube.dl porn sites list  
+ - fulfill repo requirements
+0.6.0  (10-02-2016)
+ - cleanup
+ - remove use of youtube and vimeo plugins 
+ - fulfill repo requirements
+
+0.5.9  (09-27-2016)
+ - add hentailair.xyz album parsing
+ - fix parsing in eroshare.com 
+ - add vertical sliding view for tall images
+ 0.5.8  (09-26-2016)
+ - context menu key (long press on touchscreens) can bring up manage subreddit dialog
+ - add parsing for imgtrex preview image
+0.5.7  (09-23-2016)
+ - update flickr photoset id extraction routine
+ - cleanup
+0.5.6  (09-13-2016)
+ - screensaver addon included
+ - show description in slideshow (for r/diy etc. )
+ - fade and horizontal slideshow: info button toggles shows/hide of title and description
+ - added option to randomize slideshow images 
+0.5.5  (09-09-2016)
+ - add fade and random direction to horizontal slideshow
+ - slideshow no longer disables system screensaver
+ - fix slideshow text poking up if 2 lines
+0.5.4  (09-08-2016)
+ - interface adjustment
+ - add alternate(main_list03.xml) skin for main gui
+0.5.3  (09-07-2016)
+ - add fade slideshow
+ - add random slide slideshow
+ - option to show 1 line of image title/description on slideshow
+0.5.2  (09-01-2016)
+ - add album slideshow
+ - add slideshow options
+0.5.1  (09-01-2016)
+ - add kindgirls.com
+ - add 500px.com
+ 0.5.0  (09-01-2016)
+ - reorganize how modules are called to parse links
+ 0.4.5  (08-25-2016)
+ - add vidble.com scraping image/album
+0.4.4  (08-25-2016)
+ - add eroshare.com scraping image/album/videos
+0.4.3  (08-23-2016)
+ - have ytdl addon handle all unsupported links
+ - setting to enable/disable above feature
+ - add mouse support for left slide panel
+ - slideshow and play all bugfix affecting single subreddit
+ 
+0.4.2  (08-22-2016)
+ - reorganize code
+ - add play all video
+ - add image slideshow 
+0.4.1
+ - adjust size for larger font
+ - add setting to choose xml file for main gui
+ - rename assets to not conflict with skin
+0.4.0 (08-17-2016)
+ - reorganize code
+ - support flickr galleries/groups
+ - filter posts by subreddit or domain
+ - kodi 16 compatibility 
+0.3.0
+ - add zoom and scroll down if image is very tall
+ - not open comments screen if no comments on link
+ - use thumbnail as loading image when viewing imgur album
+ - selftext posts show on preview 
+ - android compatibility fix 
+ - follow subreddit links in comment
+ - button to arrange links in comments at top of list
+0.2.1  (2016-08-08)
+ changes from reddit_viewer:
+ - different user interface
+ - removed supported sites filter. (all reddit links shown)
+ - removed play all/play/random
+ - no context menus
+ - add to favorites not yet supported
+ - list only links in comments not yet supported
+0.1.1  (2016-07-27)
+ - convert to script.reddit.reader from plugin.video.reddit_viewer
+ 
