@@ -9,15 +9,15 @@
   </requires>
   <extension point="xbmc.subtitle.module" library="service.py" />
   <extension point="xbmc.addon.metadata">
-    <summary lang="en">TuSubtitulo.com</summary>
+    <summary lang="en">TuSubtitulo.com (unofficial)</summary>
     <description lang="en_GB">Search and download subtitles from TuSubtitulo.com</description>
-    <disclaimer lang="en_GB"></disclaimer>
+    <disclaimer lang="en_GB">This is not an official work from the site admins</disclaimer>
 	<language>es en</language>
     <platform>all</platform>
     <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
     <forum></forum>
     <website></website>
     <email></email>
-    <source>https://github.com/josecurioso/service.subtitles.tusubtitulo</source>
+    <source>https://github.com/josecurioso2/service.subtitles.tusubtitulo</source>
   </extension>
 </addon>
