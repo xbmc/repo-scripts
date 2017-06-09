@@ -4,6 +4,7 @@
 import json
 import sys
 
+from reset_exclusions import *
 from utils import *
 from viewer import *
 
@@ -156,7 +157,7 @@ class Cleaner(object):
                                 break
                             if get_setting(create_subdirs):
                                 if isinstance(title, unicode):
-                                    title = title.encode()
+                                    title = title.encode("utf-8")
                                 new_path = os.path.join(get_setting(holding_folder), str(title))
                             else:
                                 new_path = get_setting(holding_folder)
@@ -190,7 +191,7 @@ class Cleaner(object):
                         progress_percent += increment * 100
                         debug("Progress percent is {percent}, amount is {amount} and increment is {increment}".format(percent=progress_percent, amount=amount, increment=increment))
                         if isinstance(title, unicode):
-                            title = title.encode()
+                            title = title.encode("utf-8")
                         self.progress.update(int(progress_percent), translate(32616).format(amount=amount, type=type_translation[video_type]), translate(32617), "[I]{0!s}[/I]".format(title))
                         self.monitor.waitForAbort(2)
                 else:
@@ -307,8 +308,8 @@ class Cleaner(object):
             (get_setting(exclusion_enabled) and get_setting(exclusion1) is not "", by_exclusion1),
             (get_setting(exclusion_enabled) and get_setting(exclusion2) is not "", by_exclusion2),
             (get_setting(exclusion_enabled) and get_setting(exclusion3) is not "", by_exclusion3),
-            (get_setting(exclusion_enabled) and get_setting(exclusion3) is not "", by_exclusion4),
-            (get_setting(exclusion_enabled) and get_setting(exclusion3) is not "", by_exclusion5)
+            (get_setting(exclusion_enabled) and get_setting(exclusion4) is not "", by_exclusion4),
+            (get_setting(exclusion_enabled) and get_setting(exclusion5) is not "", by_exclusion5)
         ]
 
         # Only check not rated videos if checking for video ratings at all
@@ -382,7 +383,7 @@ class Cleaner(object):
         :return: A list of paths that are part of the stack. If it is no stacked movie, a one-element list is returned.
         """
         if isinstance(path, unicode):
-            path = path.encode()
+            path = path.encode("utf-8")
         if path.startswith("stack://"):
             debug("Unstacking {0!r}.".format(path))
             return path.replace("stack://", "").split(" , ")
@@ -641,6 +642,8 @@ if __name__ == "__main__":
         win = LogViewerDialog("JanitorLogViewer.xml", ADDON.getAddonInfo("path"))
         win.doModal()
         del win
+    elif len(sys.argv) > 1 and sys.argv[1] == "reset":
+        reset_exclusions()
     else:
         cleaner = Cleaner()
         if get_setting(default_action) == cleaner.DEFAULT_ACTION_LOG:
