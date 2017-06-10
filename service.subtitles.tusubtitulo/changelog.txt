@@ -1,0 +1,40 @@
+1.2.1
+- Icons updated to better show that this addon is not official.
+- Added the disclaimer for that reason.
+- Added an entry on the Bugs part of the README stating the problem with version-mixing if installed from this repo and the official one.
+
+1.2.0
+- Version bump above the old, unsupported addon, language tag updated to reflect all languages.
+
+1.1.0- Addon now maintained by josecurioso after 2 years without support
+- Implemented a new, cleaner way to access Tusubtitulo.com using Beautifulsoup4
+- Todo:
+    - Code cleanup
+    - Implement rating (no actual rating on tusubtitulo.com so I'll figure something)
+0.0.6
+- Changed host to http://tusubtitulo.com
+- Added section 'series' to the main_url
+- Fixed an issue that generated the tvshow name with blank spaces at the end when tvshow not listed/indexed in Library, making the normalizer that replaces blanks per dots generate a wrong search string.
+- Changed the regex that gets the download links
+- Todo:
+	- The url endpoint needs a tvshow_id: {tvshow}/{season}/{episode}/{id}... but doesn't process it at all, for now I pass directly a string to comply with the signature.
+
+0.0.5- Addon now maintained by m0r3 due to one year without fixing bugs
+     - Updated addon.xml
+     - Fixed an issue that prevent the plugin for working if tvshow is not listed properly in library.
+Now the plugin will detect this situation and parse filename to get the proper values. Suported formats are: S01e10 110 1x10
+
+0.0.4
+- Fixed problem that prevented spanish subtitles to be shown when latino subs were present
+
+0.0.3
+- Fixed logo.png and icon.png to match XBMC'x addon guidelines
+- Removed language files
+
+0.0.2
+- Do intensive search for tv shows with names containing parentheses
+- Lang suffix for subtitles is now three words (ESP, ENG, CAT, etc.)
+- Better lang handling
+
+0.0.1
+- Initial port from Frodo's Subtitulos.es XBMC subtitles plugin by quillo86
