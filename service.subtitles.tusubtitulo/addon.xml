@@ -20,4 +20,9 @@
     <email></email>
     <source>https://github.com/josecurioso2/service.subtitles.tusubtitulo</source>
   </extension>
+  <extension point="xbmc.addon.repository" name="Josecurioso's addons">
+		<info compressed="false">http://raw.github.com/josecurioso/repository.josecurioso.kodi/master/addons.xml</info>
+		<checksum>http://raw.github.com/josecurioso/repository.josecurioso.kodi/master/addons.xml.md5</checksum>
+		<datadir zip="true">http://raw.github.com/josecurioso/repository.josecurioso.kodi/master/zips/</datadir>
+	</extension>
 </addon>
