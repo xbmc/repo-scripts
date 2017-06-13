@@ -1,3 +1,6 @@
+4.6.1 - by CaTz (06/06/2017)
+- Update mirror url
+
 4.6.0 - by CaTz (11/01/2017)
 - Add CAPTCH support
 - Check item's media type
