@@ -119,7 +119,7 @@ def notify(msg_id):
 
 
 class SubscenterHelper:
-    BASE_URL = "http://www.subscenter.org/he/api/"
+    BASE_URL = "http://www.subscenter.info/he/api/"
 
     def __init__(self):
         self.urlHandler = URLHandler()
