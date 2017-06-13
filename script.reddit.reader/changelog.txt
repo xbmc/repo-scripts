@@ -1,3 +1,17 @@
+0.9.9 (06-06-2017)
+  - prep for Leia
+    - isEmpty() is now String.IsEmpty()
+    - add search shortcut on index page
+    - language files moved
+    - stop using %s in strings.po
+    - make requests-cache a module dependency
+0.9.8
+  - add parsing for instagram profile page (album)
+  - get youtube channel video list from a userid
+  - add/show thumbnails on links in youtube description
+  - resolve shortened urls
+0.9.7
+  - context menu for links in youtube description
 0.9.6
   - context menu for youtube links in comments gui
   - recognize youtube channel url, parse channelID and use appropriate context menu

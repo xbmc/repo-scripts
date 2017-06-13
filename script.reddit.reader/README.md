@@ -8,8 +8,13 @@ This addon is inspired by the original [reddit addon](https://github.com/rasjani
 - Play video links supported by the [youtube_dl addon](https://github.com/ruuk/script.module.youtube.dl)
   - Ability to download an updated copy of the [youtube-dl](https://github.com/rg3/youtube-dl) core
 - View images and image albums
+- Reddit OAuth support
+  - Access to your private subreddits
 - Explore other subreddits
+- Extra functionality for reddit posts that link to youtube:
+  - List related videos and other videos in channel
 - Read user comments
+  - Explore links posted in comments
 - Use images from a subreddit as your screensaver
 
 ## Installation
@@ -17,7 +22,8 @@ This addon is inspired by the original [reddit addon](https://github.com/rasjani
 - [Install from zip file](http://kodi.wiki/view/HOW-TO:Install_add-ons_from_zip_files)
 
 ### Difference from reddit_viewer
-- View uncropped preview image of reddit posts
+- Custom UI to maximize the preview image; Saves you a click.
+- Better UI for reading comments
 
 ---
 

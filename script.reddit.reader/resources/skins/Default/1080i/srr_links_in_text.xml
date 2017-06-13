@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <window>
-	<defaultcontrol always="true">55</defaultcontrol>
+	<defaultcontrol always="true">204</defaultcontrol>
 	<backgroundcolor>background</backgroundcolor>
 
 	<menucontrol>9000</menucontrol>
@@ -9,219 +9,125 @@
 		<!--BEGIN include name="DefaultBackground"-->
 			<control type="group">
 				<animation effect="zoom" center="960,540" end="102,102" time="0" condition="Integer.IsGreater(System.StereoscopicMode,0)">conditional</animation>
-				<control type="image">
+				<control type="image" id="2">
 					<depth>DepthBackground</depth>
 					<!--include>FullScreenDimensions</include-->
 					<aspectratio>scale</aspectratio>
 					<animation effect="fade" start="100" end="bg_alpha" time="0" condition="Player.HasMedia + String.IsEmpty(Window(Videos).Property(PlayingBackgroundMedia))">Conditional</animation>
-					<animation effect="fade" start="0" end="100" time="300" condition="Window.Previous(fullscreenvideo) | Window.Previous(startup)">WindowOpen</animation>
-					<texture fallback="srr_SKINDEFAULT.jpg">$VAR[GlobalFanartVar]</texture>
+					<animation effect="fade" start="0" end="100" time="100" condition="Window.Previous(fullscreenvideo) | Window.Previous(startup)">WindowOpen</animation>
+					<texture fallback="srr_SKINDEFAULT.jpg">srr_SKINDEFAULT.jpg</texture>
+				</control>
+				<control type="image">
+					<depth>DepthBackground</depth>
+					<!--include>FullScreenDimensions</include-->
+					<aspectratio>scale</aspectratio>
+					<fadetime>200</fadetime>
+					<animation effect="fade" start="0" end="100" time="100">WindowOpen</animation>
+					<animation effect="fade" start="100" end="0" time="100">WindowClose</animation>
+					<texture background="true" colordiffuse="35FFFFFF">$VAR[MediaFanartVar]</texture>
+					<visible>!Player.HasMedia | !String.IsEmpty(Window(Videos).Property(PlayingBackgroundMedia))</visible>
 				</control>
 			</control>
 		<!--END include name="DefaultBackground"-->
 
-	<!--BEGIN include>View_55_WideList</include -->
-
-	<!--BEGIN include name="UpDownArrows"-->
-		<control type="button" id="55588">
-			<left>20</left>
-			<top>910</top>
-			<width>48</width>
-			<height>24</height>
-			<texturefocus colordiffuse="FF12A8DA">srr_arrowdown.png</texturefocus>
-			<texturenofocus colordiffuse="FF12A8DA">srr_arrowdown.png</texturenofocus>
-			<animation effect="zoom" start="100,0" end="100,100" center="auto" time="200" delay="10">VisibleChange</animation>
-			<animation effect="zoom" start="100,0" end="100,100" delay="500" center="auto" time="200">WindowOpen</animation>
-			<animation effect="zoom" start="100,100" end="100,0" center="auto" time="200">WindowClose</animation>
-			<onclick>SetFocus(55)</onclick>
-			<onclick>PageDown</onclick>
-			<visible>Container(55).HasNext + Control.IsVisible(55)</visible>
-			<visible>true</visible>
-		</control>
-		<control type="button" id="55589">
-			<left>20</left>
-			<top>134</top>
-			<width>48</width>
-			<height>24</height>
-			<texturefocus colordiffuse="FF12A8DA" flipy="true">srr_arrowdown.png</texturefocus>
-			<texturenofocus colordiffuse="FF12A8DA" flipy="true">srr_arrowdown.png</texturenofocus>
-			<animation effect="zoom" start="100,0" end="100,100" center="auto" time="200" delay="10">VisibleChange</animation>
-			<animation effect="zoom" start="100,0" end="100,100" delay="500" center="auto" time="200">WindowOpen</animation>
-			<animation effect="zoom" start="100,100" end="100,0" center="auto" time="200">WindowClose</animation>
-			<onclick>SetFocus(55)</onclick>
-			<onclick>PageUp</onclick>
-			<visible>Container(55).HasPrevious + Control.IsVisible(55)</visible>
-			<visible>true</visible>
-		</control>
-	<!--END include name="UpDownArrows"-->
-	
-		<control type="group">
-			<!-- OpenClose_Left - OpenClose_FadeSlide_Left --><animation type="WindowOpen"><effect type="fade" start="0" end="100" time="300" tween="sine" easing="out" /><effect type="slide" start="-320" end="0" time="400" tween="cubic" easing="out" /></animation><animation type="WindowClose"><effect type="fade" start="100" end="0" time="300" tween="sine" easing="out" /><effect type="slide" start="0" end="-320" time="300" tween="cubic" easing="out" /></animation>
-			<!-- Visible_Left - Vis_FadeSlide_Left --><animation type="Visible" reversible="False"><effect type="fade" start="0" end="100" time="300" tween="sine" easing="out" /><effect type="slide" start="-320" end="0" time="400" tween="cubic" easing="out" /></animation><animation type="Hidden" reversible="False"><effect type="fade" start="100" end="0" time="300" tween="sine" easing="out" /><effect type="slide" start="0" end="-320" time="300" tween="cubic" easing="out" /></animation>
-			<left>80</left>
-			<top>102</top>
-			<visible>true</visible>
-			<control type="image">
-				<description>background image</description>
-				<left>-20</left>
-				<top>-20</top>
-				<width>1806</width>
-				<height>912</height>
-				<texture border="22">srr_dialog-bg.png</texture>
-			</control>
-			<control type="panel" id="55">
-				<left>2</left>
-				<top>3</top>
-				<width>1760</width>
-				<height>868</height>
-				<scrolltime tween="cubic" easing="out">500</scrolltime>
-				<orientation>vertical</orientation>
-				<pagecontrol>55600</pagecontrol>
-				<onleft>55</onleft>
-				<onright>55</onright>
-				<onup>55</onup>
-				<ondown>55</ondown>
-				<visible>true</visible>
-				<focusedlayout width="440" height="144">
-					<control type="image">
-						<left>2</left>
-						<texture colordiffuse="AA12A8DA">srr_focus.png</texture>
-						<visible>Control.HasFocus(55)</visible>
-						<animation effect="fade" start="0" end="100" time="50">Focus</animation>
-						<animation effect="fade" start="100" end="0" time="50">Unfocus</animation>
-					</control>
-					<control type="image">
-						<left>8</left>
-						<width>140</width>
-						<aspectratio>keep</aspectratio>
-						<bordersize>4</bordersize>
-						<texture diffuse="gdx_diffuse2.png" fallback="icon_fallback.png">$INFO[ListItem.Art(thumb)]</texture>
-					</control>
-					<control type="textbox"><!-- ListItem.Label -->
-						<left>148</left>
-						<height>138</height>
-						<width>280</width>
-						<aligny>center</aligny>
-						<font>fontContextMenu</font>
-						<autoscroll>false</autoscroll>
-						<label>$INFO[ListItem.Label]</label>
-						<shadowcolor>text_shadow</shadowcolor>
-					</control>
-					<control type="label"><!-- Label2 -->
-						<right>20</right>
-						<height>40</height>
-						<align>right</align>
-						<aligny>top</aligny>
-						<font>font10</font>
-						<label>$INFO[ListItem.Label2]</label>
-						<textcolor>grey</textcolor>
-						<shadowcolor>text_shadow</shadowcolor>
-					</control>
-				</focusedlayout>
-				<itemlayout width="440" height="144">
-					<control type="image">
-						<aspectratio>stretch</aspectratio>
-						<texture>srr_dialog-bg.png</texture>
-					</control>
-					<control type="image">
-						<left>8</left>
-						<width>140</width>
-						<aspectratio>keep</aspectratio>
-						<bordersize>4</bordersize>
-						<texture diffuse="gdx_diffuse2.png" fallback="icon_fallback.png">$INFO[ListItem.Art(thumb)]</texture>
-					</control>
-					<control type="textbox">
-						<left>148</left>
-						<height>138</height>
-						<width>280</width>
-						<aligny>center</aligny>
-						<font>fontContextMenu</font>
-						<autoscroll>false</autoscroll>
-						<label>$INFO[ListItem.Label]</label>
-						<shadowcolor>text_shadow</shadowcolor>
-					</control>
-					<control type="label"><!-- Label2 -->
-						<right>20</right>
-						<height>40</height>
-						<align>right</align>
-						<aligny>top</aligny>
-						<font>font10</font>
-						<label>$INFO[ListItem.Label2]</label>
-						<textcolor>grey</textcolor>
-						<shadowcolor>text_shadow</shadowcolor>
-					</control>
-				</itemlayout>
-			</control>
-			<control type="scrollbar" id="55600">
-				<left>1780</left>
-				<top>0</top>
-				<width>12</width>
-				<height>868</height>
-				<onleft>55</onleft>
-				<onright>55</onright>
-				<orientation>vertical</orientation>
-			</control>
-		</control>
-	<!--END include>View_55_WideList</include -->
+	<default type="button"><!-- defaults does not work -->
+		<font>font14</font>
+		<textoffsetx>24</textoffsetx>
+		<pulseonselect>true</pulseonselect>
+	</default>
 
 		<control type="group"><description>Right side panel. this is where the comment and preview is shown</description>
-			<!-- OpenClose_Right - OpenClose_FadeSlide_Right --><animation type="WindowOpen"><effect type="fade" start="0" end="100" time="300" tween="sine" easing="out" /><effect type="slide" start="320" end="0" time="400" tween="cubic" easing="out" /></animation><animation type="WindowClose"><effect type="fade" start="100" end="0" time="300" tween="sine" easing="out" /><effect type="slide" start="0" end="320" time="300" tween="cubic" easing="out" /></animation>
-			<!-- Visible_Right - Vis_FadeSlide_Right--><animation type="Visible" reversible="False"><effect type="fade" start="0" end="100" time="300" tween="sine" easing="out"/><effect type="slide" start="320" end="0" time="400" tween="cubic" easing="out" /></animation><animation type="Hidden" reversible="False"><effect type="fade" start="100" end="0" time="300" tween="sine" easing="out" /><effect type="slide" start="0" end="320" time="300" tween="cubic" easing="out" /></animation>
-			<visible>false</visible>
+			<animation type="WindowOpen">  <effect type="fade" start="0" end="100" time="100" tween="sine" easing="out"/><effect type="slide" start="320" end="0" time="400" tween="cubic" easing="out" /></animation>
+			<animation type="WindowClose"> <effect type="fade" start="100" end="0" time="100" tween="sine" easing="out" /><effect type="slide" start="0" end="320" time="300" tween="cubic" easing="out" /></animation>
+			<visible>true</visible>
 				
 				<control type="image">
-					<left>580</left>
-					<top>102</top>
-					<width>1270</width>
-					<height>870</height>
+					<left>80</left>
+					<top>80</top>
+					<width>1730</width>
+					<height>920</height>
 					<texture border="22">srr_dialog-bg.png</texture>
 				</control>
-				
-				<control type="textbox" id="65591">
-					<description>if thumb is empty this bigger textbox is visible</description>
-					<left>612</left>
-					<top>128</top>
-					<width>1210</width>
-					<height>810</height>
-					<font>font14</font>
-					<autoscroll delay="10000" time="2000" repeat="10000">true</autoscroll>
-					<visible>String.IsEmpty(Container(55).ListItem.Art(thumb))</visible>
-					<visible>!Player.HasMedia</visible>
-					<label>$INFO[Container(55).ListItem.Plot]</label>					<!-- label>$INFO[ListItem.Label]</label-->
+
+				<control type="scrollbar" id="17"><description>scroll control for grouplist(204)</description>
+				      <left>1912</left>
+				      <top>80</top>
+				      <width>5</width>
+				      <height>900</height>
+				      <visible allowhiddenfocus="false">true</visible>
+				      <orientation>vertical</orientation>
+				      <showonepage>false</showonepage>
+				      <onleft>204</onleft>
 				</control>
-				
-				<control type="textbox" id="65592">
-					<left>612</left>
-					<top>128</top>
+
+				<control type="grouplist" id="204"><description>comments</description>
+					<left>118</left>
+					<top>94</top>
+					<width>1602</width>
+					<height>880</height>
+					<orientation>vertical</orientation>
+					<itemgap>0</itemgap>
+					<defaultcontrol>2000</defaultcontrol>
+					<visible>true</visible>
+					<scrolltime tween="sine" easing="inout">500</scrolltime>
+					<usecontrolcoords>true</usecontrolcoords>
+					<pagecontrol>17</pagecontrol>
+					<onright>17</onright>
+					<align>top</align><!-- this is aligny -->
+
+					<!-- control type="button" id="999"><!-- hidden button. when this gets focus, grouplist204 will scroll to top
+						<height>1</height><!-- setting this to 0 defaults to something about 18 
+						<texturenofocus>transparent_1x1.png</texturenofocus>
+						<label></label>
+					</control-->
+					
+					<control type="textbox" id="1000"><height>auto</height><font>font14</font></control><control type="image" id="3000"><height>200</height><aspectratio>keep</aspectratio></control><control type="button" id="2000"><font>font14</font><textoffsetx>24</textoffsetx></control>
+					
+					<control type="textbox" id="1001"><height>auto</height><font>font14</font></control><control type="image" id="3001"><height>200</height><aspectratio>keep</aspectratio></control><control type="button" id="2001"><font>font14</font><textoffsetx>24</textoffsetx></control>
+					<control type="textbox" id="1002"><height>auto</height><font>font14</font></control><control type="image" id="3002"><height>200</height><aspectratio>keep</aspectratio></control><control type="button" id="2002"><font>font14</font><textoffsetx>24</textoffsetx></control>
+					<control type="textbox" id="1003"><height>auto</height><font>font14</font></control><control type="image" id="3003"><height>200</height><aspectratio>keep</aspectratio></control><control type="button" id="2003"><font>font14</font><textoffsetx>24</textoffsetx></control>
+					<control type="textbox" id="1004"><height>auto</height><font>font14</font></control><control type="image" id="3004"><height>200</height><aspectratio>keep</aspectratio></control><control type="button" id="2004"><font>font14</font><textoffsetx>24</textoffsetx></control>
+					<control type="textbox" id="1005"><height>auto</height><font>font14</font></control><control type="image" id="3005"><height>200</height><aspectratio>keep</aspectratio></control><control type="button" id="2005"><font>font14</font><textoffsetx>24</textoffsetx></control>
+					<control type="textbox" id="1006"><height>auto</height><font>font14</font></control><control type="image" id="3006"><height>200</height><aspectratio>keep</aspectratio></control><control type="button" id="2006"><font>font14</font><textoffsetx>24</textoffsetx></control>
+					<control type="textbox" id="1007"><height>auto</height><font>font14</font></control><control type="image" id="3007"><height>200</height><aspectratio>keep</aspectratio></control><control type="button" id="2007"><font>font14</font><textoffsetx>24</textoffsetx></control>
+					<control type="textbox" id="1008"><height>auto</height><font>font14</font></control><control type="image" id="3008"><height>200</height><aspectratio>keep</aspectratio></control><control type="button" id="2008"><font>font14</font><textoffsetx>24</textoffsetx></control>
+					<control type="textbox" id="1009"><height>auto</height><font>font14</font></control><control type="image" id="3009"><height>200</height><aspectratio>keep</aspectratio></control><control type="button" id="2009"><font>font14</font><textoffsetx>24</textoffsetx></control>
+					<control type="textbox" id="1010"><height>auto</height><font>font14</font></control><control type="image" id="3010"><height>200</height><aspectratio>keep</aspectratio></control><control type="button" id="2010"><font>font14</font><textoffsetx>24</textoffsetx></control>
+
+					<control type="textbox" id="1011"><height>auto</height><font>font14</font></control><control type="image" id="3011"><height>200</height><aspectratio>keep</aspectratio></control><control type="button" id="2011"><font>font14</font><textoffsetx>24</textoffsetx></control>
+					<control type="textbox" id="1012"><height>auto</height><font>font14</font></control><control type="image" id="3012"><height>200</height><aspectratio>keep</aspectratio></control><control type="button" id="2012"><font>font14</font><textoffsetx>24</textoffsetx></control>
+					<control type="textbox" id="1013"><height>auto</height><font>font14</font></control><control type="image" id="3013"><height>200</height><aspectratio>keep</aspectratio></control><control type="button" id="2013"><font>font14</font><textoffsetx>24</textoffsetx></control>
+					<control type="textbox" id="1014"><height>auto</height><font>font14</font></control><control type="image" id="3014"><height>200</height><aspectratio>keep</aspectratio></control><control type="button" id="2014"><font>font14</font><textoffsetx>24</textoffsetx></control>
+					<control type="textbox" id="1015"><height>auto</height><font>font14</font></control><control type="image" id="3015"><height>200</height><aspectratio>keep</aspectratio></control><control type="button" id="2015"><font>font14</font><textoffsetx>24</textoffsetx></control>
+					<control type="textbox" id="1016"><height>auto</height><font>font14</font></control><control type="image" id="3016"><height>200</height><aspectratio>keep</aspectratio></control><control type="button" id="2016"><font>font14</font><textoffsetx>24</textoffsetx></control>
+					<control type="textbox" id="1017"><height>auto</height><font>font14</font></control><control type="image" id="3017"><height>200</height><aspectratio>keep</aspectratio></control><control type="button" id="2017"><font>font14</font><textoffsetx>24</textoffsetx></control>
+					<control type="textbox" id="1018"><height>auto</height><font>font14</font></control><control type="image" id="3018"><height>200</height><aspectratio>keep</aspectratio></control><control type="button" id="2018"><font>font14</font><textoffsetx>24</textoffsetx></control>
+					<control type="textbox" id="1019"><height>auto</height><font>font14</font></control><control type="image" id="3019"><height>200</height><aspectratio>keep</aspectratio></control><control type="button" id="2019"><font>font14</font><textoffsetx>24</textoffsetx></control>
+					<control type="textbox" id="1020"><height>auto</height><font>font14</font></control><control type="image" id="3020"><height>200</height><aspectratio>keep</aspectratio></control><control type="button" id="2020"><font>font14</font><textoffsetx>24</textoffsetx></control>
+
+				</control>
+
+				<!-- control type="textbox" id="65592">
+					<left>518</left>
+					<top>98</top>
 					<width>1210</width>
 					<height>156</height>
-					<font>font13</font>
+					<font>font14</font>
 					<autoscroll delay="8000" time="2000" repeat="10000">true</autoscroll>
-					<!--visible>!String.IsEmpty(Container(55).ListItem.Art(thumb)</visible-->
-					<visible>!Control.IsVisible(65591)</visible>
-					
+					<visible>!isEmpty(Container(55).ListItem.Property(link_url))</visible>
 					<label>$INFO[Container(55).ListItem.Plot]</label>					
-				</control>
+				</control-->
 				
-				<control type="image">
-					<left>602</left>
-					<top>194</top>
-					<width>1226</width>
-					<height>756</height>
+				<!-- control type="image">
+					<left>860</left>
+					<top>383</top>
+					<width>683</width>
+					<height>378</height>
 					<aspectratio>keep</aspectratio>
-					<fadetime>300</fadetime>
-					<visible>!String.IsEmpty(Container(55).ListItem.Art(thumb))</visible>
+					<visible>!isEmpty(Container(55).ListItem.Art(thumb))+isEmpty(Container(55).ListItem.Art(banner))</visible>
 					<visible>!Player.HasMedia</visible>
-					<texture fallback="colors/black.png">$INFO[Container(55).ListItem.Art(thumb)]</texture>
-				</control>
-				<control type="videowindow">
-					<left>602</left>
-					<top>184</top>
-					<width>1226</width>
-					<height>766</height>
-					<!-- doesnt work aligny>bottom</aligny-->
-				</control>
-				
+					<texture>$INFO[Container(55).ListItem.Art(thumb)]</texture>
+				</control-->
 		</control>
 
 
@@ -230,7 +136,7 @@
 				<!--  animation effect="slide" end="0,-90" time="300" tween="sine" easing="inout" condition="$EXP[infodialog_active]">conditional</animation-->
 				<depth>DepthBars</depth>
 				<animation effect="fade" start="0" end="100" time="300" condition="[Window.Previous(fullscreenvideo) | Window.Previous(startup)] + !Window.IsVisible(1109)">WindowOpen</animation>
-				<control type="image">
+				<control type="image"><description>background:top bar</description>
 					<left>0</left>
 					<top>0</top>
 					<width>2000</width>
@@ -238,34 +144,24 @@
 					<texture>srr_InfoBar.png</texture>
 					<animation effect="fade" start="100" end="0" time="300" condition="Window.Next(screencalibration)">WindowClose</animation>
 				</control>
-				<control type="image"><description>little icon on Left of top bar </description>
-					<top>12</top>
+				<control type="image" id="3"><description>little icon on Left of top bar </description>
+					<top>4</top>
 					<left>10</left>
-					<width>50</width>
-					<height>50</height>
+					<width>83</width>
+					<height>73</height>
 					<animation effect="fade" start="0" end="100" time="300">WindowOpen</animation>
 					<animation effect="fade" start="100" end="0" time="200">WindowClose</animation>
 					<texture colordiffuse="FF12A8DA">changelog.png</texture>
-					<aspectratio align="center" aligny="center">stretch</aspectratio>
+					<aspectratio align="left" aligny="center">keep</aspectratio>
 				</control>
-				<!--control type="button">
-					<top>0</top>
-					<width>120</width>
-					<height>100</height>
-					<onclick condition="!String.IsEmpty(Container.FolderPath)">Container.Update(" ",replace)</onclick>
-					<onclick condition="String.IsEmpty(Container.FolderPath)">Action(Back)</onclick>
-					<texturefocus>-</texturefocus>
-					<texturenofocus>-</texturenofocus>
-				</control-->
 
-				<control type="label" id="1">
-					<top>10</top>
-					<left>85</left>
-					<height>66</height>
+				<control type="textbox" id="1">
+					<top>0</top>
+					<left>100</left>
+					<height>76</height>
 					<width>1500</width>
-					<scroll>true</scroll>
-					<scrollspeed>50</scrollspeed>
-       				<scrollsuffix>           - </scrollsuffix>
+					<autoscroll delay="3000" time="2000" repeat="4000">true</autoscroll>
+					<aligny>center</aligny>
        				<label></label>
 				</control>
 
@@ -273,7 +169,7 @@
 					<top>40</top>
 					<label></label>
 					<font>font10</font>
-					<left>85</left>
+					<left>100</left>
 					<shadowcolor>text_shadow</shadowcolor>
 					<height>100</height>
 					<width>auto</width>
@@ -454,6 +350,8 @@
 				</control>
 			</control>
 		<!--END include name="BottomBar"-->
+
+
 
 	</controls>
 </window>

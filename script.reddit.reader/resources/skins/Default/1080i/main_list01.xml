@@ -13,7 +13,7 @@
 	
 	<!-- this WILL work
 		<onload>SetProperty(bg_image,srr_blackbg.jpg)</onload>
-		but we set this up in python: -- xbmcgui.WindowXML class e.g.: self.setProperty("bg_image", "srr_SKINDEFAULT.jpg")
+		but we set this up in python: - xbmcgui.WindowXML class e.g.: self.setProperty("bg_image", "srr_SKINDEFAULT.jpg")
 	-->
 	<controls>
 	
@@ -39,7 +39,7 @@
 					<width>1100</width>
 					<height>100</height>
 					<!-- texture colordiffuse="22EEEEEE" fallback="focus_f2.png">$INFO[Window.Property(subreddit_banner)]</texture-->
-					<texture colordiffuse="BBCECECE" diffuse="diffuse_right.png" fallback="srr_greybg.jpg">$INFO[Window.Property(subreddit_banner)]</texture>
+					<texture colordiffuse="BBCECECE" diffuse="diffuse_right.png" fallback="srr_dlg-bg.pngg">$INFO[Window.Property(subreddit_banner)]</texture>
 					<aspectratio align="center" aligny="center">scale</aspectratio>
 				</control>
 				
@@ -161,7 +161,7 @@
 					<width>1100</width>
 					<height>80</height>
 					<!-- texture colordiffuse="22EEEEEE">focus_f2.png</texture-->
-					<texture colordiffuse="55EEEEEE" diffuse="diffuse_right.png" fallback="srr_greybg.jpg">$INFO[Window.Property(subreddit_banner)]</texture>
+					<texture colordiffuse="55EEEEEE" diffuse="diffuse_right.png" fallback="srr_dlg-bg.png">$INFO[Window.Property(subreddit_banner)]</texture>
 					<aspectratio align="center" aligny="bottom">scale</aspectratio>
 				</control>
 				<control type="group"><description>left portion</description>
@@ -280,7 +280,7 @@
 					<preloaditems>true</preloaditems>
 					<scrolltime tween="sine" easing="inout">500</scrolltime>
 					<orientation>horizontal</orientation>
-					<visible>!String.isEmpty(Container(55).ListItem.Property(album_images))</visible>
+					<visible>!String.IsEmpty(Container(55).ListItem.Property(album_images))</visible>
 					<!-- pagecontrol>55600</pagecontrol-->
 					<!-- onleft>55</onleft--><!-- not go back to 55 or we end up activating the <onleft> of control(55) as well comment -->
 					<!-- onright>15</onright-->
@@ -297,7 +297,7 @@
 								<height>1080</height>
 								<aspectratio>center</aspectratio>
 								<texture diffuse="gdx_diffuse2.png" >$INFO[ListItem.Art(thumb)]</texture>
-								<visible>isEmpty(Container(5501).ListItem.Property(is_video))</visible>
+								<visible>String.IsEmpty(Container(5501).ListItem.Property(is_video))</visible>
 								<animation type="Focus">
 									<effect type="rotate" start="0" end="-360" center="auto" loop="true" time="10000"/>
 									<effect type="fade" start="10" end="100" time="5000" />
@@ -308,7 +308,7 @@
 								<height>1080</height>
 								<aspectratio>center</aspectratio>
 								<texture diffuse="gdx_diffuse2.png" >$INFO[ListItem.Art(thumb)]</texture>
-								<visible>!isEmpty(Container(5501).ListItem.Property(is_video))</visible>
+								<visible>!String.IsEmpty(Container(5501).ListItem.Property(is_video))</visible>
 								<animation type="Focus">
 									<effect type="zoom" start="100" end="300" center="auto"/>
 								</animation>
@@ -319,7 +319,7 @@
 								<description>Play overlay for video</description>
 								<aspectratio align="center" aligny="center" >center</aspectratio>
 								<texture>play_overlay.png</texture>
-								<visible>!isEmpty(Container(5501).ListItem.Property(is_video))</visible>
+								<visible>!String.IsEmpty(Container(5501).ListItem.Property(is_video))</visible>
 							</control>
 							
 							<control type="image">
@@ -353,7 +353,7 @@
 			</control>
 
 			<control type="group"><description>scrolling square image and text</description>
-				<visible allowhiddenfocus="false">isEmpty(Container(55).ListItem.Property(album_images))</visible>
+				<visible allowhiddenfocus="false">String.IsEmpty(Container(55).ListItem.Property(album_images))</visible>
 				<control type="scrollbar" id="17"><description>scroll control for grouplist(204) and textbox(65591)</description>
 				      <left>1912</left>
 				      <top>100</top>
@@ -370,9 +370,7 @@
 					<width>1080</width>
 					<height>1080</height>
 					<orientation>vertical</orientation>
-					<!-- defaultcontrol>207</defaultcontrol-->
-					<!-- visible>isEmpty(Container(55).ListItem.Art(banner)) + !isEmpty(Container(55).ListItem.Art(thumb))</visible-->
-					<visible>IsEmpty(Container(55).ListItem.Property(preview_ar))</visible>
+					<visible>String.IsEmpty(Container(55).ListItem.Property(preview_ar))</visible>
 					<scrolltime tween="sine" easing="inout">500</scrolltime>
 					<usecontrolcoords>true</usecontrolcoords>
 					<pagecontrol>17</pagecontrol>
@@ -380,19 +378,19 @@
 					
 					<control type="image" id="210"><description>thumb visible only when there is no banner(preview) art</description>
 						<height>300</height>
-						<visible>!isEmpty(Container(55).ListItem.Art(thumb)) + isEmpty(Container(55).ListItem.Art(banner))</visible>
+						<visible>!String.IsEmpty(Container(55).ListItem.Art(thumb)) + String.IsEmpty(Container(55).ListItem.Art(banner))</visible>
 						<aspectratio scalediffuse="true" aligny="center">keep</aspectratio>
 						<texture>$INFO[Container(55).ListItem.Art(thumb)]</texture>
 					</control>
 					
 					<control type="image" id="201"><description>big square image</description>
-						<!-- top>-470</top><!-- 230+400=630 to cover the ListItem.Art(thumb)image control above -->
+						<!-- top>-470</top><!- 230+400=630 to cover the ListItem.Art(thumb)image control above -->
 						<top>0</top>
 						<width>1080</width>
 						<height>1080</height>
 						<aspectratio scalediffuse="true">keep</aspectratio>
 						<texture diffuse="gdx_diffuse2.png">$INFO[Container(55).ListItem.Art(banner)]</texture>
-						<visible>IsEmpty(Container(55).ListItem.Property(preview_ar)) + !isEmpty(Container(55).ListItem.Art(banner)) + IsEmpty(Container(55).ListItem.Property(tall_image)) + IsEmpty(Container(55).ListItem.Property(very_tall_image))</visible>
+						<visible>String.IsEmpty(Container(55).ListItem.Property(preview_ar)) + !String.IsEmpty(Container(55).ListItem.Art(banner)) + String.IsEmpty(Container(55).ListItem.Property(tall_image)) + String.IsEmpty(Container(55).ListItem.Property(very_tall_image))</visible>
 					</control>
 
 					<control type="image" id="207"><description>for tall image</description>
@@ -400,7 +398,7 @@
 						<height>3000</height>
 						<aspectratio aligny="top">keep</aspectratio>
 						<texture>$INFO[Container(55).ListItem.Art(banner)]</texture>
-						<visible>IsEmpty(Container(55).ListItem.Property(preview_ar)) + !isEmpty(Container(55).ListItem.Art(banner)) + !IsEmpty(Container(55).ListItem.Property(tall_image))</visible>
+						<visible>String.IsEmpty(Container(55).ListItem.Property(preview_ar)) + !String.IsEmpty(Container(55).ListItem.Art(banner)) + !String.IsEmpty(Container(55).ListItem.Property(tall_image))</visible>
 					</control>
 
 					<control type="image" id="208"><description>for very tall image</description>
@@ -408,7 +406,7 @@
 						<height>5000</height><!-- can't auto here -->
 						<aspectratio aligny="top">keep</aspectratio>
 						<texture>$INFO[Container(55).ListItem.Art(banner)]</texture>
-						<visible>IsEmpty(Container(55).ListItem.Property(preview_ar)) + !isEmpty(Container(55).ListItem.Art(banner)) + !IsEmpty(Container(55).ListItem.Property(very_tall_image))</visible>
+						<visible>String.IsEmpty(Container(55).ListItem.Property(preview_ar)) + !String.IsEmpty(Container(55).ListItem.Art(banner)) + !String.IsEmpty(Container(55).ListItem.Property(very_tall_image))</visible>
 					</control>
 					
 					<control type="textbox" id="209"><description>post text / description</description>
@@ -418,7 +416,7 @@
 						<height min="200" max="5000">auto</height>
 						<font>font14</font>
 						<align>justify</align>
-						<visible>!IsEmpty(Container(55).ListItem.Plot)</visible>
+						<visible>!String.IsEmpty(Container(55).ListItem.Plot)</visible>
 						<autoscroll delay="10000" time="3000" repeat="10000">true</autoscroll>
 						<label>$INFO[Container(55).ListItem.Plot]</label>
 					</control>
@@ -431,7 +429,7 @@
 					<height>850</height>
 					<aspectratio scalediffuse="true" align="right" aligny="center">keep</aspectratio>
 					<texture diffuse="diffuse_left.png" >$INFO[Container(55).ListItem.Art(banner)]</texture>
-					<visible>!IsEmpty(Container(55).ListItem.Property(preview_ar))</visible>
+					<visible>!String.IsEmpty(Container(55).ListItem.Property(preview_ar))</visible>
 				</control>
 			</control>
 	</control>
@@ -483,8 +481,8 @@
 				<!-- onleft>RunAddon(script.reddit.reader,?mode=comments_gui&url=[$INFO[ListItem.Label]])</onleft         $INFO[ListItem.Label] does not work              -->
 				<!-- onleft>(show side menu panel-done in code) 9000</onleft-->
 				<onright condition="Control.IsVisible(17)">SetFocus(17)</onright>
-				<onright condition="!Control.IsVisible(17) + isEmpty(Container(55).ListItem.Property(album_images))">SetFocus(55)</onright>
-				<onright condition="!isEmpty(Container(55).ListItem.Property(album_images))">SetFocus(5501)</onright>
+				<onright condition="!Control.IsVisible(17) + String.IsEmpty(Container(55).ListItem.Property(album_images))">SetFocus(55)</onright>
+				<onright condition="!String.IsEmpty(Container(55).ListItem.Property(album_images))">SetFocus(5501)</onright>
 
 				<onup>55</onup>
 				<ondown>55</ondown>
@@ -625,16 +623,6 @@
 					</control>
 				</itemlayout>
 			</control>
-			<!-- control type="scrollbar" id="55600">
-				<left>457</left>
-				<top>0</top>
-				<width>12</width>
-				<height>830</height>
-				<onleft>55</onleft>
-				<onright>55</onright>
-				<orientation>vertical</orientation>
-			</control-->
-			
 		</control>
 	<!--END include>View_55_WideList</include -->
 
@@ -673,9 +661,9 @@
 
 		<control type="group"><description>big wide image that fades in</description>
 					<control type="group">
-						<visible>!Container(55).OnNext+!Container(55).OnPrevious + !IsEmpty(Container(55).ListItem.Property(preview_ar))</visible>
+						<visible>!Container(55).OnNext+!Container(55).OnPrevious + !String.IsEmpty(Container(55).ListItem.Property(preview_ar))</visible>
 						<animation type="Visible"><description>clear image fades in after delay</description>
-							<effect type="fade"  start="0" end="100" time="1000" tween="cubic" easing="in" delay="1800"/>
+							<effect type="fade"  start="0" end="100" time="1000" tween="cubic" easing="in" delay="3000"/>
 						</animation>
 						<control type="image" id="206"><description>background</description>
 							<top>0</top>
@@ -694,7 +682,6 @@
 							<aspectratio scalediffuse="true" align="right" aligny="center">keep</aspectratio>
 							<colordiffuse>FFFFFFFF</colordiffuse>
 							<texture diffuse="gdx_diffuse2.png">$INFO[Container(55).ListItem.Art(banner)]</texture>
-							<!-- visible>!IsEmpty(Container(55).ListItem.Property(preview_ar))</visible-->
 						</control>
 
 						<control type="textbox" id="65592"><description>partner with id 203</description>

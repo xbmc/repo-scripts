@@ -235,7 +235,7 @@
 					<height>880</height>
 					<orientation>vertical</orientation>
 					<defaultcontrol>999</defaultcontrol>
-					<visible>isEmpty(Container(55).ListItem.Property(link_url))</visible>
+					<visible>String.IsEmpty(Container(55).ListItem.Property(link_url))</visible>
 					<scrolltime tween="sine" easing="inout">500</scrolltime>
 					<usecontrolcoords>true</usecontrolcoords>
 					<pagecontrol>17</pagecontrol>
@@ -329,7 +329,7 @@
 					<height>156</height>
 					<font>font14</font>
 					<autoscroll delay="8000" time="2000" repeat="10000">true</autoscroll>
-					<visible>!isEmpty(Container(55).ListItem.Property(link_url))</visible>
+					<visible>!String.IsEmpty(Container(55).ListItem.Property(link_url))</visible>
 					<label>$INFO[Container(55).ListItem.Plot]</label>					
 				</control>
 				
@@ -339,7 +339,7 @@
 					<width>683</width>
 					<height>378</height>
 					<aspectratio>keep</aspectratio>
-					<visible>!isEmpty(Container(55).ListItem.Art(thumb))+isEmpty(Container(55).ListItem.Art(banner))</visible>
+					<visible>!String.IsEmpty(Container(55).ListItem.Art(thumb))+String.IsEmpty(Container(55).ListItem.Art(banner))</visible>
 					<visible>!Player.HasMedia</visible>
 					<texture>$INFO[Container(55).ListItem.Art(thumb)]</texture>
 				</control>
@@ -349,7 +349,7 @@
 					<width>1366</width>
 					<height>756</height>
 					<aspectratio>keep</aspectratio>
-					<visible>!isEmpty(Container(55).ListItem.Art(banner))</visible>
+					<visible>!String.IsEmpty(Container(55).ListItem.Art(banner))</visible>
 					<visible>!Player.HasMedia</visible>
 					<texture>$INFO[Container(55).ListItem.Art(banner)]</texture>
 				</control>

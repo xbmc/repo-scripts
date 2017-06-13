@@ -13,7 +13,7 @@
 	
 	<!-- this WILL work
 		<onload>SetProperty(bg_image,srr_blackbg.jpg)</onload>
-		but we set this up in python: -- xbmcgui.WindowXML class e.g.: self.setProperty("bg_image", "srr_SKINDEFAULT.jpg")
+		but we set this up in python: - xbmcgui.WindowXML class e.g.: self.setProperty("bg_image", "srr_SKINDEFAULT.jpg")
 	-->
 	<controls>
 	
@@ -39,7 +39,7 @@
 					<width>1100</width>
 					<height>100</height>
 					<!-- texture colordiffuse="22EEEEEE" fallback="focus_f2.png">$INFO[Window.Property(subreddit_banner)]</texture-->
-					<texture colordiffuse="BBCECECE" diffuse="diffuse_right.png" fallback="srr_greybg.jpg">$INFO[Window.Property(subreddit_banner)]</texture>
+					<texture colordiffuse="BBCECECE" diffuse="diffuse_right.png" fallback="srr_dlg-bg.png">$INFO[Window.Property(subreddit_banner)]</texture>
 					<aspectratio align="center" aligny="center">scale</aspectratio>
 				</control>
 				
@@ -152,7 +152,7 @@
 					<width>1100</width>
 					<height>80</height>
 					<!-- texture colordiffuse="22EEEEEE">focus_f2.png</texture-->
-					<texture colordiffuse="55EEEEEE" diffuse="diffuse_right.png" fallback="srr_greybg.jpg">$INFO[Window.Property(subreddit_banner)]</texture>
+					<texture colordiffuse="55EEEEEE" diffuse="diffuse_right.png" fallback="srr_dlg-bg.png">$INFO[Window.Property(subreddit_banner)]</texture>
 					<aspectratio align="center" aligny="bottom">scale</aspectratio>
 				</control>
 				<control type="group"><description>left portion</description>

@@ -17,14 +17,10 @@
 		<origin x="235" y="180"></origin>
 	</coordinates-->
 	<controls>
-		<control type="image"><description>semi-transparent black</description>
-			<left>-1920</left>
-			<top>-1080</top>
-			<width>5760</width>
-			<height>3240</height>
+		<control type="image" id="2">
 			<animation effect="fade" start="0" end="100" time="300">WindowOpen</animation>
 			<animation effect="fade" start="100" end="0" time="200">WindowClose</animation>
-			<texture colordiffuse="B0FFFFFF">srr_SKINDEFAULT.jpg</texture>
+			<texture fallback="srr_SKINDEFAULT.jpg">srr_SKINDEFAULT.jpg</texture>
 		</control>
 
 	<!--BEGIN include>View_55_WideList</include -->
@@ -225,7 +221,7 @@
 			<colordiffuse>FFFFFFFF</colordiffuse>
 			<font>font13</font>
 			<textcolor>FFFFFFFF</textcolor>
-			<visible>!IsEmpty(Container(55).ListItem.Plot)</visible>
+			<!--visible>!String.IsEmpty(Container(55).ListItem.Plot)</visible-->
 			<autoscroll delay="10000" time="3000" repeat="10000">true</autoscroll>
 			<label>$INFO[Container(55).ListItem.Plot]</label>
 			<align>left</align>
