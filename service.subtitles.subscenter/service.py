@@ -8,9 +8,6 @@ import xbmcvfs
 import xbmcaddon
 import xbmcgui
 import xbmcplugin
-import json
-from requests import post
-
 
 __addon__ = xbmcaddon.Addon()
 __author__ = __addon__.getAddonInfo('author')
@@ -26,11 +23,11 @@ __temp__ = unicode(xbmc.translatePath(os.path.join(__profile__, 'temp')), 'utf-8
 
 sys.path.append(__resource__)
 
-from SUBUtilities import SubscenterHelper, log, normalizeString, clear_store, parse_rls_title, clean_title
+from SUBUtilities import SubsHelper, log, normalizeString, clear_store, parse_rls_title, clean_title
 
 
 def search(item):
-    helper = SubscenterHelper()
+    helper = SubsHelper()
     subtitles_list = helper.get_subtitle_list(item)
     if subtitles_list:
         for it in subtitles_list:
@@ -38,7 +35,7 @@ def search(item):
                                         label2=it["filename"],
                                         iconImage=it["rating"],
                                         thumbnailImage=it["language_flag"]
-            )
+                                        )
             if it["sync"]:
                 listitem.setProperty("sync", "true")
             else:
@@ -60,7 +57,7 @@ def download(id, language, key, filename):
 
     zip_filename = os.path.join(__temp__, "subs.zip")
 
-    helper = SubscenterHelper()
+    helper = SubsHelper()
     helper.download(id, language, key, filename, zip_filename)
 
     for file in xbmcvfs.listdir(__temp__)[1]:
@@ -93,34 +90,9 @@ def get_params(string=""):
 
     return param
 
-def mirror_sub(id, filename, sub_file):
-    try:
-        playerid_query = '{"jsonrpc": "2.0", "method": "Player.GetActivePlayers", "id": 1}'
-        playerid = json.loads(xbmc.executeJSONRPC(playerid_query))['result'][0]['playerid']
-        imdb_id_query = '{"jsonrpc": "2.0", "method": "Player.GetItem", "params": {"playerid": ' + str(playerid) + ', "properties": ["imdbnumber"]}, "id": 1}'
-        imdb_id = json.loads(xbmc.executeJSONRPC (imdb_id_query))['result']['item']['imdbnumber']
-    except:
-        imdb_id = 0
-
-    values = {}
-    values['id'] = id
-    values['versioname'] = filename
-    values['source'] = 'subscenter'
-    values['year'] = xbmc.getInfoLabel("VideoPlayer.Year")
-    values['season'] = str(xbmc.getInfoLabel("VideoPlayer.Season"))
-    values['episode'] = str(xbmc.getInfoLabel("VideoPlayer.Episode"))
-    values['imdb'] = str(imdb_id)
-    values['tvshow'] = normalizeString(xbmc.getInfoLabel("VideoPlayer.TVshowtitle"))
-    values['title'] = normalizeString(xbmc.getInfoLabel("VideoPlayer.OriginalTitle"))
-    values['file_original_path'] = urllib.unquote(unicode(xbmc.Player().getPlayingFile(), 'utf-8'))
-    url = 'http://subs.thewiz.info/send.php'
-    try:
-        post(url, files={'sub': open(sub_file, 'rb')}, data=values)
-    except:
-        pass
 
 def takeTitleFromFocusedItem():
-    labelType = xbmc.getInfoLabel("ListItem.DBTYPE")  #movie/tvshow/season/episode
+    labelType = xbmc.getInfoLabel("ListItem.DBTYPE")  # movie/tvshow/season/episode
     labelMovieTitle = xbmc.getInfoLabel("ListItem.OriginalTitle")
     labelYear = xbmc.getInfoLabel("ListItem.Year")
     labelTVShowTitle = xbmc.getInfoLabel("ListItem.TVShowTitle")
@@ -148,7 +120,7 @@ if params['action'] in ['search', 'manualsearch']:
         params['searchstring'] = urllib.unquote(params['searchstring'])
 
     item = {}
-    
+
     if xbmc.Player().isPlaying():
         item['temp'] = False
         item['rar'] = False
@@ -174,7 +146,6 @@ if params['action'] in ['search', 'manualsearch']:
         item['3let_language'] = []
         item['preferredlanguage'] = unicode(urllib.unquote(params.get('preferredlanguage', '')), 'utf-8')
         item['preferredlanguage'] = xbmc.convertLanguage(item['preferredlanguage'], xbmc.ISO_639_2)
-
 
     if item['title'] == "":
         log("VideoPlayer.OriginalTitle not found")
@@ -218,8 +189,6 @@ elif params['action'] == 'download':
     subs = download(params["id"], params["language"], params["link"], params["filename"])
     ## we can return more than one subtitle for multi CD versions, for now we are still working out how to handle that in XBMC core
     for sub in subs:
-        if params["language"] == 'he' and xbmc.Player().isPlaying():
-            mirror_sub(params["id"], params["filename"], sub)
         listitem = xbmcgui.ListItem(label=sub)
         xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=sub, listitem=listitem, isFolder=False)
 
@@ -228,7 +197,7 @@ elif params['action'] == 'clear_store':
 
 elif params['action'] == 'login':
     clear_store(False)
-    helper = SubscenterHelper()
+    helper = SubsHelper()
     helper.login(True)
     __addon__.openSettings()
 
