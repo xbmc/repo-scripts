@@ -34,10 +34,6 @@ msgctxt "#30001"
 msgid "Time for Shutdown"
 msgstr ""
 
-msgctxt "#30002"
-msgid "Hardware Timer"
-msgstr ""
-
 msgctxt "#30003"
 msgid "Display Time for Shutdown-Confirmation"
 msgstr ""
@@ -67,11 +63,11 @@ msgid "System will shut down in %s seconds."
 msgstr ""
 
 msgctxt "#30012"
-msgid "XBMC/Kodi"
+msgid "Kodi"
 msgstr ""
 
 msgctxt "#30013"
-msgid "Operating System"
+msgid "OS (Power off)"
 msgstr ""
 
 msgctxt "#30014"
