@@ -1,3 +1,9 @@
+0.3.22
+- Some changes within the code structure made, so the addon also works in suspend mode.
+- Routines from module requests introduced
+- NVRAM Wakeup removed
+- more robust method of LibrEelec/OpenElec detection implemented
+
 0.3.21
 - IMPORTANT: Change option from excluded ports to monitored ports in network settings. Check your settings!
 
