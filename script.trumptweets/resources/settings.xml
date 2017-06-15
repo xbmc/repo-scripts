@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+    <setting id="Enable_Debugging" type="bool" label="30000" default="false" />
+    <setting id="Enable_Random"    type="enum" label="30001" default="0" values="Latest|Random"/>
+    <setting id="Wait_Time"        type="enum" label="30002" default="2" values="5m|10m|15m|30m"/>
+    <setting id="Close_Time"       type="enum" label="30003" default="1" values="2s|5s|10s|15s"/>
+    <setting id="Not_While_Playing"type="bool" label="30004" default="true" />
+</settings>

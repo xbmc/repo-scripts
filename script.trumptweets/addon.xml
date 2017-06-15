@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.trumptweets" name="Trump Tweets!!" version="1.0.2" provider-name="Lunatixz">
+    <requires>
+        <import addon="xbmc.python" version="2.25.0"/>
+        <import addon="script.module.feedparser" version="5.1.3"/>
+    </requires>
+    <extension point="xbmc.python.script" library="settings.py"/>
+    <extension point="xbmc.service" library="service.py" start="login"/>
+    <extension point="xbmc.addon.metadata">
+        <summary lang="en_GB">Love um... Hate um... Trump Tweets!!</summary>
+        <description lang="en_GB">Keep yourself entertained and/or enlightened by the President of the United States tweets. Receive real-time twitter updates from @realDonaldTrump. 3D images provided royalty free by the talented Denys Almaral.</description>
+        <license>GNU GENERAL PUBLIC LICENSE. Version 3, June 2007</license>
+        <platform>all</platform>
+        <website>https://twitter.com/realDonaldTrump</website>
+        <source>https://github.com/Lunatixz/XBMC_Addons/tree/master/script.trumptweets</source>
+        <forum>https://forum.kodi.tv/showthread.php?tid=316555</forum>
+        <news>v.1.0.1 - Tweaked Timer, Code Cleanup[CR] v.1.0.2 - Skin Tweaks</news>
+        <assets>
+            <icon>icon.png</icon>
+            <fanart>fanart.jpg</fanart>
+            <screenshot>resources/images/screenshot01.png</screenshot>
+            <screenshot>resources/images/screenshot02.png</screenshot>
+            <screenshot>resources/images/screenshot03.png</screenshot>
+            <screenshot>resources/images/screenshot04.png</screenshot>
+        </assets>
+    </extension>
+</addon>

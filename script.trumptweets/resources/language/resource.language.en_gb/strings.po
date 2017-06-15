@@ -1,0 +1,37 @@
+# Kodi Media Center language file
+# Addon Name: Trump Tweets!!
+# Addon id: script.trumptweets
+# Addon Provider: Lunatixz
+msgid ""
+msgstr ""
+"Project-Id-Version:\script.trumptweets\n"
+"Report-Msgid-Bugs-To: https://forum.kodi.tv/showthread.php?tid=316555\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Lunatixz Translation Team\n"
+"Language-Team: English (http://www.transifex.com/projects/p/xbmc-addons/language/en/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#30000"
+msgid "Enable Debugging [Log errors]"
+msgstr ""
+
+msgctxt "#30001"
+msgid "Tweet Choice"
+msgstr ""
+
+msgctxt "#30002"
+msgid "Check Tweets Every x Minutes"
+msgstr ""
+
+msgctxt "#30003"
+msgid "Close After x Seconds"
+msgstr ""
+
+msgctxt "#30004"
+msgid "Don't Show While Playing"
+msgstr ""
