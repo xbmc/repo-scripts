@@ -14,14 +14,9 @@ try:
 except ImportError:
     import storageserverdummy as StorageServer
 
-try:
-    import xbmc
-    import xbmcvfs
-    import xbmcaddon
-except ImportError:
-    from tests.stubs import xbmc
-    from tests.stubs import xbmcvfs
-    from tests.stubs import xbmcaddon
+import xbmc
+import xbmcvfs
+import xbmcaddon
 
 __addon__ = xbmcaddon.Addon()
 __version__ = __addon__.getAddonInfo('version')  # Module version
@@ -119,7 +114,7 @@ def notify(msg_id):
 
 
 class SubscenterHelper:
-    BASE_URL = "http://www.subscenter.info/he/api/"
+    BASE_URL = "http://www.subscenter.info/he/"
 
     def __init__(self):
         self.urlHandler = URLHandler()
@@ -135,42 +130,29 @@ class SubscenterHelper:
         results = []
 
         search_string = re.split(r'\s\(\w+\)$', item["tvshow"])[0] if item["tvshow"] else item["title"]
-        user_token = self.get_user_token()
 
-        if user_token:
-            query = {"q": search_string.encode("utf-8"), "user": user_token["user"], "token": user_token["token"]}
-            if item["tvshow"]:
-                query["type"] = "series"
-                query["season"] = item["season"]
-                query["episode"] = item["episode"]
-            else:
-                query["type"] = "movies"
-                if item["year"]:
-                    query["year_start"] = int(item["year"]) - 1
-                    query["year_end"] = int(item["year"])
+        if item["tvshow"]:
+            cache_key = get_store_key("tv-show_", search_string)
+            results = store.get(cache_key)
+            if results:
+                results = eval(results)
 
-            search_result = self.urlHandler.request(self.BASE_URL + "search/", query)
-
-            if search_result is not None and search_result["result"] == "failed":
-                # Update cached token
-                user_token = self.get_user_token(True)
-                query["token"] = user_token["token"]
-                search_result = self.urlHandler.request(self.BASE_URL + "search/", query)
-
-            if search_result is not None and search_result["result"] == "failed":
-                notify(32009)
-                return results
-
-            log("Results: %s" % search_result)
-
-            if search_result is None or search_result["result"] != "success" or search_result["count"] < 1:
+        if not results:
+            query = {"q": search_string.encode("utf-8").lower() + "'"}  # hack to prevent redirection in hebrew search
+            search_result = self.urlHandler.request(self.BASE_URL + "subtitle/search/", query_string=query)
+            if search_result is None:
                 return results  # return empty set
 
-            results = self._filter_results(search_result["data"], search_string, item)
-            log("Filtered: %s" % results)
+            urls = re.findall(u'<a href=".*/he/subtitle/(movie|series)/([^/]+)/">(.*) / ([^<]+)</a>', search_result)
+            years = re.findall(u'<span class="special">[^:]+: </span>(\d{4}).<br />', search_result)
+            for i, url in enumerate(urls):
+                year = years[i] if len(years) > i else ''
+                urls[i] += (year,)
 
-        else:
-            notify(32009)
+            results = self._filter_results(urls, search_string, item)
+
+            if item["tvshow"] and results:
+                store.set(cache_key, repr(results))
 
         return results
 
@@ -178,22 +160,33 @@ class SubscenterHelper:
         filtered = []
         search_string = regexHelper.sub('', search_string.lower())
 
-        for result in results:
-            eng_name = result["name_en"].strip().lower()
-            heb_name = result["name_he"].strip()
+        h = HTMLParser.HTMLParser()
+
+        log("results: %s" % results)
+
+        for i, (content_type, slug, heb_name, eng_name, year) in enumerate(results):
+            eng_name = unicode(eng_name, 'utf-8')
+            heb_name = unicode(heb_name, 'utf-8')
+
+            eng_name = h.unescape(eng_name).replace(' ...', '').lower()
+            heb_name = h.unescape(heb_name).replace(' ...', '')
 
             eng_name = regexHelper.sub(' ', eng_name)
             eng_name_tmp = regexHelper.sub('', eng_name)
-            heb_name = regexHelper.sub('', heb_name)
+            heb_name_tmp = regexHelper.sub('', heb_name)
 
-            if (search_string.startswith(eng_name_tmp) or eng_name_tmp.startswith(search_string) or
-                    search_string.startswith(heb_name) or heb_name.startswith(search_string)) and \
-                    (item["tvshow"] or
-                             item["year"] == '' or
-                             result["year"] == '' or
-                                 (int(result["year"]) - 1) <= int(item["year"]) <= (int(result["year"]) + 1) or
-                                 (int(item["year"]) - 1) <= int(result["year"]) <= (int(item["year"]) + 1)):
-                filtered.append({"name": eng_name, "year": result["year"], "subs": result["subtitles"]})
+            if ((content_type == "movie" and not item["tvshow"]) or (content_type == "series" and item["tvshow"])) \
+                    and (search_string.startswith(eng_name_tmp) or
+                             eng_name_tmp.startswith(search_string) or
+                             search_string.startswith(heb_name_tmp) or
+                             heb_name_tmp.startswith(search_string)) \
+                    and (item["tvshow"] or
+                                 item["year"] == '' or
+                                 year == '' or
+                                     (int(year) - 1) <= int(item["year"]) <= (int(year) + 1) or
+                                     (int(item["year"]) - 1) <= int(year) <= (int(item["year"]) + 1)):
+                filtered.append({"type": content_type, "name": eng_name, "slug": slug, "year": year})
+        log("filtered: %s" % filtered)
         return filtered
 
     def _build_subtitle_list(self, search_results, item):
@@ -201,31 +194,37 @@ class SubscenterHelper:
         for result in search_results:
             total_downloads = 0
             counter = 0
-            subs_list = result["subs"]
+            url = self.BASE_URL + "cinemast/data/" + result["type"] + "/sb/" + result["slug"]
+            url += "/" + item["season"] + "/" + item["episode"] + "/" if result["type"] == "series" else "/"
+            subs_list = self.urlHandler.request(url)
 
             if subs_list is not None:
-                for language in subs_list.keys():
+                subs_list = json.loads(subs_list, encoding="utf-8")
+                for language in subs_list:
                     if xbmc.convertLanguage(language, xbmc.ISO_639_2) in item["3let_language"]:
-                        for current in subs_list[language]:
-                            counter += 1
-                            title = current["version"]
-                            subtitle_rate = self._calc_rating(title, item["file_original_path"])
-                            total_downloads += int(current["downloads"])
-                            ret.append(
-                                {'lang_index': item["3let_language"].index(
-                                    xbmc.convertLanguage(language, xbmc.ISO_639_2)),
-                                    'filename': title,
-                                    'link': current["key"],
-                                    'language_name': xbmc.convertLanguage(language, xbmc.ENGLISH_NAME),
-                                    'language_flag': language,
-                                    'id': current["id"],
-                                    'rating': current["downloads"],
-                                    'sync': subtitle_rate >= 3.8,
-                                    'hearing_imp': False,
-                                    'is_preferred':
-                                        xbmc.convertLanguage(language, xbmc.ISO_639_2) == item[
-                                            'preferredlanguage']
-                                })
+                        for translator in subs_list[language]:
+                            for quality in subs_list[language][translator]:
+                                for current in subs_list[language][translator][quality]:
+                                    current = subs_list[language][translator][quality][current]
+                                    counter += 1
+                                    title = current["subtitle_version"]
+                                    subtitle_rate = self._calc_rating(title, item["file_original_path"])
+                                    total_downloads += current["downloaded"]
+                                    ret.append(
+                                        {'lang_index': item["3let_language"].index(
+                                            xbmc.convertLanguage(language, xbmc.ISO_639_2)),
+                                            'filename': title,
+                                            'link': current["key"],
+                                            'language_name': xbmc.convertLanguage(language, xbmc.ENGLISH_NAME),
+                                            'language_flag': language,
+                                            'id': current["id"],
+                                            'rating': current["downloaded"],
+                                            'sync': subtitle_rate >= 3.8,
+                                            'hearing_imp': current["hearing_impaired"] > 0,
+                                            'is_preferred':
+                                                xbmc.convertLanguage(language, xbmc.ISO_639_2) == item[
+                                                    'preferredlanguage']
+                                        })
             # Fix the rating
             if total_downloads:
                 for it in ret[-1 * counter:]:
@@ -269,11 +268,9 @@ class SubscenterHelper:
                  "key": key,
                  "sub_id": id}
 
-        user_token = self.get_user_token()
+        url = self.BASE_URL + "subtitle/download/" + language + "/"
 
-        url = self.BASE_URL + "subtitle/download/" + language + "/?" + urllib.urlencode(query)
-
-        f = self.urlHandler.request(url, user_token)
+        f = self.urlHandler.request(url, query_string=query)
 
         with open(zip_filename, "wb") as subFile:
             subFile.write(f)

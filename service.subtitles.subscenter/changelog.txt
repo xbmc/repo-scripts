@@ -1,3 +1,6 @@
+5.0.0 - by CaTz (16/06/2017)
+- Return back to site parsing
+
 4.1.5 - by CaTz (13/06/2017)
 - Update mirror url
 
