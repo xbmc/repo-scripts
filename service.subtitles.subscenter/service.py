@@ -113,7 +113,7 @@ def mirror_sub(id, filename, sub_file):
     values['tvshow'] = normalizeString(xbmc.getInfoLabel("VideoPlayer.TVshowtitle"))
     values['title'] = normalizeString(xbmc.getInfoLabel("VideoPlayer.OriginalTitle"))
     values['file_original_path'] = urllib.unquote(unicode(xbmc.Player().getPlayingFile(), 'utf-8'))
-    url = 'http://subs.thewiz.info/send.php'
+    url = 'http://api.wizdom.xyz/upload.php'
     try:
         post(url, files={'sub': open(sub_file, 'rb')}, data=values)
     except:
