@@ -1,8 +1,8 @@
 =========
-pycountry
+pycountries
 =========
 
-pycountry provides the ISO databases for the standards:
+pycountries provides the ISO databases for the standards:
 
 639-3
   Languages
@@ -30,7 +30,7 @@ Translation files for the various strings are included as well.
 Data update policy
 ==================
 
-No changes to the data will be accepted into pycountry. This is a pure wrapper
+No changes to the data will be accepted into pycountries. This is a pure wrapper
 around the ISO standard using the `pkg-isocodes` database from Debian *as is*.
 If you need changes to the politicial situation in the world, please talk to
 the ISO or Debian people, not me.
@@ -48,26 +48,26 @@ Contributions
 =============
 
 The code lives in a `bitbucket Mercurial repository
-<https://bitbucket.org/flyingcircus/pycountry>`_, and issues must be reported in
+<https://bitbucket.org/flyingcircus/pycountries>`_, and issues must be reported in
 `project bugtracker
-<https://bitbucket.org/flyingcircus/pycountry/issues?status=new&status=open>`_.
+<https://bitbucket.org/flyingcircus/pycountries/issues?status=new&status=open>`_.
 
 Countries (ISO 3166)
 ====================
 
 Countries are accessible through a database object that is already configured
-upon import of pycountry and works as an iterable:
+upon import of pycountries and works as an iterable:
 
-  >>> import pycountry
-  >>> len(pycountry.countries)
+  >>> import pycountries
+  >>> len(pycountries.countries)
   249
-  >>> list(pycountry.countries)[0]
+  >>> list(pycountries.countries)[0]
   Country(alpha_2='AF', alpha_3='AFG', name='Afghanistan', numeric='004', official_name='Islamic Republic of Afghanistan')
 
 Specific countries can be looked up by their various codes and provide the
 information included in the standard as attributes:
 
-  >>> germany = pycountry.countries.get(alpha_2='DE')
+  >>> germany = pycountries.countries.get(alpha_2='DE')
   >>> germany
   Country(alpha_2='DE', alpha_3='DEU', name='Germany', numeric='276', official_name='Federal Republic of Germany')
   >>> germany.alpha_2
@@ -85,7 +85,7 @@ The `historic_countries` database contains former countries that have been
 removed from the standard and are now included in ISO 3166-3, excluding
 existing ones:
 
- >>> ussr = pycountry.historic_countries.get(alpha_3='SUN')
+ >>> ussr = pycountries.historic_countries.get(alpha_3='SUN')
  >>> ussr
  Country(alpha_3='SUN', alpha_4='SUHH', withdrawal_date='1992-08-30', name='USSR, Union of Soviet Socialist Republics', numeric='810')
  >>> ussr.alpha_4
@@ -106,15 +106,15 @@ because they provide a nested and typed structure.
 
 All subdivisons can be accessed directly:
 
-  >>> len(pycountry.subdivisions)
+  >>> len(pycountries.subdivisions)
   4847
-  >>> list(pycountry.subdivisions)[0]
+  >>> list(pycountries.subdivisions)[0]
   Subdivision(code='AD-07', country_code='AD', name='Andorra la Vella', parent_code=None, type='Parish')
 
 Subdivisions can be accessed using their unique code and provide at least
 their code, name and type:
 
-  >>> de_st = pycountry.subdivisions.get(code='DE-ST')
+  >>> de_st = pycountries.subdivisions.get(code='DE-ST')
   >>> de_st.code
   'DE-ST'
   >>> de_st.name
@@ -126,7 +126,7 @@ their code, name and type:
 
 Some subdivisions specify another subdivision as a parent:
 
-  >>> al_br = pycountry.subdivisions.get(code='AL-BU')
+  >>> al_br = pycountries.subdivisions.get(code='AL-BU')
   >>> al_br.code
   'AL-BU'
   >>> al_br.name
@@ -142,10 +142,10 @@ Some subdivisions specify another subdivision as a parent:
 
 The divisions of a single country can be queried using the country_code index:
 
-  >>> len(pycountry.subdivisions.get(country_code='DE'))
+  >>> len(pycountries.subdivisions.get(country_code='DE'))
   16
 
-  >>> len(pycountry.subdivisions.get(country_code='US'))
+  >>> len(pycountries.subdivisions.get(country_code='US'))
   57
 
 
@@ -154,12 +154,12 @@ Scripts (ISO 15924)
 
 Scripts are available from a database similar to the countries:
 
-  >>> len(pycountry.scripts)
+  >>> len(pycountries.scripts)
   169
-  >>> list(pycountry.scripts)[0]
+  >>> list(pycountries.scripts)[0]
   Script(alpha_4='Afak', name='Afaka', numeric='439')
 
-  >>> latin = pycountry.scripts.get(name='Latin')
+  >>> latin = pycountries.scripts.get(name='Latin')
   >>> latin
   Script(alpha_4='Latn', name='Latin', numeric='215')
   >>> latin.alpha4
@@ -175,11 +175,11 @@ Currencies (ISO 4217)
 
 The currencies database is, again, similar to the ones before:
 
-  >>> len(pycountry.currencies)
+  >>> len(pycountries.currencies)
   182
-  >>> list(pycountry.currencies)[0]
+  >>> list(pycountries.currencies)[0]
   Currency(alpha_3='AED', name='UAE Dirham', numeric='784')
-  >>> argentine_peso = pycountry.currencies.get(alpha_3='ARS')
+  >>> argentine_peso = pycountries.currencies.get(alpha_3='ARS')
   >>> argentine_peso
   Currency(alpha_3='ARS', name='Argentine Peso', numeric='032')
   >>> argentine_peso.alpha_3
@@ -195,12 +195,12 @@ Languages (ISO 639-3)
 
 The languages database is similar too:
 
-  >>> len(pycountry.languages)
+  >>> len(pycountries.languages)
   7874
-  >>> list(pycountry.languages)[0]
+  >>> list(pycountries.languages)[0]
   Language(alpha_3='aaa', name='Ghotuo', scope='I', type='L')
 
-  >>> aragonese = pycountry.languages.get(alpha_2='an')
+  >>> aragonese = pycountries.languages.get(alpha_2='an')
   >>> aragonese.alpha_2
   'an'
   >>> aragonese.alpha_3
@@ -208,7 +208,7 @@ The languages database is similar too:
   >>> aragonese.name
   'Aragonese'
 
-  >>> bengali = pycountry.languages.get(alpha_2='bn')
+  >>> bengali = pycountries.languages.get(alpha_2='bn')
   >>> bengali.name
   'Bengali'
   >>> bengali.common_name
@@ -217,7 +217,7 @@ The languages database is similar too:
 Locales
 =======
 
-Locales are available in the `pycountry.LOCALES_DIR` subdirectory of this
+Locales are available in the `pycountries.LOCALES_DIR` subdirectory of this
 package. The translation domains are called `isoXXX` according to the standard
 they provide translations for. The directory is structured in a way compatible
 to Python's gettext module.
@@ -225,7 +225,7 @@ to Python's gettext module.
 Here is an example translating language names:
 
   >>> import gettext
-  >>> german = gettext.translation('iso3166', pycountry.LOCALES_DIR,
+  >>> german = gettext.translation('iso3166', pycountries.LOCALES_DIR,
   ...                              languages=['de'])
   >>> german.install()
   >>> _('Germany')
@@ -238,7 +238,7 @@ For each database (countries, languages, scripts, etc.), you can also look up
 entities case insensitively without knowing which key the value may match.  For
 example:
 
-  >>> pycountry.countries.lookup('de')
-  <pycountry.db.Country object at 0x...>
+  >>> pycountries.countries.lookup('de')
+  <pycountries.db.Country object at 0x...>
 
 The search ends with the first match, which is returned.
