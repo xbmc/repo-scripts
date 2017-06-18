@@ -33,10 +33,6 @@ msgctxt "#30001"
 msgid "Time for Shutdown"
 msgstr "Czas do wyłączenia systemu po nagraniu"
 
-msgctxt "#30002"
-msgid "Hardware Timer"
-msgstr "Zegar sprzętowy"
-
 msgctxt "#30003"
 msgid "Display Time for Shutdown-Confirmation"
 msgstr "Wyświetlanie czasu przy wyłączeniu"
@@ -66,12 +62,12 @@ msgid "System will shut down in %s seconds."
 msgstr "System zostanie zamknięty za %s sekund."
 
 msgctxt "#30012"
-msgid "XBMC/Kodi"
-msgstr "XBMC/Kodi"
+msgid "Kodi"
+msgstr "Kodi"
 
 msgctxt "#30013"
-msgid "Operating System"
-msgstr "System Operacyjny"
+msgid "OS (Power off)"
+msgstr "OS (Dezaktywować)"
 
 msgctxt "#30014"
 msgid "System will shutdown now"

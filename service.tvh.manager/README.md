@@ -13,13 +13,9 @@ Some installation notes
 
 1.	YOU KNOW WHAT A TERMINAL CONSOLE IS AND YOU ARE ABLE TO USE IT.
 
-2.	THIS ADDON USE ACPI-WAKEUP AS DEFAULT. IF YOU WISH TO USE ANOTHER METHOD (E.G. NVRAM-WAKEUP) YOU HAVE TO IMPLEMENT OR INSTALL THE NEEDED MODULES !!! FOR DETAILS LOOK INTO:
+2.	THIS ADDON USE ACPI-WAKEUP OVER RTC. YOUR MAINBOARD MUST SUPPORT THIS PROPERLY. NOTE THAT IN YOUR APM-SETTINGS OF YOUR BOARD THE RTC WAKEUP SHOULD BE SET TO ‘by OS’ OR ‘disabled’.
 
-        ~/.kodi/addons/service.tvh.manager/resources/lib/shutdown.sh
-
-3.	THIS README USES kodi AS THE DEFAULT USER. IF KODI IS RUNNING WITH A DIFFERENT USERNAME, CHANGE ALL OCCURENCES OF '/home/kodi/' TO '/home/<yourusername>/' IN YOUR PATHNAMES/NAMES.
-
-4.	Make shure that your mainboard supports ACPI-Wakeup or at least NVRAM-Wakeup and set it up properly! Note that in your APM Settings of your mainboard RTC Wakeup should be set to ‘by OS’ or ‘disabled’.
+3.	THIS README USES kodi AS THE DEFAULT USER. IF KODI IS RUNNING WITH A DIFFERENT USERNAME, CHANGE ALL OCCURENCES OF '/home/kodi/' TO '/home/yourusername/' IN YOUR PATHNAMES/NAMES.
 
 Installation
 ------------
@@ -94,4 +90,4 @@ Don’t forget to store. Remember that you have to repeat this when the skin has
 
 Please send Comments and Bugreports to birger.jesch@gmail.com
 
-HINT: If your OS is OpenELEC/LibreELEC you have to turn off ‘Shutdown requires admin privileges’ as OpenELEC/LibreELEC doesn’t need sudo! This should be done automatically if your system name is set to default (LibreELEC or OpenELEC).
+HINT: If your OS is OpenELEC/LibreELEC you have to turn off ‘Shutdown requires admin privileges’ as OpenELEC/LibreELEC doesn’t need sudo! This should be done automatically in most cases.
