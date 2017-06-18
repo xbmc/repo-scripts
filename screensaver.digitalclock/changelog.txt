@@ -1,0 +1,129 @@
+[B]5.0.1[/B]
+- Fixed the weather icon not updating bug
+
+[B]5.0.0[/B]
+- Updated the screensaver to follow Krypton updates
+
+[B]4.0.3[/B]
+- Better representation of CPU usage on multiple core systems
+
+[B]4.0.2[/B]
+- Added background image aspect ratio control
+- Added additional information:
+- CPU temperature (Depends on the system if it will work or not)
+- GPU temperature (Depends on the system if it will work or not)
+- HDD temperature (Depends on the system if it will work or not)
+- FPS
+- Current uptime
+- Total uptime
+
+[B]4.0.1[/B]
+- Fixing my dependecies error...
+
+[B]4.0.0[/B]
+- Added log out option
+- Added support for script.skin.helper.colorpicker (Thanks Marcel!)
+- Rewritten color and transparency options, now users can pick their color instead of choosing one of the few predefined ones
+- Added additional information:
+- CPU usage
+- Battery level
+- Free memory
+- Movie library info (Total, Watched, Unwatched)
+- TV Show library info (Total, Watched, Unwatched)
+- Music library info (Artists, Albums, Songs)
+ 
+[B]3.9.0[/B]
+- Got the screensaver to transifex
+- Fixed the zoom bug (when part of the information gets off the screen)
+- Added custom date format
+- Added Skin Helper background option
+- Added colon blink option
+
+[B]3.8.0[/B]
+- Repacked the options
+- Added custom position option and showing of thumbnail for now playing media
+- Fixed up a slideshow bug
+
+[B]3.7.0[/B]
+- Fixed up the code a bit and added support for estouchy skin and estuary skin
+
+[B]3.6.0[/B]
+- Added more zoom values and removed unnecessary weather updating
+
+[B]3.5.0[/B]
+- Added zoom effect for increasing text and icons
+
+[B]3.4.0[/B]
+- Fixed some xml loading bugs
+
+[B]3.3.0[/B]
+- Added fixed position
+
+[B]3.2.0[/B]
+- Fixed the sorting bug for slideshow
+
+[B]3.1.0[/B]
+- Added support for OSMC skin
+
+[B]3.0.0[/B]
+- Added bounce effect for on screen movement
+
+[B]2.9.0[/B]
+- Removed xbmc.sleep and added monitor.waitForAbort
+
+[B]2.8.0[/B]
+- Changed the way screensaver deals with custom xml files
+
+[B]2.7.0[/B]
+- Added support for text shadow color
+
+[B]2.6.0[/B]
+- Added support for Chroma skin
+
+[B]2.5.0[/B]
+- Added weather icon support (Thanks to Mario and the rest of Titan skin crew)
+
+[B]2.4.0[/B]
+- Added skin.custom for skin developers and skin.default for skins that are not directly supported
+
+[B]2.3.0[/B]
+- Added weather information and reworked current options
+
+[B]2.2.0[/B]
+- Added now playing information options
+
+[B]2.1.0[/B]
+- Setting up the screensaver so it works with most of the skins
+
+[B]2.0.0[/B]
+- Added random option for transparency
+
+[B]1.9.0[/B]
+- Added random option for colors
+
+[B]1.8.0[/B]
+- Added random option for slideshow
+
+[B]1.7.0[/B]
+- Added slideshow
+
+[B]1.6.0[/B]
+- Added transparency for date
+
+[B]1.5.0[/B]
+- Added transparency for time
+
+[B]1.4.0[/B]
+- Added date colors
+
+[B]1.3.0[/B]
+- Added time colors
+
+[B]1.2.0[/B]
+- Added date format
+
+[B]1.1.0[/B]
+- Added time format
+
+[B]1.0.0[/B]
+- Initial version
