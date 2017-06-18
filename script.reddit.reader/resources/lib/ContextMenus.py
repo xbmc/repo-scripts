@@ -48,11 +48,9 @@ def build_context_menu_entries(num_comments,commentsUrl, subreddit, domain, link
     label_search=translation(32520)
 
     cxm_list=[]
-    if cxm_show_html_to_text:
-        cxm_list.append((label_html_to_text , build_script('readHTML', link_url)         ))
 
-    if cxm_show_open_browser:
-        cxm_list.append((label_open_browser , build_script('openBrowser', link_url)         ))
+    cxm_list.extend( build_link_in_browser_context_menu_entries(link_url) )
+    cxm_list.extend( build_open_browser_to_pair_context_menu_entries(link_url) )
 
     if cxm_show_comments:
         cxm_list.append((label_view_comments , build_script('listLinksInComment', commentsUrl )  ))
@@ -94,31 +92,69 @@ def build_context_menu_entries(num_comments,commentsUrl, subreddit, domain, link
 
 
     if cxm_show_youtube_items:
-        cxm_list.extend( build_youtube_context_menu_entries('', link_url, video_id=None ))
+        cxm_list.extend( build_youtube_context_menu_entries('', link_url, video_id=None, title=post_title ))
 
     return cxm_list
 
-def build_youtube_context_menu_entries(type_, youtube_url,video_id=None):
+def build_youtube_context_menu_entries(type_, youtube_url,video_id=None,title=None):
     from domains import ClassYoutube
     cxm_list=[]
 
     match=re.compile( ClassYoutube.regex, re.I).findall( youtube_url )  #regex='(youtube.com/)|(youtu.be/)|(youtube-nocookie.com/)|(plugin.video.youtube/play)'
     if match:
-
-        if not video_id:
+        if not video_id: #no video id was supplied when this fn was called
             video_id=ClassYoutube.get_video_id(youtube_url)
 
         channel_id_from_url=ClassYoutube.get_channel_id_from_url(youtube_url)
 
         if type_=='channel': #no need to list the "show more videos from this channel" entry if we're already showing "videos from this channel"
-            cxm_list.append( (translation(32523)  , build_script("listRelatedVideo", youtube_url, '', 'related')  ) )
+            cxm_list.append( (translation(32523)  , build_script("listRelatedVideo", youtube_url, title, 'related')  ) )
         else:
-            cxm_list.append( (translation(32522)  , build_script("listRelatedVideo", youtube_url, '', 'channel')  ) )
+            cxm_list.append( (translation(32522)  , build_script("listRelatedVideo", youtube_url, title, 'channel')  ) )
             if video_id and not channel_id_from_url:#if we can parse channel id from url, and there is no video id, the url is for a channel. skip showing related videos
-                cxm_list.append( (translation(32523)  , build_script("listRelatedVideo", youtube_url, '', 'related')  ) )
+                cxm_list.append( (translation(32523)  , build_script("listRelatedVideo", youtube_url, title, 'related')  ) )
+                cxm_list.append( (translation(32525)  , build_script("listRelatedVideo", youtube_url, title, 'links_in_description')  ) )
 
         if video_id:
             cxm_list.append( (translation(32524)    , build_script("listSubReddit", assemble_reddit_filter_string(video_id,'','',''), 'Search')  ) )
+
+    return cxm_list
+
+def build_reddit_context_menu_entries(url):
+    from domains import ClassReddit
+    cxm_list=[]
+
+    match=re.compile( ClassReddit.regex, re.I).findall( url )  #regex='(youtube.com/)|(youtu.be/)|(youtube-nocookie.com/)|(plugin.video.youtube/play)'
+    if match:
+        subreddit=ClassReddit.get_video_id(url)
+        if subreddit: # and cxm_show_by_subreddit:
+            cxm_list.append( (translation(32508).format(subreddit=subreddit),
+                              build_script("listSubReddit", assemble_reddit_filter_string("",subreddit), subreddit)  ) )
+
+    return cxm_list
+
+def build_link_in_browser_context_menu_entries(url):
+    label_html_to_text=translation(32502)
+    label_open_browser=translation(32503)
+    cxm_list=[]
+    if cxm_show_html_to_text:
+        cxm_list.append((label_html_to_text , build_script('readHTML', url)         ))
+
+    if cxm_show_open_browser:
+        cxm_list.append((label_open_browser , build_script('openBrowser', url)         ))
+
+    return cxm_list
+
+def build_open_browser_to_pair_context_menu_entries(url):
+    cxm_list=[]
+    lcase_url=url.lower()
+    if "openload.co" in lcase_url:
+        pairing_url="https://olpair.com"
+    if "thevideo.me" in lcase_url:
+        pairing_url="https://thevideo.me/pair"
+
+        if cxm_show_open_browser:
+            cxm_list.append(("Go to [B][COLOR=cyan]{}[/COLOR][/B]".format(pairing_url), build_script('openBrowser', pairing_url)         ))
 
     return cxm_list
 

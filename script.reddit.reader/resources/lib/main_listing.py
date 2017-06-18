@@ -600,22 +600,10 @@ def listLinksInComment(url, name, type_):
     del ui
     return
 
-    from guis import commentsGUI
-
-    ui = commentsGUI('view_461_comments.xml' , addon_path, defaultSkin='Default', defaultRes='1080i', listing=li, id=55)
-
-    ui.setProperty('comments', 'yes')   #the links button is visible/hidden in xml by checking for this property
-
-    ui.title_bar_text=post_title
-    ui.include_parent_directory_entry=False
-
-    ui.doModal()
-    del ui
-
 def reddit_comment_worker(idx, h, q_out,submitter):
     from domains import parse_reddit_link, sitesBase
     from utils import format_description, ret_info_type_icon, build_script, is_filtered
-    from ContextMenus import build_youtube_context_menu_entries
+    from ContextMenus import build_youtube_context_menu_entries, build_reddit_context_menu_entries, build_link_in_browser_context_menu_entries, build_open_browser_to_pair_context_menu_entries
 
     try:
 
@@ -634,6 +622,8 @@ def reddit_comment_worker(idx, h, q_out,submitter):
             domain='subreddit'
         elif link_url.startswith('/u/'):
             domain='redditor'
+        elif link_url.startswith('#'): #some sort of css flair
+            link_url=''
         else:
             from urlparse import urlparse
             domain = '{uri.netloc}'.format( uri=urlparse( link_url ) )
@@ -642,8 +632,12 @@ def reddit_comment_worker(idx, h, q_out,submitter):
             log( '  comment %s TITLE:%s... link[%s]' % ( str(d).zfill(3), desc100.ljust(20)[:20],link_url ) )
 
         ld=parse_reddit_link(link_url=link_url, assume_is_video=False, needs_preview=True, get_playable_url=True )
+
+        plot=format_description(h[3])
+
         if author==submitter:#add a submitter tag
             author="[COLOR cadetblue][B]%s[/B][/COLOR][S]" %author
+            plot="[B][OP][/B] "+plot
         else:
             author="[COLOR cadetblue]%s[/COLOR]" %author
 
@@ -651,8 +645,6 @@ def reddit_comment_worker(idx, h, q_out,submitter):
             t_prepend=r"%s" %( tab )
         elif kind=='t3':
             t_prepend=r"[B]Post text:[/B]"
-
-        plot=format_description(h[3])
 
         liz=xbmcgui.ListItem(label=t_prepend + author + ': '+ desc100 ,
                              label2="")
@@ -699,7 +691,13 @@ def reddit_comment_worker(idx, h, q_out,submitter):
                 liz.setProperty('link_url', link_url )  #just used as text at bottom of the screen
 
 
-                liz.setProperty('context_menu', str(build_youtube_context_menu_entries(type_='',youtube_url=link_url,video_id=None)) )
+                context_menu_list=[]
+                context_menu_list.extend(build_youtube_context_menu_entries(type_='',youtube_url=link_url,video_id=None))
+                context_menu_list.extend(build_reddit_context_menu_entries(link_url))
+                context_menu_list.extend(build_link_in_browser_context_menu_entries(link_url))
+                context_menu_list.extend(build_open_browser_to_pair_context_menu_entries(link_url))
+
+                liz.setProperty('context_menu', str(context_menu_list) )
 
         else:
 

@@ -71,7 +71,7 @@ if __name__ == '__main__':
     name   = params.get('name', '')
 
 
-    log( "----------------v" + addon.getAddonInfo('version')  + ' ' + ( mode+': '+url if mode else '' ) +'-----------------')
+    log( "----------------v{0} {1}:{2} {3}----------------".format( addon.getAddonInfo('version'), mode,type_,(url if mode else '' ) ))
 
 
     from resources.lib.slideshow import autoSlideshow

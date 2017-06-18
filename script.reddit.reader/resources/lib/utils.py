@@ -61,16 +61,22 @@ def compose_list_item(label,label2,iconImage,property_item_type, onClick_action,
     return liz
 
 
-def build_script( mode, url, name="", type_="", script_to_call=''):
+def build_script( mode, url="", name="", type_="", script_to_call=''):
 
     if script_to_call: #plugin://plugin.video.reddit_viewer/
 
         pass
     else:
 
-        name=name.decode('unicode_escape').encode('ascii','ignore')
+        name='' if name==None else name.decode('unicode_escape').encode('ascii','ignore')
+        url=''  if url==None else url.decode('unicode_escape').encode('ascii','ignore') #causes error in urllib.quote_plus() if None
         script_to_call=addonID
-        return "RunAddon(%s,%s)" %(script_to_call, "mode="+ mode+"&url="+urllib.quote_plus(url)+"&name="+urllib.quote_plus(name)+"&type="+str(type_) )
+
+        return "RunAddon({script_to_call},mode={mode}&url={url}&name={name}&type={type})".format( script_to_call=script_to_call,
+                                                                                                  mode=mode,
+                                                                                                  url=urllib.quote_plus(url),
+                                                                                                  name=urllib.quote_plus(name),
+                                                                                                  type=str(type_)  )
 
 def build_playable_param( mode, url, name="", type_="", script_to_call=addonID):
 
@@ -275,8 +281,7 @@ def parse_filename_and_ext_from_url(url=""):
     filename=""
     ext=""
 
-    from urlparse import urlparse
-    path = urlparse(url).path
+    path = urlparse.urlparse(url).path
 
     try:
         if '.' in path:
@@ -531,7 +536,7 @@ def xbmc_notify(line1, line2, time=2000, icon=''):
     if icon and os.path.sep not in icon:
         icon=os.path.join(addon.getAddonInfo('path'), 'resources','skins','Default','media', icon)
 
-    xbmcgui.Dialog().notification( line1, line2, icon, time)  #<-- use this instead of  xbmc.executebuiltin('XBMC.Notification("%s", "%s", %d, %s )' %( Line1, line2, time, icon) ) 
+    xbmcgui.Dialog().notification( line1, line2, icon, time)  #<-- use this instead of  xbmc.executebuiltin('XBMC.Notification("%s", "%s", %d, %s )' %( Line1, line2, time, icon) )
     log("User notification: %s: %s" %(line1, line2) )
 
 def open_web_browser(url,name,type_):
@@ -662,16 +667,20 @@ def dictlist_to_listItems(dictlist):
         ti=d.get('li_thumbnailImage')
         media_url=d.get('DirectoryItem_url')
         media_type=d.get('type')
-        media_thumb=d.get('thumb')
         isPlayable=d.get('isPlayable')
         link_action=d.get('link_action')
         channel_id=d.get('channel_id')
         video_id=d.get('video_id')
+        infoLabels=d.get('infoLabels')
 
 
         liz=xbmcgui.ListItem(label=label, label2=label2)
 
-        if media_type==sitesBase.TYPE_VIDEO:
+        if media_type==sitesBase.TYPE_IMAGE:
+            liz.setProperty('item_type','script')
+            liz.setProperty('onClick_action', build_script('viewImage', media_url,'',ti) )
+            liz.setArt({"thumb": ti, "banner":media_url })
+        else:  #if media_type==sitesBase.TYPE_VIDEO:
 
             if not link_action:
                 link_action='playYTDLVideo' #default action is to send link to ytdl
@@ -682,18 +691,17 @@ def dictlist_to_listItems(dictlist):
                 liz.setProperty('is_video','true')
             else:
                 liz.setProperty('item_type','script')
-                liz.setProperty('onClick_action', build_script(link_action, media_url,'',media_thumb) )
-        elif media_type==sitesBase.TYPE_IMAGE:
-            liz.setProperty('item_type','script')
-            liz.setProperty('onClick_action', build_script('viewImage', media_url,'',media_thumb) )
+                liz.setProperty('onClick_action', build_script(link_action, media_url,'','') )
+
+            liz.setArt({"thumb": ti })
 
         liz.setProperty('link_url', media_url )  #added so we have a way to retrieve the link
         liz.setProperty('channel_id', channel_id )
         liz.setProperty('video_id', video_id )   #youtube only for now
+        liz.setProperty('label', label )
 
-        liz.setInfo( type='video', infoLabels= d['infoLabels'] ) #this tricks the skin to show the plot. where we stored the picture descriptions
+        liz.setInfo( type='video', infoLabels=infoLabels ) #this tricks the skin to show the plot. where we stored the picture descriptions
 
-        liz.setArt({"thumb": ti, "banner":media_url })
 
         directory_items.append( liz )
 

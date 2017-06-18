@@ -245,7 +245,6 @@ def populate_subreddits_pickle():
     from guis import progressBG
     loading_indicator=progressBG(translation(32023))   #Gathering icons..
 
-
     with open(subredditsFile, 'r') as fh:
         subreddit_settings = fh.readlines()
 
@@ -298,7 +297,7 @@ def parse_subreddit_entry(subreddit_entry_from_file):
         entry_type='domain'
 
         domain=re.findall(r'(?::|\/domain\/)(.+)',subreddit)[0]
-        description=translation(32008) % domain            #"Show posts from"
+        description=translation(32008) + domain            #"Show posts from"
 
     if '+' in subreddit:
         entry_type='combined'

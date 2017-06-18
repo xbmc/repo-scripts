@@ -2,20 +2,21 @@
 <addon
     id="script.reddit.reader"
     name="Reddit Reader"
-    version="0.9.6"
+    version="0.9.9"
     provider-name="gedisony">
     <requires>
-        <import addon="xbmc.python"                     version="2.25.0"/>
-	    <import addon="script.module.requests"          version="1.1.0"/>
-	    <import addon="script.module.youtube.dl"        version="16.521.0"/>
-	    <import addon="script.module.urlresolver"                      />
+        <import addon="xbmc.python"                   version="2.25.0"/>
+        <import addon="script.module.requests"        version="1.1.0"/>
+        <import addon="script.module.requests-cache"  />
+        <import addon="script.module.youtube.dl"      />
+        <import addon="script.module.urlresolver"     />
     </requires>
 
-	<extension point="xbmc.python.script" library="default.py">
-		<provides>executable</provides>
-	</extension>
-	<extension point="xbmc.ui.screensaver" library="screensaver.py" />
-    
+    <extension point="xbmc.python.script" library="default.py">
+        <provides>executable</provides>
+    </extension>
+    <extension point="xbmc.ui.screensaver" library="screensaver.py" />
+
     <extension point="xbmc.addon.metadata">
         <platform>all</platform>
         <summary lang="en_GB">Browse Reddit on Kodi</summary>
@@ -26,13 +27,13 @@
         <forum>http://forum.kodi.tv/showthread.php?tid=287355</forum>
         <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
         <email>gediso+ny at gmail dot com</email>
-		<disclaimer>This add-on is not published nor endorsed by reddit inc.</disclaimer>
-		<assets>
-			<icon>icon.png</icon>
-			<fanart>resources/rr_fanart.png</fanart>
-			<screenshot>resources/screenshot-01.jpg</screenshot>
-			<screenshot>resources/screenshot-02.jpg</screenshot>
-			<screenshot>resources/screenshot-03.jpg</screenshot>
-		</assets>		
+        <disclaimer>This add-on is not published nor endorsed by reddit inc.</disclaimer>
+        <assets>
+            <icon>icon.png</icon>
+            <fanart>resources/rr_fanart.png</fanart>
+            <screenshot>resources/screenshot-01.jpg</screenshot>
+            <screenshot>resources/screenshot-02.jpg</screenshot>
+            <screenshot>resources/screenshot-03.jpg</screenshot>
+        </assets>
     </extension>
 </addon>

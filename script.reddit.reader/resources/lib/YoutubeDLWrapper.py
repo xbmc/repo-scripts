@@ -325,7 +325,6 @@ def _selectVideoQuality(r, quality=1, disable_dash=True):
         import urllib
         import difflib
 
-
         entries = r.get('entries') or [r]
 
         minHeight, maxHeight = _getQualityLimits(quality)

@@ -402,6 +402,8 @@ def playYTDLVideo(url, name, type_):
 def add_ytdl_video_info_to_playlist(video_info, pl, title=None):
     url=video_info.get('xbmc_url')  #there is also  video_info.get('url')  url without the |useragent...
 
+    url=urllib.quote_plus(url.encode('utf-8'), safe="&$+,/:;=?@#<>[]{}|\^%")
+
     title=video_info.get('title') or title
     ytdl_format=video_info.get('ytdl_format')
     if ytdl_format:
@@ -549,26 +551,43 @@ def listRelatedVideo(url,name,type_):
 
         yt=ClassYoutube(url)
         try:
-            links_dictList=yt.get_more_info(type_)  #returns a list of dict same as one used for albums
+            yt.get_thumb_url()
+            poster=yt.poster_url
+
+
+            xbmc_busy(True)
+            if type_=='links_in_description':
+                links_dictList=yt.get_links_in_description(return_channelID_only=False)
+            else: # 'channel' 'related default
+                links_dictList=yt.ret_album_list(type_)  #returns a list of dict same as one used for albums
+            xbmc_busy(False)
+
             if links_dictList:
 
                 directory_items=dictlist_to_listItems(links_dictList)
                 for li in directory_items:
                     link_url=li.getProperty('link_url')
                     video_id=li.getProperty('video_id')
+                    label=li.getProperty('label')
+                    li.setProperty('context_menu', str(build_youtube_context_menu_entries(type_,link_url,video_id, title=label)) )
 
-                    li.setProperty('context_menu', str(build_youtube_context_menu_entries(type_,link_url,video_id)) )
+                if type_=='links_in_description':
+                    from guis import text_to_links_gui
+                    ui = text_to_links_gui('srr_links_in_text.xml' , addon_path, defaultSkin='Default', defaultRes='1080i', listing=directory_items, title=name, poster=poster)
 
-                from guis import cGUI
-                ui = cGUI('srr_related_videos.xml' , addon_path, defaultSkin='Default', defaultRes='1080i', listing=directory_items, id=55)
-                ui.include_parent_directory_entry=False
-
+                else: # 'channel' 'related default
+                    from guis import cGUI
+                    ui = cGUI('srr_related_videos.xml' , addon_path, defaultSkin='Default', defaultRes='1080i', listing=directory_items, id=55, title=name, poster=poster)
+                    ui.include_parent_directory_entry=False
                 ui.doModal()
                 del ui
             else:
                 xbmc_notify('Nothing to list', url)
+
         except ValueError as e:
             xbmc_notify('Error', str(e))
+        finally:
+            xbmc_busy(False)
     else:
         xbmc_notify('cannot identify youtube url', url)
 
