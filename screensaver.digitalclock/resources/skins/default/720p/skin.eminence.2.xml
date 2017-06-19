@@ -60,7 +60,7 @@
 				<align>center</align>
 				<aligny>center</aligny>				
 				<label></label>
-				<font>Clock</font>
+				<font>Font-MusicVis-Bigger</font>
 			</control>
 			<control type="label" id="30102">
 				<description>Colon</description>
@@ -74,7 +74,7 @@
 				<align>center</align>
 				<aligny>center</aligny>				
 				<label></label>
-				<font>Clock</font>
+				<font>Font-MusicVis-Bigger</font>
 				</control>
 			<control type="label" id="30103">
 				<description>Minute</description>
@@ -88,7 +88,7 @@
 				<align>center</align>
 				<aligny>center</aligny>				
 				<label></label>
-				<font>Clock</font>
+				<font>Font-MusicVis-Bigger</font>
 			</control>
 			<control type="label" id="30104">
 				<description>AMPM</description>
@@ -102,7 +102,7 @@
 				<align>center</align>
 				<aligny>center</aligny>				
 				<label></label>
-				<font>Font-Sublabel</font>
+				<font>Font-ListInfo</font>
 			</control>			
 			<control type="label" id="30100">
 				<description>Date</description>
@@ -116,7 +116,7 @@
 				<align>center</align>
 				<aligny>center</aligny>
 				<label></label>
-				<font>Font-Sublabel</font>
+				<font>Font-ListInfo</font>
 			</control>	
 			<control type="label" id="30110">
 				<description>Information</description>
@@ -130,7 +130,7 @@
 				<align>center</align>
 				<aligny>center</aligny>
 				<label></label>
-				<font>Font-Sublabel</font>
+				<font>Font-ListInfo</font>
 			</control>				
 			<control type="label" id="30105">
 				<description>Hour color control</description>
