@@ -1,3 +1,6 @@
+[B]5.0.2[/B]
+- Added support for Adonic and (Fuse)neue skins
+
 [B]5.0.1[/B]
 - Fixed the weather icon not updating bug
 
