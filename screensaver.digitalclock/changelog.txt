@@ -1,3 +1,6 @@
+[B]5.0.3[/B]
+- Creating a guide!
+
 [B]5.0.2[/B]
 - Added support for Adonic and (Fuse)neue skins
 
