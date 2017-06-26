@@ -1,3 +1,6 @@
+2.0.18
+- fixed support for windows 32bit after last version bump
+
 2.0.17
 - add support for windows 64bit
 

@@ -72,7 +72,7 @@ def get_platform():
   if xbmc.getCondVisibility('system.platform.osx'):
     platformstr = "osx"
   elif xbmc.getCondVisibility('system.platform.windows'):
-    if platform.machine().endswith('64'):
+    if sys.maxsize > 2**32:
       platformstr = "win64"
     else:
       platformstr = "win32"
