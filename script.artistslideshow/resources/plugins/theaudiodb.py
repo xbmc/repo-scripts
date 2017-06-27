@@ -189,10 +189,11 @@ class objectConfig():
         if success:
             rloglines, rawdata = readFile( cachefilepath ) 
             self.loglines.extend( rloglines )
-        if rawdata:
-            return int( rawdata )
-        else:
-            return 0
+        try:
+            cachetime = int( rawdata )
+        except ValueError:
+            cachetime = 0
+        return cachetime
 
 
     def _get_data( self, filepath, cachefilepath, url, url_params ):
