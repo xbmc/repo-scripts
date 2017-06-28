@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.artistslideshow" name="Artist Slideshow" version="2.0.7" provider-name="pkscout,ronie">
+<addon id="script.artistslideshow" name="Artist Slideshow" version="2.0.8" provider-name="pkscout,ronie">
 	<requires>
 		<import addon="xbmc.python" version="2.19.0"/>
 		<import addon="xbmc.addon" version="14.0.0"/>
@@ -10,9 +10,10 @@
 		<provides>executable</provides>
 	</extension>
 	<extension point="xbmc.addon.metadata">
-		<news>2.0.7
-        - changed behavior for finding MusicBrainz ID to include Kodi, local file, theaudiodb, and lastfm
-        - miscellaneous bug fixes
+		<news>
+v.2.0.8
+- fix for crash if Kodi plugin tries to load bio with oddly encoded characters
+- fix for crash if a services cache file contains a string that doesn't evaluate to int
 		</news>
 		<summary lang="ar">حمل المزيد من الصور والمعلومات عن الفنان الذى يُغنِى حالياً</summary>
 		<summary lang="be">Download images and additional info of the currently playing artist</summary>

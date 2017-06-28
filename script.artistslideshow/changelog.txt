@@ -1,3 +1,7 @@
+v.2.0.8
+- fix for crash if Kodi plugin tries to load bio with oddly encoded characters
+- fix for crash if a services cache file contains a string that doesn't evaluate to int
+
 v.2.0.7
 - added last.fm bio file as option for finding Musicbrainz ID
 - moved all Musicbrainz ID functions into plugins
