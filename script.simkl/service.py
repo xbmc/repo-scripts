@@ -8,6 +8,11 @@ Creator: David Davó <david@ddavo.me>
 import sys, os
 import xbmcaddon
 import xbmc
+
+from resources.lib import utils
+utils.systemLock("SimklTrackerRun")
+utils.systemUnlockDelay("SimklTrackerRun", 5)
+
 from resources.lib import interface, engine
 from resources.lib import simklapi as API
 
@@ -38,7 +43,9 @@ if __name__ == "__main__":
     #Testing:
     #API.api.login()
 
-    if not API.api.is_user_logged():
+    if API.api.internet == False:
+        interface.notify(getstr(32027))
+    elif not API.api.is_user_logged():
         API.api.login() #Add "remind me tomorrow button"
         #interface.notify(getstr(32026))
     else:

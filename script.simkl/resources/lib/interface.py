@@ -3,6 +3,8 @@
 import time
 import threading
 import xbmc, xbmcgui, xbmcaddon
+import utils
+
 __addon__ = xbmcaddon.Addon("script.simkl")
 from simklapi import api as API
 tmp = time.time()
@@ -61,6 +63,7 @@ class loginDialog(xbmcgui.WindowXMLDialog):
                 self.waiting = False
                 notify(getstr(32031))
 
+        utils.systemUnlockDelay("SimklTrackerRunLogin", 1)
         xbmc.log("Simkl: Stop waiting")
         self.close()
 

@@ -1,24 +1,28 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addon id="script.simkl"
        name="Simkl TV Tracker"
-       version="1.0.4"
+       version="1.2.0"
        provider-name="David Davó, Simkl">
   <requires>
-    <import addon="xbmc.python" version="2.24.0"/>
+    <import addon="xbmc.python" version="2.6"/>
   </requires>
   <extension point="xbmc.service" library="service.py" start="login" />
   <extension point="xbmc.addon.metadata">
-    <summary lang="en_gb">Simkl Scrobbler with AI file detection system</summary>
-    <disclaimer lang="en_gb">Not tested on Android</disclaimer>
-    <description lang="en_gb">Automatically set Movies and TV Shows\Anime as watched on Simkl.com. Simkl knows what you're watching, tells you episodes you've missed, and connects you to what your friends are into.</description>
+    <summary lang="en">Simkl Scrobbler with AI file detection system</summary>
+    <summary lang="en_US">Simkl Scrobbler with AI file detection system</summary>
+    <description lang="en">Automatically set Movies and TV Shows\Anime as watched on Simkl.com. Simkl knows what you're watching, tells you episodes you've missed, and connects you to what your friends are into. Sign up at https://simkl.com to get all of these features: &#10;&#10;- Automatically track what you’re watching.&#10;- Receive notifications about new episodes.&#10;- Find recommendations based on your watch history.&#10;- See your friend's ratings.&#10;&#10;Simkl was created to help people, like you, to keep track of what you watch and receive notifications about new episodes and new movie releases based on your preferences and watch history.</description>
+    <description lang="en_US">Automatically set Movies and TV Shows\Anime as watched on Simkl.com. Simkl knows what you're watching, tells you episodes you've missed, and connects you to what your friends are into. Sign up at https://simkl.com to get all of these features: &#10;&#10;- Automatically track what you’re watching.&#10;- Receive notifications about new episodes.&#10;- Find recommendations based on your watch history.&#10;- See your friend's ratings.&#10;&#10;Simkl was created to help people, like you, to keep track of what you watch and receive notifications about new episodes and new movie releases based on your preferences and watch history.</description>
+    <disclaimer lang="en">Not tested on Android</disclaimer>
     <platform>all</platform>
     <license>GPLv3</license>
+    <forum>http://forum.kodi.tv/showthread.php?tid=305324</forum>
+    <website>https://simkl.com/apps/kodi/</website>
     <email>david@ddavo.me</email>
     <source>https://github.com/SIMKL/script.simkl</source>
     <assets>
       <icon>resources/icon.png</icon>
       <fanart>resources/fanart.png</fanart>
     </assets>
-    <language></language>
+    <language>en</language>
   </extension>
 </addon>
