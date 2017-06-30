@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- Catalan language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/ca/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
+<strings>
+    <string id="30000">Actualització Automàtica de la Biblioteca de l'XBMC</string>
+    <string id="30001">General</string>
+    <string id="30002">Vídeo</string>
+    <string id="30003">Música</string>
+    <string id="30004">Actualitza la biblioteca de vídeo</string>
+    <string id="30005">Actualitza la biblioteca de música</string>
+    <string id="30006">Mostra les notificacions</string>
+    <string id="30007">Inicia durant la reproducció</string>
+    <string id="30008">Temps d'espera al començar (minuts)</string>
+    <string id="30009">Utilitzar un temporitzador avançat</string>
+    <string id="30010">Quantitat de temps entre actualitzacions (hores)</string>
+    <string id="30011">Expressió cron</string>
+    <string id="30012">Actualitza la biblioteca de vídeo</string>
+    <string id="30013">Actualitza la biblioteca de música</string>
+
+    <!-- specific paths -->
+    <string id="30020">Camí d'actualització especific 1</string>
+    <string id="30021">Camí d'actualització especific 2</string>
+    <string id="30022">Camí d'actualització especific 3</string>
+    <string id="30023">Camí del vídeo</string>
+
+    <!-- disclaimer -->
+    <string id="30030">Llegir avis</string>
+    <string id="30031">Avis del camins dels vídeos</string>
+    <string id="30032">El camí ja té que ser una font de vídeo amb contingut</string>
+    <string id="30033">El camí té ser exacte al camí de la font por escanejar</string>
+
+    <!-- cleaning -->
+    <string id="30040">Netejant</string>
+    <string id="30041">Neteja les biblioteques</string>
+    <string id="30042">Verificar les font abans de netejar</string>
+    <string id="30043">Freqüència</string>
+    <string id="30044">Després de la actualització</string>
+    <string id="30045">Un cop per dia</string>
+    <string id="30046">Un cop per setmana</string>
+    <string id="30047">Un cop per mes</string>
+    <string id="30048">Neteja la biblioteca de vídeo</string>
+    <string id="30049">Neteja la biblioteca de música</string>
+    <string id="30050">Error al netejar la base de dades</string>
+    <string id="30051">Avisa el usuari abans de netejar la biblioteca</string>
+    <string id="30052">Està programada el inici d'una neteja de la base de dades</string>
+    <string id="30053">Vols iniciar-la ara?</string>
+    <string id="30054">Biblioteca a netejar</string>
+    <string id="30055">Ambdós</string>
+    <string id="30056">Expressió cron per a vídeo</string>
+    <string id="30057">Expressió cron per a música</string>
+
+    <!-- manual run -->
+    <string id="30060">La actualització es tornara a iniciar</string>
+    <string id="30061">Voleu iniciar la actualització manualment?</string>
+</strings>

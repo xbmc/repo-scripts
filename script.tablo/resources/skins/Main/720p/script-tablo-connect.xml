@@ -217,14 +217,27 @@
             </control>
         </control>
 
-        <control type="image">
+        <control type="group">
             <visible>!IsEmpty(Window.Property(tablo.found))</visible>
-            <posx>275</posx>
-            <posy>200</posy>
-            <width>662</width>
-            <height>242</height>
-            <texture>tablo/tablo_render_hd.png</texture>
-            <aspectratio>keep</aspectratio>
+            <control type="image">
+                <visible>!StringCompare(Container(200).ListItem.Label2,duo)</visible>
+                <posx>275</posx>
+                <posy>200</posy>
+                <width>662</width>
+                <height>242</height>
+                <texture>tablo/tablo_render_hd.png</texture>
+                <aspectratio>keep</aspectratio>
+            </control>
+
+            <control type="image">
+                <visible>StringCompare(Container(200).ListItem.Label2,duo)</visible>
+                <posx>325</posx>
+                <posy>100</posy>
+                <width>629</width>
+                <height>400</height>
+                <texture>tablo/tablo_render_hd-duo.png</texture>
+                <aspectratio>keep</aspectratio>
+            </control>
         </control>
 
         <control type="image">

@@ -86,7 +86,7 @@ msgid "Could not switch to %s"
 msgstr "Kan niet overschakelen naar %s"
 
 msgctxt "#30026"
-msgid "Switching now to '%s'."
+msgid "Switching to '%s' in a few seconds"
 msgstr "Schakel nu over naar '%s'."
 
 msgctxt "#30027"
@@ -102,8 +102,16 @@ msgid "%s Seconds left to abort"
 msgstr "%s Seconden resterend om af te breken"
 
 msgctxt "#30030"
-msgid "This Addon is a part of the KN switchtimer service and cannot use as a standalone application."
-msgstr "Deze addon is onderdeel van KN switchtimer service en kan niet gebruikt worden als losstaande applicatie."
+msgid "Please use the PVR OSD Guide context menue to set or reset switch timers"
+msgstr ""
+
+msgctxt "#30031"
+msgid "Timer for this time already set (%s, %s). Would You replace this timer with the new one instead?"
+msgstr ""
+
+msgctxt "#30032"
+msgid "Channel Switch aborted"
+msgstr ""
 
 msgctxt "#30040"
 msgid "Add switchtimer"

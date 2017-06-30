@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+    <category label="32000">
+        <setting label="32001" type="lsep" />
+        <setting id="pvr_art_recordings_only" type="bool" label="32002" default="false"/>
+        <setting id="pvr_art_scraper" type="bool" label="32003" default="true"/>
+        <setting id="pvr_art_google" type="bool" label="32004" default="false" visible="eq(-1,true)"/>
+        <setting id="pvr_art_custom" type="bool" label="32005" default="false"/>
+        <setting id="pvr_art_custom_path" label="32006" type="folder" source="auto" visible="eq(-1,true)" />
+        <setting id="pvr_art_download" type="bool" label="32007" default="false" visible="eq(-2,true)"/>
+        <setting label="32008" type="lsep" />
+        <setting label="32009" type="lsep" />
+        <setting id="pvr_art_ignore_channels" label="32010" type="text" />
+        <setting id="pvr_art_ignore_titles" label="32011" type="text"/>
+        <setting id="pvr_art_ignore_genres" label="32025" type="text" default="Sport|News"/>
+        <setting id="pvr_art_ignore_commongenre" label="32026" type="bool" default="true"/>
+        <setting id="pvr_art_splittitlechar" label="32012" type="text" default=": | ( | ;"/>        
+        <setting id="pvr_art_replace_by_space" label="32013" type="text" default="-|_"/>
+        <setting id="pvr_art_stripchars" label="32014" type="text" default="\*|,|(|)|:|;|\&quot;|`|_new|new_|.|\&apos;"/>
+    </category>
+    <category label="32015">
+        <setting label="32016" type="lsep" />
+        <setting label="32017" type="lsep" />
+        <setting id="music_art_scraper" type="bool" label="32018" default="true"/>
+        <setting id="music_art_musicfolders" type="bool" label="32021" default="true"/>
+        <setting id="music_art_custom" type="bool" label="32019" default="false"/>
+        <setting id="music_art_custom_path" label="32020" type="folder" source="auto" default="" visible="eq(-1,true)"/>
+        <setting id="music_art_download" type="bool" label="32022" default="false" visible="eq(-4,true) + eq(-3,true)"/>
+        <setting id="music_art_download_custom" type="bool" label="32023" default="false" visible="eq(-5,true) + eq(-3,true)"/>
+        <setting label="" type="lsep" />
+        <setting label="32047" type="lsep" />
+        <setting id="music_art_mb_mirror" label="32024" type="text" visible="eq(-8,true)"/>
+        <setting id="music_art_scraper_adb" type="bool" label="32049" default="false" visible="eq(-9,true)"/>
+        <setting id="music_art_scraper_lfm" type="bool" label="32050" default="true" visible="eq(-10,true)"/>
+        <setting id="music_art_scraper_fatv" type="bool" label="32051" default="true" visible="eq(-11,true)"/>
+    </category>
+    <category label="32044">
+        <setting id="fanarttv_apikey" label="32045" type="text"/>
+        <setting label="32046" type="lsep" />
+    </category>
+</settings>

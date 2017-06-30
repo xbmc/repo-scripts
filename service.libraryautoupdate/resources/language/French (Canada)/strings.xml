@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- French (Canada) language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/fr_CA/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
+<strings>
+    <string id="30000">Mise à jour automatique de la médiathèque XBMC</string>
+    <string id="30001">Général</string>
+    <string id="30002">Vidéo</string>
+    <string id="30003">Musique</string>
+    <string id="30004">Mise à jour de la vidéothèque</string>
+    <string id="30005">Mise à jour de l'audiothèque</string>
+    <string id="30006">Afficher les notifications</string>
+    <string id="30007">Exécuter pendant la lecture</string>
+    <string id="30008">Retard de démarrage (minutes)</string>
+    <string id="30009">Utiliser une minuterie avancée</string>
+    <string id="30010">Intervalle entre les mises à jour (heures)</string>
+    <string id="30011">Expression cron</string>
+    <string id="30012">Mise à jour de la vidéothèque</string>
+    <string id="30013">Mise à jour de l'audiothèque</string>
+    <string id="30014">Exécuter seulement lorsque inactif</string>
+
+    <!-- specific paths -->
+    <string id="30020">Mettre à jour le chemin spécifique 1</string>
+    <string id="30021">Mettre à jour le chemin spécifique 2</string>
+    <string id="30022">Mettre à jour le chemin spécifique 3</string>
+    <string id="30023">Chemin de la vidéo</string>
+
+    <!-- disclaimer -->
+    <string id="30030">Lire l'avis de non-responsabilité</string>
+    <string id="30031">Mise en garde pour les chemins de vidéos</string>
+    <string id="30032">Le chemin doit déjà être une source vidéo avec du contenu</string>
+    <string id="30033">Le chemin doit faire correspondre exactement le chemin source au balayage</string>
+
+    <!-- cleaning -->
+    <string id="30040">Nettoyage</string>
+    <string id="30041">Nettoyer les médiathèques</string>
+    <string id="30042">Vérifier les sources avant le nettoyage</string>
+    <string id="30043">Fréquence</string>
+    <string id="30044">Après une mise à jour</string>
+    <string id="30045">Quotidiennement</string>
+    <string id="30046">Hebdomadairement</string>
+    <string id="30047">Mensuellement</string>
+    <string id="30048">Nettoyer la vidéothèque</string>
+    <string id="30049">Nettoyer l'audiothèque</string>
+    <string id="30050">Erreur lors du nettoyage de la base de données</string>
+    <string id="30051">Avertir l'utilisateur avant de nettoyer la bibliothèque</string>
+    <string id="30052">Un nettoyage de la base de données est planifiée pour s'exécuter</string>
+    <string id="30053">Voulez-vous lancer maintenant?</string>
+    <string id="30054">Médiathèque à nettoyer</string>
+    <string id="30055">Les deux</string>
+    <string id="30056">Expression cron pour vidéo</string>
+    <string id="30057">Expression cron pour musique</string>
+
+    <!-- manual run -->
+    <string id="30060">La mise à jour va s'exécuter de nouveau</string>
+    <string id="30061">Voulez-vous exécuter une mise à jour manuellement?</string>
+</strings>

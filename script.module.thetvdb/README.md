@@ -1,6 +1,7 @@
 # script.module.thetvdb
 Kodi python module to access the new thetvdb api v2
 
+The module is supported by the simplecache module to ensure that data is not useless retrieved from the API all the time.
 
 ## Usage
 
@@ -16,8 +17,9 @@ Just make sure to import it within your addon.xml:
 Now, to use it in your Kodi addon/script, make sure to import it and you can access it's methods.
 
 ```
-import thetvdb
-next_aired_episodes = thetvdb.getKodiSeriesUnairedEpisodesList(False)
+from thetvdb import TheTvDb
+tvdb = TheTvDb()
+next_aired_episodes = tvdb.get_kodi_unaired_episodes(single_episode_per_show=False)
 for episode in next_aired_episodes:
     #do your stuff here, like creating listitems for all episodes that are returned.
 ```
@@ -30,92 +32,108 @@ If any images are found, they will also be present in the result (thumb, poster,
 
 ## Available methods
 
-###getEpisode(episodeid)
+###get_episode(episodeid)
 ```
     Returns the full information for a given episode id. 
     Deprecation Warning: The director key will be deprecated in favor of the new directors key in a future release.
-    Usage: specify the episode ID: getEpisode(episodeid)
+    Usage: specify the episode ID: get_episode(episodeid)
 ```
 
-###getSeries(seriesid,ContinuingOnly=False)
+###get_series(seriesid,ContinuingOnly=False)
 ```
     Returns a series record that contains all information known about a particular series id.
-    Usage: specify the serie ID: getSeries(seriesid)
+    Usage: specify the serie ID: get_series(seriesid)
+    Output is formatted in kodi compatible json format
 ```
 
-###getContinuingSeries()
+###get_series_by_imdb_id(imdbid)
+```
+    Returns a series record that contains all information known about a particular series id.
+    Usage: specify the IMDBID for the series: get_series_by_imdb_id(seriesid)
+```
+
+
+###get_continuing_series()
 ```
     only gets the continuing series, based on which series were recently updated as there is no other api call to get that information
 ```
 
-###getSeriesActors(seriesid)
+
+###get_series_actors(seriesid)
 ```
     Returns actors for the given series id.
-    Usage: specify the series ID: getSeriesActors(seriesid)
+    Usage: specify the series ID: get_series_actors(seriesid)
 ```
 
-###getSeriesEpisodes(seriesid)
+###get_series_episodes(seriesid)
 ```
     Returns all episodes for a given series.
-    Usage: specify the series ID: getSeriesEpisodes(seriesid)
+    Usage: specify the series ID: get_series_episodes(seriesid)
+    Note: output is only summary of episode details (non kodi formatted)
 ```
 
-###getSeriesEpisodesByQuery(seriesid,absoluteNumber="",airedSeason="",airedEpisode="",dvdSeason="",dvdEpisode="",imdbId="")
+###get_last_episode_for_series(seriesid)
 ```
-    This route allows the user to query against episodes for the given series. The response is an array of episode records that have been filtered down to basic information.
-    Usage: specify the series ID: getSeriesEpisodesByQuery(seriesid)
-    optionally you can specify one or more fields for the query:
-    absoluteNumber --> Absolute number of the episode
-    airedSeason --> Aired season number
-    airedEpisode --> Aired episode number
-    dvdSeason --> DVD season number
-    dvdEpisode --> DVD episode number
-    imdbId --> IMDB id of the series
+    Returns the last aired episode for a given series.
+    Usage: specify the series ID: get_last_episode_for_series(seriesid)
 ```
 
-###getSeriesEpisodesSummary(seriesid)
+###get_series_episodes_by_query(seriesid, query="")
+```
+    This route allows the user to query against episodes for the given series. The response is an array of episode records.
+    Usage: specify the series ID: get_series_episodes_by_query(seriesid, query="imdbid=X")
+    You must specify one or more fields for the query (combine multiple with &):
+    absolutenumber=X --> Absolute number of the episode
+    airedseason=X --> Aired season number
+    airedepisode=X --> Aired episode number
+    dvdseason=X --> DVD season number
+    dvdepisode=X --> DVD episode number
+    imdbid=X --> IMDB id of the series
+    Note: output is only summary of episode details (non kodi formatted)
+```
+
+###get_series_episodes_summary(seriesid)
 ```
     Returns a summary of the episodes and seasons available for the series.
     Note: Season 0 is for all episodes that are considered to be specials.
 
-    Usage: specify the series ID: getSeriesEpisodesSummary(seriesid)
+    Usage: specify the series ID: get_series_episodes_summary(seriesid)
 ```
 
-###searchSeries(name="",imdbId="",zap2itId="")
+###search_series(query="", prefer_localized=False)
 ```
-    Allows the user to search for a series based on one or more parameters. Returns an array of results that match the query.
-    Usage: specify the series ID: searchSeries(parameters)
-    
-    Available parameters:
-    name --> Name of the series to search for.
-    imdbId --> IMDB id of the series
-    zap2itId -->  Zap2it ID of the series to search for.
+    Allows the user to search for a series based the name.
+    Returns an array of results that match the query.
+    Usage: specify the series ID: TheTvDb().search_series(searchphrase)
+
+    Available parameter:
+    prefer_localized --> True if you want to set the current kodi language as preferred in the results
 ```
 
-###getRecentlyUpdatedSeries()
+###get_recently_updated_series()
 ```
     Returns all series that have been updated in the last week
 ```
 
-###getUnAiredEpisodes(seriesid)
+###get_unaired_episodes(seriesid)
 ```
     Returns the unaired episodes for the specified seriesid
-    Usage: specify the series ID: getUnAiredEpisodes(seriesid)
+    Usage: specify the series ID: get_unaired_episodes(seriesid)
 ```
 
-###getNextUnAiredEpisode(seriesid)
+###get_nextaired_episode(seriesid)
 ```
     Returns the first next airing episode for the specified seriesid
-    Usage: specify the series ID: getNextUnAiredEpisode(seriesid)
+    Usage: specify the series ID: get_nextaired_episode(seriesid)
 ```
 
-###getUnAiredEpisodeList(seriesids)
+###get_unaired_episode_list(seriesids)
 ```
     Returns the next airing episode for each specified seriesid
-    Usage: specify the series ID: getNextUnAiredEpisode(list of seriesids)
+    Usage: get_unaired_episode_list([list [] of seriesids)
 ```
 
-###getKodiSeriesUnairedEpisodesList(singleEpisodePerShow=True):
+###get_continuing_kodi_series(single_episode_per_show=True):
 ```
     Returns the next unaired episode for all continuing tv shows in the Kodi library
     Defaults to a single episode (next unaired) for each show, to disable have False as argument.

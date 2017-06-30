@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.module.lwe_mapper"
+       name="mapper"
+       provider-name="linuxwhatelse"
+       version="1.1.0">
+
+    <requires>
+        <import addon="xbmc.python" version="2.24.0"/>
+    </requires>
+
+    <extension library="lib" point="xbmc.python.module"/>
+
+    <extension point="xbmc.addon.metadata">
+        <platform>all</platform>
+        <summary lang="en_GB">Simple URL-Scheme resolver</summary>
+        <description lang="en_GB">Simple URL-Scheme resolver</description>
+        <license>GNU GENERAL PUBLIC LICENSE. Version 3, June 2007</license>
+        <forum>http://forum.kodi.tv/showthread.php?tid=245808</forum>
+        <website>http://www.linuxwhatelse.com</website>
+        <email>info@linuxwhatelse.com</email>
+        <source>https://github.com/linuxwhatelse/script.module.lwe_mapper</source>
+    </extension>
+</addon>

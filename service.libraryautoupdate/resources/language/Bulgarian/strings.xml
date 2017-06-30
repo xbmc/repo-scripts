@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- Bulgarian language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/bg/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
+<strings>
+    <string id="30000">Автоматично обновяване</string>
+    <string id="30001">Основни</string>
+    <string id="30002">Видео</string>
+    <string id="30003">Музика</string>
+    <string id="30004">Обновявай видео библиотеката</string>
+    <string id="30005">Обновявай музикалната библиотека</string>
+    <string id="30006">Показвай известия</string>
+    <string id="30007">Обновяване и по време на възпроизвеждане</string>
+    <string id="30008">Забави обновяването, след зареждането на XBMC, с (минути)</string>
+    <string id="30009">Брояч с допълнителни опции</string>
+    <string id="30010">Интервал между две обновявания (часове)</string>
+    <string id="30011">Cron израз</string>
+    <string id="30012">на видео библиотеката</string>
+    <string id="30013">на музикалната библиотека</string>
+    <string id="30014">Стартирай само при бездействие</string>
+
+    <!-- specific paths -->
+    <string id="30020">Обновяване на път №1</string>
+    <string id="30021">Обновяване на път №2</string>
+    <string id="30022">Обновяване на път №3</string>
+    <string id="30023">Път до видео файловете</string>
+
+    <!-- disclaimer -->
+    <string id="30030">Прочетете опровержението</string>
+    <string id="30031">Опровержение за пътя до видео файловете</string>
+    <string id="30032">Пътят трябва да е съществуващ видео източник със съдържание.</string>
+    <string id="30033">Пътят да е идентичен с пътя на източника.</string>
+
+    <!-- cleaning -->
+    <string id="30040">Почистване</string>
+    <string id="30041">Почистване на библиотеките</string>
+    <string id="30042">Потвърждаване на източника преди почистване</string>
+    <string id="30043">Честота</string>
+    <string id="30044">След обновяване</string>
+    <string id="30045">Веднъж на ден</string>
+    <string id="30046">Веднъж на седмица</string>
+    <string id="30047">Веднъж на месец</string>
+    <string id="30048">Почиствай видео библиотеката</string>
+    <string id="30049">Почиствай музикалната библиотека</string>
+    <string id="30050">Възникна грешка при почистването на базата от данни</string>
+    <string id="30051">Запитване на потребителя преди почистването</string>
+    <string id="30052">Следващото почистване ще стартира след </string>
+    <string id="30053">Желаете ли да стартирате ръчно почистването, сега?</string>
+    <string id="30054">Библиотека за почистване</string>
+    <string id="30055">И двете</string>
+    <string id="30056">Cron израз за видео</string>
+    <string id="30057">Cron израз за музика</string>
+
+    <!-- manual run -->
+    <string id="30060">Следващото обновяване ще стартира след </string>
+    <string id="30061">Желаете ли да стартирате ръчно обновяването, сега?</string>
+</strings>

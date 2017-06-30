@@ -484,7 +484,7 @@ msgid "By Name"
 msgstr ""
 
 msgctxt "#32347"
-msgid "artists"
+msgid "Artists"
 msgstr ""
 
 msgctxt "#32348"
@@ -496,7 +496,7 @@ msgid "photos"
 msgstr ""
 
 msgctxt "#32350"
-msgid "shows"
+msgid "Shows"
 msgstr ""
 
 msgctxt "#32351"
@@ -920,9 +920,34 @@ msgid "Please change change or remove the current filter"
 msgstr ""
 
 msgctxt "#32456"
-msgid "Offline Mode"
+msgid "Show"
 msgstr ""
 
 msgctxt "#32457"
+msgid "By Show"
+msgstr ""
+
+msgctxt "#32458"
+msgid "Episodes"
+msgstr ""
+
+msgctxt "#32459"
+msgid "Offline Mode"
+msgstr ""
+
+msgctxt "#32460"
 msgid "Sign In"
 msgstr ""
+
+msgctxt "#32461"
+msgid "Albums"
+msgstr ""
+
+msgctxt "#32462"
+msgid "Artist"
+msgstr ""
+
+msgctxt "#32463"
+msgid "By Artist"
+msgstr ""
+

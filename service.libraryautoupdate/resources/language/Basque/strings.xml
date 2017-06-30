@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- Basque language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/eu/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
+<strings>
+    <string id="30000">XMBC liburutegi auto-eguneraketa</string>
+    <string id="30001">Orokorra</string>
+    <string id="30002">Bideoa</string>
+    <string id="30003">Musika</string>
+    <string id="30004">Eguneratu bideo liburutegia</string>
+    <string id="30005">Eguneratu musika liburutegia</string>
+    <string id="30006">Ikusi notifikazioak</string>
+    <string id="30007">Exekutatu erreprodukzio bitartean</string>
+    <string id="30008">Abiarazte atzerapena (minutu)</string>
+    <string id="30009">Erabilitako hedatutako programatzailea</string>
+    <string id="30010">Egunera tarteko aldia (ordu)</string>
+    <string id="30011">Cron espresioa</string>
+    <string id="30012">Eguneratu bideo liburutegia</string>
+    <string id="30013">Eguneratu musika liburutegia</string>
+
+    <!-- specific paths -->
+    <string id="30020">Eguneratu 1 bide zehatza</string>
+    <string id="30021">Eguneratu 2 bide zehatza</string>
+    <string id="30022">Eguneratu 3 bide zehatza</string>
+    <string id="30023">Bideo bidea</string>
+
+    <!-- disclaimer -->
+    <string id="30030">Irakurri ezespena</string>
+    <string id="30031">Bideo bide ezespena</string>
+    <string id="30032">Bidea dagoeneko bideo edukia duen jatorri bat izan behar da</string>
+    <string id="30033">Bidea arakatu nahi den jatorri bidearen berdina izan behar da</string>
+
+    <!-- cleaning -->
+    <string id="30040">Garbitzen</string>
+    <string id="30041">Garbitu liburutegiak</string>
+    <string id="30042">Egiaztatu jatorriak garbitu aurretik</string>
+    <string id="30043">Maiztasuna</string>
+    <string id="30044">Eguneratu ondoren</string>
+    <string id="30045">Egunean behin</string>
+    <string id="30046">Astean behin</string>
+    <string id="30047">Hilabetean behin</string>
+    <string id="30048">Garbitu bideo liburutegia</string>
+    <string id="30049">Garbitu musika liburutegia</string>
+    <string id="30050">Errorea datu-basea garbitzerakoan</string>
+    <string id="30051">Erabiltzailea galetu liburutegia garbitu aurretik</string>
+    <string id="30052">Datu-base garbiketa exekutatzeko programaturik dago</string>
+    <string id="30053">Berau orain abiarazi nahi al duzu?</string>
+    <string id="30054">Garbitzeko liburutegia</string>
+    <string id="30055">Biak</string>
+
+    <!-- manual run -->
+    <string id="30060">Eguneratzea berriz abiaraziko da</string>
+    <string id="30061">Eguneraketa bat eskuz abiarazi nahi al duzu?</string>
+</strings>

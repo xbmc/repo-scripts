@@ -1,0 +1,117 @@
+# Kodi language file
+# Addon Name: Skin Helper Service
+# Addon id: script.skin.helper.service
+# Addon Provider: marcelveldt
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC-Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: 2014-10-26 17:05+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE\n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+
+msgctxt "#32000"
+msgid "Custom Image"
+msgstr "Immagine personalizzata"
+
+msgctxt "#32001"
+msgid "None"
+msgstr "Nessuno"
+
+msgctxt "#32002"
+msgid "Background overlay texture"
+msgstr "Texture di sovrapposizione dello sfondo"
+
+msgctxt "#32003"
+msgid "Browse custom image for background overlay"
+msgstr "Sfoglia l'immagine personalizzata per la sovrapposizione dello sfondo"
+
+msgctxt "#32004"
+msgid "Custom single image"
+msgstr "Immagine singola personalizzata"
+
+msgctxt "#32005"
+msgid "Custom multi image (folder)"
+msgstr "Multi immagine personalizzata (cartella)"
+
+msgctxt "#32006"
+msgid "Select busy spinner"
+msgstr "Seleziona l'icona di caricamento"
+
+msgctxt "#32007"
+msgid "%s missing!"
+msgstr "%s mancante!"
+
+msgctxt "#32008"
+msgid "To get the most out of this skin, it is suggested to install a image resource addon for %s. \n Do you want to select and install this image resource addon now ?"
+msgstr "Per ottenmere il massimo da questa skin, si consiglia di installare una risorsa addon per %s. \n Si desidera selezionare e installare questa risorsa addon immagine ora?"
+
+msgctxt "#32009"
+msgid "Custom path"
+msgstr "Percorso personalizzato"
+
+msgctxt "#32010"
+msgid "Select resource addon or custom folder"
+msgstr "Seleziona risorsa addon o cartella personalizzata"
+
+msgctxt "#32011"
+msgid "Not installed"
+msgstr "Non installato"
+
+msgctxt "#32012"
+msgid "Select view"
+msgstr "Seleziona vista"
+
+msgctxt "#32013"
+msgid "Enable/disable views"
+msgstr "Abilita/disabilita viste"
+
+msgctxt "#32014"
+msgid "The action completed sucesfully"
+msgstr "Azione completata con successo"
+
+msgctxt "#32015"
+msgid "The action completed with errors"
+msgstr "Azione completata con errori"
+
+msgctxt "#32016"
+msgid "Do you want to setup a single background or a folder with multiple backgrounds ?"
+msgstr "Vuoi impostare uno sfondo signolo o una cartella con sfondi multipli?"
+
+msgctxt "#32017"
+msgid "Single"
+msgstr "Singolo"
+
+msgctxt "#32018"
+msgid "Multiple"
+msgstr "Multiplo"
+
+msgctxt "#32019"
+msgid "Random fanart from movie with genre"
+msgstr "Fanart casuali per film con genere"
+
+msgctxt "#32020"
+msgid "Select image"
+msgstr "Seleziona immagine"
+
+msgctxt "#32021"
+msgid "Available image resource addons"
+msgstr "Addons disponibili per risorse immagini"
+
+msgctxt "#32022"
+msgid "There are no (more) resource addons available for this type"
+msgstr "Non ci sono (più) risorse addon disponibili per questo tipo"
+
+msgctxt "#32023"
+msgid "Artwork options"
+msgstr "Opzioni Artwork"
+
+msgctxt "#32024"
+msgid "Select Animated Art"
+msgstr "Seleziona Art Animato"

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- Hebrew language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/he/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
+<strings>
+    <string id="30000">XBMC Library Auto Update</string>
+    <string id="30001">כללי</string>
+    <string id="30002">וידאו</string>
+    <string id="30003">מוסיקה</string>
+    <string id="30004">עדכן ספריית הוידאו</string>
+    <string id="30005">עדכן ספריית המוזיקה</string>
+    <string id="30006">הצג התראות</string>
+    <string id="30007">הרץ בעת ניגון</string>
+    <string id="30008">השהיית הפעלה (דקות)</string>
+    <string id="30009">השתמש בטיימר מתקדם</string>
+    <string id="30010">משך זמן בין עדכונים (שעות)</string>
+    <string id="30011">ביטוי Cron</string>
+    <string id="30012">עדכן ספריית הוידאו</string>
+    <string id="30013">עדכן ספריית המוזיקה</string>
+
+    <!-- specific paths -->
+    <string id="30020">עדכן נתיב ספציפי 1</string>
+    <string id="30021">עדכן נתיב ספציפי 2</string>
+    <string id="30022">עדכן נתיב ספציפי 3</string>
+    <string id="30023">נתיב וידאו</string>
+
+    <!-- disclaimer -->
+    <string id="30030">קרא הצהרה</string>
+    <string id="30031">הצהרת נתיבי וידאו</string>
+    <string id="30032">נתיב מוכרח מראש להיות מקור וידאו עם תוכן</string>
+    <string id="30033">הנתיב מוכרח להתאים במדויק לנתיב המקור ע"מ לסרוק</string>
+
+    <!-- cleaning -->
+    <string id="30040">מנקה</string>
+    <string id="30041">נקה ספריות</string>
+    <string id="30042">אמת מקורות לפני ניקוי</string>
+    <string id="30043">תדירות</string>
+    <string id="30044">לאחר עדכון</string>
+    <string id="30045">פעם ביום</string>
+    <string id="30046">פעם בשבוע</string>
+    <string id="30047">פעם בחודש</string>
+    <string id="30048">נקה ספריית וידאו</string>
+    <string id="30049">נקה ספריית מוזיקה</string>
+    <string id="30050">שגיאה בניקוי מסד הנתונים</string>
+    <string id="30051">בקש אישור משתמש לפני ניקוי הספריה</string>
+    <string id="30052">מתוזמן לרוץ ניקוי של מסד הנתונים</string>
+    <string id="30053">האם תרצה להריץ זאת כעת?</string>
+    <string id="30054">ספריה לניקוי</string>
+    <string id="30055">שניהם</string>
+    <string id="30056">ביטוי Cron לוידאו</string>
+    <string id="30057">ביטוי Cron למוזיקה</string>
+
+    <!-- manual run -->
+    <string id="30060">עדכון יורץ שוב</string>
+    <string id="30061">האם ברצונך להריץ עדכון ידנית?</string>
+</strings>

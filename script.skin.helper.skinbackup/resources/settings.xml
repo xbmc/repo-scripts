@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+    <category label="32000">
+        <setting id="backup_path" type="folder" option="writeable" source="files" label="32001" default="special://profile/addon_data/script.skin.helper.skinbackup/" />
+        <setting id="auto_backups" type="bool" label="32032" default="false"/>
+        <setting id="max_old_backups" type="number" label="32034" default="10" visible="eq(-1,true)"/>
+    </category>
+
+</settings>

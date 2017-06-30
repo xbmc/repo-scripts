@@ -1,0 +1,209 @@
+# Kodi language file
+# Addon Name: Skin Helper Backgrounds
+# Addon id: script.skin.helper.backgrounds
+# Addon Provider: marcelveldt
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC-Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: 2014-10-26 17:05+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE\n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+
+msgctxt "#32000"
+msgid "Backgrounds"
+msgstr ""
+
+msgctxt "#32001"
+msgid "Wall Backgrounds"
+msgstr ""
+
+msgctxt "#32002"
+msgid "Interval in seconds for rotating backgrounds (0 to disable)"
+msgstr ""
+
+msgctxt "#32003"
+msgid "Interval in seconds for rotating wall images (0 to disable)"
+msgstr ""
+
+msgctxt "#32004"
+msgid "Only use images from recordings for random PVR background"
+msgstr ""
+
+msgctxt "#32005"
+msgid "Use custom path for random pictures background"
+msgstr ""
+
+msgctxt "#32006"
+msgid "Custom path:"
+msgstr ""
+
+msgctxt "#32007"
+msgid "Maximum number of wall images to create for each background"
+msgstr ""
+
+msgctxt "#32008"
+msgid "Clear cache (rebuild all wall images)"
+msgstr ""
+
+msgctxt "#32009"
+msgid "Global media fanart background"
+msgstr ""
+
+msgctxt "#32010"
+msgid "Random movies background"
+msgstr ""
+
+msgctxt "#32011"
+msgid "Recent movies background"
+msgstr ""
+
+msgctxt "#32012"
+msgid "In progress movies background"
+msgstr ""
+
+msgctxt "#32013"
+msgid "Unwatched movies background"
+msgstr ""
+
+msgctxt "#32014"
+msgid "Random Tv Shows background"
+msgstr ""
+
+msgctxt "#32015"
+msgid "Recent episodes background"
+msgstr ""
+
+msgctxt "#32016"
+msgid "In progress Tv Shows background"
+msgstr ""
+
+msgctxt "#32017"
+msgid "Random pictures background"
+msgstr ""
+
+msgctxt "#32018"
+msgid "Random music videos background"
+msgstr ""
+
+msgctxt "#32019"
+msgid "Random music artists background"
+msgstr ""
+
+msgctxt "#32020"
+msgid "Top rated Movies (extendedinfo)"
+msgstr ""
+
+msgctxt "#32021"
+msgid "Top Rated tvshows (extendedinfo)"
+msgstr ""
+
+msgctxt "#32022"
+msgid "Random songs background"
+msgstr ""
+
+msgctxt "#32023"
+msgid "Recent albums background"
+msgstr ""
+
+msgctxt "#32024"
+msgid "Random PVR background"
+msgstr ""
+
+msgctxt "#32025"
+msgid "Global videos background"
+msgstr ""
+
+msgctxt "#32026"
+msgid "Global Movies & TvShows background"
+msgstr ""
+
+msgctxt "#32027"
+msgid "Recent videos background"
+msgstr ""
+
+msgctxt "#32028"
+msgid "In-progress videos background"
+msgstr ""
+
+msgctxt "#32029"
+msgid "Wall"
+msgstr ""
+
+msgctxt "#32030"
+msgid "Poster Wall"
+msgstr ""
+
+msgctxt "#32031"
+msgid "Black & White"
+msgstr ""
+
+msgctxt "#32032"
+msgid "Error while writing changes. Make sure you have filled in all fields correctly."
+msgstr ""
+
+msgctxt "#32058"
+msgid "Please enter a name for your conditional background"
+msgstr ""
+
+msgctxt "#32061"
+msgid "Please select a background image"
+msgstr ""
+
+msgctxt "#32064"
+msgid "Do you want to setup a single background or a folder with multiple backgrounds ?"
+msgstr ""
+
+msgctxt "#32065"
+msgid "Single"
+msgstr ""
+
+msgctxt "#32066"
+msgid "Multiple"
+msgstr ""
+
+msgctxt "#32067"
+msgid "Select image folder path"
+msgstr ""
+
+msgctxt "#32070"
+msgid "Conditional backgrounds"
+msgstr ""
+
+msgctxt "#32071"
+msgid "Configure conditional backgrounds"
+msgstr ""
+
+msgctxt "#32072"
+msgid "Setup backgrounds that will be activated on specified dates"
+msgstr ""
+
+msgctxt "#32073"
+msgid "Add new condition..."
+msgstr ""
+
+msgctxt "#32074"
+msgid "Add a new condition to activate a custom background on a selected timespan"
+msgstr ""
+
+msgctxt "#32075"
+msgid "Delete or change ?"
+msgstr ""
+
+msgctxt "#32076"
+msgid "Do you want to delete or change the existing entry ?"
+msgstr ""
+
+msgctxt "#32077"
+msgid "Change"
+msgstr ""
+
+msgctxt "#32078"
+msgid "Delete"
+msgstr ""

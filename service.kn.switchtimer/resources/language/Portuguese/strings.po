@@ -82,7 +82,7 @@ msgid "Timer Limit exceed, no free Slots"
 msgstr "Limite de temporizadores atingido, não existem vagas"
 
 msgctxt "#30025"
-msgid "Could not switch to %s"
+msgid "Switching to '%s' in a few seconds"
 msgstr "Não foi possível sintonizar %s"
 
 msgctxt "#30026"
@@ -102,8 +102,16 @@ msgid "%s Seconds left to abort"
 msgstr "%s segundos restantes"
 
 msgctxt "#30030"
-msgid "This Addon is a part of the KN switchtimer service and cannot use as a standalone application."
-msgstr "Este add-on faz parte do serviço KN switchtimer e não pode ser usado diretamente."
+msgid "Please use the PVR OSD Guide context menue to set or reset switch timers"
+msgstr ""
+
+msgctxt "#30031"
+msgid "Timer for this time already set (%s, %s). Would You replace this timer with the new one instead?"
+msgstr ""
+
+msgctxt "#30032"
+msgid "Channel Switch aborted"
+msgstr ""
 
 msgctxt "#30040"
 msgid "Add switchtimer"

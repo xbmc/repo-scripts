@@ -1,0 +1,269 @@
+# Kodi language file
+# Addon Name: Skin Helper Widgets
+# Addon id: script.skin.helper.widgets
+# Addon Provider: marcelveldt
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC-Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: 2014-10-26 17:05+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: Guilouz\n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+
+msgctxt "#32000"
+msgid "Favourites"
+msgstr "Favoris"
+
+msgctxt "#32001"
+msgid "Favourite Media"
+msgstr "Médias favoris"
+
+msgctxt "#32002"
+msgid "Next Episodes"
+msgstr "Episodes suivants"
+
+msgctxt "#32003"
+msgid "Recommended Movies"
+msgstr "Films recommandés"
+
+msgctxt "#32004"
+msgid "Recommended Media"
+msgstr "Médias recommandés"
+
+msgctxt "#32005"
+msgid "Recent Media"
+msgstr "Médias récents"
+
+msgctxt "#32006"
+msgid "Similar Movies"
+msgstr "Films similaires"
+
+msgctxt "#32007"
+msgid "In progress and Recommended Media"
+msgstr "Médias en cours et recommandés"
+
+msgctxt "#32008"
+msgid "Random Episodes"
+msgstr "Episodes aléatoires"
+
+msgctxt "#32009"
+msgid "Recommended Episodes"
+msgstr "Episodes recommandés"
+
+msgctxt "#32010"
+msgid "In progress and recommended Episodes"
+msgstr "Episodes en cours et recommandés"
+
+msgctxt "#32011"
+msgid "In progress Media"
+msgstr "Média en cours"
+
+msgctxt "#32012"
+msgid "Recently added songs"
+msgstr "Chansons récemment ajoutées"
+
+msgctxt "#32013"
+msgid "Recently played songs"
+msgstr "Chansons récemment jouées"
+
+msgctxt "#32014"
+msgid "Similar TV Shows"
+msgstr "Séries TV similaires"
+
+msgctxt "#32015"
+msgid "Recommended albums"
+msgstr "Albums recommandés"
+
+msgctxt "#32016"
+msgid "Recommended songs"
+msgstr "Chansons recommandées"
+
+msgctxt "#32017"
+msgid "PVR Channel groups"
+msgstr "Groupes de chaînes PVR"
+
+msgctxt "#32018"
+msgid "Recent recordings"
+msgstr "Enregistrements récents"
+
+msgctxt "#32019"
+msgid "Next unwatched recordings"
+msgstr "Enregistrements non vus suivant"
+
+msgctxt "#32020"
+msgid "TV Channels"
+msgstr "Chaînes de télévision"
+
+msgctxt "#32021"
+msgid "Timers"
+msgstr "Minuteries"
+
+msgctxt "#32022"
+msgid "Similar Media"
+msgstr "Médias similaires"
+
+msgctxt "#32023"
+msgid "Widgets"
+msgstr "Widgets"
+
+msgctxt "#32024"
+msgid "Enable artwork lookups"
+msgstr "Activer la recherche des artworks"
+
+msgctxt "#32025"
+msgid "Show specials in episode widgets"
+msgstr "Afficher les épisodes spéciaux sur les widgets des épisodes"
+
+msgctxt "#32026"
+msgid "Browse albums instead of playing for album widgets"
+msgstr "Parcourir les albums au lieu de les jouer pour les widgets des albums"
+
+msgctxt "#32027"
+msgid "In-progress episodes"
+msgstr "Episodes en cours"
+
+msgctxt "#32028"
+msgid "In-progress movies"
+msgstr "Films en cours"
+
+msgctxt "#32029"
+msgid "In-progress and recommended movies"
+msgstr "Films en cours et recommandés"
+
+msgctxt "#32030"
+msgid "TV Channels (with artwork)"
+msgstr "Chaînes de télévision (avec artwork)"
+
+msgctxt "#32031"
+msgid "Next unwatched recordings (reversed)"
+msgstr "Enregistrements non vus suivant"
+
+msgctxt "#32032"
+msgid "In-progress and random movies"
+msgstr "Films en cours et aléatoires"
+
+msgctxt "#32033"
+msgid "Random albums"
+msgstr "Albums aléatoires"
+
+msgctxt "#32034"
+msgid "Random songs"
+msgstr "Chansons aléatoires"
+
+msgctxt "#32035"
+msgid "Hide watched items in video widgets"
+msgstr "Masquer les éléments vus sur les widgets des vidéos"
+
+msgctxt "#32036"
+msgid "Only use in-progress shows in next episodes widget"
+msgstr "Afficher uniquement les séries en cours sur les widgets des épisodes"
+
+msgctxt "#32037"
+msgid "Recommended Tv Shows"
+msgstr "Séries TV recommandées"
+
+msgctxt "#32038"
+msgid "Recently added movies"
+msgstr "Films récemment ajoutés"
+
+msgctxt "#32039"
+msgid "Recently added episodes"
+msgstr "Episodes récemment ajoutés"
+
+msgctxt "#32040"
+msgid "Recently added musicvideos"
+msgstr "Clips vidéos récemment ajoutés"
+
+msgctxt "#32041"
+msgid "Random Tv Shows"
+msgstr "Séries TV aléatoires"
+
+msgctxt "#32042"
+msgid "Unaired episodes"
+msgstr "Episodes à venir"
+
+msgctxt "#32043"
+msgid "Next airing episodes"
+msgstr "Episodes diffusés prochainement"
+
+msgctxt "#32044"
+msgid "In progress TV shows"
+msgstr "Séries TV en cours"
+
+msgctxt "#32045"
+msgid "Recently added TV shows"
+msgstr "Séries TV récemment ajoutées"
+
+msgctxt "#32046"
+msgid "IMDB Top 250 movies in library"
+msgstr "Top 250 IMDB des films de la bibliothèque"
+
+msgctxt "#32047"
+msgid "IMDB Top 250 Tv shows in library"
+msgstr "Top 250 IMDB des séries TV de la bibliothèque"
+
+msgctxt "#32048"
+msgid "Random movies"
+msgstr "Films aléatoires"
+
+msgctxt "#32049"
+msgid "In progress and random Episodes"
+msgstr "Episodes en cours et aléatoires"
+
+msgctxt "#32050"
+msgid "Group items in recent episodes widget"
+msgstr "Grouper les éléments du widget des épisodes récents"
+
+msgctxt "#32051"
+msgid "Browse TV Show"
+msgstr "Parcourir le série TV"
+
+msgctxt "#32052"
+msgid "Browse Season"
+msgstr "Parcourir la saison"
+
+msgctxt "#32053"
+msgid "Default number of items to show in widget"
+msgstr "Nombre d'éléments par défaut à afficher sur le widget"
+
+msgctxt "#32054"
+msgid "PVR"
+msgstr "PVR"
+
+msgctxt "#32055"
+msgid "Similar songs"
+msgstr "Chansons similaires"
+
+msgctxt "#32056"
+msgid "Similar albums"
+msgstr "Albums similaires"
+
+msgctxt "#32057"
+msgid "Mixed Media"
+msgstr "Médias mélangés"
+
+msgctxt "#32058"
+msgid "Movies and Tvshows in IMDB Top250"
+msgstr "Films et séries TV du Top 250 IMDB"
+
+msgctxt "#32059"
+msgid "Random media"
+msgstr "Médias aléatoires"
+
+msgctxt "#32060"
+msgid "In progress and Random media"
+msgstr "Médias en cours et aléatoires"
+
+msgctxt "#32061"
+msgid "In progress music videos"
+msgstr "Clips vidéos en cours"
+
+msgctxt "#32062"
+msgid "Random music videos"
+msgstr "Clips vidéos aléatoires"

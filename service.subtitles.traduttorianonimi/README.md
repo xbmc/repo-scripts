@@ -17,7 +17,7 @@ Sistema -> Add-ons -> Sorgenti Sconosciute -> Attiva
 :ENG<br>
 if your kodi version is v17 or greater remember to allow installations from "unknown sources"<br>
 System -> Add-ons -> Unknown Sources -> Enable<br>
-- Scarica il File Zip / Download this Zip: (V2.1.0)<br /> [service.subtitles.traduttorianonimi.zip](https://github.com/ShellAddicted/service.subtitles.traduttorianonimi/files/758436/service.subtitles.traduttorianonimi.zip)
+- Scarica il File Zip / Download this Zip: (V2.1.1)<br /> [service.subtitles.traduttorianonimi.zip](https://github.com/ShellAddicted/service.subtitles.traduttorianonimi/files/997538/service.subtitles.traduttorianonimi.zip)
 - Segui Queste istruzioni / Follow this instructions:<br />
 [Kodi Wiki HOW-TO](http://kodi.wiki/view/HOW-TO:Install_add-ons_from_zip_files)
 <br>

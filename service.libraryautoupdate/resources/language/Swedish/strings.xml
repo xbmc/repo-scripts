@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- Swedish language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/sv/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
+<strings>
+    <string id="30000">XBMC biblioteksautouppdaterare</string>
+    <string id="30001">Allmän</string>
+    <string id="30002">Video</string>
+    <string id="30003">Musik</string>
+    <string id="30004">Uppdatera videobibliotek</string>
+    <string id="30005">Uppdatera musikbibliotek</string>
+    <string id="30006">Visa notifieringar</string>
+    <string id="30007">Kör under uppspelning</string>
+    <string id="30008">Uppstartsfördröjning (minuter)</string>
+    <string id="30009">Använd avancerad timer</string>
+    <string id="30010">Tid mellan uppdateringar (timmar)</string>
+    <string id="30011">Cronuttryck</string>
+    <string id="30012">Uppdatera videobibliotek</string>
+    <string id="30013">Uppdatera musikbibliotek</string>
+    <string id="30014">Kör endast vid inaktivitet</string>
+
+    <!-- specific paths -->
+    <string id="30020">Uppdatera specifik sökväg 1</string>
+    <string id="30021">Uppdatera specifik sökväg 2</string>
+    <string id="30022">Uppdatera specifik sökväg 3</string>
+    <string id="30023">Videosökväg</string>
+
+    <!-- disclaimer -->
+    <string id="30030">Läs ansvarsfriskrivning</string>
+    <string id="30031">Videosökvägsansvarsfriskrivning</string>
+    <string id="30032">Sökvägen måste redan vara en videokälla med innehåll</string>
+    <string id="30033">Sökväg måste matcha källsökvägen exakt för att skannas</string>
+
+    <!-- cleaning -->
+    <string id="30040">Rensar</string>
+    <string id="30041">Rensa bibliotek</string>
+    <string id="30042">Verifiera källor innan rensning</string>
+    <string id="30043">Frekvens</string>
+    <string id="30044">Efter uppdatering</string>
+    <string id="30045">Dagligen</string>
+    <string id="30046">Veckovis</string>
+    <string id="30047">Månadsvis</string>
+    <string id="30048">Rensa videobibliotek</string>
+    <string id="30049">Rensa musikbibliotek</string>
+    <string id="30050">Fel vid rensning av databas</string>
+    <string id="30051">Fråga innan rensning av bibliotek</string>
+    <string id="30052">En databasrensning är schemalagd att köras</string>
+    <string id="30053">Vill du köra den nu?</string>
+    <string id="30054">Bibliotek att rensa</string>
+    <string id="30055">Båda</string>
+    <string id="30056">Video-cronuttryck</string>
+    <string id="30057">Musik-cronuttryck</string>
+
+    <!-- manual run -->
+    <string id="30060">Uppdatering kommer att köras igen</string>
+    <string id="30061">Vill du manuellt köra en uppdatering?</string>
+</strings>

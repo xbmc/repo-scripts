@@ -34,6 +34,7 @@ class TabloDevice:
         self.seen = self.processDate(data.get('last_seen'))
         self.inserted = self.processDate(data.get('inserted'))
         self.modified = self.processDate(data.get('modified'))
+        self.modelType = ''
 
     def __repr__(self):
         return '<TabloDevice:{0}:{1}>'.format(self.ID, self.IP)
@@ -76,6 +77,7 @@ class TabloDevice:
         self.name = data['name']
         self.version = data['version']
         self.ID = self.ID or data.get('server_id')
+        self.modelType = data.get('model.type')
 
     @property
     def displayName(self):
@@ -166,7 +168,7 @@ class Devices(object):
         data['private_ip'] = truncZero(v[2])
         data['serverid'] = truncZero(v[3])
         typ = truncZero(v[4])
-        # styp = truncZero(v[5])
+        data['board_type'] = truncZero(v[5])
 
         if not typ == 'tablo':
             return None

@@ -14,7 +14,7 @@ class Engine:
     self.player = player
     player.engine = self
     player.api    = api
-    self.synclibrary()
+    #self.synclibrary()
 
   def synclibrary(self):
     ### UPLOAD ###

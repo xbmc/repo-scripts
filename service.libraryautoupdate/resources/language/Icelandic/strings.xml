@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- Icelandic language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/is/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
+<strings>
+    <string id="30000">Sjálfvirk uppfærsla á XBMC söfnum</string>
+    <string id="30001">Almennt</string>
+    <string id="30002">Myndefni</string>
+    <string id="30003">Tónlist</string>
+    <string id="30004">Uppfæra kvikmyndasafn</string>
+    <string id="30005">Uppfæra tónlistarsafn</string>
+    <string id="30006">Sýna Tilkynningar</string>
+    <string id="30007">Keyra á meðan afspilun er í gangi</string>
+    <string id="30008">Biðtími ræsingar (mínútur)</string>
+    <string id="30009">Notaði Ítarlega Tímasetningu</string>
+    <string id="30010">Tímalengd á milli uppfærslna (klukkutímar)</string>
+    <string id="30011">Cron segð</string>
+    <string id="30012">Uppfæra kvikmyndasafn</string>
+    <string id="30013">Uppfæra tónlistarsafn</string>
+    <string id="30014">Keyra aðeins þegar er aðgerðarlaus</string>
+
+    <!-- specific paths -->
+    <string id="30020">Uppfæra tilgreinda slóð 1</string>
+    <string id="30021">Uppfæra tilgreinda slóð 2</string>
+    <string id="30022">Uppfæra tilgreinda slóð 3</string>
+    <string id="30023">Kvikmyndaslóð</string>
+
+    <!-- disclaimer -->
+    <string id="30030">Lestu Fyrirvarann</string>
+    <string id="30031">Fyrirvari Kvikmyndaslóða</string>
+    <string id="30032">Slóðin þarf að vera þegar skilgreind sem kvikmyndaveita með efni</string>
+    <string id="30033">Slóð verður að samsvara veituslóð til að skanna hana</string>
+
+    <!-- cleaning -->
+    <string id="30040">Tiltekt</string>
+    <string id="30041">Tek til í söfnum</string>
+    <string id="30042">Sannreina Veitur fyrir Tiltekt</string>
+    <string id="30043">Tíðni</string>
+    <string id="30044">Eftir Uppfærslur</string>
+    <string id="30045">Einu sinni á dag</string>
+    <string id="30046">Einu sinni á viku</string>
+    <string id="30047">Einu sinni í mánuði</string>
+    <string id="30048">Tiltekt á Kvikmyndasafni</string>
+    <string id="30049">Tiltekt á Tónlistarsafni</string>
+    <string id="30050">Villa við tiltekt gagnagrunns</string>
+    <string id="30051">Spyrja notanda áður en tiltekt er gerð á safni</string>
+    <string id="30052">Hreinsun gagnagrunnar er tímasett í keyrslu</string>
+    <string id="30053">Viltu keyra hana núna?</string>
+    <string id="30054">Safn sem á að taka til í</string>
+    <string id="30055">Bæði</string>
+    <string id="30056">Cron segð fyrir kvikmyndir</string>
+    <string id="30057">Cron segð fyrir tónlist</string>
+
+    <!-- manual run -->
+    <string id="30060">Uppfærslan mun keyra aftur</string>
+    <string id="30061">Viltu ræsa handvirkt uppfærslu?</string>
+</strings>

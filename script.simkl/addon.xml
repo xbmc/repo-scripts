@@ -4,7 +4,7 @@
        version="1.2.0"
        provider-name="David Davó, Simkl">
   <requires>
-    <import addon="xbmc.python" version="2.6"/>
+    <import addon="xbmc.python" version="2.24.0"/>
   </requires>
   <extension point="xbmc.service" library="service.py" start="login" />
   <extension point="xbmc.addon.metadata">
@@ -21,7 +21,7 @@
     <source>https://github.com/SIMKL/script.simkl</source>
     <assets>
       <icon>resources/icon.png</icon>
-      <fanart>resources/fanart.png</fanart>
+      <fanart>resources/fanart.jpg</fanart>
     </assets>
     <language>en</language>
   </extension>

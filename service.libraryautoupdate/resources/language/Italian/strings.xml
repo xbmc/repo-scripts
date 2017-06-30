@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- Italian language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/it/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
+<strings>
+    <string id="30000">Aggiornamento Automatico Libreria XBMC</string>
+    <string id="30001">Generale</string>
+    <string id="30002">Video</string>
+    <string id="30003">Musica</string>
+    <string id="30004">Aggiorna Libreria Video</string>
+    <string id="30005">Aggiorna Libreria Musicale</string>
+    <string id="30006">Mostra Notifiche</string>
+    <string id="30007">Eseguire durante la riproduzione</string>
+    <string id="30008">Partenza Ritardata (minuti)</string>
+    <string id="30009">Usa Timer Avanzato</string>
+    <string id="30010">Tempo tra gli aggiornamenti (ore)</string>
+    <string id="30011">Cron Expression</string>
+    <string id="30012">Aggiorna Libreria Video</string>
+    <string id="30013">Aggiorna Libreria Musicale</string>
+    <string id="30014">Esegui solo quando inattivo</string>
+
+    <!-- specific paths -->
+    <string id="30020">Usa Percorso Specifico 1</string>
+    <string id="30021">Usa Percorso Specifico 2</string>
+    <string id="30022">Usa Percorso Specifico 3</string>
+    <string id="30023">Percoso Video</string>
+
+    <!-- disclaimer -->
+    <string id="30030">Leggi dichiarazione di esclusione di responsabilità</string>
+    <string id="30031">Dichiarazione di esclusione di responsabilità percorso video</string>
+    <string id="30032">Il percorso deve essere già una sorgente video con contenuto</string>
+    <string id="30033">Il percorso deve coincidere esattamente con il percorso sorgente per scansionare</string>
+
+    <!-- cleaning -->
+    <string id="30040">Pulizia</string>
+    <string id="30041">Pulisci Librerie</string>
+    <string id="30042">Verifica Sorgenti Prima di Pulire</string>
+    <string id="30043">Frequenza</string>
+    <string id="30044">Dopo l'Aggiornamento</string>
+    <string id="30045">Una Volta al Giorno</string>
+    <string id="30046">Una Volta a Settimana</string>
+    <string id="30047">Una Volta al Mese</string>
+    <string id="30048">Pulisci Libreria Video</string>
+    <string id="30049">Pulisci Libreria Musicale</string>
+    <string id="30050">Errore Pulendo il db</string>
+    <string id="30051">Richiedere conferma all'utente prima di pulizia Libreria</string>
+    <string id="30052">Una pulizia del db è stata programmata</string>
+    <string id="30053">Vuoi eseguirla ora?</string>
+    <string id="30054">Libreria da Pulire</string>
+    <string id="30055">Entrambi</string>
+    <string id="30056">Espressioni Cron Video</string>
+    <string id="30057">Espressioni Cron Misica</string>
+
+    <!-- manual run -->
+    <string id="30060">L'aggiornamento sarà eseguito di nuovo</string>
+    <string id="30061">Desideri eseguire manualmente un aggiornamento</string>
+</strings>

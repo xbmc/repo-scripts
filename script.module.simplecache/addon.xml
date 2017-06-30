@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.module.simplecache" name="Simple Cache Module" version="1.0.11" provider-name="marcelveldt">
+    <requires>
+        <import addon="xbmc.python" version="2.24.0"/>
+    </requires>
+    <extension point="xbmc.python.module" library="lib" />
+    <extension point="xbmc.addon.metadata">
+        <summary>Provides a simple file- and memory based cache for Kodi addons</summary>
+        <description>Provides a simple file- and memory based cache for Kodi addons</description>
+        <license>Apache 2.0</license>
+        <source>https://github.com/marcelveldt/script.module.simplecache</source>
+        <platform>all</platform>
+    </extension>
+</addon>
