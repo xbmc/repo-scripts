@@ -9,7 +9,7 @@
 		<setting label="32039" type="enum" id="dpms-action" lvalues="32040|32041" visible="eq(-1,1)|eq(-1,2)" option="int" default="0"/>
 		<setting label="32038" type="slider" id="manual-dpms" default="5" range="1,5,120" visible="eq(-2,2)" option="int" />
 		<setting id="toggle-displayoff" type="bool" label="32028" default="false" visible="eq(-3,1)|eq(-3,2)"/>
-		<setting id="toggle-cecoff" type="bool" label="32029" default="false" visible="eq(-4,1)|eq(-5,2)"/>
+		<setting id="toggle-cecoff" type="bool" label="32029" default="false" visible="eq(-4,1)|eq(-4,2)"/>
 		<setting label="32033" type="lsep" />
 		<setting label="32034" type="lsep" />
 		<setting id="is_locked" visible="false" default="false" />
