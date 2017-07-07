@@ -16,7 +16,7 @@
 # You should have received a copy of the GNU General Public License
 # along with Twitter Tweets.  If not, see <http://www.gnu.org/licenses/>.
 
-import os, gui, datetime, random, urllib2, json
+import os, gui, datetime, random, urllib2
 import xbmc, xbmcaddon, xbmcgui, traceback
 
 from bs4 import BeautifulSoup
@@ -40,36 +40,23 @@ def log(msg, level=xbmc.LOGDEBUG):
     if DEBUG == True:
         if level == xbmc.LOGERROR:
             msg += ' ,' + traceback.format_exc()
-        xbmc.log(ADDON_ID + '-' + ADDON_VERSION + '-' + stringify(msg), level)
+        xbmc.log(ADDON_ID + '-' + ADDON_VERSION + '-' + (msg), level)
         
-def stringify(string):
-    if isinstance(string, list):
-        string = (string[0])
-    elif isinstance(string, (int, float, long, complex, bool)):
-        string = str(string) 
-    
-    if isinstance(string, basestring):
-        if not isinstance(string, unicode):
-            string = unicode(string, 'utf-8')
-        elif isinstance(string, unicode):
-            string = string.encode('ascii', 'ignore')
-    return string
-
 def getProperty(str):
     try:
-        return xbmcgui.Window(10000).getProperty(stringify(str))
+        return xbmcgui.Window(10000).getProperty((str))
     except Exception,e:
         log("getProperty, Failed! " + str(e), xbmc.LOGERROR)
         return ''
           
 def setProperty(str1, str2):
     try:
-        xbmcgui.Window(10000).setProperty(stringify(str1), stringify(str2))
+        xbmcgui.Window(10000).setProperty((str1), (str2))
     except Exception,e:
         log("setProperty, Failed! " + str(e), xbmc.LOGERROR)
 
 def clearProperty(str):
-    xbmcgui.Window(10000).clearProperty(stringify(str))
+    xbmcgui.Window(10000).clearProperty((str))
    
 class Service():
     def __init__(self):
@@ -131,7 +118,7 @@ class Service():
             
         if REAL_SETTINGS.getSetting('%s.%s.time' %(ADDON_ID,user)) != tweetTime:
             REAL_SETTINGS.setSetting('%s.%s.time'%(ADDON_ID,user),tweetTime)
-            ui = gui.GUI("%s.default.xml" %ADDON_ID,ADDON_PATH,"default",params=json.dumps({'user':user,'icon':twitterPic,'username':twitterAlt,'title':tweetMsg,'time':tweetTime,'stats':tweetStats}))
+            ui = gui.GUI("%s.default.xml" %ADDON_ID,ADDON_PATH,"default",params=({'user':user,'icon':twitterPic,'username':twitterAlt,'title':tweetMsg,'time':tweetTime,'stats':tweetStats}))
             ui.doModal()
             del ui
 

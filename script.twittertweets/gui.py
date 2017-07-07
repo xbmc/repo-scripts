@@ -16,7 +16,7 @@
 # You should have received a copy of the GNU General Public License
 # along with Twitter Tweets.  If not, see <http://www.gnu.org/licenses/>.
 
-import threading, json
+import threading
 import xbmc, xbmcaddon, xbmcvfs, xbmcgui
 
 # Plugin Info
@@ -28,45 +28,34 @@ ADDON_PATH     = (REAL_SETTINGS.getAddonInfo('path').decode('utf-8'))
 SETTINGS_LOC   = REAL_SETTINGS.getAddonInfo('profile').decode('utf-8')
 
 ## GLOBALS ##
+DEBUG      = REAL_SETTINGS.getSetting('Enable_Debugging') == 'true'
 CLOSE_TIME = [2.0,5.0,10.0,15.0][int(REAL_SETTINGS.getSetting('Close_Time'))]
-              
+
 def log(msg, level=xbmc.LOGDEBUG):
-    xbmc.log(ADDON_ID + '-' + ADDON_VERSION + '-' + msg, level)
-      
-def stringify(string):
-    if isinstance(string, list):
-        string = (string[0])
-    elif isinstance(string, (int, float, long, complex, bool)):
-        string = str(string) 
-    
-    if isinstance(string, basestring):
-        if not isinstance(string, unicode):
-            string = unicode(string, 'utf-8')
-        elif isinstance(string, unicode):
-            string = string.encode('ascii', 'ignore')
-        else:
-            string = string.encode('utf-8', 'ignore')
-    return string
-    
+    if DEBUG == True:
+        if level == xbmc.LOGERROR:
+            msg += ' ,' + traceback.format_exc()
+        xbmc.log(ADDON_ID + '-' + ADDON_VERSION + '-' + (msg), level)
+        
 def getProperty(str):
     try:
-        return xbmcgui.Window(10000).getProperty(stringify(str))
+        return xbmcgui.Window(10000).getProperty((str))
     except Exception,e:
         log("getProperty, Failed! " + str(e), xbmc.LOGERROR)
         return ''
           
 def setProperty(str1, str2):
     try:
-        xbmcgui.Window(10000).setProperty(stringify(str1), stringify(str2))
+        xbmcgui.Window(10000).setProperty((str1), (str2))
     except Exception,e:
         log("setProperty, Failed! " + str(e), xbmc.LOGERROR)
 
 def clearProperty(str):
-    xbmcgui.Window(10000).clearProperty(stringify(str))
+    xbmcgui.Window(10000).clearProperty((str))
          
 class GUI(xbmcgui.WindowXMLDialog):
     def __init__(self, *args, **kwargs ):
-        self.params     = json.loads(kwargs['params'])
+        self.params     = kwargs['params']
         self.closeTimer = threading.Timer(CLOSE_TIME, self.close)
     
     
