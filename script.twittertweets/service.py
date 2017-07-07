@@ -53,8 +53,6 @@ def stringify(string):
             string = unicode(string, 'utf-8')
         elif isinstance(string, unicode):
             string = string.encode('ascii', 'ignore')
-        else:
-            string = string.encode('utf-8', 'ignore')
     return string
 
 def getProperty(str):
@@ -77,20 +75,20 @@ class Service():
     def __init__(self):
         log('__init__')
         random.seed()
-        self.userList  = []
         self.myService = xbmc.Monitor()
-                             
-        for i in range(1,51):
-            self.userList.append((REAL_SETTINGS.getSetting('FEED%d'%i)).replace('@',''))
-
         while not self.myService.abortRequested():
+            self.userList = []
+            for i in range(1,51):
+                self.userList.append((REAL_SETTINGS.getSetting('FEED%d'%i)).replace('@',''))
+            self.userList = filter(None, self.userList)
+            log('userList = ' + str(self.userList))
+
             WAIT_TIME = [300,600,900,1800][int(REAL_SETTINGS.getSetting('Wait_Time'))]
             IGNORE    = REAL_SETTINGS.getSetting('Not_While_Playing') == 'true'
             if xbmc.Player().isPlayingVideo() == True and IGNORE == True:
                 self.myService.waitForAbort(WAIT_TIME)
                 continue
-            self.userList = filter(None, self.userList)
-            log('userList = ' + str(self.userList))
+                
             for user in self.userList:
                 self.chkFEED(user)
             if self.myService.waitForAbort(WAIT_TIME) == True:
