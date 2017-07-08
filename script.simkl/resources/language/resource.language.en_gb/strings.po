@@ -17,7 +17,6 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #Settings
-
 msgctxt "#32001"
 msgid "Please click to Log In"
 msgstr ""
@@ -41,6 +40,20 @@ msgstr ""
 msgctxt "#32008"
 msgid "Show bubble when scrobbled"
 msgstr ""
+
+msgctxt "#32009"
+msgid "See options to customize Simkl TV Tracker"
+msgstr ""
+
+msgctxt "#32010"
+msgid "You are not logged in"
+msgstr ""
+
+msgctxt "#32011"
+msgid "You are logged in"
+msgstr ""
+
+
 
 #Up to 32020 to settings. 32021-2024 to login dialog
 

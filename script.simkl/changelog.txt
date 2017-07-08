@@ -1,6 +1,8 @@
-v 1.2.0 [17/06/30]:
+v 2.0
+- New engine, fixed all login and scrobbling bugs
+
+v 1.2.0 []:
 - Using tvdb id for series scrobbling
-- Bugs fixed
 
 v 1.1.0 [17/02/04]:
 - Fixed problem when downloading from Repositories
