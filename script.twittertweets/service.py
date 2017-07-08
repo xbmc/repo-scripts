@@ -41,23 +41,7 @@ def log(msg, level=xbmc.LOGDEBUG):
         if level == xbmc.LOGERROR:
             msg += ' ,' + traceback.format_exc()
         xbmc.log(ADDON_ID + '-' + ADDON_VERSION + '-' + (msg), level)
-        
-def getProperty(str):
-    try:
-        return xbmcgui.Window(10000).getProperty((str))
-    except Exception,e:
-        log("getProperty, Failed! " + str(e), xbmc.LOGERROR)
-        return ''
-          
-def setProperty(str1, str2):
-    try:
-        xbmcgui.Window(10000).setProperty((str1), (str2))
-    except Exception,e:
-        log("setProperty, Failed! " + str(e), xbmc.LOGERROR)
 
-def clearProperty(str):
-    xbmcgui.Window(10000).clearProperty((str))
-   
 class Service():
     def __init__(self):
         log('__init__')
