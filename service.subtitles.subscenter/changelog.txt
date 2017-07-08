@@ -1,3 +1,19 @@
+6.0.0 - by CaTz (07/07/2017)
+- Rename the addon to Cinemast
+- Start using Cinemast API
+
+5.0.2 - by sagiben (25/06/2017)
+- Fix json parsing error
+
+5.0.1 - by CaTz (24/06/2017)
+- Remove login section from settings
+
+5.0.0 - by CaTz (16/06/2017)
+- Return back to site parsing
+
+4.1.5 - by CaTz (13/06/2017)
+- Update mirror url
+
 4.1.4 - by burekas (11/01/2017)
 - Check item's media type
 

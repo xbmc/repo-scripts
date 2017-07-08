@@ -14,14 +14,9 @@ try:
 except ImportError:
     import storageserverdummy as StorageServer
 
-try:
-    import xbmc
-    import xbmcvfs
-    import xbmcaddon
-except ImportError:
-    from tests.stubs import xbmc
-    from tests.stubs import xbmcvfs
-    from tests.stubs import xbmcaddon
+import xbmc
+import xbmcvfs
+import xbmcaddon
 
 __addon__ = xbmcaddon.Addon()
 __version__ = __addon__.getAddonInfo('version')  # Module version
@@ -118,8 +113,8 @@ def notify(msg_id):
     xbmc.executebuiltin((u'Notification(%s,%s)' % (__scriptname__, __language__(msg_id))).encode('utf-8'))
 
 
-class SubscenterHelper:
-    BASE_URL = "http://www.subscenter.org/he/api/"
+class SubsHelper:
+    BASE_URL = "http://www.cinemast.org/he/cinemast/api/"
 
     def __init__(self):
         self.urlHandler = URLHandler()
@@ -258,22 +253,22 @@ class SubscenterHelper:
 
         return round(rating, 1)
 
-    def download(self, id, language, key, filename, zip_filename):
+    def download(self, id, language, key, version, zip_filename):
         ## Cleanup temp dir, we recomend you download/unzip your subs in temp folder and
         ## pass that to XBMC to copy and activate
         if xbmcvfs.exists(__temp__):
             shutil.rmtree(__temp__)
         xbmcvfs.mkdirs(__temp__)
 
-        query = {"v": ''.join(hex(ord(chr))[2:] for chr in filename),
+        query = {"v": version,
                  "key": key,
                  "sub_id": id}
 
         user_token = self.get_user_token()
 
-        url = self.BASE_URL + "subtitle/download/" + language + "/?" + urllib.urlencode(query)
+        url = self.BASE_URL + "subtitle/download/" + language + "/"
 
-        f = self.urlHandler.request(url, user_token)
+        f = self.urlHandler.request(url, data=user_token, query_string=query)
 
         with open(zip_filename, "wb") as subFile:
             subFile.write(f)
@@ -321,7 +316,7 @@ class URLHandler():
                                   ('Pragma', 'no-cache'),
                                   ('Cache-Control', 'no-cache'),
                                   ('User-Agent',
-                                   'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.111 Safari/537.36')]
+                                   'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 Kodi/17.2 (KHTML, like Gecko) Chrome/49.0.2526.111 Safari/537.36')]
 
     def request(self, url, data=None, query_string=None, ajax=False, referrer=None, cookie=None):
         if data is not None:
