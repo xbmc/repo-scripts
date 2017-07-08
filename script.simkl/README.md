@@ -1,6 +1,12 @@
-# Kodi
+# Simkl scrobbler (for Kodi)
+[![](https://img.shields.io/badge/licence-%20GPLv3-brightgreen.svg)][license] [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/SIMKL/script.simkl/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/SIMKL/script.simkl/?branch=master) [![Build Status](https://scrutinizer-ci.com/g/SIMKL/script.simkl/badges/build.png?b=master)](https://scrutinizer-ci.com/g/SIMKL/script.simkl/build-status/master) [![Gitter](https://badges.gitter.im/Simkl/API.svg)](https://gitter.im/Simkl/apps-automatic-trakers?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
-## Installing
+## Installing from Kodi
+1. Open Kodi. Then go to System » Settings » Add-ons » Install from repository » Services » Simkl TV Tracker and click Install
+2. Now it should show a prompt with instructions to Login. If this doesn't happen, go to Settings » Add-ons » My Add-ons » Services » Simkl » Configure » LogIn
+3. Please report any bugs [here](https://github.com/SIMKL/script.simkl/issues)
+
+## Installing Manually
 1. Download the .zip [here](https://github.com/SIMKL/script.simkl/releases/latest)
 2. Open Kodi and go to Settings > Add-ons > Install from zip file, select the zip file
 3. In Settings > Add-ons > My add-ons and search for Simkl TV Tracker. Click on it.
@@ -8,8 +14,7 @@
 5. Please report any bugs [here](https://github.com/SIMKL/script.simkl/issues)
 
 ## TODO:
-- [x] Add LICENSE.TXT
-- [x] Make it work (more or less)
+- [x] Make it work on Android and Kodi v17
 
 ## Donations:
 It would be very nice if you invite me for a cup of coffee:
@@ -19,3 +24,5 @@ It would be very nice if you invite me for a cup of coffee:
 Bitcoin address: 1PcbSQrBddJszsTiRhqHyLntp7Lxfuyaio
 
 Thanks, you can write me an e-mail to david@ddavo.me with your receipt, and I'll send you a photo drinking the cup of coffee you invited me to.
+
+[license]: https://github.com/SIMKL/script.simkl/blob/master/LICENSE.txt

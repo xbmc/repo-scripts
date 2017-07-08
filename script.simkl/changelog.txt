@@ -1,3 +1,10 @@
+v 1.2.0 [17/06/30]:
+- Using tvdb id for series scrobbling
+- Bugs fixed
+
+v 1.1.0 [17/02/04]:
+- Fixed problem when downloading from Repositories
+
 v 1.0.0 [17/01/25]:
 - Ready for submiting to the Kodi repositories
 

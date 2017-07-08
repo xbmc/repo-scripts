@@ -9,6 +9,9 @@ import json
 import xbmc
 import interface
 import httplib
+import utils
+
+from socket import gaierror
 
 __addon__ = interface.__addon__
 def getstr(strid): return interface.getstr(strid)
@@ -46,19 +49,25 @@ class API:
             self.token = f.readline().strip("\n")
             headers["authorization"] = "Bearer " + self.token
         try:
-            self.con = httplib.HTTPSConnection("api.simkl.com")
-            self.con.request("GET", "/users/settings", headers=headers)
-            self.USERSETTINGS = json.loads(self.con.getresponse().read().decode("utf-8"))
-            xbmc.log("Simkl: Usersettings: " + str(self.USERSETTINGS))
+            self.get_usersettings()
             self.internet = True
-            if not os.path.exists(USERFILE):
-                api.login()
-        except Exception:
+            #if not os.path.exists(USERFILE):
+            #    api.login()
+        except gaierror:
             xbmc.log("Simkl: {0}".format("No INTERNET"))
-            interface.notify(getstr(32027))
+            #interface.notify(getstr(32027))
             self.internet = False
 
+    def get_usersettings(self):
+        self.con = httplib.HTTPSConnection("api.simkl.com")
+        self.con.request("GET", "/users/settings", headers=headers)
+        r = self.con.getresponse().read().decode("utf-8")
+        xbmc.log("Simkl: get_usersettings: %s" %r)
+        self.USERSETTINGS = json.loads(r)
+        xbmc.log("Simkl: Usersettings: " + str(self.USERSETTINGS))
+
     def login(self):
+        utils.systemLock("SimklTrackerRunLogin")
         url = "/oauth/pin?client_id="
         url += APIKEY + "&redirect=" + REDIRECT_URI
 
@@ -107,6 +116,7 @@ class API:
     def is_user_logged(self):
         """ Checks if user is logged in """
         failed = False
+        if self.internet == False: return False
         if "error" in self.USERSETTINGS.keys(): failed = self.USERSETTINGS["error"]
         if self.token == "" or failed == "user_token_failed":
             xbmc.log("Simkl: User not logged in")
@@ -138,20 +148,24 @@ class API:
             del exp[fname]
             return 0
 
-    def watched(self, filename, mediatype, duration, date=time.strftime('%Y-%m-%d %H:%M:%S'), cnt=0): #OR IDMB, member: only works with movies
-        filename = filename.replace("\\", "/")
+    def watched(self, item, duration, date=time.strftime('%Y-%m-%d %H:%M:%S'), cnt=0): #OR IDMB, member: only works with movies
+        filename = item["file"].replace("\\", "/")
         if self.is_user_logged() and not self.is_locked(filename):
             try:
                 con = httplib.HTTPSConnection("api.simkl.com")
-                mediadict = {"movie": "movies", "episode":"episodes", "show":"show"}
+                mediadict = {"movie": "movies", "episode":"shows", "show":"shows"}
 
-                if filename[:2] == "tt":
-                    toappend = {"ids":{"imdb":filename}, "watched_at":date}
-                    media = mediadict[mediatype]
+                if item["imdbnumber"] != "":
+                    if item["type"] == "movie": toappend = {"ids":{"imdb": item["imdbnumber"]}, "watched_at":date}
+                    elif item["type"] == "episode":
+                        toappend = {"ids":{"tvdb":item["imdbnumber"]}, "watched_at":date,
+                        "seasons":[{
+                            "number":item["season"],
+                            "episodes":[{"number":item["episode"]}]}]}
+                    media = mediadict[item["type"]]
                 else:
                     xbmc.log("Simkl: Filename - {0}".format(filename))
-                    values = {"file":filename}
-                    values = json.dumps(values)
+                    values = json.dumps({"file":filename})
                     xbmc.log("Simkl: Query: {0}".format(values))
                     con.request("GET", "/search/file/", body=values, headers=headers)
                     r1 = con.getresponse().read()#.decode("utf-8")
@@ -180,18 +194,31 @@ class API:
                     self.lock(filename, duration)
                 return success
 
-            except httplib.BadStatusLine:
-                xbmc.log("Simkl: {0}".format("ERROR: httplib.BadStatusLine"))
-            except SSLError: #Fix #8
+            #except httplib.BadStatusLine:
+            #    xbmc.log("Simkl: {0}".format("ERROR: httplib.BadStatusLine"))
+            except:
                 xbmc.log("Simkl: ERROR: SSLError, retrying?")
-                if cnt == 0: interface.notify(getstr(32029).format(cnt+1))
+                interface.notify(getstr(32029).format(cnt+1))
+                time.sleep(5)
                 if cnt <= 3:
-                    self.watched(filename, mediatype, duration, date=date, cnt=cnt+1)
-                else: interface.notify("SSLError")
+                    self.watched(item, duration, date, cnt=cnt+1)
+                else: interface.notify(getstr(32027))
 
         else:
             xbmc.log("Simkl: Can't scrobble. User not logged in or file locked")
             return 0
+
+    def check_connection(self, cnt=0):
+        if cnt < 3:
+            try:
+                self.get_usersettings()
+                self.internet = True
+            except Exception:
+                time.sleep(5)
+                self.check_connection(cnt=cnt+1)
+        else:
+            self.internet = False
+            interface.notify(getstr(32027))
 
 api = API()
 if __name__ == "__main__":

@@ -1,6 +1,7 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
+import os
 import xbmc
 import interface
 import json
@@ -81,42 +82,35 @@ class Player(xbmc.Player):
     xbmc.log("Simkl: ONPLAYBACKENDED")
     self.onPlayBackStopped()
   def onPlayBackStopped(self):
-    '''Gets the info needed to pass to the api'''
+    ''' Gets the info needed to pass to the api '''
+    self.api.check_connection()
     try:
-      movie = self.getVideoInfoTag()
-      thing = xbmc.executeJSONRPC(json.dumps({"jsonrpc": "2.0", "method": "Player.GetItem",
-        "params": { "properties": [ "showtitle", "title", "season", "episode", "file", "imdbnumber", "genre" ]
-        , "playerid": 1 }, "id": "VideoGetItem"}))
-      xbmc.log("Simkl: Full: {0}".format(thing))
-      item = json.loads(thing)["result"]["item"]
-      #imdb  = movie.getIMDBNumber().strip(" ")
-      #fname = self.getPlayingFile()
-      imdb = item["imdbnumber"]
-      fname = item["file"]
-      media = item["type"]
-      xbmc.log("Simkl: IMDb: {0}".format(imdb))
-      xbmc.log("Simkl: Genre: {0}".format(item["genre"]))
-      xbmc.log("Simkl: MediaType: " + str(media))
+      item = json.loads(xbmc.executeJSONRPC(json.dumps({
+        "jsonrpc": "2.0", "method": "Player.GetItem",
+        "params": {
+          "properties": ["showtitle", "title", "season", "episode", "file", "tvshowid", "imdbnumber", "genre" ],
+          "playerid": 1},
+        "id": "VideoGetItem"})))["result"]["item"]
+      if item["tvshowid"] != -1:
+        item["imdbnumber"] = json.loads(xbmc.executeJSONRPC(json.dumps({
+          "jsonrpc": "2.0", "method":"VideoLibrary.GetTVShowDetails",
+          "params":{"tvshowid":item["tvshowid"], "properties":["imdbnumber"]},
+          "id":1
+          })))["result"]["tvshowdetails"]["imdbnumber"]
+      xbmc.log("Simkl: Full: {0}".format(item))
 
-      percentage = 100 * self.getTime() / self.getTotalTime()
+      percentage = min(99, 100 * self.getTime() / self.getTotalTime())
       pctconfig  = int(self.addon.getSetting("scr-pct"))
 
-      if 99 > percentage > pctconfig:
+      if percentage > pctconfig:
         bubble = __addon__.getSetting("bubble")
         xbmc.log("Simkl: Bubble == {0}".format(bubble))
         xbmc.log("Percentage: {0}, pctconfig {1}".format(percentage, pctconfig))
 
-        xbmc.log("Simkl: Ready to scrobble {0}".format(movie.getTitle()))
-        if imdb == "":
-        #if True:
-          #xbmc.log("Simkl: No imdb - Fname: {0}".format(fname))
-          r = self.api.watched(fname, media, self.getTotalTime())
-        else:
-          xbmc.log("Simkl: IMDB: " + str(imdb))
-          r = self.api.watched(imdb, media, self.getTotalTime())
+        r = self.api.watched(item, self.getTotalTime())
 
         if bubble=="true" and r:
-          if item["label"] in item["file"]:
+          if item["label"] == os.path.basename(item["file"]):
           #if True: #For testing purposes
             xbmc.log("Simkl: Label and file are the same")
             lstw = self.api.lastwatched
@@ -130,12 +124,12 @@ class Player(xbmc.Player):
 
           txt = item["label"]
           title = ""
-          if media == "movie":
+          if item["type"] == "movie":
             txt = item["title"]
-          elif media == "episode":
+          elif item["type"] == "episode":
             txt = item["showtitle"]
             title = "- S{:02}E{:02}".format(item["season"], item["episode"])
-          xbmc.log("Simkl: " + "; ".join([media, txt, title]))
+          xbmc.log("Simkl: " + "; ".join([item["type"], txt, title]))
           interface.notify(getstr(32028).format(title), title=txt)
           r = 0
 
