@@ -1,21 +1,35 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.matchcenter" name="Match center" version="2.1.2" provider-name="enen92">
+<addon id="script.video.bgtime_tv" name="BGTime.TV" version="1.0.3" provider-name="mariapmarkova@gmail.com">
 	<requires>
 		<import addon="xbmc.python" version="2.25.0"/>
-		<import addon="script.module.thesportsdb" version="1.0.1"/>
-		<import addon="script.module.pytz" version="2014.2"/>
-		<import addon="script.module.twitter" version="1.17.1"/>
-		<import addon="script.keymap" version="1.0.10"/>
+		<import addon="script.module.requests" version="2.7.0"/> 
+		<import addon="script.module.xbmcswift" version="0.0.1"/>
+		<import addon="script.module.simplecache" version="1.0.0" />
 	</requires>
-	<extension point="xbmc.python.script" library="main.py" />
+	<extension point="xbmc.python.script" library="addon.py">
+		<provides>video</provides>
+	</extension>
 	<extension point="xbmc.addon.metadata">
 		<platform>all</platform>
-		<website>http://www.thesportsdb.com/</website>
-		<source>https://github.com/enen92/script.matchcenter</source>
-		<forum>http://forum.kodi.tv/showthread.php?tid=259894</forum>
-		<summary lang="en">Extended football match information</summary>
-		<summary lang="pt">Informação extra para encontros de futebol</summary>
-		<description lang="en">This addon brings a window that can be mapped to a remote key to show livescores for the current live football games, access match information (goals, cards, subs, lineups) or follow what others are saying about the match in twitter.[CR][CR]Powered by: http://www.thesportsdb.com</description>
-		<description lang="pt">Este addon apresenta uma janela (que pode ser mapeada a um botão do comando) para apresentar os resultados ao vivo dos jogos de futebol, aceder a informação relaccionada com o jogo em questão (golos, cartões, substituições, equipa titular) ou aquilo que os outros estão a dizer acerca do jogo no twitter. [CR][CR]Suportado por: http://www.thesportsdb.com</description>
-    </extension>
+		<language>bg</language>
+		<license>The MIT License (MIT)</license>
+		<summary lang="bg">Видео адон за BGTime.TV - bgtime.tv</summary>
+		<summary lang="en">Video addon for BGTime.TV - bgtime.tv</summary>
+		<description lang="bg">
+			Този адон предлага достъп до стриймовете нa BGTime.TV (канали на живо и сериали).
+			За да го ползвате е нужна активна BGTime.TV регистрация.
+		</description>
+		<description lang="en">
+			This addon provides access to streams of BGTime.TV (live channels and series).
+			It requires active BGTime.TV registration.
+		</description>
+		<disclaimer lang="bg">
+			Нужни са активни потребителско име и парола.
+			Може да се ползва само извън България. За детайли виж https://bgtime.tv/countries
+		</disclaimer>
+		<website>https://bgtime.tv/</website>
+		<email>support@mytv.bg</email>
+		<news>v1.0.2 created by mariapmarkova@gmail.com</news>
+		<news>v1.0.2 създадена от mariapmarkova@gmail.com</news>
+	</extension>
 </addon>

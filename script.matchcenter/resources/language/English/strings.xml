@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<strings>
+	<!-- General entries -->
+	<string id="30000">Page</string>
+	<string id="30001">Search</string>    
+	<string id="30002">Play</string>
+	<string id="30003">Error</string>
+	<string id="30004">Server returned no data! Please try again.</string>
+	<string id="30005">Update your account in plugin settings!</string>
+	<string id="30006">Select quality</string>
+	<string id="30007">Server returned no data!</string>
+	<string id="30008">Enter at least 3 symbols to searching</string>
+	<string id="30009">Search for: </string>
+	<string id="30012">Timeshift: </string>
+	<string id="30013"> hours back</string>
+	<string id="30014">Upcoming video</string>
+	<string id="30015">Jan</string>
+	<string id="30016">Feb</string>
+	<string id="30017">Mar</string>
+	<string id="30018">Apr</string>
+	<string id="30019">May</string>
+	<string id="30020">Jun</string>
+	<string id="30021">Jul</string>
+	<string id="30022">Aug</string>
+	<string id="30023">Sep</string>
+	<string id="30024">Oct</string>
+	<string id="30025">Nov</string>
+	<string id="30026">Dec</string>
+
+	<!-- Settings -->
+	<string id="30010">Force ViewMode to Thumbnail</string>
+	<string id="30011">Update container on page switch</string>
+	
+	<!-- Login information entries -->
+	<string id="30200">Email</string>
+	<string id="30210">Password</string>
+
+	<!-- Server data configuration -->
+	<string id="5000">API URL</string>
+	
+</strings>
