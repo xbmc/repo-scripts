@@ -376,7 +376,7 @@ class InfoExtractor(object):
             cls._VALID_URL_RE = re.compile(cls._VALID_URL)
         m = cls._VALID_URL_RE.match(url)
         assert m
-        return m.group('id')
+        return compat_str(m.group('id'))
 
     @classmethod
     def working(cls):
@@ -420,7 +420,7 @@ class InfoExtractor(object):
             if country_code:
                 self._x_forwarded_for_ip = GeoUtils.random_ipv4(country_code)
                 if self._downloader.params.get('verbose', False):
-                    self._downloader.to_stdout(
+                    self._downloader.to_screen(
                         '[debug] Using fake IP %s (%s) as X-Forwarded-For.'
                         % (self._x_forwarded_for_ip, country_code.upper()))
 
@@ -1002,17 +1002,17 @@ class InfoExtractor(object):
                 item_type = e.get('@type')
                 if expected_type is not None and expected_type != item_type:
                     return info
-                if item_type == 'TVEpisode':
+                if item_type in ('TVEpisode', 'Episode'):
                     info.update({
                         'episode': unescapeHTML(e.get('name')),
                         'episode_number': int_or_none(e.get('episodeNumber')),
                         'description': unescapeHTML(e.get('description')),
                     })
                     part_of_season = e.get('partOfSeason')
-                    if isinstance(part_of_season, dict) and part_of_season.get('@type') == 'TVSeason':
+                    if isinstance(part_of_season, dict) and part_of_season.get('@type') in ('TVSeason', 'Season', 'CreativeWorkSeason'):
                         info['season_number'] = int_or_none(part_of_season.get('seasonNumber'))
                     part_of_series = e.get('partOfSeries') or e.get('partOfTVSeries')
-                    if isinstance(part_of_series, dict) and part_of_series.get('@type') == 'TVSeries':
+                    if isinstance(part_of_series, dict) and part_of_series.get('@type') in ('TVSeries', 'Series', 'CreativeWorkSeries'):
                         info['series'] = unescapeHTML(part_of_series.get('name'))
                 elif item_type == 'Article':
                     info.update({
@@ -1022,10 +1022,10 @@ class InfoExtractor(object):
                     })
                 elif item_type == 'VideoObject':
                     extract_video_object(e)
-                elif item_type == 'WebPage':
-                    video = e.get('video')
-                    if isinstance(video, dict) and video.get('@type') == 'VideoObject':
-                        extract_video_object(video)
+                    continue
+                video = e.get('video')
+                if isinstance(video, dict) and video.get('@type') == 'VideoObject':
+                    extract_video_object(video)
                 break
         return dict((k, v) for k, v in info.items() if v is not None)
 
@@ -2132,15 +2132,18 @@ class InfoExtractor(object):
             return is_plain_url, formats
 
         entries = []
+        # amp-video and amp-audio are very similar to their HTML5 counterparts
+        # so we wll include them right here (see
+        # https://www.ampproject.org/docs/reference/components/amp-video)
         media_tags = [(media_tag, media_type, '')
                       for media_tag, media_type
-                      in re.findall(r'(?s)(<(video|audio)[^>]*/>)', webpage)]
+                      in re.findall(r'(?s)(<(?:amp-)?(video|audio)[^>]*/>)', webpage)]
         media_tags.extend(re.findall(
             # We only allow video|audio followed by a whitespace or '>'.
             # Allowing more characters may end up in significant slow down (see
             # https://github.com/rg3/youtube-dl/issues/11979, example URL:
             # http://www.porntrex.com/maps/videositemap.xml).
-            r'(?s)(<(?P<tag>video|audio)(?:\s+[^>]*)?>)(.*?)</(?P=tag)>', webpage))
+            r'(?s)(<(?P<tag>(?:amp-)?(?:video|audio))(?:\s+[^>]*)?>)(.*?)</(?P=tag)>', webpage))
         for media_tag, media_type, media_content in media_tags:
             media_info = {
                 'formats': [],
@@ -2299,6 +2302,8 @@ class InfoExtractor(object):
             tracks = video_data.get('tracks')
             if tracks and isinstance(tracks, list):
                 for track in tracks:
+                    if not isinstance(track, dict):
+                        continue
                     if track.get('kind') != 'captions':
                         continue
                     track_url = urljoin(base_url, track.get('file'))
@@ -2328,6 +2333,8 @@ class InfoExtractor(object):
         urls = []
         formats = []
         for source in jwplayer_sources_data:
+            if not isinstance(source, dict):
+                continue
             source_url = self._proto_relative_url(source.get('file'))
             if not source_url:
                 continue

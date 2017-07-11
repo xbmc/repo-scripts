@@ -1,3 +1,7 @@
+*** 17.709.0 ***
+
+Updated youtube-dl core to 2017.07.09
+
 *** 17.518.2 ***
 
 Remove testing code that was spamming the log
