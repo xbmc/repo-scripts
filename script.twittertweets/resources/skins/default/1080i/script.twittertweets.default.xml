@@ -1,0 +1,168 @@
+﻿<window>
+    <allowoverlay>yes</allowoverlay> 
+    <coordinates>
+        <system>1</system>
+        <left>0</left>
+        <top>0</top>
+    </coordinates>
+    <controls>
+        <control type="group" id="30100">
+            <left>1220</left> 
+            <top>0</top>  
+            <animation effect="slide" start="0,1080" end="0,673" time="200" tween="quadratic" reversible="true" easing="in" condition="true">WindowOpen</animation>
+            <animation effect="slide" start="0,673" end="0,1080" time="200" tween="quadratic" reversible="true" easing="in" condition="true">WindowClose</animation>  
+            <control type="image">
+                <left>37</left> 
+                <top>29</top>  
+                <width>55</width> 
+                <height>55</height> 
+                <texture>white.png</texture>
+                <colordiffuse>FFFFFFFF</colordiffuse>
+                <visible>Control.IsVisible(30100)</visible>
+                <aspectratio scalediffuse="true" align="center" aligny="center">keep</aspectratio>    
+            </control>
+            <control type="image" id="30101">
+                <left>37</left> 
+                <top>29</top>  
+                <width>55</width> 
+                <height>55</height> 
+                <texture></texture>
+                <description></description>
+                <visible>Control.IsVisible(30100)</visible>
+                <aspectratio scalediffuse="true" align="center" aligny="center">keep</aspectratio>    
+            </control>   
+            <control type="image" id="30102">
+                <left>30</left> 
+                <top>315</top>  
+                <width>40</width> 
+                <height>40</height> 
+                <texture>white.png</texture>
+                <description>replies</description>
+                <colordiffuse>FF999999</colordiffuse>
+                <visible>Control.IsVisible(30100)</visible>
+                <aspectratio scalediffuse="true" align="center" aligny="center">keep</aspectratio>    
+            </control> 
+            <control type="image" id="30103">
+                <left>110</left> 
+                <top>315</top>  
+                <width>40</width> 
+                <height>40</height> 
+                <texture>white.png</texture>
+                <description>retweets</description>
+                <colordiffuse>FF999999</colordiffuse>
+                <visible>Control.IsVisible(30100)</visible>
+                <aspectratio scalediffuse="true" align="center" aligny="center">keep</aspectratio>    
+            </control> 
+            <control type="image" id="30104">
+                <left>190</left> 
+                <top>315</top>  
+                <width>40</width> 
+                <height>40</height>  
+                <texture>white.png</texture>
+                <description>likes</description>
+                <colordiffuse>FF999999</colordiffuse>
+                <visible>Control.IsVisible(30100)</visible>
+                <aspectratio scalediffuse="true" align="center" aligny="center">keep</aspectratio>    
+            </control>   
+            <control type="image">
+                <left>270</left> 
+                <top>315</top>  
+                <width>40</width> 
+                <height>40</height>  
+                <texture>white.png</texture>
+                <colordiffuse>FF999999</colordiffuse>
+                <visible>Control.IsVisible(30100)</visible>
+                <aspectratio scalediffuse="true" align="center" aligny="center">keep</aspectratio>    
+            </control>       
+            <control type="image">
+                <left>0</left> 
+                <top>0</top>  
+                <width>669</width> 
+                <height>407</height> 
+                <texture>template.png</texture>
+                <description></description>
+                <visible>Control.IsVisible(30100)</visible>
+                <aspectratio scalediffuse="true" align="center" aligny="center">keep</aspectratio>    
+            </control>
+            <control type="label" id="30105">
+                <left>110</left> 
+                <top>25</top>  
+                <width>559</width>
+                <label></label>
+                <font>font12</font>
+                <description>Twitter Name</description>
+                <visible>Control.IsVisible(30100)</visible>
+                <aspectratio scalediffuse="true" align="left" aligny="center">keep</aspectratio> 
+                <textcolor>FF000000</textcolor>
+            </control>
+            <control type="label" id="30106">
+                <left>110</left> 
+                <top>55</top>  
+                <width>559</width>
+                <label></label>
+                <font>font10</font>
+                <description>Twitter Acct</description>
+                <visible>Control.IsVisible(30100)</visible>
+                <aspectratio scalediffuse="true" align="left" aligny="center">keep</aspectratio> 
+                <textcolor>FF657786</textcolor>
+          </control>
+            <control type="textbox" id="30107">
+                <left>37</left> 
+                <top>100</top>   
+                <width>580</width>
+                <height>200</height>
+                <label></label>
+                <font>font12</font>
+                <description>Twitter Acct</description>
+                <wrapmultiline>true</wrapmultiline>
+                <visible>Control.IsVisible(30100)</visible>
+                <aspectratio scalediffuse="true" align="left" aligny="center">keep</aspectratio> 
+                <textcolor>FF000000</textcolor>
+          </control>
+            <control type="label" id="30108">
+                <left>37</left> 
+                <top>280</top>  
+                <width>580</width> 
+                <label></label>
+                <font>font10</font>
+                <description>time</description>
+                <visible>Control.IsVisible(30100)</visible>
+                <aspectratio scalediffuse="true" align="left" aligny="center">keep</aspectratio> 
+                <textcolor>FF999999</textcolor>
+            </control>
+            <control type="label" id="30109">
+                <left>70</left> 
+                <top>316</top>  
+                <width>40</width> 
+                <label></label>
+                <font>font10</font>
+                <description>Replies</description>
+                <visible>Control.IsVisible(30100)</visible>
+                <aspectratio scalediffuse="true" align="left" aligny="center">keep</aspectratio> 
+                <textcolor>FF999999</textcolor>
+            </control>
+            <control type="label" id="30110">
+                <left>150</left> 
+                <top>316</top>  
+                <width>40</width>
+                <label></label>
+                <font>font10</font>
+                <description>Retweets</description>
+                <visible>Control.IsVisible(30100)</visible>
+                <aspectratio scalediffuse="true" align="left" aligny="center">keep</aspectratio> 
+                <textcolor>FF999999</textcolor>
+            </control>
+            <control type="label" id="30111">
+                <left>230</left> 
+                <top>316</top>  
+                <width>40</width> 
+                <label></label>
+                <font>font10</font>
+                <description>Likes</description>
+                <visible>Control.IsVisible(30100)</visible>
+                <aspectratio scalediffuse="true" align="left" aligny="center">keep</aspectratio> 
+                <textcolor>FF999999</textcolor>
+            </control>
+        </control>
+    </controls>
+</window>
