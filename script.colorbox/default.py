@@ -3,6 +3,7 @@ import xbmc
 import xbmcgui
 import xbmcaddon
 import xbmcvfs
+import re
 from threading import Thread
 ADDON =             xbmcaddon.Addon()
 ADDON_VERSION =     ADDON.getAddonInfo('version')
@@ -27,12 +28,14 @@ ColorBox_function_map = {
         'posterize':    Utils.posterize,
         'distort':      Utils.distort}
 ColorBox_settings_map = {
-        'pixelsize':        Utils.set_pixelsize,
-        'bitsize':          Utils.set_bitsize,
-        'blursize':         Utils.set_blursize,
-        'black':            Utils.set_black,
-        'white':            Utils.set_white,
-        'quality':          Utils.set_quality}
+        'pixelsize':    Utils.set_pixelsize,
+        'bitsize':      Utils.set_bitsize,
+        'blursize':     Utils.set_blursize,
+        'black':        Utils.set_black,
+        'white':        Utils.set_white,
+        'quality':      Utils.set_quality}
+ColorBox_strip =        ('[CR]', ' '), ('<BR>', ' '), ('<br>', ' '), ('&#10;', ' '), ('&&#10;', ' ')
+#ColorBox_strip =       ('[B]', ''), ('[/B]', ''), ('[CR]', ' ')
 class ColorBoxMain:
     def __init__(self):
         Utils.log("version %s started" % ADDON_VERSION)
@@ -46,43 +49,12 @@ class ColorBoxMain:
         Utils.Load_Colors_Dict()
         monitor = xbmc.Monitor()
         while self.daemon and not monitor.abortRequested():
-            if xbmc.getInfoLabel("ListItem.Property(UnWatchedEpisodes)") != self.show_watched:
-                self.show_watched = xbmc.getInfoLabel("ListItem.Property(UnWatchedEpisodes)")
-                Utils.Show_Percentage()
-            self.prefix_now_NINE = HOME.getProperty("NINE_manual_set")
-            if self.prefix_now_NINE != '' and self.prefix_now_NINE != self.prefix_prev_NINE or HOME.getProperty("NINE_daemon_fire"):
-                try:
-                    HOME.setProperty('Daemon_NINE_ImageUpdating', '0')
-                    HOME.clearProperty("NINE_daemon_fire")
-                    self.prefix_prev_NINE = self.prefix_now_NINE
-                    self.info = ""
-                    self.var = ""
-                    for arg in self.prefix_now_NINE.strip().split(','):
-                        arg = arg.replace("'\"", "").replace("\"'", "")
-                        if arg.startswith('info='):
-                            self.info = Utils.Remove_Quotes(arg[5:])
-                        elif arg.startswith('id='):
-                            self.id = Utils.Remove_Quotes(arg[3:])
-                        elif arg.startswith('set='):
-                            self.set = Utils.Remove_Quotes(arg[4:])
-                        elif arg.startswith('var='):
-                            self.var = Utils.Remove_Quotes(arg[4:])
-                        elif arg.startswith('prefix='):
-                            self.prefix = arg[7:]
-                            if not self.prefix.endswith("."):
-                                self.prefix = self.prefix + "."
-                    if self.info != "":
-                        HOME.setProperty(self.prefix + "ImageFilterNINE", ColorBox_function_map[self.info](self.id))
-                        HOME.setProperty(self.prefix + "ImageNINE", self.id)
-                        HOME.setProperty('Daemon_NINE_ImageUpdating', '1')
-                        imagecolor, cimagecolor = Utils.Color_Only_Manual(self.id)
-                        HOME.setProperty(self.prefix + "ImageColorNINE", imagecolor)
-                        HOME.setProperty(self.prefix + "ImageCColorNINE", cimagecolor)
-                    elif self.var != "":
-                        #change various settings
-                        ColorBox_settings_map[self.var](self.set)
-                except:
-                    Utils.log("Could not process image for NINE daemon")
+            Utils.Show_Percentage()
+            #HOME.setProperty('WidgetNameLabelVar', xbmc.getInfoLabel("Control.GetLabel(7973)").replace("[CR]", " "))
+            #HOME.setProperty('HomeHeaderSubline', xbmc.getInfoLabel("Control.GetLabel(7974)").replace("[CR]", " "))
+            HOME.setProperty('LabelFilterTWO', re.sub('\s+',' ',reduce(lambda CBX_a, CBX_kv: CBX_a.replace(*CBX_kv), ColorBox_strip, xbmc.getInfoLabel("Control.GetLabel(7972)")).strip()))
+            HOME.setProperty('LabelFilterTHREE', re.sub('\s+',' ',reduce(lambda CBX_a, CBX_kv: CBX_a.replace(*CBX_kv), ColorBox_strip, xbmc.getInfoLabel("Control.GetLabel(7973)")).strip()))
+            HOME.setProperty('LabelFilterFOUR', re.sub('\s+',' ',reduce(lambda CBX_a, CBX_kv: CBX_a.replace(*CBX_kv), ColorBox_strip, xbmc.getInfoLabel("Control.GetLabel(7974)")).strip()))
             FIVE_daemon_set = HOME.getProperty("FIVE_daemon_set")
             if not FIVE_daemon_set == 'None':
                 self.image_now_FIVE = xbmc.getInfoLabel("Control.GetLabel(7975)")
@@ -144,14 +116,58 @@ class ColorBoxMain:
                         tm4.start()
                     except:
                         Utils.log("Could not process image for EIGHT daemon")
+            self.manual_set_NINE = HOME.getProperty("NINE_manual_set")
+            if self.manual_set_NINE != '' and self.manual_set_NINE != self.prefix_prev_NINE or HOME.getProperty("NINE_daemon_fire"):
+                try:
+                    HOME.setProperty('Daemon_NINE_ImageUpdating', '0')
+                    HOME.clearProperty("NINE_daemon_fire")
+                    self.prefix_prev_NINE = self.manual_set_NINE
+                    self.info = ""
+                    self.id = ""
+                    self.set = ""
+                    self.var = ""
+                    self.prefix = ""
+                    for larg in self.manual_set_NINE.strip().split('|'):
+                        for arg in larg.strip().split(','):
+                            arg = arg.replace("'\"", "").replace("\"'", "")
+                            if arg.startswith('info='):
+                                self.info = Utils.Remove_Quotes(arg[5:])
+                            elif arg.startswith('id='):
+                                self.id = Utils.Remove_Quotes(arg[3:])
+                            elif arg.startswith('set='):
+                                self.set = Utils.Remove_Quotes(arg[4:])
+                            elif arg.startswith('var='):
+                                self.var = Utils.Remove_Quotes(arg[4:])
+                            elif arg.startswith('prefix='):
+                                self.prefix = arg[7:]
+                                if not self.prefix.endswith("."):
+                                    self.prefix = self.prefix + "."
+                        if self.info != "":
+                            HOME.setProperty(self.prefix + "ImageFilterNINE", ColorBox_function_map[self.info](self.id))
+                            HOME.setProperty(self.prefix + "ImageNINE", self.id)
+                            HOME.setProperty('Daemon_NINE_ImageUpdating', '1')
+                            imagecolor, cimagecolor = Utils.Color_Only_Manual(self.id)
+                            HOME.setProperty(self.prefix + "ImageColorNINE", imagecolor)
+                            HOME.setProperty(self.prefix + "ImageCColorNINE", cimagecolor)
+                        elif self.var != "":
+                            #change various settings
+                            ColorBox_settings_map[self.var](self.set)
+                except:
+                    Utils.log("Could not process image for NINE daemon")
+            if self.ColorBox_multis != []:
+                for line in self.ColorBox_multis:
+                    self.idm, self.wpnam, self.mfx = line.strip().split('|')
+                    self.image_now_MULTI = xbmc.getInfoLabel("Control.GetLabel(" + str(self.idm) + ")")
+                    if self.image_now_MULTI != HOME.getProperty(self.wpnam) and self.image_now_MULTI != "":
+                        try:
+                            HOME.setProperty(self.wpnam + "ImageFilter", ColorBox_function_map[self.mfx](self.image_now_MULTI))
+                            HOME.setProperty(self.wpnam + "Image", self.image_now_MULTI)
+                            imagecolor, cimagecolor = Utils.Color_Only_Manual(self.image_now_MULTI)
+                            HOME.setProperty(self.wpnam + "ImageColor", imagecolor)
+                            HOME.setProperty(self.wpnam + "ImageCColor", cimagecolor)
+                        except:
+                            Utils.log("Could not process image for image_now_MULTI daemon %s" % self.wpnam)
             monitor.waitForAbort(0.2)
-    def _StartInfoActions(self):
-        for info in self.infos:
-            if info == 'randomcolor':
-                HOME.setProperty(self.prefix + "ImageColor", Utils.Random_Color())
-                HOME.setProperty(self.prefix + "ImageCColor", Utils.Complementary_Color(HOME.getProperty(self.prefix + "ImageColor")))
-            elif info == 'percentage':
-                Utils.Show_Percentage()
     def _init_vars(self):
         HOME.setProperty("OldImageColorFIVE", "FFffffff")
         HOME.setProperty("ImageColorFIVE", "FFffffff")
@@ -189,16 +205,20 @@ class ColorBoxMain:
         self.image_prev_SEVEN = ""
         self.image_prev_EIGHT = ""
         self.image_prev_NINE =  ""
-        self.prefix_now_NINE =  ""
+        self.manual_set_NINE =  ""
         self.prefix_prev_NINE = ""
         self.autoclose =        ""
     def _parse_argv(self):
         args = sys.argv
         self.infos = []
+        self.ColorBox_multis = []
         for arg in args:
             arg = arg.replace("'\"", "").replace("\"'", "")
             if arg == 'script.colorbox':
                 continue
+            elif arg.startswith('multis='):
+                self.multim = Utils.Remove_Quotes(arg[7:])
+                self.ColorBox_multis = self.multim.split(":")
             elif arg.startswith('daemon='):
                 self.daemon = True
 class ColorBoxMonitor(xbmc.Monitor):
@@ -206,17 +226,52 @@ class ColorBoxMonitor(xbmc.Monitor):
         xbmc.Monitor.__init__(self)
     def onPlayBackStarted(self):
         pass
-        # HOME.clearProperty(self.prefix + 'ImageFilter')
-        # Notify("test", "test")
-        # image, imagecolor, cimagecolor = Filter_blur(self.id, self.radius)
-        # HOME.setProperty(self.prefix + 'ImageFilter', image)
-        # HOME.setProperty(self.prefix + "ImageColor", imagecolor)
 if __name__ == "__main__":
-    args = sys.argv
-    infos = []
+    args =		sys.argv
+    infom =		""
+    idm =		""
+    varm =		120
+    prefixm	=	""
     for arg in args:
         arg = arg.replace("'\"", "").replace("\"'", "")
         if arg == 'script.colorbox':
             continue
         elif arg.startswith('daemon='):
             ColorBoxMain()
+        elif arg.startswith('info='):
+            infom = Utils.Remove_Quotes(arg[5:])
+        elif arg.startswith('id='):
+            idm = Utils.Remove_Quotes(arg[3:])
+        elif arg.startswith('var='):
+            varm = Utils.Remove_Quotes(arg[4:])
+        elif arg.startswith('quality='):
+            ColorBox_settings_map['quality'](Utils.Remove_Quotes(arg[8:]))
+        elif arg.startswith('blursize='):
+            ColorBox_settings_map['blursize'](Utils.Remove_Quotes(arg[9:]))
+        elif arg.startswith('pixelsize='):
+            ColorBox_settings_map['pixelsize'](Utils.Remove_Quotes(arg[10:]))
+        elif arg.startswith('bitsize='):
+            ColorBox_settings_map['bitsize'](Utils.Remove_Quotes(arg[8:]))
+        elif arg.startswith('black='):
+            ColorBox_settings_map['black'](Utils.Remove_Quotes(arg[6:]))
+        elif arg.startswith('white='):
+            ColorBox_settings_map['white'](Utils.Remove_Quotes(arg[6:]))
+        elif arg.startswith('prefix='):
+            prefixm = arg[7:]
+            if not prefixm.endswith("."):
+                prefixm = prefixm + "."
+    if infom == 'randomcolor':
+        HOME.setProperty(prefixm + "ImageColor", Utils.Random_Color())
+        HOME.setProperty(prefixm + "ImageCColor", Utils.Complementary_Color(HOME.getProperty(prefixm + "ImageColor")))
+    elif infom == 'shuffle' and idm != '':
+        us1 = Thread(target=Utils.Shuffle_Set, args=(idm,varm))
+        us1.start()
+    elif infom != "" and idm != "":
+        try:
+            HOME.setProperty(prefixm + "ImageFilter", ColorBox_function_map[infom](idm))
+            HOME.setProperty(prefixm + "Image", idm)
+            imagecolor, cimagecolor = Utils.Color_Only_Manual(idm)
+            HOME.setProperty(prefixm + "ImageColor", imagecolor)
+            HOME.setProperty(prefixm + "ImageCColor", cimagecolor)
+        except:
+            Utils.log("Could not process image for go_RUNSCRIPT_COLORBOX")
