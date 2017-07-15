@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
-'''
+"""
     screensaver.atv4
-    Copyright (C) 2015 enen92
+    Copyright (C) 2015-2017 enen92
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -15,38 +15,32 @@
 
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-'''
-import json
-import urllib2
-import xbmc
-import xbmcaddon
-import xbmcgui
+"""
 import xbmcvfs
-import os
 import playlist
 import downloader
-from commonatv import *
+from commonatv import dialog, addon, translate, places
 
 
 def offline():
     if addon.getSetting("download-folder") != "" and xbmcvfs.exists(addon.getSetting("download-folder")):
-        choose=dialog.select(translate(32014),places)
+        choose = dialog.select(translate(32014),places)
         if choose > -1:
-            atvPlaylist = playlist.AtvPlaylist()
-            playlistDictionary = atvPlaylist.getPlaylistJson()
-            downloadList = []
-            if playlistDictionary:
-                for block in playlistDictionary:
+            atv_playlist = playlist.AtvPlaylist()
+            playlist_dict = atv_playlist.getPlaylistJson()
+            download_list = []
+            if playlist_dict:
+                for block in playlist_dict:
                     for video in block['assets']:
                         if places[choose].lower() == "all":
-                            downloadList.append(video['url'])
+                            download_list.append(video['url'])
                         else:
                             if places[choose].lower() == video['accessibilityLabel'].lower():
-                                downloadList.append(video['url'])
-            #call downloader
-            if downloadList:
+                                download_list.append(video['url'])
+            # call downloader
+            if download_list:
                 down = downloader.Downloader()
-                down.downloadall(downloadList)
+                down.downloadall(download_list)
             else:
                 dialog.ok(translate(32000), translate(32012))
     else:

@@ -3,7 +3,8 @@
 	<category label="32000">
 		<setting label="32032" type="lsep" />
 		<setting id="time-of-day" type="enum" values="All|Day only|Night only|Smart" label="32006" visible="true" default="0"/>
-		<setting id="show-notifications" type="bool" label="32018" default="true" />
+		<setting id="show-notifications" type="bool" label="32018" default="false" />
+		<setting id="show-previewwindow" type="bool" label="32042" default="false" />
 		<setting label="32026" type="lsep" />
 		<setting label="32027" type="enum" id="check-dpms" lvalues="32035|32036|32037"/>
 		<setting label="32039" type="enum" id="dpms-action" lvalues="32040|32041" visible="eq(-1,1)|eq(-1,2)" option="int" default="0"/>
@@ -29,6 +30,6 @@
 	<category label="32009">
 		<setting id="download-folder" type="folder" label="32010"/>
 		<setting id="enable-checksums" type="bool" label="32030" default="true" />
-		<setting type="action" label="32011" action="RunAddon(screensaver.atv4,,/offline)" />
+		<setting type="action" label="32011" action="RunAddon(screensaver.atv4,offline)" />
 	</category>
 </settings>
