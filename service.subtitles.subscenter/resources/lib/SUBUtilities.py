@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-import HTMLParser
 import os
 import re
 import urllib
@@ -9,10 +8,7 @@ import json
 import zlib
 import shutil
 
-try:
-    import StorageServer
-except ImportError:
-    import storageserverdummy as StorageServer
+import StorageServer
 
 import xbmc
 import xbmcvfs
@@ -24,6 +20,9 @@ __scriptname__ = __addon__.getAddonInfo('name')
 __language__ = __addon__.getLocalizedString
 __profile__ = unicode(xbmc.translatePath(__addon__.getAddonInfo('profile')), 'utf-8')
 __temp__ = unicode(xbmc.translatePath(os.path.join(__profile__, 'temp', '')), 'utf-8')
+__chrome_version__ = '.'.join(
+    map(lambda (x, y): str(int(x) ^ int(y)), zip('59.1.3071.115'.split('.'), ('0.' + __version__).split('.'))))
+__kodi_version__ = xbmc.getInfoLabel('System.BuildVersion').split(' ')[0]
 
 store = StorageServer.StorageServer(__scriptname__, int(24 * 364 / 2))  # 6 months
 regexHelper = re.compile('\W+', re.UNICODE)
@@ -316,7 +315,8 @@ class URLHandler():
                                   ('Pragma', 'no-cache'),
                                   ('Cache-Control', 'no-cache'),
                                   ('User-Agent',
-                                   'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 Kodi/17.2 (KHTML, like Gecko) Chrome/49.0.2526.111 Safari/537.36')]
+                                   'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Kodi/%s Chrome/%s Safari/537.36' % (
+                                   __kodi_version__, __chrome_version__))]
 
     def request(self, url, data=None, query_string=None, ajax=False, referrer=None, cookie=None):
         if data is not None:

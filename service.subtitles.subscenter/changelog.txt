@@ -1,3 +1,6 @@
+6.0.1 - by CaTz (14/07/2017)
+- Add Kodi version to UA
+
 6.0.0 - by CaTz (07/07/2017)
 - Rename the addon to Cinemast
 - Start using Cinemast API
