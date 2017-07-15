@@ -14,7 +14,7 @@
 5. Please report any bugs [here](https://github.com/SIMKL/script.simkl/issues)
 
 ## TODO:
-- [x] Make it work on Android and Kodi v17
+- [x] Make it work on Android
 
 ## Donations:
 It would be very nice if you invite me for a cup of coffee:

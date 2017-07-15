@@ -8,79 +8,78 @@ msgstr ""
 "Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: David Davó\n"
-"Language-Team: Spanish\n"
+"Last-Translator: BlackSpirits\n"
+"Language-Team: Portuguese (PT)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: es\n"
+"Language: pt-pt\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #Settings
-
 msgctxt "#32001"
 msgid "Please click to Log In"
-msgstr "Por favor haz click para iniciar sesión"
+msgstr "Por favor, clique para Iniciar Sessão"
 
 msgctxt "#32002"
 msgid "Other options"
-msgstr "Otras opciones"
+msgstr "Outras opções"
 
 msgctxt "#32003"
 msgid "Sync library"
-msgstr "Sincronizar librerías"
+msgstr "Sincronizar biblioteca"
 
 msgctxt "#32006"
 msgid "Scrobble at percentage"
-msgstr "Scrobble al llegar a..."
+msgstr "Scrobble em percentagem"
 
 msgctxt "#32007"
 msgid "Checkin percentage"
-msgstr "Checkin al llegar a..."
+msgstr "Percentagem de verificação"
 
 msgctxt "#32008"
 msgid "Show bubble when scrobbled"
-msgstr "Mostrar notificación al scrobble"
+msgstr "Mostrar notificação quando scrobble"
 
 msgctxt "#32009"
 msgid "See options to customize Simkl TV Tracker"
-msgstr "Ver opciones para personalizar Simkl TV Tracker"
+msgstr "Veja as opções para personalizar Simkl TV Tracker"
 
 msgctxt "#32010"
 msgid "You are not logged in"
-msgstr "Usted no se ha identificado"
+msgstr "Você não está logado"
 
 msgctxt "#32011"
 msgid "You are logged in"
-msgstr "Has iniciado sesión"
+msgstr "Você está logado"
 
 #Up to 32020 to settings
 
 msgctxt "#32021"
 msgid "Simkl login"
-msgstr "Inicio de sesión en Simkl"
+msgstr "Iniciar Sessão en Simkl"
 
 msgctxt "#32022"
 msgid "Please visit {0} on \nyour device and enter this code"
-msgstr "Por favor visita {0}\n en tu dispositivo e introduce el código"
+msgstr "Por favor visita {0}\n no teu dispositivo e introduz o código"
 
 msgctxt "#32023"
 msgid "Remaining time: {0}/{1}"
-msgstr "Tiempo restante: {0}/{1}"
+msgstr "Tempo restante: {0}/{1}"
 
 # Blahblahblah
 
 msgctxt "#32025"
 msgid "Hello again, {0}"
-msgstr "Hola de nuevo, {0}"
+msgstr "Olá novamente, {0}"
 
 msgctxt "#32026"
 msgid "Please Log In in addon settings"
-msgstr "Por favor inicia sesión en la configuración del addon"
+msgstr "Por favor Inicia Sessão en configurações do addon"
 
 msgctxt "#32027"
 msgid "You don't have internet"
-msgstr "No tienes conexión a internet"
+msgstr "Não tens conexão à internet"
 
 msgctxt "#32028"
 msgid "Scrobbling {0}"
@@ -88,19 +87,19 @@ msgstr "Scrobbling {0}"
 
 msgctxt "#32029"
 msgid "Error at scrobbling. Retrying ({0})"
-msgstr "Error en scrobbling. Reintentando ({0})"
+msgstr "Erro no scrobbling. A tentar novamente ({0})"
 
 msgctxt "#32030"
 msgid "Login successful, {0}"
-msgstr "Sesión iniciada, {0}"
+msgstr "Sessão Iniciada, {0}"
 
 msgctxt "#32031"
 msgid "Couldn't log in"
-msgstr "No se ha podido autentificar"
+msgstr "Não foi possível iniciar sessão"
 
 msgctxt "#32032"
 msgid "You are alredy logged in as {0}"
-msgstr "Ya has iniciado sesión como '{0}'"
+msgstr "Já iniciou sessão como '{0}'"
 
 msgctxt "#32033"
 msgid "Continue"

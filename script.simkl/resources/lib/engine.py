@@ -3,137 +3,148 @@
 
 import os
 import xbmc
-import interface
 import json
-__addon__ = interface.__addon__
-def getstr(strid): return interface.getstr(strid)
+import threading
 
-class Engine:
-  def __init__(self, api, player):
-    self.api = api
-    self.player = player
-    player.engine = self
-    player.api    = api
-    #self.synclibrary()
-
-  def synclibrary(self):
-    ### UPLOAD ###
-    #DISABLED UNTIL WORKING FINE
-    pass
-    # kodilibrary = xbmc.executeJSONRPC(json.dumps({
-    #   "jsonrpc": "2.0",
-    #   "method": "VideoLibrary.GetMovies",
-    #   "params": {
-    #   "limits": {
-    #     "start": 0,
-    #     "end": 1000
-    #   },
-    #   "properties": [
-    #     "playcount",
-    #     "imdbnumber",
-    #     "file",
-    #     "lastplayed"
-    #   ],
-    #   "sort": {
-    #     "order": "ascending",
-    #     "method": "label",
-    #     "ignorearticle": True
-    #   }
-    #   },
-    #   "id": "libMovies"
-    # }))
-    # xbmc.log("Simkl: Ret: {0}".format(kodilibrary))
-    # kodilibrary = json.loads(kodilibrary)
-
-    # if kodilibrary["result"]["limits"]["total"] > 0:
-    #   for movie in kodilibrary["result"]["movies"]:
-    #     #Dont do that, upload all at once
-
-    #     if movie["playcount"] > 0:
-    #       imdb = movie["imdbnumber"]
-    #       date = movie["lastplayed"]
-    #       self.api.watched(imdb, "movie", date)
+from interface import notify
+from utils import log
+from utils import get_setting
+from utils import get_str
 
 class Player(xbmc.Player):
-  def __init__(self):
-    xbmc.Player.__init__(self)
+    def __init__(self, api):
+        xbmc.Player.__init__(self)
+        self._api = api
+        self._tracker = None
+        self._playback_lock = threading.Event()
 
-  @staticmethod
-  def getMediaType():
-    if xbmc.getCondVisibility('Container.Content(tvshows)'):
-      return "show"
-    elif xbmc.getCondVisibility('Container.Content(seasons)'):
-      return "season"
-    elif xbmc.getCondVisibility('Container.Content(episodes)'):
-      return "episode"
-    elif xbmc.getCondVisibility('Container.Content(movies)'):
-      return "movie"
-    else:
-      return None
+    def onPlayBackStarted(self):
+        self._stop_tracker()
+        if self._api.isLoggedIn:
+            self._detect_item()
 
-  def onPlayBackStarted(self):
-    #self.onPlayBackStopped()
-    pass
-  def onPlayBackSeek(self, *args):
-    self.onPlayBackStopped()
-  def onPlayBackResumed(self):
-    self.onPlayBackStopped()
-  def onPlayBackEnded(self):
-    xbmc.log("Simkl: ONPLAYBACKENDED")
-    self.onPlayBackStopped()
-  def onPlayBackStopped(self):
-    ''' Gets the info needed to pass to the api '''
-    self.api.check_connection()
-    try:
-      item = json.loads(xbmc.executeJSONRPC(json.dumps({
-        "jsonrpc": "2.0", "method": "Player.GetItem",
-        "params": {
-          "properties": ["showtitle", "title", "season", "episode", "file", "tvshowid", "imdbnumber", "genre" ],
-          "playerid": 1},
-        "id": "VideoGetItem"})))["result"]["item"]
-      if item["tvshowid"] != -1:
-        item["imdbnumber"] = json.loads(xbmc.executeJSONRPC(json.dumps({
-          "jsonrpc": "2.0", "method":"VideoLibrary.GetTVShowDetails",
-          "params":{"tvshowid":item["tvshowid"], "properties":["imdbnumber"]},
-          "id":1
-          })))["result"]["tvshowdetails"]["imdbnumber"]
-      xbmc.log("Simkl: Full: {0}".format(item))
+    def onPlayBackStopped(self):
+        log("Stop clear")
+        self._stop_tracker()
 
-      percentage = min(99, 100 * self.getTime() / self.getTotalTime())
-      pctconfig  = int(self.addon.getSetting("scr-pct"))
+    def onPlayBackEnded(self):
+        log("End clear")
+        self._stop_tracker()
 
-      if percentage > pctconfig:
-        bubble = __addon__.getSetting("bubble")
-        xbmc.log("Simkl: Bubble == {0}".format(bubble))
-        xbmc.log("Percentage: {0}, pctconfig {1}".format(percentage, pctconfig))
+    def _detect_item(self):
+        self._item = {}
+        _data = json.loads(xbmc.executeJSONRPC(json.dumps({
+            "jsonrpc": "2.0", "method": "Player.GetItem",
+            "params": {
+                "properties": ["showtitle", "title", "season", "episode", "file", "tvshowid", "imdbnumber","genre" ,"year"],
+                "playerid": 1},
+            "id": "VideoGetItem"})))["result"]["item"]
+        is_tv = _data["tvshowid"] != -1 and _data["season"] > 0 and _data["episode"] > 0
+        if is_tv:
+            _data["imdbnumber"] = json.loads(xbmc.executeJSONRPC(json.dumps({
+                "jsonrpc": "2.0", "method": "VideoLibrary.GetTVShowDetails",
+                "params": {"tvshowid": _data["tvshowid"], "properties": ["imdbnumber"]},
+                "id": 1
+            })))["result"]["tvshowdetails"]["imdbnumber"]
 
-        r = self.api.watched(item, self.getTotalTime())
+        log("Full: {0}".format(_data))
+        if ("imdbnumber" not in _data or _data["imdbnumber"] == '') and _data['file']:
+            _r = self._api.detect_by_file(filename=_data['file'])
+            if isinstance(_r, dict) and "type" in _r:
+                if _r["type"] == "episode":
+                    # TESTED
+                    if "episode" in _r:
+                        self._item = {
+                            "type": "episodes",
+                            "title": _r["show"]["title"],
+                            "simkl": _r["episode"]["ids"]["simkl"],
+                            "season": _r["episode"]["season"],
+                            "episode": _r["episode"]["episode"]
+                        }
+                elif _r["type"] == "movie" and "movie" in _r:
+                    # TESTED
+                    self._item = {
+                        "type": "movies",
+                        "title": _r["movie"]["title"],
+                        "year": _r["movie"]["year"],
+                        "simkl": _r["movie"]["ids"]["simkl"]
+                    }
 
-        if bubble=="true" and r:
-          if item["label"] == os.path.basename(item["file"]):
-          #if True: #For testing purposes
-            xbmc.log("Simkl: Label and file are the same")
-            lstw = self.api.lastwatched
-            if lstw["type"] == "episode":
-              item["showtitle"] = lstw["show"]["title"]
-              item["season"] = lstw["episode"]["season"]
-              item["episode"] = lstw["episode"]["episode"]
-            elif lstw["type"] == "movie":
-              item["title"] = "".join([lstw["movie"]["title"], " (", str(lstw["movie"]["year"]), ")"])
-            media = lstw["type"]
+        if not self._item and (_data["title"] or _data["showtitle"]):
+            if is_tv:
+                # TESTED
+                self._item = {
+                    "type": "shows",
+                    "title": _data["showtitle"],
+                    "tvdb": _data["imdbnumber"],
+                    "season": _data["season"],
+                    "episode": _data["episode"]
+                }
+            else:
+                # TESTED
+                self._item = {
+                    "type": "movies",
+                    "title": _data["title"],
+                    "year": _data["year"],
+                    "imdb": _data["imdbnumber"],
+                }
 
-          txt = item["label"]
-          title = ""
-          if item["type"] == "movie":
-            txt = item["title"]
-          elif item["type"] == "episode":
-            txt = item["showtitle"]
-            title = "- S{:02}E{:02}".format(item["season"], item["episode"])
-          xbmc.log("Simkl: " + "; ".join([item["type"], txt, title]))
-          interface.notify(getstr(32028).format(title), title=txt)
-          r = 0
+        if self._item:
+            self._run_tracker()
 
-    except RuntimeError:
-      pass
-    except ZeroDivisionError:
-      self.onPlayBackStopped()
+    def _run_tracker(self):
+        self._playback_lock.set()
+        self._tracker = threading.Thread(target=self._thread_tracker)
+        self._tracker.start()
+
+    def _stop_tracker(self):
+        if hasattr(self, '_playback_lock'): self._playback_lock.clear()
+        if not hasattr(self, '_tracker'): return
+        if self._tracker is None: return
+        if self._tracker.isAlive(): self._tracker.join()
+        self._tracker = None
+
+    def _thread_tracker(self):
+        log("in tracker thread")
+        try:
+            total_time = self.getTotalTime()
+            perc_mark = int(get_setting("scr-pct"))
+            self._is_detected = True
+            while self._playback_lock.isSet() and not xbmc.abortRequested:
+                try:
+                    if min(99, 100 * self.getTime() / total_time) >= perc_mark:
+                        if self._api.mark_as_watched(self._item) and bool(get_setting("bubble")):
+                            self._show_bubble(self._item)
+                        self._playback_lock.clear()
+                except:
+                    self._playback_lock.clear()
+                xbmc.sleep(1000)
+            log('track stop')
+        except:
+            pass
+
+    def _show_bubble(self, item):
+        log("in bubble")
+        if "title" in item:
+            txt = ''
+            title = item["title"]
+            if "episode" in item:
+                txt = "- S{:02}E{:02}".format(item["season"], item["episode"])
+            elif "year" in item:
+                title = "".join([title, " (", str(item["year"]), ")"])
+
+            log("Show Bubble")
+            notify(get_str(32028).format(txt), title=title)
+
+    @staticmethod
+    def getMediaType():
+        if xbmc.getCondVisibility('Container.Content(tvshows)'):
+            return "show"
+        elif xbmc.getCondVisibility('Container.Content(seasons)'):
+            return "season"
+        elif xbmc.getCondVisibility('Container.Content(episodes)'):
+            return "episode"
+        elif xbmc.getCondVisibility('Container.Content(movies)'):
+            return "movie"
+        else:
+            return None
