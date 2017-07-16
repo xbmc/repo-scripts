@@ -31,6 +31,16 @@ def LOG(message):
     message = '{0}: {1}'.format(ADDON_ID,message)
     xbmc.log(msg=message.encode("utf-8"), level=xbmc.LOGNOTICE)
 
+def DEBUG_LOG(message):
+    if not DEBUG:
+        return
+    LOG('DEBUG: {0}'.format(message))
+
+def VERBOSE_LOG(message):
+    if not DEBUG or not VERBOSE:
+        return
+    DEBUG_LOG(message)
+
 def sleep(ms):
     xbmc.sleep(ms)
 
@@ -333,10 +343,16 @@ def getCommand():
     return commandData.split(':',1)[-1]
 #End deprecated
 ################################################################
+DEBUG = False
+VERBOSE = False
 
 def init():
     pd = profileDirectory()
     if not os.path.exists(pd): os.makedirs(pd)
 
-DEBUG = getSetting('debug_logging',True)
+def reload():
+    global DEBUG, VERBOSE
+    DEBUG = getSetting('debug_logging',True)
+    VERBOSE = getSetting('verbose_logging',False)
+
 init()

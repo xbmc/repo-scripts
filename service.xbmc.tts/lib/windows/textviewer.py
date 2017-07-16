@@ -16,7 +16,7 @@ class TextViewerReader(WindowReaderBase):
         self._last_md5sum = md5sum
 
     def getViewerTexts(self):
-        text = xbmc.getInfoLabel('Control.GetLabel(5)').decode('utf-8')
+        text = xbmc.getInfoLabel('Control.GetLabel(5)').decode('utf-8') or xbmc.getInfoLabel('Control.GetLabel(2000)').decode('utf-8')
         if text:
             return self.processLines(text.splitlines())
         else:

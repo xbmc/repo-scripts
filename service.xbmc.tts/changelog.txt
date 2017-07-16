@@ -23,6 +23,15 @@ EXTERNAL TODO:
  OSX installer?
  Android TTS app for android backend
 
+** 1.0.7 **
+
+Add some fixes for the video info dialog
+Add handlers for some new windows
+Add verbose logging option
+Remove defunct Google and speechutil.com backends
+Issue #11: Fix voice selection on festival backend and allow for quotes in text
+Issue #13: Revert OSXSay backend to old method to fix crashing on OSX
+
 ** 1.0.6 **
 
 Fix bug on window where addon window names were being spoken as the path to the window file

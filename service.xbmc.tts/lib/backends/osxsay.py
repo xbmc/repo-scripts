@@ -3,7 +3,7 @@ import sys, subprocess, os
 from lib import util
 from base import ThreadedTTSBackend
 
-class OSXSayTTSBackend(ThreadedTTSBackend):
+class OSXSayTTSBackend_Internal(ThreadedTTSBackend):
     provider = 'OSXSay'
     displayName = 'OSX Say (OSX Internal)'
     canStreamWav = True
@@ -93,7 +93,7 @@ class OSXSayTTSBackend(ThreadedTTSBackend):
         return sys.platform == 'darwin' and not util.isATV2()
 
 #OLD
-class OSXSayTTSBackend_SubProcess(ThreadedTTSBackend):
+class OSXSayTTSBackend(ThreadedTTSBackend):
     provider = 'OSXSay'
     displayName = 'OSX Say (OSX Internal)'
     canStreamWav = True
@@ -101,7 +101,7 @@ class OSXSayTTSBackend_SubProcess(ThreadedTTSBackend):
     def __init__(self):
         util.LOG('OSXSay using subprocess method class')
         self.process = None
-        self.threadedInit()
+        ThreadedTTSBackend.__init__(self)
 
     def threadedSay(self,text):
         if not text: return

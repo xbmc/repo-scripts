@@ -42,9 +42,10 @@
     <setting visible="eq(-27,Cepstral)" id="volume.Cepstral" label="32010" type="slider" subsetting="true" option="int" default="0" range="-12,12" />
 
     <!-- OSX Say -->
-    <setting visible="eq(-28,OSXSay)" id="voice.OSXSay" subsetting="true" label="32003" type="action" action='XBMC.NotifyAll(service.xbmc.tts,SETTINGS.SETTING_DIALOG,"[\"OSXSay\",\"voice\"]")' />
-    <setting visible="eq(-29,OSXSay)" id="speed.OSXSay" label="32011" type="slider" subsetting="true" option="int" default="200" range="80,450" />
-    <setting visible="eq(-30,OSXSay)" id="volume.OSXSay" label="32014" type="slider" subsetting="true" option="percent" default="100" range="0,100" />
+    <!-- Reverted to old OSXSay hander (for now) which doesn't have these -->
+    <setting visible="false" id="voice.OSXSay" subsetting="true" label="32003" type="action" action='XBMC.NotifyAll(service.xbmc.tts,SETTINGS.SETTING_DIALOG,"[\"OSXSay\",\"voice\"]")' />
+    <setting visible="false" id="speed.OSXSay" label="32011" type="slider" subsetting="true" option="int" default="200" range="80,450" />
+    <setting visible="false" id="volume.OSXSay" label="32014" type="slider" subsetting="true" option="percent" default="100" range="0,100" />
 
     <!-- Festival -->
     <setting visible="eq(-31,Festival)" id="voice.Festival" subsetting="true" label="32003" type="action" action='XBMC.NotifyAll(service.xbmc.tts,SETTINGS.SETTING_DIALOG,"[\"Festival\",\"voice\"]")' />
@@ -53,11 +54,12 @@
     <setting visible="eq(-34,Festival)" id="pitch.Festival" label="32005" type="slider" subsetting="true" option="int" default="105" range="50,500" />
     <setting visible="eq(-35,Festival)" id="volume.Festival" label="32010" type="slider" subsetting="true" option="int" default="0" range="-12,12" />
 
-    <!-- Google -->
-    <setting visible="eq(-36,Google)" id="language.Google" subsetting="true" label="32016" type="action" action='XBMC.NotifyAll(service.xbmc.tts,SETTINGS.SETTING_DIALOG,"[\"Google\",\"language\"]")' />
-    <setting visible="eq(-37,Google)" id="player.Google" subsetting="true" label="32007" type="action" action='XBMC.NotifyAll(service.xbmc.tts,SETTINGS.PLAYER_DIALOG,{"backend":"Google"})' />
-    <setting visible="eq(-38,Google)" id="pipe.Google" label="32013" type="bool" subsetting="true" default="false" />
-    <setting visible="eq(-39,Google)" enable="eq(-2,sox) | eq(-2,mplayer) | eq(-2,afplay)" id="volume.Google" label="32010" type="slider" subsetting="true" option="int" default="0" range="-12,12" />
+    <!-- Google (Dead)-->
+    <setting visible="false" id="language.Google" subsetting="true" label="32016" type="action" action='XBMC.NotifyAll(service.xbmc.tts,SETTINGS.SETTING_DIALOG,"[\"Google\",\"language\"]")' />
+    <setting visible="false" id="player.Google" subsetting="true" label="32007" type="action" action='XBMC.NotifyAll(service.xbmc.tts,SETTINGS.PLAYER_DIALOG,{"backend":"Google"})' />
+    <setting visible="false" id="pipe.Google" label="32013" type="bool" subsetting="true" default="false" />
+    <setting visible="false" enable="eq(-2,sox) | eq(-2,mplayer) | eq(-2,afplay)" id="volume.Google" label="32010" type="slider" subsetting="true" option="int" default="0" range="-12,12" />
+
     <!-- Speech Dispatcher -->
     <setting visible="eq(-40,Speech-Dispatcher)" id="module.Speech-Dispatcher" subsetting="true" label="32018" type="action" action='XBMC.NotifyAll(service.xbmc.tts,SETTINGS.SETTING_DIALOG,"[\"Speech-Dispatcher\",\"module\"]")' />
     <setting visible="eq(-41,Speech-Dispatcher)" id="voice.Speech-Dispatcher" subsetting="true" label="32003" type="action" action='XBMC.NotifyAll(service.xbmc.tts,SETTINGS.SETTING_DIALOG,"[\"Speech-Dispatcher\",\"voice\"]")' />
@@ -112,6 +114,7 @@
     <setting label="32044" type="bool" id="use_tmpfs" default="true" />
     <setting label="32045" type="bool" id="disable_broken_backends" default="true" />
     <setting label="32046" type="bool" id="debug_logging" default="false" />
+    <setting label="32049" type="bool" id="verbose_logging" default="false" subsetting="true" enable="eq(-1,true)"/>
     <setting label="32047" type="bool" id="override_poll_interval" default="false" />
     <setting label="32048" type="slider" id="poll_interval" subsetting="true" option="int" default="100" range="50,1000" enable="eq(-1,true)" />
   </category>

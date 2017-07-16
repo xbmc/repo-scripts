@@ -16,8 +16,8 @@ from speechdispatcher import SpeechDispatcherTTSBackend
 from jaws import JAWSTTSBackend
 from speech_server import SpeechServerBackend
 from cepstral import CepstralTTSBackend #, CepstralTTSOEBackend
-from google import GoogleTTSBackend
-from speechutil import SpeechUtilComTTSBackend
+# from google import GoogleTTSBackend
+# from speechutil import SpeechUtilComTTSBackend
 from recite import ReciteTTSBackend
 #from voiceover import VoiceOverBackend #Can't test
 
@@ -35,8 +35,8 @@ backendsByPriority = [  SAPITTSBackend,
 #                        VoiceOverBackend,
                         SpeechServerBackend,
                         ReciteTTSBackend,
-                        GoogleTTSBackend,
-                        SpeechUtilComTTSBackend,
+#                        GoogleTTSBackend,
+#                        SpeechUtilComTTSBackend,
                         ESpeakCtypesTTSBackend,
                         LogOnlyTTSBackend
 ]
