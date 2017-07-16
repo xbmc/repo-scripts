@@ -9,10 +9,9 @@
         <provides>executable</provides>
     </extension>
 	<extension point="xbmc.addon.metadata">
-	    <summary lang="en">Image manipulator and colour matching tools</summary>
+	    <summary>Image manipulator and colour matching tools</summary>
 		<language/>
-		<summary lang="en">colorbox Script</summary>
-		<description lang="en">Provides image tools for skinners</description>
+		<description lang="en_GB">Provides image tools for skinners</description>
 		<platform>all</platform>
 		<license>GNU GENERAL PUBLIC LICENSE Version 2, June 1991</license>
 		<forum>http://forum.kodi.tv/</forum>
