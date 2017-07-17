@@ -9,8 +9,7 @@
         <provides>executable</provides>
     </extension>
 	<extension point="xbmc.addon.metadata">
-	    <summary>Image manipulator and colour matching tools</summary>
-		<language/>
+	    <summary lang="en_GB">Image manipulator and colour matching tools</summary>
 		<description lang="en_GB">Provides image tools for skinners</description>
 		<platform>all</platform>
 		<license>GNU GENERAL PUBLIC LICENSE Version 2, June 1991</license>
