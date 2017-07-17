@@ -15,6 +15,7 @@ from decimal import *
 from xml.dom.minidom import parse
 import time
 from threading import Thread
+from random import shuffle
 ADDON =             xbmcaddon.Addon()
 ADDON_ID =          ADDON.getAddonInfo('id')
 ADDON_LANGUAGE =    ADDON.getLocalizedString
@@ -45,6 +46,7 @@ white =             "#ffffff"
 bits =              1
 quality =           8
 colors_dict =       {}
+shuffle_numbers =   ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine']
 def set_quality(new_value):
     global quality
     quality = int(new_value)
@@ -69,6 +71,29 @@ def set_white(new_value):
     global white
     white = "#" + str(new_value)
     xbmc.executebuiltin('Skin.SetString(colorbox_white,'+str(new_value)+')')
+def Shuffle_Set(amount,timed=40):
+    timed = int(timed) / 1000.0
+    board = [[i] for i in range(int(amount))]
+    shuffle(board)
+    HOME.setProperty('Colorbox_shuffle', '1')
+    for peg in board:
+        peg = list(peg)
+        npeg = []
+        for p in peg:
+            npeg.append(shuffle_numbers[int(p)])
+        npegs = ''.join(npeg)
+        HOME.setProperty('Colorbox_shuffle.' + npegs, '1')
+        time.sleep(timed)
+    shuffle(board)
+    HOME.setProperty('Colorbox_shuffle', '0')
+    for peg in board:
+        peg = list(peg)
+        npeg = []
+        for p in peg:
+            npeg.append(shuffle_numbers[int(p)])
+        npegs = ''.join(npeg)
+        HOME.clearProperty('Colorbox_shuffle.' + npegs)
+        time.sleep(timed)
 def Random_Color():
     return "ff" + "%06x" % random.randint(0, 0xFFFFFF)
 def Complementary_Color(hex_color):
@@ -96,7 +121,10 @@ def Black_White(hex_color, prop):
     """
     comp = hex_to_RGB(hex_color)
     contrast = "{:.0f}".format((int(comp[0]) * 0.299) + (int(comp[1]) * 0.587) + (int(comp[2]) * 0.144))
-    HOME.setProperty(prop, str(contrast))
+    luma = "{:.0f}".format((int(comp[0]) * 0.2126) + (int(comp[1]) * 0.7152) + (int(comp[2]) * 0.0722))
+    #luma = "{:.0f}".format(math.sqrt(0.241 * math.pow(int(comp[0]),2) + 0.691 * math.pow(int(comp[1]),2) + 0.068 * math.pow(int(comp[2]),2)))
+    HOME.setProperty('BW'+prop, str(contrast))
+    HOME.setProperty('LUMA'+prop, str(luma))
 def Remove_Quotes(label):
     if label.startswith("'") and label.endswith("'") and len(label) > 2:
         label = label[1:-1]
@@ -116,8 +144,10 @@ def Show_Percentage():
         HOME.setProperty("Show_Percentage", perc)
     except:
         return
-def Color_Only(filterimage, cname, ccname):
+def Color_Only(filterimage, cname, ccname, imagecolor='ff000000', cimagecolor='ffffffff'):
     md5 = hashlib.md5(filterimage).hexdigest()
+    var3 = 'Old' + cname
+    var4 = 'Old' + ccname
     if not colors_dict: Load_Colors_Dict()
     if md5 not in colors_dict:
         filename = md5 + ".png"
@@ -133,10 +163,7 @@ def Color_Only(filterimage, cname, ccname):
             Write_Colors_Dict(md5,imagecolor,cimagecolor)
     else:
         imagecolor, cimagecolor = colors_dict[md5].split(':')
-    var2 = 'BW' + cname
-    var3 = 'Old' + cname
-    var4 = 'Old' + ccname
-    Black_White(imagecolor, var2)
+    Black_White(imagecolor, cname)
     tmc = Thread(target=linear_gradient, args=(cname, HOME.getProperty(var3)[2:8], imagecolor[2:8], 50, 0.01, var3))
     tmc.start()
     tmcc = Thread(target=linear_gradient, args=(ccname, HOME.getProperty(var4)[2:8], cimagecolor[2:8], 50, 0.01, var4))
@@ -144,7 +171,7 @@ def Color_Only(filterimage, cname, ccname):
     #linear_gradient(cname, HOME.getProperty(var3)[2:8], imagecolor[2:8], 50, 0.01, var3)
     #linear_gradient(ccname, HOME.getProperty(var4)[2:8], cimagecolor[2:8], 50, 0.01, var4)
     return imagecolor, cimagecolor
-def Color_Only_Manual(filterimage):
+def Color_Only_Manual(filterimage, imagecolor='ff000000', cimagecolor='ffffffff'):
     md5 = hashlib.md5(filterimage).hexdigest()
     if not colors_dict: Load_Colors_Dict()
     if md5 not in colors_dict:
@@ -309,6 +336,12 @@ def Get_Colors(img, md5):
             colour_tuple[channel] = clamp(sum(values) / len(values))
         imagecolor = 'ff%02x%02x%02x' % tuple(colour_tuple)
         cimagecolor = Complementary_Color(imagecolor)
+        #color = hex_to_RGB(imagecolor)
+        #comp = hex_to_RGB(cimagecolor)
+        #contrast = "{:.0f}".format((int(color[0]) * 0.299) + (int(color[1]) * 0.587) + (int(color[2]) * 0.144))
+        #ccontrast = "{:.0f}".format((int(comp[0]) * 0.299) + (int(comp[1]) * 0.587) + (int(comp[2]) * 0.144))
+        #if abs(int(contrast)-int(ccontrast)) < 50:
+        #    cimagecolor = RGB_to_hex("{:.0f}".format(clamp(int(comp[0]) - 50) + clamp(int(comp[1]) - 50) + clamp(int(comp[2]) - 50)))
         Write_Colors_Dict(md5,imagecolor,cimagecolor)
     else:
         imagecolor, cimagecolor = colors_dict[md5].split(':')
@@ -342,7 +375,7 @@ def Get_Frequent_Color(img):
     return 'ff%02x%02x%02x' % tuple(most_frequent_pixel[1])
 def clamp(x):
     return max(0, min(x, 255))
-def linear_gradient(cname, start_hex="000000", finish_hex="FFFFFF", n=10, sleep=0.005, _thread_check=""):
+def linear_gradient(cname, start_hex="000000", finish_hex="FFFFFF", n=10, sleep=0.005, s_thread_check=""):
     ''' returns a gradient list of (n) colors between
     two hex colors. start_hex and finish_hex
     should be the full six-digit color string,
@@ -357,14 +390,14 @@ def linear_gradient(cname, start_hex="000000", finish_hex="FFFFFF", n=10, sleep=
     # Calcuate a color at each evenly spaced value of t from 1 to n
     for t in range(1, n):
         # Interpolate RGB vector for color at the current value of t
+        if HOME.getProperty(s_thread_check)[2:8] != start_hex:
+            return
         curr_vector = [
             int(s[j] + (float(t)/(n-1))*(f[j]-s[j]))
             for j in range(3)
         ]
         # Add it to our list of output colors
         HOME.setProperty(cname, RGB_to_hex(curr_vector))
-        if HOME.getProperty(_thread_check)[2:8] != start_hex:
-            return
         time.sleep(sleep)
     return
 def hex_to_RGB(hex):
