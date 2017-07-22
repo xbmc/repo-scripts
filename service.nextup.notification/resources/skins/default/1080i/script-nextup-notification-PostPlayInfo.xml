@@ -99,7 +99,7 @@
 										<height>259</height>
 										<texture background="true">$INFO[Window.Property(previous.thumb)]</texture>
 										<aspectratio>stretch</aspectratio>
-                                        <visible>!IsEmpty(Window.Property(showplot))</visible>
+                                        <visible>!String.IsEmpty(Window.Property(showplot))</visible>
                                     </control>
                                     <control type="image">
                                         <posx>0</posx>
@@ -108,7 +108,7 @@
                                         <height>259</height>
                                         <texture background="true">$INFO[Window.Property(previous.landscape)]</texture>
                                         <aspectratio>stretch</aspectratio>
-                                        <visible>IsEmpty(Window.Property(showplot)) + !IsEmpty(Window.Property(previous.landscape))</visible>
+                                        <visible>String.IsEmpty(Window.Property(showplot)) + !String.IsEmpty(Window.Property(previous.landscape))</visible>
                                     </control>
                                     <control type="image">
                                         <posx>0</posx>
@@ -117,7 +117,7 @@
                                         <height>259</height>
                                         <texture background="true">$INFO[Window.Property(background)]</texture>
                                         <aspectratio>stretch</aspectratio>
-                                        <visible>IsEmpty(Window.Property(showplot)) + IsEmpty(Window.Property(previous.landscape))</visible>
+                                        <visible>String.IsEmpty(Window.Property(showplot)) + String.IsEmpty(Window.Property(previous.landscape))</visible>
                                     </control>
 									<control type="group">
 										<posx>193</posx>
@@ -184,7 +184,7 @@
 						</control>
 
 						<control type="group">
-							<visible>!IsEmpty(Window.Property(has.next))</visible>
+							<visible>!String.IsEmpty(Window.Property(has.next))</visible>
 							<control type="label">
 								<scroll>false</scroll>
 								<posx>572</posx>
@@ -197,7 +197,7 @@
 								<textcolor>FFFFFFFF</textcolor>
 								<shadowcolor>22000000</shadowcolor>
 								<label>[UPPERCASE]$ADDON[service.nextup.notification 30021][/UPPERCASE]</label>
-								<visible>IsEmpty(Window.Property(stillwatching))</visible>
+								<visible>String.IsEmpty(Window.Property(stillwatching))</visible>
 							</control>
 							<control type="label">
 								<scroll>false</scroll>
@@ -211,7 +211,7 @@
 								<textcolor>FFFFFFFF</textcolor>
 								<shadowcolor>22000000</shadowcolor>
 								<label>[UPPERCASE]$ADDON[service.nextup.notification 30024][/UPPERCASE]</label>
-								<visible>!IsEmpty(Window.Property(stillwatching))</visible>
+								<visible>!String.IsEmpty(Window.Property(stillwatching))</visible>
 							</control>
 							<control type="group">
 								<posx>582</posx>
@@ -238,7 +238,7 @@
 											<height>303</height>
 											<texture background="true">$INFO[Window.Property(next.thumb)]</texture>
 											<aspectratio>stretch</aspectratio>
-                                            <visible>!IsEmpty(Window.Property(showplot))</visible>
+                                            <visible>!String.IsEmpty(Window.Property(showplot))</visible>
 										</control>
                                         <control type="image">
                                             <posx>0</posx>
@@ -247,7 +247,7 @@
                                             <height>303</height>
                                             <texture background="true">$INFO[Window.Property(next.landscape)]</texture>
                                             <aspectratio>stretch</aspectratio>
-                                            <visible>IsEmpty(Window.Property(showplot)) + !IsEmpty(Window.Property(next.landscape))</visible>
+                                            <visible>String.IsEmpty(Window.Property(showplot)) + !String.IsEmpty(Window.Property(next.landscape))</visible>
                                         </control>
                                         <control type="image">
                                             <posx>0</posx>
@@ -256,10 +256,10 @@
                                             <height>303</height>
                                             <texture background="true">$INFO[Window.Property(background)]</texture>
                                             <aspectratio>stretch</aspectratio>
-                                            <visible>IsEmpty(Window.Property(showplot)) + IsEmpty(Window.Property(next.landscape))</visible>
+                                            <visible>String.IsEmpty(Window.Property(showplot)) + String.IsEmpty(Window.Property(next.landscape))</visible>
                                         </control>
 										<control type="group">
-											<visible>!IsEmpty(Window.Property(countdown)) + IntegerGreaterThan(Window.Property(countdown),-1)</visible>
+											<visible>!String.IsEmpty(Window.Property(countdown)) + Integer.IsGreater(Window.Property(countdown),-1)</visible>
 											<posx>192.5</posx>
 											<posy>75.5</posy>
 											<control type="image">
@@ -317,7 +317,7 @@
 					</control>
 
 					<control type="group">
-						<visible>!IsEmpty(Window.Property(has.next)) + !Control.HasFocus(101)</visible>
+						<visible>!String.IsEmpty(Window.Property(has.next)) + !Control.HasFocus(101)</visible>
                         <control type="label">
                             <scroll>false</scroll>
                             <posx>1177</posx>
@@ -364,12 +364,12 @@
 							<align>left</align>
 							<textcolor>FFFFFFFF</textcolor>
 							<label>$INFO[Window.Property(next.plot)]</label>
-                            <visible>!IsEmpty(Window.Property(showplot))</visible>
+                            <visible>!String.IsEmpty(Window.Property(showplot))</visible>
 						</control>
 					</control>
 
 					<control type="group">
-						<visible>IsEmpty(Window.Property(has.next)) | Control.HasFocus(101)</visible>
+						<visible>String.IsEmpty(Window.Property(has.next)) | Control.HasFocus(101)</visible>
                         <control type="label">
                             <scroll>false</scroll>
                             <posx>1177</posx>
@@ -416,7 +416,7 @@
 							<align>left</align>
 							<textcolor>FFFFFFFF</textcolor>
 							<label>$INFO[Window.Property(previous.plot)]</label>
-                            <visible>!IsEmpty(Window.Property(showplot))</visible>
+                            <visible>!String.IsEmpty(Window.Property(showplot))</visible>
 						</control>
 					</control>
 				</control>
@@ -431,7 +431,7 @@
 					<itemgap>0</itemgap>
 
 					<control type="group" id="500">
-						<visible>IntegerGreaterThan(Container(400).NumItems,0)</visible>
+						<visible>Integer.IsGreater(Container(400).NumItems,0)</visible>
 						<height>580</height>
 						<width>1920</width>
 						<control type="label">
@@ -455,7 +455,7 @@
 							<scrolltime>200</scrolltime>
 							<orientation>horizontal</orientation>
 							<preloaditems>4</preloaditems>
-							<itemlayout width="810" height="486" condition="!IsEmpty(Window.Property(showplot))">
+							<itemlayout width="810" height="486" condition="!String.IsEmpty(Window.Property(showplot))">
 								<control type="group">
 									<left>68</left>
 									<top>10</top>
@@ -503,7 +503,7 @@
 									</control>
 								</control>
 							</itemlayout>
-                            <itemlayout width="310" height="486" condition="IsEmpty(Window.Property(showplot))">
+                            <itemlayout width="310" height="486" condition="String.IsEmpty(Window.Property(showplot))">
                                 <control type="group">
                                     <left>68</left>
                                     <top>10</top>
@@ -543,7 +543,7 @@
                                     </control>
                                 </control>
                             </itemlayout>
-							<focusedlayout width="810" height="486" condition="!IsEmpty(Window.Property(showplot))">
+							<focusedlayout width="810" height="486" condition="!String.IsEmpty(Window.Property(showplot))">
 								<control type="group">
 									<depth>0.10</depth>
 									<left>68</left>
@@ -635,7 +635,7 @@
 									</control>
 								</control>
 							</focusedlayout>
-                            <focusedlayout width="310" height="486" condition="IsEmpty(Window.Property(showplot))">
+                            <focusedlayout width="310" height="486" condition="String.IsEmpty(Window.Property(showplot))">
                                 <control type="group">
                                     <depth>0.10</depth>
                                     <left>68</left>
