@@ -21,7 +21,6 @@ import xbmcaddon
 import xbmcgui
 import xbmc
 import os
-
 from resources.lib.common_cocktail import *
 
 #Window controls
@@ -42,7 +41,14 @@ class Ingredientdetails(xbmcgui.WindowXMLDialog):
 	def onInit(self):
 		self.getControl(ingredientlabel).setLabel(self.ingredient_title)
 		self.getControl(ingredientthumb).setImage(self.ingredient_thumb)
-		self.getControl(ingredientdescription).setText(self.ingredient_description)
+		self.setIngredientDescription()
+		
+	def setIngredientDescription(self):
+		description = cocktailsdb_api.Search().ingredient(self.ingredient_title)
+		if description:
+			self.getControl(ingredientdescription).setText(description)
+		else:
+			self.getControl(ingredientdescription).setText(self.ingredient_description)
 		
 	def onAction(self,action):
 		if action.getId() == ACTION_RETURN or action.getId() == ACTION_ESCAPE:

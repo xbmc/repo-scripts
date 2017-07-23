@@ -2,6 +2,8 @@
 # Cocktail
 ## Cocktail recipe browser and screensaver for Kodi
 
+![Screenshot program](https://raw.githubusercontent.com/enen92/script.screensaver.cocktail/master/icon.png)
+
 This addon let you browse dozens of cocktail recipes, filter by type, glass, alcohol percentage, ingredient and even search youtube videos.
 It also includes an interactive screensaver to display random drinks, switch drinks and search specific recipes.
 

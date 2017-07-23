@@ -26,7 +26,7 @@ In **MyVideoNav.xml** an action like `RunScript(script.playrandomvideos, "$INFO[
 "label=$INFO[Container.FolderName]", watchmode=$INFO[Control.GetLabel(10)])`
 makes for a good button in the sidebar or as some other container-focused option. Use
 
-    <visible>ListItem.IsFolder + !ListItem.IsParentFolder + !SubString(ListItem.FolderPath, plugin, Left) + !SubString(ListItem.FolderPath, addons, Left) + !SubString(ListItem.FolderPath, sources, Left) + !StringCompare(ListItem.FolderPath, add)</visible>
+    <visible>ListItem.IsFolder + !ListItem.IsParentFolder + !String.Contains(ListItem.FolderPath, plugin, Left) + !String.Contains(ListItem.FolderPath, addons, Left) + !String.Contains(ListItem.FolderPath, sources, Left) + !String.IsEqual(ListItem.FolderPath, add)</visible>
 
 to match the context item's visibility on this window.
 

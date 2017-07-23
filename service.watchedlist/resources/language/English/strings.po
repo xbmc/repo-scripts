@@ -39,12 +39,6 @@ msgctxt "#30002"
 msgid "Database"
 msgstr ""
 
-#empty strings from id 30003 to 30009
-
-msgctxt "#30010"
-msgid "Debug mode"
-msgstr ""
-
 msgctxt "#30011"
 msgid "Update movies watched state"
 msgstr ""
@@ -82,7 +76,7 @@ msgid "Database filename (SQLite Database, *.db)"
 msgstr ""
 
 msgctxt "#30020"
-msgid "Backup copy before accessing database file"
+msgid "Number of backup copies (-1=infinite)"
 msgstr ""
 
 msgctxt "#30021"
@@ -97,7 +91,29 @@ msgctxt "#30023"
 msgid "Dropbox Auth Code"
 msgstr ""
 
-#empty strings from id 30024 to 30029
+msgctxt "#30024"
+msgid "Amount of User Information"
+msgstr ""
+
+msgctxt "#30025"
+msgid "All"
+msgstr ""
+
+msgctxt "#30026"
+msgid "Only Info"
+msgstr ""
+
+msgctxt "#30027"
+msgid "Only Warning"
+msgstr ""
+
+msgctxt "#30028"
+msgid "Only Error"
+msgstr ""
+
+msgctxt "#30029"
+msgid "None"
+msgstr ""
 
 msgctxt "#30030"
 msgid "no update"
@@ -215,7 +231,11 @@ msgctxt "#32108"
 msgid "Watchedlist: MySQL Error (WL DB)"
 msgstr ""
 
-#empty strings from id 32109 to 32201
+msgctxt "#32109"
+msgid "Watchedlist: SQLite Error (WL DB)"
+msgstr ""
+
+#empty strings from id 32110 to 32201
 
 msgctxt "#32202"
 msgid "Addon movie database"
@@ -247,7 +267,11 @@ msgctxt "#32210"
 msgid "Access denied (user '%s', DB '%s')"
 msgstr ""
 
-#empty strings from id 32211 to 32297
+#empty strings from id 32211 to 32296
+
+msgctxt "#32297"
+msgid "TV-Show \"%s\" (ID %d) has no imdb-number. No processing with WL possible. Try rescraping."
+msgstr ""
 
 msgctxt "#32298"
 msgid "%d movies and %d episodes read from WL."

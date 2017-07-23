@@ -120,14 +120,14 @@
 						<fadetime>0</fadetime>
 					</control>
 					<control type="textbox">
-						<width>150</width>
-						<height>55</height>
-						<posx>0</posx>
-						<posy>170</posy>
+						<width>190</width>
+						<height>75</height>
+						<posx>-15</posx>
+						<posy>160</posy>
 						<align>center</align>
 						<aligny>center</aligny>
 						<colordiffuse>FFFFFFFF</colordiffuse>
-            				<font>font14</font>
+            				<font>font13</font>
             				<textcolor>orangered</textcolor>
             				<shadowcolor>88000000</shadowcolor>
 						<info>ListItem.Label</info>
@@ -175,14 +175,14 @@
 						<fadetime>0</fadetime>
 					</control>
 					<control type="textbox">
-						<width>150</width>
-						<height>55</height>
-						<posx>0</posx>
-						<posy>170</posy>
+						<width>190</width>
+						<height>75</height>
+						<posx>-15</posx>
+						<posy>160</posy>
 						<align>center</align>
 						<aligny>center</aligny>
 						<colordiffuse>FFFFFFFF</colordiffuse>
-            				<font>font14</font>
+            				<font>font13</font>
             				<textcolor>orangered</textcolor>
             				<shadowcolor>88000000</shadowcolor>
 						<info>ListItem.Label</info>
@@ -279,6 +279,35 @@
 		</control>
 
 
-
+		<control type="button" id="32609">
+		      <description>Back</description>
+		      <left>1200</left>
+		      <top>650</top>
+		      <width>60</width>
+		      <height>60</height>
+		      <visible>true</visible>
+		      <colordiffuse>FFFFFFFF</colordiffuse>
+		      <texturefocus border="40">buttons/roundedbutton-focus.png</texturefocus>
+		      <texturenofocus border="40">buttons/roundedbutton-nofocus.png</texturenofocus>
+		      <align></align>
+		      <label>-</label>
+		      <aligny></aligny>
+		      <textoffsetx></textoffsetx>
+		      <textoffsety></textoffsety>
+		      <pulseonselect></pulseonselect>
+		      <onclick>Action(back)</onclick>
+		      <onfocus>-</onfocus>
+		      <onunfocus>-</onunfocus>
+		      <visible>true</visible>
+		</control>
+		<control type="image" id="32610">
+				<left>1224</left>
+			    <top>673</top>
+				<width>30</width>
+				<height>30</height>
+				<texture>buttons/arrowback.png</texture>
+				<aspectratio aligny="center">scale</aspectratio>
+				<visible>true</visible>
+		</control>
     </controls>
 </window>

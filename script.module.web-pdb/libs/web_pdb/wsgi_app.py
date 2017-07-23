@@ -47,10 +47,11 @@ def compress(func):
     @wraps(func)
     def wrapper(*args, **kwargs):
         result = func(*args, **kwargs)
-        if ('Accept-Encoding' in bottle.request.headers and
-                'deflate' in bottle.request.headers['Accept-Encoding'] and
+        if ('deflate' in bottle.request.headers.get('Accept-Encoding', '') and
                 isinstance(result, basestring)):
-            result = zlib.compress(result.encode('utf-8'))
+            if isinstance(result, unicode):
+                result = result.encode('utf-8')
+            result = zlib.compress(result)
             bottle.response.add_header('Content-Encoding', 'deflate')
         return result
     return wrapper
@@ -78,17 +79,18 @@ def root():
 @app.route('/output/<mode>')
 @compress
 def send(mode):
+    bottle.response.content_type = 'application/json'
+    bottle.response.cache_control = 'no-store'
     if app.history.is_dirty or mode == 'history':
-        bottle.response.content_type = 'application/json; charset=UTF-8'
-        bottle.response.cache_control = 'no-cache'
-        return json.dumps({
+        body = {
             'history': app.history.contents,
             'globals': app.globals.contents,
             'locals': app.locals.contents,
-            'frame_data': app.frame_data.contents
-        })
+            'frame_data': app.frame_data.contents,
+        }
     else:
-        raise bottle.HTTPError(403, 'Forbidden')
+        body = None
+    return json.dumps(body)
 
 
 @app.route('/input', method='POST')

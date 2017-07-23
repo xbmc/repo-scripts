@@ -1,3 +1,6 @@
+v1.1.2 (2017-04-28)
+- Fix incorrect JSON-RPC notifications on Krypton
+
 v1.1.0 (2016-11-07)
 - Show notification if a directory can't be played
 - Show busy notification before playing first item, and option to disable it

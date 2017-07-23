@@ -15,11 +15,11 @@
 
         <control type="image">
             <description>image</description>
-            <posx>0</posx>
+            <posx>10</posx>
             <posy>10</posy>
             <aspectratio scalediffuse="false" align="center" aligny="top">keep</aspectratio>
             <colordiffuse>FFFFFFFF</colordiffuse>
-            <width>200</width>
+            <width>240</width>
             <texture>logotsdb2.png</texture>
         </control>       
 
@@ -56,7 +56,7 @@
 			<left>400</left>
 			<width>650</width>
 			<height>90</height>
-			<font>font35_title</font>
+			<font>font37</font>
 			<textcolor>FFF0F0F0</textcolor>
 			<aligny>center</aligny>
 			<align>center</align>
@@ -110,10 +110,10 @@
 	</control>
     <control type="label" id="32504">
        <posx>20</posx>
-       <posy>655</posy>
+       <posy>660</posy>
        <width>1230</width>
        <height>40</height>
-       <font>font35_title</font>
+       <font>font37</font>
        <selectedcolor>green</selectedcolor>
        <align>center</align>
        <scroll>true</scroll>
@@ -310,9 +310,9 @@
 						<posx>10</posx>
 						<posy>80</posy>
 						<align>center</align>
-						<font>font35_title</font>
+						<font>font37</font>
 						<textcolor>gold</textcolor>
-						<label>$INFO[ListItem.Property(result)]</label>
+						<label>[B]$INFO[ListItem.Property(result)][/B]</label>
 					</control>
 					<control type="image">
 						<posx>10</posx>
@@ -458,9 +458,9 @@
 						<posx>10</posx>
 						<posy>80</posy>
 						<align>center</align>
-						<font>font35_title</font>
+						<font>font37</font>
 						<textcolor>gold</textcolor>
-						<label>$INFO[ListItem.Property(result)]</label>
+						<label>[B]$INFO[ListItem.Property(result)][/B]</label>
 					</control>
 					<control type="image">
 						<posx>10</posx>
@@ -617,9 +617,9 @@
 						<posx>10</posx>
 						<posy>80</posy>
 						<align>center</align>
-						<font>font35_title</font>
+						<font>font37</font>
 						<textcolor>gold</textcolor>
-						<label>$INFO[ListItem.Property(result)]</label>
+						<label>[B]$INFO[ListItem.Property(result)][/B]</label>
 					</control>
 					<control type="image">
 						<posx>10</posx>
@@ -765,9 +765,9 @@
 						<posx>10</posx>
 						<posy>80</posy>
 						<align>center</align>
-						<font>font35_title</font>
+						<font>font37</font>
 						<textcolor>gold</textcolor>
-						<label>$INFO[ListItem.Property(result)]</label>
+						<label>[B]$INFO[ListItem.Property(result)][/B]</label>
 					</control>
 					<control type="image">
 						<posx>10</posx>

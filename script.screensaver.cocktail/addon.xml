@@ -1,16 +1,32 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.screensaver.cocktail" name="Cocktail" version="1.0.0" provider-name="enen92,Zag">
+<addon id="script.screensaver.cocktail" name="Cocktail" version="1.1.0" provider-name="enen92,Zag">
 	<requires>
-		<import addon="xbmc.python" version="2.1.0"/>
+		<import addon="xbmc.python" version="2.20.0"/>
 	</requires>
-	<extension point="xbmc.ui.screensaver" library="cocktail.py" />
+	<extension point="xbmc.ui.screensaver" library="screensaverdeactivator.py" />
 	<extension point="xbmc.python.script" library="interface.py" />
 	<extension point="xbmc.addon.metadata">
 		<platform>all</platform>
+		<license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
 		<website>http://www.thecocktaildb.com/</website>
 		<source>https://github.com/enen92/script.screensaver.cocktail</source>
 		<forum>http://forum.kodi.tv/showthread.php?tid=238039</forum>
 		<summary lang="en">Cocktail recipe browser and screensaver for Kodi</summary>
 		<description lang="en">This addon let you browse dozens of cocktail recipes. It also includes a screensaver to display random drinks. [CR][CR]Powered by http://www.thecocktaildb.com</description>
+		<assets>
+		    <icon>icon.png</icon>
+		    <fanart>fanart.jpg</fanart>
+		    <screenshot>resources/screenshots/screenshot-01.jpg</screenshot>
+		    <screenshot>resources/screenshots/screenshot-02.jpg</screenshot>
+		    <screenshot>resources/screenshots/screenshot-03.jpg</screenshot>
+		    <screenshot>resources/screenshots/screenshot-04.jpg</screenshot>
+		</assets>
+		<news>v1.1.0  (2017-2-10) [CR]
+			- Fix screensaver errors[CR]
+			- Fixes to skinning[CR]
+			- Added ingredient descriptions[CR]
+			- Added back button[CR]
+			- New icon[CR]
+			- Added screenshots[CR]</news>
     </extension>
 </addon>

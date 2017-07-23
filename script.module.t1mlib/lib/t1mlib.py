@@ -58,14 +58,14 @@ class t1mAddon(object):
       pass
 
 
-  def getRequest(self, url, udata=None, headers = httpHeaders, dopost = False):
+  def getRequest(self, url, udata=None, headers = httpHeaders, dopost = False, rmethod = None):
     self.log("getRequest URL:"+str(url))
     req = urllib2.Request(url.encode(UTF8), udata, headers)  
     if dopost == True:
-       method = "POST"
-       req.get_method = lambda: method
+       rmethod = "POST"
+    if rmethod is not None: req.get_method = lambda: rmethod
     try:
-      response = urllib2.urlopen(req)
+      response = urllib2.urlopen(req, timeout=60)
       page = response.read()
       if response.info().getheader('Content-Encoding') == 'gzip':
          self.log("Content Encoding == gzip")
@@ -162,6 +162,28 @@ class t1mAddon(object):
 
   def getVideo(self,url):
       self.getAddonVideo(url)
+          
+  def doResolve(self, liz, subtitles = []):
+      if subtitles == None:
+          subtitles = []
+      infoList = {}
+      infoList['mediatype'] = xbmc.getInfoLabel('ListItem.DBTYPE')
+      infoList['Title'] = xbmc.getInfoLabel('ListItem.Title')
+      infoList['TVShowTitle'] = xbmc.getInfoLabel('ListItem.TVShowTitle')
+      infoList['Year'] = xbmc.getInfoLabel('ListItem.Year')
+      infoList['Premiered'] = xbmc.getInfoLabel('Premiered')
+      infoList['Plot'] = xbmc.getInfoLabel('ListItem.Plot')
+      infoList['Studio'] = xbmc.getInfoLabel('ListItem.Studio')
+      infoList['Genre'] = xbmc.getInfoLabel('ListItem.Genre')
+      infoList['Duration'] = xbmc.getInfoLabel('ListItem.Duration')
+      infoList['MPAA'] = xbmc.getInfoLabel('ListItem.Mpaa')
+      infoList['Aired'] = xbmc.getInfoLabel('ListItem.Aired')
+      infoList['Season'] = xbmc.getInfoLabel('ListItem.Season')
+      infoList['Episode'] = xbmc.getInfoLabel('ListItem.Episode')
+      liz.setInfo('video', infoList)
+      liz.setSubtitles(subtitles)
+      xbmcplugin.setResolvedUrl(int(sys.argv[1]), True, liz)
+
 
   def procConvertSubtitles(self, suburl):
     subfile = ""

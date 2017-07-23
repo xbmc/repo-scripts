@@ -135,3 +135,7 @@ msgstr ""
 msgctxt "#32029"
 msgid "Ingredient description not available."
 msgstr ""
+
+msgctxt "#32030"
+msgid "Enable back button (touch)"
+msgstr ""

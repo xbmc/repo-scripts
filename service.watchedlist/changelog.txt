@@ -1,3 +1,14 @@
+version 1.2 (21.05.2017)
+* Added API and python module to use this addon in other addons
+* minor fixes
+
+version 1.1.4 (28.04.2017)
+ * Fixed error in English language file
+
+version 1.1.3 (16.04.2017)
+ * Added verbosity option for graphical user notifications
+ * Added limitation of number of backup files
+
 version 1.1.2 (12.06.2016)
  * Added fix to avoid infinite waiting if startup delay time is 0
 
@@ -53,13 +64,13 @@ version 0.9.1 (24.06.2013)
 
 version 0.9.0 (09.06.2013)
  * Added: Check watched-states permanently and enable to set media as unwatched
- 
+
 version 0.8.1 (22.05.2013)
  * Fixed: Duplicate movies and tv episodes get marked as watched
 
 version 0.8.0 (16.05.2013)
  * Fixed: lastplayed-information is now also stored in the database (although it is sometimes missing in XBMC)
  * Added: Exceptions are catched with buggalo and bug reports are sent
- 
+
 version 0.7.0 (11.05.2013)
  * Initial release

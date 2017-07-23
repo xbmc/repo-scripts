@@ -57,6 +57,7 @@ class Screensaver(xbmcgui.WindowXMLDialog):
         self.information_control = self.getControl(30110)
         self.container = self.getControl(30002)
         self.image_control = self.getControl(30020)
+        self.image_control2 = self.getControl(30022)
         self.icon_control = self.getControl(30021)
         self.hour_colorcontrol = self.getControl(30105)
         self.colon_colorcontrol = self.getControl(30106)
@@ -84,13 +85,20 @@ class Screensaver(xbmcgui.WindowXMLDialog):
         self.cpuusage = Addon.getSetting('cpuusage')
         self.batterylevel = Addon.getSetting('batterylevel')
         self.freememory = Addon.getSetting('freememory')
+        self.cputemp = Addon.getSetting('cputemp')
+        self.gputemp = Addon.getSetting('gputemp')
+        self.hddtemp = Addon.getSetting('hddtemp')
+        self.fps = Addon.getSetting('fps')
+        self.cuptime = Addon.getSetting('cuptime')
+        self.tuptime = Addon.getSetting('tuptime')
         self.movies = Addon.getSetting('movies')
         self.tvshows = Addon.getSetting('tvshows')
         self.music = Addon.getSetting('music')
         self.weatherinfoshow = Addon.getSetting('weatherinfoshow')
         self.albumartshow = Addon.getSetting('albumartshow')
         self.weathericonf = Addon.getSetting('weathericonformat')
-        self.infoswitch = int(Addon.getSetting('infoswitch'))	
+        self.infoswitch = int(Addon.getSetting('infoswitch'))
+        self.aspectratio = int(Addon.getSetting('aspectratio'))
         self.background = Addon.getSetting('backgroundchoice')
         self.randomimages = Addon.getSetting('randomimages')
         self.skinhelper = int(Addon.getSetting('skinhelper'))
@@ -143,14 +151,23 @@ class Screensaver(xbmcgui.WindowXMLDialog):
         if not(self.iconcolor):
              self.iconcolor = 'FFFFFFFF'
 
+        #setting up aspect ratio
+        if self.aspectratio == 0:
+            self.image_control2.setVisible(False)
+        if self.aspectratio == 1:
+            self.image_control.setVisible(False)
+
 		#setting up background and slideshow
         self.timer = ['15','30','60','120','180','240','300','360','420','480','540','600']
         self.slideshowcounter = 0
         if self.background == '0':
             self.image_control.setImage(os.path.join(path,"resources/media/white.png"))
             self.image_control.setColorDiffuse(self.backgroundcolor)
+            self.image_control2.setImage(os.path.join(path,"resources/media/white.png"))
+            self.image_control2.setColorDiffuse(self.backgroundcolor)
         elif self.background == '1':
             self.image_control.setImage(Addon.getSetting('file'))
+            self.image_control2.setImage(Addon.getSetting('file'))
         elif self.background == '2':
             self.folder = Addon.getSetting('folder')
             self.imagetimer = int(self.timer[int(Addon.getSetting('imagetimer'))])
@@ -165,6 +182,7 @@ class Screensaver(xbmcgui.WindowXMLDialog):
             if self.nextfile > self.number:
                 self.nextfile = 0
             self.image_control.setImage(self.path)
+            self.image_control2.setImage(self.path)
         else:
             self.imagetimer = int(self.timer[int(Addon.getSetting('imagetimer'))])
             xbmc.executebuiltin('Skin.SetString(SkinHelper.RandomFanartDelay,%s)' %self.imagetimer)
@@ -177,6 +195,7 @@ class Screensaver(xbmcgui.WindowXMLDialog):
             else:
                 self.skinhelperimage = "$INFO[Window(Home).Property(SkinHelper.GlobalFanartBackground)]"	
             self.image_control.setImage(xbmc.getInfoLabel(self.skinhelperimage))
+            self.image_control2.setImage(xbmc.getInfoLabel(self.skinhelperimage))
 
 		#setting up shadow color
         self.shadow_colorcontrol.setLabel(self.shadowcolor)
@@ -193,14 +212,32 @@ class Screensaver(xbmcgui.WindowXMLDialog):
                 if xbmc.getInfoLabel('VideoPlayer.Title'):
                     self.informationlist.append('$INFO[VideoPlayer.Title]')
             if self.cpuusage == 'true' and xbmc.getInfoLabel('System.CpuUsage'):
-                if xbmc.getInfoLabel('System.CpuUsage').count('%') > 1:
-                    self.informationlist.append("$INFO[System.CpuUsage]")
-                else:
-                    self.informationlist.append("$ADDON[screensaver.digitalclock 32280] $INFO[System.CpuUsage]")					
+                self.corenumber = xbmc.getInfoLabel('System.CpuUsage').count('%')
+                if self.corenumber == 1:
+                    self.informationlist.append("$ADDON[screensaver.digitalclock 32280] $INFO[System.CoreUsage(0)]%")
+                if self.corenumber == 2:
+                    self.informationlist.append("$ADDON[screensaver.digitalclock 32280] $INFO[System.CoreUsage(0)]% $INFO[System.CoreUsage(1)]%")
+                if self.corenumber == 4:
+                    self.informationlist.append("$ADDON[screensaver.digitalclock 32280] $INFO[System.CoreUsage(0)]% $INFO[System.CoreUsage(1)]% $INFO[System.CoreUsage(2)]% $INFO[System.CoreUsage(3)]%")
+                if self.corenumber == 8:
+                    self.informationlist.append("$ADDON[screensaver.digitalclock 32280] $INFO[System.CoreUsage(0)]% $INFO[System.CoreUsage(1)]% $INFO[System.CoreUsage(2)]% $INFO[System.CoreUsage(3)]%")
+                    self.informationlist.append("$ADDON[screensaver.digitalclock 32280] $INFO[System.CoreUsage(4)]% $INFO[System.CoreUsage(5)]% $INFO[System.CoreUsage(6)]% $INFO[System.CoreUsage(7)]%")					
             if self.batterylevel == 'true' and xbmc.getInfoLabel('System.BatteryLevel'):
                 self.informationlist.append("$ADDON[screensaver.digitalclock 32281] $INFO[System.BatteryLevel]")
             if self.freememory == 'true' and xbmc.getInfoLabel('System.FreeMemory'):
                 self.informationlist.append("$ADDON[screensaver.digitalclock 32282] $INFO[System.FreeMemory] ($INFO[System.Memory(free.percent)])")
+            if self.cputemp == 'true' and xbmc.getInfoLabel('System.CPUTemperature'):
+                self.informationlist.append("$ADDON[screensaver.digitalclock 32295] $INFO[System.CPUTemperature]")
+            if self.gputemp == 'true' and xbmc.getInfoLabel('System.GPUTemperature'):
+                self.informationlist.append("$ADDON[screensaver.digitalclock 32296] $INFO[System.GPUTemperature]")
+            if self.hddtemp == 'true' and xbmc.getInfoLabel('System.HddTemperature'):
+                self.informationlist.append("$ADDON[screensaver.digitalclock 32297] $INFO[System.HddTemperature]")
+            if self.fps == 'true' and xbmc.getInfoLabel('System.FPS'):
+                self.informationlist.append("$ADDON[screensaver.digitalclock 32298] $INFO[System.FPS]")
+            if self.cuptime == 'true' and xbmc.getInfoLabel('System.Uptime'):
+                self.informationlist.append("$ADDON[screensaver.digitalclock 32299] $INFO[System.Uptime]")
+            if self.tuptime == 'true' and xbmc.getInfoLabel('System.TotalUptime'):
+                self.informationlist.append("$ADDON[screensaver.digitalclock 32300] $INFO[System.TotalUptime]")
             if self.movies == 'true' and xbmc.getInfoLabel('Window(Home).Property(Movies.Count)'):
                 self.informationlist.append("$ADDON[screensaver.digitalclock 32283] $INFO[Window(Home).Property(Movies.Count)]")
                 self.informationlist.append("$ADDON[screensaver.digitalclock 32284] $INFO[Window(Home).Property(Movies.Watched)]")
@@ -361,6 +398,7 @@ class Screensaver(xbmcgui.WindowXMLDialog):
                         self.nextfile = random.randint(0,self.number)
                     self.path = self.folder + self.files[self.nextfile]
                     self.image_control.setImage(self.path)
+                    self.image_control2.setImage(self.path)
                     self.nextfile +=1
                     self.slideshowcounter = 0
                     if self.nextfile > self.number:
@@ -371,6 +409,7 @@ class Screensaver(xbmcgui.WindowXMLDialog):
                 self.slideshowcounter +=1
                 if self.slideshowcounter >= (self.multiplier*self.imagetimer):
                     self.image_control.setImage(xbmc.getInfoLabel(self.skinhelperimage))
+                    self.image_control2.setImage(xbmc.getInfoLabel(self.skinhelperimage))
                     self.slideshowcounter = 0
 
 			#colon blink
@@ -469,7 +508,6 @@ class Screensaver(xbmcgui.WindowXMLDialog):
                 self.information = self.informationlist[self.switch]
                 if self.switch == len(self.informationlist)-1:
                     self.switch = -1
-
         if self.weathericonf != '0' and self.albumartshow == 'true' and xbmc.getInfoLabel('Player.art(thumb)'):
             self.iconswitchcounter += 1
             if self.iconswitchcounter == (self.multiplier*self.infoswitch):

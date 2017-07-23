@@ -54,7 +54,20 @@ class Api:
 					for dict_ in data:
 						cocktails.append(Cocktail(dict_))
 					return cocktails
-				
+
+		def ingredient(self,name=None):
+			if name == None:
+				print "Error: ingredient not found"
+				return None
+			else:
+				url = '%s/%s/search.php?i=%s' % (API_BASE_URL,APIKEY,urllib.quote_plus(str(name)))
+				data = json.load(urllib2.urlopen(url))["ingredients"]
+				if not data:
+					print "No ingredients found"
+					return None
+				else:
+					return data[0]["strDescription"]
+
 	class List:
 		
 		def alcoholic(self):
