@@ -32,7 +32,7 @@ class LyricsFetcher:
         except:
             return
         req.close()
-        matchcode = re.search('</TD><TD><A href="(.*?)"', response)
+        matchcode = re.search('</TD><TD><a href="(.*?)"', response)
         if matchcode:
             lyricscode = (matchcode.group(1))
             clean = lyricscode.lstrip('http://www.letssingit.com/').rsplit('-',1)[0]
