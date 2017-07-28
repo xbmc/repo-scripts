@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<strings>
+	<!-- General entries -->
+	<string id="30000">Страница</string>
+	<string id="30001">Търси</string>    
+	<string id="30002">Пусни</string>
+	<string id="30003">Грешка</string>
+	<string id="30004">Грешка при получаване на данни от сървара! Моля опитайте отново.</string>
+	<string id="30005">Въведете потребителско име и парола в настройките на адона!</string>
+	<string id="30006">Изберете качество</string>
+	<string id="30007">Грешка при получаване на данни от сървара!</string>
+	<string id="30008">Въведете поне 3 символа за търсене.</string>
+	<string id="30009">Търсене за: </string>
+	<string id="30012">С</string>
+	<string id="30013"> часа отместване назад</string>
+	<string id="30014">Предаването все още не е излъчено</string>
+	<string id="30015">Яну</string>
+	<string id="30016">Фев</string>
+	<string id="30017">Мар</string>
+	<string id="30018">Апр</string>
+	<string id="30019">Май</string>
+	<string id="30020">Юни</string>
+	<string id="30021">Юли</string>
+	<string id="30022">Авг</string>
+	<string id="30023">Сеп</string>
+	<string id="30024">Окт</string>
+	<string id="30025">Ное</string>
+	<string id="30026">Дек</string>
+
+
+	<!-- Settings -->
+	<string id="30010">Force ViewMode to Thumbnail</string>
+	<string id="30011">Update container on page switch</string>
+	
+	<!-- Login information entries -->
+	<string id="30200">Email адрес</string>
+	<string id="30210">Парола</string>
+
+	<!-- Server data configuration -->
+	<string id="5000">URL адрес на API</string>
+	
+</strings>

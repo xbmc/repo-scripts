@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<window>
+	<allowoverlay>no</allowoverlay>
+	<!-- <defaultcontrol always="true">6001</defaultcontrol> -->
+	<backgroundcolor>FF122637</backgroundcolor>
+	<coordinates>
+		<system>1</system>
+		<posx>0</posx>
+		<posy>0</posy>
+	</coordinates>
+	<animation effect="slide" start="560,0" end="0,0" time="250">WindowOpen</animation>
+	<animation effect="slide" start="0,0" end="560,0" time="250">WindowClose</animation>
+	<controls>
+
+		<control type="image">
+			<posx>360</posx>
+			<posy>90</posy>
+			<width>560</width>
+			<height>560</height>
+			<texture>script-video-bgtime-tv-logo-big.png</texture>
+		</control>
+		<control type="image">
+			<posx>0</posx>
+			<posy>0</posy>
+			<width>1280</width>
+			<height>720</height>
+			<texture>script-video-bgtime-tv-darker-blue.png</texture>
+		</control>
+		<control type="image">
+			<posx>320</posx>
+			<posy>0</posy>
+			<width>640</width>
+			<height>720</height>
+			<texture>script-video-bgtime-tv-soft-white.png</texture>
+		</control>
+		
+		<control type="list" id="6001">
+			<posx>370</posx>
+			<posy>40</posy>
+			<width>540</width>
+			<height>720</height>
+			<viewtype label="list">list</viewtype>
+			<visible>!Control.IsVisible(6002)</visible>
+			<animation type="Visible">
+				<effect type="slide" start="560,0" end="0,0" time="500" />
+			</animation>
+			<animation type="Hidden">
+				<effect type="slide" start="0,0" end="560,0" time="500" />
+			</animation>
+			<focusposition>7</focusposition>
+			<onright>6003</onright>
+			<itemlayout width="600" height="40">
+				<control type="image">
+					<posx>0</posx>
+					<posy>0</posy>
+					<width>480</width>
+					<height>38</height>
+<!-- 					<texture>script-video-bgtime-tv-blue</texture> -->
+				</control>
+				<control type="label">
+					<posx>26</posx>
+					<posy>0</posy>
+					<width>480</width>
+					<height>38</height>
+					<aligny>center</aligny>
+					<align>center</align>
+					<font>font13</font>
+					<textcolor>ffffffff</textcolor>
+					<info>ListItem.Label</info>
+				</control>
+				<control type="image">
+					<posx>500</posx>
+					<posy>0</posy>
+					<width>40</width>
+					<height>40</height>
+					<info>ListItem.Icon</info>
+				</control>
+			</itemlayout>
+			<focusedlayout width="520" height="40">
+				<control type="image">
+					<posx>0</posx>
+					<posy>0</posy>
+					<width>480</width>
+					<height>38</height>
+					<!-- <texture>script-video-bgtime-tv-blue.png</texture> -->
+					<visible>Control.HasFocus(6000)</visible>
+				</control>
+				<control type="image">
+					<posx>0</posx>
+					<posy>0</posy>
+					<width>640</width>
+					<height>38</height>
+					<texture>script-video-bgtime-tv-grey.png</texture>
+				</control>
+				<control type="label">
+					<posx>25</posx>
+					<posy>0</posy>
+					<width>470</width>
+					<height>38</height>
+					<aligny>center</aligny>
+					<align>center</align>
+					<font>font26</font>
+					<textcolor>ffffffff</textcolor>
+					<label>[B]$INFO[ListItem.Label][/B]</label>
+				</control>
+			</focusedlayout>
+		</control>
+		<!--Loader-->
+		<control type="label" id="5100">
+			<description>visibility marker for loading group</description>
+		</control>
+		<control type="group">
+			<posx>0</posx>
+			<posy>0</posy>
+			<width>1280</width>
+			<height>720</height>
+			<visible>!Control.IsVisible(5100)</visible>
+			<animation effect="fade" start="0" end="100" time="250" delay="1500">Visible</animation>
+			<control type="image">
+				<posx>0</posx>
+				<posy>0</posy>
+				<width>1280</width>
+				<height>720</height>
+				<texture>script-video-bgtime-tv-very-dark-grey.png</texture>
+			</control>
+			<control type="image">
+				<description>loading splash</description>
+				<posx>590</posx>
+				<posy>250</posy>
+				<width>100</width>
+				<height>100</height>
+				<texture>ring.gif</texture>
+			</control>
+		</control>
+	 
+		
+	</controls>
+</window>

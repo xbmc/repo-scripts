@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<window type="dialog">
+	<allowoverlay>no</allowoverlay>
+	<defaultcontrol always="true">7000</defaultcontrol>
+	<backgroundcolor>FF122637</backgroundcolor>
+	<scroll>true</scroll>
+	<coordinates>
+		<system>1</system>
+		<posx>0</posx>
+		<posy>0</posy>
+	</coordinates>
+   
+	<!-- Program View-->
+	<controls>
+		<control type="image">
+			<posx>360</posx>
+			<posy>90</posy>
+			<width>560</width>
+			<height>560</height>
+			<texture>script-video-bgtime-tv-logo-big.png</texture>
+		</control>
+		<control type="image">
+			<posx>0</posx>
+			<posy>0</posy>
+			<width>1280</width>
+			<height>720</height>
+			<texture>script-video-bgtime-tv-darker-blue.png</texture>
+		</control>
+		<!-- Title-->
+		<control type="label" id="6001">
+			<posx>0</posx>
+			<posy>0</posy>
+			<alignment>2</alignment>  
+			<font>font14</font>
+			<align>center</align>
+			<aligny>center</aligny>
+			<width>1280</width>
+			<height>40</height>
+		</control>
+		<!-- Filters-->
+		<control type="label" id="6100">
+				<description>visibility marker for loading group</description>
+		</control>
+		<control type="button" id="6101">
+			<posx>1075</posx>
+			<posy>0</posy>
+			<width>200</width>
+			<height>40</height>
+			<alignment>2</alignment>  
+			<font>font14</font>
+			<align>center</align>
+			<aligny>center</aligny>
+			<label>Филтриране</label>
+			<visible>!Control.IsVisible(6100)</visible>
+			<textcolor>white</textcolor>
+			<texturefocus>script-video-bgtime-tv-very-lighter-blue.png</texturefocus>
+			<texturenofocus>script-video-bgtime-tv-soft-white.png</texturenofocus>
+		</control>
+		<!--Loader-->
+		<control type="label" id="5100">
+			<description>visibility marker for loading group</description>
+		</control>
+		<control type="group">
+			<posx>0</posx>
+			<posy>0</posy>
+			<width>1280</width>
+			<height>720</height>
+			<visible>!Control.IsVisible(5100)</visible>
+			<animation effect="fade" start="0" end="100" time="250" delay="1500">Visible</animation>
+			<control type="image">
+				<posx>0</posx>
+				<posy>0</posy>
+				<width>1280</width>
+				<height>720</height>
+				<texture>script-video-bgtime-tv-very-dark-grey.png</texture>
+			</control>
+			<control type="image">
+				<description>loading splash</description>
+				<posx>590</posx>
+				<posy>250</posy>
+				<width>100</width>
+				<height>100</height>
+				<texture>ring.gif</texture>
+			</control>
+		</control>
+	
+	</controls>
+	
+</window>

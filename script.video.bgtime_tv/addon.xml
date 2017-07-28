@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.video.bgtime_tv" name="BGTime.TV" version="1.0.3" provider-name="mariapmarkova@gmail.com">
+<addon id="script.video.bgtime_tv" name="BGTime.TV" version="1.0.1" provider-name="mariapmarkova@gmail.com">
 	<requires>
-		<import addon="xbmc.python" version="2.25.0"/>
+		<import addon="xbmc.python" version="2.24.0"/>
 		<import addon="script.module.requests" version="2.7.0"/> 
 		<import addon="script.module.xbmcswift" version="0.0.1"/>
 		<import addon="script.module.simplecache" version="1.0.0" />
@@ -13,7 +13,7 @@
 		<platform>all</platform>
 		<language>bg</language>
 		<license>The MIT License (MIT)</license>
-		<summary lang="bg">Видео адон за BGTime.TV - bgtime.tv</summary>
+		<summary lang="bg">Видео плъгин за BGTime.TV - bgtime.tv</summary>
 		<summary lang="en">Video addon for BGTime.TV - bgtime.tv</summary>
 		<description lang="bg">
 			Този адон предлага достъп до стриймовете нa BGTime.TV (канали на живо и сериали).
@@ -29,7 +29,7 @@
 		</disclaimer>
 		<website>https://bgtime.tv/</website>
 		<email>support@mytv.bg</email>
-		<news>v1.0.2 created by mariapmarkova@gmail.com</news>
-		<news>v1.0.2 създадена от mariapmarkova@gmail.com</news>
+		<news>v1.0.1 created by mariapmarkova@gmail.com</news>
+		<news>v1.0.1 създадена от mariapmarkova@gmail.com</news>
 	</extension>
 </addon>
