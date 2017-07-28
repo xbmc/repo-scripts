@@ -171,7 +171,7 @@ def Color_Only(filterimage, cname, ccname, imagecolor='ff000000', cimagecolor='f
     #linear_gradient(cname, HOME.getProperty(var3)[2:8], imagecolor[2:8], 50, 0.01, var3)
     #linear_gradient(ccname, HOME.getProperty(var4)[2:8], cimagecolor[2:8], 50, 0.01, var4)
     return imagecolor, cimagecolor
-def Color_Only_Manual(filterimage, imagecolor='ff000000', cimagecolor='ffffffff'):
+def Color_Only_Manual(filterimage, cname, imagecolor='ff000000', cimagecolor='ffffffff'):
     md5 = hashlib.md5(filterimage).hexdigest()
     if not colors_dict: Load_Colors_Dict()
     if md5 not in colors_dict:
@@ -188,6 +188,7 @@ def Color_Only_Manual(filterimage, imagecolor='ff000000', cimagecolor='ffffffff'
             Write_Colors_Dict(md5,imagecolor,cimagecolor)
     else:
         imagecolor, cimagecolor = colors_dict[md5].split(':')
+    Black_White(imagecolor, cname)
     return imagecolor, cimagecolor
 def blur(filterimage):
     md5 = hashlib.md5(filterimage).hexdigest()
