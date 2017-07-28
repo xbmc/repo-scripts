@@ -56,7 +56,7 @@ class ColorBoxMain:
             HOME.setProperty('LabelFilterTHREE', re.sub('\s+',' ',reduce(lambda CBX_a, CBX_kv: CBX_a.replace(*CBX_kv), ColorBox_strip, xbmc.getInfoLabel("Control.GetLabel(7973)")).strip()))
             HOME.setProperty('LabelFilterFOUR', re.sub('\s+',' ',reduce(lambda CBX_a, CBX_kv: CBX_a.replace(*CBX_kv), ColorBox_strip, xbmc.getInfoLabel("Control.GetLabel(7974)")).strip()))
             FIVE_daemon_set = HOME.getProperty("FIVE_daemon_set")
-            if not FIVE_daemon_set == 'None':
+            if not FIVE_daemon_set == '':
                 self.image_now_FIVE = xbmc.getInfoLabel("Control.GetLabel(7975)")
                 if self.image_now_FIVE != self.image_prev_FIVE and self.image_now_FIVE != "" or HOME.getProperty("FIVE_daemon_fire"):
                     try:
@@ -74,7 +74,7 @@ class ColorBoxMain:
                         Utils.log("Could not process image for FIVE daemon")
             cfa_daemon_set = HOME.getProperty("cfa_daemon_set")
             #curr_window = xbmc.getInfoLabel("Window.Property(xmlfile)")
-            if not cfa_daemon_set == 'None':
+            if not cfa_daemon_set == '':
                 self.image_now_cfa = xbmc.getInfoLabel("ListItem.Art(fanart)")
                 if self.image_now_cfa != self.image_prev_cfa and self.image_now_cfa != "" or HOME.getProperty("cfa_daemon_fire"):
                     try:
@@ -89,7 +89,7 @@ class ColorBoxMain:
                         tf.start()
                     except:
                         Utils.log("Could not process image for cfa daemon")
-            if not HOME.getProperty("SEVEN_daemon_set") == 'None':
+            if not HOME.getProperty("SEVEN_daemon_set") == '':
                 self.image_now_SEVEN = xbmc.getInfoLabel("Control.GetLabel(7977)")
                 if self.image_now_SEVEN != self.image_prev_SEVEN and self.image_now_SEVEN != "":
                     try:
@@ -100,7 +100,7 @@ class ColorBoxMain:
                         tm3.start()
                     except:
                         Utils.log("Could not process image for SEVEN daemon")
-            if not HOME.getProperty("EIGHT_daemon_set") == 'None':
+            if not HOME.getProperty("EIGHT_daemon_set") == '':
                 self.image_now_EIGHT = xbmc.getInfoLabel("Control.GetLabel(7978)")
                 if self.image_now_EIGHT != self.image_prev_EIGHT and self.image_now_EIGHT != "" or HOME.getProperty("EIGHT_daemon_fire"):
                     try:
@@ -146,7 +146,7 @@ class ColorBoxMain:
                             HOME.setProperty(self.prefix + "ImageFilterNINE", ColorBox_function_map[self.info](self.id))
                             HOME.setProperty(self.prefix + "ImageNINE", self.id)
                             HOME.setProperty('Daemon_NINE_ImageUpdating', '1')
-                            imagecolor, cimagecolor = Utils.Color_Only_Manual(self.id)
+                            imagecolor, cimagecolor = Utils.Color_Only_Manual(self.id, self.prefix + "ImageColorNINE")
                             HOME.setProperty(self.prefix + "ImageColorNINE", imagecolor)
                             HOME.setProperty(self.prefix + "ImageCColorNINE", cimagecolor)
                         elif self.var != "":
@@ -162,7 +162,7 @@ class ColorBoxMain:
                         try:
                             HOME.setProperty(self.wpnam + "ImageFilter", ColorBox_function_map[self.mfx](self.image_now_MULTI))
                             HOME.setProperty(self.wpnam + "Image", self.image_now_MULTI)
-                            imagecolor, cimagecolor = Utils.Color_Only_Manual(self.image_now_MULTI)
+                            imagecolor, cimagecolor = Utils.Color_Only_Manual(self.image_now_MULTI, self.wpnam + "ImageColor")
                             HOME.setProperty(self.wpnam + "ImageColor", imagecolor)
                             HOME.setProperty(self.wpnam + "ImageCColor", cimagecolor)
                         except:
@@ -270,7 +270,7 @@ if __name__ == "__main__":
         try:
             HOME.setProperty(prefixm + "ImageFilter", ColorBox_function_map[infom](idm))
             HOME.setProperty(prefixm + "Image", idm)
-            imagecolor, cimagecolor = Utils.Color_Only_Manual(idm)
+            imagecolor, cimagecolor = Utils.Color_Only_Manual(idm, prefixm + "ImageColor")
             HOME.setProperty(prefixm + "ImageColor", imagecolor)
             HOME.setProperty(prefixm + "ImageCColor", cimagecolor)
         except:
