@@ -27,7 +27,7 @@ __scriptid__ = __addon__.getAddonInfo('id')
 __scriptname__ = __addon__.getAddonInfo('name')
 __version__ = __addon__.getAddonInfo('version')
 __language__ = __addon__.getLocalizedString
-main_url = 'http://www.italiansubs.net/'
+main_url = 'https://www.italiansubs.net/'
 
 __cwd__ = xbmc.translatePath(__addon__.getAddonInfo('path')).decode('utf-8')
 __serieoriginalpath__ = os.path.join(__cwd__, 'resources', 'Serie.json')

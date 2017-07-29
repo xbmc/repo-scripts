@@ -1,3 +1,6 @@
+1.0.3
+- fixed a problem after itasa switched to https (thx to nicissimo97)
+
 1.0.2
 - updated thetvdb ids
 - added check to avoid running when there are no video playing
