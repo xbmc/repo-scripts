@@ -1,40 +1,50 @@
 #!/usr/bin/python
-import gzip, HTMLParser, json, os, re, StringIO, sys, urllib, urllib2, urlparse, xbmc, xbmcaddon, xbmcgui, xbmcplugin
-from BeautifulSoup import BeautifulSoup
+import cookielib, datetime, gzip, HTMLParser, json, os, re, StringIO, sys, urllib, urllib2, urlparse, xbmc, xbmcaddon, xbmcgui, xbmcplugin
+import time # Workaround bug.
+from bs4 import BeautifulSoup
+from dateutil import tz
 
 _idPlugin = 'script.module.neverwise'
 addon = xbmcaddon.Addon()
 addonName = addon.getAddonInfo('name')
 icon_path = os.path.join(addon.getAddonInfo('path'), 'icon.png')
+date_format = xbmc.getRegion('dateshort')
+time_format = xbmc.getRegion('time')
+datetime_format = '{0} {1}'.format(date_format, time_format)
 
 
-def getResponseJson(url, headers = {}):
+def getResponseJson(url, headers = {}, show_error_msg = True):
 
-  result = getResponse(url, headers)
+  result = getResponse(url, headers, show_error_msg)
 
   if result.isSucceeded and len(result.body) > 0:
-    result.body = json.loads(result.body)
+    try:
+      result.body = json.loads(result.body)
+    except:
+      result.isSucceeded = False
+      if show_error_msg:
+        showResponseError()
   else:
     result.isSucceeded = False
 
   return result
 
 
-def getResponseBS(url, headers = {}):
+def getResponseBS(url, headers = {}, show_error_msg = True, parser = 'html.parser'):
 
-  result = getResponse(url, headers)
+  result = getResponse(url, headers, show_error_msg)
 
   if result.isSucceeded:
     result.body = result.body.replace('&nbsp;', ' ')
     result.body = normalizeResponse(result.body)
-    result.body = BeautifulSoup(result.body, convertEntities = BeautifulSoup.HTML_ENTITIES) # For BS 3, in BS 4, entities get decoded automatically.
+    result.body = BeautifulSoup(result.body, parser)
 
   return result
 
 
-def getResponseForRegEx(url, headers = {}):
+def getResponseForRegEx(url, headers = {}, show_error_msg = True):
 
-  result = getResponse(url, headers)
+  result = getResponse(url, headers, show_error_msg)
 
   if result.isSucceeded:
     result.body = htmlDecode(result.body)
@@ -43,10 +53,10 @@ def getResponseForRegEx(url, headers = {}):
   return result
 
 
-def getResponse(url, headers = {}):
+def getResponse(url, headers = {}, show_error_msg = True):
 
   defaultHeaders = {
-    'User-Agent' : 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:50.0) Gecko/20100101 Firefox/50.0',
+    'User-Agent' : 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:53.0) Gecko/20100101 Firefox/53.0',
     'Accept-Encoding' : 'gzip, deflate'
   }
 
@@ -54,14 +64,20 @@ def getResponse(url, headers = {}):
     if key not in headers:
       headers[key] = value
 
+  cookies = cookielib.CookieJar()
+  opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cookies))
+  urllib2.install_opener(opener)
+
   req = urllib2.Request(url, headers = headers)
 
   result = Response()
   try:
     response = urllib2.urlopen(req)
+    result.cookies = cookies
   except:
     result.isSucceeded = False
-    showConnectionError()
+    if show_error_msg:
+      showConnectionError()
   else:
     result.body = response.read()
     encoding = response.info().get('Content-Encoding')
@@ -78,7 +94,8 @@ def getResponse(url, headers = {}):
 
     if result.body.find(b'\0') > -1: # null bytes, if there's, the response is wrong.
       result.isSucceeded = False
-      showResponseError()
+      if show_error_msg:
+        showResponseError()
 
   return result
 
@@ -116,7 +133,7 @@ def urlParametersToDict(parameters):
   return dict(urlparse.parse_qsl(parameters))
 
 
-def createListItem(label, label2 = '', iconImage = None, thumbnailImage = None, path = None, fanart = None, streamtype = None, infolabels = None, duration = '', isPlayable = False):
+def createListItem(label, label2 = '', iconImage = None, thumbnailImage = None, path = None, fanart = None, streamtype = None, infolabels = None, duration = '', isPlayable = False, contextMenu = None):
   li = xbmcgui.ListItem(label, label2)
 
   if iconImage:
@@ -140,6 +157,9 @@ def createListItem(label, label2 = '', iconImage = None, thumbnailImage = None, 
   if isPlayable:
     li.setProperty('IsPlayable', 'true')
 
+  if contextMenu and len(contextMenu) > 0:
+    li.addContextMenuItems(contextMenu)
+
   return li
 
 
@@ -147,14 +167,14 @@ def formatUrl(parameters, domain = sys.argv[0]):
   return '{0}?{1}'.format(domain, urllib.urlencode(encodeDict(parameters)))
 
 
-def createNextPageItem(handle, pageNum, urlDictParams):
+def createNextPageItem(handle, pageNum, urlDictParams, fanart = None):
   title = '{0} {1} >'.format(getTranslation(33000, _idPlugin), pageNum)
-  xbmcplugin.addDirectoryItem(handle, formatUrl(urlDictParams), createListItem(title, thumbnailImage = 'DefaultVideoPlaylists.png'), True)
+  xbmcplugin.addDirectoryItem(handle, formatUrl(urlDictParams), createListItem(title, thumbnailImage = 'DefaultVideoPlaylists.png', fanart = fanart), True)
 
 
-def createAudioVideoItems(handle):
-  xbmcplugin.addDirectoryItem(handle, formatUrl({ 'content_type' : 'video' }), createListItem(getTranslation(33004, _idPlugin), thumbnailImage = 'DefaultMovies.png'), True)
-  xbmcplugin.addDirectoryItem(handle, formatUrl({ 'content_type' : 'audio' }), createListItem(getTranslation(33005, _idPlugin), thumbnailImage = 'DefaultMusicSongs.png'), True)
+def createAudioVideoItems(handle, fanart = None):
+  xbmcplugin.addDirectoryItem(handle, formatUrl({ 'content_type' : 'video' }), createListItem(getTranslation(33004, _idPlugin), thumbnailImage = 'DefaultMovies.png', fanart = fanart), True)
+  xbmcplugin.addDirectoryItem(handle, formatUrl({ 'content_type' : 'audio' }), createListItem(getTranslation(33005, _idPlugin), thumbnailImage = 'DefaultMusicSongs.png', fanart = fanart), True)
 
 
 def encodeDict(oldDict):
@@ -187,6 +207,42 @@ def htmlDecode(text):
   return HTMLParser.HTMLParser().unescape(text)
 
 
+def getDownloadContextMenu(action, text = None):
+  default_text = getTranslation(33006, _idPlugin)
+  if text and len(text) > 0:
+    return [(u'{0} {1}'.format(default_text, text), action)]
+  else:
+    return [(default_text, action)]
+
+
+def strptime(date_string, date_format_string):
+  try:
+    return datetime.datetime.strptime(date_string, date_format_string)
+  except TypeError:
+    return datetime.datetime(*(time.strptime(date_string, date_format_string)[0:6])) # Workaround bug.
+
+
+def gettz(name):
+  return tz.gettz(name)
+
+
+def gettzlocal():
+  result = None
+
+  tzKodi = json.loads(xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "Settings.GetSettingValue", "params": {"setting": "locale.timezone"}, "id": 1}'))
+  if not 'error' in tzKodi:
+    result = tz.gettz(tzKodi['result']['value'])
+
+  if result == None:
+    result = tz.tzlocal()
+
+  if result == None:
+    result = tz.tzutc()
+
+  return result
+
+
 class Response(object):
   body = None
+  cookies = None
   isSucceeded = True
