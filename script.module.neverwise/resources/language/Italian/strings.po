@@ -39,3 +39,7 @@ msgstr "Video"
 msgctxt "#33005"
 msgid "Audio"
 msgstr "Audio"
+
+msgctxt "#33006"
+msgid "Download"
+msgstr "Scarica"

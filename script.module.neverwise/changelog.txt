@@ -1,5 +1,16 @@
+[B]Version 1.1.1[/B]
+- Fixed bug on timezone.
+- Modified dependency.
+
+[B]Version 1.1.0[/B]
+- Updated BeautifulSoup to version 4.
+- Added management of: cookies, datetime format, timezone and context menu.
+- Added getDownloadContextMenu function.
+- Updated user agent.
+- Improved the getResponse functions.
+
 [B]Version 1.0.9[/B]
-- Added htmlDecode function
+- Added htmlDecode function.
 
 [B]Version 1.0.8[/B]
 - Improved the getResponse functions.
