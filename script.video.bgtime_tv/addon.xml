@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.video.bgtime_tv" name="BGTime.TV" version="1.0.3" provider-name="mariapmarkova@gmail.com">
+	<requires>
+		<import addon="xbmc.python" version="2.25.0"/>
+		<import addon="script.module.requests" version="2.7.0"/> 
+		<import addon="script.module.xbmcswift" version="0.0.1"/>
+		<import addon="script.module.simplecache" version="1.0.0" />
+	</requires>
+	<extension point="xbmc.python.script" library="addon.py">
+		<provides>video</provides>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<platform>all</platform>
+		<language>en bg</language>
+		<license>The MIT License (MIT)</license>
+		<summary lang="bg_BG">Видео адон за BGTime.TV - bgtime.tv</summary>
+		<summary lang="en_GB">Video addon for BGTime.TV - bgtime.tv</summary>
+		<description lang="bg_BG">
+			Този адон предлага достъп до стриймовете нa BGTime.TV (канали на живо и сериали).
+			За да го ползвате е нужна активна BGTime.TV регистрация.
+		</description>
+		<description lang="en_GB">
+			This addon provides access to streams of BGTime.TV (live channels and series).
+			It requires active BGTime.TV registration.
+		</description>
+		<disclaimer lang="bg_BG">
+			Нужни са активни потребителско име и парола.
+			Може да се ползва само извън България. За детайли виж https://bgtime.tv/countries
+		</disclaimer>
+		<website>https://bgtime.tv/</website>
+		<email>support@mytv.bg</email>
+		<news>v1.0.3 created by mariapmarkova@gmail.com</news>
+	</extension>
+</addon>
