@@ -40,11 +40,13 @@ def log(msg, level=xbmc.LOGDEBUG):
 class GUI(xbmcgui.WindowXMLDialog):
     def __init__(self, *args, **kwargs ):
         self.params     = kwargs['params']
+        self.lockAction = False
         self.closeTimer = threading.Timer(CLOSE_TIME, self.close)
     
     
     def onInit(self):
         log('onInit')
+        self.lockAction = True
         replies  = (int(filter(str.isdigit, str(self.params['stats'][0])))  or 0)
         retweets = (int(filter(str.isdigit, str(self.params['stats'][1])))  or 0)
         likes    = (int(filter(str.isdigit, str(self.params['stats'][2])))  or 0)
@@ -59,9 +61,12 @@ class GUI(xbmcgui.WindowXMLDialog):
         self.getControl(30103).setColorDiffuse('FF00ff7d' if retweets > 0 else 'FF999999')
         self.getControl(30102).setColorDiffuse('FF1dcaff' if replies  > 0 else 'FF999999')
         self.getControl(30101).setImage(self.params['icon'])
+        xbmc.sleep(100) #give image time to cache.
         self.getControl(30100).setVisible(True)
+        self.lockAction = False
         self.closeTimer.start()
         
         
     def onAction(self, action):
-        self.close()
+        if self.lockAction == False:
+            self.close()

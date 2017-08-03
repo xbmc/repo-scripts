@@ -27,7 +27,7 @@
                 <width>55</width> 
                 <height>55</height> 
                 <texture></texture>
-                <description></description>
+                <description>Logo</description>
                 <visible>Control.IsVisible(30100)</visible>
                 <aspectratio scalediffuse="true" align="center" aligny="center">keep</aspectratio>    
             </control>   
@@ -37,7 +37,7 @@
                 <width>40</width> 
                 <height>40</height> 
                 <texture>white.png</texture>
-                <description>replies</description>
+                <description>replies color</description>
                 <colordiffuse>FF999999</colordiffuse>
                 <visible>Control.IsVisible(30100)</visible>
                 <aspectratio scalediffuse="true" align="center" aligny="center">keep</aspectratio>    
@@ -48,7 +48,7 @@
                 <width>40</width> 
                 <height>40</height> 
                 <texture>white.png</texture>
-                <description>retweets</description>
+                <description>retweets color</description>
                 <colordiffuse>FF999999</colordiffuse>
                 <visible>Control.IsVisible(30100)</visible>
                 <aspectratio scalediffuse="true" align="center" aligny="center">keep</aspectratio>    
@@ -59,7 +59,7 @@
                 <width>40</width> 
                 <height>40</height>  
                 <texture>white.png</texture>
-                <description>likes</description>
+                <description>likes color</description>
                 <colordiffuse>FF999999</colordiffuse>
                 <visible>Control.IsVisible(30100)</visible>
                 <aspectratio scalediffuse="true" align="center" aligny="center">keep</aspectratio>    
@@ -90,7 +90,7 @@
                 <width>559</width>
                 <label></label>
                 <font>font12</font>
-                <description>Twitter Name</description>
+                <description>Username</description>
                 <visible>Control.IsVisible(30100)</visible>
                 <aspectratio scalediffuse="true" align="left" aligny="center">keep</aspectratio> 
                 <textcolor>FF000000</textcolor>
@@ -101,7 +101,7 @@
                 <width>559</width>
                 <label></label>
                 <font>font10</font>
-                <description>Twitter Acct</description>
+                <description>Account</description>
                 <visible>Control.IsVisible(30100)</visible>
                 <aspectratio scalediffuse="true" align="left" aligny="center">keep</aspectratio> 
                 <textcolor>FF657786</textcolor>
@@ -113,10 +113,12 @@
                 <height>200</height>
                 <label></label>
                 <font>font12</font>
-                <description>Twitter Acct</description>
+                <description>Tweet</description>
                 <wrapmultiline>true</wrapmultiline>
                 <visible>Control.IsVisible(30100)</visible>
+                <scrolltime>200</scrolltime>
                 <aspectratio scalediffuse="true" align="left" aligny="center">keep</aspectratio> 
+                <autoscroll delay="3000" time="1000" repeat="10000">Control.IsVisible(30100)</autoscroll>
                 <textcolor>FF000000</textcolor>
           </control>
             <control type="label" id="30108">
@@ -125,7 +127,7 @@
                 <width>580</width> 
                 <label></label>
                 <font>font10</font>
-                <description>time</description>
+                <description>Time</description>
                 <visible>Control.IsVisible(30100)</visible>
                 <aspectratio scalediffuse="true" align="left" aligny="center">keep</aspectratio> 
                 <textcolor>FF999999</textcolor>
