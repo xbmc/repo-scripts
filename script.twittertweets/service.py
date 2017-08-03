@@ -16,7 +16,7 @@
 # You should have received a copy of the GNU General Public License
 # along with Twitter Tweets.  If not, see <http://www.gnu.org/licenses/>.
 
-import os, gui, datetime, random, urllib2
+import os, gui, datetime, random, urllib2, re
 import xbmc, xbmcaddon, xbmcgui, traceback
 
 from bs4 import BeautifulSoup
@@ -42,11 +42,30 @@ def log(msg, level=xbmc.LOGDEBUG):
             msg += ' ,' + traceback.format_exc()
         xbmc.log(ADDON_ID + '-' + ADDON_VERSION + '-' + (msg), level)
 
+def getProperty(str):
+    try:
+        return xbmcgui.Window(10000).getProperty((str))
+    except Exception,e:
+        log("getProperty, Failed! " + str(e), xbmc.LOGERROR)
+        return ''
+          
+def setProperty(str1, str2):
+    try:
+        xbmcgui.Window(10000).setProperty((str1), (str2))
+    except Exception,e:
+        log("setProperty, Failed! " + str(e), xbmc.LOGERROR)
+
+def clearProperty(str):
+    xbmcgui.Window(10000).clearProperty((str))
+   
 class Service():
     def __init__(self):
         log('__init__')
-        random.seed()
         self.myService = xbmc.Monitor()
+        self.start()
+        
+        
+    def start(self):
         while not self.myService.abortRequested():
             self.userList = []
             for i in range(1,51):
@@ -62,6 +81,7 @@ class Service():
                 
             for user in self.userList:
                 self.chkFEED(user)
+                
             if self.myService.waitForAbort(WAIT_TIME) == True:
                 break
 
@@ -76,35 +96,43 @@ class Service():
         return a[:140]
         
 
+    def cleanString(self, string):
+        return re.sub(r"http\S+", "", string)
+        
+        
     def chkFEED(self, user):
         log('chkFEED, user='+user)
         try:
-            soup       = BeautifulSoup(urllib2.urlopen(BASE_URL+user).read())
+            soup       = BeautifulSoup(urllib2.urlopen(BASE_URL+user).read(), "html.parser")
             twitterPic = soup('img' , {'class': 'ProfileAvatar-image'})[0].attrs['src']
             twitterAlt = soup('img' , {'class': 'ProfileAvatar-image'})[0].attrs['alt']
             tweetTimes = soup('a'   , {'class': 'tweet-timestamp js-permalink js-nav js-tooltip'})
             tweetMsgs  = soup('p'   , {'class': 'TweetTextSize TweetTextSize--normal js-tweet-text tweet-text'})
             tweetStats = soup('span', {'class': 'ProfileTweet-actionCountForAria'})
+            twitterVer = False #todo
 
             #find latest tweet from user, ignore retweets.
             for idx, item in enumerate(tweetTimes):
                 if user.lower() in item.attrs['href'].lower():
                     break
                     
-            tweetTime  = tweetTimes[idx]["title"]
-            tweetMsg   = tweetMsgs[idx].get_text()
-            tweetStats = [stat.get_text() for stat in tweetStats]
+            for idx, item in enumerate(tweetTimes):
+                if user.lower() in item.attrs['href'].lower():
+                    break
+                    
+            tweetTime  = tweetTimes[idx]["title"].encode("utf-8")
+            tweetMsg   = self.cleanString(tweetMsgs[idx].get_text().encode("utf-8"))
+            tweetStats = [stat.get_text().encode("utf-8") for stat in tweetStats]
             tweetStats = [tweetStats[x:x+3] for x in xrange(0, len(tweetStats), 3)]
             tweetStats = tweetStats[idx]
+            
+            if REAL_SETTINGS.getSetting('%s.%s.time' %(ADDON_ID,user)) != tweetTime:
+                REAL_SETTINGS.setSetting('%s.%s.time'%(ADDON_ID,user),tweetTime)
+                ui = gui.GUI("%s.default.xml" %ADDON_ID,ADDON_PATH,"default",params=({'user':user,'icon':twitterPic,'username':twitterAlt,'title':tweetMsg,'time':tweetTime,'stats':tweetStats,'verified':twitterVer}))
+                ui.doModal()
         except Exception,e:
             log('chkFEED, failed! ' + str(e))
             return
             
-        if REAL_SETTINGS.getSetting('%s.%s.time' %(ADDON_ID,user)) != tweetTime:
-            REAL_SETTINGS.setSetting('%s.%s.time'%(ADDON_ID,user),tweetTime)
-            ui = gui.GUI("%s.default.xml" %ADDON_ID,ADDON_PATH,"default",params=({'user':user,'icon':twitterPic,'username':twitterAlt,'title':tweetMsg,'time':tweetTime,'stats':tweetStats}))
-            ui.doModal()
-            del ui
-
 if __name__ == '__main__':
     Service()
