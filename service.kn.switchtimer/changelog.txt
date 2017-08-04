@@ -1,5 +1,8 @@
 CHANGELOG
 
+2.0.4
+- Portugese (brazilian) language added
+
 2.0.3
 - Module dateutil included.
 
