@@ -155,11 +155,11 @@ class Service(XBMCMonitor):
                             elif not self.__showNoticeBeforeSw: xbmc.sleep(self.__dispMsgTime)
 
                             elif self.__useCountdownTimer:
-                                handler.OSDProgress.create(__LS__(30028), __LS__(30026) % _timer['channel'].decode('utf-8'), __LS__(30029) % (int(self.__dispMsgTime / 1000 - secs)))
+                                handler.OSDProgress.create(__LS__(30028), __LS__(30026) % (_timer['title'].decode('utf-8'), _timer['channel'].decode('utf-8')), __LS__(30029) % (int(self.__dispMsgTime / 1000 - secs)))
                                 while secs < self.__dispMsgTime /1000:
                                     secs += 1
                                     percent = int((secs * 100000) / self.__dispMsgTime)
-                                    handler.OSDProgress.update(percent, __LS__(30026) % _timer['channel'].decode('utf-8'), __LS__(30029) % (int(self.__dispMsgTime / 1000 - secs)))
+                                    handler.OSDProgress.update(percent, __LS__(30026) % (_timer['title'].decode('utf-8'), _timer['channel'].decode('utf-8')), __LS__(30029) % (int(self.__dispMsgTime / 1000 - secs)))
                                     xbmc.sleep(1000)
                                     if (handler.OSDProgress.iscanceled()):
                                         switchAborted = True
@@ -167,7 +167,7 @@ class Service(XBMCMonitor):
                                 handler.OSDProgress.close()
                             else:
                                 idleTime = xbmc.getGlobalIdleTime()
-                                handler.notifyOSD(__LS__(30000), __LS__(30026) % (_timer['channel'].decode('utf-8')), time=self.__dispMsgTime)
+                                handler.notifyOSD(__LS__(30000), __LS__(30026) % (_timer['title'].decode('utf-8'), _timer['channel'].decode('utf-8')), time=self.__dispMsgTime)
                                 while secs < self.__dispMsgTime /1000:
                                     if idleTime > xbmc.getGlobalIdleTime():
                                         switchAborted = True

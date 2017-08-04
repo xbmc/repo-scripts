@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8' standalone='yes'?>
-<addon id="service.kn.switchtimer" name="KN Switchtimer Service" provider-name="Birger Jesch" version="2.0.3">
+<addon id="service.kn.switchtimer" name="KN Switchtimer Service" provider-name="Birger Jesch" version="2.0.4">
     <requires>
-        <import addon="xbmc.python" version="2.24.0"/>
+        <import addon="xbmc.python" version="2.25.0"/>
         <import addon="script.module.dateutil" version="2.5.3"/>
         <import addon="xbmc.json" version="6.20.0"/>
     </requires>
@@ -20,17 +20,16 @@
             </menu>
     </extension>
     <extension point="xbmc.addon.metadata">
-        <summary lang="en">A switch timer for the PVR module of Kodi</summary>
-        <summary lang="de">Ein Umschalttimer für das PVR-Modul von Kodi</summary>
-        <description lang="en">Switching with the KN switchtimer from every point of view inside Kodi to a tv or radio broadcast at a given time - no more miss your favorite shows or sports events on tv.</description>
-        <description lang="de">Mit dem KN Switchtimer schaltest Du auf Deine programmierte Sendung zur richtigen Zeit um - egal wo Du Dich gerade befindest. Nie wieder die Lieblingssendung oder wichtige Sportereignisse verpassen.</description>
-        <disclaimer lang="en">Use at your own risk.</disclaimer>
-        <disclaimer lang="de">Benutzung auf eigene Gefahr</disclaimer>
+        <summary lang="en_GB">A switch timer for the PVR module of Kodi</summary>
+        <summary lang="de_DE">Ein Umschalttimer für das PVR-Modul von Kodi</summary>
+        <description lang="en_GB">Switching with the KN switchtimer from every point of view inside Kodi to a tv or radio broadcast at a given time - no more miss your favorite shows or sports events on tv.</description>
+        <description lang="de_DE">Mit dem KN Switchtimer schaltest Du auf Deine programmierte Sendung zur richtigen Zeit um - egal wo Du Dich gerade befindest. Nie wieder die Lieblingssendung oder wichtige Sportereignisse verpassen.</description>
+        <disclaimer lang="en_GB">Use at your own risk.</disclaimer>
+        <disclaimer lang="de_DE">Benutzung auf eigene Gefahr</disclaimer>
         <platform>all</platform>
         <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
         <website>http://vdr4bj1.no-ip.org</website>
         <source>https://github.com/b-jesch/service.kn.switchtimer</source>
         <email>birger.jesch@gmail.com</email>
-        <language/>
     </extension>
 </addon>
