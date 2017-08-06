@@ -1,24 +1,24 @@
 trakt.py
 ========
 
-.. image:: https://img.shields.io/travis/fuzeman/trakt.py.svg
-    :target: https://travis-ci.org/fuzeman/trakt.py
+.. image:: https://img.shields.io/pypi/v/trakt.py.svg?style=flat-square
+   :target: https://pypi.python.org/pypi/trakt.py
 
-.. image:: https://img.shields.io/coveralls/fuzeman/trakt.py.svg
-    :target: https://coveralls.io/r/fuzeman/trakt.py?branch=master
+.. image:: https://img.shields.io/travis/fuzeman/trakt.py.svg?style=flat-square
+   :target: https://travis-ci.org/fuzeman/trakt.py
 
-.. image:: https://img.shields.io/github/release/fuzeman/trakt.py.svg
-    :target: https://github.com/fuzeman/trakt.py/releases/latest
+.. image:: https://img.shields.io/codeclimate/github/fuzeman/trakt.py.svg?style=flat-square
+   :target: https://codeclimate.com/github/fuzeman/trakt.py
 
-.. image:: https://img.shields.io/pypi/v/trakt.py.svg
-    :target: https://pypi.python.org/pypi/trakt.py
+.. image:: https://img.shields.io/coveralls/fuzeman/trakt.py.svg?style=flat-square
+   :target: https://coveralls.io/r/fuzeman/trakt.py?branch=master
 
-Python interface for the trakt.tv API
+Python interface for the Trakt.tv API.
 
 Install
 -------
 
-.. code-block:: bash
+.. code-block:: shell
 
     pip install trakt.py
 
