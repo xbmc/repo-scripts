@@ -49,10 +49,12 @@ def getFormattedItemName(type, info):
             s = "S%02dE%02d - %s" % (info['season'],
                                      info['number'], info['title'])
         elif isSeason(type):
-            if info[0]['season'] > 0:
-                s = "%s - Season %d" % (info[0]['title'], info[0]['season'])
+            if isinstance(info, list):
+                info = info[0]
+            if info['season'] > 0:
+                s = "%s - Season %d" % (info['title'], info['season'])
             else:
-                s = "%s - Specials" % info[0]['title']
+                s = "%s - Specials" % info['title']
         elif isMovie(type):
             s = "%s (%s)" % (info['title'], info['year'])
     except KeyError:
@@ -103,6 +105,10 @@ def findMediaObject(mediaObjectToMatch, listToSearch):
     if result is None and 'title' in mediaObjectToMatch and 'year' in mediaObjectToMatch:
         result = __findInList(
             listToSearch, title=mediaObjectToMatch['title'], year=mediaObjectToMatch['year'])
+    # match only by title, as some items don't have a year on trakt
+    if result is None and 'title' in mediaObjectToMatch:
+        result = __findInList(
+            listToSearch, title=mediaObjectToMatch['title'])
     return result
 
 
@@ -275,7 +281,7 @@ def sanitizeMovies(movies):
         if 'userrating' in movie:
             del movie['userrating']
 
-#todo add tests
+# todo add tests
 def sanitizeShows(shows):
     # do not remove watched_at and collected_at may cause problems between the
     # 4 sync types (would probably have to deepcopy etc)
@@ -311,7 +317,7 @@ def compareMovies(movies_col1, movies_col2, watched=False, restrict=False, playb
                         movies.append(movie_col1)
                 elif playback:
                     if 'movieid' not in movie_col1:
-                            movie_col1['movieid'] = movie_col2['movieid']
+                        movie_col1['movieid'] = movie_col2['movieid']
                     movie_col1['runtime'] = movie_col2['runtime']
                     movies.append(movie_col1)
                 elif rating:
@@ -333,3 +339,22 @@ def compareMovies(movies_col1, movies_col2, watched=False, restrict=False, playb
 
                             movies.append(movie_col1)
     return movies
+
+
+def checkIfNewVersion(old, new):
+    explodedOld = old.split('.')
+    explodedNew = new.split('.')
+
+    # Check if old is empty, it might be the first time we check
+    if old == '':
+        return True
+    # Major
+    if old[0] < new[0]:
+        return True
+    # Minor
+    if old[1] < new[1]:
+        return True
+    # Revision
+    if old[2] < new[2]:
+        return True
+    return False

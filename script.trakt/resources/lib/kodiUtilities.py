@@ -2,11 +2,12 @@
 #
 
 import xbmc
+import xbmcgui
 import xbmcaddon
 import re
 import sys
 import logging
-import utilities
+from resources.lib import utilities
 
 
 if sys.version_info >= (2, 7):
@@ -84,6 +85,16 @@ def checkExclusion(fullpath):
         logger.debug("checkExclusion(): Video is playing via HTTP source, which is currently set as excluded location.")
         return True
 
+    # Plugin exclusion
+    if fullpath.startswith("plugin://") and getSettingAsBool('ExcludePlugin'):
+        logger.debug("checkExclusion(): Video is playing via Plugin source, which is currently set as excluded location.")
+        return True
+
+    # Script exclusion
+    if xbmcgui.Window(10000).getProperty('script.trakt.paused') == 'true' and getSettingAsBool('ExcludeScript'):
+        logger.debug("checkExclusion(): Video is playing via Script source, which is currently set as excluded location.")
+        return True
+
     # Path exclusions
     ExcludePath = getSetting('ExcludePath').encode('utf-8') # Encode this as fullpath is already encoded
     if ExcludePath != "" and getSettingAsBool('ExcludePathOption'):
@@ -105,7 +116,7 @@ def kodiRpcToTraktMediaObject(type, data, mode='collected'):
         del data['label']
         return data
     elif type == 'episode':
-        if checkExclusion(data['file']):
+        if checkExclusion(data['file'].encode('utf-8')):
             return
 
         if data['playcount'] is None:
@@ -119,8 +130,16 @@ def kodiRpcToTraktMediaObject(type, data, mode='collected'):
             watched = 0
 
         episode = {'season': data['season'], 'number': data['episode'], 'title': data['label'],
-                   'ids': {'tvdb': data['uniqueid']['unknown'], 'episodeid': data['episodeid']}, 'watched': watched,
+                   'ids': {'episodeid': data['episodeid']}, 'watched': watched,
                    'plays': plays, 'collected': 1}
+        if 'tmdb' in data['uniqueid']:
+            episode['ids']['tmdb'] = data['uniqueid']['tmdb']
+        if 'imdb' in data['uniqueid']:
+            episode['ids']['imdb'] = data['uniqueid']['imdb']
+        if 'tvdb' in data['uniqueid']:
+            episode['ids']['tvdb'] = data['uniqueid']['tvdb']
+        elif 'unknown' in data['uniqueid']:
+            episode['ids']['tvdb'] = utilities.parseIdToTraktIds(data['uniqueid']['unknown'], type)[0]
         if 'lastplayed' in data:
             episode['watched_at'] = utilities.convertDateTimeToUTC(data['lastplayed'])
         if 'dateadded' in data:
@@ -136,7 +155,7 @@ def kodiRpcToTraktMediaObject(type, data, mode='collected'):
             return
 
     elif type == 'movie':
-        if checkExclusion(data.pop('file')):
+        if checkExclusion(data.pop('file').encode('utf-8')):
             return
         if 'lastplayed' in data:
             data['watched_at'] = utilities.convertDateTimeToUTC(data.pop('lastplayed'))
@@ -280,7 +299,7 @@ def checkAndConfigureProxy():
                 return matchURL.group(1) + proxyUsername + ':' + proxyPassword + '@' + matchURL.group(2) + ':' + proxyPort
         elif proxyURL and proxyPort:
             return proxyURL + ':' + proxyPort
-    
+
     return None
 
 def getMediaType():
