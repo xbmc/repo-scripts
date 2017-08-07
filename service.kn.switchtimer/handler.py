@@ -60,13 +60,11 @@ def notifyOSD(header, message, icon=__IconDefault__, time=5000):
 
 def date2timeStamp(pdate, dayfirst=True):
     df=xbmc.getRegion('dateshort')
-    notifyLog(pdate + ' ' + df)
     dtt = parser.parse(pdate, fuzzy=True, dayfirst=dayfirst).timetuple()
     return int(time.mktime(dtt))
 
 def setTimer(params):
     utime = date2timeStamp(params['date'])
-    notifyLog(str(utime) + ' ' + str(time.time()))
     if not utime: return False
 
     _now = int(time.time())
@@ -88,7 +86,7 @@ def setTimer(params):
             timers.remove(timer)
 
     if len(timers) > 9:
-        notifyLog('Timer limit exceeded, no free slot', xbmc.LOGERROR)
+        notifyLog('Timer limit exceeded, no free slot', xbmc.LOGFATAL)
         notifyOSD(__LS__(30000), __LS__(30024), icon=__IconAlert__)
         return False
 
@@ -163,7 +161,8 @@ if __name__ ==  '__main__':
             elif args['action'] == 'delall':
                 for prefix in ['t0', 't1', 't2', 't3', 't4', 't5', 't6', 't7', 't8', 't9']: clearTimerProperties()
     except IndexError:
-            notifyLog('Calling this script without parameters is not allowed', xbmc.LOGERROR)
-            OSD.ok(__LS__(30000),__LS__(30030))
+        notifyLog('Calling this script without parameters is not allowed', xbmc.LOGERROR)
+        OSD.ok(__LS__(30000),__LS__(30030))
     except Exception, e:
-            notifyLog('Script error, Timer couldn\'t set', xbmc.LOGERROR)
+        notifyLog('Script error: %s' % (e.message), xbmc.LOGERROR)
+

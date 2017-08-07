@@ -1,7 +1,7 @@
 # XBMC Media Center language file
 # Addon Name: KN Switchtimer Service
 # Addon id: service.kn.switchtimer
-# Addon version: 1.2.4
+# Addon version: 2.0.4
 # Addon Provider: Birger Jesch
 msgid ""
 msgstr ""
@@ -82,12 +82,12 @@ msgid "Timer Limit exceed, no free Slots"
 msgstr "Limite de temporizadores atingido, não existem vagas"
 
 msgctxt "#30025"
-msgid "Switching to '%s' in a few seconds"
+msgid "Could not switch to %s"
 msgstr "Não foi possível sintonizar %s"
 
 msgctxt "#30026"
-msgid "Switching now to '%s'."
-msgstr "A sintonizar '%s'."
+msgid "Switching to '%s/%s' in a few seconds"
+msgstr "'%s/%s' vai começar em poucos segundos"
 
 msgctxt "#30027"
 msgid "Broadcast on '%s' starts now"

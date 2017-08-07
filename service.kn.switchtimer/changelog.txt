@@ -1,5 +1,8 @@
 CHANGELOG
 
+2.0.5
+- Bugfixes
+
 2.0.4
 - Portugese (brazilian) language added
 
