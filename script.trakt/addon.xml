@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.trakt" name="Trakt" version="3.1.7" provider-name="Trakt.tv, Razzeee">
+<addon id="script.trakt" name="Trakt" version="3.1.12" provider-name="Trakt.tv, Razzeee">
 	<requires>
         <import addon="xbmc.python" version="2.24.0"/>
         <import addon="script.module.simplejson" version="3.3.0"/>
-        <import addon="script.module.trakt" version="2.6.1"/>
+        <import addon="script.module.trakt" version="2.12.0"/>
         <import addon="script.module.dateutil" version="2.4.2"/>
         <import addon="script.module.addon.signals" version="0.0.1"/>
 	</requires>
-	<extension point="xbmc.python.script" library="script.py">
+	<extension point="xbmc.python.script" library="defaultscript.py">
 		<provides>executable</provides>
 	</extension>
 	<extension point="xbmc.service" name="trakt.service" library="default.py" start="login" />
@@ -61,5 +61,13 @@
 		<website>http://trakt.tv</website>
 		<email></email>
 		<source>https://github.com/trakt/script.trakt</source>
+		<news>- Improved id matching for krypton+</news>
+    <assets>
+        <icon>icon.png</icon>
+        <fanart>fanart.jpg</fanart>
+        <screenshot>resources/image-01.png</screenshot>
+        <screenshot>resources/image-02.png</screenshot>
+        <screenshot>resources/image-03.png</screenshot>
+    </assets>
 	</extension>
 </addon>

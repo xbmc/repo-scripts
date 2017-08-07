@@ -2,13 +2,13 @@
 #
 import xbmcaddon
 import logging
-import deviceAuthDialog
+from resources.lib import deviceAuthDialog
 import time
 
 from trakt import Trakt
 from trakt.objects import Movie, Show
-from utilities import findMovieMatchInList, findShowMatchInList, findEpisodeMatchInList, findSeasonMatchInList, createError
-from kodiUtilities import getSetting, setSetting, notification, getString, checkAndConfigureProxy, getSettingAsInt
+from resources.lib.utilities import findMovieMatchInList, findShowMatchInList, findEpisodeMatchInList, findSeasonMatchInList, createError
+from resources.lib.kodiUtilities import getSetting, setSetting, notification, getString, checkAndConfigureProxy, getSettingAsInt
 from sys import version_info
 
 
@@ -38,10 +38,6 @@ class traktAPI(object):
                 'https': proxyURL
             }
 
-        Trakt.configuration.defaults.app(
-            id=999
-        )
-
         # Configure
         Trakt.configuration.defaults.client(
             id=self.__client_id,
@@ -65,29 +61,33 @@ class traktAPI(object):
 
     def login(self):
         # Request new device code
-        with Trakt.configuration.http(retry=True, timeout=90):
+        with Trakt.configuration.http(timeout=90):
             code = Trakt['oauth/device'].code()
 
-            # Construct device authentication poller
-            poller = Trakt['oauth/device'].poll(**code)\
-                .on('aborted', self.on_aborted)\
-                .on('authenticated', self.on_authenticated)\
-                .on('expired', self.on_expired)\
-                .on('poll', self.on_poll)
+            if not code:
+                logger.debug('Error can not reach trakt')
+                notification(getString(32024), getString(32023))
+            else:
+                # Construct device authentication poller
+                poller = Trakt['oauth/device'].poll(**code)\
+                    .on('aborted', self.on_aborted)\
+                    .on('authenticated', self.on_authenticated)\
+                    .on('expired', self.on_expired)\
+                    .on('poll', self.on_poll)
 
-            # Start polling for authentication token
-            poller.start(daemon=False)
+                # Start polling for authentication token
+                poller.start(daemon=False)
 
-            logger.debug('Enter the code "%s" at %s to authenticate your account' % (
-                code.get('user_code'),
-                code.get('verification_url')
-            ))
+                logger.debug('Enter the code "%s" at %s to authenticate your account' % (
+                    code.get('user_code'),
+                    code.get('verification_url')
+                ))
 
-            self.authDialog = deviceAuthDialog.DeviceAuthDialog('script-trakt-DeviceAuthDialog.xml', __addon__.getAddonInfo('path'),
-                                                                code=code.get('user_code'), url=code.get('verification_url'))
-            self.authDialog.doModal()
+                self.authDialog = deviceAuthDialog.DeviceAuthDialog('script-trakt-DeviceAuthDialog.xml', __addon__.getAddonInfo('path'),
+                                                                    code=code.get('user_code'), url=code.get('verification_url'))
+                self.authDialog.doModal()
 
-            del self.authDialog
+                del self.authDialog
 
     def on_aborted(self):
         """Triggered when device authentication was aborted (either with `DeviceOAuthPoller.stop()`
@@ -332,6 +332,10 @@ class traktAPI(object):
         with Trakt.configuration.http(retry=True):
             return Trakt['shows'].get(showId)
 
+    def getShowWithAllEpisodesList(self, showId):
+        with Trakt.configuration.http(retry=True, timeout=90):
+            return Trakt['shows'].seasons(showId, extended='episodes')
+
     def getEpisodeSummary(self, showId, season, episode):
         with Trakt.configuration.http(retry=True):
             return Trakt['shows'].episode(showId, season, episode)
@@ -339,6 +343,13 @@ class traktAPI(object):
     def getIdLookup(self, id, id_type):
         with Trakt.configuration.http(retry=True):
             result = Trakt['search'].lookup(id, id_type)
+            if result and not isinstance(result, list):
+                result = [result]
+            return result
+
+    def getTextQuery(self, query, type, year):
+        with Trakt.configuration.http(retry=True, timeout=90):
+            result = Trakt['search'].query(query, type, year)
             if result and not isinstance(result, list):
                 result = [result]
             return result

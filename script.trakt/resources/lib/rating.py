@@ -4,9 +4,9 @@
 import xbmc
 import xbmcaddon
 import xbmcgui
-import utilities
-import kodiUtilities
-import globals
+from resources.lib import utilities
+from resources.lib import kodiUtilities
+from resources.lib import globals
 import logging
 
 logger = logging.getLogger(__name__)
@@ -84,8 +84,6 @@ def rateMedia(media_type, itemsToRate, unrate=False, rating=None):
                 return
             else:
                 logger.debug("'%s' is being re-rated." % s)
-
-        xbmc.executebuiltin('Dialog.Close(all, true)')
 
         gui = RatingDialog(
             "script-trakt-RatingDialog.xml",

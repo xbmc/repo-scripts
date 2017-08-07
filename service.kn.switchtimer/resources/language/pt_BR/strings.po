@@ -1,0 +1,134 @@
+# XBMC Media Center language file
+# Addon Name: KN Switchtimer Service Mod
+# Addon id: service.kn.switchtimer
+# Addon version: 2.0.4
+# Addon Provider: Birger Jesch
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC-Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: 2016-09-02 05:43+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: pt_BR\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+
+msgctxt "Addon Summary"
+msgid "A switch timer for the PVR module of Kodi"
+msgstr ""
+
+msgctxt "Addon Description"
+msgid "Switching with the KN switchtimer from every point of view inside Kodi to a tv or radio broadcast at a given time - no more miss your favorite shows or sports events on tv."
+msgstr ""
+
+msgctxt "Addon Disclaimer"
+msgid "Use at your own risk."
+msgstr ""
+
+
+msgctxt "#30000"
+msgid "Switch Timer Service"
+msgstr "Serviço de Sintonização Agendada"
+
+#settings
+
+msgctxt "#30001"
+msgid "Show Notice or Countdown before Channel will switched"
+msgstr "Mostrar notificação ou contagem regressiva antes de sintonizar o canal"
+
+msgctxt "#30002"
+msgid "Duration of Notification or Countdown"
+msgstr "Duração da notificação ou contagem regressiva"
+
+msgctxt "#30003"
+msgid "Show Confirmation if Timer is set"
+msgstr "Mostrar confirmação se o horário já estiver reservado"
+
+msgctxt "#30004"
+msgid "Ignore Timers older than"
+msgstr "Ignorar lembretes com mais de"
+
+#Info
+#empty strings from id 30005 to 30009
+
+msgctxt "#30010"
+msgid "Currently active Timers"
+msgstr "Lembrete atualmente ativos"
+
+msgctxt "#30011"
+msgid "Delete all Timers"
+msgstr "Apagar todos os lembretes"
+
+msgctxt "#30012"
+msgid "Use Countdown Timer"
+msgstr "Usar lembrete com contagem regressiva"
+
+#Messages
+#empty strings from id 30013 to 30019
+
+msgctxt "#30020"
+msgid "Date/Time of Timer could not calculated"
+msgstr "Não foi possível calcular a data/hora do lembrete"
+
+msgctxt "#30021"
+msgid "Timer added"
+msgstr "Lembrete adicionado"
+
+msgctxt "#30022"
+msgid "Timer is in the past"
+msgstr "A data/hora de ínicio já passou"
+
+msgctxt "#30023"
+msgid "Timer for this time already set"
+msgstr "Já existe um lembrete para esta hora"
+
+msgctxt "#30024"
+msgid "Timer Limit exceed, no free Slots"
+msgstr "Limite de lembretes atingido, não existem vagas"
+
+msgctxt "#30025"
+msgid "Could not switch to %s"
+msgstr "Não foi possível sintonizar %s"
+
+msgctxt "#30026"
+msgid "Switching to '%s' in a few seconds"
+msgstr "'%s' vai começar em poucos segundos"
+
+msgctxt "#30027"
+msgid "Broadcast on '%s' starts now"
+msgstr "O programa '%s' começa agora"
+
+msgctxt "#30028"
+msgid "Channel Switch requested"
+msgstr "Sintonização agendada de canal"
+
+msgctxt "#30029"
+msgid "%s Seconds left to abort"
+msgstr "%s segundos restantes"
+
+msgctxt "#30030"
+msgid "Please use the PVR OSD Guide context menue to set or reset switch timers"
+msgstr "Por favor, use o Guia para acionar ou resetar os lembretes"
+
+msgctxt "#30031"
+msgid "Timer for this time already set (%s, %s). Would You replace this timer with the new one instead?"
+msgstr "Lembrete para esse horario já está reservado para (%s, %s). Você gostaria de substituir?"
+
+msgctxt "#30032"
+msgid "Channel Switch aborted"
+msgstr "Troca de canal abortada"
+
+#Labels
+#empty strings from id 30033 to 30039
+
+msgctxt "#30040"
+msgid "Add switchtimer"
+msgstr "Adicionar lembrete"
+
+msgctxt "#30041"
+msgid "Reset all switchtimers"
+msgstr "Remover todos os lembretes"
