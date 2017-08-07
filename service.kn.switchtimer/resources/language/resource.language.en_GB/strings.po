@@ -1,7 +1,7 @@
 # XBMC Media Center language file
 # Addon Name: KN Switchtimer Service
 # Addon id: service.kn.switchtimer
-# Addon version: 1.2.4
+# Addon version: 2.0.5
 # Addon Provider: Birger Jesch
 msgid ""
 msgstr ""
@@ -14,109 +14,121 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: de\n"
+"Language: en\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
 
 msgctxt "Addon Summary"
 msgid "A switch timer for the PVR module of Kodi"
-msgstr "Ein Umschalttimer für das PVR-Modul von Kodi"
+msgstr ""
 
 msgctxt "Addon Description"
 msgid "Switching with the KN switchtimer from every point of view inside Kodi to a tv or radio broadcast at a given time - no more miss your favorite shows or sports events on tv."
-msgstr "Mit dem KN Switchtimer schaltest Du auf Deine programmierte Sendung zur richtigen Zeit um - egal wo Du Dich gerade befindest. Nie wieder die Lieblingssendung oder wichtige Sportereignisse verpassen."
+msgstr ""
 
 msgctxt "Addon Disclaimer"
 msgid "Use at your own risk."
-msgstr "Benutzung auf eigene Gefahr"
+msgstr ""
+
 
 msgctxt "#30000"
 msgid "Switch Timer Service"
-msgstr "Switch Timer Service"
+msgstr ""
+
+#settings
 
 msgctxt "#30001"
 msgid "Show Notice or Countdown before Channel will switched"
-msgstr "Zeige Hinweis oder Countdown, wenn Kanalwechsel bevor steht"
+msgstr ""
 
 msgctxt "#30002"
 msgid "Duration of Notification or Countdown"
-msgstr "Anzeigedauer der Hinweismeldung oder des Countdowns"
+msgstr ""
 
 msgctxt "#30003"
 msgid "Show Confirmation if Timer is set"
-msgstr "Zeige Bestätigung für gesetzten Timer"
+msgstr ""
 
 msgctxt "#30004"
 msgid "Ignore Timers older than"
-msgstr "Ignoriere Timer, die älter sind als"
+msgstr ""
+
+#Info
+#empty strings from id 30005 to 30009
 
 msgctxt "#30010"
 msgid "Currently active Timers"
-msgstr "Anzahl aktuell aktiver Timer"
+msgstr ""
 
 msgctxt "#30011"
 msgid "Delete all Timers"
-msgstr "Alle Timer löschen"
+msgstr ""
 
 msgctxt "#30012"
 msgid "Use Countdown Timer"
-msgstr "Benutze Countdown Timer"
+msgstr ""
+
+#Messages
+#empty strings from id 30013 to 30019
 
 msgctxt "#30020"
 msgid "Date/Time of Timer could not calculated"
-msgstr "Datum/Zeit des Timers kann nicht ermittelt werden"
+msgstr ""
 
 msgctxt "#30021"
 msgid "Timer added"
-msgstr "Timer wurde aktiviert"
+msgstr ""
 
 msgctxt "#30022"
 msgid "Timer is in the past"
-msgstr "Timer liegt in der Vergangenheit"
+msgstr ""
 
 msgctxt "#30023"
 msgid "Timer for this time already set"
-msgstr "Timer für diesen Zeitpunkt bereits aktiv"
+msgstr ""
 
 msgctxt "#30024"
 msgid "Timer Limit exceed, no free Slots"
-msgstr "max. Anzahl Timer erreicht, kein freier Speicher"
+msgstr ""
 
 msgctxt "#30025"
 msgid "Could not switch to %s"
-msgstr "Kann nicht umschalten zu '%s'"
+msgstr ""
 
 msgctxt "#30026"
-msgid "Switching to '%s' in a few seconds"
-msgstr "Umschaltung zu '%s' erfolgt in wenigen Sekunden"
+msgid "Switching to '%s/%s' in a few seconds"
+msgstr ""
 
 msgctxt "#30027"
 msgid "Broadcast on '%s' starts now"
-msgstr "Sendung auf '%s' beginnt jetzt"
+msgstr ""
 
 msgctxt "#30028"
 msgid "Channel Switch requested"
-msgstr "Kanalumschaltung steht bevor"
+msgstr ""
 
 msgctxt "#30029"
 msgid "%s Seconds left to abort"
-msgstr "%s Sekunden verbleibend, um abzubrechen"
+msgstr ""
 
 msgctxt "#30030"
 msgid "Please use the PVR OSD Guide context menue to set or reset switch timers"
-msgstr "Benutze das Kontextmenü der EPG-Zeitleiste, um Umschalttimer zu setzen oder zu löschen."
+msgstr ""
 
 msgctxt "#30031"
 msgid "Timer for this time already set (%s, %s). Would You replace this timer with the new one instead?"
-msgstr "Ein Timer für diesen Zeitpunkt ist bereits aktiv (%s, %s). Möchtest Du diesen Timer mit dem neuen Timer ersetzen?"
+msgstr ""
 
 msgctxt "#30032"
 msgid "Channel Switch aborted"
-msgstr "Kanalumschaltung abgebrochen"
+msgstr ""
+
+#Labels
+#empty strings from id 30033 to 30039
 
 msgctxt "#30040"
 msgid "Add switchtimer"
-msgstr "Umschalttimer setzen"
+msgstr ""
 
 msgctxt "#30041"
 msgid "Reset all switchtimers"
-msgstr "alle Umschalttimer löschen"
+msgstr ""

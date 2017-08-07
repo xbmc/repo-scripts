@@ -1,7 +1,7 @@
 # XBMC Media Center language file
 # Addon Name: KN Switchtimer Service
 # Addon id: service.kn.switchtimer
-# Addon version: 1.2.4
+# Addon version: 2.0.5
 # Addon Provider: Birger Jesch
 msgid ""
 msgstr ""
@@ -14,7 +14,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: nl\n"
+"Language: pt\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
 
 msgctxt "Addon Summary"
@@ -31,75 +31,75 @@ msgstr ""
 
 msgctxt "#30000"
 msgid "Switch Timer Service"
-msgstr "Switch Timer Service"
+msgstr "Serviço de Sintonização Agendada"
 
 msgctxt "#30001"
 msgid "Show Notice or Countdown before Channel will switched"
-msgstr "Toon melding of Aftelprocedure voor er van kanaal gewisseld wordt"
+msgstr "Mostrar Notificação ou Contagem decrescente antes de sintonizar o canal"
 
 msgctxt "#30002"
 msgid "Duration of Notification or Countdown"
-msgstr "Tijdsduur of Melding of Aftelprocedure"
+msgstr "Duração da Notificação ou Contagem decrescente"
 
 msgctxt "#30003"
 msgid "Show Confirmation if Timer is set"
-msgstr "Toon bevestiging als timer is aangemaakt"
+msgstr "Mostrar confirmação se o temporizador estiver definido"
 
 msgctxt "#30004"
 msgid "Ignore Timers older than"
-msgstr "Negeer timers ouder dan"
+msgstr "Ignorar temporizadores com mais de"
 
 msgctxt "#30010"
 msgid "Currently active Timers"
-msgstr "Huidige actieve timers"
+msgstr "Temporizadores atualmente ativos"
 
 msgctxt "#30011"
 msgid "Delete all Timers"
-msgstr "Verwijder alle timers"
+msgstr "Eliminar todos os temporizadores"
 
 msgctxt "#30012"
 msgid "Use Countdown Timer"
-msgstr "Gebruik aftelprocedure"
+msgstr "Usar temporizador com contagem decrescente"
 
 msgctxt "#30020"
 msgid "Date/Time of Timer could not calculated"
-msgstr "Datum/Tijd van timer kan niet berekend worden"
+msgstr "Não foi possível calcular a data/hora do temporizador"
 
 msgctxt "#30021"
 msgid "Timer added"
-msgstr "Timer toegevoegd"
+msgstr "Temporizador adicionado"
 
 msgctxt "#30022"
 msgid "Timer is in the past"
-msgstr "Timer is in het verleden"
+msgstr "A data/hora de ínicio já passou"
 
 msgctxt "#30023"
 msgid "Timer for this time already set"
-msgstr "Timer voor deze tijd bestaat al"
+msgstr "Já existe um temporizador para esta hora"
 
 msgctxt "#30024"
 msgid "Timer Limit exceed, no free Slots"
-msgstr "Timer limiet bereikt, geen vrije plaatsen over"
+msgstr "Limite de temporizadores atingido, não existem vagas"
 
 msgctxt "#30025"
 msgid "Could not switch to %s"
-msgstr "Kan niet overschakelen naar %s"
+msgstr "Não foi possível sintonizar %s"
 
 msgctxt "#30026"
-msgid "Switching to '%s' in a few seconds"
-msgstr "Schakel nu over naar '%s'."
+msgid "Switching to '%s/%s' in a few seconds"
+msgstr "'%s/%s' vai começar em poucos segundos"
 
 msgctxt "#30027"
 msgid "Broadcast on '%s' starts now"
-msgstr "Uitzending op '%s' begint nu"
+msgstr "A emissão '%s' começa agora"
 
 msgctxt "#30028"
 msgid "Channel Switch requested"
-msgstr "Kanaal overschakelen aangevraagd"
+msgstr "Sintonização agendada de canal"
 
 msgctxt "#30029"
 msgid "%s Seconds left to abort"
-msgstr "%s Seconden resterend om af te breken"
+msgstr "%s segundos restantes"
 
 msgctxt "#30030"
 msgid "Please use the PVR OSD Guide context menue to set or reset switch timers"
@@ -115,8 +115,8 @@ msgstr ""
 
 msgctxt "#30040"
 msgid "Add switchtimer"
-msgstr "Voeg overschakel timer toe"
+msgstr "Novo temporizador de sintonização"
 
 msgctxt "#30041"
 msgid "Reset all switchtimers"
-msgstr "Reset alle timers"
+msgstr "Reiniciar temporizadores de sintonização"
