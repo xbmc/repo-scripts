@@ -1,25 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<addon id="script.logviewer"
-       name="Log Viewer for Kodi"
-       version="1.0.0"
-       provider-name="fightnight">
+<addon id="script.logviewer" name="Log Viewer for Kodi" provider-name="i96751414" version="2.0.0">
     <requires>
-        <import addon="xbmc.python" version="2.1.0"/> 
+        <import addon="xbmc.python" version="2.14.0"/>
     </requires>
-    <extension point="xbmc.python.pluginsource" library="default.py">
+    <extension point="xbmc.python.script" library="default.py">
         <provides>executable</provides>
     </extension>
-	<extension point="xbmc.python.module" library="lib" />
+    <extension point="xbmc.service" library="service.py" start="login"/>
+    <extension library="lib" point="xbmc.python.module"/>
     <extension point="xbmc.addon.metadata">
-	    <platform>all</platform>
-		<forum>http://forum.kodi.tv/showthread.php?tid=223490</forum>
-		<source>https://github.com/fightnight/fightnight-addons/tree/master/script.logviewer</source>
-		<summary lang="en">View Kodi Log directly on Kodi</summary>
-		<summary lang="pt">Veja o Log do Kodi directamente no Kodi</summary>
-		<description lang="en">Tools to easily check and analyse Kodi log.</description>
-		<description lang="pt">Ferramenta para verificar e ler facilmente o log do Kodi.</description>
-		<disclaimer lang="en">Opensource addon not endorsed with Team Kodi.</disclaimer>
-		<disclaimer lang="pt">Addon opensource não afliado com a Equipa Kodi.</disclaimer>
         <platform>all</platform>
+        <forum>http://forum.kodi.tv/showthread.php?tid=223490</forum>
+        <source>https://github.com/i96751414/script.logviewer</source>
+        <summary lang="en">View Kodi logfile directly on Kodi</summary>
+        <summary lang="pt">Veja o log do Kodi directamente no Kodi</summary>
+        <description lang="en">Tools to easily check and analyse Kodi log file.</description>
+        <description lang="pt">Ferramenta para verificar e ler facilmente o log do Kodi.</description>
+        <platform>all</platform>
+        <news>
+- Fix text box not opening
+- Added a custom window for reading log
+- Changed all api calls: xbmc.executebuiltin("RunScript(script.logviewer, show_log)")
+- Added service for monitoring errors
+        </news>
+        <assets>
+            <icon>icon.png</icon>
+            <screenshot>resources/images/screenshot-1.png</screenshot>
+            <screenshot>resources/images/screenshot-2.png</screenshot>
+            <screenshot>resources/images/screenshot-3.png</screenshot>
+        </assets>
     </extension>
 </addon>
