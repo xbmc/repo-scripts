@@ -23,3 +23,7 @@ msgstr ""
 msgctxt "#32002"
 msgid "Randomize"
 msgstr ""
+
+msgctxt "#32003"
+msgid "Animate"
+msgstr ""
