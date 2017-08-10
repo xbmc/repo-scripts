@@ -1,0 +1,90 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<window type="window">
+    <controls>
+        <control type="image" id="32500">
+            <description>Control Image</description>
+            <posx>0</posx>
+            <posy>0</posy>
+            <fadetime>1000</fadetime>
+            <aspectratio scalediffuse="false" align="center" aligny="center">scale</aspectratio>
+            <width>1920</width>
+            <height>1080</height>
+            <texture></texture>
+        </control>
+        <control type="image">
+            <description>Overlay</description>
+            <posx>0</posx>
+            <posy>250</posy>
+            <colordiffuse>FF555555</colordiffuse>
+            <width>1920</width>
+            <height>980</height>
+            <texture>overlayfade.png</texture>
+        </control>
+        <control type="image">
+            <description>kodi logo</description>
+            <posx>90</posx>
+            <posy>930</posy>
+            <width>250</width>
+            <height>80</height>
+            <texture>kodi-logo.png</texture>
+        </control>
+        <control type="grouplist">
+            <orientation>horizontal</orientation>
+            <top>830</top>
+            <right>125</right>
+            <align>right</align>
+            <control type="label" id="32502">
+                <description>temperature</description>
+                <right>auto</right>
+                <font>13</font>
+                <shadowcolor>text_shadow</shadowcolor>
+                <align>right</align>
+                <aligny>center</aligny>
+                <height>125</height>
+                <width>auto</width>
+                <align>right</align>
+                <label>$INFO[Weather.Temperature]</label>
+                <visible>Weather.IsFetched</visible>
+            </control>
+            <control type="image">
+                <description>Weather icon</description>
+                <align>right</align>
+                <width>80</width>
+                <height>80</height>
+                <texture>icons/$INFO[Weather.fanartcode].png</texture>
+                <visible>Weather.IsFetched</visible>
+            </control>
+            <control type="label">
+                <description>Time</description>
+                <align>left</align>
+                <font>font_clock</font>
+                <shadowcolor>text_shadow</shadowcolor>
+                <height>200</height>
+                <width>auto</width>
+                <label>$INFO[System.Time]</label>
+            </control>
+        </control>
+        <control type="label" id="32503">
+            <description>Line one</description>
+            <font>font13</font>
+            <shadowcolor>text_shadow</shadowcolor>
+            <top>920</top>
+            <right>130</right>
+            <height>200</height>
+            <width>1000</width>
+            <align>right</align>
+            <label></label>
+        </control>
+        <control type="label" id="32504">
+            <description>Line two</description>
+            <font>font13</font>
+            <shadowcolor>text_shadow</shadowcolor>
+            <top>970</top>
+            <right>130</right>
+            <height>200</height>
+            <width>1000</width>
+            <align>right</align>
+            <label></label>
+        </control>
+    </controls>
+</window>
