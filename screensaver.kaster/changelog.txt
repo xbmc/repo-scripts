@@ -1,0 +1,6 @@
+v1.0.1  11/8/2017
+-Hide Logos
+-Animations
+
+v1.0.1  10/8/2017
+-First version of the addon
