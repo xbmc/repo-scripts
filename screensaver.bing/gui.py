@@ -27,12 +27,13 @@ ADDON_NAME     = REAL_SETTINGS.getAddonInfo('name')
 ADDON_VERSION  = REAL_SETTINGS.getAddonInfo('version')
 ADDON_PATH     = (REAL_SETTINGS.getAddonInfo('path').decode('utf-8'))
 SETTINGS_LOC   = REAL_SETTINGS.getAddonInfo('profile').decode('utf-8')
-SAVE_LOC       = os.path.join(SETTINGS_LOC, 'cache','')
 BASE_URL       = 'https://www.bing.com'
 POTD_JSON      = '/HPImageArchive.aspx?format=js&idx=0&n=8&mkt=en-US'
 KODI_MONITOR   = xbmc.Monitor()
 TIMER          = [30,60,120,240][int(REAL_SETTINGS.getSetting("RotateTime"))]
 RANDOM         = REAL_SETTINGS.getSetting("Randomize") == 'true'
+ANIMATION      = 'okay' if REAL_SETTINGS.getSetting("Animate") == 'true' else 'nope'
+xbmcgui.Window(10000).setProperty('bing_animation', ANIMATION)
 
 class GUI(xbmcgui.WindowXMLDialog):
     def __init__( self, *args, **kwargs ):
@@ -55,7 +56,7 @@ class GUI(xbmcgui.WindowXMLDialog):
             xbmc.executebuiltin('SetFocus(101)')
             if KODI_MONITOR.waitForAbort(TIMER) == True or self.isExiting == True:
                 break
-            seek = str(random.randint(1,8)) if RANDOM == True else '1'
+            seek = str(random.randint(1,7)) if RANDOM == True else '1'
             xbmc.executebuiltin("Control.Move(101,%s)"%seek)
         
         
