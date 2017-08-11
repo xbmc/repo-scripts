@@ -16,7 +16,27 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
-from resources.lib.commonatv import addon
+import xbmc
+import xbmcgui
+from commonatv import addon
 
-# set locked setting back to false on startup just in case kodi had crashed during playback
-addon.setSetting("is_locked", "false")
+
+class ScreensaverTrans(xbmcgui.WindowXMLDialog):
+    
+    class ExitMonitor(xbmc.Monitor):
+
+        def __init__(self, activated_callback):
+            self.activated_callback = activated_callback
+
+        def onScreensaverDeactivated(self):
+            self.activated_callback()
+
+    def onInit(self):
+        self.exit_monitor = self.ExitMonitor(self.exit)
+
+    def exit(self):
+        addon.setSetting("is_locked", "false")
+        self.close()
+
+    def onAction(self,action):
+        self.exit()
