@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+	<category label="32002">
+		<setting label="32008" type="slider" id="wait-time-before-changing-image" default="20" range="10,1,3600" option="int" />
+		<setting label="32003" type="enum" id="screensaver-mode" default="0" lvalues="32004|32005|32006"/>
+		<setting label="32009" type="folder" id="my-pictures-folder" source="auto" option="writeable" visible="eq(-1,1)|eq(-1,2)"/>
+	</category>
+</settings>
