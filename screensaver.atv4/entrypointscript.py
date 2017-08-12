@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
     screensaver.atv4
-    Copyright (C) 2015-2017 enen92
+    Copyright (C) 2017 enen92
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -15,8 +15,12 @@
 
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-"""
-from resources.lib.commonatv import addon
 
-# set locked setting back to false on startup just in case kodi had crashed during playback
-addon.setSetting("is_locked", "false")
+
+    Note: This is a standalone script to update the offline video entries and
+    their checksums
+"""
+import sys
+from resources.lib import atv
+
+atv.run(bool(len(sys.argv)>1))

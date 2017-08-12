@@ -182,3 +182,7 @@ msgctxt "#32041"
 msgid "Stop Video"
 msgstr ""
 
+msgctxt "#32042"
+msgid "Show preview window"
+msgstr ""
+
