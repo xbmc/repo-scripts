@@ -1,0 +1,113 @@
+# Kodi Media Center language file
+# Addon Name: Picture Slideshow Screensaver
+# Addon id: screensaver.picture.slideshow
+# Addon Provider: Team-Kodi
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: Czech (http://www.transifex.com/projects/p/xbmc-addons/language/cs/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: cs\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+
+msgctxt "#30000"
+msgid "Source of slideshow images"
+msgstr "Zdroj promítaných obrázků"
+
+msgctxt "#30001"
+msgid "Folder"
+msgstr "Složka"
+
+msgctxt "#30002"
+msgid "Video Fanart"
+msgstr "Video Fanart"
+
+msgctxt "#30003"
+msgid "Music Fanart"
+msgstr "Hudební Fanart"
+
+msgctxt "#30004"
+msgid "Image Folder"
+msgstr "Složka s obrázky"
+
+msgctxt "#30005"
+msgid "Dim level"
+msgstr "Úroveň ztmavení"
+
+msgctxt "#30006"
+msgid "Effect"
+msgstr "Efekt"
+
+msgctxt "#30007"
+msgid "Slide"
+msgstr "Snímek"
+
+msgctxt "#30008"
+msgid "Crossfade"
+msgstr "Prolnutí"
+
+msgctxt "#30009"
+msgid "Pan and zoom"
+msgstr "Posun a přiblížení"
+
+msgctxt "#30010"
+msgid "Amount of seconds to display each image"
+msgstr "Doba zobrazení každého obrázku (sekundy)"
+
+msgctxt "#30011"
+msgid "Scale images fullscreen"
+msgstr "Škálovat obrázek na rozlišení celé obrazovky"
+
+msgctxt "#30012"
+msgid "Display image name"
+msgstr "Zobrazit název obrázku"
+
+msgctxt "#30013"
+msgid "Disabled"
+msgstr "Zakázáno"
+
+msgctxt "#30014"
+msgid "Use filename"
+msgstr "Použít název souboru"
+
+msgctxt "#30015"
+msgid "Use foldername"
+msgstr "Použít název složky"
+
+msgctxt "#30016"
+msgid "Display images in random order"
+msgstr "Zobrazit obrázky v náhodném pořadí"
+
+msgctxt "#30018"
+msgid "Use folder- and filename"
+msgstr "Použij složku- a jméno souboru"
+
+msgctxt "#30021"
+msgid "Display picture date"
+msgstr "Zobrazit datum obrázku"
+
+msgctxt "#30022"
+msgid "Display additional picture tags"
+msgstr "Zobrazit další značky obrázku"
+
+msgctxt "#30023"
+msgid "Display music info during audio playback"
+msgstr "Zobrazit informace o hudbě při přehrávání zvuku"
+
+msgctxt "#30024"
+msgid "Basic"
+msgstr "Základní"
+
+msgctxt "#30025"
+msgid "Additional"
+msgstr "Další"
+
+msgctxt "#30029"
+msgid "Display background picture"
+msgstr "Zobrazit obrázek na pozadí."
