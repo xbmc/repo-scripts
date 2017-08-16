@@ -1,0 +1,168 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: /script.video.bgtime_tv\n"
+"POT-Creation-Date: 2017-08-08 15:47+0300\n"
+"PO-Revision-Date: 2017-08-09 11:49+0200\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.6.11\n"
+"X-Poedit-Basepath: .\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Language: bg_BG\n"
+
+msgctxt "#32000"
+msgid "Страница"
+msgstr ""
+
+msgctxt "#32001"
+msgid "Търси"
+msgstr ""
+
+msgctxt "#32002"
+msgid "Пусни"
+msgstr ""
+
+msgctxt "#32003"
+msgid "Грешка"
+msgstr ""
+
+msgctxt "#32004"
+msgid "Грешка при получаване на данни от сървара! Моля опитайте отново."
+msgstr ""
+
+msgctxt "32005"
+msgid "Въведете потребителско име и парола в настройките на адона!"
+msgstr ""
+
+msgctxt "#32006"
+msgid "Изберете качество"
+msgstr ""
+
+msgctxt "#32007"
+msgid "Грешка при получаване на данни от сървара!"
+msgstr ""
+
+msgctxt "#32008"
+msgid "Въведете поне 3 символа за търсене."
+msgstr ""
+
+msgctxt "#32009"
+msgid "Търсене за: "
+msgstr ""
+
+msgctxt "#32010"
+msgid "С"
+msgstr ""
+
+msgctxt "#32011"
+msgid " часа отместване назад"
+msgstr ""
+
+msgctxt "#32012"
+msgid "Предаването все още не е излъчено"
+msgstr ""
+
+msgctxt "#32013"
+msgid "Яну"
+msgstr ""
+
+msgctxt "32014"
+msgid "Фев"
+msgstr ""
+
+msgctxt "#32015"
+msgid "Мар"
+msgstr ""
+
+msgctxt "#3216"
+msgid "Апр"
+msgstr ""
+
+msgctxt "#32017"
+msgid "Май"
+msgstr ""
+
+msgctxt "#32018"
+msgid "Юни"
+msgstr ""
+
+msgctxt "#32019"
+msgid "Юли"
+msgstr ""
+
+msgctxt "#320020"
+msgid "Авг"
+msgstr ""
+
+msgctxt "#320021"
+msgid "Сеп"
+msgstr ""
+
+msgctxt "#32022"
+msgid "Окт"
+msgstr ""
+
+msgctxt "32023"
+msgid "Нов"
+msgstr ""
+
+msgctxt "#32024"
+msgid "Дек"
+msgstr ""
+
+
+
+msgctxt "#32030"
+msgid "Логин информация"
+msgstr ""
+
+msgctxt "#32031"
+msgid "Сървър"
+msgstr ""
+
+msgctxt "#32032"
+msgid "Общи"
+msgstr ""
+
+
+msgctxt "#32033"
+msgid "Превключи от ViewMode на Thumbnail"
+msgstr ""
+
+msgctxt "#32034"
+msgid "Обнови контейнера при смяна на страницата"
+msgstr ""
+
+msgctxt "#32035"
+msgid "Изберете дата"
+msgstr ""
+
+
+msgctxt "#32036"
+msgid "Език"
+msgstr ""
+
+msgctxt "#32037"
+msgid "English"
+msgstr ""
+
+msgctxt "#32038"
+msgid "Български"
+msgstr ""
+
+
+
+msgctxt "#32200"
+msgid "Имейл"
+msgstr ""
+
+msgctxt "#32210"
+msgid "Парола"
+msgstr ""
+
+msgctxt "#32201"
+msgid "API URL"
+msgstr ""

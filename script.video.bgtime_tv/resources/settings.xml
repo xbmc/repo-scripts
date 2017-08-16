@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+    <category label="32030">
+        <setting id="username" type="text" label="32200" default="" />
+        <setting id="password" type="text" option="hidden" label="32210" enable="!eq(-1,)" default="" />
+    </category>
+    <category label="32031">
+        <setting id="server_url" type="text" label="32201" default="" />
+    </category>
+</settings>
