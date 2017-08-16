@@ -181,3 +181,7 @@ msgstr "Pausar Video"
 msgctxt "#32041"
 msgid "Stop Video"
 msgstr "Parar Video"
+
+msgctxt "#32042"
+msgid "Show preview window"
+msgstr "Mostrar janela de pre-visualização"
