@@ -9,7 +9,6 @@ import hashlib
 import urllib
 import random
 import math
-import time
 from PIL import Image, ImageOps, ImageEnhance, ImageDraw, ImageStat, ImageFilter
 from ImageOperations import MyGaussianBlur
 from decimal import *
@@ -87,7 +86,7 @@ def set_main(new_value):
     color_main = str(new_value)
     xbmc.executebuiltin('Skin.SetString(colorbox_main,'+str(new_value)+')')
 def Shuffle_Set(amount,timed=40):
-    timed = int(timed) / 1000.0
+    timed = int(timed)
     board = [[i] for i in range(int(amount))]
     shuffle(board)
     HOME.setProperty('Colorbox_shuffle', '1')
@@ -98,7 +97,7 @@ def Shuffle_Set(amount,timed=40):
             npeg.append(shuffle_numbers[int(p)])
         npegs = ''.join(npeg)
         HOME.setProperty('Colorbox_shuffle.' + npegs, '1')
-        time.sleep(timed)
+        xbmc.sleep(timed)
     shuffle(board)
     HOME.setProperty('Colorbox_shuffle', '0')
     for peg in board:
@@ -108,7 +107,7 @@ def Shuffle_Set(amount,timed=40):
             npeg.append(shuffle_numbers[int(p)])
         npegs = ''.join(npeg)
         HOME.clearProperty('Colorbox_shuffle.' + npegs)
-        time.sleep(timed)
+        xbmc.sleep(timed)
 def Remove_Quotes(label):
     if label.startswith("'") and label.endswith("'") and len(label) > 2:
         label = label[1:-1]
@@ -147,9 +146,9 @@ def Color_Only(filterimage, cname, ccname, imagecolor='ff000000', cimagecolor='f
     Black_White(maincolor, cname)
     cimagecolor = Color_Modify(maincolor, cmaincolor, color_comp)
     imagecolor = Color_Modify(maincolor, cmaincolor, color_main)
-    tmc = Thread(target=linear_gradient, args=(cname, HOME.getProperty(var3)[2:8], imagecolor[2:8], 50, 0.01, var3))
+    tmc = Thread(target=linear_gradient, args=(cname, HOME.getProperty(var3)[2:8], imagecolor[2:8], 50, 10, var3))
     tmc.start()
-    tmcc = Thread(target=linear_gradient, args=(ccname, HOME.getProperty(var4)[2:8], cimagecolor[2:8], 50, 0.01, var4))
+    tmcc = Thread(target=linear_gradient, args=(ccname, HOME.getProperty(var4)[2:8], cimagecolor[2:8], 50, 10, var4))
     tmcc.start()
     #linear_gradient(cname, HOME.getProperty(var3)[2:8], imagecolor[2:8], 50, 0.01, var3)
     #linear_gradient(ccname, HOME.getProperty(var4)[2:8], cimagecolor[2:8], 50, 0.01, var4)
@@ -451,7 +450,7 @@ def Get_Frequent_Color(img):
     return 'ff%02x%02x%02x' % tuple(most_frequent_pixel[1])
 def clamp(x):
     return max(0, min(x, 255))
-def linear_gradient(cname, start_hex="000000", finish_hex="FFFFFF", n=10, sleep=0.005, s_thread_check=""):
+def linear_gradient(cname, start_hex="000000", finish_hex="FFFFFF", n=10, sleep=50, s_thread_check=""):
     if start_hex == '' or finish_hex == '':
         return
     s = hex_to_RGB('#' + start_hex)
@@ -465,7 +464,7 @@ def linear_gradient(cname, start_hex="000000", finish_hex="FFFFFF", n=10, sleep=
             for j in range(3)
         ]
         HOME.setProperty(cname, RGB_to_hex(curr_vector))
-        time.sleep(sleep)
+        xbmc.sleep(sleep)
     return
 def hex_to_RGB(hex):
     return [int(hex[i:i+2], 16) for i in range(1,6,2)]
