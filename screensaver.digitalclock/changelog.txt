@@ -1,3 +1,6 @@
+[B]5.0.3[/B]
+- Added support for Aeon Nox 5: SiLVO skin
+
 [B]5.0.2[/B]
 - Added support for Adonic and (Fuse)neue skins
 
