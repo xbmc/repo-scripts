@@ -6,7 +6,7 @@
     <setting id="PhotoType"   type="enum"   label="32005" default="0"           values="Featured|Random|User|Collection"/>
     <setting id="Enable_Keys" type="bool"   label="32006" default="false"       visible="eq(-1,0)|eq(-1,1)"/>
     <setting id="Keywords"    type="text"   label="32007" default="City,Night"  visible="eq(-1,true) + lt(-2,2)"/>
-    <setting id="User"        type="text"   label="32008" default="jeisblack"   visible="eq(-3,2)"/>
+    <setting id="User"        type="text"   label="32008" default="@jeisblack"   visible="eq(-3,2)"/>
     <setting id="Collection"  type="text"   label="32009" default="1007074"     visible="eq(-4,3)"/>
     
 </settings>

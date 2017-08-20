@@ -28,8 +28,8 @@ ADDON_PATH     = (REAL_SETTINGS.getAddonInfo('path').decode('utf-8'))
 SETTINGS_LOC   = REAL_SETTINGS.getAddonInfo('profile').decode('utf-8')
 ENABLE_KEYS    = REAL_SETTINGS.getSetting("Enable_Keys") == 'true'
 KEYWORDS       = urllib.quote_plus(REAL_SETTINGS.getSetting("Keywords").encode("utf-8"))
-USER           = urllib.quote_plus(REAL_SETTINGS.getSetting("User").encode("utf-8"))
-COLLECTION     = urllib.quote_plus(REAL_SETTINGS.getSetting("Collection").encode("utf-8"))
+USER           = REAL_SETTINGS.getSetting("User").encode("utf-8").replace('@','')
+COLLECTION     = REAL_SETTINGS.getSetting("Collection").encode("utf-8")
 PHOTO_TYPE     = ['featured','random','user','collection'][int(REAL_SETTINGS.getSetting("PhotoType"))]
 BASE_URL       = 'https://source.unsplash.com'
 URL_PARAMS     = '/%s'%PHOTO_TYPE
