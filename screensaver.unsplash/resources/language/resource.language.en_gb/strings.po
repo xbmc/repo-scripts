@@ -39,3 +39,11 @@ msgstr ""
 msgctxt "#32007"
 msgid "Enter Search Parameters Ex.(City,Night)"
 msgstr ""
+
+msgctxt "#32008"
+msgid "Enter User Name"
+msgstr ""
+
+msgctxt "#32009"
+msgid "Enter Collection ID"
+msgstr ""
