@@ -28,16 +28,23 @@ ADDON_PATH     = (REAL_SETTINGS.getAddonInfo('path').decode('utf-8'))
 SETTINGS_LOC   = REAL_SETTINGS.getAddonInfo('profile').decode('utf-8')
 ENABLE_KEYS    = REAL_SETTINGS.getSetting("Enable_Keys") == 'true'
 KEYWORDS       = urllib.quote_plus(REAL_SETTINGS.getSetting("Keywords").encode("utf-8"))
-PHOTO_TYPE     = ['featured','random'][int(REAL_SETTINGS.getSetting("PhotoType"))]
+USER           = urllib.quote_plus(REAL_SETTINGS.getSetting("User").encode("utf-8"))
+COLLECTION     = urllib.quote_plus(REAL_SETTINGS.getSetting("Collection").encode("utf-8"))
+PHOTO_TYPE     = ['featured','random','user','collection'][int(REAL_SETTINGS.getSetting("PhotoType"))]
 BASE_URL       = 'https://source.unsplash.com'
-URL_PARAMS     = '/%s/1920x1200'%PHOTO_TYPE
-KEY_PARAMS     = '/?%s'%KEYWORDS
-IMAGE_URL      = BASE_URL + URL_PARAMS + KEY_PARAMS if ENABLE_KEYS else BASE_URL + URL_PARAMS
-KODI_MONITOR   = xbmc.Monitor()
+URL_PARAMS     = '/%s'%PHOTO_TYPE
 TIMER          = [30,60,120,240][int(REAL_SETTINGS.getSetting("RotateTime"))]
 ANIMATION      = 'okay' if REAL_SETTINGS.getSetting("Animate") == 'true' else 'nope'
 TIME           = REAL_SETTINGS.getSetting("Time") == 'true'
 
+if PHOTO_TYPE in ['featured','random']:
+    IMAGE_URL  = BASE_URL + URL_PARAMS + '/1920x1200/?%s'%KEYWORDS if ENABLE_KEYS else BASE_URL + URL_PARAMS
+elif PHOTO_TYPE == 'user':
+    IMAGE_URL  = BASE_URL + URL_PARAMS + '/%s/1920x1200' %USER
+else:
+    IMAGE_URL  = BASE_URL + URL_PARAMS + '/%s/1920x1200' %COLLECTION
+    
+KODI_MONITOR   = xbmc.Monitor()
 class GUI(xbmcgui.WindowXMLDialog):
     def __init__( self, *args, **kwargs ):
         self.isExiting = False
@@ -69,6 +76,7 @@ class GUI(xbmcgui.WindowXMLDialog):
         
     def openURL(self, url):
         try:
+            self.log("openURL url = " + url)
             request = urllib2.Request(url)
             request.add_header('User-Agent','Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.64 Safari/537.11')
             page = urllib2.urlopen(request, timeout = 15)
