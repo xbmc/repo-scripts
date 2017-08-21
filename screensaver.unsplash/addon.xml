@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="screensaver.unsplash" name="Unsplash Photo Screensaver" version="1.0.1" provider-name="Lunatixz">
+<addon id="screensaver.unsplash" name="Unsplash Photo Screensaver" version="1.0.2" provider-name="Lunatixz">
     <requires>
         <import addon="xbmc.python" version="2.25.0"/>
     </requires>
@@ -13,7 +13,7 @@
         <website>https://unsplash.com/</website>
         <forum>https://forum.kodi.tv/showthread.php?tid=320095</forum>
         <source>https://github.com/Lunatixz/XBMC_Addons/tree/master/screensaver.unsplash</source>
-        <news>v.1.0.1[CR]- Added User and Collection Mode</news>
+        <news>v.1.0.2[CR]- Added Image pre-cashing and fallback.[CR]v.1.0.1[CR]- Added User and Collection Mode</news>
         <assets>
             <icon>resources/images/icon.png</icon>
             <fanart>resources/images/fanart.jpg</fanart>

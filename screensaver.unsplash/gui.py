@@ -16,7 +16,7 @@
 # You should have received a copy of the GNU General Public License
 # along with Unsplash Photo ScreenSaver.  If not, see <http://www.gnu.org/licenses/>.
 
-import urllib, urllib2, socket, random
+import urllib, urllib2, socket, random, itertools
 import xbmc, xbmcaddon, xbmcvfs, xbmcgui
 
 # Plugin Info
@@ -35,7 +35,9 @@ BASE_URL       = 'https://source.unsplash.com'
 URL_PARAMS     = '/%s'%PHOTO_TYPE
 TIMER          = [30,60,120,240][int(REAL_SETTINGS.getSetting("RotateTime"))]
 ANIMATION      = 'okay' if REAL_SETTINGS.getSetting("Animate") == 'true' else 'nope'
-TIME           = REAL_SETTINGS.getSetting("Time") == 'true'
+TIME           = 'okay' if REAL_SETTINGS.getSetting("Time") == 'true' else 'nope'
+IMG_CONTROLS   = [30000,30001]
+CYC_CONTROL    = itertools.cycle(IMG_CONTROLS).next
 
 if PHOTO_TYPE in ['featured','random']:
     IMAGE_URL  = BASE_URL + URL_PARAMS + '/1920x1200/?%s'%KEYWORDS if ENABLE_KEYS else BASE_URL + URL_PARAMS
@@ -56,19 +58,32 @@ class GUI(xbmcgui.WindowXMLDialog):
     def onInit( self ):
         self.winid = xbmcgui.Window(xbmcgui.getCurrentWindowDialogId())
         self.winid.setProperty('unsplash_animation', ANIMATION)
-        self.imageControl = self.getControl(30000)
-        self.timeControl  = self.getControl(30001)
-        self.timeControl.setVisible(TIME)
+        self.winid.setProperty('unsplash_time', TIME)
         self.startRotation()
+
         
+    def setImage(self, id):
+        image = self.openURL(IMAGE_URL)
+        image = image if len(image) > 0 else self.openURL(IMAGE_URL)
+        self.getControl(id).setImage(image)
         
+
     def startRotation(self):
+        self.currentID = IMG_CONTROLS[0]
+        self.nextID    = IMG_CONTROLS[1]
+        self.setImage(self.currentID)
         while not KODI_MONITOR.abortRequested():
-            self.imageControl.setImage(self.openURL(IMAGE_URL))
-            if KODI_MONITOR.waitForAbort(TIMER) == True or self.isExiting == True:
+            self.getControl(self.nextID).setVisible(False)
+            self.getControl(self.currentID).setVisible(True)
+            self.nextID    = self.currentID
+            self.currentID = CYC_CONTROL()
+            if KODI_MONITOR.waitForAbort(int(TIMER//2)) == True or self.isExiting == True:
                 break
-        
-        
+            self.setImage(self.currentID)#pre-cache next image
+            if KODI_MONITOR.waitForAbort(int(TIMER//2)) == True or self.isExiting == True:
+                break
+
+
     def onAction( self, action ):
         self.isExiting = True
         self.close()
