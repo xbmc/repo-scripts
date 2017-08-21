@@ -77,7 +77,8 @@ class GUI(xbmcgui.WindowXMLDialog):
             self.getControl(self.currentID).setVisible(True)
             self.nextID    = self.currentID
             self.currentID = CYC_CONTROL()
-            KODI_MONITOR.waitForAbort(int(TIMER//2))
+            if KODI_MONITOR.waitForAbort(int(TIMER//2)) == True or self.isExiting == True:
+                break
             self.setImage(self.currentID)#pre-cache next image
             if KODI_MONITOR.waitForAbort(int(TIMER//2)) == True or self.isExiting == True:
                 break

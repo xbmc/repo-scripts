@@ -57,7 +57,7 @@
             <visible>StringCompare(Window.Property(unsplash_time),okay) + [Control.IsVisible(30000)|Control.IsVisible(30001)]</visible>
         </control>
         <control type="label">
-            <posx>1715</posx>
+            <posx>1755</posx>
             <posy>930</posy>
             <description>Time</description>
             <align>left</align>
