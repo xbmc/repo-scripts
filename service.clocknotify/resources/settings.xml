@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<settings>
+	<category id="general" label="30001">
+		<setting id="x" type="text" label="x" default="1610"/>
+		<setting id="y" type="text" label="y" default="30"/>
+		<setting id="width" type="text"  label="30119" default="220"/>
+		<setting id="height" type="text"  label="30120" default="60"/>
+		<setting id="font" type="text"  label="30121" default="font45"/>
+		<setting id="color" type="text"  label="30122" default="#FFFFFFFF"/>
+	</category>
+</settings>
