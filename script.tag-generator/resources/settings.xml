@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+    <category label="30900">
+        <setting label="30901" type="bool" id="32011" default="true"/>
+        <setting label="30902" type="number" visible="eq(-1,true)" id="32012" default="4"/>
+              <setting type="sep"/>
+        <setting id="32030" type="bool" label="Debug" default="false"/>
+        <setting id="32015" type="bool" label="Write Stand-Up Tags" default="true"/>
+        <setting label="30903" type="text" visible="eq(-1,true)" id="32016" default="Standup"/>
+    </category>
+    <category label="IMDB">
+        <setting id="32020" type="bool" label="Use IMDB" default="true"/>
+        <setting label="30905" visible="eq(-1,true)" default="1" type="enum"  id="32099" values="1|2|3|4|5"/>
+        <setting label="30906" type="text" visible="eq(-2,true)" id="32050" default="http://rss.imdb.com/user/ur12345678/watchlist"/>
+        <setting label="30903" type="text" visible="eq(-3,true)" id="32080" default="Your Tag"/>
+        <setting label="30906" type="text" visible="gt(-3,0) + eq(-4,true)" id="32051" default="http://rss.imdb.com/user/ur12345678/watchlist"/>
+        <setting label="30903" type="text" visible="gt(-4,0) + eq(-5,true)" id="32081" default="Your Tag"/>
+        <setting label="30906" type="text" visible="gt(-5,1) + eq(-6,true)" id="32052" default="http://rss.imdb.com/user/ur12345678/watchlist"/>
+        <setting label="30903" type="text" visible="gt(-6,1) + eq(-7,true)" id="32082" default="Your Tag"/>
+        <setting label="30906" type="text" visible="gt(-7,2) + eq(-8,true)" id="32053" default="http://rss.imdb.com/user/ur12345678/watchlist"/>
+        <setting label="30903" type="text" visible="gt(-8,2) + eq(-9,true)" id="32083" default="Your Tag"/>
+        <setting label="30906" type="text" visible="gt(-9,3) + eq(-10,true)" id="32054" default="http://rss.imdb.com/user/ur12345678/watchlist"/>
+        <setting label="30903" type="text" visible="gt(-10,3) + eq(-11,true)" id="32084" default="Your Tag"/>
+    </category>
+    <category label="Trakt">
+        <setting id="32023" type="bool" label="Use Trakt Movie Lists" default="false"/>
+        <setting id="32032" type="action" label="30917" visible="eq(-1,true)" action="RunScript(script.tag-generator, trakt_init)"/>
+        <setting label="30918" type="text" id="32031" visible="eq(-2,true)" default="-please request token-"/>
+        <setting label="30921" visible="eq(-3,true)" default="1" type="enum"  id="32098" values="1|2|3|4|5"/>
+        <setting label="30929" type="text" id="32160" visible="eq(-4,true)" default="TraktUser1"/>
+        <setting label="30922" type="text" visible="eq(-5,true)" id="32120" default="UserList1"/>
+        <setting label="30903" type="text" visible="eq(-6,true)" id="32140" default="UserTag1"/>
+        <setting label="30922" type="text" visible="gt(-4,0) + eq(-7,true)" id="32161" default="TraktUser2"/>
+        <setting label="30922" type="text" visible="gt(-5,0) + eq(-8,true)" id="32121" default="UserList2"/>
+        <setting label="30903" type="text" visible="gt(-6,0) + eq(-9,true)" id="32141" default="UserTag2"/>
+        <setting label="30922" type="text" visible="gt(-7,1) + eq(-10,true)" id="32162" default="TraktUser3"/>
+        <setting label="30922" type="text" visible="gt(-8,1) + eq(-11,true)" id="32122" default="UserList3"/>
+        <setting label="30903" type="text" visible="gt(-9,1) + eq(-12,true)" id="32142" default="UserTag3"/>
+        <setting label="30922" type="text" visible="gt(-10,2) + eq(-13,true)" id="32163" default="TraktUser4"/>
+        <setting label="30922" type="text" visible="gt(-11,2) + eq(-14,true)" id="32123" default="UserList4"/>
+        <setting label="30903" type="text" visible="gt(-12,2) + eq(-15,true)" id="32143" default="UserTag4"/>
+        <setting label="30922" type="text" visible="gt(-13,3) + eq(-16,true)" id="32164" default="TraktUser5"/>
+        <setting label="30922" type="text" visible="gt(-14,3) + eq(-17,true)" id="32124" default="UserList5"/>
+        <setting label="30903" type="text" visible="gt(-15,3) + eq(-18,true)" id="32144" default="UserTag5"/>
+    </category>
+    <category label="Misc">
+        <!--<setting id="32022" type="action" label="Write Trakt Tags" action="RunScript(script.tag-generator, trakt)"/>-->
+        <setting id="32027" type="action" label="30913" action="RunScript(script.tag-generator, imdb)"/>
+        <setting id="32032" type="action" label="30920" action="RunScript(script.tag-generator, trakt)"/>
+        <setting id="32028" type="action" label="30914" action="RunScript(script.tag-generator, standup)"/>
+        <setting id="32017" type="action" label="30915" action="RunScript(script.tag-generator, manual)"/>
+        <setting id="32018" type="action" label="30916" action="RunScript(script.tag-generator, wipeout)"/>
+        <!--<setting id="32021" type="bool" label="Background Music" default="true"/>-->
+    </category>
+</settings>
+
