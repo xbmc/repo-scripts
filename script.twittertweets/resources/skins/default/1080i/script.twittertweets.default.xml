@@ -12,10 +12,10 @@
             <animation effect="slide" start="0,1080" end="0,673" time="200" tween="quadratic" reversible="true" easing="in" condition="true">WindowOpen</animation>
             <animation effect="slide" start="0,673" end="0,1080" time="200" tween="quadratic" reversible="true" easing="in" condition="true">WindowClose</animation>  
             <control type="image">
-                <left>37</left> 
-                <top>29</top>  
-                <width>55</width> 
-                <height>55</height> 
+                <left>20</left> 
+                <top>20</top>  
+                <width>100</width> 
+                <height>100</height> 
                 <texture>white.png</texture>
                 <colordiffuse>FFFFFFFF</colordiffuse>
                 <visible>Control.IsVisible(30100)</visible>

@@ -61,10 +61,11 @@ class GUI(xbmcgui.WindowXMLDialog):
         self.getControl(30103).setColorDiffuse('FF00ff7d' if retweets > 0 else 'FF999999')
         self.getControl(30102).setColorDiffuse('FF1dcaff' if replies  > 0 else 'FF999999')
         self.getControl(30101).setImage(self.params['icon'])
-        xbmc.sleep(100) #give image time to cache.
+        xbmc.sleep(10)   #give image time to cache.
         self.getControl(30100).setVisible(True)
-        self.lockAction = False
         self.closeTimer.start()
+        xbmc.sleep(1500) #lock action.
+        self.lockAction = False
         
         
     def onAction(self, action):
