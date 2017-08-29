@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.twittertweets" name="Twitter Tweets" version="1.0.1" provider-name="Lunatixz">
+<addon id="script.twittertweets" name="Twitter Tweets" version="1.0.3" provider-name="Lunatixz">
     <requires>
         <import addon="xbmc.python" version="2.25.0"/>
         <import addon="script.module.beautifulsoup4" version="4.3.2"/>
@@ -14,7 +14,7 @@
         <website>https://twitter.com</website>
         <source>https://github.com/Lunatixz/XBMC_Addons/tree/master/script.twittertweets</source>
         <forum>https://forum.kodi.tv/showthread.php?tid=317791</forum>
-        <news>v1.0.1[CR]-Improved Images and Service.</news>
+        <news>v1.0.3[CR]-Added Ignore Pinned Tweets.[CR]-Added Account Verified Flag.[CR]-Added Option to "Display Attacment".[CR]-Added Option to "Include Retweets".[CR]-Improved service.[CR]v1.0.2[CR]-Improved service.[CR]-Corrected tweet times.[CR]-Improved overall functionality.[CR]v1.0.1[CR]-Improved Images and Service.</news>
         <assets>
             <icon>resources/images/icon.png</icon>
             <fanart>resources/images/fanart.jpg</fanart>

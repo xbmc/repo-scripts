@@ -59,3 +59,15 @@ msgstr ""
 msgctxt "#30010"
 msgid "Twitter (5)"
 msgstr ""
+
+msgctxt "#30011"
+msgid "Display Attachment"
+msgstr ""
+
+msgctxt "#30012"
+msgid "Restarting Service..."
+msgstr ""
+
+msgctxt "#30013"
+msgid "Include Retweets"
+msgstr ""
