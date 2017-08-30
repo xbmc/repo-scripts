@@ -11,6 +11,17 @@ movie_properties = ['imdbnumber', 'tag']
 
 nostingertags_filter = {'and': [{'field': 'tag', 'operator':'isnot', 'value':'duringcreditsstinger'}, {'field': 'tag', 'operator':'isnot', 'value':'aftercreditsstinger'}]}
 
+_kodiversion = None
+def get_kodi_version():
+    global _kodiversion
+    if _kodiversion is None:
+        json_request = {'jsonrpc': '2.0', 'method': 'Application.GetProperties', 'params': {}, 'id': 1}
+        json_request['params']['properties'] = ['version']
+        json_result = execute_jsonrpc(json_request)
+        if 'result' in json_result:
+            _kodiversion = json_result['result']['version']['major']
+    return _kodiversion
+
 def get_movies(sort_method='sorttitle', ascending=True, limit=None, properties=None, listfilter=None):
     json_request = get_base_json_request('VideoLibrary.GetMovies')
     json_request['params']['properties'] = properties if properties != None else movie_properties

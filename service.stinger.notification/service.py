@@ -1,17 +1,10 @@
 import json
-import os
-import sys
 import xbmc
 import xbmcaddon
 
-addon = xbmcaddon.Addon()
-resourcelibs = xbmc.translatePath(addon.getAddonInfo('path')).decode('utf-8')
-resourcelibs = os.path.join(resourcelibs, u'resources', u'lib')
-sys.path.append(resourcelibs)
-
-import quickjson
-from chapters import ChaptersFile
-from notificationwindow import NotificationWindow
+from lib import quickjson
+from lib.chapters import ChaptersFile
+from lib.notificationwindow import NotificationWindow
 
 DURING_CREDITS_STINGER_MESSAGE = 32000
 AFTER_CREDITS_STINGER_MESSAGE = 32001
@@ -22,8 +15,10 @@ DURING_CREDITS_STINGER_TAG = 'duringcreditsstinger'
 AFTER_CREDITS_STINGER_TAG = 'aftercreditsstinger'
 BOTH_STINGERS_PROPERTY = DURING_CREDITS_STINGER_TAG + ' ' + AFTER_CREDITS_STINGER_TAG
 
+addon = xbmcaddon.Addon()
+
 def log(message, level=xbmc.LOGDEBUG):
-    xbmc.log('[%s] %s' % (addon.getAddonInfo('id'), message), level)
+    xbmc.log('[service.stinger.notification] {0}'.format(message), level)
 
 class StingerService(xbmc.Monitor):
     def __init__(self):
@@ -68,22 +63,25 @@ class StingerService(xbmc.Monitor):
         xbmc.executebuiltin('SetProperty(stinger, %s, fullscreenvideo)' % value)
 
     def run(self):
-        log('Started', xbmc.LOGINFO)
         while not self.waitForAbort(5):
             if self.currentid and not self.notified:
                 if self.check_for_display():
                     self.notify()
-        log('Stopped', xbmc.LOGINFO)
 
     def onNotification(self, sender, method, data):
         if sender == 'service.stinger.notification' and method == 'Other.TagCheck':
-            import commander
+            from lib import commander
             commander.graball_stingertags()
             return
         if method not in ('Player.OnPlay', 'Player.OnStop'):
             return
+
         data = json.loads(data)
-        if not data or 'item' not in data or 'id' not in data['item'] or data['item'].get('type') != 'movie':
+        if is_data_onplay_bugged(data, method):
+            data['item']['id'], data['item']['type'] = hack_onplay_databits()
+
+        if not data or 'item' not in data or 'id' not in data['item'] or \
+                data['item'].get('type') != 'movie' or data['item']['id'] == -1:
             return
         if method == 'Player.OnStop':
             self.reset()
@@ -118,15 +116,9 @@ class StingerService(xbmc.Monitor):
                 self.totalchapters = int(xbmc.getInfoLabel('Player.ChapterCount'))
             except ValueError:
                 self.totalchapters = None
-            if not self.totalchapters:
-                duration = xbmc.getInfoLabel('Player.Duration(hh:mm:ss)').split(':', 2)
-                if len(duration) < 3:
-                    return
-                try:
-                    duration = int(duration[0]) * 60 * 60 + int(duration[1]) * 60 + int(duration[2])
-                except ValueError:
-                    return
-                chapters = ChaptersFile(title, duration, self.preferredfps, self.query_chapterdb)
+            if not self.totalchapters and xbmc.Player().isPlayingVideo():
+                duration = xbmc.Player().getTotalTime()
+                chapters = ChaptersFile(title, int(duration), self.preferredfps, self.query_chapterdb)
                 self.externalchapterstart = chapters.lastchapterstart
 
     def check_for_display(self):
@@ -151,9 +143,10 @@ class StingerService(xbmc.Monitor):
         return xbmc.getInfoLabel('Player.Time(hh:mm:ss)') > self.externalchapterstart
 
     def near_endofmovie(self):
+        if not xbmc.Player().isPlayingVideo():
+            return False
         try:
-            timeremaining = xbmc.getInfoLabel('Player.TimeRemaining(hh:mm)').split(':', 1)
-            timeremaining = int(timeremaining[0]) * 60 + int(timeremaining[1])
+            timeremaining = (xbmc.Player().getTotalTime() - xbmc.Player().getTime()) // 60
             return timeremaining < self.whereis_theend
         except ValueError:
             return False
@@ -187,9 +180,30 @@ class StingerService(xbmc.Monitor):
     def onSettingsChanged(self):
         self.get_settings()
 
+def is_data_onplay_bugged(data, method):
+    return 'item' in data and 'id' not in data['item'] and data['item'].get('type') == 'movie' and \
+        data['item'].get('title') == '' and quickjson.get_kodi_version() >= 17 and method == 'Player.OnPlay'
+
+def hack_onplay_databits():
+    # HACK: Workaround for Kodi 17 bug, not including the correct info in the notification when played
+    #  from home window or other non-media windows. http://trac.kodi.tv/ticket/17270
+
+    # VideoInfoTag can be incorrect immediately after the notification as well, keep trying
+    if not xbmc.Player().isPlayingVideo(): # But not isPlayingVideo
+        return -1, ""
+    mediatype = xbmc.Player().getVideoInfoTag().getMediaType()
+    count = 0
+    while not mediatype and count < 10:
+        xbmc.sleep(200)
+        if not xbmc.Player().isPlayingVideo():
+            return -1, ""
+        mediatype = xbmc.Player().getVideoInfoTag().getMediaType()
+        count += 1
+    if not mediatype:
+        return -1, ""
+    return xbmc.Player().getVideoInfoTag().getDbId(), mediatype
+
 if __name__ == '__main__':
-    service = StingerService()
-    try:
-        service.run()
-    finally:
-        del service
+    log('Started', xbmc.LOGINFO)
+    StingerService().run()
+    log('Stopped', xbmc.LOGINFO)

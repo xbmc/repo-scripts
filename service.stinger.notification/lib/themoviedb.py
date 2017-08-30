@@ -9,7 +9,7 @@ def log(message, level=xbmc.LOGDEBUG):
 class TheMovieDatabase(object):
     # username for this key: rmrector.kodistinger
     apikey = '847ea2f858b0275a3d941528605f5a11'
-    apiurl = 'http://api.themoviedb.org/3/movie/%s/keywords'
+    apiurl = 'https://api.themoviedb.org/3/movie/%s/keywords'
 
     def __init__(self):
         self.session = requests.Session()
