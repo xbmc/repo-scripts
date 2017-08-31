@@ -12,13 +12,13 @@
 				<texture>special://home/addons/service.stinger.notification/resources/media/logo.png</texture>
 				<colordiffuse>FFFFFFFF</colordiffuse>
 				<aspectratio align="right" aligny="bottom">keep</aspectratio>
-				<visible>StringCompare(Window(fullscreenvideo).Property(stinger), aftercreditsstinger)</visible>
+				<visible>StringCompare(Window(fullscreenvideo).Property(stinger), aftercreditsstinger) | String.IsEqual(Window(fullscreenvideo).Property(stinger), aftercreditsstinger)</visible>
 			</control>
 			<control type="image">
 				<texture>special://home/addons/service.stinger.notification/resources/media/logo.png</texture>
 				<colordiffuse>9FFFFFFF</colordiffuse>
 				<aspectratio align="right" aligny="bottom">keep</aspectratio>
-				<visible>SubString(Window(fullscreenvideo).Property(stinger), duringcreditsstinger)</visible>
+				<visible>SubString(Window(fullscreenvideo).Property(stinger), duringcreditsstinger) | String.Contains(Window(fullscreenvideo).Property(stinger), duringcreditsstinger)</visible>
 			</control>
 		</control>
 		<control type="group">
