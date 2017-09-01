@@ -10,7 +10,7 @@ from twitch.queries import query
 # required scope: none
 @query
 def get_top(limit=10, offset=0):
-    q = Qry('games/top')
+    q = Qry('games/top', use_token=False)
     q.add_param(keys.LIMIT, limit, 10)
     q.add_param(keys.OFFSET, offset, 0)
     return q
@@ -20,7 +20,7 @@ def get_top(limit=10, offset=0):
 # undocumented / unsupported
 @query
 def _check_follows(username, name):
-    q = HQry('users/{username}/follows/games/isFollowing')
+    q = HQry('users/{username}/follows/games/isFollowing', use_token=False)
     q.add_urlkw(keys.USERNAME, username)
     q.add_param(keys.NAME, name)
     return q
@@ -29,9 +29,11 @@ def _check_follows(username, name):
 # required scope: none
 # undocumented / unsupported
 @query
-def _get_followed(username):
-    q = HQry('users/{username}/follows/games')
+def _get_followed(username, limit=25, offset=0):
+    q = HQry('users/{username}/follows/games', use_token=False)
     q.add_urlkw(keys.USERNAME, username)
+    q.add_param(keys.LIMIT, limit, 25)
+    q.add_param(keys.OFFSET, offset, 0)
     return q
 
 

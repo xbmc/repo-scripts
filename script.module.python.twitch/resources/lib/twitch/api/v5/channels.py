@@ -17,7 +17,7 @@ def channel():
 # required scope: none
 @query
 def by_id(channel_id):
-    q = Qry('channels/{channel_id}')
+    q = Qry('channels/{channel_id}', use_token=False)
     q.add_urlkw(keys.CHANNEL_ID, channel_id)
     return q
 
@@ -51,7 +51,7 @@ def get_editors(channel_id):
 # required scope: none
 @query
 def get_followers(channel_id, limit=25, offset=0, cursor='MA==', direction=Direction.DESC):
-    q = Qry('channels/{channel_id}/follows')
+    q = Qry('channels/{channel_id}/follows', use_token=False)
     q.add_urlkw(keys.CHANNEL_ID, channel_id)
     q.add_param(keys.LIMIT, limit, 25)
     q.add_param(keys.OFFSET, offset, 0)
@@ -63,7 +63,7 @@ def get_followers(channel_id, limit=25, offset=0, cursor='MA==', direction=Direc
 # required scope: none
 @query
 def get_teams(channel_id):
-    q = Qry('channels/{channel_id}/teams')
+    q = Qry('channels/{channel_id}/teams', use_token=False)
     q.add_urlkw(keys.CHANNEL_ID, channel_id)
     return q
 
@@ -94,7 +94,7 @@ def get_videos(channel_id, limit=10, offset=0,
                broadcast_type=BroadcastType.HIGHLIGHT,
                hls=Boolean.FALSE, sort_by=VideoSort.TIME,
                language=Language.ALL):
-    q = Qry('channels/{id}/videos')
+    q = Qry('channels/{id}/videos', use_token=False)
     q.add_urlkw(keys.ID, channel_id)
     q.add_param(keys.LIMIT, limit, 10)
     q.add_param(keys.OFFSET, offset, 0)

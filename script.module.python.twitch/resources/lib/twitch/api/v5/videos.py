@@ -12,7 +12,7 @@ from twitch.queries import query
 # required scope: none
 @query
 def by_id(video_id):
-    q = Qry('videos/{video_id}')
+    q = Qry('videos/{video_id}', use_token=False)
     q.add_urlkw(keys.VIDEO_ID, video_id)
     return q
 
@@ -20,7 +20,7 @@ def by_id(video_id):
 # required scope: none
 @query
 def get_top(limit=10, offset=0, game=None, period=Period.WEEK, broadcast_type=BroadcastType.HIGHLIGHT):
-    q = Qry('videos/top')
+    q = Qry('videos/top', use_token=False)
     q.add_param(keys.LIMIT, limit, 10)
     q.add_param(keys.OFFSET, offset, 0)
     q.add_param(keys.GAME, game)
@@ -100,6 +100,6 @@ def complete_upload(video_id, upload_token):
 # undocumented / unsupported
 @query
 def _by_id(video_id):
-    q = HQry('videos/{video_id}')
+    q = HQry('videos/{video_id}', use_token=False)
     q.add_urlkw(keys.VIDEO_ID, video_id)
     return q

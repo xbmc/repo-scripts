@@ -10,7 +10,7 @@ from twitch.queries import query
 # required scope: none
 @query
 def get_metadata(collection_id):
-    q = Qry('collections/{collection_id}')
+    q = Qry('collections/{collection_id}', use_token=False)
     q.add_urlkw(keys.COLLECTION_ID, collection_id)
     return q
 
@@ -18,7 +18,7 @@ def get_metadata(collection_id):
 # required scope: none
 @query
 def by_id(collection_id, include_all=Boolean.FALSE):
-    q = Qry('collections/{collection_id}/items')
+    q = Qry('collections/{collection_id}/items', use_token=False)
     q.add_urlkw(keys.COLLECTION_ID, collection_id)
     q.add_param(keys.INCLUDE_ALL_ITEMS, Boolean.validate(include_all), Boolean.FALSE)
     return q
@@ -27,7 +27,7 @@ def by_id(collection_id, include_all=Boolean.FALSE):
 # required scope: none
 @query
 def get_collections(channel_id, limit=10, cursor='MA==', containing_item=None):
-    q = Qry('channels/{channel_id}/collections')
+    q = Qry('channels/{channel_id}/collections', use_token=False)
     q.add_urlkw(keys.CHANNEL_ID, channel_id)
     q.add_param(keys.LIMIT, limit, 10)
     q.add_param(keys.CURSOR, Cursor.validate(cursor), 'MA==')
