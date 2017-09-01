@@ -9,7 +9,7 @@ from twitch.queries import query
 # required scope: none
 @query
 def get_emoticons_by_set(emotesets=None):
-    q = Qry('chat/emoticon_images')
+    q = Qry('chat/emoticon_images', use_token=False)
     q.add_param(keys.EMOTESETS, emotesets, None)
     return q
 
@@ -17,7 +17,7 @@ def get_emoticons_by_set(emotesets=None):
 # required scope: none
 @query
 def get_badges(channel_id):
-    q = Qry('chat/{channel_id}/badges')
+    q = Qry('chat/{channel_id}/badges', use_token=False)
     q.add_urlkw(keys.CHANNEL_ID, channel_id)
     return q
 
@@ -25,5 +25,5 @@ def get_badges(channel_id):
 # required scope: none
 @query
 def get_emoticons():
-    q = Qry('chat/emoticons')
+    q = Qry('chat/emoticons', use_token=False)
     return q

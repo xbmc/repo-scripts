@@ -10,7 +10,7 @@ from twitch.queries import query
 # required scope: none
 @query
 def by_name(name):
-    q = Qry('communities')
+    q = Qry('communities', use_token=False)
     q.add_param(keys.NAME, name)
     return q
 
@@ -18,7 +18,7 @@ def by_name(name):
 # required scope: none
 @query
 def by_id(community_id):
-    q = Qry('communities/{community_id}')
+    q = Qry('communities/{community_id}', use_token=False)
     q.add_urlkw(keys.COMMUNITY_ID, community_id)
     return q
 
@@ -39,7 +39,7 @@ def update(community_id, summary=None, description=None,
 # required scope: none
 @query
 def get_top(limit=10, cursor='MA=='):
-    q = Qry('communities/top')
+    q = Qry('communities/top', use_token=False)
     q.add_param(keys.LIMIT, limit, 10)
     q.add_param(keys.CURSOR, Cursor.validate(cursor), 'MA==')
     return q
@@ -144,7 +144,7 @@ def get_permissions(community_id):
 # required scope: none
 @query
 def report_violation(community_id, channel_id):
-    q = Qry('communities/{community_id}/report_channel', method=methods.POST)
+    q = Qry('communities/{community_id}/report_channel', use_token=False, method=methods.POST)
     q.add_urlkw(keys.COMMUNITY_ID, community_id)
     q.add_data(keys.CHANNEL_ID, channel_id)
     return q

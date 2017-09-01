@@ -17,7 +17,7 @@ def user():
 # required scope: none
 @query
 def by_id(user_id):
-    q = Qry('users/{user_id}')
+    q = Qry('users/{user_id}', use_token=False)
     q.add_urlkw(keys.USER_ID, user_id)
     return q
 
@@ -43,7 +43,7 @@ def check_subscription(user_id, channel_id):
 @query
 def get_follows(user_id, limit=25, offset=0, direction=Direction.DESC,
                 sort_by=SortBy.CREATED_AT):
-    q = Qry('users/{user_id}/follows/channels')
+    q = Qry('users/{user_id}/follows/channels', use_token=False)
     q.add_urlkw(keys.USER_ID, user_id)
     q.add_param(keys.LIMIT, limit, 25)
     q.add_param(keys.OFFSET, offset, 0)
@@ -55,7 +55,7 @@ def get_follows(user_id, limit=25, offset=0, direction=Direction.DESC,
 # required scope: none
 @query
 def check_follows(user_id, channel_id):
-    q = Qry('users/{user_id}/follows/channels/{channel_id}')
+    q = Qry('users/{user_id}/follows/channels/{channel_id}', use_token=False)
     q.add_urlkw(keys.USER_ID, user_id)
     q.add_urlkw(keys.CHANNEL_ID, channel_id)
     return q
