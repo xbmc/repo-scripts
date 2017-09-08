@@ -45,6 +45,7 @@ pthreshold =        100
 pclength =          50
 pangle =            00
 prandomness =       10
+lightsize =         192
 black =             "#000000"
 white =             "#ffffff"
 bits =              1
