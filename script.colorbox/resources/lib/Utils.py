@@ -56,7 +56,7 @@ atsample =          10
 atscale =           1
 atpercentage =      0
 atangles =          [0,15,30,45]
-blend =             1
+blend =             1.0
 quality =           8
 color_comp =        "main:hls*0.33;0;0@hsv*0;-0.1;0.3" #[comp|main]:hls*-0.5;0.0;0.1@fhsv*-;-0.1;0.3@bump*[0-255] <- any amount of ops/any order, if no ops just use 'main:' or 'comp:'
 color_main =        "main:" #[comp|main]:fhls*-;0.5;0.5@bump*[0-255] <- any amount of ops/any order, if no ops just use 'main:' or 'comp:'
@@ -159,7 +159,7 @@ def set_sharp(new_value):
     xbmc.executebuiltin('Skin.SetString(colorbox_sharp,'+str(new_value)+')')
 def set_blend(new_value):
     global blend
-    blend = int(new_value) / 1.0
+    blend = int(new_value) / 100.0
     xbmc.executebuiltin('Skin.SetString(colorbox_blend,'+str(new_value)+')')
 def dataglitch(img):
     return Dataglitch_Image(img)
