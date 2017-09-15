@@ -1,0 +1,78 @@
+# script.widevine language file
+msgid ""
+msgstr ""
+"Project-Id-Version: script.module.inputstreamhelper\n"
+"Report-Msgid-Bugs-To: https://github.com/emilsvennesson/script.module.inputstreamhelper\n"
+"POT-Creation-Date: 2013-11-18 16:15+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: English\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+
+msgctxt "#30001"
+msgid "Information"
+msgstr ""
+
+msgctxt "#30002"
+msgid "You do not have [B]Widevine DRM[/B] installed. This is required to play this content.[CR][CR]Would you like to install [B]Widevine DRM[/B]?"
+msgstr ""
+
+msgctxt "#30003"
+msgid "[B]Widevine DRM[/B] was successfully installed!"
+msgstr ""
+
+msgctxt "#30004"
+msgid "Error"
+msgstr ""
+
+msgctxt "#30005"
+msgid "An error occurred while installing [B]Widevine DRM[/B]. Please enable debug logging and file a bug report at:[CR][CR]github.com/emilsvennesson/script.module.inputstreamhelper"
+msgstr ""
+
+msgctxt "#30006"
+msgid "[B]Widevine DRM[/B] is supported on this system architecture but is not possible to automatically install due to legal distributing issues.[CR][CR][B]Hint:[/B] Google might be able to help you out! :-)"
+msgstr ""
+
+msgctxt "#30007"
+msgid "[B]Widevine DRM[/B] is unfortunately not available on this system architecture."
+msgstr ""
+
+msgctxt "#30008"
+msgid "[B]{0}[/B] is missing on your Kodi install. This add-on is required to play this content."
+msgstr ""
+
+msgctxt "#30009"
+msgid "[B]{0}[/B] is not enabled. This add-on is required to play this content.[CR][CR]Would you like to enable [B]{1}[/B]?"
+msgstr ""
+
+msgctxt "#30010"
+msgid "[B]Kodi {0}[/B] or higher is required for Widevine DRM content playback."
+msgstr ""
+
+msgctxt "#30011"
+msgid "This operating system ([B]{0}[/B]) is not supported by Widevine DRM."
+msgstr ""
+
+msgctxt "#30012"
+msgid "The Windows Store version of Kodi does not support [B]Widevine DRM[/B].[CR][CR]Please use the installer from kodi.tv instead."
+msgstr ""
+
+msgctxt "#30013"
+msgid "Failed to retrieve [B]{0}[/B]."
+msgstr ""
+
+msgctxt "#30014"
+msgid "Download in progress..."
+msgstr ""
+
+msgctxt "#30015"
+msgid "Downloading [B]{0}[/B]..."
+msgstr ""
+
+msgctxt "#30016"
+msgid "Failed to extract [B]Widevine CDM[/B] from zip file."
+msgstr ""
