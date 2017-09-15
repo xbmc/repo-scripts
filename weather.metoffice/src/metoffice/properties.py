@@ -6,7 +6,7 @@ import json
 from PIL import Image
 import urlcache
 from constants import ISSUEDAT_FORMAT, DATAPOINT_DATETIME_FORMAT,\
-    SHORT_DAY_FORMAT, SHORT_DATE_FORMAT, DATAPOINT_DATE_FORMAT,\
+    SHORT_DAY_FORMAT, SHORT_DATE_FORMAT, TIME_FORMAT, DATAPOINT_DATE_FORMAT,\
     WEATHER_CODES, WINDOW, DAILY_LOCATION_FORECAST_URL,\
     API_KEY, ADDON_DATA_PATH, THREEHOURLY_LOCATION_FORECAST_URL,\
     TEXT_FORECAST_URL, HOURLY_LOCATION_OBSERVATION_URL,\
@@ -16,7 +16,9 @@ from constants import ISSUEDAT_FORMAT, DATAPOINT_DATETIME_FORMAT,\
     FORECAST_LOCATION, FORECAST_LOCATION_ID, OBSERVATION_LOCATION,\
     OBSERVATION_LOCATION_ID, FORECASTMAP_SLIDER, OBSERVATIONMAP_SLIDER,\
     FORECASTMAP_LAYER_SELECTION, OBSERVATIONMAP_LAYER_SELECTION, TZ, TZUK,\
-    TEMPERATUREUNITS
+    TEMPERATUREUNITS, LATITUDE, LONGITUDE
+
+import astronomy
 
 @utilities.panelbusy('LeftPane')
 def observation():
@@ -135,6 +137,11 @@ def threehourly():
         e.args = ("Key Error in JSON File", "Key '{0}' not found while processing file from url:".format(e.args[0]), THREEHOURLY_LOCATION_FORECAST_URL)
         raise
     WINDOW.setProperty('Hourly.IsFetched', 'true')#@UndefinedVariable
+
+def sunrisesunset():
+    sun = astronomy.Sun(lat=float(LATITUDE), lng=float(LONGITUDE))
+    WINDOW.setProperty('Today.Sunrise', sun.sunrise().strftime(TIME_FORMAT))
+    WINDOW.setProperty('Today.Sunset', sun.sunset().strftime(TIME_FORMAT))
 
 @utilities.panelbusy('RightPane')
 def text():

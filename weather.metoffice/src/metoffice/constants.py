@@ -22,16 +22,6 @@ KEYBOARD = xbmc.Keyboard()
 ADDON_BANNER_PATH = xbmc.translatePath('special://home/addons/%s/resources/banner.png' % ADDON.getAddonInfo('id'))
 ADDON_DATA_PATH = xbmc.translatePath('special://profile/addon_data/%s/' % ADDON.getAddonInfo('id'))
 
-try:
-    version = float(re.compile('(\d+\.\d).*').match(xbmc.getInfoLabel('System.BuildVersion')).group(1))
-except:
-    version = 1.0
-
-if version >= 16.0:
-    WEATHER_ICON_PATH = xbmc.translatePath('special://xbmc/addons/resource.images.weathericons.default/resources/%s.png').decode("utf-8")
-else:
-    WEATHER_ICON_PATH = xbmc.translatePath('special://temp/weather/%s.png').decode("utf-8")
-
 TEMPERATUREUNITS = unicode(xbmc.getRegion('tempunit'),encoding='utf-8')
 
 API_KEY = ADDON.getSetting('ApiKey')
@@ -52,6 +42,7 @@ SHORT_DAY_FORMAT = "%a"
 SHORT_DATE_FORMAT = "%d %b"
 MAPTIME_FORMAT = '%H%M %a'
 ISSUEDAT_FORMAT = '%H:%M %a %d %b %Y'
+TIME_FORMAT = '%H:%M'
 
 GOOGLE_BASE = 'http://maps.googleapis.com/maps/api/staticmap'
 GOOGLE_GLOBAL = GOOGLE_BASE + "?sensor=false&center=55,-3.5&zoom=5&size=323x472"
@@ -99,10 +90,17 @@ WEATHER_CODES = {
 
 #This list must appear in the same order as it appears in
 #the settings.xml in order for the indexes to align.
-GEOIP_PROVIDERS = [{'url':'http://ip-api.com/json/', 'latitude':'lat', 'longitude':'lon'},
-             {'url':'http://freegeoip.net/json/', 'latitude':'latitude', 'longitude':'longitude'},
-             {'url':'http://geoiplookup.net/geoapi.php?output=json', 'latitude':'latitude', 'longitude':'longitude'}
-                   ]
+GEOIP_PROVIDERS = [
+    {'url':'http://ip-api.com/json/',
+     'latitude':'lat',
+     'longitude':'lon'},
+    {'url':'http://freegeoip.net/json/',
+     'latitude':'latitude',
+     'longitude':'longitude'},
+    {'url':'http://geoiplookup.net/geoapi.php?output=json',
+     'latitude':'latitude',
+     'longitude':'longitude'}
+]
 GEOIP_PROVIDER = GEOIP_PROVIDERS[int(GEOIP)]
 
 URL_TEMPLATE = "http://datapoint.metoffice.gov.uk/public/data/{format}/{resource}/{group}/{datatype}/{object}?{get}"
