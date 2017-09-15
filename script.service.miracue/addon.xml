@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.service.miracue" name="Mira Cue" version="1.0.1" provider-name="Verto Lab">
+	<requires>
+		<import addon="xbmc.python" version="2.14.0"/>
+	</requires>
+	<extension point="xbmc.python.script" library="main_pair.py" />
+	<extension point="xbmc.service" library="service.py" start="login" />
+	<extension point="xbmc.addon.metadata">
+		<platform>all</platform>
+		<summary lang="en">Mira Cue Kodi Alexa Controller</summary>
+		<description lang="en">Voice control your Kodi using Amazon Alexa enabled devices such as Echo. Support for Google Home might be added in the future.</description>
+		<license>GNU General Public License, v2</license>
+		<language>English</language>
+		<forum>http://forum.kodi.tv/showthread.php?tid=254502</forum>
+		<source>https://github.com/vertolab/miracle</source>
+		<website>Kodi.tv</website>
+		<email>info@vertolab.com</email>
+		<assets>
+			<icon>icon.png</icon>
+			<fanart>fanart.jpg</fanart>
+			<screenshot>resources/screenshot-01.jpg</screenshot>
+			<screenshot>resources/screenshot-02.jpg</screenshot>
+			<screenshot>resources/screenshot-03.jpg</screenshot>
+			<screenshot>resources/screenshot-04.jpg</screenshot>
+			<screenshot>resources/screenshot-05.jpg</screenshot>
+		</assets>
+		<news>Addon now talks to Alexa for pairing</news>
+	</extension>
+</addon>
