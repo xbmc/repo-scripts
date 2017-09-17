@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="service.addondata.sync"
+       name="Kodi Add-on Data Sync (for Dropbox)"
+       version="0.1.1"
+       provider-name="Bas Rieter">
+    <requires>
+        <import addon="xbmc.metadata" version="2.1.0"/>
+        <import addon="xbmc.python" version="2.25.0"/>
+
+        <import addon="script.module.requests" version="2.12.4"/>
+        <import addon="script.module.six" version="1.9.0"/>
+    </requires>
+
+    <extension point="xbmc.service" library="service.py" start="login"/>
+
+    <extension point="kodi.context.item">
+        <menu id="kodi.core.main">
+            <menu>
+                <label>30010</label>
+
+                <item library="menu_sync.py">
+                    <label>30023</label>
+                    <visible>ListItem.Property(Addon.IsInstalled)</visible>
+                </item>
+
+                <item library="menu_add.py">
+                    <label>30011</label>
+                    <visible>ListItem.Property(Addon.IsInstalled)</visible>
+                </item>
+
+                <item library="menu_remove.py">
+                    <label>30012</label>
+                    <visible>ListItem.Property(Addon.IsInstalled)</visible>
+                </item>
+
+                <item library="menu_list.py">
+                    <label>30017</label>
+                    <visible>ListItem.Property(Addon.IsInstalled)</visible>
+                </item>
+            </menu>
+        </menu>
+    </extension>
+
+    <extension point="xbmc.addon.metadata">
+        <platform>all</platform>
+        <summary lang="en">Simple service add-on that syncs the profile add-on settings to Dropbox.</summary>
+        <description lang="en">This add-on syncs all addon_data folders and files with a Dropbox folder.</description>
+        <disclaimer lang="en">This add-on could potentially mess up all you add-on settings. Use with care and with a BACKUP of our addon_data folder!</disclaimer>
+        <language>en</language>
+        <platform>all</platform>
+        <license>Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)</license>
+        <website>https://www.rieter.net/content/kodi-sync/</website>
+        <news>v0.1.1 - 2017-09-17
+* Fixed: Typoos
+* Changed: pass the sync back-end client to the constructor of the sync_client
+        </news>
+        <assets>
+            <icon>resources/icon.png</icon>
+            <!--<fanart>resources/fanart.jpg</fanart>
+            <screenshot>screenshot.jpg</screenshot>-->
+        </assets>
+    </extension>
+</addon>
+
