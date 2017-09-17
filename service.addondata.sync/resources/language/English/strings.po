@@ -1,0 +1,122 @@
+# XBMC Media Center language file
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC-Addons\n"
+"Report-Msgid-Bugs-To: basrieter@gmail.com\n"
+"POT-Creation-Date: 2017-07-31 18:59+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Bas Rieter <basrieter@Gmail.com>\n"
+"Language-Team: English\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+
+msgctxt "#30001"
+msgid "Sync Settings"
+msgstr ""
+
+msgctxt "#30002"
+msgid "Dropbox API Access Token"
+msgstr ""
+
+msgctxt "#30003"
+msgid "Sync Group Name"
+msgstr ""
+
+msgctxt "#30004"
+msgid "Perform a dry-run (don't actually do anything)"
+msgstr ""
+
+msgctxt "#30005"
+msgid "Synchronisation interval (minutes)"
+msgstr ""
+
+msgctxt "#30006"
+msgid "Log level"
+msgstr ""
+
+msgctxt "#30007"
+msgid "Send log files"
+msgstr ""
+
+msgctxt "#30008"
+msgid "Gist"
+msgstr ""
+
+msgctxt "#30009"
+msgid "%d Log files uploaded to Add-on Data Sync sync folder."
+msgstr ""
+
+msgctxt "#30010"
+msgid "Add-on Data Sync"
+msgstr ""
+
+msgctxt "#30011"
+msgid "Add to Add-on Data Sync"
+msgstr ""
+
+msgctxt "#30012"
+msgid "Remove from Add-on Data Sync"
+msgstr ""
+
+msgctxt "#30013"
+msgid "Added '%s' (%s) to Add-on Data Sync"
+msgstr ""
+
+msgctxt "#30014"
+msgid "Removed '%s' (%s) from Add-on Data Sync"
+msgstr ""
+
+msgctxt "#30015"
+msgid "Last successful sync at"
+msgstr ""
+
+msgctxt "#30016"
+msgid "Logging"
+msgstr ""
+
+msgctxt "#30017"
+msgid "Manage Synced Add-ons"
+msgstr ""
+
+msgctxt "#30018"
+msgid "Select items to remove"
+msgstr ""
+
+msgctxt "#30019"
+msgid "Updated add-ons to sync"
+msgstr ""
+
+msgctxt "#30020"
+msgid "Cannot add %s to add-on sync list"
+msgstr ""
+
+msgctxt "#30021"
+msgid "Configure Sync"
+msgstr ""
+
+msgctxt "#30022"
+msgid "Forcibly started an add-on data sync"
+msgstr ""
+
+msgctxt "#30023"
+msgid "Force a Sync"
+msgstr ""
+
+msgctxt "#30024"
+msgid "Selective Sync"
+msgstr ""
+
+msgctxt "#30025"
+msgid "Action unavailable: Selective Sync enabled."
+msgstr ""
+
+msgctxt "#30026"
+msgid "Sync All"
+msgstr ""
+
+msgctxt "#30027"
+msgid "Sync Mode"
+msgstr ""
