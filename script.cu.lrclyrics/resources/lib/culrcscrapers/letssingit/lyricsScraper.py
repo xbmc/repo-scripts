@@ -32,7 +32,7 @@ class LyricsFetcher:
         except:
             return
         req.close()
-        matchcode = re.search('</TD><TD><a href="(.*?)"', response)
+        matchcode = re.search('</td><td><a href="(.*?)"', response)
         if matchcode:
             lyricscode = (matchcode.group(1))
             clean = lyricscode.lstrip('http://www.letssingit.com/').rsplit('-',1)[0]
@@ -46,7 +46,7 @@ class LyricsFetcher:
                 except:
                     return
                 req.close()
-                match = re.search('id=lyrics style="display:table-cell;vertical-align:top;">(.*?)<div', resp, flags=re.DOTALL)
+                match = re.search('id=lyrics>(.*?)<div c', resp, flags=re.DOTALL)
                 if match:
                     lyrics.lyrics = match.group(1).replace('<br>', '')
                     return lyrics
