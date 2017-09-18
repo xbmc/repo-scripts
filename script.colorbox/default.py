@@ -81,7 +81,8 @@ class ColorBoxMain:
                         tf = Thread(target=Utils.Color_Only, args=(self.image_now_cfa, "ImageColorcfa", "ImageCColorcfa"))
                         tf.start()
                     HOME.setProperty('Daemon_cfa_ImageUpdating', '1')
-            if not HOME.getProperty("SEVEN_daemon_set") == '':
+            SEVEN_daemon_set = HOME.getProperty("SEVEN_daemon_set")
+            if not SEVEN_daemon_set == '':
                 self.image_now_SEVEN = xbmc.getInfoLabel("Control.GetLabel(7977)")
                 if self.image_now_SEVEN != self.image_prev_SEVEN and self.image_now_SEVEN != "":
                     try:
@@ -92,7 +93,8 @@ class ColorBoxMain:
                         tm3.start()
                     except Exception as e:
                         Utils.log("7err: %s img: %s" % (e,self.image_now_SEVEN))
-            if not HOME.getProperty("EIGHT_daemon_set") == '':
+            EIGHT_daemon_set = HOME.getProperty("EIGHT_daemon_set")
+            if not EIGHT_daemon_set == '':
                 self.image_now_EIGHT = xbmc.getInfoLabel("Control.GetLabel(7978)")
                 if self.image_now_EIGHT != self.image_prev_EIGHT and self.image_now_EIGHT != "" or HOME.getProperty("EIGHT_daemon_fire"):
                     HOME.setProperty('Daemon_EIGHT_ImageUpdating', '0')
