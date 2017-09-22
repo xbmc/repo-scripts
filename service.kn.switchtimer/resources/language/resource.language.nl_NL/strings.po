@@ -86,12 +86,12 @@ msgid "Could not switch to %s"
 msgstr "Kan niet overschakelen naar %s"
 
 msgctxt "#30026"
-msgid "Switching to '%s/%s' in a few seconds"
-msgstr "Schakel nu over naar '%s/%s'."
+msgid "Switching at '%s' to '%s' in a few seconds"
+msgstr "Schakel nu over naar '%s' to '%s'."
 
 msgctxt "#30027"
-msgid "Broadcast on '%s' starts now"
-msgstr "Uitzending op '%s' begint nu"
+msgid "'%s' on '%s' starts now"
+msgstr "'%s' op '%s' begint nu"
 
 msgctxt "#30028"
 msgid "Channel Switch requested"
