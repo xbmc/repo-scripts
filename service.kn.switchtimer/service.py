@@ -134,7 +134,7 @@ class Service(XBMCMonitor):
 
                 if _timer['utime'] < _now: _switchInstantly = True
                 if (_timer['utime'] - _now < INTERVAL + self.__dispMsgTime / 1000) or _switchInstantly:
-                    chanIdTmr = self.channelName2channelId(_timer['channel'].decode('utf-8'))
+                    chanIdTmr = self.channelName2channelId(_timer['channel'])
                     if chanIdTmr:
 
                         # get player properties, switch if necessary
@@ -142,24 +142,28 @@ class Service(XBMCMonitor):
                         plrProps = self.getPlayer()
                         if chanIdTmr == plrProps['id']:
                             handler.notifyLog('Channel switching unnecessary')
-                            handler.notifyOSD(__LS__(30000), __LS__(30027) % (_timer['channel'].decode('utf-8')), time=self.__dispMsgTime)
+                            handler.notifyOSD(__LS__(30000), __LS__(30027) % (_timer['title'], _timer['channel']), time=self.__dispMsgTime)
                         else:
                             switchAborted = False
                             secs = 0
-                            handler.notifyLog('Channel switch to %s required' %  (_timer['channel'].decode('utf-8')))
+                            handler.notifyLog('Channel switch to %s required' % (_timer['channel']))
 
                             if _switchInstantly:
                                 handler.notifyLog('immediate channel switching required')
-                                handler.notifyOSD(__LS__(30000), __LS__(30027) % (_timer['channel'].decode('utf-8')), time=5000)
+                                handler.notifyOSD(__LS__(30000), __LS__(30027) % (_timer['title'], _timer['channel']), time=5000)
 
                             elif not self.__showNoticeBeforeSw: xbmc.sleep(self.__dispMsgTime)
 
                             elif self.__useCountdownTimer:
-                                handler.OSDProgress.create(__LS__(30028), __LS__(30026) % (_timer['title'].decode('utf-8'), _timer['channel'].decode('utf-8')), __LS__(30029) % (int(self.__dispMsgTime / 1000 - secs)))
+                                handler.OSDProgress.create(__LS__(30028), __LS__(30026) %
+                                                           (_timer['channel'], _timer['title']),
+                                                           __LS__(30029) % (int(self.__dispMsgTime / 1000 - secs)))
                                 while secs < self.__dispMsgTime /1000:
                                     secs += 1
                                     percent = int((secs * 100000) / self.__dispMsgTime)
-                                    handler.OSDProgress.update(percent, __LS__(30026) % (_timer['title'].decode('utf-8'), _timer['channel'].decode('utf-8')), __LS__(30029) % (int(self.__dispMsgTime / 1000 - secs)))
+                                    handler.OSDProgress.update(percent, __LS__(30026) %
+                                                               (_timer['channel'], _timer['title']),
+                                                               __LS__(30029) % (int(self.__dispMsgTime / 1000 - secs)))
                                     xbmc.sleep(1000)
                                     if (handler.OSDProgress.iscanceled()):
                                         switchAborted = True
@@ -167,11 +171,13 @@ class Service(XBMCMonitor):
                                 handler.OSDProgress.close()
                             else:
                                 idleTime = xbmc.getGlobalIdleTime()
-                                handler.notifyOSD(__LS__(30000), __LS__(30026) % (_timer['title'].decode('utf-8'), _timer['channel'].decode('utf-8')), time=self.__dispMsgTime)
+                                handler.notifyOSD(__LS__(30000), __LS__(30026) %
+                                                  (_timer['channel'], _timer['title']), time=self.__dispMsgTime)
                                 while secs < self.__dispMsgTime /1000:
                                     if idleTime > xbmc.getGlobalIdleTime():
                                         switchAborted = True
                                         break
+
                                     xbmc.sleep(1000)
                                     idleTime += 1
                                     secs += 1
@@ -183,7 +189,8 @@ class Service(XBMCMonitor):
 
                                     # stop all other players except pvr
 
-                                    handler.notifyLog('player:%s media:%s @id:%s is running' % (plrProps['player'], plrProps['media'], plrProps['playerid']))
+                                    handler.notifyLog('player:%s media:%s @id:%s is running' %
+                                                      (plrProps['player'], plrProps['media'], plrProps['playerid']))
                                     query = {
                                             "method": "Player.Stop",
                                             "params": {"playerid": plrProps['playerid']},
@@ -199,10 +206,10 @@ class Service(XBMCMonitor):
                                         }
                                 res = jsonrpc(query)
                                 if 'result' in res and res['result'] == 'OK':
-                                    handler.notifyLog('Switched to channel \'%s\'' % (_timer['channel'].decode('utf-8')))
+                                    handler.notifyLog('Switched to channel \'%s\'' % (_timer['channel']))
                                 else:
-                                    handler.notifyLog('Couldn\'t switch to channel \'%s\'' % (_timer['channel'].decode('utf-8')))
-                                    handler.notifyOSD(__LS__(30000), __LS__(30025) % (_timer['channel'].decode('utf-8')), icon=__IconAlert__)
+                                    handler.notifyLog('Couldn\'t switch to channel \'%s\'' % (_timer['channel']))
+                                    handler.notifyOSD(__LS__(30000), __LS__(30025) % (_timer['channel']), icon=__IconAlert__)
 
                     self.resetTmr(_timer['date'])
             self.timers = handler.getTimer()

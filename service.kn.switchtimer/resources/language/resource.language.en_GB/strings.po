@@ -95,11 +95,11 @@ msgid "Could not switch to %s"
 msgstr ""
 
 msgctxt "#30026"
-msgid "Switching to '%s/%s' in a few seconds"
+msgid "Switching at '%s' to '%s' in a few seconds"
 msgstr ""
 
 msgctxt "#30027"
-msgid "Broadcast on '%s' starts now"
+msgid "'%s' on '%s' starts now"
 msgstr ""
 
 msgctxt "#30028"

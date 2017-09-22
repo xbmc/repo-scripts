@@ -95,12 +95,12 @@ msgid "Could not switch to %s"
 msgstr "Não foi possível sintonizar %s"
 
 msgctxt "#30026"
-msgid "Switching to '%s/%s' in a few seconds"
-msgstr "'%s/%s' vai começar em poucos segundos"
+msgid "Switching at '%s' to '%s' in a few seconds"
+msgstr "'%s' - '%s' vai começar em poucos segundos"
 
 msgctxt "#30027"
-msgid "Broadcast on '%s' starts now"
-msgstr "O programa '%s' começa agora"
+msgid "'%s' on '%s' starts now"
+msgstr "'%s' - '%s' começa agora"
 
 msgctxt "#30028"
 msgid "Channel Switch requested"
