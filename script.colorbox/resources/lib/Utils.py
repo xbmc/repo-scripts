@@ -20,7 +20,7 @@ ADDON =             xbmcaddon.Addon()
 ADDON_ID =          ADDON.getAddonInfo('id')
 ADDON_LANGUAGE =    ADDON.getLocalizedString
 ADDON_DATA_PATH =   os.path.join(xbmc.translatePath("special://profile/addon_data/%s" % ADDON_ID))
-ADDON_COLORS =      os.path.join(ADDON_DATA_PATH, "colors.db")
+ADDON_COLORS =      os.path.join(ADDON_DATA_PATH, "colors.txt")
 #ADDON_SETTINGS =    os.path.join(ADDON_DATA_PATH, "settings.")
 HOME =              xbmcgui.Window(10000)
 ONE_THIRD =         1.0/3.0
@@ -911,7 +911,7 @@ def log(txt):
     if isinstance(txt, str):
         txt = txt.decode("utf-8")
     message = u'%s: %s' % (ADDON_ID, txt)
-    xbmc.log(msg=message.encode("utf-8"), level=xbmc.LOGNOTICE)
+    xbmc.log(msg=message.encode("utf-8"), level=xbmc.LOGDEBUG)
 def prettyprint(string):
     log(simplejson.dumps(string, sort_keys=True, indent=4, separators=(',', ': ')))
 ColorBox_filename_map = {
