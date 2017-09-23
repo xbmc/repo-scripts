@@ -106,7 +106,12 @@ def ColorBox_go_map(filterimage, imageops, gqual=0):
     except Exception as e:
         log("go_mapop: %s cmarg: %s" % (e,cmarg))
     else:
-        if blend < 1: img = Image.blend(imgor, img, blend)
+        if blend < 1:
+            orwidth, orheight = imgor.size
+            width, height = img.size
+            if width != orwidth or height != orheight:
+                img = img.resize((orwidth, orheight), Image.ANTIALIAS)
+            img = Image.blend(imgor, img, blend)
         img.save(targetfile)
         return targetfile
 def set_quality(new_value):
