@@ -1,3 +1,10 @@
+1.1.0
+*** Twitch API V5 is deprecated and will be removed entirely on 2/14/18
+*** script.module.python.twitch v2 will include the Twitch helix API, and may include breaking changes to current implementations.
+    If you rely on this module follow development at https://github.com/MrSprigster/script.module.python.twitch
+
+[fix/upd] v5.channels deprecated notations for community endpoints, add new communities endpoints
+
 1.0.2
 [fix] omit oauth token for queries with 'required scope: none'
 
