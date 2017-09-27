@@ -1,2 +1,10 @@
+v2.0.5
+- better error handling
+- saturate, desaturate, angle tone + more fx
+- colors.txt now colors.db (will force remake of data so can delete old or leave)
+- quality setting affects all fx now
+- filenaming convention changed to force recache of images due to new ops and above quality change
+- chaining of fx possible; use a '-' between fx names
+- in the mymultis new var to override quality (leave blank or set to 0 to use existing setting)
 v2.0.0
 - major overhaul see readme
