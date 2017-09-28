@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addon id="script.tag-generator"
        name="Tag Generator"
-       version="0.5.1"
+       version="0.5.2"
        provider-name="wellspokenman">
   <requires>
     <import addon="xbmc.python" version="2.25.0"/>
     <import addon="script.module.simplejson" version="3.3.0"/>
     <import addon="script.module.requests" version="2.12.4"/>
     <import addon="script.module.six" version="1.9.0"/>
-    <import addon="script.module.oauthlib" version="2.1.0"/>
+    <import addon="script.module.oauthlib" version="2.0.1"/>
     <import addon="script.module.requests_oauthlib" version="0.7.0"/>
   </requires>
   <extension point="xbmc.service" library="main.py" start="login">
