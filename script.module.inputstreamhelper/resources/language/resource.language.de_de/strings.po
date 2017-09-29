@@ -1,0 +1,134 @@
+# script.module.inputstreamhelper language file
+msgid ""
+msgstr ""
+"Project-Id-Version: script.module.inputstreamhelper\n"
+"Report-Msgid-Bugs-To: https://github.com/emilsvennesson/script.module.inputstreamhelper\n"
+"POT-Creation-Date: 2013-11-18 16:15+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Sebastian Golasch <public@asciidisco.com\n"
+"Language-Team: German\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: de\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+
+msgctxt "#30001"
+msgid "Information"
+msgstr "Informationen"
+
+msgctxt "#30002"
+msgid "You do not have [B]Widevine DRM[/B] installed. This is required to play this content.[CR][CR]Do you want to install [B]Widevine DRM[/B]?"
+msgstr "Die [B]Widevine DRM[/B] Bibliothek ist nicht installiert, ist aber nötig um den Inhalt wiederzugeben.[CR][CR]Soll die [B]Widevine DRM[/B] Bibliothek installiert werden?"
+
+msgctxt "#30003"
+msgid "[B]Widevine DRM[/B] was successfully installed!"
+msgstr "[B]Widevine DRM[/B] Bibliothek wurde erfolgreich installiert"
+
+msgctxt "#30004"
+msgid "Error"
+msgstr "Fehler"
+
+msgctxt "#30005"
+msgid "An error occurred while installing [B]Widevine DRM[/B]. Please enable debug logging and file a bug report at:[CR][CR]github.com/emilsvennesson/script.module.inputstreamhelper"
+msgstr "Während der Installation der [B]Widevine DRM[/B] Bibliothek ist ein Fehler aufgetreten. Bitte debug logging aktivieren und den Fehler melden:[CR][CR]github.com/emilsvennesson/script.module.inputstreamhelper"
+
+msgctxt "#30006"
+msgid "Due to distributing issues, [B]Widevine DRM[/B] has to be extracted from a Chrome OS recovery image. This process requires at least [B]{0}[/B] of free disk space. Do you wish to continue?"
+msgstr "Durch lizenzrechtliche Reglementierungen der muss die [B]Widevine DRM[/B] Bibliotke aus einem Chrome OS image extrahiert werden. Dafür sind mindestens [B]{0}[/B] freier Festplattenspeicher notwendig. Soll der Vorgang fortgesetzt werden?"
+
+msgctxt "#30007"
+msgid "[B]Widevine DRM[/B] is unfortunately not available on this system architecture."
+msgstr "Die [B]Widevine DRM[/B] Bibliotke ist leider für diese System Architektur nicht verfügbar."
+
+msgctxt "#30008"
+msgid "[B]{0}[/B] is missing on your Kodi install. This add-on is required to play this content."
+msgstr "[B]{0}[/B] fehlt in der Kodi Installation. Das Add-on wird benötigt um den Inhalt wiederzugeben."
+
+msgctxt "#30009"
+msgid "[B]{0}[/B] is not enabled. This add-on is required to play this content.[CR][CR]Would you like to enable [B]{1}[/B]?"
+msgstr "[B]{0}[/B] ist nicht aktiviert. Das Add-on wird benötigt um den Inhalt wiederzugeben.[CR][CR]Soll [B]{1}[/B] aktiviert werden?"
+
+msgctxt "#30010"
+msgid "[B]Kodi {0}[/B] or higher is required for Widevine DRM content playback."
+msgstr "[B]Kodi in der Version {0}[/B] oder höher wird benötigt um Widevine DRM geschützte Inhalte wiederzugeben."
+
+msgctxt "#30011"
+msgid "This operating system ([B]{0}[/B]) is not supported by Widevine DRM."
+msgstr "Das genutzte Betriebssystem ([B]{0}[/B]) wird aktuell nicht von der Widevine DRM Bibliothek unterstützt"
+
+msgctxt "#30012"
+msgid "The Windows Store version of Kodi does not support [B]Widevine DRM[/B].[CR][CR]Please use the installer from kodi.tv instead."
+msgstr "Die Windows Store version von Kodi unterstützt die [B]Widevine DRM[/B] Bibliothek nicht.[CR][CR]Es wird empfohlen Kodi mit einem installer von kodi.tv zu installieren."
+
+msgctxt "#30013"
+msgid "Failed to retrieve [B]{0}[/B]."
+msgstr "Fehler beim laden von [B]{0}[/B]."
+
+msgctxt "#30014"
+msgid "Download in progress..."
+msgstr "Download aktiv..."
+
+msgctxt "#30015"
+msgid "Downloading [B]{0}[/B]..."
+msgstr "Download von [B]{0}[/B]..."
+
+msgctxt "#30016"
+msgid "Failed to extract [B]Widevine CDM[/B] from zip file."
+msgstr "Fehler beim entpacken der [B]Widevine CDM[/B] Bibliothek."
+
+msgctxt "#30017"
+msgid "[B]{0}[/B] {1} or later is required to play this content."
+msgstr "[B]{0}[/B] {1} oder höher ist notwendig um den Inhalt wiederzugeben."
+
+msgctxt "#30018"
+msgid "You do not have enough free disk space to install [B]Widevine CDM[/B]. Free up at least [B]{0}[/B] and try again."
+msgstr "Es ist nicht genug Festplattenspeicher zur Installation der [B]Widevine CDM[/B] Bibliothek vorhanden. Es müssen [B]{0}[/B] verfügbar gemacht werden um es erneut zu versuchen."
+
+msgctxt "#30019"
+msgid "This operating system ([B]{0}[/B]) is not supported by [B]Widevine DRM[/B] for ARM devices."
+msgstr "Das Betriebssystem ([B]{0}[/B]) wird auf ARM Systemarchitekturen nicht von der [B]Widevine DRM[/B] Bibliothek unterstützt."
+
+msgctxt "#30020"
+msgid "[B]'{0}'[/B] or [B]'{1}'[/B] command needs to exist on system to extract the [B]Widevine DRM[/B]."
+msgstr "Die Systembefehlehle [B]'{0}'[/B] oder [B]'{1}'[/B] müssen verfügbar sein um die [B]Widevine DRM[/B] Bibliothek zu extrahieren."
+
+msgctxt "#30021"
+msgid "[B]'{0}'[/B] command needs to exist on system to extract the [B]Widevine DRM[/B]."
+msgstr "Der Systembefehl [B]'{0}'[/B] muss verfügbar sein um die [B]Widevine DRM[/B] Bibliothek zu extrahieren."
+
+msgctxt "#30022"
+msgid "Downloading Chrome OS recovery image."
+msgstr "Download des Chrome OS recovery images."
+
+msgctxt "#30023"
+msgid "Download completed!"
+msgstr "Download erfolgreich abgeschlossen!"
+
+msgctxt "#30024"
+msgid "The installation now needs to unzip, mount and extract [B]Widevine DRM[/B] from the recovery image.[CR][CR]This process may take up to five minutes to complete."
+msgstr "Das Chrome OS recovery image wird nun extrahiert und gemounted um die [B]Widevine DRM[/B] zu extrahieren.[CR][CR]Dieser Prozess kann bis zu zehn Minuten dauern."
+
+msgctxt "#30025"
+msgid "Acquiring EULA."
+msgstr "Laden der EULA"
+
+msgctxt "#30026"
+msgid "Widevine DRM EULA"
+msgstr "Widevine DRM EULA"
+
+msgctxt "#30027"
+msgid "I accept"
+msgstr "Ich akzeptiere die Bedingungen"
+
+msgctxt "#30028"
+msgid "Cancel"
+msgstr "Abbrechen"
+
+msgctxt "#30029"
+msgid "OK"
+msgstr ""
+
+msgctxt "#30030"
+msgid "Administrative rights ([B]sudo[/B]) is required to mount the Chrome OS image. Press OK to grant the installation permission to run the mount command as [B]sudo[/B]."
+msgstr "Administratiren Rechte ([B]sudo[/B]) sind erforderlich um das Chrome OS Image zu mounten. Mit OK bestätigen sie, dass der mount befehl via [B]sudo[/B] ausgeführt werden darf."
