@@ -1,0 +1,134 @@
+# script.module.inputstreamhelper language file
+msgid ""
+msgstr ""
+"Project-Id-Version: script.module.inputstreamhelper\n"
+"Report-Msgid-Bugs-To: https://github.com/emilsvennesson/script.module.inputstreamhelper\n"
+"POT-Creation-Date: 2013-11-18 16:15+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: English\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+
+msgctxt "#30001"
+msgid "Information"
+msgstr ""
+
+msgctxt "#30002"
+msgid "You do not have [B]Widevine DRM[/B] installed. This is required to play this content.[CR][CR]Do you want to install [B]Widevine DRM[/B]?"
+msgstr ""
+
+msgctxt "#30003"
+msgid "[B]Widevine DRM[/B] was successfully installed!"
+msgstr ""
+
+msgctxt "#30004"
+msgid "Error"
+msgstr ""
+
+msgctxt "#30005"
+msgid "An error occurred while installing [B]Widevine DRM[/B]. Please enable debug logging and file a bug report at:[CR][CR]github.com/emilsvennesson/script.module.inputstreamhelper"
+msgstr ""
+
+msgctxt "#30006"
+msgid "Due to distributing issues, [B]Widevine DRM[/B] has to be extracted from a Chrome OS recovery image. This process requires at least [B]{0}[/B] of free disk space. Do you wish to continue?"
+msgstr ""
+
+msgctxt "#30007"
+msgid "[B]Widevine DRM[/B] is unfortunately not available on this system architecture."
+msgstr ""
+
+msgctxt "#30008"
+msgid "[B]{0}[/B] is missing on your Kodi install. This add-on is required to play this content."
+msgstr ""
+
+msgctxt "#30009"
+msgid "[B]{0}[/B] is not enabled. This add-on is required to play this content.[CR][CR]Would you like to enable [B]{1}[/B]?"
+msgstr ""
+
+msgctxt "#30010"
+msgid "[B]Kodi {0}[/B] or higher is required for Widevine DRM content playback."
+msgstr ""
+
+msgctxt "#30011"
+msgid "This operating system ([B]{0}[/B]) is not supported by Widevine DRM."
+msgstr ""
+
+msgctxt "#30012"
+msgid "The Windows Store version of Kodi does not support [B]Widevine DRM[/B].[CR][CR]Please use the installer from kodi.tv instead."
+msgstr ""
+
+msgctxt "#30013"
+msgid "Failed to retrieve [B]{0}[/B]."
+msgstr ""
+
+msgctxt "#30014"
+msgid "Download in progress..."
+msgstr ""
+
+msgctxt "#30015"
+msgid "Downloading [B]{0}[/B]..."
+msgstr ""
+
+msgctxt "#30016"
+msgid "Failed to extract [B]Widevine CDM[/B] from zip file."
+msgstr ""
+
+msgctxt "#30017"
+msgid "[B]{0}[/B] {1} or later is required to play this content."
+msgstr ""
+
+msgctxt "#30018"
+msgid "You do not have enough free disk space to install [B]Widevine CDM[/B]. Free up at least [B]{0}[/B] and try again."
+msgstr ""
+
+msgctxt "#30019"
+msgid "This operating system ([B]{0}[/B]) is not supported by [B]Widevine DRM[/B] for ARM devices."
+msgstr ""
+
+msgctxt "#30020"
+msgid "[B]'{0}'[/B] or [B]'{1}'[/B] command needs to exist on system to extract the [B]Widevine DRM[/B]."
+msgstr ""
+
+msgctxt "#30021"
+msgid "[B]'{0}'[/B] command needs to exist on system to extract the [B]Widevine DRM[/B]."
+msgstr ""
+
+msgctxt "#30022"
+msgid "Downloading Chrome OS recovery image."
+msgstr ""
+
+msgctxt "#30023"
+msgid "Download completed!"
+msgstr ""
+
+msgctxt "#30024"
+msgid "The installation now needs to unzip, mount and extract [B]Widevine DRM[/B] from the recovery image.[CR][CR]This process may take up to ten minutes to complete."
+msgstr ""
+
+msgctxt "#30025"
+msgid "Acquiring EULA."
+msgstr ""
+
+msgctxt "#30026"
+msgid "Widevine DRM EULA"
+msgstr ""
+
+msgctxt "#30027"
+msgid "I accept"
+msgstr ""
+
+msgctxt "#30028"
+msgid "Cancel"
+msgstr ""
+
+msgctxt "#30029"
+msgid "OK"
+msgstr ""
+
+msgctxt "#30030"
+msgid "Administrative rights ([B]sudo[/B]) is required to mount the Chrome OS image. Press OK to grant the installation permission to run the mount command as [B]sudo[/B]."
+msgstr ""
