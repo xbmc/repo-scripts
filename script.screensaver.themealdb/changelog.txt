@@ -1,0 +1,2 @@
+1.0.1 Improved category icons, fixed internal variable names, fixed favorites, new logo and banner artwork
+1.0.0 Initial Release
