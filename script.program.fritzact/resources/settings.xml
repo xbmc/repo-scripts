@@ -1,0 +1,10 @@
+<settings>
+    <setting id="fbServer" type="text" label="30000" default="fritz.box" />
+    <setting id="fbUsername" type="text" label="30001" />
+    <setting id="fbPasswd" type="text" option="hidden" label="30002" />
+    <setting type="sep" />
+    <setting id="fbTLS" type="bool" label="30003" default="false" />
+    <setting type="sep" />
+    <setting id="preferredAIN" type="action" label="30004" action="RunScript(script.program.fritzact,action=setpreferredain)" default="" />
+    <setting id="readonlyAIN" type="action" label="30005" action="RunScript(script.program.fritzact,action=setreadonlyain)" default="" />
+</settings>

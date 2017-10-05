@@ -1,0 +1,49 @@
+- 0.0.17
+  enhanced list view implemented
+  architecture changed from plugin to script
+
+- 0.0.16
+  Control IDs in widget for Krypton changed
+
+- 0.0.15
+  Changes for Krypton
+
+- 0.0.14
+  Preselection of actor types implemented. See Readme.md for details
+
+- 0.0.13
+  Bugfixes
+
+- 0.0.12
+  Implementation of group attribute as actor type
+
+- 0.0.11
+  Bugfixes
+
+- 0.0.10
+  Option to exclude devices from switching added
+
+- 0.0.9
+  Prevent exception if FritzBox is not available or a connection is not established
+
+- 0.0.8
+  Code structure redesign instead of temporary store of device list. Revert 0.0.7.
+  Interactive selection of preferred AIN over device name in settings.
+
+- 0.0.7
+  Temporary store of device list to avoid spam to the FritzBox
+
+- 0.0.6
+  Show the toggled states of actors in the actors list when an actor will be switched
+
+- 0.0.5
+  Actors list added, will be shown if a preferred AIN isn't set and more than one actor is present
+
+- 0.0.4
+  Preparations for implementation of 'Comet DECT' radiator thermostat
+
+- 0.0.3
+  Bugfixes
+
+- 0.0.1
+  initial commit

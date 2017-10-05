@@ -1,0 +1,142 @@
+# XBMC Media Center language file
+# Addon Name: Fritz Smart Home
+# Addon id: script.program.fritzact
+# Addon version: 0.0.17
+# Addon Provider: Birger Jesch
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC-Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: 2016-12-02 13:29+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: de\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+
+msgctxt "Addon Summary"
+msgid "Switching your home with Kodi"
+msgstr "Schalte Dein Zuhause mit Kodi"
+
+msgctxt "Addon Description"
+msgid "Use your Fritz!DECT switches within Kodi. Control light and switch your devices with FritzDECT actors. Find out about powered-on devices and their power consumption. Make yourself comfortable with a touch of your remote."
+msgstr "Schalte Deine Fritz!DECT Steckdosen mit Kodi. Steuere Licht und Deine Geräte über FritzDECT Schalter. Informiere Dich über eingeschaltete Geräte und deren Stromverbrauch. Mach' es Dir bequem - mit nur einem Klick auf der Fernbedienung."
+
+msgctxt "#30000"
+msgid "Fritzbox Name or IP"
+msgstr "Fritzbox Name oder IP"
+
+msgctxt "#30001"
+msgid "Fritzbox Username"
+msgstr "Fritzbox Nutzername"
+
+msgctxt "#30002"
+msgid "Fritzbox Password"
+msgstr "Fritzbox Passwort"
+
+msgctxt "#30003"
+msgid "Use TLS/HTTPS for Communication"
+msgstr "Benutze TLS/HTTPS zur Kommunikation"
+
+msgctxt "#30004"
+msgid "Preferred Switch (AIN)"
+msgstr "Bevorzugter Schalter (AIN)"
+
+msgctxt "#30005"
+msgid "Don't handle these AIN"
+msgstr "Diese AIN nicht schalten"
+
+msgctxt "#30006"
+msgid "<nothing>"
+msgstr "<keine>"
+
+msgctxt "#30010"
+msgid "Fritz!Box unreachable"
+msgstr "Fritz!Box nicht erreichbar"
+
+msgctxt "#30011"
+msgid "Could not log in"
+msgstr "Login fehlgeschlagen"
+
+msgctxt "#30012"
+msgid "Login blocked, wait %s seconds"
+msgstr "Login gesperrt, bitte %s sec warten"
+
+msgctxt "#30013"
+msgid "This device should not be switched"
+msgstr "Dieses Gerät darf nicht geschaltet werden"
+
+msgctxt "#30014"
+msgid "Action could not performed"
+msgstr "Aktion kann nicht ausgeführt werden"
+
+msgctxt "#30020"
+msgid "FritzDECT Switches"
+msgstr "FritzDECT Schalter"
+
+msgctxt "#30021"
+msgid "Name: "
+msgstr "Name: "
+
+msgctxt "#30022"
+msgid "State:"
+msgstr "Status:"
+
+msgctxt "#30023"
+msgid "Switch:"
+msgstr "Schaltzustand:"
+
+msgctxt "#30024"
+msgid "Temperature:"
+msgstr "Temperatur:"
+
+msgctxt "#30025"
+msgid "Power:"
+msgstr "Leistung:"
+
+msgctxt "#30026"
+msgid "Mode:"
+msgstr "Modus:"
+
+msgctxt "#30027"
+msgid "Consumption:"
+msgstr "Verbrauch:"
+
+msgctxt "#30029"
+msgid "Temperature set:"
+msgstr "Temperatur soll:"
+
+msgctxt "#30030"
+msgid "off"
+msgstr "aus"
+
+msgctxt "#30031"
+msgid "on"
+msgstr "an"
+
+msgctxt "#30032"
+msgid "offline"
+msgstr "offline"
+
+msgctxt "#30033"
+msgid "online"
+msgstr "verfügbar"
+
+msgctxt "#30034"
+msgid "readonly"
+msgstr "nicht schaltbar"
+
+msgctxt "#30035"
+msgid "%s Value Set:"
+msgstr "%s Sollwert:"
+
+msgctxt "#30040"
+msgid "switch off"
+msgstr "ausschalten"
+
+msgctxt "#30041"
+msgid "switch on"
+msgstr "einschalten"
