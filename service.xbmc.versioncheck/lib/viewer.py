@@ -28,7 +28,7 @@ import xbmcaddon
 ADDON        = xbmcaddon.Addon('service.xbmc.versioncheck')
 ADDONVERSION = ADDON.getAddonInfo('version')
 ADDONNAME    = ADDON.getAddonInfo('name')
-if sys.version_info.major >= 3:
+if sys.version_info[0] >= 3:
     ADDONPATH    = ADDON.getAddonInfo('path')
     ADDONPROFILE = xbmc.translatePath( ADDON.getAddonInfo('profile') )
 else:

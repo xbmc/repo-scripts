@@ -31,7 +31,7 @@ import json as jsoninterface
 def get_installedversion():
     # retrieve current installed version
     json_query = xbmc.executeJSONRPC('{ "jsonrpc": "2.0", "method": "Application.GetProperties", "params": {"properties": ["version", "name"]}, "id": 1 }')
-    if sys.version_info.major >= 3:
+    if sys.version_info[0] >= 3:
         json_query = str(json_query)
     else:
         json_query = unicode(json_query, 'utf-8', errors='ignore')
@@ -51,7 +51,7 @@ def get_versionfilelist():
         file = xbmcvfs.File(version_file)
     data = file.read()
     file.close()
-    if sys.version_info.major >= 3:
+    if sys.version_info[0] >= 3:
         version_query = str(data)
     else:
         version_query = unicode(data, 'utf-8', errors='ignore')
