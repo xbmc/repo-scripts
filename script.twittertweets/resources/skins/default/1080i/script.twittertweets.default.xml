@@ -83,10 +83,27 @@
                 <description></description>
                 <visible>Control.IsVisible(30100)</visible>
                 <aspectratio scalediffuse="true" align="center" aligny="center">keep</aspectratio>    
+            </control>    
+            <control type="image">
+                <left>-660</left> 
+                <top>0</top>  
+                <width>669</width> 
+                <height>407</height> 
+                <texture>attachment.png</texture>
+                <description></description>
+                <visible>Control.IsVisible(30112)</visible>
+                <aspectratio scalediffuse="true" align="center" aligny="center">keep</aspectratio>    
+            </control>    
+            <control type="image" id="30112">
+                <left>-613</left> 
+                <top>40</top>  
+                <width>600</width> 
+                <height>300</height> 
+                <aspectratio scalediffuse="true" align="center" aligny="center">scale</aspectratio>    
             </control>
             <control type="label" id="30105">
                 <left>110</left> 
-                <top>25</top>  
+                <top>25</top>
                 <width>559</width>
                 <label></label>
                 <font>font12</font>
@@ -94,6 +111,12 @@
                 <visible>Control.IsVisible(30100)</visible>
                 <aspectratio scalediffuse="true" align="left" aligny="center">keep</aspectratio> 
                 <textcolor>FF000000</textcolor>
+            </control>
+            <control type="image" id="30113">
+                <width>30</width> 
+                <height>30</height> 
+                <texture>verified.png</texture>
+                <aspectratio scalediffuse="true" align="center" aligny="center">keep</aspectratio>
             </control>
             <control type="label" id="30106">
                 <left>110</left> 
@@ -105,7 +128,7 @@
                 <visible>Control.IsVisible(30100)</visible>
                 <aspectratio scalediffuse="true" align="left" aligny="center">keep</aspectratio> 
                 <textcolor>FF657786</textcolor>
-          </control>
+            </control>
             <control type="textbox" id="30107">
                 <left>37</left> 
                 <top>100</top>   
