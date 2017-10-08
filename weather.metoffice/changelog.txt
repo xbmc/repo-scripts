@@ -14,3 +14,7 @@ v2.0.0
 - updated for Krypton.
 - Fetch observation, daily and three hourly by default.
 - Update addon icons.
+
+v2.0.1
+- added sunrise sunset
+- added user agent to requests

@@ -72,7 +72,8 @@ class URLCache(object):
         except (KeyError, InvalidCacheError):
             #(src, headers) = urllib.urlretrieve(url)
             try:
-                response = urllib2.urlopen(url)
+                req = urllib2.Request(url, None, {'User-Agent' : 'Mozilla/5.0'})
+                response = urllib2.urlopen(req)
             except (socket.timeout, urllib2.URLError) as e:
                 e.args = (str(e), url)
                 raise

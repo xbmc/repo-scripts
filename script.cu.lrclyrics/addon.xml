@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.cu.lrclyrics" name="CU LRC Lyrics" version="5.4.2" provider-name="Taxigps, ronie">
+<addon id="script.cu.lrclyrics" name="CU LRC Lyrics" version="5.4.4" provider-name="Taxigps, ronie">
 	<requires>
 		<import addon="xbmc.python" version="2.25.0"/>
 		<import addon="script.module.chardet" version="2.2.1"/>
@@ -37,7 +37,7 @@
 		<summary lang="sk">CU LRC Lyrics</summary>
 		<summary lang="sl">CU LRC Lyrics</summary>
 		<summary lang="sv">CU LRC Lyrics</summary>
-		<summary lang="zh_CN">CU LRC 歌词</summary>
+		<summary lang="zh_CN">CU LRC Lyrics 歌词插件</summary>
 		<summary lang="zh_TW">CU LRC Lyrics 歌詞腳本</summary>
 		<description lang="be">CU LRC Lyrics is a lyrics script for Kodi. It supports regular as well as LRC Lyrics. The script can search synchronized/unsynchronized lyrics embedded, from file or by scrapers. It can read .lrc/.txt lyrics file saved at the same path by same file name with .mp3(or other type of music).</description>
 		<description lang="bg">CU LRC Лирики е добавка за лирики. Поддържа обикновени текстови файлове и .lrc файлове. Може да търси за синхронизирани/несинхронизирани лирики вградени в аудиофайловете или да ги извлича от различни източници. Може да прочита .lrc и .txt файлове съхраняващи лирики, които се намират в папката на дадения аудио файл (с разширение .mp3 например) и носят неговото име.</description>

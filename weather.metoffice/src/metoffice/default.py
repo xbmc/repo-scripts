@@ -36,6 +36,7 @@ def main():
     properties.observation()
     properties.daily()
     properties.threehourly()
+    properties.sunrisesunset()
 
     WINDOW.setProperty('WeatherProvider', ADDON.getAddonInfo('name'))#@UndefinedVariable
     WINDOW.setProperty('WeatherProviderLogo', ADDON_BANNER_PATH)#@UndefinedVariable
@@ -51,8 +52,6 @@ def main():
     WINDOW.setProperty('36Hour.IsFetched', '')#@UndefinedVariable
     WINDOW.setProperty('Weekend.IsFetched', '')#@UndefinedVariable
     WINDOW.setProperty('Map.IsFetched', '')#@UndefinedVariable
-    WINDOW.setProperty('Today.Sunrise', '')#@UndefinedVariable
-    WINDOW.setProperty('Today.Sunset', '')#@UndefinedVariable
     WINDOW.setProperty('Weather.CurrentView', '')#@UndefinedVariable
 
 if __name__ == '__main__':

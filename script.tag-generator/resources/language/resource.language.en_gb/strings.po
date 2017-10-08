@@ -1,0 +1,517 @@
+# Kodi Media Center language file
+# Addon Name: Tag Generator
+# Addon id: script.tag-generator
+# Addon Provider: wellspokenman
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: .\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: ."
+"Language-Team: .\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en_US\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#30000"
+msgid "Error"
+msgstr "Error"
+
+msgctxt "#30001"
+msgid " unreachable. Check network and retry."
+msgstr " unreachable. Check network and retry."
+
+msgctxt "#30002"
+msgid "TAG-GEN: Starting as a service."
+msgstr "TAG-GEN: Starting as a service."
+
+msgctxt "#30003"
+msgid "TAG-GEN: Cancel received from Kodi dialog, exiting."
+msgstr "TAG-GEN: Cancel received from Kodi dialog, exiting."
+
+msgctxt "#30004"
+msgid "Operation cancelled."
+msgstr "Operation cancelled."
+
+msgctxt "#30005"
+msgid "Writing blank tags for "
+msgstr "Writing blank tags for "
+
+msgctxt "#30006"
+msgid " movies"
+msgstr " movies"
+
+msgctxt "#30007"
+msgid "Alrighty then..."
+msgstr "Alrighty then..."
+
+msgctxt "#30008"
+msgid "Reading your Kodi DB..."
+msgstr "Reading your Kodi DB..."
+
+msgctxt "#30009"
+msgid "Checking for custom Trakt lists..."
+msgstr "Checking for custom Trakt lists..."
+
+msgctxt "#30010"
+msgid "Reading custom Trakt list: "
+msgstr "Reading custom Trakt list: "
+
+msgctxt "#30011"
+msgid "TAG-GEN: Reading custom Trakt Movie list: "
+msgstr "TAG-GEN: Reading custom Trakt Movie list: "
+
+msgctxt "#30012"
+msgid "TAG-GEN: Found Trakt movie "
+msgstr "TAG-GEN: Found Trakt movie "
+
+msgctxt "#30013"
+msgid "Reading your Trakt movie watchlist..."
+msgstr "Reading your Trakt movie watchlist..."
+
+msgctxt "#30014"
+msgid "TAG-GEN: Found Trakt movie "
+msgstr "TAG-GEN: Found Trakt movie "
+
+msgctxt "#30015"
+msgid " in Trakt list: "
+msgstr " in Trakt List: "
+
+msgctxt "#30016"
+msgid "Scanning for local matches to Trakt movie watchlists."
+msgstr "Scanning for local matches to Trakt movie watchlists."
+
+msgctxt "#30017"
+msgid "Writing tag '"
+msgstr "Writing tag '"
+
+msgctxt "#30018"
+msgid "' to "
+msgstr "' to "
+
+msgctxt "#30019"
+msgid "TAG-GEN: Writing tag: " 
+msgstr "TAG-GEN: Writing tag: " 
+
+msgctxt "#30020"
+msgid " to Trakt movie: "
+msgstr " to Trakt movie: "
+
+msgctxt "#30021"
+msgid "TAG-GEN: Not writing tag: " 
+msgstr "TAG-GEN: Not writing tag: " 
+
+msgctxt "#30022"
+msgid " to movie: " 
+msgstr " to movie: " 
+
+msgctxt "#30023"
+msgid " with existing tag: "
+msgstr " with existing tag: "
+
+msgctxt "#30024"
+msgid "Evaluated "
+msgstr "Evaluated "
+
+msgctxt "#30025"
+msgid " movies"
+msgstr " movies"
+
+msgctxt "#30026"
+msgid "Scraping IMDB for IDs..."
+msgstr "Scraping IMDB for IDs..."
+
+msgctxt "#30027"
+msgid "TAG-GEN: Found these IMDB tags on "
+msgstr "TAG-GEN: Found these IMDB tags on "
+
+msgctxt "#30028"
+msgid "'s watchlist: "
+msgstr "'s watchlist: "
+
+msgctxt "#30029"
+msgid " contains no IMDB IDs. Check URL and retry."
+msgstr " contains no IMDB IDs. Check URL and retry."
+
+msgctxt "#30030"
+msgid "Scanning for local matches to "
+msgstr "Scanning for local matches to "
+
+msgctxt "#30031"
+msgid "'s IMDB watchlist."
+msgstr "'s IMDB watchlist."
+
+msgctxt "#30032"
+msgid "TAG-GEN: Writing tag: "
+msgstr "TAG-GEN: Writing tag: "
+
+msgctxt "#30033" 
+msgid " to IMDB movie: "
+msgstr " to IMDB movie: "
+
+msgctxt "#30034"
+msgid " from "
+msgstr " from "
+
+msgctxt "#30035"
+msgid "'s IMDB list"
+msgstr "'s IMDB list"
+
+msgctxt "#30036"
+msgid "Writing tag '"
+msgstr "Writing tag '"
+
+msgctxt "#30037"
+msgid "' to "
+msgstr "' to "
+
+msgctxt "#30038"
+msgid " movies."
+msgstr " movies."
+
+msgctxt "#30039"
+msgid "TAG-GEN: Not writing tag: "
+msgstr "TAG-GEN: Not writing tag: "
+
+msgctxt "#30040" 
+msgid " to movie: " 
+msgstr " to movie: " 
+
+msgctxt "#30041"
+msgid " with existing tag: "
+msgstr " with existing tag: "
+
+msgctxt "#30042"
+msgid " from "
+msgstr " from "
+
+msgctxt "#30043"
+msgid "'s IMDB watchlist."
+msgstr "'s IMDB watchlist."
+
+msgctxt "#30044"
+msgid "Evaluated "
+msgstr "Evaluated "
+
+msgctxt "#30045"
+msgid " movies"
+msgstr " movies"
+
+msgctxt "#30046"
+msgid "Scraping Wikipedia for comedian names..."
+msgstr "Scraping Wikipedia for comedian names..."
+
+msgctxt "#30047"
+msgid "TAG-GEN: Found comedian: "
+msgstr "TAG-GEN: Found comedian: "
+
+msgctxt "#30048"
+msgid " in Wiki URL: "
+msgstr " in Wiki URL: "
+
+msgctxt "#30049"
+msgid " contains no comedians. Check URL and retry."
+msgstr " contains no comedians. Check URL and retry."
+
+msgctxt "#30050"
+msgid "Scanning for local matches to Wikipedia comedians..."
+msgstr "Scanning for local matches to Wikipedia comedians..."
+
+msgctxt "#30051"
+msgid "TAG-GEN: Match found for comedian: " 
+msgstr "TAG-GEN: Match found for comedian: " 
+
+msgctxt "#30052"
+msgid " in feature: "
+msgstr " in feature: "
+
+msgctxt "#30053"
+msgid " from Wikipedia comedians."
+msgstr " from Wikipedia comedians."
+
+msgctxt "#30054"
+msgid "Writing tag '"
+msgstr "Writing tag '"
+
+msgctxt "#30055" 
+msgid "' to "
+msgstr "' to "
+
+msgctxt "#30056"
+msgid " stand-up features."
+msgstr " stand-up features."
+
+msgctxt "#30057"
+msgid "Evaluated "
+msgstr "Evaluated "
+
+msgctxt "#30058"
+msgid " well known comedians."
+msgstr " well known comedians."
+
+msgctxt "#30059"
+msgid "TAG-GEN: No match found for comedian: "
+msgstr "TAG-GEN: No match found for comedian: "
+
+msgctxt "#30060"
+msgid " in feature: "
+msgstr " in feature: "
+
+msgctxt "#30061"
+msgid " with existing tag: "
+msgstr " with existing tag: "
+
+msgctxt "#30062"
+msgid "TAG-GEN: Manual run not detected and runasservice not selected, exiting."
+msgstr "TAG-GEN: Manual run not detected and runasservice not selected, exiting."
+
+msgctxt "#30063"
+msgid "TAG-GEN: Starting scraped tag generation."
+msgstr "TAG-GEN: Starting scraped tag generation."
+
+msgctxt "#30064"
+msgid "Initialising..."
+msgstr "Initialising..."
+
+msgctxt "#30065"
+msgid "Do you really want to wipe out all your local Kodi tags?"
+msgstr "Do you really want to wipe out all your local Kodi tags?"
+
+msgctxt "#30066"
+msgid "Really Really REALLY?"
+msgstr "Really Really REALLY?"
+
+msgctxt "#30067"
+msgid "Alrighty then..."
+msgstr "Alrighty then..."
+
+msgctxt "#30068"
+msgid "TAG-GEN: Wiping all your Kodi tags..."
+msgstr "TAG-GEN: Wiping all your Kodi tags..."
+
+msgctxt "#30069"
+msgid "TAG-GEN: Manual tag deletion arg received, but not confirmed so exiting."
+msgstr "TAG-GEN: Manual tag deletion arg received, but not confirmed so exiting."
+
+msgctxt "#30070"
+msgid "TAG-GEN: Starting Trakt writing."
+msgstr "TAG-GEN: Starting Trakt writing."
+
+msgctxt "#30071"
+msgid "TAG-GEN: No custom Trakt lists found."
+msgstr "TAG-GEN: No custom Trakt lists found."
+
+msgctxt "#30072"
+msgid "TAG-GEN: Manual Trakt arg received, exiting after execution."
+msgstr "TAG-GEN: Manual Trakt arg received, exiting after execution."
+
+msgctxt "#30073"
+msgid "TAG-GEN: Starting stand-up tag writing."
+msgstr "TAG-GEN: Starting stand-up tag writing."
+
+msgctxt "#30074"
+msgid "TAG-GEN: Starting IMDB tag writing."
+msgstr "TAG-GEN: Starting IMDB tag writing."
+
+msgctxt "#30075"
+msgid "TAG-GEN: Manual Stand-Up arg received, exiting after execution."
+msgstr "TAG-GEN: Manual Stand-Up arg received, exiting after execution."
+
+msgctxt "#30076"
+msgid "TAG-GEN: Manual IMDB arg received, exiting after execution."
+msgstr "TAG-GEN: Manual IMDB arg received, exiting after execution."
+
+msgctxt "#30077"
+msgid "TAG-GEN: No valid arguments supplied."
+msgstr "TAG-GEN: No valid arguments supplied."
+
+msgctxt "#30078"
+msgid "TAG-GEN: Skipping IMDB tag writing."
+msgstr "TAG-GEN: Skipping IMDB tag writing."
+
+msgctxt "#30079"
+msgid "TAG-GEN: Skipping stand-up tag writing."
+msgstr "TAG-GEN: Skipping stand-up tag writing."
+
+msgctxt "#30080"
+msgid "TAG-GEN: Skipping Trakt tag writing."
+msgstr "TAG-GEN: Skipping Trakt tag writing."
+
+msgctxt "#30081"
+msgid "Tagging complete for "
+msgstr "Tagging complete for "
+
+msgctxt "#30082"
+msgid " movies and "
+msgstr " movies and "
+
+msgctxt "#30083"
+msgid " stand-up features."
+msgstr " stand-up features."
+
+msgctxt "#30084"
+msgid "TAG-GEN: Manual arg received, exiting after single execution."
+msgstr "TAG-GEN: Manual arg received, exiting after single execution."
+
+msgctxt "#30085"
+msgid "Wrote blank tags to "
+msgstr "Wrote blank tags to "
+
+msgctxt "#30086"
+msgid " movies."
+msgstr " movies."
+
+msgctxt "#30087"
+msgid "TAG-GEN: Wipeout arg received, exiting after single execution."
+msgstr "TAG-GEN: Wipeout arg received, exiting after single execution."
+
+msgctxt "#30088"
+msgid "TAG-GEN: sleeping for "
+msgstr "TAG-GEN: sleeping for "
+
+msgctxt "#30089"
+msgid " hours"
+msgstr " hours"
+
+msgctxt "#30090"
+msgid "TAG-GEN: Fetching custom Trakt Movie lists from "
+msgstr "TAG-GEN: Fetching custom Trakt Movie lists from "
+
+msgctxt "#30091"
+msgid "Found list "
+msgstr "Found list "
+
+msgctxt "#30092"
+msgid " with slug " 
+msgstr " with slug " 
+
+msgctxt "#30093"
+msgid "Finished wiping tags." 
+msgstr "Finished wiping tags."
+
+msgctxt "#30900"
+msgid "Settings"
+msgstr "Settings"
+
+msgctxt "#30901"
+msgid "Run as a service"
+msgstr "Run as a service"
+
+msgctxt "#30902"
+msgid "Refresh Interval (hours)"
+msgstr "Refresh Interval (hours)"
+
+msgctxt "#30903"
+msgid "Set this tag in Kodi:"
+msgstr "Set this tag in Kodi:"
+
+msgctxt "#30904"
+msgid "Stand-up Comedy"
+msgstr "Stand-up Comedy"
+
+msgctxt "#30905"
+msgid "Number of URLs"
+msgstr "Number of URLs"
+
+msgctxt "#30906"
+msgid "IMDB Watchlist URL (rss)"
+msgstr "IMDB Watchlist URL (rss)"
+
+msgctxt "#30907"
+msgid "http://rss.imdb.com/user/ur12345678/watchlist"
+msgstr "http://rss.imdb.com/user/ur12345678/watchlist"
+
+msgctxt "#30908"
+msgid "Mary J"
+msgstr "Mary J"
+
+msgctxt "#30909"
+msgid "Rottencrotch"
+msgstr "Rottencrotch"
+
+msgctxt "#30910"
+msgid "Purty"
+msgstr "Purty"
+
+msgctxt "#30911"
+msgid "Pink"
+msgstr "Pink"
+
+msgctxt "#30912"
+msgid "Panties"
+msgstr "Panties"
+
+msgctxt "#30913"
+msgid "Write IMDB Tags"
+msgstr "Write IMDB Tags"
+
+msgctxt "#30914"
+msgid "Write Stand-Up Tags"
+msgstr "Write Stand-Up Tags"
+
+msgctxt "#30915"
+msgid "Write All Tags"
+msgstr "Write All Tags"
+
+msgctxt "#30916"
+msgid "Delete All Tags"
+msgstr "Delete All Tags"
+
+msgctxt "#30917"
+msgid "Request Token"
+msgstr "Request Token"
+
+msgctxt "#30918"
+msgid "Trakt Token"
+msgstr "Trakt Token"
+
+msgctxt "#30919"
+msgid "-please request token-"
+msgstr "-please request token-"
+
+msgctxt "#30920"
+msgid "Write Trakt Tags"
+msgstr "Write Trakt Tags"
+
+msgctxt "#30921"
+msgid "Number of Lists"
+msgstr "Number of Lists"
+
+msgctxt "#30922"
+msgid "Trakt List Name"
+msgstr "Trakt List Name"
+
+msgctxt "#30923"
+msgid "Please visit the following URL to generate your Trakt PIN, then press OK: \n https://trakt.tv/pin/12265"
+msgstr "Please visit the following URL to generate your Trakt PIN, then press OK: \n https://trakt.tv/pin/12265"
+
+msgctxt "#30924"
+msgid "Enter PIN"
+msgstr "Enter PIN"
+
+msgctxt "#30925"
+msgid "Error: Unable to retrieve Trakt oauth token."
+msgstr "Error: Unable to retrieve Trakt oauth token."
+
+msgctxt "#30926"
+msgid "Success: please exit then enter Tag Generator configuration."
+msgstr "Success: please exit then enter Tag Generator configuration."
+
+msgctxt "#30927"
+msgid "TAG-GEN: Manual Trakt Init arg received, exiting after execution."
+msgstr "TAG-GEN: Manual Trakt Init arg received, exiting after execution."
+
+msgctxt "#30928"
+msgid "Error: Could not retrieve movies from Trakt API."
+msgstr "Error: Could not retrieve movies from Trakt API."
+
+msgctxt "#30929"
+msgid "Trakt Username"
+msgstr "Trakt Username"
+
+msgctxt "#30930"
+msgid " movies"
+msgstr " movies"
