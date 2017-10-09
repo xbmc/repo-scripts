@@ -186,7 +186,7 @@ class Controller(object):
 		if '?' in url:  sign = '&'
 		else: 
 			if show_title == '':
-				dialog.ok(LANG(30001),  LANG(30008))
+				dialog.ok(LANG(32001),  LANG(32008))
 				return
 		if len(url) > 3:
 		
@@ -194,7 +194,7 @@ class Controller(object):
 			if rtr is None: return
 
 			if 'search' in url and show_title is not None: 
-				rtr['title_prev'] = LANG(30009)+ show_title
+				rtr['title_prev'] = LANG(32009)+ show_title
 			if rtr is None: return
 			if url == 'menu/program_v2':
 				new_program = Program(rtr)
@@ -205,7 +205,7 @@ class Controller(object):
 			if 'menu' not in rtr:
 				tracking_key =''
 				if 'key' not in rtr:
-					dialog.ok(LANG(30003), rtr['msg'])
+					dialog.ok(LANG(32003), rtr['msg'])
 					return
 				else:
 					title=''
@@ -215,7 +215,7 @@ class Controller(object):
 						for key,val in enumerate(rtr['quality_urls']):
 							items.append(val['title'])
 
-						ret = dialog.select(LANG(30006), items)
+						ret = dialog.select(LANG(32006), items)
 						if ret < 0:
 							_self.close()
 							return
@@ -276,12 +276,13 @@ class Controller(object):
 			items=[]
 			menulist = data['menu']
 			if not menulist:
-				dialog.ok(LANG(30003), LANG(30004))
+				dialog.ok(LANG(32003), LANG(32004))
 			if menulist: 
 
 				for (key, val) in enumerate(menulist):
 					label = val['title'].encode('utf-8')
 					if val['key'] == 'menu/home': continue
+
 					items.append({
 						'title': label,
 						'key': u"{0}".format(key),
@@ -290,13 +291,13 @@ class Controller(object):
 
 			return items
 
-	def getListData(self, url, send=None):
+	def getListData(self, url, send=None, is_menu=None):
 
 		if(not ADDON.getSetting('username')) or (not ADDON.getSetting('password')):
-			dialog.ok(LANG(30003), LANG(30005))
+			dialog.ok(LANG(32003), LANG(32005))
 		cached = CACHE.get(str(url+'_'+ADDON.getSetting('username')+'_'+ADDON.getSetting('password')))
 		
-		if cached is not None:
+		if cached is not None and is_menu is None:
 			return cached
 		else:
 			signin = login( 
@@ -344,7 +345,7 @@ class Controller(object):
 					'stream_started': str_time,
 					'current_time'	: num(player.getTime()),
 				}
-				if counter == 120:
+				if counter == 90:
 					counter = 0
 					player.reportPlaybackProgress(player.info, 'progress')
 
@@ -396,24 +397,40 @@ class Player(xbmc.Player):
 	def onPlayBackStopped(self):
 
 		if self.info is not None:
-			pass
 			self.reportPlaybackProgress(self.info, 'stop')
+			
 		self.is_playing = False
 
 	def onPlayBackSeek(self, time, seekOffset):
 		pass
-		
-	def reportPlaybackProgress(self, info, action):
 
+	def getToken(self):
+			if os.path.isfile(TOKEN_FILEPATH):
+				fopen = open(TOKEN_FILEPATH, "r")
+				temp_token = fopen.read()
+				fopen.close()
+				if temp_token:
+					arr = temp_token.partition(" ")
+					token = arr[0]
+					if arr[2] and arr[2] != ADDON.getSetting('username'):
+						token = '';
+					temp_token = ''
+		
+			if not token: return
+			return token
+
+	def reportPlaybackProgress(self, info, action):
+		token = self.getToken()
 		if info is None: return
 		if self.tracking_key is not None:
-			res = controller.getListData('tracking/report_playback/',
-				{	'key'			: self.tracking_key,
+			data ={	'token'			: token,
+					'key'			: self.tracking_key,
 					'stream_started': str(num(info['stream_started'])),
 					'current_time'	: str(num(info['current_time'])),
 					'action'		: action,
-				})
-
+				}
+			send = urllib.urlencode(data)
+			request = urllib2.Request(SITE_PATH +'tracking/report_playback', send, headers={"User-Agent" :  xbmc.getUserAgent()+ " BGTimeTV Addon " + str(VERSION)})
 
 
 ##########################################################################################
@@ -460,11 +477,11 @@ class login:
 
 		except HTTPError, e:
 			dialog = xbmcgui.Dialog()
-			dialog.ok(LANG(30003), e.code)
+			dialog.ok(LANG(32003), e.code)
 			return
 		except urllib2.URLError, e:
    			dialog = xbmcgui.Dialog()
-			dialog.ok(LANG(30003), LANG(30007))
+			dialog.ok(LANG(32003), LANG(32007))
 			return
 		
 		data_result = response.read()
@@ -479,7 +496,10 @@ class login:
 			return res['token']
 		
 		if 'status' in res:
-			if res['login'] == 'yes':
+			if res['status'] == 'ok':
+				return
+				
+			if 'login' in res and res['login'] == 'yes':
 	
 				if self.login_iteration > 0:
 					self.login_iteration = 0
@@ -495,14 +515,15 @@ class login:
 			else:
 				dialog = xbmcgui.Dialog()
 				if 'status' in res and res['status'] == 204:
-					dialog.ok(LANG(30003), res['msg'].encode('utf-8'))
+					dialog.ok(LANG(32003), res['msg'].encode('utf-8'))
 					return
 				if 'subscription_required' in res and res['subscription_required'] == True:
-					dialog.ok(LANG(30003), res['msg'].encode('utf-8'))
+					dialog.ok(LANG(32003), res['msg'].encode('utf-8'))
 					return
 				if 'search' in url:
-					dialog.ok(LANG(30003), res['msg'].encode('utf-8'))
+					dialog.ok(LANG(32003), res['msg'].encode('utf-8'))
 					return
+				dialog.ok(LANG(32003), res['msg'].encode('utf-8'))
 				ADDON.openSettings(ID)
 
 				return
@@ -623,7 +644,7 @@ class List(xbmcgui.WindowXML):
 	def updateList(self, list_items):
 		self.is_menu = False
 		if not list_items:
-			data = controller.getListData(url=str(BASE_URL+'?'+EPG_MENU))
+			data = controller.getListData(url=str(BASE_URL+'?'+EPG_MENU), is_menu=True)
 
 			if data is None: self.close()
 			list_items = controller.createMenuList(data)
@@ -659,12 +680,11 @@ class ThumbView(xbmcgui.WindowXML):
 	C_LIST 		= 6002
 	TEXT_Y		= 50
 	BOX_X		= 236
-	BOX_Y		= 160
+	BOX_Y		= 180
 	COLS 		= 0
 	ROWS 		= 0
 	TITLE_Y		= 40
 	DESC_Y		= 0
-	BOX_X_LT	= 180
 
 	def __new__(cls,data, url):
 		return super(ThumbView, cls).__new__(cls, 'script-video-bgtime-tv-thumb-view.xml', ADDONPATH)
@@ -698,10 +718,10 @@ class ThumbView(xbmcgui.WindowXML):
 			self.BOX_X, self.BOX_Y = (190, 236+self.TEXT_Y)
 
 		if 'livetv_alternative' in url:	
-			self.BOX_X, self.BOX_Y = self.BOX_X_LT, self.BOX_X_LT
+			self.BOX_X = self.BOX_Y;
 
 			if len(data['title_prev']) <=2:
-				data['title_prev'] 	= LANG(30012)+' '+ data['title_prev']+ LANG(30013)
+				data['title_prev'] 	= LANG(32010)+' '+ data['title_prev']+ LANG(32011)
 
 		if 'title_prev' in data:
 			control = self.getControl(self.C_TITLE)
@@ -830,7 +850,7 @@ class ThumbView(xbmcgui.WindowXML):
 		if controlId == FILTER:
 
 			filters = self.getFilters()
-			select 	= dialog.select(LANG(30006), filters)
+			select 	= dialog.select(LANG(32006), filters)
 			if select < 0: return
 
 			
@@ -1492,7 +1512,7 @@ class Program(xbmcgui.WindowXML):
 	def onClick(self, controlId):
 		if controlId == self.CONTAINER_PROG_DATE:
 			dates = self.getProgramDates()
-			select = dialog.select(LANG(30006), dates)
+			select = dialog.select(LANG(32006), dates)
 
 			if select or select is 0:
 				if select < 0: return
@@ -1565,9 +1585,9 @@ class Program(xbmcgui.WindowXML):
 
 
 	def translateMonth(self, _int):
-		monthsDict = [ 	LANG(30015), LANG(30016), LANG(30017), LANG(30018), 
-						LANG(30019), LANG(30020), LANG(30021), LANG(30022), 
-						LANG(30023), LANG(30024), LANG(30025), LANG(30026)]
+		monthsDict = [ 	LANG(32013), LANG(32014), LANG(32015), LANG(32016), 
+						LANG(32017), LANG(32018), LANG(32019), LANG(32020), 
+						LANG(32021), LANG(32022), LANG(32023), LANG(32024)]
 		if monthsDict[_int] is not None:return monthsDict[_int]
 		else: return _int
 
