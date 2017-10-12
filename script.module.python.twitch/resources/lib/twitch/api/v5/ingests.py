@@ -8,5 +8,5 @@ from twitch.queries import query
 # required scope: none
 @query
 def ingests():
-    q = Qry('ingests')
+    q = Qry('ingests', use_token=False)
     return q

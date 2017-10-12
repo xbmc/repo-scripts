@@ -10,7 +10,7 @@ from twitch.queries import query
 # required scope: None
 @query
 def by_slug(slug):
-    q = Qry('clips/{slug}')
+    q = Qry('clips/{slug}', use_token=False)
     q.add_urlkw(keys.SLUG, slug)
     return q
 
@@ -19,7 +19,7 @@ def by_slug(slug):
 @query
 def get_top(channels=None, games=None, period=ClipPeriod.WEEK, trending=Boolean.FALSE,
             language=Language.ALL, cursor='MA==', limit=10):
-    q = Qry('clips/top')
+    q = Qry('clips/top', use_token=False)
     q.add_param(keys.CHANNEL, channels, None)
     q.add_param(keys.GAME, games, None)
     q.add_param(keys.PERIOD, ClipPeriod.validate(period), ClipPeriod.WEEK)

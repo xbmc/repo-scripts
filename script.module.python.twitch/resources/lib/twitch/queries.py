@@ -105,18 +105,18 @@ class JsonQuery(_Query):
 
 
 class ApiQuery(JsonQuery):
-    def __init__(self, path, headers={}, data={}, method=methods.GET):
+    def __init__(self, path, headers={}, data={}, use_token=True, method=methods.GET):
         headers.setdefault('Client-ID', CLIENT_ID)
-        if OAUTH_TOKEN:
+        if use_token and OAUTH_TOKEN:
             headers.setdefault('Authorization', 'OAuth {access_token}'.format(access_token=OAUTH_TOKEN))
         super(ApiQuery, self).__init__(_kraken_baseurl, headers, data, method)
         self.add_path(path)
 
 
 class HiddenApiQuery(JsonQuery):
-    def __init__(self, path, headers={}, data={}, method=methods.GET):
+    def __init__(self, path, headers={}, data={}, use_token=True, method=methods.GET):
         headers.setdefault('Client-ID', CLIENT_ID)
-        if OAUTH_TOKEN:
+        if use_token and OAUTH_TOKEN:
             headers.setdefault('Authorization', 'OAuth {access_token}'.format(access_token=OAUTH_TOKEN))
         super(HiddenApiQuery, self).__init__(_hidden_baseurl, headers, data, method)
         self.add_path(path)
@@ -144,8 +144,8 @@ class UploadsQuery(DownloadQuery):
 
 
 class V5Query(ApiQuery):
-    def __init__(self, path, method=methods.GET):
-        super(V5Query, self).__init__(path, _v5_headers, method=method)
+    def __init__(self, path, use_token=True, method=methods.GET):
+        super(V5Query, self).__init__(path, _v5_headers, use_token=use_token, method=method)
 
 
 def assert_new(d, k):
