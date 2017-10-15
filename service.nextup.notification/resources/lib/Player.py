@@ -98,19 +98,19 @@ class Player(xbmc.Player):
         WINDOW = xbmcgui.Window(10000)
         WINDOW.clearProperty("NextUpNotification.NowPlaying.DBID")
         WINDOW.clearProperty("NextUpNotification.NowPlaying.Type")
-
         # Get the active player
         result = self.getNowPlaying()
         if 'result' in result:
             itemtype = result["result"]["item"]["type"]
-            itemtitle = result["result"]["item"]["showtitle"]
             if itemtype == "episode":
+                itemtitle = result["result"]["item"]["showtitle"]
                 WINDOW.setProperty("NextUpNotification.NowPlaying.Type", itemtype)
                 tvshowid = result["result"]["item"]["tvshowid"]
                 WINDOW.setProperty("NextUpNotification.NowPlaying.DBID", str(tvshowid))
                 if int(tvshowid) == -1:
                     tvshowid = self.showtitle_to_id(title=itemtitle)
                     self.logMsg("Fetched missing tvshowid " + str(tvshowid), 2)
+                    WINDOW.setProperty("NextUpNotification.NowPlaying.DBID", str(tvshowid))
             elif itemtype == "movie":
                 WINDOW.setProperty("NextUpNotification.NowPlaying.Type", itemtype)
                 id = result["result"]["item"]["id"]
