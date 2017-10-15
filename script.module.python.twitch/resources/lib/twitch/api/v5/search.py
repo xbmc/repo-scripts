@@ -10,7 +10,7 @@ from twitch.queries import query
 # required scope: none
 @query
 def channels(search_query, limit=25, offset=0):
-    q = Qry('search/channels')
+    q = Qry('search/channels', use_token=False)
     q.add_param(keys.QUERY, search_query)
     q.add_param(keys.LIMIT, limit, 25)
     q.add_param(keys.OFFSET, offset, 0)
@@ -20,7 +20,7 @@ def channels(search_query, limit=25, offset=0):
 # required scope: none
 @query
 def games(search_query, live=Boolean.FALSE):
-    q = Qry('search/games')
+    q = Qry('search/games', use_token=False)
     q.add_param(keys.QUERY, search_query)
     q.add_param(keys.TYPE, 'suggest')  # 'type' can currently only be suggest, so it is hardcoded
 
@@ -31,7 +31,7 @@ def games(search_query, live=Boolean.FALSE):
 # required scope: none
 @query
 def streams(search_query, limit=25, offset=0, hls=Boolean.FALSE):
-    q = Qry('search/streams')
+    q = Qry('search/streams', use_token=False)
     q.add_param(keys.QUERY, search_query)
     q.add_param(keys.LIMIT, limit, 25)
     q.add_param(keys.OFFSET, offset, 0)

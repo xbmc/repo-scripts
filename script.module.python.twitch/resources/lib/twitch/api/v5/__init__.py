@@ -1,5 +1,6 @@
 # -*- encoding: utf-8 -*-
 # https://dev.twitch.tv/docs/
+# V5 is deprecated and will be removed entirely on 2/14/18
 
 from twitch.api.v5 import bits  # NOQA
 from twitch.api.v5 import channel_feed  # NOQA

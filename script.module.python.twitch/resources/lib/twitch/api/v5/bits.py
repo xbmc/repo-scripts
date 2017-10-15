@@ -9,6 +9,6 @@ from twitch.queries import query
 # required scope: None
 @query
 def get_cheermotes(channel_id=None):
-    q = Qry('bits/actions')
+    q = Qry('bits/actions', use_token=False)
     q.add_param(keys.CHANNEL_ID, channel_id, None)
     return q
