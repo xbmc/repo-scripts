@@ -109,6 +109,20 @@ msgctxt "#32034"
 msgid "Cancel"
 msgstr "Cancelar"
 
+# 80 and above for warnings and errors
+
+msgctxt "#32080"
+msgid "Failed to scrobble, retrying later"
+msgstr ""
+
+msgctxt "#32081"
+msgid "Finally, failed to scrobble"
+msgstr ""
+
+#msgctxt "#"
+#msgid ""
+#msgstr ""
+
 #msgctxt "#"
 #msgid ""
 #msgstr ""

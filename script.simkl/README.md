@@ -25,4 +25,8 @@ Bitcoin address: 1PcbSQrBddJszsTiRhqHyLntp7Lxfuyaio
 
 Thanks, you can write me an e-mail to david@ddavo.me with your receipt, and I'll send you a photo drinking the cup of coffee you invited me to.
 
+## Join the conversation:
+- Discuss on Discord https://discord.gg/JRtwsfG
+- Post bugs, feature requests on Github https://github.com/SIMKL/script.simkl/issues
+
 [license]: https://github.com/SIMKL/script.simkl/blob/master/LICENSE.txt
