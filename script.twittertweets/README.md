@@ -14,3 +14,5 @@ Control(30108) - Time
 Control(30109) - # of Replies
 Control(30110) - # of Retweets
 Control(30111) - # of Likes
+Control(30112) - Optional Picture attachement
+Control(30113) - Twitter Verified Badge
