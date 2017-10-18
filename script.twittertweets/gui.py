@@ -30,6 +30,7 @@ SETTINGS_LOC   = REAL_SETTINGS.getAddonInfo('profile').decode('utf-8')
 ## GLOBALS ##
 DEBUG      = REAL_SETTINGS.getSetting('Enable_Debugging') == 'true'
 CLOSE_TIME = [2.0,5.0,10.0,15.0][int(REAL_SETTINGS.getSetting('Close_Time'))]
+ATTACHMENT = REAL_SETTINGS.getSetting('Enable_Attachment') == 'true'
 
 def log(msg, level=xbmc.LOGDEBUG):
     if DEBUG == True:
@@ -40,6 +41,7 @@ def log(msg, level=xbmc.LOGDEBUG):
 class GUI(xbmcgui.WindowXMLDialog):
     def __init__(self, *args, **kwargs ):
         self.params     = kwargs['params']
+        log('params = ' + str(self.params))
         self.lockAction = False
         self.closeTimer = threading.Timer(CLOSE_TIME, self.close)
     
@@ -61,6 +63,15 @@ class GUI(xbmcgui.WindowXMLDialog):
         self.getControl(30103).setColorDiffuse('FF00ff7d' if retweets > 0 else 'FF999999')
         self.getControl(30102).setColorDiffuse('FF1dcaff' if replies  > 0 else 'FF999999')
         self.getControl(30101).setImage(self.params['icon'])
+        x, y = self.getControl(30105).getPosition()
+        self.getControl(30113).setPosition(x+(len(self.params['username'])*15),y)
+        self.getControl(30113).setVisible(self.params['verified'])
+
+        if len(self.params['attachment']) > 0 and self.params['attachment'] != 'NA.png' and ATTACHMENT == True:
+            self.getControl(30112).setImage(self.params['attachment'])
+        else:
+            self.getControl(30112).setVisible(False)
+            
         xbmc.sleep(10)   #give image time to cache.
         self.getControl(30100).setVisible(True)
         self.closeTimer.start()
