@@ -9,8 +9,11 @@
     <extension library="service.py" point="xbmc.service" start="login"/>
     <extension point="xbmc.addon.metadata">
         <summary lang="en">Provides a postplay screen or netflix style nextup pop up notification or both together!</summary>
+        <summary lang="es">El plugin provee con una notificación pop-up estilo Netflix o una pantalla tras terminar la serie... ¡O ambos!</summary>
         <description lang="en">Provides a postplay screen or netflix style nextup pop up notification or both together!</description>
+        <description lang="es">El plugin provee con una notificación pop-up estilo Netflix o una pantalla tras terminar la serie... ¡O ambos!</description>
         <disclaimer lang="en">This plugin is a standalone plugin.</disclaimer>
+        <disclaimer lang="es">Este es un plugin autónomo.</disclaimer>
         <platform>all</platform>
         <language/>
         <assets>
