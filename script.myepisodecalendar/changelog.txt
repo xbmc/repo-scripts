@@ -1,0 +1,78 @@
+1.3.0
++ prevent some unhandled exceptions
++ cleaned up the code a bit
++ removed script.tv.show.next.aired integration (it is not desired by the Kodi team for addons to change other addons' settings)
+1.2.1
++ Optimized the detection of metadata (TV show, season, episode)
++ Only run if detected media type is "tvshow", "season" or "episode" (or unset):
+  This prevents the "XY not found" notification when watching movies.
+1.2.0
++ Fixed problems with some show titles
++ Verified that the Add-On works as expected with Jarvis
++ Corrected wrong language string when show has been added automatically
++ Improved show search and show title mapping
+1.1.1
++ Technical change only: use monitor.abortRequested() and monitor.waitForAbort() instead of xbmx.abortRequested and xbmx.sleep, see http://sourceforge.net/p/xbmc/mailman/message/34581714/
+1.1.0
++ Added script.tv.show.next.aired integration:
+  Series from MyEpisodeCalendar can now be added to the "TV Show - Next Aired" Add-On's setting "Extra shows". Series removed from MyEpisodeCalendar can also be automatically removed from Next Aired (changing this option requires saving the Add-On settings before taking effect when manually updating)
+  Plus, MyEpisodeCalendar can automatically show the "Next Aired" GUI on startup.
+  Known issue: MyEpisodeCalendar will now be listed in Programs, despite not doing more than just opening its settings dialogue.
+1.0.2
++ Re-check login status and automatic re-login if required when marking an episode as watched.
+  (myepisodecalendar.com seems to have a rather short time span for auto-logout)
+1.0.1
++ Add German language
++ Some cosmetic changes for settings and notifications
++ New settings tab to disable/enable several notifications (errors will always be shown)
+
+1.0.0 (not released) based on 1.0.15 of script.myepisodes by Maxime Hadjinlian.
+======
+1.0.15
++ Exclude pvr; http; https streaming.
++ Update BeautifulSoup to last version
++ Update Python to last version
++ Add missing license tag
+1.0.14
++ Fix dummy mistake, sorry for the inconvenience
+1.0.13
++ Update Regex expression to support more schemes.
++ Fixes bug when authentication failed
+1.0.12
++ Improve show name detection again. Show like Archer or Revolution
+should now work.
+1.0.11
++ Improve the match between a title and MyEpisode's ID.
+This should solve the issue where a show is not found and misfound when
+its title contains a year, or country reference.
+1.0.10
++ Fix a bug where Auto Add settings was not honored.
+1.0.9
++ Fix a swapped assignment, episode was season and vice-versa.
+1.0.8
++ Add an Auto Add shows settings.
++ Fix a memory leak
++ Fix some potential bug
+1.0.7
++ Improve the way to find a TVShow title, thanks to trogdorsmith and
+greek on the MyEpisodes forum for reporting the issue and testing "beta"
+version.
++ Add a fallback to find a TVShow ID on MyEpisodes
+1.0.6
++ Fix International issue. The plugin will now work when XBMC is set to
+other lanuages than English.
++ Fix memory issue when exiting plugin.
+1.0.5
++ Fix various bugs
++ Reload the plugin when the settings are modified
+1.0.4
++ Fix impossibility to login
+1.0.3
++ Update to new language system
+1.0.2
++ Add Spanish (Thanks to stravieso)
+1.0.1
++ Add Italian and Portuguese (Brazil) language, thanks
+to Julia Vidile <julia.vidile@gmail.com>
+1.0.0
+* initial Frodo commit
