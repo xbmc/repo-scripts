@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addon id="script.simkl"
        name="Simkl TV Tracker"
-       version="2.0.0"
+       version="2.1.0"
        provider-name="David Davó, Simkl">
   <requires>
     <import addon="xbmc.python" version="2.24.0"/>

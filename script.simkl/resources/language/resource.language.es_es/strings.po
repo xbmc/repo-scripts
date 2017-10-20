@@ -1,13 +1,12 @@
 # Kodi Media Center language file
 # Addon Name: Simkl TV Tracker
 # Addon id: script.services.simkl
-
 msgid ""
 msgstr ""
 "Project-Id-Version: Kodi Addons\n"
 "Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2017-07-23 22:25+0100\n"
 "Last-Translator: David Davó\n"
 "Language-Team: Spanish\n"
 "MIME-Version: 1.0\n"
@@ -15,9 +14,9 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: es\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 2.0.2\n"
 
-#Settings
-
+# Settings
 msgctxt "#32001"
 msgid "Please click to Log In"
 msgstr "Por favor haz click para iniciar sesión"
@@ -54,22 +53,28 @@ msgctxt "#32011"
 msgid "You are logged in"
 msgstr "Has iniciado sesión"
 
-#Up to 32020 to settings
+msgctxt "#32012"
+msgid "Minimum file lenght for scrobbling (minutes)"
+msgstr "Duración mínima del archivo para scrobblear (minutos)"
 
+# Up to 32020 to settings
 msgctxt "#32021"
 msgid "Simkl login"
 msgstr "Inicio de sesión en Simkl"
 
 msgctxt "#32022"
-msgid "Please visit {0} on \nyour device and enter this code"
-msgstr "Por favor visita {0}\n en tu dispositivo e introduce el código"
+msgid ""
+"Please visit {0} on \n"
+"your device and enter this code"
+msgstr ""
+"Por favor visita {0}\n"
+" en tu dispositivo e introduce el código"
 
 msgctxt "#32023"
 msgid "Remaining time: {0}/{1}"
 msgstr "Tiempo restante: {0}/{1}"
 
 # Blahblahblah
-
 msgctxt "#32025"
 msgid "Hello again, {0}"
 msgstr "Hola de nuevo, {0}"
@@ -110,6 +115,11 @@ msgctxt "#32034"
 msgid "Cancel"
 msgstr "Cancelar"
 
-#msgctxt "#"
-#msgid ""
-#msgstr ""
+# 80 and above for warnings and errors
+msgctxt "#32080"
+msgid "Failed to scrobble, retrying later"
+msgstr "No se han podido marcar como visto, se reintentará más tarde"
+
+msgctxt "#32081"
+msgid "Finally, failed to scrobble"
+msgstr "Finalmente, error al scrobblear"

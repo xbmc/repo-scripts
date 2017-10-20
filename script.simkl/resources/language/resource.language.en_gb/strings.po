@@ -53,7 +53,9 @@ msgctxt "#32011"
 msgid "You are logged in"
 msgstr ""
 
-
+msgctxt "#32012"
+msgid "Minimum file lenght for scrobbling (minutes)"
+msgstr ""
 
 #Up to 32020 to settings. 32021-2024 to login dialog
 
@@ -109,6 +111,16 @@ msgstr ""
 
 msgctxt "#32034"
 msgid "Cancel"
+msgstr ""
+
+# 80 and above for warnings and errors
+
+msgctxt "#32080"
+msgid "Failed to scrobble, retrying later"
+msgstr ""
+
+msgctxt "#32081"
+msgid "Finally, failed to scrobble"
 msgstr ""
 
 #msgctxt "#"

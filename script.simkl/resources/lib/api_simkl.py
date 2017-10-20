@@ -133,16 +133,7 @@ class Simkl:
         log("Send: {0}".format(json.dumps(s_data)))
         while True and s_data:
             r = self._http("/sync/history/", body=json.dumps(s_data), headers=self.headers)
-
-            #retry 3 times
-            if r is None:
-                _count += 1
-                if _count <= 3:
-                    notify(get_str(32029).format(_count))
-                    time.sleep(10)
-                    continue
-                notify(get_str(32027))
-                return False
+            if r is None: return False
             break
         return True
 
