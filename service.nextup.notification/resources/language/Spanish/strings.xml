@@ -10,7 +10,19 @@
     <string id="30008">A continuación</string>
     <string id="30009">Número de episodios antes de seguir viendo la consulta</string>
     <string id="30010">¿Seguir viendo?</string>
-    <string id="30012">¿Aún ahí? Presione Seguir viendo para ver el siguiente episodio</string>
+    <string id="30012">¿Sigues ahí? Presione Seguir viendo para ver el siguiente episodio</string>
     <string id="30013">Incluir episodios vistos</string>
     <string id="30014">Desactivar NextUp (requiere reiniciar)</string>
+    <string id="30015">Segundos antes de mostrar notificaciones de 'no visto' aleatorias</string>
+    <string id="30016">Mostrar notificaciones aleatorias de 'no visto'</string>
+    <string id="30017">Reproducir automáticamente videos cortos</string>
+    <string id="30018">Longitud máxima de los vídeos cortos (en minutos)</string>
+    <string id="30019">Mostrar notificaciones en pantalla durante los videos cortos</string>
+    <string id="30020">Anterior</string>
+    <string id="30021">A continuación</string>
+    <string id="30022">Mostrar pantalla tras terminar</string>
+    <string id="30023">Mostrar el argumento en la pantalla tras terminar</string>
+    <string id="30024">¿Sigues ahí?</string>
+    <string id="30025">Mostrar previsualización antes de la pantalla tras terminar</string>
 </strings>
+

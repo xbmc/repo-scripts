@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<strings>
+    <string id="30001">Benachrichtigung in Sekungen vor Ende zeigen</string>
+    <string id="30002">Log Level:</string>
+    <string id="30003">Einstellungen</string>
+    <string id="30004">Erweitert</string>
+    <string id="30005">Standardaktion wenn keine Auswahl getroffen wurde</string>
+    <string id="30006">Jetzt anschauen</string>
+    <string id="30007">Drücke Abbrechen um automatisches Abspielen der nächsten Episode zu stoppen...</string>
+    <string id="30008">Als nächstes</string>
+    <string id="30009">Anzahl der Episoden vor Nachfrage zum Weiterschauen</string>
+    <string id="30010">Weierschauen?</string>
+    <string id="30012">Noch am schauen? Drücke Weiterschauen um die nächste Episode zu sehen</string>
+    <string id="30013">Gesehene Episoden einschließen</string>
+    <string id="30014">NextUp deaktivieren (Neustart erforderlich)</string>
+    <string id="30015">Sekungen bevor die Benachrichtigung zufällige ungesehen gezeigt wird</string>
+    <string id="30016">Zeige Benachrichtigung für zufällige ungesehene Episoden</string>
+    <string id="30017">Kure Videos automatisch wiedergeben</string>
+    <string id="30018">Maximale Länge für das Abspielen kurzer Videos (in Minuten)</string>
+    <string id="30019">Zeige Benachrichtigung auf dem Bildschirm während der automatischen Wiedergabe kurzer Videos</string>
+    <string id="30020">Letzte Folge</string>
+    <string id="30021">Nächste Folge</string>
+    <string id="30022">Zeige Übersichtsbildschirm am Ende</string>
+    <string id="30023">Zeige Beschreibung auf Übersichtsbildschirm</string>
+    <string id="30024">Noch am schauen?</string>
+</strings>

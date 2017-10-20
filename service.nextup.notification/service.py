@@ -56,17 +56,18 @@ class Service():
                     randomunwatchedtime = addonSettings.getSetting("displayRandomUnwatchedTime")
                     displayrandomunwatched = addonSettings.getSetting("displayRandomUnwatched") == "true"
                     showpostplay = addonSettings.getSetting("showPostPlay") == "true"
+                    showpostplaypreview = addonSettings.getSetting("showPostPlayPreview") == "true"
 
                     if xbmcgui.Window(10000).getProperty("PseudoTVRunning") != "True" and not nextUpDisabled:
 
-                        if not showpostplay and (totalTime - playTime <= int(notificationtime) and (
+                        if (not showpostplay or (showpostplaypreview and showpostplay)) and (totalTime - playTime <= int(notificationtime) and (
                                         lastFile is None or lastFile != currentFile)) and totalTime != 0:
                             lastFile = currentFile
                             self.logMsg("Calling autoplayback totaltime - playtime is %s" % (totalTime - playTime), 2)
                             player.autoPlayPlayback()
                             self.logMsg("Netflix style autoplay succeeded.", 2)
 
-                        if showpostplay and (totalTime - playTime <= 10) and totalTime != 0:
+                        if (showpostplay and not showpostplaypreview) and (totalTime - playTime <= 10) and totalTime != 0:
                             self.logMsg("Calling post playback", 2)
                             player.postPlayPlayback()
 
