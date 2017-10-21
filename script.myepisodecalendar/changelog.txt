@@ -1,3 +1,7 @@
+1.4.0
++ Hebrew translation thanks to Eng2Heb
++ major improvements in matching series titles
++ better performance searching for series titles
 1.3.0
 + prevent some unhandled exceptions
 + cleaned up the code a bit

@@ -5,7 +5,12 @@ from BeautifulSoup import BeautifulSoup
 import cookielib
 import re
 import urllib, urllib2
-# import xbmc # only for debugging
+ 
+# only for debugging
+# import xbmc
+# def log(msg):
+#    xbmc.log("### [MyEpisodeCalendar] ### DEBUG: \n%s" % (msg, ),
+#        level=xbmc.LOGDEBUG)
 
 # This is totally stolen from script.xbmc.subtitles plugin !
 REGEX_EXPRESSIONS = [
@@ -27,16 +32,19 @@ REGEX_EXPRESSIONS = [
 MYEPISODE_URL = "http://www.myepisodecalendar.com"
 
 def sanitize(title, replace):
-    for char in ['[', ']', '_', '(', ')', '..', '.', '-']:
-        title = title.replace(char, replace)
+    pattern = re.compile('[^A-Za-z0-9' + re.escape(replace) + ']', re.UNICODE | re.IGNORECASE)
+    rPattern = re.compile('[\']+', re.UNICODE | re.IGNORECASE)
+    sPattern = re.compile('\s+', re.UNICODE | re.IGNORECASE)
 
-    title = title.replace('  ', ' ')
-    return title
+    title = title.replace('&', ' and ')
+    title = title.replace(': ', ' - ')
+    title = sPattern.sub(' ', title)
 
-# only for debugging
-# def log(msg):
-#    xbmc.log("################## DEBUG: \n%s" % (msg, ),
-#        level=xbmc.LOGDEBUG)
+    title = pattern.sub(replace, title)
+    title = rPattern.sub('', title)
+    title = sPattern.sub(' ', title)
+
+    return title.strip()
 
 class MyEpisodeCalendar(object):
 
@@ -128,24 +136,29 @@ class MyEpisodeCalendar(object):
         return True
 
     def find_show_link(self, data, show_name, strict=False):
+
         if data is None:
             return None, None
+
         soup = BeautifulSoup(data)
         tvshownames = soup.findAll("div", {"class": re.compile(r'\btvShowName\b')})
 
         show_href = None
-        show_name = show_name.lower()
+        show_name_sanitized = sanitize(show_name.lower(), ' ')
+        # TODO: search for dashed notation in URL alternatively
+        # show_name_dashes = sanitize(show_name.lower(), '-') # TODO: different sanitization: reduce multiple dashes to one, remove single quote...
+
         for show in tvshownames:
             link = show.find("a", href=True)
             if link.string is None:
                 continue
             if strict:
-                if sanitize(link.string.lower(), ' ') == show_name:
+                if sanitize(link.string.lower(), ' ') == show_name_sanitized:
                     show_href = link.get('href')
                     show_name = link.get('title')
                     break
             else:
-                if sanitize(link.string.lower(), ' ').startswith(show_name):
+                if sanitize(link.string.lower(), ' ').startswith(show_name_sanitized):
                     show_href = link.get('href')
                     show_name = link.get('title')
                     break
@@ -155,33 +168,39 @@ class MyEpisodeCalendar(object):
         # Try to find the ID of the show in our account first
         # Create a slice with only the show that may match
         new_name = show_name
-        show_name = show_name.lower()
+        show_name = show_name.lower().strip()
+        show_name_sanitized = sanitize(show_name, ' ')
 
         for keys, v in self.shows.iteritems():
             if ';' in keys:
                 keys = keys.split(';')
             else:
                 keys = [keys,]
+
             for k in keys:
-                if show_name == k.lower() or show_name == sanitize(k.lower(), ' '):
-                    new_name = k
+                k_lower = k.lower()
+                if show_name == k_lower or show_name_sanitized == k_lower:
+                    new_name = keys[0]
                     return new_name, v
 
-        # You should really never fall there, at this point, the show should be
-        # in your account, except if you disabled the feature.
 
         # It's not in our account yet ?
         # Try Find a show through its name and report its id
-        search_url = "%s/%s/%s" % (MYEPISODE_URL, "search", show_name.replace(' ', '_'))
+        search_url = "%s/%s/%s" % (MYEPISODE_URL, "search", sanitize(show_name.strip(' .'), '_'))
         data = self.send_req(search_url)
         new_name, show_href = self.find_show_link(data, show_name)
 
         # TODO: try to automatically request a show to be added to MEC
-        # TODO: check if this is working for MEC
         if show_href is None:
+            firstchar = show_name[0]
+            if firstchar.isalpha():
+                firstchar = firstchar.upper()
+            else:
+                firstchar = '0-9'
+
             # Try to lookup the list of all the shows to find the exact title
             list_url = "%s/%s/%s" % (MYEPISODE_URL, "allShows/filter-by-name",
-                    show_name[0].upper())
+                    firstchar)
             data = self.send_req(list_url)
             new_name, show_href = self.find_show_link(data, show_name, strict=True)
 
@@ -193,7 +212,10 @@ class MyEpisodeCalendar(object):
 
         if showid is None:
             return new_name, None
-        return new_name, int(showid.strip()),
+
+        showid = int(showid.strip())
+
+        return new_name, showid
 
     # This is totally stolen from script.xbmc.subtitles plugin !
     def get_info(self, file_name):
@@ -224,6 +246,9 @@ class MyEpisodeCalendar(object):
         if data is None:
             return False
         # Update list
+        # TODO: instead of calling get_show_list(),
+        #       which takes another request and updates all shows unneccessarily,
+        #       just add this show's data!
         self.get_show_list()
         return True
 
