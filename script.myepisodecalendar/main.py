@@ -126,6 +126,8 @@ class Player(xbmc.Player):
                 showAddNotif = False
             addedStringId = 32925
 
+        log("show %s" % (mce_lang(addedStringId)))
+
         if showAddNotif is True:
             notif("%s %s" % (self.title, mce_lang(addedStringId)))
 
