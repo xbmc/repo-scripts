@@ -43,3 +43,11 @@ msgstr ""
 msgctxt "#30006"
 msgid "Redownload"
 msgstr ""
+
+msgctxt "#30007"
+msgid "Installation Complete, File Removed"
+msgstr ""
+
+msgctxt "#30008"
+msgid "Cleanup download after installation"
+msgstr ""
