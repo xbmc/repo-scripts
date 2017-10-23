@@ -15,9 +15,9 @@
 #
 # -*- coding: utf-8 -*-
 
-import os, sys, time, datetime, re, traceback
-import urllib, urllib2, socket, json
-import xbmc, xbmcgui, xbmcvfs, xbmcplugin, xbmcaddon
+import os, time, datetime, traceback
+import urllib, urllib2, socket
+import xbmc, xbmcgui, xbmcvfs, xbmcaddon
 
 from bs4 import BeautifulSoup
 from simplecache import SimpleCache
