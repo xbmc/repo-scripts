@@ -27,7 +27,7 @@ ADDON_VERSION  = REAL_SETTINGS.getAddonInfo('version')
 ADDON_PATH     = (REAL_SETTINGS.getAddonInfo('path').decode('utf-8'))
 SETTINGS_LOC   = REAL_SETTINGS.getAddonInfo('profile').decode('utf-8')
 ENABLE_KEYS    = REAL_SETTINGS.getSetting("Enable_Keys") == 'true'
-KEYWORDS       = urllib.quote_plus(REAL_SETTINGS.getSetting("Keywords").encode("utf-8"))
+KEYWORDS       = urllib.quote(REAL_SETTINGS.getSetting("Keywords").encode("utf-8"))
 USER           = REAL_SETTINGS.getSetting("User").encode("utf-8").replace('@','')
 COLLECTION     = REAL_SETTINGS.getSetting("Collection").encode("utf-8")
 PHOTO_TYPE     = ['featured','random','user','collection'][int(REAL_SETTINGS.getSetting("PhotoType"))]
@@ -61,7 +61,7 @@ class GUI(xbmcgui.WindowXMLDialog):
         self.winid.setProperty('unsplash_time', TIME)
         self.startRotation()
 
-        
+         
     def setImage(self, id):
         image = self.openURL(IMAGE_URL)
         image = image if len(image) > 0 else self.openURL(IMAGE_URL)
@@ -77,10 +77,8 @@ class GUI(xbmcgui.WindowXMLDialog):
             self.getControl(self.currentID).setVisible(True)
             self.nextID    = self.currentID
             self.currentID = CYC_CONTROL()
-            if KODI_MONITOR.waitForAbort(int(TIMER//2)) == True or self.isExiting == True:
-                break
-            self.setImage(self.currentID)#pre-cache next image
-            if KODI_MONITOR.waitForAbort(int(TIMER//2)) == True or self.isExiting == True:
+            self.setImage(self.currentID)
+            if KODI_MONITOR.waitForAbort(TIMER) == True or self.isExiting == True:
                 break
 
 
