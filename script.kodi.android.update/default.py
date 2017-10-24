@@ -15,7 +15,7 @@
 #
 # -*- coding: utf-8 -*-
 
-import os, time, datetime, traceback
+import os, time, datetime, traceback, re
 import urllib, urllib2, socket
 import xbmc, xbmcgui, xbmcvfs, xbmcaddon
 
