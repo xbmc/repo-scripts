@@ -38,11 +38,14 @@ def log(msg, level=xbmc.LOGDEBUG):
 
 class Service(object):
     def __init__(self):
-        self.lastPath = REAL_SETTINGS.getSetting("LastPath")
-        if not CACHE and CLEAN and xbmcvfs.exists(self.lastPath):
-            log('Service, removing last download')
-            xbmcvfs.delete(self.lastPath)
-            xbmcgui.Dialog().notification(ADDON_NAME, LANGUAGE(30007), ICON, 4000)
+        try:
+            self.lastPath = REAL_SETTINGS.getSetting("LastPath")
+            if not CACHE and CLEAN and xbmcvfs.exists(self.lastPath):
+                log('Service, removing last download')
+                xbmcvfs.delete(self.lastPath)
+                xbmcgui.Dialog().notification(ADDON_NAME, LANGUAGE(30007), ICON, 4000)
+        except Exception, e:
+            log("Service Failed! " + str(e), xbmc.LOGERROR)
         
 if __name__ == '__main__':
     Service()
