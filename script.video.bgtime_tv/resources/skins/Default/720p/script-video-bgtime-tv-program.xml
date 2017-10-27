@@ -2,16 +2,22 @@
 <window>
 	<allowoverlay>no</allowoverlay>
 	<defaultcontrol always="true">7000</defaultcontrol>
-	<backgroundcolor>FF001829</backgroundcolor>
+	<backgroundcolor>0x00000000</backgroundcolor>
 	<coordinates>
 		<system>1</system>
 		<posx>0</posx>
 		<posy>0</posy>
 	</coordinates>
-   
+    <visible>!Player.HasMedia</visible>
 	<!-- Program View-->
 
 	<controls id="5000">
+		<control type="videowindow">
+		    <posx>0</posx>
+			<posy>0</posy>
+			<width>1280</width>
+			<height>720</height>
+		</control>
 		<control type="image">
 			<posx>360</posx>
 			<posy>90</posy>

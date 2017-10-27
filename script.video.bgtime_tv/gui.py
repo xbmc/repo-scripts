@@ -49,7 +49,6 @@ ADDONPATH       = xbmc.translatePath( ADDON.getAddonInfo('path') ).decode("utf-8
 
 TOKEN_FILEPATH  = PROFILE_PATH + '/token.txt'
 
-
 ACTION_LEFT 			= 1
 ACTION_RIGHT 			= 2
 ACTION_UP 				= 3
@@ -65,7 +64,7 @@ ACTION_STOP 			= 13
 ACTION_NEXT_ITEM 		= 14
 ACTION_PREV_ITEM 		= 15
 ACTION_SHOW_CODEC		= 27
-ACTION_SHOW_FULLSCREEN 	= 36
+ACTION_SHOW_FULLSCREEN 	= 199
 ACTION_DELETE_ITEM 		= 80
 ACTION_MENU 			= 163
 ACTION_LAST_PAGE 		= 160
@@ -124,7 +123,7 @@ C_MAIN_LOADING_PROGRESS = 5101
 FILTER_FLAG 			= 6100
 FILTER 					= 6101
 # BEGIN #
-SITE_PATH 				= 'http://bgtime.tv/api/mobile_v4/'
+SITE_PATH 				= 'https://bgtime.tv/api/mobile_v4/'
 IMAGE_PATH 				= os.path.join(ADDONPATH, 'resources', 'skins', 'Default', 'media')
 
 
@@ -156,6 +155,7 @@ def num( a):
 	if a is None: return
 	n=int(float(a))
 	return n
+
 def cleanUpUrl(url):
 	site_base = '://bgtime.tv/mobile/'
 	if site_base in url: 	url = url.replace(site_base, '')
@@ -175,13 +175,20 @@ class Controller(object):
 	last_sel_l_item = 0
 	last_sel_tv_item = None
 	is_new = False
+	last_controls =  []
+	is_from_click = False
+	thumb_view_id = False
+	list_view_id = False
+	program_view_id = False
 
+	history = list()
 	def changeControlVisibility(self, _self, _bool, *controlIds):
 		for controlId in controlIds:
 			loader = _self.getControl(controlId)
 			loader.setVisible(_bool)
 
 	def handleURLFromClick(self, url, show_title, _self=None):
+
 		sign= '?'
 		if '?' in url:  sign = '&'
 		else: 
@@ -236,17 +243,19 @@ class Controller(object):
 				self.tvPlay(rtr['key'], title, show_title, tracking_key, self.isLive(url, tracking_key))
 				return
 			else:
+				self.is_from_click = True
 				if 'thumb' in rtr['menu'][0] and len(rtr['menu'][0]['thumb']) > 1:
 					self.is_new = True
+					# if self.thumb_view_id:
 					new_view = ThumbView(rtr, url)
 					new_view.doModal()
-					del new_view
+					# del new_view
 				else:
 
 					list_items = self.createMenuList(rtr)
 					new_list = List(list_items)
 					new_list.doModal()
-					del new_list
+					# del new_list
 		return
 
 
@@ -324,35 +333,34 @@ class Controller(object):
 
 
 	def tvPlay(self, url, title, show_title, tracking_key, is_live):
-		player = Player()
-		
+		self.player = Player()
+
 		li 					= xbmcgui.ListItem(label=show_title + ' ' + title)
-		player.tracking_key = tracking_key
-		player.is_live  	= is_live
-		player.is_playing 	= True
+		self.player.tracking_key = tracking_key
+		self.player.is_live  	= is_live
+		self.player.is_playing 	= True
 		now 				= datetime.datetime.today()
 		str_time 			= num(time.mktime(now.timetuple()))
 
-		player.play(url, li)
+		self.player.play(url, li)
 
 		counter = 0
-		
-		while player.is_playing:
-			
-			if player.isPlaying():
-				player.info = {
+		last_time = 0;
+		while self.player.is_playing:
+			if self.player.isPlaying():
+				self.player.info = {
 					'key'			: tracking_key,
 					'stream_started': str_time,
-					'current_time'	: num(player.getTime()),
+					'current_time'	:  num(self.player.getTime()),
 				}
 				if counter == 90:
 					counter = 0
-					player.reportPlaybackProgress(player.info, 'progress')
+					self.player.reportPlaybackProgress(self.player.info, 'progress')
 
 			counter += 1
 			xbmc.sleep(1000)
 
-		del player
+		del self.player
 
 
 
@@ -393,7 +401,13 @@ class Player(xbmc.Player):
 
 	def onPlayBackPaused(self):
 		pass
-		
+
+	def is_overlay(self):
+		return xbmc.getCondVisibility("VideoPlayer.UsingOverlays")
+
+	def is_playback_paused(self):
+		return bool(xbmc.getCondVisibility("Player.Paused"))
+
 	def onPlayBackStopped(self):
 
 		if self.info is not None:
@@ -424,14 +438,14 @@ class Player(xbmc.Player):
 		if info is None: return
 		if self.tracking_key is not None:
 			data ={	'token'			: token,
-					'key'			: self.tracking_key,
-					'stream_started': str(num(info['stream_started'])),
-					'current_time'	: str(num(info['current_time'])),
-					'action'		: action,
-				}
+				'key'			: self.tracking_key,
+				'stream_started': str(num(info['stream_started'])),
+				'current_time'	: str(num(info['current_time'])),
+				'action'		: action,
+			}
 			send = urllib.urlencode(data)
 			request = urllib2.Request(SITE_PATH +'tracking/report_playback', send, headers={"User-Agent" :  xbmc.getUserAgent()+ " BGTimeTV Addon " + str(VERSION)})
-
+	
 
 ##########################################################################################
 ##										LOGIN  											##
@@ -592,6 +606,29 @@ class ControlAndInfo(object):
 
 
 ##########################################################################################
+##									HHISTORY    DATA									##
+##########################################################################################
+
+class URLandInfo(object):
+	def __init__(self, url, pages, filters, rows, cols, windowid):
+		self.url = url
+		self.pages = pages
+		self.idx 	= 0
+		self.x = 0
+		self.y = 0
+		self.windowid = windowid
+		self.rows = rows
+		self.cols = cols
+		self.filters = filters
+	def set_idx(self, idx):
+		self.idx = idx
+
+	def set_pos(self, x, y):
+		self.x = x
+		self.y = y
+		pass
+
+##########################################################################################
 ##									LIST VIEW 											##
 ##########################################################################################
 
@@ -620,7 +657,6 @@ class List(xbmcgui.WindowXML):
 	def onClick(self, controlId):
 		controller.changeControlVisibility(self, False, LOADER_FLAG)
 		if controlId == self.C_LIST:
-
 			list_control = self.getControl(self.C_LIST)
 			item_url = list_control.getSelectedItem().getLabel2()
 			show_title = list_control.getSelectedItem().getLabel()
@@ -647,6 +683,7 @@ class List(xbmcgui.WindowXML):
 			data = controller.getListData(url=str(BASE_URL+'?'+EPG_MENU), is_menu=True)
 
 			if data is None: self.close()
+
 			list_items = controller.createMenuList(data)
 			self.is_menu = True
 
@@ -696,13 +733,13 @@ class ThumbView(xbmcgui.WindowXML):
 		# self.swapInProgress = False
 
 	def onInit(self):
-		# self.controlFullList = list()
+
 		self.pages 				= list()
 		self.filters 			= list()
-
+		self.windowid 			= xbmcgui.getCurrentWindowId()
 		self.is_new 			= True
 		self.has_filter 		= False
-		
+		self.history 			= 0
 		self.DEFAULT_CONTROL 	= None
 		self.curr_page 			= None
 		self.last_focused_elem	= None
@@ -713,112 +750,136 @@ class ThumbView(xbmcgui.WindowXML):
 		self.createThumbView(self.data, self.url)
 		
 	def createThumbView(self, data, url):
-		if not data: pass
-		if url == 'menu/bgmovies' or url[-4:] == 'voyo':	
-			self.BOX_X, self.BOX_Y = (190, 236+self.TEXT_Y)
+	
+		for page in controller.history:
+			if page.url == url and self.windowid == page.windowid:
+				self.history  = controller.history.index(page)
+				self.pages = page.pages
+				self.curr_page = page.idx
+				self.ROWS = page.rows
+				self.COLS = page.cols
+				self.filters = page.filters
 
-		if 'livetv_alternative' in url:	
-			self.BOX_X = self.BOX_Y;
+		if self.pages :
+			if self.filters:
+				controller.changeControlVisibility(self, False, FILTER_FLAG)
+			self.updateView(self.curr_page, controller.history[self.history].x, controller.history[self.history].y)
+			return
+		else:
+			controller.last_page_url = url
+			if not data: pass
+			if url == 'menu/bgmovies' or url[-4:] == 'voyo':	
+				self.BOX_X, self.BOX_Y = (190, 236+self.TEXT_Y)
 
-			if len(data['title_prev']) <=2:
-				data['title_prev'] 	= LANG(32010)+' '+ data['title_prev']+ LANG(32011)
+			if 'livetv_alternative' in url:	
+				self.BOX_X = self.BOX_Y;
 
-		if 'title_prev' in data:
-			control = self.getControl(self.C_TITLE)
-			control.setLabel(u"{0}".format('[B]'+data['title_prev'].upper()+'[/B]'))
+				if len(data['title_prev']) <=2:
+					data['title_prev'] 	= LANG(32010)+' '+ data['title_prev']+ LANG(32011)
 
-		
-		controls 			= list()
-		self.page_list 		= list()
-		self.COLS 			= num((WIDTH-2*20)/self.BOX_X)
-		self.ROWS 			= num((HEIGHT-self.TITLE_Y-self.DESC_Y)/self.BOX_Y)
-		panel_image 		='script-video-bgtime-tv-grey.png';
-		
-		
-		x_margin 			= num((WIDTH - self.COLS*self.BOX_X - self.TITLE_Y-self.DESC_Y)/(self.COLS))
-		y_margin 			= num((HEIGHT - self.ROWS*self.BOX_Y - self.TITLE_Y-self.DESC_Y)/(self.ROWS))
-		x , y 				= (20, self.TITLE_Y+self.DESC_Y)
-		x_step 				= num(x_margin + self.BOX_X)
-		y_step 				= num(self.BOX_Y+y_margin)
+			if 'title_prev' in data:
+				control = self.getControl(self.C_TITLE)
+				control.setLabel(u"{0}".format('[B]'+data['title_prev'].upper()+'[/B]'))
 
-		counter_y, counter_x= (0, 0)
-
-		if 'filters' in data:
-			for k, v in enumerate(data['filters']):
-				self.filters.append({
-					'title'	: str(v['title'].encode('utf-8')),
-					'url'	: v['key_full']
-				})
-
-			self.has_filter = True
-			controller.changeControlVisibility(self, False, FILTER_FLAG)
-
-		for k, v in enumerate(data['menu']):
-			y_offset = y+y_step
-			if k % (self.COLS*self.ROWS) == 0 and k > 0:
-				self.pages.append(self.page_list)
-				self.page_list = list()
-				y = self.TITLE_Y+self.DESC_Y
-
-				counter_y, counter_x =(0, 0)
-
-			if 'title' in v: 			title = v['title']
-			elif 'start' in v:  		title  = str(datetime.datetime.fromtimestamp( intv['start'] ).strftime('%d.%M.%y %H:%M'))
-			title = u"{0}".format(title)
-
-			if 'livetv_alternative' in url:
-				title = u"{0}".format(v['desc'])
-				title = title.replace('\n', ' ')
-				panel_image = 'script-video-bgtime-tv-very-dark-grey.png'
-
-			control 	= xbmcgui.ControlButton(x=x, y=y+self.BOX_Y-self.TEXT_Y, width=self.BOX_X, height=self.TEXT_Y, label=title, focusTexture=os.path.join(IMAGE_PATH, 'script-video-bgtime-tv-very-lighter-blue.png'), noFocusTexture=os.path.join(IMAGE_PATH,  'script-video-bgtime-tv-darker-no.png'))
-			thumb		= xbmcgui.ControlImage(x=x, y=y, width = self.BOX_X, height=self.BOX_Y-self.TEXT_Y, filename=v['thumb'])
-			panel 		= xbmcgui.ControlImage(x=x, y=y, width = self.BOX_X, height=self.BOX_Y-self.TEXT_Y, filename=os.path.join(IMAGE_PATH, panel_image))
 			
-			if 'livetv_alternative' in url:		
-				z_index_order = [panel, thumb]
-				self.z_index_order = {'panel': 0, 'thumb': 1}
-			else:								
-				z_index_order = [thumb, panel]
-				self.z_index_order ={'thumb': 0, 'panel': 1}
-
-			info = {
-				'url'			: u"{0}".format( v['key']),
-				'title'			: u"{0}".format( v['title']),
-				'is_visible'	: False,
-				'sec_controls' 	: z_index_order,
-				'pos'			: [ counter_x, counter_y],
-				'page' 			: len(self.pages)
-			}
-
-			obj = ControlAndInfo(control, info)
-			self.page_list.append(ControlAndInfo(control, info))
+			controls 			= list()
+			self.page_list 		= list()
+			self.COLS 			= num((WIDTH-2*20)/self.BOX_X)
+			self.ROWS 			= num((HEIGHT-self.TITLE_Y-self.DESC_Y)/self.BOX_Y)
+			panel_image 		='script-video-bgtime-tv-grey.png';
 			
-			counter_x , x= counter_x+1, x+x_step
+			
+			x_margin 			= num((WIDTH - self.COLS*self.BOX_X - self.TITLE_Y-self.DESC_Y)/(self.COLS))
+			y_margin 			= num((HEIGHT - self.ROWS*self.BOX_Y - self.TITLE_Y-self.DESC_Y)/(self.ROWS))
+			x , y 				= (20, self.TITLE_Y+self.DESC_Y)
+			x_step 				= num(x_margin + self.BOX_X)
+			y_step 				= num(self.BOX_Y+y_margin)
 
-			if counter_x >= self.COLS or x > WIDTH - self.BOX_X:
-				x, y, counter_x, counter_y = 20, y+y_step, 0, counter_y+1
+			counter_y, counter_x= (0, 0)
+
+			if 'filters' in data:
+				for k, v in enumerate(data['filters']):
+					self.filters.append({
+						'title'	: str(v['title'].encode('utf-8')),
+						'url'	: v['key_full']
+					})
+
+				self.has_filter = True
+				controller.changeControlVisibility(self, False, FILTER_FLAG)
+
+			for k, v in enumerate(data['menu']):
+				y_offset = y+y_step
+				if k % (self.COLS*self.ROWS) == 0 and k > 0:
+					self.pages.append(self.page_list)
+					self.page_list = list()
+					y = self.TITLE_Y+self.DESC_Y
+
+					counter_y, counter_x =(0, 0)
+
+				if 'title' in v: 			title = v['title']
+				elif 'start' in v:  		title  = str(datetime.datetime.fromtimestamp( intv['start'] ).strftime('%d.%M.%y %H:%M'))
+				title = u"{0}".format(title)
+
+				if 'livetv_alternative' in url:
+					title = u"{0}".format(v['desc'])
+					title = title.replace('\n', ' ')
+					panel_image = 'script-video-bgtime-tv-very-dark-grey.png'
+
+				control 	= xbmcgui.ControlButton(x=x, y=y, width=self.BOX_X, height=self.BOX_Y, label='', focusTexture=os.path.join(IMAGE_PATH, 'script-video-bgtime-tv-very-lighter-blue.png'), noFocusTexture=os.path.join(IMAGE_PATH,  'script-video-bgtime-tv-darker-no.png'))
+				thumb		= xbmcgui.ControlImage(x=x, y=y, width = self.BOX_X, height=self.BOX_Y-self.TEXT_Y, filename=v['thumb'])
+				panel 		= xbmcgui.ControlImage(x=x, y=y, width = self.BOX_X, height=self.BOX_Y-self.TEXT_Y, filename=os.path.join(IMAGE_PATH, panel_image))
+				text 		= xbmcgui.ControlLabel(x=x, y=y+self.BOX_Y-self.TEXT_Y, width=self.BOX_X, height=self.TEXT_Y, label=title)
+				if 'livetv_alternative' in url:		
+					z_index_order = [panel, thumb, text]
+					self.z_index_order = {'panel': 0, 'thumb': 1, 'text' :2}
+				else:								
+					z_index_order = [thumb, panel, text]
+					self.z_index_order ={'thumb': 0, 'panel': 1, 'text' :2}
+
+				info = {
+					'url'			: u"{0}".format( v['key']),
+					'title'			: u"{0}".format( v['title']),
+					'is_visible'	: False,
+					'sec_controls' 	: z_index_order,
+					'pos'			: [ counter_x, counter_y],
+					'page' 			: len(self.pages)
+				}
+
+				obj = ControlAndInfo(control, info)
+				self.page_list.append(ControlAndInfo(control, info))
+				
+				counter_x , x= counter_x+1, x+x_step
+
+				if counter_x >= self.COLS or x > WIDTH - self.BOX_X:
+					x, y, counter_x, counter_y = 20, y+y_step, 0, counter_y+1
+
+			
+			self.pages.append(self.page_list)	
+			self.updateView(0)
+			
+			controller.history.append(URLandInfo(url, self.pages, self.filters, self.ROWS, self.COLS, xbmcgui.getCurrentWindowId()))
+			self.history = len(controller.history)-1
 		
-		self.pages.append(self.page_list)		
-		self.updateView(0)
 
 	def updateView(self, page = None, x=None, y=None):
-
+		if page is None:							page = 0
 		if page < 0 or page>= len(self.pages): 		return 
 		
-		if page is None:							page = 0
 		if controller.is_new is False and self.is_new is True and controller.last_sel_tv_item is not None:
 			if len(controller.last_sel_tv_item)	> 0:
 				el = controller.last_sel_tv_item.pop()
 				page, x, y = el['page'], el['pos'][0], el['pos'][1]
 			
 		controller.is_new = False
-		self.is_new = False
 
-		try: 					self.clearView(self.curr_page)
+		self.is_new = False
+		try: 				
+			self.clearView(self.curr_page)
 		except:				 	pass 
 		
 		controls = [elem.control  for elem in self.pages[page] ]+[el  for elem in self.pages[page] for el in elem.sec_controls]
+
+
 		self.DEFAULT_CONTROL = controls[0]
 
 		try:
@@ -827,21 +888,42 @@ class ThumbView(xbmcgui.WindowXML):
 			for v in controls:
 				try:
 					self.addControl(v)
-				except RuntimeError:
-					pass	
+				except:
+					log('Error adding contorols!!')
+
 		if page < self.curr_page: 					 y = self.pages[page][-1].pos[1]
 
 		self.curr_page = page
+	
 		controller.changeControlVisibility(self, True, LOADER_FLAG)
-
+	
+		if controller.history:
+			controller.history[self.history].set_idx(page)
+			controller.history[self.history].set_pos(x, y)
+	
 		if x is None: 
 			return self.setFocus(self.DEFAULT_CONTROL)
 		else: 
 			if len(self.pages[page]) <= x: 						x=len(self.pages[page])-1
-			if y is not None and y != 0:						return self.setFocus(controls[num(self.COLS*y+x)])
-	
+			if y is not None and y != 0:						
+				return self.setFocus(controls[num(self.COLS*y+x)])
+
 		self.setFocus(controls[num(x)])
-		
+
+	def clearView(self, page=None):
+		if page is not None:		
+			controls = [elem.control for elem in self.pages[page] ]+[el for elem in self.pages[page] for el in elem.sec_controls]
+		else:						
+			controls = list()
+
+		try:
+			self.removeControls(controls)
+		except RuntimeError:	
+			for con in controls:
+				try:
+					self.removeControl(con)
+				except:	
+					log('Error removing control')
 	
 	def onClick(self, controlId):
 		control 	= self.getControl(controlId)
@@ -856,6 +938,7 @@ class ThumbView(xbmcgui.WindowXML):
 			
 			if controller.last_sel_tv_item is None: 		controller.last_sel_tv_item = [{'page':self.curr_page,'pos': [0,0]}]
 			else:									controller.last_sel_tv_item = controller.last_sel_tv_item + [{'page':self.curr_page,'pos': [0,0]}]
+
 			controller.handleURLFromClick(self.filters[num(select)]['url'], self.filters[num(select)]['title'], self)
 			self.close()
 			return
@@ -869,21 +952,10 @@ class ThumbView(xbmcgui.WindowXML):
 		self.clearView(self.curr_page)
 		if curr_elem is None: return
 		controller.handleURLFromClick(curr_elem.url, curr_elem.title, self)
+		self.close()
+		return
 
-
-	def clearView(self, page=None):
-		if page is not None:		
-			controls = [elem.control  for elem in self.pages[page] ]+[el  for elem in self.pages[page] for el in elem.sec_controls]
-		else:						
-			controls = list()
-
-		try:
-			self.removeControls(controls)
-		except RuntimeError:
-			for elem in controls_list:
-				try:						self.removeControl(elem.control)
-				except RuntimeError:		pass
-					 # happens if we try to remove a control that doesn't exist
+	
 
 	def getControlFromPosition(self, x, y, page=0):
 		if x is None or y is None or page is None: 	return self.pages[page][0].control
@@ -893,14 +965,6 @@ class ThumbView(xbmcgui.WindowXML):
 
 		return 		 self.pages[page][0].control
 	
-	# def getPositionFromControl(self, control= None, page = None):
-	# 	if control is None: return
-	# 	if page  is None: page = 0
-
-	# 	for el in self.pages[page]: 
-	# 		if  el.control == control:	return el.pos
-
-
 	def getFilters(self):
 
 		rtr = list()
@@ -912,7 +976,6 @@ class ThumbView(xbmcgui.WindowXML):
 
 	def getInfoFromControl(self, control, page):
 		for elem in self.pages[page]:
-			# elem.sec_controls[self.z_index_order['panel']].setVisible(True)
 			if elem.control == control:
 				return elem
 		return None
@@ -928,25 +991,29 @@ class ThumbView(xbmcgui.WindowXML):
 			if self.DEFAULT_CONTROL is not None: control = self.DEFAULT_CONTROL
 
 		el = self.getInfoFromControl(control, self.curr_page)	
-		# el.sec_controls[self.z_index_order['panel']].setVisible(False)
+
+		if controller.history and el:  
+			controller.history[self.history].set_pos( el.pos[0], el.pos[1])
+
 		
-		self.last_position = el.pos
 		try:
 			super(ThumbView, self).setFocus(control)
 		except RuntimeError: 
+			log('error')
 			pass
 
 	def onAction(self, action):
 		focused_elem = None
 		act_id =  action.getId()
-		
-		if act_id in [ACTION_PARENT_DIR, KEY_NAV_BACK, ACTION_PREVIOUS_MENU]:
+	
+		if act_id in [ACTION_PARENT_DIR, KEY_NAV_BACK, ACTION_PREVIOUS_MENU, ACTION_SHOW_FULLSCREEN] :
 			self.close()
 			return
 		if act_id in [ACTION_UP, ACTION_LEFT, ACTION_RIGHT, ACTION_DOWN, ACTION_MOUSE_WHEEL_UP, ACTION_MOUSE_WHEEL_DOWN, ACTION_GESTURE_SWIPE_LEFT,ACTION_GESTURE_SWIPE_RIGHT, ACTION_GESTURE_SWIPE_DOWN, ACTION_GESTURE_SWIPE_UP]:
 			try:	
 				focused_elem = self.getFocus()
 			except:
+				'excpt'
 				if self.last_position is not None:											focused_elem = self.getControlFromPosition(self.last_position[0], self.last_position[1], self.curr_page)
 				elif self.DEFAULT_CONTROL is not None:										focused_elem = self.DEFAULT_CONTROL
 
@@ -965,7 +1032,7 @@ class ThumbView(xbmcgui.WindowXML):
 			elif act_id == ACTION_LEFT:		
 				self.left(focused_elem, curr_el,curr_el.pos[0], curr_el.pos[1], curr_el.page )
 
-			elif act_id == ACTION_RIGHT:	
+			elif act_id == ACTION_RIGHT:
 				self.right(focused_elem, curr_el,curr_el.pos[0], curr_el.pos[1], curr_el.page )
 
 			elif act_id == ACTION_DOWN:
@@ -1022,7 +1089,6 @@ class ThumbView(xbmcgui.WindowXML):
 
 		last = self.pages[-1][-1]
 		if page == len(self.pages) - 1 and y == last.pos[1] and x==last.pos[0]:			return self.setFocus(cont)
-
 		if x >= self.COLS-1: 
 			if y+1 <= self.ROWS-1: 														return self.setFocus(  self.getControlFromPosition(0 , y+1, page)  )	
 			else:																		return self.updateView(self.curr_page+1, 0)
@@ -1306,8 +1372,8 @@ class Program(xbmcgui.WindowXML):
 	def onAction(self, action):
 		focused_cont = None
 		act_id = action.getId()
-
-		if act_id in [ACTION_PARENT_DIR, KEY_NAV_BACK, ACTION_PREVIOUS_MENU]:
+	
+		if act_id in [ACTION_PARENT_DIR, KEY_NAV_BACK, ACTION_PREVIOUS_MENU, ACTION_SHOW_FULLSCREEN]:
 			self.close()
 			return
 
