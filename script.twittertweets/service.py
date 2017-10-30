@@ -68,7 +68,7 @@ class Monitor(xbmc.Monitor):
         self.pendingChange = True
 
         
-class Service():
+class Service(object):
     def __init__(self):
         log('__init__')
         self.myMonitor = Monitor()
@@ -79,10 +79,10 @@ class Service():
         log('startService')
         self.checkSettings()
         while not self.myMonitor.abortRequested():
-            if self.myMonitor.waitForAbort(self.wait) == True or self.myMonitor.pendingChange == True:
+            if self.myMonitor.pendingChange == True or self.myMonitor.waitForAbort(self.wait) == True:
                 log('startService, waitForAbort/pendingChange')
                 break
-                
+
             # Dont run while playing.
             if xbmc.Player().isPlayingVideo() == True and self.ignore == True:
                 log('start, ignore during playback')
@@ -96,15 +96,28 @@ class Service():
                 continue
 
             for user in self.userList:
+                if self.myMonitor.pendingChange == True or self.myMonitor.waitForAbort(1) == True:
+                    break
                 self.chkFEED(user)
-                                
+                
         if self.myMonitor.pendingChange == True:
-            self.startService()
+            xbmc.executebuiltin("Notification(%s, %s, %d, %s)" % (ADDON_NAME, LANGUAGE(30012), 4000, ICON))
+            self.restartService()
+            
+        
+    def restartService(self):
+        log('restartService')
+        #adapted from advised method https://forum.kodi.tv/showthread.php?tid=248758
+        xbmc.sleep(500)
+        xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method":"Addons.SetAddonEnabled","params":{"addonid":"%s","enabled":false}, "id": 1}'%(ADDON_ID))
+        xbmc.sleep(500)
+        xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method":"Addons.SetAddonEnabled","params":{"addonid":"%s","enabled":true}, "id": 1}'%(ADDON_ID))
             
                 
     def checkSettings(self):
         self.wait = [300,600,900,1800][int(REAL_SETTINGS.getSetting('Wait_Time'))]
         self.ignore = REAL_SETTINGS.getSetting('Not_While_Playing') == 'true'
+        self.incRetweets = REAL_SETTINGS.getSetting('Include_Retweets') == 'true'
         userList = []
         for i in range(1,51):
             userList.append((REAL_SETTINGS.getSetting('FEED%d'%i)).replace('@',''))
@@ -145,32 +158,35 @@ class Service():
     def chkFEED(self, user):
         log('chkFEED, user = '+user)
         try:
-            soup       = BeautifulSoup(urllib2.urlopen(BASE_URL+user).read(), "html.parser")
-            twitterPic = soup('img' , {'class': 'ProfileAvatar-image'})[0].attrs['src']
-            twitterAlt = soup('img' , {'class': 'ProfileAvatar-image'})[0].attrs['alt']
-            tweetTimes = soup('a'   , {'class': 'tweet-timestamp js-permalink js-nav js-tooltip'})
-            tweetMsgs  = soup('p'   , {'class': 'TweetTextSize TweetTextSize--normal js-tweet-text tweet-text'})
-            tweetStats = soup('span', {'class': 'ProfileTweet-actionCountForAria'})
-            twitterVer = False #todo
+            soup        = BeautifulSoup(urllib2.urlopen(BASE_URL+user).read(), "html.parser")
+            twitterPic  = soup('img' , {'class': 'ProfileAvatar-image'})[0].attrs['src']
+            twitterAlt  = soup('img' , {'class': 'ProfileAvatar-image'})[0].attrs['alt']
+            twitterVer  = True if soup.find(href='/help/verified') else False
+            tweetTimes  = soup('a'   , {'class': 'tweet-timestamp js-permalink js-nav js-tooltip'})
+            tweetMsgs   = soup('div' , {'class': 'js-tweet-text-container'})
+            tweetAtts   = soup('div' , {'class': 'AdaptiveMediaOuterContainer'})
+            tweetStats  = soup('span', {'class': 'ProfileTweet-actionCountForAria'})
+            twitterPin  = len(soup('span' , {'class': 'js-pinned-text'})) > 0
 
-            #find latest tweet from user, ignore retweets.
             for idx, item in enumerate(tweetTimes):
-                if user.lower() in item.attrs['href'].lower():
-                    break
-                    
-            for idx, item in enumerate(tweetTimes):
-                if user.lower() in item.attrs['href'].lower():
-                    break
-                    
+                if idx == 0 and twitterPin == True and user.lower() in item.attrs['href'].lower(): continue
+                elif self.incRetweets == True: break
+                elif user.lower() in item.attrs['href'].lower(): break
+            try:
+                tmpAttach   = tweetMsgs[idx]('a', {'class': 'twitter-timeline-link u-hidden'})[0].get_text()
+                tweetAttach = tweetAtts[idx].find('img').attrs['src'] if tmpAttach.startswith('pic.twitter.com') else 'NA.png'
+            except:
+                tweetAttach = 'NA.png'
+                
             tweetTime  = self.correctTime(tweetTimes[idx]["title"].encode("utf-8"))
-            tweetMsg   = self.cleanString(tweetMsgs[idx].get_text().encode("utf-8"))
+            tweetMsg   = self.cleanString((tweetMsgs[idx]('p' , {'class': 'TweetTextSize TweetTextSize--normal js-tweet-text tweet-text'})[0].get_text()).encode("utf-8"))
             tweetStats = [stat.get_text().encode("utf-8") for stat in tweetStats]
             tweetStats = [tweetStats[x:x+3] for x in xrange(0, len(tweetStats), 3)]
             tweetStats = tweetStats[idx]
-            
+
             if getProperty('%s.%s.time' %(ADDON_ID,user)) != tweetTime:
                 setProperty('%s.%s.time'%(ADDON_ID,user),tweetTime)
-                ui = gui.GUI("%s.default.xml" %ADDON_ID,ADDON_PATH,"default",params=({'user':user,'icon':twitterPic,'username':twitterAlt,'title':tweetMsg,'time':tweetTime,'stats':tweetStats,'verified':twitterVer}))
+                ui = gui.GUI("%s.default.xml" %ADDON_ID,ADDON_PATH,"default",params=({'user':user,'attachment':tweetAttach,'icon':twitterPic,'username':twitterAlt,'title':tweetMsg,'time':tweetTime,'stats':tweetStats,'verified':twitterVer}))
                 ui.doModal()
         except Exception,e:
             log('chkFEED, failed! ' + str(e))

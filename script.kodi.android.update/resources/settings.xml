@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>     
+    <setting id="Enable_Debugging"    type="bool" label="30000" default="false" />
+    <setting id="Disable_Maintenance" type="bool" label="30003" default="false" />
+    <setting id="Disable_Cache"       type="bool" label="30008" default="true" visible="eq(-1,false)"/>
+    <setting id="LastURL"             type="text" default=""    enable="false"  visible="false"/>
+</settings>

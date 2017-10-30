@@ -1,11 +1,11 @@
 # Kodi Media Center language file
-# Addon Name: Twitter Tweets
-# Addon id: script.twittertweets
+# Addon Name: Kodi Android Installer
+# Addon id: script.kodi.android.update
 # Addon Provider: Lunatixz
 msgid ""
 msgstr ""
-"Project-Id-Version:\script.twittertweets\n"
-"Report-Msgid-Bugs-To: https://forum.kodi.tv/showthread.php?tid=317791\n"
+"Project-Id-Version:\script.kodi.android.update\n"
+"Report-Msgid-Bugs-To: https://forum.kodi.tv/"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Lunatixz Translation Team\n"
@@ -21,53 +21,33 @@ msgid "Enable Debugging [Log errors]"
 msgstr ""
 
 msgctxt "#30001"
-msgid "Twitter Account"
+msgid "Something went wrong, Try again later..."
 msgstr ""
 
 msgctxt "#30002"
-msgid "Check Tweets Every x Minutes"
+msgid "Downloading & Install"
 msgstr ""
 
 msgctxt "#30003"
-msgid "Close After x Seconds"
+msgid "Keep all downloads?"
 msgstr ""
 
 msgctxt "#30004"
-msgid "Don't Show While Playing"
+msgid "File already exists"
 msgstr ""
 
 msgctxt "#30005"
-msgid "General"
+msgid "Install"
 msgstr ""
 
 msgctxt "#30006"
-msgid "Twitter (1)"
+msgid "Redownload"
 msgstr ""
 
 msgctxt "#30007"
-msgid "Twitter (2)"
+msgid "Installation Complete, File Removed"
 msgstr ""
 
 msgctxt "#30008"
-msgid "Twitter (3)"
-msgstr ""
-
-msgctxt "#30009"
-msgid "Twitter (4)"
-msgstr ""
-
-msgctxt "#30010"
-msgid "Twitter (5)"
-msgstr ""
-
-msgctxt "#30011"
-msgid "Display Attachment"
-msgstr ""
-
-msgctxt "#30012"
-msgid "Restarting Service..."
-msgstr ""
-
-msgctxt "#30013"
-msgid "Include Retweets"
+msgid "Cleanup download after installation"
 msgstr ""
