@@ -11,8 +11,8 @@
 		<website>http://www.themealdb.com/</website>
 		<source>https://github.com/zag2me/script.screensaver.themealdb</source>
 		<forum></forum>
-		<summary lang="en">Meal recipe browser and screensaver for Kodi</summary>
-		<description lang="en">This addon let you browse dozens of Meal recipes. It also includes a screensaver to display random Meals. [CR][CR]Powered by http://www.themealdb.com</description>
+		<summary lang="en_GB">Meal recipe browser and screensaver for Kodi</summary>
+		<description lang="en_GB">This addon let you browse dozens of Meal recipes. It also includes a screensaver to display random Meals. [CR][CR]Powered by http://www.themealdb.com</description>
 		<assets>
 		    <icon>icon.png</icon>
 		    <fanart>fanart.jpg</fanart>

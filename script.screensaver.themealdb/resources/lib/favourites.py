@@ -62,12 +62,10 @@ def get_favourites():
 			favourite_meals.append(themealdb.meal_lite(recipe_dict ))
 	return favourite_meals
 
-def save(filename,contents):  
-	fh = open(filename, 'w')
-	fh.write(contents)  
-	fh.close()
+def save(filename,contents):
+	with open(filename, 'w') as fh:
+		fh.write(contents)
 
 def readfile(filename):
-	f = open(filename, "r")
-	string = f.read()
-	return string
+	with open(filename, "r") as f:
+		return f.read()

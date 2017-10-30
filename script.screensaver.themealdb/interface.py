@@ -77,26 +77,6 @@ class Main(xbmcgui.WindowXML):
 		self.getControl(REGULAR_PANEL_CONTROL).selectItem(self.last_focused_mainmenu_item)
 		return
 		
-	def alcoholic_type(self):
-		self.status = 'alcoholic_selection'
-		self.last_focused_recipe = 0
-		self.last_focused_ingredient = 0
-		items = []
-		xbmc.executebuiltin( "ActivateWindow(busydialog)" )
-		categories = mealsdb_api.List().alcoholic()
-		xbmc.executebuiltin( "Dialog.Close(busydialog)" )
-		for label in categories:
-			item = xbmcgui.ListItem(label)
-			item.setArt({ 'thumb': os.path.join(addon_path,"resources","skins","default","media","menuicons",urllib.quote(label).lower()+".png") })
-			item.setProperty('category','alcoholic_selection')
-			items.append(item)
-		self.getControl(INGREDIENT_recipe_PANEL_CONTROL).reset()
-		self.getControl(REGULAR_PANEL_CONTROL).reset()
-		self.getControl(REGULAR_PANEL_CONTROL).addItems(items)
-		self.setFocusId(REGULAR_PANEL_CONTROL)
-		self.getControl(REGULAR_PANEL_CONTROL).selectItem(self.last_focused_alchool_item)
-		return
-		
 	def area_type(self):
 		self.status = 'area_selection'
 		self.last_focused_recipe = 0
