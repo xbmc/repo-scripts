@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.screensaver.themealdb" name="TheMealDB" version="1.0.1" provider-name="enen92,Zag">
+	<requires>
+		<import addon="xbmc.python" version="2.25.0"/>
+	</requires>
+	<extension point="xbmc.ui.screensaver" library="screensaverdeactivator.py" />
+	<extension point="xbmc.python.script" library="interface.py" />
+	<extension point="xbmc.addon.metadata">
+		<platform>all</platform>
+		<license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+		<website>http://www.themealdb.com/</website>
+		<source>https://github.com/zag2me/script.screensaver.themealdb</source>
+		<forum></forum>
+		<summary lang="en_GB">Meal recipe browser and screensaver for Kodi</summary>
+		<description lang="en_GB">This addon let you browse dozens of Meal recipes. It also includes a screensaver to display random Meals. [CR][CR]Powered by http://www.themealdb.com</description>
+		<assets>
+		    <icon>icon.png</icon>
+		    <fanart>fanart.jpg</fanart>
+		    <screenshot>resources/screenshots/screenshot-01.jpg</screenshot>
+		    <screenshot>resources/screenshots/screenshot-02.jpg</screenshot>
+		    <screenshot>resources/screenshots/screenshot-03.jpg</screenshot>
+		    <screenshot>resources/screenshots/screenshot-04.jpg</screenshot>
+		    <screenshot>resources/screenshots/screenshot-05.jpg</screenshot>
+		    <screenshot>resources/screenshots/screenshot-06.jpg</screenshot>
+			<banner>resources/banner.jpg</banner>
+			<logo>resources/logo.png</logo>
+		</assets>
+		<news>Here is the latest release of the new recipe Add-on for Kodi. Pop by our site to add new meals at www.themealdb.com or post in the Kodi forum thread</news>
+    </extension>
+</addon>

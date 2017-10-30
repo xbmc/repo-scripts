@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<window type="window">
+    <controls>
+
+        <control type="image" id="32601">
+            <description>Background image</description>
+            <posx>0</posx>
+            <posy>0</posy>
+            <colordiffuse>FF555555</colordiffuse>
+            <aspectratio scalediffuse="false" align="center" aligny="center">scale</aspectratio>
+            <width>1280</width>
+            <height>720</height>
+            <texture>fanart.jpg</texture>
+        </control>
+
+    </controls>
+</window>
