@@ -67,6 +67,8 @@ def addEntries(l):
 			"Aired": d.get('aired',''),
 			"Studio": d.get('channel',''),
 			}
+		if 'epoch' in d: 
+			ilabels['aired'] = time.strftime("%Y-%m-%d", time.gmtime(float(d['epoch'])))
 		if 'episode' in d: 
 			ilabels['Episode'] = d['episode']
 		if 'Season' in d: 
@@ -118,6 +120,9 @@ def addEntries(l):
 			xbmcplugin.setContent( handle=int( sys.argv[ 1 ] ), content="files" )
 			
 	xbmcplugin.addDirectoryItems(int(sys.argv[1]), lists)
+	
+def endOfDirectory():
+	xbmcplugin.endOfDirectory(int(sys.argv[1]),cacheToDisc=True)	
 
 def _buildUri(d):
 	u = d.get('pluginpath',sys.argv[0])+'?'
@@ -126,7 +131,10 @@ def _buildUri(d):
 		if not key.startswith('_'):
 			if i > 0:
 				u += '&'
-			u += key + '=' + urllib.quote_plus(d[key])
+			try:
+				u += key + '=' + urllib.quote_plus(d[key])
+			except:
+				u += key + '=' + urllib.quote_plus(d[key].encode('utf-8'))
 			i += 1
 	return u
 	
