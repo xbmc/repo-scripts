@@ -1,3 +1,6 @@
+[B]5.0.4[/B]
+- Added support for skins Ftv, Grid, Horizon and Reestuarized
+
 [B]5.0.3[/B]
 - Added support for Aeon Nox 5: SiLVO skin
 
