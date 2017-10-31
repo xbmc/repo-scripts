@@ -134,3 +134,7 @@ msgstr "Weitere Beiträge"
 msgctxt "#31041"
 msgid "Archive"
 msgstr "Archiv"
+
+msgctxt "#31042"
+msgid "Detailed search"
+msgstr "Detailsuche"
