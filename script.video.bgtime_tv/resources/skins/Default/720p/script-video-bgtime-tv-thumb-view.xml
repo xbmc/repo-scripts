@@ -1,17 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<window type="dialog">
+<window>
 	<allowoverlay>no</allowoverlay>
-	<defaultcontrol always="true">7000</defaultcontrol>
-	<backgroundcolor>FF001829</backgroundcolor>
+	<backgroundcolor>0x00000000</backgroundcolor>
 	<scroll>true</scroll>
 	<coordinates>
 		<system>1</system>
 		<posx>0</posx>
 		<posy>0</posy>
 	</coordinates>
-   
 	<!-- Program View-->
 	<controls>
+		<control type="videowindow">
+		    <posx>0</posx>
+			<posy>0</posy>
+			<width>1280</width>
+			<height>720</height>
+		</control>
 		<control type="image">
 			<posx>360</posx>
 			<posy>90</posy>
