@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.module.certifi"
+       name="certifi"
+       version="2017.07.27.1"
+       provider-name="Kenneth Reitz">
+  <requires>
+    <import addon="xbmc.python" version="2.25.0"/>
+  </requires>
+  <extension point="xbmc.python.module"
+             library="lib" />
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en_GB">Python SSL Certificates</summary>
+    <description lang="en_GB">Packed for KODI from https://github.com/certifi/python-certifi</description>
+    <platform>all</platform>
+    <language></language>
+    <license>MPL-2.0</license>
+    <forum></forum>
+    <website>https://github.com/certifi/python-certifi</website>
+    <source>https://github.com/beenje/script.module.certifi</source>
+    <email>beenje AT gmail.com</email>
+  </extension>
+</addon>
