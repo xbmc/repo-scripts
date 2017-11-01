@@ -1,0 +1,14 @@
+*.pyc
+*.pyo
+.DS_Store
+lib/MANIFEST.in
+lib/Makefile
+lib/_appveyor
+lib/appveyor.yml
+lib/docs
+lib/ext
+lib/pytest.ini
+lib/requirements.txt
+lib/setup.*
+lib/tests
+lib/tox.ini
