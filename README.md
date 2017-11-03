@@ -42,7 +42,7 @@ This branch is used for add-ons that are coded for Kodi v17.0 Krypton builds and
 * New add-on additions: **Accepted**
 * Updating already present add-ons: **Accepted**
 
-## Disclaimer ##
+## Disclaimer
 
 The contents of this repository mainly consist of add-on created by third party developers. Team Kodi holds no responsibility for it's contents.
 Team Kodi reserves the right to update or remove add-ons at any time as we deem necessary.
