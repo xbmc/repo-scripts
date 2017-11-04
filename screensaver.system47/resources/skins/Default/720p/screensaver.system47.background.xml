@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<window>
+    <coordinates>
+        <system>1</system>
+        <posx>0</posx>
+        <posy>0</posy>
+    </coordinates>
+    <controls>
+        <control type="image" id="30000">
+            <width>1280 </width>
+            <height>720</height>
+            <description>Background</description>
+            <colordiffuse>FFFFFFFF</colordiffuse>
+            <visible></visible>
+        </control>  
+        <control type="label" id="30001">
+            <width>1280 </width>
+            <height>720</height>
+            <description>Background Label</description>
+            <colordiffuse>FFFFFFFF</colordiffuse>
+            <visible></visible>
+        </control>     
+    </controls>
+</window>
