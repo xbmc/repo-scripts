@@ -1,3 +1,6 @@
+5.0.0
+- personal api key is now required
+
 4.4.2
 - new api keys
 

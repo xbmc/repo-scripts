@@ -17,23 +17,18 @@ sys.path.append(RESOURCE)
 
 from utils import *
 
-LIMIT          = False
 APPID          = ADDON.getSetting('API')
 BASE_URL       = 'http://api.openweathermap.org/data/2.5/%s'
 LATLON         = ADDON.getSetting('LatLon')
 WEEKEND        = ADDON.getSetting('Weekend')
 STATION        = ADDON.getSetting('Station')
-if APPID:
-    MAPS = ADDON.getSetting('WMaps')
-else:
-    MAPS = False
+MAPS           = ADDON.getSetting('WMaps')
 ZOOM           = str(int(ADDON.getSetting('Zoom')) + 2)
 WEATHER_ICON   = xbmc.translatePath('%s.png').decode("utf-8")
 DATEFORMAT     = xbmc.getRegion('dateshort')
 TIMEFORMAT     = xbmc.getRegion('meridiem')
 KODILANGUAGE   = xbmc.getLanguage().lower()
 MAXDAYS        = 6
-CACHEDIR       = os.path.join(PROFILE, 'cache')
 
 
 def clear():
@@ -69,9 +64,6 @@ def refresh_locations():
     log('available locations: %s' % str(locations))
 
 def get_data(search_string, item):
-    if LIMIT and item != 'location':
-        data = get_cache(item)
-        return data
     url = BASE_URL % search_string
     try:
         req = urllib2.urlopen(url)
@@ -79,15 +71,7 @@ def get_data(search_string, item):
         req.close()
     except:
         response = ''
-    if response != '':
-        path = os.path.join(CACHEDIR, item)
-        xbmcvfs.File(path, 'w').write(response)
     return response
-
-def get_cache(item):
-    path = os.path.join(CACHEDIR, item)
-    data = xbmcvfs.File(path).read()
-    return data
 
 def convert_date(stamp):
     if str(stamp).startswith('-'):
@@ -195,8 +179,6 @@ def forecast(loc,locid,locationdeg):
     log('weather location id: %s' % locid)
     log('weather location name: %s' % loc)
     log('weather location deg: %s' % locationdeg)
-    if LIMIT:
-        log('using cached data')
     if MAPS == 'true' and xbmc.getCondVisibility('System.HasAddon(script.openweathermap.maps)'):
         lat = float(eval(locationdeg)[0])
         lon = float(eval(locationdeg)[1])
@@ -883,28 +865,10 @@ set_property('Alerts.IsFetched'   , '')
 set_property('WeatherProvider'    , LANGUAGE(32000))
 set_property('WeatherProviderLogo', xbmc.translatePath(os.path.join(CWD, 'resources', 'graphics', 'banner.png')))
 
-if APPID == '':
-    random.seed()
-    APPID = random.choice(KEYS)
-    LIMIT = True
 
-log('key: %s' % APPID)
-
-if not xbmcvfs.exists(CACHEDIR):
-    xbmcvfs.mkdirs(CACHEDIR)
-
-if not sys.argv[1].startswith('Location') and LIMIT:
-    oldloc = ADDON.getSetting('oldloc')
-    curloc = ADDON.getSetting('Location%sID' % sys.argv[1])
-    if (oldloc == '0') or (oldloc != curloc):
-        LIMIT = False
-    elif oldloc == curloc:
-        oldtime = int(ADDON.getSetting('oldtime'))
-        newtime = int(time.time())
-        if (newtime - oldtime) > 3540:
-            LIMIT = False
-
-if sys.argv[1].startswith('Location'):
+if not APPID:
+    log('no api key provided')
+elif sys.argv[1].startswith('Location'):
     keyboard = xbmc.Keyboard('', xbmc.getLocalizedString(14024), False)
     keyboard.doModal()
     if (keyboard.isConfirmed() and keyboard.getText() != ''):
@@ -944,8 +908,6 @@ else:
                 locationid = str(locationids[0])
                 locationdeg = str(locationdeg[0])
     if not locationid == '':
-        ADDON.setSetting('oldloc', str(locationid))
-        ADDON.setSetting('oldtime', str(int(time.time())))
         forecast(locationname, locationid, locationdeg)
     else:
         log('no location provided')

@@ -12,22 +12,6 @@ DEBUG          = ADDON.getSetting('Debug')
 TEMPUNIT       = unicode(xbmc.getRegion('tempunit'),encoding='utf-8')
 SPEEDUNIT      = xbmc.getRegion('speedunit')
 
-KEYS = ['1fab7e4a0c59e4c97e9d2fad0444c226',
-        '4cd7cc0f5e67f4384b3a27fc521cde76',
-        '9c147de480f4d0a2d328b3aa80248727',
-        'ac9b74a65c3a6ca0ce8d6fb8a5efd4e7',
-        '975bb275d812da71ec309057b7aaa2ab',
-        '861e52c09675881b817bf89b47f9dc44',
-        'e1f79b4364ad10955c8bc9f9421e472b',
-        '4f55982020ffeae8bd3e9652191a5d04',
-        '928db392dcc654102ea8d0a6e6388a23',
-        'eb688d0a708e9107e033ac5e9a6fb6b2',
-        '7e6e2495ddb4da3065ec72faf89786fd',
-        '2e8bcdd83feff437759a89b97655e92f',
-        '91bab7dff33dbb8f3b2ac644272188fa',
-        'dd1ec26c30b60782b76b5cd4beb2cd0b',
-        'c700353fc67ddb8e6dee46b7f6ab64eb']
-
 def log(txt):
     if DEBUG == 'true':
         if isinstance (txt,str):
@@ -39,7 +23,7 @@ def set_property(name, value):
     WEATHER_WINDOW.setProperty(name, value)
 
 #http://openweathermap.org/current#multi
-        # xbmc lang name         # openweathermap code
+        # kodi lang name         # openweathermap code
 LANG = { 'afrikaans'             : '',
          'albanian'              : '',
          'amharic'               : '',
