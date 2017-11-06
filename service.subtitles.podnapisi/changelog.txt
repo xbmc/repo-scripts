@@ -1,3 +1,13 @@
+5.4.2
+- fix: Unicode issue with languages
+- fix: Year was inside the title, it must be removed
+- fix: Used year of the episode, switched to Premiered info
+- fix: Podnapisi.NET does not have Serbo-Croatian language, it resulted into None and crashed the addon
+- Removed/disabled old XML-RPC based API
+- Removed login credentials (will probably be readded later)
+- Added search with IMDb number, where possible
+- all changes in 5.4.2 by MasterMind2k
+
 5.4.0
 - use new API for better search and easier download.
 
