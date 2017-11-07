@@ -1,0 +1,215 @@
+# Kodi Media Center language file
+# Addon Name: XBMC Library Auto Update
+# Addon id: service.libraryautoupdate
+# Addon Provider: robweber
+# Translators:
+# Peppe Calvo <peppe.calvo.cc@gmail.com>, 2013
+# Peppe Calvo <peppe.calvo.cc@gmail.com>, 2013-2014
+# omar riccardi <riccardi1992@gmail.com>, 2012
+# Simone Grandi <gresy88@gmail.com>, 2015
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2017-09-19 14:20+0000\n"
+"Last-Translator: Martijn Kaijser <machine.sanctum@gmail.com>\n"
+"Language-Team: Italian (http://www.transifex.com/teamxbmc/xbmc-addons/language/it/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: it\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "Addon Summary"
+msgid ""
+"Update your Kodi Video and Music Libraries on a timer. Timer runs as an Kodi"
+" service so you never miss an update."
+msgstr "Aggiorna le tue librerie Video e Musicali in un momento definito. Il timer sarà eseguito come servizio di Kodi così non perderai nessun aggiornamento."
+
+msgctxt "Addon Description"
+msgid ""
+"This is an Kodi Service that will update your music and video libraries on a"
+" timer. You can select a different interval to scan your media databases "
+"(Audio,Video,Both) or you can set a cron-style timer for greater control. If"
+" you are playing an audio or video file when the timer starts it can skip "
+"the library update process until it is completed so that you're media "
+"experience is not interrupted. Updating a specific Video Path, and Cleaning "
+"the Music/Video libraries is now supported."
+msgstr "Questo è un servizio di Kodi che aggiornerà le tue librerie video e musicali a d una scadenza predefinita. Puoi impostare vari intervalli per scansionare i tuoi db (audio, video o entrambi) o puoi impostare un timer per un miglior controllo. Se stai eseguendo file video o audio quando la scansione sarà rimandata fin quando non avrai finito, così che non sarai interrotto. L'aggiornamento un percorso specifico e pulizia dele librerie Video e Musicali sono ora supportati "
+
+msgctxt "#30000"
+msgid "Kodi Library Auto Update"
+msgstr "Aggiornamento Automatico Libreria Kodi"
+
+msgctxt "#30001"
+msgid "General"
+msgstr "Generale"
+
+msgctxt "#30002"
+msgid "Video"
+msgstr "Video"
+
+msgctxt "#30003"
+msgid "Music"
+msgstr "Musica"
+
+msgctxt "#30004"
+msgid "Update Video Library"
+msgstr "Aggiorna Libreria Video"
+
+msgctxt "#30005"
+msgid "Update Music Library"
+msgstr "Aggiorna Libreria Musicale"
+
+msgctxt "#30006"
+msgid "Show Notifications"
+msgstr "Mostra Notifiche"
+
+msgctxt "#30007"
+msgid "Run during playback"
+msgstr "Eseguire durante la riproduzione"
+
+msgctxt "#30008"
+msgid "Startup Delay (minutes)"
+msgstr "Partenza Ritardata (minuti)"
+
+msgctxt "#30009"
+msgid "Used Advanced Timer"
+msgstr "Usa Timer Avanzato"
+
+msgctxt "#30010"
+msgid "Amount of time between updates (hours)"
+msgstr "Tempo tra gli aggiornamenti (ore)"
+
+msgctxt "#30011"
+msgid "Cron Expression"
+msgstr "Cron Expression"
+
+msgctxt "#30012"
+msgid "Update Video Library"
+msgstr "Aggiorna Libreria Video"
+
+msgctxt "#30013"
+msgid "Update Music Library"
+msgstr "Aggiorna Libreria Musicale"
+
+msgctxt "#30014"
+msgid "Only run when idle"
+msgstr "Esegui solo quando inattivo"
+
+msgctxt "#30015"
+msgid "Disable manual run prompt"
+msgstr "Disabilita avviso esecuzione manuale"
+
+msgctxt "#30020"
+msgid "Update Specific Path 1"
+msgstr "Usa Percorso Specifico 1"
+
+msgctxt "#30021"
+msgid "Update Specific Path 2"
+msgstr "Usa Percorso Specifico 2"
+
+msgctxt "#30022"
+msgid "Update Specific Path 3"
+msgstr "Usa Percorso Specifico 3"
+
+msgctxt "#30023"
+msgid "Video Path"
+msgstr "Percoso Video"
+
+msgctxt "#30030"
+msgid "Read Disclaimer"
+msgstr "Leggi dichiarazione di esclusione di responsabilità"
+
+msgctxt "#30031"
+msgid "Video Paths Disclaimer"
+msgstr "Dichiarazione di esclusione di responsabilità percorso video"
+
+msgctxt "#30032"
+msgid "Path must already be a video source with content"
+msgstr "Il percorso deve essere già una sorgente video con contenuto"
+
+msgctxt "#30033"
+msgid "Path must match source path exactly to scan"
+msgstr "Il percorso deve coincidere esattamente con il percorso sorgente per scansionare"
+
+msgctxt "#30040"
+msgid "Cleaning"
+msgstr "Pulizia"
+
+msgctxt "#30041"
+msgid "Clean Libraries"
+msgstr "Pulisci Librerie"
+
+msgctxt "#30042"
+msgid "Verify Sources Before Clean"
+msgstr "Verifica Sorgenti Prima di Pulire"
+
+msgctxt "#30043"
+msgid "Frequency"
+msgstr "Frequenza"
+
+msgctxt "#30044"
+msgid "After Update"
+msgstr "Dopo l'Aggiornamento"
+
+msgctxt "#30045"
+msgid "Once Per Day"
+msgstr "Una Volta al Giorno"
+
+msgctxt "#30046"
+msgid "Once Per Week"
+msgstr "Una Volta a Settimana"
+
+msgctxt "#30047"
+msgid "Once Per Month"
+msgstr "Una Volta al Mese"
+
+msgctxt "#30048"
+msgid "Clean Video Library"
+msgstr "Pulisci Libreria Video"
+
+msgctxt "#30049"
+msgid "Clean Music Library"
+msgstr "Pulisci Libreria Musicale"
+
+msgctxt "#30050"
+msgid "Error Cleaning Database"
+msgstr "Errore Pulendo il db"
+
+msgctxt "#30051"
+msgid "Prompt User Before Cleaning Library"
+msgstr "Richiedere conferma all'utente prima di pulizia Libreria"
+
+msgctxt "#30052"
+msgid "A database clean is scheduled to run"
+msgstr "Una pulizia del db è stata programmata"
+
+msgctxt "#30053"
+msgid "Would you like to run it now?"
+msgstr "Vuoi eseguirla ora?"
+
+msgctxt "#30054"
+msgid "Library to clean"
+msgstr "Libreria da Pulire"
+
+msgctxt "#30055"
+msgid "Both"
+msgstr "Entrambi"
+
+msgctxt "#30056"
+msgid "Video Cron Expression"
+msgstr "Espressioni Cron Video"
+
+msgctxt "#30057"
+msgid "Music Cron Expression"
+msgstr "Espressioni Cron Misica"
+
+msgctxt "#30060"
+msgid "Update will run again "
+msgstr "L'aggiornamento sarà eseguito di nuovo"
+
+msgctxt "#30061"
+msgid "Do you wish to manually run an update?"
+msgstr "Desideri eseguire manualmente un aggiornamento"

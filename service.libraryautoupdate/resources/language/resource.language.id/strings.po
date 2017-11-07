@@ -1,0 +1,213 @@
+# Kodi Media Center language file
+# Addon Name: XBMC Library Auto Update
+# Addon id: service.libraryautoupdate
+# Addon Provider: robweber
+# Translators:
+# Fajar Chandra <ff25_us@yahoo.com>, 2013
+# Rendiyono Wahyu Saputro <rendi.7936@gmail.com>, 2014
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2017-09-19 14:20+0000\n"
+"Last-Translator: Martijn Kaijser <machine.sanctum@gmail.com>\n"
+"Language-Team: Indonesian (http://www.transifex.com/teamxbmc/xbmc-addons/language/id/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: id\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgctxt "Addon Summary"
+msgid ""
+"Update your Kodi Video and Music Libraries on a timer. Timer runs as an Kodi"
+" service so you never miss an update."
+msgstr "Perbarui Pustaka Video dan Musik Kodi Anda dalam interval waktu. Timer dijalankan sebagai layanan Kodi sehingga Anda tak akan kelewatan hal baru."
+
+msgctxt "Addon Description"
+msgid ""
+"This is an Kodi Service that will update your music and video libraries on a"
+" timer. You can select a different interval to scan your media databases "
+"(Audio,Video,Both) or you can set a cron-style timer for greater control. If"
+" you are playing an audio or video file when the timer starts it can skip "
+"the library update process until it is completed so that you're media "
+"experience is not interrupted. Updating a specific Video Path, and Cleaning "
+"the Music/Video libraries is now supported."
+msgstr "Ini adalah Layanan Kodi yang akan memperbarui pustaka musik dan video Anda dalam interval waktu. Anda dapat memilih interval yang berbeda untuk memindai basis data media (Audio, Video, Keduanya) atau Anda dapat mengeset timer ala cron untuk kontrol yang lebih luas. Apabila Anda memutar berkas audio atau video saat timer dimulai, ia dapat melewati proses pembaruan pustaka sampai pemutaran selesai sehingga pengalaman media Anda tidak terganggu. Memperbarui Lokasi Video spesifik, serta Membersihkan pustaka Musik/Video kini dapat dilakukan."
+
+msgctxt "#30000"
+msgid "Kodi Library Auto Update"
+msgstr "Pembaruan Pustaka Kodi Otomatis"
+
+msgctxt "#30001"
+msgid "General"
+msgstr "Umum"
+
+msgctxt "#30002"
+msgid "Video"
+msgstr "Video"
+
+msgctxt "#30003"
+msgid "Music"
+msgstr "Musik"
+
+msgctxt "#30004"
+msgid "Update Video Library"
+msgstr "Perbarui Pustaka Video"
+
+msgctxt "#30005"
+msgid "Update Music Library"
+msgstr "Perbarui Pustaka Musik"
+
+msgctxt "#30006"
+msgid "Show Notifications"
+msgstr "Tampilkan Notifikasi"
+
+msgctxt "#30007"
+msgid "Run during playback"
+msgstr "Jalankan saat pemutaran"
+
+msgctxt "#30008"
+msgid "Startup Delay (minutes)"
+msgstr "Jeda Memulai (menit)"
+
+msgctxt "#30009"
+msgid "Used Advanced Timer"
+msgstr "Gunakan Timer Tingkat Lanjut"
+
+msgctxt "#30010"
+msgid "Amount of time between updates (hours)"
+msgstr "Lamanya jeda waktu antara pembaruan (jam)"
+
+msgctxt "#30011"
+msgid "Cron Expression"
+msgstr "Ekspresi Cron"
+
+msgctxt "#30012"
+msgid "Update Video Library"
+msgstr "Perbarui Pustaka Video"
+
+msgctxt "#30013"
+msgid "Update Music Library"
+msgstr "Perbarui Pustaka Musik"
+
+msgctxt "#30014"
+msgid "Only run when idle"
+msgstr "Hanya jalan ketika diam"
+
+msgctxt "#30015"
+msgid "Disable manual run prompt"
+msgstr ""
+
+msgctxt "#30020"
+msgid "Update Specific Path 1"
+msgstr "Pembaruan Lokasi Spesifik 1"
+
+msgctxt "#30021"
+msgid "Update Specific Path 2"
+msgstr "Pembaruan Lokasi Spesifik 2"
+
+msgctxt "#30022"
+msgid "Update Specific Path 3"
+msgstr "Pembaruan Lokasi Spesifik 3"
+
+msgctxt "#30023"
+msgid "Video Path"
+msgstr "Lokasi Video"
+
+msgctxt "#30030"
+msgid "Read Disclaimer"
+msgstr "Baca Pernyataan"
+
+msgctxt "#30031"
+msgid "Video Paths Disclaimer"
+msgstr "Pernyataan Lokasi Video"
+
+msgctxt "#30032"
+msgid "Path must already be a video source with content"
+msgstr "Lokasi harus berupa sumber video berisi konten"
+
+msgctxt "#30033"
+msgid "Path must match source path exactly to scan"
+msgstr "Lokasi harus benar-benar cocok dengan lokasi sumber yang akan dipindai"
+
+msgctxt "#30040"
+msgid "Cleaning"
+msgstr "Membersihkan"
+
+msgctxt "#30041"
+msgid "Clean Libraries"
+msgstr "Bersihkan Pustaka"
+
+msgctxt "#30042"
+msgid "Verify Sources Before Clean"
+msgstr "Verifikasi Sumber Sebelum Dibersihkan"
+
+msgctxt "#30043"
+msgid "Frequency"
+msgstr "Frekuensi"
+
+msgctxt "#30044"
+msgid "After Update"
+msgstr "Setelah Pembaruan"
+
+msgctxt "#30045"
+msgid "Once Per Day"
+msgstr "Sekali Sehari"
+
+msgctxt "#30046"
+msgid "Once Per Week"
+msgstr "Sekali Seminggu"
+
+msgctxt "#30047"
+msgid "Once Per Month"
+msgstr "Sekali Sebulan"
+
+msgctxt "#30048"
+msgid "Clean Video Library"
+msgstr "Bersihkan Pustaka Video"
+
+msgctxt "#30049"
+msgid "Clean Music Library"
+msgstr "Bersihkan Pustaka Musik"
+
+msgctxt "#30050"
+msgid "Error Cleaning Database"
+msgstr "Kesalahan Saat Membersihkan Basis Data"
+
+msgctxt "#30051"
+msgid "Prompt User Before Cleaning Library"
+msgstr "Tanyakan Pengguna Sebelum Membersihkan Pustaka"
+
+msgctxt "#30052"
+msgid "A database clean is scheduled to run"
+msgstr "Pembersihan basis data dijadwalkan untuk dijalankan"
+
+msgctxt "#30053"
+msgid "Would you like to run it now?"
+msgstr "Apakah Anda ingin jalankan sekarang?"
+
+msgctxt "#30054"
+msgid "Library to clean"
+msgstr "Pustaka untuk dibersihkan"
+
+msgctxt "#30055"
+msgid "Both"
+msgstr "Keduanya"
+
+msgctxt "#30056"
+msgid "Video Cron Expression"
+msgstr "Ekspresi Cron Video"
+
+msgctxt "#30057"
+msgid "Music Cron Expression"
+msgstr "Ekspresi Cron Musik"
+
+msgctxt "#30060"
+msgid "Update will run again "
+msgstr "Pembaruan akan dijalankan kembali"
+
+msgctxt "#30061"
+msgid "Do you wish to manually run an update?"
+msgstr "Apakah Anda ingin memperbarui secara manual?"
