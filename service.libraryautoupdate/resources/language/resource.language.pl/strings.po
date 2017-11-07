@@ -1,0 +1,218 @@
+# Kodi Media Center language file
+# Addon Name: XBMC Library Auto Update
+# Addon id: service.libraryautoupdate
+# Addon Provider: robweber
+# Translators:
+# hrynio <hrynio400@o2.pl>, 2012
+# Hubert Nafalski <hubert.nafalski@gmail.com>, 2012
+# Marcin Wójcik, 2015,2017
+# piotr.p <piotr.piernicki@gmail.com>, 2013
+# piotr.p <piotr.piernicki@gmail.com>, 2013
+# Sebastian Frel <sebafrel79@gmail.com>, 2014
+# hrynio <hrynio400@o2.pl>, 2012
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2017-09-23 18:37+0000\n"
+"Last-Translator: Marcin Wójcik\n"
+"Language-Team: Polish (http://www.transifex.com/teamxbmc/xbmc-addons/language/pl/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: pl\n"
+"Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);\n"
+
+msgctxt "Addon Summary"
+msgid ""
+"Update your Kodi Video and Music Libraries on a timer. Timer runs as an Kodi"
+" service so you never miss an update."
+msgstr "Automatycznie aktualizuj swoją bibliotekę wideo i muzyki. Harmonogram aktualizacji działa jako usługa Kodi, więc nigdy nie przegapisz niezbędnych aktualizacji."
+
+msgctxt "Addon Description"
+msgid ""
+"This is an Kodi Service that will update your music and video libraries on a"
+" timer. You can select a different interval to scan your media databases "
+"(Audio,Video,Both) or you can set a cron-style timer for greater control. If"
+" you are playing an audio or video file when the timer starts it can skip "
+"the library update process until it is completed so that you're media "
+"experience is not interrupted. Updating a specific Video Path, and Cleaning "
+"the Music/Video libraries is now supported."
+msgstr "Dodatek ten jest usługą Kodi, która aktualizuje bibliotekę muzyki i wideo. Pozwala określić częstotliwość skanowana bibliotek (Muzyki, Wideo lub obu) lub ustawić formułę w stylu Crona, w celu lepszej kontroli. Jeżeli odtwarzasz muzykę lub wideo, to aktualizacja biblioteki rozpocznie się dopiero po zakończeniu odtwarzania. Obsługiwana jest także aktualizacja wybranych ścieżek wideo oraz czyszczenie bibliotek muzyki i wideo."
+
+msgctxt "#30000"
+msgid "Kodi Library Auto Update"
+msgstr "Aktualizacja biblioteki"
+
+msgctxt "#30001"
+msgid "General"
+msgstr "Ogólne"
+
+msgctxt "#30002"
+msgid "Video"
+msgstr "Wideo"
+
+msgctxt "#30003"
+msgid "Music"
+msgstr "Muzyka"
+
+msgctxt "#30004"
+msgid "Update Video Library"
+msgstr "Aktualizuj bibliotekę wideo"
+
+msgctxt "#30005"
+msgid "Update Music Library"
+msgstr "Aktualizuj bibliotekę muzyki"
+
+msgctxt "#30006"
+msgid "Show Notifications"
+msgstr "Pokazuj powiadomienia"
+
+msgctxt "#30007"
+msgid "Run during playback"
+msgstr "Uruchamiaj podczas odtwarzania"
+
+msgctxt "#30008"
+msgid "Startup Delay (minutes)"
+msgstr "Opóźniaj uruchamianie (w minutach)"
+
+msgctxt "#30009"
+msgid "Used Advanced Timer"
+msgstr "Używaj zaawansowanego harmonogramu"
+
+msgctxt "#30010"
+msgid "Amount of time between updates (hours)"
+msgstr "Odstęp czasu między aktualizacjami (godziny)"
+
+msgctxt "#30011"
+msgid "Cron Expression"
+msgstr "Wyrażenie Crona"
+
+msgctxt "#30012"
+msgid "Update Video Library"
+msgstr "Aktualizacja biblioteki wideo"
+
+msgctxt "#30013"
+msgid "Update Music Library"
+msgstr "Aktualizacja biblioteki muzyki"
+
+msgctxt "#30014"
+msgid "Only run when idle"
+msgstr "Uruchamiaj tylko w trybie bezczynności"
+
+msgctxt "#30015"
+msgid "Disable manual run prompt"
+msgstr "Ukrywaj potwierdzenie manualnego uruchomienia"
+
+msgctxt "#30020"
+msgid "Update Specific Path 1"
+msgstr "Aktualizuj ścieżkę 1"
+
+msgctxt "#30021"
+msgid "Update Specific Path 2"
+msgstr "Aktualizuj ścieżkę 2"
+
+msgctxt "#30022"
+msgid "Update Specific Path 3"
+msgstr "Aktualizuj ścieżkę 3"
+
+msgctxt "#30023"
+msgid "Video Path"
+msgstr "Ścieżka wideo"
+
+msgctxt "#30030"
+msgid "Read Disclaimer"
+msgstr "Przeczytaj informacje o ścieżkach"
+
+msgctxt "#30031"
+msgid "Video Paths Disclaimer"
+msgstr "Informacje o ścieżkach wideo"
+
+msgctxt "#30032"
+msgid "Path must already be a video source with content"
+msgstr "Ścieżka musi być źródłem wideo z zawartością"
+
+msgctxt "#30033"
+msgid "Path must match source path exactly to scan"
+msgstr "Ścieżka do skanowania musi dokładnie pasować do ścieżki źródłowej"
+
+msgctxt "#30040"
+msgid "Cleaning"
+msgstr "Czyszczenie"
+
+msgctxt "#30041"
+msgid "Clean Libraries"
+msgstr "Uruchamiaj czyszczenie biblioteki"
+
+msgctxt "#30042"
+msgid "Verify Sources Before Clean"
+msgstr "Weryfikuj źródła przed czyszczeniem"
+
+msgctxt "#30043"
+msgid "Frequency"
+msgstr "Częstotliwość"
+
+msgctxt "#30044"
+msgid "After Update"
+msgstr "Po zakończeniu aktualizacji"
+
+msgctxt "#30045"
+msgid "Once Per Day"
+msgstr "Raz dziennie"
+
+msgctxt "#30046"
+msgid "Once Per Week"
+msgstr "Raz w tygodniu"
+
+msgctxt "#30047"
+msgid "Once Per Month"
+msgstr "Raz w miesiącu"
+
+msgctxt "#30048"
+msgid "Clean Video Library"
+msgstr "Wyczyść bibliotekę wideo"
+
+msgctxt "#30049"
+msgid "Clean Music Library"
+msgstr "Wyczyść bibliotekę muzyki"
+
+msgctxt "#30050"
+msgid "Error Cleaning Database"
+msgstr "Niepowodzenie czyszczenia bazy"
+
+msgctxt "#30051"
+msgid "Prompt User Before Cleaning Library"
+msgstr "Pytaj o potwierdzenie przed czyszczeniem biblioteki"
+
+msgctxt "#30052"
+msgid "A database clean is scheduled to run"
+msgstr "Zaplanowano czyszczenie biblioteki"
+
+msgctxt "#30053"
+msgid "Would you like to run it now?"
+msgstr "Uruchomić teraz?"
+
+msgctxt "#30054"
+msgid "Library to clean"
+msgstr "Biblioteka do czyszczenia"
+
+msgctxt "#30055"
+msgid "Both"
+msgstr "Obie"
+
+msgctxt "#30056"
+msgid "Video Cron Expression"
+msgstr "Wyrażenie Crona dla Wideo"
+
+msgctxt "#30057"
+msgid "Music Cron Expression"
+msgstr "Wyrażenie Crona dla Muzyki"
+
+msgctxt "#30060"
+msgid "Update will run again "
+msgstr "Aktualizacja rozpocznie się ponownie"
+
+msgctxt "#30061"
+msgid "Do you wish to manually run an update?"
+msgstr "Czy chcesz manualnie uruchomić aktualizację?"

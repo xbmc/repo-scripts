@@ -1,0 +1,216 @@
+# Kodi Media Center language file
+# Addon Name: XBMC Library Auto Update
+# Addon id: service.libraryautoupdate
+# Addon Provider: robweber
+# Translators:
+# foXaCe <foxace66@gmail.com>, 2014
+# foXaCe <foxace66@gmail.com>, 2012
+# mikebzh44 <mikael.bertho@gmail.com>, 2013
+# tmtisfree <tmtisfree@free.fr>, 2015
+# ryann, 2015
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2017-09-19 14:20+0000\n"
+"Last-Translator: Martijn Kaijser <machine.sanctum@gmail.com>\n"
+"Language-Team: French (http://www.transifex.com/teamxbmc/xbmc-addons/language/fr/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: fr\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+msgctxt "Addon Summary"
+msgid ""
+"Update your Kodi Video and Music Libraries on a timer. Timer runs as an Kodi"
+" service so you never miss an update."
+msgstr "Il est possible de mettre à jour la vidéothèque et l'audiothèque Kodi avec une minuterie. La minuterie fonctionne comme un service Kodi afin de ne jamais manquer une mise à jour."
+
+msgctxt "Addon Description"
+msgid ""
+"This is an Kodi Service that will update your music and video libraries on a"
+" timer. You can select a different interval to scan your media databases "
+"(Audio,Video,Both) or you can set a cron-style timer for greater control. If"
+" you are playing an audio or video file when the timer starts it can skip "
+"the library update process until it is completed so that you're media "
+"experience is not interrupted. Updating a specific Video Path, and Cleaning "
+"the Music/Video libraries is now supported."
+msgstr "Il s'agit d'un service de Kodi qui mettra à jour l'audiothèque et la vidéothèque sur une minuterie. On peut sélectionner un intervalle différent pour analyser les bases de données multimédia (audio, vidéo, les deux) ou on peut régler une minuterie pour un meilleur contrôle. Si un fichier audio ou vidéo est en lecture lorsque la minuterie démarre, la mise à jour de médiathèque peut être ignorée jusqu'à la fin de lecture pour ne pas interrompre l'utilisation multimédia. La mise à jour d’un chemin spécifique de vidéo et le nettoyage de l'audiothèque ou de la vidéothèque est maintenant possible."
+
+msgctxt "#30000"
+msgid "Kodi Library Auto Update"
+msgstr "Service de mise à jour auto. des médiathèques"
+
+msgctxt "#30001"
+msgid "General"
+msgstr "Général"
+
+msgctxt "#30002"
+msgid "Video"
+msgstr "Vidéos"
+
+msgctxt "#30003"
+msgid "Music"
+msgstr "Musique"
+
+msgctxt "#30004"
+msgid "Update Video Library"
+msgstr "Mettre à jour la vidéothèque"
+
+msgctxt "#30005"
+msgid "Update Music Library"
+msgstr "Mettre à jour l'audiothèque"
+
+msgctxt "#30006"
+msgid "Show Notifications"
+msgstr "Afficher les notifications"
+
+msgctxt "#30007"
+msgid "Run during playback"
+msgstr "Exécuter pendant la lecture"
+
+msgctxt "#30008"
+msgid "Startup Delay (minutes)"
+msgstr "Délai de démarrage (minutes)"
+
+msgctxt "#30009"
+msgid "Used Advanced Timer"
+msgstr "Utiliser une minuterie avancée"
+
+msgctxt "#30010"
+msgid "Amount of time between updates (hours)"
+msgstr "Temps entre les mises à jour (heures)"
+
+msgctxt "#30011"
+msgid "Cron Expression"
+msgstr "Expression Cron"
+
+msgctxt "#30012"
+msgid "Update Video Library"
+msgstr "Mettre à jour la vidéothèque"
+
+msgctxt "#30013"
+msgid "Update Music Library"
+msgstr "Mettre à jour l'audiothèque"
+
+msgctxt "#30014"
+msgid "Only run when idle"
+msgstr "Exécuter uniquement en cas d'inactivité"
+
+msgctxt "#30015"
+msgid "Disable manual run prompt"
+msgstr "Désactiver l'invite d'exécution manuelle"
+
+msgctxt "#30020"
+msgid "Update Specific Path 1"
+msgstr "Mise à jour chemin spécifique 1"
+
+msgctxt "#30021"
+msgid "Update Specific Path 2"
+msgstr "Mise à jour chemin spécifique 2"
+
+msgctxt "#30022"
+msgid "Update Specific Path 3"
+msgstr "Mise à jour chemin spécifique 3"
+
+msgctxt "#30023"
+msgid "Video Path"
+msgstr "Chemin vidéo"
+
+msgctxt "#30030"
+msgid "Read Disclaimer"
+msgstr "Lire l'avertissement…"
+
+msgctxt "#30031"
+msgid "Video Paths Disclaimer"
+msgstr "Avertissement des chemins vidéo"
+
+msgctxt "#30032"
+msgid "Path must already be a video source with content"
+msgstr "Le chemin doit déjà être une source vidéo avec du contenu."
+
+msgctxt "#30033"
+msgid "Path must match source path exactly to scan"
+msgstr "Le chemin doit correspondre au chemin source exact pour l'analyse."
+
+msgctxt "#30040"
+msgid "Cleaning"
+msgstr "Nettoyage"
+
+msgctxt "#30041"
+msgid "Clean Libraries"
+msgstr "Nettoyer les médiathèques"
+
+msgctxt "#30042"
+msgid "Verify Sources Before Clean"
+msgstr "Vérifier les sources avant le nettoyage"
+
+msgctxt "#30043"
+msgid "Frequency"
+msgstr "Fréquence"
+
+msgctxt "#30044"
+msgid "After Update"
+msgstr "Après mise à jour"
+
+msgctxt "#30045"
+msgid "Once Per Day"
+msgstr "Une fois par jour"
+
+msgctxt "#30046"
+msgid "Once Per Week"
+msgstr "Une fois par semaine"
+
+msgctxt "#30047"
+msgid "Once Per Month"
+msgstr "Une fois par mois"
+
+msgctxt "#30048"
+msgid "Clean Video Library"
+msgstr "Nettoyer la vidéothèque"
+
+msgctxt "#30049"
+msgid "Clean Music Library"
+msgstr "Nettoyer l'audiothèque"
+
+msgctxt "#30050"
+msgid "Error Cleaning Database"
+msgstr "Erreur de nettoyage de la base de données"
+
+msgctxt "#30051"
+msgid "Prompt User Before Cleaning Library"
+msgstr "Demander à l'utilisateur avant de nettoyer une médiathèque"
+
+msgctxt "#30052"
+msgid "A database clean is scheduled to run"
+msgstr "Un nettoyage de la base de données est planifié pour s'exécuter."
+
+msgctxt "#30053"
+msgid "Would you like to run it now?"
+msgstr "Faut-il l'exécuter maintenant ?"
+
+msgctxt "#30054"
+msgid "Library to clean"
+msgstr "Médiathèque à nettoyer"
+
+msgctxt "#30055"
+msgid "Both"
+msgstr "Les deux"
+
+msgctxt "#30056"
+msgid "Video Cron Expression"
+msgstr "Expression Cron pour la vidéo"
+
+msgctxt "#30057"
+msgid "Music Cron Expression"
+msgstr "Expression Cron pour la musique"
+
+msgctxt "#30060"
+msgid "Update will run again "
+msgstr "Une mise à jour aura lieu de nouveau dans "
+
+msgctxt "#30061"
+msgid "Do you wish to manually run an update?"
+msgstr "Faut-il exécuter une mise à jour manuellement ?"

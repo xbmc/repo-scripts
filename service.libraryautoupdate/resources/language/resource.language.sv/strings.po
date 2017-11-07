@@ -1,0 +1,213 @@
+# Kodi Media Center language file
+# Addon Name: XBMC Library Auto Update
+# Addon id: service.libraryautoupdate
+# Addon Provider: robweber
+# Translators:
+# Gunnar Norin <blittan@xbmc.org>, 2012-2013
+# Robin Björnsvik <robin@bjornsvik.se>, 2014,2016
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2017-09-19 14:20+0000\n"
+"Last-Translator: Robin Björnsvik <robin@bjornsvik.se>\n"
+"Language-Team: Swedish (http://www.transifex.com/teamxbmc/xbmc-addons/language/sv/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: sv\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "Addon Summary"
+msgid ""
+"Update your Kodi Video and Music Libraries on a timer. Timer runs as an Kodi"
+" service so you never miss an update."
+msgstr "Uppdatera ditt Kodi video och musikbibliotek schemalagt. Schemaläggaren körs som en Kodi-service så du aldrig missar en uppdatering."
+
+msgctxt "Addon Description"
+msgid ""
+"This is an Kodi Service that will update your music and video libraries on a"
+" timer. You can select a different interval to scan your media databases "
+"(Audio,Video,Both) or you can set a cron-style timer for greater control. If"
+" you are playing an audio or video file when the timer starts it can skip "
+"the library update process until it is completed so that you're media "
+"experience is not interrupted. Updating a specific Video Path, and Cleaning "
+"the Music/Video libraries is now supported."
+msgstr "Detta är en Kodi-service som schemalagt kommer att uppdatera ditt musik och videobibliotek. Du kan välja olika intervall att skanna dina mediadatabaser (Musik,Video,Båda) eller så kan du ange ett cron-inspirerad schemaläggare för bättre kontroll. Om du spelare en musik eller videofil när schemaläggaren startar, kan det hoppa över biblioteksuppdateringen till uppspelningen är klar så mediaupplevelsen inte avbryts. Uppdatering av en specifik videosökväg och rensning av musik/videobiblioteken stödjs nu."
+
+msgctxt "#30000"
+msgid "Kodi Library Auto Update"
+msgstr "Kodi biblioteksautouppdaterare"
+
+msgctxt "#30001"
+msgid "General"
+msgstr "Allmän"
+
+msgctxt "#30002"
+msgid "Video"
+msgstr "Video"
+
+msgctxt "#30003"
+msgid "Music"
+msgstr "Musik"
+
+msgctxt "#30004"
+msgid "Update Video Library"
+msgstr "Uppdatera videobibliotek"
+
+msgctxt "#30005"
+msgid "Update Music Library"
+msgstr "Uppdatera musikbibliotek"
+
+msgctxt "#30006"
+msgid "Show Notifications"
+msgstr "Visa notifieringar"
+
+msgctxt "#30007"
+msgid "Run during playback"
+msgstr "Kör under uppspelning"
+
+msgctxt "#30008"
+msgid "Startup Delay (minutes)"
+msgstr "Uppstartsfördröjning (minuter)"
+
+msgctxt "#30009"
+msgid "Used Advanced Timer"
+msgstr "Använd avancerad timer"
+
+msgctxt "#30010"
+msgid "Amount of time between updates (hours)"
+msgstr "Tid mellan uppdateringar (timmar)"
+
+msgctxt "#30011"
+msgid "Cron Expression"
+msgstr "Cronuttryck"
+
+msgctxt "#30012"
+msgid "Update Video Library"
+msgstr "Uppdatera videobibliotek"
+
+msgctxt "#30013"
+msgid "Update Music Library"
+msgstr "Uppdatera musikbibliotek"
+
+msgctxt "#30014"
+msgid "Only run when idle"
+msgstr "Kör endast vid inaktivitet"
+
+msgctxt "#30015"
+msgid "Disable manual run prompt"
+msgstr "Inaktivera förfrågan vid manuell körning"
+
+msgctxt "#30020"
+msgid "Update Specific Path 1"
+msgstr "Uppdatera specifik sökväg 1"
+
+msgctxt "#30021"
+msgid "Update Specific Path 2"
+msgstr "Uppdatera specifik sökväg 2"
+
+msgctxt "#30022"
+msgid "Update Specific Path 3"
+msgstr "Uppdatera specifik sökväg 3"
+
+msgctxt "#30023"
+msgid "Video Path"
+msgstr "Videosökväg"
+
+msgctxt "#30030"
+msgid "Read Disclaimer"
+msgstr "Läs ansvarsfriskrivning"
+
+msgctxt "#30031"
+msgid "Video Paths Disclaimer"
+msgstr "Videosökvägsansvarsfriskrivning"
+
+msgctxt "#30032"
+msgid "Path must already be a video source with content"
+msgstr "Sökvägen måste redan vara en videokälla med innehåll"
+
+msgctxt "#30033"
+msgid "Path must match source path exactly to scan"
+msgstr "Sökväg måste matcha källsökvägen exakt för att skannas"
+
+msgctxt "#30040"
+msgid "Cleaning"
+msgstr "Rensar"
+
+msgctxt "#30041"
+msgid "Clean Libraries"
+msgstr "Rensa bibliotek"
+
+msgctxt "#30042"
+msgid "Verify Sources Before Clean"
+msgstr "Verifiera källor innan rensning"
+
+msgctxt "#30043"
+msgid "Frequency"
+msgstr "Frekvens"
+
+msgctxt "#30044"
+msgid "After Update"
+msgstr "Efter uppdatering"
+
+msgctxt "#30045"
+msgid "Once Per Day"
+msgstr "Dagligen"
+
+msgctxt "#30046"
+msgid "Once Per Week"
+msgstr "Veckovis"
+
+msgctxt "#30047"
+msgid "Once Per Month"
+msgstr "Månadsvis"
+
+msgctxt "#30048"
+msgid "Clean Video Library"
+msgstr "Rensa videobibliotek"
+
+msgctxt "#30049"
+msgid "Clean Music Library"
+msgstr "Rensa musikbibliotek"
+
+msgctxt "#30050"
+msgid "Error Cleaning Database"
+msgstr "Fel vid rensning av databas"
+
+msgctxt "#30051"
+msgid "Prompt User Before Cleaning Library"
+msgstr "Fråga innan rensning av bibliotek"
+
+msgctxt "#30052"
+msgid "A database clean is scheduled to run"
+msgstr "En databasrensning är schemalagd att köras"
+
+msgctxt "#30053"
+msgid "Would you like to run it now?"
+msgstr "Vill du köra den nu?"
+
+msgctxt "#30054"
+msgid "Library to clean"
+msgstr "Bibliotek att rensa"
+
+msgctxt "#30055"
+msgid "Both"
+msgstr "Båda"
+
+msgctxt "#30056"
+msgid "Video Cron Expression"
+msgstr "Video-cronuttryck"
+
+msgctxt "#30057"
+msgid "Music Cron Expression"
+msgstr "Musik-cronuttryck"
+
+msgctxt "#30060"
+msgid "Update will run again "
+msgstr "Uppdatering kommer att köras igen"
+
+msgctxt "#30061"
+msgid "Do you wish to manually run an update?"
+msgstr "Vill du manuellt köra en uppdatering?"

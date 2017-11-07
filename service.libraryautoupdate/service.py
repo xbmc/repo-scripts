@@ -10,6 +10,8 @@ import resources.lib.utils as utils
 from resources.lib.croniter import croniter
 from resources.lib.cronclasses import CronSchedule, CustomPathFile
 
+UPGRADE_INT = 1  #to keep track of any upgrade notifications
+
 class AutoUpdater:
     last_run = 0
     sleep_time = 500
@@ -17,7 +19,6 @@ class AutoUpdater:
     lock = False
     
     monitor = None
-    customPaths = None
     
     #setup the timer amounts
     timer_amounts = {}
@@ -32,7 +33,6 @@ class AutoUpdater:
         utils.check_data_dir()  #in case this directory does not exist yet
         self.monitor = UpdateMonitor(update_settings = self.createSchedules,after_scan = self.databaseUpdated)
         self.readLastRun()
-        self.customPaths = CustomPathFile()
         
         #force and update on startup to create the array
         self.createSchedules(True)
@@ -46,7 +46,14 @@ class AutoUpdater:
                     #we missed at least one update, fix this
                     self.schedules[count].next_run = time.time() + int(utils.getSetting("startup_delay")) * 60
                 count = count + 1
-                
+
+
+        #display upgrade messages if they exist
+        if(int(utils.getSetting('upgrade_notes')) < UPGRADE_INT):
+            xbmcgui.Dialog().ok(utils.getString(30000),utils.getString(30030))
+            utils.setSetting('upgrade_notes',str(UPGRADE_INT))
+            
+        
         #program has started, check if we should show a notification
         self.showNotify()
 
@@ -176,41 +183,9 @@ class AutoUpdater:
                 
             self.schedules.append(aSchedule)
 
-        if(utils.getSetting('use_custom_1_path') == 'true'):
-            utils.log("Creating timer for Custom Path 1");
-            #create a custom video path schedule
-            aSchedule = CronSchedule()
-            aSchedule.name = utils.getString(30020)
-            aSchedule.command = 'UpdateLibrary(video,' + utils.getSetting('custom_1_scan_path') + ')'
-            aSchedule.expression = self.checkTimer('custom_1')
-            aSchedule.next_run = self.calcNextRun(aSchedule.expression,self.last_run)
-                
-            self.schedules.append(aSchedule)
-
-        if(utils.getSetting('use_custom_2_path') == 'true'):
-            utils.log("Creating timer for Custom Path 2");
-            #create a custom video path schedule
-            aSchedule = CronSchedule()
-            aSchedule.name = utils.getString(30021)
-            aSchedule.command = 'UpdateLibrary(video,' + utils.getSetting('custom_2_scan_path') + ')'
-            aSchedule.expression = self.checkTimer('custom_2')
-            aSchedule.next_run = self.calcNextRun(aSchedule.expression,self.last_run)
-                
-            self.schedules.append(aSchedule)
-
-        if(utils.getSetting('use_custom_3_path') == 'true'):
-            utils.log("Creating timer for Custom Path 3");
-            #create a custom video path schedule
-            aSchedule = CronSchedule()
-            aSchedule.name = utils.getString(30022)
-            aSchedule.command = 'UpdateLibrary(video,' + utils.getSetting('custom_3_scan_path') + ')'
-            aSchedule.expression = self.checkTimer('custom_3')
-            aSchedule.next_run = self.calcNextRun(aSchedule.expression,self.last_run)
-                
-            self.schedules.append(aSchedule)
-
         #read in any custom path options
-        for aJob in self.customPaths.getJobs():
+        customPaths = CustomPathFile()
+        for aJob in customPaths.getSchedules():
             utils.log("Creating timer " + aJob.name)
             aJob.next_run = self.calcNextRun(aJob.expression, self.last_run)
             self.schedules.append(aJob)
