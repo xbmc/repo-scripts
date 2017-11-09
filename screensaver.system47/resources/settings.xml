@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+    <setting id="Enable_Random"  type="bool"   label="32000"  default="true"/>
+    <setting id="Download"       type="action" label="32001"  action="RunScript($CWD/download.py)"/>
+    <setting id="AKEY"           type="text"   label="32000"  default="QUl6YVN5QmpqbmN6MlVjdkUxUDhPY0UzT2lFaVhfa3E1UktLcUFz" option="hidden" enable="false" visible="false" />
+    <setting id="CKEY"           type="text"   label="32000"  default="Mzc1NjMyMjAxMTEyLTFwdW8wMnE0amUybGtubjVrMTVlY2I0MjNtOWJzN3M4LmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29t" option="hidden" enable="false" visible="false" />
+    <setting id="SKEY"           type="text"   label="32000"  default="RFZWcUx0WW1pTGJKUWNBcXNJclFDMzNu" option="hidden" enable="false" visible="false" />
+</settings>
+        
