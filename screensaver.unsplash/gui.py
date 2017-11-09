@@ -38,18 +38,17 @@ ANIMATION      = 'okay' if REAL_SETTINGS.getSetting("Animate") == 'true' else 'n
 TIME           = 'okay' if REAL_SETTINGS.getSetting("Time") == 'true' else 'nope'
 IMG_CONTROLS   = [30000,30001]
 CYC_CONTROL    = itertools.cycle(IMG_CONTROLS).next
-
-if PHOTO_TYPE in ['featured','random']:
-    IMAGE_URL  = BASE_URL + URL_PARAMS + '/1920x1200/?%s'%KEYWORDS if ENABLE_KEYS else BASE_URL + URL_PARAMS
-elif PHOTO_TYPE == 'user':
-    IMAGE_URL  = BASE_URL + URL_PARAMS + '/%s/1920x1200' %USER
-else:
-    IMAGE_URL  = BASE_URL + URL_PARAMS + '/%s/1920x1200' %COLLECTION
-    
 KODI_MONITOR   = xbmc.Monitor()
+RES            = ['1280x720','1920x1080','3840x2160'][int(REAL_SETTINGS.getSetting("Resolution"))]
+
+if PHOTO_TYPE in ['featured','random']: IMAGE_URL  = BASE_URL + URL_PARAMS + '/%s/?%s'%(RES, KEYWORDS if ENABLE_KEYS else BASE_URL + URL_PARAMS)
+elif PHOTO_TYPE == 'user': IMAGE_URL  = BASE_URL + URL_PARAMS + '/%s/%s' %(USER, RES)
+else: IMAGE_URL  = BASE_URL + URL_PARAMS + '/%s/%s' %(COLLECTION, RES)
+    
 class GUI(xbmcgui.WindowXMLDialog):
     def __init__( self, *args, **kwargs ):
         self.isExiting = False
+        
         
     def log(self, msg, level=xbmc.LOGDEBUG):
         xbmc.log(ADDON_ID + '-' + ADDON_VERSION + '-' + msg, level)
@@ -78,8 +77,7 @@ class GUI(xbmcgui.WindowXMLDialog):
             self.nextID    = self.currentID
             self.currentID = CYC_CONTROL()
             self.setImage(self.currentID)
-            if KODI_MONITOR.waitForAbort(TIMER) == True or self.isExiting == True:
-                break
+            if KODI_MONITOR.waitForAbort(TIMER) == True or self.isExiting == True: break
 
 
     def onAction( self, action ):
@@ -96,8 +94,6 @@ class GUI(xbmcgui.WindowXMLDialog):
             url = page.geturl()
             self.log("openURL return url = " + url)
             return url
-        except urllib2.URLError, e:
-            self.log("openURL Failed! " + str(e), xbmc.LOGERROR)
-        except socket.timeout, e:
-            self.log("openURL Failed! " + str(e), xbmc.LOGERROR)
+        except urllib2.URLError, e: self.log("openURL Failed! " + str(e), xbmc.LOGERROR)
+        except socket.timeout, e: self.log("openURL Failed! " + str(e), xbmc.LOGERROR)
         return ''
