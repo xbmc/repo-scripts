@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.module.dropbox"
+       name="Dropbox API"
+       version="8.4.0"
+       provider-name="micah">
+  <requires>
+    <import addon="xbmc.python" version="2.25.0"/>
+    <import addon="script.module.requests" version="2.18.4"/>
+    <import addon="script.module.qrcode" version="5.2"/> <!-- For QR Code display for Dropbox API authentication -->    
+  </requires>
+  <extension point="xbmc.python.library" library="authenticate.py"> <!-- entry to start the authentification script from the settings dialog of other addons -->
+    <provides> </provides> <!-- Addon should not be shown anywhere -->
+  </extension>
+  <extension point="xbmc.python.module" library="lib" /> <!-- entry to import this in other addons -->
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en">Dropbox API</summary>        
+    <description lang="en">Provide Dropbox Python API support</description>
+    <description lang="he">התוסף מספק תמיכה ב-API Python Dropbox</description>
+    <disclaimer lang="en"></disclaimer>     
+    <platform>all</platform>
+    <language/>
+    <license>Apache2</license>
+    <forum></forum>
+    <website></website>
+    <source>http://python-requests.org</source>
+    <email>micahgalizia AT gmail.com</email>
+    <news>v8.4.0 (2017-11-21)
+- Update to API version 8.4.0
+- Switch strings to po format
+- Add Hebrew (github.com/Eng2Heb)</news>
+  </extension>
+</addon>
