@@ -69,10 +69,12 @@ def ENCODE(string):
 def DONOTHING(text):
     return text
 
-def LOG(message):
-    print 'FACEBOOK MEDIA: %s' % ENCODE(str(message))
+def LOG(message, force=False):
+    if not force and not __addon__.getSetting('debug') == "true" and not xbmc.getCondVisibility('System.GetBool(debug.showloginfo)'):
+        return
+    xbmc.log('FACEBOOK MEDIA: %s' % ENCODE(str(message)), xbmc.LOGNOTICE)
 
-LOG('Version: ' + __version__)
+LOG('Version: ' + __version__, force=True)
 
 def ERROR(message):
     LOG(message)
@@ -362,13 +364,14 @@ class SlideshowTagsWindow(BaseWindow):
         return x, nh or 1
 
     def showPhoto(self):
-        photo = self.currentPhoto()
-        width = int(photo.width(0))
-        height = int(photo.height(0))
+        photoObj = self.currentPhoto()
+        photo = photoObj.images()[0]
+        width = int(photo.get('width'))
+        height = int(photo.get('height'))
         if not width or not height: return
-        tags = photo.tags()
-        source = photo.source('')
-
+        tags = photoObj.tags()
+        source = photo.get('source', '')
+        LOG(source)
         window_w = self.getWidth()
         window_h = self.getHeight()
 
@@ -729,8 +732,8 @@ class FacebookSession:
         LOG("CATEGORIES - STOPPED")
 
     def updateImageCache(self,ID):
-        tn = "https://graph.facebook.com/"+ID+"/picture?access_token=" + self.graph.access_token
-        tn_url = self.getRealURL(tn).replace('https://','http://')
+        tn_url = "https://graph.facebook.com/"+ID+"/picture?access_token=" + self.graph.access_token
+        # tn_url = self.getRealURL(tn).replace('https://','http://')
         self.imageURLCache[ID] = tn_url
         return tn_url
 
@@ -958,7 +961,7 @@ class FacebookSession:
                 photos = self.graph.urlRequest(paging)
             else:
                 self.paging = []
-                photos = self.graph.getObject(aid).connections.photos(limit=self.getSetting('photo_limit',100))
+                photos = self.graph.getObject(aid).connections.photos(limit=self.getSetting('photo_limit',100), fields='picture,images,tags')
 
             tot = len(photos) or 1
 
@@ -976,7 +979,7 @@ class FacebookSession:
                 #tn = re.sub('/hphotos-\w+-\w+/\w+\.\w+/','/hphotos-ak-snc1/hs255.snc1/',tn) # this seems to get better results then using the random server
                 item = xbmcgui.ListItem()
                 item.setLabel(DONOTHING(self.removeCRLF(p.name(p.id))))
-                source = DONOTHING(p.source())
+                source = p.images()[0].get('source', '')
                 caption = self.makeCaption(p, uid)
                 item.setPath(source)
                 item.setProperty('source',source)
@@ -1038,8 +1041,8 @@ class FacebookSession:
                 videos = self.graph.urlRequest(paging)
             else:
                 self.paging = []
-                if uploaded: videos = self.graph.getObject(uid).connections.videos__uploaded()
-                else: videos = self.graph.getObject(uid).connections.videos()
+                if uploaded: videos = self.graph.getObject(uid).connections.videos__uploaded(fields='picture,source')
+                else: videos = self.graph.getObject(uid).connections.videos(fields='picture,source')
             if videos.previous:
                 item = self.getPagingItem('prev', videos.previous, 'videos',uid=uid)
                 items.append(item)

@@ -7,6 +7,13 @@ Known Issues/TODO:
 	-Exit photo/tags view with same photo selected (option?)
 	-Go to tagged friend when selecting tag from photo/tags view
 
+*** 0.9.17 ***
+
+Fixed thumbnails not displaying
+Fixed images not displaying
+Fixed videos not playing
+Removed superfluous auto login setting
+
 *** 0.9.16 ***
 
 Fix for errors with Estuary and others
