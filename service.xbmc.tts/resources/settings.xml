@@ -26,7 +26,7 @@
     <setting visible="eq(-15,SAPI)" id="speed.SAPI" label="32004" type="slider" subsetting="true" option="int" default="0" range="-10,10" />
     <setting visible="eq(-16,SAPI)" id="pitch.SAPI" label="32005" type="slider" subsetting="true" option="int" default="0" range="-10,10" />
     <setting visible="eq(-17,SAPI)" id="volume.SAPI" label="32014" type="slider" subsetting="true" option="percent" default="100" range="0,100" />
-    <setting visible="eq(-18,SAPI)" id="speak_via_xbmc.SAPI" label="32015" type="bool" subsetting="true" default="true" />
+    <setting visible="eq(-18,SAPI)" id="speak_via_xbmc.SAPI" label="32015" type="bool" subsetting="true" default="false" />
 
     <!-- pico2wave -->
     <setting visible="eq(-19,pico2wave)" id="language.pico2wave" subsetting="true" label="32016" type="action" action='XBMC.NotifyAll(service.xbmc.tts,SETTINGS.SETTING_DIALOG,"[\"pico2wave\",\"language\"]")' />

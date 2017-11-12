@@ -23,6 +23,11 @@ EXTERNAL TODO:
  OSX installer?
  Android TTS app for android backend
 
+** 1.0.8 **
+
+Now defaults to outputting direct through SAPI - was crashing on Windows when playing speech via XBMC
+Add spanish translation - thanks to bcernesto
+
 ** 1.0.7 **
 
 Add some fixes for the video info dialog
