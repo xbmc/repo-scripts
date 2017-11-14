@@ -11,9 +11,9 @@ T = xbmcaddon.Addon(ADDON_ID).getLocalizedString
 TOKEN_PATH = os.path.join(xbmc.translatePath(xbmcaddon.Addon(ADDON_ID).getAddonInfo('profile')),'tokens')
 if not os.path.exists(TOKEN_PATH): os.makedirs(TOKEN_PATH)
 
-URL = 'https://main-ruuk.rhcloud.com/auth/{0}'
+URL = 'https://2ndmind.com/auth/{0}'
 USER_URL = 'auth.2ndmind.com'
-REFERRER = 'https://main-ruuk.rhcloud.com/'
+REFERRER = 'https://2ndmind.com/'
 WAIT_SECONDS = 300
 POLL_INTERVAL_SECONDS = 5
 
@@ -73,6 +73,7 @@ def loadTokenFromFile():
 def _getToken(source):
 	session = requests.Session()
 	session.headers.update({'referer': REFERRER})
+	xbmc.log(repr(session.headers), xbmc.LOGNOTICE)
 	req = session.post(URL.format('getlookup'),data={'source':source})
 	start = time.time()
 	data = req.json()

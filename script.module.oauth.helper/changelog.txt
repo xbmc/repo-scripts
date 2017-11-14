@@ -1,5 +1,9 @@
 Changelog for OAuth Helper
 
+*** 0.0.9 ***
+
+Update auth URLs
+
 *** 0.0.8 ***
 
 Fix timeout dialog
