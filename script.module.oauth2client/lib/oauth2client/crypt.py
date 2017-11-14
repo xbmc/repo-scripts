@@ -38,10 +38,37 @@ class AppIdentityError(Exception):
   pass
 
 
+def _TryOpenSslImport():
+  """Import OpenSSL, avoiding the explicit import where possible.
+
+  Importing OpenSSL 0.14 can take up to 0.5s, which is a large price
+  to pay at module import time. However, it's also possible for
+  ``imp.find_module`` to fail to find the module, even when it's
+  installed. (This is the case in various exotic environments,
+  including some relevant for Google.) So we first try a fast-path,
+  and fall back to the slow import as needed.
+
+  Args:
+    None
+  Returns:
+    None
+  Raises:
+    ImportError if OpenSSL is unavailable.
+
+  """
+  try:
+    _, _package_dir, _ = imp.find_module('OpenSSL')
+    if not (os.path.isfile(os.path.join(_package_dir, 'crypto.py')) or
+            os.path.isfile(os.path.join(_package_dir, 'crypto.so')) or
+            os.path.isdir(os.path.join(_package_dir, 'crypto'))):
+      raise ImportError('No module named OpenSSL.crypto')
+    return
+  except ImportError:
+    import OpenSSL.crypto
+
+
 try:
-  _, _package_dir, _ = imp.find_module('OpenSSL')
-  if not os.path.isfile(os.path.join(_package_dir, 'crypto.py')):
-    raise ImportError('No module named OpenSSL')
+  _TryOpenSslImport()
 
   class OpenSSLVerifier(object):
     """Verifies the signature on a message."""

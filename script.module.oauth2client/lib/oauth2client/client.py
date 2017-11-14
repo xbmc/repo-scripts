@@ -81,6 +81,8 @@ GOOGLE_APPLICATION_CREDENTIALS = 'GOOGLE_APPLICATION_CREDENTIALS'
 # The ~/.config subdirectory containing gcloud credentials. Intended
 # to be swapped out in tests.
 _CLOUDSDK_CONFIG_DIRECTORY = 'gcloud'
+# The environment variable name which can replace ~/.config if set.
+_CLOUDSDK_CONFIG_ENV_VAR = 'CLOUDSDK_CONFIG'
 
 # The error message we show users when we can't find the Application
 # Default Credentials.
@@ -530,7 +532,6 @@ class OAuth2Credentials(Credentials):
     request_orig = http.request
 
     # The closure that will replace 'httplib2.Http.request'.
-    @util.positional(1)
     def new_request(uri, method='GET', body=None, headers=None,
                     redirections=httplib2.DEFAULT_MAX_REDIRECTS,
                     connection_type=None):
@@ -552,17 +553,31 @@ class OAuth2Credentials(Credentials):
         else:
           headers['user-agent'] = self.user_agent
 
+      body_stream_position = None
+      if all(getattr(body, stream_prop, None) for stream_prop in
+             ('read', 'seek', 'tell')):
+        body_stream_position = body.tell()
+
       resp, content = request_orig(uri, method, body, clean_headers(headers),
                                    redirections, connection_type)
 
-      if resp.status in REFRESH_STATUS_CODES:
-        logger.info('Refreshing due to a %s', resp.status)
+      # A stored token may expire between the time it is retrieved and the time
+      # the request is made, so we may need to try twice.
+      max_refresh_attempts = 2
+      for refresh_attempt in range(max_refresh_attempts):
+        if resp.status not in REFRESH_STATUS_CODES:
+          break
+        logger.info('Refreshing due to a %s (attempt %s/%s)', resp.status,
+                    refresh_attempt + 1, max_refresh_attempts)
         self._refresh(request_orig)
         self.apply(headers)
-        return request_orig(uri, method, body, clean_headers(headers),
-                            redirections, connection_type)
-      else:
-        return (resp, content)
+        if body_stream_position is not None:
+          body.seek(body_stream_position)
+
+        resp, content = request_orig(uri, method, body, clean_headers(headers),
+                                     redirections, connection_type)
+
+      return (resp, content)
 
     # Replace the request method with our own closure.
     http.request = new_request
@@ -620,6 +635,9 @@ class OAuth2Credentials(Credentials):
       try:
         data['token_expiry'] = datetime.datetime.strptime(
             data['token_expiry'], EXPIRY_FORMAT)
+      except TypeError:
+        data['token_expiry'] = datetime.datetime(*(time.strptime(
+            data['token_expiry'], EXPIRY_FORMAT)[0:6]))
       except ValueError:
         data['token_expiry'] = None
     retval = cls(
@@ -755,8 +773,10 @@ class OAuth2Credentials(Credentials):
       self.store.acquire_lock()
       try:
         new_cred = self.store.locked_get()
+
         if (new_cred and not new_cred.invalid and
-            new_cred.access_token != self.access_token):
+            new_cred.access_token != self.access_token and
+            not new_cred.access_token_expired):
           logger.info('Updated access_token read from Storage')
           self._updateFromCredential(new_cred)
         else:
@@ -974,11 +994,18 @@ def _get_environment(urlopen=None):
   # None is an unset value, not the default.
   SETTINGS.env_name = DEFAULT_ENV_NAME
 
-  server_software = os.environ.get('SERVER_SOFTWARE', '')
-  if server_software.startswith('Google App Engine/'):
-    SETTINGS.env_name = 'GAE_PRODUCTION'
-  elif server_software.startswith('Development/'):
-    SETTINGS.env_name = 'GAE_LOCAL'
+  try:
+    import google.appengine
+    has_gae_sdk = True
+  except ImportError:
+    has_gae_sdk = False
+
+  if has_gae_sdk:
+    server_software = os.environ.get('SERVER_SOFTWARE', '')
+    if server_software.startswith('Google App Engine/'):
+      SETTINGS.env_name = 'GAE_PRODUCTION'
+    elif server_software.startswith('Development/'):
+      SETTINGS.env_name = 'GAE_LOCAL'
   elif NO_GCE_CHECK != 'True' and _detect_gce_environment(urlopen=urlopen):
     SETTINGS.env_name = 'GCE_PRODUCTION'
 
@@ -1242,6 +1269,10 @@ def save_to_well_known_file(credentials, well_known_file=None):
   if well_known_file is None:
     well_known_file = _get_well_known_file()
 
+  config_dir = os.path.dirname(well_known_file)
+  if not os.path.isdir(config_dir):
+    raise OSError('Config directory does not exist: %s' % config_dir)
+
   credentials_data = credentials.serialization_data
   _save_private_file(well_known_file, credentials_data)
 
@@ -1268,24 +1299,23 @@ def _get_well_known_file():
 
   WELL_KNOWN_CREDENTIALS_FILE = 'application_default_credentials.json'
 
-  if os.name == 'nt':
-    try:
-      default_config_path = os.path.join(os.environ['APPDATA'],
-                                         _CLOUDSDK_CONFIG_DIRECTORY)
-    except KeyError:
-      # This should never happen unless someone is really messing with things.
-      drive = os.environ.get('SystemDrive', 'C:')
-      default_config_path = os.path.join(drive, '\\',
-                                         _CLOUDSDK_CONFIG_DIRECTORY)
-  else:
-    default_config_path = os.path.join(os.path.expanduser('~'),
-                                       '.config',
-                                       _CLOUDSDK_CONFIG_DIRECTORY)
+  default_config_dir = os.getenv(_CLOUDSDK_CONFIG_ENV_VAR)
+  if default_config_dir is None:
+    if os.name == 'nt':
+      try:
+        default_config_dir = os.path.join(os.environ['APPDATA'],
+                                          _CLOUDSDK_CONFIG_DIRECTORY)
+      except KeyError:
+        # This should never happen unless someone is really messing with things.
+        drive = os.environ.get('SystemDrive', 'C:')
+        default_config_dir = os.path.join(drive, '\\',
+                                          _CLOUDSDK_CONFIG_DIRECTORY)
+    else:
+      default_config_dir = os.path.join(os.path.expanduser('~'),
+                                        '.config',
+                                        _CLOUDSDK_CONFIG_DIRECTORY)
 
-  default_config_path = os.path.join(default_config_path,
-                                     WELL_KNOWN_CREDENTIALS_FILE)
-
-  return default_config_path
+  return os.path.join(default_config_dir, WELL_KNOWN_CREDENTIALS_FILE)
 
 
 def _get_application_default_credential_from_file(filename):
