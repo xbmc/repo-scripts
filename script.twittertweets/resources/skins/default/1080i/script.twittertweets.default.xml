@@ -85,7 +85,7 @@
                 <aspectratio scalediffuse="true" align="center" aligny="center">keep</aspectratio>    
             </control>    
             <control type="image">
-                <left>-660</left> 
+                <left>-644</left> 
                 <top>0</top>  
                 <width>669</width> 
                 <height>407</height> 
@@ -93,14 +93,23 @@
                 <description></description>
                 <visible>Control.IsVisible(30112)</visible>
                 <aspectratio scalediffuse="true" align="center" aligny="center">keep</aspectratio>    
-            </control>    
+            </control>         
             <control type="image" id="30112">
-                <left>-613</left> 
+                <left>-593</left> 
                 <top>40</top>  
                 <width>600</width> 
-                <height>300</height> 
+                <height>300</height>
                 <aspectratio scalediffuse="true" align="center" aligny="center">scale</aspectratio>    
             </control>
+            <control type="videowindow">
+                <description>VideoWindow</description>
+                <left>-593</left> 
+                <top>40</top>  
+                <width>600</width> 
+                <height>300</height>
+                <visible>Control.IsVisible(30112)</visible>
+                <aspectratio scalediffuse="true" align="center" aligny="center">scale</aspectratio>    
+            </control>   
             <control type="label" id="30105">
                 <left>110</left> 
                 <top>25</top>

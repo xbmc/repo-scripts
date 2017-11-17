@@ -3,9 +3,10 @@
     <category label="30005"> 
         <setting id="Enable_Debugging" type="bool" label="30000" default="false" />
         <setting id="Enable_Attachment"type="bool" label="30011" default="true" />
+        <setting id="Enable_Playback"  type="bool" label="30014" default="true" subsetting="true" visible="eq(-1,true)" />
         <setting id="Include_Retweets" type="bool" label="30013" default="false" />
-        <setting id="Wait_Time"        type="enum" label="30002" default="2" values="5m|10m|15m|30m"/>
-        <setting id="Close_Time"       type="enum" label="30003" default="2" values="2s|5s|10s|15s"/>
+        <setting id="Wait_Time"        type="enum" label="30002" default="2" values="1m|2m|4m|6m|8m|10m"/>
+        <setting id="Close_Time"       type="enum" label="30003" default="3" values="2s|5s|10s|15s|30s|60s|120s"/>
         <setting id="Not_While_Playing"type="bool" label="30004" default="true" />
     </category>
     <category label="30006"> 
