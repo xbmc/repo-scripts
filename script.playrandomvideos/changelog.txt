@@ -1,0 +1,50 @@
+v1.2.0 (2017-11-13)
+- Feature: merge in 'Play one random' context item
+- Feature: option for continuous play
+- Feature: option to play from all videos if no (un)watched videos available as configured
+- Feature: option to exclude TV show extras from random selection
+- Fix: Leia compatibility for context items
+
+v1.1.2 (2017-04-28)
+- Fix incorrect JSON-RPC notifications on Krypton
+
+v1.1.0 (2016-11-07)
+- Show notification if a directory can't be played
+- Show busy notification before playing first item, and option to disable it
+
+v1.1.0~beta3 (2016-10-19)
+- Replace ugly error message when playing from non-permanent (auto-mounted, external,
+  removable) sources with a nice message suggesting to add the source (fixing the problem).
+- Add `singlevideo` option to RunScript
+- Fix certain special library paths in Krypton, like recently added movies
+- Rework the directory crawler
+- Integrate context item into script
+
+v1.1.0~beta2 (2016-08-06)
+- Fix error from datetime module
+- Fix error for local paths
+
+v1.1.0~beta1 (2016-07-30)
+- Rework for continuous play
+- deprecated script argument `forcewatchmode` for `watchmode`
+- remove script argument `limit`
+
+v1.0.3 (2016-02-23)
+- Fix issues on Android and Python 2.6
+v1.0.2 (2016-01-10)
+- Fix the default settings
+v1.0.1 (2015-12-22)
+- Small text changes
+v1.0.0 (2015-12-20)
+- Localize setting options
+- Rework files to limit list based on # of directories
+- Use simplejson if not running Python 2.7
+- Other cleanup before official repo inclusion
+v0.7.0 (2015-11-08)
+- Ignore plugin paths for now
+v0.6.0 (2015-09-20)
+- Add unwatched/watched filter
+v0.5.1 (2015-09-15)
+- Try blacklisting some troublesome plugin paths
+v0.5.0 (2015-09-11)
+- Initial WIP release
