@@ -37,26 +37,24 @@ DEBUG       = REAL_SETTINGS.getSetting('Enable_Debugging') == 'true'
 BASE_URL    = 'http://twitter.com/'
 
 def log(msg, level=xbmc.LOGDEBUG):
-    if DEBUG == True:
-        if level == xbmc.LOGERROR:
-            msg += ' ,' + traceback.format_exc()
-        xbmc.log(ADDON_ID + '-' + ADDON_VERSION + '-' + (msg), level)
-
+    if DEBUG == False and level != xbmc.LOGERROR: return
+    if level == xbmc.LOGERROR: msg += ' ,' + traceback.format_exc()
+    xbmc.log(ADDON_ID + '-' + ADDON_VERSION + '-' + (msg.encode("utf-8")), level)
+     
 def getProperty(str):
-    try:
-        return xbmcgui.Window(10000).getProperty((str))
-    except Exception,e:
+    try: return xbmcgui.Window(10000).getProperty((str))
+    except Exception as e:
         log("getProperty, Failed! " + str(e), xbmc.LOGERROR)
         return ''
           
 def setProperty(str1, str2):
-    try:
-        xbmcgui.Window(10000).setProperty((str1), (str2))
-    except Exception,e:
+    try: xbmcgui.Window(10000).setProperty((str1), (str2))
+    except Exception as e:
         log("setProperty, Failed! " + str(e), xbmc.LOGERROR)
 
 def clearProperty(str):
     xbmcgui.Window(10000).clearProperty((str))
+   
    
 class Monitor(xbmc.Monitor):
     def __init__(self, *args, **kwargs):
@@ -79,27 +77,28 @@ class Service(object):
         log('startService')
         self.checkSettings()
         while not self.myMonitor.abortRequested():
+            for user in self.userList:
+                # Don't run while pending changes and wait two seconds between each chkfeed.
+                if self.myMonitor.pendingChange == True or self.myMonitor.waitForAbort(2) == True: 
+                    log('startService, waitForAbort/pendingChange')
+                    continue
+                                    
+                # Don't run while playing.
+                if xbmc.Player().isPlayingVideo() == True and self.ignore == True:
+                    log('startService, ignore during playback')
+                    continue
+
+                # Don't run while setting menu is opened.
+                if xbmcgui.getCurrentWindowDialogId() in [10140,10103]:
+                    log('startService, settings dialog opened')
+                    continue
+
+                self.chkFEED(user)
+                
             if self.myMonitor.pendingChange == True or self.myMonitor.waitForAbort(self.wait) == True:
                 log('startService, waitForAbort/pendingChange')
                 break
 
-            # Dont run while playing.
-            if xbmc.Player().isPlayingVideo() == True and self.ignore == True:
-                log('start, ignore during playback')
-                self.myMonitor.waitForAbort(1)
-                continue
-                
-            # Don't run while setting menu is opened.
-            if xbmcgui.getCurrentWindowDialogId() in [10140,10103]:
-                log('start, settings dialog opened')
-                self.myMonitor.waitForAbort(1)
-                continue
-
-            for user in self.userList:
-                if self.myMonitor.pendingChange == True or self.myMonitor.waitForAbort(1) == True:
-                    break
-                self.chkFEED(user)
-                
         if self.myMonitor.pendingChange == True:
             xbmc.executebuiltin("Notification(%s, %s, %d, %s)" % (ADDON_NAME, LANGUAGE(30012), 4000, ICON))
             self.restartService()
@@ -115,12 +114,11 @@ class Service(object):
             
                 
     def checkSettings(self):
-        self.wait = [300,600,900,1800][int(REAL_SETTINGS.getSetting('Wait_Time'))]
-        self.ignore = REAL_SETTINGS.getSetting('Not_While_Playing') == 'true'
+        self.wait        = [60,120,240,360,480,600][int(REAL_SETTINGS.getSetting('Wait_Time'))]
+        self.ignore      = REAL_SETTINGS.getSetting('Not_While_Playing') == 'true'
         self.incRetweets = REAL_SETTINGS.getSetting('Include_Retweets') == 'true'
         userList = []
-        for i in range(1,51):
-            userList.append((REAL_SETTINGS.getSetting('FEED%d'%i)).replace('@',''))
+        for i in range(1,51): userList.append((REAL_SETTINGS.getSetting('FEED%d'%i)).replace('@',''))
         self.userList = filter(None, userList)
         self.myMonitor.pendingChange = False
         log('checkSettings, ignore = '   + str(self.ignore))
@@ -129,12 +127,9 @@ class Service(object):
         
 
     def testString(self):
-        ''' 
-        gen. 140char mock sentence for skin test
-        '''
+        #gen. 140char mock sentence for skin test
         a = ''
-        for i in range(1,141):
-            a += 'W%s'%random.choice(['',' '])
+        for i in range(1,141): a += 'W%s'%random.choice(['',' '])
         return a[:140]
         
 
@@ -146,11 +141,11 @@ class Service(object):
         
     def correctTime(self, tweetTime):
         log('correctTime, IN tweetTime = '+ tweetTime)
-        tweetTime = datetime.datetime.strptime(tweetTime, '%I:%M %p - %d %b %Y')
-        is_dst = time.daylight and time.localtime().tm_isdst > 0
+        tweetTime  = datetime.datetime.strptime(tweetTime, '%I:%M %p - %d %b %Y')
+        is_dst     = time.daylight and time.localtime().tm_isdst > 0
         utc_offset = + (time.altzone if is_dst else time.timezone)
-        td_local = tweetTime + datetime.timedelta(seconds=utc_offset-3600)
-        tweetTime = td_local.strftime('%I:%M %p - %d %b %Y').lstrip('0')
+        td_local   = tweetTime + datetime.timedelta(seconds=utc_offset-3600)
+        tweetTime  = td_local.strftime('%I:%M %p - %d %b %Y').lstrip('0')
         log('correctTime, OUT tweetTime = '+ tweetTime)
         return tweetTime
         
@@ -167,30 +162,47 @@ class Service(object):
             tweetAtts   = soup('div' , {'class': 'AdaptiveMediaOuterContainer'})
             tweetStats  = soup('span', {'class': 'ProfileTweet-actionCountForAria'})
             twitterPin  = len(soup('span' , {'class': 'js-pinned-text'})) > 0
-
+            tmpThumb    = None
+            tmpVideo    = None
+            tmpImage    = None
+            
             for idx, item in enumerate(tweetTimes):
                 if idx == 0 and twitterPin == True and user.lower() in item.attrs['href'].lower(): continue
                 elif self.incRetweets == True: break
                 elif user.lower() in item.attrs['href'].lower(): break
-            try:
-                tmpAttach   = tweetMsgs[idx]('a', {'class': 'twitter-timeline-link u-hidden'})[0].get_text()
-                tweetAttach = tweetAtts[idx].find('img').attrs['src'] if tmpAttach.startswith('pic.twitter.com') else 'NA.png'
-            except:
-                tweetAttach = 'NA.png'
-                
-            tweetTime  = self.correctTime(tweetTimes[idx]["title"].encode("utf-8"))
-            tweetMsg   = self.cleanString((tweetMsgs[idx]('p' , {'class': 'TweetTextSize TweetTextSize--normal js-tweet-text tweet-text'})[0].get_text()).encode("utf-8"))
-            tweetStats = [stat.get_text().encode("utf-8") for stat in tweetStats]
-            tweetStats = [tweetStats[x:x+3] for x in xrange(0, len(tweetStats), 3)]
-            tweetStats = tweetStats[idx]
+            
+            try:                 
+                tmpAttach = tweetMsgs[idx]('a', {'class': 'twitter-timeline-link u-hidden'})[0].get_text()
+                tmpImage = tweetAtts[idx].find('img').attrs['src'] if tmpAttach.startswith('pic.twitter.com') else None
+            except: tmpImage = None
 
+            try:
+                tmpThumb    = tweetAtts[idx]('div', {'class': 'PlayableMedia-container'})
+                tmpThumb    = tmpThumb[0]('div', {'class': 'PlayableMedia-player'})[0]
+                tmpThumb    = re.findall("background-image:url(.*)'", str(tmpThumb))[0].replace("('",'')
+            except: tmpThumb = None
+            
+            if tmpThumb is not None:
+                tmpVideo    = tmpThumb.replace('pbs.twimg.com/tweet_video_thumb/','video.twimg.com/tweet_video/').replace('.jpg','.mp4')
+            
+            tmpImage    = tmpImage if tmpThumb is None else tmpThumb
+            tweetTime   = self.correctTime(tweetTimes[idx]["title"].encode("utf-8"))
+            tweetMsg    = self.cleanString((tweetMsgs[idx]('p' , {'class': 'TweetTextSize TweetTextSize--normal js-tweet-text tweet-text'})[0].get_text()).encode("utf-8"))
+            tweetStats  = [stat.get_text().encode("utf-8") for stat in tweetStats]
+            tweetStats  = [tweetStats[x:x+3] for x in xrange(0, len(tweetStats), 3)]
+            tweetStats = tweetStats[idx]
+            if len(tweetMsg) == 0: return
+            
+            # test
+            # tmpImage = 'https://pbs.twimg.com/tweet_video_thumb/DOubaqGWAAEBPWn.jpg'
+            # tmpVideo = 'https://video.twimg.com/tweet_video/DOubaqGWAAEBPWn.mp4'
+            # test
+            
             if getProperty('%s.%s.time' %(ADDON_ID,user)) != tweetTime:
                 setProperty('%s.%s.time'%(ADDON_ID,user),tweetTime)
-                ui = gui.GUI("%s.default.xml" %ADDON_ID,ADDON_PATH,"default",params=({'user':user,'attachment':tweetAttach,'icon':twitterPic,'username':twitterAlt,'title':tweetMsg,'time':tweetTime,'stats':tweetStats,'verified':twitterVer}))
+                ui = gui.GUI("%s.default.xml" %ADDON_ID,ADDON_PATH,"default",params=({'user':user,'video':tmpVideo,'image':tmpImage,'icon':twitterPic,'username':twitterAlt,'title':tweetMsg,'time':tweetTime,'stats':tweetStats,'verified':twitterVer}))
                 ui.doModal()
-        except Exception,e:
-            log('chkFEED, failed! ' + str(e))
-            return
+        except Exception as e: log('chkFEED, failed! ' + str(e))
             
 if __name__ == '__main__':
     Service()
