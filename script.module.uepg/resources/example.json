@@ -1,0 +1,20 @@
+{
+	"channelname": "",
+	"channelnumber": 0,
+	"channellogo": "",
+	"isfavorite": "False",
+	"guidedata": [{
+		"url": "",
+		"starttime": 0,
+		"runtime": 0,
+		"label": "",
+		"label2": "HD",
+		"art": [{
+			"thumb": ""
+		}],
+		"streamdetails": [{
+			"video": ""
+		}]
+	}]
+
+}

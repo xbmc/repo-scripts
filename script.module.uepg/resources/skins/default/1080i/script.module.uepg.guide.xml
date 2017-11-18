@@ -1,0 +1,721 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<window id="33000">
+    <allowoverlay>no</allowoverlay>
+    <depth>2</depth>
+    <zorder>2</zorder>
+    <coordinates>
+        <left>0</left>
+        <top>0</top>
+    </coordinates>
+    <onload>SetProperty(uEPG.timeCount,3,10000)</onload>
+    <onload>SetProperty(uEPG.textColor,0xFFFFFFFF,10000)</onload>
+    <onload>SetProperty(uEPG.disabledColor,0xFFFFFFFF,10000)</onload>
+    <onload>SetProperty(uEPG.focusedColor,0xFFFFFFFF,10000)</onload>
+    <onload>SetProperty(uEPG.shadowColor,0xFF000000,10000)</onload>
+    <onload>SetProperty(uEPG.pastColor,0xFF0f85a5,10000)</onload>
+    <onload>SetProperty(uEPG.timeColor,0xFF0f85a5,10000)</onload>
+    <onload>SetProperty(uEPG.textFont,font12,10000)</onload>
+    <onload>SetProperty(uEPGGuide,True,10000)</onload>
+    <onunload>SetProperty(uEPGGuide,False,10000)</onunload> 
+    <animation effect="fade" start="0" end="100" time="100">WindowOpen</animation>
+    <animation effect="fade" start="100" end="0" time="100">WindowClose</animation>
+    <controls> 
+        <control type="videowindow">
+            <description>VideoWindow</description>
+            <width>1920</width>
+            <height>1080</height>
+        </control>
+        <control type="image">
+            <width>1920</width>
+            <height>1080</height>
+            <texture>Background.png</texture>
+            <animation effect="fade" start="85" end="85" condition="True">Conditional</animation>
+        </control>
+        <control type="image">
+            <left>0</left>
+            <top>0</top>
+            <width>110%</width>
+            <height>130</height>
+            <texture>InfoBar.png</texture>
+            <animation effect="fade" start="85" end="85" condition="True">Conditional</animation>
+        </control>
+        <control type="image">
+            <top>0</top>
+            <left>20</left>
+            <width>55</width>
+            <height>100</height>
+            <aspectratio>keep</aspectratio>
+            <texture fallback="fanart.png" background="true">$INFO[Window(10000).Property(PluginIcon)]</texture>
+            <animation effect="fade" start="85" end="85" condition="True">Conditional</animation>
+        </control>
+        <control type="label">
+            <top>16</top>
+            <left>100</left>
+            <width min="1" max="800">auto</width>
+            <height>100</height>
+            <font>font45</font>
+            <shadowcolor>ff000000</shadowcolor>
+            <label>$INFO[System.AddonTitle(script.module.uepg),, / ]$INFO[Window(10000).Property(PluginName)]</label>
+        </control>
+        <control type="grouplist">
+            <top>0</top>
+            <align>right</align>
+            <right>20</right>
+            <height>200</height>
+            <orientation>horizontal</orientation>
+            <width>1100</width>
+            <itemgap>10</itemgap>
+            <animation effect="fade" time="150">VisibleChange</animation>
+            <control type="group">
+                <width>600</width>
+                <visible>Player.HasMedia</visible>
+                <animation effect="fade" time="200">VisibleChange</animation>
+                <control type="grouplist">
+                    <left>-75</left>
+                    <orientation>horizontal</orientation>
+                    <height>38</height>
+                    <top>14</top>
+                    <align>right</align>
+                    <width>660</width>
+                    <itemgap>5</itemgap>
+                    <usecontrolcoords>true</usecontrolcoords>
+                    <control type="image">
+                        <top>4</top>
+                        <width>32</width>
+                        <height>32</height>
+                        <aspectratio>keep</aspectratio>
+                        <texture colordiffuse="FF0f85a5">play.png</texture>
+                        <animation effect="fade" start="85" end="85" condition="True">Conditional</animation>
+                    </control>
+                    <control type="label">
+                        <label>$INFO[Player.Title]</label>
+                        <font>font27</font>
+                        <shadowcolor>ff000000</shadowcolor>
+                        <height>35</height>
+                        <width min="1" max="802">auto</width>
+                    </control>
+                    <control type="label">
+                        <label>$INFO[VideoPlayer.TvShowTitle]</label>
+                        <left>-45</left>
+                        <top>44</top>
+                        <font>font12</font>
+                        <textcolor>C0C0C0C0</textcolor>
+                        <shadowcolor>ff000000</shadowcolor>
+                        <height>25</height>
+                        <width>630</width>
+                        <align>right</align>
+                        <visible>VideoPlayer.Content(episodes)</visible>
+                    </control>
+                    <control type="label">
+                        <label>$INFO[VideoPlayer.Year]$INFO[VideoPlayer.Genre, - ]</label>
+                        <left>-45</left>
+                        <top>44</top>
+                        <font>font12</font>
+                        <textcolor>C0C0C0C0</textcolor>
+                        <shadowcolor>ff000000</shadowcolor>
+                        <height>25</height>
+                        <width>630</width>
+                        <align>right</align>
+                        <visible>VideoPlayer.Content(movies)</visible>
+                    </control>
+                    <control type="label">
+                        <label>$INFO[VideoPlayer.ChannelName]</label>
+                        <left>-45</left>
+                        <top>44</top>
+                        <font>font12</font>
+                        <textcolor>C0C0C0C0</textcolor>
+                        <shadowcolor>ff000000</shadowcolor>
+                        <height>25</height>
+                        <width>630</width>
+                        <align>right</align>
+                        <visible>VideoPlayer.Content(video)</visible>
+                    </control>
+                </control>
+            </control>
+            <control type="label">
+                <font>font_clock</font>
+                <shadowcolor>ff000000</shadowcolor>
+                <height>200</height>
+                <width>auto</width>
+                <label>$INFO[System.Time]</label>
+            </control>
+        </control>
+        <control type="image">
+            <posx>0</posx>
+            <posy>100</posy>
+            <width>1920</width>
+            <height>725</height>
+            <animation effect="fade" start="85" end="85" condition="True">Conditional</animation>
+            <texture colordiffuse="E6FFFFFF">Panel.png</texture>
+        </control>
+        <control type="image" id="33009">     
+            <description>Optional Channel Focus Highlight</description>
+            <posx>0</posx>       
+            <posy>-1000</posy>  
+            <width>408</width>
+            <height>72</height>
+            <texture>ButtonFocus.png</texture>
+            <animation effect="fade" start="85" end="85" condition="True">Conditional</animation>
+        </control> 
+        <control type="image" id="33010">     
+            <description>Optional Channel Playing Highlight</description>
+            <posx>0</posx>  
+            <posy>-1000</posy>  
+            <width>408</width>
+            <height>72</height>
+            <texture>FocusHighlight.png</texture>
+            <animation effect="fade" start="85" end="85" condition="True">Conditional</animation>
+        </control>
+        <control type="group">
+            <posx>0</posx>
+            <posy>-50</posy>
+            <control type="label" id="33005">
+                <description>Date Label</description>
+                <posx>20</posx>
+                <posy>150</posy>
+                <width min="162" max="400">auto</width>
+                <height>38</height>
+                <align>left</align>
+                <aligny>center</aligny>
+                <font>font12</font>
+                <textcolor>FF0f85a5</textcolor>
+            </control> 
+            <control type="label" id="33007">
+                <description>Timebar Current Time Button</description>
+                <posx>420</posx>
+                <posy>150</posy>
+                <width min="155" max="200">auto</width>
+                <height>38</height>
+                <fadetime>250</fadetime>
+                <textcolor>FF0f85a5</textcolor>
+                <font>font12</font>
+                <align>center</align>
+                <aligny>center</aligny>
+            </control>
+            <control type="label" id="33101">
+                <description>Time Label</description>
+                <posx>420</posx>
+                <posy>150</posy>
+                <width min="155" max="200">auto</width>
+                <height>38</height>
+                <label>Time 1</label>
+                <font>font12</font>
+                <align>left</align>
+                <aligny>center</aligny>
+                <textcolor>FF0f85a5</textcolor>
+            </control>>
+            <control type="label" id="33102">
+                <description>Time Label</description>
+                <posx>915</posx>
+                <posy>150</posy>
+                <width min="155" max="200">auto</width>
+                <height>38</height>
+                <label>Time 2</label>
+                <font>font12</font>
+                <align>left</align>
+                <aligny>center</aligny>
+                <textcolor>FF0f85a5</textcolor>
+            </control>
+            <control type="label" id="33103">
+                <description>Time Label</description>
+                <posx>1420</posx>
+                <posy>150</posy>
+                <width min="155" max="200">auto</width>
+                <height>38</height>
+                <label>Time 3</label>
+                <font>font12</font>
+                <align>left</align>
+                <aligny>center</aligny>
+                <textcolor>FF0f85a5</textcolor>
+            </control>       
+            <control type="grouplist">
+                <posx>10</posx>
+                <posy>189</posy>
+                <itemgap>0</itemgap>
+                <orientation>vertical</orientation>
+                <description>Number</description>
+                <control type="label" id="33111">
+                    <description>Channel 1 Number</description>
+                    <width>75</width>
+                    <height>75</height>
+                    <label></label>
+                    <font>font32_title</font>
+                    <align>right</align>
+                    <aligny>center</aligny>
+                    <textcolor>FFFFFFFF</textcolor>
+                    <shadowcolor>ff000000</shadowcolor>
+                </control>
+                <control type="label" id="33112">
+                    <description>Channel 2 Number</description>
+                    <width>75</width>
+                    <height>75</height>
+                    <label></label>
+                    <font>font32_title</font>
+                    <align>right</align>
+                    <aligny>center</aligny>
+                    <textcolor>FFFFFFFF</textcolor>
+                    <shadowcolor>ff000000</shadowcolor>
+                </control>
+                <control type="label" id="33113">
+                    <description>Channel 3 Number</description>
+                    <width>75</width>
+                    <height>75</height>
+                    <label></label>
+                    <font>font32_title</font>
+                    <align>right</align>
+                    <aligny>center</aligny>
+                    <textcolor>FFFFFFFF</textcolor>
+                    <shadowcolor>ff000000</shadowcolor>
+                </control>
+                <control type="label" id="33114">
+                    <description>Channel 4 Number</description>
+                    <width>75</width>
+                    <height>75</height>
+                    <label></label>
+                    <font>font32_title</font>
+                    <align>right</align>
+                    <aligny>center</aligny>
+                    <textcolor>FFFFFFFF</textcolor>
+                    <shadowcolor>ff000000</shadowcolor>
+                </control>
+                <control type="label" id="33115">
+                    <description>Channel 5 Number</description>
+                    <width>75</width>
+                    <height>75</height>
+                    <label></label>
+                    <font>font32_title</font>
+                    <align>right</align>
+                    <aligny>center</aligny>
+                    <textcolor>FFFFFFFF</textcolor>
+                    <shadowcolor>ff000000</shadowcolor>
+                </control>      
+                <control type="label" id="33116">
+                    <description>Channel 6 Number</description>
+                    <width>75</width>
+                    <height>75</height>
+                    <label></label>
+                    <font>font32_title</font>
+                    <align>right</align>
+                    <aligny>center</aligny>
+                    <textcolor>FFFFFFFF</textcolor>
+                    <shadowcolor>ff000000</shadowcolor>
+                </control>     
+                <control type="label" id="33117">
+                    <description>Channel 7 Number</description>
+                    <width>75</width>
+                    <height>75</height>
+                    <label></label>
+                    <font>font32_title</font>
+                    <align>right</align>
+                    <aligny>center</aligny>
+                    <textcolor>FFFFFFFF</textcolor>
+                    <shadowcolor>ff000000</shadowcolor>
+                </control>     
+                <control type="label" id="33118">
+                    <description>Channel 8 Number</description>
+                    <width>75</width>
+                    <height>75</height>
+                    <label></label>
+                    <font>font32_title</font>
+                    <align>right</align>
+                    <aligny>center</aligny>
+                    <textcolor>FFFFFFFF</textcolor>
+                    <shadowcolor>ff000000</shadowcolor>
+                </control>     
+                <control type="label" id="33119">
+                    <description>Channel 9 Number</description>
+                    <width>75</width>
+                    <height>75</height>
+                    <label></label>
+                    <font>font32_title</font>
+                    <align>right</align>
+                    <aligny>center</aligny>
+                    <textcolor>FFFFFFFF</textcolor>
+                    <shadowcolor>ff000000</shadowcolor>
+                </control>
+            </control>
+            <control type="group">            
+                <posx>25</posx>
+                <posy>0</posy>
+                <width>278</width>
+                <height>75</height>
+                <itemgap>0</itemgap>
+                <orientation>vertical</orientation>
+                <description>Logo+Name</description>
+                <control type="image" id="33411">
+                    <description>Channel 1 Icon</description>
+                    <posx>10</posx>
+                    <posy>189</posy>                         
+                    <width>75</width>
+                    <height>75</height>
+                    <align>left</align>
+                    <aligny>center</aligny>
+                    <aspectratio>keep</aspectratio> 
+                    <visible>false</visible>
+                    <animation effect="fade" start="85" end="85" condition="True">Conditional</animation>
+                </control>
+                <control type="label" id="33511">
+                    <description>Channel 1 Name</description>          
+                    <posx>90</posx>
+                    <posy>189</posy>
+                    <width>255</width>
+                    <height>75</height>
+                    <font>font12</font>
+                    <align>left</align>
+                    <aligny>center</aligny>
+                    <textcolor>FFFFFFFF</textcolor>
+                    <shadowcolor>ff000000</shadowcolor>
+                </control>
+                <control type="image" id="33412">
+                    <description>Channel 2 Icon</description>         
+                    <posx>10</posx>
+                    <posy>264</posy>                          
+                    <width>75</width>
+                    <height>75</height>
+                    <align>left</align>
+                    <aligny>center</aligny>
+                    <aspectratio>keep</aspectratio> 
+                    <visible>false</visible>
+                    <animation effect="fade" start="85" end="85" condition="True">Conditional</animation>
+                </control>
+                <control type="label" id="33512">
+                    <description>Channel 2 Name</description>     
+                    <posx>90</posx>
+                    <posy>264</posy>  
+                    <width>255</width>
+                    <height>75</height>
+                    <label></label>
+                    <font>font12</font>
+                    <align>left</align>
+                    <aligny>center</aligny>
+                    <textcolor>FFFFFFFF</textcolor>
+                    <shadowcolor>ff000000</shadowcolor>
+                </control>
+                <control type="image" id="33413">
+                    <description>Channel 3 Icon</description>         
+                    <posx>10</posx>
+                    <posy>339</posy>                       
+                    <width>75</width>
+                    <height>75</height>
+                    <align>left</align>
+                    <aligny>center</aligny>
+                    <aspectratio>keep</aspectratio> 
+                    <visible>false</visible>
+                    <animation effect="fade" start="85" end="85" condition="True">Conditional</animation>
+                </control>
+                <control type="label" id="33513">
+                    <description>Channel 3 Name</description>     
+                    <posx>90</posx>
+                    <posy>339</posy>  
+                    <width>255</width>
+                    <height>75</height>
+                    <label></label>
+                    <font>font12</font>
+                    <align>left</align>
+                    <aligny>center</aligny>
+                    <textcolor>FFFFFFFF</textcolor>
+                    <shadowcolor>ff000000</shadowcolor>
+                </control>
+                <control type="image" id="33414">
+                    <description>Channel 4 Icon</description>         
+                    <posx>10</posx>
+                    <posy>414</posy>                       
+                    <width>75</width>
+                    <height>75</height>
+                    <align>left</align>
+                    <aligny>center</aligny>
+                    <aspectratio>keep</aspectratio> 
+                    <visible>false</visible>
+                    <animation effect="fade" start="85" end="85" condition="True">Conditional</animation>
+                </control>
+                <control type="label" id="33514">
+                    <description>Channel 4 Name</description>     
+                    <posx>90</posx>
+                    <posy>414</posy>  
+                    <width>255</width>
+                    <height>75</height>
+                    <label></label>
+                    <font>font12</font>
+                    <align>left</align>
+                    <aligny>center</aligny>
+                    <textcolor>FFFFFFFF</textcolor>
+                    <shadowcolor>ff000000</shadowcolor>
+                </control>
+                <control type="image" id="33415">
+                    <description>Channel 5 Icon</description>         
+                    <posx>10</posx>
+                    <posy>489</posy>                       
+                    <width>75</width>
+                    <height>75</height>
+                    <align>left</align>
+                    <aligny>center</aligny>
+                    <aspectratio>keep</aspectratio>  
+                    <visible>false</visible>
+                    <animation effect="fade" start="85" end="85" condition="True">Conditional</animation>
+                </control> 
+                <control type="label" id="33515">
+                    <description>Channel 5 Name</description>     
+                    <posx>90</posx>
+                    <posy>489</posy>  
+                    <width>255</width>
+                    <height>75</height>
+                    <label></label>
+                    <font>font12</font>
+                    <align>left</align>
+                    <aligny>center</aligny>
+                    <textcolor>FFFFFFFF</textcolor>
+                    <shadowcolor>ff000000</shadowcolor>
+                </control> 
+                <control type="image" id="33416">
+                    <description>Channel 6 Icon</description>         
+                    <posx>10</posx>
+                    <posy>564</posy>                       
+                    <width>75</width>
+                    <height>75</height>
+                    <align>left</align>
+                    <aligny>center</aligny>
+                    <aspectratio>keep</aspectratio>  
+                    <visible>false</visible>
+                    <animation effect="fade" start="85" end="85" condition="True">Conditional</animation>
+                </control>   
+                <control type="label" id="33516">
+                    <description>Channel 6 Name</description>     
+                    <posx>90</posx>
+                    <posy>564</posy>  
+                    <width>255</width>
+                    <height>75</height>
+                    <label></label>
+                    <font>font12</font>
+                    <align>left</align>
+                    <aligny>center</aligny>
+                    <textcolor>FFFFFFFF</textcolor>
+                    <shadowcolor>ff000000</shadowcolor>
+                </control>
+                <control type="image" id="33417">
+                    <description>Channel 7 Icon</description>         
+                    <posx>10</posx>
+                    <posy>639</posy>                       
+                    <width>75</width>
+                    <height>75</height>
+                    <align>left</align>
+                    <aligny>center</aligny>
+                    <aspectratio>keep</aspectratio>   
+                    <visible>false</visible>
+                    <animation effect="fade" start="85" end="85" condition="True">Conditional</animation>
+                </control>   
+                <control type="label" id="33517">
+                    <description>Channel 7 Name</description>     
+                    <posx>90</posx>
+                    <posy>639</posy>  
+                    <width>255</width>
+                    <height>75</height>
+                    <label></label>
+                    <font>font12</font>
+                    <align>left</align>
+                    <aligny>center</aligny>
+                    <textcolor>FFFFFFFF</textcolor>
+                    <shadowcolor>ff000000</shadowcolor>
+                </control>
+                <control type="image" id="33418">
+                    <description>Channel 8 Icon</description>         
+                    <posx>10</posx>
+                    <posy>714</posy>                       
+                    <width>75</width>
+                    <height>75</height>
+                    <align>left</align>
+                    <aligny>center</aligny>
+                    <aspectratio>keep</aspectratio>   
+                    <visible>false</visible>
+                    <animation effect="fade" start="85" end="85" condition="True">Conditional</animation>
+                </control>   
+                <control type="label" id="33518">
+                    <description>Channel 8 Name</description>     
+                    <posx>90</posx>
+                    <posy>714</posy>  
+                    <width>255</width>
+                    <height>75</height>
+                    <label></label>
+                    <font>font12</font>
+                    <align>left</align>
+                    <aligny>center</aligny>
+                    <textcolor>FFFFFFFF</textcolor>
+                    <shadowcolor>ff000000</shadowcolor>
+                </control>
+                <control type="image" id="33419">
+                    <description>Channel 9 Icon</description>         
+                    <posx>10</posx>
+                    <posy>789</posy>                       
+                    <width>75</width>
+                    <height>75</height>
+                    <align>left</align>
+                    <aligny>center</aligny>
+                    <aspectratio>keep</aspectratio>   
+                    <visible>false</visible>
+                    <animation effect="fade" start="85" end="85" condition="True">Conditional</animation>
+                </control>   
+                <control type="label" id="33519">
+                    <description>Channel 9 Name</description>     
+                    <posx>90</posx>
+                    <posy>789</posy>  
+                    <width>255</width>
+                    <height>75</height>
+                    <label></label>
+                    <font>font12</font>
+                    <align>left</align>
+                    <aligny>center</aligny>
+                    <textcolor>FFFFFFFF</textcolor>
+                    <shadowcolor>ff000000</shadowcolor>
+                </control>
+            </control>
+            <control type="group" id="33611">
+                <posx>411</posx>
+                <posy>140</posy>
+                <width>1515</width>
+                <height>74</height>
+            </control>
+            <control type="group" id="33612">
+                <posx>411</posx>
+                <posy>215</posy>
+                <width>1515</width>
+                <height>74</height>
+            </control>
+            <control type="group" id="33613">
+                <posx>411</posx>
+                <posy>290</posy>
+                <width>1515</width>
+                <height>74</height>
+            </control>
+            <control type="group" id="33614">
+                <posx>411</posx>
+                <posy>364</posy>
+                <width>1515</width>
+                <height>74</height>
+            </control>
+            <control type="group" id="33615">
+                <posx>411</posx>
+                <posy>439</posy>
+                <width>1515</width>
+                <height>74</height>
+            </control>
+            <control type="group" id="33616">
+                <posx>411</posx>
+                <posy>514</posy>
+                <width>1515</width>
+                <height>74</height>
+            </control>
+            <control type="group" id="33617">
+                <posx>411</posx>
+                <posy>589</posy>
+                <width>1515</width>
+                <height>74</height>
+            </control>
+            <control type="group" id="33618">
+                <posx>411</posx>
+                <posy>664</posy>
+                <width>1515</width>
+                <height>74</height>
+            </control>
+            <control type="group" id="33619">
+                <posx>411</posx>
+                <posy>739</posy>
+                <width>1515</width>
+                <height>74</height>
+            </control>
+        </control>
+        <control type="image" id="33011"> 
+            <description>Timebar Optional past fade</description>
+            <posx>412</posx>
+            <posy>142</posy>
+            <width>-1</width>
+            <height>666</height>
+            <aspectratio>scale</aspectratio>
+        </control>  
+        <control type="image" id="33012"> 
+            <description>Timebar Optional future fade</description>
+            <posx>412</posx>
+            <posy>142</posy>
+            <width>-1</width>
+            <height>666</height>
+            <aspectratio>scale</aspectratio>
+        </control>
+        <control type="image" id="33013">
+            <description>Timebar line</description>
+            <posx>412</posx>
+            <posy>142</posy>
+            <width>16</width>
+            <height>666</height>
+            <aspectratio>scale</aspectratio>
+        </control> 
+        <control type="fixedlist" id="40000">
+            <itemlayout width="0" height="0">
+            </itemlayout>
+            <focusedlayout height="0" width="0">
+            </focusedlayout>
+        </control>
+        <control type="fixedlist" id="40001">
+            <itemlayout width="0" height="0">
+            </itemlayout>
+            <focusedlayout height="0" width="0">
+            </focusedlayout>
+        </control>
+        <control type="group">
+            <posx>0</posx>
+            <posy>840</posy>
+            <control type="image">
+                <description>Artwork</description>
+                <left>10</left>
+                <top>20</top>
+                <width>400</width>
+                <height>180</height>
+                <aspectratio scalediffuse="true" align="center" aligny="center">keep</aspectratio>
+                <texture fallback="fanart.png" background="true">$INFO[Container(40000).ListItem.Art(thumb)]</texture>
+                <animation effect="fade" time="500">VisibleChange</animation> 
+                <animation effect="fade" start="85" end="85" condition="True">Conditional</animation>
+            </control> 
+            <control type="image">
+                <left>1700</left>
+                <top>140</top>
+                <height>60</height>
+                <width>200</width>
+                <aspectratio scalediffuse="true" align="center" aligny="center">keep</aspectratio>
+                <texture fallback="fanart.png" background="true">$INFO[Container(40000).ListItem.Art(clearlogo)]</texture>
+                <animation effect="fade" time="500">VisibleChange</animation> 
+                <animation effect="fade" start="85" end="85" condition="True">Conditional</animation>
+            </control>
+            <control type="label">
+                <description>Show Info</description>
+                <posx>416</posx>
+                <posy>10</posy>
+                <width>1468</width>
+                <height>40</height>
+                <font>font12</font>
+                <textcolor>FFFFFFFF</textcolor>
+                <shadowcolor>ff000000</shadowcolor>
+                <aligny>top</aligny>
+                <align>left</align>
+                <scroll>true</scroll>
+                <wrapmultiline>true</wrapmultiline>
+                <scrollspeed>50</scrollspeed>
+                <scrollsuffix> - </scrollsuffix>
+                <label>[COLOR=FF0F85A5][B]$INFO[Window(10000).Property(Time),,   ][/B][/COLOR]$INFO[Container(40000).ListItem.Title,,      ][COLOR=FF0F85A5]$INFO[Container(40000).ListItem.genre,Genre: ,][/COLOR]</label>
+            </control> 
+            <control type="label">
+                <description>Show Info</description>
+                <posx>416</posx>
+                <posy>50</posy>
+                <width>1468</width>
+                <height>80</height>
+                <font>font12</font>
+                <textcolor>FFFFFFFF</textcolor>
+                <shadowcolor>ff000000</shadowcolor>
+                <aligny>top</aligny>
+                <align>left</align>
+                <scroll>true</scroll>
+                <wrapmultiline>true</wrapmultiline>
+                <scrollspeed>50</scrollspeed>
+                <scrollsuffix> - </scrollsuffix>
+                <label>$INFO[Container(40000).ListItem..plot,,]</label>
+            </control>
+        </control> 
+    </controls>
+</window>
