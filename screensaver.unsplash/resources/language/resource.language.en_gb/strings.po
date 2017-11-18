@@ -47,3 +47,7 @@ msgstr ""
 msgctxt "#32009"
 msgid "Enter Collection ID"
 msgstr ""
+
+msgctxt "#32010"
+msgid "Preferred Resolution"
+msgstr ""
