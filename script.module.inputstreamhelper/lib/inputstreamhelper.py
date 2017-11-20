@@ -118,6 +118,12 @@ class Helper(object):
     def _arch(self):
         """Map together and return the system architecture."""
         arch = platform.machine()
+        if arch == 'AMD64':
+            arch_bit = platform.architecture()[0]
+            if arch_bit == '32bit':
+                arch = 'x86'
+            elif arch_bit == '64bit':
+                arch = 'x86_64'
         if arch in config.X86_MAP:
             return config.X86_MAP[arch]
         elif 'armv' in arch:
