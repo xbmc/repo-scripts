@@ -37,7 +37,7 @@ WIDEVINE_ARCH_MAP_X86 = {
     'x86_64':
         {
             'Linux': 'x64',
-            'Windows': 'ia32',
+            'Windows': 'x64',
             'Darwin': 'x64'
         },
     'x86':
