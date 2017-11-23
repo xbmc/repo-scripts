@@ -1,6 +1,6 @@
-import collections
-
-from rollbar.lib import python_major_version, binary_type, string_types, integer_types, traverse
+from rollbar.lib import (
+    python_major_version, binary_type, string_types, integer_types,
+    number_types, traverse)
 
 _ALLOWED_CIRCULAR_REFERENCE_TYPES = [binary_type, bool, type(None)]
 
@@ -58,48 +58,53 @@ class Transform(object):
         return self.default(o, key=key)
 
 
-
-def transform(obj, transforms, key=None):
+def transform(obj, transform, key=None):
     key = key or ()
 
-    def do_transforms(type_name, val, key=None, **kw):
-        for transform in transforms:
-            fn = getattr(transform, 'transform_%s' % type_name, transform.transform_custom)
-            val = fn(val, key=key, **kw)
+    def do_transform(type_name, val, key=None, **kw):
+        fn = getattr(transform, 'transform_%s' % type_name, transform.transform_custom)
+        val = fn(val, key=key, **kw)
 
         return val
 
     if python_major_version() < 3:
         def string_handler(s, key=None):
             if isinstance(s, str):
-                return do_transforms('py2_str', s, key=key)
+                return do_transform('py2_str', s, key=key)
             elif isinstance(s, unicode):
-                return do_transforms('unicode', s, key=key)
+                return do_transform('unicode', s, key=key)
     else:
         def string_handler(s, key=None):
             if isinstance(s, bytes):
-                return do_transforms('py3_bytes', s, key=key)
+                return do_transform('py3_bytes', s, key=key)
             elif isinstance(s, str):
-                return do_transforms('unicode', s, key=key)
+                return do_transform('unicode', s, key=key)
 
     def default_handler(o, key=None):
-        if isinstance(o, integer_types + (float,)):
-            return do_transforms('number', o, key=key)
-
         if isinstance(o, bool):
-            return do_transforms('boolean', o, key=key)
+            return do_transform('boolean', o, key=key)
 
-        return do_transforms('custom', o, key=key)
+        # There is a quirk in the current version (1.1.6) of the enum
+        # backport enum34 which causes it to not have the same
+        # behavior as Python 3.4+. One way to identify IntEnums is that
+        # they are instances of numbers but not number types.
+        if isinstance(o, number_types):
+            if type(o) not in number_types:
+                return do_transform('custom', o, key=key)
+            else:
+                return do_transform('number', o, key=key)
+
+        return do_transform('custom', o, key=key)
 
     handlers = {
         'string_handler': string_handler,
-        'tuple_handler': lambda o, key=None: do_transforms('tuple', o, key=key),
-        'namedtuple_handler': lambda o, key=None: do_transforms('namedtuple', o, key=key),
-        'list_handler': lambda o, key=None: do_transforms('list', o, key=key),
-        'set_handler': lambda o, key=None: do_transforms('set', o, key=key),
-        'mapping_handler': lambda o, key=None: do_transforms('dict', o, key=key),
-        'circular_reference_handler': lambda o, key=None, ref_key=None: \
-            do_transforms('circular_reference', o, key=key, ref_key=ref_key),
+        'tuple_handler': lambda o, key=None: do_transform('tuple', o, key=key),
+        'namedtuple_handler': lambda o, key=None: do_transform('namedtuple', o, key=key),
+        'list_handler': lambda o, key=None: do_transform('list', o, key=key),
+        'set_handler': lambda o, key=None: do_transform('set', o, key=key),
+        'mapping_handler': lambda o, key=None: do_transform('dict', o, key=key),
+        'circular_reference_handler': lambda o, key=None, ref_key=None:
+            do_transform('circular_reference', o, key=key, ref_key=ref_key),
         'default_handler': default_handler,
         'allowed_circular_reference_types': _ALLOWED_CIRCULAR_REFERENCE_TYPES
     }
