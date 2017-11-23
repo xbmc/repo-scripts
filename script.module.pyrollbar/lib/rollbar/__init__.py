@@ -4,9 +4,8 @@ Plugin for Pyramid apps to submit errors to Rollbar
 from __future__ import absolute_import
 from __future__ import unicode_literals
 
-__version__ = '0.11.2'
-
 import copy
+import functools
 import inspect
 import json
 import logging
@@ -18,17 +17,23 @@ import time
 import traceback
 import types
 import uuid
-
 import wsgiref.util
-import requests
 
+import requests
 import six
 
-from rollbar.lib import dict_merge, map, parse_qs, text, urljoin, urlparse, iteritems
+from rollbar.lib import dict_merge, parse_qs, text, transport, urljoin, iteritems
 
+__version__ = '0.13.17'
+__log_name__ = 'rollbar'
+log = logging.getLogger(__log_name__)
 
-log = logging.getLogger(__name__)
-
+try:
+    # 2.x
+    import Queue as queue
+except ImportError:
+    # 3.x
+    import queue
 
 # import request objects from various frameworks, if available
 try:
@@ -80,6 +85,7 @@ try:
 except ImportError:
     AppEngineFetch = None
 
+
 def passthrough_decorator(func):
     def wrap(*args, **kwargs):
         return func(*args, **kwargs)
@@ -93,59 +99,8 @@ except ImportError:
     TornadoAsyncHTTPClient = None
 
 try:
-    from twisted.internet import reactor
-    from twisted.internet.defer import inlineCallbacks, Deferred, returnValue, succeed
-    from twisted.internet.protocol import Protocol
+    import treq
     from twisted.python import log as twisted_log
-    from twisted.web.client import Agent as TwistedHTTPClient
-    from twisted.web.http_headers import Headers as TwistedHeaders
-    from twisted.web.iweb import IBodyProducer
-
-    from zope.interface import implementer
-
-
-    try:
-        # Verify we can make HTTPS requests with Twisted.
-        # From http://twistedmatrix.com/documents/12.0.0/core/howto/ssl.html
-        from OpenSSL import SSL
-    except ImportError:
-        log.exception('Rollbar requires SSL to work with Twisted')
-        raise
-
-
-    @implementer(IBodyProducer)
-    class StringProducer(object):
-
-        def __init__(self, body):
-            self.body = body
-            self.length = len(body)
-
-        def startProducing(self, consumer):
-            consumer.write(self.body)
-            return succeed(None)
-
-        def pauseProducing(self):
-            pass
-
-        def stopProducing(self):
-            pass
-
-
-    class ResponseAccumulator(Protocol):
-        def __init__(self, length, finished):
-            self.remaining = length
-            self.finished = finished
-            self.response = ''
-
-        def dataReceived(self, bytes):
-            if self.remaining:
-                chunk = bytes[:self.remaining]
-                self.response += chunk
-                self.remaining -= len(chunk)
-
-        def connectionLost(self, reason):
-            self.finished.callback(self.response)
-
 
     def log_handler(event):
         """
@@ -165,15 +120,12 @@ try:
         except:
             log.exception('Error while reporting to Rollbar')
 
-
     # Add Rollbar as a log handler which will report uncaught errors
     twisted_log.addObserver(log_handler)
 
 
 except ImportError:
-    TwistedHTTPClient = None
-    inlineCallbacks = passthrough_decorator
-    StringProducer = None
+    treq = None
 
 
 def get_request():
@@ -287,11 +239,16 @@ SETTINGS = {
     'locals': {
         'enabled': True,
         'safe_repr': True,
+        'scrub_varargs': True,
         'sizes': DEFAULT_LOCALS_SIZES,
         'whitelisted_types': []
     },
-    'verify_https': True
+    'verify_https': True,
+    'shortener_keys': [],
+    'suppress_reinit_warning': False,
 }
+
+_CURRENT_LAMBDA_CONTEXT = None
 
 # Set in init()
 _transforms = []
@@ -302,10 +259,12 @@ _initialized = False
 # Do not call repr() on these types while gathering local variables
 blacklisted_local_types = []
 
+from rollbar.lib.transforms.scrub_redact import REDACT_REF
 
 from rollbar.lib import transforms
 from rollbar.lib.transforms.scrub import ScrubTransform
 from rollbar.lib.transforms.scruburl import ScrubUrlTransform
+from rollbar.lib.transforms.scrub_redact import ScrubRedactTransform
 from rollbar.lib.transforms.serializable import SerializableTransform
 from rollbar.lib.transforms.shortener import ShortenerTransform
 
@@ -324,7 +283,27 @@ def init(access_token, environment='production', **kw):
                  'staging', 'yourname'
     **kw: provided keyword arguments will override keys in SETTINGS.
     """
-    global SETTINGS, agent_log, _initialized, _transforms, _serialize_transform
+    global SETTINGS, agent_log, _initialized, _transforms, _serialize_transform, _threads
+
+    if _initialized:
+        # NOTE: Temp solution to not being able to re-init.
+        # New versions of pyrollbar will support re-initialization
+        # via the (not-yet-implemented) configure() method.
+        if not SETTINGS.get('suppress_reinit_warning'):
+            log.warning('Rollbar already initialized. Ignoring re-init.')
+        return
+
+    SETTINGS['access_token'] = access_token
+    SETTINGS['environment'] = environment
+
+    # Merge the extra config settings into SETTINGS
+    SETTINGS = dict_merge(SETTINGS, kw)
+
+    if SETTINGS.get('allow_logging_basic_config'):
+        logging.basicConfig()
+
+    if SETTINGS.get('handler') == 'agent':
+        agent_log = _create_agent_log()
 
     # We will perform these transforms in order:
     # 1. Serialize the payload to be all python built-in objects
@@ -335,13 +314,18 @@ def init(access_token, environment='production', **kw):
     _serialize_transform = SerializableTransform(safe_repr=SETTINGS['locals']['safe_repr'],
                                                  whitelist_types=SETTINGS['locals']['whitelisted_types'])
     _transforms = [
+        ScrubRedactTransform(),
         _serialize_transform,
         ScrubTransform(suffixes=[(field,) for field in SETTINGS['scrub_fields']], redact_char='*'),
         ScrubUrlTransform(suffixes=[(field,) for field in SETTINGS['url_fields']], params_to_scrub=SETTINGS['scrub_fields'])
     ]
 
-    # A list of key prefixes to apply our shortener transform to
+    # A list of key prefixes to apply our shortener transform to. The request
+    # being included in the body key is old behavior and is being retained for
+    # backwards compatibility.
     shortener_keys = [
+        ('request', 'POST'),
+        ('request', 'json'),
         ('body', 'request', 'POST'),
         ('body', 'request', 'json'),
     ]
@@ -352,30 +336,35 @@ def init(access_token, environment='production', **kw):
         shortener_keys.append(('body', 'trace', 'frames', '*', 'kwargs', '*'))
         shortener_keys.append(('body', 'trace', 'frames', '*', 'locals', '*'))
 
+    shortener_keys.extend(SETTINGS['shortener_keys'])
+
     shortener = ShortenerTransform(safe_repr=SETTINGS['locals']['safe_repr'],
                                    keys=shortener_keys,
                                    **SETTINGS['locals']['sizes'])
     _transforms.append(shortener)
 
-    if _initialized:
-        # NOTE: Temp solution to not being able to re-init.
-        # New versions of pyrollbar will support re-initialization
-        # via the (not-yet-implemented) configure() method.
-        log.warn('Rollbar already initialized. Ignoring re-init.')
-    else:
-        _initialized = True
+    _threads = queue.Queue()
 
-        SETTINGS['access_token'] = access_token
-        SETTINGS['environment'] = environment
+    _initialized = True
 
-        # Merge the extra config settings into SETTINGS
-        SETTINGS = dict_merge(SETTINGS, kw)
 
-        if SETTINGS.get('allow_logging_basic_config'):
-            logging.basicConfig()
-
-        if SETTINGS.get('handler') == 'agent':
-            agent_log = _create_agent_log()
+def lambda_function(f):
+    """
+    Decorator for making error handling on AWS Lambda easier
+    """
+    @functools.wraps(f)
+    def wrapper(event, context):
+        global _CURRENT_LAMBDA_CONTEXT
+        _CURRENT_LAMBDA_CONTEXT = context
+        try:
+            result = f(event, context)
+            return wait(lambda: result)
+        except:
+            cls, exc, trace = sys.exc_info()
+            report_exc_info((cls, exc, trace.tb_next))
+            wait()
+            raise
+    return wrapper
 
 
 def report_exc_info(exc_info=None, request=None, extra_data=None, payload_data=None, level=None, **kw):
@@ -432,12 +421,14 @@ def send_payload(payload, access_token):
     - 'thread': starts a single-use thread that will call _send_payload(). returns immediately.
     - 'agent': writes to a log file to be processed by rollbar-agent
     - 'tornado': calls _send_payload_tornado() (which makes an async HTTP request using tornado's AsyncHTTPClient)
+    - 'gae': calls _send_payload_appengine() (which makes a blocking call to Google App Engine)
+    - 'twisted': calls _send_payload_twisted() (which makes an async HTTP reqeust using Twisted and Treq)
     """
     handler = SETTINGS.get('handler')
     if handler == 'blocking':
         _send_payload(payload, access_token)
     elif handler == 'agent':
-        agent_log.error(payload, access_token)
+        agent_log.error(payload)
     elif handler == 'tornado':
         if TornadoAsyncHTTPClient is None:
             log.error('Unable to find tornado')
@@ -449,13 +440,14 @@ def send_payload(payload, access_token):
             return
         _send_payload_appengine(payload, access_token)
     elif handler == 'twisted':
-        if TwistedHTTPClient is None:
-            log.error('Unable to find twisted')
+        if treq is None:
+            log.error('Unable to find Treq')
             return
         _send_payload_twisted(payload, access_token)
     else:
         # default to 'thread'
         thread = threading.Thread(target=_send_payload, args=(payload, access_token))
+        _threads.put(thread)
         thread.start()
 
 
@@ -484,6 +476,12 @@ def search_items(title, return_fields=None, access_token=None, endpoint=None, **
                     access_token=access_token,
                     endpoint=endpoint,
                     **search_fields)
+
+
+def wait(f=None):
+    _threads.join()
+    if f is not None:
+        return f()
 
 
 class ApiException(Exception):
@@ -566,6 +564,7 @@ def _resolve_exception_class(idx, filter):
             cls = None
     return cls, level
 
+
 def _filtered_level(exception):
     for i, filter in enumerate(SETTINGS['exception_level_filters']):
         cls, level = _resolve_exception_class(i, filter)
@@ -586,7 +585,7 @@ def _create_agent_log():
     log_file = SETTINGS['agent.log_file']
     if not log_file.endswith('.rollbar'):
         log.error("Provided agent log file does not end with .rollbar, which it must. "
-            "Using default instead.")
+                  "Using default instead.")
         log_file = DEFAULTS['agent.log_file']
 
     retval = logging.getLogger('rollbar_agent')
@@ -620,31 +619,35 @@ def _report_exc_info(exc_info, request, extra_data, payload_data, level=None):
     if level:
         data['level'] = level
 
-    # exception info
-    # most recent call last
-    raw_frames = traceback.extract_tb(trace)
-    frames = [{'filename': f[0], 'lineno': f[1], 'method': f[2], 'code': f[3]} for f in raw_frames]
+    # walk the trace chain to collect cause and context exceptions
+    trace_chain = _walk_trace_chain(cls, exc, trace)
 
-    data['body'] = {
-        'trace': {
-            'frames': frames,
-            'exception': {
-                'class': cls.__name__,
-                'message': text(exc),
-            }
+    extra_trace_data = None
+    if len(trace_chain) > 1:
+        data['body'] = {
+            'trace_chain': trace_chain
         }
-    }
+        if payload_data and payload_data['body'] and payload_data['body']['trace']:
+            extra_trace_data = payload_data['body']['trace']
+            del payload_data['body']['trace']
+    else:
+        data['body'] = {
+            'trace': trace_chain[0]
+        }
 
     if extra_data:
         extra_data = extra_data
-        if isinstance(extra_data, dict):
-            data['custom'] = extra_data
-        else:
-            data['custom'] = {'value': extra_data}
+        if not isinstance(extra_data, dict):
+            extra_data = {'value': extra_data}
+        if extra_trace_data:
+            extra_data = dict_merge(extra_data, extra_trace_data)
+        data['custom'] = extra_data
+    if extra_trace_data and not extra_data:
+        data['custom'] = extra_trace_data
 
-    _add_locals_data(data, exc_info)
     _add_request_data(data, request)
     _add_person_data(data, request)
+    _add_lambda_context_data(data)
     data['server'] = _build_server_data()
 
     if payload_data:
@@ -654,6 +657,37 @@ def _report_exc_info(exc_info, request, extra_data, payload_data, level=None):
     send_payload(payload, data.get('access_token'))
 
     return data['uuid']
+
+
+def _walk_trace_chain(cls, exc, trace):
+    trace_chain = [_trace_data(cls, exc, trace)]
+
+    while True:
+        exc = getattr(exc, '__cause__', None) or getattr(exc, '__context__', None)
+        if not exc:
+            break
+        trace_chain.append(_trace_data(type(exc), exc, getattr(exc, '__traceback__', None)))
+
+    return trace_chain
+
+
+def _trace_data(cls, exc, trace):
+    # exception info
+    # most recent call last
+    raw_frames = traceback.extract_tb(trace)
+    frames = [{'filename': f[0], 'lineno': f[1], 'method': f[2], 'code': f[3]} for f in raw_frames]
+
+    trace_data = {
+        'frames': frames,
+        'exception': {
+            'class': getattr(cls, '__name__', cls.__class__.__name__),
+            'message': text(exc),
+        }
+    }
+
+    _add_locals_data(trace_data, (cls, exc, trace))
+
+    return trace_data
 
 
 def _report_message(message, level, request, extra_data, payload_data):
@@ -678,6 +712,7 @@ def _report_message(message, level, request, extra_data, payload_data):
 
     _add_request_data(data, request)
     _add_person_data(data, request)
+    _add_lambda_context_data(data)
     data['server'] = _build_server_data()
 
     if payload_data:
@@ -693,6 +728,10 @@ def _check_config():
     if not SETTINGS.get('enabled'):
         log.info("pyrollbar: Not reporting because rollbar is disabled.")
         return False
+
+    # skip access token check for the agent handler
+    if SETTINGS.get('handler') == 'agent':
+        return True
 
     # make sure we have an access_token
     if not SETTINGS.get('access_token'):
@@ -725,7 +764,7 @@ def _add_person_data(data, request):
     try:
         person_data = _build_person_data(request)
     except Exception as e:
-        log.exception("Exception while building person data for Rollbar paylooad: %r", e)
+        log.exception("Exception while building person data for Rollbar payload: %r", e)
     else:
         if person_data:
             data['person'] = person_data
@@ -809,11 +848,11 @@ def _flatten_nested_lists(l):
     return ret
 
 
-def _add_locals_data(data, exc_info):
+def _add_locals_data(trace_data, exc_info):
     if not SETTINGS['locals']['enabled']:
         return
 
-    frames = data['body']['trace']['frames']
+    frames = trace_data['frames']
 
     cur_tb = exc_info[2]
     frame_num = 0
@@ -831,76 +870,54 @@ def _add_locals_data(data, exc_info):
             frame_num += 1
             continue
 
-        # Create placeholders for args/kwargs/locals
-        args = []
-        kw = {}
+        # Create placeholders for argspec/varargspec/keywordspec/locals
+        argspec = None
+        varargspec = None
+        keywordspec = None
         _locals = {}
 
         try:
             arginfo = inspect.getargvalues(tb_frame)
-            local_vars = arginfo.locals
-            argspec = None
-
-            func = _get_func_from_frame(tb_frame)
-            if func:
-                if inspect.isfunction(func) or inspect.ismethod(func):
-                    argspec = inspect.getargspec(func)
-                elif inspect.isclass(func):
-                    init_func = getattr(func, '__init__', None)
-                    if init_func:
-                        argspec = inspect.getargspec(init_func)
-
-            # Get all of the named args
-            #
-            # args can be a nested list of args in the case where there
-            # are anonymous tuple args provided.
-            # e.g. in Python 2 you can:
-            #   def func((x, (a, b), z)):
-            #       return x + a + b + z
-            #
-            #   func((1, (1, 2), 3))
-            named_args = _flatten_nested_lists(arginfo.args)
-
-            # Fill in all of the named args
-            for named_arg in named_args:
-                if named_arg in local_vars:
-                    args.append(local_vars[named_arg])
-
-            # Add any varargs
-            if arginfo.varargs is not None:
-                args.extend(local_vars[arginfo.varargs])
-
-            # Fill in all of the kwargs
-            if arginfo.keywords is not None:
-                kw.update(local_vars[arginfo.keywords])
-
-            if argspec and argspec.defaults:
-                # Put any of the args that have defaults into kwargs
-                num_defaults = len(argspec.defaults)
-                if num_defaults:
-                    # The last len(argspec.defaults) args in arginfo.args should be added
-                    # to kwargs and removed from args
-                    kw.update(dict(zip(arginfo.args[-num_defaults:], args[-num_defaults:])))
-                    args = args[:-num_defaults]
 
             # Optionally fill in locals for this frame
-            if local_vars and _check_add_locals(cur_frame, frame_num, num_frames):
-                _locals.update(local_vars.items())
+            if arginfo.locals and _check_add_locals(cur_frame, frame_num, num_frames):
+                # Get all of the named args
+                #
+                # args can be a nested list of args in the case where there
+                # are anonymous tuple args provided.
+                # e.g. in Python 2 you can:
+                #   def func((x, (a, b), z)):
+                #       return x + a + b + z
+                #
+                #   func((1, (1, 2), 3))
+                argspec = _flatten_nested_lists(arginfo.args)
 
-            args = args
-            kw = kw
-            _locals = _locals
+                if arginfo.varargs is not None:
+                    varargspec = arginfo.varargs
+                    if SETTINGS['locals']['scrub_varargs']:
+                        temp_varargs = list(arginfo.locals[varargspec])
+                        for i, arg in enumerate(temp_varargs):
+                            temp_varargs[i] = REDACT_REF
 
-        except Exception as e:
+                        arginfo.locals[varargspec] = tuple(temp_varargs)
+
+                if arginfo.keywords is not None:
+                    keywordspec = arginfo.keywords
+
+                _locals.update(arginfo.locals.items())
+
+        except Exception:
             log.exception('Error while extracting arguments from frame. Ignoring.')
 
         # Finally, serialize each arg/kwarg/local separately so that we only report
         # CircularReferences for each variable, instead of for the entire payload
         # as would be the case if we serialized that payload in one-shot.
-        if args:
-            cur_frame['args'] = map(_serialize_frame_data, args)
-        if kw:
-            cur_frame['kwargs'] = dict((k, _serialize_frame_data(v)) for k, v in iteritems(kw))
+        if argspec:
+            cur_frame['argspec'] = argspec
+        if varargspec:
+            cur_frame['varargspec'] = varargspec
+        if keywordspec:
+            cur_frame['keywordspec'] = keywordspec
         if _locals:
             cur_frame['locals'] = dict((k, _serialize_frame_data(v)) for k, v in iteritems(_locals))
 
@@ -908,7 +925,38 @@ def _add_locals_data(data, exc_info):
 
 
 def _serialize_frame_data(data):
-    return transforms.transform(data, (_serialize_transform,))
+    for transform in (ScrubRedactTransform(), _serialize_transform):
+        data = transforms.transform(data, transform)
+
+    return data
+
+
+def _add_lambda_context_data(data):
+    """
+    Attempts to add information from the lambda context if it exists
+    """
+    global _CURRENT_LAMBDA_CONTEXT
+    context = _CURRENT_LAMBDA_CONTEXT
+    if context is None:
+        return
+    try:
+        lambda_data = {
+            'lambda': {
+                'remaining_time_in_millis': context.get_remaining_time_in_millis(),
+                'function_name': context.function_name,
+                'function_version': context.function_version,
+                'arn': context.invoked_function_arn,
+                'request_id': context.aws_request_id,
+            }
+        }
+        if 'custom' in data:
+            data['custom'] = dict_merge(data['custom'], lambda_data)
+        else:
+            data['custom'] = lambda_data
+    except Exception as e:
+        log.exception("Exception while adding lambda context data: %r", e)
+    finally:
+        _CURRENT_LAMBDA_CONTEXT = None
 
 
 def _add_request_data(data, request):
@@ -984,6 +1032,7 @@ def _build_webob_request_data(request):
         'GET': dict(request.GET),
         'user_ip': _extract_user_ip(request),
         'headers': dict(request.headers),
+        'method': request.method,
     }
 
     try:
@@ -1023,11 +1072,6 @@ def _build_django_request_data(request):
         'POST': dict(request.POST),
         'user_ip': _wsgi_extract_user_ip(request.environ),
     }
-
-    try:
-        request_data['body'] = request.body
-    except:
-        pass
 
     request_data['headers'] = _extract_wsgi_headers(request.environ.items())
 
@@ -1122,9 +1166,13 @@ def _build_server_data():
     # server environment
     server_data = {
         'host': socket.gethostname(),
-        'argv': sys.argv,
         'pid': os.getpid()
     }
+
+    # argv does not always exist in embedded python environments
+    argv = getattr(sys, 'argv', None)
+    if argv:
+         server_data['argv'] = argv
 
     for key in ['branch', 'root']:
         if SETTINGS.get(key):
@@ -1134,7 +1182,10 @@ def _build_server_data():
 
 
 def _transform(obj, key=None):
-    return transforms.transform(obj, _transforms, key=key)
+    for transform in _transforms:
+        obj = transforms.transform(obj, transform, key=key)
+
+    return obj
 
 
 def _build_payload(data):
@@ -1158,6 +1209,11 @@ def _send_payload(payload, access_token):
         _post_api('item/', payload, access_token=access_token)
     except Exception as e:
         log.exception('Exception while posting item %r', e)
+    try:
+        _threads.get_nowait()
+        _threads.task_done()
+    except queue.Empty:
+        pass
 
 
 def _send_payload_appengine(payload, access_token):
@@ -1192,11 +1248,11 @@ def _post_api(path, payload, access_token=None):
         headers['X-Rollbar-Access-Token'] = access_token
 
     url = urljoin(SETTINGS['endpoint'], path)
-    resp = requests.post(url,
-                         data=payload,
-                         headers=headers,
-                         timeout=SETTINGS.get('timeout', DEFAULT_TIMEOUT),
-                         verify=SETTINGS.get('verify_https', True))
+    resp = transport.post(url,
+                          data=payload,
+                          headers=headers,
+                          timeout=SETTINGS.get('timeout', DEFAULT_TIMEOUT),
+                          verify=SETTINGS.get('verify_https', True))
 
     return _parse_response(path, SETTINGS['access_token'], payload, resp)
 
@@ -1205,7 +1261,7 @@ def _get_api(path, access_token=None, endpoint=None, **params):
     access_token = access_token or SETTINGS['access_token']
     url = urljoin(endpoint or SETTINGS['endpoint'], path)
     params['access_token'] = access_token
-    resp = requests.get(url, params=params, verify=SETTINGS.get('verify_https', True))
+    resp = transport.get(url, params=params, verify=SETTINGS.get('verify_https', True))
     return _parse_response(path, access_token, params, resp, endpoint=endpoint)
 
 
@@ -1245,38 +1301,61 @@ def _send_payload_twisted(payload, access_token):
         log.exception('Exception while posting item %r', e)
 
 
-@inlineCallbacks
 def _post_api_twisted(path, payload, access_token=None):
-    headers = {'Content-Type': ['application/json']}
+    def post_data_cb(data, resp):
+        resp._content = data
+        _parse_response(path, SETTINGS['access_token'], payload, resp)
 
+    def post_cb(resp):
+        r = requests.Response()
+        r.status_code = resp.code
+        r.headers.update(resp.headers.getAllRawHeaders())
+        return treq.content(resp).addCallback(post_data_cb, r)
+
+    headers = {'Content-Type': ['application/json']}
     if access_token is not None:
         headers['X-Rollbar-Access-Token'] = [access_token]
 
     url = urljoin(SETTINGS['endpoint'], path)
+    d = treq.post(url, payload, headers=headers,
+                  timeout=SETTINGS.get('timeout', DEFAULT_TIMEOUT))
+    d.addCallback(post_cb)
 
-    agent = TwistedHTTPClient(reactor, connectTimeout=SETTINGS.get('timeout', DEFAULT_TIMEOUT))
-    resp = yield agent.request(
-           'POST',
-           url,
-           TwistedHeaders(headers),
-           StringProducer(payload))
 
-    r = requests.Response()
-    r.status_code = resp.code
-    r.headers.update(resp.headers.getAllRawHeaders())
-    bodyDeferred = Deferred()
-    resp.deliverBody(ResponseAccumulator(resp.length, bodyDeferred))
-    body = yield bodyDeferred
-    r._content = body
-    _parse_response(path, SETTINGS['access_token'], payload, r)
-    yield returnValue(None)
+def _send_failsafe(message, uuid, host):
+    body_message = ('Failsafe from pyrollbar: {0}. Original payload may be found '
+                    'in your server logs by searching for the UUID.').format(message)
+
+    data = {
+        'level': 'error',
+        'environment': SETTINGS['environment'],
+        'body': {
+            'message': {
+                'body': body_message
+            }
+        },
+        'notifier': SETTINGS['notifier'],
+        'custom': {
+            'orig_uuid': uuid,
+            'orig_host': host
+        },
+        'failsafe': True,
+        'internal': True,
+    }
+
+    payload = _build_payload(data)
+
+    try:
+        send_payload(payload, SETTINGS['access_token'])
+    except Exception:
+        log.exception('Rollbar: Error sending failsafe.')
 
 
 def _parse_response(path, access_token, params, resp, endpoint=None):
     if isinstance(resp, requests.Response):
         try:
             data = resp.text
-        except Exception as e:
+        except Exception:
             data = resp.content
             log.error('resp.text is undefined, resp.content is %r', resp.content)
     else:
@@ -1286,11 +1365,23 @@ def _parse_response(path, access_token, params, resp, endpoint=None):
         log.warning("Rollbar: over rate limit, data was dropped. Payload was: %r", params)
         return
     elif resp.status_code == 413:
-        log.warning("Rollbar: request entity too large. Payload was: %r", params)
-        return
+        uuid = None
+        host = None
+
+        try:
+            payload = json.loads(params)
+            uuid = payload['data']['uuid']
+            host = payload['data']['server']['host']
+            log.error("Rollbar: request entity too large for UUID %r\n. Payload:\n%r", uuid, payload)
+        except (TypeError, ValueError):
+            log.exception('Unable to decode JSON for failsafe.')
+        except KeyError:
+            log.exception('Unable to find payload parameters for failsafe.')
+
+        _send_failsafe('payload too large', uuid, host)
     elif resp.status_code != 200:
         log.warning("Got unexpected status code from Rollbar api: %s\nResponse:\n%s",
-            resp.status_code, data)
+                    resp.status_code, data)
 
     try:
         json_data = json.loads(data)
