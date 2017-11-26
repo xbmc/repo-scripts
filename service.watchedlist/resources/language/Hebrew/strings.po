@@ -1,0 +1,410 @@
+# XBMC Media Center language file
+# Addon Name: WatchedList
+# Addon id: service.watchedlist
+# Addon version: 1.1.0
+# Addon Provider: schapplm
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC-Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: 2016-03-28 16:47+0000\n"
+"PO-Revision-Date: 2017-10-09 11:16+0300\n"
+"Last-Translator: A. Dambledore\n"
+"Language-Team: Eng2Heb\n"
+"Language: he_IL\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+
+msgctxt "Addon Summary"
+msgid "Save watched Movies and TV Episodes independent from filenames"
+msgstr "שומר מצב נצפה לסרטים ופרקים טלוויזיה עצמאית משמות קבצים"
+
+msgctxt "Addon Description"
+msgid ""
+"Export: Searches the Kodi-Database for watched files. Determine imdb-id and thetvdb-id to identify movies and TV-episodes. Then save the list to a new independent table.\n"
+"Import: Set the watched state for each video file in Kodi.\n"
+"Automatic background process without user interaction."
+msgstr ""
+"ייצוא: מחפש את מסד הנתונים של קודי עבור קבצים שנצפו. קבע את iddb-id ו- thetvdb-id כדי לזהות סרטים ופרטי טלוויזיה. לאחר מכן שמור את הרשימה בטבלה עצמאית חדשה.\n"
+"ייבוא: הגדר את מצב נצפה עבור כל קובץ וידאו בקודי.\n"
+"תהליך רקע אוטומטי ללא אינטראקציה עם המשתמש."
+
+msgctxt "Addon Disclaimer"
+msgid "This script does not regard the file format. A Movie watched in DVD quality will also set\tthe 1080p version as watched."
+msgstr "הסקריפט הזה אינו מתייחס לתבנית הקובץ. סרט שנצפה באיכות DVD, יקבע גם את גרסת 1080p כנצפה."
+
+# Notification headers
+msgctxt "#30001"
+msgid "Basic Settings"
+msgstr "הגדרות בסיסיות"
+
+msgctxt "#30002"
+msgid "Database"
+msgstr "מסד נתונים"
+
+msgctxt "#30011"
+msgid "Update movies watched state"
+msgstr "עדכון מצב נצפה לסרטים"
+
+msgctxt "#30012"
+msgid "Update episodes watched state"
+msgstr "עדכון מצב נצפה לפרקים"
+
+msgctxt "#30013"
+msgid "autostart mode"
+msgstr "מצב אתחול אוטומטי"
+
+msgctxt "#30014"
+msgid "Update interval [hours]"
+msgstr "מרווח בין עדכונים (שעות)"
+
+msgctxt "#30015"
+msgid "Startup delay befor action [minutes]"
+msgstr "השהיית הפעלה לפני פעולה [דקות]"
+
+msgctxt "#30016"
+msgid "Progress Dialog"
+msgstr "דיאלוג התקדמות"
+
+msgctxt "#30017"
+msgid "Use non-default database file"
+msgstr "השתמש בקובץ מסד נתונים שאינו ברירת מחדל"
+
+msgctxt "#30018"
+msgid "Path to database file"
+msgstr "הנתיב אל קובץ מסד הנתונים"
+
+msgctxt "#30019"
+msgid "Database filename (SQLite Database, *.db)"
+msgstr "שם הקובץ של מסד הנתונים (מסד הנתונים SQLite, * .db)"
+
+msgctxt "#30020"
+msgid "Number of backup copies (-1=infinite)"
+msgstr "מספר עותקי גיבוי (-1 = אינסופי)"
+
+msgctxt "#30021"
+msgid "Start with Kodi (autorun)"
+msgstr "להתחיל עם קודי (הפעלה אוטומטית)"
+
+msgctxt "#30022"
+msgid "follow user setting watched/unwatched"
+msgstr "עקוב אחר הגדרות המשתמש למצב נצפה או לא נצפה"
+
+msgctxt "#30023"
+msgid "Dropbox Auth Code"
+msgstr "קוד אימות בדרופבוקס"
+
+msgctxt "#30024"
+msgid "Amount of User Information"
+msgstr "כמות מידע משתמש"
+
+msgctxt "#30025"
+msgid "All"
+msgstr "הכול"
+
+msgctxt "#30026"
+msgid "Only Info"
+msgstr "רק מידע"
+
+msgctxt "#30027"
+msgid "Only Warning"
+msgstr "רק אזהרה"
+
+msgctxt "#30028"
+msgid "Only Error"
+msgstr "רק שגיאה"
+
+msgctxt "#30029"
+msgid "None"
+msgstr "ללא"
+
+msgctxt "#30030"
+msgid "no update"
+msgstr "אין עדכון"
+
+msgctxt "#30031"
+msgid "one update"
+msgstr "עדכון אחד"
+
+msgctxt "#30032"
+msgid "periodic"
+msgstr "תקופתיים"
+
+# empty strings from id 30033 to 30039
+msgctxt "#30040"
+msgid "DB Method"
+msgstr "שיטת DB"
+
+msgctxt "#30041"
+msgid "File"
+msgstr "קובץ"
+
+msgctxt "#30042"
+msgid "MySQL"
+msgstr "MySQL"
+
+msgctxt "#30043"
+msgid "Options for accessing SQLite-DB-File"
+msgstr "אפשרויות לגישה SQLite-DB-File"
+
+msgctxt "#30044"
+msgid "Options for accessing MySQL-Server"
+msgstr "אפשרויות לגישה שרת MySQL"
+
+msgctxt "#30045"
+msgid "Dropbox synchronization"
+msgstr "סנכרון דרופבוקס"
+
+# empty strings from id 30046 to 30050
+msgctxt "#30051"
+msgid "MySQL Server"
+msgstr "MySQL שרת"
+
+msgctxt "#30052"
+msgid "MySQL Database"
+msgstr "MySQL מסד הנתונים"
+
+msgctxt "#30053"
+msgid "MySQL Username"
+msgstr "MySQL שם המשתמש"
+
+msgctxt "#30054"
+msgid "MySQL Password"
+msgstr "MySQL סיסמה"
+
+msgctxt "#30055"
+msgid "MySQL Port"
+msgstr "MySQL פורט"
+
+# empty strings from id 30056 to 32000
+msgctxt "#32001"
+msgid "manually run the database update again?"
+msgstr "להפעיל באופן ידני את העדכון מסד הנתונים שוב?"
+
+msgctxt "#32002"
+msgid "DB path does not exist: %s"
+msgstr "לא קיים נתיב לבסיס הנתונים: %s"
+
+msgctxt "#32003"
+msgid "next update in %d hours"
+msgstr "העדכון הבא בעוד %d שעות"
+
+msgctxt "#32004"
+msgid "begin update in %d minutes"
+msgstr "העדכון הבא בעוד %d דקות"
+
+msgctxt "#32005"
+msgid "running observation of changes of watched states"
+msgstr "מריץ סריקה לשינויים במצב נצפה"
+
+# empty strings from id 32006 to 32100
+msgctxt "#32101"
+msgid "WatchedList"
+msgstr "רשימת נצפה"
+
+msgctxt "#32102"
+msgid "Watchedlist: Error"
+msgstr "רשימת נצפה: שגיאה"
+
+msgctxt "#32103"
+msgid "Load watched states from addon-database..."
+msgstr "טוען מצב נצפה מתוך מסד הנתונים של ההרחבה..."
+
+msgctxt "#32104"
+msgid "load watched states Kodi-database ..."
+msgstr "טוען מצב נצפה מתוך מסד הנתונים של קודי..."
+
+msgctxt "#32105"
+msgid "update the addon watched-database ..."
+msgstr "עדכון את מצב נצפה במסד הנתונים של ההרחבה..."
+
+msgctxt "#32106"
+msgid "update the Kodi-database ..."
+msgstr "עדכון את מסד הנתונים של קודי..."
+
+msgctxt "#32107"
+msgid "update complete."
+msgstr "העדכון הושלם..."
+
+msgctxt "#32108"
+msgid "Watchedlist: MySQL Error (WL DB)"
+msgstr "רשימת נצפה: שגיאה MySQL (WL DB)"
+
+msgctxt "#32109"
+msgid "Watchedlist: SQLite Error (WL DB)"
+msgstr "רשימת נצפה: שגיאה SQLite (WL DB)"
+
+# empty strings from id 32110 to 32201
+msgctxt "#32202"
+msgid "Addon movie database"
+msgstr "מסד נתוני סרטים של ההרחבה"
+
+msgctxt "#32203"
+msgid "Addon episode database"
+msgstr "מסד נתוני פרקים של ההרחבה"
+
+msgctxt "#32204"
+msgid "Kodi-movie database"
+msgstr "מסד נתוני סרטים של קודי"
+
+msgctxt "#32205"
+msgid "Kodi-episode database"
+msgstr "מסד נתוני פרקים של קודי"
+
+# empty strings from id 32206 to 32207
+msgctxt "#32208"
+msgid "Access Denied (username/password/rights)"
+msgstr "הגישה נדחתה (שם משתמש/סיסמה/זכויות)"
+
+msgctxt "#32209"
+msgid "Database '%s' does not exist"
+msgstr "מסד הנתונים '%s' אינו קיים"
+
+msgctxt "#32210"
+msgid "Access denied (user '%s', DB '%s')"
+msgstr "הגישה נדחתה (המשתמש '%s', DB '%s')"
+
+# empty strings from id 32211 to 32296
+msgctxt "#32297"
+msgid "TV-Show \"%s\" (ID %d) has no imdb-number. No processing with WL possible. Try rescraping."
+msgstr "סדרות \"%s\" (מזהה %d) אין מספר-imdb. אין אפשרות לעבד עם WL. נסה לבצע סקרייפינג מחדש."
+
+msgctxt "#32298"
+msgid "%d movies and %d episodes read from WL."
+msgstr "%d סרטים, פרקים %d נקראו מ-WL."
+
+msgctxt "#32299"
+msgid "%d movies and %d episodes read from Kodi-DB."
+msgstr "%d סרטים, פרקים %d נקראו ממסד הנתונים של קודי."
+
+# empty string with id 32300
+msgctxt "#32301"
+msgid "%d watched new. %d updated"
+msgstr "%d מצב נצפה חדש. %d עודכן"
+
+msgctxt "#32302"
+msgid "%d movies marked as watched"
+msgstr "%d סרטים שסומנו כנצפה"
+
+msgctxt "#32303"
+msgid "%d episodes marked as watched"
+msgstr "%d פרקים שסומנו כנצפה"
+
+# Error Messages
+# empty strings from id 32304 to 32400
+msgctxt "#32401"
+msgid "Set as watched (Kodi-DB)"
+msgstr "הגדר כנצפה (קודי-DB)"
+
+msgctxt "#32402"
+msgid "Remember as newly watched (WL-DB)"
+msgstr "זכור כנצפה לאחרונה (WL-DB)"
+
+msgctxt "#32403"
+msgid "Remember as watched (updated) (WL-DB)"
+msgstr "זכור כנצפה (מעודכן) (WL-DB)"
+
+msgctxt "#32404"
+msgid "Set as not watched (Kodi-DB)"
+msgstr "הגדר כלא נצפה (קודי-DB)"
+
+msgctxt "#32405"
+msgid "Remember as not watched (WL-DB)"
+msgstr "זכור כלא נצפה (WL-DB)"
+
+# Notification text
+# empty strings from id 32406 to 32600
+msgctxt "#32601"
+msgid "Error opening WL-database"
+msgstr "שגיאה בפתיחת מסד הנתונים WL"
+
+msgctxt "#32602"
+msgid "Error loading WL-database"
+msgstr "שגיאה בטעינת מסד הנתונים WL"
+
+msgctxt "#32603"
+msgid "Error loading Kodi-database"
+msgstr "שגיאה בטעינת מסד הנתונים של קודי"
+
+msgctxt "#32604"
+msgid "Error updating WL database"
+msgstr "שגיאה בעת עדכון מסד נתונים WL"
+
+msgctxt "#32605"
+msgid "Error updating Kodi-database"
+msgstr "שגיאה בעת עדכון מסד נתונים קודי"
+
+msgctxt "#32606"
+msgid "Writing the WL-database file %s"
+msgstr "כתיבת קובץ WL-מסד הנתונים %s"
+
+msgctxt "#32607"
+msgid "Unable to merge dropbox data"
+msgstr "אין אפשרות למזג נתונים מדרופבוקס"
+
+# Progress Dialog
+# empty string with id 32609
+msgctxt "#32610"
+msgid "%d/%d: %s"
+msgstr "% d/%d: %s"
+
+msgctxt "#32611"
+msgid "%d/%d: %s S%02dE%02d"
+msgstr "% d/%d: %s S % 02dE % 02d"
+
+# Dropbox related messages
+# empty strings from id 32612 to 32707
+msgctxt "#32708"
+msgid "Dropbox Error"
+msgstr "שגיאה בדרופבוקס"
+
+msgctxt "#32709"
+msgid "Unable to upload"
+msgstr "לא מצליח להעלות"
+
+msgctxt "#32710"
+msgid "Unable to download"
+msgstr "לא מצליח להוריד"
+
+msgctxt "#32711"
+msgid "Dropbox-Import (Movies)"
+msgstr "דרופבוקס-ייבוא (סרטים)"
+
+msgctxt "#32712"
+msgid "Dropbox-Import (Episodes)"
+msgstr "דרופבוקס-ייבוא (פרקים)"
+
+msgctxt "#32713"
+msgid "Dropbox synchronization"
+msgstr "סנכרון דרופבוקס"
+
+msgctxt "#32714"
+msgid "Upload successfull"
+msgstr "העלאה הסתיימה בהצלחה"
+
+msgctxt "#32715"
+msgid "Empty authorization code in settings"
+msgstr "קוד אישור ריק בהגדרות"
+
+msgctxt "#32716"
+msgid "Update the Dropbox database: ..."
+msgstr "עדכן את מסד הנתונים של דרופבוקס:..."
+
+msgctxt "#32717"
+msgid "Dropbox database updated: %d entries."
+msgstr "דרופבוקס - עדכון מסד הנתונים: %d ערכים."
+
+msgctxt "#32718"
+msgid "Dropbox-Export (Movies)"
+msgstr "דרופבוקס-ייצוא (סרטים)"
+
+msgctxt "#32719"
+msgid "Dropbox-Export (Episodes)"
+msgstr "דרופבוקס-ייצוא (פרקים)"
+
+msgctxt "#32720"
+msgid "Error importing python Dropbox API. Disable function."
+msgstr "שגיאת ייבוא מפתח פיתון Dropbox API. בטל את הפונקציה."
