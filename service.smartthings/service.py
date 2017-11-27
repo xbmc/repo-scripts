@@ -125,8 +125,8 @@ class STHUB(object):
         self.nextCHK   = datetime.datetime.now()
         self.session   = requests.Session()
         self.url       = self.login()
-        self.hubURL    = self.getHubs() if HUB_URL is None else HUB_URL
-        if self.hubURL is None: sys.exit()
+        if self.url is not None: self.hubURL = self.getHubs() if HUB_URL is None else HUB_URL
+        else: self.hubURL = None
 
         
     def wizard(self):
@@ -143,7 +143,9 @@ class STHUB(object):
         login_data = {"username": self.username,
                       "password": self.password}       
         r = self.session.post("https://auth-global.api.smartthings.com/sso/authenticate", data=login_data)
-        if r.status_code == 401: return notification(LANGUAGE(30003))
+        if r.status_code == 401:
+            notification(LANGUAGE(30003))
+            return None
         else: return r.raise_for_status()
         return self.resolveURL()
 
@@ -161,11 +163,11 @@ class STHUB(object):
         
     def getHubs(self):
         log("getHubs, Gathering list of locations...")
-        show_busy_dialog()
         res = self.session.get(BASE_URL+"location/list")
         res.raise_for_status()
         location_rows = BeautifulSoup(res.text, "html.parser").find('tbody').findAll('tr')
         location_dict = {}
+        show_busy_dialog()
         for row in location_rows:
             location_link = row.find('a')
             location_dict[location_link.contents[0].strip()] = location_link['href'].split(":443/location/")[0]
@@ -185,12 +187,12 @@ class STHUB(object):
     def getDeviceList(self, ALL=False, OPEN=True):
         log("getDeviceList, Gathering list of devices...")
         if self.hubURL is None: self.getHubs()
-        show_busy_dialog()
         res = self.session.get(self.hubURL+"/device/list")
         res.raise_for_status()
         device_page = BeautifulSoup(res.text, "html.parser")
         device_rows = device_page.find('tbody').findAll('tr')
         device_dict = {}
+        show_busy_dialog()
         for row in device_rows:
             device_link = row.find('a')
             device_dict[device_link.contents[0].strip()] = device_link['href']
@@ -211,55 +213,60 @@ class STHUB(object):
 
     def getDeviceInfo(self, deviceLST=None):
         log("getDeviceInfo, Gathering device info...")
-        res = self.session.get(self.hubURL+"/device/list")
-        res.raise_for_status()
-        device_page = BeautifulSoup(res.text, "html.parser")
-        device_rows = device_page.find('tbody').findAll('tr')
-        device_dict = {}
-        for row in device_rows:
-            device_link = row.find('a')
-            device_dict[device_link.contents[0].strip()] = device_link['href']
-        device_keys = list(device_dict.keys())
-        for device in device_keys:
-            deviceJSON = {}
-            deviceJSON['name'] = device
-            if deviceLST and device not in deviceLST: continue
-            log("Gathering device information for [%s]"%device)
-            res = self.session.get(self.hubURL+device_dict[device])
+        try:
+            res = self.session.get(self.hubURL+"/device/list")
             res.raise_for_status()
-            full_device_page = BeautifulSoup(res.text, "html.parser")
-            report_table_html = full_device_page.findAll('tr', {'class': 'fieldcontain'})
-            for item in report_table_html:
-                if "Current States" in item.getText(): data_items = item.findAll('li', {'class': 'property-value'})
-            for item in data_items:
-                data_type = item.find('a').contents[0].title()
-                try: data_value = float(item.find('strong').contents[0].split(" ")[0])
-                except ValueError: data_value = item.find('strong').contents[0].split(" ")[0]
-                if data_type == 'Checkinterval' and data_value < self.chkIntval: self.chkIntval = data_value
-                deviceJSON[data_type] = data_value
-            yield deviceJSON
+            device_page = BeautifulSoup(res.text, "html.parser")
+            device_rows = device_page.find('tbody').findAll('tr')
+            device_dict = {}
+            for row in device_rows:
+                device_link = row.find('a')
+                device_dict[device_link.contents[0].strip()] = device_link['href']
+            device_keys = list(device_dict.keys())
+            for device in device_keys:
+                deviceJSON = {}
+                deviceJSON['name'] = device
+                if deviceLST and device not in deviceLST: continue
+                log("Gathering device information for [%s]"%device)
+                res = self.session.get(self.hubURL+device_dict[device])
+                res.raise_for_status()
+                full_device_page = BeautifulSoup(res.text, "html.parser")
+                report_table_html = full_device_page.findAll('tr', {'class': 'fieldcontain'})
+                for item in report_table_html:
+                    if "Current States" in item.getText(): data_items = item.findAll('li', {'class': 'property-value'})
+                for item in data_items:
+                    data_type = item.find('a').contents[0].title()
+                    try: data_value = float(item.find('strong').contents[0].split(" ")[0])
+                    except ValueError: data_value = item.find('strong').contents[0].split(" ")[0]
+                    if data_type == 'Checkinterval' and data_value < self.chkIntval: self.chkIntval = data_value
+                    deviceJSON[data_type] = data_value
+                yield deviceJSON
+        except Exception as e: log("getDeviceInfo, Failed " + str(e), xbmc.LOGERROR)
 
-            
+        
     def getEvents(self, deviceLST=None, LAST=True, ALL=False):
         log("getEvents")
-        res = self.session.get(self.resolveURL()+"/events")
-        res.raise_for_status()
-        event_page = BeautifulSoup(res.text, "html.parser")
-        event_rows = event_page.findAll('a', {'class': 'tooltip-init'})
-        event_rows = [x['title'] for x in event_rows]
-        event_rows = list(chunks(event_rows,3))
-        events = []
-        for event in event_rows:
-            try:
-                if ALL:
-                    events.append(event[2])
-                else:
-                    device = (([x for x in deviceLST if x in event[2]])[0])
-                    if event[2].startswith(device):
-                        if LAST: return event[2]
-                        else: events.append(event[2])
-            except: pass
+        try:
+            events = []
+            res = self.session.get(self.resolveURL()+"/events")
+            res.raise_for_status()
+            event_page = BeautifulSoup(res.text, "html.parser")
+            event_rows = event_page.findAll('a', {'class': 'tooltip-init'})
+            event_rows = [x['title'] for x in event_rows]
+            event_rows = list(chunks(event_rows,3))
+            for event in event_rows:
+                try:
+                    if ALL:
+                        events.append(event[2])
+                    else:
+                        device = (([x for x in deviceLST if x in event[2]])[0])
+                        if event[2].startswith(device):
+                            if LAST: return event[2]
+                            else: events.append(event[2])
+                except: pass
+        except Exception as e: log("checkEvents, Failed " + str(e), xbmc.LOGERROR)
         return events
+           
 
            
     def checkEvents(self):
@@ -268,7 +275,7 @@ class STHUB(object):
             if event != self.lastEvent:
                 self.lastEvent = event
                 notification(event)
-        except Exception as e: log("checkEvents, Failed " + str(e) + ", event = " + str(event), xbmc.LOGERROR)
+        except Exception as e: log("checkEvents, Failed " + str(e), xbmc.LOGERROR)
            
            
     def chkDeviceStatus(self):
