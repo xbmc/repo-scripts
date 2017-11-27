@@ -78,7 +78,7 @@ class STLIST(object):
         log('browseMonitors')
         devices = (self.service.deviceLST or None)
         if devices is None: return
-        self.addDir('[B]+ Add Device[/B]','',4)
+        # self.addDir('[B]+ Add Device[/B]','',4)
         for device in devices: self.addDir(device,'',3)
         
 
@@ -106,8 +106,8 @@ class STLIST(object):
         
     def addMonitor(self):
         self.service.getDeviceList(ALL=False,OPEN=False)
-        xbmc.executebuiltin("Container.Refresh")
         self.browseMonitors()
+        xbmc.executebuiltin("Container.Refresh")
             
             
     def openSettings(self):
