@@ -125,8 +125,8 @@ class STHUB(object):
         self.nextCHK   = datetime.datetime.now()
         self.session   = requests.Session()
         self.url       = self.login()
-        if self.url is not None: self.hubURL = self.getHubs() if HUB_URL is None else HUB_URL
-        else: self.hubURL = None
+        if HUB_URL is None: self.hubURL = self.getHubs() 
+        else: self.hubURL = HUB_URL
 
         
     def wizard(self):
@@ -163,52 +163,60 @@ class STHUB(object):
         
     def getHubs(self):
         log("getHubs, Gathering list of locations...")
-        res = self.session.get(BASE_URL+"location/list")
-        res.raise_for_status()
-        location_rows = BeautifulSoup(res.text, "html.parser").find('tbody').findAll('tr')
-        location_dict = {}
-        show_busy_dialog()
-        for row in location_rows:
-            location_link = row.find('a')
-            location_dict[location_link.contents[0].strip()] = location_link['href'].split(":443/location/")[0]
-        location_keys = list(location_dict.keys())
-        hub    = 0 if self.hubName is None else location_keys.index(self.hubName)
+        try:
+            res = self.session.get(BASE_URL+"location/list")
+            res.raise_for_status()
+            location_rows = BeautifulSoup(res.text, "html.parser").find('tbody').findAll('tr')
+            location_dict = {}
+            show_busy_dialog()
+            for row in location_rows:
+                location_link = row.find('a')
+                location_dict[location_link.contents[0].strip()] = location_link['href'].split(":443/location/")[0]
+            location_keys = list(location_dict.keys())
+            hub    = 0 if self.hubName is None else location_keys.index(self.hubName)
+            hide_busy_dialog()
+            select = selectDialog(False, location_keys, LANGUAGE(30006), preselect=hub)
+            if select > -1:        
+                self.hubName = location_keys[select]
+                self.hubURL  = location_dict[self.hubName]
+                REAL_SETTINGS.setSetting('Hub_URL', self.hubURL)
+                REAL_SETTINGS.setSetting('Select_Hub', self.hubName)
+                if len(self.deviceLST) == 0: return self.getDeviceList() 
+            self.openSettings()
+        except Exception as e: 
+            log("getHubs, Failed " + str(e), xbmc.LOGERROR)
         hide_busy_dialog()
-        select = selectDialog(False, location_keys, LANGUAGE(30006), preselect=hub)
-        if select > -1:        
-            self.hubName = location_keys[select]
-            self.hubURL  = location_dict[self.hubName]
-            REAL_SETTINGS.setSetting('Hub_URL', self.hubURL)
-            REAL_SETTINGS.setSetting('Select_Hub', self.hubName)
-            if len(self.deviceLST) == 0: return self.getDeviceList() 
-        self.openSettings()
-
+            
         
     def getDeviceList(self, ALL=False, OPEN=True):
         log("getDeviceList, Gathering list of devices...")
-        if self.hubURL is None: self.getHubs()
-        res = self.session.get(self.hubURL+"/device/list")
-        res.raise_for_status()
-        device_page = BeautifulSoup(res.text, "html.parser")
-        device_rows = device_page.find('tbody').findAll('tr')
-        device_dict = {}
-        show_busy_dialog()
-        for row in device_rows:
-            device_link = row.find('a')
-            device_dict[device_link.contents[0].strip()] = device_link['href']
-        device_keys = sorted(list(device_dict.keys()))
-        device_select = []
-        if ALL: return device_keys
-        for device in self.deviceLST:
-            try: device_select.append(device_keys.index(device))
-            except: pass
+        try:
+            if self.hubURL is None: return notification(LANGUAGE(30004))
+            res = self.session.get(self.hubURL+"/device/list")
+            res.raise_for_status()
+            device_page = BeautifulSoup(res.text, "html.parser")
+            device_rows = device_page.find('tbody').findAll('tr')
+            device_dict = {}
+            show_busy_dialog()
+            for row in device_rows:
+                device_link = row.find('a')
+                device_dict[device_link.contents[0].strip()] = device_link['href']
+            device_keys = sorted(list(device_dict.keys()))
+            device_select = []
+            if ALL: return device_keys
+            for device in self.deviceLST:
+                try: device_select.append(device_keys.index(device))
+                except: pass
+            hide_busy_dialog()
+            select  = selectDialog(True, device_keys, LANGUAGE(30005), preselect=device_select)
+            if select > -1:
+                self.deviceLST = []
+                for sel in select: self.deviceLST.append(device_keys[sel])
+            REAL_SETTINGS.setSetting('Select_Devices','|'.join(self.deviceLST))
+            if OPEN: self.openSettings()
+        except Exception as e: 
+            log("getDeviceList, Failed " + str(e), xbmc.LOGERROR)
         hide_busy_dialog()
-        select  = selectDialog(True, device_keys, LANGUAGE(30005), preselect=device_select)
-        if select > -1:
-            self.deviceLST = []
-            for sel in select: self.deviceLST.append(device_keys[sel])
-        REAL_SETTINGS.setSetting('Select_Devices','|'.join(self.deviceLST))
-        if OPEN: self.openSettings()
             
 
     def getDeviceInfo(self, deviceLST=None):
@@ -296,6 +304,12 @@ class STHUB(object):
         log('startService')
         self.myMonitor = Monitor()
         while not self.myMonitor.abortRequested():
+            # Don't run while setting menu is opened.
+            if xbmcgui.getCurrentWindowDialogId() in [10140,10103,12000]:
+                log('startService, settings dialog opened')
+                self.myMonitor.waitForAbort(5)
+                continue 
+                
             if self.myMonitor.pendingChange == True or self.myMonitor.waitForAbort(5) == True: 
                 log('startService, waitForAbort/pendingChange')
                 break
@@ -304,11 +318,6 @@ class STHUB(object):
             if xbmc.Player().isPlayingVideo() and IGNORE:
                 log('startService, ignore during playback')
                 continue
-                
-            # Don't run while setting menu is opened.
-            if xbmcgui.getCurrentWindowDialogId() in [10140,10103,12000]:
-                log('startService, settings dialog opened')
-                continue 
                 
             self.checkEvents()
             if datetime.datetime.now() >= self.nextCHK:
