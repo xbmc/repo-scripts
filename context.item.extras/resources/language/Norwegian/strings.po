@@ -1,0 +1,17 @@
+# XBMC Media Center language file
+# Addon Name: Extras
+# Addon id: context.dvd.extras
+msgid ""
+msgstr ""
+
+msgctxt "#30000"
+msgid "Extras"
+msgstr "Ekstramateriale"
+
+msgctxt "#30001"
+msgid "Extras folder"
+msgstr "Mappenavn"
+
+msgctxt "#30002"
+msgid "For å bruke denne utvidelsen, gå til videobiblioteket og åpne hurtigmenyen for en film eller TV-serie."
+msgstr ""
