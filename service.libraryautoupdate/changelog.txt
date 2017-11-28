@@ -1,3 +1,7 @@
+Version 1.0.2
+
+Issue with language/country codes in language files
+
 Version 1.0.1
 
 updated the way custom paths are handled
