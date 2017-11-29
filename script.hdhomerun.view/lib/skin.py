@@ -26,7 +26,8 @@ FONT_TRANSLATIONS = {
     'skin.eminence':      {'font10':'Font-RSS',               'font13':'font13',          'font30':'Font-ViewCategory'},
     'skin.amber':         {'font10':'GridItems',              'font13':'Details',         'font30':'MainLabelBigTitle'}, #Old gui API level - alignment flaws
     'skin.metropolis':    {'font10':'METF_DialogVerySmall',   'font13':'font13',          'font30':'METF_TitleTextLarge'},
-    'skin.quartz':        {'font10':'size14',                 'font13':'font13',          'font30':'size28'} #Old gui API level - alignment flaws
+    'skin.quartz':        {'font10':'size14',                 'font13':'font13',          'font30':'size28'}, #Old gui API level - alignment flaws
+    'skin.estuary':       {'font10':'font20_title',                 'font13':'font12',          'font30':'font30'}
 }
 
 #helix skins to check =  [' skin.refocus', ' skin.1080xf', ' skin.conq']

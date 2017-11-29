@@ -22,6 +22,7 @@ import xbmcgui
 import sys
 import os
 import urllib
+import platform
 
 __scriptname__ = sys.modules[ "__main__" ].__scriptname__
 __cwd__        = sys.modules[ "__main__" ].__cwd__
@@ -48,11 +49,11 @@ def _pbhook(numblocks, blocksize, filesize, url=None,dp=None):
         log("boblight: DOWNLOAD CANCELLED") # need to get this part working
     dp.close()
  
-def tools_downloadLibBoblight(platform,allowNotify):
+def tools_downloadLibBoblight(platformstr,allowNotify):
   log("boblight: try to fetch libboblight")
-  libname = get_libname(platform)
-  destdir = get_download_path(platform)
-  url = "%s/%s/%s.zip" % (__libbaseurl__, platform, libname)
+  libname = get_libname(platformstr)
+  destdir = get_download_path(platformstr)
+  url = "%s/%s/%s.zip" % (__libbaseurl__, platformstr, libname)
   dest = os.path.join( destdir, libname)
   try:
     DownloaderClass(url, dest + ".zip")
@@ -69,48 +70,53 @@ def log(msg):
   
 def get_platform():
   if xbmc.getCondVisibility('system.platform.osx'):
-    platform = "osx"
+    platformstr = "osx"
   elif xbmc.getCondVisibility('system.platform.windows'):
-    platform = "win32"
+    if sys.maxsize > 2**32:
+      platformstr = "win64"
+    else:
+      platformstr = "win32"
   elif  xbmc.getCondVisibility('system.platform.ios'):
-    platform = "ios"
+    platformstr = "ios"
   elif  xbmc.getCondVisibility('system.platform.tvos'):
-    platform = "tvos"
+    platformstr = "tvos"
   elif  xbmc.getCondVisibility('system.platform.android'):
     if os.uname()[4].startswith("arm") or os.uname()[4].startswith("aarch64"):
-      platform = "android"
+      platformstr = "android"
     else:
-      platform = "androidx86"
+      platformstr = "androidx86"
   else:
-    platform = "linux"
-  return platform 
+    platformstr = "linux"
+  return platformstr 
   
-def get_libname(platform):
-  if platform == "osx":
+def get_libname(platformstr):
+  if platformstr == "osx":
     return "libboblight-osx.0.dylib"
-  elif platform == "ios":
+  elif platformstr == "ios":
     return "libboblight-ios.0.dylib"
-  elif platform == "tvos":
+  elif platformstr == "tvos":
     return "libboblight-tvos.0.dylib"
-  elif platform == "win32":
+  elif platformstr == "win32":
     return "libboblight-win32.0.dll"
-  elif platform == "android" or platform == "androidx86":
+  elif platformstr == "win64":
+    return "libboblight-win64.0.dll"
+  elif platformstr == "android" or platformstr == "androidx86":
     return "libboblight.so"
-  elif platform == "linux":
+  elif platformstr == "linux":
     return "libboblight.so"
 
-def get_download_path(platform):
-  if platform == "android" or platform == "androidx86":
+def get_download_path(platformstr):
+  if platformstr == "android" or platformstr == "androidx86":
     return "/data/data/org.xbmc.kodi/files/"
   else:
     return xbmc.translatePath( os.path.join( __cwd__, 'resources', 'lib') )
 
-def get_libpath(platform):
-  if platform == 'linux':
-    return get_libname(platform)
-  elif platform == 'android' or platform == 'androidx86':
-    return "/data/data/org.xbmc.kodi/files/%s" % (get_libname(platform),)
-  elif platform == 'tvos':
-    return "%s/system/%s" % (xbmc.translatePath("special://xbmc"),get_libname(platform),)
+def get_libpath(platformstr):
+  if platformstr == 'linux':
+    return get_libname(platformstr)
+  elif platformstr == 'android' or platformstr == 'androidx86':
+    return "/data/data/org.xbmc.kodi/files/%s" % (get_libname(platformstr),)
+  elif platformstr == 'tvos':
+    return "%s/system/%s" % (xbmc.translatePath("special://xbmc"),get_libname(platformstr),)
   else:
-    return __libbasepath__ % (get_libname(platform),)  
+    return __libbasepath__ % (get_libname(platformstr),)  

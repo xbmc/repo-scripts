@@ -1,3 +1,5 @@
+from __future__ import absolute_import, division, print_function
+
 from requests import Request
 from six.moves.urllib_parse import urlencode
 import json
@@ -68,16 +70,19 @@ class TraktRequest(object):
         headers = self.kwargs.get('headers') or {}
         headers['Content-Type'] = 'application/json'
 
-        headers['trakt-api-key'] = self.client.configuration['client.id']
         headers['trakt-api-version'] = '2'
 
+        # API Key / Client ID
+        if self.client.configuration['client.id']:
+            headers['trakt-api-key'] = self.client.configuration['client.id']
+
+        # xAuth
         if self.configuration['auth.login'] and self.configuration['auth.token']:
-            # xAuth
             headers['trakt-user-login'] = self.configuration['auth.login']
             headers['trakt-user-token'] = self.configuration['auth.token']
 
+        # OAuth
         if self.configuration['oauth.token']:
-            # OAuth
             headers['Authorization'] = 'Bearer %s' % self.configuration['oauth.token']
 
         # User-Agent
@@ -98,10 +103,46 @@ class TraktRequest(object):
         path = [self.path]
         path.extend(self.params)
 
-        url = self.client.base_url + '/'.join(x for x in path if x)
+        # Build URL
+        url = self.client.base_url + '/'.join(
+            str(value) for value in path
+            if value
+        )
 
-        # Append `query` to URL
-        if self.query:
-            url += '?' + urlencode(self.query)
+        # Append query parameters (if defined)
+        query = self.encode_query(self.query)
+
+        if query:
+            url += '?' + query
 
         return url
+
+    @classmethod
+    def encode_query(cls, parameters):
+        if not parameters:
+            return ''
+
+        return urlencode([
+            (key, cls.encode_query_parameter(value))
+            for key, value in parameters.items()
+            if value is not None
+        ])
+
+    @classmethod
+    def encode_query_parameter(cls, value):
+        # Encode tuple into range string
+        if isinstance(value, tuple):
+            if len(value) != 2:
+                raise ValueError('Invalid tuple parameter (expected 2-length tuple)')
+
+            return '%s-%s' % value
+
+        # Encode list into comma-separated string
+        if isinstance(value, list):
+            return ','.join([
+                cls.encode_query_parameter(item)
+                for item in value
+            ])
+
+        # Ensure values are strings
+        return str(value)

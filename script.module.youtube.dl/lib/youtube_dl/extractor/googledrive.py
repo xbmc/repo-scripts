@@ -6,6 +6,7 @@ from .common import InfoExtractor
 from ..utils import (
     ExtractorError,
     int_or_none,
+    lowercase_escape,
 )
 
 
@@ -13,12 +14,12 @@ class GoogleDriveIE(InfoExtractor):
     _VALID_URL = r'https?://(?:(?:docs|drive)\.google\.com/(?:uc\?.*?id=|file/d/)|video\.google\.com/get_player\?.*?docid=)(?P<id>[a-zA-Z0-9_-]{28,})'
     _TESTS = [{
         'url': 'https://drive.google.com/file/d/0ByeS4oOUV-49Zzh4R1J6R09zazQ/edit?pli=1',
-        'md5': '881f7700aec4f538571fa1e0eed4a7b6',
+        'md5': 'd109872761f7e7ecf353fa108c0dbe1e',
         'info_dict': {
             'id': '0ByeS4oOUV-49Zzh4R1J6R09zazQ',
             'ext': 'mp4',
             'title': 'Big Buck Bunny.mp4',
-            'duration': 46,
+            'duration': 45,
         }
     }, {
         # video id is longer than 28 characters
@@ -55,7 +56,7 @@ class GoogleDriveIE(InfoExtractor):
     def _real_extract(self, url):
         video_id = self._match_id(url)
         webpage = self._download_webpage(
-            'http://docs.google.com/file/d/%s' % video_id, video_id, encoding='unicode_escape')
+            'http://docs.google.com/file/d/%s' % video_id, video_id)
 
         reason = self._search_regex(r'"reason"\s*,\s*"([^"]+)', webpage, 'reason', default=None)
         if reason:
@@ -68,19 +69,32 @@ class GoogleDriveIE(InfoExtractor):
             r'"fmt_stream_map"\s*,\s*"([^"]+)', webpage, 'fmt stream map').split(',')
         fmt_list = self._search_regex(r'"fmt_list"\s*,\s*"([^"]+)', webpage, 'fmt_list').split(',')
 
+        resolutions = {}
+        for fmt in fmt_list:
+            mobj = re.search(
+                r'^(?P<format_id>\d+)/(?P<width>\d+)[xX](?P<height>\d+)', fmt)
+            if mobj:
+                resolutions[mobj.group('format_id')] = (
+                    int(mobj.group('width')), int(mobj.group('height')))
+
         formats = []
-        for fmt, fmt_stream in zip(fmt_list, fmt_stream_map):
-            fmt_id, fmt_url = fmt_stream.split('|')
-            resolution = fmt.split('/')[1]
-            width, height = resolution.split('x')
-            formats.append({
-                'url': fmt_url,
-                'format_id': fmt_id,
-                'resolution': resolution,
-                'width': int_or_none(width),
-                'height': int_or_none(height),
-                'ext': self._FORMATS_EXT[fmt_id],
-            })
+        for fmt_stream in fmt_stream_map:
+            fmt_stream_split = fmt_stream.split('|')
+            if len(fmt_stream_split) < 2:
+                continue
+            format_id, format_url = fmt_stream_split[:2]
+            f = {
+                'url': lowercase_escape(format_url),
+                'format_id': format_id,
+                'ext': self._FORMATS_EXT[format_id],
+            }
+            resolution = resolutions.get(format_id)
+            if resolution:
+                f.update({
+                    'width': resolution[0],
+                    'height': resolution[1],
+                })
+            formats.append(f)
         self._sort_formats(formats)
 
         return {

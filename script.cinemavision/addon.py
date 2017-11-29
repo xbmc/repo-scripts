@@ -5,7 +5,7 @@ if __name__ == '__main__':
     if len(sys.argv) > 1:
         args = sys.argv[1:] or False
         arg = args.pop(0)
-        print '[- CinemaVision -]: Passed args: {0}'.format(repr(sys.argv))
+        # print '[- CinemaVision -]: Passed args: {0}'.format(repr(sys.argv))
 
     if arg == 'trailer.clearWatched':
         from lib import settings
@@ -16,6 +16,13 @@ if __name__ == '__main__':
     elif arg == 'experience':
         from lib import player
         player.begin(args=args)
+    elif str(arg).startswith('dbtype='):
+        if args:
+            from lib import player
+            player.begin(dbtype=arg[7:], args=args)
+        else:
+            import xbmc
+            xbmc.log('[- CinemaVision -]: Passed {0} with no dbid)'.format(arg))
     elif str(arg).startswith('movieid='):
         from lib import player
         player.begin(movieid=arg[8:], args=args)

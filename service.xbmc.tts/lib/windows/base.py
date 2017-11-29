@@ -50,6 +50,14 @@ class WindowReaderBase(WindowHandlerBase):
         text = xbmc.getInfoLabel('System.CurrentControl').decode('utf-8')
         return (text,text)
 
+    def getControlPostfix(self, controlID, ):
+        if not self.service.speakListCount:
+            return u''
+        numItems = xbmc.getInfoLabel('Container({0}).NumItems'.format(self.service.controlID)).decode('utf-8')
+        if numItems:
+            return u'... {0} {1}'.format(numItems,numItems != '1' and util.T(32107) or util.T(32106))
+        return u''
+
     def getSecondaryText(self): return None
 
     def getItemExtraTexts(self,controlID): return None

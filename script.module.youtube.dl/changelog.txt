@@ -1,3 +1,24 @@
+*** 17.709.0 ***
+
+Updated youtube-dl core to 2017.07.09
+
+*** 17.518.2 ***
+
+Remove testing code that was spamming the log
+
+*** 17.518.1 ***
+
+Added setting 'Skip Videos Without Audio' to force choosing videos with audio
+
+*** 17.518.0 ***
+
+Updated youtube-dl core to 2017.05.18.1
+Fix errors caused by Kodi datetime.strptime() issue
+
+*** 17.310.0 ***
+
+Updated youtube-dl core to 2017.03.10
+
 *** 16.1026.0 ***
 
 Updated youtube-dl core to 2016.10.26

@@ -31,7 +31,7 @@ class TVShowTests(unittest.TestCase):
 
 		options = self.downloader.search_tvshow(item['tvshow'], item['season'], item['episode'])
 		self.assertIsNotNone(options)
-		self.assertGreaterEqual(len(options), 5)
+		self.assertGreaterEqual(len(options), 1)
 
 	def test_search_inexisting_tvshow(self):
 		item = {
@@ -97,7 +97,6 @@ class TVShowTests(unittest.TestCase):
 			temp.write(data)
 			temp.flush()
 
-			out = convert_to_utf(temp.name)
 			self.assertIsNotNone(temp.read())
 			break
 

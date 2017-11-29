@@ -31,3 +31,12 @@ Add support to search tvshow season and episode
 1.0.8
 - Fixed converting to cyrillic and selecting converted subtitle
 - Better tvshow search and filter
+
+1.0.9
+- Fixed problems with titlovi api.
+
+1.1.0
+- Removed errors
+
+1.1.2
+- Fixed automatic search on tv shows

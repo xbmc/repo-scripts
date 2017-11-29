@@ -15,7 +15,7 @@ class RtlNlIE(InfoExtractor):
         https?://(?:www\.)?
         (?:
             rtlxl\.nl/[^\#]*\#!/[^/]+/|
-            rtl\.nl/system/videoplayer/(?:[^/]+/)+(?:video_)?embed\.html\b.+?\buuid=
+            rtl\.nl/(?:system/videoplayer/(?:[^/]+/)+(?:video_)?embed\.html\b.+?\buuid=|video/)
         )
         (?P<id>[0-9a-f-]+)'''
 
@@ -40,7 +40,7 @@ class RtlNlIE(InfoExtractor):
             'ext': 'mp4',
             'timestamp': 1424039400,
             'title': 'RTL Nieuws - Nieuwe beelden Kopenhagen: chaos direct na aanslag',
-            'thumbnail': 're:^https?://screenshots\.rtl\.nl/(?:[^/]+/)*sz=[0-9]+x[0-9]+/uuid=84ae5571-ac25-4225-ae0c-ef8d9efb2aed$',
+            'thumbnail': r're:^https?://screenshots\.rtl\.nl/(?:[^/]+/)*sz=[0-9]+x[0-9]+/uuid=84ae5571-ac25-4225-ae0c-ef8d9efb2aed$',
             'upload_date': '20150215',
             'description': 'Er zijn nieuwe beelden vrijgegeven die vlak na de aanslag in Kopenhagen zijn gemaakt. Op de video is goed te zien hoe omstanders zich bekommeren om één van de slachtoffers, terwijl de eerste agenten ter plaatse komen.',
         }
@@ -52,7 +52,7 @@ class RtlNlIE(InfoExtractor):
             'id': 'f536aac0-1dc3-4314-920e-3bd1c5b3811a',
             'ext': 'mp4',
             'title': 'RTL Nieuws - Meer beelden van overval juwelier',
-            'thumbnail': 're:^https?://screenshots\.rtl\.nl/(?:[^/]+/)*sz=[0-9]+x[0-9]+/uuid=f536aac0-1dc3-4314-920e-3bd1c5b3811a$',
+            'thumbnail': r're:^https?://screenshots\.rtl\.nl/(?:[^/]+/)*sz=[0-9]+x[0-9]+/uuid=f536aac0-1dc3-4314-920e-3bd1c5b3811a$',
             'timestamp': 1437233400,
             'upload_date': '20150718',
             'duration': 30.474,
@@ -69,6 +69,9 @@ class RtlNlIE(InfoExtractor):
         'only_matching': True,
     }, {
         'url': 'http://rtlxl.nl/?_ga=1.204735956.572365465.1466978370#!/rtl-nieuws-132237/3c487912-023b-49ac-903e-2c5d79f8410f',
+        'only_matching': True,
+    }, {
+        'url': 'https://www.rtl.nl/video/c603c9c2-601d-4b5e-8175-64f1e942dc7d/',
         'only_matching': True,
     }]
 

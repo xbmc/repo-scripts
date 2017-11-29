@@ -24,12 +24,9 @@ class ScrubUrlTransform(ScrubTransform):
         self.params_to_scrub = set(map(lambda x: x.lower(), params_to_scrub))
 
     def in_scrub_fields(self, key):
-        if not key:
-            # This can happen if the transform is applied to a non-object,
-            # like a string.
-            return True
-
-        return super(ScrubUrlTransform, self).in_scrub_fields(key)
+        # Returning True here because we want to scrub URLs out of
+        # every string, not just ones that we know the key for.
+        return True
 
     def redact(self, url_string):
         _redact = super(ScrubUrlTransform, self).redact
@@ -42,7 +39,7 @@ class ScrubUrlTransform(ScrubTransform):
 
         try:
             url_parts = urlsplit(url_string)
-            qs_params = parse_qs(url_parts.query)
+            qs_params = parse_qs(url_parts.query, keep_blank_values=True)
         except:
             # This isn't a URL, return url_string which is a no-op
             # for this transform
@@ -89,7 +86,6 @@ class ScrubUrlTransform(ScrubTransform):
             return super(ScrubUrlTransform, self).default(o, key=key)
 
         return o
-
 
 
 __all__ = ['ScrubUrlTransform']

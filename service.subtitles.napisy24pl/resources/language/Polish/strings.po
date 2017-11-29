@@ -19,8 +19,8 @@ msgid "Error searching for subtitles"
 msgstr "Błąd podczas szukania napisów"
 
 msgctxt "#32002"
-msgid "Username"
-msgstr "Nazwa użytkownika"
+msgid "Email"
+msgstr "E-mail"
 
 msgctxt "#32003"
 msgid "Password"
@@ -31,7 +31,7 @@ msgid "Login Details"
 msgstr "Dane logowania"
 
 msgctxt "#32005"
-msgid "Invalid email or password, please edit your credentials in the properties"
+msgid "Invalid email or password, please edit your credentials in the settings"
 msgstr "Niepoprawny email lub hasło. Popraw dane w ustawieniach"
 
 msgctxt "#32006"
@@ -47,17 +47,25 @@ msgid "Format settings"
 msgstr "Ustawienia formatu"
 
 msgctxt "#32009"
+msgid "SubRip (UTF-8)"
+msgstr "SubRip (UTF-8)"
+
+msgctxt "#32010"
 msgid "SubRip"
 msgstr "SubRip"
 
-msgctxt "#32010"
+msgctxt "#32011"
 msgid "TMPlayer"
 msgstr "TMPlayer"
 
-msgctxt "#32011"
+msgctxt "#32012"
 msgid "MicroDVD"
 msgstr "MicroDVD"
 
-msgctxt "#32012"
-msgid "MP12"
-msgstr "MP12"
+msgctxt "#32013"
+msgid "MPL2"
+msgstr "MPL2"
+
+msgctxt "#32014"
+msgid "You are logged in successfully"
+msgstr "Jesteś zalogowany pomyślnie"

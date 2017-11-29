@@ -17,4 +17,5 @@
 	<string id="30037">Audio Paused</string>
 	<string id="30038">Audio Stopped</string>
 	<string id="30039">System variable</string>
+	<string id="30040">Delay command on Video/Audio Stopped</string>
 </strings>

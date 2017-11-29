@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import
 
-from datetime import timedelta
 import sys
 
 # python 2.6 / 2.7 definitions for total_seconds function.
@@ -22,6 +21,14 @@ if version < '2.7': # pragma: no cover
 else: # pragma: no cover
     total_seconds = _total_seconds_27
 
+def is_timestamp(value):
+    if type(value) == bool:
+        return False
+    try:
+        float(value)
+        return True
+    except:
+        return False
 
 # python 2.7 / 3.0+ definitions for isstr function.
 
@@ -37,4 +44,4 @@ except NameError: #pragma: no cover
         return isinstance(s, str)
 
 
-__all__ = ['total_seconds', 'isstr']
+__all__ = ['total_seconds', 'is_timestamp', 'isstr']

@@ -15,7 +15,6 @@ ADDON_ICON          = ADDON.getAddonInfo('icon')
 ADDON_PATH          = xbmc.translatePath(ADDON.getAddonInfo('path'))
 ADDON_PATH_DATA     = xbmc.translatePath(os.path.join('special://profile/addon_data/', ADDON_ID)).replace('\\', '/') + '/'
 ADDON_PATH_LIB      = os.path.join(ADDON_PATH, 'resources', 'lib' )
-ADDON_PATH_MEDIA    = os.path.join(ADDON_PATH, 'resources', 'media' )
 ADDON_LANG          = ADDON.getLocalizedString
 
 sys.path.append(ADDON_PATH_LIB)
@@ -36,6 +35,7 @@ sProfile = {
     3: ADDON.getSetting('profile3'),
     4: ADDON.getSetting('profile4')
 }
+cecCommands = ['', 'CECActivateSource', 'CECStandby', 'CECToggleState']
 
 class PROFILES:
 
@@ -80,7 +80,7 @@ class PROFILES:
                 self.profile(mode)
             return
             
-        debug.debug('Wrong arg, use like RunScript("' + ADDON_ID + ',x") x - number of profile')
+        debug.error('Wrong arg, use like RunScript("' + ADDON_ID + ',x") x - number of profile')
 
     def getEnabledProfiles(self):
         enabledProfileKey = []
@@ -158,6 +158,7 @@ class PROFILES:
             xbmcvfs.mkdir(ADDON_PATH_DATA)
         
         # save profile file
+        debug.notice('[SAVING SETTING]: ' + sName[button])
         f = xbmcvfs.File(ADDON_PATH_DATA + 'profile' + str(button) + '.json', 'w')
         result = f.write(jsonToWrite)
         f.close()
@@ -171,7 +172,7 @@ class PROFILES:
         # stop if selected (mode) profile are disabled
         if mode != '0' and 'false' in sProfile[int(mode)]:
             debug.notify(ADDON_LANG(32103) + ' (' + sName[int(mode)] + ')')
-            debug.debug('[CHECK]: This profile is dosabled in addon settings - ' + str(mode))
+            debug.notice('[CHECK]: This profile is dosabled in addon settings - ' + str(mode))
             return False
         
         # check if profile have settings file
@@ -179,7 +180,7 @@ class PROFILES:
             if 'true' in sProfile[key]:
                 if not xbmcvfs.exists(ADDON_PATH_DATA + 'profile' + str(key) + '.json'):
                     debug.notify(ADDON_LANG(32101) + ' ' + str(key) + ' (' + sName[key] + ')')
-                    debug.debug('[PROFILE FILE]: not exist for profile - ' + str(key))
+                    debug.error('[PROFILE FILE]: not exist for profile - ' + str(key))
                     return False
                 self.aProfile.append(str(key))
         
@@ -210,6 +211,7 @@ class PROFILES:
         sVolume        = ADDON.getSetting('volume')
         sPlayer        = ADDON.getSetting('player')
         sVideo         = ADDON.getSetting('video')
+        sCec           = ADDON.getSetting('profile' + profile + '_cec')
         
         # read settings from profile
         f = xbmcvfs.File(ADDON_PATH_DATA + 'profile' + profile + '.json', 'r')
@@ -219,7 +221,7 @@ class PROFILES:
             f.close()
         except:
             debug.notify(ADDON_LANG(32104) + ' ' + profile + ' (' + sName[int(profile)] + ')')
-            debug.debug('[LOAD JSON FROM FILE]: Error reading from profile - ' + str(profile))
+            debug.error('[LOAD JSON FROM FILE]: Error reading from profile - ' + str(profile))
             return False
         
         # settings needed quote for value
@@ -230,6 +232,7 @@ class PROFILES:
         ]
         
         # set settings readed from profile file
+        debug.notice('[RESTORING SETTING]: ' + sName[int(profile)])
         for setName, setValue in jsonResult.items():
             # skip setting that type is disable to changing
             if 'false' in sPlayer and setName.startswith('videoplayer'):
@@ -253,5 +256,10 @@ class PROFILES:
         f = xbmcvfs.File(ADDON_PATH_DATA + 'profile', 'w')
         f.write(profile)
         f.close()
-
+        
+        # CEC
+        if int(sCec) > 0:
+            debug.notice('[SENDING CEC COMMAND]: ' + cecCommands[int(sCec)])
+            xbmc.executebuiltin(cecCommands[int(sCec)])
+            
 PROFILES()

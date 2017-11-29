@@ -1,8 +1,10 @@
 from array import array
 import collections
-import math
+import itertools
 
-from rollbar.lib import integer_types, iteritems, key_in, reprlib, string_types, text
+from rollbar.lib import (
+    integer_types, iteritems, key_in, number_types, reprlib, sequence_types,
+    string_types, text)
 from rollbar.lib.transforms import Transform
 
 
@@ -49,23 +51,23 @@ class ShortenerTransform(Transform):
 
         return self._repr.repr(obj)
 
+    def _shorten_mapping(self, obj, max_keys):
+        _len = len(obj)
+        if _len <= max_keys:
+            return obj
+
+        return {k: obj[k] for k in itertools.islice(obj.keys(), max_keys)}
+
     def _shorten_basic(self, obj, max_len):
         val = text(obj)
         if len(val) <= max_len:
             return obj
 
-        return self._repr.repr(val)
+        return self._repr.repr(obj)
 
     def _shorten_other(self, obj):
         if obj is None:
             return None
-
-        if isinstance(obj, float):
-            if math.isinf(obj):
-                return 'Infinity'
-
-            if math.isnan(obj):
-                return 'NaN'
 
         if self.safe_repr:
             obj = text(obj)
@@ -75,10 +77,12 @@ class ShortenerTransform(Transform):
     def _shorten(self, val):
         max_size = self._get_max_size(val)
 
-        if isinstance(val, (string_types, collections.Mapping, list, tuple, set, collections.deque)):
+        if isinstance(val, dict):
+            return self._shorten_mapping(val, max_size)
+        if isinstance(val, (string_types, sequence_types)):
             return self._shorten_sequence(val, max_size)
 
-        if isinstance(val, integer_types):
+        if isinstance(val, number_types):
             return self._shorten_basic(val, self._repr.maxlong)
 
         return self._shorten_other(val)

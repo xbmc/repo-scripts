@@ -10,6 +10,7 @@ import xbmcgui,xbmcplugin,shutil
 from zipfile import ZipFile
 from cStringIO import StringIO
 import uuid
+import re
 
 __addon__ = xbmcaddon.Addon()
 __author__     = __addon__.getAddonInfo('author')
@@ -145,7 +146,7 @@ if params['action'] == 'search':
   item = {}
   item['temp']               = False
   item['rar']                = False
-  item['year']               = xbmc.getInfoLabel("VideoPlayer.Year")                         # Year
+  item['year']               = xbmc.getInfoLabel("VideoPlayer.Premiered")                    # Year
   item['season']             = str(xbmc.getInfoLabel("VideoPlayer.Season"))                  # Season
   item['episode']            = str(xbmc.getInfoLabel("VideoPlayer.Episode"))                 # Episode
   item['tvshow']             = normalizeString(xbmc.getInfoLabel("VideoPlayer.TVshowtitle"))  # Show
@@ -153,7 +154,7 @@ if params['action'] == 'search':
   item['file_original_path'] = urllib.unquote(xbmc.Player().getPlayingFile().decode('utf-8'))# Full path of a playing file
   item['3let_language']      = [] #['scc','eng']
   
-  for lang in urllib.unquote(params['languages']).decode('utf-8').split(","):
+  for lang in urllib.unquote(params['languages']).split(","):
     item['3let_language'].append(languageTranslate(lang,0,1))
   
   if item['title'] == "":
@@ -174,8 +175,15 @@ if params['action'] == 'search':
   elif ( item['file_original_path'].find("stack://") > -1 ):
     stackPath = item['file_original_path'].split(" , ")
     item['file_original_path'] = stackPath[0][8:]
-  
-  Search(item)  
+
+  # Remove year part from the title
+  item['title'] = re.sub(r'\(\d+\)', '', item['title']).strip()
+  item['tvshow'] = re.sub(r'\(\d+\)', '', item['tvshow']).strip()
+
+  # IMDB ID
+  item['imdb'] = xbmc.getInfoLabel("VideoPlayer.IMDBNumber")
+
+  Search(item)
 
 elif params['action'] == 'download':
   subs = Download(params)

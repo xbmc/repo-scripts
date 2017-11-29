@@ -1,17 +1,23 @@
-from trakt.core.errors import ERRORS
-from trakt.core.exceptions import ServerError, ClientError
+from __future__ import absolute_import, division, print_function
+
+from trakt.core.errors import log_request_error
+from trakt.core.exceptions import RequestFailedError, ServerError, ClientError
+from trakt.core.helpers import try_convert
+from trakt.core.pagination import PaginationIterator
 from trakt.helpers import setdefault
 
-from functools import wraps
+import functools
 import logging
+import warnings
 
 log = logging.getLogger(__name__)
 
 
 def authenticated(func):
-    @wraps(func)
+    @functools.wraps(func)
     def wrap(*args, **kwargs):
-        kwargs['authenticated'] = True
+        if 'authenticated' not in kwargs:
+            kwargs['authenticated'] = True
 
         return func(*args, **kwargs)
 
@@ -19,7 +25,7 @@ def authenticated(func):
 
 
 def application(func):
-    @wraps(func)
+    @functools.wraps(func)
     def wrap(*args, **kwargs):
         if args and isinstance(args[0], Interface):
             interface = args[0]
@@ -53,14 +59,49 @@ class Interface(object):
 
         return self.client.http.configure(self.path)
 
-    @staticmethod
-    def get_data(response, exceptions=False, parse=True):
+    def get_data(self, response, exceptions=False, pagination=False, parse=True):
         if response is None:
+            if exceptions:
+                raise RequestFailedError('No response available')
+
+            log.warn('Request failed (no response returned)')
             return None
 
         # Return response, if parse=False
         if not parse:
             return response
+
+        # Check status code, log any errors
+        error = False
+
+        if response.status_code < 200 or response.status_code >= 300:
+            log_request_error(log, response)
+
+            # Raise an exception (if enabled)
+            if exceptions:
+                if response.status_code >= 500:
+                    raise ServerError(response)
+                else:
+                    raise ClientError(response)
+
+            # Set error flag
+            error = True
+
+        # Return `None` if we encountered an error, return response data
+        if error:
+            return None
+
+        # Check for pagination response
+        page_count = try_convert(response.headers.get('x-pagination-page-count'), int)
+
+        if page_count and page_count > 1:
+            if pagination:
+                return PaginationIterator(self.client, response)
+
+            warnings.warn(
+                'Unhandled pagination response, more pages can be returned with `pagination=True`',
+                stacklevel=3
+            )
 
         # Parse response, return data
         content_type = response.headers.get('content-type')
@@ -78,29 +119,6 @@ class Interface(object):
             # Fallback to raw content
             data = response.content
 
-        # Check status code, log any errors
-        error = False
-
-        if response.status_code < 200 or response.status_code >= 300:
-            # Lookup status code in trakt error definitions
-            name, desc = ERRORS.get(response.status_code, ("Unknown", "Unknown"))
-
-            log.warning('request failed: %s - "%s" (code: %s)', name, desc, response.status_code)
-
-            if exceptions:
-                # Raise an exception (including the response for further processing)
-                if response.status_code >= 500:
-                    raise ServerError(response)
-                else:
-                    raise ClientError(response)
-
-            # Set error flag
-            error = True
-
-        # Return `None` if we encountered an error, return response data
-        if error:
-            return None
-
         return data
 
 
@@ -112,10 +130,10 @@ class InterfaceProxy(object):
     def __getattr__(self, name):
         value = getattr(self.interface, name)
 
-        if not hasattr(value, '__call__'):
+        if not callable(value):
             return value
 
-        @wraps(value)
+        @functools.wraps(value)
         def wrap(*args, **kwargs):
             args = self.args + list(args)
 

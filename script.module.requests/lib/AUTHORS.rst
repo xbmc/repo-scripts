@@ -162,4 +162,15 @@ Patches and Suggestions
 - Smiley Barry (`@smiley <https://github.com/smiley>`_)
 - Shagun Sodhani (`@shagunsodhani <https://github.com/shagunsodhani>`_)
 - Robin Linderborg (`@vienno <https://github.com/vienno>`_)
-- Brian Samek(`@bsamek <https://github.com/bsamek`_)
+- Brian Samek (`@bsamek <https://github.com/bsamek>`_)
+- Dmitry Dygalo (`@Stranger6667 <https://github.com/Stranger6667>`_)
+- piotrjurkiewicz
+- Jesse Shapiro <jesse@jesseshapiro.net> (`@haikuginger <https://github.com/haikuginger>`_)
+- Nate Prewitt <nate.prewitt@gmail.com> (`@nateprewitt <https://github.com/nateprewitt>`_)
+- Maik Himstedt
+- Michael Hunsinger
+- Brian Bamsch <bbamsch32@gmail.com> (`@bbamsch <https://github.com/bbamsch>`_)
+- Om Prakash Kumar <omprakash070@gmail.com> (`@iamprakashom <https://github.com/iamprakashom>`_)
+- Philipp Konrad <gardiac2002@gmail.com> (`@gardiac2002 <https://github.com/gardiac2002>`_)
+- Hussain Tamboli <hussaintamboli18@gmail.com> (`@hussaintamboli <https://github.com/hussaintamboli>`_)
+- Casey Davidson (`@davidsoncasey <https://github.com/davidsoncasey>`_)

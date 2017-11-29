@@ -12,7 +12,15 @@ from ..compat import compat_urlparse
 
 class AbcNewsVideoIE(AMPIE):
     IE_NAME = 'abcnews:video'
-    _VALID_URL = r'https?://abcnews\.go\.com/[^/]+/video/(?P<display_id>[0-9a-z-]+)-(?P<id>\d+)'
+    _VALID_URL = r'''(?x)
+                    https?://
+                        abcnews\.go\.com/
+                        (?:
+                            [^/]+/video/(?P<display_id>[0-9a-z-]+)-|
+                            video/embed\?.*?\bid=
+                        )
+                        (?P<id>\d+)
+                    '''
 
     _TESTS = [{
         'url': 'http://abcnews.go.com/ThisWeek/video/week-exclusive-irans-foreign-minister-zarif-20411932',
@@ -23,12 +31,15 @@ class AbcNewsVideoIE(AMPIE):
             'title': '\'This Week\' Exclusive: Iran\'s Foreign Minister Zarif',
             'description': 'George Stephanopoulos goes one-on-one with Iranian Foreign Minister Dr. Javad Zarif.',
             'duration': 180,
-            'thumbnail': 're:^https?://.*\.jpg$',
+            'thumbnail': r're:^https?://.*\.jpg$',
         },
         'params': {
             # m3u8 download
             'skip_download': True,
         },
+    }, {
+        'url': 'http://abcnews.go.com/video/embed?id=46979033',
+        'only_matching': True,
     }, {
         'url': 'http://abcnews.go.com/2020/video/2020-husband-stands-teacher-jail-student-affairs-26119478',
         'only_matching': True,
@@ -59,7 +70,7 @@ class AbcNewsIE(InfoExtractor):
             'display_id': 'dramatic-video-rare-death-job-america',
             'title': 'Occupational Hazards',
             'description': 'Nightline investigates the dangers that lurk at various jobs.',
-            'thumbnail': 're:^https?://.*\.jpg$',
+            'thumbnail': r're:^https?://.*\.jpg$',
             'upload_date': '20100428',
             'timestamp': 1272412800,
         },

@@ -10,6 +10,8 @@ import ratings
 import actions
 import util
 
+TRAILER_FAIL_THRESHOLD = 10
+
 
 # Playabe is implemented as a dict to be easily serializable to JSON
 class PlayableBase(dict):
@@ -790,6 +792,7 @@ class TrailerHandler:
         trailers = []
         pool = []
         ct = 0
+        fail = 0
         for t in self._getTrailersFromDBGenre(source, watched=watched):
             pool.append(t)
             ct += 1
@@ -799,35 +802,52 @@ class TrailerHandler:
                 for t in pool:
                     t = self.updateTrailer(t, source, quality)
                     if t:
+                        fail = 0
                         trailers.append(t)
                         if len(trailers) >= count:
+                            break
+                    else:
+                        fail += 1
+                        if fail >= TRAILER_FAIL_THRESHOLD:
+                            util.DEBUG_LOG('Exceeded trailer fail threshold - aborting.')
                             break
                 pool = []
                 ct = 0
 
-            if len(trailers) >= count:
+            if len(trailers) >= count or fail >= TRAILER_FAIL_THRESHOLD:
                 break
         else:
             if pool:
                 for t in pool:
                     t = self.updateTrailer(t, source, quality)
                     if t:
+                        fail = 0
                         trailers.append(t)
                         if len(trailers) >= count:
+                            break
+                    else:
+                        fail += 1
+                        if fail >= TRAILER_FAIL_THRESHOLD:
+                            util.DEBUG_LOG('Exceeded trailer fail threshold - aborting.')
                             break
 
         return [
             Video(
-                t.url,
-                t.userAgent,
-                title=t.title,
-                thumb=t.thumb,
+                trailer.url,
+                trailer.userAgent,
+                title=trailer.title,
+                thumb=trailer.thumb,
                 volume=self.sItem.getLive('volume')
-            ).fromModule(self.sItem) for t in trailers
+            ).fromModule(self.sItem) for trailer in trailers
         ]
 
     def updateTrailer(self, t, source, quality):
-        url = scrapers.getPlayableURL(t.WID.split(':', 1)[-1], quality, source, t.url) or ''
+        try:
+            url = scrapers.getPlayableURL(t.WID.split(':', 1)[-1], quality, source, t.url) or ''
+        except:
+            util.ERROR()
+            url = ''
+
         watched = t.watched
 
         t.watched = True
@@ -1070,17 +1090,19 @@ class AudioFormatHandler:
 
     def _checkFileNameForFormat(self, feature):
         featureFileName = os.path.basename(feature.path)
-        
+
         if feature.audioFormat == 'Dolby TrueHD' and re.search(self._atmosRegex, featureFileName):
-            util.DEBUG_LOG('    - Detect: Used file path {0} to determine audio format is {1}'.format(featureFileName, 'Dolby Atmos'))
+            util.DEBUG_LOG('    - Detect: Used file path {0} to determine audio format is {1}'.format(repr(featureFileName), 'Dolby Atmos'))
             return 'Dolby Atmos'
         elif feature.audioFormat == 'DTS-HD Master Audio' and re.search(self._dtsxRegex, featureFileName):
-            util.DEBUG_LOG('    - Detect: Used file path {0} to determine audio format is {1}'.format(featureFileName, 'DTS-X'))
+            util.DEBUG_LOG('    - Detect: Used file path {0} to determine audio format is {1}'.format(repr(featureFileName), 'DTS-X'))
             return 'DTS-X'
         else:
-            util.DEBUG_LOG('    - Detect: Looked at the file path {0} and decided to keep audio format {1}'.format(featureFileName, repr(feature.audioFormat)))
+            util.DEBUG_LOG(
+                '    - Detect: Looked at the file path {0} and decided to keep audio format {1}'.format(repr(featureFileName), repr(feature.audioFormat))
+            )
             return feature.audioFormat
-    
+
     @DB.session
     def __call__(self, caller, sItem):
         bumper = None
@@ -1181,6 +1203,7 @@ class SequenceProcessor:
         self.contentPath = content_path
         self.lastFeature = None
         self._lastAction = None
+        self.end = -1
         self.loadSequence(sequence_path)
         self.createDefaultFeature()
 

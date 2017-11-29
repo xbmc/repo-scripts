@@ -121,7 +121,7 @@ class SoundcloudIE(InfoExtractor):
         },
     ]
 
-    _CLIENT_ID = '02gUJC0hH2ct1EGOcYXQIzRFU91c72Ea'
+    _CLIENT_ID = '2t9loNQH90kzJcsFCODdigxfp325aq4z'
     _IPHONE_CLIENT_ID = '376f225bf427445fc4bfb6b99b72e0bf'
 
     @staticmethod
@@ -136,7 +136,7 @@ class SoundcloudIE(InfoExtractor):
 
     @classmethod
     def _resolv_url(cls, url):
-        return 'http://api.soundcloud.com/resolve.json?url=' + url + '&client_id=' + cls._CLIENT_ID
+        return 'https://api.soundcloud.com/resolve.json?url=' + url + '&client_id=' + cls._CLIENT_ID
 
     def _extract_info_dict(self, info, full_title=None, quiet=False, secret_token=None):
         track_id = compat_str(info['id'])
@@ -173,46 +173,54 @@ class SoundcloudIE(InfoExtractor):
             })
 
         # We have to retrieve the url
-        streams_url = ('http://api.soundcloud.com/i1/tracks/{0}/streams?'
-                       'client_id={1}&secret_token={2}'.format(track_id, self._IPHONE_CLIENT_ID, secret_token))
         format_dict = self._download_json(
-            streams_url,
-            track_id, 'Downloading track url')
+            'https://api.soundcloud.com/i1/tracks/%s/streams' % track_id,
+            track_id, 'Downloading track url', query={
+                'client_id': self._CLIENT_ID,
+                'secret_token': secret_token,
+            })
 
         for key, stream_url in format_dict.items():
+            abr = int_or_none(self._search_regex(
+                r'_(\d+)_url', key, 'audio bitrate', default=None))
             if key.startswith('http'):
-                formats.append({
+                stream_formats = [{
                     'format_id': key,
                     'ext': ext,
                     'url': stream_url,
-                    'vcodec': 'none',
-                })
+                }]
             elif key.startswith('rtmp'):
                 # The url doesn't have an rtmp app, we have to extract the playpath
                 url, path = stream_url.split('mp3:', 1)
-                formats.append({
+                stream_formats = [{
                     'format_id': key,
                     'url': url,
                     'play_path': 'mp3:' + path,
                     'ext': 'flv',
-                    'vcodec': 'none',
-                })
+                }]
+            elif key.startswith('hls'):
+                stream_formats = self._extract_m3u8_formats(
+                    stream_url, track_id, 'mp3', entry_protocol='m3u8_native',
+                    m3u8_id=key, fatal=False)
+            else:
+                continue
 
-            if not formats:
-                # We fallback to the stream_url in the original info, this
-                # cannot be always used, sometimes it can give an HTTP 404 error
-                formats.append({
-                    'format_id': 'fallback',
-                    'url': info['stream_url'] + '?client_id=' + self._CLIENT_ID,
-                    'ext': ext,
-                    'vcodec': 'none',
-                })
+            for f in stream_formats:
+                f['abr'] = abr
 
-            for f in formats:
-                if f['format_id'].startswith('http'):
-                    f['protocol'] = 'http'
-                if f['format_id'].startswith('rtmp'):
-                    f['protocol'] = 'rtmp'
+            formats.extend(stream_formats)
+
+        if not formats:
+            # We fallback to the stream_url in the original info, this
+            # cannot be always used, sometimes it can give an HTTP 404 error
+            formats.append({
+                'format_id': 'fallback',
+                'url': info['stream_url'] + '?client_id=' + self._CLIENT_ID,
+                'ext': ext,
+            })
+
+        for f in formats:
+            f['vcodec'] = 'none'
 
         self._check_formats(formats, track_id)
         self._sort_formats(formats)
@@ -228,7 +236,7 @@ class SoundcloudIE(InfoExtractor):
         track_id = mobj.group('track_id')
 
         if track_id is not None:
-            info_json_url = 'http://api.soundcloud.com/tracks/' + track_id + '.json?client_id=' + self._CLIENT_ID
+            info_json_url = 'https://api.soundcloud.com/tracks/' + track_id + '.json?client_id=' + self._CLIENT_ID
             full_title = track_id
             token = mobj.group('secret_token')
             if token:
@@ -253,7 +261,7 @@ class SoundcloudIE(InfoExtractor):
 
             self.report_resolve(full_title)
 
-            url = 'http://soundcloud.com/%s' % resolve_title
+            url = 'https://soundcloud.com/%s' % resolve_title
             info_json_url = self._resolv_url(url)
         info = self._download_json(info_json_url, full_title, 'Downloading info JSON')
 
@@ -282,7 +290,7 @@ class SoundcloudSetIE(SoundcloudPlaylistBaseIE):
             'id': '2284613',
             'title': 'The Royal Concept EP',
         },
-        'playlist_mincount': 6,
+        'playlist_mincount': 5,
     }, {
         'url': 'https://soundcloud.com/the-concept-band/sets/the-royal-concept-ep/token',
         'only_matching': True,
@@ -296,7 +304,7 @@ class SoundcloudSetIE(SoundcloudPlaylistBaseIE):
         # extract simple title (uploader + slug of song title)
         slug_title = mobj.group('slug_title')
         full_title = '%s/sets/%s' % (uploader, slug_title)
-        url = 'http://soundcloud.com/%s/sets/%s' % (uploader, slug_title)
+        url = 'https://soundcloud.com/%s/sets/%s' % (uploader, slug_title)
 
         token = mobj.group('token')
         if token:
@@ -372,7 +380,7 @@ class SoundcloudUserIE(SoundcloudPlaylistBaseIE):
         'url': 'https://soundcloud.com/grynpyret/spotlight',
         'info_dict': {
             'id': '7098329',
-            'title': 'GRYNPYRET (Spotlight)',
+            'title': 'Grynpyret (Spotlight)',
         },
         'playlist_mincount': 1,
     }]
@@ -402,7 +410,7 @@ class SoundcloudUserIE(SoundcloudPlaylistBaseIE):
         mobj = re.match(self._VALID_URL, url)
         uploader = mobj.group('user')
 
-        url = 'http://soundcloud.com/%s/' % uploader
+        url = 'https://soundcloud.com/%s/' % uploader
         resolv_url = self._resolv_url(url)
         user = self._download_json(
             resolv_url, uploader, 'Downloading user info')
@@ -465,7 +473,7 @@ class SoundcloudPlaylistIE(SoundcloudPlaylistBaseIE):
     _VALID_URL = r'https?://api\.soundcloud\.com/playlists/(?P<id>[0-9]+)(?:/?\?secret_token=(?P<token>[^&]+?))?$'
     IE_NAME = 'soundcloud:playlist'
     _TESTS = [{
-        'url': 'http://api.soundcloud.com/playlists/4110309',
+        'url': 'https://api.soundcloud.com/playlists/4110309',
         'info_dict': {
             'id': '4110309',
             'title': 'TILT Brass - Bowery Poetry Club, August \'03 [Non-Site SCR 02]',

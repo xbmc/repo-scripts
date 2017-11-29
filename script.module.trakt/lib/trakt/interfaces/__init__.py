@@ -1,44 +1,52 @@
-from trakt.interfaces.base import Interface
+from __future__ import absolute_import, division, print_function
 
-from trakt.interfaces.auth import *
-from trakt.interfaces.movies import *
-from trakt.interfaces.oauth import *
-from trakt.interfaces.scrobble import *
-from trakt.interfaces.search import *
-from trakt.interfaces.shows import *
-from trakt.interfaces.sync import *
-from trakt.interfaces.users import *
+from trakt.interfaces import auth
+from trakt.interfaces import calendars
+from trakt.interfaces import movies
+from trakt.interfaces import oauth
+from trakt.interfaces import scrobble
+from trakt.interfaces import search
+from trakt.interfaces import shows
+from trakt.interfaces import sync
+from trakt.interfaces import users
+
 
 INTERFACES = [
     # /
-    AuthInterface,
-    OAuthInterface,
+    auth.AuthInterface,
+    oauth.OAuthInterface,
+    oauth.DeviceOAuthInterface,
+    oauth.PinOAuthInterface,
 
-    ScrobbleInterface,
-    SearchInterface,
+    scrobble.ScrobbleInterface,
+    search.SearchInterface,
+
+    # /calendars/
+    calendars.AllCalendarsInterface,
+    calendars.MyCalendarsInterface,
 
     # /sync/
-    SyncInterface,
-    SyncCollectionInterface,
-    SyncHistoryInterface,
-    SyncPlaybackInterface,
-    SyncRatingsInterface,
-    SyncWatchedInterface,
-    SyncWatchlistInterface,
+    sync.SyncInterface,
+    sync.SyncCollectionInterface,
+    sync.SyncHistoryInterface,
+    sync.SyncPlaybackInterface,
+    sync.SyncRatingsInterface,
+    sync.SyncWatchedInterface,
+    sync.SyncWatchlistInterface,
 
     # /shows/
-    ShowsInterface,
+    shows.ShowsInterface,
 
     # /movies/
-    MoviesInterface,
+    movies.MoviesInterface,
 
     # /users/
-    UsersInterface,
-    UsersSettingsInterface,
+    users.UsersInterface,
+    users.UsersSettingsInterface,
 
     # /users/lists/
-    UsersListsInterface,
-    UsersListInterface
+    users.UsersListsInterface,
+    users.UsersListInterface
 ]
 
 

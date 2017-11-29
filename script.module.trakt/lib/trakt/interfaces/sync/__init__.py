@@ -1,5 +1,7 @@
-from trakt.core.helpers import deprecated
-from trakt.interfaces.base import Interface
+from __future__ import absolute_import, division, print_function
+
+from trakt.core.helpers import deprecated, popitems
+from trakt.interfaces.base import Interface, authenticated
 
 # Import child interfaces
 from trakt.interfaces.sync.collection import SyncCollectionInterface
@@ -9,7 +11,7 @@ from trakt.interfaces.sync.ratings import SyncRatingsInterface
 from trakt.interfaces.sync.watched import SyncWatchedInterface
 from trakt.interfaces.sync.watchlist import SyncWatchlistInterface
 
-__all__ = [
+__all__ = (
     'SyncInterface',
     'SyncCollectionInterface',
     'SyncHistoryInterface',
@@ -17,15 +19,22 @@ __all__ = [
     'SyncRatingsInterface',
     'SyncWatchedInterface',
     'SyncWatchlistInterface'
-]
+)
 
 
 class SyncInterface(Interface):
     path = 'sync'
 
+    @authenticated
     def last_activities(self, **kwargs):
         return self.get_data(
-            self.http.get('last_activities'),
+            self.http.get(
+                'last_activities',
+                **popitems(kwargs, [
+                    'authenticated',
+                    'validate_token'
+                ])
+            ),
             **kwargs
         )
 

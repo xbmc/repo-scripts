@@ -1,13 +1,14 @@
-import experience
-import kodiutil
-import cvutil
-import kodigui
 import xbmc
 import xbmcgui
-
+import kodigui
+import kodiutil
 from kodiutil import T
 
 kodiutil.checkAPILevel()
+
+import experience  # noqa E402
+import cvutil  # noqa E402
+
 
 CHANNEL_STRINGS = {
     0: '0.0',
@@ -44,12 +45,15 @@ def featureComfirmationDialog(features):
     return pd.features, pd.sequencePath
 
 
-def begin(movieid=None, episodeid=None, selection=False, args=None):
+def begin(movieid=None, episodeid=None, dbtype=None, selection=False, args=None):
     e = experience.ExperiencePlayer().create()
     seqPath = None
 
-    if not e.hasFeatures() or selection or movieid or episodeid:
-        if not e.addSelectedFeature(selection=selection, movieid=movieid, episodeid=episodeid):
+    if not e.hasFeatures() or selection or movieid or episodeid or dbtype:
+        if dbtype:
+            if not e.addDBFeature(dbtype, args[0][5:]):
+                return showNoFeaturesDialog()
+        elif not e.addSelectedFeature(selection=selection, movieid=movieid, episodeid=episodeid):
             return showNoFeaturesDialog()
     elif len(e.features) < 2 and kodiutil.getSetting('ignore.playlist.single', True) and e.selectionAvailable():
         if not e.addSelectedFeature(selection=True):
@@ -67,6 +71,9 @@ def begin(movieid=None, episodeid=None, selection=False, args=None):
     else:
         seqPath = cvutil.getSequencePath(for_3D=e.has3D)
         kodiutil.DEBUG_LOG('Loading sequence for {0}: {1}'.format(e.has3D and '3D' or '2D', repr(seqPath)))
+
+    if xbmc.getCondVisibility('Window.IsVisible(MovieInformation)'):
+        xbmc.executebuiltin('Dialog.Close(MovieInformation)')
 
     e.start(seqPath)
 

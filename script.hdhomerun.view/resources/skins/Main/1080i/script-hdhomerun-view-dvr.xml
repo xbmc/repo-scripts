@@ -482,13 +482,13 @@
                             <width>60</width>
                             <height>60</height>
                             <texture>$INFO[ListItem.Property(channel.icon)]</texture>
-                            <aspectratio>stretch</aspectratio>
+                            <aspectratio>keep</aspectratio>
                         </control>
                         <control type="textbox">
                             <posx>95</posx>
                             <posy>182</posy>
                             <width>188</width>
-                            <height>50</height>
+                            <height>53</height>
                             <font>font10</font>
                             <align>left</align>
                             <textcolor>FFFFFFFF</textcolor>
@@ -594,13 +594,13 @@
                             <width>60</width>
                             <height>60</height>
                             <texture>$INFO[ListItem.Property(channel.icon)]</texture>
-                            <aspectratio>stretch</aspectratio>
+                            <aspectratio>keep</aspectratio>
                         </control>
                         <control type="textbox">
                             <posx>95</posx>
                             <posy>182</posy>
                             <width>188</width>
-                            <height>50</height>
+                            <height>53</height>
                             <font>font10</font>
                             <align>left</align>
                             <textcolor>FFFFFFFF</textcolor>
@@ -767,7 +767,7 @@
                             <posx>10</posx>
                             <posy>235</posy>
                             <width>186</width>
-                            <height>55</height>
+                            <height>53</height>
                             <font>font10</font>
                             <align>center</align>
                             <textcolor>FFFFFFFF</textcolor>
@@ -935,13 +935,13 @@
                                     <width>60</width>
                                     <height>60</height>
                                     <texture>$INFO[ListItem.Property(channel.icon)]</texture>
-                                    <aspectratio>stretch</aspectratio>
+                                    <aspectratio>keep</aspectratio>
                                 </control>
                                 <control type="textbox">
                                     <posx>95</posx>
                                     <posy>182</posy>
                                     <width>188</width>
-                                    <height>50</height>
+                                    <height>53</height>
                                     <font>font10</font>
                                     <align>left</align>
                                     <textcolor>FFFFFFFF</textcolor>
@@ -1047,13 +1047,13 @@
                                     <width>60</width>
                                     <height>60</height>
                                     <texture>$INFO[ListItem.Property(channel.icon)]</texture>
-                                    <aspectratio>stretch</aspectratio>
+                                    <aspectratio>keep</aspectratio>
                                 </control>
                                 <control type="textbox">
                                     <posx>95</posx>
                                     <posy>182</posy>
                                     <width>188</width>
-                                    <height>50</height>
+                                    <height>53</height>
                                     <font>font10</font>
                                     <align>left</align>
                                     <textcolor>FFFFFFFF</textcolor>
@@ -1168,13 +1168,13 @@
                                     <width>60</width>
                                     <height>60</height>
                                     <texture>$INFO[ListItem.Property(channel.icon)]</texture>
-                                    <aspectratio>stretch</aspectratio>
+                                    <aspectratio>keep</aspectratio>
                                 </control>
                                 <control type="textbox">
                                     <posx>95</posx>
                                     <posy>182</posy>
                                     <width>188</width>
-                                    <height>50</height>
+                                    <height>53</height>
                                     <font>font10</font>
                                     <align>left</align>
                                     <textcolor>FFFFFFFF</textcolor>
@@ -1280,13 +1280,13 @@
                                     <width>60</width>
                                     <height>60</height>
                                     <texture>$INFO[ListItem.Property(channel.icon)]</texture>
-                                    <aspectratio>stretch</aspectratio>
+                                    <aspectratio>keep</aspectratio>
                                 </control>
                                 <control type="textbox">
                                     <posx>95</posx>
                                     <posy>182</posy>
                                     <width>188</width>
-                                    <height>50</height>
+                                    <height>53</height>
                                     <font>font10</font>
                                     <align>left</align>
                                     <textcolor>FFFFFFFF</textcolor>

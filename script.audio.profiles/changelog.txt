@@ -1,3 +1,7 @@
+[B]1.2.0[/B]
+- add: automatic content detection and enable suitable profile
+- add: sending HDMI-CEC Commands to wake up or sleep your AVR or TV
+
 [B]1.1.1[/B]
 - fix: unicode characters for profiles name
 

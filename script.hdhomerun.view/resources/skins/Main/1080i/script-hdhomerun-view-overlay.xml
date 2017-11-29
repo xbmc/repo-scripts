@@ -233,7 +233,7 @@
                                 <width>160</width>
                                 <height>160</height>
                                 <texture>$INFO[ListItem.Property(channel.icon)]</texture>
-                                <aspectratio aligny="top">scale</aspectratio>
+                                <aspectratio aligny="top">keep</aspectratio>
                             </control>
                             <control type="textbox">
                                 <posx>10</posx>
@@ -357,7 +357,7 @@
                             <width>160</width>
                             <height>160</height>
                             <texture>$INFO[ListItem.Property(channel.icon)]</texture>
-                            <aspectratio aligny="top">scale</aspectratio>
+                            <aspectratio aligny="top">keep</aspectratio>
                         </control>
                         <control type="image">
                             <posx>180</posx>
@@ -571,7 +571,7 @@
                                 <width>160</width>
                                 <height>160</height>
                                 <texture>$INFO[ListItem.Property(channel.icon)]</texture>
-                                <aspectratio aligny="top">scale</aspectratio>
+                                <aspectratio aligny="top">keep</aspectratio>
                             </control>
                             <control type="textbox">
                                 <posx>10</posx>
@@ -689,7 +689,7 @@
                                 <width>160</width>
                                 <height>160</height>
                                 <texture>$INFO[ListItem.Property(channel.icon)]</texture>
-                                <aspectratio aligny="top">scale</aspectratio>
+                                <aspectratio aligny="top">keep</aspectratio>
                             </control>
                             <control type="textbox">
                                 <posx>10</posx>
@@ -1284,7 +1284,7 @@
                                 <width>160</width>
                                 <height>160</height>
                                 <texture>$INFO[ListItem.Property(channel.icon)]</texture>
-                                <aspectratio aligny="top">scale</aspectratio>
+                                <aspectratio aligny="top">keep</aspectratio>
                             </control>
                             <control type="textbox">
                                 <posx>10</posx>
@@ -1402,7 +1402,7 @@
                                 <width>160</width>
                                 <height>160</height>
                                 <texture>$INFO[ListItem.Property(channel.icon)]</texture>
-                                <aspectratio aligny="top">scale</aspectratio>
+                                <aspectratio aligny="top">keep</aspectratio>
                             </control>
                             <control type="textbox">
                                 <posx>10</posx>

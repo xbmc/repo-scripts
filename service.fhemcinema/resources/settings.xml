@@ -4,6 +4,7 @@
 		<setting id="endpointtype"		type="labelenum"	label="30010"	default="FHEM"	values="FHEM|CCU"	/>
 		<setting id="hostname"			type="text"			label="30011"	default=""							/>
 		<setting id="port"				type="number"		label="30012"	default="7072"	visible="eq(-2,0)"	/>
+		<setting id="stopdelay"                      type="slider" label="30040" default="0" range="0,30" />
 		<setting						type="lsep"			label="30013"										/>
 		<setting id="onstartup"			type="text"			label="30031"	default=""		visible="eq(-4,0)"	/>
 		<setting id="onshutdown"		type="text"			label="30032"	default=""		visible="eq(-5,0)"	/>

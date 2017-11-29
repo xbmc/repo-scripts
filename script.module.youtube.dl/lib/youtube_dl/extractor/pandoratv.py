@@ -11,6 +11,7 @@ from ..utils import (
     float_or_none,
     parse_duration,
     str_to_int,
+    urlencode_postdata,
 )
 
 
@@ -18,14 +19,14 @@ class PandoraTVIE(InfoExtractor):
     IE_NAME = 'pandora.tv'
     IE_DESC = '판도라TV'
     _VALID_URL = r'https?://(?:.+?\.)?channel\.pandora\.tv/channel/video\.ptv\?'
-    _TEST = {
+    _TESTS = [{
         'url': 'http://jp.channel.pandora.tv/channel/video.ptv?c1=&prgid=53294230&ch_userid=mikakim&ref=main&lot=cate_01_2',
         'info_dict': {
             'id': '53294230',
             'ext': 'flv',
             'title': '頭を撫でてくれる？',
             'description': '頭を撫でてくれる？',
-            'thumbnail': 're:^https?://.*\.jpg$',
+            'thumbnail': r're:^https?://.*\.jpg$',
             'duration': 39,
             'upload_date': '20151218',
             'uploader': 'カワイイ動物まとめ',
@@ -33,7 +34,26 @@ class PandoraTVIE(InfoExtractor):
             'view_count': int,
             'like_count': int,
         }
-    }
+    }, {
+        'url': 'http://channel.pandora.tv/channel/video.ptv?ch_userid=gogoucc&prgid=54721744',
+        'info_dict': {
+            'id': '54721744',
+            'ext': 'flv',
+            'title': '[HD] JAPAN COUNTDOWN 170423',
+            'description': '[HD] JAPAN COUNTDOWN 170423',
+            'thumbnail': r're:^https?://.*\.jpg$',
+            'duration': 1704.9,
+            'upload_date': '20170423',
+            'uploader': 'GOGO_UCC',
+            'uploader_id': 'gogoucc',
+            'view_count': int,
+            'like_count': int,
+        },
+        'params': {
+            # Test metadata only
+            'skip_download': True,
+        },
+    }]
 
     def _real_extract(self, url):
         qs = compat_urlparse.parse_qs(compat_urlparse.urlparse(url).query)
@@ -56,6 +76,22 @@ class PandoraTVIE(InfoExtractor):
                 r'^v(\d+)[Uu]rl$', format_id, 'height', default=None)
             if not height:
                 continue
+
+            play_url = self._download_json(
+                'http://m.pandora.tv/?c=api&m=play_url', video_id,
+                data=urlencode_postdata({
+                    'prgid': video_id,
+                    'runtime': info.get('runtime'),
+                    'vod_url': format_url,
+                }),
+                headers={
+                    'Origin': url,
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                })
+            format_url = play_url.get('url')
+            if not format_url:
+                continue
+
             formats.append({
                 'format_id': '%sp' % height,
                 'url': format_url,
@@ -69,7 +105,7 @@ class PandoraTVIE(InfoExtractor):
             'description': info.get('body'),
             'thumbnail': info.get('thumbnail') or info.get('poster'),
             'duration': float_or_none(info.get('runtime'), 1000) or parse_duration(info.get('time')),
-            'upload_date': info['fid'][:8] if isinstance(info.get('fid'), compat_str) else None,
+            'upload_date': info['fid'].split('/')[-1][:8] if isinstance(info.get('fid'), compat_str) else None,
             'uploader': info.get('nickname'),
             'uploader_id': info.get('upload_userid'),
             'view_count': str_to_int(info.get('hit')),

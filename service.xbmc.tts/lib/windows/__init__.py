@@ -62,7 +62,11 @@ READERS_WINID_MAP = {
                 10019: SettingsReader, #appearancesettings
                 10021: SettingsReader, #livetvsettings
                 10025: VideoLibraryWindowReader, #videolibrary
+                10030: SettingsReader, #SettingsCategory.xml
+                10031: SettingsReader, #SettingsCategory.xml
+                10032: SettingsReader, #SettingsCategory.xml
                 10034: SettingsReader, #profilesettings
+                10035: SettingsReader, #SettingsCategory.xml
                 14000: SettingsReader, #pvrclientspecificsettings
                 10100: YesNoDialogReader, #yesnodialog
                 10101: ProgressDialogReader,
@@ -95,6 +99,7 @@ READERS_WINID_MAP = {
                 10622: PVRGuideWindowReader, #radioguide
                 10623: PVRTimersWindowReader, #radiotimers
                 10624: PVRSearchWindowReader, #radiosearch
+                11102: TextViewerReader,
                 12000: SelectDialogReader,
                 12002: YesNoDialogReader,
                 12003: VideoInfoDialogReader, #videoinfodialog

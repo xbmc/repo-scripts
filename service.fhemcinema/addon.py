@@ -19,6 +19,7 @@
 import datetime,socket,subprocess,os
 import xbmc,xbmcplugin,xbmcgui,xbmcaddon
 import httplib
+import time
 
 # -- Constants ----------------------------------------------
 ADDON_ID = 'service.fhemcinema'
@@ -37,6 +38,12 @@ class FhemHandler(xbmc.Player):
 	def __init__ (self):
 		xbmc.Player.__init__(self)
 		self.isplayingvideo = False;
+		self.lastStopTime = 0
+		self.stopCommand = ''
+		self.loadSettings()
+
+	def loadSettings(self):
+		self.stopDelay = int(float(settings.getSetting('stopdelay')))
 
 	def isDayTime(self):
 		try:
@@ -123,6 +130,10 @@ class FhemHandler(xbmc.Player):
 					self.isplayingvideo = True
 				else:
 					self.isplayingvideo = False
+			timeElapsed = int(round(time.time())) - self.lastStopTime
+			if self.stopCommand != '' and timeElapsed > self.stopDelay:
+				self.SendCommand(self.stopCommand)
+				self.stopCommand = ''
 			xbmc.sleep(1000)
 
 	def StartUp(self):
@@ -139,24 +150,28 @@ class FhemHandler(xbmc.Player):
 		else:
 			self.isplayingvideo = True;
 			self.SendCommand('onvideoplay')
+		self.stopCommand = ''
 
 	def onPlayBackEnded(self):
 		if self.isplayingvideo:
-			self.SendCommand('onvideostop')
+			self.stopCommand = 'onvideostop'
 		else:
-			self.SendCommand('onaudiostop')
+			self.stopCommand = 'onaudiostop'
+		self.lastStopTime = int(round(time.time()))
 
 	def onPlayBackStopped(self):
 		if self.isplayingvideo:
-			self.SendCommand('onvideostop')
+			self.stopCommand = 'onvideostop'
 		else:
-			self.SendCommand('onaudiostop')
+			self.stopCommand = 'onaudiostop'
+		self.lastStopTime = int(round(time.time()))
 
 	def onPlayBackPaused(self):
 		if xbmc.Player().isPlayingAudio():
 			self.SendCommand('onaudiopause')
 		else:
 			self.SendCommand('onvideopause')
+		self.stopCommand = ''
 
 	def onPlayBackResumed(self):
 		if xbmc.Player().isPlayingAudio():
@@ -164,9 +179,28 @@ class FhemHandler(xbmc.Player):
 		else:
 			self.isplayingvideo = True;
 			self.SendCommand('onvideoplay')
+		self.stopCommand = ''
+
+try:
+	class SettingsMonitor( xbmc.Monitor ):
+		def __init__( self, *args, **kwargs ):
+			xbmc.Monitor.__init__( self ) 
+			xbmc.log('SettingsMonitor - init')
+
+		def RegisterHandler(self, handler):
+			self.handler = handler
+
+		def onSettingsChanged( self ):
+			self.handler.loadSettings()
+
+
+except: 
+	log('Using Eden API - you need to restart addon for changing settings')
 
 # -- Main Code ----------------------------------------------
+settingsMonitor=SettingsMonitor()
 handler=FhemHandler()
+settingsMonitor.RegisterHandler(handler)
 handler.StartUp()
 handler.Run()
 handler.ShutDown()

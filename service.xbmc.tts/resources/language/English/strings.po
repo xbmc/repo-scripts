@@ -205,6 +205,9 @@ msgctxt "#32048"
 msgid "Poll Interval (ms)"
 msgstr ""
 
+msgctxt "#32049"
+msgid "Verbose"
+msgstr ""
 
 msgctxt "#32100"
 msgid "Database scan started."

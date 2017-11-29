@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import requests
-	
+
 import xbmc, xbmcgui, xbmcaddon
 import time, re, os, json
 
@@ -11,9 +11,9 @@ T = xbmcaddon.Addon(ADDON_ID).getLocalizedString
 TOKEN_PATH = os.path.join(xbmc.translatePath(xbmcaddon.Addon(ADDON_ID).getAddonInfo('profile')),'tokens')
 if not os.path.exists(TOKEN_PATH): os.makedirs(TOKEN_PATH)
 
-URL = 'https://main-ruuk.rhcloud.com/auth/{0}'
+URL = 'https://2ndmind.com/auth/{0}'
 USER_URL = 'auth.2ndmind.com'
-REFERRER = 'https://main-ruuk.rhcloud.com/'
+REFERRER = 'https://2ndmind.com/'
 WAIT_SECONDS = 300
 POLL_INTERVAL_SECONDS = 5
 
@@ -31,7 +31,7 @@ class GetTokenFail:
 def getToken(source,from_file=False):
 	if from_file:
 		return loadTokenFromFile()
-		
+
 	token = True
 	while token:
 		if token == True: token = _getToken(source)
@@ -45,13 +45,13 @@ def showFailOptions():
 	idx = xbmcgui.Dialog().select(T(32001),[T(32002),T(32003),T(32004)])
 	if idx < 0 or idx == 2:
 		return None
-		
+
 	if idx == 1:
 		return loadTokenFromFile()
 	else:
 		return True
 
-def loadTokenFromFile():	
+def loadTokenFromFile():
 	fpath = xbmcgui.Dialog().browseSingle(1,T(32005),'files')
 	if not fpath: return None
 	try:
@@ -73,6 +73,7 @@ def loadTokenFromFile():
 def _getToken(source):
 	session = requests.Session()
 	session.headers.update({'referer': REFERRER})
+	xbmc.log(repr(session.headers), xbmc.LOGNOTICE)
 	req = session.post(URL.format('getlookup'),data={'source':source})
 	start = time.time()
 	data = req.json()
@@ -111,7 +112,7 @@ def _getToken(source):
 				secsLeft = data.get('secsLeft')
 			elif status == 'timeout':
 				prog.close()
-				yesno = xbmcgui.Dialog().ok(T(32017),T(32018),'',T(32015),T(32016),T(32001))
+				yesno = xbmcgui.Dialog().yesno(T(32017),T(32018),'',T(32015),T(32016),T(32001))
 				return GetTokenFail('TIMEOUT',yesno)
 			elif status == 'ready':
 				prog.close()
@@ -128,13 +129,13 @@ def _getToken(source):
 					'{0} {1}'.format(T(32011),USER_URL),'{0} {1}'.format(T(32012),lookup_disp),T(32013) + leftDisp
 				)
 				xbmc.sleep(1000)
-			
+
 	finally:
 		prog.close()
 
 def timeLeft(start,total,secsLeft=None):
 	leftDisp = ''
-	
+
 	now = time.time()
 	if secsLeft:
 		left = secsLeft
@@ -143,10 +144,10 @@ def timeLeft(start,total,secsLeft=None):
 	else:
 		sofar = now - start
 		left = total - sofar
-		
+
 	if left < 0 :
 		return None, None, start
-		
+
 	pct = int((sofar/float(total))*100)
 	mins = int(left/60)
 	secs = int(left%60)
@@ -161,7 +162,7 @@ class AddonTokens(object):
 		self.usersFile = os.path.join(TOKEN_PATH,self.addonID)
 		self.currentID = None
 		self.loadUsers()
-		
+
 	def loadUsers(self):
 		self.users = {}
 		if os.path.exists(self.usersFile):
@@ -204,18 +205,18 @@ class AddonTokens(object):
 		if not self.currentID in self.users: return default
 		if not key in self.users[self.currentID]: return default
 		return self.users[self.currentID][key]
-	
+
 	def hasToken(self,ID):
 		return bool(ID in self.users and self.users[ID].get('access_token'))
 
 	@property
 	def token(self):
 		return self.getSetting('access_token','')
-		
+
 	@property
 	def refreshToken(self):
 		return self.getSetting('refresh_token','')
-	
+
 	@property
 	def tokenExpiration(self):
 		return int(float(self.getSetting('token_expiration','0')))
@@ -235,7 +236,7 @@ class GoogleOAuthorizer(object):
 		assert client_id != None, 'client_id cannot be None'
 		assert client_secret != None, 'client_secret cannot be None'
 		assert auth_scope != None, 'auth_scope cannot be None'
-		
+
 		self.addonID = addon_id
 		self.clientID = client_id
 		self.clientS = client_secret
@@ -253,7 +254,7 @@ class GoogleOAuthorizer(object):
 
 	def setUser(self,userID):
 		self.tokenHandler.setUser(userID)
-	
+
 	def userName(self):
 		return self.tokenHandler.userName
 
@@ -262,7 +263,7 @@ class GoogleOAuthorizer(object):
 
 	def renameUser(self,ID,new):
 		self.tokenHandler.renameUser(ID,new)
-		
+
 	def deleteUser(self,ID):
 		self.tokenHandler.deleteUser(ID)
 
@@ -293,7 +294,7 @@ class GoogleOAuthorizer(object):
 			return self.errorReAuthorize()
 
 		LOG('REFRESHING TOKEN')
-		data = {	
+		data = {
 					'client_id':self.clientID,
 					'client_secret':self.clientS,
 					'refresh_token':self.tokenHandler.refreshToken,
@@ -308,10 +309,10 @@ class GoogleOAuthorizer(object):
 			return self.errorReAuthorize()
 
 		return self.tokenHandler.token
-	
+
 	def authorized(self):
 		return bool(self.tokenHandler.token)
-		
+
 	def authorize(self):
 		userCode = self.getDeviceUserCode()
 		if not userCode: return
@@ -330,10 +331,10 @@ class GoogleOAuthorizer(object):
 			if d.iscanceled(): return
 		finally:
 			d.close()
-			
+
 		xbmcgui.Dialog().ok(T(32008),'',T(32019))
 		return self.saveData(json)
-		
+
 	def saveData(self,json):
 		self._setSetting('access_token',json.get('access_token',''))
 		refreshToken = json.get('refresh_token')
@@ -342,7 +343,7 @@ class GoogleOAuthorizer(object):
 
 	def pollAuthServer(self):
 		json = self.session.post(
-			self.auth2URL, 
+			self.auth2URL,
 			data={
 					'client_id':self.clientID,
 					'client_secret':self.clientS,
@@ -354,7 +355,7 @@ class GoogleOAuthorizer(object):
 			if json['error'] == 'slow_down':
 				self.authPollInterval += 1
 		return json
-		
+
 	def getDeviceUserCode(self):
 		json = self.session.post(self.auth1URL,data={'client_id':self.clientID,'scope':self.authScope}).json()
 		self.authPollInterval = json.get('interval',5)

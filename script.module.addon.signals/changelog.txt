@@ -1,5 +1,13 @@
 Changelog for Addon Signals
 
+** 0.0.3 **
+
+Make add-on backwards compatible
+
+** 0.0.2 **
+
+Add registerCall(), makeCall() and returnCall()
+
 ** 0.0.1 **
 
 Initial release

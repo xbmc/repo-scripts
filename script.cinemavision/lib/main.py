@@ -10,9 +10,11 @@ from kodiutil import T
 
 kodiutil.LOG('Version: {0}'.format(kodiutil.ADDON.getAddonInfo('version')))
 
-import cvutil
+kodiutil.checkAPILevel()
 
-from lib import cinemavision
+import cvutil  # noqa E402
+
+from lib import cinemavision  # noqa E402
 
 
 class ItemSettingsWindow(kodigui.BaseDialog):
@@ -104,7 +106,7 @@ class ItemSettingsWindow(kodigui.BaseDialog):
         attr = item.dataSource
         limits = self.getLimits(sItem, attr)
         total = limits[1] - limits[0]
-        val = int(round(((pct/100.0) * total) + limits[0]))
+        val = int(round(((pct / 100.0) * total) + limits[0]))
         val = val - (val % limits[2])
         sItem.setSetting(attr, val)
 
@@ -161,7 +163,7 @@ class ItemSettingsWindow(kodigui.BaseDialog):
     def updateSlider(self, val, min_val, max_val, step):
         total = max_val - min_val
         val = val - min_val
-        pct = (val/float(total)) * 100
+        pct = (val / float(total)) * 100
         self.sliderControl.setPercent(pct)
 
     def getLimits(self, sItem, attr):
@@ -414,7 +416,11 @@ class SequenceEditorWindow(kodigui.BaseWindow):
     def checkForContentDB(self):
         if kodiutil.getSetting('content.path'):
             kodiutil.setGlobalProperty('DEMO_MODE', '')
-            return kodiutil.getSetting('content.initialized', False)
+            if kodiutil.getSetting('content.initialized', False) and kodiutil.getSetting('content.path') == kodiutil.getSetting('content.last.path'):
+                return True
+            else:
+                kodiutil.setSetting('content.last.path', kodiutil.getSetting('content.path'))
+                return False
         else:
             kodiutil.setGlobalProperty('DEMO_MODE', '1')
             return True
@@ -981,7 +987,6 @@ class SequenceEditorWindow(kodigui.BaseWindow):
 
 
 def main():
-    kodiutil.checkAPILevel()
     kodiutil.setScope()
     kodiutil.setGlobalProperty('VERSION', kodiutil.ADDON.getAddonInfo('version'))
     kodiutil.LOG('Sequence editor: OPENING')

@@ -1,3 +1,14 @@
+0.2.5
+- Use html2text lib to scrape comments. Thanks Iván Ridao Freitas for help.
+- Fix handling of movie path on filesystem. Thanks Santiago Ibarra for report.
+- Enhance movie search performance and accuracy. Thanks Iván Ridao Freitas
+  for report.
+- Fix unzip performance using Kodi API facilities. Thanks Iván Ridao Freitas.
+- More robust search for TV show episodes subtitles in the face of uneven
+  metadata quality.
+- Better handling of .ssa and .sub+.idx files. Stop recognizing .txt files as
+  subtitles files.
+
 0.2.4
 - Logging: Fix misleading phrasing.
 - Internals: Factor out detection of compressed files. Initial maintainer

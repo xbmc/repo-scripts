@@ -1,11 +1,26 @@
 Changelog for CinemaVision
 
+[- 1.0.13 -]
+
+- add:     Now has the ability to accept dbtype and dbid args for skin integration
+
+[- 1.0.12 -]
+
+- fix:     Broken iTunes scraper
+- change:  Updated icon
+- change:  Now automatically updates content when the content path is changed
+- fix:     Now cleans items from the database that do not have the content path as their path prefix
+- fix:     Content scraper now recognizes files with capitalized extensions
+- add:     Added language string 'CinemaVision' with ID 32000 to help skinners
+- add:     Portuguese (Brazil) language strings
+- add:     Screenshots (for display in add-on info)
+
 [- 1.0.11 -]
 
--fix:      Startup error on some devices (Android/Shield?)
--change:   Greatly decrease content updating time
--add:      Extra logging for sequence saving and trivia content updating
--fix:      Handle trivia with same file name but different extension
+- fix:     Startup error on some devices (Android/Shield?)
+- change:  Greatly decrease content updating time
+- add:     Extra logging for sequence saving and trivia content updating
+- fix:     Handle trivia with same file name but different extension
 
 [- 1.0.10 -]
 
