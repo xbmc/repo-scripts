@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="screensaver.system47" name="System 47 - Star Trek LCARS ScreenSaver" version="2.2f" provider-name="Lunatixz">
+<addon id="screensaver.system47" name="System 47 - Star Trek LCARS ScreenSaver" version="2.2g" provider-name="Lunatixz">
     <requires>
         <import addon="xbmc.python" version="2.25.0"/>
         <import addon="plugin.video.youtube" version="5.3.10"/>
