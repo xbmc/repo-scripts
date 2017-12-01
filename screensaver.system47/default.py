@@ -32,7 +32,7 @@ LANGUAGE      = REAL_SETTINGS.getLocalizedString
 
 ## GLOBALS ##
 ACTION_STOP   = 13
-YT_URL        = 'plugin://plugin.video.youtube/play/?video_id=Y_4iAWobejY'
+YT_URL        = 'plugin://plugin.video.youtube/play/?video_id=Y_4iAWobejY&suggested=false&incognito=true'
 FILENAME      = 'screensaver.system47.mp4'
 DEBUG         = True
 RANDOM        = REAL_SETTINGS.getSetting('Enable_Random') == 'true'
@@ -43,38 +43,18 @@ CONFIGS       = json.dumps({"origin": ADDON_ID,
                                       "key"   : base64.urlsafe_b64decode(REAL_SETTINGS.getSetting('AKEY')),
                                       "id"    : base64.urlsafe_b64decode(REAL_SETTINGS.getSetting('CKEY')),
                                       "secret": base64.urlsafe_b64decode(REAL_SETTINGS.getSetting('SKEY'))}})
-                           
-def log(msg, level=xbmc.LOGDEBUG):
-    if level == xbmc.LOGERROR: msg += ' ,' + traceback.format_exc()
-    xbmc.log(ADDON_ID + '-' + ADDON_VERSION + '-' + (msg.encode("utf-8")), level)
 
+def log(msg, level = xbmc.LOGDEBUG):
+    if level == xbmc.LOGERROR: msg += ' ,' + traceback.format_exc()
+    xbmc.log(ADDON_ID + '-' + ADDON_VERSION + '-' + (msg.encode("utf-8")), xbmc.LOGERROR)
     
-class Player(xbmc.Player):
-    def __init__(self, *args, **kwargs):
-        self.isExiting  = False
-        self.saveFile   = None
-        self.saveSeek   = 0
-        
-        
+class Player(xbmc.Player):        
     def onPlayBackStarted(self):
         log('onPlayBackStarted')
-        if not self.isExiting:
-            seekValue = int(self.getTotalTime()//(random.randint(1,16))) if RANDOM else 0
-            xbmc.Monitor().waitForAbort(9.0)
-            if seekValue > 9.0: xbmc.executebuiltin('Seek(%s)'%seekValue)
-        else:
-            if self.saveSeek > 0: self.seekTime(self.saveSeek)
-            self.Background.closeBackground()
-        
-        
-    def onPlayBackStopped(self):
-        log('onPlayBackStopped')
-        if self.saveFile and not self.isExiting:
-            self.isExiting = True
-            self.play(self.saveFile)
-            return
-        self.Background.closeBackground()
-        
+        seekValue = int(self.getTotalTime()//(random.randint(1,16))) if RANDOM else 0
+        xbmc.Monitor().waitForAbort(9.0)
+        if seekValue > 9.0: xbmc.executebuiltin('Seek(%s)'%seekValue)
+
         
 class BackgroundWindow(xbmcgui.WindowXMLDialog):
     def __init__(self, *args, **kwargs):
@@ -89,31 +69,25 @@ class BackgroundWindow(xbmcgui.WindowXMLDialog):
         
         
     def onInit(self):
-        self.saveState()
         xbmc.executebuiltin("PlayerControl(RepeatAll)")
         xbmcgui.Window(10000).setProperty('plugin.video.youtube-configs', CONFIGS)
         self.myPlayer.play(self.playFile())
     
         
     def onAction(self, act):
-        if not self.myPlayer.isExiting: self.myPlayer.stop()
+        self.closeBackground()
         
         
     def closeBackground(self):
         log('closeBackground')
         xbmcgui.Window(10000).clearProperty('plugin.video.youtube-configs')
+        self.myPlayer.stop()
         self.close()
         
-        
-    def saveState(self):
-        if not self.myPlayer.isPlaying(): return
-        self.myPlayer.saveFile = self.myPlayer.getPlayingFile()
-        self.myPlayer.saveSeek = self.myPlayer.getTime()
-
-             
+      
 class Start(object):
     def __init__(self):
         self.background = BackgroundWindow('%s.background.xml'%ADDON_ID, ADDON_PATH, "Default")
         self.background.doModal()
-if __name__ == '__main__':
-    Start()
+        
+if __name__ == '__main__': Start()
