@@ -99,3 +99,27 @@ msgstr ""
 msgctxt "#30019"
 msgid "Acceleration"
 msgstr ""
+
+msgctxt "#30020"
+msgid "Configure Smartthings Hubs in Settings."
+msgstr ""
+
+msgctxt "#30021"
+msgid "No Devices Found, please check user credentials."
+msgstr ""
+
+msgctxt "#30022"
+msgid "No Monitored Devices Found."
+msgstr ""
+
+msgctxt "#30023"
+msgid "No Event History, please check user credentials."
+msgstr ""
+
+msgctxt "#30024"
+msgid "Configure Smartthings Account in Settings."
+msgstr ""
+
+msgctxt "#30025"
+msgid "Select Smartthings Account:"
+msgstr ""

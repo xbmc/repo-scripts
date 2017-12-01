@@ -70,22 +70,22 @@ class STLIST(object):
     def browseDevices(self):
         log('browseDevices')
         devices = (self.service.getDeviceList(ALL=True) or None)
-        if devices is None: return
+        if devices is None: return self.addDir(LANGUAGE(30021),'','')
         for device in devices: self.addDir(device,'',3)
         
         
     def browseMonitors(self):
         log('browseMonitors')
         devices = (self.service.deviceLST or None)
-        if devices is None: return
         # self.addDir('[B]+ Add Device[/B]','',4)
+        if devices is None: return self.addDir(LANGUAGE(30022),'','')
         for device in devices: self.addDir(device,'',3)
         
 
     def browseEvents(self):
         log('browseEvents')
         events = (self.service.getEvents(LAST=False,ALL=True) or None)
-        if events is None: return
+        if events is None: return self.addDir(LANGUAGE(30023),'','')
         for event in events: self.addDir(event,'','')
 
         
