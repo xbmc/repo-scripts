@@ -5,7 +5,7 @@
 
 ```xml
 <requires>
-    <import addon="script.module.clouddrive.common" version="1.0.0" />
+    <import addon="script.module.clouddrive.common" />
 </requires>
 ```
 

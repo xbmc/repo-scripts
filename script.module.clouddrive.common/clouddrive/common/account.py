@@ -20,6 +20,7 @@
 import json
 import os
 from clouddrive.common.ui.utils import KodiUtils
+from clouddrive.common.utils import Utils
 
 
 class AccountManager(object):
@@ -79,6 +80,16 @@ class AccountManager(object):
         drive = self.get_drive_by_driveid(driveid)
         account['drives'].remove(drive)
         self.save()
+    
+    def get_account_display_name(self, account, drive=None, provider=None, with_format=False):
+        s = '[B]%s[/B]' if with_format else '%s'
+        display = s % Utils.unicode(account['name'])
+        if drive:
+            if provider and 'type' in drive and drive['type']:
+                display += ' | ' + provider.get_drive_type_name(drive['type'])
+            if 'name' in drive and drive['name']:
+                display += ' | ' + Utils.unicode(drive['name'])
+        return display
 
 class AccountNotFoundException(Exception):
     pass

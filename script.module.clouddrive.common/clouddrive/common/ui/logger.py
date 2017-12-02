@@ -19,7 +19,6 @@
 
 from clouddrive.common.ui.utils import KodiUtils
 
-
 class Logger:
     @staticmethod
     def debug(msg):
@@ -29,6 +28,10 @@ class Logger:
     def notice(msg):
         KodiUtils.log(msg, KodiUtils.LOGNOTICE)
     
+    @staticmethod
+    def warning(msg):
+        KodiUtils.log(msg, KodiUtils.LOGWARNING)
+        
     @staticmethod
     def error(msg):
         KodiUtils.log(msg, KodiUtils.LOGERROR)

@@ -20,7 +20,6 @@
 import json
 import traceback
 
-
 class WrappedException(Exception):
     root_exception = None
     root_tb = None
@@ -70,4 +69,3 @@ class ExceptionUtils:
             return '%s - %s' % (error['code'], error['message'])
         except:
             return response
-            

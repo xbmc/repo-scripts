@@ -27,7 +27,7 @@ import threading
 
 from clouddrive.common.ui.logger import Logger
 from clouddrive.common.ui.utils import KodiUtils
-
+from clouddrive.common.utils import Utils
 
 class BaseService(object):
     _interface = '127.0.0.1'
@@ -89,7 +89,8 @@ class BaseHandler(BaseHTTPRequestHandler):
         self.wbufsize = -1
         BaseHTTPRequestHandler.__init__(self, request, client_address, server)
     
-    def write_response(self, code, message=None, content=None, headers={}):
+    def write_response(self, code, message=None, content=None, headers=None):
+        headers = Utils.default(headers, {})
         length = 0
         self.send_response(code, message)
         if content:
