@@ -69,8 +69,10 @@ def begin(movieid=None, episodeid=None, dbtype=None, selection=False, args=None)
     if seqPath:
         kodiutil.DEBUG_LOG('Loading selected sequence: {0}'.format(repr(seqPath)))
     else:
-        seqPath = cvutil.getSequencePath(for_3D=e.has3D)
-        kodiutil.DEBUG_LOG('Loading sequence for {0}: {1}'.format(e.has3D and '3D' or '2D', repr(seqPath)))
+        feature = e.features[0]
+        seqData = cvutil.getMatchedSequence(feature)
+        seqPath = seqData['path']
+        kodiutil.DEBUG_LOG('Loading sequence for {0}: {1}'.format(feature.is3D and '3D' or '2D', repr(seqPath)))
 
     if xbmc.getCondVisibility('Window.IsVisible(MovieInformation)'):
         xbmc.executebuiltin('Dialog.Close(MovieInformation)')
@@ -170,11 +172,12 @@ class PlaylistDialog(kodigui.BaseDialog):
         if self.sequencePath:
             return
 
-        seqPath, name = cvutil.getSequencePath(for_3D=self.queueHas3D(), with_name=True)
-        if not seqPath:
+        seqData = cvutil.getMatchedSequence(self.features[0])
+        if not seqData:
             return
 
-        self.getControl(self.SEQUENCE_SELECT_ID).setLabel(name)
+        self.sequencePath = seqData['path']
+        self.getControl(self.SEQUENCE_SELECT_ID).setLabel(seqData['sequence'].name)
 
     def delete(self):
         item = self.videoListControl.getSelectedItem()
@@ -225,7 +228,7 @@ class PlaylistDialog(kodigui.BaseDialog):
             rpc.Playlist.Add(playlistid=xbmc.PLAYLIST_VIDEO, item=item)
 
     def selectSequence(self):
-        selection = cvutil.selectSequence()
+        selection = cvutil.selectSequence(active=False, for_dialog=True)
         if not selection:
             return
 

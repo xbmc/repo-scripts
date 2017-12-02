@@ -476,19 +476,19 @@
 
                     <control type="list" id="203">
                         <posx>0</posx>
-                            <posy>172</posy>
-                            <width>800</width>
-                            <height>538</height>
-                            <scrolltime>200</scrolltime>
-                            <orientation>vertical</orientation>
-                            <!-- <onleft>201</onleft>
-                            <onright>201</onright>
-                            <ondown>200</ondown>
-                            <onup>201</onup> -->
+                        <posy>172</posy>
+                        <width>800</width>
+                        <height>538</height>
+                        <scrolltime>200</scrolltime>
+                        <orientation>vertical</orientation>
+                        <!-- <onleft>201</onleft>
+                        <onright>201</onright>
+                        <ondown>200</ondown>
+                        <onup>201</onup> -->
 
                         <itemlayout height="80">
                             <control type="group">
-                                <visible>!IsEmpty(Container(201).ListItem.Property(enabled))</visible>
+                                <visible>!IsEmpty(Window(10000).Property(script.cinemavision.sequence.item.enabled))</visible>
                                 <control type="image">
                                     <posx>25</posx>
                                     <posy>5</posy>
@@ -510,7 +510,7 @@
                                 </control>
                             </control>
                             <control type="group">
-                                <visible>IsEmpty(Container(201).ListItem.Property(enabled))</visible>
+                                <visible>IsEmpty(Window(10000).Property(script.cinemavision.sequence.item.enabled))</visible>
                                 <control type="image">
                                     <posx>25</posx>
                                     <posy>5</posy>
@@ -559,7 +559,7 @@
                                 </control>
 
                                 <control type="group">
-                                    <visible>!IsEmpty(Container(201).ListItem.Property(enabled))</visible>
+                                    <visible>!IsEmpty(Window(10000).Property(script.cinemavision.sequence.item.enabled))</visible>
                                     <control type="image">
                                         <posx>5</posx>
                                         <posy>5</posy>
@@ -581,7 +581,7 @@
                                     </control>
                                 </control>
                                 <control type="group">
-                                    <visible>IsEmpty(Container(201).ListItem.Property(enabled))</visible>
+                                    <visible>IsEmpty(Window(10000).Property(script.cinemavision.sequence.item.enabled))</visible>
                                     <control type="image">
                                         <posx>5</posx>
                                         <posy>5</posy>
@@ -1066,7 +1066,35 @@
 
         </control>
 
-
+        <control type="group">
+            <visible>!IsEmpty(Window(10000).Property(script.cinemavision.ACTIVE))</visible>
+            <posx>1460</posx>
+            <posy>540</posy>
+            <control type="textbox">
+                <visible>StringCompare(Window(10000).Property(script.cinemavision.ACTIVE),1)</visible>
+                <left>0</left>
+                <top>0</top>
+                <width>420</width>
+                <height>40</height>
+                <font>font13</font>
+                <textcolor>FF009900</textcolor>
+                <align>right</align>
+                <aligny>top</aligny>
+                <label>[B][UPPERCASE]$ADDON[script.cinemavision 32608][/UPPERCASE][/B]</label>
+            </control>
+            <control type="textbox">
+                <visible>StringCompare(Window(10000).Property(script.cinemavision.ACTIVE),0)</visible>
+                <left>0</left>
+                <top>0</top>
+                <width>420</width>
+                <height>40</height>
+                <font>font13</font>
+                <textcolor>FFBB0000</textcolor>
+                <align>right</align>
+                <aligny>top</aligny>
+                <label>[B][UPPERCASE]$ADDON[script.cinemavision 32609][/UPPERCASE][/B]</label>
+            </control>
+        </control>
 
         <control type="group">
             <posx>1420</posx>

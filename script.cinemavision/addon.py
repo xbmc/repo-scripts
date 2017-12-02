@@ -35,8 +35,10 @@ if __name__ == '__main__':
     elif arg == 'update.database':
         from lib import cvutil
         from lib import kodiutil
-        cvutil.loadContent(from_settings=True)
-        kodiutil.ADDON.openSettings()
+        fromSettings = bool(args and args[0] == 'from.settings')
+        cvutil.loadContent(from_settings=fromSettings, bg=not fromSettings)
+        if fromSettings:
+            kodiutil.ADDON.openSettings()
     elif arg == 'feature.setRatingBumperStyle':
         from lib import cvutil
         cvutil.setRatingBumperStyle()

@@ -1,5 +1,28 @@
 Changelog for CinemaVision
 
+[- 1.1.0 -]
+
+- add:     Added 'Sequence settings' option to context menu
+- add:     Sequence settings: Conditions - Attributes for automatic sequence selection
+- add:     Sequence settings: Show in selection dialog - Toggle
+- fix:     Issues found with non-english characters in the file names of Action files causing errors
+- fix:     Issue #6 - With context menu visible the options icon for disabled changes to enabled
+- fix:     Issue #70 - Up/Down nav on options occasionally fails
+- fix:     Issue #71 - ImportError: Failed to import _strptime because the import lockis held by another thread
+- fix:     Issue #78 - AttributeError: 'ExperiencePlayer' object has no attribute 'processor'
+- change:  Issue #33 - Change demo content location
+- fix:     Issue #10 - When adding module sometimes jumps to the start
+- fix:     Issue #73 - iTunes scraper picking up clips
+- change:  Issue #74 - Remove 'Enabled: YES/NO' from settings display
+- add:     Issue #50 - Add 'Reset module to defaults'
+- fix:     Update demo music to point to a working stream
+- change:  Make various logging cleaner and more human readable
+- fix:     Issue #115 - Error caused when playing a movie with no active sequences
+- fix:     Issue #116 - Error when saving a sequence
+- change:  Better handling of read/write falures and errors to help troubleshooting - Issue #95
+- fix:     Issue #117 - Conditional sequences failing to match genre
+- add:     Update settings for service add-on
+
 [- 1.0.13 -]
 
 - add:     Now has the ability to accept dbtype and dbid args for skin integration

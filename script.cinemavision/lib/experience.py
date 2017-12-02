@@ -2,6 +2,7 @@ import os
 import re
 import time
 import threading
+import json
 
 import xbmc
 import xbmcgui
@@ -443,6 +444,16 @@ class ExperienceWindow(kodigui.BaseWindow):
         self.skipNotice.setAnimations([('Conditional', 'effect=fade start=100 end=0 time=500 delay=1000 condition=true')])
 
 
+def requiresStart(func):
+    def wrapper(self, *args, **kwargs):
+        if hasattr(self, 'processor'):
+            return func(self, *args, **kwargs)
+        else:
+            return None
+
+    return wrapper
+
+
 class ExperiencePlayer(xbmc.Player):
     NOT_PLAYING = 0
     PLAYING_DUMMY_NEXT = -1
@@ -477,6 +488,7 @@ class ExperiencePlayer(xbmc.Player):
         self.play(item)
 
     # PLAYER EVENTS
+    @requiresStart
     def onPlayBackEnded(self):
         if self.playStatus != self.PLAYING_MUSIC:
             self.volume.restore()
@@ -496,12 +508,14 @@ class ExperiencePlayer(xbmc.Player):
 
         self.next()
 
+    @requiresStart
     def onPlayBackPaused(self):
         DEBUG_LOG('PLAYBACK PAUSED')
         if self.pauseAction:
             DEBUG_LOG('Executing pause action: {0}'.format(self.pauseAction))
             self.pauseAction.run()
 
+    @requiresStart
     def onPlayBackResumed(self):
         DEBUG_LOG('PLAYBACK RESUMED')
         if self.resumeAction is True:
@@ -513,6 +527,7 @@ class ExperiencePlayer(xbmc.Player):
             DEBUG_LOG('Executing resume action: {0}'.format(self.resumeAction))
             self.resumeAction.run()
 
+    @requiresStart
     def onPlayBackStarted(self):
         if self.playStatus == self.PLAYING_MUSIC:
             DEBUG_LOG('MUSIC STARTED')
@@ -534,6 +549,7 @@ class ExperiencePlayer(xbmc.Player):
 
         DEBUG_LOG('PLAYBACK STARTED')
 
+    @requiresStart
     def onPlayBackStopped(self):
         if self.playStatus != self.PLAYING_MUSIC:
             self.volume.restore()
@@ -558,11 +574,13 @@ class ExperiencePlayer(xbmc.Player):
         DEBUG_LOG('PLAYBACK STOPPED')
         self.abort()
 
+    @requiresStart
     def onPlayBackFailed(self):
         self.playStatus = self.NOT_PLAYING
         DEBUG_LOG('PLAYBACK FAILED')
         self.next()
 
+    @requiresStart
     def onAbort(self):
         if self.abortAction:
             DEBUG_LOG('Executing abort action: {0}'.format(self.abortAction))
@@ -587,7 +605,8 @@ class ExperiencePlayer(xbmc.Player):
         self.features = []
 
         result = rpc.Playlist.GetItems(
-            playlistid=xbmc.PLAYLIST_VIDEO, properties=['file', 'genre', 'mpaa', 'streamdetails', 'title', 'thumbnail', 'runtime', 'year']
+            playlistid=xbmc.PLAYLIST_VIDEO,
+            properties=['file', 'genre', 'mpaa', 'streamdetails', 'title', 'thumbnail', 'runtime', 'year', 'studio', 'director', 'cast', 'tag']
         )
         for r in result.get('items', []):
             feature = self.featureFromJSON(r)
@@ -620,6 +639,11 @@ class ExperiencePlayer(xbmc.Player):
             actionFile = kodiutil.getSetting('action.onAbort.file')
             self.abortAction = actionFile and cinemavision.actions.ActionFileProcessor(actionFile) or None
 
+    def formatStreamDetails(self, jsonstring):
+        lines = json.dumps(jsonstring, indent=4, sort_keys=True).splitlines()
+        lines = [l.replace('"', '').rstrip('[]{, ') for l in lines]
+        return '\n'.join([l if not l.endswith('}') else ' ' for l in lines if l])
+
     def getCodecAndChannelsFromStreamDetails(self, details):
         try:
             streams = sorted(details['audio'], key=lambda x: x['channels'], reverse=True)
@@ -642,6 +666,10 @@ class ExperiencePlayer(xbmc.Player):
         feature.ID = kodiutil.intOrZero(r.get('movieid', r.get('episodeid', r.get('id', 0))))
         feature.dbType = r.get('type', '')
         feature.genres = r.get('genre', [])
+        feature.tags = r.get('tag', [])
+        feature.studios = r.get('studio', [])
+        feature.directors = r.get('director', [])
+        feature.cast = r.get('cast', [])
         feature.thumb = r.get('thumbnail', '')
         feature.runtime = r.get('runtime', 0)
         feature.year = r.get('year', 0)
@@ -658,14 +686,14 @@ class ExperiencePlayer(xbmc.Player):
 
         try:
             codec, channels = self.getCodecAndChannelsFromStreamDetails(r['streamdetails'])
-
             DEBUG_LOG('CODEC ({0}): {1} ({2} channels)'.format(kodiutil.strRepr(feature.title), codec, channels or '?'))
-            DEBUG_LOG('STREAMDETAILS: {0}'.format(repr(r.get('streamdetails'))))
+            DEBUG_LOG('STREAMDETAILS: \n{0}'.format(self.formatStreamDetails(r.get('streamdetails'))))
 
             feature.audioFormat = AUDIO_FORMATS.get(codec)
             feature.codec = codec
             feature.channels = channels
         except:
+            kodiutil.ERROR()
             DEBUG_LOG('CODEC ({0}): NOT DETECTED'.format(kodiutil.strRepr(feature.title)))
             DEBUG_LOG('STREAMDETAILS: {0}'.format(repr(r.get('streamdetails'))))
 
@@ -679,7 +707,8 @@ class ExperiencePlayer(xbmc.Player):
             for m in details['setdetails']['movies']:
                 try:
                     r = rpc.VideoLibrary.GetMovieDetails(
-                        movieid=m['movieid'], properties=['file', 'genre', 'mpaa', 'streamdetails', 'title', 'thumbnail', 'runtime', 'year']
+                        movieid=m['movieid'],
+                        properties=['file', 'genre', 'tag', 'mpaa', 'streamdetails', 'title', 'thumbnail', 'runtime', 'year', 'studio', 'director', 'cast']
                     )['moviedetails']
                     feature = self.featureFromJSON(r)
                     self.features.append(feature)
@@ -723,7 +752,7 @@ class ExperiencePlayer(xbmc.Player):
 
                 r = rpc.VideoLibrary.GetMovieDetails(
                     movieid=movieid,
-                    properties=['file', 'genre', 'mpaa', 'streamdetails', 'title', 'thumbnail', 'runtime', 'year']
+                    properties=['file', 'genre', 'tag', 'mpaa', 'streamdetails', 'title', 'thumbnail', 'runtime', 'year', 'studio', 'director', 'cast']
                 )['moviedetails']
                 r['type'] = 'movie'
 
@@ -759,6 +788,13 @@ class ExperiencePlayer(xbmc.Player):
             kodiutil.DEBUG_LOG('Selection is a collection')
             return self.addCollectionMovies()
 
+        dbType = xbmc.getInfoLabel('ListItem.DBTYPE')
+        dbID = kodiutil.infoLabel('ListItem.DBID')
+        if dbType == 'movie':
+            return self.addFromID(dbID, episodeid, selection)
+        elif dbType == 'episode':
+            return self.addFromID(movieid, dbID, selection)
+
         title = kodiutil.infoLabel('ListItem.Title')
         if not title:
             return False
@@ -769,9 +805,13 @@ class ExperiencePlayer(xbmc.Player):
         if ratingString:
             feature.rating = ratingString
 
-        feature.ID = kodiutil.intOrZero(xbmc.getInfoLabel('ListItem.DBID'))
-        feature.dbType = xbmc.getInfoLabel('ListItem.DBTYPE')
+        feature.ID = kodiutil.intOrZero(dbID)
+        feature.dbType = dbType
         feature.genres = kodiutil.infoLabel('ListItem.Genre').split(' / ')
+        feature.tags = kodiutil.infoLabel('ListItem.Tag').split(' / ')
+        feature.studios = kodiutil.infoLabel('ListItem.Studio').split(' / ')
+        feature.directors = kodiutil.infoLabel('ListItem.Director').split(' / ')
+        feature.cast = [{'name': a} for a in kodiutil.infoLabel('ListItem.Cast').split(' / ')]
         feature.thumb = kodiutil.infoLabel('ListItem.Thumb')
         feature.year = kodiutil.infoLabel('ListItem.Year')
 

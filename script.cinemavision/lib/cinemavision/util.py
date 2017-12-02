@@ -174,7 +174,7 @@ try:
         return stat.S_ISDIR(vstat.st_mode())
 
     def LOG(msg):
-        xbmc.log('[- CinemaVision -] (API): {0}'.format(msg))
+        xbmc.log('[- CinemaVision -] (API): {0}'.format(msg), xbmc.LOGNOTICE)
 
     try:
         xbmc.Monitor().waitForAbort

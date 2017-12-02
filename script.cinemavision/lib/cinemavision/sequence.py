@@ -1,8 +1,14 @@
 import json
 import os
-
+import re
+import datetime
+import calendar
+import ratings
+import exceptions
 import util
 from util import T
+
+SAVE_VERSION = 2
 
 LIMIT_FILE = 0
 LIMIT_FILE_DEFAULT = 1
@@ -84,11 +90,360 @@ def strToBoolWithDefault(val):
         return None
     return bool(val == 'True')
 
+def parseRatingsList(rlist):
+    for x in range(len(rlist)):
+        r = rlist[x]
+        if isinstance(r, list):
+            parseRatingsList(r)
+        elif r:
+            rlist[x] = ratings.getRating(r)
+    return rlist
+
+def unParseRatingsList(rlist):
+    for x in range(len(rlist)):
+        r = rlist[x]
+        if isinstance(r, list):
+            unParseRatingsList(r)
+        elif r:
+            rlist[x] = str(r)
+    return rlist
+
+def getConditionValueString(itype, val):
+    return util.strRepr(_getConditionValueString(itype, val))
+
+def _getConditionValueString(itype, val):
+    try:
+        if itype == 'year':
+            if len(val) > 1:
+                return u'{0} - {1}'.format(val[0], val[1] if val[1] else 'Now')
+            else:
+                return u'{0}'.format(val[0])
+        elif itype == 'ratings':
+            if len(val) > 1:
+                return u'{0} - {1}'.format(val[0] if val[0] else 'Any', val[1] if val[1] else 'Any')
+            else:
+                return u'{0}'.format(val[0])
+        elif itype == 'dates':
+            if len(val) > 1:
+                return u'{0} {1} - {2} {3}'.format(calendar.month_abbr[val[0][0]], val[0][1], calendar.month_abbr[val[1][0]], val[1][1])
+            else:
+                return u'{0} {1}'.format(calendar.month_abbr[val[0][0]], val[0][1])
+        elif itype == 'times':
+            if len(val) > 1:
+                return u'{0:02d}:{1:02d} - {2:02d}:{3:02d}'.format(val[0][0], val[0][1], val[1][0], val[1][1])
+            else:
+                return u'{0:02d}'.format(val[0][0])
+    except Exception:
+        util.ERROR()
+
+    return util.strRepr(val)
+
+class SequenceData(object):
+    def __init__(self, data_string='', name=''):
+        self.name = name
+        self.active = False
+        self._items = []
+        self._attrs = {}
+        self._settings = {}
+        self._loadPath = ''
+        self._process(data_string)
+
+    def __nonzero__(self):
+        return bool(self._items)
+
+    def __len__(self):
+        return len(self._items)
+
+    def __getitem__(self, idx):
+        return self._items[idx]
+
+    def __repr__(self):
+        return 'SequenceData [{0}]({1}): {2}'.format(repr(self.name), len(self._items), repr(self._attrs))
+
+    def _process(self, data_string):
+        if not data_string:
+            return
+
+        self._getItemsFromString(data_string)
+
+    def _getItemsFromXMLString(self, dstring):
+        from xml.etree import ElementTree as ET
+        e = ET.fromstring(dstring)
+        items = []
+        for node in e.findall('item'):
+            items.append(Item.fromNode(node))
+        return items
+
+    def _getItemsFromString(self, dstring):
+        try:
+            data = json.loads(dstring)
+            self._items = [Item.fromDict(ddict) for ddict in data['items']]
+            self._attrs = data.get('attributes', {})
+            self._settings = data.get('settings', {})
+            self.active = data.get('active', False)
+        except (ValueError, TypeError):
+            if dstring.startswith('{'):
+                util.DEBUG_LOG(repr(dstring))
+                util.ERROR('Error parsing sequence: {0}'.format(repr(self.name)))
+                raise exceptions.BadSequenceFileException()
+            else:
+                try:
+                    self._items = self._getItemsFromXMLString(dstring)
+                except:
+                    util.DEBUG_LOG(repr(dstring[:100]))
+                    util.ERROR('Error parsing sequence: {0}'.format(repr(self.name)))
+                    raise exceptions.BadSequenceFileException()
+
+        self._attrs['type'] = self._attrs.get('type')
+        self._attrs['genres'] = self._attrs.get('genres') or []
+        self._attrs['directors'] = self._attrs.get('directors') or []
+        self._attrs['studios'] = self._attrs.get('studios') or []
+        self._attrs['actors'] = self._attrs.get('actors') or []
+        self._attrs['tags'] = self._attrs.get('tags') or []
+        self._attrs['dates'] = self._attrs.get('dates') or []
+        self._attrs['times'] = self._attrs.get('times') or []
+        self._attrs['year'] = self._attrs.get('year') or []
+        self._attrs['ratings'] = parseRatingsList(self._attrs.get('ratings') or [])
+
+    def conditionsStr(self):
+        ret = 'Sequence [{0}]:\n'.format(util.strRepr(self.name))
+        for key, val in self._attrs.items():
+            if val:
+                if isinstance(val, list):
+                    ret += '    {0} = {1}\n'.format(key, ', '.join([getConditionValueString(key, v) for v in val]))
+                else:
+                    ret += '    {0} = {1}\n'.format(key, val)
+        return ret
+
+    @classmethod
+    def load(cls, path):
+        with util.vfs.File(path, 'r') as f:
+            dstring = f.read().decode('utf-8')
+
+        if not dstring:
+            raise exceptions.EmptySequenceFileException()
+
+        obj = cls(dstring, name=re.split(r'[/\\]', path)[-1][:-6])
+        obj._loadPath = path
+        return obj
+
+    def save(self, path=None):
+        path = path or self._loadPath
+
+        if util.vfs.exists(path):
+            util.vfs.delete(path)
+
+        with util.vfs.File(path, 'w') as f:
+            success = f.write(self.serialize())
+
+        if not success:
+            return False
+
+        # Make sure we can read the written file
+        try:
+            self.load(path)
+        except exceptions.EmptySequenceFileException:
+            raise exceptions.SequenceWriteReadEmptyException()
+        except exceptions.BadSequenceFileException:
+            raise exceptions.SequenceWriteReadEmptyException()
+        except:
+            raise exceptions.SequenceWriteReadUnknownException()
+
+        return success
+
+    def serialize(self):
+        data = []
+        for i in self._items:
+            data.append(i.toDict())
+
+        attrs = self._attrs.copy()
+        attrs['ratings'] = unParseRatingsList(self._attrs.get('ratings') or [])
+
+        return json.dumps(
+            {
+                'version': SAVE_VERSION,
+                'active': self.active,
+                'items': data,
+                'attributes': attrs,
+                'settings': self._settings
+            },
+            indent=1
+        )
+
+    def setItems(self, items):
+        self._items = items
+
+    def get(self, key, default=None):
+        return self._attrs.get(key, default)
+
+    def set(self, key, value):
+        self._attrs[key] = value
+
+    def visibleInDialog(self, val=None):
+        if val is None:
+            val = True if self._settings.get('show_in_dialog') is None else self._settings.get('show_in_dialog')
+        else:
+            self._settings['show_in_dialog'] = val
+
+        return val
+
+    def matchesFeatureAttr(self, attr, feature):
+        try:
+            if attr == 'type':
+                if self.get('type') == '3D':
+                    if feature.is3D:
+                        return 5
+                    else:
+                        return -1
+                elif self.get('type') == '2D':
+                    if not feature.is3D:
+                        return 5
+                    else:
+                        return -1
+            elif attr == 'studio':
+                sMatch = [s.lower() for s in self.get('studios', []) if s]
+                if not sMatch:
+                    return 0
+                for studio in feature.studios:
+                    if studio.lower() in sMatch or re.sub(r'\s?studios?(\s?)', r'\1', studio.lower()) in sMatch:
+                        return 5
+                else:
+                    return -1
+            elif attr == 'director':
+                dMatch = [s.lower() for s in self.get('directors', []) if s]
+                if not dMatch:
+                    return 0
+                for director in feature.directors:
+                    if director.lower() in dMatch:
+                        return 5
+                else:
+                    return -1
+            elif attr == 'actor':
+                aMatch = [a.lower() for a in self.get('actors', []) if a]
+                if not aMatch:
+                    return 0
+                for role in feature.cast:
+                    if role['name'].lower() in aMatch:
+                        return 5
+                else:
+                    return -1
+            elif attr == 'tags':
+                tMatch = [t.lower() for t in self.get('tags', []) if t]
+                if not tMatch:
+                    return 0
+                for tag in feature.tags:
+                    if tag.lower() in tMatch:
+                        return 5
+                else:
+                    return -1
+            elif attr == 'year':
+                years = self.get('year', [])
+
+                if not years:
+                    return 0
+
+                ret = 0
+                for year in years:
+                    ret = -1
+                    if len(year) > 1:
+                        if not year[1]:
+                            if year[0] <= feature.year:
+                                return 5
+                        else:
+                            if year[1] <= feature.year <= year[2]:
+                                return 5
+                    else:
+                        if year[0] == feature.year:
+                            return 5
+                return ret
+            elif attr == 'dates':
+                dates = self.get('dates', [])
+
+                if not dates:
+                    return 0
+
+                now = datetime.datetime.now()
+
+                ret = 0
+                for date in dates:
+                    ret = -1
+                    if len(date) > 1:
+                        if datetime.date(now.year, date[0][0], date[0][1]) <= now <= datetime.date(now.year, date[1][0], date[1][1]):
+                            return 5
+                    else:
+                        if date[0][0] == now.month and date[0][1] == now.day:
+                            return 5
+                return ret
+            elif attr == 'times':
+                times = self.get('times', [])
+
+                if not times:
+                    return 0
+
+                now = datetime.datetime.now()
+
+                ret = 0
+                for tm in times:
+                    ret = -1
+                    if len(tm) > 1:
+                        if datetime.time(tm[0][0], tm[0][1]) <= datetime.time(now.hour, now.minute) <= datetime.time(tm[1][0], tm[1][1]):
+                            return 5
+                    else:
+                        if tm[0][0] == now.hour:
+                            return 5
+                return ret
+            elif attr == 'genre':
+                genres = [s.lower() for s in self.get('genres', []) if s]
+                if not genres:
+                    return 0
+                val = 5
+                ret = 0
+                for g in feature.genres:
+                    if g.lower() in genres:
+                        ret += val
+                    val -= 2
+                    if val < 1:
+                        break
+
+                if ret:
+                    return ret
+                else:
+                    return -1
+            elif attr == 'ratings':
+                ratingsList = self.get('ratings', [])
+
+                if not ratingsList:
+                    return 0
+
+                ret = 0
+                for rating in ratingsList:
+                    ret = -1
+                    if len(rating) > 1:
+                        if not rating[1]:
+                            if rating[0] <= feature.rating:
+                                return 5
+                        elif not rating[0]:
+                            if rating[1] >= feature.rating:
+                                return 5
+                        else:
+                            if rating[0] <= feature.rating <= rating[1]:
+                                return 5
+                    else:
+                        if rating[0] == feature.rating:
+                            return 5
+                return ret
+
+            return 0
+        except Exception:
+            util.ERROR()
+
+        return 0
+
 
 ################################################################################
 # BASE class for all content items
 ################################################################################
-class Item:
+class Item(object):
     _tag = 'item'   # XML tag when serialized
     _type = 'BASE'  # Name of the type of content. Equal to the xml tag type attribute when serialized
     _elements = ()  # Tuple of attributes to serialize
@@ -188,6 +543,10 @@ class Item:
 
             setattr(new, attr, data['settings'][attr])
         return new
+
+    def resetToDefaults(self):
+        for e in self._elements:
+            setattr(self, e['attr'], e.get('default', ''))
 
     def elementData(self, element_name):
         for e in self._elements:
@@ -352,11 +711,11 @@ class Trivia(Item):
             'name': T(32030, 'Format'),
             'default': None
         },
-        {'attr': 'duration',    'type': int, 'limits': (0, 60, 1), 'name': T(32031, 'Duration (minutes)'),          'default': 0},
-        {'attr': 'qDuration',   'type': int, 'limits': (0, 60, 1), 'name': T(32032, 'Question Duration (seconds)'), 'default': 0},
-        {'attr': 'cDuration',   'type': int, 'limits': (0, 60, 1), 'name': T(32033, 'Clue Duration (seconds)'),     'default': 0},
-        {'attr': 'aDuration',   'type': int, 'limits': (0, 60, 1), 'name': T(32034, 'Answer Duration (seconds)'),   'default': 0},
-        {'attr': 'sDuration',   'type': int, 'limits': (0, 60, 1), 'name': T(32035, 'Single Duration (seconds)'),   'default': 0},
+        {'attr': 'duration', 'type': int, 'limits': (0, 60, 1), 'name': T(32031, 'Duration (minutes)'), 'default': 0},
+        {'attr': 'qDuration', 'type': int, 'limits': (0, 60, 1), 'name': T(32032, 'Question Duration (seconds)'), 'default': 0},
+        {'attr': 'cDuration', 'type': int, 'limits': (0, 60, 1), 'name': T(32033, 'Clue Duration (seconds)'), 'default': 0},
+        {'attr': 'aDuration', 'type': int, 'limits': (0, 60, 1), 'name': T(32034, 'Answer Duration (seconds)'), 'default': 0},
+        {'attr': 'sDuration', 'type': int, 'limits': (0, 60, 1), 'name': T(32035, 'Single Duration (seconds)'), 'default': 0},
         {
             'attr': 'transition',
             'type': None,
@@ -617,7 +976,7 @@ class Trailer(Item):
                 if ctype == 'trailers' and c == s[0]:
                     s[2] = s[2] in selected
                     ret.append(s)
-        ret.sort(key=lambda i: i[0].lower() in selected and selected.index(i[0].lower())+1 or 99)
+        ret.sort(key=lambda i: i[0].lower() in selected and selected.index(i[0].lower()) + 1 or 99)
         return ret
 
     def getLive(self, attr):
@@ -674,7 +1033,8 @@ class Video(Item):
             'attr': 'random',
             'type': strToBool,
             'limits': LIMIT_BOOL,
-            'name': T(32057, 'Random')
+            'name': T(32057, 'Random'),
+            'default': True
         },
         {
             'attr': 'source',
@@ -699,13 +1059,14 @@ class Video(Item):
             'attr': 'file',
             'type': None,
             'limits': LIMIT_FILE_DEFAULT,
-            'name': T(32048, 'File')
+            'name': T(32048, 'File'),
         },
         {
             'attr': 'play3D',
             'type': strToBool,
             'limits': LIMIT_BOOL,
-            'name': T(32328, 'Play 3D If 3D Feature')
+            'name': T(32328, 'Play 3D If 3D Feature'),
+            'default': True
         },
         {
             'attr': 'volume',
@@ -813,7 +1174,8 @@ class AudioFormat(Item):
             'attr': 'play3D',
             'type': strToBool,
             'limits': LIMIT_BOOL,
-            'name': T(32328, 'Play 3D if 3D feature')
+            'name': T(32328, 'Play 3D if 3D feature'),
+            'default': True
         },
         {
             'attr': 'volume',
@@ -979,13 +1341,13 @@ class Command(Item):
 
 
 CONTENT_CLASSES = {
-    'action':       Action,
-    'audioformat':  AudioFormat,
-    'command':      Command,
-    'feature':      Feature,
-    'trivia':       Trivia,
-    'trailer':      Trailer,
-    'video':        Video
+    'action': Action,
+    'audioformat': AudioFormat,
+    'command': Command,
+    'feature': Feature,
+    'trivia': Trivia,
+    'trailer': Trailer,
+    'video': Video
 }
 
 ITEM_TYPES = [
@@ -1004,29 +1366,6 @@ def getItem(token):
         if i[0] == token:
             return i[3]
 
-# - Old XML save methods
-# def prettify(elem):
-#     from xml.etree import ElementTree as ET
-#     import xml.dom.minidom as minidom
-#     """Return a pretty-printed XML string for the Element.
-#     """
-#     rough_string = ET.tostring(elem)
-#     reparsed = minidom.parseString(rough_string)
-
-#     uglyXml = reparsed.toprettyxml(indent='    ').encode('ascii', 'xmlcharrefreplace')
-#     text_re = re.compile('>\n\s+([^<>\s].*?)\n\s+</', re.DOTALL)
-#     prettyXml = text_re.sub('>\g<1></', uglyXml)
-#     return prettyXml
-#     # return reparsed.toprettyxml().encode('ascii', 'xmlcharrefreplace')
-
-# def getSaveString(items):
-#     from xml.etree import ElementTree as ET
-#     base = ET.Element('sequence')
-#     for item in items:
-#         base.append(item.toNode())
-
-#     return prettify(base)
-
 
 def sequenceHasFeature(items):
     for i in items:
@@ -1035,46 +1374,5 @@ def sequenceHasFeature(items):
     return False
 
 
-def getItemsFromXMLString(dstring):
-    from xml.etree import ElementTree as ET
-    e = ET.fromstring(dstring)
-    items = []
-    for node in e.findall('item'):
-        items.append(Item.fromNode(node))
-    return items
-
-
-def getSaveString(items):
-    data = []
-    for i in items:
-        data.append(i.toDict())
-
-    ret = json.dumps({'version': 1, 'items': data}, indent=1)
-    util.DEBUG_LOG(repr(ret))
-    return ret
-
-
-def getItemsFromString(dstring):
-    try:
-        data = json.loads(dstring)
-        return [Item.fromDict(ddict) for ddict in data['items']]
-    except ValueError:
-        if dstring and dstring.startswith('{'):
-            util.DEBUG_LOG(repr(dstring))
-            util.ERROR()
-        else:
-            try:
-                return getItemsFromXMLString(dstring)
-            except:
-                util.DEBUG_LOG(repr(dstring[:100]))
-                util.ERROR()
-
-    return None
-
-
 def loadSequence(path):
-    import xbmcvfs
-    f = xbmcvfs.File(path, 'r')
-    dstring = f.read().decode('utf-8')
-    f.close()
-    return getItemsFromString(dstring)
+    return SequenceData.load(path)
