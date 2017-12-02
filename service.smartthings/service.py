@@ -18,7 +18,7 @@
 
 # -*- coding: utf-8 -*-
 import sys, time, datetime, re, traceback
-import urllib, urllib2, socket, requests
+import urllib, urllib2, socket, requests, random
 import xbmc, xbmcgui, xbmcplugin, xbmcaddon
 
 from bs4 import BeautifulSoup
@@ -41,7 +41,7 @@ USERNAME      = (REAL_SETTINGS.getSetting('User_Email')  or None)
 PASSWORD      = REAL_SETTINGS.getSetting('User_Password')
 HUB_URL       = (REAL_SETTINGS.getSetting('Hub_URL') or None)
 HUB_NAME      = (REAL_SETTINGS.getSetting('Select_Hub')  or None)
-DEVICE_LST    = (REAL_SETTINGS.getSetting('Select_Devices')  or '').split('|')
+DEVICE_LST    = (REAL_SETTINGS.getSetting('Select_Devices') or None)
 MONITOR_KEYS  = ['Status','Switch','Acceleration','Motion','Contact','Battery','Temperature']
 EVENTS        = REAL_SETTINGS.getSetting('Monitor_Events') == "true"
 IGNORE        = REAL_SETTINGS.getSetting('Disable_Notify') == "true"
@@ -51,8 +51,8 @@ MON_STAT      = REAL_SETTINGS.getSetting('Monitor_Status') == "true"
 MON_ACCL      = REAL_SETTINGS.getSetting('Monitor_Accelerate') == "true"
 MON_BATT      = [False,50,40,30,20,10][int(REAL_SETTINGS.getSetting('Monitor_Battery'))]
 MON_TEMP      = REAL_SETTINGS.getSetting('Monitor_Temperature') == "true"
-TEMP_MIN      = int(REAL_SETTINGS.getSetting('Temperature_MIN'))
-TEMP_MAX      = int(REAL_SETTINGS.getSetting('Temperature_MAX'))
+TEMP_MIN      = float(REAL_SETTINGS.getSetting('Temperature_MIN'))
+TEMP_MAX      = float(REAL_SETTINGS.getSetting('Temperature_MAX'))
 
 #inspired by https://github.com/MikeFez/SmartThings-DeviceInfo-Scraper
 def log(msg, level=xbmc.LOGDEBUG):
@@ -116,17 +116,19 @@ class Monitor(xbmc.Monitor):
 
 class STHUB(object):
     def __init__(self):
-        self.lastEvent = None
-        self.chkIntval = 720.0
-        self.hubName   = HUB_NAME
-        self.username  = USERNAME
-        self.password  = PASSWORD
-        self.deviceLST = DEVICE_LST
-        self.nextCHK   = datetime.datetime.now()
-        self.session   = requests.Session()
-        self.url       = self.login()
-        if HUB_URL is None: self.hubURL = self.getHubs() 
-        else: self.hubURL = HUB_URL
+        self.lastEvent  = None
+        self.chkIntval  = 720.0
+        self.hubName    = HUB_NAME
+        self.hubURL     = HUB_URL
+        self.username   = USERNAME
+        self.password   = PASSWORD
+        self.deviceLST  = DEVICE_LST if DEVICE_LST is None else DEVICE_LST.split('|') 
+        self.configured = False
+        self.nextCHK    = datetime.datetime.now()
+        self.session    = requests.Session()
+        self.url        = self.login()
+        if self.url is None: return notification(LANGUAGE(30003))
+        if self.hubURL is None: return notification(LANGUAGE(30020)) 
 
         
     def wizard(self):
@@ -139,14 +141,11 @@ class STHUB(object):
         
     def login(self):
         log("login")
-        if self.username is None: self.wizard() # firstrun wizard
+        if self.username is None: return None#self.wizard() # firstrun wizard
         login_data = {"username": self.username,
                       "password": self.password}       
         r = self.session.post("https://auth-global.api.smartthings.com/sso/authenticate", data=login_data)
-        if r.status_code == 401:
-            notification(LANGUAGE(30003))
-            return None
-        else: return r.raise_for_status()
+        if r.status_code == 401: return None
         return self.resolveURL()
 
         
@@ -155,20 +154,22 @@ class STHUB(object):
         res.raise_for_status()
         location_rows = BeautifulSoup(res.text, "html.parser").find('tbody').findAll('tr')
         for row in location_rows:
-            try: return (row.find('a')['href']).replace('/show/','/')
+            try: 
+                url = (row.find('a')['href']).replace('/show/','/')
+                self.configured = True
+                return url
             except: pass
-        notification(LANGUAGE(30003))
         return None
 
         
     def getHubs(self):
         log("getHubs, Gathering list of locations...")
         try:
+            show_busy_dialog()
             res = self.session.get(BASE_URL+"location/list")
             res.raise_for_status()
             location_rows = BeautifulSoup(res.text, "html.parser").find('tbody').findAll('tr')
             location_dict = {}
-            show_busy_dialog()
             for row in location_rows:
                 location_link = row.find('a')
                 location_dict[location_link.contents[0].strip()] = location_link['href'].split(":443/location/")[0]
@@ -181,7 +182,7 @@ class STHUB(object):
                 self.hubURL  = location_dict[self.hubName]
                 REAL_SETTINGS.setSetting('Hub_URL', self.hubURL)
                 REAL_SETTINGS.setSetting('Select_Hub', self.hubName)
-                if len(self.deviceLST) == 0: return self.getDeviceList() 
+                if self.deviceLST is None: return self.getDeviceList() 
             self.openSettings()
         except Exception as e: 
             log("getHubs, Failed " + str(e), xbmc.LOGERROR)
@@ -192,25 +193,25 @@ class STHUB(object):
         log("getDeviceList, Gathering list of devices...")
         try:
             if self.hubURL is None: return notification(LANGUAGE(30004))
+            show_busy_dialog()
             res = self.session.get(self.hubURL+"/device/list")
             res.raise_for_status()
             device_page = BeautifulSoup(res.text, "html.parser")
             device_rows = device_page.find('tbody').findAll('tr')
             device_dict = {}
-            show_busy_dialog()
             for row in device_rows:
                 device_link = row.find('a')
                 device_dict[device_link.contents[0].strip()] = device_link['href']
             device_keys = sorted(list(device_dict.keys()))
             device_select = []
+            hide_busy_dialog()
             if ALL: return device_keys
+            if self.deviceLST is None: self.deviceLST = []
             for device in self.deviceLST:
                 try: device_select.append(device_keys.index(device))
                 except: pass
-            hide_busy_dialog()
             select  = selectDialog(True, device_keys, LANGUAGE(30005), preselect=device_select)
             if select > -1:
-                self.deviceLST = []
                 for sel in select: self.deviceLST.append(device_keys[sel])
             REAL_SETTINGS.setSetting('Select_Devices','|'.join(self.deviceLST))
             if OPEN: self.openSettings()
@@ -275,7 +276,6 @@ class STHUB(object):
         except Exception as e: log("checkEvents, Failed " + str(e), xbmc.LOGERROR)
         return events
            
-
            
     def checkEvents(self):
         try:
@@ -283,8 +283,10 @@ class STHUB(object):
             if event != self.lastEvent:
                 self.lastEvent = event
                 notification(event)
+            return True
         except Exception as e: log("checkEvents, Failed " + str(e), xbmc.LOGERROR)
-           
+        return False
+        
            
     def chkDeviceStatus(self):
         deviceInfo = list(self.getDeviceInfo(self.deviceLST))
@@ -303,27 +305,34 @@ class STHUB(object):
     def startService(self):
         log('startService')
         self.myMonitor = Monitor()
+        #Random start delay, avoid all services from starting at the same time.
+        self.myMonitor.waitForAbort(random.randint(5, 30))
         while not self.myMonitor.abortRequested():
             # Don't run while setting menu is opened.
+            if not self.configured:
+                log('startService, settings not configured')
+                self.myMonitor.waitForAbort(5)
+                continue
+                
             if xbmcgui.getCurrentWindowDialogId() in [10140,10103,12000]:
                 log('startService, settings dialog opened')
-                self.myMonitor.waitForAbort(5)
+                self.myMonitor.waitForAbort(15)
                 continue 
                 
-            if self.myMonitor.pendingChange == True or self.myMonitor.waitForAbort(5) == True: 
+            if self.myMonitor.pendingChange or self.myMonitor.waitForAbort(5): 
                 log('startService, waitForAbort/pendingChange')
                 break
-      
+
             # Don't run while playing.
             if xbmc.Player().isPlayingVideo() and IGNORE:
                 log('startService, ignore during playback')
+                self.myMonitor.waitForAbort(5)
                 continue
                 
-            self.checkEvents()
-            if datetime.datetime.now() >= self.nextCHK:
-                self.chkDeviceStatus()
+            if EVENTS: self.checkEvents()
+            if datetime.datetime.now() >= self.nextCHK: self.chkDeviceStatus()
                 
-        if self.myMonitor.pendingChange == True:
+        if self.myMonitor.pendingChange:
             notification(LANGUAGE(30007))
             self.restartService()
             

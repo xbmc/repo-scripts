@@ -9,7 +9,7 @@
         <setting id="Select_Devices"      type="action" label="30005" default=""  option="close"    action="RunScript($CWD/service.py, -Device)" />
         <setting id="Hub_URL"             type="text"   label=""      default=""  option="hidden"   enable="false" visible="false" />
         <setting                          type="lsep"   label="" />
-        <setting id="Monitor_Events"      type="bool"   label="30009" default="true"  />
+        <setting id="Monitor_Events"      type="bool"   label="30009" default="true" />
         <setting id="Disable_Notify"      type="bool"   label="30008" default="false" visible="eq(-1,true)" subsetting="true" />
     </category>
     <category label="30010">
