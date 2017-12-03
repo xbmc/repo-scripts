@@ -1,3 +1,16 @@
+Version 1.1.1
+
+fixed error on authorizers (missing secret/key)
+added ability to "catchup" on missed scheduled backup
+updated google oauth and client versions
+merged in dropbox v2 code
+
+Version 1.1.0
+
+added tinyurl for oauth urls
+moved authorize to settings area for cloud storage
+bug fixes
+
 Version 1.0.9
 
 fixed dropbox rest.py for Python 2.6 - thanks koying!

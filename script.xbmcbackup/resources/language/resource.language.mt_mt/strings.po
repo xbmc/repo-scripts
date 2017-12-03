@@ -1,0 +1,390 @@
+# Kodi Media Center language file
+# Addon Name: Backup
+# Addon id: script.xbmcbackup
+# Addon Provider: robweber
+# Translators:
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2017-09-19 15:06+0000\n"
+"Last-Translator: Martijn Kaijser <machine.sanctum@gmail.com>\n"
+"Language-Team: Maltese (http://www.transifex.com/teamxbmc/xbmc-addons/language/mt/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: mt\n"
+"Plural-Forms: nplurals=4; plural=(n==1 ? 0 : n==0 || ( n%100>1 && n%100<11) ? 1 : (n%100>10 && n%100<20 ) ? 2 : 3);\n"
+
+msgctxt "Addon Summary"
+msgid ""
+"Backup and restore your Kodi database and configuration files in the event "
+"of a crash or file corruption."
+msgstr ""
+
+msgctxt "Addon Description"
+msgid ""
+"Ever hosed your Kodi configuration and wished you'd had a backup? Now you "
+"can with one easy click. You can export your database, playlist, thumbnails,"
+" addons and other configuration details to any source writeable by Kodi or "
+"directly to Dropbox cloud storage. Backups can be run on demand or via a "
+"scheduler. "
+msgstr ""
+
+msgctxt "#30010"
+msgid "Backup"
+msgstr ""
+
+msgctxt "#30011"
+msgid "General"
+msgstr "Ġenerali"
+
+msgctxt "#30012"
+msgid "File Selection"
+msgstr ""
+
+msgctxt "#30013"
+msgid "Scheduling"
+msgstr ""
+
+msgctxt "#30016"
+msgid "Backup"
+msgstr ""
+
+msgctxt "#30017"
+msgid "Restore"
+msgstr ""
+
+msgctxt "#30018"
+msgid "Browse Path"
+msgstr ""
+
+msgctxt "#30019"
+msgid "Type Path"
+msgstr ""
+
+msgctxt "#30020"
+msgid "Browse Remote Path"
+msgstr ""
+
+msgctxt "#30021"
+msgid "Backup Folder Name"
+msgstr ""
+
+msgctxt "#30022"
+msgid "Progress Display"
+msgstr ""
+
+msgctxt "#30023"
+msgid "Mode"
+msgstr "Mode:"
+
+msgctxt "#30024"
+msgid "Type Remote Path"
+msgstr ""
+
+msgctxt "#30025"
+msgid "Remote Path Type"
+msgstr ""
+
+msgctxt "#30026"
+msgid "Backups to keep (0 for all)"
+msgstr ""
+
+msgctxt "#30027"
+msgid "Dropbox"
+msgstr ""
+
+msgctxt "#30028"
+msgid "Dropbox Key"
+msgstr ""
+
+msgctxt "#30029"
+msgid "Dropbox Secret"
+msgstr ""
+
+msgctxt "#30030"
+msgid "User Addons"
+msgstr ""
+
+msgctxt "#30031"
+msgid "Addon Data"
+msgstr ""
+
+msgctxt "#30032"
+msgid "Database"
+msgstr "Database"
+
+msgctxt "#30033"
+msgid "Playlist"
+msgstr "Playlist"
+
+msgctxt "#30034"
+msgid "Thumbnails/Fanart"
+msgstr ""
+
+msgctxt "#30035"
+msgid "Config Files"
+msgstr ""
+
+msgctxt "#30036"
+msgid "Custom Directory 1"
+msgstr ""
+
+msgctxt "#30037"
+msgid "Custom Directory 2"
+msgstr ""
+
+msgctxt "#30038"
+msgid "Advanced Settings Detected"
+msgstr ""
+
+msgctxt "#30039"
+msgid "The advancedsettings file should be restored first"
+msgstr ""
+
+msgctxt "#30040"
+msgid "Select Yes to restore this file and restart Kodi"
+msgstr ""
+
+msgctxt "#30041"
+msgid "Select No to continue"
+msgstr ""
+
+msgctxt "#30042"
+msgid "Resume Restore"
+msgstr ""
+
+msgctxt "#30043"
+msgid "The Backup addon has detected an unfinished restore"
+msgstr ""
+
+msgctxt "#30044"
+msgid "Would you like to continue?"
+msgstr ""
+
+msgctxt "#30045"
+msgid "Error: Remote path doesn't exist"
+msgstr ""
+
+msgctxt "#30046"
+msgid "Starting"
+msgstr ""
+
+msgctxt "#30047"
+msgid "Local Dir"
+msgstr ""
+
+msgctxt "#30048"
+msgid "Remote Dir"
+msgstr ""
+
+msgctxt "#30049"
+msgid "Gathering file list"
+msgstr ""
+
+msgctxt "#30050"
+msgid "Remote Path exists - may have old files in it!"
+msgstr ""
+
+msgctxt "#30051"
+msgid "Creating Files List"
+msgstr ""
+
+msgctxt "#30052"
+msgid "Writing file"
+msgstr ""
+
+msgctxt "#30053"
+msgid "Starting scheduled backup"
+msgstr ""
+
+msgctxt "#30054"
+msgid "Removing backup"
+msgstr ""
+
+msgctxt "#30056"
+msgid "Check log for Dropbox authorize URL"
+msgstr ""
+
+msgctxt "#30057"
+msgid "Click OK when authorized"
+msgstr ""
+
+msgctxt "#30058"
+msgid "Dropbox Developer Code Needed"
+msgstr ""
+
+msgctxt "#30059"
+msgid "Visit https://www.dropbox.com/developers"
+msgstr ""
+
+msgctxt "#30060"
+msgid "Enable Scheduler"
+msgstr ""
+
+msgctxt "#30061"
+msgid "Schedule"
+msgstr ""
+
+msgctxt "#30062"
+msgid "Hour of Day"
+msgstr ""
+
+msgctxt "#30063"
+msgid "Day of Week"
+msgstr ""
+
+msgctxt "#30064"
+msgid "Cron Schedule"
+msgstr ""
+
+msgctxt "#30065"
+msgid "Sunday"
+msgstr "Il-Ħadd"
+
+msgctxt "#30066"
+msgid "Monday"
+msgstr "It-Tnejn"
+
+msgctxt "#30067"
+msgid "Tuesday"
+msgstr "It-Tlieta"
+
+msgctxt "#30068"
+msgid "Wednesday"
+msgstr "L-Erbgħa"
+
+msgctxt "#30069"
+msgid "Thursday"
+msgstr "Il-Ħamis"
+
+msgctxt "#30070"
+msgid "Friday"
+msgstr "Il-Ġimgħa"
+
+msgctxt "#30071"
+msgid "Saturday"
+msgstr "Is-Sibt"
+
+msgctxt "#30072"
+msgid "Every Day"
+msgstr ""
+
+msgctxt "#30073"
+msgid "Every Week"
+msgstr ""
+
+msgctxt "#30074"
+msgid "First Day of Month"
+msgstr ""
+
+msgctxt "#30075"
+msgid "Custom Schedule"
+msgstr ""
+
+msgctxt "#30076"
+msgid "Shutdown After Backup"
+msgstr ""
+
+msgctxt "#30077"
+msgid "Restart Kodi"
+msgstr ""
+
+msgctxt "#30078"
+msgid "You should restart Kodi to continue"
+msgstr ""
+
+msgctxt "#30079"
+msgid "Just Today"
+msgstr ""
+
+msgctxt "#30080"
+msgid "Profiles"
+msgstr "Profil"
+
+msgctxt "#30081"
+msgid "Scheduler will run again on"
+msgstr ""
+
+msgctxt "#30082"
+msgid "Progress Bar"
+msgstr ""
+
+msgctxt "#30083"
+msgid "Background Progress Bar"
+msgstr ""
+
+msgctxt "#30084"
+msgid "None (Silent)"
+msgstr ""
+
+msgctxt "#30085"
+msgid "Version Warning"
+msgstr ""
+
+msgctxt "#30086"
+msgid ""
+"This version of Kodi is different than the one used to create the archive"
+msgstr ""
+
+msgctxt "#30087"
+msgid "Compress Archives"
+msgstr ""
+
+msgctxt "#30088"
+msgid "Copying Zip Archive"
+msgstr ""
+
+msgctxt "#30089"
+msgid "Write Error Detected"
+msgstr ""
+
+msgctxt "#30090"
+msgid "The destination may not be writeable"
+msgstr ""
+
+msgctxt "#30091"
+msgid "Zip archive could not be copied"
+msgstr ""
+
+msgctxt "#30092"
+msgid "Not all files were copied"
+msgstr ""
+
+msgctxt "#30093"
+msgid "Delete Authorization Info"
+msgstr ""
+
+msgctxt "#30094"
+msgid "This will delete any OAuth token files"
+msgstr ""
+
+msgctxt "#30095"
+msgid "Do you want to do this?"
+msgstr ""
+
+msgctxt "#30096"
+msgid "Old Zip Archive could not be deleted"
+msgstr ""
+
+msgctxt "#30097"
+msgid "This needs to happen before a backup can run"
+msgstr ""
+
+msgctxt "#30098"
+msgid "Google Drive"
+msgstr ""
+
+msgctxt "#30099"
+msgid "Open Settings"
+msgstr ""
+
+msgctxt "#30100"
+msgid "Extracting Archive"
+msgstr ""
+
+msgctxt "#30101"
+msgid "Error extracting the zip archive"
+msgstr ""

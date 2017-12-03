@@ -1,0 +1,391 @@
+# Kodi Media Center language file
+# Addon Name: Backup
+# Addon id: script.xbmcbackup
+# Addon Provider: robweber
+# Translators:
+# Martin Srebotnjak <miles@filmsi.net>, 2015
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2017-09-19 14:20+0000\n"
+"Last-Translator: Martijn Kaijser <machine.sanctum@gmail.com>\n"
+"Language-Team: Slovenian (http://www.transifex.com/teamxbmc/xbmc-addons/language/sl/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: sl\n"
+"Plural-Forms: nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3);\n"
+
+msgctxt "Addon Summary"
+msgid ""
+"Backup and restore your Kodi database and configuration files in the event "
+"of a crash or file corruption."
+msgstr "Varnostno kopirajte in obnovite svojo zbirko podatkov Kodi in prilagoditvene datoteke za primer sesutja ali okvare datotek."
+
+msgctxt "Addon Description"
+msgid ""
+"Ever hosed your Kodi configuration and wished you'd had a backup? Now you "
+"can with one easy click. You can export your database, playlist, thumbnails,"
+" addons and other configuration details to any source writeable by Kodi or "
+"directly to Dropbox cloud storage. Backups can be run on demand or via a "
+"scheduler. "
+msgstr ""
+
+msgctxt "#30010"
+msgid "Backup"
+msgstr ""
+
+msgctxt "#30011"
+msgid "General"
+msgstr "Splošno"
+
+msgctxt "#30012"
+msgid "File Selection"
+msgstr "Izbor datotek"
+
+msgctxt "#30013"
+msgid "Scheduling"
+msgstr ""
+
+msgctxt "#30016"
+msgid "Backup"
+msgstr ""
+
+msgctxt "#30017"
+msgid "Restore"
+msgstr "Obnovi"
+
+msgctxt "#30018"
+msgid "Browse Path"
+msgstr "Prebrskaj pot"
+
+msgctxt "#30019"
+msgid "Type Path"
+msgstr "Vnesite pot"
+
+msgctxt "#30020"
+msgid "Browse Remote Path"
+msgstr "Prebrskaj oddaljeno pot"
+
+msgctxt "#30021"
+msgid "Backup Folder Name"
+msgstr "Ime mape varnostne kopije"
+
+msgctxt "#30022"
+msgid "Progress Display"
+msgstr "Prikaz napredka"
+
+msgctxt "#30023"
+msgid "Mode"
+msgstr "Način"
+
+msgctxt "#30024"
+msgid "Type Remote Path"
+msgstr "Vnesite oddaljeno pot"
+
+msgctxt "#30025"
+msgid "Remote Path Type"
+msgstr "Vrsta oddaljene poti"
+
+msgctxt "#30026"
+msgid "Backups to keep (0 for all)"
+msgstr ""
+
+msgctxt "#30027"
+msgid "Dropbox"
+msgstr "Dropbox"
+
+msgctxt "#30028"
+msgid "Dropbox Key"
+msgstr ""
+
+msgctxt "#30029"
+msgid "Dropbox Secret"
+msgstr ""
+
+msgctxt "#30030"
+msgid "User Addons"
+msgstr "Uporabnikovi dodatki"
+
+msgctxt "#30031"
+msgid "Addon Data"
+msgstr "Podatki dodatkov"
+
+msgctxt "#30032"
+msgid "Database"
+msgstr "Podatkovna baza"
+
+msgctxt "#30033"
+msgid "Playlist"
+msgstr "Seznam predvajanja"
+
+msgctxt "#30034"
+msgid "Thumbnails/Fanart"
+msgstr ""
+
+msgctxt "#30035"
+msgid "Config Files"
+msgstr "Prilagoditvene datoteke"
+
+msgctxt "#30036"
+msgid "Custom Directory 1"
+msgstr "Mapa po meri 1"
+
+msgctxt "#30037"
+msgid "Custom Directory 2"
+msgstr "Mapa po meri 2"
+
+msgctxt "#30038"
+msgid "Advanced Settings Detected"
+msgstr "Zaznane napredne nastavitve"
+
+msgctxt "#30039"
+msgid "The advancedsettings file should be restored first"
+msgstr "Najprej je potrebno obnoviti datoteko advancedsettings"
+
+msgctxt "#30040"
+msgid "Select Yes to restore this file and restart Kodi"
+msgstr ""
+
+msgctxt "#30041"
+msgid "Select No to continue"
+msgstr ""
+
+msgctxt "#30042"
+msgid "Resume Restore"
+msgstr "Nadaljuj z obnovo"
+
+msgctxt "#30043"
+msgid "The Backup addon has detected an unfinished restore"
+msgstr ""
+
+msgctxt "#30044"
+msgid "Would you like to continue?"
+msgstr "Želite nadaljevati?"
+
+msgctxt "#30045"
+msgid "Error: Remote path doesn't exist"
+msgstr ""
+
+msgctxt "#30046"
+msgid "Starting"
+msgstr ""
+
+msgctxt "#30047"
+msgid "Local Dir"
+msgstr "Krajevna mapa"
+
+msgctxt "#30048"
+msgid "Remote Dir"
+msgstr "Oddaljena mapa"
+
+msgctxt "#30049"
+msgid "Gathering file list"
+msgstr "Zbiranje seznama datotek"
+
+msgctxt "#30050"
+msgid "Remote Path exists - may have old files in it!"
+msgstr ""
+
+msgctxt "#30051"
+msgid "Creating Files List"
+msgstr "Ustvarjanje seznama datotek"
+
+msgctxt "#30052"
+msgid "Writing file"
+msgstr "Pisanje datoteke"
+
+msgctxt "#30053"
+msgid "Starting scheduled backup"
+msgstr ""
+
+msgctxt "#30054"
+msgid "Removing backup"
+msgstr "Odstrani varnostno kopijo"
+
+msgctxt "#30056"
+msgid "Check log for Dropbox authorize URL"
+msgstr ""
+
+msgctxt "#30057"
+msgid "Click OK when authorized"
+msgstr ""
+
+msgctxt "#30058"
+msgid "Dropbox Developer Code Needed"
+msgstr ""
+
+msgctxt "#30059"
+msgid "Visit https://www.dropbox.com/developers"
+msgstr ""
+
+msgctxt "#30060"
+msgid "Enable Scheduler"
+msgstr ""
+
+msgctxt "#30061"
+msgid "Schedule"
+msgstr ""
+
+msgctxt "#30062"
+msgid "Hour of Day"
+msgstr "Ura dneva"
+
+msgctxt "#30063"
+msgid "Day of Week"
+msgstr "Dan v tednu"
+
+msgctxt "#30064"
+msgid "Cron Schedule"
+msgstr "Urnik cron"
+
+msgctxt "#30065"
+msgid "Sunday"
+msgstr "Nedelja"
+
+msgctxt "#30066"
+msgid "Monday"
+msgstr "Ponedeljek"
+
+msgctxt "#30067"
+msgid "Tuesday"
+msgstr "Torek"
+
+msgctxt "#30068"
+msgid "Wednesday"
+msgstr "Sreda"
+
+msgctxt "#30069"
+msgid "Thursday"
+msgstr "Četrtek"
+
+msgctxt "#30070"
+msgid "Friday"
+msgstr "Petek"
+
+msgctxt "#30071"
+msgid "Saturday"
+msgstr "Sobota"
+
+msgctxt "#30072"
+msgid "Every Day"
+msgstr "Vsak dan"
+
+msgctxt "#30073"
+msgid "Every Week"
+msgstr "Vsak teden"
+
+msgctxt "#30074"
+msgid "First Day of Month"
+msgstr "Prvi dan v mesecu"
+
+msgctxt "#30075"
+msgid "Custom Schedule"
+msgstr "Razpored po meri"
+
+msgctxt "#30076"
+msgid "Shutdown After Backup"
+msgstr ""
+
+msgctxt "#30077"
+msgid "Restart Kodi"
+msgstr "Ponovno zaženi Kodi"
+
+msgctxt "#30078"
+msgid "You should restart Kodi to continue"
+msgstr ""
+
+msgctxt "#30079"
+msgid "Just Today"
+msgstr "Samo danes"
+
+msgctxt "#30080"
+msgid "Profiles"
+msgstr "Profili"
+
+msgctxt "#30081"
+msgid "Scheduler will run again on"
+msgstr ""
+
+msgctxt "#30082"
+msgid "Progress Bar"
+msgstr "Vrstica napredka"
+
+msgctxt "#30083"
+msgid "Background Progress Bar"
+msgstr "Vrstica napredka v ozadju"
+
+msgctxt "#30084"
+msgid "None (Silent)"
+msgstr "Brez (nemo)"
+
+msgctxt "#30085"
+msgid "Version Warning"
+msgstr "Opozorilo različice"
+
+msgctxt "#30086"
+msgid ""
+"This version of Kodi is different than the one used to create the archive"
+msgstr ""
+
+msgctxt "#30087"
+msgid "Compress Archives"
+msgstr "Stisni arhive"
+
+msgctxt "#30088"
+msgid "Copying Zip Archive"
+msgstr "Kopiranje arhiva zip"
+
+msgctxt "#30089"
+msgid "Write Error Detected"
+msgstr "Zaznana napaka pri pisanju"
+
+msgctxt "#30090"
+msgid "The destination may not be writeable"
+msgstr "Na ciljno mesto morda ni mogoče pisati"
+
+msgctxt "#30091"
+msgid "Zip archive could not be copied"
+msgstr "Arhiva zip ni bilo mogoče kopirati"
+
+msgctxt "#30092"
+msgid "Not all files were copied"
+msgstr "Vse datoteke niso bile kopirane"
+
+msgctxt "#30093"
+msgid "Delete Authorization Info"
+msgstr ""
+
+msgctxt "#30094"
+msgid "This will delete any OAuth token files"
+msgstr ""
+
+msgctxt "#30095"
+msgid "Do you want to do this?"
+msgstr ""
+
+msgctxt "#30096"
+msgid "Old Zip Archive could not be deleted"
+msgstr ""
+
+msgctxt "#30097"
+msgid "This needs to happen before a backup can run"
+msgstr ""
+
+msgctxt "#30098"
+msgid "Google Drive"
+msgstr ""
+
+msgctxt "#30099"
+msgid "Open Settings"
+msgstr ""
+
+msgctxt "#30100"
+msgid "Extracting Archive"
+msgstr ""
+
+msgctxt "#30101"
+msgid "Error extracting the zip archive"
+msgstr ""

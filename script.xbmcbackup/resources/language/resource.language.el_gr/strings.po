@@ -1,0 +1,393 @@
+# Kodi Media Center language file
+# Addon Name: Backup
+# Addon id: script.xbmcbackup
+# Addon Provider: robweber
+# Translators:
+# CutSickAss <cutsickass@yahoo.com>, 2013-2015
+# CutSickAss <cutsickass@yahoo.com>, 2012-2013
+# Spiros Moshopoulos <spirosmoshopoulos@gmail.com>, 2016
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2017-09-23 18:37+0000\n"
+"Last-Translator: Spiros Moshopoulos <spirosmoshopoulos@gmail.com>\n"
+"Language-Team: Greek (http://www.transifex.com/teamxbmc/xbmc-addons/language/el/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: el\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "Addon Summary"
+msgid ""
+"Backup and restore your Kodi database and configuration files in the event "
+"of a crash or file corruption."
+msgstr "Δημιουργήστε αντίγραφα ασφαλείας της βάσης δεδομένων και των ρυθμίσεων του Kodi για την πιθανότητα σφαλμάτων ή καταστροφής αρχείων."
+
+msgctxt "Addon Description"
+msgid ""
+"Ever hosed your Kodi configuration and wished you'd had a backup? Now you "
+"can with one easy click. You can export your database, playlist, thumbnails,"
+" addons and other configuration details to any source writeable by Kodi or "
+"directly to Dropbox cloud storage. Backups can be run on demand or via a "
+"scheduler. "
+msgstr "Σας έτυχε ποτέ να χάσετε τις ρυθμίσεις του Kodi και να εύχεστε να είχατε αντίγραφο ασφαλείας; Πλέον μπορείτε με ένα απλό κλικ. Μπορείτε να εξάγετε τη βάση δεδομένων, τις λίστες αναπαραγωγής, τις μικρογραφίες, τα πρόσθετα και άλλες λεπτομέρειες της εγκατάστασης σε οποιαδήποτε πηγή στην οποία μπορεί να γράψει το Kodi, ή απευθείας στο λογαριασμό σας στο Dropbox. Τα αντίγραφα μπορούν να γίνονται κατ' επιλογή ή μέσω προγραμματισμού."
+
+msgctxt "#30010"
+msgid "Backup"
+msgstr "Αντίγραφο"
+
+msgctxt "#30011"
+msgid "General"
+msgstr "Γενικά"
+
+msgctxt "#30012"
+msgid "File Selection"
+msgstr "Επιλογή Αρχείου"
+
+msgctxt "#30013"
+msgid "Scheduling"
+msgstr "Προγραμματισμός"
+
+msgctxt "#30016"
+msgid "Backup"
+msgstr "Δημιουργία Αντιγράφου"
+
+msgctxt "#30017"
+msgid "Restore"
+msgstr "Επαναφορά"
+
+msgctxt "#30018"
+msgid "Browse Path"
+msgstr "Εντοπισμός της Διαδρομής"
+
+msgctxt "#30019"
+msgid "Type Path"
+msgstr "Πληκτρολόγηση της Διαδρομής"
+
+msgctxt "#30020"
+msgid "Browse Remote Path"
+msgstr "Εντοπισμός Απομακρυσμένης Διαδρομής"
+
+msgctxt "#30021"
+msgid "Backup Folder Name"
+msgstr "Όνομα Φακέλου Αντιγράφου Ασφαλείας"
+
+msgctxt "#30022"
+msgid "Progress Display"
+msgstr "Απεικόνιση Εξέλιξης"
+
+msgctxt "#30023"
+msgid "Mode"
+msgstr "Μέθοδος"
+
+msgctxt "#30024"
+msgid "Type Remote Path"
+msgstr "Πληκτρολόγηση Απομακρυσμένης Διαδρομής"
+
+msgctxt "#30025"
+msgid "Remote Path Type"
+msgstr "Τύπος Απομακρυσμένης Διαδρομής"
+
+msgctxt "#30026"
+msgid "Backups to keep (0 for all)"
+msgstr "Πόσα αντίγραφα να διατηρηθούν (0 για όλα)"
+
+msgctxt "#30027"
+msgid "Dropbox"
+msgstr "Dropbox"
+
+msgctxt "#30028"
+msgid "Dropbox Key"
+msgstr "Κλειδί Dropbox"
+
+msgctxt "#30029"
+msgid "Dropbox Secret"
+msgstr "Μυστικό Dropbox"
+
+msgctxt "#30030"
+msgid "User Addons"
+msgstr "Πρόσθετα Χρήστη"
+
+msgctxt "#30031"
+msgid "Addon Data"
+msgstr "Δεδομένα Πρόσθετου"
+
+msgctxt "#30032"
+msgid "Database"
+msgstr "Βάση δεδομένων"
+
+msgctxt "#30033"
+msgid "Playlist"
+msgstr "Λίστα Αναπαραγωγής"
+
+msgctxt "#30034"
+msgid "Thumbnails/Fanart"
+msgstr "Μικρογραφίες/Fanart"
+
+msgctxt "#30035"
+msgid "Config Files"
+msgstr "Αρχεία Ρυθμίσεων"
+
+msgctxt "#30036"
+msgid "Custom Directory 1"
+msgstr "Προσαρμοσμένος Φάκελος 1"
+
+msgctxt "#30037"
+msgid "Custom Directory 2"
+msgstr "Προσαρμοσμένος Φάκελος 2"
+
+msgctxt "#30038"
+msgid "Advanced Settings Detected"
+msgstr "Εντοπίστηκαν Προηγμένες Ρυθμίσεις (Advanced Settings)"
+
+msgctxt "#30039"
+msgid "The advancedsettings file should be restored first"
+msgstr "Το αρχείο advancedsettings πρέπει να επαναφερθεί πρώτο"
+
+msgctxt "#30040"
+msgid "Select Yes to restore this file and restart Kodi"
+msgstr "Επιλέξτε 'Ναι' για επαναφορά του αρχείου και επανεκκίνηση του Kodi"
+
+msgctxt "#30041"
+msgid "Select No to continue"
+msgstr "Επιλέξτε Όχι για να συνεχίσετε"
+
+msgctxt "#30042"
+msgid "Resume Restore"
+msgstr "Συνέχιση Επαναφοράς"
+
+msgctxt "#30043"
+msgid "The Backup addon has detected an unfinished restore"
+msgstr "Το πρόσθετο Backup εντόπισε μια μη ολοκληρωμένη επαναφορά"
+
+msgctxt "#30044"
+msgid "Would you like to continue?"
+msgstr "Επιθυμείτε να συνεχίσετε;"
+
+msgctxt "#30045"
+msgid "Error: Remote path doesn't exist"
+msgstr "Σφάλμα: Δεν υπάρχει η απομακρυσμένη διαδρομή"
+
+msgctxt "#30046"
+msgid "Starting"
+msgstr "Έναρξη"
+
+msgctxt "#30047"
+msgid "Local Dir"
+msgstr "Τοπικός Φάκελος"
+
+msgctxt "#30048"
+msgid "Remote Dir"
+msgstr "Απομακρυσμένος Φάκελος"
+
+msgctxt "#30049"
+msgid "Gathering file list"
+msgstr "Συγκέντρωση λίστας αρχείων"
+
+msgctxt "#30050"
+msgid "Remote Path exists - may have old files in it!"
+msgstr "Η Απομακρυσμένη Διαδρομή υπάρχει - μπορεί να έχει ήδη αρχεία μέσα!"
+
+msgctxt "#30051"
+msgid "Creating Files List"
+msgstr "Δημιουργία Λίστας Αρχείων"
+
+msgctxt "#30052"
+msgid "Writing file"
+msgstr "Εγγραφή αρχείου"
+
+msgctxt "#30053"
+msgid "Starting scheduled backup"
+msgstr "Έναρξη προγραμματισμένου αντιγράφου ασφαλείας"
+
+msgctxt "#30054"
+msgid "Removing backup"
+msgstr "Αφαίρεση αντιγράφου"
+
+msgctxt "#30056"
+msgid "Check log for Dropbox authorize URL"
+msgstr "Ελέγξτε το αρχείο καταγραφής για τη διεύθυνση URL έγκρισης του Dropbox"
+
+msgctxt "#30057"
+msgid "Click OK when authorized"
+msgstr "Πιέστε 'Επιλογή' κατά την έγκριση"
+
+msgctxt "#30058"
+msgid "Dropbox Developer Code Needed"
+msgstr "Απαιτείται Κωδικός Προγραμματιστή Dropbox"
+
+msgctxt "#30059"
+msgid "Visit https://www.dropbox.com/developers"
+msgstr "Επισκεφθείτε το https://www.dropbox.com/developers"
+
+msgctxt "#30060"
+msgid "Enable Scheduler"
+msgstr "Ενεργοποίηση Προγραμματισμού"
+
+msgctxt "#30061"
+msgid "Schedule"
+msgstr "Προγραμματισμός"
+
+msgctxt "#30062"
+msgid "Hour of Day"
+msgstr "Ώρα της Μέρας"
+
+msgctxt "#30063"
+msgid "Day of Week"
+msgstr "Μέρα της Εβδομάδας"
+
+msgctxt "#30064"
+msgid "Cron Schedule"
+msgstr "Προγραμματισμός Cron"
+
+msgctxt "#30065"
+msgid "Sunday"
+msgstr "Κυριακή"
+
+msgctxt "#30066"
+msgid "Monday"
+msgstr "Δευτέρα"
+
+msgctxt "#30067"
+msgid "Tuesday"
+msgstr "Τρίτη"
+
+msgctxt "#30068"
+msgid "Wednesday"
+msgstr "Τετάρτη"
+
+msgctxt "#30069"
+msgid "Thursday"
+msgstr "Πέμπτη"
+
+msgctxt "#30070"
+msgid "Friday"
+msgstr "Παρασκευή"
+
+msgctxt "#30071"
+msgid "Saturday"
+msgstr "Σάββατο"
+
+msgctxt "#30072"
+msgid "Every Day"
+msgstr "Κάθε Μέρα"
+
+msgctxt "#30073"
+msgid "Every Week"
+msgstr "Κάθε Εβδομάδα"
+
+msgctxt "#30074"
+msgid "First Day of Month"
+msgstr "Πρώτη του Μηνός"
+
+msgctxt "#30075"
+msgid "Custom Schedule"
+msgstr "Προσαρμοσμένος Προγραμματισμός"
+
+msgctxt "#30076"
+msgid "Shutdown After Backup"
+msgstr "Τερματισμός μετά τη δημιουργία Αντιγράφου"
+
+msgctxt "#30077"
+msgid "Restart Kodi"
+msgstr "Επανεκκίνηση Kodi"
+
+msgctxt "#30078"
+msgid "You should restart Kodi to continue"
+msgstr "Πρέπει να επανεκκινήσετε το Kodi για να συνεχίσετε"
+
+msgctxt "#30079"
+msgid "Just Today"
+msgstr "Μόνο Σήμερα"
+
+msgctxt "#30080"
+msgid "Profiles"
+msgstr "Προφίλ"
+
+msgctxt "#30081"
+msgid "Scheduler will run again on"
+msgstr "Ο προγραμματισμός θα γίνει ξανά στις"
+
+msgctxt "#30082"
+msgid "Progress Bar"
+msgstr "Μπάρα Εξέλιξης"
+
+msgctxt "#30083"
+msgid "Background Progress Bar"
+msgstr "Μπάρα Εξέλιξης Υποβάθρου"
+
+msgctxt "#30084"
+msgid "None (Silent)"
+msgstr "Κανένα (Αθόρυβο)"
+
+msgctxt "#30085"
+msgid "Version Warning"
+msgstr "Προειδοποίηση Έκδοσης"
+
+msgctxt "#30086"
+msgid ""
+"This version of Kodi is different than the one used to create the archive"
+msgstr "Η έκδοση του Kodi δεν είναι αυτή που χρησιμοποιήθηκε για τη δημιουργία του αρχείου"
+
+msgctxt "#30087"
+msgid "Compress Archives"
+msgstr "Συμπίεση Αρχείων"
+
+msgctxt "#30088"
+msgid "Copying Zip Archive"
+msgstr "Γίνεται Αντιγραφή Αρχείου Zip"
+
+msgctxt "#30089"
+msgid "Write Error Detected"
+msgstr "Εντοπίστηκε Σφάλμα Εγγραφής"
+
+msgctxt "#30090"
+msgid "The destination may not be writeable"
+msgstr "Ο προορισμός ενδέχεται να μην είναι εγγράψιμος"
+
+msgctxt "#30091"
+msgid "Zip archive could not be copied"
+msgstr "Αδυναμία αντιγραφής αρχείου Zip"
+
+msgctxt "#30092"
+msgid "Not all files were copied"
+msgstr "Δεν αντιγράφηκαν όλα τα αρχεία"
+
+msgctxt "#30093"
+msgid "Delete Authorization Info"
+msgstr "Διαγραφή Πληροφοριών Εξουσιοδότησης"
+
+msgctxt "#30094"
+msgid "This will delete any OAuth token files"
+msgstr "Αυτό θα διαγράψει όλα τα αρχεία OAuth"
+
+msgctxt "#30095"
+msgid "Do you want to do this?"
+msgstr "Σίγουρα θέλετε να το κάνετε;"
+
+msgctxt "#30096"
+msgid "Old Zip Archive could not be deleted"
+msgstr "Το παλιό αρχείο Zip δεν μπορεί να διαγραφεί"
+
+msgctxt "#30097"
+msgid "This needs to happen before a backup can run"
+msgstr "Αυτό πρέπει να γίνει πριν να εκτελεστεί το Αντίγραφο"
+
+msgctxt "#30098"
+msgid "Google Drive"
+msgstr "Google Drive"
+
+msgctxt "#30099"
+msgid "Open Settings"
+msgstr "Άνοιξε ρυθμίσεις"
+
+msgctxt "#30100"
+msgid "Extracting Archive"
+msgstr "Αποσυμπίεση αρχείου"
+
+msgctxt "#30101"
+msgid "Error extracting the zip archive"
+msgstr "Σφάλμα κατά την αποσυμπίεση αρχείου zip"

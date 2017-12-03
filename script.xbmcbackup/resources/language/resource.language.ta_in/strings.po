@@ -1,0 +1,391 @@
+# Kodi Media Center language file
+# Addon Name: Backup
+# Addon id: script.xbmcbackup
+# Addon Provider: robweber
+# Translators:
+# Veerappan Soubramanien <veeraps@gmail.com>, 2013
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2017-09-19 17:09+0000\n"
+"Last-Translator: Martijn Kaijser <machine.sanctum@gmail.com>\n"
+"Language-Team: Tamil (India) (http://www.transifex.com/teamxbmc/xbmc-addons/language/ta_IN/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ta_IN\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "Addon Summary"
+msgid ""
+"Backup and restore your Kodi database and configuration files in the event "
+"of a crash or file corruption."
+msgstr ""
+
+msgctxt "Addon Description"
+msgid ""
+"Ever hosed your Kodi configuration and wished you'd had a backup? Now you "
+"can with one easy click. You can export your database, playlist, thumbnails,"
+" addons and other configuration details to any source writeable by Kodi or "
+"directly to Dropbox cloud storage. Backups can be run on demand or via a "
+"scheduler. "
+msgstr ""
+
+msgctxt "#30010"
+msgid "Backup"
+msgstr "Kodi மறுபிரதி"
+
+msgctxt "#30011"
+msgid "General"
+msgstr "பொதுவானது"
+
+msgctxt "#30012"
+msgid "File Selection"
+msgstr "கோப்பு தேர்வு"
+
+msgctxt "#30013"
+msgid "Scheduling"
+msgstr "திட்டமிடல்"
+
+msgctxt "#30016"
+msgid "Backup"
+msgstr "மறுபிரதி"
+
+msgctxt "#30017"
+msgid "Restore"
+msgstr "மீட்டெடு"
+
+msgctxt "#30018"
+msgid "Browse Path"
+msgstr "பாதை உலாவு"
+
+msgctxt "#30019"
+msgid "Type Path"
+msgstr "பாதை உள்ளிடு"
+
+msgctxt "#30020"
+msgid "Browse Remote Path"
+msgstr "தொலை பாதை உலாவு"
+
+msgctxt "#30021"
+msgid "Backup Folder Name"
+msgstr "மறுபிரதி கோப்புறை பெயர்"
+
+msgctxt "#30022"
+msgid "Progress Display"
+msgstr ""
+
+msgctxt "#30023"
+msgid "Mode"
+msgstr "முறை"
+
+msgctxt "#30024"
+msgid "Type Remote Path"
+msgstr "தொலை பாதை உள்ளிடு"
+
+msgctxt "#30025"
+msgid "Remote Path Type"
+msgstr "தொலை பாதை உள்ளிடு"
+
+msgctxt "#30026"
+msgid "Backups to keep (0 for all)"
+msgstr "வைக்கவேண்டிய மறுபிரதிகள் (0 - அனைத்திற்கும்)"
+
+msgctxt "#30027"
+msgid "Dropbox"
+msgstr ""
+
+msgctxt "#30028"
+msgid "Dropbox Key"
+msgstr ""
+
+msgctxt "#30029"
+msgid "Dropbox Secret"
+msgstr ""
+
+msgctxt "#30030"
+msgid "User Addons"
+msgstr "பயனர் துணை பயன்கள்"
+
+msgctxt "#30031"
+msgid "Addon Data"
+msgstr "துணை பயன் தகவல்"
+
+msgctxt "#30032"
+msgid "Database"
+msgstr "தரவுத்தளம்"
+
+msgctxt "#30033"
+msgid "Playlist"
+msgstr "பட்டியல்"
+
+msgctxt "#30034"
+msgid "Thumbnails/Fanart"
+msgstr "சிறுபடம்/விசிறிபடம்"
+
+msgctxt "#30035"
+msgid "Config Files"
+msgstr "அமைப்பு கோப்புகள்"
+
+msgctxt "#30036"
+msgid "Custom Directory 1"
+msgstr ""
+
+msgctxt "#30037"
+msgid "Custom Directory 2"
+msgstr ""
+
+msgctxt "#30038"
+msgid "Advanced Settings Detected"
+msgstr ""
+
+msgctxt "#30039"
+msgid "The advancedsettings file should be restored first"
+msgstr ""
+
+msgctxt "#30040"
+msgid "Select Yes to restore this file and restart Kodi"
+msgstr ""
+
+msgctxt "#30041"
+msgid "Select No to continue"
+msgstr ""
+
+msgctxt "#30042"
+msgid "Resume Restore"
+msgstr ""
+
+msgctxt "#30043"
+msgid "The Backup addon has detected an unfinished restore"
+msgstr ""
+
+msgctxt "#30044"
+msgid "Would you like to continue?"
+msgstr ""
+
+msgctxt "#30045"
+msgid "Error: Remote path doesn't exist"
+msgstr "பிழை: தொலை பாதை இல்லை"
+
+msgctxt "#30046"
+msgid "Starting"
+msgstr "தொடங்குகிறது"
+
+msgctxt "#30047"
+msgid "Local Dir"
+msgstr "உள்ளூர் கோப்புறை"
+
+msgctxt "#30048"
+msgid "Remote Dir"
+msgstr "தொலை கோப்புறை"
+
+msgctxt "#30049"
+msgid "Gathering file list"
+msgstr "கோப்பு பட்டியலை சேகரித்தல்"
+
+msgctxt "#30050"
+msgid "Remote Path exists - may have old files in it!"
+msgstr "தொலை பாதை உள்ளது - அதில் பழைய கோப்புகள் இருக்கலாம்"
+
+msgctxt "#30051"
+msgid "Creating Files List"
+msgstr "கோப்பு பட்டியல உருவாக்குதல்"
+
+msgctxt "#30052"
+msgid "Writing file"
+msgstr "கோப்பில் எழுதப்படுகிறது"
+
+msgctxt "#30053"
+msgid "Starting scheduled backup"
+msgstr "திட்டமிட்ட மறுபிரதியை தொடங்குகிறது"
+
+msgctxt "#30054"
+msgid "Removing backup"
+msgstr "மறுபிரதியை நீக்கு"
+
+msgctxt "#30056"
+msgid "Check log for Dropbox authorize URL"
+msgstr ""
+
+msgctxt "#30057"
+msgid "Click OK when authorized"
+msgstr ""
+
+msgctxt "#30058"
+msgid "Dropbox Developer Code Needed"
+msgstr ""
+
+msgctxt "#30059"
+msgid "Visit https://www.dropbox.com/developers"
+msgstr ""
+
+msgctxt "#30060"
+msgid "Enable Scheduler"
+msgstr "திட்டமிடுநர் செயல்படுத்து"
+
+msgctxt "#30061"
+msgid "Schedule"
+msgstr "திட்டமிடு"
+
+msgctxt "#30062"
+msgid "Hour of Day"
+msgstr ""
+
+msgctxt "#30063"
+msgid "Day of Week"
+msgstr ""
+
+msgctxt "#30064"
+msgid "Cron Schedule"
+msgstr "கிரான் திட்டமிடு"
+
+msgctxt "#30065"
+msgid "Sunday"
+msgstr "ஞாயிறு "
+
+msgctxt "#30066"
+msgid "Monday"
+msgstr "திங்கள்"
+
+msgctxt "#30067"
+msgid "Tuesday"
+msgstr "செவ்வாய்"
+
+msgctxt "#30068"
+msgid "Wednesday"
+msgstr "புதன்"
+
+msgctxt "#30069"
+msgid "Thursday"
+msgstr "வியாழன்"
+
+msgctxt "#30070"
+msgid "Friday"
+msgstr "வெள்ளி"
+
+msgctxt "#30071"
+msgid "Saturday"
+msgstr "சனி"
+
+msgctxt "#30072"
+msgid "Every Day"
+msgstr "ஒவ்வொரு நாளும்"
+
+msgctxt "#30073"
+msgid "Every Week"
+msgstr "ஒவ்வொரு வாரமும்"
+
+msgctxt "#30074"
+msgid "First Day of Month"
+msgstr "மாதத்தின் முதல் நாள்"
+
+msgctxt "#30075"
+msgid "Custom Schedule"
+msgstr "தனிப்பயன் திட்டமிடு"
+
+msgctxt "#30076"
+msgid "Shutdown After Backup"
+msgstr ""
+
+msgctxt "#30077"
+msgid "Restart Kodi"
+msgstr ""
+
+msgctxt "#30078"
+msgid "You should restart Kodi to continue"
+msgstr ""
+
+msgctxt "#30079"
+msgid "Just Today"
+msgstr ""
+
+msgctxt "#30080"
+msgid "Profiles"
+msgstr "சுயவிவரங்கள்"
+
+msgctxt "#30081"
+msgid "Scheduler will run again on"
+msgstr ""
+
+msgctxt "#30082"
+msgid "Progress Bar"
+msgstr ""
+
+msgctxt "#30083"
+msgid "Background Progress Bar"
+msgstr ""
+
+msgctxt "#30084"
+msgid "None (Silent)"
+msgstr ""
+
+msgctxt "#30085"
+msgid "Version Warning"
+msgstr ""
+
+msgctxt "#30086"
+msgid ""
+"This version of Kodi is different than the one used to create the archive"
+msgstr ""
+
+msgctxt "#30087"
+msgid "Compress Archives"
+msgstr ""
+
+msgctxt "#30088"
+msgid "Copying Zip Archive"
+msgstr ""
+
+msgctxt "#30089"
+msgid "Write Error Detected"
+msgstr ""
+
+msgctxt "#30090"
+msgid "The destination may not be writeable"
+msgstr ""
+
+msgctxt "#30091"
+msgid "Zip archive could not be copied"
+msgstr ""
+
+msgctxt "#30092"
+msgid "Not all files were copied"
+msgstr ""
+
+msgctxt "#30093"
+msgid "Delete Authorization Info"
+msgstr ""
+
+msgctxt "#30094"
+msgid "This will delete any OAuth token files"
+msgstr ""
+
+msgctxt "#30095"
+msgid "Do you want to do this?"
+msgstr ""
+
+msgctxt "#30096"
+msgid "Old Zip Archive could not be deleted"
+msgstr ""
+
+msgctxt "#30097"
+msgid "This needs to happen before a backup can run"
+msgstr ""
+
+msgctxt "#30098"
+msgid "Google Drive"
+msgstr ""
+
+msgctxt "#30099"
+msgid "Open Settings"
+msgstr ""
+
+msgctxt "#30100"
+msgid "Extracting Archive"
+msgstr ""
+
+msgctxt "#30101"
+msgid "Error extracting the zip archive"
+msgstr ""

@@ -1,0 +1,395 @@
+# Kodi Media Center language file
+# Addon Name: Backup
+# Addon id: script.xbmcbackup
+# Addon Provider: robweber
+# Translators:
+# carlchina <carlchina@gmail.com>, 2014-2015
+# Ryan_gou <gzf9@163.com>, 2013
+# taxigps <taxigps@sina.com>, 2013-2014,2016
+# taxigps <taxigps@sina.com>, 2012-2013
+# YF <yfdyh000@gmail.com>, 2015
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2017-09-23 18:37+0000\n"
+"Last-Translator: taxigps <taxigps@sina.com>\n"
+"Language-Team: Chinese (http://www.transifex.com/teamxbmc/xbmc-addons/language/zh/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: zh\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgctxt "Addon Summary"
+msgid ""
+"Backup and restore your Kodi database and configuration files in the event "
+"of a crash or file corruption."
+msgstr "备份和恢复 Kodi 数据库和配置文件，以防范系统崩溃或文件损坏问题。"
+
+msgctxt "Addon Description"
+msgid ""
+"Ever hosed your Kodi configuration and wished you'd had a backup? Now you "
+"can with one easy click. You can export your database, playlist, thumbnails,"
+" addons and other configuration details to any source writeable by Kodi or "
+"directly to Dropbox cloud storage. Backups can be run on demand or via a "
+"scheduler. "
+msgstr "你是否经常折腾你的 Kodi，因而希望能够有个备份？现在可以通过简单点击来实现。你可以把资料库、播放列表、缩略图、插件和其他配置细节导出到 Kodi 可以写入的任意位置或 Dropgox 云存储空间。备份可以按需运行或通过计划任务执行。"
+
+msgctxt "#30010"
+msgid "Backup"
+msgstr "备份"
+
+msgctxt "#30011"
+msgid "General"
+msgstr "常规"
+
+msgctxt "#30012"
+msgid "File Selection"
+msgstr "文件选择"
+
+msgctxt "#30013"
+msgid "Scheduling"
+msgstr "计划任务"
+
+msgctxt "#30016"
+msgid "Backup"
+msgstr "备份"
+
+msgctxt "#30017"
+msgid "Restore"
+msgstr "恢复"
+
+msgctxt "#30018"
+msgid "Browse Path"
+msgstr "浏览目录"
+
+msgctxt "#30019"
+msgid "Type Path"
+msgstr "输入目录"
+
+msgctxt "#30020"
+msgid "Browse Remote Path"
+msgstr "浏览远程目录"
+
+msgctxt "#30021"
+msgid "Backup Folder Name"
+msgstr "备份文件夹名"
+
+msgctxt "#30022"
+msgid "Progress Display"
+msgstr "进度显示"
+
+msgctxt "#30023"
+msgid "Mode"
+msgstr "模式"
+
+msgctxt "#30024"
+msgid "Type Remote Path"
+msgstr "输入远程目录"
+
+msgctxt "#30025"
+msgid "Remote Path Type"
+msgstr "远程目录类型"
+
+msgctxt "#30026"
+msgid "Backups to keep (0 for all)"
+msgstr "保留备份数（0为全部）"
+
+msgctxt "#30027"
+msgid "Dropbox"
+msgstr "Dropbox"
+
+msgctxt "#30028"
+msgid "Dropbox Key"
+msgstr "Dropbox 用户"
+
+msgctxt "#30029"
+msgid "Dropbox Secret"
+msgstr "Dropbox 密码"
+
+msgctxt "#30030"
+msgid "User Addons"
+msgstr "用户插件"
+
+msgctxt "#30031"
+msgid "Addon Data"
+msgstr "插件数据"
+
+msgctxt "#30032"
+msgid "Database"
+msgstr "数据库"
+
+msgctxt "#30033"
+msgid "Playlist"
+msgstr "播放列表"
+
+msgctxt "#30034"
+msgid "Thumbnails/Fanart"
+msgstr "缩略图/同人画"
+
+msgctxt "#30035"
+msgid "Config Files"
+msgstr "配置文件"
+
+msgctxt "#30036"
+msgid "Custom Directory 1"
+msgstr "自定义目录1"
+
+msgctxt "#30037"
+msgid "Custom Directory 2"
+msgstr "自定义目录2"
+
+msgctxt "#30038"
+msgid "Advanced Settings Detected"
+msgstr "检测到高级设置"
+
+msgctxt "#30039"
+msgid "The advancedsettings file should be restored first"
+msgstr "将先恢复高级设置文件"
+
+msgctxt "#30040"
+msgid "Select Yes to restore this file and restart Kodi"
+msgstr "选“是”恢复此文件并重启 Kodi"
+
+msgctxt "#30041"
+msgid "Select No to continue"
+msgstr "选“否”继续"
+
+msgctxt "#30042"
+msgid "Resume Restore"
+msgstr "继续恢复"
+
+msgctxt "#30043"
+msgid "The Backup addon has detected an unfinished restore"
+msgstr "备份插件检测到未完成的恢复"
+
+msgctxt "#30044"
+msgid "Would you like to continue?"
+msgstr "要继续吗？"
+
+msgctxt "#30045"
+msgid "Error: Remote path doesn't exist"
+msgstr "错误：远程目录不存在"
+
+msgctxt "#30046"
+msgid "Starting"
+msgstr "开始"
+
+msgctxt "#30047"
+msgid "Local Dir"
+msgstr "本地目录"
+
+msgctxt "#30048"
+msgid "Remote Dir"
+msgstr "远程目录"
+
+msgctxt "#30049"
+msgid "Gathering file list"
+msgstr "获取文件列表"
+
+msgctxt "#30050"
+msgid "Remote Path exists - may have old files in it!"
+msgstr "远程目录存在 - 可能有旧文件留存！"
+
+msgctxt "#30051"
+msgid "Creating Files List"
+msgstr "创建文件列表"
+
+msgctxt "#30052"
+msgid "Writing file"
+msgstr "写入文件"
+
+msgctxt "#30053"
+msgid "Starting scheduled backup"
+msgstr "启动计划备份"
+
+msgctxt "#30054"
+msgid "Removing backup"
+msgstr "删除备份"
+
+msgctxt "#30056"
+msgid "Check log for Dropbox authorize URL"
+msgstr "检查 Dropbox 授权 URL 日志"
+
+msgctxt "#30057"
+msgid "Click OK when authorized"
+msgstr "授权后点“确定”"
+
+msgctxt "#30058"
+msgid "Dropbox Developer Code Needed"
+msgstr "需要 Dropbox 开发者 Code"
+
+msgctxt "#30059"
+msgid "Visit https://www.dropbox.com/developers"
+msgstr "访问 https://www.dropbox.com/developers"
+
+msgctxt "#30060"
+msgid "Enable Scheduler"
+msgstr "启用计划任务"
+
+msgctxt "#30061"
+msgid "Schedule"
+msgstr "时间安排"
+
+msgctxt "#30062"
+msgid "Hour of Day"
+msgstr "时刻"
+
+msgctxt "#30063"
+msgid "Day of Week"
+msgstr "星期"
+
+msgctxt "#30064"
+msgid "Cron Schedule"
+msgstr "Cron 计划任务"
+
+msgctxt "#30065"
+msgid "Sunday"
+msgstr "星期日"
+
+msgctxt "#30066"
+msgid "Monday"
+msgstr "星期一"
+
+msgctxt "#30067"
+msgid "Tuesday"
+msgstr "星期二"
+
+msgctxt "#30068"
+msgid "Wednesday"
+msgstr "星期三"
+
+msgctxt "#30069"
+msgid "Thursday"
+msgstr "星期四"
+
+msgctxt "#30070"
+msgid "Friday"
+msgstr "星期五"
+
+msgctxt "#30071"
+msgid "Saturday"
+msgstr "星期六"
+
+msgctxt "#30072"
+msgid "Every Day"
+msgstr "每天"
+
+msgctxt "#30073"
+msgid "Every Week"
+msgstr "每周"
+
+msgctxt "#30074"
+msgid "First Day of Month"
+msgstr "每月初"
+
+msgctxt "#30075"
+msgid "Custom Schedule"
+msgstr "自定义计划"
+
+msgctxt "#30076"
+msgid "Shutdown After Backup"
+msgstr "备份完成后关机"
+
+msgctxt "#30077"
+msgid "Restart Kodi"
+msgstr "重启 Kodi"
+
+msgctxt "#30078"
+msgid "You should restart Kodi to continue"
+msgstr "需要重启 Kodi 以继续"
+
+msgctxt "#30079"
+msgid "Just Today"
+msgstr "就在今天"
+
+msgctxt "#30080"
+msgid "Profiles"
+msgstr "用户配置"
+
+msgctxt "#30081"
+msgid "Scheduler will run again on"
+msgstr "计划任务将再次执行于"
+
+msgctxt "#30082"
+msgid "Progress Bar"
+msgstr "进度条"
+
+msgctxt "#30083"
+msgid "Background Progress Bar"
+msgstr "后台进度条"
+
+msgctxt "#30084"
+msgid "None (Silent)"
+msgstr "无（静默）"
+
+msgctxt "#30085"
+msgid "Version Warning"
+msgstr "版本警告"
+
+msgctxt "#30086"
+msgid ""
+"This version of Kodi is different than the one used to create the archive"
+msgstr "当前 Kodi 版本与创建备份时的版本不同"
+
+msgctxt "#30087"
+msgid "Compress Archives"
+msgstr "压缩存档"
+
+msgctxt "#30088"
+msgid "Copying Zip Archive"
+msgstr "复制 Zip 存档"
+
+msgctxt "#30089"
+msgid "Write Error Detected"
+msgstr "检测到写入错误"
+
+msgctxt "#30090"
+msgid "The destination may not be writeable"
+msgstr "目标可能不可写入"
+
+msgctxt "#30091"
+msgid "Zip archive could not be copied"
+msgstr "Zip 存档无法复制"
+
+msgctxt "#30092"
+msgid "Not all files were copied"
+msgstr "文件未能全部复制"
+
+msgctxt "#30093"
+msgid "Delete Authorization Info"
+msgstr "删除认证信息"
+
+msgctxt "#30094"
+msgid "This will delete any OAuth token files"
+msgstr "这将删除所有 OAuth 令牌文件"
+
+msgctxt "#30095"
+msgid "Do you want to do this?"
+msgstr "你确定要这样做吗？"
+
+msgctxt "#30096"
+msgid "Old Zip Archive could not be deleted"
+msgstr "旧的 ZIP 压缩包无法删除"
+
+msgctxt "#30097"
+msgid "This needs to happen before a backup can run"
+msgstr "这需要在备份前执行"
+
+msgctxt "#30098"
+msgid "Google Drive"
+msgstr "Google 云盘"
+
+msgctxt "#30099"
+msgid "Open Settings"
+msgstr "打开设置"
+
+msgctxt "#30100"
+msgid "Extracting Archive"
+msgstr "正在解压包"
+
+msgctxt "#30101"
+msgid "Error extracting the zip archive"
+msgstr "解压 ZIP 压缩包出错"
