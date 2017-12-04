@@ -4,6 +4,8 @@ import xbmcvfs
 import resources.lib.tinyurl as tinyurl
 import resources.lib.utils as utils
 import dropbox
+from resources.lib.pydrive.auth import GoogleAuth
+from resources.lib.pydrive.drive import GoogleDrive
 
 class DropboxAuthorizer:
     APP_KEY = ""
