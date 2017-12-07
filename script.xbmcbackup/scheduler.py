@@ -22,9 +22,9 @@ class BackupScheduler:
 
         if(self.enabled == "true"):
 
+            nr = 0
             if(xbmcvfs.exists(self.next_run_path)):
 
-                nr = 0
                 fh = xbmcvfs.File(self.next_run_path)
                 try:
                     #check if we saved a run time from the last run
