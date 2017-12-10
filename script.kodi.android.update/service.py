@@ -44,7 +44,7 @@ class Service(object):
                 log('Service, removing last download')
                 xbmcvfs.delete(self.lastPath)
                 xbmcgui.Dialog().notification(ADDON_NAME, LANGUAGE(30007), ICON, 4000)
-        except Exception, e:
+        except Exception as e:
             log("Service Failed! " + str(e), xbmc.LOGERROR)
         
 if __name__ == '__main__':

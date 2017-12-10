@@ -4,4 +4,5 @@
     <setting id="Disable_Maintenance" type="bool" label="30003" default="false" />
     <setting id="Disable_Cache"       type="bool" label="30008" default="true" visible="eq(-1,false)"/>
     <setting id="LastURL"             type="text" default=""    enable="false"  visible="false"/>
+    <setting id="LastPath"            type="text" default=""    enable="false"  visible="false"/>
 </settings>
