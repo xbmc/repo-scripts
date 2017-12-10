@@ -15,7 +15,7 @@
 #
 # -*- coding: utf-8 -*-
 
-import os, time, datetime, traceback, re
+import os, time, datetime, traceback, re, fnmatch, glob
 import urllib, urllib2, socket, subprocess
 import xbmc, xbmcgui, xbmcvfs, xbmcaddon
 
@@ -39,6 +39,7 @@ DEBUG     = REAL_SETTINGS.getSetting('Enable_Debugging') == 'true'
 CLEAN     = REAL_SETTINGS.getSetting('Disable_Maintenance') == 'false'
 BASE_URL  = 'http://mirrors.kodi.tv/%s/windows/'
 BUILD_OPT = ['nightlies','releases','snapshots','test-builds']
+UWP_PATH  = LANGUAGE(30010)
 
 def log(msg, level=xbmc.LOGDEBUG):
     if DEBUG == False and level != xbmc.LOGERROR: return
@@ -49,6 +50,8 @@ socket.setdefaulttimeout(TIMEOUT)
 class Installer(object):
     def __init__(self):
         self.cache    = SimpleCache()
+        self.isUWP    = len(fnmatch.filter(glob.glob(UWP_PATH),'*.*')) > 0
+        if self.isUWP: return self.okDialog(LANGUAGE(30009))
         self.lastURL  = (REAL_SETTINGS.getSetting("LastURL") or self.buildMain())
         self.lastPath = REAL_SETTINGS.getSetting("LastPath")
         self.selectDialog(self.lastURL)
@@ -71,20 +74,17 @@ class Installer(object):
 
             
     def getItems(self, soup):
-        try:
-            #folders
+        try: #folders
             items = (soup.find_all('tr'))
             del items[0]
-        except:
-            #files
+        except: #files
             items = (soup.find_all('a'))
         return [x.get_text() for x in items if x.get_text() is not None]
 
         
     def buildMain(self):
         tmpLST = []
-        for item in BUILD_OPT:
-            tmpLST.append(xbmcgui.ListItem(item.title(),'',ICON))
+        for item in BUILD_OPT: tmpLST.append(xbmcgui.ListItem(item.title(),'',ICON))
         select = xbmcgui.Dialog().select(ADDON_NAME, tmpLST, preselect=-1, useDetails=True)
         if select < 0: return #return on cancel.
         return  BASE_URL%BUILD_OPT[select].lower()
@@ -94,21 +94,23 @@ class Installer(object):
         soup = self.openURL(url)
         if soup is None: return
         for item in self.getItems(soup):
-            try:
-                #folders
+            try: #folders
                 label, label2 = re.compile("(.*?)/-(.*)").match(item).groups()
-                yield (xbmcgui.ListItem(label,label2,ICON))
-            except:
-                #files
+                yield (xbmcgui.ListItem(label,'',ICON))
+            except: #files
                 label, label2 = re.compile("(.*?)\s(.*)").match(item).groups()
-                yield (xbmcgui.ListItem(label,label2,ICON))
+                if label.endswith('.exe'): yield (xbmcgui.ListItem(label,label2,ICON))
 
 
     def setLastPath(self, url, path):
         REAL_SETTINGS.setSetting("LastURL",url)
         REAL_SETTINGS.setSetting("LastPath",path)
         
+            
+    def okDialog(self, str1, str2='', str3='', header=ADDON_NAME):
+        xbmcgui.Dialog().ok(header, str1, str2, str3)
         
+    
     def selectDialog(self, url):
         log('selectDialog, url = ' + str(url))
         newURL = url
@@ -118,7 +120,6 @@ class Installer(object):
             label  = url.replace('http://mirrors.kodi.tv/','./')
             select = xbmcgui.Dialog().select(label, items, preselect=-1, useDetails=True)
             if select < 0: return #return on cancel.
-            
             label  = items[select].getLabel()
             newURL = url + items[select].getLabel()
             preURL = url.rsplit('/', 2)[0] + '/'
@@ -138,9 +139,12 @@ class Installer(object):
         if xbmcvfs.exists(dest):
             if not xbmcgui.Dialog().yesno(ADDON_NAME, LANGUAGE(30004), dest.rsplit('/', 1)[-1], nolabel=LANGUAGE(30005), yeslabel=LANGUAGE(30006)):
                 return False
-        elif CLEAN and xbmcvfs.exists(self.lastPath):
-            xbmcvfs.delete(self.lastPath)
+        elif CLEAN and xbmcvfs.exists(self.lastPath): self.deleteEXE(self.lastPath)
         return True
+        
+        
+    def deleteEXE(self, path):
+        if xbmcvfs.exists(path): xbmcvfs.delete(path)
         
         
     def downloadEXE(self, url, dest):
@@ -151,22 +155,21 @@ class Installer(object):
         dia.update(0)
         try:
             urllib.urlretrieve(url.rstrip('/').replace('https','http'), dest, lambda nb, bs, fs: self.pbhook(nb, bs, fs, dia, start_time))
+            self.installEXE(dest)
         except Exception as e:
             xbmcgui.Dialog().notification(ADDON_NAME, LANGUAGE(30001), ICON, 4000)
             log("downloadEXE, Failed! " + str(e), xbmc.LOGERROR)
+            self.deleteEXE(dest)
             return
-        self.installEXE(dest)
-        
+
         
     def pbhook(self, numblocks, blocksize, filesize, dia, start_time):
         try: 
             percent = min(numblocks * blocksize * 100 / filesize, 100) 
             currently_downloaded = float(numblocks) * blocksize / (1024 * 1024) 
             kbps_speed = numblocks * blocksize / (time.time() - start_time) 
-            if kbps_speed > 0: 
-                eta = (filesize - numblocks * blocksize) / kbps_speed 
-            else: 
-                eta = 0 
+            if kbps_speed > 0: eta = (filesize - numblocks * blocksize) / kbps_speed 
+            else: eta = 0 
             kbps_speed = kbps_speed / 1024 
             total = float(filesize) / (1024 * 1024) 
             mbs = '%.02f MB of %.02f MB' % (currently_downloaded, total) 
@@ -177,13 +180,15 @@ class Installer(object):
             percent = 100 
             dia.update(percent) 
         if dia.iscanceled(): 
-            dia.close() 
-        return
+            dia.close()
+            raise Exception
             
             
     def installEXE(self, exefile):
-        xbmc.executebuiltin('XBMC.AlarmClock(shutdowntimer,XBMC.Quit(),0.2,false)')
-        subprocess.call([exefile], shell=True)
+        xbmc.executebuiltin('XBMC.AlarmClock(shutdowntimer,XBMC.Quit(),0.5,true)')
+        subprocess.call(['start', exefile], shell=True)
+        # os.startfile(exefile)
+        # subprocess.call('taskkill /f /im kodi.exe')
         
 if __name__ == '__main__':
     Installer()
