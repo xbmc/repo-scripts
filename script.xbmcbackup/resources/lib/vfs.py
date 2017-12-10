@@ -1,13 +1,16 @@
 import utils as utils
+import tinyurl as tinyurl
 import xbmc
 import xbmcvfs
 import xbmcgui
 import zipfile
 import zlib
 import os
-from dropbox import client, rest, session
-from pydrive.auth import GoogleAuth
+import sys
+import dropbox
+from dropbox.files import WriteMode
 from pydrive.drive import GoogleDrive
+from authorizers import DropboxAuthorizer,GoogleDriveAuthorizer
 
 class Vfs:
     root_path = None
@@ -121,55 +124,29 @@ class DropboxFileSystem(Vfs):
     
     def __init__(self,rootString):
         self.set_root(rootString)
-        
-        self.APP_KEY = utils.getSetting('dropbox_key')
-        self.APP_SECRET = utils.getSetting('dropbox_secret')
 
-        self.setup()
+        authorizer = DropboxAuthorizer()
 
-    def setup(self):
-        if(self.APP_KEY == '' or self.APP_SECRET == ''):
-            xbmcgui.Dialog().ok(utils.getString(30010),utils.getString(30058),utils.getString(30059))
-            return
-        
-        user_token_key,user_token_secret = self.getToken()
-        
-        sess = session.DropboxSession(self.APP_KEY,self.APP_SECRET,"app_folder")
-        utils.log("token:" + user_token_key + ":" + user_token_secret)
-        if(user_token_key == '' and user_token_secret == ''):
-            token = sess.obtain_request_token()
-            url = sess.build_authorize_url(token)
-
-            #print url in log
-            utils.log("Authorize URL: " + url)
-            xbmcgui.Dialog().ok(utils.getString(30010),utils.getString(30056),utils.getString(30057))  
-            
-            #if user authorized this will work
-            user_token = sess.obtain_access_token(token)
-            self.setToken(user_token.key,user_token.secret)
-            
+        if(authorizer.isAuthorized()):
+            self.client = authorizer.getClient()
         else:
-            sess.set_token(user_token_key,user_token_secret)
-        
-        self.client = client.DropboxClient(sess)
-
-        try:
-            utils.log(str(self.client.account_info()))
-        except:
-            #this didn't work, delete the token file
-            self.deleteToken()
+            #tell the user to go back and run the authorizer
+            xbmcgui.Dialog().ok(utils.getString(30010),utils.getString(30105))
+            sys.exit()
 
     def listdir(self,directory):
+        directory = self._fix_slashes(directory)
+        
         if(self.client != None and self.exists(directory)):
             files = []
             dirs = []
-            metadata = self.client.metadata(directory)
+            metadata = self.client.files_list_folder(directory)
 
-            for aFile in metadata['contents']:
-                if(aFile['is_dir']):
-                    dirs.append(utils.encode(aFile['path'][len(directory):]))
+            for aFile in metadata.entries:
+                if(isinstance(aFile,dropbox.files.FolderMetadata)):
+                    dirs.append(utils.encode(aFile.name))
                 else:
-                    files.append(utils.encode(aFile['path'][len(directory):]))
+                    files.append(utils.encode(aFile.name))
 
             return [dirs,files]
         else:
@@ -179,8 +156,7 @@ class DropboxFileSystem(Vfs):
     def mkdir(self,directory):
         directory = self._fix_slashes(directory)
         if(self.client != None):
-            if(not self.exists(directory)):
-                self.client.file_create_folder(directory)
+            #sort of odd but always return true, folder create is implicit with file upload
             return True
         else:
             return False
@@ -195,7 +171,7 @@ class DropboxFileSystem(Vfs):
                 self.rmdir(aDir)
 
             #finally remove the root directory
-            self.client.file_delete(directory)
+            self.client.files_delete(directory)
             
             return True
         else:
@@ -205,16 +181,21 @@ class DropboxFileSystem(Vfs):
         aFile = self._fix_slashes(aFile)
         
         if(self.client != None and self.exists(aFile)):
-            self.client.file_delete(aFile)
+            self.client.files_delete(aFile)
             return True
         else:
             return False
 
     def exists(self,aFile):
         aFile = self._fix_slashes(aFile)
+    
         if(self.client != None):
+            #can't list root metadata
+            if(aFile == ''):
+                return True
+            
             try:
-                meta_data = self.client.metadata(aFile)
+                meta_data = self.client.files_get_metadata(aFile)
                 #if we make it here the file does exist
                 return True
             except:
@@ -228,7 +209,7 @@ class DropboxFileSystem(Vfs):
         if(self.client != None):
             f = open(source,'rb')
             try:
-                response = self.client.put_file(dest,f,True)
+                response = self.client.files_upload(f.read(),dest,mode=WriteMode('overwrite'))
                 return True
             except:
                 #if we have an exception retry
@@ -243,84 +224,42 @@ class DropboxFileSystem(Vfs):
     def get_file(self,source,dest):
         if(self.client != None):
             #write the file locally
-            out = open(dest,'wb')
-            f = self.client.get_file(source).read()
-            out.write(f)
-            out.close()
+            f = self.client.files_download_to_file(dest,source)
             return True
         else:
             return False
 
     def _fix_slashes(self,filename):
-        return filename.replace('\\','/')
-    
-    def setToken(self,key,secret):
-        #write the token files
-        token_file = open(xbmc.translatePath(utils.data_dir() + "tokens.txt"),'w')
-        token_file.write("%s|%s" % (key,secret))
-        token_file.close()
+        result = filename.replace('\\','/')
 
-    def getToken(self):
-        #get tokens, if they exist
-        if(xbmcvfs.exists(xbmc.translatePath(utils.data_dir() + "tokens.txt"))):
-            token_file = open(xbmc.translatePath(utils.data_dir() + "tokens.txt"))
-            key,secret = token_file.read().split('|')
-            token_file.close()
+        if(result == '/'):
+            result = ""
 
-            return [key,secret]
-        else:
-            return ["",""]
-
-    def deleteToken(self):
-        if(xbmcvfs.exists(xbmc.translatePath(utils.data_dir() + "tokens.txt"))):
-            xbmcvfs.delete(xbmc.translatePath(utils.data_dir() + "tokens.txt"))
+        return result
             
 
 class GoogleDriveFilesystem(Vfs):
     drive = None
     history = {}
-    CLIENT_ID = ''
-    CLIENT_SECRET = ''
     FOLDER_TYPE = 'application/vnd.google-apps.folder'
     
     def __init__(self,rootString):
         self.set_root(rootString)
-        
-        self.CLIENT_ID = utils.getSetting('google_drive_id')
-        self.CLIENT_SECRET = utils.getSetting('google_drive_secret')
 
-        self.setup()
-    
-    def setup(self):
-        #create authorization helper and load default settings
-        gauth = GoogleAuth(xbmc.validatePath(xbmc.translatePath(utils.addon_dir() + '/resources/lib/pydrive/settings.yaml')))
-        gauth.LoadClientConfigSettings()
-        
-        #check if this user is already authorized
-        if(not xbmcvfs.exists(xbmc.translatePath(utils.data_dir() + "google_drive.dat"))):
-            settings = {"client_id":self.CLIENT_ID,'client_secret':self.CLIENT_SECRET}
-    
-            drive_url = gauth.GetAuthUrl(settings)
-    
-            utils.log("Google Drive Authorize URL: " + drive_url)
+        authorizer = GoogleDriveAuthorizer()
 
-            code = xbmcgui.Dialog().input('Google Drive Validation Code','Input the Validation code after authorizing this app')
-
-            gauth.Auth(code)
-            gauth.SaveCredentialsFile(xbmc.validatePath(xbmc.translatePath(utils.data_dir() + 'google_drive.dat')))
+        if(authorizer.isAuthorized()):
+            self.drive = authorizer.getClient()
         else:
-            gauth.LoadCredentialsFile(xbmc.validatePath(xbmc.translatePath(utils.data_dir() + 'google_drive.dat')))
-    
-        #create the drive object
-        self.drive = GoogleDrive(gauth)
-        
+            #tell the user to go back and run the authorizer
+            xbmcgui.Dialog().ok(utils.getString(30010),utils.getString(30105))
+            sys.exit()
+
         #make sure we have the folder we need
         xbmc_folder = self._getGoogleFile(self.root_path)
-        print xbmc_folder
         if(xbmc_folder == None):
             self.mkdir(self.root_path)
-    
-    
+            
     def listdir(self,directory):
         files = []
         dirs = []

@@ -26,7 +26,7 @@ class ZipExtractor:
                 
         except Exception,e:
             print str(e)
-            utils.log("Error extracting file", xbmc.LOGDEBUG)
+            utils.log("Error extracting file")
             result = False
             
         return result

@@ -1,0 +1,391 @@
+# Kodi Media Center language file
+# Addon Name: Backup
+# Addon id: script.xbmcbackup
+# Addon Provider: robweber
+# Translators:
+# Fajar Chandra <ff25_us@yahoo.com>, 2013
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2017-09-19 14:20+0000\n"
+"Last-Translator: Martijn Kaijser <machine.sanctum@gmail.com>\n"
+"Language-Team: Indonesian (http://www.transifex.com/teamxbmc/xbmc-addons/language/id/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: id\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgctxt "Addon Summary"
+msgid ""
+"Backup and restore your Kodi database and configuration files in the event "
+"of a crash or file corruption."
+msgstr "Cadangkan dan kembalikan basis data Kodi Anda beserta berkas konfigurasi apabila terjadi kerusakan atau korupsi berkas."
+
+msgctxt "Addon Description"
+msgid ""
+"Ever hosed your Kodi configuration and wished you'd had a backup? Now you "
+"can with one easy click. You can export your database, playlist, thumbnails,"
+" addons and other configuration details to any source writeable by Kodi or "
+"directly to Dropbox cloud storage. Backups can be run on demand or via a "
+"scheduler. "
+msgstr "Pernah membuat berantakan konfigurasi Kodi Anda dan berharap Anda punya cadangannya? Sekarang Anda dapat melakukannya dengan klik mudah. Anda dapat mengekspor basis data, daftar putar, gambar kecil, addon dan rincian konfigurasi lainnya ke sumber mana saja yang dapat ditulis oleh Kodi atau langsung ke penyimpanan awan Dropbox. Pencadangan dapat dijalankan sesuai permintaan atau terjadwal."
+
+msgctxt "#30010"
+msgid "Backup"
+msgstr "Pencadangan Kodi"
+
+msgctxt "#30011"
+msgid "General"
+msgstr "Umum"
+
+msgctxt "#30012"
+msgid "File Selection"
+msgstr "Pilih Berkas"
+
+msgctxt "#30013"
+msgid "Scheduling"
+msgstr "Penjadwalan"
+
+msgctxt "#30016"
+msgid "Backup"
+msgstr "Cadangan"
+
+msgctxt "#30017"
+msgid "Restore"
+msgstr "Pengembalian"
+
+msgctxt "#30018"
+msgid "Browse Path"
+msgstr "Ramban Lokasi"
+
+msgctxt "#30019"
+msgid "Type Path"
+msgstr "Lokasi Tipe"
+
+msgctxt "#30020"
+msgid "Browse Remote Path"
+msgstr "Ramban Lokasi Jarak Jauh"
+
+msgctxt "#30021"
+msgid "Backup Folder Name"
+msgstr "Nama Folder Cadangan"
+
+msgctxt "#30022"
+msgid "Progress Display"
+msgstr ""
+
+msgctxt "#30023"
+msgid "Mode"
+msgstr "Mode"
+
+msgctxt "#30024"
+msgid "Type Remote Path"
+msgstr "Lokasi Tipe Jarak Jauh"
+
+msgctxt "#30025"
+msgid "Remote Path Type"
+msgstr "Tipe Lokasi Jarak Jauh"
+
+msgctxt "#30026"
+msgid "Backups to keep (0 for all)"
+msgstr "Cadangan untuk disimpan (0 untuk seluruhnya)"
+
+msgctxt "#30027"
+msgid "Dropbox"
+msgstr "Dropbox"
+
+msgctxt "#30028"
+msgid "Dropbox Key"
+msgstr "Kunci Dropbox"
+
+msgctxt "#30029"
+msgid "Dropbox Secret"
+msgstr "Rahasia Dropbox"
+
+msgctxt "#30030"
+msgid "User Addons"
+msgstr "Addon Pengguna"
+
+msgctxt "#30031"
+msgid "Addon Data"
+msgstr "Data Addon"
+
+msgctxt "#30032"
+msgid "Database"
+msgstr "Basis Data"
+
+msgctxt "#30033"
+msgid "Playlist"
+msgstr "Daftar Main"
+
+msgctxt "#30034"
+msgid "Thumbnails/Fanart"
+msgstr "Gambar Kecil/Fanart"
+
+msgctxt "#30035"
+msgid "Config Files"
+msgstr "Berkas Konfigurasi"
+
+msgctxt "#30036"
+msgid "Custom Directory 1"
+msgstr "Direktori Lain 1"
+
+msgctxt "#30037"
+msgid "Custom Directory 2"
+msgstr "Direktori Lain 2"
+
+msgctxt "#30038"
+msgid "Advanced Settings Detected"
+msgstr "Terdeteksi Pengaturan Lanjutan"
+
+msgctxt "#30039"
+msgid "The advancedsettings file should be restored first"
+msgstr "Berkas pengaturan lanjutan perlu dikembalikan terlebih dulu"
+
+msgctxt "#30040"
+msgid "Select Yes to restore this file and restart Kodi"
+msgstr "Pilih Ya untuk mengembalikan berkas ini dan menjalankan ulang Kodi"
+
+msgctxt "#30041"
+msgid "Select No to continue"
+msgstr "Pilih Tidak untuk melanjutkan"
+
+msgctxt "#30042"
+msgid "Resume Restore"
+msgstr "Lanjutkan pengembalian"
+
+msgctxt "#30043"
+msgid "The Backup addon has detected an unfinished restore"
+msgstr "Pencadangan Kodi mendeteksi ada pengembalian yang belum selesai"
+
+msgctxt "#30044"
+msgid "Would you like to continue?"
+msgstr "Apakah Anda ingin melanjutkan?"
+
+msgctxt "#30045"
+msgid "Error: Remote path doesn't exist"
+msgstr "Kesalahan: Lokasi jarak jauh tidak ada"
+
+msgctxt "#30046"
+msgid "Starting"
+msgstr "Memulai"
+
+msgctxt "#30047"
+msgid "Local Dir"
+msgstr "Direktori Lokal"
+
+msgctxt "#30048"
+msgid "Remote Dir"
+msgstr "Direktori Jarak Jauh"
+
+msgctxt "#30049"
+msgid "Gathering file list"
+msgstr "Mengumpulkan daftar berkas"
+
+msgctxt "#30050"
+msgid "Remote Path exists - may have old files in it!"
+msgstr "Lokasi jarak jauh ada - mungkin berisi berkas lama di dalamnya!"
+
+msgctxt "#30051"
+msgid "Creating Files List"
+msgstr "Membuat Daftar Berkas"
+
+msgctxt "#30052"
+msgid "Writing file"
+msgstr "Menulis berkas"
+
+msgctxt "#30053"
+msgid "Starting scheduled backup"
+msgstr "Memulai pencadangan terjadwal"
+
+msgctxt "#30054"
+msgid "Removing backup"
+msgstr "Menghapus cadangan"
+
+msgctxt "#30056"
+msgid "Check log for Dropbox authorize URL"
+msgstr "Periksa log untuk URL otorisasi Dropbox"
+
+msgctxt "#30057"
+msgid "Click OK when authorized"
+msgstr "Klik OK ketika sudah terotorisasi"
+
+msgctxt "#30058"
+msgid "Dropbox Developer Code Needed"
+msgstr "Kode Pengembang Dropbox Diperlukan"
+
+msgctxt "#30059"
+msgid "Visit https://www.dropbox.com/developers"
+msgstr "Kunjungi https://www.dropbox.com/developers"
+
+msgctxt "#30060"
+msgid "Enable Scheduler"
+msgstr "Mengaktifkan Penjadwalan"
+
+msgctxt "#30061"
+msgid "Schedule"
+msgstr "Jadwal"
+
+msgctxt "#30062"
+msgid "Hour of Day"
+msgstr "Jam"
+
+msgctxt "#30063"
+msgid "Day of Week"
+msgstr "Hari"
+
+msgctxt "#30064"
+msgid "Cron Schedule"
+msgstr "Jadwal Cron"
+
+msgctxt "#30065"
+msgid "Sunday"
+msgstr "Minggu"
+
+msgctxt "#30066"
+msgid "Monday"
+msgstr "Senin"
+
+msgctxt "#30067"
+msgid "Tuesday"
+msgstr "Selasa"
+
+msgctxt "#30068"
+msgid "Wednesday"
+msgstr "Rabu"
+
+msgctxt "#30069"
+msgid "Thursday"
+msgstr "Kamis"
+
+msgctxt "#30070"
+msgid "Friday"
+msgstr "Jumat"
+
+msgctxt "#30071"
+msgid "Saturday"
+msgstr "Sabtu"
+
+msgctxt "#30072"
+msgid "Every Day"
+msgstr "Setiap Hari"
+
+msgctxt "#30073"
+msgid "Every Week"
+msgstr "Setiap Minggu"
+
+msgctxt "#30074"
+msgid "First Day of Month"
+msgstr "Hari Pertama Setiap Bulan"
+
+msgctxt "#30075"
+msgid "Custom Schedule"
+msgstr "Jadwal Lain"
+
+msgctxt "#30076"
+msgid "Shutdown After Backup"
+msgstr "Matikan Setelah Pencadangan"
+
+msgctxt "#30077"
+msgid "Restart Kodi"
+msgstr "Jalankan Ulang Kodi"
+
+msgctxt "#30078"
+msgid "You should restart Kodi to continue"
+msgstr "Anda perlu menjalankan ulang Kodi untuk melanjutkan"
+
+msgctxt "#30079"
+msgid "Just Today"
+msgstr "Hanya Hari Ini"
+
+msgctxt "#30080"
+msgid "Profiles"
+msgstr "Profil"
+
+msgctxt "#30081"
+msgid "Scheduler will run again on"
+msgstr ""
+
+msgctxt "#30082"
+msgid "Progress Bar"
+msgstr ""
+
+msgctxt "#30083"
+msgid "Background Progress Bar"
+msgstr ""
+
+msgctxt "#30084"
+msgid "None (Silent)"
+msgstr ""
+
+msgctxt "#30085"
+msgid "Version Warning"
+msgstr ""
+
+msgctxt "#30086"
+msgid ""
+"This version of Kodi is different than the one used to create the archive"
+msgstr ""
+
+msgctxt "#30087"
+msgid "Compress Archives"
+msgstr ""
+
+msgctxt "#30088"
+msgid "Copying Zip Archive"
+msgstr ""
+
+msgctxt "#30089"
+msgid "Write Error Detected"
+msgstr ""
+
+msgctxt "#30090"
+msgid "The destination may not be writeable"
+msgstr ""
+
+msgctxt "#30091"
+msgid "Zip archive could not be copied"
+msgstr ""
+
+msgctxt "#30092"
+msgid "Not all files were copied"
+msgstr ""
+
+msgctxt "#30093"
+msgid "Delete Authorization Info"
+msgstr ""
+
+msgctxt "#30094"
+msgid "This will delete any OAuth token files"
+msgstr ""
+
+msgctxt "#30095"
+msgid "Do you want to do this?"
+msgstr ""
+
+msgctxt "#30096"
+msgid "Old Zip Archive could not be deleted"
+msgstr ""
+
+msgctxt "#30097"
+msgid "This needs to happen before a backup can run"
+msgstr ""
+
+msgctxt "#30098"
+msgid "Google Drive"
+msgstr ""
+
+msgctxt "#30099"
+msgid "Open Settings"
+msgstr ""
+
+msgctxt "#30100"
+msgid "Extracting Archive"
+msgstr ""
+
+msgctxt "#30101"
+msgid "Error extracting the zip archive"
+msgstr ""

@@ -1,0 +1,392 @@
+# Kodi Media Center language file
+# Addon Name: Backup
+# Addon id: script.xbmcbackup
+# Addon Provider: robweber
+# Translators:
+# Artūras Griškonis <xbmc.lt@gmail.com>, 2012-2013
+# Zapata11 <raimondas.duzinskas@gmail.com>, 2014-2015
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2017-09-19 14:20+0000\n"
+"Last-Translator: Martijn Kaijser <machine.sanctum@gmail.com>\n"
+"Language-Team: Lithuanian (http://www.transifex.com/teamxbmc/xbmc-addons/language/lt/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: lt\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+
+msgctxt "Addon Summary"
+msgid ""
+"Backup and restore your Kodi database and configuration files in the event "
+"of a crash or file corruption."
+msgstr "Sukurkite savo Kodi duomenų bazės ir konfigūracijos failų atsarginę kopiją ir atstatykite iš jos, jei sistema užstrigtų ar susigadintų failas."
+
+msgctxt "Addon Description"
+msgid ""
+"Ever hosed your Kodi configuration and wished you'd had a backup? Now you "
+"can with one easy click. You can export your database, playlist, thumbnails,"
+" addons and other configuration details to any source writeable by Kodi or "
+"directly to Dropbox cloud storage. Backups can be run on demand or via a "
+"scheduler. "
+msgstr "Ar kada nors praradote savo Kodi konfigūraciją ir gailėjotės, kad neturėjote atsarginės kopijos? Dabar galite ją turėti vienu paspaudimu. Jūs galite išeksportuoti duomenų bazę, grojaraščius, priedus ir kitą konfigūracijos informaciją į bet kokį Kodi palaikomą šaltinį ar tiesiai į Dropbox debesų saugyklą. Atsarginės kopijos gali būti daromos rankiniu arba automatiniu būdu."
+
+msgctxt "#30010"
+msgid "Backup"
+msgstr "Kodi atsarginė kopija"
+
+msgctxt "#30011"
+msgid "General"
+msgstr "Pagrindinis"
+
+msgctxt "#30012"
+msgid "File Selection"
+msgstr "Failo parinkimas"
+
+msgctxt "#30013"
+msgid "Scheduling"
+msgstr "Planavimas"
+
+msgctxt "#30016"
+msgid "Backup"
+msgstr "Atsarginė kopija"
+
+msgctxt "#30017"
+msgid "Restore"
+msgstr "Atkurti"
+
+msgctxt "#30018"
+msgid "Browse Path"
+msgstr "Parinkti kelią"
+
+msgctxt "#30019"
+msgid "Type Path"
+msgstr "Įvesti kelią"
+
+msgctxt "#30020"
+msgid "Browse Remote Path"
+msgstr "Parinkti nuotolinį kelią"
+
+msgctxt "#30021"
+msgid "Backup Folder Name"
+msgstr "Atsarginių kopijų aplanko pavadinimas"
+
+msgctxt "#30022"
+msgid "Progress Display"
+msgstr "Progreso atvaizdavimas"
+
+msgctxt "#30023"
+msgid "Mode"
+msgstr "Režimas"
+
+msgctxt "#30024"
+msgid "Type Remote Path"
+msgstr "Įveskite nuotolinį kelią"
+
+msgctxt "#30025"
+msgid "Remote Path Type"
+msgstr "Nuotolinio kelio tipas"
+
+msgctxt "#30026"
+msgid "Backups to keep (0 for all)"
+msgstr "Saugomų atsarginių kopijų kiekis (0 - visos)"
+
+msgctxt "#30027"
+msgid "Dropbox"
+msgstr "Dropbox"
+
+msgctxt "#30028"
+msgid "Dropbox Key"
+msgstr "Dropbox raktas"
+
+msgctxt "#30029"
+msgid "Dropbox Secret"
+msgstr "Dropbox paslaptis"
+
+msgctxt "#30030"
+msgid "User Addons"
+msgstr "Vartotojo priedai"
+
+msgctxt "#30031"
+msgid "Addon Data"
+msgstr "Priedo duomenys"
+
+msgctxt "#30032"
+msgid "Database"
+msgstr "Duomenų bazė"
+
+msgctxt "#30033"
+msgid "Playlist"
+msgstr "Grojaraštis"
+
+msgctxt "#30034"
+msgid "Thumbnails/Fanart"
+msgstr "Miniatiūros/Fanart"
+
+msgctxt "#30035"
+msgid "Config Files"
+msgstr "Konfigūracijos failai"
+
+msgctxt "#30036"
+msgid "Custom Directory 1"
+msgstr "Pasirinktinis katalogas 1"
+
+msgctxt "#30037"
+msgid "Custom Directory 2"
+msgstr "Pasirinktinis katalogas 2"
+
+msgctxt "#30038"
+msgid "Advanced Settings Detected"
+msgstr "Aptikti išplėstiniai nustatymai"
+
+msgctxt "#30039"
+msgid "The advancedsettings file should be restored first"
+msgstr "Advancedsettings failas turi būti atkurtas pirmiausiai"
+
+msgctxt "#30040"
+msgid "Select Yes to restore this file and restart Kodi"
+msgstr "Pasirinkite \"Taip\", norėdami atkurti šį failą ir iš naujo paleisti Kodi"
+
+msgctxt "#30041"
+msgid "Select No to continue"
+msgstr "Pasirinkite \"Ne\", norėdami tęsti"
+
+msgctxt "#30042"
+msgid "Resume Restore"
+msgstr "Pratęsti atkūrimą"
+
+msgctxt "#30043"
+msgid "The Backup addon has detected an unfinished restore"
+msgstr "Kodi aptiko nebaigtą atkurti atsarginę kopiją"
+
+msgctxt "#30044"
+msgid "Would you like to continue?"
+msgstr "Ar norite tęsti?"
+
+msgctxt "#30045"
+msgid "Error: Remote path doesn't exist"
+msgstr "Klaida: Nuotolinis kelias neegzistuoja"
+
+msgctxt "#30046"
+msgid "Starting"
+msgstr "Pradedama"
+
+msgctxt "#30047"
+msgid "Local Dir"
+msgstr "Vietinis katalogas"
+
+msgctxt "#30048"
+msgid "Remote Dir"
+msgstr "Nuotolinis katalogas"
+
+msgctxt "#30049"
+msgid "Gathering file list"
+msgstr "Renkamas failų sąrašas"
+
+msgctxt "#30050"
+msgid "Remote Path exists - may have old files in it!"
+msgstr "Nuotolinis kelias egzistuoja - jame gali būti senų failų!"
+
+msgctxt "#30051"
+msgid "Creating Files List"
+msgstr "Kuriamas failų sąrašas"
+
+msgctxt "#30052"
+msgid "Writing file"
+msgstr "Rašomas failas"
+
+msgctxt "#30053"
+msgid "Starting scheduled backup"
+msgstr "Pradedamas suplanuotas atsarginės kopijos kūrimas"
+
+msgctxt "#30054"
+msgid "Removing backup"
+msgstr "Pašalinama atsarginė kopija"
+
+msgctxt "#30056"
+msgid "Check log for Dropbox authorize URL"
+msgstr "Patikrinkite žurnalą, norėdami peržiūrėti Dropbox autorizavimo URL"
+
+msgctxt "#30057"
+msgid "Click OK when authorized"
+msgstr "Paspauskite \"OK\", kai prisijungsite"
+
+msgctxt "#30058"
+msgid "Dropbox Developer Code Needed"
+msgstr "Reikalingas Dropbox vystytojo kodas"
+
+msgctxt "#30059"
+msgid "Visit https://www.dropbox.com/developers"
+msgstr "Apsilankykite https://www.dropbox.com/developers"
+
+msgctxt "#30060"
+msgid "Enable Scheduler"
+msgstr "Įjungti planavimą"
+
+msgctxt "#30061"
+msgid "Schedule"
+msgstr "Tvarkaraštis"
+
+msgctxt "#30062"
+msgid "Hour of Day"
+msgstr "Valanda"
+
+msgctxt "#30063"
+msgid "Day of Week"
+msgstr "Savaitės diena"
+
+msgctxt "#30064"
+msgid "Cron Schedule"
+msgstr "Cron tvarkaraštis"
+
+msgctxt "#30065"
+msgid "Sunday"
+msgstr "Sekmadienis"
+
+msgctxt "#30066"
+msgid "Monday"
+msgstr "Pirmadienis"
+
+msgctxt "#30067"
+msgid "Tuesday"
+msgstr "Antradienis"
+
+msgctxt "#30068"
+msgid "Wednesday"
+msgstr "Trečiadienis"
+
+msgctxt "#30069"
+msgid "Thursday"
+msgstr "Ketvirtadienis"
+
+msgctxt "#30070"
+msgid "Friday"
+msgstr "Penktadienis"
+
+msgctxt "#30071"
+msgid "Saturday"
+msgstr "Šeštadienis"
+
+msgctxt "#30072"
+msgid "Every Day"
+msgstr "Kasdien"
+
+msgctxt "#30073"
+msgid "Every Week"
+msgstr "Kiekvieną savaitę"
+
+msgctxt "#30074"
+msgid "First Day of Month"
+msgstr "Pirmą mėnesio dieną"
+
+msgctxt "#30075"
+msgid "Custom Schedule"
+msgstr "Individualus tvarkaraštis"
+
+msgctxt "#30076"
+msgid "Shutdown After Backup"
+msgstr "Išjungti kompiuterį baigus atsarginės kopijos kūrimą"
+
+msgctxt "#30077"
+msgid "Restart Kodi"
+msgstr "Iš naujo paleisti Kodi"
+
+msgctxt "#30078"
+msgid "You should restart Kodi to continue"
+msgstr "Norėdami tęsti, turite iš naujo paleisti Kodi"
+
+msgctxt "#30079"
+msgid "Just Today"
+msgstr "Tik šiandien"
+
+msgctxt "#30080"
+msgid "Profiles"
+msgstr "Profiliai"
+
+msgctxt "#30081"
+msgid "Scheduler will run again on"
+msgstr "Tvarkaraštis bus paleistas dar kartą"
+
+msgctxt "#30082"
+msgid "Progress Bar"
+msgstr "Progreso juosta"
+
+msgctxt "#30083"
+msgid "Background Progress Bar"
+msgstr "Foninė progreso juosta"
+
+msgctxt "#30084"
+msgid "None (Silent)"
+msgstr "Joks (Tylus)"
+
+msgctxt "#30085"
+msgid "Version Warning"
+msgstr "Versijos įspėjimas"
+
+msgctxt "#30086"
+msgid ""
+"This version of Kodi is different than the one used to create the archive"
+msgstr "Ši Kodi versija skiriasi nuot tos, kuri buvo naudojama kuriant šį archyvą"
+
+msgctxt "#30087"
+msgid "Compress Archives"
+msgstr "Suglaudinti archyvus"
+
+msgctxt "#30088"
+msgid "Copying Zip Archive"
+msgstr "Kopijuojamas Zip archyvas"
+
+msgctxt "#30089"
+msgid "Write Error Detected"
+msgstr "Aptikta rašymo klaida"
+
+msgctxt "#30090"
+msgid "The destination may not be writeable"
+msgstr "Paskirties įrenginys gali būti neskirtas rašymui"
+
+msgctxt "#30091"
+msgid "Zip archive could not be copied"
+msgstr "Zip archyvas negali būti nukopijuotas"
+
+msgctxt "#30092"
+msgid "Not all files were copied"
+msgstr "Buvo nukopijuoti ne visi failai"
+
+msgctxt "#30093"
+msgid "Delete Authorization Info"
+msgstr "Pašalinti prisijungimo informaciją"
+
+msgctxt "#30094"
+msgid "This will delete any OAuth token files"
+msgstr "Tai ištrins visus OAuth prisijungimo rakto failus"
+
+msgctxt "#30095"
+msgid "Do you want to do this?"
+msgstr "Ar norite tai atlikti?"
+
+msgctxt "#30096"
+msgid "Old Zip Archive could not be deleted"
+msgstr "Senas Zip archyvas negali būti ištrintas"
+
+msgctxt "#30097"
+msgid "This needs to happen before a backup can run"
+msgstr "Tai turi įvykti prieš darant atsarginę kopiją"
+
+msgctxt "#30098"
+msgid "Google Drive"
+msgstr "Google Diskas"
+
+msgctxt "#30099"
+msgid "Open Settings"
+msgstr "Atidaryti nustatymus"
+
+msgctxt "#30100"
+msgid "Extracting Archive"
+msgstr "Išskleidžiamas archyvas"
+
+msgctxt "#30101"
+msgid "Error extracting the zip archive"
+msgstr "Klaida išskleidžiant zip archyvą"

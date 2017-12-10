@@ -44,7 +44,7 @@ class GuiSettingsManager:
             if(aSetting.value.isdigit() or (aSetting.value == 'true' or aSetting.value == 'false')):
                 xbmc.executeJSONRPC('{"jsonrpc":"2.0", "id":1, "method":"Settings.SetSettingValue","params":{"setting":"' + aSetting.json_name() + '","value":' + aSetting.value + '}}')
             else:
-                xbmc.executeJSONRPC('{"jsonrpc":"2.0", "id":1, "method":"Settings.SetSettingValue","params":{"setting":"' + aSetting.json_name() + '","value":"' + aSetting.value + '"}}')
+                xbmc.executeJSONRPC('{"jsonrpc":"2.0", "id":1, "method":"Settings.SetSettingValue","params":{"setting":"' + aSetting.json_name() + '","value":"' + utils.encode(aSetting.value) + '"}}')
                 
         #make a copy of the guisettings file to make user based restores easier
         xbmcvfs.copy(self.settingsFile, xbmc.translatePath("special://home/userdata/guisettings.xml.restored"))

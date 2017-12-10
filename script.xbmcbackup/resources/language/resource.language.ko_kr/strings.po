@@ -1,0 +1,394 @@
+# Kodi Media Center language file
+# Addon Name: Backup
+# Addon id: script.xbmcbackup
+# Addon Provider: robweber
+# Translators:
+# Gabjoo Lim, 2014
+# epoke, 2012
+# piodio <piodio@gmail.com>, 2013-2015
+# piodio <piodio@gmail.com>, 2012
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2017-09-19 14:20+0000\n"
+"Last-Translator: Martijn Kaijser <machine.sanctum@gmail.com>\n"
+"Language-Team: Korean (http://www.transifex.com/teamxbmc/xbmc-addons/language/ko/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ko\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgctxt "Addon Summary"
+msgid ""
+"Backup and restore your Kodi database and configuration files in the event "
+"of a crash or file corruption."
+msgstr "Kodi 데이터베이스와 설정 파일을 백업하고 복구합니다."
+
+msgctxt "Addon Description"
+msgid ""
+"Ever hosed your Kodi configuration and wished you'd had a backup? Now you "
+"can with one easy click. You can export your database, playlist, thumbnails,"
+" addons and other configuration details to any source writeable by Kodi or "
+"directly to Dropbox cloud storage. Backups can be run on demand or via a "
+"scheduler. "
+msgstr "Kodi 설정 백업본이 있었으면 하고 원했던 적이 있습니까? 이제 한 번의 클릭으로 가능합니다. 데이터베이스, 재생목록, 썸네일, 애드온과 기타  세부 설정을 어디에나 내보내거나 직접 Dropbox 에  저장할 수 있습니다. 백업은 수동 또는 예약으로 실행할 수 있습니다."
+
+msgctxt "#30010"
+msgid "Backup"
+msgstr "Backup"
+
+msgctxt "#30011"
+msgid "General"
+msgstr "일반"
+
+msgctxt "#30012"
+msgid "File Selection"
+msgstr "파일 선택"
+
+msgctxt "#30013"
+msgid "Scheduling"
+msgstr "스케쥴"
+
+msgctxt "#30016"
+msgid "Backup"
+msgstr "백업"
+
+msgctxt "#30017"
+msgid "Restore"
+msgstr "복구"
+
+msgctxt "#30018"
+msgid "Browse Path"
+msgstr "경로 탐색"
+
+msgctxt "#30019"
+msgid "Type Path"
+msgstr "경로 입력"
+
+msgctxt "#30020"
+msgid "Browse Remote Path"
+msgstr "원격 경로 탐색"
+
+msgctxt "#30021"
+msgid "Backup Folder Name"
+msgstr "백업 폴더명"
+
+msgctxt "#30022"
+msgid "Progress Display"
+msgstr "진행 표시"
+
+msgctxt "#30023"
+msgid "Mode"
+msgstr "모드"
+
+msgctxt "#30024"
+msgid "Type Remote Path"
+msgstr "원격 경로 입력"
+
+msgctxt "#30025"
+msgid "Remote Path Type"
+msgstr "원격 경로 유형"
+
+msgctxt "#30026"
+msgid "Backups to keep (0 for all)"
+msgstr "유지할 백업 (0은 모두 유지)"
+
+msgctxt "#30027"
+msgid "Dropbox"
+msgstr "Dropbox"
+
+msgctxt "#30028"
+msgid "Dropbox Key"
+msgstr "Dropbox 아이디"
+
+msgctxt "#30029"
+msgid "Dropbox Secret"
+msgstr "Dropbox 비밀번호"
+
+msgctxt "#30030"
+msgid "User Addons"
+msgstr "사용자 애드온"
+
+msgctxt "#30031"
+msgid "Addon Data"
+msgstr "애드온 데이터"
+
+msgctxt "#30032"
+msgid "Database"
+msgstr "데이터베이스"
+
+msgctxt "#30033"
+msgid "Playlist"
+msgstr "재생목록"
+
+msgctxt "#30034"
+msgid "Thumbnails/Fanart"
+msgstr "썸네일/팬아트"
+
+msgctxt "#30035"
+msgid "Config Files"
+msgstr "설정 파일"
+
+msgctxt "#30036"
+msgid "Custom Directory 1"
+msgstr "사용자 디렉터리 1"
+
+msgctxt "#30037"
+msgid "Custom Directory 2"
+msgstr "사용자 디렉터리 2"
+
+msgctxt "#30038"
+msgid "Advanced Settings Detected"
+msgstr "Advanced Settings 감지 됨"
+
+msgctxt "#30039"
+msgid "The advancedsettings file should be restored first"
+msgstr "advancedsettings 파일을 먼저 복원하여야 합니다"
+
+msgctxt "#30040"
+msgid "Select Yes to restore this file and restart Kodi"
+msgstr "이 파일을 복원하고 Kodi를 다시 시작하려면 Yes 를 선택하세요"
+
+msgctxt "#30041"
+msgid "Select No to continue"
+msgstr "계속하려면 No 를 선택하세요"
+
+msgctxt "#30042"
+msgid "Resume Restore"
+msgstr "복원 재개"
+
+msgctxt "#30043"
+msgid "The Backup addon has detected an unfinished restore"
+msgstr "Backup 애드온이 완료되지 않은 복원을 감지하였습니다"
+
+msgctxt "#30044"
+msgid "Would you like to continue?"
+msgstr "계속 하겠습니까?"
+
+msgctxt "#30045"
+msgid "Error: Remote path doesn't exist"
+msgstr "오류: 존재하지 않는 원격 경로"
+
+msgctxt "#30046"
+msgid "Starting"
+msgstr "시작"
+
+msgctxt "#30047"
+msgid "Local Dir"
+msgstr "로컬 디렉터리"
+
+msgctxt "#30048"
+msgid "Remote Dir"
+msgstr "원격 디렉터리"
+
+msgctxt "#30049"
+msgid "Gathering file list"
+msgstr "파일 목록을 가져오는 중"
+
+msgctxt "#30050"
+msgid "Remote Path exists - may have old files in it!"
+msgstr "원격 경로 있음 - 오래된 파일이 있습니다!"
+
+msgctxt "#30051"
+msgid "Creating Files List"
+msgstr "파일 목록 작성 중"
+
+msgctxt "#30052"
+msgid "Writing file"
+msgstr "파일을 쓰는 중"
+
+msgctxt "#30053"
+msgid "Starting scheduled backup"
+msgstr "예약된 백업 시작"
+
+msgctxt "#30054"
+msgid "Removing backup"
+msgstr "백업 삭제"
+
+msgctxt "#30056"
+msgid "Check log for Dropbox authorize URL"
+msgstr "로그에서 Dropbox 인증 URL을 확인하세요"
+
+msgctxt "#30057"
+msgid "Click OK when authorized"
+msgstr "인증이 완료되면 확인을 누르세요"
+
+msgctxt "#30058"
+msgid "Dropbox Developer Code Needed"
+msgstr "Dropbox 개발자 코드가 필요합니다"
+
+msgctxt "#30059"
+msgid "Visit https://www.dropbox.com/developers"
+msgstr "https://www.dropbox.com/developers 을 방문하세요"
+
+msgctxt "#30060"
+msgid "Enable Scheduler"
+msgstr "예약 사용"
+
+msgctxt "#30061"
+msgid "Schedule"
+msgstr "예약"
+
+msgctxt "#30062"
+msgid "Hour of Day"
+msgstr "시간"
+
+msgctxt "#30063"
+msgid "Day of Week"
+msgstr "요일"
+
+msgctxt "#30064"
+msgid "Cron Schedule"
+msgstr "Cron 예약"
+
+msgctxt "#30065"
+msgid "Sunday"
+msgstr "일요일"
+
+msgctxt "#30066"
+msgid "Monday"
+msgstr "월요일"
+
+msgctxt "#30067"
+msgid "Tuesday"
+msgstr "화요일"
+
+msgctxt "#30068"
+msgid "Wednesday"
+msgstr "수요일"
+
+msgctxt "#30069"
+msgid "Thursday"
+msgstr "목요일"
+
+msgctxt "#30070"
+msgid "Friday"
+msgstr "금요일"
+
+msgctxt "#30071"
+msgid "Saturday"
+msgstr "토요일"
+
+msgctxt "#30072"
+msgid "Every Day"
+msgstr "매일"
+
+msgctxt "#30073"
+msgid "Every Week"
+msgstr "매주"
+
+msgctxt "#30074"
+msgid "First Day of Month"
+msgstr "매월 첫 날"
+
+msgctxt "#30075"
+msgid "Custom Schedule"
+msgstr "사용자 예약"
+
+msgctxt "#30076"
+msgid "Shutdown After Backup"
+msgstr "백업후 시스템 종료"
+
+msgctxt "#30077"
+msgid "Restart Kodi"
+msgstr "Kodi 재시작"
+
+msgctxt "#30078"
+msgid "You should restart Kodi to continue"
+msgstr "계속하려면 Kodi를 다시 시작하여야 합니다"
+
+msgctxt "#30079"
+msgid "Just Today"
+msgstr "오늘만"
+
+msgctxt "#30080"
+msgid "Profiles"
+msgstr "프로파일"
+
+msgctxt "#30081"
+msgid "Scheduler will run again on"
+msgstr "다음 예약 실행: "
+
+msgctxt "#30082"
+msgid "Progress Bar"
+msgstr "진행 막대"
+
+msgctxt "#30083"
+msgid "Background Progress Bar"
+msgstr "백드라운드 진행 막대"
+
+msgctxt "#30084"
+msgid "None (Silent)"
+msgstr "없음 (표시 안 함)"
+
+msgctxt "#30085"
+msgid "Version Warning"
+msgstr "버전 경고"
+
+msgctxt "#30086"
+msgid ""
+"This version of Kodi is different than the one used to create the archive"
+msgstr "이 Kodi 버전은 보관되어 있는 Kodi와 다른 버전입니다."
+
+msgctxt "#30087"
+msgid "Compress Archives"
+msgstr "보관함을 압축"
+
+msgctxt "#30088"
+msgid "Copying Zip Archive"
+msgstr "압축된 보관함을 복사"
+
+msgctxt "#30089"
+msgid "Write Error Detected"
+msgstr "쓰기 오류 감지됨"
+
+msgctxt "#30090"
+msgid "The destination may not be writeable"
+msgstr "대상에 쓸 수 없습니다"
+
+msgctxt "#30091"
+msgid "Zip archive could not be copied"
+msgstr "Zip 압축 파일을 복사할 수 없습니다"
+
+msgctxt "#30092"
+msgid "Not all files were copied"
+msgstr "모든 파일이 복사되지는 않았습니다"
+
+msgctxt "#30093"
+msgid "Delete Authorization Info"
+msgstr "인증 정보 삭제"
+
+msgctxt "#30094"
+msgid "This will delete any OAuth token files"
+msgstr "OAuth 토큰 파일을 삭제합니다"
+
+msgctxt "#30095"
+msgid "Do you want to do this?"
+msgstr "정말 진행하겠습니까?"
+
+msgctxt "#30096"
+msgid "Old Zip Archive could not be deleted"
+msgstr "오래된 Zip 압축 파일을 삭제할 수 없습니다"
+
+msgctxt "#30097"
+msgid "This needs to happen before a backup can run"
+msgstr "백업을 실행하기 전에 필요합니다"
+
+msgctxt "#30098"
+msgid "Google Drive"
+msgstr "Google 드라이브"
+
+msgctxt "#30099"
+msgid "Open Settings"
+msgstr "설정 열기"
+
+msgctxt "#30100"
+msgid "Extracting Archive"
+msgstr "압축파일 푸는 중"
+
+msgctxt "#30101"
+msgid "Error extracting the zip archive"
+msgstr "zip 압축파일 풀기 오류"

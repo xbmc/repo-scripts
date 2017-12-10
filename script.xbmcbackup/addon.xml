@@ -1,14 +1,14 @@
 ﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addon id="script.xbmcbackup"
-    name="Backup" version="1.0.9" provider-name="robweber">
+    name="Backup" version="1.1.0" provider-name="robweber">
   <requires>
 	<!-- jarvis -->
     <import addon="xbmc.python" version="2.24.0"/>
     <import addon="script.module.httplib2" version="0.8.0" />
-    <import addon="script.module.oauth2client" version="1.4.7" />
+    <import addon="script.module.oauth2client" version="4.1.2" />
     <import addon="script.module.uritemplate" version="0.6" />
     <import addon="script.module.yaml" version="3.11"/>
-    <import addon="script.module.googleapi" version="1.4.2" />
+    <import addon="script.module.googleapi" version="1.6.4" />
 	<import addon="script.module.requests" version="2.9.1" />
   </requires>
   <extension point="xbmc.python.script" library="default.py"> 

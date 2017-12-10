@@ -178,6 +178,7 @@ class XbmcBackup:
             #go through each of the user selected items and write them to the backup store
             if(utils.getSetting('backup_addons') == 'true'):
                 fileManager.addFile("-" + xbmc.translatePath('special://home/addons'))
+                fileManager.excludeFile(xbmc.translatePath('special://home/addons/packages'))
                 fileManager.walkTree(xbmc.translatePath('special://home/addons'))
 
             fileManager.addFile("-" + xbmc.translatePath('special://home/userdata'))
@@ -316,7 +317,7 @@ class XbmcBackup:
                     zip_vfs.cleanup()
                     self.xbmc_vfs.rmfile(xbmc.translatePath("special://temp/" + self.restore_point))
                     
-                    xbmcgui.Dialog.ok(utils.getString(30010),utils.getString(30101))
+                    xbmcgui.Dialog().ok(utils.getString(30010),utils.getString(30101))
                     return
                     
                 zip_vfs.cleanup()
@@ -580,7 +581,8 @@ class XbmcBackup:
 
 class FileManager:
     not_dir = ['.zip','.xsp','.rar']
-
+    exclude_dir = []
+    
     def __init__(self,vfs):
         self.vfs = vfs
         self.fileArray = []
@@ -595,20 +597,22 @@ class FileManager:
         
             #create all the subdirs first
             for aDir in dirs:
-                dirPath = xbmc.translatePath(directory + "/" + aDir)
+                dirPath = xbmc.validatePath(xbmc.translatePath(directory + "/" + aDir))
                 file_ext = aDir.split('.')[-1]
-              
-                self.addFile("-" + dirPath)
 
-                #catch for "non directory" type files
-                shouldWalk = True
+                if(not dirPath in self.exclude_dir):
+                    
+                    self.addFile("-" + dirPath)
 
-                for s in file_ext:
-                    if(s in self.not_dir):
-                        shouldWalk = False
+                    #catch for "non directory" type files
+                    shouldWalk = True
+
+                    for s in file_ext:
+                        if(s in self.not_dir):
+                            shouldWalk = False
                 
-                if(shouldWalk):
-                    self.walkTree(dirPath)  
+                    if(shouldWalk):
+                        self.walkTree(dirPath)  
             
             #copy all the files
             for aFile in files:
@@ -624,6 +628,16 @@ class FileManager:
         #write the full remote path name of this file
         utils.log("Add File: " + filename,xbmc.LOGDEBUG)
         self.fileArray.append(filename)
+
+    def excludeFile(self,filename):
+        try:
+            filename = filename.decode('UTF-8')
+        except UnicodeDecodeError:
+            filename = filename.decode('ISO-8859-2')
+            
+        #write the full remote path name of this file
+        utils.log("Exclude File: " + filename,xbmc.LOGDEBUG)
+        self.exclude_dir.append(filename)
 
     def getFiles(self):
         result = self.fileArray
