@@ -64,27 +64,24 @@ class Installer(object):
                 responce = urllib2.urlopen(request, timeout = TIMEOUT).read()
                 self.cache.set(ADDON_NAME + '.openURL, url = %s'%url, responce, expiration=datetime.timedelta(minutes=5))
             return BeautifulSoup(self.cache.get(ADDON_NAME + '.openURL, url = %s'%url), "html.parser")
-        except Exception, e:
+        except Exception as e:
             log("openURL Failed! " + str(e), xbmc.LOGERROR)
             xbmcgui.Dialog().notification(ADDON_NAME, LANGUAGE(30001), ICON, 4000)
             return None
 
             
     def getItems(self, soup):
-        try:
-            #folders
+        try: #folders
             items = (soup.find_all('tr'))
             del items[0]
-        except:
-            #files
+        except: #files
             items = (soup.find_all('a'))
         return [x.get_text() for x in items if x.get_text() is not None]
 
         
     def buildMain(self):
         tmpLST = []
-        for item in BUILD_OPT:
-            tmpLST.append(xbmcgui.ListItem(item.title(),'',ICON))
+        for item in BUILD_OPT: tmpLST.append(xbmcgui.ListItem(item.title(),'',ICON))
         select = xbmcgui.Dialog().select(ADDON_NAME, tmpLST, preselect=-1, useDetails=True)
         if select < 0: return #return on cancel.
         return  BASE_URL%BUILD_OPT[select].lower()
@@ -94,14 +91,12 @@ class Installer(object):
         soup = self.openURL(url)
         if soup is None: return
         for item in self.getItems(soup):
-            try:
-                #folders
+            try: #folders
                 label, label2 = re.compile("(.*?)/-(.*)").match(item).groups()
-                yield (xbmcgui.ListItem(label,label2,ICON))
-            except:
-                #files
+                yield (xbmcgui.ListItem(label,'',ICON))
+            except: #files
                 label, label2 = re.compile("(.*?)\s(.*)").match(item).groups()
-                yield (xbmcgui.ListItem(label,label2,ICON))
+                if label.endswith('.apk'): yield (xbmcgui.ListItem(label,label2,ICON))
 
 
     def setLastPath(self, url, path):
@@ -118,7 +113,6 @@ class Installer(object):
             label  = url.replace('http://mirrors.kodi.tv/','./')
             select = xbmcgui.Dialog().select(label, items, preselect=-1, useDetails=True)
             if select < 0: return #return on cancel.
-            
             label  = items[select].getLabel()
             newURL = url + items[select].getLabel()
             preURL = url.rsplit('/', 2)[0] + '/'
@@ -138,9 +132,12 @@ class Installer(object):
         if xbmcvfs.exists(dest):
             if not xbmcgui.Dialog().yesno(ADDON_NAME, LANGUAGE(30004), dest.rsplit('/', 1)[-1], nolabel=LANGUAGE(30005), yeslabel=LANGUAGE(30006)):
                 return False
-        elif CLEAN and xbmcvfs.exists(self.lastPath):
-            xbmcvfs.delete(self.lastPath)
+        elif CLEAN and xbmcvfs.exists(self.lastPath): self.deleteEXE(self.lastPath)
         return True
+        
+        
+    def deleteEXE(self, path):
+        if xbmcvfs.exists(path): xbmcvfs.delete(path)
         
         
     def downloadAPK(self, url, dest):
@@ -151,11 +148,12 @@ class Installer(object):
         dia.update(0)
         try:
             urllib.urlretrieve(url.rstrip('/'), dest, lambda nb, bs, fs: self.pbhook(nb, bs, fs, dia, start_time))
+            self.installAPK(dest)
         except Exception,e:
             xbmcgui.Dialog().notification(ADDON_NAME, LANGUAGE(30001), ICON, 4000)
             log("downloadAPK, Failed! " + str(e), xbmc.LOGERROR)
+            self.deleteEXE(dest)
             return
-        self.installAPK(dest)
         
         
     def pbhook(self, numblocks, blocksize, filesize, dia, start_time):
@@ -163,10 +161,8 @@ class Installer(object):
             percent = min(numblocks * blocksize * 100 / filesize, 100) 
             currently_downloaded = float(numblocks) * blocksize / (1024 * 1024) 
             kbps_speed = numblocks * blocksize / (time.time() - start_time) 
-            if kbps_speed > 0: 
-                eta = (filesize - numblocks * blocksize) / kbps_speed 
-            else: 
-                eta = 0 
+            if kbps_speed > 0: eta = (filesize - numblocks * blocksize) / kbps_speed 
+            else: eta = 0 
             kbps_speed = kbps_speed / 1024 
             total = float(filesize) / (1024 * 1024) 
             mbs = '%.02f MB of %.02f MB' % (currently_downloaded, total) 
@@ -177,12 +173,12 @@ class Installer(object):
             percent = 100 
             dia.update(percent) 
         if dia.iscanceled(): 
-            dia.close() 
-        return
+            dia.close()
+            raise Exception
             
             
     def installAPK(self, apkfile):
-        xbmc.executebuiltin('XBMC.AlarmClock(shutdowntimer,XBMC.Quit(),0.2,false)')
+        xbmc.executebuiltin('XBMC.AlarmClock(shutdowntimer,XBMC.Quit(),0.5,true)')
         xbmc.executebuiltin('StartAndroidActivity("","android.intent.action.VIEW","application/vnd.android.package-archive","file:'+apkfile+'")')
         
 if __name__ == '__main__':

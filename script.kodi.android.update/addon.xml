@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.kodi.android.update" name="Kodi Android Installer" version="1.0.2" provider-name="Team Kodi">
+<addon id="script.kodi.android.update" name="Kodi Android Installer" version="1.0.3" provider-name="Team Kodi">
     <requires>
         <import addon="xbmc.python" version="2.25.0"/>
         <import addon="script.module.simplecache" version="1.0.0"/>
@@ -13,9 +13,9 @@
         <license>GNU GENERAL PUBLIC LICENSE. Version 3, June 2007</license>
         <platform>android</platform>
         <website>http://kodi.tv</website>
-        <source>https://github.com/Lunatixz/script.kodi.android.update</source>
+        <source>https://github.com/Lunatixz/KODI_Addons/tree/master/script.kodi.android.update</source>
         <forum>https://forum.kodi.tv/showthread.php?tid=322783</forum>
-        <news>v1.0.2[CR]-Bug Fix[CR]v1.0.1[CR]-Added After Install Cleanup.</news>
+        <news>v1.0.3[CR]-Improved functionality[CR]v1.0.1[CR]-Added After Install Cleanup.</news>
         <assets>
             <icon>resources/images/icon.png</icon>
             <fanart>resources/images/fanart.jpg</fanart>
