@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<addon id="script.program.fritzact" name="Fritz Smart Home" version="0.0.17" provider-name="Birger Jesch">
+    <requires>
+        <import addon="xbmc.python" version="2.24.0" />
+        <import addon="script.module.requests" version="2.9.1" />
+    </requires>
+	<extension point="xbmc.python.script" library="default.py">
+		<provides>executable</provides>
+    </extension>
+
+    <extension point="xbmc.addon.metadata">
+        <platform>all</platform>
+        <summary lang="en">Switching your home with Kodi</summary>
+        <summary lang="de">Schalte Dein Zuhause mit Kodi</summary>
+        <description lang="en">Use your Fritz!DECT switches within Kodi. Control light and switch your devices with FritzDECT actors. Find out about powered-on devices and their power consumption. Make yourself comfortable with a touch of your remote.</description>
+        <description lang="de">Schalte Deine Fritz!DECT Steckdosen mit Kodi. Steuere Licht und Deine Geräte über FritzDECT Schalter. Informiere Dich über eingeschaltete Geräte und deren Stromverbrauch. Mach' es Dir bequem - mit nur einem Klick auf der Fernbedienung.</description>
+        <license>GNU GENERAL PUBLIC LICENSE. Version 3, June 2007</license>
+        <source>https://github.com/b-jesch/script.program.fritzact</source>
+        <forum>http://www.kodinerds.net/index.php/Thread/52691-RELEASE-Fritz-Smart-Home/</forum>
+        <email>birger.jesch@gmail.com</email>
+        <website></website>
+        <assets>
+            <icon>icon.png</icon>
+            <fanart>fanart.jpg</fanart>
+            <screenshot>resources/screenshots/screenshot-01.jpg</screenshot>
+            <screenshot>resources/screenshots/screenshot-02.jpg</screenshot>
+            <screenshot>resources/screenshots/screenshot-03.jpg</screenshot>
+        </assets>
+    </extension>
+</addon>
