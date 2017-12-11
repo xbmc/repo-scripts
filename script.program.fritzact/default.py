@@ -29,18 +29,18 @@ __addon__ = xbmcaddon.Addon()
 __addonID__ = __addon__.getAddonInfo('id')
 __addonname__ = __addon__.getAddonInfo('name')
 __version__ = __addon__.getAddonInfo('version')
-__path__ = __addon__.getAddonInfo('path')
+__path__ = xbmc.translatePath(__addon__.getAddonInfo('path'))
 __LS__ = __addon__.getLocalizedString
 
-__s_on__ = xbmc.translatePath(os.path.join(__path__, 'resources', 'lib', 'media', 'dect_on.png'))
-__s_off__ = xbmc.translatePath(os.path.join(__path__, 'resources', 'lib', 'media', 'dect_off.png'))
-__s_absent__ = xbmc.translatePath(os.path.join(__path__, 'resources', 'lib', 'media', 'dect_absent.png'))
-__t_on__ = xbmc.translatePath(os.path.join(__path__, 'resources', 'lib', 'media', 'comet_on.png'))
-__t_absent__ = xbmc.translatePath(os.path.join(__path__, 'resources', 'lib', 'media', 'comet_absent.png'))
-__gs_on__ = xbmc.translatePath(os.path.join(__path__, 'resources', 'lib', 'media', 'dect_group_on.png'))
-__gs_off__ = xbmc.translatePath(os.path.join(__path__, 'resources', 'lib', 'media', 'dect_group_off.png'))
-__gt_on__ = xbmc.translatePath(os.path.join(__path__, 'resources', 'lib', 'media', 'comet_group_on.png'))
-__gt_absent__ = xbmc.translatePath(os.path.join(__path__, 'resources', 'lib', 'media', 'comet_group_absent.png'))
+__s_on__ = os.path.join(__path__, 'resources', 'lib', 'media', 'dect_on.png')
+__s_off__ = os.path.join(__path__, 'resources', 'lib', 'media', 'dect_off.png')
+__s_absent__ = os.path.join(__path__, 'resources', 'lib', 'media', 'dect_absent.png')
+__t_on__ = os.path.join(__path__, 'resources', 'lib', 'media', 'comet_on.png')
+__t_absent__ = os.path.join(__path__, 'resources', 'lib', 'media', 'comet_absent.png')
+__gs_on__ = os.path.join(__path__, 'resources', 'lib', 'media', 'dect_group_on.png')
+__gs_off__ = os.path.join(__path__, 'resources', 'lib', 'media', 'dect_group_off.png')
+__gt_on__ = os.path.join(__path__, 'resources', 'lib', 'media', 'comet_group_on.png')
+__gt_absent__ = os.path.join(__path__, 'resources', 'lib', 'media', 'comet_group_absent.png')
 
 class Device():
 

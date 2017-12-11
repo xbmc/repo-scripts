@@ -9,8 +9,8 @@ import random
 
 __addon__ = xbmcaddon.Addon()
 __addonID__ = __addon__.getAddonInfo('id')
-__path__ = __addon__.getAddonInfo('path')
-__IconDefault__ = xbmc.translatePath(os.path.join( __path__,'resources', 'lib', 'media', 'default.png'))
+__path__ = xbmc.translatePath(__addon__.getAddonInfo('path'))
+__IconDefault__ = os.path.join( __path__,'resources', 'lib', 'media', 'default.png')
 
 
 # de-/encrypt passwords, simple algorithm, but prevent for sniffers and script kiddies

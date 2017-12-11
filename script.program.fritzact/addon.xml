@@ -15,7 +15,7 @@
         <description lang="en">Use your Fritz!DECT switches within Kodi. Control light and switch your devices with FritzDECT actors. Find out about powered-on devices and their power consumption. Make yourself comfortable with a touch of your remote.</description>
         <description lang="de">Schalte Deine Fritz!DECT Steckdosen mit Kodi. Steuere Licht und Deine Geräte über FritzDECT Schalter. Informiere Dich über eingeschaltete Geräte und deren Stromverbrauch. Mach' es Dir bequem - mit nur einem Klick auf der Fernbedienung.</description>
         <license>GNU GENERAL PUBLIC LICENSE. Version 3, June 2007</license>
-        <source>https://github.com/b-jesch/plugin.program.fritzact</source>
+        <source>https://github.com/b-jesch/script.program.fritzact</source>
         <forum>http://www.kodinerds.net/index.php/Thread/52691-RELEASE-Fritz-Smart-Home/</forum>
         <email>birger.jesch@gmail.com</email>
         <website></website>
