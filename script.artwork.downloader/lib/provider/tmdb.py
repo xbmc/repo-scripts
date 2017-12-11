@@ -19,6 +19,7 @@
 
 #import modules
 import xbmc
+import xbmcaddon
 import sys
 
 ### import libraries
@@ -29,8 +30,10 @@ from operator import itemgetter
 
 ### get addon info
 __localize__    = ( sys.modules[ "__main__" ].__localize__ )
+__addon__ = xbmcaddon.Addon()
+api_key_tmdb = __addon__.getSetting("api_key_themoviedb")       #Added by @burekas
 
-API_KEY = '4be68d7eab1fbd1b6fd8a3b80a65a95e'
+API_KEY = api_key_tmdb
 API_CFG = 'http://api.themoviedb.org/3/configuration?api_key=%s'
 API_URL = 'http://api.themoviedb.org/3/movie/%s/images?api_key=%s'
 
@@ -138,6 +141,33 @@ class TMDBProvider():
                 return image_list
 
 
+#def _search_movie(medianame,year=''):
+#    medianame = normalize_string(medianame)
+#    log('TMDB API search criteria: Title[''%s''] | Year[''%s'']' % (medianame,year) )
+#    illegal_char = ' -<>:"/\|?*%'
+#    for char in illegal_char:
+#        medianame = medianame.replace( char , '+' ).replace( '++', '+' ).replace( '+++', '+' )
+
+#    search_url = 'http://api.themoviedb.org/3/search/movie?query=%s+%s&api_key=%s' %( medianame, year, API_KEY )
+#    tmdb_id = ''
+#    log('TMDB API search:   %s ' % search_url)
+#    try:
+#        data = get_data(search_url, 'json')
+#        if data == "Empty":
+#            tmdb_id = ''
+#        else:
+#            for item in data['results']:
+#                if item['id']:
+#                    tmdb_id = item['id']
+#                    break
+#    except Exception, e:
+#        log( str( e ), xbmc.LOGERROR )
+#    if tmdb_id == '':
+#        log('TMDB API search found no ID')
+#    else:
+#        log('TMDB API search found ID: %s' %tmdb_id)
+#    return tmdb_id
+
 def _search_movie(medianame,year=''):
     medianame = normalize_string(medianame)
     log('TMDB API search criteria: Title[''%s''] | Year[''%s'']' % (medianame,year) )
@@ -145,9 +175,13 @@ def _search_movie(medianame,year=''):
     for char in illegal_char:
         medianame = medianame.replace( char , '+' ).replace( '++', '+' ).replace( '+++', '+' )
 
-    search_url = 'http://api.themoviedb.org/3/search/movie?query=%s+%s&api_key=%s' %( medianame, year, API_KEY )
+    # -JB-
+    # (I'm looking for the year) OR (I'm looking for the year-1) OR (I'm looking for the year+1)
+    for year_delta in [year, year-1,year+1]:
+        search_url = 'http://api.themoviedb.org/3/search/movie?query=%s&primary_release_year=%s&api_key=%s' % (medianame, year_delta, API_KEY)
+
     tmdb_id = ''
-    log('TMDB API search:   %s ' % search_url)
+    log('TMDB API search: %s ' % search_url)
     try:
         data = get_data(search_url, 'json')
         if data == "Empty":
@@ -157,10 +191,12 @@ def _search_movie(medianame,year=''):
                 if item['id']:
                     tmdb_id = item['id']
                     break
+                if tmdb_id != '':
+                    break
     except Exception, e:
         log( str( e ), xbmc.LOGERROR )
     if tmdb_id == '':
         log('TMDB API search found no ID')
     else:
         log('TMDB API search found ID: %s' %tmdb_id)
-    return tmdb_id
+    return tmdb_id 

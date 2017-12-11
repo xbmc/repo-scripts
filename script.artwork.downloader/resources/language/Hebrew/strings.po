@@ -331,3 +331,23 @@ msgstr "תודות ל:"
 msgctxt "#32190"
 msgid "Team XBMC and the authors of the other addons on which this was based."
 msgstr "צוות XBMC ומחברי התוספים האחרים שתוסף זה מסתמך עליהם."
+
+msgctxt "#32193"
+msgid "API Keys"
+msgstr "מפתחות API"
+
+msgctxt "#32194"
+msgid "Fanart.tv (fanart.tv)"
+msgstr ""
+
+msgctxt "#32195"
+msgid "TMDb (www.themoviedb.org)"
+msgstr ""
+
+msgctxt "#32196"
+msgid "TheTVDB (thetvdb.com)"
+msgstr ""
+
+msgctxt "#32197"
+msgid "Project Key"
+msgstr ""

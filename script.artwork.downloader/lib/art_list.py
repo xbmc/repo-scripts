@@ -164,6 +164,13 @@ def arttype_list():
                            'art_type': 'characterart',
                            'filename': 'character.png'},
 
+                          {'media_type': 'tvshow',
+                           'bulk_enabled': setting.get('tvshow_discart'),
+                           'solo_enabled': 'true',
+                           'gui_string': 32132,
+                           'art_type': 'discart',
+                           'filename': 'disc.png'},
+
                           # Musicvideo
                           {'media_type': 'musicvideo',
                            'bulk_enabled': setting.get('musicvideo_poster'),

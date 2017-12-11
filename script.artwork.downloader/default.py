@@ -681,6 +681,7 @@ class Main:
                    background = setting['background'])
         # Look for argument matching artwork types
         for item in sys.argv:
+            #log('HHH    ' + item) #burekas debug
             for type in arttype_list:
                 if item == type['art_type'] and startup['mediatype'] == type['media_type']:
                     log('- Custom %s mode art_type: %s' %(type['media_type'],type['art_type']))

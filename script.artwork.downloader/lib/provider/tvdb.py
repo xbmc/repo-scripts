@@ -19,6 +19,8 @@
 
 #import modules
 import sys
+import xbmc
+import xbmcaddon
 
 #import libraries
 import xml.etree.ElementTree as ET
@@ -31,6 +33,8 @@ API_URL = 'http://www.thetvdb.com/api/%s/series/%s/banners.xml'
 
 ### get addon info
 __localize__    = ( sys.modules[ "__main__" ].__localize__ )
+__addon__ = xbmcaddon.Addon()
+api_key_tvdb = __addon__.getSetting("api_key_tvdb")     #Added by @burekas
 
 class TVDBProvider():
     """
@@ -38,7 +42,7 @@ class TVDBProvider():
     """
     def __init__(self):
         self.name = 'TVDB'
-        self.api_key = '1A41A145E2DA0053'
+        self.api_key = api_key_tvdb
         
         self.url_prefix = 'http://www.thetvdb.com/banners/'
 

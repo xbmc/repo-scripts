@@ -1,3 +1,14 @@
+v14.3.00
+- @burekas Fix
+- Entering the API keys is done now through the addon's settings ("API Keys" category). You don't need to touch the code anymore.
+- Important Note: After the installation make sure to update your own API Keys from fanart.tv (Project key only) and themoviedb.org sites (TVDB API key is already set as default, it's global and working)
+
+v14.2.00
+- @burekas Fix
+- Fix fanart.tv scraper results for Fanart and Poster types (Movies and TV shows)
+- Important Note: After the update, please get your own private API Keys from fanart.tv and themoviedb.org sites, edit and replace them respectively in these files 'fanarttv.py' and 'tmdb.py' (Kodi\addons\script.artwork.downloader\lib\provider)
+- Additional fix of @JohnyBee for themoviedb.org provider ('tmdb.py'): "Artwork Downloader" was cannot cope with movies search by release date.
+
 v12.0.29
 - Update to fanart.tv API v3
 

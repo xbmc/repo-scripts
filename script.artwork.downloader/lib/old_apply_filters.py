@@ -287,10 +287,10 @@ def discart(data):
     elif not data.get('artwork')['discnumber'] == '1':
         reason = "Doesn't match preferred discnumber: 1"
         limited = True
-    # Correct discnumber - Edited by tomer953
+    # Correct discnumber
     elif not data.get('artwork')['disctype'] == data.get('disctype'):
         reason = "Doesn't match preferred disctype: %s" % data.get('disctype')
-        limited = False
+        limited = True
     # Correct language
     elif not data.get('artwork')['language'] in [data.get('language'), 'n/a']:
         reason = "Doesn't match preferred language: %s" % limit.get('limit_preferred_language')

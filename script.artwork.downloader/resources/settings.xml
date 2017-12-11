@@ -99,7 +99,24 @@
         <setting label="32106" type="bool"      id="xbmc_caching_enabled"       default="false" enable="false"/>
         <setting label="Debug" type="bool"      id="debug_enabled"              default="false"/>
     </category>
-    
+
+<!-- API Keys section #Added by @burekas-->
+    <category label="32193" id="api_keys">
+        <setting type="sep" />
+        <setting label="32194" type="lsep" />
+        <setting type="sep" />
+        <setting id="api_key_fanarttv" type="text" label="32197" default=""/>
+        <setting type="sep" />
+        <setting label="32195" type="lsep" />
+        <setting type="sep" />
+        <setting id="api_key_themoviedb" type="text" label="" default=""/>
+        <setting type="sep" />
+        <setting label="32196" type="lsep" />
+        <setting type="sep" />
+        <setting id="api_key_tvdb" type="text" label="" default="1A41A145E2DA0053"/>
+        <setting type="sep" />          
+    </category>  
+  
 <!-- Plugin settings: Info section -->
     <category label="32181" id="section_info">
         <setting type="sep" />
