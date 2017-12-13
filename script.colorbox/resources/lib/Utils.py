@@ -20,12 +20,16 @@ ADDON =             xbmcaddon.Addon()
 ADDON_ID =          ADDON.getAddonInfo('id')
 ADDON_LANGUAGE =    ADDON.getLocalizedString
 ADDON_DATA_PATH =   os.path.join(xbmc.translatePath("special://profile/addon_data/%s" % ADDON_ID))
-ADDON_COLORS =      os.path.join(ADDON_DATA_PATH, "colors.txt")
+ADDON_COLORS =      os.path.join(ADDON_DATA_PATH, "colors.db")
 #ADDON_SETTINGS =    os.path.join(ADDON_DATA_PATH, "settings.")
+image_formats =     ['.jpg', '.jpeg', '.png', '.tif', '.bmp', 'gif', 'tiff']
 HOME =              xbmcgui.Window(10000)
 ONE_THIRD =         1.0/3.0
 ONE_SIXTH =         1.0/6.0
 TWO_THIRD =         2.0/3.0
+min_stripes =       20
+max_stripes =       200
+orientation =       'vertical'
 lgint =             10
 lgsteps =           50
 black_pixel =       (0, 0, 0, 255)
@@ -81,8 +85,8 @@ def fndither(): return str(quality)
 def fndataglitch(): return str(doffset) + str(quality)
 def fndesaturate(): return str(desat) + str(quality)
 def fnsharpness(): return str(sharp) + str(quality)
+def fnsplicer(): return str(min_stripes) + str(max_stripes) + str(orientation) + str(quality)
 def ColorBox_go_map(filterimage, imageops, gqual=0):
-    if not filterimage: return
     if gqual == 0: gqual = quality
     filename = hashlib.md5(filterimage).hexdigest() + str(blend) + '-'
     for cmarg in imageops.strip().split('-'):
@@ -182,6 +186,10 @@ def sharpness(img):
     return img
 def pixelate(img):
     return Pixelate_Image(img)
+def splicer(images_path):
+    images_path = xbmc.getInfoLabel('ListItem.Path')
+    images = get_all_images_from_the_input_dir(images_path)
+    return Splice_Images(images, MIN_STRIPES, MAX_STRIPES, orientation=ORIENTATION)
 def shiftblock(img):
     qiterations = iterations / quality    
     return Shiftblock_Image(img, blocksize, sigma, qiterations)
@@ -358,6 +366,52 @@ def Dither_Image(img):
             dipixels[i + 1, j]     = (r[2], g[2], b[2])
             dipixels[i + 1, j + 1] = (r[3], g[3], b[3])
     return dinew
+def Splice_Images(images, min_stripes=20, max_stripes=200, orientation="verticle", random_coords=False):
+    max_area = 0
+    no_of_stripes = random.randint(min_stripes, max_stripes)
+    # Get the largest dims
+    for image in images:
+        w, h = image.size
+        area = h * w
+        if area > max_area:
+            max_area = area
+            max_width, max_height = w, h
+    max_width = max_width - (max_width % no_of_stripes)
+    max_height = max_height - (max_height % no_of_stripes)
+    output_image = Image.new('RGB', (max_width, max_height))
+    # Resize all to the largest dimensions
+    resized_images = []
+    for image in images:
+        resized_image = image.resize((max_width, max_height), 3)
+        resized_images.append(resized_image)
+    coords_list = []
+    if orientation == "verticle":
+        split = range(0, int(w), int(int(w) / int(no_of_stripes)))
+        for coord in split:
+            stripe_coords = (coord, 0, int(coord + w / no_of_stripes), h)
+            coords_list.append(stripe_coords)
+    else: # horizontal
+        split = range(0, int(h), int(int(h) / int(no_of_stripes)))
+        for coord in split:
+            stripe_coords = (0, coord, w, int(coord + h / no_of_stripes))
+            coords_list.append(stripe_coords)
+    for coords in coords_list:
+        if random_coords:
+            source_coords = coords_list[random.randint(0, len(coords_list) - 1)]
+        else:
+            source_coords = coords
+        stripe = resized_images[random.randint(0, len(resized_images) - 1)].crop(source_coords)
+        output_image.paste(stripe, coords)
+    return output_image
+def get_all_images_from_the_input_dir(input_dir):
+    images = []
+    for file in os.listdir(input_dir):
+        filepath = os.path.join(input_dir, file)
+        if os.path.isfile(filepath):
+            if os.path.splitext(filepath)[1].lower() in image_formats:
+                img = Image.open(filepath)
+                images.append(img)
+    return images
 def anglegcr(img, percentage):
     cmyk_im = img.convert('CMYK')
     if not percentage:
@@ -636,7 +690,6 @@ def Show_Percentage():
     except:
         return
 def Color_Only(filterimage, cname, ccname, imagecolor='ff000000', cimagecolor='ffffffff'):
-    if not filterimage: return
     md5 = hashlib.md5(filterimage).hexdigest()
     var3 = 'Old' + cname
     var4 = 'Old' + ccname
@@ -667,7 +720,6 @@ def Color_Only(filterimage, cname, ccname, imagecolor='ff000000', cimagecolor='f
     #linear_gradient(ccname, HOME.getProperty(var4)[2:8], cimagecolor[2:8], 50, 10, var4)
     return imagecolor, cimagecolor
 def Color_Only_Manual(filterimage, cname, imagecolor='ff000000', cimagecolor='ffffffff'):
-    if not filterimage: return
     md5 = hashlib.md5(filterimage).hexdigest()
     if not colors_dict: Load_Colors_Dict()
     if md5 not in colors_dict:
@@ -916,7 +968,7 @@ def log(txt):
     if isinstance(txt, str):
         txt = txt.decode("utf-8")
     message = u'%s: %s' % (ADDON_ID, txt)
-    xbmc.log(msg=message.encode("utf-8"), level=xbmc.LOGDEBUG)
+    xbmc.log(msg=message.encode("utf-8"), level=xbmc.LOGNOTICE)
 def prettyprint(string):
     log(simplejson.dumps(string, sort_keys=True, indent=4, separators=(',', ': ')))
 ColorBox_filename_map = {
@@ -938,6 +990,7 @@ ColorBox_filename_map = {
         'dither':       fndither,
         'desaturate':   fndesaturate,
         'sharpness':    fnsharpness,
+        'splicer':      fnsplicer,
         'dataglitch':   fndataglitch}
 ColorBox_function_map = {
         'blur':         blur,
@@ -958,4 +1011,5 @@ ColorBox_function_map = {
         'dither':       dither,
         'desaturate':   desaturate,
         'sharpness':    sharpness,
+        'splicer':      splicer,
         'dataglitch':   dataglitch}
