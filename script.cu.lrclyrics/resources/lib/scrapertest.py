@@ -12,6 +12,7 @@ from culrcscrapers.letssingit import lyricsScraper as lyricsScraper_letssingit
 from culrcscrapers.lyricwiki import lyricsScraper as lyricsScraper_lyricwiki
 from culrcscrapers.minilyrics import lyricsScraper as lyricsScraper_minilyrics
 from culrcscrapers.ttplayer import lyricsScraper as lyricsScraper_ttplayer
+from culrcscrapers.xiami import lyricsScraper as lyricsScraper_xiami
 
 FAILED = []
 
@@ -203,6 +204,23 @@ def test_scrapers():
     else:
         FAILED.append('ttplayer')
         log('FAILED: ttplayer')
+    if dialog.iscanceled():
+        return
+
+    # test xiami
+    dialog.create(ADDONNAME, LANGUAGE(32163) % 'xiami')
+    log('==================== xiami ====================')
+    song = Song('Bush', 'Swallowed')
+    st = time.time()
+    lyrics = lyricsScraper_xiami.LyricsFetcher().get_lyrics(song)
+    ft = time.time()
+    tt = ft - st
+    TIMINGS.append(['xiami',tt])
+    if lyrics:
+        log(lyrics.lyrics)
+    else:
+        FAILED.append('xiami')
+        log('FAILED: xiami')
     if dialog.iscanceled():
         return
 
