@@ -2,6 +2,7 @@ v14.4.00
 - By @burekas
 - Code fixes
 - Additional options for limiting downloaded artwork are visible again in Settings.
+- The additional fix of @JohnyBee in v14.2.00 has been removed.
 
 v14.3.00
 - By @burekas
