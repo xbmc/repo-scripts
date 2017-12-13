@@ -2,6 +2,8 @@
 
 import sys
 import urllib
+import urllib2
+import socket
 import re
 import base64
 import xbmc
@@ -68,14 +70,14 @@ class OSDBServer:
 
         if tvshow:
             if season and episode:
-                search_url_base = "http://titlovi.com/titlovi/?prijevod=%s&jezik=%s&t=2&s=%s&e=%s&sort=4" % (search_string, "%s", int(season), episode)
+                search_url_base = "https://titlovi.com/titlovi/?prijevod=%s&jezik=%s&t=2&s=%s&e=%s&sort=4" % (search_string, "%s", int(season), episode)
             elif season:
-                search_url_base = "http://titlovi.com/titlovi/?prijevod=%s&jezik=%s&t=2&s=%s&e=0&sort=4" % (search_string, "%s", int(season))
+                search_url_base = "https://titlovi.com/titlovi/?prijevod=%s&jezik=%s&t=2&s=%s&e=0&sort=4" % (search_string, "%s", int(season))
         else:
             if year:
-                search_url_base = "http://titlovi.com/titlovi/?prijevod=%s&jezik=%s&g=%s&sort=4" % (search_string, "%s", year)
+                search_url_base = "https://titlovi.com/titlovi/?prijevod=%s&jezik=%s&g=%s&sort=4" % (search_string, "%s", year)
             else:
-                search_url_base = "http://titlovi.com/titlovi/?prijevod=%s&jezik=%s&sort=4" % (search_string, "%s")
+                search_url_base = "https://titlovi.com/titlovi/?prijevod=%s&jezik=%s&sort=4" % (search_string, "%s")
 
         subtitles = None
         supported_languages = ["bs", "hr", "en", "mk", "sr", "sl", "rs", "ba", "si", "bosanski", "hrvatski", "cirilica", "english", "makedonski", "srpski", "slovenski", None] # kodi format
@@ -112,7 +114,7 @@ class OSDBServer:
 
         try:
             if subtitles:
-                url_base = "http://titlovi.com/download/?type=1&mediaid=%s"
+                url_base = "https://titlovi.com/download/?type=1&mediaid=%s"
                 log(__name__, "Found subs: %s" % len(subtitles))
                 for subtitle in subtitles:
                     subtitle_id = 0
@@ -173,11 +175,30 @@ class OSDBServer:
             return subtitles_list
 
     def openUrl(self, url):
-        WebSock = urllib.urlopen(url) # Opens a 'Socket' to URL
-        htmlContent = WebSock.read() # Reads Contents of URL and saves to Variable
-        WebSock.close() # Closes connection to url
+        try:
+            useragent = {'User-Agent': "Mozilla/5.0"}
+            req = urllib2.Request(url, headers=useragent)
+            website = urllib2.urlopen(req)
+        except urllib2.URLError, e:
+            if hasattr(e, 'reason'):
+                print 'We failed to reach a server.'
+                print 'Reason: ', e.reason
+                return False
+            elif hasattr(e, 'code'):
+                print 'The server couldn\'t fulfill the request.'
+                print 'Error code: ', e.code
+                return False
+        except socket.timeout as e:
+            # catched
+            print type(e)
+            return False
+        else:
+            # read html code
+            html = website.read()
+            website.close()
+
         naslovRE = re.compile('<li class=".*?"><h3.*?a href="(.*?)">(.*?)<\/a>.*?<i>(.*?)<\/i>.*?<\/h3><h4>(.*?)<span.*?<\/h4>.*?<img.*?src="(.*?)"')
-        naslovMatch = naslovRE.findall(htmlContent)
+        naslovMatch = naslovRE.findall(html)
         prevodi = []
         for detali in naslovMatch:
             id = detali[0].split("-")[-1]

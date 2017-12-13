@@ -40,3 +40,6 @@ Add support to search tvshow season and episode
 
 1.1.2
 - Fixed automatic search on tv shows
+
+1.1.3
+- Fixed problems with parsing titlovi
