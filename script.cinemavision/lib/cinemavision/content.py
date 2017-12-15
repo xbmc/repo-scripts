@@ -347,6 +347,12 @@ class UserContent:
 
     @DB.sessionW
     def scrapeContent(self):
+        try:
+            self._scrapeContent()
+        except:
+            util.ERROR()
+
+    def _scrapeContent(self):
         import scrapers
         scrapers.setContentPath(self._contentDirectory)
 

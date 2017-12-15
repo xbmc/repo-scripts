@@ -46,6 +46,7 @@ class Main:
         self.startOnScreensaverPartyMode                = __addon__.getSetting('start-on-screensaver-partymode') == 'true'
         self.avoidOnPauseStartOnScreensaverPartyMode    = __addon__.getSetting('avoid-on-pause-start-on-screensaver-partymode') == 'true'
         self.startupPlaylist                            = __addon__.getSetting('startup-playlist') == 'true'
+        self.startupPlaylistPartymode                   = __addon__.getSetting('startup-playlist-partymode') == 'true'
         self.startupPlaylistPath                        = xbmc.getInfoLabel( "Skin.String(Startup.Playlist.Path)" )
         self.startupFavourites                          = __addon__.getSetting('startup-favourites') == 'true'
         self.startupFavouritesPath                      = xbmc.getInfoLabel('Skin.String(Startup.Favourites.Path)')
@@ -56,6 +57,9 @@ class Main:
         self.volumePartyMode                            = __addon__.getSetting('volume-partymode') == 'true'
         self.volumeLevelPartyMode                       = int(__addon__.getSetting('volume-level-partymode'))
 
+        self.playbackRandom                             = int(__addon__.getSetting('playback-random'))
+        self.playbackRepeat                             = int(__addon__.getSetting('playback-repeat'))
+
     def runPartyMode(self):
         if self.volumePartyMode:
             executeJSONRPC('{{"jsonrpc": "2.0", "method": "Application.SetVolume", "params": {{ "volume": {0}}}, "id": 1}}'.format(self.volumeLevelPartyMode))
@@ -64,7 +68,10 @@ class Main:
 
             log('Start Playlist: ' + self.startupPlaylistPath)
 
-            xbmc.executebuiltin("XBMC.PlayMedia(" + self.startupPlaylistPath + ")")
+            if self.startupPlaylistPartymode:
+                xbmc.executebuiltin("XBMC.PlayerControl(PartyMode(" + self.startupPlaylistPath + ")")
+            else:
+                xbmc.executebuiltin("XBMC.PlayMedia(" + self.startupPlaylistPath + ")")
 
         elif self.startupFavourites:
 
@@ -77,6 +84,23 @@ class Main:
             log('Start PartyMode')
 
             xbmc.executebuiltin("XBMC.PlayerControl(PartyMode)")
+
+        if self.playbackRandom == 1:
+            log('Setting Random to Off')
+            xbmc.executebuiltin("XBMC.PlayerControl(RandomOff)")
+        elif self.playbackRandom == 2:
+            log('Setting Random to On')
+            xbmc.executebuiltin("XBMC.PlayerControl(RandomOn)")
+
+        if self.playbackRepeat == 1:
+            log('Setting Repeat to Off')
+            xbmc.executebuiltin("XBMC.PlayerControl(RepeatOff)")
+        elif self.playbackRepeat == 2:
+            log('Setting Repeat to One')
+            xbmc.executebuiltin("XBMC.PlayerControl(RepeatOne)")
+        elif self.playbackRepeat == 3:
+            log('Setting Repeat to All')
+            xbmc.executebuiltin("XBMC.PlayerControl(RepeatAll)")
 
         self.activateVisualisation()
 
@@ -107,7 +131,13 @@ class Main:
 
     def _viewCountdown(self):
         conutdownDlg = xbmcgui.DialogProgress()
-        conutdownDlg.create( __language__(30101), __language__(30102) % self.delayStartupPartyMode)
+        if self.startupPlaylist:
+            msg = 30103
+        elif self.startupFavourites:
+            msg = 30104
+        else:
+            msg = 30102
+        conutdownDlg.create( __language__(30101), __language__(msg) % self.delayStartupPartyMode)
 
         finished = True
         countdownGap = 100

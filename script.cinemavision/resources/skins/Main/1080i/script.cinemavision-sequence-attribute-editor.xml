@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<window>
+    <defaultcontrol>299</defaultcontrol>
+    <coordinates>
+        <system>1</system>
+        <posx>0</posx>
+        <posy>0</posy>
+    </coordinates>
+    <animation effect="zoom" end="74.074074074,74.074074074" center="960,540" time="0" condition="!IsEmpty(Window(10000).Property(script.cinemavision.scope.2.40:1))">Conditional</animation>
+    <animation effect="zoom" end="75.925925926,75.925925926" center="960,540" time="0" condition="!IsEmpty(Window(10000).Property(script.cinemavision.scope.2.35:1))">Conditional</animation>
+    <controls>
+        <control type="image">
+            <animation effect="fade" start="0" end="100" time="200">WindowOpen</animation>
+            <animation effect="fade" start="100" end="0" time="200">WindowClose</animation>
+            <posx>0</posx>
+            <posy>0</posy>
+            <width>1920</width>
+            <height>1080</height>
+            <texture>script.cinemavision-white_square.png</texture>
+            <colordiffuse>A0000000</colordiffuse>
+            <aspectratio>stretch</aspectratio>
+        </control>
+        <control type="group">
+            <animation effect="slide" start="0,0" end="0,700" time="200">WindowOpen</animation>
+            <animation effect="slide" start="0,700" end="0,0" time="200">WindowClose</animation>
+            <posx>300</posx>
+            <posy>-700</posy>
+            <control type="image">
+                <posx>-20</posx>
+                <posy>-20</posy>
+                <width>1360</width>
+                <height>980</height>
+                <texture>script.cinemavision-white_square.png</texture>
+                <colordiffuse>60000000</colordiffuse>
+                <aspectratio>stretch</aspectratio>
+            </control>
+            <control type="image">
+                <posx>-5</posx>
+                <posy>-5</posy>
+                <width>1330</width>
+                <height>950</height>
+                <texture>script.cinemavision-white_square.png</texture>
+                <colordiffuse>FFA0A0A0</colordiffuse>
+                <aspectratio>stretch</aspectratio>
+            </control>
+            <control type="image">
+                <posx>0</posx>
+                <posy>0</posy>
+                <width>1320</width>
+                <height>940</height>
+                <texture>script.cinemavision-white_square.png</texture>
+                <colordiffuse>FF303030</colordiffuse>
+                <aspectratio>stretch</aspectratio>
+            </control>
+
+            <control type="group" id="299">
+                <defaultcontrol>300</defaultcontrol>
+                <control type="list" id="300">
+                    <posx>20</posx>
+                    <posy>20</posy>
+                    <width>1280</width>
+                    <height>940</height>
+                    <scrolltime>200</scrolltime>
+                    <orientation>vertical</orientation>
+                    <!-- <onleft>201</onleft>
+                    <onright>201</onright>
+                    <ondown>203</ondown>
+                    <onup>201</onup> -->
+
+                    <itemlayout height="80">
+                        <control type="image">
+                            <posx>820</posx>
+                            <posy>10</posy>
+                            <width>60</width>
+                            <height>60</height>
+                            <texture>$INFO[ListItem.Thumb]</texture>
+                            <aspectratio>stretch</aspectratio>
+                        </control>
+                        <control type="label">
+                            <left>10</left>
+                            <top>10</top>
+                            <width>400</width>
+                            <height>60</height>
+                            <font>font20</font>
+                            <textcolor>FF909090</textcolor>
+                            <align>left</align>
+                            <aligny>center</aligny>
+                            <label>$INFO[ListItem.Label]</label>
+                        </control>
+                        <control type="label">
+                            <left>420</left>
+                            <top>10</top>
+                            <width>840</width>
+                            <height>60</height>
+                            <font>font20</font>
+                            <textcolor>FFAAAAFF</textcolor>
+                            <align>left</align>
+                            <aligny>center</aligny>
+                            <label>$INFO[ListItem.Label2]</label>
+                        </control>
+                    </itemlayout>
+
+                    <focusedlayout height="80">
+                        <control type="group">
+                            <posx>0</posx>
+                            <posy>0</posy>
+                            <control type="image">
+                                <posx>0</posx>
+                                <posy>0</posy>
+                                <width>1280</width>
+                                <height>80</height>
+                                <texture>script.cinemavision-white_square.png</texture>
+                                <colordiffuse>FF404040</colordiffuse>
+                                <aspectratio>stretch</aspectratio>
+                            </control>
+                            <control type="image">
+                                <posx>820</posx>
+                                <posy>10</posy>
+                                <width>60</width>
+                                <height>60</height>
+                                <texture>$INFO[ListItem.Thumb]</texture>
+                                <aspectratio>stretch</aspectratio>
+                            </control>
+                            <control type="label">
+                                <left>10</left>
+                                <top>10</top>
+                                <width>400</width>
+                                <height>60</height>
+                                <font>font20</font>
+                                <textcolor>FFFFFFFF</textcolor>
+                                <align>left</align>
+                                <aligny>center</aligny>
+                                <label>$INFO[ListItem.Label]</label>
+                            </control>
+                            <control type="label">
+                                <left>420</left>
+                                <top>10</top>
+                                <width>840</width>
+                                <height>60</height>
+                                <font>font20</font>
+                                <textcolor>FFAAAAFF</textcolor>
+                                <align>left</align>
+                                <aligny>center</aligny>
+                                <label>$INFO[ListItem.Label2]</label>
+                            </control>
+                        </control>
+
+                    </focusedlayout>
+                </control>
+            </control>
+        </control>
+    </controls>
+</window>

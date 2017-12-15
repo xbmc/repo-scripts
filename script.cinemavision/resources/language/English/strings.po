@@ -54,7 +54,7 @@ msgid "Update content"
 msgstr ""
 
 msgctxt "#32010"
-msgid "Auto update when editor starts"
+msgid "Update when editor starts"
 msgstr ""
 
 msgctxt "#32011"
@@ -431,6 +431,34 @@ msgstr ""
 
 msgctxt "#32104"
 msgid "Ignore Kodi playlist with only one item if there is a selection"
+msgstr ""
+
+msgctxt "#32105"
+msgid "Update when Kodi starts"
+msgstr ""
+
+msgctxt "#32106"
+msgid "Update after library scan"
+msgstr ""
+
+msgctxt "#32107"
+msgid "Update every... (hours)"
+msgstr ""
+
+msgctxt "#32108"
+msgid "Update when Kodi starts (requires service add-on)"
+msgstr ""
+
+msgctxt "#32109"
+msgid "Update after library scan (requires service add-on)"
+msgstr ""
+
+msgctxt "#32110"
+msgid "Update every... (hours) (requires service add-on)"
+msgstr ""
+
+msgctxt "#32111"
+msgid "Auto Update"
 msgstr ""
 
 
@@ -1007,4 +1035,24 @@ msgstr ""
 
 msgctxt "#32607"
 msgid "Kodi may be unable to write to this location."
+msgstr ""
+
+msgctxt "#32608"
+msgid "Active"
+msgstr ""
+
+msgctxt "#32609"
+msgid "Inactive"
+msgstr ""
+
+msgctxt "#32610"
+msgid "Enable"
+msgstr ""
+
+msgctxt "#32611"
+msgid "Reset module to defaults"
+msgstr ""
+
+msgctxt "#32612"
+msgid "Sequence settings"
 msgstr ""

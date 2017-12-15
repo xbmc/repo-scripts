@@ -51,6 +51,10 @@ msgctxt "#30015"
 msgid "Run Favourites"
 msgstr ""
 
+msgctxt "#30016"
+msgid "Playback Control"
+msgstr ""
+
 # setting items
 msgctxt "#30040"
 msgid "Enable"
@@ -80,6 +84,38 @@ msgctxt "#30046"
 msgid "Select from Favourites"
 msgstr ""
 
+msgctxt "#30054"
+msgid "Play in party mode"
+msgstr ""
+
+msgctxt "#30047"
+msgid "Random"
+msgstr ""
+
+msgctxt "#30048"
+msgid "Repeat"
+msgstr ""
+
+msgctxt "#30049"
+msgid "Default"
+msgstr ""
+
+msgctxt "#30050"
+msgid "Off"
+msgstr ""
+
+msgctxt "#30051"
+msgid "On"
+msgstr ""
+
+msgctxt "#30052"
+msgid "One"
+msgstr ""
+
+msgctxt "#30053"
+msgid "All"
+msgstr ""
+
 # ADDON STRINGS
 
 msgctxt "#30100"
@@ -91,5 +127,13 @@ msgid "Countdown"
 msgstr ""
 
 msgctxt "#30102"
-msgid "PartyMode start in %s seconds:"
+msgid "PartyMode auto-start in %s seconds:"
+msgstr ""
+
+msgctxt "#30103"
+msgid "Playlist auto-start in %s seconds:"
+msgstr ""
+
+msgctxt "#30104"
+msgid "Favourite auto-start in %s seconds:"
 msgstr ""

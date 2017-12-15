@@ -7,7 +7,7 @@ import xbmc
 import xbmcgui
 import xbmcaddon
 
-API_LEVEL = 3
+API_LEVEL = 4
 
 ADDON_ID = 'script.cinemavision'
 ADDON = xbmcaddon.Addon(ADDON_ID)
@@ -33,7 +33,7 @@ def DEBUG():
 
 
 def LOG(msg):
-    xbmc.log('[- CinemaVision -]: {0}'.format(msg))
+    xbmc.log('[- CinemaVision -]: {0}'.format(msg), xbmc.LOGNOTICE)
 
 
 def DEBUG_LOG(msg):
@@ -46,7 +46,11 @@ def ERROR(msg=''):
     if msg:
         LOG(msg)
     import traceback
-    xbmc.log(traceback.format_exc())
+    xbmc.log(traceback.format_exc(), xbmc.LOGNOTICE)
+
+
+def TEST(msg):
+    xbmc.log('-- TEST: {0}'.format(repr(msg)), xbmc.LOGNOTICE)
 
 
 def firstRun():
@@ -74,6 +78,26 @@ def checkAPILevel():
         import cvutil
         cvutil.loadContent()
         xbmc.sleep(1000)
+
+    if old < 4:
+        LOG('API LEVEL < 4: Migrating default sequences')
+
+        contentPath = getSetting('content.path')
+        if contentPath:
+            from lib import cinemavision
+
+            sequencesPath = cinemavision.util.pathJoin(contentPath, 'Sequences')
+
+            for stereoType in ['2D', '3D']:
+                default = getSetting('sequence.{0}'.format(stereoType))
+                if default:
+                    path = cinemavision.util.pathJoin(sequencesPath, '{0}.cvseq'.format(default))
+                    if cinemavision.util.vfs.exists(path):
+                        LOG('API Migration: Activating sequence for {0}: {1}'.format(stereoType, default))
+                        seqData = cinemavision.sequence.SequenceData.load(path)
+                        seqData.active = True
+                        seqData.set('type', stereoType)
+                        seqData.save()
 
     if getSetting('from.beta'):
         DEBUG_LOG('UPDATED FROM BETA: {0}'.format(getSetting('from.beta')))
@@ -163,8 +187,15 @@ def getPeanutButter():
 
 
 class Progress(object):
-    def __init__(self, heading, line1='', line2='', line3=''):
-        self.dialog = xbmcgui.DialogProgress()
+    def __init__(self, heading, line1='', line2='', line3='', bg=False):
+        self.isBackground = bg
+        if bg:
+            self.dialog = xbmcgui.DialogProgressBG()
+            self.iscanceled = self.iscanceledBG
+            self._update = self._updateBG
+        else:
+            self.dialog = xbmcgui.DialogProgress()
+
         self.heading = heading
         self.line1 = line1
         self.line2 = line2
@@ -173,7 +204,12 @@ class Progress(object):
         self.message = ''
 
     def __enter__(self):
-        self.dialog.create(self.heading, self.line1, self.line2, self.line3)
+        if self.isBackground:
+            heading = u'{0} - {1}'.format(self.heading, self.line1)
+            msg = u'{0} - {1}'.format(self.line2, self.line3)
+            self.dialog.create(heading, msg)
+        else:
+            self.dialog.create(self.heading, self.line1, self.line2, self.line3)
         return self
 
     def __exit__(self, exc_type, exc_value, traceback):
@@ -188,15 +224,25 @@ class Progress(object):
         if line3 is not None:
             self.line3 = line3
 
+        self._update()
+
+    def _update(self):
         self.dialog.update(self.pct, self.line1, self.line2, self.line3)
+
+    def _updateBG(self):
+        heading = u'{0} - {1}'.format(self.heading, self.line1)
+        msg = u'{0} - {1}'.format(self.line2, self.line3)
+        self.dialog.update(self.pct, heading, msg)
 
     def msg(self, msg=None, heading=None, pct=None):
         if pct is not None:
             self.pct = pct
-        self.heading = heading is not None and heading or self.heading
         self.message = msg is not None and msg or self.message
-        self.update(self.pct, self.heading, self.message)
-        return not self.dialog.iscanceled()
+        self.update(self.pct, heading, self.message)
+        return not self.iscanceled()
 
     def iscanceled(self):
         return self.dialog.iscanceled()
+
+    def iscanceledBG(self):
+        return False

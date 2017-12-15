@@ -57,9 +57,11 @@ class BaseWindow(xbmcgui.WindowXML, BaseFunctions):
             self.started = True
             self.onFirstInit()
 
-    def onFirstInit(self): pass
+    def onFirstInit(self):
+        pass
 
-    def onReInit(self): pass
+    def onReInit(self):
+        pass
 
     def setProperty(self, key, value):
         if self._closing:
@@ -369,6 +371,24 @@ class ManagedControlList(object):
             self.items.insert(index, managed_item)
             self.control.addItem(managed_item._takeListItem(self, self._nextID()))
             self._updateItems(index, self.size())
+
+        if self.positionIsValid(pos):
+            self.selectItem(pos)
+
+    def insertItems(self, index, managed_items):
+        pos = self.getSelectedPosition() + 1
+
+        incIndex = index
+        for managed_item in managed_items:
+            if incIndex >= self.size() or incIndex < 0:
+                self.addItem(managed_item)
+            else:
+                self.items.insert(incIndex, managed_item)
+                self.control.addItem(managed_item._takeListItem(self, self._nextID()))
+
+            incIndex += 1
+
+        self._updateItems(index, self.size())
 
         if self.positionIsValid(pos):
             self.selectItem(pos)

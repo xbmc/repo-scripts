@@ -120,6 +120,8 @@ class Scraper(object):
                 reviews = {}
             if 'clips' in js_data:
                 for clip in js_data['clips']:
+                    if clip.get('title') != 'Trailer':
+                        continue
                     meta = {}
                     meta.update(page)
                     meta.update(details)
