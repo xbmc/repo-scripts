@@ -1,3 +1,6 @@
+v0.9.3
+- Fixes for Kryton, Estuary and BOM source changes
+
 V0.8.9
 - Don't crash if no radar is set...
 
