@@ -1,0 +1,8 @@
+1.1.2
+  - Fixed movie synchronization in Kodi 17 and above.
+1.1.1:
+  - Internal changes and fixes.
+1.1.0:
+  - Now the addon monitors both automatic and manual "watched" status updates.
+1.0.0:
+  - Initial public release.
