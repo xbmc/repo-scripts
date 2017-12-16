@@ -101,7 +101,7 @@ def downloadBackground(radarCode, fileName, backgroundsPath):
                         print("Got " + filename)
                     else:
                         #national radar loop uses a different BG for some reason...
-                        image.retrieve(FTPSTUB + 'IDE00035.background.png', imageFileRGB )
+                        image.retrieve(HTTPSTUB + 'IDE00035.background.png', imageFileRGB )
                         print("Got IDE00035.background.png")
             except Exception as inst2:
                 print("No, really, -> Error, couldn't retrieve " + fileName + " - error: ", inst2)
