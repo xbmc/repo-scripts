@@ -8,16 +8,10 @@ import sys
 import buggalo
 import re
 import random
+import json
 
 _addon_id = u'service.watchedlist'
 _Addon = xbmcaddon.Addon(_addon_id)
-
-# XBMC-JSON
-if sys.version_info < (2, 7):
-    import simplejson
-else:
-    import json as simplejson
-
 
 def data_dir():
     """"get user data directory of this addon.
@@ -153,10 +147,10 @@ def executeJSON(request):
     Args:
         request: Dictionary with JSON-RPC Commands
     """
-    rpccmd = simplejson.dumps(request) # create string from dict
+    rpccmd = json.dumps(request) # create string from dict
     json_query = xbmc.executeJSONRPC(rpccmd)
     json_query = unicode(json_query, 'utf-8', errors='ignore')
-    json_response = simplejson.loads(json_query)
+    json_response = json.loads(json_query)
     # in case of exception this will be sent
     buggalo.addExtraData('len(json_query)',len(json_query));
     buggalo.addExtraData('len(json_response)', len(json_response));
