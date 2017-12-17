@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="service.popwindow" name="Pupup Windows" version="0.2.8" provider-name="L0RE">
+<addon id="service.popwindow" name="Pupup Windows" version="0.2.9" provider-name="L0RE">
     <requires>
         <import addon="xbmc.python" version="2.24.0"/>
 	<import addon="script.module.requests" version="2.9.1"/>	
@@ -16,5 +16,6 @@
     <forum>http://www.kodinerds.net/index.php/Thread/46939-Repo-Lost-Found</forum>
     <email>andreas at vogler dot name</email>
     <platform>all</platform>
+    <broken>Not supported at kodi.tv</broken>
   </extension>
 </addon>
