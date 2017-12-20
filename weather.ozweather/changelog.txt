@@ -1,3 +1,6 @@
+v0.9.4
+- Fixes for Weatherzone page changes
+
 v0.9.3
 - Fixes for Kryton, Estuary and BOM source changes
 
