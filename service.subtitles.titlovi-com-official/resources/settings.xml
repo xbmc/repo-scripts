@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+    <category label="32004">
+      <setting id="titlovi-username" type="text" label="32002" default=""/>
+      <setting id="titlovi-password" type="text" option = "hidden" label="32003" default=""/>
+    </category>
+    <category label="32016">
+        <setting label="32012" type="enum" id="titlovi-lat-cyr-conversion" lvalues="32013|32014|32015"/>
+    </category>
+</settings>
