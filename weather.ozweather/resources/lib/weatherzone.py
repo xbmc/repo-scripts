@@ -249,14 +249,7 @@ def setKeys(index, keys, value):
     global weatherData
 
     for key in keys:
-        if index is 0:
-            weatherData['Current.' + key] = value
-            weatherData['Current.' + key] = value
-
-        weatherData['Day' + str(index) + '.' + key] = value
-        weatherData['Day' + str(index) + '.' + key] = value
-        weatherData['Daily.' + str(index+1) + '.' + key] = value
-        weatherData['Daily.' + str(index+1) + '.' + key] = value
+        setKey(index,key, value)
 
 # Set a key - for old and new weather label support
 
@@ -265,13 +258,13 @@ def setKey(index, key, value):
     global weatherData
 
     if index is 0:
-        weatherData['Current.' + key] = value
-        weatherData['Current.' + key] = value
+        weatherData['Current.' + key] = value.strip()
+        weatherData['Current.' + key] = value.strip()
 
-    weatherData['Day' + str(index) + '.' + key] = value
-    weatherData['Day' + str(index) + '.' + key] = value
-    weatherData['Daily.' + str(index+1) + '.' + key] = value
-    weatherData['Daily.' + str(index+1) + '.' + key] = value
+    weatherData['Day' + str(index) + '.' + key] = value.strip()
+    weatherData['Day' + str(index) + '.' + key] = value.strip()
+    weatherData['Daily.' + str(index+1) + '.' + key] = value.strip()
+    weatherData['Daily.' + str(index+1) + '.' + key] = value.strip()
 
 # Returns an array of dicts, each with a Locationname and LocationUrlPart.  Empty if no location found.
 # [{'LocationName': u'Ascot Vale, VIC 3032', 'LocationUrlPart': u'/vic/melbourne/ascot-vale'}, ... ]
@@ -339,7 +332,7 @@ def getWeatherData(urlPath, extendedFeatures = True, XBMC_VERSION=17.0):
     # The longer forecast text
     try:
         p = soup.find_all("p", class_="district-forecast")  
-        weatherData["Current.ConditionLong"] = cleanLongDescription(p[0].text)
+        weatherData["Current.ConditionLong"] = cleanLongDescription(p[0].text).strip()
     except Exception as inst:
         print(str(inst))
         print("Exception in ConditionLong")
@@ -351,13 +344,13 @@ def getWeatherData(urlPath, extendedFeatures = True, XBMC_VERSION=17.0):
         tds = astronomyTable.find_all("td")
         
         # Moonphase
-        value = tds[4].find("img").get('title').title()
+        value = tds[4].find("img").get('title').title().strip()
         weatherData['Today.moonphase'] = value
         weatherData['Today.Moonphase'] = value
         
         #Sunrise/set
-        sunrise = tds[2].text
-        sunset = tds[2].text
+        sunrise = tds[2].text.strip()
+        sunset = tds[2].text.strip()
         weatherData['Today.Sunrise'] = sunrise
         weatherData['Today.Sunset'] = sunset
         weatherData['Current.Sunrise'] = sunrise
@@ -712,7 +705,7 @@ if __name__ == "__main__":
     for key in sorted(weatherData):
         if weatherData[key] == "?" or weatherData[key] == "na":
             print("**** MISSING: ")
-        print("%s: %s" % (key, weatherData[key]))
+        print("[%s]: [%s]" % (key, weatherData[key]))
 
     print("\n\nGet weather data for /vic/melbourne/ascot-vale:")
     
@@ -722,4 +715,4 @@ if __name__ == "__main__":
     for key in sorted(weatherData):
         if weatherData[key] == "?" or weatherData[key] == "na":
             print("**** MISSING: ")
-        print("%s: %s" % (key, weatherData[key]))
+        print("[%s]: [%s]" % (key, weatherData[key]))
