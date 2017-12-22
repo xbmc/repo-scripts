@@ -1,3 +1,7 @@
+v0.9.7
+- Fixes for git hell
+- Fixes for cut and paste error and strip most strings to solve whitespace issues
+
 v0.9.4
 - Fixes for Weatherzone page changes
 

@@ -349,7 +349,7 @@ def getWeatherData(urlPath, extendedFeatures = True, XBMC_VERSION=17.0):
         weatherData['Today.Moonphase'] = value
         
         #Sunrise/set
-        sunrise = tds[2].text.strip()
+        sunrise = tds[1].text.strip()
         sunset = tds[2].text.strip()
         weatherData['Today.Sunrise'] = sunrise
         weatherData['Today.Sunset'] = sunset
