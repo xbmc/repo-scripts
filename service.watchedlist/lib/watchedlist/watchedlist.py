@@ -48,8 +48,12 @@ import sqlite3
 import mysql.connector
 
 import buggalo
-buggalo.GMAIL_RECIPIENT = "msahadl60@gmail.com"
-# buggalo.SUBMIT_URL = 'http://msahadl.ms.funpic.de/buggalo-web/submit.php'
+buggalo.EMAIL_CONFIG = {"recipient":"msahadl60@gmail.com", 
+                        "sender":"Buggalo <kodiwatchedlist@gmail.com>",
+                        "server":"smtp.googlemail.com",
+                        "method":"ssl",
+                        "user":"kodiwatchedlist@gmail.com",
+                        "pass":"mcgxwujwzswnqmbh"}
 
 import utils
 
@@ -286,7 +290,6 @@ class WatchedList:
 
         try:
             utils.buggalo_extradata_settings()
-
             # check if player is running before doing the update. Only do this check for automatic start
             while xbmc.Player().isPlaying() == True and not manualstart:
                 if self.monitor.waitForAbort(60*1000): return 1 # wait one minute until next check for active playback
