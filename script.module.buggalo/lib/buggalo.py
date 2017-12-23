@@ -29,13 +29,23 @@ import buggalo_client as client
 import buggalo_gui as gui
 import buggalo_userflow as userflow
 
-# You must provide either the SUBMIT_URL or GMAIL_RECIPIENT
-# via buggalo.SUBMIT_URL = '' or buggalo.GMAIL_RECIPIENT = ''
+""" 
+You must provide either the SUBMIT_URL or EMAIL_CONFIG
+via buggalo.SUBMIT_URL = '' 
+or (as an example)
+buggalo.EMAIL_CONFIG = {"recipient":"youremail@gmail.com", 
+                        "sender":"Buggalo <buggalo_account@gmail.com>", # example
+                        "server":"smtp.googlemail.com", # example for gmail
+                        "method":"ssl",
+                        "user":"buggalo_account@gmail.com",
+                        "pass":"yourpasswordforbuggalo_account"}
+"""
 
 # The full URL to where the gathered data should be posted.
 SUBMIT_URL = None
-# The email address where the gathered data should be sent.
-GMAIL_RECIPIENT = None
+# The email configuration where and how the gathered data should be sent.
+EMAIL_CONFIG = None
+GMAIL_RECIPIENT = None # for backwards-compatibility
 
 EXTRA_DATA = dict()
 
@@ -107,6 +117,7 @@ def onExceptionRaised(extraData=None):
 
     @param extraData: str or dict
     """
+    global EMAIL_CONFIG, SUBMIT_URL, GMAIL_RECIPIENT, SCRIPT_ADDON, EXTRA_DATA
     # start by logging the usual info to stderr
     (etype, value, traceback) = sys.exc_info()
     tb.print_exception(etype, value, traceback)
@@ -122,6 +133,10 @@ def onExceptionRaised(extraData=None):
     heading = getRandomHeading()
     data = client.gatherData(etype, value, traceback, extraData, EXTRA_DATA)
 
-    d = gui.BuggaloDialog(SUBMIT_URL, GMAIL_RECIPIENT, heading, data)
+    if not GMAIL_RECIPIENT == None and EMAIL_CONFIG == None: # for backwards-compatibility
+        EMAIL_CONFIG = {'recipient':GMAIL_RECIPIENT}
+    print SUBMIT_URL
+    print EMAIL_CONFIG
+    d = gui.BuggaloDialog(SUBMIT_URL, EMAIL_CONFIG, heading, data)
     d.doModal()
     del d

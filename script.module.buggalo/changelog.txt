@@ -1,3 +1,6 @@
+[B]Version 1.1.7 - 2017-12-16[/B]
+- Added SSL login for email server
+
 [B]Version 1.1.6 - 2014-10-05[/B]
 - Fixed problem when an addon is invoked through it's settings via RunScript(..)
 - Updated language files from Transifex
