@@ -130,7 +130,7 @@ def submitData(serviceUrl, data):
             pass # probably timeout; retry
 
 
-def emailData(recipient, data):
+def emailData(emailConfig, data):
     """
 
     @param recipient:
@@ -149,12 +149,16 @@ def emailData(recipient, data):
                 keys = sorted(keys)
 
             for key in keys:
-                body += '<tr><td>%s</td>' % key
+                body += '<tr><td>%s</td>' % str(key)
                 if key == 'stacktrace':
                     body += '<td><pre>'
                     for item in values[key]:
                         body += item + '\n'
                     body += '</pre></td>'
+                elif key == 'type':
+                    body += '<td>%s</td>' % str(values[key][5:-2])
+                elif group == 'extraData':
+                    body += '<td style="white-space: pre">%s</td>' % str(values[key])
                 else:
                     body += '<td>%s</td>' % str(values[key])
                 body += '</tr>'
@@ -164,10 +168,27 @@ def emailData(recipient, data):
 
     msg = MIMEText(body, 'html')
     msg['Subject'] = '[Buggalo][%s] %s' % (data['addon']['id'], data['exception']['value'])
-    msg['From'] = 'Buggalo'
-    msg['To'] = recipient
+    if 'sender' in emailConfig:
+        msg['From'] = emailConfig['sender']
+    else:
+        msg['From'] = 'Buggalo@buggalo.com'
+    msg['To'] = emailConfig['recipient']
     msg['X-Mailer'] = 'Buggalo Exception Collector'
 
-    smtp = smtplib.SMTP('gmail-smtp-in.l.google.com')
+    if not 'server' in emailConfig:
+        emailConfig['server'] = 'gmail-smtp-in.l.google.com'
+
+    if not 'method' in emailConfig:
+        emailConfig['method'] = 'default'
+        
+    if 'method' in emailConfig and emailConfig['method'] == 'ssl':
+        smtp = smtplib.SMTP_SSL(emailConfig['server'])
+    else:
+        # smtp on port 25
+        smtp = smtplib.SMTP(emailConfig['server'])
+
+    if 'user' in emailConfig and 'pass' in emailConfig:
+        # necessary for ssl connection
+        smtp.login(emailConfig['user'], emailConfig['pass'])
     smtp.sendmail(msg['From'], msg['To'], msg.as_string(9))
     smtp.quit()

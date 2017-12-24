@@ -5,7 +5,7 @@ exception in a Python script as well as information about the
 users system, such as XBMC and Python versions.
 
 The collected information is then posted to the internet at a
-predefined URL or Gmail account where the addon author can
+predefined URL or email account where the addon author can
 investigate the exception.
 
 The script is somewhat similar to posting the xbmc.log to pastebin,
@@ -21,13 +21,22 @@ HOW TO USE
 ==========
 To use this script you must do these things besides importing it.
 
-1.  Choose whether to submit the collected data to a Gmail account or
+1.  Choose whether to submit the collected data to an Email account or
     a private website containing buggalo-web.
 
-    *  To use a Gmail account set the buggalo.GMAIL_RECIPIENT to the full
-       gmail.com address of the recipient.
+    *  To use an email account set the `buggalo.EMAIL_RECIPIENT` with a dict structure containing information about the recipient, the email server and the credentials.
+       ```python
+       buggalo.EMAIL_CONFIG = {"recipient":"youremail@gmail.com", 
+                        "sender":"Buggalo <buggalo_account@gmail.com>", # example
+                        "server":"smtp.googlemail.com", # example for gmail
+                        "method":"ssl",
+                        "user":"buggalo_account@gmail.com",
+                        "pass":"yourpasswordforbuggalo_account"}
+       ```
+       You should use encrypted communication with the email server via smtp. For this option, the `method` has to be `ssl` and you have to give the username (`user`) and the password (`pass`), as in the example above. These are publicly visible and should therefore be used only for the smtp server and for nothing else (like e.g. for account login). This means, you have to create an email account for your addon to send the bug report emails.  
+       Unencrypted login is also possible by setting the `method` to `default` and not giving the credentials. Most of the emails will be blocked by ISPs though for spam prevention.
 
-    *  To use a website set buggalo.SUBMIT_URL to a full URL where the
+    *  To use a website, set buggalo.SUBMIT_URL to a full URL where the
        collected data is submitted.
 
 2.  Surround the code you want to be covered by this script in a
@@ -69,6 +78,11 @@ To use this script you must do these things besides importing it.
     file which store the error report in the database.
     https://github.com/twinther/buggalo-web/blob/master/submit.php
 
+Examples for the implementation can be found in the code of the following addons that use buggalo:
+
+*  [script.tvguide](https://github.com/twinther/script.tvguide)
+*  [script.moviequiz](https://github.com/twinther/script.moviequiz)
+*  [service.watchedlist](https://github.com/SchapplM/xbmc-addon-service-watchedlist)
 
 NOTES ABOUT GMAIL RECIPIENT
 ===========================

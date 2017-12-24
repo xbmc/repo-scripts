@@ -48,13 +48,13 @@ class BuggaloDialog(xbmcgui.WindowXMLDialog):
     THANK_YOU_GROUP = 202
     THANK_YOU_LABEL = 203
 
-    def __new__(cls, serviceUrl, gmailRecipient, heading, data):
+    def __new__(cls, serviceUrl, emailConfig, heading, data):
         return super(BuggaloDialog, cls).__new__(cls, 'buggalo-dialog.xml', buggaloAddon.getAddonInfo('path'))
 
-    def __init__(self, serviceUrl, gmailRecipient, heading, data):
+    def __init__(self, serviceUrl, emailConfig, heading, data):
         super(BuggaloDialog, self).__init__()
         self.serviceUrl = serviceUrl
-        self.gmailRecipient = gmailRecipient
+        self.emailConfig = emailConfig
         self.heading = heading
         self.data = data
         self.detailsVisible = False
@@ -102,8 +102,8 @@ class BuggaloDialog(xbmcgui.WindowXMLDialog):
             try:
                 if self.serviceUrl is not None:
                     client.submitData(self.serviceUrl, self.data)
-                elif self.gmailRecipient is not None:
-                    client.emailData(self.gmailRecipient, self.data)
+                elif self.emailConfig is not None:
+                    client.emailData(self.emailConfig, self.data)
             except Exception:
                 self.getControl(self.THANK_YOU_LABEL).setLabel(buggaloAddon.getLocalizedString(91009))
                 (etype, value, tb) = sys.exc_info()
