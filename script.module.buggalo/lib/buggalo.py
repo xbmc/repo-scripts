@@ -135,8 +135,6 @@ def onExceptionRaised(extraData=None):
 
     if not GMAIL_RECIPIENT == None and EMAIL_CONFIG == None: # for backwards-compatibility
         EMAIL_CONFIG = {'recipient':GMAIL_RECIPIENT}
-    print SUBMIT_URL
-    print EMAIL_CONFIG
     d = gui.BuggaloDialog(SUBMIT_URL, EMAIL_CONFIG, heading, data)
     d.doModal()
     del d
