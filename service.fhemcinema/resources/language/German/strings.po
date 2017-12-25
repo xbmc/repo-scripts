@@ -1,0 +1,94 @@
+# Kodi Media Center language file
+# Addon Name: MediathekView
+# Addon id: service.fhemcinema
+# Addon Provider: leo.moll@yeasoft.com
+msgid ""
+msgstr ""
+"Project-Id-Version: Kodi Addons\n"
+"Report-Msgid-Bugs-To: leo.moll@yeasoft.com\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Alex\n"
+"Language-Team: German (http://www.transifex.com/projects/p/xbmc-addons/language/de/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: de\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#30001"
+msgid "Allgemein"
+msgstr ""
+
+msgctxt "#30002"
+msgid "Tagsüber"
+msgstr ""
+
+msgctxt "#30010"
+msgid "Heim-Automationssystem"
+msgstr ""
+
+msgctxt "#30011"
+msgid "Host"
+msgstr ""
+
+msgctxt "#30012"
+msgid "Port"
+msgstr ""
+
+msgctxt "#30013"
+msgid "Befehl bei Video/Audio gestoppt verzögern"
+msgstr ""
+
+msgctxt "#30014"
+msgid "Aktionen"
+msgstr ""
+
+msgctxt "#30021"
+msgid "Tagesvariante aktivieren (nur mit FHEM)"
+msgstr ""
+
+msgctxt "#30022"
+msgid "Von"
+msgstr ""
+
+msgctxt "#30023"
+msgid "Bis"
+msgstr ""
+
+msgctxt "#30031"
+msgid "Kodi gestartet"
+msgstr ""
+
+msgctxt "#30032"
+msgid "Kodi beendet"
+msgstr ""
+
+msgctxt "#30033"
+msgid "Videowiedergabe gestartet"
+msgstr ""
+
+msgctxt "#30034"
+msgid "Videowiedergabe angehalten"
+msgstr ""
+
+msgctxt "#30035"
+msgid "Videowiedergabe beendet"
+msgstr ""
+
+msgctxt "#30036"
+msgid "Audiowiedergabe gestartet"
+msgstr ""
+
+msgctxt "#30037"
+msgid "Audiowiedergabe angehalten"
+msgstr ""
+
+msgctxt "#30038"
+msgid "Audiowiedergabe beendet"
+msgstr ""
+
+msgctxt "#30039"
+msgid "Systemvariable"
+msgstr ""
+
