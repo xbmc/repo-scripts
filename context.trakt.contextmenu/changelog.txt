@@ -1,0 +1,8 @@
+v1.0.3
+- Updated for Kodi Leia
+
+v1.0.1
+- Fixed wrong description.
+
+v1.0.0
+- Initial Release.
