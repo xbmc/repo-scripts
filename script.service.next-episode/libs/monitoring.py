@@ -6,7 +6,8 @@
 import json
 import xbmc
 from xbmcgui import Dialog
-from commands import sync_library, sync_new_items, login, addon, update_single_item
+from commands import (sync_library, sync_new_items, login, addon,
+                      update_single_item)
 from medialibrary import get_item_details
 from gui import ui_string
 # Here ``addon`` is imported from another module to prevent a bug

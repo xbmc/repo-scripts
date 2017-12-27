@@ -9,5 +9,7 @@
              label="32002"
              action="RunScript($CWD/libs/commands.py,sync_library)" />
     <setting label="Prompt" type="bool" id="prompt_shown" default="false" visible="false" />
+    <setting label="Username" type="text" id="username" default="" visible="false"/>
+    <setting label="Hash" type="text" id="hash" default="" visible="false"/>
   </category>
 </settings>

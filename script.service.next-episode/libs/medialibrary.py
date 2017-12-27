@@ -26,9 +26,11 @@ def send_json_rpc(method, params=None):
     if params is not None:
         request['params'] = params
     json_request = json.dumps(request)
-    xbmc.log('next-episode-net: JSON-RPC request: {0}'.format(json_request), xbmc.LOGDEBUG)
+    xbmc.log('next-episode-net: JSON-RPC request: {0}'.format(json_request),
+             xbmc.LOGDEBUG)
     json_reply = xbmc.executeJSONRPC(json_request)
-    xbmc.log('next-episode-net: JSON-RPC reply: {0}'.format(json_reply), xbmc.LOGDEBUG)
+    xbmc.log('next-episode-net: JSON-RPC reply: {0}'.format(json_reply),
+             xbmc.LOGDEBUG)
     return json.loads(json_reply)['result']
 
 
@@ -37,18 +39,17 @@ def get_movies():
     Get the list of movies from the Kodi database
 
     :return: the list of movie data as Python dicts like this:
-        ``{"label":"Frankenstein Created Woman","movieid":1,"playcount":1,"uniqueid":{"imdb":"tt0061683","tmdb":"3104"}}``
+        ``{"label":"Frankenstein Created Woman","movieid":1,"playcount":1,
+        "uniqueid":{"imdb":"tt0061683","tmdb":"3104"}}``
     :rtype: list
     :raises NoDataError: if the Kodi library has no movies
     """
     params = {
-        'properties': ['playcount'],
+        'properties': ['playcount', 'imdbnumber'],
         'sort': {'order': 'ascending', 'method': 'label'}
     }
     if xbmc.getInfoLabel('System.BuildVersion') >= '17.0':
         params['properties'].append('uniqueid')
-    else:
-        params['properties'].append('imdbnumber')
     result = send_json_rpc('VideoLibrary.GetMovies', params)
     if not result.get('movies'):
         raise NoDataError
@@ -81,7 +82,8 @@ def get_episodes(tvshowid):
     :param tvshowid: internal Kodi database ID for a TV show
     :type tvshowid: str
     :return: the liso of episode data as Python dicts like this:
-        ``{u'season': 4, u'playcount': 0, u'episode': 1, u'episodeid': 5, u'label': u'4x01. The Drone Queen'}``
+        ``{u'season': 4, u'playcount': 0, u'episode': 1, u'episodeid': 5,
+        u'label': u'4x01. The Drone Queen'}``
     :rtype: list
     :raises NoDataError: if a TV show has no episodes.
     """
@@ -105,7 +107,9 @@ def get_tvdb_id(tvshowid):
     :rtype: str
     """
     params = {'tvshowid': tvshowid, 'properties': ['imdbnumber']}
-    return send_json_rpc('VideoLibrary.GetTVShowDetails', params)['tvshowdetails']['imdbnumber']
+    return send_json_rpc(
+        'VideoLibrary.GetTVShowDetails', params
+    )['tvshowdetails']['imdbnumber']
 
 
 def get_recent_movies():
@@ -117,6 +121,8 @@ def get_recent_movies():
     :raises NoDataError: if the Kodi library has no recent movies.
     """
     params = {'properties': ['imdbnumber', 'playcount']}
+    if xbmc.getInfoLabel('System.BuildVersion') >= '17.0':
+        params['properties'].append('uniqueid')
     result = send_json_rpc('VideoLibrary.GetRecentlyAddedMovies', params)
     if not result.get('movies'):
         raise NoDataError
@@ -149,13 +155,11 @@ def get_item_details(id_, type):
     :return: item details
     :rtype: dict
     """
-    params = {type + 'id': id_, 'properties': ['playcount']}
+    params = {type + 'id': id_, 'properties': ['playcount', 'imdbnumber']}
     if type == 'movie':
         method = 'VideoLibrary.GetMovieDetails'
         if xbmc.getInfoLabel('System.BuildVersion') >= '17.0':
             params['properties'].append('uniqueid')
-        else:
-            params['properties'].append('imdbnumber')
     else:
         method = 'VideoLibrary.GetEpisodeDetails'
         params['properties'] += ['tvshowid', 'season', 'episode']

@@ -49,8 +49,12 @@ class DataUpdateError(Exception):
             return 'none'
 
     def __str__(self):
-        return 'Data update error! Failed movies: {0}. Failed TV shows: {1}'.format(self.failed_movies,
-                                                                                    self.failed_shows)
+        return (
+            'Data update error! '
+            'Failed movies: {0}. Failed TV shows: {1}'.format(
+                self.failed_movies,
+                self.failed_shows)
+        )
 
 
 def web_client(url, data=None):
@@ -128,10 +132,10 @@ def prepare_movies_list(raw_movies):
     """
     listing = []
     for movie in raw_movies:
-        if xbmc.getInfoLabel('System.BuildVersion') >= '17.0':
-            imdb_id = movie['uniqueid']['imdb']
-        else:
+        if 'tt' in movie['imdbnumber']:
             imdb_id = movie['imdbnumber']
+        else:
+            imdb_id = movie['uniqueid']['imdb']
         watched = '1' if movie['playcount'] else '0'
         listing.append({'imdb_id': imdb_id, 'watched': watched})
     return listing
@@ -154,6 +158,10 @@ def prepare_episodes_list(raw_episodes):
         watched = '1' if episode['playcount'] else '0'
         if episode['tvshowid'] not in thetvdb_id_map:
             thetvdb_id_map[episode['tvshowid']] = get_tvdb_id(episode['tvshowid'])
-        listing.append({'thetvdb_id': thetvdb_id_map[episode['tvshowid']], 'season': season_n, 'episode': episode_n,
-                        'watched': watched})
+        listing.append(
+            {'thetvdb_id': thetvdb_id_map[episode['tvshowid']],
+             'season': season_n,
+             'episode': episode_n,
+             'watched': watched}
+        )
     return listing

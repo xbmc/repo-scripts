@@ -66,5 +66,7 @@ class NextEpDialog(pyxbmct.AddonDialogWindow):
         pass
 
     def setAnimation(self, control):
-        control.setAnimations([('WindowOpen', 'effect=fade start=0 end=100 time=250'),
-                               ('WindowClose', 'effect=fade start=100 end=0 time=250')])
+        control.setAnimations(
+            [('WindowOpen', 'effect=fade start=0 end=100 time=250'),
+             ('WindowClose', 'effect=fade start=100 end=0 time=250')]
+        )
