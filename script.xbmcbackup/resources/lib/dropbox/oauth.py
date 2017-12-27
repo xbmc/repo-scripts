@@ -511,5 +511,9 @@ def _params_to_urlencoded(params):
             else:
                 return str(o).encode('utf-8')
 
-    utf8_params = {encode(k): encode(v) for k, v in six.iteritems(params)}
+    #fix for python 2.6
+    utf8_params = {}
+    for k,v in six.iteritems(params):
+        utf8_params[encode(k)] = encode(v)
+
     return url_encode(utf8_params)
