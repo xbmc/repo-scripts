@@ -188,7 +188,7 @@ class DropboxFileSystem(Vfs):
 
     def exists(self,aFile):
         aFile = self._fix_slashes(aFile)
-    
+        
         if(self.client != None):
             #can't list root metadata
             if(aFile == ''):
@@ -232,8 +232,13 @@ class DropboxFileSystem(Vfs):
     def _fix_slashes(self,filename):
         result = filename.replace('\\','/')
 
+        #root needs to be a blank string
         if(result == '/'):
             result = ""
+
+        #if dir ends in slash, remove it
+        if(result[-1:] == "/"):
+            result = result[:-1]
 
         return result
             
