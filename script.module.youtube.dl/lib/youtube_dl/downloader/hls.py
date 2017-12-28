@@ -59,9 +59,9 @@ class HlsFD(FragmentFD):
         man_url = info_dict['url']
         self.to_screen('[%s] Downloading m3u8 manifest' % self.FD_NAME)
 
-        manifest = self.ydl.urlopen(self._prepare_url(info_dict, man_url)).read()
-
-        s = manifest.decode('utf-8', 'ignore')
+        urlh = self.ydl.urlopen(self._prepare_url(info_dict, man_url))
+        man_url = urlh.geturl()
+        s = urlh.read().decode('utf-8', 'ignore')
 
         if not self.can_download(s, info_dict):
             if info_dict.get('extra_param_to_segment_url'):
@@ -75,15 +75,30 @@ class HlsFD(FragmentFD):
                 fd.add_progress_hook(ph)
             return fd.real_download(filename, info_dict)
 
-        total_frags = 0
+        def anvato_ad(s):
+            return s.startswith('#ANVATO-SEGMENT-INFO') and 'type=ad' in s
+
+        media_frags = 0
+        ad_frags = 0
+        ad_frag_next = False
         for line in s.splitlines():
             line = line.strip()
-            if line and not line.startswith('#'):
-                total_frags += 1
+            if not line:
+                continue
+            if line.startswith('#'):
+                if anvato_ad(line):
+                    ad_frags += 1
+                    ad_frag_next = True
+                continue
+            if ad_frag_next:
+                ad_frag_next = False
+                continue
+            media_frags += 1
 
         ctx = {
             'filename': filename,
-            'total_frags': total_frags,
+            'total_frags': media_frags,
+            'ad_frags': ad_frags,
         }
 
         self._prepare_and_start_frag_download(ctx)
@@ -101,10 +116,14 @@ class HlsFD(FragmentFD):
         decrypt_info = {'METHOD': 'NONE'}
         byte_range = {}
         frag_index = 0
+        ad_frag_next = False
         for line in s.splitlines():
             line = line.strip()
             if line:
                 if not line.startswith('#'):
+                    if ad_frag_next:
+                        ad_frag_next = False
+                        continue
                     frag_index += 1
                     if frag_index <= ctx['fragment_index']:
                         continue
@@ -175,6 +194,8 @@ class HlsFD(FragmentFD):
                         'start': sub_range_start,
                         'end': sub_range_start + int(splitted_byte_range[0]),
                     }
+                elif anvato_ad(line):
+                    ad_frag_next = True
 
         self._finish_frag_download(ctx)
 

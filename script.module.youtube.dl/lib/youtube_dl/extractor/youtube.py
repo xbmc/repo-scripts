@@ -16,6 +16,7 @@ from ..jsinterp import JSInterpreter
 from ..swfinterp import SWFInterpreter
 from ..compat import (
     compat_chr,
+    compat_kwargs,
     compat_parse_qs,
     compat_urllib_parse_unquote,
     compat_urllib_parse_unquote_plus,
@@ -245,6 +246,11 @@ class YoutubeBaseInfoExtractor(InfoExtractor):
 
         return True
 
+    def _download_webpage(self, *args, **kwargs):
+        kwargs.setdefault('query', {})['disable_polymer'] = 'true'
+        return super(YoutubeBaseInfoExtractor, self)._download_webpage(
+            *args, **compat_kwargs(kwargs))
+
     def _real_initialize(self):
         if self._downloader is None:
             return
@@ -326,6 +332,7 @@ class YoutubeIE(YoutubeBaseInfoExtractor):
                          (?:(?:(?:(?:\w+\.)?[yY][oO][uU][tT][uU][bB][eE](?:-nocookie)?\.com/|
                             (?:www\.)?deturl\.com/www\.youtube\.com/|
                             (?:www\.)?pwnyoutube\.com/|
+                            (?:www\.)?hooktube\.com/|
                             (?:www\.)?yourepeat\.com/|
                             tube\.majestyc\.net/|
                             youtube\.googleapis\.com/)                        # the various hostnames, with wildcard subdomains
@@ -673,6 +680,7 @@ class YoutubeIE(YoutubeBaseInfoExtractor):
             },
         },
         # video_info is None (https://github.com/rg3/youtube-dl/issues/4421)
+        # YouTube Red ad is not captured for creator
         {
             'url': '__2ABJjxzNo',
             'info_dict': {
@@ -1001,6 +1009,27 @@ class YoutubeIE(YoutubeBaseInfoExtractor):
             'expected_warnings': [
                 'Skipping DASH manifest',
             ],
+        },
+        {
+            # The following content has been identified by the YouTube community
+            # as inappropriate or offensive to some audiences.
+            'url': 'https://www.youtube.com/watch?v=6SJNVb0GnPI',
+            'info_dict': {
+                'id': '6SJNVb0GnPI',
+                'ext': 'mp4',
+                'title': 'Race Differences in Intelligence',
+                'description': 'md5:5d161533167390427a1f8ee89a1fc6f1',
+                'duration': 965,
+                'upload_date': '20140124',
+                'uploader': 'New Century Foundation',
+                'uploader_id': 'UCEJYpZGqgUob0zVVEaLhvVg',
+                'uploader_url': r're:https?://(?:www\.)?youtube\.com/channel/UCEJYpZGqgUob0zVVEaLhvVg',
+                'license': 'Standard YouTube License',
+                'view_count': int,
+            },
+            'params': {
+                'skip_download': True,
+            },
         },
         {
             # itag 212
@@ -1346,6 +1375,43 @@ class YoutubeIE(YoutubeBaseInfoExtractor):
             playback_url, video_id, 'Marking watched',
             'Unable to mark watched', fatal=False)
 
+    @staticmethod
+    def _extract_urls(webpage):
+        # Embedded YouTube player
+        entries = [
+            unescapeHTML(mobj.group('url'))
+            for mobj in re.finditer(r'''(?x)
+            (?:
+                <iframe[^>]+?src=|
+                data-video-url=|
+                <embed[^>]+?src=|
+                embedSWF\(?:\s*|
+                <object[^>]+data=|
+                new\s+SWFObject\(
+            )
+            (["\'])
+                (?P<url>(?:https?:)?//(?:www\.)?youtube(?:-nocookie)?\.com/
+                (?:embed|v|p)/[0-9A-Za-z_-]{11}.*?)
+            \1''', webpage)]
+
+        # lazyYT YouTube embed
+        entries.extend(list(map(
+            unescapeHTML,
+            re.findall(r'class="lazyYT" data-youtube-id="([^"]+)"', webpage))))
+
+        # Wordpress "YouTube Video Importer" plugin
+        matches = re.findall(r'''(?x)<div[^>]+
+            class=(?P<q1>[\'"])[^\'"]*\byvii_single_video_player\b[^\'"]*(?P=q1)[^>]+
+            data-video_id=(?P<q2>[\'"])([^\'"]+)(?P=q2)''', webpage)
+        entries.extend(m[-1] for m in matches)
+
+        return entries
+
+    @staticmethod
+    def _extract_url(webpage):
+        urls = YoutubeIE._extract_urls(webpage)
+        return urls[0] if urls else None
+
     @classmethod
     def extract_id(cls, url):
         mobj = re.match(cls._VALID_URL, url, re.VERBOSE)
@@ -1436,9 +1502,14 @@ class YoutubeIE(YoutubeBaseInfoExtractor):
             if dash_mpd and dash_mpd[0] not in dash_mpds:
                 dash_mpds.append(dash_mpd[0])
 
+        is_live = None
+        view_count = None
+
+        def extract_view_count(v_info):
+            return int_or_none(try_get(v_info, lambda x: x['view_count'][0]))
+
         # Get video info
         embed_webpage = None
-        is_live = None
         if re.search(r'player-age-gate-content">', video_webpage) is not None:
             age_gate = True
             # We simulate the access to the video from www.youtube.com/v/{video_id}
@@ -1508,6 +1579,8 @@ class YoutubeIE(YoutubeBaseInfoExtractor):
                         continue
                     get_video_info = compat_parse_qs(video_info_webpage)
                     add_dash_mpd(get_video_info)
+                    if view_count is None:
+                        view_count = extract_view_count(get_video_info)
                     if not video_info:
                         video_info = get_video_info
                     if 'token' in get_video_info:
@@ -1549,6 +1622,17 @@ class YoutubeIE(YoutubeBaseInfoExtractor):
         # description
         description_original = video_description = get_element_by_id("eow-description", video_webpage)
         if video_description:
+
+            def replace_url(m):
+                redir_url = compat_urlparse.urljoin(url, m.group(1))
+                parsed_redir_url = compat_urllib_parse_urlparse(redir_url)
+                if re.search(r'^(?:www\.)?(?:youtube(?:-nocookie)?\.com|youtu\.be)$', parsed_redir_url.netloc) and parsed_redir_url.path == '/redirect':
+                    qs = compat_parse_qs(parsed_redir_url.query)
+                    q = qs.get('q')
+                    if q and q[0]:
+                        return q[0]
+                return redir_url
+
             description_original = video_description = re.sub(r'''(?x)
                 <a\s+
                     (?:[a-zA-Z-]+="[^"]*"\s+)*?
@@ -1557,7 +1641,7 @@ class YoutubeIE(YoutubeBaseInfoExtractor):
                     class="[^"]*"[^>]*>
                 [^<]+\.{3}\s*
                 </a>
-            ''', r'\1', video_description)
+            ''', replace_url, video_description)
             video_description = clean_html(video_description)
         else:
             fd_mobj = re.search(r'<meta name="description" content="([^"]+)"', video_webpage)
@@ -1591,10 +1675,8 @@ class YoutubeIE(YoutubeBaseInfoExtractor):
                 return self.playlist_result(entries, video_id, video_title, video_description)
             self.to_screen('Downloading just video %s because of --no-playlist' % video_id)
 
-        if 'view_count' in video_info:
-            view_count = int(video_info['view_count'][0])
-        else:
-            view_count = None
+        if view_count is None:
+            view_count = extract_view_count(video_info)
 
         # Check for "rental" videos
         if 'ypc_video_rental_bar_text' in video_info and 'author' not in video_info:
@@ -1612,7 +1694,7 @@ class YoutubeIE(YoutubeBaseInfoExtractor):
         video_uploader_id = None
         video_uploader_url = None
         mobj = re.search(
-            r'<link itemprop="url" href="(?P<uploader_url>https?://www.youtube.com/(?:user|channel)/(?P<uploader_id>[^"]+))">',
+            r'<link itemprop="url" href="(?P<uploader_url>https?://www\.youtube\.com/(?:user|channel)/(?P<uploader_id>[^"]+))">',
             video_webpage)
         if mobj is not None:
             video_uploader_id = mobj.group('uploader_id')
@@ -1638,10 +1720,8 @@ class YoutubeIE(YoutubeBaseInfoExtractor):
         if not upload_date:
             upload_date = self._search_regex(
                 [r'(?s)id="eow-date.*?>(.*?)</span>',
-                 r'id="watch-uploader-info".*?>.*?(?:Published|Uploaded|Streamed live|Started) on (.+?)</strong>'],
+                 r'(?:id="watch-uploader-info".*?>.*?|["\']simpleText["\']\s*:\s*["\'])(?:Published|Uploaded|Streamed live|Started) on (.+?)[<"\']'],
                 video_webpage, 'upload date', default=None)
-            if upload_date:
-                upload_date = ' '.join(re.sub(r'[/,-]', r' ', mobj.group(1)).split())
         upload_date = unified_strdate(upload_date)
 
         video_license = self._html_search_regex(
@@ -1649,7 +1729,21 @@ class YoutubeIE(YoutubeBaseInfoExtractor):
             video_webpage, 'license', default=None)
 
         m_music = re.search(
-            r'<h4[^>]+class="title"[^>]*>\s*Music\s*</h4>\s*<ul[^>]*>\s*<li>(?P<title>.+?) by (?P<creator>.+?)(?:\(.+?\))?</li',
+            r'''(?x)
+                <h4[^>]+class="title"[^>]*>\s*Music\s*</h4>\s*
+                <ul[^>]*>\s*
+                <li>(?P<title>.+?)
+                by (?P<creator>.+?)
+                (?:
+                    \(.+?\)|
+                    <a[^>]*
+                        (?:
+                            \bhref=["\']/red[^>]*>|             # drop possible
+                            >\s*Listen ad-free with YouTube Red # YouTube Red ad
+                        )
+                    .*?
+                )?</li
+            ''',
             video_webpage)
         if m_music:
             video_alt_title = remove_quotes(unescapeHTML(m_music.group('title')))
@@ -1957,39 +2051,6 @@ class YoutubeIE(YoutubeBaseInfoExtractor):
         }
 
 
-class YoutubeSharedVideoIE(InfoExtractor):
-    _VALID_URL = r'(?:https?:)?//(?:www\.)?youtube\.com/shared\?.*\bci=(?P<id>[0-9A-Za-z_-]{11})'
-    IE_NAME = 'youtube:shared'
-
-    _TEST = {
-        'url': 'https://www.youtube.com/shared?ci=1nEzmT-M4fU',
-        'info_dict': {
-            'id': 'uPDB5I9wfp8',
-            'ext': 'webm',
-            'title': 'Pocoyo: 90 minutos de episódios completos Português para crianças - PARTE 3',
-            'description': 'md5:d9e4d9346a2dfff4c7dc4c8cec0f546d',
-            'upload_date': '20160219',
-            'uploader': 'Pocoyo - Português (BR)',
-            'uploader_id': 'PocoyoBrazil',
-        },
-        'add_ie': ['Youtube'],
-        'params': {
-            # There are already too many Youtube downloads
-            'skip_download': True,
-        },
-    }
-
-    def _real_extract(self, url):
-        video_id = self._match_id(url)
-
-        webpage = self._download_webpage(url, video_id)
-
-        real_video_id = self._html_search_meta(
-            'videoId', webpage, 'YouTube video id', fatal=True)
-
-        return self.url_result(real_video_id, YoutubeIE.ie_key())
-
-
 class YoutubePlaylistIE(YoutubePlaylistBaseInfoExtractor):
     IE_DESC = 'YouTube.com playlists'
     _VALID_URL = r"""(?x)(?:
@@ -2013,7 +2074,7 @@ class YoutubePlaylistIE(YoutubePlaylistBaseInfoExtractor):
                      |
                         (%(playlist_id)s)
                      )""" % {'playlist_id': YoutubeBaseInfoExtractor._PLAYLIST_ID_RE}
-    _TEMPLATE_URL = 'https://www.youtube.com/playlist?list=%s&disable_polymer=true'
+    _TEMPLATE_URL = 'https://www.youtube.com/playlist?list=%s'
     _VIDEO_RE = r'href="\s*/watch\?v=(?P<id>[0-9A-Za-z_-]{11})&amp;[^"]*?index=(?P<index>\d+)(?:[^>]+>(?P<title>[^<]+))?'
     IE_NAME = 'youtube:playlist'
     _TESTS = [{
@@ -2209,6 +2270,19 @@ class YoutubePlaylistIE(YoutubePlaylistBaseInfoExtractor):
             r'(?s)<h1 class="pl-header-title[^"]*"[^>]*>\s*(.*?)\s*</h1>',
             page, 'title', default=None)
 
+        _UPLOADER_BASE = r'class=["\']pl-header-details[^>]+>\s*<li>\s*<a[^>]+\bhref='
+        uploader = self._search_regex(
+            r'%s["\']/(?:user|channel)/[^>]+>([^<]+)' % _UPLOADER_BASE,
+            page, 'uploader', default=None)
+        mobj = re.search(
+            r'%s(["\'])(?P<path>/(?:user|channel)/(?P<uploader_id>.+?))\1' % _UPLOADER_BASE,
+            page)
+        if mobj:
+            uploader_id = mobj.group('uploader_id')
+            uploader_url = compat_urlparse.urljoin(url, mobj.group('path'))
+        else:
+            uploader_id = uploader_url = None
+
         has_videos = True
 
         if not playlist_title:
@@ -2219,8 +2293,15 @@ class YoutubePlaylistIE(YoutubePlaylistBaseInfoExtractor):
             except StopIteration:
                 has_videos = False
 
-        return has_videos, self.playlist_result(
+        playlist = self.playlist_result(
             self._entries(page, playlist_id), playlist_id, playlist_title)
+        playlist.update({
+            'uploader': uploader,
+            'uploader_id': uploader_id,
+            'uploader_url': uploader_url,
+        })
+
+        return has_videos, playlist
 
     def _check_download_just_video(self, url, playlist_id):
         # Check if it's a video-specific URL

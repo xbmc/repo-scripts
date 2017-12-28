@@ -187,9 +187,9 @@ class PBSIE(InfoExtractor):
     _VALID_URL = r'''(?x)https?://
         (?:
            # Direct video URL
-           (?:%s)/(?:viralplayer|video)/(?P<id>[0-9]+)/? |
+           (?:%s)/(?:(?:vir|port)alplayer|video)/(?P<id>[0-9]+)(?:[?/]|$) |
            # Article with embedded player (or direct video)
-           (?:www\.)?pbs\.org/(?:[^/]+/){2,5}(?P<presumptive_id>[^/]+?)(?:\.html)?/?(?:$|[?\#]) |
+           (?:www\.)?pbs\.org/(?:[^/]+/){1,5}(?P<presumptive_id>[^/]+?)(?:\.html)?/?(?:$|[?\#]) |
            # Player
            (?:video|player)\.pbs\.org/(?:widget/)?partnerplayer/(?P<player_id>[^/]+)/
         )
@@ -346,11 +346,30 @@ class PBSIE(InfoExtractor):
             },
         },
         {
+            # https://github.com/rg3/youtube-dl/issues/13801
+            'url': 'https://www.pbs.org/video/pbs-newshour-full-episode-july-31-2017-1501539057/',
+            'info_dict': {
+                'id': '3003333873',
+                'ext': 'mp4',
+                'title': 'PBS NewsHour - full episode July 31, 2017',
+                'description': 'md5:d41d8cd98f00b204e9800998ecf8427e',
+                'duration': 3265,
+                'thumbnail': r're:^https?://.*\.jpg$',
+            },
+            'params': {
+                'skip_download': True,
+            },
+        },
+        {
             'url': 'http://player.pbs.org/widget/partnerplayer/2365297708/?start=0&end=0&chapterbar=false&endscreen=false&topbar=true',
             'only_matching': True,
         },
         {
             'url': 'http://watch.knpb.org/video/2365616055/',
+            'only_matching': True,
+        },
+        {
+            'url': 'https://player.pbs.org/portalplayer/3004638221/?uid=',
             'only_matching': True,
         }
     ]
@@ -402,6 +421,7 @@ class PBSIE(InfoExtractor):
                 r'class="coveplayerid">([^<]+)<',                       # coveplayer
                 r'<section[^>]+data-coveid="(\d+)"',                    # coveplayer from http://www.pbs.org/wgbh/frontline/film/real-csi/
                 r'<input type="hidden" id="pbs_video_id_[0-9]+" value="([0-9]+)"/>',  # jwplayer
+                r"(?s)window\.PBS\.playerConfig\s*=\s*{.*?id\s*:\s*'([0-9]+)',",
             ]
 
             media_id = self._search_regex(
@@ -432,6 +452,9 @@ class PBSIE(InfoExtractor):
                     'player URL', default=None, group='url')
                 if url:
                     break
+
+            if not url:
+                url = self._og_search_url(webpage)
 
             mobj = re.match(self._VALID_URL, url)
 
