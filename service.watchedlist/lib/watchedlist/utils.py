@@ -65,7 +65,9 @@ def setSetting(name,value):
     _Addon.setSetting(name,value)
 
 def getSetting(name):
-    return _Addon.getSetting(name)
+    # The returned value from getSetting is not unicode, only string
+    # This function returns unicode
+    return _Addon.getSetting(name).decode('utf-8')
 
 def getString(string_id):
     # return a localized string from resources/language/*.po
