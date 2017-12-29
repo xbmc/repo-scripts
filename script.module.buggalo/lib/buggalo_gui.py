@@ -77,11 +77,17 @@ class BuggaloDialog(xbmcgui.WindowXMLDialog):
                         keys = sorted(keys)
 
                     for key in keys:
+                        if isinstance(values[key], unicode):
+                            item = xbmcgui.ListItem(label='    %s' % key, label2=values[key]) # values can be unicode
+                        else:
                             item = xbmcgui.ListItem(label='    %s' % key, label2=str(values[key]))
-                            listControl.addItem(item)
+                        listControl.addItem(item)
 
                 else:
-                    item = xbmcgui.ListItem(label='[B]%s[/B]' % group, label2=str(values))
+                    if isinstance(values, unicode):
+                        item = xbmcgui.ListItem(label='[B]%s[/B]' % group, label2=values)
+                    else:
+                        item = xbmcgui.ListItem(label='[B]%s[/B]' % group, label2=str(values))
                     listControl.addItem(item)
         except Exception:
             item = xbmcgui.ListItem(label2=buggaloAddon.getLocalizedString(91008))

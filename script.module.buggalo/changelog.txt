@@ -1,3 +1,6 @@
+[B]Version 1.1.8 - 2017-12-28[/B]
+- Support for unicode data
+
 [B]Version 1.1.7 - 2017-12-16[/B]
 - Added SSL login for email server
 
