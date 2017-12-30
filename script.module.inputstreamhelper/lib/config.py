@@ -13,7 +13,8 @@ DRM_SCHEMES = {
 CDM_EXTENSIONS = (
     '.so',
     '.dll',
-    '.dylib'
+    '.dylib',
+    '.json'
 )
 
 X86_MAP = {
@@ -34,18 +35,8 @@ WIDEVINE_SUPPORTED_ARCHS = [
 ]
 
 WIDEVINE_ARCH_MAP_X86 = {
-    'x86_64':
-        {
-            'Linux': 'x64',
-            'Windows': 'x64',
-            'Darwin': 'x64'
-        },
-    'x86':
-        {
-            'Linux': 'ia32',
-            'Windows': 'ia32',
-            'Darwin': 'ia32'
-        }
+    'x86_64': 'x64',
+    'x86': 'ia32'
 }
 
 WIDEVINE_OS_MAP = {
@@ -69,6 +60,8 @@ WIDEVINE_CURRENT_VERSION_URL = 'https://dl.google.com/widevine-cdm/current.txt'
 WIDEVINE_DOWNLOAD_URL = 'https://dl.google.com/widevine-cdm/{0}-{1}-{2}.zip'
 
 WIDEVINE_LICENSE_FILE = 'LICENSE.txt'
+
+WIDEVINE_MANIFEST_FILE = 'manifest.json'
 
 CHROMEOS_RECOVERY_CONF = 'https://dl.google.com/dl/edgedl/chromeos/recovery/recovery.conf'
 

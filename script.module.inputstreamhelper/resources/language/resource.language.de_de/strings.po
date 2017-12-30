@@ -18,7 +18,7 @@ msgid "Information"
 msgstr "Informationen"
 
 msgctxt "#30002"
-msgid "You do not have [B]Widevine DRM[/B] installed. This is required to play this content.[CR][CR]Do you want to install [B]Widevine DRM[/B]?"
+msgid "[B]Widevine CDM[/B] is required to play this content.[CR][CR]Do you want to install [B]Widevine DRM[/B]?"
 msgstr "Die [B]Widevine DRM[/B] Bibliothek ist nicht installiert, ist aber nötig um den Inhalt wiederzugeben.[CR][CR]Soll die [B]Widevine DRM[/B] Bibliothek installiert werden?"
 
 msgctxt "#30003"
@@ -74,16 +74,16 @@ msgid "Downloading [B]{0}[/B]..."
 msgstr "Download von [B]{0}[/B]..."
 
 msgctxt "#30016"
-msgid "Failed to extract [B]Widevine CDM[/B] from zip file."
-msgstr "Fehler beim entpacken der [B]Widevine CDM[/B] Bibliothek."
+msgid "Failed to extract [B]Widevine DRM[/B] from zip file."
+msgstr "Fehler beim entpacken der [B]Widevine DRM[/B] Bibliothek."
 
 msgctxt "#30017"
 msgid "[B]{0}[/B] {1} or later is required to play this content."
 msgstr "[B]{0}[/B] {1} oder höher ist notwendig um den Inhalt wiederzugeben."
 
 msgctxt "#30018"
-msgid "You do not have enough free disk space to install [B]Widevine CDM[/B]. Free up at least [B]{0}[/B] and try again."
-msgstr "Es ist nicht genug Festplattenspeicher zur Installation der [B]Widevine CDM[/B] Bibliothek vorhanden. Es müssen [B]{0}[/B] verfügbar gemacht werden um es erneut zu versuchen."
+msgid "You do not have enough free disk space to install [B]Widevine DRM[/B]. Free up at least [B]{0}[/B] and try again."
+msgstr "Es ist nicht genug Festplattenspeicher zur Installation der [B]Widevine DRM[/B] Bibliothek vorhanden. Es müssen [B]{0}[/B] verfügbar gemacht werden um es erneut zu versuchen."
 
 msgctxt "#30019"
 msgid "This operating system ([B]{0}[/B]) is not supported by [B]Widevine DRM[/B] for ARM devices."
@@ -132,3 +132,7 @@ msgstr ""
 msgctxt "#30030"
 msgid "Administrative rights ([B]sudo[/B]) is required to mount the Chrome OS image. Press OK to grant the installation permission to run the mount command as [B]sudo[/B]."
 msgstr "Administratiren Rechte ([B]sudo[/B]) sind erforderlich um das Chrome OS Image zu mounten. Mit OK bestätigen sie, dass der mount befehl via [B]sudo[/B] ausgeführt werden darf."
+
+msgctxt "#30031"
+msgid "An update of [B]Widevine DRM[/B] is required to play this content."
+msgstr ""

@@ -18,7 +18,7 @@ msgid "Information"
 msgstr ""
 
 msgctxt "#30002"
-msgid "You do not have [B]Widevine DRM[/B] installed. This is required to play this content.[CR][CR]Do you want to install [B]Widevine DRM[/B]?"
+msgid "[B]Widevine CDM[/B] is required to play this content.[CR][CR]Do you want to install [B]Widevine DRM[/B]?"
 msgstr ""
 
 msgctxt "#30003"
@@ -74,7 +74,7 @@ msgid "Downloading [B]{0}[/B]..."
 msgstr ""
 
 msgctxt "#30016"
-msgid "Failed to extract [B]Widevine CDM[/B] from zip file."
+msgid "Failed to extract [B]Widevine DRM[/B] from zip file."
 msgstr ""
 
 msgctxt "#30017"
@@ -82,7 +82,7 @@ msgid "[B]{0}[/B] {1} or later is required to play this content."
 msgstr ""
 
 msgctxt "#30018"
-msgid "You do not have enough free disk space to install [B]Widevine CDM[/B]. Free up at least [B]{0}[/B] and try again."
+msgid "You do not have enough free disk space to install [B]Widevine DRM[/B]. Free up at least [B]{0}[/B] and try again."
 msgstr ""
 
 msgctxt "#30019"
@@ -131,4 +131,8 @@ msgstr ""
 
 msgctxt "#30030"
 msgid "Administrative rights ([B]sudo[/B]) is required to mount the Chrome OS image. Press OK to grant the installation permission to run the mount command as [B]sudo[/B]."
+msgstr ""
+
+msgctxt "#30031"
+msgid "An update of [B]Widevine DRM[/B] is required to play this content."
 msgstr ""

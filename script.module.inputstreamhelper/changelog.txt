@@ -1,3 +1,7 @@
+2017.12.30 v0.2.3
++ Make sure Kodi and Widevine CDM binary architecture matches
++ Minor wording changes/fixes
+
 2017.12.05 v0.2.2
 + Fixes for widevine download when using 64-bit Kodi (thanks to gismo112 & asciidisco)
 
