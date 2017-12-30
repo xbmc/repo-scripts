@@ -107,15 +107,16 @@ class Helper(object):
         return cdm_path
 
     @classmethod
+    def _widevine_manifest_path(cls):
+        return os.path.join(cls._ia_cdm_path(), config.WIDEVINE_MANIFEST_FILE)
+
+    @classmethod
     def _kodi_version(cls):
         version = xbmc.getInfoLabel('System.BuildVersion')
         return version.split(' ')[0]
 
-    def _inputstream_version(self):
-        addon = xbmcaddon.Addon(self._inputstream_addon)
-        return addon.getAddonInfo('version')
-
-    def _arch(self):
+    @classmethod
+    def _arch(cls):
         """Map together and return the system architecture."""
         arch = platform.machine()
         if arch == 'AMD64':
@@ -131,6 +132,10 @@ class Helper(object):
             return arm_arch
 
         return arch
+
+    def _inputstream_version(self):
+        addon = xbmcaddon.Addon(self._inputstream_addon)
+        return addon.getAddonInfo('version')
 
     def _log(self, string):
         """InputStream Helper log method."""
@@ -369,7 +374,7 @@ class Helper(object):
         if dialog.yesno(self._language(30001), self._language(30002)):
             cdm_version = self._current_widevine_cdm_version()
             cdm_os = config.WIDEVINE_OS_MAP[self._os]
-            cdm_arch = config.WIDEVINE_ARCH_MAP_X86[self._arch()][self._os]
+            cdm_arch = config.WIDEVINE_ARCH_MAP_X86[self._arch()]
             self._url = config.WIDEVINE_DOWNLOAD_URL.format(cdm_version, cdm_os, cdm_arch)
 
             downloaded = self._http_request(download=True)
@@ -484,6 +489,8 @@ class Helper(object):
                 if self._os == 'Windows':  # copy on windows
                     shutil.copyfile(cdm_path_addon, cdm_path_inputstream)
                 else:
+                    if os.path.lexists(cdm_path_inputstream):
+                        os.remove(cdm_path_inputstream)  # it's ok to overwrite
                     os.symlink(cdm_path_addon, cdm_path_inputstream)
 
         return True
@@ -540,6 +547,17 @@ class Helper(object):
                     return self._install_widevine_cdm_x86()
                 else:
                     return self._install_widevine_cdm_arm()
+            if 'x86' in self._arch():
+                dialog = xbmcgui.Dialog()
+                if not os.path.exists(self._widevine_manifest_path()):  # needed to validate arch/version
+                    dialog.ok(self._language(30001), self._language(30031))
+                    return self._install_widevine_cdm_x86()
+
+                with open(self._widevine_manifest_path(), 'r') as f:
+                    widevine_manifest = json.loads(f.read())
+                if config.WIDEVINE_ARCH_MAP_X86[self._arch()] != widevine_manifest['arch']:
+                    dialog.ok(self._language(30001), self._language(30031))
+                    return self._install_widevine_cdm_x86()
 
         return True
 
