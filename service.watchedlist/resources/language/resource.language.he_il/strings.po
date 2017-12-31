@@ -1,7 +1,6 @@
-# XBMC Media Center language file
+# Kodi Media Center language file
 # Addon Name: WatchedList
 # Addon id: service.watchedlist
-# Addon version: 1.1.0
 # Addon Provider: schapplm
 msgid ""
 msgstr ""
@@ -62,7 +61,7 @@ msgid "Update interval [hours]"
 msgstr "מרווח בין עדכונים (שעות)"
 
 msgctxt "#30015"
-msgid "Startup delay befor action [minutes]"
+msgid "Startup delay before action [minutes]"
 msgstr "השהיית הפעלה לפני פעולה [דקות]"
 
 msgctxt "#30016"

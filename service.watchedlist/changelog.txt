@@ -1,3 +1,9 @@
+version 1.2.3 (28.12.2017)
+* Minor fixes (unicode support, less blocking on shutdown, backup file rotation on network shares, error handling and logging)
+
+version 1.2.2 (23.12.2017)
+* Minor fixes, fixed buggalo emails
+
 version 1.2.1 (26.11.2017)
 * Fixed Dropbox API: Change from v1 to v2
 
