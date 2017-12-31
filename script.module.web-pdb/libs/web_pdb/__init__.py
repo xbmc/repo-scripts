@@ -69,6 +69,22 @@ class WebPdb(Pdb):
         Pdb.__init__(self, stdin=self.console, stdout=self.console)
         WebPdb.active_instance = self
 
+    def do_clear(self, arg):
+        """cl(ear) filename:lineno\ncl(ear) [bpnumber [bpnumber...]]
+        With a space separated list of breakpoint numbers, clear
+        those breakpoints.  Without argument, clear all breaks (but
+        first ask confirmation).  With a filename:lineno argument,
+        clear all breaks at that line in that file.
+        """
+        # The method is overridden for systems where cwd is at different place
+        # than the main script, e.g. Kodi mediacenter built-in Python.
+        orig_cwd = os.getcwd()
+        try:
+            os.chdir(os.path.dirname(self.curframe.f_code.co_filename))
+            Pdb.do_clear(self, arg)
+        finally:
+            os.chdir(orig_cwd)
+
     def do_quit(self, arg):
         """
         quit || exit || q
@@ -87,19 +103,14 @@ class WebPdb(Pdb):
         self._set_stopinfo(self.botframe, None, -1)
 
     def dispatch_return(self, frame, arg):
-        """
-        Close the web-console if returning from the top-most frame
-        (the addon script itself)
-
-        This is needed because Kodi does not respect
-        daemon threads.
-        """
+        # The parent's method needs to be called first.
+        ret = Pdb.dispatch_return(self, frame, arg)
         if frame.f_back is None:
-            self.console.writeline('*** Addon finished ***')
+            self.console.writeline('*** Thread finished ***\n')
             if not self.console.closed:
                 self.console.flush()
                 self.console.close()
-        return Pdb.dispatch_return(self, frame, arg)
+        return ret
 
     def get_current_frame_data(self):
         """
