@@ -1,20 +1,19 @@
-# XBMC Media Center language file
+# Kodi Media Center language file
 # Addon Name: WatchedList
 # Addon id: service.watchedlist
-# Addon version: 1.1.0
 # Addon Provider: schapplm
 msgid ""
 msgstr ""
 "Project-Id-Version: XBMC-Addons\n"
 "Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
 "POT-Creation-Date: 2016-03-28 16:47+0000\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE\n"
+"PO-Revision-Date: 2017-12-30 10:56+0100\n"
+"Last-Translator: schapplm\n"
+"Language-Team: schapplm\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: en\n"
+"Language: en_GB\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
 
 msgctxt "Addon Summary"
@@ -56,7 +55,7 @@ msgid "Update interval [hours]"
 msgstr ""
 
 msgctxt "#30015"
-msgid "Startup delay befor action [minutes]"
+msgid "Startup delay before action [minutes]"
 msgstr ""
 
 msgctxt "#30016"
