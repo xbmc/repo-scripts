@@ -155,9 +155,10 @@ def get_item_details(id_, type):
     :return: item details
     :rtype: dict
     """
-    params = {type + 'id': id_, 'properties': ['playcount', 'imdbnumber']}
+    params = {type + 'id': id_, 'properties': ['playcount']}
     if type == 'movie':
         method = 'VideoLibrary.GetMovieDetails'
+        params['properties'].append('imdbnumber')
         if xbmc.getInfoLabel('System.BuildVersion') >= '17.0':
             params['properties'].append('uniqueid')
     else:
