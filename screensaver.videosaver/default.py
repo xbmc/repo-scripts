@@ -36,8 +36,9 @@ class BackgroundWindow(xbmcgui.WindowXMLDialog):
         
         
     def onAction(self, act):
-        if REAL_SETTINGS.getSetting("LockAction") == 'true' and act.getId() != ACTION_STOP:
-            return
+        if REAL_SETTINGS.getSetting("LockAction") == 'true' and act.getId() != ACTION_STOP: return
+        xbmc.executebuiltin("PlayerControl(RepeatOff)")
+        xbmcgui.Window(10000).clearProperty('script.trakt.paused')
         self.myPlayer.stop()        
         self.close()
         
@@ -45,52 +46,29 @@ class BackgroundWindow(xbmcgui.WindowXMLDialog):
 class Player(xbmc.Player):
     def __init__(self):
         xbmc.Player.__init__(self, xbmc.Player()) 
-        if REAL_SETTINGS.getSetting("TraktDisable") == 'true':
-            xbmcgui.Window(10000).setProperty('script.trakt.paused','true')
+        if REAL_SETTINGS.getSetting("TraktDisable") == 'true': xbmcgui.Window(10000).setProperty('script.trakt.paused','true')
         
         
 class Start():
     def __init__(self):
+        self.fileCount     = 0
+        self.dirCount      = 0
         self.myPlayer      = Player()
         self.singleVideo   = int(REAL_SETTINGS.getSetting("VideoSource")) == 0
         self.smartPlaylist = REAL_SETTINGS.getSetting("VideoFile")[-3:] == 'xsp' 
         self.videoRandom   = REAL_SETTINGS.getSetting("VideoRandom") == "true"
-        self.fileCount     = 0
-        self.dirCount      = 0
         self.background    = BackgroundWindow('%s.background.xml'%ADDON_ID, ADDON_PATH, "Default")
         self.buildPlaylist()
         
-           
-    def uni(self, string, encoding='utf-8'):
-        if isinstance(string, basestring):
-            if not isinstance(string, unicode):
-               string = unicode(string, encoding)
-        return string
-
-        
-    def ascii(self, string):
-        if isinstance(string, basestring):
-            if isinstance(string, unicode):
-               string = string.encode('ascii', 'ignore')
-        return string
-                
-           
+      
     def sendJSON(self, command):
-        data = ''
-        try:
-            data = xbmc.executeJSONRPC(self.uni(command))
-        except UnicodeEncodeError:
-            data = xbmc.executeJSONRPC(self.ascii(command))
-        return data
+        return xbmc.executeJSONRPC(command)
               
               
     def loadJson(self, string):
-        if len(string) == 0:
-            return {}
-        try:
-            return json.loads(self.uni(string))
-        except Exception,e:
-            return {}
+        if len(string) == 0: return {}
+        try: return json.loads(string)
+        except Exception as e: return {}
             
            
     def getFileDetails(self, path):
@@ -111,9 +89,7 @@ class Start():
         if 'result' in json_response and json_response['result'] != None and 'files' in json_response['result']:
             response = json_response['result']['files']
             for i, item in enumerate(response):
-                if self.fileCount >= limit:
-                    break
-                    
+                if self.fileCount >= limit: break
                 file     = item.get('file','')
                 fileType = item.get('filetype','')
                 if fileType == 'file':
@@ -121,70 +97,55 @@ class Start():
                     itemLST.append(file)
                 elif fileType == 'directory' and (self.fileCount < limit and self.dirCount < limit):
                     self.dirCount += 1
-                    itemLST.extend(self.walk(file, limit, media, ignore, method, order, start, filter))        
+                    itemLST.extend(self.buildDirectory(file, limit))        
         return itemLST
         
 
     def buildItems(self, responce):
-        if 'result' in responce and 'filedetails' in responce['result']:
-            key = 'filedetails'
-        elif 'result' in responce and 'files' in responce['result']:
-            key = 'files'
+        if 'result' in responce and 'filedetails' in responce['result']: key = 'filedetails'
+        elif 'result' in responce and 'files' in responce['result']: key = 'files'
         for item in responce['result'][key]:
-            if key == 'files' and item.get('filetype','') == 'directory':
-                continue
+            if key == 'files' and item.get('filetype','') == 'directory': continue
             yield responce['result'][key]['file']
 
                 
     def escapeDirJSON(self, dir_name):
-        mydir = self.uni(dir_name)
-        if (mydir.find(":")):
-            mydir = mydir.replace("\\", "\\\\")
+        mydir = dir_name
+        if (mydir.find(":")): mydir = mydir.replace("\\", "\\\\")
         return mydir
         
 
     def getSmartPlaylist(self, path):
-        if xbmcvfs.exists(XSP_CACHE_LOC) == False:
-            xbmcvfs.mkdirs(XSP_CACHE_LOC)
-        if xbmcvfs.copy(path, os.path.join(XSP_CACHE_LOC,os.path.split(path)[1])) == True:
-            if xbmcvfs.exists(os.path.join(XSP_CACHE_LOC,os.path.split(path)[1])) == True:
-                return os.path.join(XSP_CACHE_LOC,os.path.split(path)[1])
+        if not xbmcvfs.exists(XSP_CACHE_LOC): xbmcvfs.mkdirs(XSP_CACHE_LOC)
+        if xbmcvfs.copy(path, os.path.join(XSP_CACHE_LOC,os.path.split(path)[1])):
+            if xbmcvfs.exists(os.path.join(XSP_CACHE_LOC,os.path.split(path)[1])): return os.path.join(XSP_CACHE_LOC,os.path.split(path)[1])
         return path
         
         
     def buildPlaylist(self):
         xbmc.executebuiltin("PlayerControl(RepeatAll)")
         playList = xbmc.PlayList(xbmc.PLAYLIST_VIDEO)
-        playList.clear()        
-        if self.singleVideo == False:
+        playList.clear()
+        xbmc.sleep(100)
+        if not self.singleVideo:
             videoLimit   = int(REAL_SETTINGS.getSetting("VideoLimit"))
             videoPath    = REAL_SETTINGS.getSetting("VideoFolder")
             playListItem = self.buildDirectory(videoPath,videoLimit)
         else:
-            if self.smartPlaylist == True:
+            if self.smartPlaylist:
                 videoLimit   = int(REAL_SETTINGS.getSetting("VideoLimit"))
                 videoPath    = REAL_SETTINGS.getSetting("VideoFile")
                 playListItem = self.buildDirectory(self.getSmartPlaylist(videoPath),videoLimit)
             else:
                 videoPath = REAL_SETTINGS.getSetting("VideoFile")
-                if not videoPath.startswith(('plugin','upnp')):
-                    playListItem = list(self.buildItems(self.getFileDetails(videoPath)))
-                else:   
-                    playListItem = [videoPath]
+                if not videoPath.startswith(('plugin','upnp')): playListItem = list(self.buildItems(self.getFileDetails(videoPath)))
+                else: playListItem = [videoPath]
                     
-        for idx, playItem in enumerate(playListItem):
-            playList.add(playItem, index=idx)
-        
-        if self.videoRandom == False:
-            playList.unshuffle()
-        else:
-            playList.shuffle()
-            
-        if REAL_SETTINGS.getSetting("TraktDisable") == 'true':
-            xbmcgui.Window(10000).setProperty('script.trakt.paused','true')
-            
+        for idx, playItem in enumerate(playListItem): playList.add(playItem, index=idx)
+        if not self.videoRandom: playList.unshuffle()
+        else: playList.shuffle()
+        if REAL_SETTINGS.getSetting("TraktDisable") == 'true': xbmcgui.Window(10000).setProperty('script.trakt.paused','true')
         self.myPlayer.play(playList)
         self.background.doModal()
 
-if __name__ == '__main__':
-    Start()
+if __name__ == '__main__': Start()
