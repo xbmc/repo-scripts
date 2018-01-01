@@ -348,6 +348,10 @@ msgctxt "#32607"
 msgid "Unable to merge dropbox data"
 msgstr ""
 
+msgctxt "#32608"
+msgid "Doing a database backup (%s)"
+msgstr ""
+
 #Progress Dialog
 #empty string with id 32609
 
