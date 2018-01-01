@@ -2,9 +2,14 @@
 import os
 import math
 import xbmc
-import xbmcgui
-import xbmcvfs
 from yd_private_libs import util
+
+IS_WEB = False
+try:
+    import xbmcgui
+    import xbmcvfs
+except ImportError:
+    IS_WEB = True
 
 T = util.T
 

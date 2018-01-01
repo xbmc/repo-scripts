@@ -1,3 +1,10 @@
+*** 17.1231.0 ***
+
+Update youtube-dl core to 2017.12.31
+Enable usage in WSGI scripts (Thanks koying)
+Add Spanish language strings (Thanks roliverosc)
+Add Hebrew language strings (Thanks Eng2Heb)
+
 *** 17.1228.0 ***
 
 Updated youtube-dl core to 2017.12.28

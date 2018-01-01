@@ -1,0 +1,166 @@
+# XBMC Media Center language file
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC-Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: 2013-12-12 22:56+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+
+msgctxt "#32001"
+msgid "ETA"
+msgstr ""
+
+msgctxt "#32002"
+msgid "Size"
+msgstr "Tamaño"
+
+msgctxt "#32003"
+msgid "Received"
+msgstr "Recibido"
+
+msgctxt "#32004"
+msgid "Downloading"
+msgstr "Descargando"
+
+msgctxt "#32005"
+msgid "Use Default?"
+msgstr "Para la descarga"
+
+msgctxt "#32006"
+msgid "Use default path:"
+msgstr "¿Desea usar el directorio por defecto:"
+
+msgctxt "#32007"
+msgid "Or choose a new path?"
+msgstr "o seleccionar un nuevo directorio?"
+
+msgctxt "#32008"
+msgid "Default"
+msgstr "Por defecto"
+
+msgctxt "#32009"
+msgid "New"
+msgstr "Nuevo"
+
+msgctxt "#32010"
+msgid "Select Directory"
+msgstr "Seleccione un nuevo directorio"
+
+msgctxt "#32011"
+msgid "Done"
+msgstr "Hecho"
+
+msgctxt "#32012"
+msgid "Download Complete"
+msgstr "Descarga Completada"
+
+msgctxt "#32013"
+msgid "Download Failed"
+msgstr "Error: Descarga Fallida"
+
+msgctxt "#32014"
+msgid "SD Only"
+msgstr "Solo SD"
+
+msgctxt "#32015"
+msgid "720p"
+msgstr ""
+
+msgctxt "#32016"
+msgid "1080p"
+msgstr ""
+
+msgctxt "#32017"
+msgid "Max Streaming Video Quality"
+msgstr "Calidad máxima de video"
+
+msgctxt "#32018"
+msgid "Disable DASH Video (Recommended)"
+msgstr "Deshabilitar Video DASH (recomendado)"
+
+msgctxt "#32019"
+msgid "Main"
+msgstr "General"
+
+msgctxt "#32020"
+msgid "Advanced"
+msgstr "Avanzado"
+
+msgctxt "#32021"
+msgid "Use user updated youtube-dl core version"
+msgstr "Usar versión de núcleo youtube-dl actualizada por el usuario"
+
+msgctxt "#32022"
+msgid "Update automatically"
+msgstr "Actualizar automáticamente"
+
+msgctxt "#32023"
+msgid "Update now"
+msgstr "Actualizar ahora"
+
+msgctxt "#32024"
+msgid "View youtube-dl core info"
+msgstr "Información sobre youtube-dl"
+
+msgctxt "#32025"
+msgid "Debug Logging"
+msgstr "Registro de depuración"
+
+msgctxt "#32026"
+msgid "Highest Available"
+msgstr "Más alta disponible"
+
+msgctxt "#32027"
+msgid "Enable youtube-dl verbose logging"
+msgstr "Habilitar registro detallado youtube-dl"
+
+msgctxt "#32028"
+msgid "Confirm download path"
+msgstr "Solicitar confirmación para directorio de descarga"
+
+msgctxt "#32029"
+msgid "Download path"
+msgstr "Directorio de descarga"
+
+msgctxt "#32030"
+msgid "Stop Current Download"
+msgstr "Detener la descarga actual"
+
+msgctxt "#32031"
+msgid "Stop All Downloads"
+msgstr "Detener todas las descargas"
+
+msgctxt "#32032"
+msgid "Manage Queue"
+msgstr "Gestionar cola de descarga"
+
+msgctxt "#32033"
+msgid "Download Currently Playing Video"
+msgstr "Descargar video en reproducción"
+
+msgctxt "#32034"
+msgid "Settings"
+msgstr "Ajustes"
+
+msgctxt "#32035"
+msgid "Message"
+msgstr "Mensaje"
+
+msgctxt "#32036"
+msgid "Failed"
+msgstr "Vaya!!! Algo ha fallado"
+
+msgctxt "#32037"
+msgid "Failed to move to downloads folder - leaving in temp"
+msgstr "Error al mover al directorio de descargas - dejando en temporal"
+
+msgctxt "#32038"
+msgid "Skip Videos Without Audio"
+msgstr "Saltar videos sin audio"

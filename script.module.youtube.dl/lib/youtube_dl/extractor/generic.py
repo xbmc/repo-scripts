@@ -100,6 +100,7 @@ from .megaphone import MegaphoneIE
 from .vzaar import VzaarIE
 from .channel9 import Channel9IE
 from .vshare import VShareIE
+from .mediasite import MediasiteIE
 
 
 class GenericIE(InfoExtractor):
@@ -1925,6 +1926,18 @@ class GenericIE(InfoExtractor):
                 'title': 'vl14062007715967',
                 'ext': 'mp4',
             }
+        },
+        {
+            'url': 'http://www.heidelberg-laureate-forum.org/blog/video/lecture-friday-september-23-2016-sir-c-antony-r-hoare/',
+            'md5': 'aecd089f55b1cb5a59032cb049d3a356',
+            'info_dict': {
+                'id': '90227f51a80c4d8f86c345a7fa62bd9a1d',
+                'ext': 'mp4',
+                'title': 'Lecture: Friday, September 23, 2016 - Sir Tony Hoare',
+                'description': 'md5:5a51db84a62def7b7054df2ade403c6c',
+                'timestamp': 1474354800,
+                'upload_date': '20160920',
+            }
         }
         # {
         #     # TODO: find another test
@@ -2882,6 +2895,16 @@ class GenericIE(InfoExtractor):
         if vshare_urls:
             return self.playlist_from_matches(
                 vshare_urls, video_id, video_title, ie=VShareIE.ie_key())
+
+        # Look for Mediasite embeds
+        mediasite_urls = MediasiteIE._extract_urls(webpage)
+        if mediasite_urls:
+            entries = [
+                self.url_result(smuggle_url(
+                    compat_urlparse.urljoin(url, mediasite_url),
+                    {'UrlReferrer': url}), ie=MediasiteIE.ie_key())
+                for mediasite_url in mediasite_urls]
+            return self.playlist_result(entries, video_id, video_title)
 
         def merge_dicts(dict1, dict2):
             merged = {}
