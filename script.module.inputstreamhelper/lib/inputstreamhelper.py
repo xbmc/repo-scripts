@@ -179,7 +179,7 @@ class Helper(object):
             self._log('cmd failed with output: {0}'.format(error.output))
             success = False
         if 'sudo' in cmd:
-            subprocess.check_output(['sudo -k'])  # reset timestamp
+            subprocess.call(['sudo', '-k'])  # reset timestamp
 
         return success
 
@@ -456,7 +456,7 @@ class Helper(object):
             with open(license_file, 'r') as f:
                 eula = f.read().strip().replace('\n', ' ')
         else:  # grab the license from the x86 files
-            self._url = config.WIDEVINE_DOWNLOAD_URL.format(self._current_widevine_cdm_version(), 'linux', 'x64')
+            self._url = config.WIDEVINE_DOWNLOAD_URL.format(self._current_widevine_cdm_version(), 'mac', 'x64')
             downloaded = self._http_request(download=True, message=self._language(30025))
             if downloaded:
                 with zipfile.ZipFile(self._download_path) as z:
