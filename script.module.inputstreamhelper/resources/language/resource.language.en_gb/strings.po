@@ -50,7 +50,7 @@ msgid "[B]{0}[/B] is not enabled. This add-on is required to play this content.[
 msgstr ""
 
 msgctxt "#30010"
-msgid "[B]Kodi {0}[/B] or higher is required for Widevine DRM content playback."
+msgid "[B]Kodi {0}[/B] or higher is required for [B]Widevine DRM[/B] content playback."
 msgstr ""
 
 msgctxt "#30011"

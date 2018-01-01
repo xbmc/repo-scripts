@@ -50,8 +50,8 @@ msgid "[B]{0}[/B] is not enabled. This add-on is required to play this content.[
 msgstr "[B]{0}[/B] ist nicht aktiviert. Das Add-on wird benötigt um den Inhalt wiederzugeben.[CR][CR]Soll [B]{1}[/B] aktiviert werden?"
 
 msgctxt "#30010"
-msgid "[B]Kodi {0}[/B] or higher is required for Widevine DRM content playback."
-msgstr "[B]Kodi in der Version {0}[/B] oder höher wird benötigt um Widevine DRM geschützte Inhalte wiederzugeben."
+msgid "[B]Kodi {0}[/B] or higher is required for [B]Widevine DRM[/B] content playback."
+msgstr "[B]Kodi in der Version {0}[/B] oder höher wird benötigt um [B]Widevine DRM[/B] geschützte Inhalte wiederzugeben."
 
 msgctxt "#30011"
 msgid "This operating system ([B]{0}[/B]) is not supported by Widevine DRM."
