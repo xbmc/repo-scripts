@@ -72,7 +72,7 @@
 		<setting id="clean_trakt_episodes" type="bool" label="32058" default="false"/>
 		<setting id="trakt_episode_playcount" type="bool" label="32052" default="true"/>
 		<setting id="kodi_episode_playcount" type="bool" label="32053" default="true"/>
-        <setting id="trakt_episode_playback" type="bool" label="32118" default="false"/>
+    <setting id="trakt_episode_playback" type="bool" label="32118" default="false"/>
 		<setting type="sep"/>
 	</category>
 	<category label="32004"><!-- Rating -->
@@ -82,5 +82,10 @@
 		<setting id="rate_min_view_time" type="slider" label="32008" range="0,5,100" default="75"/>
 		<setting id="rate_rerate" type="bool" label="32009" default="false"/>
 		<setting id="rating_default" type="slider" label="32010" range="1,10" default="6" option="int"/>
+	</category>
+	<category label="Update Library"><!-- Update Library @burekas -->
+		<setting id="update_library_movie" type="bool" label="32187" default="false"/>
+		<setting id="update_library_episode" type="bool" label="32188" default="false"/>    
+		<setting id="update_library_min_view_time" type="slider" label="32189" range="0,5,100" default="75"/>    
 	</category>
 </settings>

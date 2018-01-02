@@ -8,6 +8,7 @@ from resources.lib import utilities
 from resources.lib import kodiUtilities
 import math
 from resources.lib.rating import ratingCheck
+from resources.lib.updateLibrary import updateLibraryCheck
 
 logger = logging.getLogger(__name__)
 
@@ -247,6 +248,7 @@ class Scrobbler():
             if 'type' in self.curVideo:
                 self.__scrobble('stop')
                 ratingCheck(self.curVideo['type'], self.videosToRate, self.watchedTime, self.videoDuration, self.playlistLength)
+                updateLibraryCheck(self.curVideo['type'], self.videosToRate, self.watchedTime, self.videoDuration)
             self.watchedTime = 0
             self.isMultiPartEpisode = False
         self.videosToRate = []
