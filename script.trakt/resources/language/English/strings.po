@@ -733,3 +733,15 @@ msgstr ""
 msgctxt "#32186"
 msgid "Allow script exclusions"
 msgstr ""
+
+msgctxt "#32187"
+msgid "Update library after watching Movies"
+msgstr ""
+
+msgctxt "#32188"
+msgid "Update library after watching TV show episodes"
+msgstr ""
+
+msgctxt "#32189"
+msgid "Minimum percent watched to run update library"
+msgstr ""

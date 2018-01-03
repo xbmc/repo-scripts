@@ -643,3 +643,15 @@ msgstr "Trakt - התווסף לרשימת צפייה"
 msgctxt "#32166"
 msgid "Trakt - Failed adding to watchlist"
 msgstr "Trakt - הוספה לרשימת צפייה נכשלה"
+
+msgctxt "#32187"
+msgid "עדכון ספרייה לאחר צפייה בסרטים"
+msgstr ""
+
+msgctxt "#32188"
+msgid "עדכון ספרייה לאחר צפייה בפרקי סדרות"
+msgstr ""
+
+msgctxt "#32189"
+msgid "מינימום אחוזי צפייה להרצת עדכון ספרייה"
+msgstr ""
