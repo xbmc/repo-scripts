@@ -324,6 +324,10 @@ msgctxt "#32607"
 msgid "Unable to merge dropbox data"
 msgstr "Zusammenführung mit Dropbox"
 
+msgctxt "#32608"
+msgid "Doing a database backup (%s)"
+msgstr "Beim Sichern der Datenbank (%s)"
+
 msgctxt "#32610"
 msgid "%d/%d: %s"
 msgstr "%d/%d: %s"

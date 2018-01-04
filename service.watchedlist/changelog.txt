@@ -1,3 +1,6 @@
+version 1.2.4 (01.01.2018)
+* Fix in background user watching
+
 version 1.2.3 (28.12.2017)
 * Minor fixes (unicode support, less blocking on shutdown, backup file rotation on network shares, error handling and logging)
 
