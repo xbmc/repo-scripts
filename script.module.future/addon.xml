@@ -2,7 +2,7 @@
 <!-- Python 3 version -->
 <addon id="script.module.future"
        name="future"
-       version="0.16.0.0"
+       version="0.16.0.3"
        provider-name="Ed Schofield">
   <requires>
     <import addon="xbmc.python" version="2.25.0" />
