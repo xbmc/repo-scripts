@@ -1,4 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <addon id="script.python" version="2.7.13" provider-name="Team Kodi">
   <backwards-compatibility abi="2.6"/>
+    <extension point="xbmc.addon.metadata">
+        <summary lang="en">Defines the Python programming language used</summary>
+        <description lang="en">This module is used to define which python versions are support by the add-ons made for Kodi</description>
+        <platform>all</platform>
+        <website>https://kodi.tv</website>
+        <forum>http://forum.kodi.tv</forum>
+        <email></email>
+    </extension>
 </addon>
