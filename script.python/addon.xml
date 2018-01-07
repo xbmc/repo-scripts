@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<addon id="script.python" version="2.7.13" provider-name="Team Kodi">
+<addon id="script.python" name="Python script language" version="2.7.13" provider-name="Team Kodi">
   <backwards-compatibility abi="2.6"/>
     <extension point="xbmc.addon.metadata">
         <summary lang="en">Defines the Python programming language used</summary>
