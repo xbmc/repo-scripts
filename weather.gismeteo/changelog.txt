@@ -1,0 +1,25 @@
+v0.2.3 (2017-12-23)
+- Fixed compatibility with KODI 16.1 on Android 4.4
+
+v0.2.2 (2017-12-10)
+- Fixed bugs
+- Added selection of units for pressure and precipitation
+- Added the ability to clear the cache (Settings-Expert-Clear cache)
+
+v0.2.1 (2017-12-04)
+- Cached requests to the service
+- Added the ability to display the current location
+- Added translation for units of measure
+- Added time zone selection to display date and time
+
+v0.1.2 (2017-11-06)
+- Corrected the display of precipitation
+
+v0.1.1 (2017-11-05)
+- Compatibility with older versions of KODI is added
+- Added weather output for the weekend
+- Added weather output for 36 hours
+- Added language selection for forecasting
+
+v0.1.0 (2017-10-23)
+- Public release

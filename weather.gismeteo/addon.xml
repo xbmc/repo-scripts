@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<addon id="weather.gismeteo" version="0.2.3" name="Gismeteo" provider-name="vl.maksime">
+    <requires>
+        <import addon="xbmc.python" version="2.25.0"/>
+    </requires>
+    <extension point="xbmc.python.weather" library="default.py"/>
+    <extension point="xbmc.addon.metadata">
+        <summary lang="en_GB">Gismeteo Weather Forecast. Real time weather and detailed forecast all round the world</summary>
+        <summary lang="ru_RU">Прогноз погоды от ведущего погодного сервиса Gismeteo</summary>
+        <description lang="en_GB">The weather is provided solely for personal non-commercial use</description>
+        <description lang="ru_RU">Погода предоставлена исключительно для личного некоммерческого использования</description>
+        <disclaimer lang="en_GB">The weather forecast has been prepared by MapMakers Group Ltd</disclaimer>
+        <disclaimer lang="ru_RU">Прогноз погоды подготовлен НПЦ "Мэп Мейкер"</disclaimer>
+        <language></language>
+        <platform>all</platform>
+        <license>GNU GENERAL PUBLIC LICENSE. Version 3, 29 June 2007</license>
+        <forum>https://forum.kodi.tv/showthread.php?tid=323624</forum>
+        <website>https://www.gismeteo.ru/</website>
+        <email>vl.maksime@gmail.com</email>
+        <source>https://github.com/vlmaksime/weather.gismeteo</source>
+        <news>v0.2.3 (2017-12-23)[CR]- Fixed compatibility with KODI 16.1 on Android 4.4[CR][CR]v0.2.2 (2017-12-10)[CR]- Fixed bugs[CR]- Added selection of units for pressure and precipitation[CR]- Added the ability to clear the cache (Settings-Expert-Clear cache)</news>
+        <assets>
+            <icon>icon.png</icon>
+        </assets>
+    </extension>
+</addon>

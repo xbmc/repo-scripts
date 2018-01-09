@@ -1,0 +1,253 @@
+# Kodi Media Center language file
+# Addon Name: Gismeteo
+# Addon id: weather.gismeteo
+# Addon Provider: vl.maksime
+
+msgid ""
+msgstr ""
+
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ru\n"
+
+# Categories
+
+msgctxt "#32101"
+msgid "Location setup"
+msgstr "Места"
+
+msgctxt "#32102"
+msgid "Advanced"
+msgstr "Дополнительно"
+
+msgctxt "#32103"
+msgid "Expert"
+msgstr "Экспертный"
+
+# Location setup
+
+msgctxt "#32110"
+msgid "Current Location"
+msgstr "Текущее место"
+
+msgctxt "#32111"
+msgid "Location 1"
+msgstr "Место 1"
+
+msgctxt "#32112"
+msgid "Location 2"
+msgstr "Место 2"
+
+msgctxt "#32113"
+msgid "Location 3"
+msgstr "Место 3"
+
+msgctxt "#32114"
+msgid "Location 4"
+msgstr "Место 4"
+
+msgctxt "#32115"
+msgid "Location 5"
+msgstr "Место 5"
+
+msgctxt "#32116"
+msgid "Location 1 ID"
+msgstr "Место 1, ID"
+
+msgctxt "#32117"
+msgid "Location 2 ID"
+msgstr "Место 2, ID"
+
+msgctxt "#32118"
+msgid "Location 3 ID"
+msgstr "Место 3, ID"
+
+msgctxt "#32119"
+msgid "Location 4 ID"
+msgstr "Место 4, ID"
+
+msgctxt "#32120"
+msgid "Location 5 ID"
+msgstr "Место 5, ID"
+
+# Advanced
+
+msgctxt "#32122"
+msgid "Weekend"
+msgstr "Выходные"
+
+msgctxt "#32123"
+msgid "Saturday/Sunday"
+msgstr "Суббота/воскресенье"
+
+msgctxt "#32124"
+msgid "Friday/Saturday"
+msgstr "Пятница/суббота"
+
+msgctxt "#32125"
+msgid "Thursday/Friday"
+msgstr "Четверг/пятница"
+
+msgctxt "#32130"
+msgid "Time zone"
+msgstr "Часовой пояс"
+
+msgctxt "#32131"
+msgid "from system settings"
+msgstr "из системных настроек"
+
+msgctxt "#32132"
+msgid "from location"
+msgstr "из места"
+
+msgctxt "#32133"
+msgid "Measure units"
+msgstr "Единицы измерения"
+
+msgctxt "#32134"
+msgid "Pressure"
+msgstr "Давление"
+
+msgctxt "#32135"
+msgid "Precipitation"
+msgstr "Осадки"
+
+msgctxt "#32136"
+msgid "Clear cache"
+msgstr "Очистить кэш"
+
+msgctxt "#32200"
+msgid "User interface language"
+msgstr "Язык интерфейса"
+
+msgctxt "#32201"
+msgid "Russian"
+msgstr "Русский"
+
+msgctxt "#32202"
+msgid "Ukrainian"
+msgstr ""
+
+msgctxt "#32203"
+msgid "Lithuanian"
+msgstr "Латышский"
+
+msgctxt "#32204"
+msgid "Latvian"
+msgstr "Литовский"
+
+msgctxt "#32205"
+msgid "English"
+msgstr "Английский"
+
+msgctxt "#32206"
+msgid "Romanian"
+msgstr "Румынский"
+
+msgctxt "#32207"
+msgid "German"
+msgstr "Немецкий"
+
+msgctxt "#32208"
+msgid "Polish"
+msgstr "Польский"
+
+msgctxt "#32299"
+msgid "Language"
+msgstr "Язык"
+
+msgctxt "#32301"
+msgid "a/p"
+msgstr "а/п"
+
+#Speed
+
+msgctxt "#32401"
+msgid "m/s"
+msgstr "м/с"
+
+msgctxt "#32402"
+msgid "km/h"
+msgstr "км/ч"
+
+msgctxt "#32403"
+msgid "m/min"
+msgstr "м/мин"
+
+msgctxt "#32404"
+msgid "ft/h"
+msgstr "фут/ч"
+
+msgctxt "#32405"
+msgid "ft/min"
+msgstr "фут/мин"
+
+msgctxt "#32406"
+msgid "ft/s"
+msgstr "фут/с"
+
+msgctxt "#32407"
+msgid "knots"
+msgstr "узлы"
+
+msgctxt "#32408"
+msgid "Beaufort"
+msgstr ""
+
+msgctxt "#32409"
+msgid "inch/s"
+msgstr "дюйм/с"
+
+msgctxt "#32410"
+msgid "yard/s"
+msgstr "ярд/с"
+
+msgctxt "#32411"
+msgid "Furlong/Fortnight"
+msgstr ""
+
+msgctxt "#32412"
+msgid "mph"
+msgstr "миль/ч"
+
+msgctxt "#32413"
+msgid "kts"
+msgstr "узлы"
+
+#Wind direction
+
+msgctxt "#32420"
+msgid "сalm"
+msgstr "штиль"
+
+#Precipitation
+
+msgctxt "#32430"
+msgid "mm"
+msgstr "мм"
+
+msgctxt "#32431"
+msgid "inch"
+msgstr "дюймы"
+
+msgctxt "#32432"
+msgid "n/a"
+msgstr "н/д"
+
+#Pressure
+
+msgctxt "#32440"
+msgid "mmHg"
+msgstr "мм рт. ст."
+
+msgctxt "#32441"
+msgid "hPa"
+msgstr "гПа"
+
+msgctxt "#32442"
+msgid "mbar"
+msgstr "миллибары"
+
+msgctxt "#32443"
+msgid "inHg"
+msgstr "дюймы рт. ст."
