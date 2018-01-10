@@ -1,3 +1,9 @@
+[B]Version 2.5.9[/B]
+- Fix plugin loading on windows uwp
+- Replace print with xbmc.log
+- Replace except Exception , e with except Exception as e (python3)
+- Replace iterkeys with keys (python3)
+
 [B]Version 2.5.8[/B]
 - Fix plugin loading on windows
 

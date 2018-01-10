@@ -30,8 +30,8 @@ def run():
     sys.path = [settings.getAddonInfo('path').decode('utf-8') + "/lib"] + sys.path
     import StorageServer
     s = StorageServer.StorageServer(False)
-    print " StorageServer Module loaded RUN"
-    print s.plugin + " Starting server"
+    xbmc.log(" StorageServer Module loaded RUN")
+    xbmc.log(s.plugin + " Starting server")
     s.run()
     return True
 
