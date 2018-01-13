@@ -19,6 +19,7 @@
 
 #import modules
 import xbmc
+import xbmcaddon
 import sys
 
 ### import libraries
@@ -29,8 +30,10 @@ from operator import itemgetter
 
 ### get addon info
 __localize__    = ( sys.modules[ "__main__" ].__localize__ )
+__addon__ = xbmcaddon.Addon()
+api_key_tmdb = __addon__.getSetting("api_key_themoviedb")       #Added by @burekas
 
-API_KEY = '4be68d7eab1fbd1b6fd8a3b80a65a95e'
+API_KEY = api_key_tmdb
 API_CFG = 'http://api.themoviedb.org/3/configuration?api_key=%s'
 API_URL = 'http://api.themoviedb.org/3/movie/%s/images?api_key=%s'
 

@@ -20,6 +20,8 @@
 #import modules
 import sys
 import urllib
+import xbmc
+import xbmcaddon
 
 ### import libraries
 #from lib.provider.base import BaseProvider
@@ -30,11 +32,14 @@ from operator import itemgetter
 
 ### get addon info
 __localize__    = ( sys.modules[ '__main__' ].__localize__ )
+__addon__ = xbmcaddon.Addon()
+api_key_Fanarttv = __addon__.getSetting("api_key_fanarttv")     #Added by @burekas
 
-API_KEY = '586118be1ac673f74963cc284d46bd8e'
+API_KEY =  api_key_Fanarttv
 API_URL_TV = 'http://webservice.fanart.tv/v3/tv/%s?api_key=%s'
 API_URL_MOVIE = 'http://webservice.fanart.tv/v3/movies/%s?api_key=%s'
 
+#burekas fix: 'moviebackground', 'movieposter'
 IMAGE_TYPES_MOVIES = ['clearlogo',
                       'clearart',
                       'hdclearart',
@@ -44,8 +49,11 @@ IMAGE_TYPES_MOVIES = ['clearlogo',
                       'moviedisc',
                       'hdmovieclearart',
                       'moviethumb',
-                      'moviebanner']
+                      'moviebanner',
+                      'moviebackground',
+                      'movieposter']
 
+#burekas fix: 'showbackground', 'tvposter', 'seasonposter'
 IMAGE_TYPES_SERIES = ['clearlogo',
                       'hdtvlogo',
                       'clearart',
@@ -54,7 +62,10 @@ IMAGE_TYPES_SERIES = ['clearlogo',
                       'seasonthumb',
                       'characterart',
                       'tvbanner',
-                      'seasonbanner']
+                      'seasonbanner',
+                      'showbackground',
+                      'tvposter',
+                      'seasonposter']
 
 class FTV_TVProvider():
 
@@ -82,7 +93,9 @@ class FTV_TVProvider():
                                         'characterart': 'characterart',
                                         'tvbanner': 'banner',
                                         'seasonbanner': 'seasonbanner',
-                                        }
+                                        'showbackground': 'fanart',
+                                        'tvposter': 'poster',
+                                        'seasonposter': 'seasonposter'}
                             if art in ['hdtvlogo', 'hdclearart']:
                                 size = 'HD'
                             elif art in ['clearlogo', 'clearart']:
@@ -137,7 +150,9 @@ class FTV_MovieProvider():
                                         'hdmovielogo': 'clearlogo',
                                         'hdmovieclearart': 'clearart',
                                         'moviebanner': 'banner',
-                                        'moviethumb': 'landscape'}
+                                        'moviethumb': 'landscape',
+                                        'moviebackground': 'fanart',
+                                        'movieposter': 'poster'}
                             if art in ['hdmovielogo', 'hdmovieclearart']:
                                 size = 'HD'
                             elif art in ['movielogo', 'movieart']:

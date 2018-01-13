@@ -73,6 +73,7 @@ def get():
                'tvshow_showbanner':        __addon__.getSetting("tvshow_showbanner")      == 'true',
                'tvshow_seasonbanner':      __addon__.getSetting("tvshow_seasonbanner")    == 'true',
                'tvshow_characterart':      __addon__.getSetting("tvshow_characterart")    == 'true',
+               'tvshow_discart':           __addon__.getSetting("tvshow_discart")         == 'true',
 
                'musicvideo_enable':        __addon__.getSetting("musicvideo_enable")     == 'true',
                'musicvideo_poster':        __addon__.getSetting("musicvideo_poster")     == 'true',

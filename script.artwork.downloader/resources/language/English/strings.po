@@ -447,3 +447,23 @@ msgstr ""
 msgctxt "#32192"
 msgid "[I]  Artwork Downloader thread on the XBMC forum. [/I]"
 msgstr ""
+
+msgctxt "#32193"
+msgid "API Keys"
+msgstr ""
+
+msgctxt "#32194"
+msgid "Fanart.tv (fanart.tv)"
+msgstr ""
+
+msgctxt "#32195"
+msgid "TMDb (www.themoviedb.org)"
+msgstr ""
+
+msgctxt "#32196"
+msgid "TheTVDB (thetvdb.com)"
+msgstr ""
+
+msgctxt "#32197"
+msgid "Project Key"
+msgstr ""
