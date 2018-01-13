@@ -1,0 +1,28 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Main Translation Project (Frodo)\n"
+"Report-Msgid-Bugs-To: http://trac.xbmc.org/\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2017-10-16 18:22+0200\n"
+"Last-Translator: gogo <trebelnik2@gmail.com>\n"
+"Language-Team: English (http://www.transifex.com/projects/p/XBMC-Main-Frodo/language/en/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: hr\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Poedit 2.0.4\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+
+# English
+msgctxt "#32001"
+msgid "Convert Serbian Latin to Serbian Cyrillic"
+msgstr "Pretvori srpsku latinicu u srpsku ćirilicu"
+
+msgctxt "#32002"
+msgid "Options"
+msgstr "Mogućnosti"
+
+msgctxt "#32003"
+msgid "Convert Croation Latin to Serbian Cyrillic"
+msgstr "Pretvori hrvatsku latinicu u srpsku ćirilicu"

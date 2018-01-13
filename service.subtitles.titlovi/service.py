@@ -52,6 +52,34 @@ REGEX_EXPRESSIONS = [ '[Ss]([0-9]+)[][._-]*[Ee]([0-9]+)([^\\\\/]*)$',
                       '[\\\\/\\._ \\[\\(-]([0-9]+)x([0-9]+)([^\\\\/]*)$'
                      ]
 
+def openURLAdress(url, postData=None):
+    try:
+        useragent = {'User-Agent': "Mozilla/5.0"}
+        req = urllib2.Request(url, headers=useragent)
+        if postData:
+            data = urllib.urlencode(postData)
+            website = urllib2.urlopen(req, data)
+        else:
+            website = urllib2.urlopen(req)
+    except urllib2.URLError, e:
+        if hasattr(e, 'reason'):
+            print 'We failed to reach a server.'
+            print 'Reason: ', e.reason
+            return False
+        elif hasattr(e, 'code'):
+            print 'The server couldn\'t fulfill the request.'
+            print 'Error code: ', e.code
+            return False
+    except socket.timeout as e:
+        # catched
+        print type(e)
+        return False
+    else:
+        # read html code
+        html = website.read()
+        website.close()
+        return html
+
 
 def Search(item):
     osdb_server = OSDBServer()
@@ -118,8 +146,9 @@ def Download(url, filename, language_name=None):
 
     try:
         log(__name__, "Download using 'ZipFile' method")
-        response = urllib2.urlopen(url)
-        raw = response.read()
+        # response = urllib2.urlopen(url)
+        # raw = response.read()
+        raw = openURLAdress(url)
         archive = ZipFile(StringIO(raw), 'r')
         log(__name__, "archive: %s" % archive)
         files = archive.namelist()
@@ -285,7 +314,7 @@ if params['action'] == 'search':
 elif params['action'] == 'download':
 
     osdb_server = OSDBServer()
-    url_base = "http://titlovi.com/download/?type=1&mediaid=%s"
+    url_base = "https://titlovi.com/download/?type=1&mediaid=%s"
     url = url_base % params["ID"]
     log(__name__, 'link: %s' % url)
     # Serbian
