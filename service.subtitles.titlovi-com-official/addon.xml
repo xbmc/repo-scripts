@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addon id="service.subtitles.titlovi-com-official"
        name="Titlovi.com Official "
-       version="1.0.0"
+       version="1.1.0"
        provider-name="titlovi.com">
     <requires>
         <import addon="xbmc.python" version="2.25.0"/>
@@ -12,12 +12,17 @@
     <extension point="xbmc.addon.metadata">
         <platform>all</platform>
         <summary lang="en">Titlovi.com</summary>
-        <description lang="en">Search and download Titlovi.com subtitles. Click here to read more info about manual searching.</description>
-        <disclaimer>Users need to provide Titlovi.com username and password in add-on configuration</disclaimer>
+        <description lang="en">Search and download [B]Titlovi.com[/B] subtitles[CR][CR]When using manual search for [B]TV shows[/B] please use this example format for season and episode numbers:[CR]The Wire [B]S01E01[/B]</description>
+        <description lang="hr">Pretražite i preuzmite podnaslove sa [B]Titlovi.com[/B].[CR][CR]Kada koristite prilagođenu pretragu za [B]TV serije[/B] koristite format za sezonu i epizodu kao u ovom primjeru:[CR]The Wire [B]S01E01[/B]</description>
+        <disclaimer>Users need to provide [B]Titlovi.com[/B] username and password in add-on configuration</disclaimer>
+        <disclaimer lang="hr">Korisnici moraju upisati [B]Titlovi.com[/B] korisničko ime i lozinku u postavke dodatka</disclaimer>
         <news>
-Official addon
--When using manual search for TV shows please use this example format for season and episode numbers: The Wire S01E01
+New official addon
+
+-Version 1.1.0
+Added Croatian translation, updated addon description
         </news>
+        <news lang="hr">Novi službeni dodatak</news>
         <platform>all</platform>
         <language></language>
         <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
