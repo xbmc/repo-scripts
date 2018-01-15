@@ -97,10 +97,7 @@ class objectConfig():
                     image = artist[0].get( 'strArtistFanart' + num, '' )
                     if image:
                         images.append( image )
-        if images == []:
-            return [], self.loglines
-        else: 
-            return self._remove_exclusions( images ), self.loglines
+        return images, self.loglines
 
 
     def getMBID( self, mbid_params ):
@@ -225,20 +222,6 @@ class objectConfig():
         success, wloglines = writeFile( str( cachetime ), cachefilepath )
         self.loglines.append( wloglines)
         return success
-
-
-    def _remove_exclusions( self, image_list ):
-        images = []
-        rloglines, rawdata = readFile( self.EXCLUSIONFILEPATH )
-        self.loglines.extend( rloglines )
-        if not rawdata:
-            return image_list
-        exclusionlist = rawdata.split()
-        for image in image_list:
-            for exclusion in exclusionlist:
-                if not exclusion.startswith( xbmc.getCacheThumbName( image ) ):
-                    images.append( image )
-        return images
 
 
     def _set_filepaths( self, params ):

@@ -52,10 +52,7 @@ class objectConfig():
                 url = image.get( 'url', '' )
                 if url:
                     images.append( url )
-        if images == []:
-            return [], self.loglines
-        else: 
-            return self._remove_exclusions( images, img_params.get( 'exclusionsfile' ) ), self.loglines
+        return images, self.loglines
 
 
     def _get_cache_time( self, cachefilepath ):
@@ -105,20 +102,6 @@ class objectConfig():
         success, wloglines = writeFile( str( cachetime ), cachefilepath )
         self.loglines.append( wloglines)
         return success
-
-
-    def _remove_exclusions( self, image_list, exclusionfilepath ):
-        images = []
-        rloglines, rawdata = readFile( exclusionfilepath )
-        self.loglines.extend( rloglines )
-        if not rawdata:
-            return image_list
-        exclusionlist = rawdata.split()
-        for image in image_list:
-            for exclusion in exclusionlist:
-                if not exclusion.startswith( xbmc.getCacheThumbName( image ) ):
-                    images.append( image )
-        return images
 
 
     def _update_cache( self, filepath, cachefilepath ):

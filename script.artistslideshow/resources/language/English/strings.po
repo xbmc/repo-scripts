@@ -89,7 +89,27 @@ msgctxt "#32010"
 msgid "  Client API key"
 msgstr ""
 
-#empty strings from id 32011 to 32099
+msgctxt "#32011"
+msgid "Create artist hash mapping file"
+msgstr ""
+
+msgctxt "#32012"
+msgid "beginning work"
+msgstr ""
+
+msgctxt "#32013"
+msgid "Migrating artist information"
+msgstr ""
+
+msgctxt "#32014"
+msgid "Migrating artist images"
+msgstr ""
+
+msgctxt "#32015"
+msgid "Moving artist images to local artist location"
+msgstr ""
+
+#empty strings from id 32016 to 32099
 
 msgctxt "#32100"
 msgid "Slideshow"
@@ -143,6 +163,10 @@ msgctxt "#32112"
 msgid "Use both local and remote images"
 msgstr ""
 
+msgctxt "#32113"
+msgid "  Always use local artist path for storage"
+msgstr ""
+
 #empty strings from id 32113 to 32199
 
 msgctxt "#32200"
@@ -194,15 +218,15 @@ msgid "Enable fuzzy local artist image paths"
 msgstr ""
 
 msgctxt "#32212"
-msgid "  Platform for image storage"
+msgid "Platform for image storage"
 msgstr ""
 
 msgctxt "#32213"
-msgid "  Replace illegal path characters in artist name with"
+msgid "Replace illegal path characters in artist name with"
 msgstr ""
 
 msgctxt "#32214"
-msgid "  Replace trailing period in artist name with"
+msgid "Replace trailing period in artist name with"
 msgstr ""
 
 msgctxt "#32215"

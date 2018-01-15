@@ -1,5 +1,6 @@
-# v.0.3.4
+# v.0.3.6
 
+import subprocess, time
 try:
     import xbmcvfs
     isXBMC = True
@@ -9,12 +10,14 @@ except:
 
 if isXBMC:
     _mkdirs = xbmcvfs.mkdirs
+    _rmdir  = xbmcvfs.rmdir
     _exists = xbmcvfs.exists
     _delete = xbmcvfs.delete
     _rename = xbmcvfs.rename
     _file = xbmcvfs.File
 else:
     _mkdirs = os.makedirs
+    _rmdir  = os.rmdir
     _exists = os.path.exists
     _delete = os.remove
     _rename = os.rename
@@ -34,6 +37,7 @@ def checkPath( path, create=True ):
         log_lines.append( '%s exists' % path )
         return True, log_lines
 
+
 def deleteFile( filename ):
     log_lines = []
     if _exists( filename ):
@@ -50,6 +54,25 @@ def deleteFile( filename ):
         return True, log_lines
     else:
         log_lines.append( '%s does not exist' % filename )
+        return False, log_lines
+
+
+def deleteFolder( foldername ):
+    log_lines = []
+    if _exists( foldername ):
+        try:
+            _rmdir( foldername )
+            log_lines.append( 'deleting folder %s' % foldername )
+        except IOError:
+            log_lines.append( 'unable to delete %s' % foldername )
+            return False, log_lines
+        except Exception, e:
+            log_lines.append( 'unknown error while attempting to delete %s' % foldername )
+            log_lines.append( e )
+            return False, log_lines
+        return True, log_lines
+    else:
+        log_lines.append( '%s does not exist' % foldername )
         return False, log_lines
 
 
@@ -93,6 +116,26 @@ def renameFile ( filename, newfilename ):
     else:
         log_lines.append( '%s does not exist' % filename )
         return False, log_lines
+
+
+def popenWithTimeout( command, timeout ):
+    log_lines = []
+    try:
+        p = subprocess.Popen( command, stdout=subprocess.PIPE, stderr=subprocess.PIPE )
+    except OSError:
+        log_lines.append( 'error finding external script, terminating' )
+        return False, log_lines
+    except Exception, e:
+        log_lines.append( 'unknown error while attempting to run %s' % command )
+        log_lines.append( e )
+        return False, log_lines
+    for t in xrange( timeout * 4 ):
+        time.sleep( 0.25 )
+        if p.poll() is not None:
+            return p.communicate(), ''
+    p.kill()
+    log_lines.append( 'script took too long to run, terminating' )
+    return False, log_lines
 
 
 def writeFile( data, filename ):
