@@ -1,4 +1,4 @@
-#v.0.1.4
+#v.0.1.5
 
 try:
     import xbmc
@@ -9,15 +9,19 @@ except:
 
 #this class creates an object used to log stuff to the xbmc log file
 class Logger():
-    def __init__(self, preamble='', logfile='logfile.log', logdebug='true'):
+    def __init__( self, logconfig="file", format='%(asctime)-15s %(levelname)-8s %(message)s', logfile='logfile.log',
+                  logname='_logger', numbackups=5, logdebug='true', maxsize=100000, when='midnight', interval=1, preamble='' ):
         self.LOGPREAMBLE = preamble
         self.LOGDEBUG = logdebug
         if LOGTYPE == 'file':
-            self.logger = logging.getLogger( '_logger' )
+            self.logger = logging.getLogger( logname )                
             self.logger.setLevel( logging.DEBUG )
-            lr = logging.handlers.RotatingFileHandler( logfile, maxBytes=100000, backupCount=5 )
+            if logconfig == 'timed':
+                lr = logging.handlers.TimedRotatingFileHandler( logfile, when=when, backupCount=numbackups)
+            else:
+                lr = logging.handlers.RotatingFileHandler( logfile, maxBytes=maxsize, backupCount=numbackups )
             lr.setLevel( logging.DEBUG )
-            lr.setFormatter( logging.Formatter( "%(asctime)-15s %(levelname)-8s %(message)s" ) )
+            lr.setFormatter( logging.Formatter( format ) )
             self.logger.addHandler( lr )
 
 

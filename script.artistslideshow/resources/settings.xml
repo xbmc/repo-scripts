@@ -10,6 +10,7 @@
     <category label="32100">
         <setting id="local_artist_path" type="folder" label="32101" default="" />
         <setting id="priority" type="enum" label="32102" lvalues="32110|32111|32112" default="0" />
+        <setting id="localstorageonly" type="bool" label="32113" default="false" />
 		<setting id="include_fanartjpg" type="bool" label="32108" default="false" />
 		<setting id="include_folderjpg" type="bool" label="32109" default="false" />
         <setting id="fallback" type="bool" label="32105" default="false" />
@@ -50,10 +51,9 @@
         <setting id="show_progress" type="enum" label="32203" lvalues="32206|32207|32208" default="0" />
         <setting id="progress_path" type="folder" label="32204" default="" visible="eq(-1,2)"/>
 		<setting id="fanart_folder" type="text" label="32205" default="" />
-        <setting id="enable_fuzzysearch" type="bool" label="32211" default="false" />
-        <setting id="storage_target" type="enum" label="32212" default="0" lvalues="32215|32217|32216" visible="eq(-1,true)" />
-        <setting id="illegal_replace" type="text" label=" 32213" default="_" visible="eq(-2,true)"/>
-        <setting id="end_replace" type="text" label="32214" default="" visible="eq(-3,true) + eq(-2,0)" />		
+        <setting id="storage_target" type="enum" label="32212" default="0" lvalues="32215|32217|32216" />
+        <setting id="illegal_replace" type="text" label=" 32213" default="_" />
+        <setting id="end_replace" type="text" label="32214" default="" visible="eq(-2,0)" />		
         <setting id="logging" type="bool" label="32209" default="false" />
     </category>
 </settings>

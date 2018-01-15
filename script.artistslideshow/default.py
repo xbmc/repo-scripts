@@ -19,10 +19,12 @@ import itertools, os, random, re, sys, time
 import xml.etree.ElementTree as _xmltree
 if sys.version_info >= (2, 7):
     import json as _json
+    from collections import OrderedDict as _ordereddict
 else:
     import simplejson as _json
+    from resources.common.ordereddict import OrderedDict as _ordereddict
 from resources.common.fix_utf8 import smartUTF8
-from resources.common.fileops import checkPath, writeFile, readFile, deleteFile
+from resources.common.fileops import checkPath, writeFile, readFile, deleteFile, renameFile, deleteFolder
 from resources.common.url import URL
 from resources.common.transforms import getImageType, itemHash, itemHashwithPath
 from resources.common.xlogger import Logger
@@ -246,7 +248,7 @@ class Main:
 
     def _download( self, src, dst, dst2 ):
         if (not xbmc.abortRequested):
-            tmpname = xbmc.translatePath('special://profile/addon_data/%s/temp/%s' % ( addonname , xbmc.getCacheThumbName(src) ))
+            tmpname = os.path.join( self.DATAROOT, 'temp', src.rsplit('/', 1)[-1] )
             lw.log( ['the tmpname is ' + tmpname] )
             if xbmcvfs.exists(tmpname):
                 success, loglines = deleteFile( tmpname )
@@ -259,12 +261,12 @@ class Main:
             if not success:
                 return False
             if xbmcvfs.Stat( tmpname ).st_size() > 999:
-                image_ext = getImageType( tmpname )
-                if not xbmcvfs.exists ( dst + image_ext ):
-                    lw.log( ['copying %s to %s' % (tmpname, dst2 + image_ext)] )
-                    xbmcvfs.copy( tmpname, dst2 + image_ext )
-                    lw.log( ['moving %s to %s' % (tmpname, dst + image_ext)] )
-                    xbmcvfs.rename( tmpname, dst + image_ext )
+                if not xbmcvfs.exists ( dst ):
+                    lw.log( ['copying %s to %s' % (tmpname, dst2)] )
+                    xbmcvfs.copy( tmpname, dst2 )
+                    lw.log( ['copying %s to %s' % (tmpname, dst)] )
+                    xbmcvfs.copy( tmpname, dst )
+                    deleteFile( tmpname )
                     return True
                 else:
                     lw.log( ['image already exists, deleting temporary file'] )
@@ -428,16 +430,10 @@ class Main:
         except Exception, e:
             lw.log( ['unexpected error getting directory list', e] )
             files = []
-        if not files and trynum == 'first' and self.ENABLEFUZZYSEARCH == 'true':
-            s_name = ''
-            lw.log( ['the illegal characters are ', self.ILLEGALCHARS, 'the replacement is ' + self.ILLEGALREPLACE] )
-            for c in list( self._remove_trailing_dot( self.NAME ) ):
-                if c in self.ILLEGALCHARS:
-                    s_name = s_name + self.ILLEGALREPLACE
-                else:
-                    s_name = s_name + c  
-            lw.log( ['did not work with %s, trying %s' % (self.NAME, s_name)] )           
-            self.CacheDir = os.path.join( self.LOCALARTISTPATH, smartUTF8(s_name).decode('utf-8'), self.FANARTFOLDER )
+        if not files and trynum == 'first':
+            s_name = self._set_safe_artist_name( self.NAME )
+            lw.log( ['did not work with %s, trying %s' % (smartUTF8( self.NAME ).decode( 'utf-8' ), s_name)] )           
+            self.CacheDir = os.path.join( self.LOCALARTISTPATH, s_name, self.FANARTFOLDER )
             files = self._get_directory_list( 'second' )
         return files
         
@@ -468,7 +464,6 @@ class Main:
         image_params['lang'] = self.LANGUAGE
         image_params['artist'] = self.NAME
         image_params['infodir'] = self.InfoDir
-        image_params['exclusionsfile'] = os.path.join( self.CacheDir, "_exclusions.nfo" )
         for plugin_name in image_plugins['names']:
             image_list = []
             lw.log( ['checking %s for images' % plugin_name[1]] )
@@ -507,7 +502,7 @@ class Main:
             copy_files.append( 'folder.jpg' )
             copy_files.append( 'folder.png' )
         for one_file in copy_files:
-            result, loglines = checkPath( self.CacheDir )
+            result, loglines = checkPath( os.path.join( self.CacheDir, '' ) )
             lw.log( loglines )
             xbmcvfs.copy( os.path.join( artist_path, one_file ), os.path.join( self.CacheDir, one_file ) )
         files = self._get_directory_list()
@@ -519,8 +514,8 @@ class Main:
             if self.ARTISTNUM == 1:
             	self._set_artwork_skininfo( self.CacheDir )
                 self._get_artistinfo()
-            if self.TOTALARTISTS > 1:
-               self._merge_images()
+        if self.TOTALARTISTS > 1:
+            self._merge_images()
 
 
     def _get_musicbrainz_id( self, theartist, mbid ):
@@ -581,6 +576,7 @@ class Main:
                 break
         self.LOCALARTISTPATH = addon.getSetting( "local_artist_path" ).decode('utf-8')
         self.PRIORITY = addon.getSetting( "priority" )
+        self.LOCALSTORAGEONLY = addon.getSetting( "localstorageonly" ) 
         self.USEFALLBACK = addon.getSetting( "fallback" )
         self.FALLBACKPATH = addon.getSetting( "fallback_path" ).decode('utf-8')
         self.USEOVERRIDE = addon.getSetting( "slideshow" )
@@ -607,26 +603,26 @@ class Main:
             lw.log( ['set fanart folder to %s' % self.FANARTFOLDER] )
         else:
             self.FANARTFOLDER = 'extrafanart'
-        self.ENABLEFUZZYSEARCH = addon.getSetting( "enable_fuzzysearch" )
-        lw.log( ['fuzzy search is ' + self.ENABLEFUZZYSEARCH] )
-        if self.ENABLEFUZZYSEARCH == 'true':
-            pl = addon.getSetting( "storage_target" )
-            lw.log( ['the target is ' + pl] )
-            if pl == "0":
-                self.ENDREPLACE = addon.getSetting( "end_replace" )
-                self.ILLEGALCHARS = list( '<>:"/\|?*' )
-            elif pl == "2":
-                self.ENDREPLACE = '.'
-                self.ILLEGALCHARS = [':']
-            else:
-                self.ENDREPLACE = '.'
-                self.ILLEGALCHARS = [os.path.sep]
-            self.ILLEGALREPLACE = addon.getSetting( "illegal_replace" )
+        pl = addon.getSetting( "storage_target" )
+        if pl == "0":
+            self.ENDREPLACE = addon.getSetting( "end_replace" )
+            self.ILLEGALCHARS = list( '<>:"/\|?*' )
+        elif pl == "2":
+            self.ENDREPLACE = '.'
+            self.ILLEGALCHARS = [':']
+        else:
+            self.ENDREPLACE = '.'
+            self.ILLEGALCHARS = [os.path.sep]
+        self.ILLEGALREPLACE = addon.getSetting( "illegal_replace" )
 
 
     def _init_vars( self ):
         self.DATAROOT = xbmc.translatePath(addon.getAddonInfo('profile')).decode('utf-8')
         self.CHECKFILE = os.path.join( self.DATAROOT, 'migrationcheck.nfo' )
+        self.IMAGECHECKFILE = os.path.join( self.DATAROOT, 'imagecheck.nfo' )
+        if self.LOCALSTORAGEONLY == 'false':
+            deleteFile( self.IMAGECHECKFILE )
+        self.IMGDB = '_imgdb.nfo'
         self._set_property( "ArtistSlideshow.CleanupComplete" )
         self._set_property( "ArtistSlideshow.ArtworkReady" )
         self.SKININFO = {}
@@ -639,10 +635,10 @@ class Main:
         lw.log( ['external call is set to ' + self._get_infolabel( self.EXTERNALCALL )] )
         if addon.getSetting( "transparent" ) == 'true':
             self._set_property("ArtistSlideshowTransparent", 'true')
-            self.InitDir = xbmc.translatePath('%s/resources/transparent' % addonpath ).decode('utf-8')
+            self.InitDir = os.path.join( self.DATAROOT, 'resources', 'transparent' )
         else:
             self._set_property("ArtistSlideshowTransparent", '')
-            self.InitDir = xbmc.translatePath('%s/resources/black' % addonpath ).decode('utf-8')
+            self.InitDir = os.path.join( self.DATAROOT, 'resources', 'black' )
         self._set_property("ArtistSlideshow", self.InitDir)
         self.NAME = ''
         self.ALLARTISTS = []
@@ -657,8 +653,8 @@ class Main:
         self.DownloadedAllImages = False
         self.UsingFallback = False
         self.MINREFRESH = 9.9
-        self.TransitionDir = xbmc.translatePath('special://profile/addon_data/%s/transition' % addonname ).decode('utf-8')
-        self.MergeDir = xbmc.translatePath('special://profile/addon_data/%s/merge' % addonname ).decode('utf-8')
+        self.TransitionDir = os.path.join( self.DATAROOT, 'transition' )
+        self.MergeDir = os.path.join( self.DATAROOT, 'merge' )
         self.params = {}
 
 
@@ -698,70 +694,6 @@ class Main:
             if not self._playback_stopped_or_changed():
                 lw.log( ['switching slideshow to merge directory'] )
                 self._set_artwork_skininfo( self.MergeDir )
-
-
-    def _migrate_info_files( self ):
-        #this is a one time process to move and rename all the .nfo files to the new location
-        new_loc = os.path.join( self.DATAROOT, 'ArtistInformation' )
-        self._move_info_files( os.path.join(self.DATAROOT, 'ArtistSlideshow'), new_loc, 'cache' )
-        if self.LOCALARTISTPATH:
-            self._move_info_files( self.LOCALARTISTPATH, new_loc, 'local' )
-        self._update_check_file( '1.5.4', 'migration of artist info files complete' )
-
-
-    def _migrate_tbn_files( self ):
-        #one time process to rename all the tbn files to the appropriate extensions based on image type
-        self._rename_tbn_files( os.path.join( self.DATAROOT, 'ArtistSlideshow' ), 'cache' )
-        if self.LOCALARTISTPATH:
-            self._rename_tbn_files( self.LOCALARTISTPATH, 'local' )
-        self._update_check_file( '1.6.0', 'renaming of tbn files compete' )
-
-
-    def _move_info_files( self, old_loc, new_loc, type ):
-        lw.log( ['attempting to move from %s to %s' % (old_loc, new_loc)] )
-        try:
-            folders, fls = xbmcvfs.listdir( old_loc )
-        except OSError:
-            lw.log( ['no directory found: ' + old_loc] )
-            return
-        except Exception, e:
-            lw.log( ['unexpected error while getting directory list', e] )
-            return
-        for folder in folders:
-            if type == 'cache':
-                old_folder = os.path.join( old_loc, folder )
-                new_folder = os.path.join( new_loc, folder )
-            elif type == 'local':
-                old_folder = os.path.join( old_loc, smartUTF8(folder).decode('utf-8'), self.FANARTFOLDER )
-                new_folder = os.path.join( new_loc, itemHash(folder) )
-            try:
-                dirs, old_files = xbmcvfs.listdir( old_folder )
-            except Exception, e:
-                lw.log( ['unexpected error while getting directory list', e] )
-                old_files = []
-            exclude_path = os.path.join( old_folder, '_exclusions.nfo' )
-            if old_files and type == 'cache' and not xbmcvfs.exists(exclude_path):
-                success, loglines = writeFile( '', exclude_path )
-                lw.log( loglines )
-            for old_file in old_files:
-                if old_file.endswith( '.nfo' ) and not old_file == '_exclusions.nfo':
-                    exists, loglines = checkPath( new_folder )
-                    lw.log( loglines )
-                    new_file = old_file.strip('_')
-                    if new_file == 'artistimagesfanarttv.nfo':
-                        new_file = 'fanarttvartistimages.nfo'
-                    elif new_file == 'artistimageshtbackdrops.nfo':
-                        new_file = 'htbackdropsartistimages.nfo'
-                    elif new_file == 'artistimageslastfm.nfo':
-                        new_file = 'lastfmartistimages.nfo'
-                    elif new_file == 'artistbio.nfo':
-                        new_file = 'lastfmartistbio.nfo'
-                    elif new_file == 'artistsalbums.nfo':
-                        new_file = 'lastfmartistalbums.nfo'
-                    elif new_file == 'artistsimilar.nfo':
-                        new_file = 'lastfmartistsimilar.nfo'
-                    xbmcvfs.rename( os.path.join(old_folder, old_file), os.path.join(new_folder, new_file) )
-                    lw.log( ['moving %s to %s' % (old_file, os.path.join(new_folder, new_file))] )
 
 
     def _parse_argv( self ):
@@ -808,37 +740,6 @@ class Main:
             return self._remove_trailing_dot( thename[:-1] + self.ENDREPLACE )
         else:
             return thename
-
-
-    def _rename_tbn_files( self, loc, type ):
-        lw.log( ['attempting to rename .tbn files with correct extension', 'from location: ' + loc] )
-        try:
-            folders, fls = xbmcvfs.listdir( loc )
-        except OSError:
-            lw.log( ['no directory found: ' + loc] )
-            return
-        except Exception, e:
-            lw.log( ['unexpected error while getting directory list', e] )
-            return
-        for folder in folders:
-            lw.log( ['checking ' + folder] )
-            if type == 'cache':
-                thepath = os.path.join( loc, smartUTF8(folder).decode('utf-8') )
-            elif type == 'local':
-                thepath = os.path.join( loc, smartUTF8(folder).decode('utf-8'), self.FANARTFOLDER )
-            try:
-                dirs, files = xbmcvfs.listdir( thepath )
-            except Exception, e:
-                lw.log( ['unexpected error while getting file list', e] )
-                files = []
-            for file in files:
-                if file.endswith( '.tbn' ):
-                    old_path = os.path.join( thepath, file )
-                    new_file = file.replace( '.tbn', getImageType( old_path ) )
-                    new_path = os.path.join( thepath, new_file )
-                    xbmcvfs.rename( old_path, new_path )
-                    lw.log( ['renaming %s to %s' % (old_path, new_path)] )
-        lw.log( ['finished renaming .tbn files with correct extension'] )
     
 
     def _set_artwork_skininfo( self, dir ):
@@ -880,10 +781,24 @@ class Main:
           lw.log( ["Exception: Couldn't set propery " + property_name + " value " + value , e])
 
 
-    def _set_thedir(self, theartist, dirtype):
-        CacheName = itemHash(theartist)
-        thedir = xbmc.translatePath('special://profile/addon_data/%s/%s/%s/' % ( addonname , dirtype, CacheName, )).decode('utf-8')
-        exists, loglines = checkPath( thedir )
+    def _set_safe_artist_name( self, theartist ):
+        s_name = ''
+        lw.log( ['the illegal characters are ', self.ILLEGALCHARS, 'the replacement is ' + self.ILLEGALREPLACE] )
+        for c in list( self._remove_trailing_dot( theartist ) ):
+            if c in self.ILLEGALCHARS:
+                s_name = s_name + self.ILLEGALREPLACE
+            else:
+                s_name = s_name + c  
+        return smartUTF8(s_name).decode('utf-8')
+
+
+    def _set_thedir( self, theartist, dirtype ):
+        CacheName = self._set_safe_artist_name( theartist )
+        if dirtype == 'ArtistSlideshow' and self.LOCALSTORAGEONLY == 'true' and self.LOCALARTISTPATH:
+            thedir = os.path.join( self.LOCALARTISTPATH, CacheName, self.FANARTFOLDER )
+        else:
+            thedir = os.path.join( self.DATAROOT, dirtype, CacheName )
+        exists, loglines = checkPath( os.path.join( thedir, '' ) )
         lw.log( loglines )
         return thedir
 
@@ -910,7 +825,7 @@ class Main:
         lw.log( ['cachedir = %s' % self.CacheDir] )
         if self.ARTISTNUM == 1:
             self._get_artistinfo()
-        dirs, files = xbmcvfs.listdir(self.CacheDir)
+        dirs, files = xbmcvfs.listdir( self.CacheDir )
         for file in files:
             if (file.lower().endswith('tbn') or file.lower().endswith('jpg') or file.lower().endswith('jpeg') or file.lower().endswith('gif') or file.lower().endswith('png')) or (self.PRIORITY == '2' and self.LocalImagesFound):
                 self.CachedImagesFound = True
@@ -932,18 +847,25 @@ class Main:
                 else:
                     self._set_property("ArtistSlideshow", self.InitDir)
         lw.log( ['downloading images'] )
-        folders, cachelist = xbmcvfs.listdir( self.CacheDir )
-        cachelist_str = ''.join(str(e) for e in cachelist)
+        imgdb = os.path.join( self.CacheDir, self.IMGDB )
+        lw.log( ['checking download cache file ' + imgdb] )
+        loglines, cachelist_str = readFile( imgdb )
+        lw.log( loglines )
         for url in self._get_image_list():
             lw.log( ['the url to check is ' + url] )
             if( self._playback_stopped_or_changed() ):
                 return
-            path = itemHashwithPath( url, self.CacheDir )
-            path2 = itemHashwithPath( url, self.TransitionDir )
-            checkpath, checkfilename = os.path.split( path )
-            if not (checkfilename in cachelist_str):
+            url_image_name = url.rsplit('/', 1)[-1]
+            path = os.path.join( self.CacheDir, url_image_name )
+            path2 = os.path.join( self.TransitionDir, url_image_name )
+            lw.log( ['checking %s against %s' % (url_image_name, cachelist_str)] )
+            if not (url_image_name in cachelist_str):
                 if self._download(url, path, path2):
                     lw.log( ['downloaded %s to %s' % (url, path)]  )
+                    lw.log( ['updating download database at ' + imgdb] )
+                    cachelist_str = cachelist_str + url_image_name + '\r'
+                    success, loglines = writeFile( cachelist_str, imgdb )
+                    lw.log( loglines )
                     self.ImageDownloaded = True
             if self.ImageDownloaded:
                 if( self._playback_stopped_or_changed() and self.ARTISTNUM == 1 ):
@@ -1005,7 +927,7 @@ class Main:
             cache_trim_delay = 0   #delay time is in seconds
             if( now - self.LastCacheTrim > cache_trim_delay ):
                 lw.log( ['trimming the cache down to %s bytes' % self.maxcachesize]  )
-                cache_root = xbmc.translatePath( 'special://profile/addon_data/%s/ArtistSlideshow/' % addonname ).decode('utf-8')
+                cache_root = os.path.join( self.DATAROOT, 'ArtistSlideshow', '')
                 folders, fls = xbmcvfs.listdir( cache_root )
                 folders.sort( key=lambda x: os.path.getmtime( os.path.join ( cache_root, x ) ), reverse=True )
                 cache_size = 0
@@ -1064,8 +986,8 @@ class Main:
                 self._set_artwork_skininfo( self.FALLBACKPATH )
 
 
-    def _update_check_file( self, version, message ):
-        success, loglines = writeFile( version, self.CHECKFILE )
+    def _update_check_file( self, path, text, message ):
+        success, loglines = writeFile( text, path )
         lw.log( loglines )
         if success:
             lw.log( [message] )
@@ -1075,11 +997,302 @@ class Main:
         #this is where any code goes for one time upgrade routines
         loglines, data = readFile( self.CHECKFILE )
         lw.log( loglines )
-        if not data:
-            self._migrate_info_files()
-        loglines, data = readFile( self.CHECKFILE )
-        if data == '1.5.4':
-            self._migrate_tbn_files()
+        if '2.1.0' not in data:
+            self._upgrade_artist_folders()
+            self._upgrade_artist_images()
+            self._update_check_file( self.CHECKFILE, '2.1.0', 'name change of artist folders and image files complete' )
+        loglines, upgradecheck = readFile( self.CHECKFILE )
+        lw.log( loglines )
+        loglines, imagecheck = readFile( self.IMAGECHECKFILE )
+        lw.log( loglines )
+        if not 'true' in imagecheck:
+            lw.log( ['upgradecheck is %s and localstorageonly is %s' % (upgradecheck, self.LOCALSTORAGEONLY)] )
+            if '2.1.0' in upgradecheck and self.LOCALSTORAGEONLY == 'true':
+                lw.log( ['migrating images'] )
+                self._upgrade_migratetolocal()
+                self._update_check_file( self.IMAGECHECKFILE, 'true', 'images migrated to local storage location' )
+
+        
+    def _upgrade_artist_folders( self ):
+        inforoot = os.path.join( self.DATAROOT, 'ArtistInformation' )
+        imgroot = os.path.join( self.DATAROOT, 'ArtistSlideshow' )
+        infoarchiveroot = os.path.join( self.DATAROOT, 'archive', 'ArtistInformation' )
+        imgarchiveroot = os.path.join( self.DATAROOT, 'archive', 'ArtistSlideshow' )
+        artist_hashes = self._upgrade_get_artists_hashmap()
+        aDialog = xbmcgui.DialogProgressBG()
+        aDialog.create( smartUTF8(language(32013)), smartUTF8(language(32012)) )
+        try:
+            info_dirs, old_files = xbmcvfs.listdir( inforoot )
+        except Exception, e:
+            lw.log( ['unexpected error while getting directory list', e] )
+            info_dirs = []
+        total = float( len( info_dirs ) )
+        count = 1
+        for info_dir in info_dirs:
+            info_dir = smartUTF8(info_dir).decode('utf-8')
+            lw.log( ['looking for artist name for folder ' + info_dir] )
+            old_info = os.path.join( inforoot, info_dir )
+            newname = self._upgrade_get_artistname( old_info, info_dir, artist_hashes )
+            if newname:
+                aDialog.update( int(100*(count/total)), smartUTF8( language(32013) ), newname )
+                lw.log( ['got back %s from artist search' % smartUTF8(newname).decode('utf-8')] )
+            else:
+                lw.log( ['got back %s from artist search' % newname] )          
+            if newname:
+                s_newname = self._set_safe_artist_name( newname )
+                new_info = os.path.join( inforoot, s_newname, '' )
+                success, loglines = renameFile( os.path.join( old_info, '' ), new_info )
+                lw.log( loglines )
+                old_img = os.path.join( imgroot, info_dir, '' )
+                exists, loglines = checkPath( old_img, False )
+                lw.log( loglines )
+                if exists:
+                    new_img = os.path.join( imgroot, s_newname, '' )
+                    success, loglines = renameFile( old_img, new_img )
+                    lw.log( loglines )
+            else:
+                infoarchive = os.path.join( infoarchiveroot, info_dir )
+                orginfo = os.path.join( inforoot, info_dir )
+                self._upgrade_archive_folder( orginfo, infoarchive )
+                imgarchive =  os.path.join( imgarchiveroot, info_dir )
+                orgimg = os.path.join( imgroot, info_dir )
+                self._upgrade_archive_folder( orgimg, imgarchive )
+            count = count + 1
+        aDialog.close()
+                
+
+    def _upgrade_artist_images( self ):
+        inforoot = os.path.join( self.DATAROOT, 'ArtistInformation' )
+        imgroot = os.path.join( self.DATAROOT, 'ArtistSlideshow' )
+        iDialog = xbmcgui.DialogProgressBG()
+        iDialog.create( smartUTF8(language(32013)), smartUTF8(language(32012)) )
+        try:
+            info_dirs, old_files = xbmcvfs.listdir( inforoot )
+        except Exception, e:
+            lw.log( ['unexpected error while getting directory list', e] )
+            info_dirs = []
+        image_list = []
+        total = float( len( info_dirs ) )
+        count = 1
+        for info_dir in info_dirs:
+            info_dir = smartUTF8(info_dir).decode('utf-8')
+            iDialog.update( int(100*(count/total)), smartUTF8( language(32014) ), info_dir )
+            lw.log( ['renaming images in ' + info_dir])
+            fanart = os.path.join( inforoot, info_dir, 'fanarttvartistimages.nfo' )
+            audiodb = os.path.join( inforoot, info_dir, 'theaudiodbartistbio.nfo' )
+            exists, loglines = checkPath( fanart, False )
+            lw.log( loglines )
+            if exists:
+                loglines, rawdata = readFile( fanart )
+                lw.log( loglines )
+                try:
+                    json_data = _json.loads( rawdata )
+                except ValueError:
+                    json_data = {}
+                abs = json_data.get( 'artistbackground', [] )
+                for ab in abs:
+                    image_list.append( ab.get( 'url', '' ) )
+            exists, loglines = checkPath( audiodb, False )
+            lw.log( loglines )
+            if exists:
+                loglines, rawdata = readFile( audiodb )
+                lw.log( loglines )
+                try:
+                    json_data = _json.loads( rawdata )
+                except ValueError:
+                    json_data = {}
+                artist = json_data.get( 'artists', None )
+                if artist:
+                    for i in range( 1, 3 ):
+                        if i == 1:
+                            num = ''
+                        else:
+                            num = str( i )
+                        image_url = artist[0].get( 'strArtistFanart' + num, '' )
+                        if image_url:
+                            image_list.append( image_url )
+            for image in image_list:
+                self._upgrade_rename_image( image, os.path.join( imgroot, info_dir ) )
+                if self.LOCALARTISTPATH:
+                    self._upgrade_rename_image( image, os.path.join( self.LOCALARTISTPATH, info_dir, self.FANARTFOLDER ) )
+            count = count + 1
+        iDialog.close()
+
+
+
+    def _upgrade_archive_folder( self, src, dst ):
+        lw.log( ['moving from %s to %s' % (src, dst)] )               
+        try:
+            folders, files = xbmcvfs.listdir( os.path.join( src, '' ) )
+        except Exception, e:
+            lw.log( ['unexpected error while getting directory list', e] )
+            files = []
+        if files:
+           success, loglines = checkPath( os.path.join( dst, '' ) )
+           lw.log( loglines )
+        else:
+           success, loglines = deleteFolder( src )
+           lw.log( loglines )
+        for file in files:
+            success, loglines = renameFile( os.path.join( src, file ), os.path.join( dst, file ) )
+            lw.log( loglines )
+        success, loglines = deleteFolder( os.path.join( src, '' ) )
+        lw.log( loglines )
+
+
+    def _upgrade_rename_image( self, image, dirpath):
+            new_img_name = image.rsplit('/', 1)[-1]
+            img_hashed = itemHash( image ) + '.jpg'
+            imgdb = os.path.join( dirpath, self.IMGDB)
+            old_img = os.path.join( dirpath, img_hashed )
+            new_img = os.path.join( dirpath, new_img_name )
+            exists, loglines = checkPath( old_img, False )
+            lw.log( loglines )
+            if exists:
+                success, loglines = renameFile( old_img, new_img )
+                lw.log( loglines )
+                if success:
+                    loglines, all_images = readFile( imgdb )
+                    lw.log( loglines )
+                    success, loglines = writeFile( all_images + new_img_name + '\r', imgdb )
+                    lw.log( loglines )
+
+
+    def _upgrade_get_artistname( self, infopath, hashed_name, artist_hashes ):
+        try:
+            thename = artist_hashes[hashed_name]
+        except KeyError:
+            thename = None
+        if thename:
+            lw.log( ['found artist in hash map'])
+            return thename
+        lw.log( ['looking for artist information in ' + infopath] )
+        fanart = os.path.join( infopath, 'fanarttvartistimages.nfo' )
+        audiodb = os.path.join( infopath, 'theaudiodbartistbio.nfo' )
+        lastfm = os.path.join( infopath, 'lastfmartistbio.nfo' )
+        exists, loglines = checkPath( fanart, False )
+        lw.log( loglines )
+        if exists:
+            loglines, rawdata = readFile( fanart )
+            lw.log( loglines )
+            try:
+                json_data = _json.loads( rawdata )
+            except ValueError:
+               json_data = {}
+            thename = json_data.get( 'name', None )
+            if thename:
+                return thename
+        exists, loglines = checkPath( audiodb, False )
+        lw.log( loglines )
+        if exists:
+            loglines, rawdata = readFile( audiodb )
+            lw.log( loglines )
+            try:
+                json_data = _json.loads( rawdata )
+            except ValueError:
+               json_data = {}
+            artist = json_data.get( 'artists', None)
+            if artist:
+                thename = artist[0].get( 'strArtist', None )
+                if thename:
+                    return thename
+        exists, loglines = checkPath( lastfm, False )
+        lw.log( loglines )
+        if exists:
+            loglines, rawxml = readFile( lastfm )
+            try:
+                xmldata = _xmltree.fromstring( rawxml )
+            except _xmltree.ParseError:
+                lw.log( ['error reading XML data from ' + lastfm] )
+                return None
+            for element in xmldata.getiterator():
+                if element.tag == "name":
+                    return element.text
+        return None
+
+
+    def _upgrade_get_artists_hashmap( self ):
+        hDialog = xbmcgui.DialogProgressBG()
+        hDialog.create( smartUTF8(language(32011)), smartUTF8(language(32012)) )
+        hashmap = _ordereddict()
+        response = xbmc.executeJSONRPC ( '{"jsonrpc":"2.0", "method":"AudioLibrary.GetArtists", "params":{"albumartistsonly":false, "sort":{"order":"ascending", "ignorearticle":true, "method":"artist"}},"id": 1}}' )
+        try:
+            artists_info = _json.loads(response)['result']['artists']
+        except (IndexError, KeyError, ValueError):
+            artists_info = []
+        except Exception, e:
+            lw.log( ['unexpected error getting JSON back from Kodi', e] )
+            artists_info = []
+        if artists_info:
+            total = float( len( artists_info ) )
+            count = 1
+            for artist_info in artists_info:
+                artist = smartUTF8( artist_info['artist'] ).decode('utf-8')
+            	artist_hash = itemHash( artist_info['artist'] )
+                hashmap[artist_hash] = artist_info['artist']
+                lw.log( ["%s has a hash of %s" % (artist, artist_hash)] )
+                hDialog.update( int(100*(count/total)), smartUTF8( language(32011) ), artist )
+                count += 1
+            hashmap[itemHash( "Various Artists" )] = "Various Artists" 
+        hDialog.close()
+        return hashmap
+
+
+    def _upgrade_migratetolocal( self ):
+        mDialog = xbmcgui.DialogProgressBG()
+        mDialog.create( smartUTF8(language(32015)), smartUTF8(language(32012)) )
+        imgroot = os.path.join( self.DATAROOT, 'ArtistSlideshow' )
+        try:
+            img_dirs, old_files = xbmcvfs.listdir( imgroot )
+        except Exception, e:
+            lw.log( ['unexpected error while getting directory list', e] )
+            img_dirs = []
+        total = float( len( img_dirs ) )
+        count = 1
+        for img_dir_name in img_dirs:
+            img_dir_name = smartUTF8(img_dir_name).decode('utf-8')
+            mDialog.update( int(100*(count/total)), smartUTF8( language(32011) ), img_dir_name )
+            default_dir = os.path.join( self.DATAROOT, 'ArtistSlideshow', img_dir_name )
+            info_dir = os.path.join( self.DATAROOT, 'ArtistInformation', img_dir_name )
+            exists, loglines = checkPath( os.path.join( info_dir, '' ), False )
+            lw.log( loglines )
+            if not exists:
+                imgarchive = os.path.join( self.DATAROOT, 'archive', 'ArtistSlideshow', img_dir_name )
+                self._upgrade_archive_folder( default_dir, imgarchive )
+                continue
+            local_dir = os.path.join( self.LOCALARTISTPATH, img_dir_name, self.FANARTFOLDER )
+            imgdb = os.path.join( local_dir, self.IMGDB )
+            exists, loglines = checkPath( os.path.join( local_dir, '' ) )
+            try:
+                throwaway, images = xbmcvfs.listdir( default_dir )
+            except Exception, e:
+                lw.log( ['unexpected error while getting directory list', e] )
+                images = []
+            for image in images:
+                if image == self.IMGDB or image == '_exclusions.nfo':
+                    success, loglines = deleteFile( os.path.join( default_dir, image ) )
+                    lw.log( loglines )
+                else:
+                    src = os.path.join( default_dir, image )
+                    dst = os.path.join( local_dir, image )
+                    exists, loglines = checkPath( dst, False )
+                    loglines, all_images = readFile( imgdb )
+                    lw.log( loglines )
+                    if not exists:
+                        success, loglines = renameFile( src, dst )
+                        lw.log( loglines )
+                        if success:
+                            success, loglines = writeFile( all_images + image + '\r', imgdb )
+                            lw.log( loglines )
+                    else:
+                        success, loglines = deleteFile( src )
+                        lw.log( loglines )
+                        success, loglines = writeFile( all_images + image + '\r', imgdb )
+                        lw.log( loglines )
+            success, loglines = deleteFolder( os.path.join( default_dir, '' ) )
+            lw.log( loglines )
+            count += 1
+        mDialog.close()
 
 
     def _wait( self, wait_time ):

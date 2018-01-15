@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.artistslideshow" name="Artist Slideshow" version="2.0.8" provider-name="pkscout,ronie">
+<addon id="script.artistslideshow" name="Artist Slideshow" version="2.1.0" provider-name="pkscout,ronie">
 	<requires>
 		<import addon="xbmc.python" version="2.19.0"/>
 		<import addon="xbmc.addon" version="14.0.0"/>
@@ -11,9 +11,12 @@
 	</extension>
 	<extension point="xbmc.addon.metadata">
 		<news>
-v.2.0.8
-- fix for crash if Kodi plugin tries to load bio with oddly encoded characters
-- fix for crash if a services cache file contains a string that doesn't evaluate to int
+v.2.1.0
+- updated AS to save and use unhashed artist and image names
+- created upgrade routine to rename hashed artist and image names
+- included new option to ONLY use local artist path for storage
+- cleaned up folder path creation routines
+- removed old download exclusion logic in favor of new _imgdb.nfo history
 		</news>
 		<summary lang="ar">حمل المزيد من الصور والمعلومات عن الفنان الذى يُغنِى حالياً</summary>
 		<summary lang="be">Download images and additional info of the currently playing artist</summary>
