@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon	id="script.module.defusedxml"
+		name="defusedxml"
+		version="0.5.0"
+		provider-name="Christian Heimes">
+	<requires>
+		<import addon="xbmc.python" version="2.25.0"/>
+	</requires>
+	<extension
+		point="xbmc.python.module"
+		library="lib" />
+	<extension
+		point="xbmc.addon.metadata">
+		<summary lang="en_GB">defusedxml -- defusing XML bombs and other exploits</summary>
+		<description lang="en_GB">Packed for KODI from https://github.com/tiran/defusedxml</description>
+		<platform>all</platform>
+		<language></language>
+		<license>PSF</license>
+		<forum></forum>
+		<website>https://pypi.python.org/pypi/defusedxml</website>
+		<source>https://github.com/tiran/defusedxml</source>
+		<email></email>
+	</extension>
+</addon>
