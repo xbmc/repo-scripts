@@ -22,6 +22,14 @@ def by_id(user_id):
     return q
 
 
+# required scope: user_read
+@query
+def users(logins):
+    q = Qry('users')
+    q.add_param(keys.LOGIN, logins)
+    return q
+
+
 # required scope: user_subscriptions
 @query
 def get_emotes(user_id):
