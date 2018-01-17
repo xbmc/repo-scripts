@@ -1,3 +1,16 @@
+2.0.0
+[chg] refactor oauth for inclusion of helix
+- adds MobileClient().prepare_token_uri() for generating app access tokens, adds client_secret requirement
+- adds MobileClient().prepare_revoke_uri() for revoking oauth tokens
+- adds helix oauth scopes
+- twitch.scopes -> twitch.oauth.<api version>.scopes
+- twitch.oauth.MobileClient() -> twitch.oauth.clients.MobileClient()
+[add] helix api
+[add] add usher.live_request and usher.video_request
+[add] MobileClient().revoke_token and MobileClient().get_app_access_token queries
+[add] Kodi logging
+[add] v5 users.users
+
 1.1.0
 *** Twitch API V5 is deprecated and will be removed entirely on 2/14/18
 *** script.module.python.twitch v2 will include the Twitch helix API, and may include breaking changes to current implementations.

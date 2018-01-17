@@ -5,6 +5,7 @@ from twitch import keys, methods
 from twitch.api.parameters import Boolean, BroadcastType, Cursor, Direction, Duration, Language, VideoSort
 from twitch.queries import V5Query as Qry
 from twitch.queries import query
+from twitch.logging import log
 
 
 # required scope: channel_read
@@ -126,6 +127,7 @@ def reset_stream_key(channel_id):
 # deprecated
 @query
 def get_community(channel_id):
+    log.deprecated_query('channels.get_community', 'channels.get_communities')
     q = Qry('channels/{channel_id}/community')
     q.add_urlkw(keys.CHANNEL_ID, channel_id)
     return q
@@ -143,6 +145,7 @@ def get_communities(channel_id):
 # deprecated
 @query
 def set_community(channel_id, community_id):
+    log.deprecated_query('channels.set_community', 'channels.set_communities')
     q = Qry('channels/{channel_id}/community/{community_id}', method=methods.PUT)
     q.add_urlkw(keys.CHANNEL_ID, channel_id)
     q.add_urlkw(keys.COMMUNITY_ID, community_id)

@@ -23,6 +23,14 @@ class Period(_Parameter):
     _valid = [WEEK, MONTH, ALL]
 
 
+class PeriodHelix(_Parameter):
+    DAY = 'day'
+    WEEK = 'week'
+    MONTH = 'month'
+    ALL = 'all'
+    _valid = [DAY, WEEK, MONTH, ALL]
+
+
 class ClipPeriod(_Parameter):
     DAY = 'day'
     WEEK = 'week'
@@ -60,6 +68,14 @@ class VideoSort(_Parameter):
     _valid = [VIEWS, TIME]
 
 
+class VideoSortHelix(_Parameter):
+    VIEWS = 'views'
+    TIME = 'time'
+    TRENDING = 'trending'
+
+    _valid = [VIEWS, TIME, TRENDING]
+
+
 class BroadcastType(_Parameter):
     ARCHIVE = 'archive'
     HIGHLIGHT = 'highlight'
@@ -76,12 +92,37 @@ class BroadcastType(_Parameter):
         return value
 
 
+class BroadcastTypeHelix(_Parameter):
+    ARCHIVE = 'archive'
+    HIGHLIGHT = 'highlight'
+    UPLOAD = 'upload'
+    ALL = 'all'
+
+    _valid = [ALL, ARCHIVE, HIGHLIGHT, UPLOAD]
+
+    @classmethod
+    def validate(cls, value):
+        split_values = value.split(',')
+        for val in split_values:
+            if val not in cls._valid:
+                raise ValueError(value)
+        return value
+
+
 class StreamType(_Parameter):
     LIVE = 'live'
     PLAYLIST = 'playlist'
     ALL = 'all'
 
     _valid = [LIVE, PLAYLIST, ALL]
+
+
+class StreamTypeHelix(_Parameter):
+    LIVE = 'live'
+    VODCAST = 'vodcast'
+    ALL = 'all'
+
+    _valid = [LIVE, VODCAST, ALL]
 
 
 class Platform(_Parameter):
