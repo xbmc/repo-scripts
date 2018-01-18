@@ -1,3 +1,6 @@
+[B]Version 2.5.10[/B]
+- Fix self usage in non instance methods
+
 [B]Version 2.5.9[/B]
 - Fix plugin loading on windows uwp
 - Replace print with xbmc.log
