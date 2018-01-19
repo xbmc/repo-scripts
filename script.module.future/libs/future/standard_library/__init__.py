@@ -79,6 +79,17 @@ flog.setLevel(logging.WARN)
 
 from future.utils import PY2, PY3
 
+# Added by Roman V.M. for using in Kodi
+if PY2:
+    from xbmcaddon import Addon
+    sys.path.append(os.path.join(
+        Addon('script.module.future').getAddonInfo('path').decode('utf-8'),
+        'libs',
+        'future',
+        'standard_library',
+        'Lib')
+    )
+
 # The modules that are defined under the same names on Py3 but with
 # different contents in a significant way (e.g. submodules) are:
 #   pickle (fast one)
