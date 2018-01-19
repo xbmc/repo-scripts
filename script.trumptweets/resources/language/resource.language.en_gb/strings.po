@@ -35,3 +35,8 @@ msgstr ""
 msgctxt "#30004"
 msgid "Don't Show While Playing"
 msgstr ""
+
+msgctxt "#30005"
+msgid "Restarting Service..."
+msgstr ""
+
