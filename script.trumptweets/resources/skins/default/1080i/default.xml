@@ -9,8 +9,8 @@
         <control type="group" id="30100">
             <posx>0</posx> 
             <posy>0</posy>  
-            <animation effect="slide" start="0,1080" end="0,480" time="200" tween="quadratic" reversible="true" easing="in" condition="true">WindowOpen</animation>
-            <animation effect="slide" start="0,480" end="0,1080" time="200" tween="quadratic" reversible="true" easing="in" condition="true">WindowClose</animation>
+            <animation effect="slide" start="0,1080" end="0,480" time="250" tween="quadratic" reversible="true" easing="in" condition="true">WindowOpen</animation>
+            <animation effect="slide" start="0,480" end="0,1080" time="250" tween="quadratic" reversible="true" easing="in" condition="true">WindowClose</animation>
             <control type="image" id="30101">
                 <posx>0</posx> 
                 <posy>0</posy>  
@@ -55,8 +55,8 @@
         <control type="group" id="30200">
             <posx>0</posx> 
             <posy>0</posy>  
-            <animation effect="slide" start="0,1080" end="0,480" time="200" tween="quadratic" reversible="true" easing="in" condition="true">WindowOpen</animation>
-            <animation effect="slide" start="0,480" end="0,1080" time="200" tween="quadratic" reversible="true" easing="in" condition="true">WindowClose</animation>
+            <animation effect="slide" start="0,1080" end="0,480" time="250" tween="quadratic" reversible="true" easing="in" condition="true">WindowOpen</animation>
+            <animation effect="slide" start="0,480" end="0,1080" time="250" tween="quadratic" reversible="true" easing="in" condition="true">WindowClose</animation>
             <control type="grouplist">
                 <posx>0</posx> 
                 <posy>0</posy>  
@@ -115,8 +115,8 @@
         <control type="group" id="30300">
             <posx>0</posx> 
             <posy>0</posy>  
-            <animation effect="slide" start="0,1080" end="0,130" time="200" tween="quadratic" reversible="true" easing="in" condition="true">WindowOpen</animation>
-            <animation effect="slide" start="0,130" end="0,1080" time="200" tween="quadratic" reversible="true" easing="in" condition="true">WindowClose</animation>
+            <animation effect="slide" start="0,1080" end="0,480" time="250" tween="quadratic" reversible="true" easing="in" condition="true">WindowOpen</animation>
+            <animation effect="slide" start="0,480" end="0,1080" time="250" tween="quadratic" reversible="true" easing="in" condition="true">WindowClose</animation>
             <control type="grouplist">
                 <posx>0</posx> 
                 <posy>0</posy>  
@@ -125,8 +125,8 @@
                     <posx>0</posx> 
                     <posy>0</posy> 
                     <width>600</width> 
-                    <height>600</height> 
-                    <texture>SpeechBubble.png</texture>
+                    <height>250</height> 
+                    <texture>TweetBubble.png</texture>
                     <visible>Control.IsVisible(30300)</visible>
                     <aspectratio scalediffuse="true" align="center" aligny="center">keep</aspectratio>    
                 </control> 
@@ -134,16 +134,16 @@
                     <posx>0</posx> 
                     <posy>0</posy> 
                     <width>600</width> 
-                    <height>450</height> 
+                    <height>350</height> 
                     <texture></texture>
-                    <description>TrumpSpeech</description>
+                    <description>TrumpTweet</description>
                     <visible>Control.IsVisible(30300)</visible>
                     <aspectratio scalediffuse="true" align="center" aligny="center">keep</aspectratio>    
                 </control>   
             </control>
             <control type="label">
-                <posx>190</posx> 
-                <posy>60</posy> 
+                <posx>145</posx> 
+                <posy>35</posy> 
                 <width>480</width> 
                 <height max="280">auto</height>
                 <label>[B]$INFO[Window(10000).Property(script.trumptweets.pdate)][/B]</label>
@@ -157,12 +157,12 @@
             </control>
             <control type="label">
                 <posx>70</posx> 
-                <posy>105</posy> 
+                <posy>75</posy> 
                 <width>460</width> 
-                <height max="200">auto</height>
+                <height max="110">auto</height>
                 <label>[I]$INFO[Window(10000).Property(script.trumptweets.title)][/I]</label>
                 <font>font10</font>
-                <align>center</align>
+                <align>left</align>
                 <aligny>center</aligny>
                 <textcolor>ff014a75</textcolor>
                 <shadowcolor>C0C0C0C0</shadowcolor> 
