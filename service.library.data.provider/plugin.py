@@ -76,13 +76,14 @@ class Main:
                 data.parse_tvshows('randomepisodes', 32007, full_liz, self.USECACHE, self.PLOT_ENABLE, self.LIMIT)
                 xbmcplugin.addDirectoryItems(int(sys.argv[1]), full_liz)
             elif content_type == "recentvideos":
+                xbmcplugin.setContent(int(sys.argv[1]), 'videos')
                 listA = []
                 listB = []
                 dateListA = []
                 dateListB = []
-                data.parse_movies('recentmovies', 32005, listA, dateListA, "dateadded", self.USECACHE, self.PLOT_ENABLE, self.LIMIT)
-                data.parse_tvshows('recentepisodes', 32008, listB, dateListB, "dateadded", self.USECACHE, self.PLOT_ENABLE, self.LIMIT)
-                full_liz = data._combine_by_date(listA, dateListA, listB, dateListB, self.LIMIT, self.SETTINGLIMIT)
+                data.parse_movies('recentmovies', 32005, listA, self.USECACHE, self.PLOT_ENABLE, self.LIMIT, dateListA, "dateadded")
+                data.parse_tvshows('recentepisodes', 32008, listB, self.USECACHE, self.PLOT_ENABLE, self.LIMIT, dateListB, "dateadded")
+                full_liz = data._combine_by_date(listA, dateListA, listB, dateListB, self.LIMIT, self.SETTINGSLIMIT)
                 xbmcplugin.addDirectoryItems(int(sys.argv[1]), full_liz)
             elif content_type == "randomalbums":
                 xbmcplugin.setContent(int(sys.argv[1]), 'albums')
