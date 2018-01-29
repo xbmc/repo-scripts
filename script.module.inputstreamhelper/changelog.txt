@@ -1,3 +1,6 @@
+2018.01.29 v0.3.1
++ check_inputstream() return fix
+
 2018.01.29 v0.3.0
 + Bug fix: module left xbmcaddon class in memory
 + Keep Widevine CDM up-to-date with the latest version available (Kodi 18 and higher)
