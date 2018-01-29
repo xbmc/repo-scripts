@@ -4,7 +4,9 @@ A simple Kodi module that makes life easier for add-on developers relying on Inp
 ## Features ##
 * Displays informative dialogs if required InputStream components are unavailable
 * Checks if HLS is supported in inputstream.adaptive
-* Automatically installs Widevine DRM on supported platforms (optional)
+* Automatically installs Widevine CDM on supported platforms (optional)
+  * Keeps Widevine CDM up-to-date with the latest version available (Kodi 18 and higher)
+  * Checks for missing depending libraries by parsing the output from  `ldd`
 
 ## Example ##
 
@@ -14,9 +16,9 @@ import xbmcgui
 import inputstreamhelper
 
 def play_item():
-    inputstream_helper = inputstreamhelper.Helper('mpd', drm='widevine')
+    is_helper = inputstreamhelper.Helper('mpd', drm='widevine')
     stream_url = 'http://yt-dash-mse-test.commondatastorage.googleapis.com/media/car-20120827-manifest.mpd'
-    if inputstream_helper.check_inputstream():
+    if is_helper.check_inputstream():
         playitem = xbmcgui.ListItem(path=stream_url)
         playitem.setProperty('inputstreamaddon', 'inputstream.adaptive')
         playitem.setProperty('inputstream.adaptive.manifest_type', 'mpd')
