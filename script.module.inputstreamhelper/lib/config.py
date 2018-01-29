@@ -13,8 +13,7 @@ DRM_SCHEMES = {
 CDM_EXTENSIONS = (
     '.so',
     '.dll',
-    '.dylib',
-    '.json'
+    '.dylib'
 )
 
 X86_MAP = {
@@ -25,13 +24,17 @@ X86_MAP = {
     'i686': 'x86'
 }
 
+ARM_MAP = {
+    'armv7': 'arm',
+    'armv8': 'arm',
+    'aarch64': 'arm',
+    'aarch64_be': 'arm'
+}
+
 WIDEVINE_SUPPORTED_ARCHS = [
     'x86_64',
     'x86',
-    'armv7',
-    'armv8',
-    'aarch64',
-    'aarch64_be'
+    'arm'
 ]
 
 WIDEVINE_ARCH_MAP_X86 = {
@@ -46,14 +49,18 @@ WIDEVINE_OS_MAP = {
 }
 
 WIDEVINE_SUPPORTED_OS = [
+    'Android',
     'Linux',
     'Windows',
     'Darwin'
 ]
 
-WIDEVINE_ANDROID_MINIMUM_KODI_VERSION = '18.0'
-
-WIDEVINE_MINIMUM_KODI_VERSION = '17.4'
+WIDEVINE_MINIMUM_KODI_VERSION = {
+    'Android': '18.0',
+    'Windows': '17.4',
+    'Linux': '17.4',
+    'Darwin': '17.4'
+}
 
 WIDEVINE_CURRENT_VERSION_URL = 'https://dl.google.com/widevine-cdm/current.txt'
 
@@ -63,7 +70,15 @@ WIDEVINE_LICENSE_FILE = 'LICENSE.txt'
 
 WIDEVINE_MANIFEST_FILE = 'manifest.json'
 
-CHROMEOS_RECOVERY_CONF = 'https://dl.google.com/dl/edgedl/chromeos/recovery/recovery.conf'
+WIDEVINE_CONFIG_NAME = 'widevine_config.json'
+
+WIDEVINE_UPDATE_INTERVAL_DAYS = 1
+
+WIDEVINE_LEGACY_VERSION = '903'
+
+CHROMEOS_RECOVERY_URL = 'https://dl.google.com/dl/edgedl/chromeos/recovery/recovery.conf'
+
+CHROMEOS_RECOVERY_URL_LEGACY = 'https://gist.githubusercontent.com/emilsvennesson/5e74181c9a833129ad0bb03ccb41d81f/raw/8d162568277caaa31b54f4773e75a20514856825/recovery.conf'
 
 CHROMEOS_ARM_HWID = 'SPRING'
 

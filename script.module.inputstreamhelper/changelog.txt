@@ -1,3 +1,9 @@
+2018.01.29 v0.3.0
++ Bug fix: module left xbmcaddon class in memory
++ Keep Widevine CDM up-to-date with the latest version available (Kodi 18 and higher)
++ Check for missing depending libraries by parsing the output from ldd
++ Use older Widevine binaries on Kodi Krypton (fixes nss/nspr dependency issues)
+
 2018.01.01 v0.2.4
 + Fix ARM download on systems with sudo (OSMC etc)
 + Actually bump version in addon.xml, unlike v0.2.3...
