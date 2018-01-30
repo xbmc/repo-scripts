@@ -5,6 +5,7 @@ import json
 import time
 import subprocess
 import shutil
+import re
 from distutils.version import LooseVersion
 from datetime import datetime, timedelta
 
@@ -141,11 +142,11 @@ class Helper(object):
             else:
                 arch = 'x86_64'
         elif 'armv' in arch:
-            arch = 'armv' + arch.split('v')[1][:-1]
-        if arch in config.X86_MAP:
-            return config.X86_MAP[arch]
-        elif arch in config.ARM_MAP:
-            return config.ARM_MAP[arch]
+            arm_version = re.search('\d+', arch.split('v')[1])
+            if arm_version:
+                arch = 'armv' + arm_version.group()
+        if arch in config.ARCH_MAP:
+            return config.ARCH_MAP[arch]
 
         return arch
 
@@ -174,19 +175,19 @@ class Helper(object):
             cmd = ['parted', '-s', bin_path, 'unit s print']
         self._log('losetup calculation cmd: {0}'.format(cmd))
 
-        output = subprocess.check_output(cmd)
-        self._log('losetup calculation output: \n{0}'.format(output))
-        for line in output.splitlines():
-            partition_data = line.split()
-            if partition_data:
-                if partition_data[0] == '3' or '.bin3' in partition_data[0]:
-                    offset = int(partition_data[1].replace('s', ''))
-                    return str(offset * config.CHROMEOS_BLOCK_SIZE)
+        output = self._run_cmd(cmd, sudo=False, ask=False, output=True)
+        if output:
+            for line in output.splitlines():
+                partition_data = line.split()
+                if partition_data:
+                    if partition_data[0] == '3' or '.bin3' in partition_data[0]:
+                        offset = int(partition_data[1].replace('s', ''))
+                        return str(offset * config.CHROMEOS_BLOCK_SIZE)
 
         self._log('Failed to calculate losetup offset.')
         return False
 
-    def _run_cmd(self, cmd, sudo=False, ask=True):
+    def _run_cmd(self, cmd, sudo=False, ask=True, output=True):
         """Run subprocess command and return if it succeeds as a bool."""
         dialog = xbmcgui.Dialog()
         if ask and os.getuid() != 0 and not dialog.yesno(LANGUAGE(30001), LANGUAGE(30030), yeslabel=LANGUAGE(30029),
@@ -195,25 +196,33 @@ class Helper(object):
             return cmd
         if sudo and os.getuid() != 0 and self._cmd_exists('sudo'):
             cmd.insert(0, 'sudo')
-
         try:
-            subprocess.check_output(cmd)
-            self._log('{0} cmd executed successfully.'.format(cmd))
+            output = subprocess.check_output(cmd)
             success = True
-        except subprocess.CalledProcessError, error:
+            self._log('{0} cmd executed successfully.'.format(cmd))
+        except subprocess.CalledProcessError as error:
             self._log('cmd failed with output: {0}'.format(error.output))
+            output = False
             success = False
         if 'sudo' in cmd:
             subprocess.call(['sudo', '-k'])  # reset timestamp
 
-        return success
+        if output:
+            return output
+        else:
+            return success
 
     def _set_loop_dev(self):
         """Set an unused loop device that's available for use."""
         cmd = ['losetup', '-f']
-        self._loop_dev = subprocess.check_output(cmd).strip()
-        self._log('Found free loop device: {0}'.format(self._loop_dev))
-        return True
+        output = self._run_cmd(cmd, sudo=False, ask=False, output=True)
+        if output:
+            self._loop_dev = output.strip()
+            self._log('Found free loop device: {0}'.format(self._loop_dev))
+            return True
+        else:
+            self._log('Failed to find free loop device.')
+            return False
 
     def _losetup(self, bin_path):
         """Setup Chrome OS loop device."""
@@ -366,9 +375,14 @@ class Helper(object):
 
     def _latest_widevine_version(self, eula=False):
         """Return the latest available version of Widevine CDM/Chrome OS."""
-        datetime_obj = datetime.utcnow()
-        ADDON.setSetting('last_update', str(time.mktime(datetime_obj.timetuple())))
-        if 'x86' in self._arch() or eula:
+        if eula:
+            self._url = config.WIDEVINE_CURRENT_VERSION_URL
+            return self._http_request()
+        else:
+            datetime_obj = datetime.utcnow()
+            ADDON.setSetting('last_update', str(time.mktime(datetime_obj.timetuple())))
+
+        if 'x86' in self._arch():
             if LooseVersion(self._kodi_version()) < LooseVersion('18.0'):
                 return config.WIDEVINE_LEGACY_VERSION
             else:
@@ -518,7 +532,6 @@ class Helper(object):
             current_version = [x for x in wv_config if config.CHROMEOS_ARM_HWID in x['hwidmatch']][0]['version']
         self._log('Latest {0} version is {1}'.format(component, latest_version))
         self._log('Current {0} version installed is {1}'.format(component, current_version))
-        ADDON.setSetting('last_update', str(time.mktime(utcnow.timetuple())))
 
         if LooseVersion(latest_version) > LooseVersion(current_version):
             self._log('There is an update available for {0}'.format(component))
@@ -565,30 +578,33 @@ class Helper(object):
         """Parse ldd output of libwidevinecdm.so and display dialog if any depending libraries are missing."""
         if self._os() != 'Linux':  # this should only be needed for linux
             return None
-
         if self._cmd_exists('ldd'):
+            if not os.access(self._widevine_path(), os.X_OK):
+                self._log('Changing {0} permissions to 755.'.format(self._widevine_path()))
+                os.chmod(self._widevine_path(), 0755)  # this needs to be octal in python 3
+
             missing_libs = []
             cmd = ['ldd', self._widevine_path()]
-            output = subprocess.check_output(cmd)
-            self._log('ldd output: \n{0}'.format(output))
-            for line in output.splitlines():
-                if '=>' not in line:
-                    continue
-                lib_path = line.strip().split('=>')
-                lib = lib_path[0].strip()
-                path = lib_path[1].strip()
-                if path == 'not found':
-                    missing_libs.append(lib)
+            output = self._run_cmd(cmd, sudo=False, ask=False, output=True)
+            if output:
+                for line in output.splitlines():
+                    if '=>' not in line:
+                        continue
+                    lib_path = line.strip().split('=>')
+                    lib = lib_path[0].strip()
+                    path = lib_path[1].strip()
+                    if path == 'not found':
+                        missing_libs.append(lib)
 
-            if not missing_libs:
-                self._log('There are no missing Widevine libraries! :-)')
-                return None
-            else:
-                self._log('Widevine is missing the following libraries: {0}'.format(missing_libs))
-                return missing_libs
-        else:
-            self._log('ldd is not available - unable to check for missing widevine libs')
-            return None
+                if not missing_libs:
+                    self._log('There are no missing Widevine libraries! :-)')
+                    return None
+                else:
+                    self._log('Widevine is missing the following libraries: {0}'.format(missing_libs))
+                    return missing_libs
+
+        self._log('Failed to check for missing Widevine libraries.')
+        return None
 
     def _check_widevine(self):
         """Check that all Widevine components are installed and available."""

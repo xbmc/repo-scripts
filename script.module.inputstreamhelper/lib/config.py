@@ -16,15 +16,12 @@ CDM_EXTENSIONS = (
     '.dylib'
 )
 
-X86_MAP = {
+ARCH_MAP = {
     'x86_64': 'x86_64',
     'AMD64': 'x86_64',
     'x86': 'x86',
     'i386': 'x86',
-    'i686': 'x86'
-}
-
-ARM_MAP = {
+    'i686': 'x86',
     'armv7': 'arm',
     'armv8': 'arm',
     'aarch64': 'arm',

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <addon id="script.module.inputstreamhelper"
-       version="0.3.1"
+       version="0.3.2"
        name="InputStream Helper"
        provider-name="emilsvennesson">
   <requires>
@@ -10,11 +10,9 @@
   <extension library="lib" point="xbmc.python.module"/>
   <extension point="xbmc.addon.metadata">
     <description lang="en_GB">A simple Kodi module that makes life easier for add-on developers relying on InputStream based add-ons and DRM playback.</description>
-    <news>2018.01.29 v0.3.1
-	+ Bug fix: module left xbmcaddon class in memory
-    + Keep Widevine CDM up-to-date with the latest version available (Kodi 18 and higher)
-    + Check for missing depending libraries by parsing the output from ldd
-	+ Use older Widevine binaries on Kodi Krypton (fixes nss/nspr dependency issues)
+    <news>2018.01.30 v0.3.2
+        + Fix OSMC arm architecture detection
+        + Fix ldd permissions error
     </news>
     <platform>all</platform>
     <license>MIT License</license>
