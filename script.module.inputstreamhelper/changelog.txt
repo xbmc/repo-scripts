@@ -1,3 +1,7 @@
+2018.01.30 v0.3.2
++ Fix OSMC arm architecture detection
++ Fix ldd permissions error
+
 2018.01.29 v0.3.1
 + check_inputstream() return fix
 
