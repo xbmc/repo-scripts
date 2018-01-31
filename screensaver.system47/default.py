@@ -1,4 +1,4 @@
-#   Copyright (C) 2017 Lunatixz
+#   Copyright (C) 2018 Lunatixz
 #
 #
 # This file is part of System 47 Live in HD Screensaver.
@@ -34,7 +34,7 @@ LANGUAGE      = REAL_SETTINGS.getLocalizedString
 ACTION_STOP   = 13
 YT_URL        = 'plugin://plugin.video.youtube/play/?video_id=Y_4iAWobejY&suggested=false&incognito=true'
 FILENAME      = 'screensaver.system47.mp4'
-DEBUG         = True
+MUTE          = REAL_SETTINGS.getSetting('Enable_Mute') == 'true'
 RANDOM        = REAL_SETTINGS.getSetting('Enable_Random') == 'true'
 
 #CONFIGS for upcoming plugin.video.youtube developer key support. https://github.com/jdf76/plugin.video.youtube/issues/184
@@ -48,6 +48,20 @@ def log(msg, level = xbmc.LOGDEBUG):
     if level == xbmc.LOGERROR: msg += ' ,' + traceback.format_exc()
     xbmc.log(ADDON_ID + '-' + ADDON_VERSION + '-' + (msg.encode("utf-8")), xbmc.LOGERROR)
     
+def isMute():
+    state = False
+    json_query = '{"jsonrpc":"2.0","method":"Application.GetProperties","params":{"properties":["muted"]},"id":1}'
+    json_response = json.loads(xbmc.executeJSONRPC(json_query))
+    if json_response and 'result' in json_response: state = json_response['result']['muted']
+    log('isMute, state = ' + str(state))
+    return state
+    
+def setMute(state):
+    log('setMute, state = ' + str(state))
+    if isMute() == state: return
+    json_query = '{"jsonrpc":"2.0","method":"Application.SetMute","params":{"mute":%s},"id":1}'%str(state).lower()
+    json_response = json.loads(xbmc.executeJSONRPC(json_query))
+    
 class Player(xbmc.Player):        
     def onPlayBackStarted(self):
         log('onPlayBackStarted')
@@ -60,6 +74,7 @@ class BackgroundWindow(xbmcgui.WindowXMLDialog):
     def __init__(self, *args, **kwargs):
         self.myPlayer = Player()
         self.myPlayer.Background = self
+        if MUTE: setMute(True)
     
     
     def playFile(self):
@@ -82,6 +97,7 @@ class BackgroundWindow(xbmcgui.WindowXMLDialog):
         log('closeBackground')
         xbmcgui.Window(10000).clearProperty('plugin.video.youtube-configs')
         self.myPlayer.stop()
+        if MUTE: setMute(False)
         self.close()
         
       
