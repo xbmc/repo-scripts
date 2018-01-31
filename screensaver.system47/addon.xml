@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="screensaver.system47" name="System 47 - Star Trek LCARS ScreenSaver" version="2.2g" provider-name="Lunatixz">
+<addon id="screensaver.system47" name="System 47 - Star Trek LCARS ScreenSaver" version="2.2h" provider-name="Lunatixz">
     <requires>
         <import addon="xbmc.python" version="2.25.0"/>
         <import addon="plugin.video.youtube" version="5.3.10"/>
@@ -16,7 +16,7 @@
         <forum>https://forum.kodi.tv/showthread.php?tid=323285</forum>
         <source>https://github.com/Lunatixz/screensaver.system47/tree/master</source>
         <disclaimer lang="en_GB" >Streaming not recommend for metered Internet, choose download option under settings.</disclaimer>  
-        <news></news>
+        <news>v.2.2h[CR}- Added Mute sounds (Enabled by default).</news>
         <assets>
             <icon>resources/images/icon.png</icon>
             <fanart>resources/images/fanart.jpg</fanart>

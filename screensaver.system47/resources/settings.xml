@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <settings>
+    <setting id="Enable_Mute"    type="bool"   label="30003"  default="true"/>
     <setting id="Enable_Random"  type="bool"   label="32000"  default="true"/>
     <setting id="Download"       type="action" label="32001"  action="RunScript($CWD/download.py)"/>
     <setting id="AKEY"           type="text"   label="32000"  default="QUl6YVN5QlJlZ3VpYkhEaTRtU2I4NGpoWkVCaWpEVHJFSnhTcllF" option="hidden" enable="false" visible="false" />

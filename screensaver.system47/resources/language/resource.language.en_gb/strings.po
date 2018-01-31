@@ -31,3 +31,7 @@ msgstr ""
 msgctxt "#30002"
 msgid "Downloading..."
 msgstr ""
+
+msgctxt "#30003"
+msgid "Mute ScreenSaver"
+msgstr ""
