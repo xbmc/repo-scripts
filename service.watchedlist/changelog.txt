@@ -1,3 +1,6 @@
+version 1.2.5 (04.01.2018)
+* Fix SMB access in Windows, minor code improvements
+
 version 1.2.4 (01.01.2018)
 * Fix in background user watching
 
