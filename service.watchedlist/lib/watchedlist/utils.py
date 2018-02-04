@@ -196,29 +196,11 @@ def buggalo_extradata_settings():
     buggalo.addExtraData('setting_mysql_db', getSetting("mysql_db"))
 
 
-def translateSMB(path):
-    """"translate "smb://..." to "\\..." in windows. Don't change other paths
-
-    Args:
-        path: Path to File in Linux notation
-
-    Returns:
-        path: Path to File in Windows notation
-    """
-    if os.sep == '\\':  # windows os
-        res_smb = re.compile(r'smb://(\w+)/(.+)').findall(path)
-        if not res_smb:
-            # path is not smb://...
-            return path
-        else:
-            # create smb path
-            return '\\\\' + res_smb[0][0] + '\\' + res_smb[0][1].replace('/', '\\')
-    else:  # linux os. Path with smb:// is correct, but can not be accessed with normal python file access
-        return path
-
-
 def fileaccessmode(path):
-    """"determine file access mode in case of smb share no direct access possible
+    """"determine file access mode for the given path
+    in case of network shares no direct access is possible
+    on windows, smb paths can be accessed directly in certain conditions, 
+    which are ignored for the sake of simplicity
 
     Args:
         path: Path to File
@@ -227,23 +209,12 @@ def fileaccessmode(path):
         copy_mode: Mode of file access: 'copy' or 'normal'
     """
 
-    res_smb = re.compile(r'smb://(\w+)/(.+)').findall(path)
-    res_nw = re.compile(r'(\w+)://(.*?)').findall(path)
-    if os.sep == '\\':  # windows os
-        if not res_smb:
-            # smb accessable in windows
-            return 'normal'
-        elif res_nw:
-            # path is ftp or nfs network
-            return 'copy'
-        else:
-            # path is not smb://...
-            return 'normal'
-    else:  # linux os.
-        if res_nw:
-            # Path with smb:// or ftp:// is correct, but can not be accessed with normal python file access
-            # use virtual file system
-            return 'copy'
-        else:
-            # "normal" path
-            return 'normal'
+    res_nw = re.compile(r'(.*?)://(.*?)').findall(path)
+    print res_nw
+    if res_nw:
+        # Path with smb://, nfs:// or ftp:// is correct, but can not be accessed with normal python file access.
+        # Copy the file with the virtual file system
+        return 'copy'
+    else:
+        # "normal" path on local filesystem
+        return 'normal'
