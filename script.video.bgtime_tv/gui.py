@@ -123,7 +123,7 @@ C_MAIN_LOADING_PROGRESS = 5101
 FILTER_FLAG 			= 6100
 FILTER 					= 6101
 # BEGIN #
-SITE_PATH 				= 'https://bgtime.tv/api/mobile_v4/'
+SITE_PATH 				= 'http://bgtime.tv/api/mobile_v4/'
 IMAGE_PATH 				= os.path.join(ADDONPATH, 'resources', 'skins', 'Default', 'media')
 
 
@@ -142,10 +142,6 @@ TV_LOGO_WIDTH 			= (HEIGHT - TIMEBAR_HEIGHT) /CHANNELS_PER_PAGE
 
 CACHE 					= SimpleCache()
 dialog 					= xbmcgui.Dialog()
-
-
-
-
 
 
 def log(  text):
@@ -283,7 +279,11 @@ class Controller(object):
 	def createMenuList(self, data):        
 			menulist=[]
 			items=[]
+			# if 'menu' in data:
+			
 			menulist = data['menu']
+
+				
 			if not menulist:
 				dialog.ok(LANG(32003), LANG(32004))
 			if menulist: 
@@ -316,18 +316,19 @@ class Controller(object):
 				send
 			)
 
+
 			if (not signin) or (not signin.token):
 				return
 			if not signin.data:
 				return
 
+		expiration=datetime.timedelta(hours=3)
+		cleaned_url = cleanUpUrl(url)
+		
+		if LIVETV_PATH in cleaned_url and len(cleaned_url)> len(LIVETV_PATH):
+			expiration=datetime.timedelta(minutes=15)
 
-			expiration=datetime.timedelta(hours=3)
-			cleaned_url = cleanUpUrl(url)
-			if LIVETV_PATH in cleaned_url and len(cleaned_url)> len(LIVETV_PATH):
-				expiration=datetime.timedelta(minutes=15)
-
-			CACHE.set(str(url+'_'+ADDON.getSetting('username')+'_'+ADDON.getSetting('password')), signin.data, expiration=expiration)
+		CACHE.set(str(url+'_'+ADDON.getSetting('username')+'_'+ADDON.getSetting('password')), signin.data, expiration=expiration)
 		return signin.data
 	
 
@@ -528,7 +529,7 @@ class login:
 	
 			else:
 				dialog = xbmcgui.Dialog()
-				if 'status' in res and res['status'] == 204:
+				if 'status' in res and res['status']== 204:
 					dialog.ok(LANG(32003), res['msg'].encode('utf-8'))
 					return
 				if 'subscription_required' in res and res['subscription_required'] == True:
@@ -537,6 +538,7 @@ class login:
 				if 'search' in url:
 					dialog.ok(LANG(32003), res['msg'].encode('utf-8'))
 					return
+
 				dialog.ok(LANG(32003), res['msg'].encode('utf-8'))
 				ADDON.openSettings(ID)
 
