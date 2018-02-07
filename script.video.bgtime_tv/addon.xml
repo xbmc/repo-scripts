@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.video.bgtime_tv" name="BGTime.TV" version="1.0.5" provider-name="mariapmarkova@gmail.com">
+<addon id="script.video.bgtime_tv" name="BGTime.TV" version="1.0.6" provider-name="mariapmarkova@gmail.com">
 	<requires>
 		<import addon="xbmc.python" version="2.25.0"/>
 		<import addon="script.module.requests" version="2.7.0"/> 
@@ -16,7 +16,7 @@
 		<summary lang="bg_BG">Видео адон за BGTime.TV - bgtime.tv</summary>
 		<summary lang="en_GB">Video addon for BGTime.TV - bgtime.tv</summary>
 		<description lang="bg_BG">
-			Този адон предлага достъп до стриймовете нa BGTime.TV (канали на живо и сериали).
+			Този адд он предлага достъп до стриймовете нa BGTime.TV (канали на живо и сериали).
 			За да го ползвате е нужна активна BGTime.TV регистрация.
 		</description>
 		<description lang="en_GB">
