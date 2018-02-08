@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.module.pyqrcode" version="0.0.1" name="pyQRcode" provider-name="Lunatixz">
+<addon id="script.module.pyqrcode" version="0.0.2" name="pyQRcode" provider-name="Lunatixz">
     <requires>
         <import addon="xbmc.python" version="2.24.0" />
     </requires>
@@ -11,7 +11,7 @@
         <website>https://pypi.python.org/pypi/pyqrcode</website>
         <license>Apache2</license>
         <platform>all</platform>
-        <source>https://github.com/pylast/pyqrcode</source>
+        <source>https://github.com/Lunatixz/KODI_Addons/tree/master/script.module.pyqrcode</source>
         <news></news>
         <assets>
             <icon>icon.png</icon>
