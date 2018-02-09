@@ -15,7 +15,7 @@ socket.setdefaulttimeout(10)
 
 class LyricsFetcher:
     def __init__(self):
-        self.url = 'https://search.letssingit.com/?a=search&l=song&s=%s'
+        self.url = 'https://search.letssingit.com/?s=%s&a=search&l=archive'
 
     def get_lyrics(self, song):
         log('%s: searching lyrics for %s - %s' % (__title__, song.artist, song.title))
@@ -46,7 +46,7 @@ class LyricsFetcher:
                 except:
                     return
                 req.close()
-                match = re.search('id=lyrics>(.*?)<div c', resp, flags=re.DOTALL)
+                match = re.search('id=lyrics>(.*?)<div i', resp, flags=re.DOTALL)
                 if match:
                     lyrics.lyrics = match.group(1).replace('<br>', '')
                     return lyrics
