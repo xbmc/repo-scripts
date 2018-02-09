@@ -37,6 +37,7 @@ class LyricsFetcher:
         try:
             request = urllib2.Request(url)
             request.add_header('User-Agent', UserAgent)
+            request.add_header('Referer', 'http://www.xiami.com/play')
             response = urllib2.urlopen(request)
             result = response.read()
         except:
@@ -69,11 +70,13 @@ class LyricsFetcher:
         try:
             request = urllib2.Request(self.SONG_URL % (id))
             request.add_header('User-Agent', UserAgent)
+            request.add_header('Referer', 'http://www.xiami.com/play')
             response = urllib2.urlopen(request)
             data = response.read()
             url = re.compile('<lyric>(.+?)</lyric>').search(data).group(1)
             request = urllib2.Request(url)
             request.add_header('User-Agent', UserAgent)
+            request.add_header('Referer', 'http://www.xiami.com/play')
             response = urllib2.urlopen(request)
             lyrics = response.read()
         except:

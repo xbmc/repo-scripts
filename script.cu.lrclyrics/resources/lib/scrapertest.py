@@ -210,7 +210,7 @@ def test_scrapers():
     # test xiami
     dialog.create(ADDONNAME, LANGUAGE(32163) % 'xiami')
     log('==================== xiami ====================')
-    song = Song('Bush', 'Swallowed')
+    song = Song('Red Velvet', 'Bad Boy')
     st = time.time()
     lyrics = lyricsScraper_xiami.LyricsFetcher().get_lyrics(song)
     ft = time.time()
