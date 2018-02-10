@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-import xbmc,xbmcplugin,xbmcgui,xbmcaddon
 import urllib
 import sys
 import libmediathek3 as libMediathek
@@ -24,16 +23,15 @@ def getMostViewed():#used in unithek
 	return libZdfJsonParser.parsePage('https://api.zdf.de/content/documents/meist-gesehen-100.json?profile=default')
 
 def libZdfListMain():
-	libMediathek.searchWorkaroundRemove()
 	l = []
 	l.append({'_name':translation(31031), 'mode':'libZdfListPage', '_type': 'dir', 'url':'https://api.zdf.de/content/documents/meist-gesehen-100.json?profile=default'})
-	l.append({'_name':translation(31032), 'mode':'libZdfListAZ', '_type': 'dir'})
+	l.append({'_name':translation(31032), 'mode':'libZdfListShows', '_type': 'dir'})
 	l.append({'_name':translation(31033), 'mode':'libZdfListChannel', '_type': 'dir'})
 	l.append({'_name':translation(31034), 'mode':'libZdfListPage', '_type': 'dir', 'url':'https://api.zdf.de/search/documents?q=%2A&contentTypes=category'})
 	l.append({'_name':translation(31039), 'mode':'libZdfSearch',   '_type': 'dir'})
 	return l
 	
-def libZdfListAZ():
+def libZdfListShows():
 	libMediathek.sortAZ()
 	return libZdfJsonParser.getAZ()
 	
@@ -44,6 +42,11 @@ def libZdfListVideos():
 	return libZdfJsonParser.getVideos(params['url'])
 
 def libZdfPlay():
+	return libZdfJsonParser.getVideoUrl(params['url'])
+	
+def libZdfPlayById():
+	#https://api.zdf.de/content/documents/know-how-biathlon-104.json?profile=player
+	return libZdfJsonParser.getVideoUrlById(params['id'])
 	return libZdfJsonParser.getVideoUrl(params['url'])
 	
 def libZdfListChannel():
@@ -74,13 +77,7 @@ def libZdfListChannelDateVideos():
 	return libZdfListPage()
 	
 def libZdfSearch():
-	if libMediathek.searchWorkaroundExists():
-		d = libMediathek.searchWorkaroundRead()
-	else:
-		dialog = xbmcgui.Dialog()
-		d = dialog.input(translation(31039),type=xbmcgui.INPUT_ALPHANUM)
-		libMediathek.searchWorkaroundWrite(d)
-	search_string = urllib.quote_plus(d)
+	search_string = libMediathek.getSearchString()
 	params['url'] = "https://api.zdf.de/search/documents?q="+search_string
 	return libZdfListPage()
 		
@@ -92,21 +89,20 @@ def libZdfGetVideoHtml(url):
 def list():	
 	global params
 	params = libMediathek.get_params()
-	global pluginhandle
-	pluginhandle = int(sys.argv[1])
-	
 	mode = params.get('mode','libZdfListMain')
 	if mode == 'libZdfPlay':
 		libMediathek.play(libZdfPlay())
+	elif mode == 'libZdfPlayById':
+		libMediathek.play(libZdfPlayById())
 		
 	else:
 		l = modes.get(mode,libZdfListMain)()
 		libMediathek.addEntries(l)
-		xbmcplugin.endOfDirectory(int(sys.argv[1]),cacheToDisc=True)	
+		libMediathek.endOfDirectory()	
 	
 modes = {
 	'libZdfListMain':libZdfListMain,
-	'libZdfListAZ':libZdfListAZ,
+	'libZdfListShows':libZdfListShows,
 	'libZdfListVideos':libZdfListVideos,
 	#'libZdfListDate':libZdfListDate,
 	#'libZdfListDateChannels':libZdfListDateChannels,
@@ -117,4 +113,5 @@ modes = {
 	'libZdfSearch':libZdfSearch,
 	'libZdfListPage':libZdfListPage,
 	'libZdfPlay':libZdfPlay,
+	'libZdfPlayById':libZdfPlayById,
 	}	

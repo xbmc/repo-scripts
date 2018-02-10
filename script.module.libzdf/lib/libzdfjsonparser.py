@@ -1,23 +1,42 @@
 # -*- coding: utf-8 -*-
-import xbmc
 import json
 import libmediathek3 as libMediathek
+import libzdftokengrabber
 
 base = 'https://api.zdf.de'
 playerId = 'ngplayer_2_3'
 log = libMediathek.log
-auth = '23a1db22b51b13162bd0b86b24e556c8c6b6272d reraeB'
-auth2 = '2691892bd1523017a49138324c186711af18ab4f reraeB'
 
-getheader = {'Api-Auth': auth[::-1]}
-getheader2 = {'Api-Auth': auth2[::-1]}
+#headerMenu   = {'Api-Auth': 'Bearer '+tokenMenu}
+#headerPlayer = {'Api-Auth': 'Bearer '+tokenPlayer}
+
+def getU(url,Menu=False):
+	try:
+		header = getHeader(Menu)
+		response = libMediathek.getUrl(url,header)
+	except:
+		libzdftokengrabber.grepToken()
+		header = getHeader(Menu)
+		response = libMediathek.getUrl(url,header)
+	return response
+	
+def getHeader(Menu):
+	if Menu:
+		header = {'Api-Auth': 'Bearer '+libMediathek.f_open(libMediathek.pathUserdata('tokenMenu'))}
+	else:
+		header = {'Api-Auth': 'Bearer '+libMediathek.f_open(libMediathek.pathUserdata('tokenPlayer'))}
+	return header
 
 def parsePage(url):
 	if url.startswith('https://api.zdf.de/search/documents'):
-		response = libMediathek.getUrl(url,getheader2)
+		#response = libMediathek.getUrl(url,headerMenu)
+		response = getU(url,True)
 	else:
-		response = libMediathek.getUrl(url,getheader)
+		#response = libMediathek.getUrl(url,headerMenu)
+		response = getU(url,True)
+	
 	j = json.loads(response)
+	libMediathek.log(response)
 	if   j['profile'] == 'http://zdf.de/rels/search/result':
 		return _parseSearch(j)
 	elif j['profile'] == 'http://zdf.de/rels/search/result-page':
@@ -32,7 +51,8 @@ def parsePage(url):
 		log('Unknown profile: ' + j['profile'])
 
 def getAZ():
-	response = libMediathek.getUrl("https://api.zdf.de/content/documents/sendungen-100.json?profile=default",getheader)
+	#response = libMediathek.getUrl("https://api.zdf.de/content/documents/sendungen-100.json?profile=default",headerMenu)
+	response = getU("https://api.zdf.de/content/documents/sendungen-100.json?profile=default",True)
 	j = json.loads(response)
 	letters = {}
 	l = []
@@ -89,6 +109,7 @@ def _parseBroadcast(j):
 					d['_airedISO8601'] = broadcast['effectiveAirtimeBegin']
 				else:
 					libMediathek.log('ommiting date: '+str(broadcast))
+					libMediathek.log(str(broadcast['livestream']))
 				d['_type'] = 'date'
 				l.append(d)
 	return l
@@ -101,34 +122,41 @@ def _grepItem(target):
 	d['_thumb'] = _chooseImage(target['teaserImageRef'])
 	#d['url'] = base + target['http://zdf.de/rels/brand']['http://zdf.de/rels/target']['canonical']
 	if target['contentType'] == 'brand' or target['contentType'] == 'category':
-		#d['url'] = base + target['canonical']
-		d['url'] = base + target['http://zdf.de/rels/search/page-video-counter-with-video']['self'].replace('&limit=0','&limit=100')
-		d['_type'] = 'dir'
-		d['mode'] = 'libZdfListPage'
+		try:
+			#d['url'] = base + target['canonical']
+			d['url'] = base + target['http://zdf.de/rels/search/page-video-counter-with-video']['self'].replace('&limit=0','&limit=100')
+			d['_type'] = 'dir'
+			d['mode'] = 'libZdfListPage'
+		except: d = False
 	elif target['contentType'] == 'clip':
-		d['url'] = base + target['mainVideoContent']['http://zdf.de/rels/target']['http://zdf.de/rels/streams/ptmd-template'].replace('{playerId}',playerId)
-		if 'duration' in target['mainVideoContent']['http://zdf.de/rels/target']:
-			d['_duration'] = str(target['mainVideoContent']['http://zdf.de/rels/target']['duration'])
-		d['_type'] = 'clip'
-		#d['_type'] = 'video'
-		d['mode'] = 'libZdfPlay'
+		try:
+			d['url'] = base + target['mainVideoContent']['http://zdf.de/rels/target']['http://zdf.de/rels/streams/ptmd-template'].replace('{playerId}',playerId)
+			if 'duration' in target['mainVideoContent']['http://zdf.de/rels/target']:
+				d['_duration'] = str(target['mainVideoContent']['http://zdf.de/rels/target']['duration'])
+			d['_type'] = 'clip'
+			#d['_type'] = 'video'
+			d['mode'] = 'libZdfPlay'
+		except: d = False
 	elif target['contentType'] == 'episode':# or target['contentType'] == 'clip':
-		if not target['hasVideo']:
-			return False
-		#if target['mainVideoContent']['http://zdf.de/rels/target']['showCaption']:
-		#	d['suburl'] = base + target['mainVideoContent']['http://zdf.de/rels/target']['captionUrl']
-		if 'mainVideoContent' in target:
-			content = target['mainVideoContent']['http://zdf.de/rels/target']
-		elif 'mainContent' in target:
-			content = target['mainContent'][0]['videoContent'][0]['http://zdf.de/rels/target']
-			
-		d['url'] = base + content['http://zdf.de/rels/streams/ptmd-template'].replace('{playerId}',playerId)
-		if 'duration' in content:
-			d['_duration'] = str(content['duration'])
-		d['_type'] = 'video'
-		d['mode'] = 'libZdfPlay'
+		try:
+			if not target['hasVideo']:
+				return False
+			#if target['mainVideoContent']['http://zdf.de/rels/target']['showCaption']:
+			#	d['suburl'] = base + target['mainVideoContent']['http://zdf.de/rels/target']['captionUrl']
+			if 'mainVideoContent' in target:
+				content = target['mainVideoContent']['http://zdf.de/rels/target']
+			elif 'mainContent' in target:
+				content = target['mainContent'][0]['videoContent'][0]['http://zdf.de/rels/target']
+				
+			d['url'] = base + content['http://zdf.de/rels/streams/ptmd-template'].replace('{playerId}',playerId)
+			if 'duration' in content:
+				d['_duration'] = str(content['duration'])
+			d['_type'] = 'video'
+			d['mode'] = 'libZdfPlay'
+		except: d = False
 	else:
 		log('Unknown target type: ' + target['contentType'])
+		d = False
 	return d
 def _chooseImage(teaserImageRef,isVideo=False):
 	if not isVideo:
@@ -140,10 +168,20 @@ def _chooseImage(teaserImageRef,isVideo=False):
 		
 	return ''
 	
+def getVideoUrlById(id):
+	url = base + '/content/documents/' + id + '.json?profile=player'
+	response = getU(url,True)
+	j = json.loads(response)
+	#libMediathek.log(response)
+	url = base + j['mainVideoContent']['http://zdf.de/rels/target']['http://zdf.de/rels/streams/ptmd-template'].replace('{playerId}',playerId)
+	return getVideoUrl(url)
+	
 def getVideoUrl(url):
 	d = {}
 	d['media'] = []
-	response = libMediathek.getUrl(url,getheader)
+	#response = libMediathek.getUrl(url,headerPlayer)
+	response = getU(url,False)
+	#libMediathek.log(response)
 	j = json.loads(response)
 	for caption in j.get('captions',[]):
 		if caption['format'] == 'ebu-tt-d-basic-de':
