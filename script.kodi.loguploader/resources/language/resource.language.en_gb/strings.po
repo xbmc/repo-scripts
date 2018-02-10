@@ -32,15 +32,19 @@ msgctxt "#32004"
 msgid "Failed to retrieve the paste url"
 msgstr ""
 
+msgctxt "#32005"
+msgid "This file is too large. Max size is 1MB."
+msgstr ""
+
 msgctxt "#32011"
 msgid "Error posting the kodi.log file"
 msgstr ""
 
-msgctxt "#32011"
+msgctxt "#32012"
 msgid "Error posting the old log file"
 msgstr ""
 
-msgctxt "#32011"
+msgctxt "#32013"
 msgid "Error posting the crashlog file"
 msgstr ""
 

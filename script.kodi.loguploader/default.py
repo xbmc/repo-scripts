@@ -3,7 +3,7 @@ import re
 import socket
 import pyqrcode
 from urllib import urlencode
-from urllib import FancyURLopener
+import requests
 import xbmc
 import xbmcgui
 import xbmcaddon
@@ -19,7 +19,7 @@ LANGUAGE     = ADDON.getLocalizedString
 
 socket.setdefaulttimeout(5)
 
-URL      = 'https://paste.ubuntu.com/'
+POST     = 'http://ix.io/'
 LOGPATH  = xbmc.translatePath('special://logpath')
 LOGFILE  = os.path.join(LOGPATH, 'kodi.log')
 OLDLOG   = os.path.join(LOGPATH, 'kodi.old.log')
@@ -53,10 +53,6 @@ class QRCode(xbmcgui.WindowXMLDialog):
             self.close()
 
 
-# Custom urlopener to set user-agent
-class pasteURLopener(FancyURLopener):
-    version = '%s: %s' % (ADDONID, ADDONVERSION)
-
 class Main:
     def __init__(self):
         self.getSettings()
@@ -77,13 +73,13 @@ class Main:
             succes, data = self.readLog(item[1])
             if succes:
                 content = self.cleanLog(data)
-                succes, result = self.postLog(content)
+                succes, data = self.postLog(content)
                 if succes:
-                    self.showResult(LANGUAGE(32006) % (name, result), result)
+                    self.showResult(LANGUAGE(32006) % (name, data), data)
                 else:
-                    self.showResult('%s[CR]%s' % (error, result))
+                    self.showResult('%s[CR]%s' % (error, data))
             else:
-                self.showResult('%s[CR]%s' % (error, result))
+                self.showResult('%s[CR]%s' % (error, data))
 
     def getSettings(self):
         self.oldlog = ADDON.getSetting('oldlog') == 'true'
@@ -129,6 +125,11 @@ class Main:
 
     def readLog(self, path):
         try:
+            st = xbmcvfs.Stat(path)
+            sz = st.st_size()
+            if sz > 999999:
+                log('file is too large')
+                return False, LANGUAGE(32005)
             lf = xbmcvfs.File(path)
             content = lf.read()
             lf.close()
@@ -148,23 +149,17 @@ class Main:
 
     def postLog(self, data):
         params = {}
-        params['poster'] = 'kodi'
-        params['content'] = data
-        params['syntax'] = 'text'
-        params = urlencode(params)
-        # return True, 'http://test.com/123456/'#TEST
-        url_opener = pasteURLopener()
-
+        params['f:1'] = data
+        self.session = requests.Session()
+        UserAgent = '%s: %s' % (ADDONID, ADDONVERSION)
         try:
-            page = url_opener.open(URL, params)
-        except:
-            log('failed to connect to the server')
-            return False, LANGUAGE(32003)
-
-        try:
-            page_url = page.url.strip()
-            log(page_url)
-            return True, page_url
+            response = self.session.post(POST, data=params, headers={'User-Agent': UserAgent})
+            result = response.text
+            if result:
+                return True, result
+            else:
+                log('upload failed, paste may be too large')
+                return False, LANGUAGE(32005)
         except:
             log('unable to retrieve the paste url')
             return False, LANGUAGE(32004)
