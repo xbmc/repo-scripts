@@ -154,7 +154,7 @@ class Main:
         UserAgent = '%s: %s' % (ADDONID, ADDONVERSION)
         try:
             response = self.session.post(POST, data=params, headers={'User-Agent': UserAgent})
-            result = response.text
+            result = response.text.strip()
             if result:
                 return True, result
             else:
@@ -166,7 +166,7 @@ class Main:
 
     def showResult(self, message, url=None):
         if url:
-            imagefile = os.path.join(xbmc.translatePath(PROFILE),'%s.png'%str(url.split('/')[-2]))
+            imagefile = os.path.join(xbmc.translatePath(PROFILE),'%s.png' % str(url.split('/')[-1]))
             qrIMG = pyqrcode.create(url)
             qrIMG.png(imagefile, scale=10)
             qr = QRCode( "script-loguploader-main.xml" , CWD, "default", image=imagefile, text=message)

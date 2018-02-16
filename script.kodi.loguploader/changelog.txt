@@ -1,3 +1,6 @@
+v0.2.2
+- fix QR code image filename
+
 v0.2.1
 - change paste site to ix.io
 
