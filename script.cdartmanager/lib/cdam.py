@@ -221,9 +221,6 @@ class Settings(CDAMAddon):
     def path_missing_path(self):
         return self.__getSettingPath__("missing_path")
 
-    def path_unique_path(self):
-        return self.__getSettingPath__("unique_path")
-
 
 class Def:
     def __init__(self):

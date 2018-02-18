@@ -1,0 +1,802 @@
+# XBMC Media Center language file
+# Translators:
+# Translators:
+# Translators:
+# Translators:
+msgid ""
+msgstr ""
+"Project-Id-Version: cdART Manager\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: 2012-07-03 05:24+0000\n"
+"PO-Revision-Date: 2017-10-17 08:02+0300\n"
+"Last-Translator: A. Dambledore\n"
+"Language-Team: Eng2Heb\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: he_IL\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 2.0.4\n"
+
+msgctxt "#32000"
+msgid "Recognized Artists"
+msgstr "אומנים מוכרים"
+
+msgctxt "#32001"
+msgid "Album cdARTs"
+msgstr "גרפיקת דיסק"
+
+msgctxt "#32002"
+msgid "Select Artist"
+msgstr "בחר אמן"
+
+msgctxt "#32003"
+msgid "Album Cover Arts"
+msgstr "גרפיקת עטיפות לאלבומים"
+
+msgctxt "#32004"
+msgid "Automatic Download"
+msgstr "הורדה אוטומטית"
+
+msgctxt "#32005"
+msgid "Save Local cdART List"
+msgstr "שמור רשימה מקומית של גרפיקת דיסק"
+
+msgctxt "#32006"
+msgid "Artist Fanarts"
+msgstr "פאנארטים אמנים"
+
+msgctxt "#32007"
+msgid "Local Album Artists: %s"
+msgstr "אמני אלבום מקומי: %s"
+
+msgctxt "#32008"
+msgid "Local cdARTs: %s"
+msgstr "גרפיקת דיסק מקומית: %s"
+
+msgctxt "#32009"
+msgid "Artist ClearLOGOs"
+msgstr "סמלים שקופים של אמן"
+
+msgctxt "#32010"
+msgid "Local Discs: %s"
+msgstr "דיסקים מקומיים: %s"
+
+msgctxt "#32011"
+msgid "Advanced"
+msgstr "מתקדם"
+
+msgctxt "#32012"
+msgid "Refresh Addon Database"
+msgstr "רענן מסד נתונים"
+
+msgctxt "#32013"
+msgid "Clean XBMC's Music Library"
+msgstr "נקה את ספריית המוסיקה של קודי"
+
+msgctxt "#32014"
+msgid "Update XBMC's Music Library"
+msgstr "עדכן את ספריית המוסיקה של קודי"
+
+msgctxt "#32015"
+msgid "Delete Addon's Database?"
+msgstr "למחוק את מסד הנתונים?"
+
+msgctxt "#32016"
+msgid "Disc:"
+msgstr "תקליטור:"
+
+msgctxt "#32017"
+msgid "Local cdART List saving folder"
+msgstr "תיקיית מקומית לשמירת רשימה של גרפיקת דיסק"
+
+msgctxt "#32018"
+msgid "cdART  Backup folder"
+msgstr "תיקיית גיבוי לגרפיקת גרפיקת אלבום"
+
+msgctxt "#32019"
+msgid "Backup saving format: "
+msgstr "פורמט שמירת הגיבוי "
+
+msgctxt "#32020"
+msgid "Retrieving Music Database"
+msgstr "אחזר מסד נתוני מוזיקה"
+
+msgctxt "#32021"
+msgid "Creating Addon Database"
+msgstr "יוצר מסד נתונים"
+
+msgctxt "#32022"
+msgid "Choose Available cdART"
+msgstr "בחר גרפיקת דיסק זמינה"
+
+msgctxt "#32023"
+msgid "Download Successful!"
+msgstr "הורד בהצלחה!"
+
+msgctxt "#32024"
+msgid "Artwork Downloaded!"
+msgstr "גרפיקה הורדה!"
+
+msgctxt "#32025"
+msgid "Check file paths-Artwork Not Downloaded"
+msgstr "בדוק נתיבי קובץ - גרפיקה לא ירדה"
+
+msgctxt "#32026"
+msgid "Download Error Occured!"
+msgstr "אירעה שגיאת הורדה!"
+
+msgctxt "#32027"
+msgid "Artwork Not Download!"
+msgstr "הגרפיקה לא הורדה!"
+
+msgctxt "#32028"
+msgid "Download aborted!"
+msgstr "הורדה בוטלה!"
+
+msgctxt "#32029"
+msgid "No Artwork found?"
+msgstr "לא נמצא גרפיקה?"
+
+msgctxt "#32030"
+msgid "Please contribute! Upload your Artwork"
+msgstr "אנא תרום! העלה את הגרפיקה שלך"
+
+msgctxt "#32031"
+msgid "On fanart.tv"
+msgstr "ב-fanart.tv"
+
+msgctxt "#32032"
+msgid "Choose an Artist"
+msgstr "בחר אמן"
+
+msgctxt "#32033"
+msgid "Not Found on fanart.tv"
+msgstr "לא נמצא ב-Fanart.tv"
+
+msgctxt "#32034"
+msgid "No Artwork found for"
+msgstr "לא נמצא גרפיקה עבור"
+
+msgctxt "#32035"
+msgid " *DOWNLOADING Artwork* "
+msgstr " * מוריד גרפיקה * "
+
+msgctxt "#32036"
+msgid "Music folder path(for Artwork)"
+msgstr "נתיב תיקיית מוזיקה (עבור גרפיקה)"
+
+msgctxt "#32037"
+msgid "Getting local artists"
+msgstr "משיג אמנים מקומיים:"
+
+msgctxt "#32038"
+msgid "Artist: "
+msgstr "אמן: "
+
+msgctxt "#32039"
+msgid "Album: "
+msgstr "אלבום: "
+
+msgctxt "#32040"
+msgid "Completed"
+msgstr "סיים"
+
+msgctxt "#32041"
+msgid "New Artwork downloaded"
+msgstr "גרפיקה חדשה הורדה!"
+
+msgctxt "#32042"
+msgid "cdART Manager"
+msgstr "מנהל גרפיקת דיסק"
+
+#. string insert for local artist
+msgctxt "#32043"
+msgid "Local Artists:"
+msgstr "אמנים מקומיים:"
+
+#. string insert for local cdARTs
+msgctxt "#32044"
+msgid "Local cdARTs:"
+msgstr "גרפיקת דיסק מקומית:"
+
+#. string insert for local albums
+msgctxt "#32045"
+msgid "Local Discs:"
+msgstr "דיסקים מקומיים:"
+
+msgctxt "#32046"
+msgid "Automatic Downloading Artwork"
+msgstr "הורדת גרפיקה באופן אוטומטי"
+
+msgctxt "#32047"
+msgid "Downloading..."
+msgstr "מוריד..."
+
+msgctxt "#32048"
+msgid "Retrieving Recognized Artist List...."
+msgstr "מאחזר רשימת אמנים מוכרים..."
+
+msgctxt "#32049"
+msgid "Artists Matched: %s"
+msgstr "תאימות לאמנים: %s"
+
+msgctxt "#32050"
+msgid "Database setup aborted..."
+msgstr "הגדרת מסד הנתונים בוטלה..."
+
+msgctxt "#32051"
+msgid "Addon Database is crucial to script!"
+msgstr "מסד הנתונים הוא קריטי עבור הסקריפט!"
+
+msgctxt "#32052"
+msgid "Please go to the Advanced Menu and"
+msgstr "נא עבור אל תפריט מתקדם ו-"
+
+msgctxt "#32053"
+msgid "Refresh Addon Database"
+msgstr "רענן מסד נתונים"
+
+msgctxt "#32054"
+msgid "/Artist/Album.png"
+msgstr "/אמן/אלבום.png"
+
+msgctxt "#32055"
+msgid "/artist - album.png"
+msgstr "/אמן/אלבום.png"
+
+msgctxt "#32056"
+msgid "cdARTs Copied"
+msgstr "גרפיקת דיסק הועתקה"
+
+msgctxt "#32057"
+msgid "Finished Copying cdARTs"
+msgstr "העתקת גרפיקת דיסק הסתיימה"
+
+msgctxt "#32058"
+msgid "cdARTs Stored in"
+msgstr "גרפיקת דיסק מאוחסנת ב-"
+
+msgctxt "#32059"
+msgid " cdARTs Copied"
+msgstr " גרפיקת דיסק הועתקה"
+
+msgctxt "#32060"
+msgid "Copying cdARTs..."
+msgstr "מעתיק גרפיקת דיסק..."
+
+msgctxt "#32061"
+msgid "cdART Backup"
+msgstr "גיבוי גרפיקת דיסק"
+
+msgctxt "#32062"
+msgid "Path for missing.txt file"
+msgstr "נתיב עבור קובץ missing.txt"
+
+msgctxt "#32063"
+msgid "Copy Unique Local cdARTs"
+msgstr "העתק גרפיקת דיסק ייחודית מקומית"
+
+msgctxt "#32064"
+msgid "Unique cdARTS folder: %s"
+msgstr "תיקיית גרפיקת דיסק ייחודית: %s"
+
+msgctxt "#32065"
+msgid "Comparing Local and Online cdARTs..."
+msgstr "השוואת גרפיקת דיסק מקומית ובאינטרנט..."
+
+msgctxt "#32066"
+msgid "Error connecting to fanart.tv, Socket Timed out"
+msgstr "שגיאה בהתחברות fanart.tv, הזמן שהוקצב לחיבור עבר"
+
+msgctxt "#32067"
+msgid "Backup cdART Files"
+msgstr "גיבוי קבצי גרפיקת דיסק"
+
+msgctxt "#32068"
+msgid "Restore From Backup"
+msgstr "שיחזור מגיבוי"
+
+msgctxt "#32069"
+msgid "Restoring cdARTs from backup..."
+msgstr "משחזר גרפיקת דיסק מגיבוי..."
+
+msgctxt "#32070"
+msgid "cdARTs Restored from backup folder"
+msgstr "גרפיקת דיסק שוחזרה מתיקיית גיבוי"
+
+msgctxt "#32071"
+msgid "Settings have not been setup!"
+msgstr "לא הגדרת את ההגדרות!"
+
+msgctxt "#32072"
+msgid "Please go to Settings menu..."
+msgstr "עבור בבקשה לתפריט הגדרות..."
+
+msgctxt "#32073"
+msgid "Then Advanced: Refresh Addon Database"
+msgstr "ואז מתקדם: רענון מסד הנתונים"
+
+msgctxt "#32074"
+msgid "Copy cdART to Backup Folder"
+msgstr "העתק גרפיקת דיסק לתיקיית גיבוי"
+
+msgctxt "#32075"
+msgid "Delete cdART"
+msgstr "מחיקת גרפיקת דיסק"
+
+msgctxt "#32076"
+msgid "Copy To Unique Folder For Upload"
+msgstr "העתק לתיקיה ייחודית להעלאה"
+
+msgctxt "#32077"
+msgid "Custom Label Colors"
+msgstr "צבעי תווית מותאמים אישית"
+
+msgctxt "#32078"
+msgid "Green"
+msgstr "ירוק"
+
+msgctxt "#32079"
+msgid "Blue"
+msgstr "כחול"
+
+msgctxt "#32080"
+msgid "Red"
+msgstr "אדום"
+
+msgctxt "#32081"
+msgid "Yellow"
+msgstr "צהוב"
+
+msgctxt "#32082"
+msgid "Orange"
+msgstr "כתום"
+
+msgctxt "#32083"
+msgid "White"
+msgstr "לבן"
+
+msgctxt "#32084"
+msgid "Cyan"
+msgstr "ציאן"
+
+msgctxt "#32085"
+msgid "Violet"
+msgstr "סגול"
+
+msgctxt "#32086"
+msgid "Pink"
+msgstr "ורוד"
+
+msgctxt "#32087"
+msgid "   Recognized Artists Color"
+msgstr "    צבע לאמנים מוכרים"
+
+msgctxt "#32088"
+msgid "   Unrecognized Artists Color"
+msgstr "    צבע לאמנים לא מוכרים"
+
+msgctxt "#32089"
+msgid "   fanart.tv Albums Match Color"
+msgstr "    צבע התאמה לאלבומים fanart.tv"
+
+msgctxt "#32090"
+msgid "   Local Albums Match Color"
+msgstr "    צבע התאמה לאלבומים מקומיים"
+
+msgctxt "#32091"
+msgid "   Local and fanart.tv Match Color"
+msgstr "    צבע התאמה למקומים ול- fanart.tv"
+
+msgctxt "#32092"
+msgid "   Unmatched Album Color"
+msgstr "    צבע אלבום לא תואם"
+
+msgctxt "#32093"
+msgid "   Local cdART List Color"
+msgstr "    צבע רשימת גרפיקת דיסק מקומית"
+
+msgctxt "#32094"
+msgid "Enable custom colors for labels"
+msgstr "אפשר צבעים מותאמים אישית עבור תוויות"
+
+msgctxt "#32095"
+msgid "File Folders"
+msgstr "תיקיות קבצים"
+
+msgctxt "#32096"
+msgid "Duplicates Found"
+msgstr "נמצאו כפילויות"
+
+msgctxt "#32097"
+msgid "    Resize Unique cdARTs?"
+msgstr "    שנה גודל גרפיקת דיסק ייחודית?"
+
+msgctxt "#32098"
+msgid "Local cdART List"
+msgstr "רשימת גרפיקת דיסק מקומית"
+
+msgctxt "#32099"
+msgid "Build Addon Database in background"
+msgstr "לבנה מסד נתונים ברקע"
+
+msgctxt "#32100"
+msgid "Local Album Count"
+msgstr "ספירת אלבומים מקומיים"
+
+msgctxt "#32101"
+msgid "Sorting Album Artists"
+msgstr "ממיין אמני אלבום"
+
+msgctxt "#32102"
+msgid "Retrieving Local Database"
+msgstr "אחזר מסד מקומי"
+
+msgctxt "#32103"
+msgid "Saving Missing Artwork List"
+msgstr "שומר רשימת גרפיקת דיסק חסרה"
+
+msgctxt "#32104"
+msgid "Uploading Missing cdART List to website"
+msgstr "מעלה רשימת גרפיקת דיסק חסרה לאתר"
+
+msgctxt "#32105"
+msgid "Retrieving Album Details"
+msgstr "אחזר פרטי אלבום"
+
+msgctxt "#32106"
+msgid "Overwrite low-res existing cdARTs"
+msgstr "החלפת גרפיקה ברזולוציה נמוכה בגרפיקת דיסק קיימת"
+
+msgctxt "#32108"
+msgid "Database too old"
+msgstr "מסד הנתונים ישן מדי"
+
+msgctxt "#32109"
+msgid "Do you want to Rebuild?"
+msgstr "אתה רוצה לבנות מחדש?"
+
+msgctxt "#32110"
+msgid "Problem Accessing Folder, Script Exiting"
+msgstr "יש בעיה בגישה לתיקייה. יציאה מהסקריפט"
+
+msgctxt "#32111"
+msgid "Downloaded Artwork"
+msgstr "גרפיקה שהורדה"
+
+msgctxt "#32112"
+msgid "Updating Thumbnails and Fanarts"
+msgstr "מעדכן תמונות ממוזערות ופאנארט"
+
+msgctxt "#32113"
+msgid "Finished updating Thumbnails and Fanarts"
+msgstr "עדכון תמונות ממוזערות ופאנארט הסתיים"
+
+msgctxt "#32114"
+msgid "Check Database MBID's to be current during an Update"
+msgstr "בדק את מסד נתונים MBID כך שיהיה עדכני במהלך עדכון"
+
+msgctxt "#32115"
+msgid "Notify while in Background mode"
+msgstr "הצג התראה כשנמצא במצב עבודה ברקע"
+
+msgctxt "#32116"
+msgid "Notify At End of Background Database Build(displayed for 2 seconds)"
+msgstr "הצג התראה בגמר בניית מסד נתונים ברקע (יוצג ל-2 שניות)"
+
+msgctxt "#32117"
+msgid "Database Building completed"
+msgstr "בניית מסד נתונים הושלמה"
+
+msgctxt "#32118"
+msgid "Background Database building in progress...  Exiting Script..."
+msgstr "בתהליך בניית מסד נתונים ברקע... יוצא מהסקריפט..."
+
+msgctxt "#32119"
+msgid "Stopping Background Database Building"
+msgstr "עוצר בניית מסד נתונים ברקע"
+
+msgctxt "#32120"
+msgid "All Artists"
+msgstr "כל האמנים"
+
+msgctxt "#32121"
+msgid "Album Artists"
+msgstr "אמני אלבום"
+
+msgctxt "#32122"
+msgid "Edit Artist"
+msgstr "עריכת אמן"
+
+msgctxt "#32123"
+msgid "Backup Database"
+msgstr "גיבוי מסד הנתונים"
+
+msgctxt "#32124"
+msgid "Retrieving All Local Artists"
+msgstr "מאחזר את כל האמנים המקומיים"
+
+msgctxt "#32125"
+msgid "Artist ID: "
+msgstr "מזהה אמן: "
+
+msgctxt "#32126"
+msgid "Modify Addon Database"
+msgstr "שינוי מסד הנתונים"
+
+msgctxt "#32127"
+msgid "Edit Album"
+msgstr "עריכת אלבום"
+
+msgctxt "#32128"
+msgid "MusicBrainz Search Limit"
+msgstr "הגבלת חיפוש ב-MusicBrainz"
+
+msgctxt "#32129"
+msgid "Update Database"
+msgstr "עדכן מסד נתונים"
+
+msgctxt "#32130"
+msgid "XBMC Music Database missing..."
+msgstr "מסד הנתונים המוזיקה של קודי חסר..."
+
+msgctxt "#32131"
+msgid "Please insure Music Library is built."
+msgstr "אנא וודא שספריית המוסיקה בנויה."
+
+msgctxt "#32132"
+msgid "Updating Missing MusicBrainz Artist's IDs"
+msgstr "מעדכן את מזהי האמנים מ-MusicBrainz"
+
+msgctxt "#32133"
+msgid "Updating Missing MusicBrainz Album/Artist ID's"
+msgstr "מעדכן את מזהי האלבומים מ-MusicBrainz"
+
+msgctxt "#32134"
+msgid "Updating Addon Database"
+msgstr "מעדכן מסד נתונים"
+
+msgctxt "#32135"
+msgid "Updating Addon Database - Local Artists"
+msgstr "מעדכן מסד נתונים - אמנים מקומיים"
+
+msgctxt "#32136"
+msgid "Enable MusicBrainz ID update during Addon Database update(for missing IDs)"
+msgstr "אפשר עדכון מזהה MusicBrainz במהלך עדכון מסד הנתונים (עבור מזהים חסרים)"
+
+msgctxt "#32137"
+msgid "Artist"
+msgstr "אמן"
+
+msgctxt "#32138"
+msgid "Album"
+msgstr "אלבום"
+
+msgctxt "#32139"
+msgid "Successfully backed up Addon Database"
+msgstr "גיבוי מסד הנתונים הסתיים בהצלחה"
+
+msgctxt "#32140"
+msgid "Old Database version found..."
+msgstr "נמצא גרסת מסד נתונים ישנה..."
+
+msgctxt "#32141"
+msgid "Would you like to add Local Artists to Addon Database?"
+msgstr "האם ברצונך להוסיף אמנים מקומיים למסד הנתונים?"
+
+msgctxt "#32142"
+msgid "Add all artists to Database during Database build or update?"
+msgstr "להוסיף את כל האמנים למסד הנתונים תוך בניית מסד נתונים או עדכון?"
+
+msgctxt "#32143"
+msgid "Extra Settings"
+msgstr "הגדרות נוספות"
+
+msgctxt "#32144"
+msgid "Artist Thumbs"
+msgstr "תמונות ממוזערות של אמן"
+
+msgctxt "#32145"
+msgid "Update XBMC Thumbnails and Fanarts"
+msgstr "עדכון תמונה ממוזערת ופאנארט מ-XBMC"
+
+msgctxt "#32146"
+msgid "Settings"
+msgstr "הגדרות"
+
+msgctxt "#32147"
+msgid "Exit"
+msgstr "יציאה"
+
+msgctxt "#32148"
+msgid "(this can take a long time to complete)"
+msgstr "(התהליך יכול לקחת זמן רב עד להשלמה)"
+
+msgctxt "#32149"
+msgid "Checking Artist MBIDs"
+msgstr "בדיקת מזהה אמן MBIDs"
+
+msgctxt "#32150"
+msgid "Checking Album MBIDs"
+msgstr "בדיקת מזהה אלבום MBIDs"
+
+msgctxt "#32151"
+msgid "Find Missing MBIDs"
+msgstr "חפש מזהה MBIDs"
+
+msgctxt "#32152"
+msgid "Refresh MBIDs"
+msgstr "רענן מזהה MBIDs"
+
+msgctxt "#32153"
+msgid "Change MBID"
+msgstr "שנה מזהה MBIDs"
+
+msgctxt "#32154"
+msgid "Check All MBIDs"
+msgstr "בדוק את כל המזהים MBIDs"
+
+msgctxt "#32155"
+msgid "Enter MBID"
+msgstr "הכנס מזהה MBIDs"
+
+msgctxt "#32156"
+msgid "Select from search(manual entry)"
+msgstr "בחר מתוך החיפוש (הזנה ידנית)"
+
+msgctxt "#32157"
+msgid "Select from search(automatic)"
+msgstr "בחר מתוך החיפוש (אוטומטית)"
+
+msgctxt "#32158"
+msgid "Enable saving of missing.txt file"
+msgstr "אפשר שמירה של קובץ missing.txt"
+
+msgctxt "#32159"
+msgid "Enter Artist MBID - Including dashes(36 Characters)"
+msgstr "הזן מזהה אמן MBID - כולל מקפים (36 תווים)"
+
+msgctxt "#32160"
+msgid "Please Enter 36 Characters including dashes"
+msgstr "אנא הזן 36 תווים כולל מקפים"
+
+msgctxt "#32161"
+msgid "Do you want to re-enter?"
+msgstr "האם ברצונך להכניס מחדש?"
+
+msgctxt "#32162"
+msgid "Is this MBID Correct?"
+msgstr "האם המזהה MBID נכון?"
+
+msgctxt "#32163"
+msgid "Are you sure you want to delete MBID?"
+msgstr "האם אתה בטוח שברצונך למחוק את המזהה MBID?"
+
+msgctxt "#32164"
+msgid "Enter Artist name to search"
+msgstr "הזן את שם האמן לחיפוש"
+
+msgctxt "#32165"
+msgid "Enter Album title to search"
+msgstr "הזן את שם האלבום לחיפוש"
+
+msgctxt "#32166"
+msgid "Select Album"
+msgstr "בחירת אלבום"
+
+msgctxt "#32167"
+msgid "Enter Album MBID - Including dashes(36 Characters)"
+msgstr "הזן מזהה אלבום MBID - כולל מקפים (36 תווים)"
+
+msgctxt "#32168"
+msgid "Artist Banners"
+msgstr "כרזות אמנים"
+
+msgctxt "#32169"
+msgid "400px X 155px"
+msgstr "400px X 155px"
+
+msgctxt "#32170"
+msgid "800px X 310px"
+msgstr "800px X 310px"
+
+msgctxt "#32171"
+msgid "Enable HD Music LOGOs"
+msgstr "אפשר סמלי מוזיקת HD"
+
+msgctxt "#32172"
+msgid "Backup addon database during update"
+msgstr "גבה מסד נתונים במהלך עדכון"
+
+msgctxt "#32173"
+msgid "Number of days to cache fanart.tv data(The Scheduler)[CR]Cache gets cleared with manual use of cdART Manager"
+msgstr "מספר ימים לשמירת מידע במטמון מ-fanart.tv (המתזמן)[CR]המטמון מתנקה בזמן שימוש ידני של מנהל גרפיקת אמנים"
+
+msgctxt "#32174"
+msgid "Number of possible MBID matches:"
+msgstr "מספר התאמות אפשריות למזהה MBID:"
+
+msgctxt "#32175"
+msgid "Enable replacement of illegal filename characters in artist names"
+msgstr "אפשר החלפת תווים לא חוקיים בשמות אמנים"
+
+msgctxt "#32176"
+msgid "   illegal characters to replace"
+msgstr "   תווים לא חוקיים להחלפה"
+
+msgctxt "#32177"
+msgid "   replacement character"
+msgstr "   תו חלופי"
+
+msgctxt "#32178"
+msgid "Yes"
+msgstr "כן"
+
+msgctxt "#32179"
+msgid "No"
+msgstr "לא"
+
+msgctxt "#32180"
+msgid "    change trailing periods to replacement character"
+msgstr "    שנה מיקום עוקב לתו חלופי"
+
+msgctxt "#32181"
+msgid "There is an error in Settings."
+msgstr "יש שגיאה בהגדרות."
+
+msgctxt "#32182"
+msgid "Please check your settings and save settings[CR](press OK in settings)"
+msgstr "אנא בדוק את ההגדרות ושמור אותן[CR](הקש אישור בהגדרות)"
+
+msgctxt "#32183"
+msgid "Limit number Extrafanarts"
+msgstr "הגבל את מספר אקסטרה פאנארטס"
+
+msgctxt "#32184"
+msgid "    Extrafanart Limit:"
+msgstr "     הגבלת אקסטרה פאנארטס:"
+
+msgctxt "#32185"
+msgid "Checking fanart.tv for new artwork..."
+msgstr "בדיקת fanart.tv לגרפיקה חדשה..."
+
+msgctxt "#32186"
+msgid "Updating Database to new version..."
+msgstr "עדכון מסד הנתונים לגירסה חדשה..."
+
+msgctxt "#32187"
+msgid "Checking fanart.tv for artwork..."
+msgstr "בדיקת fanart.tv לגרפיקה..."
+
+msgctxt "#32188"
+msgid "Use http://musicbrainz.org as the MusicBrainz Server"
+msgstr "תשתמש ב-http://musicbrainz.org כשרת ל-MusicBrainz"
+
+msgctxt "#32189"
+msgid "     Url path to MusicBrainz Server(example - http://192.168.1.20)"
+msgstr "    נתיב לשרת MusicBrainz Server (לדוגמה-http://192.168.1.20)"
+
+msgctxt "#32190"
+msgid "     Delay between MusicBrainz Server requests(100's of Milliseconds)"
+msgstr "    עיכוב בין בקשות מהשרת של MusicBrainz (100 של אלפיות שניה)"
+
+msgctxt "#32191"
+msgid "Refresh fanart.tv data"
+msgstr "רענן נתונים fanart.tv"
+
+msgctxt "#32250"
+msgid "Personal API Key"
+msgstr "מפתח API מותאם אישית"
+
+msgctxt "#32251"
+msgid "Enter Personal API Key"
+msgstr "הזו מפתח API מותאם אישית"
+
+msgctxt "#32252"
+msgid "Get a Personal API Key"
+msgstr "השג מפתח API אישי"
+
+msgctxt "#32253"
+msgid "Get a Personal API Key1"
+msgstr "השג מפתח API אישי 1"

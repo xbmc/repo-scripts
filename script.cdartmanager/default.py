@@ -9,9 +9,13 @@ import traceback
 import xbmc
 import xbmcgui
 import xbmcvfs
-from lib import cdam, db, download, ftv_scraper, gui, jsonrpc_calls, utils
+
+import lib.cdam_utils as cu
+
+from lib import cdam, cdam_db, cdam_fs, download, ftv_scraper, gui, jsonrpc_calls
 from lib.cdam import Def, MediaType, ArtType, FileName
-from lib.utils import log, dialog_msg
+from lib.cdam_utils import log, dialog_msg
+from lib.cdam_fs import sanitize
 
 __cdam__ = cdam.CDAM()
 __cfg__ = cdam.Settings()
@@ -35,9 +39,9 @@ def artist_musicbrainz_id(artist_id, artist_mbid):
     artist_details = jsonrpc_calls.retrieve_artist_details(artist_id)
     artist_ = {}
     if not artist_details["musicbrainzartistid"] or not artist_mbid:
-        artist_["name"] = utils.get_unicode(artist_details["label"])
+        artist_["name"] = cu.get_unicode(artist_details["label"])
     else:
-        artist_["name"] = utils.get_unicode(artist_details["label"])
+        artist_["name"] = cu.get_unicode(artist_details["label"])
         if artist_mbid:
             artist_["musicbrainz_artistid"] = artist_mbid
         else:
@@ -48,7 +52,7 @@ def artist_musicbrainz_id(artist_id, artist_mbid):
 def album_musicbrainz_id(album_id):
     album_list = jsonrpc_calls.retrieve_album_details(album_id)
     if album_list:
-        album_detail_list = db.retrieve_album_details_full(album_list, 1, background=True)
+        album_detail_list = cdam_db.retrieve_album_details_full(album_list, 1, background=True)
         return album_detail_list
     else:
         return []
@@ -106,59 +110,40 @@ def update_xbmc_thumbnails(background=False):
     xbmc.sleep(1000)
     dialog_msg("create", heading=__lng__(32042), background=background)
     # Artists
-    artists = db.get_local_artists_db(mode="local_artists")
+    artists = cdam_db.get_local_artists_db(mode="local_artists")
     if not artists:
-        artists = db.get_local_artists_db(mode="album_artists")
+        artists = cdam_db.get_local_artists_db(mode="album_artists")
     # Albums
-    albums = db.get_local_albums_db("all artists", False)
+    albums = cdam_db.get_local_albums_db("all artists", False)
 
     count = 0
     for artist_ in artists:
-        percent = int((count / float(len(artists))) * 100) if len(artist) > 0 else 0
-        count += 1
-        if percent == 0:
-            percent = 1
-        if percent > 100:
-            percent = 100
         if dialog_msg("iscanceled"):
             break
-        dialog_msg("update", percent=percent, line1=__lng__(32112),
-                   line2=" %s %s" % (__lng__(32038), utils.get_unicode(artist_["name"])), background=background)
-        xbmc_thumbnail_path = ""
-        xbmc_fanart_path = ""
-        fanart_path = os.path.join(__cfg__.path_music_path(),
-                                   utils.change_characters(artist_["name"]), FileName.FANART).replace("\\\\", "\\")
-        artistthumb_path = os.path.join(__cfg__.path_music_path(),
-                                        utils.change_characters(artist_["name"]), FileName.FOLDER).replace("\\\\", "\\")
-        artistthumb_rename = os.path.join(__cfg__.path_music_path(),
-                                          utils.change_characters(artist_["name"]),
-                                          "artist.jpg").replace("\\\\", "\\")
-        if xbmcvfs.exists(artistthumb_rename):
-            xbmcvfs.rename(artistthumb_rename, artistthumb_path)
+
+        count += 1
+        dialog_msg("update", percent=cu.percent_of(count, len(artists)), line1=__lng__(32112),
+                   line2=" %s %s" % (__lng__(32038), cu.get_unicode(artist_["name"])), background=background)
+        # xbmc_thumbnail_path = ""
+        # xbmc_fanart_path = ""
+        fanart_path = cdam_fs.get_artist_path(artist_["name"], FileName.FANART)
+        artistthumb_path = cdam_fs.get_artist_path(artist_["name"], FileName.FOLDER)
         if xbmcvfs.exists(fanart_path):
-            xbmc_fanart_path = jsonrpc_calls.get_fanart_path(artist_["local_id"])
+            thumbnail_copy(fanart_path, jsonrpc_calls.get_fanart_path(artist_["local_id"]), ArtType.FANART)
         elif xbmcvfs.exists(artistthumb_path):
-            xbmc_thumbnail_path = jsonrpc_calls.get_thumbnail_path(artist_["local_id"], MediaType.ARTIST)
+            thumbnail_copy(artistthumb_path, jsonrpc_calls.get_thumbnail_path(artist_["local_id"], MediaType.ARTIST),
+                           "artist thumb")
         else:
             continue
-        if xbmc_fanart_path:  # copy to XBMC supplied fanart path
-            thumbnail_copy(fanart_path, xbmc_fanart_path, ArtType.FANART)
-        if xbmc_thumbnail_path:  # copy to XBMC supplied artist image path
-            thumbnail_copy(artistthumb_path, xbmc_thumbnail_path, "artist thumb")
 
     count = 1
     for album_ in albums:
-        percent = int((count / float(len(albums))) * 100) if len(albums) > 0 else 0
-        if percent < 1:
-            percent = 1
-        if percent > 100:
-            percent = 100
         if dialog_msg("iscanceled"):
             break
-        dialog_msg("update", percent=percent, line1=__lng__(32042), line2=__lng__(32112),
-                   line3=" %s %s" % (__lng__(32039), utils.get_unicode(album_["title"])), background=background)
+        dialog_msg("update", percent=cu.percent_of(count, len(albums)), line1=__lng__(32042), line2=__lng__(32112),
+                   line3=" %s %s" % (__lng__(32039), cu.get_unicode(album_["title"])), background=background)
         xbmc_thumbnail_path = ""
-        coverart_path = os.path.join(album_["path"], FileName.FOLDER).replace("\\\\", "\\")
+        coverart_path = sanitize(os.path.join(album_["path"], FileName.FOLDER))
         if xbmcvfs.exists(coverart_path):
             xbmc_thumbnail_path = jsonrpc_calls.get_thumbnail_path(album_["local_id"], "album")
         if xbmc_thumbnail_path:
@@ -213,7 +198,7 @@ if __name__ == "__main__":
         __cfg__.open()
         soft_exit = True
 
-    utils.settings_to_log(__cdam__.file_settings_xml())
+    cu.settings_to_log(__cdam__.file_settings_xml())
     script_mode, provided_mbid, provided_dbid, media_type = get_script_mode()
 
     if xbmcgui.Window(10000).getProperty("cdart_manager_running") == "True":
@@ -235,19 +220,19 @@ if __name__ == "__main__":
             if script_mode == "database":
                 log("Start method - Build Database in background", xbmc.LOGNOTICE)
                 xbmcgui.Window(10000).setProperty("cdartmanager_update", "True")
-                local_album_count, local_artist_count, local_cdart_count = db.refresh_db(background=True)
-                local_artists = db.get_local_artists_db(mode="album_artists")
+                local_album_count, local_artist_count, local_cdart_count = cdam_db.refresh_db(background=True)
+                local_artists = cdam_db.get_local_artists_db(mode="album_artists")
                 if __cfg__.enable_all_artists():
-                    all_artists = db.get_local_artists_db(mode="all_artists")
+                    all_artists = cdam_db.get_local_artists_db(mode="all_artists")
                 else:
                     all_artists = []
                 ftv_scraper.first_check(all_artists, local_artists, background=True)
                 xbmcgui.Window(10000).setProperty("cdartmanager_update", "False")
             elif script_mode in ("autocdart", "autocover", "autofanart", "autologo",
                                  "autothumb", "autobanner", "autoall", "update"):
-                local_artists = db.get_local_artists_db(mode="album_artists")
+                local_artists = cdam_db.get_local_artists_db(mode="album_artists")
                 if __cfg__.enable_all_artists():
-                    all_artists = db.get_local_artists_db(mode="all_artists")
+                    all_artists = cdam_db.get_local_artists_db(mode="all_artists")
                 else:
                     all_artists = []
             if script_mode in ("autocdart", "autocover", "autofanart", "autologo", "autothumb", "autobanner"):
@@ -283,10 +268,10 @@ if __name__ == "__main__":
             elif script_mode == "update":
                 log("Start method - Update Database in background", xbmc.LOGNOTICE)
                 xbmcgui.Window(10000).setProperty("cdart_manager_update", "True")
-                db.update_database(background=True)
-                local_artists = db.get_local_artists_db(mode="album_artists")
+                cdam_db.update_database(background=True)
+                local_artists = cdam_db.get_local_artists_db(mode="album_artists")
                 if __cfg__.enable_all_artists():
-                    all_artists = db.get_local_artists_db(mode="all_artists")
+                    all_artists = cdam_db.get_local_artists_db(mode="all_artists")
                 else:
                     all_artists = []
                 d = datetime.datetime.utcnow()
@@ -381,12 +366,12 @@ if __name__ == "__main__":
                 elif not first_run and not background_db and not soft_exit and not script_fail:  # Test database version
                     log("Looking for database version: %s" % Def.DB_VERSION, xbmc.LOGNOTICE)
                     try:
-                        version = db.get_db_version()
+                        version = cdam_db.get_db_version()
                         if version == Def.DB_VERSION:
                             log("Database matched", xbmc.LOGNOTICE)
                         else:
                             log("Old version found, upgrading database", xbmc.LOGNOTICE)
-                            db.upgrade_db(version)
+                            cdam_db.upgrade_db(version)
                     except StandardError, e:
                         traceback.print_exc()
                         log("# Error: %s" % e.__class__.__name__, xbmc.LOGNOTICE)
@@ -400,7 +385,7 @@ if __name__ == "__main__":
                             script_fail = True
                 if not script_fail and not background_db:
                     if rebuild:
-                        local_album_count, local_artist_count, local_cdart_count = db.refresh_db(True)
+                        local_album_count, local_artist_count, local_cdart_count = cdam_db.refresh_db(True)
                     elif not rebuild and not soft_exit:
                         try:
                             ui = gui.GUI("script-cdartmanager.xml", __cdam__.path())
@@ -422,8 +407,9 @@ if __name__ == "__main__":
                         "Notification( %s, %s, %d, %s)" % (
                             __lng__(32042), __lng__(32110), 500, __cdam__.file_icon()))
             clear_skin_properties()
-        except:
+        except Exception as e:
             print "Unexpected error:", sys.exc_info()[0]
+            log(e.message, xbmc.LOGWARNING)
             clear_skin_properties()
             raise
     else:
