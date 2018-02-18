@@ -18,7 +18,7 @@
         <setting label="32143" type="lsep" />
         <setting type="sep" />
         <setting label="" type="lsep" />
-        <setting label="32175" type="bool" id="enable_replace_illegal" default ="false" />
+        <setting label="32175" type="bool" id="enable_replace_illegal" default ="true" />
         <setting label="32176" type="text" id="illegal_characters" visible="eq(-1,true)" default=":*&lt;&gt;/\|?&quot;" />
         <setting label="32177" type="text" id="replace_character" visible="eq(-2,true)" default="_" />
         <setting label="32180" type="bool" id="change_period_atend" visible="eq(-3,true)" default="true" />

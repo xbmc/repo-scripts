@@ -6,9 +6,10 @@ from urllib import quote_plus
 
 import xbmc
 import cdam
-import db
+import cdam_utils as cu
+import cdam_db
 
-from utils import get_html_source, unescape, log, get_unicode, smart_unicode
+from cdam_utils import log
 
 __cdam__ = cdam.CDAM()
 __cfg__ = cdam.Settings()
@@ -66,7 +67,7 @@ def get_musicbrainz_release_group(release_mbid):
     log("Retrieving MusicBrainz Release Group MBID from Album Release MBID")
     url = release_group_url_release_mbid % (server, quote_plus(release_mbid))
     mbid = ""
-    htmlsource = get_html_source(url, release_mbid, save_file=False, overwrite=False)
+    htmlsource = cu.get_html_source(url, release_mbid, save_file=False, overwrite=False)
     match = re.search('''<release-group-list count="(?:.*?)">(.*?)</release-group-list>''', htmlsource)
     if match:
         mbid_match = re.search('''<release-group id="(.*?)"(?:.*?)">''', match.group(1))
@@ -100,8 +101,8 @@ def get_musicbrainz_album(album_title, artist, e_count, limit=1, with_singles=Fa
     album["title"] = ""
     album["artist"] = ""
     album["artist_id"] = ""
-    artist = smart_unicode(get_unicode(artist))
-    album_title = smart_unicode(get_unicode(album_title))
+    artist = cu.smart_unicode(cu.get_unicode(artist))
+    album_title = cu.smart_unicode(cu.get_unicode(album_title))
     log("Artist: %s" % artist)
     log("Album: %s" % album_title)
     artist = artist.replace('"', '?')
@@ -146,7 +147,7 @@ def get_musicbrainz_album(album_title, artist, e_count, limit=1, with_singles=Fa
                 log("Retrieving MusicBrainz Info - Checking by Artist - Using Release Name")
                 url = release_group_url_alias % (server, quote_plus(album_title.encode("utf-8")), match_within,
                                                  quote_plus(artist.encode("utf-8"))) + query_limit % limit
-        htmlsource = get_html_source(url, "", save_file=False, overwrite=False)
+        htmlsource = cu.get_html_source(url, "", save_file=False, overwrite=False)
         match = re.search('''<release-group-list count="(?:.*?)" offset="(?:.*?)">(.*?)</release-group-list>''',
                           htmlsource)
         if match:
@@ -158,8 +159,8 @@ def get_musicbrainz_album(album_title, artist, e_count, limit=1, with_singles=Fa
                 mbartist = re.search('''<name>(.*?)</name>''', htmlsource)
                 mbartistid = re.search('''<artist id="(.*?)">''', htmlsource)
                 album["id"] = mbid.group(1)
-                album["title"] = unescape(smart_unicode(mbtitle.group(1)))
-                album["artist"] = unescape(smart_unicode(mbartist.group(1)))
+                album["title"] = cu.unescape(cu.smart_unicode(mbtitle.group(1)))
+                album["artist"] = cu.unescape(cu.smart_unicode(mbartist.group(1)))
                 album["artist_id"] = mbartistid.group(1)
             except Exception as e:
                 log(e.message)
@@ -196,7 +197,7 @@ def get_musicbrainz_album(album_title, artist, e_count, limit=1, with_singles=Fa
         match_within = "~4"
         url = release_group_url_artist % (
             server, (album_title.encode("utf-8")), match_within, (artist.encode("utf-8"))) + query_limit % limit
-        htmlsource = get_html_source(url, "", save_file=False, overwrite=False)
+        htmlsource = cu.get_html_source(url, "", save_file=False, overwrite=False)
         match = re.search('''<release-group-list count="(?:.*?)" offset="(?:.*?)">(.*?)</release-group-list>''',
                           htmlsource)
         if match:
@@ -216,8 +217,8 @@ def get_musicbrainz_album(album_title, artist, e_count, limit=1, with_singles=Fa
                         mbartistid = re.search('''<artist id="(.*?)">''', item)
                         album["score"] = mbscore.group(1)
                         album["id"] = mbid.group(1)
-                        album["title"] = unescape(smart_unicode(mbtitle.group(1)))
-                        album["artist"] = unescape(smart_unicode(mbartist.group(1)))
+                        album["title"] = cu.unescape(cu.smart_unicode(mbtitle.group(1)))
+                        album["artist"] = cu.unescape(cu.smart_unicode(mbartist.group(1)))
                         album["artist_id"] = mbartistid.group(1)
                         log("Score     : %s" % album["score"])
                         log("Title     : %s" % album["title"])
@@ -240,9 +241,9 @@ def get_musicbrainz_album(album_title, artist, e_count, limit=1, with_singles=Fa
 def get_musicbrainz_artists(artist_search, limit=1):
     log("Artist: %s" % artist_search)
     artists = []
-    artist_name = smart_unicode((artist_search.replace('"', '?').replace('&', 'and')))
+    artist_name = cu.smart_unicode((artist_search.replace('"', '?').replace('&', 'and')))
     url = artist_url % (server, quote_plus(artist_name.encode("utf-8")), limit)
-    htmlsource = get_html_source(url, "", save_file=False, overwrite=False)
+    htmlsource = cu.get_html_source(url, "", save_file=False, overwrite=False)
     match = re.findall('''<artist(.*?)</artist>''', htmlsource)
     if match:
         for item in match:
@@ -256,11 +257,11 @@ def get_musicbrainz_artists(artist_search, limit=1):
             if score_match:
                 artist["score"] = score_match.group(1)
             if name_match:
-                artist["name"] = unescape(smart_unicode(name_match.group(1)))
+                artist["name"] = cu.unescape(cu.smart_unicode(name_match.group(1)))
             if id_match:
                 artist["id"] = id_match.group(1)
             if sort_name_match:
-                artist["sortname"] = unescape(smart_unicode(sort_name_match.group(1)))
+                artist["sortname"] = cu.unescape(cu.smart_unicode(sort_name_match.group(1)))
             log("Score     : %s" % artist["score"])
             log("Id        : %s" % artist["id"])
             log("Name      : %s" % artist["name"])
@@ -277,12 +278,12 @@ def get_musicbrainz_artist_id(artist_search, limit=1, alias=False):
     id_ = ""
     score = ""
     sortname = ""
-    artist_name = smart_unicode((artist_search.replace('"', '?').replace('&', 'and')))
+    artist_name = cu.smart_unicode((artist_search.replace('"', '?').replace('&', 'and')))
     if not alias:
         url = artist_url % (server, quote_plus(artist_name.encode("utf-8")), limit)
     else:
         url = alias_url % (server, quote_plus(artist_name.encode("utf-8")), limit)
-    htmlsource = get_html_source(url, "", save_file=False, overwrite=False)
+    htmlsource = cu.get_html_source(url, "", save_file=False, overwrite=False)
     match = re.search('''<artist(.*?)</artist>''', htmlsource)
     if match:
         score_match = re.search('''score="(.*?)"''', htmlsource)
@@ -295,11 +296,11 @@ def get_musicbrainz_artist_id(artist_search, limit=1, alias=False):
         if score_match:
             score = score_match.group(1)
         if name_match:
-            name = unescape(smart_unicode(name_match.group(1)))
+            name = cu.unescape(cu.smart_unicode(name_match.group(1)))
         if id_match:
             id_ = id_match.group(1)
         if sort_name_match:
-            sortname = unescape(smart_unicode(sort_name_match.group(1)))
+            sortname = cu.unescape(cu.smart_unicode(sort_name_match.group(1)))
         log("Score     : %s" % score)
         log("Id        : %s" % id_)
         log("Name      : %s" % name)
@@ -320,10 +321,10 @@ def update_musicbrainz_id(type_, info):
     try:
         if type_ == "artist":  # available data info["local_id"], info["name"], info["distant_id"]
             _, artist_id, _ = get_musicbrainz_artist_id(info["name"])
-            db.set_artist_mbid(artist_id, info["name"])
+            cdam_db.set_artist_mbid(artist_id, info["name"])
         if type_ == "album":
             album, _ = get_musicbrainz_album(info["title"], info["artist"], 0)
-            db.set_album_mbid(album["id"], info["title"])
+            cdam_db.set_album_mbid(album["id"], info["title"])
     except Exception as e:
         log(e.message, xbmc.LOGERROR)
         print_exc()
@@ -339,7 +340,7 @@ def mbid_check(database_mbid, type_):
         url = release_group_id_check % (server, database_mbid)
     elif type_ == "artist":
         url = artist_id_check % (server, database_mbid)
-    htmlsource = get_html_source(url, "", save_file=False, overwrite=False)
+    htmlsource = cu.get_html_source(url, "", save_file=False, overwrite=False)
     if type_ == "release-group":
         match = re.search('''<release-group id="(.*?)"(?:.*?)>''', htmlsource)
         if match:
