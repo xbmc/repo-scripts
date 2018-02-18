@@ -1,3 +1,9 @@
+4.2.2
+- Hebrew language, thanks Eng2Heb
+- optional sanitizing file and folder names defaults to true now
+- backup and restore now also use sanitized names
+- changed some GUI internals from splitstring to JSON
+
 4.2.1
 - Bugfix: no cdART was found in JSON
 

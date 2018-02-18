@@ -15,7 +15,7 @@ print thumbnails.get_cached_actor_thumb( "actor name" )
 print thumbnails.get_cached_picture_thumb( "full Path" )
 print thumbnails.get_cached_video_thumb( "full Path" )
 print thumbnails.get_cached_episode_thumb( "full Path", iEpisode=0 ) # iEpisode, currently not used
-print thumbnails.get_cached_fanart_thumb( "full Path", "fanart type" ) # fanart type ("music", "artist", "video", "tvshow" )
+print thumbnails.get_cached_fanart_thumb( "full Path", "fanart type" ) # fanart type ("music", "artist")
 print thumbnails.get_cached_program_thumb( "full Path" )
 print thumbnails.get_cached_script_thumb( "script name" )
 print thumbnails.get_cached_plugin_thumbs( "plugin type", "plugin name" )# tuple: default and folder thumbs
@@ -65,7 +65,6 @@ class Thumbnails:
 
     def get_cached_episode_thumb(self, strPath, iEpisode=0):
         return self.get_cached_thumb(strPath, os.path.join(THUMBS_CACHE_PATH, "Video"), True)
-        # return self.get_cached_thumb( "%sepisode%i" % ( strPath, iEpisode ), os.path.join( THUMBS_CACHE_PATH, "Video" ), True )
 
     def get_cached_fanart_thumb(self, strPath, fanart=""):
         return self.get_cached_thumb(strPath, os.path.join(THUMBS_CACHE_PATH), True)

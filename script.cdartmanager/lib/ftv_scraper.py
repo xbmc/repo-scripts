@@ -12,8 +12,8 @@ import xbmcvfs
 
 import cdam
 from cdam import Def, ArtType
-from db import store_lalist, store_local_artist_table, store_fanarttv_datecode, retrieve_fanarttv_datecode
-from utils import get_html_source, log, dialog_msg
+from cdam_db import store_lalist, store_local_artist_table, store_fanarttv_datecode, retrieve_fanarttv_datecode
+from cdam_utils import get_html_source, log, dialog_msg, percent_of
 
 __cdam__ = cdam.CDAM()
 __cfg__ = cdam.Settings()
@@ -36,7 +36,8 @@ def remote_cdart_list(artist_menu):
                         album = {"artistl_id": artist_menu["local_id"],
                                  "artistd_id": artist_menu["musicbrainz_artistid"],
                                  "musicbrainz_albumid": artwork["musicbrainz_albumid"], "disc": cdart["disc"],
-                                 "size": cdart["size"], "picture": cdart[ArtType.CDART], "thumb_art": cdart[ArtType.CDART]}
+                                 "size": cdart["size"], "picture": cdart[ArtType.CDART],
+                                 "thumb_art": cdart[ArtType.CDART]}
                         try:
                             album["local_name"] = album["artist"] = artist_menu["name"]
                         except KeyError:
@@ -284,7 +285,6 @@ def first_check(all_artists, album_artists, background=False, update_db=False):
     count = 0
     dialog_msg("create", heading="", background=background)
     for artist in album_artists:
-        percent = int((float(count) / len(album_artists)) * 100)
         log("Checking artist MBID: %s" % artist["musicbrainz_artistid"])
         match = artist
         if artist["musicbrainz_artistid"] and (artist["has_art"] == "False" or update_db):
@@ -294,15 +294,14 @@ def first_check(all_artists, album_artists, background=False, update_db=False):
         else:
             match["has_art"] = artist["has_art"]
         album_artists_matched.append(match)
-        dialog_msg("update", percent=percent, line1=heading, line2="", line3=__lng__(32049) % artist["name"],
-                   background=background)
+        dialog_msg("update", percent=percent_of(float(count), len(album_artists)), line1=heading,
+                   line2="", line3=__lng__(32049) % artist["name"], background=background)
         count += 1
     log("Storing Album Artists List")
     store_lalist(album_artists_matched)
     if __cfg__.enable_all_artists() and all_artists:
         count = 0
         for artist in all_artists:
-            percent = int((float(count) / len(all_artists)) * 100) if len(all_artists) > 0 else 100
             log("Checking artist MBID: %s" % artist["musicbrainz_artistid"])
             match = artist
             if artist["musicbrainz_artistid"] and (artist["has_art"] == "False" or update_db):
@@ -312,8 +311,8 @@ def first_check(all_artists, album_artists, background=False, update_db=False):
             else:
                 match["has_art"] = artist["has_art"]
             all_artists_matched.append(match)
-            dialog_msg("update", percent=percent, line1=heading, line2="", line3=__lng__(32049) % artist["name"],
-                       background=background)
+            dialog_msg("update", percent=percent_of(float(count), len(all_artists)), line1=heading,
+                       line2="", line3=__lng__(32049) % artist["name"], background=background)
             count += 1
         store_local_artist_table(all_artists_matched, background=background)
     store_fanarttv_datecode(present_datecode)
@@ -332,25 +331,23 @@ def get_recognized(all_artists, album_artists, background=False):
     new_artwork, data = check_fanart_new_artwork(present_datecode)
     if new_artwork:
         for artist in album_artists:
-            percent = int((float(count) / len(album_artists)) * 100)
             log("Checking artist MBID: %s" % artist["musicbrainz_artistid"])
             match = artist
             if match["musicbrainz_artistid"]:
                 match["has_art"] = update_art(match["musicbrainz_artistid"], data, artist["has_art"])
             album_artists_matched.append(match)
-            dialog_msg("update", percent=percent, line1=__lng__(32185), line2="",
+            dialog_msg("update", percent=percent_of(float(count), len(album_artists)), line1=__lng__(32185), line2="",
                        line3=__lng__(32049) % artist["name"], background=background)
             count += 1
         if __cfg__.enable_all_artists() and all_artists:
             count = 0
             for artist in all_artists:
-                percent = int((float(count) / len(all_artists)) * 100)
                 log("Checking artist MBID: %s" % artist["musicbrainz_artistid"])
                 match = artist
                 if match["musicbrainz_artistid"]:
                     match["has_art"] = update_art(match["musicbrainz_artistid"], data, artist["has_art"])
                 all_artists_matched.append(match)
-                dialog_msg("update", percent=percent, line1=__lng__(32185), line2="",
+                dialog_msg("update", percent=percent_of(float(count), len(all_artists)), line1=__lng__(32185), line2="",
                            line3=__lng__(32049) % artist["name"], background=background)
                 count += 1
     else:

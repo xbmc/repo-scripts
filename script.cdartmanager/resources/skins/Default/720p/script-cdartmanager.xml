@@ -1198,7 +1198,7 @@ id      | description
                     <pulseonselect>false</pulseonselect>
                     <onleft>140</onleft>
                     <onright>142</onright>
-                    <onup>144</onup>
+                    <onup>143</onup>
                     <ondown>143</ondown>
                 </control>
                 <control type="button" id="143"> <!-- Restore From Backup Folder -->
@@ -1221,28 +1221,6 @@ id      | description
                     <onleft>140</onleft>
                     <onright>143</onright>
                     <onup>142</onup>
-                    <ondown>144</ondown>                       
-                </control>
-                <control type="button" id="144"> <!-- Copy To Unique Folder For Upload -->
-                    <description>Copy To Unique Folder For Upload</description>
-                    <posx>10</posx>
-                    <posy>140</posy>
-                    <height>40</height>
-                    <width>380</width>
-                    <textoffsetx>10</textoffsetx>
-                    <textwidth>360</textwidth>
-                    <align>center</align>
-                    <aligny>center</aligny>
-                    <font>font13</font>
-                    <textcolor>FFFFFFFF</textcolor>
-                    <focusedcolor>FFFFFFFF</focusedcolor>
-                    <label>$ADDON[script.cdartmanager 32076]</label>
-                    <texturefocus border="5">cdman-button-focus.png</texturefocus>
-                    <texturenofocus>-</texturenofocus>
-                    <pulseonselect>false</pulseonselect>
-                    <onleft>140</onleft>
-                    <onright>144</onright>
-                    <onup>143</onup>
                     <ondown>142</ondown>
                 </control>
             </control>
