@@ -15,8 +15,16 @@
     <setting id="tmdb_language" label="Language" type="labelenum" default="English (en)" values="English (en)|Český (cs)|Dansk (da)|Deutsch (de)|ελληνικά (el)|Español (es)|Français (fr)|Magyar (hu)|Italiano (it)|Nederlands (nl)|Polski (pl)|Português (pt)|Pусский (ru)|Slovenščina (sk)|Svenska (sv)|Türkçe (tr)"/>
     <setting id="tmdb_poster_size" label="Poster Size" type="labelenum" default="w342" values="w92|w154|w185|w342|w500|original"/>
     <setting id="tmdb_backdrop_size" label="Backdrop Size" type="labelenum" default="original" values="w300|w780|w1280|original"/>
+    <setting type="lsep" label="TMDB API Key" />
+    <setting id="tmdb_api_key" type="text" label="Enter Your API Key" default="" option="hidden"/>
+    <setting id="override_keys" type="bool" label="Override TMDB keys from all addons" default="False"/>
+    <setting type="lsep" label="OMDB API Key" />
+    <setting id="omdbapi_fallback" type="bool" label="Enable omdbapi.com Fallback" default="true"/>
+    <setting id="omdb_api_key" type="text" label="Enter your API Key" default="f4adba76" option="hidden" enable="!eq(-1,false)"/>
 </category>
 <category label="TVDB (Series, Mangas and tvshows)">
     <setting id="tvdb_language" label="Language" type="labelenum" default="English (en)" values="English (en)|čeština (cs)|Dansk (da)|Deutsch (de)|ελληνικά (el)|Español (es)|Suomeksi (fi)|Français (fr)| עברית (he)|Hrvatski (hr)|Magyar (hu)|Italiano (it)|日本語 (ja)|Nederlands (nl)|Norsk (no)|Polski (pl)|Português (pt)|Pусский (ru)|Slovenski (sl)|Svenska (sv)|Türkçe (tr)|中文 (zh)"/>
+    <setting type="lsep" label="TVDB API Key" />
+    <setting id="tvdb_api_key" type="text" label="Enter Your API Key" default="2B8557E0CBF7D720" option="hidden"/>
 </category>
 </settings>
