@@ -109,7 +109,15 @@ msgctxt "#32015"
 msgid "Moving artist images to local artist location"
 msgstr ""
 
-#empty strings from id 32016 to 32099
+msgctxt "#32016"
+msgid "  I donate to this service"
+msgstr ""
+
+msgctxt "#32017"
+msgid "Moving artist service information files to local artist location"
+msgstr ""
+
+#empty strings from id 32018 to 32099
 
 msgctxt "#32100"
 msgid "Slideshow"
@@ -164,7 +172,11 @@ msgid "Use both local and remote images"
 msgstr ""
 
 msgctxt "#32113"
-msgid "  Always use local artist path for storage"
+msgid "  Always use local artist path for image storage"
+msgstr ""
+
+msgctxt "#32114"
+msgid "Alternate Slideshow"
 msgstr ""
 
 #empty strings from id 32113 to 32199
@@ -241,7 +253,11 @@ msgctxt "#32217"
 msgid "Other"
 msgstr ""
 
-#empty strings from id 32210 to 32299
+msgctxt "#32218"
+msgid "  Always use local artist path for service information storage"
+msgstr ""
+
+#empty strings from id 32219 to 32299
 
 msgctxt "#32300"
 msgid "Album Info"

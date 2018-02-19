@@ -1,6 +1,12 @@
-# v.0.3.6
+# v.0.4.0
 
-import subprocess, time
+import shutil, time
+try:
+    import subprocess
+    hasSubprocess = True
+except:
+    import os
+    hasSubprocess = False
 try:
     import xbmcvfs
     isXBMC = True
@@ -14,13 +20,14 @@ if isXBMC:
     _exists = xbmcvfs.exists
     _delete = xbmcvfs.delete
     _rename = xbmcvfs.rename
-    _file = xbmcvfs.File
+    _copy   = xbmcvfs.copy
 else:
     _mkdirs = os.makedirs
     _rmdir  = os.rmdir
     _exists = os.path.exists
     _delete = os.remove
     _rename = os.rename
+    _copy   = shutil.copyfile
 
 
 def checkPath( path, create=True ):
@@ -38,42 +45,102 @@ def checkPath( path, create=True ):
         return True, log_lines
 
 
-def deleteFile( filename ):
+def copyFile( src, dst ):
     log_lines = []
-    if _exists( filename ):
+    if _exists( src ):
         try:
-            _delete( filename )
-            log_lines.append( 'deleting file %s' % filename )
+            log_lines.append( 'copying file %s to %s' % (src, dst) )
+            _copy( src, dst )
         except IOError:
-            log_lines.append( 'unable to delete %s' % filename )
+            log_lines.append( 'unable to copy %s to %s' % (src, dst) )
             return False, log_lines
-        except Exception, e:
-            log_lines.append( 'unknown error while attempting to delete %s' % filename )
+        except Exception as e:
+            log_lines.append( 'unknown error while attempting to copy %s to %s' % (src, dst) )
             log_lines.append( e )
             return False, log_lines
         return True, log_lines
     else:
-        log_lines.append( '%s does not exist' % filename )
+        log_lines.append( '%s does not exist' % src )
         return False, log_lines
 
 
-def deleteFolder( foldername ):
+def deleteFile( src ):
+    return deleteFolder( src, type='file')
+
+
+def deleteFolder( src, type='folder' ):
     log_lines = []
-    if _exists( foldername ):
+    if _exists( src ):
+        if type == 'folder':
+            _action = _rmdir
+        else:
+            _action = _delete
         try:
-            _rmdir( foldername )
-            log_lines.append( 'deleting folder %s' % foldername )
+            log_lines.append( 'deleting %s %s' % (type, src) )
+            _action( src )
         except IOError:
-            log_lines.append( 'unable to delete %s' % foldername )
+            log_lines.append( 'unable to delete %s' % src )
             return False, log_lines
-        except Exception, e:
-            log_lines.append( 'unknown error while attempting to delete %s' % foldername )
+        except Exception as e:
+            log_lines.append( 'unknown error while attempting to delete %s' % src )
             log_lines.append( e )
             return False, log_lines
         return True, log_lines
     else:
-        log_lines.append( '%s does not exist' % foldername )
+        log_lines.append( '%s does not exist' % src )
         return False, log_lines
+
+
+def moveFile( src, dst ):
+    log_lines = []
+    cp_loglines = []
+    dl_loglines = []
+    success = True
+    if _exists( src ):
+        try:
+            log_lines.append( 'moving %s to %s' % (src, dst) )
+            _rename( filename, newfilename )
+        except IOError:
+            log_lines.append( 'unable to move %s' % src )
+            success = False
+        except Exception as e:
+            log_lines.append( 'unknown error while attempting to move %s' % src )
+            log_lines.append( e )
+            success = False
+        if not success:
+            cp_success, cp_loglines = copyFile( src, dst )
+            if cp_success:
+                dl_success, dl_loglines = deleteFile( src )
+                if dl_success:
+                    success = True
+    else:
+        log_lines.append( '%s does not exist' % src)
+        success = False
+    return success, log_lines + cp_loglines + dl_loglines
+
+
+def popenWithTimeout( command, timeout ):
+    log_lines = []
+    if hasSubProcess:
+        try:
+            p = subprocess.Popen( command, stdout=subprocess.PIPE, stderr=subprocess.PIPE )
+        except OSError:
+            log_lines.append( 'error finding external script, terminating' )
+            return False, log_lines
+        except Exception as e:
+            log_lines.append( 'unknown error while attempting to run %s' % command )
+            log_lines.append( e )
+            return False, log_lines
+        for t in xrange( timeout * 4 ):
+            time.sleep( 0.25 )
+            if p.poll() is not None:
+                return p.communicate(), log_lines
+        p.kill()
+        log_lines.append( 'script took too long to run, terminating' )
+        return False, log_lines
+    else:
+        os.system( command )
+        return True, log_lines
 
 
 def readFile( filename ):
@@ -89,7 +156,7 @@ def readFile( filename ):
         except IOError:
             log_lines.append( 'unable to read data from ' + filename )
             return log_lines, ''
-        except Exception, e:
+        except Exception as e:
             log_lines.append( 'unknown error while reading data from ' + filename )
             log_lines.append( e )
             return log_lines, ''
@@ -99,43 +166,8 @@ def readFile( filename ):
         return log_lines, ''
 
 
-def renameFile ( filename, newfilename ):
-    log_lines = []
-    if _exists( filename ):
-        try:
-            _rename( filename, newfilename )
-            log_lines.append( 'renaming %s to %s' % (filename, newfilename) )
-        except IOError:
-            log_lines.append( 'unable to rename %s' % filename )
-            return False, log_lines
-        except Exception, e:
-            log_lines.append( 'unknown error while attempting to rename %s' % filename )
-            log_lines.append( e )
-            return False, log_lines
-        return True, log_lines
-    else:
-        log_lines.append( '%s does not exist' % filename )
-        return False, log_lines
-
-
-def popenWithTimeout( command, timeout ):
-    log_lines = []
-    try:
-        p = subprocess.Popen( command, stdout=subprocess.PIPE, stderr=subprocess.PIPE )
-    except OSError:
-        log_lines.append( 'error finding external script, terminating' )
-        return False, log_lines
-    except Exception, e:
-        log_lines.append( 'unknown error while attempting to run %s' % command )
-        log_lines.append( e )
-        return False, log_lines
-    for t in xrange( timeout * 4 ):
-        time.sleep( 0.25 )
-        if p.poll() is not None:
-            return p.communicate(), ''
-    p.kill()
-    log_lines.append( 'script took too long to run, terminating' )
-    return False, log_lines
+def renameFile ( src, dst ):
+    return moveFile( src, dst )
 
 
 def writeFile( data, filename ):
@@ -153,7 +185,7 @@ def writeFile( data, filename ):
         log_lines.append( 'unable to write data to ' + filename )
         log_lines.append( e )
         return False, log_lines
-    except Exception, e:
+    except Exception as e:
         log_lines.append( 'unknown error while writing data to ' + filename )
         log_lines.append( e )
         return False, log_lines
