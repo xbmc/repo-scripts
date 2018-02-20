@@ -1,4 +1,4 @@
-#v.0.1.4
+#v.0.3.0
 
 try:
     import xbmc
@@ -9,15 +9,19 @@ except:
 
 #this class creates an object used to log stuff to the xbmc log file
 class Logger():
-    def __init__(self, preamble='', logfile='logfile.log', logdebug='true'):
+    def __init__( self, logconfig="file", format='%(asctime)-15s %(levelname)-8s %(message)s', logfile='logfile.log',
+                  logname='_logger', numbackups=5, logdebug='true', maxsize=100000, when='midnight', interval=1, preamble='' ):
         self.LOGPREAMBLE = preamble
         self.LOGDEBUG = logdebug
         if LOGTYPE == 'file':
-            self.logger = logging.getLogger( '_logger' )
+            self.logger = logging.getLogger( logname )                
             self.logger.setLevel( logging.DEBUG )
-            lr = logging.handlers.RotatingFileHandler( logfile, maxBytes=100000, backupCount=5 )
+            if logconfig == 'timed':
+                lr = logging.handlers.TimedRotatingFileHandler( logfile, when=when, backupCount=numbackups)
+            else:
+                lr = logging.handlers.RotatingFileHandler( logfile, maxBytes=maxsize, backupCount=numbackups )
             lr.setLevel( logging.DEBUG )
-            lr.setFormatter( logging.Formatter( "%(asctime)-15s %(levelname)-8s %(message)s" ) )
+            lr.setFormatter( logging.Formatter( format ) )
             self.logger.addHandler( lr )
 
 
@@ -41,7 +45,7 @@ class Logger():
                 if type(line).__name__=='unicode':
                     line = line.encode('utf-8')
                 str_line = line.__str__()
-            except Exception, e:
+            except Exception as e:
                 str_line = ''
                 self._output( 'error parsing logline', loglevel )
                 self._output( e, loglevel )
@@ -60,7 +64,7 @@ class Logger():
         if not (self.LOGDEBUG.lower() == 'false' and loglevel == self.logger.debug):
             try:
                 loglevel( "%s %s" % (self.LOGPREAMBLE, line.__str__()) )
-            except Exception, e:
+            except Exception as e:
                 self.logger.debug( "%s unable to output logline" % self.LOGPREAMBLE )
                 self.logger.debug( "%s %s" % (self.LOGPREAMBLE, e.__str__()) )
 
@@ -69,6 +73,6 @@ class Logger():
         if not (self.LOGDEBUG.lower() == 'false' and (loglevel == xbmc.LOGINFO or loglevel == xbmc.LOGDEBUG)):
             try:
                 xbmc.log( "%s %s" % (self.LOGPREAMBLE, line.__str__()), loglevel)
-            except Exception, e:
+            except Exception as e:
                 xbmc.log( "%s unable to output logline" % self.LOGPREAMBLE, loglevel)
                 xbmc.log ("%s %s" % (self.LOGPREAMBLE, e.__str__()), loglevel)

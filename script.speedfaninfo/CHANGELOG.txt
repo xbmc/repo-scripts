@@ -1,3 +1,6 @@
+v.0.7.6
+- updated common libraries (including fix for subprocess not available in Windows Store version of Kodi)
+
 v.0.7.5
 - added option to run external script to generate log file
 - added 'Other' option to sensor display
