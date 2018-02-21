@@ -18,11 +18,11 @@ msgid "Information"
 msgstr "Informationen"
 
 msgctxt "#30002"
-msgid "[B]Widevine CDM[/B] is required to play this content.[CR][CR]Do you want to install [B]Widevine CDM[/B]?"
-msgstr "Die [B]Widevine CDM[/B] Bibliothek ist nicht installiert, ist aber nötig um den Inhalt wiederzugeben.[CR][CR]Soll die [B]Widevine CDM[/B] Bibliothek installiert werden?"
+msgid "This content is DRM protected and requires the proprietary decryption module [B]Widevine CDM[/B] for playback."
+msgstr "This content is DRM protected and requires the proprietary decryption module [B]Widevine CDM[/B] for playback."
 
 msgctxt "#30003"
-msgid "[B]Widevine CDM[/B] was successfully installed!"
+msgid "[B]Widevine CDM[/B] was successfully installed."
 msgstr "[B]Widevine CDM[/B] Bibliothek wurde erfolgreich installiert"
 
 msgctxt "#30004"
@@ -98,7 +98,7 @@ msgid "[B]'{0}'[/B] command needs to exist on system to extract the [B]Widevine 
 msgstr "Der Systembefehl [B]'{0}'[/B] muss verfügbar sein um die [B]Widevine CDM[/B] Bibliothek zu extrahieren."
 
 msgctxt "#30022"
-msgid "Downloading Chrome OS recovery image."
+msgid "Downloading the Chrome OS recovery image."
 msgstr "Download des Chrome OS recovery images."
 
 msgctxt "#30023"
@@ -130,8 +130,8 @@ msgid "OK"
 msgstr ""
 
 msgctxt "#30030"
-msgid "Administrative rights ([B]sudo[/B]) is required to mount the Chrome OS image. Press OK to grant the installation permission to run the mount command as [B]sudo[/B]."
-msgstr "Administratiren Rechte ([B]sudo[/B]) sind erforderlich um das Chrome OS Image zu mounten. Mit OK bestätigen sie, dass der mount befehl via [B]sudo[/B] ausgeführt werden darf."
+msgid "The installation may need to run the following commands with root permissions: [B]{0}[/B]."
+msgstr "The installation may need to run the following commands with root permissions: [B]{0}[/B]."
 
 msgctxt "#30031"
 msgid "An update of [B]Widevine CDM[/B] is required to play this content."
@@ -147,4 +147,32 @@ msgstr ""
 
 msgctxt "#30034"
 msgid "Update"
+msgstr ""
+
+msgctxt "#30035"
+msgid "[B]loop[/B] is still loaded"
+msgstr ""
+
+msgctxt "#30036"
+msgid "Unload it by running [B]modprobe -r loop[/B] in the terminal."
+msgstr ""
+
+msgctxt "#30037"
+msgid "Success!"
+msgstr ""
+
+msgctxt "#30038"
+msgid "Install Widevine"
+msgstr ""
+
+msgctxt "#30039"
+msgid "[B]Widevine CDM[/B] is currently not available natively on ARM64. Please switch to a 32-bit userspace for [B]Widevine CDM[/B] support."
+msgstr ""
+
+msgctxt "#30040"
+msgid "Update available"
+msgstr ""
+
+msgctxt "#30041"
+msgid "Widevine CDM is required"
 msgstr ""

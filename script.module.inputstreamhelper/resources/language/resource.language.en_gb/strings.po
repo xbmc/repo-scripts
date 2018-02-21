@@ -18,11 +18,11 @@ msgid "Information"
 msgstr ""
 
 msgctxt "#30002"
-msgid "[B]Widevine CDM[/B] is required to play this content.[CR][CR]Do you want to install [B]Widevine CDM[/B]?"
+msgid "This add-on relies on the proprietary decryption module [B]Widevine CDM[/B] for playback."
 msgstr ""
 
 msgctxt "#30003"
-msgid "[B]Widevine CDM[/B] was successfully installed!"
+msgid "[B]Widevine CDM[/B] was successfully installed."
 msgstr ""
 
 msgctxt "#30004"
@@ -98,7 +98,7 @@ msgid "[B]'{0}'[/B] command needs to exist on system to extract the [B]Widevine 
 msgstr ""
 
 msgctxt "#30022"
-msgid "Downloading Chrome OS recovery image."
+msgid "Downloading the Chrome OS recovery image."
 msgstr ""
 
 msgctxt "#30023"
@@ -130,7 +130,7 @@ msgid "OK"
 msgstr ""
 
 msgctxt "#30030"
-msgid "Administrative rights ([B]sudo[/B]) is required to mount the Chrome OS image. Press OK to grant the installation permission to run the mount command as [B]sudo[/B]."
+msgid "The installation may need to run the following commands with root permissions: [B]{0}[/B]."
 msgstr ""
 
 msgctxt "#30031"
@@ -142,9 +142,37 @@ msgid "Your system is missing the following libraries required by Widevine CDM: 
 msgstr ""
 
 msgctxt "#30033"
-msgid "There is an update available for [B]Widevine CDM[/B].[CR][CR]Do you want to install the update?"
+msgid "There is an update available for [B]Widevine CDM[/B]."
 msgstr ""
 
 msgctxt "#30034"
 msgid "Update"
+msgstr ""
+
+msgctxt "#30035"
+msgid "[B]loop[/B] is still loaded"
+msgstr ""
+
+msgctxt "#30036"
+msgid "Unload it by running [B]modprobe -r loop[/B] in the terminal."
+msgstr ""
+
+msgctxt "#30037"
+msgid "Success!"
+msgstr ""
+
+msgctxt "#30038"
+msgid "Install Widevine"
+msgstr ""
+
+msgctxt "#30039"
+msgid "[B]Widevine CDM[/B] is currently not available natively on ARM64. Please switch to a 32-bit userspace for [B]Widevine CDM[/B] support."
+msgstr ""
+
+msgctxt "#30040"
+msgid "Update available"
+msgstr ""
+
+msgctxt "#30041"
+msgid "Widevine CDM is required"
 msgstr ""

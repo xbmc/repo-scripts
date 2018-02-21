@@ -6,7 +6,7 @@ A simple Kodi module that makes life easier for add-on developers relying on Inp
 * Checks if HLS is supported in inputstream.adaptive
 * Automatically installs Widevine CDM on supported platforms (optional)
   * Keeps Widevine CDM up-to-date with the latest version available (Kodi 18 and higher)
-  * Checks for missing depending libraries by parsing the output from  `ldd`
+  * Checks for missing depending libraries by parsing the output from  `ldd` (Linux)
 
 ## Example ##
 
@@ -15,16 +15,24 @@ import xbmc
 import xbmcgui
 import inputstreamhelper
 
-def play_item():
-    is_helper = inputstreamhelper.Helper('mpd', drm='widevine')
-    stream_url = 'http://yt-dash-mse-test.commondatastorage.googleapis.com/media/car-20120827-manifest.mpd'
-    if is_helper.check_inputstream():
-        playitem = xbmcgui.ListItem(path=stream_url)
-        playitem.setProperty('inputstreamaddon', 'inputstream.adaptive')
-        playitem.setProperty('inputstream.adaptive.manifest_type', 'mpd')
-        xbmc.Player().play(item=stream_url, listitem=playitem)
+PROTOCOL = 'mpd'
+DRM = 'com.widevine.alpha'
+STREAM_URL = 'https://demo.unified-streaming.com/video/tears-of-steel/tears-of-steel-dash-widevine.ism/.mpd'
+LICENSE_URL = 'https://cwip-shaka-proxy.appspot.com/no_auth'
 
-play_item()
+
+def play():
+    is_helper = inputstreamhelper.Helper(PROTOCOL, drm=DRM)
+    if is_helper.check_inputstream():
+        playitem = xbmcgui.ListItem(path=STREAM_URL)
+        playitem.setProperty('inputstreamaddon', is_helper.inputstream_addon)
+        playitem.setProperty('inputstream.adaptive.manifest_type', PROTOCOL)
+        playitem.setProperty('inputstream.adaptive.license_type', DRM)
+        playitem.setProperty('inputstream.adaptive.license_key', LICENSE_URL + '||R{SSM}|')
+        xbmc.Player().play(item=STREAM_URL, listitem=playitem)
+
+if __name__ == '__main__':
+    play()
 ```
 
 The Helper class takes two arguments: protocol (the media streaming protocol) and the optional argument 'drm'.
