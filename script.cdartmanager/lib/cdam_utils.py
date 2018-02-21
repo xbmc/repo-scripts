@@ -2,6 +2,7 @@
 import datetime
 import errno
 import htmlentitydefs
+import json
 import os
 import re
 import traceback
@@ -110,6 +111,7 @@ def settings_to_log(settings_path):
 
 def clear_image_cache(url):
     thumb = Thumbnails().get_cached_picture_thumb(url)
+    log("clear thumb: %s" % thumb, xbmc.LOGDEBUG)
     png = os.path.splitext(thumb)[0] + ".png"
     dds = os.path.splitext(thumb)[0] + ".dds"
     jpg = os.path.splitext(thumb)[0] + ".jpg"
@@ -251,6 +253,10 @@ def dialog_msg(action,
         if action == 'create':
             dialog.create(heading, line1, line2, line3)
         if action == 'update':
+            if percent > 100:
+                percent = 100
+            elif percent < 0:
+                percent = 0
             dialog.update(percent, line1, line2, line3)
         if action == 'close':
             dialog.close()
@@ -285,9 +291,20 @@ def coloring(text, color, colorword=None):
 
 
 def remove_color(text):
-    clean_text = text.replace("[/COLOR]", "").replace("[COLOR=FFFFFFFF]", "").replace("[COLOR=FF0000FF]",
-                                                                                      "").replace(
-        "[COLOR=FF00FFFF]", "").replace("[COLOR=FFEE82EE]", "").replace("[COLOR=FFFF1493]", "").replace(
-        "[COLOR=FFFF0000]", "").replace("[COLOR=FF00FF00]", "").replace("[COLOR=FFFFFF00]", "").replace(
-        "[COLOR=FFFF4500]", "")
+    clean_text = text.replace("[/COLOR]", "").replace("[COLOR=FFFFFFFF]", "").replace("[COLOR=FF0000FF]", "")\
+        .replace("[COLOR=FF00FFFF]", "").replace("[COLOR=FFEE82EE]", "").replace("[COLOR=FFFF1493]", "")\
+        .replace("[COLOR=FFFF0000]", "").replace("[COLOR=FF00FF00]", "").replace("[COLOR=FFFFFF00]", "")\
+        .replace("[COLOR=FFFF4500]", "")
     return clean_text
+
+
+def percent_of(value, base):
+    try:
+        result = int(float(value) / float(base) * 100)
+        return result
+    except (ValueError, ArithmeticError):
+        return 100
+
+
+def from_json_simple(json_string):
+    return json.loads(json_string)

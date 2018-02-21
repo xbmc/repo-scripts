@@ -5,6 +5,7 @@ import os
 import re
 import time
 import traceback
+import ast
 
 import sqlite3 as sql
 from sqlite3 import Error as SQLError
@@ -13,11 +14,12 @@ import xbmc
 import xbmcvfs
 
 import cdam
-from cdam import Def, ArtType, FileName
+import cdam_utils as cu
 
-from mb_utils import get_musicbrainz_artist_id, get_musicbrainz_album, mbid_check, \
-    get_musicbrainz_release_group
-from utils import get_unicode, log, dialog_msg
+from cdam import Def, ArtType, FileName
+from mb_utils import get_musicbrainz_artist_id, get_musicbrainz_album, mbid_check, get_musicbrainz_release_group
+from cdam_utils import log, dialog_msg
+from cdam_fs import sanitize
 from jsonrpc_calls import get_all_local_artists, retrieve_album_list, retrieve_album_details, get_album_path
 
 __cdam__ = cdam.CDAM()
@@ -92,7 +94,7 @@ def user_updates(details, type_):
         try:
             c.execute("""\
                 SELECT DISTINCT album_id FROM album_updates WHERE album_id=? and path=?
-            """, (details["local_id"], get_unicode(details["path"])))
+            """, (details["local_id"], cu.get_unicode(details["path"])))
             db_details = c.fetchall()
             print db_details
             if db_details:
@@ -100,15 +102,16 @@ def user_updates(details, type_):
                 c.execute("""\
                     UPDATE album_updates SET artist=?, title=?, musicbrainz_albumid=?,
                     musicbrainz_artistid=? WHERE album_id=? and path=?
-                """, (get_unicode(details["artist"]), get_unicode(details["title"]), details["musicbrainz_albumid"],
-                      details["musicbrainz_artistid"], details["local_id"], get_unicode(details["path"])))
+                """, (cu.get_unicode(details["artist"]), cu.get_unicode(details["title"]),
+                      details["musicbrainz_albumid"], details["musicbrainz_artistid"],
+                      details["local_id"], cu.get_unicode(details["path"])))
             else:
                 log("Storing new album edit", xbmc.LOGNOTICE)
                 c.execute("""\
                     INSERT INTO album_updates(album_id, title, artist, path, musicbrainz_albumid, musicbrainz_artistid)
                     values (?, ?, ?, ?, ?, ?)
-                """, (details["local_id"], get_unicode(details["title"]), get_unicode(details["artist"]),
-                      get_unicode(details["path"]), details["musicbrainz_albumid"], details["musicbrainz_artistid"]))
+                """, (details["local_id"], cu.get_unicode(details["title"]), cu.get_unicode(details["artist"]),
+                      cu.get_unicode(details["path"]), details["musicbrainz_albumid"], details["musicbrainz_artistid"]))
         except SQLError:
             log("Error updating album_updates table", xbmc.LOGERROR)
             traceback.print_exc()
@@ -116,8 +119,8 @@ def user_updates(details, type_):
             c.execute("""\
                 UPDATE alblist SET artist=?, title=?, musicbrainz_albumid=?, musicbrainz_artistid=?
                 WHERE album_id=? and path=?
-            """, (get_unicode(details["artist"]), get_unicode(details["title"]), details["musicbrainz_albumid"],
-                  details["musicbrainz_artistid"], details["local_id"], get_unicode(details["path"])))
+            """, (cu.get_unicode(details["artist"]), cu.get_unicode(details["title"]), details["musicbrainz_albumid"],
+                  details["musicbrainz_artistid"], details["local_id"], cu.get_unicode(details["path"])))
         except SQLError:
             log("Error updating album table", xbmc.LOGERROR)
             traceback.print_exc()
@@ -214,7 +217,7 @@ def retrieve_album_details_full(album_list, total, background=False, simple=Fals
             album_count += 1
             percent = int((album_count / float(total)) * 100) if float(total) > 0 else 100
             dialog_msg("update", percent=percent, line1=__lng__(20186),
-                       line2="%s: %s" % (__lng__(32138), (get_unicode(detail['title']))),
+                       line2="%s: %s" % (__lng__(32138), (cu.get_unicode(detail['title']))),
                        line3="%s #:%6s      %s%6s" % (__lng__(32039), album_count, __lng__(32045), total),
                        background=background)
             try:
@@ -267,16 +270,16 @@ def retrieve_album_details_full(album_list, total, background=False, simple=Fals
                                 except KeyError:
                                     album_artist["local_id"] = detail['albumid']
                                 title = detail['title']
-                                album_artist["artist"] = get_unicode(
+                                album_artist["artist"] = cu.get_unicode(
                                     artist_list_to_string(album['artist']).split(" / ")[0])
-                                album_artist["path"] = get_unicode(path)
+                                album_artist["path"] = cu.get_unicode(path)
                                 album_artist[ArtType.CDART] = xbmcvfs.exists(
-                                    os.path.join(path, FileName.CDART).replace("\\\\", "\\"))
+                                    sanitize(os.path.join(path, FileName.CDART)))
                                 album_artist[ArtType.COVER] = xbmcvfs.exists(
-                                    os.path.join(path, FileName.FOLDER).replace("\\\\", "\\"))
+                                    sanitize(os.path.join(path, FileName.FOLDER)))
                                 previous_path = path
                                 path_match = re.search("(?:\\\\|/| - )(?:disc|cd)(?:\s|-|_|)([0-9]{0,3})",
-                                                       path.replace("\\\\", "\\"), re.I)
+                                                       sanitize(path), re.I)
                                 title_match = re.search(
                                     "(.*?)(?:[\s]|[(]|[\s][(])(?:disc|cd)(?:[\s]|)([0-9]{0,3})(?:[)]?.*?)", title,
                                     re.I)
@@ -286,7 +289,7 @@ def retrieve_album_details_full(album_list, total, background=False, simple=Fals
                                             log("Title has CD count")
                                             log("    Disc %s" % title_match.group(2))
                                             album_artist["disc"] = int(title_match.group(2))
-                                            album_artist["title"] = get_unicode(
+                                            album_artist["title"] = cu.get_unicode(
                                                 (title_match.group(1).replace(" -", "")).rstrip())
                                         else:
                                             if path_match:
@@ -301,7 +304,7 @@ def retrieve_album_details_full(album_list, total, background=False, simple=Fals
                                                     album_artist["disc"] = 1
                                             else:
                                                 album_artist["disc"] = 1
-                                            album_artist["title"] = get_unicode((title.replace(" -", "")).rstrip())
+                                            album_artist["title"] = cu.get_unicode((title.replace(" -", "")).rstrip())
                                     else:
                                         if path_match:
                                             if len(path_match.groups()) > 0:
@@ -315,7 +318,7 @@ def retrieve_album_details_full(album_list, total, background=False, simple=Fals
                                                 album_artist["disc"] = 1
                                         else:
                                             album_artist["disc"] = 1
-                                        album_artist["title"] = get_unicode((title.replace(" -", "")).rstrip())
+                                        album_artist["title"] = cu.get_unicode((title.replace(" -", "")).rstrip())
                                 else:
                                     if path_match:
                                         if len(path_match.groups()) > 0:
@@ -329,7 +332,7 @@ def retrieve_album_details_full(album_list, total, background=False, simple=Fals
                                             album_artist["disc"] = 1
                                     else:
                                         album_artist["disc"] = 1
-                                    album_artist["title"] = get_unicode((title.replace(" -", "")).rstrip())
+                                    album_artist["title"] = cu.get_unicode((title.replace(" -", "")).rstrip())
                                 log("Album Title: %s" % album_artist["title"])
                                 log("Album Artist: %s" % album_artist["artist"])
                                 log("Album ID: %s" % album_artist["local_id"])
@@ -378,12 +381,12 @@ def retrieve_album_details_full(album_list, total, background=False, simple=Fals
 
 def get_album_cdart(album_path):
     log("Retrieving cdART status")
-    return bool(xbmcvfs.exists(os.path.join(album_path, FileName.CDART).replace("\\\\", "\\")))
+    return bool(sanitize(xbmcvfs.exists(os.path.join(album_path, FileName.CDART))))
 
 
 def get_album_coverart(album_path):
     log("Retrieving cover art status")
-    return bool(xbmcvfs.exists(os.path.join(album_path, FileName.FOLDER).replace("\\\\", "\\")))
+    return bool(xbmcvfs.exists(sanitize(os.path.join(album_path, FileName.FOLDER))))
 
 
 def store_alblist(local_album_list, background=False):
@@ -396,13 +399,13 @@ def store_alblist(local_album_list, background=False):
     try:
         for album in local_album_list:
             dialog_msg("update", percent=percent, line1=__lng__(20186),
-                       line2="%s: %s" % (__lng__(32138), get_unicode(album["title"])),
+                       line2="%s: %s" % (__lng__(32138), cu.get_unicode(album["title"])),
                        line3="%s%6s" % (__lng__(32100), album_count), background=background)
             log("Album Count: %s" % album_count)
             log("Album ID: %s" % album["local_id"])
             log("Album Title: %s" % album["title"])
             log("Album Artist: %s" % album["artist"])
-            log("Album Path: %s" % album["path"].replace("\\\\", "\\"))
+            log("Album Path: %s" % sanitize(album["path"]))
             log("cdART Exist?: %s" % ("False", "True")[album["cdart"]])
             log("Cover Art Exist?: %s" % ("False", "True")[album["cover"]])
             log("Disc #: %s" % album["disc"])
@@ -417,8 +420,8 @@ def store_alblist(local_album_list, background=False):
                         alblist(
                             album_id, title, artist, path, cdart, cover, disc, musicbrainz_albumid, musicbrainz_artistid
                         ) values (?, ?, ?, ?, ?, ?, ?, ?, ?)
-                """, (album["local_id"], get_unicode(album["title"]), get_unicode(album["artist"]),
-                      get_unicode(album["path"].replace("\\\\", "\\")), ("False", "True")[album["cdart"]],
+                """, (album["local_id"], cu.get_unicode(album["title"]), cu.get_unicode(album["artist"]),
+                      cu.get_unicode(sanitize(album["path"])), ("False", "True")[album["cdart"]],
                       ("False", "True")[album["cover"]], album["disc"], album["musicbrainz_albumid"],
                       album["musicbrainz_artistid"]))
             except Exception as e:
@@ -472,7 +475,7 @@ def store_lalist(local_artist_list):
             except TypeError:
                 c.execute("""\
                     insert into lalist(local_id, name, musicbrainz_artistid, fanarttv_has_art) values (?, ?, ?, ?)
-                """, (artist["local_id"], get_unicode(artist["name"]), artist["musicbrainz_artistid"],
+                """, (artist["local_id"], cu.get_unicode(artist["name"]), artist["musicbrainz_artistid"],
                       artist["has_art"]))
             except Exception as e:
                 log(e.message, xbmc.LOGERROR)
@@ -514,7 +517,7 @@ def retrieve_distinct_album_artists():
     """)
     db = c.fetchall()
     for item in db:
-        artist = {"name": get_unicode(item[0]), "musicbrainz_artistid": get_unicode(item[1])}
+        artist = {"name": cu.get_unicode(item[0]), "musicbrainz_artistid": cu.get_unicode(item[1])}
         album_artists.append(artist)
     c.close()
     log("Finished Retrieving Distinct Album Artists")
@@ -564,16 +567,16 @@ def check_local_albumartist(album_artist, local_artist_list, background=False):
     local_album_artist_list = []
     for artist in album_artist:  # match album artist to local artist id
         album_artist_1 = {}
-        name = get_unicode(artist_list_to_string(artist["name"]))
+        name = cu.get_unicode(artist_list_to_string(artist["name"]))
         artist_count += 1
         id_ = None
         for local in local_artist_list:
             dialog_msg("update", percent=percent, line1=__lng__(20186), line2="%s" % __lng__(32101),
-                       line3="%s:%s" % (__lng__(32038), (get_unicode(artist_list_to_string(local["artist"])))),
+                       line3="%s:%s" % (__lng__(32038), (cu.get_unicode(artist_list_to_string(local["artist"])))),
                        background=background)
             if dialog_msg("iscanceled", background=background):
                 break
-            if name == get_unicode(artist_list_to_string(local["artist"])):
+            if name == cu.get_unicode(artist_list_to_string(local["artist"])):
                 id_ = local["artistid"]
                 break
         if id_ is not None:
@@ -672,27 +675,17 @@ def get_local_albums_db(artist_name, background=False):
                     SELECT DISTINCT album_id, title, artist, path, cdart, cover, disc, musicbrainz_albumid,
                     musicbrainz_artistid FROM alblist WHERE artist=? ORDER BY title ASC
                 """, (artist_name,))
-            except SQLError:
-                try:
-                    c.execute("""\
-                        SELECT DISTINCT album_id, title, artist, path, cdart, cover, disc, musicbrainz_albumid,
-                        musicbrainz_artistid FROM alblist WHERE artist=? ORDER BY title ASC
-                    """, (artist_name,))
-                except SQLError:
-                    c.execute("""\
-                        SELECT DISTINCT album_id, title, artist, path, cdart, cover, disc, musicbrainz_albumid,
-                        musicbrainz_artistid FROM alblist WHERE artist=? ORDER BY title ASC
-                    """, (artist_name,))
             except Exception as e:
                 log(e.message, xbmc.LOGERROR)
                 traceback.print_exc()
         db = c.fetchall()
         c.close()
         for item in db:
-            album = {"local_id": (item[0]), "title": get_unicode(item[1]), "artist": get_unicode(item[2]),
-                     "path": get_unicode(item[3]).replace('"', ''), "cdart": eval(get_unicode(item[4])),
-                     "cover": eval(get_unicode(item[5])), "disc": (item[6]),
-                     "musicbrainz_albumid": get_unicode(item[7]), "musicbrainz_artistid": get_unicode(item[8])}
+            album = {"local_id": (item[0]), "title": cu.get_unicode(item[1]), "artist": cu.get_unicode(item[2]),
+                     "path": cu.get_unicode(item[3]),
+                     "cdart": ast.literal_eval(cu.get_unicode(item[4])),
+                     "cover": ast.literal_eval(cu.get_unicode(item[5])), "disc": (item[6]),
+                     "musicbrainz_albumid": cu.get_unicode(item[7]), "musicbrainz_artistid": cu.get_unicode(item[8])}
             # print album
             local_album_list.append(album)
     except Exception as e:
@@ -725,8 +718,8 @@ def get_local_artists_db(mode="album_artists"):
         db = c.fetchall()
         c.close()
         for item in db:
-            artists = {"local_id": (item[0]), "name": get_unicode(item[1]),
-                       "musicbrainz_artistid": get_unicode(item[2])}
+            artists = {"local_id": (item[0]), "name": cu.get_unicode(item[1]),
+                       "musicbrainz_artistid": cu.get_unicode(item[2])}
             if not item[3]:
                 artists["has_art"] = "False"
             else:
@@ -754,16 +747,17 @@ def store_local_artist_table(artist_list, background=False):
         percent = int((count / float(len(artist_list))) * 100) if len(artist_list) > 0 else 100
         dialog_msg("update", percent=percent, line1=__lng__(32124),
                    line2="%s%s" % (__lng__(32125), artist["local_id"]),
-                   line3="%s%s" % (__lng__(32028), get_unicode(artist["name"])), background=background)
+                   line3="%s%s" % (__lng__(32028), cu.get_unicode(artist["name"])), background=background)
         try:
             c.execute("""\
                 insert into local_artists(local_id, name, musicbrainz_artistid, fanarttv_has_art) values (?, ?, ?, ?)
-            """, (artist["local_id"], get_unicode(artist["name"]), artist["musicbrainz_artistid"], artist["has_art"]))
+            """, (artist["local_id"], cu.get_unicode(artist["name"]), artist["musicbrainz_artistid"],
+                  artist["has_art"]))
             count += 1
         except KeyError:
             c.execute("""\
                 insert into local_artists(local_id, name, musicbrainz_artistid, fanarttv_has_art) values (?, ?, ?, ?)
-            """, (artist["local_id"], get_unicode(artist["name"]), artist["musicbrainz_artistid"], "False"))
+            """, (artist["local_id"], cu.get_unicode(artist["name"]), artist["musicbrainz_artistid"], "False"))
             count += 1
         except Exception as e:
             log(e.message, xbmc.LOGERROR)
@@ -792,26 +786,26 @@ def build_local_artist_table(background=False):
             percent = int((count / float(total)) * 100) if float(total) > 0 else 100
             dialog_msg("update", percent=percent, line1=__lng__(20186),
                        line2="%s: %s" % (__lng__(32125), local_artist["artistid"]), line3="%s: %s" % (
-                    __lng__(32137), get_unicode(artist_list_to_string(local_artist["artist"]))),
+                    __lng__(32137), cu.get_unicode(artist_list_to_string(local_artist["artist"]))),
                        background=background)
             count += 1
             for album_artist in local_album_artist_list:
                 if dialog_msg("iscanceled", background=background):
                     break
                 if local_artist["artistid"] == album_artist["local_id"]:
-                    artist["name"] = get_unicode(artist_list_to_string(local_artist["artist"]))
+                    artist["name"] = cu.get_unicode(artist_list_to_string(local_artist["artist"]))
                     artist["local_id"] = local_artist["artistid"]
                     artist["musicbrainz_artistid"] = album_artist["musicbrainz_artistid"]
                     artist["has_art"] = album_artist["has_art"]
                     break
             if not artist:
                 try:
-                    artist["name"] = get_unicode(artist_list_to_string(local_artist["artist"]))
+                    artist["name"] = cu.get_unicode(artist_list_to_string(local_artist["artist"]))
                     _, artist["musicbrainz_artistid"], _ = get_musicbrainz_artist_id(
-                        get_unicode(artist_list_to_string(local_artist["artist"])))
+                        cu.get_unicode(artist_list_to_string(local_artist["artist"])))
                 except Exception as e:
                     log(e.message)
-                    artist["name"] = get_unicode(artist_list_to_string(local_artist["artist"]))
+                    artist["name"] = cu.get_unicode(artist_list_to_string(local_artist["artist"]))
                     _, artist["musicbrainz_artistid"], _ = get_musicbrainz_artist_id(
                         artist_list_to_string(local_artist["artist"]))
                 artist["local_id"] = artist_list_to_string(local_artist["artistid"])
@@ -930,8 +924,8 @@ def check_album_mbid(albums, background=False):
             canceled = True
             break
         dialog_msg("update", percent=percent, line1=__lng__(32150),
-                   line2="%s: %s" % (__lng__(32138), get_unicode(album["title"])),
-                   line3="%s: %s" % (__lng__(32137), get_unicode(album["artist"])), background=background)
+                   line2="%s: %s" % (__lng__(32138), cu.get_unicode(album["title"])),
+                   line3="%s: %s" % (__lng__(32137), cu.get_unicode(album["artist"])), background=background)
         if album["musicbrainz_albumid"]:
             mbid_match, current_mbid = mbid_check(album["musicbrainz_albumid"], "release-group")
             if not mbid_match:
@@ -967,7 +961,7 @@ def check_artist_mbid(artists, background=False, mode="all_artists"):
         if update_artist["musicbrainz_artistid"]:
             dialog_msg("update", percent=percent, line1=__lng__(32149),
                        line2="%s%s" % (__lng__(32125), update_artist["local_id"]),
-                       line3="%s: %s" % (__lng__(32137), get_unicode(update_artist["name"])),
+                       line3="%s: %s" % (__lng__(32137), cu.get_unicode(update_artist["name"])),
                        background=background)
             mbid_match, current_mbid = mbid_check(update_artist["musicbrainz_artistid"], "artist")
             if not mbid_match:
@@ -1008,11 +1002,11 @@ def update_missing_artist_mbid(artists, background=False, mode="all_artists", re
                 break
             dialog_msg("update", percent=percent, line1=__lng__(32132),
                        line2="%s%s" % (__lng__(32125), update_artist["local_id"]),
-                       line3="%s: %s" % (__lng__(32137), get_unicode(update_artist["name"])),
+                       line3="%s: %s" % (__lng__(32137), cu.get_unicode(update_artist["name"])),
                        background=background)
             try:
                 _, update_artist["musicbrainz_artistid"], _ = get_musicbrainz_artist_id(
-                    get_unicode(update_artist["name"]))
+                    cu.get_unicode(update_artist["name"]))
             except Exception as e:
                 log(e.message)
                 _, update_artist["musicbrainz_artistid"], _ = get_musicbrainz_artist_id(update_artist["name"])
@@ -1048,10 +1042,10 @@ def update_missing_album_mbid(albums, background=False, repair=False):
                 canceled = True
                 break
             dialog_msg("update", percent=percent, line1=__lng__(32133),
-                       line2="%s: %s" % (__lng__(32138), get_unicode(album["title"])),
-                       line3="%s: %s" % (__lng__(32137), get_unicode(album["artist"])), background=background)
-            musicbrainz_albuminfo, _ = get_musicbrainz_album(get_unicode(album["title"]),
-                                                             get_unicode(album["artist"]), 0, 1)
+                       line2="%s: %s" % (__lng__(32138), cu.get_unicode(album["title"])),
+                       line3="%s: %s" % (__lng__(32137), cu.get_unicode(album["artist"])), background=background)
+            musicbrainz_albuminfo, _ = get_musicbrainz_album(cu.get_unicode(album["title"]),
+                                                             cu.get_unicode(album["artist"]), 0, 1)
             update_album["musicbrainz_albumid"] = musicbrainz_albuminfo["id"]
             update_album["musicbrainz_artistid"] = musicbrainz_albuminfo["artist_id"]
         updated_albums.append(update_album)
@@ -1095,19 +1089,19 @@ def update_database(background=False):
     # album matching
     for item in album_detail_list:
         album_detail_list_indexed[(
-            item["disc"], get_unicode(item["artist"]), get_unicode(item["title"]), item["cover"], item["cdart"],
-            item["local_id"], get_unicode(item["path"]))] = item
+            item["disc"], cu.get_unicode(item["artist"]), cu.get_unicode(item["title"]), item["cover"], item["cdart"],
+            item["local_id"], cu.get_unicode(item["path"]))] = item
     for item in local_album_list:
-        if (item["disc"], get_unicode(item["artist"]), get_unicode(item["title"]), item["cover"], item["cdart"],
-                item["local_id"], get_unicode(item["path"])) in album_detail_list_indexed:
+        if (item["disc"], cu.get_unicode(item["artist"]), cu.get_unicode(item["title"]), item["cover"], item["cdart"],
+                item["local_id"], cu.get_unicode(item["path"])) in album_detail_list_indexed:
             matched.append(item)
     for item in matched:
         matched_indexed[(
-            item["disc"], get_unicode(item["artist"]), get_unicode(item["title"]), item["cover"], item["cdart"],
-            item["local_id"], get_unicode(item["path"]))] = item
+            item["disc"], cu.get_unicode(item["artist"]), cu.get_unicode(item["title"]), item["cover"], item["cdart"],
+            item["local_id"], cu.get_unicode(item["path"]))] = item
     for item in album_detail_list:
-        if not (item["disc"], get_unicode(item["artist"]), get_unicode(item["title"]), item["cover"], item["cdart"],
-                item["local_id"], get_unicode(item["path"])) in matched_indexed:
+        if not (item["disc"], cu.get_unicode(item["artist"]), cu.get_unicode(item["title"]), item["cover"],
+                item["cdart"], item["local_id"], cu.get_unicode(item["path"])) in matched_indexed:
             unmatched.append(item)
     unmatched_details = retrieve_album_details_full(unmatched, len(unmatched), background=background, simple=False,
                                                     update=True)
@@ -1119,20 +1113,20 @@ def update_database(background=False):
         local_artists = get_all_local_artists(True)
         log("Updating Addon's DB - Checking Artists", xbmc.LOGNOTICE)
         for artist in local_artists:
-            new_artist = {"name": get_unicode(artist_list_to_string(artist["artist"])), "local_id": artist["artistid"],
-                          "musicbrainz_artistid": ""}
+            new_artist = {"name": cu.get_unicode(artist_list_to_string(artist["artist"])),
+                          "local_id": artist["artistid"], "musicbrainz_artistid": ""}
             temp_local_artists.append(new_artist)
         local_artists = temp_local_artists
         local_artists_db = get_local_artists_db("all_artists")
         for item in local_artists:
-            local_artists_indexed[(item["local_id"], get_unicode(item["name"]))] = item
+            local_artists_indexed[(item["local_id"], cu.get_unicode(item["name"]))] = item
         for item in local_artists_db:
-            if (item["local_id"], get_unicode(item["name"])) in local_artists_indexed:
+            if (item["local_id"], cu.get_unicode(item["name"])) in local_artists_indexed:
                 local_artists_matched.append(item)
         for item in local_artists_matched:
-            local_artists_matched_indexed[(item["local_id"], get_unicode(item["name"]))] = item
+            local_artists_matched_indexed[(item["local_id"], cu.get_unicode(item["name"]))] = item
         for item in local_artists:
-            if not (item["local_id"], get_unicode(item["name"])) in local_artists_matched_indexed:
+            if not (item["local_id"], cu.get_unicode(item["name"])) in local_artists_matched_indexed:
                 local_artists_unmatched.append(item)
         if __cfg__.update_musicbrainz() and not canceled:  # update missing MusicBrainz ID's
             combined_artists, canceled = update_missing_artist_mbid(local_artists_matched, background=background,
@@ -1263,7 +1257,7 @@ def backup_database():
     todays_date = datetime.datetime.today().strftime("%m-%d-%Y")
     current_time = time.strftime('%H%M')
     db_backup_file = "l_cdart-%s-%s.bak" % (todays_date, current_time)
-    addon_backup_path = os.path.join(__cdam__.path_profile(), db_backup_file).replace("\\\\", "\\")
+    addon_backup_path = sanitize(os.path.join(__cdam__.path_profile(), db_backup_file))
     xbmcvfs.copy(__cdam__.file_addon_db(), addon_backup_path)
     if xbmcvfs.exists(addon_backup_path):
         try:
@@ -1279,12 +1273,12 @@ def backup_database():
         log("Unable to make Database Backup")
 
 
-def unset_cdart(album):
+def unset_cdart(path):
     conn = connect()
     c = conn.cursor()
     c.execute("""\
-        UPDATE alblist SET cdart=? WHERE title=?
-    """, (False, album))
+        UPDATE alblist SET cdart=? WHERE path=?
+    """, (False, path))
     conn.commit()
     c.close()
 
