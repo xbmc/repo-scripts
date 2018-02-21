@@ -1,3 +1,12 @@
+v.2.1.1
+- added option to download artist thumb from theaudiodb.com
+- added option to store service information files in local artist path
+- change to cache timing including decreased cache time if donating to image services
+- rearranged settings
+- fixes to exception handling syntax to be consistent with Python3
+- refactored some common functions
+- change to fileops common module to not use subprocess (unavailable in Windows Store version of Kodi)
+
 v.2.1.0
 - updated AS to save and use unhashed artist and image names
 - created upgrade routine to rename hashed artist and image names

@@ -1,4 +1,4 @@
-#v.0.1.5
+#v.0.3.0
 
 try:
     import xbmc
@@ -45,7 +45,7 @@ class Logger():
                 if type(line).__name__=='unicode':
                     line = line.encode('utf-8')
                 str_line = line.__str__()
-            except Exception, e:
+            except Exception as e:
                 str_line = ''
                 self._output( 'error parsing logline', loglevel )
                 self._output( e, loglevel )
@@ -64,7 +64,7 @@ class Logger():
         if not (self.LOGDEBUG.lower() == 'false' and loglevel == self.logger.debug):
             try:
                 loglevel( "%s %s" % (self.LOGPREAMBLE, line.__str__()) )
-            except Exception, e:
+            except Exception as e:
                 self.logger.debug( "%s unable to output logline" % self.LOGPREAMBLE )
                 self.logger.debug( "%s %s" % (self.LOGPREAMBLE, e.__str__()) )
 
@@ -73,6 +73,6 @@ class Logger():
         if not (self.LOGDEBUG.lower() == 'false' and (loglevel == xbmc.LOGINFO or loglevel == xbmc.LOGDEBUG)):
             try:
                 xbmc.log( "%s %s" % (self.LOGPREAMBLE, line.__str__()), loglevel)
-            except Exception, e:
+            except Exception as e:
                 xbmc.log( "%s unable to output logline" % self.LOGPREAMBLE, loglevel)
                 xbmc.log ("%s %s" % (self.LOGPREAMBLE, e.__str__()), loglevel)
