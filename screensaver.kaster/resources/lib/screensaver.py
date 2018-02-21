@@ -20,12 +20,12 @@ import xbmc
 import os
 import json
 import requests
-from random import randint, shuffle
 import xbmcgui
 import xbmcaddon
 import xbmcvfs
 import kodiutils
-import screensaverutils
+from random import randint, shuffle
+from screensaverutils import ScreenSaverUtils
 
 PATH = xbmcaddon.Addon().getAddonInfo("path")
 IMAGE_FILE = os.path.join(PATH, "resources", "images", "chromecast.json")
@@ -44,6 +44,7 @@ class Kaster(xbmcgui.WindowXMLDialog):
     def __init__(self, *args, **kwargs):
         self.images = []
         self.set_property()
+        self.utils = ScreenSaverUtils()
 
     def onInit(self):
         self.exit_monitor = self.ExitMonitor(self.exit)
@@ -68,13 +69,13 @@ class Kaster(xbmcgui.WindowXMLDialog):
                     if "location" in self.images[rand_index].keys() and "photographer" in self.images[rand_index].keys():
                         self.metadata_line2.setLabel(self.images[rand_index]["location"])
                         self.metadata_line3.setLabel("%s %s" % (kodiutils.get_string(32001),
-                                                                screensaverutils.remove_unknown_author(self.images[rand_index]["photographer"])))
+                                                                self.utils.remove_unknown_author(self.images[rand_index]["photographer"])))
                     elif "location" in self.images[rand_index].keys() and "photographer" not in self.images[rand_index].keys():
                         self.metadata_line2.setLabel(self.images[rand_index]["location"])
                         self.metadata_line3.setLabel("")
                     elif "location" not in self.images[rand_index].keys() and "photographer" in self.images[rand_index].keys():
                         self.metadata_line2.setLabel("%s %s" % (kodiutils.get_string(32001),
-                                                                screensaverutils.remove_unknown_author(self.images[rand_index]["photographer"])))
+                                                                self.utils.remove_unknown_author(self.images[rand_index]["photographer"])))
                         self.metadata_line3.setLabel("")
                     else:
                         self.metadata_line2.setLabel("")
@@ -107,7 +108,7 @@ class Kaster(xbmcgui.WindowXMLDialog):
         # Check if we have images to append
         if kodiutils.get_setting_as_int("screensaver-mode") == 1 or kodiutils.get_setting_as_int("screensaver-mode") == 2 and not override:
             if kodiutils.get_setting("my-pictures-folder") and xbmcvfs.exists(xbmc.translatePath(kodiutils.get_setting("my-pictures-folder"))):
-                for image in screensaverutils.get_own_pictures(kodiutils.get_setting("my-pictures-folder")):
+                for image in self.utils.get_own_pictures(kodiutils.get_setting("my-pictures-folder")):
                     self.images.append(image)
             else:
                 return self.get_images(override=True)
@@ -120,7 +121,7 @@ class Kaster(xbmcgui.WindowXMLDialog):
         else:
             self.setProperty("clockfont", "fontmainmenu")
         # Set skin properties as settings
-        for setting in ["hide-clock-info", "hide-kodi-logo", "hide-weather-info", "hide-pic-info"]:
+        for setting in ["hide-clock-info", "hide-kodi-logo", "hide-weather-info", "hide-pic-info", "hide-overlay", "show-blackbackground"]:
             self.setProperty(setting, kodiutils.get_setting(setting))
         # Set animations
         if kodiutils.get_setting_as_int("animation") == 1:
