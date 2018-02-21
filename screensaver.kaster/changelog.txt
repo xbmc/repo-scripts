@@ -1,3 +1,10 @@
+v1.1.0  21/2/2018
+- Support for network shares (tks InuSasha).
+- Recursive folder support for personal images 
+- Black background as an option
+- Option to hide dim overlay
+- Added spanish translation (tks roliverosc)
+
 v1.0.1  11/8/2017
 -Hide Logos
 -Animations
