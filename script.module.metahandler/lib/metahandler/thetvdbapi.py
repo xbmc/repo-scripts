@@ -27,8 +27,11 @@ import xml.parsers.expat as expat
 from cStringIO import StringIO
 from zipfile import ZipFile
 
+from addon.common.addon import Addon
+addon = Addon('script.module.metahandler')
+
 class TheTVDB(object):
-    def __init__(self, api_key='2B8557E0CBF7D720', language = 'en', want_raw = False):
+    def __init__(self, api_key=addon.get_setting('tvdb_api_key'), language = 'en', want_raw = False):
         #http://thetvdb.com/api/<apikey>/<request>
         self.api_key = api_key
         self.mirror_url = "http://thetvdb.com"

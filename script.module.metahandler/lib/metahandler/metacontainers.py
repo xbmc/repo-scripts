@@ -108,14 +108,14 @@ class MetaContainer:
                     success = xbmcvfs.rmdir(path)
                     if success == 0:
                         raise
-                except Exception, e:
+                except Exception as e:
                     try:
                         common.addon.log('Failed to delete path using xbmcvfs: %s' % e, 4)
                         common.addon.log('Attempting to remove with shutil: %s' % path, 0)
                         shutil.rmtree(path)
                     except:
                         raise
-            except Exception, e:
+            except Exception as e:
                 common.addon.log('Failed to delete path: %s' % e, 4)
                 return False
         else:
@@ -190,7 +190,7 @@ class MetaContainer:
             db = database.connect(self.videocache)
             db.execute('ATTACH DATABASE "%s" as work_db' % self.work_videocache)
             db.execute(sql_insert)
-        # except Exception, e:
+        # except Exception as e:
             # common.addon.log('************* Error attempting to insert into table: %s with error: %s' % (table, e), 4)
             # pass
             # return False
