@@ -1,3 +1,11 @@
+2018.02.21 v0.3.3
++ Load loop if it's a kernel module (thanks to mkreisl)
++ Fix legacy Widevine CDM update detection
++ inputstream_addon is now a public variable
++ Notify user that ARM64 needs 32-bit userspace
++ Improve logging
++ Cosmetics
+
 2018.01.30 v0.3.2
 + Fix OSMC arm architecture detection
 + Fix ldd permissions error

@@ -24,14 +24,15 @@ ARCH_MAP = {
     'i686': 'x86',
     'armv7': 'arm',
     'armv8': 'arm',
-    'aarch64': 'arm',
-    'aarch64_be': 'arm'
+    'aarch64': 'arm64',
+    'aarch64_be': 'arm64'
 }
 
 WIDEVINE_SUPPORTED_ARCHS = [
     'x86_64',
     'x86',
-    'arm'
+    'arm',
+    'arm64'
 ]
 
 WIDEVINE_ARCH_MAP_X86 = {
@@ -71,7 +72,7 @@ WIDEVINE_CONFIG_NAME = 'widevine_config.json'
 
 WIDEVINE_UPDATE_INTERVAL_DAYS = 1
 
-WIDEVINE_LEGACY_VERSION = '903'
+WIDEVINE_LEGACY_VERSION = '1.4.8.903'
 
 CHROMEOS_RECOVERY_URL = 'https://dl.google.com/dl/edgedl/chromeos/recovery/recovery.conf'
 
