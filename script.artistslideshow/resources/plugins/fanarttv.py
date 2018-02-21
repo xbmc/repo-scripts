@@ -1,6 +1,6 @@
 #v.0.1.0
 
-import os, time, sys, random, xbmc
+import os, time, sys, random, xbmc, xbmcvfs
 from ..common.url import URL
 from ..common.fileops import readFile, writeFile, deleteFile, checkPath
 if sys.version_info >= (2, 7):
@@ -22,9 +22,13 @@ class objectConfig():
         self.URL = 'http://webservice.fanart.tv/v3/music/'
         self.FILENAME = 'fanarttvartistimages.nfo'
         self.CACHETIMEFILENAME = 'fanarttvcachetime.nfo'
+        self.HASCLIENTKEY = False
+        self.HASDONATION = False
         self.CACHEEXPIRE = {}
-        self.CACHEEXPIRE['low'] = int( 12*secsinweek )
-        self.CACHEEXPIRE['high'] = int( 24*secsinweek )
+        self.CACHEEXPIRE['low'] = int( 3*secsinweek )
+        self.CACHEEXPIRE['high'] = int( 4*secsinweek )
+        self.CACHEEXPIREWITHCLIENTKEY = int( 2*secsinweek )
+        self.CACHEEXPIREWITHDONATION = int( secsinweek/7 )
         self.loglines = []
         self.JSONURL = URL( 'json' )
 
@@ -42,7 +46,15 @@ class objectConfig():
         url = self.URL + img_params.get( 'mbid', '' )
         url_params['api_key'] = clowncar.decode( 'base64' )
         if img_params.get( 'clientapikey', False ):
+            self.HASCLIENTKEY = True
             url_params['client_key'] = img_params.get( 'clientapikey', '' )
+            if img_params.get( 'donate' ) == 'true':
+                self.HASDONATION = True
+                self.CACHEEXPIRE['low'] = self.CACHEEXPIREWITHDONATION
+                self.CACHEEXPIRE['high'] = self.CACHEEXPIREWITHDONATION
+            else:
+                self.CACHEEXPIRE['low'] = self.CACHEEXPIREWITHCLIENTKEY
+                self.CACHEEXPIRE['high'] = self.CACHEEXPIREWITHCLIENTKEY            
         json_data = self._get_data( filepath, cachefilepath, url, url_params )
         if json_data:
             image_list = json_data.get( 'artistbackground', [] )
@@ -71,7 +83,13 @@ class objectConfig():
             cachetime = int( rawdata )
         except ValueError:
             cachetime = 0
-        return cachetime
+        # this is to honor donation or client key cache time immediately instead of after old cache expires
+        if self.HASDONATION and cachetime > self.CACHEEXPIREWITHDONATION:
+            return self.CACHEEXPIREWITHDONATION
+        elif self.HASCLIENTKEY and cachetime > self.CACHEEXPIREWITHCLIENTKEY:
+            return self.CACHEEXPIREWITHCLIENTKEY
+        else:
+            return cachetime
 
 
     def _get_data( self, filepath, cachefilepath, url, url_params ):
@@ -108,7 +126,8 @@ class objectConfig():
         exists, cloglines = checkPath( filepath, False )
         self.loglines.extend( cloglines )
         if exists:
-            if time.time() - os.path.getmtime( filepath ) < self._get_cache_time( cachefilepath ):
+            st = xbmcvfs.Stat( filepath )
+            if time.time() - st.st_mtime() < self._get_cache_time( cachefilepath ):
                 self.loglines.append( 'cached artist info found for fanarttv' )
                 return False
             else:

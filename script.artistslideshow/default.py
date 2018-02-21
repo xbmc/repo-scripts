@@ -24,7 +24,7 @@ else:
     import simplejson as _json
     from resources.common.ordereddict import OrderedDict as _ordereddict
 from resources.common.fix_utf8 import smartUTF8
-from resources.common.fileops import checkPath, writeFile, readFile, deleteFile, renameFile, deleteFolder
+from resources.common.fileops import checkPath, writeFile, readFile, deleteFile, deleteFolder, copyFile, moveFile
 from resources.common.url import URL
 from resources.common.transforms import getImageType, itemHash, itemHashwithPath
 from resources.common.xlogger import Logger
@@ -52,7 +52,7 @@ def _get_plugin_settings( preamble, module, description ):
         active = addon.getSetting( preamble + module )
     except ValueError:
         active = 'false'
-    except Exception, e:
+    except Exception as e:
         lw.log( ['unexpected error while parsing %s setting for %s' % (description, module), e] )
         active = 'false'        
     if active == 'true':
@@ -60,7 +60,7 @@ def _get_plugin_settings( preamble, module, description ):
             priority = int( addon.getSetting( preamble + "priority_" + module ) )
         except ValueError:
             priority = 10
-        except Exception, e:
+        except Exception as e:
             lw.log( ['unexpected error while parsing %s priority for %s' % (description, module), e] )
             priority = 10
     else:
@@ -207,14 +207,14 @@ class Main:
                     break
             try:
                 self._set_property("ArtistSlideshow.CleanupComplete", "True")
-            except Exception, e:
+            except Exception as e:
                 lw.log( ['unexpected error while setting property.', e] )
 
 
     def _clean_dir( self, dir_path ):
         try:
             dirs, old_files = xbmcvfs.listdir( dir_path )
-        except Exception, e:
+        except Exception as e:
             lw.log( ['unexpected error while getting directory list', e] )
             old_files = []
         for old_file in old_files:
@@ -262,11 +262,10 @@ class Main:
                 return False
             if xbmcvfs.Stat( tmpname ).st_size() > 999:
                 if not xbmcvfs.exists ( dst ):
-                    lw.log( ['copying %s to %s' % (tmpname, dst2)] )
-                    xbmcvfs.copy( tmpname, dst2 )
-                    lw.log( ['copying %s to %s' % (tmpname, dst)] )
-                    xbmcvfs.copy( tmpname, dst )
-                    deleteFile( tmpname )
+                    success, loglines = copyFile( tmpname, dst2 )
+                    lw.log( loglines )
+                    success, loglines = moveFile( tmpname, dst )
+                    lw.log( loglines )
                     return True
                 else:
                     lw.log( ['image already exists, deleting temporary file'] )
@@ -294,6 +293,7 @@ class Main:
             pass
         for plugin_name in bio_plugins['names']:
             lw.log( ['checking %s for bio' % plugin_name[1]] )
+            bio_params['donated'] = addon.getSetting( plugin_name[1] + "_donated" )
             bio, loglines = bio_plugins['objs'][plugin_name[1]].getBio( bio_params )
             lw.log( loglines )
             if bio:
@@ -315,6 +315,7 @@ class Main:
             pass
         for plugin_name in album_plugins['names']:
             lw.log( ['checking %s for album info' % plugin_name[1]] )
+            album_params['donated'] = addon.getSetting( plugin_name[1] + "_donated" )
             albums, loglines = album_plugins['objs'][plugin_name[1]].getAlbumList( album_params )
             lw.log( loglines )
             if not albums == []:
@@ -365,7 +366,7 @@ class Main:
                 playing_file = xbmc.Player().getPlayingFile() + ' - ' + xbmc.Player().getMusicInfoTag().getArtist() + ' - ' + xbmc.Player().getMusicInfoTag().getTitle()
             except RuntimeError:
                 return artists_info
-            except Exception, e:
+            except Exception as e:
                 lw.log( ['unexpected error getting playing file back from XBMC', e] )
                 return artists_info
             if playing_file != self.LASTPLAYINGFILE:
@@ -381,7 +382,7 @@ class Main:
                 playing_song = xbmc.Player().getMusicInfoTag().getTitle()
             except RuntimeError:
                 playing_song = ''
-            except Exception, e:
+            except Exception as e:
                 lw.log( ['unexpected error gettting playing song back from XBMC', e] )
                 playing_song = ''
             if not artist_names:
@@ -391,7 +392,7 @@ class Main:
                 except RuntimeError:
                     playingartist = ''
                     playing_song = ''
-                except Exception, e:
+                except Exception as e:
                     lw.log( ['unexpected error gettting playing song back from Kodi', e] )
                     playingartist = ''
                     playing_song = ''
@@ -427,7 +428,7 @@ class Main:
             dirs, files = xbmcvfs.listdir( self.CacheDir )
         except OSError:
             files = []
-        except Exception, e:
+        except Exception as e:
             lw.log( ['unexpected error getting directory list', e] )
             files = []
         if not files and trynum == 'first':
@@ -469,6 +470,7 @@ class Main:
             lw.log( ['checking %s for images' % plugin_name[1]] )
             image_params['getall'] = addon.getSetting( plugin_name[1] + "_all" )
             image_params['clientapikey'] = addon.getSetting( plugin_name[1] + "_clientapikey" )
+            image_params['donated'] = addon.getSetting( plugin_name[1] + "_donated" )
             image_list, loglines = image_plugins['objs'][plugin_name[1]].getImageList( image_params )
             lw.log( loglines )
             images.extend( image_list )
@@ -504,7 +506,8 @@ class Main:
         for one_file in copy_files:
             result, loglines = checkPath( os.path.join( self.CacheDir, '' ) )
             lw.log( loglines )
-            xbmcvfs.copy( os.path.join( artist_path, one_file ), os.path.join( self.CacheDir, one_file ) )
+            success, loglines = copyFile( os.path.join( artist_path, one_file ), os.path.join( self.CacheDir, one_file ) )
+            lw.log( loglines )
         files = self._get_directory_list()
         for file in files:
             if file.lower().endswith('tbn') or file.lower().endswith('jpg') or file.lower().endswith('jpeg') or file.lower().endswith('gif') or file.lower().endswith('png'):
@@ -551,7 +554,7 @@ class Main:
                 got_item = True
             except RuntimeError:
                 got_title = False
-            except Exception, e:
+            except Exception as e:
                 got_title = False
                 lw.log( ['unexpected error getting %s from XBMC' % item, e] )
             if num_trys > max_trys:
@@ -576,7 +579,8 @@ class Main:
                 break
         self.LOCALARTISTPATH = addon.getSetting( "local_artist_path" ).decode('utf-8')
         self.PRIORITY = addon.getSetting( "priority" )
-        self.LOCALSTORAGEONLY = addon.getSetting( "localstorageonly" ) 
+        self.LOCALSTORAGEONLY = addon.getSetting( "localstorageonly" )
+        self.LOCALINFOSTORAGE = addon.getSetting( "localinfostorage" ) 
         self.USEFALLBACK = addon.getSetting( "fallback" )
         self.FALLBACKPATH = addon.getSetting( "fallback_path" ).decode('utf-8')
         self.USEOVERRIDE = addon.getSetting( "slideshow" )
@@ -589,7 +593,7 @@ class Main:
             self.maxcachesize = int( addon.getSetting( "max_cache_size" ) ) * 1000000
         except ValueError:
             self.maxcachesize = 1024 * 1000000
-        except Exception, e:
+        except Exception as e:
             lw.log( ['unexpected error while parsing maxcachesize setting', e] )
             self.maxcachesize = 1024 * 1000000
         self.NOTIFICATIONTYPE = addon.getSetting( "show_progress" )
@@ -620,6 +624,7 @@ class Main:
         self.DATAROOT = xbmc.translatePath(addon.getAddonInfo('profile')).decode('utf-8')
         self.CHECKFILE = os.path.join( self.DATAROOT, 'migrationcheck.nfo' )
         self.IMAGECHECKFILE = os.path.join( self.DATAROOT, 'imagecheck.nfo' )
+        self.INFOCHECKFILE = os.path.join( self.DATAROOT, 'infocheck.nfo' )
         if self.LOCALSTORAGEONLY == 'false':
             deleteFile( self.IMAGECHECKFILE )
         self.IMGDB = '_imgdb.nfo'
@@ -684,7 +689,8 @@ class Main:
             if(file.lower().endswith('tbn') or file.lower().endswith('jpg') or file.lower().endswith('jpeg') or file.lower().endswith('gif') or file.lower().endswith('png')):
                 img_source = os.path.join( self.CacheDir, smartUTF8( file ).decode( 'utf-8' ) )
                 img_dest = os.path.join( self.MergeDir, itemHash( img_source ) + getImageType( img_source ) )               
-                xbmcvfs.copy( img_source, img_dest )                
+                success, loglines = copyFile( img_source, img_dest )
+                lw.log( loglines )
         if self.ARTISTNUM == self.TOTALARTISTS:
             wait_elapsed = time.time() - self.LASTARTISTREFRESH
             if( wait_elapsed > self.MINREFRESH ):
@@ -701,7 +707,7 @@ class Main:
             params = dict( arg.split( "=" ) for arg in sys.argv[ 1 ].split( "&" ) )
         except IndexError:
             params = {}        
-        except Exception, e:
+        except Exception as e:
             lw.log( ['unexpected error while parsing arguments', e] )
             params = {}
         self.WINDOWID = params.get( "windowid", "12006")
@@ -777,7 +783,7 @@ class Main:
         try:
           self.WINDOW.setProperty( property_name, value )
           lw.log( ['%s set to %s' % (property_name, value)] )
-        except Exception, e:
+        except Exception as e:
           lw.log( ["Exception: Couldn't set propery " + property_name + " value " + value , e])
 
 
@@ -796,6 +802,8 @@ class Main:
         CacheName = self._set_safe_artist_name( theartist )
         if dirtype == 'ArtistSlideshow' and self.LOCALSTORAGEONLY == 'true' and self.LOCALARTISTPATH:
             thedir = os.path.join( self.LOCALARTISTPATH, CacheName, self.FANARTFOLDER )
+        elif dirtype == 'ArtistInformation' and self.LOCALINFOSTORAGE == 'true' and self.LOCALARTISTPATH:
+            thedir = os.path.join( self.LOCALARTISTPATH, CacheName, 'information' )
         else:
             thedir = os.path.join( self.DATAROOT, dirtype, CacheName )
         exists, loglines = checkPath( os.path.join( thedir, '' ) )
@@ -1011,6 +1019,14 @@ class Main:
                 lw.log( ['migrating images'] )
                 self._upgrade_migratetolocal()
                 self._update_check_file( self.IMAGECHECKFILE, 'true', 'images migrated to local storage location' )
+        loglines, infocheck = readFile( self.INFOCHECKFILE )
+        lw.log( loglines )
+        if not 'true' in infocheck:
+            lw.log( ['upgradecheck is %s and localinfostorage is %s' % (upgradecheck, self.LOCALINFOSTORAGE)] )
+            if '2.1.0' in upgradecheck and self.LOCALINFOSTORAGE == 'true':
+                lw.log( ['migrating service information files'] )
+                self._upgrade_migratetolocalinfo()
+                self._update_check_file( self.INFOCHECKFILE, 'true', 'service information files migrated to local storage location' )
 
         
     def _upgrade_artist_folders( self ):
@@ -1023,7 +1039,7 @@ class Main:
         aDialog.create( smartUTF8(language(32013)), smartUTF8(language(32012)) )
         try:
             info_dirs, old_files = xbmcvfs.listdir( inforoot )
-        except Exception, e:
+        except Exception as e:
             lw.log( ['unexpected error while getting directory list', e] )
             info_dirs = []
         total = float( len( info_dirs ) )
@@ -1041,14 +1057,14 @@ class Main:
             if newname:
                 s_newname = self._set_safe_artist_name( newname )
                 new_info = os.path.join( inforoot, s_newname, '' )
-                success, loglines = renameFile( os.path.join( old_info, '' ), new_info )
+                success, loglines = moveFile( os.path.join( old_info, '' ), new_info )
                 lw.log( loglines )
                 old_img = os.path.join( imgroot, info_dir, '' )
                 exists, loglines = checkPath( old_img, False )
                 lw.log( loglines )
                 if exists:
                     new_img = os.path.join( imgroot, s_newname, '' )
-                    success, loglines = renameFile( old_img, new_img )
+                    success, loglines = moveFile( old_img, new_img )
                     lw.log( loglines )
             else:
                 infoarchive = os.path.join( infoarchiveroot, info_dir )
@@ -1068,7 +1084,7 @@ class Main:
         iDialog.create( smartUTF8(language(32013)), smartUTF8(language(32012)) )
         try:
             info_dirs, old_files = xbmcvfs.listdir( inforoot )
-        except Exception, e:
+        except Exception as e:
             lw.log( ['unexpected error while getting directory list', e] )
             info_dirs = []
         image_list = []
@@ -1124,7 +1140,7 @@ class Main:
         lw.log( ['moving from %s to %s' % (src, dst)] )               
         try:
             folders, files = xbmcvfs.listdir( os.path.join( src, '' ) )
-        except Exception, e:
+        except Exception as e:
             lw.log( ['unexpected error while getting directory list', e] )
             files = []
         if files:
@@ -1134,7 +1150,7 @@ class Main:
            success, loglines = deleteFolder( src )
            lw.log( loglines )
         for file in files:
-            success, loglines = renameFile( os.path.join( src, file ), os.path.join( dst, file ) )
+            success, loglines = moveFile( os.path.join( src, file ), os.path.join( dst, file ) )
             lw.log( loglines )
         success, loglines = deleteFolder( os.path.join( src, '' ) )
         lw.log( loglines )
@@ -1149,7 +1165,7 @@ class Main:
             exists, loglines = checkPath( old_img, False )
             lw.log( loglines )
             if exists:
-                success, loglines = renameFile( old_img, new_img )
+                success, loglines = moveFile( old_img, new_img )
                 lw.log( loglines )
                 if success:
                     loglines, all_images = readFile( imgdb )
@@ -1220,7 +1236,7 @@ class Main:
             artists_info = _json.loads(response)['result']['artists']
         except (IndexError, KeyError, ValueError):
             artists_info = []
-        except Exception, e:
+        except Exception as e:
             lw.log( ['unexpected error getting JSON back from Kodi', e] )
             artists_info = []
         if artists_info:
@@ -1244,14 +1260,14 @@ class Main:
         imgroot = os.path.join( self.DATAROOT, 'ArtistSlideshow' )
         try:
             img_dirs, old_files = xbmcvfs.listdir( imgroot )
-        except Exception, e:
+        except Exception as e:
             lw.log( ['unexpected error while getting directory list', e] )
             img_dirs = []
         total = float( len( img_dirs ) )
         count = 1
         for img_dir_name in img_dirs:
             img_dir_name = smartUTF8(img_dir_name).decode('utf-8')
-            mDialog.update( int(100*(count/total)), smartUTF8( language(32011) ), img_dir_name )
+            mDialog.update( int(100*(count/total)), smartUTF8( language(32015) ), img_dir_name )
             default_dir = os.path.join( self.DATAROOT, 'ArtistSlideshow', img_dir_name )
             info_dir = os.path.join( self.DATAROOT, 'ArtistInformation', img_dir_name )
             exists, loglines = checkPath( os.path.join( info_dir, '' ), False )
@@ -1265,7 +1281,7 @@ class Main:
             exists, loglines = checkPath( os.path.join( local_dir, '' ) )
             try:
                 throwaway, images = xbmcvfs.listdir( default_dir )
-            except Exception, e:
+            except Exception as e:
                 lw.log( ['unexpected error while getting directory list', e] )
                 images = []
             for image in images:
@@ -1279,7 +1295,7 @@ class Main:
                     loglines, all_images = readFile( imgdb )
                     lw.log( loglines )
                     if not exists:
-                        success, loglines = renameFile( src, dst )
+                        success, loglines = moveFile( src, dst )
                         lw.log( loglines )
                         if success:
                             success, loglines = writeFile( all_images + image + '\r', imgdb )
@@ -1289,6 +1305,44 @@ class Main:
                         lw.log( loglines )
                         success, loglines = writeFile( all_images + image + '\r', imgdb )
                         lw.log( loglines )
+            success, loglines = deleteFolder( os.path.join( default_dir, '' ) )
+            lw.log( loglines )
+            count += 1
+        mDialog.close()
+
+
+    def _upgrade_migratetolocalinfo( self ):
+        mDialog = xbmcgui.DialogProgressBG()
+        mDialog.create( smartUTF8(language(32017)), smartUTF8(language(32012)) )
+        inforoot = os.path.join( self.DATAROOT, 'ArtistInformation' )
+        try:
+            info_dirs, old_files = xbmcvfs.listdir( inforoot )
+        except Exception as e:
+            lw.log( ['unexpected error while getting directory list', e] )
+            info_dirs = []
+        total = float( len( info_dirs ) )
+        count = 1
+        for info_dir_name in info_dirs:
+            info_dir_name = smartUTF8(info_dir_name).decode('utf-8')
+            mDialog.update( int(100*(count/total)), smartUTF8( language(32017) ), info_dir_name )
+            default_dir = os.path.join( self.DATAROOT, 'ArtistInformation', info_dir_name )
+            local_dir = os.path.join( self.LOCALARTISTPATH, info_dir_name, 'information' )
+            exists, loglines = checkPath( os.path.join( local_dir, '' ) )
+            try:
+                throwaway, infofiles = xbmcvfs.listdir( default_dir )
+            except Exception as e:
+                lw.log( ['unexpected error while getting directory list', e] )
+                infofiles = []
+            for infofile in infofiles:
+                src = os.path.join( default_dir, infofile )
+                dst = os.path.join( local_dir, infofile )
+                exists, loglines = checkPath( dst, False )
+                if not exists:
+                    success, loglines = moveFile( src, dst )
+                    lw.log( loglines )
+                else:
+                    success, loglines = deleteFile( src )
+                    lw.log( loglines )
             success, loglines = deleteFolder( os.path.join( default_dir, '' ) )
             lw.log( loglines )
             count += 1

@@ -1,4 +1,4 @@
-#v.0.2.0
+#v.0.3.0
 
 import imghdr, os, re
 try:
@@ -25,7 +25,7 @@ def itemHashwithPath(item, thepath):
 def getImageType( filename ):
     try:
         new_ext = '.' + imghdr.what( filename ).replace( 'jpeg', 'jpg' )
-    except Exception, e:
+    except Exception as e:
         new_ext = '.tbn'
     return new_ext
 
