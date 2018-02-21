@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <addon id="script.module.inputstreamhelper"
-       version="0.3.2"
+       version="0.3.3"
        name="InputStream Helper"
        provider-name="emilsvennesson">
   <requires>
@@ -10,9 +10,13 @@
   <extension library="lib" point="xbmc.python.module"/>
   <extension point="xbmc.addon.metadata">
     <description lang="en_GB">A simple Kodi module that makes life easier for add-on developers relying on InputStream based add-ons and DRM playback.</description>
-    <news>2018.01.30 v0.3.2
-        + Fix OSMC arm architecture detection
-        + Fix ldd permissions error
+    <news>2018.02.21 v0.3.3
+        + Load loop if it's a kernel module (thanks to mkreisl)
+        + Fix legacy Widevine CDM update detection
+        + inputstream_addon is now a public variable
+        + Notify user that ARM64 needs 32-bit userspace
+        + Improve logging
+        + Cosmetics
     </news>
     <platform>all</platform>
     <license>MIT License</license>
