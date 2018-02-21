@@ -10,6 +10,8 @@
         <setting label="32013" type="bool" id="hide-weather-info" default="false"/>
         <setting label="32014" type="bool" id="hide-clock-info" default="false"/>
         <setting label="32015" type="bool" id="hide-pic-info" default="false"/>
+        <setting label="32020" type="bool" id="hide-overlay" default="false"/>
+        <setting label="32021" type="bool" id="show-blackbackground" default="false"/>
     </category>
     <category label="32016">
         <setting label="32017" type="enum" id="animation" lvalues="32018|32019" default="0"/>

@@ -61,8 +61,8 @@ msgid "Failed to parse image dictionary"
 msgstr "Erro a fazer parse da imagem no dicionário"
 
 msgctxt "#32011"
-msgid "Label Information"
-msgstr "Informação de labels"
+msgid "Aspect"
+msgstr "Aspecto"
 
 msgctxt "#32012"
 msgid "Hide Kodi logo"
@@ -95,3 +95,11 @@ msgstr "Fade"
 msgctxt "#32019"
 msgid "Pan and zoom"
 msgstr "Pan e zoom"
+
+msgctxt "#32020"
+msgid "Hide dim overlay"
+msgstr "Esconder plano dim"
+
+msgctxt "#32021"
+msgid "Show black background"
+msgstr "Mostrar fundo preto"

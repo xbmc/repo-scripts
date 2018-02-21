@@ -9,99 +9,97 @@ msgstr ""
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Kodi Translation Team\n"
-"Language-Team: English (http://www.transifex.com/projects/p/xbmc-addons/language/en/)\n"
+"Language-Team: Spanish (http://www.transifex.com/projects/p/xbmc-addons/language/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: en\n"
+"Language: es\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 msgctxt "#32000"
 msgid "Kaster"
-msgstr ""
+msgstr "Kaster"
 
 msgctxt "#32001"
 msgid "Photo by"
-msgstr ""
+msgstr "Fotografía de"
 
 msgctxt "#32002"
 msgid "General"
-msgstr ""
+msgstr "General"
 
 msgctxt "#32003"
 msgid "Screensaver Mode"
-msgstr ""
+msgstr "Modo de Salvapantallas"
 
 msgctxt "#32004"
 msgid "Only google photos"
-msgstr ""
+msgstr "Solo Google Photos"
 
 msgctxt "#32005"
 msgid "Only my photos"
-msgstr ""
+msgstr "Solo Mis Fotografías"
 
 msgctxt "#32006"
 msgid "Google photos + my photos"
-msgstr ""
+msgstr "Google Photos + Mis Fotografías"
 
 msgctxt "#32007"
 msgid "Unknown"
-msgstr ""
+msgstr "Desconocido"
 
 msgctxt "#32008"
 msgid "Wait time before changing image (s)"
-msgstr ""
+msgstr "Tiempo de espera antes de cambiar imagen"
 
 msgctxt "#32009"
 msgid "Folder with pictures"
-msgstr ""
+msgstr "Carpeta con imágenes"
 
 msgctxt "#32010"
 msgid "Failed to parse image dictionary"
-msgstr ""
+msgstr "Error al analizar el diccionario de imágenes"
 
 msgctxt "#32011"
 msgid "Aspect"
-msgstr ""
+msgstr "Aspecto"
 
 msgctxt "#32012"
 msgid "Hide Kodi logo"
-msgstr ""
+msgstr "Ocultar logo Kodi"
 
 msgctxt "#32013"
 msgid "Hide weather info"
-msgstr ""
+msgstr "Ocultar información meteorolóogica"
 
 msgctxt "#32014"
 msgid "Hide clock info"
-msgstr ""
+msgstr "Ocultar reloj"
 
 msgctxt "#32015"
 msgid "Hide picture info"
-msgstr ""
+msgstr "Ocultar información de la imagen"
 
 msgctxt "#32016"
 msgid "Animations"
-msgstr ""
+msgstr "Animaciones"
 
 msgctxt "#32017"
 msgid "Enabled animation"
-msgstr ""
+msgstr "Tipo de animación"
 
 msgctxt "#32018"
 msgid "Fade"
-msgstr ""
+msgstr "Desvanecerse"
 
 msgctxt "#32019"
 msgid "Pan and zoom"
-msgstr ""
+msgstr "Panorámica y zoom"
 
 msgctxt "#32020"
 msgid "Hide dim overlay"
-msgstr ""
+msgstr "Ocultar plano dim"
 
 msgctxt "#32021"
 msgid "Show black background"
-msgstr ""
-
-
+msgstr "Mostrar fondo negro"

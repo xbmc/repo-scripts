@@ -1,6 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <window type="window">
     <controls>
+        <control type="image">
+            <description>Overlay</description>
+            <posx>0</posx>
+            <posy>0</posy>
+            <width>1920</width>
+            <height>1080</height>
+            <texture>blackbackground.png</texture>
+            <visible>!String.IsEqual(Window.Property(show-blackbackground),"false")</visible>
+        </control>
         <control type="image" id="32500">
             <description>Fade image</description>
             <posx>0</posx>
@@ -21,6 +30,7 @@
             <width>1920</width>
             <height>980</height>
             <texture>overlayfade.png</texture>
+            <visible>!String.IsEqual(Window.Property(hide-overlay),"true")</visible>
         </control>
         <control type="image">
             <description>kodi logo</description>
