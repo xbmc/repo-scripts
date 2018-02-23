@@ -1,0 +1,113 @@
+# Kodi Media Center language file
+# Addon Name: Picture Slideshow Screensaver
+# Addon id: screensaver.picture.slideshow
+# Addon Provider: Team-Kodi
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: Icelandic (http://www.transifex.com/projects/p/xbmc-addons/language/is/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: is\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#30000"
+msgid "Source of slideshow images"
+msgstr "Veita skyggnumynda"
+
+msgctxt "#30001"
+msgid "Folder"
+msgstr "Mappa"
+
+msgctxt "#30002"
+msgid "Video Fanart"
+msgstr "Myndbanda Fanart"
+
+msgctxt "#30003"
+msgid "Music Fanart"
+msgstr "Tónlistar Fanart"
+
+msgctxt "#30004"
+msgid "Image Folder"
+msgstr "Mynda mappa"
+
+msgctxt "#30005"
+msgid "Dim level"
+msgstr "Birtustilling"
+
+msgctxt "#30006"
+msgid "Effect"
+msgstr "Myndbrellur"
+
+msgctxt "#30007"
+msgid "Slide"
+msgstr "Skruna"
+
+msgctxt "#30008"
+msgid "Crossfade"
+msgstr "Krossblanda"
+
+msgctxt "#30009"
+msgid "Pan and zoom"
+msgstr "Hliðrun og Þysjun"
+
+msgctxt "#30010"
+msgid "Amount of seconds to display each image"
+msgstr "Tími í sekúndum sem á að sýna hverja mynd"
+
+msgctxt "#30011"
+msgid "Scale images fullscreen"
+msgstr "Skala myndir á allan skjáinn"
+
+msgctxt "#30012"
+msgid "Display image name"
+msgstr "Sýna nafn myndar"
+
+msgctxt "#30013"
+msgid "Disabled"
+msgstr "Óvirkt"
+
+msgctxt "#30014"
+msgid "Use filename"
+msgstr "Nota skráarnafn"
+
+msgctxt "#30015"
+msgid "Use foldername"
+msgstr "Nota möppunafn"
+
+msgctxt "#30016"
+msgid "Display images in random order"
+msgstr "Birta myndir í handahófskenndri röð"
+
+msgctxt "#30018"
+msgid "Use folder- and filename"
+msgstr "Nota möppu- og skráarnafn"
+
+msgctxt "#30021"
+msgid "Display picture date"
+msgstr "Sýna dagsetningu myndar"
+
+msgctxt "#30022"
+msgid "Display additional picture tags"
+msgstr "Sýna frekari merkingar myndar"
+
+msgctxt "#30023"
+msgid "Display music info during audio playback"
+msgstr "Sýna tónlistarupplýsingar meðan lag er spilað"
+
+msgctxt "#30024"
+msgid "Basic"
+msgstr "Einfalt"
+
+msgctxt "#30025"
+msgid "Additional"
+msgstr "Meira"
+
+msgctxt "#30029"
+msgid "Display background picture"
+msgstr "Sýna bakgrunnsmynd"

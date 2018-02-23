@@ -1,0 +1,105 @@
+# Kodi Media Center language file
+# Addon Name: Picture Slideshow Screensaver
+# Addon id: screensaver.picture.slideshow
+# Addon Provider: Team-Kodi
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: Welsh (http://www.transifex.com/projects/p/xbmc-addons/language/cy/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: cy\n"
+"Plural-Forms: nplurals=4; plural=(n==1) ? 0 : (n==2) ? 1 : (n != 8 && n != 11) ? 2 : 3;\n"
+
+msgctxt "#30000"
+msgid "Source of slideshow images"
+msgstr "Ffynhonnell delweddau sioe sleidiau"
+
+msgctxt "#30001"
+msgid "Folder"
+msgstr "Ffolder"
+
+msgctxt "#30002"
+msgid "Video Fanart"
+msgstr "Celf fideo"
+
+msgctxt "#30003"
+msgid "Music Fanart"
+msgstr "Celf cerddoriaeth"
+
+msgctxt "#30004"
+msgid "Image Folder"
+msgstr "Ffolder Delweddau"
+
+msgctxt "#30005"
+msgid "Dim level"
+msgstr "Lefel pylu"
+
+msgctxt "#30006"
+msgid "Effect"
+msgstr "Effaith"
+
+msgctxt "#30007"
+msgid "Slide"
+msgstr "Sleid"
+
+msgctxt "#30008"
+msgid "Crossfade"
+msgstr "Croes bylu"
+
+msgctxt "#30009"
+msgid "Pan and zoom"
+msgstr "Tremio a chwyddo"
+
+msgctxt "#30010"
+msgid "Amount of seconds to display each image"
+msgstr "Sawl eiliadau i ddangos pob delwedd"
+
+msgctxt "#30011"
+msgid "Scale images fullscreen"
+msgstr "Graddio pob delwedd i'r sgrin lawn"
+
+msgctxt "#30012"
+msgid "Display image name"
+msgstr "Dangos enw delwedd"
+
+msgctxt "#30013"
+msgid "Disabled"
+msgstr "Analluogwyd"
+
+msgctxt "#30014"
+msgid "Use filename"
+msgstr "Defnyddio enw ffeil"
+
+msgctxt "#30015"
+msgid "Use foldername"
+msgstr "Defnyddio enw ffolder"
+
+msgctxt "#30016"
+msgid "Display images in random order"
+msgstr "Dangos delweddau ar hap"
+
+msgctxt "#30021"
+msgid "Display picture date"
+msgstr "Dangos dyddiad llun"
+
+msgctxt "#30022"
+msgid "Display additional picture tags"
+msgstr "Dangos tagiau lluniau ychwanegol"
+
+msgctxt "#30023"
+msgid "Display music info during audio playback"
+msgstr "Dangos gwybodaeth cerddoriaeth wrth chwarae sain"
+
+msgctxt "#30024"
+msgid "Basic"
+msgstr "Elfennol"
+
+msgctxt "#30025"
+msgid "Additional"
+msgstr "Ychwanegol"

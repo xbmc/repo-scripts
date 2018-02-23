@@ -1,0 +1,37 @@
+3.0.0
+- changes for python 3
+
+2.0.4
+- lanuage update
+- cosmetics
+
+2.0.3
+- update language files from Transifex
+
+2.0.2
+- update language files from Transifex
+- better support for streaming radio
+
+2.0.1
+- use Monitor.abortRequested()
+
+2.0.0
+- kodi name change
+
+1.0.2
+- update language
+
+1.0.1
+- update language
+
+v1.0.0
+- gotham release
+
+v0.0.3
+- update language files
+
+v0.0.2
+- add forum thread to addon.xml
+
+v0.0.1
+- initial release

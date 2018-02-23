@@ -1,0 +1,101 @@
+# Kodi Media Center language file
+# Addon Name: Global Search
+# Addon id: script.globalsearch
+# Addon Provider: ronie
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: French (Canada) (http://www.transifex.com/projects/p/xbmc-addons/language/fr_CA/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: fr_CA\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+msgctxt "#32000"
+msgid "General"
+msgstr "Général"
+
+msgctxt "#32001"
+msgid "Search Movies"
+msgstr "Chercher des films"
+
+msgctxt "#32002"
+msgid "Search TV Shows"
+msgstr "Chercher des séries TV"
+
+msgctxt "#32003"
+msgid "Search Episodes"
+msgstr "Chercher des épisodes"
+
+msgctxt "#32004"
+msgid "Search Music Videos"
+msgstr "Chercher des vidéos de musique"
+
+msgctxt "#32005"
+msgid "Search Artists"
+msgstr "Chercher des artistes"
+
+msgctxt "#32006"
+msgid "Search Abums"
+msgstr "Chercher des albms"
+
+msgctxt "#32007"
+msgid "Search Songs"
+msgstr "Chercher des chansons"
+
+msgctxt "#32008"
+msgid "Search Actors"
+msgstr "Chercher des acteurs"
+
+msgctxt "#32009"
+msgid "Search EPG"
+msgstr "Rechercher dans le GÉP"
+
+msgctxt "#32101"
+msgid "Enter search string"
+msgstr "Saisir la chaîne de recherche"
+
+msgctxt "#32203"
+msgid "Browse album"
+msgstr "Parcourir l'album"
+
+msgctxt "#32204"
+msgid "Season information"
+msgstr "Infomation sur la saison"
+
+msgctxt "#32205"
+msgid "Play trailer"
+msgstr "Jouer la bande-annonce"
+
+msgctxt "#32206"
+msgid "Find album"
+msgstr "Trouver un album"
+
+msgctxt "#32207"
+msgid "Find all seasons"
+msgstr "Trouver tous les saisons"
+
+msgctxt "#32208"
+msgid "Find all episodes"
+msgstr "Trouver tous les épisodes"
+
+msgctxt "#32209"
+msgid "Find all albums"
+msgstr "Trouver tous les albums"
+
+msgctxt "#32210"
+msgid "Find all songs"
+msgstr "Trouver tous les chansons"
+
+msgctxt "#32211"
+msgid "Movies starring"
+msgstr "Films mettant en vedète"
+
+msgctxt "#32299"
+msgid "NEW SEARCH"
+msgstr "Nouvelle recherche"

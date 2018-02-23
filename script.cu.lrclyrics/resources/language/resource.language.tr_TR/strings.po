@@ -1,0 +1,89 @@
+# Kodi Media Center language file
+# Addon Name: CU LRC Lyrics
+# Addon id: script.cu.lrclyrics
+# Addon Provider: Taxigps|ronie
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: Turkish (http://www.transifex.com/projects/p/xbmc-addons/language/tr/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: tr\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgctxt "#32000"
+msgid "File"
+msgstr "Dosya"
+
+msgctxt "#32001"
+msgid "No lyrics found!"
+msgstr "Sözler Bulunamadı!"
+
+msgctxt "#32002"
+msgid "Embedded"
+msgstr "Gömülü"
+
+msgctxt "#32004"
+msgid "Searching lyrics..."
+msgstr "Sözler Aranıyor"
+
+msgctxt "#32101"
+msgid "Save lyrics to lyrics folder"
+msgstr "Sözleri \"lyrics\" klasörüne kaydet"
+
+msgctxt "#32102"
+msgid "- Lyrics folder"
+msgstr "Sözler Klasörü"
+
+msgctxt "#32103"
+msgid "- Save format"
+msgstr "Formatı kaydet"
+
+msgctxt "#32106"
+msgid "Use only filename for search"
+msgstr "Dosya adına göre ara"
+
+msgctxt "#32107"
+msgid "Filename format"
+msgstr "Dosya adı formatı"
+
+msgctxt "#32150"
+msgid "Scrapers"
+msgstr "Scraperlar"
+
+msgctxt "#32151"
+msgid "Options"
+msgstr "Seçenekler"
+
+msgctxt "#32152"
+msgid "Search for embedded lyrics"
+msgstr "Gömülü sözler içinde ara"
+
+msgctxt "#32153"
+msgid "Search for local lyrics files"
+msgstr "Yerel söz dosyaları içinde ara"
+
+msgctxt "#32154"
+msgid "Synchronised lyrics scrapers"
+msgstr "Eşitlenmiş söz kazıyıcılar"
+
+msgctxt "#32156"
+msgid "Display lyrics automatically"
+msgstr "Sözleri kendiliğinden görüntüle"
+
+msgctxt "#32157"
+msgid "Clean song title (remove part in brackets)"
+msgstr "Şarkı başlığını temizle ( parantez içindeki parçayı kaldır)"
+
+msgctxt "#32158"
+msgid "Script is already running!"
+msgstr "Script zaten çalışıyor!"
+
+msgctxt "#32159"
+msgid "Enable debug logging"
+msgstr "Hata ayıklama günlüğünü etkinleştir"

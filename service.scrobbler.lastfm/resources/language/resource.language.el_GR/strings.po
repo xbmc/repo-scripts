@@ -1,0 +1,77 @@
+# Kodi Media Center language file
+# Addon Name: Last.fm
+# Addon id: service.scrobbler.lastfm
+# Addon Provider: Team-Kodi
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: Greek (http://www.transifex.com/projects/p/xbmc-addons/language/el/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: el\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#30000"
+msgid "General"
+msgstr "Γενικά"
+
+msgctxt "#30001"
+msgid "Submit songs to Last.fm"
+msgstr "Υποβολή τραγουδιών στο Last.fm"
+
+msgctxt "#30002"
+msgid "Submit streaming radio to Last.fm"
+msgstr "Υποβολή ροής ραδιοφώνου στο Last.fm"
+
+msgctxt "#30003"
+msgid "Last.fm username"
+msgstr "Όνομα χρήστη Last.fm"
+
+msgctxt "#30004"
+msgid "Last.fm password"
+msgstr "Κωδικός πρόσβασης Last.fm"
+
+msgctxt "#30005"
+msgid "Confirm Love/Ban submissions"
+msgstr "Επιβεβαίωση υποβολής Αγαπημένων/Αποκλεισμένων"
+
+msgctxt "#32011"
+msgid "Last.fm"
+msgstr "Last.fm"
+
+msgctxt "#32012"
+msgid "Do you want to add the current track to your loved tracks?"
+msgstr "Να προστεθεί το τρέχον τραγούδι στα αγαπημένα σας;"
+
+msgctxt "#32013"
+msgid "Do you want to ban the current track?"
+msgstr "Να αποκλειστεί το τρέχον τραγούδι;"
+
+msgctxt "#32014"
+msgid "Added to your loved tracks: '%s'."
+msgstr "Προσθήκη στα αγαπημένα σας τραγούδια: '%s'."
+
+msgctxt "#32015"
+msgid "Could not add '%s' to your loved tracks."
+msgstr "Δεν μπορεί να προστεθεί το '%s' στα αγαπημένα σας."
+
+msgctxt "#32016"
+msgid "Banned: '%s'."
+msgstr "Αποκλεισμένα: '%s'."
+
+msgctxt "#32017"
+msgid "Could not ban '%s'."
+msgstr "Δεν μπορεί να αποκλειστεί το '%s'."
+
+msgctxt "#32026"
+msgid "Connect to Last.fm failed"
+msgstr "Αποτυχία σύνδεσης στο Last.fm"
+
+msgctxt "#32027"
+msgid "No username or password provided"
+msgstr "Δεν εισήχθη όνομα χρήστη ή κωδικός"

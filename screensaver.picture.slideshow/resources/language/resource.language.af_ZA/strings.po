@@ -1,0 +1,105 @@
+# Kodi Media Center language file
+# Addon Name: Picture Slideshow Screensaver
+# Addon id: screensaver.picture.slideshow
+# Addon Provider: Team-Kodi
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: Afrikaans (http://www.transifex.com/projects/p/xbmc-addons/language/af/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: af\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#30000"
+msgid "Source of slideshow images"
+msgstr "Bron van skyfievertoning prente"
+
+msgctxt "#30001"
+msgid "Folder"
+msgstr "Vouer"
+
+msgctxt "#30002"
+msgid "Video Fanart"
+msgstr "Video Aanhangerkuns"
+
+msgctxt "#30003"
+msgid "Music Fanart"
+msgstr "Musiek Aanhangerkuns"
+
+msgctxt "#30004"
+msgid "Image Folder"
+msgstr "Prente Lêer"
+
+msgctxt "#30005"
+msgid "Dim level"
+msgstr "Verdof vlak"
+
+msgctxt "#30006"
+msgid "Effect"
+msgstr "Effek"
+
+msgctxt "#30007"
+msgid "Slide"
+msgstr "Skyfie"
+
+msgctxt "#30008"
+msgid "Crossfade"
+msgstr "Kruisdemp"
+
+msgctxt "#30009"
+msgid "Pan and zoom"
+msgstr "Beeldrol en zoem"
+
+msgctxt "#30010"
+msgid "Amount of seconds to display each image"
+msgstr "Hoeveelheid sekondes om elke beeld te vertoon"
+
+msgctxt "#30011"
+msgid "Scale images fullscreen"
+msgstr "Skaleer beelde volskerm"
+
+msgctxt "#30012"
+msgid "Display image name"
+msgstr "Vertoon beeld naam"
+
+msgctxt "#30013"
+msgid "Disabled"
+msgstr "Nie in staat gestel"
+
+msgctxt "#30014"
+msgid "Use filename"
+msgstr "Gebruik lêer naam"
+
+msgctxt "#30015"
+msgid "Use foldername"
+msgstr "Gebruik vouer naam"
+
+msgctxt "#30016"
+msgid "Display images in random order"
+msgstr "Vertoon beelde in lukraak volgorde"
+
+msgctxt "#30021"
+msgid "Display picture date"
+msgstr "Vertoon prent datum"
+
+msgctxt "#30022"
+msgid "Display additional picture tags"
+msgstr "Vertoon addisionele prent etikette"
+
+msgctxt "#30023"
+msgid "Display music info during audio playback"
+msgstr "Vertoon musiek inligting gedurende oudio terugspeel"
+
+msgctxt "#30024"
+msgid "Basic"
+msgstr "Basies"
+
+msgctxt "#30025"
+msgid "Additional"
+msgstr "Addisioneel"

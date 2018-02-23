@@ -1,0 +1,105 @@
+# Kodi Media Center language file
+# Addon Name: Picture Slideshow Screensaver
+# Addon id: screensaver.picture.slideshow
+# Addon Provider: Team-Kodi
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: Albanian (http://www.transifex.com/projects/p/xbmc-addons/language/sq/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: sq\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#30000"
+msgid "Source of slideshow images"
+msgstr "Burimi i imazheve të shfaqjes në seri 'slideshow'"
+
+msgctxt "#30001"
+msgid "Folder"
+msgstr "Dosje"
+
+msgctxt "#30002"
+msgid "Video Fanart"
+msgstr "Sfonde për Vidjot"
+
+msgctxt "#30003"
+msgid "Music Fanart"
+msgstr "Sfonde për Muzikën"
+
+msgctxt "#30004"
+msgid "Image Folder"
+msgstr "Dosja e Imazheve"
+
+msgctxt "#30005"
+msgid "Dim level"
+msgstr "Niveli i errësimit"
+
+msgctxt "#30006"
+msgid "Effect"
+msgstr "Effekti"
+
+msgctxt "#30007"
+msgid "Slide"
+msgstr "Slide"
+
+msgctxt "#30008"
+msgid "Crossfade"
+msgstr "Crossfade"
+
+msgctxt "#30009"
+msgid "Pan and zoom"
+msgstr "Pan dhe zoom"
+
+msgctxt "#30010"
+msgid "Amount of seconds to display each image"
+msgstr "Koha në sekonda për të treguar çdo imazh"
+
+msgctxt "#30011"
+msgid "Scale images fullscreen"
+msgstr "Shkallëzo imazhet në ekran të plotë"
+
+msgctxt "#30012"
+msgid "Display image name"
+msgstr "Trego emrin e imazhit"
+
+msgctxt "#30013"
+msgid "Disabled"
+msgstr "Deaktivuar"
+
+msgctxt "#30014"
+msgid "Use filename"
+msgstr "Përdor emrin e skedës"
+
+msgctxt "#30015"
+msgid "Use foldername"
+msgstr "Përdor emrin e dosjes"
+
+msgctxt "#30016"
+msgid "Display images in random order"
+msgstr "Trego imazhe në një rend të rastësishëm"
+
+msgctxt "#30021"
+msgid "Display picture date"
+msgstr "Trego datën e fotografisë"
+
+msgctxt "#30022"
+msgid "Display additional picture tags"
+msgstr "Trego tags të tjera shtuëse"
+
+msgctxt "#30023"
+msgid "Display music info during audio playback"
+msgstr "Trego informacionet e muzikës gjatë ridëgjimit"
+
+msgctxt "#30024"
+msgid "Basic"
+msgstr "Themelor"
+
+msgctxt "#30025"
+msgid "Additional"
+msgstr "Plotsues"

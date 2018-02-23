@@ -1,0 +1,105 @@
+# Kodi Media Center language file
+# Addon Name: Picture Slideshow Screensaver
+# Addon id: screensaver.picture.slideshow
+# Addon Provider: Team-Kodi
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: Spanish (Argentina) (http://www.transifex.com/projects/p/xbmc-addons/language/es_AR/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: es_AR\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#30000"
+msgid "Source of slideshow images"
+msgstr "Origen de las imágenes"
+
+msgctxt "#30001"
+msgid "Folder"
+msgstr "Carpeta"
+
+msgctxt "#30002"
+msgid "Video Fanart"
+msgstr "Fanart de video"
+
+msgctxt "#30003"
+msgid "Music Fanart"
+msgstr "Fanart de música"
+
+msgctxt "#30004"
+msgid "Image Folder"
+msgstr "Imagenes de una carpeta"
+
+msgctxt "#30005"
+msgid "Dim level"
+msgstr "Nivel de atenuación"
+
+msgctxt "#30006"
+msgid "Effect"
+msgstr "Efecto"
+
+msgctxt "#30007"
+msgid "Slide"
+msgstr "Diapositiva"
+
+msgctxt "#30008"
+msgid "Crossfade"
+msgstr "Crossfade"
+
+msgctxt "#30009"
+msgid "Pan and zoom"
+msgstr "Desplazamiento y zoom"
+
+msgctxt "#30010"
+msgid "Amount of seconds to display each image"
+msgstr "Número de segundos a mostrar cada imagen"
+
+msgctxt "#30011"
+msgid "Scale images fullscreen"
+msgstr "Escalar las imágenes en pantalla completa"
+
+msgctxt "#30012"
+msgid "Display image name"
+msgstr "Mostrar nombre de la imágen"
+
+msgctxt "#30013"
+msgid "Disabled"
+msgstr "Deshabilitado"
+
+msgctxt "#30014"
+msgid "Use filename"
+msgstr "Usar nombre de archivo"
+
+msgctxt "#30015"
+msgid "Use foldername"
+msgstr "Usar nombre de carpeta"
+
+msgctxt "#30016"
+msgid "Display images in random order"
+msgstr "Mostrar las imágenes en orden aleatorio"
+
+msgctxt "#30021"
+msgid "Display picture date"
+msgstr "Mostrar fecha de la imagen"
+
+msgctxt "#30022"
+msgid "Display additional picture tags"
+msgstr "Mostrar etiquetas adicionales de la imagen"
+
+msgctxt "#30023"
+msgid "Display music info during audio playback"
+msgstr "Mostrar info de música durante reproducción de audio"
+
+msgctxt "#30024"
+msgid "Basic"
+msgstr "Básico"
+
+msgctxt "#30025"
+msgid "Additional"
+msgstr "Adicional"

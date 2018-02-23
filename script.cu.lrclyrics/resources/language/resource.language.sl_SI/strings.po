@@ -1,0 +1,109 @@
+# Kodi Media Center language file
+# Addon Name: CU LRC Lyrics
+# Addon id: script.cu.lrclyrics
+# Addon Provider: Taxigps|ronie
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: Slovenian (http://www.transifex.com/projects/p/xbmc-addons/language/sl/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: sl\n"
+"Plural-Forms: nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3);\n"
+
+msgctxt "#32000"
+msgid "File"
+msgstr "Datoteka"
+
+msgctxt "#32001"
+msgid "No lyrics found!"
+msgstr "Ni najdenih besedil pesmi!"
+
+msgctxt "#32002"
+msgid "Embedded"
+msgstr "Vgrajeni"
+
+msgctxt "#32101"
+msgid "Save lyrics to lyrics folder"
+msgstr "Shrami besedilo pesmi v mapo za besedila pesmi"
+
+msgctxt "#32102"
+msgid "- Lyrics folder"
+msgstr "- Mapa za besedila pesmi"
+
+msgctxt "#32103"
+msgid "- Save format"
+msgstr "- Format zapisa"
+
+msgctxt "#32105"
+msgid "%A\\%T"
+msgstr "%A\\%T"
+
+msgctxt "#32106"
+msgid "Use only filename for search"
+msgstr "Za iskanje uporabi samo ime datoteke"
+
+msgctxt "#32107"
+msgid "Filename format"
+msgstr "Format imena datoteke"
+
+msgctxt "#32108"
+msgid "%A - %T"
+msgstr "%A - %T"
+
+msgctxt "#32109"
+msgid "%A\\%B\\%T"
+msgstr "%A\\%B\\%T"
+
+msgctxt "#32110"
+msgid "%A\\%B\\%N %T"
+msgstr "%A\\%B\\%N %T"
+
+msgctxt "#32111"
+msgid "Same name lyrics saved in sub folder"
+msgstr "Istoimenska besedila pesmi shranjena v podmapo"
+
+msgctxt "#32112"
+msgid "- Sub folder name"
+msgstr "- Ime poddirektorija"
+
+msgctxt "#32113"
+msgid "Save lyrics to song folder"
+msgstr "Shrani besedila pesmi v mapo s pesmijo"
+
+msgctxt "#32150"
+msgid "Scrapers"
+msgstr "Ponudniki"
+
+msgctxt "#32151"
+msgid "Options"
+msgstr "Možnosti"
+
+msgctxt "#32152"
+msgid "Search for embedded lyrics"
+msgstr "Išči vgrajena besedila pesmi"
+
+msgctxt "#32153"
+msgid "Search for local lyrics files"
+msgstr "Besedila pesmi išči v lokalni mapi"
+
+msgctxt "#32154"
+msgid "Synchronised lyrics scrapers"
+msgstr "Ponudniki sinhroniziranih besedil pesmi"
+
+msgctxt "#32155"
+msgid "Regular lyrics scrapers"
+msgstr "Redni ponudniki besedil pesmi"
+
+msgctxt "#32159"
+msgid "Enable debug logging"
+msgstr "Vključi zapisovanje razhroščevanja"
+
+msgctxt "#32199"
+msgid "CU LRC Lyrics"
+msgstr "CU LRC Lyrics"

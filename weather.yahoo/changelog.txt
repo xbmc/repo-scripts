@@ -1,0 +1,93 @@
+v5.0.0
+- changes for python 3
+
+v4.3.1
+- retry to fetch weather a few times
+
+v4.3.0
+- cache weather data
+
+v4.2.4
+- update translations
+
+v4.2.3
+- fix sunrise/sunset format
+
+v4.2.2
+- handle keys with value null
+
+v4.2.1
+- bugfix
+
+v4.2.0
+- add support for daily infolabels
+
+v4.1.0
+- update to new api
+
+v4.0.1
+- localize sunset/sunrise
+
+v4.0.0
+- remove simplejson support
+
+v3.1.1
+- remove unused code
+
+v3.1.0
+- change url due to api changes
+
+v3.0.9
+- add option for 5 locations
+
+v3.0.8
+- cosmetics
+- language update
+
+v3.0.7
+- updated language files from Transifex
+
+v3.0.6
+- fix another crash on empty values
+
+v3.0.5
+- fix potential crash on empty values
+
+v3.0.4
+- clear category properties
+
+v3.0.3
+- updated language files from Transifex
+
+3.0.2
+- deprecate xbmc.abortRequested
+
+v3.0.1
+- fix UnicodeDecodeError
+
+v3.0.0
+- kodi name change
+
+v2.0.4
+- language update
+
+v2.0.3
+- no reason
+
+v2.0.2
+- language update
+
+v2.0.1
+- language update
+
+v2.0.0
+- gotham release
+
+v1.0.3
+- add provider logo
+
+v1.0.2
+- fix bug in clear infolabels
+
+v1.0.1
+- initial release

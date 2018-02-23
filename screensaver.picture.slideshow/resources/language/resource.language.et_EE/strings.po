@@ -1,0 +1,105 @@
+# Kodi Media Center language file
+# Addon Name: Picture Slideshow Screensaver
+# Addon id: screensaver.picture.slideshow
+# Addon Provider: Team-Kodi
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: Estonian (http://www.transifex.com/projects/p/xbmc-addons/language/et/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: et\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#30000"
+msgid "Source of slideshow images"
+msgstr "Slaidiesitluse piltide allikas"
+
+msgctxt "#30001"
+msgid "Folder"
+msgstr "Kaustanimi"
+
+msgctxt "#30002"
+msgid "Video Fanart"
+msgstr "Video fännipildid"
+
+msgctxt "#30003"
+msgid "Music Fanart"
+msgstr "Muusika fännipildid"
+
+msgctxt "#30004"
+msgid "Image Folder"
+msgstr "Piltide kaust"
+
+msgctxt "#30005"
+msgid "Dim level"
+msgstr "Hämarduse aste"
+
+msgctxt "#30006"
+msgid "Effect"
+msgstr "Efekt"
+
+msgctxt "#30007"
+msgid "Slide"
+msgstr "Slaid"
+
+msgctxt "#30008"
+msgid "Crossfade"
+msgstr "Siire"
+
+msgctxt "#30009"
+msgid "Pan and zoom"
+msgstr "Panoraamina ja suurenda"
+
+msgctxt "#30010"
+msgid "Amount of seconds to display each image"
+msgstr "Sekundite arv iga pildi kuvamiseks"
+
+msgctxt "#30011"
+msgid "Scale images fullscreen"
+msgstr "Suurenda pilt täisekraanile"
+
+msgctxt "#30012"
+msgid "Display image name"
+msgstr "Näita pildi nime"
+
+msgctxt "#30013"
+msgid "Disabled"
+msgstr "Ei kasutata"
+
+msgctxt "#30014"
+msgid "Use filename"
+msgstr "Kasuta faili nime"
+
+msgctxt "#30015"
+msgid "Use foldername"
+msgstr "Kasuta kausta nime"
+
+msgctxt "#30016"
+msgid "Display images in random order"
+msgstr "Näita pilte suvalises järjekorras"
+
+msgctxt "#30021"
+msgid "Display picture date"
+msgstr "Näita pildi kuupäeva"
+
+msgctxt "#30022"
+msgid "Display additional picture tags"
+msgstr "Näita pildi täiendavaid silte"
+
+msgctxt "#30023"
+msgid "Display music info during audio playback"
+msgstr "Heli taasesitlusel näita muusika infot"
+
+msgctxt "#30024"
+msgid "Basic"
+msgstr "Põhiline"
+
+msgctxt "#30025"
+msgid "Additional"
+msgstr "Täiendav"

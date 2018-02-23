@@ -1,0 +1,51 @@
+v3.0.0
+- required changes for python 3
+
+v2.0.2
+- required changes for kodi leia
+
+v2.0.1
+- typo
+
+v2.0.0
+- don't set extention if we have subfolders
+
+v1.1.0
+- use select dialog
+
+v1.0.1
+- fix broken window history when clickin "get more"
+
+v1.0.0
+- remove simplejson support
+- add cancel button
+
+v0.1.0
+- fix typo in readme
+
+v0.0.9
+- parse info.xml
+
+v0.0.8
+- change none label to skin default
+
+v0.0.7
+- cosmetics
+
+v0.0.6
+- fix missing import in addon.xml
+
+v0.0.5
+- clear multi bool when needed
+
+v0.0.4
+- fix README
+
+v0.0.3
+- fix python code
+
+v0.0.2
+- add skin bool for multiimage
+
+v0.0.1
+- initial release
