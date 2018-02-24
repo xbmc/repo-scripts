@@ -1,0 +1,101 @@
+# Kodi Media Center language file
+# Addon Name: Global Search
+# Addon id: script.globalsearch
+# Addon Provider: ronie
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: Bulgarian (http://www.transifex.com/projects/p/xbmc-addons/language/bg/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: bg\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#32000"
+msgid "General"
+msgstr "Общи"
+
+msgctxt "#32001"
+msgid "Search Movies"
+msgstr "Търсене в раздел \"Филми\""
+
+msgctxt "#32002"
+msgid "Search TV Shows"
+msgstr "Търсене в раздел \"ТВ Сериали\""
+
+msgctxt "#32003"
+msgid "Search Episodes"
+msgstr "Търсене в епизодите"
+
+msgctxt "#32004"
+msgid "Search Music Videos"
+msgstr "Търсене в раздел \"Музикални клипове\""
+
+msgctxt "#32005"
+msgid "Search Artists"
+msgstr "Търсене в изпълнителите"
+
+msgctxt "#32006"
+msgid "Search Abums"
+msgstr "Търсене в албумите"
+
+msgctxt "#32007"
+msgid "Search Songs"
+msgstr "Търсене в песните"
+
+msgctxt "#32008"
+msgid "Search Actors"
+msgstr "Търсене в раздел \"Актьори\""
+
+msgctxt "#32009"
+msgid "Search EPG"
+msgstr "Търсене в ЕПС"
+
+msgctxt "#32101"
+msgid "Enter search string"
+msgstr "Въведете низ за търсене"
+
+msgctxt "#32203"
+msgid "Browse album"
+msgstr "Преглед на албума"
+
+msgctxt "#32204"
+msgid "Season information"
+msgstr "Информация за сезона"
+
+msgctxt "#32205"
+msgid "Play trailer"
+msgstr "Възпроизведи трейлъра"
+
+msgctxt "#32206"
+msgid "Find album"
+msgstr "Намери албум"
+
+msgctxt "#32207"
+msgid "Find all seasons"
+msgstr "Намери всички сезони"
+
+msgctxt "#32208"
+msgid "Find all episodes"
+msgstr "Намери всички епизоди"
+
+msgctxt "#32209"
+msgid "Find all albums"
+msgstr "Намери всички албуми"
+
+msgctxt "#32210"
+msgid "Find all songs"
+msgstr "Намери всички песни"
+
+msgctxt "#32211"
+msgid "Movies starring"
+msgstr "Филми с участието на"
+
+msgctxt "#32299"
+msgid "NEW SEARCH"
+msgstr "НОВО ТЪРСЕНЕ"

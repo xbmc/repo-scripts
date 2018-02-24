@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.globalsearch" name="Global Search" version="8.0.3" provider-name="ronie">
+	<requires>
+		<import addon="xbmc.python" version="2.25.0"/>
+	</requires>
+	<extension point="xbmc.python.script" library="default.py">
+		<provides>executable</provides>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<summary lang="bg_BG">Търси в библиотеката Ви.</summary>
+		<summary lang="ca_ES">Cerca a la teva biblioteca.</summary>
+		<summary lang="cs_CZ">Hledej v knihovně</summary>
+		<summary lang="de_DE">Durchsuchen Sie Ihre Bibliothek.</summary>
+		<summary lang="el_GR">Αναζήτηση στη Συλλογή σας.</summary>
+		<summary lang="en_GB">Search your library.</summary>
+		<summary lang="en_NZ">Search your library.</summary>
+		<summary lang="en_US">Search your library.</summary>
+		<summary lang="es_ES">Busca tu biblioteca.</summary>
+		<summary lang="fr_FR">Chercher dans la médiathèque.</summary>
+		<summary lang="fr_CA">Chercher dans votre bibliothèque</summary>
+		<summary lang="gl_ES">Buscar a súa biblioteca.</summary>
+		<summary lang="he_IL">חיפוש בספריית המדיה.</summary>
+		<summary lang="hr_HR">Pretražite svoju zbirku.</summary>
+		<summary lang="hu_HU">Keresés a médiatárban</summary>
+		<summary lang="id_ID">Cari pustaka Anda.</summary>
+		<summary lang="it_IT">Ricerca nella la tua libreria.</summary>
+		<summary lang="ko_KR">라이브러리 찾기</summary>
+		<summary lang="lt_LT">Ieškoti bibliotekoje.</summary>
+		<summary lang="nl_NL">Zoek in je bibliotheek.</summary>
+		<summary lang="nb_NO">Søk i biblioteket ditt</summary>
+		<summary lang="pl_PL">Przeszukaj swoją bibliotekę</summary>
+		<summary lang="pt_PT">Faça buscas na sua biblioteca.</summary>
+		<summary lang="pt_BR">Pesquise sua coleção.</summary>
+		<summary lang="ro_RO">Căutați în mediateca dumneavoastră.</summary>
+		<summary lang="ru_RU">Поиск в вашей медиатеке.</summary>
+		<summary lang="sl_SI">Iščite v svoji knjižnici.</summary>
+		<summary lang="sv_SE">Sök i ditt bibliotek.</summary>
+		<summary lang="tr_TR">Kitaplığını ara</summary>
+		<summary lang="zh_CN">资料库搜索</summary>
+		<description lang="bg_BG">Добавката може да намери всеки елемент във вашата видео и музикална библиотека.</description>
+		<description lang="ca_ES">Aquest complement pot trobat qualsevol article en la teva biblioteca de vídeo i música</description>
+		<description lang="cs_CZ">Tento dopněk dokáže najít libovolnou položku ve vaší audio a video knihovně.</description>
+		<description lang="de_DE">Dieses Add-on kann jeden Eintrag in Ihrer Video- und Musikbibliothek finden.</description>
+		<description lang="el_GR">Αυτό το πρόσθετο μπορεί να βρει κάθε αντικείμενο στις συλλογές σας.</description>
+		<description lang="en_GB">This addon can find any item in your video and music library.</description>
+		<description lang="en_NZ">This addon can find any item in your video and music library.</description>
+		<description lang="en_US">This addon can find any item in your video and music library.</description>
+		<description lang="es_ES">Este complemento puede encontrar cualquier elemento en tu biblioteca de vídeo y música.</description>
+		<description lang="fr_FR">Cette extension peut trouver tout élément dans la vidéothèque et l'audiothèque.</description>
+		<description lang="fr_CA">Cet addiciel peut trouver tout élément dans votre vidéothèque et dans votre audiothèque.</description>
+		<description lang="gl_ES">Este complemento pode atopar calquera elemento na súa biblioteca de medios.</description>
+		<description lang="he_IL">הרחבה זו יכולה למצוא כל פריט בספריות הווידאו והמוזיקה.</description>
+		<description lang="hr_HR">Ovaj dodatak može pronaći svaku stavku u vašoj videoteci ili fonoteci.</description>
+		<description lang="hu_HU">Ez a kiegészítő bármely elemet megtalálja a videó és audió médiatárban.</description>
+		<description lang="id_ID">Addon ini dapat mencari item apa saja di pustaka video dan musik Anda.</description>
+		<description lang="it_IT">Questo addon può trovare ogni elemento nella tua libreria video ed in quella musicale.</description>
+		<description lang="ko_KR">비디오와 음악 라이브러리의 모든 항목을 검색합니다.</description>
+		<description lang="lt_LT">Šis priedas gali rasti bet kokį elementą jūsų vaizdo ir garso bibliotekoje.</description>
+		<description lang="nl_NL">Deze addon kan elk item in je video- en muziekbibliotheken vinden.</description>
+		<description lang="nb_NO">Dette tillegget kan finne hva som helst i ditt film eller musikk bibliotek.</description>
+		<description lang="pl_PL">Ten plugin może odnaleźć dowolną pozycję w twojej bibliotece wideo oraz muzycznej.</description>
+		<description lang="pt_PT">Este addon pode encontrar qualquer item na sua biblioteca de vídeos e de músicas.</description>
+		<description lang="pt_BR">Este addon pode encontrar qualquer item na sua coleção de vídeos e música.</description>
+		<description lang="ro_RO">Acest supliment poate găsi orice element în mediateca dumneavoastră video și audio.</description>
+		<description lang="ru_RU">Это дополнение поможет найти любую запись в вашей медиатеке.</description>
+		<description lang="sl_SI">Ta dodatek lahko poišče katerokoli podatek v vaši knjižnici filmov in glasbe.</description>
+		<description lang="sv_SE">Detta tillägg kan hitta vilket objekt som helst i ditt video och musikbibliotek.</description>
+		<description lang="tr_TR">Bu eklenti video ve müzik kitaplığınızdaki herhangi bir öğeyi bulabilir.</description>
+		<description lang="zh_CN">此插件搜索你的视频和音乐资料库项目。</description>
+		<language></language>
+		<platform>all</platform>
+		<license>GNU GENERAL PUBLIC LICENSE Version 2</license>
+		<forum>http://forum.kodi.tv/showthread.php?tid=109301</forum>
+		<website></website>
+		<email></email>
+		<source>https://github.com/ronie/script.globalsearch/</source>
+	</extension>
+</addon>

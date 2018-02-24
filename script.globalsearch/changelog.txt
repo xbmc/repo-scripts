@@ -1,0 +1,256 @@
+v8.0.3
+- reset menu on init
+
+v8.0.2
+- fix content selection when using a horizontal menu
+- fixed incorrect listitem.title for episodes
+- show result counts in the menu
+- fix content selection when using a horizontal menu
+
+v8.0.1
+- fix passing search categories to the script
+- save the selected viewmode
+- close globalsearch if no is selected when promted for a new search
+
+v8.0.0
+- rewrite for Kodi Leia
+
+v7.3.1
+- remove test settings
+
+v7.3.0
+- fix epg section
+- removed channelnumber infolabel for epg items
+- removed path infolabel for epg items
+
+v7.2.4
+- add originaltitle support
+
+v7.2.3
+- cosmetics radiobuttons
+- don't show empty contextmenu
+
+v7.2.2
+- cleanup
+
+v7.2.1
+- skin cosmetics
+
+v7.2.0
+- use context menu from kodi
+
+v7.1.0
+- add direcor search support
+
+v7.0.5
+- code refactor
+- add missing skin support for livetv
+- fix infodialog buttons
+
+v7.0.4
+- ask user to search again when no results are found
+
+v7.0.3
+- new skin
+- remove ok button in info dialog
+
+v7.0.2
+- return empty userrating instead of 0
+
+v7.0.1
+- remove starrating
+- add support for userrating
+- epg runtime is an int now
+
+v7.0.0
+- remove simplejson support
+
+v6.0.2
+- language update
+- cosmetics
+
+v6.0.1
+- update action id's for jarvis
+
+v5.0.0
+- language update
+
+v4.0.3
+- fix README
+
+v4.0.2
+- rating fixes
+
+v4.0.1
+- fix channel id
+
+v4.0.0
+- add support for epg search
+- fix fanart in infodialog
+
+v3.0.4
+- update language files from Transifex
+
+v3.0.3
+- skin changes for helix
+
+v3.0.2
+- fix crash on exit
+
+v3.0.1
+- fix timing issue
+
+v3.0.0
+- kodi name change
+
+v2.1.1
+- fix crash on skins that don't support actor search
+
+v2.1.0
+- add actor search option
+
+v2.0.8
+- add xml header
+
+v2.0.7
+- language update
+
+v2.0.6
+- language update
+
+v2.0.5
+- gotham release
+
+v2.0.4
+- more path fixes for gotham
+
+v2.0.3
+- db path changes for gotham
+
+v2.0.2
+- removed search by originaltitle as it's not supported in json
+
+v2.0.1
+- properly round runtime value
+
+v2.0.0
+- re-code the context menu
+
+v1.1.1
+- display runtime in minutes
+
+v1.1.0
+- added support for tv show banner and poster
+
+v1.0.6
+- fix runtime
+
+v1.0.5
+- fix encoding issues
+
+v1.0.4
+- rename fanart property
+
+v1.0.3
+- update code to latest json-rpc changes
+
+v1.0.2
+- use json-rpc to play albums
+
+v1.0.1
+- use action.getId() instead of action
+
+v1.0.0
+- adjust code for frodo
+
+v0.2.7
+- ignore empty searchstrings
+
+v0.2.6
+- added hungarian language file
+
+v0.2.5
+- also search originaltitle for movies
+
+v0.2.4
+- add searchstring window property
+- allow dialogfullscreeninfo to be used
+
+v0.2.3
+- use label for seasons
+- sort by label instead of title
+
+v0.2.2
+- use title instead of label
+
+v0.2.1
+- fix unicode in path issue
+
+v0.2.0
+- add seperate context menu items for find seasons and find episodes
+- add seperate context menu items for find albums and find songs
+
+v0.1.9
+- add starrating
+
+v0.1.8
+- remove unused code
+
+v0.1.7
+- ignore possible encoding errors
+- improve videoresolution matching
+
+v0.1.6
+- check if streamdetails items exist before calling them
+- show artistname instead of recordlabel for musicvideos in gui
+
+v0.1.5
+- use simplejson instead of regex
+
+v0.1.4
+- clean plot and description
+
+v0.1.3
+- added option for skins to specify search categories
+
+v0.1.2
+- removed some debug logging
+- added Portuguese (Brazil) translation
+- added Italian translation
+
+v0.1.1
+- adjusted to latest json-rpc changes
+- fixed fetching of streamdetails
+
+v0.1.0
+- initial release
+
+v0.0.6 (beta 6)
+- fixed json query when compactoutput was set to false
+
+v0.0.5 (beta 5)
+- fixed hidden item showed up on info dialog
+
+v0.0.4 (beta 4)
+- speed up list creation
+- fixed issue with + in searchstring
+- fixed issue with brackets in searchstring
+- added key actions to close the context and info dialog
+- added writer info for movies
+- sort items by title
+- simplified code for searching episodes
+
+v0.0.3 (beta 3)
+- added mediaflags
+
+v0.0.2 (beta 2)
+- use less strict regex matching
+- don't use a window property to pass the searchstring
+- added 'find album' option to songs context menu
+- remove unneeded regex match in play_album code
+- use built-in python method to clear the playlist
+- simplified code to pass listitem to infodialog
+- made infodialog fully skinnable
+
+v0.0.1 (beta 1)
+- initial beta

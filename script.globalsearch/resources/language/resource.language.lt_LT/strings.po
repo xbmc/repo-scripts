@@ -1,0 +1,101 @@
+# Kodi Media Center language file
+# Addon Name: Global Search
+# Addon id: script.globalsearch
+# Addon Provider: ronie
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: Lithuanian (http://www.transifex.com/projects/p/xbmc-addons/language/lt/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: lt\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+
+msgctxt "#32000"
+msgid "General"
+msgstr "Pagrindinis"
+
+msgctxt "#32001"
+msgid "Search Movies"
+msgstr "Ieškoti filmų"
+
+msgctxt "#32002"
+msgid "Search TV Shows"
+msgstr "Ieškoti TV laidų"
+
+msgctxt "#32003"
+msgid "Search Episodes"
+msgstr "Ieškoti epizodų"
+
+msgctxt "#32004"
+msgid "Search Music Videos"
+msgstr "Ieškoti muzikinių vaizdo klipų"
+
+msgctxt "#32005"
+msgid "Search Artists"
+msgstr "Ieškoti atlikėjų"
+
+msgctxt "#32006"
+msgid "Search Abums"
+msgstr "Ieškoti albumų"
+
+msgctxt "#32007"
+msgid "Search Songs"
+msgstr "Ieškoti dainų"
+
+msgctxt "#32008"
+msgid "Search Actors"
+msgstr "Ieškoti aktorių"
+
+msgctxt "#32009"
+msgid "Search EPG"
+msgstr "Ieškoti EPG"
+
+msgctxt "#32101"
+msgid "Enter search string"
+msgstr "Įveskite paieškos eilutę"
+
+msgctxt "#32203"
+msgid "Browse album"
+msgstr "Naršyti albumą"
+
+msgctxt "#32204"
+msgid "Season information"
+msgstr "Sezono informacija"
+
+msgctxt "#32205"
+msgid "Play trailer"
+msgstr "Atkurti anonsą"
+
+msgctxt "#32206"
+msgid "Find album"
+msgstr "Rasti albumą"
+
+msgctxt "#32207"
+msgid "Find all seasons"
+msgstr "Rasti visus sezonus"
+
+msgctxt "#32208"
+msgid "Find all episodes"
+msgstr "Rasti visus epizodus"
+
+msgctxt "#32209"
+msgid "Find all albums"
+msgstr "Rasti visus albumus"
+
+msgctxt "#32210"
+msgid "Find all songs"
+msgstr "Rasti visas dainas"
+
+msgctxt "#32211"
+msgid "Movies starring"
+msgstr "Filmai, kuriuose vaidina"
+
+msgctxt "#32299"
+msgid "NEW SEARCH"
+msgstr "NAUJA PAIEŠKA"
