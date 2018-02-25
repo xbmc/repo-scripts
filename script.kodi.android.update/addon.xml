@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.kodi.android.update" name="Kodi Android Installer" version="1.0.3" provider-name="Team Kodi">
+<addon id="script.kodi.android.update" name="Kodi Android Installer" version="1.0.4" provider-name="Team Kodi">
     <requires>
-        <import addon="xbmc.python" version="2.25.0"/>
+        <import addon="xbmc.python" version="2.24.0"/>
         <import addon="script.module.simplecache" version="1.0.0"/>
         <import addon="script.module.beautifulsoup4" version="4.3.2"/>
     </requires>
@@ -15,7 +15,7 @@
         <website>http://kodi.tv</website>
         <source>https://github.com/Lunatixz/KODI_Addons/tree/master/script.kodi.android.update</source>
         <forum>https://forum.kodi.tv/showthread.php?tid=322783</forum>
-        <news>v1.0.3[CR]-Improved functionality[CR]v1.0.1[CR]-Added After Install Cleanup.</news>
+        <news>v1.0.4[CR]-Android Version Detection[CR]- Improved Error Handling[CR]v1.0.3[CR]-Improved functionality[CR]v1.0.1[CR]-Added After Install Cleanup.</news>
         <assets>
             <icon>resources/images/icon.png</icon>
             <fanart>resources/images/fanart.jpg</fanart>

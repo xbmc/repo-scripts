@@ -25,7 +25,7 @@ msgid "Something went wrong, Try again later..."
 msgstr ""
 
 msgctxt "#30002"
-msgid "Downloading & Install"
+msgid "Downloading"
 msgstr ""
 
 msgctxt "#30003"
@@ -45,9 +45,29 @@ msgid "Redownload"
 msgstr ""
 
 msgctxt "#30007"
-msgid "Installation Complete, File Removed"
+msgid "Installation complete, file removed"
 msgstr ""
 
 msgctxt "#30008"
 msgid "Cleanup download after installation"
+msgstr ""
+
+msgctxt "#30009"
+msgid "Plugin disabled"
+msgstr ""
+
+msgctxt "#30010"
+msgid "Unknown Android version"
+msgstr ""
+
+msgctxt "#30011"
+msgid "Android v.%s.0.0 is incompatible with Kodi,"
+msgstr ""
+
+msgctxt "#30012"
+msgid "Would you like to disable this plugin?"
+msgstr ""
+
+msgctxt "#30013"
+msgid "Detecting Android version..."
 msgstr ""
