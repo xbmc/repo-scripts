@@ -1,4 +1,4 @@
-#     Copyright (C) 2017 Team-Kodi
+#     Copyright (C) 2018 Team-Kodi
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -44,8 +44,8 @@ class Service(object):
                 log('Service, removing last download')
                 xbmcvfs.delete(self.lastPath)
                 xbmcgui.Dialog().notification(ADDON_NAME, LANGUAGE(30007), ICON, 4000)
-        except Exception as e:
+        except Exception as e: 
             log("Service Failed! " + str(e), xbmc.LOGERROR)
         
-if __name__ == '__main__':
+if __name__ == '__main__': 
     Service()
