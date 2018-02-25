@@ -27,6 +27,15 @@ class replacement_stderr(sys.stderr.__class__):
 sys.stderr.__class__ = replacement_stderr
 
 ###############################################################################
+# FIX: _subprocess doesn't exist on Xbox One
+###############################################################################
+
+try:
+    import _subprocess
+except ImportError:
+    from yd_private_libs import _subprocess
+
+###############################################################################
 
 try:
     import youtube_dl

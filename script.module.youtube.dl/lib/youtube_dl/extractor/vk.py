@@ -99,10 +99,10 @@ class VKIE(VKBaseIE):
     _TESTS = [
         {
             'url': 'http://vk.com/videos-77521?z=video-77521_162222515%2Fclub77521',
-            'md5': '0deae91935c54e00003c2a00646315f0',
+            'md5': '7babad3b85ea2e91948005b1b8b0cb84',
             'info_dict': {
                 'id': '162222515',
-                'ext': 'flv',
+                'ext': 'mp4',
                 'title': 'ProtivoGunz - Хуёвая песня',
                 'uploader': 're:(?:Noize MC|Alexander Ilyashenko).*',
                 'duration': 195,
@@ -318,9 +318,14 @@ class VKIE(VKBaseIE):
                 'You are trying to log in from an unusual location. You should confirm ownership at vk.com to log in with this IP.',
                 expected=True)
 
+        ERROR_COPYRIGHT = 'Video %s has been removed from public access due to rightholder complaint.'
+
         ERRORS = {
             r'>Видеозапись .*? была изъята из публичного доступа в связи с обращением правообладателя.<':
-            'Video %s has been removed from public access due to rightholder complaint.',
+            ERROR_COPYRIGHT,
+
+            r'>The video .*? was removed from public access by request of the copyright holder.<':
+            ERROR_COPYRIGHT,
 
             r'<!>Please log in or <':
             'Video %s is only available for registered users, '
