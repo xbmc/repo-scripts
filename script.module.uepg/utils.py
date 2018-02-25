@@ -1,4 +1,4 @@
-#   Copyright (C) 2017 Lunatixz
+#   Copyright (C) 2018 Lunatixz
 #
 #
 # This file is part of uEPG.
@@ -17,10 +17,11 @@
 # along with uEPG.  If not, see <http://www.gnu.org/licenses/>.
 
 # -*- coding: utf-8 -*-
-import os, json, urllib, epg, traceback, ast, time, datetime, random, itertools
+import os, json, urllib, epg, traceback, ast, time, datetime, random, itertools, calendar
 import xbmc, xbmcgui, xbmcplugin, xbmcvfs, xbmcaddon
 
 from simplecache import SimpleCache
+from pyhdhr import PyHDHR
 
 # Plugin Info
 ADDON_ID      = 'script.module.uepg'
@@ -45,7 +46,7 @@ PVR_PARAMS      = ["title","plot","plotoutline","starttime","endtime","runtime",
 ART_PARAMS      = ["thumb","poster","fanart","banner","landscape","clearart","clearlogo"]
 ALL_PARAMS      = list(set(FILE_PARAMS+PVR_PARAMS+ART_PARAMS))
 IGNORE_VALUES   = ['',[],-1,{},None]
-
+MEDIA_TYPES     = {'SP':'video','SH':'episode','EP':'episode','MV':'movie'}
 EPGGENRE_LOC    = 'epg-genres'
 COLOR_FAVORITE  = 'gold'
 TIME_BAR        = 'TimeBar.png'
@@ -108,8 +109,7 @@ try:
     from multiprocessing import cpu_count 
     from multiprocessing.pool import ThreadPool 
     ENABLE_POOL = True
-except Exception:
-    ENABLE_POOL = False
+except Exception: ENABLE_POOL = False
     
 def log(msg, level=xbmc.LOGDEBUG):
     if DEBUG == False and level != xbmc.LOGERROR: return
@@ -118,72 +118,63 @@ def log(msg, level=xbmc.LOGDEBUG):
         
 def uni(string, encoding='utf-8'):
     if isinstance(string, basestring):
-        if not isinstance(string, unicode):
-           string = unicode(string, encoding)
+        if not isinstance(string, unicode): string = unicode(string, encoding)
     return string
 
 def ascii(string):
     if isinstance(string, basestring):
-        if isinstance(string, unicode):
-           string = string.encode('ascii', 'ignore')
+        if isinstance(string, unicode): string = string.encode('ascii', 'ignore')
     return string
        
+def trimString(content, limit=250, suffix='...'):
+    if len(content) <= limit: return content
+    return content[:limit].rsplit(' ', 1)[0]+suffix
+    
 def getGenreColor(genre):
     genre = genre.split(' / ')[0]
     # return random.choice(GENRE_TYPES)[0] #test
-    if genre in COLOR_RED_TYPE:
-        return 'RED'
-    elif genre in COLOR_GREEN_TYPE:
-        return 'GREEN'
-    elif genre in COLOR_mdGREEN_TYPE:
-        return 'mdGREEN'
-    elif genre in COLOR_BLUE_TYPE:
-        return 'BLUE'
-    elif genre in COLOR_ltBLUE_TYPE:
-        return 'ltBLUE'
-    elif genre in COLOR_CYAN_TYPE:
-        return 'CYAN'
-    elif genre in COLOR_ltCYAN_TYPE:
-        return 'ltCYAN'
-    elif genre in COLOR_PURPLE_TYPE:
-        return 'PURPLE'
-    elif genre in COLOR_ltPURPLE_TYPE:
-        return 'ltPURPLE'
-    elif genre in COLOR_ORANGE_TYPE:
-        return 'ORANGE'
-    elif genre in COLOR_YELLOW_TYPE:
-        return 'YELLOW'
-    elif genre in COLOR_GRAY_TYPE:
-        return 'GRAY'
-    else:
-        return 'ButtonNoFocus'
+    if genre in COLOR_RED_TYPE: return 'RED'
+    elif genre in COLOR_GREEN_TYPE: return 'GREEN'
+    elif genre in COLOR_mdGREEN_TYPE: return 'mdGREEN'
+    elif genre in COLOR_BLUE_TYPE: return 'BLUE'
+    elif genre in COLOR_ltBLUE_TYPE: return 'ltBLUE'
+    elif genre in COLOR_CYAN_TYPE: return 'CYAN'
+    elif genre in COLOR_ltCYAN_TYPE: return 'ltCYAN'
+    elif genre in COLOR_PURPLE_TYPE: return 'PURPLE'
+    elif genre in COLOR_ltPURPLE_TYPE: return 'ltPURPLE'
+    elif genre in COLOR_ORANGE_TYPE: return 'ORANGE'
+    elif genre in COLOR_YELLOW_TYPE: return 'YELLOW'
+    elif genre in COLOR_GRAY_TYPE: return 'GRAY'
+    else: return 'ButtonNoFocus'
      
 def getPluginMeta(plugin):
     if plugin[0:9] == 'plugin://':
         plugin = plugin.replace("plugin://","")
         plugin = splitall(plugin)[0]
-    else:
-        plugin = plugin
+    else: plugin = plugin
     pluginID = xbmcaddon.Addon(plugin)
     return pluginID.getAddonInfo('name'), pluginID.getAddonInfo('author'), pluginID.getAddonInfo('icon'), pluginID.getAddonInfo('fanart'), pluginID.getAddonInfo('id')
  
 def notificationDialog(message, header=ADDON_NAME, show=True, sound=False, time=1000, icon=ICON):
     log('notificationDialog: ' + message)
     if show == True:
-        try: 
-            xbmcgui.Dialog().notification(header, message, icon, time, sound=False)
+        try: xbmcgui.Dialog().notification(header, message, icon, time, sound=False)
         except Exception as e:
             log("notificationDialog Failed! " + str(e), xbmc.LOGERROR)
             xbmc.executebuiltin("Notification(%s, %s, %d, %s)" % (header, message, time, icon))
     
-def yesnoDialog(str1, str2='', str3='', header=ADDON_NAME, yes='', no='', autoclose=0):
-    return xbmcgui.Dialog().yesno(header, str1, str2, str3, no, yes, autoclose)
+def yesnoDialog(str1, str2='', str3='', header=ADDON_NAME, yes='', no='', custom='', autoclose=0):
+    try: return xbmcgui.Dialog().yesno(header, str1, no, yes, custom, autoclose)
+    except: return xbmcgui.Dialog().yesno(header, str1, str2, str3, no, yes, autoclose)
     
 def okDialog(str1, str2='', str3='', header=ADDON_NAME):
     xbmcgui.Dialog().ok(header, str1, str2, str3)
     
 def textViewer(str1, header=ADDON_NAME):
     xbmcgui.Dialog().textviewer(header, str1)
+    
+def getKodiVersion():
+    return xbmc.getInfoLabel('System.BuildVersion')    
     
 def splitall(path):
     allparts = []
@@ -211,17 +202,14 @@ def dumpJson(mydict, sortkey=True):
     return json.dumps(mydict, sort_keys=sortkey)
 
 def getProperty(string):
-    try:
-        return xbmcgui.Window(10000).getProperty((string))
+    try: return xbmcgui.Window(10000).getProperty((string))
     except Exception as e:
         log("getProperty, Failed! " + str(e), xbmc.LOGERROR)
         return ''
           
 def setProperty(string1, string2):
-    try:
-        xbmcgui.Window(10000).setProperty((string1), (string2))
-    except Exception as e:
-        log("setProperty, Failed! " + str(e), xbmc.LOGERROR)
+    try: xbmcgui.Window(10000).setProperty((string1), (string2))
+    except Exception as e: log("setProperty, Failed! " + str(e), xbmc.LOGERROR)
 
 def clearProperty(string):
     xbmcgui.Window(10000).clearProperty((string))
@@ -235,18 +223,15 @@ def quote(string):
 def roundToHalfHour(thetime):
     n = datetime.datetime.fromtimestamp(thetime)
     delta = datetime.timedelta(minutes=30)
-    if n.minute > 29:
-        n = n.replace(minute=30, second=0, microsecond=0)
-    else:
-        n = n.replace(minute=0, second=0, microsecond=0)
+    if n.minute > 29: n = n.replace(minute=30, second=0, microsecond=0)
+    else: n = n.replace(minute=0, second=0, microsecond=0)
     return time.mktime(n.timetuple())
     
 def isBusyDialog():
     return xbmc.getCondVisibility('Window.IsActive(busydialog)')
 
 def showBusy():
-    if isBusyDialog() == False:
-        xbmc.executebuiltin('ActivateWindow(busydialog)')
+    if isBusyDialog() == False: xbmc.executebuiltin('ActivateWindow(busydialog)')
 
 def hideBusy():
     while isBusyDialog() == True:
@@ -257,35 +242,25 @@ def busyDialog(percent=0, control=None):
     if percent == 0 and not control:
         control = xbmcgui.DialogBusy()
         control.create()
-    elif percent == 100 and control:
-        control.close()
-        return
-    elif control:
-        control.update(percent)
+    elif percent == 100 and control: return control.close()
+    elif control: control.update(percent)
     return control
     
 def ProgressDialogBG(percent=0, control=None, string1='', header=ADDON_NAME):
     if percent == 0 and not control:
         control = xbmcgui.DialogProgressBG()
         control.create(header, string1)
-    elif percent == 100 and control:
-        control.close()
-        return
-    elif control:
-        control.update(percent, string1)
+    elif percent == 100 and control: return control.close()
+    elif control: control.update(percent, string1)
     return control
     
 def ProgressDialog(percent=0, control=None, string1='', string2='', string3='', header=ADDON_NAME):
     if percent == 0 and not control:
         control = xbmcgui.DialogProgress()
         control.create(header, string1, string2, string3)
-    elif control and control.iscanceled:
-        return False
-    elif percent == 100 and control:
-        control.close()
-        return
-    elif control:
-        control.update(percent, string1, string2, string3)
+    elif control and control.iscanceled: return False
+    elif percent == 100 and control: return control.close()
+    elif control: control.update(percent, string1, string2, string3)
     return control
     
 def adaptiveDialog(percent, control=None, size=0, string1='', string2='', string3='', header=ADDON_NAME):
@@ -294,17 +269,11 @@ def adaptiveDialog(percent, control=None, size=0, string1='', string2='', string
         setProperty('uEPGSplash_Progress',str(percent))
         return    
     elif getProperty('uEPGRunning') == 'True':
-        if control:
-            percent = 100
-        else:
-            return
-            
-    if size < 50:
-        return busyDialog(percent, control)
-    elif size < 150:
-        return ProgressDialogBG(percent, control, string1, header)
-    else:
-        return ProgressDialog(percent, control, string1, string2, string3, header)
+        if control: percent = 100
+        else: return
+    if size < 50: return busyDialog(percent, control)
+    elif size < 150: return ProgressDialogBG(percent, control, string1, header)
+    else: return ProgressDialog(percent, control, string1, string2, string3, header)
 
 def poolList(method, items):
     results = []
@@ -329,25 +298,20 @@ def buildListItem(item, mType='video'):
     streamInfo = (dict(item).get('streamdetails','') or {})
     item.pop('art',{})
     item.pop('streamdetails',{})
+    isHDHR = (item.get('ishdhomerun','') or 'False')
     listitem = xbmcgui.ListItem()
-    
     #todo json query returns invalid formats not compatiblity with xbmcgui.iistitems
     #clean and check json compatiblity. todo ast? eval? dict value comparison?
     for key in item.keys():
-        if key.lower() not in ITEM_TYPES:
-            item.pop(key,{})
-            
+        if key.lower() not in ITEM_TYPES: item.pop(key,{})
     for key in art.keys():
-        if key.lower() not in JSON_ART:
-            art.pop(key,{})
-    
+        if key.lower() not in JSON_ART: art.pop(key,{})
     for key, value in streamInfo.iteritems():
-        for value in value:
-            listitem.addStreamInfo(key, value)
-            
+        for value in value: listitem.addStreamInfo(key, value)
     listitem.addContextMenuItems(loadJson(item.get('contextmenu','[]')))
     listitem.setProperty("IsPlayable","true")
     listitem.setProperty("IsInternetStream","true")
+    listitem.setProperty("IsHDHomerun",isHDHR)
     listitem.setPath(item.get('url','') or item.get('path','') or '')
     listitem.setInfo(type=mType, infoLabels=item)
     listitem.setArt(art)
@@ -384,6 +348,9 @@ class RPCHelper(object):
                         item["channellogo"]   = (dataTags.get('channellogo','')        or '')
                         item["channelnumber"] = (dataTags.get('channelnumber','')      or '')
                         item["starttime"]     = (dataTags.get('starttime','')          or '')
+                        item["isnew"]         = (dataTags.get('isnew','')              or False)
+                        item["isfavorite"]    = (dataTags.get('isfavorite','')         or False)
+                        item["label"]         = (dataTags.get('label','')              or label)
                         item["label"]         = (dataTags.get('label','')              or label)
                         item["label2"]        = (dataTags.get('label2','')             or item.get('label2','')   or '')
                         item["rating"]        = float(item.get('rating','0')           or '0')
@@ -415,8 +382,71 @@ class RPCHelper(object):
              
     def cacheJSON(self, command, life=datetime.timedelta(minutes=15)):
         log('cacheJSON')
-        cacheResponce = self.cache.get(ADDON_NAME + '.cacheJSON, command = %s'%(command))
+        if DEBUG: cacheResponse = None
+        else: cacheResponce = self.cache.get(ADDON_NAME + '.cacheJSON, command = %s'%(command))
         if not cacheResponce or DEBUG == True:
             data = self.sendJSON(command)
             self.cache.set(ADDON_NAME + '.cacheJSON, command = %s'%(command), ((data)), expiration=life)
         return self.cache.get(ADDON_NAME + '.cacheJSON, command = %s'%(command))
+        
+        
+class HDHR(object):
+    def __init__(self):
+        self.pyHDHR = PyHDHR.PyHDHR()
+        
+
+    def hasHDHR(self):
+        return len((self.pyHDHR.getTuners() or '')) > 0
+
+
+    def getLiveURL(self, channel):
+        return self.pyHDHR.getLiveTVURL(str(channel))
+
+
+    def getChannelInfo(self, channel):
+        return self.pyHDHR.getChannelInfo(str(channel))
+        
+        
+    def getChannelItems(self):
+        for channel in self.pyHDHR.getChannelList():
+            try:
+                newChannel = {}
+                guidedata  = []
+                chan       = self.getChannelInfo(str(channel))
+                isFavorite = chan.getFavorite() == 1
+                if not isFavorite: continue
+                isHD       = chan.getHD() == 1
+                hasCC      = True
+                logo       = (chan.getImageURL() or ICON)
+                newChannel['channelname']   = (chan.getAffiliate() or chan.getGuideName() or chan.getGuideNumber() or 'N/A')
+                newChannel['channelnumber'] = float(chan.getGuideNumber())
+                newChannel['channellogo']   = logo
+                newChannel['isfavorite']    = isFavorite
+                for program in chan.getProgramInfos():
+                    tmpdata = {}
+                    starttime              = float(program.getStartTime())
+                    endtime                = float(program.getEndTime())
+                    runtime                = int(endtime - starttime)
+                    airdate                = float(program.getOriginalAirdate())
+                    if (starttime + runtime) < time.time(): continue
+                    tmpdata['label']       = program.getTitle()
+                    tmpdata['title']       = '%s - %s'%(program.getTitle(), program.getEpisodeTitle()) if len(program.getEpisodeTitle() or '') > 0 else program.getTitle()
+                    tmpdata['endtime']     = endtime
+                    tmpdata['starttime']   = starttime
+                    tmpdata['duration']    = runtime
+                    tmpdata['mediatype']   = 'episode' #MEDIA_TYPES[mediatype.upper()]
+                    tmpdata['url']         = chan.getURL()
+                    tmpdata['label2']      = "HD" if isHD else ""
+                    tmpdata['aired']       = (datetime.datetime.fromtimestamp((airdate or starttime))).strftime('%Y-%m-%d')
+                    thumb                  = (program.getImageURL() or logo)
+                    tmpdata['art']         = {"thumb":thumb,"poster":thumb,"clearlogo":logo}
+                    tmpdata['genre']       = list(set([x.getName() for x in program.getProgramFilters()]))
+                    tmpdata['plot']        = trimString(program.getSynopsis())
+                    tmpdata['ishdhomerun'] = 'okay'
+                    isNEW = False
+                    if airdate > 0: isNEW  = ((int(airdate)) + 48*60*60) > int(starttime)
+                    if "*" in tmpdata['label'] and isNEW == False: isNEW = True
+                    guidedata.append(tmpdata)
+                newChannel['guidedata'] = guidedata
+                yield newChannel
+            except Exception as e: log("getChannelItems failed! " + str(e), xbmc.LOGERROR)

@@ -1,4 +1,4 @@
-#   Copyright (C) 2017 Lunatixz
+#   Copyright (C) 2018 Lunatixz
 #
 #
 # This file is part of uEPG.
@@ -185,7 +185,7 @@ class uEPG(xbmcgui.WindowXML):
                 utils.log('curtime focusIndex = %s'%i)
                 self.focusIndex = i
                 self.setFocus(self.channelButtons[self.focusRow][i])
-                self.focusTime    = int(time.time())
+                self.focusTime    = int(curtime)
                 self.focusEndTime = endtime
                 break
                 
@@ -319,7 +319,10 @@ class uEPG(xbmcgui.WindowXML):
         self.currentHighLT.setVisible(False)
         for i in range(self.rowCount):
             chanColor = {True:utils.COLOR_FAVORITE,False:''}[self.channelLST.channels[curchannel - 1].isFavorite]
-            self.getControl(33111 + i).setLabel("[COLOR=%s][B]%d[/COLOR][/B]" % (chanColor, self.channelLST.channels[curchannel - 1].number))
+            chnumber  = self.channelLST.channels[curchannel - 1].number
+            if isinstance(chnumber, float): label = "[COLOR=%s][B]%.1f[/COLOR] |[/B]"%(chanColor, chnumber)
+            else: label = "[COLOR=%s][B]%d[/COLOR] |[/B]"%(chanColor, chnumber)
+            self.getControl(33111 + i).setLabel(label)
             self.getControl(33411 + i).setImage(self.channelLST.channels[curchannel - 1].logo)
             
             if curchannel == self.currentChannel:
@@ -331,12 +334,13 @@ class uEPG(xbmcgui.WindowXML):
                 self.currentHighLT.setPosition(chpx, chy)
             curchannel = self.fixChannel(curchannel + 1)
 
-        if time.time() >= starttime and time.time() < starttime + self.epgButtonwidth:
-            dif = int((starttime + self.epgButtonwidth - time.time())) 
+        curtime = time.time()
+        if curtime >= starttime and curtime < starttime + self.epgButtonwidth:
+            dif = int((starttime + self.epgButtonwidth - curtime)) 
             self.currentTime.setPosition(int((basex + basew - (timew / 2)) - (dif * (basew / self.epgButtonwidth))) - (timetw / 2), timety)
             self.currentTimeBar.setPosition(int((basex + basew - (timew / 2)) - (dif * (basew / self.epgButtonwidth))), timey)
         else:
-            if time.time() < starttime:
+            if curtime < starttime:
                 self.currentTime.setPosition(-1800, timety)
                 self.currentTimeBar.setPosition(basex, timey)
             else:
@@ -499,16 +503,17 @@ class uEPG(xbmcgui.WindowXML):
     def determinePosAtTime(self, starttime, channel):
         utils.log('determinePosAtTime, channel = ' + str(channel) + ', starttime = ' + str(starttime))
         playlistpos = 0
-        reftime     = time.time()
+        curtime     = time.time()
+        reftime     = curtime
         channel     = self.fixChannel(channel)
         epochBeginDate = (self.getItemStartTime(channel, playlistpos))
-        while epochBeginDate + self.getItemDuration(channel, playlistpos) < time.time():
+        while epochBeginDate + self.getItemDuration(channel, playlistpos) < curtime:
             utils.log('determinePosAtTime, channel = ' + str(channel) + ', loop epochBeginDate < now, playlistpos = ' + str(playlistpos))
             epochBeginDate += self.getItemDuration(channel, playlistpos)
             playlistpos = self.fixPlaylistIndex(channel, playlistpos + 1)
         
         utils.log('determinePosAtTime, channel = ' + str(channel) + ', live channel position = ' + str(playlistpos))
-        videotime = time.time() - epochBeginDate
+        videotime = curtime - epochBeginDate
         reftime -= videotime
 
         while reftime > starttime:
