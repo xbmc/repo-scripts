@@ -6,6 +6,7 @@
 	"guidedata": [{
 		"url": "",
 		"starttime": 0,
+		"endtime": 0,
 		"runtime": 0,
 		"label": "",
 		"label2": "HD",

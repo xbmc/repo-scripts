@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<addon id="script.module.uepg" version="1.0.1" name="uEPG" provider-name="Lunatixz">
+<addon id="script.module.uepg" version="1.0.2" name="uEPG" provider-name="Lunatixz">
     <requires>
         <import addon="xbmc.python" version="2.25.0"/>
+        <import addon="script.module.pyhdhr" version="1.0.0"/>
         <import addon="script.module.simplecache" version="1.0.0"/>
     </requires>
     <extension point="xbmc.python.script" defaultresolution="1080i" library="default.py"/>
@@ -10,10 +11,10 @@
         <description lang="en_GB"></description>
         <platform>all</platform>
         <license>GNU GENERAL PUBLIC LICENSE. Version 3, June 2007</license>
-        <source>https://github.com/Lunatixz/script.module.uepg/tree/master</source>
+        <source>https://github.com/Lunatixz/KODI_Addons/tree/master/script.module.uepg</source>
         <website></website>
         <forum>https://forum.kodi.tv/showthread.php?tid=321231</forum>
-        <news></news>
+        <news>[CR]1.0.2[CR]- Added HDHomerun Tuner Support</news>
         <assets>
             <icon>resources/images/icon.png</icon>
         </assets>

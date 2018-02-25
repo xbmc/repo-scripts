@@ -59,3 +59,24 @@ msgstr ""
 msgctxt "#30010"
 msgid "Use Kodi Skin (If Available)"
 msgstr ""
+
+msgctxt "#30011"
+msgid "Include HDHomerun Tuner (If Available)"
+msgstr ""
+
+msgctxt "#30012"
+msgid "HDHomerun Tuner Detected!! [CR] Would You like to Merge HDHomerun Channels with %s?"
+msgstr ""
+
+msgctxt "#30013"
+msgid "No HDHomerun Favorites Found!"
+msgstr ""
+
+msgctxt "#30014"
+msgid "Visit my.hdhomerun.com to select your Favorite Channels"
+msgstr ""
+
+msgctxt "#30015"
+msgid "To disable HDHomerun Tuner Support, open %s guide settings"
+msgstr ""
+
