@@ -1,0 +1,16 @@
+1.2.0
+- Code cleanup
+1.1.2
+- Improved playback token selection
+1.1.1
+- Fixed playback token selection
+1.1.0
+- Code cleanup
+1.0.1
+- Code cleanup
+0.1.0
+- Added full API features
+0.0.2
+- Improved auth
+0.0.1
+- Initial release
