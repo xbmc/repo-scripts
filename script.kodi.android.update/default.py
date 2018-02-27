@@ -48,7 +48,7 @@ DEVICESTR = (REAL_SETTINGS.getSetting("Platform") or None)
 
 if '64' in DEVICESTR: PLATFORM = "arm64-v8a"
 elif '86' in DEVICESTR: PLATFORM = "x86"
-elif DEVICESTR is None: PLATFORM = None
+elif DEVICESTR is None: PLATFORM = ""
 else: PLATFORM = "arm"
 
 def log(msg, level=xbmc.LOGDEBUG):
