@@ -25,7 +25,7 @@ msgid "Something went wrong, Try again later..."
 msgstr ""
 
 msgctxt "#30002"
-msgid "Downloading & Install"
+msgid "Downloading..."
 msgstr ""
 
 msgctxt "#30003"
@@ -59,3 +59,32 @@ msgstr ""
 msgctxt "#30010"
 msgid "/../../Users/*/AppData/Local/Packages/XBMCFoundation.Kodi_*"
 msgstr ""
+
+msgctxt "#30011"
+msgid "Plugin disabled"
+msgstr ""
+
+msgctxt "#30012"
+msgid "Would you like to disable this plugin?"
+msgstr ""
+
+msgctxt "#30015"
+msgid "Semi-stable (Monthly builds)."
+msgstr ""
+
+msgctxt "#30016"
+msgid "Stable (Final releases)."
+msgstr ""
+
+msgctxt "#30017"
+msgid "Unstable (Daily builds)."
+msgstr ""
+
+msgctxt "#30018"
+msgid "Experimental (Debugging builds)."
+msgstr ""
+
+msgctxt "#30019"
+msgid "Incompatible platform"
+msgstr ""
+
