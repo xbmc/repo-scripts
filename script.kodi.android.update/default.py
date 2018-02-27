@@ -40,12 +40,16 @@ DEBUG     = REAL_SETTINGS.getSetting('Enable_Debugging') == 'true'
 CLEAN     = REAL_SETTINGS.getSetting('Disable_Maintenance') == 'false'
 VERSION   = REAL_SETTINGS.getSetting("Version")
 # VERSION = 'Android 4.0.0 API level 24, kernel: Linux ARM 64-bit version 3.10.96+' #Test
-PLATFORM  = {True:"arm64-v8a", False:"arm", None:""}[('64' in REAL_SETTINGS.getSetting("Platform") or None)]
-# PLATFORM = None #Test
 BASE_URL  = 'http://mirrors.kodi.tv/'
 DROID_URL = BASE_URL + '%s/android/%s/'
 BUILD_OPT = ['nightlies','releases','snapshots','test-builds']
 BUILD_DEC = [LANGUAGE(30017),LANGUAGE(30016),LANGUAGE(30015),LANGUAGE(30018)]
+DEVICESTR = (REAL_SETTINGS.getSetting("Platform") or None)
+
+if '64' in DEVICESTR: PLATFORM = "arm64-v8a"
+elif '86' in DEVICESTR: PLATFORM = "x86"
+elif DEVICESTR is None: PLATFORM = None
+else: PLATFORM = "arm"
 
 def log(msg, level=xbmc.LOGDEBUG):
     if DEBUG == False and level != xbmc.LOGERROR: return

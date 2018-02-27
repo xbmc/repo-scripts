@@ -42,7 +42,6 @@ class Service(object):
             self.getBuild()
             self.getVersion()
             self.lastPath = REAL_SETTINGS.getSetting("LastPath")
-            self.lastPath = REAL_SETTINGS.getSetting("LastPath")
             # CACHE = Keep last download, CLEAN = Remove all downloads
             if not CACHE and CLEAN and xbmcvfs.exists(self.lastPath):
                 log('Service, removing last download')
