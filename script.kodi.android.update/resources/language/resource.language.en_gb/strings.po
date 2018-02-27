@@ -25,7 +25,7 @@ msgid "Something went wrong, Try again later..."
 msgstr ""
 
 msgctxt "#30002"
-msgid "Downloading"
+msgid "Downloading..."
 msgstr ""
 
 msgctxt "#30003"
