@@ -37,25 +37,52 @@ LANGUAGE      = REAL_SETTINGS.getLocalizedString
 TIMEOUT   = 15
 DEBUG     = REAL_SETTINGS.getSetting('Enable_Debugging') == 'true'
 CLEAN     = REAL_SETTINGS.getSetting('Disable_Maintenance') == 'false'
-BASE_URL  = 'http://mirrors.kodi.tv/%s/windows/'
+BASE_URL  = 'http://mirrors.kodi.tv/'
+WIND_URL  = BASE_URL + '%s/windows/%s/'
 BUILD_OPT = ['nightlies','releases','snapshots','test-builds']
+BUILD_DEC = [LANGUAGE(30017),LANGUAGE(30016),LANGUAGE(30015),LANGUAGE(30018)]
 UWP_PATH  = LANGUAGE(30010)
+VERSION   = REAL_SETTINGS.getSetting("Version")
+PLATFORM  = {True:"win64", False:"win32", None:""}[('64' in REAL_SETTINGS.getSetting("Platform") or None)]
 
 def log(msg, level=xbmc.LOGDEBUG):
     if DEBUG == False and level != xbmc.LOGERROR: return
     if level == xbmc.LOGERROR: msg += ' ,' + traceback.format_exc()
     xbmc.log(ADDON_ID + '-' + ADDON_VERSION + '-' + (msg.encode("utf-8")), level)
+    
+def getProperty(msg, cntrl=10000):
+    return xbmcgui.Window(cntrl).getProperty('%s.%s'%(ADDON_ID,msg))
+          
+def clearProperty(msg, cntrl=10000):
+    return xbmcgui.Window(cntrl).clearProperty('%s.%s'%(ADDON_ID,msg))
 
+def setProperty(msg, value, cntrl=10000):
+    return xbmcgui.Window(cntrl).setProperty('%s.%s'%(ADDON_ID,msg),value)
+    
 socket.setdefaulttimeout(TIMEOUT)
 class Installer(object):
     def __init__(self):
         self.cache    = SimpleCache()
-        self.isUWP    = len(fnmatch.filter(glob.glob(UWP_PATH),'*.*')) > 0
-        if self.isUWP: return self.okDialog(LANGUAGE(30009))
+        if self.chkUWP(): return
         self.lastURL  = (REAL_SETTINGS.getSetting("LastURL") or self.buildMain())
         self.lastPath = REAL_SETTINGS.getSetting("LastPath")
         self.selectDialog(self.lastURL)
         
+    
+    def chkUWP(self):
+        isUWP = len(fnmatch.filter(glob.glob(UWP_PATH),'*.*')) > 0
+        # isUWP = True #Test
+        xbmcgui.Dialog().notification(ADDON_NAME, VERSION, ICON, 8000)
+        if not isUWP: return isUWP
+        else: return self.disable()
+        
+        
+    def disable(self):
+        if not xbmcgui.Dialog().yesno(ADDON_NAME, LANGUAGE(30009), LANGUAGE(30012)): return True 
+        xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method":"Addons.SetAddonEnabled","params":{"addonid":"%s","enabled":false}, "id": 1}'%(ADDON_ID))
+        xbmcgui.Dialog().notification(ADDON_NAME, LANGUAGE(30011), ICON, 4000)
+        return True
+
         
     def openURL(self, url):
         if url is None: return
@@ -84,10 +111,10 @@ class Installer(object):
         
     def buildMain(self):
         tmpLST = []
-        for item in BUILD_OPT: tmpLST.append(xbmcgui.ListItem(item.title(),'',ICON))
+        for idx, item in enumerate(BUILD_OPT): tmpLST.append(xbmcgui.ListItem(item.title(),BUILD_DEC[idx],ICON))
         select = xbmcgui.Dialog().select(ADDON_NAME, tmpLST, preselect=-1, useDetails=True)
         if select < 0: return #return on cancel.
-        return  BASE_URL%BUILD_OPT[select].lower()
+        return  WIND_URL%(BUILD_OPT[select].lower().replace('//','/'),PLATFORM)
             
             
     def buildItems(self, url):
@@ -95,6 +122,7 @@ class Installer(object):
         if soup is None: return
         for item in self.getItems(soup):
             try: #folders
+                if 'uwp' in item.lower(): continue #ignore UWP builds
                 label, label2 = re.compile("(.*?)/-(.*)").match(item).groups()
                 yield (xbmcgui.ListItem(label,'',ICON))
             except: #files
@@ -111,56 +139,64 @@ class Installer(object):
         xbmcgui.Dialog().ok(header, str1, str2, str3)
         
     
-    def selectDialog(self, url):
+    def selectDialog(self, url, bypass=False):
         log('selectDialog, url = ' + str(url))
-        newURL = url
+        newURL  = url
         while not xbmc.Monitor().abortRequested():
             items = list(self.buildItems(url))
             if len(items) == 0: break
-            label  = url.replace('http://mirrors.kodi.tv/','./')
-            select = xbmcgui.Dialog().select(label, items, preselect=-1, useDetails=True)
-            if select < 0: return #return on cancel.
+            elif len(items) == 2 and not bypass and items[0].getLabel().startswith('Parent directory') and not items[1].getLabel().startswith('.exe'): select = 1 #If one folder bypass selection.
+            else:
+                label  = url.replace(BASE_URL,'./')
+                select = xbmcgui.Dialog().select(label, items, preselect=-1, useDetails=True)
+                if select < 0: return #return on cancel.
             label  = items[select].getLabel()
             newURL = url + items[select].getLabel()
             preURL = url.rsplit('/', 2)[0] + '/'
             
-            if newURL.endswith('exe'): 
+            if newURL.endswith('.exe'): 
                 dest = xbmc.translatePath(os.path.join(SETTINGS_LOC,label))
                 self.setLastPath(url,dest)
                 return self.downloadEXE(newURL,dest)
             elif label.startswith('Parent directory') and "windows" in preURL:
-                return self.selectDialog(preURL)
+                return self.selectDialog(preURL, True)
             elif label.startswith('Parent directory') and "windows" not in preURL:
-                return self.selectDialog(self.buildMain())
+                return self.selectDialog(self.buildMain(), False)
             url = newURL + '/'
-                
-
-    def checkFile(self, dest):
+        
+        
+    def fileExists(self, dest):
         if xbmcvfs.exists(dest):
-            if not xbmcgui.Dialog().yesno(ADDON_NAME, LANGUAGE(30004), dest.rsplit('/', 1)[-1], nolabel=LANGUAGE(30005), yeslabel=LANGUAGE(30006)):
-                return False
+            if not xbmcgui.Dialog().yesno(ADDON_NAME, LANGUAGE(30004), dest.rsplit('/', 1)[-1], nolabel=LANGUAGE(30005), yeslabel=LANGUAGE(30006)): return False
         elif CLEAN and xbmcvfs.exists(self.lastPath): self.deleteEXE(self.lastPath)
         return True
         
         
     def deleteEXE(self, path):
-        if xbmcvfs.exists(path): xbmcvfs.delete(path)
+        count = 0
+        #some file systems don't release the file lock instantly.
+        while not xbmc.Monitor().abortRequested() and count < 3:
+            count += 1
+            if xbmc.Monitor().waitForAbort(1): return 
+            try: 
+                if xbmcvfs.delete(path): return
+            except: pass
         
         
     def downloadEXE(self, url, dest):
-        if not self.checkFile(dest): return self.installEXE(dest)
+        if self.fileExists(dest): return self.installEXE(dest)
         start_time = time.time()
         dia = xbmcgui.DialogProgress()
-        dia.create(ADDON_NAME,LANGUAGE(30002))
+        dia.create(ADDON_NAME, LANGUAGE(30002))
         dia.update(0)
         try:
-            urllib.urlretrieve(url.rstrip('/').replace('https','http'), dest, lambda nb, bs, fs: self.pbhook(nb, bs, fs, dia, start_time))
-            self.installEXE(dest)
+            urllib.urlretrieve(url.rstrip('/'), dest, lambda nb, bs, fs: self.pbhook(nb, bs, fs, dia, start_time))
         except Exception as e:
+            dia.close()
             xbmcgui.Dialog().notification(ADDON_NAME, LANGUAGE(30001), ICON, 4000)
-            log("downloadEXE, Failed! " + str(e), xbmc.LOGERROR)
-            self.deleteEXE(dest)
-            return
+            log("downloadAPK, Failed! (%s) %s"%(url,str(e)), xbmc.LOGERROR)
+            return self.deleteEXE(dest)
+        return self.installEXE(dest)
 
         
     def pbhook(self, numblocks, blocksize, filesize, dia, start_time):
@@ -176,19 +212,17 @@ class Installer(object):
             e = 'Speed: %.02f Kb/s ' % kbps_speed 
             e += 'ETA: %02d:%02d' % divmod(eta, 60) 
             dia.update(percent, mbs, e)
-        except: 
+        except Exception('Download Failed'): 
             percent = 100 
-            dia.update(percent) 
-        if dia.iscanceled(): 
-            dia.close()
-            raise Exception
+            dia.update(percent)
+        if dia.iscanceled(): raise Exception('Download Canceled')
             
             
     def installEXE(self, exefile):
+        if not xbmcvfs.exists(exefile): return
         xbmc.executebuiltin('XBMC.AlarmClock(shutdowntimer,XBMC.Quit(),0.5,true)')
         subprocess.call(['start', exefile], shell=True)
         # os.startfile(exefile)
         # subprocess.call('taskkill /f /im kodi.exe')
         
-if __name__ == '__main__':
-    Installer()
+if __name__ == '__main__': Installer()

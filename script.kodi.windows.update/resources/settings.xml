@@ -5,4 +5,6 @@
     <setting id="Disable_Cache"       type="bool" label="30008" default="true"  visible="eq(-1,false)"/>
     <setting id="LastURL"             type="text" default=""    enable="false"  visible="false"/>
     <setting id="LastPath"            type="text" default=""    enable="false"  visible="false"/>
+    <setting id="Platform"            type="text" default=""    enable="false"  visible="false"/>
+    <setting id="Version"             type="text" default=""    enable="false"  visible="false"/>
 </settings>
