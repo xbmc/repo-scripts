@@ -29,22 +29,28 @@ class Logger(object):
         return
     
     def Debug(self, s):
-        xbmc.log(s, xbmc.LOGDEBUG)
-
+        try: xbmc.log(str(s), xbmc.LOGDEBUG)
+        except: pass
+        
     def Info(self, s):
-        xbmc.log(s, xbmc.LOGINFO)
+        try: xbmc.log(str(s), xbmc.LOGINFO)
+        except: pass
 
     def Warn(self, s):
-        xbmc.log(s, xbmc.LOGWARNING)
+        try: xbmc.log(str(s), xbmc.LOGWARNING)
+        except: pass
       
     def Error(self, s):
-        xbmc.log(s, xbmc.LOGERROR)
+        try: xbmc.log(str(s), xbmc.LOGERROR)
+        except: pass
 
     def Critical(self, s):
-        xbmc.log(s, xbmc.LOGERROR)
+        try: xbmc.log(str(s), xbmc.LOGERROR)
+        except: pass
 
     def Exception(self, s):
-        xbmc.log(s, xbmc.LOGDEBUG)
+        try: xbmc.log(str(s), xbmc.LOGDEBUG)
+        except: pass
     
 #Globals
 Log                 = Logger()     
@@ -588,11 +594,11 @@ class Tuner(BaseDevice):
     def discover(self):
         if time.time() - self.LastDiscover < 60:
             return True
-
+        self.LastDiscover = time.time()
         try:
-            self.LastDiscover = time.time()
             response = urllib2.urlopen(self.DiscoverURL,None,5)
             data = json.loads(response.read())
+            
             if 'DeviceID' in data:
                 self.DeviceID = data['DeviceID']
             if 'TunerCount' in data:
@@ -832,7 +838,7 @@ class PyHDHR(object):
             if guideno in chaninfos:
                 try:
                     response = urllib2.urlopen(chaninfos[guideno].getURL()+"?duration=1",None,5)
-                    return chaninfos[guideno]
+                    return chaninfos[guideno].getURL()
                 except Exception as e:
                     regx = re.search('HTTP Error 503:',str(e))
                     if regx != None:
