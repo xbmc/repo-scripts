@@ -41,78 +41,97 @@
             <texture>kaster-kodi-logo.png</texture>
             <visible>!String.IsEqual(Window.Property(hide-kodi-logo),"true")</visible>
         </control>
-        <control type="grouplist">
-            <orientation>horizontal</orientation>
+        <control type="group">
+            <orientation>vertical</orientation>
             <top>830</top>
             <right>125</right>
-            <align>right</align>
-            <control type="label" id="32502">
-                <description>temperature</description>
-                <right>auto</right>
-                <font>13</font>
-                <shadowcolor>text_shadow</shadowcolor>
+            <control type="grouplist">
+                <orientation>horizontal</orientation>
                 <align>right</align>
-                <aligny>center</aligny>
-                <height>125</height>
-                <width>auto</width>
+                <control type="label" id="32502">
+                    <description>temperature</description>
+                    <right>auto</right>
+                    <font>font13</font>
+                    <shadowcolor>#22000000</shadowcolor>
+                    <textcolor>whitesmoke</textcolor>
+                    <align>right</align>
+                    <aligny>center</aligny>
+                    <height>125</height>
+                    <width>auto</width>
+                    <align>right</align>
+                    <label>$INFO[Weather.Temperature]</label>
+                    <visible>Weather.IsFetched+!String.IsEqual(Window.Property(hide-weather-info),"true")</visible>
+                </control>
+                <control type="image">
+                    <description>Weather icon</description>
+                    <align>right</align>
+                    <width>80</width>
+                    <height>80</height>
+                    <texture>icons/$INFO[Weather.fanartcode].png</texture>
+                    <visible>Weather.IsFetched+!String.IsEqual(Window.Property(hide-weather-info),"true")</visible>
+                </control>
+                <control type="label">
+                    <description>Time</description>
+                    <align>left</align>
+                    <font>font_clock</font>
+                    <shadowcolor>22000000</shadowcolor>
+                    <textcolor>whitesmoke</textcolor>
+                    <height>200</height>
+                    <width>auto</width>
+                    <label>$INFO[System.Time]</label>
+                    <visible>String.IsEqual(Window.Property(clockfont),"fontclock")+!String.IsEqual(Window.Property(hide-clock-info),"true")</visible>
+                </control>
+                <control type="label">
+                    <description>Time</description>
+                    <align>left</align>
+                    <font>font_MainMenu</font>
+                    <shadowcolor>22000000</shadowcolor>
+                    <textcolor>whitesmoke</textcolor>
+                    <height>200</height>
+                    <width>auto</width>
+                    <label>$INFO[System.Time]</label>
+                    <visible>String.IsEqual(Window.Property(clockfont),"fontmainmenu")+!String.IsEqual(Window.Property(hide-clock-info),"true")</visible>
+                </control>
+                <control type="label">
+                    <description>Time</description>
+                    <align>left</align>
+                    <font>HomeFO</font>
+                    <shadowcolor>22000000</shadowcolor>
+                    <textcolor>whitesmoke</textcolor>
+                    <height>120</height>
+                    <width>auto</width>
+                    <label>$INFO[System.Time]</label>
+                    <visible>String.IsEqual(Window.Property(clockfont),"fontzephyr")+!String.IsEqual(Window.Property(hide-clock-info),"true")</visible>
+                </control>
+            </control>
+            <control type="label" id="32503">
+                <description>Line one</description>
+                <font>font13</font>
+                <shadowcolor>22000000</shadowcolor>
+                <textcolor>whitesmoke</textcolor>
+                <top>90</top>
+                <right>0</right>
+                <height>30</height>
+                <width>1000</width>
                 <align>right</align>
-                <label>$INFO[Weather.Temperature]</label>
-                <visible>Weather.IsFetched+!String.IsEqual(Window.Property(hide-weather-info),"true")</visible>
+                <label></label>
+                <animation effect="fade" start="100" end="0" time="15000">Visible</animation>
+                <visible>!String.IsEqual(Window.Property(hide-pic-info),"true")</visible>
             </control>
-            <control type="image">
-                <description>Weather icon</description>
+            <control type="label" id="32504">
+                <description>Line two</description>
+                <font>font13</font>
+                <shadowcolor>22000000</shadowcolor>
+                <textcolor>whitesmoke</textcolor>
+                <top>130</top>
+                <right>0</right>
+                <height>30</height>
+                <width>1000</width>
                 <align>right</align>
-                <width>80</width>
-                <height>80</height>
-                <texture>icons/$INFO[Weather.fanartcode].png</texture>
-                <visible>Weather.IsFetched+!String.IsEqual(Window.Property(hide-weather-info),"true")</visible>
+                <label></label>
+                <animation effect="fade" start="100" end="0" time="15000">Visible</animation>
+                <visible>!String.IsEqual(Window.Property(hide-pic-info),"true")</visible>
             </control>
-            <control type="label">
-                <description>Time</description>
-                <align>left</align>
-                <font>font_clock</font>
-                <shadowcolor>text_shadow</shadowcolor>
-                <height>200</height>
-                <width>auto</width>
-                <label>$INFO[System.Time]</label>
-                <visible>String.IsEqual(Window.Property(clockfont),"fontclock")+!String.IsEqual(Window.Property(hide-clock-info),"true")</visible>
-            </control>
-            <control type="label">
-                <description>Time</description>
-                <align>left</align>
-                <font>font_MainMenu</font>
-                <shadowcolor>text_shadow</shadowcolor>
-                <height>200</height>
-                <width>auto</width>
-                <label>$INFO[System.Time]</label>
-                <visible>String.IsEqual(Window.Property(clockfont),"fontmainmenu")+!String.IsEqual(Window.Property(hide-clock-info),"true")</visible>
-            </control>
-        </control>
-        <control type="label" id="32503">
-            <description>Line one</description>
-            <font>font13</font>
-            <shadowcolor>text_shadow</shadowcolor>
-            <top>920</top>
-            <right>130</right>
-            <height>200</height>
-            <width>1000</width>
-            <align>right</align>
-            <label></label>
-            <animation effect="fade" start="100" end="0" time="15000">Visible</animation>
-            <visible>!String.IsEqual(Window.Property(hide-pic-info),"true")</visible>
-        </control>
-        <control type="label" id="32504">
-            <description>Line two</description>
-            <font>font13</font>
-            <shadowcolor>text_shadow</shadowcolor>
-            <top>970</top>
-            <right>130</right>
-            <height>200</height>
-            <width>1000</width>
-            <align>right</align>
-            <label></label>
-            <animation effect="fade" start="100" end="0" time="15000">Visible</animation>
-            <visible>!String.IsEqual(Window.Property(hide-pic-info),"true")</visible>
         </control>
     </controls>
 </window>

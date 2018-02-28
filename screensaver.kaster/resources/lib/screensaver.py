@@ -116,8 +116,11 @@ class Kaster(xbmcgui.WindowXMLDialog):
         return
 
     def set_property(self):
-        if "estuary" in xbmc.getSkinDir():
+        skin = xbmc.getSkinDir()
+        if "estuary" in skin:
             self.setProperty("clockfont", "fontclock")
+        elif "zephyr" in skin:
+            self.setProperty("clockfont", "fontzephyr")
         else:
             self.setProperty("clockfont", "fontmainmenu")
         # Set skin properties as settings
