@@ -15,7 +15,7 @@
 #
 # -*- coding: utf-8 -*-
 
-import traceback
+import platform, traceback
 import xbmc, xbmcaddon, xbmcgui, xbmcvfs
 
 # Plugin Info
@@ -39,13 +39,38 @@ def log(msg, level=xbmc.LOGDEBUG):
 class Service(object):
     def __init__(self):
         try:
+            self.getBuild()
+            self.getVersion()
             self.lastPath = REAL_SETTINGS.getSetting("LastPath")
+            # CACHE = Keep last download, CLEAN = Remove all downloads
             if not CACHE and CLEAN and xbmcvfs.exists(self.lastPath):
                 log('Service, removing last download')
                 xbmcvfs.delete(self.lastPath)
                 xbmcgui.Dialog().notification(ADDON_NAME, LANGUAGE(30007), ICON, 4000)
-        except Exception as e:
-            log("Service Failed! " + str(e), xbmc.LOGERROR)
+        except Exception as e: log("Service Failed! " + str(e), xbmc.LOGERROR)
+                
         
-if __name__ == '__main__':
-    Service()
+    def getBuild(self): 
+        count = 0
+        build = ''
+        try:
+            while not xbmc.Monitor().abortRequested() and count < 3:
+                count += 1
+                build = platform.machine()
+                if len(str(build)) > 0: return REAL_SETTINGS.setSetting("Platform",str(build))
+        except Exception as e: log("getBuild Failed! " + str(e), xbmc.LOGERROR)
+             
+             
+    def getVersion(self):
+        count = 0
+        build = ''
+        try:
+            while not xbmc.Monitor().abortRequested() and count < 3:
+                count += 1 
+                build = xbmc.getInfoLabel('System.OSVersionInfo')
+                if build.lower() != 'busy': return REAL_SETTINGS.setSetting("Version",str(build))
+                if xbmc.Monitor().waitForAbort(1): return
+        except Exception as e: log("getVersion Failed! " + str(e), xbmc.LOGERROR)
+        
+              
+if __name__ == '__main__': Service()
