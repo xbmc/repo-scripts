@@ -41,7 +41,7 @@ class Logger(object):
         xbmc.log(s, xbmc.LOGERROR)
 
     def Critical(self, s):
-        xbmc.log(s, xbmc.LOGFATAL)
+        xbmc.log(s, xbmc.LOGERROR)
 
     def Exception(self, s):
         xbmc.log(s, xbmc.LOGDEBUG)
@@ -589,9 +589,8 @@ class Tuner(BaseDevice):
         if time.time() - self.LastDiscover < 60:
             return True
 
-        self.LastDiscover = time.time()
-        
         try:
+            self.LastDiscover = time.time()
             response = urllib2.urlopen(self.DiscoverURL,None,5)
             data = json.loads(response.read())
             if 'DeviceID' in data:
