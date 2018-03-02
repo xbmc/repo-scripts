@@ -70,7 +70,7 @@ msgstr "Ocultar logo Kodi"
 
 msgctxt "#32013"
 msgid "Hide weather info"
-msgstr "Ocultar información meteorolóogica"
+msgstr "Ocultar información meteorológica"
 
 msgctxt "#32014"
 msgid "Hide clock info"
@@ -98,7 +98,7 @@ msgstr "Panorámica y zoom"
 
 msgctxt "#32020"
 msgid "Hide dim overlay"
-msgstr "Ocultar plano dim"
+msgstr "Ocultar superposición tenue"
 
 msgctxt "#32021"
 msgid "Show black background"

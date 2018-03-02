@@ -1,3 +1,7 @@
+v1.2.1 2/3/2018
+- update spanish translation (tks roliversc)
+- Clock font for eminence skin
+
 v1.2.0 28/2/2018
 - Improve skinning
 - Set clock font for Actic Zephyr skin

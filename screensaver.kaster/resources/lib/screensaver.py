@@ -116,11 +116,14 @@ class Kaster(xbmcgui.WindowXMLDialog):
         return
 
     def set_property(self):
+        # Kodi does not yet allow scripts to ship font definitions
         skin = xbmc.getSkinDir()
         if "estuary" in skin:
             self.setProperty("clockfont", "fontclock")
         elif "zephyr" in skin:
             self.setProperty("clockfont", "fontzephyr")
+        elif "eminence" in skin:
+            self.setProperty("clockfont", "fonteminence")
         else:
             self.setProperty("clockfont", "fontmainmenu")
         # Set skin properties as settings
