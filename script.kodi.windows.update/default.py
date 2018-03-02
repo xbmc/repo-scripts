@@ -49,16 +49,7 @@ def log(msg, level=xbmc.LOGDEBUG):
     if DEBUG == False and level != xbmc.LOGERROR: return
     if level == xbmc.LOGERROR: msg += ' ,' + traceback.format_exc()
     xbmc.log(ADDON_ID + '-' + ADDON_VERSION + '-' + (msg.encode("utf-8")), level)
-    
-def getProperty(msg, cntrl=10000):
-    return xbmcgui.Window(cntrl).getProperty('%s.%s'%(ADDON_ID,msg))
-          
-def clearProperty(msg, cntrl=10000):
-    return xbmcgui.Window(cntrl).clearProperty('%s.%s'%(ADDON_ID,msg))
 
-def setProperty(msg, value, cntrl=10000):
-    return xbmcgui.Window(cntrl).setProperty('%s.%s'%(ADDON_ID,msg),value)
-    
 socket.setdefaulttimeout(TIMEOUT)
 class Installer(object):
     def __init__(self):
@@ -72,12 +63,12 @@ class Installer(object):
     def chkUWP(self):
         isUWP = len(fnmatch.filter(glob.glob(UWP_PATH),'*.*')) > 0
         # isUWP = True #Test
-        xbmcgui.Dialog().notification(ADDON_NAME, VERSION, ICON, 8000)
         if not isUWP: return isUWP
         else: return self.disable()
         
         
     def disable(self):
+        xbmcgui.Dialog().notification(ADDON_NAME, VERSION, ICON, 8000)
         if not xbmcgui.Dialog().yesno(ADDON_NAME, LANGUAGE(30009), LANGUAGE(30012)): return True 
         xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method":"Addons.SetAddonEnabled","params":{"addonid":"%s","enabled":false}, "id": 1}'%(ADDON_ID))
         xbmcgui.Dialog().notification(ADDON_NAME, LANGUAGE(30011), ICON, 4000)
@@ -114,7 +105,7 @@ class Installer(object):
         for idx, item in enumerate(BUILD_OPT): tmpLST.append(xbmcgui.ListItem(item.title(),BUILD_DEC[idx],ICON))
         select = xbmcgui.Dialog().select(ADDON_NAME, tmpLST, preselect=-1, useDetails=True)
         if select < 0: return #return on cancel.
-        return  WIND_URL%(BUILD_OPT[select].lower().replace('//','/'),PLATFORM)
+        return WIND_URL%(BUILD_OPT[select].lower().replace('//','/'),PLATFORM)
             
             
     def buildItems(self, url):
@@ -124,10 +115,12 @@ class Installer(object):
             try: #folders
                 if 'uwp' in item.lower(): continue #ignore UWP builds
                 label, label2 = re.compile("(.*?)/-(.*)").match(item).groups()
-                yield (xbmcgui.ListItem(label,'',ICON))
+                if label == PLATFORM: label2 = LANGUAGE(30014)%PLATFORM
+                else: label2 = '' #Don't use time-stamp for folders
+                yield (xbmcgui.ListItem(label.strip(),label2.strip(),ICON))
             except: #files
                 label, label2 = re.compile("(.*?)\s(.*)").match(item).groups()
-                if label.endswith('.exe'): yield (xbmcgui.ListItem(label,label2,ICON))
+                if label.endswith('.exe'): yield (xbmcgui.ListItem(label.strip(),label2.strip(),ICON))
 
 
     def setLastPath(self, url, path):
@@ -147,7 +140,7 @@ class Installer(object):
             if len(items) == 0: break
             elif len(items) == 2 and not bypass and items[0].getLabel().startswith('Parent directory') and not items[1].getLabel().startswith('.exe'): select = 1 #If one folder bypass selection.
             else:
-                label  = url.replace(BASE_URL,'./')
+                label  = url.replace(BASE_URL,'./').replace('//','/')
                 select = xbmcgui.Dialog().select(label, items, preselect=-1, useDetails=True)
                 if select < 0: return #return on cancel.
             label  = items[select].getLabel()
@@ -169,7 +162,7 @@ class Installer(object):
         if xbmcvfs.exists(dest):
             if not xbmcgui.Dialog().yesno(ADDON_NAME, LANGUAGE(30004), dest.rsplit('/', 1)[-1], nolabel=LANGUAGE(30005), yeslabel=LANGUAGE(30006)): return False
         elif CLEAN and xbmcvfs.exists(self.lastPath): self.deleteEXE(self.lastPath)
-        return True
+        return False
         
         
     def deleteEXE(self, path):

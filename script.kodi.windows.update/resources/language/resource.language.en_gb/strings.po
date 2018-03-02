@@ -68,6 +68,10 @@ msgctxt "#30012"
 msgid "Would you like to disable this plugin?"
 msgstr ""
 
+msgctxt "#30014"
+msgid "Current Windows platform (%s)"
+msgstr ""
+
 msgctxt "#30015"
 msgid "Semi-stable (Monthly builds)."
 msgstr ""
