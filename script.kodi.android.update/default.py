@@ -46,9 +46,9 @@ BUILD_OPT = ['nightlies','releases','snapshots','test-builds']
 BUILD_DEC = [LANGUAGE(30017),LANGUAGE(30016),LANGUAGE(30015),LANGUAGE(30018)]
 DEVICESTR = (REAL_SETTINGS.getSetting("Platform") or None)
 
-if '64' in DEVICESTR: PLATFORM = "arm64-v8a"
+if DEVICESTR is None: PLATFORM = ""
+elif '64' in DEVICESTR: PLATFORM = "arm64-v8a"
 elif '86' in DEVICESTR: PLATFORM = "x86"
-elif DEVICESTR is None: PLATFORM = ""
 else: PLATFORM = "arm"
 
 def log(msg, level=xbmc.LOGDEBUG):
@@ -67,6 +67,7 @@ class Installer(object):
         
         
     def disable(self, build):
+        xbmcgui.Dialog().notification(ADDON_NAME, VERSION, ICON, 8000)
         if not xbmcgui.Dialog().yesno(ADDON_NAME, LANGUAGE(30011)%(build), LANGUAGE(30012)): return False 
         xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method":"Addons.SetAddonEnabled","params":{"addonid":"%s","enabled":false}, "id": 1}'%(ADDON_ID))
         xbmcgui.Dialog().notification(ADDON_NAME, LANGUAGE(30009), ICON, 4000)
@@ -76,7 +77,6 @@ class Installer(object):
     def chkVersion(self):
         try: 
             build = int(re.compile('Android (\d+)').findall(VERSION)[0])
-            xbmcgui.Dialog().notification(ADDON_NAME, VERSION, ICON, 8000)
         except: build = MIN_VER
         if build >= MIN_VER: return True
         else: return self.disable(build)
@@ -142,7 +142,7 @@ class Installer(object):
             if len(items) == 0: break
             elif len(items) == 2 and not bypass and items[0].getLabel().startswith('Parent directory') and not items[1].getLabel().startswith('.apk'): select = 1 #If one folder bypass selection.
             else:
-                label  = url.replace(BASE_URL,'./')
+                label  = url.replace(BASE_URL,'./').replace('//','/')
                 select = xbmcgui.Dialog().select(label, items, preselect=-1, useDetails=True)
                 if select < 0: return #return on cancel.
             label  = items[select].getLabel()
