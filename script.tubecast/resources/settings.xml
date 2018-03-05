@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+	<category label="32003">
+		<setting label="32004" type="bool" id="enable-ssdp" default="true"/>
+	</category>
+	<category label="32012">
+		<setting label="32005" type="bool" id="debug-ssdp" default="false"/>
+		<setting label="32011" type="bool" id="debug-cmd" default="false"/>
+	</category>
+</settings>
