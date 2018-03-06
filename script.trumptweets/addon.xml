@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.trumptweets" name="Trump Tweets!!" version="1.0.3" provider-name="Lunatixz">
+<addon id="script.trumptweets" name="Trump Tweets!!" version="1.0.4" provider-name="Lunatixz">
     <requires>
         <import addon="xbmc.python" version="2.25.0"/>
         <import addon="script.module.feedparser" version="5.1.3"/>
@@ -14,7 +14,7 @@
         <website>https://twitter.com/realDonaldTrump</website>
         <source>https://github.com/Lunatixz/Kodi_Addons/tree/master/script.trumptweets</source>
         <forum>https://forum.kodi.tv/showthread.php?tid=316555</forum>
-        <news>v.1.0.3 - Service Improvements[CR]v.1.0.2 - Skin Tweaks[CR]v.1.0.1 - Tweaked Timer, Code Cleanup</news>
+        <news>v.1.0.4 - Service Improvements[CR]v.1.0.3 - Service Improvements[CR]v.1.0.2 - Skin Tweaks[CR]v.1.0.1 - Tweaked Timer, Code Cleanup</news>
         <assets>
             <icon>resources/images/icon.png</icon>
             <fanart>resources/images/fanart.jpg</fanart>

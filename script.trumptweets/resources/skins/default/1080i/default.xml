@@ -35,7 +35,7 @@
                 <wrapmultiline>false</wrapmultiline>  
                 <visible>Control.IsVisible(30100)</visible>
             </control>
-            <control type="label">
+            <control type="textbox">
                 <posx>60</posx> 
                 <posy>360</posy> 
                 <width>480</width> 
@@ -47,8 +47,8 @@
                 <textcolor>ff014a75</textcolor>
                 <shadowcolor>C0C0C0C0</shadowcolor> 
                 <wrapmultiline>true</wrapmultiline>  
-                <scrollspeed>50</scrollspeed>
-                <scrollsuffix> - </scrollsuffix>
+                <scrolltime>200</scrolltime>
+                <autoscroll delay="3000" time="1000" repeat="1000">Control.IsVisible(30100)</autoscroll>
                 <visible>Control.IsVisible(30100)</visible>
             </control>
         </control>
@@ -95,7 +95,7 @@
                 <wrapmultiline>false</wrapmultiline>  
                 <visible>Control.IsVisible(30200)</visible>
             </control>
-            <control type="label">
+            <control type="textbox">
                 <posx>70</posx> 
                 <posy>75</posy> 
                 <width>460</width> 
@@ -107,8 +107,8 @@
                 <textcolor>ff014a75</textcolor>
                 <shadowcolor>C0C0C0C0</shadowcolor> 
                 <wrapmultiline>true</wrapmultiline>  
-                <scrollspeed>50</scrollspeed>
-                <scrollsuffix> - </scrollsuffix>
+                <scrolltime>200</scrolltime>
+                <autoscroll delay="3000" time="1000" repeat="1000">Control.IsVisible(30200)</autoscroll>
                 <visible>Control.IsVisible(30200)</visible>
             </control>
         </control>
@@ -155,7 +155,7 @@
                 <wrapmultiline>false</wrapmultiline>  
                 <visible>Control.IsVisible(30300)</visible>
             </control>
-            <control type="label">
+            <control type="textbox">
                 <posx>70</posx> 
                 <posy>75</posy> 
                 <width>460</width> 
@@ -167,8 +167,8 @@
                 <textcolor>ff014a75</textcolor>
                 <shadowcolor>C0C0C0C0</shadowcolor> 
                 <wrapmultiline>true</wrapmultiline>  
-                <scrollspeed>50</scrollspeed>
-                <scrollsuffix> - </scrollsuffix>
+                <scrolltime>200</scrolltime>
+                <autoscroll delay="3000" time="1000" repeat="1000">Control.IsVisible(30300)</autoscroll>
                 <visible>Control.IsVisible(30300)</visible>
             </control>
         </control>

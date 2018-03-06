@@ -26,9 +26,9 @@ ADDON_NAME     = REAL_SETTINGS.getAddonInfo('name')
 ADDON_VERSION  = REAL_SETTINGS.getAddonInfo('version')
 ADDON_PATH     = (REAL_SETTINGS.getAddonInfo('path').decode('utf-8'))
 SETTINGS_LOC   = REAL_SETTINGS.getAddonInfo('profile').decode('utf-8')
-CLOSE_TIME     = [2,5,10,15,30,60,120][int(REAL_SETTINGS.getSetting('Close_Time'))]
                                                                          
 ## GLOBALS ##
+CLOSE_TIME     = [2,5,10,15,30,60,120][int(REAL_SETTINGS.getSetting('Close_Time'))]
 ID_LIST        = [30100,30200,30300]
 IMG_LIST       = {30101:'TrumpSign_%d.png'  %random.randint(1,4),
                   30201:'TrumpTweet_%d.png' %random.randint(1,5),
@@ -48,7 +48,7 @@ class GUI(xbmcgui.WindowXMLDialog):
         random.seed()
         self.lockAction = True
         select = random.choice(ID_LIST)
-        for id in ID_LIST:
+        for id in ID_LIST: 
             if id != select: self.getControl(id).setVisible(False)
         self.getControl(select + 1).setImage(IMG_LIST[select + 1])
         xpos, ypos = self.getControl(select).getPosition()

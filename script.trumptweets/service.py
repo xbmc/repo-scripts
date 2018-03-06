@@ -51,7 +51,7 @@ def clearProperty(string1, cntrl=10000):
 
 class Monitor(xbmc.Monitor):
     def __init__(self, *args, **kwargs):
-        self.pendingChange = False
+        self.pendingChange = True
 
         
     def onSettingsChanged(self):
@@ -66,15 +66,15 @@ class Service(object):
         
         
     def startService(self):
-        self.checkSettings()
         while not self.myMonitor.abortRequested():
-            # Don't run while pending changes and wait two seconds between each chkfeed.
-            if self.myMonitor.pendingChange == True or self.myMonitor.waitForAbort(2) == True: 
-                log('startService, waitForAbort/pendingChange')
-                continue
-                                
+            if self.myMonitor.pendingChange == True:
+                self.myMonitor.pendingChange = False
+                REAL_SETTINGS = xbmcaddon.Addon(id=ADDON_ID)
+                waitTime   = [300,600,900,1800][int(REAL_SETTINGS.getSetting('Wait_Time'))]
+                ignorePlay = REAL_SETTINGS.getSetting('Not_While_Playing') == 'true'
+            
             # Don't run while playing.
-            if xbmc.Player().isPlayingVideo() == True and self.ignore == True:
+            if xbmc.Player().isPlayingVideo() == True and ignorePlay == True:
                 log('startService, ignore during playback')
                 continue
 
@@ -85,44 +85,23 @@ class Service(object):
         
             self.chkFEED()
             
-            if self.myMonitor.pendingChange == True or self.myMonitor.waitForAbort(self.wait) == True:
+            # Sleep
+            if self.myMonitor.waitForAbort(waitTime) == True:
                 log('startService, waitForAbort/pendingChange')
                 break
-            
-        if self.myMonitor.pendingChange == True:
-            xbmc.executebuiltin("Notification(%s, %s, %d, %s)" % (ADDON_NAME, LANGUAGE(30005), 4000, ICON))
-            self.restartService()
-                
-                
-    def checkSettings(self):
-        self.wait   = [300,600,900,1800][int(REAL_SETTINGS.getSetting('Wait_Time'))]
-        self.ignore = REAL_SETTINGS.getSetting('Not_While_Playing') == 'true'           
-        self.random = int(REAL_SETTINGS.getSetting('Enable_Random')) == 1
-        self.myMonitor.pendingChange = False
-                
-                
-    def restartService(self):
-        log('restartService')
-        #adapted from advised method https://forum.kodi.tv/showthread.php?tid=248758
-        xbmc.sleep(500)
-        xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method":"Addons.SetAddonEnabled","params":{"addonid":"%s","enabled":false}, "id": 1}'%(ADDON_ID))
-        xbmc.sleep(500)
-        xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method":"Addons.SetAddonEnabled","params":{"addonid":"%s","enabled":true}, "id": 1}'%(ADDON_ID))
-                 
+    
 
     def testString(self):
         #gen. 140char mock sentence for skin test
         a = ''
-        for i in range(1,141): a += 'W%s'%random.choice(['',' '])
-        return a[:140]
+        for i in range(1,281): a += 'W%s'%random.choice(['',' '])
+        return a[:280]
         
         
     def correctTime(self, tweetTime):
         log('correctTime, IN tweetTime = '+ tweetTime)
         tweetTime  = datetime.datetime.strptime(tweetTime, '%a, %d %b %Y %H:%M:%S')
-        is_dst     = time.daylight and time.localtime().tm_isdst > 0
-        utc_offset = + (time.altzone if is_dst else time.timezone)
-        td_local   = tweetTime + datetime.timedelta(seconds=utc_offset-3600)
+        td_local   = tweetTime - datetime.timedelta(seconds=3600)
         tweetTime  = td_local.strftime('%a, %d %b %Y %I:%M:%S %p').lstrip('0')
         log('correctTime, OUT tweetTime = '+ tweetTime)
         return tweetTime
@@ -131,12 +110,13 @@ class Service(object):
     def chkFEED(self):
         log('chkFEED')
         try:
-            feed   = feedparser.parse(BASE_FEED)
-            items  = feed['entries']
-            index  = {True:random.randint(0,(len(items)-1)),False:0}[self.random]
-            item   = items[index]
-            title = ((item['title']).replace('\n','').replace('\t','').replace('\r','').rstrip())
-            pdate = self.correctTime(item.get('published','').split('+')[0].rstrip())
+            isRandom = int(REAL_SETTINGS.getSetting('Enable_Random')) == 1
+            feed     = feedparser.parse(BASE_FEED)
+            items    = feed['entries']
+            index    = {True:random.randint(0,(len(items)-1)),False:0}[isRandom]
+            item     = items[index]
+            title    = ((item['title']).replace('\n','').replace('\t','').replace('\r','').rstrip())
+            pdate    = self.correctTime(item.get('published','').split('+')[0].rstrip())
             if getProperty('%s.pdate' %ADDON_ID) == pdate: return
             setProperty('%s.title'%ADDON_ID,title)
             setProperty('%s.pdate'%ADDON_ID,pdate)
