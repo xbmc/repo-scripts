@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.adzapper" name="LiveTV Ad-Zapper" version="1.0.0" provider-name="pOpY">
+	<requires>
+		<import addon="xbmc.python" version="2.25.0"/>
+	</requires>
+	<extension point="xbmc.python.script" library="default.py"/>
+	<extension point="xbmc.service" library="service.py" start="login"/>
+	<extension point="xbmc.addon.metadata">
+		<summary lang="en_GB">Rezap to current channel after some time (advertisment)</summary>
+		<description lang="en_GB">Add advertisment skipping to your Kodi system, allowing the user to define a time to switch back to the current channel. During this time the user can switch channel without thinking to switch back manually.</description>
+		<disclaimer lang="en_GB"></disclaimer>
+		<platform>all</platform>
+		<license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+		<forum>https://forum.kodi.tv/showthread.php?tid=329102</forum>
+		<website>https://forum.kodi.tv/showthread.php?tid=329102</website>
+		<email></email>		
+		<source>https://github.com/popy2k14/repo-scripts/tree/krypton-adzapper</source>
+		<news></news>
+		<assets>
+			<icon>icon.png</icon>
+			<fanart>fanart.jpg</fanart>
+			<screenshot>resources/screenshot-01.jpg</screenshot>
+			<banner>resources/banner.jpg</banner>
+			<clearlogo>resources/logo.png</clearlogo>
+		</assets>
+	</extension>
+</addon>

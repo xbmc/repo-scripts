@@ -1,0 +1,87 @@
+# Kodi Media Center language file
+# Addon Name: LiveTV Ad-Zapper
+# Addon id: script.adzapper
+# Addon Provider: pOpY
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: English (http://www.transifex.com/projects/p/xbmc-addons/language/en/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: de\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "Addon Summary"
+msgid "Rezap to current channel after some time (advertisment)"
+msgstr "Schaltet auf aktuellen Kanal zurück nach Ablauf einer gewissen Zeit (Werbung)"
+
+msgctxt "Addon Description"
+msgid "Add advertisment skipping to your Kodi system, allowing the user to define a time to switch back to the current channel. During this time the user can switch channel without thinking to switch back manually."
+msgstr "Fügt eine einfache Möglichkeit zu Kodi hinzu, um Werbeblöcke zu überspringen. Der Benutzer kann eine Zeit definieren, anch der automatisch auf den aktuellen Kanal zurückgeschaltet wird. So verpasst man das Programm nach dem Werbeblock nicht."
+
+msgctxt "#32001"
+msgid "LiveTV Ad-Zapper"
+msgstr "Werbezapper"
+
+msgctxt "#32002"
+msgid "AD Interval Length (Minutes)"
+msgstr "Werbung Intervall Länge (Minuten)"
+
+msgctxt "#32003"
+msgid "Default AD Time (Minutes)"
+msgstr "Standard Rückschalte Zeit (Minuten)"
+
+msgctxt "#32004"
+msgid "Warning Length (Seconds)"
+msgstr "Warnung anzeigen (Sekunden)"
+
+msgctxt "#32005"
+msgid "Maximum AD Time (Minutes)"
+msgstr "Maximale Rückschalte Zeit"
+
+#empty strings from id 32006 to 32010
+
+msgctxt "#32011"
+msgid "Key mapping"
+msgstr "Tastenzuordnung"
+
+msgctxt "#32012"
+msgid "Use keymap editor addon!"
+msgstr "Bitte Keymap Editor addon benutzen!"
+
+#empty strings from id 32013 to 32020
+
+msgctxt "#32021"
+msgid "Advanced"
+msgstr "Erweitert"
+
+msgctxt "#32022"
+msgid "Debugging"
+msgstr "Debugging"
+
+msgctxt "#32023"
+msgid "Enable debug logging"
+msgstr "Debug logging aktivieren"
+
+#empty strings from id 32024 to 32100
+
+msgctxt "#32101"
+msgid "Rezap to ..."
+msgstr "Schalte zurück..."
+
+msgctxt "#32102"
+msgid "Cancel"
+msgstr "Abbrechen"
+
+msgctxt "#32103"
+msgid "Minutes"
+msgstr "Minuten"
+
+msgctxt "#32104"
+msgid "Disabled"
+msgstr "Deaktiviert"
