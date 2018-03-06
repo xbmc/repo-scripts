@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+    <setting id="Username" type="text"   label="32101" default="" />
+    <setting id="Password" type="text"   label="32102" default=""  option="hidden"/>
+    <setting id="mode" type="enum" label="32000" lvalues="32001|32002" default="0"/>
+    <setting id="random_order" type="bool" label="32103" default="true"/>
+    <setting id="tabledrop_wait" label="32104" visible="eq(-2,0)" type="slider" default="1500" range="500,500,5000" option="int"/>
+    <setting id="appletvlike_speed" label="32303" visible="eq(-3,1)" type="slider" default="1" range="0.5,0.5,8.0" option="float"/>
+    <setting id="appletvlike_concurrency" label="32304" visible="eq(-4,1)" type="slider" default="1" range="0.5,0.25,5.0" option="float"/>
+    
+    <category label="32100">
+        <setting id="USER1"            type="text" label="32101" default="popeyethefoodie"                    />
+        <setting id="USER2"            type="text" label="32101" default=""                visible="!eq(-1,)" />
+        <setting id="USER3"            type="text" label="32101" default=""                visible="!eq(-1,)" />
+        <setting id="USER4"            type="text" label="32101" default=""                visible="!eq(-1,)" />
+        <setting id="USER5"            type="text" label="32101" default=""                visible="!eq(-1,)" />
+        <setting id="USER6"            type="text" label="32101" default=""                visible="!eq(-1,)" />
+        <setting id="USER7"            type="text" label="32101" default=""                visible="!eq(-1,)" />
+        <setting id="USER8"            type="text" label="32101" default=""                visible="!eq(-1,)" />
+        <setting id="USER9"            type="text" label="32101" default=""                visible="!eq(-1,)" />
+        <setting id="USER10"           type="text" label="32101" default=""                visible="!eq(-1,)" />
+    </category>
+</settings>

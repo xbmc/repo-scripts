@@ -1,0 +1,65 @@
+# XBMC Media Center language file
+# Addon Name: Instagram ScreenSaver
+# Addon id: screensaver.instagram
+# Addon Provider: Lunatixz
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To:  \n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: English"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#32100"
+msgid "Instagram's"
+msgstr ""
+
+msgctxt "#32101"
+msgid "Instagram Username"
+msgstr ""
+
+msgctxt "#32102"
+msgid "Instagram Password"
+msgstr ""
+
+msgctxt "#32103"
+msgid "Random Image"
+msgstr ""
+
+msgctxt "#32104"
+msgid "Wait Time"
+msgstr ""
+
+msgctxt "#32000"
+msgid "Screensaver Type"
+msgstr ""
+
+msgctxt "#32001"
+msgid "TableDrop"
+msgstr ""
+
+msgctxt "#32002"
+msgid "AppleTV"
+msgstr ""
+
+msgctxt "#32303"
+msgid "Speed"
+msgstr ""
+
+msgctxt "#32304"
+msgid "Image Concurrency"
+msgstr ""
+
+msgctxt "#32305"
+msgid "%s updating..."
+msgstr ""
+
+msgctxt "#32306"
+msgid "%s update complete"
+msgstr ""
