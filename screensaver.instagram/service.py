@@ -32,15 +32,22 @@ FANART         = REAL_SETTINGS.getAddonInfo('fanart')
 LANGUAGE       = REAL_SETTINGS.getLocalizedString
 
 # Globals
-USERNAME       = REAL_SETTINGS.getSetting('Username')
-PASSWORD       = REAL_SETTINGS.getSetting('Password')
+USERNAME       = (REAL_SETTINGS.getSetting('Username') or None)
+PASSWORD       = (REAL_SETTINGS.getSetting('Password') or None)
 ORIGIN_URL     = 'https://www.instagram.com'
 LOGIN_URL      = ORIGIN_URL + '/accounts/login/ajax/'
 
 def log(msg, level=xbmc.LOGDEBUG):
     xbmc.log(ADDON_ID + '-' + ADDON_VERSION + '-' + msg, level)
     
-    
+def ProgressDialogBG(percent=0, control=None, string1='', header=ADDON_NAME):
+    if percent == 0 and not control:
+        control = xbmcgui.DialogProgressBG()
+        control.create(header, string1)
+    elif percent == 100 and control: return control.close()
+    elif control: control.update(percent, string1)
+    return control
+         
 class Monitor(xbmc.Monitor):
     def __init__(self, *args, **kwargs):
         self.pendingChange = True
@@ -55,7 +62,7 @@ class service(object):
     def __init__(self):
         self.myMonitor = Monitor()
         self.startService()
-        
+            
     
     def startService(self):
         log('startService')
@@ -67,7 +74,9 @@ class service(object):
     def updateJson(self):
         log('updateJson')
         self.myMonitor.pendingChange = False
+        if USERNAME is None: return
         for target_id in self.getTargets(): self.loadImages(target_id)
+        return
         
 
     def getTargets(self):
@@ -79,6 +88,7 @@ class service(object):
         
 
     def loadImages(self, target_id):
+        log('loadImages, target_id = ' + target_id)
         # now = datetime.datetime.now()
         # todo parse datetime rebuild outdated images
         filename = xbmc.translatePath(os.path.join(SETTINGS_LOC,'%s.json'%(target_id)))
@@ -87,12 +97,13 @@ class service(object):
         
         
     def updateImages(self, target_id, filename):
+        count         = 0
         json_results  = []
         pics_url_list = []
         pics_url_date = datetime.datetime.now()
         instagram_parser = instagram(target_id)
         target_url = ORIGIN_URL + '/' + target_id +'/?__a=1'
-        xbmcgui.Dialog().notification(ADDON_NAME, LANGUAGE(32305)%(target_id), ICON, 4000)
+        progressBG = ProgressDialogBG(0, string1=LANGUAGE(32305)%(target_id))
         req = instagram_parser.session.get(target_url)
         try: req.raise_for_status()
         except Exception as exc:
@@ -105,19 +116,23 @@ class service(object):
         #we have to get the end_cursor and redirect to get the next 12 posts,
         #keep redirecting until number of posts is less than 12
         while(not_last):
-            pics_url_list.extend(instagram_parser.handle_12_posts(data, ORIGIN_URL, target_id))
-            end_cursor = instagram_parser.get_end_cursor(data)
-            target_url = instagram_parser.refresh_url(ORIGIN_URL, target_id, end_cursor)
-            try: data = instagram_parser.session.get(target_url).json()
-            except Exception('Session Closed'): pass
-            if(len(data['user']['media']['nodes']) < 12): break
-            self.myMonitor.waitForAbort(2)
+            try:
+                count += .1
+                ProgressDialogBG(int(count * 100 // 100), progressBG)
+                pics_url_list.extend(instagram_parser.handle_12_posts(data, ORIGIN_URL, target_id))
+                end_cursor = instagram_parser.get_end_cursor(data)
+                target_url = instagram_parser.refresh_url(ORIGIN_URL, target_id, end_cursor)
+                data = instagram_parser.session.get(target_url).json()
+                if(len(data['user']['media']['nodes']) < 12): break
+                self.myMonitor.waitForAbort(2)
+            except Exception('Session Closed'): break
 
         # Last posts
+        ProgressDialogBG(95, progressBG)
         pics_url_list.extend(instagram_parser.handle_12_posts(data, ORIGIN_URL, target_id))
+        ProgressDialogBG(100, string1=LANGUAGE(32306)%(target_id))
         for idx, url in enumerate( pics_url_list): json_results.append({'idx': idx, 'image': url, 'updated':str(pics_url_date)})
         if len(json_results) == 0: return
-        xbmcgui.Dialog().notification(ADDON_NAME, LANGUAGE(32306)%(target_id), ICON, 4000)
         return self.writeJson(filename, json_results)
             
     
@@ -150,7 +165,8 @@ class instagram(object):
         except Exception as exc:
             log('problem occur: %s' % (exc))
             exit()
-
+        
+        if USERNAME is None or PASSWORD is None: return
         self.session.headers.update({'X-CSRFToken': req.cookies['csrftoken']})
         login_data = {'username': USERNAME, 'password': PASSWORD}
         login = self.session.post(LOGIN_URL, data=login_data, allow_redirects=True)

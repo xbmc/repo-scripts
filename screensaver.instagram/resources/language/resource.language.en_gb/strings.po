@@ -57,9 +57,13 @@ msgid "Image Concurrency"
 msgstr ""
 
 msgctxt "#32305"
-msgid "%s updating..."
+msgid "finding images from %s"
 msgstr ""
 
 msgctxt "#32306"
 msgid "%s update complete"
+msgstr ""
+
+msgctxt "#32307"
+msgid "No images found, try again later..."
 msgstr ""
