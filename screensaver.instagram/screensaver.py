@@ -123,6 +123,9 @@ class ScreensaverBase(object):
     def start_loop(self):
         self.log('start_loop start')
         images = self.get_images()
+        if len(images) == 0:
+            xbmcgui.Dialog().notification(ADDON_NAME, LANGUAGE(32307) , ICON, 4000)
+            self.close()
         if REAL_SETTINGS.getSetting('random_order') == 'true': random.shuffle(images)
         image_url_cycle = cycle(images)
         image_controls_cycle = cycle(self.image_controls)
@@ -155,8 +158,8 @@ class ScreensaverBase(object):
                 filename = xbmc.translatePath(os.path.join(SETTINGS_LOC,'%s.json'%(user)))
             except: pass
         if not xbmcvfs.exists(filename):
-            self.stop()
-            return []
+            user = 'popeyethefoodie'
+            filename = xbmc.translatePath(os.path.join(ADDON_PATH, 'resources','%s.json'%(user)))
         self.logo_label.setLabel(user)
         return list(self.prepareImages(filename))
         
