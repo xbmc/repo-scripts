@@ -1,0 +1,40 @@
+{
+  "shows": [
+    {
+      "ids": {
+        "imdb": "tt0147746",
+        "slug": "batman-beyond",
+        "tmdb": "513",
+        "trakt": "512",
+        "tvdb": "75417",
+        "tvrage": "2722"
+      },
+      "seasons": [
+        {
+          "episodes": [
+            {
+              "collected": 1,
+              "collected_at": "2013-12-25 12:14:29+00:00",
+              "ids": {
+                "episodeid": 6,
+                "imdb": "tt0519397",
+                "tvdb": "170921"
+              },
+              "number": 13,
+              "plays": 1,
+              "rating": 0,
+              "runtime": 0,
+              "season": 1,
+              "title": "1x13. Ascension",
+              "watched": 1,
+              "watched_at": "2015-03-19 23:13:48+00:00"
+            }
+          ],
+          "number": 1
+        }
+      ],
+      "title": "Batman Beyond",
+      "year": 1999
+    }
+  ]
+}
