@@ -1,0 +1,20 @@
+[B]Version 1.3.0[/B]
+- Added compatibility with Python 3.
+[B]Version 1.2.0[/B]
+- Added Estuary-based window skin (default starting from Kodi 17.0).
+- Fixed broken Blank* classes.
+[B]Version 1.1.7[/B]
+- Minor code refactoring
+[B]Version 1.1.6[/B]
+- Minor code refactoring
+[B]Version 1.1.5[/B]
+- Added package-level imports.
+- Changed doctsrings to Sphinx-compatible
+- Private methods now start with _
+[B]Version 1.1.4[/B]
+- Added the action code for mouse click.
+- Removed unused import.
+[B]Version 1.1.3[/B]
+- Updated addon.xml
+[B]Version 1.1.2[/B]
+- Initial release in the XBMC repo.
