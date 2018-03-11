@@ -34,12 +34,12 @@ class Downloader:
 
     def downloadall(self,urllist):
         self.dp = xbmcgui.DialogProgress()
-        self.dp.create(translate(32000),translate(32019))
+        self.dp.create(translate(32000), translate(32019))
         # video checksums - download only the videos that were not downloaded previously
         if addon.getSetting("enable-checksums") == "true":
-            with open(os.path.join(addon_path,"resources","checksums.json")) as f:
+            with open(os.path.join(addon_path, "resources", "checksums.json")) as f:
                 checksums = f.read()
-        
+
             checksums = json.loads(checksums)
 
         for url in urllist:
@@ -52,14 +52,15 @@ class Downloader:
                         f = xbmcvfs.File(xbmc.translatePath(localfile))
                         file_checksum = hashlib.md5(f.read()).hexdigest()
                         f.close()
-                
+
                         if video_file in checksums.keys() and checksums[video_file] != file_checksum:
-                           self.download(localfile,url,url.split("/")[-1])
+                            self.download(localfile,url,url.split("/")[-1])
                     else:
                         self.download(localfile,url,url.split("/")[-1])
                 else:
                     self.download(localfile,url,url.split("/")[-1])
-            else: break
+            else:
+                break
 
     def download(self,path,url,name):
         if xbmcvfs.exists(path):
@@ -78,7 +79,7 @@ class Downloader:
         block_sz = 8192
         if meta_length:
             file_size = int(meta_length[0])
-        
+
         file_size_dl = 0
         f = xbmcvfs.File(self.path, 'wb')
         numblocks = 0
@@ -91,7 +92,7 @@ class Downloader:
             f.write(buffer)
             file_size_dl += len(buffer)
             numblocks += 1
-            self.dialogdown(name,numblocks,block_sz,file_size,self.dp,start_time)
+            self.dialogdown(name, numblocks, block_sz, file_size, self.dp, start_time)
 
         f.close()
         return
@@ -99,27 +100,27 @@ class Downloader:
     def dialogdown(self, name, numblocks, blocksize, filesize, dp, start_time):
         try:
             percent = min(numblocks * blocksize * 100 / filesize, 100)
-            currently_downloaded = float(numblocks) * blocksize / (1024 * 1024) 
-            kbps_speed = numblocks * blocksize / (time.time() - start_time) 
+            currently_downloaded = float(numblocks) * blocksize / (1024 * 1024)
+            kbps_speed = numblocks * blocksize / (time.time() - start_time)
             if kbps_speed > 0:
                 eta = (filesize - numblocks * blocksize) / kbps_speed
             else:
                 eta = 0
-            kbps_speed = kbps_speed / 1024 
-            total = float(filesize) / (1024 * 1024) 
-            mbs = '%.02f MB %s %.02f MB' % (currently_downloaded,translate(32015), total) 
-            e = ' (%.0f Kb/s) ' % kbps_speed 
-            tempo = translate(32016) + ' %02d:%02d' % divmod(eta, 60) 
+            kbps_speed = kbps_speed / 1024
+            total = float(filesize) / (1024 * 1024)
+            mbs = '%.02f MB %s %.02f MB' % (currently_downloaded, translate(32015), total)
+            e = ' (%.0f Kb/s) ' % kbps_speed
+            tempo = translate(32016) + ' %02d:%02d' % divmod(eta, 60)
             dp.update(percent, name + ' - ' + mbs + e, tempo)
-        except: 
-            percent = 100 
-            dp.update(percent) 
+        except Exception:
+            percent = 100
+            dp.update(percent)
 
         if dp.iscanceled():
             self.stop = True
             dp.close()
             try:
                 xbmcvfs.delete(self.path)
-            except:
+            except Exception:
                 xbmc.log(msg='[Aerial ScreenSavers] Could not remove file', level=xbmc.LOGERROR)
             xbmc.log(msg='[Aerial ScreenSavers] Download canceled', level=xbmc.LOGDEBUG)

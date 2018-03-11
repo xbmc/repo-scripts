@@ -55,7 +55,6 @@ class ScreensaverPreview(xbmcgui.WindowXMLDialog):
         self.runAddon()
 
 
-
 def run():
     if not xbmc.getCondVisibility("Player.HasMedia"):
         if addon.getSetting("is_locked") == "false":
@@ -63,7 +62,7 @@ def run():
                 notification(translate(32000), translate(32017))
 
             if addon.getSetting("show-previewwindow") == "true":
-                #Start window
+                # Start window
                 screensaver = ScreensaverPreview(
                     'screensaver-atv4.xml',
                     addon_path,
@@ -74,11 +73,11 @@ def run():
                 xbmc.sleep(100)
                 del screensaver
             else:
-                monitor = ScreensaverPreview.ExitMonitor(ScreensaverPreview.runAddon())
+                ScreensaverPreview.ExitMonitor(ScreensaverPreview.runAddon())
                 ScreensaverPreview.send_input()
 
         else:
-            #Transparent placeholder
+            # Transparent placeholder
             trans = ScreensaverTrans(
                 'screensaver-atv4-trans.xml',
                 addon_path,

@@ -29,6 +29,7 @@
 	</category>
 	<category label="32009">
 		<setting id="download-folder" type="folder" label="32010"/>
+		<setting id="refuse-stream" type="bool" label="32043" default="false" />
 		<setting id="enable-checksums" type="bool" label="32030" default="true" />
 		<setting type="action" label="32011" action="RunAddon(screensaver.atv4,offline)" />
 	</category>

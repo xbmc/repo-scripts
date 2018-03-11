@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
+
 """
     screensaver.atv4
-    Copyright (C) 2015-2017 enen92
+    Copyright (C) 2015-2018 enen92
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -17,16 +18,16 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 
+import os
 import xbmcaddon
 import xbmcgui
-import os
 
 addon = xbmcaddon.Addon()
 addon_path = addon.getAddonInfo('path')
 dialog = xbmcgui.Dialog()
 
 applefeed = "http://a1.phobos.apple.com/us/r1000/000/Features/atv/AutumnResources/videos/entries.json"
-applelocalfeed = os.path.join(addon_path,"resources","entries.json")
+applelocalfeed = os.path.join(addon_path, "resources", "entries.json")
 places = ["All", "London", "Hawaii", "New York City", "San Francisco",
           "China", "Greenland", "Dubai", "Los Angeles", "Liwa", "Hong Kong"]
 
@@ -35,5 +36,6 @@ def translate(text):
     return addon.getLocalizedString(text).encode('utf-8')
 
 
-def notification(header, message, time=2000, icon=addon.getAddonInfo('icon'), sound=True):
+def notification(header, message, time=2000, icon=addon.getAddonInfo('icon'),
+                 sound=True):
     xbmcgui.Dialog().notification(header, message, icon, time, sound)

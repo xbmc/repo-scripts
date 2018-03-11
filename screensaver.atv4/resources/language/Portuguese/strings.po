@@ -185,3 +185,7 @@ msgstr "Parar Video"
 msgctxt "#32042"
 msgid "Show preview window"
 msgstr "Mostrar janela de pre-visualização"
+
+msgctxt "#32043"
+msgid "Use local files only (avoid external requests)"
+msgstr "Usar apenas ficheiros locais (evitar pedidos externos)"

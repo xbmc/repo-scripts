@@ -1,7 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <window type="window">
     <controls>
-
+    	<control type="image">
+            <description>blackbackground</description>
+            <posx>0</posx>
+            <posy>0</posy>
+            <colordiffuse>FF555555</colordiffuse>
+            <aspectratio scalediffuse="false" align="center" aligny="center">scale</aspectratio>
+            <width>1920</width>
+            <height>1080</height>
+            <texture>black.jpg</texture>
+        </control>
         <control type="image" id="32500">
             <description>Background image</description>
             <posx>0</posx>
@@ -11,7 +20,7 @@
             <width>1920</width>
             <height>1080</height>
             <texture>sanfrancisco.jpg</texture>
-            <visible>!IsEmpty(Window.Property(screensaver-atv4-loading))</visible>
+            <visible>!String.IsEqual(Window.Property(screensaver-atv4-loading),"false")</visible>
         </control>
 		<control type="image" id ="32501">
 				<description>Busy animation</description>
@@ -22,7 +31,7 @@
 				<texture>busy.png</texture>
 				<aspectratio>keep</aspectratio>
 				<animation effect="rotate" start="0" end="360" center="55,1015" time="1200" loop="true" condition="true">conditional</animation>
-				<visible>!IsEmpty(Window.Property(screensaver-atv4-loading))</visible>
+				<visible>!String.IsEqual(Window.Property(screensaver-atv4-loading),"false")</visible>
 			</control>
 		<control type="label" id ="32502">
 				<top>975</top>
@@ -34,7 +43,7 @@
 				<aligny>center</aligny>
 				<align>left</align>
 				<label></label>
-				<visible>!IsEmpty(Window.Property(screensaver-atv4-loading))</visible>
+				<visible>!String.IsEqual(Window.Property(screensaver-atv4-loading),"false")</visible>
 		</control>
 		<control type="label" id="32503">
 				<top>975</top>

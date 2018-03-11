@@ -22,7 +22,7 @@ from commonatv import addon
 
 
 class ScreensaverTrans(xbmcgui.WindowXMLDialog):
-    
+
     class ExitMonitor(xbmc.Monitor):
 
         def __init__(self, activated_callback):
@@ -38,5 +38,5 @@ class ScreensaverTrans(xbmcgui.WindowXMLDialog):
         addon.setSetting("is_locked", "false")
         self.close()
 
-    def onAction(self,action):
+    def onAction(self, action):
         self.exit()
