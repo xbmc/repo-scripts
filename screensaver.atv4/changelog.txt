@@ -1,18 +1,24 @@
-v1.4.2  (11/08/2017) [CR]
-- Code refactoring [CR]
-- Fix screensaver starting on party mode [CR]
-- Add option to start the screensaver without the preview window [CR]
+v1.5.0  (11/03/2018)
+- Code refactoring
+- Remove playlist and control it manually (avoid setting repeat modes)
+- Option to avoid streaming (use only local files)
+- Fixes for Leia
 
-v1.4.1  (4/7/2017) [CR]
-- Fix wrong setting [CR]
+v1.4.2  (11/08/2017) 
+- Code refactoring 
+- Fix screensaver starting on party mode 
+- Add option to start the screensaver without the preview window 
+
+v1.4.1  (4/7/2017) 
+- Fix wrong setting 
 
 v1.4.0  (11/2/2017) (thanks graysky2)
-- Improve DPMS logic [CR]
-- New settings for DPMS  [CR]
-- Fix windows [CR]
-- Video part turned into video addon [CR]
-- New screensaver init logic [CR]
-- Added service [CR]
+- Improve DPMS logic 
+- New settings for DPMS  
+- Fix windows 
+- Video part turned into video addon 
+- New screensaver init logic 
+- Added service 
 
 v1.3.4 - (18/1/2017)
 -New initialization logic - screensaver/script

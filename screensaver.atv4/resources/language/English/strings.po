@@ -186,3 +186,7 @@ msgctxt "#32042"
 msgid "Show preview window"
 msgstr ""
 
+msgctxt "#32043"
+msgid "Use local files only (avoid external requests)"
+msgstr ""
+
