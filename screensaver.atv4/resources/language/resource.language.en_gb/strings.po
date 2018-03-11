@@ -1,0 +1,192 @@
+# Kodi Media Center language file
+# Addon Name: Screensaver ATV4
+# Addon id: screensaver.atv4
+# Addon Provider: enen92
+msgid ""
+msgstr ""
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#settings labels
+
+msgctxt "#32000"
+msgid "Aerial Screensavers"
+msgstr ""
+
+msgctxt "#32001"
+msgid "Enable Hawaai"
+msgstr ""
+
+msgctxt "#32002"
+msgid "Enable London"
+msgstr ""
+
+msgctxt "#32003"
+msgid "Enable New York"
+msgstr ""
+
+msgctxt "#32004"
+msgid "Enable San Francisco"
+msgstr ""
+
+msgctxt "#32005"
+msgid "Enable China"
+msgstr ""
+
+msgctxt "#32006"
+msgid "Time of day for videos"
+msgstr ""
+
+msgctxt "#32007"
+msgid "No videos that match your criteria have been found"
+msgstr ""
+
+msgctxt "#32008"
+msgid "Getting video list..."
+msgstr ""
+
+msgctxt "#32009"
+msgid "Offline mode"
+msgstr ""
+
+msgctxt "#32010"
+msgid "Download folder"
+msgstr ""
+
+msgctxt "#32011"
+msgid "Download Videos"
+msgstr ""
+
+msgctxt "#32012"
+msgid "No videos found"
+msgstr ""
+
+msgctxt "#32013"
+msgid "You need to define a download folder."
+msgstr ""
+
+msgctxt "#32014"
+msgid "Choose locations to download videos for:"
+msgstr ""
+
+msgctxt "#32015"
+msgid "downloaded"
+msgstr ""
+
+msgctxt "#32016"
+msgid "Time left:"
+msgstr ""
+
+msgctxt "#32017"
+msgid "Instantiated. Please wait..."
+msgstr ""
+
+msgctxt "#32018"
+msgid "Show start notification"
+msgstr ""
+
+msgctxt "#32019"
+msgid "Checking which videos to download..."
+msgstr ""
+
+msgctxt "#32020"
+msgid "Enable Greenland"
+msgstr ""
+
+msgctxt "#32021"
+msgid "Enable Dubai"
+msgstr ""
+
+msgctxt "#32022"
+msgid "Enable Los Angeles"
+msgstr ""
+
+msgctxt "#32023"
+msgid "Enable Liwa"
+msgstr ""
+
+msgctxt "#32024"
+msgid "Enable Hong Kong"
+msgstr ""
+
+msgctxt "#32025"
+msgid "Initializing..."
+msgstr ""
+
+msgctxt "#32026"
+msgid "DPMS*"
+msgstr ""
+
+msgctxt "#32027"
+msgid "DPMS"
+msgstr ""
+
+msgctxt "#32028"
+msgid "Toggle display off"
+msgstr ""
+
+msgctxt "#32029"
+msgid "Put playing device on standby via a CEC"
+msgstr ""
+
+msgctxt "#32030"
+msgid "Disable checksum verification"
+msgstr ""
+
+msgctxt "#32031"
+msgid "Videos"
+msgstr ""
+
+msgctxt "#32032"
+msgid "General Settings"
+msgstr ""
+
+msgctxt "#32033"
+msgid "* DPMS will check for the Power Saving Kodi settings and stop the screensaver"
+msgstr ""
+
+msgctxt "#32034"
+msgid "if the maximum allowed time to put the display to sleep is exceeded"
+msgstr ""
+
+msgctxt "#32035"
+msgid "Off"
+msgstr ""
+
+msgctxt "#32036"
+msgid "Kodi"
+msgstr ""
+
+msgctxt "#32037"
+msgid "Manual"
+msgstr ""
+
+msgctxt "#32038"
+msgid "Manual timeout to activate DPMS (min)"
+msgstr ""
+
+msgctxt "#32039"
+msgid "DPMS action"
+msgstr ""
+
+msgctxt "#32040"
+msgid "Pause Video"
+msgstr ""
+
+msgctxt "#32041"
+msgid "Stop Video"
+msgstr ""
+
+msgctxt "#32042"
+msgid "Show preview window"
+msgstr ""
+
+msgctxt "#32043"
+msgid "Use local files only (avoid external requests)"
+msgstr ""
+
