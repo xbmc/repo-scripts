@@ -1,0 +1,4 @@
+[B]Version 3.8.0[/B]
+
+- tinydb 3.8.0
+
