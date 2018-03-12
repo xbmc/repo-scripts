@@ -1,0 +1,2 @@
+0.5.5
+- Pack babelfish 0.5.5 for Kodi 17.x Krypton (API 2.25.0) and later (Python >= 2.7)
