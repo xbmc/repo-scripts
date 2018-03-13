@@ -25,6 +25,29 @@ SELECT_PLAYBACK_ITEM = 25006
 NO_DATA = 33077
 
 
+def validate_listitems(raw_listitems):
+    """
+    Check if listitems are valid
+
+    :return: Listitems as a list.
+    :rtype: list
+    """
+
+    # Convert a generator of listitem into a list of listitems
+    if inspect.isgenerator(raw_listitems):
+        raw_listitems = list(raw_listitems)
+
+    # If raw_listitems is False then, that was deliberate, so return False
+    if raw_listitems is False or (raw_listitems and isinstance(raw_listitems, list) and raw_listitems[0] is False):
+        return False
+
+    # Checks if raw_listitems is None or an empty list
+    elif not raw_listitems:
+        raise RuntimeError("No items found")
+    else:
+        return raw_listitems
+
+
 class Route(Script):
     """
     This class is used to create Route callbacks. Route callbacks, are callbacks that
@@ -53,6 +76,8 @@ class Route(Script):
     def __init__(self):
         super(Route, self).__init__()
         self.update_listing = self.params.get(u"_updatelisting_", False)
+        self.category = re.sub(u"\(\d+\)$", u"", self._title).strip()
+        self.cache_to_disc = False
         self._manual_sort = set()
         self.content_type = None
         self.autosort = True
@@ -69,28 +94,20 @@ class Route(Script):
 
     def __add_listitems(self, raw_listitems):
         """Handle the processing of the listitems."""
-        # Convert listitem to list incase we have a generator
-        if inspect.isgenerator(raw_listitems):
-            raw_listitems = list(raw_listitems)
-
-        # If raw_listitems is False then, that was deliberate, so return False
+        raw_listitems = validate_listitems(raw_listitems)
         if raw_listitems is False:
             return False
-
-        # Check if raw_listitems is None or an empty list
-        elif not raw_listitems:
-            raise RuntimeError("No items found")
 
         # Create a new list containing tuples, consisting of path, listitem, isfolder.
         listitems = []
         folder_counter = 0.0
         mediatypes = defaultdict(int)
         for listitem in raw_listitems:
-            if listitem:
+            if listitem:  # pragma: no branch
                 # noinspection PyProtectedMember
                 listitem_tuple = listitem._close()
                 listitems.append(listitem_tuple)
-                if listitem_tuple[2]:
+                if listitem_tuple[2]:  # pragma: no branch
                     folder_counter += 1
 
                 if "mediatype" in listitem.info:
@@ -114,7 +131,7 @@ class Route(Script):
                 # Sort mediatypes by there count, and return the highest count mediatype
                 mediatype = sorted(mediatypes.items(), key=itemgetter(1))[-1][0]
             else:
-                mediatype = list(mediatypes.keys())[0]
+                mediatype = mediatypes.popitem()[0]
 
             # Convert mediatype to a content_type, not all mediatypes can be converted directly
             if mediatype in ("video", "movie", "tvshow", "episode", "musicvideo", "song", "album", "artist"):
@@ -126,7 +143,7 @@ class Route(Script):
         logger.debug("Content-type: %s", content_type)
 
         # Sets the category for skins to display modes.
-        xbmcplugin.setPluginCategory(self.handle, ensure_native_str(re.sub(u"\(\d+\)$", u"", self._title).strip()))
+        xbmcplugin.setPluginCategory(self.handle, ensure_native_str(self.category))
 
         # Add sort methods only if not a folder(Video listing)
         if not isfolder:
@@ -148,7 +165,7 @@ class Route(Script):
 
     def __end_directory(self, success):
         """Mark the end of directory listings."""
-        xbmcplugin.endOfDirectory(self.handle, success, self.update_listing, False)
+        xbmcplugin.endOfDirectory(self.handle, success, self.update_listing, self.cache_to_disc)
 
     def add_sort_methods(self, *methods):
         """

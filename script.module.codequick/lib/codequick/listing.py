@@ -90,34 +90,13 @@ class Params(MutableMapping):
         self.raw_dict = {}
 
     def __getitem__(self, key):
-        """
-        Return the item from dictionary with given key. Raises a KeyError if key is not in the map.
-
-        .. note:: All string values will be converted to unicode when returned.
-
-        :param str key: The key required for requested value.
-        :return: The saved value.
-        :raise KeyError: If key is not in the dictionary.
-        """
         value = self.raw_dict[key]
         return value.decode("utf8") if isinstance(value, bytes) else value
 
     def __setitem__(self, key, value):
-        """
-        Add a value to dictionary with given key.
-
-        :param str key: The name to set.
-        :param value: The value to add to key.
-        """
         self.raw_dict[key] = value
 
     def __delitem__(self, key):
-        """
-        Remove key from dictionary.
-
-        :param str key: The key to remove from dictionary.
-        :raises KeyError: If key is not in the dictionary.
-        """
         del self.raw_dict[key]
 
     def __contains__(self, key):
@@ -200,9 +179,9 @@ class Art(Params):
         self.raw_dict["thumb"] = global_image.format(image)
 
     def _close(self):
-        if fanart and "fanart" not in self.raw_dict:
+        if fanart and "fanart" not in self.raw_dict:  # pragma: no branch
             self.raw_dict["fanart"] = fanart
-        if "thumb" not in self.raw_dict:
+        if "thumb" not in self.raw_dict:  # pragma: no branch
             self.raw_dict["thumb"] = icon
         self._listitem.setArt(self.raw_dict)
 
@@ -218,8 +197,8 @@ class Info(Params):
     For the most part, this conversion will be done automatically.
 
     Example of what would happen is.
-        * 'duration' would be converted to ``int`` and 'SORT_METHOD_VIDEO_RUNTIME' sort method will be selected.
-        * 'size' would be converted to ``long`` and 'SORT_METHOD_SIZE' sort method will be selected.
+        * 'duration' would be converted to ``int`` and 'SORT_METHOD_VIDEO_RUNTIME' sort method would be selected.
+        * 'size' would be converted to ``long`` and 'SORT_METHOD_SIZE' sort method would be selected.
 
     .. seealso:: The full list of listitem infoLabels can be found at.\n
         https://codedocs.xyz/xbmc/xbmc/group__python__xbmcgui__listitem.html#ga0b71166869bda87ad744942888fb5f14
@@ -284,16 +263,17 @@ class Info(Params):
         :type date: str or unicode
         :param str date_format: The format of the date as a strftime directive e.g. 'june 27, 2017' => '%B %d, %Y'
         
-        .. seealso:: The List of date formats can be found at.\n
-                    https://docs.python.org/2/library/time.html#time.strftime
+        .. seealso:: The full list of directives can be found at.
+
+                    https://docs.python.org/3.6/library/time.html#time.strftime
 
         :example:
             >>> item = Listitem()
             >>> item.info.date('june 27, 2017', '%B %d, %Y')
         """
         converted_date = strptime(ensure_native_str(date), date_format)
-        self.raw_dict["date"] = strftime("%d.%m.%Y", converted_date)  # 01.01.2017
-        self.raw_dict["aired"] = strftime("%Y-%m-%d", converted_date)  # 2017-01-01
+        self.raw_dict["date"] = strftime("%d.%m.%Y", converted_date)  # 27.06.2017
+        self.raw_dict["aired"] = strftime("%Y-%m-%d", converted_date)  # 2017-06-27
         self.raw_dict["year"] = strftime("%Y", converted_date)  # 2017
         auto_sort_add(xbmcplugin.SORT_METHOD_VIDEO_YEAR)
         auto_sort_add(xbmcplugin.SORT_METHOD_DATE)
@@ -309,6 +289,7 @@ class Info(Params):
         :rtype: int
         """
         if isinstance(duration, (str, unicode_type)):
+            duration = duration.strip(";").strip(":")
             if ":" in duration or ";" in duration:
                 # Split Time By Marker and Convert to Integer
                 time_parts = duration.replace(";", ":").split(":")
@@ -342,7 +323,7 @@ class Property(Params):
             logger.debug("Ignoring empty property: '%s'", key)
 
     def _close(self):
-        for key, value in self.raw_dict:
+        for key, value in self.raw_dict.items():
             self._listitem.setProperty(key, value)
 
 
@@ -351,14 +332,14 @@ class Stream(Params):
     Dictionary like object that allows you to add stream details. e.g. video_codec, audio_codec.
 
     Expected stream values are.
-        * video_codec        - string (h264)
+        * video_codec        - str (h264)
         * aspect             - float (1.78)
         * width              - integer (1280)
         * height             - integer (720)
         * channels           - integer (2)
-        * audio_codec        - string (AAC)
-        * audio_language     - string (en)
-        * subtitle_language  - string (en)
+        * audio_codec        - str (AAC)
+        * audio_language     - str (en)
+        * subtitle_language  - str (en)
 
     Type convertion will be done automatically so manual convertion is not required.
 
@@ -375,7 +356,7 @@ class Stream(Params):
         self._listitem = listitem
 
     def __setitem__(self, key, value):
-        if value is None:
+        if not value:
             logger.debug("Ignoring empty stream detail value for: '%s'", key)
             return None
 
@@ -394,7 +375,7 @@ class Stream(Params):
         Convenient method to set required stream info to show SD/HD/4K logos.
 
         The values witch are set are 'width', 'height' and 'aspect'.
-        When no aspect ratio is given, then a ratio of '1.78'(16:9) is set when the quality is HD or greater.
+        If no aspect ratio is given, then a ratio of '1.78'(16:9) is set when the quality is 720p or greater.
 
         Quality options are.
             * 0 = 480p
@@ -402,7 +383,8 @@ class Stream(Params):
             * 2 = 1080p
             * 3 = 4K.
 
-        :param int quality: Quality of the stream.
+        :type quality: int or None
+        :param quality: Quality of the stream.
         :param float aspect: [opt] The aspect ratio of the video.
 
         :example:
@@ -444,7 +426,7 @@ class Stream(Params):
                 raise KeyError("unknown stream detail key: '{}'".format(key))
 
         # Now we are ready to send the stream info to kodi
-        if audio:
+        if audio:  # pragma: no branch
             self._listitem.addStreamInfo("audio", audio)
         if video:
             self._listitem.addStreamInfo("video", video)
@@ -454,9 +436,11 @@ class Stream(Params):
 
 class Context(list):
     """
-    This class inherits all methods from the build-in data type :class:`list`.
+    Adds item(s) to the context menu of the listitem.
 
-    This is a list containing tuples consisting of label/function pairs.
+    This is a list containing tuples consisting of label/command pairs.
+
+    This class inherits all methods from the build-in data type :class:`list`.
 
     .. seealso:: The full list of built-in functions can be found at.\n
                  http://kodi.wiki/view/List_of_Built_In_Functions
@@ -466,26 +450,52 @@ class Context(list):
         super(Context, self).__init__()
         self._listitem = listitem
 
-    def related(self, callback, **query):
+    def related(self, callback, *args, **kwargs):
         """
         Convenient method to add a related videos context menu item.
 
-        All this really does is set the label of the menu item for you.
+        All this really does is call context.container and sets label for you.
         
         :param callback: The function that will be called when menu item is activated.
-        :param query: [opt] Keyword arguments that will be passed on to callback function.
+        :param args: [opt] Positional arguments that will be passed to callback.
+        :param kwargs: [opt] Keyword arguments that will be passed on to callback function.
         """
-        self.container(Script.localize(RELATED_VIDEOS), callback, **query)
+        self.container(callback, Script.localize(RELATED_VIDEOS), *args, **kwargs)
 
-    def container(self, label, callback, **query):
+    def container(self, callback, label, *args, **kwargs):
         """
-        Convenient method to add a context menu item.
+        Convenient method to add a context menu item that links to a container.
 
-        :param label: The label of the context menu item.
+        :type label: str or unicode
         :param callback: The function that will be called when menu item is activated.
-        :param query: [opt] Keyword arguments that will be passed on to callback function.
+        :param label: The label of the context menu item.
+        :param args: [opt] Positional arguments that will be passed to callback.
+        :param kwargs: [opt] Keyword arguments that will be passed on to callback function.
         """
-        command = "XBMC.Container.Update(%s)" % build_path(callback.route.path, query)
+        if args:
+            # Convert positional arguments to keyword arguments
+            args_map = callback.route.args_to_kwargs(args)
+            kwargs.update(args_map)
+
+        command = "XBMC.Container.Update(%s)" % build_path(callback.route.path, kwargs)
+        self.append((label, command))
+
+    def script(self, callback, label, *args, **kwargs):
+        """
+        Convenient method to add a context menu item that links to a script.
+
+        :param callback: The function that will be called when menu item is activated.
+        :type label: str or unicode
+        :param label: The label of the context menu item.
+        :param args: [opt] Positional arguments that will be passed to callback.
+        :param kwargs: [opt] Keyword arguments that will be passed on to callback function.
+        """
+        if args:
+            # Convert positional arguments to keyword arguments
+            args_map = callback.route.args_to_kwargs(args)
+            kwargs.update(args_map)
+
+        command = "XBMC.RunPlugin(%s)" % build_path(callback.route.path, kwargs)
         self.append((label, command))
 
     def _close(self):
@@ -501,8 +511,8 @@ class Listitem(object):
     """
 
     def __init__(self, content_type="video"):
-        self.content_type = content_type
-        self.callback = ""
+        self._content_type = content_type
+        self.path = ""
 
         #: The underlining kodi listitem object, for advanced use.
         self.listitem = listitem = xbmcgui.ListItem()
@@ -558,9 +568,6 @@ class Listitem(object):
         """
         The listitem label property.
 
-        .. seealso:: A full list of label formating options can be found at.\n
-                     http://kodi.wiki/view/Label_Formatting
-
         :example:
             >>> item = Listitem()
             >>> item.label = "Video Title"
@@ -569,7 +576,6 @@ class Listitem(object):
 
     @label.setter
     def label(self, label):
-        """Sets the listitem's label."""
         self.listitem.setLabel(label)
         unformatted_label = strip_formatting("", label)
         self.params["_title_"] = unformatted_label
@@ -579,10 +585,10 @@ class Listitem(object):
         """
         Set the callback object.
 
-        The callback object can be any registered Route/Resolver callback function or class.
-        Or callback can be a playable url.
+        The callback object can be any registered Script/Route/Resolver callback
+        or playable url.
 
-        :param callback: The function to callback or a playable url.
+        :param callback: The callback or playable url.
         :param args: Positional arguments that will be passed to callback.
         :param kwargs: Keyword arguments that will be passed to callback.
         """
@@ -591,35 +597,38 @@ class Listitem(object):
             args_map = callback.route.args_to_kwargs(args)
             kwargs.update(args_map)
 
-        self.callback = callback
-        self.params.update(kwargs)
+        self.path = callback
+        if kwargs:
+            self.params.update(kwargs)
 
     # noinspection PyProtectedMember
     def _close(self):
-        callback = self.callback
+        callback = self.path
         if hasattr(callback, "route"):
             self.listitem.setProperty("isplayable", str(callback.route.is_playable).lower())
             self.listitem.setProperty("folder", str(callback.route.is_folder).lower())
             path = build_path(callback.route.path, self.params.raw_dict)
             isfolder = callback.route.is_folder
-        else:
+        elif callback:
             self.listitem.setProperty("isplayable", "true" if callback else "false")
             self.listitem.setProperty("folder", "false")
             path = callback
             isfolder = False
+        else:
+            raise ValueError("Missing required callback")
 
         if isfolder:
             # Set Kodi icon image if not already set
-            if "icon" not in self.art.raw_dict:
+            if "icon" not in self.art.raw_dict:  # pragma: no branch
                 self.art.raw_dict["icon"] = "DefaultFolder.png"
         else:
             # Set Kodi icon image if not already set
-            if "icon" not in self.art.raw_dict:
+            if "icon" not in self.art.raw_dict:  # pragma: no branch
                 self.art.raw_dict["icon"] = "DefaultVideo.png"
 
             # Add mediatype if not already set
-            if "mediatype" not in self.info.raw_dict and self.content_type in ("video", "music"):
-                self.info.raw_dict["mediatype"] = self.content_type
+            if "mediatype" not in self.info.raw_dict and self._content_type in ("video", "music"):  # pragma: no branch
+                self.info.raw_dict["mediatype"] = self._content_type
 
             # Add Video Specific Context menu items
             self.context.append(("$LOCALIZE[13347]", "XBMC.Action(Queue)"))
@@ -628,36 +637,41 @@ class Listitem(object):
             # Close video related datasets
             self.stream._close()
 
+        label = self.label
+        # Set label to UNKNOWN if unset
+        if not label:  # pragma: no branch
+            self.label = label = u"UNKNOWN"
+
         # Add label as plot if no plot is found
-        if "plot" not in self.info:
-            self.info["plot"] = self.label
+        if "plot" not in self.info:  # pragma: no branch
+            self.info["plot"] = label
 
         # Close common datasets
         self.listitem.setPath(path)
         self.property._close()
         self.context._close()
-        self.info._close(self.content_type)
+        self.info._close(self._content_type)
         self.art._close()
 
         # Return a tuple compatible with 'xbmcplugin.addDirectoryItems'
         return path, self.listitem, isfolder
 
     @classmethod
-    def from_dict(cls, label, callback, params=None, info=None, art=None, stream=None, properties=None, context=None):
+    def from_dict(cls, callback, label, art=None, info=None, stream=None, context=None, properties=None, params=None):
         """
         Constructor to create a listitem.
 
         This method will create and populate a listitem from a set of given values.
 
         :type label: str or unicode
-        :param label: The listitem's label.
         :param callback: The callback function or playable path.
-        :param dict params: Dictionary of parameters that will be passed to the callback function.
-        :param dict info: Dictionary of listitem infoLabels.
+        :param label: The listitem's label.
         :param dict art: Dictionary of listitem's art.
+        :param dict info: Dictionary of listitem infoLabels.
         :param dict stream: Dictionary of stream details.
-        :param dict properties: Dictionary of listitem properties.
         :param list context: List of context menu item(s) containing tuples of label/command pairs.
+        :param dict properties: Dictionary of listitem properties.
+        :param dict params: Dictionary of parameters that will be passed to the callback function.
 
         :return: A listitem object.
         :rtype: Listitem
@@ -666,48 +680,112 @@ class Listitem(object):
         item.set_callback(callback)
         item.label = label
 
-        if params:
+        if params:  # pragma: no branch
             item.params.update(params)
-        if info:
+        if info:  # pragma: no branch
             item.info.update(info)
-        if art:
+        if art:  # pragma: no branch
             item.art.update(art)
-        if stream:
+        if stream:  # pragma: no branch
             item.stream.update(stream)
-        if properties:
+        if properties:  # pragma: no branch
             item.property.update(properties)
-        if context:
+        if context:  # pragma: no branch
             item.context.extend(context)
 
         return item
 
     @classmethod
-    def next_page(cls, **params):
+    def next_page(cls, *args, **kwargs):
         """
-        Constructor for adding Next Page.
+        Constructor for adding link to Next Page of content.
 
-        Add a listitem that will link to the next page of items. The current running callback will be called with
-        all of the params that are given here.
+        The current running callback will be called with all of the params that are given here.
 
-        :param params: Keyword arguments of params that will be added to the current set of callback params.
+        :param args: Positional arguments that will be passed to current callback.
+        :param kwargs: Keyword arguments that will be passed to current callback.
 
         :example:
             >>> item = Listitem()
             >>> item.next_page(url="http://example.com/videos?page2")
         """
+        # Current running callback
+        callback = dispatcher.current_route.org_callback
+
+        if args:
+            # Convert positional arguments to keyword arguments
+            args_map = callback.route.args_to_kwargs(args)
+            kwargs.update(args_map)
+
         # Add support params to callback params
-        params["_updatelisting_"] = True
-        params["_title_"] = dispatcher.support_params.get(u"_title_", u"")
-        params["_nextpagecount_"] = dispatcher.support_params.get(u"_nextpagecount_", 1) + 1
+        kwargs["_updatelisting_"] = True if u"_nextpagecount_" in dispatcher.support_params else False
+        kwargs["_title_"] = dispatcher.support_params.get(u"_title_", u"")
+        kwargs["_nextpagecount_"] = dispatcher.support_params.get(u"_nextpagecount_", 1) + 1
 
         # Create listitem instance
         item = cls()
-        label = u"%s %i" % (Script.localize(NEXT_PAGE), params["_nextpagecount_"])
+        label = u"%s %i" % (Script.localize(NEXT_PAGE), kwargs["_nextpagecount_"])
         item.info["plot"] = "Show the next page of content."
         item.label = "[B]%s[/B]" % label
         item.art.global_thumb("next.png")
-        item.params.update(params)
-        item.set_callback(dispatcher.callback, **params)
+        item.params.update(kwargs)
+        item.set_callback(callback, **kwargs)
+        return item
+
+    @classmethod
+    def recent(cls, callback, *args, **kwargs):
+        """
+        Constructor for adding Recent Videos folder.
+
+        This is a convenience method that creates the listitem with name, thumbnail and plot
+        already preset.
+
+        :param callback: The callback function.
+        :param args: Positional arguments that will be passed to callback.
+        :param kwargs: Keyword arguments that will be passed to callback.
+        """
+        if args:
+            # Convert positional arguments to keyword arguments
+            args_map = callback.route.args_to_kwargs(args)
+            kwargs.update(args_map)
+
+        # Create listitem instance
+        item = cls()
+        item.label = Script.localize(RECENT_VIDEOS)
+        item.info["plot"] = "Show the most recent videos."
+        item.art.global_thumb("recent.png")
+        item.set_callback(callback, **kwargs)
+        return item
+
+    @classmethod
+    def search(cls, callback, *args, **kwargs):
+        """
+        Constructor to add saved search Support to addon.
+
+        This will first link to a sub folder that lists all saved search terms.
+        From here, search terms can be created or removed.
+        When a selection is made, the callback function that was given will be executed with all params forwarded on.
+        Except with one extra param, 'search_query' witch is the search term that was selected.
+
+        :param callback: Function that will be called when the listitem is activated.
+        :param args: Positional arguments that will be passed to callback.
+        :param kwargs: Keyword arguments that will be passed to callback.
+        :raises ValueError: If the given callback function does not have a 'search_query' parameter.
+        """
+        if args:
+            # Convert positional arguments to keyword arguments
+            args_map = callback.route.args_to_kwargs(args)
+            kwargs.update(args_map)
+
+        # Check that callback function has required parameter(search_query).
+        if "search_query" not in callback.route.arg_names():
+            raise ValueError("callback function is missing required argument: 'search_query'")
+
+        item = cls()
+        item.label = u"[B]%s[/B]" % Script.localize(SEARCH)
+        item.art.global_thumb("search.png")
+        item.info["plot"] = "Search for video content."
+        item.set_callback(SavedSearches, route=callback.route.path, first_load=True, **kwargs)
         return item
 
     @classmethod
@@ -741,50 +819,9 @@ class Listitem(object):
         item.set_callback(YTPlaylist)
         return item
 
-    @classmethod
-    def recent(cls, callback, **params):
-        """
-        Constructor for adding Recent Folder.
-
-        This is really more of a convenience method that creates the listitem with name, thumbnail and plot
-        already preset for the user.
-
-        :param callback: The callback function.
-        :type callback: :class:`types.FunctionType`
-        :param params: Keyword arguments of parameters that will be passed to the callback function.
-        """
-        # Create listitem instance
-        item = cls()
-        item.label = Script.localize(RECENT_VIDEOS)
-        item.info["plot"] = "Show the most recent videos."
-        item.art.global_thumb("recent.png")
-        item.set_callback(callback, **params)
-        return item
-
-    @classmethod
-    def search(cls, callback, **params):
-        """
-        Constructor to add saved search Support to addon.
-
-        This will first link to a sub folder that lists all saved search terms.
-        From here, search terms can be created or removed.
-        When a selection is made, the callback function that was given will be executed with all params forwarded on.
-        Except with one extra param, 'search_query' witch is the search term that was selected.
-
-        :param callback: Function that will be called when the listitem is activated.
-        :param params: Keyword arguments that will be farwarded on to callback.
-        :raises ValueError: If the given callback function does not have a 'search_query' parameter.
-        """
-        # Check that callback function has required parameter(search_query).
-        if "search_query" not in callback.route.arg_names():
-            raise ValueError("callback function is missing required argument: 'search_query'")
-
-        item = cls()
-        item.label = u"[B]%s[/B]" % Script.localize(SEARCH)
-        item.art.global_thumb("search.png")
-        item.info["plot"] = "Search for video content."
-        item.set_callback(SavedSearches, route=callback.route.path, **params)
-        return item
+    def __repr__(self):
+        """Returns representation of the object."""
+        return "{}('{}')".format(self.__class__.__name__, ensure_native_str(self.label))
 
 
 # Import callback functions required for listitem constructs

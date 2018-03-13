@@ -20,53 +20,18 @@ try:
 except NameError:
     long_type = int
 
-PY3 = sys.version_info >= (3, 0)
+PY3 = sys.version_info[0] >= 3
 
 # Unicode Type object, unicode on python2 or str on python3
 unicode_type = type(u"")
 
-__all__ = ["CacheProperty", "keyboard", "parse_qs", "urljoin_partial", "strip_tags",
+__all__ = ["keyboard", "parse_qs", "urljoin_partial", "strip_tags",
            "safe_path", "ensure_bytes", "ensure_native_str", "ensure_unicode"]
-
-
-class CacheProperty(object):
-    """
-    Decorator that converts a class method into a class property and caches the response on first access.
-
-    When the class property is accessed for the first time, the result is computed and returned.
-    The property is then replaced with an instance attribute with the computed result.
-
-    :example:
-        >>> import random
-        >>> class Test(object):
-        >>>     @CacheProperty
-        >>>     def data_id(self):
-        >>>         return random.random()
-        >>>
-        >>> obj = Test()
-        >>> print(obj.data_id)
-        0.39391705700202373
-        >>> print(obj.data_id)
-        0.39391705700202373
-    """
-
-    def __init__(self, func):
-        self.__name__ = func.__name__
-        self.__doc__ = func.__doc__
-        self._func = func
-
-    def __get__(self, instance, owner):
-        if instance:
-            attr = self._func(instance)
-            setattr(instance, self.__name__, attr)
-            return attr
-        else:
-            return self
 
 
 def keyboard(heading, default="", hidden=False):
     """
-    Show a keyboard dialog with default text heading and hidden input flag if supplied.
+    Show a keyboard dialog.
 
     :param heading: Keyboard heading.
     :type heading: str or unicode
@@ -93,7 +58,7 @@ def keyboard(heading, default="", hidden=False):
         text = kb.getText()
         return text.decode("utf8") if isinstance(text, bytes) else text
     else:
-        return u""
+        return u""  # pragma: no cover
 
 
 def parse_qs(qs, keep_blank_values=False, strict_parsing=False):
@@ -120,7 +85,7 @@ def parse_qs(qs, keep_blank_values=False, strict_parsing=False):
     :return: Returns a dict of key/value pairs, with all keys and values as unicode.
     :rtype: dict
 
-    :raises ValueError: If duplicate query field names exists.
+    :raises ValueError: If duplicate query field names exists or if there is a parsing error.
 
     :example:
         >>> parse_qs("http://example.com/path?q=search&safe=no")
@@ -217,7 +182,7 @@ def safe_path(path, encoding="utf8"):
 
     :type path: str or unicode
     :param path: The path to convert.
-    :param str encoding: [opt] The encoding to use when needed.
+    :param str encoding: [opt] The encoding to use if needed.
     :return: Returns the path as unicode or bytes base on platform os.
     """
     return ensure_unicode(path, encoding) if sys.platform.startswith("win") else ensure_bytes(path, encoding)
@@ -253,7 +218,7 @@ def ensure_native_str(data, encoding="utf8"):
         # Only executes on python 3
         return data.decode(encoding)
     else:
-        str(data)
+        return str(data)
 
 
 def ensure_unicode(data, encoding="utf8"):
