@@ -11,6 +11,7 @@ from os.path import join as pjoin
 import os.path
 from pprint import pformat
 import re
+import shutil
 import sys
 import tempfile
 import time
@@ -44,7 +45,7 @@ __addon__ = xbmcaddon.Addon()
 __author__     = __addon__.getAddonInfo('author')
 __scriptid__   = __addon__.getAddonInfo('id')
 __scriptname__ = __addon__.getAddonInfo('name')
-__version__    = '0.2.5'
+__version__    = '0.3.0'
 __language__   = __addon__.getLocalizedString
 
 __cwd__        = xbmc.translatePath(__addon__.getAddonInfo('path')).decode("utf-8")
@@ -325,13 +326,21 @@ def Search(item):
         append_subtitle(sub, file_original_path)
 
 
-def _handle_compressed_subs(workdir, compressed_file):
+def _handle_compressed_subs(workdir, compressed_file, ext):
     """
     Uncompress 'compressed_file' in 'workdir'.
     """
-    xbmc.executebuiltin("XBMC.Extract(%s, %s)" % (
-                        compressed_file.encode("utf-8"),
-                        workdir.encode("utf-8")), True)
+    kodi_major_version = int(xbmc.getInfoLabel('System.BuildVersion').split('.')[0])
+    if ext == 'rar' and kodi_major_version >= 18:
+        src = 'archive' + '://' + quote_plus(compressed_file) + '/'
+        (cdirs, cfiles) = xbmcvfs.listdir(src)
+        for cfile in cfiles:
+            fsrc = '%s%s' % (src, cfile)
+            xbmcvfs.copy(fsrc, workdir + cfile)
+    else:
+        xbmc.executebuiltin("XBMC.Extract(%s, %s)" % (
+                            compressed_file.encode("utf-8"),
+                            workdir.encode("utf-8")), True)
 
     files = os.listdir(workdir)
     files = [f for f in files if is_subs_file(f)]
@@ -359,8 +368,8 @@ def _save_subtitles(workdir, content):
     is_compressed = ctype is not None
     # Never found/downloaded an unpacked subtitles file, but just to be sure ...
     # Assume unpacked sub file is a '.srt'
-    cfext = {'RAR': '.rar', 'ZIP': '.zip'}.get(ctype, '.srt')
-    tmp_fname = pjoin(workdir, "subdivx" + cfext)
+    cfext = {'RAR': 'rar', 'ZIP': 'zip'}.get(ctype, 'srt')
+    tmp_fname = pjoin(workdir, "subdivx." + cfext)
     log(u"Saving subtitles to '%s'" % tmp_fname)
     try:
         with open(tmp_fname, "wb") as fh:
@@ -370,7 +379,7 @@ def _save_subtitles(workdir, content):
         return []
     else:
         if is_compressed:
-            return _handle_compressed_subs(workdir, tmp_fname)
+            return _handle_compressed_subs(workdir, tmp_fname, cfext)
         return [{'path': tmp_fname, 'forced': False}]
 
 
@@ -387,8 +396,7 @@ def Download(subdivx_id, workdir):
         return []
     match = DETAIL_PAGE_LINK_RE.search(html_content)
     if match is None:
-        log(u"Intermediate detail page for selected subtitle or expected content not found. Handling it as final download page",
-            level=LOGWARNING)
+        log(u"Intermediate detail page for selected subtitle or expected content not found. Handling it as final download page")
     else:
         id_ = match.group('id')
         # Fetch and scrape final page
@@ -398,8 +406,7 @@ def Download(subdivx_id, workdir):
         return []
     match = DOWNLOAD_LINK_RE.search(html_content)
     if match is None:
-        log(u"Expected content not found in final download page",
-            level=LOGFATAL)
+        log(u"Expected content not found in final download page")
         return []
     id_, u = match.group('id', 'u')
     actual_subtitle_file_url = MAIN_SUBDIVX_URL + "bajar.php?id=" + id_ + "&u=" + u
@@ -482,6 +489,19 @@ def debug_dump_path(victim, name):
     xbmc.log("SUBDIVX - %s (%s): %s" % (name, t, victim), level=LOGDEBUG)
 
 
+def _cleanup_tempdir(dir_path):
+    try:
+        shutil.rmtree(dir_path, ignore_errors=True)
+    except Exception:
+        log(u"Failed to remove %s" % dir_path, level=LOGWARNING)
+
+
+def _cleanup_tempdirs(profile_path):
+    dirs, _ = xbmcvfs.listdir(profile_path)
+    for dir_path in dirs[:10]:
+        _cleanup_tempdir(os.path.join(profile_path, dir_path))
+
+
 def main():
     """Main entry point of the script when it is invoked by XBMC."""
     # Get parameters from XBMC and launch actions
@@ -534,12 +554,15 @@ def main():
             item['file_original_path'] = stackPath[0][8:]
 
         Search(item)
+        # Send end of directory to XBMC
+        xbmcplugin.endOfDirectory(int(sys.argv[1]))
 
     elif action == 'download':
         debug_dump_path(xbmc.translatePath(__addon__.getAddonInfo('profile')),
                         "xbmc.translatePath(__addon__.getAddonInfo('profile'))")
         debug_dump_path(__profile__, '__profile__')
         xbmcvfs.mkdirs(__profile__)
+        _cleanup_tempdirs(__profile__)
         workdir = tempfile.mkdtemp(dir=__profile__)
         # Make sure it ends with a path separator (Kodi 14)
         workdir = workdir + os.path.sep
@@ -558,14 +581,13 @@ def main():
             listitem = xbmcgui.ListItem(label=sub['path'])
             xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=sub['path'],
                                         listitem=listitem, isFolder=False)
+        # Send end of directory to XBMC
+        xbmcplugin.endOfDirectory(int(sys.argv[1]))
 
-    # Send end of directory to XBMC
-    xbmcplugin.endOfDirectory(int(sys.argv[1]))
-
-    if (action == 'download' and
-            __addon__.getSetting('show_nick_in_place_of_lang') == 'true'):
-        time.sleep(3)
-        _double_dot_fix_hack(params['filename'].encode('utf-8'))
+        _cleanup_tempdir(workdir)
+        if __addon__.getSetting('show_nick_in_place_of_lang') == 'true':
+            time.sleep(2)
+            _double_dot_fix_hack(params['filename'].encode('utf-8'))
 
 
 if __name__ == '__main__':
