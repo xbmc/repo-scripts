@@ -38,9 +38,16 @@ returns a 304 Not-Modified response, the cache is reused, saving having to re-do
 Inspired by: urlfetch & requests
 urlfetch: https://github.com/ifduyue/urlfetch
 requests: http://docs.python-requests.org/en/master/
+
+Github: https://github.com/willforde/urlquick
+Documentation: http://urlquick.readthedocs.io/en/stable/?badge=stable
+Integrated Testing: https://travis-ci.org/willforde/urlquick
+Code Coverage: https://coveralls.io/github/willforde/urlquick?branch=master
+Codacy: https://app.codacy.com/app/willforde/urlquick/dashboard
 """
 
 __all__ = ["request", "get", "head", "post", "put", "patch", "delete", "cache_cleanup", "Session"]
+__version__ = "0.9.3"
 
 # Standard library imports
 from collections import MutableMapping, defaultdict
@@ -241,9 +248,17 @@ class CachedProperty(object):
 
 
 class CacheHandler(object):
+    # Checks if it's time to initiate a cache cleanup
+    initiate_cleanup = _addon_data.getSetting("cache_cleanup_timestamp") == "" or \
+                       (time.time() - float(_addon_data.getSetting("cache_cleanup_timestamp")) > 60 * 60 * 24 * 28)
+
     def __init__(self, uid, max_age=MAX_AGE):
         self.max_age = max_age
         self.response = None
+
+        if self.initiate_cleanup:
+            cache_cleanup(60 * 60 * 24 * 14)
+            _addon_data.setSetting("cache_cleanup_timestamp", str(time.time()))
 
         # Filepath to cache file
         cache_dir = self.cache_dir()
@@ -428,6 +443,9 @@ def cache_cleanup(max_age=None):
             if not handler.isfilefresh(cache_path, max_age):
                 handler.delete(cache_path)
 
+    # Disable cleanup flag
+    handler.initiate_cleanup = False
+
 
 class CacheAdapter(object):
     def __init__(self):
@@ -496,10 +514,10 @@ class CacheResponse(object):
 
 class ConnectionManager(CacheAdapter):
     def __init__(self):
-        self.request_handler = {"http": (HTTPConnection, {}), "https": (HTTPSConnection, {})}
+        self.request_handler = {"http": {}, "https": {}}
         super(ConnectionManager, self).__init__()
 
-    def make_request(self, req, timeout, max_age):
+    def make_request(self, req, timeout, verify, max_age):
         # Only check cache if max_age set to a valid value
         if max_age >= 0:
             cached_resp = self.cache_check(req.method, req.url, req.data, req.headers, max_age=max_age)
@@ -507,7 +525,7 @@ class ConnectionManager(CacheAdapter):
                 return cached_resp
 
             # Request resource and cache it if possible
-            resp = self.connect(req, timeout)
+            resp = self.connect(req, timeout, verify)
             callback = lambda: (resp.getheaders(), resp.read(), resp.status, resp.reason)
             cached_resp = self.handle_response(req.method, resp.status, callback)
             if cached_resp:
@@ -516,13 +534,14 @@ class ConnectionManager(CacheAdapter):
                 return resp
 
         # Default to un-cached response
-        return self.connect(req, timeout)
+        return self.connect(req, timeout, verify)
 
-    def connect(self, req, timeout):
+    def connect(self, req, timeout, verify):
         # Fetch connection from pool and attempt to reuse if available
-        connection, pool = self.request_handler[req.type]
+        pool = self.request_handler[req.type]
         if req.host in pool:
             try:
+                # noinspection PyTypeChecker
                 return self.send_request(pool[req.host], req)
             except Exception as e:
                 # Remove the connection from the pool as it's unusable
@@ -534,7 +553,14 @@ class ConnectionManager(CacheAdapter):
                     raise
 
         # Create a new connection
-        conn = connection(req.host, timeout=timeout)
+        if req.type == "https":
+            # noinspection PyProtectedMember
+            context = ssl._create_unverified_context() if verify is False else None
+            conn = HTTPSConnection(req.host, timeout=timeout, context=context)
+        else:
+            conn = HTTPConnection(req.host, timeout=timeout)
+
+        # Make first connection to server
         response = self.send_request(conn, req)
 
         # Add connection to the pool if the response is not set to close
@@ -567,7 +593,7 @@ class ConnectionManager(CacheAdapter):
 
     def close(self):
         """Close all persistent connections and remove."""
-        for _, pool in self.request_handler.values():
+        for pool in self.request_handler.values():
             for key in list(pool.keys()):
                 conn = pool.pop(key)
                 conn.close()
@@ -947,7 +973,7 @@ class Session(ConnectionManager):
         return self.request(u"DELETE", url, **kwargs)
 
     def request(self, method, url, params=None, data=None, headers=None, cookies=None, auth=None,
-                timeout=10, allow_redirects=None, json=None, raise_for_status=None, max_age=None):
+                timeout=10, allow_redirects=None, verify=True, json=None, raise_for_status=None, max_age=None):
         """
         Make request for remote resource.
 
@@ -964,6 +990,7 @@ class Session(ConnectionManager):
         :param tuple auth: [opt] (username, password) for basic authentication.
         :param int timeout: [opt] Connection timeout in seconds.
         :param bool allow_redirects: [opt] Enable/disable redirection. Defaults to ``True``.
+        :param bool verify: [opt] Controls whether to verify the server's TLS certificate. Defaults to ``True``
         :param bool raise_for_status: [opt] Raise's HTTPError if status code is > 400. Defaults to ``False``.
         :param int max_age: [opt] Age the 'cache' can be, before it’s considered stale. -1 will disable caching.
                             Defaults to :data:`MAX_AGE <urlquick.MAX_AGE>`
@@ -1015,7 +1042,7 @@ class Session(ConnectionManager):
 
         while True:
             # Send a request for resource
-            raw_resp = self.make_request(req, timeout, max_age)
+            raw_resp = self.make_request(req, timeout, verify, max_age)
             resp = Response(raw_resp, req, start_time, history[:])
 
             visited[req.url] += 1
@@ -1368,7 +1395,7 @@ class Response(object):
 
 
 def request(method, url, params=None, data=None, headers=None, cookies=None, auth=None,
-            timeout=10, allow_redirects=None, json=None, raise_for_status=None, max_age=None):
+            timeout=10, allow_redirects=None, verify=True, json=None, raise_for_status=None, max_age=None):
     """
     Make request for remote resource.
 
@@ -1385,6 +1412,7 @@ def request(method, url, params=None, data=None, headers=None, cookies=None, aut
     :param tuple auth: [opt] (username, password) for basic authentication.
     :param int timeout: [opt] Connection timeout in seconds.
     :param bool allow_redirects: [opt] Enable/disable redirection. Defaults to ``True``.
+    :param bool verify: [opt] Controls whether to verify the server's TLS certificate. Defaults to ``True``
     :param bool raise_for_status: [opt] Raise's HTTPError if status code is > 400. Defaults to ``False``.
     :param int max_age: [opt] Age the 'cache' can be, before it’s considered stale. -1 will disable caching.
                         Defaults to :data:`MAX_AGE <urlquick.MAX_AGE>`
@@ -1400,7 +1428,7 @@ def request(method, url, params=None, data=None, headers=None, cookies=None, aut
     """
     with Session() as session:
         return session.request(method, url, params, data, headers, cookies, auth, timeout,
-                               allow_redirects, json, raise_for_status, max_age)
+                               allow_redirects, verify, json, raise_for_status, max_age)
 
 
 def get(url, params=None, **kwargs):

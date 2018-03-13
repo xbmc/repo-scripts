@@ -22,6 +22,10 @@ logger = logging.getLogger("%s.youtube" % logger_id)
 ALLVIDEOS = 32003
 PLAYLISTS = 136
 
+# Youtube cache directory
+_CACHEFILE = os.path.join(Route.get_info("profile"), u"_youtube-cache.sqlite")
+CACHEFILE = _CACHEFILE if PY3 else safe_path(_CACHEFILE)
+
 
 class CustomRow(sqlite3.Row):
     def __eq__(self, y):
@@ -34,8 +38,7 @@ class CustomRow(sqlite3.Row):
 class Database(object):
     def __init__(self):
         # Unfortunately with python 3, sqlite3.connect might fail if system local is 'c_type'(ascii)
-        filepath = os.path.join(Route.get_info("profile"), u"_youtube-cache.sqlite")
-        self.db = db = sqlite3.connect(filepath if PY3 else safe_path(filepath), timeout=1)
+        self.db = db = sqlite3.connect(CACHEFILE, timeout=1)
 
         db.isolation_level = None
         db.row_factory = CustomRow
@@ -65,7 +68,7 @@ class Database(object):
         self.cur.execute("BEGIN")
         try:
             execute_obj(sqlquery, args)
-        except Exception as e:
+        except Exception as e:  # pragma: no cover
             self.db.rollback()
             raise e
         else:
@@ -155,12 +158,12 @@ class API(object):
         """
         source = self.req_session.get(url, params=query)
         response = json.loads(source.content, encoding=source.encoding)
-        if u"error" not in response:
+        if u"error" not in response:  # pragma: no branch
             return response
-        else:
+        else:  # pragma: no cover
             try:
                 message = response[u"error"][u"errors"][0][u"message"]
-            except KeyError:
+            except (KeyError, ValueError):
                 raise RuntimeError("Youtube V3 API return an error response")
             else:
                 raise RuntimeError("Youtube V3 API return an error response: %s" % message)
@@ -285,7 +288,7 @@ class API(object):
                  "playlistId": playlist_id, "part": "snippet,status"}
 
         # Add pageToken if exists
-        if pagetoken:
+        if pagetoken:  # pragma: no cover
             query["pageToken"] = pagetoken
 
         # Connect to server to optain json response
@@ -335,7 +338,7 @@ class API(object):
                            "(publishedAt,localized,thumbnails/medium/url))"}
 
         # Add pageToken if exists
-        if pagetoken:
+        if pagetoken:  # pragma: no cover
             query["pageToken"] = pagetoken
 
         # Connect to server to optain json response
@@ -369,7 +372,7 @@ class APIControl(Route):
     def __init__(self):
         super(APIControl, self).__init__()
         self.db = Database()
-        self.register_metacall(self.db.cleanup)
+        self.register_delayed_callback(self.db.cleanup)
         self.api = API()
 
     def valid_playlistid(self, contentid):
@@ -395,7 +398,10 @@ class APIControl(Route):
                 # Channel data is missing from cache
                 # Update cache and return uploads uuid
                 self.update_channel_cache([contentid])
-                return self.db.channels[contentid]
+                if contentid in self.db.channels:
+                    return self.db.channels[contentid]
+                else:
+                    raise KeyError("Unable to find Youtube channel: {}".format(contentid))
 
         # PL = Playlist / UU = Channel Uploads / FL = Favorites List
         elif contentid[:2] in ("PL", "FL", "UU"):
@@ -430,7 +436,7 @@ class APIControl(Route):
             # Fetch the channel banner if available
             try:
                 data["fanart"] = item[u"brandingSettings"][u"image"][u"bannerTvMediumImageUrl"]
-            except KeyError:
+            except KeyError:  # pragma: no cover
                 data["fanart"] = None
 
             # Add the dict of channel data to list of channels that will be added to database
@@ -449,7 +455,7 @@ class APIControl(Route):
         :type ids: list
         """
         cached_videos = self.db.extract_videos(ids)
-        uncached_ids = [key for key in ids if key not in cached_videos]
+        uncached_ids = [key for key in ids if key not in cached_videos]  # pragma: no branch
         if uncached_ids:
             # Fetch video information
             feed = self.api.videos(uncached_ids)
@@ -471,18 +477,9 @@ class APIControl(Route):
 
                 # Convert duration to what kodi is expecting (duration in seconds)
                 duration_str = content_details[u"duration"]
-                duration_str = duration_search.findall(duration_str)
-                if duration_str:
-                    duration = 0
-                    for time_segment, timeType in duration_str:
-                        if timeType == u"H":
-                            duration += (int(time_segment) * 3600)
-                        elif timeType == u"M":
-                            duration += (int(time_segment) * 60)
-                        elif timeType == u"S":
-                            duration += (int(time_segment))
-
-                    data["duration"] = duration
+                duration_match = duration_search.findall(duration_str)
+                if duration_match:  # pragma: no branch
+                    data["duration"] = self._convert_duration(duration_match)
 
                 # Add the dict of video data to list of video that will be added to database
                 processed_videos.append(data)
@@ -519,7 +516,7 @@ class APIControl(Route):
         # Check that the quality setting is set to HD or greater
         try:
             ishd = self.setting.get_int("video_quality", addon_id="script.module.youtube.dl")
-        except RuntimeError:
+        except RuntimeError:  # pragma: no cover
             ishd = True
 
         # Process videos
@@ -563,12 +560,26 @@ class APIControl(Route):
 
             # Add Context item for youtube channel if videos from more than one channel are ben listed
             if multi_channel:
-                item.context.container(u"Go to: %s" % video_data["channel_title"], Playlist,
+                item.context.container(Playlist, u"Go to: %s" % video_data["channel_title"],
                                        contentid=video_data["channel_id"])
 
             # Return the listitem
             item.set_callback(play_video, video_id=video_data["video_id"])
             yield item
+
+    @staticmethod
+    def _convert_duration(duration_match):
+        """Convert youtube duration format to a format suitable for kodi."""
+        duration = 0
+        for time_segment, timeType in duration_match:
+            if timeType == u"H":
+                duration += (int(time_segment) * 3600)
+            elif timeType == u"M":
+                duration += (int(time_segment) * 60)
+            elif timeType == u"S":  # pragma: no branch
+                duration += (int(time_segment))
+
+        return duration
 
 
 @Route.register
@@ -598,14 +609,14 @@ class Playlists(APIControl):
 
         # Fetch fanart image for channel
         fanart = self.db.cur.execute("SELECT fanart FROM channels WHERE channel_id = ?", (channel_id,)).fetchone()
-        if fanart:
+        if fanart:  # pragma: no branch
             fanart = fanart[0]
 
         # Fetch channel playlists feed
         feed = self.api.playlists(channel_id, pagetoken, loop)
 
         # Add next Page entry if pagetoken is found
-        if u"nextPageToken" in feed:
+        if u"nextPageToken" in feed:  # pragma: no branch
             yield Listitem.next_page(channel_id=channel_id, show_all=False, pagetoken=feed[u"nextPageToken"])
 
         # Display a link for listing all channel videos
@@ -621,7 +632,7 @@ class Playlists(APIControl):
 
             # Check if there is actualy items in the playlist before listing
             item_count = playlist_item[u"contentDetails"][u"itemCount"]
-            if item_count == 0:
+            if item_count == 0:  # pragma: no cover
                 continue
 
             # Fetch video snippet
@@ -675,10 +686,10 @@ class Playlist(APIControl):
 
         # Fetch video ids for all public videos
         for item in feed[u"items"]:
-            if item[u"status"][u"privacyStatus"] == u"public":
+            if item[u"status"][u"privacyStatus"] == u"public":  # pragma: no branch
                 channel_list.add(item[u"snippet"][u"channelId"])
                 video_list.append(item[u"snippet"][u"resourceId"][u"videoId"])
-            else:
+            else:  # pragma: no cover
                 logger.debug("Skipping non plublic video: '%s'", item[u"snippet"][u"resourceId"][u"videoId"])
 
         # Return the list of video listitems
@@ -715,13 +726,14 @@ class Related(APIControl):
         :returns: A generator of listitems.
         :rtype: :class:`types.GeneratorType`
         """
-        self.update_listing = True
+        self.category = "Related"
+        self.update_listing = bool(pagetoken)
         feed = self.api.search(pageToken=pagetoken, relatedToVideoId=video_id)
-        video_list = [item[u"id"][u"videoId"] for item in feed[u"items"]]
+        video_list = [item[u"id"][u"videoId"] for item in feed[u"items"]]  # pragma: no branch
 
         # List all the related videos
         results = list(self.videos(video_list, multi_channel=True))
-        if u"nextPageToken" in feed:
+        if u"nextPageToken" in feed:  # pragma: no branch
             next_item = Listitem.next_page(video_id=video_id, pagetoken=feed[u"nextPageToken"])
             results.append(next_item)
         return results
@@ -733,5 +745,5 @@ def play_video(plugin, video_id):
     :type plugin: :class:`codequick.PlayMedia`
     :type video_id: unicode
     """
-    url = u"https://www.youtube.com/watch?v=%s" % video_id
+    url = u"https://www.youtube.com/watch?v={}".format(video_id)
     return plugin.extract_source(url)
