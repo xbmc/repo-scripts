@@ -1,3 +1,21 @@
+0.3.0
+- Release changes since 0.2.5
+
+0.2.13
+- Add 'news' section to addon.xml. Translate it and description to Spanish
+
+0.2.12
+- Comply with new Kodi policies: Less verbose logging by default. Achieved
+  by moving most of it to LOGDEBUG level
+
+0.2.11
+- Remove disposable temporary directory after using it.
+
+0.2.10
+- Attempt 1 at fixing decompression of RAR files on Kodi 18. This introduces
+  a dependency on the vfs.libarchive binary addon for Kodi>=18.
+- Users need to activate and/or install 'Archive support' add-on manually.
+
 0.2.5
 - Use html2text lib to scrape comments. Thanks Iván Ridao Freitas for help.
 - Fix handling of movie path on filesystem. Thanks Santiago Ibarra for report.
