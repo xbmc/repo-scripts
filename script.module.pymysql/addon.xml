@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.module.pymysql"
+       name="pymysql"
+       version="0.8.0"
+       provider-name="smitchell6879">
+  <requires>
+    <import addon="xbmc.python" version="2.24.0"/>
+  </requires>
+  <extension point="xbmc.python.module"
+             library="lib" />
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en">Simple MySql Connector for Python</summary>
+    <description lang="en">Simple MySql Connector for Python</description>
+    <platform>all</platform>
+    <language></language>
+    <license>MIT</license>
+    <forum></forum>
+    <website>http://pymysql.readthedocs.io/</website>
+    <source>https://github.com/PyMySQL/PyMySQL</source>
+    <!-- <email></email> -->
+  </extension>
+</addon>

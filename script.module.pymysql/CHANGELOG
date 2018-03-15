@@ -1,0 +1,253 @@
+# Changes
+
+## 0.8
+
+Release date: 2017-12-20
+
+* **BACKWARD INCOMPATIBLE** ``binary_prefix`` option is added and off
+  by default because of compatibility with mysqlclient.
+  When you need PyMySQL 0.7 behavior, you have to pass ``binary_prefix=True``.
+  (#549)
+
+* **BACKWARD INCOMPATIBLE** MULTI_STATEMENT client flag is not set by
+  default while it was set by default on PyMySQL 0.7.  You need to
+  pass ``client_flag=CLIENT.MULTI_STATEMENT`` explicitly when you
+  want to use multi statement.  (#590)
+
+* Fixed AuthSwitch packet handling.
+
+* Raise OperationalError for MariaDB's constraint error. (#607)
+
+* executemany() accepts query without space between ``VALUES`` and ``(``.  (#597)
+
+* Support config file containing option without value. (#588)
+
+* Fixed Connection.ping() returned unintended value.
+
+
+## 0.7.11
+
+Release date: 2017-04-06
+
+* Fixed Connection.close() failed when failed to send COM_CLOSE packet.
+* Cursor.executemany() accepts query ends with semicolon.
+* ssl parameters can be read from my.cnf.
+
+
+## 0.7.10
+
+Release date: 2017-02-14
+
+* **SECURITY FIX**: Raise RuntimeError when received LOAD_LOCAL packet while
+  ``loacal_infile=False``.  (Thanks to Bryan Helmig)
+
+* Raise SERVER_LOST error for MariaDB's shutdown packet (#540)
+
+* Change default connect_timeout to 10.
+
+* Add bind_address option (#529)
+
+
+## 0.7.9
+
+Release date: 2016-09-03
+
+* Fix PyMySQL stop reading rows when first column is empty string (#513)
+  Reverts DEPRECATE_EOF introduced in 0.7.7.
+
+## 0.7.8
+
+Release date: 2016-09-01
+
+* Revert error message change in 0.7.7.
+  (SQLAlchemy parses error message, #507)
+
+## 0.7.7
+
+Release date: 2016-08-30
+
+* Add new unicode collation (#498)
+* Fix conv option is not used for encoding objects.
+* Experimental support for DEPRECATE_EOF protocol.
+
+## 0.7.6
+
+Release date: 2016-07-29
+
+* Fix SELECT JSON type cause UnicodeError
+* Avoid float convertion while parsing microseconds
+* Warning has number
+* SSCursor supports warnings
+
+## 0.7.5
+
+Release date: 2016-06-28
+
+* Fix exception raised while importing when getpwuid() fails (#472)
+* SSCursor supports LOAD DATA LOCAL INFILE (#473)
+* Fix encoding error happen for JSON type (#477)
+* Fix test fail on Python 2.7 and MySQL 5.7 (#478)
+
+## 0.7.4
+
+Release date: 2016-05-26
+
+* Fix AttributeError may happen while Connection.__del__ (#463)
+* Fix SyntaxError in test_cursor. (#464)
+* frozenset support for query value. (#461)
+* Start using readthedocs.io
+
+## 0.7.3
+
+Release date: 2016-05-19
+
+* Add read_timeout and write_timeout option.
+* Support serialization customization by `conv` option.
+* Unknown type is converted by `str()`, for MySQLdb compatibility.
+* Support '%%' in `Cursor.executemany()`
+* Support REPLACE statement in `Cursor.executemany()`
+* Fix handling incomplete row caused by 'SHOW SLAVE HOSTS'.
+* Fix decode error when use_unicode=False on PY3
+* Fix port option in my.cnf file is ignored.
+
+
+## 0.7.2
+
+Release date: 2016-02-24
+
+* Fix misuse of `max_allowed_packet` parameter. (#426, #407 and #397)
+* Add %(name)s plceholder support to `Cursor.executemany()`. (#427, thanks to
+  @WorldException)
+
+## 0.7.1
+
+Release date: 2016-01-14
+
+* Fix auth fail with MySQL 5.1
+* Fix escaping unicode fails on Python 2
+
+## 0.7
+
+Release date: 2016-01-10
+
+* Faster binary escaping
+* Add `"_binary" prefix` to string literal for binary types.
+  binary types are: `bytearray` on Python 2, `bytes` and `bytearray` on Python 3.
+  This is because recent MySQL show warnings when string literal is invalid for
+  connection encoding.
+* `pymysql.Binary()` returns `bytearray` on Python 2.  This is required to distinguish
+  binary and string.
+* Auth plugin support.
+* no_delay option is ignored.  It will be removed in PyMySQL 0.8.
+
+
+## 0.6.7
+
+Release date: 2015-09-30
+
+* Allow self signed certificate
+* Add max_allowed_packet option
+* Fix error when bytes in executemany
+* Support geometry type
+* Add coveralls badge to README
+* Fix some bugs relating to warnings
+* Add Cursor.mogrify() method
+* no_delay option is deprecated and True by default
+* Fix options from my.cnf overrides options from arguments
+* Allow socket like object.  (It's not feature for end users)
+* Strip quotes while reading options from my.cnf file
+* Fix encoding issue in executemany()
+
+## 0.6.6
+
+* Add context manager to cursor
+* Fix can't encode blob that is not utf-8 on PY3. (regression of 0.6.4,
+  Thanks to @wiggzz)
+
+## 0.6.5
+Skipped
+
+## 0.6.4
+* Support "LOAD LOCAL INFILE".  Thanks @wraziens
+* Show MySQL warnings after execute query.
+* Fix MySQLError may be wrapped with OperationalError while connectiong. (#274)
+* SSCursor no longer attempts to expire un-collected rows within __del__,
+  delaying termination of an interrupted program; cleanup of uncollected
+  rows is left to the Connection on next execute, which emits a
+  warning at that time. (#287)
+* Support datetime and time with microsecond. (#303)
+* Use surrogateescape to format bytes on Python 3.
+* OperationalError raised from connect() have information about original
+  exception. (#304)
+* `init_command` now support multi statement.
+* `Connection.escape()` method now accepts second argument compatible to
+  MySQL-Python.
+
+## 0.6.3
+* Fixed multiple result sets with SSCursor.
+* Fixed connection timeout.
+* Fixed literal set syntax to work on Py2.6.
+* Allow for mysql negative values with 0 hour timedelta.
+* Added Connection.begin().
+
+## 0.6.2
+* Fixed old password on Python 3.
+* Added support for bulk insert in Cursor.executemany().
+* Added support for microseconds in datetimes and dates before 1900.
+* Several other bug fixes.
+
+## 0.6.1
+* Added cursor._last_executed for MySQLdb compatibility
+* Cursor.fetchall() and .fetchmany now return list, not tuple
+* Allow "length of auth-plugin-data" = 0
+* Cursor.connection references connection object without weakref
+
+## 0.6
+* Improved Py3k support
+* Improved PyPy support
+* Added IPv6 support
+* Added Thing2Literal for Django/MySQLdb compatibility
+* Removed errorhandler
+* Fixed GC errors
+* Improved test suite
+* Many bug fixes
+* Many performance improvements
+
+## 0.4
+* Miscellaneous bug fixes
+* Implementation of SSL support
+* Implementation of kill()
+* Cleaned up charset functionality
+* Fixed BIT type handling
+* Connections raise exceptions after they are close()'d
+* Full Py3k and unicode support
+
+## 0.3
+* Implemented most of the extended DBAPI 2.0 spec including callproc()
+* Fixed error handling to include the message from the server and support
+  multiple protocol versions.
+* Implemented ping()
+* Implemented unicode support (probably needs better testing)
+* Removed DeprecationWarnings
+* Ran against the MySQLdb unit tests to check for bugs
+* Added support for client_flag, charset, sql_mode, read_default_file,
+  use_unicode, cursorclass, init_command, and connect_timeout.
+* Refactoring for some more compatibility with MySQLdb including a fake
+  pymysql.version_info attribute.
+* Now runs with no warnings with the -3 command-line switch
+* Added test cases for all outstanding tickets and closed most of them.
+* Basic Jython support added.
+* Fixed empty result sets bug.
+* Integrated new unit tests and refactored the example into one.
+* Fixed bug with decimal conversion.
+* Fixed string encoding bug. Now unicode and binary data work!
+* Added very basic docstrings.
+
+## 0.2
+* Changed connection parameter name 'password' to 'passwd'
+  to make it more plugin replaceable for the other mysql clients.
+* Changed pack()/unpack() calls so it runs on 64 bit OSes too.
+* Added support for unix_socket.
+* Added support for no password.
+* Renamed decorders to decoders.
+* Better handling of non-existing decoder.
