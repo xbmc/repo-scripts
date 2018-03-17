@@ -35,11 +35,19 @@ class CastPlayer(xbmc.Player):
     def onPlayBackStarted(self):
         self.from_yt = False
         self.playing = True
-        self.youtubecastv1.report_playback_started(self.video_id, int(self.getTime()), self.ctt, self.list_id, self.current_index)
+
+        if not self.getTime():
+            playing_time = 0
+        else:
+            playing_time = self.getTime()
+
+        self.youtubecastv1.report_playback_started(self.video_id, int(playing_time), self.ctt, self.list_id, self.current_index)
+
         while not monitor.abortRequested():
             if self.playing:
                 try:
-                    self.youtubecastv1.report_playing_time(self.getPlayingStatusCode(), int(self.getTime()), int(self.getTotalTime()))
+                    if self.getTime():
+                        self.youtubecastv1.report_playing_time(self.getPlayingStatusCode(), int(self.getTime()), int(self.getTotalTime()))
                 except Exception as e:
                     logger.error(e)
                     logger.debug("Probably playback was stopped but we still have a request")

@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-
 from resources.lib.kodi import kodilogging
 from resources.lib.kodi.utils import get_setting_as_bool
 from resources.lib.tubecast.chromecast import Chromecast
