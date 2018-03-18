@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.tubecast" name="TubeCast" version="1.0.2" provider-name="enen92">
+<addon id="script.tubecast" name="TubeCast" version="1.0.3" provider-name="enen92">
     <requires>
         <import addon="xbmc.python" version="2.25.0"/>
         <import addon="script.module.bottle" version="0.12.0"/>
@@ -19,7 +19,10 @@
         <website></website>
         <email>enen92@kodi.tv</email>
         <source>https://github.com/enen92/script.tubecast</source>
-        <news>Fixes null playback time reporting</news>
+        <news>
+            Improve logging
+            Better control over events/playback reporting to youtube
+        </news>
         <disclaimer>This is not a full chromecast implementation nor will it ever be. It will only work as long as Google keep backwards compatibility with the cast v1 protocol in the Youtube application. Deeply inspired by Leapcast and gotubecast projects</disclaimer>
         <assets>
             <icon>resources/img/icon.png</icon>

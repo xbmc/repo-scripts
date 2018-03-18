@@ -43,9 +43,6 @@ class YoutubeCastV1(object):
         if dial:
             self._setup_routes(dial)
 
-        # Start "player" thread
-        threading.Thread(target=self.__player_thread).start()
-
     def _initial_app_state(self):
         self.session = requests.Session()
         self.ctt = None
@@ -171,6 +168,8 @@ class YoutubeCastV1(object):
             _, data = parse_cmd(cmd)
             logger.info("Remote connected: {}".format(data))
             self.has_client = True
+            # Start "player" thread
+            threading.Thread(target=self.__player_thread).start()
             # Start a new volume_monitor if not yet available
             if not self.volume_monitor:
                 threading.Thread(target=self.__monitor_volume).start()
@@ -297,15 +296,17 @@ class YoutubeCastV1(object):
     def report_playback_ended(self):
         # Inform current state (stopped)
         self.__post_bind("onStateChange", {"state": "4", "currentTime": "0", "duration": "0", "cpn": "foo"})
-        if self.cur_list and self.current_index + 1 < len(self.cur_list):
+        if self.cur_list and self.current_index and self.current_index + 1 < len(self.cur_list):
             self._next()
         else:
             self._ready()
 
     def report_playback_started(self, video_id, current_time, ctt, list_id, current_index):
+        logger.debug("Report playback started")
         self.__post_bind("nowPlaying", {"videoId": video_id, "currentTime": current_time, "ctt": ctt, "listId": list_id, "currentIndex": int(current_index), "state": "3"})
 
     def report_playing_time(self, play_state, current_time, duration):
+        logger.debug("Report playback current time")
         self.play_state = 1
         self.__post_bind("onStateChange", {"currentTime": str(current_time), "state": str(self.play_state), "duration": str(duration), "cpn": "foo"})
 
@@ -337,8 +338,11 @@ class YoutubeCastV1(object):
 
     def __player_thread(self):
         self.player = CastPlayer(youtubecastv1=self)
-        while not monitor.abortRequested():
+        while not monitor.abortRequested() and self.has_client:
             monitor.waitForAbort(1)
+        # Del player
+        del self.player
+        self.player = None
         # Break listener if present
         if self.listener:
             self.listener.force_stop()
