@@ -25,7 +25,7 @@ class CastPlayer(xbmc.Player):
         self.current_index = current_index
 
     def play_from_youtube(self, url):
-        self.from_y = True
+        self.from_yt = True
         self.play(url)
 
     @staticmethod
@@ -33,43 +33,49 @@ class CastPlayer(xbmc.Player):
         return 2 if xbmc.getInfoLabel('Player.Paused') else 1
 
     def onPlayBackStarted(self):
-        self.from_yt = False
         self.playing = True
 
-        if not self.getTime():
-            playing_time = 0
-        else:
-            playing_time = self.getTime()
+        if self.youtubecastv1.has_client and self.from_yt:
+            try:
+                playing_time = self.getTime()
+            except Exception:
+                playing_time = 0
 
-        self.youtubecastv1.report_playback_started(self.video_id, int(playing_time), self.ctt, self.list_id, self.current_index)
+            self.youtubecastv1.report_playback_started(self.video_id, int(playing_time), self.ctt, self.list_id, self.current_index)
 
-        while not monitor.abortRequested():
-            if self.playing:
-                try:
-                    if self.getTime():
-                        self.youtubecastv1.report_playing_time(self.getPlayingStatusCode(), int(self.getTime()), int(self.getTotalTime()))
-                except Exception as e:
-                    logger.error(e)
-                    logger.debug("Probably playback was stopped but we still have a request")
-                    self.youtubecastv1.report_playback_ended()
-                    self.playing = False
-            monitor.waitForAbort(5)
+            while not monitor.abortRequested() and self.playing:
+                if self.playing and self.from_yt:
+                    try:
+                        if self.getTime():
+                            self.youtubecastv1.report_playing_time(self.getPlayingStatusCode(), int(self.getTime()), int(self.getTotalTime()))
+                    except Exception as e:
+                        logger.error(e)
+                        logger.debug("Probably playback was stopped but we still have a request")
+                        self.youtubecastv1.report_playback_ended()
+                        self.playing = False
+                monitor.waitForAbort(5)
 
     def onPlayBackResumed(self):
-        self.playing = True
-        self.youtubecastv1.report_playing_time(self.getPlayingStatusCode(), int(self.getTime()), int(self.getTotalTime()))
+        if self.youtubecastv1.has_client and self.from_yt:
+            self.playing = True
+            self.youtubecastv1.report_playing_time(self.getPlayingStatusCode(), int(self.getTime()), int(self.getTotalTime()))
 
     def onPlayBackPaused(self):
-        self.playing = False
-        self.youtubecastv1.pause(int(self.getTime()), int(self.getTotalTime()))
+        if self.youtubecastv1.has_client and self.from_yt:
+            self.playing = False
+            self.youtubecastv1.pause(int(self.getTime()), int(self.getTotalTime()))
 
     def onPlaybackEnded(self):
-        self.playing = False
-        if not self.from_yt:
-            self.youtubecastv1.report_playback_ended()
+        if self.youtubecastv1.has_client:
+            self.playing = False
+            if self.from_yt:
+                self.youtubecastv1.report_playback_ended()
+        self.from_yt = False
 
     def onPlayBackSeek(self, time, seekOffset):
-        self.youtubecastv1.report_playing_time(self.getPlayingStatusCode(), int(self.getTime()), int(self.getTotalTime()))
+        if self.youtubecastv1.has_client and self.from_yt:
+            self.youtubecastv1.report_playing_time(self.getPlayingStatusCode(), int(self.getTime()), int(self.getTotalTime()))
 
     def onPlayBackStopped(self):
-        self.onPlaybackEnded()
+        if self.youtubecastv1.has_client:
+            self.onPlaybackEnded()

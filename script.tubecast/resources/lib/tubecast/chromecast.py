@@ -10,6 +10,8 @@ from wsgiref.simple_server import WSGIRequestHandler, WSGIServer, make_server
 from resources.lib.kodi import kodilogging
 from resources.lib.tubecast.dial import app
 
+import socket
+
 
 logger = kodilogging.get_logger()
 
@@ -17,7 +19,14 @@ logger = kodilogging.get_logger()
 class SilentWSGIRequestHandler(WSGIRequestHandler):
     """WSGI request handler with logging disabled"""
     def log_message(self, format, *args):
-        pass
+        logger.debug("{} - - {}".format(self.address_string(), format % args))
+
+    def handle(self):
+        try:
+            WSGIRequestHandler.handle(self)
+        except socket.error:
+            # Avoid garbage on the kodi log
+            pass
 
 
 class ThreadedWSGIServer(ThreadingMixIn, WSGIServer):
@@ -39,7 +48,7 @@ class Chromecast(object):
     def _run_server(self, host, port):
         self._server = make_server(host, port, app,
                                    server_class=ThreadedWSGIServer,
-                                   handler_class=WSGIRequestHandler)
+                                   handler_class=SilentWSGIRequestHandler)
         self._server.timeout = 0.1
         while not self._abort_var or not self._monitor.abortRequested():
             self._server.handle_request()
