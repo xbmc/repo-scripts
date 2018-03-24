@@ -45,7 +45,7 @@ class Logger(object):
         except: pass
 
     def Critical(self, s):
-        try: xbmc.log(str(s), xbmc.LOGERROR)
+        try: xbmc.log(str(s), xbmc.LOGFATAL)
         except: pass
 
     def Exception(self, s):
@@ -838,7 +838,7 @@ class PyHDHR(object):
             if guideno in chaninfos:
                 try:
                     response = urllib2.urlopen(chaninfos[guideno].getURL()+"?duration=1",None,5)
-                    return chaninfos[guideno].getURL()
+                    return chaninfos[guideno]
                 except Exception as e:
                     regx = re.search('HTTP Error 503:',str(e))
                     if regx != None:
@@ -911,6 +911,18 @@ class PyHDHR(object):
             else:
                 series[progs[key].getDisplayGroupTitle()].addEpisodeCount(1)
         return series
+                
+    def search(self,query):
+        self.discover()
+        foundprogs = {}
+        for guideno in self.ChannelArray:
+            for key in self.ChannelInfos[str(guideno)].getProgramInfos():
+                if(searchString(query,key.getTitle()) or
+                        searchString(query,key.getEpisodeTitle()) or
+                        searchString(query,key.getSynopsis())
+                ):
+                    foundprogs[str(guideno)] = key
+        return foundprogs
         
     def searchWhatsOn(self,query):
         self.discover()
