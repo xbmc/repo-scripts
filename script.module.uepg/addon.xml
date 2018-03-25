@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<addon id="script.module.uepg" version="1.0.2" name="uEPG" provider-name="Lunatixz">
+<addon id="script.module.uepg" version="1.0.3" name="uEPG" provider-name="Lunatixz">
     <requires>
         <import addon="xbmc.python" version="2.25.0"/>
         <import addon="script.module.pyhdhr" version="1.0.0"/>
@@ -14,7 +14,7 @@
         <source>https://github.com/Lunatixz/KODI_Addons/tree/master/script.module.uepg</source>
         <website></website>
         <forum>https://forum.kodi.tv/showthread.php?tid=321231</forum>
-        <news>[CR]1.0.2[CR]- Added HDHomerun Tuner Support</news>
+        <news>v1.0.3[CR]- Fixed listitem Parsing and Default Skin[CR]1.0.2[CR]- Added HDHomerun Tuner Support</news>
         <assets>
             <icon>resources/images/icon.png</icon>
         </assets>

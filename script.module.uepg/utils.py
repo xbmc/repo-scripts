@@ -131,7 +131,9 @@ def trimString(content, limit=250, suffix='...'):
     return content[:limit].rsplit(' ', 1)[0]+suffix
     
 def getGenreColor(genre):
-    genre = genre.split(' / ')[0]
+    genre = genre.split(' / ')
+    if len(genre) > 5: return 'ButtonNoFocus'
+    else: genre = genre[0]
     # return random.choice(GENRE_TYPES)[0] #test
     if genre in COLOR_RED_TYPE: return 'RED'
     elif genre in COLOR_GREEN_TYPE: return 'GREEN'
@@ -382,8 +384,7 @@ class RPCHelper(object):
              
     def cacheJSON(self, command, life=datetime.timedelta(minutes=15)):
         log('cacheJSON')
-        if DEBUG: cacheResponse = None
-        else: cacheResponce = self.cache.get(ADDON_NAME + '.cacheJSON, command = %s'%(command))
+        cacheResponce = self.cache.get(ADDON_NAME + '.cacheJSON, command = %s'%(command))
         if not cacheResponce or DEBUG == True:
             data = self.sendJSON(command)
             self.cache.set(ADDON_NAME + '.cacheJSON, command = %s'%(command), ((data)), expiration=life)
@@ -434,13 +435,15 @@ class HDHR(object):
                     tmpdata['endtime']     = endtime
                     tmpdata['starttime']   = starttime
                     tmpdata['duration']    = runtime
-                    tmpdata['mediatype']   = 'episode' #MEDIA_TYPES[mediatype.upper()]
+                    try: mtype             = MTYPES[program.getEpisodeNumber()[:2]]
+                    except: mtype = 'episode'
+                    tmpdata['mediatype']   = mtype
                     tmpdata['url']         = chan.getURL()
                     tmpdata['label2']      = "HD" if isHD else ""
                     tmpdata['aired']       = (datetime.datetime.fromtimestamp((airdate or starttime))).strftime('%Y-%m-%d')
                     thumb                  = (program.getImageURL() or logo)
                     tmpdata['art']         = {"thumb":thumb,"poster":thumb,"clearlogo":logo}
-                    tmpdata['genre']       = list(set([x.getName() for x in program.getProgramFilters()]))
+                    tmpdata['genre']       = []
                     tmpdata['plot']        = trimString(program.getSynopsis())
                     tmpdata['ishdhomerun'] = 'okay'
                     isNEW = False
