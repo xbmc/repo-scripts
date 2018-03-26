@@ -1,0 +1,77 @@
+# Kodi Media Center language file
+# Addon Name: Last.fm
+# Addon id: service.scrobbler.lastfm
+# Addon Provider: Team-Kodi
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: Croatian (http://www.transifex.com/projects/p/xbmc-addons/language/hr/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: hr\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+
+msgctxt "#30000"
+msgid "General"
+msgstr "Općenito"
+
+msgctxt "#30001"
+msgid "Submit songs to Last.fm"
+msgstr "Prijavi pjesme na Last.fm"
+
+msgctxt "#30002"
+msgid "Submit streaming radio to Last.fm"
+msgstr "Prijavi stremanje radija na Last.fm"
+
+msgctxt "#30003"
+msgid "Last.fm username"
+msgstr "Last.fm korisničko Ime"
+
+msgctxt "#30004"
+msgid "Last.fm password"
+msgstr "Last.fm lozinka"
+
+msgctxt "#30005"
+msgid "Confirm Love/Ban submissions"
+msgstr "Potvrdi Sviđa-mi-se/Zabrana prijavu"
+
+msgctxt "#32011"
+msgid "Last.fm"
+msgstr "Last.fm"
+
+msgctxt "#32012"
+msgid "Do you want to add the current track to your loved tracks?"
+msgstr "Želite li dodati trenutnu pjesmu, pjesmama koje vam se sviđaju?"
+
+msgctxt "#32013"
+msgid "Do you want to ban the current track?"
+msgstr "Želite li zabraniti trenutnu pjesmu?"
+
+msgctxt "#32014"
+msgid "Added to your loved tracks: '%s'."
+msgstr "Dodano pjesmama koje vam se sviđaju: '%s'."
+
+msgctxt "#32015"
+msgid "Could not add '%s' to your loved tracks."
+msgstr "Nemoguće dodavanje '%s' pjesmama koje vam se sviđaju."
+
+msgctxt "#32016"
+msgid "Banned: '%s'."
+msgstr "Zabranjeno: '%s'."
+
+msgctxt "#32017"
+msgid "Could not ban '%s'."
+msgstr "Nemoguća zabrana '%s'."
+
+msgctxt "#32026"
+msgid "Connect to Last.fm failed"
+msgstr "Neuspjelo povezivanje na Last.fm"
+
+msgctxt "#32027"
+msgid "No username or password provided"
+msgstr "Korisničko ime ili lozinka nisu dostupni"

@@ -1,0 +1,77 @@
+# Kodi Media Center language file
+# Addon Name: Last.fm
+# Addon id: service.scrobbler.lastfm
+# Addon Provider: Team-Kodi
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: Korean (http://www.transifex.com/projects/p/xbmc-addons/language/ko/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ko\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgctxt "#30000"
+msgid "General"
+msgstr "일반"
+
+msgctxt "#30001"
+msgid "Submit songs to Last.fm"
+msgstr "노래 정보를 Last.fm에 전송"
+
+msgctxt "#30002"
+msgid "Submit streaming radio to Last.fm"
+msgstr "스트리밍 라디오 정보를 Last.fm에 전송"
+
+msgctxt "#30003"
+msgid "Last.fm username"
+msgstr "Last.fm 사용자명"
+
+msgctxt "#30004"
+msgid "Last.fm password"
+msgstr "Last.fm 비밀번호"
+
+msgctxt "#30005"
+msgid "Confirm Love/Ban submissions"
+msgstr "좋아함/싫어함 전송 확인"
+
+msgctxt "#32011"
+msgid "Last.fm"
+msgstr "Last.fm"
+
+msgctxt "#32012"
+msgid "Do you want to add the current track to your loved tracks?"
+msgstr "현재 트랙을 좋아하는 트랙에 추가하겠습니까?"
+
+msgctxt "#32013"
+msgid "Do you want to ban the current track?"
+msgstr "현재 트랙을 제거하겠습니까?"
+
+msgctxt "#32014"
+msgid "Added to your loved tracks: '%s'."
+msgstr "좋아하는 트랙에 추가됨: '%s'."
+
+msgctxt "#32015"
+msgid "Could not add '%s' to your loved tracks."
+msgstr "'%s' 을(를) 좋아하는 트랙에 추가할 수 없습니다."
+
+msgctxt "#32016"
+msgid "Banned: '%s'."
+msgstr "싫어함: '%s'."
+
+msgctxt "#32017"
+msgid "Could not ban '%s'."
+msgstr "'%s' 을(를) 싫어함으로 설정하지 못함."
+
+msgctxt "#32026"
+msgid "Connect to Last.fm failed"
+msgstr "Last.fm 연결 실패"
+
+msgctxt "#32027"
+msgid "No username or password provided"
+msgstr "사용자이름 또는 비밀번호를 입력하세요"

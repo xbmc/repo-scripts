@@ -1,0 +1,77 @@
+# Kodi Media Center language file
+# Addon Name: Last.fm
+# Addon id: service.scrobbler.lastfm
+# Addon Provider: Team-Kodi
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: Polish (http://www.transifex.com/projects/p/xbmc-addons/language/pl/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: pl\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+
+msgctxt "#30000"
+msgid "General"
+msgstr "Ogólne"
+
+msgctxt "#30001"
+msgid "Submit songs to Last.fm"
+msgstr "Publikuj odtwarzane utwory w serwisie Last.fm"
+
+msgctxt "#30002"
+msgid "Submit streaming radio to Last.fm"
+msgstr "Publikuj radio internetowe do serwisu Last.fm"
+
+msgctxt "#30003"
+msgid "Last.fm username"
+msgstr "Nazwa użytkownika Last.fm"
+
+msgctxt "#30004"
+msgid "Last.fm password"
+msgstr "Hasło Last.fm"
+
+msgctxt "#30005"
+msgid "Confirm Love/Ban submissions"
+msgstr "Potwierdź zgłoszenia Ulubionych/Zablokowanych"
+
+msgctxt "#32011"
+msgid "Last.fm"
+msgstr "Last.fm"
+
+msgctxt "#32012"
+msgid "Do you want to add the current track to your loved tracks?"
+msgstr "Na pewno chcesz dodać ten utwór do ulubionych?"
+
+msgctxt "#32013"
+msgid "Do you want to ban the current track?"
+msgstr "Na pewno chcesz zablokować ten utwór?"
+
+msgctxt "#32014"
+msgid "Added to your loved tracks: '%s'."
+msgstr "Dodano do ulubionych: „%s”."
+
+msgctxt "#32015"
+msgid "Could not add '%s' to your loved tracks."
+msgstr "Nie mogę dodać '%s' do twoich ulubionych ścieżek."
+
+msgctxt "#32016"
+msgid "Banned: '%s'."
+msgstr "Zablokowano: „%s”."
+
+msgctxt "#32017"
+msgid "Could not ban '%s'."
+msgstr "Nie można zablokować „%s”."
+
+msgctxt "#32026"
+msgid "Connect to Last.fm failed"
+msgstr "Połączenie z Last.fm nie powiodło się"
+
+msgctxt "#32027"
+msgid "No username or password provided"
+msgstr "Nie podano nazwy uzytkownika i/lub hasła"

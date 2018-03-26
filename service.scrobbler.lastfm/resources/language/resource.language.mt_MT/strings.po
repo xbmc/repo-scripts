@@ -1,0 +1,61 @@
+# Kodi Media Center language file
+# Addon Name: Last.fm
+# Addon id: service.scrobbler.lastfm
+# Addon Provider: Team-Kodi
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: Maltese (http://www.transifex.com/projects/p/xbmc-addons/language/mt/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: mt\n"
+"Plural-Forms: nplurals=4; plural=(n==1 ? 0 : n==0 || ( n%100>1 && n%100<11) ? 1 : (n%100>10 && n%100<20 ) ? 2 : 3);\n"
+
+msgctxt "#30000"
+msgid "General"
+msgstr "Ġenerali"
+
+msgctxt "#30001"
+msgid "Submit songs to Last.fm"
+msgstr "Ibgħat Diski lil LastFM"
+
+msgctxt "#30003"
+msgid "Last.fm username"
+msgstr "LastFM Username"
+
+msgctxt "#30004"
+msgid "Last.fm password"
+msgstr "LastFM Sigriet"
+
+msgctxt "#32011"
+msgid "Last.fm"
+msgstr "LastFM"
+
+msgctxt "#32012"
+msgid "Do you want to add the current track to your loved tracks?"
+msgstr "Trid iżżid din it-trekk mal-lista ta’ treks li tħobb?"
+
+msgctxt "#32013"
+msgid "Do you want to ban the current track?"
+msgstr "Trid tagħmel bojkott li din it-trekk?"
+
+msgctxt "#32014"
+msgid "Added to your loved tracks: '%s'."
+msgstr "Miżjud mat-treks li tħobb: '%s'."
+
+msgctxt "#32015"
+msgid "Could not add '%s' to your loved tracks."
+msgstr "Problema biex iżżid '%s' mal-lista ta’ treks li tħobb."
+
+msgctxt "#32016"
+msgid "Banned: '%s'."
+msgstr "Bojkott: '%s'."
+
+msgctxt "#32017"
+msgid "Could not ban '%s'."
+msgstr "Problema biex tagħmel bojkott lil '%s'."
