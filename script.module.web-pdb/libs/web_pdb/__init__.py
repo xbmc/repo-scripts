@@ -80,7 +80,9 @@ class WebPdb(Pdb):
         # than the main script, e.g. Kodi mediacenter built-in Python.
         orig_cwd = os.getcwd()
         try:
-            os.chdir(os.path.dirname(self.curframe.f_code.co_filename))
+            os.chdir(os.path.dirname(
+                os.path.abspath(self.curframe.f_code.co_filename))
+            )
             Pdb.do_clear(self, arg)
         finally:
             os.chdir(orig_cwd)
@@ -129,10 +131,12 @@ class WebPdb(Pdb):
             lines = [line.decode('utf-8') for line in lines]
         return {
             'filename': os.path.basename(filename),
-            'listing': ''.join(lines),
-            'curr_line': self.curframe.f_lineno,
+            'file_listing': ''.join(lines),
+            'current_line': self.curframe.f_lineno,
             'total_lines': len(lines),
-            'breaklist': self.get_file_breaks(filename),
+            'breakpoints': self.get_file_breaks(filename),
+            'globals': self.get_globals(),
+            'locals': self.get_locals()
         }
 
     def _format_variables(self, raw_vars):
