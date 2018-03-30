@@ -28,38 +28,23 @@ File-like web-based input/output console
 from __future__ import absolute_import, unicode_literals
 import sys
 import weakref
-from socket import gethostname
 from threading import Thread, Event, RLock
 try:
     import queue
 except ImportError:
     import Queue as queue
-try:
-    from socketserver import ThreadingMixIn
-except ImportError:
-    from SocketServer import ThreadingMixIn
-from wsgiref.simple_server import make_server, WSGIServer, WSGIRequestHandler
+from .asyncore_wsgi import make_server, AsyncWebSocketHandler
 import xbmc
 from xbmcaddon import Addon
 from xbmcgui import DialogProgressBG
 from .wsgi_app import app
+from .logging import getLogger
 
 __all__ = ['WebConsole']
 
 kodi_monitor = xbmc.Monitor()
 addon = Addon('script.module.web-pdb')
-
-
-class SilentWSGIRequestHandler(WSGIRequestHandler):
-    """WSGI request handler with logging disabled"""
-    def log_message(self, format, *args):
-        pass
-
-
-class ThreadedWSGIServer(ThreadingMixIn, WSGIServer):
-    """Multi-Threaded WSGI server"""
-    daemon_threads = True
-    allow_reuse_address = True
+logger = getLogger(__name__)
 
 
 class ThreadSafeBuffer(object):
@@ -91,17 +76,38 @@ class ThreadSafeBuffer(object):
             self._is_dirty = True
 
 
+class WebConsoleSocket(AsyncWebSocketHandler):
+    """
+    WebConsoleSocket receives PDB commands from the front-end and
+    sends pings to client(s) about console updates
+    """
+    clients = []
+    input_queue = queue.Queue()
+
+    @classmethod
+    def send_message(cls, msg):
+        for cl in cls.clients:
+            if cl.handshaked:
+                cl.sendMessage(msg)  # sendMessage uses deque so it is thread-safe
+
+    def handleConnected(self):
+        self.clients.append(self)
+
+    def handleMessage(self):
+        self.input_queue.put(self.data)
+
+    def handleClose(self):
+        self.clients.remove(self)
+
+
 class WebConsole(object):
     """
     A file-like class for exchanging data between PDB and the web-UI
     """
     def __init__(self, host, port, debugger):
         self._debugger = weakref.proxy(debugger)
-        self._history = ThreadSafeBuffer('')
-        self._globals = ThreadSafeBuffer('')
-        self._locals = ThreadSafeBuffer('')
+        self._console_history = ThreadSafeBuffer('')
         self._frame_data = ThreadSafeBuffer()
-        self._in_queue = queue.Queue()
         self._stop_all = Event()
         self._server_thread = Thread(target=self._run_server, args=(host, port))
         self._server_thread.daemon = True
@@ -124,85 +130,80 @@ class WebConsole(object):
         return self._stop_all.is_set()
 
     def _run_server(self, host, port):
-        app.in_queue = self._in_queue
-        app.history = self._history
-        app.globals = self._globals
-        app.locals = self._locals
         app.frame_data = self._frame_data
-        httpd = make_server(host, port, app,
-                            server_class=ThreadedWSGIServer,
-                            handler_class=SilentWSGIRequestHandler)
-        httpd.timeout = 0.1
-        hostname = gethostname()
-        xbmc.log('Web-PDB: starting web-server on {0}:{1}...'.format(hostname, port),
-                 xbmc.LOGNOTICE)
+        httpd = make_server(host, port, app, ws_handler_class=WebConsoleSocket)
+        logger.info('Web-PDB: starting web-server on {0}:{1}...'.format(
+                httpd.server_name, port)
+        )
         dialog = DialogProgressBG()
         started = False
         while not (self._stop_all.is_set() or kodi_monitor.abortRequested()):
-            httpd.handle_request()
+            try:
+                httpd.handle_request()
+            except SystemExit:
+                break
             if not started:
-                xbmc.log('Web-PDB: web-server started.', xbmc.LOGNOTICE)
+                logger.info('Web-PDB: web-server started.')
                 dialog.create(
                     addon.getLocalizedString(32001),
-                    addon.getLocalizedString(32002).format(hostname, port)
+                    addon.getLocalizedString(32002).format(
+                        httpd.server_name, port
+                    )
                 )
                 dialog.update(100)
                 started = True
-        httpd.socket.close()
-        xbmc.log('Web-PDB: web-server stopped.', xbmc.LOGNOTICE)
+        httpd.handle_close()
+        logger.info('Web-PDB: web-server stopped.')
         dialog.close()
 
     def readline(self):
         while not (self._stop_all.is_set() or kodi_monitor.abortRequested()):
             try:
-                data = self._in_queue.get(timeout=0.1)
+                data = WebConsoleSocket.input_queue.get(timeout=0.1)
                 break
             except queue.Empty:
                 continue
         else:
-            data = ''
+            data = '\n'
         self.writeline(data)
         return data
 
     read = readline
 
-    def readlines(self):
-        return [self.readline()]
-
     def writeline(self, data):
         if sys.version_info[0] == 2 and isinstance(data, str):
             data = data.decode('utf-8')
-        self._history.contents += data
+        self._console_history.contents += data
         try:
-            self._globals.contents = self._debugger.get_globals()
-            self._locals.contents = self._debugger.get_locals()
-            self._frame_data.contents = self._debugger.get_current_frame_data()
+            frame_data = self._debugger.get_current_frame_data()
         except (IOError, AttributeError):
-            self._globals.contents = self._locals.contents = 'No data available'
-            self._frame_data.contents = {
+            frame_data = {
                 'filename': '',
-                'listing': 'No data available',
-                'curr_line': -1,
-                'breaklist': [],
+                'file_listing': 'No data available',
+                'current_line': -1,
+                'total_lines': -1,
+                'breakpoints': [],
+                'globals': 'No data available',
+                'locals': 'No data available'
             }
+        frame_data['console_history'] = self._console_history.contents
+        self._frame_data.contents = frame_data
+        WebConsoleSocket.send_message('ping')  # Ping all clients about data update
 
     write = writeline
 
-    def writelines(self, lines):
-        for line in lines:
-            self.writeline(line)
-
     def flush(self):
         """
-        Wait until history is read but no more than 5 cycles
+        Wait until history is read but no more than 10 cycles
         in case a browser session is closed.
         """
         i = 0
-        while self._history.is_dirty and i <= 5 and not kodi_monitor.abortRequested():
+        while (self._frame_data.is_dirty and i < 10 and
+               not kodi_monitor.abortRequested()):
             i += 1
-            xbmc.sleep(200)
+            xbmc.sleep(100)
 
     def close(self):
-        xbmc.log('Web-PDB: stopping web-server...', xbmc.LOGNOTICE)
+        logger.info('Web-PDB: stopping web-server...')
         self._stop_all.set()
         self._server_thread.join()
