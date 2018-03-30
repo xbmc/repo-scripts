@@ -6,10 +6,11 @@
 import os
 import sys
 from copy import deepcopy
-import xbmc
+from pprint import pformat
 from xbmcaddon import Addon
 from xbmcgui import Dialog
 import pyxbmct
+import logger
 from medialibrary import (get_movies, get_tvshows, get_episodes,
                           get_recent_movies, get_recent_episodes, get_tvdb_id,
                           NoDataError)
@@ -86,12 +87,10 @@ def send_data(data):
     try:
         update_data(data)
     except LoginError:
-        xbmc.log('next-episode.net: login failed! '
-                 'Re-enter your username and password.',
-                 xbmc.LOGERROR)
+        logger.log_error('Login failed! Re-enter your username and password.')
         dialog.notification('next-episode.net', ui_string(32007), icon='error')
     except DataUpdateError as ex:
-        xbmc.log('next-episode.net: {0}'.format(ex), xbmc.LOGERROR)
+        logger.log_error(str(ex))
         if addon.getSetting('disable_error_dialogs') != 'true':
             dialog.ok('next-epsisode.net',
                       ui_string(32020),
@@ -114,7 +113,7 @@ def log_data_sent(data):
     """
     logged_data = deepcopy(data)
     logged_data['user']['username'] = logged_data['user']['hash'] = '*****'
-    xbmc.log('next-episode: data sent:\n{0}'.format(logged_data), xbmc.LOGDEBUG)
+    logger.log_debug('Data sent:\n{0}'.format(pformat(logged_data)))
 
 
 def sync_library():
@@ -149,9 +148,8 @@ def sync_library():
             log_data_sent(data)
             send_data(data)
         else:
-            xbmc.log(
-                'next-episode: Kodi video library has no movies and TV episodes.',
-                xbmc.LOGWARNING
+            logger.log_warning(
+                'Kodi video library has no movies and TV episodes.'
             )
 
 
@@ -176,9 +174,8 @@ def sync_new_items():
         log_data_sent(data)
         send_data(data)
     else:
-        xbmc.log(
-            'next-episode.net: Kodi video library has no recent movies and episodes.',
-            xbmc.LOGWARNING
+        logger.log_warning(
+            'Kodi video library has no recent movies and episodes.'
         )
 
 
@@ -233,11 +230,11 @@ def login():
                 hash_ = get_password_hash(username, password)
             except LoginError:
                 dialog.ok('next-episode.net', ui_string(32007), ui_string(32010))
-                xbmc.log('next-episode.net: login failed!', xbmc.LOGERROR)
+                logger.log_error('Login failed!')
             else:
                 addon.setSetting('username', username)
                 addon.setSetting('hash', hash_)
-                xbmc.log('next-episode.net: successful login', xbmc.LOGDEBUG)
+                logger.log_debug('Successful login')
                 dialog.notification('next-episode.net', ui_string(32011),
                                     time=3000, sound=False)
                 result = True

@@ -3,11 +3,11 @@
 # Author: Roman Miroshnychenko aka Roman V.M. (romanvm@yandex.ua)
 # License: GPL v. 3 <http://www.gnu.org/licenses/gpl-3.0.en.html>
 
-import xbmc
+from libs.logger import log_notice
 from libs.monitoring import UpdateMonitor, initial_prompt
 
 initial_prompt()
 update_monitor = UpdateMonitor()
-xbmc.log('next-episode.net: service started', xbmc.LOGNOTICE)
+log_notice('Service started')
 update_monitor.waitForAbort()
-xbmc.log('next-episode.net: service stopped', xbmc.LOGNOTICE)
+log_notice('Service stopped')
