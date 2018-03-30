@@ -6,6 +6,7 @@
 import json
 import xbmc
 from xbmcgui import Dialog
+import logger
 from commands import (sync_library, sync_new_items, login, addon,
                       update_single_item)
 from medialibrary import get_item_details
@@ -23,7 +24,7 @@ class UpdateMonitor(xbmc.Monitor):
     def onScanFinished(self, library):
         if library == 'video':
             sync_new_items()
-            xbmc.log('next-episode.net: new items updated', xbmc.LOGDEBUG)
+            logger.log_debug('New items updated')
 
     def onNotification(self, sender, method, data):
         """

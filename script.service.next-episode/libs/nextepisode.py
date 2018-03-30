@@ -5,8 +5,9 @@
 
 import json
 from copy import deepcopy
+from pprint import pformat
 from requests import post
-import xbmc
+import logger
 from medialibrary import get_tvdb_id
 
 UPDATE_DATA = 'https://next-episode.net/api/kodi/v1/update_data'
@@ -73,7 +74,7 @@ def web_client(url, data=None):
     logged_data = deepcopy(result)
     if 'hash' in logged_data:
         logged_data['hash'] = '*****'
-    xbmc.log('next-episode reply:\n{0}'.format(logged_data), xbmc.LOGDEBUG)
+    logger.log_debug('next-episode reply:\n{0}'.format(pformat(logged_data)))
     return result
 
 
@@ -153,15 +154,15 @@ def prepare_episodes_list(raw_episodes):
     listing = []
     thetvdb_id_map = {}
     for episode in raw_episodes:
-        season_n = str(episode['season'])
-        episode_n = str(episode['episode'])
+        season_num = str(episode['season'])
+        episode_num = str(episode['episode'])
         watched = '1' if episode['playcount'] else '0'
         if episode['tvshowid'] not in thetvdb_id_map:
             thetvdb_id_map[episode['tvshowid']] = get_tvdb_id(episode['tvshowid'])
         listing.append(
             {'thetvdb_id': thetvdb_id_map[episode['tvshowid']],
-             'season': season_n,
-             'episode': episode_n,
+             'season': season_num,
+             'episode': episode_num,
              'watched': watched}
         )
     return listing
