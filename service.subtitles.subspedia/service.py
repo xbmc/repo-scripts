@@ -24,8 +24,8 @@ temp = xbmc.translatePath( os.path.join( profile, 'temp','') ).decode("utf-8")
 
 def Search(item):
     if 'ita' in item['3let_language'] and item['tvshow']:
-        urlgetid="http://www.subspedia.tv/API/getAllSeries.php"
-        urlgetsub="http://www.subspedia.tv/API/getBySerie.php?serie="
+        urlgetid="https://www.subspedia.tv/API/elenco_serie"
+        urlgetsub="https://www.subspedia.tv/API/sottotitoli_serie?serie="
         idserie=checkexp(item['tvshow'])
         linkdownload=""
         eptitolo=""  
