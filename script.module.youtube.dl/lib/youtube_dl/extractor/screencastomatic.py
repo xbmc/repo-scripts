@@ -2,11 +2,7 @@
 from __future__ import unicode_literals
 
 from .common import InfoExtractor
-from ..compat import compat_urlparse
-from ..utils import (
-    ExtractorError,
-    js_to_json,
-)
+from ..utils import js_to_json
 
 
 class ScreencastOMaticIE(InfoExtractor):
@@ -18,8 +14,9 @@ class ScreencastOMaticIE(InfoExtractor):
             'id': 'c2lD3BeOPl',
             'ext': 'mp4',
             'title': 'Welcome to 3-4 Philosophy @ DECV!',
-            'thumbnail': 're:^https?://.*\.jpg$',
+            'thumbnail': r're:^https?://.*\.jpg$',
             'description': 'as the title says! also: some general info re 1) VCE philosophy and 2) distance learning.',
+            'duration': 369.163,
         }
     }
 
@@ -27,23 +24,14 @@ class ScreencastOMaticIE(InfoExtractor):
         video_id = self._match_id(url)
         webpage = self._download_webpage(url, video_id)
 
-        setup_js = self._search_regex(
-            r"(?s)jwplayer\('mp4Player'\).setup\((\{.*?\})\);",
-            webpage, 'setup code')
-        data = self._parse_json(setup_js, video_id, transform_source=js_to_json)
-        try:
-            video_data = next(
-                m for m in data['modes'] if m.get('type') == 'html5')
-        except StopIteration:
-            raise ExtractorError('Could not find any video entries!')
-        video_url = compat_urlparse.urljoin(url, video_data['config']['file'])
-        thumbnail = data.get('image')
+        jwplayer_data = self._parse_json(
+            self._search_regex(
+                r"(?s)jwplayer\('mp4Player'\).setup\((\{.*?\})\);", webpage, 'setup code'),
+            video_id, transform_source=js_to_json)
 
-        return {
-            'id': video_id,
+        info_dict = self._parse_jwplayer_data(jwplayer_data, video_id, require_title=False)
+        info_dict.update({
             'title': self._og_search_title(webpage),
             'description': self._og_search_description(webpage),
-            'url': video_url,
-            'ext': 'mp4',
-            'thumbnail': thumbnail,
-        }
+        })
+        return info_dict

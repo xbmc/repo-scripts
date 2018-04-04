@@ -1,18 +1,20 @@
-# -*- coding: utf-8 -*-
+# coding: utf-8
 from __future__ import unicode_literals
 
-import base64
 import binascii
 import re
 import json
 
 from .common import InfoExtractor
+from ..compat import (
+    compat_b64decode,
+    compat_ord,
+)
 from ..utils import (
     ExtractorError,
     qualities,
     determine_ext,
 )
-from ..compat import compat_ord
 
 
 class TeamcocoIE(InfoExtractor):
@@ -88,7 +90,7 @@ class TeamcocoIE(InfoExtractor):
         preload_codes = self._html_search_regex(
             r'(function.+)setTimeout\(function\(\)\{playlist',
             webpage, 'preload codes')
-        base64_fragments = re.findall(r'"([a-zA-z0-9+/=]+)"', preload_codes)
+        base64_fragments = re.findall(r'"([a-zA-Z0-9+/=]+)"', preload_codes)
         base64_fragments.remove('init')
 
         def _check_sequence(cur_fragments):
@@ -97,7 +99,7 @@ class TeamcocoIE(InfoExtractor):
             for i in range(len(cur_fragments)):
                 cur_sequence = (''.join(cur_fragments[i:] + cur_fragments[:i])).encode('ascii')
                 try:
-                    raw_data = base64.b64decode(cur_sequence)
+                    raw_data = compat_b64decode(cur_sequence)
                     if compat_ord(raw_data[0]) == compat_ord('{'):
                         return json.loads(raw_data.decode('utf-8'))
                 except (TypeError, binascii.Error, UnicodeDecodeError, ValueError):

@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 import re
 
 from .common import InfoExtractor
+from ..compat import compat_str
 from ..utils import (
     int_or_none,
     sanitized_Request,
@@ -17,16 +18,16 @@ class YouPornIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?youporn\.com/watch/(?P<id>\d+)/(?P<display_id>[^/?#&]+)'
     _TESTS = [{
         'url': 'http://www.youporn.com/watch/505835/sex-ed-is-it-safe-to-masturbate-daily/',
-        'md5': '71ec5fcfddacf80f495efa8b6a8d9a89',
+        'md5': '3744d24c50438cf5b6f6d59feb5055c2',
         'info_dict': {
             'id': '505835',
             'display_id': 'sex-ed-is-it-safe-to-masturbate-daily',
             'ext': 'mp4',
             'title': 'Sex Ed: Is It Safe To Masturbate Daily?',
             'description': 'Love & Sex Answers: http://bit.ly/DanAndJenn -- Is It Unhealthy To Masturbate Daily?',
-            'thumbnail': 're:^https?://.*\.jpg$',
+            'thumbnail': r're:^https?://.*\.jpg$',
             'uploader': 'Ask Dan And Jennifer',
-            'upload_date': '20101221',
+            'upload_date': '20101217',
             'average_rating': int,
             'view_count': int,
             'comment_count': int,
@@ -35,7 +36,7 @@ class YouPornIE(InfoExtractor):
             'age_limit': 18,
         },
     }, {
-        # Anonymous User uploader
+        # Unknown uploader
         'url': 'http://www.youporn.com/watch/561726/big-tits-awesome-brunette-on-amazing-webcam-show/?from=related3&al=2&from_id=561726&pos=4',
         'info_dict': {
             'id': '561726',
@@ -43,9 +44,9 @@ class YouPornIE(InfoExtractor):
             'ext': 'mp4',
             'title': 'Big Tits Awesome Brunette On amazing webcam show',
             'description': 'http://sweetlivegirls.com Big Tits Awesome Brunette On amazing webcam show.mp4',
-            'thumbnail': 're:^https?://.*\.jpg$',
-            'uploader': 'Anonymous User',
-            'upload_date': '20111125',
+            'thumbnail': r're:^https?://.*\.jpg$',
+            'uploader': 'Unknown',
+            'upload_date': '20110418',
             'average_rating': int,
             'view_count': int,
             'comment_count': int,
@@ -68,28 +69,46 @@ class YouPornIE(InfoExtractor):
         webpage = self._download_webpage(request, display_id)
 
         title = self._search_regex(
-            [r'(?:video_titles|videoTitle)\s*[:=]\s*(["\'])(?P<title>.+?)\1',
-             r'<h1[^>]+class=["\']heading\d?["\'][^>]*>([^<])<'],
-            webpage, 'title', group='title')
+            [r'(?:video_titles|videoTitle)\s*[:=]\s*(["\'])(?P<title>(?:(?!\1).)+)\1',
+             r'<h1[^>]+class=["\']heading\d?["\'][^>]*>(?P<title>[^<]+)<'],
+            webpage, 'title', group='title',
+            default=None) or self._og_search_title(
+            webpage, default=None) or self._html_search_meta(
+            'title', webpage, fatal=True)
 
         links = []
 
+        # Main source
+        definitions = self._parse_json(
+            self._search_regex(
+                r'mediaDefinition\s*=\s*(\[.+?\]);', webpage,
+                'media definitions', default='[]'),
+            video_id, fatal=False)
+        if definitions:
+            for definition in definitions:
+                if not isinstance(definition, dict):
+                    continue
+                video_url = definition.get('videoUrl')
+                if isinstance(video_url, compat_str) and video_url:
+                    links.append(video_url)
+
+        # Fallback #1, this also contains extra low quality 180p format
+        for _, link in re.findall(r'<a[^>]+href=(["\'])(http.+?)\1[^>]+title=["\']Download [Vv]ideo', webpage):
+            links.append(link)
+
+        # Fallback #2 (unavailable as at 22.06.2017)
         sources = self._search_regex(
             r'(?s)sources\s*:\s*({.+?})', webpage, 'sources', default=None)
         if sources:
             for _, link in re.findall(r'[^:]+\s*:\s*(["\'])(http.+?)\1', sources):
                 links.append(link)
 
-        # Fallback #1
+        # Fallback #3 (unavailable as at 22.06.2017)
         for _, link in re.findall(
-                r'(?:videoUrl|videoSrc|videoIpadUrl|html5PlayerSrc)\s*[:=]\s*(["\'])(http.+?)\1', webpage):
+                r'(?:videoSrc|videoIpadUrl|html5PlayerSrc)\s*[:=]\s*(["\'])(http.+?)\1', webpage):
             links.append(link)
 
-        # Fallback #2, this also contains extra low quality 180p format
-        for _, link in re.findall(r'<a[^>]+href=(["\'])(http.+?)\1[^>]+title=["\']Download [Vv]ideo', webpage):
-            links.append(link)
-
-        # Fallback #3, encrypted links
+        # Fallback #4, encrypted links (unavailable as at 22.06.2017)
         for _, encrypted_link in re.findall(
                 r'encryptedQuality\d{3,4}URL\s*=\s*(["\'])([\da-zA-Z+/=]+)\1', webpage):
             links.append(aes_decrypt_text(encrypted_link, title, 32).decode('utf-8'))
@@ -121,36 +140,37 @@ class YouPornIE(InfoExtractor):
             webpage, 'thumbnail', fatal=False, group='thumbnail')
 
         uploader = self._html_search_regex(
-            r'(?s)<div[^>]+class=["\']videoInfoBy(?:\s+[^"\']+)?["\'][^>]*>\s*By:\s*</div>(.+?)</(?:a|div)>',
+            r'(?s)<div[^>]+class=["\']submitByLink["\'][^>]*>(.+?)</div>',
             webpage, 'uploader', fatal=False)
         upload_date = unified_strdate(self._html_search_regex(
-            r'(?s)<div[^>]+class=["\']videoInfoTime["\'][^>]*>(.+?)</div>',
+            [r'Date\s+[Aa]dded:\s*<span>([^<]+)',
+             r'(?s)<div[^>]+class=["\']videoInfo(?:Date|Time)["\'][^>]*>(.+?)</div>'],
             webpage, 'upload date', fatal=False))
 
         age_limit = self._rta_search(webpage)
 
         average_rating = int_or_none(self._search_regex(
-            r'<div[^>]+class=["\']videoInfoRating["\'][^>]*>\s*<div[^>]+class=["\']videoRatingPercentage["\'][^>]*>(\d+)%</div>',
+            r'<div[^>]+class=["\']videoRatingPercentage["\'][^>]*>(\d+)%</div>',
             webpage, 'average rating', fatal=False))
 
         view_count = str_to_int(self._search_regex(
-            r'(?s)<div[^>]+class=["\']videoInfoViews["\'][^>]*>.*?([\d,.]+)\s*</div>',
-            webpage, 'view count', fatal=False))
+            r'(?s)<div[^>]+class=(["\']).*?\bvideoInfoViews\b.*?\1[^>]*>.*?(?P<count>[\d,.]+)<',
+            webpage, 'view count', fatal=False, group='count'))
         comment_count = str_to_int(self._search_regex(
             r'>All [Cc]omments? \(([\d,.]+)\)',
             webpage, 'comment count', fatal=False))
 
-        def extract_tag_box(title):
-            tag_box = self._search_regex(
-                (r'<div[^>]+class=["\']tagBoxTitle["\'][^>]*>\s*%s\b.*?</div>\s*'
-                 '<div[^>]+class=["\']tagBoxContent["\']>(.+?)</div>') % re.escape(title),
-                webpage, '%s tag box' % title, default=None)
+        def extract_tag_box(regex, title):
+            tag_box = self._search_regex(regex, webpage, title, default=None)
             if not tag_box:
                 return []
             return re.findall(r'<a[^>]+href=[^>]+>([^<]+)', tag_box)
 
-        categories = extract_tag_box('Category')
-        tags = extract_tag_box('Tags')
+        categories = extract_tag_box(
+            r'(?s)Categories:.*?</[^>]+>(.+?)</div>', 'categories')
+        tags = extract_tag_box(
+            r'(?s)Tags:.*?</div>\s*<div[^>]+class=["\']tagBoxContent["\'][^>]*>(.+?)</div>',
+            'tags')
 
         return {
             'id': video_id,

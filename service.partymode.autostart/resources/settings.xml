@@ -9,6 +9,7 @@
 		<setting id="avoid-on-pause-start-on-screensaver-partymode" type="bool" label="30042" subsetting="true" default="true" enable="eq(-1,true)"/>
 		<setting label="30013" type="lsep"/>
 		<setting id="startup-playlist" type="bool" label="30040" default="false"/>
+		<setting id="startup-playlist-partymode" type="bool" label="30054" default="false"/>
 		<setting type="action" label="30043" action="Skin.SetFile(Startup.Playlist.Path,,special://musicplaylists/)"/>
 		<setting id="startup-playlist-path" type="text" label="$INFO[Skin.String(Startup.Playlist.Path)]" value="$INFO[Skin.String(Startup.Playlist.Path)]" enable="false"/>
 		<setting label="30015" type="lsep"/>
@@ -23,5 +24,8 @@
 		<setting label="30014" type="lsep"/>
 		<setting id="volume-partymode" type="bool" label="30044" default="false"/>
 		<setting id="volume-level-partymode" subsetting="true" type="slider" label="30045" default="100" range="0,100" option="int" enable="eq(-1,true)"/>
+		<setting label="30016" type="lsep"/>
+		<setting id="playback-random" type="enum" label="30047" lvalues="30049|30050|30051" default="0"/>
+		<setting id="playback-repeat" type="enum" label="30048" lvalues="30049|30050|30052|30053" default="0"/>
 	</category>
 </settings>

@@ -1,4 +1,6 @@
-from trakt.core.helpers import from_iso8601
+from __future__ import absolute_import, division, print_function
+
+from trakt.core.helpers import from_iso8601_datetime
 
 
 class Rating(object):
@@ -6,7 +8,18 @@ class Rating(object):
         self._client = client
 
         self.value = value
+        """
+        :type: :class:`~python:int`
+
+        Rating value (0 - 10)
+        """
+
         self.timestamp = timestamp
+        """
+        :type: :class:`~python:datetime.datetime`
+
+        Rating timestamp
+        """
 
     @classmethod
     def _construct(cls, client, info):
@@ -15,8 +28,16 @@ class Rating(object):
 
         r = cls(client)
         r.value = info.get('rating')
-        r.timestamp = from_iso8601(info.get('rated_at'))
+        r.timestamp = from_iso8601_datetime(info.get('rated_at'))
         return r
+
+    def __getstate__(self):
+        state = self.__dict__
+
+        if hasattr(self, '_client'):
+            del state['_client']
+
+        return state
 
     def __eq__(self, other):
         if not isinstance(other, Rating):

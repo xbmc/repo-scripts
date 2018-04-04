@@ -19,7 +19,7 @@ class IndavideoEmbedIE(InfoExtractor):
             'ext': 'mp4',
             'title': 'Cicatánc',
             'description': '',
-            'thumbnail': 're:^https?://.*\.jpg$',
+            'thumbnail': r're:^https?://.*\.jpg$',
             'uploader': 'cukiajanlo',
             'uploader_id': '83729',
             'timestamp': 1439193826,
@@ -60,7 +60,8 @@ class IndavideoEmbedIE(InfoExtractor):
 
         formats = [{
             'url': video_url,
-            'height': self._search_regex(r'\.(\d{3,4})\.mp4$', video_url, 'height', default=None),
+            'height': int_or_none(self._search_regex(
+                r'\.(\d{3,4})\.mp4(?:\?|$)', video_url, 'height', default=None)),
         } for video_url in video_urls]
         self._sort_formats(formats)
 
@@ -101,7 +102,7 @@ class IndavideoIE(InfoExtractor):
             'ext': 'mp4',
             'title': 'Vicces cica',
             'description': 'Játszik a tablettel. :D',
-            'thumbnail': 're:^https?://.*\.jpg$',
+            'thumbnail': r're:^https?://.*\.jpg$',
             'uploader': 'Jet_Pack',
             'uploader_id': '491217',
             'timestamp': 1390821212,

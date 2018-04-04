@@ -8,6 +8,9 @@ XT = xbmc.getLocalizedString
 
 LOG_PATH = os.path.join(xbmc.translatePath('special://logpath').decode('utf-8'),'xbmc.log')
 
+DISABLE_PATH = os.path.join(xbmc.translatePath('special://profile').decode('utf-8'), 'addon_data', ADDON_ID, 'DISABLED')
+ENABLE_PATH = os.path.join(xbmc.translatePath('special://profile').decode('utf-8'), 'addon_data', ADDON_ID, 'ENABLED')
+
 def ERROR(txt,hide_tb=False,notify=False):
     if isinstance (txt,str): txt = txt.decode("utf-8")
     short = str(sys.exc_info()[1])
@@ -28,6 +31,16 @@ def LOG(message):
     message = '{0}: {1}'.format(ADDON_ID,message)
     xbmc.log(msg=message.encode("utf-8"), level=xbmc.LOGNOTICE)
 
+def DEBUG_LOG(message):
+    if not DEBUG:
+        return
+    LOG('DEBUG: {0}'.format(message))
+
+def VERBOSE_LOG(message):
+    if not DEBUG or not VERBOSE:
+        return
+    DEBUG_LOG(message)
+
 def sleep(ms):
     xbmc.sleep(ms)
 
@@ -42,6 +55,15 @@ def configDirectory():
 
 def profileDirectory():
     return xbmc.translatePath(xbmcaddon.Addon(ADDON_ID).getAddonInfo('profile')).decode('utf-8')
+
+def addonPath():
+    addonPath = os.path.join(xbmc.translatePath('special://home').decode('utf-8'),'addons',ADDON_ID)
+    if not os.path.exists(addonPath):
+        addonPath = os.path.join(xbmc.translatePath('special://xbmc').decode('utf-8'),'addons',ADDON_ID)
+
+    assert os.path.exists(addonPath), 'Addon path resolution failure'
+
+    return addonPath
 
 def backendsDirectory():
     return os.path.join(xbmc.translatePath(info('path')).decode('utf-8'),'lib','backends')
@@ -61,8 +83,9 @@ def getTmpfs():
     return None
 
 def playSound(name,return_duration=False):
-    wavPath = os.path.join(xbmc.translatePath('special://home'),'addons','service.xbmc.tts','resources','wavs','{0}.wav'.format(name))
-    #wavPath = os.path.join(xbmc.translatePath(xbmcaddon.Addon().getAddonInfo('path')).decode('utf-8'),'resources','wavs','{0}.wav'.format(name))
+    wavPath = os.path.join(addonPath(), 'resources','wavs','{0}.wav'.format(name))
+    # This doesn't work as this may be called when the addon is disabled
+    # wavPath = os.path.join(xbmc.translatePath(xbmcaddon.Addon().getAddonInfo('path')).decode('utf-8'),'resources','wavs','{0}.wav'.format(name))
     xbmc.playSFX(wavPath)
     if return_duration:
         wavPath = wavPath.decode('utf-8')
@@ -191,6 +214,31 @@ def raspberryPiDistro():
 def isOpenElec():
     return xbmc.getCondVisibility('System.HasAddon(os.openelec.tv)')
 
+def isPreInstalled():
+    kodiPath = xbmc.translatePath('special://xbmc').decode('utf-8')
+    preInstalledPath = os.path.join(kodiPath, 'addons', ADDON_ID)
+    return os.path.exists(preInstalledPath)
+
+def wasPostInstalled():
+    if os.path.exists(DISABLE_PATH):
+        with open(DISABLE_PATH, 'r') as f:
+            return f.read() == 'POST'
+    elif os.path.exists(ENABLE_PATH):
+        with open(ENABLE_PATH, 'r') as f:
+            return f.read() == 'POST'
+
+    return False
+
+def wasPreInstalled():
+    if os.path.exists(DISABLE_PATH):
+        with open(DISABLE_PATH, 'r') as f:
+            return f.read() == 'PRE'
+    elif os.path.exists(ENABLE_PATH):
+        with open(ENABLE_PATH, 'r') as f:
+            return f.read() == 'PRE'
+
+    return False
+
 def commandIsAvailable(command):
     for p in os.environ["PATH"].split(os.pathsep):
         if os.path.isfile(os.path.join(p,command)): return True
@@ -295,10 +343,16 @@ def getCommand():
     return commandData.split(':',1)[-1]
 #End deprecated
 ################################################################
+DEBUG = False
+VERBOSE = False
 
 def init():
     pd = profileDirectory()
     if not os.path.exists(pd): os.makedirs(pd)
 
-DEBUG = getSetting('debug_logging',True)
+def reload():
+    global DEBUG, VERBOSE
+    DEBUG = getSetting('debug_logging',True)
+    VERBOSE = getSetting('verbose_logging',False)
+
 init()

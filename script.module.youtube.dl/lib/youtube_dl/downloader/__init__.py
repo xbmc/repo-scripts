@@ -7,6 +7,7 @@ from .http import HttpFD
 from .rtmp import RtmpFD
 from .dash import DashSegmentsFD
 from .rtsp import RtspFD
+from .ism import IsmFD
 from .external import (
     get_external_downloader,
     FFmpegFD,
@@ -24,6 +25,7 @@ PROTOCOL_MAP = {
     'rtsp': RtspFD,
     'f4m': F4mFD,
     'http_dash_segments': DashSegmentsFD,
+    'ism': IsmFD,
 }
 
 
@@ -41,8 +43,14 @@ def get_suitable_downloader(info_dict, params={}):
         if ed.can_download(info_dict):
             return ed
 
-    if protocol == 'm3u8' and params.get('hls_prefer_native'):
+    if protocol.startswith('m3u8') and info_dict.get('is_live'):
+        return FFmpegFD
+
+    if protocol == 'm3u8' and params.get('hls_prefer_native') is True:
         return HlsFD
+
+    if protocol == 'm3u8_native' and params.get('hls_prefer_native') is False:
+        return FFmpegFD
 
     return PROTOCOL_MAP.get(protocol, HttpFD)
 

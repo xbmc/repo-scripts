@@ -13,11 +13,11 @@ class Trailer(_scrapers.Trailer):
         self.data = data
         if self.data.get('rating', '').lower().startswith('not'):
             self.data['rating'] = 'NR'
-        self.rating = ratings.getRating('MPAA', self.data['rating'])
+        self.rating = ratings.getRating('MPAA', self.data.get('mpaa', ''))
 
     @property
     def ID(self):
-        return 'itunes:{0}'.format(self.data['location'])
+        return 'itunes:{0}.{1}'.format(self.data['movie_id'], self.data['location'])
 
     @property
     def title(self):
@@ -33,7 +33,7 @@ class Trailer(_scrapers.Trailer):
 
     @property
     def userAgent(self):
-        return scraper.USER_AGENT
+        return scraper.BROWSER_UA
 
     @property
     def release(self):
@@ -52,43 +52,55 @@ class Trailer(_scrapers.Trailer):
         return None
 
     def _getPlayableURL(self, res='720p'):
-        return ItunesTrailerScraper(self.data['location'], res)
+        return ItunesTrailerScraper.getPlayableURL(self.data['location'], res)
 
 
 class ItunesTrailerScraper(_scrapers.Scraper):
     LAST_UPDATE_FILE = os.path.join(util.STORAGE_PATH, 'itunes.last')
+
+    RES = {
+        '480p': 'sd',
+        '720p': 'hd720',
+        '1080p': 'hd1080',
+    }
 
     def __init__(self):
         self.loadTimes()
 
     @staticmethod
     def getPlayableURL(ID, res=None, url=None):
-        res = res or '720p'
+        res = ItunesTrailerScraper.RES.get(res, 'hd720p')
 
-        ts = scraper.TrailerScraper()
-        all_ = [t for t in ts.get_trailers(ID) if t]
+        ts = scraper.Scraper()
+        id_location = ID.split('.', 1)
+        all_ = [t for t in ts.get_trailers(id_location[-1], id_location[0]) if t]
 
         if not all_:
             return None
 
         trailers = [t for t in all_ if t['title'] == 'Trailer']
 
+        url = None
         if trailers:
             try:
-                version = [v for v in trailers if any(res in u for u in v['urls'])][0]
+                version = [v for v in trailers if any(res in u for u in v['streams'])][0]
                 if version:
-                    return [u for u in version['urls'] if res in u][0]
+                    url = [u for u in version['streams'] if res in u][0]
             except:
                 import traceback
                 traceback.print_exc()
 
-        try:
-            return all_[0]['urls'][0]
-        except:
-            import traceback
-            traceback.print_exc()
+        if not url:
+            try:
+                streams = all_[0]['streams']
+                url = streams.get(res, streams.get('hd720', streams.get('sd')))
+            except:
+                import traceback
+                traceback.print_exc()
 
-        return None
+        url = re.sub(r'(480p|720p|1080p)', r'h\1', url)
+
+        return url
 
     def loadTimes(self):
         self.lastAllUpdate = 0
@@ -120,7 +132,7 @@ class ItunesTrailerScraper(_scrapers.Scraper):
         return False
 
     def getTrailers(self):
-        ms = scraper.MovieScraper()
+        ms = scraper.Scraper()
         if self.allIsDue():
             util.DEBUG_LOG('    - Fetching all trailers')
             return [Trailer(t) for t in ms.get_all_movies(None)]
@@ -128,7 +140,7 @@ class ItunesTrailerScraper(_scrapers.Scraper):
         return []
 
     def updateTrailers(self):
-        ms = scraper.MovieScraper()
+        ms = scraper.Scraper()
         if self.recentIsDue():
             util.DEBUG_LOG('    - Fetching recent trailers')
             return [Trailer(t) for t in ms.get_most_recent_movies(None)]

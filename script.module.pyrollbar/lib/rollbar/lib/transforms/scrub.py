@@ -1,4 +1,3 @@
-import os
 import random
 
 from rollbar.lib import build_key_matcher, text

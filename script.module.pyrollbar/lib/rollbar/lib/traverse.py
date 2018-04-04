@@ -1,7 +1,7 @@
 import collections
+import logging
 
 from rollbar.lib import binary_type, iteritems, string_types, circular_reference_label
-
 
 CIRCULAR = -1
 DEFAULT = 0
@@ -11,6 +11,8 @@ NAMEDTUPLE = 3
 LIST = 4
 SET = 5
 STRING = 6
+
+log = logging.getLogger(__name__)
 
 
 def _noop_circular(a, **kw):
@@ -114,22 +116,27 @@ def traverse(obj,
     }
     kw.update(custom_handlers)
 
-    if obj_type is STRING:
-        return string_handler(obj, key=key)
-    elif obj_type is TUPLE:
-        return tuple_handler(tuple(traverse(elem, key=key + (i,), **kw) for i, elem in enumerate(obj)), key=key)
-    elif obj_type is NAMEDTUPLE:
-        return namedtuple_handler(obj._make(traverse(v, key=key + (k,), **kw) for k, v in iteritems(obj._asdict())), key=key)
-    elif obj_type is LIST:
-        return list_handler(list(traverse(elem, key=key + (i,), **kw) for i, elem in enumerate(obj)), key=key)
-    elif obj_type is SET:
-        return set_handler(set(traverse(elem, key=key + (i,), **kw) for i, elem in enumerate(obj)), key=key)
-    elif obj_type is MAPPING:
-        return mapping_handler(dict((k, traverse(v, key=key + (k,), **kw)) for k, v in iteritems(obj)), key=key)
-    elif obj_type is DEFAULT:
-        for handler_type, handler in iteritems(custom_handlers):
-            if isinstance(obj, handler_type):
-                return handler(obj, key=key)
+    try:
+        if obj_type is STRING:
+            return string_handler(obj, key=key)
+        elif obj_type is TUPLE:
+            return tuple_handler(tuple(traverse(elem, key=key + (i,), **kw) for i, elem in enumerate(obj)), key=key)
+        elif obj_type is NAMEDTUPLE:
+            return namedtuple_handler(obj._make(traverse(v, key=key + (k,), **kw) for k, v in iteritems(obj._asdict())), key=key)
+        elif obj_type is LIST:
+            return list_handler(list(traverse(elem, key=key + (i,), **kw) for i, elem in enumerate(obj)), key=key)
+        elif obj_type is SET:
+            return set_handler(set(traverse(elem, key=key + (i,), **kw) for i, elem in enumerate(obj)), key=key)
+        elif obj_type is MAPPING:
+            return mapping_handler(dict((k, traverse(v, key=key + (k,), **kw)) for k, v in iteritems(obj)), key=key)
+        elif obj_type is DEFAULT:
+            for handler_type, handler in iteritems(custom_handlers):
+                if isinstance(obj, handler_type):
+                    return handler(obj, key=key)
+    except:
+        # use the default handler for unknown object types
+        log.debug("Exception while traversing object using type-specific "
+                  "handler. Switching to default handler.", exc_info=True)
 
     return default_handler(obj, key=key)
 

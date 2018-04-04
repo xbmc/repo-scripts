@@ -54,12 +54,13 @@ with a value list
 Unknown;Start;Shutdown;Audio playback start;Video playback start;Audio playback stop;Video playback stop;Audio playback pause;Video playback pause
 ```
 
-![Homematic configuration screenshot](/screenshots/ccu_config.png)
+![Homematic configuration screenshot](/resources/screenshots/ccu_config.png)
 
 
 License
 -------
 This software is released under the [GPL 2.0 license] [2].
+The plugin logo is under copyright by [bytefeed.com] [4]. Thank you for the kind permission of use!
 
 
 Useful Links
@@ -73,3 +74,4 @@ Support Forum: http://forum.xbmc.org/showthread.php?tid=204667
 [1]: http://www.fhem.de
 [2]: http://www.gnu.org/licenses/gpl-2.0.html
 [3]: http://www.eq-3.de/produkt-detail-zentralen-und-gateways/items/homematic-zentrale-ccu-2.html
+[4]: http://bytefeed.com

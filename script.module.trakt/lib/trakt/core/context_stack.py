@@ -1,3 +1,5 @@
+from __future__ import absolute_import, division, print_function
+
 from threading import Lock
 
 
@@ -15,6 +17,9 @@ class ContextStack(object):
         self._lock = Lock()
 
     def pop(self):
+        if len(self._list) < 1:
+            return None
+
         context = self._list.pop()
 
         self._lock.release()

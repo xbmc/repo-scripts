@@ -8,3 +8,8 @@
 1.1.2 - by KianMax 26/03/2016
 - Manual Search Added
 
+1.1.3 - by KianMax 31/03/2016
+- Some improvements in the search functionality
+
+1.1.4 - by KianMax 09/04/2016
+- Some improvements in the search functionality

@@ -1,28 +1,44 @@
 from __future__ import unicode_literals
 
 import re
-import json
 
 from .common import InfoExtractor
 from ..utils import (
+    mimetype2ext,
     qualities,
+    remove_end,
 )
 
 
 class ImdbIE(InfoExtractor):
     IE_NAME = 'imdb'
     IE_DESC = 'Internet Movie Database trailers'
-    _VALID_URL = r'https?://(?:www|m)\.imdb\.com/video/imdb/vi(?P<id>\d+)'
+    _VALID_URL = r'https?://(?:www|m)\.imdb\.com/(?:video|title).+?[/-]vi(?P<id>\d+)'
 
-    _TEST = {
+    _TESTS = [{
         'url': 'http://www.imdb.com/video/imdb/vi2524815897',
         'info_dict': {
             'id': '2524815897',
             'ext': 'mp4',
-            'title': 'Ice Age: Continental Drift Trailer (No. 2) - IMDb',
+            'title': 'Ice Age: Continental Drift Trailer (No. 2)',
             'description': 'md5:9061c2219254e5d14e03c25c98e96a81',
         }
-    }
+    }, {
+        'url': 'http://www.imdb.com/video/_/vi2524815897',
+        'only_matching': True,
+    }, {
+        'url': 'http://www.imdb.com/title/tt1667889/?ref_=ext_shr_eml_vi#lb-vi2524815897',
+        'only_matching': True,
+    }, {
+        'url': 'http://www.imdb.com/title/tt1667889/#lb-vi2524815897',
+        'only_matching': True,
+    }, {
+        'url': 'http://www.imdb.com/videoplayer/vi1562949145',
+        'only_matching': True,
+    }, {
+        'url': 'http://www.imdb.com/title/tt4218696/videoplayer/vi2608641561',
+        'only_matching': True,
+    }]
 
     def _real_extract(self, url):
         video_id = self._match_id(url)
@@ -48,29 +64,43 @@ class ImdbIE(InfoExtractor):
             json_data = self._search_regex(
                 r'<script[^>]+class="imdb-player-data"[^>]*?>(.*?)</script>',
                 format_page, 'json data', flags=re.DOTALL)
-            info = json.loads(json_data)
-            format_info = info['videoPlayerObject']['video']
-            f_id = format_info['ffname']
+            info = self._parse_json(json_data, video_id, fatal=False)
+            if not info:
+                continue
+            format_info = info.get('videoPlayerObject', {}).get('video', {})
+            if not format_info:
+                continue
+            video_info_list = format_info.get('videoInfoList')
+            if not video_info_list or not isinstance(video_info_list, list):
+                continue
+            video_info = video_info_list[0]
+            if not video_info or not isinstance(video_info, dict):
+                continue
+            video_url = video_info.get('videoUrl')
+            if not video_url:
+                continue
+            format_id = format_info.get('ffname')
             formats.append({
-                'format_id': f_id,
-                'url': format_info['videoInfoList'][0]['videoUrl'],
-                'quality': quality(f_id),
+                'format_id': format_id,
+                'url': video_url,
+                'ext': mimetype2ext(video_info.get('videoMimeType')),
+                'quality': quality(format_id),
             })
         self._sort_formats(formats)
 
         return {
             'id': video_id,
-            'title': self._og_search_title(webpage),
+            'title': remove_end(self._og_search_title(webpage), ' - IMDb'),
             'formats': formats,
             'description': descr,
-            'thumbnail': format_info['slate'],
+            'thumbnail': format_info.get('slate'),
         }
 
 
 class ImdbListIE(InfoExtractor):
     IE_NAME = 'imdb:list'
     IE_DESC = 'Internet Movie Database lists'
-    _VALID_URL = r'https?://www\.imdb\.com/list/(?P<id>[\da-zA-Z_-]{11})'
+    _VALID_URL = r'https?://(?:www\.)?imdb\.com/list/(?P<id>[\da-zA-Z_-]{11})'
     _TEST = {
         'url': 'http://www.imdb.com/list/JFs9NWw6XI0',
         'info_dict': {

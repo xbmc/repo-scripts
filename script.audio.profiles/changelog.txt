@@ -1,3 +1,15 @@
+[B]1.2.0[/B]
+- add: automatic content detection and enable suitable profile
+- add: sending HDMI-CEC Commands to wake up or sleep your AVR or TV
+
+[B]1.1.1[/B]
+- fix: unicode characters for profiles name
+
+[B]1.1.0[/B]
+- fix: compatibility with KODI 17 Krypton 
+- fix: rewrite window dialog to use WindowXML
+- add: service to auto open menu when star playing video
+
 [B]1.0.5[/B]
 - fix: update addon.xml
 

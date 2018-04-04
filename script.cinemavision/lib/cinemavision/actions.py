@@ -62,7 +62,7 @@ class SleepCommand(ActionCommand):
             util.ERROR()
             self._addOutput(traceback.format_exc())
 
-        time.sleep(ms/1000.0)
+        time.sleep(ms / 1000.0)
 
 
 class ModuleCommand(ActionCommand):

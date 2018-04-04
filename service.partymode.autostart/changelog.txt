@@ -1,3 +1,11 @@
+0.9.1b
+- Set new values default (fix issue #6) (thanks to andpei - pr#7)
+
+0.9.0b
+- The oft-requested playback controls (repeat and random) (thanks to eslindsey - pr#5)
+- A toggle to enable party mode when auto-starting a playlist (thanks to eslindsey - pr#4)
+- Explicit countdown window that actually tells you what it's going to do (thanks to eslindsey - pr#3)
+
 0.8.8b
 - Allow to add favourites to autostart (thanks to andpei  - pr#2)
 

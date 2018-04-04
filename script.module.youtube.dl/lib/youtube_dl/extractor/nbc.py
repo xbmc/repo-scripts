@@ -1,47 +1,39 @@
 from __future__ import unicode_literals
 
 import re
+import base64
 
 from .common import InfoExtractor
 from .theplatform import ThePlatformIE
+from .adobepass import AdobePassIE
 from ..utils import (
     find_xpath_attr,
-    lowercase_escape,
     smuggle_url,
     unescapeHTML,
     update_url_query,
     int_or_none,
-    HEADRequest,
-    parse_iso8601,
 )
 
 
-class NBCIE(InfoExtractor):
-    _VALID_URL = r'https?://www\.nbc\.com/(?:[^/]+/)+(?P<id>n?\d+)'
+class NBCIE(AdobePassIE):
+    _VALID_URL = r'https?(?P<permalink>://(?:www\.)?nbc\.com/(?:classic-tv/)?[^/]+/video/[^/]+/(?P<id>n?\d+))'
 
     _TESTS = [
         {
-            'url': 'http://www.nbc.com/the-tonight-show/segments/112966',
+            'url': 'http://www.nbc.com/the-tonight-show/video/jimmy-fallon-surprises-fans-at-ben-jerrys/2848237',
             'info_dict': {
-                'id': '112966',
+                'id': '2848237',
                 'ext': 'mp4',
                 'title': 'Jimmy Fallon Surprises Fans at Ben & Jerry\'s',
                 'description': 'Jimmy gives out free scoops of his new "Tonight Dough" ice cream flavor by surprising customers at the Ben & Jerry\'s scoop shop.',
+                'timestamp': 1424246400,
+                'upload_date': '20150218',
+                'uploader': 'NBCU-COM',
             },
             'params': {
                 # m3u8 download
                 'skip_download': True,
             },
-        },
-        {
-            'url': 'http://www.nbc.com/the-tonight-show/episodes/176',
-            'info_dict': {
-                'id': '176',
-                'ext': 'flv',
-                'title': 'Ricky Gervais, Steven Van Zandt, ILoveMakonnen',
-                'description': 'A brand new episode of The Tonight Show welcomes Ricky Gervais, Steven Van Zandt and ILoveMakonnen.',
-            },
-            'skip': '404 Not Found',
         },
         {
             'url': 'http://www.nbc.com/saturday-night-live/video/star-wars-teaser/2832821',
@@ -50,6 +42,9 @@ class NBCIE(InfoExtractor):
                 'ext': 'mp4',
                 'title': 'Star Wars Teaser',
                 'description': 'md5:0b40f9cbde5b671a7ff62fceccc4f442',
+                'timestamp': 1417852800,
+                'upload_date': '20141206',
+                'uploader': 'NBCU-COM',
             },
             'params': {
                 # m3u8 download
@@ -58,28 +53,61 @@ class NBCIE(InfoExtractor):
             'skip': 'Only works from US',
         },
         {
-            # This video has expired but with an escaped embedURL
-            'url': 'http://www.nbc.com/parenthood/episode-guide/season-5/just-like-at-home/515',
+            # HLS streams requires the 'hdnea3' cookie
+            'url': 'http://www.nbc.com/Kings/video/goliath/n1806',
+            'info_dict': {
+                'id': '101528f5a9e8127b107e98c5e6ce4638',
+                'ext': 'mp4',
+                'title': 'Goliath',
+                'description': 'When an unknown soldier saves the life of the King\'s son in battle, he\'s thrust into the limelight and politics of the kingdom.',
+                'timestamp': 1237100400,
+                'upload_date': '20090315',
+                'uploader': 'NBCU-COM',
+            },
+            'params': {
+                'skip_download': True,
+            },
+            'skip': 'Only works from US',
+        },
+        {
+            'url': 'https://www.nbc.com/classic-tv/charles-in-charge/video/charles-in-charge-pilot/n3310',
             'only_matching': True,
-        }
+        },
     ]
 
     def _real_extract(self, url):
-        video_id = self._match_id(url)
-        webpage = self._download_webpage(url, video_id)
-        theplatform_url = unescapeHTML(lowercase_escape(self._html_search_regex(
-            [
-                r'(?:class="video-player video-player-full" data-mpx-url|class="player" src)="(.*?)"',
-                r'<iframe[^>]+src="((?:https?:)?//player\.theplatform\.com/[^"]+)"',
-                r'"embedURL"\s*:\s*"([^"]+)"'
-            ],
-            webpage, 'theplatform url').replace('_no_endcard', '').replace('\\/', '/')))
-        if theplatform_url.startswith('//'):
-            theplatform_url = 'http:' + theplatform_url
+        permalink, video_id = re.match(self._VALID_URL, url).groups()
+        permalink = 'http' + permalink
+        video_data = self._download_json(
+            'https://api.nbc.com/v3/videos', video_id, query={
+                'filter[permalink]': permalink,
+            })['data'][0]['attributes']
+        query = {
+            'mbr': 'true',
+            'manifest': 'm3u',
+        }
+        video_id = video_data['guid']
+        title = video_data['title']
+        if video_data.get('entitlement') == 'auth':
+            resource = self._get_mvpd_resource(
+                'nbcentertainment', title, video_id,
+                video_data.get('vChipRating'))
+            query['auth'] = self._extract_mvpd_auth(
+                url, video_id, 'nbcentertainment', resource)
+        theplatform_url = smuggle_url(update_url_query(
+            'http://link.theplatform.com/s/NnzsPC/media/guid/2410887629/' + video_id,
+            query), {'force_smil_url': True})
         return {
             '_type': 'url_transparent',
-            'url': smuggle_url(theplatform_url, {'source_url': url}),
             'id': video_id,
+            'title': title,
+            'url': theplatform_url,
+            'description': video_data.get('description'),
+            'keywords': video_data.get('keywords'),
+            'season_number': int_or_none(video_data.get('seasonNumber')),
+            'episode_number': int_or_none(video_data.get('episodeNumber')),
+            'series': video_data.get('showName'),
+            'ie_key': 'ThePlatform',
         }
 
 
@@ -87,15 +115,18 @@ class NBCSportsVPlayerIE(InfoExtractor):
     _VALID_URL = r'https?://vplayer\.nbcsports\.com/(?:[^/]+/)+(?P<id>[0-9a-zA-Z_]+)'
 
     _TESTS = [{
-        'url': 'https://vplayer.nbcsports.com/p/BxmELC/nbcsports_share/select/9CsDKds0kvHI',
+        'url': 'https://vplayer.nbcsports.com/p/BxmELC/nbcsports_embed/select/9CsDKds0kvHI',
         'info_dict': {
             'id': '9CsDKds0kvHI',
-            'ext': 'flv',
+            'ext': 'mp4',
             'description': 'md5:df390f70a9ba7c95ff1daace988f0d8d',
             'title': 'Tyler Kalinoski hits buzzer-beater to lift Davidson',
+            'timestamp': 1426270238,
+            'upload_date': '20150313',
+            'uploader': 'NBCU-SPORTS',
         }
     }, {
-        'url': 'http://vplayer.nbcsports.com/p/BxmELC/nbc_embedshare/select/_hqLjQ95yx8Z',
+        'url': 'https://vplayer.nbcsports.com/p/BxmELC/nbcsports_embed/select/media/_hqLjQ95yx8Z',
         'only_matching': True,
     }]
 
@@ -109,13 +140,14 @@ class NBCSportsVPlayerIE(InfoExtractor):
     def _real_extract(self, url):
         video_id = self._match_id(url)
         webpage = self._download_webpage(url, video_id)
-        theplatform_url = self._og_search_video_url(webpage)
+        theplatform_url = self._og_search_video_url(webpage).replace(
+            'vplayer.nbcsports.com', 'player.theplatform.com')
         return self.url_result(theplatform_url, 'ThePlatform')
 
 
 class NBCSportsIE(InfoExtractor):
     # Does not include https because its certificate is invalid
-    _VALID_URL = r'https?://www\.nbcsports\.com//?(?:[^/]+/)+(?P<id>[0-9a-z-]+)'
+    _VALID_URL = r'https?://(?:www\.)?nbcsports\.com//?(?:[^/]+/)+(?P<id>[0-9a-z-]+)'
 
     _TEST = {
         'url': 'http://www.nbcsports.com//college-basketball/ncaab/tom-izzo-michigan-st-has-so-much-respect-duke',
@@ -124,6 +156,9 @@ class NBCSportsIE(InfoExtractor):
             'ext': 'flv',
             'title': 'Tom Izzo, Michigan St. has \'so much respect\' for Duke',
             'description': 'md5:ecb459c9d59e0766ac9c7d5d0eda8113',
+            'uploader': 'NBCU-SPORTS',
+            'upload_date': '20150330',
+            'timestamp': 1427726529,
         }
     }
 
@@ -134,10 +169,37 @@ class NBCSportsIE(InfoExtractor):
             NBCSportsVPlayerIE._extract_url(webpage), 'NBCSportsVPlayer')
 
 
+class CSNNEIE(InfoExtractor):
+    _VALID_URL = r'https?://(?:www\.)?csnne\.com/video/(?P<id>[0-9a-z-]+)'
+
+    _TEST = {
+        'url': 'http://www.csnne.com/video/snc-evening-update-wright-named-red-sox-no-5-starter',
+        'info_dict': {
+            'id': 'yvBLLUgQ8WU0',
+            'ext': 'mp4',
+            'title': 'SNC evening update: Wright named Red Sox\' No. 5 starter.',
+            'description': 'md5:1753cfee40d9352b19b4c9b3e589b9e3',
+            'timestamp': 1459369979,
+            'upload_date': '20160330',
+            'uploader': 'NBCU-SPORTS',
+        }
+    }
+
+    def _real_extract(self, url):
+        display_id = self._match_id(url)
+        webpage = self._download_webpage(url, display_id)
+        return {
+            '_type': 'url_transparent',
+            'ie_key': 'ThePlatform',
+            'url': self._html_search_meta('twitter:player:stream', webpage),
+            'display_id': display_id,
+        }
+
+
 class NBCNewsIE(ThePlatformIE):
-    _VALID_URL = r'''(?x)https?://(?:www\.)?nbcnews\.com/
+    _VALID_URL = r'''(?x)https?://(?:www\.)?(?:nbcnews|today|msnbc)\.com/
         (?:video/.+?/(?P<id>\d+)|
-        ([^/]+/)*(?P<display_id>[^/?]+))
+        ([^/]+/)*(?:.*-)?(?P<mpx_id>[^/?]+))
         '''
 
     _TESTS = [
@@ -155,17 +217,20 @@ class NBCNewsIE(ThePlatformIE):
             'url': 'http://www.nbcnews.com/watch/nbcnews-com/how-twitter-reacted-to-the-snowden-interview-269389891880',
             'md5': 'af1adfa51312291a017720403826bb64',
             'info_dict': {
-                'id': '269389891880',
+                'id': 'p_tweet_snow_140529',
                 'ext': 'mp4',
                 'title': 'How Twitter Reacted To The Snowden Interview',
                 'description': 'md5:65a0bd5d76fe114f3c2727aa3a81fe64',
+                'uploader': 'NBCU-NEWS',
+                'timestamp': 1401363060,
+                'upload_date': '20140529',
             },
         },
         {
             'url': 'http://www.nbcnews.com/feature/dateline-full-episodes/full-episode-family-business-n285156',
             'md5': 'fdbf39ab73a72df5896b6234ff98518a',
             'info_dict': {
-                'id': 'Wjf9EDR3A_60',
+                'id': '529953347624',
                 'ext': 'mp4',
                 'title': 'FULL EPISODE: Family Business',
                 'description': 'md5:757988edbaae9d7be1d585eb5d55cc04',
@@ -176,25 +241,62 @@ class NBCNewsIE(ThePlatformIE):
             'url': 'http://www.nbcnews.com/nightly-news/video/nightly-news-with-brian-williams-full-broadcast-february-4-394064451844',
             'md5': '73135a2e0ef819107bbb55a5a9b2a802',
             'info_dict': {
-                'id': '394064451844',
+                'id': 'nn_netcast_150204',
                 'ext': 'mp4',
                 'title': 'Nightly News with Brian Williams Full Broadcast (February 4)',
                 'description': 'md5:1c10c1eccbe84a26e5debb4381e2d3c5',
+                'timestamp': 1423104900,
+                'uploader': 'NBCU-NEWS',
+                'upload_date': '20150205',
             },
         },
         {
             'url': 'http://www.nbcnews.com/business/autos/volkswagen-11-million-vehicles-could-have-suspect-software-emissions-scandal-n431456',
             'md5': 'a49e173825e5fcd15c13fc297fced39d',
             'info_dict': {
-                'id': '529953347624',
+                'id': 'x_lon_vwhorn_150922',
                 'ext': 'mp4',
-                'title': 'Volkswagen U.S. Chief: We \'Totally Screwed Up\'',
-                'description': 'md5:d22d1281a24f22ea0880741bb4dd6301',
+                'title': 'Volkswagen U.S. Chief:\xa0 We Have Totally Screwed Up',
+                'description': 'md5:c8be487b2d80ff0594c005add88d8351',
+                'upload_date': '20150922',
+                'timestamp': 1442917800,
+                'uploader': 'NBCU-NEWS',
             },
-            'expected_warnings': ['http-6000 is not available']
+        },
+        {
+            'url': 'http://www.today.com/video/see-the-aurora-borealis-from-space-in-stunning-new-nasa-video-669831235788',
+            'md5': '118d7ca3f0bea6534f119c68ef539f71',
+            'info_dict': {
+                'id': 'tdy_al_space_160420',
+                'ext': 'mp4',
+                'title': 'See the aurora borealis from space in stunning new NASA video',
+                'description': 'md5:74752b7358afb99939c5f8bb2d1d04b1',
+                'upload_date': '20160420',
+                'timestamp': 1461152093,
+                'uploader': 'NBCU-NEWS',
+            },
+        },
+        {
+            'url': 'http://www.msnbc.com/all-in-with-chris-hayes/watch/the-chaotic-gop-immigration-vote-314487875924',
+            'md5': '6d236bf4f3dddc226633ce6e2c3f814d',
+            'info_dict': {
+                'id': 'n_hayes_Aimm_140801_272214',
+                'ext': 'mp4',
+                'title': 'The chaotic GOP immigration vote',
+                'description': 'The Republican House votes on a border bill that has no chance of getting through the Senate or signed by the President and is drawing criticism from all sides.',
+                'thumbnail': r're:^https?://.*\.jpg$',
+                'timestamp': 1406937606,
+                'upload_date': '20140802',
+                'uploader': 'NBCU-NEWS',
+            },
         },
         {
             'url': 'http://www.nbcnews.com/watch/dateline/full-episode--deadly-betrayal-386250819952',
+            'only_matching': True,
+        },
+        {
+            # From http://www.vulture.com/2016/06/letterman-couldnt-care-less-about-late-night.html
+            'url': 'http://www.nbcnews.com/widget/video-embed/701714499682',
             'only_matching': True,
         },
     ]
@@ -216,103 +318,133 @@ class NBCNewsIE(ThePlatformIE):
             }
         else:
             # "feature" and "nightly-news" pages use theplatform.com
-            display_id = mobj.group('display_id')
-            webpage = self._download_webpage(url, display_id)
-            info = None
+            video_id = mobj.group('mpx_id')
+            webpage = self._download_webpage(url, video_id)
+
+            filter_param = 'byId'
             bootstrap_json = self._search_regex(
-                r'(?m)var\s+(?:bootstrapJson|playlistData)\s*=\s*({.+});?\s*$',
+                [r'(?m)(?:var\s+(?:bootstrapJson|playlistData)|NEWS\.videoObj)\s*=\s*({.+});?\s*$',
+                 r'videoObj\s*:\s*({.+})', r'data-video="([^"]+)"',
+                 r'jQuery\.extend\(Drupal\.settings\s*,\s*({.+?})\);'],
                 webpage, 'bootstrap json', default=None)
             if bootstrap_json:
-                bootstrap = self._parse_json(bootstrap_json, display_id)
-                info = bootstrap['results'][0]['video']
-            else:
-                player_instance_json = self._search_regex(
-                    r'videoObj\s*:\s*({.+})', webpage, 'player instance')
-                info = self._parse_json(player_instance_json, display_id)
-            video_id = info['mpxId']
-            title = info['title']
+                bootstrap = self._parse_json(
+                    bootstrap_json, video_id, transform_source=unescapeHTML)
 
-            subtitles = {}
-            caption_links = info.get('captionLinks')
-            if caption_links:
-                for (sub_key, sub_ext) in (('smpte-tt', 'ttml'), ('web-vtt', 'vtt'), ('srt', 'srt')):
-                    sub_url = caption_links.get(sub_key)
-                    if sub_url:
-                        subtitles.setdefault('en', []).append({
-                            'url': sub_url,
-                            'ext': sub_ext,
-                        })
-
-            formats = []
-            for video_asset in info['videoAssets']:
-                video_url = video_asset.get('publicUrl')
-                if not video_url:
-                    continue
-                container = video_asset.get('format')
-                asset_type = video_asset.get('assetType') or ''
-                if container == 'ISM' or asset_type == 'FireTV-Once':
-                    continue
-                elif asset_type == 'OnceURL':
-                    tp_formats, tp_subtitles = self._extract_theplatform_smil(
-                        video_url, video_id)
-                    formats.extend(tp_formats)
-                    subtitles = self._merge_subtitles(subtitles, tp_subtitles)
+                info = None
+                if 'results' in bootstrap:
+                    info = bootstrap['results'][0]['video']
+                elif 'video' in bootstrap:
+                    info = bootstrap['video']
+                elif 'msnbcVideoInfo' in bootstrap:
+                    info = bootstrap['msnbcVideoInfo']['meta']
+                elif 'msnbcThePlatform' in bootstrap:
+                    info = bootstrap['msnbcThePlatform']['videoPlayer']['video']
                 else:
-                    tbr = int_or_none(video_asset.get('bitRate'), 1000)
-                    format_id = 'http%s' % ('-%d' % tbr if tbr else '')
-                    video_url = update_url_query(
-                        video_url, {'format': 'redirect'})
-                    # resolve the url so that we can check availability and detect the correct extension
-                    head = self._request_webpage(
-                        HEADRequest(video_url), video_id,
-                        'Checking %s url' % format_id,
-                        '%s is not available' % format_id,
-                        fatal=False)
-                    if head:
-                        video_url = head.geturl()
-                        formats.append({
-                            'format_id': format_id,
-                            'url': video_url,
-                            'width': int_or_none(video_asset.get('width')),
-                            'height': int_or_none(video_asset.get('height')),
-                            'tbr': tbr,
-                            'container': video_asset.get('format'),
-                        })
-            self._sort_formats(formats)
+                    info = bootstrap
+
+                if 'guid' in info:
+                    video_id = info['guid']
+                    filter_param = 'byGuid'
+                elif 'mpxId' in info:
+                    video_id = info['mpxId']
 
             return {
+                '_type': 'url_transparent',
                 'id': video_id,
-                'title': title,
-                'description': info.get('description'),
-                'thumbnail': info.get('description'),
-                'thumbnail': info.get('thumbnail'),
-                'duration': int_or_none(info.get('duration')),
-                'timestamp': parse_iso8601(info.get('pubDate')),
-                'formats': formats,
-                'subtitles': subtitles,
+                # http://feed.theplatform.com/f/2E2eJC/nbcnews also works
+                'url': update_url_query('http://feed.theplatform.com/f/2E2eJC/nnd_NBCNews', {filter_param: video_id}),
+                'ie_key': 'ThePlatformFeed',
             }
 
 
-class MSNBCIE(InfoExtractor):
-    # https URLs redirect to corresponding http ones
-    _VALID_URL = r'https?://www\.msnbc\.com/[^/]+/watch/(?P<id>[^/]+)'
+class NBCOlympicsIE(InfoExtractor):
+    IE_NAME = 'nbcolympics'
+    _VALID_URL = r'https?://www\.nbcolympics\.com/video/(?P<id>[a-z-]+)'
+
     _TEST = {
-        'url': 'http://www.msnbc.com/all-in-with-chris-hayes/watch/the-chaotic-gop-immigration-vote-314487875924',
-        'md5': '6d236bf4f3dddc226633ce6e2c3f814d',
+        # Geo-restricted to US
+        'url': 'http://www.nbcolympics.com/video/justin-roses-son-leo-was-tears-after-his-dad-won-gold',
+        'md5': '54fecf846d05429fbaa18af557ee523a',
         'info_dict': {
-            'id': 'n_hayes_Aimm_140801_272214',
+            'id': 'WjTBzDXx5AUq',
+            'display_id': 'justin-roses-son-leo-was-tears-after-his-dad-won-gold',
             'ext': 'mp4',
-            'title': 'The chaotic GOP immigration vote',
-            'description': 'The Republican House votes on a border bill that has no chance of getting through the Senate or signed by the President and is drawing criticism from all sides.',
-            'thumbnail': 're:^https?://.*\.jpg$',
-            'timestamp': 1406937606,
-            'upload_date': '20140802',
-            'categories': ['MSNBC/Topics/Franchise/Best of last night', 'MSNBC/Topics/General/Congress'],
+            'title': 'Rose\'s son Leo was in tears after his dad won gold',
+            'description': 'Olympic gold medalist Justin Rose gets emotional talking to the impact his win in men\'s golf has already had on his children.',
+            'timestamp': 1471274964,
+            'upload_date': '20160815',
+            'uploader': 'NBCU-SPORTS',
         },
     }
 
     def _real_extract(self, url):
-        video_id = self._match_id(url)
-        webpage = self._download_webpage(url, video_id)
-        embed_url = self._html_search_meta('embedURL', webpage)
-        return self.url_result(embed_url)
+        display_id = self._match_id(url)
+
+        webpage = self._download_webpage(url, display_id)
+
+        drupal_settings = self._parse_json(self._search_regex(
+            r'jQuery\.extend\(Drupal\.settings\s*,\s*({.+?})\);',
+            webpage, 'drupal settings'), display_id)
+
+        iframe_url = drupal_settings['vod']['iframe_url']
+        theplatform_url = iframe_url.replace(
+            'vplayer.nbcolympics.com', 'player.theplatform.com')
+
+        return {
+            '_type': 'url_transparent',
+            'url': theplatform_url,
+            'ie_key': ThePlatformIE.ie_key(),
+            'display_id': display_id,
+        }
+
+
+class NBCOlympicsStreamIE(AdobePassIE):
+    IE_NAME = 'nbcolympics:stream'
+    _VALID_URL = r'https?://stream\.nbcolympics\.com/(?P<id>[0-9a-z-]+)'
+    _TEST = {
+        'url': 'http://stream.nbcolympics.com/2018-winter-olympics-nbcsn-evening-feb-8',
+        'info_dict': {
+            'id': '203493',
+            'ext': 'mp4',
+            'title': 're:Curling, Alpine, Luge [0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}$',
+        },
+        'params': {
+            # m3u8 download
+            'skip_download': True,
+        },
+    }
+    _DATA_URL_TEMPLATE = 'http://stream.nbcolympics.com/data/%s_%s.json'
+
+    def _real_extract(self, url):
+        display_id = self._match_id(url)
+        webpage = self._download_webpage(url, display_id)
+        pid = self._search_regex(r'pid\s*=\s*(\d+);', webpage, 'pid')
+        resource = self._search_regex(
+            r"resource\s*=\s*'(.+)';", webpage,
+            'resource').replace("' + pid + '", pid)
+        event_config = self._download_json(
+            self._DATA_URL_TEMPLATE % ('event_config', pid),
+            pid)['eventConfig']
+        title = self._live_title(event_config['eventTitle'])
+        source_url = self._download_json(
+            self._DATA_URL_TEMPLATE % ('live_sources', pid),
+            pid)['videoSources'][0]['sourceUrl']
+        media_token = self._extract_mvpd_auth(
+            url, pid, event_config.get('requestorId', 'NBCOlympics'), resource)
+        formats = self._extract_m3u8_formats(self._download_webpage(
+            'http://sp.auth.adobe.com/tvs/v1/sign', pid, query={
+                'cdn': 'akamai',
+                'mediaToken': base64.b64encode(media_token.encode()),
+                'resource': base64.b64encode(resource.encode()),
+                'url': source_url,
+            }), pid, 'mp4')
+        self._sort_formats(formats)
+
+        return {
+            'id': pid,
+            'display_id': display_id,
+            'title': title,
+            'formats': formats,
+            'is_live': True,
+        }

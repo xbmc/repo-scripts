@@ -19,7 +19,7 @@ class DeezerPlaylistIE(InfoExtractor):
             'id': '176747451',
             'title': 'Best!',
             'uploader': 'Anonymous',
-            'thumbnail': 're:^https?://cdn-images.deezer.com/images/cover/.*\.jpg$',
+            'thumbnail': r're:^https?://cdn-images\.deezer\.com/images/cover/.*\.jpg$',
         },
         'playlist_count': 30,
         'skip': 'Only available in .de',
@@ -41,7 +41,9 @@ class DeezerPlaylistIE(InfoExtractor):
                 'Deezer said: %s' % geoblocking_msg, expected=True)
 
         data_json = self._search_regex(
-            r'naboo\.display\(\'[^\']+\',\s*(.*?)\);\n', webpage, 'data JSON')
+            (r'__DZR_APP_STATE__\s*=\s*({.+?})\s*</script>',
+             r'naboo\.display\(\'[^\']+\',\s*(.*?)\);\n'),
+            webpage, 'data JSON')
         data = json.loads(data_json)
 
         playlist_title = data.get('DATA', {}).get('TITLE')

@@ -1,7 +1,9 @@
 import base64
+import collections
 import copy
 import os
 import sys
+from array import array
 
 import six
 from six.moves import urllib
@@ -11,7 +13,9 @@ reprlib = six.moves.reprlib
 
 binary_type = six.binary_type
 integer_types = six.integer_types
+number_types = integer_types + (float, )
 string_types = six.string_types
+sequence_types = (collections.Mapping, list, tuple, set, frozenset, array, collections.deque)
 
 urlparse = urllib.parse.urlparse
 urlsplit = urllib.parse.urlsplit
@@ -44,11 +48,10 @@ if python_major_version() < 3:
 
         return repr(val)
 
-
     _map = map
+
     def map(*args):
         return _map(*args)
-
 
     def force_lower(val):
         return str(val).lower()
@@ -57,11 +60,10 @@ else:
     def text(val):
         return str(val)
 
-
     _map = map
+
     def map(*args):
         return list(_map(*args))
-
 
     def force_lower(val):
         try:
@@ -171,7 +173,10 @@ def dict_merge(a, b):
         if k in result and isinstance(result[k], dict):
             result[k] = dict_merge(result[k], v)
         else:
-            result[k] = copy.deepcopy(v)
+            try:
+                result[k] = copy.deepcopy(v)
+            except:
+                result[k] = '<Uncopyable obj:(%s)>' % (v,)
 
     return result
 
@@ -179,6 +184,17 @@ def dict_merge(a, b):
 def circular_reference_label(data, ref_key=None):
     ref = '.'.join(map(text, ref_key))
     return '<CircularReference type:(%s) ref:(%s)>' % (type(data).__name__, ref)
+
+
+def float_nan_label(data):
+    return '<NaN>'
+
+
+def float_infinity_label(data):
+    if data > 1:
+        return '<Infinity>'
+    else:
+        return '<NegativeInfinity>'
 
 
 def unencodable_object_label(data):
@@ -189,4 +205,3 @@ def unencodable_object_label(data):
 def undecodable_object_label(data):
     return '<Undecodable type:(%s) base64:(%s)>' % (type(data).__name__,
                                                     base64.b64encode(data).decode('ascii'))
-

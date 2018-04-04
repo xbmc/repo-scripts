@@ -10,9 +10,12 @@ except TypeError:
         def strptime(cls, dstring, dformat):
             return datetime.datetime(*(time.strptime(dstring, dformat)[0:6]))
 
+    # To fix an issue with threading ad strptime
+    import _strptime # pylint: disable=W0611
+
     datetime.datetime = new_datetime
 
-from peewee import peewee
+from peewee import peewee # pylint: disable=E0401
 import util
 
 DATABASE_VERSION = 6
@@ -37,7 +40,7 @@ def session(func):
     def inner(*args, **kwargs):
         try:
             DB.connect()
-            with DB.transaction():
+            with DB.atomic():
                 return func(*args, **kwargs)
         finally:
             DB.close()
@@ -48,7 +51,7 @@ def sessionW(func):
     def inner(*args, **kwargs):
         try:
             W_DB.connect()
-            with W_DB.transaction():
+            with W_DB.atomic():
                 return func(*args, **kwargs)
         finally:
             W_DB.close()
@@ -69,7 +72,7 @@ def dummyCallback(*args, **kwargs):
 
 def migrateDB(DB, version):
     util.LOG('Migrating database from version {0} to {1}'.format(version, DATABASE_VERSION))
-    from peewee.playhouse import migrate
+    from peewee.playhouse import migrate # pylint: disable=E0401
     migrator = migrate.SqliteMigrator(DB)
     migratorW = migrate.SqliteMigrator(W_DB)
 

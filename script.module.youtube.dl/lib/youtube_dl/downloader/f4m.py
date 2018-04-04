@@ -1,26 +1,27 @@
 from __future__ import division, unicode_literals
 
-import base64
 import io
 import itertools
-import os
 import time
 
 from .fragment import FragmentFD
 from ..compat import (
+    compat_b64decode,
     compat_etree_fromstring,
     compat_urlparse,
     compat_urllib_error,
     compat_urllib_parse_urlparse,
+    compat_struct_pack,
+    compat_struct_unpack,
 )
 from ..utils import (
-    encodeFilename,
     fix_xml_ampersands,
-    sanitize_open,
-    struct_pack,
-    struct_unpack,
     xpath_text,
 )
+
+
+class DataTruncatedError(Exception):
+    pass
 
 
 class FlvReader(io.BytesIO):
@@ -29,20 +30,28 @@ class FlvReader(io.BytesIO):
     The file format is documented in https://www.adobe.com/devnet/f4v.html
     """
 
+    def read_bytes(self, n):
+        data = self.read(n)
+        if len(data) < n:
+            raise DataTruncatedError(
+                'FlvReader error: need %d bytes while only %d bytes got' % (
+                    n, len(data)))
+        return data
+
     # Utility functions for reading numbers and strings
     def read_unsigned_long_long(self):
-        return struct_unpack('!Q', self.read(8))[0]
+        return compat_struct_unpack('!Q', self.read_bytes(8))[0]
 
     def read_unsigned_int(self):
-        return struct_unpack('!I', self.read(4))[0]
+        return compat_struct_unpack('!I', self.read_bytes(4))[0]
 
     def read_unsigned_char(self):
-        return struct_unpack('!B', self.read(1))[0]
+        return compat_struct_unpack('!B', self.read_bytes(1))[0]
 
     def read_string(self):
         res = b''
         while True:
-            char = self.read(1)
+            char = self.read_bytes(1)
             if char == b'\x00':
                 break
             res += char
@@ -53,18 +62,18 @@ class FlvReader(io.BytesIO):
         Read a box and return the info as a tuple: (box_size, box_type, box_data)
         """
         real_size = size = self.read_unsigned_int()
-        box_type = self.read(4)
+        box_type = self.read_bytes(4)
         header_end = 8
         if size == 1:
             real_size = self.read_unsigned_long_long()
             header_end = 16
-        return real_size, box_type, self.read(real_size - header_end)
+        return real_size, box_type, self.read_bytes(real_size - header_end)
 
     def read_asrt(self):
         # version
         self.read_unsigned_char()
         # flags
-        self.read(3)
+        self.read_bytes(3)
         quality_entry_count = self.read_unsigned_char()
         # QualityEntryCount
         for i in range(quality_entry_count):
@@ -85,7 +94,7 @@ class FlvReader(io.BytesIO):
         # version
         self.read_unsigned_char()
         # flags
-        self.read(3)
+        self.read_bytes(3)
         # time scale
         self.read_unsigned_int()
 
@@ -119,7 +128,7 @@ class FlvReader(io.BytesIO):
         # version
         self.read_unsigned_char()
         # flags
-        self.read(3)
+        self.read_bytes(3)
 
         self.read_unsigned_int()  # BootstrapinfoVersion
         # Profile,Live,Update,Reserved
@@ -184,6 +193,11 @@ def build_fragments_list(boot_info):
     first_frag_number = fragment_run_entry_table[0]['first']
     fragments_counter = itertools.count(first_frag_number)
     for segment, fragments_count in segment_run_table['segment_run']:
+        # In some live HDS streams (for example Rai), `fragments_count` is
+        # abnormal and causing out-of-memory errors. It's OK to change the
+        # number of fragments for live streams as they are updated periodically
+        if fragments_count == 4294967295 and boot_info['live']:
+            fragments_count = 2
         for _ in range(fragments_count):
             res.append((segment, next(fragments_counter)))
 
@@ -194,11 +208,11 @@ def build_fragments_list(boot_info):
 
 
 def write_unsigned_int(stream, val):
-    stream.write(struct_pack('!I', val))
+    stream.write(compat_struct_pack('!I', val))
 
 
 def write_unsigned_int_24(stream, val):
-    stream.write(struct_pack('!I', val)[1:])
+    stream.write(compat_struct_pack('!I', val)[1:])
 
 
 def write_flv_header(stream):
@@ -229,8 +243,17 @@ def remove_encrypted_media(media):
                        media))
 
 
-def _add_ns(prop):
-    return '{http://ns.adobe.com/f4m/1.0}%s' % prop
+def _add_ns(prop, ver=1):
+    return '{http://ns.adobe.com/f4m/%d.0}%s' % (ver, prop)
+
+
+def get_base_url(manifest):
+    base_url = xpath_text(
+        manifest, [_add_ns('baseURL'), _add_ns('baseURL', 2)],
+        'base URL', default=None)
+    if base_url:
+        base_url = base_url.strip()
+    return base_url
 
 
 class F4mFD(FragmentFD):
@@ -289,7 +312,7 @@ class F4mFD(FragmentFD):
             boot_info = self._get_bootstrap_from_url(bootstrap_url)
         else:
             bootstrap_url = None
-            bootstrap = base64.b64decode(node.text.encode('ascii'))
+            bootstrap = compat_b64decode(node.text)
             boot_info = read_bootstrap_info(bootstrap)
         return boot_info, bootstrap_url
 
@@ -297,7 +320,8 @@ class F4mFD(FragmentFD):
         man_url = info_dict['url']
         requested_bitrate = info_dict.get('tbr')
         self.to_screen('[%s] Downloading f4m manifest' % self.FD_NAME)
-        urlh = self.ydl.urlopen(man_url)
+
+        urlh = self.ydl.urlopen(self._prepare_url(info_dict, man_url))
         man_url = urlh.geturl()
         # Some manifests may be malformed, e.g. prosiebensat1 generated manifests
         # (see https://github.com/rg3/youtube-dl/issues/6215#issuecomment-121704244
@@ -307,7 +331,7 @@ class F4mFD(FragmentFD):
         doc = compat_etree_fromstring(manifest)
         formats = [(int(f.attrib.get('bitrate', -1)), f)
                    for f in self._get_unencrypted_media(doc)]
-        if requested_bitrate is None:
+        if requested_bitrate is None or len(formats) == 1:
             # get the best format
             formats = sorted(formats, key=lambda f: f[0])
             rate, media = formats[-1]
@@ -315,13 +339,17 @@ class F4mFD(FragmentFD):
             rate, media = list(filter(
                 lambda f: int(f[0]) == requested_bitrate, formats))[0]
 
-        base_url = compat_urlparse.urljoin(man_url, media.attrib['url'])
+        # Prefer baseURL for relative URLs as per 11.2 of F4M 3.0 spec.
+        man_base_url = get_base_url(doc) or man_url
+
+        base_url = compat_urlparse.urljoin(man_base_url, media.attrib['url'])
         bootstrap_node = doc.find(_add_ns('bootstrapInfo'))
-        boot_info, bootstrap_url = self._parse_bootstrap_node(bootstrap_node, base_url)
+        boot_info, bootstrap_url = self._parse_bootstrap_node(
+            bootstrap_node, man_base_url)
         live = boot_info['live']
         metadata_node = media.find(_add_ns('metadata'))
         if metadata_node is not None:
-            metadata = base64.b64decode(metadata_node.text.encode('ascii'))
+            metadata = compat_b64decode(metadata_node.text)
         else:
             metadata = None
 
@@ -344,17 +372,21 @@ class F4mFD(FragmentFD):
 
         dest_stream = ctx['dest_stream']
 
-        write_flv_header(dest_stream)
-        if not live:
-            write_metadata_tag(dest_stream, metadata)
+        if ctx['complete_frags_downloaded_bytes'] == 0:
+            write_flv_header(dest_stream)
+            if not live:
+                write_metadata_tag(dest_stream, metadata)
 
         base_url_parsed = compat_urllib_parse_urlparse(base_url)
 
         self._start_frag_download(ctx)
 
-        frags_filenames = []
+        frag_index = 0
         while fragments_list:
             seg_i, frag_i = fragments_list.pop(0)
+            frag_index += 1
+            if frag_index <= ctx['fragment_index']:
+                continue
             name = 'Seg%d-Frag%d' % (seg_i, frag_i)
             query = []
             if base_url_parsed.query:
@@ -364,24 +396,26 @@ class F4mFD(FragmentFD):
             if info_dict.get('extra_param_to_segment_url'):
                 query.append(info_dict['extra_param_to_segment_url'])
             url_parsed = base_url_parsed._replace(path=base_url_parsed.path + name, query='&'.join(query))
-            frag_filename = '%s-%s' % (ctx['tmpfilename'], name)
             try:
-                success = ctx['dl'].download(frag_filename, {'url': url_parsed.geturl()})
+                success, down_data = self._download_fragment(ctx, url_parsed.geturl(), info_dict)
                 if not success:
                     return False
-                (down, frag_sanitized) = sanitize_open(frag_filename, 'rb')
-                down_data = down.read()
-                down.close()
                 reader = FlvReader(down_data)
                 while True:
-                    _, box_type, box_data = reader.read_box_info()
+                    try:
+                        _, box_type, box_data = reader.read_box_info()
+                    except DataTruncatedError:
+                        if test:
+                            # In tests, segments may be truncated, and thus
+                            # FlvReader may not be able to parse the whole
+                            # chunk. If so, write the segment as is
+                            # See https://github.com/rg3/youtube-dl/issues/9214
+                            dest_stream.write(down_data)
+                            break
+                        raise
                     if box_type == b'mdat':
-                        dest_stream.write(box_data)
+                        self._append_fragment(ctx, box_data)
                         break
-                if live:
-                    os.remove(encodeFilename(frag_sanitized))
-                else:
-                    frags_filenames.append(frag_sanitized)
             except (compat_urllib_error.HTTPError, ) as err:
                 if live and (err.code == 404 or err.code == 410):
                     # We didn't keep up with the live window. Continue
@@ -400,8 +434,5 @@ class F4mFD(FragmentFD):
                     self.report_warning(msg)
 
         self._finish_frag_download(ctx)
-
-        for frag_file in frags_filenames:
-            os.remove(encodeFilename(frag_file))
 
         return True

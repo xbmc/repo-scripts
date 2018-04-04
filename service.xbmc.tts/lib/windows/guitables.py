@@ -137,7 +137,7 @@ winListItemProperties = {        10040:('$INFO[ListItem.Property(Addon.Status)]'
 
 def getWindowAddonID(winID):
     path = xbmc.getInfoLabel('Window({0}).Property(xmlfile)'.format(winID)).decode('utf-8')
-    addonID = path.split('/addons/',1)[-1].split('/',1)[0]
+    addonID = path.replace('\\', '/').split('/addons/',1)[-1].split('/',1)[0]
     return addonID
 
 def getWindowAddonName(winID):

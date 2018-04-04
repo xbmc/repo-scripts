@@ -1,20 +1,24 @@
 # coding: utf-8
 from __future__ import unicode_literals
 
-import re
-
 from .common import InfoExtractor
+from ..utils import (
+    int_or_none,
+    float_or_none,
+)
 
 
 class FczenitIE(InfoExtractor):
-    _VALID_URL = r'https?://(?:www\.)?fc-zenit\.ru/video/gl(?P<id>[0-9]+)'
+    _VALID_URL = r'https?://(?:www\.)?fc-zenit\.ru/video/(?P<id>[0-9]+)'
     _TEST = {
-        'url': 'http://fc-zenit.ru/video/gl6785/',
-        'md5': '458bacc24549173fe5a5aa29174a5606',
+        'url': 'http://fc-zenit.ru/video/41044/',
+        'md5': '0e3fab421b455e970fa1aa3891e57df0',
         'info_dict': {
-            'id': '6785',
+            'id': '41044',
             'ext': 'mp4',
-            'title': '«Зенит-ТВ»: как Олег Шатов играл против «Урала»',
+            'title': 'Так пишется история: казанский разгром ЦСКА на «Зенит-ТВ»',
+            'timestamp': 1462283735,
+            'upload_date': '20160503',
         },
     }
 
@@ -22,20 +26,31 @@ class FczenitIE(InfoExtractor):
         video_id = self._match_id(url)
         webpage = self._download_webpage(url, video_id)
 
-        video_title = self._html_search_regex(r'<div class=\"photoalbum__title\">([^<]+)', webpage, 'title')
+        msi_id = self._search_regex(
+            r"(?s)config\s*=\s*{.+?video_id\s*:\s*'([^']+)'", webpage, 'msi id')
 
-        bitrates_raw = self._html_search_regex(r'bitrates:.*\n(.*)\]', webpage, 'video URL')
-        bitrates = re.findall(r'url:.?\'(.+?)\'.*?bitrate:.?([0-9]{3}?)', bitrates_raw)
+        msi_data = self._download_json(
+            'http://player.fc-zenit.ru/msi/video', msi_id, query={
+                'video': msi_id,
+            })['data']
+        title = msi_data['name']
 
         formats = [{
-            'url': furl,
-            'tbr': tbr,
-        } for furl, tbr in bitrates]
+            'format_id': q.get('label'),
+            'url': q['url'],
+            'height': int_or_none(q.get('label')),
+        } for q in msi_data['qualities'] if q.get('url')]
 
         self._sort_formats(formats)
 
+        tags = [tag['label'] for tag in msi_data.get('tags', []) if tag.get('label')]
+
         return {
             'id': video_id,
-            'title': video_title,
+            'title': title,
+            'thumbnail': msi_data.get('preview'),
             'formats': formats,
+            'duration': float_or_none(msi_data.get('duration')),
+            'timestamp': int_or_none(msi_data.get('date')),
+            'tags': tags,
         }

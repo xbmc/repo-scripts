@@ -1,3 +1,57 @@
+*** 18.320.0 ***
+
+Updated youtube-dl core to 2018.03.20
+
+*** 18.225.0 ***
+
+Updated youtube-dl core to 2018.02.25
+Possible fix for import errors on Xbox One - Issue #33
+
+*** 17.1231.0 ***
+
+Update youtube-dl core to 2017.12.31
+Enable usage in WSGI scripts (Thanks koying)
+Add Spanish language strings (Thanks roliverosc)
+Add Hebrew language strings (Thanks Eng2Heb)
+
+*** 17.1228.0 ***
+
+Updated youtube-dl core to 2017.12.28
+
+*** 17.709.0 ***
+
+Updated youtube-dl core to 2017.07.09
+
+*** 17.518.2 ***
+
+Remove testing code that was spamming the log
+
+*** 17.518.1 ***
+
+Added setting 'Skip Videos Without Audio' to force choosing videos with audio
+
+*** 17.518.0 ***
+
+Updated youtube-dl core to 2017.05.18.1
+Fix errors caused by Kodi datetime.strptime() issue
+
+*** 17.310.0 ***
+
+Updated youtube-dl core to 2017.03.10
+
+*** 16.1026.0 ***
+
+Updated youtube-dl core to 2016.10.26
+
+*** 16.627.0 ***
+
+Updated youtube-dl core to 2016.06.27
+Downloads that fail to copy from temp to downloads now are kept in temp with a message
+
+*** 16.521.0 ***
+
+Updated youtube-dl core to 2016.05.21.2
+
 *** 16.327.0 ***
 
 Updated youtube-dl core to 2016.03.27

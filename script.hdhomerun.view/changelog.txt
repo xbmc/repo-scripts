@@ -1,3 +1,36 @@
+** 2017.1.2 **
+
+Fix channel icon scaling
+Fix fonts for Estuary
+
+** 2016.12.14 **
+
+Change rules URL to not use the test server
+
+** 2016.07.15 **
+
+Update for recordings API change
+Change column headings to 'MOVIE NAME' and 'EVENT NAME' when showing movies or sports respectively
+
+** 2016.05.09 **
+
+Added setting 'Load recording at startup if DVR is detected' (default=disabled)
+
+** 2016.04.30 **
+
+Refresh cached recordings after delete
+Fix for error causing failure when attempting to sort by program name/episode name
+Change column header to 'EPISODE NAME' when showing episodes for a single show to match the sort target
+
+** 2016.04.29 **
+
+Add single episode recording
+Add team recording
+Add recordings delete options
+Add ability to set a custom padding value
+Various interface fixes, tweaks and improvements
+
+
 ** 2016.03.24 **
 
 Added 'None' to padding options (0 seconds)

@@ -34,6 +34,15 @@ import buggalo_userflow as userflow
 
 
 def gatherData(etype, value, tracebackInfo, extraData, globalExtraData):
+    """
+    This method gathers all available data and bundles it in one dict object
+
+    @param etype: Type of the raised exception (output of sys.exc_info)
+    @param value: ... (output of sys.exc_info)
+    @param tracebackInfo: ... (output of sys.exc_info)
+    @param extraData: Additional data given for the specific try-except-clause
+    @param globalExtraData: Data assembled over the whole runtime of the addon
+    """
     data = dict()
     data['version'] = 4
     data['timestamp'] = datetime.datetime.now().isoformat()
@@ -88,11 +97,11 @@ def gatherData(etype, value, tracebackInfo, extraData, globalExtraData):
 
     extraDataInfo = dict()
     try:
-
+        # convert globalExtraData to a dict that can be processed by BuggaloDialog, submitData and emailData (as part of data)
         for (key, value) in globalExtraData.items():
-            if isinstance(extraData, str):
-                extraDataInfo[key] = value.decode('utf-8', 'ignore')
-            elif isinstance(extraData, unicode):
+            if isinstance(value, str):
+                extraDataInfo[key] = value.decode('utf-8', 'ignore') # convert to unicode
+            elif isinstance(value, unicode):
                 extraDataInfo[key] = value
             else:
                 extraDataInfo[key] = str(value)
@@ -106,7 +115,10 @@ def gatherData(etype, value, tracebackInfo, extraData, globalExtraData):
                 else:
                     extraDataInfo[key] = str(value)
         elif extraData is not None:
-            extraDataInfo[''] = str(extraData)
+            if isinstance(extraData, unicode):
+                extraDataInfo[''] = extraData
+            else:
+                extraDataInfo[''] = str(extraData)
     except Exception, ex:
         (etype, value, tb) = sys.exc_info()
         traceback.print_exception(etype, value, tb)
@@ -130,7 +142,7 @@ def submitData(serviceUrl, data):
             pass # probably timeout; retry
 
 
-def emailData(recipient, data):
+def emailData(emailConfig, data):
     """
 
     @param recipient:
@@ -138,36 +150,57 @@ def emailData(recipient, data):
     @return:
     """
 
-    # build html table with data
-    body = '<table border="1">'
+    # build html table with data (with unicode character set)
+    body = u'<table border="1">'
     for group in sorted(data.keys()):
         values = data[group]
         if type(values) == dict:
-            body += '<tr><td colspan="2"><h2>%s</h2></td></tr>' % group.capitalize()
+            body += u'<tr><td colspan="2"><h2>%s</h2></td></tr>' % group.capitalize()
             keys = values.keys()
-            if group == 'userflow':
+            if group == u'userflow':
                 keys = sorted(keys)
 
             for key in keys:
-                body += '<tr><td>%s</td>' % key
-                if key == 'stacktrace':
-                    body += '<td><pre>'
+                body += u'<tr><td>%s</td>' % str(key)
+                if key == u'stacktrace':
+                    body += u'<td><pre>'
                     for item in values[key]:
                         body += item + '\n'
-                    body += '</pre></td>'
+                    body += u'</pre></td>'
+                elif key == u'type':
+                    body += u'<td>%s</td>' % str(values[key][5:-2])
+                elif group == u'extraData':
+                    body += u'<td style="white-space: pre">%s</td>' % values[key] # values in extraData are unicode
                 else:
-                    body += '<td>%s</td>' % str(values[key])
-                body += '</tr>'
+                    body += u'<td>%s</td>' % str(values[key])
+                body += u'</tr>'
         else:
             body += '<tr><td><h2>%s</h2></td><td>%s</td></tr>' % (group.capitalize(), str(values))
-    body += '</table>'
+    body += u'</table>'
 
-    msg = MIMEText(body, 'html')
-    msg['Subject'] = '[Buggalo][%s] %s' % (data['addon']['id'], data['exception']['value'])
-    msg['From'] = 'Buggalo'
-    msg['To'] = recipient
+    msg = MIMEText(body, 'html', 'utf-8')
+    msg['Subject'] = '[Buggalo][%s] v%s: %s' % (data['addon']['id'], data['addon']['version'], data['exception']['value'])
+    if 'sender' in emailConfig:
+        msg['From'] = emailConfig['sender']
+    else:
+        msg['From'] = 'Buggalo@buggalo.com'
+    msg['To'] = emailConfig['recipient']
     msg['X-Mailer'] = 'Buggalo Exception Collector'
 
-    smtp = smtplib.SMTP('gmail-smtp-in.l.google.com')
+    if not 'server' in emailConfig:
+        emailConfig['server'] = 'gmail-smtp-in.l.google.com'
+
+    if not 'method' in emailConfig:
+        emailConfig['method'] = 'default'
+        
+    if emailConfig['method'] == 'ssl':
+        smtp = smtplib.SMTP_SSL(emailConfig['server'])
+    else:
+        # smtp on port 25
+        smtp = smtplib.SMTP(emailConfig['server'])
+
+    if 'user' in emailConfig and 'pass' in emailConfig:
+        # necessary for ssl connection
+        smtp.login(emailConfig['user'], emailConfig['pass'])
     smtp.sendmail(msg['From'], msg['To'], msg.as_string(9))
     smtp.quit()

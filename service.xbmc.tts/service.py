@@ -114,7 +114,7 @@ class TTSService(xbmc.Monitor):
 
     def reloadSettings(self):
         self.readerOn = not util.getSetting('reader_off',False)
-        util.DEBUG = util.getSetting('debug_logging',True)
+        util.reload()
         self.speakListCount = util.getSetting('speak_list_count',True)
         self.autoItemExtra = False
         if util.getSetting('auto_item_extra',False):
@@ -283,7 +283,7 @@ class TTSService(xbmc.Monitor):
             import threading
             util.LOG('Remaining Threads:')
             for t in threading.enumerate():
-                util.LOG('  {0}'.format(t.name))
+                util.DEBUG_LOG('  {0}'.format(t.name))
 
     def shutdown(self):
         self.stop = True
@@ -364,12 +364,14 @@ class TTSService(xbmc.Monitor):
     def sayText(self,text,interrupt=False):
         assert isinstance(text,unicode), "Not Unicode"
         if self.tts.dead: return self.fallbackTTS(self.tts.deadReason)
+        util.VERBOSE_LOG(repr(text))
         self.tts.say(self.cleanText(text),interrupt)
 
     def sayTexts(self,texts,interrupt=True):
         if not texts: return
         assert all(isinstance(t,unicode) for t in texts), "Not Unicode"
         if self.tts.dead: return self.fallbackTTS(self.tts.deadReason)
+        util.VERBOSE_LOG(repr(texts))
         self.tts.sayList(self.cleanText(texts),interrupt=interrupt)
 
     def insertPause(self,ms=500):
@@ -408,7 +410,7 @@ class TTSService(xbmc.Monitor):
         self.winID = winID
         self.updateWindowReader()
         if util.DEBUG:
-            util.LOG('Window ID: {0} Handler: {1} File: {2}'.format(winID,self.windowReader.ID,xbmc.getInfoLabel('Window.Property(xmlfile)')))
+            util.DEBUG_LOG('Window ID: {0} Handler: {1} File: {2}'.format(winID,self.windowReader.ID,xbmc.getInfoLabel('Window.Property(xmlfile)')))
 
         name = self.windowReader.getName()
         if name:
@@ -435,13 +437,13 @@ class TTSService(xbmc.Monitor):
         controlID = self.window().getFocusId()
         if controlID == self.controlID: return newW
         if util.DEBUG:
-            util.LOG('Control: %s' % controlID)
+            util.DEBUG_LOG('Control: %s' % controlID)
         self.controlID = controlID
         if not controlID: return newW
         return True
 
     def checkControlDescription(self,newW):
-        post = self.getControlPostfix()
+        post = self.windowReader.getControlPostfix(self.controlID)
         description = self.windowReader.getControlDescription(self.controlID) or ''
         if description or post:
             self.sayText(description + post,interrupt=not newW)
@@ -461,12 +463,6 @@ class TTSService(xbmc.Monitor):
         self.sayText(text,interrupt=not newD)
         if self.autoItemExtra:
             self.waitingToReadItemExtra = time.time()
-
-    def getControlPostfix(self):
-        if not self.speakListCount: return u''
-        numItems = xbmc.getInfoLabel('Container({0}).NumItems'.format(self.controlID)).decode('utf-8')
-        if numItems: return u'... {0} {1}'.format(numItems,numItems != '1' and T(32107) or T(32106))
-        return u''
 
     def newSecondaryText(self, text):
         self.secondaryText = text
@@ -497,8 +493,52 @@ class TTSService(xbmc.Monitor):
             return [self._cleanText(t) for t in text]
 
 
+def preInstalledFirstRun():
+    if not util.isPreInstalled(): #Do as little as possible if there is no pre-install
+        if util.wasPreInstalled():
+            util.LOG('PRE INSTALL: REMOVED')
+            # Set version to 0.0.0 so normal first run will execute and fix the keymap
+            util.setSetting('version','0.0.0')
+            import enabler
+            enabler.markPreOrPost() # Update the install status
+        return False
+
+    import enabler
+
+    lastVersion = util.getSetting('version')
+
+    if not enabler.isPostInstalled() and util.wasPostInstalled():
+        util.LOG('POST INSTALL: UN-INSTALLED OR REMOVED')
+        # Add-on was removed. Assume un-installed and treat this as a pre-installed first run to disable the addon
+    elif lastVersion:
+        enabler.markPreOrPost() # Update the install status
+        return False
+
+    # Set version to 0.0.0 so normal first run will execute on first enable
+    util.setSetting('version','0.0.0')
+
+    util.LOG('PRE-INSTALLED FIRST RUN')
+    util.LOG('Installing basic keymap')
+
+    # Install keymap with just F12 enabling included
+    from lib import keymapeditor
+    keymapeditor.installBasicKeymap()
+
+    util.LOG('Pre-installed - DISABLING')
+
+    enabler.disableAddon()
+    return True
+
+
+def startService():
+    if preInstalledFirstRun():
+        return
+
+    TTSService().start()
+
+
 if __name__ == '__main__':
     if len(sys.argv) > 1 and sys.argv[1] == 'voice_dialog':
         backends.selectVoice()
     else:
-        TTSService().start()
+        startService()

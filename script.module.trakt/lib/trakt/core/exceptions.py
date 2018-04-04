@@ -1,4 +1,10 @@
+from __future__ import absolute_import, division, print_function
+
 from trakt.core.errors import ERRORS
+
+
+class RequestFailedError(Exception):
+    pass
 
 
 class RequestError(Exception):
@@ -6,7 +12,7 @@ class RequestError(Exception):
         self.response = response
         self.status_code = response.status_code if response is not None else None
 
-        self.error = ERRORS.get(self.status_code, ("Unknown", "Unknown"))
+        self.error = ERRORS.get(self.status_code, ('Unknown', 'Unknown'))
 
         # Call super class with message
         super(RequestError, self).__init__('%s - "%s"' % self.error)

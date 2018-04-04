@@ -10,6 +10,8 @@ import ratings
 import actions
 import util
 
+TRAILER_FAIL_THRESHOLD = 10
+
 
 # Playabe is implemented as a dict to be easily serializable to JSON
 class PlayableBase(dict):
@@ -53,7 +55,7 @@ class Image(Playable):
         self['fade'] = fade
 
     def __repr__(self):
-        return 'IMAGE ({0}s): {1}'.format(self.duration, self.path)
+        return 'IMAGE ({0}s): {1}'.format(self.duration, repr(self.path))
 
     @property
     def setID(self):
@@ -322,13 +324,19 @@ class Feature(Video):
     type = 'FEATURE'
 
     def __repr__(self):
-        return 'FEATURE [ {0} ]:\n    Path: {1}\n    Rating: ({2})\n    Genres: {3}\n    3D: {4}\n    Audio: {5}'.format(
-            repr(self.title),
-            repr(self.path),
-            repr(self.rating),
-            repr(self.genres),
+        return ('FEATURE [ {0} ]:\n    Path: {1}\n    Rating: {2}\n    Year: {3}\n    Studios: {4}\n    ' +
+                'Directors: {5}\n    Cast: {6}\n    Genres: {7}\n    Tags: {8}\n    3D: {9}\n    Audio: {10}').format(
+            util.strRepr(self.title),
+            util.strRepr(self.path),
+            util.strRepr(self.rating),
+            util.strRepr(self.year),
+            ', '.join([util.strRepr(s) for s in self.studios]),
+            ', '.join([util.strRepr(d) for d in self.directors]),
+            ', '.join([util.strRepr(c['name']) for c in self.cast]),
+            ', '.join([util.strRepr(g) for g in self.genres]),
+            ', '.join([util.strRepr(t) for t in self.tags]),
             self.is3D and 'Yes' or 'No',
-            repr(self.audioFormat)
+            util.strRepr(self.audioFormat)
         )
 
     @property
@@ -368,6 +376,38 @@ class Feature(Video):
     @genres.setter
     def genres(self, val):
         self['genres'] = val
+
+    @property
+    def tags(self):
+        return self.get('tags', [])
+
+    @tags.setter
+    def tags(self, val):
+        self['tags'] = val
+
+    @property
+    def studios(self):
+        return self.get('studio', [])
+
+    @studios.setter
+    def studios(self, val):
+        self['studio'] = val
+
+    @property
+    def directors(self):
+        return self.get('director', [])
+
+    @directors.setter
+    def directors(self, val):
+        self['director'] = val
+
+    @property
+    def cast(self):
+        return self.get('cast', [])
+
+    @cast.setter
+    def cast(self, val):
+        self['cast'] = val
 
     @property
     def is3D(self):
@@ -430,7 +470,7 @@ class Feature(Video):
         if not self.runtime:
             return
 
-        return '{0} minutes'.format(self.runtime/60)
+        return '{0} minutes'.format(self.runtime / 60)
 
 
 class Action(dict):
@@ -442,7 +482,7 @@ class Action(dict):
         self['path'] = processor.path
 
     def __repr__(self):
-        return '{0}: {1} - {2}'.format(self.type, self['path'], self.processor)
+        return '{0}: {1} - {2}'.format(self.type, repr(self['path']), self.processor)
 
     def run(self):
         self.processor.run()
@@ -790,6 +830,7 @@ class TrailerHandler:
         trailers = []
         pool = []
         ct = 0
+        fail = 0
         for t in self._getTrailersFromDBGenre(source, watched=watched):
             pool.append(t)
             ct += 1
@@ -799,35 +840,52 @@ class TrailerHandler:
                 for t in pool:
                     t = self.updateTrailer(t, source, quality)
                     if t:
+                        fail = 0
                         trailers.append(t)
                         if len(trailers) >= count:
+                            break
+                    else:
+                        fail += 1
+                        if fail >= TRAILER_FAIL_THRESHOLD:
+                            util.DEBUG_LOG('Exceeded trailer fail threshold - aborting.')
                             break
                 pool = []
                 ct = 0
 
-            if len(trailers) >= count:
+            if len(trailers) >= count or fail >= TRAILER_FAIL_THRESHOLD:
                 break
         else:
             if pool:
                 for t in pool:
                     t = self.updateTrailer(t, source, quality)
                     if t:
+                        fail = 0
                         trailers.append(t)
                         if len(trailers) >= count:
+                            break
+                    else:
+                        fail += 1
+                        if fail >= TRAILER_FAIL_THRESHOLD:
+                            util.DEBUG_LOG('Exceeded trailer fail threshold - aborting.')
                             break
 
         return [
             Video(
-                t.url,
-                t.userAgent,
-                title=t.title,
-                thumb=t.thumb,
+                trailer.url,
+                trailer.userAgent,
+                title=trailer.title,
+                thumb=trailer.thumb,
                 volume=self.sItem.getLive('volume')
-            ).fromModule(self.sItem) for t in trailers
+            ).fromModule(self.sItem) for trailer in trailers
         ]
 
     def updateTrailer(self, t, source, quality):
-        url = scrapers.getPlayableURL(t.WID.split(':', 1)[-1], quality, source, t.url) or ''
+        try:
+            url = scrapers.getPlayableURL(t.WID.split(':', 1)[-1], quality, source, t.url) or ''
+        except:
+            util.ERROR()
+            url = ''
+
         watched = t.watched
 
         t.watched = True
@@ -844,6 +902,12 @@ class TrailerHandler:
         return None
 
     def updateTrailers(self, source):
+        try:
+            self._updateTrailers(source)
+        except:
+            util.ERROR()
+
+    def _updateTrailers(self, source):
         trailers = scrapers.updateTrailers(source)
         if trailers:
             total = len(trailers)
@@ -948,7 +1012,7 @@ class VideoBumperHandler:
 
     def __call__(self, caller, sItem):
         self.caller = caller
-        util.DEBUG_LOG('[{0}] {1}'.format(sItem.typeChar, sItem.display()))
+        util.DEBUG_LOG('[{0}] {1}'.format(sItem.typeChar, repr(sItem.display())))
 
         if not sItem.vtype:
             util.DEBUG_LOG('    - {0}'.format('No bumper type - SKIPPING'))
@@ -1070,17 +1134,19 @@ class AudioFormatHandler:
 
     def _checkFileNameForFormat(self, feature):
         featureFileName = os.path.basename(feature.path)
-        
+
         if feature.audioFormat == 'Dolby TrueHD' and re.search(self._atmosRegex, featureFileName):
-            util.DEBUG_LOG('    - Detect: Used file path {0} to determine audio format is {1}'.format(featureFileName, 'Dolby Atmos'))
+            util.DEBUG_LOG('    - Detect: Used file path {0} to determine audio format is {1}'.format(repr(featureFileName), 'Dolby Atmos'))
             return 'Dolby Atmos'
         elif feature.audioFormat == 'DTS-HD Master Audio' and re.search(self._dtsxRegex, featureFileName):
-            util.DEBUG_LOG('    - Detect: Used file path {0} to determine audio format is {1}'.format(featureFileName, 'DTS-X'))
+            util.DEBUG_LOG('    - Detect: Used file path {0} to determine audio format is {1}'.format(repr(featureFileName), 'DTS-X'))
             return 'DTS-X'
         else:
-            util.DEBUG_LOG('    - Detect: Looked at the file path {0} and decided to keep audio format {1}'.format(featureFileName, repr(feature.audioFormat)))
+            util.DEBUG_LOG(
+                '    - Detect: Looked at the file path {0} and decided to keep audio format {1}'.format(repr(featureFileName), repr(feature.audioFormat))
+            )
             return feature.audioFormat
-    
+
     @DB.session
     def __call__(self, caller, sItem):
         bumper = None
@@ -1164,7 +1230,7 @@ class ActionHandler:
             util.DEBUG_LOG('[{0}] NO PATH SET'.format(sItem.typeChar))
             return []
 
-        util.DEBUG_LOG('[{0}] {1}'.format(sItem.typeChar, sItem.file))
+        util.DEBUG_LOG('[{0}] {1}'.format(sItem.typeChar, repr(sItem.file)))
         processor = actions.ActionFileProcessor(sItem.file)
         return [Action(processor)]
 
@@ -1181,6 +1247,7 @@ class SequenceProcessor:
         self.contentPath = content_path
         self.lastFeature = None
         self._lastAction = None
+        self.end = -1
         self.loadSequence(sequence_path)
         self.createDefaultFeature()
 
@@ -1254,7 +1321,7 @@ class SequenceProcessor:
             sItem = self.sequence[pos]
 
             if not sItem.enabled:
-                util.DEBUG_LOG('[{0}] ({1}) DISABLED'.format(sItem.typeChar, sItem.display()))
+                util.DEBUG_LOG('[{0}] ({1}) DISABLED'.format(sItem.typeChar, repr(sItem.display())))
                 pos += 1
                 continue
 

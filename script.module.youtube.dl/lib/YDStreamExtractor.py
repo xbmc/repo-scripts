@@ -54,7 +54,9 @@ def _getQualityLimits(quality):
 def _selectVideoQuality(r, quality=None):
         if quality is None:
             quality = util.getSetting('video_quality', 1)
+
         disable_dash = util.getSetting('disable_dash_video', True)
+        skip_no_audio = util.getSetting('skip_no_audio', True)
 
         entries = r.get('entries') or [r]
 
@@ -81,12 +83,20 @@ def _selectVideoQuality(r, quality=None):
             fallback = formats[index[keys[0]]]
             for fmt in keys:
                 fdata = formats[index[fmt]]
+
                 if 'height' not in fdata:
                     continue
-                if disable_dash and 'dash' in fdata.get('format_note', '').lower():
+                elif disable_dash and 'dash' in fdata.get('format_note', '').lower():
                     continue
+                elif skip_no_audio and fdata.get('acodec', '').lower() == 'none':
+                    continue
+
                 h = fdata['height']
+                if h == None:
+                   h = 1
                 p = fdata.get('preference', 1)
+                if p == None:
+                   p = 1
                 if h >= minHeight and h <= maxHeight:
                     if (h >= prefMax and p > prefPref) or (h > prefMax and p >= prefPref):
                         prefMax = h
@@ -276,7 +286,7 @@ def _isValidMediaExtension(ext):
 def _infoFromListItem(listitem):
     url = listitem.getfilename()
     title = listitem.getProperty('title') or listitem.getLabel()
-    description = listitem.getdescription() or listitem.getLabel2()
+    description = listitem.getLabel2() or ''
     thumbnail = listitem.getProperty('iconImage') or listitem.getProperty('thumbnailImage') or ''  # Not sure if this works
 
     return {'url': url, 'title': title, 'description': description, 'thumbnail': thumbnail}
@@ -327,7 +337,9 @@ def _handleDownload(info, path=None, duration=None, bg=False):
         if os.path.exists(part):
             os.rename(part, result.filepath)
 
-    StreamUtils.moveFile(filePath, path, filename=info.get('filename'))
+    if not StreamUtils.moveFile(filePath, path, filename=info.get('filename')):
+        StreamUtils.showMessage(StreamUtils.T(32036), StreamUtils.T(32037), '', result.filepath, bg=bg)
+
     return result
 
 
@@ -376,7 +388,7 @@ def handleDownload(info, duration=None, bg=False, path=None):
     Returns a DownloadResult object for foreground transfers.
     """
     info = _convertInfo(info)
-    path = StreamUtils.getDownloadPath()
+    path = path or StreamUtils.getDownloadPath()
     if bg:
         servicecontrol.ServiceControl().download(info, path, duration)
     else:

@@ -1,19 +1,25 @@
+from __future__ import absolute_import, division, print_function
+
+from trakt.core.helpers import clean_username
 from trakt.interfaces.base import Interface
 from trakt.mapper import ListMapper
 
-# Import child interfaces
-from trakt.interfaces.users.lists.list_ import UsersListInterface
+import requests
 
-__all__ = [
-    'UsersListsInterface'
+# Import child interfaces
+from trakt.interfaces.users.lists.list_ import UsersListInterface  # noqa: I100
+
+__all__ = (
+    'UsersListsInterface',
     'UsersListInterface'
-]
+)
 
 
 class UsersListsInterface(Interface):
     path = 'users/*/lists'
 
-    def create(self, username, name, description=None, privacy='private', display_numbers=False, allow_comments=True, **kwargs):
+    def create(self, username, name, description=None, privacy='private',
+               display_numbers=False, allow_comments=True, **kwargs):
         data = {
             'name': name,
             'description': description,
@@ -36,11 +42,14 @@ class UsersListsInterface(Interface):
             data=data
         )
 
-        if response.status_code < 200 or response.status_code >= 300:
-            return None
-
         # Parse response
-        item = self.get_data(response)
+        item = self.get_data(response, **kwargs)
+
+        if isinstance(item, requests.Response):
+            return item
+
+        if not item:
+            return None
 
         # Map item to list object
         return ListMapper.custom_list(
@@ -49,16 +58,19 @@ class UsersListsInterface(Interface):
         )
 
     def get(self, username, **kwargs):
+        if kwargs.get('parse') is False:
+            raise ValueError('Parse can\'t be disabled on this method')
+
         # Send request
         response = self.http.get(
-            '/users/%s/lists' % username,
+            '/users/%s/lists' % clean_username(username),
         )
 
-        if response.status_code < 200 or response.status_code >= 300:
-            return
-
         # Parse response
-        items = self.get_data(response)
+        items = self.get_data(response, **kwargs)
+
+        if not items:
+            return
 
         # Map items to list objects
         for item in items:

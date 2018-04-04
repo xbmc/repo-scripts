@@ -1,3 +1,51 @@
+1.3.1
+- Fixed broken download due to site changes and added some future changes protection
+
+1.3.0
+- Added fake token generation support - download speed should much improve (@yosi-dediashvili)
+- Improved Checking item's media type (@burekas7)
+
+1.2.1 
+- Improvement for the option of using the addon when kodi is not playing (@burekas7)
+- Add support for local tvshow content (@burekas7)
+- Fix bug for last episode in a season that didn't return results. (@burekas7)
+
+1.2.0
+- added support for the new download code screen
+- fix Manual Search, Empty Title&Kodi isn't playing (@burekas7)
+
+1.1.4
+- fixed broken search due to site API change
+
+1.1.3
+- another (hopefully better) fix for download link issue
+
+1.1.2
+- fixed download issue occurring to several users
+
+1.1.1
+- some minor bug fixes
+
+1.1.0
+- updated the addon to support Torec website version 7.0
+
+1.0.10
+- fixed a breaking change from torec.net -> http://www.xn--9dbf0cd.net leading to addon download malfunction
+
+1.0.9
+- fixed disfunctional addon (@myakove)
+
+1.0.8
+- another fix for TOO MANY DL issue (@gklein)
+
+1.0.7
+- added support for zip and rar archives (@gklein)
+
+1.0.6
+- bypass for new issue with TOO MANY DL
+- some minor speedups
+- utf-8 issues (@zofer1)
+
 1.0.5
 - better handling of TOO MANY DL error by performing retries
 
@@ -6,7 +54,7 @@
 
 1.0.3
 - many cleanups
-- fixed case comparing issues with rating system (matanelgabsi)
+- fixed case comparing issues with rating system (@matanelgabsi)
 - reduced the number of files created during download (and extraction)
 - fastened the download process a bit
 - possible fix for UnicodeDecodeError (#4)

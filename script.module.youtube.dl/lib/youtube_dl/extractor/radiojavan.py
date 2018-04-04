@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 import re
 
 from .common import InfoExtractor
-from ..utils import(
+from ..utils import (
     unified_strdate,
     str_to_int,
 )
@@ -18,7 +18,7 @@ class RadioJavanIE(InfoExtractor):
             'id': 'chaartaar-ashoobam',
             'ext': 'mp4',
             'title': 'Chaartaar - Ashoobam',
-            'thumbnail': 're:^https?://.*\.jpe?g$',
+            'thumbnail': r're:^https?://.*\.jpe?g$',
             'upload_date': '20150215',
             'view_count': int,
             'like_count': int,

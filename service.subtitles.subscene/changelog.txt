@@ -1,3 +1,6 @@
+1.7.1
+- better download handling
+
 1.7.0
 - improved title matching
 

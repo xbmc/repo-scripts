@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.xbmc.boblight" name="Kodi Boblight" version="2.0.16" provider-name="bobo1on1, Memphiz">
+﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.xbmc.boblight" name="Kodi Boblight" version="2.0.18" provider-name="bobo1on1, Memphiz">
   <requires>
     <import addon="xbmc.python" version="2.1.0"/>
   </requires>

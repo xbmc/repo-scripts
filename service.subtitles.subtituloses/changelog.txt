@@ -1,3 +1,6 @@
+0.0.7
+- Addon marked as broken
+
 0.0.6
 - Changed host to http://tusubtitulo.com
 - Added section 'series' to the main_url

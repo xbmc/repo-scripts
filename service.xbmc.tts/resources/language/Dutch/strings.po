@@ -1,0 +1,615 @@
+# XBMC Media Center language file
+msgid ""
+msgstr ""
+"Project-Id-Version: Kodi Screen Reader\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: 2013-12-12 22:56+0000\n"
+"PO-Revision-Date: 2015-12-29 20:26+0100\n"
+"Last-Translator: Leonard de Ruijter <alderuijter@gmail.com>\n"
+"Language-Team: Leonard de Ruijter <alderuijter@gmail.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: nl\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 1.8.6\n"
+
+msgctxt "#32001"
+msgid "Engine"
+msgstr "Spraakuitvoer"
+
+msgctxt "#32002"
+msgid "Default TTS Engine"
+msgstr "Standaarduitvoer voor tekst naar spraak"
+
+msgctxt "#32003"
+msgid "Voice"
+msgstr "Stem"
+
+msgctxt "#32004"
+msgid "Rate"
+msgstr "Snelheid"
+
+msgctxt "#32005"
+msgid "Pitch"
+msgstr "Toonhoogte"
+
+msgctxt "#32006"
+msgid "Speed"
+msgstr "Snelheid"
+
+msgctxt "#32007"
+msgid "Player"
+msgstr "Speler"
+
+msgctxt "#32008"
+msgid "Play Speech Directly Via Flite"
+msgstr "Spraak direct via Flite afspelen"
+
+msgctxt "#32009"
+msgid "Speed % (Needs SOX or MPlayer)"
+msgstr "Snelheid % (Vereist SOX of MPlayer)"
+
+msgctxt "#32010"
+msgid "Volume dB"
+msgstr "Volume dB"
+
+msgctxt "#32011"
+msgid "Rate (WPM)"
+msgstr "Snelheid (WPM)"
+
+msgctxt "#32012"
+msgid "Play Speech Directly Via eSpeak"
+msgstr "Spraak direct via eSpeak afspeelen"
+
+msgctxt "#32013"
+msgid "Pipe Audio To Player"
+msgstr "Audio doorsturen naar speler"
+
+msgctxt "#32014"
+msgid "Volume"
+msgstr "Volume"
+
+msgctxt "#32015"
+msgid "Play Speech Via XBMC"
+msgstr "Spraak via Kodi afspelen"
+
+msgctxt "#32016"
+msgid "Language"
+msgstr "Taal"
+
+msgctxt "#32017"
+msgid "Use aoss"
+msgstr "Aoss gebruiken"
+
+msgctxt "#32018"
+msgid "Module"
+msgstr "Module"
+
+msgctxt "#32019"
+msgid "Server"
+msgstr "Server"
+
+msgctxt "#32020"
+msgid "Perl Server"
+msgstr "Perl Server"
+
+msgctxt "#32021"
+msgid "Speak On Server"
+msgstr "Uitspreken op server"
+
+msgctxt "#32022"
+msgid "Server Speed (If Supported)"
+msgstr "Server snelheid (wanneer ondersteund)"
+
+msgctxt "#32023"
+msgid "Server Pitch (If Supported)"
+msgstr "Server toonhoogte (wanneer ondersteund)"
+
+msgctxt "#32024"
+msgid "Server Volume dB (If Supported)"
+msgstr "Server volume dB (wanneer ondersteund)"
+
+msgctxt "#32025"
+msgid "Player Speed (If Supported)"
+msgstr "Speler snelheid (wanneer ondersteund)"
+
+msgctxt "#32026"
+msgid "Player Volume dB (If Supported)"
+msgstr "Speler volume dB (wanneer ondersteund)"
+
+msgctxt "#32027"
+msgid "IP Address"
+msgstr "IP-adres"
+
+msgctxt "#32028"
+msgid "Port"
+msgstr "Poort"
+
+msgctxt "#32029"
+msgid "Options"
+msgstr "Opties"
+
+msgctxt "#32030"
+msgid "Keymap"
+msgstr "Toetsenbordsneltoetsen"
+
+msgctxt "#32031"
+msgid "Advanced"
+msgstr "Geavanceerd"
+
+msgctxt "#32032"
+msgid "Disable Interface Reader"
+msgstr "Interfacelezer uitschakelen"
+
+msgctxt "#32033"
+msgid "Speak Extra Item Information Automatically"
+msgstr "Extra iteminformatie automatisch uitspreken"
+
+msgctxt "#32034"
+msgid "Delay (seconds)"
+msgstr "Vertraging (seconden)"
+
+msgctxt "#32035"
+msgid "Speak Number Of Items For Lists"
+msgstr "Aantal items in lijst uitspreken"
+
+msgctxt "#32036"
+msgid "Speak Background Progress Updates"
+msgstr "Wijzigingen van achtergrondvoortgang uitspreken"
+
+msgctxt "#32037"
+msgid "Minimum Progress Update Interval (Seconds)"
+msgstr "Minimale interval voortgangsupdates (Seconden)nimale Fortschrittsänderungen-Intervall (Sekunden)"
+
+msgctxt "#32038"
+msgid "Speak When Media Playing"
+msgstr "Spreken tijdens het afspelen van media"
+
+msgctxt "#32039"
+msgid "Install Default Keymap"
+msgstr "Standaard toetsenbordtoewijzingen installeren"
+
+msgctxt "#32040"
+msgid "Install Custom Keymap"
+msgstr "Aangepaste toetsenbordtoewijzingen installeren"
+
+msgctxt "#32041"
+msgid "Edit Custom Keymap"
+msgstr "Aangepaste toetsenbordtoewijzingen bewerken"
+
+msgctxt "#32042"
+msgid "Reset Custom Keymap To Defaults"
+msgstr "Aangepaste toetsenbordtoewijzingen herstellen naar standaardwaarden"
+
+msgctxt "#32043"
+msgid "Remove Installed Keymap"
+msgstr "Geïnstalleerde toetsenbordtoewijzingen verwijderen"
+
+msgctxt "#32044"
+msgid "Output .wav Files To tmpfs"
+msgstr ".wav bestanden naar tmpfs schrijven"
+
+msgctxt "#32045"
+msgid "Disable Broken TTS Engines"
+msgstr "Niet werkende spraakuitvoermogelijkheden uitschakelen"
+
+msgctxt "#32046"
+msgid "Enable Debug Logging"
+msgstr "Debug-logging activeren"
+
+msgctxt "#32047"
+msgid "Override Poll Interval"
+msgstr "Poll-intervall overschrijven"
+
+msgctxt "#32048"
+msgid "Poll Interval (ms)"
+msgstr "Poll-intervall (ms)"
+
+msgctxt "#32100"
+msgid "Database scan started."
+msgstr "Databasescan gestart."
+
+msgctxt "#32101"
+msgid "Database scan finished."
+msgstr "Datebasescan voltooid."
+
+msgctxt "#32102"
+msgid "Notice... Speech engine falling back to {0}"
+msgstr "Let op... Spraakuitvoer teruggevallen op {0}"
+
+msgctxt "#32103"
+msgid "Reason"
+msgstr "Reden"
+
+msgctxt "#32104"
+msgid "New T T S Version"
+msgstr "Nieuwe T T S versie"
+
+msgctxt "#32105"
+msgid "Window"
+msgstr "Venster"
+
+msgctxt "#32106"
+msgid "item"
+msgstr "Item"
+
+msgctxt "#32107"
+msgid "items"
+msgstr "Items"
+
+msgctxt "#32108"
+msgid "Season"
+msgstr "Seizoen"
+
+msgctxt "#32109"
+msgid "Episode"
+msgstr "Aflevering"
+
+msgctxt "#32110"
+msgid "Parent Directory"
+msgstr "Bovenliggende map"
+
+msgctxt "#32111"
+msgid "Installed"
+msgstr "Geïnstalleerd"
+
+msgctxt "#32112"
+msgid "Updated"
+msgstr "Bijgewerkt"
+
+msgctxt "#32113"
+msgid "Default keymap installed successfully!"
+msgstr "Standaard toetsenbordtoewijzingen succesvol geïnstalleerd."
+
+msgctxt "#32114"
+msgid "Custom keymap installed or updated successfully!"
+msgstr "Aangepaste toetsenbordtoewijzingen succesvol geïnstalleerd."
+
+msgctxt "#32115"
+msgid "Custom keymap reset to defaults."
+msgstr "Aangepaste toetsenbordtoewijzingen hersteld naar standaardwaarden."
+
+msgctxt "#32116"
+msgid "Removed"
+msgstr "Verwijderd"
+
+msgctxt "#32117"
+msgid "Keymap removed."
+msgstr "Toetsenbordtoewijzingen verwijderd."
+
+msgctxt "#32118"
+msgid "Press the key you want to assign now."
+msgstr "Druk op de toets die je wilt toewijzen."
+
+msgctxt "#32119"
+msgid "Timeout in {0} seconds"
+msgstr "Time out over {0} seconden"
+
+msgctxt "#32120"
+msgid "Importing P.V.R. E.P.G."
+msgstr "PVR gids importeren"
+
+msgctxt "#32121"
+msgid "Loading P.V.R. E.P.G."
+msgstr "PVR gids laden"
+
+msgctxt "#32122"
+msgid "Background Progress Started"
+msgstr "Achtergrondvoortgang gestart"
+
+msgctxt "#32123"
+msgid "Background Progress Done"
+msgstr "Achtergrondvoortgan voltooid."
+
+msgctxt "#32124"
+msgid "Press the key you want to assign now."
+msgstr "Druk op de toets die je wilt toewijzen."
+
+msgctxt "#32125"
+msgid "Live TV Settings"
+msgstr "Live TV instellingen"
+
+msgctxt "#32126"
+msgid "virtual keyboard"
+msgstr "virtueel toetsenbord"
+
+msgctxt "#32127"
+msgid "volume bar"
+msgstr "volumebalk"
+
+msgctxt "#32128"
+msgid "context menu"
+msgstr "contekstmenu"
+
+msgctxt "#32129"
+msgid "info dialog"
+msgstr "infovenster"
+
+msgctxt "#32130"
+msgid "numeric input"
+msgstr "nummerieke invoer"
+
+msgctxt "#32131"
+msgid "shutdown menu"
+msgstr "afsluitmenu"
+
+msgctxt "#32132"
+msgid "player controls"
+msgstr "spelerbediening"
+
+msgctxt "#32133"
+msgid "seek bar"
+msgstr "zoekbalk"
+
+msgctxt "#32134"
+msgid "music OSD"
+msgstr "nuziek OSD"
+
+msgctxt "#32135"
+msgid "visualisation preset list"
+msgstr "visualisatie presets lijst"
+
+msgctxt "#32136"
+msgid "OSD video settings"
+msgstr "OSD video-instellingen"
+
+msgctxt "#32137"
+msgid "OSD audio settings"
+msgstr "OSD audio-instellingen"
+
+msgctxt "#32138"
+msgid "video bookmarks"
+msgstr "video bladwijzers"
+
+msgctxt "#32139"
+msgid "file browser"
+msgstr "bestandsbeheer"
+
+msgctxt "#32140"
+msgid "network setup"
+msgstr "netwerk instellingen"
+
+msgctxt "#32141"
+msgid "media source"
+msgstr "mediabron"
+
+msgctxt "#32142"
+msgid "smart playlist editor"
+msgstr "slimme afspeellijstbewerker"
+
+msgctxt "#32143"
+msgid "busy dialog"
+msgstr "bezig venster"
+
+msgctxt "#32144"
+msgid "addon settings"
+msgstr "add-on instellingen"
+
+msgctxt "#32145"
+msgid "fullscreen info"
+msgstr "volledig scherm info"
+
+msgctxt "#32146"
+msgid "karaoke selector"
+msgstr "karaoke selectie"
+
+msgctxt "#32147"
+msgid "karaoke large selector"
+msgstr "karaoke large selectie"
+
+msgctxt "#32148"
+msgid "slider dialog"
+msgstr "schuifbalk venster"
+
+msgctxt "#32149"
+msgid "addon information"
+msgstr "add-on informatie"
+
+msgctxt "#32150"
+msgid "text viewer"
+msgstr "tekstweergave"
+
+msgctxt "#32151"
+msgid "peripheral settings"
+msgstr "Toebehoren instellingen"
+
+msgctxt "#32152"
+msgid "media filter"
+msgstr "mediafilter"
+
+msgctxt "#32153"
+msgid "pvr"
+msgstr "pvr"
+
+msgctxt "#32154"
+msgid "pvr guide info"
+msgstr "PVR gidsinfo"
+
+msgctxt "#32155"
+msgid "pvr recording info"
+msgstr "PVR opnameinfo"
+
+msgctxt "#32156"
+msgid "pvr timer setting"
+msgstr "PVR Timerinstelling"
+
+msgctxt "#32157"
+msgid "pvr group manager"
+msgstr "PVR groepenbeheer"
+
+msgctxt "#32158"
+msgid "pvr channel manager"
+msgstr "PVR kanalenbeheer"
+
+msgctxt "#32159"
+msgid "pvr guide search"
+msgstr "PVR gids zoeken"
+
+msgctxt "#32160"
+msgid "pvr OSD channels"
+msgstr "PVR OSD-kanalen"
+
+msgctxt "#32161"
+msgid "pvr OSD guide"
+msgstr "PVR OSD-gids"
+
+msgctxt "#32162"
+msgid "virtual keyboard"
+msgstr "virtueel toetsenbord"
+
+msgctxt "#32163"
+msgid "video menu"
+msgstr "Videomenu"
+
+msgctxt "#32164"
+msgid "PVR Client Specific Settings"
+msgstr "PVR cliëntspecifieke instellingen"
+
+msgctxt "#32165"
+msgid "unknown"
+msgstr "onbekend"
+
+msgctxt "#32166"
+msgid "Addons updated"
+msgstr "Add-ons bijgewerkt"
+
+msgctxt "#32167"
+msgid "version"
+msgstr "versie"
+
+msgctxt "#32168"
+msgid "Notice"
+msgstr "Opmerking"
+
+msgctxt "#32169"
+msgid "Rewind"
+msgstr "Terugspoelen"
+
+msgctxt "#32170"
+msgid "Fast Forward"
+msgstr "Snel vooruit"
+
+msgctxt "#32171"
+msgid "Channel"
+msgstr "Kanaal"
+
+msgctxt "#32172"
+msgid "Sub-setting"
+msgstr "sub-optie"
+
+msgctxt "#32173"
+msgid "yes"
+msgstr "ja"
+
+msgctxt "#32174"
+msgid "no"
+msgstr "nee"
+
+msgctxt "#32175"
+msgid "section"
+msgstr "sectie"
+
+msgctxt "#32176"
+msgid "area"
+msgstr "gebied"
+
+msgctxt "#32177"
+msgid "space"
+msgstr "spatie"
+
+msgctxt "#32178"
+msgid "No text"
+msgstr "Geen tekst"
+
+msgctxt "#32179"
+msgid "deleted"
+msgstr "verwijderd"
+
+msgctxt "#32180"
+msgid "Cannot adjust volume"
+msgstr "Kan volume niet aanpassen"
+
+msgctxt "#32181"
+msgid "Choose Backend"
+msgstr "Kies backend"
+
+msgctxt "#32182"
+msgid "Not Available"
+msgstr "Niet beschikbaar"
+
+msgctxt "#32183"
+msgid "No players to select."
+msgstr "Geen spelers te selecteren"
+
+msgctxt "#32184"
+msgid "Auto"
+msgstr "Auto"
+
+msgctxt "#32185"
+msgid "Choose Player"
+msgstr "Kies speler"
+
+msgctxt "#32186"
+msgid "No options to select."
+msgstr "Geen selecteerbare opties"
+
+msgctxt "#32187"
+msgid "Choose Option"
+msgstr "Kies optie"
+
+msgctxt "#32188"
+msgid "PVR TV Channels"
+msgstr "PVR TV-kanalen"
+
+msgctxt "#32189"
+msgid "PVR TV Recordings"
+msgstr "PVR TV-opnames"
+
+msgctxt "#32190"
+msgid "PVR TV Guide"
+msgstr "PVR TV-gids"
+
+msgctxt "#32191"
+msgid "PVR TV Timers"
+msgstr "PVR TV-timers"
+
+msgctxt "#32192"
+msgid "PVR TV Search"
+msgstr "PVR TV Zoeken"
+
+msgctxt "#32193"
+msgid "PVR Radio Channels"
+msgstr "PVR Radiokanalen"
+
+msgctxt "#32194"
+msgid "PVR Radio Recordings"
+msgstr "PVR Radio-opnames"
+
+msgctxt "#32195"
+msgid "PVR Radio Guide"
+msgstr "PVR Radiogids"
+
+msgctxt "#32196"
+msgid "PVR Radio Timers"
+msgstr "PVR Radiotimers"
+
+msgctxt "#32197"
+msgid "PVR Radio Search"
+msgstr "PVR Radio Zoeken"
+
+msgctxt "#32198"
+msgid "watched"
+msgstr "bekeken"
+
+msgctxt "#32199"
+msgid "resumable"
+msgstr "hervatbaar"
+
+msgctxt "#32200"
+msgid "selected"
+msgstr "geselecteerd"
+
+msgctxt "#32201"
+msgid "Subtitles dialog"
+msgstr "Ondertiteling venster"

@@ -4,6 +4,7 @@ from __future__ import unicode_literals
 import re
 
 from .common import InfoExtractor
+from ..compat import compat_urlparse
 from ..utils import (
     get_element_by_id,
     clean_html,
@@ -26,10 +27,18 @@ class KuwoBaseIE(InfoExtractor):
     def _get_formats(self, song_id, tolerate_ip_deny=False):
         formats = []
         for file_format in self._FORMATS:
+            query = {
+                'format': file_format['ext'],
+                'br': file_format.get('br', ''),
+                'rid': 'MUSIC_%s' % song_id,
+                'type': 'convert_url',
+                'response': 'url'
+            }
+
             song_url = self._download_webpage(
-                'http://antiserver.kuwo.cn/anti.s?format=%s&br=%s&rid=MUSIC_%s&type=convert_url&response=url' %
-                (file_format['ext'], file_format.get('br', ''), song_id),
+                'http://antiserver.kuwo.cn/anti.s',
                 song_id, note='Download %s url info' % file_format['format'],
+                query=query, headers=self.geo_verification_headers(),
             )
 
             if song_url == 'IPDeny' and not tolerate_ip_deny:
@@ -44,18 +53,13 @@ class KuwoBaseIE(InfoExtractor):
                     'abr': file_format.get('abr'),
                 })
 
-        # XXX _sort_formats fails if there are not formats, while it's not the
-        # desired behavior if 'IPDeny' is ignored
-        # This check can be removed if https://github.com/rg3/youtube-dl/pull/8051 is merged
-        if not tolerate_ip_deny:
-            self._sort_formats(formats)
         return formats
 
 
 class KuwoIE(KuwoBaseIE):
     IE_NAME = 'kuwo:song'
     IE_DESC = '酷我音乐'
-    _VALID_URL = r'https?://www\.kuwo\.cn/yinyue/(?P<id>\d+?)'
+    _VALID_URL = r'https?://(?:www\.)?kuwo\.cn/yinyue/(?P<id>\d+)'
     _TESTS = [{
         'url': 'http://www.kuwo.cn/yinyue/635632/',
         'info_dict': {
@@ -73,12 +77,12 @@ class KuwoIE(KuwoBaseIE):
             'id': '6446136',
             'ext': 'mp3',
             'title': '心',
-            'description': 'md5:b2ab6295d014005bfc607525bfc1e38a',
+            'description': 'md5:5d0e947b242c35dc0eb1d2fce9fbf02c',
             'creator': 'IU',
             'upload_date': '20150518',
         },
         'params': {
-            'format': 'mp3-320'
+            'format': 'mp3-320',
         },
     }, {
         'url': 'http://www.kuwo.cn/yinyue/3197154?catalog=yueku2016',
@@ -87,25 +91,26 @@ class KuwoIE(KuwoBaseIE):
 
     def _real_extract(self, url):
         song_id = self._match_id(url)
-        webpage = self._download_webpage(
+        webpage, urlh = self._download_webpage_handle(
             url, song_id, note='Download song detail info',
             errnote='Unable to get song detail info')
-        if '对不起，该歌曲由于版权问题已被下线，将返回网站首页' in webpage:
+        if song_id not in urlh.geturl() or '对不起，该歌曲由于版权问题已被下线，将返回网站首页' in webpage:
             raise ExtractorError('this song has been offline because of copyright issues', expected=True)
 
         song_name = self._html_search_regex(
-            r'(?s)class="(?:[^"\s]+\s+)*title(?:\s+[^"\s]+)*".*?<h1[^>]+title="([^"]+)"', webpage, 'song name')
-        singer_name = self._html_search_regex(
-            r'<div[^>]+class="s_img">\s*<a[^>]+title="([^>]+)"',
-            webpage, 'singer name', fatal=False)
+            r'<p[^>]+id="lrcName">([^<]+)</p>', webpage, 'song name')
+        singer_name = remove_start(self._html_search_regex(
+            r'<a[^>]+href="http://www\.kuwo\.cn/artist/content\?name=([^"]+)">',
+            webpage, 'singer name', fatal=False), '歌手')
         lrc_content = clean_html(get_element_by_id('lrcContent', webpage))
         if lrc_content == '暂无':     # indicates no lyrics
             lrc_content = None
 
         formats = self._get_formats(song_id)
+        self._sort_formats(formats)
 
         album_id = self._html_search_regex(
-            r'<p[^>]+class="album"[^<]+<a[^>]+href="http://www\.kuwo\.cn/album/(\d+)/"',
+            r'<a[^>]+href="http://www\.kuwo\.cn/album/(\d+)/"',
             webpage, 'album id', fatal=False)
 
         publish_time = None
@@ -134,13 +139,13 @@ class KuwoIE(KuwoBaseIE):
 class KuwoAlbumIE(InfoExtractor):
     IE_NAME = 'kuwo:album'
     IE_DESC = '酷我音乐 - 专辑'
-    _VALID_URL = r'https?://www\.kuwo\.cn/album/(?P<id>\d+?)/'
+    _VALID_URL = r'https?://(?:www\.)?kuwo\.cn/album/(?P<id>\d+?)/'
     _TEST = {
         'url': 'http://www.kuwo.cn/album/502294/',
         'info_dict': {
             'id': '502294',
-            'title': 'M',
-            'description': 'md5:6a7235a84cc6400ec3b38a7bdaf1d60c',
+            'title': 'Made\xa0Series\xa0《M》',
+            'description': 'md5:d463f0d8a0ff3c3ea3d6ed7452a9483f',
         },
         'playlist_count': 2,
     }
@@ -176,7 +181,7 @@ class KuwoChartIE(InfoExtractor):
         'info_dict': {
             'id': '香港中文龙虎榜',
         },
-        'playlist_mincount': 10,
+        'playlist_mincount': 7,
     }
 
     def _real_extract(self, url):
@@ -195,12 +200,12 @@ class KuwoChartIE(InfoExtractor):
 class KuwoSingerIE(InfoExtractor):
     IE_NAME = 'kuwo:singer'
     IE_DESC = '酷我音乐 - 歌手'
-    _VALID_URL = r'https?://www\.kuwo\.cn/mingxing/(?P<id>[^/]+)'
+    _VALID_URL = r'https?://(?:www\.)?kuwo\.cn/mingxing/(?P<id>[^/]+)'
     _TESTS = [{
         'url': 'http://www.kuwo.cn/mingxing/bruno+mars/',
         'info_dict': {
             'id': 'bruno+mars',
-            'title': 'Bruno Mars',
+            'title': 'Bruno\xa0Mars',
         },
         'playlist_mincount': 329,
     }, {
@@ -238,8 +243,9 @@ class KuwoSingerIE(InfoExtractor):
                 query={'artistId': artist_id, 'pn': page_num, 'rn': self.PAGE_SIZE})
 
             return [
-                self.url_result(song_url, 'Kuwo') for song_url in re.findall(
-                    r'<div[^>]+class="name"><a[^>]+href="(http://www\.kuwo\.cn/yinyue/\d+)',
+                self.url_result(compat_urlparse.urljoin(url, song_url), 'Kuwo')
+                for song_url in re.findall(
+                    r'<div[^>]+class="name"><a[^>]+href="(/yinyue/\d+)',
                     webpage)
             ]
 
@@ -259,7 +265,7 @@ class KuwoCategoryIE(InfoExtractor):
             'title': '八十年代精选',
             'description': '这些都是属于八十年代的回忆！',
         },
-        'playlist_count': 30,
+        'playlist_mincount': 24,
     }
 
     def _real_extract(self, url):
@@ -274,6 +280,8 @@ class KuwoCategoryIE(InfoExtractor):
         category_desc = remove_start(
             get_element_by_id('intro', webpage).strip(),
             '%s简介：' % category_name)
+        if category_desc == '暂无':
+            category_desc = None
 
         jsonm = self._parse_json(self._html_search_regex(
             r'var\s+jsonm\s*=\s*([^;]+);', webpage, 'category songs'), category_id)
@@ -288,7 +296,7 @@ class KuwoCategoryIE(InfoExtractor):
 class KuwoMvIE(KuwoBaseIE):
     IE_NAME = 'kuwo:mv'
     IE_DESC = '酷我音乐 - MV'
-    _VALID_URL = r'https?://www\.kuwo\.cn/mv/(?P<id>\d+?)/'
+    _VALID_URL = r'https?://(?:www\.)?kuwo\.cn/mv/(?P<id>\d+?)/'
     _TEST = {
         'url': 'http://www.kuwo.cn/mv/6480076/',
         'info_dict': {

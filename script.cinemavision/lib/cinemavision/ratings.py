@@ -43,6 +43,9 @@ class RatingSystem:
     def __str__(self):
         return self.__repr__()
 
+    def __getitem__(self, idx):
+        return self.ratings[idx]
+
     def getRatingByName(self, name):
         name = name.upper()
         for r in self.ratings:
@@ -118,15 +121,15 @@ class MPAA(RatingSystem):
     class MPAARating(Rating):
         system = 'MPAA'
 
+    NR = MPAARating('NR', 1000)
     NC_17 = MPAARating('NC-17', 170)
     R = MPAARating('R', 160)
     PG_13 = MPAARating('PG-13', 130)
     PG = MPAARating('PG', 120)
     G = MPAARating('G', 0)
-    NR = MPAARating('NR', 1000)
 
     name = 'MPAA'
-    ratings = [NR, G, PG, PG_13, R, NC_17]
+    ratings = [G, PG, PG_13, R, NC_17, NR]
     regions = ['US']
 
 
@@ -216,6 +219,10 @@ def setDefaultRatingSystem(system):
     global DEFAULT_RATING_SYSTEM
     DEFAULT_RATING_SYSTEM = system
     util.DEBUG_LOG('Default rating system: {0}'.format(DEFAULT_RATING_SYSTEM))
+
+
+def defaultRatingsSystem():
+    return getRatingsSystem(DEFAULT_RATING_SYSTEM)
 
 
 def loadFromXML():

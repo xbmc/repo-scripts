@@ -1,4 +1,4 @@
-# encoding: utf-8
+# coding: utf-8
 from __future__ import unicode_literals
 
 from .brightcove import (
@@ -28,7 +28,7 @@ class NownessBaseIE(InfoExtractor):
                         bc_url = BrightcoveLegacyIE._extract_brightcove_url(player_code)
                         if bc_url:
                             return self.url_result(bc_url, BrightcoveLegacyIE.ie_key())
-                        bc_url = BrightcoveNewIE._extract_url(player_code)
+                        bc_url = BrightcoveNewIE._extract_url(self, player_code)
                         if bc_url:
                             return self.url_result(bc_url, BrightcoveNewIE.ie_key())
                         raise ExtractorError('Could not find player definition')
@@ -62,9 +62,12 @@ class NownessIE(NownessBaseIE):
             'ext': 'mp4',
             'title': 'Candor: The Art of Gesticulation',
             'description': 'Candor: The Art of Gesticulation',
-            'thumbnail': 're:^https?://.*\.jpg',
-            'uploader': 'Nowness',
+            'thumbnail': r're:^https?://.*\.jpg',
+            'timestamp': 1446745676,
+            'upload_date': '20151105',
+            'uploader_id': '2385340575001',
         },
+        'add_ie': ['BrightcoveNew'],
     }, {
         'url': 'https://cn.nowness.com/story/kasper-bjorke-ft-jaakko-eino-kalevi-tnr',
         'md5': 'e79cf125e387216f86b2e0a5b5c63aa3',
@@ -73,9 +76,12 @@ class NownessIE(NownessBaseIE):
             'ext': 'mp4',
             'title': 'Kasper Bjørke ft. Jaakko Eino Kalevi: TNR',
             'description': 'Kasper Bjørke ft. Jaakko Eino Kalevi: TNR',
-            'thumbnail': 're:^https?://.*\.jpg',
-            'uploader': 'Nowness',
+            'thumbnail': r're:^https?://.*\.jpg',
+            'timestamp': 1407315371,
+            'upload_date': '20140806',
+            'uploader_id': '2385340575001',
         },
+        'add_ie': ['BrightcoveNew'],
     }, {
         # vimeo
         'url': 'https://www.nowness.com/series/nowness-picks/jean-luc-godard-supercut',
@@ -85,11 +91,12 @@ class NownessIE(NownessBaseIE):
             'ext': 'mp4',
             'title': 'Bleu, Blanc, Rouge - A Godard Supercut',
             'description': 'md5:f0ea5f1857dffca02dbd37875d742cec',
-            'thumbnail': 're:^https?://.*\.jpg',
+            'thumbnail': r're:^https?://.*\.jpg',
             'upload_date': '20150607',
             'uploader': 'Cinema Sem Lei',
             'uploader_id': 'cinemasemlei',
         },
+        'add_ie': ['Vimeo'],
     }]
 
     def _real_extract(self, url):

@@ -2,9 +2,14 @@
 import os
 import math
 import xbmc
-import xbmcgui
-import xbmcvfs
 from yd_private_libs import util
+
+IS_WEB = False
+try:
+    import xbmcgui
+    import xbmcvfs
+except ImportError:
+    IS_WEB = True
 
 T = util.T
 
@@ -188,8 +193,11 @@ def downloadProgressCallbackBG(prog, data):
 def moveFile(file_path, dest_path, filename=None):
     fname = filename or os.path.basename(file_path)
     destFilePath = os.path.join(dest_path, fname)
-    xbmcvfs.copy(file_path, destFilePath)
-    xbmcvfs.delete(file_path)
+    if xbmcvfs.copy(file_path, destFilePath):
+        xbmcvfs.delete(file_path)
+        return True
+
+    return False
 
 
 def getDownloadPath(use_default=None):

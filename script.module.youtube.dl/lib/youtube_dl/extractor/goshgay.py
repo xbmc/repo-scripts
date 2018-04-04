@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+# coding: utf-8
 from __future__ import unicode_literals
 
 from .common import InfoExtractor
@@ -11,16 +11,16 @@ from ..utils import (
 
 
 class GoshgayIE(InfoExtractor):
-    _VALID_URL = r'https?://www\.goshgay\.com/video(?P<id>\d+?)($|/)'
+    _VALID_URL = r'https?://(?:www\.)?goshgay\.com/video(?P<id>\d+?)($|/)'
     _TEST = {
         'url': 'http://www.goshgay.com/video299069/diesel_sfw_xxx_video',
-        'md5': '027fcc54459dff0feb0bc06a7aeda680',
+        'md5': '4b6db9a0a333142eb9f15913142b0ed1',
         'info_dict': {
             'id': '299069',
             'ext': 'flv',
             'title': 'DIESEL SFW XXX Video',
-            'thumbnail': 're:^http://.*\.jpg$',
-            'duration': 79,
+            'thumbnail': r're:^http://.*\.jpg$',
+            'duration': 80,
             'age_limit': 18,
         }
     }
@@ -47,5 +47,5 @@ class GoshgayIE(InfoExtractor):
             'title': title,
             'thumbnail': thumbnail,
             'duration': duration,
-            'age_limit': self._family_friendly_search(webpage),
+            'age_limit': 18,
         }

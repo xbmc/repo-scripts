@@ -103,6 +103,24 @@ def durationToShortText(seconds):
         return '{0}s'.format(secs)
     return '0s'
 
+def durationToMinuteText(seconds):
+    """
+    Converts seconds to a short user friendly string
+    Example: 143 -> 2m 23s
+    """
+    mins = int(seconds/60)
+    if mins:
+        mins = '{0}m'.format(mins)
+    else:
+        mins = ''
+    secs = int(seconds % 60)
+    if secs:
+        return mins + '{0}s'.format(secs)
+    elif mins:
+        return mins
+
+    return '0s'
+
 def timeInDayLocalSeconds():
     now = datetime.datetime.now()
     sod = datetime.datetime(year=now.year,month=now.month,day=now.day)

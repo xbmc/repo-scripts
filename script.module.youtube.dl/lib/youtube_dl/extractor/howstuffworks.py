@@ -6,48 +6,25 @@ from ..utils import (
     int_or_none,
     js_to_json,
     unescapeHTML,
+    determine_ext,
 )
 
 
 class HowStuffWorksIE(InfoExtractor):
-    _VALID_URL = r'https?://[\da-z-]+\.howstuffworks\.com/(?:[^/]+/)*(?:\d+-)?(?P<id>.+?)-video\.htm'
+    _VALID_URL = r'https?://[\da-z-]+\.(?:howstuffworks|stuff(?:(?:youshould|theydontwantyouto)know|toblowyourmind|momnevertoldyou)|(?:brain|car)stuffshow|fwthinking|geniusstuff)\.com/(?:[^/]+/)*(?:\d+-)?(?P<id>.+?)-video\.htm'
     _TESTS = [
         {
-            'url': 'http://adventure.howstuffworks.com/5266-cool-jobs-iditarod-musher-video.htm',
+            'url': 'http://www.stufftoblowyourmind.com/videos/optical-illusions-video.htm',
+            'md5': '76646a5acc0c92bf7cd66751ca5db94d',
             'info_dict': {
-                'id': '450221',
-                'ext': 'flv',
-                'title': 'Cool Jobs - Iditarod Musher',
-                'description': 'Cold sleds, freezing temps and warm dog breath... an Iditarod musher\'s dream. Kasey-Dee Gardner jumps on a sled to find out what the big deal is.',
-                'display_id': 'cool-jobs-iditarod-musher',
-                'thumbnail': 're:^https?://.*\.jpg$',
-                'duration': 161,
-            },
-        },
-        {
-            'url': 'http://adventure.howstuffworks.com/7199-survival-zone-food-and-water-in-the-savanna-video.htm',
-            'info_dict': {
-                'id': '453464',
+                'id': '855410',
                 'ext': 'mp4',
-                'title': 'Survival Zone: Food and Water In the Savanna',
-                'description': 'Learn how to find both food and water while trekking in the African savannah. In this video from the Discovery Channel.',
-                'display_id': 'survival-zone-food-and-water-in-the-savanna',
-                'thumbnail': 're:^https?://.*\.jpg$',
+                'title': 'Your Trickster Brain: Optical Illusions -- Science on the Web',
+                'description': 'md5:e374ff9561f6833ad076a8cc0a5ab2fb',
             },
         },
         {
-            'url': 'http://entertainment.howstuffworks.com/arts/2706-sword-swallowing-1-by-dan-meyer-video.htm',
-            'info_dict': {
-                'id': '440011',
-                'ext': 'flv',
-                'title': 'Sword Swallowing #1 by Dan Meyer',
-                'description': 'Video footage (1 of 3) used by permission of the owner Dan Meyer through Sword Swallowers Association International <www.swordswallow.org>',
-                'display_id': 'sword-swallowing-1-by-dan-meyer',
-                'thumbnail': 're:^https?://.*\.jpg$',
-            },
-        },
-        {
-            'url': 'http://shows.howstuffworks.com/stuff-to-blow-your-mind/optical-illusions-video.htm',
+            'url': 'http://shows.howstuffworks.com/more-shows/why-does-balloon-stick-to-hair-video.htm',
             'only_matching': True,
         }
     ]
@@ -63,13 +40,19 @@ class HowStuffWorksIE(InfoExtractor):
         video_id = clip_info['content_id']
         formats = []
         m3u8_url = clip_info.get('m3u8')
-        if m3u8_url:
-            formats += self._extract_m3u8_formats(m3u8_url, video_id, 'mp4')
+        if m3u8_url and determine_ext(m3u8_url) == 'm3u8':
+            formats.extend(self._extract_m3u8_formats(m3u8_url, video_id, 'mp4', format_id='hls', fatal=True))
+        flv_url = clip_info.get('flv_url')
+        if flv_url:
+            formats.append({
+                'url': flv_url,
+                'format_id': 'flv',
+            })
         for video in clip_info.get('mp4', []):
             formats.append({
                 'url': video['src'],
-                'format_id': video['bitrate'],
-                'vbr': int(video['bitrate'].rstrip('k')),
+                'format_id': 'mp4-%s' % video['bitrate'],
+                'vbr': int_or_none(video['bitrate'].rstrip('k')),
             })
 
         if not formats:
@@ -102,6 +85,6 @@ class HowStuffWorksIE(InfoExtractor):
             'title': unescapeHTML(clip_info['clip_title']),
             'description': unescapeHTML(clip_info.get('caption')),
             'thumbnail': clip_info.get('video_still_url'),
-            'duration': clip_info.get('duration'),
+            'duration': int_or_none(clip_info.get('duration')),
             'formats': formats,
         }

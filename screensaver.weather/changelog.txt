@@ -1,5 +1,0 @@
-v1.1.0
-- Stop Screen dimming after a few minutes
-
-v1.0.0
-- Initial Version

@@ -1,3 +1,8 @@
+0.0.22
+- open file browse dialog if automatic search failed in unpacked dir
+- change rating calculation logic
+- remove use VideoPlayer.Year usage
+
 0.0.21
 - update icon and logo
 - order shows by avg score

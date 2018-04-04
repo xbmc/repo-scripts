@@ -9,7 +9,7 @@
         <effect type="zoom" start="0" end="100" center="1920,540" time="300" delay="300" />
         <effect type="fade" start="0" end="100" time="300" delay="300" />
     </animation>
-    <animation condition="IsEmpty(Window.Property(staring.recording))" type="WindowClose">
+    <animation condition="IsEmpty(Window.Property(starting.recording))" type="WindowClose">
         <effect type="zoom" start="100" end="0" center="1920,540" time="300" />
         <effect type="fade" start="100" end="0" time="300" />
     </animation>
@@ -174,7 +174,7 @@
                         <focusedcolor>FF7CF711</focusedcolor>
                         <texturefocus>-</texturefocus>
                         <texturenofocus>-</texturenofocus>
-                        <label>[B]$ADDON[script.hdhomerun.view 32815][/B]</label>
+                        <label>[B]$INFO[Window.Property(sort.name.label)][/B]</label>
                     </control>
                     <control type="group">
                         <visible>StringCompare(Window.Property(sort.mode),ORIGINAL)</visible>

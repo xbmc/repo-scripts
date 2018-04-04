@@ -1,6 +1,12 @@
 # -*- coding: utf-8 -*-
-import xbmc, xbmcgui
+import xbmc
 import os, json, hashlib, time
+
+IS_WEB = False
+try:
+    import xbmcgui
+except ImportError:
+    IS_WEB = True
 
 class JsonRAFifoQueue(object):
     def __init__(self,path):

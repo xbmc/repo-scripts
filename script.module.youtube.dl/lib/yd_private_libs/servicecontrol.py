@@ -1,11 +1,16 @@
 # -*- coding: utf-8 -*-
 import xbmc
-import xbmcgui
 import os
 import binascii
 import json
 import util
 import jsonqueue
+
+IS_WEB = False
+try:
+    import xbmcgui
+except ImportError:
+    IS_WEB = True
 
 BASE_COMMAND = 'XBMC.NotifyAll(script.module.youtube.dl,{0},"{{{1}}}")'
 BASE_ARG = '\\"{0}\\":\\"{1}\\"'

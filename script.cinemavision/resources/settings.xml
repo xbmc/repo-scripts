@@ -2,8 +2,8 @@
 <settings>
     <category label="32001">
         <setting label="32002" type="lsep"/>
-        <setting id="sequence.2D"         label="32003" type="action" action="RunScript(script.cinemavision,sequence.2D)" />
-        <setting id="sequence.3D"         label="32004" type="action" action="RunScript(script.cinemavision,sequence.3D)" />
+        <!-- <setting id="sequence.2D"         label="32003" type="action" action="RunScript(script.cinemavision,sequence.2D)" /> -->
+        <!-- <setting id="sequence.3D"         label="32004" type="action" action="RunScript(script.cinemavision,sequence.3D)" /> -->
         <setting id="3D.tag.regex"        label="32005" type="text"   default="(?i)3DSBS|3D.SBS|HSBS|H.SBS|H-SBS|[\. _]SBS[\. _]|FULL-SBS|FULL.SBS|FULLSBS|FSBS|HALF-SBS|3DTAB|3D.TAB|HTAB|H.TAB|3DOU|3D.OU|3D.HOU|[\. _]HOU[\. _]|[\. _]OU[\. _]|HALF-TAB" />
         <setting id="bumper.fallback2D"   label="32006" type="bool"   default="false" />
         <setting label="32101" type="lsep"/>
@@ -13,27 +13,32 @@
 
     <category label="32007">
         <setting id="content.path"        label="32008" type="folder" sources="auto" option="writeable" value="" />
-        <setting id="database.update"     label="32009" type="action" action="RunScript(script.cinemavision,update.database)" option="close" />
-        <setting id="database.autoUpdate" label="32010" type="bool" default="false" subsetting="true" />
+        <setting id="database.update"     label="32009" type="action" action="RunScript(script.cinemavision,update.database,from.settings)" option="close" />
+        <setting label="32111" type="lsep"/>
+        <setting id="database.autoUpdate" label="32010" type="bool" default="false" />
+        <setting id="service.database.update.kodiStartup" label="32105" type="bool" default="false" visible="System.HasAddon(service.cinemavision)" />
+        <setting id="service.database.update.scanFinished" label="32106" type="bool" default="0" visible="System.HasAddon(service.cinemavision)" />
+        <setting id="service.database.update.interval" label="32107" type="labelenum" values="Disabled|1|6|12|24|48" default="0" visible="System.HasAddon(service.cinemavision)" />
+        <setting id="dummy.service.database.update.auto" label="Background updating: Requires service add-on (Beta)" type="text" default="" visible="!System.HasAddon(service.cinemavision)" enable="false" />
         <setting label="32011" type="lsep"/>
         <setting id="scraper.trailers.Content"            label="32012" type="bool" default="true" />
         <setting id="scraper.trailers.KodiDB"             label="32013" type="bool" default="true" />
-        <setting id="scraper.trailers.KodiDB.skipYouTube" label="32014" type="bool" default="false" subsetting="true" enable="eq(-1,true)"/>
-        <setting id="scraper.trailers.KodiDB.markWatched" label="32015" type="bool" default="false" subsetting="true" enable="eq(-2,true)"/>
+        <setting id="scraper.trailers.KodiDB.skipYouTube" label="32014" type="bool" default="false" subsetting="true" enable="eq(-1,true)" />
+        <setting id="scraper.trailers.KodiDB.markWatched" label="32015" type="bool" default="false" subsetting="true" enable="eq(-2,true)" />
         <setting id="scraper.trailers.iTunes"             label="32016" type="bool" default="true" />
         <setting id="scraper.trailers.StereoscopyNews"    label="32017" type="bool" default="false" />
     </category>
 
     <category label="32018">
         <setting id="hide.queue.dialog"        label="32019" type="bool"   default="false" />
-        <setting id="hide.queue.dialog.single" label="32020" type="bool"   default="false" subsetting="true" enable="eq(-1,true)"/>
+        <setting id="hide.queue.dialog.single" label="32020" type="bool"   default="false" subsetting="true" enable="eq(-1,true)" />
         <setting id="ignore.playlist.single"   label="32104" type="bool"   default="true" />
         <setting id="allow.video.skip"         label="32021" type="bool"   default="true" />
         <setting id="video.preDelay"           label="32022" type="slider" default="0" range="0,100,3000" option="int" />
     </category>
 
     <category label="32023">
-        <setting label="32024" type="lsep"/>
+        <setting label="32024" type="lsep" />
         <setting id="video.volume" label="32025" type="slider" default="100" range="1,100" option="percent" />
     </category>
 

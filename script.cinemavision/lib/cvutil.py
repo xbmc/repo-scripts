@@ -39,15 +39,7 @@ def getSequenceName(path):
 
 
 def getSequencePath(for_3D=False, with_name=False):
-    if for_3D:
-        name = kodiutil.getSetting('sequence.3D')
-    else:
-        name = kodiutil.getSetting('sequence.2D')
-
-    if name:
-        path = getSavePath(name)
-    else:
-        path = defaultSavePath()
+    path = defaultSavePath(for_3D)
 
     if with_name:
         return (path, getSequenceName(path))
@@ -55,20 +47,26 @@ def getSequencePath(for_3D=False, with_name=False):
     return path
 
 
-def selectSequence():
+def selectSequence(active=True, for_dialog=False):
     import xbmcgui
+
+    contentPath = getSequencesContentPath()
+    if not contentPath:
+        return None
+
+    sequencesPath = cinemavision.util.pathJoin(contentPath, 'Sequences')
 
     default2D = 2
     default3D = 3
 
-    contentPath = kodiutil.getSetting('content.path')
+    contentPath = getSequencesContentPath()
     if not contentPath:
         xbmcgui.Dialog().ok(T(32500, 'Not Found'), ' ', T(32501, 'No sequences found.'))
         return None
 
-    sequencesPath = cinemavision.util.pathJoin(contentPath, 'Sequences')
-    options = cinemavision.util.vfs.listdir(sequencesPath)
-    options = [(n, n[:-6]) for n in options if n.endswith('.cvseq')]
+    sequences = getActiveSequences(active=active, for_dialog=for_dialog)
+
+    options = [('{0}.cvseq'.format(s.name), s.name) for s in sequences]
     options.append((default2D, u'[ {0} ]'.format(T(32599, 'Default 2D'))))
     options.append((default3D, u'[ {0} ]'.format(T(32600, 'Default 3D'))))
 
@@ -87,10 +85,99 @@ def selectSequence():
     elif result == default3D:
         path = defaultSavePath(for_3D=True)
     else:
-        path = cinemavision.util.pathJoin(sequencesPath, options[idx][0])
+        path = cinemavision.util.pathJoin(sequencesPath, result)
 
     return {'path': path, 'name': options[idx][1]}
 
+
+def getSequencesContentPath():
+    import xbmcgui
+    contentPath = kodiutil.getSetting('content.path')
+    if not contentPath:
+        xbmcgui.Dialog().ok(T(32500, 'Not Found'), ' ', T(32501, 'No sequences found.'))
+        return None
+
+    return contentPath
+
+
+def getActiveSequences(active=True, for_dialog=False):
+    contentPath = getSequencesContentPath()
+    if not contentPath:
+        return None
+
+    sequencesPath = cinemavision.util.pathJoin(contentPath, 'Sequences')
+    sequencePaths = [cinemavision.util.pathJoin(sequencesPath, p) for p in cinemavision.util.vfs.listdir(sequencesPath)]
+
+    sequences = []
+    for p in sequencePaths:
+        try:
+            s = cinemavision.sequence.SequenceData.load(p)
+            if not active or (s and s.active):
+                if not for_dialog or s.visibleInDialog():
+                    sequences.append(s)
+        except Exception:
+            kodiutil.ERROR('Failed to load: {0}'.format(kodiutil.strRepr(p)))
+
+    return sequences
+
+
+def getMatchedSequence(feature):
+    priority = ['type', 'ratings', 'year', 'studio', 'director', 'actor', 'genre', 'tags', 'dates', 'times']
+
+    contentPath = getSequencesContentPath()
+    if not contentPath:
+        return getDefaultSequenceData(feature)
+
+    sequencesPath = cinemavision.util.pathJoin(contentPath, 'Sequences')
+
+    sequences = getActiveSequences()
+
+    if not sequences:
+        return getDefaultSequenceData(feature)
+
+    out = 'Active sequences:\n'
+    for seq in sequences:
+        out += '{0}\n'.format(seq.conditionsStr())
+
+    kodiutil.DEBUG_LOG(out)
+
+    matches = [[s, 0] for s in sequences]
+    for attr in priority:
+        for seq in matches[:]:
+            match = seq[0].matchesFeatureAttr(attr, feature)
+            if match >= 0:
+                seq[1] += match
+            else:
+                matches.remove(seq)
+
+        if not matches:
+            break
+
+    if matches:
+        out = 'MATCHES: '
+        out += ', '.join(['{0}({1})'.format(kodiutil.strRepr(m[0].name), m[1]) for m in matches])
+        kodiutil.DEBUG_LOG(out)
+        seqData = max(matches, key=lambda x: x[1])[0]
+    else:
+        seqData = None
+
+    kodiutil.DEBUG_LOG('.')
+    kodiutil.DEBUG_LOG('CHOICE: {0}'.format(seqData.name))
+    kodiutil.DEBUG_LOG('.')
+    kodiutil.DEBUG_LOG(feature)
+
+    if not seqData:
+        return getDefaultSequenceData(feature)
+
+    path = cinemavision.util.pathJoin(sequencesPath, '{0}.cvseq'.format(seqData.name))
+    return {'path': path, 'sequence': seqData}
+
+def getDefaultSequenceData(feature):
+    path = defaultSavePath(for_3D=feature.is3D)
+    seqData = cinemavision.sequence.SequenceData.load(path)
+    seqData.name = u'[ {0} ]'.format(T(32600, 'Default 3D') if feature.is3D else T(32599, 'Default 2D'))
+
+    return {'path': path, 'sequence': seqData}
 
 def getContentPath(from_load=False):
     contentPath = kodiutil.getSetting('content.path')
@@ -102,7 +189,7 @@ def getContentPath(from_load=False):
             try:
                 import shutil
                 shutil.rmtree(demoPath)
-            except:
+            except Exception:
                 kodiutil.ERROR()
 
         return contentPath
@@ -115,7 +202,7 @@ def getContentPath(from_load=False):
         return demoPath
 
 
-def loadContent(from_settings=False):
+def loadContent(from_settings=False, bg=False):
     import xbmcgui
 
     if from_settings and not kodiutil.getSetting('content.path'):
@@ -126,7 +213,7 @@ def loadContent(from_settings=False):
 
     kodiutil.DEBUG_LOG('Loading content...')
 
-    with kodiutil.Progress(T(32505, 'Loading Content')) as p:
+    with kodiutil.Progress(T(32505, 'Loading Content'), bg=bg) as p:
         cinemavision.content.UserContent(contentPath, callback=p.msg, trailer_sources=kodiutil.getSetting('trailer.scrapers', '').split(','))
 
     createSettingsRSDirs()
@@ -165,7 +252,7 @@ def downloadDemoContent():
     import xbmc
     import requests
     import zipfile
-    url = 'http://cinemavision.tv/cvdemo/Demo.zip'
+    url = 'http://demo.cinemavision.tv/Demo.zip'
     output = os.path.join(kodiutil.PROFILE_PATH, 'demo.zip')
     target = os.path.join(kodiutil.PROFILE_PATH, 'demo', 'Trivia Slides')
     # if not os.path.exists(target):
@@ -182,7 +269,7 @@ def downloadDemoContent():
         with kodiutil.Progress(T(32506, 'Download'), T(32507, 'Downloading demo content')) as p:
             for block in response.iter_content(blockSize):
                 sofar += blockSize
-                pct = int((sofar/total) * 100)
+                pct = int((sofar / total) * 100)
                 p.update(pct)
                 handle.write(block)
 
@@ -271,13 +358,13 @@ def evalActionFile(paths, test=True):
                 messages.append(u'[COLOR FFFF0000]{0}[/COLOR]'.format('SKIPPED DUE TO ERRORS'))
             else:
                 with kodiutil.Progress('Testing', 'Executing actions...'):
-                    messages += ['[B]TEST ({0}):[/B]'.format(os.path.basename(path)), '']
+                    messages += [u'[B]TEST ({0}):[/B]'.format(os.path.basename(path)), '']
                     for line in processor.test():
                         if line.startswith('Action ('):
                             lsplit = line.split(': ', 1)
-                            line = '[COLOR FFAAAAFF]{0}:[/COLOR] {1}'.format(lsplit[0], lsplit[1])
+                            line = u'[COLOR FFAAAAFF]{0}:[/COLOR] {1}'.format(lsplit[0], lsplit[1])
                         elif line.startswith('ERROR:'):
-                            line = '[COLOR FFFF0000]{0}[/COLOR]'.format(line)
+                            line = u'[COLOR FFFF0000]{0}[/COLOR]'.format(line)
                         messages.append(line)
             messages.append('')
 

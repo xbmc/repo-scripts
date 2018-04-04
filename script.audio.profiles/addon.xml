@@ -1,18 +1,20 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addon id="script.audio.profiles"
     name="Audio Profiles"
-    version="1.0.5"
+    version="1.2.0"
     provider-name="Regss">
     <requires>
         <import addon="xbmc.python" version="2.14.0" />
-        <import addon="service.audio.profiles" version="1.0.0" />
     </requires>
     <extension point="xbmc.python.script" library="default.py" />
+    <extension point="xbmc.service" library="service.py" start="login" />
     <extension point="xbmc.addon.metadata">
         <summary lang="en">Save audio profile and easily switch between them</summary>
         <summary lang="pl">Zapisuje profile ustawień audio i łatwo przełącza między nimi</summary>
+        <summary lang="it">Salva il profilo audio e cambia facilmente tra di loro</summary>
         <description lang="en">To map a key for switch audio profile edit keymap xml file and add:[CR]RunScript(script.audio.profiles,0) - for switch profile in loop[CR]RunScript(script.audio.profiles,x) - where x is number of profile</description>
         <description lang="pl">Aby przypisać przycisk to zmiany profili edytuj plik keymap xml i dodaj:[CR]RunScript(script.audio.profiles,0) - aby przełączać między profilami w pętli[CR]RunScript(script.audio.profiles,x) - gdzie x to numer profilu</description>
+        <description lang="it">Per assegnare il cambio profilo audio ad un pulsante modifica il file keymap xml e aggiungi:[CR]RunScript(script.audio.profiles,0) - per cambiare  il profilo in ciclo continuo [CR]RunScript(script.audio.profiles,x) dove x è il numero del profilo</description>
         <platform>all</platform>
         <license>GNU GENERAL PUBLIC LICENSE. Version 3, 29 June 2007</license>
         <forum>http://forum.kodi.tv/showthread.php?tid=200081</forum>

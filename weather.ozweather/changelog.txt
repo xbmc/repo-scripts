@@ -1,3 +1,38 @@
+v0.9.7
+- Fixes for git hell
+- Fixes for cut and paste error and strip most strings to solve whitespace issues
+
+v0.9.4
+- Fixes for Weatherzone page changes
+
+v0.9.3
+- Fixes for Kryton, Estuary and BOM source changes
+
+V0.8.9
+- Don't crash if no radar is set...
+
+V0.8.8
+- Release of below after a few further bugfixes to icons mainly
+
+V0.8.5
+- Release of below after a few bugfixes...
+
+V0.8.4 - Test only release
+- Re-Write for Krypton
+- Set more of the new weather labels
+- Backwards compatibly for Jarvis
+- 3 separate unit-testable scraper modules created (BOM, Weatherzone, ABC Video)
+- Each scraper is unit testable independent of Kodi for easier development in future
+- Remove parsedom dependency, scrape using beautifulsoup4
+- Use requests module vs. older methods
+- Use caching for significant speed improvements on 2nd and subsequent weather updates
+- Add .gitginore for .pyo, .pyc, and test outputs
+- Set appropriate icons for night time weather (after sunset, before sunrise)
+
+
+V0.8.2
+- Setting that disables periodic radar background updating fort those platforms with PIL issues
+
 V0.8.1
 - Scraping fixes for new weatherzone, mainly moonphase
 

@@ -25,9 +25,11 @@ __cwd__        = sys.modules[ "__main__" ].__cwd__
 __language__   = sys.modules[ "__main__" ].__language__
 __scriptid__   = sys.modules[ "__main__" ].__scriptid__
 
-USER_AGENT        = "%s_v%s" % (__scriptname__.replace(" ","_"),__version__ )
-SEARCH_URL        = "http://www.podnapisi.net/ppodnapisi/search?tbsl=1&sK=%s&sJ=%s&sY=%s&sTS=%s&sTE=%s&sXML=1&lang=0"
-SEARCH_URL_HASH   = "http://www.podnapisi.net/ppodnapisi/search?tbsl=1&sK=%s&sJ=%s&sY=%s&sTS=%s&sTE=%s&sMH=%s&sXML=1&lang=0"
+USER_AGENT           = "%s_v%s" % (__scriptname__.replace(" ","_"),__version__ )
+SEARCH_URL_IMDB      = "https://www.podnapisi.net/ppodnapisi/search?sI=%s&sJ=%s&sTS=%s&sTE=%s&sXML=1"
+SEARCH_URL_IMDB_HASH = "https://www.podnapisi.net/ppodnapisi/search?sI=%s&sJ=%s&sTS=%s&sTE=%s&sMH=%s&sXML=1"
+SEARCH_URL           = "https://www.podnapisi.net/ppodnapisi/search?sK=%s&sJ=%s&sY=%s&sTS=%s&sTE=%s&sXML=1"
+SEARCH_URL_HASH      = "https://www.podnapisi.net/ppodnapisi/search?sK=%s&sJ=%s&sY=%s&sTS=%s&sTE=%s&sMH=%s&sXML=1"
 
 DOWNLOAD_URL      = "http://www.podnapisi.net/subtitles/%s/download"
 
@@ -35,67 +37,67 @@ LANGUAGES      = (
 
     # Full Language name[0]     podnapisi[1]  ISO 639-1[2]   ISO 639-1 Code[3]   Script Setting Language[4]   localized name id number[5]
 
-    ("Albanian"                   , "29",       "sq",            "alb",                 "0",                     30201  ),
-    ("Arabic"                     , "12",       "ar",            "ara",                 "1",                     30202  ),
-    ("Belarusian"                 , "0" ,       "hy",            "arm",                 "2",                     30203  ),
-    ("Bosnian"                    , "10",       "bs",            "bos",                 "3",                     30204  ),
-    ("Bulgarian"                  , "33",       "bg",            "bul",                 "4",                     30205  ),
-    ("Catalan"                    , "53",       "ca",            "cat",                 "5",                     30206  ),
-    ("Chinese"                    , "17",       "zh",            "chi",                 "6",                     30207  ),
-    ("Croatian"                   , "38",       "hr",            "hrv",                 "7",                     30208  ),
-    ("Czech"                      , "7",        "cs",            "cze",                 "8",                     30209  ),
-    ("Danish"                     , "24",       "da",            "dan",                 "9",                     30210  ),
-    ("Dutch"                      , "23",       "nl",            "dut",                 "10",                    30211  ),
-    ("English"                    , "2",        "en",            "eng",                 "11",                    30212  ),
-    ("Estonian"                   , "20",       "et",            "est",                 "12",                    30213  ),
-    ("Persian"                    , "52",       "fa",            "per",                 "13",                    30247  ),
-    ("Finnish"                    , "31",       "fi",            "fin",                 "14",                    30214  ),
-    ("French"                     , "8",        "fr",            "fre",                 "15",                    30215  ),
-    ("German"                     , "5",        "de",            "ger",                 "16",                    30216  ),
-    ("Greek"                      , "16",       "el",            "ell",                 "17",                    30217  ),
-    ("Hebrew"                     , "22",       "he",            "heb",                 "18",                    30218  ),
-    ("Hindi"                      , "42",       "hi",            "hin",                 "19",                    30219  ),
-    ("Hungarian"                  , "15",       "hu",            "hun",                 "20",                    30220  ),
-    ("Icelandic"                  , "6",        "is",            "ice",                 "21",                    30221  ),
-    ("Indonesian"                 , "0",        "id",            "ind",                 "22",                    30222  ),
-    ("Italian"                    , "9",        "it",            "ita",                 "23",                    30224  ),
-    ("Japanese"                   , "11",       "ja",            "jpn",                 "24",                    30225  ),
-    ("Korean"                     , "4",        "ko",            "kor",                 "25",                    30226  ),
-    ("Latvian"                    , "21",       "lv",            "lav",                 "26",                    30227  ),
-    ("Lithuanian"                 , "0",        "lt",            "lit",                 "27",                    30228  ),
-    ("Macedonian"                 , "35",       "mk",            "mac",                 "28",                    30229  ),
-    ("Malay"                      , "0",        "ms",            "may",                 "29",                    30248  ),    
-    ("Norwegian"                  , "3",        "no",            "nor",                 "30",                    30230  ),
-    ("Polish"                     , "26",       "pl",            "pol",                 "31",                    30232  ),
-    ("Portuguese"                 , "32",       "pt",            "por",                 "32",                    30233  ),
-    ("PortugueseBrazil"           , "48",       "pb",            "pob",                 "33",                    30234  ),
-    ("Romanian"                   , "13",       "ro",            "rum",                 "34",                    30235  ),
-    ("Russian"                    , "27",       "ru",            "rus",                 "35",                    30236  ),
-    ("Serbian"                    , "36",       "sr",            "scc",                 "36",                    30237  ),
-    ("Slovak"                     , "37",       "sk",            "slo",                 "37",                    30238  ),
-    ("Slovenian"                  , "1",        "sl",            "slv",                 "38",                    30239  ),
-    ("Spanish"                    , "28",       "es",            "spa",                 "39",                    30240  ),
-    ("Swedish"                    , "25",       "sv",            "swe",                 "40",                    30242  ),
-    ("Thai"                       , "0",        "th",            "tha",                 "41",                    30243  ),
-    ("Turkish"                    , "30",       "tr",            "tur",                 "42",                    30244  ),
-    ("Ukrainian"                  , "46",       "uk",            "ukr",                 "43",                    30245  ),
-    ("Vietnamese"                 , "51",       "vi",            "vie",                 "44",                    30246  ),
-    ("BosnianLatin"               , "10",       "bs",            "bos",                 "100",                   30204  ),
-    ("Farsi"                      , "52",       "fa",            "per",                 "13",                    30247  ),
-    ("English (US)"               , "2",        "en",            "eng",                 "100",                   30212  ),
-    ("English (UK)"               , "2",        "en",            "eng",                 "100",                   30212  ),
-    ("Portuguese (Brazilian)"     , "48",       "pt-br",         "pob",                 "100",                   30234  ),
-    ("Portuguese (Brazil)"        , "48",       "pb",            "pob",                 "33",                    30234  ),
-    ("Portuguese-BR"              , "48",       "pb",            "pob",                 "33",                    30234  ),
-    ("Brazilian"                  , "48",       "pb",            "pob",                 "33",                    30234  ),
-    ("Español (Latinoamérica)"    , "28",       "es",            "spa",                 "100",                   30240  ),
-    ("Español (España)"           , "28",       "es",            "spa",                 "100",                   30240  ),
-    ("Spanish (Latin America)"    , "28",       "es",            "spa",                 "100",                   30240  ),
-    ("Español"                    , "28",       "es",            "spa",                 "100",                   30240  ),
-    ("SerbianLatin"               , "36",       "sr",            "scc",                 "100",                   30237  ),
-    ("Spanish (Spain)"            , "28",       "es",            "spa",                 "100",                   30240  ),
-    ("Chinese (Traditional)"      , "17",       "zh",            "chi",                 "100",                   30207  ),
-    ("Chinese (Simplified)"       , "17",       "zh",            "chi",                 "100",                   30207  ) )
+    (u"Albanian"                   , "29",       "sq",            "alb",                 "0",                     30201  ),
+    (u"Arabic"                     , "12",       "ar",            "ara",                 "1",                     30202  ),
+    (u"Belarusian"                 , "0" ,       "hy",            "arm",                 "2",                     30203  ),
+    (u"Bosnian"                    , "10",       "bs",            "bos",                 "3",                     30204  ),
+    (u"Bulgarian"                  , "33",       "bg",            "bul",                 "4",                     30205  ),
+    (u"Catalan"                    , "53",       "ca",            "cat",                 "5",                     30206  ),
+    (u"Chinese"                    , "17",       "zh",            "chi",                 "6",                     30207  ),
+    (u"Croatian"                   , "38",       "hr",            "hrv",                 "7",                     30208  ),
+    (u"Czech"                      , "7",        "cs",            "cze",                 "8",                     30209  ),
+    (u"Danish"                     , "24",       "da",            "dan",                 "9",                     30210  ),
+    (u"Dutch"                      , "23",       "nl",            "dut",                 "10",                    30211  ),
+    (u"English"                    , "2",        "en",            "eng",                 "11",                    30212  ),
+    (u"Estonian"                   , "20",       "et",            "est",                 "12",                    30213  ),
+    (u"Persian"                    , "52",       "fa",            "per",                 "13",                    30247  ),
+    (u"Finnish"                    , "31",       "fi",            "fin",                 "14",                    30214  ),
+    (u"French"                     , "8",        "fr",            "fre",                 "15",                    30215  ),
+    (u"German"                     , "5",        "de",            "ger",                 "16",                    30216  ),
+    (u"Greek"                      , "16",       "el",            "ell",                 "17",                    30217  ),
+    (u"Hebrew"                     , "22",       "he",            "heb",                 "18",                    30218  ),
+    (u"Hindi"                      , "42",       "hi",            "hin",                 "19",                    30219  ),
+    (u"Hungarian"                  , "15",       "hu",            "hun",                 "20",                    30220  ),
+    (u"Icelandic"                  , "6",        "is",            "ice",                 "21",                    30221  ),
+    (u"Indonesian"                 , "0",        "id",            "ind",                 "22",                    30222  ),
+    (u"Italian"                    , "9",        "it",            "ita",                 "23",                    30224  ),
+    (u"Japanese"                   , "11",       "ja",            "jpn",                 "24",                    30225  ),
+    (u"Korean"                     , "4",        "ko",            "kor",                 "25",                    30226  ),
+    (u"Latvian"                    , "21",       "lv",            "lav",                 "26",                    30227  ),
+    (u"Lithuanian"                 , "0",        "lt",            "lit",                 "27",                    30228  ),
+    (u"Macedonian"                 , "35",       "mk",            "mac",                 "28",                    30229  ),
+    (u"Malay"                      , "0",        "ms",            "may",                 "29",                    30248  ),
+    (u"Norwegian"                  , "3",        "no",            "nor",                 "30",                    30230  ),
+    (u"Polish"                     , "26",       "pl",            "pol",                 "31",                    30232  ),
+    (u"Portuguese"                 , "32",       "pt",            "por",                 "32",                    30233  ),
+    (u"PortugueseBrazil"           , "48",       "pb",            "pob",                 "33",                    30234  ),
+    (u"Romanian"                   , "13",       "ro",            "rum",                 "34",                    30235  ),
+    (u"Russian"                    , "27",       "ru",            "rus",                 "35",                    30236  ),
+    (u"Serbian"                    , "47",       "sr",            "scc",                 "36",                    30237  ),
+    (u"Slovak"                     , "37",       "sk",            "slo",                 "37",                    30238  ),
+    (u"Slovenian"                  , "1",        "sl",            "slv",                 "38",                    30239  ),
+    (u"Spanish"                    , "28",       "es",            "spa",                 "39",                    30240  ),
+    (u"Swedish"                    , "25",       "sv",            "swe",                 "40",                    30242  ),
+    (u"Thai"                       , "0",        "th",            "tha",                 "41",                    30243  ),
+    (u"Turkish"                    , "30",       "tr",            "tur",                 "42",                    30244  ),
+    (u"Ukrainian"                  , "46",       "uk",            "ukr",                 "43",                    30245  ),
+    (u"Vietnamese"                 , "51",       "vi",            "vie",                 "44",                    30246  ),
+    (u"BosnianLatin"               , "10",       "bs",            "bos",                 "100",                   30204  ),
+    (u"Farsi"                      , "52",       "fa",            "per",                 "13",                    30247  ),
+    (u"English (US)"               , "2",        "en",            "eng",                 "100",                   30212  ),
+    (u"English (UK)"               , "2",        "en",            "eng",                 "100",                   30212  ),
+    (u"Portuguese (Brazilian)"     , "48",       "pt-br",         "pob",                 "100",                   30234  ),
+    (u"Portuguese (Brazil)"        , "48",       "pb",            "pob",                 "33",                    30234  ),
+    (u"Portuguese-BR"              , "48",       "pb",            "pob",                 "33",                    30234  ),
+    (u"Brazilian"                  , "48",       "pb",            "pob",                 "33",                    30234  ),
+    (u"Español (Latinoamérica)"    , "28",       "es",            "spa",                 "100",                   30240  ),
+    (u"Español (España)"           , "28",       "es",            "spa",                 "100",                   30240  ),
+    (u"Spanish (Latin America)"    , "28",       "es",            "spa",                 "100",                   30240  ),
+    (u"Español"                    , "28",       "es",            "spa",                 "100",                   30240  ),
+    (u"SerbianLatin"               , "36",       "sr",            "scc",                 "100",                   30237  ),
+    (u"Spanish (Spain)"            , "28",       "es",            "spa",                 "100",                   30240  ),
+    (u"Chinese (Traditional)"      , "17",       "zh",            "chi",                 "100",                   30207  ),
+    (u"Chinese (Simplified)"       , "17",       "zh",            "chi",                 "100",                   30207  ) )
 
 
 def languageTranslate(lang, lang_from, lang_to):
@@ -236,6 +238,9 @@ class PNServer:
     self.connected = False
     
   def Login(self):
+    # Currently, login is disabled
+    return
+
     self.podserver   = xmlrpclib.Server('http://ssp.podnapisi.net:8000')
     init        = self.podserver.initiate(USER_AGENT)  
     hash        = md5()
@@ -260,30 +265,7 @@ class PNServer:
       self.connected = False 
 
   def SearchSubtitlesWeb( self, item):
-    if len(item['tvshow']) > 1:
-      item['title'] = item['tvshow']
-    
-    if (__addon__.getSetting("PNmatch") == 'true'):
-      url =  SEARCH_URL_HASH % (item['title'].replace(" ","+"),
-                               ','.join(item['3let_language']),
-                               str(item['year']),
-                               str(item['season']), 
-                               str(item['episode']),
-                               '%s,sublight:%s,sublight:%s' % (item['OShash'],item['SLhash'],md5(item['SLhash']).hexdigest() )
-                               )
-    else:
-      url =  SEARCH_URL % (item['title'].replace(" ","+"),
-                           ','.join(item['3let_language']),
-                           str(item['year']),
-                           str(item['season']), 
-                           str(item['episode'])
-                          )
-
-    log( __scriptid__ ,"Search URL - %s" % (url))
-    
-    subtitles = self.fetch(url)
-
-    if subtitles:
+    def read_subtitles(subtitles):
       for subtitle in subtitles:
         filename    = self.get_element(subtitle, "release")
 
@@ -306,21 +288,75 @@ class PNServer:
                                     'sync'          : hashMatch,
                                     'hearing_imp'   : "n" in self.get_element(subtitle, "flags")
                                     })
+
+    if len(item['tvshow']) > 1:
+      item['title'] = item['tvshow']
+
+    selected_languages = ','.join([i for i in item['3let_language'] if isinstance(i, basestring)])
+
+    if (__addon__.getSetting("PNmatch") == 'true'):
+      url =  SEARCH_URL_IMDB_HASH % (item['imdb'],
+                                    selected_languages,
+                                    str(item['season']),
+                                    str(item['episode']),
+                                    '%s,sublight:%s,sublight:%s' % (item['OShash'],item['SLhash'],md5(item['SLhash']).hexdigest() )
+                                    )
+      fallback_url =  SEARCH_URL_HASH % (item['title'].replace(" ","+"),
+                                         selected_languages,
+                                         str(item['year']),
+                                         str(item['season']),
+                                         str(item['episode']),
+                                         '%s,sublight:%s,sublight:%s' % (item['OShash'],item['SLhash'],md5(item['SLhash']).hexdigest() )
+                                         )
+    else:
+      url =  SEARCH_URL_IMDB % (item['imdb'],
+                                selected_languages,
+                                str(item['season']),
+                                str(item['episode'])
+                                )
+      fallback_url =  SEARCH_URL % (item['title'].replace(" ","+"),
+                                   selected_languages,
+                                   str(item['year']),
+                                   str(item['season']),
+                                   str(item['episode'])
+                                   )
+
+    if not item.get('imdb'):
+      url = fallback_url
+
+    log( __scriptid__ ,"Search URL - %s" % (url))
+
+    subtitles = self.fetch(url)
+
+    if subtitles:
+      read_subtitles(subtitles)
+
+    if not self.subtitles_list and url != fallback_url:
+      log( __scriptid__ ,"Search - IMDB ID search failed, fallback to title")
+
+      subtitles = self.fetch(fallback_url)
+
+      log( __scriptid__ ,"Search Fallback URL - %s" % (fallback_url))
+
+      if subtitles:
+        read_subtitles(subtitles)
+
+    if self.subtitles_list:
       self.mergesubtitles()
     return self.subtitles_list
   
   def Download(self,params):
     print params
     subtitle_ids = []
-    if (__addon__.getSetting("PNmatch") == 'true' and params["hash"] != "000000000000"):
-      self.Login()
-      if params["match"] == "True":
-        subtitle_ids.append(str(params["link"]))
+    # if (__addon__.getSetting("PNmatch") == 'true' and params["hash"] != "000000000000"):
+    #   self.Login()
+    #   if params["match"] == "True":
+    #     subtitle_ids.append(str(params["link"]))
 
-      log( __scriptid__ ,"Sending match to Podnapisi server")
-      result = self.podserver.match(self.pod_session, params["hash"], params["movie_id"], int(params["season"]), int(params["episode"]), subtitle_ids)
-      if result['status'] == 200:
-        log( __scriptid__ ,"Match successfuly sent")
+    #   log( __scriptid__ ,"Sending match to Podnapisi server")
+    #   result = self.podserver.match(self.pod_session, params["hash"], params["movie_id"], int(params["season"]), int(params["episode"]), subtitle_ids)
+    #   if result['status'] == 200:
+    #     log( __scriptid__ ,"Match successfuly sent")
 
     return DOWNLOAD_URL % str(params["link"])
 

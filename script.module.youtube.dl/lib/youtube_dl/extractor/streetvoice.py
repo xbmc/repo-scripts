@@ -14,10 +14,9 @@ class StreetVoiceIE(InfoExtractor):
         'info_dict': {
             'id': '94440',
             'ext': 'mp3',
-            'filesize': 4167053,
             'title': '輸',
             'description': 'Crispy脆樂團 - 輸',
-            'thumbnail': 're:^https?://.*\.jpg$',
+            'thumbnail': r're:^https?://.*\.jpg$',
             'duration': 260,
             'upload_date': '20091018',
             'uploader': 'Crispy脆樂團',
@@ -32,20 +31,19 @@ class StreetVoiceIE(InfoExtractor):
         song_id = self._match_id(url)
 
         song = self._download_json(
-            'http://streetvoice.com/music/api/song/%s' % song_id, song_id)
+            'https://streetvoice.com/api/v1/public/song/%s/' % song_id, song_id, data=b'')
 
         title = song['name']
-        author = song['musician']['name']
+        author = song['user']['nickname']
 
         return {
             'id': song_id,
             'url': song['file'],
-            'filesize': song.get('size'),
             'title': title,
             'description': '%s - %s' % (author, title),
             'thumbnail': self._proto_relative_url(song.get('image'), 'http:'),
             'duration': song.get('length'),
             'upload_date': unified_strdate(song.get('created_at')),
             'uploader': author,
-            'uploader_id': compat_str(song['musician']['id']),
+            'uploader_id': compat_str(song['user']['id']),
         }

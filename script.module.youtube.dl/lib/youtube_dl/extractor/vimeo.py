@@ -1,4 +1,4 @@
-# encoding: utf-8
+# coding: utf-8
 from __future__ import unicode_literals
 
 import json
@@ -8,6 +8,7 @@ import itertools
 from .common import InfoExtractor
 from ..compat import (
     compat_HTTPError,
+    compat_str,
     compat_urlparse,
 )
 from ..utils import (
@@ -15,11 +16,13 @@ from ..utils import (
     ExtractorError,
     InAdvancePagedList,
     int_or_none,
+    NO_DEFAULT,
     RegexNotFoundError,
     sanitized_Request,
     smuggle_url,
     std_headers,
-    unified_strdate,
+    try_get,
+    unified_timestamp,
     unsmuggle_url,
     urlencode_postdata,
     unescapeHTML,
@@ -38,216 +41,30 @@ class VimeoBaseInfoExtractor(InfoExtractor):
             if self._LOGIN_REQUIRED:
                 raise ExtractorError('No login info available, needed for using %s.' % self.IE_NAME, expected=True)
             return
-        self.report_login()
-        webpage = self._download_webpage(self._LOGIN_URL, None, False)
+        webpage = self._download_webpage(
+            self._LOGIN_URL, None, 'Downloading login page')
         token, vuid = self._extract_xsrft_and_vuid(webpage)
-        data = urlencode_postdata({
+        data = {
             'action': 'login',
             'email': username,
             'password': password,
             'service': 'vimeo',
             'token': token,
-        })
-        login_request = sanitized_Request(self._LOGIN_URL, data)
-        login_request.add_header('Content-Type', 'application/x-www-form-urlencoded')
-        login_request.add_header('Referer', self._LOGIN_URL)
+        }
         self._set_vimeo_cookie('vuid', vuid)
-        self._download_webpage(login_request, None, False, 'Wrong login info')
-
-    def _extract_xsrft_and_vuid(self, webpage):
-        xsrft = self._search_regex(
-            r'(?:(?P<q1>["\'])xsrft(?P=q1)\s*:|xsrft\s*[=:])\s*(?P<q>["\'])(?P<xsrft>.+?)(?P=q)',
-            webpage, 'login token', group='xsrft')
-        vuid = self._search_regex(
-            r'["\']vuid["\']\s*:\s*(["\'])(?P<vuid>.+?)\1',
-            webpage, 'vuid', group='vuid')
-        return xsrft, vuid
-
-    def _set_vimeo_cookie(self, name, value):
-        self._set_cookie('vimeo.com', name, value)
-
-
-class VimeoIE(VimeoBaseInfoExtractor):
-    """Information extractor for vimeo.com."""
-
-    # _VALID_URL matches Vimeo URLs
-    _VALID_URL = r'''(?x)
-                    https?://
-                        (?:
-                            (?:
-                                www|
-                                (?P<player>player)
-                            )
-                            \.
-                        )?
-                        vimeo(?P<pro>pro)?\.com/
-                        (?!channels/[^/?#]+/?(?:$|[?#])|(?:album|ondemand)/)
-                        (?:.*?/)?
-                        (?:
-                            (?:
-                                play_redirect_hls|
-                                moogaloop\.swf)\?clip_id=
-                            )?
-                        (?:videos?/)?
-                        (?P<id>[0-9]+)
-                        /?(?:[?&].*)?(?:[#].*)?$
-                    '''
-    IE_NAME = 'vimeo'
-    _TESTS = [
-        {
-            'url': 'http://vimeo.com/56015672#at=0',
-            'md5': '8879b6cc097e987f02484baf890129e5',
-            'info_dict': {
-                'id': '56015672',
-                'ext': 'mp4',
-                'title': "youtube-dl test video - \u2605 \" ' \u5e78 / \\ \u00e4 \u21ad \U0001d550",
-                'description': 'md5:2d3305bad981a06ff79f027f19865021',
-                'upload_date': '20121220',
-                'uploader_url': 're:https?://(?:www\.)?vimeo\.com/user7108434',
-                'uploader_id': 'user7108434',
-                'uploader': 'Filippo Valsorda',
-                'duration': 10,
-            },
-        },
-        {
-            'url': 'http://vimeopro.com/openstreetmapus/state-of-the-map-us-2013/video/68093876',
-            'md5': '3b5ca6aa22b60dfeeadf50b72e44ed82',
-            'note': 'Vimeo Pro video (#1197)',
-            'info_dict': {
-                'id': '68093876',
-                'ext': 'mp4',
-                'uploader_url': 're:https?://(?:www\.)?vimeo\.com/openstreetmapus',
-                'uploader_id': 'openstreetmapus',
-                'uploader': 'OpenStreetMap US',
-                'title': 'Andy Allan - Putting the Carto into OpenStreetMap Cartography',
-                'description': 'md5:fd69a7b8d8c34a4e1d2ec2e4afd6ec30',
-                'duration': 1595,
-            },
-        },
-        {
-            'url': 'http://player.vimeo.com/video/54469442',
-            'md5': '619b811a4417aa4abe78dc653becf511',
-            'note': 'Videos that embed the url in the player page',
-            'info_dict': {
-                'id': '54469442',
-                'ext': 'mp4',
-                'title': 'Kathy Sierra: Building the minimum Badass User, Business of Software 2012',
-                'uploader': 'The BLN & Business of Software',
-                'uploader_url': 're:https?://(?:www\.)?vimeo\.com/theblnbusinessofsoftware',
-                'uploader_id': 'theblnbusinessofsoftware',
-                'duration': 3610,
-                'description': None,
-            },
-        },
-        {
-            'url': 'http://vimeo.com/68375962',
-            'md5': 'aaf896bdb7ddd6476df50007a0ac0ae7',
-            'note': 'Video protected with password',
-            'info_dict': {
-                'id': '68375962',
-                'ext': 'mp4',
-                'title': 'youtube-dl password protected test video',
-                'upload_date': '20130614',
-                'uploader_url': 're:https?://(?:www\.)?vimeo\.com/user18948128',
-                'uploader_id': 'user18948128',
-                'uploader': 'Jaime Marquínez Ferrándiz',
-                'duration': 10,
-                'description': 'This is "youtube-dl password protected test video" by Jaime Marquínez Ferrándiz on Vimeo, the home for high quality videos and the people\u2026',
-            },
-            'params': {
-                'videopassword': 'youtube-dl',
-            },
-        },
-        {
-            'url': 'http://vimeo.com/channels/keypeele/75629013',
-            'md5': '2f86a05afe9d7abc0b9126d229bbe15d',
-            'note': 'Video is freely available via original URL '
-                    'and protected with password when accessed via http://vimeo.com/75629013',
-            'info_dict': {
-                'id': '75629013',
-                'ext': 'mp4',
-                'title': 'Key & Peele: Terrorist Interrogation',
-                'description': 'md5:8678b246399b070816b12313e8b4eb5c',
-                'uploader_url': 're:https?://(?:www\.)?vimeo\.com/atencio',
-                'uploader_id': 'atencio',
-                'uploader': 'Peter Atencio',
-                'upload_date': '20130927',
-                'duration': 187,
-            },
-        },
-        {
-            'url': 'http://vimeo.com/76979871',
-            'note': 'Video with subtitles',
-            'info_dict': {
-                'id': '76979871',
-                'ext': 'mp4',
-                'title': 'The New Vimeo Player (You Know, For Videos)',
-                'description': 'md5:2ec900bf97c3f389378a96aee11260ea',
-                'upload_date': '20131015',
-                'uploader_url': 're:https?://(?:www\.)?vimeo\.com/staff',
-                'uploader_id': 'staff',
-                'uploader': 'Vimeo Staff',
-                'duration': 62,
-            }
-        },
-        {
-            # from https://www.ouya.tv/game/Pier-Solar-and-the-Great-Architects/
-            'url': 'https://player.vimeo.com/video/98044508',
-            'note': 'The js code contains assignments to the same variable as the config',
-            'info_dict': {
-                'id': '98044508',
-                'ext': 'mp4',
-                'title': 'Pier Solar OUYA Official Trailer',
-                'uploader': 'Tulio Gonçalves',
-                'uploader_url': 're:https?://(?:www\.)?vimeo\.com/user28849593',
-                'uploader_id': 'user28849593',
-            },
-        },
-        {
-            # contains original format
-            'url': 'https://vimeo.com/33951933',
-            'md5': '53c688fa95a55bf4b7293d37a89c5c53',
-            'info_dict': {
-                'id': '33951933',
-                'ext': 'mp4',
-                'title': 'FOX CLASSICS - Forever Classic ID - A Full Minute',
-                'uploader': 'The DMCI',
-                'uploader_url': 're:https?://(?:www\.)?vimeo\.com/dmci',
-                'uploader_id': 'dmci',
-                'upload_date': '20111220',
-                'description': 'md5:ae23671e82d05415868f7ad1aec21147',
-            },
-        },
-        {
-            'url': 'https://vimeo.com/109815029',
-            'note': 'Video not completely processed, "failed" seed status',
-            'only_matching': True,
-        },
-        {
-            'url': 'https://vimeo.com/groups/travelhd/videos/22439234',
-            'only_matching': True,
-        },
-        {
-            # source file returns 403: Forbidden
-            'url': 'https://vimeo.com/7809605',
-            'only_matching': True,
-        },
-    ]
-
-    @staticmethod
-    def _extract_vimeo_url(url, webpage):
-        # Look for embedded (iframe) Vimeo player
-        mobj = re.search(
-            r'<iframe[^>]+?src=(["\'])(?P<url>(?:https?:)?//player\.vimeo\.com/video/.+?)\1', webpage)
-        if mobj:
-            player_url = unescapeHTML(mobj.group('url'))
-            surl = smuggle_url(player_url, {'http_headers': {'Referer': url}})
-            return surl
-        # Look for embedded (swf embed) Vimeo player
-        mobj = re.search(
-            r'<embed[^>]+?src="((?:https?:)?//(?:www\.)?vimeo\.com/moogaloop\.swf.+?)"', webpage)
-        if mobj:
-            return mobj.group(1)
+        try:
+            self._download_webpage(
+                self._LOGIN_URL, None, 'Logging in',
+                data=urlencode_postdata(data), headers={
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'Referer': self._LOGIN_URL,
+                })
+        except ExtractorError as e:
+            if isinstance(e.cause, compat_HTTPError) and e.cause.code == 418:
+                raise ExtractorError(
+                    'Unable to log in: bad username or password',
+                    expected=True)
+            raise ExtractorError('Unable to log in')
 
     def _verify_video_password(self, url, video_id, webpage):
         password = self._downloader.params.get('videopassword')
@@ -269,6 +86,360 @@ class VimeoIE(VimeoBaseInfoExtractor):
             password_request, video_id,
             'Verifying the password', 'Wrong password')
 
+    def _extract_xsrft_and_vuid(self, webpage):
+        xsrft = self._search_regex(
+            r'(?:(?P<q1>["\'])xsrft(?P=q1)\s*:|xsrft\s*[=:])\s*(?P<q>["\'])(?P<xsrft>.+?)(?P=q)',
+            webpage, 'login token', group='xsrft')
+        vuid = self._search_regex(
+            r'["\']vuid["\']\s*:\s*(["\'])(?P<vuid>.+?)\1',
+            webpage, 'vuid', group='vuid')
+        return xsrft, vuid
+
+    def _set_vimeo_cookie(self, name, value):
+        self._set_cookie('vimeo.com', name, value)
+
+    def _vimeo_sort_formats(self, formats):
+        # Bitrates are completely broken. Single m3u8 may contain entries in kbps and bps
+        # at the same time without actual units specified. This lead to wrong sorting.
+        self._sort_formats(formats, field_preference=('preference', 'height', 'width', 'fps', 'tbr', 'format_id'))
+
+    def _parse_config(self, config, video_id):
+        video_data = config['video']
+        # Extract title
+        video_title = video_data['title']
+
+        # Extract uploader, uploader_url and uploader_id
+        video_uploader = video_data.get('owner', {}).get('name')
+        video_uploader_url = video_data.get('owner', {}).get('url')
+        video_uploader_id = video_uploader_url.split('/')[-1] if video_uploader_url else None
+
+        # Extract video thumbnail
+        video_thumbnail = video_data.get('thumbnail')
+        if video_thumbnail is None:
+            video_thumbs = video_data.get('thumbs')
+            if video_thumbs and isinstance(video_thumbs, dict):
+                _, video_thumbnail = sorted((int(width if width.isdigit() else 0), t_url) for (width, t_url) in video_thumbs.items())[-1]
+
+        # Extract video duration
+        video_duration = int_or_none(video_data.get('duration'))
+
+        formats = []
+        config_files = video_data.get('files') or config['request'].get('files', {})
+        for f in config_files.get('progressive', []):
+            video_url = f.get('url')
+            if not video_url:
+                continue
+            formats.append({
+                'url': video_url,
+                'format_id': 'http-%s' % f.get('quality'),
+                'width': int_or_none(f.get('width')),
+                'height': int_or_none(f.get('height')),
+                'fps': int_or_none(f.get('fps')),
+                'tbr': int_or_none(f.get('bitrate')),
+            })
+
+        for files_type in ('hls', 'dash'):
+            for cdn_name, cdn_data in config_files.get(files_type, {}).get('cdns', {}).items():
+                manifest_url = cdn_data.get('url')
+                if not manifest_url:
+                    continue
+                format_id = '%s-%s' % (files_type, cdn_name)
+                if files_type == 'hls':
+                    formats.extend(self._extract_m3u8_formats(
+                        manifest_url, video_id, 'mp4',
+                        'm3u8_native', m3u8_id=format_id,
+                        note='Downloading %s m3u8 information' % cdn_name,
+                        fatal=False))
+                elif files_type == 'dash':
+                    mpd_pattern = r'/%s/(?:sep/)?video/' % video_id
+                    mpd_manifest_urls = []
+                    if re.search(mpd_pattern, manifest_url):
+                        for suffix, repl in (('', 'video'), ('_sep', 'sep/video')):
+                            mpd_manifest_urls.append((format_id + suffix, re.sub(
+                                mpd_pattern, '/%s/%s/' % (video_id, repl), manifest_url)))
+                    else:
+                        mpd_manifest_urls = [(format_id, manifest_url)]
+                    for f_id, m_url in mpd_manifest_urls:
+                        mpd_formats = self._extract_mpd_formats(
+                            m_url.replace('/master.json', '/master.mpd'), video_id, f_id,
+                            'Downloading %s MPD information' % cdn_name,
+                            fatal=False)
+                        for f in mpd_formats:
+                            if f.get('vcodec') == 'none':
+                                f['preference'] = -50
+                            elif f.get('acodec') == 'none':
+                                f['preference'] = -40
+                        formats.extend(mpd_formats)
+
+        subtitles = {}
+        text_tracks = config['request'].get('text_tracks')
+        if text_tracks:
+            for tt in text_tracks:
+                subtitles[tt['lang']] = [{
+                    'ext': 'vtt',
+                    'url': 'https://vimeo.com' + tt['url'],
+                }]
+
+        return {
+            'title': video_title,
+            'uploader': video_uploader,
+            'uploader_id': video_uploader_id,
+            'uploader_url': video_uploader_url,
+            'thumbnail': video_thumbnail,
+            'duration': video_duration,
+            'formats': formats,
+            'subtitles': subtitles,
+        }
+
+
+class VimeoIE(VimeoBaseInfoExtractor):
+    """Information extractor for vimeo.com."""
+
+    # _VALID_URL matches Vimeo URLs
+    _VALID_URL = r'''(?x)
+                    https?://
+                        (?:
+                            (?:
+                                www|
+                                (?P<player>player)
+                            )
+                            \.
+                        )?
+                        vimeo(?P<pro>pro)?\.com/
+                        (?!(?:channels|album)/[^/?#]+/?(?:$|[?#])|[^/]+/review/|ondemand/)
+                        (?:.*?/)?
+                        (?:
+                            (?:
+                                play_redirect_hls|
+                                moogaloop\.swf)\?clip_id=
+                            )?
+                        (?:videos?/)?
+                        (?P<id>[0-9]+)
+                        (?:/[\da-f]+)?
+                        /?(?:[?&].*)?(?:[#].*)?$
+                    '''
+    IE_NAME = 'vimeo'
+    _TESTS = [
+        {
+            'url': 'http://vimeo.com/56015672#at=0',
+            'md5': '8879b6cc097e987f02484baf890129e5',
+            'info_dict': {
+                'id': '56015672',
+                'ext': 'mp4',
+                'title': "youtube-dl test video - \u2605 \" ' \u5e78 / \\ \u00e4 \u21ad \U0001d550",
+                'description': 'md5:509a9ad5c9bf97c60faee9203aca4479',
+                'timestamp': 1355990239,
+                'upload_date': '20121220',
+                'uploader_url': r're:https?://(?:www\.)?vimeo\.com/user7108434',
+                'uploader_id': 'user7108434',
+                'uploader': 'Filippo Valsorda',
+                'duration': 10,
+                'license': 'by-sa',
+            },
+        },
+        {
+            'url': 'http://vimeopro.com/openstreetmapus/state-of-the-map-us-2013/video/68093876',
+            'md5': '3b5ca6aa22b60dfeeadf50b72e44ed82',
+            'note': 'Vimeo Pro video (#1197)',
+            'info_dict': {
+                'id': '68093876',
+                'ext': 'mp4',
+                'uploader_url': r're:https?://(?:www\.)?vimeo\.com/openstreetmapus',
+                'uploader_id': 'openstreetmapus',
+                'uploader': 'OpenStreetMap US',
+                'title': 'Andy Allan - Putting the Carto into OpenStreetMap Cartography',
+                'description': 'md5:fd69a7b8d8c34a4e1d2ec2e4afd6ec30',
+                'duration': 1595,
+            },
+        },
+        {
+            'url': 'http://player.vimeo.com/video/54469442',
+            'md5': '619b811a4417aa4abe78dc653becf511',
+            'note': 'Videos that embed the url in the player page',
+            'info_dict': {
+                'id': '54469442',
+                'ext': 'mp4',
+                'title': 'Kathy Sierra: Building the minimum Badass User, Business of Software 2012',
+                'uploader': 'The BLN & Business of Software',
+                'uploader_url': r're:https?://(?:www\.)?vimeo\.com/theblnbusinessofsoftware',
+                'uploader_id': 'theblnbusinessofsoftware',
+                'duration': 3610,
+                'description': None,
+            },
+        },
+        {
+            'url': 'http://vimeo.com/68375962',
+            'md5': 'aaf896bdb7ddd6476df50007a0ac0ae7',
+            'note': 'Video protected with password',
+            'info_dict': {
+                'id': '68375962',
+                'ext': 'mp4',
+                'title': 'youtube-dl password protected test video',
+                'timestamp': 1371200155,
+                'upload_date': '20130614',
+                'uploader_url': r're:https?://(?:www\.)?vimeo\.com/user18948128',
+                'uploader_id': 'user18948128',
+                'uploader': 'Jaime Marquínez Ferrándiz',
+                'duration': 10,
+                'description': 'md5:dca3ea23adb29ee387127bc4ddfce63f',
+            },
+            'params': {
+                'videopassword': 'youtube-dl',
+            },
+        },
+        {
+            'url': 'http://vimeo.com/channels/keypeele/75629013',
+            'md5': '2f86a05afe9d7abc0b9126d229bbe15d',
+            'info_dict': {
+                'id': '75629013',
+                'ext': 'mp4',
+                'title': 'Key & Peele: Terrorist Interrogation',
+                'description': 'md5:8678b246399b070816b12313e8b4eb5c',
+                'uploader_url': r're:https?://(?:www\.)?vimeo\.com/atencio',
+                'uploader_id': 'atencio',
+                'uploader': 'Peter Atencio',
+                'timestamp': 1380339469,
+                'upload_date': '20130928',
+                'duration': 187,
+            },
+        },
+        {
+            'url': 'http://vimeo.com/76979871',
+            'note': 'Video with subtitles',
+            'info_dict': {
+                'id': '76979871',
+                'ext': 'mp4',
+                'title': 'The New Vimeo Player (You Know, For Videos)',
+                'description': 'md5:2ec900bf97c3f389378a96aee11260ea',
+                'timestamp': 1381846109,
+                'upload_date': '20131015',
+                'uploader_url': r're:https?://(?:www\.)?vimeo\.com/staff',
+                'uploader_id': 'staff',
+                'uploader': 'Vimeo Staff',
+                'duration': 62,
+            }
+        },
+        {
+            # from https://www.ouya.tv/game/Pier-Solar-and-the-Great-Architects/
+            'url': 'https://player.vimeo.com/video/98044508',
+            'note': 'The js code contains assignments to the same variable as the config',
+            'info_dict': {
+                'id': '98044508',
+                'ext': 'mp4',
+                'title': 'Pier Solar OUYA Official Trailer',
+                'uploader': 'Tulio Gonçalves',
+                'uploader_url': r're:https?://(?:www\.)?vimeo\.com/user28849593',
+                'uploader_id': 'user28849593',
+            },
+        },
+        {
+            # contains original format
+            'url': 'https://vimeo.com/33951933',
+            'md5': '53c688fa95a55bf4b7293d37a89c5c53',
+            'info_dict': {
+                'id': '33951933',
+                'ext': 'mp4',
+                'title': 'FOX CLASSICS - Forever Classic ID - A Full Minute',
+                'uploader': 'The DMCI',
+                'uploader_url': r're:https?://(?:www\.)?vimeo\.com/dmci',
+                'uploader_id': 'dmci',
+                'timestamp': 1324343742,
+                'upload_date': '20111220',
+                'description': 'md5:ae23671e82d05415868f7ad1aec21147',
+            },
+        },
+        {
+            # only available via https://vimeo.com/channels/tributes/6213729 and
+            # not via https://vimeo.com/6213729
+            'url': 'https://vimeo.com/channels/tributes/6213729',
+            'info_dict': {
+                'id': '6213729',
+                'ext': 'mov',
+                'title': 'Vimeo Tribute: The Shining',
+                'uploader': 'Casey Donahue',
+                'uploader_url': r're:https?://(?:www\.)?vimeo\.com/caseydonahue',
+                'uploader_id': 'caseydonahue',
+                'timestamp': 1250886430,
+                'upload_date': '20090821',
+                'description': 'md5:bdbf314014e58713e6e5b66eb252f4a6',
+            },
+            'params': {
+                'skip_download': True,
+            },
+            'expected_warnings': ['Unable to download JSON metadata'],
+        },
+        {
+            # redirects to ondemand extractor and should be passed through it
+            # for successful extraction
+            'url': 'https://vimeo.com/73445910',
+            'info_dict': {
+                'id': '73445910',
+                'ext': 'mp4',
+                'title': 'The Reluctant Revolutionary',
+                'uploader': '10Ft Films',
+                'uploader_url': r're:https?://(?:www\.)?vimeo\.com/tenfootfilms',
+                'uploader_id': 'tenfootfilms',
+            },
+            'params': {
+                'skip_download': True,
+            },
+        },
+        {
+            'url': 'http://vimeo.com/moogaloop.swf?clip_id=2539741',
+            'only_matching': True,
+        },
+        {
+            'url': 'https://vimeo.com/109815029',
+            'note': 'Video not completely processed, "failed" seed status',
+            'only_matching': True,
+        },
+        {
+            'url': 'https://vimeo.com/groups/travelhd/videos/22439234',
+            'only_matching': True,
+        },
+        {
+            'url': 'https://vimeo.com/album/2632481/video/79010983',
+            'only_matching': True,
+        },
+        {
+            # source file returns 403: Forbidden
+            'url': 'https://vimeo.com/7809605',
+            'only_matching': True,
+        },
+        {
+            'url': 'https://vimeo.com/160743502/abd0e13fb4',
+            'only_matching': True,
+        }
+    ]
+
+    @staticmethod
+    def _smuggle_referrer(url, referrer_url):
+        return smuggle_url(url, {'http_headers': {'Referer': referrer_url}})
+
+    @staticmethod
+    def _extract_urls(url, webpage):
+        urls = []
+        # Look for embedded (iframe) Vimeo player
+        for mobj in re.finditer(
+                r'<iframe[^>]+?src=(["\'])(?P<url>(?:https?:)?//player\.vimeo\.com/video/\d+.*?)\1',
+                webpage):
+            urls.append(VimeoIE._smuggle_referrer(unescapeHTML(mobj.group('url')), url))
+        PLAIN_EMBED_RE = (
+            # Look for embedded (swf embed) Vimeo player
+            r'<embed[^>]+?src=(["\'])(?P<url>(?:https?:)?//(?:www\.)?vimeo\.com/moogaloop\.swf.+?)\1',
+            # Look more for non-standard embedded Vimeo player
+            r'<video[^>]+src=(["\'])(?P<url>(?:https?:)?//(?:www\.)?vimeo\.com/[0-9]+)\1',
+        )
+        for embed_re in PLAIN_EMBED_RE:
+            for mobj in re.finditer(embed_re, webpage):
+                urls.append(mobj.group('url'))
+        return urls
+
+    @staticmethod
+    def _extract_url(url, webpage):
+        urls = VimeoIE._extract_urls(url, webpage)
+        return urls[0] if urls else None
+
     def _verify_player_video_password(self, url, video_id):
         password = self._downloader.params.get('videopassword')
         if password is None:
@@ -277,10 +448,10 @@ class VimeoIE(VimeoBaseInfoExtractor):
         pass_url = url + '/check-password'
         password_request = sanitized_Request(pass_url, data)
         password_request.add_header('Content-Type', 'application/x-www-form-urlencoded')
+        password_request.add_header('Referer', url)
         return self._download_json(
             password_request, video_id,
-            'Verifying the password',
-            'Wrong password')
+            'Verifying the password', 'Wrong password')
 
     def _real_initialize(self):
         self._login()
@@ -299,13 +470,19 @@ class VimeoIE(VimeoBaseInfoExtractor):
         orig_url = url
         if mobj.group('pro') or mobj.group('player'):
             url = 'https://player.vimeo.com/video/' + video_id
-        else:
+        elif any(p in url for p in ('play_redirect_hls', 'moogaloop.swf')):
             url = 'https://vimeo.com/' + video_id
 
         # Retrieve video webpage to extract further information
         request = sanitized_Request(url, headers=headers)
         try:
-            webpage = self._download_webpage(request, video_id)
+            webpage, urlh = self._download_webpage_handle(request, video_id)
+            redirect_url = compat_str(urlh.geturl())
+            # Some URLs redirect to ondemand can't be extracted with
+            # this extractor right away thus should be passed through
+            # ondemand extractor (e.g. https://vimeo.com/73445910)
+            if VimeoOndemandIE.suitable(redirect_url):
+                return self.url_result(redirect_url, VimeoOndemandIE.ie_key())
         except ExtractorError as ee:
             if isinstance(ee.cause, compat_HTTPError) and ee.cause.code == 403:
                 errmsg = ee.cause.read()
@@ -332,6 +509,9 @@ class VimeoIE(VimeoBaseInfoExtractor):
                     '%s said: %s' % (self.IE_NAME, seed_status['title']),
                     expected=True)
 
+        cc_license = None
+        timestamp = None
+
         # Extract the config JSON
         try:
             try:
@@ -345,14 +525,18 @@ class VimeoIE(VimeoBaseInfoExtractor):
                     vimeo_clip_page_config = self._search_regex(
                         r'vimeo\.clip_page_config\s*=\s*({.+?});', webpage,
                         'vimeo clip page config')
-                    config_url = self._parse_json(
-                        vimeo_clip_page_config, video_id)['player']['config_url']
+                    page_config = self._parse_json(vimeo_clip_page_config, video_id)
+                    config_url = page_config['player']['config_url']
+                    cc_license = page_config.get('cc_license')
+                    timestamp = try_get(
+                        page_config, lambda x: x['clip']['uploaded_on'],
+                        compat_str)
                 config_json = self._download_webpage(config_url, video_id)
                 config = json.loads(config_json)
             except RegexNotFoundError:
                 # For pro videos or player.vimeo.com urls
                 # We try to find out to which variable is assigned the config dic
-                m_variable_name = re.search('(\w)\.video\.id', webpage)
+                m_variable_name = re.search(r'(\w)\.video\.id', webpage)
                 if m_variable_name is not None:
                     config_re = r'%s=({[^}].+?});' % re.escape(m_variable_name.group(1))
                 else:
@@ -367,37 +551,33 @@ class VimeoIE(VimeoBaseInfoExtractor):
             if re.search(r'<form[^>]+?id="pw_form"', webpage) is not None:
                 if '_video_password_verified' in data:
                     raise ExtractorError('video password verification failed!')
-                self._verify_video_password(url, video_id, webpage)
+                self._verify_video_password(redirect_url, video_id, webpage)
                 return self._real_extract(
-                    smuggle_url(url, {'_video_password_verified': 'verified'}))
+                    smuggle_url(redirect_url, {'_video_password_verified': 'verified'}))
             else:
                 raise ExtractorError('Unable to extract info section',
                                      cause=e)
         else:
             if config.get('view') == 4:
-                config = self._verify_player_video_password(url, video_id)
+                config = self._verify_player_video_password(redirect_url, video_id)
 
-        if '>You rented this title.<' in webpage:
+        def is_rented():
+            if '>You rented this title.<' in webpage:
+                return True
+            if config.get('user', {}).get('purchased'):
+                return True
+            label = try_get(
+                config, lambda x: x['video']['vod']['purchase_options'][0]['label_string'], compat_str)
+            if label and label.startswith('You rented this'):
+                return True
+            return False
+
+        if is_rented():
             feature_id = config.get('video', {}).get('vod', {}).get('feature_id')
             if feature_id and not data.get('force_feature_id', False):
                 return self.url_result(smuggle_url(
                     'https://player.vimeo.com/player/%s' % feature_id,
                     {'force_feature_id': True}), 'Vimeo')
-
-        # Extract title
-        video_title = config['video']['title']
-
-        # Extract uploader, uploader_url and uploader_id
-        video_uploader = config['video'].get('owner', {}).get('name')
-        video_uploader_url = config['video'].get('owner', {}).get('url')
-        video_uploader_id = video_uploader_url.split('/')[-1] if video_uploader_url else None
-
-        # Extract video thumbnail
-        video_thumbnail = config['video'].get('thumbnail')
-        if video_thumbnail is None:
-            video_thumbs = config['video'].get('thumbs')
-            if video_thumbs and isinstance(video_thumbs, dict):
-                _, video_thumbnail = sorted((int(width if width.isdigit() else 0), t_url) for (width, t_url) in video_thumbs.items())[-1]
 
         # Extract video description
 
@@ -418,14 +598,11 @@ class VimeoIE(VimeoBaseInfoExtractor):
         if not video_description and not mobj.group('player'):
             self._downloader.report_warning('Cannot find video description')
 
-        # Extract video duration
-        video_duration = int_or_none(config['video'].get('duration'))
-
         # Extract upload date
-        video_upload_date = None
-        mobj = re.search(r'<time[^>]+datetime="([^"]+)"', webpage)
-        if mobj is not None:
-            video_upload_date = unified_strdate(mobj.group(1))
+        if not timestamp:
+            timestamp = self._search_regex(
+                r'<time[^>]+datetime="([^"]+)"', webpage,
+                'timestamp', default=None)
 
         try:
             view_count = int(self._search_regex(r'UserPlays:(\d+)', webpage, 'view count'))
@@ -448,7 +625,10 @@ class VimeoIE(VimeoBaseInfoExtractor):
                 if download_url and not source_file.get('is_cold') and not source_file.get('is_defrosting'):
                     source_name = source_file.get('public_name', 'Original')
                     if self._is_valid_url(download_url, video_id, '%s video' % source_name):
-                        ext = source_file.get('extension', determine_ext(download_url)).lower()
+                        ext = (try_get(
+                            source_file, lambda x: x['extension'],
+                            compat_str) or determine_ext(
+                            download_url, None) or 'mp4').lower()
                         formats.append({
                             'url': download_url,
                             'ext': ext,
@@ -458,53 +638,29 @@ class VimeoIE(VimeoBaseInfoExtractor):
                             'format_id': source_name,
                             'preference': 1,
                         })
-        config_files = config['video'].get('files') or config['request'].get('files', {})
-        for f in config_files.get('progressive', []):
-            video_url = f.get('url')
-            if not video_url:
-                continue
-            formats.append({
-                'url': video_url,
-                'format_id': 'http-%s' % f.get('quality'),
-                'width': int_or_none(f.get('width')),
-                'height': int_or_none(f.get('height')),
-                'fps': int_or_none(f.get('fps')),
-                'tbr': int_or_none(f.get('bitrate')),
-            })
-        m3u8_url = config_files.get('hls', {}).get('url')
-        if m3u8_url:
-            formats.extend(self._extract_m3u8_formats(
-                m3u8_url, video_id, 'mp4', 'm3u8_native', m3u8_id='hls', fatal=False))
-        # Bitrates are completely broken. Single m3u8 may contain entries in kbps and bps
-        # at the same time without actual units specified. This lead to wrong sorting.
-        self._sort_formats(formats, field_preference=('preference', 'height', 'width', 'fps', 'format_id'))
 
-        subtitles = {}
-        text_tracks = config['request'].get('text_tracks')
-        if text_tracks:
-            for tt in text_tracks:
-                subtitles[tt['lang']] = [{
-                    'ext': 'vtt',
-                    'url': 'https://vimeo.com' + tt['url'],
-                }]
+        info_dict = self._parse_config(config, video_id)
+        formats.extend(info_dict['formats'])
+        self._vimeo_sort_formats(formats)
 
-        return {
+        if not cc_license:
+            cc_license = self._search_regex(
+                r'<link[^>]+rel=["\']license["\'][^>]+href=(["\'])(?P<license>(?:(?!\1).)+)\1',
+                webpage, 'license', default=None, group='license')
+
+        info_dict.update({
             'id': video_id,
-            'uploader': video_uploader,
-            'uploader_url': video_uploader_url,
-            'uploader_id': video_uploader_id,
-            'upload_date': video_upload_date,
-            'title': video_title,
-            'thumbnail': video_thumbnail,
-            'description': video_description,
-            'duration': video_duration,
             'formats': formats,
+            'timestamp': unified_timestamp(timestamp),
+            'description': video_description,
             'webpage_url': url,
             'view_count': view_count,
             'like_count': like_count,
             'comment_count': comment_count,
-            'subtitles': subtitles,
-        }
+            'license': cc_license,
+        })
+
+        return info_dict
 
 
 class VimeoOndemandIE(VimeoBaseInfoExtractor):
@@ -519,8 +675,25 @@ class VimeoOndemandIE(VimeoBaseInfoExtractor):
             'ext': 'mp4',
             'title': 'המעבדה - במאי יותם פלדמן',
             'uploader': 'גם סרטים',
-            'uploader_url': 're:https?://(?:www\.)?vimeo\.com/gumfilms',
+            'uploader_url': r're:https?://(?:www\.)?vimeo\.com/gumfilms',
             'uploader_id': 'gumfilms',
+        },
+        'params': {
+            'format': 'best[protocol=https]',
+        },
+    }, {
+        # requires Referer to be passed along with og:video:url
+        'url': 'https://vimeo.com/ondemand/36938/126682985',
+        'info_dict': {
+            'id': '126682985',
+            'ext': 'mp4',
+            'title': 'Rävlock, rätt läte på rätt plats',
+            'uploader': 'Lindroth & Norin',
+            'uploader_url': r're:https?://(?:www\.)?vimeo\.com/user14430847',
+            'uploader_id': 'user14430847',
+        },
+        'params': {
+            'skip_download': True,
         },
     }, {
         'url': 'https://vimeo.com/ondemand/nazmaalik',
@@ -536,7 +709,12 @@ class VimeoOndemandIE(VimeoBaseInfoExtractor):
     def _real_extract(self, url):
         video_id = self._match_id(url)
         webpage = self._download_webpage(url, video_id)
-        return self.url_result(self._og_search_video_url(webpage), VimeoIE.ie_key())
+        return self.url_result(
+            # Some videos require Referer to be passed along with og:video:url
+            # similarly to generic vimeo embeds (e.g.
+            # https://vimeo.com/ondemand/36938/126682985).
+            VimeoIE._smuggle_referrer(self._og_search_video_url(webpage), url),
+            VimeoIE.ie_key())
 
 
 class VimeoChannelIE(VimeoBaseInfoExtractor):
@@ -598,8 +776,21 @@ class VimeoChannelIE(VimeoBaseInfoExtractor):
                 webpage = self._login_list_password(page_url, list_id, webpage)
                 yield self._extract_list_title(webpage)
 
-            for video_id in re.findall(r'id="clip_(\d+?)"', webpage):
-                yield self.url_result('https://vimeo.com/%s' % video_id, 'Vimeo')
+            # Try extracting href first since not all videos are available via
+            # short https://vimeo.com/id URL (e.g. https://vimeo.com/channels/tributes/6213729)
+            clips = re.findall(
+                r'id="clip_(\d+)"[^>]*>\s*<a[^>]+href="(/(?:[^/]+/)*\1)(?:[^>]+\btitle="([^"]+)")?', webpage)
+            if clips:
+                for video_id, video_url, video_title in clips:
+                    yield self.url_result(
+                        compat_urlparse.urljoin(base_url, video_url),
+                        VimeoIE.ie_key(), video_id=video_id, video_title=video_title)
+            # More relaxed fallback
+            else:
+                for video_id in re.findall(r'id=["\']clip_(\d+)', webpage):
+                    yield self.url_result(
+                        'https://vimeo.com/%s' % video_id,
+                        VimeoIE.ie_key(), video_id=video_id)
 
             if re.search(self._MORE_PAGES_INDICATOR, webpage, re.DOTALL) is None:
                 break
@@ -636,7 +827,7 @@ class VimeoUserIE(VimeoChannelIE):
 
 class VimeoAlbumIE(VimeoChannelIE):
     IE_NAME = 'vimeo:album'
-    _VALID_URL = r'https://vimeo\.com/album/(?P<id>\d+)'
+    _VALID_URL = r'https://vimeo\.com/album/(?P<id>\d+)(?:$|[?#]|/(?!video))'
     _TITLE_RE = r'<header id="page_header">\n\s*<h1>(.*?)</h1>'
     _TESTS = [{
         'url': 'https://vimeo.com/album/2632481',
@@ -656,6 +847,13 @@ class VimeoAlbumIE(VimeoChannelIE):
         'params': {
             'videopassword': 'youtube-dl',
         }
+    }, {
+        'url': 'https://vimeo.com/album/2632481/sort:plays/format:thumbnail',
+        'only_matching': True,
+    }, {
+        # TODO: respect page number
+        'url': 'https://vimeo.com/album/2632481/page:2/sort:plays/format:thumbnail',
+        'only_matching': True,
     }]
 
     def _page_url(self, base_url, pagenum):
@@ -687,7 +885,7 @@ class VimeoGroupsIE(VimeoAlbumIE):
         return self._extract_videos(name, 'https://vimeo.com/groups/%s' % name)
 
 
-class VimeoReviewIE(InfoExtractor):
+class VimeoReviewIE(VimeoBaseInfoExtractor):
     IE_NAME = 'vimeo:review'
     IE_DESC = 'Review pages on vimeo'
     _VALID_URL = r'https://vimeo\.com/[^/]+/review/(?P<id>[^/]+)'
@@ -699,6 +897,7 @@ class VimeoReviewIE(InfoExtractor):
             'ext': 'mp4',
             'title': "DICK HARDWICK 'Comedian'",
             'uploader': 'Richard Hardwick',
+            'uploader_id': 'user21297594',
         }
     }, {
         'note': 'video player needs Referer',
@@ -710,15 +909,52 @@ class VimeoReviewIE(InfoExtractor):
             'title': 're:(?i)^Death by dogma versus assembling agile . Sander Hoogendoorn',
             'uploader': 'DevWeek Events',
             'duration': 2773,
-            'thumbnail': 're:^https?://.*\.jpg$',
+            'thumbnail': r're:^https?://.*\.jpg$',
+            'uploader_id': 'user22258446',
         }
+    }, {
+        'note': 'Password protected',
+        'url': 'https://vimeo.com/user37284429/review/138823582/c4d865efde',
+        'info_dict': {
+            'id': '138823582',
+            'ext': 'mp4',
+            'title': 'EFFICIENT PICKUP MASTERCLASS MODULE 1',
+            'uploader': 'TMB',
+            'uploader_id': 'user37284429',
+        },
+        'params': {
+            'videopassword': 'holygrail',
+        },
+        'skip': 'video gone',
     }]
 
+    def _real_initialize(self):
+        self._login()
+
+    def _get_config_url(self, webpage_url, video_id, video_password_verified=False):
+        webpage = self._download_webpage(webpage_url, video_id)
+        config_url = self._html_search_regex(
+            r'data-config-url=(["\'])(?P<url>(?:(?!\1).)+)\1', webpage,
+            'config URL', default=None, group='url')
+        if not config_url:
+            data = self._parse_json(self._search_regex(
+                r'window\s*=\s*_extend\(window,\s*({.+?})\);', webpage, 'data',
+                default=NO_DEFAULT if video_password_verified else '{}'), video_id)
+            config_url = data.get('vimeo_esi', {}).get('config', {}).get('configUrl')
+        if config_url is None:
+            self._verify_video_password(webpage_url, video_id, webpage)
+            config_url = self._get_config_url(
+                webpage_url, video_id, video_password_verified=True)
+        return config_url
+
     def _real_extract(self, url):
-        mobj = re.match(self._VALID_URL, url)
-        video_id = mobj.group('id')
-        player_url = 'https://player.vimeo.com/player/' + video_id
-        return self.url_result(player_url, 'Vimeo', video_id)
+        video_id = self._match_id(url)
+        config_url = self._get_config_url(url, video_id)
+        config = self._download_json(config_url, video_id)
+        info_dict = self._parse_config(config, video_id)
+        self._vimeo_sort_formats(info_dict['formats'])
+        info_dict['id'] = video_id
+        return info_dict
 
 
 class VimeoWatchLaterIE(VimeoChannelIE):

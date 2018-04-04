@@ -4,8 +4,10 @@ import re
 
 from .common import InfoExtractor
 from ..utils import (
+    ExtractorError,
     parse_duration,
     str_to_int,
+    urljoin,
 )
 
 
@@ -21,13 +23,14 @@ class VpornIE(InfoExtractor):
                 'ext': 'mp4',
                 'title': 'Violet on her 19th birthday',
                 'description': 'Violet dances in front of the camera which is sure to get you horny.',
-                'thumbnail': 're:^https?://.*\.jpg$',
+                'thumbnail': r're:^https?://.*\.jpg$',
                 'uploader': 'kileyGrope',
                 'categories': ['Masturbation', 'Teen'],
                 'duration': 393,
                 'age_limit': 18,
                 'view_count': int,
-            }
+            },
+            'skip': 'video removed',
         },
         {
             'url': 'http://www.vporn.com/female/hana-shower/523564/',
@@ -38,9 +41,9 @@ class VpornIE(InfoExtractor):
                 'ext': 'mp4',
                 'title': 'Hana Shower',
                 'description': 'Hana showers at the bathroom.',
-                'thumbnail': 're:^https?://.*\.jpg$',
+                'thumbnail': r're:^https?://.*\.jpg$',
                 'uploader': 'Hmmmmm',
-                'categories': ['Big Boobs', 'Erotic', 'Teen', 'Female'],
+                'categories': ['Big Boobs', 'Erotic', 'Teen', 'Female', '720p'],
                 'duration': 588,
                 'age_limit': 18,
                 'view_count': int,
@@ -55,15 +58,18 @@ class VpornIE(InfoExtractor):
 
         webpage = self._download_webpage(url, display_id)
 
+        errmsg = 'This video has been deleted due to Copyright Infringement or by the account owner!'
+        if errmsg in webpage:
+            raise ExtractorError('%s said: %s' % (self.IE_NAME, errmsg), expected=True)
+
         title = self._html_search_regex(
             r'videoname\s*=\s*\'([^\']+)\'', webpage, 'title').strip()
         description = self._html_search_regex(
             r'class="(?:descr|description_txt)">(.*?)</div>',
             webpage, 'description', fatal=False)
-        thumbnail = self._html_search_regex(
-            r'flashvars\.imageUrl\s*=\s*"([^"]+)"', webpage, 'description', fatal=False, default=None)
-        if thumbnail:
-            thumbnail = 'http://www.vporn.com' + thumbnail
+        thumbnail = urljoin('http://www.vporn.com', self._html_search_regex(
+            r'flashvars\.imageUrl\s*=\s*"([^"]+)"', webpage, 'description',
+            default=None))
 
         uploader = self._html_search_regex(
             r'(?s)Uploaded by:.*?<a href="/user/[^"]+"[^>]*>(.+?)</a>',

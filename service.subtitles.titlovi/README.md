@@ -1,7 +1,7 @@
-XBMC 13 Gotham addon for titlovi.com
+KODI addon for titlovi.com
 =========================
 
-Titlovi.com subtitle addon for gotham.
+Titlovi.com subtitle addon for kodi.
 Search and download subtitles from Titlovi.com, for movies and tv series.
 And if you wish, convert serbian latin to cyrillic
 

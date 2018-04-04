@@ -1,4 +1,4 @@
-# encoding: utf-8
+# coding: utf-8
 from __future__ import unicode_literals
 
 import re
@@ -16,6 +16,9 @@ class TvigleIE(InfoExtractor):
     IE_NAME = 'tvigle'
     IE_DESC = 'Интернет-телевидение Tvigle.ru'
     _VALID_URL = r'https?://(?:www\.)?(?:tvigle\.ru/(?:[^/]+/)+(?P<display_id>[^/]+)/$|cloud\.tvigle\.ru/video/(?P<id>\d+))'
+
+    _GEO_BYPASS = False
+    _GEO_COUNTRIES = ['RU']
 
     _TESTS = [
         {
@@ -58,7 +61,9 @@ class TvigleIE(InfoExtractor):
         if not video_id:
             webpage = self._download_webpage(url, display_id)
             video_id = self._html_search_regex(
-                r'class="video-preview current_playing" id="(\d+)">',
+                (r'<div[^>]+class=["\']player["\'][^>]+id=["\'](\d+)',
+                 r'var\s+cloudId\s*=\s*["\'](\d+)',
+                 r'class="video-preview current_playing" id="(\d+)"'),
                 webpage, 'video id')
 
         video_data = self._download_json(
@@ -70,8 +75,13 @@ class TvigleIE(InfoExtractor):
 
         error_message = item.get('errorMessage')
         if not videos and error_message:
-            raise ExtractorError(
-                '%s returned error: %s' % (self.IE_NAME, error_message), expected=True)
+            if item.get('isGeoBlocked') is True:
+                self.raise_geo_restricted(
+                    msg=error_message, countries=self._GEO_COUNTRIES)
+            else:
+                raise ExtractorError(
+                    '%s returned error: %s' % (self.IE_NAME, error_message),
+                    expected=True)
 
         title = item['title']
         description = item.get('description')
@@ -81,10 +91,10 @@ class TvigleIE(InfoExtractor):
 
         formats = []
         for vcodec, fmts in item['videos'].items():
+            if vcodec == 'hls':
+                continue
             for format_id, video_url in fmts.items():
                 if format_id == 'm3u8':
-                    formats.extend(self._extract_m3u8_formats(
-                        video_url, video_id, 'mp4', m3u8_id=vcodec))
                     continue
                 height = self._search_regex(
                     r'^(\d+)[pP]$', format_id, 'height', default=None)
