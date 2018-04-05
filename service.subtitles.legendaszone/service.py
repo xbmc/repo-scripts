@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Service Legendas-Zone.org version 0.1.2
+# Service Legendas-Zone.org version 0.1.3
 # Code based on Undertext (FRODO) service
 # Coded by HiGhLaNdR@OLDSCHOOL
 # Ported to Gotham by HiGhLaNdR@OLDSCHOOL
@@ -42,7 +42,7 @@ sys.path.append (__resource__)
 __search__ = __addon__.getSetting( 'SEARCH' )
 debug = __addon__.getSetting( 'DEBUG' )
 
-main_url = "http://www.legendas-zone.org/"
+main_url = "https://www.legendas-zone.org/"
 debug_pretext = "LegendasZone"
 #SEARCH_PAGE_URL = MAIN_SUBDIVX_URL + "modules.php?name=Downloads&file=jz&d_op=search_next&order=&form_cat=28&page=%(page)s&query=%(query)s"
 
