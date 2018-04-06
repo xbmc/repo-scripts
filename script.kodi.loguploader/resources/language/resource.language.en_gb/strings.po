@@ -33,7 +33,15 @@ msgid "Failed to retrieve the paste url"
 msgstr ""
 
 msgctxt "#32005"
-msgid "This file is too large. Max size is 1MB."
+msgid "This file is too large. Max size is 400kB."
+msgstr ""
+
+msgctxt "#32006"
+msgid "Post this url or scan QRcode for your %s, together with a problem description, on the Kodi forum: %s"
+msgstr ""
+
+msgctxt "#32007"
+msgid "Error posting the logfile."
 msgstr ""
 
 msgctxt "#32011"
@@ -74,10 +82,6 @@ msgstr ""
 
 msgctxt "#32033"
 msgid "crashlog"
-msgstr ""
-
-msgctxt "#32006"
-msgid "Post this url or scan QRcode for your %s, together with a problem description, on the Kodi support forum: %s"
 msgstr ""
 
 msgctxt "#32501"

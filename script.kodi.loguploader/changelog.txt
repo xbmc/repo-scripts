@@ -1,3 +1,6 @@
+v0.3.1
+- change paste site to paste.kodi.tv
+
 v0.2.2
 - fix QR code image filename
 

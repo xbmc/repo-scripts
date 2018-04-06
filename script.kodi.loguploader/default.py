@@ -2,27 +2,26 @@ import os
 import re
 import socket
 import pyqrcode
-from urllib import urlencode
 import requests
 import xbmc
 import xbmcgui
 import xbmcaddon
 import xbmcvfs
 
-ADDON        = xbmcaddon.Addon()
-ADDONID      = ADDON.getAddonInfo('id')
-ADDONNAME    = ADDON.getAddonInfo('name')
+ADDON = xbmcaddon.Addon()
+ADDONID = ADDON.getAddonInfo('id')
+ADDONNAME = ADDON.getAddonInfo('name')
 ADDONVERSION = ADDON.getAddonInfo('version')
-CWD          = ADDON.getAddonInfo('path').decode('utf-8')
-PROFILE      = ADDON.getAddonInfo('profile').decode('utf-8')
-LANGUAGE     = ADDON.getLocalizedString
+CWD = ADDON.getAddonInfo('path').decode('utf-8')
+PROFILE = ADDON.getAddonInfo('profile').decode('utf-8')
+LANGUAGE = ADDON.getLocalizedString
 
 socket.setdefaulttimeout(5)
 
-POST     = 'http://ix.io/'
-LOGPATH  = xbmc.translatePath('special://logpath')
-LOGFILE  = os.path.join(LOGPATH, 'kodi.log')
-OLDLOG   = os.path.join(LOGPATH, 'kodi.old.log')
+URL = 'http://paste.kodi.tv/'
+LOGPATH = xbmc.translatePath('special://logpath')
+LOGFILE = os.path.join(LOGPATH, 'kodi.log')
+OLDLOG = os.path.join(LOGPATH, 'kodi.old.log')
 REPLACES = (('//.+?:.+?@', '//USER:PASSWORD@'),('<user>.+?</user>', '<user>USER</user>'),('<pass>.+?</pass>', '<pass>PASSWORD</pass>'),)
 
 def log(txt):
@@ -127,7 +126,7 @@ class Main:
         try:
             st = xbmcvfs.Stat(path)
             sz = st.st_size()
-            if sz > 999999:
+            if sz > 400000:
                 log('file is too large')
                 return False, LANGUAGE(32005)
             lf = xbmcvfs.File(path)
@@ -148,18 +147,19 @@ class Main:
             return content
 
     def postLog(self, data):
-        params = {}
-        params['f:1'] = data
         self.session = requests.Session()
         UserAgent = '%s: %s' % (ADDONID, ADDONVERSION)
         try:
-            response = self.session.post(POST, data=params, headers={'User-Agent': UserAgent})
-            result = response.text.strip()
-            if result:
+            response = self.session.post(URL + 'documents', data=data, headers={'User-Agent': UserAgent})
+            if 'key' in response.json():
+                result = URL + response.json()['key']
                 return True, result
-            else:
+            elif 'message' in response.json():
                 log('upload failed, paste may be too large')
-                return False, LANGUAGE(32005)
+                return False, response.json()['message']
+            else:
+                log('error: %s' % response.text)
+                return False, LANGUAGE(32007)
         except:
             log('unable to retrieve the paste url')
             return False, LANGUAGE(32004)
