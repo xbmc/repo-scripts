@@ -3,14 +3,14 @@
 # License: GPL v.3 https://www.gnu.org/copyleft/gpl.html
 
 import math
-from simpleplugin import Weather
+from .simpleweather import Weather
 
 weather = Weather()
 
 TEMPUNIT   = weather.tempunit
 SPEEDUNIT  = weather.speedunit
-PRESUNIT   = ['mmHg','hPa', 'mbar', 'inHg'][weather.PresUnit]
-PRECIPUNIT = ['mm', 'inch'][weather.PrecipUnit]
+PRESUNIT   = ['mmHg','hPa', 'mbar', 'inHg'][weather.get_setting("PresUnit")]
+PRECIPUNIT = ['mm', 'inch'][weather.get_setting("PrecipUnit")]
 
          # kodi lang name          # gismeteo code
 LANG = { 'afrikaans'             : '',
@@ -302,7 +302,7 @@ def TEMP(deg):
         temp = deg * 1.8 + 491.67
     elif TEMPUNIT == u'°Rø':
         temp = deg * 0.525 + 7.5
-    elif TEMPUNIT == u'°D':
+    elif TEMPUNIT in [u'°D', u'°De']:
         temp = deg / -0.667 + 150
     elif TEMPUNIT == u'°N':
         temp = deg * 0.33

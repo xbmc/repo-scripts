@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<addon id="weather.gismeteo" version="0.2.3" name="Gismeteo" provider-name="vl.maksime">
+<addon id="weather.gismeteo" version="0.3.3" name="Gismeteo" provider-name="vl.maksime">
     <requires>
         <import addon="xbmc.python" version="2.25.0"/>
+        <import addon="script.module.future"/>
     </requires>
     <extension point="xbmc.python.weather" library="default.py"/>
     <extension point="xbmc.addon.metadata">
@@ -18,7 +19,7 @@
         <website>https://www.gismeteo.ru/</website>
         <email>vl.maksime@gmail.com</email>
         <source>https://github.com/vlmaksime/weather.gismeteo</source>
-        <news>v0.2.3 (2017-12-23)[CR]- Fixed compatibility with KODI 16.1 on Android 4.4[CR][CR]v0.2.2 (2017-12-10)[CR]- Fixed bugs[CR]- Added selection of units for pressure and precipitation[CR]- Added the ability to clear the cache (Settings-Expert-Clear cache)</news>
+        <news>v0.3.3 (2018-04-07)[CR]- Fixed bug with parsing XML data[CR][CR]v0.3.2 (2018-02-18)[CR]- Fixed compatibility with Android and LibreELEC[CR][CR]v0.3.1 (2018-02-11)[CR]- Adapted to use the SimplePlugin 3 library[CR]- Implemented support for Python 3.6 (Compatibility with KODI 19 and above)[CR]- Fixed bugs</news>
         <assets>
             <icon>icon.png</icon>
         </assets>

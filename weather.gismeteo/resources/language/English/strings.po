@@ -160,7 +160,7 @@ msgctxt "#32301"
 msgid "a/p"
 msgstr ""
 
-#Speed
+# Speed
 
 msgctxt "#32401"
 msgid "m/s"
@@ -214,13 +214,13 @@ msgctxt "#32413"
 msgid "kts"
 msgstr ""
 
-#Wind direction
+# Wind direction
 
 msgctxt "#32420"
-msgid "сalm"
+msgid "calm"
 msgstr ""
 
-#Precipitation
+# Precipitation
 
 msgctxt "#32430"
 msgid "mm"
@@ -234,7 +234,7 @@ msgctxt "#32432"
 msgid "n/a"
 msgstr ""
 
-#Pressure
+# Pressure
 
 msgctxt "#32440"
 msgid "mmHg"
