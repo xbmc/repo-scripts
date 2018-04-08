@@ -2,7 +2,7 @@
 <settings>
 	<category label="32000">
 		<setting label="32032" type="lsep" />
-		<setting id="time-of-day" type="enum" values="All|Day only|Night only|Smart" label="32006" visible="true" default="0"/>
+		<setting id="time-of-day" type="enum" lvalues="32044|32045|32046|32047" label="32006" visible="true" default="0"/>
 		<setting id="show-notifications" type="bool" label="32018" default="false" />
 		<setting id="show-previewwindow" type="bool" label="32042" default="false" />
 		<setting label="32026" type="lsep" />

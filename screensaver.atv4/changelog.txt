@@ -1,3 +1,7 @@
+v1.5.1  (08/04/2018)
+- Add spanish translation
+- Add missing strings
+
 v1.5.0  (11/03/2018)
 - Code refactoring
 - Remove playlist and control it manually (avoid setting repeat modes)

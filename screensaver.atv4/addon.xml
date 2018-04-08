@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="screensaver.atv4" name="Aerial" version="1.5.0" provider-name="enen92">
+<addon id="screensaver.atv4" name="Aerial" version="1.5.1" provider-name="enen92">
 	<requires>
 		<import addon="xbmc.python" version="2.25.0"/>
 	</requires>
@@ -14,12 +14,12 @@
 		<source>https://github.com/enen92/screensaver.atv4</source>
 		<forum>http://forum.kodi.tv/showthread.php?tid=246655</forum>
 		<summary lang="en_GB">Apple TV 4 Screensavers in Kodi</summary>
+		<summary lang="es_ES">Protector de pantalla Apple TV 4 para Kodi</summary>
 		<description lang="en_GB">This screensaver addon enables the new Apple TV4 aerial screensavers in Kodi</description>
-		<news>v1.5.0  (11/03/2018)
-			- Code refactoring
-			- Remove playlist and control it manually (avoid setting repeat modes)
-			- Option to avoid streaming (use only local files)
-			- Fixes for Leia
+        	<description lang="es_ES">Este complemento habilita el protector de pantalla Aerial de Apple TV 4 para Kodi</description>
+		<news>v1.5.1  (08/04/2018)
+			- Add spanish translation
+			- Add missing strings
 		</news>
 		<assets>
 			<icon>icon.png</icon>
