@@ -33,7 +33,7 @@ msgid "Failed to retrieve the paste url"
 msgstr ""
 
 msgctxt "#32005"
-msgid "This file is too large. Max size is 400kB."
+msgid "This file is too large. Max size is 1MB."
 msgstr ""
 
 msgctxt "#32006"
@@ -82,6 +82,18 @@ msgstr ""
 
 msgctxt "#32033"
 msgid "crashlog"
+msgstr ""
+
+msgctxt "#32040"
+msgid "Do you want to view your %s or upload it to http://paste.kodi.tv/?"
+msgstr ""
+
+msgctxt "#32041"
+msgid "view"
+msgstr ""
+
+msgctxt "#32042"
+msgid "upload"
 msgstr ""
 
 msgctxt "#32501"

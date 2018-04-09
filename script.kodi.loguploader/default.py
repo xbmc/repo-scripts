@@ -18,7 +18,7 @@ LANGUAGE = ADDON.getLocalizedString
 
 socket.setdefaulttimeout(5)
 
-URL = 'http://paste.kodi.tv/'
+URL = 'https://paste.kodi.tv/'
 LOGPATH = xbmc.translatePath('special://logpath')
 LOGFILE = os.path.join(LOGPATH, 'kodi.log')
 OLDLOG = os.path.join(LOGPATH, 'kodi.old.log')
@@ -51,6 +51,20 @@ class QRCode(xbmcgui.WindowXMLDialog):
         if (controlId == self.okbutton):
             self.close()
 
+class LogView(xbmcgui.WindowXMLDialog):
+    def __init__(self, *args, **kwargs):
+        self.name = kwargs["name"]
+        self.content = kwargs["content"]
+
+    def onInit(self):
+        self.header = 501
+        self.textbox = 502
+        self.showdialog()
+
+    def showdialog(self):
+        self.getControl(self.header).setLabel(self.name)
+        self.getControl(self.textbox).setText(self.content)
+        self.setFocusId(503)
 
 class Main:
     def __init__(self):
@@ -72,11 +86,18 @@ class Main:
             succes, data = self.readLog(item[1])
             if succes:
                 content = self.cleanLog(data)
-                succes, data = self.postLog(content)
-                if succes:
-                    self.showResult(LANGUAGE(32006) % (name, data), data)
+                dialog = xbmcgui.Dialog()
+                confirm = dialog.yesno(ADDONNAME, LANGUAGE(32040) % name, nolabel=LANGUAGE(32041), yeslabel=LANGUAGE(32042))
+                if confirm:
+                    succes, data = self.postLog(content)
+                    if succes:
+                        self.showResult(LANGUAGE(32006) % (name, data), data)
+                    else:
+                        self.showResult('%s[CR]%s' % (error, data))
                 else:
-                    self.showResult('%s[CR]%s' % (error, data))
+                    lv = LogView( "script-loguploader-view.xml" , CWD, "default", name=name, content=content)
+                    lv.doModal()
+                    del lv
             else:
                 self.showResult('%s[CR]%s' % (error, data))
 
@@ -126,7 +147,7 @@ class Main:
         try:
             st = xbmcvfs.Stat(path)
             sz = st.st_size()
-            if sz > 400000:
+            if sz > 1000000:
                 log('file is too large')
                 return False, LANGUAGE(32005)
             lf = xbmcvfs.File(path)
