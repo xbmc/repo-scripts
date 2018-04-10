@@ -87,6 +87,7 @@ ListItem.Label
 ListItem.Icon
 ListItem.Art()
 ListItem.Episode
+ListItem.Season
 ListItem.Mpaa
 ListItem.Year
 ListItem.Genre
@@ -106,6 +107,7 @@ ListItem.Label
 ListItem.Icon
 ListItem.Art()
 ListItem.Episode
+ListItem.Season
 ListItem.TvShowTitle
 ListItem.Playcount
 ListItem.UserRating
@@ -119,11 +121,11 @@ ListItem.Label
 ListItem.Icon
 ListItem.Art()
 ListItem.Episode
+ListItem.Season
 ListItem.Plot
 ListItem.Rating
 ListItem.UserRating
 ListItem.Director
-ListItem.Season
 ListItem.Duration
 ListItem.TvShowTitle
 ListItem.Premiered
