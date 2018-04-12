@@ -73,11 +73,10 @@ class GUI(xbmcgui.WindowXML):
         json_response = json.loads(json_query)
         if json_response.has_key('result') and (json_response['result'] != None) and json_response['result'].has_key('favourites') and json_response['result']['favourites'] != None:
             for item in json_response['result']['favourites']:
-                print str(item)
                 if 'path' in item:
                     self.favourites.append(item['path'])
-                else:
-                    self.favourites.append(item['windowparameter'])      
+                elif 'windowparameter' in item:
+                    self.favourites.append(item['windowparameter'])
 
     def _reset_variables(self):
         self.focusset= 'false'
