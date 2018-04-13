@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.cu.lrclyrics" name="CU LRC Lyrics" version="5.4.7" provider-name="Taxigps, ronie">
+<addon id="script.cu.lrclyrics" name="CU LRC Lyrics" version="5.4.8" provider-name="Taxigps, ronie">
 	<requires>
 		<import addon="xbmc.python" version="2.25.0"/>
 		<import addon="script.module.chardet" version="2.2.1"/>
 		<import addon="script.module.beautifulsoup4" version="4.3.2"/>
+		<import addon="script.module.requests" version="2.18.4"/>
 	</requires>
 	<extension point="xbmc.python.lyrics" library="default.py"/>
 	<extension point="xbmc.service" library="default.py" start="login"/>
@@ -17,7 +18,7 @@
 		<summary lang="en_GB">CU LRC Lyrics</summary>
 		<summary lang="en_NZ">CU LRC Lyrics</summary>
 		<summary lang="en_US">CU LRC Lyrics</summary>
-		<summary lang="es_ES">CU LRC Letras</summary>
+		<summary lang="es_ES">CU LRC Lyrics</summary>
 		<summary lang="fr_FR">CU LRC Lyrics</summary>
 		<summary lang="fr_CA">Paroles CU LRC</summary>
 		<summary lang="gl_ES">Letras de CU LRC</summary>
@@ -48,7 +49,7 @@
 		<description lang="en_GB">CU LRC Lyrics is a lyrics script for Kodi. It supports regular as well as LRC Lyrics. The script can search synchronized/unsynchronized lyrics embedded, from file or by scrapers. It can read .lrc/.txt lyrics file saved at the same path by same file name with .mp3(or other type of music).</description>
 		<description lang="en_NZ">CU LRC Lyrics is a lyrics script for Kodi. It supports regular as well as LRC Lyrics. The script can search synchronised/unsynchronised lyrics embedded, from file or by scrapers. It can read .lrc/.txt lyrics file saved at the same path by same file name with .mp3(or other type of music).</description>
 		<description lang="en_US">CU LRC Lyrics is a lyrics script for Kodi. It supports regular as well as LRC Lyrics. The script can search synchronized/unsynchronized lyrics embedded, from file or by scrapers. It can read .lrc/.txt lyrics file saved at the same path by same file name with .mp3(or other type of music).</description>
-		<description lang="es_ES">Letras de CRI de CU es un script de letras para Kodi. El soporte es regular como el de Lyrics LRC. La secuencia de comandos puede buscar letras sincronizadas/de sincronizadas incrustadas, por archivo o por scrapers. Puede leer .lrc/.txt de archivo de letras guardado en la misma carpeta con el mismo nombre del archivo con. mp3 (u otro tipo de música).</description>
+		<description lang="es_ES">CU LRC Lyrics es un script de letras para Kodi. Es compatible tanto con letra regular como LRC Lyrics. El script puede buscar desde archivo o a través de scrapers letras incrustadas sincronizadas o no sincronizadas. Puede leer archivos .lrc/.txt guardados en la misma carpeta con el mismo nombre del archivo *.mp3 (u otro tipo de archivo de audio).</description>
 		<description lang="fr_FR">CU LRC Lyrics est un script pour gérer les paroles dans Kodi. Il supporte les formats de paroles habituels aussi bien que LRC. Le script peut chercher des paroles synchronisées/désynchronisées intégrées dans les fichier ou par collecteurs. Il peut lire les fichiers paroles .lrc/.txt stockés dans le même dossier et avec le même nom que le fichier .mp3 (ou autre type de format musical).</description>
 		<description lang="fr_CA">Paroles CU LRC est un script de paroles pour Kodi. Il prend en charge les paroles régulières et LRC. Le script peut rechercher des paroles synchronisées/désynchronisées intégrées, d'un fichier ou de récupérateurs. Il peut lire les fichiers de paroles .lrc/.txt enregistrés dans le même chemin et avec le me nom que le .mp3 (ou autres types de musique).</description>
 		<description lang="gl_ES">Letras CU LRC é un script de letras para Kodi. Soporta letras normais como as LRC. O script pode buscar letras sincronizadas/non sincronizadas incrustadas, ou buscar a partir dun ficheiro ou de scrapers. Pode ler letras de ficheiros .lrc/.txt gardados na mesma ruta do ficheiro .mp3 (ou outro tipo de música).</description>

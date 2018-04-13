@@ -160,7 +160,7 @@ class Song:
         match = regex.match(song.title)
         if match:
             song.title = song.title[4:]
-        if not song.artist and xbmc.getCondVisibility('Player.IsInternetStream'):
+        if not song.artist and (xbmc.getCondVisibility('Player.IsInternetStream') or xbmc.getCondVisibility('Pvr.IsPlayingRadio')):
             # We probably listen to a radio which usually set the song title as 'Artist - Title' (via ICY StreamTitle)
             song.analyze_safe = False
             sep = song.title.find('-')
