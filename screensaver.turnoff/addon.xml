@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="screensaver.turnoff" name="Turn Off" version="0.9.0" provider-name="Dag Wieers">
+  <extension point="xbmc.addon.metadata">
+    <platform>all</platform>
+    <summary lang="en_GB">Screensaver that turns your screen off to save power</summary>
+    <description lang="en_GB">The Turn Off screensaver turns your TV, projector or monitor off, like any old fashioned screensaver is intended to do.</description>
+    <source>http://github.com/dagwieers/plugin.screensaver.off</source>
+    <license>GPL2+</license>
+    <email>dag@wieers.com</email>
+  </extension>
+  <extension point="xbmc.ui.screensaver" library="screensaver.py"/>
+  <requires><import addon="xbmc.python" version="2.25.0"/></requires>
+</addon>
