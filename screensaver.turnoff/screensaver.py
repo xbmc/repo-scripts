@@ -14,12 +14,12 @@ def log_notice(msg='', level=xbmc.LOGNOTICE):
     xbmc.log(msg='[%s] %s' % (addon_name, msg), level=level)
 
 
-def popup(heading='', message='', delay=10000, icon=''):
+def popup(heading='', msg='', delay=10000, icon=''):
     if not heading:
         heading = '%s screensaver failed' % addon_name
     if not icon:
         icon = addon_icon
-    xbmcgui.Dialog().notification(heading, message, icon, delay)
+    xbmcgui.Dialog().notification(heading, msg, icon, delay)
 
 
 def run_builtin(builtin):
