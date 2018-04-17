@@ -1,16 +1,16 @@
 # XBMC Media Center language file
 # Addon Name: traduttorianonimi.it
 # Addon id: service.subtitles.traduttorianonimi
-# Addon version: 2.0.2
+# Addon version: 2.2.1
 # Addon Provider: shelladdicted
 msgid ""
 msgstr ""
-"Project-Id-Version: XBMC-Addons\n"
-"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
-"POT-Creation-Date: 2016-05-22 20:45+0000\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE\n"
+"Project-Id-Version: service.subtitles.traduttorianonimi\n"
+"Report-Msgid-Bugs-To: shelladdicted@gmail.com\n"
+"POT-Creation-Date: 2016-05-22 20:45+0200\n"
+"PO-Revision-Date: 2018-04-17 19:30+0200\n"
+"Last-Translator: ShellAddicted <shelladdicted@gmail.com>\n"
+"Language-Team: English\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
