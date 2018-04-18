@@ -2,7 +2,7 @@
 #
 #  TraduttoriAnonimi.py
 #  
-#  Copyright 2017 ShellAddicted <shelladdicted@gmail.com<>
+#  Copyright 2018 ShellAddicted <shelladdicted@gmail.com>
 #  
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -17,18 +17,17 @@
 #  along with this program; if not, write to the Free Software
 #  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 #  MA 02110-1301, USA.
-#  
-#
 
 __author__ = "ShellAddicted"
-__copyright__ = "Copyright 2017, ShellAddicted"
+__copyright__ = "Copyright 2018, ShellAddicted"
 __license__ = "GPL"
-__version__ = "1.0.1"
+__version__ = "1.1.0"
 __maintainer__ = "ShellAddicted"
 __email__ = "shelladdicted@gmail.com"
 __status__ = "Development"
 
 import re
+import logging
 
 try:
     import urlparse
@@ -43,74 +42,35 @@ except NameError:
 from bs4 import BeautifulSoup
 import requests
 
-import logging
-
 class TraduttoriAnonimi:
 
-    def __init__(self, baseURL="http://traduttorianonimi.it", showsListPath="elenco-serie/",headers={"user-agent": "Kodi-SubtitleService-TraduttoriAnonimi"}):
-        self._initLogger();
-
+    def __init__(self, baseURL="http://traduttorianonimi.it", showsListPath="elenco-serie/?S={0}", headers={"user-agent": "Kodi-SubtitleService-TraduttoriAnonimi"}):
         self._baseURL = baseURL
-        self.log.debug("baseURL=> {0}".format(self._baseURL))
+        self._showsListURL = urlparse.urljoin(baseURL, showsListPath)
+        self._headers = headers
+        
+        self._episodeRegex = re.compile("(?P<tvshowname>.+)(?:(?:\s|s|\.)|\.s|\.so)(?P<season>\d+)(?:x|e|\.x|\.e)(?P<episode>\d+)", re.IGNORECASE)
 
-        self._showsListPath = showsListPath
-        self.log.debug("showsListPath=> {0}".format(self._showsListPath))
+        self._log = logging.getLogger("TraduttoriAnonimi")
 
-        self._showsListURL = urlparse.urljoin(self._baseURL, self._showsListPath)
-        self.log.debug("showsListURL=> {0}".format(self._showsListURL))
-
-        self._headers=headers
-
-        self._showsList = {}
-        self.UpdateShowsList()
-
-    def _initLogger(self):
-        self.log = logging.getLogger("TraduttoriAnonimi")
-        self.log.setLevel(logging.DEBUG)
-        style = logging.Formatter("{%(levelname)s} %(name)s.%(funcName)s() -->> %(message)s")
-        consoleHandler = logging.StreamHandler()
-        consoleHandler.setFormatter(style)
-        self.log.addHandler(consoleHandler)
-
-    def _retriveURL(self,url, headers=None):
-        """
-        return a requests response object of a GET Request
-        :param url: url to the resource
-        :param headers: headers of the request
-        :return: requests.models.Response or None
-        """
-        if headers is None:
-            headers=self._headers
-
+    def _retriveURL(self, url):
         try:
-            self.log.debug("GET Request => HEADERS={0} ; URL={1}".format(headers, url))
-            q = requests.get(url, headers=headers)
-            self.log.debug("GET Request <= Response HEADERS={0}".format(q.headers))
-            return q
-        except:
+            return requests.get(url, headers = self._headers)
+        except Exception:
+            self._log.error("request failed.", exc_info=True)
             return None
 
-    def _searchInDict(self,token, where):
+    def _searchInDict(self, token, where):
+        results = []
         showNameRegex = re.compile(self._magicUnicode(token), re.IGNORECASE)
-        result = []
-
-        for x, y in where.items():
-            if showNameRegex.search(self._magicUnicode(x)):
-                result.append({"Name": x, "URL": y})
-
-        if len(result) == 0:
-            result = None
-
-        return result
+        for name, url in where.items():
+            if showNameRegex.search(self._magicUnicode(name)):
+                results.append({"Name": name, "URL": url})
+        return results
 
     @staticmethod
     def _magicUnicode(data):
-        """
-        Return Unicode (utf-8) text encoded
-        :param data: data (text) to encode
-        :return:
-        """
-        # unicode is not defined in python3.x
+        # unicode is not defined in python3, use bytes
         if type(data) != bytes:
             return str(data).encode("utf-8")
         else:
@@ -118,78 +78,60 @@ class TraduttoriAnonimi:
 
     @staticmethod
     def _magicInt(x):
-        """
-        Cast to integer (if possible) without raise an exception (that is ignored)
-        :param x: value to Cast
-        :return: int (if possible) else exactly the input (x)
-        """
         try:
             return int(x)
         except (TypeError, ValueError):
             return x
 
-    def UpdateShowsList(self):
-        self.log.info("Grabbing Shows list from Website.")
-        url = self._showsListURL
+    def getShows(self, firstLetter="*"):
+        # Get Shows as a dict {showName: showURL}
+        shows = {}
 
-        self.log.debug("self._showsList re-initialized")
-        self._showsList = {}
-
-        for attempt in xrange(100):
-            r = self._retriveURL(url)
-            self.log.debug("Attempt #{0}".format(attempt))
-            if r is not None:
-                html = r.content
-                parser = BeautifulSoup(html, "html.parser")
-
-                for showTag in parser.findAll("a", {"href": re.compile("serie\?c=\d+", re.IGNORECASE)}):
-                    showName = self._magicUnicode(showTag.find("img").attrs["title"])
-                    self._showsList[showName] = showTag.attrs["href"]
-
+        for fl in "abcdefghijklmnopqrstuvwxyz" if firstLetter == "*" else firstLetter[0]:
+            for attempt in xrange(5): # Max 5 attempts
+                # Shows are alphabetically ordered, so go directly to the right position
+                # Sample URL: http://www.traduttorianonimi.it/elenco-serie/?S=Tt  where 'Tt' (T) is the first letter of show title [lower+upper(case)]
+                
+                self._log.debug("Loading shows... Attempt #{0}".format(attempt))
+                r = self._retriveURL(self._showsListURL.format(fl.upper() + fl.lower()))
                 try:
-                    tmp = parser.find("div", {"class": "pagination"}).find("a", {"class": "next"})
-                except AttributeError:
-                    tmp = None
+                    if r is not None:
+                        parser = BeautifulSoup(r.content, "html.parser")
+                        for showTag in parser.findAll("a", {"href": re.compile("serie\?c=\d+", re.IGNORECASE)}):
+                            showTitle = self._magicUnicode(showTag.find("img").attrs["title"])
+                            shows[showTitle] = showTag.attrs["href"]
+                        self._log.info("Shows successfully loaded.")
+                        break
+                    else:
+                        self._log.error("Invalid response, retry.")
 
-                if tmp is not None:
-                    url = urlparse.urljoin(self._baseURL, tmp.attrs["href"])
-                    self.log.debug("Next Page Found. Following => {0}".format(url))
-                else:
-                    self.log.debug("Next Page Not Found. Exiting from loop")
-                    break
-            else:
-                self.log.error("response is None. Exiting from loop")
-                break
-        return self._showsList
-
-    def searchTvShow(self,showName):
-        return self._searchInDict(showName,self._showsList)
+                except Exception:
+                    self._log.error("loading failed.", exc_info=True)  # Log the error and continue
+        return shows
 
     def getSubtitles(self, showName, season, episode):
-        showName = self._magicUnicode(showName)
-        self.log.debug("Searching "+str(showName)+"  s"+str(season)+" e"+str(episode))
-        showsResults = self._searchInDict(showName, self._showsList)
-        episodeRegex = re.compile(
-            "(?P<tvshowname>.+)(?:(?:\s|s|\.)|\.s|\.so)(?P<season>\d+)(?:x|e|\.x|\.e)(?P<episode>\d+)", re.IGNORECASE)
-        if showsResults is None:
-            self.log.info("No showsResults")
+        shows = self.getShows(showName[0])
+        showMatches = self._searchInDict(showName, shows) # Search for the correct show
+        if showMatches is []:
+            self._log.error("Show not found :-(")
             return []
+
         subtitlesResults = []
-        for show in showsResults:
+        for show in showMatches:
             r = self._retriveURL(show["URL"])
             if r is not None:
-                html = r.content
-                parser = BeautifulSoup(html, "html.parser")
-
-                for ep in parser.findAll("td", {"class": "dwn"}):
-                    subs=ep.findAll("a")
-                    if subs is not None:
-                        for tmp in subs:
-                            self.log.debug("Analyzing => {0}".format(tmp))
-                            if tmp is not None and "title" in tmp.attrs and "href" in tmp.attrs:
-                                x = episodeRegex.search(tmp.attrs["title"])
-                                self.log.debug("Regex Groups=> {0}".format(x.groups()))
-                                if self._magicInt(x.group("season")) == season and self._magicInt(x.group("episode")) == episode:
-                                    self.log.info("Subtitle Found")
-                                    subtitlesResults.append({"Name": tmp.attrs["title"], "URL": tmp.attrs["href"]})
+                try:
+                    parser = BeautifulSoup(r.content, "html.parser")
+                    for ep in parser.findAll("td", {"class": "dwn"}):
+                        subs = ep.findAll("a")
+                        if subs is not None:
+                            for tmp in subs:
+                                if tmp is not None and "title" in tmp.attrs and "href" in tmp.attrs:
+                                    x = self._episodeRegex.search(tmp.attrs["title"])
+                                    if self._magicInt(x.group("season")) == season and self._magicInt(x.group("episode")) == episode:
+                                        subtitlesResults.append({"Name": tmp.attrs["title"], "URL": tmp.attrs["href"]})
+                except Exception:
+                    self._log.error("parsing failed", exc_info=True)
+            else:
+                self._log.error("empty response.")
         return subtitlesResults
