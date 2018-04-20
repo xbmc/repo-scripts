@@ -26,6 +26,7 @@ File-like web-based input/output console
 """
 
 from __future__ import absolute_import, unicode_literals
+import os
 import sys
 import weakref
 from threading import Thread, Event, RLock
@@ -178,10 +179,10 @@ class WebConsole(object):
             frame_data = self._debugger.get_current_frame_data()
         except (IOError, AttributeError):
             frame_data = {
+                'dirname': '',
                 'filename': '',
                 'file_listing': 'No data available',
                 'current_line': -1,
-                'total_lines': -1,
                 'breakpoints': [],
                 'globals': 'No data available',
                 'locals': 'No data available'
