@@ -69,26 +69,6 @@ class WebPdb(Pdb):
         Pdb.__init__(self, stdin=self.console, stdout=self.console)
         WebPdb.active_instance = self
 
-    def do_clear(self, arg):
-        """cl(ear) filename:lineno\ncl(ear) [bpnumber [bpnumber...]]
-        With a space separated list of breakpoint numbers, clear
-        those breakpoints.  Without argument, clear all breaks (but
-        first ask confirmation).  With a filename:lineno argument,
-        clear all breaks at that line in that file.
-        """
-        # The method is overridden for systems where cwd is at different place
-        # than the main script, e.g. Kodi mediacenter built-in Python.
-        orig_cwd = os.getcwd()
-        try:
-            os.chdir(os.path.dirname(
-                os.path.abspath(self.curframe.f_code.co_filename))
-            )
-            Pdb.do_clear(self, arg)
-        finally:
-            os.chdir(orig_cwd)
-
-    do_cl = do_clear
-
     def do_quit(self, arg):
         """
         quit || exit || q
@@ -130,10 +110,10 @@ class WebPdb(Pdb):
         if sys.version_info[0] == 2:
             lines = [line.decode('utf-8') for line in lines]
         return {
+            'dirname': os.path.dirname(os.path.abspath(filename)) + os.path.sep,
             'filename': os.path.basename(filename),
             'file_listing': ''.join(lines),
             'current_line': self.curframe.f_lineno,
-            'total_lines': len(lines),
             'breakpoints': self.get_file_breaks(filename),
             'globals': self.get_globals(),
             'locals': self.get_locals()
@@ -297,7 +277,9 @@ def catch_post_mortem(host='', port=5555):
     try:
         yield
     except:
-        xbmc.log('Web-PDB: unhandled exception detected:\n{0}'.format(traceback.format_exc()), xbmc.LOGERROR)
+        xbmc.log('Web-PDB: unhandled exception detected:\n{0}'.format(
+            traceback.format_exc()), xbmc.LOGERROR
+        )
         xbmc.log('Web-PDB: starting post-mortem debugging...', xbmc.LOGERROR)
         Dialog().notification('Web-PDB',
                               'Addon error! Starting post-mortem debugging.',
