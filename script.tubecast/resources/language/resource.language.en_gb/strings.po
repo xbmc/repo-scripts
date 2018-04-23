@@ -68,3 +68,7 @@ msgstr ""
 msgctxt "#32012"
 msgid "Debug"
 msgstr ""
+
+msgctxt "#32013"
+msgid "Verify SSL connections"
+msgstr ""

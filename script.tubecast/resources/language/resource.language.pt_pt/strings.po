@@ -68,3 +68,7 @@ msgstr "Depuração de comandos do youtube"
 msgctxt "#32012"
 msgid "Debug"
 msgstr "Depuração"
+
+msgctxt "#32013"
+msgid "Verify SSL connections"
+msgstr "Verificar ligações SSL"

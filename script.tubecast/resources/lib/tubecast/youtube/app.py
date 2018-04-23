@@ -110,14 +110,20 @@ class YoutubeCastV1(object):
         return self.pairing_code
 
     def _generate_screen_id(self):
-        screen_id = self.session.get("{}/api/lounge/pairing/generate_screen_id".format(self.base_url))
+        screen_id = self.session.get(
+            "{}/api/lounge/pairing/generate_screen_id".format(self.base_url),
+            verify=get_setting_as_bool("verify-ssl")
+        )
         self.screen_id = screen_id.text
         logger.debug("Screen ID is: {}".format(self.screen_id))
         return self.screen_id
 
     def _get_lounge_token_batch(self):
-        token_info = self.session.post("{}/api/lounge/pairing/get_lounge_token_batch".format(self.base_url),
-                                       data={"screen_ids": self.screen_id}).json()
+        token_info = self.session.post(
+            "{}/api/lounge/pairing/get_lounge_token_batch".format(self.base_url),
+            data={"screen_ids": self.screen_id},
+            verify=get_setting_as_bool("verify-ssl")
+        ).json()
         self.lounge_token = token_info["screens"][0]["loungeToken"]
         logger.debug("Lounge Token: {}".format(self.lounge_token))
         self.bind_vals["loungeIdToken"] = self.lounge_token
@@ -127,26 +133,40 @@ class YoutubeCastV1(object):
         self.ofs += 1
         bind_vals = self.bind_vals
         bind_vals["CVER"] = "1"
-        bind_info = self.session.post("{}/api/lounge/bc/bind?{}".format(self.base_url, urllib.urlencode(bind_vals)), data={"count": "0"}).text
+        bind_info = self.session.post(
+            "{}/api/lounge/bc/bind?{}".format(self.base_url, urllib.urlencode(bind_vals)),
+            data={"count": "0"},
+            verify=get_setting_as_bool("verify-ssl")
+        ).text
         for line in bind_info.split("\n"):
             self.handle_cmd(str(line))
 
     def _register_pairing_code(self):
-        r = self.session.post("{}/api/lounge/pairing/register_pairing_code".format(self.base_url),
-                              data={"access_type": "permanent",
-                                    "app": self.default_screen_app,
-                                    "pairing_code": self.pairing_code,
-                                    "screen_id": self.screen_id,
-                                    "screen_name": self.default_screen_name})
+        r = self.session.post(
+            "{}/api/lounge/pairing/register_pairing_code".format(self.base_url),
+            data={
+                "access_type": "permanent",
+                "app": self.default_screen_app,
+                "pairing_code": self.pairing_code,
+                "screen_id": self.screen_id,
+                "screen_name": self.default_screen_name
+                },
+            verify=get_setting_as_bool("verify-ssl")
+        )
         logger.debug("Registered pairing code status code: {}".format(r.status_code))
 
     def _get_pairing_code(self):
-        r = self.session.post("{}/api/lounge/pairing/get_pairing_code?ctx=pair".format(self.base_url),
-                              data={"access_type": "permanent",
-                                    "app": self.default_screen_app,
-                                    "lounge_token": self.lounge_token,
-                                    "screen_id": self.screen_id,
-                                    "screen_name": self.default_screen_name})
+        r = self.session.post(
+            "{}/api/lounge/pairing/get_pairing_code?ctx=pair".format(self.base_url),
+            data={
+                "access_type": "permanent",
+                "app": self.default_screen_app,
+                "lounge_token": self.lounge_token,
+                "screen_id": self.screen_id,
+                "screen_name": self.default_screen_name
+            },
+            verify=get_setting_as_bool("verify-ssl")
+        )
         return "{}-{}-{}-{}".format(r.text[0:3], r.text[3:6], r.text[6:9], r.text[9:12])
 
     def handle_cmd(self, cmd):
@@ -330,10 +350,20 @@ class YoutubeCastV1(object):
 
         bind_vals = self.bind_vals
         bind_vals["RID"] = "1337"
-        self.session.post("{}/api/lounge/bc/bind?{}".format(self.base_url, urllib.urlencode(bind_vals)), data=post_data)
+        self.session.post(
+            "{}/api/lounge/bc/bind?{}".format(
+                self.base_url,
+                urllib.urlencode(bind_vals)
+            ),
+            data=post_data,
+            verify=get_setting_as_bool("verify-ssl")
+        )
 
     def _get_list_info(self, list_id):
-        r = self.session.get("{}/list_ajax?style=json&action_get_list=1&list={}".format(self.base_url, list_id))
+        r = self.session.get(
+            "{}/list_ajax?style=json&action_get_list=1&list={}".format(self.base_url, list_id),
+            verify=get_setting_as_bool("verify-ssl")
+        )
         return r.json()["video"]
 
     def __player_thread(self):
