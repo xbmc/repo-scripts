@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <settings>
     <category label="30000">
+        <setting id="log_title" type="text" label="30011" default="" />
         <setting id="log_location" type="folder" label="30006" default="" />
         <setting id="show_compact" type="bool" label="30004" default="false" />
         <setting id="transparency" type="slider" label="30005" default="70" range="10,10,100" visible="eq(-1,true)" enable="eq(-1,true)" option="int" />
         <setting id="temp_scale" type="labelenum" label="30002" values="Celcius|Farenheit" default="0" />
         <setting id="update_delay" type ="labelenum" label="30003" values="10|20|30|40|50|60|90|120|180|240" default="30" />
-        <setting id="logging" type="bool" label="32209" default="false" />
     </category>
     <category label="30010">
-        <setting id="log_title" type="text" label="30011" default="" />
         <setting id="use_log2" type="bool" label="30012" default="false" />
         <setting id="log_title2" type="text" label="30020" enable="eq(-1,true)" default="" />
         <setting id="log_location2" type="folder" enable="eq(-2,true)" label="30021" default="" />
@@ -22,5 +21,6 @@
         <setting id="use_external_script" type="bool" label="30034" default="false" />
         <setting id="external_script" type="file" label="30032" visible="eq(-1,true)" enable="eq(-1,true)" default="" />
         <setting id="external_timeout" type="number" label="30033" visible="eq(-2,true)" enable="eq(-2,true)" default="10" />
+        <setting id="logging" type="bool" label="32209" default="false" />
     </category>
 </settings>

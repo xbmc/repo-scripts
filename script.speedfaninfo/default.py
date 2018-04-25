@@ -278,8 +278,11 @@ class Main( xbmcgui.WindowXMLDialog ):
             read_str = f.read( read_size )
             lw.log( [read_str] )
             # Remove newline at the end
-            if read_str[offset - 1] == '\n':
-                read_str = read_str[0:-1]
+            try:
+                if read_str[offset - 1] == '\n':
+                    read_str = read_str[0:-1]
+            except:
+                pass
             lines = read_str.split('\n')
             if len( lines ) > 1:  # Got a complete line
                 if s_pos == 2:
