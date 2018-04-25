@@ -1,4 +1,4 @@
-# v.0.4.0
+# v.0.4.3
 
 import shutil, time
 try:
@@ -99,7 +99,7 @@ def moveFile( src, dst ):
     if _exists( src ):
         try:
             log_lines.append( 'moving %s to %s' % (src, dst) )
-            _rename( filename, newfilename )
+            _rename( src, dst )
         except IOError:
             log_lines.append( 'unable to move %s' % src )
             success = False
@@ -121,7 +121,8 @@ def moveFile( src, dst ):
 
 def popenWithTimeout( command, timeout ):
     log_lines = []
-    if hasSubProcess:
+    log_lines.append( 'running command ' + command)
+    if hasSubprocess:
         try:
             p = subprocess.Popen( command, stdout=subprocess.PIPE, stderr=subprocess.PIPE )
         except OSError:
@@ -139,6 +140,7 @@ def popenWithTimeout( command, timeout ):
         log_lines.append( 'script took too long to run, terminating' )
         return False, log_lines
     else:
+        log_lines.append( 'running command with os.system' )
         os.system( command )
         return True, log_lines
 
@@ -170,18 +172,18 @@ def renameFile ( src, dst ):
     return moveFile( src, dst )
 
 
-def writeFile( data, filename ):
+def writeFile( data, filename, wtype='wb' ):
     log_lines = []
     if type(data).__name__=='unicode':
         data = data.encode('utf-8')
     try:
-        thefile = xbmcvfs.File( filename, 'wb' )
+        thefile = xbmcvfs.File( filename, wtype )
     except:
-        thefile = open( filename, 'wb' )
+        thefile = open( filename, wtype )
     try:
         thefile.write( data )
         thefile.close()
-    except IOError, e:
+    except IOError as e:
         log_lines.append( 'unable to write data to ' + filename )
         log_lines.append( e )
         return False, log_lines

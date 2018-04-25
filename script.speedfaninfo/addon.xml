@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.speedfaninfo" name="SpeedFan Information Display" version="0.7.6" provider-name="pkscout">
+<addon id="script.speedfaninfo" name="SpeedFan Information Display" version="0.7.8" provider-name="pkscout">
 	<requires>
 		<import addon="xbmc.python" version="2.19.0"/>
 		<import addon="xbmc.addon" version="14.0.0"/>
@@ -9,8 +9,9 @@
 	</extension>
 	<extension point="xbmc.addon.metadata">
 		<news>
-v.0.7.6
-- updated common libraries (including fix for compatibility with Windows Store version of Kodi)
+v.0.7.8
+- fix for problem with common library moving files
+- changes for better compatibility when running script on non-Windows machine
 		</news>
 		<summary lang="af">Vertoon inligting van jou SpeedFan Aantekenings.</summary>
 		<summary lang="be">Display information from your SpeedFan log.</summary>
