@@ -17,8 +17,14 @@
 
 import re
 import sys
-from urlparse import urlsplit, parse_qs
-from urllib import urlencode
+try:
+    from urlparse import urlsplit, parse_qs
+except ImportError:
+    from urllib.parse import urlsplit, parse_qs
+try:
+    from urllib import urlencode
+except ImportError:
+    from urllib.parse import urlencode
 
 try:
     import xbmc
@@ -63,7 +69,7 @@ class Plugin(object):
         if path.startswith(self.base_url):
             path = path.split(self.base_url, 1)[1]
 
-        for view_fun, rules in self._rules.iteritems():
+        for view_fun, rules in iter(self._rules.items()):
             for rule in rules:
                 if rule.match(path) is not None:
                     return view_fun
@@ -104,7 +110,7 @@ class Plugin(object):
 
     def run(self, argv=sys.argv):
         if len(argv) > 2:
-            self.args = parse_qs(argv[2].lstrip(b'?'))
+            self.args = parse_qs(argv[2].lstrip('?'))
         path = urlsplit(argv[0]).path or '/'
         self._dispatch(path)
 
@@ -112,7 +118,7 @@ class Plugin(object):
         self._dispatch(path)
 
     def _dispatch(self, path):
-        for view_func, rules in self._rules.iteritems():
+        for view_func, rules in iter(self._rules.items()):
             for rule in rules:
                 kwargs = rule.match(path)
                 if kwargs is not None:
