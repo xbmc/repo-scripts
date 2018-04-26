@@ -4,6 +4,7 @@ import os
 import sys
 import xbmc
 import urllib
+import urllib2
 import xbmcvfs
 import xbmcaddon
 import xbmcgui
@@ -236,8 +237,8 @@ def download(id, url, filename, search_string=""):
     xbmcvfs.mkdirs(__temp__)
 
     filename = os.path.join(__temp__, filename + ".zip")
-
-    sub = urllib.urlopen(url).read()
+    req = urllib2.Request(url, headers={"User-Agent": "Kodi-Addon"})
+    sub = urllib2.urlopen(req).read()
     with open(filename, "wb") as subFile:
         subFile.write(sub)
     subFile.close()
@@ -360,13 +361,3 @@ elif params['action'] == 'download':
         )
 
 xbmcplugin.endOfDirectory(int(sys.argv[1]))  # send end of directory to XBMC
-
-
-
-
-
-
-
-
-
-

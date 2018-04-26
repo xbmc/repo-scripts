@@ -11,7 +11,8 @@ def log(module, msg):
 def geturl(url):
     log(__name__, "Getting url: %s" % url)
     try:
-        response = urllib2.urlopen(url)
+        req = urllib2.Request(url, headers={"User-Agent": "Kodi-Addon"})
+        response = urllib2.urlopen(req)
         content = response.read()
         #Fix non-unicode characters in movie titles
         #strip_unicode = re.compile("([^-_a-zA-Z0-9!@#%&=,/'\";:~`\$\^\*\(\)\+\[\]\.\{\}\|\?<>\\]+|[^\s]+)")
