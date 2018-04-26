@@ -1,3 +1,7 @@
+v.2.1.2
+- fix for common library issue with moving a file
+- fix for crash when trying to trim cache folder
+
 v.2.1.1
 - added option to download artist thumb from theaudiodb.com
 - added option to store service information files in local artist path

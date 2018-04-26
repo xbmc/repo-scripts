@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.artistslideshow" name="Artist Slideshow" version="2.1.1" provider-name="pkscout,ronie">
+<addon id="script.artistslideshow" name="Artist Slideshow" version="2.1.2" provider-name="pkscout,ronie">
 	<requires>
 		<import addon="xbmc.python" version="2.19.0"/>
 		<import addon="xbmc.addon" version="14.0.0"/>
@@ -11,13 +11,9 @@
 	</extension>
 	<extension point="xbmc.addon.metadata">
 		<news>
-v.2.1.1
-- added option to download artist thumb from theaudiodb.com
-- added option to store service information files in local artist path
-- change to cache timing including decreased cache time if donating to image services
-- rearranged settings
-- fixes to exception handling syntax to be consistent with Python3
-- fixes for compatibility with Windows Store version of Kodi
+v.2.1.2
+- fix for common library issue with moving a file
+- fix for crash when trying to trim cache folder
 		</news>
 		<summary lang="ar">حمل المزيد من الصور والمعلومات عن الفنان الذى يُغنِى حالياً</summary>
 		<summary lang="be">Download images and additional info of the currently playing artist</summary>
