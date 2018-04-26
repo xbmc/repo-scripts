@@ -22,10 +22,6 @@ import json, collections, utils, itertools, threading
 import xbmc, xbmcgui, xbmcplugin, xbmcvfs, xbmcaddon
 
 class Player(xbmc.Player):
-    def __init__(self, *args, **kwargs):
-        pass
-        
-         
     def onPlayBackStarted(self):
         utils.log('onPlayBackStarted')
         self.uEPG.currentChannel = self.uEPG.newChannel
@@ -54,13 +50,10 @@ class BackgroundWindow(xbmcgui.WindowXML):
         utils.log('BackgroundWindow, onAction ' + str(action))
         self.uEPG.playSFX(action) 
         lastaction = time.time() - self.uEPG.lastActTime
-        if action in utils.ACTION_PREVIOUS_MENU:
-            self.uEPG.toggleFullscreen()
+        if action in utils.ACTION_PREVIOUS_MENU: self.uEPG.toggleFullscreen()
         else:
-            if action in utils.ACTION_MOVE_DOWN:
-                self.uEPG.GoDown()
-            elif action in utils.ACTION_MOVE_UP:
-                self.uEPG.GoUp()
+            if action in utils.ACTION_MOVE_DOWN: self.uEPG.GoDown()
+            elif action in utils.ACTION_MOVE_UP: self.uEPG.GoUp()
 
                 
 class uEPG(xbmcgui.WindowXML):
@@ -115,14 +108,11 @@ class uEPG(xbmcgui.WindowXML):
             self.clockMode      = int(utils.REAL_SETTINGS.getSetting("ClockMode"))
         
             self.channelButtons = [None] * self.rowCount
-            for i in range(self.rowCount):
-                self.channelButtons[i] = []
-            
+            for i in range(self.rowCount): self.channelButtons[i] = []
             try:
                 self.removeControl(self.fadePast)
                 self.removeControl(self.currentTimeBar)
-            except:
-                pass
+            except: pass
                 
             self.focusChannel   = self.getControl(33009)
             self.currentHighLT  = self.getControl(33010)
@@ -231,8 +221,7 @@ class uEPG(xbmcgui.WindowXML):
                 st = datetime.datetime.fromtimestamp(float(startTime)).strftime("%H:%M")
                 et = datetime.datetime.fromtimestamp(float(endTime)).strftime("%H:%M")
             utils.setProperty("Time",'%s - %s' % (st, et))
-        except Exception as e:
-            utils.clearProperty('Time')
+        except Exception as e: utils.clearProperty('Time')
 
             
     def setShowInfo(self):
@@ -263,7 +252,6 @@ class uEPG(xbmcgui.WindowXML):
         self.contextLST = self.getContextList(newchan, plpos)
         self.newChannel = newchan
         self.setPlayingTime(startTime, duration)
-        
         self.getControl(40000).reset()
         self.getControl(40000).addItem(self.listItem)
         utils.log('setShowInfo, pos = ' + str(plpos))
@@ -274,10 +262,8 @@ class uEPG(xbmcgui.WindowXML):
         self.getControl(33005).setLabel(now.strftime(self.timeFormat))
         delta = datetime.timedelta(minutes=30)
         for i in range(self.timeCount):
-            if self.clockMode == 0:
-                self.getControl(33101 + i).setLabel(now.strftime("%I:%M%p").lower())
-            else:
-                self.getControl(33101 + i).setLabel(now.strftime("%H:%M"))
+            if self.clockMode == 0: self.getControl(33101 + i).setLabel(now.strftime("%I:%M%p").lower())
+            else: self.getControl(33101 + i).setLabel(now.strftime("%H:%M"))
             now = now + delta
         utils.log('setTimeLabels return')
 
@@ -327,8 +313,7 @@ class uEPG(xbmcgui.WindowXML):
             
             if curchannel == self.currentChannel:
                 utils.log('setChannelButtons, current playing channel row')
-                if xbmc.Player().isPlayingVideo():
-                    self.currentHighLT.setVisible(True)
+                if xbmc.Player().isPlayingVideo(): self.currentHighLT.setVisible(True)
                 chx , chy  = self.getControl(33611 + i).getPosition()
                 chpx, chpy = self.currentHighLT.getPosition()
                 self.currentHighLT.setPosition(chpx, chy)
@@ -348,10 +333,8 @@ class uEPG(xbmcgui.WindowXML):
                 self.currentTimeBar.setPosition(basex + basew - timew, timey)
 
         now = datetime.datetime.now()
-        if self.clockMode == 0:
-            timeex = now.strftime("%I:%M%p").lower()
-        else:
-            timeex = now.strftime("%H:%M")
+        if self.clockMode == 0: timeex = now.strftime("%I:%M%p").lower()
+        else: timeex = now.strftime("%H:%M")
         self.currentTime.setLabel(timeex)
         
         TimeTX, TimeTY = self.currentTime.getPosition()
@@ -362,7 +345,6 @@ class uEPG(xbmcgui.WindowXML):
         FFadeX, FFadeY = self.fadeFuture.getPosition()
         self.fadeFuture.setPosition(LTimeX, PFadeY)
         self.fadeFuture.setWidth(((basew - basex) - (timew / 2)) + TimeBX)
-
         TimeBW     = int(self.currentTime.getWidth())
         TimeButton = range(LTimeX - int(round(TimeBW//2)),LTimeX + int(round(TimeBW//2)))
         if LTimeX < self.TimeXYW['Time1X']:
@@ -387,8 +369,7 @@ class uEPG(xbmcgui.WindowXML):
         myadds.append(self.currentTimeBar)
             
         if TimeTX == -1800:
-            for i in range(self.timeCount):
-                self.getControl(33101 + i).setVisible(True)     
+            for i in range(self.timeCount): self.getControl(33101 + i).setVisible(True)     
         else:
             for i in range(self.timeCount):
                 self.getControl(33101 + i).setVisible(True)
@@ -396,19 +377,13 @@ class uEPG(xbmcgui.WindowXML):
                     if pos in TimeButton:
                         self.getControl(33101 + i).setVisible(False)
                         break
-        try:
-            self.removeControls(self.toRemove)
+        try: self.removeControls(self.toRemove)
         except:
             for cntrl in self.toRemove:
-                try:
-                    self.removeControl(cntrl)
-                except:
-                    pass
-        try:
-            self.addControls(myadds)
-        except:
-            utils.log('setChannelButtons, addControls busy')
-            
+                try: self.removeControl(cntrl)
+                except: pass
+        try: self.addControls(myadds)
+        except: utils.log('setChannelButtons, addControls busy')
         self.toRemove = []
         utils.log('setChannelButtons return')
 
@@ -479,13 +454,9 @@ class uEPG(xbmcgui.WindowXML):
 
     def fixPlaylistIndex(self, channel, index):
         size = self.channelLST.channels[channel - 1].listSize
-        if size == 0:
-            return index
-        while index >= size:
-            index -= size
-
-        while index < 0:
-            index += size
+        if size == 0: return index
+        while index >= size: index -= size
+        while index < 0: index += size
         return index
 
     
@@ -493,10 +464,8 @@ class uEPG(xbmcgui.WindowXML):
         while channel < 1 or channel > self.channelLST.maxChannels:
             if channel < 1: channel = self.channelLST.maxChannels + channel
             if channel > self.channelLST.maxChannels: channel -= self.channelLST.maxChannels
-        if increasing:
-            direction = 1
-        else:
-            direction = -1
+        if increasing: direction = 1
+        else: direction = -1
         return channel
         
         
@@ -543,7 +512,6 @@ class uEPG(xbmcgui.WindowXML):
             basew = self.getControl(33611 + row).getWidth()
             buttonFocus   = os.path.join(self.channelLST.mediaFolder,utils.BUTTON_FOCUS)
             buttonNoFocus = os.path.join(self.channelLST.mediaFolder,utils.EPGGENRE_LOC,'COLOR_ButtonNoFocus.png')
-            
             self.toRemove.extend(self.channelButtons[row])
             del self.channelButtons[row][:]
             
@@ -558,32 +526,23 @@ class uEPG(xbmcgui.WindowXML):
                     xpos       = int(basex + (totaltime * (basew / self.epgButtonwidth)))
                     tmpdur     = self.getItemDuration(curchannel, playlistpos)
                     shouldskip = False
-                    
                     if reftime < starttime:
                         tmpdur -= starttime - reftime
                         reftime = starttime
-
-                        if tmpdur < 60 * 3:
-                            shouldskip = True
+                        if tmpdur < 60 * 3: shouldskip = True
 
                     if shouldskip == False:
                         nextlen = self.getItemDuration(curchannel, playlistpos + 1)
                         prevlen = self.getItemDuration(curchannel, playlistpos - 1)
-
-                        if nextlen < 60:
-                            tmpdur += nextlen / 2
-
-                        if prevlen < 60:
-                            tmpdur += prevlen / 2
+                        if nextlen < 60: tmpdur += nextlen / 2
+                        if prevlen < 60: tmpdur += prevlen / 2
 
                     width = int((basew / self.epgButtonwidth) * tmpdur)
                     if width < 30 and shouldskip == False:
                         width = 30
                         tmpdur = int(30.0 / (basew / self.epgButtonwidth))
 
-                    if width + xpos > basex + basew:
-                        width = basex + basew - xpos
-                        
+                    if width + xpos > basex + basew: width = basex + basew - xpos
                     utils.log('setButtons, shouldskip = ' + str(shouldskip))
                     if shouldskip == False and width >= 30:
                         mylabel       = self.getItemLabel(curchannel, playlistpos)
@@ -606,8 +565,7 @@ class uEPG(xbmcgui.WindowXML):
             if len(self.channelButtons[row]) == 0:
                 utils.log('setButtons, no buttons')
                 self.channelButtons[row].append(xbmcgui.ControlButton(basex, basey, basew, baseh, self.channelLST.channels[curchannel-1].name, focusTexture=buttonFocus, noFocusTexture=buttonNoFocus, alignment=4, shadowColor=self.shadowColor, font=self.textFont, textColor=self.textColor, focusedColor=self.focusedColor))
-        except Exception as e:
-            utils.log("setButtons, exception " + str(e), xbmc.LOGERROR)
+        except Exception as e: utils.log("setButtons, exception " + str(e), xbmc.LOGERROR)
         utils.log('setButtons return')
         return True
 
@@ -631,7 +589,6 @@ class uEPG(xbmcgui.WindowXML):
         baseh         = self.getControl(33611 + newrow).getHeight()
         basew         = self.getControl(33611 + newrow).getWidth()
         basex, basey  = self.getControl(33611 + newrow).getPosition()
-
         chx, chy = self.focusChannel.getPosition()
         self.focusChannel.setPosition(chx, basey)
         
@@ -645,15 +602,12 @@ class uEPG(xbmcgui.WindowXML):
             left      = left - basex
             starttime = self.shownTime + (left / (basew / self.epgButtonwidth))
             endtime   = starttime + (width / (basew / self.epgButtonwidth))
-
             if self.focusTime >= starttime and self.focusTime <= endtime:
                 self.focusIndex = i
                 self.setFocus(self.channelButtons[newrow][i])
                 self.setShowInfo()
                 self.focusEndTime = endtime
-
-                if resetfocustime:
-                    self.focusTime = starttime + 30
+                if resetfocustime: self.focusTime = starttime + 30
                 utils.log('setProperButton, found button return')
                 return
 
@@ -665,9 +619,7 @@ class uEPG(xbmcgui.WindowXML):
         starttime = self.shownTime + (left / (basew / self.epgButtonwidth))
         endtime   = starttime + (width / (basew / self.epgButtonwidth))
         self.focusEndTime = endtime
-
-        if resetfocustime:
-            self.focusTime = starttime + 30
+        if resetfocustime: self.focusTime = starttime + 30
         self.setShowInfo()
         utils.log('setProperButton return')
 
@@ -676,28 +628,24 @@ class uEPG(xbmcgui.WindowXML):
         utils.log('GoPgDown')
         try:
             newchannel = self.centerChannel
-            for x in range(0, self.rowCount):
-                newchannel = self.fixChannel(newchannel + 1)
+            for x in range(0, self.rowCount): newchannel = self.fixChannel(newchannel + 1)
             self.setChannelButtons(self.shownTime, self.fixChannel(newchannel))
             self.setProperButton(0)
             self.infoOffsetV = self.infoOffsetV - self.rowCount
             utils.log('GoPgDown return') 
-        except Exception as e:
-            utils.log("GoPgDown, failed! " + str(e), xbmc.LOGERROR)
+        except Exception as e: utils.log("GoPgDown, failed! " + str(e), xbmc.LOGERROR)
 
     
     def GoPgUp(self):
         utils.log('GoPgUp')
         try:
             newchannel = self.centerChannel
-            for x in range(0, self.rowCount):
-                newchannel = self.fixChannel(newchannel - 1, False)
+            for x in range(0, self.rowCount): newchannel = self.fixChannel(newchannel - 1, False)
             self.setChannelButtons(self.shownTime, self.fixChannel(newchannel))
             self.setProperButton(0)
             self.infoOffsetV = self.infoOffsetV + self.rowCount
             utils.log('GoPgUp return')
-        except Exception as e:
-            utils.log("GoPgUp, failed! " + str(e), xbmc.LOGERROR)
+        except Exception as e: utils.log("GoPgUp, failed! " + str(e), xbmc.LOGERROR)
 
 
     def GoDown(self):
@@ -708,11 +656,9 @@ class uEPG(xbmcgui.WindowXML):
                 self.focusRow = self.rowCount - 2
             self.setProperButton(self.focusRow + 1)
             self.infoOffsetV = self.infoOffsetV - 1
-            if self.getWindowID() == 12005:
-                self.selectAction()
+            if self.getWindowID() == 12005: self.selectAction()
             utils.log('goDown return')
-        except Exception as e:
-            utils.log("goDown, failed! " + str(e), xbmc.LOGERROR)
+        except Exception as e: utils.log("goDown, failed! " + str(e), xbmc.LOGERROR)
 
         
     def GoUp(self):
@@ -730,11 +676,9 @@ class uEPG(xbmcgui.WindowXML):
                 self.focusRow = 1
             self.setProperButton(self.focusRow - 1)
             self.infoOffsetV = self.infoOffsetV + 1
-            if self.getWindowID() == 12005:
-                self.selectAction()
+            if self.getWindowID() == 12005: self.selectAction()
             utils.log('goUp, return')
-        except Exception as e:
-            utils.log("goUp, failed! " + str(e), xbmc.LOGERROR)
+        except Exception as e: utils.log("goUp, failed! " + str(e), xbmc.LOGERROR)
 
     
     def GoLeft(self):
@@ -749,12 +693,9 @@ class uEPG(xbmcgui.WindowXML):
                 starttime = self.shownTime + (left / (basew / self.epgButtonwidth))  
                 self.setChannelButtons(self.shownTime - 1800, self.centerChannel)
                 curbutidx = self.findButtonAtTime(self.focusRow, starttime + 30)
-                if(curbutidx - 1) >= 0:
-                    self.focusIndex = curbutidx - 1
-                else:
-                    self.focusIndex = 0
-            else:
-                self.focusIndex -= 1
+                if(curbutidx - 1) >= 0: self.focusIndex = curbutidx - 1
+                else: elf.focusIndex = 0
+            else: self.focusIndex -= 1
             left, top = self.channelButtons[self.focusRow][self.focusIndex].getPosition()
             width = self.channelButtons[self.focusRow][self.focusIndex].getWidth()
             left = left - basex
@@ -766,8 +707,7 @@ class uEPG(xbmcgui.WindowXML):
             self.focusTime = starttime + 30
             self.infoOffset = self.infoOffset - 1
             utils.log('goLeft return') 
-        except Exception as e:
-            utils.log("goLeft, failed! " + str(e), xbmc.LOGERROR)
+        except Exception as e: utils.log("goLeft, failed! " + str(e), xbmc.LOGERROR)
 
     
     def GoRight(self):
@@ -782,12 +722,9 @@ class uEPG(xbmcgui.WindowXML):
                 starttime = self.shownTime + (left / (basew / self.epgButtonwidth)) 
                 self.setChannelButtons(self.shownTime + 1800, self.centerChannel)
                 curbutidx = self.findButtonAtTime(self.focusRow, starttime + 30)
-                if(curbutidx + 1) < len(self.channelButtons[self.focusRow]):
-                    self.focusIndex = curbutidx + 1
-                else:
-                    self.focusIndex = len(self.channelButtons[self.focusRow]) - 1
-            else:
-                self.focusIndex += 1
+                if(curbutidx + 1) < len(self.channelButtons[self.focusRow]): self.focusIndex = curbutidx + 1
+                else: self.focusIndex = len(self.channelButtons[self.focusRow]) - 1
+            else: self.focusIndex += 1
             left, top = self.channelButtons[self.focusRow][self.focusIndex].getPosition()
             width = self.channelButtons[self.focusRow][self.focusIndex].getWidth()
             left = left - basex
@@ -799,8 +736,7 @@ class uEPG(xbmcgui.WindowXML):
             self.focusTime = starttime + 30  
             self.infoOffset = self.infoOffset + 1
             utils.log('goRight return')
-        except Exception as e:
-            utils.log("goRight, failed! " + str(e), xbmc.LOGERROR)
+        except Exception as e: utils.log("goRight, failed! " + str(e), xbmc.LOGERROR)
                     
         
     def findButtonAtTime(self, row, selectedtime):
@@ -814,43 +750,32 @@ class uEPG(xbmcgui.WindowXML):
             left = left - basex
             starttime = self.shownTime + (left/ (basew / self.epgButtonwidth))
             endtime = starttime + (width / (basew / self.epgButtonwidth))
-            if selectedtime >= starttime and selectedtime <= endtime:
-                return i
+            if selectedtime >= starttime and selectedtime <= endtime: return i
         return -1
         
         
     def playSFX(self,action):
         utils.log("playSFX")
-        # if REAL_SETTINGS.getSetting("SFX_Enabled") != "true":
-            # return
-        if action in ['ACTION_CLICK'] + utils.ACTION_SELECT_ITEM + utils.ACTION_MOVE_DOWN + utils.ACTION_MOVE_UP +utils.ACTION_MOVE_LEFT + utils.ACTION_MOVE_RIGHT:
-            xbmc.playSFX(utils.SELECT_SFX)
-        elif action in utils.ACTION_CONTEXT_MENU + utils.ACTION_PAGEDOWN + utils.ACTION_PAGEUP:
-            xbmc.playSFX(utils.CONTEXT_SFX)
-        elif action in utils.ACTION_PREVIOUS_MENU:
-            xbmc.playSFX(utils.BACK_SFX)
-        elif action in ['ACTION_ALERT']:
-            xbmc.playSFX(utils.ALERT_SFX)
+        if action in ['ACTION_CLICK'] + utils.ACTION_SELECT_ITEM + utils.ACTION_MOVE_DOWN + utils.ACTION_MOVE_UP +utils.ACTION_MOVE_LEFT + utils.ACTION_MOVE_RIGHT: xbmc.playSFX(utils.SELECT_SFX)
+        elif action in utils.ACTION_CONTEXT_MENU + utils.ACTION_PAGEDOWN + utils.ACTION_PAGEUP: xbmc.playSFX(utils.CONTEXT_SFX)
+        elif action in utils.ACTION_PREVIOUS_MENU: xbmc.playSFX(utils.BACK_SFX)
+        elif action in ['ACTION_ALERT']: xbmc.playSFX(utils.ALERT_SFX)
         
         
     def toggleFullscreen(self):
         utils.log('toggleFullscreen')
-        if self.player.isPlayingVideo():
-            xbmc.executebuiltin(self.windowToggle())
+        if self.player.isPlayingVideo(): xbmc.executebuiltin(self.windowToggle())
         return
         
             
     def buildContextMenu(self):
         utils.log('buildContextMenu')
         tmpLST = ['Information']
-        for item in self.contextLST:
-            tmpLST.append(item[0])
+        for item in self.contextLST: tmpLST.append(item[0])
         select = xbmcgui.Dialog().contextmenu(tmpLST)
-        print select, tmpLST[select], self.contextLST[select]
         if select < 0: return
         elif select == 0: return self.showInfo()
         item = (self.contextLST[select-1][1])
-        print "(%s)"%item
         return xbmc.executebuiltin(item)
             
             
@@ -869,33 +794,21 @@ class uEPG(xbmcgui.WindowXML):
             if self.closeCount == 2:
                 plug = self.channelLST.pluginName
                 head = '%s / %s'%(utils.ADDON_NAME,plug)
-                if utils.yesnoDialog(utils.LANGUAGE(30001)%plug,header=head) == True:
-                    self.closeUEPG()
-                else:
-                    self.closeCount = 0
-            else:
-                self.toggleFullscreen()
+                if utils.yesnoDialog(utils.LANGUAGE(30001)%plug,header=head) == True: self.closeUEPG()
+                else: self.closeCount = 0
+            else: self.toggleFullscreen()
         else:
             self.closeCount = 0
-            if action in utils.ACTION_MOVE_DOWN:
-                self.GoDown()
-            elif action in utils.ACTION_MOVE_UP:
-                self.GoUp()
+            if action in utils.ACTION_MOVE_DOWN: self.GoDown()
+            elif action in utils.ACTION_MOVE_UP: self.GoUp()
             elif action in utils.ACTION_MOVE_LEFT:
-                if self.infoOffset <= -2:
-                    return
+                if self.infoOffset <= -2: return
                 self.GoLeft()
-            elif action in utils.ACTION_MOVE_RIGHT:
-                self.GoRight()
-            elif action in utils.ACTION_PAGEDOWN:
-                self.GoPgDown()
-            elif action in utils.ACTION_PAGEUP:
-                self.GoPgUp()
-            elif action in utils.ACTION_CONTEXT_MENU:
-                self.buildContextMenu()
-            elif action in utils.ACTION_SELECT_ITEM and self.getFocusId() <= 40000:
-                self.selectAction()
-                utils.log('onAction return')
+            elif action in utils.ACTION_MOVE_RIGHT: self.GoRight()
+            elif action in utils.ACTION_PAGEDOWN: self.GoPgDown()
+            elif action in utils.ACTION_PAGEUP: self.GoPgUp()
+            elif action in utils.ACTION_CONTEXT_MENU: self.buildContextMenu()
+            elif action in utils.ACTION_SELECT_ITEM and self.getFocusId() <= 40000: self.selectAction()
 
                 
     def onClick(self, controlid):
@@ -920,8 +833,7 @@ class uEPG(xbmcgui.WindowXML):
                     utils.log('canceling threads...')
                     thread.cancel()
                     thread.join()
-                except Exception as e:
-                    utils.log('closeUEPG, failed to close thread ' + str(e), xbmc.LOGERROR)             
+                except Exception as e: utils.log('closeUEPG, failed to close thread ' + str(e), xbmc.LOGERROR)             
         utils.setProperty('uEPGRunning','False')
         #reopen originating plugin to avoid reloading uEPG on exit.
         xbmc.executebuiltin('XBMC.AlarmClock(%s,ActivateWindow(Videos,plugin://%s),0.5,true)'%('',self.channelLST.pluginPath))

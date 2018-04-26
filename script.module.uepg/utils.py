@@ -135,19 +135,19 @@ def getGenreColor(genre):
     if len(genre) > 5: return 'ButtonNoFocus'
     else: genre = genre[0]
     # return random.choice(GENRE_TYPES)[0] #test
-    if genre in COLOR_RED_TYPE: return 'RED'
-    elif genre in COLOR_GREEN_TYPE: return 'GREEN'
-    elif genre in COLOR_mdGREEN_TYPE: return 'mdGREEN'
-    elif genre in COLOR_BLUE_TYPE: return 'BLUE'
-    elif genre in COLOR_ltBLUE_TYPE: return 'ltBLUE'
-    elif genre in COLOR_CYAN_TYPE: return 'CYAN'
-    elif genre in COLOR_ltCYAN_TYPE: return 'ltCYAN'
-    elif genre in COLOR_PURPLE_TYPE: return 'PURPLE'
+    if genre in COLOR_RED_TYPE:        return 'RED'
+    elif genre in COLOR_GREEN_TYPE:    return 'GREEN'
+    elif genre in COLOR_mdGREEN_TYPE:  return 'mdGREEN'
+    elif genre in COLOR_BLUE_TYPE:     return 'BLUE'
+    elif genre in COLOR_ltBLUE_TYPE:   return 'ltBLUE'
+    elif genre in COLOR_CYAN_TYPE:     return 'CYAN'
+    elif genre in COLOR_ltCYAN_TYPE:   return 'ltCYAN'
+    elif genre in COLOR_PURPLE_TYPE:   return 'PURPLE'
     elif genre in COLOR_ltPURPLE_TYPE: return 'ltPURPLE'
-    elif genre in COLOR_ORANGE_TYPE: return 'ORANGE'
-    elif genre in COLOR_YELLOW_TYPE: return 'YELLOW'
-    elif genre in COLOR_GRAY_TYPE: return 'GRAY'
-    else: return 'ButtonNoFocus'
+    elif genre in COLOR_ORANGE_TYPE:   return 'ORANGE'
+    elif genre in COLOR_YELLOW_TYPE:   return 'YELLOW'
+    elif genre in COLOR_GRAY_TYPE:     return 'GRAY'
+    else:                              return 'ButtonNoFocus'
      
 def getPluginMeta(plugin):
     if plugin[0:9] == 'plugin://':
@@ -324,28 +324,30 @@ class RPCHelper(object):
     def __init__(self):
         self.cache       = SimpleCache()
         self.channelname = ''
+        self.duration    = 0
         
      
     def escapeDirJSON(self, dir_name):
         mydir = uni(dir_name)
-        if (mydir.find(":")):
-            mydir = mydir.replace("\\", "\\\\")
+        if (mydir.find(":")): mydir = mydir.replace("\\", "\\\\")
         return mydir
-        
+
         
     def getFileList(self, path, life, media='video', ignore='false', method='random', order='ascending', end=0, start=0, filter={}):  
         fileList = []
         log('getFileList, path = ' + path)
         json_response = self.requestList(path, life, media='video', ignore='false', method='random', order='ascending', end=0, start=0, filter={})
         if 'result' in json_response and 'files' in json_response['result']:
-            for idx, item in enumerate(json_response['result']['files']):
+            items = json_response['result']['files']
+            for idx, item in enumerate(items):
                 try:
-                    duration = 0
                     file     = item.get('file','')
                     label    = (item.get('label','')    or item.get('title',''))
                     fileType = (item.get('filetype','') or '')
                     if fileType == 'file':
-                        dataTags = loadJson(unquote((item.get('tagline','')            or ''))) 
+                        item["duration"]      = int(item.get('duration','')            or item.get('runtime','')  or '0')
+                        try: dataTags = loadJson(unquote((item.get('tagline','')       or {})))
+                        except: dataTags = {}
                         item["channelname"]   = (dataTags.get('channelname','')        or self.channelname)
                         item["channellogo"]   = (dataTags.get('channellogo','')        or '')
                         item["channelnumber"] = (dataTags.get('channelnumber','')      or '')
@@ -356,13 +358,13 @@ class RPCHelper(object):
                         item["label"]         = (dataTags.get('label','')              or label)
                         item["label2"]        = (dataTags.get('label2','')             or item.get('label2','')   or '')
                         item["rating"]        = float(item.get('rating','0')           or '0')
-                        item["duration"]      = int(item.get('duration','')            or item.get('runtime','')  or '0')
+                        # self.duration += item["duration"]
                         fileList.append(item)
                     elif fileType == 'directory':
+                        # self.duration    = 0
                         self.channelname = label
                         fileList.extend(self.getFileList(file, life, media, ignore, method, order, end, start, filter))
-                except Exception as e:
-                    log("getFileList, failed! " + str(e), xbmc.LOGERROR)
+                except Exception as e: log("getFileList, failed! " + str(e), xbmc.LOGERROR)
         return fileList
 
         
@@ -375,10 +377,8 @@ class RPCHelper(object):
     def sendJSON(self, command):
         log('sendJSON')
         data = ''
-        try:
-            data = xbmc.executeJSONRPC(uni(command))
-        except UnicodeEncodeError:
-            data = xbmc.executeJSONRPC(ascii(command))
+        try: data = xbmc.executeJSONRPC(uni(command))
+        except UnicodeEncodeError: data = xbmc.executeJSONRPC(ascii(command))
         return (uni(data))
              
              
