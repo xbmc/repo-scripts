@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon
+   id="service.subtitles.legendastv"
+   name="Legendas.TV"
+   version="2.4.0"
+   provider-name="gfjardim">
+  <requires>
+    <import addon="xbmc.python" version="2.14.0"/>
+  </requires>
+  <extension point="xbmc.subtitle.module" library="service.py" />
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en">Legendas.TV</summary>
+    <description lang="en">Search and download subtitles from Legendas.TV</description>
+    <description lang="pt">Procura e baixa legendas de Legendas.TV</description>
+    <disclaimer lang="en">For bugs, requests or general questions visit the 'Subtitle add-on' subforum on the XBMC forum.</disclaimer>
+    <disclaimer lang="pt">Para bugs, pedidos ou perguntas visite o subfórum 'Subtitle add-on' no fórum oficial do XBMC.</disclaimer>
+    <language></language>
+    <platform>all</platform>
+    <license>GNU GENERAL PUBLIC LICENSE. Version 3.</license>
+    <forum></forum>
+    <website></website>
+    <email></email>
+    <source>https://github.com/gfjardim/service.subtitles.legendastv</source>
+  </extension>
+</addon>

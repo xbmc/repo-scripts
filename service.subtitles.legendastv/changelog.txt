@@ -1,0 +1,49 @@
+2.4.0
+- Fix: Use RAR Archive support addon on Kodi 18 (Leia) (henricos)
+- Fix: handling non-ascii content on log method (ecsousa)
+- Fix: Use new URL for searches; idex starts at 0 now (fernandog)
+- Fix: Kodi 18 (Leia): check if RAR Archive support plugin is enabled
+- Fix: better subtitle extraction handling
+- Fix: rating stars not appearing correctly
+
+2.3.2
+- Fix: addon version mismatch 
+
+2.3.1
+- Fix: subtitles not downloading
+- Fix: better error handling
+- Add: Search Using Original Title option
+
+2.3.0
+- Fix: use IMDB to filter results, if possible
+- Add: Use TheTVDB to retrieve tv shows original titles
+
+2.2.5
+- Fix cleanup
+- Fix string in pt_PT (thanks to Mafarricos)
+- Fix manual search not working with tv shows
+- Add batch import of subtitle packs
+
+2.2.4
+- Added login support (thanks to Eduardo Franceschi)
+- Highlights are now displayed correctly
+
+2.2.3
+- Change the way pack's are detected
+
+2.2.2
+- Fix a bug with stream sites not parsing a valid filename (thanks to Mafarricos)
+
+2.2.1
+- Fix: Portuguese subtitles not displayed (tnx to Carlos Correia)
+- Implemented: Changing the language predilection at addon preferences (tnx to Carlos Correia)
+- Fix: small string fix (tnx to Carlos Correia)
+- Fix: Language sorting
+- Implement manual search 
+- Workaround: Android not parsing filesystem encoding
+
+2.2.0
+- Fix: decompressing the downloaded subtitle
+
+2.1.2
+- Move the service out of XBMC Subtitles
