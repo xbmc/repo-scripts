@@ -42,7 +42,7 @@ class ChannelList(object):
         self.uEPGRunning  = utils.getProperty('uEPGRunning') == "True"
         self.incHDHR      = utils.REAL_SETTINGS.getSetting('Enable_HDHR') == "true"
         self.useKodiSkin  = utils.REAL_SETTINGS.getSetting('useKodiSkin') == "true"
-        
+
         
     def prepareListItem(self, channelPath):
         utils.log('prepareListItem, channelPath = ' + str(channelPath))
@@ -206,6 +206,7 @@ if __name__ == '__main__':
                 break
             except: pass
             
+        hasChannels= False
         channelLST = ChannelList()
         channelLST.incHDHR      = (utils.loadJson(utils.unquote(params.get('include_hdhr','')))          or channelLST.incHDHR)
         channelLST.skinPath     = ((utils.loadJson(utils.unquote(params.get('skin_path',''))))           or channelLST.chkSkinPath())
@@ -242,7 +243,6 @@ if __name__ == '__main__':
         if dataType   == 'json': hasChannels = channelLST.prepareJson(utils.loadJson(utils.unquote(data)))
         elif dataType == 'property': hasChannels = channelLST.prepareJson(utils.loadJson(utils.unquote(utils.getProperty(data))))
         elif dataType == 'listitem': hasChannels = channelLST.prepareListItem(utils.unquote(data))
-        else: hasChannels = False
         
         if utils.REAL_SETTINGS.getSetting('FirstTime_Run') == "true":
             utils.REAL_SETTINGS.setSetting('FirstTime_Run','false')
@@ -254,9 +254,7 @@ if __name__ == '__main__':
             xbmc.sleep(100)
         
         if hasChannels == True:
-            if channelLST.refreshIntvl > 0 and channelLST.refreshPath is not None:
-                channelLST.startRefreshTimer()
-            
+            if channelLST.refreshIntvl > 0 and channelLST.refreshPath is not None: channelLST.startRefreshTimer()
             if channelLST.uEPGRunning == False and utils.getProperty('uEPGGuide') != 'True':
                 channelLST.myEPG = epg.uEPG('%s.guide.xml'%utils.ADDON_ID,channelLST.skinPath,'default')
                 channelLST.myEPG.channelLST = channelLST
@@ -265,6 +263,6 @@ if __name__ == '__main__':
                 xbmc.sleep(100)
         else:
             utils.log("invalid uEPG information", xbmc.LOGERROR)
-            utils.notificationDialog(utils.LANGUAGE(30002)%(channelLST.pluginName,channelLST.pluginAuthor),icon=channelLST.pluginIcon)
-            # utils.REAL_SETTINGS.openSettings() 
+            # utils.notificationDialog(utils.LANGUAGE(30002)%(channelLST.pluginName,channelLST.pluginAuthor),icon=channelLST.pluginIcon)
+            utils.REAL_SETTINGS.openSettings() 
         del utils.KODI_MONITOR
