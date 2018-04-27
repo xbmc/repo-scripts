@@ -233,7 +233,7 @@ class LegendasTV:
             if R.has_key("_source"):
                 ContentID = R['_id']
                 # Continue if id already exists
-                if filter(lambda id: id['id'] == ContentID, discardedResults) or filter(lambda id: id['id'] == ContentID, allResults):
+                if [i for i in discardedResults if i['id'] == ContentID] or [i for i in allResults if i['id'] == ContentID]:
                     continue
                 Source    = R["_source"]
                 LTVSeason = Source["temporada"] if Source["tipo"] == "S" and Source["temporada"] else 0
