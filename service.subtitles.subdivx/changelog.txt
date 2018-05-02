@@ -1,3 +1,11 @@
+0.3.2
+- Be less verbose when removing old temporary dirs.
+
+0.3.1
+- Attempt at fixing a timing bug that can happen when removing the temporary
+  directory used for decompression of the downloaded file. Happens usually
+  on Android.
+
 0.3.0
 - Release changes since 0.2.5
 
