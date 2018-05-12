@@ -267,9 +267,9 @@ def ProgressDialog(percent=0, control=None, string1='', string2='', string3='', 
     
 def adaptiveDialog(percent, control=None, size=0, string1='', string2='', string3='', header=ADDON_NAME):
     #Dialog based on length of parsable content... ie Simple dialog for quick parse, Advanced dialog for longer parsing.
-    if getProperty('uEPGSplash') == 'True':
-        setProperty('uEPGSplash_Progress',str(percent))
-        return    
+    if getProperty('uEPGSplash') == 'True': return
+        # setProperty('uEPGSplash_Progress',str(int(round(percent, -1))))
+        # return    
     elif getProperty('uEPGRunning') == 'True':
         if control: percent = 100
         else: return
@@ -281,7 +281,7 @@ def poolList(method, items):
     results = []
     if ENABLE_POOL:
         pool = ThreadPool(cpu_count())
-        results = pool.map(method, items)
+        results = pool.imap_unordered(method, items)
         pool.close()
         pool.join()
     else:

@@ -51,9 +51,9 @@ class ChannelList(object):
         heading = '%s / %s'%(utils.ADDON_NAME,self.pluginName)
         self.busy = utils.adaptiveDialog(0, size=len(channelResults), string1=utils.LANGUAGE(30004), header=heading)
         for i, item in enumerate(channelResults):
-            utils.adaptiveDialog((i*50//len(channelResults)), self.busy, string1=utils.LANGUAGE(30004))
+            utils.adaptiveDialog((i*100//len(channelResults))//2, self.busy, string1=utils.LANGUAGE(30004))
             if len(item.get('channelname','')) > 0: channelnames.append(item['channelname'])
-                            
+                                            
         channelNum   = 0
         channelItems = []
         counter      = collections.Counter(channelnames)
@@ -78,8 +78,8 @@ class ChannelList(object):
                 channelItems.append(newChannel)
         utils.adaptiveDialog(100, self.busy, string1=utils.LANGUAGE(30005))
         return self.prepareJson(channelItems)
-        
-        
+                
+                
     def prepareJson(self, channelItems):
         utils.log('prepareJson')
         try:
@@ -111,7 +111,7 @@ class ChannelList(object):
         self.busy = utils.adaptiveDialog(0, size=len(channelItems), string1=utils.LANGUAGE(30004), header=heading)
         
         for i, item in enumerate(channelItems):
-            utils.adaptiveDialog((i*50//len(channelItems)), self.busy, string1=utils.LANGUAGE(30004))
+            utils.adaptiveDialog((i*100//len(channelItems))//2, self.busy, string1=utils.LANGUAGE(30004))
             if len(item.get('guidedata','')) > 0:
                 channelnames.append(item['channelname'])
                 channelnumber = item['channelnumber']
@@ -124,7 +124,7 @@ class ChannelList(object):
         self.maxChannels  = len(counter)
         self.channelNames = list(counter.elements())
         for i in range(self.maxChannels):
-            utils.adaptiveDialog((i*50//self.maxChannels), self.busy, string1=utils.LANGUAGE(30004))
+            utils.adaptiveDialog((i*100//self.maxChannels)//2, self.busy, string1=utils.LANGUAGE(30004))
             self.channels.append(Channel())
         utils.adaptiveDialog(100, self.busy, string1=utils.LANGUAGE(30005))
         
@@ -264,5 +264,5 @@ if __name__ == '__main__':
         else:
             utils.log("invalid uEPG information", xbmc.LOGERROR)
             # utils.notificationDialog(utils.LANGUAGE(30002)%(channelLST.pluginName,channelLST.pluginAuthor),icon=channelLST.pluginIcon)
-            utils.REAL_SETTINGS.openSettings() 
+            # utils.REAL_SETTINGS.openSettings() 
         del utils.KODI_MONITOR
