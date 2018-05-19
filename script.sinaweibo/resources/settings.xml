@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+    <category label="30005">
+        <setting id="Enable_Debugging"  type="bool" label="30000" default="false" />
+		<setting label="32014" type="action" action="RunScript(script.sinaweibo, keymapeditor)"/>
+        <setting id="save_history_during_playback" type="bool" label="32072" default="true" />
+	</category>
+    <category label="32070">
+		<setting label="32071" type="slider" id="twitter-update-time" default="2" range="1,1,30" option="int" />
+		<setting id="twitter_history_enabled" type="bool" label="32073" default="true" />
+		<setting label="32074" type="action" action="RunScript(script.sinaweibo, removetwitterhistory)" enable="eq(-1,true)"/>
+	</category>
+    <category label="30006">
+        <setting label="32071" type="slider" id="weibo-update-time" default="2" range="1,1,30" option="int" />
+		<setting id="weibo_history_enabled" type="bool" label="32073" default="true" />
+		<setting label="32074" type="action" action="RunScript(script.sinaweibo, removetweibohistory)" enable="eq(-1,true)"/>
+        <setting id="UID1"            type="text" label="30001" default="@1618051664" />
+        <setting id="UID2"            type="text" label="30001" default="@2028810631" visible="!eq(-1,@)" />
+        <setting id="UID3"            type="text" label="30001" default="@2257175873"     visible="!eq(-1,@)" />
+        <setting id="UID4"            type="text" label="30001" default="@"               visible="!eq(-1,@)" />
+        <setting id="UID5"            type="text" label="30001" default="@"               visible="!eq(-1,@)" />
+        <setting id="UID6"            type="text" label="30001" default="@"               visible="!eq(-1,@)" />
+        <setting id="UID7"            type="text" label="30001" default="@"               visible="!eq(-1,@)" />
+        <setting id="UID8"            type="text" label="30001" default="@"               visible="!eq(-1,@)" />
+        <setting id="UID9"            type="text" label="30001" default="@"               visible="!eq(-1,@)" />
+        <setting id="UID10"           type="text" label="30001" default="@"               visible="!eq(-1,@)" />
+    </category>
+</settings>

@@ -1,0 +1,286 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<window type="window">
+	<depth>0.52</depth>
+	<defaultcontrol always="true">32500</defaultcontrol>
+	<animation type="WindowOpen" reversible="false">
+		<effect type="zoom" start="80" end="100" center="960,540" delay="160" tween="back" time="240" />
+		<effect type="fade" delay="160" end="100" time="240" />
+	</animation>
+	<animation type="WindowClose" reversible="false">
+		<effect type="zoom" start="100" end="80" center="960,540" easing="in" tween="back" time="240" />
+		<effect type="fade" start="100" end="0" time="240" />
+	</animation>
+	<defaultcontrol always="true">32501</defaultcontrol>
+	<controls>
+		<control type="group">
+			<top>10</top>
+			<control type="image">
+				<left>60</left>
+				<top>0</top>
+				<width>1158</width>
+				<height>700</height>
+				<texture border="2">dialog-bg-solid.png</texture>
+			</control>
+			<control type="image">
+				<left>60</left>
+				<top>0</top>
+				<width>1158</width>
+				<height>70</height>
+				<texture colordiffuse="FF12B2E7" border="2">white70.png</texture>
+			</control>
+			<control type="label" id="32500">
+				<textoffsetx>70</textoffsetx>
+				<left>110</left>
+				<top>0</top>
+				<width>969</width>
+				<height>70</height>
+				<font>font20_title</font>
+				<label></label>
+				<align>left</align>
+				<aligny>center</aligny>
+				<shadowcolor>black</shadowcolor>
+			</control>
+			<control type="button">
+				<left>-1920</left>
+				<top>-1080</top>
+				<width>5760</width>
+				<height>3240</height>
+				<texturefocus>-</texturefocus>
+				<texturenofocus>-</texturenofocus>
+				<onclick>Action(close)</onclick>
+			</control>
+			<control type="button">
+				<description>button overlay to avoid closing in dialog area</description>
+				<left>0</left>
+				<top>0</top>
+				<width>969</width>
+				<height>283</height>
+				<texturefocus>-</texturefocus>
+				<texturenofocus>-</texturenofocus>
+				<onclick>noop</onclick>
+			</control>
+			<control type="image" id="32503">
+				<description>Twitter logo</description>
+				<left>80</left>
+				<top>0</top>
+				<width>69</width>
+				<height>69</height>
+				<texture></texture>
+			</control>
+			<control type="radiobutton" id="32502">
+				<left>1220</left>
+				<top>11</top>
+				<width>48</width>
+				<height>48</height>
+				<radiowidth>48</radiowidth>
+				<radioheight>48</radioheight>
+				<texturefocus>-</texturefocus>
+				<texturenofocus>-</texturenofocus>
+				<label></label>
+				<animation effect="slide" end="-70,0" time="0" condition="true">Conditional</animation>
+				<textureradioofffocus colordiffuse="EEFFFFFF">close.png</textureradioofffocus>
+				<textureradiooffnofocus colordiffuse="EEFFFFFF">logo.png</textureradiooffnofocus>
+				<textureradioonfocus colordiffuse="EEFFFFFF">close.png</textureradioonfocus>
+				<textureradioonnofocus colordiffuse="EEFFFFFF">logo.png</textureradioonnofocus>
+				<onclick>Action(close)</onclick>
+				<onup>32501</onup>
+				<ondown>32501</ondown>
+			</control>
+		</control>
+		<control type="group">
+			<visible>IsEmpty(Window(home).Property(loading-script-matchcenter-twitter))</visible>
+			<control type="list" id="32501">
+				<left>-55</left>
+				<top>85</top>
+				<width>1137</width>
+				<height>540</height>
+				<onup>32502</onup>
+				<ondown>32514</ondown>
+				<onright>61</onright>
+				<pagecontrol>61</pagecontrol>
+				<scrolltime>200</scrolltime>
+				<animation effect="slide" start="0,0" end="10,0" time="0" condition="!Control.IsVisible(61)">Conditional</animation>
+				<animation effect="slide" end="120,0" time="0" condition="!Control.IsVisible(5)">Conditional</animation>
+				<itemlayout height="108" width="1137">
+					<control type="image">
+						<left>-25</left>
+						<top>-20</top>
+						<width>1177</width>
+						<height>146</height>
+						<texture border="40">button-nofo.png</texture>
+					</control>
+					<control type="image">
+						<description>Profile pic</description>
+						<left>2</left>
+						<top>3</top>
+						<width>83</width>
+						<height>83</height>
+						<texture>$INFO[ListItem.Property(profilepic)]</texture>
+						<pulseonselect></pulseonselect>
+					</control>
+					<control type="label">
+						<description>Tweet author</description>
+						<posx>95</posx>
+						<posy>5</posy>
+						<width>1000</width>
+						<height>90</height>
+						<label>$INFO[ListItem.Property(author)]</label>
+						<font>font14</font>
+						<align>left</align>
+						<textcolor>cadetblue</textcolor>
+						<shadowcolor>AA000000</shadowcolor>
+					</control>
+					<control type="label">
+						<description>Tweet timedelta</description>
+						<posx>720</posx>
+						<posy>5</posy>
+						<width>400</width>
+						<height>90</height>
+						<label>$INFO[ListItem.Property(timedelta)]</label>
+						<font>font12</font>
+						<align>right</align>
+						<textcolor>cadetblue</textcolor>
+						<shadowcolor>AA000000</shadowcolor>
+					</control>
+					<control type="textbox">
+						<description>Tweet text</description>
+						<posx>95</posx>
+						<posy>30</posy>
+						<width>1000</width>
+						<height>108</height>
+						<label>$INFO[ListItem.Label]</label>
+						<font>font14</font>
+						<align>left</align>
+						<textcolor>grey</textcolor>
+						<shadowcolor>AA000000</shadowcolor>
+					</control>
+				</itemlayout>
+				<focusedlayout height="108" width="1137">
+					<control type="image">
+						<left>-25</left>
+						<top>-20</top>
+						<width>1177</width>
+						<height>146</height>
+						<texture border="40">button-nofo.png</texture>
+					</control>
+					<control type="image">
+						<left>-20</left>
+						<top>-20</top>
+						<width>1177</width>
+						<height>146</height>
+						<texture border="40" colordiffuse="FF12B2E7">button-fo.png</texture>
+						<animation effect="fade" start="100" end="0" time="0">Unfocus</animation>
+					</control>
+					<control type="image">
+						<description>Profile Pic</description>
+						<left>2</left>
+						<top>3</top>
+						<width>83</width>
+						<height>83</height>
+						<texture>$INFO[ListItem.Property(profilepic)]</texture>
+					</control>
+					<control type="label">
+						<description>Tweet author</description>
+						<posx>95</posx>
+						<posy>5</posy>
+						<width>1000</width>
+						<height>90</height>
+						<label>$INFO[ListItem.Property(author)]</label>
+						<font>font14</font>
+						<align>left</align>
+						<textcolor>cadetblue</textcolor>
+						<shadowcolor>AA000000</shadowcolor>
+					</control>
+					<control type="label">
+						<description>Tweet timedelta</description>
+						<posx>720</posx>
+						<posy>5</posy>
+						<width>400</width>
+						<height>90</height>
+						<label>$INFO[ListItem.Property(timedelta)]</label>
+						<font>font12</font>
+						<align>right</align>
+						<textcolor>cadetblue</textcolor>
+						<shadowcolor>AA000000</shadowcolor>
+					</control>
+					<control type="textbox">
+						<description>Tweet Text</description>
+						<posx>95</posx>
+						<posy>30</posy>
+						<width>1000</width>
+						<height>108</height>
+						<label>$INFO[ListItem.Label]</label>
+						<font>font14</font>
+						<align>left</align>
+						<textcolor>white</textcolor>
+						<shadowcolor>AA000000</shadowcolor>
+						<pulseonselect></pulseonselect>
+					</control>
+				</focusedlayout>
+			</control>
+			<control type="scrollbar" id="61">
+				<left>1082</left>
+				<top>85</top>
+				<width>15</width>
+				<height>540</height>
+				<texturesliderbackground colordiffuse="29FFFFFF">white.png</texturesliderbackground>
+				<texturesliderbar colordiffuse="AAFFFFFF">white.png</texturesliderbar>
+				<texturesliderbarfocus colordiffuse="FF12B2E7">white.png</texturesliderbarfocus>
+				<textureslidernib>-</textureslidernib>
+				<textureslidernibfocus>-</textureslidernibfocus>
+				<showonepage>false</showonepage>
+				<orientation>vertical</orientation>
+				<onleft>32501</onleft>
+				<onright>32501</onright>
+				<ondown>61</ondown>
+				<onup>61</onup>
+				<animation effect="slide" end="120,0" time="0" condition="!Control.IsVisible(5)">Conditional</animation>
+			</control>
+		</control>
+		<control type="button" id="32514">
+			<description>ReFresh</description>
+			<left>550</left>
+			<top>630</top>
+			<width>200</width>
+			<height>80</height>
+			<label>$ADDON[script.sinaweibo 32042]</label>
+			<texturefocus border="30" colordiffuse="FF12B2E7">button-fo.png</texturefocus>
+			<texturenofocus border="30">button-nofo.png</texturenofocus>
+			<font>font13</font>
+			<align>center</align>
+			<aligny>center</aligny>
+			<textcolor>white</textcolor>
+			<disabledcolor>disabled</disabledcolor>
+			<textoffsetx>7</textoffsetx>
+			<pulseonselect>no</pulseonselect>
+			<onleft>32501</onleft>
+			<onright>32501</onright>
+			<onup>32501</onup>
+			<ondown>32501</ondown>
+		</control>
+		<!--Busy control-->
+		<control type="image" id="32540">
+			<description>Busy animation</description>
+			<posx>450</posx>
+			<posy>300</posy>
+			<width>120</width>
+			<height>120</height>
+			<texture></texture>
+			<aspectratio>keep</aspectratio>
+			<animation effect="rotate" start="0" end="360" center="510,360" time="1200" loop="true" condition="true">conditional</animation>
+			<visible>!IsEmpty(Window(home).Property(loading-script-sinaweibo-weibo))</visible>
+		</control>
+		<control type="label">
+			<top>310</top>
+			<left>400</left>
+			<width>650</width>
+			<height>90</height>
+			<font>font35_title</font>
+			<textcolor>FFF0F0F0</textcolor>
+			<aligny>center</aligny>
+			<align>center</align>
+			<label>$ADDON[script.sinaweibo 32016]</label>
+			<visible>!IsEmpty(Window(home).Property(loading-script-sinaweibo-weibo))</visible>
+		</control>
+	</controls>
+</window>

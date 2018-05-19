@@ -1,0 +1,178 @@
+# Kodi Media Center language file
+# Addon Name: Twitter Tweets
+# Addon id: script.twittertweets
+# Addon Provider: Lunatixz
+msgid ""
+msgstr ""
+"Project-Id-Version:\script.sinaweibo\n"
+"Report-Msgid-Bugs-To: https://forum.kodi.tv\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: WeiboFans Translation Team\n"
+"Language-Team: English (http://www.transifex.com/projects/p/xbmc-addons/language/en/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#30000"
+msgid "Enable Debugging [Log errors]"
+msgstr ""
+
+msgctxt "#30001"
+msgid "Weibo Account"
+msgstr ""
+
+msgctxt "#30002"
+msgid "Check Weibo Every x Minutes"
+msgstr ""
+
+msgctxt "#30003"
+msgid "Close After x Seconds"
+msgstr ""
+
+msgctxt "#30004"
+msgid "Don't Show While Playing"
+msgstr ""
+
+msgctxt "#30005"
+msgid "General"
+msgstr ""
+
+msgctxt "#30006"
+msgid "Weibo"
+msgstr ""
+
+msgctxt "#32007"
+msgid "Settings"
+msgstr ""
+
+msgctxt "#30011"
+msgid "Display Attachment"
+msgstr ""
+
+msgctxt "#30012"
+msgid "Restarting Service..."
+msgstr ""
+
+msgctxt "#30013"
+msgid "Include Retweets"
+msgstr ""
+
+msgctxt "#30014"
+msgid "Enable Video Attachments (Experimental)"
+msgstr ""
+
+msgctxt "#30015"
+msgid "Pleas disable and enable addon or restart kodi for new settings to be effected"
+msgstr ""
+
+msgctxt "#32010"
+msgid "Twitter"
+msgstr ""
+
+msgctxt "#32014"
+msgid "Define a remote keymap to start the addon"
+msgstr ""
+
+msgctxt "#32016"
+msgid "LOADING..."
+msgstr ""
+
+msgctxt "#32042"
+msgid "Refresh"
+msgstr ""
+
+msgctxt "#32046"
+msgid "Enter twitter hashtag:"
+msgstr ""
+
+msgctxt "#32047"
+msgid "Twitter hashtag cannot be null."
+msgstr ""
+
+msgctxt "#32048"
+msgid "Enter Weibo UID:"
+msgstr ""
+
+msgctxt "#32054"
+msgid "ago"
+msgstr ""
+
+msgctxt "#32055"
+msgid "and"
+msgstr ""
+
+msgctxt "#32056"
+msgid "day"
+msgstr ""
+
+msgctxt "#32057"
+msgid "days"
+msgstr ""
+
+msgctxt "#32058"
+msgid "hour"
+msgstr ""
+
+msgctxt "#32059"
+msgid "hours"
+msgstr ""
+
+msgctxt "#32060"
+msgid "minute"
+msgstr ""
+
+msgctxt "#32061"
+msgid "minutes"
+msgstr ""
+
+msgctxt "#32062"
+msgid "second"
+msgstr ""
+
+msgctxt "#32063"
+msgid "seconds"
+msgstr ""
+
+msgctxt "#32065"
+msgid "This function allows you to start the addon by pressing a key on your remote control. To use this function you need to use the Keymap Editor addon from the official repository. Match Center will start it automatically for you once you close this dialog. Once the Keymap editor addon starts you need to follow the following instructions.[CR][CR]1) Select edit[CR]2) Select global[CR]3) Select addons [CR]4) Select \"Launch SinaWeibo\"[CR]5)Press any key on your remote control[CR]6)Go back three times[CR]7)Hit save[CR][CR]After a Kodi reboot you can start this addon by just pressing the key you selected"
+msgstr ""
+
+msgctxt "#32066"
+msgid "An error has occured. Please provide a log file to the KodiAddonUser@gmail.com."
+msgstr ""
+
+msgctxt "#32067"
+msgid "Are you sure you want to define a keymap(short cut) for this addon?"
+msgstr ""
+
+
+msgctxt "#32070"
+msgid "Twitter"
+msgstr ""
+
+msgctxt "#32071"
+msgid "Twitter update time (min)"
+msgstr ""
+
+msgctxt "#32072"
+msgid "Save search history when playing media"
+msgstr ""
+
+msgctxt "#32073"
+msgid "Enable Search history (context menu)"
+msgstr ""
+
+msgctxt "#32074"
+msgid "Delete search history"
+msgstr ""
+
+msgctxt "#32075"
+msgid "No history available."
+msgstr ""
+
+msgctxt "#32076"
+msgid "Please choose an entry from history:"
+msgstr ""
