@@ -9,10 +9,10 @@ from twitter import *
 from common_addon import *
 from addonfileio import FileIO
 
-con_secret = 'h7hSFO1BNKzyB2EabYf7RXXd5'
-con_secret_key = 'tVbNWktkILCHu9CcENhXaUnLOrZWhJIHvBNcSEwgaczR8adZwU'
-token = '1226187432-3Tn0Euwt604LvNXGsVYWrgBrXa2xboo3UFgbrha'
-token_key = 'KccVJ7kUFJhG7uZgJeQNizEbf9Z9spZDhEKGP3b3ogrH2'
+con_secret = 'JEV0DlR2jhIZmFeLvUDsH6juU'
+con_secret_key = 'pcdauBCHsgL0xJ8ZxH187ElqDtBjeWWrnd7lWXXif8vwrr9nqL'
+token = '952980031399084032-zVMCwWJPudkUWivY1LdWEwzoySVVsl8'
+token_key = 'RDBWQvpBSxyd7nnpxfJ8Zf1eEAYoKf7PEwtsOKB2RXMHj'
 
 t = Twitter(
     auth=OAuth(token, token_key, con_secret, con_secret_key))
