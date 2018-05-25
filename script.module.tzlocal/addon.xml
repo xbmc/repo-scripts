@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.module.tzlocal" version="1.5.2" name="tzlocal" provider-name="Lunatixz">
+    <requires>
+        <import addon="xbmc.python" version="2.25.0" />
+        <import addon="script.module.pytz" version="2014.2"/>
+    </requires>
+    <extension library="lib" point="xbmc.python.module" />
+    <extension point="xbmc.addon.metadata">
+        <summary lang="en_GB">A Python interface for tzlocal</summary>
+        <description lang="en_GB">A Python interface for tzlocal</description>
+        <forum>http://forum.kodi.tv</forum>
+        <website>https://github.com/regebro/tzlocal</website>
+        <license>MIT</license>
+        <platform>all</platform>
+        <source>https://github.com/Lunatixz/KODI_Addons/tree/master/script.module.tzlocal</source>
+        <news></news>
+        <assets>
+            <icon>icon.png</icon>
+        </assets>
+    </extension>
+</addon>
