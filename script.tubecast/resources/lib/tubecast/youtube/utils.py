@@ -12,7 +12,7 @@ def parse_cmd(cmd):
     if cmd:
         code = cmd[0][0]
         cmd = ast.literal_eval("{}".format(cmd[0][1].replace('"{', '{').replace('}"', '}').replace('\\"', '"')))
-        return code, cmd
+        return int(code), cmd
     else:
         raise ValueError('Unable to parse CMD')
 
