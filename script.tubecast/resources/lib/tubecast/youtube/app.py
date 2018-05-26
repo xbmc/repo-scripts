@@ -60,6 +60,8 @@ class YoutubeCastV1(object):
         self.volume_monitor = None
         self.listener = None
         self.connected_client = None
+        # Hold references to the index of received codes
+        self.code = -1
         # Get service announcement data
         self.bind_vals = templates.announcement(self.screen_uid, self.default_screen_name, self.default_screen_app)
 
@@ -185,57 +187,77 @@ class YoutubeCastV1(object):
 
         elif case("remoteConnected", cmd):
             # Parse data
-            _, data = parse_cmd(cmd)
-            logger.info("Remote connected: {}".format(data))
-            self.has_client = True
-            # Start "player" thread
-            threading.Thread(target=self.__player_thread).start()
-            # Start a new volume_monitor if not yet available
-            if not self.volume_monitor:
-                threading.Thread(target=self.__monitor_volume).start()
-            # Disable automatic playback from youtube (this is kodi not youtube :))
-            self._set_disabled()
-            # Check if it is a new association
-            if not self.connected_client or self.connected_client != data:
-                self.connected_client = data
-                kodibrigde.remote_connected(data["name"])
+            code, data = parse_cmd(cmd)
+            if code > self.code:
+                self.code = code
+                logger.info("Remote connected: {}".format(data))
+                self.has_client = True
+                if not self.player:
+                    # Start "player" thread
+                    threading.Thread(target=self.__player_thread).start()
+                # Start a new volume_monitor if not yet available
+                if not self.volume_monitor:
+                    threading.Thread(target=self.__monitor_volume).start()
+                # Disable automatic playback from youtube (this is kodi not youtube :))
+                self._set_disabled()
+                # Check if it is a new association
+                if not self.connected_client or self.connected_client != data:
+                    self.connected_client = data
+                    kodibrigde.remote_connected(data["name"])
+            else:
+                logger.debug("Command ignored, already executed before")
 
         elif case("remoteDisconnected", cmd):
-            _, data = parse_cmd(cmd)
-            logger.info("Remote disconnected: {}".format(data))
-            self._initial_app_state()
-            kodibrigde.remote_disconnected(data["name"])
+            code, data = parse_cmd(cmd)
+            if code > self.code:
+                self.code = code
+                logger.info("Remote disconnected: {}".format(data))
+                self._initial_app_state()
+                kodibrigde.remote_disconnected(data["name"])
+                # Kill player if exists
+                if self.player and self.player.isPlaying:
+                    self._ready()
+            else:
+                logger.debug("Command ignored, already executed before")
 
         elif case("getNowPlaying", cmd):
             logger.debug("getNowPlaying received")
             self._ready()
 
         elif case("setPlaylist", cmd):
-            _, data = parse_cmd(cmd)
-            logger.debug("setPlaylist: {}".format(data))
-            cur_video_id = data["videoId"]
-            video_ids = data["videoIds"]
-            self.ctt = data["ctt"]
-            self.cur_list_id = data["listId"]
-            self.current_index = int(data["currentIndex"])
-            self.cur_list = video_ids.split(",")
-            # Set info on our custom player instance and request playback
-            self.player.setInfo(cur_video_id, self.ctt, self.cur_list_id, self.current_index)
-            self.player.play_from_youtube(kodibrigde.get_youtube_plugin_path(cur_video_id))
+            code, data = parse_cmd(cmd)
+            if code > self.code:
+                self.code = code
+                logger.debug("setPlaylist: {}".format(data))
+                cur_video_id = data["videoId"]
+                video_ids = data["videoIds"]
+                self.ctt = data["ctt"]
+                self.cur_list_id = data["listId"]
+                self.current_index = int(data["currentIndex"])
+                self.cur_list = video_ids.split(",")
+                # Set info on our custom player instance and request playback
+                self.player.setInfo(cur_video_id, self.ctt, self.cur_list_id, self.current_index)
+                self.player.play_from_youtube(kodibrigde.get_youtube_plugin_path(cur_video_id))
+            else:
+                logger.debug("Command ignored, already executed before")
 
         elif case("updatePlaylist", cmd):
-            _, data = parse_cmd(cmd)
-            logger.debug("updatePlaylist: {}".format(data))
-            if "videoIds" in data.keys():
-                self.cur_list = data["videoIds"].split(",")
-                if self.current_index >= len(self.cur_list):
-                    self.current_index -= 1
+            code, data = parse_cmd(cmd)
+            if code > self.code:
+                self.code = code
+                logger.debug("updatePlaylist: {}".format(data))
+                if "videoIds" in data.keys():
+                    self.cur_list = data["videoIds"].split(",")
+                    if self.current_index >= len(self.cur_list):
+                        self.current_index -= 1
+                else:
+                    self.cur_list = []
+                    self.current_index = 0
+                    # Check if kodi is playing and if so request stop
+                    if self.player.playing:
+                        self.player.stop()
             else:
-                self.cur_list = []
-                self.current_index = 0
-                # Check if kodi is playing and if so request stop
-                if self.player.playing:
-                    self.player.stop()
+                logger.debug("Command ignored, already executed before")
 
         elif case("next", cmd):
             logger.debug("Next received")
@@ -253,25 +275,34 @@ class YoutubeCastV1(object):
 
         elif case("stopVideo", cmd):
             logger.debug("stopVideo received")
-            self._ready()
+            if self.player and self.player.playing:
+                self._ready()
 
         elif case("seekTo", cmd):
-            _, data = parse_cmd(cmd)
-            logger.debug("seekTo: {}".format(data))
-            time_seek = data["newTime"]
-            self._seek(time_seek)
+            code, data = parse_cmd(cmd)
+            if code > self.code:
+                self.code = code
+                logger.debug("seekTo: {}".format(data))
+                time_seek = data["newTime"]
+                self._seek(time_seek)
+            else:
+                logger.debug("Command ignored, already executed before")
 
         elif case("getVolume", cmd):
             logger.debug("getVolume received")
             self._get_volume()
 
         elif case("setVolume", cmd):
-            _, data = parse_cmd(cmd)
-            logger.debug("setVolume: {}".format(data))
-            new_volume = data["volume"]
-            # Set volume only if it differs from current volume
-            if new_volume != kodibrigde.get_kodi_volume():
-                self._set_volume(new_volume)
+            code, data = parse_cmd(cmd)
+            if code > self.code:
+                self.code = code
+                logger.debug("setVolume: {}".format(data))
+                new_volume = data["volume"]
+                # Set volume only if it differs from current volume
+                if new_volume != kodibrigde.get_kodi_volume():
+                    self._set_volume(new_volume)
+            else:
+                logger.debug("Command ignored, already executed before")
 
         elif case("play", cmd):
             logger.debug("play received")
