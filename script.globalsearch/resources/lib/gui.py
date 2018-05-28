@@ -91,6 +91,9 @@ class GUI(xbmcgui.WindowXML):
         vid = ADDON.getSetting('view')
         if vid:
             xbmc.executebuiltin('Container.SetViewMode(%i)' % int(vid))
+        else:
+            # no view will be loaded unless we call SetViewMode, might be a bug...
+            xbmc.executebuiltin('Container.SetViewMode(-1)')
 
     def _fetch_items(self):
         for key, value in sorted(CATEGORIES.items(), key=lambda x: x[1]['order']):
