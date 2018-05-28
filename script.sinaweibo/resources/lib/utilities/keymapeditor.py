@@ -20,4 +20,6 @@ def run():
 
     except:
         traceback.print_stack()
-        xbmc.executebuiltin("XBMC.Notification('" + translate(32000) + "','" + translate(32066) + "','2000','')")
+        dialog = xbmcgui.Dialog()
+        dialog.notification(translate(32000), translate(32066), xbmcaddon.Addon().getAddonInfo('icon'), 2000)
+        #xbmc.executebuiltin("XBMC.Notification('" + translate(32000) + "','" + translate(32066) + "','2000','')")

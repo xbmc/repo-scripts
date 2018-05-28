@@ -69,7 +69,7 @@ def add_hashtag_to_twitter_history(hashtag):
 def remove_twitter_hashtag_history():
     if os.path.exists(twitter_history_file):
         os.remove(twitter_history_file)
-        xbmc.executebuiltin("XBMC.Notification(%s,%s,3000,%s)" % (
-        translate(32000), translate(32071), os.path.join(addon_path, "resources/images/weibo-500.png")))
+        dialog = xbmcgui.Dialog()
+        dialog.notification(translate(32000), translate(32078), xbmcaddon.Addon().getAddonInfo('icon'), 4000)
     else:
         xbmcgui.Dialog().ok(translate(32000), translate(32075))

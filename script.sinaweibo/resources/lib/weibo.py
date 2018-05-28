@@ -21,16 +21,16 @@ class TwitterDialog(xbmcgui.WindowXMLDialog):
         self.teamObjs = {}
 
     def onInit(self):
-        xbmc.log(msg="weibo center  cycle started", level=xbmc.LOGDEBUG)
+        xbmc.log(msg="sinaweibo-Twitter cycle started", level=xbmc.LOGDEBUG)
         self.getControl(32540).setImage(os.path.join(addon_path, "resources", "images", "weibo_sm.png"))
         self.refresh()
         i = 0
-        while self.isRunning:
+        while self.isRunning and not xbmc.Monitor().abortRequested():
             if (float(i * 200) / (twitter_update_time * 60 * 1000)).is_integer() and ((i * 200) / (3 * 60 * 1000)) != 0:
                 self.getTweets()
             xbmc.sleep(200)
             i += 1
-        xbmc.log(msg="[Match Center] Twitter cycle stopped", level=xbmc.LOGDEBUG)
+        xbmc.log(msg="sinaweibo-Twitter cycle stopped", level=xbmc.LOGDEBUG)
 
     def getTweets(self):
         self.getControl(32500).setLabel("#" + self.hash)

@@ -4,6 +4,7 @@ import time
 import os
 import xbmcgui
 import xbmc
+import xbmcaddon
 import json
 from twitter import *
 from common_addon import *
@@ -67,8 +68,8 @@ def get_username_tweets(weibo_username):
                 })
     except:
         xbmc.log(traceback.format_exc())
-        xbmc.executebuiltin(
-            "Notification(%s, %s, %d, %s)" % (weibo_username, 'Weibo User Not Exists', 4000, xbmcaddon.Addon().getAddonInfo('icon')))
+        dialog = xbmcgui.Dialog()
+        dialog.notification(weibo_username, 'Weibo User Not Exists', xbmcaddon.Addon().getAddonInfo('icon'), 4000)
     finally:
         return return_twitter
 
@@ -87,9 +88,8 @@ def get_uid_tweets(weibo_uid):
         json_obj = json.loads(json_string)
         xbmc.log(msg='!!!!!!!!!!!!!!!!!!!!!!get_uid_tweets' + weibo_uid + 'load finish!!!!!!!!!!!!!!!!', level=xbmc.LOGDEBUG)
         if json_obj['ok'] is 0:
-            xbmc.executebuiltin(
-                "Notification(%s, %s, %d, %s)" % (
-                weibo_uid, 'Weibo User ID Not Exists', 4000, xbmcaddon.Addon().getAddonInfo('icon')))
+            dialog = xbmcgui.Dialog()
+            dialog.notification(weibo_uid, 'Weibo User ID Not Exists', xbmcaddon.Addon().getAddonInfo('icon'), 4000)
         for i in range(0,len(json_obj['data']['cards'])):
             if json_obj['data']['cards'][i]['card_type'] != 9:
                 continue
@@ -119,8 +119,8 @@ def get_uid_tweets(weibo_uid):
             })
     except:
         xbmc.log(traceback.format_exc())
-        xbmc.executebuiltin(
-            "Notification(%s, %s, %d, %s)" % (weibo_uid, 'Weibo User ID Not Exists', 4000, xbmcaddon.Addon().getAddonInfo('icon')))
+        dialog = xbmcgui.Dialog()
+        dialog.notification(weibo_uid, 'Weibo User ID Not Exists', xbmcaddon.Addon().getAddonInfo('icon'), 4000)
     finally:
         return return_twitter
 
@@ -173,7 +173,7 @@ def add_hashtag_to_twitter_history(hashtag):
 def remove_twitter_hashtag_history():
     if os.path.exists(weibo_history_file):
         os.remove(weibo_history_file)
-        xbmc.executebuiltin("XBMC.Notification(%s,%s,3000,%s)" % (
-        translate(32000), translate(32071), os.path.join(addon_path, "icon.png")))
+        dialog = xbmcgui.Dialog()
+        dialog.notification(translate(32000), translate(32078), xbmcaddon.Addon().getAddonInfo('icon'), 4000)
     else:
         xbmcgui.Dialog().ok(translate(32000), translate(32075))

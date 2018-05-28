@@ -20,18 +20,18 @@ class TwitterDialog(xbmcgui.WindowXMLDialog):
         self.teamObjs = {}
 
     def onInit(self):
-        xbmc.log(msg="weibo center  cycle started", level=xbmc.LOGDEBUG)
+        xbmc.log(msg="sinaweibo Twitter cycle started", level=xbmc.LOGDEBUG)
         self.getControl(32540).setImage(os.path.join(addon_path, "resources", "images", "twitter_sm.png"))
-        xbmc.executebuiltin("SetProperty(loading-script-matchcenter-twitter,1,home)")
+        xbmc.executebuiltin("SetProperty(loading-script-sinaweibo-twitter,1,home)")
         self.getTweets()
-        xbmc.executebuiltin("ClearProperty(loading-script-matchcenter-twitter,Home)")
+        xbmc.executebuiltin("ClearProperty(loading-script-sinaweibo-twitter,Home)")
         i = 0
-        while self.isRunning:
+        while self.isRunning and not xbmc.Monitor().abortRequested():
             if (float(i * 200) / (twitter_update_time * 60 * 1000)).is_integer() and ((i * 200) / (3 * 60 * 1000)) != 0:
                 self.getTweets()
             xbmc.sleep(200)
             i += 1
-        xbmc.log(msg="[Match Center] Twitter cycle stopped", level=xbmc.LOGDEBUG)
+        xbmc.log(msg="sinaweibo Twitter cycle stopped", level=xbmc.LOGDEBUG)
 
     def getTweets(self):
         self.getControl(32500).setLabel("#" + self.hash)
@@ -60,9 +60,9 @@ class TwitterDialog(xbmcgui.WindowXMLDialog):
         return
 
     def refresh(self):
-        xbmc.executebuiltin("SetProperty(loading-script-matchcenter-twitter,1,home)")
+        xbmc.executebuiltin("SetProperty(loading-script-sinaweibo-twitter,1,home)")
         self.getTweets()
-        xbmc.executebuiltin("ClearProperty(loading-script-matchcenter-twitter,Home)")
+        xbmc.executebuiltin("ClearProperty(loading-script-sinaweibo-twitter,Home)")
 
     def stopRunning(self):
         self.isRunning = False

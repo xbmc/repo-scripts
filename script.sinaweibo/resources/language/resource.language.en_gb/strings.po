@@ -1,7 +1,7 @@
 # Kodi Media Center language file
 # Addon Name: Twitter Tweets
-# Addon id: script.twittertweets
-# Addon Provider: Lunatixz
+# Addon id: script.sinaweibo
+# Addon Provider: WeiboFans
 msgid ""
 msgstr ""
 "Project-Id-Version:\script.sinaweibo\n"
@@ -175,4 +175,8 @@ msgstr ""
 
 msgctxt "#32076"
 msgid "Please choose an entry from history:"
+msgstr ""
+
+msgctxt "#32078"
+msgid "Search history deleted."
 msgstr ""

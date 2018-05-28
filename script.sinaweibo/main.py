@@ -20,7 +20,6 @@ params=get_params()
 
 if not params:
     if "script-sinaweibo-MainMenu.xml" not in xbmc.getInfoLabel('Window.Property(xmlfile)'):
-        #xbmc.executebuiltin("Notification(%s, %s, %d, %s)" % ('weilcome', 'Thanks for using this addon', 4000, xbmcaddon.Addon().getAddonInfo('icon')))
         mainmenu.start()
 else:
     # Integration patterns below

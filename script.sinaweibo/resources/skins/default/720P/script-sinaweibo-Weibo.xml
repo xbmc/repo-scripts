@@ -88,7 +88,7 @@
 			</control>
 		</control>
 		<control type="group">
-			<visible>IsEmpty(Window(home).Property(loading-script-matchcenter-twitter))</visible>
+			<visible>IsEmpty(Window(home).Property(loading-script-sinaweibo-weibo))</visible>
 			<control type="list" id="32501">
 				<left>-55</left>
 				<top>85</top>
