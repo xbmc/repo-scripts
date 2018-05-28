@@ -1,0 +1,210 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<window type="window">
+	<depth>0.52</depth>
+	<coordinates>
+		<left>147</left>
+		<top>180</top>
+	</coordinates>
+	<defaultcontrol always="true">32500</defaultcontrol>
+	<animation type="WindowOpen" reversible="false">
+		<effect type="zoom" start="80" end="100" center="960,540" delay="160" tween="back" time="240" />
+		<effect type="fade" delay="160" end="100" time="240" />
+	</animation>
+	<animation type="WindowClose" reversible="false">
+		<effect type="zoom" start="100" end="80" center="960,540" easing="in" tween="back" time="240" />
+		<effect type="fade" start="100" end="0" time="240" />
+	</animation>
+	<controls>
+		<control type="image">
+			<left>0</left>
+			<top>0</top>
+			<width>969</width>
+			<height>283</height>
+			<texture border="2">dialog-bg-solid.png</texture>
+		</control>
+		<control type="image">
+			<left>0</left>
+			<top>0</top>
+			<width>969</width>
+			<height>70</height>
+			<texture colordiffuse="FF12B2E7" border="2">white70.png</texture>
+		</control>
+		<control type="label">
+			<textoffsetx>70</textoffsetx>
+			<left>-30</left>
+			<top>0</top>
+			<width>969</width>
+			<height>70</height>
+			<font>font20_title</font>
+			<label>Sina Weibo</label>
+			<align>left</align>
+			<aligny>center</aligny>
+			<shadowcolor>black</shadowcolor>
+		</control>
+		<control type="button">
+			<left>-1920</left>
+			<top>-1080</top>
+			<width>5760</width>
+			<height>3240</height>
+			<texturefocus>-</texturefocus>
+			<texturenofocus>-</texturenofocus>
+			<onclick>Action(close)</onclick>
+		</control>
+		<control type="button">
+			<description>button overlay to avoid closing in dialog area</description>
+			<left>0</left>
+			<top>0</top>
+			<width>969</width>
+			<height>283</height>
+			<texturefocus>-</texturefocus>
+			<texturenofocus>-</texturenofocus>
+			<onclick>noop</onclick>
+		</control>
+		<control type="radiobutton" id="32501">
+			<left>969</left>
+			<top>11</top>
+			<width>48</width>
+			<height>48</height>
+			<radiowidth>48</radiowidth>
+			<radioheight>48</radioheight>
+			<texturefocus>-</texturefocus>
+			<texturenofocus>-</texturenofocus>
+			<label></label>
+			<animation effect="slide" end="-70,0" time="0" condition="true">Conditional</animation>
+			<textureradioofffocus colordiffuse="EEFFFFFF">close.png</textureradioofffocus>
+			<textureradiooffnofocus colordiffuse="EEFFFFFF">logo.png</textureradiooffnofocus>
+			<textureradioonfocus colordiffuse="EEFFFFFF">close.png</textureradioonfocus>
+			<textureradioonnofocus colordiffuse="EEFFFFFF">logo.png</textureradioonnofocus>
+			<onclick>Action(close)</onclick>
+			<onup>32500</onup>
+			<ondown>32500</ondown>
+		</control>
+		<control type="group">
+			<control type="group">
+				<control type="image">
+					<left>-21</left>
+					<top>50</top>
+					<width>1011</width>
+					<height>253</height>
+					<texture border="40">dialogbutton-nofo.png</texture>
+				</control>
+				<control type="list" id="32500">
+					<left>-139</left>
+					<top>55</top>
+					<width>980</width>
+					<height>220</height>
+					<onup>32501</onup>
+					<ondown>32501</ondown>
+					<orientation>horizontal</orientation>
+					<scrolltime>200</scrolltime>
+					<animation effect="slide" start="0,0" end="10,0" time="0" condition="!Control.IsVisible(61)">Conditional</animation>
+					<animation effect="slide" end="120,0" time="0" condition="!Control.IsVisible(5)">Conditional</animation>
+					<itemlayout height="225" width="323">
+						<top>2</top>
+						<control type="image">
+							<top>5</top>
+							<left>-3</left>
+							<width>347</width>
+							<height>260</height>
+							<texture border="40">button-nofo.png</texture>
+						</control>
+						<control type="image">
+							<left>95</left>
+							<top>23</top>
+							<width>160</width>
+							<height>130</height>
+							<texture>$INFO[ListItem.Property(thumb)]</texture>
+							<aspectratio>keep</aspectratio>
+							<align>center</align>
+						</control>
+						<control type="image">
+							<left>17</left>
+							<top>149</top>
+							<width>307</width>
+							<height>75</height>
+							<texture colordiffuse="60FFFFFF">black.png</texture>
+						</control>
+						<control type="image">
+							<left>329</left>
+							<top>24</top>
+							<width>50</width>
+							<height>50</height>
+							<aspectratio>keep</aspectratio>
+							<texture>$INFO[ListItem.Overlay]</texture>
+						</control>
+						<control type="textbox">
+							<left>25</left>
+							<top>146</top>
+							<width>300</width>
+							<height>74</height>
+							<label>[COLOR grey]$INFO[ListItem.Label][/COLOR]</label>
+							<shadowcolor>text_shadow</shadowcolor>
+							<font>font12</font>
+							<align>center</align>
+							<aligny>center</aligny>
+						</control>
+					</itemlayout>
+					<focusedlayout height="225" width="323">
+						<control type="group">
+							<depth>0.10</depth>
+							<animation type="Focus" reversible="false">
+								<effect type="zoom" center="auto" start="100" end="108" time="250" tween="sine" />
+							</animation>
+							<animation type="UnFocus" reversible="false">
+								<effect type="zoom" center="auto" start="108" end="100" time="150" tween="sine" />
+							</animation>
+							<top>2</top>
+							<control type="image">
+								<width>340</width>
+								<height>245</height>
+								<texture border="40">button-nofo.png</texture>
+								<animation effect="fade" start="0" end="100" time="0">Unfocus</animation>
+								<animation effect="fade" start="100" end="0" time="0">Focus</animation>
+							</control>
+							<control type="image">
+								<width>340</width>
+								<height>237</height>
+								<texture border="40" colordiffuse="FF12B2E7">button-fo.png</texture>
+								<animation effect="fade" start="100" end="0" time="0">Unfocus</animation>
+							</control>
+							<control type="image">
+								<left>95</left>
+								<top>23</top>
+								<width>160</width>
+								<height>130</height>
+								<texture>$INFO[ListItem.Property(thumb)]</texture>
+								<aspectratio>keep</aspectratio>
+								<align>center</align>
+							</control>
+							<control type="image">
+								<left>0</left>
+								<top>24</top>
+								<width>50</width>
+								<height>50</height>
+								<aspectratio>keep</aspectratio>
+								<texture>$INFO[ListItem.Overlay]</texture>
+							</control>
+							<control type="image">
+								<left>21</left>
+								<top>149</top>
+								<width>298</width>
+								<height>75</height>
+								<texture colordiffuse="60FFFFFF">black.png</texture>
+							</control>
+							<control type="textbox">
+								<left>25</left>
+								<top>146</top>
+								<width>300</width>
+								<height>74</height>
+								<font>font12</font>
+								<label>$INFO[ListItem.Label]</label>
+								<align>center</align>
+								<aligny>center</aligny>
+							</control>
+						</control>
+					</focusedlayout>
+				</control>
+			</control>
+		</control>
+	</controls>
+</window>
