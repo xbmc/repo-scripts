@@ -1,0 +1,54 @@
+# XBMC Media Center language file
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC-Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: 2014-01-28 17:05+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Oskar Karlsosn <kontakta@oskarkarlsson.nu>\n"
+"Language-Team: LANGUAGE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+
+#Settings Headline
+
+msgctxt "#32000"
+msgid "General"
+msgstr ""
+
+msgctxt "#32001"
+msgid "Scrobbling"
+msgstr ""
+
+#Settings sub-menu
+
+msgctxt "#32002"
+msgid "Username"
+msgstr ""
+
+msgctxt "#32003"
+msgid "API key (you can find yours on: https://episodehunter.tv/user/settings)"
+msgstr ""
+
+msgctxt "#32004"
+msgid "Scrobble Movies"
+msgstr ""
+
+msgctxt "#32005"
+msgid "Scrobble TV Episodes"
+msgstr ""
+
+msgctxt "#32006"
+msgid "Percent watched to scrobble item"
+msgstr ""
+
+msgctxt "#32007"
+msgid "Offline"
+msgstr ""
+
+msgctxt "#32008"
+msgid "Debug"
+msgstr ""
