@@ -1,0 +1,167 @@
+# Kodi Media Center language file
+# Addon Name: XBMC LCDproc
+# Addon id: script.xbmc.lcdproc
+# Addon Provider: Team Kodi: Memphiz, Daniel 'herrnst' Scheller
+msgid ""
+msgstr ""
+"Project-Id-Version: script.xbmc.lcdproc\n"
+"Report-Msgid-Bugs-To: https://github.com/herrnst/script.xbmc.lcdproc\n"
+"POT-Creation-Date: 2018-06-02 15:55+0200\n"
+"PO-Revision-Date: 2018-06-02 15:55+0200\n"
+"Last-Translator: Daniel Scheller <nst@kodi.tv>\n"
+"Language-Team: English\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+
+# Settings
+# Behaviour
+
+msgctxt "#32100"
+msgid "Behaviour"
+msgstr ""
+
+msgctxt "#32101"
+msgid "Delay for scrolling text"
+msgstr ""
+
+msgctxt "#32102"
+msgid "Scroll mode"
+msgstr ""
+
+msgctxt "#32103"
+msgid "Navigation display duration (s)"
+msgstr ""
+
+msgctxt "#32104"
+msgid "Display refresh rate (Hz)"
+msgstr ""
+
+msgctxt "#32105"
+msgid "Use alternate charset"
+msgstr ""
+
+msgctxt "#32106"
+msgid "Charset"
+msgstr ""
+
+msgctxt "#32107"
+msgid "Support for extra display elements (e.g. icons)"
+msgstr ""
+
+# empty strings from id 32108 to 32199
+# Backlight
+
+msgctxt "#32200"
+msgid "Backlight"
+msgstr ""
+
+msgctxt "#32201"
+msgid "on screensaver"
+msgstr ""
+
+msgctxt "#32202"
+msgid "Dim on shutdown"
+msgstr ""
+
+msgctxt "#32203"
+msgid "on video/LiveTV playback"
+msgstr ""
+
+msgctxt "#32204"
+msgid "on music/radio playback"
+msgstr ""
+
+msgctxt "#32205"
+msgid "Delay (s)"
+msgstr ""
+
+msgctxt "#32206"
+msgid "Dim/turn off..."
+msgstr ""
+
+# empty strings from id 32207 to 32299
+# Connection
+
+msgctxt "#32300"
+msgid "Connection"
+msgstr ""
+
+msgctxt "#32301"
+msgid "Use remote LCDProc"
+msgstr ""
+
+msgctxt "#32302"
+msgid "LCDd IP"
+msgstr ""
+
+msgctxt "#32303"
+msgid "LCDd port"
+msgstr ""
+
+msgctxt "#32304"
+msgid "Show heartbeat symbol"
+msgstr ""
+
+msgctxt "#32305"
+msgid "Hide connection error notifications"
+msgstr ""
+
+# empty strings from id 32306 to 32400
+# Enum values: Scroll mode
+
+msgctxt "#32401"
+msgid "Marquee"
+msgstr ""
+
+msgctxt "#32402"
+msgid "Left/Right"
+msgstr ""
+
+# empty strings from id 32403 to 32410
+# Enum values: Charsets
+
+msgctxt "#32411"
+msgid "ISO8859-1 (default)"
+msgstr ""
+
+msgctxt "#32412"
+msgid "ISO8859-15"
+msgstr ""
+
+msgctxt "#32413"
+msgid "KOI8-R"
+msgstr ""
+
+msgctxt "#32414"
+msgid "CP1251"
+msgstr ""
+
+msgctxt "#32415"
+msgid "ISO8859-5"
+msgstr ""
+
+msgctxt "#32416"
+msgid "HD44780-ROM A00"
+msgstr ""
+
+msgctxt "#32417"
+msgid "HD44780-ROM A02"
+msgstr ""
+
+# empty strings from id 32418 to 32499
+# Notifications
+
+msgctxt "#32500"
+msgid "Failed to connect to LCDProc!"
+msgstr ""
+
+msgctxt "#32501"
+msgid "Connected to LCDProc!"
+msgstr ""
+
+msgctxt "#32502"
+msgid "Warning! Errors in LCD.xml or LCD.xml not found!"
+msgstr ""

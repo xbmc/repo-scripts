@@ -1,0 +1,80 @@
+<lcd>
+   <!-- advanced configurables, XML-uncomment and set options as desired -->
+
+   <!-- scrollseparator: string to use as separator if text gets scrolled -->
+   <!--scrollseparator> </scrollseparator-->
+
+   <!-- progressbarsurroundings: put progress bars in square brackets (on/off) -->
+   <!--progressbarsurroundings>off</progressbarsurroundings-->
+
+   <!-- progressbarblank: character to use as non-filled progressbar -->
+   <!--progressbarblank>-</progressbarblank-->
+
+   <!-- icontextoffset: offset for text displayed after any play/pause icons -->
+   <!--icontextoffset>2</icontextoffset-->
+
+   <!-- allowemptylines: show text lines without contents or filter them (on/off) -->
+   <!--allowemptylines>off</allowemptylines-->
+
+   <!-- centerbigdigits: (try to) align big numbers centered on the display (on/off) -->
+   <!--centerbigdigits>off</centerbigdigits-->
+
+   <!-- disableplayindicatoronpause: turn off any playing indicator (extra stuff) when pausing playback (on/off) -->
+   <!--disableplayindicatoronpause>off</disableplayindicatoronpause-->
+
+   <navigation>
+      <line>$INFO[System.CurrentWindow]</line>
+      <line>$INFO[System.CurrentControl]</line>
+      <line>Freemem: $INFO[System.FreeMemory]</line>
+      <line>$INFO[System.ScreenWidth]x$INFO[System.ScreenHeight] $INFO[System.ScreenMode]</line>
+   </navigation>
+   <music>
+      <line>$INFO[LCD.PlayIcon] $INFO[Player.Time]/$INFO[Player.Duration]</line>
+      <line>$INFO[MusicPlayer.Title]</line>
+      <line>$INFO[MusicPlayer.Artist]</line>
+      <line>$INFO[MusicPlayer.Album] ($INFO[MusicPlayer.Year])</line>
+   </music>
+   <video>
+      <line>$INFO[LCD.PlayIcon] $INFO[Player.Time]/$INFO[Player.Duration]</line>
+      <line>$INFO[VideoPlayer.Title]</line>
+      <line>$INFO[VideoPlayer.Genre]</line>
+      <line>$INFO[LCD.ProgressBar]</line>
+      <line>Freemem: $INFO[System.FreeMemory]</line>
+   </video>
+   <tvshow>
+      <line>$INFO[LCD.PlayIcon] $INFO[Player.Time]/$INFO[Player.Duration]</line>
+      <line>$INFO[VideoPlayer.TVShowTitle]</line>
+      <line>$INFO[VideoPlayer.Title]</line>
+      <line>$INFO[LCD.ProgressBar]</line>
+      <line>Freemem: $INFO[System.FreeMemory]</line>
+   </tvshow>
+   <general>
+      <line>Kodi running...</line>
+      <line>$INFO[System.Time] $INFO[System.Date]</line>
+      <line>Freemem: $INFO[System.FreeMemory]</line>
+      <line>$INFO[System.ScreenWidth]x$INFO[System.ScreenHeight] $INFO[System.ScreenMode]</line>
+   </general>
+   <screensaver>
+      <line>$INFO[System.CurrentWindow]</line>
+      <line>$INFO[LCD.TimeWide21]</line>
+      <line>$INFO[LCD.TimeWide22]</line>
+      <line>Freemem: $INFO[System.FreeMemory]</line>
+   </screensaver>
+   <xbelaunch>
+      <line></line>
+      <line>Playing</line>
+      <line>$INFO[System.LaunchXBE]</line>
+   </xbelaunch>
+   <pvrtv>
+      <line>$INFO[VideoPlayer.ChannelName]</line>
+      <line>$INFO[VideoPlayer.Title]</line>
+      <line>$INFO[LCD.PlayIcon] $INFO[PVR.EpgEventElapsedTime]$INFO[PVR.EpgEventDuration,/,]</line>
+      <line>$INFO[LCD.ProgressBar]</line>
+   </pvrtv>
+   <pvrradio>
+      <line>$INFO[MusicPlayer.ChannelName]</line>
+      <line>$INFO[MusicPlayer.Title]</line>
+      <line>$INFO[LCD.PlayIcon] $INFO[PVR.EpgEventElapsedTime]$INFO[PVR.EpgEventDuration,/,]</line>
+      <line>$INFO[LCD.ProgressBar]</line>
+   </pvrradio>
+</lcd>
