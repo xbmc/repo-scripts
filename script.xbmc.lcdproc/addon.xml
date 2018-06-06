@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.xbmc.lcdproc" name="XBMC LCDproc" version="3.0.0" provider-name="Team Kodi: Memphiz, Daniel 'herrnst' Scheller">
+  <requires>
+    <import addon="xbmc.python" version="2.25.0"/>
+  </requires>
+  <extension point="xbmc.service" library="main.py"/>
+  <extension point="xbmc.addon.metadata">
+    <language></language>
+    <summary>Kodi/XBMC LCDproc</summary>
+    <description lang="en_GB">Displays configurable information e.g. about playing media or Kodi status on any LC/VF-display driven by LCDproc, and acts as direct drop-in replacement to the LCD/VFD-feature previously available in Kodi/XBMC's core. Supports additional display elements (icons, bars) on SoundGraph iMON LCD and Targa/Futaba mdm166a VFD hardware. Requires a properly configured and running LCDd either locally or somewhere on the network.</description>
+    <description lang="de_DE">Zeigt konfigurierbare Informationen z.B. über aktuelle Wiedergabe oder den Kodi Status auf beliebigen von LCDproc angesteuerten LC/VF-Displays, ersetzt die zuvor im Kodi/XBMC-Kern enthaltene LCD/VFD-Funktion. Unterstützt zusätzliche Elemente (Icons, Balken) von SoundGraph iMON LCD und Targa/Futaba mdm166a VFD Hardware. Benötigt einen konfigurierten, laufenden LCDd auf dem lokalen System oder im Netzwerk.</description>
+    <description lang="fr_FR">Affiche des informations définies par configuration telles que le média en cours de lecture, l'état de Kodi... et ce sur tout type d'afficheur LC/VF géré par LCDProc. Remplace la fonctionnalité LCD/VFD précédemment disponible par défaut dans Kodi/XBMC. Gère des éléments supplémentaires (icônes, barres) sur les écrans SoundGraph iMON LCD et Targa/Futaba mdm166a VFD. Nécessite un serveur LCDd correctement configuré et disponible localement ou sur le réseau.</description>
+    <disclaimer lang="en_GB">Works with LCDproc only. Other LCD services like LCD4Linux or iMON Manager on Win32 are not supported. No liability taken for damaged hardware and/or software caused by this addon.</disclaimer>
+    <disclaimer lang="de_DE">Funktioniert ausschliesslich mit LCDproc. Andere LCD-Dienste wie LCD4Linux, iMON Manager unter Win32 u.a. sind nicht unterstützt. Keine Haftung für durch dieses Addon beschädigte Hard-/Software.</disclaimer>
+    <disclaimer lang="fr_FR">Fonctionne uniquement avec LCDProc. Les services tels que LCD4Linux ou iMON Manager sur Win32 ne sont pas gérés. Nous déclinons toute responsabilité en cas de dégats survenus suite à l'utilisation de cette extension.</disclaimer>
+    <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+    <platform>all</platform>
+    <website>https://github.com/lcdproc/lcdproc</website>
+    <forum>https://forum.kodi.tv/showthread.php?tid=143912</forum>
+    <source>https://github.com/herrnst/script.xbmc.lcdproc</source>
+    <email>nst at kodi dot tv</email>
+    <assets>
+      <icon>resources/icon.png</icon>
+    </assets>
+    <news>3.0.0 (Leia)
+- Compatibility with Kodi 18 Leia
+- Polish translation by mskalski (thanks!)
+- French translation by fengalin (thanks!)
+- Strings finally migrated to strings.po format
+- New progressbar+time linetype by Truong Ta (thanks!)
+- Fixes, cleanups, cosmetics and optimizations all over the place
+</news>
+  </extension>
+</addon>
