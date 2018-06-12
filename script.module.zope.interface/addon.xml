@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.module.zope.interface" name="Twisted" version="4.0.5"
+<addon id="script.module.zope.interface" name="Zope interface" 
+version="4.0.6"
        provider-name="mablae">
     <requires>
         <import addon="xbmc.python" version="2.1.0"/>
