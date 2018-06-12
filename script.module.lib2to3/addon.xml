@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.module.lib2to3" name="future" version="3.7.0" provider-name="Python software foundation">
+<addon id="script.module.lib2to3" name="lib2to3" version="3.7.0.1" 
+provider-name="Python software foundation">
 	<requires>
 		<import addon="xbmc.python" version="2.24.0"/>
 	</requires>
