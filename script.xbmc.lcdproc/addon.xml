@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.xbmc.lcdproc" name="XBMC LCDproc" version="3.0.0" provider-name="Team Kodi: Memphiz, Daniel 'herrnst' Scheller">
+<addon id="script.xbmc.lcdproc" name="XBMC LCDproc" version="3.0.1" provider-name="Team Kodi: Memphiz, Daniel 'herrnst' Scheller">
   <requires>
     <import addon="xbmc.python" version="2.25.0"/>
   </requires>
@@ -22,13 +22,9 @@
     <assets>
       <icon>resources/icon.png</icon>
     </assets>
-    <news>3.0.0 (Leia)
-- Compatibility with Kodi 18 Leia
-- Polish translation by mskalski (thanks!)
-- French translation by fengalin (thanks!)
-- Strings finally migrated to strings.po format
-- New progressbar+time linetype by Truong Ta (thanks!)
-- Fixes, cleanups, cosmetics and optimizations all over the place
+    <news>3.0.1
+- Imports cleaned up
+- Compatibility with Python 3
 </news>
   </extension>
 </addon>

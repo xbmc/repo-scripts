@@ -21,23 +21,21 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 '''
 
-import platform
-import xbmc
-import sys
-import os
 import re
 import telnetlib
 import time
 
+import xbmc
+
 from socket import *
 
-from settings import *
-from lcdbase import *
+from .settings import *
+from .lcdbase import *
 
-from lcdproc_extra_imon import *
-from lcdproc_extra_mdm166a import *
+from .lcdproc_extra_imon import *
+from .lcdproc_extra_mdm166a import *
 
-from infolabels import *
+from .infolabels import *
 
 MAX_ROWS = 20
 MAX_BIGDIGITS = 20
@@ -56,27 +54,27 @@ class LCDProc(LcdBase):
     self.m_timeSocketIdleTimeout = 2
     self.m_strLineText = [None]*MAX_ROWS
     self.m_strLineType = [None]*MAX_ROWS
-    self.m_strLineIcon = [None]*MAX_ROWS
+    self.m_bstrLineIcon = [None]*MAX_ROWS
     self.m_strDigits = [None]*MAX_BIGDIGITS
     self.m_iProgressBarWidth = 0
     self.m_iProgressBarLine = -1
-    self.m_strIconName = "BLOCK_FILLED"
+    self.m_bstrIconName = b"BLOCK_FILLED"
     self.m_iBigDigits = int(8) # 12:45:78 / colons count as digit
     self.m_iOffset = 1
-    self.m_strSetLineCmds = ""
+    self.m_bstrSetLineCmds = b""
     self.m_cExtraIcons = None
 
     LcdBase.__init__(self)
 
   def SendCommand(self, strCmd, bCheckRet):
-    countcmds = string.count(strCmd, '\n')
+    countcmds = strCmd.count(b'\n')
     sendcmd = strCmd
     ret = True
 
     # Single command without lf
     if countcmds < 1:
       countcmds = 1
-      sendcmd += "\n"
+      sendcmd += b"\n"
 
     try:
       # Send to server via raw socket to prevent telnetlib tampering with
@@ -96,20 +94,20 @@ class LCDProc(LcdBase):
       while True:
         try:
           # Read server reply
-          reply = self.tn.read_until("\n",3)
+          reply = self.tn.read_until(b"\n",3)
         except:
           # (Re)read failed, abort
           log(LOGERROR, "SendCommand: Telnet exception - reread")
           return False
 
         # Skip these messages
-        if reply[:6] == 'listen':
+        if reply[:6] == b'listen':
           continue
-        elif reply[:6] == 'ignore':
+        elif reply[:6] == b'ignore':
           continue
-        elif reply[:3] == 'key':
+        elif reply[:3] == b'key':
           continue
-        elif reply[:9] == 'menuevent':
+        elif reply[:9] == b'menuevent':
           continue
 
         # Response seems interesting, so stop here
@@ -118,47 +116,47 @@ class LCDProc(LcdBase):
       if not bCheckRet:
         continue # no return checking desired, so be fine
 
-      if strCmd == 'noop' and reply == 'noop complete\n':
+      if strCmd == b'noop' and reply == b'noop complete\n':
         continue # noop has special reply
 
-      if reply == 'success\n':
+      if reply == b'success\n':
         continue
 
       ret = False
 
     # Leave information something undesired happened
     if ret is False:
-      log(LOGWARNING, "Reply to '" + strCmd +"' was '" + reply)
+      log(LOGWARNING, "Reply to '%s' was '%s'" % (strCmd.decode(self.m_strLCDEncoding), reply.decode(self.m_strLCDEncoding)))
 
     return ret
 
   def SetupScreen(self):
     # Add screen first
-    if not self.SendCommand("screen_add xbmc", True):
+    if not self.SendCommand(b"screen_add xbmc", True):
       return False
 
     # Set screen priority
-    if not self.SendCommand("screen_set xbmc -priority info", True):
+    if not self.SendCommand(b"screen_set xbmc -priority info", True):
       return False
 
     # Turn off heartbeat if desired
     if not settings_getHeartBeat():
-      if not self.SendCommand("screen_set xbmc -heartbeat off", True):
+      if not self.SendCommand(b"screen_set xbmc -heartbeat off", True):
         return False
 
     # Initialize command list var
-    strInitCommandList = ""
+    strInitCommandList = b""
 
     # Setup widgets (scrollers and hbars first)
     for i in range(1,int(self.m_iRows)+1):
       # Text widgets
-      strInitCommandList += "widget_add xbmc lineScroller" + str(i) + " scroller\n"
+      strInitCommandList += b"widget_add xbmc lineScroller%i scroller\n" % (i)
 
       # Progress bars
-      strInitCommandList += "widget_add xbmc lineProgress" + str(i) + " hbar\n"
+      strInitCommandList += b"widget_add xbmc lineProgress%i hbar\n" % (i)
 
       # Reset bars to zero
-      strInitCommandList += "widget_set xbmc lineProgress" + str(i) + " 0 0 0\n"
+      strInitCommandList += b"widget_set xbmc lineProgress%i 0 0 0\n" % (i)
 
       self.m_strLineText[i-1] = ""
       self.m_strLineType[i-1] = ""
@@ -166,21 +164,21 @@ class LCDProc(LcdBase):
     # Setup icons last
     for i in range(1,int(self.m_iRows)+1):
       # Icons
-      strInitCommandList += "widget_add xbmc lineIcon" + str(i) + " icon\n"
+      strInitCommandList += b"widget_add xbmc lineIcon%i icon\n" % (i)
 
       # Default icon
-      strInitCommandList += "widget_set xbmc lineIcon" + str(i) + " 0 0 BLOCK_FILLED\n"
+      strInitCommandList += b"widget_set xbmc lineIcon%i 0 0 BLOCK_FILLED\n" % (i)
 
-      self.m_strLineIcon[i-1] = ""
+      self.m_bstrLineIcon[i-1] = b""
 
     for i in range(1,int(self.m_iBigDigits + 1)):
       # Big Digit
-      strInitCommandList += "widget_add xbmc lineBigDigit" + str(i) + " num\n"
+      strInitCommandList += b"widget_add xbmc lineBigDigit%i num\n" % (i)
 
       # Set Digit
-      strInitCommandList += "widget_set xbmc lineBigDigit" + str(i) + " 0 0\n"
+      strInitCommandList += b"widget_set xbmc lineBigDigit%i 0 0\n" % (i)
 
-      self.m_strDigits[i] = ""
+      self.m_strDigits[i] = b""
 
     if not self.SendCommand(strInitCommandList, True):
       return False
@@ -232,8 +230,8 @@ class LCDProc(LcdBase):
     # Never cause script failure/interruption by this! This is totally optional!
     try:
       # Retrieve driver name for additional functionality
-      self.tn.write("info\n")
-      reply = str(self.tn.read_until("\n",3)).strip()
+      self.tn.write(b"info\n")
+      reply = self.tn.read_until(b"\n",3).strip().decode("ascii")
 
       # When the LCDd driver doesn't supply a valid string, inform and return
       if reply == "":
@@ -275,10 +273,10 @@ class LCDProc(LcdBase):
 
       self.tn.open(ip, port)
       # Start a new session
-      self.tn.write("hello\n")
+      self.tn.write(b"hello\n")
 
       # Receive LCDproc data to determine row and column information
-      reply = self.tn.read_until("\n",3)
+      reply = self.tn.read_until(b"\n",3).decode("ascii")
       log(LOGDEBUG,"Reply: " + reply)
 
       # parse reply by regex
@@ -342,7 +340,7 @@ class LCDProc(LcdBase):
             log(LOGERROR, "CloseSocket(): Cannot clear extra icons")
 
         # do gracefully disconnect (send directly as we won't get any response on this)
-        self.tn.write("bye\n")
+        self.tn.write(b"bye\n")
         # and close socket afterwards
         self.tn.close()
       except:
@@ -365,7 +363,7 @@ class LCDProc(LcdBase):
     if (self.m_timeLastSockAction + self.m_timeSocketIdleTimeout) > time.time():
       return True
 
-    if not self.SendCommand("noop", True):
+    if not self.SendCommand(b"noop", True):
       log(LOGERROR, "noop failed in IsConnected(), aborting!")
       return False
 
@@ -378,9 +376,9 @@ class LCDProc(LcdBase):
 
     # Build command
     if iLight == 0:
-      cmd = "screen_set xbmc -backlight off\n"
+      cmd = b"screen_set xbmc -backlight off\n"
     elif iLight > 0:
-      cmd = "screen_set xbmc -backlight on\n"
+      cmd = b"screen_set xbmc -backlight on\n"
 
     # Send to server
     if not self.SendCommand(cmd, True):
@@ -400,7 +398,7 @@ class LCDProc(LcdBase):
       return
 
     # Build command to suspend screen
-    cmd = "screen_set xbmc -priority hidden\n"
+    cmd = b"screen_set xbmc -priority hidden\n"
 
     # Send to server
     if not self.SendCommand(cmd, True):
@@ -412,7 +410,7 @@ class LCDProc(LcdBase):
       return
 
     # Build command to resume screen
-    cmd = "screen_set xbmc -priority info\n"
+    cmd = b"screen_set xbmc -priority info\n"
 
     # Send to server
     if not self.SendCommand(cmd, True):
@@ -469,11 +467,11 @@ class LCDProc(LcdBase):
         self.m_strDigits[iDigitCount] = strTimeString[i]
 
         if strTimeString[i] == ":":
-          self.m_strSetLineCmds += "widget_set xbmc lineBigDigit%i %i 10\n" % (iDigitCount, iOffset)
+          self.m_bstrSetLineCmds += b"widget_set xbmc lineBigDigit%i %i 10\n" % (iDigitCount, iOffset)
         elif strTimeString[i].isdigit():
-          self.m_strSetLineCmds += "widget_set xbmc lineBigDigit%i %i %s\n" % (iDigitCount, iOffset, strTimeString[i])
+          self.m_bstrSetLineCmds += b"widget_set xbmc lineBigDigit%i %i %s\n" % (iDigitCount, iOffset, strTimeString[i].encode(self.m_strLCDEncoding))
         else:
-          self.m_strSetLineCmds += "widget_set xbmc lineBigDigit" + str(iDigitCount) + " 0 0\n"
+          self.m_bstrSetLineCmds += b"widget_set xbmc lineBigDigit%i 0 0\n" % (iDigitCount)
 
       if strTimeString[i] == ":":
         iOffset += 1
@@ -485,7 +483,7 @@ class LCDProc(LcdBase):
     while iDigitCount <= self.m_iBigDigits:
       if self.m_strDigits[iDigitCount] != "" or bForceUpdate:
         self.m_strDigits[iDigitCount] = ""
-        self.m_strSetLineCmds += "widget_set xbmc lineBigDigit" + str(iDigitCount) + " 0 0\n"
+        self.m_bstrSetLineCmds += b"widget_set xbmc lineBigDigit%i 0 0\n" % (iDigitCount)
 
       iDigitCount += 1
 
@@ -499,16 +497,16 @@ class LCDProc(LcdBase):
     bForwarding = InfoLabel_IsPlayerForwarding()
     bRewinding = InfoLabel_IsPlayerRewinding()
 
-    self.m_strIconName = "STOP"
+    self.m_bstrIconName = b"STOP"
 
     if bForwarding:
-      self.m_strIconName = "FF"
+      self.m_bstrIconName = b"FF"
     elif bRewinding:
-      self.m_strIconName = "FR"
+      self.m_bstrIconName = b"FR"
     elif bPaused:
-      self.m_strIconName = "PAUSE"
+      self.m_bstrIconName = b"PAUSE"
     elif bPlaying:
-      self.m_strIconName = "PLAY"
+      self.m_bstrIconName = b"PLAY"
 
   def GetRows(self):
     return int(self.m_iRows)
@@ -517,7 +515,7 @@ class LCDProc(LcdBase):
     for i in range(1,int(self.m_iBigDigits + 1)):
       # Clear Digit
       if fullredraw:
-        self.m_strSetLineCmds += "widget_set xbmc lineBigDigit" + str(i) + " 0 0\n"
+        self.m_bstrSetLineCmds += b"widget_set xbmc lineBigDigit%i 0 0\n" % (i)
       self.m_strDigits[i] = ""
 
     # on full redraw, make sure all widget get redrawn by resetting their type
@@ -525,12 +523,12 @@ class LCDProc(LcdBase):
       for i in range(0, int(self.GetRows())):
         self.m_strLineType[i] = ""
         self.m_strLineText[i] = ""
-        self.m_strLineIcon[i] = ""
+        self.m_bstrLineIcon[i] = b""
 
   def ClearLine(self, iLine):
-    self.m_strSetLineCmds += "widget_set xbmc lineIcon%i 0 0 BLOCK_FILLED\n" % (iLine)
-    self.m_strSetLineCmds += "widget_set xbmc lineProgress%i 0 0 0\n" % (iLine)
-    self.m_strSetLineCmds += "widget_set xbmc lineScroller%i 1 %i %i %i m 1 \"\"\n" % (iLine, iLine, self.m_iColumns, iLine)
+    self.m_bstrSetLineCmds += b"widget_set xbmc lineIcon%i 0 0 BLOCK_FILLED\n" % (iLine)
+    self.m_bstrSetLineCmds += b"widget_set xbmc lineProgress%i 0 0 0\n" % (iLine)
+    self.m_bstrSetLineCmds += b"widget_set xbmc lineScroller%i 1 %i %i %i m 1 \"\"\n" % (iLine, iLine, self.m_iColumns, iLine)
 
   def SetLine(self, mode, iLine, strLine, dictDescriptor, bForce):
     if self.m_bStop or not self.tnsocket:
@@ -558,10 +556,10 @@ class LCDProc(LcdBase):
       bExtraForce = True
 
       if dictDescriptor['type'] == LCD_LINETYPE.LCD_LINETYPE_PROGRESS and dictDescriptor['text'] != "":
-        self.m_strSetLineCmds += "widget_set xbmc lineScroller%i 1 %i %i %i m 1 \"%s\"\n" % (ln, ln, self.m_iColumns, ln, dictDescriptor['text'])
+        self.m_bstrSetLineCmds += b"widget_set xbmc lineScroller%i 1 %i %i %i m 1 \"%s\"\n" % (ln, ln, self.m_iColumns, ln, dictDescriptor['text'].encode(self.m_strLCDEncoding))
 
       if dictDescriptor['type'] == LCD_LINETYPE.LCD_LINETYPE_PROGRESSTIME and dictDescriptor['text'] != "":
-        self.m_strSetLineCmds += "widget_set xbmc lineScroller%i 1 %i %i %i m 1 \"%s\"\n" % (ln, ln, self.m_iColumns, ln, dictDescriptor['text'])
+        self.m_bstrSetLineCmds += b"widget_set xbmc lineScroller%i 1 %i %i %i m 1 \"%s\"\n" % (ln, ln, self.m_iColumns, ln, dictDescriptor['text'].encode(self.m_strLCDEncoding))
 
     if dictDescriptor['type'] == LCD_LINETYPE.LCD_LINETYPE_BIGSCREEN:
       strLineLong = self.GetBigDigitTime(mode)
@@ -574,11 +572,11 @@ class LCDProc(LcdBase):
 
     iMaxLineLen = dictDescriptor['endx'] - (int(dictDescriptor['startx']) - 1)
     iScrollSpeed = settings_getScrollDelay()
-    strScrollMode = settings_getLCDprocScrollMode()
+    bstrScrollMode = settings_getLCDprocScrollMode().encode(self.m_strLCDEncoding)
 
     if len(strLineLong) > iMaxLineLen: # if the string doesn't fit the display...
-      if iScrollSpeed != 0:          # add separator when scrolling enabled
-        if strScrollMode == "m":     # and scrollmode is marquee
+      if iScrollSpeed != 0:            # add separator when scrolling enabled
+        if bstrScrollMode == b"m":     # and scrollmode is marquee
           strLineLong += self.m_strScrollSeparator
       else:                                       # or cut off
         strLineLong = strLineLong[:iMaxLineLen]
@@ -593,13 +591,13 @@ class LCDProc(LcdBase):
         self.SetBigDigits(strLineLong, bExtraForce)
       # progressbar line
       elif dictDescriptor['type'] == LCD_LINETYPE.LCD_LINETYPE_PROGRESS:
-        self.m_strSetLineCmds += "widget_set xbmc lineProgress%i %i %i %i\n" % (ln, iStartX, ln, self.m_iProgressBarWidth)
+        self.m_bstrSetLineCmds += b"widget_set xbmc lineProgress%i %i %i %i\n" % (ln, iStartX, ln, self.m_iProgressBarWidth)
       # progressbar line with time
       elif dictDescriptor['type'] == LCD_LINETYPE.LCD_LINETYPE_PROGRESSTIME:
         drawLineText = True
         pLenFract = float(self.m_iColumns - int(len(plDuration) + len(plTime))) / self.m_iColumns
         pTimeLen = int(self.m_iProgressBarWidth * pLenFract)
-        self.m_strSetLineCmds += "widget_set xbmc lineProgress%i %i %i %i\n" % (ln, iStartX + len(plTime), ln, pTimeLen)
+        self.m_bstrSetLineCmds += b"widget_set xbmc lineProgress%i %i %i %i\n" % (ln, iStartX + len(plTime), ln, pTimeLen)
       # everything else (text, icontext)
       else:
         drawLineText = True
@@ -611,16 +609,16 @@ class LCDProc(LcdBase):
             iStartX += int(iSpaces / 2)
 
       if drawLineText:
-        self.m_strSetLineCmds += "widget_set xbmc lineScroller%i %i %i %i %i %s %i \"%s\"\n" % (ln, iStartX, ln, self.m_iColumns, ln, strScrollMode, iScrollSpeed, re.escape(strLineLong))
+        self.m_bstrSetLineCmds += b"widget_set xbmc lineScroller%i %i %i %i %i %s %i \"%s\"\n" % (ln, iStartX, ln, self.m_iColumns, ln, bstrScrollMode, iScrollSpeed, re.escape(strLineLong.encode(self.m_strLCDEncoding, errors="replace")))
 
       # cache contents
       self.m_strLineText[iLine] = strLineLong
 
     if dictDescriptor['type'] == LCD_LINETYPE.LCD_LINETYPE_ICONTEXT:
-      if self.m_strLineIcon[iLine] != self.m_strIconName or bExtraForce:
-        self.m_strLineIcon[iLine] = self.m_strIconName
+      if self.m_bstrLineIcon[iLine] != self.m_bstrIconName or bExtraForce:
+        self.m_bstrLineIcon[iLine] = self.m_bstrIconName
 
-        self.m_strSetLineCmds += "widget_set xbmc lineIcon%i 1 %i %s\n" % (ln, ln, self.m_strIconName)
+        self.m_bstrSetLineCmds += b"widget_set xbmc lineIcon%i 1 %i %s\n" % (ln, ln, self.m_bstrIconName)
 
   def ClearDisplay(self):
     log(LOGDEBUG, "Clearing display contents")
@@ -639,8 +637,8 @@ class LCDProc(LcdBase):
     self.FlushLines()
 
   def FlushLines(self):
-      if len(self.m_strSetLineCmds) > 0:
+      if len(self.m_bstrSetLineCmds) > 0:
         # Send complete command package
-        self.SendCommand(self.m_strSetLineCmds, False)
+        self.SendCommand(self.m_bstrSetLineCmds, False)
 
-        self.m_strSetLineCmds = ""
+        self.m_bstrSetLineCmds = b""

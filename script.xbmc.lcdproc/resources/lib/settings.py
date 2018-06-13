@@ -21,13 +21,9 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 '''
 
-import string
-import sys
 import time
 
-import xbmc
-
-from common import *
+from .common import *
 
 #general
 global g_hostip
@@ -266,15 +262,15 @@ def settings_handleLcdSettings():
 
   g_settingsChanged = False
 
-  scrolldelay = int(float(string.replace(KODI_ADDON_SETTINGS.getSetting("scrolldelay"), ",", ".")))
+  scrolldelay = int(float(KODI_ADDON_SETTINGS.getSetting("scrolldelay").replace(",", ".")))
   scrollmode = KODI_ADDON_SETTINGS.getSetting("scrollmode")
   dimonscreensaver = KODI_ADDON_SETTINGS.getSetting("dimonscreensaver") == "true"
   dimonshutdown = KODI_ADDON_SETTINGS.getSetting("dimonshutdown") == "true"
   dimonvideoplayback = KODI_ADDON_SETTINGS.getSetting("dimonvideoplayback") == "true"
   dimonmusicplayback = KODI_ADDON_SETTINGS.getSetting("dimonmusicplayback") == "true"
-  dimdelay = int(float(string.replace(KODI_ADDON_SETTINGS.getSetting("dimdelay"), ",", ".")))
-  navtimeout = int(float(string.replace(KODI_ADDON_SETTINGS.getSetting("navtimeout"), ",", ".")))
-  refreshrate = int(float(string.replace(KODI_ADDON_SETTINGS.getSetting("refreshrate"), ",", ".")))
+  dimdelay = int(float(KODI_ADDON_SETTINGS.getSetting("dimdelay").replace(",", ".")))
+  navtimeout = int(float(KODI_ADDON_SETTINGS.getSetting("navtimeout").replace(",", ".")))
+  refreshrate = int(float(KODI_ADDON_SETTINGS.getSetting("refreshrate").replace(",", ".")))
   hideconnpopups = KODI_ADDON_SETTINGS.getSetting("hideconnpopups") == "true"
   usealternatecharset = KODI_ADDON_SETTINGS.getSetting("usealternatecharset") == "true"
   charset = KODI_ADDON_SETTINGS.getSetting("charset")

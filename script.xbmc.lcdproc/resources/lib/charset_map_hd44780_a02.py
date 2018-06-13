@@ -20,8 +20,6 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 '''
 
-import codecs
-
 encmap_hd44780_a02 = {
   0x0000: 0x0000,     #  NULL
   # 0x0001: 0x0001,     #  START OF HEADING

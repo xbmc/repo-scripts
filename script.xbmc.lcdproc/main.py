@@ -23,12 +23,9 @@
 
 # base imports
 import time
-import os
-import sys
 
 # Kodi imports
 import xbmc
-import xbmcaddon
 import xbmcgui
 
 from resources.lib.common import *

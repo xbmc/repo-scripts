@@ -23,8 +23,6 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 '''
 
-import sys
-
 class LCDproc_extra_base():
   def __init__(self):
     pass
