@@ -21,8 +21,8 @@
 '''
 
 import codecs
-from charset_map_hd44780_a00 import *
-from charset_map_hd44780_a02 import *
+from .charset_map_hd44780_a00 import *
+from .charset_map_hd44780_a02 import *
 
 class HD44780_Codec(codecs.Codec):
 

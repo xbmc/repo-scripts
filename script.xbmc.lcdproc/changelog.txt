@@ -1,3 +1,6 @@
+3.0.1
+- Imports cleaned up
+- Compatibility with Python 3
 3.0.0 (Leia)
 - Compatibility with Kodi 18 Leia
 - Polish translation by mskalski (thanks!)

@@ -23,16 +23,13 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 '''
 
-import os
-import string
 import sys
 import time
 
 import xbmc
-import xbmcaddon
 import xbmcgui
 
-from settings import *
+from .settings import *
 
 # interesting XBMC GUI Window IDs (no defines seem to exist for this)
 class WINDOW_IDS:
@@ -66,7 +63,11 @@ def InfoLabel_Initialize():
   g_InfoLabel_navTimer = time.time()
 
 def InfoLabel_GetInfoLabel(strLabel):
-  return xbmc.getInfoLabel(strLabel)
+  ret = xbmc.getInfoLabel(strLabel)
+  # pre-py3 compat
+  if sys.version_info.major < 3:
+    return ret.decode("utf-8")
+  return ret
 
 def InfoLabel_GetBool(strBool):
   return xbmc.getCondVisibility(strBool)
@@ -171,7 +172,7 @@ def InfoLabel_IsMuted():
   return InfoLabel_GetBool("Player.Muted")
 
 def InfoLabel_GetVolumePercent():
-  volumedb = float(string.replace(string.replace(InfoLabel_GetInfoLabel("Player.Volume"), ",", "."), " dB", ""))
+  volumedb = float(InfoLabel_GetInfoLabel("Player.Volume").replace(",", ".").replace(" dB", ""))
   return (100 * (60.0 + volumedb) / 60)
 
 def InfoLabel_GetPlayerTimeSecs():
@@ -201,8 +202,6 @@ def InfoLabel_IsNavigationActive():
   global g_InfoLabel_oldMenu
   global g_InfoLabel_oldSubMenu
   global g_InfoLabel_navTimer
-
-  #from settings import settings_getNavTimeout
 
   ret = False
 

@@ -24,14 +24,10 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 '''
 
-import xbmc
-import sys
 import time
 
-from lcdproc import *
-from lcdbase import LCD_EXTRAICONS
-from extraicons import *
-from lcdproc_extra_base import *
+from .extraicons import *
+from .lcdproc_extra_base import *
 
 IMON_OUTPUT_INTERVAL = 0.2 # seconds
 
@@ -145,33 +141,33 @@ class LCDproc_extra_imon(LCDproc_extra_base):
       self.SetBar(i, float(0))
 
   def SetOutputIcons(self):
-    ret = ""
+    ret = b""
 
     # Make sure we don't send "0" to LCDproc, this would reset bars
     self.m_iOutputValueIcons |= IMON_ICONS.ICON_DUMMY
 
     if self.m_iOutputValueIcons != self.m_iOutputValueOldIcons:
       self.m_iOutputValueOldIcons = self.m_iOutputValueIcons
-      ret += "output %d\n" % (self.m_iOutputValueIcons)
+      ret += b"output %d\n" % (self.m_iOutputValueIcons)
 
     return ret
 
   def SetOutputBars(self):
-    ret = ""
+    ret = b""
 
     if self.m_iOutputValueBars != self.m_iOutputValueOldBars:
       self.m_iOutputValueOldBars = self.m_iOutputValueBars
-      ret += "output %d\n" % (self.m_iOutputValueBars)
+      ret += b"output %d\n" % (self.m_iOutputValueBars)
 
     return ret
 
   def GetOutputCommands(self):
-    ret = ""
+    ret = b""
 
     if self._DoOutputCommand():
       ret += self.SetOutputIcons()
 
-      if ret == "":
+      if ret == b"":
         ret += self.SetOutputBars()
 
     return ret
@@ -351,4 +347,4 @@ class LCDproc_extra_imon(LCDproc_extra_base):
     self.m_iOutputValueIcons = 0
     self.m_iOutputValueBars = 0
 
-    return "output 0\n"
+    return b"output 0\n"

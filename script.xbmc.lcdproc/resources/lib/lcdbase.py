@@ -21,12 +21,9 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 '''
 
-import platform
-import sys
 import os
-import shutil
 import re
-import telnetlib
+import shutil
 import time
 
 from xml.etree import ElementTree as xmltree
@@ -35,11 +32,11 @@ from array import array
 import xbmc
 import xbmcgui
 
-from common import *
-from settings import *
-from extraicons import *
-from infolabels import *
-from charset_hd44780 import *
+from .common import *
+from .settings import *
+from .extraicons import *
+from .infolabels import *
+from .charset_hd44780 import *
 
 __lcdxml__        = xbmc.translatePath(os.path.join("special://masterprofile", "LCD.xml"))
 __lcddefaultxml__ = xbmc.translatePath(os.path.join(KODI_ADDON_ROOTPATH, "resources", "LCD.xml.defaults"))
@@ -90,7 +87,6 @@ class LcdBase():
     self.m_strScrollSeparator = " "
 
     # runtime vars/state tracking
-    self.m_strInfoLabelEncoding = "utf-8" # http://forum.xbmc.org/showthread.php?tid=125492&pid=1045926#pid1045926
     self.m_timeDisableOnPlayTimer = time.time()
     self.m_bCurrentlyDimmed = False
     self.m_bHaveHD44780Charmap = False
@@ -393,7 +389,7 @@ class LcdBase():
         linetext = ""
       else:
         # prepare text line for XBMC's expected encoding
-        linetext = line.text.strip().encode(self.m_strInfoLabelEncoding, "ignore")
+        linetext = line.text.strip()
 
       # make sure linetext has something so re.match won't fail
       if linetext != "":
@@ -506,19 +502,10 @@ class LcdBase():
         if self.m_lcdMode[mode][inLine]['type'] == LCD_LINETYPE.LCD_LINETYPE_ICONTEXT:
           self.SetPlayingStateIcon()
 
-        srcline = InfoLabel_GetInfoLabel(self.m_lcdMode[mode][inLine]['text'])
+        line = InfoLabel_GetInfoLabel(self.m_lcdMode[mode][inLine]['text'])
 
-        if len(srcline) > 0:
-          srcline = self.StripBBCode(srcline)
-
-        if self.m_strInfoLabelEncoding != self.m_strLCDEncoding:
-          try:
-            line = srcline.decode(self.m_strInfoLabelEncoding).encode(self.m_strLCDEncoding, "replace")
-          except:
-            log(LOGDEBUG, "Caught exception on charset conversion: " + srcline)
-            line = "---"
-        else:
-          line = srcline
+        if len(line) > 0:
+          line = self.StripBBCode(line)
 
         self.SetProgressBar(0, -1)
 
@@ -536,7 +523,7 @@ class LcdBase():
 
     if self.m_cExtraIcons is not None:
       self.SetExtraInformation()
-      self.m_strSetLineCmds += self.m_cExtraIcons.GetOutputCommands()
+      self.m_bstrSetLineCmds += self.m_cExtraIcons.GetOutputCommands()
 
     self.FlushLines()
 

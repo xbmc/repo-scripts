@@ -25,7 +25,6 @@
 '''
 
 import os
-import sys
 
 import xbmc
 import xbmcaddon
