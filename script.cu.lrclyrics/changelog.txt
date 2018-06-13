@@ -1,3 +1,6 @@
+v5.5.0
+- remove broken scrapers
+
 v5.4.8
 - fix letssingit scraper
 - fix pvr radio
