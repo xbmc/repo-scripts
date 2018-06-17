@@ -8,7 +8,7 @@ from bs4 import BeautifulSoup
 from utilities import *
 
 __title__ = 'lyricscom'
-__priority__ = '240'
+__priority__ = '230'
 __lrc__ = False
 
 

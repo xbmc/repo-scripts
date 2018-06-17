@@ -10,7 +10,7 @@ import json
 from utilities import *
 
 __title__ = 'lyricwiki'
-__priority__ = '200'
+__priority__ = '100'
 __lrc__ = False
 
 LIC_TXT = 'we are not licensed to display the full lyrics for this song at the moment'

@@ -15,7 +15,7 @@ from utilities import *
 from audiofile import AudioFile
 
 __title__ = 'GomAudio'
-__priority__ = '130'
+__priority__ = '140'
 __lrc__ = True
 
 socket.setdefaulttimeout(10)

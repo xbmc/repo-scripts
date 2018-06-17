@@ -14,7 +14,7 @@ import difflib
 from utilities import *
 
 __title__ = "TTPlayer"
-__priority__ = '110'
+__priority__ = '120'
 __lrc__ = True
 
 socket.setdefaulttimeout(10)

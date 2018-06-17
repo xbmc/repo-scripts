@@ -2,6 +2,7 @@
 import time
 from utilities import *
 from culrcscrapers.alsong import lyricsScraper as lyricsScraper_alsong
+from culrcscrapers.azlyrics import lyricsScraper as lyricsScraper_azlyrics
 from culrcscrapers.baidu import lyricsScraper as lyricsScraper_baidu
 from culrcscrapers.darklyrics import lyricsScraper as lyricsScraper_darklyrics
 from culrcscrapers.genius import lyricsScraper as lyricsScraper_genius
@@ -9,7 +10,9 @@ from culrcscrapers.gomaudio import lyricsScraper as lyricsScraper_gomaudio
 from culrcscrapers.lyricscom import lyricsScraper as lyricsScraper_lyricscom
 from culrcscrapers.lyricsmode import lyricsScraper as lyricsScraper_lyricsmode
 from culrcscrapers.lyricwiki import lyricsScraper as lyricsScraper_lyricwiki
+from culrcscrapers.minilyrics import lyricsScraper as lyricsScraper_minilyrics
 from culrcscrapers.ttplayer import lyricsScraper as lyricsScraper_ttplayer
+from culrcscrapers.xiami import lyricsScraper as lyricsScraper_xiami
 
 FAILED = []
 
@@ -34,8 +37,25 @@ def test_scrapers():
     if dialog.iscanceled():
         return
 
+    # test azlyrics
+    dialog.update(8, LANGUAGE(32163) % 'azlyrics')
+    log('==================== azlyrics ====================')
+    song = Song('La Dispute', 'Such Small Hands')
+    st = time.time()
+    lyrics = lyricsScraper_azlyrics.LyricsFetcher().get_lyrics(song)
+    ft = time.time()
+    tt = ft - st
+    TIMINGS.append(['azlyrics',tt])
+    if lyrics:
+        log(lyrics.lyrics)
+    else:
+        FAILED.append('azlyrics')
+        log('FAILED: azlyrics')
+    if dialog.iscanceled():
+        return
+
     # test baidu
-    dialog.update(11, LANGUAGE(32163) % 'baidu')
+    dialog.update(16, LANGUAGE(32163) % 'baidu')
     log('==================== baidu ====================')
     song = Song('Blur', 'There\'s No Other Way')
     st = time.time()
@@ -52,7 +72,7 @@ def test_scrapers():
         return
 
     # test darklyrics
-    dialog.update(22, LANGUAGE(32163) % 'darklyrics')
+    dialog.update(25, LANGUAGE(32163) % 'darklyrics')
     log('==================== darklyrics ====================')
     song = Song('Neurosis', 'Lost')
     st = time.time()
@@ -86,7 +106,7 @@ def test_scrapers():
         return
 
     # test gomaudio
-    dialog.update(44, LANGUAGE(32163) % 'gomaudio')
+    dialog.update(41, LANGUAGE(32163) % 'gomaudio')
     log('==================== gomaudio ====================')
     song = Song('Lady Gaga', 'Just Dance')
     st = time.time()
@@ -103,7 +123,7 @@ def test_scrapers():
         return
 
     # test lyricscom
-    dialog.update(55, LANGUAGE(32163) % 'lyricscom')
+    dialog.update(50, LANGUAGE(32163) % 'lyricscom')
     log('==================== lyricscom ====================')
     song = Song('Blur', 'You\'re So Great')
     st = time.time()
@@ -120,7 +140,7 @@ def test_scrapers():
         return
 
     # test lyricsmode
-    dialog.update(66, LANGUAGE(32163) % 'lyricsmode')
+    dialog.update(58, LANGUAGE(32163) % 'lyricsmode')
     log('==================== lyricsmode ====================')
     song = Song('Maren Morris', 'My Church')
     st = time.time()
@@ -137,7 +157,7 @@ def test_scrapers():
         return
 
     # test lyricwiki
-    dialog.update(77, LANGUAGE(32163) % 'lyricwiki')
+    dialog.update(66, LANGUAGE(32163) % 'lyricwiki')
     log('==================== lyricwiki ====================')
     song = Song('Maren Morris', 'My Church')
     st = time.time()
@@ -153,8 +173,25 @@ def test_scrapers():
     if dialog.iscanceled():
         return
 
+    # test minilyrics
+    dialog.update(75, LANGUAGE(32163) % 'minilyrics')
+    log('==================== minilyrics ====================')
+    song = Song('Michael Bublé', 'Feeling Good')
+    st = time.time()
+    lyrics = lyricsScraper_minilyrics.LyricsFetcher().get_lyrics(song)
+    ft = time.time()
+    tt = ft - st
+    TIMINGS.append(['minilyrics',tt])
+    if lyrics:
+        log(lyrics.lyrics)
+    else:
+        FAILED.append('minilyrics')
+        log('FAILED: minilyrics')
+    if dialog.iscanceled():
+        return
+
     # test ttplayer
-    dialog.update(88, LANGUAGE(32163) % 'ttplayer')
+    dialog.update(83, LANGUAGE(32163) % 'ttplayer')
     log('==================== ttplayer ====================')
     song = Song('Abba', 'Elaine')
     st = time.time()
@@ -167,6 +204,23 @@ def test_scrapers():
     else:
         FAILED.append('ttplayer')
         log('FAILED: ttplayer')
+    if dialog.iscanceled():
+        return
+
+    # test xiami
+    dialog.update(91, LANGUAGE(32163) % 'xiami')
+    log('==================== xiami ====================')
+    song = Song('Red Velvet', 'Bad Boy')
+    st = time.time()
+    lyrics = lyricsScraper_xiami.LyricsFetcher().get_lyrics(song)
+    ft = time.time()
+    tt = ft - st
+    TIMINGS.append(['xiami',tt])
+    if lyrics:
+        log(lyrics.lyrics)
+    else:
+        FAILED.append('xiami')
+        log('FAILED: xiami')
     if dialog.iscanceled():
         return
 

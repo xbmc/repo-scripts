@@ -13,7 +13,7 @@ import difflib
 from utilities import *
 
 __title__ = 'Baidu'
-__priority__ = '120'
+__priority__ = '130'
 __lrc__ = True
 
 socket.setdefaulttimeout(10)

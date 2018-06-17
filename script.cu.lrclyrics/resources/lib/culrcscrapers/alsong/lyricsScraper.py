@@ -12,7 +12,7 @@ import xml.dom.minidom as xml
 from utilities import *
 
 __title__ = 'Alsong'
-__priority__ = '140'
+__priority__ = '150'
 __lrc__ = True
 
 socket.setdefaulttimeout(10)
