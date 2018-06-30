@@ -565,7 +565,7 @@ class GUI(xbmcgui.WindowXMLDialog):
 
     def parser_lyrics(self, lyrics):
         offset = 0.00
-        found = re.search('\[offset:(\d+)\]', lyrics)
+        found = re.search('\[offset:\s?(\d+)\]', lyrics)
         if found:
             offset = float(found.group(1)) / 1000
         self.pOverlay = []
