@@ -25,313 +25,236 @@ import time
 
 from .common import *
 
-#general
-global g_hostip
-global g_hostport
-global g_timer
-global g_heartbeat
-global g_scrolldelay
-global g_scrollmode
-global g_settingsChanged
-global g_dimonscreensaver
-global g_dimonshutdown
-global g_dimonvideoplayback
-global g_dimonmusicplayback
-global g_dimdelay
-global g_navtimeout
-global g_refreshrate
-global g_hideconnpopups
-global g_usealternatecharset
-global g_charset
-global g_useextraelements
+class Settings():
 
-#init globals with defaults
-def settings_initGlobals():
-  global g_hostip
-  global g_hostport
-  global g_timer
-  global g_heartbeat
-  global g_scrolldelay
-  global g_scrollmode
-  global g_settingsChanged
-  global g_dimonscreensaver
-  global g_dimonshutdown
-  global g_dimonvideoplayback
-  global g_dimonmusicplayback
-  global g_dimdelay
-  global g_navtimeout
-  global g_refreshrate
-  global g_hideconnpopups
-  global g_usealternatecharset
-  global g_charset
-  global g_useextraelements
+    ########
+    # ctor
+    def __init__(self):
+        # init class members (settings) with defaults
+        self._hostip              = "127.0.0.1"
+        self._hostport            = 13666
+        self._timer               = time.time()
+        self._heartbeat           = False
+        self._scrolldelay         = 1
+        self._scrollmode          = "0"
+        self._settingsChanged     = True
+        self._dimonscreensaver    = False
+        self._dimonshutdown       = False
+        self._dimonvideoplayback  = False
+        self._dimonmusicplayback  = False
+        self._dimdelay            = 0
+        self._navtimeout          = 3
+        self._refreshrate         = 1
+        self._hideconnpopups      = True
+        self._usealternatecharset = False
+        self._charset             = "iso-8859-1"
+        self._useextraelements    = True
 
-  g_hostip              = "127.0.0.1"
-  g_hostport            = 13666
-  g_timer               = time.time()
-  g_heartbeat           = False
-  g_scrolldelay         = 1
-  g_scrollmode          = "0"
-  g_settingsChanged     = True
-  g_dimonscreensaver    = False
-  g_dimonshutdown       = False
-  g_dimonvideoplayback  = False
-  g_dimonmusicplayback  = False
-  g_dimdelay            = 0
-  g_navtimeout          = 3
-  g_refreshrate         = 1
-  g_hideconnpopups      = True
-  g_usealternatecharset = False
-  g_charset             = "iso-8859-1"
-  g_useextraelements    = True
+    def getHostIp(self):
+        return self._hostip
 
-def settings_getHostIp():
-  global g_hostip
-  return g_hostip
+    def getHostPort(self):
+        return self._hostport
 
-def settings_getHostPort():
-  global g_hostport
-  return g_hostport
+    def getHeartBeat(self):
+        return self._heartbeat
 
-def settings_getHeartBeat():
-  global g_heartbeat
-  return g_heartbeat
+    def getUseExtraElements(self):
+        return self._useextraelements
 
-def settings_getUseExtraElements():
-  global g_useextraelements
-  return g_useextraelements
+    def getScrollDelay(self):
+        return self._scrolldelay
 
-def settings_getScrollDelay():
-  global g_scrolldelay
-  return g_scrolldelay
+    def getScrollMode(self):
+        return self._scrollmode
 
-def settings_getScrollMode():
-  global g_scrollmode
-  return g_scrollmode
+    def getLCDprocScrollMode(self):
+        if self._scrollmode == "1":
+            return "h"
+        return "m"
 
-def settings_getLCDprocScrollMode():
-  global g_scrollmode
-  if g_scrollmode == "1":
-    return "h"
-  return "m"
+    def getDimOnScreensaver(self):
+        return self._dimonscreensaver
 
-def settings_getDimOnScreensaver():
-  global g_dimonscreensaver
-  return g_dimonscreensaver
+    def getDimOnShutdown(self):
+        return self._dimonshutdown
 
-def settings_getDimOnShutdown():
-  global g_dimonshutdown
-  return g_dimonshutdown
+    def getDimOnVideoPlayback(self):
+        return self._dimonvideoplayback
 
-def settings_getDimOnVideoPlayback():
-  global g_dimonvideoplayback
-  return g_dimonvideoplayback
+    def getDimOnMusicPlayback(self):
+        return self._dimonmusicplayback
 
-def settings_getDimOnMusicPlayback():
-  global g_dimonmusicplayback
-  return g_dimonmusicplayback
+    def getDimDelay(self):
+        return self._dimdelay
 
-def settings_getDimDelay():
-  global g_dimdelay
-  return g_dimdelay
+    def getNavTimeout(self):
+        return self._navtimeout
 
-def settings_getNavTimeout():
-  global g_navtimeout
-  return g_navtimeout
+    def getRefreshRate(self):
+        return self._refreshrate
 
-def settings_getRefreshRate():
-  global g_refreshrate
-  return g_refreshrate
+    def getHideConnPopups(self):
+        return self._hideconnpopups
 
-def settings_getHideConnPopups():
-  global g_hideconnpopups
-  return g_hideconnpopups
+    def getCharset(self):
+        ret = ""
 
-def settings_getCharset():
-  global g_usealternatecharset
-  global g_charset
-  ret = ""
+        # if alternatecharset is disabled, return LCDproc's default
+        if self._usealternatecharset == False:
+            ret = "iso-8859-1"
+        else:
+            # make sure to keep this in sync with settings.xml!
+            if self._charset == "1":
+                ret = "iso-8859-15"
+            elif self._charset == "2":
+                ret = "koi8-r"
+            elif self._charset == "3":
+                ret = "cp1251"
+            elif self._charset == "4":
+                ret = "iso-8859-5"
+            elif self._charset == "5":
+                ret = "hd44780-a00"
+            elif self._charset == "6":
+                ret = "hd44780-a02"
+            else:
+                ret = "iso-8859-1"
 
-  # if alternatecharset is disabled, return LCDproc's default
-  if g_usealternatecharset == False:
-    ret = "iso-8859-1"
-  else:
-    # make sure to keep this in sync with settings.xml!
-    if g_charset == "1":
-      ret = "iso-8859-15"
-    elif g_charset == "2":
-      ret = "koi8-r"
-    elif g_charset == "3":
-      ret = "cp1251"
-    elif g_charset == "4":
-      ret = "iso-8859-5"
-    elif g_charset == "5":
-      ret = "hd44780-a00"
-    elif g_charset == "6":
-      ret = "hd44780-a02"
-    else:
-      ret = "iso-8859-1"
+        return ret
 
-  return ret
+    # check for new settings and handle them if anything changed
+    # only checks if the last check is 5 secs old
+    # returns if a reconnect is needed due to settings change
+    def checkForNewSettings(self):
+    # TODO: for now impl. stat on addon.getAddonInfo('profile')/settings.xml and use mtime
+    # check for new settings every 5 secs
+        reconnect = False
 
-#check for new settings and handle them if anything changed
-#only checks if the last check is 5 secs old
-#returns if a reconnect is needed due to settings change
-def settings_checkForNewSettings():
-#todo  for now impl. stat on addon.getAddonInfo('profile')/settings.xml and use mtime
-#check for new settings every 5 secs
-  global g_timer
-  reconnect = False
+        if time.time() - self._timer > 5:
+            reconnect = self.setup()
+            self._timer = time.time()
 
-  if time.time() - g_timer > 5:
-    reconnect = settings_setup()
-    g_timer = time.time()
-  return reconnect
+        return reconnect
 
-def settings_didSettingsChange():
-  global g_settingsChanged
-  settingsChanged = g_settingsChanged
-  g_settingsChanged = False
-  return settingsChanged
+    def didSettingsChange(self):
+        settingsChanged = self._settingsChanged
+        self._settingsChanged = False
+        return settingsChanged
 
-# handle all settings that might require a reinit and/or reconnect
-# (e.g. network config changes)
-# returns true if reconnect is needed due to network changes
-def settings_handleCriticalSettings():
-  global g_hostip
-  global g_hostport
-  global g_heartbeat
-  global g_useextraelements
+    # handle all settings that might require a reinit and/or reconnect
+    # (e.g. network config changes)
+    # returns true if reconnect is needed due to network changes
+    def handleCriticalSettings(self):
+        reconnect = False
 
-  reconnect = False
+        hostip           = KODI_ADDON_SETTINGS.getSetting("hostip")
+        hostport         = int(KODI_ADDON_SETTINGS.getSetting("hostport"))
+        heartbeat        = KODI_ADDON_SETTINGS.getSetting("heartbeat") == "true"
+        useextraelements = KODI_ADDON_SETTINGS.getSetting("useextraelements") == "true"
 
-  hostip    = KODI_ADDON_SETTINGS.getSetting("hostip")
-  hostport  = int(KODI_ADDON_SETTINGS.getSetting("hostport"))
-  heartbeat = KODI_ADDON_SETTINGS.getSetting("heartbeat") == "true"
-  useextraelements = KODI_ADDON_SETTINGS.getSetting("useextraelements") == "true"
+        # server settings
+        # we need to reconnect if networkaccess bool changes
+        # or if network access is enabled and ip or port have changed
+        if self._hostip != hostip or self._hostport != hostport or self._heartbeat != heartbeat:
+            if self._hostip != hostip:
+                log(LOGDEBUG, "settings: changed hostip to " + str(hostip))
+                self._hostip = hostip
+                reconnect = True
 
-  #server settings
-  #we need to reconnect if networkaccess bool changes
-  #or if network access is enabled and ip or port have changed
-  if g_hostip != hostip or g_hostport != hostport or g_heartbeat != heartbeat:
-    if g_hostip != hostip:
-      log(LOGDEBUG, "settings: changed hostip to " + str(hostip))
-      g_hostip = hostip
-      reconnect = True
+            if self._hostport != hostport:
+                # make sure valid port number was given
+                if hostport > 0 and hostport < 65536:
+                    log(LOGDEBUG, "settings: changed hostport to " + str(hostport))
+                    self._hostport = hostport
+                    reconnect = True
+                else:
+                    log(LOGDEBUG, "settings: invalid hostport value " + str(hostport) + ", resetting to old value " + str(self._hostport))
+                    KODI_ADDON_SETTINGS.setSetting("hostport", str(self._hostport))
 
-    if g_hostport != hostport:
+            if self._heartbeat != heartbeat:
+                log(LOGDEBUG, "settings: toggled heartbeat bool")
+                self._heartbeat = heartbeat
+                reconnect = True
 
-      # make sure valid port number was given
-      if hostport > 0 and hostport < 65536:
-        log(LOGDEBUG, "settings: changed hostport to " + str(hostport))
-        g_hostport = hostport
-        reconnect = True
-      else:
-        log(LOGDEBUG, "settings: invalid hostport value " + str(hostport) + ", resetting to old value " + str(g_hostport))
+        # extra element support needs a reinit+reconnect so the extraelement
+        # support object resets
+        if self._useextraelements != useextraelements:
+            self._useextraelements = useextraelements
+            reconnect = True
 
-      KODI_ADDON_SETTINGS.setSetting("hostport", str(g_hostport))
+        return reconnect
 
-    if g_heartbeat != heartbeat:
-      log(LOGDEBUG, "settings: toggled heartbeat bool")
-      g_heartbeat = heartbeat
-      reconnect = True
+    def handleLcdSettings(self):
+        scrolldelay = int(float(KODI_ADDON_SETTINGS.getSetting("scrolldelay").replace(",", ".")))
+        scrollmode = KODI_ADDON_SETTINGS.getSetting("scrollmode")
+        dimonscreensaver = KODI_ADDON_SETTINGS.getSetting("dimonscreensaver") == "true"
+        dimonshutdown = KODI_ADDON_SETTINGS.getSetting("dimonshutdown") == "true"
+        dimonvideoplayback = KODI_ADDON_SETTINGS.getSetting("dimonvideoplayback") == "true"
+        dimonmusicplayback = KODI_ADDON_SETTINGS.getSetting("dimonmusicplayback") == "true"
+        dimdelay = int(float(KODI_ADDON_SETTINGS.getSetting("dimdelay").replace(",", ".")))
+        navtimeout = int(float(KODI_ADDON_SETTINGS.getSetting("navtimeout").replace(",", ".")))
+        refreshrate = int(float(KODI_ADDON_SETTINGS.getSetting("refreshrate").replace(",", ".")))
+        hideconnpopups = KODI_ADDON_SETTINGS.getSetting("hideconnpopups") == "true"
+        usealternatecharset = KODI_ADDON_SETTINGS.getSetting("usealternatecharset") == "true"
+        charset = KODI_ADDON_SETTINGS.getSetting("charset")
 
-  # extra element support needs a reinit+reconnect so the extraelement
-  # support object resets
-  if g_useextraelements != useextraelements:
-    g_useextraelements = useextraelements
-    reconnect = True
+        if self._scrolldelay != scrolldelay:
+            self._scrolldelay = scrolldelay
+            self._settingsChanged = True
 
-  return reconnect
+        if self._scrollmode != scrollmode:
+            self._scrollmode = scrollmode
+            self._settingsChanged = True
 
-def settings_handleLcdSettings():
-  global g_scrolldelay
-  global g_scrollmode
-  global g_heartbeat
-  global g_settingsChanged
-  global g_dimonscreensaver
-  global g_dimonshutdown
-  global g_dimonvideoplayback
-  global g_dimonmusicplayback
-  global g_dimdelay
-  global g_navtimeout
-  global g_refreshrate
-  global g_hideconnpopups
-  global g_usealternatecharset
-  global g_charset
+        if self._dimonscreensaver != dimonscreensaver:
+            self._dimonscreensaver = dimonscreensaver
+            self._settingsChanged = True
 
-  g_settingsChanged = False
+        if self._dimonshutdown != dimonshutdown:
+            self._dimonshutdown = dimonshutdown
+            self._settingsChanged = True
 
-  scrolldelay = int(float(KODI_ADDON_SETTINGS.getSetting("scrolldelay").replace(",", ".")))
-  scrollmode = KODI_ADDON_SETTINGS.getSetting("scrollmode")
-  dimonscreensaver = KODI_ADDON_SETTINGS.getSetting("dimonscreensaver") == "true"
-  dimonshutdown = KODI_ADDON_SETTINGS.getSetting("dimonshutdown") == "true"
-  dimonvideoplayback = KODI_ADDON_SETTINGS.getSetting("dimonvideoplayback") == "true"
-  dimonmusicplayback = KODI_ADDON_SETTINGS.getSetting("dimonmusicplayback") == "true"
-  dimdelay = int(float(KODI_ADDON_SETTINGS.getSetting("dimdelay").replace(",", ".")))
-  navtimeout = int(float(KODI_ADDON_SETTINGS.getSetting("navtimeout").replace(",", ".")))
-  refreshrate = int(float(KODI_ADDON_SETTINGS.getSetting("refreshrate").replace(",", ".")))
-  hideconnpopups = KODI_ADDON_SETTINGS.getSetting("hideconnpopups") == "true"
-  usealternatecharset = KODI_ADDON_SETTINGS.getSetting("usealternatecharset") == "true"
-  charset = KODI_ADDON_SETTINGS.getSetting("charset")
+        if self._dimonvideoplayback != dimonvideoplayback:
+            self._dimonvideoplayback = dimonvideoplayback
+            self._settingsChanged = True
 
-  if g_scrolldelay != scrolldelay:
-    g_scrolldelay = scrolldelay
-    g_settingsChanged = True
+        if self._dimonmusicplayback != dimonmusicplayback:
+            self._dimonmusicplayback = dimonmusicplayback
+            self._settingsChanged = True
 
-  if g_scrollmode != scrollmode:
-    g_scrollmode = scrollmode
-    g_settingsChanged = True
+        if self._dimdelay != dimdelay:
+            self._dimdelay = dimdelay
+            self._settingsChanged = True
 
-  if g_dimonscreensaver != dimonscreensaver:
-    g_dimonscreensaver = dimonscreensaver
-    g_settingsChanged = True
+        if self._navtimeout != navtimeout:
+            self._navtimeout = navtimeout
+            self._settingsChanged = True
 
-  if g_dimonshutdown != dimonshutdown:
-    g_dimonshutdown = dimonshutdown
-    g_settingsChanged = True
+        if self._refreshrate != refreshrate:
+            self._refreshrate = refreshrate
 
-  if g_dimonvideoplayback != dimonvideoplayback:
-    g_dimonvideoplayback = dimonvideoplayback
-    g_settingsChanged = True
+            if refreshrate < 1:
+                self._refreshrate = 1
 
-  if g_dimonmusicplayback != dimonmusicplayback:
-    g_dimonmusicplayback = dimonmusicplayback
-    g_settingsChanged = True
+            self._settingsChanged = True
 
-  if g_dimdelay != dimdelay:
-    g_dimdelay = dimdelay
-    g_settingsChanged = True
+        if self._hideconnpopups != hideconnpopups:
+            self._hideconnpopups = hideconnpopups
+            self._settingsChanged = True
 
-  if g_navtimeout != navtimeout:
-    g_navtimeout = navtimeout
-    g_settingsChanged = True
+        if self._usealternatecharset != usealternatecharset:
+            self._usealternatecharset = usealternatecharset
+            self._settingsChanged = True
 
-  if g_refreshrate != refreshrate:
-    g_refreshrate = refreshrate
+        if self._charset != charset:
+            self._charset = charset
+            self._settingsChanged = True
 
-    if refreshrate < 1:
-      g_refreshrate = 1
+    # handles all settings and applies them as needed
+    # returns if a reconnect is needed due to settings changes
+    def setup(self):
+        reconnect = False
+        reconnect = self.handleCriticalSettings()
+        self.handleLcdSettings()
 
-    g_settingsChanged = True
-
-  if g_hideconnpopups != hideconnpopups:
-    g_hideconnpopups = hideconnpopups
-    g_settingsChanged = True
-
-  if g_usealternatecharset != usealternatecharset:
-    g_usealternatecharset = usealternatecharset
-    g_settingsChanged = True
-
-  if g_charset != charset:
-    g_charset = charset
-    g_settingsChanged = True
-
-#handles all settings and applies them as needed
-#returns if a reconnect is needed due to settings changes
-def settings_setup():
-  reconnect = False
-  reconnect = settings_handleCriticalSettings()
-  settings_handleLcdSettings()
-
-  return reconnect
+        return reconnect

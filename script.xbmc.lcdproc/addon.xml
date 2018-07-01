@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.xbmc.lcdproc" name="XBMC LCDproc" version="3.0.1" provider-name="Team Kodi: Memphiz, Daniel 'herrnst' Scheller">
+<addon id="script.xbmc.lcdproc" name="XBMC LCDproc" version="3.0.2" provider-name="Team Kodi: Memphiz, Daniel 'herrnst' Scheller">
   <requires>
     <import addon="xbmc.python" version="2.25.0"/>
   </requires>
@@ -22,9 +22,12 @@
     <assets>
       <icon>resources/icon.png</icon>
     </assets>
-    <news>3.0.1
-- Imports cleaned up
-- Compatibility with Python 3
+    <news>3.0.2
+- Refactored the main addon handling into class XBMCLCDproc()
+- Refactored the settings and infolabels modules into classes
+- fixed connection status popup handling logic
+- Code/vars move and cleanup
+- Window ID cleanup (fixes the extraicon triggers during navigation)
 </news>
   </extension>
 </addon>
