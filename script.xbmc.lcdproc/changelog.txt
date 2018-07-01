@@ -1,3 +1,9 @@
+3.0.2
+- Refactored the main addon handling into class XBMCLCDproc()
+- Refactored the settings and infolabels modules into classes
+- fixed connection status popup handling logic
+- Code/vars move and cleanup
+- Window ID cleanup (fixes the extraicon triggers during navigation)
 3.0.1
 - Imports cleaned up
 - Compatibility with Python 3

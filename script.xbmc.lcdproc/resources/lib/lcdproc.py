@@ -43,7 +43,7 @@ INIT_RETRY_INTERVAL = 2
 INIT_RETRY_INTERVAL_MAX = 60
 
 class LCDProc(LcdBase):
-  def __init__(self):
+  def __init__(self, settings):
     self.m_bStop        = True
     self.m_lastInitAttempt = 0
     self.m_initRetryInterval = INIT_RETRY_INTERVAL
@@ -64,7 +64,7 @@ class LCDProc(LcdBase):
     self.m_bstrSetLineCmds = b""
     self.m_cExtraIcons = None
 
-    LcdBase.__init__(self)
+    LcdBase.__init__(self, settings)
 
   def SendCommand(self, strCmd, bCheckRet):
     countcmds = strCmd.count(b'\n')
@@ -140,7 +140,7 @@ class LCDProc(LcdBase):
       return False
 
     # Turn off heartbeat if desired
-    if not settings_getHeartBeat():
+    if not self.m_Settings.getHeartBeat():
       if not self.SendCommand(b"screen_set xbmc -heartbeat off", True):
         return False
 
@@ -225,7 +225,7 @@ class LCDProc(LcdBase):
     rematch_mdm166a = "Targa(.*)mdm166a"
     rematch_imonvfd = "Soundgraph(.*)VFD"
 
-    bUseExtraIcons = settings_getUseExtraElements()
+    bUseExtraIcons = self.m_Settings.getUseExtraElements()
 
     # Never cause script failure/interruption by this! This is totally optional!
     try:
@@ -267,8 +267,8 @@ class LCDProc(LcdBase):
     self.CloseSocket()
 
     try:
-      ip = settings_getHostIp()
-      port = settings_getHostPort()
+      ip = self.m_Settings.getHostIp()
+      port = self.m_Settings.getHostPort()
       log(LOGDEBUG,"Open " + str(ip) + ":" + str(port))
 
       self.tn.open(ip, port)
@@ -423,12 +423,12 @@ class LCDProc(LcdBase):
   def GetBigDigitTime(self, mode):
       ret = ""
 
-      if InfoLabel_IsPlayerPlaying():
-        if not (mode == LCD_MODE.LCD_MODE_SCREENSAVER and InfoLabel_IsPlayerPaused()):
-          ret = InfoLabel_GetPlayerTime()[-self.m_iBigDigits:]
+      if self.m_InfoLabels.IsPlayerPlaying():
+        if not (mode == LCD_MODE.LCD_MODE_SCREENSAVER and self.m_InfoLabels.IsPlayerPaused()):
+          ret = self.m_InfoLabels.GetPlayerTime()[-self.m_iBigDigits:]
 
       if ret == "": # no usable timestring, e.g. not playing anything
-        strSysTime = InfoLabel_GetSystemTime()
+        strSysTime = self.m_InfoLabels.GetSystemTime()
 
         if self.m_iBigDigits >= 8: # return h:m:s
           ret = strSysTime
@@ -492,10 +492,10 @@ class LCDProc(LcdBase):
     return self.m_iProgressBarWidth
 
   def SetPlayingStateIcon(self):
-    bPlaying = InfoLabel_IsPlayerPlaying()
-    bPaused = InfoLabel_IsPlayerPaused()
-    bForwarding = InfoLabel_IsPlayerForwarding()
-    bRewinding = InfoLabel_IsPlayerRewinding()
+    bPlaying = self.m_InfoLabels.IsPlayerPlaying()
+    bPaused = self.m_InfoLabels.IsPlayerPaused()
+    bForwarding = self.m_InfoLabels.IsPlayerForwarding()
+    bRewinding = self.m_InfoLabels.IsPlayerRewinding()
 
     self.m_bstrIconName = b"STOP"
 
@@ -537,8 +537,8 @@ class LCDProc(LcdBase):
     if iLine < 0 or iLine >= int(self.m_iRows):
       return
 
-    plTime = InfoLabel_GetPlayerTime()
-    plDuration = InfoLabel_GetPlayerDuration()
+    plTime = self.m_InfoLabels.GetPlayerTime()
+    plDuration = self.m_InfoLabels.GetPlayerDuration()
     ln = iLine + 1
     bExtraForce = False
     drawLineText = False
@@ -571,8 +571,8 @@ class LCDProc(LcdBase):
     strLineLong.strip()
 
     iMaxLineLen = dictDescriptor['endx'] - (int(dictDescriptor['startx']) - 1)
-    iScrollSpeed = settings_getScrollDelay()
-    bstrScrollMode = settings_getLCDprocScrollMode().encode(self.m_strLCDEncoding)
+    iScrollSpeed = self.m_Settings.getScrollDelay()
+    bstrScrollMode = self.m_Settings.getLCDprocScrollMode().encode(self.m_strLCDEncoding)
 
     if len(strLineLong) > iMaxLineLen: # if the string doesn't fit the display...
       if iScrollSpeed != 0:            # add separator when scrolling enabled
