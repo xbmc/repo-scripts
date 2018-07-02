@@ -1,0 +1,183 @@
+version 3.2.1
+  - Use correct hook into kodi 18
+
+version 3.2.0
+  - Improved id matching for different metadata providers
+  - Added various refactoring and testing
+  - Improve mathing for movies with the same name
+  - Moved to new language structure
+
+version 3.1.12
+  - Improved id matching for krypton+
+
+version 3.1.11
+  - Allow exclusions of plugins or scripts
+  - Updates for MythTv integration
+  - Allow to unrate an item on Trakt (only via integration)
+  - Added some more tests
+
+version 3.1.10
+  - fix scrobling problem when using yatse to start playback
+  - internal refactoring
+
+version 3.1.9
+  - fallback to only title matching if all else fails
+  - updated dependencies
+
+version 3.1.8
+  - added MythTV PVR recordings scrobbling, as an option (under Scrobbler in configuration)
+  - added option to perform secondary search for show title by text, if initial scrobble fails
+  - small bugfix for the hungarian translations
+  - don't close other windows after playback
+  - bugfix for sync crashing when using paths with special characters
+
+version 3.1.7
+  - fixed expired auth tokens not getting refreshed correctly
+
+version 3.1.6
+  - fixed bug when trying to start authentication manually
+
+version 3.1.5
+  - implemented device auth flow
+
+version 3.1.4
+  - fix episode progress playback sync
+  - improved movie progress playback sync
+  - fix another case of the rating popup failing to show up
+  - improved interaction with Nextup Service Notification addon
+  - some more fixes
+  - more tests
+
+version 3.1.3
+  - bugfix for movies being rated with 1 on sync
+  - added fallback for dates outside of the unix timespan - they will now fall back to the current date/time
+  - fixed rating popup not showing up for content from external addons
+
+version 3.1.2
+  - bugfix for movie playback progress sync
+
+version 3.1.1
+  - bugfix for tv show rating sync
+
+version 3.1.0
+  - add ratings sync for movies, tvshows and episodes
+  - store ratings in kodi when rating on trakt
+
+version 3.0.7
+  - fix for exclusions when using special characters
+
+version 3.0.6
+  - fix getting some user settings, like path excludes
+
+version 3.0.5
+  - added scrobble start offset setting (default is 0)
+  - changed up/down buttons in rating dialog to go to 10/1 instead of right/left
+  - you can now exclude up to 12 paths
+  - fixed multiple potential crashs
+  - updated language files from Transifex
+
+version 3.0.4
+  - added playback progress sync for episodes
+  - fixed problem when external addon is providing video_ids but no year
+  - fixed problem with multi-part episodes sometimes not being recognized
+  - added fallback for dates outside of the unix timespan - they will now fall back to the current date/time
+  - updated language files from Transifex
+
+version 3.0.3
+  - bugfix for keyboard not showing up when trying to type in the pin dialog
+  - properly handle any ids combination when scrobbling is off for ratings
+  - updated language files from Transifex
+
+version 3.0.2
+  - fancy PIN auth dialog (by tknorris) and design (by piers)
+  - new design for context menu (by piers)
+  - skinners be aware, we renamed the dialogs, so you will need to rename yours too
+  - improved the dialogs so they are easier to skin
+  - you no longer need to scrobble to get a rating dialog
+  - created context menu addons for Kodi 15 (Isengard) - you need to install them on their own
+  - added an 'add to watchlist' button
+  - various fixes for manual rating and watched
+  - fixed some notifications not causing errors
+  - added id scrobbling via ids window property
+  - updated language files from Transifex
+
+version 3.0.1
+  - moved to PIN login, you will need to reenter your credentials. It's more secure and users with social logins (e.g. g+ or fb) can now login too!
+  - readded manual ratings for movies/shows/episodes (by tknorris)
+  - implemented manual ratings for seasons (by tknorris)
+  - readded manual ratings for movies/shows/seasons/episodes
+  - readded the Trakt contextmenu
+  - multipart episodes now show a rating dialog for each episode, when playback is finished
+  - use kodi proxy to send requests to trakt
+  - updated transifex translations
+
+version 3.0.0
+  - new Trakt branded rating dialog (by Piers)
+  - ported to Trakt.tv api v2 (using trakt.py by fuzeman)
+  - added playback progress sync for movies
+  - renamed everything from xbmc to kodi
+  - more languages supported
+  - send collected date from kodi to Trakt
+  - send watched date from kodi to Trakt
+  - send watched times and last watched date from Trakt to kodi
+  - removed lists management and contextmenu (for now)
+  - default rating is now a neutral 6 "Okay"
+  - improved logging
+  - various improvements and bugfixes
+
+version 2.3.2
+  - fixed update tags not running after sync, if the setting was enabled (nate1280)
+  - fixed usage of sync after library update, was always syncing (nate1280)
+  - small cleanup of sync, replace redundant calls with a variable and one time call (nate1280)
+  - compatible with Gotham
+  - language updates
+  - other bug fixes (see github)
+
+version 2.3.1
+  - improved API error handling and debugging
+  - new context menu action via RunScript(script.trakt,action=contextmenu)
+  - silent option for manual sync via RunScript(script.trakt,action=sync,silent=True)
+
+version 2.3.0
+  - moved debug settings to their own menu (nate1280)
+  - new togglewatched action for skins/keymaps (nate1280)
+  - new rate action for skins/keymaps (nate1280)
+  - new tagging/list actions for skins/keymaps (nate1280)
+  - alternate rating notification style (nate1280)
+  - exclusion checks now work in syncing and scrobbling (nate1280)
+
+version 2.2.0
+  - lots of code optimizing and bug fixes (nate1280)
+  - sync fixes (nate1280)
+  - better scrobbling of streaming media (nate1280)
+  - updated translations
+
+version 2.1.0
+  - rate movies and episode after watching them (sschocke, N3MIS15)
+  - use urllib2 for connection (nate1280)
+  - rewrite notification service (nate1280)
+  - scrobbles playlisted items correctly (koying)
+  - exclude settings for media to not scrobble (ezechiel1917)
+  - scrobble multi-part episodes correctly (nate1280)
+
+version 2.0.0
+  - compatible with Frodo only, Eden support dropped
+  - supports absolute and dvd ordering (mizaki)
+  - sync your TV episode and movie collections to Trakt (N3MIS15)
+  - auto clean your Trakt collection so that it matches up with XBMC (N3MIS15)
+  - keep watched statuses synced between XBMC and Trakt (N3MIS15)
+  - retry the telnet connection to prevent timeouts (sschocke)
+  - fixed authentication issue for incorrect username/password
+  - default to HTTPS on
+  - retry failed API calls (nate1280)
+
+version 1.0.1
+  - code optimization (seadog)
+  - use tvdb_id for much improved matching and international support
+  - hide error notifications during playback
+
+version 1.0.0
+  - initial release
+  - tv episode and movie scrobbling
+  - works with local files and remote streams with correct metadata
+  - tested with XBMC library mode, PleXBMC, Amazon, CBS
