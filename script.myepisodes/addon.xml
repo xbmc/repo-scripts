@@ -18,6 +18,7 @@
     <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
     <source>https://github.com/maximeh/script.myepisodes</source>
     <email>maxime dot hadjinlian at gmail dot com</email>
+    <broken>Not compatible with MyEpisodes anymore. Please update Kodi and this addon</broken>
   </extension>
 </addon>
 
