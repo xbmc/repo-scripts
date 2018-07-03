@@ -33,8 +33,8 @@ msgctxt "#32004"
 msgid "Server returned no data! Please try again."
 msgstr ""
 
-msgctxt "32005"
-msgid "Update your account in plugin settings!"
+msgctxt "#32005"
+msgid "Update your account in the add-on settings!"
 msgstr ""
 
 msgctxt "#32006"
@@ -164,4 +164,57 @@ msgstr ""
 
 msgctxt "#32201"
 msgid "API URL"
+msgstr ""
+
+msgctxt "#32202"
+msgid "Account"
+msgstr ""
+
+msgctxt "#32203"
+msgid "Status"
+msgstr ""
+
+msgctxt "#32204"
+msgid "Active"
+msgstr ""
+
+msgctxt "#32205"
+msgid "Inactive"
+msgstr ""
+
+msgctxt "#32206"
+msgid "Old password"
+msgstr ""
+
+msgctxt "#32207"
+msgid "New password"
+msgstr ""
+
+msgctxt "#32208"
+msgid "Repeat password"
+msgstr ""
+
+msgctxt "#32209"
+msgid "Save changes"
+msgstr ""
+
+msgctxt "#32210"
+msgid "You need to enter old and new password and repeat the new password"
+msgstr ""
+
+msgctxt "#32211"
+msgid "Settings"
+msgstr ""
+
+
+msgctxt "#32212"
+msgid "Login"
+msgstr ""
+
+msgctxt "#32213"
+msgid "To use the service you need to login"
+msgstr ""
+
+msgctxt "#32214"
+msgid "Използвай Player GUI"
 msgstr ""

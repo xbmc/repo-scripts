@@ -1,74 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<window>
+<window id="1136">
 	<allowoverlay>no</allowoverlay>
-	<backgroundcolor>0x00000000</backgroundcolor>
-	<coordinates>
-		<system>1</system>
-		<posx>0</posx>
-		<posy>0</posy>
-	</coordinates>
+  <menucontrol></menucontrol>
+ 
+<!--   <animation effect="slide" end="0" time="500">WindowClose</animation>
+  <animation effect="slide" end="0" time="500">WindowOpen</animation> -->
+  <zorder>10</zorder>
+  <coordinates>
+    <left>0</left>
+    <top>0</top>
+    <origin x="100" y="50">Window.IsActive(Home)</origin>
+  </coordinates>
 
 	<controls>
-		<control type="videowindow">
-		    <posx>0</posx>
-			<posy>0</posy>
-			<width>1280</width>
-			<height>720</height>
-		</control>
-		<control type="image">
-			<posx>360</posx>
-			<posy>90</posy>
-			<width>560</width>
-			<height>560</height>
-			<texture>script-video-bgtime-tv-logo-big.png</texture>
-		</control>
 		<control type="image">
 			<posx>0</posx>
 			<posy>0</posy>
-			<width>1280</width>
+			<width>320</width>
 			<height>720</height>
-			<texture>script-video-bgtime-tv-darker-blue.png</texture>
+			<texture>script-video-bgtime-tv-gblue10.png</texture>
 		</control>
-		<control type="image">
-			<posx>320</posx>
-			<posy>0</posy>
-			<width>640</width>
-			<height>720</height>
-			<texture>script-video-bgtime-tv-soft-white.png</texture>
-		</control>
-		
 		<control type="list" id="6001">
-			<posx>370</posx>
-			<posy>40</posy>
-			<width>540</width>
+			<posx>0</posx>
+			<posy>0</posy>
+			<width>320</width>
 			<height>720</height>
 			<viewtype label="list">list</viewtype>
 			<visible>!Control.IsVisible(6002)</visible>
-			<animation type="Visible">
-				<effect type="slide" start="560,0" end="0,0" time="500" />
-			</animation>
-			<animation type="Hidden">
-				<effect type="slide" start="0,0" end="560,0" time="500" />
-			</animation>
 			<focusposition>7</focusposition>
 			<onright>6003</onright>
 			<itemlayout width="600" height="40">
 				<control type="image">
 					<posx>0</posx>
 					<posy>0</posy>
-					<width>480</width>
+					<width>320</width>
 					<height>38</height>
-<!-- 					<texture>script-video-bgtime-tv-blue</texture> -->
 				</control>
 				<control type="label">
 					<posx>26</posx>
 					<posy>0</posy>
-					<width>480</width>
+					<width>320</width>
 					<height>38</height>
 					<aligny>center</aligny>
-					<align>center</align>
 					<font>font13</font>
-					<textcolor>ffffffff</textcolor>
+					<textcolor>0xffffffff</textcolor>
 					<info>ListItem.Label</info>
 				</control>
 				<control type="image">
@@ -83,30 +58,36 @@
 				<control type="image">
 					<posx>0</posx>
 					<posy>0</posy>
-					<width>480</width>
+					<width>320</width>
 					<height>38</height>
-					<!-- <texture>script-video-bgtime-tv-blue.png</texture> -->
 					<visible>Control.HasFocus(6000)</visible>
 				</control>
 				<control type="image">
 					<posx>0</posx>
 					<posy>0</posy>
-					<width>640</width>
+					<width>320</width>
 					<height>38</height>
-					<texture>script-video-bgtime-tv-grey.png</texture>
+					<texture>script-video-bgtime-tv-dgblue10.png</texture>
 				</control>
 				<control type="label">
 					<posx>25</posx>
 					<posy>0</posy>
-					<width>470</width>
+					<width>320</width>
 					<height>38</height>
 					<aligny>center</aligny>
-					<align>center</align>
 					<font>font26</font>
 					<textcolor>ffffffff</textcolor>
 					<label>[B]$INFO[ListItem.Label][/B]</label>
 				</control>
 			</focusedlayout>
+		</control>
+		<control type="button" id="6004">
+			<posx>321</posx>
+			<posy>0</posy>
+			<width>1280</width>
+			<height>720</height>
+			<texturefocus>script-video-bgtime-tv-transparent.png</texturefocus>
+			<texturenofocus>script-video-bgtime-tv-transparent.png</texturenofocus>
 		</control>
 		<!--Loader-->
 		<control type="label" id="5100">

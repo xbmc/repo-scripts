@@ -166,3 +166,60 @@ msgstr ""
 msgctxt "#32201"
 msgid "API URL"
 msgstr ""
+
+
+
+msgctxt "#32202"
+msgid "Потребител"
+msgstr ""
+
+msgctxt "#32203"
+msgid "Статус"
+msgstr ""
+
+msgctxt "#32204"
+msgid "активен"
+msgstr ""
+
+msgctxt "#32205"
+msgid "Неактивен"
+msgstr ""
+
+msgctxt "#32206"
+msgid "Стара парола"
+msgstr ""
+
+msgctxt "#32207"
+msgid "Нова парола"
+msgstr ""
+
+msgctxt "#32208"
+msgid "Повторете паролата"
+msgstr ""
+
+msgctxt "#32209"
+msgid "Запази промените"
+msgstr ""
+
+
+msgctxt "#32210"
+msgid "Трябва да въведеете стара и нова парола и да повторите нова парола!"
+msgstr ""
+
+
+msgctxt "#32211"
+msgid "Oпции"
+msgstr ""
+
+
+msgctxt "#32212"
+msgid "Вход"
+msgstr ""
+
+msgctxt "#32213"
+msgid "За да използвате услугата е необходимо да се впишете в акаунта си"
+msgstr ""
+
+msgctxt "#32215"
+msgid "Използвай Player GUI"
+msgstr ""
