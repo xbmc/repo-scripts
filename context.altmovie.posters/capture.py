@@ -78,12 +78,13 @@ class ALTPOSTERS(object):
         for idx in range(1,SEARCHDEPTH):
             try:
                 SEARCHURL = 'http://www.alternativemovieposters.com/page/%d/?s=%s'
-                soup = BeautifulSoup(self.openURL(SEARCHURL%(idx,urllib.quote_plus(title))), "html.parser")
-                posters = soup('div' , {'class': 'fusion-image-wrapper'})
-                if not posters or len(posters) == 0: break
-                for poster in posters:
-                    url = poster.find_all('img')[0].attrs['src']
-                    listItems.append(xbmcgui.ListItem(poster.find_all('h4')[0].get_text(), thumbnailImage=url, path=url))
+                soup  = BeautifulSoup(self.openURL(SEARCHURL%(idx,urllib.quote_plus(title))), "html.parser")
+                items = soup('div' , {'class': 'fusion-post-wrapper'})
+                if not items or len(items) == 0: break
+                for item in items:
+                    url = item('div' , {'class': 'fusion-image-wrapper'})[0].find('img').attrs['src']
+                    label = item('div' , {'class': 'fusion-post-content post-content'})[0].find('a').get_text()
+                    listItems.append(xbmcgui.ListItem(label, thumbnailImage=url, path=url))
             except: break
         xbmc.executebuiltin('Dialog.Close(busydialog)')
         if len(listItems) > 0:
