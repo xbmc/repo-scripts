@@ -61,9 +61,9 @@ class Connection(object):
         )
 
     def scrobble_episode(self, **kargs):
-        """ Scrobble en episode to episodehunter.tv """
+        """ Scrobble an episode to episodehunter.tv """
         return self.make_request(
             event_type='scrobble',
-            media_type='movie',
+            media_type='episode',
             **kargs
         )
