@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<addon id="script.episodehunter" version="2.0.4" name="EpisodeHunter" provider-name="Episodehunter.tv">
+<addon id="script.episodehunter" version="2.0.5" name="EpisodeHunter" provider-name="Episodehunter.tv">
     <requires>
         <import addon="xbmc.python" version="2.25.0"/>
     </requires>
@@ -14,9 +14,8 @@ Episodehunter keeps automatically a record of what you are watching and can ther
 You are required to have an EpisodeHunter account for this plugin.
 Create an account on episodehunter.tv
         </description>
-        <news>v2.0.4 (2018-06-03)
-- Remove movie and shows sync
-- Remove offline database</news>
+        <news>v2.0.5 (2018-07-08)
+- Bugfix regarding that episodes did not get marked as watched</news>
         <platform>all</platform>
         <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
         <language></language>
