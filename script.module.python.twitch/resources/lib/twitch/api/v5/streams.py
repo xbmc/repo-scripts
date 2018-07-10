@@ -1,10 +1,10 @@
 # -*- encoding: utf-8 -*-
 # https://dev.twitch.tv/docs/v5/reference/streams/
 
-from twitch import keys
-from twitch.api.parameters import Boolean, StreamType, Language, Platform
-from twitch.queries import V5Query as Qry
-from twitch.queries import query
+from ... import keys
+from ...api.parameters import Boolean, StreamType, Language, Platform
+from ...queries import V5Query as Qry
+from ...queries import query
 
 
 # required scope: none

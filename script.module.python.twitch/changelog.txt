@@ -1,3 +1,8 @@
+2.0.1
+[fix] clips usher
+[chg] to relative imports
+[upd] deprecation/removal dates
+
 2.0.0
 [chg] refactor oauth for inclusion of helix
 - adds MobileClient().prepare_token_uri() for generating app access tokens, adds client_secret requirement

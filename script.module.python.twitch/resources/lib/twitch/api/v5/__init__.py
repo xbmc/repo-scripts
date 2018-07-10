@@ -1,22 +1,26 @@
 # -*- encoding: utf-8 -*-
 # https://dev.twitch.tv/docs/
-# V5 is deprecated and will be removed entirely on 2/14/18
-from twitch.logging import log
+# V5 is deprecated and will be removed entirely on 12/31/18
 
-log.deprecated_api_version('V5', 'Helix', '2/14/18')
+__all__ = ['bits', 'channel_feed', 'channels', 'chat', 'clips', 'collections', 'communities',
+           'games', 'ingests', 'root', 'search', 'streams', 'teams', 'users', 'videos']
 
-from twitch.api.v5 import bits  # NOQA
-from twitch.api.v5 import channel_feed  # NOQA
-from twitch.api.v5 import channels  # NOQA
-from twitch.api.v5 import chat  # NOQA
-from twitch.api.v5 import clips  # NOQA
-from twitch.api.v5 import collections  # NOQA
-from twitch.api.v5 import communities  # NOQA
-from twitch.api.v5 import games  # NOQA
-from twitch.api.v5 import ingests  # NOQA
-from twitch.api.v5.root import root  # NOQA
-from twitch.api.v5 import search  # NOQA
-from twitch.api.v5 import streams  # NOQA
-from twitch.api.v5 import teams  # NOQA
-from twitch.api.v5 import users  # NOQA
-from twitch.api.v5 import videos  # NOQA
+from ...log import log
+
+log.deprecated_api_version('V5', 'Helix', '12/31/18')
+
+from . import bits  # NOQA
+from . import channel_feed  # NOQA
+from . import channels  # NOQA
+from . import chat  # NOQA
+from . import clips  # NOQA
+from . import collections  # NOQA
+from . import communities  # NOQA
+from . import games  # NOQA
+from . import ingests  # NOQA
+from .root import root  # NOQA
+from . import search  # NOQA
+from . import streams  # NOQA
+from . import teams  # NOQA
+from . import users  # NOQA
+from . import videos  # NOQA

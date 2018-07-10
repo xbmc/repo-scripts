@@ -1,12 +1,12 @@
 # -*- encoding: utf-8 -*-
 # https://dev.twitch.tv/docs/v5/reference/videos/
 
-from twitch import keys, methods
-from twitch.api.parameters import BroadcastType, Period, Language
-from twitch.queries import V5Query as Qry
-from twitch.queries import HiddenApiQuery as HQry
-from twitch.queries import UploadsQuery as UQry
-from twitch.queries import query
+from ... import keys, methods
+from ...api.parameters import BroadcastType, Period, Language
+from ...queries import V5Query as Qry
+from ...queries import HiddenApiQuery as HQry
+from ...queries import UploadsQuery as UQry
+from ...queries import query
 
 
 # required scope: none

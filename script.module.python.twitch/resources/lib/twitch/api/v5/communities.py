@@ -1,10 +1,10 @@
 # -*- encoding: utf-8 -*-
 # https://dev.twitch.tv/docs/v5/reference/communities/
 
-from twitch import keys, methods
-from twitch.api.parameters import Cursor
-from twitch.queries import V5Query as Qry
-from twitch.queries import query
+from ... import keys, methods
+from ...api.parameters import Cursor
+from ...queries import V5Query as Qry
+from ...queries import query
 
 
 # required scope: none

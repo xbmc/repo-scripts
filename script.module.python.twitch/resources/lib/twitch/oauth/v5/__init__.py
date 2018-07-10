@@ -1,3 +1,5 @@
 # -*- encoding: utf-8 -*-
 
-from twitch.oauth.v5 import scopes
+__all__ = ['scopes']
+
+from . import scopes
