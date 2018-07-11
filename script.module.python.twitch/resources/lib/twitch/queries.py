@@ -2,11 +2,11 @@
 
 from six.moves.urllib.parse import urljoin
 
-from twitch import CLIENT_ID, OAUTH_TOKEN, APP_TOKEN
-from twitch.exceptions import ResourceUnavailableException
-from twitch.logging import log, prep_log_message
-from twitch.scraper import download, get_json, get_json_and_headers
-from twitch import methods
+from . import CLIENT_ID, OAUTH_TOKEN, APP_TOKEN
+from .exceptions import ResourceUnavailableException
+from .log import log, prep_log_message
+from .scraper import download, get_json, get_json_and_headers
+from . import methods
 
 _kraken_baseurl = 'https://api.twitch.tv/kraken/'
 _helix_baseurl = 'https://api.twitch.tv/helix/'

@@ -1,7 +1,8 @@
 # -*- encoding: utf-8 -*-
 import re
-from twitch import keys
-from twitch.logging import log
+from ast import literal_eval
+from . import keys
+from .log import log
 
 _m3u_pattern = re.compile(
     r'#EXT-X-MEDIA:TYPE=VIDEO.*'
@@ -10,8 +11,6 @@ _m3u_pattern = re.compile(
     r'#EXT-X-STREAM-INF:.*'
     r'BANDWIDTH=(?P<bandwidth>[0-9]+).*\n('
     r'?P<url>http.*)')
-
-_clip_embed_pattern = re.compile(r'quality_options:\s*(?P<qualities>\[[^\]]+?\])')
 
 _error_pattern = re.compile(r'.*<tr><td><b>error</b></td><td>(?P<message>.+?)</td></tr>.*', re.IGNORECASE)
 
@@ -73,18 +72,23 @@ def m3u8_to_list(string):
     return l
 
 
-def clip_embed_to_list(string):
-    log.debug('clip_embed_to_list called for:\n{0}'.format(string))
-    match = re.search(_clip_embed_pattern, string)
+def clip_embed_to_list(response):
+    log.debug('clip_embed_to_list called for:\n{0}'.format(response))
+
+    response = literal_eval(response)
+    qualities = list()
     l = list()
-    if match:
-        match = eval(match.group('qualities'))
+
+    if isinstance(response, dict):
+        qualities = response.get('quality_options', list())
+
+    if qualities:
         l = [{
                  'id': item['quality'],
                  'name': item['quality'],
                  'url': item['source'],
                  'bandwidth': -1
-             } for item in match]
+             } for item in qualities]
         if l:
             l.insert(0, {
                 'id': 'Source',

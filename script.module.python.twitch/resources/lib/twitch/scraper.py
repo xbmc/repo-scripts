@@ -1,15 +1,15 @@
 # -*- encoding: utf-8 -*-
 import sys
 import requests
-# import six
+
 from six.moves.urllib.error import URLError
 from six.moves.urllib.parse import quote_plus  # NOQA
 from six.moves.urllib.parse import urlencode
-# from six.moves.urllib.request import Request, urlopen
 
-from twitch.keys import USER_AGENT, USER_AGENT_STRING
-from twitch.logging import log
-import methods
+from .keys import USER_AGENT, USER_AGENT_STRING
+from .log import log
+from .exceptions import ResourceUnavailableException
+from . import methods
 
 try:
     import json
@@ -95,7 +95,7 @@ def download(baseurl, parameters={}, headers={}, data={}, method=methods.GET, re
                 raise  # propagate non-URLError
             log.debug('Error |{0}| during HTTP Request, retrying'.format(repr(err)))
     else:
-        raise
+        raise ResourceUnavailableException('Max retries exceeded')
 
     if not response_headers:
         return content

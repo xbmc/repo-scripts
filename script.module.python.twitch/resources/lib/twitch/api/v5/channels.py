@@ -1,11 +1,11 @@
 # -*- encoding: utf-8 -*-
 # https://dev.twitch.tv/docs/v5/reference/channels/
 
-from twitch import keys, methods
-from twitch.api.parameters import Boolean, BroadcastType, Cursor, Direction, Duration, Language, VideoSort
-from twitch.queries import V5Query as Qry
-from twitch.queries import query
-from twitch.logging import log
+from ... import keys, methods
+from ...api.parameters import Boolean, BroadcastType, Cursor, Direction, Duration, Language, VideoSort
+from ...queries import V5Query as Qry
+from ...queries import query
+from ...log import log
 
 
 # required scope: channel_read

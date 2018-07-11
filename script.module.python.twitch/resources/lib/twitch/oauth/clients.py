@@ -1,8 +1,8 @@
 # -*- encoding: utf-8 -*-
 
-from twitch import CLIENT_ID, CLIENT_SECRET, methods
-from twitch.queries import OAuthQuery as Qry
-from twitch.queries import query
+from .. import CLIENT_ID, CLIENT_SECRET, methods
+from ..queries import OAuthQuery as Qry
+from ..queries import query
 
 from six.moves.urllib_parse import urlsplit, urlencode
 

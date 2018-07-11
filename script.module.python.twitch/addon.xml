@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.module.python.twitch" name="python-twitch for Kodi" version="2.0.0" provider-name="A Talented Community">
+<addon id="script.module.python.twitch" name="python-twitch for Kodi" version="2.0.1" provider-name="A Talented Community">
     <requires>
         <import addon="xbmc.python" version="2.20.0"/>
         <import addon="script.module.six" version="1.9.0"/>
@@ -9,12 +9,9 @@
     <extension point="xbmc.addon.metadata">
         <platform>all</platform>
         <news>
-[chg] refactor oauth for inclusion of helix
-[add] helix api
-[add] add usher.live_request and usher.video_request
-[add] MobileClient().revoke_token and MobileClient().get_app_access_token queries
-[add] Kodi logging
-[add] v5 users.users
+[fix] clips usher
+[chg] to relative imports
+[upd] deprecation/removal dates
         </news>
         <assets>
             <icon>icon.png</icon>
@@ -25,5 +22,6 @@
         <license>GNU GENERAL PUBLIC LICENSE. Version 3, 29 June 2007</license>
         <forum> </forum>
         <source>https://github.com/MrSprigster/script.module.python.twitch</source>
+        <reuselanguageinvoker>true</reuselanguageinvoker>
     </extension>
 </addon>

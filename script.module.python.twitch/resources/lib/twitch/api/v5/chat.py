@@ -1,9 +1,9 @@
 # -*- encoding: utf-8 -*-
 # https://dev.twitch.tv/docs/v5/reference/chat/
 
-from twitch import keys
-from twitch.queries import V5Query as Qry
-from twitch.queries import query
+from ... import keys
+from ...queries import V5Query as Qry
+from ...queries import query
 
 
 # required scope: none

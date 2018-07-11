@@ -1,10 +1,10 @@
 # -*- encoding: utf-8 -*-
 # https://dev.twitch.tv/docs/api/reference
 
-from twitch import keys
-from twitch.api.parameters import Cursor
-from twitch.queries import HelixQuery as Qry
-from twitch.queries import query
+from ... import keys
+from ...api.parameters import Cursor
+from ...queries import HelixQuery as Qry
+from ...queries import query
 
 
 # required scope: none
