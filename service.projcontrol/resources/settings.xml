@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+  <category label="32001">
+    <setting label="32002" type="text" id="device" default="/dev/ttyUSB0"/>
+    <setting label="32003" type="number" id="timeout" default="5"/>
+    <setting label="32004" type="select" id="manufacturer" values="Epson|InFocus" default="Epson"/>
+      <setting label="32005" type="select" id="epson_model" 
+        values="TW3200" default="TW3200" 
+        visible="eq(-1,Epson)"
+        subsetting="true"/>
+      <setting label="32005" type="select" id="infocus_model"
+        values="IN72/IN74/IN76" default="IN72/IN74/IN76"
+        visible="eq(-2,InFocus)"
+        subsetting="true"/>
+  </category>
+  <category label="32010">
+    <setting label="32011" type="bool" id="at_start" default="false"/>
+    <setting label="32012" type="bool" id="at_shutdown" default="false"/>
+    <setting label="32013" type="bool" id="at_ss_start" default="false"/>
+    <setting label="32014" type="number" id="at_ss_start_delay" default="0" visible="eq(-1,true)" subsetting="true"/>
+    <setting label="32015" type="bool" id="at_ss_shutdown" default="false"/>
+    <setting label="32016" type="number" id="min_turnaround" default="90" visible="eq(-1,true)" subsetting="true"/>
+    <setting label="32017" type="bool" id="set_input" default="false"/>
+    <setting label="32018" type="text" id="input_source" default="HDMI1" visible="eq(-1,true)" subsetting="true"/>
+  </category>
+  <category label="32020">
+    <setting label="32021" type="bool" id="lib_update" default="false"/>
+    <setting label="32022" type="bool" id="update_music" default="false" visible="eq(-1,true)" subsetting="true"/>
+    <setting label="32023" type="bool" id="update_video" default="false" visible="eq(-2,true)" subsetting="true"/>
+    <setting label="32024" type="bool" id="update_again" default="false" visible="eq(-3,true)" subsetting="true"/>
+    <setting label="32025" type="number" id="update_again_at" default="60" subsetting="true" visible="eq(-1,true)"/>
+  </category>
+  <category label="32030">
+    <setting label="32031" type="bool" id="enabled" default="false"/>
+    <setting label="32032" type="ipaddress" id="address" default="0.0.0.0" enable="eq(-1,true)"/>
+    <setting label="32033" type="number" id="port" default="6661" enable="eq(-2,true)"/>
+  </category>
+</settings>

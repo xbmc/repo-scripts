@@ -1,0 +1,174 @@
+# Kodi Media Center language file
+# Addon Name: Projector Control
+# Addon id: service.projcontrol
+# Addon Provider: feffe
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: English (http://www.transifex.com/projects/p/xbmc-addons/language/en/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+
+# Configuration options 32001-32099
+
+msgctxt "#32001"
+msgid "Projector Details"
+msgstr "Projektoregenskaper"
+
+msgctxt "#32002"
+msgid "Serial Device"
+msgstr "Seriellport"
+
+msgctxt "#32003"
+msgid "Response Read Timeout"
+msgstr "Svarstimeout"
+
+msgctxt "#32004"
+msgid "Manufacturer"
+msgstr "Tillverkare"
+
+msgctxt "#32005"
+msgid "Model"
+msgstr "Model"
+
+# empty strings #32006-32009
+
+msgctxt "#32010"
+msgid "Projector Control"
+msgstr "Projektorhantering"
+
+msgctxt "#32011"
+msgid "Start projector when Kodi starts"
+msgstr "Starta projektorn när Kodi startar"
+
+msgctxt "#32012"
+msgid "Shutdown projector when Kodi exits"
+msgstr "Stäng av projektorn när Kodi avslutas"
+
+msgctxt "#32013"
+msgid "Shutdown projector when screensaver activates"
+msgstr "Stäng av projektorn när skärmsläckaren aktiveras"
+
+msgctxt "#32014"
+msgid "Delay after screensaver activation before projector shutdown"
+msgstr "Fördröjning innan projektorn stängs av när skärmsläckaren startar"
+
+msgctxt "#32015"
+msgid "Start projector when screensaver deactivates"
+msgstr "Starta projektorn när skärmsläckaren avslutas"
+
+msgctxt "#32016"
+msgid "Minimum interval between projector shutdown and startup"
+msgstr "Minsta interval mellan projektoravstängning och uppstart"
+
+msgctxt "#32017"
+msgid "Set input source on projector after projector starts"
+msgstr "Set videokälla på projektorn när den startat"
+
+msgctxt "#32018"
+msgid "Input source"
+msgstr "Videokälla"
+
+# empty string #32019
+
+msgctxt "#32020"
+msgid "Library Updates"
+msgstr "Uppdatering av mediabibliotek"
+
+msgctxt "#32021"
+msgid "Update library when projector shuts down"
+msgstr "Uppdatera mediabibliotek när projektorn stängs av"
+
+msgctxt "#32022"
+msgid "Update Music Library"
+msgstr "Uppdatera musikbiblioteket"
+
+msgctxt "#32023"
+msgid "Update Video Library"
+msgstr "Uppdatera videobiblioteket"
+
+msgctxt "#32024"
+msgid "Regular updates"
+msgstr "Återkommande uppdateringar"
+
+msgctxt "#32025"
+msgid "Update every (Minutes)"
+msgstr "Uppdatera varje (minuter)"
+
+# empty strings #32026-32029
+
+msgctxt "#32030"
+msgid "REST API"
+msgstr "REST API"
+
+msgctxt "#32031"
+msgid "Enable REST API"
+msgstr "Aktivera REST API"
+
+msgctxt "#32032"
+msgid "Listen Address"
+msgstr "Adress att lyssna på"
+
+msgctxt "#32033"
+msgid "Listen Port"
+msgstr "Port att lyssna på"
+
+
+
+msgctxt "#32100"
+msgid "Projector Command Failed"
+msgstr "Projektorkommando misslyckades"
+
+msgctxt "#32101"
+msgid "Report From Projector"
+msgstr "Rapport från projektor"
+
+
+# Errors
+
+msgctxt "#32200"
+msgid "REST API not available, see https://github.com/fredrik-eriksson/kodi_projcontrol for possible reasons"
+msgstr "Det går inte att aktivera REST API, se https://github.com/fredrik-eriksson/kodi_projcontrol för möjliga orsaker"
+
+msgctxt "#32201"
+msgid "Failed to start API web server, Try to disable and reenable addon"
+msgstr "Misslyckades med att starta API-server, prova att avaktivera och aktivera tillägget"
+
+msgctxt "#32203"
+msgid "Configuration error: unsupported manufacturer"
+msgstr "Konfigurationsfel: okänd tillverkare"
+
+msgctxt "#32204"
+msgid "Failed to open projector serial device"
+msgstr "Misslyckades med att öppna serieportsanslutningen"
+
+msgctxt "#32205"
+msgid "Failed to send command to projector"
+msgstr "Misslyckades med att skicka kommando till projektorn"
+
+msgctxt "#32206"
+msgid "Error when sending command to projector"
+msgstr "Fel i kommunikation med projektorn"
+
+msgctxt "#32207"
+msgid "Configuration error: invalid source for this model"
+msgstr "Konfigurationsfel: ogiltig källa för projektormodellen"
+
+
+# Informational
+
+msgctxt "#32300"
+msgid "Started projector API at"
+msgstr "Projektor-API startat på"
+
+msgctxt "#32301"
+msgid "Projector API stopped"
+msgstr "Projektor-API avstängt"
