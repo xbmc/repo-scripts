@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.module.xmltodict" name="xmltodict" version="0.9.0" provider-name="martinblech">
+<addon id="script.module.xmltodict" name="xmltodict" version="0.11.0" provider-name="martinblech">
     <requires>
         <import addon="xbmc.python" version="2.1.0"/>
     </requires>
@@ -7,7 +7,7 @@
     <extension point="xbmc.addon.metadata">
         <language></language>
         <summary lang="en">Python helper module</summary>
-        <description lang="en">xmltodict is a Python module that makes working with XML feel like you are working with JSON, as in this "spec".[CR]</description>
+        <description lang="en">xmltodict is a Python module that makes working with XML feel like you are working with JSON, as in this "spec".</description>
         <license>MIT</license>
         <platform>all</platform>
         <website>https://github.com/martinblech/xmltodict</website>
