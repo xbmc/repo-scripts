@@ -3,7 +3,6 @@ import sys
 import urlparse
 import xbmc
 import xbmcaddon
-import xbmcgui
 from datetime import datetime
 
 if sys.version_info < (2, 7):
@@ -26,6 +25,17 @@ def get_main_addon():
     if not _main_addon:
         _main_addon = xbmcaddon.Addon()
     return _main_addon
+
+_kodiversion = None
+def get_kodi_version():
+    global _kodiversion
+    if _kodiversion is None:
+        json_request = {'jsonrpc': '2.0', 'method': 'Application.GetProperties', 'params': {}, 'id': 1}
+        json_request['params']['properties'] = ['version']
+        json_result = execute_jsonrpc(json_request)
+        if 'result' in json_result:
+            _kodiversion = json_result['result']['version']['major']
+    return _kodiversion
 
 def localize(messageid):
     if isinstance(messageid, basestring):
@@ -89,10 +99,7 @@ def log(message, level=xbmc.LOGDEBUG):
     xbmc.log(file_message, level)
 
 def get_busydialog():
-    try:
-        return xbmcgui.DialogBusy()
-    except AttributeError: # pre-Krypton beta6-ish
-        return OldDialogBusy()
+    return DialogBusy()
 
 class LogJSONEncoder(json.JSONEncoder):
     def __init__(self, *args, **kwargs):
@@ -133,25 +140,24 @@ class UTF8JSONDecoder(json.JSONDecoder):
         else:
             return jsoninput
 
-class OldDialogBusy(object):
-    # DEPRECATED: Just a quick shim to match Krypton's new DialogBusy() API
+class DialogBusy(object):
     def __init__(self):
         self.visible = False
+        window = 'busydialognocancel' if get_kodi_version() >= 18 else 'busydialog'
+        self._activate = 'ActivateWindow({0})'.format(window)
+        self._close = 'Dialog.Close({0})'.format(window)
 
     def create(self):
-        xbmc.executebuiltin('ActivateWindow(busydialog)')
+        xbmc.executebuiltin(self._activate)
         self.visible = True
 
     def close(self):
-        xbmc.executebuiltin('Dialog.Close(busydialog)')
+        xbmc.executebuiltin(self._close)
         self.visible = False
-
-    def update(self): pass
-    def iscanceled(self): return False
 
     def __del__(self):
         if self.visible:
             try:
-                xbmc.executebuiltin('Dialog.Close(busydialog)')
+                xbmc.executebuiltin(self._close)
             except AttributeError:
                 pass

@@ -1,3 +1,7 @@
+v1.2.1 (2018-06-22)
+- Fix: error when playing some videos from file system
+- Fix: support busy dialog changes in Kodi Leia
+
 v1.2.0 (2017-11-13)
 - Feature: merge in 'Play one random' context item
 - Feature: option for continuous play
