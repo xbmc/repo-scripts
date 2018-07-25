@@ -1,4 +1,4 @@
-# v.0.4.3
+# v.0.4.4
 
 import shutil, time
 try:
@@ -19,14 +19,12 @@ if isXBMC:
     _rmdir  = xbmcvfs.rmdir
     _exists = xbmcvfs.exists
     _delete = xbmcvfs.delete
-    _rename = xbmcvfs.rename
     _copy   = xbmcvfs.copy
 else:
     _mkdirs = os.makedirs
     _rmdir  = os.rmdir
     _exists = os.path.exists
     _delete = os.remove
-    _rename = os.rename
     _copy   = shutil.copyfile
 
 
@@ -95,24 +93,13 @@ def moveFile( src, dst ):
     log_lines = []
     cp_loglines = []
     dl_loglines = []
-    success = True
+    success = False
     if _exists( src ):
-        try:
-            log_lines.append( 'moving %s to %s' % (src, dst) )
-            _rename( src, dst )
-        except IOError:
-            log_lines.append( 'unable to move %s' % src )
-            success = False
-        except Exception as e:
-            log_lines.append( 'unknown error while attempting to move %s' % src )
-            log_lines.append( e )
-            success = False
-        if not success:
-            cp_success, cp_loglines = copyFile( src, dst )
-            if cp_success:
-                dl_success, dl_loglines = deleteFile( src )
-                if dl_success:
-                    success = True
+        cp_success, cp_loglines = copyFile( src, dst )
+        if cp_success:
+            dl_success, dl_loglines = deleteFile( src )
+            if dl_success:
+                success = True
     else:
         log_lines.append( '%s does not exist' % src)
         success = False
