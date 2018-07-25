@@ -67,13 +67,24 @@ class RpcHandler(BaseHandler):
 
 class RemoteProcessCallable(object):
  
-    def rpc(self, method, args=[], kwargs={}):
+    def rpc(self, method, args=None, kwargs=None):
+        args = Utils.default(args, [])
+        kwargs = Utils.default(kwargs, {})
         method = getattr(self, method)
         fkwargs = {}
         for name in inspect.getargspec(method)[0]:
             if name in kwargs:
                 fkwargs[name] = kwargs[name]
-        return method(*args, **fkwargs)
+        try:
+            return method(*args, **fkwargs)
+        except Exception as ex:
+            handle = True
+            httpex = ExceptionUtils.extract_exception(ex, HTTPError)
+            if httpex:
+                handle = httpex.code != 404
+            if handle:
+                self._handle_exception(ex, False)
+            raise ex
 
 class RpcUtil(object):
     

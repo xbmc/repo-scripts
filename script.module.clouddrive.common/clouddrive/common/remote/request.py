@@ -24,6 +24,7 @@ import urllib2
 from clouddrive.common.exception import RequestException
 from clouddrive.common.ui.logger import Logger
 from clouddrive.common.utils import Utils
+from cookielib import CookieJar
 
 
 class Request(object):
@@ -50,6 +51,7 @@ class Request(object):
     response_code = None
     response_info = None
     response_text = None
+    response_cookies = None
     
     def __init__(self, url, data, headers=None, tries=3, delay=5, backoff=2, exceptions=None, before_request=None, on_exception=None, on_failure=None, on_success=None, on_complete=None, cancel_operation=None, waiting_retry=None, wait=None):
         self.url = url
@@ -116,6 +118,9 @@ class Request(object):
                 self.response_code = response.getcode()
                 self.response_info = response.info()
                 self.response_url = response.geturl()
+                cookiejar = CookieJar()
+                cookiejar._policy._now = cookiejar._now = int(time.time())
+                self.response_cookies = cookiejar.make_cookies(response, req)
                 self.response_text = response.read()
                 content_length = self.response_info.getheader('content-length', -1)
                 response_report = '\nResponse Headers:\n%s' % Utils.str(self.response_info)

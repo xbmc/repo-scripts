@@ -270,7 +270,7 @@ msgid "Allow cloud drive addons to be used as a source"
 msgstr ""
 
 msgctxt "#32069"
-msgid "     Source server port  -  http://localhost:<port>"
+msgid "     Source server port  -  http://localhost:<port>/source"
 msgstr ""
 
 msgctxt "#32070"
@@ -280,3 +280,12 @@ msgstr ""
 msgctxt "#32071"
 msgid "Go to [Add-ons > %s > Add an account...] to add one."
 msgstr ""
+
+msgctxt "#32072"
+msgid "[B]Security Error[/B]"
+msgstr ""
+
+msgctxt "#32073"
+msgid "Ip change detected: [B]%s[/B] to [B]%s[/B]. Make sure you stay in the same network."
+msgstr ""
+

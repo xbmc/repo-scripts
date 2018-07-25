@@ -17,6 +17,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #-------------------------------------------------------------------------------
 
+import json
 import re
 import time
 import urllib
@@ -24,8 +25,8 @@ import urllib2
 
 from clouddrive.common.exception import ExceptionUtils, RequestException
 from clouddrive.common.remote.request import Request
+from clouddrive.common.ui.logger import Logger
 from clouddrive.common.utils import Utils
-import json
 
 
 class OAuth2(object):
@@ -39,7 +40,7 @@ class OAuth2(object):
     def get_access_tokens(self):
         raise NotImplementedError()
     
-    def refresh_access_tokens(self, request_params={}):
+    def refresh_access_tokens(self, request_params=None):
         raise NotImplementedError()
     
     def persist_access_tokens(self, access_tokens):
@@ -49,12 +50,14 @@ class OAuth2(object):
         ex = ExceptionUtils.extract_exception(e, urllib2.HTTPError)
         if ex and ex.code >= 400 and ex.code <= 599 and ex.code != 503:
             request.tries = request.current_tries
-        if original_on_exception:
+        if original_on_exception and not(original_on_exception is self._on_exception):
             original_on_exception(request, e)
             
-    def _wrap_on_exception(self, request_params={}):
+    def _wrap_on_exception(self, request_params=None):
+        request_params = Utils.default(request_params, {})
         original_on_exception = Utils.get_safe_value(request_params, 'on_exception', None)
         request_params['on_exception'] = lambda request, e: self._on_exception(request, e, original_on_exception)
+        return request_params
     
     def _validate_access_tokens(self, access_tokens, url, data, request_headers):
         if not access_tokens or not 'access_token' in access_tokens or not 'refresh_token' in access_tokens or not 'expires_in' in access_tokens or not 'date' in access_tokens:
@@ -72,10 +75,12 @@ class OAuth2(object):
             url += '?' + parameters
         return url
     
-    def request(self, method, path, parameters={}, request_params={}, access_tokens={}, headers=None):
+    def request(self, method, path, parameters=None, request_params=None, access_tokens=None, headers=None):
+        parameters = Utils.default(parameters, {})
+        access_tokens = Utils.default(access_tokens, {})
         encoded_parameters = urllib.urlencode(parameters)
         url = self._build_url(method, path, encoded_parameters)
-        self._wrap_on_exception(request_params)
+        request_params = self._wrap_on_exception(request_params)
         if not headers:
             headers = Utils.default(self._get_request_headers(), {})
         content_type = Utils.get_safe_value(headers, 'content-type', '')

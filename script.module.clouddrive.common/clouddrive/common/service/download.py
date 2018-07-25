@@ -19,20 +19,23 @@
 
 from urllib2 import HTTPError
 
+from clouddrive.common.account import AccountManager
 from clouddrive.common.exception import ExceptionUtils
+from clouddrive.common.remote.errorreport import ErrorReport
 from clouddrive.common.service.base import BaseService, BaseHandler
 from clouddrive.common.ui.logger import Logger
-from clouddrive.common.utils import Utils
 from clouddrive.common.ui.utils import KodiUtils
-from clouddrive.common.service.rpc import RpcUtil
+from clouddrive.common.utils import Utils
 
 
 class DownloadService(BaseService):
     name = 'download'
+    profile_path = Utils.unicode(KodiUtils.translate_path(KodiUtils.get_addon_info('profile')))
     
-    def __init__(self):
-        super(DownloadService, self).__init__()
+    def __init__(self, provider_class):
+        super(DownloadService, self).__init__(provider_class)
         self._handler = Download
+        
     
 class Download(BaseHandler):
     def do_GET(self):
@@ -41,14 +44,13 @@ class Download(BaseHandler):
         code = 307
         headers = {}
         content = Utils.get_file_buffer()
-        if len(data) > 5 and data[1] == self.server.service.name:
+        if len(data) > 4 and data[1] == self.server.service.name:
             try:
-                item = RpcUtil.rpc(data[2], 'get_item', kwargs = {
-                    'driveid' : data[3],
-                    'item_driveid' : data[4],
-                    'item_id' : data[5],
-                    'include_download_info' : True
-                })
+                driveid = data[2]
+                provider = self.server.data()
+                account_manager = AccountManager(self.server.service.profile_path)
+                provider.configure(account_manager, driveid)
+                item = provider.get_item(item_driveid=data[3], item_id=data[4], include_download_info = True)
                 headers['location'] = item['download_info']['url']
             except Exception as e:
                 httpex = ExceptionUtils.extract_exception(e, HTTPError)
@@ -56,6 +58,8 @@ class Download(BaseHandler):
                     code = httpex.code
                 else:
                     code = 500
+                
+                ErrorReport.handle_exception(e)
                 content.write(ExceptionUtils.full_stacktrace(e))
         else:
             code = 404
@@ -63,10 +67,10 @@ class Download(BaseHandler):
         
 class DownloadServiceUtil(object):
     @staticmethod
-    def build_download_url(addonid, driveid, item_driveid, item_id, name):
-        return 'http://%s:%s/%s/%s/%s/%s/%s/%s' % (
+    def build_download_url(driveid, item_driveid, item_id, name, addonid=None):
+        return 'http://%s:%s/%s/%s/%s/%s/%s' % (
             DownloadService._interface,
-            KodiUtils.get_service_port(DownloadService.name, 'script.module.clouddrive.common'),
+            KodiUtils.get_service_port(DownloadService.name, addonid),
             DownloadService.name,
-            addonid, driveid, item_driveid, item_id, name
+            driveid, item_driveid, item_id, name
         )

@@ -17,12 +17,29 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #-------------------------------------------------------------------------------
 
-try:
-    from cStringIO import StringIO
-except ImportError:
-    from StringIO import StringIO
-    
+
 class Utils:
+    
+    _extension_map = {
+        'html' : 'text/html',
+        'htm' : 'text/html',
+        'txt' : 'text/plain',
+        'rtf' : 'application/rtf',
+        'odf' : 'application/vnd.oasis.opendocument.text',
+        'pdf' : 'application/pdf',
+        'doc' : 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+        'docx' : 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+        'epub' : 'application/epub+zip',
+        'xls' : 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+        'sxc' : 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+        'csv' : 'text/csv',
+        'ppt' : 'application/vnd.openxmlformats-officedocument.presentationml.presentation',
+        'pptx' : 'application/vnd.openxmlformats-officedocument.presentationml.presentation',
+        'sxi' : 'application/vnd.oasis.opendocument.presentation',
+        'json' : 'application/json',
+        'mkv' : 'video/x-matroska'
+    }   
+    
     @staticmethod
     def get_extension(name):
         index = name.rfind('.')
@@ -82,6 +99,11 @@ class Utils:
     
     @staticmethod
     def get_file_buffer():
+        try:
+            from cStringIO import StringIO
+        except ImportError:
+            from StringIO import StringIO
+            
         return StringIO()
     
     @staticmethod
@@ -90,3 +112,8 @@ class Utils:
         if index > -1:
             return path[:index]
         return ''
+    
+    @staticmethod
+    def get_mimetype_by_extension(extension):
+        return Utils.get_safe_value(Utils._extension_map, Utils.default(extension, ''))
+    

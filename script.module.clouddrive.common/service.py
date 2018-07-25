@@ -17,11 +17,9 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #-------------------------------------------------------------------------------
 
-from clouddrive.common.service.download import DownloadService
-from clouddrive.common.service.source import SourceService
+from clouddrive.common.service.source import SourceRedirector, SourceService
 from clouddrive.common.service.utils import ServiceUtil
 
 
 if __name__ == '__main__':
-    ServiceUtil.run([DownloadService(), SourceService()])
-    
+    ServiceUtil.run([SourceService(None, SourceRedirector)])

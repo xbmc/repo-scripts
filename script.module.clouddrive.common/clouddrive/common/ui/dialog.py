@@ -17,9 +17,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #-------------------------------------------------------------------------------
 
-import xbmcaddon
 import xbmcgui
-
 
 class DialogProgressBG (xbmcgui.DialogProgressBG):
     _default_heading = None

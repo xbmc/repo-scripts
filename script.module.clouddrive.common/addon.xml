@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addon id="script.module.clouddrive.common" name="Cloud Drive Common Module"
-	version="1.0.0" provider-name="Carlos Guzman (cguZZman)">
+	version="1.1.5" provider-name="Carlos Guzman (cguZZman)">
 	<requires>
 		<import addon="xbmc.python" version="2.25.0" />
 		<import addon="script.module.dateutil"/>
@@ -16,6 +16,39 @@
 		<license>GNU GENERAL PUBLIC LICENSE. Version 3, 29 June 2007</license>
 		<source>https://github.com/cguZZman/script.module.clouddrive.common</source>
 		<forum>https://github.com/cguZZman/script.module.clouddrive.common/issues</forum>
-		<news>v1.0.0 - Nov 6, 2017: First release</news>
+		<news>
+v1.1.5 released Jul 14, 2018:
+- Fixes for slow connections
+v1.1.4 released Jul 12, 2018:
+- Ip change detection.
+- Fixes
+v1.1.0 released Jul 11, 2018:
+- New mode for source and download services. Both moved to respective addons.
+- Source service fixed.
+v1.0.4 released Jul 6, 2018:
+- Fix display more than 100 files in source mode
+v1.0.3 released Jul 5, 2018:
+- Fixes
+v1.0.2 released March 15, 2018:
+- Fixes
+v1.0.1 released Nov 6, 2017:
+- Login app rename
+- Support for images by extension only when the cloud drive doesn't provide image information. 
+v1.0.0 released Nov 6, 2017:
+- First release
+		</news>
+		<disclaimer lang="en_GB">
+This cloud drive addon uses a third-party authentication mechanism commonly known as OAuth 2.0.
+If you want to know more about OAuth 2.0 you can visit the following pages:
+- https://oauth.net/2/
+- https://developers.google.com/identity/protocols/OAuth2
+- https://docs.microsoft.com/en-us/onedrive/developer/rest-api/getting-started/msa-oauth
+
+Kodi and myself take no responsibility or liability whatsoever.
+
+The authentication server URL is specified in Settings / Advanced / Sign-in Server. The Sign-in Server implements the OAuth 2.0 protocol.
+The complete source code of the Sign-in Server can be download here: https://github.com/cguZZman/drive-login
+You can clone the project and host it in your own server. 
+		</disclaimer>
 	</extension>
 </addon>
