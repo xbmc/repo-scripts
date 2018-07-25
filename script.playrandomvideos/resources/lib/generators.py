@@ -190,8 +190,8 @@ class RandomJSONDirectoryGenerator(object):
                 result_dirs.add(file_['file'])
             else:
                 if check_mimetype and not file_['mimetype'].startswith('video') or \
-                        self.watchmode == WATCHMODE_UNWATCHED and file_['playcount'] > 0 or \
-                        self.watchmode == WATCHMODE_WATCHED and file_['playcount'] == 0:
+                        self.watchmode == WATCHMODE_UNWATCHED and file_.get('playcount', 0) > 0 or \
+                        self.watchmode == WATCHMODE_WATCHED and file_.get('playcount', 0) == 0:
                     continue
                 result_files.append(file_)
                 if self.singleresult:
