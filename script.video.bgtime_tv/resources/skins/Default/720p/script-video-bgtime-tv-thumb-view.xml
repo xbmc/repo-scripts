@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<window>
+<window id="1138">
 	<allowoverlay>no</allowoverlay>
 	<backgroundcolor>0x00000000</backgroundcolor>
 	<scroll>true</scroll>
@@ -17,21 +17,14 @@
 			<height>720</height>
 		</control>
 		<control type="image">
-			<posx>360</posx>
-			<posy>90</posy>
-			<width>560</width>
-			<height>560</height>
-			<texture>script-video-bgtime-tv-logo-big.png</texture>
-		</control>
-		<control type="image">
 			<posx>0</posx>
 			<posy>0</posy>
 			<width>1280</width>
 			<height>720</height>
-			<texture>script-video-bgtime-tv-darker-blue.png</texture>
+			<texture>script-video-bgtime-tv-black07.png</texture>
 		</control>
 		<!-- Title-->
-		<control type="label" id="6001">
+		<control type="label" id="6104">
 			<posx>0</posx>
 			<posy>0</posy>
 			<alignment>2</alignment>  
@@ -43,7 +36,7 @@
 		</control>
 		<!-- Filters-->
 		<control type="label" id="6100">
-				<description>visibility marker for loading group</description>
+			<description>visibility marker for loading group</description>
 		</control>
 		<control type="button" id="6101">
 			<posx>1075</posx>
@@ -57,8 +50,61 @@
 			<label>Филтриране</label>
 			<visible>!Control.IsVisible(6100)</visible>
 			<textcolor>white</textcolor>
-			<texturefocus>script-video-bgtime-tv-very-lighter-blue.png</texturefocus>
-			<texturenofocus>script-video-bgtime-tv-soft-white.png</texturenofocus>
+			<texturefocus>script-video-bgtime-tv-gblue10.png</texturefocus>
+			<texturenofocus>script-video-bgtime-tv-gblue04.png</texturenofocus>
+		</control>
+				<!-- MENU START -->
+		<!-- Menu handler-->
+		<control type="button" id="6001">
+			<posx>0</posx>
+			<posy>0</posy>
+			<width>50</width>
+			<height>720</height>
+			<texturefocus>script-video-bgtime-tv-gblue10.png</texturefocus>
+			<texturenofocus>script-video-bgtime-tv-grey10.png</texturenofocus>
+		</control>
+
+
+
+		<control type="image">
+			<description>logo</description>
+			<posx>13</posx>
+			<posy>15</posy>
+			<width>25</width>
+			<height>28</height>
+			<texture>scipt-video-bgtime-tv-logo-icon.png</texture>
+		</control>
+		<control type="image">
+			<description>menu</description>
+			<posx>15</posx>
+			<posy>300</posy>
+			<width>20</width>
+			<height>18</height>
+			<texture>script-video-bgtime-tv-menu-icon.png</texture>
+		</control>
+		<control type="image">
+			<description>logo</description>
+			<posx>15</posx>
+			<posy>340</posy>
+			<width>20</width>
+			<height>18</height>
+			<texture>script-video-bgtime-tv-profile-icon.png</texture>
+		</control>
+		<control type="image">
+			<description>logo</description>
+			<posx>15</posx>
+			<posy>380</posy>
+			<width>20</width>
+			<height>18</height>
+			<texture>script-video-bgtime-tv-search-icon.png</texture>
+		</control>
+		<control type="image">
+			<description>logo</description>
+			<posx>15</posx>
+			<posy>420</posy>
+			<width>20</width>
+			<height>18</height>
+			<texture>script-video-bgtime-tv-logout-icon.png</texture>
 		</control>
 		<!--Loader-->
 		<control type="label" id="5100">
