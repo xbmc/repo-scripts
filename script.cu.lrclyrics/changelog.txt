@@ -1,3 +1,6 @@
+v5.5.4
+- fix xiami error
+
 v5.5.3
 - handle space in offset tag
 

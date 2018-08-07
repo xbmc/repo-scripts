@@ -35,7 +35,6 @@ class LyricsFetcher:
         keyword = "%s %s" % (song.title, song.artist)
         url = self.LIST_URL % (urllib.quote(keyword))
         try:
-            print url
             request = urllib2.Request(url)
             request.add_header('User-Agent', UserAgent)
             request.add_header('Referer', 'https://www.xiami.com/play')
@@ -68,28 +67,26 @@ class LyricsFetcher:
 
     def get_lyrics_from_list(self, link):
         title,id,artist,song = link
-        if 1:
+        try:
             request = urllib2.Request(self.SONG_URL % (id))
-            print str(self.SONG_URL % (id))
             request.add_header('User-Agent', UserAgent)
             request.add_header('Referer', 'https://www.xiami.com/play')
             response = urllib2.urlopen(request)
             data = response.read()
-            print data
             url = re.compile('<lyric>(.+?)</lyric>').search(data).group(1)
             request = urllib2.Request('https:%s' % url)
             request.add_header('User-Agent', UserAgent)
             request.add_header('Referer', 'https://www.xiami.com/play')
             response = urllib2.urlopen(request)
             lyrics = response.read()
-#        except:
-#            log( "%s: %s::%s (%d) [%s]" % (
-#                   __title__, self.__class__.__name__,
-#                   sys.exc_info()[ 2 ].tb_frame.f_code.co_name,
-#                   sys.exc_info()[ 2 ].tb_lineno,
-#                   sys.exc_info()[ 1 ]
-#                   ))
-#            return
+        except:
+            log( "%s: %s::%s (%d) [%s]" % (
+                   __title__, self.__class__.__name__,
+                   sys.exc_info()[ 2 ].tb_frame.f_code.co_name,
+                   sys.exc_info()[ 2 ].tb_lineno,
+                   sys.exc_info()[ 1 ]
+                   ))
+            return
         enc = chardet.detect(lyrics)
         lyrics = lyrics.decode(enc['encoding'], 'ignore')
         return lyrics
