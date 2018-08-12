@@ -276,7 +276,7 @@ def catch_post_mortem(host='', port=5555):
     """
     try:
         yield
-    except:
+    except Exception:
         xbmc.log('Web-PDB: unhandled exception detected:\n{0}'.format(
             traceback.format_exc()), xbmc.LOGERROR
         )
