@@ -35,6 +35,7 @@ from __future__ import absolute_import
 import asyncore
 import select
 import socket
+from errno import EINTR
 from io import BytesIO
 from shutil import copyfileobj
 from tempfile import TemporaryFile
@@ -45,21 +46,76 @@ from .. import logging
 __all__ = ['AsyncWsgiHandler', 'AsyncWebSocketHandler', 'AsyncWsgiServer',
             'make_server']
 
-__version__ = '0.0.3'
+__version__ = '0.0.6'
 
 logger = logging.getLogger('asyncore_wsgi')
 
 
+def epoll_poller(timeout=0.0, map=None):
+    """
+    A poller which uses epoll(), supported on Linux 2.5.44 and newer
+
+    Borrowed from here:
+    https://github.com/m13253/python-asyncore-epoll/blob/master/asyncore_epoll.py#L200
+    """
+    if map is None:
+        map = asyncore.socket_map
+    pollster = select.epoll()
+    if map:
+        for fd, obj in map.items():
+            flags = 0
+            if obj.readable():
+                flags |= select.POLLIN | select.POLLPRI
+            if obj.writable():
+                flags |= select.POLLOUT
+            if flags:
+                # Only check for exceptions if object was either readable
+                # or writable.
+                flags |= select.POLLERR | select.POLLHUP | select.POLLNVAL
+                pollster.register(fd, flags)
+        try:
+            r = pollster.poll(timeout)
+        except select.error as err:
+            if err.args[0] != EINTR:
+                raise
+            r = []
+        for fd, flags in r:
+            obj = map.get(fd)
+            if obj is None:
+                continue
+            asyncore.readwrite(obj, flags)
+
+
 def get_poll_func():
     """Get the best available socket poll function
-    
+
     :return: poller function
     """
-    if hasattr(select, 'poll'):
+    if hasattr(select, 'epoll'):
+        poll_func = epoll_poller
+    elif hasattr(select, 'poll'):
         poll_func = asyncore.poll2
     else:
         poll_func = asyncore.poll
     return poll_func
+
+
+class AsyncServerHandler(ServerHandler):
+    """
+    Modified ServerHandler class for using with async transfer
+    """
+
+    def __init__(self, *args, **kwargs):
+        ServerHandler.__init__(self, *args, **kwargs)
+        self.iterator = None
+
+    def cleanup_headers(self):
+        # Do not add Content-Length and use Transfer-Encoding: chunked instead
+        pass
+
+    def finish_response(self):
+        """Get WSGI response iterator for sending in handle_write"""
+        self.iterator = iter(self.result)
 
 
 class AsyncWsgiHandler(asyncore.dispatcher, WSGIRequestHandler):
@@ -73,6 +129,7 @@ class AsyncWsgiHandler(asyncore.dispatcher, WSGIRequestHandler):
     server_version = 'AsyncWsgiServer/' + __version__
     protocol_version = 'HTTP/1.1'
     max_input_content_length = 1024 * 1024 * 1024
+    max_input_in_memory = 16 * 1024
     ws_path = '/ws'
     ws_handler_class = None
     verbose_logging = False
@@ -80,6 +137,8 @@ class AsyncWsgiHandler(asyncore.dispatcher, WSGIRequestHandler):
     def __init__(self, request, client_address, server, map):
         self._can_read = True
         self._can_write = False
+        self._server_handler = None
+        self._transfer_chunked = False
         self.request = request
         self.client_address = client_address
         self.server = server
@@ -129,35 +188,55 @@ class AsyncWsgiHandler(asyncore.dispatcher, WSGIRequestHandler):
                     self.send_error(413)
                     self.handle_close()
                     return
-                elif cont_length > 16 * 1024:
+                elif cont_length > self.max_input_in_memory:
                     self._input_stream = TemporaryFile()
                 copyfileobj(self.rfile, self._input_stream)
                 self._input_stream.seek(0)
-        self._can_write = True
+        self._server_handler = AsyncServerHandler(
+            self._input_stream, self.wfile, self.get_stderr(),
+            self.get_environ())
+        self._server_handler.server_software = self.server_version
+        self._server_handler.http_version = self.protocol_version[5:]
+        self._server_handler.request_handler = self  # backpointer for logging
+        self._server_handler.wsgi_multiprocess = False
+        self._server_handler.wsgi_multithread = False
+        try:
+            self._server_handler.run(self.server.get_app())
+        except Exception:
+            self.handle_error()
+        else:
+            if 'Content-Length' not in self._server_handler.headers:
+                self._transfer_chunked = True
+                self._server_handler.headers['Transfer-Encoding'] = 'chunked'
+            self._can_write = True
 
     def handle_write(self):
         self._can_write = False
-        handler = ServerHandler(self._input_stream, self.wfile,
-                                self.get_stderr(), self.get_environ())
-        handler.server_software = self.server_version
-        handler.http_version = self.protocol_version[5:]
-        handler.request_handler = self  # backpointer for logging
-        handler.wsgi_multiprocess = False
-        handler.wsgi_multithread = False
         try:
-            handler.run(self.server.get_app())
+            chunk = next(self._server_handler.iterator)
+            if self._transfer_chunked:
+                chunk = hex(len(chunk)).encode('ascii')[2:] + \
+                        b'\r\n' + chunk + b'\r\n'
+            self._server_handler.write(chunk)
+        except StopIteration:
+            if self._transfer_chunked:
+                self._server_handler.write(b'0\r\n\r\n')
+            self._server_handler.close()
+            self._server_handler = None
+            self._transfer_chunked = False
+            if self.close_connection:
+                self.handle_close()
+            else:
+                try:
+                    self.wfile.flush()
+                except socket.error:
+                    self.handle_error()
+                else:
+                    self._can_read = True
         except Exception:
             self.handle_error()
-            return
-        if self.close_connection:
-            self.handle_close()
         else:
-            try:
-                self.wfile.flush()
-            except socket.error:
-                self.handle_error()
-            else:
-                self._can_read = True
+            self._can_write = True
 
     def handle_error(self):
         logger.exception('Exception in {}!'.format(repr(self)))
@@ -251,7 +330,7 @@ class AsyncWsgiServer(asyncore.dispatcher, WSGIServer):
         asyncore.close_all(self._map, True)
 
 
-def make_server(host, port, app,
+def make_server(host, port, app=None,
                 server_class=AsyncWsgiServer,
                 handler_class=AsyncWsgiHandler,
                 ws_handler_class=None,

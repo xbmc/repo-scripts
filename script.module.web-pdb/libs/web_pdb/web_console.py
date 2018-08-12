@@ -26,8 +26,6 @@ File-like web-based input/output console
 """
 
 from __future__ import absolute_import, unicode_literals
-import os
-import sys
 import weakref
 from threading import Thread, Event, RLock
 try:
@@ -86,7 +84,7 @@ class WebConsoleSocket(AsyncWebSocketHandler):
     input_queue = queue.Queue()
 
     @classmethod
-    def send_message(cls, msg):
+    def broadcast(cls, msg):
         for cl in cls.clients:
             if cl.handshaked:
                 cl.sendMessage(msg)  # sendMessage uses deque so it is thread-safe
@@ -172,7 +170,7 @@ class WebConsole(object):
     read = readline
 
     def writeline(self, data):
-        if sys.version_info[0] == 2 and isinstance(data, str):
+        if isinstance(data, bytes):
             data = data.decode('utf-8')
         self._console_history.contents += data
         try:
@@ -189,7 +187,7 @@ class WebConsole(object):
             }
         frame_data['console_history'] = self._console_history.contents
         self._frame_data.contents = frame_data
-        WebConsoleSocket.send_message('ping')  # Ping all clients about data update
+        WebConsoleSocket.broadcast('ping')  # Ping all clients about data update
 
     write = writeline
 
