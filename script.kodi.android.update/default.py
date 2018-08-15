@@ -38,8 +38,7 @@ TIMEOUT   = 15
 MIN_VER   = 5 #Minimum Android Version Compatible with Kodi
 DEBUG     = REAL_SETTINGS.getSetting('Enable_Debugging') == 'true'
 CLEAN     = REAL_SETTINGS.getSetting('Disable_Maintenance') == 'false'
-VERSION   = REAL_SETTINGS.getSetting("Version")
-# VERSION = 'Android 4.0.0 API level 24, kernel: Linux ARM 64-bit version 3.10.96+' #Test
+VERSION   = REAL_SETTINGS.getSetting("Version") #VERSION = 'Android 4.0.0 API level 24, kernel: Linux ARM 64-bit version 3.10.96+' #Test
 BASE_URL  = 'http://mirrors.kodi.tv/'
 DROID_URL = BASE_URL + '%s/android/%s/'
 BUILD_OPT = ['nightlies','releases','snapshots','test-builds']
@@ -89,9 +88,9 @@ class Installer(object):
             cacheResponce = self.cache.get(ADDON_NAME + '.openURL, url = %s'%url)
             if not cacheResponce:
                 request = urllib2.Request(url)
-                responce = urllib2.urlopen(request, timeout = TIMEOUT).read()
-                self.cache.set(ADDON_NAME + '.openURL, url = %s'%url, responce, expiration=datetime.timedelta(minutes=5))
-            return BeautifulSoup(self.cache.get(ADDON_NAME + '.openURL, url = %s'%url), "html.parser")
+                cacheResponce = urllib2.urlopen(request, timeout = TIMEOUT).read()
+                self.cache.set(ADDON_NAME + '.openURL, url = %s'%url, cacheResponce, expiration=datetime.timedelta(minutes=5))
+            return BeautifulSoup(cacheResponce, "html.parser")
         except Exception as e:
             log("openURL Failed! " + str(e), xbmc.LOGERROR)
             xbmcgui.Dialog().notification(ADDON_NAME, LANGUAGE(30001), ICON, 4000)
@@ -163,11 +162,11 @@ class Installer(object):
     def fileExists(self, dest):
         if xbmcvfs.exists(dest):
             if not xbmcgui.Dialog().yesno(ADDON_NAME, LANGUAGE(30004), dest.rsplit('/', 1)[-1], nolabel=LANGUAGE(30005), yeslabel=LANGUAGE(30006)): return True
-        elif CLEAN and xbmcvfs.exists(self.lastPath): self.deleteEXE(self.lastPath)
+        elif CLEAN and xbmcvfs.exists(self.lastPath): self.deleleAPK(self.lastPath)
         return False
         
         
-    def deleteEXE(self, path):
+    def deleleAPK(self, path):
         count = 0
         #some file systems don't release the file lock instantly.
         while not xbmc.Monitor().abortRequested() and count < 3:
@@ -183,14 +182,13 @@ class Installer(object):
         start_time = time.time()
         dia = xbmcgui.DialogProgress()
         dia.create(ADDON_NAME, LANGUAGE(30002))
-        dia.update(0)
         try:
             urllib.urlretrieve(url.rstrip('/'), dest, lambda nb, bs, fs: self.pbhook(nb, bs, fs, dia, start_time))
         except Exception as e:
             dia.close()
             xbmcgui.Dialog().notification(ADDON_NAME, LANGUAGE(30001), ICON, 4000)
             log("downloadAPK, Failed! (%s) %s"%(url,str(e)), xbmc.LOGERROR)
-            return self.deleteEXE(dest)
+            return self.deleleAPK(dest)
         return self.installAPK(dest)
         
         
@@ -205,11 +203,11 @@ class Installer(object):
             total = float(filesize) / (1024 * 1024) 
             mbs = '%.02f MB of %.02f MB' % (currently_downloaded, total) 
             e = 'Speed: %.02f Kb/s ' % kbps_speed 
-            e += 'ETA: %02d:%02d' % divmod(eta, 60) 
-            dia.update(percent, mbs, e)
-        except Exception('Download Failed'): 
-            percent = 100 
-            dia.update(percent)
+            if eta < 0: eta = divmod(0, 60)
+            else: eta = divmod(eta, 60)
+            e += 'ETA: %02d:%02d' % eta
+            dia.update(percent, LANGUAGE(30002), mbs, e)
+        except Exception('Download Failed'): dia.update(100)
         if dia.iscanceled(): raise Exception('Download Canceled')
             
             
