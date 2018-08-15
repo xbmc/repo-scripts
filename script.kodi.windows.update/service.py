@@ -1,4 +1,4 @@
-#     Copyright (C) 2017 Team-Kodi
+#     Copyright (C) 2018 Team-Kodi
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -41,8 +41,7 @@ class Service(object):
         try:
             self.getBuild()
             self.getVersion()
-            self.lastPath = REAL_SETTINGS.getSetting("LastPath")
-            # CACHE = Keep last download, CLEAN = Remove all downloads
+            self.lastPath = REAL_SETTINGS.getSetting("LastPath") # CACHE = Keep last download, CLEAN = Remove all downloads
             if not CACHE and CLEAN and xbmcvfs.exists(self.lastPath):
                 log('Service, removing last download')
                 xbmcvfs.delete(self.lastPath)
