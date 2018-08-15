@@ -1,4 +1,4 @@
-#     Copyright (C) 2017 Team-Kodi
+#     Copyright (C) 2018 Team-Kodi
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -15,8 +15,8 @@
 #
 # -*- coding: utf-8 -*-
 
-import os, time, datetime, traceback, re, fnmatch, glob
-import urllib, urllib2, socket, subprocess
+import os, time, datetime, traceback, re, fnmatch, glob, threading
+import urllib, urllib2, socket, subprocess, shutil
 import xbmc, xbmcgui, xbmcvfs, xbmcaddon
 
 from bs4 import BeautifulSoup
@@ -50,11 +50,13 @@ def log(msg, level=xbmc.LOGDEBUG):
     if level == xbmc.LOGERROR: msg += ' ,' + traceback.format_exc()
     xbmc.log(ADDON_ID + '-' + ADDON_VERSION + '-' + (msg.encode("utf-8")), level)
 
+    
 socket.setdefaulttimeout(TIMEOUT)
 class Installer(object):
     def __init__(self):
         self.cache    = SimpleCache()
         if self.chkUWP(): return
+        self.killKodi = threading.Timer(1.0, self.killME)
         self.lastURL  = (REAL_SETTINGS.getSetting("LastURL") or self.buildMain())
         self.lastPath = REAL_SETTINGS.getSetting("LastPath")
         self.selectDialog(self.lastURL)
@@ -82,9 +84,9 @@ class Installer(object):
             cacheResponce = self.cache.get(ADDON_NAME + '.openURL, url = %s'%url)
             if not cacheResponce:
                 request = urllib2.Request(url)
-                responce = urllib2.urlopen(request, timeout = TIMEOUT).read()
-                self.cache.set(ADDON_NAME + '.openURL, url = %s'%url, responce, expiration=datetime.timedelta(minutes=5))
-            return BeautifulSoup(self.cache.get(ADDON_NAME + '.openURL, url = %s'%url), "html.parser")
+                cacheResponce = urllib2.urlopen(request, timeout = TIMEOUT).read()
+                self.cache.set(ADDON_NAME + '.openURL, url = %s'%url, cacheResponce, expiration=datetime.timedelta(minutes=5))
+            return BeautifulSoup(cacheResponce, "html.parser")
         except Exception as e:
             log("openURL Failed! " + str(e), xbmc.LOGERROR)
             xbmcgui.Dialog().notification(ADDON_NAME, LANGUAGE(30001), ICON, 4000)
@@ -181,7 +183,6 @@ class Installer(object):
         start_time = time.time()
         dia = xbmcgui.DialogProgress()
         dia.create(ADDON_NAME, LANGUAGE(30002))
-        dia.update(0)
         try:
             urllib.urlretrieve(url.rstrip('/'), dest, lambda nb, bs, fs: self.pbhook(nb, bs, fs, dia, start_time))
         except Exception as e:
@@ -203,19 +204,23 @@ class Installer(object):
             total = float(filesize) / (1024 * 1024) 
             mbs = '%.02f MB of %.02f MB' % (currently_downloaded, total) 
             e = 'Speed: %.02f Kb/s ' % kbps_speed 
-            e += 'ETA: %02d:%02d' % divmod(eta, 60) 
-            dia.update(percent, mbs, e)
-        except Exception('Download Failed'): 
-            percent = 100 
-            dia.update(percent)
+            if eta < 0: eta = divmod(0, 60)
+            else: eta = divmod(eta, 60)
+            e += 'ETA: %02d:%02d' % eta
+            dia.update(percent, LANGUAGE(30002), mbs, e)
+        except Exception('Download Failed'): dia.update(100)
         if dia.iscanceled(): raise Exception('Download Canceled')
             
             
     def installEXE(self, exefile):
         if not xbmcvfs.exists(exefile): return
         xbmc.executebuiltin('XBMC.AlarmClock(shutdowntimer,XBMC.Quit(),0.5,true)')
-        subprocess.call(['start', exefile], shell=True)
-        # os.startfile(exefile)
-        # subprocess.call('taskkill /f /im kodi.exe')
+        self.killKodi.start()
+        subprocess.call(exefile, shell=True)
+        
+        
+    def killME(self):
+        subprocess.call('taskkill /f /im kodi.exe')
+        
         
 if __name__ == '__main__': Installer()
