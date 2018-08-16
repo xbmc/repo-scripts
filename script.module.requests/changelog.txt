@@ -1,3 +1,6 @@
+[B]Version 2.19.1[/B]
+- Synchronize with requests 2.19.1
+
 [B]Version 2.18.4[/B]
 
 - Synchronize with requests 2.18.4
