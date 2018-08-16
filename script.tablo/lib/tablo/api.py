@@ -154,6 +154,7 @@ class Airing(object):
         self.type = type_
         self._background = None
         self._thumb = None
+        self._channel = None
         self._datetime = False
         self._datetimeEnd = None
         self._gridAiring = None
@@ -196,7 +197,7 @@ class Airing(object):
         if 'recording' in self.path:
             return Watch(self.path)
         else:
-            return Watch(self.data['airing_details']['channel']['path'])
+            return Watch(self.data['airing_details']['channel_path'])
 
     @property
     def background(self):
@@ -223,7 +224,10 @@ class Airing(object):
 
     @property
     def channel(self):
-        return self.data['airing_details']['channel']
+        channelPath = self.data['airing_details']['channel_path']
+        if not self._channel:
+            self._channel = Channel(API(channelPath).getCached())
+        return self._channel
 
     @property
     def scheduled(self):
@@ -274,9 +278,10 @@ class Airing(object):
         return self.datetime.strftime('%A, %B {0}').format(self.datetime.day)
 
     def displayChannel(self):
+        channel = self.channel
         return '{0}-{1}'.format(
-            self.data['airing_details']['channel']['channel']['major'],
-            self.data['airing_details']['channel']['channel']['minor']
+            channel.data['channel']['major'],
+            channel.data['channel']['minor']
         )
 
     def secondsToEnd(self, start=None):
@@ -298,7 +303,7 @@ class Airing(object):
 
     @property
     def network(self):
-        return self.data['airing_details']['channel']['channel'].get('network') or ''
+        return self.channel.data['channel'].get('network') or ''
 
     # For recordings
     def delete(self):
@@ -499,6 +504,8 @@ class Program(Show):
 
 
 class Endpoint(object):
+    cache = {}
+
     def __init__(self, segments=None):
         self.device = None
         self.segments = segments or []
@@ -518,6 +525,19 @@ class Endpoint(object):
             headers={'User-Agent': USER_AGENT},
             params=kwargs
         )
+
+    @requestHandler
+    def getCached(self, **kwargs):
+        path = '/'.join(self.segments)
+
+        if not path in self.cache:
+            self.cache[path] = requests.get(
+                'http://{0}/{1}'.format(self.device.address(), path),
+                headers={'User-Agent': USER_AGENT},
+                params=kwargs
+            )
+
+        return self.cache[path]
 
     @requestHandler
     def post(self, *args, **kwargs):

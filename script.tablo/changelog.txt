@@ -1,3 +1,7 @@
+- 1.0.2
+
+CHANGE:  Update API calls to retrieve an airing's channel data
+
 - 1.0.1
 
 Add use device rendering for duo where relevant
