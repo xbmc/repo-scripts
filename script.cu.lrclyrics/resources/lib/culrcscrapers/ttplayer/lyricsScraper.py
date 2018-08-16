@@ -8,6 +8,7 @@ taxigps
 import os
 import socket
 import urllib
+import urllib2
 import re
 import random
 import difflib
@@ -16,6 +17,8 @@ from utilities import *
 __title__ = "TTPlayer"
 __priority__ = '120'
 __lrc__ = True
+
+UserAgent = 'Mozilla/5.0 (Windows NT 10.0; WOW64; rv:51.0) Gecko/20100101 Firefox/51.0'
 
 socket.setdefaulttimeout(10)
 
@@ -172,11 +175,13 @@ class LyricsFetcher:
 
     def get_lyrics_from_list(self, link):
         title,Id,artist,song = link
-        log('%s %s %s' %(Id, artist, song))
         try:
             url = self.LYRIC_URL %(int(Id),ttpClient.CodeFunc(int(Id), artist + song), random.randint(0,0xFFFFFFFFFFFF))
-            f = urllib.urlopen(url)
-            Page = f.read()
+            log('%s: search url: %s' % (__title__, url))
+            request = urllib2.Request(url)
+            request.add_header('User-Agent', UserAgent)
+            response = urllib2.urlopen(request)
+            Page = response.read()
         except:
             log("%s: %s::%s (%d) [%s]" % (
                    __title__, self.__class__.__name__,

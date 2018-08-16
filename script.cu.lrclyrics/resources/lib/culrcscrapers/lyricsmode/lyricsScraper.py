@@ -21,7 +21,7 @@ class LyricsFetcher:
         if not result:
             result = self.search_url(artist, title)
         if result:
-            lyr = result.split('ui-annotatable">')[1].split('</p>')[0]
+            lyr = result.split('js-lyric-text-container">')[1].split('</p>')[0]
             lyrics.lyrics = lyr.replace('<br />', '')
             return lyrics
 
@@ -29,7 +29,7 @@ class LyricsFetcher:
         try:
             log('%s: search url: %s' % (__title__, url))
             song_search = urllib.urlopen(url).read()
-            if song_search.find('ui-annotatable">') >= 0:
+            if song_search.find('js-lyric-text-container">') >= 0:
                 return song_search
         except:
             log('error in direct url')
