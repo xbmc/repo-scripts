@@ -16,7 +16,7 @@ PENDING_UPDATE = {}
 
 
 def addPending(path=None, airing=None):
-    path = path or airing.data['airing_details']['channel']['path']
+    path = path or airing.data['airing_details']['channel_path']
     PENDING_UPDATE[path] = 1
 
 
