@@ -16,9 +16,24 @@ msgstr ""
 "Language: en\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
+msgctxt "#32000"
+msgid "Exports"
+msgstr ""
+
+msgctxt "#32001"
+msgid "Export of '%s' will be removed. Are you sure?"
+msgstr ""
+
+msgctxt "#32002"
+msgid "Select destination folder"
+msgstr ""
+
+msgctxt "#32003"
+msgid "Run export now"
+msgstr ""
 
 msgctxt "#32004"
-msgid "Export to library (.strm)..."
+msgid "Export to .strm files..."
 msgstr ""
 
 msgctxt "#32005"
@@ -38,11 +53,11 @@ msgid "Connecting with server, please wait..."
 msgstr ""
 
 msgctxt "#32009"
-msgid "Go to URL: %s"
+msgid "Scan the QR code and sign in."
 msgstr ""
 
 msgctxt "#32010"
-msgid "Enter this code and follow instructions: %s"
+msgid "or[CR]Go to this URL: %s[CR]enter the code and sign in: %s"
 msgstr ""
 
 msgctxt "#32011"
@@ -106,7 +121,7 @@ msgid "Starting, please wait..."
 msgstr ""
 
 msgctxt "#32026"
-msgid "A valid export folder is required"
+msgid "The destination folder '%s' is invalid. It does not exist."
 msgstr ""
 
 msgctxt "#32027"
@@ -289,3 +304,50 @@ msgctxt "#32073"
 msgid "Ip change detected: [B]%s[/B] to [B]%s[/B]. Make sure you stay in the same network."
 msgstr ""
 
+msgctxt "#32074"
+msgid "Check your internet connection and try again."
+msgstr ""
+
+msgctxt "#32075"
+msgid "There is a problem with your network connection."
+msgstr ""
+
+msgctxt "#32076"
+msgid "No network connection detected."
+msgstr ""
+
+msgctxt "#32077"
+msgid "Unable to reach the server."
+msgstr ""
+
+msgctxt "#32078"
+msgid "The SSL connection has failed (insecure connection detected)."
+msgstr ""
+
+msgctxt "#32079"
+msgid "Every"
+msgstr ""
+
+msgctxt "#32080"
+msgid "at"
+msgstr ""
+
+msgctxt "#32081"
+msgid "Startup"
+msgstr ""
+
+msgctxt "#32082"
+msgid "Day"
+msgstr ""
+
+msgctxt "#32083"
+msgid "Schedules"
+msgstr ""
+
+msgctxt "#32084"
+msgid "%s is required."
+msgstr ""
+
+msgctxt "#32085"
+msgid "Destination"
+msgstr ""

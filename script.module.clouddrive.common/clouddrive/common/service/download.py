@@ -22,13 +22,13 @@ from urllib2 import HTTPError
 from clouddrive.common.account import AccountManager
 from clouddrive.common.exception import ExceptionUtils
 from clouddrive.common.remote.errorreport import ErrorReport
-from clouddrive.common.service.base import BaseService, BaseHandler
+from clouddrive.common.service.base import BaseServerService, BaseHandler
 from clouddrive.common.ui.logger import Logger
 from clouddrive.common.ui.utils import KodiUtils
 from clouddrive.common.utils import Utils
 
 
-class DownloadService(BaseService):
+class DownloadService(BaseServerService):
     name = 'download'
     profile_path = Utils.unicode(KodiUtils.translate_path(KodiUtils.get_addon_info('profile')))
     

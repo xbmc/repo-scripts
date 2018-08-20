@@ -21,7 +21,7 @@ import inspect
 from urllib2 import HTTPError
 
 from clouddrive.common.exception import ExceptionUtils
-from clouddrive.common.service.base import BaseService, BaseHandler
+from clouddrive.common.service.base import BaseServerService, BaseHandler
 from clouddrive.common.ui.logger import Logger
 from clouddrive.common.utils import Utils
 import uuid
@@ -29,7 +29,7 @@ from clouddrive.common.remote.request import Request
 from clouddrive.common.ui.utils import KodiUtils
 
 
-class RpcService(BaseService):
+class RpcService(BaseServerService):
     name = 'rpc'
     def __init__(self, listener):
         super(RpcService, self).__init__(listener)

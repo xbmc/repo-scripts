@@ -42,8 +42,9 @@ class AccountManager(object):
     def load(self):
         self.accounts = {}
         if os.path.exists(self._config_path):
-            with open(self._config_path, 'rb') as fo:
-                self.accounts = json.loads(fo.read())
+            with KodiUtils.lock:
+                with open(self._config_path, 'rb') as fo:
+                    self.accounts = json.loads(fo.read())
         return self.accounts
     
     def add_account(self, account):
@@ -66,9 +67,10 @@ class AccountManager(object):
         raise DriveNotFoundException(driveid)
     
     def save(self):
-        with open(self._config_path, 'wb') as fo:
-            fo.write(json.dumps(self.accounts, sort_keys=True, indent=4))
-
+        with KodiUtils.lock:
+            with open(self._config_path, 'wb') as fo:
+                fo.write(json.dumps(self.accounts, sort_keys=True, indent=4))
+        
     def remove_account(self, accountid):
         self.load()
         del self.accounts[accountid]

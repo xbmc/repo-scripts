@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<window>
+	<coordinates>
+		<left>595</left>
+		<top>390</top>
+	</coordinates>
+	<onup>1005</onup>
+	<ondown>1005</ondown>
+	<onleft>1005</onleft>
+	<onright>1005</onright>
+	<controls>
+		<animation type="WindowOpen" reversible="false">
+			<effect type="zoom" start="80" end="100" center="960,540"
+				delay="160" tween="back" time="240" />
+			<effect type="fade" delay="160" end="100" time="240" />
+		</animation>
+		<animation type="WindowClose" reversible="false">
+			<effect type="zoom" start="100" end="80" center="960,540"
+				easing="in" tween="back" time="240" />
+			<effect type="fade" start="100" end="0" time="240" />
+		</animation>
+		<control type="image">
+			<left>-1920</left>
+			<top>-1080</top>
+			<width>5760</width>
+			<height>3240</height>
+			<animation effect="fade" start="0" end="100" time="300">WindowOpen
+			</animation>
+			<animation effect="fade" start="100" end="0" time="200">WindowClose
+			</animation>
+			<texture colordiffuse="C2FFFFFF">black.png</texture>
+		</control>
+		<!-- Dialog panel -->
+		<control type="image">
+			<left>0</left>
+			<top>0</top>
+			<width>730</width>
+			<height>300</height>
+			<texture border="2">dialog-bg.png</texture>
+		</control>
+		<!-- Title bar -->
+		<control type="image">
+			<left>0</left>
+			<top>0</top>
+			<width>730</width>
+			<height>70</height>
+			<texture colordiffuse="FF147A96" border="2">white.png</texture>
+		</control>
+		<!-- Title label -->
+		<control type="label" id="1000">
+			<textoffsetx>20</textoffsetx>
+			<left>0</left>
+			<top>0</top>
+			<width>730</width>
+			<height>70</height>
+			<font>font30_title</font>
+			<align>left</align>
+			<aligny>center</aligny>
+			<shadowcolor>FF000000</shadowcolor>
+		</control>
+
+		<control type="group" id="1001">
+			<left>120</left>
+			<top>200</top>
+			<!-- Cancel button -->
+	        <control type="button" id="1002">
+	            <left>0</left>
+	            <top>0</top>
+	            <width>250</width>
+	            <height>100</height>
+	            <label>222</label>
+	            <align>center</align>
+	            <aligny>center</aligny>
+	            
+	            <onup>1010</onup>
+				<ondown>1010</ondown>
+				<onleft>1003</onleft>
+				<onright>1003</onright>
+	        </control>
+	        <!-- Save button -->
+	        <control type="button" id="1003">
+	            <left>250</left>
+	            <top>0</top>
+	            <width>250</width>
+	            <height>100</height>
+	            <label>Save</label>
+	            <align>center</align>
+	            <aligny>center</aligny>
+	            
+	            <onup>1010</onup>
+				<ondown>1010</ondown>
+				<onleft>1002</onleft>
+				<onright>1002</onright>
+	        </control>
+        </control>
+        
+		<control type="group" id="1010">
+			<left>0</left>
+			<top>90</top>
+			<control type="label">
+				<left>0</left>
+				<top>15</top>
+				<width>170</width>
+				<height>50</height>
+				<label>Every</label>
+				<textoffsetx>20</textoffsetx>
+				<align>center</align>
+				<aligny>center</aligny>
+			</control>
+			<control type="button" id="1011">
+	            <left>150</left>
+	            <top>0</top>
+	            <width>280</width>
+	            <height>88</height>
+	            <align>center</align>
+	            <aligny>center</aligny>
+	            
+	            <onup>1001</onup>
+				<ondown>1001</ondown>
+				<onleft>1012</onleft>
+				<onright>1012</onright>
+	        </control>
+			<control type="label" id="10100">
+				<textoffsetx>20</textoffsetx>
+				<left>410</left>
+				<top>15</top>
+				<width>120</width>
+				<height>50</height>
+				<align>center</align>
+				<aligny>center</aligny>
+			</control>
+			<control type="button" id="1012">
+	            <left>510</left>
+	            <top>0</top>
+	            <width>200</width>
+	            <height>88</height>
+	            <label>00:00</label>
+	            <align>center</align>
+	            <aligny>center</aligny>
+	            
+	            <onup>1001</onup>
+				<ondown>1001</ondown>
+				<onleft>1011</onleft>
+				<onright>1011</onright>
+	        </control>
+        
+        </control>
+	</controls>
+</window>
+
