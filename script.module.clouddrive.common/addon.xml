@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addon id="script.module.clouddrive.common" name="Cloud Drive Common Module"
-	version="1.1.5" provider-name="Carlos Guzman (cguZZman)">
+	version="1.2.3" provider-name="Carlos Guzman (cguZZman)">
 	<requires>
 		<import addon="xbmc.python" version="2.25.0" />
 		<import addon="script.module.dateutil"/>
+		<import addon="script.module.pyqrcode"/>
 	</requires>
 	<extension point="xbmc.python.module" library="/" />
 	<extension point="xbmc.service" library="service.py" start="login" />
@@ -17,6 +18,15 @@
 		<source>https://github.com/cguZZman/script.module.clouddrive.common</source>
 		<forum>https://github.com/cguZZman/script.module.clouddrive.common/issues</forum>
 		<news>
+v1.2.3 released Aug 24, 2018:
+- Fix watch folder creating strm for non-media files
+- strm files saved in the cloud are exported as is. 
+v1.2.1 released Aug 18, 2018:
+- Fix source mode
+v1.2.0 released Aug 15, 2018:
+- Added auto export and watch export folder
+v1.1.7 released Jul 14, 2018:
+- Added a QR code to simplify adding an account
 v1.1.5 released Jul 14, 2018:
 - Fixes for slow connections
 v1.1.4 released Jul 12, 2018:

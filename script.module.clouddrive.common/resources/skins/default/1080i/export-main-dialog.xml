@@ -1,0 +1,356 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<window>
+	<coordinates>
+		<left>310</left>
+		<top>100</top>
+	</coordinates>
+	<onup>1005</onup>
+	<ondown>1005</ondown>
+	<onleft>1005</onleft>
+	<onright>1005</onright>
+	<controls>
+		<animation type="WindowOpen" reversible="false">
+			<effect type="zoom" start="80" end="100" center="960,540"
+				delay="160" tween="back" time="240" />
+			<effect type="fade" delay="160" end="100" time="240" />
+		</animation>
+		<animation type="WindowClose" reversible="false">
+			<effect type="zoom" start="100" end="80" center="960,540"
+				easing="in" tween="back" time="240" />
+			<effect type="fade" start="100" end="0" time="240" />
+		</animation>
+		<control type="image">
+			<left>-1920</left>
+			<top>-1080</top>
+			<width>5760</width>
+			<height>3240</height>
+			<animation effect="fade" start="0" end="100" time="300">WindowOpen
+			</animation>
+			<animation effect="fade" start="100" end="0" time="200">WindowClose
+			</animation>
+			<texture colordiffuse="C2FFFFFF">black.png</texture>
+		</control>
+		<!-- Dialog panel -->
+		<control type="image">
+			<left>0</left>
+			<top>0</top>
+			<width>1300</width>
+			<height>880</height>
+			<texture border="2">dialog-bg.png</texture>
+		</control>
+		<!-- Title bar -->
+		<control type="image">
+			<left>0</left>
+			<top>0</top>
+			<width>1300</width>
+			<height>70</height>
+			<texture colordiffuse="FF147A96" border="2">white.png</texture>
+		</control>
+		<!-- Title label -->
+		<control type="label" id="1000">
+			<textoffsetx>20</textoffsetx>
+			<left>0</left>
+			<top>0</top>
+			<width>1300</width>
+			<height>70</height>
+			<font>font30_title</font>
+			<align>left</align>
+			<aligny>center</aligny>
+			<shadowcolor>FF000000</shadowcolor>
+		</control>
+		
+		<control type="group" id="998">
+			<left>0</left>
+			<top>780</top>
+			<!-- Cancel button -->
+			<control type="button" id="999">
+				<left>550</left>
+				<top>0</top>
+				<width>250</width>
+				<height>100</height>
+				<label>222</label>
+				<align>center</align>
+				<aligny>center</aligny>
+	
+				<onup>1011</onup>
+				<ondown>1006</ondown>
+				<onleft>1002</onleft>
+				<onright>1001</onright>
+			</control>
+			<!-- Save button -->
+			<control type="button" id="1001">
+				<left>790</left>
+				<top>0</top>
+				<width>250</width>
+				<height>100</height>
+				<label>190</label>
+				<align>center</align>
+				<aligny>center</aligny>
+	
+				<onup>1011</onup>
+				<ondown>1006</ondown>
+				<onleft>999</onleft>
+				<onright>1002</onright>
+			</control>
+			<!-- Save & Export button -->
+			<control type="button" id="1002">
+				<left>1030</left>
+				<top>0</top>
+				<width>270</width>
+				<height>100</height>
+				<label>Save &amp; Run</label>
+				<align>center</align>
+				<aligny>center</aligny>
+	
+				<onup>1011</onup>
+				<ondown>1006</ondown>
+				<onleft>1001</onleft>
+				<onright>999</onright>
+			</control>
+		</control>
+		
+		<control type="group">
+			<left>0</left>
+			<top>90</top>
+			<!-- drive name label -->
+			<control type="label">
+				<left>0</left>
+				<top>0</top>
+				<width>250</width>
+				<height>50</height>
+				<label>Cloud Drive:</label>
+				<textoffsetx>20</textoffsetx>
+				<align>left</align>
+				<aligny>center</aligny>
+			</control>
+			<!-- drive name background -->
+			<control type="image">
+				<left>250</left>
+				<top>0</top>
+				<width>1030</width>
+				<height>50</height>
+				<texture colordiffuse="44000000">white.png</texture>
+			</control>
+			<!-- drive name text -->
+			<control type="label" id="1003">
+				<left>250</left>
+				<top>0</top>
+				<width>1030</width>
+				<height>50</height>
+				<textoffsetx>10</textoffsetx>
+				<align>left</align>
+				<aligny>center</aligny>
+				<scroll>true</scroll>
+				<haspath>true</haspath>
+			</control>
+		</control>
+		
+		<control type="group">
+			<left>0</left>
+			<top>160</top>
+			<!-- drive folder label -->
+			<control type="label">
+				<left>0</left>
+				<top>0</top>
+				<width>250</width>
+				<height>50</height>
+				<label>Cloud Folder:</label>
+				<textoffsetx>20</textoffsetx>
+				<align>left</align>
+				<aligny>center</aligny>
+			</control>
+			<!-- drive folder background -->
+			<control type="image">
+				<left>250</left>
+				<top>0</top>
+				<width>1030</width>
+				<height>50</height>
+				<texture colordiffuse="44000000">white.png</texture>
+			</control>
+			<!-- drive folder textbox -->
+			<control type="label" id="1004">
+				<left>250</left>
+				<top>0</top>
+				<width>1030</width>
+				<height>50</height>
+				<textoffsetx>10</textoffsetx>
+				<align>left</align>
+				<aligny>center</aligny>
+				<scroll>true</scroll>
+				<haspath>true</haspath>
+			</control>
+		</control>
+		
+		<control type="group">
+			<left>0</left>
+			<top>230</top>
+			<!-- destination folder label -->
+			<control type="label">
+				<left>0</left>
+				<top>0</top>
+				<width>250</width>
+				<height>50</height>
+				<label>Destination:</label>
+				<textoffsetx>20</textoffsetx>
+				<align>left</align>
+				<aligny>center</aligny>
+			</control>
+			<!-- destination folder background -->
+			<control type="image">
+				<left>250</left>
+				<top>0</top>
+				<width>970</width>
+				<height>50</height>
+				<texture colordiffuse="44000000">white.png</texture>
+			</control>
+			<!-- destination folder textbox -->
+			<control type="label" id="1005">
+				<left>250</left>
+				<top>0</top>
+				<width>970</width>
+				<height>50</height>
+				<textoffsetx>10</textoffsetx>
+				<align>left</align>
+				<aligny>center</aligny>
+			</control>
+			<control type="button" id="1006">
+				<left>1210</left>
+				<top>-19</top>
+				<width>90</width>
+				<height>88</height>
+				<label>...</label>
+				<align>center</align>
+				<aligny>center</aligny>
+	
+				<onup>998</onup>
+				<ondown>1007</ondown>
+				<onleft>998</onleft>
+				<onright>1007</onright>
+			</control>
+		</control>
+	
+		<control type="radiobutton" id="1007">
+			<left>0</left>
+			<top>280</top>
+			<width>1300</width>
+			<height>88</height>
+			<texturenofocus>dialog-bg.png</texturenofocus>
+			<label>Update library after export</label>
+			<textoffsetx>22</textoffsetx>
+			<onup>1006</onup>
+			<ondown>1008</ondown>
+			<onleft>1006</onleft>
+			<onright>1008</onright>
+		</control>
+		
+		<control type="radiobutton" id="1008">
+			<left>0</left>
+			<top>350</top>
+			<width>1300</width>
+			<height>88</height>
+			<texturenofocus>dialog-bg.png</texturenofocus>
+			<label>Watch for changes in the Cloud Folder</label>
+			<textoffsetx>22</textoffsetx>
+			<onup>1007</onup>
+			<ondown>1009</ondown>
+			<onleft>1007</onleft>
+			<onright>1009</onright>
+		</control>
+		
+		<control type="radiobutton" id="1009">
+			<left>0</left>
+			<top>420</top>
+			<width>1300</width>
+			<height>88</height>
+			<texturenofocus>dialog-bg.png</texturenofocus>
+			<label>Schedule automatic exports</label>
+			<textoffsetx>22</textoffsetx>
+			<onup>1008</onup>
+			<ondown>1010</ondown>
+			<onleft>1008</onleft>
+			<onright>1010</onright>
+		</control>
+		
+		<control type="group">
+			<left>0</left>
+			<top>510</top>
+			<!-- schedules label -->
+			<control type="label" id="10100">
+				<textoffsetx>20</textoffsetx>
+				<left>0</left>
+				<top>0</top>
+				<width>250</width>
+				<height>50</height>
+				<label>32083</label>
+				<align>left</align>
+				<aligny>center</aligny>
+			</control>
+			<!-- schedules background -->
+			<control type="image">
+				<left>250</left>
+				<top>0</top>
+				<width>1030</width>
+				<height>200</height>
+				<texture colordiffuse="44000000">white.png</texture>
+			</control>
+			<!-- schedules folder textbox -->
+			<control type="fixedlist" id="1010">
+				<left>250</left>
+				<top>0</top>
+				<width>1030</width>
+				<height>200</height>
+				<pagecontrol>10</pagecontrol>
+				<onup>1009</onup>
+				<ondown>1011</ondown>
+				<onleft>1009</onleft>
+				<onright>1011</onright>
+				<itemlayout width="1030" height="50">
+					<control type="label">
+						<left>10</left>
+						<top>0</top>
+						<width>1030</width>
+						<height>50</height>
+						<aligny>center</aligny>
+						<info>ListItem.Label</info>
+					</control>
+				</itemlayout>
+				<focusedlayout width="1030" height="50">
+					<control type="image">
+						<left>0</left>
+						<top>0</top>
+						<right>0</right>
+						<bottom>0</bottom>
+						<texture colordiffuse="FF147A96" border="2">white.png</texture>
+						<visible>Control.HasFocus(1010)</visible>
+					</control>
+					<control type="label">
+						<left>10</left>
+						<top>0</top>
+						<width>1030</width>
+						<height>50</height>
+						<aligny>center</aligny>
+						<info>ListItem.Label</info>
+					</control>
+				</focusedlayout>
+			</control>
+	
+			<!-- Add button -->
+			<control type="button" id="1011">
+				<left>230</left>
+				<top>190</top>
+				<width>170</width>
+				<height>90</height>
+				<label>Add</label>
+				<align>center</align>
+				<aligny>center</aligny>
+	
+				<onup>1010</onup>
+				<ondown>998</ondown>
+				<onleft>1010</onleft>
+				<onright>1001</onright>
+			</control>
+		</control>
+		
+	</controls>
+</window>
+

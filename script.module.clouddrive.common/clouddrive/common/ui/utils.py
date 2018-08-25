@@ -30,6 +30,7 @@ class KodiUtils:
     LOGWARNING = 2
     LOGERROR = 3
     lock = Lock()
+    common_addon_id = 'script.module.clouddrive.common'
     
     @staticmethod
     def get_addon(addonid=None):
@@ -38,7 +39,35 @@ class KodiUtils:
             return xbmcaddon.Addon(addonid)
         else:
             return xbmcaddon.Addon()
+    @staticmethod
+    def get_common_addon():
+        return KodiUtils.get_addon(KodiUtils.common_addon_id)
     
+    @staticmethod
+    def get_common_addon_path():
+        return Utils.unicode(KodiUtils.get_addon_info("path", KodiUtils.common_addon_id))
+    
+    @staticmethod
+    def localize(string_id, addonid=None, addon=None):
+        if string_id < 32000:
+            import xbmc
+            return xbmc.getLocalizedString(string_id) 
+        if not addon:
+            addon = KodiUtils.get_addon(addonid)
+        return addon.getLocalizedString(string_id)
+    
+    @staticmethod
+    def create_list_item(id, label):
+        import xbmcgui
+        list_item = xbmcgui.ListItem(label)
+        list_item.setProperty('id', Utils.str(id))
+        return list_item
+    
+    @staticmethod
+    def get_language_code():
+        import xbmc
+        return xbmc.getLanguage(format=xbmc.ISO_639_1, region=True)
+         
     @staticmethod
     def get_system_monitor():
         import xbmc
@@ -74,14 +103,20 @@ class KodiUtils:
         xbmc.getCondVisibility(cmd)
         
     @staticmethod
+    def update_library(database, wait=False):
+        KodiUtils.executebuiltin('UpdateLibrary(%s)' % database, wait)
+        
+    @staticmethod
     def executebuiltin(cmd, wait=False):
         import xbmc
         xbmc.executebuiltin(cmd, wait)
         
     @staticmethod
-    def run_script(addonid, params=None, wait=False):
+    def run_script(script, params=None, wait=False):
         import xbmc
-        cmd = 'RunScript(%s,0,%s)' % (addonid, '?%s' % urllib.urlencode(params))
+        if params:
+            params = urllib.urlencode(params)
+        cmd = 'RunScript(%s,0,?%s)' % (script, params)
         xbmc.executebuiltin(cmd, wait)
         
     @staticmethod
@@ -127,7 +162,6 @@ class KodiUtils:
     
     @staticmethod
     def set_addon_setting(setting_id, value, addonid=None):
-        from clouddrive.common.utils import Utils
         addon = KodiUtils.get_addon(addonid)
         setting = addon.setSetting(setting_id, Utils.str(value))
         del addon
@@ -142,17 +176,14 @@ class KodiUtils:
     
     @staticmethod
     def get_service_port(service, addonid=None):
-        KodiUtils.lock.acquire()
-        port = KodiUtils.get_addon_setting('%s.service.port' % service, addonid)
-        KodiUtils.lock.release()
+        with KodiUtils.lock:
+            port = KodiUtils.get_addon_setting('%s.service.port' % service, addonid)
         return port
 
     @staticmethod
     def set_service_port(service, port, addonid=None):
-        from clouddrive.common.utils import Utils
-        KodiUtils.lock.acquire()
-        KodiUtils.set_addon_setting('%s.service.port' % service, Utils.str(port), addonid)
-        KodiUtils.lock.release()
+        with KodiUtils.lock:
+            KodiUtils.set_addon_setting('%s.service.port' % service, Utils.str(port), addonid)
     
     @staticmethod
     def get_signin_server(addonid=None):
@@ -173,7 +204,7 @@ class KodiUtils:
             level = xbmc.LOGWARNING
         elif level == 3:
             level = xbmc.LOGERROR
-        xbmc.log('[%s][%s-%s]: %s' % (KodiUtils.get_addon_info('id'), threading.current_thread().name,threading.current_thread().ident, msg), level)
+        xbmc.log('[%s][%s-%s]: %s' % (KodiUtils.get_addon_info('id'), threading.current_thread().name,threading.current_thread().ident, Utils.str(msg)), level)
 
     @staticmethod
     def translate_path(path):
@@ -189,11 +220,31 @@ class KodiUtils:
             return None
     
     @staticmethod
+    def file(f, opts):
+        import xbmcvfs
+        return xbmcvfs.File(f, opts)
+    
+    @staticmethod
     def file_exists(f):
         import xbmcvfs
         return xbmcvfs.exists(f)
     
     @staticmethod
+    def file_delete(f):
+        import xbmcvfs
+        return xbmcvfs.delete(f)
+    
+    @staticmethod
+    def file_rename(f, newFile):
+        import xbmcvfs
+        return xbmcvfs.rename(f, newFile)
+    
+    @staticmethod
     def mkdirs(f):
         import xbmcvfs
         return xbmcvfs.mkdirs(f)
+    
+    @staticmethod
+    def rmdir(f, force=False):
+        import xbmcvfs
+        return xbmcvfs.rmdir(f, force)

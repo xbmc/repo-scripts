@@ -38,12 +38,12 @@ msgid "Connecting with server, please wait..."
 msgstr "Conectando com o servidor, por favor aguarde..."
 
 msgctxt "#32009"
-msgid "Go to URL: %s"
-msgstr "Ir para a URL: %s"
+msgid "Scan the QR code and sign in."
+msgstr "Scan the QR code and sign in."
 
 msgctxt "#32010"
-msgid "Enter this code and follow instructions: %s"
-msgstr "Insira esse codigo e siga as instruções: %s"
+msgid "or[CR]Go to this URL: %s[CR]enter the code and sign in: %s"
+msgstr "or[CR]Go to this URL: %s[CR]enter the code and sign in: %s"
 
 msgctxt "#32011"
 msgid "Expires in %s seconds..."
