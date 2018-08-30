@@ -1,13 +1,13 @@
 # -*- encoding: utf-8 -*-
 # https://dev.twitch.tv/docs/
-# V5 is deprecated and will be removed entirely on 12/31/18
+# V5 is deprecated and will be removed entirely on TBD
 
 __all__ = ['bits', 'channel_feed', 'channels', 'chat', 'clips', 'collections', 'communities',
            'games', 'ingests', 'root', 'search', 'streams', 'teams', 'users', 'videos']
 
 from ...log import log
 
-log.deprecated_api_version('V5', 'Helix', '12/31/18')
+log.deprecated_api_version('V5', 'Helix', 'TBD')
 
 from . import bits  # NOQA
 from . import channel_feed  # NOQA

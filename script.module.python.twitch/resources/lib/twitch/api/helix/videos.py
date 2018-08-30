@@ -2,14 +2,14 @@
 # https://dev.twitch.tv/docs/api/reference
 
 from ... import keys
-from ...api.parameters import Cursor, Language, BroadcastTypeHelix, VideoSortHelix, PeriodHelix
+from ...api.parameters import Cursor, Language, BroadcastTypeHelix, VideoSortHelix, PeriodHelix, IntRange, ItemCount
 from ...queries import HelixQuery as Qry
 from ...queries import query
 
 
 # required scope: none
 @query
-def get_videos(video_id=list(), game_id=list(), user_id=list(),
+def get_videos(video_id=list(), game_id='', user_id='',
                broadcast_type=BroadcastTypeHelix.ALL, language='',
                after='MA==', before='MA==', first=20,
                sort_order=VideoSortHelix.TIME, period=PeriodHelix.ALL, use_app_token=False):
@@ -17,15 +17,15 @@ def get_videos(video_id=list(), game_id=list(), user_id=list(),
     if not video_id:
         q.add_param(keys.AFTER, Cursor.validate(after), 'MA==')
         q.add_param(keys.BEFORE, Cursor.validate(before), 'MA==')
-        q.add_param(keys.FIRST, first, 20)
-        q.add_param(keys.GAME_ID, game_id, list())
-        q.add_param(keys.USER_ID, user_id, list())
+        q.add_param(keys.FIRST, IntRange(1, 100).validate(first), 20)
+        q.add_param(keys.GAME_ID, game_id, '')
+        q.add_param(keys.USER_ID, user_id, '')
         q.add_param(keys.TYPE, BroadcastTypeHelix.validate(broadcast_type), BroadcastTypeHelix.ALL)
         q.add_param(keys.SORT, VideoSortHelix.validate(sort_order), VideoSortHelix.TIME)
         q.add_param(keys.PERIOD, PeriodHelix.validate(period), PeriodHelix.ALL)
         if language:
             q.add_param(keys.LANGUAGE, Language.validate(language), '')
     else:
-        q.add_param(keys.ID, video_id, list())
+        q.add_param(keys.ID, ItemCount().validate(video_id), list())
 
     return q

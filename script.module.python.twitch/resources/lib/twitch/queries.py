@@ -16,8 +16,6 @@ _clips_baseurl = 'https://clips.twitch.tv/'
 _uploads_baseurl = 'https://uploads.twitch.tv/'
 _oauth_baseurl = 'https://api.twitch.tv/kraken/oauth2/'
 
-_v5_headers = {'ACCEPT': 'application/vnd.twitchtv.v5+json'}
-
 
 class _Query(object):
     def __init__(self, url, headers={}, data={}, method=methods.GET):
@@ -182,7 +180,8 @@ class UploadsQuery(DownloadQuery):
 
 class V5Query(ApiQuery):
     def __init__(self, path, use_token=True, method=methods.GET):
-        super(V5Query, self).__init__(path, _v5_headers, use_token=use_token, method=method)
+        headers = {'ACCEPT': 'application/vnd.twitchtv.v5+json'}
+        super(V5Query, self).__init__(path, headers, use_token=use_token, method=method)
 
 
 class HelixQuery(HelixApiQuery):

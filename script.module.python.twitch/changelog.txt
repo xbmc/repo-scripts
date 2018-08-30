@@ -1,3 +1,8 @@
+2.0.2
+[fix] Python 3 compat.
+[add] fast_bread param to usher
+[add/upd] helix endpoints
+
 2.0.1
 [fix] clips usher
 [chg] to relative imports
