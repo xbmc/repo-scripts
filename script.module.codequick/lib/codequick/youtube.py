@@ -9,7 +9,7 @@ import os
 
 # Package imports
 from codequick.route import Route
-from codequick.utils import safe_path, PY3
+from codequick.utils import bold
 from codequick.listing import Listitem
 from codequick.resolver import Resolver
 from codequick.support import logger_id
@@ -23,8 +23,7 @@ ALLVIDEOS = 32003
 PLAYLISTS = 136
 
 # Youtube cache directory
-_CACHEFILE = os.path.join(Route.get_info("profile"), u"_youtube-cache.sqlite")
-CACHEFILE = _CACHEFILE if PY3 else safe_path(_CACHEFILE)
+CACHEFILE = os.path.join(Route.get_info("profile"), u"_youtube-cache.sqlite")
 
 
 class CustomRow(sqlite3.Row):
@@ -253,8 +252,7 @@ class API(object):
         Note:
         If no id(s) are given then all category ids are fetched for given region.
 
-        :param region_code: [opt] The region code for the categories id(s).
-        :type region_code: str or unicode
+        :param str region_code: [opt] The region code for the categories id(s).
 
         :returns: Dictionary of video categories.
         :rtype: dict
@@ -271,14 +269,9 @@ class API(object):
 
         Refer to 'https://developers.google.com/youtube/v3/docs/playlistItems/list'
 
-        :param playlist_id: ID of youtube playlist
-        :type playlist_id: str or unicode
-
-        :param pagetoken: The token for the next page of results
-        :type pagetoken: str or unicode
-
-        :param loop: [opt] Return all the videos within playlist. (Default => False)
-        :type loop: bool
+        :param str playlist_id: ID of youtube playlist
+        :param str pagetoken: The token for the next page of results
+        :param bool loop: [opt] Return all the videos within playlist. (Default => False)
 
         :returns: Dictionary of playlist items.
         :rtype: dict
@@ -301,7 +294,7 @@ class API(object):
         Refer to 'https://developers.google.com/youtube/v3/docs/videos/list'
 
         :param video_id: Video id(s) to fetch data for.
-        :type video_id: str or unicode or list or frozenset
+        :type video_id: str or list or frozenset
 
         :returns: Dictionary of video items.
         :rtype: dict
@@ -320,14 +313,9 @@ class API(object):
 
         Refer to 'https://developers.google.com/youtube/v3/docs/playlists/list'
 
-        :param channel_id: Id of the channel to fetch playlists for.
-        :type channel_id: str or unicode
-
-        :param pagetoken: The token for the next page of results
-        :type pagetoken: str or unicode
-
-        :param loop: [opt] Return all the playlists for channel. (Default => False)
-        :type loop: bool
+        :param str channel_id: Id of the channel to fetch playlists for.
+        :param str pagetoken: The token for the next page of results
+        :param bool loop: [opt] Return all the playlists for channel. (Default => False)
 
         :returns: Dictionary of playlists.
         :rtype: dict
@@ -372,7 +360,7 @@ class APIControl(Route):
     def __init__(self):
         super(APIControl, self).__init__()
         self.db = Database()
-        self.register_delayed_callback(self.db.cleanup)
+        self.register_delayed(self.db.cleanup)
         self.api = API()
 
     def valid_playlistid(self, contentid):
@@ -383,8 +371,8 @@ class APIControl(Route):
         If channel uuid is given, then the required uploads uuid will be fetched
         from youtube and stored in the cache.
 
-        :param unicode contentid: ID of youtube content to validate, Channel uuid,
-                                  Channel Uploads uuid or Playlist uuid.
+        :param str contentid: ID of youtube content to validate, Channel uuid,
+                              Channel Uploads uuid or Playlist uuid.
 
         :raises ValueError: If contentid is not one of the required types.
         """
@@ -588,17 +576,10 @@ class Playlists(APIControl):
         """
         List all playlist for giving channel
 
-        :param channel_id: Channel id to list playlists for.
-        :type channel_id: unicode
-
-        :param show_all: [opt] Add link to all of the channels videos if True. (default => True)
-        :type show_all: bool
-
-        :param pagetoken: [opt] The token for the next page of results.
-        :type pagetoken: str or unicode
-
-        :param loop: [opt] Return all the playlist for channel. (Default => False)
-        :type loop: bool
+        :param str channel_id: Channel id to list playlists for.
+        :param bool show_all: [opt] Add link to all of the channels videos if True. (default => True)
+        :param str pagetoken: [opt] The token for the next page of results.
+        :param bool loop: [opt] Return all the playlist for channel. (Default => False)
 
         :returns: A generator of listitems.
         :rtype: :class:`types.GeneratorType`
@@ -622,7 +603,7 @@ class Playlists(APIControl):
         # Display a link for listing all channel videos
         # This is usefull when the root of a addon is the playlist directory
         if show_all:
-            title = self.localize(ALLVIDEOS)
+            title = bold(self.localize(ALLVIDEOS))
             yield Listitem.youtube(channel_id, title, enable_playlists=False)
 
         # Loop Entries
@@ -661,17 +642,10 @@ class Playlist(APIControl):
         """
         List all video within youtube playlist
 
-        :param contentid: Channel id or playlist id to list videos for.
-        :type contentid: unicode
-
-        :param pagetoken: [opt] The page token representing the next page of content.
-        :type pagetoken: unicode
-
-        :param enable_playlists: [opt] Set to True to enable linking to channel playlists. (default => False)
-        :type enable_playlists: bool
-
-        :param loop: [opt] Return all the videos within playlist. (Default => False)
-        :type loop: bool
+        :param str contentid: Channel id or playlist id to list videos for.
+        :param str pagetoken: [opt] The page token representing the next page of content.
+        :param bool enable_playlists: [opt] Set to True to enable linking to channel playlists. (default => False)
+        :param bool loop: [opt] Return all the videos within playlist. (Default => False)
 
         :returns: A generator of listitems.
         :rtype: :class:`types.GeneratorType`
@@ -717,11 +691,8 @@ class Related(APIControl):
         """
         Search for all videos related to a giving video id.
 
-        :param video_id: Id of the video the fetch related video for.
-        :type video_id: unicode
-
-        :param pagetoken: [opt] The page token representing the next page of content.
-        :type pagetoken: unicode
+        :param str video_id: Id of the video the fetch related video for.
+        :param str pagetoken: [opt] The page token representing the next page of content.
 
         :returns: A generator of listitems.
         :rtype: :class:`types.GeneratorType`
@@ -742,8 +713,8 @@ class Related(APIControl):
 @Resolver.register
 def play_video(plugin, video_id):
     """
-    :type plugin: :class:`codequick.PlayMedia`
-    :type video_id: unicode
+    :type  plugin: :class:`codequick.PlayMedia`
+    :type video_id: str
     """
     url = u"https://www.youtube.com/watch?v={}".format(video_id)
     return plugin.extract_source(url)

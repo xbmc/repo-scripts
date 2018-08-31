@@ -21,24 +21,24 @@ msgstr ""
 # Addon Strings: 32000 - 32199 #
 # ##############################
 msgctxt "#32001"
-msgid "[B]Youtube Channel[/B]"
-msgstr "[B]ערןץ יו-טיוב[/B]"
+msgid "Youtube Channel"
+msgstr "ערןץ יו-טיוב"
 
 msgctxt "#32002"
-msgid "[B]Recent Videos[/B]"
-msgstr "[B]סרטונים אחרונים[/B]"
+msgid "Recent Videos"
+msgstr "סרטונים אחרונים"
 
 msgctxt "#32003"
-msgid "[B]All Videos[/B]"
-msgstr "[B]כל קבצי הווידאו[/B]"
+msgid "All Videos"
+msgstr "כל קבצי הווידאו"
 
 # ####################################
 # Context Menu String: 32200 - 32299 #
 # ####################################
+
 msgctxt "#32201"
 msgid "Related Videos"
 msgstr "סרטונים קשורים"
-
 
 # ##############################
 # Error Strings: 32400 - 32599 #

@@ -15,7 +15,7 @@ from codequick.script import Script
 from codequick.support import logger_id, auto_sort
 from codequick.utils import ensure_native_str
 
-__all__ = ["Route"]
+__all__ = ["Route", "validate_listitems"]
 
 # Logger specific to this module
 logger = logging.getLogger("%s.route" % logger_id)
@@ -26,12 +26,7 @@ NO_DATA = 33077
 
 
 def validate_listitems(raw_listitems):
-    """
-    Check if listitems are valid
-
-    :return: Listitems as a list.
-    :rtype: list
-    """
+    """Check if listitems are valid"""
 
     # Convert a generator of listitem into a list of listitems
     if inspect.isgenerator(raw_listitems):
@@ -50,10 +45,17 @@ def validate_listitems(raw_listitems):
 
 class Route(Script):
     """
-    This class is used to create Route callbacks. Route callbacks, are callbacks that
-    return listitems witch show up as folders in kodi.
+    This class is used to create "Route" callbacks. “Route" callbacks, are callbacks that
+    return "listitems" which will show up as folders in Kodi.
 
-    Route inherits all methods and attributes from :class:`script.Script<codequick.script.Script>`.
+    Route inherits all methods and attributes from :class:`codequick.Script<codequick.script.Script>`.
+
+    The possible return types from Route Callbacks are.
+        * ``iterable``: "List" or "tuple", consisting of :class:`codequick.listitem<codequick.listing.Listitem>` objects.
+        * ``generator``: A Python "generator" that return's :class:`codequick.listitem<codequick.listing.Listitem>` objects.
+        * ``False``: This will cause the "plugin call" to quit silently, without raising a RuntimeError.
+
+    :raises RuntimeError: If no content was returned from callback.
 
     :example:
         >>> from codequick import Route, Listitem
@@ -82,21 +84,12 @@ class Route(Script):
         self.content_type = None
         self.autosort = True
 
-    def _execute_route(self, callback):
-        """Execute the callback function and process the results."""
-
-        # Fetch all listitems from callback function
-        listitems = super(Route, self)._execute_route(callback)
-
-        # Process listitems and close
-        success = self.__add_listitems(listitems)
-        self.__end_directory(success)
-
-    def __add_listitems(self, raw_listitems):
+    def _process_results(self, raw_listitems):
         """Handle the processing of the listitems."""
         raw_listitems = validate_listitems(raw_listitems)
         if raw_listitems is False:
-            return False
+            xbmcplugin.endOfDirectory(self.handle, False)
+            return None
 
         # Create a new list containing tuples, consisting of path, listitem, isfolder.
         listitems = []
@@ -119,9 +112,10 @@ class Route(Script):
         self.__content_type(isfolder, mediatypes)
 
         # Pass the listitems and relevant data to kodi
-        return xbmcplugin.addDirectoryItems(self.handle, listitems, len(listitems))
+        success = xbmcplugin.addDirectoryItems(self.handle, listitems, len(listitems))
+        xbmcplugin.endOfDirectory(self.handle, success, self.update_listing, self.cache_to_disc)
 
-    def __content_type(self, isfolder, mediatypes):
+    def __content_type(self, isfolder, mediatypes):  # type: (bool, defaultdict) -> None
         """Configure plugin properties, content, category and sort methods."""
 
         # See if we can guess the content_type based on the mediatypes from the listitem
@@ -149,7 +143,7 @@ class Route(Script):
         if not isfolder:
             self.__add_sort_methods(self._manual_sort)
 
-    def __add_sort_methods(self, manual):
+    def __add_sort_methods(self, manual):  # type: (set) -> None
         """Add sort methods to kodi."""
         if self.autosort:
             manual.update(auto_sort)
@@ -163,18 +157,14 @@ class Route(Script):
             # If no sortmethods are given then set sort mehtod to unsorted
             xbmcplugin.addSortMethod(self.handle, xbmcplugin.SORT_METHOD_UNSORTED)
 
-    def __end_directory(self, success):
-        """Mark the end of directory listings."""
-        xbmcplugin.endOfDirectory(self.handle, success, self.update_listing, self.cache_to_disc)
-
     def add_sort_methods(self, *methods):
         """
-        Adds sorting method(s) for the media list.
+        Add sorting method(s).
 
-        Any number of sort methods can be given as multiple arguments.
-        Normally this should not be needed as sort methods are auto detected.
+        Any number of sort method's can be given as multiple arguments.
+        Normally this should not be needed, as sort method's are auto detected.
 
-        :param int methods: One or more kodi sort methods.
+        :param int methods: One or more Kodi sort method's.
 
         .. seealso:: The full list of sort methods can be found at.\n
                      https://codedocs.xyz/xbmc/xbmc/group__python__xbmcplugin.html#ga85b3bff796fd644fb28f87b136025f40
