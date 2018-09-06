@@ -721,7 +721,7 @@ class GuideOverlay(util.CronReceiver):
             self.fallbackChannel = None
             self.playChannel(channel)
         util.showNotification(util.T(32023),time_ms=5000,header=util.T(32022))
-        self.windowLoop()
+        self.showOverlay(True)
 
     def onPlayBackEnded(self):
         util.setGlobalProperty('playing.dvr','')

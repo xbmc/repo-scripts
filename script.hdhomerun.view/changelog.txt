@@ -1,3 +1,9 @@
+** 2018.9.6 **
+
+Fixes for Kodi 18 compatibility
+Improved handling for startup channel failure
+Update API endpoints
+
 ** 2017.1.2 **
 
 Fix channel icon scaling

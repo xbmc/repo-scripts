@@ -87,6 +87,7 @@
                     <width>110</width>
                     <height>110</height>
                     <label>13395</label>
+                    <textcolor>00000000</textcolor>
                     <font>-</font>
                     <texturefocus>script-hdhomerun-view-video_icon_focus.png</texturefocus>
                     <texturenofocus>script-hdhomerun-view-video_icon.png</texturenofocus>
@@ -97,6 +98,7 @@
                     <width>110</width>
                     <height>110</height>
                     <label>13396</label>
+                    <textcolor>00000000</textcolor>
                     <font>-</font>
                     <texturefocus>script-hdhomerun-view-audio_icon_focus.png</texturefocus>
                     <texturenofocus>script-hdhomerun-view-audio_icon.png</texturenofocus>
@@ -107,6 +109,7 @@
                     <width>110</width>
                     <height>110</height>
                     <label>13396</label>
+                    <textcolor>00000000</textcolor>
                     <font>-</font>
                     <texturefocus>script-hdhomerun-view-volume_down_icon_focus.png</texturefocus>
                     <texturenofocus>script-hdhomerun-view-volume_down_icon.png</texturenofocus>
@@ -117,6 +120,7 @@
                     <width>110</width>
                     <height>110</height>
                     <label>13396</label>
+                    <textcolor>00000000</textcolor>
                     <font>-</font>
                     <texturefocus>script-hdhomerun-view-volume_up_icon_focus.png</texturefocus>
                     <texturenofocus>script-hdhomerun-view-volume_up_icon.png</texturenofocus>
@@ -126,43 +130,5 @@
             </control>
 
         </control>
-
-        <control type="group">
-            <visible>!IsEmpty(Window(10000).Property(script.hdhomerun.view.busy))</visible>
-            <posx>1367</posx>
-            <posy>860</posy>
-
-            <control type="image">
-                <posx>0</posx>
-                <posy>0</posy>
-                <width>503</width>
-                <height>170</height>
-                <texture>script-hdhomerun-view-loading_bg.png</texture>
-                <colordiffuse>80FFFFFF</colordiffuse>
-                <aspectratio>stretch</aspectratio>
-            </control>
-            <control type="label">
-                <posx>21</posx>
-                <posy>44</posy>
-                <width>307</width>
-                <height>106</height>
-                <font>font13</font>
-                <align>center</align>
-                <aligny>center</aligny>
-                <textcolor>FF000000</textcolor>
-                <label>[B]$INFO[Window(10000).Property(script.hdhomerun.view.busy)][/B]</label>
-            </control>
-            <control type="image">
-                <posx>354</posx>
-                <posy>21</posy>
-                <width>128</width>
-                <height>128</height>
-                <texture>script-hdhomerun-view-loading.gif</texture>
-                <colordiffuse>80FFFFFF</colordiffuse>
-                <aspectratio>stretch</aspectratio>
-            </control>
-
-        </control>
-
     </controls>
 </window>
