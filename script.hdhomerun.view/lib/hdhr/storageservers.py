@@ -6,7 +6,7 @@ import guide
 import errors
 from lib import util
 
-MY = 'my'
+MY = 'api'
 
 HIDE_SERIES_URL = 'http://%s.hdhomerun.com/api/search_hide?DeviceAuth={deviceAuth}&SeriesID={seriesID}' % MY
 SUGGEST_URL = 'http://%s.hdhomerun.com/api/suggest?DeviceAuth={deviceAuth}&Cmd={command}&SeriesID={seriesID}' % MY

@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import os
+import json
 import xbmc, xbmcvfs
 import util
 
@@ -36,6 +37,7 @@ FONTS = ('font10','font13','font30')
 
 VERSION = util.ADDON.getAddonInfo('version')
 VERSION_FILE = os.path.join(xbmc.translatePath(util.ADDON.getAddonInfo('profile')).decode('utf-8'),'skin','version')
+KODI_VERSION_FILE = os.path.join(xbmc.translatePath(util.ADDON.getAddonInfo('profile')).decode('utf-8'),'skin','kodi_version')
 
 def skinningAPIisOld():
     try:
@@ -56,7 +58,7 @@ DVR_EPISODES_DIALOG = "script-hdhomerun-view-dvr_episodes_dialog.xml"
 OPTIONS_DIALOG = "script-hdhomerun-view-options.xml"
 
 
-SKINS_XMLS = (OVERLAY,CHANNEL_ENTRY,DVR_WINDOW,DVR_RECORD_DIALOG)
+SKINS_XMLS = (OVERLAY,CHANNEL_ENTRY,DVR_WINDOW,DVR_RECORD_DIALOG,DVR_EPISODES_DIALOG,OPTIONS_DIALOG)
 
 def copyTree(source,target):
 	pct = 0
@@ -105,15 +107,34 @@ def customizeSkinXML(skin,xml):
     for font in FONTS:
         data = data.replace('@{0}@'.format(font),FONT_TRANSLATIONS[skin][font])
 
+    if kodiHasNewStringInfoLabels():
+        util.DEBUG_LOG('Updating skins for new InfoLabels')
+        data = data.replace('IsEmpty', 'String.IsEmpty')
+        data = data.replace('StringCompare', 'String.IsEqual')
+        # SubString(info,string[,Left|Right])
+        # data.replace('SubString', 'String.StartsWith')
+        # data.replace('SubString', 'String.EndsWith')
+        # data.replace('SubString', 'String.Contains')
+
     with open(target,'w') as t:
         t.write(data)
 
 def updateNeeded():
     if not os.path.exists(VERSION_FILE): return True
+    if not os.path.exists(KODI_VERSION_FILE): return True
     with open(VERSION_FILE, 'r') as f:
         version = f.read()
     if version != '{0}:{1}:{2}'.format(currentKodiSkin(),VERSION,OLD_API and ':old' or ''): return True
     return False
+
+def kodiHasNewStringInfoLabels():
+    return getKodiVersion()['major'] > 17
+
+def getKodiVersion():
+    json_query = xbmc.executeJSONRPC('{ "jsonrpc": "2.0", "method": "Application.GetProperties", "params": {"properties": ["version", "name"]}, "id": 1 }')
+    json_query = unicode(json_query, 'utf-8', errors='ignore')
+    json_query = json.loads(json_query)
+    return json_query['result']['version']
 
 def getSkinPath():
     skin = currentKodiSkin()
@@ -129,6 +150,8 @@ def getSkinPath():
                 customizeSkinXML(skin,xml)
             with open(VERSION_FILE, 'w') as f:
                 f.write('{0}:{1}:{2}'.format(currentKodiSkin(),VERSION,OLD_API and ':old' or ''))
+            with open(KODI_VERSION_FILE, 'w') as f:
+                f.write(json.dumps(getKodiVersion()))
         except:
             util.ERROR()
             return default

@@ -274,6 +274,12 @@ class TunerDevice(Device):
         url = getattr(self,'lineUpURL',None)
         if not url:
             url = LINEUP_URL_BASE.format(ip=self.ip)
+
+        if '?' in url:
+            url += '&show=demo'
+        else:
+            url += '?show=demo'
+
         return url
 
     @property

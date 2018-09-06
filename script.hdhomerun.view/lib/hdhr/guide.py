@@ -14,12 +14,12 @@ except:
 from lib import util
 import errors
 
-GUIDE_URL = 'http://my.hdhomerun.com/api/guide.php?DeviceAuth={0}'
-SLICE_URL = 'http://my.hdhomerun.com/api/guide.php?DeviceAuth={deviceAuth}&Channel={channel}{start}'
-SEARCH_URL = 'http://my.hdhomerun.com/api/search?DeviceAuth={deviceAuth}&Search={search}'
-EPISODES_URL = 'http://my.hdhomerun.com/api/episodes?DeviceAuth={deviceAuth}&SeriesID={seriesID}'
-SUGGEST_URL = 'http://my.hdhomerun.com/api/suggest?DeviceAuth={deviceAuth}&Category={category}'
-NOW_SHOWING_URL = 'http://my.hdhomerun.com/api/up_next?DeviceAuth={deviceAuth}{start}'
+GUIDE_URL = 'http://api.hdhomerun.com/api/guide.php?DeviceAuth={0}'
+SLICE_URL = 'http://api.hdhomerun.com/api/guide.php?DeviceAuth={deviceAuth}&Channel={channel}{start}'
+SEARCH_URL = 'http://api.hdhomerun.com/api/search?DeviceAuth={deviceAuth}&Search={search}'
+EPISODES_URL = 'http://api.hdhomerun.com/api/episodes?DeviceAuth={deviceAuth}&SeriesID={seriesID}'
+SUGGEST_URL = 'http://api.hdhomerun.com/api/suggest?DeviceAuth={deviceAuth}&Category={category}'
+NOW_SHOWING_URL = 'http://api.hdhomerun.com/api/up_next?DeviceAuth={deviceAuth}{start}'
 NOW_SHOWING_START = '&Start={utcUnixtime}'
 
 

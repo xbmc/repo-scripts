@@ -10,7 +10,7 @@ ADDON = xbmcaddon.Addon()
 T = ADDON.getLocalizedString
 
 def LOG(msg):
-    xbmc.log('script.hdhomerun.view: {0}'.format(msg))
+    xbmc.log('script.hdhomerun.view: {0}'.format(msg), xbmc.LOGNOTICE)
 
 def DEBUG_LOG(msg):
     if not getSetting('debug',False) and not xbmc.getCondVisibility('System.GetBool(debug.showloginfo)'): return
