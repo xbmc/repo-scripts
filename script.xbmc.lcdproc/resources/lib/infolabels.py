@@ -54,7 +54,7 @@ class InfoLabels():
         ret = xbmc.getInfoLabel(strLabel)
         # pre-py3 compat
         if self._py2compat:
-            return ret.decode("utf-8")
+            return ret.decode("utf-8", errors="ignore")
         return ret
 
     def GetBool(self, strBool):

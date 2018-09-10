@@ -690,7 +690,7 @@ class LcdBase():
         # returns the correct codec id. As the display is wrong for VC-1 only,
         # accept that the codec icon is right only in maybe 70-80% of all playback
         # cases. This needs fixing in XBMC! See http://trac.xbmc.org/ticket/13969
-        if strVideoCodec in ["mpg", "mpeg", "mpeg2video", "h264", "x264", "mpeg4", "hdmv"]:
+        if strVideoCodec in ["mpg", "mpeg", "mpeg2video", "h264", "x264", "mpeg4", "hdmv", "hevc"]:
           self.m_cExtraIcons.SetIconState(LCD_EXTRAICONS.LCD_EXTRAICON_VCODEC_MPEG, True)
 
         # any divx
@@ -702,7 +702,7 @@ class LcdBase():
           self.m_cExtraIcons.SetIconState(LCD_EXTRAICONS.LCD_EXTRAICON_VCODEC_XVID, True)
 
         # wmv and vc-1
-        elif strVideoCodec in ["wmv", "wvc1", "vc-1"]:
+        elif strVideoCodec in ["wmv", "wvc1", "vc-1", "vc1"]:
           self.m_cExtraIcons.SetIconState(LCD_EXTRAICONS.LCD_EXTRAICON_VCODEC_WMV, True)
 
         # anything else
@@ -727,7 +727,7 @@ class LcdBase():
           self.m_cExtraIcons.SetIconState(LCD_EXTRAICONS.LCD_EXTRAICON_ACODEC_DTS, True)
 
         # mp3
-        elif strAudioCodec == "mp3":
+        elif strAudioCodec in ["mp3", "mp3float"]:
           self.m_cExtraIcons.SetIconState(LCD_EXTRAICONS.LCD_EXTRAICON_ACODEC_MP3, True)
 
         # any ogg vorbis

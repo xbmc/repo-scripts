@@ -60,7 +60,7 @@ msgstr "Podświetlenie"
 
 msgctxt "#32201"
 msgid "on screensaver"
-msgstr "podczas działania wygaszacza ekrany"
+msgstr "podczas działania wygaszacza ekranu"
 
 msgctxt "#32202"
 msgid "Dim on shutdown"
@@ -80,7 +80,7 @@ msgstr "Opóźnienie (s)"
 
 msgctxt "#32206"
 msgid "Dim/turn off..."
-msgstr "Przyciemnij/wyłącz:"
+msgstr "Przyciemnij/wyłącz podświetlenie:"
 
 # empty strings from id 32207 to 32299
 # Connection
