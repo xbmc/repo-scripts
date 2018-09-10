@@ -245,7 +245,7 @@ class get_tiles(threading.Thread):
             self.loop += 1
             if MONITOR.waitForAbort(10):
                 return
-            self.fetch_tiles(failed, mapdir, zoom)
+            self.fetch_tiles(failed, mapdir, zoom, self.api)
 
     def merge_tiles(self):
         out = Image.new("RGBA", (756, 756), None)
