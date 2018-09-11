@@ -32,6 +32,8 @@ from clouddrive.common.service.base import BaseServerService, BaseHandler
 from clouddrive.common.ui.logger import Logger
 from clouddrive.common.ui.utils import KodiUtils
 from clouddrive.common.utils import Utils
+import json
+from urlparse import urlparse
 
 
 class Source(BaseHandler):
@@ -171,19 +173,27 @@ class Source(BaseHandler):
         driveid = self.get_driveid(drive_name)
         if driveid:
             parts = self.path.split('/')
-            if parts[len(parts)-1]:
+            filename = parts[len(parts)-1]
+            if filename:
                 response_code = 303
                 if path:
-                    key = '%s%s:children' % (driveid, path[0:path.rfind('/')],)
-                    Logger.debug('reading cache key: ' + key)
-                    children = self._children_cache.get(key)
-                    if not children and type(children) is NoneType:
-                        self.get_folder_items(driveid, path[0:path.rfind('/')+1])
-                    
-                    url = self.get_download_url(driveid, path)
+                    u = urlparse(path)
+                    path = u.path
+                    Logger.debug('query: %s' % u.query)
+                    if u.query == 'subtitles':
+                        response_code = 200
+                        response.write(json.dumps({'driveid': driveid, 'subtitles': self.get_subtitles(driveid, path)}))
+                    else:
+                        key = '%s%s:children' % (driveid, path[0:path.rfind('/')],)
+                        Logger.debug('reading cache key: ' + key)
+                        children = self._children_cache.get(key)
+                        if not children and type(children) is NoneType:
+                            self.get_folder_items(driveid, path[0:path.rfind('/')+1])
+                        url = self.get_download_url(driveid, path)
+                        headers['location'] = url
                 else:
                     url = self.path + '/'
-                headers['location'] = url
+                    headers['location'] = url
             else:
                 response_code = 200
                 response.write(str(self.show_folder(driveid, path)))
@@ -250,8 +260,8 @@ class Source(BaseHandler):
                 return True
             index = path.rfind('/')
         return True
-        
-    def get_download_url(self, driveid, path):
+    
+    def get_item(self, driveid, path):
         key = '%s%s' % (driveid, path,)
         Logger.debug('Testing item from cache: %s' % key)
         item = self._items_cache.get(key)
@@ -262,9 +272,28 @@ class Source(BaseHandler):
             item = provider.get_item(path=path, include_download_info = True)
             Logger.debug('Saving item in cache: %s' % key)
             self._items_cache.set(key, item)
+        return item
+    
+    def get_download_url(self, driveid, path):
+        item = self.get_item(driveid, path) 
         if 'folder' in item:
             return self.path + '/'
         return item['download_info']['url']
+    
+    def get_subtitles(self, driveid, path):
+        item = self.get_item(driveid, path) 
+        key = '%s%s-subtitles' % (driveid, path,)
+        Logger.debug('Testing subtitles from cache: %s' % key)
+        subtitles = self._items_cache.get(key)
+        if not subtitles:
+            provider = self._get_provider()
+            provider.configure(self._account_manager, driveid)
+            self.is_path_possible(driveid, path)
+            item_driveid = Utils.default(Utils.get_safe_value(item, 'drive_id'), driveid)
+            subtitles = provider.get_subtitles(item['parent'], item['name'], item_driveid)
+            Logger.debug('Saving subtitles in cache: %s' % key)
+            self._items_cache.set(key, item)
+        return subtitles
     
     def handle_resource_request(self, data):
         addon_name = data[2]
