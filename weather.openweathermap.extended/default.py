@@ -182,7 +182,7 @@ def forecast(loc,locid,locationdeg):
     if MAPS == 'true' and xbmc.getCondVisibility('System.HasAddon(script.openweathermap.maps)'):
         lat = float(eval(locationdeg)[0])
         lon = float(eval(locationdeg)[1])
-        xbmc.executebuiltin('XBMC.RunAddon(script.openweathermap.maps,lat=%s&lon=%s&zoom=%s&api=%s)' % (lat, lon, ZOOM, APPID))
+        xbmc.executebuiltin('XBMC.RunAddon(script.openweathermap.maps,lat=%s&lon=%s&zoom=%s&api=%s&debug=%s)' % (lat, lon, ZOOM, APPID, DEBUG))
     else:
         set_property('Map.IsFetched', '')
         for count in range (1, 6):
