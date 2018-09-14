@@ -210,15 +210,15 @@ class get_tiles(threading.Thread):
                             return
                         bytes = response.read(4096)
                         if not bytes:
-                            log('image downloaded')
+                            log('image downloaded', DEBUG)
                             break
                         data.append(bytes)
                 except:
-                    log('image download failed, retry')
+                    log('image download failed, retry', DEBUG)
                     success = False
                 response.close()
             except:
-                log('failed to connect, retry')
+                log('failed to connect, retry', DEBUG)
                 success = False
             if not success:
                 data = []
@@ -236,7 +236,7 @@ class get_tiles(threading.Thread):
                     tmpmap.write(''.join(data))
                     tmpmap.close()
                 except:
-                    log('failed to save image')
+                    log('failed to save image', DEBUG)
                     return
             count += 1
             if MONITOR.abortRequested():
@@ -278,5 +278,10 @@ class MyMonitor(xbmc.Monitor):
 MONITOR = MyMonitor()
 
 if ( __name__ == "__main__" ):
-    log('script version %s started' % ADDONVERSION)
+    try:
+        params = dict(arg.split('=') for arg in sys.argv[ 1 ].split('&'))
+    except:
+        params = {}
+    DEBUG = params.get('debug', 'false') == 'true'
+    log('script version %s started' % ADDONVERSION, DEBUG)
     Main()

@@ -3,18 +3,16 @@ import xbmc, xbmcgui, xbmcaddon
 
 ADDON      = xbmcaddon.Addon()
 ADDONID    = ADDON.getAddonInfo('id')
-MAINADDON  = xbmcaddon.Addon('weather.openweathermap.extended')
 
 WEATHER_WINDOW = xbmcgui.Window(12600)
-DEBUG          = MAINADDON.getSetting('Debug')
 TEMPUNIT       = unicode(xbmc.getRegion('tempunit'),encoding='utf-8')
 SPEEDUNIT      = xbmc.getRegion('speedunit')
 
 if SPEEDUNIT in ('ft/s', 'ft/min', 'ft/h', 'inch/s', 'yard/s', 'kts', ):
     SPEEDUNIT = 'mph'
 
-def log(txt):
-    if DEBUG == 'true':
+def log(txt, DEBUG):
+    if DEBUG:
         if isinstance (txt,str):
             txt = txt.decode("utf-8")
         message = u'%s: %s' % (ADDONID, txt)
