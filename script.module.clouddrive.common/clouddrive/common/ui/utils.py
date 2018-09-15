@@ -248,3 +248,8 @@ class KodiUtils:
     def rmdir(f, force=False):
         import xbmcvfs
         return xbmcvfs.rmdir(f, force)
+    
+    @staticmethod
+    def kodi_player_class():
+        import xbmc
+        return xbmc.Player

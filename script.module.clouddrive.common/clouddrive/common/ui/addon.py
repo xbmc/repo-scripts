@@ -110,10 +110,8 @@ class CloudDriveAddon(RemoteProcessCallable):
                     self._content_type = 'image'
                 else:
                     self._content_type = 'video'
-            xbmcplugin.addSortMethod(handle=self._addon_handle, sortMethod=xbmcplugin.SORT_METHOD_NONE )
-            xbmcplugin.addSortMethod(handle=self._addon_handle, sortMethod=xbmcplugin.SORT_METHOD_UNSORTED ) 
             xbmcplugin.addSortMethod(handle=self._addon_handle, sortMethod=xbmcplugin.SORT_METHOD_LABEL)
-            xbmcplugin.addSortMethod(handle=self._addon_handle, sortMethod=xbmcplugin.SORT_METHOD_FILE )
+            xbmcplugin.addSortMethod(handle=self._addon_handle, sortMethod=xbmcplugin.SORT_METHOD_UNSORTED ) 
             xbmcplugin.addSortMethod(handle=self._addon_handle, sortMethod=xbmcplugin.SORT_METHOD_SIZE )
             xbmcplugin.addSortMethod(handle=self._addon_handle, sortMethod=xbmcplugin.SORT_METHOD_DATE )
             xbmcplugin.addSortMethod(handle=self._addon_handle, sortMethod=xbmcplugin.SORT_METHOD_DURATION )
@@ -338,7 +336,7 @@ class CloudDriveAddon(RemoteProcessCallable):
     
     def _remove_export(self, driveid, item_id):
         export_manager = ExportManager(self._account_manager._addon_data_path)
-        item = export_manager.load()[item_id]['item']
+        item = export_manager.load()[item_id]
         if self._dialog.yesno(self._addon_name, self._common_addon.getLocalizedString(32001) % Utils.unicode(item['name']), None):
             export_manager.remove_export(item_id)
             KodiUtils.executebuiltin('Container.Refresh')
@@ -498,10 +496,13 @@ class CloudDriveAddon(RemoteProcessCallable):
                 list_item.setProperty('IsPlayable', 'true')
                 params['action'] = 'play'
                 url = self._addon_url + '?' + urllib.urlencode(params)
+                info = {'size': item['size'], 'date': KodiUtils.to_timestamp(Utils.get_safe_value(item, 'last_modified_date'))}
                 if 'audio' in item:
-                    list_item.setInfo('music', item['audio'])
+                    info.update(item['audio'])
+                    list_item.setInfo('music', info)
                 elif 'video' in item:
                     list_item.addStreamInfo('video', item['video'])
+                    list_item.setInfo('video', info)
                 if 'thumbnail' in item:
                     list_item.setArt({'icon': item['thumbnail'], 'thumb': item['thumbnail']})
             elif ('image' in item or item_name_extension in self._image_file_extensions) and self._content_type == 'image' and item_name_extension != 'mp4':

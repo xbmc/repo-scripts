@@ -26,6 +26,7 @@ from clouddrive.common.remote.request import Request
 from clouddrive.common.ui.logger import Logger
 from clouddrive.common.ui.utils import KodiUtils
 from clouddrive.common.utils import Utils
+from clouddrive.common.account import DriveNotFoundException
 
 
 class ErrorReport(object):
@@ -43,6 +44,7 @@ class ErrorReport(object):
         stacktrace = ExceptionUtils.full_stacktrace(ex)
         rex = ExceptionUtils.extract_exception(ex, RequestException)
         httpex = ExceptionUtils.extract_exception(ex, HTTPError)
+        dnf = ExceptionUtils.extract_exception(ex, DriveNotFoundException)
         
         line1 = ''
         line2 = Utils.unicode(ex)
@@ -59,6 +61,9 @@ class ErrorReport(object):
             elif httpex.code == 404:
                 send_report = False
                 log_report = False
+        if dnf:
+            send_report = False
+            log_report = False
             
         addonid = KodiUtils.get_addon_info('id')
         addon_version = KodiUtils.get_addon_info('version')

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addon id="script.module.clouddrive.common" name="Cloud Drive Common Module"
-	version="1.2.3" provider-name="Carlos Guzman (cguZZman)">
+	version="1.2.6" provider-name="Carlos Guzman (cguZZman)">
 	<requires>
 		<import addon="xbmc.python" version="2.25.0" />
 		<import addon="script.module.dateutil"/>
@@ -18,6 +18,12 @@
 		<source>https://github.com/cguZZman/script.module.clouddrive.common</source>
 		<forum>https://github.com/cguZZman/script.module.clouddrive.common/issues</forum>
 		<news>
+v1.2.6 released Sep 10, 2018:
+- Subtitles assigned in source mode
+- Fixes
+v1.2.5 released Aug 25, 2018:
+- Fix 'Remove' export option
+- Fix error log
 v1.2.3 released Aug 24, 2018:
 - Fix watch folder creating strm for non-media files
 - strm files saved in the cloud are exported as is. 
