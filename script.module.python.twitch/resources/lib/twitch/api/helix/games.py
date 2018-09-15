@@ -2,7 +2,7 @@
 # https://dev.twitch.tv/docs/api/reference
 
 from ... import keys
-from ...api.parameters import Cursor
+from ...api.parameters import Cursor, IntRange, ItemCount
 from ...queries import HelixQuery as Qry
 from ...queries import query
 
@@ -11,8 +11,9 @@ from ...queries import query
 @query
 def get_games(game_id=list(), game_name=list(), use_app_token=False):
     q = Qry('games', use_app_token=use_app_token)
-    q.add_param(keys.ID, game_id, list())
-    q.add_param(keys.NAME, game_name, list())
+    q.add_param(keys.ID, ItemCount().validate(game_id), list())
+    q.add_param(keys.NAME, ItemCount().validate(game_name), list())
+
     return q
 
 
@@ -22,6 +23,6 @@ def get_top(after='MA==', before='MA==', first=20, use_app_token=False):
     q = Qry('games/top', use_app_token=use_app_token)
     q.add_param(keys.AFTER, Cursor.validate(after), 'MA==')
     q.add_param(keys.BEFORE, Cursor.validate(before), 'MA==')
-    q.add_param(keys.FIRST, first, 20)
+    q.add_param(keys.FIRST, IntRange(1, 100).validate(first), 20)
 
     return q

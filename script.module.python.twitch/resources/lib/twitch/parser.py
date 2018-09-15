@@ -18,6 +18,7 @@ _error_pattern = re.compile(r'.*<tr><td><b>error</b></td><td>(?P<message>.+?)</t
 def m3u8(f):
     def m3u8_wrapper(*args, **kwargs):
         results = f(*args, **kwargs)
+        results = results.decode('utf-8')
         if keys.ERROR in results:
             if isinstance(results, dict):
                 return results
@@ -74,7 +75,7 @@ def m3u8_to_list(string):
 
 def clip_embed_to_list(response):
     log.debug('clip_embed_to_list called for:\n{0}'.format(response))
-
+    response = response.decode('utf-8')
     response = literal_eval(response)
     qualities = list()
     l = list()

@@ -1,4 +1,6 @@
 # -*- encoding: utf-8 -*-
+from six.moves import xrange
+
 from base64 import b64decode
 
 
@@ -191,3 +193,41 @@ class Language(_Parameter):
 
 class Duration(_Parameter):
     _valid = [30, 60, 90, 120, 150, 180]
+
+
+class ReportType(_Parameter):
+    OVERVIEW_V1 = 'overview_v1'
+    OVERVIEW_V2 = 'overview_v2'
+
+    _valid = [OVERVIEW_V1, OVERVIEW_V2]
+
+
+class EntitlementType(_Parameter):
+    BULK_DROPS_GRANT = 'bulk_drops_grant'
+
+    _valid = [BULK_DROPS_GRANT]
+
+
+class IntRange(_Parameter):
+
+    @classmethod
+    def __init__(cls, first, last):
+        cls._valid = [i for i in xrange(first, last + 1)]
+
+
+class ItemCount(object):
+    _max_items = 100
+
+    @classmethod
+    def __init__(cls, max_items=100):
+        cls._max_items = max_items
+
+    @classmethod
+    def valid(cls):
+        raise NotImplementedError
+
+    @classmethod
+    def validate(cls, value):
+        if len(value) <= cls._max_items:
+            return value
+        raise ValueError(value)

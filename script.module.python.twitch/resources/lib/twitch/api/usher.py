@@ -54,6 +54,7 @@ def live_request(channel):
         q.add_param(keys.ALLOW_SOURCE, Boolean.TRUE)
         q.add_param(keys.ALLOW_SPECTRE, Boolean.TRUE)
         q.add_param(keys.ALLOW_AUDIO_ONLY, Boolean.TRUE)
+        q.add_param(keys.FAST_BREAD, Boolean.TRUE)
         url = '?'.join([q.url, urlencode(q.params)])
         request_dict = {'url': url, 'headers': q.headers}
         log.debug('live_request: |{0}|'.format(str(request_dict)))
@@ -69,6 +70,7 @@ def _live(channel, token):
     q.add_param(keys.ALLOW_SOURCE, Boolean.TRUE)
     q.add_param(keys.ALLOW_SPECTRE, Boolean.TRUE)
     q.add_param(keys.ALLOW_AUDIO_ONLY, Boolean.TRUE)
+    q.add_param(keys.FAST_BREAD, Boolean.TRUE)
     return q
 
 
