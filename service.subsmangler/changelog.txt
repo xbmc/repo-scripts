@@ -1,0 +1,93 @@
+v1.0.0 (2018-09-09)
+- first release for Official Kodi Repo
+v0.0.35 (2018-08-31)
+- add onAVStarted event support for Kodi 18 compatibility
+- add BusyDialogNoCancel window support for Kodi 18 compatibility
+v0.0.34 (2018-08-11)
+- fix Unicode crash in ProgressDialog
+v0.0.33 (2018-08-10)
+- add German language (thanks to anonymous translator)
+v0.0.32 (2018-06-16)
+- alter default settings:
+-- don't auto invoke Subtitle Search dialog if local subtitles are present --> True
+-- convert existing non-ass subtitles already found on disk --> True
+-- if possible, extend subtitle display time if it is too short --> True
+v0.0.31 (2018-06-04)
+- add Czech and Slovak language (thanks to anonymous translator)
+- add Hungarian language (thanks to Gyorgy Popovics)
+v0.0.30 (2018-05-14)
+- fix broken handlers definition
+v0.0.29 (2018-05-14)
+- code fixes suggested by codacy
+v0.0.28 (2018-05-13)
+- improve strings filtering to better remove whitespaces
+v0.0.27 (2018-04-26)
+- code clean-up (remove unused imports)
+v0.0.26 (2018-04-03)
+- fix: enabling existing 'ass' subtitles didn't work due to lack of full path
+- add fanart
+v0.0.25 (2018-03-26)
+- if 'ass' subtitles are already available, enable them directly instead of just enabling subtitles. This prevents internal subtitles to be shown instead.
+v0.0.24 (2018-03-24)
+- try to read video info several times if the first try returns no information
+v0.0.23 (2018-03-06)
+- add option to maintain bigger space between lines so that background doesn't overlap
+v0.0.22 (2018-03-05)
+- try to guess subtitle file encoding based on its language
+- add option to remove unprocessed subs during housekeeping
+- add icon
+v0.0.21
+- internal test build
+v0.0.20 (2018-03-01)
+- fix Unicode crash in logging routine
+- use datadir for temp files instead of Kodi's temp
+v0.0.18-v0.0.19
+- internal test builds
+v0.0.17 (2018-02-26)
+- xbmcvfs.copy() replaced by shutils.copyfile() to test if copy problems can be fixed
+v0.0.16 (2018-02-24)
+- fix for opening YesNo dialog immediatelly after SubSearch dialog if new playback was started without manual stop of the previous one
+v0.0.15 (2018-02-23)
+- added ability to convert local subtitle files accompanying played video file
+v0.0.14 (2018-02-16)
+- scanning for subtitles will not be triggered immediatelly after video has ended
+v0.0.13 (2018-02-15)
+- fixed skipping next subtitle entry on list if current subtitle was deleted
+v0.0.12 (2018-02-14)
+- improved progress bar calculation
+- detection of forced internal subtitles and audio tracks matching preferred language
+v0.0.11 (2018-02-13)
+- unicode fixes
+- subtitle file matching against video files fixes
+- added possibility of extending subtitle display time to match minimum calculated time
+v0.0.10 (2018-02-11)
+- added possibility to automatically remove subtitle files for nonexisting videos
+v0.0.9 (2018-02-09)
+- improve extension detection of variable lengths
+- option not to pause playback during conversion
+v0.0.8 (2018-02-08)
+- added support for generic Ads section
+- added customizing of foreground/background colors
+- reorganized settings
+- improved Exception handling
+v0.0.7 (2018-02-07)
+- confirmation dialog if subtitles search dialog should be opened the next time
+- unicode fixes
+- more Windows codepages added
+- online playback will not trigger subtitles window
+v0.0.6 (2018-02-05)
+- fixes for handling Boolean values correctly in config file
+- respecting of 'noautosubs' flag file/extension when trying to open subtitles search dialog
+v0.0.5 (2018-02-04)
+- some code clean-up
+- regex auto-update
+- subtitles search dialog auto invoke
+- minimum xbmc.python: 2.25.0 - due to API availability
+v0.0.4 (2018-02-02)
+- separate log file with logrotation
+v0.0.3 (2018-02-01)
+- custom log filtering
+v0.0.2 (2018-01-31)
+- initial regexp filtering
+v0.0.1  (2018-01-21)
+- initial test version with subtitles conversion mechanism
