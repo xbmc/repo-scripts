@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="service.subsmangler" name="Subtitles Mangler" version="1.0.0" provider-name="bkiziuk">
+    <requires>
+        <import addon="xbmc.python" version="2.25.0"/>
+    </requires>
+    <extension point="xbmc.service" library="service.py" start="login"/>
+    <extension point="xbmc.addon.metadata">
+        <summary lang="cs_CZ">Kompletní průvodce titukly</summary>
+        <summary lang="de_DE">Ein umfassendes Tool für Untertitel</summary>
+        <summary lang="en_GB">A comprehensive subtitle companion</summary>
+        <summary lang="hu_HU">Egy teljeskörű felirat asszisztens</summary>
+        <summary lang="pl_PL">Wszechstronny asystent napisów</summary>
+        <summary lang="sk_SK">Kompletný sprievodca titukly</summary>
+        <description lang="cs_CZ">Upraví soubory titulků tak, aby obsahovaly černé pozadí. Podporuje formáty microDVD, SubRip, MPL2 a TMP. Automaticky vyvolá dialog pro vyhledávání titulků, pokud nejsou lokální titulky detekovány. Pokud původní video bylo odstraněno, odstraní soubory titulků. Umožňuje také odstranění reklamních textů a textů pro sluchově postižené. Nevyžaduje externí pluginy.</description>
+        <description lang="de_DE">Modifiziert Untertitel-Dateien so, dass diese einen schwarzen Hintergrund erhalten. Folgende Formate werden unterstützt: microDVD, SubRip, MPL2 and TMP. Es wird automatisch ein Untertitel-Suchdialog gestartet, wenn keine lokalen Untertitel gefunden wurden. Löscht Untertitel-Dateien, wenn die originale Videodatei gelöscht wurde. Weiterhin können Werbetexte und Untertitel für Hörgeschädigte entfernt werden. Es werden keine weiteren externen PlugIns benötigt.</description>
+        <description lang="en_GB">Adjusts subtitle files to include black background. Supports: microDVD, SubRip, MPL2 and TMP formats. Automatically invokes subtitle search dialog if local subtitles are not detected. Removes subtitle files if original video was deleted. Also, allows to remove advertisement texts and texts for the Hearing Impaired. Doesn't require external plugins.</description>
+        <description lang="hu_HU">Feliratok beállítása fekete háttérrel. Támogatott: microDVD, SubRip, MPL2 és TMP formátumok. Automatikusan elindul a felirat kereső program, ha nem található helyi felirat fájl. Törli a letöltött feliratot, ha az eredeti videó törlésre kerül. Továbbá, eltávolítja a hírdetési szövegeket, illetve a hallássérülteknek szóló feliratokat. Nem igényel külső plugin-t.</description>
+        <description lang="pl_PL">Konwertuje napisy dodając czarne tło. Obsługuje formaty microDVD, SubRip, MPL2 i TMP. Umożliwia automatyczne uruchamianie okna wyszukiwania napisów w sytuacji, gdy nie zostały wykryte lokalne napisy. Usuwa pliki z napisami dla skasowanych filmów. Pozwala również na usuwanie z napisów podpisów reklamowych oraz znaczników dla niesłyszących. Nie wymaga zależnych wtyczek.</description>
+        <description lang="sk_SK">Upraví súbory titulkov tak, aby obsahovali čierne pozadie. Podporuje formáty MicroDVD, SubRip, MPL2 a TMP. Automaticky vyvolá dialóg pre vyhľadávanie titulkov, pokiaľ nie sú lokálne titulky detekované. Ak pôvodné video bolo odstránené, odstráni súbory titulkov. Umožňuje tiež odstránenie reklamných textov a textov pre sluchovo postihnutých. Nevyžaduje externé pluginy.</description>
+        <disclaimer lang="cs_CZ">Kompletní průvodce titukly</disclaimer>
+        <disclaimer lang="de_DE">Ein umfassendes Tool für Untertitel</disclaimer>
+        <disclaimer lang="en_GB">A comprehensive subtitle companion</disclaimer>
+        <disclaimer lang="hu_HU">Egy teljeskörű felirat asszisztens</disclaimer>
+        <disclaimer lang="pl_PL">Wszechstronny asystent napisów</disclaimer>
+        <disclaimer lang="sk_SK">Kompletný sprievodca titukly</disclaimer>
+        <news>v1.0.0 (2018-09-09)
+- first release for Official Kodi Repo
+</news>
+        <platform>all</platform>
+        <license>GNU General Public License v3.0</license>
+        <forum>https://forum.kodi.tv/showthread.php?tid=328763</forum>
+        <source>https://github.com/bkiziuk/service.subsmangler</source>
+        <assets>
+            <icon>resources/icon.png</icon>
+            <fanart>resources/fanart.jpg</fanart>
+        </assets>
+    </extension>
+</addon>

@@ -1,0 +1,209 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: SubsMangler\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: bkiziuk\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en_GB\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#32001"
+msgid "Main"
+msgstr ""
+
+msgctxt "#32002"
+msgid "Convert subtitles"
+msgstr ""
+
+msgctxt "#32003"
+msgid "Font size"
+msgstr ""
+
+msgctxt "#32004"
+msgid "Remove Closed Captioning"
+msgstr ""
+
+msgctxt "#32005"
+msgid "Remove advertisements"
+msgstr ""
+
+msgctxt "#32006"
+msgid "Auto-update filtering definitions"
+msgstr ""
+
+msgctxt "#32007"
+msgid "Background transparency"
+msgstr ""
+
+msgctxt "#32010"
+msgid "Invoke subtitles search dialog on playback start"
+msgstr ""
+
+msgctxt "#32011"
+msgid "Pause Playback during conversion"
+msgstr ""
+
+msgctxt "#32012"
+msgid "Include subtitles already found on disk"
+msgstr ""
+
+msgctxt "#32013"
+msgid "Don't invoke dialog if local unprocessed subs are found"
+msgstr ""
+
+msgctxt "#32020"
+msgid "Logging level"
+msgstr ""
+
+msgctxt "#32022"
+msgid "Debug"
+msgstr ""
+
+msgctxt "#32023"
+msgid "Info"
+msgstr ""
+
+msgctxt "#32024"
+msgid "Notice"
+msgstr ""
+
+msgctxt "#32025"
+msgid "Warning"
+msgstr ""
+
+msgctxt "#32026"
+msgid "Error"
+msgstr ""
+
+msgctxt "#32027"
+msgid "Severe"
+msgstr ""
+
+msgctxt "#32028"
+msgid "Fatal"
+msgstr ""
+
+msgctxt "#32029"
+msgid "None"
+msgstr ""
+
+msgctxt "#32030"
+msgid "Logging destination"
+msgstr ""
+
+msgctxt "#32031"
+msgid "Kodi's kodi.log"
+msgstr ""
+
+msgctxt "#32032"
+msgid "Separate log file (smangler.log)"
+msgstr ""
+
+msgctxt "#32040"
+msgid "No new subtitles file has been detected."
+msgstr ""
+
+msgctxt "#32041"
+msgid "Do you want to PREVENT subtitles search dialog from opening automatically next time this file is played?"
+msgstr ""
+
+msgctxt "#32042"
+msgid "No"
+msgstr ""
+
+msgctxt "#32043"
+msgid "Yes"
+msgstr ""
+
+msgctxt "#32048"
+msgid "Housekeeping"
+msgstr ""
+
+msgctxt "#32049"
+msgid "Foreground color"
+msgstr ""
+
+msgctxt "#32050"
+msgid "Background color"
+msgstr ""
+
+msgctxt "#32051"
+msgid "Black"
+msgstr ""
+
+msgctxt "#32052"
+msgid "Grey"
+msgstr ""
+
+msgctxt "#32053"
+msgid "Purple"
+msgstr ""
+
+msgctxt "#32054"
+msgid "Blue"
+msgstr ""
+
+msgctxt "#32055"
+msgid "Green"
+msgstr ""
+
+msgctxt "#32056"
+msgid "Red"
+msgstr ""
+
+msgctxt "#32057"
+msgid "Light blue"
+msgstr ""
+
+msgctxt "#32058"
+msgid "Yellow"
+msgstr ""
+
+msgctxt "#32059"
+msgid "White"
+msgstr ""
+
+msgctxt "#32070"
+msgid "Automatically remove orphaned subtitle files"
+msgstr ""
+
+msgctxt "#32071"
+msgid "Make a backup of processed subtitle file"
+msgstr ""
+
+msgctxt "#32072"
+msgid "Remove backed-up copy of orphaned subtitle file"
+msgstr ""
+
+msgctxt "#32073"
+msgid "Simulate file removal only"
+msgstr ""
+
+msgctxt "#32074"
+msgid "Remove orphaned unprocessed subtitle files"
+msgstr ""
+
+msgctxt "#32075"
+msgid "Try to maintain bigger line spacing"
+msgstr ""
+
+msgctxt "#32080"
+msgid "Conversion"
+msgstr ""
+
+msgctxt "#32081"
+msgid "Adjust subtitle display time"
+msgstr ""
+
+msgctxt "#32090"
+msgid "Scanning for subtitle files"
+msgstr ""
+
+msgctxt "#32091"
+msgid "Clearing orphaned subtitle files"
+msgstr ""
