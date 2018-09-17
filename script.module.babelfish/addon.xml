@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.module.babelfish"
+       name="babelfish"
+       version="0.5.5"
+       provider-name="Antoine Bertin">
+  <requires>
+    <import addon="xbmc.python" version="2.25.0"/>
+  </requires>
+  <extension point="xbmc.python.module"
+             library="lib" />
+  <extension point="xbmc.addon.metadata">
+    <summary>babelfish - Python library to work with countries and languages</summary>
+    <description>Packed for Kodi from https://github.com/Diaoul/babelfish</description>
+    <platform>all</platform>
+    <language></language>
+    <license>Revised BSD License</license>
+    <forum></forum>
+    <website>http://babelfish.readthedocs.io/en/latest/</website>
+    <source>https://github.com/ramiro/script.module.babelfish</source>
+    <email></email>
+  </extension>
+</addon>
