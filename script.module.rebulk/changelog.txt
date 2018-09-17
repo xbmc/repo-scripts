@@ -1,0 +1,2 @@
+0.9.0
+- Pack rebulk 0.9.0 for Kodi 17.x Krypton (API 2.25.0) and later (Python >= 2.7)
