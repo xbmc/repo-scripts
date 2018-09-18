@@ -1,3 +1,7 @@
+3.0.3
+- Polish translation update by mskalski (thanks!)
+- Fixed a possible UTF8 conversion crash/exception
+- Updated video/audiocodec strings for extraicon display
 3.0.2
 - Refactored the main addon handling into class XBMCLCDproc()
 - Refactored the settings and infolabels modules into classes
