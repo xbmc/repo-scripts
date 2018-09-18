@@ -31,7 +31,7 @@ class SavedSearches(Route):
 
         # Persistent list of currently saved searches
         self.search_db = PersistentList(SEARCH_DB)
-        self.register_delayed_callback(self.close)
+        self.register_delayed(self.close)
 
     def run(self, remove_entry=None, search=False, first_load=False, **extras):
         """List all saved searches."""
@@ -63,19 +63,21 @@ class SavedSearches(Route):
         Checks if searh term returns valid results before adding to saved searches.
         Then directly farward the results to kodi.
 
-        :param search_term: The serch term used to search for results.
-        :param extras: Extra parameters that will be farwarded on to the callback function.
+        :param str search_term: The serch term used to search for results.
+        :param dict extras: Extra parameters that will be farwarded on to the callback function.
         :return: List if valid search results
         """
         self.category = search_term.title()
         callback_params = extras.copy()
         callback_params["search_query"] = search_term
+
+        # We switch selector to redirected callback to allow next page to work properly
         route = callback_params.pop("route")
         dispatcher.selector = route
 
         # Fetch search results from callback
-        callback = dispatcher.current_route.callback
-        listitems = callback(self, **callback_params)
+        func = dispatcher.get_route().function
+        listitems = func(self, **callback_params)
 
         # Check that we have valid listitems
         valid_listitems = validate_listitems(listitems)
@@ -95,6 +97,8 @@ class SavedSearches(Route):
         """
         List all saved searches.
 
+        :param dict extras: Extra parameters that will be farwarded on to the context.container.
+
         :returns: A generator of listitems.
         :rtype: :class:`types.GeneratorType`
         """
@@ -107,7 +111,8 @@ class SavedSearches(Route):
 
         # Set the callback function to the route that was given
         callback_params = extras.copy()
-        callback = dispatcher[callback_params.pop("route")].callback
+        route = callback_params.pop("route")
+        callback = dispatcher.get_route(route).callback
 
         # Prefetch the localized string for the context menu lable
         str_remove = self.localize(REMOVE)

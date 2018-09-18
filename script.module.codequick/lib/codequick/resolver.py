@@ -26,7 +26,6 @@ SELECT_PLAYBACK_ITEM = 25006
 NO_VIDEO = 32401
 NO_DATA = 33077
 
-
 # Patterens to extract video url
 # Copied from the Youtube-DL project
 # https://github.com/rg3/youtube-dl/blob/4471affc348af40409188f133786780edd969623/youtube_dl/extractor/youtube.py#L329
@@ -58,20 +57,23 @@ $"""
 
 class Resolver(Script):
     """
-    This class is used to create Resolver callbacks. Resolver callbacks, are callbacks that
-    return playable video urls witch kodi can play.
+    This class is used to create "Resolver" callbacks. Resolver callbacks are callbacks that
+    return playable video URL's which Kodi can play.
 
     Resolver inherits all methods and attributes from :class:`script.Script<codequick.script.Script>`.
 
-    The possible return types from resolver callbacks are.
-        * ``bytes``: Url as type bytes.
-        * ``unicode``: Url as type unicode.
-        * ``iterable``: List or tuple, consisting of url's, listItem's or a tuple consisting of title and url.
-        * ``dict``: Dictionary consisting of title as the key and the url as the value.
-        * ``listItem``: A listitem object with required data already set e.g. label and path.
-        * ``generator``: A python generator that return's one or more urls.
+    The possible return types from Resolver Callbacks are.
+        * ``bytes``: URL as type "bytes".
+        * ``str``: URL as type "str".
+        * ``iterable``: "List" or "tuple", consisting of URL's, "listItem's" or a "tuple" consisting of (title, URL).
+        * ``dict``: "Dictionary" consisting of "title" as the key and the URL as the value.
+        * ``listItem``: A :class:`codequick.Listitem<codequick.listing.Listitem>` object with required data already set e.g. "label" and "path".
+        * ``generator``: A Python "generator" that return's one or more URL's.
 
-    .. note:: If multiple url's are given, a playlist will be automaticly created.
+    .. note:: If multiple URL's are given, a playlist will be automaticly created.
+
+    :raises RuntimeError: If no content was returned from callback.
+    :raises ValueError: If returned url is invalid.
 
     :example:
         >>> from codequick import Resolver, Route, Listitem
@@ -93,23 +95,16 @@ class Resolver(Script):
         super(Resolver, self).__init__()
         self.playlist = xbmc.PlayList(xbmc.PLAYLIST_VIDEO)
 
-    def _execute_route(self, callback):
-        """Execute the callback function and process the results."""
-        resolved = super(Resolver, self)._execute_route(callback)
-        self._send_to_kodi(resolved)
-
-    def create_loopback(self, url, **next_params):
+    def create_loopback(self, url, **next_params):  # Undocumented
         """
-        Create a playlist where the second item loops back to addon to load next video.
+        Create a playlist where the second item loops back to add-on to load next video.
 
         Also useful for continuous playback of videos with no foreseeable end. For example, party mode.
 
-        :param url: Url of the first playable item.
-        :type url: str or unicode
+        :param str url: URL of the first playable item.
+        :param next_params: [opt] "Keyword" arguments to add to the loopback request when accessing the next video.
 
-        :param next_params: [opt] Keyword arguments to add to the loopback request when accessing the next video.
-
-        :returns: The Listitem that kodi will play.
+        :returns: The Listitem that Kodi will play.
         :rtype: xbmcgui.ListItem
         """
         # Video Playlist
@@ -145,9 +140,15 @@ class Resolver(Script):
 
     def extract_source(self, url, quality=None, **params):
         """
-        Extract video url using YoutubeDL.
+        Extract video URL using "YouTube.DL".
 
-        YoutubeDL provides access to hundreds of sites.
+        YouTube.DL provides access to hundreds of sites.
+
+        .. seealso::
+
+            The list of supported sites can be found at:
+
+            https://rg3.github.io/youtube-dl/supportedsites.html
 
         Quality options are.
             * 0 = SD,
@@ -155,19 +156,12 @@ class Resolver(Script):
             * 2 = 1080p,
             * 3 = Highest Available
 
-        :param url: Url of the video source to extract the playable video from.
-        :type url: str or unicode
-        :param int quality: [opt] Override youtubeDL's quality setting.
-        :param params: Optional Keyword arguments of youtube_dl parameters.
+        :param str url: URL of the video source, where the playable video can be extracted from.
+        :param int quality: [opt] Override YouTube.DL's quality setting.
+        :param params: Optional "Keyword" arguments of YouTube.DL parameters.
 
         :returns: The playable video url
         :rtype: str
-
-        .. seealso::
-
-            The list of supported sites can be found at:
-
-            https://rg3.github.io/youtube-dl/supportedsites.html
 
         .. seealso::
 
@@ -177,8 +171,8 @@ class Resolver(Script):
 
         .. note::
 
-            Unfortunately the kodi Youtube-DL module is python2 only.
-            It should be ported to python3 when kodi switches to python 3 for version 19.
+            Unfortunately the Kodi YouTube.DL module is Python 2 only. It should be
+            ported to Python 3 when Kodi switches to Python 3 for version 19.
         """
 
         def ytdl_logger(record):
@@ -212,7 +206,9 @@ class Resolver(Script):
         elif stored_errors:
             raise RuntimeError(stored_errors[0])
 
-    def extract_youtube(self, source):
+    @staticmethod
+    def extract_youtube(source):  # pragma: no cover
+        # TODO: Remove this method as soon as I found out for sure that youtube.dl works on kodi for Xbox
         import htmlement
         import urlquick
 
@@ -282,8 +278,7 @@ class Resolver(Script):
         Process the playlist item and add to kodi playlist.
 
         :param int count: The part number of the item
-        :param url: The resolved object
-        :type url: str or unicode
+        :param str url: The resolved object
         """
         # Kodi original listitem object
         if isinstance(url, xbmcgui.ListItem):
@@ -317,7 +312,7 @@ class Resolver(Script):
         for item in enumerate(filter(None, resolved), 2):
             self._playlist_item(*item)
 
-    def _send_to_kodi(self, resolved):
+    def _process_results(self, resolved):
         """
         Construct playable listitem and send to kodi.
 
@@ -345,7 +340,7 @@ class Resolver(Script):
             # Fetch the first element of the generator and process the rest in the background
             elif inspect.isgenerator(resolved):
                 listitem = self._create_playlist([next(resolved)])
-                self.register_delayed_callback(self._process_generator, resolved)
+                self.register_delayed(self._process_generator, resolved)
 
             # Create playlist if resolved is a dict of {title: url}
             elif hasattr(resolved, "items"):
@@ -355,7 +350,7 @@ class Resolver(Script):
                 # Resolved url must be invalid
                 raise ValueError("resolver returned invalid url of type: '%s'" % type(resolved))
         else:
-            raise ValueError(self.localize(NO_VIDEO))
+            raise RuntimeError(self.localize(NO_VIDEO))
 
         # Send playable listitem to kodi
         logger.debug("Resolved Url: %s", listitem.getPath())

@@ -14,36 +14,40 @@ except ImportError:
     # noinspection PyUnresolvedReferences
     import urlparse
 
-try:
-    # noinspection PyUnresolvedReferences
-    long_type = long
-except NameError:
-    long_type = int
-
 PY3 = sys.version_info[0] >= 3
 
 # Unicode Type object, unicode on python2 or str on python3
 unicode_type = type(u"")
 
-__all__ = ["keyboard", "parse_qs", "urljoin_partial", "strip_tags",
-           "safe_path", "ensure_bytes", "ensure_native_str", "ensure_unicode"]
+string_map = {}
+"""
+Dict of localized string references used in conjunction with 
+:class:`Script.localize<codequick.script.Script.localize>`.
+Allowing you to use the string as the localized string reference.
+
+.. note:: It is best if you set the string references at the top of your add-on python file.
+
+:example:
+    >>> Script.localize(30001)
+    "Toutes les vidéos"
+    >>> 
+    >>> # Add reference id for "All Videos" so you can use the string name instead.
+    >>> utils.string_map["All Videos": 30001]
+    >>> Script.localize("All Videos")
+    "Toutes les vidéos"
+"""
 
 
 def keyboard(heading, default="", hidden=False):
     """
     Show a keyboard dialog.
 
-    :param heading: Keyboard heading.
-    :type heading: str or unicode
-
-    :param default: [opt] Default text.
-    :type default: str or unicode
-
-    :param hidden: [opt] ``True`` for hidden text entry.
-    :type hidden: bool
+    :param str heading: Keyboard heading.
+    :param str default: [opt] Default text.
+    :param bool hidden: [opt] ``True`` for hidden text entry.
 
     :return: Returns the user input as unicode.
-    :rtype: unicode
+    :rtype: str
     """
     # Convert inputs to strings if required
     heading = ensure_native_str(heading)
@@ -63,26 +67,24 @@ def keyboard(heading, default="", hidden=False):
 
 def parse_qs(qs, keep_blank_values=False, strict_parsing=False):
     """
-    Parse a urlencoded query string, and return the data as a dictionary.
+    Parse a "urlencoded" query string, and return the data as a dictionary.
 
-    Parse a query string given as a string or unicode argument (data of type application/x-www-form-urlencoded).
-    Data is returned as a dictionary. The dictionary keys are the unique query variable names and the values
-    are unicode values for each name
+    Parse a query string given as a string or unicode argument (data of type application/x-www-form- urlencoded).
+    Data is returned as a dictionary. The dictionary keys are the "Unique" query variable names and
+    the values are "Unicode" values for each name.
 
-    The optional argument keep_blank_values is a flag indicating whether blank values in percent-encoded queries
-    should be treated as blank strings. A ``True`` value indicates that blanks should be retained as blank strings.
+    The optional argument ``keep_blank_values``, is a flag indicating whether blank values in percent-encoded queries
+    should be treated as a blank string.  A ``True`` value indicates that blanks should be retained as a blank string.
     The default ``False`` value indicates that blank values are to be ignored and treated as if they were not included.
 
-    The optional argument strict_parsing is a flag indicating what to do with parsing errors.
-    If ``False`` (the default), errors are silently ignored. If ``True``, errors raise a ValueError exception.
+    The optional argument ``strict_parsing``, is a flag indicating what to do with parsing errors. If ``False``
+    (the default), errors are silently ignored. If ``True``, errors raise a "ValueError" exception.
 
-    :param qs: Percent-encoded query string to be parsed, or a url with a query string.
-    :type qs: str or unicode
-
+    :param str qs: Percent-encoded "query string" to be parsed, or a URL with a "query string".
     :param bool keep_blank_values: ``True`` to keep blank values, else discard.
-    :param bool strict_parsing: ``True`` to raise ValueError if there are parsing errors, else silently ignore.
+    :param bool strict_parsing: ``True`` to raise "ValueError" if there are parsing errors, else silently ignore.
 
-    :return: Returns a dict of key/value pairs, with all keys and values as unicode.
+    :return: Returns a dictionary of key/value pairs, with all keys and values as "Unicode".
     :rtype: dict
 
     :raises ValueError: If duplicate query field names exists or if there is a parsing error.
@@ -105,9 +107,9 @@ def parse_qs(qs, keep_blank_values=False, strict_parsing=False):
                 raise ValueError("encountered duplicate param field name: '%s'" % key)
     else:
         for bkey, value in parsed:
-            ukey = unicode_type(bkey, encoding="utf8")
+            ukey = bkey.decode("utf8")
             if ukey not in params:
-                params[ukey] = unicode_type(value, encoding="utf8")
+                params[ukey] = value.decode("utf8")
             else:
                 # Only add keys that are not already added, multiple values are not supported
                 raise ValueError("encountered duplicate param field name: '%s'" % bkey)
@@ -120,17 +122,16 @@ def urljoin_partial(base_url):
     """
     Construct a full (absolute) URL by combining a base URL with another URL.
 
-    This is useful when parsing html as the majority of links would be relative links.
+    This is useful when parsing HTML, as the majority of links would be relative links.
 
     Informally, this uses components of the base URL, in particular the addressing scheme,
     the network location and (part of) the path, to provide missing components in the relative URL.
 
-    Returns a new partial object which when called will pass base_url to urlparse.urljoin along with the
+    Returns a new "partial" object which when called, will pass ``base_url`` to :func:`urlparse.urljoin` along with the
     supplied relative URL.
 
-    :type base_url: str or unicode
-    :param base_url: The absolute url to use as the base.
-    :returns: A partial function that accepts a relative url and returns a full absolute url.
+    :param str base_url: The absolute URL to use as the base.
+    :returns: A partial function that accepts a relative URL and returns a full absolute URL.
     
     :example:
         >>> url_constructor = urljoin_partial("https://google.ie/")
@@ -145,9 +146,9 @@ def urljoin_partial(base_url):
         """
         Construct a full (absolute) using saved base url.
 
-        :param url: The relative URL to combine with base.
+        :param str url: The relative URL to combine with base.
         :return: Absolute url.
-        :rtype: unicode
+        :rtype: str
         """
         return urlparse.urljoin(base_url, ensure_unicode(url))
 
@@ -156,10 +157,11 @@ def urljoin_partial(base_url):
 
 def strip_tags(html):
     """
-    Strips out html tags and return plain text.
+    Strips out HTML tags and return plain text.
 
-    :param html: HTML with text to extract.
-    :type html: bytes or unicode
+    :param str html: HTML with text to extract.
+    :returns: Html with tags striped out
+    :rtype: str
 
     :example:
         >>> strip_tags('<a href="http://example.com/">I linked to <i>example.com</i></a>')
@@ -170,45 +172,17 @@ def strip_tags(html):
     return re.sub("<[^<]+?>", "", html)
 
 
-def safe_path(path, encoding="utf8"):
-    """
-    Returns path as type ``bytes`` or ``unicode`` base on platform os.
-
-    Unicode when on windows, bytes when on linux/bsd.
-
-    This is needed because a path operation may fail on windows if path is of type ``bytes`` and it's contains
-    non ascii characters. Same if path is of type ``unicode`` on linux and locale is set to
-    'C'(ascii) instead of something like 'UTF-8'.
-
-    :type path: str or unicode
-    :param path: The path to convert.
-    :param str encoding: [opt] The encoding to use if needed.
-    :return: Returns the path as unicode or bytes base on platform os.
-    """
-    return ensure_unicode(path, encoding) if sys.platform.startswith("win") else ensure_bytes(path, encoding)
-
-
-def ensure_bytes(data, encoding="utf8"):
-    """
-    Ensures that given string is returned as type ``bytes``.
-
-    :param data: String to convert if needed.
-    :param str encoding: [opt] The encoding to use if needed..
-    :returns: The given string as type ``bytes``
-    :rtype: bytes
-    """
-    return data if isinstance(data, bytes) else unicode_type(data).encode(encoding)
-
-
 def ensure_native_str(data, encoding="utf8"):
     """
-    Ensures that given string is returned as a native ``str`` type, ``bytes`` on python2, ``unicode`` on python3.
+    Ensures that the given string is returned as a native str type, ``bytes`` on Python 2, ``unicode`` on Python 3.
 
     :param data: String to convert if needed.
     :param str encoding: [opt] The encoding to use if needed..
     :returns: The given string as a native ``str`` type.
     :rtype: str
     """
+    # This is the fastest way
+    # that I can find to do this
     if isinstance(data, str):
         return data
     elif isinstance(data, unicode_type):
@@ -223,14 +197,47 @@ def ensure_native_str(data, encoding="utf8"):
 
 def ensure_unicode(data, encoding="utf8"):
     """
-    Ensures that given string is return as type ``unicode``.
+    Ensures that the given string is return as type ``unicode``.
 
+    :type data: str or bytes
     :param data: String to convert if needed.
     :param str encoding: [opt] The encoding to use if needed..
+
     :returns: The given string as type ``unicode``.
-    :rtype: unicode
+    :rtype: str
     """
-    if isinstance(data, bytes):
-        return data.decode(encoding)
-    else:
-        return unicode_type(data)
+    return data.decode(encoding) if isinstance(data, bytes) else unicode_type(data)
+
+
+def bold(text):
+    """
+    Return Bolded text.
+
+    :param str text: Text to bold.
+    :returns: Bolded text.
+    :rtype: str
+    """
+    return "[B]%s[/B]" % text
+
+
+def italic(text):
+    """
+    Return Italic text.
+
+    :param str text: Text to italic.
+    :returns: Italic text.
+    :rtype: str
+    """
+    return "[I]%s[/I]" % text
+
+
+def color(text, color_code):
+    """
+    Return Colorized text of givin color.
+
+    :param str text: Text to italic.
+    :param str color_code: Color to change text to.
+    :returns: Colorized text.
+    :rtype: str
+    """
+    return "[COLOR %s]%s[/COLOR]" % (color_code, text)

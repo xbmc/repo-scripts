@@ -21,15 +21,15 @@ msgstr ""
 ################################
 
 msgctxt "#32001"
-msgid "[B]Youtube Channel[/B]"
+msgid "Youtube Channel"
 msgstr ""
 
 msgctxt "#32002"
-msgid "[B]Recent Videos[/B]"
+msgid "Recent Videos"
 msgstr ""
 
 msgctxt "#32003"
-msgid "[B]All Videos[/B]"
+msgid "All Videos"
 msgstr ""
 
 ######################################

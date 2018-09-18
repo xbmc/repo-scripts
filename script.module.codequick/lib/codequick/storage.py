@@ -2,7 +2,9 @@
 from __future__ import absolute_import
 
 # Standard Library Imports
+from collections import MutableMapping, MutableSequence
 from hashlib import sha1
+import time
 import sys
 import os
 
@@ -25,15 +27,17 @@ class _PersistentBase(object):
     """
     Base class to handle persistent file handling.
 
-    :param name: Filename of persistence storage file.
-    :type name: str or unicode
+    :param str name: Filename of persistence storage file.
     """
 
     def __init__(self, name):
         super(_PersistentBase, self).__init__()
+        self._version_string = "__codequick_storage_version__"
+        self._data_string = "__codequick_storage_data__"
         self._serializer_obj = object
         self._stream = None
         self._hash = None
+        self._data = None
 
         # Filename is already a fullpath
         if os.path.sep in name:
@@ -68,12 +72,14 @@ class _PersistentBase(object):
 
     def flush(self):
         """
-        Syncrnize data back to disk.
+        Synchronize data back to disk.
 
         Data will only be written to disk if content has changed.
         """
+
         # Serialize the storage data
-        content = pickle.dumps(self._serialize(), protocol=2)  # Protocol 2 is used for python2/3 compatibility
+        data = {self._version_string: 2, self._data_string: self._data}
+        content = pickle.dumps(data, protocol=2)  # Protocol 2 is used for python2/3 compatibility
         current_hash = sha1(content).hexdigest()
 
         # Compare saved hash with current hash, to detect if content has changed
@@ -91,10 +97,10 @@ class _PersistentBase(object):
             self._stream.flush()
 
     def close(self):
-        """Close file object."""
-        if self._stream:
-            self._stream.close()
-            self._stream = None
+        """Flush content to disk & close file object."""
+        self.flush()
+        self._stream.close()
+        self._stream = None
 
     def __enter__(self):
         return self
@@ -102,25 +108,45 @@ class _PersistentBase(object):
     def __exit__(self, *_):
         self.close()
 
-    def _serialize(self):  # pragma: no cover
-        pass
+    def __len__(self):
+        return len(self._data)
+
+    def __getitem__(self, index):
+        return self._data[index][0]
+
+    def __setitem__(self, index, value):
+        self._data[index] = (value, time.time())
+
+    def __delitem__(self, index):
+        del self._data[index]
+
+    def __bool__(self):
+        return bool(self._data)
+
+    def __nonzero__(self):
+        return bool(self._data)
 
 
-class PersistentDict(_PersistentBase, dict):
+class PersistentDict(_PersistentBase, MutableMapping):
     """
     Persistent storage with a :class:`dictionary<dict>` like interface.
 
-    This class inherits all methods from the build-in data type :class:`dict`.
-
-    :param name: Filename or path to storage file.
-    :type name: str or unicode
+    :param str name: Filename or path to storage file.
+    :param int ttl: [opt] The amount of time in "seconds" that a value can be stored before it expires.
 
     .. note::
 
-        ``name`` can be the filename of a file, or the full path to a file.
+        ``name`` can be a filename, or the full path to a file.
         The add-on profile directory will be the default location for files, unless a full path is given.
 
-    .. note:: This class is also designed as a context manager.
+    .. note:: If the ``ttl`` parameter is given, "any" expired data will be removed on initialization.
+
+    .. note:: This class is also designed as a "Context Manager".
+
+    .. note::
+
+        Data will only be synced to disk when connection to file is
+        "closed" or when "flush" method is explicitly called.
 
     :Example:
         >>> with PersistentDict("dictfile.pickle") as db:
@@ -128,31 +154,52 @@ class PersistentDict(_PersistentBase, dict):
         >>>     db.flush()
     """
 
-    def __init__(self, name):
+    def __iter__(self):
+        return iter(self._data)
+
+    def __repr__(self):
+        return '%s(%r)' % (self.__class__.__name__, dict(self.items()))
+
+    def __init__(self, name, ttl=None):
         super(PersistentDict, self).__init__(name)
-        current_data = self._load()
-        if current_data:
-            self.update(current_data)
+        data = self._load()
+        self._data = {}
 
-    def _serialize(self):
-        return dict(self)
+        if data:
+            version = data.get(self._version_string, 1)
+            if version == 1:
+                self._data = {key: (val, time.time()) for key, val in data.items()}
+            else:
+                data = data[self._data_string]
+                if ttl:
+                    self._data = {key: item for key, item in data.items() if time.time() - item[1] < ttl}
+                else:
+                    self._data = data
+
+    def items(self):
+        return map(lambda x: (x[0], x[1][0]), self._data.items())
 
 
-class PersistentList(_PersistentBase, list):
+class PersistentList(_PersistentBase, MutableSequence):
     """
-    Persistent storage with a :class:`list` like interface.
+    Persistent storage with a :class:`list<list>` like interface.
 
-    This class inherits all methods from the build-in data type :class:`list`.
-
-    :param name: Filename or path to storage file.
-    :type name: str or unicode
+    :param str name: Filename or path to storage file.
+    :param int ttl: [opt] The amount of time in "seconds" that a value can be stored before it expires.
 
     .. note::
 
-        ``name`` can be the filename of a file, or the full path to a file.
+        ``name`` can be a filename, or the full path to a file.
         The add-on profile directory will be the default location for files, unless a full path is given.
 
-    .. note:: This class is also designed as a context manager.
+    .. note:: If the ``ttl`` parameter is given, "any" expired data will be removed on initialization.
+
+    .. note:: This class is also designed as a "Context Manager".
+
+    .. note::
+
+        Data will only be synced to disk when connection to file is
+        "closed" or when "flush" method is explicitly called.
 
     :Example:
         >>> with PersistentList("listfile.pickle") as db:
@@ -161,11 +208,26 @@ class PersistentList(_PersistentBase, list):
         >>>     db.flush()
     """
 
-    def __init__(self, name):
-        super(PersistentList, self).__init__(name)
-        current_data = self._load()
-        if current_data:
-            self.extend(current_data)
+    def __repr__(self):
+        return '%s(%r)' % (self.__class__.__name__, [val for val, _ in self._data])
 
-    def _serialize(self):
-        return list(self)
+    def __init__(self, name, ttl=None):
+        super(PersistentList, self).__init__(name)
+        data = self._load()
+        self._data = []
+
+        if data:
+            if isinstance(data, list):
+                self._data = [(val, time.time()) for val in data]
+            else:
+                data = data[self._data_string]
+                if ttl:
+                    self._data = [item for item in data if time.time() - item[1] < ttl]
+                else:
+                    self._data = data
+
+    def insert(self, index, value):
+        self._data.insert(index, (value, time.time()))
+
+    def append(self, value):
+        self._data.append((value, time.time()))

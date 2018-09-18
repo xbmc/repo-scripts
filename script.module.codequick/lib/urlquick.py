@@ -25,6 +25,11 @@
 """
 Urlquick
 --------
+
+NOTE: This module will soon be replaced with a module that modifies requests itself, and adds support for
+the same caching system that this module uses. Now that kodi (19) will have module caching, the performance hit for
+importing requests each time the addon is loaded is considerably reduced
+
 A light-weight http client with requests like interface. Featuring persistent connections and caching support.
 This project was originally created for use by Kodi add-ons, but has grown into something more.
 I found, that while requests has a very nice interface, there was a noticeable lag when importing the library.
