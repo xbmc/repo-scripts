@@ -22,9 +22,10 @@ from threading import Lock
 import threading
 import time
 import urllib
-from clouddrive.common.utils import Utils
+import urlparse
 
 class KodiUtils:
+    HOME_WINDOW = 10000
     LOGDEBUG = 0
     LOGNOTICE = 1
     LOGWARNING = 2
@@ -45,6 +46,7 @@ class KodiUtils:
     
     @staticmethod
     def get_common_addon_path():
+        from clouddrive.common.utils import Utils
         return Utils.unicode(KodiUtils.get_addon_info("path", KodiUtils.common_addon_id))
     
     @staticmethod
@@ -59,6 +61,7 @@ class KodiUtils:
     @staticmethod
     def create_list_item(id, label):
         import xbmcgui
+        from clouddrive.common.utils import Utils
         list_item = xbmcgui.ListItem(label)
         list_item.setProperty('id', Utils.str(id))
         return list_item
@@ -95,7 +98,8 @@ class KodiUtils:
         cmd = {'jsonrpc': '2.0', 'method': method, 'id': request_id}
         if params:
             cmd['params'] = params
-        return json.loads(xbmc.executeJSONRPC(json.dumps(cmd)))
+        cmd = json.dumps(cmd)
+        return json.loads(xbmc.executeJSONRPC(cmd)) 
     
     @staticmethod
     def get_cond_visibility(cmd):
@@ -162,6 +166,7 @@ class KodiUtils:
     
     @staticmethod
     def set_addon_setting(setting_id, value, addonid=None):
+        from clouddrive.common.utils import Utils
         addon = KodiUtils.get_addon(addonid)
         setting = addon.setSetting(setting_id, Utils.str(value))
         del addon
@@ -182,6 +187,7 @@ class KodiUtils:
 
     @staticmethod
     def set_service_port(service, port, addonid=None):
+        from clouddrive.common.utils import Utils
         with KodiUtils.lock:
             KodiUtils.set_addon_setting('%s.service.port' % service, Utils.str(port), addonid)
     
@@ -191,11 +197,13 @@ class KodiUtils:
     
     @staticmethod
     def get_cache_expiration_time(addonid=None):
+        from clouddrive.common.utils import Utils
         return int(Utils.default(KodiUtils.get_addon_setting('cache-expiration-time', addonid), '5'))
     
     @staticmethod
     def log(msg, level):
         import xbmc
+        from clouddrive.common.utils import Utils
         if level == 0:
             level = xbmc.LOGDEBUG
         elif level == 1:
@@ -212,12 +220,33 @@ class KodiUtils:
         return xbmc.translatePath(path)
     
     @staticmethod
-    def to_timestamp(s):
+    def to_kodi_item_date_str(dt):
+        s = None
+        if dt:
+            s = '%02d.%02d.%04d' % (dt.day, dt.month, dt.year,)
+        return s
+    
+    @staticmethod
+    def to_db_date_str(dt):
+        s = None
+        if dt:
+            s = '%04d-%02d-%02d %02d:%02d:%02d' % (dt.year, dt.month, dt.day, dt.hour, dt.minute, dt.second)
+        return s
+    
+    @staticmethod
+    def to_datetime(s):
         import dateutil.parser
         try:
-            return int(time.mktime(dateutil.parser.parse(s).timetuple()))
+            return dateutil.parser.parse(s)
         except:
             return None
+        
+    @staticmethod
+    def to_timestamp(s):
+        dt = KodiUtils.to_datetime(s)
+        if dt:
+            dt = int(time.mktime(dt.timetuple()))
+        return dt
     
     @staticmethod
     def file(f, opts):
@@ -250,6 +279,89 @@ class KodiUtils:
         return xbmcvfs.rmdir(f, force)
     
     @staticmethod
+    def read_content_file(file_path):
+        content = None
+        f = None
+        try:
+            f = KodiUtils.file(file_path, 'r')
+            content = f.read()
+        finally:
+            if f:
+                f.close()
+        return content
+
+    @staticmethod
     def kodi_player_class():
         import xbmc
         return xbmc.Player
+    
+    @staticmethod
+    def get_info_label(label):
+        import xbmc
+        return xbmc.getInfoLabel(label)
+    
+    @staticmethod
+    def get_current_library_info():
+        dbtype = KodiUtils.get_info_label('ListItem.DBTYPE')
+        dbid = KodiUtils.get_info_label('ListItem.DBID')
+        path = KodiUtils.get_info_label('ListItem.FileNameAndPath')
+        if path:
+            return {'type': dbtype, 'id': dbid, 'path': path}
+    
+    @staticmethod
+    def find_video_in_library(itemtype, item_id, filename):
+        KodiUtils.log('find_video_in_library - %s - %s - %s' % (itemtype, item_id, filename), KodiUtils.LOGDEBUG)
+        db = itemtype + 's'
+        params = {'properties':['file'], 'filter': {"field": "filename", "operator": "contains", "value": filename}}
+        response = KodiUtils.execute_json_rpc('videolibrary.get' + db, params)
+        if response['result']['limits']['total'] > 0:
+            collection = response['result'][db]
+            for video in collection:
+                path = video['file']
+                content = KodiUtils.read_content_file(path)
+                if content:
+                    params = urlparse.parse_qs(urlparse.urlparse(content).query)
+                    if 'item_id' in params:
+                        if params['item_id'][0] == item_id:
+                            KodiUtils.log('FOUND!', KodiUtils.LOGDEBUG)
+                            return {'type': itemtype, 'id': video[itemtype+'id'], 'path': path}
+
+    @staticmethod
+    def find_exported_video_in_library(item_id, filename):
+        info = KodiUtils.find_video_in_library('episode', item_id, filename)
+        if not info:
+            info = KodiUtils.find_video_in_library('movie', item_id, filename)
+        return info
+    
+    @staticmethod
+    def get_video_details(itemtype, dbid):
+        params = {'properties':['resume','playcount'], itemtype + 'id': int(dbid)}
+        key = itemtype + 'details'
+        response = KodiUtils.execute_json_rpc('videolibrary.get' + key, params)
+        if 'result' in response and key in response['result']:
+            return response['result'][key]
+    
+    @staticmethod
+    def save_video_details(itemtype, dbid, details):
+        details[itemtype + 'id'] = int(dbid)
+        key = itemtype + 'details'
+        return KodiUtils.execute_json_rpc('videolibrary.set' + key, details)
+    
+    @staticmethod
+    def get_home_property(key):
+        win = KodiUtils.get_window(KodiUtils.HOME_WINDOW)
+        value = win.getProperty(key)
+        del win
+        return value
+    
+    @staticmethod
+    def set_home_property(key, value):
+        win = KodiUtils.get_window(KodiUtils.HOME_WINDOW)
+        win.setProperty(key, value)
+        del win
+    
+    @staticmethod
+    def clear_home_property(key):
+        win = KodiUtils.get_window(KodiUtils.HOME_WINDOW)
+        win.clearProperty(key)
+        del win

@@ -225,7 +225,7 @@ msgid "Recent"
 msgstr ""
 
 msgctxt "#32054"
-msgid "-unused- Documents"
+msgid "Resume from %s"
 msgstr ""
 
 msgctxt "#32055"
