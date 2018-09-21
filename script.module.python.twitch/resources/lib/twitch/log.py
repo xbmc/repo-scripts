@@ -23,6 +23,7 @@ def _mask(message):
     masked_message = re.sub(r'(USER-IP=[\'"])[^\'"]+', r'\1' + mask, masked_message)
     masked_message = re.sub(r'(["\']client_secret["\']:\s*[\'"])[^\'"]+', r'\1' + mask, masked_message)
     masked_message = re.sub(r'(client_secret=).+?(&|$|\|)', r'\1' + mask + r'\2', masked_message)
+    masked_message = re.sub(r'(\\*"user_ip\\*":\\*").+?(\\*")', r'\1' + mask + r'\2', masked_message)
     return masked_message
 
 

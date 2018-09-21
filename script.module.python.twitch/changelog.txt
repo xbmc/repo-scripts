@@ -1,3 +1,6 @@
+2.0.3
+[chg] redact user ip from token logging
+
 2.0.2
 [fix] Python 3 compat.
 [add] fast_bread param to usher
