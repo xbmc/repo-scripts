@@ -43,6 +43,7 @@ from clouddrive.common.utils import Utils
 import xbmcgui
 import xbmcplugin
 import xbmcvfs
+from datetime import timedelta, datetime
 
 
 class CloudDriveAddon(RemoteProcessCallable):
@@ -95,6 +96,7 @@ class CloudDriveAddon(RemoteProcessCallable):
         self._system_monitor = KodiUtils.get_system_monitor()
         self._account_manager = AccountManager(self._profile_path)
         self._pin_dialog = None
+        self.iskrypton = KodiUtils.get_home_property('iskrypton') == 'true'
         
         if len(sys.argv) > 1:
             self._addon_handle = int(sys.argv[1])
@@ -477,10 +479,10 @@ class CloudDriveAddon(RemoteProcessCallable):
             if 'extra_params' in item:
                 params.update(item['extra_params'])
             context_options = []
+            info = {'size': item['size'], 'date': KodiUtils.to_kodi_item_date_str(KodiUtils.to_datetime(Utils.get_safe_value(item, 'last_modified_date')))}
             if is_folder:
                 params['action'] = '_list_folder'
                 url = self._addon_url + '?' + urllib.urlencode(params)
-                
                 params['action'] = '_search'
                 cmd = 'ActivateWindow(%d,%s?%s)' % (xbmcgui.getCurrentWindowId(), self._addon_url, urllib.urlencode(params))
                 context_options.append((self._common_addon.getLocalizedString(32039), cmd))
@@ -496,13 +498,13 @@ class CloudDriveAddon(RemoteProcessCallable):
                 list_item.setProperty('IsPlayable', 'true')
                 params['action'] = 'play'
                 url = self._addon_url + '?' + urllib.urlencode(params)
-                info = {'size': item['size'], 'date': KodiUtils.to_timestamp(Utils.get_safe_value(item, 'last_modified_date'))}
+                info_type = self._content_type
                 if 'audio' in item:
                     info.update(item['audio'])
-                    list_item.setInfo('music', info)
+                    info_type = 'music'
                 elif 'video' in item:
                     list_item.addStreamInfo('video', item['video'])
-                    list_item.setInfo('video', info)
+                list_item.setInfo(info_type, info)
                 if 'thumbnail' in item:
                     list_item.setArt({'icon': item['thumbnail'], 'thumb': item['thumbnail']})
             elif ('image' in item or item_name_extension in self._image_file_extensions) and self._content_type == 'image' and item_name_extension != 'mp4':
@@ -511,7 +513,8 @@ class CloudDriveAddon(RemoteProcessCallable):
                 else:
                     url = DownloadServiceUtil.build_download_url(driveid, item_driveid, item_id, urllib.quote(Utils.str(item_name)))
                 if 'image' in item:
-                    list_item.setInfo('pictures', item['image'])
+                    info.update(item['image'])
+                list_item.setInfo('pictures', info)
                 if 'thumbnail' in item and item['thumbnail']:
                     list_item.setArt({'icon': item['thumbnail'], 'thumb': item['thumbnail']})
             if url:
@@ -603,6 +606,41 @@ class CloudDriveAddon(RemoteProcessCallable):
         item = self.get_provider().get_item(item_driveid, item_id, find_subtitles=find_subtitles)
         file_name = Utils.unicode(item['name'])
         list_item = xbmcgui.ListItem(file_name)
+        succeeded = True
+        info = KodiUtils.get_current_library_info()
+        if not info:
+            info = KodiUtils.find_exported_video_in_library(item_id, file_name + ExportManager._strm_extension)
+        if info and info['id']:
+            Logger.debug('library info: %s' % Utils.str(info))
+            KodiUtils.set_home_property('dbid', Utils.str(info['id']))
+            KodiUtils.set_home_property('dbtype', info['type'])
+            KodiUtils.set_home_property('addonid', self._addonid)
+            details = KodiUtils.get_video_details(info['type'], info['id'])
+            Logger.debug('library details: %s' % Utils.str(details))
+            if details and 'resume' in details:
+                KodiUtils.set_home_property('playcount', Utils.str(details['playcount']))
+                resume = details['resume']
+                if resume['position'] > 0:
+                    play_resume = False
+                    if self.iskrypton:
+                        play_resume = KodiUtils.get_addon_setting('resume_playing') == 'true'
+                    elif KodiUtils.get_addon_setting('ask_resume') == 'true':
+                        d = datetime(1,1,1) + timedelta(seconds=resume['position'])
+                        t = '%02d:%02d:%02d' % (d.hour, d.minute, d.second)
+                        Logger.debug(t)
+                        option = self._dialog.contextmenu([KodiUtils.localize(32054, addon=self._common_addon) % t, KodiUtils.localize(12021)])
+                        Logger.debug('selected option: %d' % option)
+                        if option == -1:
+                            succeeded = False
+                        elif option == 0:
+                            play_resume = True
+                    if play_resume:
+                        list_item.setProperty('resumetime', Utils.str(resume['position']))
+                        list_item.setProperty('startoffset', Utils.str(resume['position']))
+                        list_item.setProperty('totaltime', Utils.str(resume['total']))
+        else:
+            from clouddrive.common.service.player import KodiPlayer
+            KodiPlayer.cleanup()
         if 'audio' in item:
             list_item.setInfo('music', item['audio'])
         elif 'video' in item:
@@ -616,7 +654,7 @@ class CloudDriveAddon(RemoteProcessCallable):
                 subtitles.append(DownloadServiceUtil.build_download_url(driveid, Utils.default(Utils.get_safe_value(subtitle, 'drive_id'), driveid), subtitle['id'], urllib.quote(Utils.str(subtitle['name']))))
             list_item.setSubtitles(subtitles)
         if not self.cancel_operation():
-            xbmcplugin.setResolvedUrl(self._addon_handle, True, list_item)
+            xbmcplugin.setResolvedUrl(self._addon_handle, succeeded, list_item)
     
     def _handle_exception(self, ex, show_error_dialog = True):
         stacktrace = ExceptionUtils.full_stacktrace(ex)

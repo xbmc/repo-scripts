@@ -81,20 +81,11 @@ class ExportManager(object):
     @staticmethod
     def add_item_info(items_info, item_id, name, full_local_path, parent):
         items_info[item_id] = {'name': name, 'full_local_path': full_local_path, 'parent': parent}
-        #if parent:
-        #    parents = Utils.get_safe_value(items_info, 'parents', [])
-        #    parents.append(parent)
-        #    items_info['parents'] = parents
     
     @staticmethod
     def remove_item_info(items_info, item_id):
         if item_id in items_info:
-            #item_info = items_info[item_id]
             del items_info[item_id]
-            #parent = Utils.get_safe_value(item_info, 'parent')
-            #parents = Utils.get_safe_value(items_info, 'parents')
-            #if parent and parents and parent in parents:
-            #    parents.remove(parent)
     
     @staticmethod
     def create_strm(driveid, item, file_path, content_type, addon_url):

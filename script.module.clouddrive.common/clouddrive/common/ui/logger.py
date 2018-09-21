@@ -17,21 +17,23 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #-------------------------------------------------------------------------------
 
-from clouddrive.common.ui.utils import KodiUtils
-
 class Logger:
     @staticmethod
     def debug(msg):
+        from clouddrive.common.ui.utils import KodiUtils
         KodiUtils.log(msg, KodiUtils.LOGDEBUG)
     
     @staticmethod
     def notice(msg):
+        from clouddrive.common.ui.utils import KodiUtils
         KodiUtils.log(msg, KodiUtils.LOGNOTICE)
     
     @staticmethod
     def warning(msg):
+        from clouddrive.common.ui.utils import KodiUtils
         KodiUtils.log(msg, KodiUtils.LOGWARNING)
         
     @staticmethod
     def error(msg):
+        from clouddrive.common.ui.utils import KodiUtils
         KodiUtils.log(msg, KodiUtils.LOGERROR)
