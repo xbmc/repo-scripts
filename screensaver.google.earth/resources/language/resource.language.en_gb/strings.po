@@ -17,7 +17,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 msgctxt "#32001"
-msgid "Update Images"
+msgid "Something went wrong, Try again later ..."
 msgstr ""
 
 msgctxt "#32002"
@@ -30,12 +30,4 @@ msgstr ""
 
 msgctxt "#32004"
 msgid "Display Time & Weather"
-msgstr ""
-
-msgctxt "#32005"
-msgid "Updating Images..."
-msgstr ""
-
-msgctxt "#32006"
-msgid "Update Complete"
 msgstr ""
