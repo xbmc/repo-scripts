@@ -5,85 +5,92 @@
         <posx>0</posx>
         <posy>0</posy>
     </coordinates>
-    <onload>SetFocus(101)</onload>
-    <animation effect="fade" time="250">WindowOpen</animation>
-    <animation effect="fade" time="50">WindowClose</animation>
+    <animation effect="fade" start="0" end="100" time="250">WindowOpen</animation>
+    <animation effect="fade" start="100" end="0" time="250">WindowClose</animation>
     <controls>
         <control type="image">
             <posx>0</posx>
             <posy>0</posy>
             <width>1920</width> 
-            <height>1080</height> 
+            <height>1080</height>
             <texture>black.png</texture>
+            <aspectratio scalediffuse="false">stretch</aspectratio>
         </control>
-        <control type="panel" id="101">
+        <control type="image" id="30000">
             <posx>0</posx> 
             <posy>0</posy> 
             <width>1920</width> 
             <height>1080</height> 
-            <scrolltime tween="sine" easing="out">200</scrolltime>
-            <autoscroll>true</autoscroll>
-            <include>contentpanelslide</include>
-            <itemlayout height="1080" width="1920">
-                <control type="image">
-                    <posx>0</posx> 
-                    <posy>0</posy> 
-                </control>
-            </itemlayout>
-            <focusedlayout height="1080" width="1920">
-                <control type="image">
-                    <posx>0</posx> 
-                    <posy>0</posy> 
-                    <width>1920</width> 
-                    <height>1080</height> 
-                    <aspectratio scalediffuse="false">scale</aspectratio>
-                    <animation effect="zoom" start="110" end="130" center="auto" time="25000" tween="cubic" easing="inout" condition="String.IsEqual(Window.Property(earth_animation),okay)" pulse="true">Conditional</animation>
-                    <animation effect="slide" start="-10,-10" end="20,20" time="9000" tween="cubic" easing="inout" condition="String.IsEqual(Window.Property(earth_animation),okay)" pulse="true">Conditional</animation>
-                    <info>ListItem.Thumb</info>
-                </control>
-                <control type="image">
-                    <posx>0</posx>
-                    <posy>250</posy>
-                    <width>1920</width> 
-                    <height>1080</height> 
-                    <texture>overlayfade.png</texture>
-                </control>
-                <control type="image">
-                    <posx>-800</posx>
-                    <posy>950</posy>
-                    <width>1920</width> 
-                    <height>50</height> 
-                    <align>left</align>
-                    <texture>logo.png</texture>
-                    <aspectratio scalediffuse="false">keep</aspectratio>
-                    <animation effect="fade" start="55" end="0" time="15000" condition="True">Conditional</animation>
-                </control>
-                <control type="label">
-                    <posx>105</posx>
-                    <posy>1000</posy>
-                    <align>left</align>
-                    <width>auto</width>
-                    <height>25</height>
-                    <font>font10</font>
-                    <textcolor>ffffffff</textcolor>
-                    <shadowcolor>ff000000</shadowcolor>
-                    <info>ListItem.Label</info>
-                    <animation effect="fade" start="100" end="0" time="15000" condition="True">Conditional</animation>
-                </control>
-            </focusedlayout>
+            <aspectratio scalediffuse="false">scale</aspectratio>
+            <animation effect="fade" time="1000">VisibleChange</animation>
+            <animation effect="zoom" start="110" end="130" center="auto" time="25000" tween="cubic" easing="inout" condition="String.isEqual(Window.Property(earth_animation),okay)" pulse="true">Conditional</animation>
+            <animation effect="slide" start="-10,-10" end="20,20" time="9000" tween="cubic" easing="inout" condition="String.isEqual(Window.Property(earth_animation),okay)" pulse="true">Conditional</animation>
         </control>
-        <control type="label" id="102">
+        <control type="image" id="30100">
+            <posx>0</posx> 
+            <posy>0</posy> 
+            <width>1920</width> 
+            <height>1080</height> 
+            <aspectratio scalediffuse="false">scale</aspectratio>
+            <animation effect="fade" time="1000">VisibleChange</animation>
+            <animation effect="zoom" start="110" end="130" center="auto" time="25000" tween="cubic" easing="inout" condition="String.isEqual(Window.Property(earth_animation),okay)" pulse="true">Conditional</animation>
+            <animation effect="slide" start="-10,-10" end="20,20" time="9000" tween="cubic" easing="inout" condition="String.isEqual(Window.Property(earth_animation),okay)" pulse="true">Conditional</animation>
+        </control>
+        <control type="image" id="30003">
+            <posx>0</posx>
+            <posy>250</posy>
+            <width>1920</width> 
+            <height>1080</height> 
+            <texture>overlayfade.png</texture>
+            <visible>[Control.IsVisible(30000) | Control.IsVisible(30100)]</visible>
+        </control>
+        <control type="image">
+            <posx>-800</posx>
+            <posy>950</posy>
+            <width>1920</width> 
+            <height>50</height> 
+            <align>left</align>
+            <texture>logo.png</texture>
+            <aspectratio scalediffuse="false">keep</aspectratio>
+            <animation effect="fade" start="15" end="15" condition="True">Conditional</animation>
+            <visible>[Control.IsVisible(30000) | Control.IsVisible(30100)]</visible>
+        </control>
+        <control type="label" id="30001">
+            <posx>105</posx>
+            <posy>1000</posy>
+            <align>left</align>
+            <width>auto</width>
+            <height>25</height>
+            <font>font10</font>
+            <textcolor>ffffffff</textcolor>
+            <shadowcolor>ff000000</shadowcolor>
+            <animation effect="fade" start="25" end="25" condition="True">Conditional</animation>
+            <visible>Control.IsVisible(30000)</visible>
+        </control>
+        <control type="label" id="30101">
+            <posx>105</posx>
+            <posy>1000</posy>
+            <align>left</align>
+            <width>auto</width>
+            <height>25</height>
+            <font>font10</font>
+            <textcolor>ffffffff</textcolor>
+            <shadowcolor>ff000000</shadowcolor>
+            <animation effect="fade" start="25" end="25" condition="True">Conditional</animation>
+            <visible>Control.IsVisible(30100)</visible>
+        </control>
+        <control type="label" id="30002">
             <posx>1540</posx>
             <posy>850</posy>
             <description>Time</description>
             <align>left</align>
             <font>font_clock</font>
+            <shadowcolor>text_shadow</shadowcolor>
             <height>80</height>
             <width>auto</width>
-            <shadowcolor>ff000000</shadowcolor>
             <label>[B]$INFO[System.Time][/B]</label>
             <animation effect="fade" start="15" end="15" condition="True">Conditional</animation>
-            <visible>String.IsEqual(Window.Property(earth_time),okay) + [Control.IsVisible(101)]</visible>
+            <visible>String.isEqual(Window.Property(earth_time),okay) + [Control.IsVisible(30000)|Control.IsVisible(30100)]</visible>
         </control>
         <control type="label">
             <posx>1755</posx>
@@ -91,12 +98,12 @@
             <description>Time</description>
             <align>left</align>
             <font>font10</font>
+            <shadowcolor>text_shadow</shadowcolor>
             <height>200</height>
             <width>auto</width>
-            <shadowcolor>ff000000</shadowcolor>
             <label>$INFO[Weather.Temperature]</label>
             <animation effect="fade" start="25" end="25" condition="True">Conditional</animation>
-            <visible>[Weather.IsFetched + Control.IsVisible(102)]</visible>
+            <visible>[Weather.IsFetched + Control.IsVisible(30002)]</visible>
         </control>
     </controls>
 </window>
