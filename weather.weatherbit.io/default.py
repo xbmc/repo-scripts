@@ -331,7 +331,7 @@ def daily_props(data):
             set_property('Daily.%i.Visibility'    % (count+1), str(item['vis'] * 0.621371) + ' mi')
         else:
             set_property('Daily.%i.Pressure'      % (count+1), str(item['pres']) + ' mb')
-            set_property('Daily.%i.SeaLevel'      % (count+1), str(round(item['slp'])) + ' mm')
+            set_property('Daily.%i.SeaLevel'      % (count+1), str(round(item['slp'])) + ' mb')
             set_property('Daily.%i.Snow'          % (count+1), str(round(item['snow'])) + ' mm')
             set_property('Daily.%i.SnowDepth'     % (count+1), str(round(item['snow_depth'])) + ' mm')
             set_property('Daily.%i.Precipitation' % (count+1), str(round(item['precip'])) + ' mm')
@@ -383,7 +383,7 @@ def hourly_props(data):
             set_property('Hourly.%i.Visibility'    % (count+1), str(item['vis'] * 0.621371) + ' mi')
         else:
             set_property('Hourly.%i.Pressure'      % (count+1), str(item['pres']) + ' mb')
-            set_property('Hourly.%i.SeaLevel'      % (count+1), str(round(item['slp'])) + ' mm')
+            set_property('Hourly.%i.SeaLevel'      % (count+1), str(round(item['slp'])) + ' mb')
             set_property('Hourly.%i.Snow'          % (count+1), str(round(item['snow'])) + ' mm')
             set_property('Hourly.%i.SnowDepth'     % (count+1), str(round(item['snow_depth'])) + ' mm')
             set_property('Hourly.%i.Precipitation' % (count+1), str(round(item['precip'])) + ' mm')
