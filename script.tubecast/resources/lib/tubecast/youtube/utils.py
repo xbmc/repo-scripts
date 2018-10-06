@@ -8,10 +8,17 @@ def case(identifier, cmd):
 
 
 def parse_cmd(cmd):
-    cmd = re.compile('(\d+),\[".+?",(.+?)\]').findall(cmd)
+    cmd = re.compile('(\d+),\[".+?",(.*)\]\]').findall(cmd)
     if cmd:
         code = cmd[0][0]
-        cmd = ast.literal_eval("{}".format(cmd[0][1].replace('"{', '{').replace('}"', '}').replace('\\"', '"')))
+        cmd = ast.literal_eval(
+            "{}".format(
+                cmd[0][1]
+                .replace('"{', '{')
+                .replace('}"', '}')
+                .replace('\\"', '"')
+                )
+            )
         return int(code), cmd
     else:
         raise ValueError('Unable to parse CMD')

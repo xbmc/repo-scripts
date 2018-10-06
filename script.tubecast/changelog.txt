@@ -1,3 +1,7 @@
+v1.0.7 (6/10/2018)
+-Improve regex for received codes
+-Fix playlist playback
+
 v1.0.6  (25/5/2018)
 - Avoid player restarting. Track received codes.
 
