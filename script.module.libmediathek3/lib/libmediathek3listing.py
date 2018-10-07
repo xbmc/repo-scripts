@@ -30,7 +30,10 @@ def addEntries(l):
 			continue
 		doneList.append(str(d))
 		
-		u = _buildUri(d)
+		if '_overridepath' in d:
+			u = d['_overridepath']
+		else:
+			u = _buildUri(d)
 		newd = {}
 		for key in d:
 			if key.startswith('_'):
@@ -70,9 +73,9 @@ def addEntries(l):
 		if 'epoch' in d: 
 			ilabels['aired'] = time.strftime("%Y-%m-%d", time.gmtime(float(d['epoch'])))
 		if 'episode' in d: 
-			ilabels['Episode'] = d['episode']
-		if 'Season' in d: 
-			ilabels['Season'] = d['season']
+			ilabels['episode'] = d['episode']
+		if 'season' in d: 
+			ilabels['season'] = d['season']
 		if 'tvshowtitle' in d: 
 			ilabels['tvshowtitle'] = d['tvshowtitle']
 			ilabels['tagline'] = d['tvshowtitle']
@@ -88,11 +91,13 @@ def addEntries(l):
 				ilabels['mediatype'] = 'episode'
 			else:
 				ilabels['mediatype'] = 'video'
-		
+				
 		ok=True
 		liz=xbmcgui.ListItem(clearString(d.get('name','')))
-			
-		liz.setInfo( type="Video", infoLabels=ilabels)
+		if d['type'] == 'audio':
+			liz.setInfo( type="music", infoLabels=ilabels)
+		else:
+			liz.setInfo( type="Video", infoLabels=ilabels)
 		liz.addStreamInfo('subtitle', {'language': 'deu'})
 		art = {}
 		art['thumb'] = d.get('thumb')
@@ -102,7 +107,11 @@ def addEntries(l):
 		art['icon'] = d.get('channelLogo','')
 		liz.setArt(art)
 		
-		if d.get('type',None) == 'video' or d.get('type',None) == 'live' or d.get('type',None) == 'date' or d.get('type',None) == 'clip' or d.get('type',None) == 'episode':
+		if 'customprops' in d:
+			for prop in d['customprops']:
+				liz.setProperty(prop, d['customprops'][prop])
+				
+		if d.get('type',None) == 'video' or d.get('type',None) == 'live' or d.get('type',None) == 'date' or d.get('type',None) == 'clip' or d.get('type',None) == 'episode' or d.get('type',None) == 'audio':
 			#xbmcplugin.setContent( handle=int( sys.argv[ 1 ] ), content="episodes" )
 			liz.setProperty('IsPlayable', 'true')
 			lists.append([u,liz,False])

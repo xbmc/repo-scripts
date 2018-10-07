@@ -10,6 +10,8 @@ import re
 import sys
 from StringIO import StringIO
 import gzip
+import cookielib
+import pickle
 temp = xbmc.translatePath(xbmcaddon.Addon().getAddonInfo('profile')+'temp').decode('utf-8')
 dict = xbmc.translatePath(xbmcaddon.Addon().getAddonInfo('profile')+'dict.py').decode('utf-8')
 
@@ -27,22 +29,18 @@ def log(msg):
 def getTranslation(id,addonid='script.module.libmediathek3'):
 	return xbmcaddon.Addon(id=addonid).getLocalizedString(id)
 	
-def getUrl(url,headers=False,post=False):
+def getUrl(url,headers=False,post=False,cookies=False):
 	log(url)
-	return _request(url,headers,post)
+	return _request(url,headers,post,cookies)
 	try:
-		return _request(url,headers,post)
+		return _request(url,headers,post,cookies)
 	except:#fast retry hack
-		return _request(url,headers,post)
-def _request(url,headers,post):
+		return _request(url,headers,post,cookies)
+def _request(url,headers,post,cookies):
 	log(url)
 	if post:
-		#log(urllib.urlencode(post))
-		#log(urllib.quote(post))
-		#log(post)
-		#req = urllib2.Request(url,urllib.urlencode(post))
-		#req = urllib2.Request(url,urllib.quote(post))
 		req = urllib2.Request(url,post)
+		log('########POST!')
 	else:
 		req = urllib2.Request(url)
 	if headers:
@@ -53,7 +51,41 @@ def _request(url,headers,post):
 	else:
 		req.add_header('User-Agent', 'Mozilla/5.0 (Windows NT 6.1; rv:25.0) Gecko/20100101 Firefox/25.0')
 		req.add_header('Accept-Encoding','gzip, deflate')
-	response = urllib2.urlopen(req)
+		
+		
+		
+		
+		
+	if cookies:
+		cj = cookielib.CookieJar()
+		log(pathUserdata(''))
+		log(pathUserdata('cookies.txt'))
+		if not f_exists(pathUserdata('')):
+			f_mkdir(pathUserdata(''))
+		if f_exists(pathUserdata('cookies.txt')):
+			c = pickle.loads(f_open(pathUserdata('cookies.txt')))
+			for cookie in c:
+				cj.set_cookie(cookie)
+		opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cj))
+		#response = urllib2.urlopen(req)
+		response = opener.open(req)
+		
+		c = []
+		for cookie in cj:
+			log(str(cookie))
+			c.append(cookie)
+		log(str(cj))
+			
+		f_write(pathUserdata('cookies.txt'),pickle.dumps(c))
+		#cj.save(cookiefile)
+	else:
+		response = urllib2.urlopen(req)
+		
+		
+		
+		
+		
+	#response = urllib2.urlopen(req)
 	compressed = response.info().get('Content-Encoding') == 'gzip'
 	link = response.read()
 	response.close()
