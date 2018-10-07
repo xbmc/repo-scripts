@@ -22,43 +22,43 @@ msgstr ""
 
 msgctxt "#32002"
 msgid "Video Type"
-msgstr ""
+msgstr "Tipo de vídeo"
 
 msgctxt "#32003"
 msgid "Video File"
-msgstr ""
+msgstr "Archivo de vídeo"
 
 msgctxt "#32004"
 msgid "Video Folder"
-msgstr ""
+msgstr "Carpeta de vídeo"
 
 msgctxt "#32005"
 msgid "Video Limit"
-msgstr ""
+msgstr "Limite de vídeo"
 
 msgctxt "#32006"
 msgid "Randomize"
-msgstr ""
+msgstr "Modo aleatorio"
 
 msgctxt "#32007"
 msgid "Disable Trakt"
-msgstr ""
+msgstr "Deshabilitar Trakt"
 
 msgctxt "#32008"
 msgid "Ignore Keypress (Stop to end)."
-msgstr ""
+msgstr "Ignorar pulsación de teclas (Detener para finalizar)"
 
 msgctxt "#32009"
 msgid "Single Video"
-msgstr ""
+msgstr "Un solo vídeo"
 
 msgctxt "#32010"
 msgid "Multiple Videos"
-msgstr ""
+msgstr "Multiples vídeos"
 
-msgctxt "#32011"
+msgctxt "#30011"
 msgid "Mute ScreenSaver"
-msgstr ""
+msgstr "Mute ScreenSaver"
 
 msgctxt "#32012"
 msgid "Enable Debugging [Log errors]"
@@ -66,4 +66,4 @@ msgstr ""
 
 msgctxt "#32013"
 msgid "Building Playlist"
-msgstr ""
+msgstr "Building Playlist"
