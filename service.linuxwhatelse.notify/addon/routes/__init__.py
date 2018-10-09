@@ -1,2 +1,2 @@
-from addon.routes import notification
-from addon.routes import call
+from addon.routes import call  # noqa:F401
+from addon.routes import notification  # noqa:F401

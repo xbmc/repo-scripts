@@ -3,11 +3,12 @@ import json
 import xbmc
 import xbmcaddon
 
-
 addon = xbmcaddon.Addon()
+
 
 def translate(id):
     return addon.getLocalizedString(id)
+
 
 def log(*args, **kwargs):
     if not kwargs or 'lvl' not in kwargs:
@@ -16,16 +17,17 @@ def log(*args, **kwargs):
     else:
         lvl = kwargs['lvl']
 
-    msg = '[%s] ' % addon.getAddonInfo('name')
+    msg = '[%s] ' % addon.getAddonInfo('id')
     msg += ' '.join(str(x) for x in args)
 
     xbmc.log(msg, level=lvl)
 
+
 def execute_jsonrpc(method, params=None):
     data = {}
-    data['id']         = 1
-    data['jsonrpc']    = '2.0'
-    data['method']     = method
+    data['id'] = 1
+    data['jsonrpc'] = '2.0'
+    data['method'] = method
     if params:
         data['params'] = params
 

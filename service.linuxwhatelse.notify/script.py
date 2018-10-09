@@ -1,15 +1,13 @@
 import os
-import socket
-
-import xbmc
 
 import pyqrcode
-
-from addon import cache_dir
-from addon import addon
-from addon import utils
+import xbmc
+import xbmcaddon
+from addon import CACHE_DIR, utils
 
 if __name__ == '__main__':
+    addon = xbmcaddon.Addon()
+
     host = xbmc.getIPAddress()
     port = addon.getSetting('server.port')
 
@@ -17,7 +15,7 @@ if __name__ == '__main__':
     username = addon.getSetting('server.username')
     password = addon.getSetting('server.password')
 
-    tmp_file = os.path.join(cache_dir, 'qr-code.png')
+    tmp_file = os.path.join(CACHE_DIR, 'qr-code.png')
 
     qr_string = host + ':' + port
 
@@ -27,4 +25,4 @@ if __name__ == '__main__':
     qr = pyqrcode.create(qr_string)
     qr.png(tmp_file, scale=30)
 
-    utils.execute_jsonrpc('Player.Open', {'item' : {'file' : tmp_file}})
+    utils.execute_jsonrpc('Player.Open', {'item': {'file': tmp_file}})

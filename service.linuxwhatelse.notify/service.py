@@ -1,24 +1,28 @@
-import os
+import BaseHTTPServer
 import json
+import socket
 import threading
 import xmlrpclib
-
-import BaseHTTPServer
 from SocketServer import ThreadingMixIn
 
+import mapper
 import xbmc
-import xbmcgui
-
-from addon import addon
-from addon import mpr
-
+import xbmcaddon
 from addon import utils
-from addon import routes
+
+MPR = mapper.Mapper.get('notify')
 
 
 class Handler(BaseHTTPServer.BaseHTTPRequestHandler):
     @property
     def is_authorized(self):
+        try:
+            addon = xbmcaddon.Addon()
+        except RuntimeError:
+            # When the addon gets disabled and the dummy request get sent,
+            # this will happen
+            return False
+
         is_auth_enabled = addon.getSetting('server.auth_enabled')
 
         if is_auth_enabled == 'false':
@@ -26,7 +30,6 @@ class Handler(BaseHTTPServer.BaseHTTPRequestHandler):
 
         username = addon.getSetting('server.username')
         password = addon.getSetting('server.password')
-
 
         if 'Authorization' in self.headers:
             auth = self.headers['Authorization'].split()[1].decode('base64')
@@ -47,10 +50,13 @@ class Handler(BaseHTTPServer.BaseHTTPRequestHandler):
 
         content_length = int(self.headers['Content-Length'])
         data = self.rfile.read(content_length)
-        if data:
-            data = json.loads(data)
 
-        resp = mpr.call(url=self.path, args={'data' : data})
+        try:
+            data = json.loads(data)
+        except ValueError:
+            data = {}
+
+        resp = MPR.call(url=self.path, args={'data': data})
 
         if resp:
             self.send_response(200)
@@ -61,9 +67,9 @@ class Handler(BaseHTTPServer.BaseHTTPRequestHandler):
         self.end_headers()
 
     def log_message(self, format, *args):
-        utils.log("%s - - [%s] %s\n" % (self.address_string(),
-                                        self.log_date_time_string(),
-                                        format%args))
+        utils.log("{} - - [{}] {}\n".format(self.address_string(),
+                                            self.log_date_time_string(),
+                                            format % args))
 
 
 class ThreadedHTTPServer(ThreadingMixIn, BaseHTTPServer.HTTPServer):
@@ -97,21 +103,23 @@ class ThreadedHTTPServer(ThreadingMixIn, BaseHTTPServer.HTTPServer):
 
         utils.log('Exit flag was set')
         try:
-            addr = 'http://%s:%i' % (self.server_address[0],
-                                     self.server_address[1])
+            addr = 'http://{}:{}'.format(self.server_address[0],
+                                         self.server_address[1])
 
             utils.log('Sending dummy request to:', addr)
             xmlrpclib.Server(addr).ping()
-        except:
+        except Exception:
             pass
 
         utils.log('Shutdown complete')
 
 
 if __name__ == '__main__':
+    addon = xbmcaddon.Addon()
     port = int(addon.getSetting('server.port'))
 
     server = ThreadedHTTPServer(('0.0.0.0', port), Handler)
+    server.socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
     server.serve_forever()
 
     monitor = xbmc.Monitor()

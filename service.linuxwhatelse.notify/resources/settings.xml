@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <settings>
-    <setting id="saved_volume" type="number"/>
-
-
 
     <category label="30000">
+
         <setting label="30021"    type="lsep" />
         <setting label="30022"    id="notification.play_sound"    type="bool"    subsetting="true"    default="true" />
 
@@ -21,6 +19,8 @@
         <setting label="30016"    id="video.play_after"      type="bool"      subsetting="true"    visible="eq(-2,2)"    default="true" />
         <setting label="30017"    id="video.volume"          type="slider"    subsetting="true"    visible="eq(-3,3)"    option="int"    range="5,5,100"    default="15" />
         <setting label="30018"    id="video.reset_volume"    type="bool"      subsetting="true"    visible="eq(-4,3)"    default="true" />
+
+        <setting id="saved_volume" type="number" visible="false"/>
     </category>
 
     <category label="30001">

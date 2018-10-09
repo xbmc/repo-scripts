@@ -3,16 +3,10 @@ import os
 import xbmc
 import xbmcaddon
 
-import mapper
+PROFILE_PATH = xbmc.translatePath(xbmcaddon.Addon().getAddonInfo('profile'))
+CACHE_DIR = os.path.join(PROFILE_PATH, 'cache')
 
-addon = xbmcaddon.Addon()
-player = xbmc.Player()
+if not os.path.exists(CACHE_DIR):
+    os.makedirs(CACHE_DIR)
 
-
-mpr = mapper.Mapper()
-
-
-profile_path = xbmc.translatePath(addon.getAddonInfo('profile'))
-cache_dir = os.path.join(profile_path, 'cache')
-if not os.path.exists(cache_dir):
-    os.makedirs(cache_dir)
+from addon import routes  # noqa:F401, isort:skip
