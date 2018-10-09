@@ -2,7 +2,7 @@
 <addon id="script.module.lwe_mapper"
        name="mapper"
        provider-name="linuxwhatelse"
-       version="1.1.0">
+       version="1.2.5">
 
     <requires>
         <import addon="xbmc.python" version="2.24.0"/>
@@ -16,8 +16,8 @@
         <description lang="en_GB">Simple URL-Scheme resolver</description>
         <license>GNU GENERAL PUBLIC LICENSE. Version 3, June 2007</license>
         <forum>http://forum.kodi.tv/showthread.php?tid=245808</forum>
-        <website>http://www.linuxwhatelse.com</website>
-        <email>info@linuxwhatelse.com</email>
+        <website>http://www.linuxwhatelse.de</website>
+        <email>info@linuxwhatelse.de</email>
         <source>https://github.com/linuxwhatelse/script.module.lwe_mapper</source>
     </extension>
 </addon>
