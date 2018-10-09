@@ -1,7 +1,13 @@
 # -*- coding: utf-8 -*-
 
-import os, sys, time, urllib2, unicodedata, random, string
-import xbmc, xbmcgui, xbmcaddon, xbmcvfs
+import os
+import sys
+import time
+import urllib2
+import unicodedata
+import xbmc
+import xbmcgui
+import xbmcaddon
 import json
 
 ADDON        = xbmcaddon.Addon()
@@ -137,7 +143,6 @@ def geoip():
 
 def location(locstr):
     locs    = []
-    locids  = []
     locdegs = []
     log('location: %s' % locstr)
     loc = unicodedata.normalize('NFKD', unicode(locstr, 'utf-8')).encode('ascii','ignore')
@@ -155,11 +160,7 @@ def location(locstr):
         return None, None, None
     if data != '' and 'list' in data:
         for item in data['list']:
-            if item['name'] == '': # bug? test by searching for california
-                location = string.capwords(locstr)
-            else:
-                location   = item['name']
-            locationid = str(item['id'])
+            location   = item['name']
             locationlat = str(item['coord']['lat'])
             locationlon = str(item['coord']['lon'])
             locdeg = [locationlat,locationlon]
@@ -168,20 +169,17 @@ def location(locstr):
                 locs.append(location + ' (' + locationcountry + ') - lat/lon:' + locationlat + '/' + locationlon)
             else:
                 locs.append(location + ' (' + locationcountry + ')')
-            locids.append(locationid)
             locdegs.append(locdeg)
     log('locs: %s' % str(locs))
-    log('locids: %s' % str(locids))
     log('locdegs: %s' % str(locdegs))
-    return locs, locids, locdegs
+    return locs, locdegs
 
-def forecast(loc,locid,locationdeg):
-    log('weather location id: %s' % locid)
+def forecast(loc, locationdeg):
     log('weather location name: %s' % loc)
     log('weather location deg: %s' % locationdeg)
+    lat = eval(locationdeg)[0]
+    lon = eval(locationdeg)[1]
     if MAPS == 'true' and xbmc.getCondVisibility('System.HasAddon(script.openweathermap.maps)'):
-        lat = float(eval(locationdeg)[0])
-        lon = float(eval(locationdeg)[1])
         xbmc.executebuiltin('XBMC.RunAddon(script.openweathermap.maps,lat=%s&lon=%s&zoom=%s&api=%s&debug=%s)' % (lat, lon, ZOOM, MAPID, DEBUG))
     else:
         set_property('Map.IsFetched', '')
@@ -190,9 +188,9 @@ def forecast(loc,locid,locationdeg):
             set_property('Map.%i.Area' % count, '')
             set_property('Map.%i.Heading' % count, '')
             set_property('Map.%i.Legend' % count, '')
-    current_string = 'current?key=%s&city_id=%s' % (APPID, locid)
-    hourly_string = 'forecast/hourly?key=%s&city_id=%s' % (APPID, locid)
-    daily_string = 'forecast/daily?key=%s&city_id=%s' % (APPID, locid)
+    current_string = 'current?key=%s&lat=%s&lon=%s' % (APPID, lat, lon)
+    hourly_string = 'forecast/hourly?key=%s&lat=%s&lon=%s' % (APPID, lat, lon)
+    daily_string = 'forecast/daily?key=%s&lat=%s&lon=%s' % (APPID, lat, lon)
     retry = 0
     failed = False
     while (retry < 6) and (not MONITOR.abortRequested()):
@@ -240,7 +238,7 @@ def forecast(loc,locid,locationdeg):
 
 def current_props(data,loc):
 # standard properties
-    code = data['data'][0]['weather']['code']
+    code = str(data['data'][0]['weather']['code'])
     pod = data['data'][0]['pod']
     code = code + pod
     weathercode = WEATHER_CODES[code]
@@ -263,7 +261,7 @@ def current_props(data,loc):
     if not precip:
         precip = 0
     if 'F' in TEMPUNIT:
-        set_property('Current.Visibility'   , str(data['data'][0]['vis'] * 0.621371) + 'mi')
+        set_property('Current.Visibility'   , str(round(data['data'][0]['vis'] * 0.621371 ,2)) + 'mi')
         set_property('Current.Pressure'     , str(round(data['data'][0]['pres'] / 33.86 ,2)) + ' in')
         set_property('Current.SeaLevel'     , str(round(data['data'][0]['slp'] / 33.86 ,2)) + ' in')
         set_property('Current.Precipitation', str(int(round(precip *  0.04 ,2))) + ' in')
@@ -276,8 +274,8 @@ def current_props(data,loc):
         set_property('Current.Snow'         , str(int(round(data['data'][0].get('snow',0)))) + ' mm')
     set_property('Forecast.City'            , data['data'][0]['city_name'])
     set_property('Forecast.Country'         , data['data'][0]['country_code'])
-    set_property('Forecast.Latitude'        , data['data'][0]['lat'])
-    set_property('Forecast.Longitude'       , data['data'][0]['lon'])
+    set_property('Forecast.Latitude'        , str(data['data'][0]['lat']))
+    set_property('Forecast.Longitude'       , str(data['data'][0]['lon']))
     set_property('Forecast.Updated'         , data['data'][0]['ob_time'])
     set_property('Today.Sunrise'            , data['data'][0]['sunrise'])
     set_property('Today.Sunset'             , data['data'][0]['sunset'])
@@ -328,10 +326,10 @@ def daily_props(data):
             set_property('Daily.%i.Snow'          % (count+1), str(round(item['snow'] * 0.04 ,2)) + ' in')
             set_property('Daily.%i.SnowDepth'     % (count+1), str(round(item['snow_depth'] * 0.04 ,2)) + ' in')
             set_property('Daily.%i.Precipitation' % (count+1), str(round(item['precip'] * 0.04 ,2)) + ' in')
-            set_property('Daily.%i.Visibility'    % (count+1), str(item['vis'] * 0.621371) + ' mi')
+            set_property('Daily.%i.Visibility'    % (count+1), str(round(item['vis'] * 0.621371 ,2)) + ' mi')
         else:
             set_property('Daily.%i.Pressure'      % (count+1), str(item['pres']) + ' mb')
-            set_property('Daily.%i.SeaLevel'      % (count+1), str(round(item['slp'])) + ' mm')
+            set_property('Daily.%i.SeaLevel'      % (count+1), str(round(item['slp'])) + ' mb')
             set_property('Daily.%i.Snow'          % (count+1), str(round(item['snow'])) + ' mm')
             set_property('Daily.%i.SnowDepth'     % (count+1), str(round(item['snow_depth'])) + ' mm')
             set_property('Daily.%i.Precipitation' % (count+1), str(round(item['precip'])) + ' mm')
@@ -380,10 +378,10 @@ def hourly_props(data):
             set_property('Hourly.%i.Snow'          % (count+1), str(round(item['snow'] * 0.04 ,2)) + ' in')
             set_property('Hourly.%i.SnowDepth'     % (count+1), str(round(item['snow_depth'] * 0.04 ,2)) + ' in')
             set_property('Hourly.%i.Precipitation' % (count+1), str(round(item['precip'] * 0.04 ,2)) + ' in')
-            set_property('Hourly.%i.Visibility'    % (count+1), str(item['vis'] * 0.621371) + ' mi')
+            set_property('Hourly.%i.Visibility'    % (count+1), str(round(item['vis'] * 0.621371 ,2)) + ' mi')
         else:
             set_property('Hourly.%i.Pressure'      % (count+1), str(item['pres']) + ' mb')
-            set_property('Hourly.%i.SeaLevel'      % (count+1), str(round(item['slp'])) + ' mm')
+            set_property('Hourly.%i.SeaLevel'      % (count+1), str(round(item['slp'])) + ' mb')
             set_property('Hourly.%i.Snow'          % (count+1), str(round(item['snow'])) + ' mm')
             set_property('Hourly.%i.SnowDepth'     % (count+1), str(round(item['snow_depth'])) + ' mm')
             set_property('Hourly.%i.Precipitation' % (count+1), str(round(item['precip'])) + ' mm')
@@ -420,42 +418,36 @@ elif sys.argv[1].startswith('Location'):
     keyboard.doModal()
     if (keyboard.isConfirmed() and keyboard.getText() != ''):
         text = keyboard.getText()
-        locations, locationids, locationdeg = location(text)
+        locations, locationdeg = location(text)
         dialog = xbmcgui.Dialog()
         if locations and locations != []:
             selected = dialog.select(xbmc.getLocalizedString(396), locations)
             if selected != -1:
                 ADDON.setSetting(sys.argv[1], locations[selected].split(' - ')[0])
-                ADDON.setSetting(sys.argv[1] + 'ID', locationids[selected])
                 ADDON.setSetting(sys.argv[1] + 'deg', str(locationdeg[selected]))
                 log('selected location: %s' % locations[selected])
-                log('selected location id: %s' % locationids[selected])
                 log('selected location lat/lon: %s' % locationdeg[selected])
         else:
             dialog.ok(ADDONNAME, xbmc.getLocalizedString(284))
 else:
     locationname = ADDON.getSetting('Location%s' % sys.argv[1])
-    locationid = ADDON.getSetting('Location%sID' % sys.argv[1])
     locationdeg = ADDON.getSetting('Location%sdeg' % sys.argv[1])
-    if (locationid == '') and (sys.argv[1] != '1'):
+    if (locationdeg == '') and (sys.argv[1] != '1'):
         locationname = ADDON.getSetting('Location1')
-        locationid = ADDON.getSetting('Location1ID')
         locationdeg = ADDON.getSetting('Location1deg')
         log('trying location 1 instead')
-    if locationid == '':
+    if locationdeg == '':
         log('fallback to geoip')
         locationstring = geoip()
         if locationstring:
-            locations, locationids, locationdeg = location(locationstring.encode("utf-8"))
+            locations, locationdeg = location(locationstring.encode("utf-8"))
             if locations:
                 ADDON.setSetting('Location1', locations[0].split(' - ')[0])
-                ADDON.setSetting('Location1ID', locationids[0])
                 ADDON.setSetting('Location1deg', str(locationdeg[0]))
                 locationname = locations[0]
-                locationid = str(locationids[0])
                 locationdeg = str(locationdeg[0])
-    if not locationid == '':
-        forecast(locationname, locationid, locationdeg)
+    if not locationdeg == '':
+        forecast(locationname, locationdeg)
     else:
         log('no location provided')
         clear()

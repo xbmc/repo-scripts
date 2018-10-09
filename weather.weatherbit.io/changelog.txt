@@ -1,3 +1,11 @@
+v0.0.7
+- get weather by lat/lon instead of city id
+
+v0.0.6
+- updated readme
+- fix sealevel pressure unit
+- round visibility value in miles
+
 v0.0.5
 - fix interaction with script.openweathermap.maps
 
