@@ -1,54 +1,106 @@
 # -*- coding: utf-8 -*-
-"""
-    Copyright: (c) 2015 linuxwhatelse (info@linuxwhatelse.de)
-    License: GPLv3, see LICENSE for more details
-
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
-
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-"""
-
-__author__    = 'linuxwhatelse'
-__email__     = 'info@linuxwhatelse.com'
-__copyright__ = 'Copyright 2016, linuxwhatelse'
-__license__   = 'GPLv3'
-
-__version__   = '1.1.0'
-
-import os.path
+import sys
 import re
 import inspect
-import urlparse
+import threading
+
+if sys.version_info.major == 3:
+    import urllib
+    import urllib.parse
+elif sys.version_info.major == 2:
+    import urlparse
+else:
+    raise ImportError('Python version not supported.')
+
 
 class Mapper(object):
-    _data_store = []
+    __instances = dict()
+
+    _name = None
+
+    _lock = None
+    _data_store = None
+
+    def __init__(self):
+        """Create a new mapper instance.
+           Using `Mapper.get()`_ is the prefered way.
+        """
+        self._lock = threading.RLock()
+        self._data_store = list()
+
+    @property
+    def name(self):
+        """Name of this instance."""
+        return self._name
+
+    @classmethod
+    def get(cls, name=__name__):
+        """Return a Mapper instance with the given name.
+           If the name already exist return its instance.
+
+           Does not work if a Mapper was created via its constructor.
+
+           Using `Mapper.get()`_ is the prefered way.
+
+        Args:
+            name (str, optional): Name for the newly created instance.
+                Defaults to `__name__`.
+
+        Returns:
+            Mapper: A mapper instance for the given name.
+
+        Raises:
+            TypeError: If a invalid name was given.
+        """
+        if not isinstance(name, str):
+            raise TypeError('A mapper name must be a string')
+
+        if name not in cls.__instances:
+            cls.__instances[name] = cls()
+            cls.__instances[name]._name = name
+
+        return cls.__instances[name]
 
     def url(self, pattern, method=None, type_cast=None):
         """Decorator for registering a path pattern.
 
         Args:
             pattern (str): Regex pattern to match a certain path
-            method (Optional[str]): Usually used to define one of
-                GET, POST, PUT, DELETE (However, you can use whatever you want)
-                Defaults to None
-            type_cast (Optional[dict]): Mapping between the param name and
-                one of int, float, bool
+            method (str, optional): Usually used to define one of GET, POST,
+                PUT, DELETE. You may use whatever fits your situation though.
+                Defaults to None.
+            type_cast (dict, optional): Mapping between the param name and
+                one of `int`, `float` or `bool`. The value reflected by the
+                provided param name will than be casted to the given type.
+                Defaults to None.
         """
         if not type_cast:
             type_cast = {}
 
         def decorator(function):
             self.add(pattern, function, method, type_cast)
+            return function
 
+        return decorator
+
+    def s_url(self, path, method=None, type_cast=None):
+        """Decorator for registering a simple path.
+
+        Args:
+            path (str): Path to be matched.
+            method (str, optional): Usually used to define one of GET, POST,
+                PUT, DELETE. You may use whatever fits your situation though.
+                Defaults to None.
+            type_cast (dict, optional): Mapping between the param name and
+                one of `int`, `float` or `bool`. The value reflected by the
+                provided param name will than be casted to the given type.
+                Defaults to None.
+        """
+        if not type_cast:
+            type_cast = {}
+
+        def decorator(function):
+            self.s_add(path, function, method, type_cast)
             return function
 
         return decorator
@@ -57,94 +109,93 @@ class Mapper(object):
         """Function for registering a path pattern.
 
         Args:
-            pattern (str): Regex pattern to match a certain path
-            function (function): Function to associate with this path
-            method (Optional[str]): Usually used to define one of
-                GET, POST, PUT, DELETE (However, you can use whatever you want)
-                Defaults to None
-            type_cast (Optional[dict]): Mapping between the param name and
-                one of int, float, bool
+            pattern (str): Regex pattern to match a certain path.
+            function (function): Function to associate with this path.
+            method (str, optional): Usually used to define one of GET, POST,
+                PUT, DELETE. You may use whatever fits your situation though.
+                Defaults to None.
+            type_cast (dict, optional): Mapping between the param name and
+                one of `int`, `float` or `bool`. The value reflected by the
+                provided param name will than be casted to the given type.
+                Defaults to None.
         """
         if not type_cast:
             type_cast = {}
 
-        self._data_store.append({
-            'pattern'   : pattern,
-            'function'  : function,
-            'method'    : method,
-            'type_cast' : type_cast,
-        })
-
-    def s_url(self, path, method=None, type_cast=None):
-        """Decorator for registering a simple path.
-
-        Args:
-            path (str): Path to be matched
-            method (Optional[str]): Usually used to define one of
-                GET, POST, PUT, DELETE (However, you can use whatever you want)
-                Defaults to None
-            type_cast (Optional[dict]): Mapping between the param name and
-                one of int, float, bool
-        """
-        if not type_cast:
-            type_cast = {}
-
-        def decorator(function):
-            self.s_add(path, function, method, type_cast)
-
-            return function
-
-        return decorator
+        with self._lock:
+            self._data_store.append({
+                'pattern': pattern,
+                'function': function,
+                'method': method,
+                'type_cast': type_cast,
+            })
 
     def s_add(self, path, function, method=None, type_cast=None):
         """Function for registering a simple path.
 
         Args:
-            path (str): Path to be matched
-            function (function): Function to associate with this path
-            method (Optional[str]): Usually used to define one of
-                GET, POST, PUT, DELETE (However, you can use whatever you want)
-                Defaults to None
-            type_cast (Optional[dict]): Mapping between the param name and
-                one of int, float, bool
+            path (str): Path to be matched.
+            function (function): Function to associate with this path.
+            method (str, optional): Usually used to define one of GET, POST,
+                PUT, DELETE. You may use whatever fits your situation though.
+                Defaults to None.
+            type_cast (dict, optional): Mapping between the param name and
+                one of `int`, `float` or `bool`. The value reflected by the
+                provided param name will than be casted to the given type.
+                Defaults to None.
         """
-        path = '^/%s' % path.lstrip('/')
-        path = '%s/$' % path.rstrip('/')
-        path = path.replace('<', '(?P<')
-        path = path.replace('>', '>[^/]*)')
+        with self._lock:
+            try:
+                path = '^/{}'.format(path.lstrip('/'))
+                path = '{}/$'.format(path.rstrip('/'))
+                path = path.replace('<', '(?P<')
+                path = path.replace('>', '>[^/]*)')
 
-        self.add(path, function, method, type_cast)
+                self.add(path, function, method, type_cast)
+            except Exception:
+                pass
 
     def clear(self):
         """Clears all data associated with the mappers data store"""
-        del self._data_store[:]
+        with self._lock:
+            try:
+                del self._data_store[:]
+            except Exception:
+                pass
 
     def call(self, url, method=None, args=None):
-        """Calls the first function matching the urls pattern and method (if any)
+        """Calls the first function matching the urls pattern and method.
 
         Args:
-            url (str): Url where a matching function should be called
-            method (Optional[str]): Method used while registering a function.
+            url (str): Url for which to call a matching function.
+            method (str, optional): The method used while registering a
+                function.
                 Defaults to None
-            args (Optional[dict]): Additional args in form of a dict
-                which should be passed to the matching function
+            args (dict, optional): Additional args to be passed to the
+                matching function.
 
         Returns:
-            Returns the functions return value, None if it didn't return anything.
-            Also, it will return None if no matching function was called.
+            The functions return value or `None` if no function was called.
         """
         if not args:
             args = {}
 
-        data = urlparse.urlparse(url)
-        path = data.path.rstrip('/') + '/'
-        _args = dict(urlparse.parse_qs(data.query, keep_blank_values=True))
+        if sys.version_info.major == 3:
+            data = urllib.parse.urlparse(url)
+            path = data.path.rstrip('/') + '/'
+            _args = dict(urllib.parse.parse_qs(data.query,
+                                               keep_blank_values=True))
+        elif sys.version_info.major == 2:
+            data = urlparse.urlparse(url)
+            path = data.path.rstrip('/') + '/'
+            _args = dict(urlparse.parse_qs(data.query,
+                                           keep_blank_values=True))
 
         for elem in self._data_store:
-            pattern     = elem['pattern']
-            function    = elem['function']
-            _method     = elem['method']
-            type_cast   = elem['type_cast']
+            pattern = elem['pattern']
+            function = elem['function']
+            _method = elem['method']
+            type_cast = elem['type_cast']
 
             result = re.match(pattern, path)
 
@@ -152,7 +203,7 @@ class Mapper(object):
             if result and _method == method:
                 _args = dict(_args, **result.groupdict())
 
-                # Unpack value lists (due to urlparse.parse_qs) in case
+                # Unpack value lists (due to urllib.parse.parse_qs) in case
                 # theres only one value available
                 for key, val in _args.items():
                     if isinstance(_args[key], list) and len(_args[key]) == 1:
@@ -195,16 +246,20 @@ class Mapper(object):
             val = float(value)
 
         elif to == bool:
-            if value.lower() == 'true' or value== '1':
+            if value.lower() in ('true', '1'):
                 val = True
 
-            elif value.lower() == 'false' or value == '0':
+            elif value.lower() in ('false', '0'):
                 val = False
 
         return val
 
     def _get_function_args(self, func):
-        args, varargs, varkw, defaults = inspect.getargspec(func)
-        if defaults:
-            args = args[:-len(defaults)]
+        if sys.version_info.major == 3:
+            sig = inspect.signature(func)
+            args = list(sig.parameters)
+
+        elif sys.version_info.major == 2:
+            args, varargs, varkw, defaults = inspect.getargspec(func)
+
         return args
