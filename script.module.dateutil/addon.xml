@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addon id="script.module.dateutil"
        name="dateutil"
-       version="2.5.3"
+       version="2.7.3"
        provider-name="Gustavo Niemeyer, Tomi Pieviläinen, Yaron de Leeuw, Razzeee">
   <requires>
     <import addon="xbmc.python" version="2.1.0"/>

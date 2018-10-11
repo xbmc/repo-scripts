@@ -1,9 +1,16 @@
 import sys
+import unittest
 
-try:
-    import unittest2 as unittest
-except ImportError:
-    import unittest
+class ImportVersionTest(unittest.TestCase):
+    """ Test that dateutil.__version__ can be imported"""
+
+    def testImportVersionStr(self):
+        from dateutil import __version__
+
+    def testImportRoot(self):
+        import dateutil
+
+        self.assertTrue(hasattr(dateutil, '__version__'))
 
 
 class ImportEasterTest(unittest.TestCase):
@@ -107,16 +114,20 @@ class ImportTZTest(unittest.TestCase):
         from dateutil.tz import gettz
         from dateutil.tz import tzwin
         from dateutil.tz import tzwinlocal
+        from dateutil.tz import UTC
+        from dateutil.tz import datetime_ambiguous
+        from dateutil.tz import datetime_exists
+        from dateutil.tz import resolve_imaginary
 
         tz_all = ["tzutc", "tzoffset", "tzlocal", "tzfile", "tzrange",
-                  "tzstr", "tzical", "gettz"]
+                  "tzstr", "tzical", "gettz", "datetime_ambiguous",
+                  "datetime_exists", "resolve_imaginary", "UTC"]
 
         tz_all += ["tzwin", "tzwinlocal"] if sys.platform.startswith("win") else []
         lvars = locals()
 
         for var in tz_all:
             self.assertIsNot(lvars[var], None)
-
 
 @unittest.skipUnless(sys.platform.startswith('win'), "Requires Windows")
 class ImportTZWinTest(unittest.TestCase):
@@ -128,7 +139,13 @@ class ImportTZWinTest(unittest.TestCase):
         from dateutil import tzwin
 
     def testTzwinStar(self):
-        tzwin_all = ["tzwin", "tzwinlocal"]
+        from dateutil.tzwin import tzwin
+        from dateutil.tzwin import tzwinlocal
+
+        tzwin_all = [tzwin, tzwinlocal]
+
+        for var in tzwin_all:
+            self.assertIsNot(var, None)
 
 
 class ImportZoneInfoTest(unittest.TestCase):

@@ -1,26 +1,43 @@
 dateutil - powerful extensions to datetime
 ==========================================
 
-.. image:: https://img.shields.io/travis/dateutil/dateutil/master.svg?style=flat-square
+|pypi| |support| |licence| 
+
+|gitter| |readthedocs|
+
+|travis| |appveyor| |coverage|
+
+.. |pypi| image:: https://img.shields.io/pypi/v/python-dateutil.svg?style=flat-square
+    :target: https://pypi.org/project/python-dateutil/
+    :alt: pypi version
+
+.. |support| image:: https://img.shields.io/pypi/pyversions/python-dateutil.svg?style=flat-square
+    :target: https://pypi.org/project/python-dateutil/
+    :alt: supported Python version
+
+.. |travis| image:: https://img.shields.io/travis/dateutil/dateutil/master.svg?style=flat-square&label=Travis%20Build
     :target: https://travis-ci.org/dateutil/dateutil
     :alt: travis build status
 
-.. image:: https://img.shields.io/appveyor/ci/dateutil/dateutil/master.svg?style=flat-square
+.. |appveyor| image:: https://img.shields.io/appveyor/ci/dateutil/dateutil/master.svg?style=flat-square&logo=appveyor
     :target: https://ci.appveyor.com/project/dateutil/dateutil
     :alt: appveyor build status
 
-.. image:: https://codecov.io/github/dateutil/dateutil/coverage.svg?branch=master
+.. |coverage| image:: https://codecov.io/github/dateutil/dateutil/coverage.svg?branch=master
     :target: https://codecov.io/github/dateutil/dateutil?branch=master
     :alt: Code coverage
 
-.. image:: https://img.shields.io/pypi/dd/python-dateutil.svg?style=flat-square
-    :target: https://pypi.python.org/pypi/python-dateutil/
-    :alt: pypi downloads per day
+.. |gitter| image:: https://badges.gitter.im/dateutil/dateutil.svg
+   :alt: Join the chat at https://gitter.im/dateutil/dateutil
+   :target: https://gitter.im/dateutil/dateutil
 
-.. image:: https://img.shields.io/pypi/v/python-dateutil.svg?style=flat-square
-    :target: https://pypi.python.org/pypi/python-dateutil/
-    :alt: pypi version
+.. |licence| image:: https://img.shields.io/pypi/l/python-dateutil.svg?style=flat-square
+    :target: https://pypi.org/project/python-dateutil/
+    :alt: licence
 
+.. |readthedocs| image:: https://img.shields.io/readthedocs/dateutil/latest.svg?style=flat-square&label=Read%20the%20Docs
+   :alt: Read the documentation at https://dateutil.readthedocs.io/en/latest/
+   :target: https://dateutil.readthedocs.io/en/latest/
 
 The `dateutil` module provides powerful extensions to
 the standard `datetime` module, available in Python.
@@ -29,13 +46,14 @@ the standard `datetime` module, available in Python.
 Download
 ========
 dateutil is available on PyPI
-https://pypi.python.org/pypi/python-dateutil/
+https://pypi.org/project/python-dateutil/
 
 The documentation is hosted at:
-https://dateutil.readthedocs.org/
+https://dateutil.readthedocs.io/en/stable/
 
 Code
 ====
+The code and issue tracker are hosted on Github:
 https://github.com/dateutil/dateutil/
 
 Features
@@ -93,6 +111,11 @@ date out of the "date" unix system command. Here is the code:
 
 Being exactly 6 months ahead was **really** a coincidence :)
 
+Contributing
+============
+
+We welcome many types of contributions - bug reports, pull requests (code, infrastructure or documentation fixes). For more information about how to contribute to the project, see the ``CONTRIBUTING.md`` file in the repository.
+
 
 Author
 ======
@@ -103,19 +126,8 @@ It is maintained by:
 
 * Gustavo Niemeyer <gustavo@niemeyer.net> 2003-2011
 * Tomi Pieviläinen <tomi.pievilainen@iki.fi> 2012-2014
-* Yaron de Leeuw <me@jarondl.net> 2014-
+* Yaron de Leeuw <me@jarondl.net> 2014-2016
 * Paul Ganssle <paul@ganssle.io> 2015-
-
-Our mailing list is available at `dateutil@python.org <https://mail.python.org/mailman/listinfo/dateutil>`_. As it is hosted by the PSF, it is subject to the `PSF code of 
-conduct <https://www.python.org/psf/codeofconduct/>`_.
-
-Building and releasing
-======================
-When you get the source, it does not contain the internal zoneinfo
-database. To get (and update) the database, run the updatezinfo.py script. Make sure
-that the zic command is in your path, and that you have network connectivity
-to get the latest timezone information from IANA, or from `our mirror of the
-IANA database <https://dateutil.github.io/tzdata/>`_.
 
 Starting with version 2.4.1, all source and binary distributions will be signed
 by a PGP key that has, at the very least, been signed by the key which made the
@@ -124,20 +136,23 @@ previous release. A table of release signing keys can be found below:
 ===========  ============================
 Releases     Signing key fingerprint
 ===========  ============================
-2.4.1-       `0xCD54FCE3D964BEFB`_
+2.4.1-       `6B49 ACBA DCF6 BD1C A206 67AB CD54 FCE3 D964 BEFB`_ (|pgp_mirror|_)
 ===========  ============================
 
-Testing
+
+Contact
 =======
-dateutil has a comprehensive test suite, which can be run simply by running
-`python setup.py test [-q]` in the project root. Note that if you don't have the internal
-zoneinfo database, some tests will fail. Apart from that, all tests should pass.
+Our mailing list is available at `dateutil@python.org <https://mail.python.org/mailman/listinfo/dateutil>`_. As it is hosted by the PSF, it is subject to the `PSF code of
+conduct <https://www.python.org/psf/codeofconduct/>`_.
 
-To easily test dateutil against all supported Python versions, you can use
-`tox <https://tox.readthedocs.org/en/latest/>`_.
+License
+=======
 
-All github pull requests are automatically tested using travis and appveyor.
+All contributions after December 1, 2017 released under dual license - either `Apache 2.0 License <https://www.apache.org/licenses/LICENSE-2.0>`_ or the `BSD 3-Clause License <https://opensource.org/licenses/BSD-3-Clause>`_. Contributions before December 1, 2017 - except those those explicitly relicensed - are released only under the BSD 3-Clause License.
 
 
-.. _0xCD54FCE3D964BEFB:
+.. _6B49 ACBA DCF6 BD1C A206 67AB CD54 FCE3 D964 BEFB:
    https://pgp.mit.edu/pks/lookup?op=vindex&search=0xCD54FCE3D964BEFB
+
+.. |pgp_mirror| replace:: mirror
+.. _pgp_mirror: https://sks-keyservers.net/pks/lookup?op=vindex&search=0xCD54FCE3D964BEFB
