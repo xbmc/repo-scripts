@@ -3,6 +3,7 @@
 import os
 import sys
 import time
+from datetime import datetime
 import urllib2
 import unicodedata
 import xbmc
@@ -21,6 +22,7 @@ PROFILE      = xbmc.translatePath(ADDON.getAddonInfo('profile')).decode('utf-8')
 
 sys.path.append(RESOURCE)
 
+from dateutil import tz
 from utils import *
 
 APPID          = ADDON.getSetting('API')
@@ -97,6 +99,22 @@ def convert_date(stamp):
 
 def get_time(stamp):
     date_time = time.localtime(stamp)
+    if TIMEFORMAT != '/':
+        localtime = time.strftime('%I:%M%p', date_time)
+    else:
+        localtime = time.strftime('%H:%M', date_time)
+    return localtime
+
+def convert_time(utc_time):
+    from_zone = tz.tzutc()
+    to_zone = tz.tzlocal()
+    try:
+        utc = datetime.strptime(utc_time, '%Y-%m-%d %H:%M')
+    except:
+        utc = datetime(*(time.strptime(utc_time, '%Y-%m-%d %H:%M')[0:6]))
+    utc = utc.replace(tzinfo=from_zone)
+    date_time = utc.astimezone(to_zone)
+    date_time = time.strptime(str(date_time)[0:16], '%Y-%m-%d %H:%M')
     if TIMEFORMAT != '/':
         localtime = time.strftime('%I:%M%p', date_time)
     else:
@@ -276,9 +294,9 @@ def current_props(data,loc):
     set_property('Forecast.Country'         , data['data'][0]['country_code'])
     set_property('Forecast.Latitude'        , str(data['data'][0]['lat']))
     set_property('Forecast.Longitude'       , str(data['data'][0]['lon']))
-    set_property('Forecast.Updated'         , data['data'][0]['ob_time'])
-    set_property('Today.Sunrise'            , data['data'][0]['sunrise'])
-    set_property('Today.Sunset'             , data['data'][0]['sunset'])
+    set_property('Forecast.Updated'         , convert_date(data['data'][0]['ts']))
+    set_property('Today.Sunrise'            , convert_time('%s %s' % (data['data'][0]['ob_time'][0:10], data['data'][0]['sunrise'])))
+    set_property('Today.Sunset'             , convert_time('%s %s' % (data['data'][0]['ob_time'][0:10], data['data'][0]['sunset'])))
 
 def daily_props(data):
 # standard properties
