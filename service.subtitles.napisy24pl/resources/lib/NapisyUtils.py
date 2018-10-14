@@ -94,7 +94,7 @@ def parse_rls_title(item):
 
 
 class NapisyHelper:
-    BASE_URL = "http://napisy24.pl"
+    BASE_URL = "https://napisy24.pl"
 
     def __init__(self):
         self.urlHandler = URLHandler()
@@ -142,7 +142,7 @@ class NapisyHelper:
         post_data = {"username": username, "passwd": password, "Submit": ""}
         content = self.urlHandler.request(self.BASE_URL + "/cb-login", data=post_data)
 
-        if content.find('http://napisy24.pl/cb-logout') > -1:
+        if content.find(self.BASE_URL + "/cb-logout") > -1:
             self.urlHandler.save_cookie()
 
             if notify_success:
