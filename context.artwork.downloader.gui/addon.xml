@@ -6,12 +6,13 @@
 	</requires>
 	<extension point="kodi.context.item" library="context.py">
 		<item>
-			<label>32000</label>
+			<label>Select artwork to add</label>
 			<visible>Container.Content(tvshows)|Container.Content(movies)|Container.Content(musicvideos)</visible>
 			<parent>kodi.core.manage</parent>
 		</item>
 	</extension>
 	<extension point="kodi.addon.metadata">
+		<broken>Artwork Downloader defunct</broken>
 		<summary lang="en">Show Artwork Downloader GUI for the selected item.</summary>
 		<description lang="en">Show Artwork Downloader GUI for the selected item. Added to the 'Manage...' context menu. The add-on Artwork Downloader does all the work, this just runs it for the selected item.</description>
 		<disclaimer lang="en" />
