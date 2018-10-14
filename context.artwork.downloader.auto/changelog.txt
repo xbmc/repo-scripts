@@ -1,4 +1,0 @@
-v1.0.1 (2015-09-19)
-- Fix add-on metadata
-v1.0.0 (2015-09-11)
-- Initial release
