@@ -1,3 +1,6 @@
+2.0.2 - by DaM (14/10/2018)
+- Fix base-url to be HTTPs
+
 2.0.1 - by CaTz (22/04/2017)
 - Added title parse & clean up
 
