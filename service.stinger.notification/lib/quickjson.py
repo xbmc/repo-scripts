@@ -15,11 +15,7 @@ _kodiversion = None
 def get_kodi_version():
     global _kodiversion
     if _kodiversion is None:
-        json_request = {'jsonrpc': '2.0', 'method': 'Application.GetProperties', 'params': {}, 'id': 1}
-        json_request['params']['properties'] = ['version']
-        json_result = execute_jsonrpc(json_request)
-        if 'result' in json_result:
-            _kodiversion = json_result['result']['version']['major']
+        _kodiversion = int(xbmc.getInfoLabel('System.BuildVersion').split('.')[0])
     return _kodiversion
 
 def get_movies(sort_method='sorttitle', ascending=True, limit=None, properties=None, listfilter=None):

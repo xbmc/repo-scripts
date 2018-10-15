@@ -1,0 +1,86 @@
+# Kodi Media Center language file
+# Addon Name: Stinger scene notification
+# Addon id: service.stinger.notification
+msgid ""
+msgstr ""
+"Project-Id-Version: service.stinger.notification\n"
+"Report-Msgid-Bugs-To: http://trac.kodi.tv/\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2017-10-16 11:10+0300\n"
+"Last-Translator: A. Dambledore\n"
+"Language-Team: Eng2Heb\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: he_IL\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+
+# Notification messages
+msgctxt "#32000"
+msgid "There is a stinger scene during the credits. Keep watching!"
+msgstr "יש סצנת stinger במהלך הקרדיטים.  הביטו!"
+
+msgctxt "#32001"
+msgid "There is a stinger scene after the credits. Wait for it!"
+msgstr "יש סצנת stinger אחרי הקרדיטים. חכה לזה!"
+
+msgctxt "#32002"
+msgid "There are stinger scenes all over the place! Better sit tight."
+msgstr "יש סצנות stinger במיקום העכשווי! אל תזוז מכאן."
+
+msgctxt "#32003"
+msgid "During credits"
+msgstr "במהלך קרדיטים"
+
+msgctxt "#32004"
+msgid "After credits"
+msgstr "לאחר קרדיטים"
+
+# Actions
+msgctxt "#32400"
+msgid "Grab stinger tags from TheMovieDB for all movies"
+msgstr "השג תגי stinger של TheMovieDB עבור כל הסרטים"
+
+msgctxt "#32401"
+msgid "The tags 'duringcreditsstinger' and 'aftercreditsstinger' have been added to all relevant movies. Thanks, TheMovieDB! Use the Universal Movie Scraper as your movie scraper to tag new movies as they are added."
+msgstr "התג duringcreditsstinger והתג aftercreditsstinger נוספו לכל הסרטים הרלוונטיים. תודה ל- TheMovieDB! תשתמש בסקראפר אוניברסלי לסרט שלך כדי לתייג סרטים חדשים בעת הוספתם."
+
+# Settings headings
+msgctxt "#32999"
+msgid "Consider additional tag for"
+msgstr "שקול תג נוסף עבור"
+
+# duringcreditsstinger and aftercreditsstinger are then listed below this heading
+msgctxt "#32998"
+msgid "Actions"
+msgstr "פעולות"
+
+# Settings
+msgctxt "#32900"
+msgid "Use simple notification message"
+msgstr "תשתמש בהודעה פשוטה"
+
+msgctxt "#32901"
+msgid "If no chapters available, display notification "
+msgstr "אם אין פרקים זמינים, הצג הודעה "
+
+msgctxt "#32902"
+msgid "Query the ChapterDb if video is missing chapters"
+msgstr "שלח שאילתה ל-ChapterDb אם לוידאו חסרים פרקים"
+
+msgctxt "#32903"
+msgid "Preferred FPS for ChapterDb queries"
+msgstr "FPS מועדף עבור שאילתות ChapterDb"
+
+msgctxt "#32904"
+msgid "Display notification message for "
+msgstr "הצג הודעה למשך "
+
+msgctxt "#32905"
+msgid "%2.0f seconds"
+msgstr "%2.0f שניות"
+
+msgctxt "#32906"
+msgid "%2.0f minutes before end"
+msgstr "%2.0f דקות לסיום"
