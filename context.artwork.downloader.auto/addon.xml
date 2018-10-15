@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="context.artwork.downloader.auto" name="Download All Artwork - Artwork Downloader" version="1.0.1" provider-name="rmrector">
+<addon id="context.artwork.downloader.auto" name="Download All Artwork - Artwork Downloader" version="1.0.2" provider-name="rmrector">
 	<requires>
 		<import addon="xbmc.python" version="2.20.0" />
 		<import addon="script.artwork.downloader" version="12.0.29" />
