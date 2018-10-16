@@ -263,7 +263,10 @@ def current_props(data,loc):
     set_property('Current.Location'     , loc)
     set_property('Current.Condition'    , FORECAST.get(data['data'][0]['weather']['code'], data['data'][0]['weather']['description']))
     set_property('Current.Temperature'  , str(int(round(data['data'][0]['temp']))))
-    set_property('Current.FeelsLike'    , str(int(round(data['data'][0]['app_temp']))))
+    if data['data'][0]['app_temp']:
+        set_property('Current.FeelsLike'    , str(int(round(data['data'][0]['app_temp']))))
+    else:
+        set_property('Current.FeelsLike'    , '')
     set_property('Current.Wind'         , str(int(round(data['data'][0]['wind_spd'] * 3.6))))
     set_property('Current.WindDirection', xbmc.getLocalizedString(WIND_DIR(int(round(data['data'][0]['wind_dir'])))))
     set_property('Current.DewPoint'     , str(data['data'][0]['dewpt']))
@@ -387,9 +390,12 @@ def hourly_props(data):
         set_property('Hourly.%i.WindDirection'   % (count+1), xbmc.getLocalizedString(int(round(WIND_DIR(item['wind_dir'])))))
         set_property('Hourly.%i.WindDegree'      % (count+1), str(item['wind_dir']) + u'°')
         set_property('Hourly.%i.Humidity'        % (count+1), str(item['rh']) + '%')
-        set_property('Hourly.%i.Temperature'     % (count+1), TEMP(item['temp']) + TEMPUNIT)
-        set_property('Hourly.%i.FeelsLike'       % (count+1), TEMP(int(round(item['app_temp']))) + TEMPUNIT)
         set_property('Hourly.%i.DewPoint'        % (count+1), TEMP(int(round(item['dewpt']))) + TEMPUNIT)
+        set_property('Hourly.%i.Temperature'     % (count+1), TEMP(item['temp']) + TEMPUNIT)
+        if data['data'][0]['app_temp']:
+            set_property('Hourly.%i.FeelsLike'     % (count+1), TEMP(int(round(item['app_temp']))) + TEMPUNIT)
+        else:
+            set_property('Hourly.%i.FeelsLike'     % (count+1), '')
         if 'F' in TEMPUNIT:
             set_property('Hourly.%i.Pressure'      % (count+1), str(round(item['pres'] / 33.86 ,2)) + ' in')
             set_property('Hourly.%i.SeaLevel'      % (count+1), str(round(item['slp'] / 33.86 ,2)) + ' in')

@@ -1,3 +1,6 @@
+v0.0.9
+- fix crash when feels like temp is missing
+
 v0.0.8
 - convert sunrise / sunset time from utc to local time
 
