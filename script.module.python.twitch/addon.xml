@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.module.python.twitch" name="python-twitch for Kodi" version="2.0.3" provider-name="A Talented Community">
+<addon id="script.module.python.twitch" name="python-twitch for Kodi" version="2.0.4" provider-name="A Talented Community">
     <requires>
         <import addon="xbmc.python" version="2.20.0"/>
         <import addon="script.module.six" version="1.9.0"/>
@@ -9,7 +9,7 @@
     <extension point="xbmc.addon.metadata">
         <platform>all</platform>
         <news>
-[chg] redact user ip from token logging
+[fix] video/live stream token encoding
         </news>
         <assets>
             <icon>icon.png</icon>
@@ -18,7 +18,6 @@
         <summary lang="en_GB">Module for interaction with the Twitch.tv API</summary>
         <description lang="en_GB">python-twitch for Kodi is module for interaction with the Twitch.tv API based on python-twitch by ingwinlu.</description>
         <license>GNU GENERAL PUBLIC LICENSE. Version 3, 29 June 2007</license>
-        <forum> </forum>
         <source>https://github.com/MrSprigster/script.module.python.twitch</source>
         <reuselanguageinvoker>true</reuselanguageinvoker>
     </extension>
