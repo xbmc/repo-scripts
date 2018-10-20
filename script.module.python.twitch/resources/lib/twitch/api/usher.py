@@ -49,8 +49,8 @@ def live_request(channel):
     else:
         q = UsherQuery('api/channel/hls/{channel}.m3u8')
         q.add_urlkw(keys.CHANNEL, channel)
-        q.add_param(keys.SIG, token[keys.SIG])
-        q.add_param(keys.TOKEN, token[keys.TOKEN])
+        q.add_param(keys.SIG, token[keys.SIG].encode('utf-8'))
+        q.add_param(keys.TOKEN, token[keys.TOKEN].encode('utf-8'))
         q.add_param(keys.ALLOW_SOURCE, Boolean.TRUE)
         q.add_param(keys.ALLOW_SPECTRE, Boolean.TRUE)
         q.add_param(keys.ALLOW_AUDIO_ONLY, Boolean.TRUE)
@@ -65,8 +65,8 @@ def live_request(channel):
 def _live(channel, token):
     q = UsherQuery('api/channel/hls/{channel}.m3u8')
     q.add_urlkw(keys.CHANNEL, channel)
-    q.add_param(keys.SIG, token[keys.SIG])
-    q.add_param(keys.TOKEN, token[keys.TOKEN])
+    q.add_param(keys.SIG, token[keys.SIG].encode('utf-8'))
+    q.add_param(keys.TOKEN, token[keys.TOKEN].encode('utf-8'))
     q.add_param(keys.ALLOW_SOURCE, Boolean.TRUE)
     q.add_param(keys.ALLOW_SPECTRE, Boolean.TRUE)
     q.add_param(keys.ALLOW_AUDIO_ONLY, Boolean.TRUE)
@@ -92,8 +92,8 @@ def video_request(video_id):
         else:
             q = UsherQuery('vod/{id}')
             q.add_urlkw(keys.ID, video_id)
-            q.add_param(keys.NAUTHSIG, token[keys.SIG])
-            q.add_param(keys.NAUTH, token[keys.TOKEN])
+            q.add_param(keys.NAUTHSIG, token[keys.SIG].encode('utf-8'))
+            q.add_param(keys.NAUTH, token[keys.TOKEN].encode('utf-8'))
             q.add_param(keys.ALLOW_SOURCE, Boolean.TRUE)
             q.add_param(keys.ALLOW_AUDIO_ONLY, Boolean.TRUE)
             url = '?'.join([q.url, urlencode(q.params)])
@@ -108,8 +108,8 @@ def video_request(video_id):
 def _vod(video_id, token):
     q = UsherQuery('vod/{id}')
     q.add_urlkw(keys.ID, video_id)
-    q.add_param(keys.NAUTHSIG, token[keys.SIG])
-    q.add_param(keys.NAUTH, token[keys.TOKEN])
+    q.add_param(keys.NAUTHSIG, token[keys.SIG].encode('utf-8'))
+    q.add_param(keys.NAUTH, token[keys.TOKEN].encode('utf-8'))
     q.add_param(keys.ALLOW_SOURCE, Boolean.TRUE)
     q.add_param(keys.ALLOW_AUDIO_ONLY, Boolean.TRUE)
     return q
