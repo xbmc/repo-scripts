@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="screensaver.qlock" name="QLock Screensaver" version="0.0.5" provider-name="phil65">
+	<requires>
+		<import addon="xbmc.python" version="2.26.0"/>
+		<import addon="service.qlock" version="0.5.3"/>
+	</requires>
+	<extension point="xbmc.ui.screensaver" library="default.py"/>
+	<extension point="xbmc.python.script" library="default.py" />
+	<extension point="xbmc.addon.metadata">
+		<summary lang="en_GB">Screensaver which makes use of the Qlock add-on by Amet (Team-XBMC)</summary>
+		<description lang="en_GB">A screensaver which makes use of the Qlock add-on to display a letter matrix clock.</description>
+		<language></language>
+		<platform>all</platform>
+		<license>GNU GENERAL PUBLIC LICENSE Version 2</license>
+	</extension>
+</addon>
