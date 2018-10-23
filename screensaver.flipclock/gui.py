@@ -1,4 +1,4 @@
-﻿#   Copyright (C) 2017 Lunatixz, Anisan
+﻿#   Copyright (C) 2018 Lunatixz, Anisan
 #
 #
 # This file is part of Flip Clock.
@@ -28,8 +28,16 @@ KODI_MONITOR   = xbmc.Monitor()
 
 SKIN_LOC       = os.path.join(ADDON_PATH, 'resources', 'skins', 'default' ,'media')
 DIGIT_LOC      = os.path.join(SKIN_LOC, "Digits")
+CLOCK_LOC      = os.path.join(SKIN_LOC, "Clock")
 BACKGROUND_LOC = os.path.join(SKIN_LOC, "Background")
-BACKGROUND_IMG = os.path.join(SKIN_LOC, "background.jpg")
+DEFAULT_IMG    = os.path.join(BACKGROUND_LOC, "1.jpg")
+CLOCK_MODE     = REAL_SETTINGS.getSetting("ClockMode")
+IMAGE_MODE     = int(REAL_SETTINGS.getSetting("ImageSource"))
+USER_IMG       = REAL_SETTINGS.getSetting("BackImage")
+USER_IMG       = '' if USER_IMG == 'Default' else USER_IMG
+USER_FOLDER    = REAL_SETTINGS.getSetting("BackFolder")
+USER_FOLDER    = '' if USER_FOLDER == 'Default' else USER_FOLDER
+ANIMATION      = 'okay' if REAL_SETTINGS.getSetting("Animate") == 'true' else 'nope'
 EXIT_SCRIPT    = ( 9, 6, 10, 247, 275, 61467, 216, 257, 61448, )
 CANCEL_DIALOG  = EXIT_SCRIPT + ( 1, 2, 3, 4, 12, 122, 75, 7, 92, )
 
@@ -93,28 +101,26 @@ class GUI(xbmcgui.WindowXMLDialog):
             self.h2 = 0
             self.m1 = 0
             self.m2 = 0
-            self.clockMode  = REAL_SETTINGS.getSetting("ClockMode")
-            self.imageMode  = int(REAL_SETTINGS.getSetting("ImageSource"))
-            self.backImage  = REAL_SETTINGS.getSetting("BackImage")
-            self.backFolder = REAL_SETTINGS.getSetting("BackFolder")
-            self.backProper = xbmcgui.Window(10000).getProperty("screensaver.flipclock.background")
+            self.winid = xbmcgui.Window(xbmcgui.getCurrentWindowDialogId())
+            self.winid.setProperty('flip_animation', ANIMATION)
+            self.imgProp    = (USER_IMG     or DEFAULT_IMG)
+            self.folderProp = (USER_FOLDER  or BACKGROUND_LOC)
             #either use script, custom user or default background
-            self.backImage  = None if not xbmcvfs.exists(self.backImage) else self.backImage
-            self.backImage  = (self.backProper or self.backImage or BACKGROUND_IMG)
-            self.backFolder = None if self.backProper else self.backFolder
             
-            if self.imageMode == 1:
-                xbmcgui.Window(10000).setProperty("screensaver.flipclock.folder",self.backFolder)
+            if IMAGE_MODE == 1:
+                self.winid.setProperty("screensaver.flipclock.folder",self.folderProp)
+                self.ui.getControl(40000).setVisible(False)
             else:
-                xbmcgui.Window(10000).clearProperty("screensaver.flipclock.folder")
-                self.ui.getControl(100).setImage(self.backImage)
+                self.winid.clearProperty("screensaver.flipclock.folder")
+                self.ui.getControl(40000).setVisible(True)
+                self.ui.getControl(40000).setImage(self.imgProp)
                       
         def run(self):
             i = 0
             while not KODI_MONITOR.abortRequested() and not self.ui.terminate:
                 dtn = datetime.datetime.now()
                 
-                if self.clockMode == "1":
+                if CLOCK_MODE == "1":
                     dte = dtn.strftime("%d.%m.%Y %H:%M:%S")
                     h = dtn.strftime("%H")
                 else:
@@ -164,7 +170,7 @@ class GUI(xbmcgui.WindowXMLDialog):
         
         def flip1(self):
             i = 1
-            self.ui.getControl( FLIP1 ).setImage(os.path.join(BACKGROUND_LOC,"0.png"))
+            self.ui.getControl( FLIP1 ).setImage(os.path.join(CLOCK_LOC,"0.png"))
             self.ui.getControl( FLIP1 ).setVisible(1)
             self.ui.getControl( DIGIT11 ).setImage(os.path.join(DIGIT_LOC,str(self.new1)+"(1).png"))
             self.ui.getControl( DIGIT12 ).setImage(os.path.join(DIGIT_LOC,str(self.old1)+"(2).png"))
@@ -188,7 +194,7 @@ class GUI(xbmcgui.WindowXMLDialog):
             h = 40
             while (i<12):
                 KODI_MONITOR.waitForAbort(.01)
-                self.ui.getControl( FLIP1 ).setImage(os.path.join(BACKGROUND_LOC,str(i)+".png"))
+                self.ui.getControl( FLIP1 ).setImage(os.path.join(CLOCK_LOC,str(i)+".png"))
                 h = h-3
                 self.ui.getControl( DIGIT110 ).setPosition(15,24+(40-h))
                 self.ui.getControl( DIGIT110 ).setHeight(h)
@@ -210,7 +216,7 @@ class GUI(xbmcgui.WindowXMLDialog):
             while (i<20):
                 KODI_MONITOR.waitForAbort(.01)
                 h = h+4
-                self.ui.getControl( FLIP1 ).setImage(os.path.join(BACKGROUND_LOC,str(i)+".png"))
+                self.ui.getControl( FLIP1 ).setImage(os.path.join(CLOCK_LOC,str(i)+".png"))
                 self.ui.getControl( DIGIT120 ).setHeight(h)
                 self.ui.getControl( DIGIT220 ).setHeight(h)
                 i  =  i +1
@@ -230,7 +236,7 @@ class GUI(xbmcgui.WindowXMLDialog):
         
         def flip2(self):
             i = 1
-            self.ui.getControl( FLIP2 ).setImage(os.path.join(BACKGROUND_LOC,"0.png"))
+            self.ui.getControl( FLIP2 ).setImage(os.path.join(CLOCK_LOC,"0.png"))
             self.ui.getControl( FLIP2 ).setVisible(1)
             self.ui.getControl( DIGIT31 ).setImage(os.path.join(DIGIT_LOC,str(self.new1)+"(1).png"))
             self.ui.getControl( DIGIT32 ).setImage(os.path.join(DIGIT_LOC,str(self.old1)+"(2).png"))
@@ -254,7 +260,7 @@ class GUI(xbmcgui.WindowXMLDialog):
             h = 40
             while (i<12):
                 KODI_MONITOR.waitForAbort(.01)
-                self.ui.getControl( FLIP2 ).setImage(os.path.join(BACKGROUND_LOC,str(i)+".png"))
+                self.ui.getControl( FLIP2 ).setImage(os.path.join(CLOCK_LOC,str(i)+".png"))
                 h = h-3
                 self.ui.getControl( DIGIT310 ).setPosition(15,24+(40-h))
                 self.ui.getControl( DIGIT310 ).setHeight(h)
@@ -276,7 +282,7 @@ class GUI(xbmcgui.WindowXMLDialog):
             while (i<20):
                 KODI_MONITOR.waitForAbort(.01)
                 h = h+4
-                self.ui.getControl( FLIP2 ).setImage(os.path.join(BACKGROUND_LOC,str(i)+".png"))
+                self.ui.getControl( FLIP2 ).setImage(os.path.join(CLOCK_LOC,str(i)+".png"))
                 self.ui.getControl( DIGIT320 ).setHeight(h)
                 self.ui.getControl( DIGIT420 ).setHeight(h)
                 i  =  i +1

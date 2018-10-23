@@ -31,3 +31,7 @@ msgstr ""
 msgctxt "#32004"
 msgid "Custom Background Folder"
 msgstr ""
+
+msgctxt "#32005"
+msgid "Animate Image"
+msgstr ""
