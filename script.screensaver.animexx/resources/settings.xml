@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<settings>
-	<setting label="45001" type="slider" id="Time" default="60" range="10,10,600" option="int" />
-	<setting id="kleine" type="bool" label="45003" default="false"/>
-	<setting id="debug" type="bool" label="45002" default="false"/>
-</settings>
