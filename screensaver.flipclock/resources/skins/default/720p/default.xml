@@ -4,23 +4,23 @@
         <system>1</system>
         <posx>0</posx>
         <posy>0</posy>
-    </coordinates>
+    </coordinates>    
     <animation effect="fade" time="250">WindowOpen</animation>
     <animation effect="fade" time="250">WindowClose</animation>
     <controls>
         <control type="group">
             <posx>0</posx> 
             <posy>0</posy> 
-            <control type="image" id="100">
+            <control type="image" id="40000">
                 <description>background</description> 
                 <posx>0</posx> 
                 <posy>0</posy> 
                 <width>1280</width> 
                 <height>720</height> 
-                <visible>IsEmpty(Window(10000).Property(screensaver.flipclock.folder))</visible>
-                <animation effect="fade" start="95" delay="20000" time="20000" tween="sin" condition="True" pulse="true">Conditional</animation>
+                <animation effect="zoom" start="110" end="130" center="auto" time="25000" tween="cubic" easing="inout" condition="String.isEqual(Window.Property(flip_animation),okay)" pulse="true">Conditional</animation>
+                <animation effect="slide" start="-10,-10" end="20,20" time="9000" tween="cubic" easing="inout" condition="String.isEqual(Window.Property(flip_animation),okay)" pulse="true">Conditional</animation>
             </control>
-            <control type="multiimage" id="101">
+            <control type="multiimage" id="40001">
                 <description>background</description> 
                 <posx>0</posx> 
                 <posy>0</posy> 
@@ -31,7 +31,10 @@
                 <pauseatend>2000</pauseatend>
                 <randomize>true</randomize>
                 <loop>yes</loop>
-                <info>Window(10000).Property(screensaver.flipclock.folder)</info>
+                <visible>[!Control.IsVisible(40000)]</visible>
+                <info>Window.Property(screensaver.flipclock.folder)</info>
+                <animation effect="zoom" start="110" end="130" center="auto" time="25000" tween="cubic" easing="inout" condition="String.isEqual(Window.Property(flip_animation),okay)" pulse="true">Conditional</animation>
+                <animation effect="slide" start="-10,-10" end="20,20" time="9000" tween="cubic" easing="inout" condition="String.isEqual(Window.Property(flip_animation),okay)" pulse="true">Conditional</animation>
             </control>
             <control type="group" id="200">
                 <posx>100</posx> 
@@ -52,7 +55,7 @@
                         <posy>0</posy> 
                         <width>129</width> 
                         <height>142</height> 
-                        <texture border="0">background/flip_bg.png</texture> 
+                        <texture border="0">clock/flip_bg.png</texture> 
                     </control>	
                     <!-- 1 -->
                     <control type="image" id="2111">
@@ -89,7 +92,7 @@
                         <posy>0</posy> 
                         <width>129</width> 
                         <height>142</height> 
-                        <texture border="0">background/flip_bg.png</texture> 
+                        <texture border="0">clock/flip_bg.png</texture> 
                     </control>	
                     <!-- 1 -->
                     <control type="image" id="21110">
@@ -144,7 +147,7 @@
                         <posy>0</posy> 
                         <width>129</width> 
                         <height>142</height> 
-                        <texture border="0">background/flip_bg.png</texture> 
+                        <texture border="0">clock/flip_bg.png</texture> 
                     </control>	
                     <!-- 1 -->
                     <control type="image" id="2211">
@@ -181,7 +184,7 @@
                         <posy>0</posy> 
                         <width>129</width> 
                         <height>142</height> 
-                        <texture border="0">background/flip_bg.png</texture> 
+                        <texture border="0">clock/flip_bg.png</texture> 
                     </control>	
                     <!-- 1 -->
                     <control type="image" id="22110">

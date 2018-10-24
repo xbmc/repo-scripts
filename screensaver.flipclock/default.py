@@ -1,4 +1,4 @@
-#   Copyright (C) 2017 Lunatixz, Anisan
+#   Copyright (C) 2018 Lunatixz, Anisan
 #
 #
 # This file is part of Flip Clock.
