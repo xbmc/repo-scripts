@@ -1,0 +1,80 @@
+# Kodi Media Center language file
+msgid ""
+msgstr ""
+
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: uk\n"
+
+
+msgctxt "#32000"
+msgid "Success!"
+msgstr "Готово!"
+
+msgctxt "#32001"
+msgid "Subtitles downloaded."
+msgstr "Субтитри завантажено."
+
+msgctxt "#32002"
+msgid "Error!"
+msgstr "Помилка!"
+
+msgctxt "#32003"
+msgid "Exceeded daily limit for subs downloads."
+msgstr "Перевищено щоденний ліміт завантаження субтитрів."
+
+msgctxt "#32004"
+msgid "Unable to download subtitles."
+msgstr "Не вдалося завантажити субтитри"
+
+msgctxt "#32005"
+msgid "Unable to connect to addic7ed.com."
+msgstr "Не вдалося підключится до addic7ed.com."
+
+msgctxt "#32006"
+msgid "Unable to determine episode data."
+msgstr "Не вдалося визначити дані серії."
+
+msgctxt "#32007"
+msgid "Always use filename for subs search"
+msgstr "Завжди шукати субтитри за іменем файлу"
+
+msgctxt "#32008"
+msgid "Select episode"
+msgstr "Виберіть серію"
+
+msgctxt "#32009"
+msgid "Login error!"
+msgstr "Помилка входу."
+
+msgctxt "#32010"
+msgid "Login to Addic7ed.com"
+msgstr "Вхід на Addic7ed.com"
+
+msgctxt "#32011"
+msgid "Username"
+msgstr "Ім\'я користувача"
+
+msgctxt "#32012"
+msgid "Password"
+msgstr "Пароль"
+
+msgctxt "#32013"
+msgid "Clean cookies"
+msgstr "Очистити кукі"
+
+msgctxt "#32014"
+msgid "This will logout you from Addic7ed.com."
+msgstr "Це призведе до виходу з Addic7ed.com."
+
+msgctxt "#32015"
+msgid "Are you sure?"
+msgstr "Ви впевнені?"
+
+msgctxt "#32016"
+msgid "Cookies removed successfully."
+msgstr "Кукі успішно видалені."
+
+msgctxt "#32017"
+msgid "Unable to remove cookies!"
+msgstr "Не вдалося видалити кукі."

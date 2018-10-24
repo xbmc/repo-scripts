@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<addon id="service.subtitles.rvm.addic7ed"
+  name="Addic7ed.com"
+  version="3.0.0"
+  provider-name="Roman V.M.">
+<requires>
+  <import addon="xbmc.python" version="2.25.0"/>
+  <import addon="script.module.beautifulsoup4"/>
+  <import addon="script.module.html5lib"/>
+  <import addon="script.module.requests"/>
+  <import addon="script.module.future"/>
+  <import addon="script.module.kodi-six"/>
+  <!--<import addon="script.module.web-pdb"/>-->
+</requires>
+<extension point="xbmc.subtitle.module" library="main.py" />
+<extension point="xbmc.addon.metadata">
+  <summary lang="en_GB">Addic7ed.com Subtitles</summary>
+  <summary lang="ru_RU">Субтитры Addic7ed.com</summary>
+  <summary lang="uk_UA">Субтитри Addic7ed.com</summary>
+  <description lang="en_GB">Subtitles service for Addic7ed.com. It supports only TV shows.</description>
+  <description lang="ru_RU">Служба субтитров для сайта Addic7ed.com. Служба поддерживает только сериалы.</description>
+  <description lang="uk_UA">Служба субтитрів для сайту Addic7ed.com. Служба підтримує лише серіали.</description>
+  <platform>all</platform>
+  <source>https://github.com/romanvm/service.addic7ed</source>
+  <license>GPL v.3</license>
+  <assets>
+    <icon>icon.png</icon>
+    <fanart>fanart.jpg</fanart>
+  </assets>
+  <news>v.3.0.0
+- Changed addon ID to avoid clashes with similar addons.
+- Changed icon and fanart to generic versions.
+- Converted code to Python 3 compatible.
+- Code refactoring and cleanup.</news>
+  <reuselanguageinvoker>false</reuselanguageinvoker>
+</extension>
+</addon>
