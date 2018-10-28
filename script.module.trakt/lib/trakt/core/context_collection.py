@@ -17,12 +17,12 @@ class ListCollection(object):
 
     @synchronized(lambda self: self._lock)
     def append(self, value):
-        l = self._lists[-1]
+        collection = self._lists[-1]
 
-        if type(l) is not list:
+        if type(collection) is not list:
             raise ValueError()
 
-        l.append(value)
+        collection.append(value)
 
     @synchronized(lambda self: self._lock)
     def find_list(self, index):
@@ -48,11 +48,11 @@ class ListCollection(object):
 
     @synchronized(lambda self: self._lock)
     def lists(self, resolve=True):
-        for l in self._lists:
-            if resolve and callable(l):
-                l = l()
+        for collection in self._lists:
+            if resolve and callable(collection):
+                collection = collection()
 
-            yield l
+            yield collection
 
     @synchronized(lambda self: self._lock)
     def pop(self, index=None):

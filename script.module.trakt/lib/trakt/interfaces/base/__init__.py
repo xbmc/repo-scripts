@@ -64,7 +64,7 @@ class Interface(object):
             if exceptions:
                 raise RequestFailedError('No response available')
 
-            log.warn('Request failed (no response returned)')
+            log.warning('Request failed (no response returned)')
             return None
 
         # Return response, if parse=False

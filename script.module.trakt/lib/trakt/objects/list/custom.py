@@ -48,9 +48,9 @@ class CustomList(List):
         if not info:
             return None
 
-        l = cls(client, keys, **kwargs)
-        l._update(info)
-        return l
+        obj = cls(client, keys, **kwargs)
+        obj._update(info)
+        return obj
 
     def items(self, **kwargs):
         """Retrieve list items.

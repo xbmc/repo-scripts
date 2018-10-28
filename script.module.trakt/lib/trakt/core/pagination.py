@@ -54,7 +54,7 @@ class PaginationIterator(object):
         response = self.fetch(page)
 
         if response is None:
-            log.warn('Request failed (no response returned)')
+            log.warning('Request failed (no response returned)')
             return None
 
         if response.status_code < 200 or response.status_code >= 300:

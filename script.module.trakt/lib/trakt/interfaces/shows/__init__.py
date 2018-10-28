@@ -1,6 +1,8 @@
 from __future__ import absolute_import, division, print_function
 
-from trakt.interfaces.base import Interface
+from trakt.core.helpers import popitems
+from trakt.interfaces.base import Interface, authenticated
+from trakt.mapper.progress import ProgressMapper
 from trakt.mapper.summary import SummaryMapper
 
 import requests
@@ -99,3 +101,33 @@ class ShowsInterface(Interface):
             return item
 
         return SummaryMapper.episode(self.client, item)
+
+    @authenticated
+    def progress(self, progress_type, id, hidden=False, specials=False, count_specials=True, **kwargs):
+        query = {
+            'hidden': hidden,
+            'specials': specials,
+            'count_specials': count_specials
+        }
+
+        response = self.http.get(str(id), [
+            'progress', progress_type
+        ], query=query, **popitems(kwargs, [
+            'authenticated',
+            'validate_token'
+        ]))
+
+        item = self.get_data(response, **kwargs)
+
+        if isinstance(item, requests.Response):
+            return item
+
+        return ProgressMapper.progress(self.client, progress_type, item)
+
+    @authenticated
+    def progress_collection(self, id, hidden=False, specials=False, count_specials=True, **kwargs):
+        return self.progress('collection', id, hidden, specials, count_specials, **kwargs)
+
+    @authenticated
+    def progress_watched(self, id, hidden=False, specials=False, count_specials=True, **kwargs):
+        return self.progress('watched', id, hidden, specials, count_specials, **kwargs)

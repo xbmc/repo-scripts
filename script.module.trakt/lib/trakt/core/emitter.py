@@ -178,7 +178,7 @@ class Emitter(object):
             callback(*args, **kwargs)
             return True
         except Exception as ex:
-            log.warn('[%s] Exception raised in: %s - %s' % (event, cls.__function_name(callback), ex), exc_info=True)
+            log.warning('[%s] Exception raised in: %s - %s' % (event, cls.__function_name(callback), ex), exc_info=True)
             return False
 
     def __call_async(self, callback, args=None, kwargs=None, event=None):

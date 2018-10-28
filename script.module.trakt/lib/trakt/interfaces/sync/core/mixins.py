@@ -49,7 +49,7 @@ class Get(Interface):
     def shows(self, store=None, **kwargs):
         return self.get(
             'shows',
-            store,
+            store=store,
             **kwargs
         )
 
@@ -57,7 +57,7 @@ class Get(Interface):
     def movies(self, store=None, **kwargs):
         return self.get(
             'movies',
-            store,
+            store=store,
             **kwargs
         )
 

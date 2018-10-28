@@ -6,6 +6,7 @@ from trakt.objects.list import CustomList, List
 from trakt.objects.media import Media
 from trakt.objects.movie import Movie
 from trakt.objects.person import Person
+from trakt.objects.progress import CollectionProgress, WatchedProgress
 from trakt.objects.rating import Rating
 from trakt.objects.season import Season
 from trakt.objects.show import Show
@@ -22,5 +23,6 @@ __all__ = (
     'Season',
     'Show',
     'Video',
-    'Person'
+    'Person',
+    'WatchedProgress', 'CollectionProgress'
 )

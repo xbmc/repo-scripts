@@ -8,7 +8,7 @@ class SyncWatchlistInterface(Get, Add, Remove):
     path = 'sync/watchlist'
     flags = {'in_watchlist': True}
 
-    def get(self, media=None, page=1, per_page=10, start_at=None, end_at=None, store=None, **kwargs):
+    def get(self, media=None, page=1, per_page=10, start_at=None, end_at=None, store=None, extended=None, **kwargs):
         # Build query
         query = {}
 
@@ -17,6 +17,9 @@ class SyncWatchlistInterface(Get, Add, Remove):
 
         if per_page:
             query['limit'] = per_page
+
+        if extended:
+            query['extended'] = extended
 
         # Request watched history
         return super(SyncWatchlistInterface, self).get(
@@ -30,7 +33,7 @@ class SyncWatchlistInterface(Get, Add, Remove):
     def seasons(self, store=None, **kwargs):
         return self.get(
             'seasons',
-            store,
+            store=store,
             **kwargs
         )
 
@@ -38,6 +41,6 @@ class SyncWatchlistInterface(Get, Add, Remove):
     def episodes(self, store=None, **kwargs):
         return self.get(
             'episodes',
-            store,
+            store=store,
             **kwargs
         )

@@ -1,3 +1,7 @@
+Version 3.0.0
+
+- trakt.py Version 3.0.0
+
 Version 2.14.1
 
 - trakt.py Version 2.14.1
