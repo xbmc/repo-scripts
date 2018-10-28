@@ -1,3 +1,5 @@
+from __future__ import absolute_import, division, print_function
+
 from trakt.core.emitter import Emitter
 from trakt.interfaces.base import Interface
 
@@ -5,6 +7,7 @@ from datetime import datetime, timedelta
 from threading import Thread
 import calendar
 import logging
+import requests
 import time
 
 log = logging.getLogger(__name__)
@@ -13,7 +16,7 @@ log = logging.getLogger(__name__)
 class DeviceOAuthInterface(Interface):
     path = 'oauth/device'
 
-    def code(self):
+    def code(self, **kwargs):
         client_id = self.client.configuration['client.id']
 
         if not client_id:
@@ -26,7 +29,10 @@ class DeviceOAuthInterface(Interface):
             }
         )
 
-        data = self.get_data(response)
+        data = self.get_data(response, **kwargs)
+
+        if isinstance(data, requests.Response):
+            return data
 
         if not data:
             return None
@@ -34,7 +40,7 @@ class DeviceOAuthInterface(Interface):
         return data
 
     def poll(self, device_code, expires_in, interval, **kwargs):
-        """Construct device authentication poller
+        """Construct the device authentication poller.
 
         :param device_code: Device authentication code
         :type device_code: str
@@ -67,6 +73,9 @@ class DeviceOAuthInterface(Interface):
         )
 
         data = self.get_data(response, **kwargs)
+
+        if isinstance(data, requests.Response):
+            return data
 
         if not data:
             return None
@@ -107,7 +116,7 @@ class DeviceOAuthPoller(Interface, Emitter):
             try:
                 self._process()
             except Exception as ex:
-                log.warn('Exception raised in DeviceOAuthPoller: %s', ex, exc_info=True)
+                log.warning('Exception raised in DeviceOAuthPoller: %s', ex, exc_info=True)
             finally:
                 self._active = False
                 self._running = False

@@ -1,8 +1,10 @@
+from __future__ import absolute_import, division, print_function
+
 from trakt.interfaces.base import authenticated
-from trakt.interfaces.sync.core.mixins import Get
+from trakt.interfaces.sync.core.mixins import Get, Delete
 
 
-class SyncPlaybackInterface(Get):
+class SyncPlaybackInterface(Get, Delete):
     path = 'sync/playback'
 
     @authenticated
@@ -13,6 +15,6 @@ class SyncPlaybackInterface(Get):
     def episodes(self, store=None, **kwargs):
         return self.get(
             'episodes',
-            store,
+            store=store,
             **kwargs
         )

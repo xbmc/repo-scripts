@@ -1,4 +1,8 @@
+from __future__ import absolute_import, division, print_function
+
 from trakt.interfaces.base import Interface
+
+import requests
 
 
 class AuthInterface(Interface):
@@ -11,6 +15,9 @@ class AuthInterface(Interface):
         })
 
         data = self.get_data(response, **kwargs)
+
+        if isinstance(data, requests.Response):
+            return data
 
         if not data:
             return None

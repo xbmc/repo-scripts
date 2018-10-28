@@ -1,6 +1,11 @@
+from __future__ import absolute_import, division, print_function
+
+from trakt.core.helpers import popitems
 from trakt.core.pagination import PaginationIterator
-from trakt.interfaces.base import authenticated, Interface
+from trakt.interfaces.base import Interface, authenticated
 from trakt.mapper.sync import SyncMapper
+
+import requests
 
 
 class Get(Interface):
@@ -17,12 +22,17 @@ class Get(Interface):
         response = self.http.get(
             params=params,
             query=query,
-
-            authenticated=kwargs.pop('authenticated', None)
+            **popitems(kwargs, [
+                'authenticated',
+                'validate_token'
+            ])
         )
 
         # Parse response
         items = self.get_data(response, **kwargs)
+
+        if isinstance(items, requests.Response):
+            return items
 
         if type(items) is not list and not isinstance(items, PaginationIterator):
             return None
@@ -39,7 +49,7 @@ class Get(Interface):
     def shows(self, store=None, **kwargs):
         return self.get(
             'shows',
-            store,
+            store=store,
             **kwargs
         )
 
@@ -47,7 +57,7 @@ class Get(Interface):
     def movies(self, store=None, **kwargs):
         return self.get(
             'movies',
-            store,
+            store=store,
             **kwargs
         )
 
@@ -57,8 +67,10 @@ class Add(Interface):
     def add(self, items, **kwargs):
         response = self.http.post(
             data=items,
-
-            authenticated=kwargs.pop('authenticated', None)
+            **popitems(kwargs, [
+                'authenticated',
+                'validate_token'
+            ])
         )
 
         return self.get_data(response, **kwargs)
@@ -70,8 +82,24 @@ class Remove(Interface):
         response = self.http.post(
             'remove',
             data=items,
-
-            authenticated=kwargs.pop('authenticated', None)
+            **popitems(kwargs, [
+                'authenticated',
+                'validate_token'
+            ])
         )
 
         return self.get_data(response, **kwargs)
+
+
+class Delete(Interface):
+    @authenticated
+    def delete(self, playbackid, **kwargs):
+        response = self.http.delete(
+            path=str(playbackid),
+            **popitems(kwargs, [
+                'authenticated',
+                'validate_token'
+            ])
+        )
+
+        return 200 <= response.status_code < 300

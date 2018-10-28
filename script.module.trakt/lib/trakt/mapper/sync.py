@@ -1,3 +1,5 @@
+from __future__ import absolute_import, division, print_function
+
 from trakt.mapper.core.base import Mapper
 
 import logging
@@ -199,7 +201,7 @@ class SyncMapper(Mapper):
             )
 
             if result is None:
-                log.warn('Unable to map item: %s', item)
+                log.warning('Unable to map item: %s', item)
 
         return store
 
@@ -242,7 +244,7 @@ class SyncMapper(Mapper):
             )
 
             if result is None:
-                log.warn('Unable to map item: %s', item)
+                log.warning('Unable to map item: %s', item)
 
             # Yield item in iterator
             yield result

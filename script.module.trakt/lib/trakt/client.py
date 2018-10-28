@@ -1,13 +1,16 @@
+from __future__ import absolute_import, division, print_function
+
 from trakt.core.configuration import ConfigurationManager
 from trakt.core.emitter import Emitter
 from trakt.core.http import HttpClient
 from trakt.interfaces import construct_map
 from trakt.interfaces.base import InterfaceProxy
+from trakt.mapper.core.base import Mapper
 from trakt.version import __version__
 
 
 class TraktClient(Emitter):
-    base_url = 'https://api-v2launch.trakt.tv'
+    base_url = 'https://api.trakt.tv'
     version = __version__
 
     __interfaces = None
@@ -42,6 +45,13 @@ class TraktClient(Emitter):
     @site_url.setter
     def site_url(self, value):
         self._site_url = value
+
+    def construct(self, media, item, keys=None, **kwargs):
+        return Mapper.construct(self, media, item, keys, **kwargs)
+
+    @staticmethod
+    def get_ids(media, item, parent=None):
+        return Mapper.get_ids(media, item, parent)
 
     def __getitem__(self, path):
         parts = path.strip('/').split('/')

@@ -1,3 +1,6 @@
+from __future__ import absolute_import, division, print_function
+
+from six import string_types
 import functools
 import logging
 import warnings
@@ -30,10 +33,22 @@ def deprecated(message):
     return wrap
 
 
+def popitems(d, keys):
+    result = {}
+
+    for key in keys:
+        value = d.pop(key, None)
+
+        if value is not None:
+            result[key] = value
+
+    return result
+
+
 def synchronized(f_lock, mode='full'):
     if mode == 'full':
         mode = ['acquire', 'release']
-    elif isinstance(mode, (str, unicode)):
+    elif isinstance(mode, string_types):
         mode = [mode]
 
     def wrap(func):
@@ -82,7 +97,26 @@ def try_convert(value, value_type, default=None):
 # Date/Time Conversion
 #
 
+@deprecated('`from_iso8601(value)` has been renamed to `from_iso8601_datetime(value)`')
 def from_iso8601(value):
+    return from_iso8601_datetime(value)
+
+
+def from_iso8601_date(value):
+    if value is None:
+        return None
+
+    if arrow is None:
+        raise Exception('"arrow" module is not available')
+
+    # Parse ISO8601 datetime
+    dt = arrow.get(value)
+
+    # Return date object
+    return dt.date()
+
+
+def from_iso8601_datetime(value):
     if value is None:
         return None
 
@@ -99,7 +133,19 @@ def from_iso8601(value):
     return dt.datetime
 
 
+@deprecated('`to_iso8601(value)` has been renamed to `to_iso8601_datetime(value)`')
 def to_iso8601(value):
+    return to_iso8601_datetime(value)
+
+
+def to_iso8601_date(value):
+    if value is None:
+        return None
+
+    return value.strftime('%Y-%m-%d')
+
+
+def to_iso8601_datetime(value):
     if value is None:
         return None
 

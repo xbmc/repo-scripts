@@ -1,4 +1,6 @@
-from trakt.core.helpers import from_iso8601
+from __future__ import absolute_import, division, print_function
+
+from trakt.core.helpers import from_iso8601_datetime
 from trakt.objects.core.helpers import update_attributes
 
 
@@ -92,7 +94,7 @@ class Comment(object):
 
     @property
     def id(self):
-        """Returns the comment identifier
+        """Retrieve the comment identifier.
 
         :rtype: :class:`~python:int`
         """
@@ -106,7 +108,7 @@ class Comment(object):
 
     @property
     def pk(self):
-        """Primary Key (unique identifier for the comment)
+        """Retrieve the primary key (unique identifier for the comment).
 
         :return: :code:`("trakt", <id>)` or :code:`None` if no primary key is available
         :rtype: :class:`~python:tuple`
@@ -122,10 +124,10 @@ class Comment(object):
             return
 
         if 'created_at' in info:
-            self.created_at = from_iso8601(info.get('created_at'))
+            self.created_at = from_iso8601_datetime(info.get('created_at'))
 
         if 'liked_at' in info:
-            self.liked_at = from_iso8601(info.get('liked_at'))
+            self.liked_at = from_iso8601_datetime(info.get('liked_at'))
 
         update_attributes(self, info, [
             'parent_id',
