@@ -22,7 +22,36 @@
 
 # General Ads section includes generic definitions applicable to any language
 [Ads]
-.*www.opensubtitles.org.*
+# sites & tools
+.*netflix.*
+.*opensubtitles.org.*
+.*podnapisi.net.*
+.*SRT Converter.*
+.*subedit.*
+.*subtitletools.com.*
+.*www.osdb.link.*
+# domains
+.*facebook.com.*
+.*gmail.com.*
+.*hotmail.com.*
+.*twitter.com.*
+.*yahoo.com.*
+# movie specs
+.*23.976.*
+.*720p.*
+.*1080p.*
+.*bd.?rip.*
+.*blu.?ray.*
+.*divx.*
+.*dvd.?rip.*
+.*hdtv.*
+.*hevc.*
+.*hd.?dvd.*
+.*[hx]{1}26[45]{1}.*   # matches: x264 h264 x265 h265
+.*movie info:.*
+.*web.?dl.*
+.*xvid.*
+
 
 
 # Language specific Ads secions include language specific definitions.

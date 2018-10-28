@@ -6,7 +6,7 @@ It is Kodi Media Center service plugin aiming to be a comprehensive subtitle hel
 It allows:
 1) invoking subtitle search dialog at playback start taking into account local subtitle files availability
 - recognizes if there are subtitle files already downloaded or not
-- recognizes 'noautosubs' file (per directory) and '.noautosubs' extension (per file) whose presence prevents subtitle search dialog from opening
+- recognizes 'noautosubs' file (per directory) and '.noautosubs' extension (per file) whose presence prevents subtitle search dialog from opening. Allows to manage it from within UI
 - tries to identify if video file includes internal forced subtitles matching preferred language
 
 2) detecting if subtitle file was downloaded locally and perform conversion
