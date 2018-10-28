@@ -104,6 +104,10 @@ msgctxt "#32032"
 msgid "Separate log file (smangler.log)"
 msgstr "Egyedi lg fájl (smangler.log)"
 
+msgctxt "#32033"
+msgid "Show 'noautosubs' context menu item"
+msgstr ""
+
 msgctxt "#32040"
 msgid "No new subtitles file has been detected."
 msgstr "Nem található új felirat fájl."
@@ -207,3 +211,39 @@ msgstr "Felirat fájlok keresése"
 msgctxt "#32091"
 msgid "Clearing orphaned subtitle files"
 msgstr "Árva felirat fájlok törlése"
+
+msgctxt "#32100"
+msgid "Manage 'noautosubs' flag"
+msgstr "'noautosubs' beállítás kezelése"
+
+msgctxt "#32101"
+msgid "Following path contains 'noautosubs' file:"
+msgstr "A következő hely tartalmaz 'noautosubs' funkciót:"
+
+msgctxt "#32102"
+msgid "Subtitle search dialog will not be opened."
+msgstr "A feliratkereső ablak nem fog megjelenni"
+
+msgctxt "#32103"
+msgid "'.noautosubs' extension flag IS SET for file:"
+msgstr "'.noautosubs' kiterjesztés BEÁLLíTVA a fájlnak:"
+
+msgctxt "#32104"
+msgid "Do you want to CLEAR it?"
+msgstr "Ki akarja KAPCSOLNI?"
+
+msgctxt "#32105"
+msgid "'.noautosubs' extension flag IS CLEARED for file:"
+msgstr "'.noautosubs' funkció KIKAPCSOLVA a fájlnál:"
+
+msgctxt "#32106"
+msgid "Do you want to SET it?"
+msgstr "Be akarja KAPCSOLNI?"
+
+msgctxt "#32107"
+msgid "'noautosubs' file IS SET for folder:"
+msgstr "'noautosubs' funkció BEKAPCSOLVA a mappának:"
+
+msgctxt "#32108"
+msgid "'noautosubs' file IS CLEARED for folder:"
+msgstr "'noautosubs' funkció KIKAPCSOLVA a mappánál:"

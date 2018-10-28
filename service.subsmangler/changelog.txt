@@ -1,3 +1,8 @@
+v1.1.0 (2018-10-27)
+- implement context menu for easier management of 'noautosubs' file/extension
+- change default logging destination to separate log file
+- decrease housekeeping timer only if player is idle
+- ignore 'plugin://' media path
 v1.0.0 (2018-09-09)
 - first release for Official Kodi Repo
 v0.0.35 (2018-08-31)
