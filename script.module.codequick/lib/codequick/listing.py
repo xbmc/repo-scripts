@@ -2,7 +2,6 @@
 from __future__ import absolute_import
 
 # Standard Library Imports
-from collections import MutableMapping
 from time import strptime, strftime
 import logging
 import os
@@ -16,6 +15,13 @@ import xbmcgui
 from codequick.script import Script
 from codequick.support import auto_sort, build_path, logger_id, dispatcher
 from codequick.utils import ensure_unicode, ensure_native_str, unicode_type, PY3, bold
+
+if PY3:
+    # noinspection PyUnresolvedReferences, PyCompatibility
+    from collections.abc import MutableMapping, MutableSequence
+else:
+    # noinspection PyUnresolvedReferences, PyCompatibility
+    from collections import MutableMapping, MutableSequence
 
 __all__ = ["Listitem"]
 
@@ -80,8 +86,11 @@ strip_formatting = re.compile("\[[^\]]+?\]").sub
 # Localized string Constants
 RELATED_VIDEOS = 32201
 RECENT_VIDEOS = 32002
+RECENT_VIDEOS_PLOT = 32004
 ALLVIDEOS = 32003
 NEXT_PAGE = 33078
+NEXT_PAGE_PLOT = 32005
+SEARCH_PLOT = 32006
 SEARCH = 137
 
 
@@ -154,7 +163,7 @@ class Art(Params):
     def local_thumb(self, image):
         """
         Set the "thumbnail" image to a image file, located in the add-on "resources/media" directory.
-        
+
         :param str image: Filename of the image.
         """
         # Here we can't be sure if 'image' only contains ascii characters, so ensure_native_str is needed
@@ -163,7 +172,7 @@ class Art(Params):
     def global_thumb(self, image):
         """
         Set the "thumbnail" image to a image file, located in the codequick "resources/media" directory.
-        
+
         The available global thumbnail images are.
             * next.png        - Arrow pointing to the right.
             * videos.png      - Circle with a play button in the middle.
@@ -264,10 +273,10 @@ class Info(Params):
     def date(self, date, date_format):
         """
         Set the date infolabel.
-        
+
         :param str date: The date for the listitem.
         :param str date_format: The format of the date as a strftime directive e.g. "june 27, 2017" => "%B %d, %Y"
-        
+
         .. seealso:: The full list of directives can be found at:
 
                     https://docs.python.org/3.6/library/time.html#time.strftime
@@ -459,11 +468,15 @@ class Context(list):
         Convenient method to add a "Related Videos" context menu item.
 
         All this really does is to call "context.container" and sets "label" for you.
-        
+
         :param callback: The function that will be called when menu item is activated.
         :param args: [opt] "Positional" arguments that will be passed to the callback.
         :param kwargs: [opt] "Keyword" arguments that will be passed to the callback.
         """
+        # Add '_updatelisting_ = True' to callback params if called from the same callback as is given here
+        if callback.route == dispatcher.get_route():
+            kwargs["_updatelisting_"] = True
+
         self.container(callback, Script.localize(RELATED_VIDEOS), *args, **kwargs)
 
     def container(self, callback, label, *args, **kwargs):
@@ -548,9 +561,9 @@ class Listitem(object):
         self.property = Property(listitem)
         """
         Dictionary like object that allows you to add "listitem properties". e.g. "StartOffset".
-        
-        Some of these are processed internally by Kodi, such as the "StartOffset" property, 
-        which is the offset in seconds at which to start playback of an item. Others may be used 
+
+        Some of these are processed internally by Kodi, such as the "StartOffset" property,
+        which is the offset in seconds at which to start playback of an item. Others may be used
         in the skin to add extra information, such as "WatchedCount" for tvshow items.
 
         :examples:
@@ -684,6 +697,7 @@ class Listitem(object):
         Constructor for adding link to "Next Page" of content.
 
         The current running "callback" will be called with all of the parameters that are given here.
+        You can also specify which "callback" will be called by setting a keywork only argument called 'callback'.
 
         :param args: "Positional" arguments that will be passed to the callback.
         :param kwargs: "Keyword" arguments that will be passed to the callback.
@@ -693,7 +707,8 @@ class Listitem(object):
             >>> item.next_page(url="http://example.com/videos?page2")
         """
         # Current running callback
-        route = dispatcher.get_route()
+        callback = dispatcher.get_route().callback
+        callback = kwargs.pop("callback", callback)
 
         # Add support params to callback params
         kwargs["_updatelisting_"] = True if u"_nextpagecount_" in dispatcher.params else False
@@ -703,10 +718,10 @@ class Listitem(object):
         # Create listitem instance
         item = cls()
         label = u"%s %i" % (Script.localize(NEXT_PAGE), kwargs["_nextpagecount_"])
-        item.info["plot"] = "Show the next page of content."
+        item.info["plot"] = Script.localize(NEXT_PAGE_PLOT)
         item.label = bold(label)
         item.art.global_thumb("next.png")
-        item.set_callback(route.callback, *args, **kwargs)
+        item.set_callback(callback, *args, **kwargs)
         return item
 
     @classmethod
@@ -723,9 +738,9 @@ class Listitem(object):
         # Create listitem instance
         item = cls()
         item.label = bold(Script.localize(RECENT_VIDEOS))
-        item.info["plot"] = "Show the most recent videos."
+        item.info["plot"] = Script.localize(RECENT_VIDEOS_PLOT)
         item.art.global_thumb("recent.png")
-        item.set_callback(callback, args, **kwargs)
+        item.set_callback(callback, *args, **kwargs)
         return item
 
     @classmethod
@@ -754,8 +769,8 @@ class Listitem(object):
         item = cls()
         item.label = bold(Script.localize(SEARCH))
         item.art.global_thumb("search.png")
-        item.info["plot"] = "Search for video content."
-        item.set_callback(SavedSearches, route=callback.route.path, first_load=True, **kwargs)
+        item.info["plot"] = Script.localize(SEARCH_PLOT)
+        item.set_callback(SavedSearches, _route=callback.route.path, first_load=True, **kwargs)
         return item
 
     @classmethod

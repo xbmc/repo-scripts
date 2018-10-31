@@ -21,9 +21,11 @@ logger = logging.getLogger("%s.youtube" % logger_id)
 # Localized string Constants
 ALLVIDEOS = 32003
 PLAYLISTS = 136
+PLAYLISTS_PLOT = 32007
 
-# Youtube cache directory
-CACHEFILE = os.path.join(Route.get_info("profile"), u"_youtube-cache.sqlite")
+# Constants
+CACHEFILE = os.path.join(Route.get_info("profile"), u"_youtube-cache.sqlite")  # Youtube cache directory
+EXCEPTED_STATUS = [u"public", u"unlisted"]
 
 
 class CustomRow(sqlite3.Row):
@@ -660,7 +662,7 @@ class Playlist(APIControl):
 
         # Fetch video ids for all public videos
         for item in feed[u"items"]:
-            if item[u"status"][u"privacyStatus"] == u"public":  # pragma: no branch
+            if u"status" in item and item[u"status"][u"privacyStatus"] in EXCEPTED_STATUS:  # pragma: no branch
                 channel_list.add(item[u"snippet"][u"channelId"])
                 video_list.append(item[u"snippet"][u"resourceId"][u"videoId"])
             else:  # pragma: no cover
@@ -676,7 +678,7 @@ class Playlist(APIControl):
         if enable_playlists and contentid.startswith("UC") and pagetoken is None:
             item = Listitem()
             item.label = u"[B]%s[/B]" % self.localize(PLAYLISTS)
-            item.info["plot"] = "Show all channel playlists."
+            item.info["plot"] = self.localize(PLAYLISTS_PLOT)
             item.art["icon"] = "DefaultVideoPlaylists.png"
             item.art.global_thumb("playlist.png")
             item.set_callback(Playlists, channel_id=contentid, show_all=False)

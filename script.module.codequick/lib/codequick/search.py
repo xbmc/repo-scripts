@@ -1,11 +1,15 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import
 
+# Standard Library Imports
+from hashlib import sha1
+import pickle
+
 # Package imports
-from codequick.storage import PersistentList
+from codequick.storage import PersistentDict
 from codequick.support import dispatcher
 from codequick.listing import Listitem
-from codequick.utils import keyboard
+from codequick.utils import keyboard, ensure_unicode, unicode_type
 from codequick.route import Route, validate_listitems
 
 # Localized string Constants
@@ -14,7 +18,18 @@ REMOVE = 1210
 SEARCH = 137
 
 # Name of the database file
-SEARCH_DB = u"_searches.pickle"
+SEARCH_DB = u"_new_searches.pickle"
+
+
+def hash_params(data):
+    # type: (dict) -> unicode_type
+
+    # Convert dict of params into a sorted list of key, value pairs
+    sorted_dict = sorted(data.items())
+
+    # Pickle the sorted dict so we can hash the contents
+    content = pickle.dumps(sorted_dict, protocol=2)
+    return ensure_unicode(sha1(content).hexdigest())
 
 
 @Route.register
@@ -30,27 +45,31 @@ class SavedSearches(Route):
         super(SavedSearches, self).__init__()
 
         # Persistent list of currently saved searches
-        self.search_db = PersistentList(SEARCH_DB)
+        self.search_db = PersistentDict(SEARCH_DB)
         self.register_delayed(self.close)
+        self.session_data = None  # type: list
 
     def run(self, remove_entry=None, search=False, first_load=False, **extras):
         """List all saved searches."""
 
+        # Create session hash from givin arguments
+        session_hash = hash_params(extras)
+        self.session_data = session_data = self.search_db.setdefault(session_hash, [])
+
         # Remove search term from saved searches
-        if remove_entry and remove_entry in self.search_db:
+        if remove_entry and remove_entry in session_data:
+            session_data.remove(remove_entry)
             self.update_listing = True
-            self.search_db.remove(remove_entry)
             self.search_db.flush()
 
         # Show search dialog if search argument is True, or if there is no search term saved
         # First load is used to only allow auto search to work when first loading the saved search container.
         # Fixes an issue when there is no saved searches left after removing them.
-        elif search or (first_load is True and not self.search_db):
-            self.cache_to_disc = True
+        elif search or (first_load is True and not session_data):
             search_term = keyboard(self.localize(ENTER_SEARCH_STRING))
             if search_term:
                 return self.redirect_search(search_term, extras)
-            elif not self.search_db:
+            elif not session_data:
                 return False
             else:
                 self.update_listing = True
@@ -67,12 +86,13 @@ class SavedSearches(Route):
         :param dict extras: Extra parameters that will be farwarded on to the callback function.
         :return: List if valid search results
         """
-        self.category = search_term.title()
+        self.params[u"_title_"] = search_term.title()
+        self.category = self.params[u"_title_"]
         callback_params = extras.copy()
         callback_params["search_query"] = search_term
 
         # We switch selector to redirected callback to allow next page to work properly
-        route = callback_params.pop("route")
+        route = callback_params.pop("_route")
         dispatcher.selector = route
 
         # Fetch search results from callback
@@ -84,8 +104,8 @@ class SavedSearches(Route):
 
         # Add the search term to database and return the list of results
         if valid_listitems:
-            if search_term not in self.search_db:  # pragma: no branch
-                self.search_db.append(search_term)
+            if search_term not in self.session_data:  # pragma: no branch
+                self.session_data.append(search_term)
                 self.search_db.flush()
 
             return valid_listitems
@@ -111,14 +131,14 @@ class SavedSearches(Route):
 
         # Set the callback function to the route that was given
         callback_params = extras.copy()
-        route = callback_params.pop("route")
+        route = callback_params.pop("_route")
         callback = dispatcher.get_route(route).callback
 
         # Prefetch the localized string for the context menu lable
         str_remove = self.localize(REMOVE)
 
         # List all saved searches
-        for search_term in self.search_db:
+        for search_term in self.session_data:
             item = Listitem()
             item.label = search_term.title()
 
