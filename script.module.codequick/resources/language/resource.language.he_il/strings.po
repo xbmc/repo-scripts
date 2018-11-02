@@ -32,6 +32,22 @@ msgctxt "#32003"
 msgid "All Videos"
 msgstr "כל קבצי הווידאו"
 
+msgctxt "#32004"
+msgid "Show the most recent videos."
+msgstr ""
+
+msgctxt "#32005"
+msgid "Show the next page of content."
+msgstr ""
+
+msgctxt "#32006"
+msgid "Search for video content."
+msgstr ""
+
+msgctxt "#32007"
+msgid "Show all channel playlists."
+msgstr ""
+
 # ####################################
 # Context Menu String: 32200 - 32299 #
 # ####################################

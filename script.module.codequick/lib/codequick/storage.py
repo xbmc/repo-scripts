@@ -2,20 +2,27 @@
 from __future__ import absolute_import
 
 # Standard Library Imports
-from collections import MutableMapping, MutableSequence
 from hashlib import sha1
 import time
 import sys
 import os
 
 try:
+    # noinspection PyPep8Naming
     import cPickle as pickle
 except ImportError:  # pragma: no cover
     import pickle
 
 # Package imports
 from codequick.script import Script
-from codequick.utils import ensure_unicode
+from codequick.utils import ensure_unicode, PY3
+
+if PY3:
+    # noinspection PyUnresolvedReferences, PyCompatibility
+    from collections.abc import MutableMapping, MutableSequence
+else:
+    # noinspection PyUnresolvedReferences, PyCompatibility
+    from collections import MutableMapping, MutableSequence
 
 __all__ = ["PersistentDict", "PersistentList"]
 

@@ -22,31 +22,32 @@ msgstr ""
 
 msgctxt "#32001"
 msgid "Youtube Channel"
-msgstr ""
+msgstr "Chaîne Youtube"
 
 msgctxt "#32002"
 msgid "Recent Videos"
-msgstr ""
+msgstr "Vidéos Résentes"
 
 msgctxt "#32003"
 msgid "All Videos"
-msgstr ""
+msgstr "Toutes les Vidéos"
 
 msgctxt "#32004"
 msgid "Show the most recent videos."
-msgstr ""
+msgstr "Afficher les vidéos les plus récentes."
 
 msgctxt "#32005"
 msgid "Show the next page of content."
-msgstr ""
+msgstr "Afficher le contenu de la page suivante"
 
 msgctxt "#32006"
 msgid "Search for video content."
-msgstr ""
+msgstr "Rechercher du contenu vidéo."
 
 msgctxt "#32007"
 msgid "Show all channel playlists."
-msgstr ""
+msgstr "Afficher toutes les playlists de la chaîne."
+
 
 ######################################
 # Context Menu String: 32200 - 32299 #
@@ -54,7 +55,7 @@ msgstr ""
 
 msgctxt "#32201"
 msgid "Related Videos"
-msgstr ""
+msgstr "Vidéos Similaires"
 
 ##################################
 # Setting Strings: 32300 - 32399 #
@@ -66,4 +67,4 @@ msgstr ""
 
 msgctxt "#32401"
 msgid "Unable to resolve url"
-msgstr ""
+msgstr "Impossible de résoudre l'URL"
