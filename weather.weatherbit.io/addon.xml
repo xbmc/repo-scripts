@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="weather.weatherbit.io" name="Weatherbit IO" version="0.0.10" provider-name="ronie">
+	<requires>
+		<import addon="xbmc.python" version="2.25.0"/>
+		<import addon="script.openweathermap.maps" version="0.2.2"/>
+		<import addon="script.module.dateutil" version="2.5.3"/>
+	</requires>
+	<extension point="xbmc.python.weather" library="default.py"/>
+	<extension point="xbmc.addon.metadata">
+		<summary lang="en">Weather forecast from weatherbit.io</summary>
+		<description lang="en">Weather forecast provided by Weatherbit (https://weatherbit.io/)</description>
+		<language></language>
+		<platform>all</platform>
+		<license>GNU GENERAL PUBLIC LICENSE Version 2</license>
+		<forum>https://forum.kodi.tv/forumdisplay.php?fid=155</forum>
+		<website></website>
+		<email></email>
+		<source>https://gitlab.com/ronie/weather.weatherbit.io/</source>
+	</extension>
+</addon>

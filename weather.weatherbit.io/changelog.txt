@@ -1,0 +1,33 @@
+v0.0.10
+- workaround strptime bug
+
+v0.0.9
+- fix crash when feels like temp is missing
+
+v0.0.8
+- convert sunrise / sunset time from utc to local time
+
+v0.0.7
+- get weather by lat/lon instead of city id
+
+v0.0.6
+- updated readme
+- fix sealevel pressure unit
+- round visibility value in miles
+
+v0.0.5
+- fix interaction with script.openweathermap.maps
+
+v0.0.4
+- settings cleanup
+
+v0.0.3
+- code cleanup
+- fix geoip lookup
+
+v0.0.2
+- fix crash on null value for the precipation key in current conditions
+- fix crash on missing snow key in current conditions
+
+v0.0.1
+- initial alpha
