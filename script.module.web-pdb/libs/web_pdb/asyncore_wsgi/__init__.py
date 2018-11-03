@@ -205,6 +205,7 @@ class AsyncWsgiHandler(asyncore.dispatcher, WSGIRequestHandler):
         except Exception:
             self.handle_error()
         else:
+            self._server_handler.headers['X-Clacks-Overhead'] = 'GNU Terry Pratchett'
             if 'Content-Length' not in self._server_handler.headers:
                 self._transfer_chunked = True
                 self._server_handler.headers['Transfer-Encoding'] = 'chunked'
