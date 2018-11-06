@@ -9,7 +9,7 @@ import pickle
 import requests
 from kodi_six.xbmcgui import Dialog
 from .addon import ADDON_ID, addon, profile, get_ui_string
-from .exceptions import CookiesError, LoginError, ConnectionError
+from .exceptions import CookiesError, LoginError, Add7ConnectionError
 from .utils import logger
 
 __all__ = ['Session']
@@ -116,14 +116,14 @@ class Session(object):
             response = self._session.get(url, params=params)
         except requests.RequestException:
             logger.error('Unable to connect to Addic7ed.com!')
-            raise ConnectionError
+            raise Add7ConnectionError
         response.encoding = 'utf-8'  # Encoding is auto-detected incorrectly
         logger.debug('Addic7ed.com returned page:\n{}'.format(response.text))
-        if response.status_code not in (200, 301, 302):
+        if not response.ok:
             logger.error('Addic7ed.com returned status: {0}'.format(
                 response.status_code)
             )
-            raise ConnectionError
+            raise Add7ConnectionError
         return response
 
     def load_page(self, path, params=None):

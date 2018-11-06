@@ -16,7 +16,8 @@ from urllib import parse as urlparse
 from kodi_six import xbmc, xbmcplugin, xbmcgui, xbmcvfs
 from . import parser
 from .addon import addon, profile, get_ui_string, icon
-from .exceptions import DailyLimitError, ParseError, SubsSearchError
+from .exceptions import DailyLimitError, ParseError, SubsSearchError, \
+    Add7ConnectionError
 from .utils import logger, get_languages, get_now_played, parse_filename, \
     normalize_showname
 
@@ -105,7 +106,7 @@ def download_subs(link, referrer, filename):
     # Download the subs from addic7ed.com
     try:
         parser.download_subs(link, referrer, subspath)
-    except ConnectionError:
+    except Add7ConnectionError:
         logger.error('Unable to connect to addic7ed.com')
         dialog.notification(get_ui_string(32002), get_ui_string(32005), 'error')
     except DailyLimitError:
@@ -201,7 +202,7 @@ def search_subs(params):
         logger.debug('Search query: {0}'.format(query))
         try:
             results = parser.search_episode(query, languages)
-        except ConnectionError:
+        except Add7ConnectionError:
             logger.error('Unable to connect to addic7ed.com')
             dialog.notification(
                 get_ui_string(32002), get_ui_string(32005), 'error'
@@ -217,7 +218,7 @@ def search_subs(params):
                 if i >= 0:
                     try:
                         results = parser.get_episode(results[i].link, languages)
-                    except ConnectionError:
+                    except Add7ConnectionError:
                         logger.error('Unable to connect to addic7ed.com')
                         dialog.notification(get_ui_string(32002),
                                             get_ui_string(32005), 'error')

@@ -15,7 +15,7 @@ class SubsSearchError(Add7Exception):
     pass
 
 
-class ConnectionError(Add7Exception):
+class Add7ConnectionError(Add7Exception):
     pass
 
 
