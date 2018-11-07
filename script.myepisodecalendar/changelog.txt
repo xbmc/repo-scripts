@@ -1,3 +1,6 @@
+1.4.1
++ Fixed login by switching myepisodecalendar URLs to https
++ Switched TVDB API URLs to https
 1.4.0
 + Hebrew translation thanks to Eng2Heb
 + major improvements in matching series titles
