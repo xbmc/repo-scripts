@@ -22,7 +22,7 @@ msgstr "Kaster"
 
 msgctxt "#32001"
 msgid "Photo by"
-msgstr "Fotografía de"
+msgstr "Foto de"
 
 msgctxt "#32002"
 msgid "General"
@@ -38,11 +38,11 @@ msgstr "Solo Google Photos"
 
 msgctxt "#32005"
 msgid "Only my photos"
-msgstr "Solo Mis Fotografías"
+msgstr "Solo Mis Fotos"
 
 msgctxt "#32006"
 msgid "Google photos + my photos"
-msgstr "Google Photos + Mis Fotografías"
+msgstr "Google Photos + Mis Fotos"
 
 msgctxt "#32007"
 msgid "Unknown"
