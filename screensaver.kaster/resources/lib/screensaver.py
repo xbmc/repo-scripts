@@ -39,15 +39,26 @@ class Kaster(xbmcgui.WindowXMLDialog):
             self.exit_callback = exit_callback
 
         def onScreensaverDeactivated(self):
-            self.exit_callback()
+            try:
+                self.exit_callback()
+            except AttributeError:
+                xbmc.log(
+                    msg="exit_callback method not yet available",
+                    level=xbmc.LOGWARNING
+                )
+
 
     def __init__(self, *args, **kwargs):
+        self.exit_monitor = None
         self.images = []
         self.set_property()
         self.utils = ScreenSaverUtils()
 
     def onInit(self):
+        self._isactive = True
+        # Register screensaver deactivate callback function
         self.exit_monitor = self.ExitMonitor(self.exit)
+        # Init controls
         self.backgroud = self.getControl(32500)
         self.metadata_line2 = self.getControl(32503)
         self.metadata_line3 = self.getControl(32504)
@@ -56,9 +67,9 @@ class Kaster(xbmcgui.WindowXMLDialog):
         self.get_images()
 
         # Start Image display loop
-        if self.images:
-            while not self.exit_monitor.abortRequested():
-                rand_index = randint(0, len(self.images)-1)
+        if self.images and self.exit_monitor:
+            while self._isactive and not self.exit_monitor.abortRequested():
+                rand_index = randint(0, len(self.images) - 1)
 
                 # if it is a google image....
                 if "private" not in self.images[rand_index]:
@@ -94,9 +105,16 @@ class Kaster(xbmcgui.WindowXMLDialog):
                 self.backgroud.setImage(self.images[rand_index]["url"])
                 # Pop image and wait
                 del self.images[rand_index]
-                self.exit_monitor.waitForAbort(kodiutils.get_setting_as_int("wait-time-before-changing-image"))
+                # Sleep for a given ammount of time if the window is active abort is not requested
+                # note: abort requested is only called after kodi kills the entrypoint and we need to return
+                # as soon as possible
+                loop_count = (kodiutils.get_setting_as_int("wait-time-before-changing-image") * 1000) / 200
+                for _ in range(0, loop_count):
+                    if self._isactive and not self.exit_monitor.abortRequested():
+                        xbmc.sleep(200)
                 # Check if images dict is empty, if so read the file again
-                self.get_images()
+                if not self.images:
+                    self.get_images()
 
     def get_images(self, override=False):
         # Read google images from json file
@@ -132,7 +150,14 @@ class Kaster(xbmcgui.WindowXMLDialog):
         # Set animations
         if kodiutils.get_setting_as_int("animation") == 1:
             self.setProperty("animation","panzoom")
-        return
+        return         
+
 
     def exit(self):
+        self._isactive = False
+        # Delete the monitor from memory so we can gracefully remove
+        # the screensaver window from memory too
+        if self.exit_monitor:
+            del self.exit_monitor
+        # Finally call close so doModal returns
         self.close()
