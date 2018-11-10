@@ -1,3 +1,13 @@
+*** 18.1107.0 ***
+
+Updated youtube-dl core to 2018.11.7
+
+*** 18.619.0 ***
+
+Updated youtube-dl core to 2018.06.19
+Added dutch translation - (Thanks Quihico)
+Added greek translations - (Thanks Twilight0)
+
 *** 18.425.0 ***
 
 Updated youtube-dl core to 2018.04.25

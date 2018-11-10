@@ -1,0 +1,166 @@
+# XBMC Media Center language file
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC-Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: 2013-12-12 22:56+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+
+msgctxt "#32001"
+msgid "ETA"
+msgstr "ΕΩΑ"
+
+msgctxt "#32002"
+msgid "Size"
+msgstr "Μέγεθος"
+
+msgctxt "#32003"
+msgid "Received"
+msgstr "Ελήφθησαν"
+
+msgctxt "#32004"
+msgid "Downloading"
+msgstr "Μεταφόρτωση"
+
+msgctxt "#32005"
+msgid "Use Default?"
+msgstr "Χρήση προκαθορισμένου;"
+
+msgctxt "#32006"
+msgid "Use default path:"
+msgstr "Χρήση προκαθορισμένης διαδρομής"
+
+msgctxt "#32007"
+msgid "Or choose a new path?"
+msgstr "Ή επιλογή νέας διαδρομής;"
+
+msgctxt "#32008"
+msgid "Default"
+msgstr "Προκαθορισμένη"
+
+msgctxt "#32009"
+msgid "New"
+msgstr "Νέα"
+
+msgctxt "#32010"
+msgid "Select Directory"
+msgstr "Επιλογή φακέλου"
+
+msgctxt "#32011"
+msgid "Done"
+msgstr "Έγινε"
+
+msgctxt "#32012"
+msgid "Download Complete"
+msgstr "Ολοκλήρωση μεταφόρτωσης"
+
+msgctxt "#32013"
+msgid "Download Failed"
+msgstr "Αποτυχία μεταφόρτωσης"
+
+msgctxt "#32014"
+msgid "SD Only"
+msgstr "Μόνο MA"
+
+msgctxt "#32015"
+msgid "720p"
+msgstr "720π"
+
+msgctxt "#32016"
+msgid "1080p"
+msgstr "1080π"
+
+msgctxt "#32017"
+msgid "Max Streaming Video Quality"
+msgstr "Μέγιστη ποιότητα ροής βίντεο"
+
+msgctxt "#32018"
+msgid "Disable DASH Video (Recommended)"
+msgstr "Απενεργοποίηση βίντεο μορφής DASH (Προτείνεται)"
+
+msgctxt "#32019"
+msgid "Main"
+msgstr "Βασικά"
+
+msgctxt "#32020"
+msgid "Advanced"
+msgstr "Για προχωρημένους"
+
+msgctxt "#32021"
+msgid "Use user updated youtube-dl core version"
+msgstr "Κάνε χρήση αναβαθμισμένης έκδοσης πυρήνα youtube-dl από τον χρήστη"
+
+msgctxt "#32022"
+msgid "Update automatically"
+msgstr "Αυτόματη αναβάθμιση"
+
+msgctxt "#32023"
+msgid "Update now"
+msgstr "Αναβάθμισε τώρα"
+
+msgctxt "#32024"
+msgid "View youtube-dl core info"
+msgstr "Δείξε τις πληροφορίες πυρήνα youtube-dl"
+
+msgctxt "#32025"
+msgid "Debug Logging"
+msgstr "Καταγραφή αποσφαλμάτωσης"
+
+msgctxt "#32026"
+msgid "Highest Available"
+msgstr "Υψηλότερη διαθέσιμη"
+
+msgctxt "#32027"
+msgid "Enable youtube-dl verbose logging"
+msgstr "Ενεργοποίηση αναλυτικής καταγραφής σφαλμάτων"
+
+msgctxt "#32028"
+msgid "Confirm download path"
+msgstr "Επιβεβαίωση διαδρομής μεταφόρτωσης"
+
+msgctxt "#32029"
+msgid "Download path"
+msgstr "Διαδρομή μεταφόρτωσης"
+
+msgctxt "#32030"
+msgid "Stop Current Download"
+msgstr "Διακοπή τρέχουσας μεταφόρτωσης"
+
+msgctxt "#32031"
+msgid "Stop All Downloads"
+msgstr "Διακοπή όλων των μεταφορτώσεων"
+
+msgctxt "#32032"
+msgid "Manage Queue"
+msgstr "Διαχείριση ουράς"
+
+msgctxt "#32033"
+msgid "Download Currently Playing Video"
+msgstr "Μεταφόρτωση του τρέχοντος βίντεο αναπαραγωγής"
+
+msgctxt "#32034"
+msgid "Settings"
+msgstr "Ρυθμίσεις"
+
+msgctxt "#32035"
+msgid "Message"
+msgstr "Μήνυμα"
+
+msgctxt "#32036"
+msgid "Failed"
+msgstr "Αποτυχία"
+
+msgctxt "#32037"
+msgid "Failed to move to downloads folder - leaving in temp"
+msgstr "Αποτυχία μετακίνησης στον φάκελο μεταφόρτωσης - αφέθηκε στον προσωρινό φάκελο"
+
+msgctxt "#32038"
+msgid "Skip Videos Without Audio"
+msgstr "Προσπέραση βίντεο χωρίς ήχο"
