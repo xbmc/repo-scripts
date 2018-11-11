@@ -1,3 +1,6 @@
+v1.2.3 11/11/2018
+- [new] add dutch translation (tks klojum)
+
 v1.2.2 10/11/2018
 -fix spanish translation (tks roliversc)
 -fix del instances left in memory
