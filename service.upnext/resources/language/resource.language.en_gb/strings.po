@@ -1,0 +1,158 @@
+# Service Up Next language file
+# Addon Name: Up Next
+# Addon id: service.upnext
+# Addon Provider: im85288
+msgid ""
+msgstr ""
+"Project-Id-Version: service.upnext\n"
+"Report-Msgid-Bugs-To: http://trac.xbmc.org/\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2018-02-26 13:31+0000\n"
+"Last-Translator: im85288\n"
+"Language-Team: English\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 1.8.7\n"
+
+msgctxt "#30001"
+msgid "The number of seconds before the end to show the notification"
+msgstr ""
+
+msgctxt "#30002"
+msgid "Log Level:"
+msgstr ""
+
+msgctxt "#30003"
+msgid "Settings"
+msgstr ""
+
+msgctxt "#30004"
+msgid "Advanced"
+msgstr ""
+
+msgctxt "#30005"
+msgid "Default action when nothing selected"
+msgstr ""
+
+msgctxt "#30006"
+msgid "Watch Now"
+msgstr ""
+
+msgctxt "#30008"
+msgid "Up Next"
+msgstr ""
+
+msgctxt "#30009"
+msgid "Number of episodes before still watching query"
+msgstr ""
+
+msgctxt "#30010"
+msgid "Continue watching"
+msgstr ""
+
+msgctxt "#30013"
+msgid "Include watched episodes"
+msgstr ""
+
+msgctxt "#30014"
+msgid "Disable Up Next (restart required)"
+msgstr ""
+
+msgctxt "#30017"
+msgid "Automatically play short videos"
+msgstr ""
+
+msgctxt "#30018"
+msgid "Maximum length for automatic short video play (in minutes)"
+msgstr ""
+
+msgctxt "#30019"
+msgid "Show on-screen notification during short video autoplay"
+msgstr ""
+
+msgctxt "#30024"
+msgid "Still there?"
+msgstr ""
+
+msgctxt "#30025"
+msgid "Set the display mode for the notifications"
+msgstr ""
+
+msgctxt "#30028"
+msgid "Developer"
+msgstr ""
+
+msgctxt "#30029"
+msgid "Enable developer mode"
+msgstr ""
+
+msgctxt "#30030"
+msgid "Choose the window to be shown"
+msgstr ""
+
+msgctxt "#30032"
+msgid "Enable on playlists"
+msgstr ""
+
+msgctxt "#30034"
+msgid "Close"
+msgstr ""
+
+msgctxt "#30035"
+msgid "seconds"
+msgstr ""
+
+msgctxt "#30036"
+msgid "in"
+msgstr ""
+
+msgctxt "#30037"
+msgid "Next Episode in"
+msgstr ""
+
+msgctxt "#30038"
+msgid "Simple"
+msgstr ""
+
+msgctxt "#30039"
+msgid "Fancy"
+msgstr ""
+
+msgctxt "#30040"
+msgid "Play"
+msgstr ""
+
+msgctxt "#30041"
+msgid "Don't Play"
+msgstr ""
+
+msgctxt "#30042"
+msgid "None"
+msgstr ""
+
+msgctxt "#30043"
+msgid "Info"
+msgstr ""
+
+msgctxt "#30044"
+msgid "Debug"
+msgstr ""
+
+msgctxt "#30045"
+msgid "UpNext"
+msgstr ""
+
+msgctxt "#30046"
+msgid "UpNextSimple"
+msgstr ""
+
+msgctxt "#30047"
+msgid "StillWatching"
+msgstr ""
+
+msgctxt "#30048"
+msgid "StillWatchingSimple"
+msgstr ""
