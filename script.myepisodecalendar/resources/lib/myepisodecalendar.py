@@ -29,7 +29,7 @@ REGEX_EXPRESSIONS = [
     '[\\\\/\\._ \\[\\(-]([0-9]+)x([0-9]+)([^\\\\/]*)$'
     ]
 
-MYEPISODE_URL = "http://www.myepisodecalendar.com"
+MYEPISODE_URL = "https://www.myepisodecalendar.com"
 
 def sanitize(title, replace):
     pattern = re.compile('[^A-Za-z0-9' + re.escape(replace) + ']', re.UNICODE | re.IGNORECASE)
@@ -304,7 +304,7 @@ class MyEpisodeCalendar(object):
         return True
 
     def getTVDBIDFromShowTitle(self, title, lang='en'):
-        GetSeriesURL = 'http://www.thetvdb.com/api/GetSeries.php?seriesname=%s&language=%s' % (urllib.quote(title), lang)
+        GetSeriesURL = 'https://www.thetvdb.com/api/GetSeries.php?seriesname=%s&language=%s' % (urllib.quote(title), lang)
         seriesData = self.send_req(GetSeriesURL)
 
         if seriesData is None:
