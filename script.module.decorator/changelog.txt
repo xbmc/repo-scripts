@@ -1,2 +1,0 @@
-[B]3.3.3[/B]
-- initial Release for XBMC
