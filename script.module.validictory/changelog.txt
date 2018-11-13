@@ -1,8 +1,0 @@
-0.9.3
-- update to upstream version: validictory 0.9.0
-
-0.9.0
-- update to upstream version: validictory 0.9.0
-
-0.8.3
-- initial Release for XBMC
