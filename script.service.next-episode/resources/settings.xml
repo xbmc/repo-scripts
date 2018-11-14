@@ -4,10 +4,10 @@
     <setting label="32019" type="bool" id="disable_error_dialogs" default="false" />
     <setting type="action"
              label="32001"
-             action="RunScript($CWD/libs/commands.py,login)" />
+             action="RunScript($CWD/commands.py,login)" />
     <setting type="action"
              label="32002"
-             action="RunScript($CWD/libs/commands.py,sync_library)" />
+             action="RunScript($CWD/commands.py,sync_library)" />
     <setting label="Prompt" type="bool" id="prompt_shown" default="false" visible="false" />
     <setting label="Username" type="text" id="username" default="" visible="false"/>
     <setting label="Hash" type="text" id="hash" default="" visible="false"/>

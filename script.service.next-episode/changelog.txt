@@ -1,3 +1,5 @@
+1.2.0
+  - Added compatibility with Python 3 for the future Kodi 19 "M..." version.
 1.1.5:
   - Fixed getting IMDB/TheTVDB IDs in Kodi >= 17.
 1.1.3:

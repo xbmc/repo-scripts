@@ -3,12 +3,16 @@
 # Author: Roman Miroshnychenko aka Roman V.M. (romanvm@yandex.ua)
 # License: GPL v. 3 <http://www.gnu.org/licenses/gpl-3.0.en.html>
 
+from __future__ import absolute_import, unicode_literals
+from future.utils import python_2_unicode_compatible
 import json
 from copy import deepcopy
 from pprint import pformat
 from requests import post
-import logger
-from medialibrary import get_tvdb_id
+from . import logger
+from .medialibrary import get_tvdb_id
+
+__all__ = ['prepare_movies_list', 'prepare_episodes_list', 'update_data']
 
 UPDATE_DATA = 'https://next-episode.net/api/kodi/v1/update_data'
 LOGIN = 'https://next-episode.net/api/kodi/v1/login'
@@ -18,6 +22,7 @@ class LoginError(Exception):
     pass
 
 
+@python_2_unicode_compatible
 class DataUpdateError(Exception):
     """
     Exception that carries information about movies and/or TV shows

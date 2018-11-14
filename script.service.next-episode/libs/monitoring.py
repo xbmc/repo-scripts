@@ -3,16 +3,19 @@
 # Author: Roman Miroshnychenko aka Roman V.M. (romanvm@yandex.ua)
 # License: GPL v. 3 <http://www.gnu.org/licenses/gpl-3.0.en.html>
 
+from __future__ import absolute_import, unicode_literals
 import json
-import xbmc
-from xbmcgui import Dialog
-import logger
-from commands import (sync_library, sync_new_items, login, addon,
-                      update_single_item)
-from medialibrary import get_item_details
-from gui import ui_string
+from kodi_six import xbmc
+from kodi_six.xbmcgui import Dialog
+from . import logger
+from .addon import addon
+from .utils import sync_library, sync_new_items, login, update_single_item
+from .medialibrary import get_item_details
+from .gui import ui_string
 # Here ``addon`` is imported from another module to prevent a bug
 # when username and hash are not stored in the addon settings.
+
+__all__ = ['UpdateMonitor', 'initial_prompt']
 
 dialog = Dialog()
 

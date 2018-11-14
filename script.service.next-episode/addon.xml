@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <addon id="script.service.next-episode"
    name="Next Episode (next-episode.net)"
-   version="1.1.5"
+   version="1.2.0"
    provider-name="next-episode.net">
   <requires>
     <import addon="xbmc.python" version="2.25.0" />
-    <import addon="script.module.pyxbmct" version="1.1.0" />
-    <import addon="script.module.requests" version="2.9.0" />
+    <import addon="script.module.pyxbmct" />
+    <import addon="script.module.requests" />
+    <import addon="script.module.future" />
+    <import addon="script.module.kodi-six" />
   </requires>
   <extension point="xbmc.service" library="service.py" start="[login|startup]" />
   <extension point="xbmc.python.script" library="main.py">
@@ -25,5 +27,9 @@
     <website>http://next-episode.net</website>
     <email>roman1972@gmail.com</email>
     <source>https://github.com/santah/next-episode-kodi</source>
+    <assets>
+      <icon>icon.png</icon>
+    </assets>
+    <news>1.2.0: Added compatibility with Python 3 for the future Kodi 19 "M..." version.</news>
   </extension>
 </addon>
