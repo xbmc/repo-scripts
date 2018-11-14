@@ -31,9 +31,9 @@ class NapiProjektHelper:
             subs = urllib.urlopen(url).read()
 
             if subs[0:3] != 'NPc':
-                subtitle_list.append({"language": language})
+                subtitle_list.append({"language": language, "is_preferred": language == item["preferredlanguage"]})
 
-        return subtitle_list
+        return sorted(subtitle_list, key=lambda x: (x['is_preferred']), reverse=True)
 
     def download(self, language="PL"):
         values = {
