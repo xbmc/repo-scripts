@@ -3,9 +3,10 @@
 # E-mail: romanvm@yandex.ua
 # License: GPL v. 3 <http://www.gnu.org/licenses/gpl-3.0.en.html>
 
+from __future__ import unicode_literals
 import pyxbmct
 from libs.gui import NextEpDialog, ui_string
-from libs.commands import sync_library, login
+from libs.utils import sync_library, login
 
 
 class MainDialog(NextEpDialog):

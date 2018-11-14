@@ -3,14 +3,16 @@
 # Author: Roman Miroshnychenko aka Roman V.M. (romanvm@yandex.ua)
 # License: GPL v. 3 <http://www.gnu.org/licenses/gpl-3.0.en.html>
 
+from __future__ import absolute_import, unicode_literals
+from future.utils import with_metaclass
 from abc import ABCMeta, abstractmethod
 from contextlib import contextmanager
-from xbmc import executebuiltin
-from xbmcaddon import Addon
+from kodi_six.xbmc import executebuiltin
 from xbmcgui import ACTION_NAV_BACK
 import pyxbmct
+from .addon import addon
 
-addon = Addon('script.service.next-episode')
+__all__ = ['NextEpDialog', 'ui_string', 'busy_spinner']
 
 
 def ui_string(id_):
@@ -22,7 +24,7 @@ def ui_string(id_):
     :return: localized string
     :rtype: str
     """
-    return addon.getLocalizedString(id_).encode('utf-8')
+    return addon.getLocalizedString(id_)
 
 
 @contextmanager
@@ -40,12 +42,10 @@ def busy_spinner():
         executebuiltin('Dialog.Close(10138)')  # Busy spinner off
 
 
-class NextEpDialog(pyxbmct.AddonDialogWindow):
+class NextEpDialog(with_metaclass(ABCMeta, pyxbmct.AddonDialogWindow)):
     """
     Base class for addon dialogs
     """
-    __metaclass__ = ABCMeta
-
     def __init__(self, width, height, rows, columns, title=''):
         super(NextEpDialog, self).__init__(title)
         self.setGeometry(width, height, rows, columns)

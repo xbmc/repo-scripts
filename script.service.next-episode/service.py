@@ -3,6 +3,7 @@
 # Author: Roman Miroshnychenko aka Roman V.M. (romanvm@yandex.ua)
 # License: GPL v. 3 <http://www.gnu.org/licenses/gpl-3.0.en.html>
 
+from __future__ import unicode_literals
 from libs.logger import log_notice
 from libs.monitoring import UpdateMonitor, initial_prompt
 

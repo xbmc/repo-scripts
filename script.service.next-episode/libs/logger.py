@@ -3,23 +3,15 @@
 # E-mail: roman1972@gmail.com
 # License: GPL v. 3 <http://www.gnu.org/licenses/gpl-3.0.en.html>
 
+from __future__ import absolute_import, unicode_literals
 import os
 from inspect import currentframe
-import xbmc
-from xbmcaddon import Addon
+from kodi_six import xbmc
+from .addon import addon_id, addon_version
 
 __all__ = ['log_debug', 'log_error', 'log_notice', 'log_warning']
 
 FORMAT = '{id} [v.{version}] - {filename}:{lineno} - {message}'
-addon = Addon('script.service.next-episode')
-addon_id = addon.getAddonInfo('id')
-addon_version = addon.getAddonInfo('version')
-
-
-def encode(msg):
-    if isinstance(msg, unicode):
-        msg = msg.encode('utf-8')
-    return msg
 
 
 def log_message(msg, level=xbmc.LOGDEBUG):
@@ -30,7 +22,7 @@ def log_message(msg, level=xbmc.LOGDEBUG):
             version=addon_version,
             filename=os.path.basename(curr_frame.f_back.f_back.f_code.co_filename),
             lineno=curr_frame.f_back.f_back.f_lineno,
-            message=encode(msg)
+            message=msg
         ),
         level
     )
