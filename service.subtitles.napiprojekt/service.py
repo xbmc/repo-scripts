@@ -56,7 +56,7 @@ def timeout(func, args=(), kwargs={}, timeout_duration=10, default=None):
 
 def set_filehash(path, rar):
     d = md5()
-    qpath = urllib.quote(path)
+    qpath = urllib.quote(path, safe='')
     if rar:
         path = """rar://""" + qpath + '/'
         for file in xbmcvfs.listdir(path)[1]:
