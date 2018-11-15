@@ -2,11 +2,9 @@ from __future__ import absolute_import, division, print_function
 
 from trakt.core.helpers import popitems
 from trakt.interfaces.base import Interface, authenticated
+from trakt.interfaces.users.lists import UsersListInterface, UsersListsInterface
+from trakt.interfaces.users.settings import UsersSettingsInterface
 from trakt.mapper import CommentMapper, ListMapper
-
-# Import child interfaces
-from trakt.interfaces.users.lists import UsersListInterface, UsersListsInterface  # noqa: I100
-from trakt.interfaces.users.settings import UsersSettingsInterface  # noqa: I100
 
 import logging
 
@@ -60,4 +58,4 @@ class UsersInterface(Interface):
                     self.client, item
                 )
             else:
-                log.warn('Unknown item returned, type: %r', item_type)
+                log.warning('Unknown item returned, type: %r', item_type)

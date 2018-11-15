@@ -1,6 +1,6 @@
 from __future__ import absolute_import, division, print_function
 
-from trakt.objects import Movie, Show, Episode, Season, CustomList, Comment, Person
+from trakt.objects import Movie, Show, Episode, Season, CustomList, Comment, Person, WatchedProgress, CollectionProgress
 
 IDENTIFIERS = {
     'movie': [
@@ -114,5 +114,11 @@ class Mapper(object):
 
         if media == 'person':
             return Person._construct(client, keys, item, **kwargs)
+
+        if media == 'watched_progress':
+            return WatchedProgress._construct(client, item, **kwargs)
+
+        if media == 'collection_progress':
+            return CollectionProgress._construct(client, item, **kwargs)
 
         raise ValueError('Unknown media type provided')

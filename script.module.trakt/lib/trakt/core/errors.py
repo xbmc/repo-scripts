@@ -42,7 +42,7 @@ def log_request_error(logger, response):
         message = 'Request failed: %s: "%%s" (%%s)' % (response.status_code,)
 
     # Log warning
-    logger.warn(message, desc, name, extra={
+    logger.warning(message, desc, name, extra={
         'data': {
             'http.headers': {
                 'cf-ray': response.headers.get('cf-ray'),

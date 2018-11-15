@@ -15,6 +15,6 @@ class SyncPlaybackInterface(Get, Delete):
     def episodes(self, store=None, **kwargs):
         return self.get(
             'episodes',
-            store,
+            store=store,
             **kwargs
         )

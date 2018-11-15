@@ -15,14 +15,14 @@ class SearchMapper(Mapper):
             media = item.get('type')
 
         if not media:
-            log.warn('Item %r has no "type" defined', media)
+            log.warning('Item %r has no "type" defined', media)
             return None
 
         # Find function for `media`
         func = getattr(cls, media, None)
 
         if not func:
-            log.warn('Unknown media type: %r', media)
+            log.warning('Unknown media type: %r', media)
             return None
 
         # Map item

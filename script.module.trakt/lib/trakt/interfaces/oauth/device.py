@@ -116,7 +116,7 @@ class DeviceOAuthPoller(Interface, Emitter):
             try:
                 self._process()
             except Exception as ex:
-                log.warn('Exception raised in DeviceOAuthPoller: %s', ex, exc_info=True)
+                log.warning('Exception raised in DeviceOAuthPoller: %s', ex, exc_info=True)
             finally:
                 self._active = False
                 self._running = False

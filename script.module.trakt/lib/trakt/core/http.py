@@ -8,12 +8,16 @@ from trakt.core.keylock import KeyLock
 from trakt.core.request import TraktRequest
 
 from requests.adapters import DEFAULT_POOLBLOCK, HTTPAdapter
+from requests.exceptions import ConnectionError, SSLError
+from requests.packages.urllib3.exceptions import ReadTimeoutError
 from threading import RLock
 import calendar
 import datetime
 import logging
 import requests
+import six
 import socket
+import sys
 import time
 
 try:
@@ -116,32 +120,54 @@ class HttpClient(object):
         timeout = self.client.configuration.get('http.timeout', DEFAULT_HTTP_TIMEOUT)
 
         # Send request
+        exc_info = None
         response = None
 
         for i in range(max_retries + 1):
             if i > 0:
-                log.warn('Retry # %s', i)
+                log.warning('Retry # %s', i)
+
+            exc_info = None
 
             # Send request
             try:
                 response = self.session.send(request, timeout=timeout)
+            except (ConnectionError, ReadTimeoutError, SSLError):
+                exc_info = sys.exc_info()
             except socket.gaierror as e:
                 code, _ = e
 
                 if code != 8:
                     raise e
 
-                log.warn('Encountered socket.gaierror (code: 8)')
+                log.warning('Encountered socket.gaierror (code: 8)')
 
                 response = self.rebuild().send(request, timeout=timeout)
 
-            # Retry requests on errors >= 500 (when enabled)
-            if not retry or response.status_code < 500:
+            # Retry requests on exceptions or 5xx errors (when enabled)
+            if not retry or (not exc_info and response.status_code < 500):
                 break
 
-            log.warn('Continue retry since status is %s, waiting %s seconds', response.status_code, retry_sleep)
-            time.sleep(retry_sleep)
+            if exc_info:
+                log.warning(
+                    'Continue retry since "%s" exception was raised, waiting %s seconds',
+                    exc_info[0].__name__, retry_sleep
+                )
+            else:
+                log.warning(
+                    'Continue retry since status is %s, waiting %s seconds',
+                    response.status_code, retry_sleep
+                )
 
+            # Sleep until next request attempt
+            if i < max_retries:
+                time.sleep(retry_sleep)
+
+        # Raise last exception
+        if exc_info:
+            six.reraise(*exc_info)
+
+        # Return last response
         return response
 
     def delete(self, path=None, params=None, data=None, **kwargs):
@@ -217,11 +243,11 @@ class HttpClient(object):
             return True
 
         if not config['oauth.refresh']:
-            log.warn('OAuth - Unable to refresh expired token (token refreshing hasn\'t been enabled)')
+            log.warning('OAuth - Unable to refresh expired token (token refreshing hasn\'t been enabled)')
             return False
 
         if not config['oauth.refresh_token']:
-            log.warn('OAuth - Unable to refresh expired token ("refresh_token" parameter hasn\'t been defined)')
+            log.warning('OAuth - Unable to refresh expired token ("refresh_token" parameter hasn\'t been defined)')
             return False
 
         # Retrieve username
@@ -232,7 +258,7 @@ class HttpClient(object):
 
         # Acquire refreshing lock
         if not self._oauth_refreshing[username].acquire(False):
-            log.warn('OAuth - Token is already being refreshed for %r', username)
+            log.warning('OAuth - Token is already being refreshed for %r', username)
             return False
 
         log.info('OAuth - Token has expired, refreshing token...')
@@ -258,7 +284,7 @@ class HttpClient(object):
         )
 
         if response is None:
-            log.warn('OAuth - Unable to refresh expired token (no response returned)')
+            log.warning('OAuth - Unable to refresh expired token (no response returned)')
             return False
 
         if response.status_code < 200 or response.status_code >= 300:
@@ -267,14 +293,14 @@ class HttpClient(object):
 
             # Handle refresh rejection
             if response.status_code == 401:
-                log.warn('OAuth - Unable to refresh expired token (rejected)')
+                log.warning('OAuth - Unable to refresh expired token (rejected)')
 
                 # Fire rejected event
                 self.client.emit('oauth.refresh.rejected', config['oauth.username'])
                 return False
 
             # Unknown error returned
-            log.warn('OAuth - Unable to refresh expired token (code: %r)', response.status_code)
+            log.warning('OAuth - Unable to refresh expired token (code: %r)', response.status_code)
             return False
 
         # Retrieve authorization parameters from response
