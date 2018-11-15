@@ -1,0 +1,407 @@
+msgctxt "#3000"
+msgid "Guess!"
+msgstr "Μαντέψτε!"
+
+msgctxt "#3001"
+msgid "Random"
+msgstr "Τυχαίο"
+
+msgctxt "#3002"
+msgid "Back"
+msgstr "Πίσω"
+
+msgctxt "#3050"
+msgid "Could not log in"
+msgstr "Αδυναμία εισόδου"
+
+msgctxt "#3051"
+msgid "Password wrong or username unknown: [B]%s[/B][CR]Please change credentials or disable login"
+msgstr "Λανθασμένος κωδικός ή άγνωστο όνομα χρήστη: [B]%s[/B][CR]Αλλάξτε τα στοιχεία ή απενεργοποιήστε την είσοδο"
+
+msgctxt "#3052"
+msgid "Enter shot ID"
+msgstr "Εισάγετε το ID του στιγμιότυπου"
+
+msgctxt "#3053"
+msgid "Type the movie title"
+msgstr "Εισάγετε τον τίτλο της ταινίας"
+
+msgctxt "#3054"
+msgid "Login site unreachable"
+msgstr "Αδυναμία σύνδεσης με την ιστοσελίδα"
+
+msgctxt "#3055"
+msgid "Could not retrieve shot"
+msgstr "Αδυναμία λήψης στιγμιότυπου"
+
+msgctxt "#3066"
+msgid "Could not check guess"
+msgstr "Αδυναμία ελέγχου μαντεψιάς"
+
+msgctxt "#3100"
+msgid "Checking: [B]%s[/B]"
+msgstr "Έλεγχος: [B]%s[/B]"
+
+msgctxt "#3101"
+msgid "Correct. Original title is: [B]%s[/B]"
+msgstr "Σωστό. Ο αρχικός τίτλος είναι: [B]%s[/B]"
+
+msgctxt "#3102"
+msgid "Wrong: [B]%s[/B]"
+msgstr "Λάθος: [B]%s[/B]"
+
+msgctxt "#3103"
+msgid "Not logged in"
+msgstr "Δεν είστε συνδεδεμένος"
+
+msgctxt "#3104"
+msgid "Logged in as user: [B]%s[/B]"
+msgstr "Συνδεδεμένος ως: [B]%s[/B]"
+
+msgctxt "#3105"
+msgid "Your score: [B]%s[/B] ([B]%s[/B])"
+msgstr "Το σκορ σας: [B]%s[/B] ([B]%s[/B])"
+
+msgctxt "#3106"
+msgid "Solved [B][COLOR=ff008B00]%s[/COLOR][/B] times, first by [B]%s[/B]"
+msgstr "Επιλύθηκε [B][COLOR=ff008B00]%s[/COLOR][/B] φορές, πρώτη φορά από [B]%s[/B]"
+
+msgctxt "#3107"
+msgid "Not solved yet"
+msgstr "Δε λύθηκε ακόμη"
+
+msgctxt "#3108"
+msgid "Shot ID: [B]%s[/B]"
+msgstr "ID Στιγμιότυπου: [B]%s[/B]"
+
+msgctxt "#3109"
+msgid "Date: [B]%s[/B]"
+msgstr "Ημερομηνία: [B]%s[/B]"
+
+msgctxt "#3110"
+msgid "Posted by: [B]%s[/B]"
+msgstr "Υπεβλήθη από: [B]%s[/B]"
+
+msgctxt "#3111"
+msgid "Not released"
+msgstr "Δεν κυκλοφόρησε"
+
+msgctxt "#3112"
+msgid "Deleted user"
+msgstr "Διεγραμμένος χρήστης"
+
+msgctxt "#3113"
+msgid "New Submissions"
+msgstr "Νέες Υποβολές"
+
+msgctxt "#3114"
+msgid "Feature Films"
+msgstr "Κύριες Ταινίες"
+
+msgctxt "#3115"
+msgid "The Archive"
+msgstr "Αρχείο"
+
+msgctxt "#3116"
+msgid "[B]%s[/B] votes"
+msgstr "[B]%s[/B] ψήφοι"
+
+msgctxt "#3117"
+msgid "[B]%s[/B] / [B]%s[/B]"
+msgstr "[B]%s[/B] / [B]%s[/B]"
+
+msgctxt "#3118"
+msgid "Hidden"
+msgstr "Κρυφά"
+
+msgctxt "#3119"
+msgid "-"
+msgstr "-"
+
+msgctxt "#3120"
+msgid "Rejected shots"
+msgstr "Απορριφθέντα στιγμιότυπα"
+
+msgctxt "#3121"
+msgid "You already solved this shot"
+msgstr "Έχετε ήδη λύσει αυτή τη μικρογραφία"
+
+msgctxt "#3122"
+msgid "The correct solution was: [B]%s[/B]"
+msgstr "Η σωστή λύση ήταν: [B]%s[/B]"
+
+msgctxt "#3123"
+msgid "You posted this shot"
+msgstr "Υποβάλλατε αυτό το στιγμιότυπο"
+
+msgctxt "#3124"
+msgid "Sorry, you are not allowed to view the shot [B]%s[/B] - redirected to [B]%s[/B]"
+msgstr "Δυστυχώς δεν έχετε το δικαίωμα να δείτε το στιγμιότυπο [B]%s[/B] - γίνεται ανακατεύθυνση στο [B]%s[/B]"
+
+msgctxt "#3125"
+msgid "The Vault"
+msgstr "Θησαυροφυλάκιο"
+
+msgctxt "#3126"
+msgid "Awesome. Original title is: [B]%s[/B] +1 Point!"
+msgstr "Τέλεια. Ο αρχικός τίτλος είναι: [B]%s[/B] +1 Πόντος!"
+
+msgctxt "#3127"
+msgid "Deleted Shots"
+msgstr "Διαγραμμένα Στιγμιότυπα"
+
+msgctxt "#3128"
+msgid "Sorry, no such shot [B]%s[/B] - redirected to [B]%s[/B]"
+msgstr "Δυστυχώς το στιγμιότυπο B]%s[/B] δεν υπάρχει - γίνεται ανακατεύθυνση στο B]%s[/B]"
+
+msgctxt "#3200"
+msgid "General"
+msgstr "Γενικά"
+
+msgctxt "#3201"
+msgid "Login"
+msgstr "Είσοδος"
+
+msgctxt "#3202"
+msgid "Use whatthemovie.com account"
+msgstr "Χρήση λογαριασμού whatthemovie.com"
+
+msgctxt "#3203"
+msgid "Username"
+msgstr "Όνομα χρήστη"
+
+msgctxt "#3204"
+msgid "Password"
+msgstr "Κωδικός πρόσβασης"
+
+msgctxt "#3205"
+msgid "Settings for \"random\" button (login required)"
+msgstr "Ρυθμίσεις για το πλήκτρο \"τυχαίων\" (απαιτείται είσοδος)"
+
+msgctxt "#3206"
+msgid "Difficulty"
+msgstr "Δυσκολία"
+
+msgctxt "#3207"
+msgid "Easy"
+msgstr "Εύκολο"
+
+msgctxt "#3208"
+msgid "Easy+medium"
+msgstr "Εύκολο+Μεσαίο"
+
+msgctxt "#3209"
+msgid "All"
+msgstr "Όλα"
+
+msgctxt "#3210"
+msgid "Include archive"
+msgstr "Συμπερίληψη αρχείου"
+
+msgctxt "#3211"
+msgid "Include solved"
+msgstr "Συμπερίληψη λυμένων"
+
+msgctxt "#3212"
+msgid "Look+feel"
+msgstr "Όψη+αφή"
+
+msgctxt "#3213"
+msgid "Look"
+msgstr "Όψη"
+
+msgctxt "#3214"
+msgid "Show \"posted by\""
+msgstr "Εμφάνιση \"υπεβλήθη από\""
+
+msgctxt "#3215"
+msgid "Show \"solved\""
+msgstr "Εμφάνιση \"λυμένων\""
+
+msgctxt "#3216"
+msgid "Show \"shot ID\""
+msgstr "Εμφάνιση \"ID στιγμιότυπου\""
+
+msgctxt "#3217"
+msgid "Show \"shot date\""
+msgstr "Εμφάνιση \"ημερομηνία στιγμιότυπου\""
+
+msgctxt "#3218"
+msgid "Behaviour"
+msgstr "Συμπεριφορά"
+
+msgctxt "#3219"
+msgid "Auto jump after guess was right"
+msgstr "Αυτόματη μετάβαση αν η μαντεψιά ήταν σωστή"
+
+msgctxt "#3220"
+msgid "...after x seconds"
+msgstr "...μετά από x δευτερόλεπτα"
+
+msgctxt "#3221"
+msgid "Show \"shot flags\""
+msgstr "Εμφάνιση \"σημαιών στιγμιοτύπων\""
+
+msgctxt "#3222"
+msgid "Flags"
+msgstr "Σημαίες"
+
+msgctxt "#3223"
+msgid "Flag 1"
+msgstr "Σημαία 1"
+
+msgctxt "#3224"
+msgid "Flag 2"
+msgstr "Σημαία 2"
+
+msgctxt "#3225"
+msgid "Flag 3"
+msgstr "Σημαία 3"
+
+msgctxt "#3226"
+msgid "Flag 4"
+msgstr "Σημαία 4"
+
+msgctxt "#3227"
+msgid "Flag 5"
+msgstr "Σημαία 5"
+
+msgctxt "#3228"
+msgid "Choose the flags you want to see"
+msgstr "Επιλέξτε τις σημαίες που θέλετε να δείτε"
+
+msgctxt "#3229"
+msgid "Navigation options (login required)"
+msgstr "Επιλογές πλοήγησης (απαιτείται είσοδος)"
+
+msgctxt "#3230"
+msgid "Only unsolved Shots"
+msgstr "Μόνο τα ανεπίλυτα Στιγμιότυπα"
+
+msgctxt "#3231"
+msgid "Show \"shot rating\""
+msgstr "Εμφάνιση \"βαθμολογίας στιγμιότυπου\""
+
+msgctxt "#3232"
+msgid "Jump to"
+msgstr "Μετάβαση σε"
+
+msgctxt "#3233"
+msgid "Random"
+msgstr "Τυχαίο"
+
+msgctxt "#3234"
+msgid "Next"
+msgstr "Επόμενο"
+
+msgctxt "#3235"
+msgid "Show tool buttons"
+msgstr "Εμφάνιση πλήκτρων εργαλείων"
+
+msgctxt "#3236"
+msgid "Show navigation buttons"
+msgstr "Εμφάνιση πλήκτρων πλοήγησης"
+
+msgctxt "#3237"
+msgid "Keys"
+msgstr "Κλειδιά"
+
+msgctxt "#3238"
+msgid "Choose buttons for actions"
+msgstr "Επιλέξτε πλήκτρα για τις ενέργειες"
+
+msgctxt "#3239"
+msgid "No key"
+msgstr "Κανένα κλειδί"
+
+msgctxt "#3240"
+msgid "page up"
+msgstr "page up"
+
+msgctxt "#3241"
+msgid "page down"
+msgstr "page down"
+
+msgctxt "#3242"
+msgid "show info"
+msgstr "Εμφάνιση πληροφοριών"
+
+msgctxt "#3243"
+msgid "pause"
+msgstr "παύση"
+
+msgctxt "#3244"
+msgid "stop"
+msgstr "διακοπή"
+
+msgctxt "#3245"
+msgid "next item"
+msgstr "επόμενο αντικείμενο"
+
+msgctxt "#3246"
+msgid "prev item"
+msgstr "προηγούμενο αντικείμενο"
+
+msgctxt "#3247"
+msgid "fast forward"
+msgstr "μπροστά"
+
+msgctxt "#3248"
+msgid "rewind"
+msgstr "πίσω"
+
+msgctxt "#3249"
+msgid "play"
+msgstr "αναπαραγωγή"
+
+msgctxt "#3250"
+msgid "context menu"
+msgstr "μενού επιλογών"
+
+msgctxt "#3251"
+msgid "volume up"
+msgstr "ένταση πάνω"
+
+msgctxt "#3252"
+msgid "volume down"
+msgstr "ένταση κάτω"
+
+msgctxt "#3253"
+msgid "scroll up"
+msgstr "κύλιση πάνω"
+
+msgctxt "#3254"
+msgid "scroll down"
+msgstr "κύλιση κάτω"
+
+msgctxt "#3255"
+msgid "home"
+msgstr "home"
+
+msgctxt "#3256"
+msgid "end"
+msgstr "end"
+
+msgctxt "#3260"
+msgid "Next"
+msgstr "Επόμενο"
+
+msgctxt "#3261"
+msgid "Previous"
+msgstr "Προηγούμενο"
+
+msgctxt "#3262"
+msgid "Jump"
+msgstr "Μετάβαση"
+
+msgctxt "#3263"
+msgid "Bookmark"
+msgstr "Σελιδοδείκτης"
+
+msgctxt "#3264"
+msgid "Favourite"
+msgstr "Αγαπημένο"
+
+msgctxt "#3265"
+msgid "Solve"
+msgstr "Επίλυση"

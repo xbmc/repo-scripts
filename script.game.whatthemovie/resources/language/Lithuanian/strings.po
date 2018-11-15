@@ -1,0 +1,407 @@
+msgctxt "#3000"
+msgid "Guess!"
+msgstr "Atspėk(-ti)!"
+
+msgctxt "#3001"
+msgid "Random"
+msgstr "Atsitiktinai"
+
+msgctxt "#3002"
+msgid "Back"
+msgstr "Atgal"
+
+msgctxt "#3050"
+msgid "Could not log in"
+msgstr "Nepavyko prisijungti prie"
+
+msgctxt "#3051"
+msgid "Password wrong or username unknown: [B]%s[/B][CR]Please change credentials or disable login"
+msgstr "Slaptažodis neteisingas arba vartotojo vardas nežinomas: [B]%s[/ B][CR] Prašome pakeisti kredencialus ir/arba išjungti prisijungimą"
+
+msgctxt "#3052"
+msgid "Enter shot ID"
+msgstr "Įveskite kadro ID"
+
+msgctxt "#3053"
+msgid "Type the movie title"
+msgstr "Įveskite filmo pavadinimą"
+
+msgctxt "#3054"
+msgid "Login site unreachable"
+msgstr "Prisijungimas svetainėje nepasiekiamas"
+
+msgctxt "#3055"
+msgid "Could not retrieve shot"
+msgstr "Nepavyko gauti kadro"
+
+msgctxt "#3066"
+msgid "Could not check guess"
+msgstr "Nepavyko patikrinti atspėjimo"
+
+msgctxt "#3100"
+msgid "Checking: [B]%s[/B]"
+msgstr "Tikrinimas: [B]%s[/B]"
+
+msgctxt "#3101"
+msgid "Correct. Original title is: [B]%s[/B]"
+msgstr "Ištaisyti. Originalus pavadinimas: [B]%s[/B]"
+
+msgctxt "#3102"
+msgid "Wrong: [B]%s[/B]"
+msgstr "Klaida: [B]%s[/B]"
+
+msgctxt "#3103"
+msgid "Not logged in"
+msgstr "Neprisijunges"
+
+msgctxt "#3104"
+msgid "Logged in as user: [B]%s[/B]"
+msgstr "Prisijungęs kaip naudotojas: [B]%s[/B]"
+
+msgctxt "#3105"
+msgid "Your score: [B]%s[/B] ([B]%s[/B])"
+msgstr "Your score: [B]%s[/B] ([B]%s[/B])"
+
+msgctxt "#3106"
+msgid "Solved [B][COLOR=ff008B00]%s[/COLOR][/B] times, first by [B]%s[/B]"
+msgstr "Išspręsta [B][COLOR=ff008B00]%s[/COLOR][/B] kartus, pirmiausia [B]%s[/B]"
+
+msgctxt "#3107"
+msgid "Not solved yet"
+msgstr "Dar neišspresta"
+
+msgctxt "#3108"
+msgid "Shot ID: [B]%s[/B]"
+msgstr "Shot ID: [B]%s[/B]"
+
+msgctxt "#3109"
+msgid "Date: [B]%s[/B]"
+msgstr "Data: [B]%s[/B]"
+
+msgctxt "#3110"
+msgid "Posted by: [B]%s[/B]"
+msgstr "Įdėjo: [B]%s[/B]"
+
+msgctxt "#3111"
+msgid "Not released"
+msgstr "Nėra išleistas"
+
+msgctxt "#3112"
+msgid "Deleted user"
+msgstr "Panaikinta vartotojo"
+
+msgctxt "#3113"
+msgid "New Submissions"
+msgstr "Naujų pareiškimų"
+
+msgctxt "#3114"
+msgid "Feature Films"
+msgstr "Vaidybiniai filmai"
+
+msgctxt "#3115"
+msgid "The Archive"
+msgstr "Archyvas"
+
+msgctxt "#3116"
+msgid "[B]%s[/B] votes"
+msgstr "[B]%s[/B] balsai"
+
+msgctxt "#3117"
+msgid "[B]%s[/B] / [B]%s[/B]"
+msgstr "[B]%s[/B] / [B]%s[/B]"
+
+msgctxt "#3118"
+msgid "Hidden"
+msgstr "Paslėptas"
+
+msgctxt "#3119"
+msgid "-"
+msgstr "-"
+
+msgctxt "#3120"
+msgid "Rejected shots"
+msgstr "Atmesti kadrai"
+
+msgctxt "#3121"
+msgid "You already solved this shot"
+msgstr "Jūs jau išsprendė šį kadrą"
+
+msgctxt "#3122"
+msgid "The correct solution was: [B]%s[/B]"
+msgstr "Teisingas sprendimas: [B]%s[/B]"
+
+msgctxt "#3123"
+msgid "You posted this shot"
+msgstr "Jums atsiuntė šį kadrą"
+
+msgctxt "#3124"
+msgid "Sorry, you are not allowed to view the shot [B]%s[/B] - redirected to [B]%s[/B]"
+msgstr "Atsiprašome, bet jums neleidžiama peržiūrėti kadro [B]%s[/B] - nukreipti į [B]%s[/B]"
+
+msgctxt "#3125"
+msgid "The Vault"
+msgstr "Praktika"
+
+msgctxt "#3126"
+msgid "Awesome. Original title is: [B]%s[/B] +1 Point!"
+msgstr "Nuostabus.Originalus pavadinimas: [B]%s[/B] +1 Taškas!"
+
+msgctxt "#3127"
+msgid "Deleted Shots"
+msgstr "Ištrinti kadrai"
+
+msgctxt "#3128"
+msgid "Sorry, no such shot [B]%s[/B] - redirected to [B]%s[/B]"
+msgstr "Atsiprašome, nėra tokio kadrą [B]%s[/B] - nukreipti į [B]%s[/B]"
+
+msgctxt "#3200"
+msgid "General"
+msgstr "Pagrindinis"
+
+msgctxt "#3201"
+msgid "Login"
+msgstr "Prisijungti"
+
+msgctxt "#3202"
+msgid "Use whatthemovie.com account"
+msgstr "Naudoti whatthemovie.com paskyrą"
+
+msgctxt "#3203"
+msgid "Username"
+msgstr "Vartotojo vardas"
+
+msgctxt "#3204"
+msgid "Password"
+msgstr "Slaptažodis"
+
+msgctxt "#3205"
+msgid "Settings for \"random\" button (login required)"
+msgstr "Nustatymai \"atsitiktinai\" mygtukas (reikalinga registracija)"
+
+msgctxt "#3206"
+msgid "Difficulty"
+msgstr "Lygio sunkumas"
+
+msgctxt "#3207"
+msgid "Easy"
+msgstr "Lengvas"
+
+msgctxt "#3208"
+msgid "Easy+medium"
+msgstr "Lengvas + vidutinis"
+
+msgctxt "#3209"
+msgid "All"
+msgstr "Pilnas"
+
+msgctxt "#3210"
+msgid "Include archive"
+msgstr "Įtraukti į archyvą"
+
+msgctxt "#3211"
+msgid "Include solved"
+msgstr "Įtraukti į išspręstus"
+
+msgctxt "#3212"
+msgid "Look+feel"
+msgstr "Žiūrėti + pajusti"
+
+msgctxt "#3213"
+msgid "Look"
+msgstr "Žiūrėti"
+
+msgctxt "#3214"
+msgid "Show \"posted by\""
+msgstr "Rodyti \"išspręndė pagal\""
+
+msgctxt "#3215"
+msgid "Show \"solved\""
+msgstr "Rodyti \"išspręndė\""
+
+msgctxt "#3216"
+msgid "Show \"shot ID\""
+msgstr "Rodyti \"kadro ID\""
+
+msgctxt "#3217"
+msgid "Show \"shot date\""
+msgstr "Rodyti \"kadro data\""
+
+msgctxt "#3218"
+msgid "Behaviour"
+msgstr "Elgesys"
+
+msgctxt "#3219"
+msgid "Auto jump after guess was right"
+msgstr "Auto perėjimas po spėjimo buvo teisus"
+
+msgctxt "#3220"
+msgid "...after x seconds"
+msgstr "... po x sekundžių"
+
+msgctxt "#3221"
+msgid "Show \"shot flags\""
+msgstr "Rodyti \"kadro vėliavėles\""
+
+msgctxt "#3222"
+msgid "Flags"
+msgstr "Vėliavėlės"
+
+msgctxt "#3223"
+msgid "Flag 1"
+msgstr "Vėliavėlė 1"
+
+msgctxt "#3224"
+msgid "Flag 2"
+msgstr "Vėliavėlė 2"
+
+msgctxt "#3225"
+msgid "Flag 3"
+msgstr "Vėliavėlė 3"
+
+msgctxt "#3226"
+msgid "Flag 4"
+msgstr "Vėliavėlė 4"
+
+msgctxt "#3227"
+msgid "Flag 5"
+msgstr "Vėliavėlė 5"
+
+msgctxt "#3228"
+msgid "Choose the flags you want to see"
+msgstr "Pasirinkite vėliavėlę katrą norite matyti"
+
+msgctxt "#3229"
+msgid "Navigation options (login required)"
+msgstr "Naršymo funkcijos (reikalinga registracija)"
+
+msgctxt "#3230"
+msgid "Only unsolved Shots"
+msgstr "Tik neišspręsti kadrai"
+
+msgctxt "#3231"
+msgid "Show \"shot rating\""
+msgstr "Rodyti \"kadro (-į)vertinimas\""
+
+msgctxt "#3232"
+msgid "Jump to"
+msgstr "Pereiti į"
+
+msgctxt "#3233"
+msgid "Random"
+msgstr "Atsitiktinai"
+
+msgctxt "#3234"
+msgid "Next"
+msgstr "Sekantis"
+
+msgctxt "#3235"
+msgid "Show tool buttons"
+msgstr "Rodyti įrankių mygtukus"
+
+msgctxt "#3236"
+msgid "Show navigation buttons"
+msgstr "Rodyti navigacijos mygtukus"
+
+msgctxt "#3237"
+msgid "Keys"
+msgstr "Raktai/Klavišai/Mygtukai"
+
+msgctxt "#3238"
+msgid "Choose buttons for actions"
+msgstr "Pasirinkite veiksmų mygtukus"
+
+msgctxt "#3239"
+msgid "No key"
+msgstr "Jokio mygtuko"
+
+msgctxt "#3240"
+msgid "page up"
+msgstr "aukštyn į puslapį"
+
+msgctxt "#3241"
+msgid "page down"
+msgstr "žemyn į puslapį"
+
+msgctxt "#3242"
+msgid "show info"
+msgstr "rodoma informacija"
+
+msgctxt "#3243"
+msgid "pause"
+msgstr "pauzė"
+
+msgctxt "#3244"
+msgid "stop"
+msgstr "stabdyti"
+
+msgctxt "#3245"
+msgid "next item"
+msgstr "kitas elementas"
+
+msgctxt "#3246"
+msgid "prev item"
+msgstr "ankstesnis elementas"
+
+msgctxt "#3247"
+msgid "fast forward"
+msgstr "greitai pasukti į priekį"
+
+msgctxt "#3248"
+msgid "rewind"
+msgstr "atsukti atgal"
+
+msgctxt "#3249"
+msgid "play"
+msgstr "žaisti"
+
+msgctxt "#3250"
+msgid "context menu"
+msgstr "kontekstinis meniu"
+
+msgctxt "#3251"
+msgid "volume up"
+msgstr "pagarsinti"
+
+msgctxt "#3252"
+msgid "volume down"
+msgstr "patylditi"
+
+msgctxt "#3253"
+msgid "scroll up"
+msgstr "slinkti aukštyn"
+
+msgctxt "#3254"
+msgid "scroll down"
+msgstr "slinkti žemyn"
+
+msgctxt "#3255"
+msgid "home"
+msgstr "namo"
+
+msgctxt "#3256"
+msgid "end"
+msgstr "pabaiga"
+
+msgctxt "#3260"
+msgid "Next"
+msgstr "Sekantis"
+
+msgctxt "#3261"
+msgid "Previous"
+msgstr "Ankstesnis"
+
+msgctxt "#3262"
+msgid "Jump"
+msgstr "Peršokti"
+
+msgctxt "#3263"
+msgid "Bookmark"
+msgstr "Žymelė"
+
+msgctxt "#3264"
+msgid "Favourite"
+msgstr "Mėgstamiausi"
+
+msgctxt "#3265"
+msgid "Solve"
+msgstr "Išspręsti"

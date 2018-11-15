@@ -1,3 +1,6 @@
+1.0.10 (21.10.2018)
+- added add-on to new games category in add-on manager
+
 1.0.9 (28.01.2014)
 - fixed translations in gotham
 

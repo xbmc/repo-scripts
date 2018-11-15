@@ -1,0 +1,71 @@
+msgctxt "#3001"
+msgid "Random"
+msgstr "I Rastësishëm"
+
+msgctxt "#3002"
+msgid "Back"
+msgstr "Mbrapa"
+
+msgctxt "#3118"
+msgid "Hidden"
+msgstr "Fshehur"
+
+msgctxt "#3200"
+msgid "General"
+msgstr "I përgjithsëm"
+
+msgctxt "#3203"
+msgid "Username"
+msgstr "Emër-kalues"
+
+msgctxt "#3204"
+msgid "Password"
+msgstr "Fjalkalim"
+
+msgctxt "#3205"
+msgid "Settings for \"random\" button (login required)"
+msgstr ""
+
+msgctxt "#3209"
+msgid "All"
+msgstr "Gjith"
+
+msgctxt "#3214"
+msgid "Show \"posted by\""
+msgstr ""
+
+msgctxt "#3215"
+msgid "Show \"solved\""
+msgstr ""
+
+msgctxt "#3216"
+msgid "Show \"shot ID\""
+msgstr ""
+
+msgctxt "#3217"
+msgid "Show \"shot date\""
+msgstr ""
+
+msgctxt "#3221"
+msgid "Show \"shot flags\""
+msgstr ""
+
+msgctxt "#3231"
+msgid "Show \"shot rating\""
+msgstr ""
+
+msgctxt "#3233"
+msgid "Random"
+msgstr "I Rastësishëm"
+
+msgctxt "#3234"
+msgid "Next"
+msgstr "Tjetër"
+
+msgctxt "#3260"
+msgid "Next"
+msgstr "Tjetër"
+
+msgctxt "#3261"
+msgid "Previous"
+msgstr "I Mëparshëm"

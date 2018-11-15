@@ -1,0 +1,403 @@
+msgctxt "#3000"
+msgid "Guess!"
+msgstr "Pogodi!"
+
+msgctxt "#3001"
+msgid "Random"
+msgstr "Naizmjenično"
+
+msgctxt "#3002"
+msgid "Back"
+msgstr "Nazad"
+
+msgctxt "#3050"
+msgid "Could not log in"
+msgstr "Nemoguća prijava"
+
+msgctxt "#3051"
+msgid "Password wrong or username unknown: [B]%s[/B][CR]Please change credentials or disable login"
+msgstr "Pogrešna lozinka ili korisničko ime: [B]%s[/B][CR]Promijenite vjerodajnice ili onemogućite prijavu"
+
+msgctxt "#3052"
+msgid "Enter shot ID"
+msgstr "Upišite ID snimke"
+
+msgctxt "#3053"
+msgid "Type the movie title"
+msgstr "Upišite naslov filma"
+
+msgctxt "#3054"
+msgid "Login site unreachable"
+msgstr "Stranica prijave nedostupna"
+
+msgctxt "#3055"
+msgid "Could not retrieve shot"
+msgstr "Nemoguće primanje snimke"
+
+msgctxt "#3066"
+msgid "Could not check guess"
+msgstr "Nemoguća provjera"
+
+msgctxt "#3100"
+msgid "Checking: [B]%s[/B]"
+msgstr "Provjeravanje: [B]%s[/B]"
+
+msgctxt "#3101"
+msgid "Correct. Original title is: [B]%s[/B]"
+msgstr "Ispravno. Izvorni naslov je: [B]%s[/B]"
+
+msgctxt "#3102"
+msgid "Wrong: [B]%s[/B]"
+msgstr "Pogrešno: [B]%s[/B]"
+
+msgctxt "#3103"
+msgid "Not logged in"
+msgstr "Niste prijavljeni"
+
+msgctxt "#3104"
+msgid "Logged in as user: [B]%s[/B]"
+msgstr "Prijavljeni ste kao korisnik: [B]%s[/B]"
+
+msgctxt "#3105"
+msgid "Your score: [B]%s[/B] ([B]%s[/B])"
+msgstr "Vaš rezultat [B]%s[/B] ([B]%s[/B])"
+
+msgctxt "#3106"
+msgid "Solved [B][COLOR=ff008B00]%s[/COLOR][/B] times, first by [B]%s[/B]"
+msgstr "Riješeno [B][COLOR=ff008B00]%s[/COLOR][/B] puta, prvi je [B]%s[/B]"
+
+msgctxt "#3107"
+msgid "Not solved yet"
+msgstr "Još nije riješeno"
+
+msgctxt "#3108"
+msgid "Shot ID: [B]%s[/B]"
+msgstr "ID snimke: [B]%s[/B]"
+
+msgctxt "#3109"
+msgid "Date: [B]%s[/B]"
+msgstr "Datum: [B]%s[/B]"
+
+msgctxt "#3110"
+msgid "Posted by: [B]%s[/B]"
+msgstr "Objavio: [B]%s[/B]"
+
+msgctxt "#3111"
+msgid "Not released"
+msgstr "Nije objavljeno"
+
+msgctxt "#3112"
+msgid "Deleted user"
+msgstr "Obrisani korisnik"
+
+msgctxt "#3113"
+msgid "New Submissions"
+msgstr "Nova prijava"
+
+msgctxt "#3114"
+msgid "Feature Films"
+msgstr "Značajke filma"
+
+msgctxt "#3115"
+msgid "The Archive"
+msgstr "Arhiva"
+
+msgctxt "#3116"
+msgid "[B]%s[/B] votes"
+msgstr "[B]%s[/B] glasova"
+
+msgctxt "#3117"
+msgid "[B]%s[/B] / [B]%s[/B]"
+msgstr "[B]%s[/B] / [B]%s[/B]"
+
+msgctxt "#3118"
+msgid "Hidden"
+msgstr "Sakriveno"
+
+msgctxt "#3119"
+msgid "-"
+msgstr "-"
+
+msgctxt "#3120"
+msgid "Rejected shots"
+msgstr "Odbačene snimke"
+
+msgctxt "#3121"
+msgid "You already solved this shot"
+msgstr "Već ste riješili ovu snimku"
+
+msgctxt "#3122"
+msgid "The correct solution was: [B]%s[/B]"
+msgstr "Točno riješenje je: [B]%s[/B]"
+
+msgctxt "#3123"
+msgid "You posted this shot"
+msgstr "Vi ste objavili ovu snimku"
+
+msgctxt "#3124"
+msgid "Sorry, you are not allowed to view the shot [B]%s[/B] - redirected to [B]%s[/B]"
+msgstr "Isprika, nije vam dopušteno da vidite ovu snimku [B]%s[/B] - preusmjerenje na [B]%s[/B]"
+
+msgctxt "#3126"
+msgid "Awesome. Original title is: [B]%s[/B] +1 Point!"
+msgstr "Fenomenalno. Izvorni naslov je: [B]%s[/B] +1 Bod!"
+
+msgctxt "#3127"
+msgid "Deleted Shots"
+msgstr "Obrisane snimke"
+
+msgctxt "#3128"
+msgid "Sorry, no such shot [B]%s[/B] - redirected to [B]%s[/B]"
+msgstr "Isprika, nema takve snimke [B]%s[/B] - preusmjerenje na [B]%s[/B]"
+
+msgctxt "#3200"
+msgid "General"
+msgstr "Općenito"
+
+msgctxt "#3201"
+msgid "Login"
+msgstr "Prijava"
+
+msgctxt "#3202"
+msgid "Use whatthemovie.com account"
+msgstr "Koristite whatthemovie.com račun"
+
+msgctxt "#3203"
+msgid "Username"
+msgstr "Korisničko ime"
+
+msgctxt "#3204"
+msgid "Password"
+msgstr "Zaporka"
+
+msgctxt "#3205"
+msgid "Settings for \"random\" button (login required)"
+msgstr "Postavke za tipku \"naizmjenično\" (potrebna je prijava)"
+
+msgctxt "#3206"
+msgid "Difficulty"
+msgstr "Težina"
+
+msgctxt "#3207"
+msgid "Easy"
+msgstr "Lagana"
+
+msgctxt "#3208"
+msgid "Easy+medium"
+msgstr "Lagano+srednja"
+
+msgctxt "#3209"
+msgid "All"
+msgstr "Sve"
+
+msgctxt "#3210"
+msgid "Include archive"
+msgstr "Uključi arhivu "
+
+msgctxt "#3211"
+msgid "Include solved"
+msgstr "Uključi riješeno"
+
+msgctxt "#3212"
+msgid "Look+feel"
+msgstr "Izgled+osjećaj"
+
+msgctxt "#3213"
+msgid "Look"
+msgstr "Izgled"
+
+msgctxt "#3214"
+msgid "Show \"posted by\""
+msgstr "Prikaži \"objavio\""
+
+msgctxt "#3215"
+msgid "Show \"solved\""
+msgstr "Prikaži \"riješeno\""
+
+msgctxt "#3216"
+msgid "Show \"shot ID\""
+msgstr "Prikaži \"ID snimke\""
+
+msgctxt "#3217"
+msgid "Show \"shot date\""
+msgstr "Prikaži \"datum snimke\""
+
+msgctxt "#3218"
+msgid "Behaviour"
+msgstr "Ponašanje"
+
+msgctxt "#3219"
+msgid "Auto jump after guess was right"
+msgstr "Automatski skoči nakon točnog pogotka "
+
+msgctxt "#3220"
+msgid "...after x seconds"
+msgstr "...nakon x sekundi"
+
+msgctxt "#3221"
+msgid "Show \"shot flags\""
+msgstr "Prikaži \"oznake snimke\""
+
+msgctxt "#3222"
+msgid "Flags"
+msgstr "Oznake"
+
+msgctxt "#3223"
+msgid "Flag 1"
+msgstr "Oznaka 1"
+
+msgctxt "#3224"
+msgid "Flag 2"
+msgstr "Oznaka 2"
+
+msgctxt "#3225"
+msgid "Flag 3"
+msgstr "Oznaka 3"
+
+msgctxt "#3226"
+msgid "Flag 4"
+msgstr "Oznaka 4"
+
+msgctxt "#3227"
+msgid "Flag 5"
+msgstr "Oznaka 5"
+
+msgctxt "#3228"
+msgid "Choose the flags you want to see"
+msgstr "Odaberite koju oznaku želite vidjeti"
+
+msgctxt "#3229"
+msgid "Navigation options (login required)"
+msgstr "Mogućnosti navigacije (prijava je potrebna)"
+
+msgctxt "#3230"
+msgid "Only unsolved Shots"
+msgstr "Samo neriješene snimke"
+
+msgctxt "#3231"
+msgid "Show \"shot rating\""
+msgstr "Prikaži \"ocjena snimke\""
+
+msgctxt "#3232"
+msgid "Jump to"
+msgstr "Skoči na"
+
+msgctxt "#3233"
+msgid "Random"
+msgstr "Naizmjenično"
+
+msgctxt "#3234"
+msgid "Next"
+msgstr "Sljedeće"
+
+msgctxt "#3235"
+msgid "Show tool buttons"
+msgstr "Prikaži tipke alata"
+
+msgctxt "#3236"
+msgid "Show navigation buttons"
+msgstr "Prikaži tipke navigacije"
+
+msgctxt "#3237"
+msgid "Keys"
+msgstr "Tipke"
+
+msgctxt "#3238"
+msgid "Choose buttons for actions"
+msgstr "Odaberite tipku za radnju"
+
+msgctxt "#3239"
+msgid "No key"
+msgstr "Nema tipke"
+
+msgctxt "#3240"
+msgid "page up"
+msgstr "page up"
+
+msgctxt "#3241"
+msgid "page down"
+msgstr "page down"
+
+msgctxt "#3242"
+msgid "show info"
+msgstr "prikaži informacije"
+
+msgctxt "#3243"
+msgid "pause"
+msgstr "pauza"
+
+msgctxt "#3244"
+msgid "stop"
+msgstr "zaustavi"
+
+msgctxt "#3245"
+msgid "next item"
+msgstr "sljedeća stavka"
+
+msgctxt "#3246"
+msgid "prev item"
+msgstr "prijašnja stavka"
+
+msgctxt "#3247"
+msgid "fast forward"
+msgstr "premotavanje unaprijed"
+
+msgctxt "#3248"
+msgid "rewind"
+msgstr "premotavanje unazad"
+
+msgctxt "#3249"
+msgid "play"
+msgstr "reproduciraj"
+
+msgctxt "#3250"
+msgid "context menu"
+msgstr "kontekstni izbornik"
+
+msgctxt "#3251"
+msgid "volume up"
+msgstr "pojačaj glasnoću zvuka"
+
+msgctxt "#3252"
+msgid "volume down"
+msgstr "smanj glasnoću zvuka"
+
+msgctxt "#3253"
+msgid "scroll up"
+msgstr "pomakni gore"
+
+msgctxt "#3254"
+msgid "scroll down"
+msgstr "pomakni dolje"
+
+msgctxt "#3255"
+msgid "home"
+msgstr "naslovnica"
+
+msgctxt "#3256"
+msgid "end"
+msgstr "završetak"
+
+msgctxt "#3260"
+msgid "Next"
+msgstr "Sljedeće"
+
+msgctxt "#3261"
+msgid "Previous"
+msgstr "Prijašnje"
+
+msgctxt "#3262"
+msgid "Jump"
+msgstr "Skoči"
+
+msgctxt "#3263"
+msgid "Bookmark"
+msgstr "Zabilješka"
+
+msgctxt "#3264"
+msgid "Favourite"
+msgstr "Omiljeno"
+
+msgctxt "#3265"
+msgid "Solve"
+msgstr "Riješi"

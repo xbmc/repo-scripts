@@ -1,0 +1,407 @@
+msgctxt "#3000"
+msgid "Guess!"
+msgstr "Gæt!"
+
+msgctxt "#3001"
+msgid "Random"
+msgstr "Tilfældig"
+
+msgctxt "#3002"
+msgid "Back"
+msgstr "Tilbage"
+
+msgctxt "#3050"
+msgid "Could not log in"
+msgstr "Kunne ikke logge ind"
+
+msgctxt "#3051"
+msgid "Password wrong or username unknown: [B]%s[/B][CR]Please change credentials or disable login"
+msgstr "Kodeord var forkert eller brugernavnet er ukendt: [B]%s[/B][CR]Indtast venligst rigtige oplysninger eller deaktiver login"
+
+msgctxt "#3052"
+msgid "Enter shot ID"
+msgstr "Indtast ID på billede"
+
+msgctxt "#3053"
+msgid "Type the movie title"
+msgstr "Skriv filmtitlen"
+
+msgctxt "#3054"
+msgid "Login site unreachable"
+msgstr "Loginsiden er utilgængellig"
+
+msgctxt "#3055"
+msgid "Could not retrieve shot"
+msgstr "Kunne ikke hente stillbillede"
+
+msgctxt "#3066"
+msgid "Could not check guess"
+msgstr "Kunne ikke tjekke gæst"
+
+msgctxt "#3100"
+msgid "Checking: [B]%s[/B]"
+msgstr "Tjekker: [B]%s[/B]"
+
+msgctxt "#3101"
+msgid "Correct. Original title is: [B]%s[/B]"
+msgstr "Korrekt. Originalttitlen er: [B]%s[/B]"
+
+msgctxt "#3102"
+msgid "Wrong: [B]%s[/B]"
+msgstr "Forkert: [B]%s[/B]"
+
+msgctxt "#3103"
+msgid "Not logged in"
+msgstr "Ikke logget ind"
+
+msgctxt "#3104"
+msgid "Logged in as user: [B]%s[/B]"
+msgstr "Logget ind som bruger: [B]%s[/B]"
+
+msgctxt "#3105"
+msgid "Your score: [B]%s[/B] ([B]%s[/B])"
+msgstr "Din score: [B]%s[/B] ([B]%s[/B])"
+
+msgctxt "#3106"
+msgid "Solved [B][COLOR=ff008B00]%s[/COLOR][/B] times, first by [B]%s[/B]"
+msgstr "Løst [B][COLOR=ff008B00]%s[/COLOR][/B] gange, første gang af [B]%s[/B]"
+
+msgctxt "#3107"
+msgid "Not solved yet"
+msgstr "Ikke løst endnu"
+
+msgctxt "#3108"
+msgid "Shot ID: [B]%s[/B]"
+msgstr "Billede-ID: [B]%s[/B]"
+
+msgctxt "#3109"
+msgid "Date: [B]%s[/B]"
+msgstr "Dato: [B]%s[/B]"
+
+msgctxt "#3110"
+msgid "Posted by: [B]%s[/B]"
+msgstr "Lagt op af: [B]%s[/B]"
+
+msgctxt "#3111"
+msgid "Not released"
+msgstr "Ikke offentliggjort"
+
+msgctxt "#3112"
+msgid "Deleted user"
+msgstr "Slet bruger"
+
+msgctxt "#3113"
+msgid "New Submissions"
+msgstr "Nye Biddrag"
+
+msgctxt "#3114"
+msgid "Feature Films"
+msgstr "Fremhævede Film"
+
+msgctxt "#3115"
+msgid "The Archive"
+msgstr "Arkivet"
+
+msgctxt "#3116"
+msgid "[B]%s[/B] votes"
+msgstr "[B]%s[/B] stemmer"
+
+msgctxt "#3117"
+msgid "[B]%s[/B] / [B]%s[/B]"
+msgstr "[B]%s[/B] / [B]%s[/B]"
+
+msgctxt "#3118"
+msgid "Hidden"
+msgstr "Skjult"
+
+msgctxt "#3119"
+msgid "-"
+msgstr "-"
+
+msgctxt "#3120"
+msgid "Rejected shots"
+msgstr "Afviste stillbilleder"
+
+msgctxt "#3121"
+msgid "You already solved this shot"
+msgstr "Du har allerede løst dette billede"
+
+msgctxt "#3122"
+msgid "The correct solution was: [B]%s[/B]"
+msgstr "Den korrekte løsning var: [B]%s[/B]"
+
+msgctxt "#3123"
+msgid "You posted this shot"
+msgstr "Du lagde dette billede op"
+
+msgctxt "#3124"
+msgid "Sorry, you are not allowed to view the shot [B]%s[/B] - redirected to [B]%s[/B]"
+msgstr "Beklager, du har ikke rettighed til at se dette billede [B]%s[/B] - omdirigeret til [B]%s[/B]"
+
+msgctxt "#3125"
+msgid "The Vault"
+msgstr "Banken"
+
+msgctxt "#3126"
+msgid "Awesome. Original title is: [B]%s[/B] +1 Point!"
+msgstr "Fedt. Originaltitel er: [B]%s[/B] +1 Point!"
+
+msgctxt "#3127"
+msgid "Deleted Shots"
+msgstr "Slettede stillbilleder"
+
+msgctxt "#3128"
+msgid "Sorry, no such shot [B]%s[/B] - redirected to [B]%s[/B]"
+msgstr "Beklager, billede findes ikke [B]%s[/B] - omdirigeret til [B]%s[/B]"
+
+msgctxt "#3200"
+msgid "General"
+msgstr "Generelt"
+
+msgctxt "#3201"
+msgid "Login"
+msgstr "Login"
+
+msgctxt "#3202"
+msgid "Use whatthemovie.com account"
+msgstr "Brug whatthemovie.com konto"
+
+msgctxt "#3203"
+msgid "Username"
+msgstr "Brugernavn"
+
+msgctxt "#3204"
+msgid "Password"
+msgstr "Adgangskode"
+
+msgctxt "#3205"
+msgid "Settings for \"random\" button (login required)"
+msgstr "Indstillinger for \"tilfældig\" knap (kræver login )"
+
+msgctxt "#3206"
+msgid "Difficulty"
+msgstr "Sværdhedsgrad"
+
+msgctxt "#3207"
+msgid "Easy"
+msgstr "Let"
+
+msgctxt "#3208"
+msgid "Easy+medium"
+msgstr "Let+mellem"
+
+msgctxt "#3209"
+msgid "All"
+msgstr "Alle"
+
+msgctxt "#3210"
+msgid "Include archive"
+msgstr "Inkluder arkiv"
+
+msgctxt "#3211"
+msgid "Include solved"
+msgstr "Inkluder løste"
+
+msgctxt "#3212"
+msgid "Look+feel"
+msgstr "Udseende+stil"
+
+msgctxt "#3213"
+msgid "Look"
+msgstr "Udseende"
+
+msgctxt "#3214"
+msgid "Show \"posted by\""
+msgstr "Vis \"lagt op af\""
+
+msgctxt "#3215"
+msgid "Show \"solved\""
+msgstr "Vis \"løste\""
+
+msgctxt "#3216"
+msgid "Show \"shot ID\""
+msgstr "Vis \"billede-ID\""
+
+msgctxt "#3217"
+msgid "Show \"shot date\""
+msgstr "Vis \"billede-dato\""
+
+msgctxt "#3218"
+msgid "Behaviour"
+msgstr "Opførsel"
+
+msgctxt "#3219"
+msgid "Auto jump after guess was right"
+msgstr "Spring automatisk videre efter korrekt gæt"
+
+msgctxt "#3220"
+msgid "...after x seconds"
+msgstr "...efter x sekunder"
+
+msgctxt "#3221"
+msgid "Show \"shot flags\""
+msgstr "Vis \"billede-flag\""
+
+msgctxt "#3222"
+msgid "Flags"
+msgstr "Flag"
+
+msgctxt "#3223"
+msgid "Flag 1"
+msgstr "Flag 1"
+
+msgctxt "#3224"
+msgid "Flag 2"
+msgstr "Flag 2"
+
+msgctxt "#3225"
+msgid "Flag 3"
+msgstr "Flag 3"
+
+msgctxt "#3226"
+msgid "Flag 4"
+msgstr "Flag 4"
+
+msgctxt "#3227"
+msgid "Flag 5"
+msgstr "Flag 5"
+
+msgctxt "#3228"
+msgid "Choose the flags you want to see"
+msgstr "Vælg de flag du ønsker at se"
+
+msgctxt "#3229"
+msgid "Navigation options (login required)"
+msgstr "Indstillinger for navigation (kræver login)"
+
+msgctxt "#3230"
+msgid "Only unsolved Shots"
+msgstr "Kun uløste Stillbilleder"
+
+msgctxt "#3231"
+msgid "Show \"shot rating\""
+msgstr "Vis \"billedrating\""
+
+msgctxt "#3232"
+msgid "Jump to"
+msgstr "Spring til"
+
+msgctxt "#3233"
+msgid "Random"
+msgstr "Tilfældigt"
+
+msgctxt "#3234"
+msgid "Next"
+msgstr "Næste"
+
+msgctxt "#3235"
+msgid "Show tool buttons"
+msgstr "Vis værktøjsknapper"
+
+msgctxt "#3236"
+msgid "Show navigation buttons"
+msgstr "Vis navigationsknapper"
+
+msgctxt "#3237"
+msgid "Keys"
+msgstr "Taster"
+
+msgctxt "#3238"
+msgid "Choose buttons for actions"
+msgstr "Vælg knapper til handlinger"
+
+msgctxt "#3239"
+msgid "No key"
+msgstr "Ingen tast"
+
+msgctxt "#3240"
+msgid "page up"
+msgstr "side op"
+
+msgctxt "#3241"
+msgid "page down"
+msgstr "side ned"
+
+msgctxt "#3242"
+msgid "show info"
+msgstr "vis info"
+
+msgctxt "#3243"
+msgid "pause"
+msgstr "pause"
+
+msgctxt "#3244"
+msgid "stop"
+msgstr "stop"
+
+msgctxt "#3245"
+msgid "next item"
+msgstr "næste emne"
+
+msgctxt "#3246"
+msgid "prev item"
+msgstr "forrige emne"
+
+msgctxt "#3247"
+msgid "fast forward"
+msgstr "spol frem"
+
+msgctxt "#3248"
+msgid "rewind"
+msgstr "spol tilbage"
+
+msgctxt "#3249"
+msgid "play"
+msgstr "afspil"
+
+msgctxt "#3250"
+msgid "context menu"
+msgstr "kontekstmenu"
+
+msgctxt "#3251"
+msgid "volume up"
+msgstr "skru op"
+
+msgctxt "#3252"
+msgid "volume down"
+msgstr "skru ned"
+
+msgctxt "#3253"
+msgid "scroll up"
+msgstr "scroll op"
+
+msgctxt "#3254"
+msgid "scroll down"
+msgstr "scroll ned"
+
+msgctxt "#3255"
+msgid "home"
+msgstr "hjem"
+
+msgctxt "#3256"
+msgid "end"
+msgstr "slut"
+
+msgctxt "#3260"
+msgid "Next"
+msgstr "Næste"
+
+msgctxt "#3261"
+msgid "Previous"
+msgstr "Forrige"
+
+msgctxt "#3262"
+msgid "Jump"
+msgstr "Spring"
+
+msgctxt "#3263"
+msgid "Bookmark"
+msgstr "Føj til bogmærker"
+
+msgctxt "#3264"
+msgid "Favourite"
+msgstr "Favorit"
+
+msgctxt "#3265"
+msgid "Solve"
+msgstr "Løs"
