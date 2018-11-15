@@ -1,0 +1,79 @@
+msgctxt "#3001"
+msgid "Random"
+msgstr "隨機"
+
+msgctxt "#3002"
+msgid "Back"
+msgstr "返回"
+
+msgctxt "#3118"
+msgid "Hidden"
+msgstr "隱藏"
+
+msgctxt "#3200"
+msgid "General"
+msgstr "一般設定"
+
+msgctxt "#3201"
+msgid "Login"
+msgstr "登入"
+
+msgctxt "#3203"
+msgid "Username"
+msgstr "帳號"
+
+msgctxt "#3204"
+msgid "Password"
+msgstr "密碼"
+
+msgctxt "#3205"
+msgid "Settings for \"random\" button (login required)"
+msgstr ""
+
+msgctxt "#3209"
+msgid "All"
+msgstr "全部"
+
+msgctxt "#3214"
+msgid "Show \"posted by\""
+msgstr ""
+
+msgctxt "#3215"
+msgid "Show \"solved\""
+msgstr ""
+
+msgctxt "#3216"
+msgid "Show \"shot ID\""
+msgstr ""
+
+msgctxt "#3217"
+msgid "Show \"shot date\""
+msgstr ""
+
+msgctxt "#3221"
+msgid "Show \"shot flags\""
+msgstr ""
+
+msgctxt "#3231"
+msgid "Show \"shot rating\""
+msgstr ""
+
+msgctxt "#3233"
+msgid "Random"
+msgstr "隨機"
+
+msgctxt "#3234"
+msgid "Next"
+msgstr "向後"
+
+msgctxt "#3260"
+msgid "Next"
+msgstr "向後"
+
+msgctxt "#3261"
+msgid "Previous"
+msgstr "向前"
+
+msgctxt "#3264"
+msgid "Favourite"
+msgstr "我的最愛"

@@ -1,0 +1,79 @@
+msgctxt "#3001"
+msgid "Random"
+msgstr "Rastgele"
+
+msgctxt "#3002"
+msgid "Back"
+msgstr "Geri"
+
+msgctxt "#3118"
+msgid "Hidden"
+msgstr "Gizli"
+
+msgctxt "#3119"
+msgid "-"
+msgstr "Sırala"
+
+msgctxt "#3200"
+msgid "General"
+msgstr "Genel"
+
+msgctxt "#3203"
+msgid "Username"
+msgstr "Kullanıcı adı"
+
+msgctxt "#3204"
+msgid "Password"
+msgstr "Parola"
+
+msgctxt "#3205"
+msgid "Settings for \"random\" button (login required)"
+msgstr ""
+
+msgctxt "#3209"
+msgid "All"
+msgstr "Hepsi"
+
+msgctxt "#3214"
+msgid "Show \"posted by\""
+msgstr ""
+
+msgctxt "#3215"
+msgid "Show \"solved\""
+msgstr ""
+
+msgctxt "#3216"
+msgid "Show \"shot ID\""
+msgstr ""
+
+msgctxt "#3217"
+msgid "Show \"shot date\""
+msgstr ""
+
+msgctxt "#3221"
+msgid "Show \"shot flags\""
+msgstr ""
+
+msgctxt "#3231"
+msgid "Show \"shot rating\""
+msgstr ""
+
+msgctxt "#3233"
+msgid "Random"
+msgstr "Rastgele"
+
+msgctxt "#3234"
+msgid "Next"
+msgstr "Sonraki"
+
+msgctxt "#3260"
+msgid "Next"
+msgstr "Sonraki"
+
+msgctxt "#3261"
+msgid "Previous"
+msgstr "Önceki"
+
+msgctxt "#3264"
+msgid "Favourite"
+msgstr "Sık Kullanılanlar"

@@ -1,0 +1,79 @@
+msgctxt "#3001"
+msgid "Random"
+msgstr "Juhuslik"
+
+msgctxt "#3002"
+msgid "Back"
+msgstr "Tagasi"
+
+msgctxt "#3118"
+msgid "Hidden"
+msgstr "Peidetud"
+
+msgctxt "#3200"
+msgid "General"
+msgstr "Üldine"
+
+msgctxt "#3201"
+msgid "Login"
+msgstr "Logi sisse"
+
+msgctxt "#3203"
+msgid "Username"
+msgstr "Kasutajanimi"
+
+msgctxt "#3204"
+msgid "Password"
+msgstr "Salasõna"
+
+msgctxt "#3205"
+msgid "Settings for \"random\" button (login required)"
+msgstr ""
+
+msgctxt "#3209"
+msgid "All"
+msgstr "Kõik"
+
+msgctxt "#3214"
+msgid "Show \"posted by\""
+msgstr ""
+
+msgctxt "#3215"
+msgid "Show \"solved\""
+msgstr ""
+
+msgctxt "#3216"
+msgid "Show \"shot ID\""
+msgstr ""
+
+msgctxt "#3217"
+msgid "Show \"shot date\""
+msgstr ""
+
+msgctxt "#3221"
+msgid "Show \"shot flags\""
+msgstr ""
+
+msgctxt "#3231"
+msgid "Show \"shot rating\""
+msgstr ""
+
+msgctxt "#3233"
+msgid "Random"
+msgstr "Juhuslik"
+
+msgctxt "#3234"
+msgid "Next"
+msgstr "Järgmine"
+
+msgctxt "#3260"
+msgid "Next"
+msgstr "Järgmine"
+
+msgctxt "#3261"
+msgid "Previous"
+msgstr "Eelmine"
+
+msgctxt "#3264"
+msgid "Favourite"
+msgstr "Lemmik"

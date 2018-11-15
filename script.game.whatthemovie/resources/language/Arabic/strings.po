@@ -1,0 +1,71 @@
+msgctxt "#3001"
+msgid "Random"
+msgstr "عشوائي"
+
+msgctxt "#3002"
+msgid "Back"
+msgstr "خلف"
+
+msgctxt "#3118"
+msgid "Hidden"
+msgstr "مخفي"
+
+msgctxt "#3200"
+msgid "General"
+msgstr "عام"
+
+msgctxt "#3203"
+msgid "Username"
+msgstr "اسم المستخدم"
+
+msgctxt "#3204"
+msgid "Password"
+msgstr "كلمة المرور"
+
+msgctxt "#3205"
+msgid "Settings for \"random\" button (login required)"
+msgstr ""
+
+msgctxt "#3209"
+msgid "All"
+msgstr "الكل"
+
+msgctxt "#3214"
+msgid "Show \"posted by\""
+msgstr ""
+
+msgctxt "#3215"
+msgid "Show \"solved\""
+msgstr ""
+
+msgctxt "#3216"
+msgid "Show \"shot ID\""
+msgstr ""
+
+msgctxt "#3217"
+msgid "Show \"shot date\""
+msgstr ""
+
+msgctxt "#3221"
+msgid "Show \"shot flags\""
+msgstr ""
+
+msgctxt "#3231"
+msgid "Show \"shot rating\""
+msgstr ""
+
+msgctxt "#3233"
+msgid "Random"
+msgstr "عشوائي"
+
+msgctxt "#3234"
+msgid "Next"
+msgstr "التالي"
+
+msgctxt "#3260"
+msgid "Next"
+msgstr "التالي"
+
+msgctxt "#3261"
+msgid "Previous"
+msgstr "السابق"

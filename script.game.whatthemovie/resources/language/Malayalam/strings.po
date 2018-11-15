@@ -1,0 +1,47 @@
+msgctxt "#3200"
+msgid "General"
+msgstr "പോതുവായത്"
+
+msgctxt "#3205"
+msgid "Settings for \"random\" button (login required)"
+msgstr ""
+
+msgctxt "#3214"
+msgid "Show \"posted by\""
+msgstr ""
+
+msgctxt "#3215"
+msgid "Show \"solved\""
+msgstr ""
+
+msgctxt "#3216"
+msgid "Show \"shot ID\""
+msgstr ""
+
+msgctxt "#3217"
+msgid "Show \"shot date\""
+msgstr ""
+
+msgctxt "#3221"
+msgid "Show \"shot flags\""
+msgstr ""
+
+msgctxt "#3231"
+msgid "Show \"shot rating\""
+msgstr ""
+
+msgctxt "#3234"
+msgid "Next"
+msgstr "അടുത്തത്"
+
+msgctxt "#3249"
+msgid "play"
+msgstr "കാണുക"
+
+msgctxt "#3260"
+msgid "Next"
+msgstr "അടുത്തത്"
+
+msgctxt "#3261"
+msgid "Previous"
+msgstr "മുന്‍പുള്ള"

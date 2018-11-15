@@ -1,0 +1,407 @@
+msgctxt "#3000"
+msgid "Guess!"
+msgstr "Találja ki!"
+
+msgctxt "#3001"
+msgid "Random"
+msgstr "Véletlenszerű"
+
+msgctxt "#3002"
+msgid "Back"
+msgstr "Vissza"
+
+msgctxt "#3050"
+msgid "Could not log in"
+msgstr "Nem sikerült bejelentkezni"
+
+msgctxt "#3051"
+msgid "Password wrong or username unknown: [B]%s[/B][CR]Please change credentials or disable login"
+msgstr "Hibás jelszó vagy ismeretlen felhasználó: [B]%s[/B][CR]Változtassa meg az adatait vagy szakítsa meg a bejelentkezést"
+
+msgctxt "#3052"
+msgid "Enter shot ID"
+msgstr "Adja meg a pillanatkép azonosítóját"
+
+msgctxt "#3053"
+msgid "Type the movie title"
+msgstr "írja be a film címét"
+
+msgctxt "#3054"
+msgid "Login site unreachable"
+msgstr "A bejelentkezési oldal nem érhető el"
+
+msgctxt "#3055"
+msgid "Could not retrieve shot"
+msgstr "Nem tölthető le a kép"
+
+msgctxt "#3066"
+msgid "Could not check guess"
+msgstr "Nem lehetséges a találgatás ellenőrzése"
+
+msgctxt "#3100"
+msgid "Checking: [B]%s[/B]"
+msgstr "Ellenőrzés: [B]%s[/B]"
+
+msgctxt "#3101"
+msgid "Correct. Original title is: [B]%s[/B]"
+msgstr "Helyes. Az eredeti cím: [B]%s[/B]"
+
+msgctxt "#3102"
+msgid "Wrong: [B]%s[/B]"
+msgstr "Helytelen: [B]%s[/B]"
+
+msgctxt "#3103"
+msgid "Not logged in"
+msgstr "Nincs bejelentkezve"
+
+msgctxt "#3104"
+msgid "Logged in as user: [B]%s[/B]"
+msgstr "Bejelentkezve a következő néven: [B]%s[/B]"
+
+msgctxt "#3105"
+msgid "Your score: [B]%s[/B] ([B]%s[/B])"
+msgstr "Az Ön pontszáma: [B]%s[/B] ([B]%s[/B])"
+
+msgctxt "#3106"
+msgid "Solved [B][COLOR=ff008B00]%s[/COLOR][/B] times, first by [B]%s[/B]"
+msgstr "Megoldva [B][COLOR=ff008B00]%s[/COLOR][/B] alkalommal, először [B]%s[/B] által"
+
+msgctxt "#3107"
+msgid "Not solved yet"
+msgstr "Még nincs megfejtve"
+
+msgctxt "#3108"
+msgid "Shot ID: [B]%s[/B]"
+msgstr "Pillanatkép azonosító: [B]%s[/B]"
+
+msgctxt "#3109"
+msgid "Date: [B]%s[/B]"
+msgstr "Dátum: [B]%s[/B]"
+
+msgctxt "#3110"
+msgid "Posted by: [B]%s[/B]"
+msgstr "Beküldte: [B]%s[/B]"
+
+msgctxt "#3111"
+msgid "Not released"
+msgstr "Nincs kiadva"
+
+msgctxt "#3112"
+msgid "Deleted user"
+msgstr "Törölt felhasználó"
+
+msgctxt "#3113"
+msgid "New Submissions"
+msgstr "Új elfogadottak"
+
+msgctxt "#3114"
+msgid "Feature Films"
+msgstr "Kiemelt filmek"
+
+msgctxt "#3115"
+msgid "The Archive"
+msgstr "Az archív"
+
+msgctxt "#3116"
+msgid "[B]%s[/B] votes"
+msgstr "[B]%s[/B] szavazat"
+
+msgctxt "#3117"
+msgid "[B]%s[/B] / [B]%s[/B]"
+msgstr "[B]%s[/B] / [B]%s[/B]"
+
+msgctxt "#3118"
+msgid "Hidden"
+msgstr "Rejtett"
+
+msgctxt "#3119"
+msgid "-"
+msgstr "-"
+
+msgctxt "#3120"
+msgid "Rejected shots"
+msgstr "Visszautasított pillanatképek"
+
+msgctxt "#3121"
+msgid "You already solved this shot"
+msgstr "Már megfejtette ezt a pillanatképet"
+
+msgctxt "#3122"
+msgid "The correct solution was: [B]%s[/B]"
+msgstr "A helyes megoldás a következő: [B]%s[/B]"
+
+msgctxt "#3123"
+msgid "You posted this shot"
+msgstr "Ezt a pillanatképet Ön küldte be"
+
+msgctxt "#3124"
+msgid "Sorry, you are not allowed to view the shot [B]%s[/B] - redirected to [B]%s[/B]"
+msgstr "Sajnáljuk, de nem nézheti meg a [B]%s[/B] pillanatképet - átirányítás ide: [B]%s[/B]"
+
+msgctxt "#3125"
+msgid "The Vault"
+msgstr "A filmtár"
+
+msgctxt "#3126"
+msgid "Awesome. Original title is: [B]%s[/B] +1 Point!"
+msgstr "Nagyszerű. Az eredeti cím: [B]%s[/B] +1 pont!"
+
+msgctxt "#3127"
+msgid "Deleted Shots"
+msgstr "Törölt pillanatképek"
+
+msgctxt "#3128"
+msgid "Sorry, no such shot [B]%s[/B] - redirected to [B]%s[/B]"
+msgstr "Sajnáljuk, de nem létezik a(z) [B]%s[/B] pillanatkép - átirányítás ide: [B]%s[/B]"
+
+msgctxt "#3200"
+msgid "General"
+msgstr "Általános"
+
+msgctxt "#3201"
+msgid "Login"
+msgstr "Bejelentkezés"
+
+msgctxt "#3202"
+msgid "Use whatthemovie.com account"
+msgstr "A whatthemovie.com fiók használata"
+
+msgctxt "#3203"
+msgid "Username"
+msgstr "Felhasználónév"
+
+msgctxt "#3204"
+msgid "Password"
+msgstr "Jelszó"
+
+msgctxt "#3205"
+msgid "Settings for \"random\" button (login required)"
+msgstr "A \"véletlen\" gomb beállításai (bejelentkezés szükséges)"
+
+msgctxt "#3206"
+msgid "Difficulty"
+msgstr "Nehézség"
+
+msgctxt "#3207"
+msgid "Easy"
+msgstr "Könnyű"
+
+msgctxt "#3208"
+msgid "Easy+medium"
+msgstr "Könnyű+közepes"
+
+msgctxt "#3209"
+msgid "All"
+msgstr "Mind"
+
+msgctxt "#3210"
+msgid "Include archive"
+msgstr "Archívumot belevéve"
+
+msgctxt "#3211"
+msgid "Include solved"
+msgstr "Bevétel megfejtve"
+
+msgctxt "#3212"
+msgid "Look+feel"
+msgstr "Külső"
+
+msgctxt "#3213"
+msgid "Look"
+msgstr "Kinézet"
+
+msgctxt "#3214"
+msgid "Show \"posted by\""
+msgstr "Beküldő mutatása"
+
+msgctxt "#3215"
+msgid "Show \"solved\""
+msgstr "Megoldás mutatása"
+
+msgctxt "#3216"
+msgid "Show \"shot ID\""
+msgstr "Azonosító mutatása"
+
+msgctxt "#3217"
+msgid "Show \"shot date\""
+msgstr "Dátum mutatása"
+
+msgctxt "#3218"
+msgid "Behaviour"
+msgstr "Viselkedés"
+
+msgctxt "#3219"
+msgid "Auto jump after guess was right"
+msgstr "Automatikus ugrás a helyes válasz után"
+
+msgctxt "#3220"
+msgid "...after x seconds"
+msgstr "...x másodperc után"
+
+msgctxt "#3221"
+msgid "Show \"shot flags\""
+msgstr "Jelölők mutatása"
+
+msgctxt "#3222"
+msgid "Flags"
+msgstr "Jelölők"
+
+msgctxt "#3223"
+msgid "Flag 1"
+msgstr "Jelölő 1"
+
+msgctxt "#3224"
+msgid "Flag 2"
+msgstr "Jelölő 2"
+
+msgctxt "#3225"
+msgid "Flag 3"
+msgstr "Jelölő 3"
+
+msgctxt "#3226"
+msgid "Flag 4"
+msgstr "Jelölő 4"
+
+msgctxt "#3227"
+msgid "Flag 5"
+msgstr "Jelölő 5"
+
+msgctxt "#3228"
+msgid "Choose the flags you want to see"
+msgstr "Válassza ki a látni kívánt jelölőket"
+
+msgctxt "#3229"
+msgid "Navigation options (login required)"
+msgstr "Navigációs beállítások (bejelentkezés szükséges)"
+
+msgctxt "#3230"
+msgid "Only unsolved Shots"
+msgstr "Csak a megfejtetlenek"
+
+msgctxt "#3231"
+msgid "Show \"shot rating\""
+msgstr "Mutassa az értékelést"
+
+msgctxt "#3232"
+msgid "Jump to"
+msgstr "Ugrás ide:"
+
+msgctxt "#3233"
+msgid "Random"
+msgstr "Véletlenszerű"
+
+msgctxt "#3234"
+msgid "Next"
+msgstr "Következő"
+
+msgctxt "#3235"
+msgid "Show tool buttons"
+msgstr "Eszközgombok mutatása"
+
+msgctxt "#3236"
+msgid "Show navigation buttons"
+msgstr "Navigációs gombok mutatása"
+
+msgctxt "#3237"
+msgid "Keys"
+msgstr "Billentyűk"
+
+msgctxt "#3238"
+msgid "Choose buttons for actions"
+msgstr "Válasszon billentyűket a funkciókhoz"
+
+msgctxt "#3239"
+msgid "No key"
+msgstr "nincs billentyű"
+
+msgctxt "#3240"
+msgid "page up"
+msgstr "előző oldal"
+
+msgctxt "#3241"
+msgid "page down"
+msgstr "következő oldal"
+
+msgctxt "#3242"
+msgid "show info"
+msgstr "infó mutatása"
+
+msgctxt "#3243"
+msgid "pause"
+msgstr "szüneteltetés"
+
+msgctxt "#3244"
+msgid "stop"
+msgstr "megállítás"
+
+msgctxt "#3245"
+msgid "next item"
+msgstr "következő elem"
+
+msgctxt "#3246"
+msgid "prev item"
+msgstr "előző elem"
+
+msgctxt "#3247"
+msgid "fast forward"
+msgstr "előretekerés"
+
+msgctxt "#3248"
+msgid "rewind"
+msgstr "visszatekerés"
+
+msgctxt "#3249"
+msgid "play"
+msgstr "lejátszás"
+
+msgctxt "#3250"
+msgid "context menu"
+msgstr "helyi menü"
+
+msgctxt "#3251"
+msgid "volume up"
+msgstr "hangosítás"
+
+msgctxt "#3252"
+msgid "volume down"
+msgstr "halkítás"
+
+msgctxt "#3253"
+msgid "scroll up"
+msgstr "görgetés felfelé"
+
+msgctxt "#3254"
+msgid "scroll down"
+msgstr "görgetés lefelé"
+
+msgctxt "#3255"
+msgid "home"
+msgstr "eleje"
+
+msgctxt "#3256"
+msgid "end"
+msgstr "vége"
+
+msgctxt "#3260"
+msgid "Next"
+msgstr "Következő"
+
+msgctxt "#3261"
+msgid "Previous"
+msgstr "Előző"
+
+msgctxt "#3262"
+msgid "Jump"
+msgstr "Ugrás"
+
+msgctxt "#3263"
+msgid "Bookmark"
+msgstr "Könyvjelző"
+
+msgctxt "#3264"
+msgid "Favourite"
+msgstr "Kedvenc"
+
+msgctxt "#3265"
+msgid "Solve"
+msgstr "Megfejtés"

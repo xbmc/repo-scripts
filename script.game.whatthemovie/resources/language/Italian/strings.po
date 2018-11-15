@@ -1,0 +1,407 @@
+msgctxt "#3000"
+msgid "Guess!"
+msgstr "Indovina!"
+
+msgctxt "#3001"
+msgid "Random"
+msgstr "Casuale"
+
+msgctxt "#3002"
+msgid "Back"
+msgstr "Indietro"
+
+msgctxt "#3050"
+msgid "Could not log in"
+msgstr "No posso loggarmi"
+
+msgctxt "#3051"
+msgid "Password wrong or username unknown: [B]%s[/B][CR]Please change credentials or disable login"
+msgstr "Password errata o nome utente sconosciuto:  [B]%s[/B][CR] Per favore cambia le credenziali o disabilita il login"
+
+msgctxt "#3052"
+msgid "Enter shot ID"
+msgstr "Inserisci l'ID dell'immagine"
+
+msgctxt "#3053"
+msgid "Type the movie title"
+msgstr "Digita il titolo del film"
+
+msgctxt "#3054"
+msgid "Login site unreachable"
+msgstr "Sito irraggiungibile"
+
+msgctxt "#3055"
+msgid "Could not retrieve shot"
+msgstr "Impossibile recuperare l'immagine"
+
+msgctxt "#3066"
+msgid "Could not check guess"
+msgstr "Impossibile controllare se hai indovinato"
+
+msgctxt "#3100"
+msgid "Checking: [B]%s[/B]"
+msgstr "Sto verificando: [B]%s[/B]"
+
+msgctxt "#3101"
+msgid "Correct. Original title is: [B]%s[/B]"
+msgstr "Esatto. Il titolo originale è [B]%s[/B]"
+
+msgctxt "#3102"
+msgid "Wrong: [B]%s[/B]"
+msgstr "Errato: [B]%s[/B]"
+
+msgctxt "#3103"
+msgid "Not logged in"
+msgstr "Non loggato"
+
+msgctxt "#3104"
+msgid "Logged in as user: [B]%s[/B]"
+msgstr "Loggato come: [B]%s[/B]"
+
+msgctxt "#3105"
+msgid "Your score: [B]%s[/B] ([B]%s[/B])"
+msgstr "Il tuo punteggio: [B]%s[/B] ([B]%s[/B])"
+
+msgctxt "#3106"
+msgid "Solved [B][COLOR=ff008B00]%s[/COLOR][/B] times, first by [B]%s[/B]"
+msgstr "Risolto [B][COLOR=ff008B00]%s[/COLOR][/B] volte, il primo è stato [B]%s[B]"
+
+msgctxt "#3107"
+msgid "Not solved yet"
+msgstr "Non ancora risolto"
+
+msgctxt "#3108"
+msgid "Shot ID: [B]%s[/B]"
+msgstr "ID Immagine: [B]%s[/B]"
+
+msgctxt "#3109"
+msgid "Date: [B]%s[/B]"
+msgstr "Data: [B]%s[/B]"
+
+msgctxt "#3110"
+msgid "Posted by: [B]%s[/B]"
+msgstr "Postata da: [B]%s[/B]"
+
+msgctxt "#3111"
+msgid "Not released"
+msgstr "Non Rilasciata"
+
+msgctxt "#3112"
+msgid "Deleted user"
+msgstr "Utente Cancellato"
+
+msgctxt "#3113"
+msgid "New Submissions"
+msgstr "Nuovi Invii"
+
+msgctxt "#3114"
+msgid "Feature Films"
+msgstr "Film Preferiti"
+
+msgctxt "#3115"
+msgid "The Archive"
+msgstr "L'archivio"
+
+msgctxt "#3116"
+msgid "[B]%s[/B] votes"
+msgstr "[B]%s[/B] voti"
+
+msgctxt "#3117"
+msgid "[B]%s[/B] / [B]%s[/B]"
+msgstr "[B]%s[/B] / [B]%s[/B]"
+
+msgctxt "#3118"
+msgid "Hidden"
+msgstr "Nascosto"
+
+msgctxt "#3119"
+msgid "-"
+msgstr "-"
+
+msgctxt "#3120"
+msgid "Rejected shots"
+msgstr "Immagini rifiutate"
+
+msgctxt "#3121"
+msgid "You already solved this shot"
+msgstr "Hai già risolto questa immagine"
+
+msgctxt "#3122"
+msgid "The correct solution was: [B]%s[/B]"
+msgstr "La soluzione corretta era: [B]%s[/B]"
+
+msgctxt "#3123"
+msgid "You posted this shot"
+msgstr "Hai postato tu quest'immagine"
+
+msgctxt "#3124"
+msgid "Sorry, you are not allowed to view the shot [B]%s[/B] - redirected to [B]%s[/B]"
+msgstr "Scusa ma non sei autorizzato a vedere quest'immagine [B]%s[/B] - reindirizzato a [B]%s[/B] "
+
+msgctxt "#3125"
+msgid "The Vault"
+msgstr "La Volta"
+
+msgctxt "#3126"
+msgid "Awesome. Original title is: [B]%s[/B] +1 Point!"
+msgstr "Magnifico. Il titolo originale è: [B]%s[/B] +1 punto!"
+
+msgctxt "#3127"
+msgid "Deleted Shots"
+msgstr "immagine Eliminata"
+
+msgctxt "#3128"
+msgid "Sorry, no such shot [B]%s[/B] - redirected to [B]%s[/B]"
+msgstr "Scusa nessuna immagine [B]%s[/B] - reindirizzato a [B]%s[/B]"
+
+msgctxt "#3200"
+msgid "General"
+msgstr "Generale"
+
+msgctxt "#3201"
+msgid "Login"
+msgstr "Login"
+
+msgctxt "#3202"
+msgid "Use whatthemovie.com account"
+msgstr "Usa l'account di whatthemovie.com"
+
+msgctxt "#3203"
+msgid "Username"
+msgstr "Nome utente"
+
+msgctxt "#3204"
+msgid "Password"
+msgstr "Password"
+
+msgctxt "#3205"
+msgid "Settings for \"random\" button (login required)"
+msgstr "Impostazioni per il tasto \"casuale\" (è richiesto il login)"
+
+msgctxt "#3206"
+msgid "Difficulty"
+msgstr "Difficolta"
+
+msgctxt "#3207"
+msgid "Easy"
+msgstr "Facile"
+
+msgctxt "#3208"
+msgid "Easy+medium"
+msgstr "Medio Facile"
+
+msgctxt "#3209"
+msgid "All"
+msgstr "Tutto"
+
+msgctxt "#3210"
+msgid "Include archive"
+msgstr "Includi Archivio"
+
+msgctxt "#3211"
+msgid "Include solved"
+msgstr "Includi Risolti"
+
+msgctxt "#3212"
+msgid "Look+feel"
+msgstr "Guarda Senti"
+
+msgctxt "#3213"
+msgid "Look"
+msgstr "Guarda"
+
+msgctxt "#3214"
+msgid "Show \"posted by\""
+msgstr "Mostra \"postato da\""
+
+msgctxt "#3215"
+msgid "Show \"solved\""
+msgstr "Mostra \"risolti\""
+
+msgctxt "#3216"
+msgid "Show \"shot ID\""
+msgstr "Mostra \"ID immagine\""
+
+msgctxt "#3217"
+msgid "Show \"shot date\""
+msgstr "Mostra \"data immagine\""
+
+msgctxt "#3218"
+msgid "Behaviour"
+msgstr "Comportamento"
+
+msgctxt "#3219"
+msgid "Auto jump after guess was right"
+msgstr "Avanzamento automatico sopo la risposta esatta"
+
+msgctxt "#3220"
+msgid "...after x seconds"
+msgstr ".....dopo x secondi"
+
+msgctxt "#3221"
+msgid "Show \"shot flags\""
+msgstr "Mostra \"bandiere immagini\""
+
+msgctxt "#3222"
+msgid "Flags"
+msgstr "Bandiere"
+
+msgctxt "#3223"
+msgid "Flag 1"
+msgstr "Bandiera 1"
+
+msgctxt "#3224"
+msgid "Flag 2"
+msgstr "Bandiera 2"
+
+msgctxt "#3225"
+msgid "Flag 3"
+msgstr "Bandiera 3"
+
+msgctxt "#3226"
+msgid "Flag 4"
+msgstr "Bandiera 4"
+
+msgctxt "#3227"
+msgid "Flag 5"
+msgstr "Bandiera 5"
+
+msgctxt "#3228"
+msgid "Choose the flags you want to see"
+msgstr "Scegli la bandiera che vuoi vedere"
+
+msgctxt "#3229"
+msgid "Navigation options (login required)"
+msgstr "Opzioni di navigazione (è richiesto il login)"
+
+msgctxt "#3230"
+msgid "Only unsolved Shots"
+msgstr "Solo immagini irrisolte"
+
+msgctxt "#3231"
+msgid "Show \"shot rating\""
+msgstr "Mostra \"votazione immagine\""
+
+msgctxt "#3232"
+msgid "Jump to"
+msgstr "Vai a"
+
+msgctxt "#3233"
+msgid "Random"
+msgstr "Casuale"
+
+msgctxt "#3234"
+msgid "Next"
+msgstr "Successivo"
+
+msgctxt "#3235"
+msgid "Show tool buttons"
+msgstr "Mostra bottoni strumento "
+
+msgctxt "#3236"
+msgid "Show navigation buttons"
+msgstr "Mostra bottoni navigazione"
+
+msgctxt "#3237"
+msgid "Keys"
+msgstr "Chiavi"
+
+msgctxt "#3238"
+msgid "Choose buttons for actions"
+msgstr "Scegli bottoni per azioni"
+
+msgctxt "#3239"
+msgid "No key"
+msgstr "Nessuna chiave"
+
+msgctxt "#3240"
+msgid "page up"
+msgstr "pagina su"
+
+msgctxt "#3241"
+msgid "page down"
+msgstr "pagina giù"
+
+msgctxt "#3242"
+msgid "show info"
+msgstr "mostra informazioni"
+
+msgctxt "#3243"
+msgid "pause"
+msgstr "pausa"
+
+msgctxt "#3244"
+msgid "stop"
+msgstr "stop"
+
+msgctxt "#3245"
+msgid "next item"
+msgstr "elemento successivo"
+
+msgctxt "#3246"
+msgid "prev item"
+msgstr "elemento precedente"
+
+msgctxt "#3247"
+msgid "fast forward"
+msgstr "avanti veloce"
+
+msgctxt "#3248"
+msgid "rewind"
+msgstr "riavvolgi"
+
+msgctxt "#3249"
+msgid "play"
+msgstr "esegui"
+
+msgctxt "#3250"
+msgid "context menu"
+msgstr "menù contestuale"
+
+msgctxt "#3251"
+msgid "volume up"
+msgstr "Alza il Volume"
+
+msgctxt "#3252"
+msgid "volume down"
+msgstr "Abbassa il Volume"
+
+msgctxt "#3253"
+msgid "scroll up"
+msgstr "Scorri verso l'alto"
+
+msgctxt "#3254"
+msgid "scroll down"
+msgstr "Scorri verso il basso"
+
+msgctxt "#3255"
+msgid "home"
+msgstr "Casa"
+
+msgctxt "#3256"
+msgid "end"
+msgstr "fine"
+
+msgctxt "#3260"
+msgid "Next"
+msgstr "Successivo"
+
+msgctxt "#3261"
+msgid "Previous"
+msgstr "Precedente"
+
+msgctxt "#3262"
+msgid "Jump"
+msgstr "Salta"
+
+msgctxt "#3263"
+msgid "Bookmark"
+msgstr "Segnalibri"
+
+msgctxt "#3264"
+msgid "Favourite"
+msgstr "Preferito"
+
+msgctxt "#3265"
+msgid "Solve"
+msgstr "Risolvi"

@@ -1,0 +1,71 @@
+msgctxt "#3001"
+msgid "Random"
+msgstr "Lukraak"
+
+msgctxt "#3002"
+msgid "Back"
+msgstr "Trug"
+
+msgctxt "#3118"
+msgid "Hidden"
+msgstr "Weggesteek"
+
+msgctxt "#3200"
+msgid "General"
+msgstr "Algemeen"
+
+msgctxt "#3203"
+msgid "Username"
+msgstr "Gebruikersnaam"
+
+msgctxt "#3204"
+msgid "Password"
+msgstr "Wagwoord"
+
+msgctxt "#3205"
+msgid "Settings for \"random\" button (login required)"
+msgstr ""
+
+msgctxt "#3209"
+msgid "All"
+msgstr "Almal"
+
+msgctxt "#3214"
+msgid "Show \"posted by\""
+msgstr ""
+
+msgctxt "#3215"
+msgid "Show \"solved\""
+msgstr ""
+
+msgctxt "#3216"
+msgid "Show \"shot ID\""
+msgstr ""
+
+msgctxt "#3217"
+msgid "Show \"shot date\""
+msgstr ""
+
+msgctxt "#3221"
+msgid "Show \"shot flags\""
+msgstr ""
+
+msgctxt "#3231"
+msgid "Show \"shot rating\""
+msgstr ""
+
+msgctxt "#3233"
+msgid "Random"
+msgstr "Lukraak"
+
+msgctxt "#3234"
+msgid "Next"
+msgstr "Volgende"
+
+msgctxt "#3260"
+msgid "Next"
+msgstr "Volgende"
+
+msgctxt "#3261"
+msgid "Previous"
+msgstr "Vorige"
