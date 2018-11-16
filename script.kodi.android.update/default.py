@@ -26,7 +26,7 @@ from simplecache import SimpleCache
 ADDON_ID      = 'script.kodi.android.update'
 REAL_SETTINGS = xbmcaddon.Addon(id=ADDON_ID)
 ADDON_NAME    = REAL_SETTINGS.getAddonInfo('name')
-SETTINGS_LOC  = REAL_SETTINGS.getAddonInfo('profile').decode('utf-8')
+SETTINGS_LOC  = '/storage/emulated/0/download' # REAL_SETTINGS.getAddonInfo('profile').decode('utf-8')
 ADDON_PATH    = REAL_SETTINGS.getAddonInfo('path').decode('utf-8')
 ADDON_VERSION = REAL_SETTINGS.getAddonInfo('version')
 ICON          = REAL_SETTINGS.getAddonInfo('icon')
@@ -71,6 +71,12 @@ class Installer(object):
         xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method":"Addons.SetAddonEnabled","params":{"addonid":"%s","enabled":false}, "id": 1}'%(ADDON_ID))
         xbmcgui.Dialog().notification(ADDON_NAME, LANGUAGE(30009), ICON, 4000)
         return False
+        
+        
+    def prompt(self, fle):
+        #temp solution no need to use localized strings
+        msg = '[CR][CR]"%s" is temporarily impaired due to an Android API change.[CR][CR]In the interim please open your file explorer, navigate to "%s" and install "%s".[CR][CR]Thank you, Sorry for any inconvenience...'%(ADDON_NAME,SETTINGS_LOC,fle)
+        xbmcgui.Dialog().ok(ADDON_NAME, msg)
         
         
     def chkVersion(self):
@@ -212,7 +218,8 @@ class Installer(object):
             
             
     def installAPK(self, apkfile):
-        xbmc.executebuiltin('XBMC.AlarmClock(shutdowntimer,XBMC.Quit(),0.5,true)')
-        xbmc.executebuiltin('StartAndroidActivity("","android.intent.action.VIEW","application/vnd.android.package-archive","file:'+apkfile+'")')
+        self.prompt(apkfile.rsplit('/', 1)[1])
+        # xbmc.executebuiltin('XBMC.AlarmClock(shutdowntimer,XBMC.Quit(),0.5,true)')
+        # xbmc.executebuiltin('StartAndroidActivity("","android.intent.action.VIEW","application/vnd.android.package-archive","content:%s")'%apkfile)
         
 if __name__ == '__main__': Installer()
