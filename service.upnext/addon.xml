@@ -5,10 +5,10 @@
     </requires>
     <extension library="service.py" point="xbmc.service"/>
     <extension point="xbmc.addon.metadata">
-        <summary>Provides a netflix style pop up notification for watching the next episode with fancy/simple
+        <summary lang="en">Provides a netflix style pop up notification for watching the next episode with fancy/simple
             modes.
         </summary>
-        <description>Provides a netflix style pop up notification for watching the next episode with
+        <description lang="en">Provides a netflix style pop up notification for watching the next episode with
             fancy/simple modes. A prompt to check if your still watching also occurs after a few automatically watched
             shows in a row.
         </description>
