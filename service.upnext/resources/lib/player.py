@@ -113,8 +113,8 @@ class Player(xbmc.Player):
         return next_up_page, still_watching_page
 
     def show_popup_and_wait(self, episode, next_up_page, still_watching_page):
-        play_time = xbmc.Player().getTime()
-        total_time = xbmc.Player().getTotalTime()
+        play_time = self.getTime()
+        total_time = self.getTotalTime()
         progress_step_size = self.calculateProgressSteps(total_time - play_time)
         next_up_page.setItem(episode)
         next_up_page.setProgressStepSize(progress_step_size)
@@ -140,12 +140,12 @@ class Player(xbmc.Player):
             still_watching_page.show()
             utils.window('service.upnext.dialog', 'true')
             showing_still_watching_page = True
-        while xbmc.Player().isPlaying() and (
+        while self.isPlaying() and (
                 total_time - play_time > 1) and not next_up_page.isCancel() and not next_up_page.isWatchNow() and not still_watching_page.isStillWatching() and not still_watching_page.isCancel():
             xbmc.sleep(100)
             try:
-                play_time = xbmc.Player().getTime()
-                total_time = xbmc.Player().getTotalTime()
+                play_time = self.getTime()
+                total_time = self.getTotalTime()
                 if showing_next_up_page:
                     next_up_page.updateProgressControl()
                 elif showing_still_watching_page:
@@ -182,7 +182,7 @@ class Player(xbmc.Player):
         return should_play_default, should_play_non_default
 
     def get_episode(self):
-        current_file = xbmc.Player().getPlayingFile()
+        current_file = self.getPlayingFile()
         if not self.api.has_addon_data():
             # Get the active player
             result = self.api.getNowPlaying()
@@ -213,7 +213,7 @@ class Player(xbmc.Player):
             still_watching_page_simple.show()
         utils.window('service.upnext.dialog', 'true')
 
-        while xbmc.Player().isPlaying() and not next_up_page.isCancel() and not next_up_page.isWatchNow() and not still_watching_page.isStillWatching() and not still_watching_page.isCancel():
+        while self.isPlaying() and not next_up_page.isCancel() and not next_up_page.isWatchNow() and not still_watching_page.isStillWatching() and not still_watching_page.isCancel():
             xbmc.sleep(100)
             next_up_page.updateProgressControl()
             next_up_page_simple.updateProgressControl()
