@@ -112,3 +112,47 @@ msgstr ""
 msgctxt "#30037"
 msgid "Next Episode in"
 msgstr ""
+
+msgctxt "#30038"
+msgid "Simple"
+msgstr ""
+
+msgctxt "#30039"
+msgid "Fancy"
+msgstr ""
+
+msgctxt "#30040"
+msgid "Play"
+msgstr ""
+
+msgctxt "#30041"
+msgid "Don't Play"
+msgstr ""
+
+msgctxt "#30042"
+msgid "None"
+msgstr ""
+
+msgctxt "#30043"
+msgid "Info"
+msgstr ""
+
+msgctxt "#30044"
+msgid "Debug"
+msgstr ""
+
+msgctxt "#30045"
+msgid "UpNext"
+msgstr ""
+
+msgctxt "#30046"
+msgid "UpNextSimple"
+msgstr ""
+
+msgctxt "#30047"
+msgid "StillWatching"
+msgstr ""
+
+msgctxt "#30048"
+msgid "StillWatchingSimple"
+msgstr ""

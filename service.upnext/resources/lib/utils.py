@@ -3,11 +3,7 @@ import xbmcgui
 import xbmcaddon
 import inspect
 import binascii
-import sys
-if sys.version_info < (2, 7):
-    import simplejson as json
-else:
-    import json
+import json
 
 
 def addon_id():
@@ -94,7 +90,7 @@ def decode_data(data):
         return json.loads(binascii.unhexlify(data[0]))
 
 
-def logMsg(title, msg, level=1):
+def log(title, msg, level=1):
     logLevel = int(settings("logLevel"))
     window('logLevel', str(logLevel))
     if logLevel >= level:
