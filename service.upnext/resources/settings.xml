@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+    <category label="30003">
+        <setting id="simpleMode" type="enum" label="30025" lvalues="30038|30039" default="1"/>
+        <setting id="autoPlaySeasonTime" type="slider" label="30001" default="30" range="10,5,60" option="int" />
+        <setting id="autoPlayMode" type="enum" label="30005" lvalues="30040|30041" default="0"/>
+        <setting id="playedInARow" type="number" label="30009" default="3" visible="true" enable="true"/>
+        <setting id="includeWatched" type="bool" label="30013" default="false" visible="true" enable="true"/>
+        <setting id="enablePlaylist" type="bool" label="30032" default="false" visible="true" enable="true"/>
+    </category>
+    <category label="30004">
+        <setting id="disableNextUp" type="bool" label="30014" default="false" visible="true" enable="true"/>
+        <setting id="logLevel" type="enum" label="30002" lvalues="30042|30043|30044" default="0"/>
+        <setting id="shortPlayMode" type="bool" label="30017" default="false" visible="true" enable="true"/>
+        <setting id="shortPlayLength" type="number" label="30018" default="10" visible="true" enable="true"/>
+        <setting id="shortPlayNotification" type="bool" label="30019" default="true" visible="true" enable="true"/>
+    </category>
+    <category label="30028">
+        <setting id="developerMode" type="bool" label="30029" default="false" visible="true" enable="true"/>
+        <setting id="windowMode" type="enum" label="30030" lvalues="30045|30046|30047|30048" visible="eq(-1,true)" default="0"/>
+    </category>
+</settings>
