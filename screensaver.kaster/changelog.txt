@@ -1,3 +1,6 @@
+v1.2.4/1.2.5 (20/11/2018)
+- [new] initial support for python3 compatibility (tks rechi)
+
 v1.2.3 11/11/2018
 - [new] add dutch translation (tks klojum)
 
