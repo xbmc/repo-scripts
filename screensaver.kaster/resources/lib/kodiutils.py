@@ -44,7 +44,10 @@ def log(message,level):
 
 
 def get_setting(setting):
-    return ADDON.getSetting(setting).strip().decode('utf-8')
+    try:
+        return ADDON.getSetting(setting).strip().decode('utf-8')
+    except AttributeError:
+        return ADDON.getSetting(setting).strip()
 
 
 def set_setting(setting, value):
