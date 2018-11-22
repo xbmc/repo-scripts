@@ -107,3 +107,7 @@ msgstr ""
 msgctxt "#30022"
 msgid "Play notification sound"
 msgstr ""
+
+msgctxt "#30023"
+msgid "Display time"
+msgstr ""

@@ -31,13 +31,6 @@ def on_notification_posted(data):
 
     message = message.replace('\n', ' ').replace('\r', ' ')
 
-    # Try and get a display time (default back to 5 sec.)
-    try:
-        display_time = int(data['displayTime'])
-
-    except Exception:
-        display_time = 5000
-
     # Get an icon to display
     large_icon_data = data['largeIcon']['data']
     app_icon_data = data['appIcon']['data']
@@ -65,7 +58,10 @@ def on_notification_posted(data):
             f.write(icon.decode('base64'))
 
     addon = xbmcaddon.Addon()
+
     play_sound = addon.getSetting('notification.play_sound') == 'true'
+    display_time = int(addon.getSetting('notification.display_time')) * 1000
+
     xbmcgui.Dialog().notification(title, message, icon_path, display_time,
                                   play_sound)
 
