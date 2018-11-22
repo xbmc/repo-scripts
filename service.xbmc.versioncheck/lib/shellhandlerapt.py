@@ -16,7 +16,7 @@
 #    along with this program. If not, see <http://www.gnu.org/licenses/>.
 #
 import xbmc
-from common import *
+from .common import *
 
 try:
     from subprocess import check_output
@@ -56,7 +56,7 @@ class ShellHandlerApt:
             if installed == "(none)":
                 installed = False
             if candidate == "(none)":
-                candiate = False
+                candidate = False
             return installed, candidate
         else:
             log("ShellHandlerApt: error during version check")

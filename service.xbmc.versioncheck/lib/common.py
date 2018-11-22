@@ -15,6 +15,7 @@
 #    You should have received a copy of the GNU General Public License
 #    along with this program. If not, see <http://www.gnu.org/licenses/>.
 #
+import sys
 
 import os
 import xbmc
@@ -25,16 +26,24 @@ import xbmcvfs
 ADDON        = xbmcaddon.Addon()
 ADDONVERSION = ADDON.getAddonInfo('version')
 ADDONNAME    = ADDON.getAddonInfo('name')
-ADDONPATH    = ADDON.getAddonInfo('path').decode('utf-8')
-ADDONPROFILE = xbmc.translatePath( ADDON.getAddonInfo('profile') ).decode('utf-8')
+if sys.version_info[0] >= 3:
+    ADDONPATH    = ADDON.getAddonInfo('path')
+    ADDONPROFILE = xbmc.translatePath( ADDON.getAddonInfo('profile') )
+else:
+    ADDONPATH    = ADDON.getAddonInfo('path').decode('utf-8')
+    ADDONPROFILE = xbmc.translatePath( ADDON.getAddonInfo('profile') ).decode('utf-8')
 ICON         = ADDON.getAddonInfo('icon')
+KODI_VERSION_MAJOR = int(xbmc.getInfoLabel('System.BuildVersion')[0:2])
 
 monitor = xbmc.Monitor()
 
 # Fixes unicode problems
 def string_unicode(text, encoding='utf-8'):
     try:
-        text = unicode( text, encoding )
+        if sys.version_info[0] >= 3:
+            text = str( text )
+        else:
+            text = unicode( text, encoding )
     except:
         pass
     return text
@@ -51,10 +60,13 @@ def localise(id):
     return string
 
 def log(txt):
-    if isinstance (txt,str):
-        txt = txt.decode("utf-8")
-    message = u'%s: %s' % ("Version Check", txt)
-    xbmc.log(msg=message.encode("utf-8"), level=xbmc.LOGDEBUG)
+    if sys.version_info[0] >= 3:
+        message = '%s: %s' % ("Version Check", txt.encode('utf-8'))
+    else:
+        if isinstance (txt,str):
+            txt = txt.decode("utf-8")
+        message = (u'%s: %s' % ("Version Check", txt)).encode("utf-8")
+    xbmc.log(msg=message, level=xbmc.LOGDEBUG)
 
 def get_password_from_user():
     keyboard = xbmc.Keyboard("", ADDONNAME + "," +localise(32022), True)
@@ -89,7 +101,7 @@ def upgrade_message(msg, oldversion, upgrade, msg_current, msg_available):
         #ADDON.setSetting("lastnotified_version", ADDONVERSION)
     else:
         log("Already notified one time for upgrading.")
-        
+
 def upgrade_message2( version_installed, version_available, version_stable, oldversion, upgrade,):
     # shorten releasecandidate to rc
     if version_installed['tag'] == 'releasecandidate':
@@ -117,7 +129,7 @@ def upgrade_message2( version_installed, version_available, version_stable, oldv
     # People will find out once they visit the website.
     # For stable only notify once and when there's a newer stable available.
     # Ignore any add-on updates as those only count for != stable
-    if oldversion == 'stable' and ADDON.getSetting("lastnotified_stable") != msg_stable: 
+    if oldversion == 'stable' and ADDON.getSetting("lastnotified_stable") != msg_stable:
         if xbmcaddon.Addon('xbmc.addon').getAddonInfo('version') < "13.9.0":
             xbmcgui.Dialog().ok(ADDONNAME,
                                 msg,
@@ -129,7 +141,7 @@ def upgrade_message2( version_installed, version_available, version_stable, oldv
                                 localise(32032),
                                 localise(32033))
         ADDON.setSetting("lastnotified_stable", msg_stable)
-    
+
     elif oldversion != 'stable' and ADDON.getSetting("lastnotified_version") != msg_available:
         if xbmcaddon.Addon('xbmc.addon').getAddonInfo('version') < "13.9.0":
             # point them to xbmc.org
@@ -157,20 +169,37 @@ def upgrade_message2( version_installed, version_available, version_stable, oldv
         #ADDON.setSetting("lastnotified_version", ADDONVERSION)
         '''
         ADDON.setSetting("lastnotified_version", msg_available)
-        
+
     else:
         log("Already notified one time for upgrading.")
 
 
+def abortRequested():
+    if KODI_VERSION_MAJOR > 13:
+        return monitor.abortRequested()
+    else:
+        return xbmc.abortRequested
+
+
+def waitForAbort(seconds):
+    if KODI_VERSION_MAJOR > 13:
+        return monitor.waitForAbort(seconds)
+    else:
+        for _ in range(0, seconds*1000/200):
+            if xbmc.abortRequested:
+                return True
+            xbmc.sleep(200)
+
+
 def wait_for_end_of_video():
     # Don't show notify while watching a video
-    while xbmc.Player().isPlayingVideo() and not monitor.abortRequested():
-        if monitor.waitForAbort(1):
+    while xbmc.Player().isPlayingVideo() and not abortRequested():
+        if waitForAbort(1):
             # Abort was requested while waiting. We should exit
             break
     i = 0
-    while i < 10 and not monitor.abortRequested():
-        if monitor.waitForAbort(1):
+    while i < 10 and not abortRequested():
+        if waitForAbort(1):
             # Abort was requested while waiting. We should exit
             break
         i += 1

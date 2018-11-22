@@ -1,4 +1,10 @@
-v0.3.19 to v0.3.5
+v0.3.26 to v0.4.2
+- Update version list
+
+v0.3.25
+- fix issue with the older python2.6
+
+v0.3.5 to v0.3.24
 - Update version list
 
 v0.3.14
