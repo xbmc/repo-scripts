@@ -2,9 +2,9 @@
 <settings>
 
     <category label="30000">
-
         <setting label="30021"    type="lsep" />
-        <setting label="30022"    id="notification.play_sound"    type="bool"    subsetting="true"    default="true" />
+        <setting label="30023"    id="notification.display_time"  type="slider"  option="int"    range="1,1,10"    default="5" />
+        <setting label="30022"    id="notification.play_sound"    type="bool"    default="true" />
 
         <setting label="30008"    type="lsep" />
         <setting label="30010"    id="music.on_call"         type="enum"      lvalues="30011|30012|30013|30014"          default="3" />
