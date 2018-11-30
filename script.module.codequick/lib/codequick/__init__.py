@@ -32,10 +32,6 @@ Codacy: https://app.codacy.com/app/willforde/script.module.codequick/dashboard
 
 from __future__ import absolute_import
 
-# Execution start time, used later
-# to report total execution time
-start_time = __import__("time").time()
-
 # Package imports
 from codequick.support import run
 from codequick.resolver import Resolver
@@ -45,4 +41,3 @@ from codequick.route import Route
 from codequick import utils, storage
 
 __all__ = ["run", "Script", "Route", "Resolver", "Listitem", "utils", "storage"]
-__version__ = (0, 9, 6)
