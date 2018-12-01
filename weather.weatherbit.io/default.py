@@ -4,6 +4,7 @@ import os
 import sys
 import time
 from datetime import datetime
+import _strptime
 import urllib2
 import unicodedata
 import xbmc
@@ -64,7 +65,6 @@ def refresh_locations():
         if loc_name != '':
             locations += 1
         else:
-            ADDON.setSetting('Location%sID' % count, '')
             ADDON.setSetting('Location%sdeg' % count, '')
         set_property('Location%s' % count, loc_name)
     set_property('Locations', str(locations))
@@ -146,8 +146,9 @@ def get_month(stamp, form):
     return label
 
 def geoip():
+    # list of alternative providers https://ahmadawais.com/best-api-geolocating-an-ip-address/)
     try:
-        req = urllib2.urlopen('http://geoip.nekudo.com/api')
+        req = urllib2.urlopen('http://ip-api.com/json')
         response = req.read()
         req.close()
     except:
@@ -155,9 +156,12 @@ def geoip():
         log('failed to retrieve geoip location')
     if response:
         data = json.loads(response)
-        if data and 'city' in data and 'country' in data and 'code' in data['country']:
-            city, country = data['city'], data['country']['code']
-            return '%s, %s' % (city, country)
+        if data and 'city' in data and 'countryCode' in data and 'lat' in data and 'lon' in data:
+            city = data['city'] + ' (' + data['countryCode'] + ')'
+            latlon = []
+            latlon.append(str(data['lat']))
+            latlon.append(str(data['lon']))
+            return city, str(latlon)
 
 def location(locstr):
     locs    = []
@@ -462,14 +466,10 @@ else:
         log('trying location 1 instead')
     if locationdeg == '':
         log('fallback to geoip')
-        locationstring = geoip()
-        if locationstring:
-            locations, locationdeg = location(locationstring.encode("utf-8"))
-            if locations:
-                ADDON.setSetting('Location1', locations[0].split(' - ')[0])
-                ADDON.setSetting('Location1deg', str(locationdeg[0]))
-                locationname = locations[0]
-                locationdeg = str(locationdeg[0])
+        locationname, locationdeg = geoip()
+        if locationname and locationdeg:
+            ADDON.setSetting('Location1', locationname.encode("utf-8"))
+            ADDON.setSetting('Location1deg', locationdeg)
     if not locationdeg == '':
         forecast(locationname, locationdeg)
     else:
