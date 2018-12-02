@@ -28,21 +28,13 @@ CACHEFILE = os.path.join(Route.get_info("profile"), u"_youtube-cache.sqlite")  #
 EXCEPTED_STATUS = [u"public", u"unlisted"]
 
 
-class CustomRow(sqlite3.Row):
-    def __eq__(self, y):
-        return y == self[0]
-
-    def __hash__(self):
-        return hash(self[0])
-
-
 class Database(object):
     def __init__(self):
         # Unfortunately with python 3, sqlite3.connect might fail if system local is 'c_type'(ascii)
         self.db = db = sqlite3.connect(CACHEFILE, timeout=1)
 
         db.isolation_level = None
-        db.row_factory = CustomRow
+        db.row_factory = sqlite3.Row
         self.cur = cur = db.cursor()
 
         # Performance tweaks
@@ -89,11 +81,12 @@ class Database(object):
         self.execute(self.cur.executemany, sqlquery, videos)
 
     def extract_videos(self, data):
-        return set(self.cur.execute("""
+        results = self.cur.execute("""
         SELECT video_id, title, thumb, description, genre, count, date, hd, duration, videos.channel_id,
         fanart, channel_title FROM videos INNER JOIN channels ON channels.channel_id = videos.channel_id
         INNER JOIN categories ON categories.id = videos.genre_id
-        WHERE video_id IN (%s)""" % ",".join("?" * len(data)), data))
+        WHERE video_id IN (%s)""" % ",".join("?" * len(data)), data)
+        return {row[0]: row for row in results}
 
     @property
     def channels(self):
@@ -445,7 +438,7 @@ class APIControl(Route):
         :type ids: list
         """
         cached_videos = self.db.extract_videos(ids)
-        uncached_ids = [key for key in ids if key not in cached_videos]  # pragma: no branch
+        uncached_ids = list(frozenset(key for key in ids if key not in cached_videos))  # pragma: no branch
         if uncached_ids:
             # Fetch video information
             feed = self.api.videos(uncached_ids)
@@ -490,8 +483,8 @@ class APIControl(Route):
             cached = self.db.extract_videos(uncached_ids)
             cached_videos.update(cached)
 
-        # Return a list of Row objects of video data
-        return cached_videos
+        # Return each video in the order givin by the playlist
+        return (cached_videos[video_id] for video_id in ids if video_id in cached_videos)
 
     def videos(self, video_ids, multi_channel=False):
         """

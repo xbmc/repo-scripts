@@ -438,8 +438,7 @@ class Stream(Params):
                 raise KeyError("unknown stream detail key: '{}'".format(key))
 
         # Now we are ready to send the stream info to kodi
-        if audio:  # pragma: no branch
-            self._listitem.addStreamInfo("audio", audio)
+        self._listitem.addStreamInfo("audio", audio)
         if video:
             self._listitem.addStreamInfo("video", video)
         if subtitle:
@@ -477,7 +476,9 @@ class Context(list):
         if callback.route == dispatcher.get_route():
             kwargs["_updatelisting_"] = True
 
-        self.container(callback, Script.localize(RELATED_VIDEOS), *args, **kwargs)
+        related_videos_text = Script.localize(RELATED_VIDEOS)
+        kwargs["_title_"] = related_videos_text
+        self.container(callback, related_videos_text, *args, **kwargs)
 
     def container(self, callback, label, *args, **kwargs):
         """
@@ -524,6 +525,9 @@ class Listitem(object):
 
         #: The underlining kodi listitem object, for advanced use.
         self.listitem = listitem = xbmcgui.ListItem()
+
+        #: List of paths to subtitle files.
+        self.subtitles = []
 
         self.info = Info(listitem)
         """
@@ -610,14 +614,15 @@ class Listitem(object):
     # noinspection PyProtectedMember
     def _close(self):
         callback = self.path
+        listitem = self.listitem
         if hasattr(callback, "route"):
-            self.listitem.setProperty("isplayable", str(callback.route.is_playable).lower())
-            self.listitem.setProperty("folder", str(callback.route.is_folder).lower())
+            listitem.setProperty("isplayable", str(callback.route.is_playable).lower())
+            listitem.setProperty("folder", str(callback.route.is_folder).lower())
             path = build_path(callback, self._args, self.params.raw_dict)
             isfolder = callback.route.is_folder
         else:
-            self.listitem.setProperty("isplayable", "true" if callback else "false")
-            self.listitem.setProperty("folder", "false")
+            listitem.setProperty("isplayable", "true" if callback else "false")
+            listitem.setProperty("folder", "false")
             path = callback
             isfolder = False
 
@@ -625,6 +630,10 @@ class Listitem(object):
             # Add mediatype if not already set
             if "mediatype" not in self.info.raw_dict and self._content_type in ("video", "music"):  # pragma: no branch
                 self.info.raw_dict["mediatype"] = self._content_type
+
+            # Set the listitem subtitles
+            if self.subtitles:
+                self.listitem.setSubtitles(self.subtitles)
 
             # Add Video Specific Context menu items
             self.context.append(("$LOCALIZE[13347]", "XBMC.Action(Queue)"))
@@ -638,14 +647,14 @@ class Listitem(object):
             self.label = u"UNKNOWN"
 
         # Close common datasets
-        self.listitem.setPath(path)
+        listitem.setPath(path)
         self.property._close()
         self.context._close()
         self.info._close(self._content_type)
         self.art._close(isfolder)
 
         # Return a tuple compatible with 'xbmcplugin.addDirectoryItems'
-        return path, self.listitem, isfolder
+        return path, listitem, isfolder
 
     @classmethod
     def from_dict(cls, callback, label, art=None, info=None, stream=None, context=None, properties=None, params=None):

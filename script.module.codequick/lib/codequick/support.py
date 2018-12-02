@@ -242,7 +242,7 @@ class Dispatcher(object):
         # Construct route path
         path = callback.__name__.lower()
         if path != "root":
-            path = "/{}/{}".format(callback.__module__.strip("_").replace(".", "/"), callback.__name__).lower()
+            path = "/{}/{}/".format(callback.__module__.strip("_").replace(".", "/"), callback.__name__).lower()
 
         # Register callback
         if path in self.registered_routes:
@@ -299,9 +299,7 @@ class Dispatcher(object):
             logger.critical(msg, exc_info=1)
 
         else:
-            from . import start_time
             logger.debug("Route Execution Time: %ims", (time.time() - execute_time) * 1000)
-            logger.debug("Total Execution Time: %ims", (time.time() - start_time) * 1000)
             self.run_delayed()
 
     def run_delayed(self):
