@@ -275,27 +275,33 @@ def current_props(data,loc):
     set_property('Current.WindDirection', xbmc.getLocalizedString(WIND_DIR(int(round(data['data'][0]['wind_dir'])))))
     set_property('Current.DewPoint'     , str(data['data'][0]['dewpt']))
     set_property('Current.Humidity'     , str(data['data'][0]['rh']))
-    set_property('Current.UVIndex'      , str(int(round(data['data'][0]['uv']))))
+    if data['data'][0]['uv']:
+        set_property('Current.UVIndex'  , str(int(round(data['data'][0]['uv']))))
+    else:
+        set_property('Current.UVIndex'  , '')
     set_property('Current.OutlookIcon'  , '%s.png' % weathercode) # kodi translates it to Current.ConditionIcon
     set_property('Current.FanartCode'   , weathercode)
     set_property('Location'             , loc)
     set_property('Updated'              , convert_date(data['data'][0]['ts']))
 # extended properties
     set_property('Current.Cloudiness'       , str(data['data'][0]['clouds']) + '%')
-    precip = data['data'][0]['precip']
-    if not precip:
-        precip = 0
     if 'F' in TEMPUNIT:
         set_property('Current.Visibility'   , str(round(data['data'][0]['vis'] * 0.621371 ,2)) + 'mi')
         set_property('Current.Pressure'     , str(round(data['data'][0]['pres'] / 33.86 ,2)) + ' in')
         set_property('Current.SeaLevel'     , str(round(data['data'][0]['slp'] / 33.86 ,2)) + ' in')
-        set_property('Current.Precipitation', str(int(round(precip *  0.04 ,2))) + ' in')
+        if data['data'][0]['precip']:
+            set_property('Current.Precipitation', str(int(round(data['data'][0]['precip'] *  0.04 ,2))) + ' in')
+        else:
+            set_property('Current.Precipitation', '')
         set_property('Current.Snow'         , str(int(round(data['data'][0].get('snow',0) *  0.04 ,2))) + ' in')
     else:
         set_property('Current.Visibility'   , str(data['data'][0]['vis']) + 'km')
         set_property('Current.Pressure'     , str(data['data'][0]['pres']) + ' mb')
         set_property('Current.SeaLevel'     , str(data['data'][0]['slp']) + ' mb')
-        set_property('Current.Precipitation', str(int(round(precip))) + ' mm')
+        if data['data'][0]['precip']:
+            set_property('Current.Precipitation', str(int(round(data['data'][0]['precip']))) + ' mm')
+        else:
+            set_property('Current.Precipitation', '')
         set_property('Current.Snow'         , str(int(round(data['data'][0].get('snow',0)))) + ' mm')
     set_property('Forecast.City'            , data['data'][0]['city_name'])
     set_property('Forecast.Country'         , data['data'][0]['country_code'])
@@ -345,19 +351,27 @@ def daily_props(data):
         set_property('Daily.%i.HighFeelsLike'   % (count+1), TEMP(int(round(item['app_max_temp']))) + TEMPUNIT)
         set_property('Daily.%i.LowFeelsLike'    % (count+1), TEMP(int(round(item['app_min_temp']))) + TEMPUNIT)
         set_property('Daily.%i.DewPoint'        % (count+1), TEMP(int(round(item['dewpt']))) + TEMPUNIT)
+
+
         if 'F' in TEMPUNIT:
             set_property('Daily.%i.Pressure'      % (count+1), str(round(item['pres'] / 33.86 ,2)) + ' in')
             set_property('Daily.%i.SeaLevel'      % (count+1), str(round(item['slp'] / 33.86 ,2)) + ' in')
             set_property('Daily.%i.Snow'          % (count+1), str(round(item['snow'] * 0.04 ,2)) + ' in')
             set_property('Daily.%i.SnowDepth'     % (count+1), str(round(item['snow_depth'] * 0.04 ,2)) + ' in')
-            set_property('Daily.%i.Precipitation' % (count+1), str(round(item['precip'] * 0.04 ,2)) + ' in')
+            if item['precip']:
+                set_property('Daily.%i.Precipitation' % (count+1), str(round(item['precip'] * 0.04 ,2)) + ' in')
+            else:
+                set_property('Daily.%i.Precipitation' % (count+1), '')
             set_property('Daily.%i.Visibility'    % (count+1), str(round(item['vis'] * 0.621371 ,2)) + ' mi')
         else:
             set_property('Daily.%i.Pressure'      % (count+1), str(item['pres']) + ' mb')
             set_property('Daily.%i.SeaLevel'      % (count+1), str(round(item['slp'])) + ' mb')
             set_property('Daily.%i.Snow'          % (count+1), str(round(item['snow'])) + ' mm')
             set_property('Daily.%i.SnowDepth'     % (count+1), str(round(item['snow_depth'])) + ' mm')
-            set_property('Daily.%i.Precipitation' % (count+1), str(round(item['precip'])) + ' mm')
+            if item['precip']:
+                set_property('Daily.%i.Precipitation' % (count+1), str(round(item['precip'])) + ' mm')
+            else:
+                set_property('Daily.%i.Precipitation' % (count+1), '')
             set_property('Daily.%i.Visibility'    % (count+1), str(item['vis']) + ' km')
         set_property('Daily.%i.WindSpeed'         % (count+1), SPEED(item['wind_spd']) + SPEEDUNIT)
         set_property('Daily.%i.WindGust'          % (count+1), SPEED(item['wind_gust_spd']) + SPEEDUNIT)
@@ -366,7 +380,10 @@ def daily_props(data):
         set_property('Daily.%i.CloudsMid'         % (count+1), str(item['clouds_mid']) + '%')
         set_property('Daily.%i.CloudsHigh'        % (count+1), str(item['clouds_hi']) + '%')
         set_property('Daily.%i.Probability'       % (count+1), str(item['pop']) + '%')
-        set_property('Daily.%i.UVIndex'           % (count+1), str(int(round(item['uv']))) + '%')
+        if item['uv']:
+            set_property('Daily.%i.UVIndex'       % (count+1), str(int(round(item['uv']))) + '%')
+        else:
+            set_property('Daily.%i.UVIndex'       % (count+1), '')
         set_property('Daily.%i.Sunrise'           % (count+1), convert_date(item['sunrise_ts']))
         set_property('Daily.%i.Sunset'            % (count+1), convert_date(item['sunset_ts']))
         set_property('Daily.%i.Moonrise'          % (count+1), convert_date(item['moonrise_ts']))
@@ -405,14 +422,20 @@ def hourly_props(data):
             set_property('Hourly.%i.SeaLevel'      % (count+1), str(round(item['slp'] / 33.86 ,2)) + ' in')
             set_property('Hourly.%i.Snow'          % (count+1), str(round(item['snow'] * 0.04 ,2)) + ' in')
             set_property('Hourly.%i.SnowDepth'     % (count+1), str(round(item['snow_depth'] * 0.04 ,2)) + ' in')
-            set_property('Hourly.%i.Precipitation' % (count+1), str(round(item['precip'] * 0.04 ,2)) + ' in')
+            if item['precip']:
+                set_property('Hourly.%i.Precipitation' % (count+1), str(round(item['precip'] * 0.04 ,2)) + ' in')
+            else:
+                set_property('Hourly.%i.Precipitation' % (count+1), '')
             set_property('Hourly.%i.Visibility'    % (count+1), str(round(item['vis'] * 0.621371 ,2)) + ' mi')
         else:
             set_property('Hourly.%i.Pressure'      % (count+1), str(item['pres']) + ' mb')
             set_property('Hourly.%i.SeaLevel'      % (count+1), str(round(item['slp'])) + ' mb')
             set_property('Hourly.%i.Snow'          % (count+1), str(round(item['snow'])) + ' mm')
             set_property('Hourly.%i.SnowDepth'     % (count+1), str(round(item['snow_depth'])) + ' mm')
-            set_property('Hourly.%i.Precipitation' % (count+1), str(round(item['precip'])) + ' mm')
+            if item['precip']:
+                set_property('Hourly.%i.Precipitation' % (count+1), str(round(item['precip'])) + ' mm')
+            else:
+                set_property('Hourly.%i.Precipitation' % (count+1), '')
             set_property('Hourly.%i.Visibility'    % (count+1), str(item['vis']) + ' km')
         set_property('Hourly.%i.WindSpeed'         % (count+1), SPEED(item['wind_spd']) + SPEEDUNIT)
         set_property('Hourly.%i.WindGust'          % (count+1), SPEED(item['wind_gust_spd']) + SPEEDUNIT)
@@ -421,7 +444,10 @@ def hourly_props(data):
         set_property('Hourly.%i.CloudsMid'         % (count+1), str(item['clouds_mid']) + '%')
         set_property('Hourly.%i.CloudsHigh'        % (count+1), str(item['clouds_hi']) + '%')
         set_property('Hourly.%i.Probability'       % (count+1), str(item['pop']) + '%')
-        set_property('Hourly.%i.UVIndex'           % (count+1), str(int(round(item['uv']))) + '%')
+        if item['uv']:
+            set_property('Hourly.%i.UVIndex'       % (count+1), str(int(round(item['uv']))) + '%')
+        else:
+            set_property('Hourly.%i.UVIndex'       % (count+1), '')
         set_property('Hourly.%i.Ozone'             % (count+1), str(int(round(item['ozone']))) + ' DU')
 
 class MyMonitor(xbmc.Monitor):
