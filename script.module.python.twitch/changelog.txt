@@ -1,3 +1,8 @@
+2.0.5
+[add] add frame rate and resolution to returned stream information
+[upd] update usher parameters
+[upd] use SPDX license identifiers
+
 2.0.4
 [fix] video/live stream token encoding
 

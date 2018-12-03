@@ -1,4 +1,15 @@
 # -*- encoding: utf-8 -*-
+"""
+
+    Copyright (C) 2012-2016 python-twitch (https://github.com/ingwinlu/python-twitch)
+    Copyright (C) 2016-2018 script.module.python.twitch
+
+    This file is part of script.module.python.twitch
+
+    SPDX-License-Identifier: GPL-3.0-only
+    See LICENSES/GPL-3.0-only for more information.
+"""
+
 import re
 from ast import literal_eval
 from . import keys
@@ -9,10 +20,29 @@ _m3u_pattern = re.compile(
     r'GROUP-ID="(?P<group_id>[^"]*)",'
     r'NAME="(?P<group_name>[^"]*)"[,=\w]*\n'
     r'#EXT-X-STREAM-INF:.*'
-    r'BANDWIDTH=(?P<bandwidth>[0-9]+).*\n('
-    r'?P<url>http.*)')
+    r'BANDWIDTH=(?P<bandwidth>[0-9]+),'
+    r'(?:.*RESOLUTION="*(?P<resolution>[0-9xX]+)"*,)?'
+    r'(?:.*FRAME-RATE=(?P<fps>[0-9.]+))?.*\n'
+    r'(?P<url>http.*)')
 
 _error_pattern = re.compile(r'.*<tr><td><b>error</b></td><td>(?P<message>.+?)</td></tr>.*', re.IGNORECASE)
+
+
+def _find_frame_rate(group_id, group_name):
+    group_id = group_id.lower()
+
+    if group_id == 'audio_only':
+        return None
+    elif group_id == 'chunked':
+        group_id = group_name.lower().replace('(source)', '').strip()
+
+    info = group_id.split('p')
+    if len(info) > 1 and info[1]:
+        fps = float(info[1])
+    else:
+        fps = 30.0
+
+    return fps
 
 
 def m3u8(f):
@@ -43,13 +73,25 @@ def m3u8_to_dict(string):
     d = dict()
     matches = re.finditer(_m3u_pattern, string)
     for m in matches:
-        name = 'Audio Only' if m.group('group_name') == 'audio_only' else m.group('group_name')
-        name = 'Source' if m.group('group_id') == 'chunked' else name
+        if m.group('group_name') == 'audio_only':
+            name = 'Audio Only'
+        elif m.group('group_id') == 'chunked':
+            name = 'Source'
+        else:
+            name = m.group('group_name')
+
+        if m.group('fps'):
+            fps = float(m.group('fps'))
+        else:
+            fps = _find_frame_rate(m.group('group_id'), m.group('group_name'))
+
         d[m.group('group_id')] = {
             'id': m.group('group_id'),
             'name': name,
             'url': m.group('url'),
-            'bandwidth': int(m.group('bandwidth'))
+            'bandwidth': int(m.group('bandwidth')),
+            'fps': fps,
+            'resolution': m.group('resolution')
         }
     log.debug('m3u8_to_dict result:\n{0}'.format(d))
     return d
@@ -60,13 +102,25 @@ def m3u8_to_list(string):
     l = list()
     matches = re.finditer(_m3u_pattern, string)
     for m in matches:
-        name = 'Audio Only' if m.group('group_name') == 'audio_only' else m.group('group_name')
-        name = 'Source' if m.group('group_id') == 'chunked' else name
+        if m.group('group_name') == 'audio_only':
+            name = 'Audio Only'
+        elif m.group('group_id') == 'chunked':
+            name = 'Source'
+        else:
+            name = m.group('group_name')
+
+        if m.group('fps'):
+            fps = float(m.group('fps'))
+        else:
+            fps = _find_frame_rate(m.group('group_id'), m.group('group_name'))
+
         l.append({
             'id': m.group('group_id'),
             'name': name,
             'url': m.group('url'),
-            'bandwidth': int(m.group('bandwidth'))
+            'bandwidth': int(m.group('bandwidth')),
+            'fps': fps,
+            'resolution': m.group('resolution')
         })
 
     log.debug('m3u8_to_list result:\n{0}'.format(l))
@@ -85,11 +139,11 @@ def clip_embed_to_list(response):
 
     if qualities:
         l = [{
-                 'id': item['quality'],
-                 'name': item['quality'],
-                 'url': item['source'],
-                 'bandwidth': -1
-             } for item in qualities]
+            'id': item['quality'],
+            'name': item['quality'],
+            'url': item['source'],
+            'bandwidth': -1
+        } for item in qualities]
         if l:
             l.insert(0, {
                 'id': 'Source',

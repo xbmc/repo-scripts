@@ -1,9 +1,13 @@
 # -*- encoding: utf-8 -*-
-# https://dev.twitch.tv/docs/authentication#scopes
 """
-    scopes
+    Reference: https://dev.twitch.tv/docs/authentication#scopes
 
-    string constants
+    Copyright (C) 2016-2018 script.module.python.twitch
+
+    This file is part of script.module.python.twitch
+
+    SPDX-License-Identifier: GPL-3.0-only
+    See LICENSES/GPL-3.0-only for more information.
 """
 
 analytics_read_extensions = 'analytics:read:extensions'  # View analytics data for your extensions.

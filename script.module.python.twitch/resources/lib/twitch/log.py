@@ -1,4 +1,14 @@
 # -*- coding: utf-8 -*-
+"""
+
+    Copyright (C) 2016-2018 script.module.python.twitch
+
+    This file is part of script.module.python.twitch
+
+    SPDX-License-Identifier: GPL-3.0-only
+    See LICENSES/GPL-3.0-only for more information.
+"""
+
 import re
 import logging
 import copy
@@ -23,7 +33,8 @@ def _mask(message):
     masked_message = re.sub(r'(USER-IP=[\'"])[^\'"]+', r'\1' + mask, masked_message)
     masked_message = re.sub(r'(["\']client_secret["\']:\s*[\'"])[^\'"]+', r'\1' + mask, masked_message)
     masked_message = re.sub(r'(client_secret=).+?(&|$|\|)', r'\1' + mask + r'\2', masked_message)
-    masked_message = re.sub(r'(\\*"user_ip\\*":\\*").+?(\\*")', r'\1' + mask + r'\2', masked_message)
+    masked_message = re.sub(r'(\\*["\']user_ip\\*["\']:\\*["\']).+?(\\*["\'])', r'\1' + mask + r'\2', masked_message)
+    masked_message = re.sub(r'(["\'](?:nauth)*sig["\']: ["\'])[^\'"]+', r'\1' + mask, masked_message)
     return masked_message
 
 
