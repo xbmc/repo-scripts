@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.module.python.twitch" name="python-twitch for Kodi" version="2.0.4" provider-name="A Talented Community">
+<addon id="script.module.python.twitch" name="python-twitch for Kodi" version="2.0.5" provider-name="A Talented Community">
     <requires>
         <import addon="xbmc.python" version="2.20.0"/>
-        <import addon="script.module.six" version="1.9.0"/>
-        <import addon="script.module.requests" version="2.9.1"/>
+        <import addon="script.module.six" version="1.11.0"/>
+        <import addon="script.module.requests" version="2.12.4"/>
     </requires>
     <extension point="xbmc.python.module" library="resources/lib"/>
     <extension point="xbmc.addon.metadata">
         <platform>all</platform>
         <news>
-[fix] video/live stream token encoding
+[add] add frame rate and resolution to returned stream information
+[upd] update usher parameters
+[upd] use SPDX license identifiers
         </news>
         <assets>
             <icon>icon.png</icon>
@@ -17,7 +19,7 @@
         <platform>all</platform>
         <summary lang="en_GB">Module for interaction with the Twitch.tv API</summary>
         <description lang="en_GB">python-twitch for Kodi is module for interaction with the Twitch.tv API based on python-twitch by ingwinlu.</description>
-        <license>GNU GENERAL PUBLIC LICENSE. Version 3, 29 June 2007</license>
+        <license>GPL-3.0-only</license>
         <source>https://github.com/MrSprigster/script.module.python.twitch</source>
         <reuselanguageinvoker>true</reuselanguageinvoker>
     </extension>

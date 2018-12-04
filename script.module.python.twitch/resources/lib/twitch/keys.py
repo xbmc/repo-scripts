@@ -1,8 +1,14 @@
 # -*- encoding: utf-8 -*-
 """
-    keys
-
     string constants
+
+    Copyright (C) 2012-2016 python-twitch (https://github.com/ingwinlu/python-twitch)
+    Copyright (C) 2016-2018 script.module.python.twitch
+
+    This file is part of script.module.python.twitch
+
+    SPDX-License-Identifier: GPL-3.0-only
+    See LICENSES/GPL-3.0-only for more information.
 """
 
 AFTER = 'after'
@@ -10,11 +16,15 @@ ALLOW_AUDIO_ONLY = 'allow_audio_only'
 ALLOW_SOURCE = 'allow_source'
 ALLOW_SPECTRE = 'allow_spectre'
 AVATAR_IMAGE = 'avatar_image'
+BAKING_BREAD = 'baking_bread'
+BAKING_BROWNIES = 'baking_brownies'
+BAKING_BROWNIES_TIMEOUT = 'baking_brownies_timeout'
 BEFORE = 'before'
 BROADCAST_TYPE = 'broadcast_type'
 BROADCASTER_ID = 'broadcaster_id'
 BROADCASTER_LANGUAGE = 'broadcaster_language'
 BROADCASTS = 'broadcasts'
+CDM = 'cdm'
 CHANNEL = 'channel'
 CHANNEL_FEED_ENABLED = 'channel_feed_enabled'
 CHANNEL_ID = 'channel_id'
@@ -27,6 +37,7 @@ COMMUNITY_ID = 'community_id'
 COMMUNITY_IDS = 'community_ids'
 CONTAINING_ITEM = 'containing_item'
 CONTENT = 'content'
+CONTROL = 'control'
 COUNT = 'count'
 COVER_IMAGE = 'cover_image'
 CURSOR = 'cursor'
@@ -59,6 +70,7 @@ LIMIT = 'limit'
 LIVE = 'live'
 LOGIN = 'login'
 MANIFEST_ID = 'manifest_id'
+MEDIAPLAYER = 'mediaplayer'
 MESSAGE = 'message'
 NAME = 'name'
 NAUTH = 'nauth'
@@ -68,10 +80,15 @@ NOTIFICATIONS = 'notifications'
 OFFSET = 'offset'
 PART = 'part'
 PERIOD = 'period'
+PLATFORM = 'platform'
+PLAYER_BACKEND = 'player_backend'
+PLAYLIST_INCLUDE_FRAMERATE = 'playlist_include_framerate'
 POSITION = 'position'
 POST_ID = 'post_id'
 QUERY = 'query'
 REASON = 'reason'
+REASSIGNMENT_SUPPORTED = 'reassignment_supported'
+RTQOS = 'rtqos'
 RULES = 'rules'
 SCE_PLATFORM = 'sce_platform'
 SHARE = 'share'
@@ -101,4 +118,6 @@ USER_LOGIN = 'user_login'
 UPLOAD_TOKEN = 'upload_token'
 VIDEO_ID = 'video_id'
 VOD = 'vod'
+WEB = 'web'
+WV = 'wv'
 XBOX_HEARTBEAT = 'xbox_heartbeat'

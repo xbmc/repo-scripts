@@ -1,5 +1,14 @@
 # -*- encoding: utf-8 -*-
-# https://dev.twitch.tv/docs/api/reference
+"""
+    Reference: https://dev.twitch.tv/docs/api/reference
+
+    Copyright (C) 2016-2018 script.module.python.twitch
+
+    This file is part of script.module.python.twitch
+
+    SPDX-License-Identifier: GPL-3.0-only
+    See LICENSES/GPL-3.0-only for more information.
+"""
 
 from ... import keys
 from ...api.parameters import Cursor, IntRange, ItemCount
