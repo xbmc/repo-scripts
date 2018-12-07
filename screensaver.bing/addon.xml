@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="screensaver.bing" name="Bing: Photos of the Week" version="1.0.2" provider-name="Lunatixz">
+<addon id="screensaver.bing" name="Bing: Photos of the Week" version="1.0.3" provider-name="Lunatixz">
     <requires>
         <import addon="xbmc.python" version="2.25.0"/>
         <import addon="script.module.simplecache" version="1.0.0"/>
@@ -13,7 +13,7 @@
         <platform>all</platform>
         <source>https://github.com/Lunatixz/XBMC_Addons/tree/master/screensaver.bing</source>
         <forum>https://forum.kodi.tv/showthread.php?tid=319728</forum>
-        <news>v.1.0.2[CR]- Leia compatibility.[CR]v.1.0.1 - Added fade overlay and a option to animate.</news>
+        <news>v.1.0.3[CR]- Fixed background transparency.[CR]v.1.0.2[CR]- Leia compatibility.[CR]v.1.0.1 - Added fade overlay and a option to animate.</news>
         <assets>
             <icon>icon.png</icon>
             <fanart>fanart.jpg</fanart>
