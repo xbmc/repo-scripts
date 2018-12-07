@@ -9,6 +9,13 @@
     <animation effect="fade" time="250">WindowOpen</animation>
     <animation effect="fade" time="250">WindowClose</animation>
     <controls>
+        <control type="image">
+            <posx>0</posx>
+            <posy>0</posy>
+            <width>1920</width> 
+            <height>1080</height> 
+            <texture>black.png</texture>
+        </control>
         <control type="panel" id="101">
             <posx>0</posx> 
             <posy>0</posy> 
@@ -24,13 +31,6 @@
                 </control>
             </itemlayout>
             <focusedlayout height="1080" width="1920">
-                <control type="image">
-                    <posx>0</posx>
-                    <posy>0</posy>
-                    <width>1920</width> 
-                    <height>1080</height> 
-                    <texture>black.png</texture>
-                </control>
                 <control type="image">
                     <posx>0</posx> 
                     <posy>0</posy> 
