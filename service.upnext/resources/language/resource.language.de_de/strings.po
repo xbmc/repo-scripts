@@ -1,0 +1,100 @@
+# Service Up Next language file
+# Addon Name: Up Next
+# Addon id: service.upnext
+# Addon Provider: im85288
+# Translators:
+# sualfred <su4lfred@gmail.com>, 2018
+msgid ""
+msgstr ""
+"Last-Translator: sualfred <su4lfred@gmail.com>, 2018\n"
+"Language-Team: German (Germany) (https://www.transifex.com/emby/teams/92605/de_DE/)\n"
+"Language: de_DE\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#30001"
+msgid "The number of seconds before the end to show the notification"
+msgstr "Restlaufzeit bevor der Dialog eingeblendet wird (Sekunden)"
+
+msgctxt "#30002"
+msgid "Log Level:"
+msgstr "Log Level:"
+
+msgctxt "#30003"
+msgid "Settings"
+msgstr "Einstellungen"
+
+msgctxt "#30004"
+msgid "Advanced"
+msgstr "Erweitert"
+
+msgctxt "#30005"
+msgid "Default action when nothing selected"
+msgstr "Standardaktion wenn nichts ausgewählt wird"
+
+msgctxt "#30006"
+msgid "Watch Now"
+msgstr "Jetzt abspielen"
+
+msgctxt "#30008"
+msgid "Up Next"
+msgstr "Up Next"
+
+msgctxt "#30009"
+msgid "Number of episodes before still watching query"
+msgstr "Anzahl der Episoden bevor der \"Noch da?\" Dialog eingeblendet wird"
+
+msgctxt "#30010"
+msgid "Continue watching"
+msgstr "Wiedergabe fortsetzen"
+
+msgctxt "#30013"
+msgid "Include watched episodes"
+msgstr "Gesehene Episoden mit einschließen"
+
+msgctxt "#30014"
+msgid "Disable Up Next (restart required)"
+msgstr "Up Next deaktivieren (benötigt Neustart)"
+
+msgctxt "#30017"
+msgid "Automatically play short videos"
+msgstr "Spiele kurze Videos automatisch ab"
+
+msgctxt "#30018"
+msgid "Maximum length for automatic short video play (in minutes)"
+msgstr "Maximale Länge für das Abspielen von kurzen Videos (in Minuten)"
+
+msgctxt "#30019"
+msgid "Show on-screen notification during short video autoplay"
+msgstr "Zeige Benachrichtigung bei automatischer Wiedergabe von kurzen Videos"
+
+msgctxt "#30024"
+msgid "Still there?"
+msgstr "Noch da?"
+
+msgctxt "#30025"
+msgid "Set the display mode for the notifications"
+msgstr "Anzeigemodus der Benachrichtigung"
+
+msgctxt "#30028"
+msgid "Developer"
+msgstr "Entwickler"
+
+msgctxt "#30029"
+msgid "Enable developer mode"
+msgstr "Entwicklermodus"
+
+msgctxt "#30030"
+msgid "Choose the window to be shown"
+msgstr "Wähle welches Fenster gezeigt werden soll"
+
+msgctxt "#30032"
+msgid "Enable on playlists"
+msgstr "Aktiviere Wiedergabelisten"
+
+msgctxt "#30034"
+msgid "Close"
+msgstr "Schließen"
+
+msgctxt "#30035"
+msgid "seconds"
+msgstr "Sekunden"
