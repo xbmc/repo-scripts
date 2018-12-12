@@ -23,9 +23,9 @@ import requests
 import xbmcgui
 import xbmcaddon
 import xbmcvfs
-import kodiutils
+from . import kodiutils
 from random import randint, shuffle
-from screensaverutils import ScreenSaverUtils
+from .screensaverutils import ScreenSaverUtils
 
 PATH = xbmcaddon.Addon().getAddonInfo("path")
 IMAGE_FILE = os.path.join(PATH, "resources", "images", "chromecast.json")
