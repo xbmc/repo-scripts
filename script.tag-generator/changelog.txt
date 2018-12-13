@@ -1,3 +1,13 @@
+v0.6 (December 12th, 2018)
+- Added Oscar award/nominee tagging (inspired by Jorge: https://github.com/bluesauce)
+- Updated regex to support IMDb lists of all types (Top250, Academy Awards, Sundance etc)
+- Added notifications (can be disabled in Settings)
+- Service interval now relies on local machine time
+- Fixed bug that prevented service from exiting cleanly in some situations
+- Trakt token in settings is now read-only
+- Replaced urllib2 with requests
+- Code cleanup (a lot of string IDs have changed)
+
 v0.5 (April 4th, 2017)
 - added Trakt support for 2.0 API (depends on PyTrakt, by Jon Nappi)
 - code cleanup and text amendments
