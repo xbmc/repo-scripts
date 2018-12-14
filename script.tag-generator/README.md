@@ -1,7 +1,7 @@
 # Kodi tag-generator
 Discussion: https://forum.kodi.tv/showthread.php?tid=140494
 
-Tag generator helps you create Smart Playlists from IMDB/Trakt Watchlists by tagging local movies found in specified lists.
+Tag generator helps you create Smart Playlists from IMDb/Trakt Watchlists by tagging local movies found in specified lists.
 Also creates a stand-up comedy tag based on Wikipedia comedians, as there is no genre for stand-up.
 Specify your IMDb/Trakt watchlists then choose the desired Kodi tag for each list.
 Runs as a service in the background at a specified interval, and also allows for manual creation.

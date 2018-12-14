@@ -24,7 +24,7 @@ __language__ = __settings__.getLocalizedString
 c_refresh = __settings__.getSetting("32012")
 c_runasservice = json.loads(__settings__.getSetting("32011"))
 start_time = datetime.datetime.now()
-service_interval = int(c_refresh)*360  # seconds
+service_interval = int(c_refresh)*3600  # seconds
 micronap = 500  # milliseconds
 
 
