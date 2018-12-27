@@ -5,8 +5,8 @@
         <posx>0</posx>
         <posy>0</posy>
     </coordinates>
-    <animation effect="slide" start="0,1080" end="0,0" time="300" reversible="false" condition="!IsEmpty(Window(10000).Property(script.hdhomerun.view.window.animations))">WindowOpen</animation>
-    <animation effect="slide" start="0,0" end="0,-1080" time="300" reversible="false" condition="!IsEmpty(Window(10000).Property(script.hdhomerun.view.window.animations))">WindowClose</animation>
+    <animation effect="slide" start="0,1080" end="0,0" time="300" reversible="false" condition="!String.IsEmpty(Window(10000).Property(script.hdhomerun.view.window.animations))">WindowOpen</animation>
+    <animation effect="slide" start="0,0" end="0,-1080" time="300" reversible="false" condition="!String.IsEmpty(Window(10000).Property(script.hdhomerun.view.window.animations))">WindowClose</animation>
     <controls>
         <control type="image">
             <posx>0</posx>
@@ -55,7 +55,7 @@
                     <aspectratio>stretch</aspectratio>
                 </control>
                 <control type="image">
-                    <animation effect="fade" start="100" end="0" time="200" condition="!StringCompare(Window(10000).Property(script.hdhomerun.view.DVR_MODE),WATCH)">Conditional</animation>
+                    <animation effect="fade" start="100" end="0" time="200" condition="!String.IsEqual(Window(10000).Property(script.hdhomerun.view.DVR_MODE),WATCH)">Conditional</animation>
                     <posx>0</posx>
                     <posy>0</posy>
                     <width>60</width>
@@ -66,7 +66,7 @@
                 </control>
 
                 <control type="group">
-                    <animation effect="fade" start="100" end="50" time="200" condition="!StringCompare(Window(10000).Property(script.hdhomerun.view.DVR_MODE),WATCH)">Conditional</animation>
+                    <animation effect="fade" start="100" end="50" time="200" condition="!String.IsEqual(Window(10000).Property(script.hdhomerun.view.DVR_MODE),WATCH)">Conditional</animation>
                     <control type="image">
                         <posx>6</posx>
                         <posy>18</posy>
@@ -185,7 +185,7 @@
                                     <label>[B]$INFO[ListItem.Label][/B]</label>
                                 </control>
                                 <control type="label">
-                                    <visible>!IsEmpty(ListItem.Property(show.count))</visible>
+                                    <visible>!String.IsEmpty(ListItem.Property(show.count))</visible>
                                     <posx>272</posx>
                                     <posy>60</posy>
                                     <width>1358</width>
@@ -268,7 +268,7 @@
                                     <label>[B]$INFO[ListItem.Label][/B]</label>
                                 </control>
                                 <control type="label">
-                                    <visible>!IsEmpty(ListItem.Property(show.count))</visible>
+                                    <visible>!String.IsEmpty(ListItem.Property(show.count))</visible>
                                     <posx>272</posx>
                                     <posy>60</posy>
                                     <width>1358</width>
@@ -307,7 +307,7 @@
                 </control>
 
                 <control type="label">
-                    <visible>!IsEmpty(Window(10000).Property(script.hdhomerun.view.NO_RECORDINGS))</visible>
+                    <visible>!String.IsEmpty(Window(10000).Property(script.hdhomerun.view.NO_RECORDINGS))</visible>
                     <posx>65</posx>
                     <posy>510</posy>
                     <width>1725</width>
@@ -323,7 +323,7 @@
         </control>
 
         <control type="group">
-            <animation effect="slide" start="0,0" end="-1725,0" time="200" condition="!StringCompare(Window(10000).Property(script.hdhomerun.view.DVR_MODE),WATCH)">Conditional</animation>
+            <animation effect="slide" start="0,0" end="-1725,0" time="200" condition="!String.IsEqual(Window(10000).Property(script.hdhomerun.view.DVR_MODE),WATCH)">Conditional</animation>
             <posx>1790</posx>
             <posy>0</posy>
 
@@ -389,7 +389,7 @@
                     <aspectratio>stretch</aspectratio>
                 </control>
                 <control type="image">
-                    <animation effect="fade" start="100" end="0" time="200" condition="!StringCompare(Window(10000).Property(script.hdhomerun.view.DVR_MODE),SEARCH)">Conditional</animation>
+                    <animation effect="fade" start="100" end="0" time="200" condition="!String.IsEqual(Window(10000).Property(script.hdhomerun.view.DVR_MODE),SEARCH)">Conditional</animation>
                     <posx>0</posx>
                     <posy>0</posy>
                     <width>60</width>
@@ -400,7 +400,7 @@
                 </control>
 
                 <control type="group">
-                    <animation effect="fade" start="100" end="50" time="200" condition="!StringCompare(Window(10000).Property(script.hdhomerun.view.DVR_MODE),SEARCH)">Conditional</animation>
+                    <animation effect="fade" start="100" end="50" time="200" condition="!String.IsEqual(Window(10000).Property(script.hdhomerun.view.DVR_MODE),SEARCH)">Conditional</animation>
                     <control type="image">
                         <posx>6</posx>
                         <posy>18</posy>
@@ -426,7 +426,7 @@
 
 
                 <control type="panel" id="201">
-                    <visible>IsEmpty(Window(10000).Property(script.hdhomerun.view.now.showing)) + IsEmpty(Window(10000).Property(script.hdhomerun.view.movie.posters))</visible>
+                    <visible>String.IsEmpty(Window(10000).Property(script.hdhomerun.view.now.showing)) + String.IsEmpty(Window(10000).Property(script.hdhomerun.view.movie.posters))</visible>
                     <posx>90</posx>
                     <posy>70</posy>
                     <width>1800</width>
@@ -495,7 +495,7 @@
                             <label>[B]$INFO[ListItem.Property(series.title)][/B]</label>
                         </control>
                         <control type="image">
-                            <visible>!IsEmpty(ListItem.Property(has.rule))</visible>
+                            <visible>!String.IsEmpty(ListItem.Property(has.rule))</visible>
                             <posx>291</posx>
                             <posy>146</posy>
                             <width>16</width>
@@ -504,7 +504,7 @@
                             <aspectratio>stretch</aspectratio>
                         </control>
                         <control type="image">
-                            <visible>!IsEmpty(ListItem.Property(hidden))</visible>
+                            <visible>!String.IsEmpty(ListItem.Property(hidden))</visible>
                             <posx>5</posx>
                             <posy>5</posy>
                             <width>318</width>
@@ -543,7 +543,7 @@
                             <aspectratio aligny="top">scale</aspectratio>
                         </control>
                         <control type="image">
-                            <visible>!IsEmpty(ListItem.Property(hidden))</visible>
+                            <visible>!String.IsEmpty(ListItem.Property(hidden))</visible>
                             <posx>5</posx>
                             <posy>5</posy>
                             <width>318</width>
@@ -607,7 +607,7 @@
                             <label>[B]$INFO[ListItem.Property(series.title)][/B]</label>
                         </control>
                         <control type="image">
-                            <visible>!IsEmpty(ListItem.Property(has.rule))</visible>
+                            <visible>!String.IsEmpty(ListItem.Property(has.rule))</visible>
                             <posx>291</posx>
                             <posy>146</posy>
                             <width>16</width>
@@ -619,7 +619,7 @@
                 </control>
 
                 <control type="panel" id="211">
-                    <visible>!IsEmpty(Window(10000).Property(script.hdhomerun.view.movie.posters))</visible>
+                    <visible>!String.IsEmpty(Window(10000).Property(script.hdhomerun.view.movie.posters))</visible>
                     <posx>90</posx>
                     <posy>70</posy>
                     <width>1800</width>
@@ -661,7 +661,7 @@
                             <aspectratio aligny="top">scale</aspectratio>
                         </control>
                         <control type="image">
-                            <visible>!IsEmpty(ListItem.Property(has.rule))</visible>
+                            <visible>!String.IsEmpty(ListItem.Property(has.rule))</visible>
                             <posx>171</posx>
                             <posy>20</posy>
                             <width>16</width>
@@ -670,7 +670,7 @@
                             <aspectratio>stretch</aspectratio>
                         </control>
                         <control type="image">
-                            <visible>!IsEmpty(ListItem.Property(hidden))</visible>
+                            <visible>!String.IsEmpty(ListItem.Property(hidden))</visible>
                             <posx>5</posx>
                             <posy>5</posy>
                             <width>196</width>
@@ -709,7 +709,7 @@
                             <aspectratio aligny="top">scale</aspectratio>
                         </control>
                         <control type="image">
-                            <visible>!IsEmpty(ListItem.Property(has.rule))</visible>
+                            <visible>!String.IsEmpty(ListItem.Property(has.rule))</visible>
                             <posx>171</posx>
                             <posy>20</posy>
                             <width>16</width>
@@ -718,7 +718,7 @@
                             <aspectratio>stretch</aspectratio>
                         </control>
                         <control type="image">
-                            <visible>!IsEmpty(ListItem.Property(hidden))</visible>
+                            <visible>!String.IsEmpty(ListItem.Property(hidden))</visible>
                             <posx>5</posx>
                             <posy>5</posy>
                             <width>196</width>
@@ -837,7 +837,7 @@
 
 
                 <control type="group" id="551">
-                    <visible>!IsEmpty(Window(10000).Property(script.hdhomerun.view.now.showing))</visible>
+                    <visible>!String.IsEmpty(Window(10000).Property(script.hdhomerun.view.now.showing))</visible>
 
                     <control type="group" id="261">
                         <posx>0</posx>
@@ -948,7 +948,7 @@
                                     <label>[B]$INFO[ListItem.Property(series.title)][/B]</label>
                                 </control>
                                 <control type="image">
-                                    <visible>!IsEmpty(ListItem.Property(has.rule))</visible>
+                                    <visible>!String.IsEmpty(ListItem.Property(has.rule))</visible>
                                     <posx>291</posx>
                                     <posy>146</posy>
                                     <width>16</width>
@@ -957,7 +957,7 @@
                                     <aspectratio>stretch</aspectratio>
                                 </control>
                                 <control type="image">
-                                    <visible>!IsEmpty(ListItem.Property(hidden))</visible>
+                                    <visible>!String.IsEmpty(ListItem.Property(hidden))</visible>
                                     <posx>5</posx>
                                     <posy>5</posy>
                                     <width>318</width>
@@ -996,7 +996,7 @@
                                     <aspectratio aligny="top">scale</aspectratio>
                                 </control>
                                 <control type="image">
-                                    <visible>!IsEmpty(ListItem.Property(hidden))</visible>
+                                    <visible>!String.IsEmpty(ListItem.Property(hidden))</visible>
                                     <posx>5</posx>
                                     <posy>5</posy>
                                     <width>318</width>
@@ -1060,7 +1060,7 @@
                                     <label>[B]$INFO[ListItem.Property(series.title)][/B]</label>
                                 </control>
                                 <control type="image">
-                                    <visible>!IsEmpty(ListItem.Property(has.rule))</visible>
+                                    <visible>!String.IsEmpty(ListItem.Property(has.rule))</visible>
                                     <posx>291</posx>
                                     <posy>146</posy>
                                     <width>16</width>
@@ -1181,7 +1181,7 @@
                                     <label>[B]$INFO[ListItem.Property(series.title)][/B]</label>
                                 </control>
                                 <control type="image">
-                                    <visible>!IsEmpty(ListItem.Property(has.rule))</visible>
+                                    <visible>!String.IsEmpty(ListItem.Property(has.rule))</visible>
                                     <posx>291</posx>
                                     <posy>146</posy>
                                     <width>16</width>
@@ -1190,7 +1190,7 @@
                                     <aspectratio>stretch</aspectratio>
                                 </control>
                                 <control type="image">
-                                    <visible>!IsEmpty(ListItem.Property(hidden))</visible>
+                                    <visible>!String.IsEmpty(ListItem.Property(hidden))</visible>
                                     <posx>5</posx>
                                     <posy>5</posy>
                                     <width>318</width>
@@ -1229,7 +1229,7 @@
                                     <aspectratio aligny="top">scale</aspectratio>
                                 </control>
                                 <control type="image">
-                                    <visible>!IsEmpty(ListItem.Property(hidden))</visible>
+                                    <visible>!String.IsEmpty(ListItem.Property(hidden))</visible>
                                     <posx>5</posx>
                                     <posy>5</posy>
                                     <width>318</width>
@@ -1293,7 +1293,7 @@
                                     <label>[B]$INFO[ListItem.Property(series.title)][/B]</label>
                                 </control>
                                 <control type="image">
-                                    <visible>!IsEmpty(ListItem.Property(has.rule))</visible>
+                                    <visible>!String.IsEmpty(ListItem.Property(has.rule))</visible>
                                     <posx>291</posx>
                                     <posy>146</posy>
                                     <width>16</width>
@@ -1329,7 +1329,7 @@
                 </control>
 
                 <control type="label">
-                    <visible>!IsEmpty(Window(10000).Property(script.hdhomerun.view.NO_RESULTS))</visible>
+                    <visible>!String.IsEmpty(Window(10000).Property(script.hdhomerun.view.NO_RESULTS))</visible>
                     <posx>65</posx>
                     <posy>510</posy>
                     <width>1725</width>
@@ -1556,7 +1556,7 @@
         </control>
 
         <control type="group">
-            <animation effect="slide" start="0,0" end="-1725,0" time="200" condition="StringCompare(Window(10000).Property(script.hdhomerun.view.DVR_MODE),RULES)">Conditional</animation>
+            <animation effect="slide" start="0,0" end="-1725,0" time="200" condition="String.IsEqual(Window(10000).Property(script.hdhomerun.view.DVR_MODE),RULES)">Conditional</animation>
             <posx>1855</posx>
             <posy>0</posy>
 
@@ -1621,7 +1621,7 @@
                     <aspectratio>stretch</aspectratio>
                 </control>
                 <control type="image">
-                    <animation effect="fade" start="100" end="0" time="200" condition="!StringCompare(Window(10000).Property(script.hdhomerun.view.DVR_MODE),RULES)">Conditional</animation>
+                    <animation effect="fade" start="100" end="0" time="200" condition="!String.IsEqual(Window(10000).Property(script.hdhomerun.view.DVR_MODE),RULES)">Conditional</animation>
                     <posx>0</posx>
                     <posy>0</posy>
                     <width>60</width>
@@ -1631,7 +1631,7 @@
                     <aspectratio>stretch</aspectratio>
                 </control>
                 <control type="group">
-                    <animation effect="fade" start="100" end="50" time="200" condition="!StringCompare(Window(10000).Property(script.hdhomerun.view.DVR_MODE),RULES)">Conditional</animation>
+                    <animation effect="fade" start="100" end="50" time="200" condition="!String.IsEqual(Window(10000).Property(script.hdhomerun.view.DVR_MODE),RULES)">Conditional</animation>
                     <control type="image">
                         <posx>6</posx>
                         <posy>18</posy>
@@ -1655,11 +1655,11 @@
                 </control>
 
                 <control type="group">
-                    <visible>IsEmpty(Window(10000).Property(script.hdhomerun.view.NO_RULES))</visible>
+                    <visible>String.IsEmpty(Window(10000).Property(script.hdhomerun.view.NO_RULES))</visible>
                     <posx>90</posx>
                     <posy>40</posy>
                     <control type="label">
-                        <visible>IsEmpty(Window(10000).Property(script.hdhomerun.view.moving.rule))</visible>
+                        <visible>String.IsEmpty(Window(10000).Property(script.hdhomerun.view.moving.rule))</visible>
                         <posx>5</posx>
                         <posy>5</posy>
                         <width>1360</width>
@@ -1671,7 +1671,7 @@
                         <label>[B]$ADDON[script.hdhomerun.view 32821][/B]</label>
                     </control>
                     <control type="label">
-                        <visible>!IsEmpty(Window(10000).Property(script.hdhomerun.view.moving.rule))</visible>
+                        <visible>!String.IsEmpty(Window(10000).Property(script.hdhomerun.view.moving.rule))</visible>
                         <posx>5</posx>
                         <posy>5</posy>
                         <width>1360</width>
@@ -1697,7 +1697,7 @@
                 </control>
 
                 <control type="label">
-                    <visible>!IsEmpty(Window(10000).Property(script.hdhomerun.view.NO_RULES))</visible>
+                    <visible>!String.IsEmpty(Window(10000).Property(script.hdhomerun.view.NO_RULES))</visible>
                     <posx>65</posx>
                     <posy>510</posy>
                     <width>1725</width>
@@ -1797,7 +1797,7 @@
                             <posx>0</posx>
                             <posy>0</posy>
                             <control type="image">
-                                <visible>IsEmpty(Window(10000).Property(script.hdhomerun.view.moving.rule))</visible>
+                                <visible>String.IsEmpty(Window(10000).Property(script.hdhomerun.view.moving.rule))</visible>
                                 <posx>0</posx>
                                 <posy>0</posy>
                                 <width>1665</width>
@@ -1807,7 +1807,7 @@
                                 <aspectratio>stretch</aspectratio>
                             </control>
                             <control type="image">
-                                <visible>!IsEmpty(Window(10000).Property(script.hdhomerun.view.moving.rule))</visible>
+                                <visible>!String.IsEmpty(Window(10000).Property(script.hdhomerun.view.moving.rule))</visible>
                                 <posx>0</posx>
                                 <posy>0</posy>
                                 <width>1665</width>
@@ -1896,7 +1896,7 @@
         </control>
 
         <control type="group">
-            <visible>!IsEmpty(Window(10000).Property(script.hdhomerun.view.busy))</visible>
+            <visible>!String.IsEmpty(Window(10000).Property(script.hdhomerun.view.busy))</visible>
             <posx>1367</posx>
             <posy>860</posy>
 

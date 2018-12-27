@@ -159,7 +159,7 @@ class RecordDialog(kodigui.BaseDialog):
                 if not episode and not team:
                     self.rule = self.storageServer.getSeriesRule(self.series.ID) or self.rule
                     self.ruleAdded = True
-        except hdhr.errors.RuleModException, e:
+        except hdhr.errors.RuleModException as e:
             util.showNotification(e.message,header=T(32832))
             return
 
@@ -185,7 +185,7 @@ class RecordDialog(kodigui.BaseDialog):
     def hide(self):
         try:
             util.withBusyDialog(self.storageServer.hideSeries,'HIDING',self.series)
-        except hdhr.errors.SeriesHideException, e:
+        except hdhr.errors.SeriesHideException as e:
             util.showNotification(e.message,header=T(32838))
             return
 
