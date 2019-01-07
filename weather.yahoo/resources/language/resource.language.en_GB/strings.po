@@ -20,7 +20,9 @@ msgctxt "#32101"
 msgid "Location setup"
 msgstr ""
 
-#empty strings from id 32102 to 32110
+msgctxt "#32102"
+msgid "Advanced"
+msgstr ""
 
 msgctxt "#32111"
 msgid "Location 1"
@@ -40,4 +42,40 @@ msgstr ""
 
 msgctxt "#32115"
 msgid "Location 5"
+msgstr ""
+
+msgctxt "#32129"
+msgid "Enable logging"
+msgstr ""
+
+msgctxt "#32200"
+msgid "New Moon"
+msgstr ""
+
+msgctxt "#32201"
+msgid "Waxing Crescent"
+msgstr ""
+
+msgctxt "#32202"
+msgid "First Quarter"
+msgstr ""
+
+msgctxt "#32203"
+msgid "Waxing Gibbous"
+msgstr ""
+
+msgctxt "#32204"
+msgid "Full Moon"
+msgstr ""
+
+msgctxt "#32205"
+msgid "Waning Gibbous"
+msgstr ""
+
+msgctxt "#32206"
+msgid "Last Quarter"
+msgstr ""
+
+msgctxt "#32207"
+msgid "Waning Crescent"
 msgstr ""
