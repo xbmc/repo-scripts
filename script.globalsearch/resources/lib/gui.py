@@ -359,6 +359,9 @@ class GUI(xbmcgui.WindowXML):
                 art['thumb'] = labels['poster']
             elif labels.get('banner'):
                 art['thumb'] = labels['banner']
+            # needed for seasons and episodes
+            elif art.get('tvshow.fanart'):
+               art['fanart'] = art['tvshow.fanart']
         else:
             art = labels['art']
             # needed for albums and songs

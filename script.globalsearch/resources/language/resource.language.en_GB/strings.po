@@ -41,7 +41,7 @@ msgid "Search Artists"
 msgstr ""
 
 msgctxt "#32006"
-msgid "Search Abums"
+msgid "Search Albums"
 msgstr ""
 
 msgctxt "#32007"
