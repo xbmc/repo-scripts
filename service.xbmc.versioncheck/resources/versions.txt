@@ -215,6 +215,15 @@
                 "major": "18",
                 "minor": "0",
                 "tag": "releasecandidate",
+                "tagversion":"5",
+                "revision": "20190111-baff0a1838",
+                "extrainfo": "RC5",
+                "addon_support": "yes"
+            },
+            {
+                "major": "18",
+                "minor": "0",
+                "tag": "releasecandidate",
                 "tagversion":"4",
                 "revision": "20181228-14086a7bd3",
                 "extrainfo": "RC4",
