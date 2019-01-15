@@ -59,12 +59,13 @@ def downloadBackground(radarCode, fileName, backgroundsPath):
     #download the backgrounds only if we don't have them yet
     if not os.path.isfile( backgroundsPath + outFileName ):
 
-        print("Downloading missing background image...." + outFileName)
+        print("Downloading missing background image....[%s] as [%s]" % (fileName, outFileName))
 
-        #import PIL only if we need it so the add on can be run for data only
-        #on platforms without PIL
-        #print("Importing PIL as extra features are activated.")
+        #import PIL only if we need it so the add on can be run for data only on platforms without PIL
+        
+        print("Importing PIL as extra features are activated.")
         from PIL import Image
+        
         #ok get ready to retrieve some images
         image = urllib.URLopener()
 
@@ -72,9 +73,14 @@ def downloadBackground(radarCode, fileName, backgroundsPath):
         try:
             imageFileIndexed = backgroundsPath + "idx." + fileName
             imageFileRGB = backgroundsPath + outFileName
+            
             try:
+                #print(FTPSTUB + fileName)
                 image.retrieve(FTPSTUB + fileName, imageFileIndexed )
-            except:
+                # Needed due to bug in python 2.7 urllib - https://stackoverflow.com/questions/44733710/downloading-second-file-from-ftp-fails
+                urllib.urlcleanup()
+            except Exception as inst:
+                print(inst)
                 print("ftp failed, let's try http instead...")
                 try:
                     image.retrieve(HTTPSTUB + fileName, imageFileIndexed )
@@ -82,6 +88,7 @@ def downloadBackground(radarCode, fileName, backgroundsPath):
                     print("http failed too.. sad face :( ")
                     #jump to the outer exception
                     raise
+            
             #got here, we must have an image
             print("Downloaded background texture...now converting from indexed to RGB - " + fileName)
             im = Image.open( imageFileIndexed )
@@ -111,7 +118,7 @@ def downloadBackground(radarCode, fileName, backgroundsPath):
 
 def prepareBackgrounds(radarCode, backgroundsPath):
 
-    print("prepareBackgrounds(%s)" % radarCode)
+    print("Calling prepareBackgrounds on [%s]" % radarCode)
 
     downloadBackground(radarCode, "IDR.legend.0.png", backgroundsPath)
     downloadBackground(radarCode, "background.png", backgroundsPath)
