@@ -21,6 +21,13 @@ from bs4 import BeautifulSoup
 from urlparse import urlparse
 import datetime
 
+try:
+    from xbmc import log as log
+except ImportError:
+    print("\nXBMC is not available -> probably unit testing")
+    def log(str):
+        print(str)
+
 # CONSTANTS
 
 SCHEMA = "http://"
@@ -277,10 +284,10 @@ def getLocationsForPostcodeOrSuburb(text):
     try:
         r = requests.post(SCHEMA + WEATHERZONE_SEARCH_URL, data={'q' : text, 't' : '3' })
         soup = BeautifulSoup(r.text, 'html.parser')
-        print("Result url: " + r.url)
+        log("Result url: " + r.url)
 
     except Exception as inst:
-        print("Exception loading locations results in weatherzone.getLocationsForPostcodeOrSuburb" + str(inst))
+        log("Exception loading locations results in weatherzone.getLocationsForPostcodeOrSuburb" + str(inst))
         raise
     
     # Two repsonses are possible.
@@ -308,7 +315,7 @@ def getLocationsForPostcodeOrSuburb(text):
             locationURLPaths.append(url)
 
     except Exception as inst:
-        print("Exception processing locations in weatherzone.getLocationsForPostcodeOrSuburb" + str(inst))
+        log("Exception processing locations in weatherzone.getLocationsForPostcodeOrSuburb" + str(inst))
         raise
 
     return locations, locationURLPaths
@@ -326,7 +333,7 @@ def getWeatherData(urlPath, extendedFeatures = True, XBMC_VERSION=17.0):
 
     except Exception as inst:
         # If we can't get and parse the page at all, might as well bail right out...
-        print("Error requesting/souping weather page at " + SCHEMA + WEATHERZONE_URL + urlPath)
+        log("Error requesting/souping weather page at " + SCHEMA + WEATHERZONE_URL + urlPath)
         raise
 
     # The longer forecast text
@@ -334,8 +341,8 @@ def getWeatherData(urlPath, extendedFeatures = True, XBMC_VERSION=17.0):
         p = soup.find_all("p", class_="district-forecast")  
         weatherData["Current.ConditionLong"] = cleanLongDescription(p[0].text).strip()
     except Exception as inst:
-        print(str(inst))
-        print("Exception in ConditionLong")
+        log(str(inst))
+        log("Exception in ConditionLong")
         weatherData["Current.ConditionLong"] = "?"
 
     # Astronomy Data
@@ -357,7 +364,7 @@ def getWeatherData(urlPath, extendedFeatures = True, XBMC_VERSION=17.0):
         weatherData['Current.Sunset'] = sunset
 
     except Exception as inst:
-        print("Exception processing astronomy data from " + SCHEMA + WEATHERZONE_URL + urlPath + "\n" + str(inst))
+        log("Exception processing astronomy data from " + SCHEMA + WEATHERZONE_URL + urlPath + "\n" + str(inst))
         weatherData['Today.moonphase'] = "?"
         weatherData['Today.Moonphase'] = "?"
         weatherData['Today.Sunrise'] = "?"
@@ -376,54 +383,54 @@ def getWeatherData(urlPath, extendedFeatures = True, XBMC_VERSION=17.0):
         try:
             weatherData["Current.Temperature"] = str(int(round(float(lhs[0].text[:-2]))))
         except Exception as inst:
-            print(str(inst))
+            log(str(inst))
             weatherData["Current.Temperature"] = "?"       
         try:
             weatherData["Current.DewPoint"] = str(int(round(float(lhs[1].text[:-2]))))
         except Exception as inst:
-            print(str(inst))
+            log(str(inst))
             weatherData["Current.DewPoint"] = "?"
         try:
             weatherData["Current.FeelsLike"] = str(int(round(float(lhs[2].text[:-2]))))
         except Exception as inst:
-            print(str(inst))
+            log(str(inst))
             weatherData["Current.FeelsLike"] = "?"
         try:
             weatherData["Current.Humidity"] = str(int(round(float(lhs[3].text[:-1]))))
         except Exception as inst:
-            print(str(inst))
+            log(str(inst))
             weatherData["Current.Humidity"] = "?"
         try:
             weatherData["Current.WindDirection"] = str(lhs[4].text.split(" ")[0])
             weatherData["Current.WindDegree"] = weatherData["Current.WindDirection"]
         except Exception as inst:
-            print(str(inst))
+            log(str(inst))
             weatherData["Current.WindDirection"] = "?"
             weatherData["Current.WindDegree"] = "?"
         try:    
             weatherData["Current.Wind"] = str(lhs[4].text.split(" ")[1][:-4])
         except Exception as inst:
-            print(str(inst))
+            log(str(inst))
             weatherData["Current.Wind"] = "?"
         try:
             weatherData["Current.WindGust"] = str(lhs[5].text[:-4])
         except Exception as inst:
-            print(str(inst))
+            log(str(inst))
             weatherData["Current.WindGust"] = "?"
         try:
             weatherData["Current.Pressure"] = str(lhs[6].text[:-3])
         except Exception as inst:
-            print(str(inst))
+            log(str(inst))
             weatherData["Current.Pressure"] = "?"
         try:
             weatherData["Current.FireDanger"] = str(float(lhs[7].text))
         except Exception as inst:
-            print(str(inst))
+            log(str(inst))
             weatherData["Current.FireDanger"] = "?"
         try:
             weatherData["Current.FireDangerText"] = fireDangerToText(float(lhs[7].text))
         except Exception as inst:
-            print(str(inst))
+            log(str(inst))
             weatherData["Current.FireDangerText"] = "?"
         try:
             rainSince = lhs[8].text.partition('/')
@@ -438,7 +445,7 @@ def getWeatherData(urlPath, extendedFeatures = True, XBMC_VERSION=17.0):
             else:
                 weatherData["Current.RainLastHr"] = str(rainSince[2][:-2])   
         except Exception as inst:
-            print(str(inst))
+            log(str(inst))
             weatherData["Current.RainSince9"] = "?"
             weatherData["Current.Precipitation"] = "?"
             weatherData["Current.RainLastHr"] = "?"
@@ -457,14 +464,14 @@ def getWeatherData(urlPath, extendedFeatures = True, XBMC_VERSION=17.0):
         #     weatherData['Current.Sunset'] = rhs[1].text 
 
         # except Exception as inst:
-        #     print(str(inst))
+        #     log(str(inst))
         #     weatherData['Today.Sunrise'] = "?"
         #     weatherData['Today.Sunset'] = "?"
         #     weatherData['Current.Sunrise'] = "?"
         #     weatherData['Current.Sunset'] = "?"
 
     except Exception as inst:
-        print("Exception processing current conditions data from " + SCHEMA + WEATHERZONE_URL + urlPath + "\n" + str(inst))
+        log("Exception processing current conditions data from " + SCHEMA + WEATHERZONE_URL + urlPath + "\n" + str(inst))
         raise
     
 
@@ -493,8 +500,8 @@ def getWeatherData(urlPath, extendedFeatures = True, XBMC_VERSION=17.0):
                             setKey(i, "LongDay", fullDay)
 
                         except Exception as inst:
-                            print(str(inst))
-                            print("Exception in ShortDay,Title,LongDay")
+                            log(str(inst))
+                            log("Exception in ShortDay,Title,LongDay")
                             setKey(i, "ShortDay", "?")
                             setKey(i, "Title", "?")  
                             setKey(i, "LongDay", "?")                      
@@ -504,8 +511,8 @@ def getWeatherData(urlPath, extendedFeatures = True, XBMC_VERSION=17.0):
                             setKey(i, "ShortDate", date.text[3:])
                 
                         except Exception as inst:
-                            print(str(inst))
-                            print("Exception in ShortDate")
+                            log(str(inst))
+                            log("Exception in ShortDate")
                             setKey(i, "ShortDate", "?")
     
             
@@ -518,8 +525,8 @@ def getWeatherData(urlPath, extendedFeatures = True, XBMC_VERSION=17.0):
                             setKey(i, "Outlook", cleanShortDescription(shortDesc.text))
                             setKey(i, "Condition", cleanShortDescription(shortDesc.text))
                         except Exception as inst:
-                            print(str(inst))
-                            print("Exception in Outlook,Condition")
+                            log(str(inst))
+                            log("Exception in Outlook,Condition")
                             setKey(i, "Outlook", "?")
                             setKey(i, "Condition", "?")
                        
@@ -553,13 +560,13 @@ def getWeatherData(urlPath, extendedFeatures = True, XBMC_VERSION=17.0):
                                 weathercode = WEATHER_CODES[cleanShortDescription(shortDesc.text)]
                         
                         except Exception as inst:
-                            print(str(inst))
-                            print("Exception in weathercode")
+                            log(str(inst))
+                            log("Exception in weathercode")
                             try:    
                                 weathercode = WEATHER_CODES[cleanShortDescription(shortDesc.text)]
                             except Exception as inst:                                
-                                print(str(inst))
-                                print("Exception (2nd) in weathercode")
+                                log(str(inst))
+                                log("Exception (2nd) in weathercode")
                                 weathercode = 'na'
                         
                         value = '%s.png' % weathercode
@@ -575,8 +582,8 @@ def getWeatherData(urlPath, extendedFeatures = True, XBMC_VERSION=17.0):
                         value = '%s' % td.text[:-2]
                         setKeys(i, ["HighTemp","HighTemperature"], value)
                     except Exception as inst:
-                        print(str(inst))
-                        print("Exception in HighTemp,HighTemperature")
+                        log(str(inst))
+                        log("Exception in HighTemp,HighTemperature")
                         setKeys(i, ["HighTemp","HighTemperature"], "?")                   
  
             # Minimums
@@ -587,8 +594,8 @@ def getWeatherData(urlPath, extendedFeatures = True, XBMC_VERSION=17.0):
                         value = '%s' % td.text[:-2]
                         setKeys(i, ["LowTemp","LowTemperature"], value)
                     except Exception as inst:
-                        print(str(inst))
-                        print("Exception in LowTemp,LowTemperature")
+                        log(str(inst))
+                        log("Exception in LowTemp,LowTemperature")
                         setKeys(i, ["LowTemp","LowTemperature"], "?")                   
 
             # Chance of rain
@@ -600,8 +607,8 @@ def getWeatherData(urlPath, extendedFeatures = True, XBMC_VERSION=17.0):
                         setKey(i, "ChancePrecipitation", value)
                         setKey(i, "RainChance", value)
                     except Exception as inst:
-                        print(str(inst))
-                        print("Exception ChancePrecipitation,RainChance")
+                        log(str(inst))
+                        log("Exception ChancePrecipitation,RainChance")
                         setKey(i, "ChancePrecipitation", "?") 
                         setKey(i, "RainChance", "?")                  
 
@@ -614,8 +621,8 @@ def getWeatherData(urlPath, extendedFeatures = True, XBMC_VERSION=17.0):
                         setKey(i, "Precipitation", value)
                         setKey(i, "RainChanceAmount", value)
                     except Exception as inst:
-                        print(str(inst))
-                        print("Exception in Precipitation,RainChanceAmount")
+                        log(str(inst))
+                        log("Exception in Precipitation,RainChanceAmount")
                         setKey(i, "Precipitation", "?")
                         setKey(i, "RainChanceAmount", "?")
             # UV
@@ -626,8 +633,8 @@ def getWeatherData(urlPath, extendedFeatures = True, XBMC_VERSION=17.0):
                     span = tds[0].find("span")
                     weatherData["Current.UVIndex"] = "%s (%s)" % (span.text, span.get('title'))
                 except Exception as inst:
-                    print(str(inst))
-                    print("Exception in UVIndex")
+                    log(str(inst))
+                    log("Exception in UVIndex")
                     weatherData["Current.UVIndex"] = "?"
 
             # Wind speed and direction - there are two values per day here...
@@ -646,7 +653,7 @@ def getWeatherData(urlPath, extendedFeatures = True, XBMC_VERSION=17.0):
                             windSpeeds9am.append(windSpeedData[i].text)
                             windSpeeds3pm.append(windSpeedData[i+1].text)
                 except Exception as inst:
-                    print(str(inst))
+                    log(str(inst))
                     windSpeeds9am.append("?")
                     windSpeeds9am.append("?")
              
@@ -663,7 +670,7 @@ def getWeatherData(urlPath, extendedFeatures = True, XBMC_VERSION=17.0):
                             windDirections9am.append(windDirectionData[i].text.replace("\n",""))
                             windDirections3pm.append(windDirectionData[i+1].text.replace("\n",""))
                 except Exception as inst:
-                    print(str(inst))
+                    log(str(inst))
                     windDirections9am.append("?")
                     windDirections3pm.append("?")
 
@@ -675,7 +682,7 @@ def getWeatherData(urlPath, extendedFeatures = True, XBMC_VERSION=17.0):
             setKey(i, "WindDirection", windDirections3pm[i])
 
     except Exception as inst:
-        print("Exception processing forecast rows data from " + SCHEMA + WEATHERZONE_URL + urlPath + "\n" + str(inst))
+        log("Exception processing forecast rows data from " + SCHEMA + WEATHERZONE_URL + urlPath + "\n" + str(inst))
         raise
 
 
@@ -686,33 +693,33 @@ def getWeatherData(urlPath, extendedFeatures = True, XBMC_VERSION=17.0):
 # MAIN - for testing outside of Kodi
 
 if __name__ == "__main__":
-    print("\n\nTesting scraping of Weatherzone\n")
+    log("\nTesting scraping of Weatherzone\n")
 
-    print("First test getting weatherzone location from postcode/suburb name:");
+    log("First test getting weatherzone location from postcode/suburb name:");
 
-    print("\n3032:")
-    print(getLocationsForPostcodeOrSuburb(3032))
-    print("\n9999:")
-    print(getLocationsForPostcodeOrSuburb(9999))
-    print("\nKyneton:")
-    print(getLocationsForPostcodeOrSuburb("Kyneton"))
+    log("\n3032:")
+    log(getLocationsForPostcodeOrSuburb(3032))
+    log("\n9999:")
+    log(getLocationsForPostcodeOrSuburb(9999))
+    log("\nKyneton:")
+    log(getLocationsForPostcodeOrSuburb("Kyneton"))
 
-    print("\n\nGet weather data for /vic/central/kyneton:")
+    log("\n\nGet weather data for /vic/central/kyneton:")
     
 
     weatherData = getWeatherData("/vic/central/kyneton", True)
 
     for key in sorted(weatherData):
         if weatherData[key] == "?" or weatherData[key] == "na":
-            print("**** MISSING: ")
-        print("[%s]: [%s]" % (key, weatherData[key]))
+            log("**** MISSING: ")
+        log("[%s]: [%s]" % (key, weatherData[key]))
 
-    print("\n\nGet weather data for /vic/melbourne/ascot-vale:")
+    log("\n\nGet weather data for /vic/melbourne/ascot-vale:")
     
 
     weatherData = getWeatherData("/vic/melbourne/ascot-vale", True)
 
     for key in sorted(weatherData):
         if weatherData[key] == "?" or weatherData[key] == "na":
-            print("**** MISSING: ")
-        print("[%s]: [%s]" % (key, weatherData[key]))
+            log("**** MISSING: ")
+        log("[%s]: [%s]" % (key, weatherData[key]))
