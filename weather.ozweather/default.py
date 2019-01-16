@@ -248,80 +248,84 @@ def forecast(urlPath, radarCode):
     setProperty(WEATHER_WINDOW, 'Forecast.Updated', time.strftime("%d/%m/%Y %H:%M"))
     setProperty(WEATHER_WINDOW, 'Today.IsFetched', "true")        
 
+def findLocation():
+
+    keyboard = xbmc.Keyboard('', LANGUAGE(32195), False)
+    keyboard.doModal()
+    
+    if (keyboard.isConfirmed() and keyboard.getText() != ''):
+        text = keyboard.getText()
+
+        log("Doing locations search for " + text)
+        locations, locationURLPaths = getLocationsForPostcodeOrSuburb(text)
+
+        # Now get them to choose an actual location
+        dialog = xbmcgui.Dialog()
+        if locations != []:
+            selected = dialog.select(xbmc.getLocalizedString(396), locations)
+            if selected != -1:
+                ADDON.setSetting(sys.argv[1], locations[selected])
+                ADDON.setSetting(sys.argv[1] + 'UrlPath', locationURLPaths[selected])
+        # Or indicate we did not receieve any locations
+        else:
+            dialog.ok(ADDONNAME, xbmc.getLocalizedString(284))
+
+def getForecast():
+
+    # Nice neat updates - clear out everything first...
+    clearProperties()
+
+    # Set basic properties/brand
+    setProperty(WEATHER_WINDOW, 'WeatherProviderLogo'       , xbmc.translatePath(os.path.join(CWD, 'resources', 'banner.png')))
+    setProperty(WEATHER_WINDOW, 'WeatherProvider'           , 'Bureau of Meteorology Australia (via WeatherZone)')
+    setProperty(WEATHER_WINDOW, 'WeatherVersion'            , ADDONNAME + "-" + VERSION)
+    
+    # Set what we updated and when
+    setProperty(WEATHER_WINDOW, 'Location'              , ADDON.getSetting('Location%s' % sys.argv[1]))
+    setProperty(WEATHER_WINDOW, 'Updated'               , time.strftime("%d/%m/%Y %H:%M"))
+    setProperty(WEATHER_WINDOW, 'Current.Location'      , ADDON.getSetting('Location%s' % sys.argv[1]))
+    setProperty(WEATHER_WINDOW, 'Forecast.City'         , ADDON.getSetting('Location%s' % sys.argv[1]))
+    setProperty(WEATHER_WINDOW, 'Forecast.Country'      , "Australia")
+    setProperty(WEATHER_WINDOW, 'Forecast.Updated'      , time.strftime("%d/%m/%Y %H:%M"))
+
+    # Retrieve the currently chosen location & radar
+    locationUrlPath = ""
+    locationUrlPath = ADDON.getSetting('Location%sUrlPath' % sys.argv[1])
+
+    # Old style paths (pre v0.8.5) must be updated to new
+    if not locationUrlPath:
+        locationUrlPath = ADDON.getSetting('Location%sid' % sys.argv[1])
+        locationUrlPath = locationUrlPath.replace("http://www.weatherzone.com.au","")
+        ADDON.setSetting('Location%sUrlPath' % sys.argv[1], locationUrlPath)
+
+    radar = ""
+    radar = ADDON.getSetting('Radar%s' % sys.argv[1])
+    # If we don't have a radar code, get the national radar by default
+    if radar == "":
+        log("Radar code empty for location " + locationUrlPath +" so using default radar code IDR00004 (national radar)")
+        radar = "IDR00004"
+    
+    # Now scrape the weather data & radar images
+    forecast(locationUrlPath, radar)
 
 # TWO MAJOR MODES - SETTINGS and FORECAST RETRIEVAL
 
 if __name__ == "__main__":
 
     footprints()
-
     socket.setdefaulttimeout(100)
 
     # SETTINGS
     # the addon is being called from the settings section where the user enters their postcodes
     if sys.argv[1].startswith('Location'):
-        
-        keyboard = xbmc.Keyboard('', LANGUAGE(32195), False)
-        keyboard.doModal()
-        
-        if (keyboard.isConfirmed() and keyboard.getText() != ''):
-            text = keyboard.getText()
-
-            log("Doing locations search for " + text)
-            locations, locationURLPaths = getLocationsForPostcodeOrSuburb(text)
-
-            # Now get them to choose an actual location
-            dialog = xbmcgui.Dialog()
-            if locations != []:
-                selected = dialog.select(xbmc.getLocalizedString(396), locations)
-                if selected != -1:
-                    ADDON.setSetting(sys.argv[1], locations[selected])
-                    ADDON.setSetting(sys.argv[1] + 'UrlPath', locationURLPaths[selected])
-            # Or indicate we did not receieve any locations
-            else:
-                dialog.ok(ADDONNAME, xbmc.getLocalizedString(284))
-
+        findLocation()
 
     # FORECAST
     # script is being called in general use, not from the settings page
     # sys.argv[1] has the current location number, so get the currently selected location and grab it's forecast
     else:
+        getForecast()
 
-        # Nice neat updates - clear out everything first...
-        clearProperties()
-
-        # Set basic properties/brand
-        setProperty(WEATHER_WINDOW, 'WeatherProviderLogo'       , xbmc.translatePath(os.path.join(CWD, 'resources', 'banner.png')))
-        setProperty(WEATHER_WINDOW, 'WeatherProvider'           , 'Bureau of Meteorology Australia (via WeatherZone)')
-        setProperty(WEATHER_WINDOW, 'WeatherVersion'            , ADDONNAME + "-" + VERSION)
-        
-        # Set what we updated and when
-        setProperty(WEATHER_WINDOW, 'Location'              , ADDON.getSetting('Location%s' % sys.argv[1]))
-        setProperty(WEATHER_WINDOW, 'Updated'               , time.strftime("%d/%m/%Y %H:%M"))
-        setProperty(WEATHER_WINDOW, 'Current.Location'      , ADDON.getSetting('Location%s' % sys.argv[1]))
-        setProperty(WEATHER_WINDOW, 'Forecast.City'         , ADDON.getSetting('Location%s' % sys.argv[1]))
-        setProperty(WEATHER_WINDOW, 'Forecast.Country'      , "Australia")
-        setProperty(WEATHER_WINDOW, 'Forecast.Updated'      , time.strftime("%d/%m/%Y %H:%M"))
-
-        # Retrieve the currently chosen location & radar
-        locationUrlPath = ""
-        locationUrlPath = ADDON.getSetting('Location%sUrlPath' % sys.argv[1])
-
-        # Old style paths (pre v0.8.5) must be updated to new
-        if not locationUrlPath:
-            locationUrlPath = ADDON.getSetting('Location%sid' % sys.argv[1])
-            locationUrlPath = locationUrlPath.replace("http://www.weatherzone.com.au","")
-            ADDON.setSetting('Location%sUrlPath' % sys.argv[1], locationUrlPath)
-
-        radar = ""
-        radar = ADDON.getSetting('Radar%s' % sys.argv[1])
-        # If we don't have a radar code, get the national radar by default
-        if radar == "":
-            log("Radar code empty for location " + locationUrlPath +" so using default radar code IDR00004 (national radar)")
-            radar = "IDR00004"
-        
-        # Now scrape the weather data & radar images
-        forecast(locationUrlPath, radar)
 
     # Refresh the locations
     refresh_locations()

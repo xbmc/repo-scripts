@@ -1,0 +1,70 @@
+# Kodi Media Center language file
+# Addon Name: OzWeather
+# Addon id: weather.ozweather
+# Addon Provider: bossanova808
+msgid ""
+msgstr ""
+"Project-Id-Version: Kodi Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@kodi.org\n"
+"POT-Creation-Date: 2011-12-14 00:00+1000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: English (http://www.transifex.com/projects/p/xbmc-addons/language/en/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#32101"
+msgid "OzWeather Settings"
+msgstr ""
+
+msgctxt "#32111"
+msgid "Change Suburb 1"
+msgstr ""
+
+msgctxt "#32112"
+msgid "Change Suburb 2"
+msgstr ""
+
+msgctxt "#32113"
+msgid "Change Suburb 3"
+msgstr ""
+
+msgctxt "#32113"
+msgid "Change Suburb 3"
+msgstr ""
+
+msgctxt "#32113"
+msgid "Change Suburb 3"
+msgstr ""
+
+msgctxt "#32155"
+msgid "Change Radar ID for Suburb 1 (e.g. IDR023)"
+msgstr ""
+
+msgctxt "#32156"
+msgid "Change Radar ID for Suburb 2"
+msgstr ""
+
+msgctxt "#32157"
+msgid "Change Radar ID for Suburb 3"
+msgstr ""
+
+msgctxt "#32194"
+msgid "Use extended features (long forecast, radar loop)"
+msgstr ""
+
+msgctxt "#32195"
+msgid "Enter suburb name, or your 4 digit postcode e.g. 3051"
+msgstr ""
+
+msgctxt "#32196"
+msgid "ABC Weather Video Quality Level"
+msgstr ""
+
+msgctxt "#32197"
+msgid "Periodically Update Radar Backgrounds?"
+msgstr ""
+

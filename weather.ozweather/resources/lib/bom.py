@@ -23,6 +23,13 @@ import time
 import ftplib
 import urllib, urllib2
 
+try:
+    from xbmc import log as log
+except ImportError:
+    print("\nXBMC is not available -> probably unit testing")
+    def log(str):
+        print(str)
+
 # Constants
 
 FTPSTUB = "ftp://anonymous:someone%40somewhere.com@ftp.bom.gov.au//anon/gen/radar_transparencies/"
@@ -51,20 +58,21 @@ def downloadBackground(radarCode, fileName, backgroundsPath):
         weekAgo = now - 7*60*60*24 # Number of seconds in a week
         #log ("filecreation: " + str(fileCreation) + " weekAgo " + str(weekAgo))
         if fileCreation < weekAgo:
-            print("Backgrounds stale (> one week) - refreshing - " + outFileName)
+            log("Backgrounds stale (> one week) - refreshing - " + outFileName)
             os.remove(backgroundsPath + outFileName)
         else:
-            print("Using cached background - " + outFileName)
+            log("Using cached background - " + outFileName)
 
     #download the backgrounds only if we don't have them yet
     if not os.path.isfile( backgroundsPath + outFileName ):
 
-        print("Downloading missing background image...." + outFileName)
+        log("Downloading missing background image....[%s] as [%s]" % (fileName, outFileName))
 
-        #import PIL only if we need it so the add on can be run for data only
-        #on platforms without PIL
-        #print("Importing PIL as extra features are activated.")
+        #import PIL only if we need it so the add on can be run for data only on platforms without PIL
+        
+        log("Importing PIL as extra features are activated.")
         from PIL import Image
+        
         #ok get ready to retrieve some images
         image = urllib.URLopener()
 
@@ -72,18 +80,24 @@ def downloadBackground(radarCode, fileName, backgroundsPath):
         try:
             imageFileIndexed = backgroundsPath + "idx." + fileName
             imageFileRGB = backgroundsPath + outFileName
+            
             try:
+                #log(FTPSTUB + fileName)
                 image.retrieve(FTPSTUB + fileName, imageFileIndexed )
-            except:
-                print("ftp failed, let's try http instead...")
+                # Needed due to bug in python 2.7 urllib - https://stackoverflow.com/questions/44733710/downloading-second-file-from-ftp-fails
+                urllib.urlcleanup()
+            except Exception as inst:
+                log(inst)
+                log("ftp failed, let's try http instead...")
                 try:
                     image.retrieve(HTTPSTUB + fileName, imageFileIndexed )
                 except:
-                    print("http failed too.. sad face :( ")
+                    log("http failed too.. sad face :( ")
                     #jump to the outer exception
                     raise
+            
             #got here, we must have an image
-            print("Downloaded background texture...now converting from indexed to RGB - " + fileName)
+            log("Downloaded background texture...now converting from indexed to RGB - " + fileName)
             im = Image.open( imageFileIndexed )
             rgbimg = im.convert('RGBA')
             rgbimg.save(imageFileRGB, "PNG")
@@ -91,27 +105,27 @@ def downloadBackground(radarCode, fileName, backgroundsPath):
         
         except Exception as inst:
 
-            print("Error getting " + fileName + " - error: ", inst)
+            log("Error getting " + fileName + " - error: ", inst)
 
             try:
                 #ok so something is wrong with image conversion - probably a PIL issue, so let's just get a minimal BG image
                 if "background.png" in fileName:
                     if not '00004' in fileName:
                         image.retrieve(FTPSTUB + fileName, imageFileRGB )
-                        print("Got " + filename)
+                        log("Got " + filename)
                     else:
                         #national radar loop uses a different BG for some reason...
-                        image.retrieve(HTTPSTUB + 'IDE00035.background.png', imageFileRGB )
-                        print("Got IDE00035.background.png")
+                        image.retrieve(FTPSTUB + 'IDE00035.background.png', imageFileRGB )
+                        log("Got IDE00035.background.png")
             except Exception as inst2:
-                print("No, really, -> Error, couldn't retrieve " + fileName + " - error: ", inst2)
+                log("No, really, -> Error, couldn't retrieve " + fileName + " - error: ", inst2)
 
 
 # Download backgrounds for a radar image
 
 def prepareBackgrounds(radarCode, backgroundsPath):
 
-    print("prepareBackgrounds(%s)" % radarCode)
+    log("Calling prepareBackgrounds on [%s]" % radarCode)
 
     downloadBackground(radarCode, "IDR.legend.0.png", backgroundsPath)
     downloadBackground(radarCode, "background.png", backgroundsPath)
@@ -131,19 +145,19 @@ def buildImages(radarCode, updateRadarBackgrounds, backgroundsPath, overlayLoopP
     # grab the current time as as 12 digit 0 padded string
     timeNow = format(int(time.time()),'012d')
 
-    print("buildImages(%s)" % radarCode)
-    print("Overlay loop path: " + overlayLoopPath)
-    print("Backgrounds path: " + backgroundsPath)
+    log("buildImages(%s)" % radarCode)
+    log("Overlay loop path: " + overlayLoopPath)
+    log("Backgrounds path: " + backgroundsPath)
 
     # remove any backgrounds older than 
 
-    print("Deleting any radar overlays older than 2 hours")
+    log("Deleting any radar overlays older than 2 hours")
     currentFiles = glob.glob (overlayLoopPath + "/*.png")
     for count, file in enumerate(currentFiles):
         filetime = os.path.getmtime(file) 
         twoHoursAgo = time.time() - (2 * 60 * 60)
         if filetime < twoHoursAgo:
-            print("Deleted " + str(os.path.basename(file)))
+            log("Deleted " + str(os.path.basename(file)))
             os.remove(file)
 
     # rename the currently kept radar backgrounds to prevent Kodi caching issues
@@ -165,12 +179,12 @@ def buildImages(radarCode, updateRadarBackgrounds, backgroundsPath, overlayLoopP
             try:
                 os.makedirs( backgroundsPath )
                 success = True
-                print("Successfully created " + backgroundsPath)
+                log("Successfully created " + backgroundsPath)
             except:
                 attempts += 1
                 time.sleep(0.1)
         if not success:
-            print("ERROR: Failed to create directory for radar background images!")
+            log("ERROR: Failed to create directory for radar background images!")
             return    
 
     if not os.path.exists( overlayLoopPath ):
@@ -180,12 +194,12 @@ def buildImages(radarCode, updateRadarBackgrounds, backgroundsPath, overlayLoopP
             try:
                 os.makedirs( overlayLoopPath )
                 success = True
-                print("Successfully created " + overlayLoopPath)
+                log("Successfully created " + overlayLoopPath)
             except:
                 attempts += 1
                 time.sleep(0.1)
         if not success:
-            print("ERROR: Failed to create directory for loop images!")
+            log("ERROR: Failed to create directory for loop images!")
             return
 
 
@@ -201,25 +215,25 @@ def buildImages(radarCode, updateRadarBackgrounds, backgroundsPath, overlayLoopP
     # first we retrieve a list of the available files via ftp
     # ok get ready to retrieve some images
 
-    print("Download the radar loop")
+    log("Download the radar loop")
     files = []
 
-    print("Log in to BOM FTP")
+    log("Log in to BOM FTP")
     ftp = ftplib.FTP("ftp.bom.gov.au")
     ftp.login("anonymous", "anonymous@anonymous.org")
     ftp.cwd("/anon/gen/radar/")
 
-    print("Get files list")
+    log("Get files list")
     #connected, so let's get the list
     try:
         files = ftp.nlst()
-    except ftplib.error_perm, resp:
+    except ftplib.error_perm as resp:
         if str(resp) == "550 No files found":
-            print("No files in BOM ftp directory!")
+            log("No files in BOM ftp directory!")
         else:
-            print("Something wrong in the ftp bit of radar images")
+            log("Something wrong in the ftp bit of radar images")
 
-    print("Download the files...")
+    log("Download the files...")
     #ok now we need just the matching radar files...
     loopPicNames = []
     for f in files:
@@ -234,17 +248,17 @@ def buildImages(radarCode, updateRadarBackgrounds, backgroundsPath, overlayLoopP
             if f[-3:] == "png":
                 imageToRetrieve = "ftp://anonymous:someone%40somewhere.com@ftp.bom.gov.au//anon/gen/radar/" + f
                 outputFile = timeNow + "." + f
-                print("Retrieving new radar image: " + imageToRetrieve)
-                print("Output to file: " + outputFile)
+                log("Retrieving new radar image: " + imageToRetrieve)
+                log("Output to file: " + outputFile)
                 try:
                     radarImage = urllib2.urlopen(imageToRetrieve)                    
                     fh = open( overlayLoopPath + "/" + outputFile , "wb")
                     fh.write(radarImage.read())
                     fh.close()
                 except Exception as inst:
-                    print("Failed to retrieve radar image: " + imageToRetrieve + ", oh well never mind!", inst )
+                    log("Failed to retrieve radar image: " + imageToRetrieve + ", oh well never mind!", inst )
         else:
-            print("Using cached radar image: " + timeNow + "." + f)
+            log("Using cached radar image: " + timeNow + "." + f)
 
 
 ###########################################################
@@ -252,27 +266,31 @@ def buildImages(radarCode, updateRadarBackgrounds, backgroundsPath, overlayLoopP
 
 if __name__ == "__main__":
 
+    # Test Ascot Vale or change here to IDR00004 for national radar...
+
     radarCode = "IDR023"
     backgroundsPath = os.getcwd() + "/test-outputs/backgrounds/" + radarCode + "/"
     overlayLoopPath = os.getcwd() + "/test-outputs/loop/" + radarCode + "/"
 
     if len(sys.argv) > 1 and sys.argv[1] == "clean":
         try:
-            print("\n\nCleaning test-outputs folder")
+            log("\n\nCleaning test-outputs folder")
             shutil.rmtree(os.getcwd() + "/test-outputs/")
         except Exception as inst:
             pass        
 
-    print("\nCurrent files in test-outputs:\n")
+    log("\nCurrent files in test-outputs:\n")
 
     for dirpath, dirnames, filenames in os.walk(os.getcwd() + "/test-outputs/"):
         for name in dirnames:
-            print(os.path.join(dirpath, name))
+            log(os.path.join(dirpath, name))
         for name in filenames:
-            print(os.path.join(dirpath, name))
+            log(os.path.join(dirpath, name))
  
-    print("\nTesting getting radar images from them BOM\n")
+    log("\nTesting getting radar images from them BOM\n")
     buildImages(radarCode, True, backgroundsPath, overlayLoopPath)
 
-    print(os.listdir(backgroundsPath))
-    print(os.listdir(overlayLoopPath))
+    log(os.listdir(backgroundsPath))
+    log(os.listdir(overlayLoopPath))
+
+  
