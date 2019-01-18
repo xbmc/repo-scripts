@@ -3,6 +3,7 @@
     <category label="32001">
       <setting id="AutoInvokeSubsDialog" type="bool" label="32010" default="true"/>
       <setting id="NoAutoInvokeIfLocalUnprocSubsFound" type="bool" label="32013" default="true" subsetting="true" enable="eq(-1,true)"/>
+      <setting id="NoConfirmationInvokeIfDownloadedSubsNotFound" type="bool" label="32014" default="false" subsetting="true" enable="eq(-1,true)"/>
       <setting type="sep"/>
       <setting id="LogLevel" type="select" label="32020" lvalues="32022|32023|32024|32025|32026|32027|32028|32029" default="2"/>
       <setting id="SeparateLogFile" type="enum" label="32030" lvalues="32031|32032" default="1"/>
@@ -22,10 +23,11 @@
       <setting id="RemoveCCmarks" type="bool" label="32004" default="true" enable="eq(-9,true)"/>
       <setting id="RemoveAdds" type="bool" label="32005" default="true" enable="eq(-10,true)"/>
       <setting id="AdjustSubDisplayTime" type="bool" label="32081" default="true" enable="eq(-11,true)"/>
-      <setting id="PauseOnConversion" type="bool" label="32011" default="true" enable="eq(-12,true)"/>
-      <setting id="BackupOldSubs" type="bool" label="32071" default="true" enable="eq(-13,true)"/>
+      <setting id="FixOverlappingSubDisplayTime" type="bool" label="32082" default="false" subsetting="true" enable="eq(-1,true)"/>
+      <setting id="PauseOnConversion" type="bool" label="32011" default="true" enable="eq(-13,true)"/>
+      <setting id="BackupOldSubs" type="bool" label="32071" default="true" enable="eq(-14,true)"/>
       <setting type="sep"/>
-      <setting id="AutoUpdateDef" type="bool" label="32006" default="true" enable="eq(-15,true)"/>
+      <setting id="AutoUpdateDef" type="bool" label="32006" default="true" enable="eq(-16,true)"/>
     </category>
     <category label="32048">
       <setting id="AutoRemoveOldSubs" type="bool" label="32070" default="true"/>

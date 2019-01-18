@@ -53,8 +53,12 @@ msgid "Include subtitles already found on disk"
 msgstr "füge Untertitel hinzu, welche bereits auf der Festplatte vorhanden sind"
 
 msgctxt "#32013"
-msgid "Don't invoke dialog if local unprocessed subs are found"
+msgid "Don't invoke search dialog if local unprocessed subs are found"
 msgstr "das Suchfenster nicht anzeigen, wenn lokale unverarbeitete Untertitel vorhanden sind"
+
+msgctxt "#32014"
+msgid "Don't invoke confirmation dialog if downloaded subs are not found"
+msgstr "Wenn keine heruntergeladenen Untertitel gefunden werden rufe keinen Bestätigungsdialog auf"
 
 msgctxt "#32020"
 msgid "Logging level"
@@ -106,7 +110,7 @@ msgstr "eine separate Protokolldatei (smangler.log)"
 
 msgctxt "#32033"
 msgid "Show 'noautosubs' context menu item"
-msgstr ""
+msgstr "Anzeigen von 'noautosubs" im Kontextmenü"
 
 msgctxt "#32040"
 msgid "No new subtitles file has been detected."
@@ -204,6 +208,10 @@ msgctxt "#32081"
 msgid "Adjust subtitle display time"
 msgstr "Anpassung der Anzeigezeit der Untertitel"
 
+msgctxt "#32082"
+msgid "Shrink overlapping subtitle time"
+msgstr "Verkürzen der überlappenden Untertitelzeit"
+
 msgctxt "#32090"
 msgid "Scanning for subtitle files"
 msgstr "Nach Untertiteldateien suchen"
@@ -246,4 +254,4 @@ msgstr "'noautosubs' Datei IST AKTIV fuer Ordner:"
 
 msgctxt "#32108"
 msgid "'noautosubs' file IS CLEARED for folder:"
-msgstr "'noautosubs' Datei IST GELOESCHT fuer Ordner:""
+msgstr "'noautosubs' Datei IST GELOESCHT fuer Ordner:"

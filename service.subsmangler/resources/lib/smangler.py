@@ -897,8 +897,8 @@ def MangleSubtitles(originalinputfile):
                 # 500 ms for line + 67 ms per each character (15 chars per second)
                 minCalcLength = 500 + (len(subsline) * 67)
 
-                common.Log("    Min. calculated length: " + str(minCalcLength) + " ms", xbmc.LOGDEBUG)
                 common.Log("    Actual length: " + str(line.duration) + " ms", xbmc.LOGDEBUG)
+                common.Log("    Min. calculated length: " + str(minCalcLength) + " ms", xbmc.LOGDEBUG)
 
                 # check next subtitle start time and compare it to this subtitle end time
                 ## https://stackoverflow.com/questions/1011938/python-previous-and-next-values-inside-a-loop
@@ -909,29 +909,34 @@ def MangleSubtitles(originalinputfile):
                     nextlineclearance = nextlinestart - line.end
                     common.Log("    Clearance to next sub: " + str(nextlineclearance) + " ms", xbmc.LOGDEBUG)
 
-                if minCalcLength > line.duration:
-                    # calculate amount of time to increase visibility of subtitle to reach minimum time
-                    expectedincrease = minCalcLength - line.duration
+                    if nextlineclearance < 2:
+                        if common.setting_FixOverlappingSubDisplayTime:
+                            line.duration = line.duration + nextlineclearance - 2
+                            common.Log("    Time subtracted from subtitle duration: " + str(2 - nextlineclearance) + " ms", xbmc.LOGDEBUG)
 
-                    # find amount of time to safely increase subtitle display length
-                    if nextlinestart != 0:
-                        # calculate time increase that will satisfy expectedincrease but still does not overlap next subtitle
-                        # maintain a gap of at least 2ms
-                        timetoincrease = min(nextlineclearance, expectedincrease) - 2
-                    else:
-                        # for the last subtitle, there is no limitation of next subtitle start time, so increase to minimum calculated time
-                        timetoincrease = expectedincrease
+                    elif minCalcLength > line.duration:
+                        # calculate amount of time to increase visibility of subtitle to reach minimum time
+                        expectedincrease = minCalcLength - line.duration
 
-                    # check if line.duration is positive as negative line.duration will raise ValueError in pysubs2 library
-                    if line.duration < 0:
-                        line.duration = 0
-                    # timetoincrease should be positive as well
-                    if timetoincrease < 0:
-                        timetoincrease = 0
+                        # find amount of time to safely increase subtitle display length
+                        if nextlinestart != 0:
+                            # calculate time increase that will satisfy expectedincrease but still does not overlap next subtitle
+                            # maintain a gap of at least 2ms
+                            timetoincrease = min(nextlineclearance, expectedincrease) - 2
+                        else:
+                            # for the last subtitle, there is no limitation of next subtitle start time, so increase to minimum calculated time
+                            timetoincrease = expectedincrease
 
-                    # modify subtitle object
-                    line.duration = line.duration + timetoincrease
-                    common.Log("    Time added to subtitle duration: " + str(timetoincrease) + " ms", xbmc.LOGDEBUG)
+                        # check if line.duration is positive as negative line.duration will raise ValueError in pysubs2 library
+                        if line.duration < 0:
+                            line.duration = 0
+                        # timetoincrease should be positive as well
+                        if timetoincrease < 0:
+                            timetoincrease = 0
+
+                        # modify subtitle object
+                        line.duration = line.duration + timetoincrease
+                        common.Log("    Time added to subtitle duration: " + str(timetoincrease) + " ms", xbmc.LOGDEBUG)
 
                 # remember start time of subtitle
                 nextlinestart = line.start
@@ -1311,29 +1316,33 @@ def DetectNewSubs():
 
     # check if subtitles search window was opened but there were no new subtitles processed
     if SubsSearchWasOpened:
-        common.Log("Subtitles search window was opened but no new subtitles were detected. Opening YesNo dialog.", xbmc.LOGINFO)
+        if not common.setting_NoConfirmationInvokeIfDownloadedSubsNotFound:
+            common.Log("Subtitles search window was opened but no new subtitles were detected. Opening YesNo dialog.", xbmc.LOGINFO)
 
-        # pause playbcak
-        PlaybackPause()
+            # pause playbcak
+            PlaybackPause()
 
-        # display YesNo dialog
-        # http://mirrors.xbmc.org/docs/python-docs/13.0-gotham/xbmcgui.html#Dialog-yesno
-        YesNoDialog = xbmcgui.Dialog().yesno("Subtitles Mangler", common.__addonlang__(32040).encode('utf-8'), line2=common.__addonlang__(32041).encode('utf-8'), nolabel=common.__addonlang__(32042).encode('utf-8'), yeslabel=common.__addonlang__(32043).encode('utf-8'))
-        if YesNoDialog:
-            # user does not want the subtitle search dialog to appear again for this file
-            common.Log("Answer is Yes. Setting .noautosubs extension flag for file: " + playingFilenamePath.encode('utf-8'), xbmc.LOGINFO)
+            # display YesNo dialog
+            # http://mirrors.xbmc.org/docs/python-docs/13.0-gotham/xbmcgui.html#Dialog-yesno
+            YesNoDialog = xbmcgui.Dialog().yesno("Subtitles Mangler", common.__addonlang__(32040).encode('utf-8'), line2=common.__addonlang__(32041).encode('utf-8'), nolabel=common.__addonlang__(32042).encode('utf-8'), yeslabel=common.__addonlang__(32043).encode('utf-8'))
+            if YesNoDialog:
+                # user does not want the subtitle search dialog to appear again for this file
+                common.Log("Answer is Yes. Setting .noautosubs extension flag for file: " + playingFilenamePath.encode('utf-8'), xbmc.LOGINFO)
 
-            # set '.noautosubs' extension for file being played
-            filebase, fileext = os.path.splitext(playingFilenamePath)
-            # create .noautosubs file
-            common.CreateNoAutoSubsFile(filebase + ".noautosubs")
+                # set '.noautosubs' extension for file being played
+                filebase, fileext = os.path.splitext(playingFilenamePath)
+                # create .noautosubs file
+                common.CreateNoAutoSubsFile(filebase + ".noautosubs")
+
+            else:
+                # user wants the dialog to appear again next time the video is played
+                common.Log("Answer is No. Doing nothing.", xbmc.LOGINFO)
+
+            # resume playback
+            PlaybackResume()
 
         else:
-            # user wants the dialog to appear again next time the video is played
-            common.Log("Answer is No. Doing nothing.", xbmc.LOGINFO)
-
-        # resume playback
-        PlaybackResume()
+            common.Log("Subtitles search window was opened and no new subtitles were detected, but configuration prevents YesNo dialog from opening.", xbmc.LOGINFO)
 
         # clear the flag to prevent opening dialog on next call of DetectNewSubs()
         SubsSearchWasOpened = False

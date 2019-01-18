@@ -53,7 +53,11 @@ msgid "Include subtitles already found on disk"
 msgstr ""
 
 msgctxt "#32013"
-msgid "Don't invoke dialog if local unprocessed subs are found"
+msgid "Don't invoke search dialog if local unprocessed subs are found"
+msgstr ""
+
+msgctxt "#32014"
+msgid "Don't invoke confirmation dialog if downloaded subs are not found"
 msgstr ""
 
 msgctxt "#32020"
@@ -203,6 +207,10 @@ msgstr ""
 msgctxt "#32081"
 msgid "Adjust subtitle display time"
 msgstr ""
+
+msgctxt "#32082"
+msgid "Shrink overlapping subtitle time"
+msgstr  ""
 
 msgctxt "#32090"
 msgid "Scanning for subtitle files"

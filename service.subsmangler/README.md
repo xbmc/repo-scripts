@@ -14,5 +14,6 @@ It allows:
 - support subtitles input formats: microDVD, SubRip, MPL2 and TMP
 - allows to filter subtitle contents based on various Regular Expression type criteria, which gives ability to remove unwanted texts, such as Hearing Impaired tags, advertisements, credits, etc.
 - allows to increase subtitle display time to match at least minimum calculated time based on subtitle text length, taking into account start time of the next subtitle line
+- allows to shrink subtitle display time to avoid overlapping the next subtitle line
 
 3) detecting if video was removed from local storage and removing any related subtitle files
