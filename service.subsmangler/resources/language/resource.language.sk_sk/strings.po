@@ -53,8 +53,12 @@ msgid "Include subtitles already found on disk"
 msgstr "Obsahuje titulky už nájdené na disku"
 
 msgctxt "#32013"
-msgid "Don't invoke dialog if local unprocessed subs are found"
+msgid "Don't invoke search dialog if local unprocessed subs are found"
 msgstr "Nevyvolať dialóg ak sú nájdené nespracované titulky"
+
+msgctxt "#32014"
+msgid "Don't invoke confirmation dialog if downloaded subs are not found"
+msgstr "Nevyvolávať dialóg potvrdenie pokiaľ nie sú nájdené stiahnuté titulky"
 
 msgctxt "#32020"
 msgid "Logging level"
@@ -106,7 +110,7 @@ msgstr "Samostatný súbor logov (smangler.log)"
 
 msgctxt "#32033"
 msgid "Show 'noautosubs' context menu item"
-msgstr ""
+msgstr "Ukázať 'noautosubs' context menu"
 
 msgctxt "#32040"
 msgid "No new subtitles file has been detected."
@@ -203,6 +207,10 @@ msgstr "Konverzia"
 msgctxt "#32081"
 msgid "Adjust subtitle display time"
 msgstr "Nastaviť čas zobrazenia tituklů"
+
+msgctxt "#32082"
+msgid "Shrink overlapping subtitle time"
+msgstr "Zmenšiť přerývající sa čas titulkov"
 
 msgctxt "#32090"
 msgid "Scanning for subtitle files"

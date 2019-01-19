@@ -112,6 +112,7 @@ def GetSettings():
     global setting_PauseOnConversion
     global setting_AutoInvokeSubsDialog
     global setting_NoAutoInvokeIfLocalUnprocSubsFound
+    global setting_NoConfirmationInvokeIfDownloadedSubsNotFound
     global setting_AutoUpdateDef
     global setting_SeparateLogFile
     global setting_AutoRemoveOldSubs
@@ -120,9 +121,11 @@ def GetSettings():
     global setting_RemoveUnprocessedSubs
     global setting_SimulateRemovalOnly
     global setting_AdjustSubDisplayTime
+    global setting_FixOverlappingSubDisplayTime
 
     setting_AutoInvokeSubsDialog = GetBool(__addon__.getSetting("AutoInvokeSubsDialog"))
     setting_NoAutoInvokeIfLocalUnprocSubsFound = GetBool(__addon__.getSetting("NoAutoInvokeIfLocalUnprocSubsFound"))
+    setting_NoConfirmationInvokeIfDownloadedSubsNotFound = GetBool(__addon__.getSetting("NoConfirmationInvokeIfDownloadedSubsNotFound"))
     setting_ShowNoautosubsContextItem = GetBool(__addon__.getSetting("ShowNoautosubsContextItem"))
     setting_ConversionServiceEnabled = GetBool(__addon__.getSetting("ConversionServiceEnabled"))
     setting_AlsoConvertExistingSubtitles = GetBool(__addon__.getSetting("AlsoConvertExistingSubtitles"))
@@ -134,6 +137,7 @@ def GetSettings():
     setting_RemoveCCmarks = GetBool(__addon__.getSetting("RemoveCCmarks"))
     setting_RemoveAds = GetBool(__addon__.getSetting("RemoveAdds"))
     setting_AdjustSubDisplayTime = GetBool(__addon__.getSetting("AdjustSubDisplayTime"))
+    setting_FixOverlappingSubDisplayTime = GetBool(__addon__.getSetting("FixOverlappingSubDisplayTime"))
     setting_PauseOnConversion = GetBool(__addon__.getSetting("PauseOnConversion"))
     setting_BackupOldSubs = GetBool(__addon__.getSetting("BackupOldSubs"))
     setting_AutoRemoveOldSubs = GetBool(__addon__.getSetting("AutoRemoveOldSubs"))
@@ -145,28 +149,30 @@ def GetSettings():
     setting_SeparateLogFile = int(__addon__.getSetting("SeparateLogFile"))
 
     Log("Reading settings.", xbmc.LOGINFO)
-    Log("Setting:       AutoInvokeSubsDialog = " + str(setting_AutoInvokeSubsDialog), xbmc.LOGINFO)
-    Log(" NoAutoInvokeIfLocalUnprocSubsFound = " + str(setting_NoAutoInvokeIfLocalUnprocSubsFound), xbmc.LOGINFO)
-    Log("          ShowNoautosubsContextItem = " + str(setting_ShowNoautosubsContextItem), xbmc.LOGINFO)
-    Log("           ConversionServiceEnabled = " + str(setting_ConversionServiceEnabled), xbmc.LOGINFO)
-    Log("       AlsoConvertExistingSubtitles = " + str(setting_AlsoConvertExistingSubtitles), xbmc.LOGINFO)
-    Log("                       SubsFontSize = " + str(setting_SubsFontSize), xbmc.LOGINFO)
-    Log("                    ForegroundColor = " + str(setting_ForegroundColor), xbmc.LOGINFO)
-    Log("                    BackgroundColor = " + str(setting_BackgroundColor), xbmc.LOGINFO)
-    Log("             BackgroundTransparency = " + str(setting_BackgroundTransparency), xbmc.LOGINFO)
-    Log("          MaintainBiggerLineSpacing = " + str(setting_MaintainBiggerLineSpacing), xbmc.LOGINFO)
-    Log("                      RemoveCCmarks = " + str(setting_RemoveCCmarks), xbmc.LOGINFO)
-    Log("                          RemoveAds = " + str(setting_RemoveAds), xbmc.LOGINFO)
-    Log("               AdjustSubDisplayTime = " + str(setting_AdjustSubDisplayTime), xbmc.LOGINFO)
-    Log("                  PauseOnConversion = " + str(setting_PauseOnConversion), xbmc.LOGINFO)
-    Log("                      BackupOldSubs = " + str(setting_BackupOldSubs), xbmc.LOGINFO)
-    Log("                  AutoRemoveOldSubs = " + str(setting_AutoRemoveOldSubs), xbmc.LOGINFO)
-    Log("                   RemoveSubsBackup = " + str(setting_RemoveSubsBackup), xbmc.LOGINFO)
-    Log("              RemoveUnprocessedSubs = " + str(setting_RemoveUnprocessedSubs), xbmc.LOGINFO)
-    Log("                SimulateRemovalOnly = " + str(setting_SimulateRemovalOnly), xbmc.LOGINFO)
-    Log("                      AutoUpdateDef = " + str(setting_AutoUpdateDef), xbmc.LOGINFO)
-    Log("                           LogLevel = " + str(setting_LogLevel), xbmc.LOGINFO)
-    Log("                    SeparateLogFile = " + str(setting_SeparateLogFile), xbmc.LOGINFO)
+    Log("Setting:                 AutoInvokeSubsDialog = " + str(setting_AutoInvokeSubsDialog), xbmc.LOGINFO)
+    Log("           NoAutoInvokeIfLocalUnprocSubsFound = " + str(setting_NoAutoInvokeIfLocalUnprocSubsFound), xbmc.LOGINFO)
+    Log(" NoConfirmationInvokeIfDownloadedSubsNotFound = " + str(setting_NoConfirmationInvokeIfDownloadedSubsNotFound), xbmc.LOGINFO)
+    Log("                    ShowNoautosubsContextItem = " + str(setting_ShowNoautosubsContextItem), xbmc.LOGINFO)
+    Log("                     ConversionServiceEnabled = " + str(setting_ConversionServiceEnabled), xbmc.LOGINFO)
+    Log("                 AlsoConvertExistingSubtitles = " + str(setting_AlsoConvertExistingSubtitles), xbmc.LOGINFO)
+    Log("                                 SubsFontSize = " + str(setting_SubsFontSize), xbmc.LOGINFO)
+    Log("                              ForegroundColor = " + str(setting_ForegroundColor), xbmc.LOGINFO)
+    Log("                              BackgroundColor = " + str(setting_BackgroundColor), xbmc.LOGINFO)
+    Log("                       BackgroundTransparency = " + str(setting_BackgroundTransparency), xbmc.LOGINFO)
+    Log("                    MaintainBiggerLineSpacing = " + str(setting_MaintainBiggerLineSpacing), xbmc.LOGINFO)
+    Log("                                RemoveCCmarks = " + str(setting_RemoveCCmarks), xbmc.LOGINFO)
+    Log("                                    RemoveAds = " + str(setting_RemoveAds), xbmc.LOGINFO)
+    Log("                         AdjustSubDisplayTime = " + str(setting_AdjustSubDisplayTime), xbmc.LOGINFO)
+    Log("                 FixOverlappingSubDisplayTime = " + str(setting_FixOverlappingSubDisplayTime), xbmc.LOGINFO)
+    Log("                            PauseOnConversion = " + str(setting_PauseOnConversion), xbmc.LOGINFO)
+    Log("                                BackupOldSubs = " + str(setting_BackupOldSubs), xbmc.LOGINFO)
+    Log("                            AutoRemoveOldSubs = " + str(setting_AutoRemoveOldSubs), xbmc.LOGINFO)
+    Log("                             RemoveSubsBackup = " + str(setting_RemoveSubsBackup), xbmc.LOGINFO)
+    Log("                        RemoveUnprocessedSubs = " + str(setting_RemoveUnprocessedSubs), xbmc.LOGINFO)
+    Log("                          SimulateRemovalOnly = " + str(setting_SimulateRemovalOnly), xbmc.LOGINFO)
+    Log("                                AutoUpdateDef = " + str(setting_AutoUpdateDef), xbmc.LOGINFO)
+    Log("                                     LogLevel = " + str(setting_LogLevel), xbmc.LOGINFO)
+    Log("                              SeparateLogFile = " + str(setting_SeparateLogFile), xbmc.LOGINFO)
 
     # set setting value into the skin
     if setting_ShowNoautosubsContextItem:

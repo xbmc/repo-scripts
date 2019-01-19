@@ -53,8 +53,12 @@ msgid "Include subtitles already found on disk"
 msgstr "Konwertuj napisy już istniejące na dysku"
 
 msgctxt "#32013"
-msgid "Don't invoke dialog if local unprocessed subs are found"
+msgid "Don't invoke search dialog if local unprocessed subs are found"
 msgstr "Nie pokazuj okna wyszukiwania jeśli istnieją lokalne nieprzetworzone napisy"
+
+msgctxt "#32014"
+msgid "Don't invoke confirmation dialog if downloaded subs are not found"
+msgstr "Nie pokazuj okna potwierdzenia jeśli nie znaleziono pobranych napisów"
 
 msgctxt "#32020"
 msgid "Logging level"
@@ -203,6 +207,10 @@ msgstr "Konwersja"
 msgctxt "#32081"
 msgid "Adjust subtitle display time"
 msgstr "Koryguj czas wyświetlania napisów"
+
+msgctxt "#32082"
+msgid "Shrink overlapping subtitle time"
+msgstr "Skracaj czas napisów zachodzących na siebie"
 
 msgctxt "#32090"
 msgid "Scanning for subtitle files"

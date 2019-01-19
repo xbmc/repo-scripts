@@ -53,8 +53,12 @@ msgid "Include subtitles already found on disk"
 msgstr "Csatolt felirat található a lemezen"
 
 msgctxt "#32013"
-msgid "Don't invoke dialog if local unprocessed subs are found"
+msgid "Don't invoke search dialog if local unprocessed subs are found"
 msgstr "Ne indítsa a folyamatot ha helyi nem feldolgozott feliratot talált"
+
+msgctxt "#32014"
+msgid "Don't invoke confirmation dialog if downloaded subs are not found"
+msgstr "Ne hozza fel a megerõsítõ ablakot, ha a letöltött felirat fájlok nem találhatóak"
 
 msgctxt "#32020"
 msgid "Logging level"
@@ -106,7 +110,7 @@ msgstr "Egyedi lg fájl (smangler.log)"
 
 msgctxt "#32033"
 msgid "Show 'noautosubs' context menu item"
-msgstr ""
+msgstr "Mutassa a 'noautosubs' menü tartalmat"
 
 msgctxt "#32040"
 msgid "No new subtitles file has been detected."
@@ -203,6 +207,10 @@ msgstr "Konvertálás"
 msgctxt "#32081"
 msgid "Adjust subtitle display time"
 msgstr "Javítsa a felirat megjelenítési időt"
+
+msgctxt "#32082"
+msgid "Shrink overlapping subtitle time"
+msgstr "Felirat átfedési idõ csökkentése"
 
 msgctxt "#32090"
 msgid "Scanning for subtitle files"
