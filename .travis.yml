@@ -10,7 +10,7 @@ script:
 - |
   if [ "$TRAVIS_PULL_REQUEST" = "false" ]; then
     kodi-addon-checker --branch=jarvis;
-  then 
+  else 
     kodi-addon-checker --branch=jarvis --PR $(git diff --diff-filter=d --name-only HEAD~ | grep / | cut -d / -f1 | sort | uniq); 
   fi
 
