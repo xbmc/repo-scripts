@@ -10,7 +10,7 @@ script:
 - |
    if [ "$TRAVIS_PULL_REQUEST" = "false" ]; then
       kodi-addon-checker --branch=leia;
-   else [ "$TRAVIS_PULL_REQUEST" != "false" ]; 
+   else
       kodi-addon-checker --branch=leia --PR $(git diff --diff-filter=d --name-only HEAD~ | grep / | cut -d / -f1 | sort | uniq); 
    fi
 
