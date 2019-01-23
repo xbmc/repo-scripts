@@ -1,3 +1,8 @@
+3.0.3
+- update language directory structure
+- update python except syntax
+- add assets tag in addon.xml
+
 3.0.2
 - cosmetics
 

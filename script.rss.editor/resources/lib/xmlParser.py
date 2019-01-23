@@ -129,7 +129,7 @@ class XMLParser:
             RssFeedsFile.close()
             log('[SCRIPT] RSS Editor --> write success')
             self.refreshFeed()
-        except IOError, error:
+        except IOError as error:
             log('[SCRIPT] RSS Editor --> write failed', error)
 
     def refreshFeed(self):
