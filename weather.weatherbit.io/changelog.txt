@@ -1,3 +1,9 @@
+v0.0.14
+- cosmetics
+
+v0.0.13
+- fix potential issue when speed is set to beaufort
+
 v0.0.12
 - fix crash when uv data or precipitation data is missing
 

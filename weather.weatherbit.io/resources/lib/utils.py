@@ -185,7 +185,7 @@ def SPEED(mps):
     if SPEEDUNIT == 'km/h':
         speed = mps * 3.6
     elif SPEEDUNIT == 'm/min':
-        speed = mps * 60
+        speed = mps * 60.0
     elif SPEEDUNIT == 'ft/h':
         speed = mps * 11810.88
     elif SPEEDUNIT == 'ft/min':
@@ -197,7 +197,7 @@ def SPEED(mps):
     elif SPEEDUNIT == 'knots':
         speed = mps * 1.944
     elif SPEEDUNIT == 'Beaufort':
-        speed = KPHTOBFT(mps* 3.6)
+        speed = float(KPHTOBFT(mps* 3.6))
     elif SPEEDUNIT == 'inch/s':
         speed = mps * 39.37
     elif SPEEDUNIT == 'yard/s':

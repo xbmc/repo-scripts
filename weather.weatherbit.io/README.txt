@@ -111,8 +111,8 @@ Daily.%i.Sunrise
 Daily.%i.Sunset
 Daily.%i.Moonrise
 Daily.%i.Moonset
-Daily.%i.MoonPhase        (moon phase fraction)
-Daily.%i.Ozone            (average ozone level)
+Daily.%i.MoonPhase         (moon phase fraction)
+Daily.%i.Ozone             (average ozone level)
 
 
 HOURLY [1-34]              (NOTE: this is 3-hourly, eg. 0:00, 3:00, 6:00, 9:00 and so on) 
@@ -121,12 +121,12 @@ Hourly.IsFetched
 Hourly.%i.Time             (eg. '12:00')
 Hourly.%i.LongDate
 Hourly.%i.ShortDate
-Hourly.%i.Outlook           (eg. 'Very heavy rain')
+Hourly.%i.Outlook          (eg. 'Very heavy rain')
 Hourly.%i.OutlookIcon
 Hourly.%i.FanartCode
 Hourly.%i.WindSpeed
-Hourly.%i.WindDirection     (eg. 'SSW')
-Hourly.%i.WindDegree        (eg. '220°')
+Hourly.%i.WindDirection    (eg. 'SSW')
+Hourly.%i.WindDegree       (eg. '220°')
 Hourly.%i.Humidity
 Hourly.%i.DewPoint
 Hourly.%i.WindGust
@@ -135,16 +135,16 @@ Hourly.%i.FeelsLike
 Hourly.%i.Pressure
 Hourly.%i.SeaLevel
 Hourly.%i.Cloudiness
-Hourly.%i.CloudsLow         (cloud coverage at 0-3km hight)
-Hourly.%i.CloudsMid         (cloud coverage at 3-5km hight)
-Hourly.%i.CloudsHigh        (cloud coverage at >5km hight)
-Hourly.%i.Snow              (amount of snow)
-Hourly.%i.SnowDepth         (depth of snow on the ground)
-Hourly.%i.Precipitation     (total amount of rain and snow)
-Hourly.%i.Probability       (probability of precipitation)
+Hourly.%i.CloudsLow        (cloud coverage at 0-3km hight)
+Hourly.%i.CloudsMid        (cloud coverage at 3-5km hight)
+Hourly.%i.CloudsHigh       (cloud coverage at >5km hight)
+Hourly.%i.Snow             (amount of snow)
+Hourly.%i.SnowDepth        (depth of snow on the ground)
+Hourly.%i.Precipitation    (total amount of rain and snow)
+Hourly.%i.Probability      (probability of precipitation)
 Hourly.%i.UVIndex
 Hourly.%i.Visibility
-Hourly.%i.Ozone             (average ozone level)
+Hourly.%i.Ozone            (average ozone level)
 
 
 MAP [1-5]
