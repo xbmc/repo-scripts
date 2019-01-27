@@ -13,7 +13,7 @@
 # *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
 # *  http://www.gnu.org/copyleft/gpl.html
 
-from loveban import LoveBan
+from love import Love
 from utils import *
 from helpers import *
 
@@ -23,11 +23,11 @@ class Main:
     def __init__( self ):
         # check how we were started
         try:
-            loveban, params = parse_argv()
+            love, params = parse_argv()
             log('params: %s' % params, SESSION)
-            if loveban and params:
+            if love and params:
                 # run as script
-                LoveBan(params)
+                Love(params)
                 return
         except:
             # run as service
@@ -45,21 +45,20 @@ class Main:
         self.monitor.waitForAbort()
         # clear skin properties
         clear_prop('LastFM.CanLove')
-        clear_prop('LastFM.CanBan')
 
     def _get_settings( self, puser=False, ppwd=False ):
         log('get settings', SESSION)
         # if available, pass the old user and pwd to readsettings
-        settings     = read_settings(SESSION, puser, ppwd)
-        user         = settings['user']
-        pwd          = settings['pwd']
-        songs        = settings['songs']
-        videos       = settings['videos']
-        radio        = settings['radio']
+        settings = read_settings(SESSION, puser, ppwd)
+        user = settings['user']
+        pwd = settings['pwd']
+        songs = settings['songs']
+        videos = settings['videos']
+        radio = settings['radio']
         self.sesskey = settings['sesskey']
         # init the player class (re-init when settings have changed)
         self.player = MyPlayer(action=self._lastfm_submit, user=user, pwd=pwd, songs=songs, videos=videos, radio=radio, sesskey=self.sesskey)
-        # init the player class (re-init when settings have changed)
+        # init the monitor class (re-init when settings have changed)
         self.monitor = MyMonitor(action=self._get_settings, user=user, pwd=pwd)
 
     def _init_vars( self ):
@@ -146,7 +145,7 @@ class Main:
                 data['timestamp[%d]' % count] = str(item.get('timestamp',''))
                 data['track[%d]' % count] = item.get('title','')
                 data['trackNumber[%d]' % count] = item.get('track','')
-                data['user[%d]' % count] = item.get('user','')
+                data['user[%d]' % count] = item.get('userselected','')
             else:
                 # item does not qualify for a scrobble
                 unqualified.append(item)
@@ -204,18 +203,17 @@ class MyPlayer(xbmc.Player):
     def __init__( self, *args, **kwargs ):
         xbmc.Player.__init__( self )
         log('init player class', SESSION)
-        self.action  = kwargs['action']
-        self.user    = kwargs['user']
-        self.pwd     = kwargs['pwd']
+        self.action = kwargs['action']
+        self.user = kwargs['user']
+        self.pwd = kwargs['pwd']
         self.sesskey = kwargs['sesskey']
-        self.songs   = kwargs['songs']
-        self.videos  = kwargs['videos']
-        self.radio   = kwargs['radio']
-        self.Audio   = False
+        self.songs = kwargs['songs']
+        self.videos = kwargs['videos']
+        self.radio = kwargs['radio']
+        self.Audio = False
 
     def onPlayBackStarted( self ):
         # only do something if we're playing audio and user has enabled it in settings
-
         if self.sesskey and self.user and self.pwd:
             if (self.isPlayingAudio() and (self.radio or self.songs)) or (self.isPlayingMusicVideo() and self.videos):
                 # we need to keep track of this bool for stopped/ended notifications
@@ -267,22 +265,22 @@ class MyPlayer(xbmc.Player):
         # get duration from xbmc.Player if the MusicInfoTag duration is invalid
         if int(duration) <= 0:
             duration = str(int(self.getTotalTime()))
-        track    = str(tags.getTrack())
-        mbid     = '' # musicbrainz id is not yet available
+        track = str(tags.getTrack())
+        mbid = '' # musicbrainz id is not yet available
         streamid = '' # deprecated
-        path      = self.getPlayingFile().decode("utf-8")
+        path = self.getPlayingFile().decode("utf-8")
         timestamp = int(time.time())
         if is_local(path):
-            user = '1'
+            userselected = '1'
         else:
-            user = '0'
+            userselected = '0'
         log('song scrobbling enabled: ' + str(self.songs), SESSION)
         log('video scrobbling enabled: ' + str(self.videos), SESSION)
         log('radio scrobbling enabled: ' + str(self.radio), SESSION)
         log('artist: ' + artist, SESSION)
         log('title: ' + title, SESSION)
         log('path: ' + path, SESSION)
-        log('user flag: ' + user, SESSION)
+        log('user selected flag: ' + userselected, SESSION)
         # streaming radio may provide both artistname and songtitle as one label, or we have a file with no tags
         # NOTE - this is against the last.fm scrobbling rules:
         # "Do not attempt to determine a track's meta data from its filename. Please only use meta data from well-structured sources such as ID3 tags."
@@ -301,22 +299,22 @@ class MyPlayer(xbmc.Player):
                 pass
         # make sure we have artist and trackname
         if artist and title:
-            # check user settings to determine if we should submit this track
-            if user == '1' and not self.songs:
-                # user is listening to local source, but songs setting is disabled
-                log('user settings prohibit us from scrobbling local tracks', SESSION)
+            # check settings to determine if we should submit this track
+            if userselected == '1' and not self.songs:
+                # listening to local source, but songs setting is disabled
+                log('settings prohibit us from scrobbling local tracks', SESSION)
                 return None
-            elif user == '0' and not self.radio:
-                # user is listening to remote source, but the radio setting is disabled
-                log('user settings prohibit us from scrobbling online streaming radio', SESSION)
+            elif userselected == '0' and not self.radio:
+                # listening to remote source, but the radio setting is disabled
+                log('settings prohibit us from scrobbling online streaming radio', SESSION)
                 return None
             elif self.isPlayingMusicVideo() and not self.videos:
-                # user is watching a music video, but the music video setting is disabled
-                log('user settings prohibit us from scrobbling music videos', SESSION)
+                # watching a music video, but the music video setting is disabled
+                log('settings prohibit us from scrobbling music videos', SESSION)
                 return None
             # previous clauses did not return, so we have either a local play with the songs setting enabled, or a remote play with the radio setting enabled,
             # and therefore can scrobble
-            tracktags = dict(artist=artist, album=album, albumartist=albumartist, title=title, duration=duration, track=track, mbid=mbid, path=path, timestamp=timestamp, streamid=streamid, user=user)
+            tracktags = dict(artist=artist, album=album, albumartist=albumartist, title=title, duration=duration, track=track, mbid=mbid, path=path, timestamp=timestamp, streamid=streamid, user=userselected)
             log('tracktags: %s' % tracktags, SESSION)
             return tracktags
         else:
@@ -330,8 +328,8 @@ class MyMonitor(xbmc.Monitor):
     def __init__( self, *args, **kwargs ):
         xbmc.Monitor.__init__( self )
         log('init monitor class', SESSION)
-        self.user   = kwargs['user']
-        self.pwd    = kwargs['pwd']
+        self.user = kwargs['user']
+        self.pwd = kwargs['pwd']
         self.action = kwargs['action']
 
     def onSettingsChanged( self ):

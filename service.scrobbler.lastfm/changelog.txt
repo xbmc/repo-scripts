@@ -1,3 +1,12 @@
+v3.1.1
+- cosmetics
+
+v3.1.0
+- remove option to ban tracks, no longer supported by last.fm
+
+v3.0.1
+- move repo to gitlab
+
 v3.0.0
 - add support for musicvideos
 

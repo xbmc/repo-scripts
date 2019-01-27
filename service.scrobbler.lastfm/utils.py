@@ -5,15 +5,15 @@ import json
 __addon__        = xbmcaddon.Addon()
 __addonid__      = __addon__.getAddonInfo('id')
 
-APIURL       = 'http://ws.audioscrobbler.com/2.0/'
-AUTHURL      = 'https://ws.audioscrobbler.com/2.0/'
-HEADERS      = {'User-Agent': 'Kodi Media center', 'Accept-Charset': 'utf-8'}
-LANGUAGE     = __addon__.getLocalizedString
+APIURL = 'http://ws.audioscrobbler.com/2.0/'
+AUTHURL = 'https://ws.audioscrobbler.com/2.0/'
+HEADERS = {'User-Agent': 'Kodi Media center', 'Accept-Charset': 'utf-8'}
+LANGUAGE = __addon__.getLocalizedString
 ADDONVERSION = __addon__.getAddonInfo('version')
-CWD          = __addon__.getAddonInfo('path').decode("utf-8")
-STATUS       = __addon__.getSetting('lastfmstatus')
-DATAPATH     = xbmc.translatePath(xbmcaddon.Addon().getAddonInfo('profile')).decode('utf-8')
-WINDOW       = xbmcgui.Window(10000)
+CWD = __addon__.getAddonInfo('path').decode("utf-8")
+STATUS = __addon__.getSetting('lastfmstatus')
+DATAPATH = xbmc.translatePath(xbmcaddon.Addon().getAddonInfo('profile')).decode('utf-8')
+WINDOW = xbmcgui.Window(10000)
 
 socket.setdefaulttimeout(10)
 
@@ -31,13 +31,13 @@ def parse_argv():
 def read_settings(session, puser=False, ppwd=False):
     # read settings
     settings = {}
-    user      = __addon__.getSetting('lastfmuser').decode("utf-8")
-    pwd       = __addon__.getSetting('lastfmpass').decode("utf-8")
-    songs     = __addon__.getSetting('lastfmsubmitsongs') == 'true'
-    videos    = __addon__.getSetting('lastfmsubmitvideos') == 'true'
-    radio     = __addon__.getSetting('lastfmsubmitradio') == 'true'
-    confirm   = __addon__.getSetting('lastfmconfirm') == 'true'
-    sesskey   = __addon__.getSetting('lastfmkey')
+    user = __addon__.getSetting('lastfmuser').decode("utf-8")
+    pwd = __addon__.getSetting('lastfmpass').decode("utf-8")
+    songs = __addon__.getSetting('lastfmsubmitsongs') == 'true'
+    videos = __addon__.getSetting('lastfmsubmitvideos') == 'true'
+    radio = __addon__.getSetting('lastfmsubmitradio') == 'true'
+    confirm = __addon__.getSetting('lastfmconfirm') == 'true'
+    sesskey = __addon__.getSetting('lastfmkey')
     # if puser or ppwd is true, we were called by onSettingsChanged
     if puser or ppwd:
         # check if user has changed it's username or password
@@ -58,7 +58,6 @@ def read_settings(session, puser=False, ppwd=False):
             sesskey = response['session']['key']
             # set property for skins
             set_prop('LastFM.CanLove', 'True')
-            set_prop('LastFM.CanBan', 'True')
         elif response.has_key('error'):
             msg  = response['message'] 
             xbmc.executebuiltin('Notification(%s,%s,%i)' % (LANGUAGE(32011), msg, 7000))
@@ -72,16 +71,15 @@ def read_settings(session, puser=False, ppwd=False):
     elif not (user and pwd):
         # no username or password
         xbmc.executebuiltin('Notification(%s,%s,%i)' % (LANGUAGE(32011), LANGUAGE(32027), 7000))
-    settings['user']    = user
-    settings['pwd']     = pwd
-    settings['songs']   = songs
-    settings['videos']  = videos
-    settings['radio']   = radio
+    settings['user'] = user
+    settings['pwd'] = pwd
+    settings['songs'] = songs
+    settings['videos'] = videos
+    settings['radio'] = radio
     settings['confirm'] = confirm
     settings['sesskey'] = sesskey
     if sesskey:
         set_prop('LastFM.CanLove', 'True')
-        set_prop('LastFM.CanBan', 'True')
     return settings
 
 def set_prop(key, val):
