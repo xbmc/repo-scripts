@@ -105,7 +105,7 @@ class GUI(xbmcgui.WindowXML):
         if cat['content'] == 'livetv':
             self._fetch_channelgroups(cat)
             return
-        if cat['type'] == 'seasonepisodes' or cat['type'] == 'albumsongs':
+        if cat['type'] == 'seasonepisodes':
             search = search[0], search[1]
         self.getControl(SEARCHCATEGORY).setLabel(xbmc.getLocalizedString(cat['label']))
         self.getControl(SEARCHCATEGORY).setVisible(True)
@@ -397,9 +397,7 @@ class GUI(xbmcgui.WindowXML):
         elif key == 'artistalbums':
             search = listitem.getMusicInfoTag().getDbId()
         elif key == 'albumsongs':
-            artist = listitem.getMusicInfoTag().getArtist()
-            album = listitem.getLabel()
-            search = [artist,album]
+            search = listitem.getMusicInfoTag().getDbId()
         elif key == 'actormovies':
             search = listitem.getLabel()
         elif key == 'directormovies':
@@ -419,6 +417,7 @@ class GUI(xbmcgui.WindowXML):
             xbmc.executeJSONRPC('{"jsonrpc":"2.0", "method":"Player.Open", "params":{"item":{"%s":%d}}, "id":1}' % (key, int(value)))
         else:
             resume = int(listitem.getProperty('resume'))
+            selected = False
             if self.playaction == 0:
                 labels = ()
                 functions = ()
@@ -437,6 +436,7 @@ class GUI(xbmcgui.WindowXML):
                 functions += ('info',)
                 selection = xbmcgui.Dialog().contextmenu(labels)
                 if selection >= 0:
+                    selected = True
                     if functions[selection] == 'play':
                         self.playaction = 1
                     elif functions[selection] == 'resume':
@@ -446,6 +446,20 @@ class GUI(xbmcgui.WindowXML):
             if self.playaction == 3:
                 self._show_info(listitem)
             elif self.playaction == 1 or self.playaction == 2:
+                if self.playaction == 1 and not selected:
+                    if int(resume) > 0:
+                        labels = ()
+                        functions = ()
+                        m, s = divmod(resume, 60)
+                        h, m = divmod(m, 60)
+                        val = '%d:%02d:%02d' % (h, m, s)
+                        labels += (LANGUAGE(32212) % val,)
+                        functions += ('resume',)
+                        labels += (xbmc.getLocalizedString(12021),)
+                        functions += ('play',)
+                        selection = xbmcgui.Dialog().contextmenu(labels)
+                        if functions[selection] == 'resume':
+                            self.playaction = 2
                 if self.playaction == 2:
                     self.Player.resume = resume
                 xbmc.executeJSONRPC('{"jsonrpc":"2.0", "method":"Player.Open", "params":{"item":{"%s":%d}}, "id":1}' % (key, int(value)))
@@ -658,11 +672,5 @@ class MyPlayer(xbmc.Player):
         xbmc.Player.__init__(self)
         self.resume = 0
 
-    def onPlayBackStarted(self):
-        for count in range(50):
-            if self.isPlayingVideo():
-                break
-            elif self.isPlayingAudio():
-                return
-            xbmc.sleep(100)
+    def onAVStarted(self):
         self.seekTime(float(self.resume))

@@ -269,7 +269,7 @@ CATEGORIES = {
                              'method':'AudioLibrary.GetSongs',
                              'properties':SONGLABELS,
                              'sort':'title',
-                             'rule':'"filter":{"and":[{"field":"artist", "operator":"is", "value":"%s"}, {"field":"album", "operator":"is", "value":"%s"}]}',
+                             'rule':'"filter":{"albumid":%s}',
                              'streamdetails':False,
                              'label':134,
                              'icon':'DefaultAudio.png',

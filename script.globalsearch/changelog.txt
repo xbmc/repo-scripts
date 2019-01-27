@@ -1,3 +1,12 @@
+v8.0.11
+- leia bump
+
+v8.0.10
+- implement play/resume option
+
+v8.0.9
+- improve support for compilation albums
+
 v8.0.8
 - fix fanart for seasons and episodes
 
