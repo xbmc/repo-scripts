@@ -210,10 +210,3 @@ msgstr ""
 msgctxt "#32167"
 msgid "Delete lyrics"
 msgstr ""
-
-#empty strings from id 32168 to 32198
-#Skin labels
-
-msgctxt "#32199"
-msgid "CU LRC Lyrics"
-msgstr ""

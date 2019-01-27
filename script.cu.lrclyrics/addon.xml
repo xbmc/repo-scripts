@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.cu.lrclyrics" name="CU LRC Lyrics" version="5.5.5" provider-name="Taxigps, ronie">
+<addon id="script.cu.lrclyrics" name="CU LRC Lyrics" version="5.5.7" provider-name="Taxigps, ronie">
 	<requires>
 		<import addon="xbmc.python" version="2.25.0"/>
 		<import addon="script.module.chardet" version="2.2.1"/>
@@ -73,9 +73,10 @@
 		<language></language>
 		<platform>all</platform>
 		<license>GNU GENERAL PUBLIC LICENSE Version 2</license>
-		<forum>http://forum.kodi.tv/showthread.php?tid=147340</forum>
-		<website></website>
-		<email></email>
+		<forum>https://forum.kodi.tv/showthread.php?tid=147340</forum>
 		<source>https://gitlab.com/ronie/script.cu.lrclyrics/</source>
+		<assets>
+			<icon>resources/icon.png</icon>
+		</assets>
 	</extension>
 </addon>
