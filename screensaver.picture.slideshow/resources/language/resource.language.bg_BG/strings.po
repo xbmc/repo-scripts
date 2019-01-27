@@ -1,0 +1,93 @@
+# Kodi Media Center language file
+# Addon Name: Picture Slideshow Screensaver
+# Addon id: screensaver.picture.slideshow
+# Addon Provider: Team-Kodi
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: Bulgarian (http://www.transifex.com/projects/p/xbmc-addons/language/bg/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: bg\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#30000"
+msgid "Source of slideshow images"
+msgstr "Източник на изображения"
+
+msgctxt "#30001"
+msgid "Folder"
+msgstr "Папка"
+
+msgctxt "#30002"
+msgid "Video Fanart"
+msgstr "Фен-арт на видео файловете"
+
+msgctxt "#30003"
+msgid "Music Fanart"
+msgstr "Фен-арт на аудио файловете"
+
+msgctxt "#30004"
+msgid "Image Folder"
+msgstr "Папка с изображения"
+
+msgctxt "#30005"
+msgid "Dim level"
+msgstr "Степен на затъмняване"
+
+msgctxt "#30006"
+msgid "Effect"
+msgstr "Ефект"
+
+msgctxt "#30007"
+msgid "Slide"
+msgstr "Плъзгане"
+
+msgctxt "#30008"
+msgid "Crossfade"
+msgstr "Плавен преход"
+
+msgctxt "#30010"
+msgid "Amount of seconds to display each image"
+msgstr "Изобразяване всяко изображение за (Х сек)"
+
+msgctxt "#30012"
+msgid "Display image name"
+msgstr "Показвай имената на снимките"
+
+msgctxt "#30013"
+msgid "Disabled"
+msgstr "Изключена"
+
+msgctxt "#30014"
+msgid "Use filename"
+msgstr "..името на файла"
+
+msgctxt "#30015"
+msgid "Use foldername"
+msgstr "...името на папката"
+
+msgctxt "#30016"
+msgid "Display images in random order"
+msgstr "Показвай изображенията в произволен ред"
+
+msgctxt "#30018"
+msgid "Use folder- and filename"
+msgstr "Ползвай папка и име на файла"
+
+msgctxt "#30021"
+msgid "Display picture date"
+msgstr "Показвай датата"
+
+msgctxt "#30024"
+msgid "Basic"
+msgstr "Основни"
+
+msgctxt "#30025"
+msgid "Additional"
+msgstr "Допълнителни"

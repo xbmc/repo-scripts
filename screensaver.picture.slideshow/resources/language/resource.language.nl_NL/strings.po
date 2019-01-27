@@ -1,0 +1,113 @@
+# Kodi Media Center language file
+# Addon Name: Picture Slideshow Screensaver
+# Addon id: screensaver.picture.slideshow
+# Addon Provider: Team-Kodi
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: Dutch (http://www.transifex.com/projects/p/xbmc-addons/language/nl/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: nl\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#30000"
+msgid "Source of slideshow images"
+msgstr "Locatie van diavoorstelling afbeeldingen"
+
+msgctxt "#30001"
+msgid "Folder"
+msgstr "Map"
+
+msgctxt "#30002"
+msgid "Video Fanart"
+msgstr "Video Fanart"
+
+msgctxt "#30003"
+msgid "Music Fanart"
+msgstr "Music Fanart"
+
+msgctxt "#30004"
+msgid "Image Folder"
+msgstr "Image Folder"
+
+msgctxt "#30005"
+msgid "Dim level"
+msgstr "Dimveau"
+
+msgctxt "#30006"
+msgid "Effect"
+msgstr "Effect"
+
+msgctxt "#30007"
+msgid "Slide"
+msgstr "Dia"
+
+msgctxt "#30008"
+msgid "Crossfade"
+msgstr "Vloeiende overgang"
+
+msgctxt "#30009"
+msgid "Pan and zoom"
+msgstr "Draaien en zoomen"
+
+msgctxt "#30010"
+msgid "Amount of seconds to display each image"
+msgstr "Aantal seconden om elk plaatje te tonen"
+
+msgctxt "#30011"
+msgid "Scale images fullscreen"
+msgstr "schaal foto's naar volledig scherm"
+
+msgctxt "#30012"
+msgid "Display image name"
+msgstr "Weergeven foto naam"
+
+msgctxt "#30013"
+msgid "Disabled"
+msgstr "Uitgeschakeld"
+
+msgctxt "#30014"
+msgid "Use filename"
+msgstr "Gebruik bestandsnaam"
+
+msgctxt "#30015"
+msgid "Use foldername"
+msgstr "Gebruik mapnaam"
+
+msgctxt "#30016"
+msgid "Display images in random order"
+msgstr "Afbeeldingen willekeurig weergeven"
+
+msgctxt "#30018"
+msgid "Use folder- and filename"
+msgstr "Gebruik map- en bestandsnaam"
+
+msgctxt "#30021"
+msgid "Display picture date"
+msgstr "Toon afbeeldingsdatum"
+
+msgctxt "#30022"
+msgid "Display additional picture tags"
+msgstr "Toon extra afbeelding tags"
+
+msgctxt "#30023"
+msgid "Display music info during audio playback"
+msgstr "Toon muziekinformatie tijdens het afspelen"
+
+msgctxt "#30024"
+msgid "Basic"
+msgstr "Basis"
+
+msgctxt "#30025"
+msgid "Additional"
+msgstr "Extra"
+
+msgctxt "#30029"
+msgid "Display background picture"
+msgstr "Toon achtergrondafbeelding"

@@ -1,0 +1,109 @@
+# Kodi Media Center language file
+# Addon Name: Picture Slideshow Screensaver
+# Addon id: screensaver.picture.slideshow
+# Addon Provider: Team-Kodi
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: Romanian (http://www.transifex.com/projects/p/xbmc-addons/language/ro/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ro\n"
+"Plural-Forms: nplurals=3; plural=(n==1?0:(((n%100>19)||((n%100==0)&&(n!=0)))?2:1));\n"
+
+msgctxt "#30000"
+msgid "Source of slideshow images"
+msgstr "Sursă imagini diaporamă"
+
+msgctxt "#30001"
+msgid "Folder"
+msgstr "Dosar"
+
+msgctxt "#30002"
+msgid "Video Fanart"
+msgstr "Creații artistice video"
+
+msgctxt "#30003"
+msgid "Music Fanart"
+msgstr "Creații artistice muzică"
+
+msgctxt "#30004"
+msgid "Image Folder"
+msgstr "Dosar imagini"
+
+msgctxt "#30005"
+msgid "Dim level"
+msgstr "Nivel întunecare"
+
+msgctxt "#30006"
+msgid "Effect"
+msgstr "Efect"
+
+msgctxt "#30007"
+msgid "Slide"
+msgstr "Glisează"
+
+msgctxt "#30008"
+msgid "Crossfade"
+msgstr "Suprapunere"
+
+msgctxt "#30009"
+msgid "Pan and zoom"
+msgstr "Deplasare şi mărire"
+
+msgctxt "#30010"
+msgid "Amount of seconds to display each image"
+msgstr "Câte secunde se afişează fiecare imagine"
+
+msgctxt "#30011"
+msgid "Scale images fullscreen"
+msgstr "Imagini afișate pe tot ecranul"
+
+msgctxt "#30012"
+msgid "Display image name"
+msgstr "Afișare nume imagini"
+
+msgctxt "#30013"
+msgid "Disabled"
+msgstr "Dezactivat"
+
+msgctxt "#30014"
+msgid "Use filename"
+msgstr "Utilizează nume fișier"
+
+msgctxt "#30015"
+msgid "Use foldername"
+msgstr "Utilizează nume director"
+
+msgctxt "#30016"
+msgid "Display images in random order"
+msgstr "Arată imaginile în ordine aleatoare"
+
+msgctxt "#30018"
+msgid "Use folder- and filename"
+msgstr "Folosește dosar- și nume fișier"
+
+msgctxt "#30021"
+msgid "Display picture date"
+msgstr "Arata data imaginii"
+
+msgctxt "#30022"
+msgid "Display additional picture tags"
+msgstr "Arata informații adiționale ale imaginii"
+
+msgctxt "#30023"
+msgid "Display music info during audio playback"
+msgstr "Arată informații despre muzică în timpul redării audio"
+
+msgctxt "#30024"
+msgid "Basic"
+msgstr "De bază"
+
+msgctxt "#30025"
+msgid "Additional"
+msgstr "Adițional "

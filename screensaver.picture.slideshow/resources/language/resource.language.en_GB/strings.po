@@ -1,0 +1,124 @@
+# Kodi Media Center language file
+# Addon Name: Picture Slideshow Screensaver
+# Addon id: screensaver.picture.slideshow
+# Addon Provider: Team-Kodi
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: English (http://www.transifex.com/projects/p/xbmc-addons/language/en/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#30000"
+msgid "Source of slideshow images"
+msgstr ""
+
+msgctxt "#30001"
+msgid "Folder"
+msgstr ""
+
+msgctxt "#30002"
+msgid "Video Fanart"
+msgstr ""
+
+msgctxt "#30003"
+msgid "Music Fanart"
+msgstr ""
+
+msgctxt "#30004"
+msgid "Image Folder"
+msgstr ""
+
+msgctxt "#30005"
+msgid "Dim level"
+msgstr ""
+
+msgctxt "#30006"
+msgid "Effect"
+msgstr ""
+
+msgctxt "#30007"
+msgid "Slide"
+msgstr ""
+
+msgctxt "#30008"
+msgid "Crossfade"
+msgstr ""
+
+msgctxt "#30009"
+msgid "Pan and zoom"
+msgstr ""
+
+msgctxt "#30010"
+msgid "Amount of seconds to display each image"
+msgstr ""
+
+msgctxt "#30011"
+msgid "Scale images fullscreen"
+msgstr ""
+
+msgctxt "#30012"
+msgid "Display image name"
+msgstr ""
+
+msgctxt "#30013"
+msgid "Disabled"
+msgstr ""
+
+msgctxt "#30014"
+msgid "Use filename"
+msgstr ""
+
+msgctxt "#30015"
+msgid "Use foldername"
+msgstr ""
+
+msgctxt "#30016"
+msgid "Display images in random order"
+msgstr ""
+
+#empty string with id 30017
+
+msgctxt "#30018"
+msgid "Use folder- and filename"
+msgstr ""
+
+#empty strings from id 30019 to 30020
+
+msgctxt "#30021"
+msgid "Display picture date"
+msgstr ""
+
+msgctxt "#30022"
+msgid "Display additional picture tags"
+msgstr ""
+
+msgctxt "#30023"
+msgid "Display music info during audio playback"
+msgstr ""
+
+msgctxt "#30024"
+msgid "Basic"
+msgstr ""
+
+msgctxt "#30025"
+msgid "Additional"
+msgstr ""
+msgstr ""
+
+msgctxt "#30026"
+msgid "Resume slideshow from last position"
+msgstr ""
+
+#empty strings from id 30027 to 30028
+
+msgctxt "#30029"
+msgid "Display background picture"
+msgstr ""

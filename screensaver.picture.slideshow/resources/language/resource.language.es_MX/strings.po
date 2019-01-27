@@ -1,0 +1,49 @@
+# Kodi Media Center language file
+# Addon Name: Picture Slideshow Screensaver
+# Addon id: screensaver.picture.slideshow
+# Addon Provider: Team-Kodi
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: Spanish (Mexico) (http://www.transifex.com/projects/p/xbmc-addons/language/es_MX/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: es_MX\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#30000"
+msgid "Source of slideshow images"
+msgstr "Fuente de imágenes de presentación"
+
+msgctxt "#30001"
+msgid "Folder"
+msgstr "Carpeta"
+
+msgctxt "#30002"
+msgid "Video Fanart"
+msgstr "Fanart de Video"
+
+msgctxt "#30003"
+msgid "Music Fanart"
+msgstr "Fanart de Música"
+
+msgctxt "#30004"
+msgid "Image Folder"
+msgstr "Carpeta de Imágenes"
+
+msgctxt "#30005"
+msgid "Dim level"
+msgstr "Nivel de atenuamiento"
+
+msgctxt "#30013"
+msgid "Disabled"
+msgstr "Deshabilitado"
+
+msgctxt "#30024"
+msgid "Basic"
+msgstr "Básico"

@@ -260,7 +260,7 @@ class Screensaver(xbmcgui.WindowXMLDialog):
                     # add slide anim
                     self._set_prop('Slide%d' % order[0], '0')
                     self._set_prop('Slide%d' % order[1], '1')
-                else:
+                elif self.slideshow_effect == '1' or self.slideshow_effect == '2':
                     # add random slide/zoom anim
                     if self.slideshow_effect == '2':
                         # add random slide/zoom anim

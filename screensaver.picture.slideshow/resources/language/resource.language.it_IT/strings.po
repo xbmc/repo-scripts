@@ -1,0 +1,113 @@
+# Kodi Media Center language file
+# Addon Name: Picture Slideshow Screensaver
+# Addon id: screensaver.picture.slideshow
+# Addon Provider: Team-Kodi
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: Italian (http://www.transifex.com/projects/p/xbmc-addons/language/it/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: it\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#30000"
+msgid "Source of slideshow images"
+msgstr "Fonte delle immagini"
+
+msgctxt "#30001"
+msgid "Folder"
+msgstr "Cartella"
+
+msgctxt "#30002"
+msgid "Video Fanart"
+msgstr "Fanart video"
+
+msgctxt "#30003"
+msgid "Music Fanart"
+msgstr "Fanart musicali"
+
+msgctxt "#30004"
+msgid "Image Folder"
+msgstr "Cartella di immagini"
+
+msgctxt "#30005"
+msgid "Dim level"
+msgstr "Livello di oscuramento"
+
+msgctxt "#30006"
+msgid "Effect"
+msgstr "Effetto"
+
+msgctxt "#30007"
+msgid "Slide"
+msgstr "Diapositiva"
+
+msgctxt "#30008"
+msgid "Crossfade"
+msgstr "Dissolvenza incrociata"
+
+msgctxt "#30009"
+msgid "Pan and zoom"
+msgstr "Pan & zoom"
+
+msgctxt "#30010"
+msgid "Amount of seconds to display each image"
+msgstr "Quantità di secondi per visualizzare ogni immagine"
+
+msgctxt "#30011"
+msgid "Scale images fullscreen"
+msgstr "Ridimensioni immagini a schermo intero"
+
+msgctxt "#30012"
+msgid "Display image name"
+msgstr "Mostra il nome dell'immagine"
+
+msgctxt "#30013"
+msgid "Disabled"
+msgstr "Disabilitato"
+
+msgctxt "#30014"
+msgid "Use filename"
+msgstr "Usa il nome del file"
+
+msgctxt "#30015"
+msgid "Use foldername"
+msgstr "Usa il nome della cartella"
+
+msgctxt "#30016"
+msgid "Display images in random order"
+msgstr "Mostra immagini in ordine casuale"
+
+msgctxt "#30018"
+msgid "Use folder- and filename"
+msgstr "Usa cartella- e nome del file"
+
+msgctxt "#30021"
+msgid "Display picture date"
+msgstr "Mostra la data delle foto"
+
+msgctxt "#30022"
+msgid "Display additional picture tags"
+msgstr "Mostra etichette addizionali delle fot"
+
+msgctxt "#30023"
+msgid "Display music info during audio playback"
+msgstr "Mostra le informazioni sulla musica durante l'esecuzione"
+
+msgctxt "#30024"
+msgid "Basic"
+msgstr "Base"
+
+msgctxt "#30025"
+msgid "Additional"
+msgstr "Supplementare"
+
+msgctxt "#30029"
+msgid "Display background picture"
+msgstr "Mostra immagine di sfondo"

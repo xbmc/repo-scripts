@@ -1,0 +1,113 @@
+# Kodi Media Center language file
+# Addon Name: Picture Slideshow Screensaver
+# Addon id: screensaver.picture.slideshow
+# Addon Provider: Team-Kodi
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: Korean (http://www.transifex.com/projects/p/xbmc-addons/language/ko/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ko\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgctxt "#30000"
+msgid "Source of slideshow images"
+msgstr "슬라이드쇼 이미지 소스"
+
+msgctxt "#30001"
+msgid "Folder"
+msgstr "폴더"
+
+msgctxt "#30002"
+msgid "Video Fanart"
+msgstr "비디오 팬아트"
+
+msgctxt "#30003"
+msgid "Music Fanart"
+msgstr "음악 팬아트"
+
+msgctxt "#30004"
+msgid "Image Folder"
+msgstr "이미지 폴더"
+
+msgctxt "#30005"
+msgid "Dim level"
+msgstr "어두운 정도"
+
+msgctxt "#30006"
+msgid "Effect"
+msgstr "효과"
+
+msgctxt "#30007"
+msgid "Slide"
+msgstr "슬라이드"
+
+msgctxt "#30008"
+msgid "Crossfade"
+msgstr "크로스페이드"
+
+msgctxt "#30009"
+msgid "Pan and zoom"
+msgstr "확대와 이동"
+
+msgctxt "#30010"
+msgid "Amount of seconds to display each image"
+msgstr "각 이미지를 표시할 시간 (초)"
+
+msgctxt "#30011"
+msgid "Scale images fullscreen"
+msgstr "전체화면 늘이기"
+
+msgctxt "#30012"
+msgid "Display image name"
+msgstr "이미지 이름 표시"
+
+msgctxt "#30013"
+msgid "Disabled"
+msgstr "사용 안 함"
+
+msgctxt "#30014"
+msgid "Use filename"
+msgstr "파일명 사용"
+
+msgctxt "#30015"
+msgid "Use foldername"
+msgstr "폴더명 사용"
+
+msgctxt "#30016"
+msgid "Display images in random order"
+msgstr "무작위 순으로 이미지 표시"
+
+msgctxt "#30018"
+msgid "Use folder- and filename"
+msgstr "사용자 폴더 - 파일 이름"
+
+msgctxt "#30021"
+msgid "Display picture date"
+msgstr "사진 날짜 표시"
+
+msgctxt "#30022"
+msgid "Display additional picture tags"
+msgstr "부가 사진 태그 표시"
+
+msgctxt "#30023"
+msgid "Display music info during audio playback"
+msgstr "오디오 재생중에 음악 정보 표시"
+
+msgctxt "#30024"
+msgid "Basic"
+msgstr "기본"
+
+msgctxt "#30025"
+msgid "Additional"
+msgstr "부가"
+
+msgctxt "#30029"
+msgid "Display background picture"
+msgstr "배경 사진 표시"

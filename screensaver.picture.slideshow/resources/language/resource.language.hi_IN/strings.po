@@ -1,0 +1,105 @@
+# Kodi Media Center language file
+# Addon Name: Picture Slideshow Screensaver
+# Addon id: screensaver.picture.slideshow
+# Addon Provider: Team-Kodi
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: Hindi (Devanagiri) (http://www.transifex.com/projects/p/xbmc-addons/language/hi/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: hi\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#30000"
+msgid "Source of slideshow images"
+msgstr "स्लीडेशो चित्रो का सोर्स"
+
+msgctxt "#30001"
+msgid "Folder"
+msgstr "फोल्डर"
+
+msgctxt "#30002"
+msgid "Video Fanart"
+msgstr "वीडियो फ़ानर्ट"
+
+msgctxt "#30003"
+msgid "Music Fanart"
+msgstr "म्यूज़िक फ़ानर्ट"
+
+msgctxt "#30004"
+msgid "Image Folder"
+msgstr "चित्र फ़ानर्ट"
+
+msgctxt "#30005"
+msgid "Dim level"
+msgstr "डिम का ताल"
+
+msgctxt "#30006"
+msgid "Effect"
+msgstr "एफेक्ट"
+
+msgctxt "#30007"
+msgid "Slide"
+msgstr "	परिकलन"
+
+msgctxt "#30008"
+msgid "Crossfade"
+msgstr "क्रॉसफेड"
+
+msgctxt "#30009"
+msgid "Pan and zoom"
+msgstr "पएन और ज़ूम करे"
+
+msgctxt "#30010"
+msgid "Amount of seconds to display each image"
+msgstr "प्रतेक चित्र को प्रदर्शन करने मे सेकेंड्स की मात्रा"
+
+msgctxt "#30011"
+msgid "Scale images fullscreen"
+msgstr "चित्रो को फुलस्क्रीन मे नापे"
+
+msgctxt "#30012"
+msgid "Display image name"
+msgstr "चित्र के नाम का प्रदर्सन करे"
+
+msgctxt "#30013"
+msgid "Disabled"
+msgstr "विकलांग"
+
+msgctxt "#30014"
+msgid "Use filename"
+msgstr "फाइलनेम का प्रयोग करे"
+
+msgctxt "#30015"
+msgid "Use foldername"
+msgstr "फोल्डर के नेम का प्रयोग करे"
+
+msgctxt "#30016"
+msgid "Display images in random order"
+msgstr "चित्रो को यादृच्छिक तरीके से प्रदर्सन करे "
+
+msgctxt "#30021"
+msgid "Display picture date"
+msgstr "चित्र के दिनांक का प्रदर्सन करे"
+
+msgctxt "#30022"
+msgid "Display additional picture tags"
+msgstr "अतिरिक्त पिक्चर टॅग्स का प्रदर्सन करे"
+
+msgctxt "#30023"
+msgid "Display music info during audio playback"
+msgstr "ऑडियो प्लेबॅक के दौरान गाने की जानकारी दिखाए"
+
+msgctxt "#30024"
+msgid "Basic"
+msgstr "बुनियादी"
+
+msgctxt "#30025"
+msgid "Additional"
+msgstr "अतिरिक्त"

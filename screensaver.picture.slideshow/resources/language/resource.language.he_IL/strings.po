@@ -1,0 +1,109 @@
+# Kodi Media Center language file
+# Addon Name: Picture Slideshow Screensaver
+# Addon id: screensaver.picture.slideshow
+# Addon Provider: Team-Kodi
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: Hebrew (http://www.transifex.com/projects/p/xbmc-addons/language/he/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: he\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#30000"
+msgid "Source of slideshow images"
+msgstr "מקור תמונות המצגת"
+
+msgctxt "#30001"
+msgid "Folder"
+msgstr "תיקיה"
+
+msgctxt "#30002"
+msgid "Video Fanart"
+msgstr "וידאו פאנארט"
+
+msgctxt "#30003"
+msgid "Music Fanart"
+msgstr "מוזיקה פאנארט"
+
+msgctxt "#30004"
+msgid "Image Folder"
+msgstr "תיקיית תמונות"
+
+msgctxt "#30005"
+msgid "Dim level"
+msgstr "רמת עמעום"
+
+msgctxt "#30006"
+msgid "Effect"
+msgstr "אפקט"
+
+msgctxt "#30007"
+msgid "Slide"
+msgstr "מצגת"
+
+msgctxt "#30008"
+msgid "Crossfade"
+msgstr "התמזגות"
+
+msgctxt "#30009"
+msgid "Pan and zoom"
+msgstr "תקריב וחיתוך מסך"
+
+msgctxt "#30010"
+msgid "Amount of seconds to display each image"
+msgstr "כמות השניות כדי להציג כל תמונה"
+
+msgctxt "#30011"
+msgid "Scale images fullscreen"
+msgstr "הגדל תמונות למסף מלא"
+
+msgctxt "#30012"
+msgid "Display image name"
+msgstr "הצג שם תמונה"
+
+msgctxt "#30013"
+msgid "Disabled"
+msgstr "מנוטרל"
+
+msgctxt "#30014"
+msgid "Use filename"
+msgstr "השתמש בשם קובץ"
+
+msgctxt "#30015"
+msgid "Use foldername"
+msgstr "השתמש בשם תיקיה"
+
+msgctxt "#30016"
+msgid "Display images in random order"
+msgstr "הצגת התמונות בסדר אקראי"
+
+msgctxt "#30021"
+msgid "Display picture date"
+msgstr "הצג תאריך תמונה"
+
+msgctxt "#30022"
+msgid "Display additional picture tags"
+msgstr "הצג תוויות תמונה נוספות"
+
+msgctxt "#30023"
+msgid "Display music info during audio playback"
+msgstr "הצג פרטי מוזיקה בזמן ניגון אודיו"
+
+msgctxt "#30024"
+msgid "Basic"
+msgstr "בסיסי"
+
+msgctxt "#30025"
+msgid "Additional"
+msgstr "נוסף"
+
+msgctxt "#30029"
+msgid "Display background picture"
+msgstr "הצג תמונת רקע "

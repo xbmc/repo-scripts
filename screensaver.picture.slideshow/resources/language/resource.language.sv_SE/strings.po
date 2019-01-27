@@ -1,0 +1,109 @@
+# Kodi Media Center language file
+# Addon Name: Picture Slideshow Screensaver
+# Addon id: screensaver.picture.slideshow
+# Addon Provider: Team-Kodi
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: Swedish (http://www.transifex.com/projects/p/xbmc-addons/language/sv/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: sv\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#30000"
+msgid "Source of slideshow images"
+msgstr "Bildspelskälla"
+
+msgctxt "#30001"
+msgid "Folder"
+msgstr "Mapp"
+
+msgctxt "#30002"
+msgid "Video Fanart"
+msgstr "Videofanart"
+
+msgctxt "#30003"
+msgid "Music Fanart"
+msgstr "Musikfanart"
+
+msgctxt "#30004"
+msgid "Image Folder"
+msgstr "Bildmapp"
+
+msgctxt "#30005"
+msgid "Dim level"
+msgstr "Nedtoningsnivå"
+
+msgctxt "#30006"
+msgid "Effect"
+msgstr "Effekt"
+
+msgctxt "#30007"
+msgid "Slide"
+msgstr "Bildspel"
+
+msgctxt "#30008"
+msgid "Crossfade"
+msgstr "Övertoning"
+
+msgctxt "#30009"
+msgid "Pan and zoom"
+msgstr "Panorera och zooma"
+
+msgctxt "#30010"
+msgid "Amount of seconds to display each image"
+msgstr "Antal sekunder att visa varje bild"
+
+msgctxt "#30011"
+msgid "Scale images fullscreen"
+msgstr "Skala bilden till helskärm"
+
+msgctxt "#30012"
+msgid "Display image name"
+msgstr "Visa bildnamnet"
+
+msgctxt "#30013"
+msgid "Disabled"
+msgstr "Inaktiverad"
+
+msgctxt "#30014"
+msgid "Use filename"
+msgstr "Använd filnamnet"
+
+msgctxt "#30015"
+msgid "Use foldername"
+msgstr "Använd mappnamnet"
+
+msgctxt "#30016"
+msgid "Display images in random order"
+msgstr "Visa bilder i slumpmässig ordning"
+
+msgctxt "#30018"
+msgid "Use folder- and filename"
+msgstr "Använd mapp- och filnamn"
+
+msgctxt "#30021"
+msgid "Display picture date"
+msgstr "Visa bilddatum"
+
+msgctxt "#30022"
+msgid "Display additional picture tags"
+msgstr "Visa ytterligare bildtaggar"
+
+msgctxt "#30023"
+msgid "Display music info during audio playback"
+msgstr "Visa musikinfo under uppspelning"
+
+msgctxt "#30024"
+msgid "Basic"
+msgstr "Grundläggande"
+
+msgctxt "#30025"
+msgid "Additional"
+msgstr "Ytterligare"

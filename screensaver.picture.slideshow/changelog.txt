@@ -1,3 +1,13 @@
+v5.0.4
+- add option to disable animations
+
+v5.0.3
+- move repo to gitlab
+
+v5.0.2
+-cosmetics
+- skin tweaks
+
 v5.0.1
 - add black background
 

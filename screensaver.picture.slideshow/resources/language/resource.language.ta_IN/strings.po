@@ -1,0 +1,105 @@
+# Kodi Media Center language file
+# Addon Name: Picture Slideshow Screensaver
+# Addon id: screensaver.picture.slideshow
+# Addon Provider: Team-Kodi
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: Tamil (India) (http://www.transifex.com/projects/p/xbmc-addons/language/ta_IN/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ta_IN\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#30000"
+msgid "Source of slideshow images"
+msgstr "படக்காட்சி படங்களின் மூலம்"
+
+msgctxt "#30001"
+msgid "Folder"
+msgstr "கோப்புறை"
+
+msgctxt "#30002"
+msgid "Video Fanart"
+msgstr "நிகழ்பட விசிறிபடம்"
+
+msgctxt "#30003"
+msgid "Music Fanart"
+msgstr "இசை விசிறிபடம்"
+
+msgctxt "#30004"
+msgid "Image Folder"
+msgstr "பட கோப்புறை"
+
+msgctxt "#30005"
+msgid "Dim level"
+msgstr "மங்கு நிலை"
+
+msgctxt "#30006"
+msgid "Effect"
+msgstr "விளைவு"
+
+msgctxt "#30007"
+msgid "Slide"
+msgstr "சறுக்கு"
+
+msgctxt "#30008"
+msgid "Crossfade"
+msgstr "குறுக்குமங்கு"
+
+msgctxt "#30009"
+msgid "Pan and zoom"
+msgstr "இடவல நகர்வு மற்றும் பெரிதாக்கு"
+
+msgctxt "#30010"
+msgid "Amount of seconds to display each image"
+msgstr "அடுத்து படம் காண்பிக்க இத்தனை நொடிகள்"
+
+msgctxt "#30011"
+msgid "Scale images fullscreen"
+msgstr "படங்களை முழுத்திரை அளவுக்கு மாற்று"
+
+msgctxt "#30012"
+msgid "Display image name"
+msgstr "பட பெயரை காட்டு"
+
+msgctxt "#30013"
+msgid "Disabled"
+msgstr "முடக்கப்பட்டன"
+
+msgctxt "#30014"
+msgid "Use filename"
+msgstr "கொப்புபெயரி உபயோகி"
+
+msgctxt "#30015"
+msgid "Use foldername"
+msgstr "கோப்புறை பெயரை உபயோகி"
+
+msgctxt "#30016"
+msgid "Display images in random order"
+msgstr "சீரற்ற வரிசையில் படங்களை காண்பிக்க"
+
+msgctxt "#30021"
+msgid "Display picture date"
+msgstr "பட தேதியை காட்டு"
+
+msgctxt "#30022"
+msgid "Display additional picture tags"
+msgstr "கூடுதல் படத்தை குறிச்சொற்களை காட்டு"
+
+msgctxt "#30023"
+msgid "Display music info during audio playback"
+msgstr "ஆடியோ பின்னணி போது இசை தகவல் காட்டு"
+
+msgctxt "#30024"
+msgid "Basic"
+msgstr "அடிப்படை"
+
+msgctxt "#30025"
+msgid "Additional"
+msgstr "கூடுதலான"
