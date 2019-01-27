@@ -106,7 +106,7 @@ Hourly.%i.FeelsLike
 Hourly.%i.Humidity
 Hourly.%i.Precipitation    (probability of precipitation)
 Hourly.%i.WindSpeed
-Hourly.%i.WindDirection     (eg. 'SSW')
-Hourly.%i.WindDegree        (eg. '220°')
+Hourly.%i.WindDirection    (eg. 'SSW')
+Hourly.%i.WindDegree       (eg. '220°')
 Hourly.%i.DewPoint
 

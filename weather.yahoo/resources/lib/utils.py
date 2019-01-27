@@ -102,7 +102,7 @@ def SPEED(mph):
     elif SPEEDUNIT == 'knots':
         speed = mps * 1.944
     elif SPEEDUNIT == 'Beaufort':
-        speed = KPHTOBFT(mps* 3.6)
+        speed = float(KPHTOBFT(mps* 3.6))
     elif SPEEDUNIT == 'inch/s':
         speed = mps * 39.37
     elif SPEEDUNIT == 'yard/s':
@@ -112,6 +112,37 @@ def SPEED(mph):
     else:
         speed = mps
     return str(int(round(speed)))
+
+def KPHTOBFT(spd):
+    if (spd < 1.0):
+        bft = '0'
+    elif (spd >= 1.0) and (spd < 5.6):
+        bft = '1'
+    elif (spd >= 5.6) and (spd < 12.0):
+        bft = '2'
+    elif (spd >= 12.0) and (spd < 20.0):
+        bft = '3'
+    elif (spd >= 20.0) and (spd < 29.0):
+        bft = '4'
+    elif (spd >= 29.0) and (spd < 39.0):
+        bft = '5'
+    elif (spd >= 39.0) and (spd < 50.0):
+        bft = '6'
+    elif (spd >= 50.0) and (spd < 62.0):
+        bft = '7'
+    elif (spd >= 62.0) and (spd < 75.0):
+        bft = '8'
+    elif (spd >= 75.0) and (spd < 89.0):
+        bft = '9'
+    elif (spd >= 89.0) and (spd < 103.0):
+        bft = '10'
+    elif (spd >= 103.0) and (spd < 118.0):
+        bft = '11'
+    elif (spd >= 118.0):
+        bft = '12'
+    else:
+        bft = ''
+    return bft
 
 def WIND_DIR(deg):
     if deg >= 349 or deg <=  11:
