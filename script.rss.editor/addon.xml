@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.rss.editor" name="RSS Editor" version="3.0.2" provider-name="rwparris2, Team Kodi">
+<addon id="script.rss.editor" name="RSS Editor" version="3.0.3" provider-name="rwparris2, Team Kodi">
   <requires>
     <import addon="xbmc.python" version="2.25.0"/>
   </requires>
@@ -15,8 +15,10 @@
     <language></language>
     <license>GNU GENERAL PUBLIC LICENSE Version 2</license>
     <forum></forum>
-    <website></website>
     <email></email>
     <source>https://github.com/XBMC-Addons/script.rss.editor/</source>
+    <assets>
+      <icon>icon.png</icon>
+    </assets>
   </extension>
 </addon>
