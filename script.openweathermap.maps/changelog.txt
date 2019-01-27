@@ -1,3 +1,6 @@
+v0.2.3
+- cosmetics
+
 v0.2.2
 - make script compatible with multiple weather addons
 
