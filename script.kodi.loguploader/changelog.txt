@@ -1,0 +1,33 @@
+v0.4.0
+- krypton bump
+
+v0.3.3
+- move repo to gitlab
+- use file.size() instead of stat()
+
+v0.3.2
+- add logviewer option
+
+v0.3.1
+- change paste site to paste.kodi.tv
+
+v0.2.2
+- fix QR code image filename
+
+v0.2.1
+- change paste site to ix.io
+
+v0.1.1
+- fix issue saving the png image
+
+v0.1.0
+- qr code support
+
+v0.0.3
+- prevent crashlogs from being posted multiple times
+
+v0.0.2
+- cosmetics
+
+v0.0.1
+- initial release
