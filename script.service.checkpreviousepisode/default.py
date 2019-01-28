@@ -8,6 +8,7 @@ __addon__ = xbmcaddon.Addon()
 __cwd__ = __addon__.getAddonInfo('path')
 __scriptname__ = __addon__.getAddonInfo('name')
 __version__ = __addon__.getAddonInfo('version')
+__kodiversion__ = float(xbmcaddon.Addon('xbmc.addon').getAddonInfo('version')[0:4])
 __icon__ = __addon__.getAddonInfo('icon')
 __ID__ = __addon__.getAddonInfo('id')
 __language__ = __addon__.getLocalizedString
@@ -16,17 +17,14 @@ global g_jumpBackSecs
 g_jumpBackSecs = 0
 
 def log(msg):
-  xbmc.log("### [%s] - %s" % (__scriptname__,msg,),level=xbmc.LOGDEBUG )
+    xbmc.log("### [%s] - %s" % (__scriptname__,msg,),level=xbmc.LOGDEBUG )
 
 def getSetting(setting):
-  return __addon__.getSetting(setting).strip()
-
-log( "[%s] - Version: %s Started" % (__scriptname__,__version__))
+    return __addon__.getSetting(setting).strip()
 
 # Odd this is needed, it should be a testable state on Player really...
 def isPlaybackPaused():
     return bool(xbmc.getCondVisibility("Player.Paused"))
-
 
 # Check if the previous episode is present, and if so if it has been watched
 def checkPreviousEpisode():
@@ -72,6 +70,8 @@ def checkPreviousEpisode():
                                 playcount += episode['playcount']
                                 found = True
                         
+                        #log("Found: " + str(found) + " playcount: " + str(playcount)) 
+
                         if (not found and getSetting("IgnoreIfEpisodeAbsentFromLibrary").lower() != 'true') or (found and playcount == 0):
                             
                             # Only trigger the pause if the player is actually playing as other addons may also have paused the player
@@ -107,26 +107,26 @@ class MyPlayer( xbmc.Player ):
 
     def __init__( self, *args, **kwargs ):
         xbmc.Player.__init__( self )
-        log('MyPlayer - init')
+        log('MyPlayer - init ')
 
     def onPlayBackStarted( self ):
-        if __version__ < 17.9:
+        if __kodiversion__ < 17.9:
             checkPreviousEpisode()
 
     def onAVStarted( self ):
-        if __version__ >= 17.9:
+        if __kodiversion__ >= 17.9:
             checkPreviousEpisode()
 
 
 # Initial setup
 
+log( "Version: %s Started" % (__version__))
 # # Kodi Krypton and below:
-# if __version__ < 17.9:
-#     log('Kodi ' + __version__ + ', listen to onPlayBackStarted')
-
-# # Kodi Leia and above:
-# else:
-#     log('Kodi ' + __version__ + ', listen to onAVStarted')
+if __kodiversion__ < 17.9:
+    log('Kodi ' + str(__kodiversion__) + ', listen to onPlayBackStarted')
+# Kodi Leia and above:
+else:
+    log('Kodi ' + str(__kodiversion__) + ', listen to onAVStarted')
 
 player_monitor = MyPlayer()
 while not xbmc.abortRequested:

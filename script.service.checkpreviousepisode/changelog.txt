@@ -1,5 +1,9 @@
+v 0.3.3
+* Krypton fixes for previous
+
 v0.3.2
 * Maintenance by bossanova08 - Updated for Kodi Leia
+* Add new setting to ignore if the previous episode is not in library at all
 
 v0.3.1
 * Use builtin json module instead of simplejson (Thanks tamland)
