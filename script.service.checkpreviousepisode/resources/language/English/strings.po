@@ -45,9 +45,9 @@ msgid "Would you like to browse the episodes of this show?"
 msgstr ""
 
 msgctxt "#32008"
-msgid "Show Option to browse the show"
+msgid "Show option to browse the show"
 msgstr ""
 
 msgctxt "#32009"
-msgid "Warn only if previous episode is actually found in your library and unwatched?"
+msgid "Warn only if previous episode found in your library and unwatched?"
 msgstr ""
