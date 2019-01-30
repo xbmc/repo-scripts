@@ -1,0 +1,94 @@
+#!/bin/bash
+# Need bash because we use nullglob, extglob
+#
+# list-records [--after RECORD]
+#
+# Print, one per line, names of non-empty files in the current directory
+# that match the shell glob patterns in /etc/resolvconf/interface-order.
+# If the "--after RECORD" option is given and RECORD is not null then only
+# start listing after RECORD (i.e., do not print RECORD itself, and if
+# RECORD is not found then print nothing).
+# 
+
+set -e
+
+RECORD_TO_WAIT_FOR=""  # This means: don't wait before printing
+[ "$1" = "--after" ] && RECORD_TO_WAIT_FOR="$2"
+FIRST_ARG_WITHOUT_OPTION_PREFIX="${1#--after=}"
+[ "$FIRST_ARG_WITHOUT_OPTION_PREFIX" != "$1" ] && RECORD_TO_WAIT_FOR="$FIRST_ARG_WITHOUT_OPTION_PREFIX"
+
+#
+# Store arguments (minus duplicates) in RSLT, separated by newlines.
+#
+# Doesn't work properly if an argument itself contains whitespace.
+#
+uniquify()
+{
+	local E
+	RSLT=""
+	while [ "$1" ] ; do
+		for E in $RSLT ; do
+			[ "$1" = "$E" ] && { shift ; continue 2 ; }
+		done
+		RSLT="${RSLT:+$RSLT
+}$1"
+		shift
+	done
+}
+
+### Compile ordered list of resolv.conf-type files ###
+
+# The following must be the content of the factory-provided interface-order file
+PATTERNS="lo.inet6
+lo.inet
+lo.@(dnsmasq|pdnsd)
+lo.!(pdns|pdns-recursor)
+lo
+tun*
+tap*
+hso*
+em+([0-9])?(_+([0-9]))*
+p+([0-9])p+([0-9])?(_+([0-9]))*
+@(br|eth)*([^.]).inet6
+@(br|eth)*([^.]).ip6.@(dhclient|dhcpcd|pump|udhcpc)
+@(br|eth)*([^.]).inet
+@(br|eth)*([^.]).@(dhclient|dhcpcd|pump|udhcpc)
+@(br|eth)*
+@(ath|wifi|wlan)*([^.]).inet6
+@(ath|wifi|wlan)*([^.]).ip6.@(dhclient|dhcpcd|pump|udhcpc)
+@(ath|wifi|wlan)*([^.]).inet
+@(ath|wifi|wlan)*([^.]).@(dhclient|dhcpcd|pump|udhcpc)
+@(ath|wifi|wlan)*
+ppp*
+*"
+if [ -r /etc/resolvconf/interface-order ] ; then
+	PATTERNS="$(sed -e '
+		s/^[[:space:]]\+//
+		s/[[:space:]].*//
+		s/#.*//
+		/\//d
+		/^~/d
+		/^\./d
+		/^$/d
+		' /etc/resolvconf/interface-order)"
+fi
+
+shopt -s nullglob extglob
+# The nullglob option isn't essential since the test -s below will eliminate
+# any unexpanded patterns. The extglob option, however, is essential; it
+# makes the glob language of interface-order patterns as powerful as regexps.
+
+# Pathname expansion occurs on the following line resulting, in general,
+# in multiple instances of filenames; duplicates must be removed.
+uniquify $PATTERNS
+# Result is in RSLT
+
+for FLNM in $RSLT ; do
+	if [ "$RECORD_TO_WAIT_FOR" ] ; then
+		[ "$FLNM" = "$RECORD_TO_WAIT_FOR" ] && RECORD_TO_WAIT_FOR=""
+		continue
+	fi
+	# Only list records of non-zero size
+	[ -s "$FLNM" ] && echo "$FLNM"
+done
+exit 0

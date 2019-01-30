@@ -1,0 +1,161 @@
+#!/bin/sh
+#
+# Script to update resolv.conf, the libc resolver configuration file,
+# and to notify users of the libc resolver of changes
+#
+# Assumption: On entry, PWD contains the resolv.conf-type files.
+#
+# This script is part of the resolvconf package.
+#
+# Set REPORT_ABSENT_SYMLINK=no to inhibit warning message that
+# /etc/resolv.conf is not a symbolic link
+#
+# Set TRUNCATE_NAMESERVER_LIST_AFTER_LOOPBACK_ADDRESS=no
+# to allow additional nameserver addresses to be listed in
+# resolv.conf after an initial loopback address 127.* or ::1.
+#
+
+set -e
+PATH=/sbin:/bin
+
+[ -x /lib/resolvconf/list-records ] || exit 1
+
+# Default override
+[ -r /etc/default/resolvconf ] && . /etc/default/resolvconf
+
+ETC=/etc
+ETCRESOLVCONF="${ETC}/resolvconf"
+RESOLVCONFDIR="${ETCRESOLVCONF}/resolv.conf.d"
+BASEFILE="${RESOLVCONFDIR}/base"
+HEADFILE="${RESOLVCONFDIR}/head"
+TAILFILE="${RESOLVCONFDIR}/tail"
+DYNAMICRSLVCNFFILE="/run/resolvconf/resolv.conf"
+TMPFILE="${DYNAMICRSLVCNFFILE}_new.$$"
+
+# Set unset variables to their defaults
+if [ -z "$REPORT_ABSENT_SYMLINK" ] ; then
+	# '..._ALTERED_...' is the old deprecated name for this variable
+	if [ "$REPORT_ALTERED_SYMLINK" ] ; then
+		REPORT_ABSENT_SYMLINK="$REPORT_ALTERED_SYMLINK"
+	else
+		# Set to default value
+		REPORT_ABSENT_SYMLINK=y
+	fi
+fi
+
+if [ -z "$TRUNCATE_NAMESERVER_LIST_AFTER_LOOPBACK_ADDRESS" ] ; then
+	# '..._127' is the old deprecated name for this variable
+	if [ "$TRUNCATE_NAMESERVER_LIST_AFTER_127" ] ; then
+		TRUNCATE_NAMESERVER_LIST_AFTER_LOOPBACK_ADDRESS="$TRUNCATE_NAMESERVER_LIST_AFTER_127"
+	else
+		# Set to default value
+		TRUNCATE_NAMESERVER_LIST_AFTER_LOOPBACK_ADDRESS=y
+	fi
+fi
+
+
+report_warning() { echo "$0: Warning: $*" >&2 ; }
+
+resolv_conf_is_symlinked_to_dynamic_file() {
+	[ -L ${ETC}/resolv.conf ] && [ "$(readlink -m ${ETC}/resolv.conf)" = "$DYNAMICRSLVCNFFILE" ]
+}
+
+if ! resolv_conf_is_symlinked_to_dynamic_file ; then
+	case "$REPORT_ABSENT_SYMLINK" in
+	  y|Y|yes|YES|Yes)
+		report_warning "${ETC}/resolv.conf is not a symbolic link to $DYNAMICRSLVCNFFILE"
+		;;
+	esac
+fi
+
+# Args are candidate items not containing spaces
+# Returns RSLT -- space-separated list of items without duplicates
+#
+# Stores arguments (minus duplicates) in RSLT, separated by spaces
+uniquify()
+{
+	RSLT=""
+	local D
+	while [ "$1" ] ; do
+		# Remove the root domain suffix
+		D="${1%.}"
+		for E in $RSLT ; do
+			[ "$D" = "$E" ] && { shift ; continue 2 ; }
+		done
+		RSLT="${RSLT:+$RSLT }$D"
+		shift
+	done
+}
+
+# Args are candidate items not containing spaces
+# Returns NSMSRVS -- space-separate list of no more than 3 items,
+#                    without duplicates,
+#                    truncated after loopback address if TRUNCATE_NAMESERVER_LIST_AFTER_LOOPBACK_ADDRESS set affirmatively
+uniquify_nameserver_list()
+{
+	NMSRVRS=""
+	N=0
+	while [ "$1" ] ; do
+		for E in $NMSRVRS ; do
+			[ "$1" = "$E" ] && { shift ; continue 2 ; }
+		done
+		NMSRVRS="${NMSRVRS:+$NMSRVRS }$1"
+		case "$TRUNCATE_NAMESERVER_LIST_AFTER_LOOPBACK_ADDRESS" in (y|Y|yes|YES|Yes) case "$1" in (127.*|::1) return 0 ;; esac ;; esac
+		N=$(($N + 1))
+		[ "$N" = 3 ] && return 0
+		shift
+	done
+}
+
+RSLVCNFFILES="$(/lib/resolvconf/list-records)"
+
+[ -f "$BASEFILE" ] && RSLVCNFFILES="$RSLVCNFFILES
+$BASEFILE"
+
+### Compile list of nameservers ###
+NMSRVRS=""
+if [ "$RSLVCNFFILES" ] ; then
+	uniquify_nameserver_list $(sed -n 's/^[[:space:]]*nameserver[[:space:]]\+//p' $RSLVCNFFILES)
+fi
+
+### Compile search list ###
+SRCHS=""
+if [ "$RSLVCNFFILES" ] ; then
+	uniquify $(sed -n 's/^[[:space:]]*\(\(search\)\|\(domain\)\)[[:space:]]\+//p' $RSLVCNFFILES)
+	SRCHS="$RSLT"
+fi
+
+clean_up() { rm -f "$TMPFILE" ; }
+trap clean_up EXIT
+clean_up
+
+### Make the file ###
+: > "$TMPFILE"
+[ -f "$HEADFILE" ] && cat "$HEADFILE" >> "$TMPFILE"
+for N in $NMSRVRS ; do echo "nameserver $N" >> "$TMPFILE" ; done
+[ "$SRCHS" ] && echo "search $SRCHS" >> "$TMPFILE"
+[ "$RSLVCNFFILES" ] && sed -e '/^[[:space:]]*$/d' -e '/^[[:space:]]*#/d' -e '/^[[:space:]]*\(\(nameserver\)\|\(search\)\|\(domain\)\)[[:space:]]/d' $RSLVCNFFILES >> "$TMPFILE" 2>/dev/null
+[ -f "$TAILFILE" ] && cat "$TAILFILE" >> "$TMPFILE"
+
+### Put the file in place ###
+
+if [ -f "$DYNAMICRSLVCNFFILE" ] && [ "$(cat $TMPFILE)" = "$(cat $DYNAMICRSLVCNFFILE)" ] ; then
+	# The file has not changed
+	rm -f "$TMPFILE"
+	exit 0
+fi
+
+# The file has changed
+mv -f "$TMPFILE" "$DYNAMICRSLVCNFFILE"
+
+# Only notify users of /etc/resolv.conf if /etc/resolv.conf is actually
+# symlinked to the file we have just updated.
+resolv_conf_is_symlinked_to_dynamic_file || exit 0
+
+# Notify users of the resolver
+if [ -d "${ETCRESOLVCONF}/update-libc.d" ] ; then
+	exec run-parts "${ETCRESOLVCONF}/update-libc.d"
+fi
+
+exit 0
+
