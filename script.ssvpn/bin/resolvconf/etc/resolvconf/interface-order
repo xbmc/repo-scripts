@@ -1,0 +1,23 @@
+# interface-order(5)
+lo.inet6
+lo.inet
+lo.@(dnsmasq|pdnsd)
+lo.!(pdns|pdns-recursor)
+lo
+tun*
+tap*
+hso*
+em+([0-9])?(_+([0-9]))*
+p+([0-9])p+([0-9])?(_+([0-9]))*
+@(br|eth)*([^.]).inet6
+@(br|eth)*([^.]).ip6.@(dhclient|dhcpcd|pump|udhcpc)
+@(br|eth)*([^.]).inet
+@(br|eth)*([^.]).@(dhclient|dhcpcd|pump|udhcpc)
+@(br|eth)*
+@(ath|wifi|wlan)*([^.]).inet6
+@(ath|wifi|wlan)*([^.]).ip6.@(dhclient|dhcpcd|pump|udhcpc)
+@(ath|wifi|wlan)*([^.]).inet
+@(ath|wifi|wlan)*([^.]).@(dhclient|dhcpcd|pump|udhcpc)
+@(ath|wifi|wlan)*
+ppp*
+*

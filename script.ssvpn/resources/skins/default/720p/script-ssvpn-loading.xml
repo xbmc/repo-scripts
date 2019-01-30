@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<window type="window">
+	<depth>0.52</depth>
+	<defaultcontrol always="true">33003</defaultcontrol>
+	<animation type="WindowOpen" reversible="false">
+		<effect type="zoom" start="80" end="100" center="960,540" delay="160" tween="back" time="240" />
+		<effect type="fade" delay="160" end="100" time="240" />
+	</animation>
+	<animation type="WindowClose" reversible="false">
+		<effect type="zoom" start="100" end="80" center="960,540" easing="in" tween="back" time="240" />
+		<effect type="fade" start="100" end="0" time="240" />
+	</animation>
+	<defaultcontrol always="true">33003</defaultcontrol>
+	<controls>
+		<control type="group">
+			<control type="group">
+				<left>240</left>
+				<top>100</top>
+				<control type="image" id="33003">
+					<left>0</left>
+					<top>0</top>
+					<width>800</width>
+					<height>520</height>
+					<texture border="2"></texture>
+				</control>
+				<control type="radiobutton" id="33004">
+					<left>820</left>
+					<top>12</top>
+					<width>36</width>
+					<height>36</height>
+					<radiowidth>36</radiowidth>
+					<radioheight>36</radioheight>
+					<texturefocus>-</texturefocus>
+					<texturenofocus>-</texturenofocus>
+					<label></label>
+					<onup>5003</onup>
+					<ondown>5003</ondown>
+					<animation effect="slide" end="-70,0" time="0" condition="true">Conditional</animation>
+					<textureradioofffocus colordiffuse="EEFFFFFF">close.png</textureradioofffocus>
+					<textureradiooffnofocus colordiffuse="EEFFFFFF">logo.png</textureradiooffnofocus>
+					<textureradioonfocus colordiffuse="EEFFFFFF">close.png</textureradioonfocus>
+					<textureradioonnofocus colordiffuse="EEFFFFFF">logo.png</textureradioonnofocus>
+					<onclick>Action(close)</onclick>
+				</control>
+			</control>
+		</control>
+		<control type="image" id="33000">
+			<description>Busy animation1</description>
+			<posx>550</posx>
+			<posy>210</posy>
+			<width>180</width>
+			<height>180</height>
+			<texture></texture>
+			<aspectratio>keep</aspectratio>
+			<animation effect="rotate" start="360" end="0" center="640,300" time="1200" loop="true" condition="true">conditional</animation>
+			<visible>true</visible>
+		</control>
+		<control type="image" id="33001">
+			<description>Busy animation2</description>
+			<posx>565</posx>
+			<posy>225</posy>
+			<width>150</width>
+			<height>150</height>
+			<texture></texture>
+			<aspectratio>keep</aspectratio>
+			<animation effect="rotate" start="360" end="0" center="640,300" time="1000" loop="true" condition="true">conditional</animation>
+			<visible>true</visible>
+		</control>
+		<control type="label" id="33002">
+			<top>410</top>
+			<left>320</left>
+			<width>650</width>
+			<height>90</height>
+			<font>font35_title</font>
+			<textcolor>FFF0F0F0</textcolor>
+			<aligny>center</aligny>
+			<align>center</align>
+			<visible>true</visible>
+		</control>
+	</controls>
+</window>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+	<category label="2030">
+		<setting label="2030" type="lsep"/>
+		<setting label="2031" type="text" id="email" default=""/>
+		<setting label="2032" type="text" id="password" option="hidden" default=""/>
+		<setting label="2033" type="bool" id="auto_login" default="true" enable="!eq(-1,false)"/>
+		<setting label="2034" type="select" id="vpn_mode" lvalues="2040|2041" default="0"/>
+	</category>
+	<category label="2000">
+		<setting label="2003" type="lsep"/>
+		<setting id="openvpn" type="file" label="2000" default="/usr/sbin/openvpn"/>
+		<setting id="ip" type="ipaddress" label="2004" default="127.0.0.1"/>
+		<setting id="port" type="number" label="2005" default="1337"/>
+		<setting id="args" type="text" label="2006" default=""/>
+	</category>
+	<category label="2010">
+		<setting id="sudo" type="bool" label="2011" default="true"/>
+		<setting id="sudopassword" type="text" label="2012" default="" option="hidden"/>
+		<setting id="sudo_require" type="bool" label="2013" default="false"/>
+	</category>
+	<category label="2020">
+		<setting id="killswitch" type="bool" label="2021" default="true"/>
+		<setting id="allow_local" type="bool" label="2022" default="true"/>
+		<setting id="ipv6" type="bool" label="2023" default="true"/>
+		<setting id="debug" type="bool" label="2024" default="false"/>
+	</category>
+</settings>

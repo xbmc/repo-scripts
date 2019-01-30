@@ -1,0 +1,172 @@
+#!/bin/sh
+#
+# This file is part of the resolvconf package.
+#
+
+set -e
+
+echo_usage() { echo "Usage: resolvconf (-d IFACE|-a IFACE|-u|--enable-updates|--disable-updates|--updates-are-enabled)" ; }
+
+PATH=/sbin:/bin
+MYNAME="${0##*/}"
+RUN_DIR=/run/resolvconf
+ENABLE_UPDATES_FLAGFILE="${RUN_DIR}/enable-updates"
+POSTPONED_UPDATE_FLAGFILE="${RUN_DIR}/postponed-update"
+
+report_err() { echo "${MYNAME}: Error: $*" >&2 ; }
+
+# Check arguments
+CMD="$1"
+case "$CMD" in
+  -a|-d)
+	IFACE="$2"
+	if [ ! "$IFACE" ] ; then
+		report_err "No interface name specified"
+		echo_usage >&2
+		exit 1
+	fi
+	report_iface_err() {
+		report_err "$* not allowed in interface record name"
+	}
+	case "$IFACE" in
+	  */*) report_iface_err "Slash" ; exit 1 ;;
+	  *" "*) report_iface_err "Space" ; exit 1 ;;
+	  .*) report_iface_err "Initial dot" ; exit 1 ;;
+	  -*) report_iface_err "Initial hyphen" ; exit 1 ;;
+	  ~*) report_iface_err "Initial tilde" ; exit 1 ;;
+	esac
+	;;
+  -u|--enable-updates|--disable-updates|--updates-are-enabled)
+  	if [ "$2" ] ; then
+		report_err "The $CMD option does not take an argument"
+		echo_usage >&2
+		exit 1
+	fi
+	;;
+  *)
+	report_err "Command not recognized"
+	echo_usage >&2
+	exit 99
+	;;
+esac
+
+[ -d "${RUN_DIR}/interface" ] || { mkdir -p "${RUN_DIR}/interface" ; }
+[ -d "${RUN_DIR}/interface" ] || { report_err "${RUN_DIR}/interface either does not exist or is not a directory" ; exit 1 ; }
+cd "${RUN_DIR}/interface"
+
+update_and_exit()
+{
+	rm -f "$POSTPONED_UPDATE_FLAGFILE"
+	exec run-parts ${1:+--arg="$1"} ${2:+--arg="$2"} /etc/resolvconf/update.d
+}
+
+# Handle commands that don't require normalized_stdin()
+
+case "$CMD" in
+  -d)
+	if [ ! -e "$IFACE" ] ; then
+		exit 0
+	fi
+	if [ ! -s "$IFACE" ] ; then
+		rm -f "$IFACE"
+		exit 0
+	fi
+	rm -f "$IFACE"
+	if [ -e "$ENABLE_UPDATES_FLAGFILE" ] ; then
+		update_and_exit -d "$IFACE"
+	else
+		: >| "$POSTPONED_UPDATE_FLAGFILE"
+		exit 0
+	fi
+	;;
+  -u)
+	if [ -e "$ENABLE_UPDATES_FLAGFILE" ] ; then
+		update_and_exit -u
+	else
+		: >| "$POSTPONED_UPDATE_FLAGFILE"
+		exit 0
+	fi
+	;;
+  --enable-updates)
+	: >| "$ENABLE_UPDATES_FLAGFILE" || exit 1
+	if [ -e "$POSTPONED_UPDATE_FLAGFILE" ] ; then
+		(update_and_exit -u) || :
+	fi
+	exit 0
+	;;
+  --disable-updates)
+	rm -f "$POSTPONED_UPDATE_FLAGFILE" || :
+	rm -f "$ENABLE_UPDATES_FLAGFILE" || exit 1
+	exit 0
+	;;
+  --updates-are-enabled)
+	if [ -e "$ENABLE_UPDATES_FLAGFILE" ] ; then
+		exit 0
+	else
+		exit 1
+	fi
+	;;
+esac
+
+#	
+# The following function must EXACTLY the same in the resolvconf
+# and test-normalization scripts. And the test must pass!
+#
+### BEGIN FUNCTION TO COPY TO THE test-normalization SCRIPT ###
+#
+# Echo stdin with:
+#	comments removed;
+#	initial and terminal whitespace removed;
+#	whitespace strings replaced by single blanks;
+#	leading zeroes removed from nameserver address fields;
+#	first set of zero fields in an IPv6 address collapsed to '::';
+#	empty lines removed.
+normalized_stdin() {
+	sed                                                                        \
+		-e 's/#.*$//'                                                      \
+		-e 's/[[:blank:]]\+$//'                                            \
+		-e 's/^[[:blank:]]\+//'                                            \
+		-e 's/[[:blank:]]\+/ /g'                                           \
+		-e '/^nameserver/!b ENDOFCYCLE'                                    \
+		-e 's/$/ /'                                                        \
+		-e 's/\([:. ]\)0\+/\10/g'                                          \
+		-e 's/\([:. ]\)0\([123456789abcdefABCDEF][[:xdigit:]]*\)/\1\2/g'   \
+		-e '/::/b ENDOFCYCLE; s/ \(0[: ]\)\+/ ::/'                         \
+		-e '/::/b ENDOFCYCLE; s/:\(0[: ]\)\+/::/'                          \
+		-e ': ENDOFCYCLE'                                                  \
+		- |                                                                \
+	sed                                                                        \
+		-e 's/[[:blank:]]\+$//'                                            \
+		-e '/^$/d'
+}
+### END FUNCTION TO COPY TO THE test-normalization SCRIPT ###
+
+case "$CMD" in
+  -a)
+	OLD_CONTENT=""
+	[ -f "$IFACE" ] && OLD_CONTENT="$(cat "$IFACE")"
+	NEW_CONTENT="$(normalized_stdin)"
+	# Proceed only if content has changed. The test here can't
+	# eliminate 100% of redundant invocations of update scripts
+	# because we don't do any locking; however it certainly does
+	# eliminate most of them.
+	if [ "$NEW_CONTENT" = "$OLD_CONTENT" ] ; then 
+		exit 0
+	fi
+	IFACE_TMPFILE="${IFACE}_new.$$"
+	cleanup() { rm -f "$IFACE_TMPFILE" ; }
+	trap cleanup EXIT
+	echo "$NEW_CONTENT" > "$IFACE_TMPFILE"
+	mv -f "$IFACE_TMPFILE" "$IFACE"
+
+	if [ -e "$ENABLE_UPDATES_FLAGFILE" ] ; then
+		update_and_exit -a "$IFACE"
+	else
+		: >| "$POSTPONED_UPDATE_FLAGFILE"
+		exit 0
+	fi
+	;;
+esac
+
+# Don't reach here
+exit 99

@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<window type="window">
+	<depth>0.52</depth>
+	<defaultcontrol always="true">31010</defaultcontrol>
+	<animation type="WindowOpen" reversible="false">
+		<effect type="zoom" start="80" end="100" center="960,540" delay="160" tween="back" time="240" />
+		<effect type="fade" delay="160" end="100" time="240" />
+	</animation>
+	<animation type="WindowClose" reversible="false">
+		<effect type="zoom" start="100" end="80" center="960,540" easing="in" tween="back" time="240" />
+		<effect type="fade" start="100" end="0" time="240" />
+	</animation>
+	<defaultcontrol always="true">31010</defaultcontrol>
+	<controls>
+		<control type="group">
+			<control type="group">
+				<left>240</left>
+				<top>100</top>
+				<control type="image" id="31001">
+					<description>Background Image</description>
+					<left>0</left>
+					<top>0</top>
+					<width>800</width>
+					<height>520</height>
+					<texture border="2"></texture>
+				</control>
+				<control type="radiobutton" id="31011">
+					<left>820</left>
+					<top>12</top>
+					<width>36</width>
+					<height>36</height>
+					<radiowidth>36</radiowidth>
+					<radioheight>36</radioheight>
+					<texturefocus>-</texturefocus>
+					<texturenofocus>-</texturenofocus>
+					<label></label>
+					<onup>5003</onup>
+					<ondown>5003</ondown>
+					<animation effect="slide" end="-70,0" time="0" condition="true">Conditional</animation>
+					<textureradioofffocus colordiffuse="EEFFFFFF">close.png</textureradioofffocus>
+					<textureradiooffnofocus colordiffuse="EEFFFFFF">logo.png</textureradiooffnofocus>
+					<textureradioonfocus colordiffuse="EEFFFFFF">close.png</textureradioonfocus>
+					<textureradioonnofocus colordiffuse="EEFFFFFF">logo.png</textureradioonnofocus>
+					<onclick>Action(close)</onclick>
+				</control>
+			</control>
+		</control>
+		<control type="image" id="31002">
+			<description>Background for Country Flage</description>
+			<left>560</left>
+			<top>160</top>
+			<width>160</width>
+			<height>160</height>
+			<texture></texture>
+		</control>
+		<control type="image" id="31003">
+			<description>Country Flag</description>
+			<left>567</left>
+			<top>167</top>
+			<width>146</width>
+			<height>146</height>
+			<texture></texture>
+		</control>
+		<control type="image" id="31004">
+			<description>Background for Status1</description>
+			<left>660</left>
+			<top>260</top>
+			<width>80</width>
+			<height>80</height>
+			<texture></texture>
+		</control>
+		<control type="image" id="31005">
+			<description>Background for Status2</description>
+			<left>667</left>
+			<top>267</top>
+			<width>66</width>
+			<height>66</height>
+			<texture></texture>
+		</control>
+		<control type="image" id="31006">
+			<description>Connection Status1</description>
+			<left>680</left>
+			<top>278</top>
+			<width>40</width>
+			<height>40</height>
+			<texture></texture>
+		</control>
+		<control type="label" id="31007">
+			<description>Country Name</description>
+			<top>310</top>
+			<left>320</left>
+			<width>650</width>
+			<height>90</height>
+			<font>font35_title</font>
+			<textcolor>FFF0F0F0</textcolor>
+			<aligny>center</aligny>
+			<align>center</align>
+			<visible>true</visible>
+		</control>
+		<control type="image" id="31008">
+			<description>Connection Status2</description>
+			<left>590</left>
+			<top>450</top>
+			<width>100</width>
+			<height>50</height>
+			<texture></texture>
+		</control>
+		<control type="button" id="31009">
+			<description>My status button</description>
+			<left>590</left>
+			<top>450</top>
+			<width>100</width>
+			<height>50</height>
+			<visible>true</visible>
+			<colordiffuse>FFFFFFFF</colordiffuse>
+			<texturefocus colordiffuse="FFFFAAFF"></texturefocus>
+			<texturenofocus colordiffuse="FFFFAAFF"></texturenofocus>
+			<focusedcolor>FFFFFFFF</focusedcolor>
+			<disabledcolor>80FFFFFF</disabledcolor>
+			<invalidcolor>FFFFFFFF</invalidcolor>
+		</control>
+		<control type="button" id="31010">
+			<description>Select location button</description>
+			<left>540</left>
+			<top>540</top>
+			<width>200</width>
+			<height>90</height>
+			<visible>true</visible>
+			<colordiffuse>FFFFFFFF</colordiffuse>
+			<texturefocus colordiffuse="FFFFAAFF"></texturefocus>
+			<texturenofocus colordiffuse="FFFFAAFF"></texturenofocus>
+			<focusedcolor>FFFFFFFF</focusedcolor>
+			<disabledcolor>80FFFFFF</disabledcolor>
+			<invalidcolor>FFFFFFFF</invalidcolor>
+			<font>font40_title</font>
+			<textcolor>FFF0F0F0</textcolor>
+			<aligny>center</aligny>
+			<align>center</align>
+			<label>Change Location</label>
+		</control>
+	</controls>
+</window>
