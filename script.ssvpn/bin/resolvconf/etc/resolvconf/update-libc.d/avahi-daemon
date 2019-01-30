@@ -1,8 +1,0 @@
-#!/bin/sh
-#
-# If we have an unicast .local domain, we immediately disable avahi to avoid
-# conflicts with the multicast IP4LL .local domain
-
-if [ -x /usr/lib/avahi/avahi-daemon-check-dns.sh ]; then
-  exec /usr/lib/avahi/avahi-daemon-check-dns.sh
-fi

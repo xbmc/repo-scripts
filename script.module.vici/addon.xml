@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addon id="script.module.vici" name="vici" version="5.5.3" provider-name="venus36">
   <requires>
-    <import addon="xbmc.python" version="2.20.0"/>
+    <import addon="xbmc.python" version="2.25.0"/>
   </requires>
   <extension point="xbmc.python.module" library="lib" />
   <extension point="xbmc.addon.metadata">
