@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.module.vici" name="vici" version="5.5.3" provider-name="venus">
+<addon id="script.module.vici" name="vici" version="5.5.3" provider-name="venus36">
   <requires>
     <import addon="xbmc.python" version="2.20.0"/>
   </requires>
@@ -8,11 +8,10 @@
     <summary lang="en">Python StrongSwan Library</summary>
     <description lang="en">Packed for KODI from https://pypi.org/project/vici/</description>
     <platform>all</platform>
-    <language></language>
+    <language>en</language>
     <license>Apache2</license>
-    <forum></forum>
     <website>https://github.com/strongswan/strongswan/tree/master/src/libcharon/plugins/vici/python</website>
-    <source></source>
-    <email></email>
+    <source>https://github.com/venus36/script.module.vici</source>
+    <email>venus0036@mail.com</email>
   </extension>
 </addon>
