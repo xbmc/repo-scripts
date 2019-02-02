@@ -1,3 +1,8 @@
+v0.9.9
+- Fixes for national radar
+- Simplify radar downloading
+- Fix logging in the event of exceptions
+
 v0.9.8
 - Updates for Leia
 - Fixes for recent ABC and BOM changes

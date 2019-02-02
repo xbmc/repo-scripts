@@ -39,6 +39,9 @@ HTTPSTUB = "http://www.bom.gov.au/products/radar_transparencies/"
 # Converts the image from indexed colour to RGBA colour
 
 def downloadBackground(radarCode, fileName, backgroundsPath):
+
+    # Needed due to bug in python 2.7 urllib - https://stackoverflow.com/questions/44733710/downloading-second-file-from-ftp-fails
+    urllib.urlcleanup()
     
     outFileName = fileName
 
@@ -51,7 +54,6 @@ def downloadBackground(radarCode, fileName, backgroundsPath):
 
 
     # Delete backgrounds older than a week old
-
     if os.path.isfile( backgroundsPath + outFileName ):
         fileCreation = os.path.getmtime( backgroundsPath + outFileName )
         now = time.time()
@@ -66,60 +68,39 @@ def downloadBackground(radarCode, fileName, backgroundsPath):
     #download the backgrounds only if we don't have them yet
     if not os.path.isfile( backgroundsPath + outFileName ):
 
-        log("Downloading missing background image....[%s] as [%s]" % (fileName, outFileName))
-
         #import PIL only if we need it so the add on can be run for data only on platforms without PIL
         
         log("Importing PIL as extra features are activated.")
         from PIL import Image
+
+        log("Downloading missing background image....[%s] as [%s]" % (fileName, outFileName))
         
         #ok get ready to retrieve some images
         image = urllib.URLopener()
+        imageFileIndexed = backgroundsPath + "idx." + fileName
+        imageFileRGB = backgroundsPath + outFileName
 
-        #the legend image showing the rain scale
-        try:
-            imageFileIndexed = backgroundsPath + "idx." + fileName
-            imageFileRGB = backgroundsPath + outFileName
-            
+        #special case for national radar background (already an RGB image)
+        if "background.png" in fileName and '00004' in fileName:
+            image.retrieve(FTPSTUB + 'IDE00035.background.png', imageFileRGB )
+            log("Got IDE00035.background.png as " + outFileName)
+        #all other images...need to be converted from indexed colour to RGB
+        else:          
             try:
                 #log(FTPSTUB + fileName)
                 image.retrieve(FTPSTUB + fileName, imageFileIndexed )
-                # Needed due to bug in python 2.7 urllib - https://stackoverflow.com/questions/44733710/downloading-second-file-from-ftp-fails
-                urllib.urlcleanup()
             except Exception as inst:
-                log(inst)
-                log("ftp failed, let's try http instead...")
-                try:
-                    image.retrieve(HTTPSTUB + fileName, imageFileIndexed )
-                except:
-                    log("http failed too.. sad face :( ")
-                    #jump to the outer exception
-                    raise
-            
-            #got here, we must have an image
-            log("Downloaded background texture...now converting from indexed to RGB - " + fileName)
-            im = Image.open( imageFileIndexed )
-            rgbimg = im.convert('RGBA')
-            rgbimg.save(imageFileRGB, "PNG")
-            os.remove(imageFileIndexed)
-        
-        except Exception as inst:
-
-            log("Error getting " + fileName + " - error: ", inst)
+                log("ftp failed with error: " + str(inst))
 
             try:
-                #ok so something is wrong with image conversion - probably a PIL issue, so let's just get a minimal BG image
-                if "background.png" in fileName:
-                    if not '00004' in fileName:
-                        image.retrieve(FTPSTUB + fileName, imageFileRGB )
-                        log("Got " + filename)
-                    else:
-                        #national radar loop uses a different BG for some reason...
-                        image.retrieve(FTPSTUB + 'IDE00035.background.png', imageFileRGB )
-                        log("Got IDE00035.background.png")
-            except Exception as inst2:
-                log("No, really, -> Error, couldn't retrieve " + fileName + " - error: ", inst2)
-
+                log("Downloaded background texture...now converting from indexed file [" + imageFileIndexed +  "] to RGB: " + fileName)
+                im = Image.open( imageFileIndexed )
+                rgbimg = im.convert('RGBA')
+                rgbimg.save(imageFileRGB, "PNG")
+                os.remove(imageFileIndexed)
+            except Exception as inst:
+                log("Indexed to RGB converstion failed with error: " + str(inst))
+    
 
 # Download backgrounds for a radar image
 
@@ -151,7 +132,7 @@ def buildImages(radarCode, updateRadarBackgrounds, backgroundsPath, overlayLoopP
 
     # remove any backgrounds older than 
 
-    log("Deleting any radar overlays older than 2 hours")
+    log("Deleting any radar overlays older than 2 hours (as BOM keeps last two hours, we do too)")
     currentFiles = glob.glob (overlayLoopPath + "/*.png")
     for count, file in enumerate(currentFiles):
         filetime = os.path.getmtime(file) 
@@ -165,8 +146,6 @@ def buildImages(radarCode, updateRadarBackgrounds, backgroundsPath, overlayLoopP
     for file in currentFiles:
         os.rename(file, os.path.dirname(file) + "/" + timeNow + "." + os.path.basename(file)[13:])
 
-
-    #sys.exit()
 
     # We need make the directories to store stuff if they don't exist
     # delay hack is here to make sure OS has actually released the handle
@@ -256,7 +235,7 @@ def buildImages(radarCode, updateRadarBackgrounds, backgroundsPath, overlayLoopP
                     fh.write(radarImage.read())
                     fh.close()
                 except Exception as inst:
-                    log("Failed to retrieve radar image: " + imageToRetrieve + ", oh well never mind!", inst )
+                    log("Failed to retrieve radar image: " + imageToRetrieve + ", oh well never mind!" + str(inst))
         else:
             log("Using cached radar image: " + timeNow + "." + f)
 
@@ -265,12 +244,6 @@ def buildImages(radarCode, updateRadarBackgrounds, backgroundsPath, overlayLoopP
 # MAIN - for testing outside of Kodi
 
 if __name__ == "__main__":
-
-    # Test Ascot Vale or change here to IDR00004 for national radar...
-
-    radarCode = "IDR023"
-    backgroundsPath = os.getcwd() + "/test-outputs/backgrounds/" + radarCode + "/"
-    overlayLoopPath = os.getcwd() + "/test-outputs/loop/" + radarCode + "/"
 
     if len(sys.argv) > 1 and sys.argv[1] == "clean":
         try:
@@ -286,11 +259,25 @@ if __name__ == "__main__":
             log(os.path.join(dirpath, name))
         for name in filenames:
             log(os.path.join(dirpath, name))
- 
-    log("\nTesting getting radar images from them BOM\n")
-    buildImages(radarCode, True, backgroundsPath, overlayLoopPath)
 
+    # Test Ascot Vale IDR023
+    log("\nTesting getting radar images from the BOM for Ascot Vale - IDR023\n")
+    radarCode = "IDR023"
+    backgroundsPath = os.getcwd() + "/test-outputs/backgrounds/" + radarCode + "/"
+    overlayLoopPath = os.getcwd() + "/test-outputs/loop/" + radarCode + "/"
+    buildImages(radarCode, True, backgroundsPath, overlayLoopPath)
     log(os.listdir(backgroundsPath))
     log(os.listdir(overlayLoopPath))
+    
+    # Test national radar IDR00004, a special case
+    log("\n\n\nTesting getting radar images from the BOM for the National Radar - IDR00004\n")
+    radarCode = "IDR00004"
+    backgroundsPath = os.getcwd() + "/test-outputs/backgrounds/" + radarCode + "/"
+    overlayLoopPath = os.getcwd() + "/test-outputs/loop/" + radarCode + "/"
+    buildImages(radarCode, True, backgroundsPath, overlayLoopPath)
+    log(os.listdir(backgroundsPath))
+    log(os.listdir(overlayLoopPath))
+
+
 
   

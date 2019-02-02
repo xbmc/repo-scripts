@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="weather.ozweather" name="Oz Weather" version="0.9.8" provider-name="Bossanova808">
+<addon id="weather.ozweather" name="Oz Weather" version="0.9.9" provider-name="Bossanova808">
 	<requires>
 		<import addon="xbmc.python" version="2.14.0"/>
 		<import addon="script.module.pil" version="1.1.7"/>
@@ -9,13 +9,13 @@
 	<extension point="xbmc.python.weather" library="default.py"/>
 	<extension point="xbmc.addon.metadata">
 		<summary lang="en">Weather forecasting and radar images for Australia using Bureau of Meteorology data</summary>
-		<description lang="en">Weather forecast data scraped from the Australian Bureau of Meteorology via WeatherZone - www.bom.gov.au and www.weatherzone.com.au.  For full features (e.g. radar) make sure you install the skin file you can find in the addon directory.  Contributed files for other skins welcome.</description>
+		<description lang="en">Weather forecast data scraped from the Australian Bureau of Meteorology via WeatherZone - www.bom.gov.au and www.weatherzone.com.au.  For full features (e.g. radar) make sure you install the replacement skin files found via the addon wiki (https://kodi.wiki/index.php?title=Add-on:Oz_Weather).</description>
 		<disclaimer lang="en">Use of this addon implies you agree to the following terms and conditions - http://reg.bom.gov.au/other/copyright.shtml and http://reg.bom.gov.au/other/disclaimer.shtml</disclaimer>
 		<platform>all</platform>
 		<language>en</language>
 		<license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
-		<forum>http://forum.xbmc.org/showthread.php?tid=116905</forum>
-		<website>http://wiki.xbmc.org/index.php?title=Add-on:Oz_Weather</website>
+		<forum>https://forum.kodi.tv/showthread.php?tid=116905</forum>
+		<website>https://kodi.wiki/index.php?title=Add-on:Oz_Weather</website>
 		<email></email>
 		<source>https://github.com/bossanova808/weather.ozweather</source>
 	</extension>
