@@ -1,4 +1,4 @@
-#     Copyright (C) 2018 Team-Kodi
+#     Copyright (C) 2019 Team-Kodi
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -16,7 +16,7 @@
 # -*- coding: utf-8 -*-
 
 import os, time, datetime, traceback, re, fnmatch, glob, threading
-import urllib, urllib2, socket, subprocess, shutil
+import urllib, urllib2, socket, subprocess, shutil, sys
 import xbmc, xbmcgui, xbmcvfs, xbmcaddon
 
 from bs4 import BeautifulSoup
@@ -32,7 +32,7 @@ ADDON_VERSION = REAL_SETTINGS.getAddonInfo('version')
 ICON          = REAL_SETTINGS.getAddonInfo('icon')
 FANART        = REAL_SETTINGS.getAddonInfo('fanart')
 LANGUAGE      = REAL_SETTINGS.getLocalizedString
-
+ 
 ## GLOBALS ##
 TIMEOUT   = 15
 DEBUG     = REAL_SETTINGS.getSetting('Enable_Debugging') == 'true'
@@ -41,7 +41,7 @@ BASE_URL  = 'http://mirrors.kodi.tv/'
 WIND_URL  = BASE_URL + '%s/windows/%s/'
 BUILD_OPT = ['nightlies','releases','snapshots','test-builds']
 BUILD_DEC = [LANGUAGE(30017),LANGUAGE(30016),LANGUAGE(30015),LANGUAGE(30018)]
-UWP_PATH  = LANGUAGE(30010)
+# UWP_PATH  = LANGUAGE(30010)
 VERSION   = REAL_SETTINGS.getSetting("Version")
 PLATFORM  = {True:"win64", False:"win32", None:""}[('64' in REAL_SETTINGS.getSetting("Platform") or None)]
 
@@ -56,17 +56,16 @@ class Installer(object):
     def __init__(self):
         self.cache    = SimpleCache()
         if self.chkUWP(): return
-        self.killKodi = threading.Timer(1.0, self.killME)
+        self.killKodi = threading.Timer(2.0, self.killME)
         self.lastURL  = (REAL_SETTINGS.getSetting("LastURL") or self.buildMain())
         self.lastPath = REAL_SETTINGS.getSetting("LastPath")
         self.selectDialog(self.lastURL)
         
     
     def chkUWP(self):
-        isUWP = len(fnmatch.filter(glob.glob(UWP_PATH),'*.*')) > 0
-        # isUWP = True #Test
-        if not isUWP: return isUWP
-        else: return self.disable()
+        isUWP = (xbmc.getCondVisibility("system.platform.uwp") or sys.platform == "win10" or re.search(r"[/\\]WindowsApps[/\\]XBMCFoundation\.Kodi_", xbmc.translatePath("special://xbmc/")))
+        if isUWP: return self.disable()
+        return isUWP
         
         
     def disable(self):
