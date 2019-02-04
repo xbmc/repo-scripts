@@ -356,7 +356,7 @@ class AutoUpdater:
             if(aJob.command['method'] != 'VideoLibrary.Scan'):
                 mediaType = 'music'
             
-            if(aJob.command['params'].has_key('directory')):
+            if('directory' in aJob.command['params']):
                 #we have a specific path to check
                 result = self._sourceExists(aJob.command['params']['directory'])
             else:
@@ -364,7 +364,7 @@ class AutoUpdater:
                 response = json.loads(xbmc.executeJSONRPC(json.dumps({'jsonrpc':'2.0','method':'Files.GetSources','params':{'media':mediaType},'id':44})))
 
                 #make sure we got something
-                if(response.has_key('result')):
+                if('result' in response):
                     for source in response['result']['sources']:
                         if(not self._sourceExists(source['file'])):
                             #one failure fails the whole thing

@@ -4,7 +4,7 @@
 import re
 from time import time, mktime
 from datetime import datetime, date
-from relativedelta import relativedelta
+from .relativedelta import relativedelta
 
 search_re = re.compile(r'^([^-]+)-([^-/]+)(/(.*))?$')
 only_int_re = re.compile(r'^\d+$')
@@ -85,7 +85,7 @@ class croniter(object):
                         or not only_int_re.search(str(step))):
                         raise ValueError("[%s] is not acceptable" %expr_format)
 
-                    for j in xrange(int(low), int(high)+1):
+                    for j in range(int(low), int(high)+1):
                         if j % int(step) == 0:
                             e_list.append(j)
                 else:
@@ -305,4 +305,4 @@ if __name__ == '__main__':
     base = datetime(2010, 1, 25)
     itr = croniter('0 0 1 * *', base)
     n1 = itr.get_next(datetime)
-    print n1
+    print(n1)
