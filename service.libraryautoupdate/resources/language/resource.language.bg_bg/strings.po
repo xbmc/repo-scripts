@@ -1,0 +1,214 @@
+# Kodi Media Center language file
+# Addon Name: XBMC Library Auto Update
+# Addon id: service.libraryautoupdate
+# Addon Provider: robweber
+# Translators:
+# Atanas Kovachki <crashdeburn@gmail.com>, 2014
+# Kiril <neohidra@gmail.com>, 2013-2015
+# Любомир Василев, 2015
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2017-09-19 14:20+0000\n"
+"Last-Translator: Martijn Kaijser <machine.sanctum@gmail.com>\n"
+"Language-Team: Bulgarian (http://www.transifex.com/teamxbmc/xbmc-addons/language/bg/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: bg\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "Addon Summary"
+msgid ""
+"Update your Kodi Video and Music Libraries on a timer. Timer runs as an Kodi"
+" service so you never miss an update."
+msgstr "Обновява библиотеките в Kodi (за видео и музика) чрез брояч. Той се стартира като Kodi услуга, затова няма да изпуснете нито едно обновяване."
+
+msgctxt "Addon Description"
+msgid ""
+"This is an Kodi Service that will update your music and video libraries on a"
+" timer. You can select a different interval to scan your media databases "
+"(Audio,Video,Both) or you can set a cron-style timer for greater control. If"
+" you are playing an audio or video file when the timer starts it can skip "
+"the library update process until it is completed so that you're media "
+"experience is not interrupted. Updating a specific Video Path, and Cleaning "
+"the Music/Video libraries is now supported."
+msgstr "Услугата ще обновява видео и музикалната библиотека в Kodi през определен интервал от време. Можете да променяте интервала за сканиране (на източниците на видео, аудио или и за двата вида информация). Можете да зададете брояч в стил Cron (за запознатите с Linux), който Ви осигурява по-голям контрол. Ако се случи, че гледате/слушате файл от библиотека за която се е задействал брояч сканирането ще се отложи до момента в който не приключите активността. Също така се поддържа и обновяване на определени папки и почистване на библиотеките."
+
+msgctxt "#30000"
+msgid "Kodi Library Auto Update"
+msgstr "Автоматично обновяване"
+
+msgctxt "#30001"
+msgid "General"
+msgstr "Основни"
+
+msgctxt "#30002"
+msgid "Video"
+msgstr "Видео"
+
+msgctxt "#30003"
+msgid "Music"
+msgstr "Музика"
+
+msgctxt "#30004"
+msgid "Update Video Library"
+msgstr "Обновявай видео библиотеката"
+
+msgctxt "#30005"
+msgid "Update Music Library"
+msgstr "Обновявай музикалната библиотека"
+
+msgctxt "#30006"
+msgid "Show Notifications"
+msgstr "Показвай известия"
+
+msgctxt "#30007"
+msgid "Run during playback"
+msgstr "Обновяване и по време на възпроизвеждане"
+
+msgctxt "#30008"
+msgid "Startup Delay (minutes)"
+msgstr "Забави обновяването, след зареждането на Kodi, с (минути)"
+
+msgctxt "#30009"
+msgid "Used Advanced Timer"
+msgstr "Брояч с допълнителни опции"
+
+msgctxt "#30010"
+msgid "Amount of time between updates (hours)"
+msgstr "Интервал между две обновявания (часове)"
+
+msgctxt "#30011"
+msgid "Cron Expression"
+msgstr "Cron израз"
+
+msgctxt "#30012"
+msgid "Update Video Library"
+msgstr "на видео библиотеката"
+
+msgctxt "#30013"
+msgid "Update Music Library"
+msgstr "на музикалната библиотека"
+
+msgctxt "#30014"
+msgid "Only run when idle"
+msgstr "Стартирай само при бездействие"
+
+msgctxt "#30015"
+msgid "Disable manual run prompt"
+msgstr ""
+
+msgctxt "#30020"
+msgid "Update Specific Path 1"
+msgstr "Обновяване на път №1"
+
+msgctxt "#30021"
+msgid "Update Specific Path 2"
+msgstr "Обновяване на път №2"
+
+msgctxt "#30022"
+msgid "Update Specific Path 3"
+msgstr "Обновяване на път №3"
+
+msgctxt "#30023"
+msgid "Video Path"
+msgstr "Път до видео файловете"
+
+msgctxt "#30030"
+msgid "Read Disclaimer"
+msgstr "Прочетете опровержението"
+
+msgctxt "#30031"
+msgid "Video Paths Disclaimer"
+msgstr "Опровержение за пътя до видео файловете"
+
+msgctxt "#30032"
+msgid "Path must already be a video source with content"
+msgstr "Пътят трябва да е съществуващ видео източник със съдържание."
+
+msgctxt "#30033"
+msgid "Path must match source path exactly to scan"
+msgstr "Пътят да е идентичен с пътя на източника."
+
+msgctxt "#30040"
+msgid "Cleaning"
+msgstr "Почистване"
+
+msgctxt "#30041"
+msgid "Clean Libraries"
+msgstr "Почистване на библиотеките"
+
+msgctxt "#30042"
+msgid "Verify Sources Before Clean"
+msgstr "Потвърждаване на източника преди почистване"
+
+msgctxt "#30043"
+msgid "Frequency"
+msgstr "Честота"
+
+msgctxt "#30044"
+msgid "After Update"
+msgstr "След обновяване"
+
+msgctxt "#30045"
+msgid "Once Per Day"
+msgstr "Веднъж на ден"
+
+msgctxt "#30046"
+msgid "Once Per Week"
+msgstr "Веднъж на седмица"
+
+msgctxt "#30047"
+msgid "Once Per Month"
+msgstr "Веднъж на месец"
+
+msgctxt "#30048"
+msgid "Clean Video Library"
+msgstr "Почиствай видео библиотеката"
+
+msgctxt "#30049"
+msgid "Clean Music Library"
+msgstr "Почиствай музикалната библиотека"
+
+msgctxt "#30050"
+msgid "Error Cleaning Database"
+msgstr "Възникна грешка при почистването на базата данни"
+
+msgctxt "#30051"
+msgid "Prompt User Before Cleaning Library"
+msgstr "Запитване на потребителя преди почистването"
+
+msgctxt "#30052"
+msgid "A database clean is scheduled to run"
+msgstr "Следващото почистване ще стартира след "
+
+msgctxt "#30053"
+msgid "Would you like to run it now?"
+msgstr "Желаете ли да стартирате ръчно почистването, сега?"
+
+msgctxt "#30054"
+msgid "Library to clean"
+msgstr "Библиотека за почистване"
+
+msgctxt "#30055"
+msgid "Both"
+msgstr "И двете"
+
+msgctxt "#30056"
+msgid "Video Cron Expression"
+msgstr "Cron израз за видео"
+
+msgctxt "#30057"
+msgid "Music Cron Expression"
+msgstr "Cron израз за музика"
+
+msgctxt "#30060"
+msgid "Update will run again "
+msgstr "Следващото обновяване ще стартира след "
+
+msgctxt "#30061"
+msgid "Do you wish to manually run an update?"
+msgstr "Желаете ли да стартирате ръчно обновяването, сега?"
