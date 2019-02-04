@@ -1,3 +1,6 @@
+v5.5.9
+- fix lyricsmode scraper
+
 v5.5.8
 - cosmetics
 

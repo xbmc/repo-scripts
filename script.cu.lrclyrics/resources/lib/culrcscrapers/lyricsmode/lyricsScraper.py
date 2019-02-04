@@ -21,7 +21,7 @@ class LyricsFetcher:
         if not result:
             result = self.search_url(artist, title)
         if result:
-            lyr = result.split('js-lyric-text-container">')[1].split('</p>')[0]
+            lyr = result.split('style="position: relative;">')[1].split('<div')[0]
             lyrics.lyrics = lyr.replace('<br />', '')
             return lyrics
 
@@ -29,7 +29,7 @@ class LyricsFetcher:
         try:
             log('%s: search url: %s' % (__title__, url))
             song_search = urllib.urlopen(url).read()
-            if song_search.find('js-lyric-text-container">') >= 0:
+            if song_search.find('lyrics_text') >= 0:
                 return song_search
         except:
             log('error in direct url')
@@ -38,7 +38,7 @@ class LyricsFetcher:
         try:
             url = 'http://www.lyricsmode.com/search.php?search=' + urllib.quote_plus(artist.lower() + ' ' + title.lower())
             song_search = urllib.urlopen(url).read()
-            matchcode = re.search('d><a href="(.*?)"', song_search, flags=re.DOTALL)
+            matchcode = re.search('lm-list__cell-title">.*?<a href="(.*?)" class="lm-link lm-link--primary', song_search, flags=re.DOTALL)
             try:
                 url = 'http://www.lyricsmode.com' + (matchcode.group(1))
                 result = self.direct_url(url)
