@@ -209,7 +209,7 @@ def properties(response, loc, locid):
         set_property('Hourly.%i.FanartCode'      % (count + 1), str(item['conditionCode']))
         set_property('Hourly.%i.Humidity'        % (count + 1), str(item['humidity']) + '%')
         set_property('Hourly.%i.Precipitation'   % (count + 1), str(item['precipitationProbability']) + '%')
-        set_property('Hourly.%i.WindDirection'   % (count + 1), xbmc.getLocalizedString(WIND_DIR(item['windDirectionCode'])))
+        set_property('Hourly.%i.WindDirection'   % (count + 1), xbmc.getLocalizedString(WIND_DIR(item['windDirection'])))
         set_property('Hourly.%i.WindSpeed'       % (count + 1), SPEED(item['windSpeed']) + SPEEDUNIT)
         set_property('Hourly.%i.WindDegree'      % (count + 1), str(item['windDirection']) + u'°')
         set_property('Hourly.%i.DewPoint'        % (count + 1), TEMP(dewpoint(int(convert_temp(item['temperature']['now'])), item['humidity']), 'C') + TEMPUNIT)

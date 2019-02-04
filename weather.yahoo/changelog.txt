@@ -1,3 +1,6 @@
+v5.0.4
+- fix hourly wind direction
+
 v5.0.3
 - cosmetics
 
