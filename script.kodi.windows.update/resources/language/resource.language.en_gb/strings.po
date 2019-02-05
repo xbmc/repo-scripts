@@ -92,3 +92,7 @@ msgctxt "#30019"
 msgid "Incompatible platform"
 msgstr ""
 
+msgctxt "#30020"
+msgid "Enable Silent Installation"
+msgstr ""
+
