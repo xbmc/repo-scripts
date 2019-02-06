@@ -16,7 +16,7 @@ def data_dir():
 def addon_dir():
     return __Addon.getAddonInfo('path')
 
-def log(message,loglevel=xbmc.LOGNOTICE):
+def log(message,loglevel=xbmc.LOGDEBUG):
     xbmc.log(encode(__addon_id__ + "-" + __Addon.getAddonInfo('version') + " : " + message),level=loglevel)
 
 def showNotification(title,message):

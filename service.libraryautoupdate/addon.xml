@@ -74,7 +74,7 @@
     <description lang="zh">这是一个定时更新你的音乐和视频资料库的XBMC服务程序。你可以设置不同的时间间隔来扫描媒体库（音频、视频或二者），或者设置一个cron类型的定时器来获得更好的控制。如果定时动作开始时你正在播放一个音频或视频文件，它会跳过此次更新直到播放完毕以避免影响你欣赏媒体。现在已支持更新指定的视频路径以及清理音视频资料库。</description>
     <language></language>
     <license>The MIT License</license>
-    <forum>http://forum.xbmc.org/showthread.php?tid=119520</forum>
+    <forum>http://https://forum.kodi.tv/showthread.php?tid=119520</forum>
     <source>https://github.com/robweber/xbmclibraryautoupdate</source>
 	<assets>
 		<icon>resources/media/icon.png</icon>
