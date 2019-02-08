@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<window>
+    <defaultcontrol>203</defaultcontrol>
+    <animation effect="fade" time="500">WindowOpen</animation>
+    <animation effect="fade" time="500">WindowClose</animation>
+    <zorder>1</zorder>
+    <controls>
+        <control type="group">
+            <onright>203</onright>
+            <onleft>203</onleft>
+            <ondown>301</ondown>
+            <onup>302</onup>
+            <top>40</top>
+            <centerleft>50%</centerleft>
+            <width>1200</width>
+            <include>Animation_DialogPopupVisible</include>
+            <include content="DialogBackgroundCommons">
+                <param name="width" value="1200" />
+                <param name="height" value="640" />
+                <param name="header_label" value="$ADDON[script.service.janitor 32603]" />
+                <param name="header_id" value="2" />
+            </include>
+            <control type="textbox" id="202">
+                <description>Log Contents</description>
+                <posx>30</posx>
+                <posy>90</posy>
+                <width>1130</width>
+                <height>485</height>
+                <align>left</align>
+                <label></label> <!-- This is set from viewer.py -->
+                <pagecontrol>203</pagecontrol>
+                <autoscroll delay="3000" time="1000" repeat="10000">!Control.HasFocus(203)</autoscroll>
+            </control>
+            <control type="scrollbar" id="203">
+                <right>18</right>
+                <top>100</top>
+                <width>12</width>
+                <bottom>116</bottom>
+                <onleft>302</onleft>
+                <orientation>vertical</orientation>
+                <animation effect="slide" end="18,0" time="300" tween="sine" easing="inout" condition="!Control.HasFocus(203)">conditional</animation>
+            </control>
+            <control type="image" id="11">
+                <description>Top separator</description>
+                <posy>88</posy>
+                <height>1</height>
+                <width>1170</width>
+                <centerleft>50%</centerleft>
+                <texture colordiffuse="AAAAAAAA" border="2">separator-grey.png</texture>
+            </control>
+            <control type="image" id="11">
+                <description>Bottom separator</description>
+                <posy>105r</posy>
+                <height>1</height>
+                <width>1170</width>
+                <centerleft>50%</centerleft>
+                <texture colordiffuse="AAAAAAAA" border="2">separator-grey.png</texture>
+            </control>
+            <control type="button" id="301">
+                <description>Trim Button</description>
+                <posx>320</posx>
+                <posy>111r</posy>
+                <width>250</width>
+                <height>80</height>
+                <align>center</align>
+                <texturenofocus border="40">dialogbutton-nofo.png</texturenofocus>
+                <texturefocus border="40">dialogbutton-fo.png</texturefocus>
+                <colordiffuse>FF43C6DB</colordiffuse>
+                <label>$ADDON[script.service.janitor 32608]</label>
+                <onright>302</onright>
+                <onup>203</onup>
+                <ondown>203</ondown>
+            </control>
+            <control type="button" id="302">
+                <description>Clear Button</description>
+                <posx>580r</posx>
+                <posy>111r</posy>
+                <width>250</width>
+                <height>80</height>
+                <align>center</align>
+                <texturenofocus border="40">dialogbutton-nofo.png</texturenofocus>
+                <texturefocus border="40">dialogbutton-fo.png</texturefocus>
+                <colordiffuse>FF43C6DB</colordiffuse>
+                <label>$ADDON[script.service.janitor 32609]</label>
+                <onright>203</onright>
+                <onleft>301</onleft>
+                <onup>203</onup>
+                <ondown>203</ondown>
+            </control>
+        </control>
+    </controls>
+</window>
