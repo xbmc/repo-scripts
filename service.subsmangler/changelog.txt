@@ -1,3 +1,6 @@
+v1.3.0 (2019-02-10)
+- add ability to convert subtitles without enforcing .ass format (and therefore adding custom font/background color and opacity). In this case file is saved in SubRip format.
+- please note that the output file extension was changed to .utf. Therefore existing .ass subtitle file may be reconverted automatically at the next playback.
 v1.2.0 (2019-01-18)
 - add configuration option to prevent showing confirmation dialog if no subtitles file was downloaded
 - add ability to shrink subtitle time if it overlaps the next subtitle

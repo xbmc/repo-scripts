@@ -60,6 +60,18 @@ msgctxt "#32014"
 msgid "Don't invoke confirmation dialog if downloaded subs are not found"
 msgstr "Wenn keine heruntergeladenen Untertitel gefunden werden rufe keinen Bestätigungsdialog auf"
 
+msgctxt "#32015"
+msgid "Subtitle output format"
+msgstr "Ausgabeformat für Untertitel"
+
+msgctxt "#32016"
+msgid "Substation Alpha"
+msgstr "Substation Alpha"
+
+msgctxt "#32017"
+msgid "SubRip"
+msgstr "SubRip"
+
 msgctxt "#32020"
 msgid "Logging level"
 msgstr "Protokollierungsstufe"
