@@ -61,7 +61,7 @@ def main():
         else:
             common.Log("'noautosubs' file does not exist in: " + filepath.encode('utf-8'), xbmc.LOGDEBUG)
             # check if .noautosubs extension exists
-            filebase, fileext = os.path.splitext(filepathname)
+            filebase, _fileext = os.path.splitext(filepathname)
             if (xbmcvfs.exists(filebase + ".noautosubs")):
                 # extension flag is set for this file
                 common.Log("'.noautosubs' file exists: " + filebase.encode('utf-8') + ".noautosubs   Opening YesNoDialog.", xbmc.LOGDEBUG)

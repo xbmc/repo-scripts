@@ -60,6 +60,18 @@ msgctxt "#32014"
 msgid "Don't invoke confirmation dialog if downloaded subs are not found"
 msgstr ""
 
+msgctxt "#32015"
+msgid "Subtitle output format"
+msgstr ""
+
+msgctxt "#32016"
+msgid "Substation Alpha"
+msgstr ""
+
+msgctxt "#32017"
+msgid "SubRip"
+msgstr ""
+
 msgctxt "#32020"
 msgid "Logging level"
 msgstr ""

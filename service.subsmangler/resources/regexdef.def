@@ -54,7 +54,7 @@
 
 
 
-# Language specific Ads secions include language specific definitions.
+# Language specific Ads sections include language specific definitions.
 # Only one section is loaded based on subtitles language designation in subtitles file name
 # Language codes must confirm to ISO 639-2
 [Ads_eng]   # English

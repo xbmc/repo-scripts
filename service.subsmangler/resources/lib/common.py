@@ -102,6 +102,7 @@ def GetSettings():
 
     global setting_ConversionServiceEnabled
     global setting_AlsoConvertExistingSubtitles
+    global setting_SubsOutputFormat
     global setting_SubsFontSize
     global setting_ForegroundColor
     global setting_BackgroundColor
@@ -129,6 +130,7 @@ def GetSettings():
     setting_ShowNoautosubsContextItem = GetBool(__addon__.getSetting("ShowNoautosubsContextItem"))
     setting_ConversionServiceEnabled = GetBool(__addon__.getSetting("ConversionServiceEnabled"))
     setting_AlsoConvertExistingSubtitles = GetBool(__addon__.getSetting("AlsoConvertExistingSubtitles"))
+    setting_SubsOutputFormat = int(__addon__.getSetting("SubsOutputFormat"))
     setting_SubsFontSize = int(__addon__.getSetting("SubsFontSize"))
     setting_ForegroundColor = int(__addon__.getSetting("ForegroundColor"))
     setting_BackgroundColor = int(__addon__.getSetting("BackgroundColor"))
@@ -155,6 +157,7 @@ def GetSettings():
     Log("                    ShowNoautosubsContextItem = " + str(setting_ShowNoautosubsContextItem), xbmc.LOGINFO)
     Log("                     ConversionServiceEnabled = " + str(setting_ConversionServiceEnabled), xbmc.LOGINFO)
     Log("                 AlsoConvertExistingSubtitles = " + str(setting_AlsoConvertExistingSubtitles), xbmc.LOGINFO)
+    Log("                             SubsOutputFormat = " + str(setting_SubsOutputFormat), xbmc.LOGINFO)
     Log("                                 SubsFontSize = " + str(setting_SubsFontSize), xbmc.LOGINFO)
     Log("                              ForegroundColor = " + str(setting_ForegroundColor), xbmc.LOGINFO)
     Log("                              BackgroundColor = " + str(setting_BackgroundColor), xbmc.LOGINFO)
@@ -212,7 +215,7 @@ def CreateNoAutoSubsFile(file):
     # create .noautosubs file
     try:
         f = xbmcvfs.File (file, 'w')
-        result = f.write("# This file was created by Subtitles Mangler.\n# Presence of this file prevents automatical opening of subtitles search dialog.")
+        _result = f.write("# This file was created by Subtitles Mangler.\n# Presence of this file prevents automatical opening of subtitles search dialog.")
         f.close()
     except Exception as e:
         Log("Can not create noautosubs file.", xbmc.LOGERROR)

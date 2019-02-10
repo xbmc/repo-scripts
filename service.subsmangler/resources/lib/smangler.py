@@ -153,9 +153,9 @@ def PreparePlugin():
 
     # list of input file extensions
     # extensions in lowercase with leading dot
-    # note: we do not include output extension .ass
+    # note: we do not include output extension .utf
     global SubExtList
-    SubExtList = [ '.txt', '.srt', '.sub', '.subrip', '.microdvd', '.mpl', '.tmp' ]
+    SubExtList = [ '.txt', '.srt', '.sub', '.subrip', '.microdvd', '.mpl', '.tmp', '.ass' ]
 
     # list of video file extensions
     # extensions in lowercase with leading dot
@@ -192,7 +192,7 @@ def PreparePlugin():
             xbmc.log("SubsMangler: profile directory created: " + common.__addonworkdir__.encode('utf-8'), level=xbmc.LOGNOTICE)
         except OSError as e:
             xbmc.log("SubsMangler: Log: can't create directory: " + common.__addonworkdir__.encode('utf-8'), level=xbmc.LOGERROR)
-            xbmc.Log("Exception: " + str(e.message).encode('utf-8'), xbmc.LOGERROR)
+            xbmc.log("Exception: " + str(e.message).encode('utf-8'), xbmc.LOGERROR)
 
     # load settings
     common.GetSettings()
@@ -324,7 +324,7 @@ def GetSubtitles():
         common.Log("Kodi's preferred audio language: " + prefaudiolanguage, xbmc.LOGINFO)
         common.Log("Kodi's preferred subtitles language: " + prefsubtitlelanguage, xbmc.LOGINFO)
 
-        # check if there is .ass subtitle file already on disk matching video being played
+        # check if there is .utf subtitle file already on disk matching video being played
         # if not, automatically open subtitlesearch dialog
         #
         # set initial value for SubsSearchWasOpened flag
@@ -336,13 +336,13 @@ def GetSubtitles():
             extlist = list()
 
             if common.setting_NoAutoInvokeIfLocalUnprocSubsFound:
-                # optionally search for all subtitle extensions, not only '.ass'
+                # optionally search for all subtitle extensions, not only '.utf'
                 # assignment operator just makes an alias for the list
                 # https://stackoverflow.com/questions/2612802/how-to-clone-or-copy-a-list
                 extlist = list(SubExtList)
 
-            # search for target extension '.ass'
-            extlist.append('.ass')
+            # search for target extension '.utf'
+            extlist.append('.utf')
 
             # get all file names matching name of file being played
             localsubs = GetSubtitleFiles(subtitlePath, extlist)
@@ -386,17 +386,17 @@ def GetSubtitles():
                     else:
                         common.Log("Video or subtitle language match Kodi's preferred settings. Not opening subtitle search dialog.", xbmc.LOGINFO)
                 else:
-                    # enable .ass subtitles if they are present on the list
+                    # enable .utf subtitles if they are present on the list
                     asssubs = False
                     for item in localsubs:
-                        if ".ass" in item[-4:]:
-                            common.Log("Local 'ass' subtitles matching video being played detected. Enabling subtitles: " + os.path.join(subtitlePath, item), xbmc.LOGINFO)
+                        if ".utf" in item[-4:]:
+                            common.Log("Local 'utf' subtitles matching video being played detected. Enabling subtitles: " + os.path.join(subtitlePath, item), xbmc.LOGINFO)
                             xbmc.Player().setSubtitles(os.path.join(subtitlePath, item))
                             asssubs = True
                             break
 
                     if not asssubs:
-                        common.Log("Local non 'ass' subtitles matching video being played detected. Not opening subtitle search dialog.", xbmc.LOGINFO)
+                        common.Log("Local non 'utf' subtitles matching video being played detected. Not opening subtitle search dialog.", xbmc.LOGINFO)
             else:
                 common.Log("'noautosubs' file or extension detected. Not opening subtitle search dialog.", xbmc.LOGINFO)
         else:
@@ -592,9 +592,9 @@ def MangleSubtitles(originalinputfile):
 
     # get subtitles language by splitting it from filename
     # split file and extension
-    subfilebase, subfileext = os.path.splitext(originalinputfile)
+    subfilebase, _subfileext = os.path.splitext(originalinputfile)
     # from filename split language designation
-    subfilecore, subfilelang = os.path.splitext(subfilebase)
+    _subfilecore, subfilelang = os.path.splitext(subfilebase)
 
     common.Log("Read subtitle language designation: " + subfilelang[1:],xbmc.LOGINFO)
     # try to find ISO639-2 designation
@@ -606,7 +606,7 @@ def MangleSubtitles(originalinputfile):
     # construct input_file name
     tempinputfile = os.path.join(common.__addonworkdir__, tempfile + "_in.txt")
     # construct output_file name
-    tempoutputfile = os.path.join(common.__addonworkdir__, tempfile + "_out.ass")
+    tempoutputfile = os.path.join(common.__addonworkdir__, tempfile + "_out.utf")
     # copy file to temp
     copy_file(originalinputfile, tempinputfile)
 
@@ -661,7 +661,7 @@ def MangleSubtitles(originalinputfile):
     enc = ""
     try:
         with codecs.open(tempinputfile, mode="rb", encoding='utf-8') as reader:
-            temp = reader.read()
+            _temp = reader.read()
             # still no exception - seems to be a success
             common.Log("UTF-8 encoding seems to be valid.", xbmc.LOGINFO)
             enc = "utf-8"
@@ -681,7 +681,7 @@ def MangleSubtitles(originalinputfile):
             # try to read file using language specific encoding
             try:
                 with codecs.open(tempinputfile, mode="rb", encoding=enc) as reader:
-                    temp = reader.read()
+                    _temp = reader.read()
                     # still no exception - seems to be a success
                     common.Log("Chosen encoding: " + enc + " based on language: " + subslang + " seems to be valid.", xbmc.LOGINFO)
             except Exception as e:
@@ -702,7 +702,7 @@ def MangleSubtitles(originalinputfile):
         for enc in encodings:
             try:
                 with codecs.open(tempinputfile, mode="rb", encoding=enc) as reader:
-                    temp = reader.read()
+                    _temp = reader.read()
                     break
             except Exception as e:
                 # no encoding fits the file
@@ -882,9 +882,10 @@ def MangleSubtitles(originalinputfile):
         else:
             # increase line spacing if subtitle is multiline
             # use Max Deryagin's solution: https://www.md-subs.com/line-spacing-in-ssa
+            # do it only if subtitle output format is Substation Alpha (setting_SubsOutputFormat == 0)
             # FIXME - currently only 2-line is supported
             # check if subtitle is multiline
-            if common.setting_MaintainBiggerLineSpacing and re.search(r"\N", subsline):
+            if common.setting_MaintainBiggerLineSpacing and re.search(r"\N", subsline) and common.setting_SubsOutputFormat == 0:
                 # line is multiline - add tags
                 subsline = r"{\org(-2000000,0)\fr0.00012}" + subsline
                 subsline = subsline.replace(r"\N", r"{\r}\N")
@@ -947,8 +948,12 @@ def MangleSubtitles(originalinputfile):
 
     common.Log("Filtering lists applied.", xbmc.LOGINFO)
 
-    #save subs
-    subs.save(tempoutputfile)
+    # save subs in a proper format
+    if common.setting_SubsOutputFormat == 0:
+        outfileformat = "ass"
+    else:
+        outfileformat = "srt"
+    subs.save(tempoutputfile, format_= outfileformat)
 
     # wait until file is saved
     wait_for_file(tempoutputfile, True)
@@ -968,8 +973,8 @@ def MangleSubtitles(originalinputfile):
         common.Log("Exception: " + str(e.message), xbmc.LOGERROR)
 
     # copy new file back to its original location changing only its extension
-    filebase, fileext = os.path.splitext(originalinputfile)
-    originaloutputfile = filebase + '.ass'
+    filebase, _fileext = os.path.splitext(originalinputfile)
+    originaloutputfile = filebase + '.utf'
     copy_file(tempoutputfile, originaloutputfile)
 
     # make a backup copy of subtitle file or remove file
@@ -1153,17 +1158,17 @@ def GetSubtitleFiles(subspath, substypelist):
 
     # use dictionary solution - load all files in directory to dictionary and remove those not fulfiling criteria
     # Python doesn't support smb:// paths. Use xbmcvfs: https://forum.kodi.tv/showthread.php?tid=211821
-    dirs, files = xbmcvfs.listdir(subtitlePath)
+    _dirs, files = xbmcvfs.listdir(subtitlePath)
     SubsFiles = dict ([(f, None) for f in files])
     # filter dictionary, leaving only subtitle files matching played video
     # https://stackoverflow.com/questions/5384914/how-to-delete-items-from-a-dictionary-while-iterating-over-it
-    playingFilenameBase, playingFilenameExt = os.path.splitext(playingFilename)
+    playingFilenameBase, _playingFilenameExt = os.path.splitext(playingFilename)
 
     for item in SubsFiles.keys():
         # split file and extension
         subfilebase, subfileext = os.path.splitext(item)
         # from filename split language designation
-        subfilecore, subfilelang = os.path.splitext(subfilebase)
+        subfilecore, _subfilelang = os.path.splitext(subfilebase)
         # remove files that do not meet criteria
         if not ((((subfilebase.lower() == playingFilenameBase.lower() or subfilecore.lower() == playingFilenameBase.lower()) and (subfileext.lower() in substypelist)) \
             or ((subfilebase.lower() == playingFilenameBase.lower()) and (subfileext.lower() == ".noautosubs"))) \
@@ -1172,7 +1177,7 @@ def GetSubtitleFiles(subspath, substypelist):
             # subfilename matches video name AND fileext is on the list of supported extensions
             # OR subfilename matches video name AND fileext matches '.noautosubs'
             # OR subfilename matches 'noautosubs'
-            # FIXME - now we assume that .ass subtitle will not be processed
+            # FIXME - now we assume that .utf subtitle will not be processed
             del SubsFiles[item]
 
     return SubsFiles
@@ -1256,7 +1261,7 @@ def DetectNewSubs():
             common.Log("Clearing temporary files.", xbmc.LOGINFO)
             for item in tempfilelist:
                 filebase, fileext = os.path.splitext(item)
-                if (fileext.lower() in SubExtList) or fileext.lower().endswith(".ass"):
+                if (fileext.lower() in SubExtList) or fileext.lower().endswith(".utf"):
                     os.remove(os.path.join(common.__addonworkdir__, item))
                     common.Log("       File: " + os.path.join(common.__addonworkdir__, item) + "  removed.", xbmc.LOGINFO)
 
@@ -1311,7 +1316,7 @@ def DetectNewSubs():
             SubsSearchWasOpened = False
 
             # sleep for 10 seconds to avoid processing newly added subititle file
-            #this should not be needed since we do not support .ass as input file at the moment
+            #this should not be needed since we do not support .utf as input file at the moment
             #xbmc.sleep(10000)
 
     # check if subtitles search window was opened but there were no new subtitles processed
@@ -1472,7 +1477,7 @@ def RemoveOldSubs():
 
     # construct target list for file candidate extensions to be removed
     # remove processed subs and .noautosubs files
-    extRemovalList = [ '.ass', '.noautosubs' ]
+    extRemovalList = [ '.utf', '.noautosubs' ]
     # remove processed subs backup files
     if common.setting_RemoveSubsBackup:
         for ext in SubExtList:
@@ -1509,7 +1514,7 @@ def RemoveOldSubs():
             # check every file in the current subdir and add it to appropriate list
             for thisfile in files:
                 fullfilepath = os.path.join(directory, thisfile.decode('utf-8'))
-                filebase, fileext = os.path.splitext(fullfilepath)
+                _filebase, fileext = os.path.splitext(fullfilepath)
                 if fileext in VideoExtList:
                     # this file is video - add to video list
                     common.Log("Adding to video list: " + fullfilepath.encode('utf-8'),xbmc.LOGDEBUG)
@@ -1537,7 +1542,7 @@ def RemoveOldSubs():
         dirs, files = xbmcvfs.listdir(subspath)
         for thisfile in files:
             fullfilepath = os.path.join(subspath, thisfile.decode('utf-8'))
-            filebase, fileext = os.path.splitext(fullfilepath)
+            _filebase, fileext = os.path.splitext(fullfilepath)
             if fileext in extRemovalList:
                 # this file is subs related - add to subs list
                 common.Log("Adding to subs list: " + fullfilepath,xbmc.LOGDEBUG)
@@ -1555,9 +1560,9 @@ def RemoveOldSubs():
         # split filename from full path
         subfilename = os.path.basename(subfile)
         # split filename and extension
-        subfilebase, subfileext = os.path.splitext(subfilename)
+        subfilebase, _subfileext = os.path.splitext(subfilename)
         # from filename split language designation
-        subfilecore, subfilelang = os.path.splitext(subfilebase)
+        subfilecore, _subfilelang = os.path.splitext(subfilebase)
 
         # check if there is a video matching subfile
         videoexists = False
@@ -1565,7 +1570,7 @@ def RemoveOldSubs():
             # split filename from full path
             videofilename = os.path.basename(videofile)
             # split filename and extension
-            videofilebase, videofileext = os.path.splitext(videofilename)
+            videofilebase, _videofileext = os.path.splitext(videofilename)
 
             # check if subfile basename or corename equals videofile basename
             if subfilebase.lower() == videofilebase.lower() or subfilecore.lower() == videofilebase.lower():

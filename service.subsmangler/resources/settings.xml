@@ -14,15 +14,16 @@
       <setting id="ConversionServiceEnabled" type="bool" label="32002" default="true"/>
       <setting id="AlsoConvertExistingSubtitles" type="bool" label="32012" default="true" subsetting="true" enable="eq(-1,true)"/>
       <setting type="sep"/>
-      <setting id="SubsFontSize" type="slider" label="32003" default="18" range="10,30" option="int" enable="eq(-3,true)"/>
-      <setting id="ForegroundColor" type="select" label="32049" lvalues="32051|32052|32053|32054|32055|32056|32057|32058|32059" default="8" enable="eq(-4,true)"/>
-      <setting id="BackgroundColor" type="select" label="32050" lvalues="32051|32052|32053|32054|32055|32056|32057|32058|32059" default="0" enable="eq(-5,true)"/>
-      <setting id="BackgroundTransparency" type="slider" label="32007" default="0" range="0,100" option="percent" enable="eq(-6,true)"/>
-      <setting id="MaintainBiggerLineSpacing" type="bool" label="32075" default="false" enable="eq(-7,true)"/>
+      <setting id="SubsOutputFormat" type="select" label="32015" lvalues="32016|32017" default="0" enable="eq(-3,true)"/>
+      <setting id="SubsFontSize" type="slider" label="32003" default="18" range="10,30" option="int" subsetting="true" enable="eq(-1,0)"/>
+      <setting id="ForegroundColor" type="select" label="32049" lvalues="32051|32052|32053|32054|32055|32056|32057|32058|32059" default="8" subsetting="true" enable="eq(-2,0)"/>
+      <setting id="BackgroundColor" type="select" label="32050" lvalues="32051|32052|32053|32054|32055|32056|32057|32058|32059" default="0" subsetting="true" enable="eq(-3,0)"/>
+      <setting id="BackgroundTransparency" type="slider" label="32007" default="0" range="0,100" option="percent" subsetting="true" enable="eq(-4,0)"/>
+      <setting id="MaintainBiggerLineSpacing" type="bool" label="32075" default="false" subsetting="true" enable="eq(-5,0)"/>
       <setting type="sep"/>
-      <setting id="RemoveCCmarks" type="bool" label="32004" default="true" enable="eq(-9,true)"/>
-      <setting id="RemoveAdds" type="bool" label="32005" default="true" enable="eq(-10,true)"/>
-      <setting id="AdjustSubDisplayTime" type="bool" label="32081" default="true" enable="eq(-11,true)"/>
+      <setting id="RemoveCCmarks" type="bool" label="32004" default="true" enable="eq(-10,true)"/>
+      <setting id="RemoveAdds" type="bool" label="32005" default="true" enable="eq(-11,true)"/>
+      <setting id="AdjustSubDisplayTime" type="bool" label="32081" default="true" enable="eq(-12,true)"/>
       <setting id="FixOverlappingSubDisplayTime" type="bool" label="32082" default="false" subsetting="true" enable="eq(-1,true)"/>
       <setting id="PauseOnConversion" type="bool" label="32011" default="true" enable="eq(-13,true)"/>
       <setting id="BackupOldSubs" type="bool" label="32071" default="true" enable="eq(-14,true)"/>
