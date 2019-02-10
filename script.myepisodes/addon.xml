@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addon id="script.myepisodes"
        name="MyEpisodes"
-       version="2.0.0"
+       version="2.0.1"
        provider-name="Maxime Hadjinlian">
   <requires>
     <import addon="xbmc.python" version="2.25.0"/>
@@ -14,8 +14,7 @@
     <description lang="en_GB">Automatically set watched episodes on MyEpisodes.com</description>
     <platform>all</platform>
     <language>en fr it pt es</language>
-    <forum></forum>
-    <website></website>
+    <website>https://www.myepisodes.com</website>
     <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
     <source>https://github.com/maximeh/script.myepisodes</source>
     <email>maxime dot hadjinlian at gmail dot com</email>
