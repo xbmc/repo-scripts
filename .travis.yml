@@ -5,14 +5,16 @@ python:
 install:
   - pip install kodi-addon-checker
 
+before_script:
+  - |
+    if [ "$TRAVIS_PULL_REQUEST" = "false" ]; then
+      export ADDON_CHECK_PARAMETERS="--branch=krypton";
+    else
+      export ADDON_CHECK_PARAMETERS="--branch=krypton --PR $(git diff --diff-filter=d --name-only HEAD~ | grep / | cut -d / -f1 | sort | uniq)";
+    fi
 # command to run our tests
 script:
-- |
-  if [ "$TRAVIS_PULL_REQUEST" = "false" ]; then 
-    kodi-addon-checker --branch=krypton; 
-  else
-    kodi-addon-checker --branch=krypton --PR $(git diff --diff-filter=d --name-only HEAD~ | grep / | cut -d / -f1 | sort | uniq); 
-  fi
+- kodi-addon-checker $ADDON_CHECK_PARAMETERS
 
 notifications:
   webhooks: https://www.travisbuddy.com/
