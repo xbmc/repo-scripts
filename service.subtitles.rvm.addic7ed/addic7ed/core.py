@@ -4,8 +4,8 @@
 
 from __future__ import absolute_import, unicode_literals
 from future import standard_library
+from future.builtins import str, dict
 standard_library.install_aliases()
-from builtins import str, dict
 
 import os
 import sys
@@ -35,17 +35,35 @@ EpisodeData = namedtuple('EpisodeData',
                          ['showname', 'season', 'episode', 'filename'])
 
 
+def _detect_synced_subs(subs_list, filename):
+    """
+    Try to detect if subs from Addic7ed.com match the file being played
+
+    :param subs_list: list or generator of subtitle items
+    :param filename: the name of an episode videofile being played
+    :return: the generator of subtitles  "sync" property
+    """
+    listing = []
+    for item in subs_list:
+        release_match = release_re.search(filename)
+        if release_match is not None:
+            release = release_match.group(1).lower()
+        else:
+            release = ''
+        lowercase_version = item.version.lower()
+        resync_pattern = r'sync.+?{}'.format(release)
+        synced = (release and
+                  release in lowercase_version and
+                  re.search(resync_pattern, lowercase_version, re.I) is None)
+        listing.append((item, synced))
+    return listing
+
+
 def display_subs(subs_list, episode_url, filename):
     """
     Display the list of found subtitles
 
-    :param subs_list: the list of named tuples with the following fields:
-
-        - language: Kodi language name for the subtitles.
-        - verison: a descriptive text for the subtitles.
-        - hi (bool): ``True`` if subs for hearing impaired
-        - link: download link for the subtitles.
-
+    :param subs_list: the list or generator of tuples (subs item, synced)
     :param episode_url: the URL for the episode page on addic7ed.com.
         It is needed for downloading subs as 'Referer' HTTP header.
     :param filename: the name of the video-file being played.
@@ -61,16 +79,21 @@ def display_subs(subs_list, episode_url, filename):
     - 'sync': if 'true' then 'SYNC' icon is displayed for the list item.
     - url: a plugin call URL for downloading selected subs.
     """
-    for item in subs_list:
+    subs_list = sorted(
+        _detect_synced_subs(subs_list, filename),
+        key=lambda i: i[1],
+        reverse=True
+    )
+    for item, synced in subs_list:
+        if addon.getSetting('do_login') != 'true' and item.unfinished:
+            continue
         list_item = xbmcgui.ListItem(label=item.language, label2=item.version)
         list_item.setArt(
             {'thumb': xbmc.convertLanguage(item.language, xbmc.ISO_639_1)}
         )
         if item.hi:
             list_item.setProperty('hearing_imp', 'true')
-        release_match = release_re.search(filename)
-        if (release_match is not None and
-                release_match.group(1).lower() in item.version.lower()):
+        if synced:
             list_item.setProperty('sync', 'true')
         url = '{0}?{1}'.format(
             sys.argv[0],
