@@ -23,9 +23,12 @@ __all__ = ['search_episode', 'get_episode', 'download_subs']
 session = Session()
 SubsSearchResult = namedtuple('SubsSearchResult', ['subtitles', 'episode_url'])
 EpisodeItem = namedtuple('EpisodeItem', ['title', 'link'])
-SubsItem = namedtuple('SubsItem', ['language', 'version', 'link', 'hi'])
+SubsItem = namedtuple('SubsItem', ['language', 'version', 'link', 'hi', 'unfinished'])
 serie_re = re.compile(r'^serie')
 version_re = re.compile(r'Version (.*?),')
+original_download_re = re.compile(r'^/original')
+updated_download_re = re.compile(r'^/updated')
+jointranslation_re = re.compile('^/jointranslation')
 
 
 def search_episode(query, languages=None):
@@ -131,16 +134,27 @@ def parse_episode(sub_cells, languages):
             for language in languages:
                 if language.add7_lang in lang_cell.text:
                     download_cell = lang_cell.find_next('td', {'colspan': '3'})
-                    download_button = download_cell.find(text='most updated')
+                    download_button = download_cell.find(
+                        'a',
+                        class_='buttonDownload',
+                        href=updated_download_re
+                    )
                     if download_button is None:
-                        download_button = download_cell.find(text='Download')
-                    download_tag = download_button.parent.parent
+                        download_button = download_cell.find(
+                            'a',
+                            class_='buttonDownload',
+                            href=original_download_re
+                        )
+                    download_row = download_button.parent.parent
+                    info_row = download_row.find_next('tr')
+                    hi = info_row.find('img', title='Hearing Impaired') is not None
+                    unfinished = info_row.find('a', href=jointranslation_re) is not None
                     yield SubsItem(
                         language=language.kodi_lang,
                         version=version,
-                        link=download_tag['href'],
-                        hi=(download_tag.find_next('tr').contents[1].find(
-                            'img', title='Hearing Impaired') is not None)
+                        link=download_button['href'],
+                        hi=hi,
+                        unfinished=unfinished
                     )
                     break
 

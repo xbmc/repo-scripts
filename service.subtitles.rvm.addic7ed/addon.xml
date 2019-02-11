@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <addon id="service.subtitles.rvm.addic7ed"
   name="Addic7ed.com"
-  version="3.0.1"
+  version="3.0.4"
   provider-name="Roman V.M.">
 <requires>
   <import addon="xbmc.python" version="2.25.0"/>
@@ -27,8 +27,11 @@
     <icon>icon.png</icon>
     <fanart>fanart.jpg</fanart>
   </assets>
-  <news>v.3.0.1:
-- Fixed potential crash because of NameError exception.</news>
+  <news>v.3.0.4:
+- Synced subs are shown first in the list.
+- Unfinished translations are hidden from users that aren't logged in.
+- Fixed parsing translated episode pages (non-English).
+- Fixed re-synced subtitles marked as "sync".</news>
   <reuselanguageinvoker>false</reuselanguageinvoker>
 </extension>
 </addon>
