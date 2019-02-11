@@ -14,6 +14,7 @@ import kodilogging
 from myepisodes import MyEpisodes
 
 _addon = xbmcaddon.Addon()
+_kodiversion = float(xbmcaddon.Addon('xbmc.addon').getAddonInfo('version')[0:4])
 _cwd = _addon.getAddonInfo('path')
 _language = _addon.getLocalizedString
 _resource_path = os.path.join(_cwd, 'resources', 'lib')
@@ -32,8 +33,8 @@ class MyeMonitor(xbmc.Monitor):
         self.action()
 
 def _initMyEpisodes():
-    username = _addon.getSetting('Username').decode('utf-8', 'replace')
-    password = _addon.getSetting('Password')
+    username = utils.getSetting('Username')
+    password = utils.getSetting('Password')
 
     login_notif = _language(32912)
     if not username or not password:
@@ -67,7 +68,7 @@ class MyePlayer(xbmc.Player):
         self.is_excluded = False
         self._total_time = sys.maxsize
         self._last_pos = 0
-        self._min_percent = int(_addon.getSetting('watched-percent'))
+        self._min_percent = utils.getSettingAsInt('watched-percent')
         self._tracker = None
         self._playback_lock = threading.Event()
         self.monitor = MyeMonitor(action=self._reset)
@@ -106,7 +107,7 @@ class MyePlayer(xbmc.Player):
 
     def _addShow(self):
 
-        if _addon.getSetting('auto-add') != "true":
+        if not utils.getSettingAsBool('auto-add'):
             logger.debug('Auto-add function disabled.')
             return
 
@@ -124,7 +125,15 @@ class MyePlayer(xbmc.Player):
             added = 32925
         utils.notif("%s %s" % (self.title, _language(added)))
 
+    # For backward compatibility
     def onPlayBackStarted(self):
+        if _kodiversion >= 17.9:
+            return
+        # This call is only for Krypton and below
+        self.onAVStarted()
+
+    # Only available in Leia (18) and up
+    def onAVStarted(self):
         self.setUp()
         self._total_time = self.getTotalTime()
         self._tracker.start()
@@ -181,9 +190,15 @@ class MyePlayer(xbmc.Player):
         if self.is_excluded:
             return
 
+        logger.debug('last_pos / total_time : %s / %s',
+                     self._last_pos, self._total_time)
+
         actual_percent = (self._last_pos/self._total_time)*100
         logger.debug('last_pos / total_time : %s / %s = %s %%',
                      self._last_pos, self._total_time, actual_percent)
+
+        logger.debug("min_percent: %s", self._min_percent)
+
         if actual_percent < self._min_percent:
             return
 
@@ -201,7 +216,8 @@ if __name__ == "__main__":
     if not player.mye.is_logged:
         sys.exit(0)
 
-    logger.debug("[%s] - Version: %s Started", _addon.getAddonInfo('name'),
+    logger.debug("[%s] - Version: %s Started",
+                 _addon.getAddonInfo('name'),
                  _addon.getAddonInfo('version'))
 
     while not player.monitor.abortRequested():
