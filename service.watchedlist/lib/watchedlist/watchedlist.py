@@ -314,10 +314,10 @@ class WatchedList:
             utils.buggalo_extradata_settings()
             # check if player is running before doing the update. Only do this check for automatic start
             while xbmc.Player().isPlaying() and not manualstart:
-                if self.monitor.waitForAbort(60 * 1000):
+                if self.monitor.waitForAbort(60):
                     return 1  # wait one minute until next check for active playback
                 if not xbmc.Player().isPlaying():
-                    if self.monitor.waitForAbort(180 * 1000):
+                    if self.monitor.waitForAbort(180):
                         return 1  # wait 3 minutes so the dialogue does not pop up directly after the playback ends
 
             # load the addon-database
