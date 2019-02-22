@@ -1,4 +1,9 @@
-v 0.3.3
+v0.3.4
+* Add new option to ignore particular shows
+* Move 'browse show episodes' to a setting rather than on every interaction, which felt janky to me
+* Improve language across the board
+
+v0.3.3
 * Krypton fixes for previous
 
 v0.3.2
