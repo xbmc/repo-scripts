@@ -96,9 +96,7 @@ class MAIN():
         if lyrics:
             if lyrics.lyrics:
                 log('found lyrics in memory')
-            else:
-                log('no lyrics found on previous search')
-            return lyrics
+                return lyrics
         if song.title:
             lyrics = self.find_lyrics(song)
             if lyrics.lyrics and ADDON.getSetting('strip') == 'true':
@@ -109,7 +107,7 @@ class MAIN():
                 strip_k1 = re.sub(ur'[\u1100-\u11ff]+', '', fulltext)
                 strip_k2 = re.sub(ur'[\uAC00-\uD7A3]+', '', strip_k1)
                 strip_c = re.sub(ur'[\u3000-\u9fff]+', '', strip_k2)
-                lyrics.lyrics = strip_c.encode('utf-8')
+                lyrics.lyrics = strip_c.encode('utf-8').replace('：',':') #replace fullwith colon (not present in many font files)
         # no song title, we can't search online. try matching local filename
         elif (ADDON.getSetting('save_lyrics2') == 'true'):
             lyrics = self.get_lyrics_from_file(song, True)
@@ -198,7 +196,7 @@ class MAIN():
             lyricsfile = song.path1(getlrc)
             if xbmcvfs.exists(lyricsfile):
                 lyr = get_textfile(lyricsfile)
-                if lyr:
+                if lyr != None:
                     lyrics.lyrics = lyr
                     return lyrics
         if ADDON.getSetting('save_lyrics2') == 'true':
@@ -206,7 +204,7 @@ class MAIN():
             lyricsfile = song.path2(getlrc)
             if xbmcvfs.exists(lyricsfile):
                 lyr = get_textfile(lyricsfile)
-                if lyr:
+                if lyr != None:
                     lyrics.lyrics = lyr
                     return lyrics
         return None
@@ -215,7 +213,7 @@ class MAIN():
         savedLyrics = self.get_lyrics_from_memory(lyrics.song)
         if (savedLyrics is None):
             self.fetchedLyrics.append(lyrics)
-            self.fetchedLyrics = self.fetchedLyrics[:10]
+            self.fetchedLyrics = self.fetchedLyrics[-10:]
 
     def save_lyrics_to_file(self, lyrics, adjust=None):
         if isinstance (lyrics.lyrics, str):
@@ -257,7 +255,15 @@ class MAIN():
             log('failed to save lyrics')
             return False
 
+    def remove_lyrics_from_memory(self, lyrics):
+        # delete lyrics from memory
+        if lyrics in self.fetchedLyrics:
+            self.fetchedLyrics.remove(lyrics)
+
     def delete_lyrics(self, lyrics):
+        # delete lyrics from memory
+        self.remove_lyrics_from_memory(lyrics)
+        # delete saved lyrics
         if (ADDON.getSetting('save_lyrics1') == 'true'):
             file_path = lyrics.song.path1(lyrics.lrc)
             success = self.delete_file(file_path)
@@ -272,7 +278,6 @@ class MAIN():
         except:
             log('failed to delete file')
             return False
-
 
     def myPlayerChanged(self):
         global lyrics
@@ -296,7 +301,7 @@ class MAIN():
                     # check if gui is already running
                     if not WIN.getProperty('culrc.guirunning') == 'TRUE':
                         WIN.setProperty('culrc.guirunning', 'TRUE')
-                        gui = guiThread(mode=self.mode, save=self.save_lyrics_to_file, delete=self.delete_lyrics, function=self.return_time)
+                        gui = guiThread(mode=self.mode, save=self.save_lyrics_to_file, remove=self.remove_lyrics_from_memory, delete=self.delete_lyrics, function=self.return_time)
                         gui.start()
                 else:
                     # signal gui thread to exit
@@ -358,11 +363,12 @@ class guiThread(threading.Thread):
         threading.Thread.__init__(self)
         self.mode = kwargs['mode']
         self.save = kwargs['save']
+        self.remove = kwargs['remove']
         self.delete = kwargs['delete']
         self.function = kwargs['function']
 
     def run(self):
-        ui = GUI('script-cu-lrclyrics-main.xml', CWD, 'Default', mode=self.mode, save=self.save, delete=self.delete, function=self.function)
+        ui = GUI('script-cu-lrclyrics-main.xml', CWD, 'Default', mode=self.mode, save=self.save, remove=self.remove, delete=self.delete, function=self.function)
         ui.doModal()
         del ui
         WIN.clearProperty('culrc.guirunning')
@@ -373,6 +379,7 @@ class syncThread(threading.Thread):
         self.function = kwargs['function']
         self.adjust = kwargs['adjust']
         self.save = kwargs['save']
+        self.remove = kwargs['remove']
         self.lyrics = kwargs['lyrics']
 
     def run(self):
@@ -382,12 +389,15 @@ class syncThread(threading.Thread):
         adjust = dialog.val
         del dialog
         self.save(self.lyrics, adjust)
+        # file has changed, remove it from memory
+        self.remove(self.lyrics)
 
 class GUI(xbmcgui.WindowXMLDialog):
     def __init__(self, *args, **kwargs):
         xbmcgui.WindowXMLDialog.__init__(self)
         self.mode = kwargs['mode']
         self.save = kwargs['save']
+        self.remove = kwargs['remove']
         self.delete = kwargs['delete']
         self.function = kwargs['function']
         self.Monitor = MyMonitor(function = None)
@@ -565,7 +575,7 @@ class GUI(xbmcgui.WindowXMLDialog):
 
     def parser_lyrics(self, lyrics):
         offset = 0.00
-        found = re.search('\[offset:\s?(\d+)\]', lyrics)
+        found = re.search('\[offset:\s?(-?\d+)\]', lyrics)
         if found:
             offset = float(found.group(1)) / 1000
         self.pOverlay = []
@@ -648,7 +658,7 @@ class GUI(xbmcgui.WindowXMLDialog):
                 if functions[selection] == 'select':
                     self.reshow_choices()
                 elif functions[selection] == 'sync':
-                    sync = syncThread(adjust=self.syncadjust, function=self.set_synctime, save=self.save, lyrics=self.lyrics)
+                    sync = syncThread(adjust=self.syncadjust, function=self.set_synctime, save=self.save, lyrics=self.lyrics, remove=self.remove)
                     sync.start()
                 elif functions[selection] == 'delete':
                     self.lyrics.lyrics = ''

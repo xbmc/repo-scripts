@@ -190,12 +190,19 @@ class LyricsFetcher:
                    sys.exc_info()[1]
                   ))
             return None
-        # ttplayer occasionally returns incorrect lyrics. if we have an 'ar' tag with a value we can check if the artist matches
+        # ttplayer occasionally returns incorrect lyrics. if we have a 'ti' and/or an 'ar' tag with a value we can check if they match the title and artist
         if Page.startswith('[ti:'):
             check = Page.split('\n')
+            if not check[0][4:-1] == '':
+                if (difflib.SequenceMatcher(None, song.lower(), check[0][4:-1].lower()).ratio() > 0.8):
+                    return Page
+                else:
+                    return ''
             if check[1][0:4] == '[ar:' and not check[1][4:-1] == '':
                 if (difflib.SequenceMatcher(None, artist.lower(), check[1][4:-1].lower()).ratio() > 0.8):
                     return Page
+                else:
+                    return ''
             else:
                 return Page
         elif Page.startswith('['):

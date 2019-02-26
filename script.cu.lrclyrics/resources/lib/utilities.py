@@ -38,7 +38,7 @@ def get_textfile(filepath):
         file.close()
         # Detect text encoding
         enc = chardet.detect(data)
-        if (enc['encoding'] == 'utf-8'):
+        if enc['encoding'] == 'utf-8' or enc['encoding'] == None:
             return data
         else:
             return unicode(data, enc['encoding']).encode('utf-8')

@@ -1,3 +1,21 @@
+v5.5.13
+- fix negative offset
+
+v5.5.12
+- fix for empty lyrics files
+
+v5.5.11
+- fix lyrics sync
+
+v5.5.10
+- delete lyrics from memory as well
+- re-search for lyrics if it was not found previously
+- fix lyrics from memory
+- fix lyricwiki scraper
+- more accurate results from ttplayer scraper
+- genius scraper strip blank lines
+- change manual sync range to +/ 20 secs
+
 v5.5.9
 - fix lyricsmode scraper
 

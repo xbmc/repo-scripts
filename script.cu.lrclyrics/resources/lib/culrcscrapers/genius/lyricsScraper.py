@@ -59,7 +59,7 @@ class LyricsFetcher:
         try:
             lyricscode = (matchcode.group(1))
             lyr = re.sub('<[^<]+?>', '', lyricscode)
-            lyrics.lyrics = lyr.replace('\\n','\n')
+            lyrics.lyrics = lyr.replace('\\n','\n').strip()
             return lyrics
         except:
             return None
