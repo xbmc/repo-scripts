@@ -9,7 +9,7 @@
         <effect type="zoom" start="0" end="100" center="1920,540" time="300" delay="300" />
         <effect type="fade" start="0" end="100" time="300" delay="300" />
     </animation>
-    <animation condition="IsEmpty(Window.Property(starting.recording))" type="WindowClose">
+    <animation condition="String.IsEmpty(Window.Property(starting.recording))" type="WindowClose">
         <effect type="zoom" start="100" end="0" center="1920,540" time="300" />
         <effect type="fade" start="100" end="0" time="300" />
     </animation>
@@ -51,7 +51,7 @@
                 </control>
 
                 <control type="group">
-                    <animation effect="fade" start="100" end="50" time="200" condition="!StringCompare(Window(10000).Property(script.hdhomerun.view.DVR_MODE),WATCH)">Conditional</animation>
+                    <animation effect="fade" start="100" end="50" time="200" condition="!String.IsEqual(Window(10000).Property(script.hdhomerun.view.DVR_MODE),WATCH)">Conditional</animation>
                     <control type="image">
                         <posx>66</posx>
                         <posy>18</posy>
@@ -141,11 +141,11 @@
                     <posx>600</posx>
                     <posy>40</posy>
                     <control type="group">
-                        <visible>StringCompare(Window.Property(sort.mode),NAME)</visible>
+                        <visible>String.IsEqual(Window.Property(sort.mode),NAME)</visible>
                         <posx>5</posx>
                         <posy>14</posy>
                         <control type="image">
-                            <visible>!IsEmpty(Window.Property(sort.asc))</visible>
+                            <visible>!String.IsEmpty(Window.Property(sort.asc))</visible>
                             <posx>0</posx>
                             <posy>0</posy>
                             <width>16</width>
@@ -153,7 +153,7 @@
                             <texture>script-hdhomerun-view-sort_indicator.png</texture>
                         </control>
                         <control type="image">
-                            <visible>IsEmpty(Window.Property(sort.asc))</visible>
+                            <visible>String.IsEmpty(Window.Property(sort.asc))</visible>
                             <posx>0</posx>
                             <posy>0</posy>
                             <width>16</width>
@@ -177,11 +177,11 @@
                         <label>[B]$INFO[Window.Property(sort.name.label)][/B]</label>
                     </control>
                     <control type="group">
-                        <visible>StringCompare(Window.Property(sort.mode),ORIGINAL)</visible>
+                        <visible>String.IsEqual(Window.Property(sort.mode),ORIGINAL)</visible>
                         <posx>735</posx>
                         <posy>14</posy>
                         <control type="image">
-                            <visible>IsEmpty(Window.Property(sort.asc))</visible>
+                            <visible>String.IsEmpty(Window.Property(sort.asc))</visible>
                             <posx>0</posx>
                             <posy>0</posy>
                             <width>16</width>
@@ -189,7 +189,7 @@
                             <texture>script-hdhomerun-view-sort_indicator.png</texture>
                         </control>
                         <control type="image">
-                            <visible>!IsEmpty(Window.Property(sort.asc))</visible>
+                            <visible>!String.IsEmpty(Window.Property(sort.asc))</visible>
                             <posx>0</posx>
                             <posy>0</posy>
                             <width>16</width>
@@ -213,11 +213,11 @@
                         <label>[B]$ADDON[script.hdhomerun.view 32816][/B]</label>
                     </control>
                     <control type="group">
-                        <visible>StringCompare(Window.Property(sort.mode),AIRDATE)</visible>
+                        <visible>String.IsEqual(Window.Property(sort.mode),AIRDATE)</visible>
                         <posx>1005</posx>
                         <posy>14</posy>
                         <control type="image">
-                            <visible>IsEmpty(Window.Property(sort.asc))</visible>
+                            <visible>String.IsEmpty(Window.Property(sort.asc))</visible>
                             <posx>0</posx>
                             <posy>0</posy>
                             <width>16</width>
@@ -225,7 +225,7 @@
                             <texture>script-hdhomerun-view-sort_indicator.png</texture>
                         </control>
                         <control type="image">
-                            <visible>!IsEmpty(Window.Property(sort.asc))</visible>
+                            <visible>!String.IsEmpty(Window.Property(sort.asc))</visible>
                             <posx>0</posx>
                             <posy>0</posy>
                             <width>16</width>

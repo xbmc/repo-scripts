@@ -28,7 +28,7 @@ FONT_TRANSLATIONS = {
     'skin.amber':         {'font10':'GridItems',              'font13':'Details',         'font30':'MainLabelBigTitle'}, #Old gui API level - alignment flaws
     'skin.metropolis':    {'font10':'METF_DialogVerySmall',   'font13':'font13',          'font30':'METF_TitleTextLarge'},
     'skin.quartz':        {'font10':'size14',                 'font13':'font13',          'font30':'size28'}, #Old gui API level - alignment flaws
-    'skin.estuary':       {'font10':'font20_title',                 'font13':'font12',          'font30':'font30'}
+    'skin.estuary':       {'font10':'font20_title',           'font13':'font12',          'font30':'font30'}
 }
 
 #helix skins to check =  [' skin.refocus', ' skin.1080xf', ' skin.conq']
@@ -107,14 +107,11 @@ def customizeSkinXML(skin,xml):
     for font in FONTS:
         data = data.replace('@{0}@'.format(font),FONT_TRANSLATIONS[skin][font])
 
-    if kodiHasNewStringInfoLabels():
-        util.DEBUG_LOG('Updating skins for new InfoLabels')
-        data = data.replace('IsEmpty', 'String.IsEmpty')
-        data = data.replace('StringCompare', 'String.IsEqual')
-        # SubString(info,string[,Left|Right])
-        # data.replace('SubString', 'String.StartsWith')
-        # data.replace('SubString', 'String.EndsWith')
-        # data.replace('SubString', 'String.Contains')
+    if kodiHasOldStringInfoLabels():
+        util.DEBUG_LOG('Updating skins for old InfoLabels')
+        data = data.replace('String.IsEmpty', 'IsEmpty')
+        data = data.replace('String.IsEqual', 'StringCompare')
+        data = data.replace('Integer.IsGreater', 'IntegerGreaterThan')
 
     with open(target,'w') as t:
         t.write(data)
@@ -127,8 +124,8 @@ def updateNeeded():
     if version != '{0}:{1}:{2}'.format(currentKodiSkin(),VERSION,OLD_API and ':old' or ''): return True
     return False
 
-def kodiHasNewStringInfoLabels():
-    return getKodiVersion()['major'] > 17
+def kodiHasOldStringInfoLabels():
+    return getKodiVersion()['major'] < 17
 
 def getKodiVersion():
     json_query = xbmc.executeJSONRPC('{ "jsonrpc": "2.0", "method": "Application.GetProperties", "params": {"properties": ["version", "name"]}, "id": 1 }')
@@ -139,23 +136,25 @@ def getKodiVersion():
 def getSkinPath():
     skin = currentKodiSkin()
     default = util.ADDON.getAddonInfo('path')
-    if skin == 'skin.confluence': return default
-    if not skin in FONT_TRANSLATIONS: return default
+    if not skin in FONT_TRANSLATIONS and not kodiHasOldStringInfoLabels(): return default
+
     if updateNeeded():
         util.DEBUG_LOG('Updating custom skin')
         try:
             setupDynamicSkin()
 
+            util.DEBUG_LOG('Using custom fonts for: {0}'.format(skin))
+
             for xml in SKINS_XMLS:
-                customizeSkinXML(skin,xml)
+                util.DEBUG_LOG('- Updating XML for: {0}'.format(xml))
+                customizeSkinXML(skin, xml)
+
             with open(VERSION_FILE, 'w') as f:
-                f.write('{0}:{1}:{2}'.format(currentKodiSkin(),VERSION,OLD_API and ':old' or ''))
+                f.write('{0}:{1}:{2}'.format(skin, VERSION, OLD_API and ':old' or ''))
             with open(KODI_VERSION_FILE, 'w') as f:
                 f.write(json.dumps(getKodiVersion()))
         except:
             util.ERROR()
             return default
-
-    util.DEBUG_LOG('Using custom fonts for: {0}'.format(skin))
 
     return os.path.join(xbmc.translatePath(util.ADDON.getAddonInfo('profile')).decode('utf-8'),'skin')

@@ -88,8 +88,8 @@ class sockaddr(Union):
         elif family == 18:  # AF_LINK
             return str(self.sa_sdl)
         else:
-            print family
-            raise NotImplementedError, "address family %d not supported" % family
+            print(family)
+            raise NotImplementedError("address family %d not supported" % family)
 
 
 class ifaddrs(Structure):

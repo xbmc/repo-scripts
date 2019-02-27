@@ -22,7 +22,7 @@
         </control>
 
         <control type="videowindow">
-            <visible>!IsEmpty(Window.Property(touch.mode))</visible>
+            <visible>!String.IsEmpty(Window.Property(touch.mode))</visible>
             <posx>0</posx>
             <posy>0</posy>
             <width>1920</width>
@@ -30,7 +30,7 @@
         </control>
 
         <control type="group">
-            <visible>[!IsEmpty(Window.Property(show.overlay)) | !IsEmpty(Window.Property(show.current))] + !IsEmpty(Window.Property(channel.name))</visible>
+            <visible>[!String.IsEmpty(Window.Property(show.overlay)) | !String.IsEmpty(Window.Property(show.current))] + !String.IsEmpty(Window.Property(channel.name))</visible>
             <animation effect="slide" start="0,1080" end="0,-150" time="500">VisibleChange</animation>
             <posx>0</posx>
             <posy>1080</posy>
@@ -124,8 +124,8 @@
         </control>
 
         <control type="group" id="200">
-            <visible>IsEmpty(Window(10000).Property(script.hdhomerun.view.playing.dvr))</visible>
-            <animation effect="slide" start="0,0" end="-900,0" time="100" condition="!IsEmpty(Window.Property(show.overlay))">Conditional</animation>
+            <visible>String.IsEmpty(Window(10000).Property(script.hdhomerun.view.playing.dvr))</visible>
+            <animation effect="slide" start="0,0" end="-900,0" time="100" condition="!String.IsEmpty(Window.Property(show.overlay))">Conditional</animation>
             <posx>1920</posx>
             <posy>0</posy>
             <defaultcontrol>210</defaultcontrol>
@@ -146,7 +146,7 @@
                 <itemlayout height="270">
 
                     <control type="group">
-                        <visible>!IsEmpty(Window(10000).Property(script.hdhomerun.view.touch.mode)) | !IsEmpty(Window(10000).Property(script.hdhomerun.view.guide.full.detail))</visible>
+                        <visible>!String.IsEmpty(Window(10000).Property(script.hdhomerun.view.touch.mode)) | !String.IsEmpty(Window(10000).Property(script.hdhomerun.view.guide.full.detail))</visible>
                         <posx>1100</posx>
                         <posy>0</posy>
                         <control type="image">
@@ -159,7 +159,7 @@
                             <aspectratio>stretch</aspectratio>
                         </control>
                         <control type="image">
-                            <visible>!IsEmpty(ListItem.Property(is.current))</visible>
+                            <visible>!String.IsEmpty(ListItem.Property(is.current))</visible>
                             <posx>340</posx>
                             <posy>0</posy>
                             <width>480</width>
@@ -206,7 +206,7 @@
                                 <aspectratio>stretch</aspectratio>
                             </control>
                             <control type="image">
-                                <visible>!IsEmpty(ListItem.Property(is.current))</visible>
+                                <visible>!String.IsEmpty(ListItem.Property(is.current))</visible>
                                 <posx>0</posx>
                                 <posy>0</posy>
                                 <width>180</width>
@@ -216,7 +216,7 @@
                                 <aspectratio>stretch</aspectratio>
                             </control>
                             <control type="label">
-                                <visible>IsEmpty(ListItem.Property(channel.icon))</visible>
+                                <visible>String.IsEmpty(ListItem.Property(channel.icon))</visible>
                                 <posx>10</posx>
                                 <posy>10</posy>
                                 <width>160</width>
@@ -307,7 +307,7 @@
                     </control>
 
                     <control type="group">
-                        <visible>IsEmpty(Window(10000).Property(script.hdhomerun.view.touch.mode)) + IsEmpty(Window(10000).Property(script.hdhomerun.view.guide.full.detail))</visible>
+                        <visible>String.IsEmpty(Window(10000).Property(script.hdhomerun.view.touch.mode)) + String.IsEmpty(Window(10000).Property(script.hdhomerun.view.guide.full.detail))</visible>
                         <posx>1500</posx>
                         <posy>0</posy>
 
@@ -321,7 +321,7 @@
                             <aspectratio>stretch</aspectratio>
                         </control>
                         <control type="image">
-                            <visible>!IsEmpty(ListItem.Property(is.current))</visible>
+                            <visible>!String.IsEmpty(ListItem.Property(is.current))</visible>
                             <posx>0</posx>
                             <posy>0</posy>
                             <width>420</width>
@@ -340,7 +340,7 @@
                             <aspectratio>stretch</aspectratio>
                         </control>
                         <control type="label">
-                            <visible>IsEmpty(ListItem.Property(channel.icon))</visible>
+                            <visible>String.IsEmpty(ListItem.Property(channel.icon))</visible>
                             <posx>10</posx>
                             <posy>10</posy>
                             <width>160</width>
@@ -414,7 +414,7 @@
                 <!-- FOCUSED LAYOUT ####################################### -->
                 <focusedlayout height="270">
                     <control type="group">
-                        <visible>!IsEmpty(Window(10000).Property(script.hdhomerun.view.touch.mode)) | !IsEmpty(Window(10000).Property(script.hdhomerun.view.guide.full.detail))</visible>
+                        <visible>!String.IsEmpty(Window(10000).Property(script.hdhomerun.view.touch.mode)) | !String.IsEmpty(Window(10000).Property(script.hdhomerun.view.guide.full.detail))</visible>
                         <posx>1100</posx>
                         <posy>0</posy>
                         <control type="image">
@@ -427,7 +427,7 @@
                             <aspectratio>stretch</aspectratio>
                         </control>
                         <control type="image">
-                            <visible>!IsEmpty(ListItem.Property(is.current))</visible>
+                            <visible>!String.IsEmpty(ListItem.Property(is.current))</visible>
                             <posx>340</posx>
                             <posy>0</posy>
                             <width>480</width>
@@ -448,7 +448,7 @@
                         </control>
 
                         <control type="group">
-                            <visible>IntegerGreaterThan(ListItem.Property(slice.offset),0)</visible>
+                            <visible>Integer.IsGreater(ListItem.Property(slice.offset),0)</visible>
                             <control type="label">
                                 <posx>350</posx>
                                 <posy>10</posy>
@@ -471,7 +471,7 @@
                             </control>
                         </control>
                         <control type="group">
-                            <visible>!IntegerGreaterThan(ListItem.Property(slice.offset),0)</visible>
+                            <visible>!Integer.IsGreater(ListItem.Property(slice.offset),0)</visible>
                             <control type="label">
                                 <posx>350</posx>
                                 <posy>10</posy>
@@ -505,7 +505,7 @@
                         </control>
 
                         <control type="group">
-                            <visible>!IsEmpty(ListItem.Property(loading))</visible>
+                            <visible>!String.IsEmpty(ListItem.Property(loading))</visible>
                             <posx>340</posx>
                             <posy>0</posy>
                             <control type="image">
@@ -531,7 +531,7 @@
                         </control>
 
                         <control type="group">
-                            <animation effect="fade" start="100" end="0" time="1" delay="500" condition="!IsEmpty(ListItem.Property(show))">Conditional</animation>
+                            <animation effect="fade" start="100" end="0" time="1" delay="500" condition="!String.IsEmpty(ListItem.Property(show))">Conditional</animation>
                             <posx>-80</posx>
                             <posy>0</posy>
                             <control type="image">
@@ -544,7 +544,7 @@
                                 <aspectratio>stretch</aspectratio>
                             </control>
                             <control type="image">
-                                <visible>!IsEmpty(ListItem.Property(is.current))</visible>
+                                <visible>!String.IsEmpty(ListItem.Property(is.current))</visible>
                                 <posx>0</posx>
                                 <posy>0</posy>
                                 <width>180</width>
@@ -554,7 +554,7 @@
                                 <aspectratio>stretch</aspectratio>
                             </control>
                             <control type="label">
-                                <visible>IsEmpty(ListItem.Property(channel.icon))</visible>
+                                <visible>String.IsEmpty(ListItem.Property(channel.icon))</visible>
                                 <posx>10</posx>
                                 <posy>10</posy>
                                 <width>160</width>
@@ -644,12 +644,12 @@
                         </control>
 
                         <control type="group">
-                            <animation effect="slide" start="0,0" end="-240,0" condition="IntegerGreaterThan(ListItem.Property(slice.offset),0)">Conditional</animation>
-                            <animation effect="slide" start="0,0" end="-240,0" condition="IntegerGreaterThan(ListItem.Property(slice.offset),1)">Conditional</animation>
-                            <animation effect="slide" start="0,0" end="-240,0" condition="IntegerGreaterThan(ListItem.Property(slice.offset),2)">Conditional</animation>
-                            <animation effect="slide" start="0,0" end="-240,0" condition="IntegerGreaterThan(ListItem.Property(slice.offset),3)">Conditional</animation>
-                            <animation effect="slide" start="0,0" end="-240,0" condition="IntegerGreaterThan(ListItem.Property(slice.offset),4)">Conditional</animation>
-                            <animation effect="slide" start="0,0" end="-240,0" condition="IntegerGreaterThan(ListItem.Property(slice.offset),5)">Conditional</animation>
+                            <animation effect="slide" start="0,0" end="-240,0" condition="Integer.IsGreater(ListItem.Property(slice.offset),0)">Conditional</animation>
+                            <animation effect="slide" start="0,0" end="-240,0" condition="Integer.IsGreater(ListItem.Property(slice.offset),1)">Conditional</animation>
+                            <animation effect="slide" start="0,0" end="-240,0" condition="Integer.IsGreater(ListItem.Property(slice.offset),2)">Conditional</animation>
+                            <animation effect="slide" start="0,0" end="-240,0" condition="Integer.IsGreater(ListItem.Property(slice.offset),3)">Conditional</animation>
+                            <animation effect="slide" start="0,0" end="-240,0" condition="Integer.IsGreater(ListItem.Property(slice.offset),4)">Conditional</animation>
+                            <animation effect="slide" start="0,0" end="-240,0" condition="Integer.IsGreater(ListItem.Property(slice.offset),5)">Conditional</animation>
                             <posx>-80</posx>
                             <posy>0</posy>
                             <control type="image">
@@ -662,7 +662,7 @@
                                 <aspectratio>stretch</aspectratio>
                             </control>
                             <control type="image">
-                                <visible>!IsEmpty(ListItem.Property(is.current))</visible>
+                                <visible>!String.IsEmpty(ListItem.Property(is.current))</visible>
                                 <posx>0</posx>
                                 <posy>0</posy>
                                 <width>180</width>
@@ -672,7 +672,7 @@
                                 <aspectratio>stretch</aspectratio>
                             </control>
                             <control type="label">
-                                <visible>IsEmpty(ListItem.Property(channel.icon))</visible>
+                                <visible>String.IsEmpty(ListItem.Property(channel.icon))</visible>
                                 <posx>10</posx>
                                 <posy>10</posy>
                                 <width>160</width>
@@ -761,7 +761,7 @@
                                 </control>
                             </control>
                             <control type="group">
-                                <visible>IntegerGreaterThan(ListItem.Property(slice.offset),0)</visible>
+                                <visible>Integer.IsGreater(ListItem.Property(slice.offset),0)</visible>
                                 <posx>420</posx>
                                 <posy>0</posy>
                                 <control type="image">
@@ -790,7 +790,7 @@
                                     <aspectratio aligny="top">scale</aspectratio>
                                 </control>
                                 <control type="image">
-                                    <visible>!IsEmpty(ListItem.Property(slice0.hasrule))</visible>
+                                    <visible>!String.IsEmpty(ListItem.Property(slice0.hasrule))</visible>
                                     <posx>214</posx>
                                     <posy>190</posy>
                                     <width>16</width>
@@ -820,7 +820,7 @@
                                 </control>
                             </control>
                             <control type="group">
-                                <visible>IntegerGreaterThan(ListItem.Property(slice.offset),1)</visible>
+                                <visible>Integer.IsGreater(ListItem.Property(slice.offset),1)</visible>
                                 <posx>660</posx>
                                 <posy>0</posy>
                                 <control type="image">
@@ -849,7 +849,7 @@
                                     <aspectratio aligny="top">scale</aspectratio>
                                 </control>
                                 <control type="image">
-                                    <visible>!IsEmpty(ListItem.Property(slice1.hasrule))</visible>
+                                    <visible>!String.IsEmpty(ListItem.Property(slice1.hasrule))</visible>
                                     <posx>214</posx>
                                     <posy>190</posy>
                                     <width>16</width>
@@ -879,7 +879,7 @@
                                 </control>
                             </control>
                             <control type="group">
-                                <visible>IntegerGreaterThan(ListItem.Property(slice.offset),2)</visible>
+                                <visible>Integer.IsGreater(ListItem.Property(slice.offset),2)</visible>
                                 <posx>900</posx>
                                 <posy>0</posy>
                                 <control type="image">
@@ -908,7 +908,7 @@
                                     <aspectratio aligny="top">scale</aspectratio>
                                 </control>
                                 <control type="image">
-                                    <visible>!IsEmpty(ListItem.Property(slice2.hasrule))</visible>
+                                    <visible>!String.IsEmpty(ListItem.Property(slice2.hasrule))</visible>
                                     <posx>214</posx>
                                     <posy>190</posy>
                                     <width>16</width>
@@ -938,7 +938,7 @@
                                 </control>
                             </control>
                             <control type="group">
-                                <visible>IntegerGreaterThan(ListItem.Property(slice.offset),3)</visible>
+                                <visible>Integer.IsGreater(ListItem.Property(slice.offset),3)</visible>
                                 <posx>1140</posx>
                                 <posy>0</posy>
                                 <control type="image">
@@ -967,7 +967,7 @@
                                     <aspectratio aligny="top">scale</aspectratio>
                                 </control>
                                 <control type="image">
-                                    <visible>!IsEmpty(ListItem.Property(slice3.hasrule))</visible>
+                                    <visible>!String.IsEmpty(ListItem.Property(slice3.hasrule))</visible>
                                     <posx>214</posx>
                                     <posy>190</posy>
                                     <width>16</width>
@@ -997,7 +997,7 @@
                                 </control>
                             </control>
                             <control type="group">
-                                <visible>IntegerGreaterThan(ListItem.Property(slice.offset),4)</visible>
+                                <visible>Integer.IsGreater(ListItem.Property(slice.offset),4)</visible>
                                 <posx>1380</posx>
                                 <posy>0</posy>
                                 <control type="image">
@@ -1026,7 +1026,7 @@
                                     <aspectratio aligny="top">scale</aspectratio>
                                 </control>
                                 <control type="image">
-                                    <visible>!IsEmpty(ListItem.Property(slice4.hasrule))</visible>
+                                    <visible>!String.IsEmpty(ListItem.Property(slice4.hasrule))</visible>
                                     <posx>214</posx>
                                     <posy>190</posy>
                                     <width>16</width>
@@ -1056,7 +1056,7 @@
                                 </control>
                             </control>
                             <control type="group">
-                                <visible>IntegerGreaterThan(ListItem.Property(slice.offset),5)</visible>
+                                <visible>Integer.IsGreater(ListItem.Property(slice.offset),5)</visible>
                                 <posx>1620</posx>
                                 <posy>0</posy>
                                 <control type="image">
@@ -1085,7 +1085,7 @@
                                     <aspectratio aligny="top">scale</aspectratio>
                                 </control>
                                 <control type="image">
-                                    <visible>!IsEmpty(ListItem.Property(slice5.hasrule))</visible>
+                                    <visible>!String.IsEmpty(ListItem.Property(slice5.hasrule))</visible>
                                     <posx>214</posx>
                                     <posy>190</posy>
                                     <width>16</width>
@@ -1126,8 +1126,8 @@
                     </control>
 
                     <control type="group">
-                        <visible>IsEmpty(Window(10000).Property(script.hdhomerun.view.touch.mode)) + IsEmpty(Window(10000).Property(script.hdhomerun.view.guide.full.detail))</visible>
-                        <animation effect="slide" start="480,0" end="0,0" time="50" delay="300" condition="!IsEmpty(ListItem.Property(show))">Conditional</animation>
+                        <visible>String.IsEmpty(Window(10000).Property(script.hdhomerun.view.touch.mode)) + String.IsEmpty(Window(10000).Property(script.hdhomerun.view.guide.full.detail))</visible>
+                        <animation effect="slide" start="480,0" end="0,0" time="50" delay="300" condition="!String.IsEmpty(ListItem.Property(show))">Conditional</animation>
                         <posx>1100</posx>
                         <posy>0</posy>
                         <control type="image">
@@ -1140,7 +1140,7 @@
                             <aspectratio>stretch</aspectratio>
                         </control>
                         <control type="image">
-                            <visible>!IsEmpty(ListItem.Property(is.current))</visible>
+                            <visible>!String.IsEmpty(ListItem.Property(is.current))</visible>
                             <posx>340</posx>
                             <posy>0</posy>
                             <width>480</width>
@@ -1161,7 +1161,7 @@
                         </control>
 
                         <control type="group">
-                            <visible>IntegerGreaterThan(ListItem.Property(slice.offset),0)</visible>
+                            <visible>Integer.IsGreater(ListItem.Property(slice.offset),0)</visible>
                             <control type="label">
                                 <posx>350</posx>
                                 <posy>10</posy>
@@ -1184,7 +1184,7 @@
                             </control>
                         </control>
                         <control type="group">
-                            <visible>!IntegerGreaterThan(ListItem.Property(slice.offset),0)</visible>
+                            <visible>!Integer.IsGreater(ListItem.Property(slice.offset),0)</visible>
                             <control type="label">
                                 <posx>350</posx>
                                 <posy>10</posy>
@@ -1218,7 +1218,7 @@
                         </control>
 
                         <control type="group">
-                            <visible>!IsEmpty(ListItem.Property(loading))</visible>
+                            <visible>!String.IsEmpty(ListItem.Property(loading))</visible>
                             <posx>340</posx>
                             <posy>0</posy>
                             <control type="image">
@@ -1244,7 +1244,7 @@
                         </control>
 
                         <control type="group">
-                            <animation effect="fade" start="100" end="0" time="1" delay="500" condition="!IsEmpty(ListItem.Property(show))">Conditional</animation>
+                            <animation effect="fade" start="100" end="0" time="1" delay="500" condition="!String.IsEmpty(ListItem.Property(show))">Conditional</animation>
                             <posx>-80</posx>
                             <posy>0</posy>
                             <control type="image">
@@ -1257,7 +1257,7 @@
                                 <aspectratio>stretch</aspectratio>
                             </control>
                             <control type="image">
-                                <visible>!IsEmpty(ListItem.Property(is.current))</visible>
+                                <visible>!String.IsEmpty(ListItem.Property(is.current))</visible>
                                 <posx>0</posx>
                                 <posy>0</posy>
                                 <width>180</width>
@@ -1267,7 +1267,7 @@
                                 <aspectratio>stretch</aspectratio>
                             </control>
                             <control type="label">
-                                <visible>IsEmpty(ListItem.Property(channel.icon))</visible>
+                                <visible>String.IsEmpty(ListItem.Property(channel.icon))</visible>
                                 <posx>10</posx>
                                 <posy>10</posy>
                                 <width>160</width>
@@ -1357,12 +1357,12 @@
                         </control>
 
                         <control type="group">
-                            <animation effect="slide" start="0,0" end="-240,0" condition="IntegerGreaterThan(ListItem.Property(slice.offset),0)">Conditional</animation>
-                            <animation effect="slide" start="0,0" end="-240,0" condition="IntegerGreaterThan(ListItem.Property(slice.offset),1)">Conditional</animation>
-                            <animation effect="slide" start="0,0" end="-240,0" condition="IntegerGreaterThan(ListItem.Property(slice.offset),2)">Conditional</animation>
-                            <animation effect="slide" start="0,0" end="-240,0" condition="IntegerGreaterThan(ListItem.Property(slice.offset),3)">Conditional</animation>
-                            <animation effect="slide" start="0,0" end="-240,0" condition="IntegerGreaterThan(ListItem.Property(slice.offset),4)">Conditional</animation>
-                            <animation effect="slide" start="0,0" end="-240,0" condition="IntegerGreaterThan(ListItem.Property(slice.offset),5)">Conditional</animation>
+                            <animation effect="slide" start="0,0" end="-240,0" condition="Integer.IsGreater(ListItem.Property(slice.offset),0)">Conditional</animation>
+                            <animation effect="slide" start="0,0" end="-240,0" condition="Integer.IsGreater(ListItem.Property(slice.offset),1)">Conditional</animation>
+                            <animation effect="slide" start="0,0" end="-240,0" condition="Integer.IsGreater(ListItem.Property(slice.offset),2)">Conditional</animation>
+                            <animation effect="slide" start="0,0" end="-240,0" condition="Integer.IsGreater(ListItem.Property(slice.offset),3)">Conditional</animation>
+                            <animation effect="slide" start="0,0" end="-240,0" condition="Integer.IsGreater(ListItem.Property(slice.offset),4)">Conditional</animation>
+                            <animation effect="slide" start="0,0" end="-240,0" condition="Integer.IsGreater(ListItem.Property(slice.offset),5)">Conditional</animation>
                             <posx>-80</posx>
                             <posy>0</posy>
                             <control type="image">
@@ -1375,7 +1375,7 @@
                                 <aspectratio>stretch</aspectratio>
                             </control>
                             <control type="image">
-                                <visible>!IsEmpty(ListItem.Property(is.current))</visible>
+                                <visible>!String.IsEmpty(ListItem.Property(is.current))</visible>
                                 <posx>0</posx>
                                 <posy>0</posy>
                                 <width>180</width>
@@ -1385,7 +1385,7 @@
                                 <aspectratio>stretch</aspectratio>
                             </control>
                             <control type="label">
-                                <visible>IsEmpty(ListItem.Property(channel.icon))</visible>
+                                <visible>String.IsEmpty(ListItem.Property(channel.icon))</visible>
                                 <posx>10</posx>
                                 <posy>10</posy>
                                 <width>160</width>
@@ -1474,7 +1474,7 @@
                                 </control>
                             </control>
                             <control type="group">
-                                <visible>IntegerGreaterThan(ListItem.Property(slice.offset),0)</visible>
+                                <visible>Integer.IsGreater(ListItem.Property(slice.offset),0)</visible>
                                 <posx>420</posx>
                                 <posy>0</posy>
                                 <control type="image">
@@ -1503,7 +1503,7 @@
                                     <aspectratio aligny="top">scale</aspectratio>
                                 </control>
                                 <control type="image">
-                                    <visible>!IsEmpty(ListItem.Property(slice0.hasrule))</visible>
+                                    <visible>!String.IsEmpty(ListItem.Property(slice0.hasrule))</visible>
                                     <posx>214</posx>
                                     <posy>190</posy>
                                     <width>16</width>
@@ -1533,7 +1533,7 @@
                                 </control>
                             </control>
                             <control type="group">
-                                <visible>IntegerGreaterThan(ListItem.Property(slice.offset),1)</visible>
+                                <visible>Integer.IsGreater(ListItem.Property(slice.offset),1)</visible>
                                 <posx>660</posx>
                                 <posy>0</posy>
                                 <control type="image">
@@ -1562,7 +1562,7 @@
                                     <aspectratio aligny="top">scale</aspectratio>
                                 </control>
                                 <control type="image">
-                                    <visible>!IsEmpty(ListItem.Property(slice1.hasrule))</visible>
+                                    <visible>!String.IsEmpty(ListItem.Property(slice1.hasrule))</visible>
                                     <posx>214</posx>
                                     <posy>190</posy>
                                     <width>16</width>
@@ -1592,7 +1592,7 @@
                                 </control>
                             </control>
                             <control type="group">
-                                <visible>IntegerGreaterThan(ListItem.Property(slice.offset),2)</visible>
+                                <visible>Integer.IsGreater(ListItem.Property(slice.offset),2)</visible>
                                 <posx>900</posx>
                                 <posy>0</posy>
                                 <control type="image">
@@ -1621,7 +1621,7 @@
                                     <aspectratio aligny="top">scale</aspectratio>
                                 </control>
                                 <control type="image">
-                                    <visible>!IsEmpty(ListItem.Property(slice2.hasrule))</visible>
+                                    <visible>!String.IsEmpty(ListItem.Property(slice2.hasrule))</visible>
                                     <posx>214</posx>
                                     <posy>190</posy>
                                     <width>16</width>
@@ -1651,7 +1651,7 @@
                                 </control>
                             </control>
                             <control type="group">
-                                <visible>IntegerGreaterThan(ListItem.Property(slice.offset),3)</visible>
+                                <visible>Integer.IsGreater(ListItem.Property(slice.offset),3)</visible>
                                 <posx>1140</posx>
                                 <posy>0</posy>
                                 <control type="image">
@@ -1680,7 +1680,7 @@
                                     <aspectratio aligny="top">scale</aspectratio>
                                 </control>
                                 <control type="image">
-                                    <visible>!IsEmpty(ListItem.Property(slice3.hasrule))</visible>
+                                    <visible>!String.IsEmpty(ListItem.Property(slice3.hasrule))</visible>
                                     <posx>214</posx>
                                     <posy>190</posy>
                                     <width>16</width>
@@ -1710,7 +1710,7 @@
                                 </control>
                             </control>
                             <control type="group">
-                                <visible>IntegerGreaterThan(ListItem.Property(slice.offset),4)</visible>
+                                <visible>Integer.IsGreater(ListItem.Property(slice.offset),4)</visible>
                                 <posx>1380</posx>
                                 <posy>0</posy>
                                 <control type="image">
@@ -1739,7 +1739,7 @@
                                     <aspectratio aligny="top">scale</aspectratio>
                                 </control>
                                 <control type="image">
-                                    <visible>!IsEmpty(ListItem.Property(slice4.hasrule))</visible>
+                                    <visible>!String.IsEmpty(ListItem.Property(slice4.hasrule))</visible>
                                     <posx>214</posx>
                                     <posy>190</posy>
                                     <width>16</width>
@@ -1769,7 +1769,7 @@
                                 </control>
                             </control>
                             <control type="group">
-                                <visible>IntegerGreaterThan(ListItem.Property(slice.offset),5)</visible>
+                                <visible>Integer.IsGreater(ListItem.Property(slice.offset),5)</visible>
                                 <posx>1620</posx>
                                 <posy>0</posy>
                                 <control type="image">
@@ -1798,7 +1798,7 @@
                                     <aspectratio aligny="top">scale</aspectratio>
                                 </control>
                                 <control type="image">
-                                    <visible>!IsEmpty(ListItem.Property(slice5.hasrule))</visible>
+                                    <visible>!String.IsEmpty(ListItem.Property(slice5.hasrule))</visible>
                                     <posx>214</posx>
                                     <posy>190</posy>
                                     <width>16</width>
@@ -1853,10 +1853,10 @@
             </control>
 
             <control type="group">
-                <visible>!IsEmpty(Window.Property(show.overlay))</visible>
-                <animation effect="slide" start="0,0" end="0,270" condition="IntegerGreaterThan(Container(201).Position,0)">Conditional</animation>
-                <animation effect="slide" start="0,0" end="0,270" condition="IntegerGreaterThan(Container(201).Position,1)">Conditional</animation>
-                <animation effect="slide" start="0,0" end="0,270" condition="IntegerGreaterThan(Container(201).Position,2)">Conditional</animation>
+                <visible>!String.IsEmpty(Window.Property(show.overlay))</visible>
+                <animation effect="slide" start="0,0" end="0,270" condition="Integer.IsGreater(Container(201).Position,0)">Conditional</animation>
+                <animation effect="slide" start="0,0" end="0,270" condition="Integer.IsGreater(Container(201).Position,1)">Conditional</animation>
+                <animation effect="slide" start="0,0" end="0,270" condition="Integer.IsGreater(Container(201).Position,2)">Conditional</animation>
                 <posx>0</posx>
                 <posy>0</posy>
                 <control type="group" id="216">
@@ -1879,7 +1879,7 @@
                 </control>
 
                 <control type="group" id="218">
-                    <visible>IntegerGreaterThan(Container(201).ListItem.Property(slice.offset),0)</visible>
+                    <visible>Integer.IsGreater(Container(201).ListItem.Property(slice.offset),0)</visible>
                     <control type="button" id="217">
                         <left>-1020</left>
                         <top>0</top>
@@ -1902,7 +1902,7 @@
 
         <control type="group">
             <description>Seek bar for DVR</description>
-            <visible>[!IsEmpty(Window.Property(show.seekbar)) + Player.HasVideo()] | [!IsEmpty(Window(10000).Property(script.hdhomerun.view.playing.dvr)) + [Player.Paused | Player.Seeking | Player.DisplayAfterSeek | Player.Forwarding | Player.Rewinding]]</visible>
+            <visible>[!String.IsEmpty(Window.Property(show.seekbar)) + Player.HasVideo()] | [!String.IsEmpty(Window(10000).Property(script.hdhomerun.view.playing.dvr)) + [Player.Paused | Player.Seeking | Player.DisplayAfterSeek | Player.Forwarding | Player.Rewinding]]</visible>
             <posx>40</posx>
             <posy>960</posy>
             <control type="image">
@@ -1981,7 +1981,7 @@
         </control>
 
         <control type="group">
-            <visible>!IsEmpty(Window.Property(loading.progress))</visible>
+            <visible>!String.IsEmpty(Window.Property(loading.progress))</visible>
             <posx>760</posx>
             <posy>340</posy>
 
@@ -1995,7 +1995,7 @@
             </control>
 
             <control type="image">
-                <visible>StringCompare(Window.Property(loading.progress),25)</visible>
+                <visible>String.IsEqual(Window.Property(loading.progress),25)</visible>
                 <animation effect="zoom" start="24,100" end="50,100" center="0,69" time="1000">Visible</animation>
                 <posx>80</posx>
                 <posy>137</posy>
@@ -2004,7 +2004,7 @@
                 <texture>script-hdhomerun-view-splash_progress_bar.png</texture>
             </control>
             <control type="image">
-                <visible>StringCompare(Window.Property(loading.progress),50)</visible>
+                <visible>String.IsEqual(Window.Property(loading.progress),50)</visible>
                 <animation effect="zoom" start="50,100" end="75,100" center="0,69" time="1000">Visible</animation>
                 <posx>80</posx>
                 <posy>137</posy>
@@ -2013,7 +2013,7 @@
                 <texture>script-hdhomerun-view-splash_progress_bar.png</texture>
             </control>
             <control type="image">
-                <visible>StringCompare(Window.Property(loading.progress),75)</visible>
+                <visible>String.IsEqual(Window.Property(loading.progress),75)</visible>
                 <animation effect="zoom" start="75,100" end="100,100" center="0,69" time="1000">Visible</animation>
                 <posx>80</posx>
                 <posy>137</posy>
@@ -2022,7 +2022,7 @@
                 <texture>script-hdhomerun-view-splash_progress_bar.png</texture>
             </control>
             <control type="image">
-                <visible>StringCompare(Window.Property(loading.progress),100)</visible>
+                <visible>String.IsEqual(Window.Property(loading.progress),100)</visible>
                 <posx>80</posx>
                 <posy>137</posy>
                 <width>249</width>
@@ -2052,7 +2052,7 @@
         </control>
 
         <control type="group">
-            <visible>!IsEmpty(Window(10000).Property(script.hdhomerun.view.busy)) + [!Player.HasVideo | !IsEmpty(Window.Property(show.overlay))]</visible>
+            <visible>!String.IsEmpty(Window(10000).Property(script.hdhomerun.view.busy)) + [!Player.HasVideo | !String.IsEmpty(Window.Property(show.overlay))]</visible>
             <posx>1367</posx>
             <posy>860</posy>
 

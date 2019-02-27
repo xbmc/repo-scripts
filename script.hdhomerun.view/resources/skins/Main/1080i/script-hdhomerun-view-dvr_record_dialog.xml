@@ -155,7 +155,7 @@
                 <onright>217</onright>
                 <orientation>horizontal</orientation>
                 <control type="button" id="208">
-                    <visible>!IsEmpty(Window.Property(show.watch))</visible>
+                    <visible>!String.IsEmpty(Window.Property(show.watch))</visible>
                     <width>200</width>
                     <height>70</height>
                     <label>[B]WATCH[/B]</label>
@@ -165,7 +165,7 @@
                     <texturenofocus border="6">script-hdhomerun-view-flat_button_nf.png</texturenofocus>
                 </control>
                 <control type="button" id="206">
-                    <visible>!IsEmpty(Window.Property(show.hasRule))</visible>
+                    <visible>!String.IsEmpty(Window.Property(show.hasRule))</visible>
                     <width>250</width>
                     <height>70</height>
                     <label>[B]PRIORITY[/B]</label>
@@ -175,7 +175,7 @@
                     <texturenofocus border="6">script-hdhomerun-view-flat_button_nf.png</texturenofocus>
                 </control>
                 <control type="button" id="205">
-                    <visible>!IsEmpty(Window.Property(show.hasRule)) + IsEmpty(Window.Property(is.movie))</visible>
+                    <visible>!String.IsEmpty(Window.Property(show.hasRule)) + String.IsEmpty(Window.Property(is.movie))</visible>
                     <width>250</width>
                     <height>70</height>
                     <label>[B]$INFO[Window.Property(record.always)][/B]</label>
@@ -185,7 +185,7 @@
                     <texturenofocus border="6">script-hdhomerun-view-flat_button_nf.png</texturenofocus>
                 </control>
                 <control type="button" id="203">
-                    <visible>IsEmpty(Window.Property(show.hasRule))</visible>
+                    <visible>String.IsEmpty(Window.Property(show.hasRule))</visible>
                     <width>250</width>
                     <height>70</height>
                     <label>[B]$ADDON[script.hdhomerun.view 32824][/B]</label>
@@ -195,7 +195,7 @@
                     <texturenofocus border="6">script-hdhomerun-view-flat_button_nf.png</texturenofocus>
                 </control>
                 <!-- <control type="button" id="209">
-                    <visible>!IsEmpty(Window.Property(has.teams))</visible>
+                    <visible>!String.IsEmpty(Window.Property(has.teams))</visible>
                     <width>200</width>
                     <height>70</height>
                     <label>[B]TEAMS[/B]</label>
@@ -205,7 +205,7 @@
                     <texturenofocus border="6">script-hdhomerun-view-flat_button_nf.png</texturenofocus>
                 </control> -->
                 <control type="button" id="207">
-                    <visible>!IsEmpty(Window.Property(show.hasRule))</visible>
+                    <visible>!String.IsEmpty(Window.Property(show.hasRule))</visible>
                     <width>280</width>
                     <height>70</height>
                     <label>[B]DELETE TASK[/B]</label>
@@ -215,7 +215,7 @@
                     <texturenofocus border="6">script-hdhomerun-view-flat_button_nf.png</texturenofocus>
                 </control>
                 <control type="button" id="204">
-                    <visible>!IsEmpty(Window.Property(show.hide))</visible>
+                    <visible>!String.IsEmpty(Window.Property(show.hide))</visible>
                     <width>240</width>
                     <height>70</height>
                     <label>[B]$INFO[Window.Property(show.hide)][/B]</label>
@@ -416,7 +416,7 @@
                                 <label>$INFO[ListItem.Property(channel.name)]</label>
                             </control>
                             <control type="image">
-                                <visible>!IsEmpty(ListItem.Property(has.rule))</visible>
+                                <visible>!String.IsEmpty(ListItem.Property(has.rule))</visible>
                                 <posx>164</posx>
                                 <posy>10</posy>
                                 <width>16</width>
@@ -622,7 +622,7 @@
                                 <label>$INFO[ListItem.Property(channel.name)]</label>
                             </control>
                             <control type="image">
-                                <visible>!IsEmpty(ListItem.Property(has.rule))</visible>
+                                <visible>!String.IsEmpty(ListItem.Property(has.rule))</visible>
                                 <posx>164</posx>
                                 <posy>10</posy>
                                 <width>16</width>
@@ -833,7 +833,7 @@
         </control>
 
         <control type="group">
-            <visible>!IsEmpty(Window(10000).Property(script.hdhomerun.view.busy))</visible>
+            <visible>!String.IsEmpty(Window(10000).Property(script.hdhomerun.view.busy))</visible>
             <posx>1367</posx>
             <posy>860</posy>
 

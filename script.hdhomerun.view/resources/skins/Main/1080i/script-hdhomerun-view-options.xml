@@ -5,8 +5,8 @@
         <posx>0</posx>
         <posy>0</posy>
     </coordinates>
-    <animation effect="slide" start="0,1080" end="0,0" time="300" reversible="false" condition="!IsEmpty(Window(10000).Property(script.hdhomerun.view.window.animations))">WindowOpen</animation>
-    <animation effect="slide" start="0,0" end="0,-1080" time="300" reversible="false" condition="!IsEmpty(Window(10000).Property(script.hdhomerun.view.window.animations))">WindowClose</animation>
+    <animation effect="slide" start="0,1080" end="0,0" time="300" reversible="false" condition="!String.IsEmpty(Window(10000).Property(script.hdhomerun.view.window.animations))">WindowOpen</animation>
+    <animation effect="slide" start="0,0" end="0,-1080" time="300" reversible="false" condition="!String.IsEmpty(Window(10000).Property(script.hdhomerun.view.window.animations))">WindowClose</animation>
     <controls>
         <control type="image">
             <posx>0</posx>
@@ -42,7 +42,7 @@
             </control>
 
             <control type="button" id="248">
-                <visible>!Player.HasVideo | !IsEmpty(Window(10000).Property(script.hdhomerun.view.playing.dvr))</visible>
+                <visible>!Player.HasVideo | !String.IsEmpty(Window(10000).Property(script.hdhomerun.view.playing.dvr))</visible>
                 <width>256</width>
                 <height>256</height>
                 <label>[B]LIVE TV[/B]</label>

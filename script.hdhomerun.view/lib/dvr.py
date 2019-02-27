@@ -839,9 +839,9 @@ class DVRBase(util.CronReceiver):
             elif idx == 1:
                 self.deleteRule()
 
-        except hdhr.errors.RuleModException, e:
+        except hdhr.errors.RuleModException as e:
             util.showNotification(e.message,header=T(32827))
-        except hdhr.errors.RuleDelException, e:
+        except hdhr.errors.RuleDelException as e:
             util.showNotification(e.message,header=T(32828))
 
     @util.busyDialog('UPDATING')
