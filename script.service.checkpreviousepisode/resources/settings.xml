@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <settings>
-  <setting id="BrowseForShow" type="bool" label="32008" default="true"/>
-  <setting id="IgnoreIfEpisodeAbsentFromLibrary" type="bool" label="32009" default="false"/>    
+  <setting id="ForceBrowseForShow" type="bool" label="32050" default="false"/>
+  <setting id="IgnoreIfEpisodeAbsentFromLibrary" type="bool" label="32051" default="false"/>
+  <setting id="ManageIgnored" label="32052" type="action" action="RunScript($ID,ManageIgnored)"/>    
 </settings>
