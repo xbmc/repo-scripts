@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="screensaver.videosaver" name="Video ScreenSaver" version="1.0.2" provider-name="Lunatixz">
+<addon id="screensaver.videosaver" name="Video ScreenSaver" version="1.0.3" provider-name="Lunatixz">
     <requires>
         <import addon="xbmc.python" version="2.25.0"/>
     </requires>
@@ -16,7 +16,7 @@
         <source>https://github.com/Lunatixz/Kodi_Addons/tree/master/screensaver.videosaver</source>
         <disclaimer lang="en_GB" >Streaming sources not recommend for metered Internet.</disclaimer>
 		<disclaimer lang="es_ES" >Se recomienda no usar recursos en Streaming para conexiones a Internet de uso medido.</disclaimer>	
-        <news>v.1.0.2[CR]- Misc. Improvements[CR]- Added Mute Audio[CR]- Spanish Translation (Thanks roliverosc).[CR]v.1.0.1[CR]- Fixed MultiVideo[CR]- Added RepeatOFF</news>
+        <news>v.1.0.3[CR]- Fixed PVR playback[CR]- Fixed Auto Repeat[CR]- v.1.0.2[CR]- Misc. Improvements[CR]- Added Mute Audio[CR]- Spanish Translation (Thanks roliverosc).[CR]v.1.0.1[CR]- Fixed MultiVideo[CR]- Added RepeatOFF</news>
         <assets>
             <icon>resources/images/icon.png</icon>
             <fanart>resources/images/fanart.jpg</fanart>
