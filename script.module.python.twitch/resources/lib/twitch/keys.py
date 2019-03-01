@@ -3,7 +3,7 @@
     string constants
 
     Copyright (C) 2012-2016 python-twitch (https://github.com/ingwinlu/python-twitch)
-    Copyright (C) 2016-2018 script.module.python.twitch
+    Copyright (C) 2016-2019 script.module.python.twitch
 
     This file is part of script.module.python.twitch
 
@@ -29,6 +29,7 @@ CHANNEL = 'channel'
 CHANNEL_FEED_ENABLED = 'channel_feed_enabled'
 CHANNEL_ID = 'channel_id'
 CLIP = 'clip'
+CODE = 'code'
 COLLECTION_ID = 'collection_id'
 COMMENT_ID = 'comment_id'
 COMMENTS = 'comments'
@@ -100,6 +101,8 @@ STARTED_AT = 'started_at'
 STATUS = 'status'
 STREAM_TYPE = 'stream_type'
 SUMMARY = 'summary'
+TAG_ID = 'tag_id'
+TAG_IDS = 'tag_ids'
 TAG_LIST = 'tag_list'
 TARGET_ID = 'target_id'
 TEAM = 'team'
