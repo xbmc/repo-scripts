@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.module.python.twitch" name="python-twitch for Kodi" version="2.0.5" provider-name="A Talented Community">
+<addon id="script.module.python.twitch" name="python-twitch for Kodi" version="2.0.6" provider-name="A Talented Community">
     <requires>
         <import addon="xbmc.python" version="2.20.0"/>
         <import addon="script.module.six" version="1.11.0"/>
@@ -9,9 +9,7 @@
     <extension point="xbmc.addon.metadata">
         <platform>all</platform>
         <news>
-[add] add frame rate and resolution to returned stream information
-[upd] update usher parameters
-[upd] use SPDX license identifiers
+[add] add missing helix api endpoints
         </news>
         <assets>
             <icon>icon.png</icon>

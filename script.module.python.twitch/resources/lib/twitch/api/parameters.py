@@ -10,7 +10,7 @@
     See LICENSES/GPL-3.0-only for more information.
 """
 
-from six.moves import xrange
+from six.moves import range
 
 from base64 import b64decode
 
@@ -223,7 +223,7 @@ class IntRange(_Parameter):
 
     @classmethod
     def __init__(cls, first, last):
-        cls._valid = [i for i in xrange(first, last + 1)]
+        cls._valid = [i for i in range(first, last + 1)]
 
 
 class ItemCount(object):

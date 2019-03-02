@@ -1,3 +1,6 @@
+2.0.6
+[add] add missing helix api endpoints
+
 2.0.5
 [add] add frame rate and resolution to returned stream information
 [upd] update usher parameters
