@@ -1,4 +1,4 @@
-#   Copyright (C) 2018 Lunatixz
+#   Copyright (C) 2019 Lunatixz
 #
 #
 # This file is part of Video ScreenSaver.
@@ -24,6 +24,7 @@ ADDON_ID       = 'screensaver.videosaver'
 REAL_SETTINGS  = xbmcaddon.Addon(id=ADDON_ID)
 ADDON_NAME     = REAL_SETTINGS.getAddonInfo('name')
 ADDON_VERSION  = REAL_SETTINGS.getAddonInfo('version')
+ICON           = REAL_SETTINGS.getAddonInfo('icon')
 ADDON_PATH     = (REAL_SETTINGS.getAddonInfo('path').decode('utf-8'))
 SETTINGS_LOC   = REAL_SETTINGS.getAddonInfo('profile').decode('utf-8')
 XSP_CACHE_LOC  = os.path.join(SETTINGS_LOC, 'cache','')
@@ -157,6 +158,7 @@ class Start():
         log('buildItems')
         if 'result' in responce and 'filedetails' in responce['result']: key = 'filedetails'
         elif 'result' in responce and 'files' in responce['result']: key = 'files'
+        else: xbmcgui.Dialog().notification(ADDON_NAME, LANGUAGE(30001), ICON, 4000)
         for item in responce['result'][key]:
             if key == 'files' and item.get('filetype','') == 'directory': continue
             yield responce['result'][key]['file']
@@ -178,10 +180,9 @@ class Start():
         
     def buildPlaylist(self):
         log('buildPlaylist')
-        xbmc.executebuiltin("PlayerControl(RepeatAll)")
         self.playList = xbmc.PlayList(xbmc.PLAYLIST_VIDEO)
         self.playList.clear()
-        xbmc.sleep(500)
+        xbmc.sleep(1000)
         if not self.singleVideo:
             videoLimit   = int(REAL_SETTINGS.getSetting("VideoLimit"))
             videoPath    = REAL_SETTINGS.getSetting("VideoFolder")
@@ -193,13 +194,15 @@ class Start():
                 playListItem = self.buildDirectory(self.getSmartPlaylist(videoPath),videoLimit)
             else:
                 videoPath = REAL_SETTINGS.getSetting("VideoFile")
-                if not videoPath.startswith(('plugin','upnp')): playListItem = list(self.buildItems(self.getFileDetails(videoPath)))
+                if not videoPath.startswith(('plugin','upnp','pvr')): playListItem = list(self.buildItems(self.getFileDetails(videoPath)))
                 else: playListItem = [videoPath]
                     
         for idx, playItem in enumerate(playListItem): self.playList.add(playItem, index=idx)
         if not self.videoRandom: self.playList.unshuffle()
         else: self.playList.shuffle()
         self.myPlayer.play(self.playList)
+        xbmc.executebuiltin("PlayerControl(RepeatAll)")
+        xbmc.executebuiltin("Action(Fullscreen)")
         self.background.doModal()
 
 if __name__ == '__main__': Start()

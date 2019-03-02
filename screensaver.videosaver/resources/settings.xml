@@ -8,6 +8,6 @@
     <setting id="TraktDisable" type="bool"      label="32007" default="true"/>
     <setting id="LockAction"   type="bool"      label="32008" default="false"/>
     <setting id="Enable_Mute"  type="bool"      label="32011" default="false"/>
-    <setting id="Enable_Debugging" type="bool"  label="30000" default="false" />
+    <setting id="Enable_Debugging" type="bool"  label="32012" default="false" />
 </settings>
         
