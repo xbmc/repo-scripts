@@ -395,7 +395,10 @@ class LcdBase():
         linetext = ""
       else:
         # prepare text line for XBMC's expected encoding
-        linetext = line.text.strip()
+        if self.m_InfoLabels._py2compat:
+          linetext = line.text.strip().encode("utf-8", errors="ignore")
+        else:
+          linetext = line.text.strip()
 
       # make sure linetext has something so re.match won't fail
       if linetext != "":

@@ -64,7 +64,7 @@ class InfoLabels():
         return int(xbmcgui.getCurrentWindowId())
 
     def timeToSecs(self, timeAr):
-    # initialise return
+        # initialise return
         currentSecs = 0
 
         arLen = len(timeAr)
