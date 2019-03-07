@@ -1,0 +1,431 @@
+# XBMC Media Center language file
+# Addon Name: Janitor
+# Addon id: script.service.janitor
+# Addon version: 4.3.2
+# Addon Provider: Anthirian, drewzh
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC-Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: 2014-04-10 16:23+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: kugan49 <kugan49@gmail.com>\n"
+"Language-Team: FR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: fr\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+
+msgctxt "Addon Summary"
+msgid "Regularly deletes old movies, TV show episodes and music videos"
+msgstr "Supprime régulièrement les vieux films, vielles séries TV et vieux clips musicaux"
+
+msgctxt "Addon Description"
+msgid "This addon will automatically scan your library for watched movies, TV show episodes and music videos, and delete them from the file system based on numerous critia such as age, rating, free disk space, etc. All these options and more can be configured via the addon's settings. Also make sure you set the correct path to the disk you wish to check for free space, especially when you store your videos on a secondary drive or a network share. Through the settings you can view which videos have been cleaned.\n\nBeware!\nThis addon has the potential to erase your entire video collection! Please make sure you understand exactly what this addon is designed to do before enabling any type of cleaning in the settings. I will not be held responsible for loss of data due to user error.\n\nOriginally developed by Andrew 'drewzh' Higginson (xbmcfilecleaner@drewzh.com)"
+msgstr "Cet add-on va scanner automatiquement  votre librairie, pour supprimer ou archiver les films, séries TV et clips musicaux basés sur de nombreux critères comme la date de visionnage, la note, l'espace disque, etc. Toutes ces options peuvent être configurées via les paramètres de l'Addon. Assurez vous de renseigner le bon chemin d'accès pour vérifier l'espace disque, spécialement lorsque vous archivez dans un second disque ou un emplacement réseau. Dans les paramètres vous pouvez accéder à l'historique des vidéos nettoyées."
+
+msgctxt "Addon Disclaimer"
+msgid "It is recommended to not delete videos permanently until you are familiar with all of the settings."
+msgstr "IL est recommandé de ne pas supprimer physiquement de vidéos avant de bien maitriser les réglages."
+
+
+# Actions section
+# =======================
+msgctxt "#32100"
+msgid "Actions"
+msgstr "Actions"
+
+msgctxt "#32101"
+msgid "[B]Which videos do you want to clean?[/B]"
+msgstr "[B]Quel type de vidéos voulez-vous netttoyer ?[/B]"
+
+msgctxt "#32102"
+msgid "Default action"
+msgstr "Action par défaut"
+
+msgctxt "#32103"
+msgid "Clean up"
+msgstr "Nettoyer"
+
+msgctxt "#32104"
+msgid "View log"
+msgstr "Voir le Log"
+
+msgctxt "#32105"
+msgid "Cleaning type"
+msgstr "Type de nettoyage"
+
+msgctxt "#32106"
+msgid "Move elsewhere"
+msgstr "Déplacer ailleurs"
+
+msgctxt "#32107"
+msgid "Delete permanently"
+msgstr "Suppression permanente"
+
+msgctxt "#32108"
+msgid "[I]Please specify where to store watched videos [/I]"
+msgstr "[I]Merci de préciser ou vous souhaitez stocker les fichiers vus[/I]"
+
+msgctxt "#32109"
+msgid "Holding folder location"
+msgstr "Emplacement du dossier de sauvegarde"
+
+msgctxt "#32110"
+msgid "Create subdirectories (i.e. [B]../Artist[/B], [B]../Movie[/B] and [B]../Show[/B])"
+msgstr "Créer des sous répertoires (i.e. [B]../Artist[/B], [B]../Movie[/B] and [B]../Show[/B])"
+
+msgctxt "#32111"
+msgid "Clean movies"
+msgstr "Nettoyer les films"
+
+msgctxt "#32112"
+msgid "Clean TV shows"
+msgstr "Nettoyer les séries TV"
+
+msgctxt "#32113"
+msgid "Clean music videos"
+msgstr "Nettoyer les clips musicaux"
+
+msgctxt "#32114"
+msgid "Clean Kodi video library afterwards"
+msgstr "Nettoyer la librairie Kodi après traitement"
+
+msgctxt "#32115"
+msgid "Also delete empty folders"
+msgstr "Supprimer aussi les dossier vides"
+
+msgctxt "#32116"
+msgid "Ignore files with the following extensions (separate with commas)"
+msgstr "Ignorer les fichiers avec les extensions suivante (separés par des virgules)"
+
+msgctxt "#32117"
+msgid "Also clean related files with similar names (e.g. subtitles)"
+msgstr "Nettoyer aussi les fichiers avec le même non (e.G. sous titres)"
+
+
+
+# Frequency section
+# =======================
+msgctxt "#32200"
+msgid "Frequency"
+msgstr "Fréquence"
+
+msgctxt "#32201"
+msgid "[B]When should watched videos be cleaned?[/B]"
+msgstr "[B]Quand la vidéo doit être nettoyée ?[/B]"
+
+msgctxt "#32202"
+msgid "Run as a service"
+msgstr "Lancer en tant que service"
+
+msgctxt "#32203"
+msgid "Delayed start (in minutes)"
+msgstr "Lancement retardé (en minutes)"
+
+msgctxt "#32204"
+msgid "Scan interval (in minutes)"
+msgstr "Interval de scan (en minutes)"
+
+msgctxt "#32205"
+msgid "Do not clean during playback"
+msgstr "Ne pas nettoyer pendant la lecture"
+
+msgctxt "#32206"
+msgid "Start cleaning right after playback stops"
+msgstr "Lancer le nettoyage juste après l'arrêt de la lecture"
+
+
+# Conditions section
+# =======================
+msgctxt "#32300"
+msgid "Conditions"
+msgstr "Conditions"
+
+msgctxt "#32301"
+msgid "[B]Which conditions must be met before a watched video is cleaned?[/B]"
+msgstr "[B]Quelles conditions doivent être remplies avant de nettoyer une video vue?[/B]"
+
+msgctxt "#32302"
+msgid "Wait a certain number of days after watching before cleaning"
+msgstr "Attendre un certain nombre de jours après que la vidéo ait été vue pour nettoyer"
+
+msgctxt "#32303"
+msgid "Days after which a video is considered to have expired"
+msgstr "Nombre de jours à attendre pour que la vidéo puisse être nettoyée"
+
+msgctxt "#32304"
+msgid "Only delete videos with low ratings"
+msgstr "Nettoyer uniquement les videos avec de mauvaises notes"
+
+msgctxt "#32305"
+msgid "[I]Note that music videos do not have ratings and ignore these settings [/I]"
+msgstr "[I]Nota :les clips musicaux n'ont pas de notes, ces réglages ne seront pas pris en compte[/I]"
+
+msgctxt "#32306"
+msgid "Delete a video with a rating lower than"
+msgstr "Nettoyer une vidéo avec une note inférieure à "
+
+msgctxt "#32307"
+msgid "Ignore videos without rating"
+msgstr "Ingnorer les vidéos sans note"
+
+msgctxt "#32308"
+msgid "Only clean videos if low on disk space"
+msgstr "Nettoyer seulement en cas de manque d'espace disque"
+
+msgctxt "#32309"
+msgid "Minimum percentage of free disk space"
+msgstr "Pourcentage minimun d'espace disque libre"
+
+msgctxt "#32310"
+msgid "Path to check for free disk space"
+msgstr "Chemin pour vérifier l'espace disque"
+
+msgctxt "#32311"
+msgid "Do not clean videos that are still in progress"
+msgstr "Ne pas nettoyer les vidéos qui sont ne pas entièrement lues"
+
+msgctxt "#32312"
+msgid "[I]Note that music videos cannot be partially played and will ignore this [/I]"
+msgstr "[I]Nota :les clips musicaux ne peuvent pas être partiellement vus, ces réglages ne seront pas pris en compte[/I]"
+
+msgctxt "#32313"
+msgid "Do not clean videos that have hard links (e.g. seeding torrents)"
+msgstr "Ne pas nettoyer des videos avec des liens actifs (e.g. partage torrent en cours)"
+
+# Exclusions section
+# ==================
+msgctxt "#32400"
+msgid "Exclusions"
+msgstr "Exclusions"
+
+msgctxt "#32401"
+msgid "[B]Which paths must not be touched?[/B]"
+msgstr "[B]Quels répertoires ne doivent pas être traités?[/B]"
+
+msgctxt "#32402"
+msgid "Enable exclusions"
+msgstr "Autoriser les exclusions"
+
+msgctxt "#32403"
+msgid "[I]Use the same type of path (local, NFS, SMB) you use for the library [/I]"
+msgstr "[I]Utilisez le même type d'accès à vos répertoires que ceux présents dans la librairie (local, NFS, SMB)[/I]"
+
+msgctxt "#32404"
+msgid "Path to exclude"
+msgstr "Chemin à exclure"
+
+msgctxt "#32405"
+msgid "Reset exclusions"
+msgstr "Réinitialiser les exclusions"
+
+# Notifications section
+# =======================
+msgctxt "#32500"
+msgid "Notifications"
+msgstr "Notifications"
+
+msgctxt "#32501"
+msgid "[B]How much information do you want to get?[/B]"
+msgstr "[B]Comment voulez vous être averti?[/B]"
+
+msgctxt "#32502"
+msgid "Show notifications"
+msgstr "Montrer les notifications"
+
+msgctxt "#32503"
+msgid "Do not show notifications during video playback"
+msgstr "Ne pas montrer les notifications pendant la lecture video"
+
+msgctxt "#32504"
+msgid "Enable debug messages"
+msgstr "Autoriser les messages de debugage"
+
+
+# Localization strings
+# for Kodi notifications
+# =======================
+msgctxt "#32511"
+msgid "Error reading hard disk. Please check your settings."
+msgstr "Erreur de lecture du disque dur. Merci de vérifier vos paramètres"
+
+msgctxt "#32512"
+msgid "Could not check disk space. Access denied."
+msgstr "Vérification de l'espace disque impossible. Accès refusé"
+
+msgctxt "#32513"
+msgid "Could not check disk space. Path does not exist."
+msgstr "Vérification de l'espace disque impossible. Le chemin n'existe pas"
+
+msgctxt "#32514"
+msgid "Cleaning results"
+msgstr "Resultats du nettoyage"
+
+msgctxt "#32515"
+msgid "movie(s)"
+msgstr "Film(s)"
+
+msgctxt "#32516"
+msgid "episode(s)"
+msgstr "Série(s) TV"
+
+msgctxt "#32517"
+msgid "music video(s)"
+msgstr "Clip(s)"
+
+#Suffix for cleaning results. Do not remove the single leading whitespace!
+msgctxt "#32518"
+msgid " were cleaned"
+msgstr " ont été nettoyés"
+
+msgctxt "#32519"
+msgid "Would you like to view the cleaning log?"
+msgstr "Voulez vous ouvrir le log de nettoyage"
+
+#TODO: change to more general description why cleaning was not performed
+msgctxt "#32520"
+msgid "No cleaning performed"
+msgstr "Pas de nettoyage à faire"
+
+msgctxt "#32521"
+msgid "The destination folder is not set up."
+msgstr "Le repertoire de destination n'est pas défini."
+
+msgctxt "#32522"
+msgid "You must first select a holding folder."
+msgstr "Vous devez selectionner un repertoire de sauvegarde"
+
+msgctxt "#32523"
+msgid "Would you like to do this now?"
+msgstr "Voulez vous lancer maintenant ?"
+
+# Temporary, until Linux remote share disk space checks are supported
+msgctxt "#32524"
+msgid "Remote disk space checking is not supported for your OS yet"
+msgstr "La recherhce d'espace disque sur les disque réseau n'est pas supporté par votre OS"
+
+# Log section
+# =======================
+
+msgctxt "#32600"
+msgid "History"
+msgstr "Historique"
+
+msgctxt "#32601"
+msgid "[B]See which files have been cleaned recently.[/B]"
+msgstr "[B]montre les fihciers récemment nettoyés.[/B]"
+
+msgctxt "#32602"
+msgid "View cleaning history"
+msgstr "Voir l'historique de nettoyage"
+
+msgctxt "#32603"
+msgid "[B]Cleaning Log[/B]"
+msgstr "[B]Log nettoyage[/B]"
+
+msgctxt "#32604"
+msgid "Are you sure?"
+msgstr "Etess-vous sûr?"
+
+msgctxt "#32605"
+msgid "This will trim the log file, keeping the first 25 lines."
+msgstr "Vous allez tronquer le fichier log pour ne garder que les 25 premières lignes"
+
+msgctxt "#32606"
+msgid "This will delete the entire contents of the log file."
+msgstr "Vous allez supprimer l'intégralité du fichier log"
+
+msgctxt "#32607"
+msgid "This action is irreversible. Do you wish to continue?"
+msgstr "Cette action est irréversible, voulez-vous continuer ?"
+
+msgctxt "#32608"
+msgid "Trim"
+msgstr "Tronquer"
+
+msgctxt "#32609"
+msgid "Clear"
+msgstr "Vider"
+
+msgctxt "#32610"
+msgid "This will reset any exclusions you have set up."
+msgstr "Vous allez réinitiliser toutes les exclusions paramétrées"
+
+msgctxt "#32611"
+msgid "Errors occurred while moving"
+msgstr "une erreur est apparue pendant le déplacement"
+
+msgctxt "#32612"
+msgid "Not all files could be moved to the holding folder."
+msgstr "Tous les fichiers ne peuvent être déplacés dans le dossier de sauvegarde"
+
+msgctxt "#32613"
+msgid "Ensure you have appropriate permissions and try again."
+msgstr "Assurez-vous d'avoir les droits sur le répertoire puis reessayez"
+
+msgctxt "#32614"
+msgid "Please check the log file for details and move the particular files manually."
+msgstr "Merci de vérifier le fichier log pour les détails et déplacer les fichiers manuellement"
+
+
+# Progress dialog translations. Keep the text between brackets as is! All dialogs have three lines we need to fill.
+msgctxt "#32615"
+msgid " "
+msgstr " " # One space is required to remove line from previous dialog
+
+msgctxt "#32616"
+msgid "[B]{amount}[/B] {type} have expired."
+msgstr "[B]{amount}[/B] {type} a expiré."
+
+msgctxt "#32617"
+msgid "Testing for exclusions."
+msgstr "Vérification des exclusions"
+
+# Create progress dialog
+msgctxt "#32618"
+msgid "Cleaning {type}"
+msgstr "Nettoyage {type}"
+
+msgctxt "#32619"
+msgid "Starting cleaning routine."
+msgstr "Démarrage programme de nettoyage"
+
+# No videos match cleaning criteria
+msgctxt "#32621"
+msgid "Cleaning not required."
+msgstr "Nettoyage pas nécessaire"
+
+msgctxt "#32622"
+msgid "Watch some videos or"
+msgstr "Reardez des vidéos ou"
+
+msgctxt "#32623"
+msgid "adjust your settings."
+msgstr "modifiez vos paramètres"
+
+# Cleaning of this video type is not enabled
+msgctxt "#32624"
+msgid "Cleaning {type} is disabled."
+msgstr "Néttoyage de {type} est désactivé."
+
+msgctxt "#32625"
+msgid "Skipping cleaning."
+msgstr "Annulation nettoyage"
+
+msgctxt "#32626"
+msgid "movies"
+msgstr films"
+
+msgctxt "#32627"
+msgid "music videos"
+msgstr "clips musicaux"
+
+msgctxt "#32628"
+msgid "episodes"
+msgstr "séries TV"
+
+msgctxt "#32629"
+msgid "[B]Cleaning {type}[/B]"
+msgstr "[B]Nettoyage {type}[/B]"
