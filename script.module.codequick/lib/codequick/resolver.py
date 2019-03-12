@@ -96,6 +96,7 @@ class Resolver(Script):
     def __init__(self):
         super(Resolver, self).__init__()
         self.playlist = xbmc.PlayList(xbmc.PLAYLIST_VIDEO)
+        self._extra_commands = {}  # Extra options that are passed to listitem
 
     def create_loopback(self, url, **next_params):  # Undocumented
         """
@@ -201,8 +202,13 @@ class Resolver(Script):
         if video_info:
             if video_info.hasMultipleStreams():
                 # More than one stream found, Ask the user to select a stream
-                return self._source_selection(video_info)
-            else:
+                video_info = self._source_selection(video_info)
+
+            if video_info:
+                # Content Lookup needs to be disabled for dailymotion videos to work
+                if video_info.sourceName == "dailymotion":
+                    self._extra_commands["setContentLookup"] = False
+
                 return video_info.streamURL()
 
         # Raise any stored errors
@@ -246,8 +252,7 @@ class Resolver(Script):
         Ask user with video stream to play.
 
         :param video_info: YDStreamExtractor video_info object.
-        :returns: Stream url of video
-        :rtype: str
+        :returns: video_info object with the video pre selection.
         """
         display_list = []
         # Populate list with name of extractor ('YouTube') and video title.
@@ -259,7 +264,7 @@ class Resolver(Script):
         ret = dialog.select(self.localize(SELECT_PLAYBACK_ITEM), display_list)
         if ret >= 0:
             video_info.selectStream(ret)
-            return video_info.streamURL()
+            return video_info
 
     def _create_playlist(self, urls):
         """
@@ -368,6 +373,11 @@ class Resolver(Script):
             listitem = xbmcgui.ListItem()
         else:
             raise RuntimeError(self.localize(NO_VIDEO))
+
+        # Add extra parameters to listitem
+        if "setContentLookup" in self._extra_commands:
+            value = self._extra_commands["setContentLookup"]
+            listitem.setContentLookup(value)
 
         # Send playable listitem to kodi
         xbmcplugin.setResolvedUrl(self.handle, bool(resolved), listitem)
