@@ -1,3 +1,6 @@
+v5.5.14
+- stop searching for lyrics when exiting the visualization screen
+
 v5.5.13
 - fix negative offset
 

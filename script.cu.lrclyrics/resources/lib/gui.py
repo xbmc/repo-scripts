@@ -97,7 +97,7 @@ class MAIN():
             if lyrics.lyrics:
                 log('found lyrics in memory')
                 return lyrics
-        if song.title:
+        if song.title and xbmc.getCondVisibility('Window.IsVisible(12006)'):
             lyrics = self.find_lyrics(song)
             if lyrics.lyrics and ADDON.getSetting('strip') == 'true':
                 if isinstance (lyrics.lyrics,str):
@@ -109,7 +109,7 @@ class MAIN():
                 strip_c = re.sub(ur'[\u3000-\u9fff]+', '', strip_k2)
                 lyrics.lyrics = strip_c.encode('utf-8').replace('：',':') #replace fullwith colon (not present in many font files)
         # no song title, we can't search online. try matching local filename
-        elif (ADDON.getSetting('save_lyrics2') == 'true'):
+        elif (ADDON.getSetting('save_lyrics2') == 'true') and xbmc.getCondVisibility('Window.IsVisible(12006)'):
             lyrics = self.get_lyrics_from_file(song, True)
             if not lyrics:
                 lyrics = self.get_lyrics_from_file(song, False)
@@ -118,14 +118,15 @@ class MAIN():
             lyrics.song = song
             lyrics.source = ''
             lyrics.lyrics = ''
-        self.save_lyrics_to_memory(lyrics)
+        if xbmc.getCondVisibility('Window.IsVisible(12006)'):
+            self.save_lyrics_to_memory(lyrics)
         return lyrics
 
     def find_lyrics(self, song):
         # search embedded lrc lyrics
         ext = os.path.splitext(song.filepath.decode('utf-8'))[1].lower()
         sup_ext = ['.mp3', '.flac']
-        if (ADDON.getSetting('search_embedded') == 'true') and song.analyze_safe and (ext in sup_ext):
+        if (ADDON.getSetting('search_embedded') == 'true') and song.analyze_safe and (ext in sup_ext) and xbmc.getCondVisibility('Window.IsVisible(12006)'):
             log('searching for embedded lrc lyrics')
             try:
                 lyrics = getEmbedLyrics(song, True)
@@ -135,21 +136,21 @@ class MAIN():
                 log('found embedded lrc lyrics')
                 return lyrics
         # search lrc lyrics from file
-        if (ADDON.getSetting('search_file') == 'true'):
+        if (ADDON.getSetting('search_file') == 'true') and xbmc.getCondVisibility('Window.IsVisible(12006)'):
             lyrics = self.get_lyrics_from_file(song, True)
             if (lyrics):
                 log('found lrc lyrics from file')
                 return lyrics
         # search lrc lyrics by scrapers
         for scraper in self.scrapers:
-            if scraper[3]:
+            if scraper[3] and xbmc.getCondVisibility('Window.IsVisible(12006)'):
                 lyrics = scraper[1].get_lyrics(song)
                 if (lyrics):
                     log('found lrc lyrics online')
                     self.save_lyrics_to_file(lyrics)
                     return lyrics
         # search embedded txt lyrics
-        if (ADDON.getSetting('search_embedded') == 'true' and song.analyze_safe):
+        if (ADDON.getSetting('search_embedded') == 'true' and song.analyze_safe) and xbmc.getCondVisibility('Window.IsVisible(12006)'):
             log('searching for embedded txt lyrics')
             try:
                 lyrics = getEmbedLyrics(song, False)
@@ -159,14 +160,14 @@ class MAIN():
                 log('found embedded txt lyrics')
                 return lyrics
         # search txt lyrics from file
-        if (ADDON.getSetting('search_file') == 'true'):
+        if (ADDON.getSetting('search_file') == 'true') and xbmc.getCondVisibility('Window.IsVisible(12006)'):
             lyrics = self.get_lyrics_from_file(song, False)
             if (lyrics):
                 log('found txt lyrics from file')
                 return lyrics
         # search txt lyrics by scrapers
         for scraper in self.scrapers:
-            if not scraper[3]:
+            if not scraper[3] and xbmc.getCondVisibility('Window.IsVisible(12006)'):
                 lyrics = scraper[1].get_lyrics(song)
                 if (lyrics):
                     log('found txt lyrics online')
@@ -298,8 +299,8 @@ class MAIN():
                 if lyrics.lyrics:
                     # signal the gui thread to display the next lyrics
                     WIN.setProperty('culrc.newlyrics', 'TRUE')
-                    # check if gui is already running
-                    if not WIN.getProperty('culrc.guirunning') == 'TRUE':
+                    # double-check if we're still on the  visualisation screen and check if gui is already running
+                    if xbmc.getCondVisibility('Window.IsVisible(12006)') and not WIN.getProperty('culrc.guirunning') == 'TRUE':
                         WIN.setProperty('culrc.guirunning', 'TRUE')
                         gui = guiThread(mode=self.mode, save=self.save_lyrics_to_file, remove=self.remove_lyrics_from_memory, delete=self.delete_lyrics, function=self.return_time)
                         gui.start()
