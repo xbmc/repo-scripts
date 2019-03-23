@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 INPUTSTREAM_PROTOCOLS = {
     'mpd': 'inputstream.adaptive',
     'ism': 'inputstream.adaptive',
@@ -70,7 +72,7 @@ WIDEVINE_MANIFEST_FILE = 'manifest.json'
 
 WIDEVINE_CONFIG_NAME = 'widevine_config.json'
 
-WIDEVINE_UPDATE_INTERVAL_DAYS = 1
+WIDEVINE_UPDATE_INTERVAL_DAYS = 30
 
 WIDEVINE_LEGACY_VERSION = '1.4.8.903'
 

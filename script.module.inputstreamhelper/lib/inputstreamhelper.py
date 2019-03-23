@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import os
 import platform
 import zipfile
@@ -13,10 +15,7 @@ import requests
 
 import config
 
-import xbmc
-import xbmcaddon
-import xbmcgui
-import xbmcvfs
+from kodi_six import xbmc, xbmcaddon, xbmcgui, xbmcvfs
 
 ADDON = xbmcaddon.Addon('script.module.inputstreamhelper')
 ADDON_PROFILE = xbmc.translatePath(ADDON.getAddonInfo('profile'))
@@ -56,8 +55,8 @@ class Helper(object):
 
     @classmethod
     def _diskspace(cls):
-        """Return the free disk space available (in bytes) in cdm_path."""
-        statvfs = os.statvfs(cls._addon_cdm_path())
+        """Return the free disk space available (in bytes) in temp_path."""
+        statvfs = os.statvfs(cls._temp_path())
         return statvfs.f_frsize * statvfs.f_bavail
 
     @classmethod
@@ -118,10 +117,7 @@ class Helper(object):
 
     @classmethod
     def _legacy(cls):
-        if LooseVersion('18.0') > cls._kodi_version():
-            return True
-        else:
-            return False
+        return LooseVersion('18.0') > LooseVersion(cls._kodi_version())
 
     @classmethod
     def _arch(cls):
@@ -162,6 +158,20 @@ class Helper(object):
         """Check whether cmd exists on system."""
         # https://stackoverflow.com/questions/377017/test-if-executable-exists-in-python
         return subprocess.call('type ' + cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE) == 0
+
+    def _helper_disabled(self):
+        """Return if inputstreamhelper has been disabled in settings.xml."""
+        disabled = ADDON.getSetting('disabled')
+        if not disabled:
+            ADDON.setSetting('disabled', 'false')  # create default entry
+            disabled = 'false'
+
+        if disabled == 'true':
+            self._log('inputstreamhelper is disabled in settings.xml.')
+            return True
+        else:
+            self._log('inputstreamhelper is enabled. You can disable inputstreamhelper by setting \"disabled\" to \"true\" in settings.xml (Note: only recommended for developers knowing what they\'re doing!)')
+            return False
 
     def _inputstream_version(self):
         addon = xbmcaddon.Addon(self.inputstream_addon)
@@ -263,7 +273,7 @@ class Helper(object):
             return True
         else:
             if self._widevine_path():
-                self._log('Found Widevine binary at {0}'.format(self._widevine_path()))
+                self._log('Found Widevine binary at {0}'.format(self._widevine_path().encode('utf-8')))
                 return True
             else:
                 self._log('Widevine is not installed.')
@@ -315,7 +325,7 @@ class Helper(object):
                 progress_dialog.close()
                 return True
         else:
-            return req.content
+            return req.text
 
     def _has_inputstream(self):
         """Checks if selected InputStream add-on is installed."""
@@ -595,7 +605,7 @@ class Helper(object):
 
     def _extract_widevine_from_img(self):
         """Extracts the Widevine CDM binary from the mounted Chrome OS image."""
-        for root, dirs, files in os.walk(self._mnt_path()):
+        for root, dirs, files in os.walk(str(self._mnt_path())):
             for filename in files:
                 if filename == 'libwidevinecdm.so':
                     cdm_path = os.path.join(root, filename)
@@ -613,7 +623,7 @@ class Helper(object):
         if self._cmd_exists('ldd'):
             if not os.access(self._widevine_path(), os.X_OK):
                 self._log('Changing {0} permissions to 744.'.format(self._widevine_path()))
-                os.chmod(self._widevine_path(), 0744)  # this needs to be octal in python 3
+                os.chmod(self._widevine_path(), 0o744)
 
             missing_libs = []
             cmd = ['ldd', self._widevine_path()]
@@ -744,6 +754,8 @@ class Helper(object):
 
     def check_inputstream(self):
         """Main function. Ensures that all components are available for InputStream add-on playback."""
+        if self._helper_disabled():  # blindly return True if helper has been disabled
+            return True
         dialog = xbmcgui.Dialog()
         if not self._has_inputstream():
             dialog.ok(LANGUAGE(30004), LANGUAGE(30008).format(self.inputstream_addon))
@@ -755,6 +767,7 @@ class Helper(object):
             else:
                 return False
         self._log('{0} {1} is installed and enabled.'.format(self.inputstream_addon, self._inputstream_version()))
+
         if self.protocol == 'hls' and not self._supports_hls():
             dialog.ok(LANGUAGE(30004),
                       LANGUAGE(30017).format(self.inputstream_addon, config.HLS_MINIMUM_IA_VERSION))
