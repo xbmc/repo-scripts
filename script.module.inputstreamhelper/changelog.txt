@@ -1,3 +1,13 @@
+2019.03.23 v0.3.4
++ python2_3 compability (mediaminister, Rechi)
++ Option to disable inputstreamhelper in settings.xml
++ calculate disk space on the tmp folder (dawez)
++ Support for Unicode paths in Windows (WallyCZ)
++ Italian translation (pinoelefante)
++ Dutch translation (dnicolaas)
++ Greek translation (Twilight0)
++ Russian translation (vlmaksime)
+
 2018.02.21 v0.3.3
 + Load loop if it's a kernel module (thanks to mkreisl)
 + Fix legacy Widevine CDM update detection
