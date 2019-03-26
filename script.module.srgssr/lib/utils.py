@@ -354,3 +354,22 @@ def _parse_date_time(input_string):
         except (ValueError, TypeError):
             return date_time
     return None
+
+
+def generate_unique_list(input, unique_key):
+    """
+    Merges a list of similar dictionaries (at least one key has to be
+    available in every dictionary) into a single list.
+
+    Keyword arguments:
+    input       -- a list of similar dictionaries
+    unique_key  -- the key which is taken to compare the values
+    """
+    unique_keys = []
+    output = []
+    for li in input:
+        for elem in li:
+            if elem[unique_key] not in unique_keys:
+                unique_keys.append(elem[unique_key])
+                output.append(elem)
+    return output
