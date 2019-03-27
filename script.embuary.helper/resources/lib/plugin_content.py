@@ -489,6 +489,10 @@ class PluginContent(object):
         try:
             cast = json_query['result'][self.key_details]['cast']
             title = json_query['result'][self.key_details]['label']
+
+            if not cast:
+                raise Exception
+
         except Exception:
             log('Items by actor %s: No cast found')
             return
@@ -502,7 +506,7 @@ class PluginContent(object):
             else:
                 break
 
-        random_actor = ''.join(random.sample(population=cast_range, k=1))
+        random_actor = ''.join(random.choice(cast_range))
         filter = {'and': [{'operator': 'is', 'field': 'actor', 'value': random_actor}, {'operator': 'isnot', 'field': 'title', 'value': title}]}
 
         movie_query = json_call('VideoLibrary.GetMovies',
@@ -568,6 +572,9 @@ class PluginContent(object):
                 title = similar_list[0]['title']
                 genres = similar_list[0]['genre']
 
+            if not genres:
+                raise Exception
+
         except Exception:
             log ('Get similar: Not able to get genres')
             return
@@ -615,15 +622,18 @@ class PluginContent(object):
 
         try:
             if self.key_details in json_query['result']:
-                json_query = json_query['result'][self.key_details]['cast']
+                cast = json_query['result'][self.key_details]['cast']
             else:
-                json_query = json_query['result'][self.key_items][0]['cast']
+                cast = json_query['result'][self.key_items][0]['cast']
+
+            if not cast:
+                raise Exception
 
         except Exception:
             log('Get cast: No cast found.')
+            return
 
-        else:
-            append_items(self.li,json_query,type='cast')
+        append_items(self.li,cast,type='cast')
 
 
     # jump to letter
