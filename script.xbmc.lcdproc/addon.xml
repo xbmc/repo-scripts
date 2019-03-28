@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.xbmc.lcdproc" name="XBMC LCDproc" version="3.0.4" provider-name="Team Kodi: Memphiz, Daniel 'herrnst' Scheller">
+<addon id="script.xbmc.lcdproc" name="XBMC LCDproc" version="3.0.5" provider-name="Team Kodi: Memphiz, Daniel 'herrnst' Scheller">
   <requires>
-    <import addon="xbmc.python" version="2.25.0"/>
+    <import addon="xbmc.python" version="2.26.0"/>
   </requires>
   <extension point="xbmc.service" library="main.py"/>
   <extension point="xbmc.addon.metadata">
@@ -24,8 +24,8 @@
     <assets>
       <icon>resources/icon.png</icon>
     </assets>
-    <news>3.0.4
-- Fix possible exception due to improper LCD.xml handling
+    <news>3.0.5
+- selectable BigDigit clock format by mskalski (thanks!)
 </news>
   </extension>
 </addon>
