@@ -102,7 +102,7 @@ class InfoLabels():
         # apply some split magic for 12h format here, as "hh:mm:ss"
         # makes up for format guessing inside XBMC - fix for post-frodo at
         # https://github.com/xbmc/xbmc/pull/2321
-        ret = "0" + self.GetInfoLabel("System.Time(hh:mm:ss)").split(" ")[0]
+        ret = self.GetInfoLabel("System.Time(%s)" % self._settings.getSysTimeFormat()).split(" ")[0]
         return ret[-8:]
 
     def GetPlayerTime(self):

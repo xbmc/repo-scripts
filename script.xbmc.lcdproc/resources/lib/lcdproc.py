@@ -458,8 +458,8 @@ class LCDProc(LcdBase):
       iOffset = 1;
 
     if self.m_iOffset != iOffset:
-      # on offset change, reset numbers (only) to force redraw
-      self.ClearBigDigits(False)
+      # on offset change force redraw
+      bForceUpdate = True
       self.m_iOffset = iOffset
 
     for i in range(int(iStringOffset), int(iStringLength)):

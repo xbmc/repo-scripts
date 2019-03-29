@@ -51,7 +51,11 @@ msgctxt "#32107"
 msgid "Support for extra display elements (e.g. icons)"
 msgstr "Wsparcie dla dodatkowych elementów wyświetlających (np. ikon)"
 
-# empty strings from id 32108 to 32199
+msgctxt "#32108"
+msgid "System time format"
+msgstr "Format czasu systemowego"
+
+# empty strings from id 32109 to 32199
 # Backlight
 
 msgctxt "#32200"
@@ -151,7 +155,26 @@ msgctxt "#32417"
 msgid "HD44780-ROM A02"
 msgstr "HD44780-ROM A02"
 
-# empty strings from id 32418 to 32499
+# empty strings from id 32418 to 32420
+# Enum values: System time format
+
+msgctxt "#32421"
+msgid "H:MM"
+msgstr ""
+
+msgctxt "#32422"
+msgid "HH:MM"
+msgstr ""
+
+msgctxt "#32423"
+msgid "H:MM:SS"
+msgstr ""
+
+msgctxt "#32424"
+msgid "HH:MM:SS"
+msgstr ""
+
+# empty strings from id 32425 to 32499
 # Notifications
 
 msgctxt "#32500"

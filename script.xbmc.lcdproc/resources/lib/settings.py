@@ -49,6 +49,7 @@ class Settings():
         self._usealternatecharset = False
         self._charset             = "iso-8859-1"
         self._useextraelements    = True
+        self._systimeformat       = 3
 
     def getHostIp(self):
         return self._hostip
@@ -96,6 +97,20 @@ class Settings():
 
     def getHideConnPopups(self):
         return self._hideconnpopups
+
+    def getSysTimeFormat(self):
+        # make sure to keep this in sync with settings.xml!
+        ret = "HH:mm:ss"
+        if self._systimeformat == "0":
+            ret = "H:mm"
+        elif self._systimeformat == "1":
+            ret = "HH:mm"
+        elif self._systimeformat == "2":
+            ret = "H:mm:ss"
+        elif self._systimeformat == "3":
+            ret = "HH:mm:ss"
+
+        return ret
 
     def getCharset(self):
         ret = ""
@@ -197,6 +212,7 @@ class Settings():
         hideconnpopups = KODI_ADDON_SETTINGS.getSetting("hideconnpopups") == "true"
         usealternatecharset = KODI_ADDON_SETTINGS.getSetting("usealternatecharset") == "true"
         charset = KODI_ADDON_SETTINGS.getSetting("charset")
+        systimeformat = KODI_ADDON_SETTINGS.getSetting("systimeformat")
 
         if self._scrolldelay != scrolldelay:
             self._scrolldelay = scrolldelay
@@ -248,6 +264,10 @@ class Settings():
 
         if self._charset != charset:
             self._charset = charset
+            self._settingsChanged = True
+
+        if self._systimeformat != systimeformat:
+            self._systimeformat = systimeformat
             self._settingsChanged = True
 
     # handles all settings and applies them as needed
