@@ -1,3 +1,13 @@
+v5.0.7
+- cleanup
+
+v5.0.6
+- use cached fanart images
+
+v5.0.5
+- remove option to disable animations
+- increase preloading time
+
 v5.0.4
 - add option to disable animations
 

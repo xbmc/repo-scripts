@@ -84,13 +84,13 @@ msgctxt "#30016"
 msgid "Display images in random order"
 msgstr ""
 
-#empty string with id 30017
+# empty string with id 30017
 
 msgctxt "#30018"
 msgid "Use folder- and filename"
 msgstr ""
 
-#empty strings from id 30019 to 30020
+# empty strings from id 30019 to 30020
 
 msgctxt "#30021"
 msgid "Display picture date"
@@ -111,13 +111,12 @@ msgstr ""
 msgctxt "#30025"
 msgid "Additional"
 msgstr ""
-msgstr ""
 
 msgctxt "#30026"
 msgid "Resume slideshow from last position"
 msgstr ""
 
-#empty strings from id 30027 to 30028
+# empty strings from id 30027 to 30028
 
 msgctxt "#30029"
 msgid "Display background picture"

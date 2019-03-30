@@ -134,6 +134,11 @@ class Screensaver(xbmcgui.WindowXMLDialog):
         # start with image 1
         cur_img = self.image1
         order = [1,2]
+
+        if self.slideshow_type == '2':
+            usetexturecache = False
+        else:
+            usetexturecache = True
         # loop until onScreensaverDeactivated is called
         while (not self.Monitor.abortRequested()) and (not self.stop):
             # keep track of image position, needed to save the offset
@@ -144,16 +149,16 @@ class Screensaver(xbmcgui.WindowXMLDialog):
                 if self.slideshow_type == '2' and not xbmcvfs.exists(img[0]):
                     continue
                 # add image to gui
-                cur_img.setImage(img[0],False)
+                cur_img.setImage(img[0],usetexturecache)
                 # add background image to gui
                 if self.slideshow_scale == 'false' and self.slideshow_bg == 'true':
                     if order[0] == 1:
-                        self.image3.setImage(img[0],False)
+                        self.image3.setImage(img[0],usetexturecache)
                     else:
-                        self.image4.setImage(img[0],False)
+                        self.image4.setImage(img[0],usetexturecache)
                 # give xbmc some time to load the image
                 if not self.startup:
-                    xbmc.sleep(1000)
+                    xbmc.sleep(4000)
                 else:
                     self.startup = False
                 # get exif and iptc tags if enabled in settings and we have an image that can contain this data
@@ -260,7 +265,7 @@ class Screensaver(xbmcgui.WindowXMLDialog):
                     # add slide anim
                     self._set_prop('Slide%d' % order[0], '0')
                     self._set_prop('Slide%d' % order[1], '1')
-                elif self.slideshow_effect == '1' or self.slideshow_effect == '2':
+                else:
                     # add random slide/zoom anim
                     if self.slideshow_effect == '2':
                         # add random slide/zoom anim
@@ -279,8 +284,8 @@ class Screensaver(xbmcgui.WindowXMLDialog):
                 else:
                     cur_img = self.image1
                     order = [1,2]
-                # slideshow time in secs (we already slept for 1 second)
-                count = self.slideshow_time - 1
+                # slideshow time in secs (we already slept for 4 seconds)
+                count = self.slideshow_time - 4
                 # display the image for the specified amount of time
                 while (not self.Monitor.abortRequested()) and (not self.stop) and count > 0:
                     count -= 1
