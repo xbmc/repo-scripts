@@ -30,21 +30,21 @@ def valid_video_id(video_id):
 
 
 @query
-def channel_token(channel):
+def channel_token(channel, platform=keys.WEB):
     q = HiddenApiQuery('channels/{channel}/access_token')
     q.add_urlkw(keys.CHANNEL, channel)
     q.add_param(keys.NEED_HTTPS, Boolean.TRUE)
-    q.add_param(keys.PLATFORM, keys.WEB)
+    q.add_param(keys.PLATFORM, platform)
     q.add_param(keys.PLAYER_BACKEND, keys.MEDIAPLAYER)
     return q
 
 
 @query
-def vod_token(video_id):
+def vod_token(video_id, platform=keys.WEB):
     q = HiddenApiQuery('vods/{vod}/access_token')
     q.add_urlkw(keys.VOD, video_id)
     q.add_param(keys.NEED_HTTPS, Boolean.TRUE)
-    q.add_param(keys.PLATFORM, keys.WEB)
+    q.add_param(keys.PLATFORM, platform)
     q.add_param(keys.PLAYER_BACKEND, keys.MEDIAPLAYER)
     return q
 
@@ -56,8 +56,8 @@ def _legacy_video(video_id):
     return q
 
 
-def live_request(channel):
-    token = channel_token(channel)
+def live_request(channel, platform=keys.WEB):
+    token = channel_token(channel, platform=platform)
     if keys.ERROR in token:
         return token
     else:
@@ -99,18 +99,18 @@ def _live(channel, token):
 
 
 @m3u8
-def live(channel):
-    token = channel_token(channel)
+def live(channel, platform=keys.WEB):
+    token = channel_token(channel, platform=platform)
     if keys.ERROR in token:
         return token
     else:
         return _live(channel, token)
 
 
-def video_request(video_id):
+def video_request(video_id, platform=keys.WEB):
     video_id = valid_video_id(video_id)
     if video_id:
-        token = vod_token(video_id)
+        token = vod_token(video_id, platform=platform)
         if keys.ERROR in token:
             return token
         else:
@@ -156,10 +156,10 @@ def _vod(video_id, token):
 
 
 @m3u8
-def video(video_id):
+def video(video_id, platform=keys.WEB):
     video_id = valid_video_id(video_id)
     if video_id:
-        token = vod_token(video_id)
+        token = vod_token(video_id, platform=platform)
         if keys.ERROR in token:
             return token
         else:
