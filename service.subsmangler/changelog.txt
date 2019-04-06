@@ -1,3 +1,7 @@
+v1.4.0 (2019-04-06)
+- support for subtitles for internet streams
+v1.3.1 (2019-04-01)
+- fix settings display in Kodi 17.6
 v1.3.0 (2019-02-10)
 - add ability to convert subtitles without enforcing .ass format (and therefore adding custom font/background color and opacity). In this case file is saved in SubRip format.
 - please note that the output file extension was changed to .utf. Therefore existing .ass subtitle file may be reconverted automatically at the next playback.

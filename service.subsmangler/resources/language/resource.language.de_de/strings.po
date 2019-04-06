@@ -40,6 +40,10 @@ msgctxt "#32007"
 msgid "Background transparency"
 msgstr "Transparent des Hintergrundes"
 
+msgctxt "#32009"
+msgid "Invoke also when playing internet stream"
+msgstr "Zusätzlich beim Abspielen von Internet-Streams anzeigen"
+
 msgctxt "#32010"
 msgid "Invoke subtitles search dialog on playback start"
 msgstr "Untertitel-Suchfenster nach dem Start der Wiedergabe anzeigen"
@@ -122,7 +126,7 @@ msgstr "eine separate Protokolldatei (smangler.log)"
 
 msgctxt "#32033"
 msgid "Show 'noautosubs' context menu item"
-msgstr "Anzeigen von 'noautosubs" im Kontextmenü"
+msgstr "Anzeigen von 'noautosubs' im Kontextmenü"
 
 msgctxt "#32040"
 msgid "No new subtitles file has been detected."

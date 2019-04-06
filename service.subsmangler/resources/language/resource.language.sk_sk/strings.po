@@ -40,6 +40,10 @@ msgctxt "#32007"
 msgid "Background transparency"
 msgstr "Priehľadnosť pozadia"
 
+msgctxt "#32009"
+msgid "Invoke also when playing internet stream"
+msgstr "Vyvolať aj pri prehrávaní streamov z Internetu"
+
 msgctxt "#32010"
 msgid "Invoke subtitles search dialog on playback start"
 msgstr "Pri štarte prehrávaní vyvolať dialóg vyhľadávania titulkov"
