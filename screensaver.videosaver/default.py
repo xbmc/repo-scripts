@@ -30,7 +30,7 @@ SETTINGS_LOC   = REAL_SETTINGS.getAddonInfo('profile').decode('utf-8')
 XSP_CACHE_LOC  = os.path.join(SETTINGS_LOC, 'cache','')
 MEDIA_EXTS     = (xbmc.getSupportedMedia('video')).split('|')
 ACTION_STOP    = 13
-MUTE           = REAL_SETTINGS.getSetting('Enable_Mute') == 'true'
+VOLUME         = int(REAL_SETTINGS.getSetting('Set_Volume'))
 DEBUG          = REAL_SETTINGS.getSetting('Enable_Debugging') == 'true'
 LANGUAGE       = REAL_SETTINGS.getLocalizedString
 
@@ -47,10 +47,15 @@ def isMute():
     log('isMute, state = ' + str(state))
     return state
     
-def setMute(state):
-    log('setMute, state = ' + str(state))
-    if isMute() == state: return
-    json_query = '{"jsonrpc":"2.0","method":"Application.SetMute","params":{"mute":%s},"id":1}'%str(state).lower()
+def saveVolume():
+    json_query = '{"jsonrpc":"2.0","method":"Application.GetProperties","params":{"properties":["volume"]},"id":1}'
+    json_response = json.loads(xbmc.executeJSONRPC(json_query))
+    xbmcgui.Window(10000).setProperty('%s.RESTORE'%ADDON_ID,str(json_response.get('result',{}).get('volume',0)))
+    
+def setVolume(state):
+    log('setVolume, state = ' + str(state))
+    if isMute() == True: return
+    json_query = '{"jsonrpc":"2.0","method":"Application.SetVolume","params":{"volume":%s},"id":2}'%str(state)
     json_response = json.loads(xbmc.executeJSONRPC(json_query))
 
 def ProgressDialogBG(percent=0, control=None, string1='', header=ADDON_NAME):
@@ -61,17 +66,19 @@ def ProgressDialogBG(percent=0, control=None, string1='', header=ADDON_NAME):
     elif control: control.update(percent, string1)
     return control
     
+    
 class BackgroundWindow(xbmcgui.WindowXMLDialog):
     def __init__(self, *args, **kwargs):
         xbmcgui.WindowXMLDialog.__init__(self, *args, **kwargs)
         self.myPlayer = Player()
-        if MUTE: setMute(True)
+        saveVolume()
+        setVolume(VOLUME)
         
         
     def onAction(self, act):
         log('onAction')
         if REAL_SETTINGS.getSetting("LockAction") == 'true' and act.getId() != ACTION_STOP: return
-        if MUTE: setMute(False)
+        setVolume(int(xbmcgui.Window(10000).getProperty('%s.RESTORE'%ADDON_ID)))
         self.myPlayer.stop()
         self.close()
         
@@ -80,8 +87,8 @@ class Player(xbmc.Player):
     def __init__(self):
         xbmc.Player.__init__(self, xbmc.Player()) 
         if REAL_SETTINGS.getSetting("TraktDisable") == 'true': xbmcgui.Window(10000).setProperty('script.trakt.paused','true')
-        
-        
+
+
     def onPlayBackStopped(self):
         log('onPlayBackStopped')
         xbmc.executebuiltin("PlayerControl(RepeatOff)")
@@ -204,5 +211,5 @@ class Start():
         xbmc.executebuiltin("PlayerControl(RepeatAll)")
         xbmc.executebuiltin("Action(Fullscreen)")
         self.background.doModal()
-
+        self.myPlayer.onPlayBackStopped()
 if __name__ == '__main__': Start()
