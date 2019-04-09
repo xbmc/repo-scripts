@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addon id="script.module.requests"
        name="requests"
-       version="2.19.1"
+       version="2.21.0"
        provider-name="kennethreitz">
   <requires>
     <import addon="xbmc.python" version="2.25.0"/>
@@ -20,7 +20,10 @@
     <license>Apache2</license>
     <forum></forum>
     <website>http://python-requests.org</website>
-    <source>https://github.com/beenje/script.module.requests</source>
-    <email>beenje AT gmail.com</email>
+    <source>https://github.com/Freso/script.module.requests</source>
+    <email>freso.dk AT gmail.com</email>
+    <assets>
+      <icon>resources/icon.png</icon>
+    </assets>
   </extension>
 </addon>
