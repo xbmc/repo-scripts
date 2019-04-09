@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addon id="script.module.idna"
        name="idna"
-       version="2.6"
+       version="2.8"
        provider-name="Kim Davies">
   <requires>
     <import addon="xbmc.python" version="2.25.0"/>
@@ -16,7 +16,10 @@
     <license>BSD</license>
     <forum></forum>
     <website>https://github.com/kjd/idna</website>
-    <source>https://github.com/beenje/script.module.idna</source>
-    <email>beenje AT gmail.com</email>
+    <source>https://github.com/Freso/script.module.idna</source>
+    <email>freso.dk AT gmail.com</email>
+    <assets>
+      <icon>resources/icon.png</icon>
+    </assets>
   </extension>
 </addon>
