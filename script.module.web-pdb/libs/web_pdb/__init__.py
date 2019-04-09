@@ -32,6 +32,7 @@ import sys
 import traceback
 import random
 from contextlib import contextmanager
+from pprint import pformat
 if sys.version_info[0] == 2:
     from .pdb_py2 import PdbPy2 as Pdb
 else:
@@ -50,6 +51,7 @@ class WebPdb(Pdb):
     It provides a web-interface for Python's built-in PDB debugger
     """
     active_instance = None
+    null = object()
 
     def __init__(self, host='', port=5555):
         """
@@ -81,6 +83,60 @@ class WebPdb(Pdb):
         return Pdb.do_quit(self, arg)
 
     do_q = do_exit = do_quit
+
+    def do_inspect(self, arg):
+        """
+        i(nspect) object
+        Inspect an object
+        """
+        if arg in self.curframe.f_locals:
+            obj = self.curframe.f_locals[arg]
+        elif arg in self.curframe.f_globals:
+            obj = self.curframe.f_globals[arg]
+        else:
+            obj = WebPdb.null
+        if obj is not WebPdb.null:
+            self.console.writeline(
+                '{0} = {1}:\n'.format(arg, type(obj))
+            )
+            for name, value in inspect.getmembers(obj):
+                if not (name.startswith('__') and (name.endswith('__'))):
+                    self.console.writeline('    {0}: {1}\n'.format(
+                        name, self._get_repr(value, pretty=True, indent=8)
+                    ))
+        else:
+            self.console.writeline(
+                'NameError: name "{0}" is not defined\n'.format(arg)
+            )
+        self.console.flush()
+
+    do_i = do_inspect
+
+    @staticmethod
+    def _get_repr(obj, pretty=False, indent=1):
+        """
+        Get string representation of an object
+
+        :param obj: object
+        :type obj: object
+        :param pretty: use pretty formatting
+        :type pretty: bool
+        :param indent: indentation for pretty formatting
+        :type indent: int
+        :return: string representation
+        :rtype: str
+        """
+        if pretty:
+            repr_value = pformat(obj, indent)
+        else:
+            repr_value = repr(obj)
+        if sys.version_info[0] == 2:
+            # Try to convert Unicode string to human-readable form
+            try:
+                repr_value = repr_value.decode('raw_unicode_escape')
+            except UnicodeError:
+                repr_value = repr_value.decode('utf-8', 'replace')
+        return repr_value
 
     def set_continue(self):
         # Don't stop except at breakpoints or when finished
@@ -129,13 +185,7 @@ class WebPdb(Pdb):
         f_vars = []
         for var, value in raw_vars.items():
             if not (var.startswith('__') and var.endswith('__')):
-                repr_value = repr(value)
-                if sys.version_info[0] == 2:
-                    # Try to convert Unicode string to human-readable form
-                    try:
-                        repr_value = repr_value.decode('raw_unicode_escape')
-                    except UnicodeError:
-                        repr_value = repr_value.decode('utf-8', 'replace')
+                repr_value = self._get_repr(value)
                 f_vars.append('{0} = {1}'.format(var, repr_value))
         return '\n'.join(sorted(f_vars))
 
