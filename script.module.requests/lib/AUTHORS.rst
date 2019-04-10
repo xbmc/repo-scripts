@@ -1,12 +1,13 @@
 Requests is written and maintained by Kenneth Reitz and
 various contributors:
 
-Keepers of the Three Crystals
-`````````````````````````````
+Keepers of the Four Crystals
+````````````````````````````
 
 - Kenneth Reitz <me@kennethreitz.org> `@kennethreitz <https://github.com/kennethreitz>`_, Keeper of the Master Crystal.
 - Cory Benfield <cory@lukasa.co.uk> `@lukasa <https://github.com/lukasa>`_
 - Ian Cordasco <graffatcolmingov@gmail.com> `@sigmavirus24 <https://github.com/sigmavirus24>`_
+- Nate Prewitt <nate.prewitt@gmail.com> `@nateprewitt <https://github.com/nateprewitt>`_
 
 
 
@@ -174,3 +175,9 @@ Patches and Suggestions
 - Philipp Konrad <gardiac2002@gmail.com> (`@gardiac2002 <https://github.com/gardiac2002>`_)
 - Hussain Tamboli <hussaintamboli18@gmail.com> (`@hussaintamboli <https://github.com/hussaintamboli>`_)
 - Casey Davidson (`@davidsoncasey <https://github.com/davidsoncasey>`_)
+- Andrii Soldatenko (`@a_soldatenko <https://github.com/andriisoldatenko>`_)
+- Moinuddin Quadri <moin18@gmail.com> (`@moin18 <https://github.com/moin18>`_)
+- Matt Kohl (`@mattkohl <https://github.com/mattkohl>`_)
+- Jonathan Vanasco (`@jvanasco <https://github.com/jvanasco>`_)
+- David Fontenot (`@davidfontenot <https://github.com/davidfontenot>`_)
+- Shmuel Amar (`@shmuelamar <https://github.com/shmuelamar>`_)
