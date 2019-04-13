@@ -309,7 +309,7 @@ class PluginContent(object):
         genre = remove_quotes(self.params.get('genre'))
 
         if not genre:
-            genres_list = []
+            genres = []
 
             if not self.dbtype or self.dbtype == 'movie':
                 movies_genres_query = json_call('VideoLibrary.GetGenres',
@@ -318,7 +318,7 @@ class PluginContent(object):
                                     )
                 try:
                     for item in movies_genres_query['result']['genres']:
-                        genres_list.append(item.get('label'))
+                        genres.append(item.get('label'))
                 except Exception:
                     log('Get movies by genre: no genres found')
 
@@ -329,13 +329,12 @@ class PluginContent(object):
                                     )
                 try:
                     for item in tvshow_genres_query['result']['genres']:
-                        genres_list.append(item.get('label'))
+                        genres.append(item.get('label'))
                 except Exception:
                     log('Get TV shows by genre: no genres found')
 
-            if genres_list:
-                random.shuffle(genres_list)
-                genre = genres_list[0]
+            if genres:
+                genre = random.choice(genres)
 
         if genre:
             filters = [{'operator': 'contains', 'field': 'genre', 'value': genre}]

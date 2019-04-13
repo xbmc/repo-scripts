@@ -7,6 +7,7 @@ import xbmc
 import xbmcaddon
 import xbmcgui
 import json
+import time
 
 ########################
 
@@ -29,6 +30,7 @@ def get_kodiversion():
 
     build = xbmc.getInfoLabel('System.BuildVersion')
     return int(build[:2])
+
 
 def log(txt,loglevel=NOTICE,force=False):
 
@@ -202,4 +204,15 @@ def json_call(method,properties=None,sort=None,query_filter=None,limit=None,para
     log('json-result: %s' % result, DEBUG)
 
     return result
+
+
+def reload_widgets(delay=False):
+
+    log('Force widgets to refresh')
+    timestamp = time.strftime('%Y%m%d%H%M%S', time.gmtime())
+
+    if delay:
+        execute('AlarmClock(WidgetRefresh,SetProperty(EmbuaryWidgetUpdate,%s,home),00:04,silent)' % timestamp)
+    else:
+        winprop('EmbuaryWidgetUpdate', timestamp)
 

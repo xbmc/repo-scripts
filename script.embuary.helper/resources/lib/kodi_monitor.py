@@ -4,7 +4,6 @@
 
 import xbmc
 import xbmcgui
-import time
 import json
 
 from resources.lib.helper import *
@@ -14,8 +13,8 @@ from resources.lib.helper import *
 class KodiMonitor(xbmc.Monitor):
 
     def __init__(self):
-        xbmc.Monitor.__init__(self)
         self.do_fullscreen_lock = False
+        self.has_PVR_prop = False
 
 
     def onNotification(self, sender, method, data):
@@ -28,15 +27,14 @@ class KodiMonitor(xbmc.Monitor):
             if not self.do_fullscreen_lock:
                 self.do_fullscreen()
 
-            if visible('String.StartsWith(Player.Filenameandpath,pvr://) + !VideoPlayer.Content(livetv)'):
+            if visible('String.StartsWith(Player.Filenameandpath,pvr://)'):
                 self.get_channellogo()
 
-            if PLAYER.isPlayingAudio() and visible('!String.IsEmpty(MusicPlayer.DBID)'):
+            if PLAYER.isPlayingAudio() and visible('!String.IsEmpty(MusicPlayer.DBID) + String.IsEmpty(Player.Art(thumb))'):
                 self.get_songartworks()
 
-
         if method == 'Player.OnStop' or method == 'VideoLibrary.OnUpdate' or method == 'AudioLibrary.OnUpdate':
-            self.refresh_widgets()
+            reload_widgets(True)
 
         if method == 'Player.OnAVChange':
             self.get_audiotracks()
@@ -44,18 +42,13 @@ class KodiMonitor(xbmc.Monitor):
         if method == 'Player.OnStop':
             xbmc.sleep(3000)
             if not PLAYER.isPlaying() and xbmcgui.getCurrentWindowId() not in [12005, 12006, 10028, 10500, 10138, 10160]:
-                winprop('Player.ChannelLogo', clear=True)
                 self.do_fullscreen_lock = False
+
+                if self.has_PVR_prop:
+                    winprop('Player.ChannelLogo', clear=True)
 
         if method == 'Playlist.OnAdd':
             self.clear_playlists()
-
-
-    def refresh_widgets(self):
-
-        timestr = time.strftime('%Y%m%d%H%M%S', time.gmtime())
-        log('Refreshing widgets')
-        execute('AlarmClock(WidgetRefresh,SetProperty(EmbuaryWidgetUpdate,%s,home),00:04,silent)' % timestr)
 
 
     def clear_playlists(self):
@@ -74,7 +67,7 @@ class KodiMonitor(xbmc.Monitor):
     def get_audiotracks(self):
 
         xbmc.sleep(100)
-        log('Playback changed. Look for available audio streams.')
+        log('Look for available audio streams.')
 
         audiotracks = PLAYER.getAvailableAudioStreams()
         if len(audiotracks) > 1:
@@ -112,14 +105,16 @@ class KodiMonitor(xbmc.Monitor):
         channel_details = get_channeldetails(xbmc.getInfoLabel('VideoPlayer.ChannelName'))
         try:
             winprop('Player.ChannelLogo', channel_details['icon'])
+            self.has_PVR_prop = True
 
         except Exception:
             winprop('Player.ChannelLogo', clear=True)
+            self.has_PVR_prop = False
 
 
     def get_songartworks(self):
 
-        log('Music playback detected. Fetching song artworks from database')
+        log('Music playback with no artworks detected. Trying to fetch them from the database.')
 
         try:
             songdetails = json_call('AudioLibrary.GetSongDetails',
@@ -128,15 +123,12 @@ class KodiMonitor(xbmc.Monitor):
                                 )
 
             songdetails = songdetails['result']['songdetails']
-
-            winprop('MusicPlayer.Cover', songdetails['art'].get('thumb', ''))
-            winprop('MusicPlayer.Fanart', songdetails['art'].get('fanart', ''))
-            winprop('MusicPlayer.Clearlogo', songdetails['art'].get('clearlogo', ''))
+            fanart = songdetails['art'].get('fanart', '')
+            thumb = songdetails['art'].get('thumb', '')
+            clearlogo = songdetails['art'].get('clearlogo', '')
 
         except Exception:
-            winprop('MusicPlayer.Cover', clear=True)
-            winprop('MusicPlayer.Fanart', clear=True)
-            winprop('MusicPlayer.Clearlogo', clear=True)
+            return
 
         try:
             albumdetails = json_call('AudioLibrary.GetAlbumDetails',
@@ -145,9 +137,13 @@ class KodiMonitor(xbmc.Monitor):
                                 )
 
             albumdetails = albumdetails['result']['albumdetails']
-
-            winprop('MusicPlayer.DiscArt', albumdetails['art'].get('discart', ''))
+            discart = albumdetails['art'].get('discart', '')
 
         except Exception:
-            winprop('MusicPlayer.DiscArt', clear=True)
+            pass
 
+
+        item = xbmcgui.ListItem()
+        item.setPath(xbmc.Player().getPlayingFile())
+        item.setArt({'thumb': thumb, 'fanart': fanart, 'clearlogo': clearlogo, 'discart': discart})
+        xbmc.Player().updateInfoTag(item)

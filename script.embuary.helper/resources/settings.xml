@@ -2,7 +2,7 @@
 <settings>
 	<category label="128">
         <setting label="14092" type="lsep"/>
-		<setting id="log" label="666" type="bool" default="false"/>
-		<setting id="debuglog" label="20191" type="bool" default="false"/>
+		<setting id="log" label="30002" type="bool" default="false"/>
+		<setting id="debuglog" label="30003" type="bool" default="false"/>
 	</category>
 </settings>

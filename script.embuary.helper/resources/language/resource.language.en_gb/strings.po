@@ -21,3 +21,11 @@ msgstr ""
 msgctxt "#30001"
 msgid "This is a tool to provide features to a skin and requires skin integration."
 msgstr ""
+
+msgctxt "#30002"
+msgid "Enable logging"
+msgstr ""
+
+msgctxt "#30003"
+msgid "Enable debug logging"
+msgstr ""
