@@ -40,6 +40,10 @@ msgctxt "#32007"
 msgid "Background transparency"
 msgstr ""
 
+msgctxt "#32009"
+msgid "Invoke also when playing internet stream"
+msgstr ""
+
 msgctxt "#32010"
 msgid "Invoke subtitles search dialog on playback start"
 msgstr ""

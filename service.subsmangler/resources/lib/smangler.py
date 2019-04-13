@@ -245,7 +245,7 @@ def SupplementaryServices():
 # function checks if stream is a local file and tries to find matching subtitles
 # if subtitles are not found, it opens search dialog
 def GetSubtitles():
-    """Check if stream is a local file and launch subtitles. If subtitles are not present, open search dialog
+    """Check if stream is a local file or online stream and launch subtitles. If subtitles are not present, open search dialog
     """
     global subtitlePath
     global playingFilename
@@ -275,11 +275,9 @@ def GetSubtitles():
         if counter > 1:
             common.Log("First GetPlayingInfo() read failed. Number of tries: " + str(counter), xbmc.LOGWARNING)
 
-        # ignore all streaming videos
-        # http://xion.io/post/code/python-startswith-tuple.html
-        protocols = ("http", "https", "mms", "rtsp", "pvr", "plugin")
-        if playingFilenamePath.lower().startswith(tuple(p + '://' for p in protocols)):
-            common.Log("Video stream detected. Ignoring it.", xbmc.LOGINFO)
+        # ignore streaming videos if configuration says so
+        if InternetStream(playingFilenamePath) and not common.setting_AutoInvokeSubsDialogOnStream:
+            common.Log("Video stream detected but AutoInvokeSubsDialogOnStream is disabled. Ignoring.", xbmc.LOGINFO)
             return
         elif not playingFilenamePath:
             # string is empty, may happen when playing buffered streams
@@ -344,7 +342,7 @@ def GetSubtitles():
             # search for target extension '.utf'
             extlist.append('.utf')
 
-            # get all file names matching name of file being played
+            # get all subtitle file names from the given path
             localsubs = GetSubtitleFiles(subtitlePath, extlist)
 
             # check if there is 'noautosubs' file or extension on returned file list
@@ -387,15 +385,15 @@ def GetSubtitles():
                         common.Log("Video or subtitle language match Kodi's preferred settings. Not opening subtitle search dialog.", xbmc.LOGINFO)
                 else:
                     # enable .utf subtitles if they are present on the list
-                    asssubs = False
+                    utfsubs = False
                     for item in localsubs:
                         if ".utf" in item[-4:]:
                             common.Log("Local 'utf' subtitles matching video being played detected. Enabling subtitles: " + os.path.join(subtitlePath, item), xbmc.LOGINFO)
                             xbmc.Player().setSubtitles(os.path.join(subtitlePath, item))
-                            asssubs = True
+                            utfsubs = True
                             break
 
-                    if not asssubs:
+                    if not utfsubs:
                         common.Log("Local non 'utf' subtitles matching video being played detected. Not opening subtitle search dialog.", xbmc.LOGINFO)
             else:
                 common.Log("'noautosubs' file or extension detected. Not opening subtitle search dialog.", xbmc.LOGINFO)
@@ -414,13 +412,13 @@ def GetSubtitles():
 # https://stackoverflow.com/questions/2879856/get-system-language-in-iso-639-3-letter-codes-in-python
 # http://www.loc.gov/standards/iso639-2/ISO-639-2_utf-8.txt
 def GetIsoCode(lang):
-    """Find correct ISO-639-3 language code.
+    """Find correct ISO-639-2 language code.
 
     Arguments:
-        lang {str} -- language name, ISO-639-2 code or ISO-639-3 code
+        lang {str} -- language name, ISO-639-1 code or ISO-639-2 code
 
     Returns:
-        str -- ISO-639-3 code
+        str -- ISO-639-2 code
     """
 
     # "bibliographic" iso codes are derived from English word for the language
@@ -432,15 +430,7 @@ def GetIsoCode(lang):
     if lang:
         # language code is not empty
         common.Log("Looking for language code for: " + lang, xbmc.LOGDEBUG)
-        f = codecs.open(os.path.join(common.__addondir__, 'resources', 'ISO-639-2_utf-8.txt'), 'rb', 'utf-8')
-        for line in f:
-            iD = {}
-            iD['bibliographic'], iD['terminologic'], iD['alpha2'], iD['english'], iD['french'] = line.strip().split('|')
-
-            if iD['bibliographic'].lower() == lang.lower() or iD['alpha2'].lower() == lang.lower() or iD['english'].lower() == lang.lower():
-                outlang = iD['bibliographic']
-                break
-        f.close()
+        outlang = xbmc.convertLanguage(lang, xbmc.ISO_639_2)
 
         if outlang:
             common.Log("Language code found: " + outlang, xbmc.LOGDEBUG)
@@ -883,7 +873,7 @@ def MangleSubtitles(originalinputfile):
             # increase line spacing if subtitle is multiline
             # use Max Deryagin's solution: https://www.md-subs.com/line-spacing-in-ssa
             # do it only if subtitle output format is Substation Alpha (setting_SubsOutputFormat == 0)
-            # FIXME - currently only 2-line is supported
+            # TODO - currently only 2-line is supported
             # check if subtitle is multiline
             if common.setting_MaintainBiggerLineSpacing and re.search(r"\N", subsline) and common.setting_SubsOutputFormat == 0:
                 # line is multiline - add tags
@@ -1003,6 +993,24 @@ def RemoveWhitespaces(subsline):
 
 
 
+def InternetStream(srcurl):
+    """Checks if the file is an internet stream
+
+    Arguments:
+        srcurl {string} -- [Path and filename of file being played]
+
+    Returns:
+        bool -- True is stream is internet stream
+    """
+    # http://xion.io/post/code/python-startswith-tuple.html
+    protocols = ("http", "https", "mms", "rtsp", "pvr", "plugin")
+    if srcurl.lower().startswith(tuple(p + '://' for p in protocols)):
+        return True
+    else:
+        return False
+
+
+
 # copy function
 def copy_file(srcFile, dstFile):
     """Copy file using xbmcvfs.
@@ -1016,35 +1024,24 @@ def copy_file(srcFile, dstFile):
         common.Log("copy_file: srcFile: " + srcFile, xbmc.LOGINFO)
         common.Log("           dstFile: " + dstFile, xbmc.LOGINFO)
         if xbmcvfs.exists(srcFile):
-            #FIXME - debug
-            common.Log("copy_file: srcFile exists.", xbmc.LOGINFO)
+            common.Log("copy_file: srcFile exists.", xbmc.LOGDEBUG)
         if xbmcvfs.exists(dstFile):
-            common.Log("copy_file: dstFile exists. Trying to remove.", xbmc.LOGINFO)
+            common.Log("copy_file: dstFile exists. Trying to remove.", xbmc.LOGDEBUG)
             delete_file(dstFile)
         else:
-            common.Log("copy_file: dstFile does not exist.", xbmc.LOGINFO)
-        common.Log("copy_file: Copy started.", xbmc.LOGINFO)
+            common.Log("copy_file: dstFile does not exist.", xbmc.LOGDEBUG)
+        common.Log("copy_file: Copy started.", xbmc.LOGDEBUG)
 
         # as xbmcvfs.copy() sometimes fails, make more tries to check if lock is permanent - test only
         counter = 0
         success = 0
         while not (success != 0 or counter >= 3):
             success = xbmcvfs.copy(srcFile, dstFile)
-            common.Log("copy_file: SuccessStatus: " + str(success), xbmc.LOGINFO)
+            common.Log("copy_file: SuccessStatus: " + str(success), xbmc.LOGDEBUG)
             counter += 1
             xbmc.sleep(500)
         if counter > 1:
             common.Log("copy_file: First copy try failed. Number of tries: " + str(counter), xbmc.LOGWARNING)
-
-        # #FIXME - debug
-        # filehandle = xbmcvfs.File(srcFile)
-        # buffer = filehandle.read()
-        # filehandle.close()
-        # Log("File data read: " + str(buffer), xbmc.LOGINFO)
-        # filehandle = xbmcvfs.File(dstFile, 'w')
-        # result = filehandle.write(buffer)
-        # filehandle.close()
-        # Log("File data write result: " + str(result), xbmc.LOGINFO)
 
     except Exception as e:
         common.Log("copy_file: Copy failed.", xbmc.LOGERROR)
@@ -1177,7 +1174,7 @@ def GetSubtitleFiles(subspath, substypelist):
             # subfilename matches video name AND fileext is on the list of supported extensions
             # OR subfilename matches video name AND fileext matches '.noautosubs'
             # OR subfilename matches 'noautosubs'
-            # FIXME - now we assume that .utf subtitle will not be processed
+            # note: we assume that .utf subtitle will not be processed
             del SubsFiles[item]
 
     return SubsFiles
@@ -1231,11 +1228,11 @@ def DetectNewSubs():
     # setting process flag, process starts to run
     DetectionIsRunning = True
 
-    # load all subtitle files matching video being played
+    # load all subtitle files in the given directory
     # also returns 'noautosubs' file and '.noautosubs' extension
     RecentSubsFiles = GetSubtitleFiles(subtitlePath, SubExtList)
 
-    # check all remaining subtitle files for changed timestamp
+    # check all found subtitle files for changed timestamp
     for f in RecentSubsFiles:
         # ignore 'noautosubs' file/extension to not trigger detection of subtitles
         if f[-10:].lower() == "noautosubs":
@@ -1288,7 +1285,7 @@ def DetectNewSubs():
 
             # check if destination file exists
             if xbmcvfs.exists(ResultFile):
-                common.Log("Subtitles available.", xbmc.LOGNOTICE)
+                common.Log("Subtitles available and enabled.", xbmc.LOGNOTICE)
 
                 # load new subtitles and turn them on
                 xbmc.Player().setSubtitles(ResultFile)
@@ -1321,7 +1318,7 @@ def DetectNewSubs():
 
     # check if subtitles search window was opened but there were no new subtitles processed
     if SubsSearchWasOpened:
-        if not common.setting_NoConfirmationInvokeIfDownloadedSubsNotFound:
+        if not common.setting_NoConfirmationInvokeIfDownloadedSubsNotFound and not InternetStream(playingFilenamePath):
             common.Log("Subtitles search window was opened but no new subtitles were detected. Opening YesNo dialog.", xbmc.LOGINFO)
 
             # pause playbcak
@@ -1373,15 +1370,7 @@ def GetPlayingInfo():
 
     # get settings from Kodi configuration on assumed subtitles location
     storagemode = GetKodiSetting("subtitles.storagemode") # 1=location defined by custompath; 0=location in movie dir
-    custompath = GetKodiSetting("subtitles.custompath")   # path to non-standard dir with subtitles
-
-    if storagemode == 1:    # location == custompath
-        if xbmcvfs.exists(custompath):
-            subspath = custompath
-        else:
-            subspath = xbmc.translatePath("special://temp")
-    else:   # location == movie dir
-        subspath = xbmc.getInfoLabel('Player.Folderpath')
+    custompath = GetKodiSetting("subtitles.custompath")   # path to non-standard dir with subtitles, also returned by "special://subtitles"
 
     # get video details
     filename = xbmc.getInfoLabel('Player.Filename')
@@ -1389,6 +1378,23 @@ def GetPlayingInfo():
     filefps = xbmc.getInfoLabel('Player.Process(VideoFPS)')
     audiolang = xbmc.getInfoLabel('VideoPlayer.AudioLanguage')
     filelang = xbmc.getInfoLabel('VideoPlayer.SubtitlesLanguage')
+
+    # check if file is played from internet or it is a local file and based on this adjust predicted subtitle location
+    if InternetStream(filepathname):
+        # internet stream
+        if custompath:
+            subspath = custompath
+        else:
+            subspath = xbmc.translatePath("special://temp")
+    else:
+        # local file
+        if storagemode == 1:    # location == custompath
+            if xbmcvfs.exists(custompath):
+                subspath = custompath
+            else:
+                subspath = xbmc.translatePath("special://temp")
+        else:   # location == movie dir
+            subspath = xbmc.getInfoLabel('Player.Folderpath')
 
     common.Log("File currently played: " + filepathname, xbmc.LOGINFO)
     common.Log("Subtitles download path: " + subspath, xbmc.LOGINFO)
@@ -1525,20 +1531,18 @@ def RemoveOldSubs():
                     subfiles.append(fullfilepath)
 
     # process custom subtitle path if it is set in Kodi configuration
-    # get settings from Kodi configuration on assumed subtitles location
-    storagemode = GetKodiSetting("subtitles.storagemode") # 1=location defined by custompath; 0=location in movie dir
-    custompath = GetKodiSetting("subtitles.custompath")   # path to non-standard dir with subtitles
+    custompath = xbmc.translatePath("special://subtitles")   # path to non-standard dir with subtitles
 
-    if storagemode == 1:    # location == custompath
+    if custompath:
         if xbmcvfs.exists(custompath):
             subspath = custompath
         else:
             subspath = ""
-    else:   # location == movie dir
+    else:
         subspath = ""
 
     if subspath:
-        common.Log("Scanning for orphaned subtitle files on custom path: " + subspath, xbmc.LOGNOTICE)
+        common.Log("Scanning for orphaned subtitle files on custom path: " + subspath.encode('utf-8'), xbmc.LOGNOTICE)
         dirs, files = xbmcvfs.listdir(subspath)
         for thisfile in files:
             fullfilepath = os.path.join(subspath, thisfile.decode('utf-8'))
@@ -1547,6 +1551,19 @@ def RemoveOldSubs():
                 # this file is subs related - add to subs list
                 common.Log("Adding to subs list: " + fullfilepath,xbmc.LOGDEBUG)
                 subfiles.append(fullfilepath)
+    else:
+        common.Log("Custom path not set. Skipping scanning it.", xbmc.LOGINFO)
+
+    # process temp folder
+    common.Log("Scanning for orphaned subtitle files on temp path: " + xbmc.translatePath("special://temp").encode('utf-8'), xbmc.LOGNOTICE)
+    dirs, files = xbmcvfs.listdir(xbmc.translatePath("special://temp"))
+    for thisfile in files:
+        fullfilepath = os.path.join(xbmc.translatePath("special://temp").decode('utf-8'), thisfile.decode('utf-8'))
+        _filebase, fileext = os.path.splitext(fullfilepath)
+        if fileext in extRemovalList:
+            # this file is subs related - add to subs list
+            common.Log("Adding to subs list: " + fullfilepath,xbmc.LOGDEBUG)
+            subfiles.append(fullfilepath)
 
     # record scan time
     ClearScanTime = time.time()

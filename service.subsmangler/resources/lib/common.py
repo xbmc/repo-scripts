@@ -112,6 +112,7 @@ def GetSettings():
     global setting_RemoveAds
     global setting_PauseOnConversion
     global setting_AutoInvokeSubsDialog
+    global setting_AutoInvokeSubsDialogOnStream
     global setting_NoAutoInvokeIfLocalUnprocSubsFound
     global setting_NoConfirmationInvokeIfDownloadedSubsNotFound
     global setting_AutoUpdateDef
@@ -125,6 +126,7 @@ def GetSettings():
     global setting_FixOverlappingSubDisplayTime
 
     setting_AutoInvokeSubsDialog = GetBool(__addon__.getSetting("AutoInvokeSubsDialog"))
+    setting_AutoInvokeSubsDialogOnStream = GetBool(__addon__.getSetting("AutoInvokeSubsDialogOnStream"))
     setting_NoAutoInvokeIfLocalUnprocSubsFound = GetBool(__addon__.getSetting("NoAutoInvokeIfLocalUnprocSubsFound"))
     setting_NoConfirmationInvokeIfDownloadedSubsNotFound = GetBool(__addon__.getSetting("NoConfirmationInvokeIfDownloadedSubsNotFound"))
     setting_ShowNoautosubsContextItem = GetBool(__addon__.getSetting("ShowNoautosubsContextItem"))
@@ -152,6 +154,7 @@ def GetSettings():
 
     Log("Reading settings.", xbmc.LOGINFO)
     Log("Setting:                 AutoInvokeSubsDialog = " + str(setting_AutoInvokeSubsDialog), xbmc.LOGINFO)
+    Log("                 AutoInvokeSubsDialogOnStream = " + str(setting_AutoInvokeSubsDialogOnStream), xbmc.LOGINFO)
     Log("           NoAutoInvokeIfLocalUnprocSubsFound = " + str(setting_NoAutoInvokeIfLocalUnprocSubsFound), xbmc.LOGINFO)
     Log(" NoConfirmationInvokeIfDownloadedSubsNotFound = " + str(setting_NoConfirmationInvokeIfDownloadedSubsNotFound), xbmc.LOGINFO)
     Log("                    ShowNoautosubsContextItem = " + str(setting_ShowNoautosubsContextItem), xbmc.LOGINFO)

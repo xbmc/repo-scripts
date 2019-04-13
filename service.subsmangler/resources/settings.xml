@@ -2,8 +2,9 @@
 <settings>
     <category label="32001">
       <setting id="AutoInvokeSubsDialog" type="bool" label="32010" default="true"/>
-      <setting id="NoAutoInvokeIfLocalUnprocSubsFound" type="bool" label="32013" default="true" subsetting="true" enable="eq(-1,true)"/>
-      <setting id="NoConfirmationInvokeIfDownloadedSubsNotFound" type="bool" label="32014" default="false" subsetting="true" enable="eq(-1,true)"/>
+      <setting id="AutoInvokeSubsDialogOnStream" type="bool" label="32009" default="true" subsetting="true" enable="eq(-1,true)"/>
+      <setting id="NoAutoInvokeIfLocalUnprocSubsFound" type="bool" label="32013" default="true" subsetting="true" enable="eq(-2,true)"/>
+      <setting id="NoConfirmationInvokeIfDownloadedSubsNotFound" type="bool" label="32014" default="false" subsetting="true" enable="eq(-3,true)"/>
       <setting type="sep"/>
       <setting id="LogLevel" type="select" label="32020" lvalues="32022|32023|32024|32025|32026|32027|32028|32029" default="2"/>
       <setting id="SeparateLogFile" type="enum" label="32030" lvalues="32031|32032" default="1"/>
@@ -14,7 +15,7 @@
       <setting id="ConversionServiceEnabled" type="bool" label="32002" default="true"/>
       <setting id="AlsoConvertExistingSubtitles" type="bool" label="32012" default="true" subsetting="true" enable="eq(-1,true)"/>
       <setting type="sep"/>
-      <setting id="SubsOutputFormat" type="select" label="32015" lvalues="32016|32017" default="0" enable="eq(-3,true)"/>
+      <setting id="SubsOutputFormat" type="enum" label="32015" lvalues="32016|32017" default="0" enable="eq(-3,true)"/>
       <setting id="SubsFontSize" type="slider" label="32003" default="18" range="10,30" option="int" subsetting="true" enable="eq(-1,0)"/>
       <setting id="ForegroundColor" type="select" label="32049" lvalues="32051|32052|32053|32054|32055|32056|32057|32058|32059" default="8" subsetting="true" enable="eq(-2,0)"/>
       <setting id="BackgroundColor" type="select" label="32050" lvalues="32051|32052|32053|32054|32055|32056|32057|32058|32059" default="0" subsetting="true" enable="eq(-3,0)"/>

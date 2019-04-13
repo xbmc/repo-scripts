@@ -40,9 +40,13 @@ msgctxt "#32007"
 msgid "Background transparency"
 msgstr "Háttér átláthatóság"
 
+msgctxt "#32009"
+msgid "Invoke also when playing internet stream"
+msgstr "Megnyitás internetes streameléskor is"
+
 msgctxt "#32010"
 msgid "Invoke subtitles search dialog on playback start"
-msgstr "Felirat kereő ablak megnyitása lejátszás indításakor"
+msgstr "Felirat kereső ablak megnyitása lejátszás indításakor"
 
 msgctxt "#32011"
 msgid "Pause Playback during conversion"
