@@ -57,7 +57,7 @@ msgid "Multiple Videos"
 msgstr ""
 
 msgctxt "#32011"
-msgid "Mute ScreenSaver"
+msgid "Set ScreenSaver Volume"
 msgstr ""
 
 msgctxt "#32012"

@@ -7,7 +7,7 @@
     <setting id="VideoRandom"  type="bool"      label="32006" default="false"                          subsetting="true" visible="eq(-4,1)"/>
     <setting id="TraktDisable" type="bool"      label="32007" default="true"/>
     <setting id="LockAction"   type="bool"      label="32008" default="false"/>
-    <setting id="Enable_Mute"  type="bool"      label="32011" default="false"/>
+    <setting id="Set_Volume"   type="slider"    label="32011" default="100" range="0,1,100" option="int" />
     <setting id="Enable_Debugging" type="bool"  label="32012" default="false" />
 </settings>
         
