@@ -82,9 +82,7 @@ def parse_movies(li, item, searchstring=False, append=False):
 											'Playcount': item['playcount']})
 	li_item.setProperty('resumetime', str(item['resume']['position']))
 	li_item.setProperty('totaltime', str(item['resume']['total']))
-	li_item.setProperty('fanart_image', item['art'].get('fanart', ''))
 	li_item.setArt(item['art'])
-	li_item.setThumbnailImage(item['art'].get('poster', ''))
 	li_item.setIconImage('DefaultVideo.png')
 
 	hasVideo = False
@@ -160,7 +158,6 @@ def parse_tvshows(li, item, searchstring=False, append=False):
 	li_item.setProperty('WatchedEpisodes', watchedepisodes)
 	li_item.setProperty('UnwatchedEpisodes', unwatchedepisodes)
 	li_item.setArt(item['art'])
-	li_item.setThumbnailImage(item['art'].get('poster', ''))
 	li_item.setIconImage('DefaultVideo.png')
 
 	if searchstring:
@@ -204,9 +201,9 @@ def parse_seasons(li, item, append=False):
 											'mediatype': 'season',
 											'dbid': item['seasonid']})
 	li_item.setArt(item['art'])
+	li_item.setArt({'fanart': item['art'].get('tvshow.fanart', '')})
 	li_item.setProperty('WatchedEpisodes', watchedepisodes)
 	li_item.setProperty('UnwatchedEpisodes', unwatchedepisodes)
-	li_item.setThumbnailImage(item['art'].get('poster', ''))
 	li_item.setIconImage('DefaultVideo.png')
 
 	if seasonnr == '0':
@@ -239,9 +236,8 @@ def parse_episodes(li, item, append=False):
 											'mediatype': 'episode'})
 	li_item.setProperty('resumetime', str(item['resume']['position']))
 	li_item.setProperty('totaltime', str(item['resume']['total']))
-	li_item.setProperty('fanart_image', item['art'].get('item.fanart', ''))
+	li_item.setArt({'fanart': item['art'].get('tvshow.fanart', ''), 'clearlogo': item['art'].get('tvshow.clearlogo', ''), 'landscape': item['art'].get('tvshow.landscape', ''), 'clearart': item['art'].get('tvshow.clearart', '')})
 	li_item.setArt(item['art'])
-	li_item.setThumbnailImage(item['art'].get('thumb', ''))
 	li_item.setIconImage('DefaultTVShows.png')
 
 	hasVideo = False

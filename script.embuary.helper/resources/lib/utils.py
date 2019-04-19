@@ -9,6 +9,7 @@ import xbmcgui
 import xbmcvfs
 import json
 import random
+import os
 
 ''' Python 2<->3 compatibility
 '''
@@ -140,7 +141,7 @@ def playitem(params):
                     item={dbtype: int(dbid)}
                     )
     else:
-        execute('PlayMedia(%s)' % remove_quotes(params.get('item')))
+        execute('PlayMedia("%s")' % remove_quotes(params.get('item')))
 
 
 def playall(params):
@@ -279,13 +280,34 @@ def hyperion_winscreencap(params):
 
     port = params.get('port', '9192')
     action = params.get('cmd').upper()
-
     try:
         response = urllib.urlopen('http://localhost:%s?command=%s&force=True' % (port,action))
         response.read()
         response.close()
     except:
         pass
+
+
+def txtfile(params):
+
+    prop = params.get('property')
+    path = xbmc.translatePath(remove_quotes(params.get('path')))
+
+    if os.path.isfile(path):
+        log('Reading file %s' % path)
+
+        file = open(path, 'r')
+        text = file.read()
+        file.close()
+
+        if prop:
+            winprop(prop,text)
+        else:
+            xbmcgui.Dialog().textviewer(remove_quotes(params.get('header')),text)
+
+    else:
+        log('Cannot find %s' % path)
+        winprop(prop, clear=True)
 
 
 class PlayCinema(object):
