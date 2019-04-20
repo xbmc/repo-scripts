@@ -1,0 +1,333 @@
+# XBMC Media Center language file
+# Addon Name: Artist Slideshow
+# Addon id: script.artistslideshow
+# Addon Provider: ronie|pkscuot
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: Bulgarian (http://www.transifex.com/projects/p/xbmc-addons/language/bg/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: bg\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#30300"
+msgid "Downloading"
+msgstr "Сваляне"
+
+msgctxt "#30301"
+msgid "Downloading artist images"
+msgstr "Сваляне изображения на артиста"
+
+msgctxt "#30302"
+msgid "Nothing Downloaded"
+msgstr "Нищо не е свалено"
+
+msgctxt "#30303"
+msgid "No images found for artist"
+msgstr "Не са открити изображения за артиста"
+
+msgctxt "#30304"
+msgid "Download Complete"
+msgstr "Свалянето завърши"
+
+msgctxt "#30305"
+msgid "All artist images downloaded"
+msgstr "Свалени са всички зображения на артиста"
+
+msgctxt "#32000"
+msgid "Download"
+msgstr "Свали"
+
+msgctxt "#32001"
+msgid "Download images from last.fm"
+msgstr "Сваляй изображения от last.fm"
+
+msgctxt "#32002"
+msgid "Download images from htbackdrops.com"
+msgstr "Сваляй изображения от htbackdrops.com"
+
+msgctxt "#32003"
+msgid "  Minimal image width"
+msgstr "Мин. ширина на изображенията"
+
+msgctxt "#32004"
+msgid "  Minimal image height"
+msgstr "Мин. височина на изображенията"
+
+msgctxt "#32005"
+msgid "Download additional artist information"
+msgstr "Сваляй допълнителна инф. за артистите"
+
+msgctxt "#32006"
+msgid "  Preferred language for artist information"
+msgstr "Предпочитан език на инф. за артистите"
+
+msgctxt "#32007"
+msgid "  Download only 16:9 images"
+msgstr "Сваляй само изображения във формат 16:9"
+
+msgctxt "#32008"
+msgid "Download images from fanart.tv"
+msgstr "Сваляй изображения от fanart.tv"
+
+msgctxt "#32009"
+msgid "Download images from theaudiodb.com"
+msgstr "Сваляй изображения от theaudiodb.com"
+
+msgctxt "#32100"
+msgid "Slideshow"
+msgstr "Слайдшоу"
+
+msgctxt "#32101"
+msgid "Local artist folder"
+msgstr "Локална папка за изпълнителя"
+
+msgctxt "#32102"
+msgid "  Image Priority"
+msgstr "Приоритет за изображението"
+
+msgctxt "#32103"
+msgid "Fallback folder"
+msgstr "Резервна папка"
+
+msgctxt "#32104"
+msgid "Override folder"
+msgstr "Замесваща папка"
+
+msgctxt "#32105"
+msgid "Use fallback slideshow"
+msgstr "Ползвай резервно слайдшоу"
+
+msgctxt "#32106"
+msgid "Use override slideshow"
+msgstr "Ползвай замесващо слайдшоу"
+
+msgctxt "#32110"
+msgid "Use remote images first"
+msgstr "Първо ползвай отдалечените изображения"
+
+msgctxt "#32111"
+msgid "Use local images first"
+msgstr "Първо ползвай локалните изображения"
+
+msgctxt "#32112"
+msgid "Use both local and remote images"
+msgstr "Ползвай локални и отдалечени изображения"
+
+msgctxt "#32200"
+msgid "Advanced"
+msgstr "Допълнителни"
+
+msgctxt "#32201"
+msgid "Limit size of download cache"
+msgstr "Лимит на кеша за сваляне"
+
+msgctxt "#32202"
+msgid "  Maximum cache size (in megabytes)"
+msgstr "Максимален размер на кеша (в мегабайти)"
+
+msgctxt "#32203"
+msgid "Download notification type"
+msgstr "Тип на известията за сваляне"
+
+msgctxt "#32205"
+msgid "Alternate name for local fanart folder"
+msgstr "Алтернативно име за локалната фанарт папка"
+
+msgctxt "#32206"
+msgid "None"
+msgstr "Без"
+
+msgctxt "#32207"
+msgid "Text notifications"
+msgstr "Текстово известяване"
+
+msgctxt "#32208"
+msgid "Custom images"
+msgstr "Персонални изображения"
+
+msgctxt "#32209"
+msgid "Enable debug logging"
+msgstr "Включи дебъг дневника"
+
+msgctxt "#32901"
+msgid "Albanian"
+msgstr "албански"
+
+msgctxt "#32902"
+msgid "Arabic"
+msgstr "арабски"
+
+msgctxt "#32903"
+msgid "Belarusian"
+msgstr "беларуски"
+
+msgctxt "#32904"
+msgid "Bosnian (Latin)"
+msgstr "босненски (Latin)"
+
+msgctxt "#32905"
+msgid "Bulgarian"
+msgstr "български"
+
+msgctxt "#32906"
+msgid "Catalan"
+msgstr "каталонски"
+
+msgctxt "#32907"
+msgid "Chinese"
+msgstr "китайски"
+
+msgctxt "#32908"
+msgid "Croatian"
+msgstr "хърватски"
+
+msgctxt "#32909"
+msgid "Czech"
+msgstr "чешки"
+
+msgctxt "#32910"
+msgid "Danish"
+msgstr "датски"
+
+msgctxt "#32911"
+msgid "Dutch"
+msgstr "нидерландски (холандски)"
+
+msgctxt "#32912"
+msgid "English"
+msgstr "английски"
+
+msgctxt "#32913"
+msgid "Estonian"
+msgstr "естонски"
+
+msgctxt "#32914"
+msgid "Finnish"
+msgstr "фински (финландски)"
+
+msgctxt "#32915"
+msgid "French"
+msgstr "френски"
+
+msgctxt "#32916"
+msgid "German"
+msgstr "немски"
+
+msgctxt "#32917"
+msgid "Greek"
+msgstr "гръцки"
+
+msgctxt "#32918"
+msgid "Hebrew"
+msgstr "иврит"
+
+msgctxt "#32919"
+msgid "Hindi"
+msgstr "хинди"
+
+msgctxt "#32920"
+msgid "Hungarian"
+msgstr "унгарски"
+
+msgctxt "#32921"
+msgid "Icelandic"
+msgstr "исландски"
+
+msgctxt "#32922"
+msgid "Indonesian"
+msgstr "индонезийски"
+
+msgctxt "#32924"
+msgid "Italian"
+msgstr "италиански"
+
+msgctxt "#32925"
+msgid "Japanese"
+msgstr "японкси"
+
+msgctxt "#32926"
+msgid "Korean"
+msgstr "корейски"
+
+msgctxt "#32927"
+msgid "Latvian"
+msgstr "латвийски"
+
+msgctxt "#32928"
+msgid "Lithuanian"
+msgstr "литовски"
+
+msgctxt "#32929"
+msgid "Macedonian"
+msgstr "македонски"
+
+msgctxt "#32930"
+msgid "Norwegian"
+msgstr "норвежки"
+
+msgctxt "#32932"
+msgid "Polish"
+msgstr "полски"
+
+msgctxt "#32933"
+msgid "Portuguese"
+msgstr "португалски"
+
+msgctxt "#32934"
+msgid "Portuguese (Brazil)"
+msgstr "португалски (Brazil)"
+
+msgctxt "#32935"
+msgid "Romanian"
+msgstr "румънски"
+
+msgctxt "#32936"
+msgid "Russian"
+msgstr "руски"
+
+msgctxt "#32937"
+msgid "SerbianLatin"
+msgstr "сръбски (Latin)"
+
+msgctxt "#32938"
+msgid "Slovak"
+msgstr "словашки"
+
+msgctxt "#32939"
+msgid "Slovenian"
+msgstr "словенски"
+
+msgctxt "#32940"
+msgid "Spanish"
+msgstr "испанки"
+
+msgctxt "#32942"
+msgid "Swedish"
+msgstr "шведски"
+
+msgctxt "#32943"
+msgid "Thai"
+msgstr "тайски (тайландски)"
+
+msgctxt "#32944"
+msgid "Turkish"
+msgstr "турски"
+
+msgctxt "#32945"
+msgid "Ukrainian"
+msgstr "украински"
+
+msgctxt "#32946"
+msgid "Vietnamese"
+msgstr "виетнамски"
+
+msgctxt "#32947"
+msgid "Farsi"
+msgstr "персийски (фарси)"

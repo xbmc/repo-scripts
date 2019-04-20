@@ -1,0 +1,217 @@
+# XBMC Media Center language file
+# Addon Name: Artist Slideshow
+# Addon id: script.artistslideshow
+# Addon Provider: ronie|pkscuot
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: Albanian (http://www.transifex.com/projects/p/xbmc-addons/language/sq/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: sq\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#30300"
+msgid "Downloading"
+msgstr "Duke shkarkuar"
+
+msgctxt "#32000"
+msgid "Download"
+msgstr "Shkarkoni"
+
+msgctxt "#32100"
+msgid "Slideshow"
+msgstr "Slideshow"
+
+msgctxt "#32200"
+msgid "Advanced"
+msgstr "Të shtuar"
+
+msgctxt "#32206"
+msgid "None"
+msgstr "Asnjë"
+
+msgctxt "#32209"
+msgid "Enable debug logging"
+msgstr "Aktivoni debug logging"
+
+msgctxt "#32901"
+msgid "Albanian"
+msgstr "Shqip"
+
+msgctxt "#32902"
+msgid "Arabic"
+msgstr "Arrabisht"
+
+msgctxt "#32903"
+msgid "Belarusian"
+msgstr "Bjellarusisht"
+
+msgctxt "#32904"
+msgid "Bosnian (Latin)"
+msgstr "Boshnjake (latine)"
+
+msgctxt "#32905"
+msgid "Bulgarian"
+msgstr "Bullgarisht"
+
+msgctxt "#32906"
+msgid "Catalan"
+msgstr "Catalanisht"
+
+msgctxt "#32907"
+msgid "Chinese"
+msgstr "Kinez"
+
+msgctxt "#32908"
+msgid "Croatian"
+msgstr "Kroate"
+
+msgctxt "#32909"
+msgid "Czech"
+msgstr "Çek"
+
+msgctxt "#32910"
+msgid "Danish"
+msgstr "Danez"
+
+msgctxt "#32911"
+msgid "Dutch"
+msgstr "Hollandez"
+
+msgctxt "#32912"
+msgid "English"
+msgstr "Anglisht"
+
+msgctxt "#32913"
+msgid "Estonian"
+msgstr "Estonez"
+
+msgctxt "#32914"
+msgid "Finnish"
+msgstr "Finnlandisht"
+
+msgctxt "#32915"
+msgid "French"
+msgstr "Frangjisht"
+
+msgctxt "#32916"
+msgid "German"
+msgstr "Gjermanisht"
+
+msgctxt "#32917"
+msgid "Greek"
+msgstr "Greqisht"
+
+msgctxt "#32918"
+msgid "Hebrew"
+msgstr "Hebraik"
+
+msgctxt "#32919"
+msgid "Hindi"
+msgstr "Hindi"
+
+msgctxt "#32920"
+msgid "Hungarian"
+msgstr "Hungarez"
+
+msgctxt "#32921"
+msgid "Icelandic"
+msgstr "Islandez"
+
+msgctxt "#32922"
+msgid "Indonesian"
+msgstr "Indonez"
+
+msgctxt "#32924"
+msgid "Italian"
+msgstr "Italisht"
+
+msgctxt "#32925"
+msgid "Japanese"
+msgstr "Japonisht"
+
+msgctxt "#32926"
+msgid "Korean"
+msgstr "Korean"
+
+msgctxt "#32927"
+msgid "Latvian"
+msgstr "Letonisht"
+
+msgctxt "#32928"
+msgid "Lithuanian"
+msgstr "Lituanisht"
+
+msgctxt "#32929"
+msgid "Macedonian"
+msgstr "Maqedonisht"
+
+msgctxt "#32930"
+msgid "Norwegian"
+msgstr "Norvegjez"
+
+msgctxt "#32932"
+msgid "Polish"
+msgstr "Polonisht"
+
+msgctxt "#32933"
+msgid "Portuguese"
+msgstr "Portugalisht"
+
+msgctxt "#32934"
+msgid "Portuguese (Brazil)"
+msgstr "Portugalisht  (Brazil)"
+
+msgctxt "#32935"
+msgid "Romanian"
+msgstr "Rumanisht"
+
+msgctxt "#32936"
+msgid "Russian"
+msgstr "Rusisht"
+
+msgctxt "#32937"
+msgid "SerbianLatin"
+msgstr "SërbishtLatin"
+
+msgctxt "#32938"
+msgid "Slovak"
+msgstr "Sllovak"
+
+msgctxt "#32939"
+msgid "Slovenian"
+msgstr "Slloven"
+
+msgctxt "#32940"
+msgid "Spanish"
+msgstr "Spanjisht"
+
+msgctxt "#32942"
+msgid "Swedish"
+msgstr "Suedez"
+
+msgctxt "#32943"
+msgid "Thai"
+msgstr "Thai"
+
+msgctxt "#32944"
+msgid "Turkish"
+msgstr "Turqisht"
+
+msgctxt "#32945"
+msgid "Ukrainian"
+msgstr "Ukrainase"
+
+msgctxt "#32946"
+msgid "Vietnamese"
+msgstr "Vietnamisht"
+
+msgctxt "#32947"
+msgid "Farsi"
+msgstr "Farsi"

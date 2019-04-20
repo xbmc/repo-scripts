@@ -1,0 +1,257 @@
+# XBMC Media Center language file
+# Addon Name: Artist Slideshow
+# Addon id: script.artistslideshow
+# Addon Provider: ronie|pkscuot
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: Spanish (Argentina) (http://www.transifex.com/projects/p/xbmc-addons/language/es_AR/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: es_AR\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#30300"
+msgid "Downloading"
+msgstr "Descargando"
+
+msgctxt "#30301"
+msgid "Downloading artist images"
+msgstr "Descargando imágenes de artista"
+
+msgctxt "#30302"
+msgid "Nothing Downloaded"
+msgstr "Nada descargado"
+
+msgctxt "#30303"
+msgid "No images found for artist"
+msgstr "No se encontraron imágenes para el artista"
+
+msgctxt "#30304"
+msgid "Download Complete"
+msgstr "Descarga completa"
+
+msgctxt "#30305"
+msgid "All artist images downloaded"
+msgstr "Todas las imágenes de artista descargadas"
+
+msgctxt "#32000"
+msgid "Download"
+msgstr "Descargar"
+
+msgctxt "#32001"
+msgid "Download images from last.fm"
+msgstr "Descargar imágenes de last.fm"
+
+msgctxt "#32002"
+msgid "Download images from htbackdrops.com"
+msgstr "Descargar imágenes de htbackdrops.com"
+
+msgctxt "#32005"
+msgid "Download additional artist information"
+msgstr "Descargar información adicional del artista"
+
+msgctxt "#32006"
+msgid "  Preferred language for artist information"
+msgstr "Idioma preferido para la información del artista"
+
+msgctxt "#32100"
+msgid "Slideshow"
+msgstr "Presentación"
+
+msgctxt "#32101"
+msgid "Local artist folder"
+msgstr "Carpeta local del artista"
+
+msgctxt "#32200"
+msgid "Advanced"
+msgstr "Avanzado"
+
+msgctxt "#32206"
+msgid "None"
+msgstr "Ninguno"
+
+msgctxt "#32209"
+msgid "Enable debug logging"
+msgstr "Habilitar trazas de depuración"
+
+msgctxt "#32901"
+msgid "Albanian"
+msgstr "Albanés"
+
+msgctxt "#32902"
+msgid "Arabic"
+msgstr "Arabe"
+
+msgctxt "#32903"
+msgid "Belarusian"
+msgstr "Bieloruso"
+
+msgctxt "#32904"
+msgid "Bosnian (Latin)"
+msgstr "Bosnio (Latin)"
+
+msgctxt "#32905"
+msgid "Bulgarian"
+msgstr "Bulgaro"
+
+msgctxt "#32906"
+msgid "Catalan"
+msgstr "Catalán"
+
+msgctxt "#32907"
+msgid "Chinese"
+msgstr "Chino"
+
+msgctxt "#32908"
+msgid "Croatian"
+msgstr "Croata"
+
+msgctxt "#32909"
+msgid "Czech"
+msgstr "Checo"
+
+msgctxt "#32910"
+msgid "Danish"
+msgstr "Danés"
+
+msgctxt "#32911"
+msgid "Dutch"
+msgstr "Holandés"
+
+msgctxt "#32912"
+msgid "English"
+msgstr "Inglés"
+
+msgctxt "#32913"
+msgid "Estonian"
+msgstr "Estonio"
+
+msgctxt "#32914"
+msgid "Finnish"
+msgstr "Finés"
+
+msgctxt "#32915"
+msgid "French"
+msgstr "Francés"
+
+msgctxt "#32916"
+msgid "German"
+msgstr "Alemán"
+
+msgctxt "#32917"
+msgid "Greek"
+msgstr "Griego"
+
+msgctxt "#32918"
+msgid "Hebrew"
+msgstr "Hebreo"
+
+msgctxt "#32919"
+msgid "Hindi"
+msgstr "Hindú"
+
+msgctxt "#32920"
+msgid "Hungarian"
+msgstr "Hungaro"
+
+msgctxt "#32921"
+msgid "Icelandic"
+msgstr "Islandés"
+
+msgctxt "#32922"
+msgid "Indonesian"
+msgstr "Indonesio"
+
+msgctxt "#32924"
+msgid "Italian"
+msgstr "Italiano"
+
+msgctxt "#32925"
+msgid "Japanese"
+msgstr "Japonés"
+
+msgctxt "#32926"
+msgid "Korean"
+msgstr "Coreano"
+
+msgctxt "#32927"
+msgid "Latvian"
+msgstr "Letonés"
+
+msgctxt "#32928"
+msgid "Lithuanian"
+msgstr "Lituano"
+
+msgctxt "#32929"
+msgid "Macedonian"
+msgstr "Macedonio"
+
+msgctxt "#32930"
+msgid "Norwegian"
+msgstr "Noruego"
+
+msgctxt "#32932"
+msgid "Polish"
+msgstr "Polaco"
+
+msgctxt "#32933"
+msgid "Portuguese"
+msgstr "Portugués"
+
+msgctxt "#32934"
+msgid "Portuguese (Brazil)"
+msgstr "Portugués (Brasil)"
+
+msgctxt "#32935"
+msgid "Romanian"
+msgstr "Rumano"
+
+msgctxt "#32936"
+msgid "Russian"
+msgstr "Ruso"
+
+msgctxt "#32937"
+msgid "SerbianLatin"
+msgstr "Serbolatino"
+
+msgctxt "#32938"
+msgid "Slovak"
+msgstr "Eslovaquio"
+
+msgctxt "#32939"
+msgid "Slovenian"
+msgstr "Esloveno"
+
+msgctxt "#32940"
+msgid "Spanish"
+msgstr "Español"
+
+msgctxt "#32942"
+msgid "Swedish"
+msgstr "Sueco"
+
+msgctxt "#32943"
+msgid "Thai"
+msgstr "Thai"
+
+msgctxt "#32944"
+msgid "Turkish"
+msgstr "Turco"
+
+msgctxt "#32945"
+msgid "Ukrainian"
+msgstr "Ucraino"
+
+msgctxt "#32946"
+msgid "Vietnamese"
+msgstr "Vietnamita"
+
+msgctxt "#32947"
+msgid "Farsi"
+msgstr "Farsi"

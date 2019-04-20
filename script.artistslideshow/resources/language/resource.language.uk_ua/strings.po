@@ -1,0 +1,217 @@
+# XBMC Media Center language file
+# Addon Name: Artist Slideshow
+# Addon id: script.artistslideshow
+# Addon Provider: ronie|pkscuot
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: Ukrainian (http://www.transifex.com/projects/p/xbmc-addons/language/uk/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: uk\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+
+msgctxt "#30300"
+msgid "Downloading"
+msgstr "Завантаження…"
+
+msgctxt "#32000"
+msgid "Download"
+msgstr "Завантажити"
+
+msgctxt "#32100"
+msgid "Slideshow"
+msgstr "Слайд-шоу"
+
+msgctxt "#32200"
+msgid "Advanced"
+msgstr "Більше"
+
+msgctxt "#32206"
+msgid "None"
+msgstr "Ні"
+
+msgctxt "#32209"
+msgid "Enable debug logging"
+msgstr "Увімкнути журнал налагодження"
+
+msgctxt "#32901"
+msgid "Albanian"
+msgstr "Албанська"
+
+msgctxt "#32902"
+msgid "Arabic"
+msgstr "Арабська"
+
+msgctxt "#32903"
+msgid "Belarusian"
+msgstr "Білоруська"
+
+msgctxt "#32904"
+msgid "Bosnian (Latin)"
+msgstr "Боснійська (Латинка)"
+
+msgctxt "#32905"
+msgid "Bulgarian"
+msgstr "Болгарська"
+
+msgctxt "#32906"
+msgid "Catalan"
+msgstr "Каталанська"
+
+msgctxt "#32907"
+msgid "Chinese"
+msgstr "Китайська"
+
+msgctxt "#32908"
+msgid "Croatian"
+msgstr "Хорватська"
+
+msgctxt "#32909"
+msgid "Czech"
+msgstr "Чеська"
+
+msgctxt "#32910"
+msgid "Danish"
+msgstr "Данська"
+
+msgctxt "#32911"
+msgid "Dutch"
+msgstr "Данська"
+
+msgctxt "#32912"
+msgid "English"
+msgstr "Англійська"
+
+msgctxt "#32913"
+msgid "Estonian"
+msgstr "Естонська"
+
+msgctxt "#32914"
+msgid "Finnish"
+msgstr "Фінська"
+
+msgctxt "#32915"
+msgid "French"
+msgstr "Французька"
+
+msgctxt "#32916"
+msgid "German"
+msgstr "Німецька"
+
+msgctxt "#32917"
+msgid "Greek"
+msgstr "Грецька"
+
+msgctxt "#32918"
+msgid "Hebrew"
+msgstr "Іврит"
+
+msgctxt "#32919"
+msgid "Hindi"
+msgstr "Хінді"
+
+msgctxt "#32920"
+msgid "Hungarian"
+msgstr "Угорська"
+
+msgctxt "#32921"
+msgid "Icelandic"
+msgstr "Ісландська"
+
+msgctxt "#32922"
+msgid "Indonesian"
+msgstr "Індонезійська"
+
+msgctxt "#32924"
+msgid "Italian"
+msgstr "Італійська"
+
+msgctxt "#32925"
+msgid "Japanese"
+msgstr "Японська"
+
+msgctxt "#32926"
+msgid "Korean"
+msgstr "Корейська"
+
+msgctxt "#32927"
+msgid "Latvian"
+msgstr "Латвійська"
+
+msgctxt "#32928"
+msgid "Lithuanian"
+msgstr "Литовська"
+
+msgctxt "#32929"
+msgid "Macedonian"
+msgstr "Македонська"
+
+msgctxt "#32930"
+msgid "Norwegian"
+msgstr "Норвезька"
+
+msgctxt "#32932"
+msgid "Polish"
+msgstr "Польська"
+
+msgctxt "#32933"
+msgid "Portuguese"
+msgstr "Португальська"
+
+msgctxt "#32934"
+msgid "Portuguese (Brazil)"
+msgstr "Португальська (Бразилія)"
+
+msgctxt "#32935"
+msgid "Romanian"
+msgstr "Румунська"
+
+msgctxt "#32936"
+msgid "Russian"
+msgstr "Російська"
+
+msgctxt "#32937"
+msgid "SerbianLatin"
+msgstr "Сербська Латинка"
+
+msgctxt "#32938"
+msgid "Slovak"
+msgstr "Словацька"
+
+msgctxt "#32939"
+msgid "Slovenian"
+msgstr "Словенська"
+
+msgctxt "#32940"
+msgid "Spanish"
+msgstr "Іспанська"
+
+msgctxt "#32942"
+msgid "Swedish"
+msgstr "Шведська"
+
+msgctxt "#32943"
+msgid "Thai"
+msgstr "Тайська"
+
+msgctxt "#32944"
+msgid "Turkish"
+msgstr "Турецька"
+
+msgctxt "#32945"
+msgid "Ukrainian"
+msgstr "Українська"
+
+msgctxt "#32946"
+msgid "Vietnamese"
+msgstr "В’єтнамська"
+
+msgctxt "#32947"
+msgid "Farsi"
+msgstr "Фарсі"

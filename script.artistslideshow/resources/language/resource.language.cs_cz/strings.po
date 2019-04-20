@@ -1,0 +1,297 @@
+# XBMC Media Center language file
+# Addon Name: Artist Slideshow
+# Addon id: script.artistslideshow
+# Addon Provider: ronie|pkscuot
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: Czech (http://www.transifex.com/projects/p/xbmc-addons/language/cs/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: cs\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+
+msgctxt "#30300"
+msgid "Downloading"
+msgstr "Stahuji"
+
+msgctxt "#30301"
+msgid "Downloading artist images"
+msgstr "Stahuji obrázky interpreta"
+
+msgctxt "#30302"
+msgid "Nothing Downloaded"
+msgstr "Nic nebylo staženo"
+
+msgctxt "#30303"
+msgid "No images found for artist"
+msgstr "Nebyl nalezen žádný obrázek interpreta"
+
+msgctxt "#30304"
+msgid "Download Complete"
+msgstr "Stahování dokončeno"
+
+msgctxt "#30305"
+msgid "All artist images downloaded"
+msgstr "Všechny obrázky interpreta staženy"
+
+msgctxt "#32000"
+msgid "Download"
+msgstr "Stáhnout"
+
+msgctxt "#32001"
+msgid "Download images from last.fm"
+msgstr "Stáhnout obrázky z last.fm"
+
+msgctxt "#32002"
+msgid "Download images from htbackdrops.com"
+msgstr "Stáhnout obrázky z htbackdrops.com"
+
+msgctxt "#32003"
+msgid "  Minimal image width"
+msgstr "Minimální šířka obrázku"
+
+msgctxt "#32004"
+msgid "  Minimal image height"
+msgstr "Minimální výška obrázku"
+
+msgctxt "#32005"
+msgid "Download additional artist information"
+msgstr "Stáhnout dodatečné informace o interpretovi"
+
+msgctxt "#32006"
+msgid "  Preferred language for artist information"
+msgstr "Upřednostňovaný jazyk informací o interpretovi"
+
+msgctxt "#32007"
+msgid "  Download only 16:9 images"
+msgstr "Stahovat pouze 16:9 obrázky"
+
+msgctxt "#32008"
+msgid "Download images from fanart.tv"
+msgstr "Stahovat obrázky z fanart.tv"
+
+msgctxt "#32009"
+msgid "Download images from theaudiodb.com"
+msgstr "Stahovat obrázky z theaudiodb.com"
+
+msgctxt "#32100"
+msgid "Slideshow"
+msgstr "Promítání"
+
+msgctxt "#32102"
+msgid "  Image Priority"
+msgstr "Priorita obrázku"
+
+msgctxt "#32110"
+msgid "Use remote images first"
+msgstr "Nejdříve použít vzdálené obrázky"
+
+msgctxt "#32111"
+msgid "Use local images first"
+msgstr "Nejdříve použít lokální obrázky"
+
+msgctxt "#32112"
+msgid "Use both local and remote images"
+msgstr "Použít lokální i vzdálené obrázky"
+
+msgctxt "#32200"
+msgid "Advanced"
+msgstr "Pokročilé"
+
+msgctxt "#32206"
+msgid "None"
+msgstr "Žádné"
+
+msgctxt "#32207"
+msgid "Text notifications"
+msgstr "Textová upozornění"
+
+msgctxt "#32208"
+msgid "Custom images"
+msgstr "Vlastní obrázky"
+
+msgctxt "#32209"
+msgid "Enable debug logging"
+msgstr "Povolit zaznamenávání ladících informací"
+
+msgctxt "#32901"
+msgid "Albanian"
+msgstr "Albánština"
+
+msgctxt "#32902"
+msgid "Arabic"
+msgstr "Arabština"
+
+msgctxt "#32903"
+msgid "Belarusian"
+msgstr "Běloruština"
+
+msgctxt "#32904"
+msgid "Bosnian (Latin)"
+msgstr "Boesenština (latinka)"
+
+msgctxt "#32905"
+msgid "Bulgarian"
+msgstr "Bulharština"
+
+msgctxt "#32906"
+msgid "Catalan"
+msgstr "Katalánština"
+
+msgctxt "#32907"
+msgid "Chinese"
+msgstr "Činština"
+
+msgctxt "#32908"
+msgid "Croatian"
+msgstr "Chorvatština"
+
+msgctxt "#32909"
+msgid "Czech"
+msgstr "Čeština"
+
+msgctxt "#32910"
+msgid "Danish"
+msgstr "Dánština"
+
+msgctxt "#32911"
+msgid "Dutch"
+msgstr "Dánština"
+
+msgctxt "#32912"
+msgid "English"
+msgstr "Angličtina"
+
+msgctxt "#32913"
+msgid "Estonian"
+msgstr "Estonština"
+
+msgctxt "#32914"
+msgid "Finnish"
+msgstr "Finština"
+
+msgctxt "#32915"
+msgid "French"
+msgstr "Francouzština"
+
+msgctxt "#32916"
+msgid "German"
+msgstr "Němčina"
+
+msgctxt "#32917"
+msgid "Greek"
+msgstr "Řečtina"
+
+msgctxt "#32918"
+msgid "Hebrew"
+msgstr "Hebrejština"
+
+msgctxt "#32919"
+msgid "Hindi"
+msgstr "Hindština"
+
+msgctxt "#32920"
+msgid "Hungarian"
+msgstr "Maďarština"
+
+msgctxt "#32921"
+msgid "Icelandic"
+msgstr "Islandština"
+
+msgctxt "#32922"
+msgid "Indonesian"
+msgstr "Indonézština"
+
+msgctxt "#32924"
+msgid "Italian"
+msgstr "Italština"
+
+msgctxt "#32925"
+msgid "Japanese"
+msgstr "Japonština"
+
+msgctxt "#32926"
+msgid "Korean"
+msgstr "Korejština"
+
+msgctxt "#32927"
+msgid "Latvian"
+msgstr "Lotyština"
+
+msgctxt "#32928"
+msgid "Lithuanian"
+msgstr "Litevština"
+
+msgctxt "#32929"
+msgid "Macedonian"
+msgstr "Makedónština"
+
+msgctxt "#32930"
+msgid "Norwegian"
+msgstr "Norština"
+
+msgctxt "#32932"
+msgid "Polish"
+msgstr "Polština"
+
+msgctxt "#32933"
+msgid "Portuguese"
+msgstr "Portugalština"
+
+msgctxt "#32934"
+msgid "Portuguese (Brazil)"
+msgstr "Portugalština (Brazílie)"
+
+msgctxt "#32935"
+msgid "Romanian"
+msgstr "Rumunština"
+
+msgctxt "#32936"
+msgid "Russian"
+msgstr "Ruština"
+
+msgctxt "#32937"
+msgid "SerbianLatin"
+msgstr "Srbština (latinka)"
+
+msgctxt "#32938"
+msgid "Slovak"
+msgstr "Slovenština"
+
+msgctxt "#32939"
+msgid "Slovenian"
+msgstr "Slovinština"
+
+msgctxt "#32940"
+msgid "Spanish"
+msgstr "Španělština"
+
+msgctxt "#32942"
+msgid "Swedish"
+msgstr "Švédština"
+
+msgctxt "#32943"
+msgid "Thai"
+msgstr "Thaiština"
+
+msgctxt "#32944"
+msgid "Turkish"
+msgstr "Turečtina"
+
+msgctxt "#32945"
+msgid "Ukrainian"
+msgstr "Ukrajinština"
+
+msgctxt "#32946"
+msgid "Vietnamese"
+msgstr "Větnamština"
+
+msgctxt "#32947"
+msgid "Farsi"
+msgstr "Perština"

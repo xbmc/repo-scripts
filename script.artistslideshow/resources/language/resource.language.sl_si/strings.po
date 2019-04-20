@@ -1,0 +1,321 @@
+# XBMC Media Center language file
+# Addon Name: Artist Slideshow
+# Addon id: script.artistslideshow
+# Addon Provider: ronie|pkscuot
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: Slovenian (http://www.transifex.com/projects/p/xbmc-addons/language/sl/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: sl\n"
+"Plural-Forms: nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3);\n"
+
+msgctxt "#30300"
+msgid "Downloading"
+msgstr "Prenašam"
+
+msgctxt "#30301"
+msgid "Downloading artist images"
+msgstr "Nalaganje slik izvajalca"
+
+msgctxt "#30302"
+msgid "Nothing Downloaded"
+msgstr "Ni prenešenih datotek"
+
+msgctxt "#30303"
+msgid "No images found for artist"
+msgstr "Ne najdem slik izvajalca"
+
+msgctxt "#30304"
+msgid "Download Complete"
+msgstr "Prenos končan"
+
+msgctxt "#30305"
+msgid "All artist images downloaded"
+msgstr "Vse slike izvajalcev so prenešene"
+
+msgctxt "#32000"
+msgid "Download"
+msgstr "Prenesi"
+
+msgctxt "#32001"
+msgid "Download images from last.fm"
+msgstr "Prenesi slike iz last.fm"
+
+msgctxt "#32002"
+msgid "Download images from htbackdrops.com"
+msgstr "Prenesi slike iz htbackdrops.com"
+
+msgctxt "#32003"
+msgid "  Minimal image width"
+msgstr "Najmanjša širina slike"
+
+msgctxt "#32004"
+msgid "  Minimal image height"
+msgstr "Najmanjša višina slike"
+
+msgctxt "#32005"
+msgid "Download additional artist information"
+msgstr "Prenesi dodatne informacije o izvajalcu"
+
+msgctxt "#32006"
+msgid "  Preferred language for artist information"
+msgstr "Želeni jezik za informacije o izvajalcu"
+
+msgctxt "#32007"
+msgid "  Download only 16:9 images"
+msgstr "Prenesi samo slike v razmerju 16:9"
+
+msgctxt "#32008"
+msgid "Download images from fanart.tv"
+msgstr "Prenesi slike iz fanart.tv"
+
+msgctxt "#32009"
+msgid "Download images from theaudiodb.com"
+msgstr "Prenesi slike iz theaudiodb.com"
+
+msgctxt "#32100"
+msgid "Slideshow"
+msgstr "Diaprojekcija slik"
+
+msgctxt "#32101"
+msgid "Local artist folder"
+msgstr "Lokalna mapa za izvajalce"
+
+msgctxt "#32103"
+msgid "Fallback folder"
+msgstr "Rezervna mapa"
+
+msgctxt "#32105"
+msgid "Use fallback slideshow"
+msgstr "Uporabi rezervno diaprojekcijo slik"
+
+msgctxt "#32110"
+msgid "Use remote images first"
+msgstr "Najprej uporabi oddaljene slike"
+
+msgctxt "#32111"
+msgid "Use local images first"
+msgstr "Najprej uporabi lokalne slike"
+
+msgctxt "#32112"
+msgid "Use both local and remote images"
+msgstr "Uporabi oboje -lokalne in oddaljene- slike"
+
+msgctxt "#32200"
+msgid "Advanced"
+msgstr "Napredno"
+
+msgctxt "#32201"
+msgid "Limit size of download cache"
+msgstr "Omeji velikost predpomnilnika za prenose"
+
+msgctxt "#32202"
+msgid "  Maximum cache size (in megabytes)"
+msgstr "Največja velikost predpomnilnika (v MB)"
+
+msgctxt "#32203"
+msgid "Download notification type"
+msgstr "Prenesi vrsto obvestila"
+
+msgctxt "#32205"
+msgid "Alternate name for local fanart folder"
+msgstr "Nadomestno ime lokalne mape za ozadja"
+
+msgctxt "#32206"
+msgid "None"
+msgstr "Brez"
+
+msgctxt "#32207"
+msgid "Text notifications"
+msgstr "Besedilno obvestilo"
+
+msgctxt "#32208"
+msgid "Custom images"
+msgstr "Slike po meri"
+
+msgctxt "#32209"
+msgid "Enable debug logging"
+msgstr "Vključi zapisovanje razhroščevanja"
+
+msgctxt "#32901"
+msgid "Albanian"
+msgstr "Albanski"
+
+msgctxt "#32902"
+msgid "Arabic"
+msgstr "Arabski"
+
+msgctxt "#32903"
+msgid "Belarusian"
+msgstr "Beloruski"
+
+msgctxt "#32904"
+msgid "Bosnian (Latin)"
+msgstr "Bošnjaški (latinična)"
+
+msgctxt "#32905"
+msgid "Bulgarian"
+msgstr "Bolgarski"
+
+msgctxt "#32906"
+msgid "Catalan"
+msgstr "Katalonski"
+
+msgctxt "#32907"
+msgid "Chinese"
+msgstr "Kitajski"
+
+msgctxt "#32908"
+msgid "Croatian"
+msgstr "Hrvaški"
+
+msgctxt "#32909"
+msgid "Czech"
+msgstr "Češki"
+
+msgctxt "#32910"
+msgid "Danish"
+msgstr "Danski"
+
+msgctxt "#32911"
+msgid "Dutch"
+msgstr "Nizozemski"
+
+msgctxt "#32912"
+msgid "English"
+msgstr "Angleščina"
+
+msgctxt "#32913"
+msgid "Estonian"
+msgstr "Estonski"
+
+msgctxt "#32914"
+msgid "Finnish"
+msgstr "Finski"
+
+msgctxt "#32915"
+msgid "French"
+msgstr "Francoščina"
+
+msgctxt "#32916"
+msgid "German"
+msgstr "Nemščina"
+
+msgctxt "#32917"
+msgid "Greek"
+msgstr "Grški"
+
+msgctxt "#32918"
+msgid "Hebrew"
+msgstr "Hebrejski"
+
+msgctxt "#32919"
+msgid "Hindi"
+msgstr "Hindi"
+
+msgctxt "#32920"
+msgid "Hungarian"
+msgstr "Madžarski"
+
+msgctxt "#32921"
+msgid "Icelandic"
+msgstr "Islandski"
+
+msgctxt "#32922"
+msgid "Indonesian"
+msgstr "Indonezijski"
+
+msgctxt "#32924"
+msgid "Italian"
+msgstr "Italijanščina"
+
+msgctxt "#32925"
+msgid "Japanese"
+msgstr "Japonščina"
+
+msgctxt "#32926"
+msgid "Korean"
+msgstr "Korejski"
+
+msgctxt "#32927"
+msgid "Latvian"
+msgstr "Latvijski"
+
+msgctxt "#32928"
+msgid "Lithuanian"
+msgstr "Litovski"
+
+msgctxt "#32929"
+msgid "Macedonian"
+msgstr "Makedonski"
+
+msgctxt "#32930"
+msgid "Norwegian"
+msgstr "Norveški"
+
+msgctxt "#32932"
+msgid "Polish"
+msgstr "Poljski"
+
+msgctxt "#32933"
+msgid "Portuguese"
+msgstr "Portugalski"
+
+msgctxt "#32934"
+msgid "Portuguese (Brazil)"
+msgstr "Portugalski (Brazilija)"
+
+msgctxt "#32935"
+msgid "Romanian"
+msgstr "Romunski"
+
+msgctxt "#32936"
+msgid "Russian"
+msgstr "Ruski"
+
+msgctxt "#32937"
+msgid "SerbianLatin"
+msgstr "Srbski (latinsko)"
+
+msgctxt "#32938"
+msgid "Slovak"
+msgstr "Slovaški"
+
+msgctxt "#32939"
+msgid "Slovenian"
+msgstr "Slovenski"
+
+msgctxt "#32940"
+msgid "Spanish"
+msgstr "Španščina"
+
+msgctxt "#32942"
+msgid "Swedish"
+msgstr "Švedski"
+
+msgctxt "#32943"
+msgid "Thai"
+msgstr "Tajski"
+
+msgctxt "#32944"
+msgid "Turkish"
+msgstr "Turški"
+
+msgctxt "#32945"
+msgid "Ukrainian"
+msgstr "Ukrajinski"
+
+msgctxt "#32946"
+msgid "Vietnamese"
+msgstr "Vietnamski"
+
+msgctxt "#32947"
+msgid "Farsi"
+msgstr "Farsi"

@@ -1,0 +1,337 @@
+# XBMC Media Center language file
+# Addon Name: Artist Slideshow
+# Addon id: script.artistslideshow
+# Addon Provider: ronie|pkscuot
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: Greek (http://www.transifex.com/projects/p/xbmc-addons/language/el/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: el\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#30300"
+msgid "Downloading"
+msgstr "Γίνεται λήψη"
+
+msgctxt "#30301"
+msgid "Downloading artist images"
+msgstr "Λαμβάνονται εικόνες καλλιτεχνών"
+
+msgctxt "#30302"
+msgid "Nothing Downloaded"
+msgstr "Δεν ελήφθη τίποτα"
+
+msgctxt "#30303"
+msgid "No images found for artist"
+msgstr "Δε βρέθηκαν εικόνες για τον καλλιτέχνη"
+
+msgctxt "#30304"
+msgid "Download Complete"
+msgstr "Ολοκλήρωση λήψης"
+
+msgctxt "#30305"
+msgid "All artist images downloaded"
+msgstr "Ελήφθησαν όλες οι εικόνες καλλιτέχνη"
+
+msgctxt "#32000"
+msgid "Download"
+msgstr "Λήψη"
+
+msgctxt "#32001"
+msgid "Download images from last.fm"
+msgstr "Εικόνες από last.fm"
+
+msgctxt "#32002"
+msgid "Download images from htbackdrops.com"
+msgstr "Εικόνες από htbackdrops.com"
+
+msgctxt "#32003"
+msgid "  Minimal image width"
+msgstr "  Ελάχιστο πλάτος εικόνας"
+
+msgctxt "#32004"
+msgid "  Minimal image height"
+msgstr "  Ελάχιστο ύψος εικόνας"
+
+msgctxt "#32005"
+msgid "Download additional artist information"
+msgstr "Λήψη επιπλέον πληροφοριών καλλιτέχνη"
+
+msgctxt "#32006"
+msgid "  Preferred language for artist information"
+msgstr "Προτιμώμενη γλώσσα πληροφοριών καλλιτέχνη"
+
+msgctxt "#32007"
+msgid "  Download only 16:9 images"
+msgstr "  Λήψη μόνο εικόνων αναλογίας 16:9"
+
+msgctxt "#32008"
+msgid "Download images from fanart.tv"
+msgstr "Εικόνες από fanart.tv"
+
+msgctxt "#32009"
+msgid "Download images from theaudiodb.com"
+msgstr "Εικόνες από theaudiodb.com"
+
+msgctxt "#32100"
+msgid "Slideshow"
+msgstr "Παρουσίαση διαφανειών"
+
+msgctxt "#32101"
+msgid "Local artist folder"
+msgstr "Τοπικός φάκελος καλλιτεχνών"
+
+msgctxt "#32102"
+msgid "  Image Priority"
+msgstr "Προτεραιότητα Εικόνας"
+
+msgctxt "#32103"
+msgid "Fallback folder"
+msgstr "Φάκελος εφεδρικής παρουσίασης"
+
+msgctxt "#32104"
+msgid "Override folder"
+msgstr "Φάκελος παρουσίασης παράκαμψης"
+
+msgctxt "#32105"
+msgid "Use fallback slideshow"
+msgstr "Χρήση εφεδρικής παρουσίασης διαφανειών"
+
+msgctxt "#32106"
+msgid "Use override slideshow"
+msgstr "Φάκελος παρουσίασης παράκαμψης"
+
+msgctxt "#32110"
+msgid "Use remote images first"
+msgstr "Χρήση πρώτα των απομακρυσμένων εικόνων"
+
+msgctxt "#32111"
+msgid "Use local images first"
+msgstr "Χρήση πρώτα των τοπικών εικόνων"
+
+msgctxt "#32112"
+msgid "Use both local and remote images"
+msgstr "Χρήση τοπικών και απομακρυσμένων εικόνων"
+
+msgctxt "#32200"
+msgid "Advanced"
+msgstr "Για προχωρημένους"
+
+msgctxt "#32201"
+msgid "Limit size of download cache"
+msgstr "Περιορισμός της λανθάνουσας μνήμης λήψεων"
+
+msgctxt "#32202"
+msgid "  Maximum cache size (in megabytes)"
+msgstr "Μέγιστο μέγεθος λανθάνουσας μνήμης (σε MB)"
+
+msgctxt "#32203"
+msgid "Download notification type"
+msgstr "Τύπος ειδοποίησης λήψεων"
+
+msgctxt "#32204"
+msgid "  Custom notification images folder"
+msgstr "Φάκελος προσωπικών εικόνων ειδοποιήσεων"
+
+msgctxt "#32205"
+msgid "Alternate name for local fanart folder"
+msgstr "Εναλλακτικό όνομα τοπικού φακέλου fanart"
+
+msgctxt "#32206"
+msgid "None"
+msgstr "Κανένας"
+
+msgctxt "#32207"
+msgid "Text notifications"
+msgstr "Ειδοποιήσεις κειμένου"
+
+msgctxt "#32208"
+msgid "Custom images"
+msgstr "Προσωπικές εικόνες"
+
+msgctxt "#32209"
+msgid "Enable debug logging"
+msgstr "Ενεργοποίηση καταγραφής σφαλμάτων"
+
+msgctxt "#32901"
+msgid "Albanian"
+msgstr "Αλβανικά"
+
+msgctxt "#32902"
+msgid "Arabic"
+msgstr "Αραβικά"
+
+msgctxt "#32903"
+msgid "Belarusian"
+msgstr "Λευκορώσικα"
+
+msgctxt "#32904"
+msgid "Bosnian (Latin)"
+msgstr "Βοσνιακά (Λατινικά)"
+
+msgctxt "#32905"
+msgid "Bulgarian"
+msgstr "Βουλγάρικα"
+
+msgctxt "#32906"
+msgid "Catalan"
+msgstr "Καταλανικά"
+
+msgctxt "#32907"
+msgid "Chinese"
+msgstr "Κινέζικα"
+
+msgctxt "#32908"
+msgid "Croatian"
+msgstr "Κροατικά"
+
+msgctxt "#32909"
+msgid "Czech"
+msgstr "Τσέχικα"
+
+msgctxt "#32910"
+msgid "Danish"
+msgstr "Δανικά"
+
+msgctxt "#32911"
+msgid "Dutch"
+msgstr "Ολλανδικά"
+
+msgctxt "#32912"
+msgid "English"
+msgstr "Αγγλικά"
+
+msgctxt "#32913"
+msgid "Estonian"
+msgstr "Εσθονικά"
+
+msgctxt "#32914"
+msgid "Finnish"
+msgstr "Φινλανδικά"
+
+msgctxt "#32915"
+msgid "French"
+msgstr "Γαλλικά"
+
+msgctxt "#32916"
+msgid "German"
+msgstr "Γερμανικά"
+
+msgctxt "#32917"
+msgid "Greek"
+msgstr "Ελληνικά"
+
+msgctxt "#32918"
+msgid "Hebrew"
+msgstr "Εβραϊκά"
+
+msgctxt "#32919"
+msgid "Hindi"
+msgstr "Ινδικά"
+
+msgctxt "#32920"
+msgid "Hungarian"
+msgstr "Ουγγρικά"
+
+msgctxt "#32921"
+msgid "Icelandic"
+msgstr "Ισλανδικά"
+
+msgctxt "#32922"
+msgid "Indonesian"
+msgstr "Ινδονησιακά"
+
+msgctxt "#32924"
+msgid "Italian"
+msgstr "Ιταλικά"
+
+msgctxt "#32925"
+msgid "Japanese"
+msgstr "Ιαπωνικά"
+
+msgctxt "#32926"
+msgid "Korean"
+msgstr "Κορεάτικα"
+
+msgctxt "#32927"
+msgid "Latvian"
+msgstr "Λετονικά"
+
+msgctxt "#32928"
+msgid "Lithuanian"
+msgstr "Λιθουανικά"
+
+msgctxt "#32929"
+msgid "Macedonian"
+msgstr "Γλώσσα FYROM"
+
+msgctxt "#32930"
+msgid "Norwegian"
+msgstr "Νορβηγικά"
+
+msgctxt "#32932"
+msgid "Polish"
+msgstr "Πολωνικά"
+
+msgctxt "#32933"
+msgid "Portuguese"
+msgstr "Πορτογαλικά"
+
+msgctxt "#32934"
+msgid "Portuguese (Brazil)"
+msgstr "Πορτογαλικά (Βραζιλίας)"
+
+msgctxt "#32935"
+msgid "Romanian"
+msgstr "Ρουμανικά"
+
+msgctxt "#32936"
+msgid "Russian"
+msgstr "Ρώσικα"
+
+msgctxt "#32937"
+msgid "SerbianLatin"
+msgstr "Σερβικά Λατινικά"
+
+msgctxt "#32938"
+msgid "Slovak"
+msgstr "Σλοβακικά"
+
+msgctxt "#32939"
+msgid "Slovenian"
+msgstr "Σλοβενικά"
+
+msgctxt "#32940"
+msgid "Spanish"
+msgstr "Ισπανικά"
+
+msgctxt "#32942"
+msgid "Swedish"
+msgstr "Σουηδικά"
+
+msgctxt "#32943"
+msgid "Thai"
+msgstr "Ταϊλανδικά"
+
+msgctxt "#32944"
+msgid "Turkish"
+msgstr "Τούρκικα"
+
+msgctxt "#32945"
+msgid "Ukrainian"
+msgstr "Ουκρανικά"
+
+msgctxt "#32946"
+msgid "Vietnamese"
+msgstr "Βιετναμέζικα"
+
+msgctxt "#32947"
+msgid "Farsi"
+msgstr "Φαρσί"
