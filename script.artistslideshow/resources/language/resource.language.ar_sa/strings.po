@@ -1,0 +1,333 @@
+# XBMC Media Center language file
+# Addon Name: Artist Slideshow
+# Addon id: script.artistslideshow
+# Addon Provider: ronie|pkscuot
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: Arabic (http://www.transifex.com/projects/p/xbmc-addons/language/ar/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ar\n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
+
+msgctxt "#30300"
+msgid "Downloading"
+msgstr "يُنَزِل"
+
+msgctxt "#30301"
+msgid "Downloading artist images"
+msgstr "يُنَزِل صور للفنان"
+
+msgctxt "#30302"
+msgid "Nothing Downloaded"
+msgstr "لم يُنَزَل أى شيئ"
+
+msgctxt "#30303"
+msgid "No images found for artist"
+msgstr "تعذر العثور على اى صور للفنان"
+
+msgctxt "#30304"
+msgid "Download Complete"
+msgstr "نُزِلَ بنجاح"
+
+msgctxt "#30305"
+msgid "All artist images downloaded"
+msgstr "نُزِلَت كل صور الفنان"
+
+msgctxt "#32000"
+msgid "Download"
+msgstr "نَزِل"
+
+msgctxt "#32001"
+msgid "Download images from last.fm"
+msgstr "نَزِل الصور من موقع last.fm"
+
+msgctxt "#32002"
+msgid "Download images from htbackdrops.com"
+msgstr "نَزِل الصور من موقع htbackdrops.com"
+
+msgctxt "#32003"
+msgid "  Minimal image width"
+msgstr "حِد عرض الصوره"
+
+msgctxt "#32004"
+msgid "  Minimal image height"
+msgstr "حِد إرتفاع الصوره"
+
+msgctxt "#32005"
+msgid "Download additional artist information"
+msgstr "نَزِل معلومات إضافيه عن الفنان"
+
+msgctxt "#32006"
+msgid "  Preferred language for artist information"
+msgstr "اللغه المفضله لمعلومات الفنان"
+
+msgctxt "#32007"
+msgid "  Download only 16:9 images"
+msgstr "نَزِل فقط من 16 الى 9 صور"
+
+msgctxt "#32008"
+msgid "Download images from fanart.tv"
+msgstr "نَزِل الصور من موقع fanart.tv"
+
+msgctxt "#32009"
+msgid "Download images from theaudiodb.com"
+msgstr "نَزِل الصور من موقع theaudiodb.com"
+
+msgctxt "#32100"
+msgid "Slideshow"
+msgstr "عرض شرائح"
+
+msgctxt "#32101"
+msgid "Local artist folder"
+msgstr "مجلد الفنان المحلى"
+
+msgctxt "#32102"
+msgid "  Image Priority"
+msgstr "اولويه الصور"
+
+msgctxt "#32103"
+msgid "Fallback folder"
+msgstr "المجلد اﻹحتياطى"
+
+msgctxt "#32104"
+msgid "Override folder"
+msgstr "المجلد التجاوزى"
+
+msgctxt "#32105"
+msgid "Use fallback slideshow"
+msgstr "إستخدم عرض الشرائح اﻹحتياطى"
+
+msgctxt "#32106"
+msgid "Use override slideshow"
+msgstr "إستخدم عرض الشرائح التجاوزى"
+
+msgctxt "#32110"
+msgid "Use remote images first"
+msgstr "استخدم الصور المُستقبله عن بعد اولاً"
+
+msgctxt "#32111"
+msgid "Use local images first"
+msgstr "استخدم الصور المحلية أولاً"
+
+msgctxt "#32112"
+msgid "Use both local and remote images"
+msgstr "استخدم الصور المُستقبله عن بعد والمحليه معاً"
+
+msgctxt "#32200"
+msgid "Advanced"
+msgstr "مُتقدم"
+
+msgctxt "#32201"
+msgid "Limit size of download cache"
+msgstr "حِد ذاكره التنزيل المؤقته"
+
+msgctxt "#32202"
+msgid "  Maximum cache size (in megabytes)"
+msgstr "اقصى حجم للذاكره المؤقته (بالميغابايت)"
+
+msgctxt "#32203"
+msgid "Download notification type"
+msgstr "نوع تنبيهات التنزيل"
+
+msgctxt "#32204"
+msgid "  Custom notification images folder"
+msgstr "مجلد صور التنبيهات المخصصه"
+
+msgctxt "#32206"
+msgid "None"
+msgstr "بلا"
+
+msgctxt "#32207"
+msgid "Text notifications"
+msgstr "التنبيهات النصيه"
+
+msgctxt "#32208"
+msgid "Custom images"
+msgstr "صور مخصصه"
+
+msgctxt "#32209"
+msgid "Enable debug logging"
+msgstr "تمكين تسجيل التصحيح"
+
+msgctxt "#32901"
+msgid "Albanian"
+msgstr "الألبانية"
+
+msgctxt "#32902"
+msgid "Arabic"
+msgstr "العربية"
+
+msgctxt "#32903"
+msgid "Belarusian"
+msgstr "البيلاروسية"
+
+msgctxt "#32904"
+msgid "Bosnian (Latin)"
+msgstr "البوسنيه (لاتينية)"
+
+msgctxt "#32905"
+msgid "Bulgarian"
+msgstr "البلغارية"
+
+msgctxt "#32906"
+msgid "Catalan"
+msgstr "الكتلانية"
+
+msgctxt "#32907"
+msgid "Chinese"
+msgstr "الصينية"
+
+msgctxt "#32908"
+msgid "Croatian"
+msgstr "الكرواتية"
+
+msgctxt "#32909"
+msgid "Czech"
+msgstr "التشيكية"
+
+msgctxt "#32910"
+msgid "Danish"
+msgstr "الدنماركية"
+
+msgctxt "#32911"
+msgid "Dutch"
+msgstr "الألمانية"
+
+msgctxt "#32912"
+msgid "English"
+msgstr "الإنجليزية"
+
+msgctxt "#32913"
+msgid "Estonian"
+msgstr "الإستونية"
+
+msgctxt "#32914"
+msgid "Finnish"
+msgstr "الفنلندية"
+
+msgctxt "#32915"
+msgid "French"
+msgstr "الفرنسية"
+
+msgctxt "#32916"
+msgid "German"
+msgstr "الجرمانية"
+
+msgctxt "#32917"
+msgid "Greek"
+msgstr "اليونانية"
+
+msgctxt "#32918"
+msgid "Hebrew"
+msgstr "العبرية"
+
+msgctxt "#32919"
+msgid "Hindi"
+msgstr "الهندية"
+
+msgctxt "#32920"
+msgid "Hungarian"
+msgstr "الهنغارية"
+
+msgctxt "#32921"
+msgid "Icelandic"
+msgstr "الأيسلاندية"
+
+msgctxt "#32922"
+msgid "Indonesian"
+msgstr "الإندونيسية"
+
+msgctxt "#32924"
+msgid "Italian"
+msgstr "الإيطالية"
+
+msgctxt "#32925"
+msgid "Japanese"
+msgstr "اليابانية"
+
+msgctxt "#32926"
+msgid "Korean"
+msgstr "الكورية"
+
+msgctxt "#32927"
+msgid "Latvian"
+msgstr "اللاتيفية"
+
+msgctxt "#32928"
+msgid "Lithuanian"
+msgstr "الليتوانية"
+
+msgctxt "#32929"
+msgid "Macedonian"
+msgstr "المقدونية"
+
+msgctxt "#32930"
+msgid "Norwegian"
+msgstr "النرويجية"
+
+msgctxt "#32932"
+msgid "Polish"
+msgstr "البولونية"
+
+msgctxt "#32933"
+msgid "Portuguese"
+msgstr "البرتغالية"
+
+msgctxt "#32934"
+msgid "Portuguese (Brazil)"
+msgstr "البرتغالية (البرازيل)"
+
+msgctxt "#32935"
+msgid "Romanian"
+msgstr "الرومانية"
+
+msgctxt "#32936"
+msgid "Russian"
+msgstr "الروسية"
+
+msgctxt "#32937"
+msgid "SerbianLatin"
+msgstr "الصربية"
+
+msgctxt "#32938"
+msgid "Slovak"
+msgstr "السلوفاكية"
+
+msgctxt "#32939"
+msgid "Slovenian"
+msgstr "السلوفينية"
+
+msgctxt "#32940"
+msgid "Spanish"
+msgstr "الإسبانية"
+
+msgctxt "#32942"
+msgid "Swedish"
+msgstr "السويدية"
+
+msgctxt "#32943"
+msgid "Thai"
+msgstr "التيلاندية"
+
+msgctxt "#32944"
+msgid "Turkish"
+msgstr "التركية"
+
+msgctxt "#32945"
+msgid "Ukrainian"
+msgstr "الأكرانية"
+
+msgctxt "#32946"
+msgid "Vietnamese"
+msgstr "الفيتنامية"
+
+msgctxt "#32947"
+msgid "Farsi"
+msgstr "الفارسية"

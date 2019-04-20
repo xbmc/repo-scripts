@@ -1,0 +1,205 @@
+# XBMC Media Center language file
+# Addon Name: Artist Slideshow
+# Addon id: script.artistslideshow
+# Addon Provider: ronie|pkscuot
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: Latvian (http://www.transifex.com/projects/p/xbmc-addons/language/lv/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: lv\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : 2);\n"
+
+msgctxt "#30300"
+msgid "Downloading"
+msgstr "Lejupielādēšana"
+
+msgctxt "#32100"
+msgid "Slideshow"
+msgstr "Slīdrāde"
+
+msgctxt "#32200"
+msgid "Advanced"
+msgstr "Papildus"
+
+msgctxt "#32901"
+msgid "Albanian"
+msgstr "albāņu"
+
+msgctxt "#32902"
+msgid "Arabic"
+msgstr "arābu"
+
+msgctxt "#32903"
+msgid "Belarusian"
+msgstr "baltkrievu"
+
+msgctxt "#32904"
+msgid "Bosnian (Latin)"
+msgstr "bosniešu (latīņu)"
+
+msgctxt "#32905"
+msgid "Bulgarian"
+msgstr "bulgāru"
+
+msgctxt "#32906"
+msgid "Catalan"
+msgstr "kataloniešu"
+
+msgctxt "#32907"
+msgid "Chinese"
+msgstr "ķīniešu"
+
+msgctxt "#32908"
+msgid "Croatian"
+msgstr "horvātu"
+
+msgctxt "#32909"
+msgid "Czech"
+msgstr "čehu"
+
+msgctxt "#32910"
+msgid "Danish"
+msgstr "dāņu"
+
+msgctxt "#32911"
+msgid "Dutch"
+msgstr "holandiešu"
+
+msgctxt "#32912"
+msgid "English"
+msgstr "angļu"
+
+msgctxt "#32913"
+msgid "Estonian"
+msgstr "igauņu"
+
+msgctxt "#32914"
+msgid "Finnish"
+msgstr "somu"
+
+msgctxt "#32915"
+msgid "French"
+msgstr "franču"
+
+msgctxt "#32916"
+msgid "German"
+msgstr "vācu"
+
+msgctxt "#32917"
+msgid "Greek"
+msgstr "grieķu"
+
+msgctxt "#32918"
+msgid "Hebrew"
+msgstr "žīdu"
+
+msgctxt "#32919"
+msgid "Hindi"
+msgstr "hindu"
+
+msgctxt "#32920"
+msgid "Hungarian"
+msgstr "ungāru"
+
+msgctxt "#32921"
+msgid "Icelandic"
+msgstr "islandiešu"
+
+msgctxt "#32922"
+msgid "Indonesian"
+msgstr "indonēziešu"
+
+msgctxt "#32924"
+msgid "Italian"
+msgstr "itāliešu"
+
+msgctxt "#32925"
+msgid "Japanese"
+msgstr "japāņu"
+
+msgctxt "#32926"
+msgid "Korean"
+msgstr "korejiešu"
+
+msgctxt "#32927"
+msgid "Latvian"
+msgstr "Latviešu"
+
+msgctxt "#32928"
+msgid "Lithuanian"
+msgstr "lietuviešu"
+
+msgctxt "#32929"
+msgid "Macedonian"
+msgstr "maķedoniešu"
+
+msgctxt "#32930"
+msgid "Norwegian"
+msgstr "norvēģu"
+
+msgctxt "#32932"
+msgid "Polish"
+msgstr "poļu"
+
+msgctxt "#32933"
+msgid "Portuguese"
+msgstr "portugāļu"
+
+msgctxt "#32934"
+msgid "Portuguese (Brazil)"
+msgstr "portugāļu (no Brazīlijas)"
+
+msgctxt "#32935"
+msgid "Romanian"
+msgstr "rumāņu"
+
+msgctxt "#32936"
+msgid "Russian"
+msgstr "krievu"
+
+msgctxt "#32937"
+msgid "SerbianLatin"
+msgstr "serbu latīņu"
+
+msgctxt "#32938"
+msgid "Slovak"
+msgstr "slovaku"
+
+msgctxt "#32939"
+msgid "Slovenian"
+msgstr "slovēņu"
+
+msgctxt "#32940"
+msgid "Spanish"
+msgstr "spāņu"
+
+msgctxt "#32942"
+msgid "Swedish"
+msgstr "zviedru"
+
+msgctxt "#32943"
+msgid "Thai"
+msgstr "taizemiešu"
+
+msgctxt "#32944"
+msgid "Turkish"
+msgstr "turku"
+
+msgctxt "#32945"
+msgid "Ukrainian"
+msgstr "ukraiņu"
+
+msgctxt "#32946"
+msgid "Vietnamese"
+msgstr "vietnamiešu"
+
+msgctxt "#32947"
+msgid "Farsi"
+msgstr "persiešu"

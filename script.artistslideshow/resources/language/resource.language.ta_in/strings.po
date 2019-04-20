@@ -1,0 +1,209 @@
+# XBMC Media Center language file
+# Addon Name: Artist Slideshow
+# Addon id: script.artistslideshow
+# Addon Provider: ronie|pkscuot
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: Tamil (India) (http://www.transifex.com/projects/p/xbmc-addons/language/ta_IN/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ta_IN\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#30300"
+msgid "Downloading"
+msgstr "பதிவிறக்கபடுகின்றது"
+
+msgctxt "#32200"
+msgid "Advanced"
+msgstr "மேம்பட்ட"
+
+msgctxt "#32206"
+msgid "None"
+msgstr "எதுவுமில்லை"
+
+msgctxt "#32209"
+msgid "Enable debug logging"
+msgstr "பிழைநீக்கு பதிவை செயல்படுத்தவும்"
+
+msgctxt "#32901"
+msgid "Albanian"
+msgstr "அல்பேனிய"
+
+msgctxt "#32902"
+msgid "Arabic"
+msgstr "அரபு"
+
+msgctxt "#32903"
+msgid "Belarusian"
+msgstr "பெலருசிய"
+
+msgctxt "#32904"
+msgid "Bosnian (Latin)"
+msgstr "போஸ்னியன் (லத்தீன்)"
+
+msgctxt "#32905"
+msgid "Bulgarian"
+msgstr "பல்கேரிய"
+
+msgctxt "#32906"
+msgid "Catalan"
+msgstr "கட்டல"
+
+msgctxt "#32907"
+msgid "Chinese"
+msgstr "சீன"
+
+msgctxt "#32908"
+msgid "Croatian"
+msgstr "குரோஷியன்"
+
+msgctxt "#32909"
+msgid "Czech"
+msgstr "செக்"
+
+msgctxt "#32910"
+msgid "Danish"
+msgstr "டேனிஷ்"
+
+msgctxt "#32911"
+msgid "Dutch"
+msgstr "டச்சு"
+
+msgctxt "#32912"
+msgid "English"
+msgstr "ஆங்கிலம்"
+
+msgctxt "#32913"
+msgid "Estonian"
+msgstr "எஸ்தானியம்"
+
+msgctxt "#32914"
+msgid "Finnish"
+msgstr "ஃபின்னிஷ்"
+
+msgctxt "#32915"
+msgid "French"
+msgstr "பிரஞ்சு"
+
+msgctxt "#32916"
+msgid "German"
+msgstr "ஜேர்மன்"
+
+msgctxt "#32917"
+msgid "Greek"
+msgstr "கிரேக்கம்"
+
+msgctxt "#32918"
+msgid "Hebrew"
+msgstr "யூதர்"
+
+msgctxt "#32919"
+msgid "Hindi"
+msgstr "ஹிந்தி"
+
+msgctxt "#32920"
+msgid "Hungarian"
+msgstr "ஹங்கேரிய"
+
+msgctxt "#32921"
+msgid "Icelandic"
+msgstr "ஐஸ்லாந்தியம்"
+
+msgctxt "#32922"
+msgid "Indonesian"
+msgstr "இந்தோனேசிய"
+
+msgctxt "#32924"
+msgid "Italian"
+msgstr "இத்தாலிய"
+
+msgctxt "#32925"
+msgid "Japanese"
+msgstr "ஜப்பனீஸ்"
+
+msgctxt "#32926"
+msgid "Korean"
+msgstr "கொரிய"
+
+msgctxt "#32927"
+msgid "Latvian"
+msgstr "லேட்வியன்"
+
+msgctxt "#32928"
+msgid "Lithuanian"
+msgstr " லித்துவானிய"
+
+msgctxt "#32929"
+msgid "Macedonian"
+msgstr "மாஸிடோனிய"
+
+msgctxt "#32930"
+msgid "Norwegian"
+msgstr "நார்விஜிய"
+
+msgctxt "#32932"
+msgid "Polish"
+msgstr "போலந்து"
+
+msgctxt "#32933"
+msgid "Portuguese"
+msgstr "போர்த்துகீசிய"
+
+msgctxt "#32934"
+msgid "Portuguese (Brazil)"
+msgstr "போர்த்துகீசிய (பிரேசில்)"
+
+msgctxt "#32935"
+msgid "Romanian"
+msgstr "ரோமானிய"
+
+msgctxt "#32936"
+msgid "Russian"
+msgstr "ரஷிய"
+
+msgctxt "#32937"
+msgid "SerbianLatin"
+msgstr "செருபிய லத்தீன்"
+
+msgctxt "#32938"
+msgid "Slovak"
+msgstr "ஸ்லோவக்"
+
+msgctxt "#32939"
+msgid "Slovenian"
+msgstr "ஸ்லோவேனிய"
+
+msgctxt "#32940"
+msgid "Spanish"
+msgstr "ஸ்பானிஷ்"
+
+msgctxt "#32942"
+msgid "Swedish"
+msgstr "ஸ்வீடிஷ்"
+
+msgctxt "#32943"
+msgid "Thai"
+msgstr "தாய்"
+
+msgctxt "#32944"
+msgid "Turkish"
+msgstr "துருக்கிய"
+
+msgctxt "#32945"
+msgid "Ukrainian"
+msgstr "உக்ரைனிய"
+
+msgctxt "#32946"
+msgid "Vietnamese"
+msgstr "வியட்நாமிய"
+
+msgctxt "#32947"
+msgid "Farsi"
+msgstr "பாரசிக"

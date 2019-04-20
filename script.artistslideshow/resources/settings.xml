@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+    <category label="32100">
+        <setting id="local_artist_path" type="folder" label="32101" default="" />
+        <setting id="priority" type="enum" label="32102" lvalues="32110|32111|32112" default="0" />
+        <setting id="localstorageonly" type="bool" label="32113" default="false" />
+        <setting id="localinfostorage" type="bool" label="32218" default="false" />
+		<setting id="include_fanartjpg" type="bool" label="32108" default="false" />
+		<setting id="include_folderjpg" type="bool" label="32109" default="false" />
+        <setting id="disable_multiartist" type="bool" label="32210" default="false" />
+        <setting id="transparent" type="bool" label="32107" default="false" />
+    </category>
+	<category label="32114">
+		<setting id="fanart_folder" type="text" label="32205" default="" />
+        <setting id="fallback" type="bool" label="32105" default="false" />
+        <setting id="fallback_path" type="folder" label="32103" default="" visible="eq(-1,true)" />
+        <setting id="slideshow" type="bool" label="32106" default="false" />
+        <setting id="slideshow_path" type="folder" label="32104" default="" visible="eq(-1,true)" />
+	</category>
+    <category label="32000">
+        <setting id="fanarttv" type="bool" label="32008" default="false" />
+        <setting id="fanarttv_clientapikey" type="text" label="32010" visible="eq(-1,true)" default="" />
+        <setting id="fanarttv_all" type="bool" label="32007" visible="eq(-2,true)" default="false" />
+        <setting id="fanarttv_donated" type="bool" label="32016" visible="eq(-3,true)" default="false" />
+        <setting id="theaudiodb" type="bool" label="32009" default="false" />
+        <setting id="theaudiodb_all" type="bool" label="32007" visible="eq(-1,true)" default="false" />
+        <setting id="theaudiodb_donated" type="bool" label="32016" visible="eq(-2,true)" default="false" />
+    </category>
+    <category label="32300">
+        <setting id="ai_theaudiodb" type="bool" label="32302" default="false" />
+        <setting id="ai_priority_theaudiodb" type="slider" label="32301" visible="eq(-1,true)" default="5" range='1,1,10' option='int' />
+        <setting id="ai_lastfm" type="bool" label="32303" default="false" />
+        <setting id="ai_priority_lastfm" type="slider" label="32301" visible="eq(-1,true)" default="5" range='1,1,10' option='int' />
+    </category>
+    <category label="32400">
+        <setting id="language" type="enum" label="32401" default="11" lvalues="32901|32902|32903|32904|32905|32906|32907|32908|32909|32910|32911|32912|32913|32947|32914|32915|32916|32917|32918|32919|32920|32921|32922|32924|32925|32926|32927|32928|32929|32930|32932|32933|32934|32935|32936|32937|32938|32939|32940|32942|32943|32944|32945|32946" />
+        <setting id="ab_kodi" type="bool" label="32402" default="true" />
+        <setting id="ab_priority_kodi" type="slider" label="32301" visible="eq(-1,true)" default="1" range='1,1,10' option='int' />
+        <setting id="ab_theaudiodb" type="bool" label="32403" default="false" />
+        <setting id="ab_priority_theaudiodb" type="slider" label="32301" visible="eq(-1,true)" default="5" range='1,1,10' option='int' />
+        <setting id="ab_lastfm" type="bool" label="32404" default="false" />
+        <setting id="ab_priority_lastfm" type="slider" label="32301" visible="eq(-1,true)" default="5" range='1,1,10' option='int' />
+    </category>
+    <category label="32500">
+        <setting id="sa_lastfm" type="bool" label="32501" default="false" />
+        <setting id="sa_priority_lastfm" type="slider" label="32301" visible="eq(-1,true)" default="5" range='1,1,10' option='int' />
+    </category>
+    <category label="32200">
+        <setting id="show_progress" type="enum" label="32203" lvalues="32206|32207|32208" default="0" />
+        <setting id="progress_path" type="folder" label="32204" default="" visible="eq(-1,2)"/>
+        <setting id="storage_target" type="enum" label="32212" default="0" lvalues="32215|32217|32216" />
+        <setting id="illegal_replace" type="text" label=" 32213" default="_" />
+        <setting id="end_replace" type="text" label="32214" default="" visible="eq(-2,0)" />		
+        <setting id="restrict_cache" type="bool" label="32201" default="false" />
+        <setting id="max_cache_size" label="32202" type="labelenum" values="128|256|512|768|1024|2048|3072|4096" visible="eq(-1,true)" default="1024" />
+        <setting id="logging" type="bool" label="32209" default="false" />
+    </category>
+</settings>

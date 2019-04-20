@@ -1,0 +1,217 @@
+# XBMC Media Center language file
+# Addon Name: Artist Slideshow
+# Addon id: script.artistslideshow
+# Addon Provider: ronie|pkscuot
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: Lithuanian (http://www.transifex.com/projects/p/xbmc-addons/language/lt/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: lt\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+
+msgctxt "#30300"
+msgid "Downloading"
+msgstr "Parsisiuntimas"
+
+msgctxt "#32000"
+msgid "Download"
+msgstr "Atsisiųsti"
+
+msgctxt "#32100"
+msgid "Slideshow"
+msgstr "Skaidrių peržiūra"
+
+msgctxt "#32200"
+msgid "Advanced"
+msgstr "Išplėstinė(-is)"
+
+msgctxt "#32206"
+msgid "None"
+msgstr "Nieko"
+
+msgctxt "#32209"
+msgid "Enable debug logging"
+msgstr "Įjungti derinimo žurnalą"
+
+msgctxt "#32901"
+msgid "Albanian"
+msgstr "Albanijos"
+
+msgctxt "#32902"
+msgid "Arabic"
+msgstr "Arabų"
+
+msgctxt "#32903"
+msgid "Belarusian"
+msgstr "Baltarusijos"
+
+msgctxt "#32904"
+msgid "Bosnian (Latin)"
+msgstr "Bosnių (lotynų)"
+
+msgctxt "#32905"
+msgid "Bulgarian"
+msgstr "Bulgarų"
+
+msgctxt "#32906"
+msgid "Catalan"
+msgstr "Katalonų"
+
+msgctxt "#32907"
+msgid "Chinese"
+msgstr "Kinijos"
+
+msgctxt "#32908"
+msgid "Croatian"
+msgstr "Kroatų"
+
+msgctxt "#32909"
+msgid "Czech"
+msgstr "Čekijos"
+
+msgctxt "#32910"
+msgid "Danish"
+msgstr "Danijos"
+
+msgctxt "#32911"
+msgid "Dutch"
+msgstr "Olandijos"
+
+msgctxt "#32912"
+msgid "English"
+msgstr "Anglijos"
+
+msgctxt "#32913"
+msgid "Estonian"
+msgstr "Estijos"
+
+msgctxt "#32914"
+msgid "Finnish"
+msgstr "Suomijos"
+
+msgctxt "#32915"
+msgid "French"
+msgstr "Prancūzų"
+
+msgctxt "#32916"
+msgid "German"
+msgstr "Vokietijos"
+
+msgctxt "#32917"
+msgid "Greek"
+msgstr "Graikijos"
+
+msgctxt "#32918"
+msgid "Hebrew"
+msgstr "Žydų"
+
+msgctxt "#32919"
+msgid "Hindi"
+msgstr "Hindi"
+
+msgctxt "#32920"
+msgid "Hungarian"
+msgstr "Vengrijos"
+
+msgctxt "#32921"
+msgid "Icelandic"
+msgstr "Islandijos"
+
+msgctxt "#32922"
+msgid "Indonesian"
+msgstr "Indonezijos"
+
+msgctxt "#32924"
+msgid "Italian"
+msgstr "Italijos"
+
+msgctxt "#32925"
+msgid "Japanese"
+msgstr "Japonijos"
+
+msgctxt "#32926"
+msgid "Korean"
+msgstr "Korėjos"
+
+msgctxt "#32927"
+msgid "Latvian"
+msgstr "Latvijos"
+
+msgctxt "#32928"
+msgid "Lithuanian"
+msgstr "Lietuvos"
+
+msgctxt "#32929"
+msgid "Macedonian"
+msgstr "Makedonijos"
+
+msgctxt "#32930"
+msgid "Norwegian"
+msgstr "Norvegijos"
+
+msgctxt "#32932"
+msgid "Polish"
+msgstr "Lenkijos"
+
+msgctxt "#32933"
+msgid "Portuguese"
+msgstr "Portugalijos"
+
+msgctxt "#32934"
+msgid "Portuguese (Brazil)"
+msgstr "Portugalų (Brazilija)"
+
+msgctxt "#32935"
+msgid "Romanian"
+msgstr "Rumunijos"
+
+msgctxt "#32936"
+msgid "Russian"
+msgstr "Rusijos"
+
+msgctxt "#32937"
+msgid "SerbianLatin"
+msgstr "Serbų (lotynų)"
+
+msgctxt "#32938"
+msgid "Slovak"
+msgstr "Slovakijos"
+
+msgctxt "#32939"
+msgid "Slovenian"
+msgstr "Slovėnijos"
+
+msgctxt "#32940"
+msgid "Spanish"
+msgstr "Ispanijos"
+
+msgctxt "#32942"
+msgid "Swedish"
+msgstr "Švedijos"
+
+msgctxt "#32943"
+msgid "Thai"
+msgstr "Tailando"
+
+msgctxt "#32944"
+msgid "Turkish"
+msgstr "Turkijos"
+
+msgctxt "#32945"
+msgid "Ukrainian"
+msgstr "Ukrainos"
+
+msgctxt "#32946"
+msgid "Vietnamese"
+msgstr "Vietnamo"
+
+msgctxt "#32947"
+msgid "Farsi"
+msgstr "Persų"

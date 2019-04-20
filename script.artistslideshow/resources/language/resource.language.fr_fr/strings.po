@@ -1,0 +1,440 @@
+# XBMC Media Center language file
+# Addon Name: Artist Slideshow
+# Addon id: script.artistslideshow
+# Addon Provider: ronie|pkscuot
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2016-04-10 04:50+0200\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: French (http://www.transifex.com/projects/p/xbmc-addons/"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#Dialog Text
+
+msgctxt "#30300"
+msgid "Downloading"
+msgstr "Téléchargement"
+
+msgctxt "#30301"
+msgid "Downloading artist images"
+msgstr "Téléchargement des images des artistes"
+
+msgctxt "#30302"
+msgid "Nothing Downloaded"
+msgstr "Aucun téléchargement"
+
+msgctxt "#30303"
+msgid "No images found for artist"
+msgstr "Aucune image trouvée pour cet artiste"
+
+msgctxt "#30304"
+msgid "Download Complete"
+msgstr "Téléchargement terminé"
+
+msgctxt "#30305"
+msgid "All artist images downloaded"
+msgstr "Toutes les images des artistes ont été téléchargé"
+
+#empty strings from id 30306 to 31999
+#Settings
+
+msgctxt "#32000"
+msgid "Images"
+msgstr "Images"
+
+msgctxt "#32001"
+msgid "Download images from last.fm"
+msgstr "Télécharger les images depuis last.fm"
+
+msgctxt "#32002"
+msgid "Download images from htbackdrops.org"
+msgstr "Télécharger les images depuis htbackdrops.org"
+
+msgctxt "#32003"
+msgid "  Minimal image width"
+msgstr "  Largeur minimale de l’image"
+
+msgctxt "#32004"
+msgid "  Minimal image height"
+msgstr "  Hauteur minimale de l’image"
+
+msgctxt "#32005"
+msgid "Download additional artist information"
+msgstr "Télécharger les informations additionnelles des artistes"
+
+msgctxt "#32006"
+msgid "  Preferred language for artist information"
+msgstr "  Langue préférée pour les informations des artistes"
+
+msgctxt "#32007"
+msgid "  Download all images regardless of resolution"
+msgstr "  - Télécharger toutes les images indépendamment de la résolution"
+
+msgctxt "#32008"
+msgid "Download images from fanart.tv"
+msgstr "Télécharger les images à partir de fanart.tv"
+
+msgctxt "#32009"
+msgid "Download images from theaudiodb.com"
+msgstr "Télécharger les images depuis theaudiodb.com"
+
+msgctxt "#32010"
+msgid "  Client API key"
+msgstr "  - Clé du client API"
+
+#empty strings from id 32011 to 32099
+
+msgctxt "#32100"
+msgid "Slideshow"
+msgstr "Diaporama"
+
+msgctxt "#32101"
+msgid "Local artist folder"
+msgstr "Dossier local de l’artiste"
+
+msgctxt "#32102"
+msgid "  Image Priority"
+msgstr "  - Priorité des images"
+
+msgctxt "#32103"
+msgid "Fallback folder"
+msgstr "Dossier par défaut"
+
+msgctxt "#32104"
+msgid "Override folder"
+msgstr "Ecraser le dossier"
+
+msgctxt "#32105"
+msgid "Use fallback slideshow"
+msgstr "Utiliser le diaporama par défaut"
+
+msgctxt "#32106"
+msgid "Use override slideshow"
+msgstr "Utiliser le diaporama de substitution"
+
+msgctxt "#32107"
+msgid "Use transparent background when no artist images found"
+msgstr "Utiliser l’arrière-plan transparent lorsque aucune image de l’artiste n’est trouvée"
+
+#empty strings from id 32108 to 32109
+
+msgctxt "#32110"
+msgid "Use remote images first"
+msgstr "Utiliser les images distantes en premier"
+
+msgctxt "#32111"
+msgid "Use local images first"
+msgstr "Utiliser les images locales en premier"
+
+msgctxt "#32112"
+msgid "Use both local and remote images"
+msgstr "Utiliser à la fois les images locales et distantes"
+
+#empty strings from id 32113 to 32199
+
+msgctxt "#32200"
+msgid "Advanced"
+msgstr "Avancés"
+
+msgctxt "#32201"
+msgid "Limit size of download cache"
+msgstr "Limiter la taille du cache de téléchargement"
+
+msgctxt "#32202"
+msgid "  Maximum cache size (in megabytes)"
+msgstr "  - Taille maximale du cache (en méga octets)"
+
+msgctxt "#32203"
+msgid "Download notification type"
+msgstr "Type de notification de téléchargement"
+
+msgctxt "#32204"
+msgid "  Custom notification images folder"
+msgstr "  - Dossier des images personnalisées de notification"
+
+msgctxt "#32205"
+msgid "Alternate name for local fanart folder"
+msgstr "Nom alternatif pour le dossier local des fanarts"
+
+msgctxt "#32206"
+msgid "None"
+msgstr "Aucun"
+
+msgctxt "#32207"
+msgid "Text notifications"
+msgstr "Notifications de texte"
+
+msgctxt "#32208"
+msgid "Custom images"
+msgstr "Images personnalisées"
+
+msgctxt "#32209"
+msgid "Enable debug logging"
+msgstr "Activer le mode debug"
+
+#empty strings from id 32210 to 32299
+
+msgctxt "#32300"
+msgid "Album Info"
+msgstr "Informations de l'album"
+
+msgctxt "#32301"
+msgid "  Priority"
+msgstr "  - Priorité"
+
+msgctxt "#32302"
+msgid "Download album info from the audiodb.com"
+msgstr "Télécharger les informations de l'album depuis theaudiodb.com"
+
+msgctxt "#32303"
+msgid "Download album info from the last.fm"
+msgstr "Télécharger les informations de l'album depuis last.fm"
+
+#empty strings from id 32304 to 32399
+
+msgctxt "#32400"
+msgid "Artist Bio"
+msgstr "Biographie de l'artiste"
+
+msgctxt "#32401"
+msgid "Preferred language for artist bio"
+msgstr "Langue préférée pour la biographie de l'artiste"
+
+msgctxt "#32402"
+msgid "Get artist bio from Kodi"
+msgstr "Obtenir la biographie de l'artiste depuis Kodi"
+
+msgctxt "#32403"
+msgid "Download artist bio from theaudiodb.com"
+msgstr "Télécharger la biographie de l'artiste depuis theaudiodb.com"
+
+msgctxt "#32404"
+msgid "Download artist bio from last.fm"
+msgstr "Télécharger la biographie de l'artiste depuis last.fm"
+
+#empty strings from id 32404 to 32499
+
+msgctxt "#32500"
+msgid "Similar Artists"
+msgstr "Artistes similaires"
+
+msgctxt "#32501"
+msgid "Download similar artists from last.fm"
+msgstr "Télécharger les artistes similaires depuis last.fm"
+
+#empty strings from id 32502 to 32599
+
+msgctxt "#32600"
+msgid "Instructions"
+msgstr "Instructions"
+
+msgctxt "#32601"
+msgid "Some services allow you to set a priority for use."
+msgstr "Certains services vous permettent de définir une priorité à l'utilisation."
+
+msgctxt "#32602"
+msgid "In those cases priority 1 will be used first and 10 last."
+msgstr "Dans ces cas, la priorité 1 sera utilisée pour la première et 10 pour la dernière."
+
+msgctxt "#32603"
+msgid " "
+msgstr " "
+
+msgctxt "#32604"
+msgid "Certain services require your music to be tagged with the MusicBrainz ID"
+msgstr "Certains services nécessitent que vos musiques soient taguées avec l'ID MusicBrainz."
+
+msgctxt "#32605"
+msgid "see http://kodi.wiki/view/Add-on:Artist_Slideshow for more information"
+msgstr "Voir http://kodi.wiki/view/Add-on:Artist_Slideshow pour plus d'informations."
+
+#empty strings from id 32606 to 32900
+
+#Languages
+
+msgctxt "#32901"
+msgid "Albanian"
+msgstr "Albanais"
+
+msgctxt "#32902"
+msgid "Arabic"
+msgstr "Arabe"
+
+msgctxt "#32903"
+msgid "Belarusian"
+msgstr "Biélorusse"
+
+msgctxt "#32904"
+msgid "Bosnian (Latin)"
+msgstr "Bosnien (Latin)"
+
+msgctxt "#32905"
+msgid "Bulgarian"
+msgstr "Bulgare"
+
+msgctxt "#32906"
+msgid "Catalan"
+msgstr "Catalan"
+
+msgctxt "#32907"
+msgid "Chinese"
+msgstr "Chinois"
+
+msgctxt "#32908"
+msgid "Croatian"
+msgstr "Croate"
+
+msgctxt "#32909"
+msgid "Czech"
+msgstr "Tchèque"
+
+msgctxt "#32910"
+msgid "Danish"
+msgstr "Danois"
+
+msgctxt "#32911"
+msgid "Dutch"
+msgstr "Néerlandais"
+
+msgctxt "#32912"
+msgid "English"
+msgstr "Anglais"
+
+msgctxt "#32913"
+msgid "Estonian"
+msgstr "Estonien"
+
+msgctxt "#32914"
+msgid "Finnish"
+msgstr "Finlandais"
+
+msgctxt "#32915"
+msgid "French"
+msgstr "Français"
+
+msgctxt "#32916"
+msgid "German"
+msgstr "Allemand"
+
+msgctxt "#32917"
+msgid "Greek"
+msgstr "Grec"
+
+msgctxt "#32918"
+msgid "Hebrew"
+msgstr "Israélien"
+
+msgctxt "#32919"
+msgid "Hindi"
+msgstr "Hindi"
+
+msgctxt "#32920"
+msgid "Hungarian"
+msgstr "Hongrois"
+
+msgctxt "#32921"
+msgid "Icelandic"
+msgstr "Islandais"
+
+msgctxt "#32922"
+msgid "Indonesian"
+msgstr "Indonésien"
+
+msgctxt "#32924"
+msgid "Italian"
+msgstr "Italien"
+
+msgctxt "#32925"
+msgid "Japanese"
+msgstr "Japonais"
+
+msgctxt "#32926"
+msgid "Korean"
+msgstr "Coréen"
+
+msgctxt "#32927"
+msgid "Latvian"
+msgstr "Letton"
+
+msgctxt "#32928"
+msgid "Lithuanian"
+msgstr "Lituanien"
+
+msgctxt "#32929"
+msgid "Macedonian"
+msgstr "Macédonien"
+
+msgctxt "#32930"
+msgid "Norwegian"
+msgstr "Norvégien"
+
+#empty string with id 32931
+
+msgctxt "#32932"
+msgid "Polish"
+msgstr "Polonais"
+
+msgctxt "#32933"
+msgid "Portuguese"
+msgstr "Portugais"
+
+msgctxt "#32934"
+msgid "Portuguese (Brazil)"
+msgstr "Portugais (Brésil)"
+
+msgctxt "#32935"
+msgid "Romanian"
+msgstr "Roumain"
+
+msgctxt "#32936"
+msgid "Russian"
+msgstr "Russe"
+
+msgctxt "#32937"
+msgid "SerbianLatin"
+msgstr "Serbie Latin"
+
+msgctxt "#32938"
+msgid "Slovak"
+msgstr "Slovaque"
+
+msgctxt "#32939"
+msgid "Slovenian"
+msgstr "Slovénien"
+
+msgctxt "#32940"
+msgid "Spanish"
+msgstr "Espagnol"
+
+#empty string with id 32941
+
+msgctxt "#32942"
+msgid "Swedish"
+msgstr "Suédois"
+
+msgctxt "#32943"
+msgid "Thai"
+msgstr "Thaïlandais"
+
+msgctxt "#32944"
+msgid "Turkish"
+msgstr "Turc"
+
+msgctxt "#32945"
+msgid "Ukrainian"
+msgstr "Ukrainien"
+
+msgctxt "#32946"
+msgid "Vietnamese"
+msgstr "Vietnamien"
+
+msgctxt "#32947"
+msgid "Farsi"
+msgstr "Farsi"
