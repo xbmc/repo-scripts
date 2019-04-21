@@ -683,10 +683,11 @@ class Main:
 
     def _merge_images( self ):
         lw.log( ['merging files from primary directory %s into merge directory %s' % (self.CacheDir, self.MergeDir)] )
-        self.MergedImagesFound = True
+        self.MergedImagesFound = False
         dirs, files = xbmcvfs.listdir(self.CacheDir)
         for file in files:
             if(file.lower().endswith('tbn') or file.lower().endswith('jpg') or file.lower().endswith('jpeg') or file.lower().endswith('gif') or file.lower().endswith('png')):
+                self.MergedImagesFound = True
                 img_source = os.path.join( self.CacheDir, smartUTF8( file ).decode( 'utf-8' ) )
                 img_dest = os.path.join( self.MergeDir, itemHash( img_source ) + getImageType( img_source ) )               
                 success, loglines = copyFile( img_source, img_dest )
