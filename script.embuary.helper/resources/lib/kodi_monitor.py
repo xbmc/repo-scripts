@@ -30,7 +30,7 @@ class KodiMonitor(xbmc.Monitor):
             if visible('String.StartsWith(Player.Filenameandpath,pvr://)'):
                 self.get_channellogo()
 
-            if PLAYER.isPlayingAudio() and visible('!String.IsEmpty(MusicPlayer.DBID) + String.IsEmpty(Player.Art(thumb))'):
+            if PLAYER.isPlayingAudio() and visible('!String.IsEmpty(MusicPlayer.DBID) + [String.IsEmpty(Player.Art(thumb)) | String.IsEmpty(Player.Art(discart))]'):
                 self.get_songartworks()
 
         if method == 'Player.OnStop' or method == 'VideoLibrary.OnUpdate' or method == 'AudioLibrary.OnUpdate':

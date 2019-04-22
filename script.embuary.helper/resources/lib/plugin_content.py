@@ -49,7 +49,9 @@ class PluginContent(object):
         self.sort_recent = {'order': 'descending', 'method': 'dateadded'}
         self.sort_random = {'method': 'random'}
         self.unplayed_filter = {'field': 'playcount', 'operator': 'lessthan', 'value': '1'}
-        self.unplayedepisodes_filter = {'field':'numwatched','operator':'greaterthan','value':['0']}
+        self.played_filter = {'field': 'playcount', 'operator': 'greaterthan', 'value': '0'}
+        self.unplayedepisodes_filter = {'field':'numwatched','operator':'lessthan','value':['1']}
+        self.playedepisodes_filter = {'field':'numwatched','operator':'greaterthan','value':['0']}
         self.specials_filter = {'field': 'season', 'operator': 'greaterthan', 'value': '0'}
         self.inprogress_filter = {'field': 'inprogress', 'operator': 'true', 'value': ''}
         self.notinprogress_filter = {'field': 'inprogress', 'operator': 'false', 'value': ''}
@@ -540,22 +542,30 @@ class PluginContent(object):
     # because you watched xyz
     def get_similar(self):
 
+        ''' Based on show or movie of the database
+        '''
         if self.dbid:
             json_query = json_call(self.method_details,
                                 properties=['title', 'genre'],
                                 params={self.param: int(self.dbid)}
                                 )
-        else:
+
+        ''' Based on a random one of the last 10 watched items
+        '''
+        if not self.dbid:
             if self.dbtype == 'tvshow':
-                query_filter={'or': [self.unplayed_filter,self.unplayedepisodes_filter]}
+                query_filter={'or': [self.played_filter,self.playedepisodes_filter]}
             else:
-                query_filter=self.unplayed_filter
+                query_filter=self.played_filter
 
             json_query = json_call(self.method_item,
                                 properties=['title', 'genre'],
                                 sort={'method': 'lastplayed','order': 'descending'}, limit=10,
                                 query_filter=query_filter
                                 )
+
+        ''' Get the genres of the selected item
+        '''
         try:
             if self.dbid:
                 title = json_query['result'][self.key_details]['title']
@@ -580,6 +590,8 @@ class PluginContent(object):
 
         random.shuffle(genres)
 
+        ''' Get movies or shows based on one or two genres of selected watched item
+        '''
         filters = [{'operator': 'isnot', 'field': 'title', 'value': title},{'operator': 'is', 'field': 'genre', 'value': genres[0]}]
         if len(genres) > 1:
             filters.append({'operator': 'is', 'field': 'genre', 'value': genres[1]})
@@ -597,11 +609,12 @@ class PluginContent(object):
             json_query = json_query['result'][self.key_items]
         except KeyError:
             log('Get similar: No matching items found')
-        else:
-            if self.dbtype == 'movie':
-                append_items(self.li,json_query,type='movies',searchstring=title)
-            elif self.dbtype == 'tvshow':
-                append_items(self.li,json_query,type='tvshows',searchstring=title)
+            return
+
+        if self.dbtype == 'movie':
+            append_items(self.li,json_query,type='movies',searchstring=title)
+        elif self.dbtype == 'tvshow':
+            append_items(self.li,json_query,type='tvshows',searchstring=title)
 
 
     # cast
