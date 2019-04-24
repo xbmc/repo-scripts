@@ -17,8 +17,6 @@ ADDON_ID = ADDON.getAddonInfo('id')
 NOTICE = xbmc.LOGNOTICE
 WARNING = xbmc.LOGWARNING
 DEBUG = xbmc.LOGDEBUG
-LOG_ENABLED = True if ADDON.getSetting('log') == 'true' else False
-DEBUGLOG_ENABLED = True if ADDON.getSetting('debuglog') == 'true' else False
 
 PLAYER = xbmc.Player()
 VIDEOPLAYLIST = xbmc.PlayList(xbmc.PLAYLIST_VIDEO)
@@ -34,7 +32,7 @@ def get_kodiversion():
 
 def log(txt,loglevel=NOTICE,force=False):
 
-    if ((loglevel == NOTICE or loglevel == WARNING) and LOG_ENABLED) or (loglevel == DEBUG and DEBUGLOG_ENABLED) or force:
+    if ((loglevel == NOTICE or loglevel == WARNING) and ADDON.getSettingBool('log')) or (loglevel == DEBUG and ADDON.getSettingBool('debuglog')) or force:
 
         ''' Python 2 requires to decode stuff at first
         '''
