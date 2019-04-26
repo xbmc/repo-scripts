@@ -81,7 +81,7 @@ auto_sort_add = auto_sort.add
 quality_map = ((768, 576), (1280, 720), (1920, 1080), (3840, 2160))  # SD, 720p, 1080p, 4K
 
 # Re.sub to remove formatting from label strings
-strip_formatting = re.compile("\[[^\]]+?\]").sub
+strip_formatting = re.compile(r"\[[^\]]+?\]").sub
 
 # Localized string Constants
 RELATED_VIDEOS = 32201
@@ -126,12 +126,26 @@ class Params(MutableMapping):
     def __repr__(self):
         return "%s(%r)" % (self.__class__, self.raw_dict)
 
+    def clean(self):
+        """Remove any and all None values from the dictionary."""
+        for key in [key for key, val in self.raw_dict.items() if not val]:
+            del self.raw_dict[key]
+
 
 class Art(Params):
     """
     Dictionary like object, that allows you to add various images. e.g. "thumb", "fanart".
 
-    This class inherits all methods and attributes from :class:`collections.MutableMapping`.
+    if "thumb", "fanart" or "icon"  is not set, then they will be set automaticly based on the add-on's
+    fanart and icon images.
+
+    .. note::
+
+        The automatic image values can be disabled by setting an empty string. e.g. item.art["thumb"] = "".
+
+    .. note::
+
+        This class inherits all methods and attributes from :class:`collections.MutableMapping`.
 
     Expected art values are.
         * thumb
@@ -155,10 +169,7 @@ class Art(Params):
         self._listitem = listitem
 
     def __setitem__(self, key, value):  # type: (str, str) -> None
-        if value:
-            self.raw_dict[key] = ensure_native_str(value)
-        else:
-            logger.debug("Ignoring empty art value: '%s'", key)
+        self.raw_dict[key] = ensure_native_str(value)
 
     def local_thumb(self, image):
         """
@@ -195,6 +206,7 @@ class Art(Params):
         if "icon" not in self.raw_dict:  # pragma: no branch
             self.raw_dict["icon"] = "DefaultFolder.png" if isfolder else "DefaultVideo.png"
 
+        self.clean()  # Remove all None values
         self._listitem.setArt(self.raw_dict)
 
 
@@ -520,6 +532,8 @@ class Listitem(object):
 
     def __init__(self, content_type="video"):
         self._content_type = content_type
+        self.is_playable = True
+        self.is_folder = False
         self._args = None
         self.path = ""
 
@@ -598,14 +612,29 @@ class Listitem(object):
         """
         Set the "callback" object.
 
-        The "callback" object can be any registered :class:`codequick.Script<codequick.script.Script>`,
-        :class:`codequick.Route<codequick.route.Route>` or :class:`codequick.Resolver<codequick.resolver.Resolver>`
-        callback, or playable URL.
+        The "callback" parameter can be any of the following:
+            * :class:`codequick.Script<codequick.script.Script>` callback.
+            * :class:`codequick.Route<codequick.route.Route>` callback.
+            * :class:`codequick.Resolver<codequick.resolver.Resolver>` callback.
+            * The path to a callback function. i.e. "/main/menu/"
+            * Any kodi path, e.g. "plugin://" or "script://"
+            * Directly playable URL.
+
+        .. note::
+
+            By default kodi plugin / script paths are treated as playable items.
+            To override this behavior, you can pass in the ``is_playable`` and ``is_folder`` parameters.
+            If only ``is_folder`` is given, then ``is_playable`` will default to ``not is_folder``.
 
         :param callback: The "callback" or playable URL.
         :param args: "Positional" arguments that will be passed to the callback.
         :param kwargs: "Keyword" arguments that will be passed to the callback.
         """
+        self.is_folder = is_folder = kwargs.pop("is_folder", self.is_folder)
+        self.is_playable = kwargs.pop("is_playable", not is_folder)
+        if callback in dispatcher.registered_routes:
+            callback = dispatcher.registered_routes[callback].callback
+
         self.path = callback
         self._args = args
         if kwargs:
@@ -613,18 +642,21 @@ class Listitem(object):
 
     # noinspection PyProtectedMember
     def _close(self):
-        callback = self.path
+        path = self.path
         listitem = self.listitem
-        if hasattr(callback, "route"):
-            listitem.setProperty("isplayable", str(callback.route.is_playable).lower())
-            listitem.setProperty("folder", str(callback.route.is_folder).lower())
-            path = build_path(callback, self._args, self.params.raw_dict)
-            isfolder = callback.route.is_folder
-        else:
-            listitem.setProperty("isplayable", "true" if callback else "false")
+        if hasattr(path, "route"):
+            isfolder = path.route.is_folder
+            listitem.setProperty("isplayable", str(path.route.is_playable).lower())
+            listitem.setProperty("folder", str(path.route.is_folder).lower())
+            path = build_path(path, self._args, self.params.raw_dict)
+        elif not path:
+            listitem.setProperty("isplayable", "false")
             listitem.setProperty("folder", "false")
-            path = callback
             isfolder = False
+        else:
+            listitem.setProperty("isplayable", str(self.is_playable).lower())
+            listitem.setProperty("folder", str(self.is_folder).lower())
+            isfolder = self.is_folder
 
         if not isfolder:
             # Add mediatype if not already set
