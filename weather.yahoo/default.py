@@ -24,7 +24,7 @@ sys.path.append(RESOURCE)
 from utils import *
 
 LCURL = 'https://www.yahoo.com/news/_tdnews/api/resource/WeatherSearch;text=%s'
-FCURL = 'https://www.yahoo.com/news/_tdnews/api/resource/WeatherService;woeids=[%s]'
+FCURL = 'https://www.yahoo.com/news/_tdnews/api/resource/WeatherService;woeids=%%5B%s%%5D'
 
 socket.setdefaulttimeout(10)
 
