@@ -1,49 +1,10 @@
 Changes
 =======
 
-1.25.2 (2019-04-28)
+1.24.3 (2019-05-01)
 -------------------
 
-* Change ``is_ipaddress`` to not detect IPvFuture addresses. (Pull #1583)
-
-* Change ``parse_url`` to percent-encode invalid characters within the
-  path, query, and target components. (Pull #1586)
-
-
-1.25.1 (2019-04-24)
--------------------
-
-* Add support for Google's ``Brotli`` package. (Pull #1572, Pull #1579)
-
-* Upgrade bundled rfc3986 to v1.3.1 (Pull #1578)
-
-
-1.25 (2019-04-22)
------------------
-
-* Require and validate certificates by default when using HTTPS (Pull #1507)
-
-* Upgraded ``urllib3.utils.parse_url()`` to be RFC 3986 compliant. (Pull #1487)
-
-* Added support for ``key_password`` for ``HTTPSConnectionPool`` to use
-  encrypted ``key_file`` without creating your own ``SSLContext`` object. (Pull #1489)
-
-* Add TLSv1.3 support to CPython, pyOpenSSL, and SecureTransport ``SSLContext``
-  implementations. (Pull #1496)
-
-* Switched the default multipart header encoder from RFC 2231 to HTML 5 working draft. (Issue #303, PR #1492)
-
-* Fixed issue where OpenSSL would block if an encrypted client private key was
-  given and no password was given. Instead an ``SSLError`` is raised. (Pull #1489)
-
-* Added support for Brotli content encoding. It is enabled automatically if
-  ``brotlipy`` package is installed which can be requested with
-  ``urllib3[brotli]`` extra. (Pull #1532)
-
-* Drop ciphers using DSS key exchange from default TLS cipher suites.
-  Improve default ciphers when using SecureTransport. (Pull #1496)
-
-* Implemented a more efficient ``HTTPResponse.__iter__()`` method. (Issue #1483)
+* Apply fix for CVE-2019-9740. (Pull #1591)
 
 
 1.24.2 (2019-04-17)
@@ -89,6 +50,7 @@ Changes
   raised HeaderParsingError, resulting in a warning being logged. (Pull #1439)
 
 * Move urllib3 to src/urllib3 (Pull #1409)
+
 
 
 1.23 (2018-06-04)

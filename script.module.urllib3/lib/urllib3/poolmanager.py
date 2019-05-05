@@ -20,8 +20,7 @@ __all__ = ['PoolManager', 'ProxyManager', 'proxy_from_url']
 log = logging.getLogger(__name__)
 
 SSL_KEYWORDS = ('key_file', 'cert_file', 'cert_reqs', 'ca_certs',
-                'ssl_version', 'ca_cert_dir', 'ssl_context',
-                'key_password')
+                'ssl_version', 'ca_cert_dir', 'ssl_context')
 
 # All known keyword arguments that could be provided to the pool manager, its
 # pools, or the underlying connections. This is used to construct a pool key.
@@ -35,7 +34,6 @@ _key_fields = (
     'key_block',  # bool
     'key_source_address',  # str
     'key_key_file',  # str
-    'key_key_password',  # str
     'key_cert_file',  # str
     'key_cert_reqs',  # str
     'key_ca_certs',  # str
