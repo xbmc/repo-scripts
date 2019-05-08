@@ -1,6 +1,7 @@
 import xbmc
 import xbmcaddon
 import xbmcgui
+import xbmcvfs
 import os
 import json
 import yaml
@@ -15,11 +16,12 @@ __version__ = __addon__.getAddonInfo('version')
 __kodiversion__ = float(xbmcaddon.Addon('xbmc.addon').getAddonInfo('version')[0:4])
 __icon__ = __addon__.getAddonInfo('icon')
 __ID__ = __addon__.getAddonInfo('id')
-__ignoredshowsfile__ = xbmc.translatePath("special://profile/addon_data/" + __ID__ + "/ignoredShows.yaml")
+__profile__    = xbmc.translatePath( __addon__.getAddonInfo('profile') ).decode("utf-8")
+__ignoredshowsfile__ = xbmc.translatePath( os.path.join( __profile__, 'ignoredShows.yaml' ) ).decode("utf-8")
 __language__ = __addon__.getLocalizedString
 
 def log(msg, level=xbmc.LOGDEBUG):
-    xbmc.log("### [%s] - %s" % (__scriptname__,msg,),level )
+    xbmc.log(("### [%s] - %s" % (__scriptname__,msg,)).encode("utf-8"),level )
 
 def getSetting(setting):
     return __addon__.getSetting(setting).strip()
@@ -54,6 +56,8 @@ def writeIgnoredShowsToConfig(ignoredShows, tvshowtitle=None, tvshowid=None):
         log("Set show title " + tvshowtitle + ", id [" + str(tvshowid) + "], to ignore from now on.")
         ignoredShows[tvshowid] = tvshowtitle
     
+    if not xbmcvfs.exists(__profile__):
+        xbmcvfs.mkdirs(__profile__)
     # ...and dump the whole dict to our yaml file (clobber over any old file)
     with open(__ignoredshowsfile__, 'w') as yaml_file:
         log("Ignored Shows to write to config is: " + str(ignoredShows))
