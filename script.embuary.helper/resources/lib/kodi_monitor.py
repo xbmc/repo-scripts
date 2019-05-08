@@ -30,11 +30,11 @@ class KodiMonitor(xbmc.Monitor):
             if visible('String.StartsWith(Player.Filenameandpath,pvr://)'):
                 self.get_channellogo()
 
-            if PLAYER.isPlayingAudio() and visible('!String.IsEmpty(MusicPlayer.DBID) + [String.IsEmpty(Player.Art(thumb)) | String.IsEmpty(Player.Art(discart))]'):
+            if PLAYER.isPlayingAudio() and visible('!String.IsEmpty(MusicPlayer.DBID) + [String.IsEmpty(Player.Art(thumb)) | String.IsEmpty(Player.Art(album.discart))]'):
                 self.get_songartworks()
 
-        if method == 'Player.OnStop' or method == 'VideoLibrary.OnUpdate' or method == 'AudioLibrary.OnUpdate':
-            reload_widgets(True)
+        if method == 'VideoLibrary.OnUpdate' or method == 'AudioLibrary.OnUpdate':
+            reload_widgets()
 
         if method == 'Player.OnAVChange':
             self.get_audiotracks()
@@ -142,8 +142,7 @@ class KodiMonitor(xbmc.Monitor):
         except Exception:
             pass
 
-
         item = xbmcgui.ListItem()
         item.setPath(xbmc.Player().getPlayingFile())
-        item.setArt({'thumb': thumb, 'fanart': fanart, 'clearlogo': clearlogo, 'discart': discart})
+        item.setArt({'thumb': thumb, 'fanart': fanart, 'clearlogo': clearlogo, 'discart': discart, 'album.discart': discart})
         xbmc.Player().updateInfoTag(item)

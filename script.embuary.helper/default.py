@@ -67,6 +67,8 @@ class Main:
                 playrandom(self.params)
             elif action == 'playcinema':
                 PlayCinema(self.params)
+            elif action == 'blurimg':
+                blurimg(self.params)
             elif action == 'txtfile':
                 txtfile(self.params)
             elif action == 'hyperion':

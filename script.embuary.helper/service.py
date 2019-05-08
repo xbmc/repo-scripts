@@ -8,6 +8,7 @@ import xbmcgui
 import random
 
 from resources.lib.helper import *
+from resources.lib.image import *
 from resources.lib.kodi_monitor import KodiMonitor
 
 ########################
@@ -27,6 +28,12 @@ has_reloaded = False
 
 while not MONITOR.abortRequested():
 
+	blurring = visible('Skin.HasSetting(BlurEnabled)')
+
+	# Blur listitem fanart
+	if blurring:
+		image_filter()
+
 	# Workaround for login screen bug
 	if not has_reloaded:
 		if visible('System.HasLoginScreen + Skin.HasSetting(ReloadOnLogin)'):
@@ -36,7 +43,6 @@ while not MONITOR.abortRequested():
 
 	# Master lock reload logic for widgets
 	if visible('System.HasLocks'):
-
 		if master_lock == 'None':
 			master_lock = True if visible('System.IsMaster') else False
 			log('Master mode: %s' % master_lock)
@@ -59,24 +65,28 @@ while not MONITOR.abortRequested():
 		log('Start new fanart grabber process')
 		fanarts = grabfanart()
 		bg_task_interval = 0
+
 	else:
-		bg_task_interval += 10
+		bg_task_interval += 1
 
 	# Set fanart property
 	if fanarts and bg_interval >=10:
-		winprop('EmbuaryBackground', random.choice(fanarts))
+		random_background = random.choice(fanarts)
+		winprop('EmbuaryBackground', random_background)
 		bg_interval = 0
+
 	else:
-		bg_interval += 10
+		bg_interval += 1
 
 	# Refresh widgets
 	if refresh_interval >= 600:
-		reload_widgets()
+		reload_widgets(instant=True)
 		refresh_interval = 0
-	else:
-		refresh_interval += 10
 
-	MONITOR.waitForAbort(10)
+	else:
+		refresh_interval += 1
+
+	MONITOR.waitForAbort(1)
 
 del MONITOR
 
