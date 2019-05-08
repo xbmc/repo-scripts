@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.service.playbackresumer" name="XBMC Playback Resumer" version="1.2.0" provider-name="bradvido88, bossanova808">
+  <requires>
+    <import addon="xbmc.python" version="2.14.0"/>
+	  <import addon="xbmc.json" version="6.0.0"/>	
+  </requires>
+  <extension point="xbmc.service" library="default.py" start="login"></extension>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en">Periodically sets the resume point of videos and can automatically resume last played video if XBMC crashes.</summary>
+    <description lang="en">
+        This addon runs in the background as a service and will periodically update the resume point while videos are playing. It will also automatically resume a video if XBMC was shutdown while playing it. See setting to configure how often the resume point is set and whether to automatically resume. 
+    </description>
+    <platform>all</platform>
+	<language></language> <!-- *content* language, not applicable to this service -->
+	<license>GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007</license>
+    <website>https://github.com/bossanova808/script.service.playbackresumer</website>
+    <source>https://github.com/bossanova808/script.service.playbackresumer</source>
+    <forum>http://forum.xbmc.org/showthread.php?tid=183084</forum>
+    <email>bossanova808@gmail.com</email>
+  </extension>
+</addon>
+
+

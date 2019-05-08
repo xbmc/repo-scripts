@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+<category label="32000">    
+	<setting id="saveintervalsecs" type="slider" label="32001" default="20" range="5,600" />
+	<setting id="resumeonstartup" type="bool" label="32002" default="false" />
+	<setting id="autoplayrandom" type="bool" label="32003" default="false" />
+</category>  
+
+
+  <category label="32030">
+    <setting id="ExcludeLiveTV" type="bool" label="32031" default="false"/>
+    <setting id="ExcludeHTTP" type="bool" label="32032" default="false"/>    
+    <setting id="ExcludePathOption" type="bool" label="32033" default="false" />
+    <setting id="ExcludePath" type="folder" source="video" label="32034" default="" visible= "eq(-1,true)" enable="eq(-1,true)" />
+    <setting id="ExcludePathOption2" type="bool" label="32033" default="false" visible= "eq(-2,true)" enable="eq(-2,true)" />
+    <setting id="ExcludePath2" type="folder" source="video" label="32034" default="" visible= "eq(-1,true)" enable="eq(-1,true)" />
+    <setting id="ExcludePathOption3" type="bool" label="32033" default="false" visible= "eq(-2,true)" enable="eq(-2,true)" />
+    <setting id="ExcludePath3" type="folder" source="video" label="32034" default="" visible= "eq(-1,true)" enable="eq(-1,true)" />
+  </category>
+</settings>
