@@ -8,11 +8,14 @@ import xbmcaddon
 import xbmcgui
 import json
 import time
+import os
 
 ########################
 
 ADDON = xbmcaddon.Addon()
 ADDON_ID = ADDON.getAddonInfo('id')
+ADDON_DATA_PATH = os.path.join(xbmc.translatePath("special://profile/addon_data/%s" % ADDON_ID))
+ADDON_DATA_IMG_PATH = os.path.join(xbmc.translatePath("special://profile/addon_data/%s/img" % ADDON_ID))
 
 NOTICE = xbmc.LOGNOTICE
 WARNING = xbmc.LOGWARNING
@@ -72,6 +75,13 @@ def execute(cmd):
 def visible(condition):
 
 	return xbmc.getCondVisibility(condition)
+
+
+def clear_playlists():
+
+    log('Clearing existing playlists')
+    VIDEOPLAYLIST.clear()
+    MUSICPLAYLIST.clear()
 
 
 def grabfanart():
@@ -204,13 +214,17 @@ def json_call(method,properties=None,sort=None,query_filter=None,limit=None,para
     return result
 
 
-def reload_widgets(delay=False):
+def reload_widgets(instant=False,force=True):
 
     log('Force widgets to refresh')
     timestamp = time.strftime('%Y%m%d%H%M%S', time.gmtime())
 
-    if delay:
-        execute('AlarmClock(WidgetRefresh,SetProperty(EmbuaryWidgetUpdate,%s,home),00:04,silent)' % timestamp)
-    else:
+    if instant:
         winprop('EmbuaryWidgetUpdate', timestamp)
+        return
 
+    execute('AlarmClock(WidgetRefresh,SetProperty(EmbuaryWidgetUpdate,%s,home),00:05,silent)' % timestamp)
+
+    if force:
+        execute('AlarmClock(WidgetForceRefresh1,SetProperty(EmbuaryForceWidgetUpdate,1,home),00:10,silent)')
+        execute('AlarmClock(WidgetForceRefresh2,ClearProperty(EmbuaryForceWidgetUpdate,home),00:11,silent)')

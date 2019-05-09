@@ -21,6 +21,7 @@ except ImportError:
 from resources.lib.helper import *
 from resources.lib.library import *
 from resources.lib.json_map import *
+from resources.lib.image import *
 
 ########################
 
@@ -102,9 +103,6 @@ def setkodisetting(params):
             value = True
         elif value.lower() == 'false':
             value = False
-        else:
-            log('SetKodiSetting: No valid value')
-            return
 
     json_call('Settings.SetSettingValue',
                 params={'setting': '%s' % settingname, 'value': value}
@@ -130,34 +128,53 @@ def playsfx(params):
 
 
 def playitem(params):
-    VIDEOPLAYLIST.clear()
-    execute('Dialog.Close(all,true)')
+    clear_playlists()
 
+    dbtype = params.get('dbtype')
     dbid = params.get('dbid')
-    dbtype = 'movieid' if not params.get('dbtype') == 'episode' else 'episodeid'
+
+    if dbtype =='episode':
+        itemtype = 'episodeid'
+    elif dbtype =='song':
+        itemtype = 'songid'
+    else:
+        itemtype = 'movieid'
+
+    execute('Dialog.Close(all,true)')
 
     if dbid:
         json_call('Player.Open',
-                    item={dbtype: int(dbid)}
+                    item={itemtype: int(dbid)}
                     )
     else:
         execute('PlayMedia("%s")' % remove_quotes(params.get('item')))
 
 
 def playall(params):
-    VIDEOPLAYLIST.clear()
+    clear_playlists()
+
+    dbid = params.get('id')
+
+    if params.get('type') == 'music':
+        playlistid = 0
+        playlist = MUSICPLAYLIST
+    else:
+        playlistid = 1
+        playlist = VIDEOPLAYLIST
 
     if params.get('method') == 'fromhere':
-        method = 'Container(%s).ListItemNoWrap' % params.get('id')
+        method = 'Container(%s).ListItemNoWrap' % dbid
     else:
-        method = 'Container(%s).ListItemAbsolute' % params.get('id')
+        method = 'Container(%s).ListItemAbsolute' % dbid
 
-    for i in range(int(xbmc.getInfoLabel('Container.NumItems'))):
+    for i in range(int(xbmc.getInfoLabel('Container(%s).NumItems' % dbid))):
 
         if visible('String.IsEqual(%s(%s).DBType,movie)' % (method,i)):
             media_type = 'movie'
         elif visible('String.IsEqual(%s(%s).DBType,episode)' % (method,i)):
             media_type = 'episode'
+        elif visible('String.IsEqual(%s(%s).DBType,song)' % (method,i)):
+            media_type = 'song'
         else:
             media_type = None
 
@@ -167,33 +184,37 @@ def playall(params):
         if media_type and dbid:
             json_call('Playlist.Add',
                         item={'%sid' % media_type: int(dbid)},
-                        params={'playlistid': 1}
+                        params={'playlistid': playlistid}
                         )
         elif url:
             json_call('Playlist.Add',
                         item={'file': url},
-                        params={'playlistid': 1}
+                        params={'playlistid': playlistid}
                         )
 
-    PLAYER.play(VIDEOPLAYLIST, startpos=0, windowed=False)
+    PLAYER.play(playlist, startpos=0, windowed=False)
 
 
 def playrandom(params):
-    VIDEOPLAYLIST.clear()
+    clear_playlists()
 
-    i = random.randint(1,int(xbmc.getInfoLabel('Container.NumItems')))
+    dbid = params.get('id')
 
-    if visible('String.IsEqual(Container(%s).ListItemAbsolute(%s).DBType,movie)' % (params.get('id'),i)):
+    i = random.randint(1,int(xbmc.getInfoLabel('Container(%s).NumItems' % dbid)))
+
+    if visible('String.IsEqual(Container(%s).ListItemAbsolute(%s).DBType,movie)' % (dbid,i)):
         media_type = 'movie'
-    elif visible('String.IsEqual(Container(%s).ListItemAbsolute(%s).DBType,episode)' % (params.get('id'),i)):
+    elif visible('String.IsEqual(Container(%s).ListItemAbsolute(%s).DBType,episode)' % (dbid,i)):
         media_type = 'episode'
+    elif visible('String.IsEqual(Container(%s).ListItemAbsolute(%s).DBType,song)' % (dbid,i)):
+        media_type = 'song'
     else:
         media_type = None
 
-    dbid = xbmc.getInfoLabel('Container(%s).ListItemAbsolute(%s).DBID' % (params.get('id'),i))
-    url = xbmc.getInfoLabel('Container(%s).ListItemAbsolute(%s).Filenameandpath' % (params.get('id'),i))
+    item_dbid = xbmc.getInfoLabel('Container(%s).ListItemAbsolute(%s).DBID' % (dbid,i))
+    url = xbmc.getInfoLabel('Container(%s).ListItemAbsolute(%s).Filenameandpath' % (dbid,i))
 
-    playitem({'dbtype': media_type, 'dbid': dbid, 'item': url})
+    playitem({'dbtype': media_type, 'dbid': item_dbid, 'item': url})
 
 
 def jumptoshow_by_episode(params):
@@ -308,6 +329,11 @@ def txtfile(params):
     else:
         log('Cannot find %s' % path)
         winprop(prop, clear=True)
+
+
+def blurimg(params):
+
+    image_filter(params.get('prop','output'),remove_quotes(params.get('file')),params.get('radius'))
 
 
 class PlayCinema(object):
