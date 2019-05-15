@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 
 ### Common Code for bossanova808 addons
-### By bossanova808 2015
+### By bossanova808
 ### Free in all senses....
 
-### VERSION 0.2.2
+### VERSION 0.2.4
 
 import xbmc
 import xbmcaddon
@@ -197,7 +197,8 @@ def stripList(l, chars):
 
 def setProperty(window, name, value = ""):
     window.setProperty(name, value)
-    log("Set property name: [%s] - value:[%s]" % (name,value))
+    if value:
+        log("Set window property: [%s] - value:[%s]" % (name,value))
 
 ################################################################################
 # Try and sett the window mode to thumbnail mode....
@@ -288,6 +289,12 @@ elif xbmc.getCondVisibility( "System.Platform.Linux.RaspberryPi" ):
 elif xbmc.getCondVisibility( "System.Platform.Android" ):
   SYSTEM = "android"
 
+# Seems to be needed for linux on arm support - see https://github.com/bossanova808/repository.bossanova808/issues/7
+try:
+    if(uname[4].startswith("arm")):
+        SYSTEM = "arm"
+except:
+    pass
 
 XBMC_VERSION = None
 VERSION_NUMBER = None

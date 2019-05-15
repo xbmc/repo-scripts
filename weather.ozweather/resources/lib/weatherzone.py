@@ -30,7 +30,7 @@ except ImportError:
 
 # CONSTANTS
 
-SCHEMA = "http://"
+SCHEMA = "https://"
 WEATHERZONE_URL = 'www.weatherzone.com.au'
 WEATHERZONE_SEARCH_URL = WEATHERZONE_URL + "/search/"
 
