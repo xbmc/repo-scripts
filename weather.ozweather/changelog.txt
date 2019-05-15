@@ -1,3 +1,6 @@
+v1.0.1
+- Must scrape all WeatherZone data over https now it seems
+
 v1.0.0
 - More robust error handling if scraped data is unexpectedly absent
 
