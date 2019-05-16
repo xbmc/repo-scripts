@@ -1,3 +1,10 @@
+v0.0.16
+- don't normalize location search strings
+
+v0.0.15
+- fix potential geoip crash
+- silence setting not found log entries
+
 v0.0.14
 - cosmetics
 

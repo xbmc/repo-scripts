@@ -147,6 +147,8 @@ def get_month(stamp, form):
 
 def geoip():
     # list of alternative providers https://ahmadawais.com/best-api-geolocating-an-ip-address/)
+    city = ''
+    latlon = ''
     try:
         req = urllib2.urlopen('http://ip-api.com/json')
         response = req.read()
@@ -161,15 +163,13 @@ def geoip():
             latlon = []
             latlon.append(str(data['lat']))
             latlon.append(str(data['lon']))
-            return city, str(latlon)
+    return city, str(latlon)
 
 def location(locstr):
     locs    = []
     locdegs = []
-    log('location: %s' % locstr)
-    loc = unicodedata.normalize('NFKD', unicode(locstr, 'utf-8')).encode('ascii','ignore')
-    log('searching for location: %s' % loc)
-    search_string = urllib2.quote(loc)
+    log('searching for location: %s' % locstr)
+    search_string = urllib2.quote(locstr)
     query = get_data(search_string, 'location')
     log('location data: %s' % query)
     if not query:
@@ -185,7 +185,7 @@ def location(locstr):
             location   = item['name']
             locationlat = str(item['coord']['lat'])
             locationlon = str(item['coord']['lon'])
-            locdeg = [locationlat,locationlon]
+            locdeg = str([locationlat,locationlon])
             locationcountry = item['sys']['country']
             if LATLON == 'true':
                 locs.append(location + ' (' + locationcountry + ') - lat/lon:' + locationlat + '/' + locationlon)
@@ -478,7 +478,7 @@ elif sys.argv[1].startswith('Location'):
             selected = dialog.select(xbmc.getLocalizedString(396), locations)
             if selected != -1:
                 ADDON.setSetting(sys.argv[1], locations[selected].split(' - ')[0])
-                ADDON.setSetting(sys.argv[1] + 'deg', str(locationdeg[selected]))
+                ADDON.setSetting(sys.argv[1] + 'deg', locationdeg[selected])
                 log('selected location: %s' % locations[selected])
                 log('selected location lat/lon: %s' % locationdeg[selected])
         else:
