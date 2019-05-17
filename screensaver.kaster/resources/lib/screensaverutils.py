@@ -68,7 +68,7 @@ class ScreenSaverUtils:
         self.__get_images_recursively(xbmc.translatePath(path))
 
         for _file in self.get_all_images():
-            if _file.endswith(('.png', '.jpg', '.jpeg')):
+            if _file.lower().endswith(('.png', '.jpg', '.jpeg')):
                 returned_dict = {
                     "url": _file,
                     "private": True
