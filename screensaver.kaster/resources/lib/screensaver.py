@@ -142,6 +142,8 @@ class Kaster(xbmcgui.WindowXMLDialog):
             self.setProperty("clockfont", "fontzephyr")
         elif "eminence" in skin:
             self.setProperty("clockfont", "fonteminence")
+        elif "aura" in skin:
+            self.setProperty("clockfont", "fontaura")
         else:
             self.setProperty("clockfont", "fontmainmenu")
         # Set skin properties as settings

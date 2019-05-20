@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="screensaver.kaster" name="Kaster" version="1.2.6" provider-name="enen92">
+<addon id="screensaver.kaster" name="Kaster" version="1.2.7" provider-name="enen92">
 	<requires>
 		<import addon="xbmc.python" version="2.25.0"/>
 		<import addon="script.module.requests"/>
@@ -18,9 +18,9 @@
 		<description lang="pt_PT">Apresenta imagens lindíssimas originalmente pertencentes ao screensaver do chromecast. Pode também apresentar as suas próprias imagens conjuntamente com a respectiva informação.</description>
 		<description lang="es_ES">Muestra bellas imágenes como las del protector de pantalla de chromecast. También puede mostrar sus propias fotos junto con su respectiva información.</description>
 		<description lang="nl_NL">Toon prachtige afbeeldingen afkomstig van de Chromecast screensaver. Je kunt ook je eigen foto's tonen met al hun informatie.</description>
-		<news>v1.2.6
-		  [fix] travis config
-			[new] initial support for python3 compatibility (tks rechi)
+		<news>v1.2.7
+		  [fix] File extensions in uppercase
+			[new] Add aura skin font support
 		</news>
 		<assets>
 			<icon>resources/images/icon.png</icon>
