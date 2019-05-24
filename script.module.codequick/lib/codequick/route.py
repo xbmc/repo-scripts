@@ -85,6 +85,7 @@ class Route(Script):
         self.update_listing = self.params.get(u"_updatelisting_", False)
         self.category = re.sub(u"\(\d+\)$", u"", self._title).strip()
         self.cache_to_disc = self.params.get(u"_cache_to_disc_", True)
+        self.redirect_single_item = False
         self._manual_sort = list()
         self.content_type = _UNSET
         self.autosort = True
@@ -110,6 +111,11 @@ class Route(Script):
 
                 if "mediatype" in listitem.info:
                     mediatypes[listitem.info["mediatype"]] += 1
+
+        # If redirect_single_item is set to True then redirect view to the first
+        # listitem if it's the only listitem and that listitem is a folder
+        if self.redirect_single_item and len(listitems) == 1 and listitems[0][2] is True:
+            return listitems[0][0]  # return the listitem path
 
         # Guess if this directory listing is primarily a folder or video listing.
         # Listings will be considered to be a folder if more that half the listitems are folder items.
