@@ -162,7 +162,7 @@ def get_channeldetails(channel_name):
 
     try:
         for channel in channels['result']['channels']:
-            if channel['channel'] == channel_name:
+            if channel['channel'].encode('utf-8') == channel_name:
                 channel_details['channelid'] = channel['channelid']
                 channel_details['channel'] = channel['channel']
                 channel_details['icon'] = channel['icon']
@@ -173,7 +173,7 @@ def get_channeldetails(channel_name):
     return channel_details
 
 
-def json_call(method,properties=None,sort=None,query_filter=None,limit=None,params=None,item=None):
+def json_call(method,properties=None,sort=None,query_filter=None,limit=None,params=None,item=None,options=None):
 
     json_string = {'jsonrpc': '2.0', 'id': 1, 'method': method, 'params': {}}
 
@@ -188,6 +188,9 @@ def json_call(method,properties=None,sort=None,query_filter=None,limit=None,para
 
     if query_filter is not None:
         json_string['params']['filter'] = query_filter
+
+    if options is not None:
+        json_string['params']['options'] = options
 
     if item is not None:
         json_string['params']['item'] = item

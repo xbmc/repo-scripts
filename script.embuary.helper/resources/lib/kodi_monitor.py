@@ -24,6 +24,7 @@ class KodiMonitor(xbmc.Monitor):
             self.data = json.loads(data)
 
         if method == 'Player.OnPlay':
+            self.get_videoinfo()
             if not self.do_fullscreen_lock:
                 self.do_fullscreen()
 
@@ -146,3 +147,62 @@ class KodiMonitor(xbmc.Monitor):
         item.setPath(xbmc.Player().getPlayingFile())
         item.setArt({'thumb': thumb, 'fanart': fanart, 'clearlogo': clearlogo, 'discart': discart, 'album.discart': discart})
         xbmc.Player().updateInfoTag(item)
+
+
+    def get_videoinfo(self):
+
+        for i in range(1,50):
+            winprop('VideoPlayer.AudioCodec.%i' % i, clear=True)
+            winprop('VideoPlayer.AudioChannels.%i' % i, clear=True)
+            winprop('VideoPlayer.AudioLanguage.%i' % i, clear=True)
+            winprop('VideoPlayer.SubtitleLanguage.%i' % i, clear=True)
+
+        dbid = xbmc.getInfoLabel('VideoPlayer.DBID')
+        if not dbid:
+            return
+
+        if visible('VideoPlayer.Content(movies)'):
+            method = 'VideoLibrary.GetMovieDetails'
+            mediatype = 'movieid'
+            details = 'moviedetails'
+
+        elif visible('VideoPlayer.Content(episodes)'):
+            method = 'VideoLibrary.GetEpisodeDetails'
+            mediatype = 'episodeid'
+            details = 'episodedetails'
+
+        else:
+            return
+
+        json_query = json_call(method,
+                            properties=['streamdetails'],
+                            params={mediatype: int(dbid)}
+                            )
+
+        try:
+            results_audio = json_query['result'][details]['streamdetails']['audio']
+
+            i = 1
+            for track in results_audio:
+                winprop('VideoPlayer.AudioCodec.%i' % i, track['codec'])
+                winprop('VideoPlayer.AudioChannels.%i' % i, str(track['channels']))
+                winprop('VideoPlayer.AudioLanguage.%i' % i, track['language'])
+                i += 1
+
+        except Exception:
+            pass
+
+        try:
+            results_subtitle = json_query['result'][details]['streamdetails']['subtitle']
+
+            i = 1
+            for subtitle in results_subtitle:
+                winprop('VideoPlayer.SubtitleLanguage.%i' % i, subtitle['language'])
+                i += 1
+
+        except Exception:
+            return
+
+
+
+

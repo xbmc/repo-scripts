@@ -154,15 +154,12 @@ def playall(params):
     clear_playlists()
 
     dbid = params.get('id')
+    method = params.get('method')
 
-    if params.get('type') == 'music':
-        playlistid = 0
-        playlist = MUSICPLAYLIST
-    else:
-        playlistid = 1
-        playlist = VIDEOPLAYLIST
+    playlistid = 0 if params.get('type') == 'music' else 1
+    shuffled = True if method == 'shuffle' else False
 
-    if params.get('method') == 'fromhere':
+    if method == 'fromhere':
         method = 'Container(%s).ListItemNoWrap' % dbid
     else:
         method = 'Container(%s).ListItemAbsolute' % dbid
@@ -192,7 +189,10 @@ def playall(params):
                         params={'playlistid': playlistid}
                         )
 
-    PLAYER.play(playlist, startpos=0, windowed=False)
+    json_call('Player.Open',
+                item={'playlistid': playlistid, 'position': 0},
+                options={'shuffled': shuffled}
+                )
 
 
 def playrandom(params):

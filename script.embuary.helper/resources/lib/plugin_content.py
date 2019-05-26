@@ -71,6 +71,8 @@ class PluginContent(object):
 
         starwars = ['Star Wars', 'Krieg der Sterne', 'Luke Skywalker', 'Darth Vader', 'Jedi ', 'Ewoks', 'Starwars', 'Kylo Ren', 'Yoda ', 'Chewbacca', 'Anakin Skywalker', 'Han Solo', 'r2-d2', 'bb-8', 'Millennium Falcon', 'Millenium Falke', 'Stormtrooper', 'Sturmtruppler']
 
+        startrek = ['Star Trek', 'Captain Kirk', 'Cpt. Kirk', 'James Kirk', 'James T. Kirk', 'James Tiberius Kirk', 'Jean-Luc Picard', 'Commander Spock', 'Deep Space Nine', 'Deep Space 9', 'Raumschiff Enterprise', 'Raumschiff Voyager', 'Klingonen', 'Klingons', 'Commander Data', 'Commander Geordi La Forge', 'Counselor Deanna Troi', 'William Thomas Riker', 'Captain Benjamin Sisko', 'Cpt. Benjamin Sisko', 'Captain Kathryn Janeway', 'Cpt. Kathryn Janeway']
+
         filters = []
 
         if self.params.get('list') == 'xmas':
@@ -87,6 +89,13 @@ class PluginContent(object):
         elif self.params.get('list') == 'starwars':
             use_episodes = False
             for keyword in starwars:
+                filters.append({'operator': 'contains', 'field': 'title', 'value': keyword})
+                filters.append({'operator': 'contains', 'field': 'originaltitle', 'value': keyword})
+                filters.append({'operator': 'contains', 'field': 'plot', 'value': keyword})
+
+        elif self.params.get('list') == 'startrek':
+            use_episodes = False
+            for keyword in startrek:
                 filters.append({'operator': 'contains', 'field': 'title', 'value': keyword})
                 filters.append({'operator': 'contains', 'field': 'originaltitle', 'value': keyword})
                 filters.append({'operator': 'contains', 'field': 'plot', 'value': keyword})
@@ -482,10 +491,11 @@ class PluginContent(object):
     # get items by actor
     def get_items_by_actor(self):
 
-        json_query = json_call(self.method_details,
-                                properties=['title', 'cast'],
-                                params={self.param: int(self.dbid)}
-                                )
+        if self.dbid:
+            json_query = json_call(self.method_details,
+                                    properties=['title', 'cast'],
+                                    params={self.param: int(self.dbid)}
+                                    )
 
         try:
             cast = json_query['result'][self.key_details]['cast']
@@ -495,7 +505,7 @@ class PluginContent(object):
                 raise Exception
 
         except Exception:
-            log('Items by actor %s: No cast found')
+            log('Items by actor: No cast found')
             return
 
         cast_range=[]
@@ -659,15 +669,25 @@ class PluginContent(object):
 
             if len(all_letters) > 1:
 
+                numbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
+                alphabet = ['#', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
+                letter_count = 0
                 first_number = False
-                for number in ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']:
 
-                    if number in all_letters:
-                        first_number = number
+                for item in numbers:
+                    if item in all_letters:
+                        letter_count += 1
+                        first_number = item
                         break
 
-                for letter in ['#', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L',
-                               'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']:
+                for item in alphabet:
+                    if item in all_letters:
+                        letter_count += 1
+
+                if letter_count < 2:
+                    return
+
+                for letter in alphabet:
 
                     li_item = xbmcgui.ListItem(label=letter)
 

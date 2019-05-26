@@ -34,9 +34,20 @@ class Main:
         path = sys.argv[2]
 
         try:
-            self.params = dict(urlparse.parse_qsl(path[1:]))
+            args = path[1:]
+            self.params = dict(urlparse.parse_qsl(args))
+
+            ''' workaround to get the correct values for titles with special characters
+            '''
+            if ('title=\'\"' and '\"\'') in args:
+                start_pos=args.find('title=\'\"')
+                end_pos=args.find('\"\'')
+                clean_title = args[start_pos+8:end_pos]
+                self.params['title'] = clean_title
+
         except Exception:
             self.params = {}
+
 
     def getinfos(self):
         li = list()
