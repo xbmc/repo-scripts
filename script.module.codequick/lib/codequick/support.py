@@ -3,8 +3,8 @@ from __future__ import absolute_import
 
 # Standard Library Imports
 import binascii
-import logging
 import inspect
+import logging
 import pickle
 import time
 import sys
@@ -17,6 +17,12 @@ import xbmc
 
 # Package imports
 from codequick.utils import parse_qs, ensure_native_str, urlparse, PY3, unicode_type
+
+if PY3:
+    from inspect import getfullargspec
+else:
+    # noinspection PyDeprecation
+    from inspect import getargspec as getfullargspec
 
 script_data = xbmcaddon.Addon("script.module.codequick")
 addon_data = xbmcaddon.Addon()
@@ -130,11 +136,7 @@ class Route(object):
 
     def arg_names(self):  # type: () -> list
         """Return a list of argument names, positional and keyword arguments."""
-        if PY3:
-            return inspect.getfullargspec(self.function).args
-        else:
-            # noinspection PyDeprecation
-            return inspect.getargspec(self.function).args
+        return getfullargspec(self.function).args
 
     def unittest_caller(self, *args, **kwargs):
         """
@@ -208,9 +210,9 @@ class Dispatcher(object):
         self.params.clear()
         auto_sort.clear()
 
-    def parse_args(self):
+    def parse_args(self, redirect=None):
         """Extract arguments given by Kodi"""
-        _, _, route, raw_params, _ = urlparse.urlsplit(sys.argv[0] + sys.argv[2])
+        _, _, route, raw_params, _ = urlparse.urlsplit(redirect if redirect else sys.argv[0] + sys.argv[2])
         self.selector = route if len(route) > 1 else "root"
         self.handle = int(sys.argv[1])
 
@@ -252,12 +254,12 @@ class Dispatcher(object):
         callback.route = route
         return callback
 
-    def register_delayed(self, func, args, kwargs):
+    def register_delayed(self, *callback):
         """Register a function that will be called later, after content has been listed."""
-        callback = (func, args, kwargs)
         self.registered_delayed.append(callback)
 
-    def run_callback(self):
+    # noinspection PyIncorrectDocstring
+    def run_callback(self, process_errors=True, redirect=None):
         """
         The starting point of the add-on.
 
@@ -266,9 +268,16 @@ class Dispatcher(object):
 
         The "root" callback, is the callback that will be the initial
         starting point for the add-on.
+
+        :param bool process_errors: Enable/Disable internal error handler. (default => True)
+        :returns: Returns None if no errors were raised, or if errors were raised and process_errors is
+                  True (default) then the error Exception that was raised will be returned.
+
+        returns the error Exception if an error ocurred.
+        :rtype: Exception or None
         """
         self.reset()
-        self.parse_args()
+        self.parse_args(redirect)
         logger.debug("Dispatching to route: '%s'", self.selector)
         logger.debug("Callback parameters: '%s'", self.callback_params)
 
@@ -276,15 +285,22 @@ class Dispatcher(object):
             # Fetch the controling class and callback function/method
             route = self.get_route()
             execute_time = time.time()
+            redirect = None
 
             # Initialize controller and execute callback
             parent_ins = route.parent()
             results = route.function(parent_ins, **self.callback_params)
             if hasattr(parent_ins, "_process_results"):
                 # noinspection PyProtectedMember
-                parent_ins._process_results(results)
+                redirect = parent_ins._process_results(results)
 
         except Exception as e:
+            self.run_delayed(e)
+            # Don't do anything with the error
+            # if process_errors is disabled
+            if not process_errors:
+                raise
+
             try:
                 msg = str(e)
             except UnicodeEncodeError:
@@ -294,15 +310,18 @@ class Dispatcher(object):
                 msg = unicode_type(e).encode("utf8")
 
             # Log the error in both the gui and the kodi log file
+            logger.critical(msg, exc_info=1)
             dialog = xbmcgui.Dialog()
             dialog.notification(e.__class__.__name__, msg, addon_data.getAddonInfo("icon"))
-            logger.critical(msg, exc_info=1)
+            return e
 
         else:
             logger.debug("Route Execution Time: %ims", (time.time() - execute_time) * 1000)
             self.run_delayed()
+            if redirect:
+                self.run_callback(process_errors, redirect)
 
-    def run_delayed(self):
+    def run_delayed(self, exception=None):
         """Execute all delayed callbacks, if any."""
         if self.registered_delayed:
             # Time before executing callbacks
@@ -310,12 +329,16 @@ class Dispatcher(object):
 
             # Execute in order of last in first out (LIFO).
             while self.registered_delayed:
-                func, args, kwargs = self.registered_delayed.pop()
+                func, args, kwargs, function_type = self.registered_delayed.pop()
+                if function_type == 2 or bool(exception) == function_type:
+                    # Add raised exception to callback if requested
+                    if "exception" in getfullargspec(func).args:
+                        kwargs["exception"] = exception
 
-                try:
-                    func(*args, **kwargs)
-                except Exception as e:
-                    logger.exception(str(e))
+                    try:
+                        func(*args, **kwargs)
+                    except Exception as e:
+                        logger.exception(str(e))
 
             # Log execution time of callbacks
             logger.debug("Callbacks Execution Time: %ims", (time.time() - start_time) * 1000)
