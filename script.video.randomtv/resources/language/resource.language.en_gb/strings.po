@@ -76,3 +76,7 @@ msgstr ""
 msgctxt "#32017"
 msgid "Time To Wait For Response (Minutes)"
 msgstr ""
+
+msgctxt "#32018"
+msgid "Play with RandomTV"
+msgstr ""

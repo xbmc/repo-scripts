@@ -16,6 +16,8 @@ There are a couple options in the setting menu:
   - Time To Wait For Response (Minutes)
 - Include All TV Shows or Select certain TV Shows
 
+It will also add a context menu item so that you can play a specific show or season with RandomTV
+
 It seems to be working pretty well for me on a couple different Pi's running OSMC and on my Windows UWP installs, so I figured I would release it to see of others could benefit.
 
 Comments/feedback/bug reports welcome, but be gentle, it's my first ever addon.  ;-)
