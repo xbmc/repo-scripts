@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+    <setting id="Enable_Debugging" type="bool"    label="30000"  default="false" />
+    <setting id="Search_Depth"     type="slider"  label="30002"  default="4" range="1,1,10" option="int" />
+</settings>

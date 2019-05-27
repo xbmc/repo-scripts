@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<settings >
+	<category label="32067">
+		<setting label="32068" type="bool" id="allow_directory_listing" default="true"/>
+		<setting label="32069" type="number" id="port_directory_listing" default="8585"/>
+    </category>
+</settings>

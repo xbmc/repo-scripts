@@ -1,0 +1,56 @@
+2019.03.23 v0.3.4
++ python2_3 compability (mediaminister, Rechi)
++ Option to disable inputstreamhelper in settings.xml
++ calculate disk space on the tmp folder (dawez)
++ Support for Unicode paths in Windows (WallyCZ)
++ Italian translation (pinoelefante)
++ Dutch translation (dnicolaas)
++ Greek translation (Twilight0)
++ Russian translation (vlmaksime)
+
+2018.02.21 v0.3.3
++ Load loop if it's a kernel module (thanks to mkreisl)
++ Fix legacy Widevine CDM update detection
++ inputstream_addon is now a public variable
++ Notify user that ARM64 needs 32-bit userspace
++ Improve logging
++ Cosmetics
+
+2018.01.30 v0.3.2
++ Fix OSMC arm architecture detection
++ Fix ldd permissions error
+
+2018.01.29 v0.3.1
++ check_inputstream() return fix
+
+2018.01.29 v0.3.0
++ Bug fix: module left xbmcaddon class in memory
++ Keep Widevine CDM up-to-date with the latest version available (Kodi 18 and higher)
++ Check for missing depending libraries by parsing the output from ldd
++ Use older Widevine binaries on Kodi Krypton (fixes nss/nspr dependency issues)
+
+2018.01.01 v0.2.4
++ Fix ARM download on systems with sudo (OSMC etc)
++ Actually bump version in addon.xml, unlike v0.2.3...
+
+2017.12.30 v0.2.3
++ Make sure Kodi and Widevine CDM binary architecture matches
++ Minor wording changes/fixes
+
+2017.12.05 v0.2.2
++ Fixes for widevine download when using 64-bit Kodi (thanks to gismo112 & asciidisco)
+
+2017.10.15 v0.2.1
++ Update German translation (thanks to asciidisco)
++ Improve root permissions acquisition
+
+2017.09.29 v0.2.0
++ Automatic Widevine CDM download on ARM devices
++ Display Widevine EULA during installation procedure
++ German translation (thanks to asciidisco)
++ New, smaller and less ugly generic icon
++ Better exception handling
++ Code cleanup
+
+2017.09.13 v0.1.0
++ Initial release

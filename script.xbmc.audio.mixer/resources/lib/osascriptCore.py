@@ -102,7 +102,7 @@ class alsaMixerCore:
         else:
           cmdStr = "osascript -e 'set volume output muted false'"  
         stdErr, stdOut, retValue = self.__runSilent(cmdStr)
-        print cmdStr
+        print(cmdStr)
 
     def getPlaybackControls(self):
         channels = ""
@@ -123,7 +123,7 @@ class alsaMixerCore:
 
     def __printDebugLine(self, aLine):
         if self.gDebugMode>0:
-            print aLine
+            print(aLine)
 
     def __runSilent(self, aCmdline):
         self.__printDebugLine("Running: " + aCmdline)

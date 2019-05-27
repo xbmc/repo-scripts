@@ -1,3 +1,24 @@
+2.1.7
+- Added function to play by id
+2.1.6
+- Loading API keys from website now
+2.1.5
+- Changed API keys again
+2.1.4
+- Changed API keys again
+2.1.3
+- Changed API keys again
+2.1.2
+- Changed API keys again
+2.1.1
+- Changed API keys again
+2.1.0
+- Code cleanup
+- Changed API keys
+2.0.4
+- Removed xbmc* dependencies
+2.0.3
+- Fixed error with video entries without url
 2.0.2
 - Added second API key for some directories
 2.0.1

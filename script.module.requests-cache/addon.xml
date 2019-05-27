@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.module.requests-cache"
+       name="requests-cache"
+       version="0.4.13"
+       provider-name="gedisony">
+  <requires>
+    <import addon="xbmc.python" version="2.25.0"/>
+  </requires>
+  <extension point="xbmc.python.module"
+             library="lib" />
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en_GB">Persistent cache for requests library</summary>
+    <description lang="en_GB">Packed for KODI: requests-cache</description>
+    <platform>all</platform>
+    <language></language>
+    <license>BSD</license>
+    <forum>https://forum.kodi.tv/showthread.php?tid=316817</forum>
+    <website>https://pypi.python.org/pypi/requests-cache</website>
+    <source>https://github.com/gedisony/script.module.requests-cache</source>
+    <email>gedisony AT gmail.com</email>
+  </extension>
+</addon>

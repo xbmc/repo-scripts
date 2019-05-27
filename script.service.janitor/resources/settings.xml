@@ -73,7 +73,7 @@
         <setting label="32404" id="exclusion3" type="folder" default="" subsetting="true" visible="eq(-4,true)" />
         <setting label="32404" id="exclusion4" type="folder" default="" subsetting="true" visible="eq(-5,true)" />
         <setting label="32404" id="exclusion5" type="folder" default="" subsetting="true" visible="eq(-6,true)" />
-        <setting label="32405" id="reset_exclusions" type="action" action="RunScript(special://home/addons/script.service.janitor/reset_exclusions.py)" subsetting="true" visible="eq(-7,true)" />
+        <setting label="32405" id="reset_exclusions" type="action" action="RunScript(script.service.janitor, reset)" subsetting="true" visible="eq(-7,true)" />
     </category>
 
     <!-- Notifications section -->

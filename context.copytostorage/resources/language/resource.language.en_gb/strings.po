@@ -1,0 +1,69 @@
+# Kodi Media Center language file
+# Addon Name: Copy to Storage
+# Addon id: context.copytostorage
+msgid ""
+msgstr ""
+
+msgctxt "#32000"
+msgid "Copy To storage"
+msgstr ""
+
+
+msgctxt "#32001"
+msgid "ERROR"
+msgstr ""
+
+
+msgctxt "#32002"
+msgid "Could not resolve path info for:"
+msgstr ""
+
+
+msgctxt "#32003"
+msgid "Copying finished"
+msgstr ""
+
+
+msgctxt "#32004"
+msgid "Done"
+msgstr ""
+
+
+msgctxt "#32005"
+msgid "Done copying %s files with %s error"
+msgstr ""
+
+
+msgctxt "#32006"
+msgid "ERROR COPYING"
+msgstr ""
+
+
+msgctxt "#32007"
+msgid "Failed to copy"
+msgstr ""
+
+
+msgctxt "#32008"
+msgid "Copying: %s/%s"
+msgstr ""
+
+
+msgctxt "#32009"
+msgid "Done copying %s files with %s error"
+msgstr ""
+
+
+msgctxt "#32010"
+msgid "Copy file"
+msgstr ""
+
+
+msgctxt "#32011"
+msgid "files"
+msgstr ""
+
+
+msgctxt "#32012"
+msgid "File not copied"
+msgstr ""

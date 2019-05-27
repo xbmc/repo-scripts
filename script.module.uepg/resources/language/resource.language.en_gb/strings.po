@@ -1,0 +1,82 @@
+# Kodi Media Center language file
+# Addon Name: uEPG
+# Addon id: script.module.uepg
+# Addon Provider: Lunatixz
+msgid ""
+msgstr ""
+"Project-Id-Version: script.module.uepg\n"
+"Report-Msgid-Bugs-To: https://forum.kodi.tv/showthread.php?tid=321231\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Lunatixz Translation Team\n"
+"Language-Team: English (http://www.transifex.com/projects/p/xbmc-addons/language/en/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#30000"
+msgid "Enable Debugging [Log errors]"
+msgstr ""
+
+msgctxt "#30001"
+msgid "Are you sure you want to exit %s?"
+msgstr ""
+
+msgctxt "#30002"
+msgid "%s Error, Contact %s for support"
+msgstr ""
+
+msgctxt "#30003"
+msgid "Refreshing Guidedata"
+msgstr ""
+
+msgctxt "#30004"
+msgid "Verifying Guidedata, Please Wait"
+msgstr ""
+
+msgctxt "#30005"
+msgid "Verifying Guidedata, Finished"
+msgstr ""
+
+msgctxt "#30006"
+msgid "Loading Guidedata, Please Wait"
+msgstr ""
+
+msgctxt "#30007"
+msgid "Loading Guidedata, Finished"
+msgstr ""
+
+msgctxt "#30008"
+msgid "Welcome to uEPG[CR][CR]-Navigate using Up, Down, Left, Right, PageUp, PageDown.[CR][CR]-Use Select, Enter or OK to play selected content.[CR][CR]-Toggle between fullscreen video and the EPG using Back, Previous or Close.[CR][CR]-Open the context menu using your specified context key.[CR][CR]-Exit the guide by stopping the currently playing video and pressing Back, Previous or Close twice."
+msgstr ""
+
+msgctxt "#30009"
+msgid "Clock Mode"
+msgstr ""
+
+msgctxt "#30010"
+msgid "Use Kodi Skin (If Available)"
+msgstr ""
+
+msgctxt "#30011"
+msgid "Include HDHomerun Tuner (If Available)"
+msgstr ""
+
+msgctxt "#30012"
+msgid "HDHomerun Tuner Detected!! [CR] Would You like to Merge HDHomerun Channels with %s?"
+msgstr ""
+
+msgctxt "#30013"
+msgid "No HDHomerun Favorites Found!"
+msgstr ""
+
+msgctxt "#30014"
+msgid "Visit my.hdhomerun.com to select your Favorite Channels"
+msgstr ""
+
+msgctxt "#30015"
+msgid "To disable HDHomerun Tuner Support, open %s guide settings"
+msgstr ""
+

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.tag-generator"
+       name="Tag Generator"
+       version="0.6.4"
+       provider-name="wellspokenman">
+  <requires>
+    <import addon="xbmc.python" version="2.25.0"/>
+    <import addon="script.module.simplejson" version="3.3.0"/>
+    <import addon="script.module.requests" version="2.12.4"/>
+    <import addon="script.module.six" version="1.9.0"/>
+    <import addon="script.module.oauthlib" version="2.0.1"/>
+    <import addon="script.module.requests_oauthlib" version="0.7.0"/>
+    <import addon="script.module.beautifulsoup4" version="4.5.3"/>
+  </requires>
+  <extension point="xbmc.service" library="main.py" />
+  <extension point="xbmc.addon.metadata">
+    <platform>all</platform>
+    <summary lang="en_GB">IMDB, Trakt, Oscar and Stand-up Tag Generator</summary>
+    <description lang="en_GB">Helps you create Smart Playlists from IMDb/Trakt Watchlists by tagging local movies found in specified lists. Also creates a stand-up comedy tag based on Wikipedia comedians, as there is no genre for stand-up. Specify your IMDb/Trakt watchlists then choose your desired Kodi tag for each list. Runs as a service in the background at a specified interval, and also allows for manual creation. For Trakt, you can add lists from your own account, from public accounts, or shared lists from anyone you are friends with (people you follow, who follow you back). Oscar tagging lets you tag winners and/or nominees with each award for each movie in the following format 'Winner: Best Motion Picture'. </description>
+	<license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+	<forum>http://forum.kodi.tv/showthread.php?tid=140494</forum>
+	<source>https://github.com/wellspokenman/tag-generator</source>
+    <news>
+    v0.6.4 (December 15th, 2018)
+    - Added Oscar award/nominee tagging (inspired by Jorge: https://github.com/bluesauce)
+    - Updated regex to support IMDb lists of all types (Top250, Academy Awards, Sundance etc)
+    - Added notifications (can be disabled in Settings)
+    - Service interval now relies on local machine time
+    - Fixed bug that prevented service from exiting cleanly in some situations
+    - Trakt token in settings is now read-only
+    - Replaced urllib2 with requests
+    - Code cleanup
+    </news>
+  </extension>
+</addon>

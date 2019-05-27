@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.module.pyserial"
+       name="pyserial"
+       version="3.4.0"
+       provider-name="Chris Liechti">
+  <requires>
+    <import addon="xbmc.python" version="2.25.0"/>
+  </requires>
+  <extension point="xbmc.python.module"
+             library="lib" />
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en_GB">Python serial port access library</summary>
+    <description lang="en_GB">Packed for KODI from https://github.com/pyserial/pyserial</description>
+    <platform>all</platform>
+    <language></language>
+    <license>BSD-3-Clause</license>
+    <forum></forum>
+    <website>https://github.com/pyserial/pyserial</website>
+    <source>https://github.com/fredrik-eriksson/script.module.pyserial</source>
+    <email>projcontrol _at_ wb9.se</email>
+  </extension>
+</addon>

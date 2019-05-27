@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<addon id="script.module.inputstreamhelper"
+       version="0.3.4"
+       name="InputStream Helper"
+       provider-name="emilsvennesson">
+    <requires>
+        <import addon="xbmc.python" version="2.25.0"/>
+        <import addon="script.module.kodi-six" version="0.0.2"/>
+        <import addon="script.module.requests" version="2.9.1"/>
+    </requires>
+    <extension library="lib" point="xbmc.python.module"/>
+    <extension point="xbmc.addon.metadata">
+        <description lang="en_GB">A simple Kodi module that makes life easier for add-on developers relying on InputStream based add-ons and DRM playback.</description>
+        <description lang="el_GR">Μία απλή μονάδα για το Kodi η οποία διευκολύνει την ζωή των προγραμματιστών οι οποίοι εξαρτώνται από τα πρόσθετσ InputStream και αναπαραγωγή τύπου DRM.</description>
+        <news>2019.03.23 v0.3.4
+        + python2_3 compability (mediaminister, Rechi)
+        + Option to disable inputstreamhelper in settings.xml
+        + calculate disk space on the tmp folder (dawez)
+        + Support for Unicode paths in Windows (WallyCZ)
+        + Italian translation (pinoelefante)
+        + Dutch translation (dnicolaas)
+        + Greek translation (Twilight0)
+        + Russian translation (vlmaksime)
+    </news>
+        <platform>all</platform>
+        <license>MIT License</license>
+        <source>https://github.com/emilsvennesson/script.module.inputstreamhelper</source>
+        <assets>
+            <icon>resources/icon.png</icon>
+        </assets>
+    </extension>
+</addon>

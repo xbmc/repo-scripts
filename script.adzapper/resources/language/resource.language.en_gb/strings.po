@@ -1,0 +1,87 @@
+# Kodi Media Center language file
+# Addon Name: LiveTV Ad-Zapper
+# Addon id: script.adzapper
+# Addon Provider: pOpY
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: English (http://www.transifex.com/projects/p/xbmc-addons/language/en/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "Addon Summary"
+msgid "Rezap to current channel after some time (advertisment)"
+msgstr ""
+
+msgctxt "Addon Description"
+msgid "Add advertisment skipping to your Kodi system, allowing the user to define a time to switch back to the current channel. During this time the user can switch channel without thinking to switch back manually."
+msgstr ""
+
+msgctxt "#32001"
+msgid "LiveTV Ad-Zapper"
+msgstr ""
+
+msgctxt "#32002"
+msgid "AD Interval Length (Minutes)"
+msgstr ""
+
+msgctxt "#32003"
+msgid "Default AD Time (Minutes)"
+msgstr ""
+
+msgctxt "#32004"
+msgid "Warning Length (Seconds)"
+msgstr ""
+
+msgctxt "#32005"
+msgid "Maximum AD Time (Minutes)"
+msgstr ""
+
+#empty strings from id 32006 to 32010
+
+msgctxt "#32011"
+msgid "Key mapping"
+msgstr ""
+
+msgctxt "#32012"
+msgid "Use keymap editor addon!"
+msgstr ""
+
+#empty strings from id 32013 to 32020
+
+msgctxt "#32021"
+msgid "Advanced"
+msgstr ""
+
+msgctxt "#32022"
+msgid "Debugging"
+msgstr ""
+
+msgctxt "#32023"
+msgid "Enable debug logging"
+msgstr ""
+
+#empty strings from id 32024 to 32100
+
+msgctxt "#32101"
+msgid "Rezap to ..."
+msgstr ""
+
+msgctxt "#32102"
+msgid "Cancel"
+msgstr ""
+
+msgctxt "#32103"
+msgid "Minutes"
+msgstr ""
+
+msgctxt "#32104"
+msgid "Disabled"
+msgstr ""

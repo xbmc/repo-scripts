@@ -1,0 +1,8 @@
+<settings>
+        <setting id="Enable_Debugging" type="bool"   label="30000" default="false" />
+        <setting id="useKodiSkin"      type="bool"   label="30010" default="false" />
+        <setting id="Enable_HDHR"      type="bool"   label="30011" default="false" />
+        <setting id="ClockMode"        type="enum"   label="30009" default="0"     values="12 Hour|24 Hour"/>
+        <setting id="FirstTime_Run"    type="bool"   label="30000" default="true"  visible="false"/>
+        <setting id="FirstTime_HDHR"   type="bool"   label="30000" default="true"  visible="false"/>
+</settings>

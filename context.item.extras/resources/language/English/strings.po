@@ -1,0 +1,17 @@
+# XBMC Media Center language file
+# Addon Name: Extras
+# Addon id: context.dvd.extras
+msgid ""
+msgstr ""
+
+msgctxt "#30000"
+msgid "Extras"
+msgstr ""
+
+msgctxt "#30001"
+msgid "Extras folder"
+msgstr ""
+
+msgctxt "#30002"
+msgid "To use this add-on go to the video library and open the context menu on a movie or TV show."
+msgstr ""

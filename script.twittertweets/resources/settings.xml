@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>    
+    <category label="30005"> 
+        <setting id="Enable_Debugging"  type="bool" label="30000" default="false" />
+        <setting id="Enable_Attachment" type="bool" label="30011" default="true" />
+        <setting id="Enable_Playback"   type="bool" label="30014" default="true" subsetting="true" visible="eq(-1,true)" />
+        <setting id="Include_Retweets"  type="bool" label="30013" default="false" />
+        <setting id="Wait_Time"         type="enum" label="30002" default="2" values="1m|2m|4m|6m|8m|10m"/>
+        <setting id="Close_Time"        type="enum" label="30003" default="3" values="2s|5s|10s|15s|30s|60s|120s"/>
+        <setting id="Not_While_Playing" type="bool" label="30004" default="true" />
+    </category>
+    <category label="30006"> 
+        <setting id="FEED1"            type="text" label="30001" default="@KodiTV" />
+        <setting id="FEED2"            type="text" label="30001" default="@PseudoTV_Live" visible="!eq(-1,@)" />
+        <setting id="FEED3"            type="text" label="30001" default="@"               visible="!eq(-1,@)" />
+        <setting id="FEED4"            type="text" label="30001" default="@"               visible="!eq(-1,@)" />
+        <setting id="FEED5"            type="text" label="30001" default="@"               visible="!eq(-1,@)" />
+        <setting id="FEED6"            type="text" label="30001" default="@"               visible="!eq(-1,@)" />
+        <setting id="FEED7"            type="text" label="30001" default="@"               visible="!eq(-1,@)" />
+        <setting id="FEED8"            type="text" label="30001" default="@"               visible="!eq(-1,@)" />
+        <setting id="FEED9"            type="text" label="30001" default="@"               visible="!eq(-1,@)" />
+        <setting id="FEED10"           type="text" label="30001" default="@"               visible="!eq(-1,@)" />
+    </category>
+    <category label="30007"> 
+        <setting id="FEED11"            type="text" label="30001" default="@" />
+        <setting id="FEED12"            type="text" label="30001" default="@"               visible="!eq(-1,@)" />
+        <setting id="FEED13"            type="text" label="30001" default="@"               visible="!eq(-1,@)" />
+        <setting id="FEED14"            type="text" label="30001" default="@"               visible="!eq(-1,@)" />
+        <setting id="FEED15"            type="text" label="30001" default="@"               visible="!eq(-1,@)" /> 
+        <setting id="FEED16"            type="text" label="30001" default="@"               visible="!eq(-1,@)" />
+        <setting id="FEED17"            type="text" label="30001" default="@"               visible="!eq(-1,@)" />
+        <setting id="FEED18"            type="text" label="30001" default="@"               visible="!eq(-1,@)" />
+        <setting id="FEED19"            type="text" label="30001" default="@"               visible="!eq(-1,@)" />
+        <setting id="FEED20"            type="text" label="30001" default="@"               visible="!eq(-1,@)" />
+    </category>
+    <category label="30008"> 
+        <setting id="FEED21"            type="text" label="30001" default="@" />
+        <setting id="FEED22"            type="text" label="30001" default="@"               visible="!eq(-1,@)" />
+        <setting id="FEED23"            type="text" label="30001" default="@"               visible="!eq(-1,@)" />
+        <setting id="FEED24"            type="text" label="30001" default="@"               visible="!eq(-1,@)" />
+        <setting id="FEED25"            type="text" label="30001" default="@"               visible="!eq(-1,@)" />
+        <setting id="FEED26"            type="text" label="30001" default="@"               visible="!eq(-1,@)" />
+        <setting id="FEED27"            type="text" label="30001" default="@"               visible="!eq(-1,@)" />
+        <setting id="FEED28"            type="text" label="30001" default="@"               visible="!eq(-1,@)" />
+        <setting id="FEED29"            type="text" label="30001" default="@"               visible="!eq(-1,@)" />
+        <setting id="FEED30"            type="text" label="30001" default="@"               visible="!eq(-1,@)" />
+    </category>
+    <category label="30009"> 
+        <setting id="FEED31"            type="text" label="30001" default="@" />
+        <setting id="FEED32"            type="text" label="30001" default="@"               visible="!eq(-1,@)" />
+        <setting id="FEED33"            type="text" label="30001" default="@"               visible="!eq(-1,@)" />
+        <setting id="FEED34"            type="text" label="30001" default="@"               visible="!eq(-1,@)" />
+        <setting id="FEED35"            type="text" label="30001" default="@"               visible="!eq(-1,@)" />
+        <setting id="FEED36"            type="text" label="30001" default="@"               visible="!eq(-1,@)" />
+        <setting id="FEED37"            type="text" label="30001" default="@"               visible="!eq(-1,@)" />
+        <setting id="FEED38"            type="text" label="30001" default="@"               visible="!eq(-1,@)" />
+        <setting id="FEED39"            type="text" label="30001" default="@"               visible="!eq(-1,@)" />
+        <setting id="FEED40"            type="text" label="30001" default="@"               visible="!eq(-1,@)" />
+    </category>
+    <category label="30010"> 
+        <setting id="FEED41"            type="text" label="30001" default="@" />
+        <setting id="FEED42"            type="text" label="30001" default="@"               visible="!eq(-1,@)" />
+        <setting id="FEED43"            type="text" label="30001" default="@"               visible="!eq(-1,@)" />
+        <setting id="FEED44"            type="text" label="30001" default="@"               visible="!eq(-1,@)" />
+        <setting id="FEED45"            type="text" label="30001" default="@"               visible="!eq(-1,@)" />
+        <setting id="FEED46"            type="text" label="30001" default="@"               visible="!eq(-1,@)" />
+        <setting id="FEED47"            type="text" label="30001" default="@"               visible="!eq(-1,@)" />
+        <setting id="FEED48"            type="text" label="30001" default="@"               visible="!eq(-1,@)" />
+        <setting id="FEED49"            type="text" label="30001" default="@"               visible="!eq(-1,@)" />
+        <setting id="FEED50"            type="text" label="30001" default="@"               visible="!eq(-1,@)" />
+    </category>
+</settings>

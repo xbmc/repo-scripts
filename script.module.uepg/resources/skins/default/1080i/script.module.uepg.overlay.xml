@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<window>
+    <coordinates>
+        <system>1</system>
+        <posx>0</posx>
+        <posy>0</posy>
+    </coordinates>
+    <onload>SetProperty(uEPG.BACK_Opened,true,10000)</onload>
+    <onunload>SetProperty(uEPG.BACK_Opened,false,10000)</onunload> 
+    <controls>
+        <control type="videowindow">
+            <description>VideoWindow</description>
+            <width>1920</width>
+            <height>1080</height>
+            <visible>Player.Playing</visible>
+        </control>
+    </controls>
+</window>

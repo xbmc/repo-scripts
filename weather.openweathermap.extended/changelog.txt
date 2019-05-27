@@ -1,3 +1,25 @@
+v5.0.2
+- fix compatibility issue with script.openweathermap.maps
+
+v5.0.1
+- move repo to gitlab
+
+v5.0.0
+- personal api key is now required
+
+v4.4.2
+- new api keys
+
+v4.4.1
+- disable maps by default again
+- make personal api key mandetory for maps
+
+v4.4.0
+- re-enable maps
+
+v4.3.1
+- don't crash when an invalid api key is used
+
 v4.3.0
 - remove maps functionality
 

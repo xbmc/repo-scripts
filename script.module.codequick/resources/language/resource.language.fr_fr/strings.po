@@ -1,0 +1,70 @@
+# Kodi Media Center language file
+# Addon Name: CodeQuick
+# Addon id: script.module.codequick
+# Addon Provider: willforde
+msgid ""
+msgstr ""
+"Project-Id-Version: Kodi Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@kodi.org\n"
+"POT-Creation-Date: 2016-01-28 21:10+0000\n"
+"PO-Revision-Date: 2017-08-01 04:17+0000\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: English (http://www.transifex.com/projects/p/xbmc-addons/language/en/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+################################
+# Addon Strings: 32000 - 32199 #
+################################
+
+msgctxt "#32001"
+msgid "Youtube Channel"
+msgstr "Chaîne Youtube"
+
+msgctxt "#32002"
+msgid "Recent Videos"
+msgstr "Vidéos Résentes"
+
+msgctxt "#32003"
+msgid "All Videos"
+msgstr "Toutes les Vidéos"
+
+msgctxt "#32004"
+msgid "Show the most recent videos."
+msgstr "Afficher les vidéos les plus récentes."
+
+msgctxt "#32005"
+msgid "Show the next page of content."
+msgstr "Afficher le contenu de la page suivante"
+
+msgctxt "#32006"
+msgid "Search for video content."
+msgstr "Rechercher du contenu vidéo."
+
+msgctxt "#32007"
+msgid "Show all channel playlists."
+msgstr "Afficher toutes les playlists de la chaîne."
+
+
+######################################
+# Context Menu String: 32200 - 32299 #
+######################################
+
+msgctxt "#32201"
+msgid "Related Videos"
+msgstr "Vidéos Similaires"
+
+##################################
+# Setting Strings: 32300 - 32399 #
+##################################
+
+################################
+# Error Strings: 32400 - 32599 #
+################################
+
+msgctxt "#32401"
+msgid "Unable to resolve url"
+msgstr "Impossible de résoudre l'URL"

@@ -1,0 +1,217 @@
+# Kodi Media Center language file
+# Addon Name: CU LRC Lyrics
+# Addon id: script.cu.lrclyrics
+# Addon Provider: Taxigps|ronie
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: Spanish (http://www.transifex.com/projects/p/xbmc-addons/language/es/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: es\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#32000"
+msgid "File"
+msgstr "Archivo"
+
+msgctxt "#32001"
+msgid "No lyrics found!"
+msgstr "¡Letra no encontrada!"
+
+msgctxt "#32002"
+msgid "Embedded"
+msgstr "Incrustada"
+
+msgctxt "#32003"
+msgid "Lyrics offset"
+msgstr "Compensar Letra"
+
+msgctxt "#32004"
+msgid "Searching lyrics..."
+msgstr "Buscando letra...."
+
+msgctxt "#32005"
+msgid "Select lyrics:"
+msgstr "Seleccione otra letra"
+
+msgctxt "#32006"
+msgid "Select different lyrics"
+msgstr "Seleccionar letra diferente"
+
+msgctxt "#32007"
+msgid "Manually sync lyrics"
+msgstr "Sincronizar letra manualmente"
+
+msgctxt "#32008"
+msgid "Delayed by: %ss"
+msgstr "Retrasar: %ss"
+
+msgctxt "#32009"
+msgid "Ahead by: %ss"
+msgstr "Adelantar: %ss"
+
+#empty strings from id 32010 to 32100
+#Settings labels
+
+msgctxt "#32101"
+msgid "Search and save lyrics in separate lyrics folder"
+msgstr "Buscar y guardar letra en una carpeta lyrics separada"
+
+msgctxt "#32102"
+msgid "- Lyrics folder"
+msgstr "Ubicación:"
+
+msgctxt "#32103"
+msgid "- Filename format"
+msgstr "Formato de archivo"
+
+msgctxt "#32104"
+msgid "%N %A - %T"
+msgstr ""
+
+msgctxt "#32105"
+msgid "%A\\%T"
+msgstr ""
+
+msgctxt "#32106"
+msgid "Use only filename for search"
+msgstr "Usar solo el nombre del archivo para buscar"
+
+msgctxt "#32107"
+msgid "Filename format"
+msgstr "Formato para nombre de archivo al buscar"
+
+msgctxt "#32108"
+msgid "%A - %T"
+msgstr ""
+
+msgctxt "#32109"
+msgid "%A\\%B\\%T"
+msgstr ""
+
+msgctxt "#32110"
+msgid "%A\\%B\\%N (-) %T"
+msgstr ""
+
+msgctxt "#32111"
+msgid "Lyrics are in a subfolder"
+msgstr "En subcarpeta"
+
+msgctxt "#32112"
+msgid "- Subfolder name"
+msgstr "Nombre para subcarpeta"
+
+msgctxt "#32113"
+msgid "Search and save lyrics in song folder"
+msgstr "Buscar y guardar letra en carpeta de la canción"
+
+msgctxt "#32114"
+msgid "%N - %A - %T"
+msgstr ""
+
+msgctxt "#32115"
+msgid "Display options"
+msgstr "Opciones de pantalla"
+
+msgctxt "#32116"
+msgid "Search options"
+msgstr "Opciones de búsqueda"
+
+msgctxt "#32117"
+msgid "Lyrics files"
+msgstr "Archivos Lyrics (letras)"
+
+msgctxt "#32118"
+msgid "Debugging"
+msgstr "Depuración"
+
+#empty strings from id 32120 to 32148
+
+msgctxt "#32149"
+msgid "Expert"
+msgstr "Experto"
+
+msgctxt "#32150"
+msgid "Scrapers"
+msgstr "Scrapers"
+
+msgctxt "#32151"
+msgid "Options"
+msgstr "Opciones"
+
+msgctxt "#32152"
+msgid "Search for embedded lyrics"
+msgstr "Buscar letra incrustada"
+
+msgctxt "#32153"
+msgid "Search for local lyrics files"
+msgstr "Buscar archivos lyrics en local"
+
+msgctxt "#32154"
+msgid "Synchronised lyrics scrapers"
+msgstr "Scraper para letra sincronizada"
+
+msgctxt "#32155"
+msgid "Regular lyrics scrapers"
+msgstr "Scraper para letra regular"
+
+msgctxt "#32156"
+msgid "Display lyrics automatically"
+msgstr "Mostrar letra automáticamente"
+
+msgctxt "#32157"
+msgid "Clean song title (remove part in brackets)"
+msgstr "Limpiar título de la canción (quita partes entre paréntesis)"
+
+msgctxt "#32158"
+msgid "Script is already running!"
+msgstr "¡El script ya está en ejecución!"
+
+msgctxt "#32159"
+msgid "Enable debug logging"
+msgstr "Habilitar registro de depuración"
+
+msgctxt "#32160"
+msgid "Hide notifications"
+msgstr "Ocultar notificaciones"
+
+msgctxt "#32161"
+msgid "Remove Chinese/Korean text from lyrics"
+msgstr "Eliminar texto Chino/Coreano de la letra"
+
+msgctxt "#32162"
+msgid "Scraper test"
+msgstr "Comprobar scrapers"
+
+msgctxt "#32163"
+msgid "Testing: %s"
+msgstr "Comprobando: %s"
+
+msgctxt "#32164"
+msgid "All scrapers are working ok"
+msgstr "Todos los scrapers funcionan correctamente"
+
+msgctxt "#32165"
+msgid "Failed scrapers: %s"
+msgstr "Scrapers con error: %s"
+
+msgctxt "#32166"
+msgid "Time offset for synchronised lyrics"
+msgstr "Ajuste de tiempo para letras sincronizadas"
+
+msgctxt "#32167"
+msgid "Delete lyrics"
+msgstr "Borrar letra"
+
+#empty strings from id 32168 to 32198
+#Skin labels
+
+msgctxt "#32199"
+msgid "CU LRC Lyrics"
+msgstr ""

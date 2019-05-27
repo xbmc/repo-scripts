@@ -53,7 +53,7 @@ class Log(object):
                         f.write("[B][{0!s}][/B]\n".format(time.strftime("%d/%m/%Y  -  %H:%M:%S")))
                         for line in data:
                             if isinstance(line, unicode):
-                                line = line.encode()
+                                line = line.encode("utf-8")
                             f.write(" - {0!s}\n".format(line))
                         f.write("\n")
                         debug("New data written to log file.")

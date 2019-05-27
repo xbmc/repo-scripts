@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<addon id="weather.gismeteo" version="0.3.3" name="Gismeteo" provider-name="vl.maksime">
+    <requires>
+        <import addon="xbmc.python" version="2.25.0"/>
+        <import addon="script.module.future"/>
+    </requires>
+    <extension point="xbmc.python.weather" library="default.py"/>
+    <extension point="xbmc.addon.metadata">
+        <summary lang="en_GB">Gismeteo Weather Forecast. Real time weather and detailed forecast all round the world</summary>
+        <summary lang="ru_RU">Прогноз погоды от ведущего погодного сервиса Gismeteo</summary>
+        <description lang="en_GB">The weather is provided solely for personal non-commercial use</description>
+        <description lang="ru_RU">Погода предоставлена исключительно для личного некоммерческого использования</description>
+        <disclaimer lang="en_GB">The weather forecast has been prepared by MapMakers Group Ltd</disclaimer>
+        <disclaimer lang="ru_RU">Прогноз погоды подготовлен НПЦ "Мэп Мейкер"</disclaimer>
+        <language></language>
+        <platform>all</platform>
+        <license>GNU GENERAL PUBLIC LICENSE. Version 3, 29 June 2007</license>
+        <forum>https://forum.kodi.tv/showthread.php?tid=323624</forum>
+        <website>https://www.gismeteo.ru/</website>
+        <email>vl.maksime@gmail.com</email>
+        <source>https://github.com/vlmaksime/weather.gismeteo</source>
+        <news>v0.3.3 (2018-04-07)[CR]- Fixed bug with parsing XML data[CR][CR]v0.3.2 (2018-02-18)[CR]- Fixed compatibility with Android and LibreELEC[CR][CR]v0.3.1 (2018-02-11)[CR]- Adapted to use the SimplePlugin 3 library[CR]- Implemented support for Python 3.6 (Compatibility with KODI 19 and above)[CR]- Fixed bugs</news>
+        <assets>
+            <icon>icon.png</icon>
+        </assets>
+    </extension>
+</addon>

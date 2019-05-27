@@ -1,0 +1,81 @@
+# Kodi Media Center language file
+# Addon Name: Yahoo! Weather
+# Addon id: weather.yahoo
+# Addon Provider: ronie
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: English (http://www.transifex.com/projects/p/xbmc-addons/language/en/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#32101"
+msgid "Location setup"
+msgstr ""
+
+msgctxt "#32102"
+msgid "Advanced"
+msgstr ""
+
+msgctxt "#32111"
+msgid "Location 1"
+msgstr ""
+
+msgctxt "#32112"
+msgid "Location 2"
+msgstr ""
+
+msgctxt "#32113"
+msgid "Location 3"
+msgstr ""
+
+msgctxt "#32114"
+msgid "Location 4"
+msgstr ""
+
+msgctxt "#32115"
+msgid "Location 5"
+msgstr ""
+
+msgctxt "#32129"
+msgid "Enable logging"
+msgstr ""
+
+msgctxt "#32200"
+msgid "New Moon"
+msgstr ""
+
+msgctxt "#32201"
+msgid "Waxing Crescent"
+msgstr ""
+
+msgctxt "#32202"
+msgid "First Quarter"
+msgstr ""
+
+msgctxt "#32203"
+msgid "Waxing Gibbous"
+msgstr ""
+
+msgctxt "#32204"
+msgid "Full Moon"
+msgstr ""
+
+msgctxt "#32205"
+msgid "Waning Gibbous"
+msgstr ""
+
+msgctxt "#32206"
+msgid "Last Quarter"
+msgstr ""
+
+msgctxt "#32207"
+msgid "Waning Crescent"
+msgstr ""

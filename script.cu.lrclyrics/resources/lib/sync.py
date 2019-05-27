@@ -8,7 +8,6 @@ class GUI(xbmcgui.WindowXMLDialog):
         self.offset = kwargs['offset']
 
     def onInit(self):
-        self.val = 0.0
         self._get_controls()
         self._init_values()
         self.exit = False
@@ -25,7 +24,7 @@ class GUI(xbmcgui.WindowXMLDialog):
         self.header.setLabel(LANGUAGE(32003))
         string = self._get_string(self.offset)
         self.label.setLabel(string)
-        self.slider.setPercent((self.offset * 10.0) + 50.0)
+        self.slider.setFloat((self.offset * 1.0), -20.0, 0.1, 20.0)
 
     def _get_string(self, val):
         if val > 0.0:
@@ -40,8 +39,8 @@ class GUI(xbmcgui.WindowXMLDialog):
         if action.getId() in CANCEL_DIALOG:
             self.exit = True
         else:
-            val = self.slider.getPercent()
-            self.val = round((val - 50.0) / 10.0, 1)
+            val = self.slider.getFloat()
+            self.val = round(val,1)
             string = self._get_string(self.val)
             self.label.setLabel(string)
             self.function(self.val)

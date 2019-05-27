@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="context.copytostorage" name="Copy File To Storage" version="1.0.0" provider-name="Abel Tesfaye">
+  <requires>
+    <import addon="xbmc.python" version="2.25.0"/>
+  </requires>
+  <extension point="kodi.context.item">
+    <menu id="kodi.core.main">
+      <item library="addon.py">
+        <label>32000</label>
+        <visible>String.IsEqual(ListItem.dbtype,movie) |String.IsEqual(ListItem.dbtype,video) |  String.IsEqual(ListItem.dbtype,tvshow) | String.IsEqual(ListItem.dbtype,episode) | String.IsEqual(ListItem.dbtype,musicvideo) | String.IsEqual(ListItem.dbtype,music) | String.IsEqual(ListItem.dbtype,song) | String.IsEqual(ListItem.dbtype,album)| String.IsEqual(ListItem.dbtype,artist) </visible>
+      </item>
+    </menu>
+  </extension>
+  <extension point="kodi.addon.metadata">
+    <platform>all</platform>
+    <summary lang="en_GB">Copy any file using the context menu.</summary>
+    <description lang="en_GB">Adds a context menu entry for to enable you to copy movies, songs, etc.. into your devices</description>
+    <license>GNU GENERAL PUBLIC LICENSE. Version 3,  29 June 2007</license>
+    <forum></forum>
+    <source>https://github.com/abeltesfaye/context.copytostorage</source>
+    <assets>
+        <icon>icon.png</icon>
+        <fanart>fanart.jpg</fanart>
+        <screenshot>resources/screenshot-01.png</screenshot>
+        <screenshot>resources/screenshot-02.png</screenshot>
+    </assets>
+  </extension>
+</addon>

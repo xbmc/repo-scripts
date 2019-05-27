@@ -1,0 +1,446 @@
+# Kodi Media Center language file
+# Addon Name: OpenWeatherMap Extended
+# Addon id: weather.openweathermap.extended
+# Addon Provider: ronie
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2017-10-17 09:27+0300\n"
+"Last-Translator: A. Dambledore\n"
+"Language-Team: Eng2Heb\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: he_IL\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+
+msgctxt "#32000"
+msgid "OpenWeatherMap"
+msgstr "OpenWeatherMap"
+
+# empty strings from id 32001 to 32100
+msgctxt "#32101"
+msgid "Location setup"
+msgstr "הגדרות מיקום"
+
+msgctxt "#32102"
+msgid "Advanced"
+msgstr "מתקדם"
+
+msgctxt "#32103"
+msgid "Expert"
+msgstr "מומחה"
+
+msgctxt "#32104"
+msgid "Maps"
+msgstr "מפה"
+
+# empty strings from id 32104 to 32109
+msgctxt "#32110"
+msgid "API key"
+msgstr "מפתח API"
+
+msgctxt "#32111"
+msgid "Location 1"
+msgstr "מיקום 1"
+
+msgctxt "#32112"
+msgid "Location 2"
+msgstr "מיקום 2"
+
+msgctxt "#32113"
+msgid "Location 3"
+msgstr "מיקום 3"
+
+msgctxt "#32114"
+msgid "Location 4"
+msgstr "מיקום 4"
+
+msgctxt "#32115"
+msgid "Location 5"
+msgstr "מיקום 5"
+
+msgctxt "#32116"
+msgid "Location 1 ID"
+msgstr "מזהה מיקום 1"
+
+msgctxt "#32117"
+msgid "Location 2 ID"
+msgstr "מזהה מיקום 2"
+
+msgctxt "#32118"
+msgid "Location 3 ID"
+msgstr "מזהה מיקום 3"
+
+msgctxt "#32119"
+msgid "Location 4 ID"
+msgstr "מזהה מיקום 4"
+
+msgctxt "#32120"
+msgid "Location 5 ID"
+msgstr "מזהה מיקום 5"
+
+msgctxt "#32121"
+msgid "Show lat/lon when searching locations"
+msgstr "הצג קווי אורך / רוחב כאשר מחפשים תחנה"
+
+msgctxt "#32122"
+msgid "Weekend"
+msgstr "סוף שבוע"
+
+msgctxt "#32123"
+msgid "Saturday/Sunday"
+msgstr "שבת/ראשון"
+
+msgctxt "#32124"
+msgid "Friday/Saturday"
+msgstr "שישי/שבת"
+
+msgctxt "#32125"
+msgid "Thursday/Friday"
+msgstr "חמישי/שישי"
+
+msgctxt "#32126"
+msgid "Use personal weather station"
+msgstr "השתמש בתחנת מזג אויר פרטית"
+
+msgctxt "#32127"
+msgid "Station ID"
+msgstr "מזהה תחנה"
+
+msgctxt "#32128"
+msgid "Map zoom level"
+msgstr "רמת תקריב של מפה"
+
+msgctxt "#32129"
+msgid "Enable logging"
+msgstr "אפשר יומן רישום"
+
+msgctxt "#32130"
+msgid "Download weather maps"
+msgstr "הורד מפות מזג אויר"
+
+msgctxt "#32131"
+msgid "Get an api key at: http://openweathermap.org/appid"
+msgstr "השג מפתח API ב: http://openweathermap.org/appid"
+
+msgctxt "#32132"
+msgid "and enter it in the addon settings,"
+msgstr "והכנס אותו בהגדרות ההרחבה,"
+
+msgctxt "#32133"
+msgid "or disable this addon."
+msgstr "או השבת את ההרחבה."
+
+# empty strings with id 32134
+msgctxt "#32135"
+msgid "To use maps, get an api key at: http://openweathermap.org/appid"
+msgstr "כדי להשתמש במפה, השג מפתח API ב: http://openweathermap.org/appid"
+
+# empty strings from id 32136 to 32200
+msgctxt "#32201"
+msgid "Thunderstorm with light rain"
+msgstr "סופות רעמים עם גשם קל"
+
+msgctxt "#32202"
+msgid "Thunderstorm with rain"
+msgstr "סופות רעמים עם גשם"
+
+msgctxt "#32203"
+msgid "Thunderstorm with heavy rain"
+msgstr "סופות רעמים עם גשם כבד"
+
+msgctxt "#32204"
+msgid "Light thunderstorm"
+msgstr "סופות רעמים קלות"
+
+msgctxt "#32205"
+msgid "Thunderstorm"
+msgstr "סופת רעמים"
+
+msgctxt "#32206"
+msgid "Heavy thunderstorm"
+msgstr "סופות רעמים כבדות"
+
+msgctxt "#32207"
+msgid "Ragged thunderstorm"
+msgstr "סופות רעמים מפוזרות"
+
+msgctxt "#32208"
+msgid "Thunderstorm with light drizzle"
+msgstr "סופות רעמים עם טפטוף קל"
+
+msgctxt "#32209"
+msgid "Thunderstorm with drizzle"
+msgstr "סופות רעמים עם טפטוף"
+
+msgctxt "#32210"
+msgid "Thunderstorm with heavy drizzle"
+msgstr "סופות רעמים עם טפטוף כבד"
+
+msgctxt "#32211"
+msgid "Light intensity drizzle"
+msgstr "טפטוף קל"
+
+msgctxt "#32212"
+msgid "Drizzle"
+msgstr "טפטוף"
+
+msgctxt "#32213"
+msgid "Heavy intensity drizzle"
+msgstr "טפטוף בעוצמה כבדה"
+
+msgctxt "#32214"
+msgid "Light intensity drizzle rain"
+msgstr "גשם מטפטף בעוצמה קלה"
+
+msgctxt "#32215"
+msgid "Drizzle rain"
+msgstr "גשם מטפטף"
+
+msgctxt "#32216"
+msgid "Heavy intensity drizzle rain"
+msgstr "גשם כבד של טפטופים עזים"
+
+msgctxt "#32217"
+msgid "Shower rain and drizzle"
+msgstr "מקלחת גשם וטפטופים"
+
+msgctxt "#32218"
+msgid "Heavy shower rain and drizzle"
+msgstr "גשם כבד מעורב בטפטוף"
+
+msgctxt "#32219"
+msgid "Shower drizzle"
+msgstr "מקלחת טפטוף"
+
+msgctxt "#32220"
+msgid "Light rain"
+msgstr "גשם קל"
+
+msgctxt "#32221"
+msgid "Moderate rain"
+msgstr "גשם מתון"
+
+msgctxt "#32222"
+msgid "Heavy intensity rain"
+msgstr "גשם כבד"
+
+msgctxt "#32223"
+msgid "Very heavy rain"
+msgstr "גשם כבד מאוד"
+
+msgctxt "#32224"
+msgid "Extreme rain"
+msgstr "גשם קיצוני"
+
+msgctxt "#32225"
+msgid "Freezing rain"
+msgstr "גשם מקפיא"
+
+msgctxt "#32226"
+msgid "Light intensity shower rain"
+msgstr "מקלחת גשם קלה"
+
+msgctxt "#32227"
+msgid "Shower rain"
+msgstr "מקלחת גשם"
+
+msgctxt "#32228"
+msgid "Heavy intensity shower rain"
+msgstr "מקלחת גשם כבדה"
+
+msgctxt "#32229"
+msgid "Ragged shower rain"
+msgstr "מקלחת גשם לפרקים"
+
+msgctxt "#32230"
+msgid "Light snow"
+msgstr "שלג קל"
+
+msgctxt "#32231"
+msgid "Snow"
+msgstr "שלג"
+
+msgctxt "#32232"
+msgid "Heavy snow"
+msgstr "שלג כבד"
+
+msgctxt "#32233"
+msgid "Sleet"
+msgstr "גשם קרחי"
+
+msgctxt "#32234"
+msgid "Shower sleet"
+msgstr "שלג מימי"
+
+msgctxt "#32235"
+msgid "Light rain and snow"
+msgstr "גשם קל ושלג"
+
+msgctxt "#32236"
+msgid "Rain and snow"
+msgstr "גשם ושלג"
+
+msgctxt "#32237"
+msgid "Light shower snow"
+msgstr "מקלחת שלג קלה"
+
+msgctxt "#32238"
+msgid "Shower snow"
+msgstr "מקלחת שלג"
+
+msgctxt "#32239"
+msgid "Heavy shower snow"
+msgstr "מקלחת גשם כבדה"
+
+msgctxt "#32240"
+msgid "Mist"
+msgstr "ערפל"
+
+msgctxt "#32241"
+msgid "Smoke"
+msgstr "עשן"
+
+msgctxt "#32242"
+msgid "Haze"
+msgstr "אביך"
+
+msgctxt "#32243"
+msgid "Sand, dust whirls"
+msgstr "חול, מערבולות אבק"
+
+msgctxt "#32244"
+msgid "Fog"
+msgstr "ערפילי"
+
+msgctxt "#32245"
+msgid "Sand"
+msgstr "חול"
+
+msgctxt "#32246"
+msgid "Dust"
+msgstr "אבק"
+
+msgctxt "#32247"
+msgid "Volcanic ash"
+msgstr "אפר וולקני"
+
+msgctxt "#32248"
+msgid "Squalls"
+msgstr "רוחות סערה"
+
+msgctxt "#32249"
+msgid "Tornado"
+msgstr "טורנדו"
+
+msgctxt "#32250"
+msgid "Clear sky"
+msgstr "שמים בהיריםweather forecast"
+
+msgctxt "#32251"
+msgid "Few clouds"
+msgstr "מעט עננים"
+
+msgctxt "#32252"
+msgid "Scattered clouds"
+msgstr "עננים פזורים"
+
+msgctxt "#32253"
+msgid "Broken clouds"
+msgstr "עננים שבורים"
+
+msgctxt "#32254"
+msgid "Overcast clouds"
+msgstr "מעונן חלקית"
+
+msgctxt "#32255"
+msgid "Tornado"
+msgstr "טורנדו"
+
+msgctxt "#32256"
+msgid "Tropical storm"
+msgstr "סופה טרופית"
+
+msgctxt "#32257"
+msgid "Hurricane"
+msgstr "הוריקן"
+
+msgctxt "#32258"
+msgid "Cold"
+msgstr "קור"
+
+msgctxt "#32259"
+msgid "Hot"
+msgstr "חם"
+
+msgctxt "#32260"
+msgid "Windy"
+msgstr "רוחות ערות"
+
+msgctxt "#32261"
+msgid "Hail"
+msgstr "ברד"
+
+msgctxt "#32262"
+msgid "Calm"
+msgstr "רגוע"
+
+msgctxt "#32263"
+msgid "Light breeze"
+msgstr "רוח קלה"
+
+msgctxt "#32264"
+msgid "Gentle breeze"
+msgstr "רוח קלה"
+
+msgctxt "#32265"
+msgid "Moderate breeze"
+msgstr "רוח בינונית"
+
+msgctxt "#32266"
+msgid "Fresh breeze"
+msgstr "רוח רעננה"
+
+msgctxt "#32267"
+msgid "Strong breeze"
+msgstr "רוח חזקה"
+
+msgctxt "#32268"
+msgid "High wind, near gale"
+msgstr "רוחות חזקות, כמעט סערה"
+
+msgctxt "#32269"
+msgid "Gale"
+msgstr "סופה"
+
+msgctxt "#32270"
+msgid "Severe gale"
+msgstr "סופה חמורה"
+
+msgctxt "#32271"
+msgid "Storm"
+msgstr "סערה"
+
+msgctxt "#32272"
+msgid "Violent storm"
+msgstr "סופה אלימה"
+
+msgctxt "#32273"
+msgid "Hurricane"
+msgstr "הוריקן"
+
+msgctxt "#32274"
+msgid "Clear"
+msgstr "נקה"
+
+msgctxt "#32275"
+msgid "Clouds"
+msgstr "עננים"
+
+msgctxt "#32276"
+msgid "Rain"
+msgstr "גשם"

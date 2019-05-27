@@ -166,7 +166,7 @@ class alsaMixerCore:
 
 	def __printDebugLine(self, aLine):
 		if self.gDebugMode>0:
-			print aLine
+			print(aLine)
 
 	def __runSilent(self, aCmdline):
 		self.__printDebugLine("Running: " + aCmdline)
@@ -217,7 +217,7 @@ if __name__ == '__main__':
 
 	try:
 		if alsaCore.checkPlatform() == 0:
-			print "Unsupported platform!"
+			print("Unsupported platform!")
 		else:
 			if options.mixerControl:
 				if options.setVolume:
@@ -225,29 +225,29 @@ if __name__ == '__main__':
 						parser.error("Please specify a volume level.")
 					else:
 						if alsaCore.setVolume(options.mixerControl, args[0]):
-							print "Error setting volume, check values"
+							print("Error setting volume, check values")
 						else:
-							print "Control:" + options.mixerControl + " - Volume set at " + args[0]
+							print("Control:" + options.mixerControl + " - Volume set at " + args[0])
 				elif options.queryType:
 					if alsaCore.hasVolume(options.mixerControl):
-						print "Control has volume capabilities."
+						print("Control has volume capabilities.")
 					else:
-						print "Control does not have volume capabilities."
+						print("Control does not have volume capabilities.")
 				else:
-					print "Volume = " + alsaCore.getVolume(options.mixerControl)
+					print("Volume = " + alsaCore.getVolume(options.mixerControl))
 			else:
 				controls = alsaCore.getPlaybackControls()
 				for aControl in controls:
-					print "Control=<" + aControl + ">"
-					print "HasVolume=<" + str(alsaCore.hasVolume(aControl)) + ">"
+					print("Control=<" + aControl + ">")
+					print("HasVolume=<" + str(alsaCore.hasVolume(aControl)) + ">")
 					if alsaCore.hasVolume(aControl):
-						print "Volume = " + alsaCore.getVolume(aControl) + " %"
+						print("Volume = " + alsaCore.getVolume(aControl) + " %")
 					if alsaCore.hasSwitch(aControl):
-						print "Switchable = YES"
+						print("Switchable = YES")
 					else:
-						print "Switchable = NO"
+						print("Switchable = NO")
 
-	except Exception, error:
-		print "ErrorCode:" + str(error)
+	except Exception as error:
+		print("ErrorCode:" + str(error))
 		eCode = int(str(error))
 

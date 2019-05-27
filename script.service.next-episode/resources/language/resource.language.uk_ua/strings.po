@@ -1,0 +1,100 @@
+# Kodi Media Center language file
+msgid ""
+msgstr ""
+
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: uk\n"
+
+
+msgctxt "#32000"
+msgid "General"
+msgstr "Загальні"
+
+msgctxt "#32001"
+msgid "Login to next-episode.net"
+msgstr "Вхід на next-episode.net"
+
+msgctxt "#32002"
+msgid "Send video library data to next-episode.net"
+msgstr "Надіслати дані медіатеки на next-episode.net"
+
+msgctxt "#32003"
+msgid "Username:"
+msgstr "Ім'я користувача"
+
+msgctxt "#32004"
+msgid "Password:"
+msgstr "Пароль"
+
+msgctxt "#32005"
+msgid "OK"
+msgstr "ОК"
+
+msgctxt "#32006"
+msgid "Cancel"
+msgstr "Скасувати"
+
+msgctxt "#32007"
+msgid "Login failed!"
+msgstr "Помилка входу."
+
+msgctxt "#32008"
+msgid "Data update error. See log for more details."
+msgstr "Помилка передачі даних. Див. журнал."
+
+msgctxt "#32009"
+msgid "Data updated"
+msgstr "Дані оновлено"
+
+msgctxt "#32010"
+msgid "Check login/password and try again."
+msgstr "Перевірте ім'я користувача та пароль і повторіть спробу."
+
+msgctxt "#32011"
+msgid "Successful login"
+msgstr "Успішний вхід"
+
+msgctxt "#32012"
+msgid "Login required!"
+msgstr "Потрібно увійти!"
+
+msgctxt "#32013"
+msgid "You need to login to next-episode.net"
+msgstr "Потрібно увійти на next-episode.net,"
+
+msgctxt "#32014"
+msgid "to synchronize your video library data."
+msgstr "щоб синхронізувати дані медіатеки."
+
+msgctxt "#32015"
+msgid "Login now?"
+msgstr "Увійти зараз?"
+
+msgctxt "#32016"
+msgid "Library synchronization"
+msgstr "Синхронізація медіатеки"
+
+msgctxt "#32017"
+msgid "You need to synchronize your video library data."
+msgstr "Потрібно синхронізувати дані медіатеки."
+
+msgctxt "#32018"
+msgid "Synchronize now?"
+msgstr "Синхронізувати зараз?"
+
+msgctxt "#32019"
+msgid "Disable notification dialogs for update errors"
+msgstr "Вимкнути діалоги для помилок передачі даних"
+
+msgctxt "#32020"
+msgid "Data update error! Please report it to next-episode.net."
+msgstr "Помилка передачі даних. Повідомте про це на next-episode.net."
+
+msgctxt "#32021"
+msgid "Failed movies: {0}"
+msgstr "Невідомі фільми: {0}"
+
+msgctxt "#32022"
+msgid "Failed TV shows: {0}"
+msgstr "Невідомі серіали: {0}"

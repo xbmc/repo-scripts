@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<window type="window">
+    <controls>
+
+	<control type="group">
+		<posx>40</posx>
+		<posy>120</posy>
+		<control type="image">
+			<posy>0</posy>
+			<posx>50</posx>
+			<width>1100</width>
+			<height>500</height>
+			<texture border="40">buttons/roundedbutton-nofocus.png</texture>
+		</control>
+		<control type="image">
+			<posy>0</posy>
+			<posx>50</posx>
+			<width>1100</width>
+			<height>500</height>
+			<texture border="40">buttons/roundedbutton-focus.png</texture>
+		</control>
+		<control type="label" id="32609">
+			<description>Ingredient title for description</description>
+			<posx>50</posx>
+			<posy>40</posy>
+			<width>1080</width>
+			<align>center</align>
+			<aligny>top</aligny>
+			<scroll>true</scroll>
+			<label></label>
+			<font>font30_title</font>
+			<textcolor>orangered</textcolor>
+			<shadowcolor>ff000000</shadowcolor>
+			<wrapmultiline>true</wrapmultiline>
+			<scrollspeed>50</scrollspeed>
+			<scrollsuffix> - </scrollsuffix>
+		</control>
+		<control type="image" id="32610">
+			<description>ingredient image</description>
+			<posx>100</posx>
+			<posy>90</posy>
+			<aspectratio scalediffuse="false" align="center" aligny="center">keep</aspectratio>
+			<colordiffuse>FFFFFFFF</colordiffuse>
+			<width>350</width>
+			<height>350</height>
+			<texture background="true" fallback="menuicons/notavailable.png"></texture>
+		</control>
+		<control type="textbox" id="32611">
+			<description>Ingredient description</description>
+			<posx>460</posx>
+			<posy>95</posy>
+			<width>650</width>
+			<height>330</height>
+			<aligny>top</aligny>
+			<colordiffuse>FFFFFFFF</colordiffuse>
+			<font>font16</font>
+			<textcolor>FFFFFFFF</textcolor>
+			<shadowcolor>66000000</shadowcolor>
+			<autoscroll delay="10000" time="1500" repeat="10000"></autoscroll>
+			<label></label>
+		</control>
+	</control>
+
+    </controls>
+</window>

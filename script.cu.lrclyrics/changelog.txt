@@ -1,3 +1,96 @@
+v5.5.14
+- stop searching for lyrics when exiting the visualization screen
+
+v5.5.13
+- fix negative offset
+
+v5.5.12
+- fix for empty lyrics files
+
+v5.5.11
+- fix lyrics sync
+
+v5.5.10
+- delete lyrics from memory as well
+- re-search for lyrics if it was not found previously
+- fix lyrics from memory
+- fix lyricwiki scraper
+- more accurate results from ttplayer scraper
+- genius scraper strip blank lines
+- change manual sync range to +/ 20 secs
+
+v5.5.9
+- fix lyricsmode scraper
+
+v5.5.8
+- cosmetics
+
+v5.5.7
+- remove xiami scraper
+
+v5.5.6
+- language update
+
+v5.5.5
+- fix ttplayer scraper
+- fix lyricsmode scraper
+
+v5.5.4
+- fix xiami error
+
+v5.5.3
+- handle space in offset tag
+
+v5.5.2
+- move repo to gitlab
+
+v5.5.1
+- add azlyrics scraper
+- re-add minilyrics scraper
+- fix xiami scraper
+
+v5.5.0
+- remove broken scrapers
+
+v5.4.8
+- fix letssingit scraper
+- fix pvr radio
+
+v5.4.7
+- fix letssingit scraper
+- fix xiami scraper
+
+v5.4.6
+- fix embedded uslt lyrics
+
+v5.4.5
+- add test for xiami scraper
+
+v5.4.4
+- add xiami scraper
+
+v5.4.3
+- fix letssingit scraper
+
+v5.4.2
+- fix letssingit scraper
+
+v5.4.1
+- fix letssingit scraper
+
+v5.4.0
+- gomaudio: fix handling of accented characters
+- fix letssingit scraper
+- fix genius scraper
+
+v5.3.9
+- fix letssingit scraper
+- fix getting song title from internet streams
+- don't crash on offset tags without value
+
+v5.3.8
+- cosmetics
+
 v5.3.7
 - add support for synced lyrics in txxx tag
 

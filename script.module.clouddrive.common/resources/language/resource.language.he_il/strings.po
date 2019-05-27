@@ -1,0 +1,278 @@
+# Kodi Media Center language file
+# Addon Name: Cloud Drive Common Module
+# Addon id: script.module.clouddrive.common
+# Addon Provider: Carlos Guzman (cguZZman)
+msgid ""
+msgstr ""
+"Project-Id-Version: Kodi Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2017-10-19 13:11+0300\n"
+"Last-Translator: A. Dambledore\n"
+"Language-Team: Eng2Heb\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: he_IL\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+
+msgctxt "#32004"
+msgid "Export to library (.strm)..."
+msgstr "יצא לספרייה (.strm)..."
+
+msgctxt "#32005"
+msgid "Add an account..."
+msgstr "הוסף חשבון..."
+
+msgctxt "#32006"
+msgid "Remove Account..."
+msgstr "הסר חשבון..."
+
+msgctxt "#32007"
+msgid "Remove Drive..."
+msgstr "הסר את הכונן..."
+
+msgctxt "#32008"
+msgid "Connecting with server, please wait..."
+msgstr "מתחבר עם השרת, אנא המתן..."
+
+msgctxt "#32009"
+msgid "Scan the QR code and sign in."
+msgstr "Scan the QR code and sign in."
+
+msgctxt "#32010"
+msgid "or[CR]Go to this URL: %s[CR]enter the code and sign in: %s"
+msgstr "or[CR]Go to this URL: %s[CR]enter the code and sign in: %s"
+
+msgctxt "#32011"
+msgid "Expires in %s seconds..."
+msgstr "פג ב- %s שניות."
+
+msgctxt "#32012"
+msgid "כן! אני בפנים"
+msgstr ""
+
+msgctxt "#32013"
+msgid "No"
+msgstr "לא"
+
+msgctxt "#32014"
+msgid "Retrieving credentials..."
+msgstr "מאחזר את האישורים..."
+
+msgctxt "#32015"
+msgid "Unable to login:"
+msgstr "אין אפשרת להתחבר:"
+
+msgctxt "#32016"
+msgid "Please try again."
+msgstr "אנא נסה  שנית."
+
+msgctxt "#32017"
+msgid "Retrieving drive information..."
+msgstr "איחזור מידע מהכונן..."
+
+msgctxt "#32018"
+msgid "Unable to retrieve the drive information:"
+msgstr "אין אפשרות לאחזר מידע מהכונן:"
+
+msgctxt "#32019"
+msgid "The access to this resource has been denied. You might not have enough permission"
+msgstr "הגישה למשאב זה נדחתה. ייתכן שאין לך הרשאה מספקת"
+
+msgctxt "#32020"
+msgid "Adding account..."
+msgstr "הוספת חשבון..."
+
+msgctxt "#32021"
+msgid "Unable to add account:"
+msgstr "אין אפשרות להוסיף את החשבון:"
+
+msgctxt "#32022"
+msgid "Account '%s' will be removed. Are you sure?"
+msgstr "החשבון '%s' יוסר. האם אתה בטוח?"
+
+msgctxt "#32023"
+msgid "Drive '%s' will be removed. Are you sure?"
+msgstr "הכונן '%s' יוסר. האם אתה בטוח?"
+
+msgctxt "#32024"
+msgid "exporting"
+msgstr "מייצא"
+
+msgctxt "#32025"
+msgid "Starting, please wait..."
+msgstr "מתחיל. אנא המתן..."
+
+msgctxt "#32026"
+msgid "A valid export folder is required"
+msgstr "נדרשת תיקיית ייצוא חוקית"
+
+msgctxt "#32027"
+msgid "Unknown error:"
+msgstr "שגיאה לא ידועה:"
+
+msgctxt "#32028"
+msgid "Unable to move your previous accounts information file. Please move it manually to %s or add your accounts again."
+msgstr "לא ניתן להעביר את קובץ פרטי החשבונות הקודמים שלך. העבר אותו ידנית ל-%s או הוסף שוב את החשבונות שלך."
+
+msgctxt "#32029"
+msgid "Need help? Go to the forum and post a message in: kodi.daro.mx/forum"
+msgstr "זקוק לעזרה? עבור אל הפורום ופרסם הודעה ב: kodi.daro.mx/forum"
+
+msgctxt "#32030"
+msgid "Collaboration"
+msgstr "שיתוף פעולה"
+
+msgctxt "#32031"
+msgid "Report errors automatically to help resolve them quickly"
+msgstr "דווח על שגיאות באופן אוטומטי כדי לסייע בפתרון הבעיות במהירות"
+
+msgctxt "#32034"
+msgid "'%s' is not a folder"
+msgstr "'%s' זה לא תיקייה"
+
+msgctxt "#32035"
+msgid "The server is temporary unavailable for this operation."
+msgstr "השרת אינו זמין זמנית עבור פעולה זו."
+
+msgctxt "#32036"
+msgid "Something went wrong with this operation."
+msgstr "משהו השתבש בפעולה הזו."
+
+msgctxt "#32037"
+msgid "File or folder not found. Make sure is still in your drive."
+msgstr "הקובץ או התיקייה לא נמצאו. ודא כי הוא עדיין בכונן שלך."
+
+msgctxt "#32038"
+msgid "Please try again later."
+msgstr "אנא נסו שוב מאוחר יותר."
+
+msgctxt "#32039"
+msgid "Search..."
+msgstr "חיפוש..."
+
+msgctxt "#32040"
+msgid "Searching '%s', please wait..."
+msgstr "מחפש '%s', נא להמתין..."
+
+msgctxt "#32041"
+msgid "Processing results, please wait..."
+msgstr "מעבד תוצאות, אנא המתן..."
+
+msgctxt "#32042"
+msgid "Enter text to search:"
+msgstr "הזן טקסט לחיפוש:"
+
+msgctxt "#32043"
+msgid "Something happened with the request%s."
+msgstr "קרה משהו עם הבקשה %s."
+
+msgctxt "#32044"
+msgid "Will try in %s seconds."
+msgstr "ננסה תוך %s שניות."
+
+msgctxt "#32045"
+msgid "Attempt %s of %s."
+msgstr "ניסיון %s מתוך %s."
+
+msgctxt "#32046"
+msgid "The credentials for '%s' are no longer valid. You need to sign in again.%sDo you want to start the process?"
+msgstr "האישורים עבור '%s' אינם תקפים עוד. עליך להיכנס שוב. %s האם ברצונך להתחיל את התהליך?"
+
+msgctxt "#32047"
+msgid "%s of %s items loaded, please wait..."
+msgstr "%s של פריטים %s נטענו, אנא המתן..."
+
+msgctxt "#32048"
+msgid "%s items loaded, please wait..."
+msgstr "%s פריטים  נטענו, אנא המתן..."
+
+msgctxt "#32049"
+msgid "Loading %s items in this folder, please wait..."
+msgstr "טוען %s פריטים בתיקיה זו, המתן ..."
+
+msgctxt "#32050"
+msgid "Do you want to help reporting errors to resolve them quickly?"
+msgstr "האם ברצונך לעזור בדיווח שגיאות כדי לפתור אותן במהירות?"
+
+msgctxt "#32052"
+msgid "Files"
+msgstr "קבצים"
+
+msgctxt "#32053"
+msgid "Recent"
+msgstr "אחרונים"
+
+msgctxt "#32054"
+msgid "-unused- Documents"
+msgstr "-לא בשימוש- מסמכים"
+
+msgctxt "#32055"
+msgid "-unused- Special: Photos"
+msgstr "-לא בשימוש- מיוחד: תמונות"
+
+msgctxt "#32056"
+msgid "-unused- Special: Music"
+msgstr "-לא בשימוש- מיוחד: מוסיקה"
+
+msgctxt "#32057"
+msgid "-unused- Shared By Me"
+msgstr "-לא בשימוש- שותף על-ידי"
+
+msgctxt "#32058"
+msgid "Shared With Me"
+msgstr "משותף איתי"
+
+msgctxt "#32059"
+msgid "Exporting task already in progress."
+msgstr "ייצוא משימה כבר בביצוע."
+
+msgctxt "#32060"
+msgid "Searching subtitle file %s, please wait..."
+msgstr "חיפוש קובץ כתוביות %s, נא להמתין..."
+
+msgctxt "#32061"
+msgid "Subtitle found! Playing this video with subtitle..."
+msgstr "‎כתובית נמצאה! מפעיל את הסרטון הזה עם כתוביות."
+
+msgctxt "#32062"
+msgid "Subtitle not found for this video"
+msgstr "כתובת לא נמצאה עבור הווידאו הזה"
+
+msgctxt "#32063"
+msgid "This account or drive is not registered.%sDo you want to add an account?"
+msgstr "חשבון או כונן זה אינם רשומים. %s האם ברצונך להוסיף חשבון?"
+
+msgctxt "#32064"
+msgid "Retrieving owner information..."
+msgstr "מאחזר פרטי בעלים..."
+
+msgctxt "#32065"
+msgid "Unable to retrieve the owner information:"
+msgstr "אין אפשרות לאחזר פרטי בעלים:"
+
+msgctxt "#32066"
+msgid "Unable to remove previous files and folders in %s"
+msgstr "אין אפשרות להסיר את הקבצים והתיקיות הקודמים ב-%s"
+
+msgctxt "#32067"
+msgid "Services"
+msgstr "שירותים"
+
+msgctxt "#32068"
+msgid "Allow %s addon to be used as a source"
+msgstr "אפשר להשתמש בהרחבה %s כמקור"
+
+msgctxt "#32069"
+msgid "     Source server port  -  http://localhost:<port>/source"
+msgstr "     מקור יציאת שרת  -  http://localhost:<port>/source"
+
+msgctxt "#32070"
+msgid "There are no accounts added in %s."
+msgstr "אין חשבונות שנוספו ב- %s."
+
+msgctxt "#32071"
+msgid "Go to [Add-ons > %s > Add an account...] to add one."
+msgstr "עבור ל-[תוספות > %s > הוסף חשבון...] כדי להוסיף אחד."

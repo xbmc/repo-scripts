@@ -1,0 +1,309 @@
+# Kodi Media Center language file
+# Addon Name: Tag Generator
+# Addon id: script.tag-generator
+# Addon Provider: wellspokenman
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: .\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: ."
+"Language-Team: .\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en_US\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#30000"
+msgid "Error"
+msgstr "Error"
+
+msgctxt "#30001"
+msgid " unreachable. Check network and retry."
+msgstr " unreachable. Check network and retry."
+
+msgctxt "#30002"
+msgid "Writing blank tags for "
+msgstr "Writing blank tags for "
+
+msgctxt "#30003"
+msgid " movies"
+msgstr " movies"
+
+msgctxt "#30004"
+msgid "Alrighty then..."
+msgstr "Alrighty then..."
+
+msgctxt "#30005"
+msgid "Reading your Kodi DB..."
+msgstr "Reading your Kodi DB..."
+
+msgctxt "#30006"
+msgid "Scanning for local matches to Trakt movie watchlists."
+msgstr "Scanning for local matches to Trakt movie watchlists."
+
+msgctxt "#30007"
+msgid "Writing tag '"
+msgstr "Writing tag '"
+
+msgctxt "#30008"
+msgid "' to "
+msgstr "' to "
+
+msgctxt "#30009"
+msgid "Evaluated "
+msgstr "Evaluated "
+
+msgctxt "#30010"
+msgid " movies"
+msgstr " movies"
+
+msgctxt "#30011"
+msgid "Scraping IMDb for IDs..."
+msgstr "Scraping IMDb for IDs..."
+
+msgctxt "#30012"
+msgid " contains no IMDB IDs. Check URL and retry."
+msgstr " contains no IMDB IDs. Check URL and retry."
+
+msgctxt "#30013"
+msgid "Scanning for local matches to "
+msgstr "Scanning for local matches to "
+
+msgctxt "#30014"
+msgid "Writing tag '"
+msgstr "Writing tag '"
+
+msgctxt "#30015"
+msgid "' to "
+msgstr "' to "
+
+msgctxt "#30016"
+msgid " movies."
+msgstr " movies."
+
+msgctxt "#30017"
+msgid "Evaluated "
+msgstr "Evaluated "
+
+msgctxt "#30018"
+msgid " movies"
+msgstr " movies"
+
+msgctxt "#30019"
+msgid "Scraping Wikipedia for comedian names..."
+msgstr "Scraping Wikipedia for comedian names..."
+
+msgctxt "#30020"
+msgid " contains no comedians. Check URL and retry."
+msgstr " contains no comedians. Check URL and retry."
+
+msgctxt "#30021"
+msgid "Scanning for local matches to Wikipedia comedians..."
+msgstr "Scanning for local matches to Wikipedia comedians..."
+
+msgctxt "#30022"
+msgid "Writing tag '"
+msgstr "Writing tag '"
+
+msgctxt "#30023"
+msgid "' to "
+msgstr "' to "
+
+msgctxt "#30024"
+msgid " stand-up features."
+msgstr " stand-up features."
+
+msgctxt "#30025"
+msgid "Evaluated "
+msgstr "Evaluated "
+
+msgctxt "#30026"
+msgid " well known comedians."
+msgstr " well known comedians."
+
+msgctxt "#30027"
+msgid "Initialising..."
+msgstr "Initialising..."
+
+msgctxt "#30028"
+msgid "Do you really want to delete all your local Kodi tags?"
+msgstr "Do you really want to delete all your local Kodi tags?"
+
+msgctxt "#30029"
+msgid "Really Really REALLY?"
+msgstr "Really Really REALLY?"
+
+msgctxt "#30030"
+msgid "Alrighty then..."
+msgstr "Alrighty then..."
+
+msgctxt "#30031"
+msgid "Tagging complete for "
+msgstr "Tagging complete for "
+
+msgctxt "#30032"
+msgid " movies, "
+msgstr " movies, "
+
+msgctxt "#30033"
+msgid " stand-up features, and "
+msgstr " stand-up feature, and "
+
+msgctxt "#30034"
+msgid "Wrote blank tags to "
+msgstr "Wrote blank tags to "
+
+msgctxt "#30035"
+msgid " movies."
+msgstr " movies."
+
+msgctxt "#30036"
+msgid "tagging IMDb movies"
+msgstr "tagging IMDb movies"
+
+msgctxt "#30037"
+msgid "tagging Trakt movies"
+msgstr "tagging Trakt movies"
+
+msgctxt "#30038"
+msgid "tagging stand-up features"
+msgstr "tagging stand-up features"
+
+msgctxt "#30039"
+msgid "tagging movie awards"
+msgstr "tagging movie awards"
+
+msgctxt "#30040"
+msgid " award winning/nominated movies."
+msgstr " award winning/nominated movies."
+
+msgctxt "#30041"
+msgid "Searching for award winning/nominated movies."
+msgstr "Searching for award winning/nominated movies."
+
+msgctxt "#30042"
+msgid "Writing awards tags to: "
+msgstr "Writing awards tags to: "
+
+msgctxt "#30043"
+msgid "Error: please choose at least one awards category."
+msgstr "Error: please choose at least one awards category."
+
+msgctxt "#30900"
+msgid "Settings"
+msgstr "Settings"
+
+msgctxt "#30901"
+msgid "Run as a service"
+msgstr "Run as a service"
+
+msgctxt "#30902"
+msgid "Refresh Interval (hours)"
+msgstr "Refresh Interval (hours)"
+
+msgctxt "#30903"
+msgid "Set this tag in Kodi:"
+msgstr "Set this tag in Kodi:"
+
+msgctxt "#30904"
+msgid "Stand-up Comedy"
+msgstr "Stand-up Comedy"
+
+msgctxt "#30905"
+msgid "Number of URLs"
+msgstr "Number of URLs"
+
+msgctxt "#30906"
+msgid "IMDB Watchlist URL"
+msgstr "IMDB Watchlist URL"
+
+msgctxt "#30913"
+msgid "Write IMDB Tags"
+msgstr "Write IMDB Tags"
+
+msgctxt "#30914"
+msgid "Write Stand-Up Tags"
+msgstr "Write Stand-Up Tags"
+
+msgctxt "#30915"
+msgid "Write All Tags"
+msgstr "Write All Tags"
+
+msgctxt "#30916"
+msgid "Delete All Tags"
+msgstr "Delete All Tags"
+
+msgctxt "#30917"
+msgid "Request Token"
+msgstr "Request Token"
+
+msgctxt "#30918"
+msgid "Trakt Token"
+msgstr "Trakt Token"
+
+msgctxt "#30919"
+msgid "-please request token-"
+msgstr "-please request token-"
+
+msgctxt "#30920"
+msgid "Write Trakt Tags"
+msgstr "Write Trakt Tags"
+
+msgctxt "#30921"
+msgid "Number of Lists"
+msgstr "Number of Lists"
+
+msgctxt "#30922"
+msgid "Trakt List Name"
+msgstr "Trakt List Name"
+
+msgctxt "#30923"
+msgid "Please visit the following URL to generate your Trakt PIN, then press OK: https://trakt.tv/pin/12265"
+msgstr "Please visit the following URL to generate your Trakt PIN, then press OK: https://trakt.tv/pin/12265"
+
+msgctxt "#30924"
+msgid "Enter PIN"
+msgstr "Enter PIN"
+
+msgctxt "#30925"
+msgid "Error: Unable to retrieve Trakt oauth token."
+msgstr "Error: Unable to retrieve Trakt oauth token."
+
+msgctxt "#30926"
+msgid "Write Awards Tags"
+msgstr "Write Awards Tags"
+
+msgctxt "#30927"
+msgid "Use Trakt Movie Lists"
+msgstr "Use Trakt Movie Lists"
+
+msgctxt "#30928"
+msgid "Use IMDb Lists"
+msgstr "Use IMDb Lists"
+
+msgctxt "#30929"
+msgid "Trakt Username"
+msgstr "Trakt Username"
+
+msgctxt "#30930"
+msgid "Write Awards Tags"
+msgstr "Write Awards Tags"
+
+msgctxt "#30931"
+msgid "Notifications"
+msgstr "Notifications"
+
+msgctxt "#30932"
+msgid "Debug Mode"
+msgstr "Debug Mode"
+
+msgctxt "#30933"
+msgid "Oscar Winners"
+msgstr "Oscar Winners"
+
+msgctxt "#30934"
+msgid "Oscar Nominees"
+msgstr "Oscar Nominees"

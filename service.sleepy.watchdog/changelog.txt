@@ -1,0 +1,59 @@
+CHANGELOG
+
+0.1.20
+- Ready for Krypton
+
+0.1.19
+- Ukrainian language added
+- Messaging switched from progress dialog to an intermitted notification as some skins
+  shows the progress dialog too obtrusive.
+
+0.1.16 - 18
+- Minor bugfixes
+
+0.1.15
+- Activation of watchdog to a given time frame implemented
+
+0.1.14
+- Bugfix
+- Language XML Files changed to Transifex .po
+
+0.1.13
+- Minor bugfixes
+
+0.1.12
+- Option for exiting Kodi added
+
+0.1.11
+- Code adjustments
+
+0.1.10
+- Option for keeping Watchdog alive when stop playing video/audio is selected
+
+0.1.9
+- Option added. Jumps into main menu optionally when stop playing video/audio is selected.
+
+0.1.8
+- Unused code removed. Also addon-id.ctl is no longer needed (see V.0.1.6) because
+  Sleepy Watchdog can now handle addons himself.
+
+0.1.7
+- New action added. Watchdog can now start other addons too.
+
+0.1.6
+- Mechanism for interoperability between addons implemented. TVH Powermanagement
+  now creates an addon-id.ctl file that signals an active state of the addon.
+  Watchdog kicks off without any action in this case.
+
+0.1.4
+- Use DialogProgress instead of DialogProgressBG as this wasn't shown in fullscreen mode
+
+0.1.3
+- CEC command added (turns TV off)
+
+0.1.2
+- German language file added, some code enhancements
+
+0.1.1
+- Initial version
+

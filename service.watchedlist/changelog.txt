@@ -1,0 +1,94 @@
+version 1.2.6 (16.02.2019)
+* Fixed waiting time for periodic update during playback
+
+version 1.2.5 (04.01.2018)
+* Fix SMB access in Windows, minor code improvements
+
+version 1.2.4 (01.01.2018)
+* Fix in background user watching
+
+version 1.2.3 (28.12.2017)
+* Minor fixes (unicode support, less blocking on shutdown, backup file rotation on network shares, error handling and logging)
+
+version 1.2.2 (23.12.2017)
+* Minor fixes, fixed buggalo emails
+
+version 1.2.1 (26.11.2017)
+* Fixed Dropbox API: Change from v1 to v2
+
+version 1.2 (21.05.2017)
+* Added API and python module to use this addon in other addons
+* minor fixes
+
+version 1.1.4 (28.04.2017)
+ * Fixed error in English language file
+
+version 1.1.3 (16.04.2017)
+ * Added verbosity option for graphical user notifications
+ * Added limitation of number of backup files
+
+version 1.1.2 (12.06.2016)
+ * Added fix to avoid infinite waiting if startup delay time is 0
+
+version 1.1.1 (29.05.2016)
+ * Added fix for non-working python dropbox import
+
+version 1.1.0 (02.04.2016)
+ * Added dropbox synchronization for the database
+
+version 1.0.5 (24.12.2015)
+ * Enabled IPv6 adresses for hostnames
+
+version 1.0.4 (16.05.2015)
+ * Fixed mysql timestamp bug
+
+version 1.0.3 (11.01.2015)
+ * Fixed wrong implementation of startup delay
+ * Fixed missing startup execution if autostart mode is set to periodic
+
+version 1.0.2 (10.01.2015)
+ * Fixed support for Database file got lost in version 1.0.0
+
+version 1.0.1 (13.12.2014)
+ * Fixed unwanted waiting time in autostart
+
+version 1.0.0 (01.09.2014)
+ * Added mySQL Database support for the WatchedList Database
+
+version 0.9.8 (31.08.2014)
+ * Fix for Unicode Path problems
+ * Fix for SQLite Error handling
+
+version 0.9.7 (14.06.2014)
+ * Added custom sleep function to handle requested shutdown in Gotham
+
+version 0.9.6 (23.09.2013)
+ * Fixed tvshow id with imdb-scraper
+
+version 0.9.5 (18.09.2013)
+ * Fixed bug in watching user actions
+
+version 0.9.4 (09.09.2013)
+ * Fixed bug in watching user actions
+
+version 0.9.3  (04.09.2013)
+ * Fixed minor bugs
+
+version 0.9.2 (01.08.2013)
+ * Fixed minor bugs
+
+version 0.9.1 (24.06.2013)
+ * Fixed: Network share problems in Linux
+
+version 0.9.0 (09.06.2013)
+ * Added: Check watched-states permanently and enable to set media as unwatched
+
+version 0.8.1 (22.05.2013)
+ * Fixed: Duplicate movies and tv episodes get marked as watched
+
+version 0.8.0 (16.05.2013)
+ * Fixed: lastplayed-information is now also stored in the database (although it is sometimes missing in XBMC)
+ * Added: Exceptions are catched with buggalo and bug reports are sent
+
+version 0.7.0 (11.05.2013)
+ * Initial release

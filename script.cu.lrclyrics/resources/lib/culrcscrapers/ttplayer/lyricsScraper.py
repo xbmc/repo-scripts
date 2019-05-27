@@ -8,14 +8,17 @@ taxigps
 import os
 import socket
 import urllib
+import urllib2
 import re
 import random
 import difflib
 from utilities import *
 
 __title__ = "TTPlayer"
-__priority__ = '110'
+__priority__ = '120'
 __lrc__ = True
+
+UserAgent = 'Mozilla/5.0 (Windows NT 10.0; WOW64; rv:51.0) Gecko/20100101 Firefox/51.0'
 
 socket.setdefaulttimeout(10)
 
@@ -172,11 +175,13 @@ class LyricsFetcher:
 
     def get_lyrics_from_list(self, link):
         title,Id,artist,song = link
-        log('%s %s %s' %(Id, artist, song))
         try:
             url = self.LYRIC_URL %(int(Id),ttpClient.CodeFunc(int(Id), artist + song), random.randint(0,0xFFFFFFFFFFFF))
-            f = urllib.urlopen(url)
-            Page = f.read()
+            log('%s: search url: %s' % (__title__, url))
+            request = urllib2.Request(url)
+            request.add_header('User-Agent', UserAgent)
+            response = urllib2.urlopen(request)
+            Page = response.read()
         except:
             log("%s: %s::%s (%d) [%s]" % (
                    __title__, self.__class__.__name__,
@@ -185,12 +190,19 @@ class LyricsFetcher:
                    sys.exc_info()[1]
                   ))
             return None
-        # ttplayer occasionally returns incorrect lyrics. if we have an 'ar' tag with a value we can check if the artist matches
+        # ttplayer occasionally returns incorrect lyrics. if we have a 'ti' and/or an 'ar' tag with a value we can check if they match the title and artist
         if Page.startswith('[ti:'):
             check = Page.split('\n')
+            if not check[0][4:-1] == '':
+                if (difflib.SequenceMatcher(None, song.lower(), check[0][4:-1].lower()).ratio() > 0.8):
+                    return Page
+                else:
+                    return ''
             if check[1][0:4] == '[ar:' and not check[1][4:-1] == '':
                 if (difflib.SequenceMatcher(None, artist.lower(), check[1][4:-1].lower()).ratio() > 0.8):
                     return Page
+                else:
+                    return ''
             else:
                 return Page
         elif Page.startswith('['):

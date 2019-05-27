@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.module.nexx" 
+	     name="Nexx Video API service module" 
+	     version="1.2.0" 
+	     provider-name="sarbes">
+  <requires>
+    <import addon="xbmc.python" version="2.25.0" />
+    <import addon="script.module.libmediathek3" version="1.5.0"/>
+  </requires>
+  <extension point="xbmc.python.module" library="lib" />
+  <extension point="xbmc.addon.metadata">
+    <platform>all</platform>
+    <summary lang="en">This is a service module for the API of the CMS provider Nexx.</summary>
+  </extension>
+</addon>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="context.item.extras" name="Extras" version="1.3.0" provider-name="takoi">
+  <requires>
+    <import addon="xbmc.python" version="2.25.0"/>
+    <import addon="script.module.routing" version="0.2.0"/>
+  </requires>
+  <extension point="kodi.context.item">
+    <menu id="kodi.core.main">
+      <item library="addon.py">
+        <label>30000</label>
+        <visible>String.IsEqual(ListItem.dbtype,movie)
+            | String.IsEqual(ListItem.dbtype,tvshow)
+            | String.IsEqual(ListItem.dbtype,season)
+        </visible>
+      </item>
+    </menu>
+  </extension>
+  <extension point="xbmc.python.pluginsource" library="plugin.py">
+    <provides>video</provides>
+  </extension>
+  <extension point="kodi.addon.metadata">
+    <platform>all</platform>
+    <summary lang="en_GB">View extras and special features</summary>
+    <description lang="en_GB">Provides an easy way to browse and view movie and TV show extras. Extras can be accessed from the context menu in the video library.
+
+By default, the add-on will look in the "Extras" sub-folder for content (can be changed in settings).
+
+Tip: for how to avoid extras beings scraped to library, see http://kodi.wiki/view/Add-on:Extras</description>
+    <license>GNU GENERAL PUBLIC LICENSE. Version 3, 29 June 2007</license>
+    <forum></forum>
+    <source>https://github.com/tamland/kodi-addon-extras</source>
+    <website>http://kodi.wiki/view/Add-on:Extras</website>
+    <news>- Items are now sorted by name.
+- Fixed back navigation.
+- Kodi v18 support.</news>
+    <assets>
+      <icon>icon.png</icon>
+      <fanart>fanart.jpg</fanart>
+    </assets>
+  </extension>
+</addon>

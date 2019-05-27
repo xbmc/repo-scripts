@@ -1,0 +1,53 @@
+# XBMC Media Center language file
+# Addon Name: Unsplash Photo ScreenSaver
+# Addon id: screensaver.unsplash
+# Addon Provider: Lunatixz
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To:  \n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: English"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#32002"
+msgid "Rotate Image Every"
+msgstr ""
+
+msgctxt "#32003"
+msgid "Animate Image"
+msgstr ""
+
+msgctxt "#32004"
+msgid "Display Time & Weather"
+msgstr ""
+
+msgctxt "#32005"
+msgid "Preferred Mode"
+msgstr ""
+
+msgctxt "#32006"
+msgid "Enable Keywords"
+msgstr ""
+
+msgctxt "#32007"
+msgid "Enter Search Parameters Ex.(City,Night)"
+msgstr ""
+
+msgctxt "#32008"
+msgid "Enter User Name"
+msgstr ""
+
+msgctxt "#32009"
+msgid "Enter Collection ID"
+msgstr ""
+
+msgctxt "#32010"
+msgid "Preferred Resolution"
+msgstr ""

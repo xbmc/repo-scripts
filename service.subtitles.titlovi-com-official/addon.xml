@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="service.subtitles.titlovi-com-official"
+       name="Titlovi.com Official "
+       version="1.1.0"
+       provider-name="titlovi.com">
+    <requires>
+        <import addon="xbmc.python" version="2.25.0"/>
+        <import addon="script.module.requests" version="2.18.4"/>
+        <import addon="script.module.simplecache" version="1.0.11"/>
+    </requires>
+    <extension point="xbmc.subtitle.module" library="service.py"/>
+    <extension point="xbmc.addon.metadata">
+        <platform>all</platform>
+        <summary lang="en_GB">Titlovi.com</summary>
+        <description lang="en_GB">Search and download [B]Titlovi.com[/B] subtitles[CR][CR]When using manual search for [B]TV shows[/B] please use this example format for season and episode numbers:[CR]The Wire [B]S01E01[/B]</description>
+        <description lang="hr_HR">Pretražite i preuzmite podnaslove sa [B]Titlovi.com[/B].[CR][CR]Kada koristite prilagođenu pretragu za [B]TV serije[/B] koristite format za sezonu i epizodu kao u ovom primjeru:[CR]The Wire [B]S01E01[/B]</description>
+        <disclaimer lang="en_GB">Users need to provide [B]Titlovi.com[/B] username and password in add-on configuration</disclaimer>
+        <disclaimer lang="hr_HR">Korisnici moraju upisati [B]Titlovi.com[/B] korisničko ime i lozinku u postavke dodatka</disclaimer>
+        <news lang="en_GB">New official addon [CR][CR] -Version 1.1.0[CR] Added Croatian translation, updated addon description</news>
+        <news lang="hr_HR">Novi službeni addon [CR][CR] -Verzija 1.1.0[CR] Dodan hrvatski prijevod, updatean opis addona</news>
+        <platform>all</platform>
+        <language></language>
+        <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+        <website>http://www.titlovi.com</website>
+        <email>info [at] titlovi {dot} com</email>
+        <forum>https://forum.kodi.tv/showthread.php?tid=325289</forum>
+        <assets>
+            <icon>icon.png</icon>
+            <fanart>fanart.jpg</fanart>
+			<screenshot>resources/media/screenshot1.jpg</screenshot>
+            <screenshot>resources/media/screenshot2.jpg</screenshot>
+            <screenshot>resources/media/screenshot3.jpg</screenshot>
+		</assets>
+        <source>https://github.com/tturkalj/service.subtitles.titlovi-com-official</source>
+    </extension>
+</addon>

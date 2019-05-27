@@ -1,0 +1,74 @@
+# Kodi Media Center language file
+# Addon Name: Twitter Tweets
+# Addon id: script.twittertweets
+# Addon Provider: Lunatixz
+msgid ""
+msgstr ""
+"Project-Id-Version: \\script.twittertweets\n"
+"Report-Msgid-Bugs-To: https://forum.kodi.tv/showthread.php?tid=317791\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2017-10-17 22:03+0200\n"
+"Language-Team: English (http://www.transifex.com/projects/p/xbmc-addons/language/en/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 2.0.3\n"
+"Last-Translator: \n"
+"Language: es\n"
+
+msgctxt "#30000"
+msgid "Enable Debugging [Log errors]"
+msgstr "Habilitar debugging [Registrar errores]"
+
+msgctxt "#30001"
+msgid "Twitter Account"
+msgstr "Cuenta de Twitter"
+
+msgctxt "#30002"
+msgid "Check Tweets Every x Minutes"
+msgstr "Comprobar Tweets cada x minutos"
+
+msgctxt "#30003"
+msgid "Close After x Seconds"
+msgstr "Cerrar tras x segundos"
+
+msgctxt "#30004"
+msgid "Don't Show While Playing"
+msgstr "No mostrar durante la reproducción"
+
+msgctxt "#30005"
+msgid "General"
+msgstr "General"
+
+msgctxt "#30006"
+msgid "Twitter (1)"
+msgstr "Twitter (1)"
+
+msgctxt "#30007"
+msgid "Twitter (2)"
+msgstr "Twitter (2)"
+
+msgctxt "#30008"
+msgid "Twitter (3)"
+msgstr "Twitter (3)"
+
+msgctxt "#30009"
+msgid "Twitter (4)"
+msgstr "Twitter (4)"
+
+msgctxt "#30010"
+msgid "Twitter (5)"
+msgstr "Twitter (5)"
+
+msgctxt "#30011"
+msgid "Display Attachment"
+msgstr "Mostrar adjuntos"
+
+msgctxt "#30012"
+msgid "Restarting Service..."
+msgstr "Reiniciando servicio..."
+
+msgctxt "#30013"
+msgid "Include Retweets"
+msgstr "Incluir Retweets"

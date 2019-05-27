@@ -48,7 +48,7 @@
 			<width>1320</width>
 			<height>70</height>
 			<font>font32_title</font>
-			<label>$ADDON[script.cu.lrclyrics 32199]</label>
+			<label>CU LRC Lyrics</label>
 			<align>left</align>
 			<aligny>center</aligny>
 			<shadowcolor>black</shadowcolor>

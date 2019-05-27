@@ -1,0 +1,245 @@
+# XBMC Media Center language file
+# Addon Name: Sleepy Watchdog
+# Addon id: service.sleepy.watchdog
+# Addon version: 0.1.14
+# Addon Provider: Birger Jesch, thanks to Martin Schlosser
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC-Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: 2015-09-29 07:42+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: uk\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+
+msgctxt "Addon Summary"
+msgid "Sleepy Watchdog - he's watching while You sleep"
+msgstr "Sleepy Watchdog - він чатує, поки Ви спите"
+
+msgctxt "Addon Description"
+msgid "This Idle Timer management performs defined actions after an adjusted amount of inactivity time. Those actions are stop playing Audio, Video or TV for example or some actions to execute shutdown variations like suspend, reboot poweroff or hibernate."
+msgstr "Цей Таймер Простою виконує задані дії, після встановленого часу неактивності. Наприклад, зупиняє відтворення Аудіо, Відео, TV-Потоків чи інші дії (як Призупинення, Вимкнення, Перезавантаження або Гібернація) до Системи."
+
+msgctxt "Addon Disclaimer"
+msgid "Use at your own risk. This service could conflict to other services (e.g recording services)."
+msgstr "Використовуйте на власний Ризик. Ця Служба, може вступати в конфлікт з іншими сервісами (н.д. Запису)."
+
+
+msgctxt "#32100"
+msgid "Sleepy WatchDog"
+msgstr "Sleepy WatchDog"
+
+msgctxt "#32110"
+msgid "Activity frame"
+msgstr "Активувати"
+
+msgctxt "#32111"
+msgid "always active"
+msgstr "завжди"
+
+msgctxt "#32112"
+msgid "only in time frame"
+msgstr "тільки в проміжках часу"
+
+msgctxt "#32113"
+msgid "from"
+msgstr "від"
+
+msgctxt "#32114"
+msgid "until"
+msgstr "до"
+
+msgctxt "#32115"
+msgid "Execute '%s' in %s secs"
+msgstr ""
+
+# Messages
+
+msgctxt "#32116"
+msgid "The activity settings of the time frame or setting of idle time are not suitable. Sleepy Watchdog will never be activated. Please correct them."
+msgstr "Параметри часових проміжків чи налаштування часу простою, не підходять. Sleepy Watchdog Ніколи не буде активований. Будь ласка, Виправте їх."
+
+msgctxt "#32117"
+msgid "The setting of idle time in the alternate time frame is not suitable. Sleepy Watchdog will never be activated in alternate time frame. Please correct that."
+msgstr ""
+
+msgctxt "#32118"
+msgid "Execution of idle actions aborted"
+msgstr ""
+
+#setting strings
+#empty strings from id 32119 to 32119
+
+msgctxt "#32120"
+msgid "max. Duration of idle time"
+msgstr "Макс. Тривалість часу простою"
+
+msgctxt "#32121"
+msgid "Action to execute"
+msgstr "Дія до виконання"
+
+msgctxt "#32122"
+msgid "Show notification on WatchDog activation"
+msgstr "Показувати повідомлення, перед виконанням дії"
+
+msgctxt "#32123"
+msgid "Duration of notification"
+msgstr "Тривалість повідомлення"
+
+msgctxt "#32124"
+msgid "Test settings of active time frame (wait 1 min)"
+msgstr ""
+
+msgctxt "#32125"
+msgid "Turn off TV (CEC)"
+msgstr "Вимкнути TV (CEC)"
+
+msgctxt "#32126"
+msgid "Addon ID [,parameter]"
+msgstr "ID Надбудови [,параметр]"
+
+msgctxt "#32127"
+msgid "Jump into Main Menu"
+msgstr "Перейти до Головного Меню"
+
+msgctxt "#32128"
+msgid "Keep WatchDog alive"
+msgstr "Тримати WatchDog активним"
+
+#defined actions
+#empty string with id 32129
+
+msgctxt "#32130"
+msgid "Stop playing media"
+msgstr "Зупинити відтворення"
+
+msgctxt "#32131"
+msgid "Reboot"
+msgstr "Перезавантаження"
+
+msgctxt "#32132"
+msgid "Shutdown"
+msgstr "Вимкнення"
+
+msgctxt "#32133"
+msgid "Hibernate"
+msgstr "Гібернація"
+
+msgctxt "#32134"
+msgid "Suspend"
+msgstr "Призупинення"
+
+msgctxt "#32135"
+msgid "Run Addon"
+msgstr "Запустити Надбудову"
+
+msgctxt "#32136"
+msgid "Exit Kodi"
+msgstr "Вихід Kodi"
+
+#strings of settings outside active timeframe
+
+msgctxt "#32140"
+msgid "Perform actions outside the active time frame too"
+msgstr ""
+
+msgctxt "#32150"
+msgid "00:00 o'clock"
+msgstr "00:00 годин"
+
+msgctxt "#32151"
+msgid "01:00 o'clock"
+msgstr "01:00 годин"
+
+msgctxt "#32152"
+msgid "02:00 o'clock"
+msgstr "02:00 годин"
+
+msgctxt "#32153"
+msgid "03:00 o'clock"
+msgstr "03:00 годин"
+
+msgctxt "#32154"
+msgid "04:00 o'clock"
+msgstr "04:00 годин"
+
+msgctxt "#32155"
+msgid "05:00 o'clock"
+msgstr "05:00 годин"
+
+msgctxt "#32156"
+msgid "06:00 o'clock"
+msgstr "06:00 годин"
+
+msgctxt "#32157"
+msgid "07:00 o'clock"
+msgstr "07:00 годин"
+
+msgctxt "#32158"
+msgid "08:00 o'clock"
+msgstr "08:00 годин"
+
+msgctxt "#32159"
+msgid "09:00 o'clock"
+msgstr "09:00 годин"
+
+msgctxt "#32160"
+msgid "10:00 o'clock"
+msgstr "10:00 годин"
+
+msgctxt "#32161"
+msgid "11:00 o'clock"
+msgstr "11:00 годин"
+
+msgctxt "#32162"
+msgid "12:00 o'clock"
+msgstr "12:00 годин"
+
+msgctxt "#32163"
+msgid "13:00 o'clock"
+msgstr "13:00 годин"
+
+msgctxt "#32164"
+msgid "14:00 o'clock"
+msgstr "14:00 годин"
+
+msgctxt "#32165"
+msgid "15:00 o'clock"
+msgstr "15:00 годин"
+
+msgctxt "#32166"
+msgid "16:00 o'clock"
+msgstr "16:00 годин"
+
+msgctxt "#32167"
+msgid "17:00 o'clock"
+msgstr "17:00 годин"
+
+msgctxt "#32168"
+msgid "18:00 o'clock"
+msgstr "18:00 годин"
+
+msgctxt "#32169"
+msgid "19:00 o'clock"
+msgstr "19:00 годин"
+
+msgctxt "#32170"
+msgid "20:00 o'clock"
+msgstr "20:00 годин"
+
+msgctxt "#32171"
+msgid "21:00 o'clock"
+msgstr "21:00 годин"
+
+msgctxt "#32172"
+msgid "22:00 o'clock"
+msgstr "22:00 годин"
+
+msgctxt "#32173"
+msgid "23:00 o'clock"
+msgstr "23:00 годин"

@@ -1,0 +1,15 @@
+[B]Version 1.25.2[/B]
+
+- urllib3 1.25.2
+
+[B]Version 1.25.1[/B]
+
+- urllib3 1.25.1
+
+[B]Version 1.24.1[/B]
+
+- urllib3 1.24.1
+
+[B]Version 1.22[/B]
+
+- urllib3 1.22

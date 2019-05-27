@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.module.htmlement" name="HTMLement" provider-name="willforde" version="0.2.3">
+    <requires>
+        <import addon="xbmc.python" version="2.25.0"/>
+    </requires>
+    <extension point="xbmc.python.module" library="lib"/>
+    <extension point="xbmc.addon.metadata">
+        <summary lang="en_GB">Pure-Python HTML parser with ElementTree support.</summary>
+        <description lang="en_GB">Parses HTML using HTMLParser to build a tree of Elements. Utilizing ElementTree support for XPath expression to parse the tree.</description>
+        <website>http://python-htmlement.readthedocs.io/en/stable/?badge=stable</website>
+        <source>https://github.com/willforde/python-htmlement</source>
+        <email>willforde+htmlement@gmail.com</email>
+        <license>MIT License</license>
+        <platform>all</platform>
+        <language>en</language>
+        <assets>
+            <icon>resources/icon.png</icon>
+        </assets>
+    </extension>
+</addon>

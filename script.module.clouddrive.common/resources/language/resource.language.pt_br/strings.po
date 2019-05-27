@@ -1,0 +1,282 @@
+# Kodi Media Center language file
+# Addon Name: Cloud Drive Common Module
+# Addon id: script.module.clouddrive.common
+# Addon Provider: Carlos Guzman (cguZZman)
+msgid ""
+msgstr ""
+"Project-Id-Version: Kodi Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: English (http://www.transifex.com/projects/p/xbmc-addons/language/en/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+
+msgctxt "#32004"
+msgid "Export to library (.strm)..."
+msgstr "Exportar para a biblioteca (.strm)"
+
+msgctxt "#32005"
+msgid "Add an account..."
+msgstr "Adicionar uma conta..."
+
+msgctxt "#32006"
+msgid "Remove Account..."
+msgstr "Remover conta..."
+
+msgctxt "#32007"
+msgid "Remove Drive..."
+msgstr "Remover Drive..."
+
+msgctxt "#32008"
+msgid "Connecting with server, please wait..."
+msgstr "Conectando com o servidor, por favor aguarde..."
+
+msgctxt "#32009"
+msgid "Scan the QR code and sign in."
+msgstr "Scan the QR code and sign in."
+
+msgctxt "#32010"
+msgid "or[CR]Go to this URL: %s[CR]enter the code and sign in: %s"
+msgstr "or[CR]Go to this URL: %s[CR]enter the code and sign in: %s"
+
+msgctxt "#32011"
+msgid "Expires in %s seconds..."
+msgstr "Expira em %s segundos..."
+
+msgctxt "#32012"
+msgid "Yes! Count me in"
+msgstr "Sim! Conte comigo"
+
+msgctxt "#32013"
+msgid "No"
+msgstr "Não"
+
+msgctxt "#32014"
+msgid "Retrieving credentials..."
+msgstr "Obtendo credenciais..."
+
+msgctxt "#320G15"
+msgid "Unable to login:"
+msgstr "Não foi possível logar:"
+
+msgctxt "#32016"
+msgid "Please try again."
+msgstr "Por favor, tente novamente."
+
+msgctxt "#32017"
+msgid "Retrieving drive information..."
+msgstr "Obtendo informações do drive..."
+
+msgctxt "#32018"
+msgid "Unable to retrieve the drive information:"
+msgstr "Não foi possível obter as informações do Drive"
+
+msgctxt "#32019"
+msgid "The access to this resource has been denied. You might not have enough permission"
+msgstr "O Acesso para esse recurso foi negado. Você pode não ter permição de acesso o suficiente."
+
+msgctxt "#32020"
+msgid "Adding account..."
+msgstr "Adicionando conta..."
+
+msgctxt "#32021"
+msgid "Unable to add account:"
+msgstr "Não foi possivel adicionar a conta:"
+
+msgctxt "#32022"
+msgid "Account '%s' will be removed. Are you sure?"
+msgstr "A Conta '%s' será removida. Tem certeza?"
+
+msgctxt "#32023"
+msgid "Drive '%s' will be removed. Are you sure?"
+msgstr "Drive '%s' será removido. Tem certeza?"
+
+msgctxt "#32024"
+msgid "exporting"
+msgstr "exportando"
+
+msgctxt "#32025"
+msgid "Starting, please wait..."
+msgstr "Iniciando, por favor aguarde..."
+
+msgctxt "#32026"
+msgid "A valid export folder is required"
+msgstr "É necessário um diretório de exportação válido"
+
+msgctxt "#32027"
+msgid "Unknown error:"
+msgstr "Erro desconhecido:"
+
+msgctxt "#32028"
+msgid "Unable to move your previous accounts information file. Please move it manually to %s or add your accounts again."
+msgstr "Não foi possível mover o arqquivo informação de contas anterior. Por favor o mova manualmente %s ou adicione sua conta novamente."
+
+msgctxt "#32029"
+msgid "Need help? Go to the forum and post a message in: kodi.daro.mx/forum"
+msgstr "Precisa de ajuda? Vá no forum e poste sua mensagem em: kodi.daro.mx/forum"
+
+msgctxt "#32030"
+msgid "Collaboration"
+msgstr "Colaboração"
+
+msgctxt "#32031"
+msgid "Report errors automatically to help resolve them quickly"
+msgstr "Reportar erros automaticamente para ajudar a resolver-los rapidamente"
+
+msgctxt "#32032"
+msgid "Auto-Refreshed slideshow"
+msgstr "Slideshow com atualização automática"
+
+msgctxt "#32034"
+msgid "'%s' is not a folder"
+msgstr "'%s' não é um diretório"
+
+msgctxt "#32035"
+msgid "The server is temporary unavailable for this operation."
+msgstr "O servidor está temporariamente inacessível para essa operação."
+
+msgctxt "#32036"
+msgid "Something went wrong with this operation."
+msgstr "Alguma coisa deu errado com essa operação."
+
+msgctxt "#32037"
+msgid "File or folder not found. Make sure is still in your drive."
+msgstr "O arquivo ou direttório não foi encontrado. Tenha certeza que o mesmo se encontra no seu drive."
+
+msgctxt "#32038"
+msgid "Please try again later."
+msgstr "Por favor tente nnovamente mais tarde."
+
+msgctxt "#32039"
+msgid "Search..."
+msgstr "Buscar..."
+
+msgctxt "#32040"
+msgid "Searching '%s', please wait..."
+msgstr "Buscando '%s', por favor aguarde..."
+
+msgctxt "#32041"
+msgid "Processing results, please wait..."
+msgstr "Processando resultados, por favor aguarde..."
+
+msgctxt "#32042"
+msgid "Enter text to search:"
+msgstr "Entre um texto para procurar:"
+
+msgctxt "#32043"
+msgid "Something happened with the request%s."
+msgstr "Alguma coisa aconteceu com a requisição%s."
+
+msgctxt "#32044"
+msgid "Will try in %s seconds."
+msgstr "Tentará em %s segundos."
+
+msgctxt "#32045"
+msgid "Attempt %s of %s."
+msgstr "Tentativa %s de %s."
+
+msgctxt "#32046"
+msgid "The credentials for '%s' are no longer valid. You need to sign in again.%sDo you want to start the process?"
+msgstr "As credenciais para '%s' não sao mais válidas. Você precisa autenticar novamente.%sGostaria de iniciar o processo?"
+
+msgctxt "#32047"
+msgid "%s of %s items loaded, please wait..."
+msgstr "%s de %s itens carregados, por favor aguarde..."
+
+msgctxt "#32048"
+msgid "%s items loaded, please wait..."
+msgstr "%s itens carregados, por favor aguarde..."
+
+msgctxt "#32049"
+msgid "Loading %s items in this folder, please wait..."
+msgstr "Carregando %s itens nesse diretório, por favor espere..."
+
+msgctxt "#32050"
+msgid "Do you want to help reporting errors to resolve them quickly?"
+msgstr "Gostaria de ajudar a reportar erros para resolver-los rapidamente?"
+
+msgctxt "#32052"
+msgid "Files"
+msgstr "Arquivos"
+
+msgctxt "#32053"
+msgid "Recent"
+msgstr "Recente"
+
+msgctxt "#32054"
+msgid "-unused- Documents"
+msgstr "-unused- Documentos"
+
+msgctxt "#32055"
+msgid "-unused- Special: Photos"
+msgstr "-unused- Especial: Fotos"
+
+msgctxt "#32056"
+msgid "-unused- Special: Music"
+msgstr "-unused- Especial: Musica"
+
+msgctxt "#32057"
+msgid "-unused- Shared By Me"
+msgstr "-unused- Compartilhado por mim"
+
+msgctxt "#32058"
+msgid "Shared With Me"
+msgstr "Compartilhado comigo"
+
+msgctxt "#32059"
+msgid "Exporting task already in progress."
+msgstr "Exportação já está em progresso."
+
+msgctxt "#32060"
+msgid "Searching subtitle file %s, please wait..."
+msgstr "Procurando arquivo de legendas %s, por favor espere..."
+
+msgctxt "#32061"
+msgid "Subtitle found! Playing this video with subtitle..."
+msgstr "Legenda encontrada! Tocando esse video com legenda..."
+
+msgctxt "#32062"
+msgid "Subtitle not found for this video"
+msgstr "Legenda não encontrada para esse video."
+
+msgctxt "#32063"
+msgid "This account or drive is not registered.%sDo you want to add an account?"
+msgstr "Essa conta ou drive não está registrada.%sGostaria de adicionar uma conta?"
+
+msgctxt "#32064"
+msgid "Retrieving owner information..."
+msgstr "Recuperando iformações do dono..."
+
+msgctxt "#32065"
+msgid "Unable to retrieve the owner information:"
+msgstr "Não foi possível recuperar as informações do dono:"
+
+msgctxt "#32066"
+msgid "Unable to remove previous files and folders in %s"
+msgstr "Não foi possível remover os arquivos e diretórios em %s"
+
+msgctxt "#32067"
+msgid "Services"
+msgstr "Serviços"
+
+msgctxt "#32068"
+msgid "Allow cloud drive addons to be used as a source"
+msgstr "Permitir que os cloud drive addons sejam usados como fonte"
+
+msgctxt "#32069"
+msgid "     Source server port  -  http://localhost:<port>/source"
+msgstr "     Fonte servidor porta  -  http://localhost:<porta>/source"
+
+msgctxt "#32070"
+msgid "There are no accounts added in %s."
+msgstr "Não há contas adicionadas em %s."
+
+msgctxt "#32071"
+msgid "Go to [Add-ons > %s > Add an account...] to add one."
+msgstr "Vá paara [Add-ons > %s > adicionar uma conta...] para adicionar uma."

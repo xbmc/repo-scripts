@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+    <setting id="RotateTime"  type="enum"   label="32002" default="0"           values="30s|60s|120s|240s"/>
+    <setting id="Animate"     type="bool"   label="32003" default="false"/>
+    <setting id="Time"        type="bool"   label="32004" default="true"/>
+    <setting id="Resolution"  type="enum"   label="32010" default="1"           values="1280x720|1920x1080|3840x2160"/>
+    <setting id="PhotoType"   type="enum"   label="32005" default="0"           values="Featured|Random|User|Collection"/>
+    <setting id="Enable_Keys" type="bool"   label="32006" default="false"       visible="eq(-1,0)|eq(-1,1)"/>
+    <setting id="Keywords"    type="text"   label="32007" default="City,Night"  visible="eq(-1,true) + lt(-2,2)" subsetting="true"/>
+    <setting id="User"        type="text"   label="32008" default="@jeisblack"  visible="eq(-3,2)"               subsetting="true"/>
+    <setting id="Collection"  type="text"   label="32009" default="1007074"     visible="eq(-4,3)"               subsetting="true"/>
+    
+</settings>
+        

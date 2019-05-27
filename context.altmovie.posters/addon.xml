@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="context.altmovie.posters" name="Alternative Movie Posters" version="1.0.1" provider-name="Lunatixz">
+    <requires>
+        <import addon="xbmc.python" version="2.25.0"/>
+        <import addon="script.module.simplecache" version="1.0.0"/>
+        <import addon="script.module.beautifulsoup4" version="4.3.2"/>
+    </requires>
+    <extension point="kodi.context.item" library="capture.py">
+        <item>
+            <label>32000</label>
+            <visible>String.IsEqual(ListItem.dbtype,movie)</visible>
+        </item>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <news>v.1.0.1[CR]-Corrected website change.</news>
+        <summary lang="en_GB">The world's largest curated collection of Alternative Movie Posters.</summary>
+        <description lang="en_GB"></description>
+        <platform>all</platform>
+        <license>GNU GENERAL PUBLIC LICENSE. Version 3, June 2007</license>
+        <source>https://github.com/Lunatixz/KODI_Addons/tree/master/context.altmovie.posters</source>
+        <website>https://alternativemovieposters.com/</website>
+        <forum>https://forum.kodi.tv/showthread.php?tid=331142</forum>
+        <assets>
+            <icon>resources/images/icon.png</icon>
+            <fanart>resources/images/fanart.jpg</fanart>
+            <screenshot>resources/images/screenshot01.png</screenshot>
+            <screenshot>resources/images/screenshot02.png</screenshot>
+            <screenshot>resources/images/screenshot03.png</screenshot>
+        </assets>
+    </extension>
+</addon>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<settings>
+    <category label="32001">
+        <setting id="testlength"             label="32011" type="slider" default="30" range="1,1,60" option="int" />
+        <setting id="testconcurrently"       label="32012" type="bool"   default="true" />
+        <setting id="nearby_internet_server" label="32013" type="text"   default="facebook.com" />
+	</category>
+</settings>
+

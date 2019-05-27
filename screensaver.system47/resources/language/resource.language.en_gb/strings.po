@@ -1,0 +1,37 @@
+# XBMC Media Center language file
+# Addon Name: System 47 - Star Trek LCARS ScreenSaver
+# Addon id: screensaver.system47
+# Addon Provider: Lunatixz
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To:  \n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: English"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#32000"
+msgid "Random Start Position"
+msgstr ""
+
+msgctxt "#32001"
+msgid "Download video (1.2GB)"
+msgstr ""
+
+msgctxt "#30001"
+msgid "Something went wrong, Try again..."
+msgstr ""
+
+msgctxt "#30002"
+msgid "Downloading..."
+msgstr ""
+
+msgctxt "#30003"
+msgid "Mute ScreenSaver"
+msgstr ""

@@ -217,7 +217,7 @@
 					<textwidth>320</textwidth>
 					<textcolor>white</textcolor>
 					<invalidcolor>invalid</invalidcolor>
-				<label>$ADDON[script.reddit.reader 32052]</label>
+				<label>$ADDON[script.reddit.reader 32015]</label>
 				<onclick></onclick>
 			</control>
 

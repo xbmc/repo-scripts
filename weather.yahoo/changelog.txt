@@ -1,3 +1,24 @@
+v5.0.5
+- fix url. thx olympus
+
+v5.0.4
+- fix hourly wind direction
+
+v5.0.3
+- cosmetics
+
+v5.0.2
+- fix crash when speed is set to Beaufort
+
+v5.0.1
+- fix crash when speed is set to Beaufort
+
+v5.0.0
+- new version, old api closed
+
+v4.3.2
+- move repo to gitlab
+
 v4.3.1
 - retry to fetch weather a few times
 

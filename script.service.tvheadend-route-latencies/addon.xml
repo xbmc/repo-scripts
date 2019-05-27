@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.service.tvheadend-route-latencies"
+       name="Tvheadend route latencies"
+       version="1.0.0"
+       provider-name="iwis">
+    <requires>
+        <import addon="xbmc.python" version="2.25.0" />
+        <import addon="script.module.pyxbmct" version="1.1.4" />		
+        <import addon="script.module.requests" version="1.1.0" />
+        <import addon="pvr.hts" version="3.4.17" />		
+    </requires>
+    <extension point="xbmc.python.script" library="default.py" />
+    <extension point="xbmc.addon.metadata">
+        <summary lang="en_GB">Checks quality of Kodi's and Tvheadend's local networks</summary>
+        <summary lang="pl_PL">Sprawdza jakość sieci lokalnych Kodi i Tvheadend</summary>
+        <description lang="en_GB">Shows latency (RTT) and packets loss to consecutive steps on the way from Kodi to Tvheadend server. Use it when network issues cause problems during watching TV streamed from Tvheadend. The problem can be in: Kodi's local network, connection between Kodi's local network and its ISP, connection between Tvheadend's local network and its ISP, Tvheadend's local network or the route between both ISPs. You will have a clue where is the problem and which network should be fixed. More information on: github.com/iwis/script.service.tvheadend-route-latencies</description>
+        <description lang="pl_PL">Pokazuje jakie jest opóźnienie (RTT) oraz straty pakietów na poszczególnych elementach drogi od Kodi do Tvheadend. Użyj wtyczki gdy sieć powoduje problemy z oglądaniem TV z Tvheadend. Problem może być w: sieci lokalnej Kodi, podłączeniu sieci lokalnej Kodi do Internetu, podłączeniu sieci lokalnej Tvheadend do Internetu, sieci lokalnej Tvheadend lub w pozostałej części Internetu. Będziesz wiedział gdzie jest problem i którą sieć naprawić. Więcej informacji na: github.com/iwis/script.service.tvheadend-route-latencies</description>
+        <platform>windx linux android</platform>
+        <license>GNU GENERAL PUBLIC LICENSE. Version 3, June 2007</license>
+        <source>https://github.com/iwis/script.service.tvheadend-route-latencies</source>
+        <forum></forum>
+        <email></email>
+        <assets>
+            <icon>resources/icon.png</icon>
+            <screenshot>resources/screenshot-01.jpg</screenshot>
+            <screenshot>resources/screenshot-02.jpg</screenshot>
+        </assets>
+    </extension>
+</addon>
+
