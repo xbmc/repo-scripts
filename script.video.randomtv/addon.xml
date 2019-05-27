@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.video.randomtv" name="RandomTV" version="1.2.0" provider-name="gmccauley">
+<addon id="script.video.randomtv" name="RandomTV" version="1.2.1" provider-name="gmccauley">
   <requires>
     <import addon="xbmc.python" version="2.25.0"/>
   </requires>
@@ -32,11 +32,11 @@ It will also add a context menu item so that you can play a specific show or sea
     <language></language>
     <platform>all</platform>
     <license>GNU General Public License, v2</license>
-    <forum>http://forum.kodi.tv/showthread.php?tid=310494</forum>
-    <website></website>
-    <email></email>
+    <forum>https://forum.kodi.tv/showthread.php?tid=310494</forum>
     <source>https://github.com/gmccauley/script.video.randomtv</source>
     <news>
+v1.2.1 (27 May 2019)
+  - Updated addon.xml
 v1.2.0 (26 May 2019)
   - Added Context Menu Item to play tv shows or seasons with RandomTV
 v1.1.2 (2 May 2017)
@@ -67,7 +67,6 @@ v0.1 (25 March 2017)
     <assets>
         <icon>resources/icon.png</icon>
         <fanart>resources/fanart.jpg</fanart>
-        <screenshot></screenshot>
     </assets>
   </extension>
 </addon>
