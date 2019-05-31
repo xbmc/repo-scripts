@@ -1,3 +1,6 @@
+v1.4.1 (2019-06-01)
+- change definitions URL to update directly from SubsMangler master branch
+- fix creating data-dir before initiating external log file
 v1.4.0 (2019-04-06)
 - support for subtitles for internet streams
 v1.3.1 (2019-04-01)
