@@ -7,8 +7,11 @@ A class for working with DRM
 
 from __future__ import absolute_import
 import sys as _sys
-from xbmcdrm import *
-from .utils import PY2 as _PY2, patch_module as _patch_module
+from .utils import PY2 as _PY2, ModuleWrapper as _ModuleWrapper
 
 if _PY2:
-    _patch_module(_sys.modules[__name__])
+    import xbmcdrm as _xbmcdrm
+    _wrapped_xbmcdrm = _ModuleWrapper(_xbmcdrm)
+    _sys.modules[__name__] = _wrapped_xbmcdrm
+else:
+    from xbmcdrm import *
