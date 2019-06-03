@@ -1,6 +1,16 @@
 Changes
 =======
 
+1.25.3 (2019-05-23)
+-------------------
+
+* Change ``HTTPSConnection`` to load system CA certificates
+  when ``ca_certs``, ``ca_cert_dir``, and ``ssl_context`` are
+  unspecified. (Pull #1608, Issue #1603)
+
+* Upgrade bundled rfc3986 to v1.3.2. (Pull #1609, Issue #1605)
+
+
 1.25.2 (2019-04-28)
 -------------------
 
@@ -45,6 +55,10 @@ Changes
 
 * Implemented a more efficient ``HTTPResponse.__iter__()`` method. (Issue #1483)
 
+1.24.3 (2019-05-01)
+-------------------
+
+* Apply fix for CVE-2019-9740. (Pull #1591)
 
 1.24.2 (2019-04-17)
 -------------------
