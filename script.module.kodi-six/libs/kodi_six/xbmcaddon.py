@@ -7,8 +7,11 @@ A class for accessing addon properties
 
 from __future__ import absolute_import
 import sys as _sys
-from xbmcaddon import *
-from .utils import PY2 as _PY2, patch_module as _patch_module
+from .utils import PY2 as _PY2, ModuleWrapper as _ModuleWrapper
 
 if _PY2:
-    _patch_module(_sys.modules[__name__])
+    import xbmcaddon as _xbmcaddon
+    _wrapped_xbmcaddon = _ModuleWrapper(_xbmcaddon)
+    _sys.modules[__name__] = _wrapped_xbmcaddon
+else:
+    from xbmcaddon import *
