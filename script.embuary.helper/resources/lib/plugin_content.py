@@ -291,6 +291,7 @@ class PluginContent(object):
                 episode_query = json_call('VideoLibrary.GetEpisodes',
                             properties=episode_properties,
                             sort=self.sort_recent,limit=1,
+                            query_filter=self.unplayed_filter,
                             params={'tvshowid': int(tvshow['tvshowid'])}
                             )
 
