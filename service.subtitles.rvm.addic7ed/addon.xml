@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <addon id="service.subtitles.rvm.addic7ed"
   name="Addic7ed.com"
-  version="3.0.4"
+  version="3.1.0"
   provider-name="Roman V.M.">
 <requires>
   <import addon="xbmc.python" version="2.25.0"/>
   <import addon="script.module.beautifulsoup4"/>
   <import addon="script.module.html5lib"/>
   <import addon="script.module.requests"/>
-  <import addon="script.module.future"/>
+  <import addon="script.module.six"/>
   <import addon="script.module.kodi-six"/>
   <!--<import addon="script.module.web-pdb"/>-->
 </requires>
@@ -27,11 +27,10 @@
     <icon>icon.png</icon>
     <fanart>fanart.jpg</fanart>
   </assets>
-  <news>v.3.0.4:
-- Synced subs are shown first in the list.
-- Unfinished translations are hidden from users that aren't logged in.
-- Fixed parsing translated episode pages (non-English).
-- Fixed re-synced subtitles marked as "sync".</news>
+  <news>v.3.1.0:
+- Removed login feature because of changes on Addic7ed.com.
+- Fixed exception when a filename contained a non-ASCII character.
+- Various optimizations.</news>
   <reuselanguageinvoker>false</reuselanguageinvoker>
 </extension>
 </addon>

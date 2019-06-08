@@ -2,9 +2,5 @@
 <settings>
   <category label="128">
     <setting id="use_filename" type="bool" label="32007" default="false" />
-    <setting id="do_login" type="bool" label="32010" default="false" />
-    <setting label="32011" type="text" id="username" visible="eq(-1,true)" />
-    <setting label="32012" type="text" id="password" option="hidden" visible="eq(-2,true)" />
-    <setting label="32013" type="action" action="RunScript($CWD/logout.py)" visible="eq(-3,true)" />
   </category>
 </settings>

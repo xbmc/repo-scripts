@@ -3,16 +3,13 @@
 # Author: Roman Miroshnychenko aka Roman V.M. (roman1972@gmail.com)
 
 from __future__ import absolute_import, unicode_literals
-from future import standard_library
-from future.builtins import str, dict
-standard_library.install_aliases()
-
 import os
 import sys
 import re
 import shutil
 from collections import namedtuple
-from urllib import parse as urlparse
+from six import PY2
+from six.moves import urllib_parse as urlparse
 from kodi_six import xbmc, xbmcplugin, xbmcgui, xbmcvfs
 from . import parser
 from .addon import addon, profile, get_ui_string, icon
@@ -27,7 +24,7 @@ temp_dir = os.path.join(profile, 'temp')
 handle = int(sys.argv[1])
 
 
-VIDEOFILES = ('.avi', '.mkv', '.mp4', '.ts', '.m2ts', '.mov')
+VIDEOFILES = frozenset(('.avi', '.mkv', '.mp4', '.ts', '.m2ts', '.mov'))
 dialog = xbmcgui.Dialog()
 release_re = re.compile(r'-(.*?)(?:\[.*?\])?\.')
 
@@ -85,7 +82,7 @@ def display_subs(subs_list, episode_url, filename):
         reverse=True
     )
     for item, synced in subs_list:
-        if addon.getSetting('do_login') != 'true' and item.unfinished:
+        if item.unfinished:
             continue
         list_item = xbmcgui.ListItem(label=item.language, label2=item.version)
         list_item.setArt(
@@ -265,6 +262,8 @@ def router(paramstring):
     :type paramstring: str
     """
     # Get plugin call params
+    if PY2:
+        paramstring = urlparse.unquote(paramstring).decode('utf-8')
     params = dict(urlparse.parse_qsl(paramstring))
     if params['action'] in ('search', 'manualsearch'):
         # Search and display subs.
@@ -272,6 +271,6 @@ def router(paramstring):
     elif params['action'] == 'download':
         download_subs(
             params['link'], params['ref'],
-            urlparse.unquote_plus(params['filename'])
+            urlparse.unquote(params['filename'])
         )
     xbmcplugin.endOfDirectory(handle)

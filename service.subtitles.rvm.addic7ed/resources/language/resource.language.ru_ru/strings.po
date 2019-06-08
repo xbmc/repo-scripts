@@ -1,4 +1,4 @@
-﻿# XBMC Media Center language file
+# XBMC Media Center language file
 msgid ""
 msgstr ""
 
