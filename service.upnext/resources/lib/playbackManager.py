@@ -30,6 +30,7 @@ class PlaybackManager:
             return
         self.log("episode details %s" % json.dumps(episode), 2)
         self.launch_popup(episode)
+        self.api.reset_addon_data()
 
     def launch_popup(self, episode):
         episode_id = episode["episodeid"]
@@ -43,7 +44,9 @@ class PlaybackManager:
             should_play_default, should_play_non_default = (
                 self.extract_play_info(next_up_page, showing_next_up_page, showing_still_watching_page,
                                        still_watching_page, total_time))
-
+            if not self.state.track:
+                self.log("exit launch_popup early due to disabled tracking", 2)
+                return
             play_item_option_1 = (should_play_default and self.state.playMode == "0")
             play_item_option_2 = (should_play_non_default and self.state.playMode == "1")
             if play_item_option_1 or play_item_option_2:
@@ -91,13 +94,13 @@ class PlaybackManager:
             try:
                 play_time = self.player.getTime()
                 total_time = self.player.getTotalTime()
-                if showing_next_up_page:
-                    next_up_page.updateProgressControl()
-                elif showing_still_watching_page:
-                    still_watching_page.updateProgressControl()
+                if not self.state.pause:
+                    if showing_next_up_page:
+                        next_up_page.updateProgressControl()
+                    elif showing_still_watching_page:
+                        still_watching_page.updateProgressControl()
             except Exception as e:
                 self.log("error show_popup_and_wait  %s" % repr(e), 1)
-                pass
         return showing_next_up_page, showing_still_watching_page, total_time
 
     def extract_play_info(self, next_up_page, showing_next_up_page, showing_still_watching_page, still_watching_page,
@@ -108,15 +111,14 @@ class PlaybackManager:
             if next_up_page.isWatchNow() or still_watching_page.isStillWatching():
                 self.state.played_in_a_row = 1
             should_play_default = not next_up_page.isCancel()
+            should_play_non_default = next_up_page.isWatchNow()
         else:
             if showing_next_up_page:
                 next_up_page.close()
-                utils.window('service.upnext.dialog', clear=True)
                 should_play_default = not next_up_page.isCancel()
                 should_play_non_default = next_up_page.isWatchNow()
             elif showing_still_watching_page:
                 still_watching_page.close()
-                utils.window('service.upnext.dialog', clear=True)
                 should_play_default = still_watching_page.isStillWatching()
                 should_play_non_default = still_watching_page.isStillWatching()
 
@@ -124,4 +126,5 @@ class PlaybackManager:
                 self.state.played_in_a_row = 1
             else:
                 self.state.played_in_a_row += 1
+        utils.window('service.upnext.dialog', clear=True)
         return should_play_default, should_play_non_default

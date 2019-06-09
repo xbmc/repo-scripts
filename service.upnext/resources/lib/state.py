@@ -16,4 +16,6 @@ class State:
         self.current_episode_id = None
         self.tv_show_id = None
         self.played_in_a_row = 1
-
+        self.last_file = None
+        self.track = False
+        self.pause = False

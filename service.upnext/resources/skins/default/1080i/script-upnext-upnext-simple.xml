@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <window>
-    <defaultcontrol always="true">3012</defaultcontrol>
+    <defaultcontrol always="true">20</defaultcontrol>
     <onload>Dialog.Close(fullscreeninfo,true)</onload>
     <onload>Dialog.Close(videoosd,true)</onload>
     <controls>
@@ -27,13 +27,41 @@
                     <left>20</left>
                     <width>75%</width>
                     <!-- Buttons -->
-                    <control type="grouplist">
+                    <control type="button" id="3012">
+                        <left>-1000</left>
+                        <top>-1000</top>
+                        <height>1</height>
+                        <width>1</width>
+                    </control>
+                    <control type="grouplist" id="20">
                         <orientation>horizontal</orientation>
                         <height>56</height>
                         <itemgap>10</itemgap>
                         <align>left</align>
-                        <control type="button" id="3012">
+                        <control type="button" id="10">
+                            <label>    $ADDON[service.upnext 30049]</label>
+                            <onclick>SendClick(3012)</onclick>
+                            <visible>Integer.IsGreater(Player.TimeRemaining,59)</visible>
+                            <height>56</height>
+                            <width min="50">auto</width>
+                            <font>font20_title</font>
+                            <textoffsetx>55</textoffsetx>
+                            <textcolor>ddffffff</textcolor>
+                            <focusedcolor>eeffffff</focusedcolor>
+                            <selectedcolor>ddffffff</selectedcolor>
+                            <shadowcolor>22000000</shadowcolor>
+                            <aligny>center</aligny>
+                            <align>center</align>
+                            <texturefocus border="10" colordiffuse="FF172A91">button.png</texturefocus>
+                            <texturenofocus border="10" colordiffuse="FF212121">button.png</texturenofocus>
+                            <alttexturefocus border="10" colordiffuse="FF172A91">button.png</alttexturefocus>
+                            <alttexturenofocus border="10" colordiffuse="FF212121">button.png</alttexturenofocus>
+                            <pulseonselect>no</pulseonselect>
+                        </control>
+                        <control type="button" id="11">
                             <label>    $ADDON[service.upnext 30037] [COLOR FFFF4081]$INFO[Player.TimeRemaining(ss),,][/COLOR] $ADDON[service.upnext 30035]</label>
+                            <onclick>SendClick(3012)</onclick>
+                            <visible>!Integer.IsGreater(Player.TimeRemaining,59)</visible>
                             <height>56</height>
                             <width min="50">auto</width>
                             <font>font20_title</font>
@@ -75,7 +103,7 @@
                         <aspect>keep</aspect>
                         <texture colordiffuse="ddffffff">nextupicons/30.png</texture>
                         <animation effect="slide" end="13,5" time="0" condition="true">Conditional</animation>
-                        <visible>Integer.IsGreater(Player.TimeRemaining(ss),30)</visible>
+                        <visible>Integer.IsGreater(Player.TimeRemaining,30)</visible>
                     </control>
                     <control type="image">
                         <width>46</width>
@@ -83,7 +111,7 @@
                         <aspect>keep</aspect>
                         <texture colordiffuse="ddffffff">$INFO[Player.TimeRemaining(ss),nextupicons/,.png]</texture>
                         <animation effect="slide" end="13,5" time="0" condition="true">Conditional</animation>
-                        <visible>!Integer.IsGreater(Player.TimeRemaining(ss),30)</visible>
+                        <visible>!Integer.IsGreater(Player.TimeRemaining,30)</visible>
                     </control>
                 </control>
             </control>
