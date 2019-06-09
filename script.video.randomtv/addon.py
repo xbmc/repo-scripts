@@ -118,32 +118,69 @@ backWindow.show()
 
 
 # Get TV Episodes
-if addon.getSetting("IncludeAll") == "true":
-	command = '{"jsonrpc": "2.0", "method": "VideoLibrary.GetTVShows", "id": 1}'
-	allShows = json.loads(xbmc.executeJSONRPC(command))
+if hasattr(sys, 'listitem'):
+	log("--------- Context Menu Selected")
+	log("-- Item Label: " + sys.listitem.getLabel())
+
+	selectedPath = sys.listitem.getPath()
+	log("-- Item Path: " + selectedPath)
+
+	if "inprogresstvshows" in selectedPath:
+		log("-- Selected from In Progress")
+		selectedShow = selectedPath.split('/')[3]
+		selectedSeason = selectedPath.split('/')[4]
+	elif "tvshows" in selectedPath:
+		log("-- Selected from TV Shows")
+		selectedShow = selectedPath.split('/')[4]
+		selectedSeason = selectedPath.split('/')[5]
 	
-	if allShows['result']['limits']['total'] > 0:
-		for show in allShows['result']['tvshows']:
-			command = '{"jsonrpc": "2.0", "method": "VideoLibrary.GetEpisodes", "params": { "tvshowid": %d, "properties": ["showtitle", "file", "playcount", "lastplayed", "resume"] }, "id": 1}' % (show['tvshowid'])
+	if selectedSeason == "": selectedSeason = "-1"
+	selectedSeason = int(selectedSeason)
+	selectedShow = int(selectedShow)
+	
+	log("-- Show ID: " + str(selectedShow))
+	log("-- Season: " + str(selectedSeason))
+		
+	if selectedSeason > 0:
+		command = '{"jsonrpc": "2.0", "method": "VideoLibrary.GetEpisodes", "params": { "tvshowid": %d, "season": %d, "properties": ["showtitle", "file", "playcount", "lastplayed", "resume"] }, "id": 1}' % (selectedShow, selectedSeason)
+	else:
+		command = '{"jsonrpc": "2.0", "method": "VideoLibrary.GetEpisodes", "params": { "tvshowid": %d, "properties": ["showtitle", "file", "playcount", "lastplayed", "resume"] }, "id": 1}' % selectedShow
+		
+	returnedEpisodes = json.loads(xbmc.executeJSONRPC(command))
+	if returnedEpisodes['result']['limits']['total'] > 0:
+		for episode in returnedEpisodes['result']['episodes']:
+			if addon.getSetting("IncludeUnwatched") == "true" or episode['playcount'] > 0:
+				log("Added Episode: " + str(episode['episodeid']) + " -- " + episode['showtitle'].encode('utf-8').strip() + " - " + episode['label'].encode('utf-8').strip())
+				myEpisodes.append({'episodeId': episode['episodeid'], 'episodeShow': episode['showtitle'].encode('utf-8').strip(), 'episodeName': episode['label'].encode('utf-8').strip(), 'episodeFile': episode['file'].encode('utf-8').strip(), 'playCount': episode['playcount'], 'lastPlayed': episode['lastplayed'], 'resume': episode['resume']})	
+else:
+	log("--------- Started App from Addon Menu")
+	if addon.getSetting("IncludeAll") == "true":
+		command = '{"jsonrpc": "2.0", "method": "VideoLibrary.GetTVShows", "id": 1}'
+		allShows = json.loads(xbmc.executeJSONRPC(command))
+	
+		if allShows['result']['limits']['total'] > 0:
+			for show in allShows['result']['tvshows']:
+				command = '{"jsonrpc": "2.0", "method": "VideoLibrary.GetEpisodes", "params": { "tvshowid": %d, "properties": ["showtitle", "file", "playcount", "lastplayed", "resume"] }, "id": 1}' % (show['tvshowid'])
+				allEpisodes = json.loads(xbmc.executeJSONRPC(command))
+			
+				if allEpisodes['result']['limits']['total'] > 0:
+					for episode in allEpisodes['result']['episodes']:
+						if addon.getSetting("IncludeUnwatched") == "true" or episode['playcount'] > 0:
+							log("Added Episode: " + str(episode['episodeid']) + " -- " + episode['showtitle'].encode('utf-8').strip() + " - " + episode['label'].encode('utf-8').strip())
+							#log("Added Episode: " + episode['label'].encode('utf-8').strip())
+							myEpisodes.append({'episodeId': episode['episodeid'], 'episodeShow': episode['showtitle'].encode('utf-8').strip(), 'episodeName': episode['label'].encode('utf-8').strip(), 'episodeFile': episode['file'].encode('utf-8').strip(), 'playCount': episode['playcount'], 'lastPlayed': episode['lastplayed'], 'resume': episode['resume']})
+	else:
+		for includedShow in map(int, includedShows.split(", ")):
+			command = '{"jsonrpc": "2.0", "method": "VideoLibrary.GetEpisodes", "params": { "tvshowid": %d, "properties": ["showtitle", "file", "playcount", "lastplayed", "resume"] }, "id": 1}' % includedShow
 			allEpisodes = json.loads(xbmc.executeJSONRPC(command))
 			
 			if allEpisodes['result']['limits']['total'] > 0:
 				for episode in allEpisodes['result']['episodes']:
 					if addon.getSetting("IncludeUnwatched") == "true" or episode['playcount'] > 0:
-						log("Added Episode: " + episode['label'].encode('utf-8').strip())
+						log("Added Episode: " + str(episode['episodeid']) + " -- " + episode['showtitle'].encode('utf-8').strip() + " - " + episode['label'].encode('utf-8').strip())
+						#log("Added Episode: " + episode['label'].encode('utf-8').strip())
 						myEpisodes.append({'episodeId': episode['episodeid'], 'episodeShow': episode['showtitle'].encode('utf-8').strip(), 'episodeName': episode['label'].encode('utf-8').strip(), 'episodeFile': episode['file'].encode('utf-8').strip(), 'playCount': episode['playcount'], 'lastPlayed': episode['lastplayed'], 'resume': episode['resume']})
-else:
-	for includedShow in map(int, includedShows.split(", ")):
-		command = '{"jsonrpc": "2.0", "method": "VideoLibrary.GetEpisodes", "params": { "tvshowid": %d, "properties": ["showtitle", "file", "playcount", "lastplayed", "resume"] }, "id": 1}' % includedShow
-		allEpisodes = json.loads(xbmc.executeJSONRPC(command))
-			
-		if allEpisodes['result']['limits']['total'] > 0:
-			for episode in allEpisodes['result']['episodes']:
-				if addon.getSetting("IncludeUnwatched") == "true" or episode['playcount'] > 0:
-					log("Added Episode: " + episode['label'].encode('utf-8').strip())
-					myEpisodes.append({'episodeId': episode['episodeid'], 'episodeShow': episode['showtitle'].encode('utf-8').strip(), 'episodeName': episode['label'].encode('utf-8').strip(), 'episodeFile': episode['file'].encode('utf-8').strip(), 'playCount': episode['playcount'], 'lastPlayed': episode['lastplayed'], 'resume': episode['resume']})
-		
-
+#		
 log("Total Episodes: " + str(len(myEpisodes)))
 
 
@@ -152,6 +189,9 @@ if len(myEpisodes) == 0:
 	log("--------- No episodes")
 	xbmcgui.Dialog().ok(name, addon.getLocalizedString(32008), addon.getLocalizedString(32009))
 	xbmc.executebuiltin('Addon.OpenSettings(%s)' % addonid)
+	backWindow.close()
+	log("Stopping")
+	log("-------------------------------------------------------------------------")
 	quit()
 else:
 	log("--------- Episodes Found")
