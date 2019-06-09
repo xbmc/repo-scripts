@@ -23,6 +23,22 @@ __version__ = __addon__.getAddonInfo('version')
 __addonlang__ = __addon__.getLocalizedString
 __kodiversion__ = xbmc.getInfoLabel('System.BuildVersion')[:4]
 
+
+
+# prepare datadir
+# directory and file is local to the filesystem
+# no need to use xbmcvfs
+if not os.path.isdir(__addonworkdir__):
+    xbmc.log("SubsMangler: profile directory doesn't exist: " + __addonworkdir__.encode('utf-8') + "   Trying to create.", level=xbmc.LOGNOTICE)
+    try:
+        os.mkdir(__addonworkdir__)
+        xbmc.log("SubsMangler: profile directory created: " + __addonworkdir__.encode('utf-8'), level=xbmc.LOGNOTICE)
+    except OSError as e:
+        xbmc.log("SubsMangler: Log: can't create directory: " + __addonworkdir__.encode('utf-8'), level=xbmc.LOGERROR)
+        xbmc.log("Exception: " + str(e.message).encode('utf-8'), xbmc.LOGERROR)
+
+
+
 # prepare external log handler
 # https://docs.python.org/2/library/logging.handlers.html
 global logger
