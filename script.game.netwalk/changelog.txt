@@ -1,4 +1,7 @@
-0.0.5 (81.01.2014)
+0.0.6 (21.10.2018)
+ - added add-on to new games category in add-on manager
+
+0.0.5 (18.01.2014)
  - fixed translations in gotham
 
 0.0.4 (28.08.2013)
