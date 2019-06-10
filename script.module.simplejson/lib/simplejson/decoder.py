@@ -4,7 +4,7 @@ from __future__ import absolute_import
 import re
 import sys
 import struct
-from .compat import fromhex, b, u, text_type, binary_type, PY3, unichr
+from .compat import PY3, unichr
 from .scanner import make_scanner, JSONDecodeError
 
 def _import_c_scanstring():
@@ -22,12 +22,12 @@ __all__ = ['JSONDecoder']
 FLAGS = re.VERBOSE | re.MULTILINE | re.DOTALL
 
 def _floatconstants():
-    _BYTES = fromhex('7FF80000000000007FF0000000000000')
-    # The struct module in Python 2.4 would get frexp() out of range here
-    # when an endian is specified in the format string. Fixed in Python 2.5+
-    if sys.byteorder != 'big':
-        _BYTES = _BYTES[:8][::-1] + _BYTES[8:][::-1]
-    nan, inf = struct.unpack('dd', _BYTES)
+    if sys.version_info < (2, 6):
+        _BYTES = '7FF80000000000007FF0000000000000'.decode('hex')
+        nan, inf = struct.unpack('>dd', _BYTES)
+    else:
+        nan = float('nan')
+        inf = float('inf')
     return nan, inf, -inf
 
 NaN, PosInf, NegInf = _floatconstants()
@@ -40,14 +40,14 @@ _CONSTANTS = {
 
 STRINGCHUNK = re.compile(r'(.*?)(["\\\x00-\x1f])', FLAGS)
 BACKSLASH = {
-    '"': u('"'), '\\': u('\u005c'), '/': u('/'),
-    'b': u('\b'), 'f': u('\f'), 'n': u('\n'), 'r': u('\r'), 't': u('\t'),
+    '"': u'"', '\\': u'\\', '/': u'/',
+    'b': u'\b', 'f': u'\f', 'n': u'\n', 'r': u'\r', 't': u'\t',
 }
 
 DEFAULT_ENCODING = "utf-8"
 
 def py_scanstring(s, end, encoding=None, strict=True,
-        _b=BACKSLASH, _m=STRINGCHUNK.match, _join=u('').join,
+        _b=BACKSLASH, _m=STRINGCHUNK.match, _join=u''.join,
         _PY3=PY3, _maxunicode=sys.maxunicode):
     """Scan the string s for a JSON string. End is the index of the
     character in s after the quote that started the JSON string.
@@ -71,8 +71,8 @@ def py_scanstring(s, end, encoding=None, strict=True,
         content, terminator = chunk.groups()
         # Content is contains zero or more unescaped string characters
         if content:
-            if not _PY3 and not isinstance(content, text_type):
-                content = text_type(content, encoding)
+            if not _PY3 and not isinstance(content, unicode):
+                content = unicode(content, encoding)
             _append(content)
         # Terminator is the end of string, a literal control character,
         # or a backslash denoting that an escape sequence follows
@@ -281,7 +281,7 @@ class JSONDecoder(object):
     +---------------+-------------------+
     | array         | list              |
     +---------------+-------------------+
-    | string        | unicode           |
+    | string        | str, unicode      |
     +---------------+-------------------+
     | number (int)  | int, long         |
     +---------------+-------------------+
@@ -365,8 +365,8 @@ class JSONDecoder(object):
         instance containing a JSON document)
 
         """
-        if _PY3 and isinstance(s, binary_type):
-            s = s.decode(self.encoding)
+        if _PY3 and isinstance(s, bytes):
+            s = str(s, self.encoding)
         obj, end = self.raw_decode(s)
         end = _w(s, end).end()
         if end != len(s):
@@ -384,6 +384,17 @@ class JSONDecoder(object):
         have extraneous data at the end.
 
         """
-        if _PY3 and not isinstance(s, text_type):
+        if idx < 0:
+            # Ensure that raw_decode bails on negative indexes, the regex
+            # would otherwise mask this behavior. #98
+            raise JSONDecodeError('Expecting value', s, idx)
+        if _PY3 and not isinstance(s, str):
             raise TypeError("Input string must be text, not bytes")
+        # strip UTF-8 bom
+        if len(s) > idx:
+            ord0 = ord(s[idx])
+            if ord0 == 0xfeff:
+                idx += 1
+            elif ord0 == 0xef and s[idx:idx + 3] == '\xef\xbb\xbf':
+                idx += 3
         return self.scan_once(s, idx=_w(s, idx).end())

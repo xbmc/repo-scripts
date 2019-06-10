@@ -3,8 +3,9 @@
 from __future__ import absolute_import
 import re
 from operator import itemgetter
-from decimal import Decimal
-from .compat import u, unichr, binary_type, string_types, integer_types, PY3
+# Do not import Decimal directly to avoid reload issues
+import decimal
+from .compat import unichr, binary_type, text_type, string_types, integer_types, PY3
 def _import_speedups():
     try:
         from . import _speedups
@@ -13,12 +14,10 @@ def _import_speedups():
         return None, None
 c_encode_basestring_ascii, c_make_encoder = _import_speedups()
 
-from simplejson.decoder import PosInf
+from .decoder import PosInf
+from .raw_json import RawJSON
 
-#ESCAPE = re.compile(ur'[\x00-\x1f\\"\b\f\n\r\t\u2028\u2029]')
-# This is required because u() will mangle the string and ur'' isn't valid
-# python3 syntax
-ESCAPE = re.compile(u'[\\x00-\\x1f\\\\"\\b\\f\\n\\r\\t\u2028\u2029]')
+ESCAPE = re.compile(r'[\x00-\x1f\\"]')
 ESCAPE_ASCII = re.compile(r'([\\"]|[^\ -~])')
 HAS_UTF8 = re.compile(r'[\x80-\xff]')
 ESCAPE_DCT = {
@@ -33,21 +32,31 @@ ESCAPE_DCT = {
 for i in range(0x20):
     #ESCAPE_DCT.setdefault(chr(i), '\\u{0:04x}'.format(i))
     ESCAPE_DCT.setdefault(chr(i), '\\u%04x' % (i,))
-for i in [0x2028, 0x2029]:
-    ESCAPE_DCT.setdefault(unichr(i), '\\u%04x' % (i,))
 
 FLOAT_REPR = repr
 
-def encode_basestring(s, _PY3=PY3, _q=u('"')):
+def encode_basestring(s, _PY3=PY3, _q=u'"'):
     """Return a JSON representation of a Python string
 
     """
     if _PY3:
-        if isinstance(s, binary_type):
-            s = s.decode('utf-8')
+        if isinstance(s, bytes):
+            s = str(s, 'utf-8')
+        elif type(s) is not str:
+            # convert an str subclass instance to exact str
+            # raise a TypeError otherwise
+            s = str.__str__(s)
     else:
         if isinstance(s, str) and HAS_UTF8.search(s) is not None:
-            s = s.decode('utf-8')
+            s = unicode(s, 'utf-8')
+        elif type(s) not in (str, unicode):
+            # convert an str subclass instance to exact str
+            # convert a unicode subclass instance to exact unicode
+            # raise a TypeError otherwise
+            if isinstance(s, str):
+                s = str.__str__(s)
+            else:
+                s = unicode.__getnewargs__(s)[0]
     def replace(match):
         return ESCAPE_DCT[match.group(0)]
     return _q + ESCAPE.sub(replace, s) + _q
@@ -58,11 +67,23 @@ def py_encode_basestring_ascii(s, _PY3=PY3):
 
     """
     if _PY3:
-        if isinstance(s, binary_type):
-            s = s.decode('utf-8')
+        if isinstance(s, bytes):
+            s = str(s, 'utf-8')
+        elif type(s) is not str:
+            # convert an str subclass instance to exact str
+            # raise a TypeError otherwise
+            s = str.__str__(s)
     else:
         if isinstance(s, str) and HAS_UTF8.search(s) is not None:
-            s = s.decode('utf-8')
+            s = unicode(s, 'utf-8')
+        elif type(s) not in (str, unicode):
+            # convert an str subclass instance to exact str
+            # convert a unicode subclass instance to exact unicode
+            # raise a TypeError otherwise
+            if isinstance(s, str):
+                s = str.__str__(s)
+            else:
+                s = unicode.__getnewargs__(s)[0]
     def replace(match):
         s = match.group(0)
         try:
@@ -116,12 +137,14 @@ class JSONEncoder(object):
     """
     item_separator = ', '
     key_separator = ': '
+
     def __init__(self, skipkeys=False, ensure_ascii=True,
-            check_circular=True, allow_nan=True, sort_keys=False,
-            indent=None, separators=None, encoding='utf-8', default=None,
-            use_decimal=True, namedtuple_as_object=True,
-            tuple_as_array=True, bigint_as_string=False,
-            item_sort_key=None, for_json=False, ignore_nan=False):
+                 check_circular=True, allow_nan=True, sort_keys=False,
+                 indent=None, separators=None, encoding='utf-8', default=None,
+                 use_decimal=True, namedtuple_as_object=True,
+                 tuple_as_array=True, bigint_as_string=False,
+                 item_sort_key=None, for_json=False, ignore_nan=False,
+                 int_as_string_bitcount=None, iterable_as_array=False):
         """Constructor for JSONEncoder, with sensible defaults.
 
         If skipkeys is false, then it is a TypeError to attempt
@@ -166,7 +189,7 @@ class JSONEncoder(object):
         transformed into unicode using that encoding prior to JSON-encoding.
         The default is UTF-8.
 
-        If use_decimal is true (not the default), ``decimal.Decimal`` will
+        If use_decimal is true (default: ``True``), ``decimal.Decimal`` will
         be supported directly by the encoder. For the inverse, decode JSON
         with ``parse_float=decimal.Decimal``.
 
@@ -176,9 +199,17 @@ class JSONEncoder(object):
         If tuple_as_array is true (the default), tuple (and subclasses) will
         be encoded as JSON arrays.
 
+        If *iterable_as_array* is true (default: ``False``),
+        any object not in the above table that implements ``__iter__()``
+        will be encoded as a JSON array.
+
         If bigint_as_string is true (not the default), ints 2**53 and higher
         or lower than -2**53 will be encoded as strings. This is to avoid the
         rounding that happens in Javascript otherwise.
+
+        If int_as_string_bitcount is a positive number (n), then int of size
+        greater than or equal to 2**n or lower than or equal to -2**n will be
+        encoded as strings.
 
         If specified, item_sort_key is a callable used to sort the items in
         each dictionary. This is useful if you want to sort items other than
@@ -203,10 +234,12 @@ class JSONEncoder(object):
         self.use_decimal = use_decimal
         self.namedtuple_as_object = namedtuple_as_object
         self.tuple_as_array = tuple_as_array
+        self.iterable_as_array = iterable_as_array
         self.bigint_as_string = bigint_as_string
         self.item_sort_key = item_sort_key
         self.for_json = for_json
         self.ignore_nan = ignore_nan
+        self.int_as_string_bitcount = int_as_string_bitcount
         if indent is not None and not isinstance(indent, string_types):
             indent = indent * ' '
         self.indent = indent
@@ -236,7 +269,8 @@ class JSONEncoder(object):
                 return JSONEncoder.default(self, o)
 
         """
-        raise TypeError(repr(o) + " is not JSON serializable")
+        raise TypeError('Object of type %s is not JSON serializable' %
+                        o.__class__.__name__)
 
     def encode(self, o):
         """Return a JSON string representation of a Python data structure.
@@ -250,7 +284,7 @@ class JSONEncoder(object):
         if isinstance(o, binary_type):
             _encoding = self.encoding
             if (_encoding is not None and not (_encoding == 'utf-8')):
-                o = o.decode(_encoding)
+                o = text_type(o, _encoding)
         if isinstance(o, string_types):
             if self.ensure_ascii:
                 return encode_basestring_ascii(o)
@@ -285,10 +319,10 @@ class JSONEncoder(object):
             _encoder = encode_basestring_ascii
         else:
             _encoder = encode_basestring
-        if self.encoding != 'utf-8':
+        if self.encoding != 'utf-8' and self.encoding is not None:
             def _encoder(o, _orig_encoder=_encoder, _encoding=self.encoding):
                 if isinstance(o, binary_type):
-                    o = o.decode(_encoding)
+                    o = text_type(o, _encoding)
                 return _orig_encoder(o)
 
         def floatstr(o, allow_nan=self.allow_nan, ignore_nan=self.ignore_nan,
@@ -304,6 +338,9 @@ class JSONEncoder(object):
             elif o == _neginf:
                 text = '-Infinity'
             else:
+                if type(o) != float:
+                    # See #118, do not trust custom str/repr
+                    o = float(o)
                 return _repr(o)
 
             if ignore_nan:
@@ -315,8 +352,9 @@ class JSONEncoder(object):
 
             return text
 
-
         key_memo = {}
+        int_as_string_bitcount = (
+            53 if self.bigint_as_string else self.int_as_string_bitcount)
         if (_one_shot and c_make_encoder is not None
                 and self.indent is None):
             _iterencode = c_make_encoder(
@@ -324,18 +362,18 @@ class JSONEncoder(object):
                 self.key_separator, self.item_separator, self.sort_keys,
                 self.skipkeys, self.allow_nan, key_memo, self.use_decimal,
                 self.namedtuple_as_object, self.tuple_as_array,
-                self.bigint_as_string, self.item_sort_key,
-                self.encoding, self.for_json, self.ignore_nan,
-                Decimal)
+                int_as_string_bitcount,
+                self.item_sort_key, self.encoding, self.for_json,
+                self.ignore_nan, decimal.Decimal, self.iterable_as_array)
         else:
             _iterencode = _make_iterencode(
                 markers, self.default, _encoder, self.indent, floatstr,
                 self.key_separator, self.item_separator, self.sort_keys,
                 self.skipkeys, _one_shot, self.use_decimal,
                 self.namedtuple_as_object, self.tuple_as_array,
-                self.bigint_as_string, self.item_sort_key,
-                self.encoding, self.for_json,
-                Decimal=Decimal)
+                int_as_string_bitcount,
+                self.item_sort_key, self.encoding, self.for_json,
+                self.iterable_as_array, Decimal=decimal.Decimal)
         try:
             return _iterencode(o, 0)
         finally:
@@ -349,6 +387,11 @@ class JSONEncoderForHTML(JSONEncoder):
     characters &, < and > should be escaped. They cannot be escaped
     with the usual entities (e.g. &amp;) because they are not expanded
     within <script> tags.
+
+    This class also escapes the line separator and paragraph separator
+    characters U+2028 and U+2029, irrespective of the ensure_ascii setting,
+    as these characters are not valid in JavaScript strings (see
+    http://timelessrepo.com/json-isnt-a-javascript-subset).
     """
 
     def encode(self, o):
@@ -366,18 +409,25 @@ class JSONEncoderForHTML(JSONEncoder):
             chunk = chunk.replace('&', '\\u0026')
             chunk = chunk.replace('<', '\\u003c')
             chunk = chunk.replace('>', '\\u003e')
+
+            if not self.ensure_ascii:
+                chunk = chunk.replace(u'\u2028', '\\u2028')
+                chunk = chunk.replace(u'\u2029', '\\u2029')
+
             yield chunk
 
 
 def _make_iterencode(markers, _default, _encoder, _indent, _floatstr,
         _key_separator, _item_separator, _sort_keys, _skipkeys, _one_shot,
         _use_decimal, _namedtuple_as_object, _tuple_as_array,
-        _bigint_as_string, _item_sort_key, _encoding, _for_json,
+        _int_as_string_bitcount, _item_sort_key,
+        _encoding,_for_json,
+        _iterable_as_array,
         ## HACK: hand-optimized bytecode; turn globals into locals
         _PY3=PY3,
         ValueError=ValueError,
         string_types=string_types,
-        Decimal=Decimal,
+        Decimal=None,
         dict=dict,
         float=float,
         id=id,
@@ -386,11 +436,37 @@ def _make_iterencode(markers, _default, _encoder, _indent, _floatstr,
         list=list,
         str=str,
         tuple=tuple,
+        iter=iter,
     ):
+    if _use_decimal and Decimal is None:
+        Decimal = decimal.Decimal
     if _item_sort_key and not callable(_item_sort_key):
         raise TypeError("item_sort_key must be None or callable")
     elif _sort_keys and not _item_sort_key:
         _item_sort_key = itemgetter(0)
+
+    if (_int_as_string_bitcount is not None and
+        (_int_as_string_bitcount <= 0 or
+         not isinstance(_int_as_string_bitcount, integer_types))):
+        raise TypeError("int_as_string_bitcount must be a positive integer")
+
+    def _encode_int(value):
+        skip_quoting = (
+            _int_as_string_bitcount is None
+            or
+            _int_as_string_bitcount < 1
+        )
+        if type(value) not in integer_types:
+            # See #118, do not trust custom str/repr
+            value = int(value)
+        if (
+            skip_quoting or
+            (-1 << _int_as_string_bitcount)
+            < value <
+            (1 << _int_as_string_bitcount)
+        ):
+            return str(value)
+        return '"' + str(value) + '"'
 
     def _iterencode_list(lst, _current_indent_level):
         if not lst:
@@ -416,9 +492,12 @@ def _make_iterencode(markers, _default, _encoder, _indent, _floatstr,
                 first = False
             else:
                 buf = separator
-            if (isinstance(value, string_types) or
-                (_PY3 and isinstance(value, binary_type))):
+            if isinstance(value, string_types):
                 yield buf + _encoder(value)
+            elif _PY3 and isinstance(value, bytes) and _encoding is not None:
+                yield buf + _encoder(value)
+            elif isinstance(value, RawJSON):
+                yield buf + value.encoded_json
             elif value is None:
                 yield buf + 'null'
             elif value is True:
@@ -426,10 +505,7 @@ def _make_iterencode(markers, _default, _encoder, _indent, _floatstr,
             elif value is False:
                 yield buf + 'false'
             elif isinstance(value, integer_types):
-                yield ((buf + str(value))
-                       if (not _bigint_as_string or
-                           (-1 << 53) < value < (1 << 53))
-                           else (buf + '"' + str(value) + '"'))
+                yield buf + _encode_int(value)
             elif isinstance(value, float):
                 yield buf + _floatstr(value)
             elif _use_decimal and isinstance(value, Decimal):
@@ -454,18 +530,22 @@ def _make_iterencode(markers, _default, _encoder, _indent, _floatstr,
                         chunks = _iterencode(value, _current_indent_level)
                 for chunk in chunks:
                     yield chunk
-        if newline_indent is not None:
-            _current_indent_level -= 1
-            yield '\n' + (_indent * _current_indent_level)
-        yield ']'
+        if first:
+            # iterable_as_array misses the fast path at the top
+            yield '[]'
+        else:
+            if newline_indent is not None:
+                _current_indent_level -= 1
+                yield '\n' + (_indent * _current_indent_level)
+            yield ']'
         if markers is not None:
             del markers[markerid]
 
     def _stringify_key(key):
         if isinstance(key, string_types): # pragma: no cover
             pass
-        elif isinstance(key, binary_type):
-            key = key.decode(_encoding)
+        elif _PY3 and isinstance(key, bytes) and _encoding is not None:
+            key = str(key, _encoding)
         elif isinstance(key, float):
             key = _floatstr(key)
         elif key is True:
@@ -475,13 +555,17 @@ def _make_iterencode(markers, _default, _encoder, _indent, _floatstr,
         elif key is None:
             key = 'null'
         elif isinstance(key, integer_types):
+            if type(key) not in integer_types:
+                # See #118, do not trust custom str/repr
+                key = int(key)
             key = str(key)
         elif _use_decimal and isinstance(key, Decimal):
             key = str(key)
         elif _skipkeys:
             key = None
         else:
-            raise TypeError("key " + repr(key) + " is not a string")
+            raise TypeError('keys must be str, int, float, bool or None, '
+                            'not %s' % key.__class__.__name__)
         return key
 
     def _iterencode_dict(dct, _current_indent_level):
@@ -530,9 +614,12 @@ def _make_iterencode(markers, _default, _encoder, _indent, _floatstr,
                 yield item_separator
             yield _encoder(key)
             yield _key_separator
-            if (isinstance(value, string_types) or
-                (_PY3 and isinstance(value, binary_type))):
+            if isinstance(value, string_types):
                 yield _encoder(value)
+            elif _PY3 and isinstance(value, bytes) and _encoding is not None:
+                yield _encoder(value)
+            elif isinstance(value, RawJSON):
+                yield value.encoded_json
             elif value is None:
                 yield 'null'
             elif value is True:
@@ -540,10 +627,7 @@ def _make_iterencode(markers, _default, _encoder, _indent, _floatstr,
             elif value is False:
                 yield 'false'
             elif isinstance(value, integer_types):
-                yield (str(value)
-                       if (not _bigint_as_string or
-                           (-1 << 53) < value < (1 << 53))
-                           else ('"' + str(value) + '"'))
+                yield _encode_int(value)
             elif isinstance(value, float):
                 yield _floatstr(value)
             elif _use_decimal and isinstance(value, Decimal):
@@ -575,9 +659,12 @@ def _make_iterencode(markers, _default, _encoder, _indent, _floatstr,
             del markers[markerid]
 
     def _iterencode(o, _current_indent_level):
-        if (isinstance(o, string_types) or
-            (_PY3 and isinstance(o, binary_type))):
+        if isinstance(o, string_types):
             yield _encoder(o)
+        elif _PY3 and isinstance(o, bytes) and _encoding is not None:
+            yield _encoder(o)
+        elif isinstance(o, RawJSON):
+            yield o.encoded_json
         elif o is None:
             yield 'null'
         elif o is True:
@@ -585,10 +672,7 @@ def _make_iterencode(markers, _default, _encoder, _indent, _floatstr,
         elif o is False:
             yield 'false'
         elif isinstance(o, integer_types):
-            yield (str(o)
-                   if (not _bigint_as_string or
-                       (-1 << 53) < o < (1 << 53))
-                       else ('"' + str(o) + '"'))
+            yield _encode_int(o)
         elif isinstance(o, float):
             yield _floatstr(o)
         else:
@@ -614,6 +698,16 @@ def _make_iterencode(markers, _default, _encoder, _indent, _floatstr,
                 elif _use_decimal and isinstance(o, Decimal):
                     yield str(o)
                 else:
+                    while _iterable_as_array:
+                        # Markers are not checked here because it is valid for
+                        # an iterable to return self.
+                        try:
+                            o = iter(o)
+                        except TypeError:
+                            break
+                        for chunk in _iterencode_list(o, _current_indent_level):
+                            yield chunk
+                        return
                     if markers is not None:
                         markerid = id(o)
                         if markerid in markers:
