@@ -18,31 +18,37 @@ class Monitor(xbmc.Monitor):
         utils.log("%s %s" % (utils.addon_name(), class_name), str(msg), int(lvl))
 
     def run(self):
-        last_file = None
+
         while not self.abortRequested():
             # check every 1 sec
             if self.waitForAbort(1):
                 # Abort was requested while waiting. We should exit
                 break
-            if self.player.isPlaying():
+            if self.player.is_tracking():
                 try:
                     play_time = self.player.getTime()
                     total_time = self.player.getTotalTime()
+                    last_file = self.player.get_last_file()
                     current_file = self.player.getPlayingFile()
                     notification_time = self.api.notification_time()
                     up_next_disabled = utils.settings("disableNextUp") == "true"
-                    if utils.window("PseudoTVRunning") != "True" and not up_next_disabled and total_time > 300:
+                    if utils.window("PseudoTVRunning") != "True" and not up_next_disabled:
                         if (total_time - play_time <= int(notification_time) and (
                                 last_file is None or last_file != current_file)) and total_time != 0:
-                            last_file = current_file
+                            self.player.set_last_file(current_file)
                             self.log("Calling autoplayback totaltime - playtime is %s" % (total_time - play_time), 2)
                             self.playback_manager.launch_up_next()
                             self.log("Up Next style autoplay succeeded.", 2)
+                            self.player.disable_tracking()
 
                 except Exception as e:
                     self.log("Exception in Playback Monitor Service: %s" % repr(e))
 
-        self.log("======== STOP %s ========" % utils.addon_name(), 0)
+                    if 'not playing any media file' in str(e):
+                        self.log("No file is playing - stop up next tracking.", 2)
+                        self.player.disable_tracking()
+
+        self.log("======== STOP service.upnext ========", 0)
 
     def onNotification(self, sender, method, data):
 
