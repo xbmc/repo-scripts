@@ -29,3 +29,11 @@ msgstr ""
 msgctxt "#30003"
 msgid "Enable debug logging"
 msgstr ""
+
+msgctxt "#30004"
+msgid "detected"
+msgstr ""
+
+msgctxt "#30005"
+msgid "Changed font to"
+msgstr ""

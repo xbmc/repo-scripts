@@ -79,6 +79,7 @@ def parse_movies(li, item, searchstring=False, append=False):
 											'CastAndRole': cast[1],
 											'mediatype': 'movie',
 											'Trailer': item['trailer'],
+											'Path': item['file'],
 											'Playcount': item['playcount']})
 	li_item.setProperty('resumetime', str(item['resume']['position']))
 	li_item.setProperty('totaltime', str(item['resume']['total']))
@@ -232,6 +233,7 @@ def parse_episodes(li, item, append=False):
 											'Director': _get_joined_items(item.get('director', '')),
 											'Writer': _get_joined_items(item.get('writer', '')),
 											'Cast': cast[0],
+											'Path': item['file'],
 											'CastAndRole': cast[1],
 											'mediatype': 'episode'})
 	li_item.setProperty('resumetime', str(item['resume']['position']))
