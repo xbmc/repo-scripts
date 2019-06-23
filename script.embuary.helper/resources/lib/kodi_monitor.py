@@ -24,6 +24,7 @@ class KodiMonitor(xbmc.Monitor):
             self.data = json.loads(data)
 
         if method == 'Player.OnPlay':
+            xbmc.stopSFX()
             self.get_videoinfo()
             if not self.do_fullscreen_lock:
                 self.do_fullscreen()

@@ -71,8 +71,10 @@ class Main:
                 blurimg(self.params)
             elif action == 'txtfile':
                 txtfile(self.params)
-            elif action == 'hyperion':
-                hyperion_winscreencap(self.params)
+            elif action == 'fontchange':
+                fontchange(self.params)
+            elif action == 'setinfo':
+                setinfo(self.params)
 
 if __name__ == "__main__":
     Main()
