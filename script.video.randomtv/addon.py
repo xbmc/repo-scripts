@@ -6,6 +6,7 @@ import random
 import threading
 import sys
 import time
+import urllib
 
 
 def log(msg):
@@ -125,7 +126,14 @@ if hasattr(sys, 'listitem'):
 	selectedPath = sys.listitem.getPath()
 	log("-- Item Path: " + selectedPath)
 
-	if "inprogresstvshows" in selectedPath:
+	if "favourites" in selectedPath:
+		log("-- Selected from Favourites")
+		log("---- Decoded Path: " + urllib.unquote(selectedPath))
+		embeddedPath = urllib.unquote(selectedPath).split('"')[1]
+		log("---- Embeddedd Path: " + embeddedPath)
+		selectedShow = embeddedPath.split('/')[4]
+		selectedSeason = embeddedPath.split('/')[5]
+	elif "inprogresstvshows" in selectedPath:
 		log("-- Selected from In Progress")
 		selectedShow = selectedPath.split('/')[3]
 		selectedSeason = selectedPath.split('/')[4]
@@ -140,7 +148,7 @@ if hasattr(sys, 'listitem'):
 	
 	log("-- Show ID: " + str(selectedShow))
 	log("-- Season: " + str(selectedSeason))
-		
+	
 	if selectedSeason > 0:
 		command = '{"jsonrpc": "2.0", "method": "VideoLibrary.GetEpisodes", "params": { "tvshowid": %d, "season": %d, "properties": ["showtitle", "file", "playcount", "lastplayed", "resume"] }, "id": 1}' % (selectedShow, selectedSeason)
 	else:
