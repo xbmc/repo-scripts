@@ -587,10 +587,15 @@ class PluginContent(object):
                     if x['genre']:
                         similar_list.append(x)
 
-                random.shuffle(similar_list)
+                item_pos = self.params.get('pos')
+                if not item_pos:
+                    random.shuffle(similar_list)
+                    i = 0
+                else:
+                    i = int(item_pos)
 
-                title = similar_list[0]['title']
-                genres = similar_list[0]['genre']
+                title = similar_list[i]['title']
+                genres = similar_list[i]['genre']
 
             if not genres:
                 raise Exception
