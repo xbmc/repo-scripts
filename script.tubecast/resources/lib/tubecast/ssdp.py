@@ -104,15 +104,16 @@ class MulticastServer(ControlMixin, ThreadingUDPServer):
 class SSDPHandler(DatagramRequestHandler):
 
     header = '''\
-    HTTP/1.1 200 OK\r
-    LOCATION: http://{{ ip }}:8008/ssdp/device-desc.xml\r
-    CACHE-CONTROL: max-age=1800\r
-    CONFIGID.UPNP.ORG: 7337\r
-    BOOTID.UPNP.ORG: 7337\r
-    USN: uuid:{{ uuid }}\r
-    ST: urn:dial-multiscreen-org:service:dial:1\r
-    \r
-    '''
+HTTP/1.1 200 OK\r
+LOCATION: http://{{ ip }}:8008/ssdp/device-desc.xml\r
+CACHE-CONTROL: max-age=1800\r
+EXT: \r
+SERVER: UPnP/1.0\r
+BOOTID.UPNP.ORG: 1\r
+USN: uuid:{{ uuid }}\r
+ST: urn:dial-multiscreen-org:service:dial:1\r
+\r
+'''
 
     def handle(self):
         data = self.request[0].strip()

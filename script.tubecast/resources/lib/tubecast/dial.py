@@ -9,29 +9,20 @@ from resources.lib.tubecast.youtube.app import YoutubeCastV1
 logger = kodilogging.get_logger()
 
 __device__ = '''<?xml version="1.0" encoding="utf-8"?>
-    <root xmlns="urn:schemas-upnp-org:device-1-0" xmlns:r="urn:restful-tv-org:schemas:upnp-dd">
-        <specVersion>
-        <major>1</major>
-        <minor>0</minor>
-        </specVersion>
-        <URLBase>{{ path }}</URLBase>
-        <device>
-            <deviceType>urn:schemas-upnp-org:device:dail:1</deviceType>
-            <friendlyName>{{ friendlyName }}</friendlyName>
-            <manufacturer>Google Inc.</manufacturer>
-            <modelName>Eureka Dongle</modelName>
-            <UDN>uuid:{{ uuid }}</UDN>
-            <serviceList>
-                <service>
-                    <serviceType>urn:schemas-upnp-org:service:dail:1</serviceType>
-                    <serviceId>urn:upnp-org:serviceId:dail</serviceId>
-                    <controlURL>/ssdp/notfound</controlURL>
-                    <eventSubURL>/ssdp/notfound</eventSubURL>
-                    <SCPDURL>/ssdp/notfound</SCPDURL>
-                </service>
-            </serviceList>
-        </device>
-    </root>'''
+<root xmlns="urn:schemas-upnp-org:device-1-0" xmlns:r="urn:restful-tv-org:schemas:upnp-dd">
+    <specVersion>
+    <major>1</major>
+    <minor>0</minor>
+    </specVersion>
+    <URLBase>{{ path }}</URLBase>
+    <device>
+        <deviceType>urn:schemas-upnp-org:device:dail:1</deviceType>
+        <friendlyName>{{ friendlyName }}</friendlyName>
+        <manufacturer>Kodi</manufacturer>
+        <modelName>Tubecast</modelName>
+        <UDN>uuid:{{ uuid }}</UDN>
+    </device>
+</root>'''
 
 
 class DIALApp(Bottle):
