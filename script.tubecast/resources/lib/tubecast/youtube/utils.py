@@ -26,6 +26,6 @@ def parse_cmd(cmd):
 
 def get_video_list(data):
     videos = []
-    if "videos" in data.keys():
+    if "videos" in list(data.keys()):
         videos = data["videos"]
     return videos

@@ -231,7 +231,8 @@ class YoutubeCastV1(object):
                 logger.debug("setPlaylist: {}".format(data))
                 cur_video_id = data["videoId"]
                 video_ids = data["videoIds"]
-                self.ctt = data["ctt"]
+                if 'ctt' in data:
+                    self.ctt = data["ctt"]
                 self.cur_list_id = data["listId"]
                 self.current_index = int(data["currentIndex"])
                 self.cur_list = video_ids.split(",")
