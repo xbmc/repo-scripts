@@ -151,6 +151,54 @@ def playitem(params):
         execute('PlayMedia("%s")' % remove_quotes(params.get('item')))
 
 
+def playfolder(params):
+    clear_playlists()
+
+    dbid = int(params.get('dbid'))
+    shuffled = True if params.get('shuffle') == 'true' else False
+
+    if params.get('type') == 'season':
+        json_query = json_call('VideoLibrary.GetSeasonDetails',
+                                properties=['title','season','tvshowid'],
+                                params={'seasonid': dbid}
+                                )
+        try:
+            result = json_query['result']['seasondetails']
+        except Exception as error:
+            log('Play folder error getting season details: %s' % error)
+            return
+
+        json_query = json_call('VideoLibrary.GetEpisodes',
+    	       					properties=episode_properties,
+                                query_filter={'operator': 'is', 'field': 'season', 'value': '%s' % result['season']},
+    							params={'tvshowid': int(result['tvshowid'])}
+                                )
+    else:
+        json_query = json_call('VideoLibrary.GetEpisodes',
+                            properties=episode_properties,
+                            params={'tvshowid': dbid}
+                            )
+
+    try:
+        result = json_query['result']['episodes']
+    except Exception as error:
+        log('Play folder error getting episodes: %s' % error)
+        return
+
+    for episode in result:
+        json_call('Playlist.Add',
+                item={'episodeid': episode['episodeid']},
+                params={'playlistid': 1}
+                )
+
+    execute('Dialog.Close(all)')
+
+    json_call('Player.Open',
+            item={'playlistid': 1, 'position': 0},
+            options={'shuffled': shuffled}
+            )
+
+
 def playall(params):
     clear_playlists()
 
@@ -284,18 +332,16 @@ def tvshow_details_by_season(params):
         log('Show details by season: Could not get TV show details')
         return
 
-    if int(details['episode']) > int(details['watchedepisodes']):
-        unwatchedepisodes = int(details['episode']) - int(details['watchedepisodes'])
-        unwatchedepisodes = str(unwatchedepisodes)
-    else:
-        unwatchedepisodes = '0'
+    episode = details['episode']
+    watchedepisodes = details['watchedepisodes']
+    unwatchedepisodes = get_unwatched(episode,watchedepisodes)
 
     winprop('tvshow.dbid', str(details['tvshowid']))
     winprop('tvshow.rating', str(round(details['rating'],1)))
     winprop('tvshow.seasons', str(details['season']))
-    winprop('tvshow.episodes', str(details['episode']))
-    winprop('tvshow.watchedepisodes', str(details['watchedepisodes']))
-    winprop('tvshow.unwatchedepisodes', unwatchedepisodes)
+    winprop('tvshow.episodes', str(episode))
+    winprop('tvshow.watchedepisodes', str(watchedepisodes))
+    winprop('tvshow.unwatchedepisodes', str(unwatchedepisodes))
 
 
 def txtfile(params):
@@ -429,8 +475,13 @@ class PlayCinema(object):
                     )
 
         log('Play with cinema mode: Grab your popcorn')
+
         execute('Dialog.Close(all,true)')
-        PLAYER.play(VIDEOPLAYLIST, startpos=0, windowed=False)
+
+        json_call('Player.Open',
+                item={'playlistid': 1, 'position': 0},
+                options={'shuffled': False}
+                )
 
     def get_trailers(self):
 

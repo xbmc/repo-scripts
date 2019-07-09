@@ -30,28 +30,28 @@ def append_items(li, json_query, type, searchstring=False, append=True):
 
 
 def _get_cast(castData):
-		listCast = []
-		listCastAndRole = []
-		for castmember in castData:
-			listCast.append(castmember['name'])
-			listCastAndRole.append((castmember['name'], castmember['role']))
-		return [listCast, listCastAndRole]
+	listCast = []
+	listCastAndRole = []
+	for castmember in castData:
+		listCast.append(castmember['name'])
+		listCastAndRole.append((castmember['name'], castmember['role']))
+	return [listCast, listCastAndRole]
 
 
 def _get_first_item(item):
-		if len(item) > 0:
-			item = item[0]
-		else:
-			item = ''
-		return item
+	if len(item) > 0:
+		item = item[0]
+	else:
+		item = ''
+	return item
 
 
 def _get_joined_items(item):
-		if len(item) > 0:
-			item = ' / '.join(item)
-		else:
-			item = ''
-		return item
+	if len(item) > 0:
+		item = ' / '.join(item)
+	else:
+		item = ''
+	return item
 
 
 def parse_movies(li, item, searchstring=False, append=False):
@@ -110,20 +110,11 @@ def parse_tvshows(li, item, searchstring=False, append=False):
 	if 'cast' in item:
 		cast = _get_cast(item['cast'])
 
-	rating = str(round(item['rating'],1))
-	dbid = str(item['tvshowid'])
-	season = str(item['season'])
-	episode = str(item['episode'])
-	watchedepisodes = str(item['watchedepisodes'])
-
-	if int(episode) > int(watchedepisodes):
-		unwatchedepisodes = int(episode) - int(watchedepisodes)
-		unwatchedepisodes = str(unwatchedepisodes)
-	else:
-		unwatchedepisodes = '0'
-
-	year = str(item['year'])
-	mpaa = item['year']
+	dbid = item['tvshowid']
+	season = item['season']
+	episode = item['episode']
+	watchedepisodes = item['watchedepisodes']
+	unwatchedepisodes = get_unwatched(episode,watchedepisodes)
 
 	if not visible('Window.IsVisible(movieinformation)'):
 		folder = True
@@ -134,15 +125,15 @@ def parse_tvshows(li, item, searchstring=False, append=False):
 
 	li_item = xbmcgui.ListItem(item['title'])
 	li_item.setInfo(type='Video', infoLabels={'Title': item['title'],
-											'Year': year,
+											'Year': item['year'],
 											'Genre': _get_joined_items(item.get('genre', '')),
 											'Studio': _get_first_item(item.get('studio', '')),
 											'Country': _get_first_item(item.get('country', '')),
 											'Plot': item['plot'],
-											'Rating': rating,
+											'Rating': str(float(item['rating'])),
 											'Votes': item['votes'],
 											'Premiered': item['premiered'],
-											'MPAA': mpaa,
+											'MPAA': item['mpaa'],
 											'Cast': cast[0],
 											'CastAndRole': cast[1],
 											'mediatype': 'tvshow',
@@ -150,14 +141,14 @@ def parse_tvshows(li, item, searchstring=False, append=False):
 											'season': season,
 											'episode': episode,
 											'tvshowtitle': item['title'],
-											'imdbnumber': str(item['imdbnumber']),
+											'imdbnumber': item['imdbnumber'],
 											'Path': item['file'],
 											'DateAdded': item['dateadded'],
 											'Playcount': item['playcount']})
-	li_item.setProperty('TotalSeasons', season)
-	li_item.setProperty('TotalEpisodes', episode)
-	li_item.setProperty('WatchedEpisodes', watchedepisodes)
-	li_item.setProperty('UnwatchedEpisodes', unwatchedepisodes)
+	li_item.setProperty('TotalSeasons', str(season))
+	li_item.setProperty('TotalEpisodes', str(episode))
+	li_item.setProperty('WatchedEpisodes', str(watchedepisodes))
+	li_item.setProperty('UnwatchedEpisodes', str(unwatchedepisodes))
 	li_item.setArt(item['art'])
 	li_item.setIconImage('DefaultVideo.png')
 
@@ -170,32 +161,29 @@ def parse_tvshows(li, item, searchstring=False, append=False):
 
 def parse_seasons(li, item, append=False):
 
-	tvshowdbid = str(item['tvshowid'])
-	seasonnr = str(item['season'])
-	episode = str(item['episode'])
-	watchedepisodes = str(item['watchedepisodes'])
+	tvshowdbid = item['tvshowid']
+	season = item['season']
+	episode = item['episode']
+	watchedepisodes = item['watchedepisodes']
+	unwatchedepisodes = get_unwatched(episode,watchedepisodes)
 
-	if seasonnr == '0':
+	if season == 0:
 		title = '%s' % (xbmc.getLocalizedString(20381))
+		special = 'true'
 	else:
-		title = '%s %s' % (xbmc.getLocalizedString(20373), seasonnr)
-
-	if int(episode) > int(watchedepisodes):
-		unwatchedepisodes = int(episode) - int(watchedepisodes)
-		unwatchedepisodes = str(unwatchedepisodes)
-	else:
-		unwatchedepisodes = '0'
+		title = '%s %s' % (xbmc.getLocalizedString(20373), season)
+		special = 'false'
 
 	if not visible('Window.IsVisible(movieinformation)'):
 		folder = True
-		file = 'videodb://tvshows/titles/%s/%s/' % (tvshowdbid, seasonnr)
+		file = 'videodb://tvshows/titles/%s/%s/' % (tvshowdbid, season)
 	else:
 		folder = False
-		file = 'plugin://script.embuary.helper/?action=jumptoseason&dbid=%s&season=%s' % (tvshowdbid, seasonnr)
+		file = 'plugin://script.embuary.helper/?action=jumptoseason&dbid=%s&season=%s' % (tvshowdbid, season)
 
 	li_item = xbmcgui.ListItem(title)
 	li_item.setInfo(type='Video', infoLabels={'Title': title,
-											'season': seasonnr,
+											'season': season,
 											'episode': episode,
 											'tvshowtitle': item['showtitle'],
 											'playcount': item['playcount'],
@@ -203,12 +191,10 @@ def parse_seasons(li, item, append=False):
 											'dbid': item['seasonid']})
 	li_item.setArt(item['art'])
 	li_item.setArt({'fanart': item['art'].get('tvshow.fanart', '')})
-	li_item.setProperty('WatchedEpisodes', watchedepisodes)
-	li_item.setProperty('UnwatchedEpisodes', unwatchedepisodes)
+	li_item.setProperty('WatchedEpisodes', str(watchedepisodes))
+	li_item.setProperty('UnwatchedEpisodes', str(unwatchedepisodes))
+	li_item.setProperty('IsSpecial', special)
 	li_item.setIconImage('DefaultVideo.png')
-
-	if seasonnr == '0':
-		li_item.setProperty('IsSpecial', 'true')
 
 	if append:
 		li.append((file, li_item, folder))
@@ -224,7 +210,7 @@ def parse_episodes(li, item, append=False):
 											'Episode': item['episode'],
 											'Season': item['season'],
 											'Premiered': item['firstaired'],
-											'Dbid': str(item['episodeid']),
+											'Dbid': item['episodeid'],
 											'Plot': item['plot'],
 											'TVshowTitle': item['showtitle'],
 											'lastplayed': item['lastplayed'],
