@@ -42,7 +42,7 @@ def httpdate_to_datetime(input_date):
 
 
 def datetime_to_httpdate(input_date):
-    # type: (datetime) -> Optional[datetime]
+    # type: (datetime) -> Optional[str]
     """Converts datetime to http date string"""
     if input_date is None:
         return None
@@ -55,7 +55,7 @@ def datetime_to_httpdate(input_date):
 
 def conditional_headers(row):
     # type: (sqlite3.Row) -> dict
-    """Creates dict of If-None-Match and If-Modified-Since headers based on row etag and last_modified columns"""
+    """Creates dict of conditional request headers based on row etag and last_modified"""
     headers = {}
     if row["etag"] is not None:
         headers["If-None-Match"] = row["etag"]
@@ -86,7 +86,7 @@ class Store(object):
         """Gets set of stored strings"""
         with Cache(self.db) as c:
             data = c.get(self.key)
-            return data["blob"] if data is set else set()
+            return data["blob"] if data else set()
 
     def _save(self, data):
         # type: (set) -> None
@@ -252,7 +252,7 @@ class Cache(object):
         }
 
     def _execute(self, query, values=None):
-        # type: (str, tuple) -> sqlite3.cursor
+        # type: (str, tuple) -> sqlite3.Cursor
         if values is None:
             values = ()
         try:
@@ -260,7 +260,7 @@ class Cache(object):
             with self.connection:
                 return self.connection.execute(query, values)
         except (sqlite3.IntegrityError, sqlite3.OperationalError) as e:
-            logger.debug(e.message)
+            logger.debug(e)
 
     def _open(self, name):
         # type: (str) -> None
