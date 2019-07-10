@@ -63,6 +63,8 @@ class Main:
                 playsfx(self.params)
             elif action == 'playall':
                 playall(self.params)
+            elif action == 'playfolder':
+                playfolder(self.params)
             elif action == 'playrandom':
                 playrandom(self.params)
             elif action == 'playcinema':

@@ -173,6 +173,14 @@ def get_channeldetails(channel_name):
     return channel_details
 
 
+def get_unwatched(episode,watchedepisodes):
+    if episode > watchedepisodes:
+        unwatchedepisodes = episode - watchedepisodes
+        return unwatchedepisodes
+    else:
+        return 0
+
+
 def json_call(method,properties=None,sort=None,query_filter=None,limit=None,params=None,item=None,options=None):
 
     json_string = {'jsonrpc': '2.0', 'id': 1, 'method': method, 'params': {}}
