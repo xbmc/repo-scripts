@@ -28,7 +28,7 @@ msgctxt "Addon Disclaimer"
 msgid "This script does not regard the file format. A Movie watched in DVD quality will also set	the 1080p version as watched."
 msgstr ""
 
-#Notification headers
+# Notification headers
 
 msgctxt "#30001"
 msgid "Basic Settings"
@@ -126,7 +126,7 @@ msgctxt "#30032"
 msgid "periodic"
 msgstr ""
 
-#empty strings from id 30033 to 30039
+# empty strings from id 30033 to 30039
 
 msgctxt "#30040"
 msgid "DB Method"
@@ -152,7 +152,7 @@ msgctxt "#30045"
 msgid "Dropbox synchronization"
 msgstr ""
 
-#empty strings from id 30046 to 30050
+# empty strings from id 30046 to 30050
 
 msgctxt "#30051"
 msgid "MySQL Server"
@@ -174,7 +174,7 @@ msgctxt "#30055"
 msgid "MySQL Port"
 msgstr ""
 
-#empty strings from id 30056 to 32000
+# empty strings from id 30056 to 32000
 
 msgctxt "#32001"
 msgid "manually run the database update again?"
@@ -196,7 +196,7 @@ msgctxt "#32005"
 msgid "running observation of changes of watched states"
 msgstr ""
 
-#empty strings from id 32006 to 32100
+# empty strings from id 32006 to 32100
 
 msgctxt "#32101"
 msgid "WatchedList"
@@ -234,7 +234,7 @@ msgctxt "#32109"
 msgid "Watchedlist: SQLite Error (WL DB)"
 msgstr ""
 
-#empty strings from id 32110 to 32201
+# empty strings from id 32110 to 32201
 
 msgctxt "#32202"
 msgid "Addon movie database"
@@ -252,7 +252,7 @@ msgctxt "#32205"
 msgid "Kodi-episode database"
 msgstr ""
 
-#empty strings from id 32206 to 32207
+# empty strings from id 32206 to 32207
 
 msgctxt "#32208"
 msgid "Access Denied (username/password/rights)"
@@ -266,7 +266,7 @@ msgctxt "#32210"
 msgid "Access denied (user '%s', DB '%s')"
 msgstr ""
 
-#empty strings from id 32211 to 32296
+# empty strings from id 32211 to 32296
 
 msgctxt "#32297"
 msgid "TV-Show \"%s\" (ID %d) has no imdb-number. No processing with WL possible. Try rescraping."
@@ -280,7 +280,7 @@ msgctxt "#32299"
 msgid "%d movies and %d episodes read from Kodi-DB."
 msgstr ""
 
-#empty string with id 32300
+# empty string with id 32300
 
 msgctxt "#32301"
 msgid "%d watched new. %d updated"
@@ -294,8 +294,8 @@ msgctxt "#32303"
 msgid "%d episodes marked as watched"
 msgstr ""
 
-#Error Messages
-#empty strings from id 32304 to 32400
+# Error Messages
+# empty strings from id 32304 to 32400
 
 msgctxt "#32401"
 msgid "Set as watched (Kodi-DB)"
@@ -317,8 +317,8 @@ msgctxt "#32405"
 msgid "Remember as not watched (WL-DB)"
 msgstr ""
 
-#Notification text
-#empty strings from id 32406 to 32600
+# Notification text
+# empty strings from id 32406 to 32600
 
 msgctxt "#32601"
 msgid "Error opening WL-database"
@@ -352,8 +352,8 @@ msgctxt "#32608"
 msgid "Doing a database backup (%s)"
 msgstr ""
 
-#Progress Dialog
-#empty string with id 32609
+# Progress Dialog
+# empty string with id 32609
 
 msgctxt "#32610"
 msgid "%d/%d: %s"
@@ -363,8 +363,8 @@ msgctxt "#32611"
 msgid "%d/%d: %s S%02dE%02d"
 msgstr ""
 
-#Dropbox related messages
-#empty strings from id 32612 to 32707
+# Dropbox related messages
+# empty strings from id 32612 to 32707
 
 msgctxt "#32708"
 msgid "Dropbox Error"
