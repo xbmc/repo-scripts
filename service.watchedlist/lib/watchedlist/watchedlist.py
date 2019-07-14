@@ -321,9 +321,10 @@ class WatchedList:
                         return 1  # wait 3 minutes so the dialogue does not pop up directly after the playback ends
 
             # load the addon-database
-            if self.load_db(True):  # True: Manual start
-                utils.showNotification(utils.getString(32102), utils.getString(32601), xbmc.LOGERROR)
-                return 3
+            if self.sqlcursor_wl == 0 or self.sqlcon_wl == 0:
+                if self.load_db(True):  # True: Manual start
+                    utils.showNotification(utils.getString(32102), utils.getString(32601), xbmc.LOGERROR)
+                    return 3
 
             if self.sync_tvshows():
                 utils.showNotification(utils.getString(32102), utils.getString(32604), xbmc.LOGERROR)
