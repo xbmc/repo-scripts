@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.module.pyscrypt"
+    name="PyScrypt"
+    version="1.6.2"
+    provider-name="ricmoo">
+
+    <requires>
+        <import addon="xbmc.python" version="2.26.0"/>
+    </requires>
+
+    <extension point="xbmc.python.module" library="lib" />
+
+    <extension point="xbmc.addon.metadata">
+        <summary lang="en_GB">Pure-Python Implementation of the scrypt password-based key derivation function and scrypt file format library</summary>
+        <description lang="en_GB">A very simple, pure-Python implementation of the scrypt password-based key derivation function and scrypt file format library with no dependencies beyond standard Python libraries.</description>
+        <platform>all</platform>
+        <license>MIT</license>
+        <website>https://github.com/ricmoo/pyscrypt</website>
+        <source>https://github.com/ricmoo/pyscrypt</source>
+        <assets>
+            <icon>resources/icon.png</icon>
+        </assets>
+    </extension>
+</addon>

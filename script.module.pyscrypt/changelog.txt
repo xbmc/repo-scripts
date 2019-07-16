@@ -1,0 +1,2 @@
+[B]Version 1.6.2[/B]
+- Updated to PyScrypt 1.6.2
