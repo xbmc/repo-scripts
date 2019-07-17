@@ -79,6 +79,8 @@ class Main:
                 split(self.params)
             elif action == 'setinfo':
                 setinfo(self.params)
+            elif action == 'lookforfile':
+                lookforfile(self.params)
             elif action == 'restartservice':
                 execute('NotifyAll(%s, restart)' % ADDON_ID)
 

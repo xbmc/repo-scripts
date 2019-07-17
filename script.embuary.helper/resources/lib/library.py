@@ -114,6 +114,7 @@ def parse_movies(li, item, searchstring=False, append=False):
     _set_unique_properties(li_item,country,'country')
     _set_unique_properties(li_item,director,'director')
     _set_unique_properties(li_item,writer,'writer')
+    _set_unique_properties(li_item,cast[0],'cast')
 
     li_item.setArt(item['art'])
     li_item.setArt({'icon': 'DefaultVideo.png'})
@@ -191,6 +192,7 @@ def parse_tvshows(li, item, searchstring=False, append=False):
 
     _set_unique_properties(li_item,genre,'genre')
     _set_unique_properties(li_item,studio,'studio')
+    _set_unique_properties(li_item,cast[0],'cast')
 
     li_item.setArt(item['art'])
     li_item.setArt({'icon': 'DefaultVideo.png'})
@@ -276,6 +278,7 @@ def parse_episodes(li, item, append=False):
 
     _set_unique_properties(li_item,director,'director')
     _set_unique_properties(li_item,writer,'writer')
+    _set_unique_properties(li_item,cast[0],'cast')
 
     li_item.setArt({'icon': 'DefaultTVShows.png', 'fanart': item['art'].get('tvshow.fanart', ''), 'clearlogo': item['art'].get('tvshow.clearlogo', ''), 'landscape': item['art'].get('tvshow.landscape', ''), 'clearart': item['art'].get('tvshow.clearart', '')})
     li_item.setArt(item['art'])
