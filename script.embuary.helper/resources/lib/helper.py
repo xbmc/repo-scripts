@@ -21,6 +21,8 @@ NOTICE = xbmc.LOGNOTICE
 WARNING = xbmc.LOGWARNING
 DEBUG = xbmc.LOGDEBUG
 
+DIALOG = xbmcgui.Dialog()
+
 PLAYER = xbmc.Player()
 VIDEOPLAYLIST = xbmc.PlayList(xbmc.PLAYLIST_VIDEO)
 MUSICPLAYLIST = xbmc.PlayList(xbmc.PLAYLIST_MUSIC)
@@ -28,13 +30,11 @@ MUSICPLAYLIST = xbmc.PlayList(xbmc.PLAYLIST_MUSIC)
 ########################
 
 def get_kodiversion():
-
     build = xbmc.getInfoLabel('System.BuildVersion')
     return int(build[:2])
 
 
 def log(txt,loglevel=NOTICE,force=False):
-
     if ((loglevel == NOTICE or loglevel == WARNING) and ADDON.getSettingBool('log')) or (loglevel == DEBUG and ADDON.getSettingBool('debuglog')) or force:
 
         ''' Python 2 requires to decode stuff at first
@@ -54,7 +54,6 @@ def log(txt,loglevel=NOTICE,force=False):
 
 
 def remove_quotes(label):
-
     if not label:
         return ''
 
@@ -67,14 +66,12 @@ def remove_quotes(label):
 
 
 def execute(cmd):
-
     log('Execute: %s' % cmd)
     xbmc.executebuiltin(cmd, DEBUG)
 
 
 def visible(condition):
-
-	return xbmc.getCondVisibility(condition)
+    return xbmc.getCondVisibility(condition)
 
 
 def clear_playlists():
@@ -84,14 +81,18 @@ def clear_playlists():
     MUSICPLAYLIST.clear()
 
 
-def grabfanart():
+def gotopath(path,target='videos'):
+    execute('Dialog.Close(all,true)')
+    execute('Container.Update(%s)' % path) if visible('Window.IsMedia') else execute('ActivateWindow(%s,%s,return)' % (target,path))
 
+
+def grabfanart():
     fanarts = list()
 
     movie_query = json_call('VideoLibrary.GetMovies',
-                        properties=['art'],
-                        sort={'method': 'random'}, limit=20
-                        )
+                            properties=['art'],
+                            sort={'method': 'random'}, limit=20
+                            )
 
     try:
         for art in movie_query['result']['movies']:
@@ -101,9 +102,9 @@ def grabfanart():
         log('Backgrounds: No movie artworks found.')
 
     tvshow_query = json_call('VideoLibrary.GetTVShows',
-                        properties=['art'],
-                        sort={'method': 'random'}, limit=20
-                        )
+                            properties=['art'],
+                            sort={'method': 'random'}, limit=20
+                            )
 
     try:
         for art in tvshow_query['result']['tvshows']:
@@ -116,12 +117,10 @@ def grabfanart():
 
 
 def winprop(key, value=None, clear=False, window_id=10000):
-
     window = xbmcgui.Window(window_id)
 
     if clear:
 
-        log('Clear prop: %s' % key)
         window.clearProperty(key.replace('.json', '').replace('.bool', ''))
 
     elif value is not None:
@@ -152,13 +151,12 @@ def winprop(key, value=None, clear=False, window_id=10000):
 
 
 def get_channeldetails(channel_name):
-
     channel_details = {}
 
     channels = json_call('PVR.GetChannels',
-                properties=['channel', 'uniqueid', 'icon', 'thumbnail'],
-                params={'channelgroupid': 'alltv'},
-                )
+                        properties=['channel', 'uniqueid', 'icon', 'thumbnail'],
+                        params={'channelgroupid': 'alltv'},
+                        )
 
     try:
         for channel in channels['result']['channels']:
@@ -182,14 +180,13 @@ def get_unwatched(episode,watchedepisodes):
 
 
 def json_call(method,properties=None,sort=None,query_filter=None,limit=None,params=None,item=None,options=None):
-
     json_string = {'jsonrpc': '2.0', 'id': 1, 'method': method, 'params': {}}
 
     if properties is not None:
         json_string['params']['properties'] = properties
 
     if limit is not None:
-        json_string['params']['limits'] = {'start': 0, 'end': limit}
+        json_string['params']['limits'] = {'start': 0, 'end': int(limit)}
 
     if sort is not None:
         json_string['params']['sort'] = sort
@@ -226,7 +223,6 @@ def json_call(method,properties=None,sort=None,query_filter=None,limit=None,para
 
 
 def reload_widgets(instant=False,force=True):
-
     log('Force widgets to refresh')
     timestamp = time.strftime('%Y%m%d%H%M%S', time.gmtime())
 
