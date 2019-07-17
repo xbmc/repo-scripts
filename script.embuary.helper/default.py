@@ -16,7 +16,7 @@ class Main:
         if self.action:
             self.getactions()
         else:
-            xbmcgui.Dialog().ok(ADDON.getLocalizedString(30000), ADDON.getLocalizedString(30001))
+            DIALOG.ok(ADDON.getLocalizedString(32000), ADDON.getLocalizedString(32001))
 
     def _parse_argv(self):
         args = sys.argv
@@ -75,8 +75,12 @@ class Main:
                 txtfile(self.params)
             elif action == 'fontchange':
                 fontchange(self.params)
+            elif action == 'split':
+                split(self.params)
             elif action == 'setinfo':
                 setinfo(self.params)
+            elif action == 'restartservice':
+                execute('NotifyAll(%s, restart)' % ADDON_ID)
 
 if __name__ == "__main__":
     Main()

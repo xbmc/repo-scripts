@@ -42,8 +42,7 @@ def selectdialog(params):
             indexlist.append(i)
 
     if selectionlist:
-        select_dialog = xbmcgui.Dialog()
-        index = select_dialog.select(headertxt, selectionlist)
+        index = DIALOG.select(headertxt, selectionlist)
 
         if index > -1:
             value = xbmc.getInfoLabel('Window.Property(Dialog.%i.Builtin)' % (indexlist[index]))
@@ -59,9 +58,7 @@ def selectdialog(params):
 def dialogok(params):
     headertxt = remove_quotes(params.get('header', ''))
     bodytxt = remove_quotes(params.get('message', ''))
-    dialog = xbmcgui.Dialog()
-    dialog.ok(heading=headertxt, line1=bodytxt)
-    del dialog
+    DIALOG.ok(heading=headertxt, line1=bodytxt)
 
 
 def dialogyesno(params):
@@ -70,7 +67,7 @@ def dialogyesno(params):
     yesactions = params.get('yesaction', '').split('|')
     noactions = params.get('noaction', '').split('|')
 
-    if xbmcgui.Dialog().yesno(heading=headertxt, line1=bodytxt):
+    if DIALOG.yesno(heading=headertxt, line1=bodytxt):
         for action in yesactions:
             execute(action)
     else:
@@ -81,7 +78,7 @@ def dialogyesno(params):
 def textviewer(params):
     headertxt = remove_quotes(params.get('header', ''))
     bodytxt = remove_quotes(params.get('message', ''))
-    xbmcgui.Dialog().textviewer(headertxt, bodytxt)
+    DIALOG.textviewer(headertxt, bodytxt)
 
 
 def togglekodisetting(params):
@@ -169,9 +166,9 @@ def playfolder(params):
             return
 
         json_query = json_call('VideoLibrary.GetEpisodes',
-    	       					properties=episode_properties,
+                                properties=episode_properties,
                                 query_filter={'operator': 'is', 'field': 'season', 'value': '%s' % result['season']},
-    							params={'tvshowid': int(result['tvshowid'])}
+                                params={'tvshowid': int(result['tvshowid'])}
                                 )
     else:
         json_query = json_call('VideoLibrary.GetEpisodes',
@@ -202,18 +199,18 @@ def playfolder(params):
 def playall(params):
     clear_playlists()
 
-    dbid = params.get('id')
+    container = params.get('id')
     method = params.get('method')
 
     playlistid = 0 if params.get('type') == 'music' else 1
     shuffled = True if method == 'shuffle' else False
 
     if method == 'fromhere':
-        method = 'Container(%s).ListItemNoWrap' % dbid
+        method = 'Container(%s).ListItemNoWrap' % container
     else:
-        method = 'Container(%s).ListItemAbsolute' % dbid
+        method = 'Container(%s).ListItemAbsolute' % container
 
-    for i in range(int(xbmc.getInfoLabel('Container(%s).NumItems' % dbid))):
+    for i in range(int(xbmc.getInfoLabel('Container(%s).NumItems' % container))):
 
         if visible('String.IsEqual(%s(%s).DBType,movie)' % (method,i)):
             media_type = 'movie'
@@ -247,15 +244,15 @@ def playall(params):
 def playrandom(params):
     clear_playlists()
 
-    dbid = params.get('id')
+    container = params.get('id')
 
-    i = random.randint(1,int(xbmc.getInfoLabel('Container(%s).NumItems' % dbid)))
+    i = random.randint(1,int(xbmc.getInfoLabel('Container(%s).NumItems' % container)))
 
-    if visible('String.IsEqual(Container(%s).ListItemAbsolute(%s).DBType,movie)' % (dbid,i)):
+    if visible('String.IsEqual(Container(%s).ListItemAbsolute(%s).DBType,movie)' % (container,i)):
         media_type = 'movie'
-    elif visible('String.IsEqual(Container(%s).ListItemAbsolute(%s).DBType,episode)' % (dbid,i)):
+    elif visible('String.IsEqual(Container(%s).ListItemAbsolute(%s).DBType,episode)' % (container,i)):
         media_type = 'episode'
-    elif visible('String.IsEqual(Container(%s).ListItemAbsolute(%s).DBType,song)' % (dbid,i)):
+    elif visible('String.IsEqual(Container(%s).ListItemAbsolute(%s).DBType,song)' % (container,i)):
         media_type = 'song'
     else:
         media_type = None
@@ -282,11 +279,6 @@ def jumptoshow_by_episode(params):
 
 def goto(params):
     gotopath(remove_quotes(params.get('path')),params.get('target'))
-
-
-def gotopath(path,target='videos'):
-    execute('Dialog.Close(all,true)')
-    execute('Container.Update(%s)' % path) if visible('Window.IsMedia') else execute('ActivateWindow(%s,%s,return)' % (target,path))
 
 
 def resetposition(params):
@@ -358,7 +350,7 @@ def txtfile(params):
         if prop:
             winprop(prop,text)
         else:
-            xbmcgui.Dialog().textviewer(remove_quotes(params.get('header')),text)
+            DIALOG.textviewer(remove_quotes(params.get('header')),text)
 
     else:
         log('Cannot find %s' % path)
@@ -377,7 +369,7 @@ def fontchange(params):
 
         if value in str(locale.getdefaultlocale()):
             setkodisetting({'setting': 'lookandfeel.font', 'value': params.get('font')})
-            xbmcgui.Dialog().notification('%s %s' % (value.upper(),ADDON.getLocalizedString(30004)), '%s %s' % (ADDON.getLocalizedString(30005),font))
+            DIALOG.notification('%s %s' % (value.upper(),ADDON.getLocalizedString(32004)), '%s %s' % (ADDON.getLocalizedString(32005),font))
             log('Locale %s is not supported by default font. Change to %s.' % (value.upper(),font))
             break
 
@@ -385,11 +377,12 @@ def fontchange(params):
 def setinfo(params):
     dbid = params.get('dbid')
     dbtype = params.get('type')
+    value = params.get('value')
 
     try:
-        value = int(params.get('value'))
+        value = int(value)
     except Exception:
-        value = params.get('value')
+        pass
 
     if dbtype == 'movie':
         method = 'VideoLibrary.SetMovieDetails'
@@ -405,6 +398,22 @@ def setinfo(params):
                 params={key: int(dbid), params.get('field'): value}
                 )
 
+
+def split(params):
+    value =  remove_quotes(params.get('value'))
+    separator = remove_quotes(params.get('separator'))
+    prop = params.get('property')
+
+    i = 0
+    for item in value.split(separator):
+        winprop('%s.%s' % (prop,i), item)
+        i += 1
+
+    for item in range(i,30):
+        winprop('%s.%s' % (prop,i), clear=True)
+        i += 1
+
+
 class PlayCinema(object):
 
     def __init__(self, params):
@@ -414,41 +423,37 @@ class PlayCinema(object):
 
         self.dbid = params.get('dbid')
         self.dbtype = params.get('type')
-        self.item_title = remove_quotes(params.get('title'))
 
-        if not self.dbid or not self.item_title or not self.dbtype:
+        if not self.dbid or not self.dbtype:
             for i in range(30):
-
                 if xbmc.getInfoLabel('Container.ListItem.Label'):
                     break
                 xbmc.sleep(100)
 
             self.dbid = xbmc.getInfoLabel('Container.ListItem.DBID')
-            self.item_title = xbmc.getInfoLabel('Container.ListItem.Label')
             self.dbtype = xbmc.getInfoLabel('Container.ListItem.DBTYPE')
 
-        if self.dbid and self.item_title and self.dbtype:
-            log('Play with cinema mode: %s' % self.item_title)
+        if self.dbid and self.dbtype:
             self.run()
         else:
             log('Play with cinema mode: Not enough arguments')
 
 
     def run(self):
+        clear_playlists()
         index = 0
-        VIDEOPLAYLIST.clear()
 
         if self.trailer_count:
-            trailers = self.get_trailers()
-            for trailer in trailers:
+            movies = self.get_trailers()
+            for trailer in movies:
 
                 trailer_title = '%s (%s)' % (trailer['title'], xbmc.getLocalizedString(20410))
                 trailer_rating = str(round(trailer['rating'],1))
-                thumbnailImage = trailer['art'].get('landscape') or trailer['art'].get('fanart') or trailer['art'].get('poster', '')
+                trailer_thumb = trailer['art'].get('landscape') or trailer['art'].get('fanart') or trailer['art'].get('poster', '')
 
                 listitem = xbmcgui.ListItem(trailer_title)
                 listitem.setInfo('video', {'Title': trailer_title, 'mediatype': 'video', 'plot': trailer.get('plot', ''), 'year': trailer.get('year', ''), 'mpaa': trailer.get('mpaa', ''), 'rating': trailer_rating})
-                listitem.setArt({'thumb':thumbnailImage, 'clearlogo': trailer['art'].get('clearlogo', '')})
+                listitem.setArt({'thumb': trailer_thumb, 'clearlogo': trailer['art'].get('clearlogo', '')})
                 VIDEOPLAYLIST.add(url=trailer['trailer'], listitem=listitem, index=index)
 
                 log('Play with cinema mode: Adding trailer %s' % trailer_title)
@@ -458,10 +463,8 @@ class PlayCinema(object):
         if self.intro_path:
             intro = self.get_intros()
             if intro:
-                intro_title = '%s (Intro)' % (self.item_title)
-
-                listitem = xbmcgui.ListItem(intro_title)
-                listitem.setInfo('video', {'Title': intro_title, 'mediatype': 'video'})
+                listitem = xbmcgui.ListItem('Intro')
+                listitem.setInfo('video', {'Title': 'Intro', 'mediatype': 'video'})
                 listitem.setArt({'thumb':'special://home/addons/script.embuary.helper/resources/trailer.jpg'})
                 VIDEOPLAYLIST.add(url=intro, listitem=listitem, index=index)
 
@@ -484,32 +487,30 @@ class PlayCinema(object):
                 )
 
     def get_trailers(self):
-
             movies = json_call('VideoLibrary.GetMovies',
                                 properties=movie_properties,
-                                query_filter={'field': 'playcount', 'operator': 'lessthan', 'value': '1'},
+                                query_filter={'and': [{'field': 'playcount', 'operator': 'lessthan', 'value': '1'},{'field': 'hastrailer', 'operator': 'true', 'value': []}]},
                                 sort={'method': 'random'}, limit=int(self.trailer_count)
                                 )
 
             try:
                 movies = movies['result']['movies']
             except KeyError:
+                log('Play with cinema mode: No unwatched movies with available trailer found')
                 return
 
             return movies
 
     def get_intros(self):
-
             dirs, files = xbmcvfs.listdir(self.intro_path)
 
             intros = []
             for file in files:
-                if file.endswith(('.mp4', '.mkv', '.mpg', '.mpeg', '.avi', '.wmv', '.mov', '.flv')):
+                if file.endswith(('.mp4', '.mkv', '.mpg', '.mpeg', '.avi', '.wmv', '.mov')):
                     intros.append(file)
 
             if intros:
-                random.shuffle(intros)
-                self.intro_path += intros[0]
-                return self.intro_path
+                return random.choice(self.intro_path)
 
-            return intros
+            log('Play with cinema mode: No intros found')
+            return

@@ -4,6 +4,7 @@
 ########################
 
 import random
+import json
 
 from resources.lib.helper import *
 from resources.lib.library import *
@@ -21,6 +22,7 @@ class PluginContent(object):
         self.tag = remove_quotes(params.get('tag'))
         self.unwatched = remove_quotes(params.get('unwatched'))
         self.limit = remove_quotes(params.get('limit'))
+        self.retry_count = 1
         self.li = li
 
         if self.dbtype == 'movie':
@@ -57,6 +59,58 @@ class PluginContent(object):
         self.notinprogress_filter = {'field': 'inprogress', 'operator': 'false', 'value': ''}
         self.tag_filter = {'operator': 'is', 'field': 'tag', 'value': self.tag}
         self.title_filter = {'operator': 'is', 'field': 'title', 'value': self.dbtitle}
+
+
+    # by dbid
+    def get_bydbid(self):
+
+        json_query = json_call(self.method_details,
+                                properties=self.properties,
+                                params={self.param: int(self.dbid)}
+                                )
+
+        try:
+            result = json_query['result'][self.key_details]
+        except Exception as error:
+            log('Get by DBID: No result found: %s' % error)
+            return
+
+        append_items(self.li,[result],type=self.dbtype)
+
+
+    # by custom args
+    def get_byargs(self):
+
+        limit = self.limit or None
+        filter_args = self.params.get('filter_args') or None
+        sort_args = self.params.get('sort_args') or None
+
+        if sort_args:
+            sort_args = json.loads(sort_args)
+
+        filters = []
+        if filter_args is not None:
+            filters.append(json.loads(filter_args))
+        if self.tag:
+            filters.append(self.tag_filter)
+        if filters:
+            filter = {'and': filters}
+        else:
+            filter = None
+
+        json_query = json_call(self.method_item,
+                                properties=self.properties,
+                                sort=sort_args, limit=limit,
+                                query_filter=filter
+                                )
+
+        try:
+            result = json_query['result'][self.key_items]
+        except Exception as error:
+            log('Get by args: No result found: %s' % error)
+            return
+
+        append_items(self.li,result,type=self.dbtype)
 
 
     # season widgets
@@ -105,10 +159,7 @@ class PluginContent(object):
 
         filter = {'or': filters}
 
-        if self.limit:
-            limit = int(self.limit)
-        else:
-            limit = 25
+        limit = self.limit or 25
 
         if not self.dbtype or self.dbtype == 'movie':
             json_query = json_call('VideoLibrary.GetMovies',
@@ -121,7 +172,7 @@ class PluginContent(object):
             except Exception:
                 log('Movies by seasonal keyword: No movies found.')
             else:
-                append_items(self.li,json_query,type='movies')
+                append_items(self.li,json_query,type='movie')
 
         if not self.dbtype or self.dbtype == 'tvshow':
             if use_episodes:
@@ -135,7 +186,7 @@ class PluginContent(object):
                 except Exception:
                     log('Episodes by seasonal keyword: No episodes found.')
                 else:
-                    append_items(self.li,json_query,type='episodes')
+                    append_items(self.li,json_query,type='episode')
 
             else:
                 json_query = json_call('VideoLibrary.GetTVShows',
@@ -148,7 +199,7 @@ class PluginContent(object):
                 except Exception:
                     log('TV shows by seasonal keyword: No shows found.')
                 else:
-                    append_items(self.li,json_query,type='tvshows')
+                    append_items(self.li,json_query,type='tvshow')
 
         random.shuffle(self.li)
 
@@ -184,7 +235,7 @@ class PluginContent(object):
         except Exception:
             log('Get seasons by TV show: No seasons found')
         else:
-            append_items(self.li,season_query,type='seasons')
+            append_items(self.li,season_query,type='season')
 
 
     # get more episodes from the same season
@@ -217,7 +268,7 @@ class PluginContent(object):
         except Exception:
             log('Get more episodes by season: No episodes found')
         else:
-            append_items(self.li,episode_query,type='episodes')
+            append_items(self.li,episode_query,type='episode')
 
 
     # get nextup
@@ -254,7 +305,7 @@ class PluginContent(object):
                 except Exception:
                     log('Get next up episodes: No next episodes found for %s' % episode['title'])
                 else:
-                    append_items(self.li,episode_details,type='episodes')
+                    append_items(self.li,episode_details,type='episode')
 
 
     # get mixed recently added tvshows/episodes
@@ -279,13 +330,7 @@ class PluginContent(object):
 
         for tvshow in json_query:
 
-            totalepisodes = tvshow['episode']
-            watchedepisodes = tvshow['watchedepisodes']
-
-            if totalepisodes > watchedepisodes:
-                unwatchedepisodes = int(totalepisodes) - int(watchedepisodes)
-            else:
-                unwatchedepisodes = 0
+            unwatchedepisodes = get_unwatched(tvshow['episode'],tvshow['watchedepisodes'])
 
             if unwatchedepisodes == 1:
                 episode_query = json_call('VideoLibrary.GetEpisodes',
@@ -300,7 +345,7 @@ class PluginContent(object):
                 except Exception:
                     log('Get new media: Error fetching by episode details')
                 else:
-                    append_items(self.li,episode_query,type='episodes')
+                    append_items(self.li,episode_query,type='episode')
 
             else:
                 tvshow_query = json_call('VideoLibrary.GetTVShowDetails',
@@ -312,7 +357,7 @@ class PluginContent(object):
                 except Exception:
                     log('Get new media: Error fetching by TV show details')
                 else:
-                    append_items(self.li,[tvshow_query],type='tvshows')
+                    append_items(self.li,[tvshow_query],type='tvshow')
 
 
     # media by genre
@@ -367,7 +412,7 @@ class PluginContent(object):
                 except Exception:
                     log('Movies by genre %s: No movies found.' % genre)
                 else:
-                    append_items(self.li,json_query,type='movies',searchstring=genre)
+                    append_items(self.li,json_query,type='movie',searchstring=genre)
 
             if not self.dbtype or self.dbtype == 'tvshow':
                 json_query = json_call('VideoLibrary.GetTVShows',
@@ -380,7 +425,10 @@ class PluginContent(object):
                 except Exception:
                     log('TV shows by genre %s: No shows found.' % genre)
                 else:
-                    append_items(self.li,json_query,type='tvshows',searchstring=genre)
+                    append_items(self.li,json_query,type='tvshow',searchstring=genre)
+
+            if not self.li:
+                self._retry('get_mediabygenre')
 
             random.shuffle(self.li)
 
@@ -388,29 +436,36 @@ class PluginContent(object):
     # inprogress media
     def get_inprogress(self):
 
+        filters = [self.inprogress_filter]
+        if self.tag:
+            filters.append(self.tag_filter)
+        filter = {'and': filters}
+
         if not self.dbtype or self.dbtype == 'movie':
             json_query = json_call('VideoLibrary.GetMovies',
                                 properties=movie_properties,
-                                query_filter=self.inprogress_filter
+                                sort=self.sort_lastplayed,
+                                query_filter=filter
                                 )
             try:
                 json_query = json_query['result']['movies']
             except Exception:
                 log('In progress media: No movies found.')
             else:
-                append_items(self.li,json_query,type='movies')
+                append_items(self.li,json_query,type='movie')
 
         if not self.dbtype or self.dbtype == 'tvshow':
             json_query = json_call('VideoLibrary.GetEpisodes',
                                 properties=episode_properties,
-                                query_filter=self.inprogress_filter
+                                sort=self.sort_lastplayed,
+                                query_filter=filter
                                 )
             try:
                 json_query = json_query['result']['episodes']
             except Exception:
                 log('In progress media: No episodes found.')
             else:
-                append_items(self.li,json_query,type='episodes')
+                append_items(self.li,json_query,type='episode')
 
 
     # genres
@@ -434,12 +489,12 @@ class PluginContent(object):
                             query_filter={'operator': 'is', 'field': 'genre', 'value': genre['label']}
                             )
             posters = {}
-            index=0
+            index = 0
             try:
                 for art in genre_items['result'][self.key_items]:
                     poster = 'poster.%s' % index
                     posters[poster] = art['art'].get('poster', '')
-                    index+=1
+                    index += 1
             except Exception:
                 pass
 
@@ -455,7 +510,7 @@ class PluginContent(object):
 
 
     # get movies by director
-    def get_directed_by(self):
+    def get_directedby(self):
 
         if self.dbid:
             json_query = json_call('VideoLibrary.GetMovieDetails',
@@ -485,12 +540,14 @@ class PluginContent(object):
             json_query = json_query['result']['movies']
         except Exception:
             log('Movies by director %s: No additional movies found' % joineddirectors)
-        else:
-            append_items(self.li,json_query,type='movies',searchstring=joineddirectors)
+            self._retry('get_directedby')
+            return
+
+        append_items(self.li,json_query,type='movie',searchstring=joineddirectors)
 
 
     # get items by actor
-    def get_items_by_actor(self):
+    def get_itemsbyactor(self):
 
         if self.dbid:
             json_query = json_call(self.method_details,
@@ -532,7 +589,7 @@ class PluginContent(object):
         except Exception:
             log('Items by actor %s: No movies found' % random_actor)
         else:
-            append_items(self.li,movie_query,type='movies',searchstring=random_actor)
+            append_items(self.li,movie_query,type='movie',searchstring=random_actor)
 
         tvshow_query = json_call('VideoLibrary.GetTVShows',
                                     properties=tvshow_properties,
@@ -545,7 +602,10 @@ class PluginContent(object):
         except Exception:
             log('Items by actor %s: No shows found' % random_actor)
         else:
-            append_items(self.li,tvshow_query,type='tvshows',searchstring=random_actor)
+            append_items(self.li,tvshow_query,type='tvshow',searchstring=random_actor)
+
+        if not self.li:
+            self._retry('get_itemsbyactor')
 
         random.shuffle(self.li)
 
@@ -625,12 +685,13 @@ class PluginContent(object):
             json_query = json_query['result'][self.key_items]
         except KeyError:
             log('Get similar: No matching items found')
+            self._retry('get_similar')
             return
 
         if self.dbtype == 'movie':
-            append_items(self.li,json_query,type='movies',searchstring=title)
+            append_items(self.li,json_query,type='movie',searchstring=title)
         elif self.dbtype == 'tvshow':
-            append_items(self.li,json_query,type='tvshows',searchstring=title)
+            append_items(self.li,json_query,type='tvshow',searchstring=title)
 
 
     # cast
@@ -712,4 +773,16 @@ class PluginContent(object):
                         if not self.params.get('showall') == 'false':
                             self.li.append((li_path, li_item, False))
 
+
+    # retry loop
+    def _retry(self,type):
+        log('Retry to get content (%s)' % str(self.retry_count))
+
+        if self.retry_count < 5:
+            self.retry_count += 1
+            getattr(self, type)()
+
+        else:
+            log('No content found. Stop retrying.')
+            self.retry_count = 1
 

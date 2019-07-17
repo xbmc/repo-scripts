@@ -2,75 +2,82 @@
 # Addon Name: Embuary Helper
 # Addon id: script.embuary.helper
 # Addon Provider: sualfred
+# Translators:
+# Andrea Matesi <andreamatesi@gmail.com>, 2019
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: Embuary Helper\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Language-Team: \n"
+"PO-Revision-Date: 2019-07-14 05:59+0000\n"
+"Last-Translator: Andrea Matesi <andreamatesi@gmail.com>, 2019\n"
+"Language-Team: Italian (Italy) (https://www.transifex.com/sualfred/teams/80018/it_IT/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: en_GB\n"
+"Language: it_IT\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 msgctxt "#32000"
 msgid "Error"
-msgstr ""
+msgstr "Errore"
 
 msgctxt "#32001"
-msgid "This is a tool to provide features to a skin and requires skin integration."
+msgid ""
+"This is a tool to provide features to a skin and requires skin integration."
 msgstr ""
+"L'oggetto offre funzionalità ad una skin e richiede l'integrazione "
+"all'interno di una skin"
 
 msgctxt "#32002"
 msgid "Enable logging"
-msgstr ""
+msgstr "Attiva logging"
 
 msgctxt "#32003"
 msgid "Enable debug logging"
-msgstr ""
+msgstr "Attiva debug logging"
 
 msgctxt "#32004"
 msgid "detected"
-msgstr ""
+msgstr "rilevato"
 
 msgctxt "#32005"
 msgid "Changed font to"
-msgstr ""
+msgstr "Font cambiato a"
 
 msgctxt "#32006"
 msgid "Service is restarting"
-msgstr ""
+msgstr "Riavvio del servizio"
 
 #: /resources/lib/plugin_listing.py
 msgctxt "#32007"
 msgid "Suggestions based on random watched item"
-msgstr ""
+msgstr "Suggerimenti casuali per oggetti visti di recente"
 
 #: /resources/lib/plugin_listing.py
 msgctxt "#32008"
 msgid "Next up"
-msgstr ""
+msgstr "Prossimo"
 
 #: /resources/lib/plugin_listing.py
 msgctxt "#32009"
 msgid "Suggestions by random genre"
-msgstr ""
+msgstr "Suggerimenti casuali per genere"
 
 #: /resources/lib/plugin_listing.py
 msgctxt "#32010"
 msgid "Mix of recently added episodes and shows"
-msgstr ""
+msgstr "Mix per show ed episodi aggiunti di recente"
 
 #: /resources/lib/plugin_listing.py
 msgctxt "#32011"
 msgid "All media"
-msgstr ""
+msgstr "Tutti i media"
 
 #: /resources/lib/plugin_listing.py
 msgctxt "#32012"
 msgid "Recommended by rating"
-msgstr ""
+msgstr "Raccomandazioni basate sul rating"
 
 #: /resources/lib/plugin_listing.py
 msgctxt "#32013"

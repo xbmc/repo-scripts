@@ -12,8 +12,9 @@ except ImportError:
     import urllib.parse as urlparse
 
 from resources.lib.helper import *
+from resources.lib.plugin_listing import *
 from resources.lib.plugin_content import *
-from resources.lib.plugin_utils import *
+from resources.lib.plugin_actions import *
 
 ########################
 
@@ -25,8 +26,11 @@ class Main:
         self.action = self.params.get('action')
         if self.info:
             self.getinfos()
-        if self.action:
+        elif self.action:
             self.actions()
+        else:
+            self.listing()
+
 
     def _parse_argv(self):
 
@@ -47,6 +51,14 @@ class Main:
 
         except Exception:
             self.params = {}
+
+
+    def listing(self):
+        li = list()
+        plugin = PluginListing(self.params,li)
+
+        xbmcplugin.addDirectoryItems(int(sys.argv[1]), li)
+        xbmcplugin.endOfDirectory(handle=int(sys.argv[1]))
 
 
     def getinfos(self):
@@ -72,24 +84,29 @@ class Main:
         elif self.info == 'getbygenre':
             plugin.get_mediabygenre()
         elif self.info == 'getdirectedby':
-            plugin.get_directed_by()
+            plugin.get_directedby()
         elif self.info == 'getitemsbyactor':
-            plugin.get_items_by_actor()
+            plugin.get_itemsbyactor()
         elif self.info == 'getseasonal':
             plugin.get_seasonal()
         elif self.info == 'jumptoletter':
             plugin.jumptoletter()
+        elif self.info == 'bydbid':
+            plugin.get_bydbid()
+        elif self.info == 'byargs':
+            plugin.get_byargs()
 
         xbmcplugin.addDirectoryItems(int(sys.argv[1]), li)
         xbmcplugin.endOfDirectory(handle=int(sys.argv[1]))
 
     def actions(self):
+        plugin = PluginActions(self.params)
+
         if self.action == 'smsjump':
-            smsjump(self.params)
-        elif self.action == 'jumptoshow':
-            jumptoshow(self.params)
-        elif self.action == 'jumptoseason':
-            jumptoseason(self.params)
+            plugin.smsjump()
+        elif self.action == 'folderjump':
+            plugin.folderjump()
+
 
 if __name__ == '__main__':
     Main()
