@@ -65,6 +65,7 @@ class Main(xbmc.Monitor):
                 split({'value': xbmc.getInfoLabel('ListItem.Country'), 'property': 'ListItem.Country', 'separator': ' / '})
                 split({'value': xbmc.getInfoLabel('ListItem.Studio'), 'property': 'ListItem.Studio', 'separator': ' / '})
                 split({'value': xbmc.getInfoLabel('ListItem.Director'), 'property': 'ListItem.Director', 'separator': ' / '})
+                split({'value': xbmc.getInfoLabel('ListItem.Cast'), 'property': 'ListItem.Cast'})
 
             # Grab fanarts
             if self.get_backgrounds >= 200:

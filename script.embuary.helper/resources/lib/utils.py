@@ -401,23 +401,40 @@ def setinfo(params):
 
 def split(params):
     value =  remove_quotes(params.get('value'))
-    separator = remove_quotes(params.get('separator'))
     prop = params.get('property')
+    separator = remove_quotes(params.get('separator'))
 
-    i = 0
-    for item in value.split(separator):
-        winprop('%s.%s' % (prop,i), item)
-        i += 1
+    if value:
+        if separator:
+            value = value.split(separator)
+        else:
+            value = value.splitlines()
 
-    for item in range(i,30):
-        winprop('%s.%s' % (prop,i), clear=True)
-        i += 1
+        i = 0
+        for item in value:
+            winprop('%s.%s' % (prop,i), item)
+            i += 1
+
+        for item in range(i,30):
+            winprop('%s.%s' % (prop,i), clear=True)
+            i += 1
+
+
+def lookforfile(params):
+    file = remove_quotes(params.get('file'))
+    prop = params.get('prop','FileExists')
+
+    if xbmcvfs.exists(file):
+        winprop('%s.bool' % prop, True)
+        log('File exists: %s' % file)
+    else:
+        winprop(prop, clear=True)
+        log('File does not exist: %s' % file)
 
 
 class PlayCinema(object):
 
     def __init__(self, params):
-
         self.trailer_count = xbmc.getInfoLabel('Skin.String(TrailerCount)') if not xbmc.getInfoLabel('Skin.String(TrailerCount)') == '0' else ''
         self.intro_path = xbmc.getInfoLabel('Skin.String(IntroPath)')
 
@@ -486,6 +503,7 @@ class PlayCinema(object):
                 options={'shuffled': False}
                 )
 
+
     def get_trailers(self):
             movies = json_call('VideoLibrary.GetMovies',
                                 properties=movie_properties,
@@ -501,6 +519,7 @@ class PlayCinema(object):
 
             return movies
 
+
     def get_intros(self):
             dirs, files = xbmcvfs.listdir(self.intro_path)
 
@@ -510,7 +529,8 @@ class PlayCinema(object):
                     intros.append(file)
 
             if intros:
-                return random.choice(self.intro_path)
+                url = '%s%s' % (self.intro_path,random.choice(intros))
+                return url
 
             log('Play with cinema mode: No intros found')
             return
