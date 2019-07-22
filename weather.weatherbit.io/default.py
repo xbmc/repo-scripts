@@ -6,6 +6,7 @@ import time
 from datetime import datetime
 import _strptime
 import urllib2
+import requests
 import unicodedata
 import xbmc
 import xbmcgui
@@ -75,13 +76,8 @@ def get_data(search_string, item):
         url = LOCATION_URL % search_string
     else:
         url = BASE_URL % search_string
-    try:
-        req = urllib2.urlopen(url)
-        response = req.read()
-        req.close()
-    except:
-        response = ''
-    return response
+    response = requests.get(url)
+    return str(response.text)
 
 def convert_date(stamp):
     date_time = time.localtime(stamp)
@@ -149,20 +145,16 @@ def geoip():
     # list of alternative providers https://ahmadawais.com/best-api-geolocating-an-ip-address/)
     city = ''
     latlon = ''
-    try:
-        req = urllib2.urlopen('http://ip-api.com/json')
-        response = req.read()
-        req.close()
-    except:
-        response = ''
-        log('failed to retrieve geoip location')
+    response = requests.get('http://ip-api.com/json')
     if response:
-        data = json.loads(response)
+        data = response.json()
         if data and 'city' in data and 'countryCode' in data and 'lat' in data and 'lon' in data:
             city = data['city'] + ' (' + data['countryCode'] + ')'
             latlon = []
             latlon.append(str(data['lat']))
             latlon.append(str(data['lon']))
+    else:
+        log('failed to retrieve geoip location')
     return city, str(latlon)
 
 def location(locstr):
@@ -222,6 +214,8 @@ def forecast(loc, locationdeg):
             retry = 6
             try:
                 current_weather = json.loads(current_data)
+                if 'error' in current_weather:
+                    return
             except:
                 clear()
                 log('parsing current data failed')
@@ -242,6 +236,8 @@ def forecast(loc, locationdeg):
     log('daily data: %s' % daily_data)
     try:
         daily_weather = json.loads(daily_data)
+        if 'error' in daily_weather:
+            return
     except:
         log('parsing daily data failed')
         daily_weather = ''
@@ -252,6 +248,8 @@ def forecast(loc, locationdeg):
     log('hourly data: %s' % hourly_data)
     try:
         hourly_weather = json.loads(hourly_data)
+        if 'error' in hourly_weather:
+            return
     except:
         log('parsing hourly data failed')
         hourly_weather = ''
@@ -395,7 +393,7 @@ def hourly_props(data):
 # extended properties
     for count, item in enumerate(data['data']):
         code = str(item['weather']['code'])
-        pod = data['data'][0]['pod']
+        pod = item['pod']
         code = code + pod
         weathercode = WEATHER_CODES[code]
         set_property('Hourly.%i.Time'            % (count+1), get_time(item['ts']))
