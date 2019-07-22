@@ -1,4 +1,4 @@
-#   Copyright (C) 2018 Lunatixz
+#   Copyright (C) 2019 Lunatixz
 #
 #
 # This file is part of PyHDHR
@@ -107,12 +107,15 @@ class ChannelInfo(object):
     URL = ""
     Favorite = -1
     Tuner = None
+    DRM = False
     
     def __init__(self,Tuner):
         self.Tuner = Tuner
         return
 
     def parse(self,parsestr,PyHDHR):
+        if 'DRM' in parsestr:
+            self.DRM = parsestr['DRM'] == 1
         if 'GuideNumber' in parsestr:
             self.GuideNumber = parsestr['GuideNumber']
         if 'GuideName' in parsestr:
@@ -165,6 +168,9 @@ class ChannelInfo(object):
 
     def getHD(self):
         return self.HD
+        
+    def getDRM(self):
+        return self.DRM
 
     def getURL(self):
         return self.URL
