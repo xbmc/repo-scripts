@@ -1,4 +1,4 @@
-#   Copyright (C) 2018 Lunatixz
+#   Copyright (C) 2019 Lunatixz
 #
 #
 # This file is part of uEPG.
@@ -17,7 +17,7 @@
 # along with uEPG.  If not, see <http://www.gnu.org/licenses/>.
 
 # -*- coding: utf-8 -*-
-import os, sys, time, datetime, re, traceback
+import os, sys, time, datetime, re, traceback, urllib
 import json, collections, utils, itertools, threading
 import xbmc, xbmcgui, xbmcplugin, xbmcvfs, xbmcaddon
 
@@ -69,12 +69,12 @@ class uEPG(xbmcgui.WindowXML):
         self.currentChannel = 1
         self.newChannel     = -1
         self.focusRow       = 0
-        self.focusIndex     = -1
         self.defaultRows    = 9
+        self.focusIndex     = -1
         self.onInitReturn   = False
         self.player         = Player()
         self.player.uEPG    = self
-        self.rowCount       = int(utils.getProperty("uEPG.rowCount") or self.defaultRows)
+        self.rowCount       = (int(utils.getProperty("uEPG.rowCount") or self.defaultRows))
         self.overlay        = BackgroundWindow('%s.overlay.xml'%utils.ADDON_ID,utils.ADDON_PATH,"default")
         self.overlay.uEPG   = self
 
@@ -93,18 +93,20 @@ class uEPG(xbmcgui.WindowXML):
             utils.log('onInit, onInitReturn = False')
             self.guideLimit     = 14400
             self.rowCount       = self.chkRows(self.rowCount)
-            self.epgButtonwidth = float((utils.getProperty("uEPG.buttonWidth"))       or "5400.0")
-            self.timeCount      = int((utils.getProperty("uEPG.timeCount"))           or "3")
-            self.textColor      = hex(int((utils.getProperty("uEPG.textColor")        or "0xFFFFFFFF"),16))[2:]
-            self.disabledColor  = hex(int((utils.getProperty("uEPG.disabledColor")    or "0xFFFFFFFF"),16))[2:]
-            self.focusedColor   = hex(int((utils.getProperty("uEPG.focusedColor")     or "0xFFFFFFFF"),16))[2:]
-            self.shadowColor    = hex(int((utils.getProperty("uEPG.shadowColor")      or "0xFF000000"),16))[2:]
-            self.pastColor      = hex(int((utils.getProperty("uEPG.pastColor")        or "0xFF0f85a5"),16))[2:]
-            self.timeColor      = hex(int((utils.getProperty("uEPG.timeColor")        or "0xFF0f85a5"),16))[2:]
-            self.futureColor    = hex(int((utils.getProperty("uEPG.futureColor")      or "0xFF0f85a5"),16))[2:]
-            self.singleLineFade = (utils.getProperty("uEPG.singleLineFade")           or "false") == "true"
-            self.textFont       = (utils.getProperty("uEPG.timeCount")                or "font12")
-            self.timeFormat     = (utils.getProperty("uEPG.timeFormat")               or "%A, %B %d")
+            self.epgButtonwidth = float((utils.getProperty("uEPG.buttonWidth"))         or "5400.0")
+            self.timeCount      = int((utils.getProperty("uEPG.timeCount"))             or "3")
+            self.textColor      = hex(int((utils.getProperty("uEPG.textColor")          or "0xFFFFFFFF"),16))[2:]
+            self.disabledColor  = hex(int((utils.getProperty("uEPG.disabledColor")      or "0xFFFFFFFF"),16))[2:]
+            self.focusedColor   = hex(int((utils.getProperty("uEPG.focusedColor")       or "0xFFFFFFFF"),16))[2:]
+            self.shadowColor    = hex(int((utils.getProperty("uEPG.shadowColor")        or "0xFF000000"),16))[2:]
+            self.pastColor      = hex(int((utils.getProperty("uEPG.pastColor")          or "0xFF0f85a5"),16))[2:]
+            self.timeColor      = hex(int((utils.getProperty("uEPG.timeColor")          or "0xFF0f85a5"),16))[2:]
+            self.futureColor    = hex(int((utils.getProperty("uEPG.futureColor")        or "0xFF0f85a5"),16))[2:]
+            self.favColor       = hex(int((utils.getProperty("uEPG.favColor")           or "0xFFFFD700"),16))[2:]
+            self.favDefault     = hex(int((utils.getProperty("uEPG.favDefault")         or "0x00000000"),16))[2:]
+            self.singleLineFade = (utils.getProperty("uEPG.singleLineFade")             or "false") == "true"
+            self.textFont       = (utils.getProperty("uEPG.timeCount")                  or "font12")
+            self.timeFormat     = (urllib.unquote(utils.getProperty("uEPG.timeFormat")) or "%A, %B %d")
             self.clockMode      = int(utils.REAL_SETTINGS.getSetting("ClockMode"))
         
             self.channelButtons = [None] * self.rowCount
@@ -204,6 +206,7 @@ class uEPG(xbmcgui.WindowXML):
         precount = rowcount
         if self.channelLST.maxChannels < rowcount: rowcount = self.channelLST.maxChannels
         elif self.channelLST.maxChannels >= self.defaultRows and self.channelLST.skinPath.startswith(utils.ADDON_PATH): rowcount = self.defaultRows
+        
         utils.log("chkRows, rowcount = " + str(rowcount))
         return rowcount
         
@@ -249,6 +252,8 @@ class uEPG(xbmcgui.WindowXML):
         duration        = self.getItemDuration(newchan, plpos)
         self.mediaPath  = self.getItemMediaPath(newchan, plpos)
         self.listItem   = self.getItemListItem(newchan, plpos)
+        self.label      = self.getItemLabel(newchan, plpos)
+        self.type       = self.getItemType(newchan, plpos)
         self.contextLST = self.getContextList(newchan, plpos)
         self.newChannel = newchan
         self.setPlayingTime(startTime, duration)
@@ -304,12 +309,12 @@ class uEPG(xbmcgui.WindowXML):
             
         self.currentHighLT.setVisible(False)
         for i in range(self.rowCount):
-            chanColor = {True:utils.COLOR_FAVORITE,False:''}[self.channelLST.channels[curchannel - 1].isFavorite]
             chnumber  = self.channelLST.channels[curchannel - 1].number
-            if isinstance(chnumber, float): label = "[COLOR=%s][B]%.1f[/COLOR] |[/B]"%(chanColor, chnumber)
-            else: label = "[COLOR=%s][B]%d[/COLOR] |[/B]"%(chanColor, chnumber)
+            if self.channelLST.channels[curchannel - 1].isHDHR: label = "[COLOR=%s][B]%s[/COLOR] |[/B]"%('green', str(chnumber))
+            else: label = '[B]%s |[/B]'%(str(chnumber))
             self.getControl(33111 + i).setLabel(label)
             self.getControl(33411 + i).setImage(self.channelLST.channels[curchannel - 1].logo)
+            utils.setProperty('FavColor',{True:self.favColor,False:self.favDefault}[self.channelLST.channels[curchannel - 1].isFavorite])
             
             if curchannel == self.currentChannel:
                 utils.log('setChannelButtons, current playing channel row')
@@ -426,6 +431,14 @@ class uEPG(xbmcgui.WindowXML):
         genre = ' / '.join(genre) if isinstance(genre, list) else genre
         utils.log('getItemGenre, genre = ' + str(genre))
         return genre
+        
+        
+    def getItemType(self, channel, position):
+        position = self.fixPlaylistIndex(channel, position)
+        item = self.channelLST.channels[channel - 1].guidedata[position]
+        type = item.get('mediatype','tvshows')
+        utils.log('getItemType, type = ' + str(type))
+        return type
 
         
     def getItemDuration(self, channel, position):
@@ -651,7 +664,7 @@ class uEPG(xbmcgui.WindowXML):
     def GoDown(self):
         utils.log('goDown')
         try:
-            if self.focusRow == self.rowCount - 1 or self.getFocusId() == 40001:
+            if self.focusRow == ((self.rowCount - 1) or self.getFocusId() == 40001):
                 self.setChannelButtons(self.shownTime, self.fixChannel(self.centerChannel + 1))
                 self.focusRow = self.rowCount - 2
             self.setProperButton(self.focusRow + 1)
@@ -694,7 +707,7 @@ class uEPG(xbmcgui.WindowXML):
                 self.setChannelButtons(self.shownTime - 1800, self.centerChannel)
                 curbutidx = self.findButtonAtTime(self.focusRow, starttime + 30)
                 if(curbutidx - 1) >= 0: self.focusIndex = curbutidx - 1
-                else: elf.focusIndex = 0
+                else: self.focusIndex = 0
             else: self.focusIndex -= 1
             left, top = self.channelButtons[self.focusRow][self.focusIndex].getPosition()
             width = self.channelButtons[self.focusRow][self.focusIndex].getWidth()
@@ -780,7 +793,10 @@ class uEPG(xbmcgui.WindowXML):
             
             
     def showInfo(self):
-        xbmcgui.Dialog().info(self.listItem)
+        curListItem = self.listItem
+        try: curListItem = utils.buildListItem(utils.getMeta(self.label,self.type))
+        except: pass
+        xbmcgui.Dialog().info(curListItem)
             
             
     def onAction(self, act): 
