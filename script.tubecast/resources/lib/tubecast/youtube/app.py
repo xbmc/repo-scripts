@@ -247,7 +247,7 @@ class YoutubeCastV1(object):
             if code > self.code:
                 self.code = code
                 logger.debug("updatePlaylist: {}".format(data))
-                if "videoIds" in data.keys():
+                if "videoIds" in list(data.keys()):
                     self.cur_list = data["videoIds"].split(",")
                     if self.current_index >= len(self.cur_list):
                         self.current_index -= 1
@@ -377,7 +377,7 @@ class YoutubeCastV1(object):
         self.ofs += 1
         post_data = {"count": "1", "ofs": str(self.ofs)}
         post_data["req0__sc"] = sc
-        for key in postdata.keys():
+        for key in list(postdata.keys()):
             post_data["req0_" + key] = postdata[key]
 
         bind_vals = self.bind_vals
