@@ -1,3 +1,5 @@
+1.1.0 (2018-12-23)
+-  Addon setted as broken, Subsfactory community has closed!
 0.0.7
 - fixed for some TV show
 0.0.6
