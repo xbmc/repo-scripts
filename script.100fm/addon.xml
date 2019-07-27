@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.100fm" name="100FM Radius Digital" version="0.2.3" provider-name="Nir Elbaz">
+<addon id="script.100fm" name="100FM Radius Digital" version="0.2.4" provider-name="Nir Elbaz">
     <requires>
         <import addon="xbmc.python" version="2.24.0"/>
         <import addon="script.module.requests" version="2.9.1"/>
@@ -9,6 +9,7 @@
         <provides>audio</provides>
     </extension>
     <extension point="xbmc.addon.metadata">
+        <broken>Addon is no longer being developed</broken>
         <summary lang="en">100FM Radius Digital - Music, that's all</summary>
         <summary lang="he">100FM רדיוס דיגיטל - מוזיקה זה הכל</summary>
         <description lang="en">100FM radio station Kodi add-on. The add-on offers live listening to dozens different
