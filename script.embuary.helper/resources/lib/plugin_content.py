@@ -4,7 +4,7 @@
 ########################
 
 import random
-import json
+import xbmcvfs
 
 from resources.lib.helper import *
 from resources.lib.library import *
@@ -61,16 +61,17 @@ class PluginContent(object):
         self.title_filter = {'operator': 'is', 'field': 'title', 'value': self.dbtitle}
 
 
-    # by dbid
-    def get_bydbid(self):
-
-        json_query = json_call(self.method_details,
+    ''' by dbid to get all available listitems
+    '''
+    def getbydbid(self):
+        try:
+            json_query = json_call(self.method_details,
                                 properties=self.properties,
                                 params={self.param: int(self.dbid)}
                                 )
 
-        try:
             result = json_query['result'][self.key_details]
+
         except Exception as error:
             log('Get by DBID: No result found: %s' % error)
             return
@@ -78,19 +79,16 @@ class PluginContent(object):
         append_items(self.li,[result],type=self.dbtype)
 
 
-    # by custom args
-    def get_byargs(self):
-
+    ''' by custom args to parse own json
+    '''
+    def getbyargs(self):
         limit = self.limit or None
-        filter_args = self.params.get('filter_args') or None
-        sort_args = self.params.get('sort_args') or None
-
-        if sort_args:
-            sort_args = json.loads(sort_args)
+        filter_args = remove_quotes(self.params.get('filter_args')) or None
+        sort_args = remove_quotes(self.params.get('sort_args')) or None
 
         filters = []
         if filter_args is not None:
-            filters.append(json.loads(filter_args))
+            filters.append(eval(filter_args))
         if self.tag:
             filters.append(self.tag_filter)
         if filters:
@@ -98,14 +96,18 @@ class PluginContent(object):
         else:
             filter = None
 
-        json_query = json_call(self.method_item,
-                                properties=self.properties,
-                                sort=sort_args, limit=limit,
-                                query_filter=filter
-                                )
+        if sort_args is not None:
+            sort_args = eval(sort_args)
 
         try:
+            json_query = json_call(self.method_item,
+                                    properties=self.properties,
+                                    sort=sort_args, limit=limit,
+                                    query_filter=filter
+                                    )
+
             result = json_query['result'][self.key_items]
+
         except Exception as error:
             log('Get by args: No result found: %s' % error)
             return
@@ -113,9 +115,33 @@ class PluginContent(object):
         append_items(self.li,result,type=self.dbtype)
 
 
-    # season widgets
-    def get_seasonal(self):
+    ''' resource helper to create a list will all existing and matching resource images
+    '''
+    def getresourceimages(self):
+        resource_addon = self.params.get('addon')
+        resource_dir = xbmc.translatePath('resource://%s/' % resource_addon)
 
+        string = remove_quotes(self.params.get('string'))
+        separator = remove_quotes(self.params.get('separator'))
+
+        if separator:
+            values = string.split(separator)
+        else:
+            values = string.splitlines()
+
+        for item in values:
+            for filename in ['%s.jpg' % item, '%s.png' % item]:
+                filepath = resource_dir + filename
+                if xbmcvfs.exists(filepath):
+                    list_item = xbmcgui.ListItem(label=item)
+                    list_item.setArt({'icon': filepath})
+                    self.li.append(('', list_item, False))
+                    break
+
+
+    ''' season widgets to display library content that fit a special seasson or date
+    '''
+    def getseasonal(self):
         xmas = ['xmas', 'christmas', 'x-mas', 'mistletow', 'claus', 'snowman', 'happy holidays', 'st. nick', 'Weihnacht', 'weihnachten', 'fest der liebe', 'trannenbaum', 'schneemann', 'heilige nacht',
                 'heiliger abend', 'heiligabend', 'nikolaus', 'christkind', 'mistelzweig', 'Noël', 'Meilleurs vœux', 'feliz navidad', 'joyeux noel', 'Natale', 'szczęśliwe święta', 'Veselé Vánoce',
                 'Vrolijk kerstfeest', 'Kerstmis', 'Boże Narodzenie', 'Kalėdos', 'Crăciun']
@@ -123,31 +149,35 @@ class PluginContent(object):
         horror = ['ужас', 'užas', 'rædsel', 'horror', 'φρίκη', 'õudus', 'kauhu', 'horreur', 'užas', 'borzalom', 'hryllingi', 'ホラー', 'siaubas', 'verschrikking', 'skrekk', 'przerażenie', 'groază',
                 'фильм ужасов', 'hrôza', 'grozo', 'Skräck', 'korku', 'жах']
 
-        starwars = ['Star Wars', 'Krieg der Sterne', 'Luke Skywalker', 'Darth Vader', 'Jedi ', 'Ewoks', 'Starwars', 'Kylo Ren', 'Yoda ', 'Chewbacca', 'Anakin Skywalker', 'Han Solo', 'r2-d2', 'bb-8', 'Millennium Falcon', 'Millenium Falke', 'Stormtrooper', 'Sturmtruppler']
+        starwars = ['Star Wars', 'Krieg der Sterne', 'Luke Skywalker', 'Darth Vader', 'Jedi ', 'Ewoks', 'Starwars', 'Kylo Ren', 'Yoda ', 'Chewbacca', 'Anakin Skywalker', 'Han Solo', 'r2-d2', 'bb-8',
+                    'Millennium Falcon', 'Millenium Falke', 'Stormtrooper', 'Sturmtruppler']
 
-        startrek = ['Star Trek', 'Captain Kirk', 'Cpt. Kirk', 'James Kirk', 'James T. Kirk', 'James Tiberius Kirk', 'Jean-Luc Picard', 'Commander Spock', 'Deep Space Nine', 'Deep Space 9', 'Raumschiff Enterprise', 'Raumschiff Voyager', 'Klingonen', 'Klingons', 'Commander Data', 'Commander Geordi La Forge', 'Counselor Deanna Troi', 'William Thomas Riker', 'Captain Benjamin Sisko', 'Cpt. Benjamin Sisko', 'Captain Kathryn Janeway', 'Cpt. Kathryn Janeway']
+        startrek = ['Star Trek', 'Captain Kirk', 'Cpt. Kirk', 'James Kirk', 'James T. Kirk', 'James Tiberius Kirk', 'Jean-Luc Picard', 'Commander Spock', 'Deep Space Nine', 'Deep Space 9',
+                    'Raumschiff Enterprise', 'Raumschiff Voyager', 'Klingonen', 'Klingons', 'Commander Data', 'Commander Geordi La Forge', 'Counselor Deanna Troi', 'William Thomas Riker',
+                    'Captain Benjamin Sisko', 'Cpt. Benjamin Sisko', 'Captain Kathryn Janeway', 'Cpt. Kathryn Janeway']
 
         filters = []
+        list_type = self.params.get('list')
 
-        if self.params.get('list') == 'xmas':
+        if list_type == 'xmas':
             use_episodes = True
             for keyword in xmas:
                 filters.append({'operator': 'contains', 'field': 'title', 'value': keyword})
                 filters.append({'operator': 'contains', 'field': 'plot', 'value': keyword})
 
-        elif self.params.get('list') == 'horror':
+        elif list_type == 'horror':
             use_episodes = False
             for keyword in horror:
                 filters.append({'operator': 'contains', 'field': 'genre', 'value': keyword})
 
-        elif self.params.get('list') == 'starwars':
+        elif list_type == 'starwars':
             use_episodes = False
             for keyword in starwars:
                 filters.append({'operator': 'contains', 'field': 'title', 'value': keyword})
                 filters.append({'operator': 'contains', 'field': 'originaltitle', 'value': keyword})
                 filters.append({'operator': 'contains', 'field': 'plot', 'value': keyword})
 
-        elif self.params.get('list') == 'startrek':
+        elif list_type == 'startrek':
             use_episodes = False
             for keyword in startrek:
                 filters.append({'operator': 'contains', 'field': 'title', 'value': keyword})
@@ -204,8 +234,9 @@ class PluginContent(object):
         random.shuffle(self.li)
 
 
-    # get seasons
-    def get_seasons(self):
+    ''' get seasons of a show
+    '''
+    def getseasons(self):
         if not self.dbid:
             get_dbid = json_call('VideoLibrary.GetTVShows',
                             properties=['title'], limit=1,
@@ -238,9 +269,9 @@ class PluginContent(object):
             append_items(self.li,season_query,type='season')
 
 
-    # get more episodes from the same season
-    def get_seasonepisodes(self):
-
+    ''' get more episodes from the same season
+    '''
+    def getseasonepisodes(self):
         if not self.dbid:
             get_dbid = json_call('VideoLibrary.GetTVShows',
                             properties=['title'], limit=1,
@@ -271,9 +302,9 @@ class PluginContent(object):
             append_items(self.li,episode_query,type='episode')
 
 
-    # get nextup
-    def get_nextup(self):
-
+    ''' get nextup of inprogress TV shows
+    '''
+    def getnextup(self):
         filters = [self.inprogress_filter]
         if self.tag:
             filters.append(self.tag_filter)
@@ -308,13 +339,19 @@ class PluginContent(object):
                     append_items(self.li,episode_details,type='episode')
 
 
-    # get mixed recently added tvshows/episodes
-    def get_newshows(self):
+    ''' get recently added episodes of unwatched shows
+    '''
+    def getnewshows(self):
+        show_all = get_bool(self.params.get('showall'))
 
-        filters = [self.unplayed_filter]
-        if self.tag:
-            filters.append(self.tag_filter)
-        filter = {'and': filters}
+        if show_all:
+            filter = self.tag_filter if self.tag else None
+
+        else:
+            filters = [self.unplayed_filter]
+            if self.tag:
+                filters.append(self.tag_filter)
+            filter = {'and': filters}
 
         json_query = json_call('VideoLibrary.GetTVShows',
                         properties=tvshow_properties,
@@ -329,40 +366,66 @@ class PluginContent(object):
             return
 
         for tvshow in json_query:
+            try:
+                unwatchedepisodes = get_unwatched(tvshow['episode'],tvshow['watchedepisodes'])
+                append_tvshow = False
 
-            unwatchedepisodes = get_unwatched(tvshow['episode'],tvshow['watchedepisodes'])
+                if show_all:
+                    ''' All recently added episodes. Watched state is ignored and only items added of the same date
+                        will be grouped.
+                    '''
+                    episode_query = json_call('VideoLibrary.GetEpisodes',
+                                            properties=episode_properties,
+                                            sort=self.sort_recent, limit=2,
+                                            params={'tvshowid': int(tvshow['tvshowid'])}
+                                            )
 
-            if unwatchedepisodes == 1:
-                episode_query = json_call('VideoLibrary.GetEpisodes',
-                            properties=episode_properties,
-                            sort=self.sort_recent,limit=1,
-                            query_filter=self.unplayed_filter,
-                            params={'tvshowid': int(tvshow['tvshowid'])}
-                            )
-
-                try:
                     episode_query = episode_query['result']['episodes']
-                except Exception:
-                    log('Get new media: Error fetching by episode details')
-                else:
+
+                    try:
+                        if not get_date(episode_query[0]['dateadded']) == get_date(episode_query[1]['dateadded']):
+                            raise Exception
+                        append_tvshow = True
+
+                    except Exception:
+                        append_items(self.li,[episode_query[0]],type='episode')
+
+                elif unwatchedepisodes == 1:
+                    ''' Recently added episodes based on unwatched or in progress TV shows. Episodes will be grouped
+                        if more than one unwatched episode is available.
+                    '''
+                    episode_query = json_call('VideoLibrary.GetEpisodes',
+                                            properties=episode_properties,
+                                            sort=self.sort_recent,limit=1,
+                                            query_filter=self.unplayed_filter,
+                                            params={'tvshowid': int(tvshow['tvshowid'])}
+                                            )
+
+                    episode_query = episode_query['result']['episodes']
                     append_items(self.li,episode_query,type='episode')
 
-            else:
-                tvshow_query = json_call('VideoLibrary.GetTVShowDetails',
-                            properties=tvshow_properties,
-                            params={'tvshowid': int(tvshow['tvshowid'])}
-                            )
-                try:
-                    tvshow_query = tvshow_query['result']['tvshowdetails']
-                except Exception:
-                    log('Get new media: Error fetching by TV show details')
                 else:
+                    append_tvshow = True
+
+                ''' Group episodes to show if more than one valid episode is available
+                '''
+                if append_tvshow:
+                    tvshow_query = json_call('VideoLibrary.GetTVShowDetails',
+                                            properties=tvshow_properties,
+                                            params={'tvshowid': int(tvshow['tvshowid'])}
+                                            )
+
+                    tvshow_query = tvshow_query['result']['tvshowdetails']
                     append_items(self.li,[tvshow_query],type='tvshow')
 
+            except Exception as error:
+                log('Get new media: Not able to parse data for show %s - %s' % (tvshow,error))
+                pass
 
-    # media by genre
-    def get_mediabygenre(self):
 
+    ''' get custom media by genre
+    '''
+    def getbygenre(self):
         genre = remove_quotes(self.params.get('genre'))
 
         if not genre:
@@ -428,14 +491,14 @@ class PluginContent(object):
                     append_items(self.li,json_query,type='tvshow',searchstring=genre)
 
             if not self.li:
-                self._retry('get_mediabygenre')
+                self._retry('getbygenre')
 
             random.shuffle(self.li)
 
 
-    # inprogress media
-    def get_inprogress(self):
-
+    ''' get inprogress media
+    '''
+    def getinprogress(self):
         filters = [self.inprogress_filter]
         if self.tag:
             filters.append(self.tag_filter)
@@ -468,9 +531,9 @@ class PluginContent(object):
                 append_items(self.li,json_query,type='episode')
 
 
-    # genres
-    def get_genre(self):
-
+    ''' genres listing with 4 posters of each available genre content
+    '''
+    def getgenre(self):
         json_query = json_call('VideoLibrary.GetGenres',
                             sort={'method': 'label'},
                             params={'type': self.dbtype}
@@ -509,9 +572,9 @@ class PluginContent(object):
         append_items(self.li,json_query,type='genre')
 
 
-    # get movies by director
-    def get_directedby(self):
-
+    ''' get movies by director
+    '''
+    def getdirectedby(self):
         if self.dbid:
             json_query = json_call('VideoLibrary.GetMovieDetails',
                                 properties=['title', 'director'],
@@ -540,15 +603,15 @@ class PluginContent(object):
             json_query = json_query['result']['movies']
         except Exception:
             log('Movies by director %s: No additional movies found' % joineddirectors)
-            self._retry('get_directedby')
+            self._retry('getdirectedby')
             return
 
         append_items(self.li,json_query,type='movie',searchstring=joineddirectors)
 
 
-    # get items by actor
-    def get_itemsbyactor(self):
-
+    ''' get items by actor
+    '''
+    def getitemsbyactor(self):
         if self.dbid:
             json_query = json_call(self.method_details,
                                     properties=['title', 'cast'],
@@ -605,14 +668,14 @@ class PluginContent(object):
             append_items(self.li,tvshow_query,type='tvshow',searchstring=random_actor)
 
         if not self.li:
-            self._retry('get_itemsbyactor')
+            self._retry('getitemsbyactor')
 
         random.shuffle(self.li)
 
 
-    # because you watched xyz
-    def get_similar(self):
-
+    ''' because you watched xyz
+    '''
+    def getsimilar(self):
         ''' Based on show or movie of the database
         '''
         if self.dbid:
@@ -685,7 +748,7 @@ class PluginContent(object):
             json_query = json_query['result'][self.key_items]
         except KeyError:
             log('Get similar: No matching items found')
-            self._retry('get_similar')
+            self._retry('getsimilar')
             return
 
         if self.dbtype == 'movie':
@@ -694,9 +757,9 @@ class PluginContent(object):
             append_items(self.li,json_query,type='tvshow',searchstring=title)
 
 
-    # cast
-    def get_cast(self):
-
+    ''' get cast of item
+    '''
+    def getcast(self):
         if self.dbtitle:
             json_query = json_call(self.method_item,
                                 properties=['cast'],
@@ -725,9 +788,9 @@ class PluginContent(object):
         append_items(self.li,cast,type='cast')
 
 
-    # jump to letter
+    ''' jump to letter for smsjump navigation
+    '''
     def jumptoletter(self):
-
         if xbmc.getInfoLabel('Container.NumItems'):
 
             all_letters = []
@@ -761,20 +824,26 @@ class PluginContent(object):
                     if letter == '#' and first_number:
                         li_path = 'plugin://script.embuary.helper/?action=smsjump&letter=0'
                         li_item.setProperty('IsNumber', first_number)
-                        self.li.append((li_path, li_item, False))
+                        append = True
 
                     elif letter in all_letters:
                         li_path = 'plugin://script.embuary.helper/?action=smsjump&letter=%s' % letter
-                        self.li.append((li_path, li_item, False))
+                        append = True
 
-                    else:
+                    elif get_bool(self.params.get('showall','true')):
                         li_path = ''
                         li_item.setProperty('NotAvailable', 'true')
-                        if not self.params.get('showall') == 'false':
-                            self.li.append((li_path, li_item, False))
+                        append = True
+
+                    else:
+                        append = False
+
+                    if append:
+                        self.li.append((li_path, li_item, False))
 
 
-    # retry loop
+    ''' retry loop for random based widgets if previous run has not returned any single item
+    '''
     def _retry(self,type):
         log('Retry to get content (%s)' % str(self.retry_count))
 

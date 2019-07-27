@@ -15,9 +15,9 @@ import locale
 ''' Python 2<->3 compatibility
 '''
 try:
-    import urllib2 as urllib
+    import urllib
 except ImportError:
-    import urllib.request as urllib
+    import urllib.parse as urllib
 
 from resources.lib.helper import *
 from resources.lib.library import *
@@ -26,7 +26,44 @@ from resources.lib.image import *
 
 ########################
 
-def selectdialog(params):
+def restartservice(params):
+    execute('NotifyAll(%s, restart)' % ADDON_ID)
+
+
+def settimer(params):
+    actions = remove_quotes(params.get('do'))
+    time = params.get('time','50')
+    delay = params.get('delay')
+    busydialog = get_bool(params.get('busydialog','true'))
+
+    if busydialog:
+        execute('ActivateWindow(busydialognocancel)')
+
+    xbmc.sleep(int(time))
+    execute('Dialog.Close(all,true)')
+
+    while visible('Window.IsVisible(busydialognocancel)'):
+        xbmc.sleep(10)
+
+    for action in actions.split('||'):
+        execute(action)
+        if delay:
+            xbmc.sleep(int(delay))
+
+
+def encode(params):
+    string = remove_quotes(params.get('string'))
+    prop = params.get('prop','EncodedString')
+    winprop(prop,urllib.quote(string))
+
+
+def decode(params):
+    string = remove_quotes(params.get('string'))
+    prop = params.get('prop','DecodedString')
+    winprop(prop,urllib.unquote(string))
+
+
+def createselect(params):
     selectionlist = []
     indexlist = []
     headertxt = remove_quotes(params.get('header', ''))
@@ -90,6 +127,30 @@ def togglekodisetting(params):
                 )
 
 
+def getkodisetting(params):
+    setting = params.get('setting')
+
+    json_query = json_call('Settings.GetSettingValue',
+                params={'setting': '%s' % setting}
+                )
+
+    try:
+        result = json_query['result']
+        result = result.get('value')
+
+        if params.get('strip') == 'timeformat':
+
+            strip = ['(12h)', ('(24h)')]
+            for value in strip:
+                if value in result:
+                    result = result[:-6]
+
+        winprop(setting, result)
+
+    except Exception:
+        winprop(setting, clear=True)
+
+
 def setkodisetting(params):
     settingname = params.get('setting', '')
     value = params.get('value', '')
@@ -106,9 +167,10 @@ def setkodisetting(params):
                 params={'setting': '%s' % settingname, 'value': value}
                 )
 
+
 def toggleaddons(params):
     addonid = params.get('addonid').split('+')
-    enable = True if params.get('enable').lower() == 'true' else False
+    enable = get_bool(params.get('enable'))
 
     for addon in addonid:
 
@@ -152,7 +214,7 @@ def playfolder(params):
     clear_playlists()
 
     dbid = int(params.get('dbid'))
-    shuffled = True if params.get('shuffle') == 'true' else False
+    shuffled = get_bool(params.get('shuffle'))
 
     if params.get('type') == 'season':
         json_query = json_call('VideoLibrary.GetSeasonDetails',
@@ -203,7 +265,7 @@ def playall(params):
     method = params.get('method')
 
     playlistid = 0 if params.get('type') == 'music' else 1
-    shuffled = True if method == 'shuffle' else False
+    shuffled = get_bool(method,'shuffle')
 
     if method == 'fromhere':
         method = 'Container(%s).ListItemNoWrap' % container
@@ -283,7 +345,7 @@ def goto(params):
 
 def resetposition(params):
     containers = params.get('container').split('||')
-    only_inactive_container = True if params.get('only') == 'inactive' else False
+    only_inactive_container = get_bool(params.get('only'),'inactive')
     current_control =xbmc.getInfoLabel('System.CurrentControlID')
 
     for item in containers:
@@ -301,7 +363,7 @@ def resetposition(params):
             pass
 
 
-def tvshow_details_by_season(params):
+def details_by_season(params):
     season_query = json_call('VideoLibrary.GetSeasonDetails',
                         properties=season_properties,
                         params={'seasonid': int(params.get('dbid'))}
@@ -364,14 +426,21 @@ def blurimg(params):
 
 def fontchange(params):
     font = params.get('font')
+    fallback_locales = params.get('locales').split('+')
 
-    for value in params.get('locales').split('+'):
+    try:
+        defaultlocale = locale.getdefaultlocale()
+        shortlocale = defaultlocale[0][3:].lower()
 
-        if value in str(locale.getdefaultlocale()):
-            setkodisetting({'setting': 'lookandfeel.font', 'value': params.get('font')})
-            DIALOG.notification('%s %s' % (value.upper(),ADDON.getLocalizedString(32004)), '%s %s' % (ADDON.getLocalizedString(32005),font))
-            log('Locale %s is not supported by default font. Change to %s.' % (value.upper(),font))
-            break
+        for value in fallback_locales:
+            if value == shortlocale:
+                setkodisetting({'setting': 'lookandfeel.font', 'value': params.get('font')})
+                DIALOG.notification('%s %s' % (value.upper(),ADDON.getLocalizedString(32004)), '%s %s' % (ADDON.getLocalizedString(32005),font))
+                log('Locale %s is not supported by default font. Change to %s.' % (value.upper(),font))
+                break
+
+    except Exception:
+        log('Auto font change: No system locale found')
 
 
 def setinfo(params):
@@ -432,10 +501,19 @@ def lookforfile(params):
         log('File does not exist: %s' % file)
 
 
+def getlocale(params):
+    try:
+        defaultlocale = locale.getdefaultlocale()
+        shortlocale = defaultlocale[0][3:].upper()
+        winprop('SystemLocale', shortlocale)
+    except Exception:
+        winprop('SystemLocale', clear=True)
+
+
 class PlayCinema(object):
 
     def __init__(self, params):
-        self.trailer_count = xbmc.getInfoLabel('Skin.String(TrailerCount)') if not xbmc.getInfoLabel('Skin.String(TrailerCount)') == '0' else ''
+        self.trailer_count = xbmc.getInfoLabel('Skin.String(TrailerCount)') if xbmc.getInfoLabel('Skin.String(TrailerCount)') != '0' else False
         self.intro_path = xbmc.getInfoLabel('Skin.String(IntroPath)')
 
         self.dbid = params.get('dbid')

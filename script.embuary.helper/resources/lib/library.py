@@ -28,7 +28,7 @@ def append_items(li, json_query, type, searchstring=False, append=True):
             parse_cast(li, item, append)
 
 
-def _get_cast(castData):
+def get_cast(castData):
     listcast = []
     listcastandrole = []
     for castmember in castData:
@@ -38,7 +38,7 @@ def _get_cast(castData):
     return [listcast, listcastandrole]
 
 
-def _get_first_item(item):
+def get_first_item(item):
     if len(item) > 0:
         item = item[0]
     else:
@@ -47,13 +47,21 @@ def _get_first_item(item):
     return item
 
 
-def _get_joined_items(item):
+def get_joined_items(item):
     if len(item) > 0:
         item = ' / '.join(item)
     else:
         item = ''
 
     return item
+
+
+def get_unwatched(episode,watchedepisodes):
+    if episode > watchedepisodes:
+        unwatchedepisodes = episode - watchedepisodes
+        return unwatchedepisodes
+    else:
+        return 0
 
 
 def _set_unique_properties(li_item,item,prop):
@@ -68,10 +76,33 @@ def _set_unique_properties(li_item,item,prop):
     return li_item
 
 
+def _set_ratings(li_item,item,properties=False):
+    for key in item:
+        try:
+            rating = item[key]['rating']
+            votes = item[key]['votes'] or 0
+            default = True if key == 'default' or len(item) == 1 else False
+
+            ''' Kodi only supports floats up to 10.0. But Rotten Tomatoes is using 0-100.
+                To get the values correctly set it's required to transform the value.
+            '''
+            if rating > 100:
+                raise Exception
+            elif rating > 10:
+                rating = rating / 10
+
+            li_item.setRating(key, float(rating), votes, default)
+
+        except Exception:
+            pass
+
+    return li_item
+
+
 def parse_movies(li, item, searchstring=False, append=False):
 
     if 'cast' in item:
-        cast = _get_cast(item['cast'])
+        cast = get_cast(item['cast'])
 
     genre = item.get('genre', '')
     studio = item.get('studio', '')
@@ -84,11 +115,11 @@ def parse_movies(li, item, searchstring=False, append=False):
                                             'originaltitle': item['originaltitle'],
                                             'sorttitle': item['sorttitle'],
                                             'year': item['year'],
-                                            'genre': _get_joined_items(genre),
-                                            'studio': _get_joined_items(studio),
-                                            'country': _get_joined_items(country),
-                                            'director': _get_joined_items(director),
-                                            'writer': _get_joined_items(writer),
+                                            'genre': get_joined_items(genre),
+                                            'studio': get_joined_items(studio),
+                                            'country': get_joined_items(country),
+                                            'director': get_joined_items(director),
+                                            'writer': get_joined_items(writer),
                                             'plot': item['plot'],
                                             'plotoutline': item['plotoutline'],
                                             'dbid': item['movieid'],
@@ -106,8 +137,8 @@ def parse_movies(li, item, searchstring=False, append=False):
                                             'dateadded': item['dateadded'],
                                             'path': item['file'],
                                             'playcount': item['playcount']})
-    li_item.setProperty('resumetime', str(item['resume']['position']))
-    li_item.setProperty('totaltime', str(item['resume']['total']))
+
+    _set_ratings(li_item,item['ratings'])
 
     _set_unique_properties(li_item,genre,'genre')
     _set_unique_properties(li_item,studio,'studio')
@@ -115,6 +146,9 @@ def parse_movies(li, item, searchstring=False, append=False):
     _set_unique_properties(li_item,director,'director')
     _set_unique_properties(li_item,writer,'writer')
     _set_unique_properties(li_item,cast[0],'cast')
+
+    li_item.setProperty('resumetime', str(item['resume']['position']))
+    li_item.setProperty('totaltime', str(item['resume']['total']))
 
     li_item.setArt(item['art'])
     li_item.setArt({'icon': 'DefaultVideo.png'})
@@ -141,7 +175,7 @@ def parse_movies(li, item, searchstring=False, append=False):
 def parse_tvshows(li, item, searchstring=False, append=False):
 
     if 'cast' in item:
-        cast = _get_cast(item['cast'])
+        cast = get_cast(item['cast'])
 
     genre = item.get('genre', '')
     studio = item.get('studio', '')
@@ -165,8 +199,8 @@ def parse_tvshows(li, item, searchstring=False, append=False):
                                             'tvshowtitle': item['title'],
                                             'sorttitle': item['sorttitle'],
                                             'originaltitle': item['originaltitle'],
-                                            'genre': _get_joined_items(genre),
-                                            'studio': _get_joined_items(studio),
+                                            'genre': get_joined_items(genre),
+                                            'studio': get_joined_items(studio),
                                             'plot': item['plot'],
                                             'rating': str(float(item['rating'])),
                                             'userrating': str(float(item['userrating'])),
@@ -185,14 +219,17 @@ def parse_tvshows(li, item, searchstring=False, append=False):
                                             'duration': item['runtime'],
                                             'dateadded': item['dateadded'],
                                             'playcount': item['playcount']})
-    li_item.setProperty('Totalseasons', str(season))
-    li_item.setProperty('Totalepisodes', str(episode))
-    li_item.setProperty('Watchedepisodes', str(watchedepisodes))
-    li_item.setProperty('Unwatchedepisodes', str(unwatchedepisodes))
+
+    _set_ratings(li_item,item['ratings'])
 
     _set_unique_properties(li_item,genre,'genre')
     _set_unique_properties(li_item,studio,'studio')
     _set_unique_properties(li_item,cast[0],'cast')
+
+    li_item.setProperty('Totalseasons', str(season))
+    li_item.setProperty('Totalepisodes', str(episode))
+    li_item.setProperty('Watchedepisodes', str(watchedepisodes))
+    li_item.setProperty('Unwatchedepisodes', str(unwatchedepisodes))
 
     li_item.setArt(item['art'])
     li_item.setArt({'icon': 'DefaultVideo.png'})
@@ -247,7 +284,7 @@ def parse_seasons(li, item, append=False):
 def parse_episodes(li, item, append=False):
 
     if 'cast' in item:
-        cast = _get_cast(item['cast'])
+        cast = get_cast(item['cast'])
 
     director = item.get('director', '')
     writer = item.get('writer', '')
@@ -266,19 +303,22 @@ def parse_episodes(li, item, append=False):
                                             'userrating': str(float(item['userrating'])),
                                             'votes': item['votes'],
                                             'playcount': item['playcount'],
-                                            'director': _get_joined_items(director),
-                                            'writer': _get_joined_items(writer),
+                                            'director': get_joined_items(director),
+                                            'writer': get_joined_items(writer),
                                             'cast': cast[0],
                                             'path': item['file'],
                                             'dateadded': item['dateadded'],
                                             'castandrole': cast[1],
                                             'mediatype': 'episode'})
-    li_item.setProperty('resumetime', str(item['resume']['position']))
-    li_item.setProperty('totaltime', str(item['resume']['total']))
+
+    _set_ratings(li_item,item['ratings'])
 
     _set_unique_properties(li_item,director,'director')
     _set_unique_properties(li_item,writer,'writer')
     _set_unique_properties(li_item,cast[0],'cast')
+
+    li_item.setProperty('resumetime', str(item['resume']['position']))
+    li_item.setProperty('totaltime', str(item['resume']['total']))
 
     li_item.setArt({'icon': 'DefaultTVShows.png', 'fanart': item['art'].get('tvshow.fanart', ''), 'clearlogo': item['art'].get('tvshow.clearlogo', ''), 'landscape': item['art'].get('tvshow.landscape', ''), 'clearart': item['art'].get('tvshow.clearart', '')})
     li_item.setArt(item['art'])

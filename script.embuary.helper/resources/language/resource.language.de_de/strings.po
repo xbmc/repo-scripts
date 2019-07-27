@@ -46,8 +46,8 @@ msgid "Changed font to"
 msgstr "Wechsle Schriftart zu"
 
 msgctxt "#32006"
-msgid "Service is restarting"
-msgstr "Service wird neugestartet"
+msgid "Applying changes"
+msgstr "Änderungen werden übernommen"
 
 #: /resources/lib/plugin_listing.py
 msgctxt "#32007"
@@ -66,8 +66,8 @@ msgstr "Vorschläge basierend auf zufälligen Genre"
 
 #: /resources/lib/plugin_listing.py
 msgctxt "#32010"
-msgid "Mix of recently added episodes and shows"
-msgstr "Mischung aus kürzlich hinzugefügten Episoden und Serien"
+msgid "Recently added episodes and shows"
+msgstr "Kürzlich hinzugefügte Episoden und Serien"
 
 #: /resources/lib/plugin_listing.py
 msgctxt "#32011"
@@ -88,3 +88,33 @@ msgstr "Weiterschauen"
 msgctxt "#32014"
 msgid "Suggestions based on the last watched item"
 msgstr "Vorschläge basierend auf dem zuletzt gesehenen Video"
+
+#: /resources/lib/plugin_listing.py
+msgctxt "#32015"
+msgid "Recently added unwatched episodes and shows"
+msgstr "Kürzlich hinzugefügte ungesehene Episoden und Serien"
+
+#: /resources/settings.xml
+msgctxt "#32016"
+msgid "Enable service module"
+msgstr "Aktiviere Servicemodul"
+
+#: /resources/settings.xml
+msgctxt "#32017"
+msgid "Service interval time"
+msgstr "Service Zeitintervall"
+
+#: /resources/settings.xml
+msgctxt "#32018"
+msgid "Default blurring radius"
+msgstr "Standard Radius des Weichzeichners"
+
+#: /resources/settings.xml
+msgctxt "#32020"
+msgid "Misc."
+msgstr "Sonstiges"
+
+#: /resources/settings.xml
+msgctxt "#32021"
+msgid "Background change interval"
+msgstr "Hintergrund-Wechselintervall"

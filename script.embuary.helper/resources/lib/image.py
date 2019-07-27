@@ -22,7 +22,8 @@ from resources.lib.helper import *
 #################################################################################################
 
 BLUR_CONTAINER = xbmc.getInfoLabel('Skin.String(BlurContainer)') or 100000
-BLUR_RADIUS = xbmc.getInfoLabel('Skin.String(BlurRadius)') or 2
+BLUR_RADIUS = xbmc.getInfoLabel('Skin.String(BlurRadius)') or ADDON.getSetting('blur_radius')
+OLD_IMAGE = ''
 
 #################################################################################################
 
@@ -33,7 +34,7 @@ if not os.path.exists(ADDON_DATA_IMG_PATH):
 
 
 def image_filter(prop='listitem',file=None,radius=BLUR_RADIUS):
-
+    global OLD_IMAGE
     image = file if file is not None else xbmc.getInfoLabel('Control.GetLabel(%s)' % BLUR_CONTAINER)
 
     try:
@@ -43,13 +44,17 @@ def image_filter(prop='listitem',file=None,radius=BLUR_RADIUS):
         return
 
     if image:
-        blurred_image, imagecolor = image_blur(image,radius)
-        winprop(prop + '_blurred', blurred_image)
-        winprop(prop + '_color', imagecolor)
+        if image == OLD_IMAGE:
+            log('Image blurring: Image has not changed. Skip %s.' % image, DEBUG)
+        else:
+            log('Image blurring: Image changed. Blur %s.' % image, DEBUG)
+            OLD_IMAGE = image
+            blurred_image, imagecolor = image_blur(image,radius)
+            winprop(prop + '_blurred', blurred_image)
+            winprop(prop + '_color', imagecolor)
 
 
 def image_blur(image,radius):
-
     md5 = hashlib.md5(image).hexdigest()
     filename = md5 + str(radius) + '.png'
     targetfile = os.path.join(ADDON_DATA_IMG_PATH, filename)
@@ -99,7 +104,6 @@ def image_blur(image,radius):
 
 
 def get_colors(img):
-
     width, height = img.size
     imagecolor = 'FFF0F0F0'
 
