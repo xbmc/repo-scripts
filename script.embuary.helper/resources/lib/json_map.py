@@ -18,6 +18,7 @@ movie_properties = [
                     'lastplayed',
                     'trailer',
                     'rating',
+                    'ratings',
                     'userrating',
                     'resume',
                     'art',
@@ -27,7 +28,8 @@ movie_properties = [
                     'writer',
                     'cast',
                     'dateadded',
-                    'imdbnumber']
+                    'imdbnumber'
+                    ]
 
 episode_properties = [
                     'title',
@@ -40,6 +42,7 @@ episode_properties = [
                     'votes',
                     'file',
                     'rating',
+                    'ratings',
                     'userrating',
                     'resume',
                     'tvshowid',
@@ -51,7 +54,8 @@ episode_properties = [
                     'writer',
                     'cast',
                     'dateadded',
-                    'lastplayed']
+                    'lastplayed'
+                    ]
 
 season_properties = [
                     'season',
@@ -61,7 +65,8 @@ season_properties = [
                     'watchedepisodes',
                     'showtitle',
                     'playcount',
-                    'tvshowid']
+                    'tvshowid'
+                    ]
 
 tvshow_properties = [
                     'title',
@@ -70,6 +75,7 @@ tvshow_properties = [
                     'plot',
                     'cast',
                     'rating',
+                    'ratings',
                     'userrating',
                     'votes',
                     'genre',
@@ -85,4 +91,112 @@ tvshow_properties = [
                     'art',
                     'dateadded',
                     'watchedepisodes',
-                    'imdbnumber']
+                    'imdbnumber'
+                    ]
+
+playlist_properties = [
+                    'title',
+                    'artist',
+                    'albumartist',
+                    'genre',
+                    'year',
+                    'rating',
+                    'album',
+                    'track',
+                    'duration',
+                    'comment',
+                    'lyrics',
+                    'musicbrainztrackid',
+                    'musicbrainzartistid',
+                    'musicbrainzalbumid',
+                    'musicbrainzalbumartistid',
+                    'playcount',
+                    'fanart',
+                    'director',
+                    'trailer',
+                    'tagline',
+                    'plot',
+                    'plotoutline',
+                    'originaltitle',
+                    'lastplayed',
+                    'writer',
+                    'studio',
+                    'mpaa',
+                    'cast',
+                    'country',
+                    'imdbnumber',
+                    'premiered',
+                    'productioncode',
+                    'runtime',
+                    'set',
+                    'showlink',
+                    'streamdetails',
+                    'top250',
+                    'votes',
+                    'firstaired',
+                    'season',
+                    'episode',
+                    'showtitle',
+                    'thumbnail',
+                    'file',
+                    'resume',
+                    'artistid',
+                    'albumid',
+                    'tvshowid',
+                    'setid',
+                    'watchedepisodes',
+                    'disc',
+                    'tag',
+                    'art',
+                    'genreid',
+                    'displayartist',
+                    'albumartistid',
+                    'description',
+                    'theme',
+                    'mood',
+                    'style',
+                    'albumlabel',
+                    'sorttitle',
+                    'episodeguide',
+                    'uniqueid',
+                    'dateadded',
+                    'channel',
+                    'channeltype',
+                    'hidden',
+                    'locked',
+                    'channelnumber',
+                    'starttime',
+                    'endtime',
+                    'specialsortseason',
+                    'specialsortepisode',
+                    'compilation',
+                    'releasetype',
+                    'albumreleasetype',
+                    'contributors',
+                    'displaycomposer',
+                    'displayconductor',
+                    'displayorchestra',
+                    'displaylyricist',
+                    'userrating'
+                    ]
+
+artist_properties = [
+                    "instrument",
+                    "style",
+                    "mood",
+                    "born",
+                    "formed",
+                    "description",
+                    "genre",
+                    "died",
+                    "disbanded",
+                    "yearsactive",
+                    "musicbrainzartistid",
+                    "fanart",
+                    "thumbnail",
+                    "compilationartist",
+                    "dateadded",
+                    "roles",
+                    "songgenres",
+                    "isalbumartist"
+                    ]

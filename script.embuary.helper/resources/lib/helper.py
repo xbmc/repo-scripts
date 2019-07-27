@@ -8,6 +8,7 @@ import xbmcaddon
 import xbmcgui
 import json
 import time
+import datetime
 import os
 
 ########################
@@ -65,6 +66,13 @@ def remove_quotes(label):
     return label
 
 
+def get_date(date_time):
+    date_time_obj = datetime.datetime.strptime(date_time, '%Y-%m-%d %H:%M:%S')
+    date_obj = date_time_obj.date()
+
+    return date_obj
+
+
 def execute(cmd):
     log('Execute: %s' % cmd)
     xbmc.executebuiltin(cmd, DEBUG)
@@ -75,7 +83,6 @@ def visible(condition):
 
 
 def clear_playlists():
-
     log('Clearing existing playlists')
     VIDEOPLAYLIST.clear()
     MUSICPLAYLIST.clear()
@@ -86,59 +93,25 @@ def gotopath(path,target='videos'):
     execute('Container.Update(%s)' % path) if visible('Window.IsMedia') else execute('ActivateWindow(%s,%s,return)' % (target,path))
 
 
-def grabfanart():
-    fanarts = list()
-
-    movie_query = json_call('VideoLibrary.GetMovies',
-                            properties=['art'],
-                            sort={'method': 'random'}, limit=20
-                            )
-
-    try:
-        for art in movie_query['result']['movies']:
-                movie_fanart = art['art'].get('fanart', '')
-                fanarts.append(movie_fanart)
-    except Exception:
-        log('Backgrounds: No movie artworks found.')
-
-    tvshow_query = json_call('VideoLibrary.GetTVShows',
-                            properties=['art'],
-                            sort={'method': 'random'}, limit=20
-                            )
-
-    try:
-        for art in tvshow_query['result']['tvshows']:
-                tvshow_fanart = art['art'].get('fanart', '')
-                fanarts.append(tvshow_fanart)
-    except Exception:
-        log('Backgrounds: No TV show artworks found.')
-
-    return fanarts
-
-
 def winprop(key, value=None, clear=False, window_id=10000):
     window = xbmcgui.Window(window_id)
 
     if clear:
-
         window.clearProperty(key.replace('.json', '').replace('.bool', ''))
 
     elif value is not None:
 
         if key.endswith('.json'):
-
             key = key.replace('.json', '')
             value = json.dumps(value)
 
         elif key.endswith('.bool'):
-
             key = key.replace('.bool', '')
             value = 'true' if value else 'false'
 
         window.setProperty(key, value)
 
     else:
-
         result = window.getProperty(key.replace('.json', '').replace('.bool', ''))
 
         if result:
@@ -171,15 +144,17 @@ def get_channeldetails(channel_name):
     return channel_details
 
 
-def get_unwatched(episode,watchedepisodes):
-    if episode > watchedepisodes:
-        unwatchedepisodes = episode - watchedepisodes
-        return unwatchedepisodes
-    else:
-        return 0
+def get_bool(value,string='true'):
+    try:
+        if value.lower() == string:
+            return True
+        raise Exception
+
+    except Exception:
+        return False
 
 
-def json_call(method,properties=None,sort=None,query_filter=None,limit=None,params=None,item=None,options=None):
+def json_call(method,properties=None,sort=None,query_filter=None,limit=None,params=None,item=None,options=None,limits=None):
     json_string = {'jsonrpc': '2.0', 'id': 1, 'method': method, 'params': {}}
 
     if properties is not None:
@@ -196,6 +171,9 @@ def json_call(method,properties=None,sort=None,query_filter=None,limit=None,para
 
     if options is not None:
         json_string['params']['options'] = options
+
+    if limits is not None:
+        json_string['params']['limits'] = limits
 
     if item is not None:
         json_string['params']['item'] = item
@@ -216,8 +194,7 @@ def json_call(method,properties=None,sort=None,query_filter=None,limit=None,para
 
     result = json.loads(result)
 
-    log('json-string: %s' % json_string, DEBUG)
-    log('json-result: %s' % result, DEBUG)
+    log('JSON call: %s' % json_string, DEBUG)
 
     return result
 

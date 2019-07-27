@@ -2,112 +2,99 @@
 # Addon Name: Embuary Helper
 # Addon id: script.embuary.helper
 # Addon Provider: sualfred
+# Translators:
+# Bartolome Soriano <bsoriano@gmail.com>, 2019
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: Embuary Helper\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Language-Team: \n"
+"PO-Revision-Date: 2019-07-14 05:59+0000\n"
+"Last-Translator: Bartolome Soriano <bsoriano@gmail.com>, 2019\n"
+"Language-Team: Spanish (Spain) (https://www.transifex.com/sualfred/teams/80018/es_ES/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: en_GB\n"
+"Language: es_ES\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 msgctxt "#32000"
 msgid "Error"
-msgstr ""
+msgstr "Error"
 
 msgctxt "#32001"
-msgid "This is a tool to provide features to a skin and requires skin integration."
+msgid ""
+"This is a tool to provide features to a skin and requires skin integration."
 msgstr ""
+"Esta es una herramienta para proveer funcionalidades para un skin y requiere"
+" de integración en el skin."
 
 msgctxt "#32002"
 msgid "Enable logging"
-msgstr ""
+msgstr "Activar bitácora"
 
 msgctxt "#32003"
 msgid "Enable debug logging"
-msgstr ""
+msgstr "Activar bitácora de depuración"
 
 msgctxt "#32004"
 msgid "detected"
-msgstr ""
+msgstr "detectado"
 
 msgctxt "#32005"
 msgid "Changed font to"
-msgstr ""
+msgstr "Font cambiado a"
 
 msgctxt "#32006"
 msgid "Applying changes"
-msgstr ""
+msgstr "Aplicando cambios"
 
 #: /resources/lib/plugin_listing.py
 msgctxt "#32007"
 msgid "Suggestions based on random watched item"
-msgstr ""
+msgstr "Sugerecnias basadas en un ítem aleatorio ya visto"
 
 #: /resources/lib/plugin_listing.py
 msgctxt "#32008"
 msgid "Next up"
-msgstr ""
+msgstr "Próximo"
 
 #: /resources/lib/plugin_listing.py
 msgctxt "#32009"
 msgid "Suggestions by random genre"
-msgstr ""
+msgstr "Sugerencias por género aleatorio"
 
 #: /resources/lib/plugin_listing.py
 msgctxt "#32010"
 msgid "Recently added episodes and shows"
-msgstr ""
+msgstr "Episodios y series añadidos recientemente"
 
 #: /resources/lib/plugin_listing.py
 msgctxt "#32011"
 msgid "All media"
-msgstr ""
+msgstr "Toda la media"
 
 #: /resources/lib/plugin_listing.py
 msgctxt "#32012"
 msgid "Recommended by rating"
-msgstr ""
+msgstr "Recomendados por valoración"
 
 #: /resources/lib/plugin_listing.py
 msgctxt "#32013"
 msgid "Continue watching"
-msgstr ""
+msgstr "Continuar viendo"
 
 #: /resources/lib/plugin_listing.py
 msgctxt "#32014"
 msgid "Suggestions based on the last watched item"
-msgstr ""
+msgstr "Sugerencias basadas en el ultimo ítem visto"
 
 #: /resources/lib/plugin_listing.py
 msgctxt "#32015"
 msgid "Recently added unwatched episodes and shows"
-msgstr ""
+msgstr "Episodios y series no vistos añadidos recientemente"
 
 #: /resources/settings.xml
 msgctxt "#32016"
 msgid "Enable service module"
-msgstr ""
-
-#: /resources/settings.xml
-msgctxt "#32017"
-msgid "Service interval time"
-msgstr ""
-
-#: /resources/settings.xml
-msgctxt "#32018"
-msgid "Default blurring radius"
-msgstr ""
-
-#: /resources/settings.xml
-msgctxt "#32020"
-msgid "Misc."
-msgstr ""
-
-#: /resources/settings.xml
-msgctxt "#32021"
-msgid "Background change interval"
-msgstr ""
+msgstr "Activar módulo de servicio"
