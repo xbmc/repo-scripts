@@ -33,7 +33,7 @@ def Search(item):
             eps=str(item['episode'])
         urlsearch=urlsearch+eps
         page=urllib2.urlopen(urlsearch)
-        html=BeautifulSoup(page)
+        html=BeautifulSoup(page,"html.parser")
         ul=html.find(id="download-page").find('ul')
         if ul is not None:
             tr=ul.find('table').find('tbody').find_all('tr')
