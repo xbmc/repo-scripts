@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.maps.browser" name="Maps Browser" version="1.0.0" provider-name="Philipp Temminghoff (phil65)">
+<addon id="script.maps.browser" name="Maps Browser" version="1.0.1" provider-name="Philipp Temminghoff (phil65)">
 	<requires>
 		<import addon="xbmc.python" version="2.24.0"/>
 		<import addon="script.module.simplejson" version="2.0.10"/>
@@ -10,7 +10,8 @@
 		<provides>executable</provides>
 	</extension>
 	<extension point="xbmc.addon.metadata">
-		<language/>
+        <broken>Addon is not maintained and doesn't work on higher kodi versions</broken>
+        <language/>
 		<summary lang="en">Google Maps Browser (including Street View)</summary>
 		<description lang="en">This Maps Browser Add-on allows you to explore the map with a remote. It can also show POIs, geotagged images and much more on the map.</description>
 		<platform>all</platform>
