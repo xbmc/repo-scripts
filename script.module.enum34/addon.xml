@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.module.enum34" version="1.1.6" name="enum" provider-name="jmooremcc">
+    <requires>
+        <import addon="xbmc.python" version="2.24.0" />
+    </requires>
+    <extension library="lib/enum" point="xbmc.python.module" />
+    <extension point="xbmc.addon.metadata">
+        <summary lang="en_GB">A Python interface for enum34</summary>
+        <description lang="en_GB">A Python interface for enum34</description>
+        <forum></forum>
+        <website>https://pypi.org/project/enum34/</website>
+        <license>MIT</license>
+        <platform>all</platform>
+        <source>https://bitbucket.org/stoneleaf/enum34/src/default/</source>
+        <assets>
+            <icon>icon.png</icon>
+        </assets>
+    </extension>
+</addon>
