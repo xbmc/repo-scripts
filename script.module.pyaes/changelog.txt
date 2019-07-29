@@ -1,0 +1,2 @@
+[B]Version 1.6.1[/B]
+- Updated to PyAES 1.6.1
