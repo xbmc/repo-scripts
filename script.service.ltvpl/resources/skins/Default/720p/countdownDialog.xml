@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<window id="1102" type="dialog">
+  <coordinates>
+    <system>1</system>
+    <posx>960</posx>
+    <posy>500</posy>
+    <width>200</width>
+    <height>300</height>
+  </coordinates>
+  <defaultcontrol>900</defaultcontrol>
+  <controls>
+    <left>0</left>
+    <top>0</top>
+    <width>300</width>
+    <height>300</height>
+    <!--control type="group"-->
+    <!--Background Image-->
+    <control type="image">
+      <width>300</width>
+      <height>190</height>
+      <texture>DialogBack.png</texture>
+    </control>
+    <!--Dialog Title-->
+    <control type="group">
+      <left>5</left>
+      <top>0</top>
+      <control type="image">
+        <top>3</top>
+        <left>2</left>
+        <width>285</width>
+        <height>25</height>
+        <texture colordiffuse="FF0000DD">white.png</texture>
+      </control>
+      <control type="label">
+        <width>300</width>
+        <textcolor>yellow</textcolor>
+        <label>$INFO[Window.Property(maintitle)]</label>
+        <align>center</align>
+      </control>
+    </control>
+    <!--Channel Data-->
+    <control type="group">
+      <left>3</left>
+      <top>25</top>
+      <control type="label">
+        <left>10</left>
+        <font>font10</font>
+        <textwidth>275</textwidth>
+        <label>$INFO[Window.Property(pgmData)]</label>
+      </control>
+      <!--Countdown Clock-->
+      <control type="label" id="100">
+        <left>0</left>
+        <top>20</top>
+        <width>300</width>
+        <height>120</height>
+        <align>center</align>
+        <aligny>center</aligny>
+        <font>WeatherTemp</font>
+        <label>$INFO[Window.Property(Time)]</label>
+        <visible>true</visible>
+      </control>
+      <!--Cancel Button-->
+      <control type="button" id="900">
+        <left>85</left>
+        <top>105</top>
+        <height>62</height>
+        <width>150</width>
+        <font>font11</font>
+        <align>center</align>
+        <label>$INFO[Window.Property(cancel)]</label>
+        <textcolor>orange</textcolor>
+        <texture texturecolor="FF2222CC" border="5">white</texture>
+        <visible>True</visible>
+      </control>
+    </control>
+  </controls>
+</window>

@@ -1,0 +1,454 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<window id="1100" type="dialog">
+  <animation effect="fade" delay="1000" time="200">WindowOpen</animation>
+  <animation effect="fade" start="100" end="0" time="200">WindowClose</animation>
+  <views>50</views>
+  <coordinates>
+    <left>190</left>
+    <top>150</top>
+    <width>960</width>
+    <height>500</height>
+    <!--<origin x="200" y="200">Window.IsActive(Home)</origin>-->
+  </coordinates>
+  <zorder>0</zorder>
+  <defaultcontrol>800</defaultcontrol>
+  <PreviousMenu>Home</PreviousMenu>
+  <controls>
+
+    <control type="group" id="900">
+      <left>0</left>
+      <top>0</top>
+      <width>960</width>
+      <height>500</height>
+      <!--Background Image-->
+      <control type="image" id="60">
+        <!--visible>"!Window.IsActive(10138)"</visible-->
+        <description>Background Image</description>
+        <left>0</left>
+        <top>0</top>
+        <width>960</width>
+        <height>420</height>
+        <aspectratio>1</aspectratio>
+        <texture>DialogBgd.jpg</texture>
+        <colordiffuse>FF555555</colordiffuse>
+        <visible>true</visible>
+      </control>
+      <!--Window Title-->
+      <control type="label">
+        <description>Title</description>
+        <left>0</left>
+        <top>10</top>
+        <height>50</height>
+        <width>900</width>
+        <textcolor>yellow</textcolor>
+        <font>font14</font>
+        <align>center</align>
+        <label>$INFO[Window.Property(windowtitle)]</label>
+        <visible>true</visible>
+      </control>
+      <!--Close Window Button  20-->
+      <control type="button" id="20">
+        <description>Close Window button</description>
+        <posx>895</posx>
+        <posy>3</posy>
+        <width>64</width>
+        <height>32</height>
+        <label>-</label>
+        <font>-</font>
+        <visible>true</visible>
+        <onclick>PreviousMenu</onclick>
+        <onleft>800</onleft>
+        <onright>800</onright>
+        <onup>800</onup>
+        <ondown>17</ondown>
+        <texturefocus>DialogCloseButton-focus.png</texturefocus>
+        <texturenofocus>DialogCloseButton.png</texturenofocus>
+        <visible>system.getbool(input.enablemouse)</visible>
+      </control>
+      <!--Border Around Window-->
+      <control type="image">
+        <top>43</top>
+        <left>5</left>
+        <description>Frame Around List</description>
+        <width>948</width>
+        <height>350</height>
+        <texture border="10">button-focus.png</texture>
+        <visible>Control.HasFocus(800)</visible>
+        <!--texture colordiffuse="FFAA66AA" border="5">WhiteDialogBack.png</texture-->
+      </control>
+      <!--Header-->
+      <control type="group">
+        <description>Playlist Header</description>
+        <left>10</left>
+        <top>50</top>
+        <width>930</width>
+        <height>50</height>
+
+        <control type="group">
+          <left>0</left>
+          <top>0</top>
+          <height>30</height>
+          <width>120</width>
+          <control type="image">
+            <top>2</top>
+            <height>28</height>
+            <colordiffuse>FFAA0000</colordiffuse>
+            <aspectratio>stretch</aspectratio>
+            <texture>WhiteBlank.png</texture>
+          </control>
+
+          <control type="label">
+            <font>font13</font>
+            <textcolor>white</textcolor>
+            <label>$INFO[Window.Property(Date)]</label>
+            <!--label>Date</label-->
+            <align>center</align>
+            <selectedcolor>green</selectedcolor>
+          </control>
+        </control>
+        <control type="group">
+          <left>121</left>
+          <top>0</top>
+          <height>30</height>
+          <width>100</width>
+          <control type="image">
+            <top>2</top>
+            <height>28</height>
+            <colordiffuse>FFAA0000</colordiffuse>
+            <aspectratio>stretch</aspectratio>
+            <texture>WhiteBlank.png</texture>
+          </control>
+
+          <control type="label">
+            <font>font13</font>
+            <textcolor>white</textcolor>
+            <label>$INFO[Window.Property(Time)]</label>
+            <!--label>Time</label-->
+            <align>center</align>
+            <selectedcolor>green</selectedcolor>
+          </control>
+        </control>
+        <control type="group">
+          <left>222</left>
+          <top>0</top>
+          <height>30</height>
+          <width>50</width>
+          <control type="image">
+            <top>2</top>
+            <height>28</height>
+            <colordiffuse>FFAA0000</colordiffuse>
+            <aspectratio>stretch</aspectratio>
+            <texture>WhiteBlank.png</texture>
+          </control>
+
+          <control type="label">
+            <font>font13</font>
+            <textcolor>white</textcolor>
+            <label>$INFO[Window.Property(Ch)]</label>
+            <!--label>Ch</label-->
+            <align>center</align>
+            <selectedcolor>green</selectedcolor>
+          </control>
+        </control>
+        <control type="group">
+          <left>273</left>
+          <top>0</top>
+          <height>30</height>
+          <width>170</width>
+          <control type="image">
+            <top>2</top>
+            <height>28</height>
+            <colordiffuse>FFAA0000</colordiffuse>
+            <aspectratio>stretch</aspectratio>
+            <texture>WhiteBlank.png</texture>
+          </control>
+
+          <control type="label">
+            <font>font13</font>
+            <textcolor>white</textcolor>
+            <label>$INFO[Window.Property(Frequency)]</label>
+            <!--label>Frequency</label-->
+            <align>center</align>
+            <selectedcolor>green</selectedcolor>
+          </control>
+        </control>
+        <control type="group">
+          <left>444</left>
+          <top>0</top>
+          <height>30</height>
+          <width>342</width>
+          <control type="image">
+            <top>2</top>
+            <height>28</height>
+            <colordiffuse>FFAA0000</colordiffuse>
+            <aspectratio>stretch</aspectratio>
+            <texture>WhiteBlank.png</texture>
+          </control>
+
+          <control type="label">
+            <font>font13</font>
+            <textcolor>white</textcolor>
+            <label>$INFO[Window.Property(Description)]</label>
+            <!--label>Description</label-->
+            <align>center</align>
+            <selectedcolor>green</selectedcolor>
+          </control>
+        </control>
+        <control type="group">
+          <left>787</left>
+          <top>0</top>
+          <height>30</height>
+          <width>150</width>
+          <control type="image">
+            <top>2</top>
+            <height>28</height>
+            <colordiffuse>FFAA0000</colordiffuse>
+            <aspectratio>stretch</aspectratio>
+            <texture>WhiteBlank.png</texture>
+          </control>
+
+          <control type="label">
+            <font>font13</font>
+            <textcolor>white</textcolor>
+            <label>$INFO[Window.Property(Expires)]</label>
+            <!--label>Expires On</label-->
+            <align>center</align>
+            <selectedcolor>green</selectedcolor>
+          </control>
+        </control>
+      </control>
+      <!--Main List 800-->
+      <control type="list" id="800">
+        <description>The Playlist Display</description>
+        <left>10</left>
+        <top>85</top>
+        <width>915</width>
+        <height>300</height>
+        <viewtype label="535">list</viewtype>
+        <textoffsetx>50</textoffsetx>
+        <!--onup>20</onup-->
+        <!--ondown>20</ondown-->
+        <onleft>20</onleft>
+        <onright condition="Control.IsVisible(17)">17</onright>
+        <onright condition="!Control.IsVisible(17)">20</onright>
+        <pagecontrol>17</pagecontrol>
+
+        <itemlayout height="30" width="900">
+          <control type="image">
+            <top>2</top>
+            <left>0</left>
+            <top>0</top>
+            <height>28</height>
+            <width>924</width>
+            <colordiffuse>CC110077</colordiffuse>
+            <aspectratio>stretch</aspectratio>
+            <texture>WhiteBlank.png</texture>
+          </control>
+          <control type="group">
+            <left>0</left>
+            <top>0</top>
+            <height>30</height>
+            <width>120</width>
+            <control type="label">
+              <font>font13</font>
+              <textcolor>white</textcolor>
+              <label>$INFO[ListItem.Property(Date)]</label>
+              <align>center</align>
+              <selectedcolor>green</selectedcolor>
+            </control>
+          </control>
+          <control type="group">
+            <left>121</left>
+            <top>0</top>
+            <height>30</height>
+            <width>100</width>
+            <control type="label">
+              <font>font13</font>
+              <textcolor>white</textcolor>
+              <label>$INFO[ListItem.Property(Time)]</label>
+              <align>center</align>
+              <selectedcolor>green</selectedcolor>
+            </control>
+          </control>
+          <control type="group">
+            <left>222</left>
+            <top>0</top>
+            <height>30</height>
+            <width>60</width>
+            <control type="label">
+              <font>font13</font>
+              <textcolor>white</textcolor>
+              <label>$INFO[ListItem.Property(Ch)]</label>
+              <align>center</align>
+              <selectedcolor>green</selectedcolor>
+            </control>
+          </control>
+          <control type="group">
+            <left>273</left>
+            <top>0</top>
+            <height>30</height>
+            <width>170</width>
+            <control type="label">
+              <font>font13</font>
+              <textcolor>white</textcolor>
+              <label>$INFO[ListItem.Property(Frequency)]</label>
+              <align>center</align>
+              <selectedcolor>green</selectedcolor>
+            </control>
+          </control>
+          <control type="group">
+            <left>444</left>
+            <top>0</top>
+            <height>30</height>
+            <width>342</width>
+            <control type="label">
+              <font>font13</font>
+              <textcolor>white</textcolor>
+              <label>$INFO[ListItem.Property(Description)]</label>
+              <align>left</align>
+              <selectedcolor>green</selectedcolor>
+            </control>
+          </control>
+          <control type="group">
+            <left>787</left>
+            <top>0</top>
+            <height>30</height>
+            <width>120</width>
+            <control type="label">
+              <font>font13</font>
+              <textcolor>white</textcolor>
+              <label>$INFO[ListItem.Property(Expires)]</label>
+              <align>center</align>
+              <selectedcolor>green</selectedcolor>
+            </control>
+          </control>
+        </itemlayout>
+
+        <focusedlayout height="30" width="900">
+          <control type="image">
+            <left>0</left>
+            <top>2</top>
+            <width>924</width>
+            <height>28</height>
+            <colordiffuse>CC001199</colordiffuse>
+            <aspectratio>stretch</aspectratio>
+            <texture>WhiteBlank.png</texture>
+          </control>
+          <control type="group">
+            <left>0</left>
+            <top>0</top>
+            <height>30</height>
+            <width>120</width>
+            <control type="label">
+              <font>font13</font>
+              <textcolor>orange</textcolor>
+              <label>$INFO[ListItem.Property(Date)]</label>
+              <align>center</align>
+              <selectedcolor>green</selectedcolor>
+            </control>
+          </control>
+          <control type="group">
+            <left>121</left>
+            <top>0</top>
+            <height>30</height>
+            <width>100</width>
+            <control type="label">
+              <font>font13</font>
+              <textcolor>orange</textcolor>
+              <label>$INFO[ListItem.Property(Time)]</label>
+              <align>center</align>
+              <selectedcolor>green</selectedcolor>
+            </control>
+          </control>
+          <control type="group">
+            <left>222</left>
+            <top>0</top>
+            <height>30</height>
+            <width>60</width>
+            <control type="label">
+              <font>font13</font>
+              <textcolor>orange</textcolor>
+              <label>$INFO[ListItem.Property(Ch)]</label>
+              <align>center</align>
+              <selectedcolor>green</selectedcolor>
+            </control>
+          </control>
+          <control type="group">
+            <left>273</left>
+            <top>0</top>
+            <height>30</height>
+            <width>170</width>
+            <control type="label">
+              <font>font13</font>
+              <textcolor>orange</textcolor>
+              <label>$INFO[ListItem.Property(Frequency)]</label>
+              <align>center</align>
+              <selectedcolor>green</selectedcolor>
+            </control>
+          </control>
+          <control type="group">
+            <left>444</left>
+            <top>0</top>
+            <height>30</height>
+            <width>342</width>
+            <control type="label">
+              <font>font13</font>
+              <textcolor>orange</textcolor>
+              <label>$INFO[ListItem.Property(Description)]</label>
+              <align>left</align>
+              <selectedcolor>green</selectedcolor>
+            </control>
+          </control>
+          <control type="group">
+            <left>787</left>
+            <top>0</top>
+            <height>30</height>
+            <width>120</width>
+            <control type="label">
+              <font>font13</font>
+              <textcolor>orange</textcolor>
+              <label>$INFO[ListItem.Property(Expires)]</label>
+              <align>center</align>
+              <selectedcolor>green</selectedcolor>
+            </control>
+          </control>
+        </focusedlayout>
+      </control>
+      <control type="label">
+        <description>Vacation Mode</description>
+        <left>10</left>
+        <top>393</top>
+        <height>50</height>
+        <width>900</width>
+        <textcolor>yellow</textcolor>
+        <font>font10</font>
+        <align>left</align>
+        <label>$INFO[Window.Property(vacationMode)]</label>
+        <visible>true</visible>
+      </control>
+      <!--Scrollbar 17-->
+      <control type="scrollbar" id="17">
+        <description>My first scroll bar control</description>
+        <left>920</left>
+        <top>90</top>
+        <width>20</width>
+        <height>300</height>
+        <visible>true</visible>
+
+        <texturesliderbackground colordiffuse="DD222222" border="10,0,10,0">white.png</texturesliderbackground>
+        <texturesliderbar colordiffuse="FFAAAAAA" border="10,0,10,0">white.png</texturesliderbar>
+        <texturesliderbarfocus colordiffuse="FF5555AA">white.png</texturesliderbarfocus>
+        <!--textureslidernib colordiffuse="FF555555" border="10,0,10,0">white.png</textureslidernib>
+        <textureslidernibfocus  border="10,0,10,0">white.png</textureslidernibfocus-->
+        <pulseonselect></pulseonselect>
+        <orientation>vertical</orientation>
+        <showonepage>true</showonepage>
+        <!--onup>20</onup>
+        <ondown>800</ondown-->
+        <onleft>800</onleft>
+        <onright>20</onright>
+      </control>
+    </control>
+  </controls>
+</window>

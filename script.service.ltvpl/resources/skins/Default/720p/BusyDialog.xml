@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<window>
+	<animation effect="fade" time="100">WindowOpen</animation>
+	<animation effect="fade" time="300">WindowClose</animation>
+	<coordinates>
+		<system>1</system>
+		<left>0</left>
+		<top>0</top>
+	</coordinates>
+	<controls>
+		<control type="group">
+			<left>550</left>
+			<top>90</top>
+			<control type="image">
+				<description>background image</description>
+				<left>0</left>
+				<top>0</top>
+				<width>200</width>
+				<height>70</height>
+				<texture border="20">OverlayDialogBackground.png</texture>
+			</control>
+			<control type="image">
+				<description>Busy animation</description>
+				<left>20</left>
+				<top>20</top>
+				<width>32</width>
+				<height>32</height>
+				<texture>busy.png</texture>
+				<aspectratio>keep</aspectratio>
+				<animation effect="rotate" start="0" end="360" center="36,36" time="900" loop="true" condition="true">conditional</animation>
+			</control>
+      <control type="image">
+				<description>Busy animation mask</description>
+				<left>20</left>
+				<top>20</top>
+				<width>32</width>
+				<height>32</height>
+				<texture>radialmask2.png</texture>
+				<aspectratio>keep</aspectratio>
+			</control>
+			<control type="label">
+				<description>Busy label</description>
+				<left>60</left>
+				<top>20</top>
+				<width>120</width>
+				<height>32</height>
+				<align>left</align>
+				<aligny>center</aligny>
+				<textcolor>white</textcolor>
+				<label>$INFO[Window.Property(working)]</label>
+				<font>font12</font>
+			</control>
+			<control type="progress" id="10">
+				<description>Progressbar</description>
+				<left>20</left>
+				<top>53</top>
+				<width>160</width>
+				<height>8</height>
+				<texturebg>transparent.png</texturebg>
+				<midtexture>prog-body.png</midtexture>
+			</control>
+		</control>
+	</controls>
+</window>

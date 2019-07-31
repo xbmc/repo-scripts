@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<includes>
+  <constant name="ItemHeight">50</constant>
+  <constant name="ItemWidth">200</constant>
+  <constant name="ItemLeft">350.0</constant>
+  <constant name="ItemTop">50</constant>
+
+  <include name="Bgd_Texture">
+    <colordiffuse>33FF00FF</colordiffuse>
+  </include>
+  <include name="closebutton">
+    <param name="posx" default="260" />
+    <param name="posy" default="5" />
+    <definition>
+      <control type="button" id="$PARAM[id]">
+        <description>Close Window button</description>
+        <posx>$PARAM[posx]</posx>
+        <posy>$PARAM[posy]</posy>
+        <width>64</width>
+        <height>32</height>
+        <label>-</label>
+        <font>-</font>
+        <visible>true</visible>
+        <onclick>PreviousMenu</onclick>
+        <texturefocus>DialogCloseButton-focus.png</texturefocus>
+        <texturenofocus>DialogCloseButton.png</texturenofocus>
+        <visible>system.getbool(input.enablemouse)</visible>
+      </control>
+    </definition>
+  </include>
+</includes>
