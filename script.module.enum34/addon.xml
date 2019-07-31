@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.module.enum34" version="1.1.6" name="enum" provider-name="Ethan Furman">
+    <requires>
+        <import addon="xbmc.python" version="2.26.0" />
+    </requires>
+    <extension library="lib" point="xbmc.python.module" />
+    <extension point="xbmc.addon.metadata">
+        <summary lang="en_GB">A Python interface for enum34</summary>
+        <description lang="en_GB">Python 3.4 Enum backported to 3.3, 3.2, 3.1, 2.7, 2.6, 2.5, and 2.4</description>
+        <website>https://pypi.org/project/enum34/</website>
+        <license>BSD</license>
+        <platform>all</platform>
+        <source>https://bitbucket.org/stoneleaf/enum34/</source>
+        <assets>
+            <icon>icon.png</icon>
+        </assets>
+    </extension>
+</addon>
