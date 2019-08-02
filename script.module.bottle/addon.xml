@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.module.bottle" name="Bottle" version="0.12.8" provider-name="Team Kodi">
+<addon id="script.module.bottle" name="Bottle" version="0.12.17" provider-name="Marcel Hellkamp">
   <requires>
-    <import addon="xbmc.python" version="2.19.0"/>
+    <import addon="xbmc.python" version="2.20.0"/>
   </requires>
   <extension point="xbmc.python.module" library="lib"/>
   <extension point="kodi.addon.metadata">
-    <summary>Bottle module</summary>
-    <description>Fast and simple WSGI-framework for small web-applications</description>
+    <summary lang="en_GB">Fast and simple WSGI-framework for small web-applications</summary>
+    <description lang="en_GB">Bottle is a fast and simple micro-framework for small web applications. It offers request dispatching (Routes) with url parameter support, templates, a built-in HTTP Server and adapters for many third party WSGI/HTTP-server and template engines - all in a single file and with no dependencies other than the Python Standard Library.</description>
     <license>MIT</license>
-    <platform>all</platform>
+    <source>https://github.com/bottlepy/bottle</source>
     <website>http://bottlepy.org</website>
   </extension>
 </addon>
