@@ -41,9 +41,9 @@ def media_streamdetails(filename, streamdetails):
             info['videoresolution'] = "540"
         elif (videowidth <= 1280 and videoheight <= 720):
             info['videoresolution'] = "720"
-        elif (videowidth >= 1281 or videoheight >= 721):
+        elif (videowidth <= 1920 or videoheight <= 1080):
             info['videoresolution'] = "1080"
-        elif (videowidth >= 1921 or videoheight >= 1081):
+        elif (videowidth <= 3840 or videoheight <= 2160):
             info['videoresolution'] = "4k"
         else:
             info['videoresolution'] = ""
@@ -51,6 +51,8 @@ def media_streamdetails(filename, streamdetails):
         info['videoresolution'] = '576'
     elif (('bluray' or 'blu-ray' or 'brrip' or 'bdrip' or 'hddvd' or 'hd-dvd') in filename):
         info['videoresolution'] = '1080'
+    elif (('4k') in filename):
+        info['videoresolution'] = '4k'
     else:
         info['videoresolution'] = '1080'
     if video:
