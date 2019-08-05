@@ -77,7 +77,7 @@ def get_data(search_string, item):
     else:
         url = BASE_URL % search_string
     response = requests.get(url)
-    return str(response.text)
+    return response.text
 
 def convert_date(stamp):
     date_time = time.localtime(stamp)
