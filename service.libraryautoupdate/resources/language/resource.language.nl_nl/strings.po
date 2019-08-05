@@ -1,0 +1,215 @@
+# Kodi Media Center language file
+# Addon Name: XBMC Library Auto Update
+# Addon id: service.libraryautoupdate
+# Addon Provider: robweber
+# Translators:
+# Bèr Schellekens <ber@afrit57.nl>, 2015
+# M. de Boer <de.boer.melle@gmail.com>, 2014
+# Bloksel <mgboom@gmail.com>, 2013
+# Wouter De Ryck <narfotic@gmail.com>, 2012
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2017-09-19 14:20+0000\n"
+"Last-Translator: Martijn Kaijser <machine.sanctum@gmail.com>\n"
+"Language-Team: Dutch (http://www.transifex.com/teamxbmc/xbmc-addons/language/nl/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: nl\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "Addon Summary"
+msgid ""
+"Update your Kodi Video and Music Libraries on a timer. Timer runs as an Kodi"
+" service so you never miss an update."
+msgstr "Werk je Kodi video en muziek bibliotheken periodiek bij. De timer werkt als een Kodi service zodat je geen enkele update mist."
+
+msgctxt "Addon Description"
+msgid ""
+"This is an Kodi Service that will update your music and video libraries on a"
+" timer. You can select a different interval to scan your media databases "
+"(Audio,Video,Both) or you can set a cron-style timer for greater control. If"
+" you are playing an audio or video file when the timer starts it can skip "
+"the library update process until it is completed so that you're media "
+"experience is not interrupted. Updating a specific Video Path, and Cleaning "
+"the Music/Video libraries is now supported."
+msgstr "Dit is een Kodi service die je muziek en video bibliotheek periodiek bijwerkt. Je kan een interval instellen per media bibliotheek (audio, video of beide) of je kan een timer in cron-stijl instellen voor meer controle. Als je een audio of video file afspeelt wanneer een geplande update start, kan het bijwerken worden uitgesteld tot het bestand is afgespeeld om je media-beleving niet te onderbreken. Een specifieke video locatie bijwerken en de muziek/videobibliotheken opschonen, zijn nu ondersteund. "
+
+msgctxt "#30000"
+msgid "Kodi Library Auto Update"
+msgstr "Kodi bibiliotheek automatisch bijwerken"
+
+msgctxt "#30001"
+msgid "General"
+msgstr "Algemeen"
+
+msgctxt "#30002"
+msgid "Video"
+msgstr "Video"
+
+msgctxt "#30003"
+msgid "Music"
+msgstr "Muziek"
+
+msgctxt "#30004"
+msgid "Update Video Library"
+msgstr "Video bibliotheek bijwerken"
+
+msgctxt "#30005"
+msgid "Update Music Library"
+msgstr "Muziek bibliotheek bijwerken"
+
+msgctxt "#30006"
+msgid "Show Notifications"
+msgstr "Toon meldingen"
+
+msgctxt "#30007"
+msgid "Run during playback"
+msgstr "Uitvoeren tijdens afspelen"
+
+msgctxt "#30008"
+msgid "Startup Delay (minutes)"
+msgstr "Uitstel bij opstarten (in minuten)"
+
+msgctxt "#30009"
+msgid "Used Advanced Timer"
+msgstr "Uitgebreide timer gebruiken"
+
+msgctxt "#30010"
+msgid "Amount of time between updates (hours)"
+msgstr "Tijd tussen bijwerken (in uren)"
+
+msgctxt "#30011"
+msgid "Cron Expression"
+msgstr "Cron Expression"
+
+msgctxt "#30012"
+msgid "Update Video Library"
+msgstr "Video bibliotheek bijwerken"
+
+msgctxt "#30013"
+msgid "Update Music Library"
+msgstr "Muziek bibliotheek bijwerken"
+
+msgctxt "#30014"
+msgid "Only run when idle"
+msgstr "Alleen uitvoeren bij inactiviteit"
+
+msgctxt "#30015"
+msgid "Disable manual run prompt"
+msgstr "Schakel handmatige start prompt uit"
+
+msgctxt "#30020"
+msgid "Update Specific Path 1"
+msgstr "Bijwerken van specifieke loctaie 1"
+
+msgctxt "#30021"
+msgid "Update Specific Path 2"
+msgstr "Bijwerken van specifieke locatie 2"
+
+msgctxt "#30022"
+msgid "Update Specific Path 3"
+msgstr "Bijwerken van specifieke locatie 3"
+
+msgctxt "#30023"
+msgid "Video Path"
+msgstr "Video locatie"
+
+msgctxt "#30030"
+msgid "Read Disclaimer"
+msgstr "Disclaimer lezen"
+
+msgctxt "#30031"
+msgid "Video Paths Disclaimer"
+msgstr "Video Locaties Disclaimer"
+
+msgctxt "#30032"
+msgid "Path must already be a video source with content"
+msgstr "Locatie moet al een video bron zijn met inhoud"
+
+msgctxt "#30033"
+msgid "Path must match source path exactly to scan"
+msgstr "Locatie moet exact overeenkomen met bronlocatie om te scannen"
+
+msgctxt "#30040"
+msgid "Cleaning"
+msgstr "Opschonen"
+
+msgctxt "#30041"
+msgid "Clean Libraries"
+msgstr "Bibliotheek opschonen"
+
+msgctxt "#30042"
+msgid "Verify Sources Before Clean"
+msgstr "Bronnen verifiëren voor opschoning"
+
+msgctxt "#30043"
+msgid "Frequency"
+msgstr "Frequentie"
+
+msgctxt "#30044"
+msgid "After Update"
+msgstr "Na bijwerken"
+
+msgctxt "#30045"
+msgid "Once Per Day"
+msgstr "Dagelijks"
+
+msgctxt "#30046"
+msgid "Once Per Week"
+msgstr "Wekelijks"
+
+msgctxt "#30047"
+msgid "Once Per Month"
+msgstr "Maandelijks"
+
+msgctxt "#30048"
+msgid "Clean Video Library"
+msgstr "Video bibliotheek opschonen"
+
+msgctxt "#30049"
+msgid "Clean Music Library"
+msgstr "Muziek bibliotheek opschonen"
+
+msgctxt "#30050"
+msgid "Error Cleaning Database"
+msgstr "Fout tijdens opschonen bibliotheek"
+
+msgctxt "#30051"
+msgid "Prompt User Before Cleaning Library"
+msgstr "Vragen voor opschonen bibliotheek"
+
+msgctxt "#30052"
+msgid "A database clean is scheduled to run"
+msgstr "Een opschoning van de bibliotheek is gepland"
+
+msgctxt "#30053"
+msgid "Would you like to run it now?"
+msgstr "Wil je de opschoning nu uitvoeren?"
+
+msgctxt "#30054"
+msgid "Library to clean"
+msgstr "Op te schonen bibliotheek"
+
+msgctxt "#30055"
+msgid "Both"
+msgstr "Beide"
+
+msgctxt "#30056"
+msgid "Video Cron Expression"
+msgstr "Video Cron Mededeling"
+
+msgctxt "#30057"
+msgid "Music Cron Expression"
+msgstr "Muziek Cron Mededeling"
+
+msgctxt "#30060"
+msgid "Update will run again "
+msgstr "Opnieuw bijwerken"
+
+msgctxt "#30061"
+msgid "Do you wish to manually run an update?"
+msgstr "Wil je manueel bijwerken?"
