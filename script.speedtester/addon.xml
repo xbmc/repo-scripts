@@ -14,5 +14,9 @@
     <summary lang="en">Speed Tester</summary>
     <description lang="en">Speed Tester powered by speedtest.net</description>
     <platform>all</platform>
+    <assets>
+       <icon>icon.png</icon>
+       <fanart>fanart.jpg</fanart>
+    </assets>
   </extension>
 </addon>
