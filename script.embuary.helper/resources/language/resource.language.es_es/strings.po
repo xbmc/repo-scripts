@@ -98,3 +98,23 @@ msgstr "Episodios y series no vistos añadidos recientemente"
 msgctxt "#32016"
 msgid "Enable service module"
 msgstr "Activar módulo de servicio"
+
+#: /resources/settings.xml
+msgctxt "#32017"
+msgid "Service interval time"
+msgstr "Intervalo de tiempo del servicio"
+
+#: /resources/settings.xml
+msgctxt "#32018"
+msgid "Default blurring radius"
+msgstr "Radio de difuminado por defecto"
+
+#: /resources/settings.xml
+msgctxt "#32020"
+msgid "Misc."
+msgstr "Misc."
+
+#: /resources/settings.xml
+msgctxt "#32021"
+msgid "Background change interval"
+msgstr "Intervalo de cambio de fondo"

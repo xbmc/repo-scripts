@@ -11,6 +11,7 @@ movie_properties = [
                     'studio',
                     'country',
                     'tagline',
+                    'tag',
                     'plot',
                     'runtime',
                     'file',
@@ -89,6 +90,7 @@ tvshow_properties = [
                     'sorttitle',
                     'originaltitle',
                     'art',
+                    'tag',
                     'dateadded',
                     'watchedepisodes',
                     'imdbnumber'
