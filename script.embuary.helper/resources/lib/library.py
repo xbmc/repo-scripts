@@ -76,7 +76,7 @@ def _set_unique_properties(li_item,item,prop):
     return li_item
 
 
-def _set_ratings(li_item,item,properties=False):
+def _set_ratings(li_item,item):
     for key in item:
         try:
             rating = item[key]['rating']
@@ -125,6 +125,7 @@ def parse_movies(li, item, searchstring=False, append=False):
                                             'dbid': item['movieid'],
                                             'imdbnumber': item['imdbnumber'],
                                             'tagline': item['tagline'],
+                                            'tag': item['tag'],
                                             'rating': str(float(item['rating'])),
                                             'userrating': str(float(item['userrating'])),
                                             'votes': item['votes'],
@@ -207,6 +208,7 @@ def parse_tvshows(li, item, searchstring=False, append=False):
                                             'votes': item['votes'],
                                             'premiered': item['premiered'],
                                             'mpaa': item['mpaa'],
+                                            'tag': item['tag'],
                                             'cast': cast[0],
                                             'castandrole': cast[1],
                                             'mediatype': 'tvshow',

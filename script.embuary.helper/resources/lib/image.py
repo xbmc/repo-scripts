@@ -67,10 +67,10 @@ def image_blur(image,radius):
 
         for i in range(1, 4):
             try:
-                if os.path.isfile(xbmc_cache_file):
+                if xbmcvfs.exists(xbmc_cache_file):
                     img = Image.open(xbmc.translatePath(xbmc_cache_file))
                     break
-                elif os.path.isfile(xbmc_vid_cache_file):
+                elif xbmcvfs.exists(xbmc_vid_cache_file):
                     img = Image.open(xbmc.translatePath(xbmc_vid_cache_file))
                     break
                 else:

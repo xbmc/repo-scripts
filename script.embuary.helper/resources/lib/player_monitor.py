@@ -68,7 +68,7 @@ class PlayerMonitor(xbmc.Monitor):
         ''' Playback stopped. Clean up.
         '''
         if method == 'Player.OnStop':
-            xbmc.sleep(3000)
+            xbmc.sleep(2500)
             if not PLAYER.isPlaying() and xbmcgui.getCurrentWindowId() not in [12005, 12006, 10028, 10500, 10138, 10160]:
                 self.fullscreen_lock = False
                 self.nextitem_lock = False
@@ -77,6 +77,16 @@ class PlayerMonitor(xbmc.Monitor):
                 self.get_channellogo(clear=True)
                 self.get_audiotracks(clear=True)
                 self.get_videoinfo(clear=True)
+
+                ''' Kodi doesn't reset shuffle to false automatically. To prevent issues with Emby for Kodi we have to
+                    set shuffle to false for the next video playback if it was enabled by the script before.
+                '''
+                if winprop('script.shuffle.bool'):
+                    winrpop('script.shuffle', clear=True)
+
+                    json_call('Player.SetShuffle',
+                                params={'playerid': 1, 'shuffle': False}
+                                )
 
 
     def clear_playlists(self):
@@ -240,6 +250,7 @@ class PlayerMonitor(xbmc.Monitor):
 
 
     def get_songartworks(self):
+        art = {}
         try:
             songdetails = json_call('AudioLibrary.GetSongDetails',
                                 properties=['art', 'albumid'],
@@ -247,9 +258,9 @@ class PlayerMonitor(xbmc.Monitor):
                                 )
 
             songdetails = songdetails['result']['songdetails']
-            fanart = songdetails['art'].get('fanart', '')
-            thumb = songdetails['art'].get('thumb', '')
-            clearlogo = songdetails['art'].get('clearlogo', '')
+            art['fanart'] = songdetails['art'].get('fanart', '')
+            art['thumb'] = songdetails['art'].get('thumb', '')
+            art['clearlogo'] = songdetails['art'].get('clearlogo', '')
 
         except Exception:
             return
@@ -262,11 +273,13 @@ class PlayerMonitor(xbmc.Monitor):
 
             albumdetails = albumdetails['result']['albumdetails']
             discart = albumdetails['art'].get('discart', '')
+            art['discart'] = discart
+            art['album.discart'] = discart
 
         except Exception:
             pass
 
         item = xbmcgui.ListItem()
         item.setPath(xbmc.Player().getPlayingFile())
-        item.setArt({'thumb': thumb, 'fanart': fanart, 'clearlogo': clearlogo, 'discart': discart, 'album.discart': discart})
+        item.setArt(art)
         xbmc.Player().updateInfoTag(item)
