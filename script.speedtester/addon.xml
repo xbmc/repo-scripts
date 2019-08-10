@@ -5,6 +5,7 @@
        provider-name="Dr0idGuy">
   <requires>
     <import addon="xbmc.python" version="2.1.0"/>
+    <import addon="script.module.kodi-six" />
   </requires>
   <extension point="xbmc.python.script"
              library="testit.py">
