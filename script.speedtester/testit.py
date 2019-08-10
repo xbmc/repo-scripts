@@ -51,9 +51,12 @@
 # under the License.													   #
 ############################################################################
 
-import xbmc
-import xbmcgui
-import xbmcaddon
+
+try:
+	from kodi_six import xbmc, xbmcaddon, xbmcgui
+except ImportError:
+	import xbmc ,xbmcgui, xbmcaddon
+
 import os
 import re
 import sys
@@ -93,6 +96,7 @@ ua_tuple = ('Mozilla/5.0', '(%s; U; %s; en-us)'
 		
 user_agent = ' '.join(ua_tuple)
 
+#py2 imports except py3 ver
 try:
 	import xml.etree.cElementTree as ET
 	from xml.dom import minidom as DOM
@@ -150,20 +154,20 @@ except ImportError:
 			return
 
 		def write(data):
-			if not isinstance(data, str):
+			if not isinstance(data, basestring):
 				data = str(data)
 			fp.write(data)
 
 		want_unicode = False
 		sep = kwargs.pop('sep', None)
 		if sep is not None:
-			if isinstance(sep, str):
+			if isinstance(sep, unicode):
 				want_unicode = True
 			elif not isinstance(sep, str):
 				raise TypeError('sep must be None or a string')
 		end = kwargs.pop('end', None)
 		if end is not None:
-			if isinstance(end, str):
+			if isinstance(end, unicode):
 				want_unicode = True
 			elif not isinstance(end, str):
 				raise TypeError('end must be None or a string')
@@ -171,12 +175,12 @@ except ImportError:
 			raise TypeError('invalid keyword arguments to print()')
 		if not want_unicode:
 			for arg in args:
-				if isinstance(arg, str):
+				if isinstance(arg, unicode):
 					want_unicode = True
 					break
 		if want_unicode:
-			newline = str('\n')
-			space = str(' ')
+			newline = unicode('\n')
+			space = unicode(' ')
 		else:
 			newline = '\n'
 			space = ' '
@@ -442,11 +446,25 @@ def getBestServer(servers):
 	best['latency'] = fastest
 	return best
 
-class DG_Speed_Test(xbmcgui.WindowXMLDialog):
-	def __init__(self, *args, **kwargs):
-		xbmcgui.WindowXMLDialog.__init__(self, *args, **kwargs)
+#stupid py3
+class animation(xbmcgui.WindowXMLDialog):
+	def __init__(self,*args, **kwargs):
+		try:
+			xbmcgui.WindowXMLDialog.__init__(self, *args, **kwargs)
+		except:
+			#py3
+			xbmcgui.WindowXMLDialog(*args, **kwargs)
 		self.doModal()
 
+class DG_Speed_Test(animation):
+	def __init__(self,*args, **kwargs):
+		try:
+			xbmcgui.WindowXMLDialog.__init__(self, *args, **kwargs)
+			self.doModal()
+		except:
+			#py3
+			super().__init__(*args, **kwargs)
+		
 	def onInit(self):
 		self.testRun = False
 
@@ -478,8 +496,8 @@ class DG_Speed_Test(xbmcgui.WindowXMLDialog):
 
 	def displayButtonRun(self, function="true"):
 		if (function == "true"):
-			button_run_glowx = (self.screenx / 3) - (300 / 2)
-			button_run_glowy = (self.screeny / 3) - (122 / 2) + 50
+			button_run_glowx = int((self.screenx / 3) - (300 / 2))
+			button_run_glowy = int((self.screeny / 3) - (122 / 2) + 50)
 
 			self.button_run_glow = xbmcgui.ControlImage(button_run_glowx, button_run_glowy, 300, 122, '', aspectRatio=0)
 			self.addControl(self.button_run_glow)
@@ -489,11 +507,8 @@ class DG_Speed_Test(xbmcgui.WindowXMLDialog):
 				('conditional', 'effect=fade start=0 time=1000 condition=true pulse=true')
 			])
 
-			self.button_run = xbmcgui.ControlButton(button_run_glowx, button_run_glowy, 300, 122, "[B]Run Speedtest[/B]",
-													focusTexture=self.image_button_run,
-													noFocusTexture=self.image_button_run, alignment=2 | 4,
-													textColor='0xFF000000', focusedColor='0xFF000000',
-													shadowColor='0xFFCCCCCC', disabledColor='0xFF000000')
+			self.button_run = xbmcgui.ControlButton(button_run_glowx, button_run_glowy, 300, 122, "[B]Run Speedtest[/B]",focusTexture=self.image_button_run,noFocusTexture=self.image_button_run, alignment=2 | 4,textColor='0xFF000000', focusedColor='0xFF000000',shadowColor='0xFFCCCCCC', disabledColor='0xFF000000')
+
 			self.addControl(self.button_run)
 			self.setFocus(self.button_run)
 			self.button_run.setVisible(False)
@@ -524,11 +539,8 @@ class DG_Speed_Test(xbmcgui.WindowXMLDialog):
 				'effect=fade start=0 time=1000 delay=2000 pulse=true condition=Control.IsVisible(%d)' % self.button_close_glow.getId())
 			])
 
-			self.button_close = xbmcgui.ControlButton(99999, 99999, 300, 122, "[B]Close[/B]",
-													focusTexture=self.image_button_run,
-													noFocusTexture=self.image_button_run, alignment=2 | 4,
-													textColor='0xFF000000', focusedColor='0xFF000000',
-													shadowColor='0xFFCCCCCC')
+			self.button_close = xbmcgui.ControlButton(99999, 99999, 300, 122, "[B]Close[/B]",focusTexture=self.image_button_run,noFocusTexture=self.image_button_run, alignment=2 | 4,textColor='0xFF000000', focusedColor='0xFF000000',shadowColor='0xFFCCCCCC', disabledColor='0xFF000000')
+
 			self.addControl(self.button_close)
 			self.button_close.setVisible(False)
 			self.button_close.setPosition(880, 418)
@@ -548,13 +560,13 @@ class DG_Speed_Test(xbmcgui.WindowXMLDialog):
 
 	def displayPingTest(self, function="true"):
 		if (function == "true"):
-			imgCentertextx = (self.screenx / 3) - (320 / 2)
-			imgCentertexty = (self.screeny / 3) - (130 / 2) + 50
+			imgCentertextx = int((self.screenx / 3) - (320 / 2))
+			imgCentertexty = int((self.screeny / 3) - (130 / 2) + 50)
 			self.imgCentertext = xbmcgui.ControlImage(imgCentertextx, imgCentertexty, 320, 130, ' ', aspectRatio=0)
 			self.addControl(self.imgCentertext)
 
-			imgPingx = (self.screenx / 3) - (600 / 2)
-			imgPingy = (self.screeny / 3) - (400 / 2)
+			imgPingx = int((self.screenx / 3) - (600 / 2))
+			imgPingy = int((self.screeny / 3) - (400 / 2))
 			self.imgPing = xbmcgui.ControlImage(imgPingx, imgPingy, 600, 400, '', aspectRatio=1)
 			self.imgPing_glow = xbmcgui.ControlImage(imgPingx, imgPingy, 600, 400, '', aspectRatio=1)
 			self.addControl(self.imgPing)
@@ -592,11 +604,11 @@ class DG_Speed_Test(xbmcgui.WindowXMLDialog):
 	def displayGaugeTest(self, function="true"):
 		if (function == "true"):
 
-			imgGaugex = (self.screenx / 3) - (548 / 2)
-			imgGaugey = (self.screeny / 3) - (400 / 2)
+			imgGaugex = int((self.screenx / 3) - (548 / 2))
+			imgGaugey = int((self.screeny / 3) - (400 / 2))
 
-			imgGauge_arrowx = (self.screenx / 3) - (66 / 2) - 5
-			imgGauge_arrowy = (self.screeny / 3) - (260 / 2) - 60
+			imgGauge_arrowx = int((self.screenx / 3) - (66 / 2) - 5)
+			imgGauge_arrowy = int((self.screeny / 3) - (260 / 2) - 60)
 			self.imgGauge = xbmcgui.ControlImage(imgGaugex, imgGaugey, 548, 400, '', aspectRatio=0)
 			self.imgGauge_arrow = xbmcgui.ControlImage(imgGauge_arrowx, imgGauge_arrowy, 66, 260, '', aspectRatio=0)
 			self.addControl(self.imgGauge)
@@ -618,8 +630,8 @@ class DG_Speed_Test(xbmcgui.WindowXMLDialog):
 				'effect=fade start=100 end=0 time=300 condition=!Control.IsEnabled(%d)' % self.imgGauge_arrow.getId())
 			])
 
-			dlul_prog_textboxx = (self.screenx / 3) - (200 / 2)
-			dlul_prog_textboxy = (self.screeny / 3) - (50 / 2) + 170
+			dlul_prog_textboxx = int((self.screenx / 3) - (200 / 2))
+			dlul_prog_textboxy = int((self.screeny / 3) - (50 / 2) + 170)
 			self.dlul_prog_textbox = xbmcgui.ControlLabel(dlul_prog_textboxx, dlul_prog_textboxy, 200, 50, label='',
 														textColor='0xFFFFFFFF', font='font30', alignment=2 | 4)
 			self.addControl(self.dlul_prog_textbox)
@@ -648,8 +660,8 @@ class DG_Speed_Test(xbmcgui.WindowXMLDialog):
 				'effect=fade start=100 end=0 time=300 condition=!Control.IsEnabled(%d)' % self.imgProgress.getId())
 			])
 			self.imgProgress.setVisible(True)
-			imgProgressx = (self.screenx / 3) - (200 / 2)
-			imgProgressy = (self.screeny / 3) - (50 / 2) + 270
+			imgProgressx = int((self.screenx / 3) - (200 / 2))
+			imgProgressy = int((self.screeny / 3) - (50 / 2) + 270)
 			self.please_wait_textbox = xbmcgui.ControlLabel(imgProgressx, imgProgressy, 200, 50,
 															label='Please wait...', textColor='0xFFFFFFFF',
 															alignment=2 | 4)
@@ -1053,4 +1065,6 @@ class DG_Speed_Test(xbmcgui.WindowXMLDialog):
 if __name__ == '__main__':
 	Dr0idGuy = DG_Speed_Test("main.xml", ADDON.getAddonInfo('path'), "Default")
 	del Dr0idGuy
+
+
 
