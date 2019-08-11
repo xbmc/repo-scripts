@@ -1,0 +1,3 @@
+v1.0.2 - Deletes BLOB converter on close
+v1.0.1 - Small bug-fix with Store class retrieve
+v1.0.0 - Initial version
