@@ -1,0 +1,353 @@
+#!/usr/bin/python
+# This is a simple webserver that will feed out a calendar table view of the
+# TV Show Next Aired data.  By default it displays the default-profile's data
+# (aka profile "") but that can be changed by manually editing the setting
+# "default_profile" in the cal-server.conf file we create.
+#
+# The URL path format we accept includes these bits:
+#
+# /profile/NAME     Output the NAME profile's contents.  If repeated, we merge
+#                   the NAMEs together.  Use '*" for the default profile (aka "").
+# /notprofile/NAME  Exclude all NAME profile(s) (repeatable).  Gives intersection.
+# /yesterday        Include yesterday's show's in the output.
+# /days=NUM         Output NUM days (counting today forward).  Defaults to 15.
+# /noempty          Skip the days without shows (e.g. /days=365/noempty).
+#
+# The script creates the cal-server.conf file on first run.  The user can feel
+# free to edit the colors therein, omit shows by adding the line: "omit": true,
+# to the show's data, change the show's displayed name: "alt": "display this",
+# and bump a show's start time slightly: "bump_mins": NUM, (a very limited tweak
+# just to affect the sort in the display).
+
+import os, sys, re, time
+from datetime import datetime, date, timedelta
+from BaseHTTPServer import HTTPServer, BaseHTTPRequestHandler
+# If we ever want to go multi-threaded, look for the ### lines, such as these:
+###from SocketServer import ThreadingMixIn
+###import threading
+try:
+    import simplejson as json
+except ImportError:
+    import json
+
+BIND_HOST = '' # Empty string binds to all IP addresses
+BIND_PORT = 9999
+DATA_DIR = '../../userdata/addon_data/script.tv.show.next.aired'
+DATA_FILE = 'next.aired.db'
+CONF_FILE = 'cal-server.conf'
+
+# The default colors we put into the cal-server.conf file.  Form: fg/bg
+# or just bg (with as assumed black fg).
+COLORS = """
+    white/CornflowerBlue white/Coral GoldenRod DarkKhaki SpringGreen
+    DeepSkyBlue YellowGreen white/DarkGoldenRod DarkSeaGreen Gold
+    white/DeepPink white/SeaGreen DarkOrange DarkTurquoise GreenYellow
+    white/SteelBlue white/IndianRed Cyan PowderBlue white/MediumVioletRed
+    LightSeaGreen LightGoldenRodYellow white/OrangeRed white/OliveDrab
+    white/Orchid PaleGoldenRod white/RoyalBlue ForestGreen white/SaddleBrown
+    white/DarkSalmon Turquoise Yellow Thistle white/Violet Wheat Plum
+    white/Pink white/DarkRed LawnGreen white/DarkGreen white/Red
+    white/MidnightBlue Aqua Aquamarine CadetBlue white/Brown DarkGray
+    white/DarkOliveGreen HotPink LightBlue LightCoral LightGreen
+    LightPink MediumOrchid MediumSpringGreen MediumSeaGreen Tan
+    white/Tomato
+    """
+
+def main(argv):
+    # Try to find our data dir based on the script path.
+    script_dir = re.sub(r"[\\/][^\\/]+$", '', argv[0])
+    # Start by visiting our script dir (so we work with a relative path argv[0]).
+    os.chdir(script_dir)
+    # If the default relative path fails, override DATA_DIR above.
+    os.chdir(DATA_DIR)
+
+    httpd = HTTPServer((BIND_HOST, BIND_PORT), MyHandler)
+    ###httpd = ThreadedHTTPServer((BIND_HOST, BIND_PORT), MyHandler)
+    try:
+        httpd.serve_forever()
+    except KeyboardInterrupt:
+        pass
+    httpd.server_close()
+
+class MyHandler(BaseHTTPRequestHandler):
+    def address_string(self):
+        host, port = self.client_address[:2]
+        #return socket.getfqdn(host) # This can cause slow serving if a reverse-DNS isn't found.
+        return host
+
+    def do_HEAD(s):
+        s.send_response(200)
+        s.send_header("Content-type", "text/html")
+        s.end_headers()
+
+    def do_GET(s):
+        req = re.sub(r"(?<!/)$", '/', s.path)
+        want_profiles = []
+        exclude_profiles = []
+        prof_regex = re.compile(r"/((?:not?)?)profile/([^/]*)")
+        while True:
+            m = prof_regex.search(req)
+            if not m:
+                break
+            req = prof_regex.sub('', req, 1)
+            profile = m.group(2)
+            if profile == '*':
+                profile = ''
+            if m.group(1):
+                exclude_profiles.append(profile)
+            else:
+                want_profiles.append(profile)
+
+        day_cnt = 15
+        days_regex = re.compile(r"/days[/=](\d+)")
+        m = days_regex.search(req)
+        if m:
+            req = days_regex.sub('', req, 1)
+            day_cnt = int(m.group(1))
+
+        want_yesterday = False
+        yest_regex = re.compile(r"/yesterday/")
+        if yest_regex.search(req):
+            req = yest_regex.sub('/', req)
+            want_yesterday = True
+
+        want_empty_days = True
+        empty_regex = re.compile(r"/noempty/")
+        if empty_regex.search(req):
+            req = empty_regex.sub('/', req)
+            want_empty_days = False
+
+        if req != '/':
+            s.send_response(404)
+            s.send_header("Content-type", "text/plain")
+            s.end_headers()
+            return
+
+        data = read_repr(DATA_FILE)[0]
+        opts = read_json(CONF_FILE)
+        if opts is None:
+            colors = COLORS.split()
+            colors += [ c + ',DarkOrange' for c in colors ]
+            opts = { 'colors': colors, 'shows': {}, 'default_profile': '' }
+            opts_changed = True
+        else:
+            opts_changed = False
+
+        if not want_profiles:
+            want_profiles.append(opts.get('default_profile', ''))
+
+        day_list = []
+        day_hash = {}
+        today = date.today()
+        today_str = str(today)
+        start_ndx = -1 if want_yesterday else 0
+        for num in range(start_ndx, day_cnt):
+            d = str(today + timedelta(days=num))
+            day_list.append(d)
+            day_hash[d] = []
+
+        for tid, show in data.iteritems():
+            show_opts = opts['shows'].get(show['Show Name'].lower(), {})
+            if 'omit' in show_opts:
+                continue
+            want = False
+            for prof in want_profiles:
+                if prof in show['profiles']:
+                    want = True
+                    break
+            for prof in exclude_profiles:
+                if prof in show['profiles']:
+                    want = False
+                    break
+            if want:
+                show['url'] = 'http://thetvdb.com/?tab=series&id=%s' % tid
+                for ep in show['episodes']:
+                    if 'bump_mins' in show_opts:
+                        ep['aired'] = re.sub(
+                                r"(\d\d\d\d-\d\d-\d\d.)(\d\d):(\d\d)",
+                                lambda m: bump_hh_mm(m, show_opts['bump_mins']),
+                                ep['aired'])
+                    d = ep['aired'][:10]
+                    if d < day_list[0] or d > day_list[-1]: continue
+                    day_hash[d].append((ep, show))
+
+        s.send_response(200)
+        s.send_header("Content-type", "text/html")
+        s.end_headers()
+        s.wfile.write("""
+<html><head>
+
+<title>cal-server</title>
+
+<style>
+a {
+    color: inherit;
+    text-decoration: none;
+}
+a:hover {
+    text-decoration: underline;
+}
+table, td {
+    border: 2px solid black;
+    border-collapse: collapse;
+}
+th {
+    border: 2px solid black;
+    background-color: white;
+    color: black;
+}
+td {
+    vertical-align: top;
+    padding: 3px;
+    width: 6.25%;
+    text-align: center;
+}
+.show {
+    font-size: 1.4em;
+    font-weight: bold;
+    text-shadow: 1px 1px gray;
+}
+.nums {
+    font-size: 1.2em;
+    font-weight: bold;
+}
+.title {
+    font-size: 1.3em;
+    border: 1px dashed black;
+}
+.runtime {
+    font-style: italic;
+}
+</style>
+
+<script>
+setTimeout(function(){window.location.reload(true)}, 60000);
+</script>
+
+</head>
+<body bgcolor="black">
+<table><tr>
+        """)
+
+        for d in day_list:
+            if not want_empty_days and not day_hash[d]:
+                day_hash[d] = None
+                continue
+            s.wfile.write('<th>')
+            if d < today_str:
+                s.wfile.write('Yesterday')
+            elif d == today_str:
+                s.wfile.write('Today')
+            else:
+                dt = date(*map(int, d.split('-')))
+                s.wfile.write(dt.strftime('%a,&nbsp;%b&nbsp;%d'))
+            s.wfile.write("</th>\n")
+            day_hash[d].sort(key=lambda x: (x[0]['aired'], x[1]['Show Name'], x[0]['sn'], x[0]['en']))
+
+        while True:
+            empty = True
+            row = "</tr><tr>\n"
+            for d in day_list:
+                if day_hash[d] is None:
+                    continue
+                if len(day_hash[d]):
+                    ep, show = day_hash[d].pop(0)
+                    show_name = show['Show Name']
+                    lc_show_name = show_name.lower()
+                    if lc_show_name in opts['shows']:
+                        show_opts = opts['shows'][lc_show_name]
+                    else:
+                        show_opts = opts['shows'][lc_show_name] = {}
+                    if 'colors' in show_opts:
+                        colors = show_opts['colors'].split('/')
+                    else:
+                        # Give a few shows complex sample colors, just to show what's possible.
+                        if re.match(r"doctor who", lc_show_name):
+                            colors = [ 'white', 'MidnightBlue,#666666,MidnightBlue,MidnightBlue,MidnightBlue' ]
+                        elif re.match(r"duck dynasty", lc_show_name):
+                            colors = [ 'white', 'DarkGoldenRod,DarkGreen,DarkGoldenRod,DarkGreen,DarkGoldenRod' ]
+                        elif re.match(r"beware the batman", lc_show_name):
+                            colors = [ 'white', 'to top right,#333355,Black,#333355,#333355,#333355,Black,#333355' ]
+                        elif re.match(r"masterchef", lc_show_name):
+                            colors = [ 'white', '45deg,#606dbc,#606dbc 10px,#465298 10px,#465298 20px' ]
+                        elif re.match(r"the colbert report", lc_show_name):
+                            colors = [ 'white', '135deg,ForestGreen,ForestGreen 3px,CornflowerBlue 3px,CornflowerBlue 6px' ]
+                        elif re.match(r"the daily show", lc_show_name):
+                            colors = [ 'Yellow', '45deg,CornflowerBlue,CornflowerBlue 3px,ForestGreen 3px, ForestGreen 6px' ]
+                        else:
+                            colors = (opts['colors'].pop(0) if len(opts['colors']) else 'white').split('/')
+                        if len(colors) < 2:
+                            colors.insert(0, 'black')
+                        show_opts['colors'] = '/'.join(colors)
+                        opts_changed = True
+                    fgcolor, bgcolor = colors
+                    if bgcolor.find(',') < 0:
+                        bgstyle = 'background-color: %s' % bgcolor
+                    else:
+                        bgstyle = 'background: repeating-linear-gradient(%s)' % bgcolor
+                    name_html = '<a href="%s">%s</a>' % (show['url'], show_opts.get('alt', show_name))
+                    name_html = re.sub(r"\s+\(([A-Z][A-Z]|\d\d\d\d)\)", r" <small><small>(\1)</small></small>", name_html)
+                    runtime = ep.get('Runtime', show['Runtime'])
+                    show_title = '%s (%s)' % (show['Network'], show['Country'])
+                    time_title = show['Airtime']
+                    row += "<td style='color: %s; %s'>" % (fgcolor, bgstyle)
+                    row += div('show', name_html, show_title)
+                    row += div('nums', '%02dx%02d' % (ep['sn'], ep['en']))
+                    row += div('title', ep['name'])
+                    row += div('runtime', "(%s&nbsp;mins)" % runtime, time_title)
+                    empty = False
+                else:
+                    row += '<td>'
+                row += "</td>\n"
+            if empty:
+                break
+            s.wfile.write(row)
+
+        s.wfile.write("</tr></table>\n")
+
+        if opts_changed:
+            write_json(opts, CONF_FILE)
+
+###class ThreadedHTTPServer(ThreadingMixIn, HTTPServer):
+###    """Handle requests in a separate thread."""
+
+def bump_hh_mm(m, bump_mins):
+    hh_mm = int(m.group(2))*60 + int(m.group(3)) + bump_mins
+    if hh_mm < 0:
+        hh_mm = 0
+    return m.group(1) + "%02d:%02d" % (int(hh_mm)/60, hh_mm % 60)
+
+def read_repr(filename):
+    try:
+        return eval(file(filename, "r").read())
+    except:
+        return [{}]
+
+def read_json(filename):
+    try:
+        data = file(filename, "r").read()
+    except:
+        return None
+    # This allows a trailing comma in the json data for lists and hashes:
+    data = re.sub(r",(\s*\n\s*[\}\]])", r"\1", data)
+    return json.loads(data)
+
+def write_json(data, filename):
+    data = json.dumps(data, sort_keys=True, indent=2, separators=(', ', ': '))
+    data = re.sub(r" +\n", "\n", data) # Get rid of trailing whitespace
+    data = re.sub(r'([a-z0-9"])(\s*\n\s*[\}\]])', r'\1,\2', data) # Add in trailing commas for easier editing
+    with open(filename, 'w') as fh:
+        fh.write(data)
+
+def div(class_name, txt, title=None):
+    attr_str = ''
+    if class_name is not None:
+        attr_str += ' class="%s"' % class_name
+    if title is not None:
+        attr_str += ' title="%s"' % title
+    return "<div%s>%s</div>\n" % (attr_str, txt)
+
+if __name__ == '__main__':
+    main(sys.argv)
+
+# vim: sw=4 ts=8 et

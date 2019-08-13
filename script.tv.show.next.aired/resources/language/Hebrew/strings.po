@@ -1,0 +1,169 @@
+# Kodi Media Center language file
+# Addon Name: TV Show - Next Aired
+# Addon id: script.tv.show.next.aired
+# Addon Provider: Ppic|Frost|ronie|`Black|phil65|WayneD
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: Hebrew (http://www.transifex.com/projects/p/xbmc-addons/language/he/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: he\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "Addon Summary"
+msgid "Get info for TV Shows Next Aired."
+msgstr "קבל פרטי השידור הבא של תכניות הטלוויזיה."
+
+msgctxt "Addon Description"
+msgid "Get info for TV Shows Next Aired. You'll never miss one again."
+msgstr "קבל פרטי השידור הבא של תכניות הטלוויזיה. לעולם לא תחמיץ שוב פרק."
+
+msgctxt "#32000"
+msgid "Display"
+msgstr "תצוגה"
+
+msgctxt "#32001"
+msgid "Thumbnail type"
+msgstr "סוג תמונה ממוזערת"
+
+msgctxt "#32002"
+msgid "Download banners (Artwork Downloader required)"
+msgstr "הורד באנרים (נדרש Artwork Downloader)"
+
+msgctxt "#32003"
+msgid "Download logos (Artwork Downloader required)"
+msgstr "הורד אייקונים (נדרש Artwork Downloader)"
+
+msgctxt "#32004"
+msgid "Enable background fanart"
+msgstr "אפשר פאנארט רקע"
+
+msgctxt "#32005"
+msgid "Enable 16:9 preview thumbs"
+msgstr "אפשר תמונה מקדימה ממוזערת ביחס 16:9"
+
+msgctxt "#32006"
+msgid "Download 16:9 preview thumbs (Artwork Downloader required)"
+msgstr "הורד תמונה מקדימה ממוזערת ביחס 16:9 (נדרש Artwork Downloader)"
+
+msgctxt "#32007"
+msgid "Update the TV information now"
+msgstr "לעדכן את מידע הטלוויזיה עכשיו"
+
+msgctxt "#32008"
+msgid "Download TV information:"
+msgstr "הורדת פרטי סדרות:"
+
+msgctxt "#32011"
+msgid "Download posters (Artwork Downloader required)"
+msgstr "הורד פוסטרים (נדרש Artwork Downloader)"
+
+msgctxt "#32012"
+msgid "**Reset all data** and update the TV information now"
+msgstr "** איפוס כל הנתונים ** ולעדכן את מידע הטלוויזיה עכשיו"
+
+msgctxt "#32013"
+msgid "Show All TV Shows for home screen (needs skin Support)"
+msgstr "הצג כל תכניות הטלוויזיה במסך הבית (נדרשת תמיכת המעטפת)"
+
+msgctxt "#32014"
+msgid "Use day-of-week and month names in dates instead of just numbers (for a skin that needs help)"
+msgstr "השתמש ביום-של-שבוע ושמות חודשים בתאריכים במקום רק מספרים (למעטפת שזקוקה לעזרה)"
+
+msgctxt "#32018"
+msgid "Yesterday"
+msgstr "אתמול"
+
+msgctxt "#32019"
+msgid "TV Guide"
+msgstr "מדריך תכניות"
+
+msgctxt "#32020"
+msgid "Advanced Options:"
+msgstr "אפשרויות מתקדמות:"
+
+msgctxt "#32021"
+msgid "Extra shows (TVDB ID numbers)"
+msgstr "סדרות נוספים (מספרי זיהוי TVDB)"
+
+msgctxt "#32022"
+msgid "Omit shows (TVDB ID numbers)"
+msgstr "להשמיט סדרות(מספרי זיהוי TVDB)"
+
+msgctxt "#32024"
+msgid "Search language on TVDB"
+msgstr "חפש שפה בTVDB"
+
+msgctxt "#32101"
+msgid "TV Show - Next Aired"
+msgstr "תכנית טלוויזיה - השידור הבא"
+
+msgctxt "#32102"
+msgid "Getting information..."
+msgstr "משיג פרטים..."
+
+msgctxt "#32103"
+msgid "CANCELLED"
+msgstr "בוטלה"
+
+msgctxt "#32104"
+msgid "Operation cancelled by user."
+msgstr "פעולה בוטלה ע\"י המשתמש."
+
+msgctxt "#32106"
+msgid "The update failed (we'll retry again later)."
+msgstr "העדכון נכשל (אנחנו מנסים שוב מאוחר יותר)."
+
+msgctxt "#32201"
+msgid "Returning Series"
+msgstr "סדרה חוזרת"
+
+msgctxt "#32202"
+msgid "Cancelled/Ended"
+msgstr "בוטלה/הסתיימה"
+
+msgctxt "#32203"
+msgid "TBD/On The Bubble"
+msgstr "תוכרז בקרוב/על סף אישור"
+
+msgctxt "#32204"
+msgid "In Development"
+msgstr "בתהליכי פיתוח"
+
+msgctxt "#32205"
+msgid "New Series"
+msgstr "סדרה חדשה"
+
+msgctxt "#32206"
+msgid "Never Aired"
+msgstr "מעולם לא שודרה"
+
+msgctxt "#32207"
+msgid "Final Season"
+msgstr "עונת סיום"
+
+msgctxt "#32208"
+msgid "On Hiatus"
+msgstr "בהפסקה זמנית"
+
+msgctxt "#32209"
+msgid "Pilot Ordered"
+msgstr "הוזמן פיילוט"
+
+msgctxt "#32210"
+msgid "Pilot Rejected"
+msgstr "פיילוט נפסל"
+
+msgctxt "#32211"
+msgid "Cancelled"
+msgstr "בוטלה"
+
+msgctxt "#32212"
+msgid "Ended"
+msgstr "הסתיימה"

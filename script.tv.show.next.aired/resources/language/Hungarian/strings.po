@@ -1,0 +1,197 @@
+# Kodi Media Center language file
+# Addon Name: TV Show - Next Aired
+# Addon id: script.tv.show.next.aired
+# Addon Provider: Ppic|Frost|ronie|`Black|phil65|WayneD
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: Hungarian (http://www.transifex.com/projects/p/xbmc-addons/language/hu/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: hu\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "Addon Summary"
+msgid "Get info for TV Shows Next Aired."
+msgstr "Információ a sorozatok következő vetítési idejéről."
+
+msgctxt "Addon Description"
+msgid "Get info for TV Shows Next Aired. You'll never miss one again."
+msgstr "Információ a sorozatok következő vetítési idejéről. Soha nem marad le mégegyszer semmiről."
+
+msgctxt "#32000"
+msgid "Display"
+msgstr "Képernyő"
+
+msgctxt "#32001"
+msgid "Thumbnail type"
+msgstr "Bélyegkép típus."
+
+msgctxt "#32002"
+msgid "Download banners (Artwork Downloader required)"
+msgstr "Bannerek letöltése (Artwork letöltő szükséges)"
+
+msgctxt "#32003"
+msgid "Download logos (Artwork Downloader required)"
+msgstr "Legók letöltése (Artwork letöltő szükséges)"
+
+msgctxt "#32004"
+msgid "Enable background fanart"
+msgstr "Háttér Fanart engedélyezése"
+
+msgctxt "#32005"
+msgid "Enable 16:9 preview thumbs"
+msgstr "Előnézeti 16:9 bélyegképek engedélyezése"
+
+msgctxt "#32006"
+msgid "Download 16:9 preview thumbs (Artwork Downloader required)"
+msgstr "Előnézeti 16:9 bélyegképek letöltése (Artwork letöltő szükséges)"
+
+msgctxt "#32007"
+msgid "Update the TV information now"
+msgstr "TV információ azonnali frissítése"
+
+msgctxt "#32008"
+msgid "Download TV information:"
+msgstr "TV információ letöltése:"
+
+msgctxt "#32009"
+msgid "In the background every [N] hours"
+msgstr "A háttérben minden [N] órában"
+
+msgctxt "#32010"
+msgid "On entering the guide if data is over [N] hours old"
+msgstr "Műsorfüzet belépéskor ha az adat [N] órás"
+
+msgctxt "#32011"
+msgid "Download posters (Artwork Downloader required)"
+msgstr "Poszterek letöltése (Artwork letöltő szükséges)"
+
+msgctxt "#32012"
+msgid "**Reset all data** and update the TV information now"
+msgstr "**Adatok törlése** és a TV információ azonnali frissítése"
+
+msgctxt "#32013"
+msgid "Show All TV Shows for home screen (needs skin Support)"
+msgstr "Minden sorozat megjelenítése a főképernyőn (Felület támogatás szükséges)"
+
+msgctxt "#32014"
+msgid "Use day-of-week and month names in dates instead of just numbers (for a skin that needs help)"
+msgstr "Napok és hónapok nevének használata számok helyett (felszíneknek ahol szükséges)"
+
+msgctxt "#32015"
+msgid "Number of next-aired days to include in the TV Guide"
+msgstr "Következő rész vetítéséig a napok száma a Műsorfüzetben."
+
+msgctxt "#32016"
+msgid "Start the TV Guide week based on Today instead of Monday"
+msgstr "Műsorfüzet hétkezdete a mai nap hétfő helyett."
+
+msgctxt "#32017"
+msgid "Include Yesterday in the Today-style TV Guide"
+msgstr "A tegnapi nap megjelenítése a Ma stílusú műsorfüzetben."
+
+msgctxt "#32018"
+msgid "Yesterday"
+msgstr "Tegnap"
+
+msgctxt "#32019"
+msgid "TV Guide"
+msgstr "GyorsMenü"
+
+msgctxt "#32020"
+msgid "Advanced Options:"
+msgstr "Haladó Beállítások:"
+
+msgctxt "#32021"
+msgid "Extra shows (TVDB ID numbers)"
+msgstr "Extra show-k (TVDB ID számok)"
+
+msgctxt "#32022"
+msgid "Omit shows (TVDB ID numbers)"
+msgstr "Kihagyott show-k (TVDB ID számok)"
+
+msgctxt "#32023"
+msgid "Ignore \"Specials\" (requires a reset)"
+msgstr "\"Specials\" kihagyása (újraindítás szükséges)"
+
+msgctxt "#32024"
+msgid "Search language on TVDB"
+msgstr "Nyelv keresése a TVDB-n"
+
+msgctxt "#32101"
+msgid "TV Show - Next Aired"
+msgstr "Sorozat - Következő Vetítés"
+
+msgctxt "#32102"
+msgid "Getting information..."
+msgstr "Információ szerzése...."
+
+msgctxt "#32103"
+msgid "CANCELLED"
+msgstr "MEGSZAKÍTVA"
+
+msgctxt "#32104"
+msgid "Operation cancelled by user."
+msgstr "Művelet felhasználó által megszakítva."
+
+msgctxt "#32105"
+msgid "ABORTED due to fetch failures"
+msgstr "MEGSZAKÍTVA legyűjtési hiba miatt"
+
+msgctxt "#32106"
+msgid "The update failed (we'll retry again later)."
+msgstr "A frissítés sikertelen (később újra megpróbáljuk)"
+
+msgctxt "#32201"
+msgid "Returning Series"
+msgstr "Visszatérő Sorozat"
+
+msgctxt "#32202"
+msgid "Cancelled/Ended"
+msgstr "Törülve/Végetért"
+
+msgctxt "#32203"
+msgid "TBD/On The Bubble"
+msgstr "Függőben/Döntés Alatt"
+
+msgctxt "#32204"
+msgid "In Development"
+msgstr "Készítés Alatt."
+
+msgctxt "#32205"
+msgid "New Series"
+msgstr "Új Sorozat"
+
+msgctxt "#32206"
+msgid "Never Aired"
+msgstr "Soha Nem Vetített"
+
+msgctxt "#32207"
+msgid "Final Season"
+msgstr "Záró Évad"
+
+msgctxt "#32208"
+msgid "On Hiatus"
+msgstr "Kihagyás Alatt"
+
+msgctxt "#32209"
+msgid "Pilot Ordered"
+msgstr "Pilot Berendelve"
+
+msgctxt "#32210"
+msgid "Pilot Rejected"
+msgstr "Pilot Törölve"
+
+msgctxt "#32211"
+msgid "Cancelled"
+msgstr "Leállítva"
+
+msgctxt "#32212"
+msgid "Ended"
+msgstr "Befejezett"

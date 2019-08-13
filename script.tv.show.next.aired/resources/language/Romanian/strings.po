@@ -1,0 +1,125 @@
+# Kodi Media Center language file
+# Addon Name: TV Show - Next Aired
+# Addon id: script.tv.show.next.aired
+# Addon Provider: Ppic|Frost|ronie|`Black|phil65|WayneD
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: Romanian (http://www.transifex.com/projects/p/xbmc-addons/language/ro/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ro\n"
+"Plural-Forms: nplurals=3; plural=(n==1?0:(((n%100>19)||((n%100==0)&&(n!=0)))?2:1));\n"
+
+msgctxt "Addon Summary"
+msgid "Get info for TV Shows Next Aired."
+msgstr "Află despre emisiuni care urmează să fie difuzate"
+
+msgctxt "Addon Description"
+msgid "Get info for TV Shows Next Aired. You'll never miss one again."
+msgstr "Află despre emisiuni care urmează să fie difuzate. Nu vei mai rata nici una."
+
+msgctxt "#32000"
+msgid "Display"
+msgstr "Afişare"
+
+msgctxt "#32001"
+msgid "Thumbnail type"
+msgstr "Tip imagine"
+
+msgctxt "#32002"
+msgid "Download banners (Artwork Downloader required)"
+msgstr "Descarcă bannere (necesită Artwork Downloader)"
+
+msgctxt "#32003"
+msgid "Download logos (Artwork Downloader required)"
+msgstr "Descarcă logouri (necesită Artwork Downloader)"
+
+msgctxt "#32004"
+msgid "Enable background fanart"
+msgstr "Permite fundal fanart"
+
+msgctxt "#32005"
+msgid "Enable 16:9 preview thumbs"
+msgstr "Permite afişare imagini 16:9"
+
+msgctxt "#32006"
+msgid "Download 16:9 preview thumbs (Artwork Downloader required)"
+msgstr "Descarcă imagini 16:9 (necesită Artwork Downloader)"
+
+msgctxt "#32011"
+msgid "Download posters (Artwork Downloader required)"
+msgstr "Descarcă postere (necesită Artwork Downloader)"
+
+msgctxt "#32019"
+msgid "TV Guide"
+msgstr "Ghid TV"
+
+msgctxt "#32101"
+msgid "TV Show - Next Aired"
+msgstr "TV Show - Next Aired"
+
+msgctxt "#32102"
+msgid "Getting information..."
+msgstr "Caut informaţii..."
+
+msgctxt "#32103"
+msgid "CANCELLED"
+msgstr "Anulat"
+
+msgctxt "#32104"
+msgid "Operation cancelled by user."
+msgstr "Operaţiune anulată"
+
+msgctxt "#32201"
+msgid "Returning Series"
+msgstr "în desfăşurare"
+
+msgctxt "#32202"
+msgid "Cancelled/Ended"
+msgstr "anulat / încheiat"
+
+msgctxt "#32203"
+msgid "TBD/On The Bubble"
+msgstr "viitor incert"
+
+msgctxt "#32204"
+msgid "In Development"
+msgstr "în producţie"
+
+msgctxt "#32205"
+msgid "New Series"
+msgstr "serial nou"
+
+msgctxt "#32206"
+msgid "Never Aired"
+msgstr "nedifuzat"
+
+msgctxt "#32207"
+msgid "Final Season"
+msgstr "ultimul sezon"
+
+msgctxt "#32208"
+msgid "On Hiatus"
+msgstr "viitor incert"
+
+msgctxt "#32209"
+msgid "Pilot Ordered"
+msgstr "pilot comandat"
+
+msgctxt "#32210"
+msgid "Pilot Rejected"
+msgstr "pilot respins"
+
+msgctxt "#32211"
+msgid "Cancelled"
+msgstr "anulat"
+
+msgctxt "#32212"
+msgid "Ended"
+msgstr "încheiat"

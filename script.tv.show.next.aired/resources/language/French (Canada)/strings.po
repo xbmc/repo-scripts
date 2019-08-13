@@ -1,0 +1,197 @@
+# Kodi Media Center language file
+# Addon Name: TV Show - Next Aired
+# Addon id: script.tv.show.next.aired
+# Addon Provider: Ppic|Frost|ronie|`Black|phil65|WayneD
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: French (Canada) (http://www.transifex.com/projects/p/xbmc-addons/language/fr_CA/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: fr_CA\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+msgctxt "Addon Summary"
+msgid "Get info for TV Shows Next Aired."
+msgstr "Obtenir les infos de prochaine diffusion des séries télé."
+
+msgctxt "Addon Description"
+msgid "Get info for TV Shows Next Aired. You'll never miss one again."
+msgstr "Obtenir les infos de prochaine diffusion des séries télé. Vous n'en manquerez plus jamais une."
+
+msgctxt "#32000"
+msgid "Display"
+msgstr "Affichage"
+
+msgctxt "#32001"
+msgid "Thumbnail type"
+msgstr "Type d'imagette"
+
+msgctxt "#32002"
+msgid "Download banners (Artwork Downloader required)"
+msgstr "Télécharger des bannières (téléchargeur d'illustrations exigé)"
+
+msgctxt "#32003"
+msgid "Download logos (Artwork Downloader required)"
+msgstr "Télécharger des logos (téléchargeur d'illustrations exigé)"
+
+msgctxt "#32004"
+msgid "Enable background fanart"
+msgstr "Activer les fanarts d'arrière-plan"
+
+msgctxt "#32005"
+msgid "Enable 16:9 preview thumbs"
+msgstr "Activer les imagettes d'aperçu en 16:9"
+
+msgctxt "#32006"
+msgid "Download 16:9 preview thumbs (Artwork Downloader required)"
+msgstr "Télécharger des imagettes d'aperçu en 16:9 (le téléchargeur d'illustrations est requis)"
+
+msgctxt "#32007"
+msgid "Update the TV information now"
+msgstr "Mettre à jour les informations télé maintenant"
+
+msgctxt "#32008"
+msgid "Download TV information:"
+msgstr "Télécharger les informations télé :"
+
+msgctxt "#32009"
+msgid "In the background every [N] hours"
+msgstr "En arrière-plan toutes les [N] heures"
+
+msgctxt "#32010"
+msgid "On entering the guide if data is over [N] hours old"
+msgstr "En entrant dans le guide si les données ont plus de [N] heures"
+
+msgctxt "#32011"
+msgid "Download posters (Artwork Downloader required)"
+msgstr "Télécharger des affiches (le téléchargeur d'illustrations est requis)"
+
+msgctxt "#32012"
+msgid "**Reset all data** and update the TV information now"
+msgstr "**Réinitialiser toutes les données** et mettre à jour les informations télé maintenant"
+
+msgctxt "#32013"
+msgid "Show All TV Shows for home screen (needs skin Support)"
+msgstr "Afficher Toutes les émissions télé pour l'écran d'accueil (prise en charge de l'habillage nécessaire)"
+
+msgctxt "#32014"
+msgid "Use day-of-week and month names in dates instead of just numbers (for a skin that needs help)"
+msgstr "Utiliser les noms de jours et de mois dans les dates au lieu des nombres (pour un habillage qui a besoin d'aide)"
+
+msgctxt "#32015"
+msgid "Number of next-aired days to include in the TV Guide"
+msgstr "Nombre de jours de prochaine diffusion à inclure dans le guide télé"
+
+msgctxt "#32016"
+msgid "Start the TV Guide week based on Today instead of Monday"
+msgstr "Démarrer la semaine du guide télé aujourd'hui au lieu de lundi"
+
+msgctxt "#32017"
+msgid "Include Yesterday in the Today-style TV Guide"
+msgstr "Inclure Hier au style Aujourd'hui du guide télé"
+
+msgctxt "#32018"
+msgid "Yesterday"
+msgstr "Hier"
+
+msgctxt "#32019"
+msgid "TV Guide"
+msgstr "Guide télé"
+
+msgctxt "#32020"
+msgid "Advanced Options:"
+msgstr "Options avancées :"
+
+msgctxt "#32021"
+msgid "Extra shows (TVDB ID numbers)"
+msgstr "Émissions supplémentaires (numéros d'ID de TVDB) "
+
+msgctxt "#32022"
+msgid "Omit shows (TVDB ID numbers)"
+msgstr "Omettre les émissions (numéros d'ID de TVDB) "
+
+msgctxt "#32023"
+msgid "Ignore \"Specials\" (requires a reset)"
+msgstr "Ignorer les « émissions spéciales » (redémarrage nécessaire)"
+
+msgctxt "#32024"
+msgid "Search language on TVDB"
+msgstr "Chercher la langue sur TVDB "
+
+msgctxt "#32101"
+msgid "TV Show - Next Aired"
+msgstr "Série télé - Prochaine diffusion"
+
+msgctxt "#32102"
+msgid "Getting information..."
+msgstr "Obtention des informations..."
+
+msgctxt "#32103"
+msgid "CANCELLED"
+msgstr "ANNULÉ"
+
+msgctxt "#32104"
+msgid "Operation cancelled by user."
+msgstr "Opération annulée par l'utilisateur."
+
+msgctxt "#32105"
+msgid "ABORTED due to fetch failures"
+msgstr "INTERROMPUE à cause de défaillances de récupération"
+
+msgctxt "#32106"
+msgid "The update failed (we'll retry again later)."
+msgstr "La mise à jour a échoué (nous ressayerons plus tard)."
+
+msgctxt "#32201"
+msgid "Returning Series"
+msgstr "Séries récurrentes"
+
+msgctxt "#32202"
+msgid "Cancelled/Ended"
+msgstr "Annulée/terminée"
+
+msgctxt "#32203"
+msgid "TBD/On The Bubble"
+msgstr "TBD/On the Bubble"
+
+msgctxt "#32204"
+msgid "In Development"
+msgstr "En cours de développement"
+
+msgctxt "#32205"
+msgid "New Series"
+msgstr "Nouvelle série"
+
+msgctxt "#32206"
+msgid "Never Aired"
+msgstr "Jamais diffusé"
+
+msgctxt "#32207"
+msgid "Final Season"
+msgstr "Saison finale"
+
+msgctxt "#32208"
+msgid "On Hiatus"
+msgstr "Saison suspendue"
+
+msgctxt "#32209"
+msgid "Pilot Ordered"
+msgstr "Pilote commandé"
+
+msgctxt "#32210"
+msgid "Pilot Rejected"
+msgstr "Pilote rejeté"
+
+msgctxt "#32211"
+msgid "Cancelled"
+msgstr "Annulé"
+
+msgctxt "#32212"
+msgid "Ended"
+msgstr "Terminée"
