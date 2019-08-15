@@ -52,6 +52,7 @@ def image_filter(prop='listitem',file=None,radius=BLUR_RADIUS):
             blurred_image, imagecolor = image_blur(image,radius)
             winprop(prop + '_blurred', blurred_image)
             winprop(prop + '_color', imagecolor)
+            winprop(prop + '_color_noalpha', imagecolor[2:])
 
 
 def image_blur(image,radius):
