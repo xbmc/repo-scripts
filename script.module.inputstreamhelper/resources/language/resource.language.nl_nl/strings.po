@@ -23,7 +23,7 @@ msgstr "Deze add-on heeft een decryptie-module van een derde partij nodig [B]Wid
 
 msgctxt "#30003"
 msgid "[B]Widevine CDM[/B] was successfully installed."
-msgstr "[B]Widevine CDM[/B] is geïnstalleerd."
+msgstr "[B]Widevine CDM[/B] is geÃ¯nstalleerd."
 
 msgctxt "#30004"
 msgid "Error"
