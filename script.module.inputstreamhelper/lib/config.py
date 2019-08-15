@@ -62,9 +62,9 @@ WIDEVINE_MINIMUM_KODI_VERSION = {
     'Darwin': '17.4'
 }
 
-WIDEVINE_CURRENT_VERSION_URL = 'https://dl.google.com/widevine-cdm/current.txt'
+WIDEVINE_VERSIONS_URL = 'https://dl.google.com/widevine-cdm/versions.txt'
 
-WIDEVINE_DOWNLOAD_URL = 'https://dl.google.com/widevine-cdm/{0}-{1}-{2}.zip'
+WIDEVINE_DOWNLOAD_URL = 'https://dl.google.com/widevine-cdm/{version}-{os}-{arch}.zip'
 
 WIDEVINE_LICENSE_FILE = 'LICENSE.txt'
 
@@ -72,7 +72,7 @@ WIDEVINE_MANIFEST_FILE = 'manifest.json'
 
 WIDEVINE_CONFIG_NAME = 'widevine_config.json'
 
-WIDEVINE_UPDATE_INTERVAL_DAYS = 30
+WIDEVINE_UPDATE_INTERVAL_DAYS = 14
 
 WIDEVINE_LEGACY_VERSION = '1.4.8.903'
 
@@ -80,7 +80,7 @@ CHROMEOS_RECOVERY_URL = 'https://dl.google.com/dl/edgedl/chromeos/recovery/recov
 
 CHROMEOS_RECOVERY_URL_LEGACY = 'https://gist.githubusercontent.com/emilsvennesson/5e74181c9a833129ad0bb03ccb41d81f/raw/8d162568277caaa31b54f4773e75a20514856825/recovery.conf'
 
-CHROMEOS_ARM_HWID = 'SPRING'
+CHROMEOS_ARM_HWID = 'SKATE'
 
 CHROMEOS_BLOCK_SIZE = 512
 
