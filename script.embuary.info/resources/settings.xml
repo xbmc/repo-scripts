@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+	<category label="128">
+                <setting label="TheMovieDB" type="lsep"/>
+                <setting label="$ADDON[script.embuary.info 32024]" type="select" values="bg|cs|da|de|el|en|es|fi|fr|he|hr|hu|it|ja|ko|nl|no|pl|pt|ru|sl|sv|tr|zh" id="language_code" default="en"/>
+                <setting label="$ADDON[script.embuary.info 32003]" type="select" values="AU|BG|BR|CA|DE|DK|ES|FI|FR|GB|HU|IN|IT|KR|LT|MY|NL|NO|NZ|PH|PT|RU|SE|SK|TH|US" id="country_code" default="US"/>
+                <setting label="$ADDON[script.embuary.info 32023]" type="text" id="tmdb_api_key" default="fc168650632c6597038cf7072a7c20da"/>
+                <setting label="OMDB $ADDON[script.embuary.info 32002]" type="lsep"/>
+                <setting label="$ADDON[script.embuary.info 32023]" type="text" id="omdb_api_key"/>
+                <setting label="$ADDON[script.embuary.info 32020]" type="lsep"/>
+                <setting label="$ADDON[script.embuary.info 32021]" type="bool" id="cache_enabled" default="true"/>
+        </category>
+</settings>
