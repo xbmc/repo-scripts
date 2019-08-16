@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.skin.info.service" name="Skin Info Service" version="1.0.5" provider-name="phil65, SiLVO">
+<addon id="script.skin.info.service" name="Skin Info Service" version="1.0.6" provider-name="phil65, SiLVO">
 	<requires>
 		<import addon="xbmc.python" version="2.26.0" />
 	</requires>
@@ -17,6 +17,6 @@
 		<assets>
 			<icon>icon.png</icon>
 		</assets>
-		<news>Add 4k support</news>
+		<news>Add set details support for Home Window</news>
 	</extension>
 </addon>

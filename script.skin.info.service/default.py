@@ -27,7 +27,7 @@ class Daemon:
         self.previousitem = ""
         log("starting backend")
         while (not self._stop) and (not xbmc.abortRequested):
-            if xbmc.getCondVisibility("Container.Content(movies) | Container.Content(sets) | Container.Content(artists) | Container.Content(albums) | Container.Content(episodes) | Container.Content(musicvideos)"):
+            if xbmc.getCondVisibility("Container.Content(movies) | Container.Content(sets) | ListItem.IsCollection | String.IsEqual(ListItem.DBTYPE,set) | Container.Content(artists) | Container.Content(albums) | Container.Content(episodes) | Container.Content(musicvideos)"):
                 self.selecteditem = xbmc.getInfoLabel("ListItem.DBID")
                 if (self.selecteditem != self.previousitem):
                     self.previousitem = self.selecteditem
@@ -121,7 +121,7 @@ class Daemon:
             set_album_properties(json_response)
 
     def _set_movieset_details(self, dbid):
-        json_response = Get_JSON_response('{"jsonrpc": "2.0", "method": "VideoLibrary.GetMovieSetDetails", "params": {"setid": %s, "properties": [ "thumbnail" ], "movies": { "properties":  [ "rating", "art", "file", "year", "director", "writer","genre" , "thumbnail", "runtime", "studio", "plotoutline", "plot", "country", "streamdetails"], "sort": { "order": "ascending",  "method": "year" }} },"id": 1 }' % dbid)
+        json_response = Get_JSON_response('{"jsonrpc": "2.0", "method": "VideoLibrary.GetMovieSetDetails", "params": {"setid": %s, "properties": [ "thumbnail" ], "movies": { "properties":  [ "rating", "art", "file", "year", "director", "writer", "genre", "thumbnail", "runtime", "studio", "plotoutline", "plot", "country", "streamdetails"], "sort": { "order": "ascending",  "method": "year" }} },"id": 1 }' % dbid)
         clear_properties()
         if ("result" in json_response) and ('setdetails' in json_response['result']):
             set_movie_properties(json_response)
