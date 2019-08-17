@@ -26,10 +26,6 @@ msgctxt "#32002"
 msgid "Enable logging"
 msgstr ""
 
-msgctxt "#32003"
-msgid "Enable debug logging"
-msgstr ""
-
 msgctxt "#32004"
 msgid "detected"
 msgstr ""

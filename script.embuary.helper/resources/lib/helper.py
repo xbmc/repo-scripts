@@ -10,8 +10,11 @@ import json
 import time
 import datetime
 import os
+import sys
 
 ########################
+
+PYTHON3 = True if sys.version_info.major == 3 else False
 
 ADDON = xbmcaddon.Addon()
 ADDON_ID = ADDON.getAddonInfo('id')
@@ -36,21 +39,16 @@ def get_kodiversion():
 
 
 def log(txt,loglevel=NOTICE,force=False):
-    if ((loglevel == NOTICE or loglevel == WARNING) and ADDON.getSettingBool('log')) or (loglevel == DEBUG and ADDON.getSettingBool('debuglog')) or force:
+    if ((loglevel == NOTICE or loglevel == WARNING) and ADDON.getSettingBool('log')) or loglevel == DEBUG or force:
 
-        ''' Python 2 requires to decode stuff at first
-        '''
-        try:
-            if isinstance(txt, str):
-                txt = txt.decode('utf-8')
-        except AttributeError:
-            pass
+        if not PYTHON3 and isinstance(txt, str):
+            txt = txt.decode('utf-8')
 
         message = u'[ %s ] %s' % (ADDON_ID,txt)
 
-        try:
-            xbmc.log(msg=message.encode('utf-8'), level=loglevel) # Python 2
-        except TypeError:
+        if not PYTHON3:
+            xbmc.log(msg=message.encode('utf-8'), level=loglevel)
+        else:
             xbmc.log(msg=message, level=loglevel)
 
 
@@ -185,18 +183,10 @@ def json_call(method,properties=None,sort=None,query_filter=None,limit=None,para
 
     result = xbmc.executeJSONRPC(json_string)
 
-    ''' Python 2 compatibility
-    '''
-    try:
+    if not PYTHON3:
         result = unicode(result, 'utf-8', errors='ignore')
-    except NameError:
-        pass
 
-    result = json.loads(result)
-
-    log('JSON call: %s' % json_string, DEBUG)
-
-    return result
+    return json.loads(result)
 
 
 def reload_widgets(instant=False,force=True):
