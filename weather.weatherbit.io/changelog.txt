@@ -1,3 +1,12 @@
+v0.0.19
+- fix unicode error
+
+v0.0.18
+- fix hourly icons
+
+v0.0.17
+- use requests instead of urllib2
+
 v0.0.16
 - don't normalize location search strings
 

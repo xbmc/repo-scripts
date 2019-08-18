@@ -406,16 +406,18 @@ class Helper(object):
     def _latest_widevine_version(self, eula=False):
         """Returns the latest available version of Widevine CDM/Chrome OS."""
         if eula:
-            self._url = config.WIDEVINE_CURRENT_VERSION_URL
-            return self._http_request()
+            self._url = config.WIDEVINE_VERSIONS_URL
+            versions = self._http_request()
+            return versions.split()[-1]
 
         ADDON.setSetting('last_update', str(time.mktime(datetime.utcnow().timetuple())))
         if 'x86' in self._arch():
             if self._legacy():
                 return config.WIDEVINE_LEGACY_VERSION
             else:
-                self._url = config.WIDEVINE_CURRENT_VERSION_URL
-                return self._http_request()
+                self._url = config.WIDEVINE_VERSIONS_URL
+                versions = self._http_request()
+                return versions.split()[-1]
         else:
             return [x for x in self._chromeos_config() if config.CHROMEOS_ARM_HWID in x['hwidmatch']][0]['version']
 
@@ -447,7 +449,7 @@ class Helper(object):
             cdm_version = cdm_version.split('.')[-1]
         cdm_os = config.WIDEVINE_OS_MAP[self._os()]
         cdm_arch = config.WIDEVINE_ARCH_MAP_X86[self._arch()]
-        self._url = config.WIDEVINE_DOWNLOAD_URL.format(cdm_version, cdm_os, cdm_arch)
+        self._url = config.WIDEVINE_DOWNLOAD_URL.format(version=cdm_version, os=cdm_os, arch=cdm_arch)
 
         downloaded = self._http_request(download=True)
         if downloaded:
@@ -553,10 +555,27 @@ class Helper(object):
 
         return False
 
+    def _first_run(self):
+        """Check if this add-on version is running for the first time"""
+
+        # Get versions
+        settings_version = ADDON.getSetting('version')
+        if settings_version == '':
+            settings_version = '0.3.4'  # settings_version didn't exist in version 0.3.4 and older
+        addon_version = ADDON.getAddonInfo('version')
+
+        # Compare versions
+        if LooseVersion(addon_version) > LooseVersion(settings_version):
+            # New version found, save addon_version to settings
+            ADDON.setSetting('version', addon_version)
+            self._log('inputstreamhelper version %s is running for the first time' % addon_version)
+            return True
+        return False
+
     def _update_widevine(self):
         """Prompts user to upgrade Widevine CDM when a newer version is available."""
         last_update = ADDON.getSetting('last_update')
-        if last_update:
+        if last_update and not self._first_run():
             last_update_dt = datetime.fromtimestamp(float(ADDON.getSetting('last_update')))
             if last_update_dt + timedelta(days=config.WIDEVINE_UPDATE_INTERVAL_DAYS) >= datetime.utcnow():
                 self._log('Widevine update check was made on {0}'.format(last_update_dt.isoformat()))
@@ -591,7 +610,7 @@ class Helper(object):
                 eula = f.read().strip().replace('\n', ' ')
         else:  # grab the license from the x86 files
             self._log('Acquiring Widevine EULA from x86 files.')
-            self._url = config.WIDEVINE_DOWNLOAD_URL.format(self._latest_widevine_version(eula=True), 'mac', 'x64')
+            self._url = config.WIDEVINE_DOWNLOAD_URL.format(version=self._latest_widevine_version(eula=True), os='mac', arch='x64')
             downloaded = self._http_request(download=True, message=LANGUAGE(30025))
             if downloaded:
                 with zipfile.ZipFile(self._download_path) as z:
@@ -752,14 +771,27 @@ class Helper(object):
 
         return True
 
+    def _install_inputstream(self):
+        """Install inputstream addon."""
+        try:  # See if there's an installed repo that has it
+            xbmc.executebuiltin('InstallAddon({})'.format(self.inputstream_addon), True)
+            addon = xbmcaddon.Addon('{}'.format(self.inputstream_addon))
+            self._log('inputstream addon installed from repo')
+            return True
+        except RuntimeError:
+            self._log('inputstream addon not installed')
+            return False
+
     def check_inputstream(self):
         """Main function. Ensures that all components are available for InputStream add-on playback."""
         if self._helper_disabled():  # blindly return True if helper has been disabled
             return True
         dialog = xbmcgui.Dialog()
         if not self._has_inputstream():
-            dialog.ok(LANGUAGE(30004), LANGUAGE(30008).format(self.inputstream_addon))
-            return False
+            # Try to install inputstream addon
+            if not self._install_inputstream():
+                dialog.ok(LANGUAGE(30004), LANGUAGE(30008).format(self.inputstream_addon))
+                return False
         elif not self._inputstream_enabled():
             ok = dialog.yesno(LANGUAGE(30001), LANGUAGE(30009).format(self.inputstream_addon, self.inputstream_addon))
             if ok:

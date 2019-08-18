@@ -1,3 +1,6 @@
+version 1.2.7 (03.05.2019)
+* Minor fixes (mysql access protection, remove credentials from log file)
+
 version 1.2.6 (16.02.2019)
 * Fixed waiting time for periodic update during playback
 

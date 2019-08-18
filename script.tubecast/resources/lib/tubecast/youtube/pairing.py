@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import time
 
-from app import YoutubeCastV1
+from .app import YoutubeCastV1
 
 from resources.lib.kodi.utils import get_string
 

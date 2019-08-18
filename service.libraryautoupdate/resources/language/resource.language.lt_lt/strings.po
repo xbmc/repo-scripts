@@ -1,0 +1,213 @@
+# Kodi Media Center language file
+# Addon Name: XBMC Library Auto Update
+# Addon id: service.libraryautoupdate
+# Addon Provider: robweber
+# Translators:
+# Artūras Griškonis <ArtX38@gmail.com>, 2013
+# Zapata11 <raimondas.duzinskas@gmail.com>, 2014-2015
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2017-09-19 14:20+0000\n"
+"Last-Translator: Martijn Kaijser <machine.sanctum@gmail.com>\n"
+"Language-Team: Lithuanian (http://www.transifex.com/teamxbmc/xbmc-addons/language/lt/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: lt\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+
+msgctxt "Addon Summary"
+msgid ""
+"Update your Kodi Video and Music Libraries on a timer. Timer runs as an Kodi"
+" service so you never miss an update."
+msgstr "Atnaujinkite savo Kodi vaizdo ir muzikos bibliotekas nustatytu laiku. Laikmatis veikia kaip Kodi paslauga, todėl jūs niekada nepraleisite atnaujinimo."
+
+msgctxt "Addon Description"
+msgid ""
+"This is an Kodi Service that will update your music and video libraries on a"
+" timer. You can select a different interval to scan your media databases "
+"(Audio,Video,Both) or you can set a cron-style timer for greater control. If"
+" you are playing an audio or video file when the timer starts it can skip "
+"the library update process until it is completed so that you're media "
+"experience is not interrupted. Updating a specific Video Path, and Cleaning "
+"the Music/Video libraries is now supported."
+msgstr "Tai Kodi paslauga, kuri atnaujins jūsų muzikos ir vaizdo bibliotekas nurodytu laiku. Jūs galite nurodyti skirtingus laiko intervalus media duomenų bazių skenavimui (garso, vaizdo, abiejų) arba galite nustatyti 'Cron' stiliaus laikmatį geresnei kontrolei. Jei laikmatis suveikia tuo metu, kai atkuriamas garso ar vaizdo failas, bibliotekos atnaujinimo procesas gali būti pristabdytas kol atkūrimas bus baigtas tam, kad galėtumėte nepertraukiamai mėgautis media turiniu. Dabar taip pat palaikomas konkretaus kelio iki vaizdo failų atnaujinimas ir muzikos/vaizdo bibliotekų valymas."
+
+msgctxt "#30000"
+msgid "Kodi Library Auto Update"
+msgstr "Kodi bibliotekos automatinis atnaujinimas"
+
+msgctxt "#30001"
+msgid "General"
+msgstr "Pagrindinis"
+
+msgctxt "#30002"
+msgid "Video"
+msgstr "Vaizdas"
+
+msgctxt "#30003"
+msgid "Music"
+msgstr "Muzika"
+
+msgctxt "#30004"
+msgid "Update Video Library"
+msgstr "Atnaujinti vaizdo biblioteką"
+
+msgctxt "#30005"
+msgid "Update Music Library"
+msgstr "Atnaujinti muzikos biblioteką"
+
+msgctxt "#30006"
+msgid "Show Notifications"
+msgstr "Rodyti pranešimus"
+
+msgctxt "#30007"
+msgid "Run during playback"
+msgstr "Vykdyti atkūrimo metu"
+
+msgctxt "#30008"
+msgid "Startup Delay (minutes)"
+msgstr "Paleisties uždelsimas (min.)"
+
+msgctxt "#30009"
+msgid "Used Advanced Timer"
+msgstr "Naudoti išplėstinį laikmatį"
+
+msgctxt "#30010"
+msgid "Amount of time between updates (hours)"
+msgstr "Laiko tarpas tarp atnaujinimų (valandos)"
+
+msgctxt "#30011"
+msgid "Cron Expression"
+msgstr "Cron išraiška"
+
+msgctxt "#30012"
+msgid "Update Video Library"
+msgstr "Atnaujinti vaizdo biblioteką"
+
+msgctxt "#30013"
+msgid "Update Music Library"
+msgstr "Atnaujinti muzikos biblioteką"
+
+msgctxt "#30014"
+msgid "Only run when idle"
+msgstr "Paleisti tik veikiant tuščiąją eiga"
+
+msgctxt "#30015"
+msgid "Disable manual run prompt"
+msgstr "Išjungti rankinio paleidimo užklausimą"
+
+msgctxt "#30020"
+msgid "Update Specific Path 1"
+msgstr "Atnaujinti specifinį kelią 1"
+
+msgctxt "#30021"
+msgid "Update Specific Path 2"
+msgstr "Atnaujinti specifinį kelią 2"
+
+msgctxt "#30022"
+msgid "Update Specific Path 3"
+msgstr "Atnaujinti specifinį kelią 3"
+
+msgctxt "#30023"
+msgid "Video Path"
+msgstr "Vaizdo įrašų kelias"
+
+msgctxt "#30030"
+msgid "Read Disclaimer"
+msgstr "Skaityti atsakomybės ribojimą"
+
+msgctxt "#30031"
+msgid "Video Paths Disclaimer"
+msgstr "Vaizdo įrašų kelių atsakomybės ribojimas"
+
+msgctxt "#30032"
+msgid "Path must already be a video source with content"
+msgstr "Kelias jau turi būti vaizdo šaltinis su turiniu"
+
+msgctxt "#30033"
+msgid "Path must match source path exactly to scan"
+msgstr "Kelias turi tiksliai atitikti šaltinio kelią, kad būtų galima nuskaityti"
+
+msgctxt "#30040"
+msgid "Cleaning"
+msgstr "Valoma"
+
+msgctxt "#30041"
+msgid "Clean Libraries"
+msgstr "Valyti bibliotekas"
+
+msgctxt "#30042"
+msgid "Verify Sources Before Clean"
+msgstr "Patikrinti šaltinius prieš valymą"
+
+msgctxt "#30043"
+msgid "Frequency"
+msgstr "Dažnumas"
+
+msgctxt "#30044"
+msgid "After Update"
+msgstr "Po atnaujinimo"
+
+msgctxt "#30045"
+msgid "Once Per Day"
+msgstr "Kartą per dieną"
+
+msgctxt "#30046"
+msgid "Once Per Week"
+msgstr "Kartą per savaitę"
+
+msgctxt "#30047"
+msgid "Once Per Month"
+msgstr "Kartą per mėnesį"
+
+msgctxt "#30048"
+msgid "Clean Video Library"
+msgstr "Valyti vaizdo biblioteką"
+
+msgctxt "#30049"
+msgid "Clean Music Library"
+msgstr "Valyti muzikos biblioteką"
+
+msgctxt "#30050"
+msgid "Error Cleaning Database"
+msgstr "Klaida valant duomenų bazę"
+
+msgctxt "#30051"
+msgid "Prompt User Before Cleaning Library"
+msgstr "Klausti prieš valant biblioteką"
+
+msgctxt "#30052"
+msgid "A database clean is scheduled to run"
+msgstr "Duomenų bazės valymas suplanuotas"
+
+msgctxt "#30053"
+msgid "Would you like to run it now?"
+msgstr "Norėtumėte paleisti dabar?"
+
+msgctxt "#30054"
+msgid "Library to clean"
+msgstr "Valyti biblioteką"
+
+msgctxt "#30055"
+msgid "Both"
+msgstr "Abi"
+
+msgctxt "#30056"
+msgid "Video Cron Expression"
+msgstr "Vaizdo 'Cron' išraiška"
+
+msgctxt "#30057"
+msgid "Music Cron Expression"
+msgstr "Muzikos 'Cron' išraiška"
+
+msgctxt "#30060"
+msgid "Update will run again "
+msgstr "Atnaujinimas bus paleistas dar kartą"
+
+msgctxt "#30061"
+msgid "Do you wish to manually run an update?"
+msgstr "Ar norite paleisti atnaujinimą rankiniu būdu?"

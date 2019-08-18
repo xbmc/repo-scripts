@@ -125,6 +125,17 @@
                     <label>$INFO[System.Time]</label>
                     <visible>String.IsEqual(Window.Property(clockfont),"fontaura")+!String.IsEqual(Window.Property(hide-clock-info),"true")</visible>
                 </control>
+                <control type="label">
+                    <description>Time</description>
+                    <align>left</align>
+                    <font>Clock</font>
+                    <shadowcolor>22000000</shadowcolor>
+                    <textcolor>whitesmoke</textcolor>
+                    <height>120</height>
+                    <width>auto</width>
+                    <label>$INFO[System.Time]</label>
+                    <visible>String.IsEqual(Window.Property(clockfont),"box")+!String.IsEqual(Window.Property(hide-clock-info),"true")</visible>
+                </control>
             </control>
             <control type="label" id="32503">
                 <description>Line one</description>

@@ -68,8 +68,9 @@ class ChannelList(object):
             newChannel['channelname']   = channelName
             for item in channelResults:
                 if channel == item['channelname']:
+                    starttime = int(item.get('starttime','') or starttime)
                     starttime = starttime + (int(item.get('duration','')) or int(item.get('runtime','')))
-                    item['starttime']           = int(item['starttime']              or starttime)
+                    item['starttime'] = starttime
                     newChannel['channelnumber'] = (item.get('channelnumber','')      or channelNum)
                     newChannel['channellogo']   = (item.get('channellogo','')        or self.pluginIcon)
                     guidedata.append(item)
@@ -145,7 +146,7 @@ class ChannelList(object):
             if utils.adaptiveDialog((i*100//len(channelItems)), self.busy, string1=utils.LANGUAGE(30006)) == False: break
             try:
                 item                         = channelItems[i]
-                item['guidedata']            = sorted(item['guidedata'], key=lambda x:x['starttime'])
+                item['guidedata']            = sorted(item['guidedata'], key=lambda x:x.get('starttime',''), reverse=False)
                 item['guidedata']            = item['guidedata'][:self.maxGuidedata]#truncate guidedata to a manageable amount.
                 self.channels[i].name        = item['channelname']
                 self.channels[i].logo        = (item.get('channellogo','')        or '')
@@ -153,7 +154,7 @@ class ChannelList(object):
                 self.channels[i].isFavorite  = (item.get('isfavorite','')         or False)
                 self.channels[i].guidedata   = (item['guidedata']                 or '')
                 self.channels[i].listSize    = len(self.channels[i].guidedata)
-                self.channels[i].listItems   = utils.poolListItem(item['guidedata'])
+                self.channels[i].listItems   = [utils.buildListItem(data) for data in item['guidedata']]
                 self.channels[i].isValid     = True #todo
                 totalTime = 0
                 for idx, tmpdata in enumerate(self.channels[i].guidedata): totalTime = totalTime + int((tmpdata.get('runtime','') or tmpdata.get('duration','')))
@@ -220,6 +221,7 @@ if __name__ == '__main__':
         utils.log('dataType = '     + str(dataType))
         utils.log('skinPath = '     + str(channelLST.skinPath))
         utils.log('skinFolder = '   + str(channelLST.skinFolder))
+        utils.log('rowCount = '     + utils.getProperty('uEPG.rowCount'))
         utils.log('refreshPath = '  + str(channelLST.refreshPath))
         utils.log('refreshIntvl = ' + str(channelLST.refreshIntvl))
         utils.setProperty('PluginName'   ,channelLST.pluginName)
@@ -228,10 +230,10 @@ if __name__ == '__main__':
         utils.setProperty('PluginAuthor' ,channelLST.pluginAuthor)
         
         #show optional load screen
-        if channelLST.uEPGRunning == False and utils.getProperty('uEPGSplash') != 'True' and xbmcvfs.exists(os.path.join(channelLST.skinFolder,'%s.splash.xml'%utils.ADDON_ID)) == True:
-            mySplash   = epg.Splash('%s.splash.xml'%utils.ADDON_ID,channelLST.skinPath,'default')
-            mySplash.show()
-            xbmc.sleep(100)
+        # if channelLST.uEPGRunning == False and utils.getProperty('uEPGSplash') != 'True' and xbmcvfs.exists(os.path.join(channelLST.skinFolder,'%s.splash.xml'%utils.ADDON_ID)) == True:
+            # mySplash   = epg.Splash('%s.splash.xml'%utils.ADDON_ID,channelLST.skinPath,'default')
+            # mySplash.show()
+            # xbmc.sleep(100)
             
         firstHDHR = utils.REAL_SETTINGS.getSetting('FirstTime_HDHR') == "true"
         if utils.HDHR().hasHDHR() and firstHDHR and not channelLST.incHDHR:
@@ -240,7 +242,7 @@ if __name__ == '__main__':
                 utils.REAL_SETTINGS.setSetting('Enable_HDHR','true')
                 channelLST.incHDHR = True
                 
-        if dataType   == 'json': hasChannels = channelLST.prepareJson(utils.loadJson(utils.unquote(data)))
+        if dataType   == 'json':     hasChannels = channelLST.prepareJson(utils.loadJson(utils.unquote(data)))
         elif dataType == 'property': hasChannels = channelLST.prepareJson(utils.loadJson(utils.unquote(utils.getProperty(data))))
         elif dataType == 'listitem': hasChannels = channelLST.prepareListItem(utils.unquote(data))
         
@@ -248,10 +250,10 @@ if __name__ == '__main__':
             utils.REAL_SETTINGS.setSetting('FirstTime_Run','false')
             utils.textViewer(utils.LANGUAGE(30008),'%s / %s'%(utils.ADDON_NAME,channelLST.pluginName))
 
-        if utils.getProperty('uEPGSplash') == 'True':
-            mySplash.close()
-            del mySplash
-            xbmc.sleep(100)
+        # if utils.getProperty('uEPGSplash') == 'True':
+            # mySplash.close()
+            # del mySplash
+            # xbmc.sleep(100)
         
         if hasChannels == True:
             if channelLST.refreshIntvl > 0 and channelLST.refreshPath is not None: channelLST.startRefreshTimer()

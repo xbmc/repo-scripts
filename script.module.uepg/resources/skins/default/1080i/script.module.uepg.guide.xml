@@ -236,105 +236,105 @@
                 <description>Number</description>
                 <control type="label" id="33111">
                     <description>Channel 1 Number</description>
-                    <width>75</width>
+                    <width>125</width>
                     <height>75</height>
                     <label></label>
                     <font>font12</font>
-                    <align>right</align>
+                    <align>left</align>
                     <aligny>center</aligny>
                     <textcolor>FFFFFFFF</textcolor>
                     <shadowcolor>ff000000</shadowcolor>
                 </control>
                 <control type="label" id="33112">
                     <description>Channel 2 Number</description>
-                    <width>75</width>
+                    <width>125</width>
                     <height>75</height>
                     <label></label>
                     <font>font12</font>
-                    <align>right</align>
+                    <align>r</align>
                     <aligny>center</aligny>
                     <textcolor>FFFFFFFF</textcolor>
                     <shadowcolor>ff000000</shadowcolor>
                 </control>
                 <control type="label" id="33113">
                     <description>Channel 3 Number</description>
-                    <width>75</width>
+                    <width>125</width>
                     <height>75</height>
                     <label></label>
                     <font>font12</font>
-                    <align>right</align>
+                    <align>left</align>
                     <aligny>center</aligny>
                     <textcolor>FFFFFFFF</textcolor>
                     <shadowcolor>ff000000</shadowcolor>
                 </control>
                 <control type="label" id="33114">
                     <description>Channel 4 Number</description>
-                    <width>75</width>
+                    <width>125</width>
                     <height>75</height>
                     <label></label>
                     <font>font12</font>
-                    <align>right</align>
+                    <align>left</align>
                     <aligny>center</aligny>
                     <textcolor>FFFFFFFF</textcolor>
                     <shadowcolor>ff000000</shadowcolor>
                 </control>
                 <control type="label" id="33115">
                     <description>Channel 5 Number</description>
-                    <width>75</width>
+                    <width>125</width>
                     <height>75</height>
                     <label></label>
                     <font>font12</font>
-                    <align>right</align>
+                    <align>left</align>
                     <aligny>center</aligny>
                     <textcolor>FFFFFFFF</textcolor>
                     <shadowcolor>ff000000</shadowcolor>
                 </control>      
                 <control type="label" id="33116">
                     <description>Channel 6 Number</description>
-                    <width>75</width>
+                    <width>125</width>
                     <height>75</height>
                     <label></label>
                     <font>font12</font>
-                    <align>right</align>
+                    <align>left</align>
                     <aligny>center</aligny>
                     <textcolor>FFFFFFFF</textcolor>
                     <shadowcolor>ff000000</shadowcolor>
                 </control>     
                 <control type="label" id="33117">
                     <description>Channel 7 Number</description>
-                    <width>75</width>
+                    <width>125</width>
                     <height>75</height>
                     <label></label>
                     <font>font12</font>
-                    <align>right</align>
+                    <align>left</align>
                     <aligny>center</aligny>
                     <textcolor>FFFFFFFF</textcolor>
                     <shadowcolor>ff000000</shadowcolor>
                 </control>     
                 <control type="label" id="33118">
                     <description>Channel 8 Number</description>
-                    <width>75</width>
+                    <width>125</width>
                     <height>75</height>
                     <label></label>
                     <font>font12</font>
-                    <align>right</align>
+                    <align>left</align>
                     <aligny>center</aligny>
                     <textcolor>FFFFFFFF</textcolor>
                     <shadowcolor>ff000000</shadowcolor>
                 </control>     
                 <control type="label" id="33119">
                     <description>Channel 9 Number</description>
-                    <width>75</width>
+                    <width>125</width>
                     <height>75</height>
                     <label></label>
                     <font>font12</font>
-                    <align>right</align>
+                    <align>left</align>
                     <aligny>center</aligny>
                     <textcolor>FFFFFFFF</textcolor>
                     <shadowcolor>ff000000</shadowcolor>
                 </control>
             </control>
-            <control type="group">            
+            <control type="group">
                 <posx>25</posx>
                 <posy>0</posy>
                 <width>278</width>
@@ -673,6 +673,17 @@
                 <animation effect="fade" start="85" end="85" condition="True">Conditional</animation>
             </control> 
             <control type="image">
+                <description>Artwork</description>
+                <left>350</left>
+                <top>160</top>
+                <width>40</width>
+                <height>40</height>
+                <aspectratio scalediffuse="true" align="center" aligny="center">keep</aspectratio>
+                <texture background="true">HDHR.png</texture>
+                <visible>String.IsEqual(Container(40000).Property(IsHDHomerun),okay)</visible>
+                <animation effect="fade" time="100">VisibleChange</animation> 
+            </control>
+            <control type="image">
                 <left>1700</left>
                 <top>140</top>
                 <height>60</height>
@@ -698,7 +709,7 @@
                 <scrollspeed>50</scrollspeed>
                 <scrollsuffix> - </scrollsuffix>
                 <label>[COLOR=FF0F85A5][B]$INFO[Window(10000).Property(Time),,   ][/B][/COLOR]$INFO[Container(40000).ListItem.Title,,      ][COLOR=FF0F85A5]$INFO[Container(40000).ListItem.genre,Genre: ,][/COLOR]</label>
-            </control> 
+            </control>
             <control type="label">
                 <description>Show Info</description>
                 <posx>416</posx>

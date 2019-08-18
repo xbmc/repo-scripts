@@ -1,0 +1,214 @@
+# Kodi Media Center language file
+# Addon Name: XBMC Library Auto Update
+# Addon id: service.libraryautoupdate
+# Addon Provider: robweber
+# Translators:
+# David Soms, 2015
+# José Luis Ametller <ametller@users.noreply.github.com>, 2015
+# Ramon Buldó <rbuldo@gmail.com>, 2013
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2017-09-23 18:37+0000\n"
+"Last-Translator: Martijn Kaijser <machine.sanctum@gmail.com>\n"
+"Language-Team: Catalan (http://www.transifex.com/teamxbmc/xbmc-addons/language/ca/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ca\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "Addon Summary"
+msgid ""
+"Update your Kodi Video and Music Libraries on a timer. Timer runs as an Kodi"
+" service so you never miss an update."
+msgstr "Actualitza les llibreries de vídeo i música de l'Kodi amb un temporitzador. El temporitzador arranca com un servei de l'Kodi, per tant mai es perdrà una actualització."
+
+msgctxt "Addon Description"
+msgid ""
+"This is an Kodi Service that will update your music and video libraries on a"
+" timer. You can select a different interval to scan your media databases "
+"(Audio,Video,Both) or you can set a cron-style timer for greater control. If"
+" you are playing an audio or video file when the timer starts it can skip "
+"the library update process until it is completed so that you're media "
+"experience is not interrupted. Updating a specific Video Path, and Cleaning "
+"the Music/Video libraries is now supported."
+msgstr "Aquest és un servei de Kodi que actualitza les teves biblioteques de vídeo i música amb un temporitzador. Podeu seleccionar un interval diferent per analitzar les bases de dades multimèdia (àudio, vídeo, ambdós) o pot establir un temporitzador d'estil cron per a un major control. Si està reproduint a l'arxiu d'àudio o de vídeo quan s'inicia el temporitzador es pot ometre el procés d'actualització de la biblioteca fins que acabi per tant de tindre una experiència multimèdia ininterrompuda. Ara es compatible amb l'actualització d'un camí de vídeo específic, i la neteja de les biblioteques de música i vídeo."
+
+msgctxt "#30000"
+msgid "Kodi Library Auto Update"
+msgstr "Actualització Automàtica de la Biblioteca de l'Kodi"
+
+msgctxt "#30001"
+msgid "General"
+msgstr "General"
+
+msgctxt "#30002"
+msgid "Video"
+msgstr "Vídeo"
+
+msgctxt "#30003"
+msgid "Music"
+msgstr "Música"
+
+msgctxt "#30004"
+msgid "Update Video Library"
+msgstr "Actualitza la biblioteca de vídeo"
+
+msgctxt "#30005"
+msgid "Update Music Library"
+msgstr "Actualitza la biblioteca de música"
+
+msgctxt "#30006"
+msgid "Show Notifications"
+msgstr "Mostra les notificacions"
+
+msgctxt "#30007"
+msgid "Run during playback"
+msgstr "Inicia durant la reproducció"
+
+msgctxt "#30008"
+msgid "Startup Delay (minutes)"
+msgstr "Temps d'espera al començar (minuts)"
+
+msgctxt "#30009"
+msgid "Used Advanced Timer"
+msgstr "Utilitzar un temporitzador avançat"
+
+msgctxt "#30010"
+msgid "Amount of time between updates (hours)"
+msgstr "Quantitat de temps entre actualitzacions (hores)"
+
+msgctxt "#30011"
+msgid "Cron Expression"
+msgstr "Expressió cron"
+
+msgctxt "#30012"
+msgid "Update Video Library"
+msgstr "Actualitza la biblioteca de vídeo"
+
+msgctxt "#30013"
+msgid "Update Music Library"
+msgstr "Actualitza la biblioteca de música"
+
+msgctxt "#30014"
+msgid "Only run when idle"
+msgstr "Només s'executa quan està inactiu"
+
+msgctxt "#30015"
+msgid "Disable manual run prompt"
+msgstr ""
+
+msgctxt "#30020"
+msgid "Update Specific Path 1"
+msgstr "Camí d'actualització especific 1"
+
+msgctxt "#30021"
+msgid "Update Specific Path 2"
+msgstr "Camí d'actualització especific 2"
+
+msgctxt "#30022"
+msgid "Update Specific Path 3"
+msgstr "Camí d'actualització especific 3"
+
+msgctxt "#30023"
+msgid "Video Path"
+msgstr "Camí del vídeo"
+
+msgctxt "#30030"
+msgid "Read Disclaimer"
+msgstr "Llegir avis"
+
+msgctxt "#30031"
+msgid "Video Paths Disclaimer"
+msgstr "Avis del camins dels vídeos"
+
+msgctxt "#30032"
+msgid "Path must already be a video source with content"
+msgstr "El camí ja té que ser una font de vídeo amb contingut"
+
+msgctxt "#30033"
+msgid "Path must match source path exactly to scan"
+msgstr "El camí té ser exacte al camí de la font por escanejar"
+
+msgctxt "#30040"
+msgid "Cleaning"
+msgstr "S'està netejant"
+
+msgctxt "#30041"
+msgid "Clean Libraries"
+msgstr "Neteja les biblioteques"
+
+msgctxt "#30042"
+msgid "Verify Sources Before Clean"
+msgstr "Verifica les font abans de netejar"
+
+msgctxt "#30043"
+msgid "Frequency"
+msgstr "Freqüència"
+
+msgctxt "#30044"
+msgid "After Update"
+msgstr "Després de la actualització"
+
+msgctxt "#30045"
+msgid "Once Per Day"
+msgstr "Un cop per dia"
+
+msgctxt "#30046"
+msgid "Once Per Week"
+msgstr "Un cop per setmana"
+
+msgctxt "#30047"
+msgid "Once Per Month"
+msgstr "Un cop per mes"
+
+msgctxt "#30048"
+msgid "Clean Video Library"
+msgstr "Neteja la biblioteca de vídeo"
+
+msgctxt "#30049"
+msgid "Clean Music Library"
+msgstr "Neteja la biblioteca de música"
+
+msgctxt "#30050"
+msgid "Error Cleaning Database"
+msgstr "Error al netejar la base de dades"
+
+msgctxt "#30051"
+msgid "Prompt User Before Cleaning Library"
+msgstr "Avisa el usuari abans de netejar la biblioteca"
+
+msgctxt "#30052"
+msgid "A database clean is scheduled to run"
+msgstr "Està programada el inici d'una neteja de la base de dades"
+
+msgctxt "#30053"
+msgid "Would you like to run it now?"
+msgstr "Vols iniciar-la ara?"
+
+msgctxt "#30054"
+msgid "Library to clean"
+msgstr "Biblioteca a netejar"
+
+msgctxt "#30055"
+msgid "Both"
+msgstr "Ambdós"
+
+msgctxt "#30056"
+msgid "Video Cron Expression"
+msgstr "Expressió cron per a vídeo"
+
+msgctxt "#30057"
+msgid "Music Cron Expression"
+msgstr "Expressió cron per a música"
+
+msgctxt "#30060"
+msgid "Update will run again "
+msgstr "La actualització es tornara a iniciar"
+
+msgctxt "#30061"
+msgid "Do you wish to manually run an update?"
+msgstr "Voleu iniciar la actualització manualment?"
