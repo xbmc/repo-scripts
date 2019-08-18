@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.module.cache" name="cache" version="1.0.2" provider-name="fraser">
+<addon id="script.module.cache" name="cache" version="1.0.3" provider-name="fraser">
     <requires>
-        <import addon="xbmc.python" version="2.26.0"/>
+        <import addon="xbmc.python" version="2.25.0"/>
     </requires>
     <extension point="xbmc.python.module" library="lib"/>
     <extension point="xbmc.addon.metadata">
@@ -14,6 +14,6 @@ Can be used as a generic key/blob data store when used without directives
         <platform>all</platform>
         <email>fraser.chapman@gmail.com</email>
         <source>https://github.com/FraserChapman/script.module.cache</source>
-        <news>v1.0.2 (14-7-19) - Deletes BLOB converter on close</news>
+        <news>v1.0.3 (18-7-19) - Fixes python version error</news>
     </extension>
 </addon>
