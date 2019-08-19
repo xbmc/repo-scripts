@@ -58,7 +58,7 @@ def omdb_call(imdbnumber=None,title=None,year=None,content_type=None):
             omdb['imdbVotes'] = result.get('imdbVotes')
             omdb['DVD'] = date_format(result.get('DVD'))
 
-            delete_keys = [key for key,value in omdb.iteritems() if value == 'N/A' or value == 'NA']
+            delete_keys = [key for key,value in omdb.items() if value == 'N/A' or value == 'NA']
             for key in delete_keys:
                 del omdb[key]
 
@@ -304,7 +304,7 @@ def tmdb_error(message=ADDON.getLocalizedString(32019)):
 
 def tmdb_check_localdb(local_items,title,originaltitle,year,imdbnumber=False):
     found_local = False
-    local = {'dbid': -1, 'playcount': -1, 'watchedepisodes': -1, 'episodes': -1, 'unwatchedepisodes': -1, 'file': -1}
+    local = {'dbid': -1, 'playcount': 0, 'watchedepisodes': '', 'episodes': '', 'unwatchedepisodes': '', 'file': ''}
 
     if local_items:
         for item in local_items:
@@ -398,7 +398,7 @@ def tmdb_handle_movie(item,local_items,full_info=False):
     list_item.setProperty('call', 'movie')
     list_item.setProperty('budget', format_currency(item.get('budget')))
     list_item.setProperty('revenue', format_currency(item.get('revenue')))
-    list_item.setProperty('file', str(local_info['file']))
+    list_item.setProperty('file', local_info.get('file',''))
 
     if full_info and OMDB_API_KEY and imdbnumber:
         omdb = omdb_call(imdbnumber)
