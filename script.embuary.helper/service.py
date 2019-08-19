@@ -50,7 +50,7 @@ class Main(xbmc.Monitor):
         if ADDON_ID in sender and 'restart' in method:
             self.restart = True
 
-        if method == 'VideoLibrary.OnUpdate' or method == 'AudioLibrary.OnUpdate':
+        if method in ['VideoLibrary.OnUpdate', 'AudioLibrary.OnUpdate']:
             reload_widgets()
 
 
