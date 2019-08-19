@@ -216,7 +216,7 @@ class DialogPerson(xbmcgui.WindowXMLDialog):
         self.cont3 = self.getControl(10054)
         self.cont3.addItems(self.images)
 
-    def onAction(self, action):
+    def onAction(self,action):
         if action.getId() in [92,10]:
             self.action['id'] = ''
             self.action['call'] = 'back' if action.getId() == 92 else 'close'
@@ -235,7 +235,15 @@ class DialogPerson(xbmcgui.WindowXMLDialog):
             FullScreenImage(controlId)
 
     def quit(self):
-        self.close()
+        close_action = self.getProperty('onclose')
+        onback_action = self.getProperty('onback_%s' % self.getFocusId())
+
+        if self.action.get('call') == 'back' and onback_action:
+            execute(onback_action)
+        else:
+            if close_action:
+                execute(close_action)
+            self.close()
 
 
 ''' Show & movie dialog
@@ -277,7 +285,7 @@ class DialogVideo(xbmcgui.WindowXMLDialog):
         self.cont5 = self.getControl(10056)
         self.cont5.addItems(self.crew)
 
-    def onAction(self, action):
+    def onAction(self,action):
         if action.getId() in [92,10]:
             self.action['id'] = ''
             self.action['call'] = 'back' if action.getId() == 92 else 'close'
@@ -302,7 +310,15 @@ class DialogVideo(xbmcgui.WindowXMLDialog):
             self.quit()
 
     def quit(self):
-        self.close()
+        close_action = self.getProperty('onclose')
+        onback_action = self.getProperty('onback_%s' % self.getFocusId())
+
+        if self.action.get('call') == 'back' and onback_action:
+            execute(onback_action)
+        else:
+            if close_action:
+                execute(close_action)
+            self.close()
 
 
 ''' Slideshow dialog

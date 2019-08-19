@@ -56,4 +56,12 @@ The script provides a selection dialog if multiple results were returned.
 * List control ID `1` = Is used to display a portrait/backdrop images in fullscreen.
 * Scrollbar control ID `2` = Will be the focused on window init.
 
+## Overwriting onback or provide an additional onclose action
+You can add a custom onback or a general onclose action in script-embuary-video.xml and script-embuary-person.xml
+
+*Example*
+
+* `<onload>SetProperty(onclose,SetFocus(100))</onload>` = To set a general action if a window is going to be closed. Like reseting the focus to a default control.
+* `<onload>SetProperty(onback_10052,SetFocus(900))</onload>` = Don't close the window, but set focus to ID 900 if onback was called while container 10052 was in focus.
+
 
