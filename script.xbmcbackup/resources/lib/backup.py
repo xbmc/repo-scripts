@@ -544,6 +544,14 @@ class XbmcBackup:
         
         #remove the validation file
         xbmcvfs.delete(xbmc.translatePath(utils.data_dir() + "xbmcbackup.val"))
+
+        if(success):
+            #android requires a .nomedia file to not index the directory as media
+            if(not xbmcvfs.exists(xbmc.translatePath(utils.data_dir() + ".nomedia"))):
+                nmFile = xbmcvfs.File(xbmc.translatePath(utils.data_dir() + ".nomedia"),'w')
+                nmFile.close()
+
+            success = self.remote_vfs.put(xbmc.translatePath(utils.data_dir() + ".nomedia"),self.remote_vfs.root_path + ".nomedia")
         
         return success
 

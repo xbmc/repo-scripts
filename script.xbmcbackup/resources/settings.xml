@@ -13,8 +13,8 @@
 		<setting id="dropbox_secret" type="text" label="30029" visible="eq(-4,2)" default="" />
 		<setting id="google_drive_id" type="text" label="Client ID" visible="eq(-5,3)" default="" />
 		<setting id="google_drive_secret" type="text" label="Client Secret" visible="eq(-6,3)" default="" />
-		<setting id="remove_auth_button" type="action" label="30104" action="RunScript(special://home/addons/script.xbmcbackup/authorize_cloud.py,type=dropbox)" visible="eq(-7,2)"/>
-		<setting id="remove_auth_button" type="action" label="30104" action="RunScript(special://home/addons/script.xbmcbackup/authorize_cloud.py,type=google_drive)" visible="eq(-8,3)"/>
+		<setting id="auth_dropbox_button" type="action" label="30104" action="RunScript(special://home/addons/script.xbmcbackup/authorize_cloud.py,type=dropbox)" visible="eq(-7,2)"/>
+		<setting id="auth_google_button" type="action" label="30104" action="RunScript(special://home/addons/script.xbmcbackup/authorize_cloud.py,type=google_drive)" visible="eq(-8,3)"/>
 		<setting id="remove_auth_button" type="action" label="30093" action="RunScript(special://home/addons/script.xbmcbackup/remove_auth.py)" visible="gt(-9,1)"/>
 	</category>
 	<category id="selection" label="30012">

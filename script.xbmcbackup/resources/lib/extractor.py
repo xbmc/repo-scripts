@@ -1,4 +1,3 @@
-import xbmc
 import utils as utils
 
 class ZipExtractor:
@@ -24,8 +23,7 @@ class ZipExtractor:
                 #extract the file
                 zipFile.extract(aFile,outLoc)
                 
-        except Exception,e:
-            print str(e)
+        except Exception as e:
             utils.log("Error extracting file")
             result = False
             
