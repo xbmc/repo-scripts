@@ -1,5 +1,7 @@
 # Backup Addon
 
+__Kodi Version Compatibility:__ Kodi 16.x (Jarvis) and greater
+
 ## About
 
 I've had to recover my database, thumbnails, and source configuration enough times that I just wanted a quick easy way to back them up. That is what this addon is meant to do. 

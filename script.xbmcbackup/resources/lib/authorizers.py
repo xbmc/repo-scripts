@@ -58,7 +58,7 @@ class DropboxAuthorizer:
         try:
             user_token = flow.finish(code)
             self._setToken(user_token.access_token)
-        except Exception,e:
+        except Exception as e:
             utils.log("Error: %s" % (e,))
             result = False
             

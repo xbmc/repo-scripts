@@ -6,9 +6,10 @@ import xbmcgui
 import zipfile
 import zlib
 import os
+import os.path
 import sys
 import dropbox
-from dropbox.files import WriteMode
+from dropbox.files import WriteMode,CommitInfo,UploadSessionCursor
 from pydrive.drive import GoogleDrive
 from authorizers import DropboxAuthorizer,GoogleDriveAuthorizer
 
@@ -118,6 +119,7 @@ class ZipFileSystem(Vfs):
         return self.zip.infolist()
 
 class DropboxFileSystem(Vfs):
+    MAX_CHUNK = 50 * 1000 * 1000 #dropbox uses 150, reduced to 50 for small mem systems
     client = None
     APP_KEY = ''
     APP_SECRET = ''
@@ -207,11 +209,34 @@ class DropboxFileSystem(Vfs):
         dest = self._fix_slashes(dest)
         
         if(self.client != None):
+            #open the file and get its size
             f = open(source,'rb')
+            f_size = os.path.getsize(source)
+            
             try:
-                response = self.client.files_upload(f.read(),dest,mode=WriteMode('overwrite'))
+                if(f_size < self.MAX_CHUNK):
+                    #use the regular upload
+                    response = self.client.files_upload(f.read(),dest,mode=WriteMode('overwrite'))
+                else:
+                    #start the upload session
+                    upload_session = self.client.files_upload_session_start(f.read(self.MAX_CHUNK))
+                    upload_cursor = UploadSessionCursor(upload_session.session_id,f.tell())
+                    
+                    while(f.tell() < f_size):
+                        #check if we should finish the upload
+                        if((f_size - f.tell()) <= self.MAX_CHUNK):
+                            #upload and close
+                            self.client.files_upload_session_finish(f.read(self.MAX_CHUNK),upload_cursor,CommitInfo(dest,mode=WriteMode('overwrite')))
+                        else:
+                            #upload a part and store the offset
+                            self.client.files_upload_session_append_v2(f.read(self.MAX_CHUNK),upload_cursor)
+                            upload_cursor.offset = f.tell()
+                    
+                 #if no errors we're good!   
                 return True
-            except:
+            except Exception as anError:
+                utils.log(str(anError))
+                
                 #if we have an exception retry
                 if(retry):
                     return self.put(source,dest,False)
