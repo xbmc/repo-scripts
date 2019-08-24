@@ -1,0 +1,31 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Main Translation Project (Frodo)\n"
+"Report-Msgid-Bugs-To: http://trac.xbmc.org/\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2019-08-16 10:42+0200\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: English (http://www.transifex.com/projects/p/XBMC-Main-Frodo/language/en/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 2.2.3\n"
+
+# English
+msgctxt "#32501"
+msgid "Subtitle downloaded"
+msgstr ""
+
+msgctxt "#32502"
+msgid "Manual search not supported"
+msgstr ""
+
+msgctxt "#32503"
+msgid "Season pack"
+msgstr ""
+
+msgctxt "#32504"
+msgid "Select subtitle:"
+msgstr ""
