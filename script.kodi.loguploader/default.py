@@ -3,17 +3,17 @@ import re
 import socket
 import pyqrcode
 import requests
-import xbmc
-import xbmcgui
-import xbmcaddon
-import xbmcvfs
+from kodi_six import xbmc
+from kodi_six import xbmcgui
+from kodi_six import xbmcaddon
+from kodi_six import xbmcvfs
 
 ADDON = xbmcaddon.Addon()
 ADDONID = ADDON.getAddonInfo('id')
 ADDONNAME = ADDON.getAddonInfo('name')
 ADDONVERSION = ADDON.getAddonInfo('version')
-CWD = ADDON.getAddonInfo('path').decode('utf-8')
-PROFILE = ADDON.getAddonInfo('profile').decode('utf-8')
+CWD = ADDON.getAddonInfo('path')
+PROFILE = ADDON.getAddonInfo('profile')
 LANGUAGE = ADDON.getLocalizedString
 
 socket.setdefaulttimeout(5)
@@ -25,10 +25,8 @@ OLDLOG = os.path.join(LOGPATH, 'kodi.old.log')
 REPLACES = (('//.+?:.+?@', '//USER:PASSWORD@'),('<user>.+?</user>', '<user>USER</user>'),('<pass>.+?</pass>', '<pass>PASSWORD</pass>'),)
 
 def log(txt):
-    if isinstance (txt,str):
-        txt = txt.decode('utf-8')
     message = u'%s: %s' % (ADDONID, txt)
-    xbmc.log(msg=message.encode('utf-8'), level=xbmc.LOGDEBUG)
+    xbmc.log(msg=message, level=xbmc.LOGDEBUG)
 
 
 class QRCode(xbmcgui.WindowXMLDialog):
@@ -145,12 +143,11 @@ class Main:
 
     def readLog(self, path):
         try:
-            st = xbmcvfs.Stat(path)
-            sz = st.st_size()
+            lf = xbmcvfs.File(path)
+            sz = lf.size()
             if sz > 1000000:
                 log('file is too large')
                 return False, LANGUAGE(32005)
-            lf = xbmcvfs.File(path)
             content = lf.read()
             lf.close()
             if content:
@@ -171,7 +168,7 @@ class Main:
         self.session = requests.Session()
         UserAgent = '%s: %s' % (ADDONID, ADDONVERSION)
         try:
-            response = self.session.post(URL + 'documents', data=data, headers={'User-Agent': UserAgent})
+            response = self.session.post(URL + 'documents', data=data.encode('utf-8'), headers={'User-Agent': UserAgent})
             if 'key' in response.json():
                 result = URL + response.json()['key']
                 return True, result
