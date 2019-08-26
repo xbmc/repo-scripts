@@ -1,3 +1,9 @@
+v5.0.9
+- fix splash image kept spinning in the background, eating up cpu
+
+v5.0.8
+- re-add option to disable animations
+
 v5.0.7
 - cleanup
 

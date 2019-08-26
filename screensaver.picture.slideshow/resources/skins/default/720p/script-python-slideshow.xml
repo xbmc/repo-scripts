@@ -3,6 +3,7 @@
 	<zorder>6</zorder>
 	<controls>
 		<control type="image">
+			<description>window background image</description>
 			<posx>0</posx>
 			<posy>0</posy>
 			<width>1280</width>
@@ -20,7 +21,11 @@
 					<animation type="Conditional" condition="String.IsEqual(Window.Property(SlideView.Fade11),1)">
 						<effect type="fade" start="100" end="0" time="1000"/>
 					</animation>
+					<animation type="Conditional" condition="String.IsEqual(Window.Property(SlideView.Fade31),1)">
+						<effect type="fade" start="100" end="0" time="0"/>
+					</animation>
 					<control type="image" id="5">
+						<description>background image 1</description>
 						<posx>0</posx>
 						<posy>0</posy>
 						<width>1280</width>
@@ -34,7 +39,11 @@
 					<animation type="Conditional" condition="String.IsEqual(Window.Property(SlideView.Fade12),1)">
 						<effect type="fade" start="100" end="0" time="1000"/>
 					</animation>
+					<animation type="Conditional" condition="String.IsEqual(Window.Property(SlideView.Fade32),1)">
+						<effect type="fade" start="100" end="0" time="0"/>
+					</animation>
 					<control type="image" id="6">
+						<description>background image 2</description>
 						<posx>0</posx>
 						<posy>0</posy>
 						<width>1280</width>
@@ -45,6 +54,7 @@
 					</control>
 				</control>
 				<control type="image">
+					<description>background fade</description>
 					<animation effect="fade" start="80" end="80" time="0" condition="true">Conditional</animation>
 					<posx>0</posx>
 					<posy>0</posy>
@@ -57,7 +67,11 @@
 				<animation type="Conditional" condition="String.IsEqual(Window.Property(SlideView.Fade1),1)">
 					<effect type="fade" start="100" end="0" time="1000"/>
 				</animation>
+				<animation type="Conditional" condition="String.IsEqual(Window.Property(SlideView.Fade21),1)">
+					<effect type="fade" start="100" end="0" time="0"/>
+				</animation>
 				<control type="image" id="1">
+					<description>image 1</description>
 					<posx>0</posx>
 					<posy>0</posy>
 					<width>1280</width>
@@ -77,7 +91,11 @@
 				<animation type="Conditional" condition="String.IsEqual(Window.Property(SlideView.Fade2),1)">
 					<effect type="fade" start="100" end="0" time="1000"/>
 				</animation>
+				<animation type="Conditional" condition="String.IsEqual(Window.Property(SlideView.Fade22),1)">
+					<effect type="fade" start="100" end="0" time="0"/>
+				</animation>
 				<control type="image" id="2">
+					<description>image 2</description>
 					<posx>0</posx>
 					<posy>0</posy>
 					<width>1280</width>
@@ -97,7 +115,11 @@
 				<animation type="Conditional" condition="String.IsEqual(Window.Property(SlideView.Fade1),1)">
 					<effect type="fade" start="100" end="0" time="1000"/>
 				</animation>
+				<animation type="Conditional" condition="String.IsEqual(Window.Property(SlideView.Fade21),1)">
+					<effect type="fade" start="100" end="0" time="0"/>
+				</animation>
 				<control type="image" id="3">
+					<description>fullscreen scaled image 1</description>
 					<posx>0</posx>
 					<posy>0</posy>
 					<width>1280</width>
@@ -117,7 +139,11 @@
 				<animation type="Conditional" condition="String.IsEqual(Window.Property(SlideView.Fade2),1)">
 					<effect type="fade" start="100" end="0" time="1000"/>
 				</animation>
+				<animation type="Conditional" condition="String.IsEqual(Window.Property(SlideView.Fade22),1)">
+					<effect type="fade" start="100" end="0" time="0"/>
+				</animation>
 				<control type="image" id="4">
+					<description>fullscreen scaled image 2</description>
 					<posx>0</posx>
 					<posy>0</posy>
 					<width>1280</width>
@@ -256,6 +282,7 @@
 			</control>
 		</control>
 		<control type="image">
+			<description>splash image</description>
 			<posx>409</posx>
 			<posy>129</posy>
 			<width>461</width>
@@ -263,15 +290,17 @@
 			<aspectratio>keep</aspectratio>
 			<fadetime>0</fadetime>
 			<texture>screensaver-splash.png</texture>
-			<animation effect="rotate" end="-360" center="auto" time="7000" loop="true" reversible="false" condition="True">Conditional</animation>
+			<animation effect="rotate" end="-360" center="auto" time="7000" loop="true" reversible="false" condition="!String.IsEqual(Window.Property(SlideView.Splash),hide)">Conditional</animation>
 			<animation type="WindowOpen">
 				<effect type="fade" start="0" end="100" time="1000" delay="500"/>
 			</animation>
 			<animation type="Conditional" condition="String.IsEqual(Window.Property(SlideView.Splash),hide)">
 				<effect type="fade" start="100" end="0" time="500"/>
 			</animation>
+			<visible>!String.IsEqual(Window.Property(SlideView.Splash),hide)</visible>
 		</control>
 		<control type="image">
+			<description>dim image</description>
 			<posx>0</posx>
 			<posy>0</posy>
 			<width>1280</width>
