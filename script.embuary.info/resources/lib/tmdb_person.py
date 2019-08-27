@@ -25,8 +25,6 @@ class TMDBPersons(object):
 
             if not self.details:
                 self.details = tmdb_item_details('person',self.tmdb_id,append_to_response='translations,movie_credits,tv_credits,images')
-                if self.details:
-                    write_cache(cache_key,self.details)
 
             if not self.details:
                 return
@@ -34,11 +32,15 @@ class TMDBPersons(object):
             self.movies = self.details['movie_credits']['cast']
             self.tvshows = self.details['tv_credits']['cast']
             self.images = self.details['images']['profiles']
+            self.local_movie_count = 0
+            self.local_tv_count = 0
 
-            self.result['person'] = self.get_person_details()
             self.result['movies'] = self.get_movie_list()
             self.result['tvshows'] = self.get_tvshow_list()
+            self.result['person'] = self.get_person_details()
             self.result['images'] = self.get_person_images()
+
+            write_cache(cache_key,self.details)
 
     def __getitem__(self, key):
         return self.result.get(key,'')
@@ -47,6 +49,9 @@ class TMDBPersons(object):
         li = list()
 
         list_item = tmdb_handle_person(self.details)
+        list_item.setProperty('LocalMovies', str(self.local_movie_count))
+        list_item.setProperty('LocalTVShows', str(self.local_tv_count))
+        list_item.setProperty('LocalMedia', str(self.local_movie_count + self.local_tv_count))
         li.append(list_item)
 
         return li
@@ -58,9 +63,12 @@ class TMDBPersons(object):
 
         for item in movies:
             if item['id'] not in duplicate_handler:
-                list_item = tmdb_handle_movie(item,self.local_movies)
+                list_item, is_local = tmdb_handle_movie(item,self.local_movies)
                 li.append(list_item)
                 duplicate_handler.append(item['id'])
+
+                if is_local:
+                    self.local_movie_count += 1
 
         return li
 
@@ -71,9 +79,12 @@ class TMDBPersons(object):
 
         for item in tvshows:
             if item['character'] and item['id'] not in duplicate_handler:
-                list_item = tmdb_handle_tvshow(item,self.local_shows)
+                list_item, is_local = tmdb_handle_tvshow(item,self.local_shows)
                 li.append(list_item)
                 duplicate_handler.append(item['id'])
+
+                if is_local:
+                    self.local_tv_count += 1
 
         return li
 

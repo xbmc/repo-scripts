@@ -4,7 +4,7 @@
 # Addon Provider: sualfred
 # Translators:
 # Bartolome Soriano <bsoriano@gmail.com>, 2019
-#
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: Embuary Helper\n"
@@ -114,12 +114,37 @@ msgctxt "#32016"
 msgid "Seasons"
 msgstr "Temporadas"
 
+#: /resources/skins/default/1080i/script-embuary-person.xml
+msgctxt "#32017"
+msgid "Known for"
+msgstr "Conocida(o) por"
+
+#: /resources/skins/default/1080i/script-embuary-video.xml
+msgctxt "#32018"
+msgid "Crew"
+msgstr "Personal"
+
 #: /resources/settings.xml
 msgctxt "#32023"
 msgid "API key"
 msgstr "Llave API"
 
 #: /resources/settings.xml
+msgctxt "#32020"
+msgid "Caching"
+msgstr "Haciendo Caché"
+
+#: /resources/settings.xml
+msgctxt "#32021"
+msgid "Enable caching of fetched data"
+msgstr "Activar cache para datos obtenidos"
+
+#: /resources/settings.xml
 msgctxt "#32024"
 msgid "Default language"
 msgstr "Idioma por defecto"
+
+#: /resources/skins/default/1080i/script-embuary-person.xml
+msgctxt "#32025"
+msgid "items in your library"
+msgstr "ítems en su colección"

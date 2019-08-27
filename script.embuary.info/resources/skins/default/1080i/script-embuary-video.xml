@@ -333,9 +333,9 @@
 							</item>
 							<item>
 								<visible>System.HasAddon(script.embuary.helper)</visible>
-								<visible>!String.IsEmpty(Container(10051).ListItem.Property(Biography))</visible>
+								<visible>!String.IsEmpty(Container(10051).ListItem.Plot)</visible>
 								<label>$LOCALIZE[207]</label>
-								<onclick>RunScript(script.embuary.helper,action=textviewer,header='$ESCINFO[Container(10051).ListItem.Label]',message='$ESCINFO[Container(10051).ListItem.Property(Biography)]')</onclick>
+								<onclick>RunScript(script.embuary.helper,action=textviewer,header='$ESCINFO[Container(10051).ListItem.Label]',message='$ESCINFO[Container(10051).ListItem.Plot]')</onclick>
 							</item>
 						</content>
 					</control>

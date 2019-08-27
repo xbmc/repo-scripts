@@ -29,8 +29,6 @@ class TMDBVideos(object):
 
             if not self.details:
                 self.details = tmdb_item_details(self.call,self.tmdb_id,append_to_response='release_dates,content_ratings,external_ids,credits,videos,translations')
-                if self.details:
-                    write_cache(cache_key,self.details)
 
             if not self.details:
                 return
@@ -48,6 +46,8 @@ class TMDBVideos(object):
             self.result['youtube'] = self.get_yt_videos()
             self.result['images'] = self.get_images()
 
+            write_cache(cache_key,self.details)
+
     def __getitem__(self, key):
         return self.result.get(key,'')
 
@@ -55,9 +55,9 @@ class TMDBVideos(object):
         li = list()
 
         if self.movie:
-            list_item = tmdb_handle_movie(self.details,self.local_movies,full_info=True)
+            list_item, is_local = tmdb_handle_movie(self.details,self.local_movies,full_info=True)
         elif self.tvshow:
-            list_item = tmdb_handle_tvshow(self.details,self.local_shows,full_info=True)
+            list_item, is_local = tmdb_handle_tvshow(self.details,self.local_shows,full_info=True)
 
         li.append(list_item)
         return li
@@ -135,14 +135,14 @@ class TMDBVideos(object):
             similar = sort_dict(similar,'release_date',True)
 
             for item in similar:
-                list_item = tmdb_handle_movie(item,self.local_movies)
+                list_item, is_local = tmdb_handle_movie(item,self.local_movies)
                 li.append(list_item)
 
         elif self.tvshow:
             similar = sort_dict(similar,'first_air_date',True)
 
             for item in similar:
-                list_item = tmdb_handle_tvshow(item,self.local_shows)
+                list_item, is_local = tmdb_handle_tvshow(item,self.local_shows)
                 li.append(list_item)
 
         return li

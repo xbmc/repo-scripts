@@ -120,6 +120,14 @@
 								<shadowcolor>50000000</shadowcolor>
 								<visible>Integer.IsGreater(Container(10053).NumItems,0)</visible>
 							</control>
+							<control type="label">
+								<label>$INFO[Container(10051).ListItem.Property(LocalMedia),, $ADDON[script.embuary.info 32026]]</label>
+								<width>auto</width>
+								<font>font12</font>
+								<textcolor>ffffffff</textcolor>
+								<shadowcolor>50000000</shadowcolor>
+								<visible>Integer.IsGreater(Container(10051).ListItem.Property(LocalMedia),0)</visible>
+							</control>
 						</control>
 					</control>
 					<!-- buttons -->

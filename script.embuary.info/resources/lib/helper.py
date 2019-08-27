@@ -21,6 +21,7 @@ PYTHON3 = True if sys.version_info.major == 3 else False
 
 ADDON = xbmcaddon.Addon()
 ADDON_ID = ADDON.getAddonInfo('id')
+ADDON_VERSION = ADDON.getAddonInfo('version')
 
 ''' Python 2<->3 compatibility
 '''
@@ -55,12 +56,11 @@ def log(txt,loglevel=DEBUG,force=False):
 
 def get_cache(key):
     if CACHE_ENABLED:
-        return CACHE.get(key)
+        return CACHE.get(ADDON_VERSION + key)
 
 
-def write_cache(value,data):
-    if CACHE_ENABLED:
-        CACHE.set(value,data,expiration=datetime.timedelta(days=14))
+def write_cache(key,data):
+    CACHE.set(ADDON_VERSION + key,data,expiration=datetime.timedelta(days=14))
 
 
 def format_currency(integer):
