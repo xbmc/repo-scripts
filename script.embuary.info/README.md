@@ -31,7 +31,7 @@ The script provides a selection dialog if multiple results were returned.
 * EN is used as default language. It can be changed in the add-on settings, but will still be used if important informations are missing from the result (The Movie DB doesn't have a own fallback logic).
 * US is used as default country locale for certifications. Other supported locales can be set in the add-on settings.
 
-## Required windows and reserved IDs
+## Required windows, reserved IDs and properties
 *Important*
 * I hate it if a script takes control about the focus. Because of that it's up to the skinner to add a `<defaultcontrol>` tag.
 * `ListItem.DBID` is filled if the found item is part of the local library.
@@ -44,6 +44,20 @@ The script provides a selection dialog if multiple results were returned.
 * List control ID `10053` = All shows starring with actor xyz
 * List control ID `10054` = Actor portraits
 
+Special properties:
+* `Container(10051).ListItem.Property(TotalMedia)` = Total count of media which is also available in your library
+* `Container(10051).ListItem.Property(TotalTVShows)` = Total count of shows which is also available in your library
+* `Container(10051).ListItem.Property(TotalMovies)` = Total count of movies which is also available in your library
+* `Container(10051).ListItem.Property(Birthday)` = Date of birth
+* `Container(10051).ListItem.Property(Deathday)` = Date of death
+* `Container(10051).ListItem.Property(Age)` = Current age / died at the age of
+* `Container(10051).ListItem.Property(Place_Of_Birth)` = Place of birth
+* `Container(10051).ListItem.Property(Known_For_Department)` = Known for department (acting, directing, etc.)
+* `Container(10051).ListItem.Property(Gender)` = Gender (male/female)
+* `Container(10051).ListItem.Property(Biography)` = Biography
+* `Container(10052).ListItem.Property(Role)` = Character role
+* `Container(10053).ListItem.Property(Role)` = Character role
+
 *script-embuary-video.xml*
 * List control ID `10051` = All available information of the called item.
 * List control ID `10052` = Cast
@@ -51,6 +65,22 @@ The script provides a selection dialog if multiple results were returned.
 * List control ID `10054` = YouTube results
 * List control ID `10055` = Backdrop images
 * List control ID `10056` = Crew
+
+Special properties for all items:
+* `Container(id).ListItem.Property(UnwatchedEpisodes)` = Local unwatched episodes
+* `Container(id).ListItem.Property(WatchedEpisodes)` = Local watched episodes
+* `Container(id).ListItem.Property(TotalEpisodes)` = Local available episodes
+* `Container(id).ListItem.Property(File)` = Local filename and path of movie
+
+Special properties:
+* `Container(10051).ListItem.Property(Votes.IMDB)` = IMDb votes
+* `Container(10051).ListItem.Property(Rating.IMDB)` = IMDb rating
+* `Container(10051).ListItem.Property(Rating.Rotten)` = Rotten Tomatoes rating
+* `Container(10051).ListItem.Property(Rating.Metacritic)` = Metacritic rating
+* `Container(10051).ListItem.Property(Release)` = Retail release date
+* `Container(10051).ListItem.Property(Budget)` = Budget
+* `Container(10051).ListItem.Property(Revenue)` = Revenue
+* `Container(10051).ListItem.Property(Awards)` = Awards
 
 *script-embuary-image.xml*
 * List control ID `1` = Is used to display a portrait/backdrop images in fullscreen.

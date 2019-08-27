@@ -2,142 +2,149 @@
 # Addon Name: Embuary Info
 # Addon id: script.embuary.info
 # Addon Provider: sualfred
+# Translators:
+# Andrea Matesi <andreamatesi@gmail.com>, 2019
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: Embuary Helper\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Language-Team: \n"
+"PO-Revision-Date: 2019-08-08 13:02+0000\n"
+"Last-Translator: Andrea Matesi <andreamatesi@gmail.com>, 2019\n"
+"Language-Team: Italian (Italy) (https://www.transifex.com/sualfred/teams/80018/it_IT/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: en_GB\n"
+"Language: it_IT\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 msgctxt "#32000"
 msgid "Error"
-msgstr ""
+msgstr "Errore"
 
 msgctxt "#32001"
-msgid "This is a tool to provide features to a skin and requires skin integration."
+msgid ""
+"This is a tool to provide features to a skin and requires skin integration."
 msgstr ""
+"Questo oggetto offre funzionalità alla skin e richiede l'integrazione nella "
+"skin"
 
 #: /resources/settings.xml
 msgctxt "#32002"
 msgid "(Get a free API key on www.omdbapi.com)"
-msgstr ""
+msgstr "(Ottieni una chiave API gratuita presso www.omdbapi.com)"
 
 #: /resources/settings.xml
 msgctxt "#32003"
 msgid "Certification country"
-msgstr ""
+msgstr "Nazione certificata"
 
 #: /resources/lib/tmdb.py
 msgctxt "#32019"
 msgid "No information found"
-msgstr ""
+msgstr "Nessuna informazione trovata"
 
 #: /resources/lib/tmdb_utils.py
 msgctxt "#32022"
 msgid "Invalid TheMovieDB API key"
-msgstr ""
+msgstr "Chiave API TheMovieDB invalida"
 
 #: /default.py
 msgctxt "#32004"
 msgid "Person"
-msgstr ""
+msgstr "Persona"
 
 #: /default.py
 msgctxt "#32005"
 msgid "Search for"
-msgstr ""
+msgstr "Cerca per"
 
 #: /resources/skins/default/1080i/script-embuary-person.xml
 msgctxt "#32006"
 msgid "Age"
-msgstr ""
+msgstr "Età"
 
 #: /resources/skins/default/1080i/script-embuary-person.xml
 msgctxt "#32007"
 msgid "Place of birth"
-msgstr ""
+msgstr "Luogo di nascita"
 
 #: /resources/skins/default/1080i/script-embuary-person.xml
 msgctxt "#32008"
 msgid "Facts"
-msgstr ""
+msgstr "Fatti"
 
 #: /resources/skins/default/1080i/script-embuary-video.xml
 msgctxt "#32009"
 msgid "Similar"
-msgstr ""
+msgstr "Simili"
 
 #: /resources/skins/default/1080i/script-embuary-video.xml
 msgctxt "#32010"
 msgid "Images"
-msgstr ""
+msgstr "Immagini"
 
 #: /resources/skins/default/1080i/script-embuary-video.xml
 msgctxt "#32011"
 msgid "Premiered"
-msgstr ""
+msgstr "Prima"
 
 #: /resources/skins/default/1080i/script-embuary-video.xml
 msgctxt "#32012"
 msgid "Retail"
-msgstr ""
+msgstr "Pubblico"
 
 #: /resources/skins/default/1080i/script-embuary-video.xml
 msgctxt "#32013"
 msgid "Budget"
-msgstr ""
+msgstr "Budget"
 
 #: /resources/skins/default/1080i/script-embuary-video.xml
 msgctxt "#32014"
 msgid "Revenue"
-msgstr ""
+msgstr "Incassi"
 
 #: /resources/skins/default/1080i/script-embuary-video.xml
 msgctxt "#32015"
 msgid "Awards"
-msgstr ""
+msgstr "Riconoscimenti"
 
 #: /resources/skins/default/1080i/script-embuary-video.xml
 msgctxt "#32016"
 msgid "Seasons"
-msgstr ""
+msgstr "Stagioni"
 
 #: /resources/skins/default/1080i/script-embuary-person.xml
 msgctxt "#32017"
 msgid "Known for"
-msgstr ""
+msgstr "Conosciuto per"
 
 #: /resources/skins/default/1080i/script-embuary-video.xml
 msgctxt "#32018"
 msgid "Crew"
-msgstr ""
+msgstr "Troupe"
 
 #: /resources/settings.xml
 msgctxt "#32023"
 msgid "API key"
-msgstr ""
+msgstr "Chiave API"
 
 #: /resources/settings.xml
 msgctxt "#32020"
 msgid "Caching"
-msgstr ""
+msgstr "Caching"
 
 #: /resources/settings.xml
 msgctxt "#32021"
 msgid "Enable caching of fetched data"
-msgstr ""
+msgstr "Abilita caching informazioni acquisite"
 
 #: /resources/settings.xml
 msgctxt "#32024"
 msgid "Default language"
-msgstr ""
+msgstr "Lingua predefinita"
 
 #: /resources/skins/default/1080i/script-embuary-person.xml
 msgctxt "#32025"
 msgid "items in your library"
-msgstr ""
+msgstr "Oggetti libreria"

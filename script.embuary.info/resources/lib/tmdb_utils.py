@@ -372,11 +372,13 @@ def tmdb_handle_movie(item,local_items,full_info=False):
     premiered = item.get('release_date') if item.get('release_date',0) != '0' else ''
     duration = item.get('runtime') * 60 if item.get('runtime',0) > 0 else ''
     local_info = tmdb_check_localdb(local_items,label,originaltitle,premiered,imdbnumber)
+    dbid = local_info['dbid']
+    is_local = True if dbid > 0 else False
 
     list_item = xbmcgui.ListItem(label=label)
     list_item.setInfo('video', {'title': label,
                                 'originaltitle': originaltitle,
-                                'dbid': local_info['dbid'],
+                                'dbid': dbid,
                                 'playcount': local_info['playcount'],
                                 'imdbnumber': imdbnumber,
                                 'rating': item.get('vote_average',''),
@@ -394,11 +396,12 @@ def tmdb_handle_movie(item,local_items,full_info=False):
                                 'mediatype': 'movie'}
                                  )
     list_item.setArt({'icon': 'DefaultVideo.png','thumb': icon,'fanart': backdrop})
-    list_item.setProperty('id', str(item.get('id','')))
-    list_item.setProperty('call', 'movie')
+    list_item.setProperty('role', item.get('character',''))
     list_item.setProperty('budget', format_currency(item.get('budget')))
     list_item.setProperty('revenue', format_currency(item.get('revenue')))
     list_item.setProperty('file', local_info.get('file',''))
+    list_item.setProperty('id', str(item.get('id','')))
+    list_item.setProperty('call', 'movie')
 
     if full_info and OMDB_API_KEY and imdbnumber:
         omdb = omdb_call(imdbnumber)
@@ -410,7 +413,7 @@ def tmdb_handle_movie(item,local_items,full_info=False):
             list_item.setProperty('awards', omdb.get('awards'))
             list_item.setProperty('release', omdb.get('DVD'))
 
-    return list_item
+    return list_item, is_local
 
 
 def tmdb_handle_tvshow(item,local_items,full_info=False):
@@ -423,11 +426,13 @@ def tmdb_handle_tvshow(item,local_items,full_info=False):
     imdbnumber = item['external_ids']['imdb_id'] if item.get('external_ids') else ''
     tvdb_id = item['external_ids']['tvdb_id'] if item.get('external_ids') else ''
     local_info = tmdb_check_localdb(local_items,label,originaltitle,premiered,tvdb_id)
+    dbid = local_info['dbid']
+    is_local = True if dbid > 0 else False
 
     list_item = xbmcgui.ListItem(label=label)
     list_item.setInfo('video', {'title': label,
                                 'originaltitle': originaltitle,
-                                'dbid': local_info['dbid'],
+                                'dbid': dbid,
                                 'playcount': local_info['playcount'],
                                 'status': item.get('status',''),
                                 'rating': item.get('vote_average',''),
@@ -447,6 +452,7 @@ def tmdb_handle_tvshow(item,local_items,full_info=False):
     list_item.setProperty('TotalEpisodes', str(local_info['episodes']))
     list_item.setProperty('WatchedEpisodes', str(local_info['watchedepisodes']))
     list_item.setProperty('UnWatchedEpisodes', str(local_info['unwatchedepisodes']))
+    list_item.setProperty('role', item.get('character',''))
     list_item.setProperty('tvdb_id', str(tvdb_id))
     list_item.setProperty('id', str(item.get('id','')))
     list_item.setProperty('call', 'tv')
@@ -459,7 +465,7 @@ def tmdb_handle_tvshow(item,local_items,full_info=False):
             list_item.setProperty('rating.imdb', omdb.get('imdbRating'))
             list_item.setProperty('votes.imdb', omdb.get('imdbVotes'))
 
-    return list_item
+    return list_item, is_local
 
 
 def tmdb_fallback_info(item,key):
