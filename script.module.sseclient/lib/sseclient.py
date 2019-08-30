@@ -1,3 +1,10 @@
+#!/usr/bin/env python
+"""client library for iterating over http Server Sent Event (SSE) streams"""
+#
+# Distributed under the terms of the MIT license.
+#
+from __future__ import unicode_literals
+
 import codecs
 import re
 import time
@@ -7,6 +14,7 @@ import six
 
 import requests
 
+__version__ = '0.0.24'
 
 # Technically, we should support streams that mix line endings.  This regex,
 # however, assumes that a system will provide consistent line endings.
@@ -35,7 +43,7 @@ class SSEClient(object):
         self.requests_kwargs['headers']['Accept'] = 'text/event-stream'
 
         # Keep data here as it streams in
-        self.buf = u''
+        self.buf = ''
 
         self._connect()
 
@@ -46,11 +54,29 @@ class SSEClient(object):
         # Use session if set.  Otherwise fall back to requests module.
         requester = self.session or requests
         self.resp = requester.get(self.url, stream=True, **self.requests_kwargs)
-        self.resp_iterator = self.resp.iter_content(chunk_size=self.chunk_size)
+        self.resp_iterator = self.iter_content()
 
         # TODO: Ensure we're handling redirects.  Might also stick the 'origin'
         # attribute on Events like the Javascript spec requires.
         self.resp.raise_for_status()
+
+    def iter_content(self):
+        def generate():
+            while True:
+                if hasattr(self.resp.raw, '_fp') and \
+                        hasattr(self.resp.raw._fp, 'fp') and \
+                        hasattr(self.resp.raw._fp.fp, 'read1'):
+                    chunk = self.resp.raw._fp.fp.read1(self.chunk_size)
+                else:
+                    # _fp is not available, this means that we cannot use short
+                    # reads and this will block until the full chunk size is
+                    # actually read
+                    chunk = self.resp.raw.read(self.chunk_size)
+                if not chunk:
+                    break
+                yield chunk
+
+        return generate()
 
     def _event_complete(self):
         return re.search(end_of_field, self.buf) is not None
