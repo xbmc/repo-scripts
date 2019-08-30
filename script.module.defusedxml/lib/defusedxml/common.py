@@ -2,12 +2,17 @@
 #
 # Copyright (c) 2013 by Christian Heimes <christian@python.org>
 # Licensed to PSF under a Contributor Agreement.
-# See http://www.python.org/psf/license for licensing details.
+# See https://www.python.org/psf/license for licensing details.
 """Common constants, exceptions and helpe functions
 """
 import sys
+import xml.parsers.expat
 
 PY3 = sys.version_info[0] == 3
+
+# Fail early when pyexpat is not installed correctly
+if not hasattr(xml.parsers.expat, "ParserCreate"):
+    raise ImportError("pyexpat")  # pragma: no cover
 
 
 class DefusedXmlException(ValueError):
@@ -85,35 +90,44 @@ def _apply_defusing(defused_mod):
     return stdlib_mod
 
 
-def _generate_etree_functions(DefusedXMLParser, _TreeBuilder,
-                              _parse, _iterparse):
+def _generate_etree_functions(DefusedXMLParser, _TreeBuilder, _parse, _iterparse):
     """Factory for functions needed by etree, dependent on whether
     cElementTree or ElementTree is used."""
 
-    def parse(source, parser=None, forbid_dtd=False, forbid_entities=True,
-              forbid_external=True):
+    def parse(source, parser=None, forbid_dtd=False, forbid_entities=True, forbid_external=True):
         if parser is None:
-            parser = DefusedXMLParser(target=_TreeBuilder(),
-                                      forbid_dtd=forbid_dtd,
-                                      forbid_entities=forbid_entities,
-                                      forbid_external=forbid_external)
+            parser = DefusedXMLParser(
+                target=_TreeBuilder(),
+                forbid_dtd=forbid_dtd,
+                forbid_entities=forbid_entities,
+                forbid_external=forbid_external,
+            )
         return _parse(source, parser)
 
-    def iterparse(source, events=None, parser=None, forbid_dtd=False,
-                  forbid_entities=True, forbid_external=True):
+    def iterparse(
+        source,
+        events=None,
+        parser=None,
+        forbid_dtd=False,
+        forbid_entities=True,
+        forbid_external=True,
+    ):
         if parser is None:
-            parser = DefusedXMLParser(target=_TreeBuilder(),
-                                      forbid_dtd=forbid_dtd,
-                                      forbid_entities=forbid_entities,
-                                      forbid_external=forbid_external)
+            parser = DefusedXMLParser(
+                target=_TreeBuilder(),
+                forbid_dtd=forbid_dtd,
+                forbid_entities=forbid_entities,
+                forbid_external=forbid_external,
+            )
         return _iterparse(source, events, parser)
 
-    def fromstring(text, forbid_dtd=False, forbid_entities=True,
-                   forbid_external=True):
-        parser = DefusedXMLParser(target=_TreeBuilder(),
-                                  forbid_dtd=forbid_dtd,
-                                  forbid_entities=forbid_entities,
-                                  forbid_external=forbid_external)
+    def fromstring(text, forbid_dtd=False, forbid_entities=True, forbid_external=True):
+        parser = DefusedXMLParser(
+            target=_TreeBuilder(),
+            forbid_dtd=forbid_dtd,
+            forbid_entities=forbid_entities,
+            forbid_external=forbid_external,
+        )
         parser.feed(text)
         return parser.close()
 

@@ -2,14 +2,19 @@
 #
 # Copyright (c) 2013 by Christian Heimes <christian@python.org>
 # Licensed to PSF under a Contributor Agreement.
-# See http://www.python.org/psf/license for licensing details.
+# See https://www.python.org/psf/license for licensing details.
 """Defuse XML bomb denial of service vulnerabilities
 """
 from __future__ import print_function, absolute_import
 
-from .common import (DefusedXmlException, DTDForbidden, EntitiesForbidden,
-                     ExternalReferenceForbidden, NotSupportedError,
-                     _apply_defusing)
+from .common import (
+    DefusedXmlException,
+    DTDForbidden,
+    EntitiesForbidden,
+    ExternalReferenceForbidden,
+    NotSupportedError,
+    _apply_defusing,
+)
 
 
 def defuse_stdlib():
@@ -31,15 +36,27 @@ def defuse_stdlib():
     xmlrpc.monkey_patch()
     defused[xmlrpc] = None
 
-    for defused_mod in [cElementTree, ElementTree, minidom, pulldom, sax,
-                        expatbuilder, expatreader]:
+    for defused_mod in [
+        cElementTree,
+        ElementTree,
+        minidom,
+        pulldom,
+        sax,
+        expatbuilder,
+        expatreader,
+    ]:
         stdlib_mod = _apply_defusing(defused_mod)
         defused[defused_mod] = stdlib_mod
 
     return defused
 
 
-__version__ = "0.5.0"
+__version__ = "0.6.0"
 
-__all__ = ['DefusedXmlException', 'DTDForbidden', 'EntitiesForbidden',
-           'ExternalReferenceForbidden', 'NotSupportedError']
+__all__ = [
+    "DefusedXmlException",
+    "DTDForbidden",
+    "EntitiesForbidden",
+    "ExternalReferenceForbidden",
+    "NotSupportedError",
+]

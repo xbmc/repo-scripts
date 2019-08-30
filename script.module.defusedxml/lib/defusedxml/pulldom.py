@@ -2,7 +2,7 @@
 #
 # Copyright (c) 2013 by Christian Heimes <christian@python.org>
 # Licensed to PSF under a Contributor Agreement.
-# See http://www.python.org/psf/license for licensing details.
+# See https://www.python.org/psf/license for licensing details.
 """Defused xml.dom.pulldom
 """
 from __future__ import print_function, absolute_import
@@ -14,8 +14,14 @@ from .sax import make_parser
 __origin__ = "xml.dom.pulldom"
 
 
-def parse(stream_or_string, parser=None, bufsize=None, forbid_dtd=False,
-          forbid_entities=True, forbid_external=True):
+def parse(
+    stream_or_string,
+    parser=None,
+    bufsize=None,
+    forbid_dtd=False,
+    forbid_entities=True,
+    forbid_external=True,
+):
     if parser is None:
         parser = make_parser()
         parser.forbid_dtd = forbid_dtd
@@ -24,8 +30,9 @@ def parse(stream_or_string, parser=None, bufsize=None, forbid_dtd=False,
     return _parse(stream_or_string, parser, bufsize)
 
 
-def parseString(string, parser=None, forbid_dtd=False,
-                forbid_entities=True, forbid_external=True):
+def parseString(
+    string, parser=None, forbid_dtd=False, forbid_entities=True, forbid_external=True
+):
     if parser is None:
         parser = make_parser()
         parser.forbid_dtd = forbid_dtd
