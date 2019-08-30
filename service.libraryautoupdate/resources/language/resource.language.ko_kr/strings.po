@@ -1,0 +1,214 @@
+# Kodi Media Center language file
+# Addon Name: XBMC Library Auto Update
+# Addon id: service.libraryautoupdate
+# Addon Provider: robweber
+# Translators:
+# epoke, 2012
+# piodio <piodio@gmail.com>, 2013-2014
+# piodio <piodio@gmail.com>, 2012
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2017-09-19 14:20+0000\n"
+"Last-Translator: Martijn Kaijser <machine.sanctum@gmail.com>\n"
+"Language-Team: Korean (http://www.transifex.com/teamxbmc/xbmc-addons/language/ko/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ko\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgctxt "Addon Summary"
+msgid ""
+"Update your Kodi Video and Music Libraries on a timer. Timer runs as an Kodi"
+" service so you never miss an update."
+msgstr "Kodi 비디오, 음악 라이브러리를 타이머로 자동 업데이트 하세요. 타이머는 Kodi 서비스로 실행되므로 업데이트를 잊어버리는 일은 없습니다."
+
+msgctxt "Addon Description"
+msgid ""
+"This is an Kodi Service that will update your music and video libraries on a"
+" timer. You can select a different interval to scan your media databases "
+"(Audio,Video,Both) or you can set a cron-style timer for greater control. If"
+" you are playing an audio or video file when the timer starts it can skip "
+"the library update process until it is completed so that you're media "
+"experience is not interrupted. Updating a specific Video Path, and Cleaning "
+"the Music/Video libraries is now supported."
+msgstr "음악과 비디오 라이브러리 업데이트를 예약 실행하는 Kodi 서비스입니다. 미디어 데이터베이스(오디오, 비디오, 모두)를 각각 다른 간격으로 업데이트하도록 선택하거나 cron 스타일의 타이머를 설정할 수 있습니다. 타이머가 시작될 때 오디오나 비디오를 재생하고 있다면 재생을 완료할 때까지 라이브러리 업데이트 프로세스를 생략할 수 있습니다. 지정한 비디오 경로 업데이트, 음악/비디오 라이브러리 정리도 지원합니다."
+
+msgctxt "#30000"
+msgid "Kodi Library Auto Update"
+msgstr "Kodi Library Auto Update"
+
+msgctxt "#30001"
+msgid "General"
+msgstr "일반"
+
+msgctxt "#30002"
+msgid "Video"
+msgstr "비디오"
+
+msgctxt "#30003"
+msgid "Music"
+msgstr "음악"
+
+msgctxt "#30004"
+msgid "Update Video Library"
+msgstr "비디오 라이브러리 업데이트"
+
+msgctxt "#30005"
+msgid "Update Music Library"
+msgstr "음악 라이브러리 업데이트"
+
+msgctxt "#30006"
+msgid "Show Notifications"
+msgstr "알림 보기"
+
+msgctxt "#30007"
+msgid "Run during playback"
+msgstr "재생중 실행"
+
+msgctxt "#30008"
+msgid "Startup Delay (minutes)"
+msgstr "시작 지연 (분)"
+
+msgctxt "#30009"
+msgid "Used Advanced Timer"
+msgstr "고급 타이머 사용"
+
+msgctxt "#30010"
+msgid "Amount of time between updates (hours)"
+msgstr "업데이트 간격 (시간)"
+
+msgctxt "#30011"
+msgid "Cron Expression"
+msgstr "Cron Expression"
+
+msgctxt "#30012"
+msgid "Update Video Library"
+msgstr "비디오 라이브러리 업데이트"
+
+msgctxt "#30013"
+msgid "Update Music Library"
+msgstr "음악 라이브러리 업데이트"
+
+msgctxt "#30014"
+msgid "Only run when idle"
+msgstr "유휴상태일 때만 실행"
+
+msgctxt "#30015"
+msgid "Disable manual run prompt"
+msgstr ""
+
+msgctxt "#30020"
+msgid "Update Specific Path 1"
+msgstr "지정한 경로 1 업데이트"
+
+msgctxt "#30021"
+msgid "Update Specific Path 2"
+msgstr "지정한 경로 2 업데이트"
+
+msgctxt "#30022"
+msgid "Update Specific Path 3"
+msgstr "지정한 경로 3 업데이트"
+
+msgctxt "#30023"
+msgid "Video Path"
+msgstr "비디오 경로"
+
+msgctxt "#30030"
+msgid "Read Disclaimer"
+msgstr "주의사항 읽기"
+
+msgctxt "#30031"
+msgid "Video Paths Disclaimer"
+msgstr "비디오 경로 주의사항"
+
+msgctxt "#30032"
+msgid "Path must already be a video source with content"
+msgstr "경로는 콘텐츠가 있는 비디오 소스여야 합니다"
+
+msgctxt "#30033"
+msgid "Path must match source path exactly to scan"
+msgstr "경로는 소스 경로와 정확히 일치해야 합니다"
+
+msgctxt "#30040"
+msgid "Cleaning"
+msgstr "정리"
+
+msgctxt "#30041"
+msgid "Clean Libraries"
+msgstr "라이브러리 정리"
+
+msgctxt "#30042"
+msgid "Verify Sources Before Clean"
+msgstr "정리 전에 소스 확인"
+
+msgctxt "#30043"
+msgid "Frequency"
+msgstr "주기"
+
+msgctxt "#30044"
+msgid "After Update"
+msgstr "업데이트 후"
+
+msgctxt "#30045"
+msgid "Once Per Day"
+msgstr "하루 한 번"
+
+msgctxt "#30046"
+msgid "Once Per Week"
+msgstr "매주 한 번"
+
+msgctxt "#30047"
+msgid "Once Per Month"
+msgstr "매월 한 번"
+
+msgctxt "#30048"
+msgid "Clean Video Library"
+msgstr "비디오 라이브러리 정리"
+
+msgctxt "#30049"
+msgid "Clean Music Library"
+msgstr "음악 라이브러리 정리"
+
+msgctxt "#30050"
+msgid "Error Cleaning Database"
+msgstr "라이브러리 정리 에러"
+
+msgctxt "#30051"
+msgid "Prompt User Before Cleaning Library"
+msgstr "라이브러리 정리 전에 확인"
+
+msgctxt "#30052"
+msgid "A database clean is scheduled to run"
+msgstr "데이터베이스 정리가 예약되었습니다"
+
+msgctxt "#30053"
+msgid "Would you like to run it now?"
+msgstr "지금 실행하겠습니까?"
+
+msgctxt "#30054"
+msgid "Library to clean"
+msgstr "정리할 라이브러리"
+
+msgctxt "#30055"
+msgid "Both"
+msgstr "모두"
+
+msgctxt "#30056"
+msgid "Video Cron Expression"
+msgstr "비디오 Cron 표현식"
+
+msgctxt "#30057"
+msgid "Music Cron Expression"
+msgstr "음악 Cron 표현식"
+
+msgctxt "#30060"
+msgid "Update will run again "
+msgstr "업데이트가 다시 실행됩니다"
+
+msgctxt "#30061"
+msgid "Do you wish to manually run an update?"
+msgstr "업데이트를 수동으로 시작하겠습니까?"
