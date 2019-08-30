@@ -38,6 +38,19 @@ def get_kodiversion():
     return int(build[:2])
 
 
+def addon_setting(skin,setting,save=False):
+    profile = xbmc.getInfoLabel('System.ProfileName')
+    setting_id = skin + '_' + profile + '_' + setting
+    skin_version = xbmcaddon.Addon(skin).getAddonInfo('version')
+
+    if not save:
+        if ADDON.getSetting(id=setting_id) == skin_version:
+            return True
+        return False
+    else:
+        ADDON.setSetting(id=setting_id, value=skin_version)
+
+
 def log(txt,loglevel=NOTICE,force=False):
     if ((loglevel == NOTICE or loglevel == WARNING) and ADDON.getSettingBool('log')) or loglevel == DEBUG or force:
 
@@ -60,6 +73,8 @@ def remove_quotes(label):
         label = label[1:-1]
         if label.startswith('"') and label.endswith('"') and len(label) > 2:
             label = label[1:-1]
+        elif label.startswith('&quot;') and label.endswith('&quot;'):
+            label = label[6:-6]
 
     return label
 
@@ -72,8 +87,8 @@ def get_date(date_time):
 
 
 def execute(cmd):
-    log('Execute: %s' % cmd)
-    xbmc.executebuiltin(cmd, DEBUG)
+    log('Execute: %s' % cmd, DEBUG)
+    xbmc.executebuiltin(cmd)
 
 
 def visible(condition):
