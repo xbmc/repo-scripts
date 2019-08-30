@@ -842,6 +842,66 @@ class PluginContent(object):
                         self.li.append((li_path, li_item, False))
 
 
+    def getpathstats(self):
+        path = remove_quotes(self.params.get('path'))
+        prop_prefix = self.params.get('prefix','Stats')
+
+        played = 0
+        numitems = 0
+        inprogress = 0
+        episodes = 0
+        watchedepisodes = 0
+        tvshowscount = 0
+        tvshows = []
+
+        if 'activatewindow' in path.lower() and '://' in path and ',' in path:
+            path = path.split(',')[1]
+            path = remove_quotes("'" + path + "'") #be sure to remove unwanted quotes from the path
+
+            json_query = json_call('Files.GetDirectory',
+                                    properties=['playcount','resume','episode','watchedepisodes','tvshowid'],
+                                    params={'directory': path, 'media': 'video'}
+                                    )
+
+            try:
+                for item in json_query['result']['files']:
+                    if 'type' not in item:
+                        continue
+
+                    if item['type'] == 'episode':
+                        episodes += 1
+                        if item['playcount'] > 0:
+                            watchedepisodes += 1
+                        if item['tvshowid'] not in tvshows:
+                            tvshows.append(item['tvshowid'])
+                            tvshowscount += 1
+
+                    elif item['type'] == 'tvshow':
+                        episodes += item['episode']
+                        watchedepisodes += item['watchedepisodes']
+                        tvshowscount += 1
+
+                    else:
+                        numitems += 1
+                        if 'playcount' in item.keys():
+                            if item['playcount'] > 0:
+                                played += 1
+                            if item['resume']['position'] > 0:
+                                inprogress += 1
+
+            except Exception:
+                pass
+
+            winprop('%s_Watched' % prop_prefix, str(played))
+            winprop('%s_Count' % prop_prefix, str(numitems))
+            winprop('%s_TVShowCount' % prop_prefix, str(tvshowscount))
+            winprop('%s_InProgress' % prop_prefix, str(inprogress))
+            winprop('%s_Unwatched' % prop_prefix, str(numitems - played))
+            winprop('%s_Episodes' % prop_prefix, str(episodes))
+            winprop('%s_WatchedEpisodes' % prop_prefix, str(watchedepisodes))
+            winprop('%s_UnwatchedEpisodes' % prop_prefix, str(episodes - watchedepisodes))
+
+
     ''' retry loop for random based widgets if previous run has not returned any single item
     '''
     def _retry(self,type):
