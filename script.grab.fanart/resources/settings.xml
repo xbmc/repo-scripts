@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<settings>
+	<setting id="refresh" type="number" default="10" label="Refresh Time" visible="false" />
+	<setting id="mode" type="labelenum" default="random" label="Mode" values="random|recent" visible="false" />
+</settings>
