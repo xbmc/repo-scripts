@@ -1,0 +1,41 @@
+# Kodi language file
+# Addon Name: Skin Helper Service ColorPicker
+# Addon id: script.skin.helper.colorpicker
+# Addon Provider: marcelveldt
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC-Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: 2014-10-26 17:05+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE\n"
+"Language: nl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+
+msgctxt "#32011"
+msgid "Selecteer een kleur..."
+msgstr ""
+
+msgctxt "#32012"
+msgid "Kleurwaarde:"
+msgstr ""
+
+msgctxt "#32013"
+msgid "Geen"
+msgstr ""
+
+msgctxt "#32049"
+msgid "Ondoorzichtigheid"
+msgstr ""
+
+msgctxt "#32050"
+msgid "Aangepast"
+msgstr ""
+
+msgctxt "#32141"
+msgid "Kleurenpalet"
+msgstr ""
