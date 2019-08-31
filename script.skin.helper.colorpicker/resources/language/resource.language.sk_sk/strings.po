@@ -1,0 +1,42 @@
+# Kodi language file
+# Addon Name: Skin Helper Service ColorPicker
+# Addon id: script.skin.helper.colorpicker
+# Addon Provider: marcelveldt
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC-Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: 2014-10-26 17:05+0000\n"
+"PO-Revision-Date: 2018-05-10 14:41+0200\n"
+"Language-Team: LANGUAGE\n"
+"Language: sk_SK\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+"Last-Translator: Miro Valko <mvalec@atlas.sk>\n"
+"X-Generator: Poedit 2.0.7\n"
+
+msgctxt "#32011"
+msgid "Pick a color..."
+msgstr "Voľba farby..."
+
+msgctxt "#32012"
+msgid "Color value:"
+msgstr "Hodnota farby:"
+
+msgctxt "#32013"
+msgid "None"
+msgstr "Zrušiť"
+
+msgctxt "#32049"
+msgid "Opacity"
+msgstr "Opacita"
+
+msgctxt "#32050"
+msgid "Custom color"
+msgstr "Užívateľská farba"
+
+msgctxt "#32141"
+msgid "Color Palette"
+msgstr "Paleta farieb"
