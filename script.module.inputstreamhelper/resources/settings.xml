@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <settings>
-   <setting id="disabled" value="" visible="false" />
-   <setting id="last_update" value="" visible="false" />
+    <setting id="last_update" value="" visible="false" />
+    <setting id="version" value="" visible="false" />
+    <category label="30900"> <!-- Troubleshooting -->
+        <setting label="30903" help="30904" type="bool" id="disabled" value="false"/>
+        <setting label="30904" type="text" enable="false"/> <!-- disabled_warning -->
+        <setting label="30905" help="30906" type="action" id="install_widevine" action="RunScript(script.module.inputstreamhelper, widevine_install)" enable="eq(-2,false)" visible="!system.platform.android"/>
+        <setting label="30907" help="30908" type="action" id="remove_widevine" action="RunScript(script.module.inputstreamhelper, widevine_remove)" enable="eq(-3,false)" visible="!system.platform.android"/>
+    </category>
 </settings>
