@@ -1,4 +1,7 @@
 # -*- coding: utf-8 -*-
+''' Configuration variables for inpustreamhelper '''
+from __future__ import absolute_import, division, unicode_literals
+
 
 INPUTSTREAM_PROTOCOLS = {
     'mpd': 'inputstream.adaptive',
@@ -12,22 +15,23 @@ DRM_SCHEMES = {
     'com.widevine.alpha': 'widevine'
 }
 
-CDM_EXTENSIONS = (
-    '.so',
-    '.dll',
-    '.dylib'
-)
+WIDEVINE_CDM_FILENAME = {
+    'Android': None,
+    'Linux': 'libwidevinecdm.so',
+    'Windows': 'widevinecdm.dll',
+    'Darwin': 'libwidevinecdm.dylib'
+}
 
 ARCH_MAP = {
-    'x86_64': 'x86_64',
+    'aarch64': 'arm64',
+    'aarch64_be': 'arm64',
     'AMD64': 'x86_64',
-    'x86': 'x86',
-    'i386': 'x86',
-    'i686': 'x86',
     'armv7': 'arm',
     'armv8': 'arm',
-    'aarch64': 'arm64',
-    'aarch64_be': 'arm64'
+    'i386': 'x86',
+    'i686': 'x86',
+    'x86': 'x86',
+    'x86_64': 'x86_64',
 }
 
 WIDEVINE_SUPPORTED_ARCHS = [
@@ -57,9 +61,9 @@ WIDEVINE_SUPPORTED_OS = [
 
 WIDEVINE_MINIMUM_KODI_VERSION = {
     'Android': '18.0',
-    'Windows': '17.4',
-    'Linux': '17.4',
-    'Darwin': '17.4'
+    'Windows': '18.0',
+    'Linux': '18.0',
+    'Darwin': '18.0'
 }
 
 WIDEVINE_VERSIONS_URL = 'https://dl.google.com/widevine-cdm/versions.txt'
@@ -74,13 +78,31 @@ WIDEVINE_CONFIG_NAME = 'widevine_config.json'
 
 WIDEVINE_UPDATE_INTERVAL_DAYS = 14
 
-WIDEVINE_LEGACY_VERSION = '1.4.8.903'
-
 CHROMEOS_RECOVERY_URL = 'https://dl.google.com/dl/edgedl/chromeos/recovery/recovery.conf'
 
-CHROMEOS_RECOVERY_URL_LEGACY = 'https://gist.githubusercontent.com/emilsvennesson/5e74181c9a833129ad0bb03ccb41d81f/raw/8d162568277caaa31b54f4773e75a20514856825/recovery.conf'
-
-CHROMEOS_ARM_HWID = 'SKATE'
+# Last updated: 2019-08-20 (version 12239.67.0)
+CHROMEOS_RECOVERY_ARM_HWIDS = [
+    'BOB',
+    'WHITETIP',
+    'SKATE',
+    'SPRING',
+    'SNOW',
+    'ELM',
+    'HANA',
+    'BIG',
+    'BLAZE',
+    'RELM',
+    'DUMO',
+    'SCARLET',
+    'FIEVEL',
+    'JAQ',
+    'JERRY',
+    'MICKEY',
+    'MIGHTY',
+    'MINNIE',
+    'SPEEDY',
+    'TIGER',
+]
 
 CHROMEOS_BLOCK_SIZE = 512
 
