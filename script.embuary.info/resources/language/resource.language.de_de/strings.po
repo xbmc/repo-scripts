@@ -4,18 +4,18 @@
 # Addon Provider: sualfred
 # Translators:
 # sualfred <su4lfred@gmail.com>, 2019
-#
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: Embuary Helper\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: 2019-08-08 13:02+0000\n"
 "Last-Translator: sualfred <su4lfred@gmail.com>, 2019\n"
-"Language-Team: German (https://www.transifex.com/sualfred/teams/80018/de/)\n"
+"Language-Team: German (Germany) (https://www.transifex.com/sualfred/teams/80018/de_DE/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: de\n"
+"Language: de_DE\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 msgctxt "#32000"
@@ -143,3 +143,27 @@ msgstr "Aktiviere Caching von abgerufenen Daten"
 msgctxt "#32024"
 msgid "Default language"
 msgstr "Standardsprache"
+
+#: /resources/skins/default/1080i/script-embuary-person.xml
+msgctxt "#32025"
+msgid "items in your library"
+msgstr "Einträge in der Datenbank"
+
+#: /resources/settings.xml
+msgctxt "#32026"
+msgid "Misc."
+msgstr "Sonstiges"
+
+#: /resources/settings.xml
+msgctxt "#32027"
+msgid "Hide person appearances in reality/talk/news shows"
+msgstr ""
+"Personenauftritte in Reality- / Talk- / Nachrichtensendungen ausblenden"
+
+#: /resources/settings.xml
+msgctxt "#32028"
+msgid ""
+"Hide person appearances in specials/documentaries/behind the scenes movies"
+msgstr ""
+"Personenauftritte in Specials / Dokumentationen / Behind the Scenes-Filmen "
+"ausblenden"
