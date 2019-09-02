@@ -9,5 +9,8 @@
                 <setting label="$ADDON[script.embuary.info 32023]" type="text" id="omdb_api_key"/>
                 <setting label="$ADDON[script.embuary.info 32020]" type="lsep"/>
                 <setting label="$ADDON[script.embuary.info 32021]" type="bool" id="cache_enabled" default="true"/>
+                <setting label="$ADDON[script.embuary.info 32026]" type="lsep"/>
+                <setting label="$ADDON[script.embuary.info 32027]" type="bool" id="filter_shows" default="true"/>
+                <setting label="$ADDON[script.embuary.info 32028]" type="bool" id="filter_movies" default="false"/>
         </category>
 </settings>

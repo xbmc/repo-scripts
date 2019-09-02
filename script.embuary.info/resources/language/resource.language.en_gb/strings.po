@@ -141,3 +141,18 @@ msgstr ""
 msgctxt "#32025"
 msgid "items in your library"
 msgstr ""
+
+#: /resources/settings.xml
+msgctxt "#32026"
+msgid "Misc."
+msgstr ""
+
+#: /resources/settings.xml
+msgctxt "#32027"
+msgid "Hide person appearances in reality/talk/news shows"
+msgstr ""
+
+#: /resources/settings.xml
+msgctxt "#32028"
+msgid "Hide person appearances in specials/documentaries/behind the scenes movies"
+msgstr ""

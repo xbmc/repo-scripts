@@ -81,6 +81,27 @@ Special properties:
 * `Container(10051).ListItem.Property(Budget)` = Budget
 * `Container(10051).ListItem.Property(Revenue)` = Revenue
 * `Container(10051).ListItem.Property(Awards)` = Awards
+* `Container(10051).ListItem.Property(Homepage)` = Homepage
+* `Container(10051).ListItem.Property(Network.%i)` = Network name (%i = 0,1,2,3,...)
+* `Container(10051).ListItem.Property(Network.icon.%i)` = Network icon (%i = 0,1,2,3,...)
+* `Container(10051).ListItem.Property(Studio.%i)` = Studio name (%i = 0,1,2,3,...)
+* `Container(10051).ListItem.Property(Studio.icon.%i)` = Studio icon (%i = 0,1,2,3,...)
+* `Container(10051).ListItem.Property(Collection)` = Belongs to collection
+* `Container(10051).ListItem.Property(Collection_id)` = Collection ID
+* `Container(10051).ListItem.Property(Collection_poster)` = Collection poster art
+* `Container(10051).ListItem.Property(Collection_fanart)` = Collection fanart
+* `Container(10051).ListItem.Property(NextEpisode)` = Next aired episode name
+* `Container(10051).ListItem.Property(NextEpisode_number)` = Next aired episode number
+* `Container(10051).ListItem.Property(NextEpisode_season)` = Next aired episode season number
+* `Container(10051).ListItem.Property(NextEpisode_plot)` = Next aired episode plot
+* `Container(10051).ListItem.Property(NextEpisode_date)` = Next aired episode date
+* `Container(10051).ListItem.Property(NextEpisode_thumb)` = Next aired episode thumb
+* `Container(10051).ListItem.Property(LastEpisode)` = Last aired episode name
+* `Container(10051).ListItem.Property(LastEpisode_number)` = Last aired episode number
+* `Container(10051).ListItem.Property(LastEpisode_season)` = Last aired episode season number
+* `Container(10051).ListItem.Property(LastEpisode_plot)` = Last aired episode plot
+* `Container(10051).ListItem.Property(LastEpisode_date)` = Last aired episode date
+* `Container(10051).ListItem.Property(LastEpisode_thumb)` = Last aired episode thumb
 
 *script-embuary-image.xml*
 * List control ID `1` = Is used to display a portrait/backdrop images in fullscreen.
