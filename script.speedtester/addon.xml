@@ -15,7 +15,6 @@
     <description lang="en_GB">Speed Tester powered by speedtest.net</description>
     <license>Apache</license>
     <platform>all</platform>
-    <assets>
        <icon>icon.png</icon>
        <fanart>fanart.jpg</fanart>
     </assets>
