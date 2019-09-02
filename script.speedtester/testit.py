@@ -66,9 +66,6 @@ import socket
 import timeit
 import platform
 import threading
-import time
-import uuid
-
 
 try:
 	import xml.etree.cElementTree as ET
@@ -97,105 +94,31 @@ ua_tuple = ('Mozilla/5.0', '(%s; U; %s; en-us)'
 user_agent = ' '.join(ua_tuple)
 
 #py2 imports except py3 ver
-try:
-	import xml.etree.cElementTree as ET
-	from xml.dom import minidom as DOM
-except ImportError:
+if sys.version_info.major==3:
 	try:
 		import xml.etree.ElementTree as ET
 	except ImportError:
 		from xml.dom import minidom as DOM
 		ET = None
-
-try:
-	from urllib2 import urlopen, Request, HTTPError, URLError
-except ImportError:
 	from urllib.request import urlopen, Request, HTTPError, URLError
-
-try:
-	from httplib import HTTPConnection, HTTPSConnection
-except ImportError:
 	from http.client import HTTPConnection, HTTPSConnection
-
-try:
-	from Queue import Queue
-except ImportError:
 	from queue import Queue
-
-try:
-	from urlparse import urlparse
-except ImportError:
 	from urllib.parse import urlparse
-
-try:
-	from urlparse import parse_qs
-except ImportError:
 	try:
 		from urllib.parse import parse_qs
 	except ImportError:
 		from cgi import parse_qs
-
-try:
 	from hashlib import md5
-except ImportError:
+if sys.version_info.major==2:
+	import xml.etree.cElementTree as ET
+	from xml.dom import minidom as DOM
+	from urllib2 import urlopen, Request, HTTPError, URLError
+	from httplib import HTTPConnection, HTTPSConnection
+	from Queue import Queue
+	from urlparse import urlparse
+	from urlparse import parse_qs
 	from md5 import md5
 
-try:
-	from argparse import ArgumentParser as ArgParser
-except ImportError:
-	from optparse import OptionParser as ArgParser
-
-try:
-	import builtins
-except ImportError:
-	def print_(*args, **kwargs):
-		fp = kwargs.pop('file', sys.stdout)
-		if fp is None:
-			return
-
-		def write(data):
-			if not isinstance(data, basestring):
-				data = str(data)
-			fp.write(data)
-
-		want_unicode = False
-		sep = kwargs.pop('sep', None)
-		if sep is not None:
-			if isinstance(sep, unicode):
-				want_unicode = True
-			elif not isinstance(sep, str):
-				raise TypeError('sep must be None or a string')
-		end = kwargs.pop('end', None)
-		if end is not None:
-			if isinstance(end, unicode):
-				want_unicode = True
-			elif not isinstance(end, str):
-				raise TypeError('end must be None or a string')
-		if kwargs:
-			raise TypeError('invalid keyword arguments to print()')
-		if not want_unicode:
-			for arg in args:
-				if isinstance(arg, unicode):
-					want_unicode = True
-					break
-		if want_unicode:
-			newline = unicode('\n')
-			space = unicode(' ')
-		else:
-			newline = '\n'
-			space = ' '
-		if sep is None:
-			sep = space
-		if end is None:
-			end = newline
-		for (i, arg) in enumerate(args):
-			if i:
-				write(sep)
-			write(arg)
-		write(end)
-else:
-	print_ = getattr(builtins, 'print')
-	del builtins
 
 class SpeedtestCliServerListError(Exception):
 	"""
@@ -301,7 +224,7 @@ def getConfig():
 		build_request('http://www.speedtest.net/speedtest-config.php')
 	uh = catch_request(request)
 	if uh is False:
-		print_('Could not retrieve speedtest.net configuration: %s' % e)
+		xbmc.log('Could not retrieve speedtest.net configuration: %s' % e,xbmc.LOGDEBUG)
 		sys.exit(1)
 	configxml = []
 	while 1:
@@ -332,7 +255,7 @@ def getConfig():
 				'upload': getAttributesByTagName(root, 'upload'),
 				}
 	except SyntaxError:
-		print_('Failed to parse speedtest.net configuration')
+		xbmc.log('Failed to parse speedtest.net configuration',xbmc.LOGDEBUG)
 		sys.exit(1)
 	del root
 	del configxml
@@ -355,7 +278,7 @@ def closestServers(client, all=False):
 				errors.append('%s' % e)
 				raise SpeedtestCliServerListError
 			serversxml = []
-			while 1:
+			while not xbmc.Monitor().abortRequested():
 				serversxml.append(uh.read(10240))
 				if len(serversxml[-1]) == 0:
 					break
@@ -396,9 +319,7 @@ def closestServers(client, all=False):
 		if servers:
 			break
 	if not servers:
-		print_('''Failed to retrieve list of speedtest.net servers:
-%s'''
-			% '\n'.join(errors))
+		xbmc.log('Failed to retrieve list of speedtest.net servers:%s'% '\n'.join(errors),xbmc.LOGDEBUG)
 		sys.exit(1)
 	closest = []
 	for d in sorted(servers.keys()):
@@ -446,25 +367,20 @@ def getBestServer(servers):
 	best['latency'] = fastest
 	return best
 
-#stupid py3
+
 class animation(xbmcgui.WindowXMLDialog):
 	def __init__(self,*args, **kwargs):
-		try:
-			xbmcgui.WindowXMLDialog.__init__(self, *args, **kwargs)
-		except:
-			#py3
-			xbmcgui.WindowXMLDialog(*args, **kwargs)
+		super(xbmcgui.WindowXMLDialog, self).__init__()
 		self.doModal()
 
 class DG_Speed_Test(animation):
 	def __init__(self,*args, **kwargs):
-		try:
+		if sys.version_info.major==2:
 			xbmcgui.WindowXMLDialog.__init__(self, *args, **kwargs)
 			self.doModal()
-		except:
-			#py3
+		if sys.version_info.major==3:
 			super().__init__(*args, **kwargs)
-		
+
 	def onInit(self):
 		self.testRun = False
 
@@ -904,51 +820,41 @@ class DG_Speed_Test(animation):
 
 		startST.append('Retrieving speedtest.net configuration')
 		self.update_textbox(startST)
-		if not simple:
-			print_('Retrieving speedtest.net configuration')
 		try:
 			config = getConfig()
 		except URLError:
-			print_('Cannot retrieve speedtest configuration')
 			return False
 
 		startST.append('Retrieving speedtest.net server list')
 		self.update_textbox(startST)
 		self.imgCentertext.setImage(self.image_centertext_testingping)
-		print_('Retrieving speedtest.net server list...')
 
 		servers = closestServers(config['client'])
 
 		startST.append('Testing from %(isp)s (%(ip)s)' % config['client'])
 		self.update_textbox(startST)
-		print_('Testing from %(isp)s (%(ip)s)...' % config['client'])
 
 		best = getBestServer(servers)
 
 		try:
 			startST.append('Selecting best server based on latency')
 			self.update_textbox(startST)
-			print_('Selecting best server based on latency')
 		except:pass
 		try:
 			startST.append('Hosted by: %(sponsor)s' % best)
 			self.update_textbox(startST)
-			print_('Hosted by %(sponsor)s' % best)
 		except:pass
 		try:
 			startST.append('Host Server: %(host)s' % best)
 			self.update_textbox(startST)
-			print_('Host Server: %(host)s' % best)
 		except:pass
 		try:
 			startST.append('Country: %(country)s' % best)
 			self.update_textbox(startST)
-			print_('Location: %(country)s' % best)
 		except:pass
 		try:
 			startST.append('City , State: %(name)s' % best)
 			self.update_textbox(startST)
-			print_('City , State: %(name)s' % best)
 		except:pass
 		try:
 			km2mi = 0.62
@@ -957,13 +863,11 @@ class DG_Speed_Test(animation):
 			miles = Distance * km2mi
 			startST.append('Distance: %s mi' % miles)
 			self.update_textbox(startST)
-			print_('Distance: %s' % miles)
 		except:pass
 		try:
 			startST.append('Ping: %(latency)s ms' % best)
 			self.update_textbox(startST)
 			self.ping_textbox.setLabel("%.0f" % float(best['latency']))
-			print_('Ping: %(latency)s ms' % best)
 		except:pass
 		self.imgCentertext.setImage(' ')
 		self.imgPing.setEnabled(False)
@@ -976,24 +880,16 @@ class DG_Speed_Test(animation):
 				urls.append('%s/random%sx%s.jpg' %
 									(os.path.dirname(best['url']), size, size))
 		self.imgGauge.setVisible(True)
-		time.sleep(1)
+		xbmc.Monitor().waitForAbort(1)
 		self.configGauge(0)
 		self.imgGauge_arrow.setVisible(True)
 
 		startST.append('Testing download speed')
 		self.update_textbox(startST)
-		if not simple:
-			print_('Testing download speed', end='')
 		dlspeed = self.downloadSpeed(urls, simple)
-		if not simple:
-			print_()
 		startST.append('Download: %0.2f M%s/s' % ((dlspeed / 1000 / 1000) * units[1], units[0]))
 		self.update_textbox(startST)
 		self.dl_textbox.setLabel("%.2f" % float((dlspeed / 1000 / 1000) * units[1]))
-		print_('Download: %0.2f M%s/s' %
-				((dlspeed / 1000 / 1000) * units[1], units[0]))
-		self.configGauge(0, (dlspeed / 1000 / 1000) * 8, time=3000)
-		time.sleep(2)
 
 		sizesizes = [int(.25 * 1000 * 1000), int(.5 * 1000 * 1000)]
 		sizes = []
@@ -1003,18 +899,12 @@ class DG_Speed_Test(animation):
 
 		startST.append('Testing upload speed')
 		self.update_textbox(startST)
-		if not simple:
-			print_('Testing upload speed', end='')
 		ulspeed = self.uploadSpeed(best['url'], sizes, simple)
-		if not simple:
-			print_()
 		startST.append('Upload: %0.2f M%s/s' % ((ulspeed / 1000 / 1000) * units[1], units[0]))
 		self.update_textbox(startST)
 		self.ul_textbox.setLabel("%.2f" % float((ulspeed / 1000 / 1000) * units[1]))
-		print_('Upload: %0.2f M%s/s' %
-				((ulspeed / 1000 / 1000) * units[1], units[0]))
 		self.configGauge(0, (ulspeed / 1000 / 1000) * 8, time=3000)
-		time.sleep(2)
+		xbmc.Monitor().waitForAbort(2)
 
 		if share:
 			dlspeedk = int(round((dlspeed / 1000) * 8, 0))
@@ -1040,31 +930,25 @@ class DG_Speed_Test(animation):
 										headers=headers)
 			f = catch_request(request)
 			if f is False:
-				print_('Could not submit results to speedtest.net')
+				xbmc.log('Could not submit results to speedtest.net',xbmc.LOGDEBUG)
 				return False
 			response = f.read()
 			code = f.code
 			f.close()
 
 			if int(code) != 200:
-				print_('Could not submit results to speedtest.net')
+				xbmc.log('Could not submit results to speedtest.net',xbmc.LOGDEBUG)
 				return False
 
 			qsargs = parse_qs(response.decode())
 			resultid = qsargs.get('resultid')
 			if not resultid or len(resultid) != 1:
-				print_('Could not submit results to speedtest.net')
+				xbmc.log('Could not submit results to speedtest.net',xbmc.LOGDEBUG)
 				return False
-
-			print_('Share results: https://www.speedtest.net/result/%s.png' %
-					resultid[0])
 				
 			global image_result
 			image_result = 'https://www.speedtest.net/result/%s.png' % resultid[0]
 
 if __name__ == '__main__':
-	Dr0idGuy = DG_Speed_Test("main.xml", ADDON.getAddonInfo('path'), "Default")
+	Dr0idGuy = DG_Speed_Test("script-speedtester_main.xml", ADDON.getAddonInfo('path'), "Default")
 	del Dr0idGuy
-
-
-
