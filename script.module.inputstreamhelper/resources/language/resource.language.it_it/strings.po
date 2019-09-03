@@ -221,8 +221,64 @@ msgctxt "#30053"
 msgid "[B]Widevine CDM[/B] not found."
 msgstr "[B]Widevine CDM[/B] non e' stato trovato"
 
+msgctxt "#30054"
+msgid "disabled"
+msgstr ""
+
+
+### INFORMATION DIALOG
+msgctxt "#30800"
+msgid "[B]Kodi information[/B]"
+msgstr ""
+
+msgctxt "#30801"
+msgid "Kodi version: [B]{version}[/B]"
+msgstr ""
+
+msgctxt "#30802"
+msgid "Kodi platform/architecture: [B]{platform}[/B]/[B]{arch}[/B]"
+msgstr ""
+
+msgctxt "#30810"
+msgid "[B]InputStream information[/B]"
+msgstr ""
+
+msgctxt "#30811"
+msgid "InputStream Helper version: [B]{version}[/B] {state}"
+msgstr ""
+
+msgctxt "#30812"
+msgid "InputStream Adaptive version: [B]{version}[/B] {state}"
+msgstr ""
+
+msgctxt "#30820"
+msgid "[B]Widevine information[/B]"
+msgstr ""
+
+msgctxt "#30821"
+msgid "Widevine version: [B]{version}[/B] [COLOR gray](last updated on [B]{date}[/B])[/COLOR]"
+msgstr ""
+
+msgctxt "#30822"
+msgid "Widevine CDM path: [B]{path}[/B]"
+msgstr ""
+
+msgctxt "#30823"
+msgid "ChromeOS version: [B]{version}[/B]"
+msgstr ""
+
+msgctxt "#30830"
+msgid "Please report issues to:\n - [B]{url}[/B]"
+msgstr ""
+
+
+### SETTINGS
 msgctxt "#30900"
 msgid "Troubleshooting"
+msgstr ""
+
+msgctxt "#30901"
+msgid "InputStream Helper information"
 msgstr ""
 
 msgctxt "#30903"

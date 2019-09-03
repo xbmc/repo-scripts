@@ -61,3 +61,106 @@ Please report any issues or bug reports on the [GitHub Issues](https://github.co
 
 ## License ##
 This module is licensed under the **The MIT License**. Please see the [LICENSE.txt](LICENSE.txt) file for details.
+
+## Releases
+## v0.4.2 (2019-09-03)
+- Move release history to readme file (@mediaminister)
+- Clean up coverage/codecov config (@dagwieers)
+- Add InputStream Helper Information to settings page (@horstle, @dagwieers)
+- Make sure addon.xml meets all requirements (@mediaminister)
+- Simplify add-on entry point to speed up loading time (@mediaminister)
+- Unicode fix for os.walk (@mediaminister)
+- Revert "Fix ARM processing in unittest locally" (@mediaminister)
+- Fix unresponsive Kodi when opening add-on information pane (@dagwieers, @mediaminister)
+- Add-on structure improvements (@dagwieers)
+
+## v0.4.1 (2019-09-01)
+- Follow kodi-addon-checker recommended code changes (@mediaminister)
+- Implement api using runscript (@mediaminister)
+- Fix ARM processing in unittest locally (@dagwieers)
+- Add more project information (@dagwieers)
+- More coverage improvements (@dagwieers)
+
+## v0.4.0 (2019-09-01)
+- Use local url variable (@mediaminister)
+- Directly use Kodi CDM directory (@mediaminister)
+- Implement settings menu and API (@dagwieers)
+- Add integration tests (@dagwieers)
+- Add a progress dialog for extraction on ARM (@dagwieers)
+- Fix crash when using platform.system() (@dagwieers)
+- Fix a python error (@mediaminister)
+- Remove legacy Widevine CDM support (@dagwieers)
+- Replace requests/urllib3 with urllib/urllib2 (@dagwieers)
+- Various unicode fixes (@mediaminister)
+- Add proxy support (@dagwieers)
+- Add setting to disable inputstreamhelper (@horstle, @JohnPlayerSpecial2018)
+- Check Widevine support before all checks (@vlmaksime)
+- Support 64-bit kernel with 32-bit userspace (@mrfixit2001)
+- Dutch translation (@mediaminister, @basrieter)
+- German translation (@flubshi)
+- Greek translation (@Twilight0)
+- Italian translation (@pinoelefante)
+- Russian translation (@vlmaksime)
+- Swedish translation (@emilsvennesson)
+
+## v0.3.5 (2019-08-15)
+- Auto install inputstream.adaptive (@mediaminister)
+- Fix latest Widevine version detection (@dagwieers)
+- Check for Widevine updates on new release (@mediaminister)
+
+## v0.3.4 (2019-03-23)
+- python2_3 compability (@mediaminister, @Rechi)
+- Option to disable inputstreamhelper in settings.xml
+- calculate disk space on the tmp folder (@dawez)
+- Support for Unicode paths in Windows (@WallyCZ)
+- Italian translation (@pinoelefante)
+- Dutch translation (@dnicolaas)
+- Greek translation (@Twilight0)
+- Russian translation (@vlmaksime)
+
+## v0.3.3 (2018-02-21)
+- Load loop if it's a kernel module (@mkreisl)
+- Fix legacy Widevine CDM update detection
+- inputstream_addon is now a public variable
+- Notify user that ARM64 needs 32-bit userspace
+- Improve logging
+- Cosmetics
+
+## v0.3.2 (2018-01-30)
+- Fix OSMC arm architecture detection
+- Fix ldd permissions error
+
+## v0.3.1 (2018-01-29)
+- check_inputstream() return fix
+
+## v0.3.0 (2018-01-29)
+- Bug fix: module left xbmcaddon class in memory
+- Keep Widevine CDM up-to-date with the latest version available (Kodi 18 and higher)
+- Check for missing depending libraries by parsing the output from ldd
+- Use older Widevine binaries on Kodi Krypton (fixes nss/nspr dependency issues)
+
+## v0.2.4 (2018.01.01)
+- Fix ARM download on systems with sudo (OSMC etc)
+- Actually bump version in addon.xml, unlike v0.2.3...
+
+## v0.2.3 (2017-12-30)
+- Make sure Kodi and Widevine CDM binary architecture matches
+- Minor wording changes/fixes
+
+## v0.2.2 (2017-12-05)
+- Fixes for widevine download when using 64-bit Kodi (@gismo112, @asciidisco)
+
+## v0.2.1 (2017-10-15)
+- Update German translation (@asciidisco)
+- Improve root permissions acquisition
+
+## v0.2.0 (2017-09-29)
+- Automatic Widevine CDM download on ARM devices
+- Display Widevine EULA during installation procedure
+- German translation (thanks to asciidisco)
+- New, smaller and less ugly generic icon
+- Better exception handling
+- Code cleanup
+
+## v0.1.0 (2017-09-13)
+- Initial release

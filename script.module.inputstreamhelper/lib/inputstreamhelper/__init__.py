@@ -20,7 +20,7 @@ try:  # Python 3
 except ImportError:  # Python 2
     from urllib2 import build_opener, HTTPError, install_opener, ProxyHandler, urlopen
 
-import config
+from inputstreamhelper import config
 
 from kodi_six import xbmc, xbmcaddon, xbmcgui, xbmcvfs
 
@@ -256,65 +256,32 @@ class Helper:
         addon = xbmcaddon.Addon(self.inputstream_addon)
         return addon.getAddonInfo('version')
 
+    @staticmethod
+    def _get_lib_version(lib):
+        if lib:
+            with open(lib, 'rb') as f:
+                x = re.search(r'[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+', str(f.read()))
+            return x.group(0).lstrip('0')
+        return 'Not found'
+
     def _chromeos_offset(self, bin_path):
-        ''' Calculate the Chrome OS start offset using fdisk or parted '''
-        # Prefer parted over fdisk because it is more reliable
-        if self._cmd_exists('parted'):
+        """Calculate the Chrome OS losetup start offset using fdisk/parted."""
+        if self._cmd_exists('fdisk'):
+            cmd = ['fdisk', bin_path, '-l']
+        else:  # parted
             cmd = ['parted', '-s', bin_path, 'unit s print']
-        else:
-            cmd = ['fdisk', '-l', bin_path]
 
-        header = None
-        best_size = 0
-        best_offset = 0
         output = self._run_cmd(cmd, sudo=False)
-        if not output['success']:
-            log('Failed to run: %s' % cmd)
-            return False
+        if output['success']:
+            for line in output['output'].splitlines():
+                partition_data = line.split()
+                if partition_data:
+                    if partition_data[0] == '3' or '.bin3' in partition_data[0]:
+                        offset = int(partition_data[1].replace('s', ''))
+                        return str(offset * config.CHROMEOS_BLOCK_SIZE)
 
-        # Routine that works for both fdisk and parted
-        for line in output['output'].splitlines():
-            # Split by whitespace is not sufficient, some header titles use whitespace
-            partition_data = list([_f for _f in re.split(r'\s{2,}', line) if _f])
-            if not partition_data:
-                continue
-
-            # Find the Size and Start columns
-            if 'Size' in partition_data and 'Start' in partition_data:
-                header = partition_data
-                continue
-            elif 'Blocks' in partition_data and 'Start' in partition_data:
-                header = partition_data
-                continue
-
-            # Discard data if we did not find a header
-            if header is None:
-                continue
-
-            # Create a dictionary from header and data
-            partition = dict(list(zip(header, partition_data)))
-            if partition.get('Size') is None and partition.get('Blocks') is None or partition.get('Start') is None:
-                continue
-
-            # Find the largest partition, and store the offset
-            # NOTE: For parted we need to remove the 's' unit
-            partition_size = int((partition.get('Size') or partition.get('Blocks')).replace('s', ''))
-            if partition.get('Name') == 'ROOT-A' or partition_size > best_size:
-                # The name or id is always stored in the first column
-                partition_name = partition_data[0]
-                best_size = partition_size
-                best_offset = int(partition.get('Start').replace('s', ''))
-                if partition.get('Name') == 'ROOT-A':
-                    log('Partition {partition} is named {name}, using offset {offset}', partition=partition_name, name='ROOT-A', offset=best_offset)
-                    break
-                else:
-                    log('Partition {partition} is larger ({size}), using offset {offset}', partition=partition_name, size=best_size, offset=best_offset)
-
-        if best_offset == 0:
-            log('Failed to calculate partition offset.')
-            return False
-
-        return str(best_offset * config.CHROMEOS_BLOCK_SIZE)
+        log('Failed to calculate losetup offset.')
+        return False
 
     def _run_cmd(self, cmd, sudo=False, shell=False):
         ''' Run subprocess command and return if it succeeds as a bool '''
@@ -654,7 +621,7 @@ class Helper:
 
         return False
 
-    def _install_widevine_arm(self):
+    def _install_widevine_arm(self):  # pylint: disable=too-many-statements
         """Installs Widevine CDM on ARM-based architectures."""
         root_cmds = ['mount', 'umount', 'losetup', 'modprobe']
         devices = self._chromeos_config()
@@ -717,6 +684,7 @@ class Helper:
                     progress_dialog.update(97, line1=localize(30050))  # Finishing
                     self._cleanup()
                     if self._has_widevine():
+                        ADDON.setSetting('chromeos_version', arm_device['version'])
                         with open(self._widevine_config_path(), 'w') as config_file:
                             config_file.write(json.dumps(devices, indent=4))
                         wv_check = self._check_widevine()
@@ -824,7 +792,7 @@ class Helper:
     def _extract_widevine_from_img(self):
         ''' Extract the Widevine CDM binary from the mounted Chrome OS image '''
         for root, dirs, files in os.walk(str(self._mnt_path())):  # pylint: disable=unused-variable
-            if 'libwidevinecdm.so' not in files:
+            if str('libwidevinecdm.so') not in files:
                 continue
             cdm_path = os.path.join(root, 'libwidevinecdm.so')
             log('Found libwidevinecdm.so in {path}', path=cdm_path)
@@ -1045,3 +1013,31 @@ class Helper:
             return None
 
         return dict(http=proxy_address, https=proxy_address)
+
+    def info_dialog(self):
+        """ Show an Info box with useful info e.g. for bug reports"""
+        disabled_str = ' ({disabled}'.format(disabled=localize(30054))
+
+        kodi_info = [localize(30801, version=self._kodi_version()),
+                     localize(30802, platform=system_os(), arch=self._arch())]
+
+        ishelper_state = disabled_str if not ADDON.getSetting('disabled') == 'false' else ''
+        istream_state = disabled_str if not self._inputstream_enabled() else ''
+        is_info = [localize(30811, version=ADDON.getAddonInfo('version'), state=ishelper_state),
+                   localize(30812, version=self._inputstream_version(), state=istream_state)]
+
+        wv_updated = datetime.fromtimestamp(float(ADDON.getSetting('last_update'))).strftime("%Y-%m-%d %H:%M") if ADDON.getSetting('last_update') else 'Never'
+        wv_info = [localize(30821, version=self._get_lib_version(self._widevine_path()), date=wv_updated),
+                   localize(30822, path=self._ia_cdm_path())]
+        if platform == 'arm':
+            wv_info.append(localize(30823, version=ADDON.getSetting('chromeos_version')))
+
+        text = (localize(30800) + "\n - "
+                + "\n - ".join(kodi_info) + "\n\n"
+                + localize(30810) + "\n - "
+                + "\n - ".join(is_info) + "\n\n"
+                + localize(30820) + "\n - "
+                + "\n - ".join(wv_info) + "\n\n"
+                + localize(30830, url=config.ISSUE_URL))
+
+        xbmcgui.Dialog().textviewer(localize(30901), text)

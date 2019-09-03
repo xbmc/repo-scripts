@@ -1,42 +1,36 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<addon id="script.module.inputstreamhelper" version="0.4.1" name="InputStream Helper" provider-name="emilsvennesson,dagwieers">
-    <requires>
-        <import addon="xbmc.python" version="2.25.0"/>
-        <!-- This is needed for the plugin to import the library -->
-        <import addon="script.module.inputstreamhelper" optional="true"/>
-        <import addon="script.module.kodi-six" version="0.0.4"/>
-        <import addon="script.module.pysocks" version="1.6.8" optional="true"/>
-    </requires>
-    <extension point="xbmc.python.module" library="lib"/>
-    <!-- This is needed to get an addon icon -->
-    <extension point="xbmc.python.script" library="addon.py"/>
-    <extension point="xbmc.addon.metadata">
-        <description lang="en_GB">A simple Kodi module that makes life easier for add-on developers relying on InputStream based add-ons and DRM playback.</description>
-        <description lang="el_GR">Μία απλή μονάδα για το Kodi η οποία διευκολύνει την ζωή των προγραμματιστών οι οποίοι εξαρτώνται από τα πρόσθετσ InputStream και αναπαραγωγή τύπου DRM.</description>
-        <description lang="ru_RU">Простой модуль для Kodi, который облегчает жизнь разработчикам дополнений, с использованием InputStream дополнений и воспроизведения DRM контента.</description>
-        <news>
-v0.4.1 (2019-09-01)
-- Use local url variable
-- Directly use Kodi CDM directory
-- Implement settings menu and API
-- Add integration tests
-- Add a progress dialog for extraction on ARM
-- Fix crash when using platform.system()
-- Fix a python error
-- Remove legacy Widevine CDM support
-- Replace requests/urllib3 with urllib/urllib2
-- Various unicode fixes
-- Add proxy support
-- Add setting to disable inputstreamhelper
-- Check Widevine support before all checks
-- Support 64-bit kernel with 32-bit userspace
-- Dutch, German, Greek, Italian, Russian and Swedish translations
-        </news>
-        <platform>all</platform>
-        <license>MIT</license>
-        <source>https://github.com/emilsvennesson/script.module.inputstreamhelper</source>
-        <assets>
-            <icon>resources/icon.png</icon>
-        </assets>
-    </extension>
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.module.inputstreamhelper" name="InputStream Helper" version="0.4.2" provider-name="emilsvennesson, dagwieers">
+  <requires>
+    <import addon="xbmc.python" version="2.25.0"/>
+    <import addon="script.module.kodi-six" version="0.0.4"/>
+    <import addon="script.module.pysocks" version="1.6.8" optional="true"/>
+  </requires>
+  <extension point="xbmc.python.module" library="lib"/>
+  <!-- This is needed to get an addon icon -->
+  <extension point="xbmc.python.script" library="default.py"/>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en_GB">Kodi InputStream and DRM playback made easy</summary>
+    <description lang="en_GB">A simple Kodi module that makes life easier for add-on developers relying on InputStream based add-ons and DRM playback.</description>
+    <description lang="el_GR">Μία απλή μονάδα για το Kodi η οποία διευκολύνει την ζωή των προγραμματιστών οι οποίοι εξαρτώνται από τα πρόσθετσ InputStream και αναπαραγωγή τύπου DRM.</description>
+    <description lang="ru_RU">Простой модуль для Kodi, который облегчает жизнь разработчикам дополнений, с использованием InputStream дополнений и воспроизведения DRM контента.</description>
+    <news>
+      v0.4.2 (2019-09-03)
+        - Move release history to readme file
+        - Clean up coverage/codecov config
+        - Add InputStream Helper Information to settings page
+        - Make sure addon.xml meets all requirements
+        - Simplify add-on entry point to speed up loading time
+        - Unicode fix for os.walk
+        - Revert "Fix ARM processing in unittest locally"
+        - Fix unresponsive Kodi when opening add-on information pane
+        - Add-on structure improvements        
+    </news>
+    <platform>all</platform>
+    <license>MIT</license>
+    <website>https://github.com/emilsvennesson/script.module.inputstreamhelper/wiki</website>
+    <source>https://github.com/emilsvennesson/script.module.inputstreamhelper</source>
+    <assets>
+      <icon>resources/icon.png</icon>
+    </assets>
+  </extension>
 </addon>
