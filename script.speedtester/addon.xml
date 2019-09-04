@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.speedtester"
+       name="Speed Tester"
+       version="1.0.0"
+       provider-name="Dr0idGuy">
+  <requires>
+    <import addon="xbmc.python" version="2.26.0"/>
+  </requires>
+  <extension point="xbmc.python.script"
+             library="testit.py">
+        <provides>executable</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en_GB">Speed Tester</summary>
+    <description lang="en_GB">Speed Tester powered by speedtest.net</description>
+    <license>Apache 2.0</license>
+    <platform>all</platform>
+    <assets>
+       <icon>icon.png</icon>
+       <fanart>fanart.jpg</fanart>
+    </assets>
+  </extension>
+</addon>
