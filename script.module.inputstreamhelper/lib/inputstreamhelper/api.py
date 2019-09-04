@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
-''' This is the actual InputStream Helper plugin entry point '''
+''' This is the actual InputStream Helper API script '''
 
 from __future__ import absolute_import, division, unicode_literals
-import sys
 from inputstreamhelper import ADDON, Helper, log
 
 
@@ -18,6 +17,8 @@ def run(params):
                 check_inputstream(params[2])
             elif len(params) == 4:
                 check_inputstream(params[2], drm=params[3])
+        elif params[1] == 'info':
+            info_dialog()
     elif len(params) > 4:
         log('invalid API call, too many parameters')
     else:
@@ -39,5 +40,6 @@ def widevine_remove():
     Helper('mpd', drm='widevine').remove_widevine()
 
 
-if __name__ == '__main__':
-    run(sys.argv)
+def info_dialog():
+    ''' The API interface to show an info Dialog '''
+    Helper('mpd', drm='widevine').info_dialog()
