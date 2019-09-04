@@ -51,12 +51,7 @@
 # under the License.													   #
 ############################################################################
 
-
-try:
-	from kodi_six import xbmc, xbmcaddon, xbmcgui
-except ImportError:
-	import xbmc ,xbmcgui, xbmcaddon
-
+import xbmc ,xbmcgui, xbmcaddon
 import os
 import re
 import sys
@@ -66,16 +61,6 @@ import socket
 import timeit
 import platform
 import threading
-
-try:
-	import xml.etree.cElementTree as ET
-	from xml.dom import minidom as DOM
-except ImportError:
-	try:
-		import xml.etree.ElementTree as ET
-	except ImportError:
-		from xml.dom import minidom as DOM
-		ET = None
 
 ADDON = xbmcaddon.Addon()
 ADDONID = ADDON.getAddonInfo('id')
