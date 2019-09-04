@@ -1,3 +1,0 @@
-[B]Version 2.3[/B]
-
-- ijson 2.3
