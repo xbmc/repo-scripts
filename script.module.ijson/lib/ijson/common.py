@@ -143,6 +143,7 @@ def items(prefixed_events, prefix):
                     while (current, event) != (prefix, end_event):
                         builder.event(event, value)
                         current, event, value = next(prefixed_events)
+                    del builder.containers[:]
                     yield builder.value
                 else:
                     yield value

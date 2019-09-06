@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addon	id="script.module.ijson"
 		name="ijson"
-		version="2.3"
-		provider-name="Ivan Sagalaev">
+		version="2.4"
+		provider-name="Ivan Sagalaev, Rodrigo Tobar">
 	<requires>
 		<import addon="xbmc.python" version="2.25.0"/>
 	</requires>
@@ -13,12 +13,11 @@
 		point="xbmc.addon.metadata">
 		<summary lang="en_GB">Iterative JSON parser with a standard Python iterator interface</summary>
 		<description lang="en_GB">Packed for KODI from https://github.com/isagalaev/ijson</description>
-		<platform>all</platform>
-		<language></language>
-		<license>BSD 3-clause</license>
-		<forum></forum>
-		<website>http://pypi.python.org/pypi/ijson/</website>
-		<source>https://github.com/isagalaev/ijson</source>
-		<email></email>
+		<license>BSD-3-Clause</license>
+		<website>https://pypi.org/project/ijson/</website>
+		<source>https://github.com/ICRAR/ijson</source>
+		<assets>
+			<icon>icon.png</icon>
+		</assets>
 	</extension>
 </addon>

@@ -25,7 +25,10 @@ def find_yajl_ctypes(required):
     so_name = util.find_library('yajl')
     if so_name is None:
         raise YAJLImportError('YAJL shared object not found.')
-    yajl = cdll.LoadLibrary(so_name)
+    try:
+        yajl = cdll.LoadLibrary(so_name)
+    except OSError:
+        raise YAJLImportError('Unable to load YAJL.')
     require_version(yajl.yajl_version(), required)
     return yajl
 
