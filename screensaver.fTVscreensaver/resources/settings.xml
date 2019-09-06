@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+    <setting label="21870" type="lsep"/>
+	<setting id="source" label="$ADDON[screensaver.fTVscreensaver 32000]" type="enum" lvalues="14211|19076"/>
+	<setting id="path" label="$LOCALIZE[573]" type="folder"  source="auto" visible="eq(-1,1)"/>
+	<setting id="recursive" label="$LOCALIZE[20346]" type="bool" default="true" visible="eq(-2,1)"/>
+    <setting label="128" type="lsep"/>
+	<setting id="scrollspeed" label="$LOCALIZE[224]" type="slider" default="60" range="10,10,100" option="int" />
+	<setting id="refresh" label="$ADDON[screensaver.fTVscreensaver 32001]" type="slider" default="10" range="10,10,320" option="int" />
+	<setting id="dim" label="$LOCALIZE[352]" type="bool" default="false"/>
+	<setting id="dim_timer" label="$ADDON[screensaver.fTVscreensaver 32002]" type="slider" default="1" range="1,1,5" option="int" visible="eq(-1,true)"/>
+	<setting id="dim_level" label="$ADDON[screensaver.fTVscreensaver 32003]" type="slider" default="10" range="10,10,100" option="int" visible="eq(-2,true)"/>
+</settings>

@@ -1,0 +1,596 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<window>
+    <animation type="WindowOpen">
+        <effect center="990,540" tween="circle" easing="out" end="100" start="110" time="400" type="zoom" />
+        <effect easing="inout" end="100" start="0" time="400" tween="sine" type="fade" />
+    </animation>
+    <controls>
+        <!-- Background -->
+        <control type="image">
+            <left>0</left>
+            <top>0</top>
+            <bottom>0</bottom>
+            <right>0</right>
+            <texture>default.png</texture>
+        </control>
+        <!-- round 1 -->
+        <control type="group" id="100">
+            <control type="grouplist">
+            <heigth>1060</heigth>
+            <width>6135</width>
+            <top>10</top>
+            <orientation>horizontal</orientation>
+            <itemgap>10</itemgap>
+            <!-- fanart poster  / poster fanart -->
+            <control type="group">
+                <height>1060</height>
+                <width>1055</width>
+                <!-- #1 1/2 fanart -->
+                <control type="image" id="201">
+                    <left>0</left>
+                    <top>0</top>
+                    <height>525</height>
+                    <width>700</width>
+                    <aspectratio align="center">scale</aspectratio>
+                    <texture fallback="views/wide.png" background="true">$INFO[Window(Home).Property(fTVscreensaver.FanArt.1)]</texture>
+                    <fadetime>1000</fadetime>
+                </control>
+                <!-- #2 poster 1/2 -->
+                <control type="image" id="101">
+                    <left>0</left>
+                    <top>535</top>
+                    <height>525</height>
+                    <width>345</width>
+                    <aspectratio align="center">scale</aspectratio>
+                    <texture fallback="views/poster.png" background="true">$INFO[Window(Home).Property(fTVscreensaver.Poster.1)]</texture>
+                    <fadetime>1000</fadetime>
+                </control>
+                <!-- #3 1/2 poster -->
+                <control type="image" id="102">
+                    <left>710</left>
+                    <top>0</top>
+                    <height>525</height>
+                    <width>345</width>
+                    <aspectratio align="center">scale</aspectratio>
+                    <texture fallback="views/poster.png" background="true">$INFO[Window(Home).Property(fTVscreensaver.Poster.2)]</texture>
+                    <fadetime>1000</fadetime>
+                </control>
+                <!-- #4 1/2 fanart -->
+                <control type="image" id="202">
+                    <left>355</left>
+                    <top>535</top>
+                    <height>525</height>
+                    <width>700</width>
+                    <aspectratio align="center">scale</aspectratio>
+                    <texture fallback="views/wide.png" background="true">$INFO[Window(Home).Property(fTVscreensaver.FanArt.2)]</texture>
+                    <fadetime>1000</fadetime>
+                </control>
+            </control>
+            <!-- 3x fanart -->
+            <control type="group">
+                <height>1060</height>
+                <width>461</width>
+                <!-- #5 1/3 fanart -->
+                <control type="image" id="203">
+                    <left>0</left>
+                    <top>0</top>
+                    <height>346</height>
+                    <width>461</width>
+                    <aspectratio align="center">scale</aspectratio>
+                    <texture fallback="views/wide.png" background="true">$INFO[Window(Home).Property(fTVscreensaver.FanArt.3)]</texture>
+                    <fadetime>1000</fadetime>
+                </control>
+                <!-- #6 1/3 fanart -->
+                <control type="image" id="204">
+                    <left>0</left>
+                    <top>356</top>
+                    <height>347</height>
+                    <width>461</width>
+                    <aspectratio align="center">scale</aspectratio>
+                    <texture fallback="views/wide.png" background="true">$INFO[Window(Home).Property(fTVscreensaver.FanArt.4)]</texture>
+                    <fadetime>1000</fadetime>
+                </control>
+                <!-- #7 1/3 fanart -->
+                <control type="image" id="205">
+                    <left>0</left>
+                    <top>713</top>
+                    <height>347</height>
+                    <width>461</width>
+                    <aspectratio align="center">scale</aspectratio>
+                    <texture fallback="views/wide.png" background="true">$INFO[Window(Home).Property(fTVscreensaver.FanArt.5)]</texture>
+                    <fadetime>1000</fadetime>
+                </control>
+            </control>
+            <!-- 1/3 fanart 2/3 poster -->
+            <control type="group">
+                <height>1060</height>
+                <width>463</width>
+                <!-- #8 1/3 fanart -->
+                <control type="image" id="206">
+                    <left>0</left>
+                    <top>0</top>
+                    <height>346</height>
+                    <width>463</width>
+                    <aspectratio align="center">scale</aspectratio>
+                    <texture fallback="views/wide.png" background="true">$INFO[Window(Home).Property(fTVscreensaver.FanArt.6)]</texture>
+                    <fadetime>1000</fadetime>
+                </control>
+                <!-- #9 2/3 poster -->
+                <control type="image" id="103">
+                    <left>0</left>
+                    <top>356</top>
+                    <height>704</height>
+                    <width>463</width>
+                    <aspectratio align="center">scale</aspectratio>
+                    <texture fallback="views/poster.png" background="true">$INFO[Window(Home).Property(fTVscreensaver.Poster.3)]</texture>
+                    <fadetime>1000</fadetime>
+                </control>
+            </control>
+            <!-- 1/2 fanart fanart -->
+            <control type="group">
+                <height>1060</height>
+                <width>700</width>
+                <!-- #10 1/2 fanart -->
+                <control type="image" id="207">
+                    <left>0</left>
+                    <top>0</top>
+                    <height>525</height>
+                    <width>700</width>
+                    <aspectratio align="center">scale</aspectratio>
+                    <texture fallback="views/wide.png" background="true">$INFO[Window(Home).Property(fTVscreensaver.FanArt.7)]</texture>
+                    <fadetime>1000</fadetime>
+                </control>
+                <!-- #11 1/2 fanart -->
+                <control type="image" id="208">
+                    <left>0</left>
+                    <top>535</top>
+                    <height>525</height>
+                    <width>700</width>
+                    <aspectratio align="center">scale</aspectratio>
+                    <texture fallback="views/wide.png" background="true">$INFO[Window(Home).Property(fTVscreensaver.FanArt.8)]</texture>
+                    <fadetime>1000</fadetime>
+                </control>
+            </control>
+            <!-- poster fanart / fanart poster -->
+            <control type="group">
+                <height>1060</height>
+                <width>1055</width>
+                <!-- #12 poster 1/2 -->
+                <control type="image" id="104">
+                    <left>0</left>
+                    <top>0</top>
+                    <height>525</height>
+                    <width>345</width>
+                    <aspectratio align="center">scale</aspectratio>
+                    <texture fallback="views/poster.png" background="true">$INFO[Window(Home).Property(fTVscreensaver.Poster.4)]</texture>
+                    <fadetime>1000</fadetime>
+                </control>
+                <!-- #13 1/2 fanart -->
+                <control type="image" id="209">
+                    <left>0</left>
+                    <top>535</top>
+                    <height>525</height>
+                    <width>700</width>
+                    <aspectratio align="center">scale</aspectratio>
+                    <texture fallback="views/wide.png" background="true">$INFO[Window(Home).Property(fTVscreensaver.FanArt.9)]</texture>
+                    <fadetime>1000</fadetime>
+                </control>
+                <!-- #14 1/2 fanart -->
+                <control type="image" id="210">
+                    <left>355</left>
+                    <top>0</top>
+                    <height>525</height>
+                    <width>700</width>
+                    <aspectratio align="center">scale</aspectratio>
+                    <texture fallback="views/wide.png" background="true">$INFO[Window(Home).Property(fTVscreensaver.FanArt.10)]</texture>
+                    <fadetime>1000</fadetime>
+                </control>
+                <!-- #15 poster 1/2 -->
+                <control type="image" id="105">
+                    <left>710</left>
+                    <top>535</top>
+                    <height>525</height>
+                    <width>345</width>
+                    <aspectratio align="center">scale</aspectratio>
+                    <texture fallback="views/poster.png" background="true">$INFO[Window(Home).Property(fTVscreensaver.Poster.5)]</texture>
+                    <fadetime>1000</fadetime>
+                </control>
+            </control>
+            <!-- 3x fanart -->
+            <control type="group">
+                <height>1060</height>
+                <width>461</width>
+                <!-- #16 1/3 fanart -->
+                <control type="image" id="211">
+                    <left>0</left>
+                    <top>0</top>
+                    <height>346</height>
+                    <width>461</width>
+                    <aspectratio align="center">scale</aspectratio>
+                    <texture fallback="views/wide.png" background="true">$INFO[Window(Home).Property(fTVscreensaver.FanArt.11)]</texture>
+                    <fadetime>1000</fadetime>
+                </control>
+                <!-- #17 1/3 fanart -->
+                <control type="image" id="212">
+                    <left>0</left>
+                    <top>356</top>
+                    <height>347</height>
+                    <width>461</width>
+                    <aspectratio align="center">scale</aspectratio>
+                    <texture fallback="views/wide.png" background="true">$INFO[Window(Home).Property(fTVscreensaver.FanArt.12)]</texture>
+                    <fadetime>1000</fadetime>
+                </control>
+                <!-- #18 1/3 fanart -->
+                <control type="image" id="213">
+                    <left>0</left>
+                    <top>713</top>
+                    <height>347</height>
+                    <width>461</width>
+                    <aspectratio align="center">scale</aspectratio>
+                    <texture fallback="views/wide.png" background="true">$INFO[Window(Home).Property(fTVscreensaver.FanArt.13)]</texture>
+                    <fadetime>1000</fadetime>
+                </control>
+            </control>
+            <!-- big poster -->
+            <control type="group">
+                <height>1060</height>
+                <width>697</width>
+                <!-- #19 poster 1/1 -->
+                <control type="image" id="106">
+                    <left>0</left>
+                    <top>0</top>
+                    <height>1060</height>
+                    <width>697</width>
+                    <aspectratio align="center">scale</aspectratio>
+                    <texture fallback="views/poster.png" background="true">$INFO[Window(Home).Property(fTVscreensaver.Poster.6)]</texture>
+                    <fadetime>1000</fadetime>
+                </control>
+            </control>
+            <!-- 1/2 fanart fanart -->
+            <control type="group">
+                <height>1060</height>
+                <width>700</width>
+                <!-- #20 1/2 fanart -->
+                <control type="image" id="214">
+                    <left>0</left>
+                    <top>0</top>
+                    <height>525</height>
+                    <width>700</width>
+                    <aspectratio align="center">scale</aspectratio>
+                    <texture fallback="views/wide.png" background="true">$INFO[Window(Home).Property(fTVscreensaver.FanArt.14)]</texture>
+                    <fadetime>1000</fadetime>
+                </control>
+                <!-- #21 1/2 fanart -->
+                <control type="image" id="215">
+                    <left>0</left>
+                    <top>535</top>
+                    <height>525</height>
+                    <width>700</width>
+                    <aspectratio align="center">scale</aspectratio>
+                    <texture fallback="views/wide.png" background="true">$INFO[Window(Home).Property(fTVscreensaver.FanArt.15)]</texture>
+                    <fadetime>1000</fadetime>
+                </control>
+            </control>
+            <!-- 1/3 fanart 2/3 poster -->
+            <control type="group">
+                <height>1060</height>
+                <width>463</width>
+                <!-- #22 2/3 poster -->
+                <control type="image" id="107">
+                    <left>0</left>
+                    <top>0</top>
+                    <height>704</height>
+                    <width>463</width>
+                    <aspectratio align="center">scale</aspectratio>
+                    <texture fallback="views/poster.png" background="true">$INFO[Window(Home).Property(fTVscreensaver.Poster.7)]</texture>
+                    <fadetime>1000</fadetime>
+                </control>
+                <!-- #23 1/3 fanart -->
+                <control type="image" id="216">
+                    <left>0</left>
+                    <top>714</top>
+                    <height>346</height>
+                    <width>463</width>
+                    <aspectratio align="center">scale</aspectratio>
+                    <texture fallback="views/wide.png" background="true">$INFO[Window(Home).Property(fTVscreensaver.FanArt.16)]</texture>
+                    <fadetime>1000</fadetime>
+                </control>
+            </control>
+        </control>
+    </control>
+    <!-- round 2 -->
+    <control type="group" id="200">
+        <control type="grouplist">
+            <left>6145</left>
+            <heigth>1060</heigth>
+            <width>6135</width>
+            <top>10</top>
+            <orientation>horizontal</orientation>
+            <itemgap>10</itemgap>
+            <!-- fanart poster  / poster fanart -->
+            <control type="group">
+                <height>1060</height>
+                <width>1055</width>
+                <!-- #1 1/2 fanart -->
+                <control type="image" id="201">
+                    <left>0</left>
+                    <top>0</top>
+                    <height>525</height>
+                    <width>700</width>
+                    <aspectratio align="center">scale</aspectratio>
+                    <texture fallback="views/wide.png" background="true">$INFO[Window(Home).Property(fTVscreensaver.FanArt.1)]</texture>
+                    <fadetime>1000</fadetime>
+                </control>
+                <!-- #2 poster 1/2 -->
+                <control type="image" id="101">
+                    <left>0</left>
+                    <top>535</top>
+                    <height>525</height>
+                    <width>345</width>
+                    <aspectratio align="center">scale</aspectratio>
+                    <texture fallback="views/poster.png" background="true">$INFO[Window(Home).Property(fTVscreensaver.Poster.1)]</texture>
+                    <fadetime>1000</fadetime>
+                </control>
+                <!-- #3 1/2 poster -->
+                <control type="image" id="102">
+                    <left>710</left>
+                    <top>0</top>
+                    <height>525</height>
+                    <width>345</width>
+                    <aspectratio align="center">scale</aspectratio>
+                    <texture fallback="views/poster.png" background="true">$INFO[Window(Home).Property(fTVscreensaver.Poster.2)]</texture>
+                    <fadetime>1000</fadetime>
+                </control>
+                <!-- #4 1/2 fanart -->
+                <control type="image" id="202">
+                    <left>355</left>
+                    <top>535</top>
+                    <height>525</height>
+                    <width>700</width>
+                    <aspectratio align="center">scale</aspectratio>
+                    <texture fallback="views/wide.png" background="true">$INFO[Window(Home).Property(fTVscreensaver.FanArt.2)]</texture>
+                    <fadetime>1000</fadetime>
+                </control>
+            </control>
+            <!-- 3x fanart -->
+            <control type="group">
+                <height>1060</height>
+                <width>461</width>
+                <!-- #5 1/3 fanart -->
+                <control type="image" id="203">
+                    <left>0</left>
+                    <top>0</top>
+                    <height>346</height>
+                    <width>461</width>
+                    <aspectratio align="center">scale</aspectratio>
+                    <texture fallback="views/wide.png" background="true">$INFO[Window(Home).Property(fTVscreensaver.FanArt.3)]</texture>
+                    <fadetime>1000</fadetime>
+                </control>
+                <!-- #6 1/3 fanart -->
+                <control type="image" id="204">
+                    <left>0</left>
+                    <top>356</top>
+                    <height>347</height>
+                    <width>461</width>
+                    <aspectratio align="center">scale</aspectratio>
+                    <texture fallback="views/wide.png" background="true">$INFO[Window(Home).Property(fTVscreensaver.FanArt.4)]</texture>
+                    <fadetime>1000</fadetime>
+                </control>
+                <!-- #7 1/3 fanart -->
+                <control type="image" id="205">
+                    <left>0</left>
+                    <top>713</top>
+                    <height>347</height>
+                    <width>461</width>
+                    <aspectratio align="center">scale</aspectratio>
+                    <texture fallback="views/wide.png" background="true">$INFO[Window(Home).Property(fTVscreensaver.FanArt.5)]</texture>
+                    <fadetime>1000</fadetime>
+                </control>
+            </control>
+            <!-- 1/3 fanart 2/3 poster -->
+            <control type="group">
+                <height>1060</height>
+                <width>463</width>
+                <!-- #8 1/3 fanart -->
+                <control type="image" id="206">
+                    <left>0</left>
+                    <top>0</top>
+                    <height>346</height>
+                    <width>463</width>
+                    <aspectratio align="center">scale</aspectratio>
+                    <texture fallback="views/wide.png" background="true">$INFO[Window(Home).Property(fTVscreensaver.FanArt.6)]</texture>
+                    <fadetime>1000</fadetime>
+                </control>
+                <!-- #9 2/3 poster -->
+                <control type="image" id="103">
+                    <left>0</left>
+                    <top>356</top>
+                    <height>704</height>
+                    <width>463</width>
+                    <aspectratio align="center">scale</aspectratio>
+                    <texture fallback="views/poster.png" background="true">$INFO[Window(Home).Property(fTVscreensaver.Poster.3)]</texture>
+                    <fadetime>1000</fadetime>
+                </control>
+            </control>
+            <!-- 1/2 fanart fanart -->
+            <control type="group">
+                <height>1060</height>
+                <width>700</width>
+                <!-- #10 1/2 fanart -->
+                <control type="image" id="207">
+                    <left>0</left>
+                    <top>0</top>
+                    <height>525</height>
+                    <width>700</width>
+                    <aspectratio align="center">scale</aspectratio>
+                    <texture fallback="views/wide.png" background="true">$INFO[Window(Home).Property(fTVscreensaver.FanArt.7)]</texture>
+                    <fadetime>1000</fadetime>
+                </control>
+                <!-- #11 1/2 fanart -->
+                <control type="image" id="208">
+                    <left>0</left>
+                    <top>535</top>
+                    <height>525</height>
+                    <width>700</width>
+                    <aspectratio align="center">scale</aspectratio>
+                    <texture fallback="views/wide.png" background="true">$INFO[Window(Home).Property(fTVscreensaver.FanArt.8)]</texture>
+                    <fadetime>1000</fadetime>
+                </control>
+            </control>
+            <!-- poster fanart / fanart poster -->
+            <control type="group">
+                <height>1060</height>
+                <width>1055</width>
+                <!-- #12 poster 1/2 -->
+                <control type="image" id="104">
+                    <left>0</left>
+                    <top>0</top>
+                    <height>525</height>
+                    <width>345</width>
+                    <aspectratio align="center">scale</aspectratio>
+                    <texture fallback="views/poster.png" background="true">$INFO[Window(Home).Property(fTVscreensaver.Poster.4)]</texture>
+                    <fadetime>1000</fadetime>
+                </control>
+                <!-- #13 1/2 fanart -->
+                <control type="image" id="209">
+                    <left>0</left>
+                    <top>535</top>
+                    <height>525</height>
+                    <width>700</width>
+                    <aspectratio align="center">scale</aspectratio>
+                    <texture fallback="views/wide.png" background="true">$INFO[Window(Home).Property(fTVscreensaver.FanArt.9)]</texture>
+                    <fadetime>1000</fadetime>
+                </control>
+                <!-- #14 1/2 fanart -->
+                <control type="image" id="210">
+                    <left>355</left>
+                    <top>0</top>
+                    <height>525</height>
+                    <width>700</width>
+                    <aspectratio align="center">scale</aspectratio>
+                    <texture fallback="views/wide.png" background="true">$INFO[Window(Home).Property(fTVscreensaver.FanArt.10)]</texture>
+                    <fadetime>1000</fadetime>
+                </control>
+                <!-- #15 poster 1/2 -->
+                <control type="image" id="105">
+                    <left>710</left>
+                    <top>535</top>
+                    <height>525</height>
+                    <width>345</width>
+                    <aspectratio align="center">scale</aspectratio>
+                    <texture fallback="views/poster.png" background="true">$INFO[Window(Home).Property(fTVscreensaver.Poster.5)]</texture>
+                    <fadetime>1000</fadetime>
+                </control>
+            </control>
+            <!-- 3x fanart -->
+            <control type="group">
+                <height>1060</height>
+                <width>461</width>
+                <!-- #16 1/3 fanart -->
+                <control type="image" id="211">
+                    <left>0</left>
+                    <top>0</top>
+                    <height>346</height>
+                    <width>461</width>
+                    <aspectratio align="center">scale</aspectratio>
+                    <texture fallback="views/wide.png" background="true">$INFO[Window(Home).Property(fTVscreensaver.FanArt.11)]</texture>
+                    <fadetime>1000</fadetime>
+                </control>
+                <!-- #17 1/3 fanart -->
+                <control type="image" id="212">
+                    <left>0</left>
+                    <top>356</top>
+                    <height>347</height>
+                    <width>461</width>
+                    <aspectratio align="center">scale</aspectratio>
+                    <texture fallback="views/wide.png" background="true">$INFO[Window(Home).Property(fTVscreensaver.FanArt.12)]</texture>
+                    <fadetime>1000</fadetime>
+                </control>
+                <!-- #18 1/3 fanart -->
+                <control type="image" id="213">
+                    <left>0</left>
+                    <top>713</top>
+                    <height>347</height>
+                    <width>461</width>
+                    <aspectratio align="center">scale</aspectratio>
+                    <texture fallback="views/wide.png" background="true">$INFO[Window(Home).Property(fTVscreensaver.FanArt.13)]</texture>
+                    <fadetime>1000</fadetime>
+                </control>
+            </control>
+            <!-- big poster -->
+            <control type="group">
+                <height>1060</height>
+                <width>697</width>
+                <!-- #19 poster 1/1 -->
+                <control type="image" id="106">
+                    <left>0</left>
+                    <top>0</top>
+                    <height>1060</height>
+                    <width>697</width>
+                    <aspectratio align="center">scale</aspectratio>
+                    <texture fallback="views/poster.png" background="true">$INFO[Window(Home).Property(fTVscreensaver.Poster.6)]</texture>
+                    <fadetime>1000</fadetime>
+                </control>
+            </control>
+            <!-- 1/2 fanart fanart -->
+            <control type="group">
+                <height>1060</height>
+                <width>700</width>
+                <!-- #20 1/2 fanart -->
+                <control type="image" id="214">
+                    <left>0</left>
+                    <top>0</top>
+                    <height>525</height>
+                    <width>700</width>
+                    <aspectratio align="center">scale</aspectratio>
+                    <texture fallback="views/wide.png" background="true">$INFO[Window(Home).Property(fTVscreensaver.FanArt.14)]</texture>
+                    <fadetime>1000</fadetime>
+                </control>
+                <!-- #21 1/2 fanart -->
+                <control type="image" id="215">
+                    <left>0</left>
+                    <top>535</top>
+                    <height>525</height>
+                    <width>700</width>
+                    <aspectratio align="center">scale</aspectratio>
+                    <texture fallback="views/wide.png" background="true">$INFO[Window(Home).Property(fTVscreensaver.FanArt.15)]</texture>
+                    <fadetime>1000</fadetime>
+                </control>
+            </control>
+            <!-- 1/3 fanart 2/3 poster -->
+            <control type="group">
+                <height>1060</height>
+                <width>463</width>
+                <!-- #22 2/3 poster -->
+                <control type="image" id="107">
+                    <left>0</left>
+                    <top>0</top>
+                    <height>704</height>
+                    <width>463</width>
+                    <aspectratio align="center">scale</aspectratio>
+                    <texture fallback="views/poster.png" background="true">$INFO[Window(Home).Property(fTVscreensaver.Poster.7)]</texture>
+                    <fadetime>1000</fadetime>
+                </control>
+                <!-- #23 1/3 fanart -->
+                <control type="image" id="216">
+                    <left>0</left>
+                    <top>714</top>
+                    <height>346</height>
+                    <width>463</width>
+                    <aspectratio align="center">scale</aspectratio>
+                    <texture fallback="views/wide.png" background="true">$INFO[Window(Home).Property(fTVscreensaver.FanArt.16)]</texture>
+                    <fadetime>1000</fadetime>
+                </control>
+            </control>
+        </control>
+    </control>
+    <!-- DIM - DO NOT REMOVE THIS CONTROL -->
+    <control type="image" id="300">
+        <left>0</left>
+        <top>0</top>
+        <bottom>0</bottom>
+        <right>0</right>
+        <texture>default.png</texture>
+    </control>
+</controls>
+</window>
