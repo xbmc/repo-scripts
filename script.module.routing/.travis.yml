@@ -1,0 +1,19 @@
+language: python
+
+python:
+- '2.7'
+- '3.6'
+- '3.7'
+
+sudo: false
+
+env:
+  PYTHONPATH: lib
+
+install:
+- pip install -r requirements.txt
+
+script:
+- pylint lib/*.py
+- pytest lib/tests.py
+#- if [[ $TRAVIS_PYTHON_VERSION != 2.7 ]]; then (kodi-addon-checker --branch=krypton .); fi
