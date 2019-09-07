@@ -32,7 +32,7 @@ dateutil is available on PyPI
 https://pypi.python.org/pypi/python-dateutil/
 
 The documentation is hosted at:
-https://dateutil.readthedocs.org/
+https://dateutil.readthedocs.io/
 
 Code
 ====
@@ -103,10 +103,10 @@ It is maintained by:
 
 * Gustavo Niemeyer <gustavo@niemeyer.net> 2003-2011
 * Tomi Pieviläinen <tomi.pievilainen@iki.fi> 2012-2014
-* Yaron de Leeuw <me@jarondl.net> 2014-
+* Yaron de Leeuw <me@jarondl.net> 2014-2016
 * Paul Ganssle <paul@ganssle.io> 2015-
 
-Our mailing list is available at `dateutil@python.org <https://mail.python.org/mailman/listinfo/dateutil>`_. As it is hosted by the PSF, it is subject to the `PSF code of 
+Our mailing list is available at `dateutil@python.org <https://mail.python.org/mailman/listinfo/dateutil>`_. As it is hosted by the PSF, it is subject to the `PSF code of
 conduct <https://www.python.org/psf/codeofconduct/>`_.
 
 Building and releasing
@@ -124,7 +124,7 @@ previous release. A table of release signing keys can be found below:
 ===========  ============================
 Releases     Signing key fingerprint
 ===========  ============================
-2.4.1-       `0xCD54FCE3D964BEFB`_
+2.4.1-       `6B49 ACBA DCF6 BD1C A206 67AB CD54 FCE3 D964 BEFB`_
 ===========  ============================
 
 Testing
@@ -134,10 +134,10 @@ dateutil has a comprehensive test suite, which can be run simply by running
 zoneinfo database, some tests will fail. Apart from that, all tests should pass.
 
 To easily test dateutil against all supported Python versions, you can use
-`tox <https://tox.readthedocs.org/en/latest/>`_.
+`tox <https://tox.readthedocs.io/en/latest/>`_.
 
 All github pull requests are automatically tested using travis and appveyor.
 
 
-.. _0xCD54FCE3D964BEFB:
+.. _6B49 ACBA DCF6 BD1C A206 67AB CD54 FCE3 D964 BEFB:
    https://pgp.mit.edu/pks/lookup?op=vindex&search=0xCD54FCE3D964BEFB

@@ -16,8 +16,10 @@ except ImportError:
     from fractions import gcd
 
 from six import advance_iterator, integer_types
-from six.moves import _thread
+from six.moves import _thread, range
 import heapq
+
+from ._common import weekday as weekdaybase
 
 # For warning about deprecation of until and count
 from warnings import warn
@@ -44,7 +46,7 @@ del M29, M30, M31, M365MASK[59], MDAY365MASK[59], NMDAY365MASK[31]
 MDAY365MASK = tuple(MDAY365MASK)
 M365MASK = tuple(M365MASK)
 
-FREQNAMES = ['YEARLY','MONTHLY','WEEKLY','DAILY','HOURLY','MINUTELY','SECONDLY']
+FREQNAMES = ['YEARLY', 'MONTHLY', 'WEEKLY', 'DAILY', 'HOURLY', 'MINUTELY', 'SECONDLY']
 
 (YEARLY,
  MONTHLY,
@@ -59,38 +61,18 @@ easter = None
 parser = None
 
 
-class weekday(object):
-    __slots__ = ["weekday", "n"]
-
-    def __init__(self, weekday, n=None):
+class weekday(weekdaybase):
+    """
+    This version of weekday does not allow n = 0.
+    """
+    def __init__(self, wkday, n=None):
         if n == 0:
-            raise ValueError("Can't create weekday with n == 0")
+            raise ValueError("Can't create weekday with n==0")
 
-        self.weekday = weekday
-        self.n = n
+        super(weekday, self).__init__(wkday, n)
 
-    def __call__(self, n):
-        if n == self.n:
-            return self
-        else:
-            return self.__class__(self.weekday, n)
 
-    def __eq__(self, other):
-        try:
-            if self.weekday != other.weekday or self.n != other.n:
-                return False
-        except AttributeError:
-            return False
-        return True
-
-    def __repr__(self):
-        s = ("MO", "TU", "WE", "TH", "FR", "SA", "SU")[self.weekday]
-        if not self.n:
-            return s
-        else:
-            return "%s(%+d)" % (s, self.n)
-
-MO, TU, WE, TH, FR, SA, SU = weekdays = tuple([weekday(x) for x in range(7)])
+MO, TU, WE, TH, FR, SA, SU = weekdays = tuple(weekday(x) for x in range(7))
 
 
 def _invalidates_cache(f):
@@ -276,12 +258,12 @@ class rrulebase(object):
         n = 0
         for d in gen:
             if comp(d, dt):
-                yield d
-
                 if count is not None:
                     n += 1
-                    if n >= count:
+                    if n > count:
                         break
+
+                yield d
 
     def between(self, after, before, inc=False, count=1):
         """ Returns all the occurrences of the rrule between after and before.
@@ -383,7 +365,7 @@ class rrule(rrulebase):
         limit of the recurrence. The last recurrence in the rule is the greatest
         datetime that is less than or equal to the value specified in the
         ``until`` parameter.
-        
+
         .. note::
             As of version 2.5.0, the use of the ``until`` keyword together
             with the ``count`` keyword is deprecated per RFC-2445 Sec. 4.3.10.
@@ -464,7 +446,7 @@ class rrule(rrulebase):
             until = datetime.datetime.fromordinal(until.toordinal())
         self._until = until
 
-        if count and until:
+        if count is not None and until:
             warn("Using both 'count' and 'until' is inconsistent with RFC 2445"
                  " and has been deprecated in dateutil. Future versions will "
                  "raise an error.", DeprecationWarning)
@@ -553,8 +535,8 @@ class rrule(rrulebase):
 
             bymonthday = set(bymonthday)            # Ensure it's unique
 
-            self._bymonthday = tuple(sorted([x for x in bymonthday if x > 0]))
-            self._bynmonthday = tuple(sorted([x for x in bymonthday if x < 0]))
+            self._bymonthday = tuple(sorted(x for x in bymonthday if x > 0))
+            self._bynmonthday = tuple(sorted(x for x in bymonthday if x < 0))
 
             # Storing positive numbers first, then negative numbers
             if 'bymonthday' not in self._original_rule:
@@ -707,9 +689,9 @@ class rrule(rrulebase):
             parts.append('INTERVAL=' + str(self._interval))
 
         if self._wkst:
-            parts.append('WKST=' + str(self._wkst))
+            parts.append('WKST=' + repr(weekday(self._wkst))[0:2])
 
-        if self._count:
+        if self._count is not None:
             parts.append('COUNT=' + str(self._count))
 
         if self._until:
@@ -750,6 +732,20 @@ class rrule(rrulebase):
 
         output.append(';'.join(parts))
         return '\n'.join(output)
+
+    def replace(self, **kwargs):
+        """Return new rrule with same attributes except for those attributes given new
+           values by whichever keyword arguments are specified."""
+        new_kwargs = {"interval": self._interval,
+                      "count": self._count,
+                      "dtstart": self._dtstart,
+                      "freq": self._freq,
+                      "until": self._until,
+                      "wkst": self._wkst,
+                      "cache": False if self._cache is None else True }
+        new_kwargs.update(self._original_rule)
+        new_kwargs.update(kwargs)
+        return rrule(**new_kwargs)
 
     def _iter(self):
         year, month, day, hour, minute, second, weekday, yearday, _ = \
@@ -849,13 +845,13 @@ class rrule(rrulebase):
                         self._len = total
                         return
                     elif res >= self._dtstart:
-                        total += 1
-                        yield res
-                        if count:
+                        if count is not None:
                             count -= 1
-                            if not count:
+                            if count < 0:
                                 self._len = total
                                 return
+                        total += 1
+                        yield res
             else:
                 for i in dayset[start:end]:
                     if i is not None:
@@ -866,13 +862,14 @@ class rrule(rrulebase):
                                 self._len = total
                                 return
                             elif res >= self._dtstart:
-                                total += 1
-                                yield res
-                                if count:
+                                if count is not None:
                                     count -= 1
-                                    if not count:
+                                    if count < 0:
                                         self._len = total
                                         return
+
+                                total += 1
+                                yield res
 
             # Handle frequency and interval
             fixday = False
@@ -1560,7 +1557,7 @@ class _rrulestr(object):
                 elif name == "EXDATE":
                     for parm in parms:
                         if parm != "VALUE=DATE-TIME":
-                            raise ValueError("unsupported RDATE parm: "+parm)
+                            raise ValueError("unsupported EXDATE parm: "+parm)
                     exdatevals.append(value)
                 elif name == "DTSTART":
                     for parm in parms:
@@ -1606,6 +1603,7 @@ class _rrulestr(object):
 
     def __call__(self, s, **kwargs):
         return self._parse_rfc(s, **kwargs)
+
 
 rrulestr = _rrulestr()
 
