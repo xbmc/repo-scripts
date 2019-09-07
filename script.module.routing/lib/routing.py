@@ -123,7 +123,8 @@ class Plugin:
     def run(self, argv=None):
         if argv is None:
             argv = sys.argv
-        self.path = urlsplit(argv[0]).path or '/'
+        self.path = urlsplit(argv[0]).path
+        self.path = self.path.rstrip('/')
         if len(argv) > 2:
             self.args = parse_qs(argv[2].lstrip('?'))
         self._dispatch(self.path)
@@ -145,6 +146,7 @@ class Plugin:
 class UrlRule:
 
     def __init__(self, pattern):
+        pattern = pattern.rstrip('/')
         kw_pattern = r'<(?:[^:]+:)?([A-z]+)>'
         self._pattern = re.sub(kw_pattern, '{\\1}', pattern)
         self._keywords = re.findall(kw_pattern, pattern)
@@ -160,10 +162,6 @@ class UrlRule:
         Check if path matches this rule. Returns a dictionary of the extracted
         arguments if match, otherwise None.
         """
-        # Strip trailing slashes
-        if len(path) > 1:
-            path = path.rstrip('/')
-
         # match = self._regex.search(urlsplit(path).path)
         match = self._regex.search(path)
         return match.groupdict() if match else None

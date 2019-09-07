@@ -114,9 +114,26 @@ def test_arg_parsing(plugin):
     plugin.run(['plugin://py.test/foo', '0', '?bar=baz'])
     assert plugin.args['bar'][0] == 'baz'
 
+def test_trailing_slash_in_route_definition(plugin):
+    """ Should call registered route with trailing slash. """
+    f = mock.create_autospec(lambda: None)
+    plugin.route("/foo/")(f)
+    plugin.run(['plugin://py.test/foo', '0'])
+    assert f.call_count == 1
 
-def test_trailing_slashes():
-    assert UrlRule("/p/<foo>").match("/p/bar") == {'foo': 'bar'}
-    assert UrlRule("/p/<foo>").match("/p/bar/") == {'foo': 'bar'}
-    assert UrlRule("/p/<foo>").match("/p/bar//") == {'foo': 'bar'}
-    assert UrlRule("/p/<foo>").match("/p/bar///") == {'foo': 'bar'}
+def test_trailing_slashes_in_run(plugin):
+    """ Should call registered route without trailing slash. """
+    f = mock.create_autospec(lambda: None)
+    plugin.route("/foo")(f)
+    plugin.run(['plugin://py.test/foo/', '0'])
+    assert f.call_count == 1
+
+def test_trailing_slash_handling_for_root(plugin):
+    f = mock.create_autospec(lambda: None)
+    plugin.route("/<a>")(lambda: None)
+    plugin.route("/")(f)
+    plugin.run(['plugin://py.test/', '0'])
+    plugin.run(['plugin://py.test', '0'])
+    assert f.call_count == 2
+    with pytest.raises(RoutingError):
+        plugin.run(['plugin://py.test/a/b', '0'])
