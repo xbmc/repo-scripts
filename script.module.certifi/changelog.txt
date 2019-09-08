@@ -1,7 +1,0 @@
-[B]Version 2019.3.9[/B]
-
-- certifi 2019.3.9
-
-[B]Version 2017.07.27.1[/B]
-
-- certifi 2017.07.27.1
