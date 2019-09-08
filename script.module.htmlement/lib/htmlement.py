@@ -61,7 +61,7 @@ __repo__ = "https://github.com/willforde/python-htmlement"
 __copyright__ = "Copyright (C) 2016 William Forde"
 __author__ = "William Forde"
 __license__ = "MIT"
-__version__ = "0.2.3"
+__version__ = "1.0.0"
 __credit__ = "Rafael Marmelo"
 
 # Add missing codepoints
@@ -73,16 +73,16 @@ def fromstring(text, tag="", attrs=None, encoding=None):
     Parse's "HTML" document from a string into an element tree.
 
     :param text: The "HTML" document to parse.
-    :type text: bytes or unicode
+    :type text: str or bytes
 
     :param str tag: (optional) Name of "tag / element" which is used to filter down "the tree" to a required section.
-    :type tag: unicode
+    :type tag: str
 
     :param attrs: (optional) The attributes of the element, that will be used, when searchingfor the required section.
-    :type attrs: dict(unicode, unicode)
+    :type attrs: dict(str, str)
 
     :param encoding: (optional) Encoding used, when decoding the source data before feeding it to the parser.
-    :type encoding: bytes or unicode
+    :type encoding: str
 
     :return: The root element of the element tree.
     :rtype: xml.etree.ElementTree.Element
@@ -99,16 +99,16 @@ def fromstringlist(sequence, tag="", attrs=None, encoding=None):
     Parses an "HTML document" from a sequence of "HTML sections" into an element tree.
 
     :param sequence: A sequence of "HTML sections" to parse.
-    :type sequence: list(bytes or unicode)
+    :type sequence: list(str or bytes)
 
     :param str tag: (optional) Name of "tag / element" which is used to filter down "the tree" to a required section.
-    :type tag: unicode
+    :type tag: str
 
     :param attrs: (optional) The attributes of the element, that will be used, when searchingfor the required section.
-    :type attrs: dict(unicode, unicode)
+    :type attrs: dict(str, str)
 
     :param encoding: (optional) Encoding used, when decoding the source data before feeding it to the parser.
-    :type encoding: bytes or unicode
+    :type encoding: str
 
     :return: The root element of the element tree.
     :rtype: xml.etree.ElementTree.Element
@@ -126,16 +126,16 @@ def parse(source, tag="", attrs=None, encoding=None):
     Load an external "HTML document" into an element tree.
 
     :param source: A filename or file like object containing HTML data.
-    :type source: bytes or unicode or io.TextIOBase
+    :type source: str or io.TextIOBase
 
     :param str tag: (optional) Name of "tag / element" which is used to filter down "the tree" to a required section.
-    :type tag: unicode
+    :type tag: str
 
     :param attrs: (optional) The attributes of the element, that will be used, when searchingfor the required section.
-    :type attrs: dict(unicode, unicode)
+    :type attrs: dict(str, str)
 
     :param encoding: (optional) Encoding used, when decoding the source data before feeding it to the parser.
-    :type encoding: bytes or unicode
+    :type encoding: str
 
     :return: The root element of the element tree.
     :rtype: xml.etree.ElementTree.Element
@@ -185,13 +185,13 @@ class HTMLement(object):
     `False` will only give a match if given attribute does not exist in the element.
 
     :param str tag: (optional) Name of "tag / element" which is used to filter down "the tree" to a required section.
-    :type tag: unicode
+    :type tag: str
 
     :param attrs: (optional) The attributes of the element, that will be used, when searchingfor the required section.
-    :type attrs: dict(unicode, unicode)
+    :type attrs: dict(str, str)
 
     :param encoding: (optional) Encoding used, when decoding the source data before feeding it to the parser.
-    :type encoding: bytes or unicode
+    :type encoding: str
 
     .. _Xpath: https://docs.python.org/3.6/library/xml.etree.elementtree.html#xpath-support
     __ XPath_
@@ -210,12 +210,12 @@ class HTMLement(object):
         Otherwise encoding will default to "ISO-8859-1"
 
         :param data: HTML data
-        :type data: bytes or unicode
+        :type data: str or bytes
 
         :raises UnicodeDecodeError: If decoding of *data* fails.
         """
         # Skip feeding data into parser if we already have what we want
-        if self._finished is True:
+        if self._finished == 1:
             return None
 
         # Make sure that we have unicode before continuing
@@ -251,7 +251,7 @@ class HTMLement(object):
         :type data: bytes
 
         :return: HTML data decoded.
-        :rtype: unicode
+        :rtype: str
         """
         # Atemp to find the encoding from the html source
         end_head_tag = data.find(b"</head>")
@@ -287,7 +287,7 @@ class ParseHTML(HTMLParser):
         if attrs:
             self.attrs = attrs
             for key, value in attrs.copy().items():
-                if value is False:
+                if value == 0:
                     self._unw_attrs.append(key)
                     del attrs[key]
         else:
@@ -399,7 +399,7 @@ class ParseHTML(HTMLParser):
 
     def close(self):
         self._flush()
-        if self.enabled is False:
+        if self.enabled == 0:
             msg = "Unable to find requested section with tag of '{}' and attributes of {}"
             raise RuntimeError(msg.format(self.tag, self.attrs))
         elif self._root is not None:
@@ -442,7 +442,7 @@ class ParseHTML(HTMLParser):
                         # Check for wanted attrs
                         elif key in wanted_attrs:
                             c_value = wanted_attrs[key]
-                            if c_value == value or c_value is True:
+                            if c_value == value or c_value == 1:
                                 # Remove this attribute from the wanted dict of attributes
                                 # to indicate that this attribute has been found
                                 del wanted_attrs[key]
