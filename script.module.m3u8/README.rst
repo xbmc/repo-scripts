@@ -4,6 +4,12 @@
 .. image:: https://coveralls.io/repos/globocom/m3u8/badge.png?branch=master
     :target: https://coveralls.io/r/globocom/m3u8?branch=master
 
+.. image:: https://gemnasium.com/leandromoreira/m3u8.svg
+    :target: https://gemnasium.com/leandromoreira/m3u8
+
+.. image:: https://badge.fury.io/py/m3u8.svg
+    :target: https://badge.fury.io/py/m3u8
+
 
 m3u8
 ====
@@ -28,20 +34,104 @@ directly from a string:
 
     m3u8_obj = m3u8.loads('#EXTM3U8 ... etc ... ')
 
-Encryption key
---------------
+Supported tags
+=============
 
-The segments may be encrypted, in this case the ``key`` attribute will
-be an object with all the attributes from `#EXT-X-KEY`_:
+* #EXT-X-TARGETDURATION
+* #EXT-X-MEDIA-SEQUENCE
+* #EXT-X-DISCONTINUITY-SEQUENCE
+* #EXT-X-PROGRAM-DATE-TIME
+* #EXT-X-MEDIA
+* #EXT-X-PLAYLIST-TYPE
+* #EXT-X-KEY
+* #EXT-X-STREAM-INF
+* #EXT-X-VERSION
+* #EXT-X-ALLOW-CACHE
+* #EXT-X-ENDLIST
+* #EXTINF
+* #EXT-X-I-FRAMES-ONLY
+* #EXT-X-BYTERANGE
+* #EXT-X-I-FRAME-STREAM-INF
+* #EXT-X-DISCONTINUITY
+* #EXT-X-CUE-OUT
+* #EXT-X-CUE-OUT-CONT
+* #EXT-X-INDEPENDENT-SEGMENTS
+* #EXT-OATCLS-SCTE35
+* #EXT-X-CUE-OUT
+* #EXT-X-CUE-IN
+* #EXT-X-CUE-SPAN
+* #EXT-X-MAP
+* #EXT-X-START
+
+Encryption keys
+---------------
+
+The segments may be or not encrypted. The ``keys`` attribute list will
+be an list  with all the different keys as described with `#EXT-X-KEY`_:
+
+Each key has the next properties:
 
 -  ``method``: ex.: "AES-128"
 -  ``uri``: the key uri, ex.: "http://videoserver.com/key.bin"
 -  ``iv``: the initialization vector, if available. Otherwise ``None``.
 
-If no ``#EXT-X-KEY`` is found, the ``key`` attribute will be ``None``.
+If no ``#EXT-X-KEY`` is found, the ``keys`` list will have a unique element ``None``. Multiple keys are supported.
 
-Multiple keys are not supported yet (and has a low priority), follow
-`issue 1`_ for updates.
+If unencrypted and encrypted segments are mixed in the M3U8 file, then the list will contain a ``None`` element, with one
+or more keys afterwards.
+
+To traverse the list of keys available:
+
+::
+
+    import m3u8
+
+    m3u8_obj = m3u8.loads('#EXTM3U8 ... etc ...')
+    len(m3u8_obj.keys) => returns the number of keys available in the list (normally 1)
+    for key in m3u8_obj.keys:
+       if key:  # First one could be None
+          key.uri
+          key.method
+          key.iv
+
+
+Getting segments encrypted with one key
+---------------------------------------
+
+There are cases where listing segments for a given key is important. It's possible to
+retrieve the list of segments encrypted with one key via ``by_key`` method in the
+``segments`` list.
+
+Example of getting the segments with no encryption:
+
+::
+
+    import m3u8
+
+    m3u8_obj = m3u8.loads('#EXTM3U8 ... etc ...')
+    segmk1 = m3u8_obj.segments.by_key(None)
+
+    # Get the list of segments encrypted using last key
+    segm = m3u8_obj.segments.by_key( m3u8_obj.keys[-1] )
+
+
+With this method, is now possible also to change the key from some of the segments programatically:
+
+
+::
+
+    import m3u8
+
+    m3u8_obj = m3u8.loads('#EXTM3U8 ... etc ...')
+
+    # Create a new Key and replace it
+    new_key = m3u8.Key("AES-128", "/encrypted/newkey.bin", None, iv="0xf123ad23f22e441098aa87ee")
+    for segment in m3u8_obj.segments.by_key( m3u8_obj.keys[-1] ):
+        segm.key = new_key
+    # Remember to sync the key from the list as well
+    m3u8_obj.keys[-1] = new_key
+
+
 
 Variant playlists (variable bitrates)
 -------------------------------------
@@ -115,16 +205,16 @@ If you plan to implement a new feature or something that will take more
 than a few minutes, please open an issue to make sure we don't work on
 the same thing.
 
-.. _m3u8: http://tools.ietf.org/html/draft-pantos-http-live-streaming-09
+.. _m3u8: https://tools.ietf.org/html/draft-pantos-http-live-streaming-20
 .. _#EXT-X-KEY: http://tools.ietf.org/html/draft-pantos-http-live-streaming-07#section-3.3.4
 .. _issue 1: https://github.com/globocom/m3u8/issues/1
 .. _variant streams: http://tools.ietf.org/html/draft-pantos-http-live-streaming-08#section-6.2.4
 .. _example here: http://tools.ietf.org/html/draft-pantos-http-live-streaming-08#section-8.5
-.. _#EXT-X-STREAM-INF: http://tools.ietf.org/html/draft-pantos-http-live-streaming-08#section-3.4.10
+.. _#EXT-X-STREAM-INF: https://tools.ietf.org/html/draft-pantos-http-live-streaming-16#section-4.3.4.2
 .. _issue 4: https://github.com/globocom/m3u8/issues/4
-.. _I-frame playlists: http://tools.ietf.org/html/draft-pantos-http-live-streaming-08#section-3.4.12
+.. _I-frame playlists: https://tools.ietf.org/html/draft-pantos-http-live-streaming-16#section-4.3.4.3
 .. _Apple's documentation: https://developer.apple.com/library/ios/technotes/tn2288/_index.html#//apple_ref/doc/uid/DTS40012238-CH1-I_FRAME_PLAYLIST
 .. _Alternative audio: http://tools.ietf.org/html/draft-pantos-http-live-streaming-08#section-8.7
-.. _#EXT-X-MEDIA: http://tools.ietf.org/html/draft-pantos-http-live-streaming-08#section-3.4.9
+.. _#EXT-X-MEDIA: https://tools.ietf.org/html/draft-pantos-http-live-streaming-16#section-4.3.4.1
 .. _VOD: https://developer.apple.com/library/mac/technotes/tn2288/_index.html#//apple_ref/doc/uid/DTS40012238-CH1-TNTAG2
 .. _EVENT: https://developer.apple.com/library/mac/technotes/tn2288/_index.html#//apple_ref/doc/uid/DTS40012238-CH1-EVENT_PLAYLIST
