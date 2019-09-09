@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <addon id="service.subtitles.rvm.addic7ed"
   name="Addic7ed.com"
-  version="3.1.0"
+  version="3.1.1"
   provider-name="Roman V.M.">
 <requires>
   <import addon="xbmc.python" version="2.25.0"/>
@@ -17,17 +17,27 @@
   <summary lang="en_GB">Addic7ed.com Subtitles</summary>
   <summary lang="ru_RU">Субтитры Addic7ed.com</summary>
   <summary lang="uk_UA">Субтитри Addic7ed.com</summary>
+  <summary lang="fr_FR">Sous-titres Addic7ed.com</summary>
+  <summary lang="nl_NL">Addic7ed.com Ondertitels</summary>
   <description lang="en_GB">Subtitles service for Addic7ed.com. It supports only TV shows.</description>
   <description lang="ru_RU">Служба субтитров для сайта Addic7ed.com. Служба поддерживает только сериалы.</description>
   <description lang="uk_UA">Служба субтитрів для сайту Addic7ed.com. Служба підтримує лише серіали.</description>
+  <description lang="fr_FR">Service de sous-titres pour Addic7ed.com. Fonctionne uniquement pour les séries TV.</description>
+  <description lang="nl_NL">Ondertiteling dienst voor Addic7ed.com. Ondersteunt enkel TV series.</description>
   <platform>all</platform>
   <source>https://github.com/romanvm/service.addic7ed</source>
+  <website>www.addic7ed.com</website>
   <license>GPL v.3</license>
   <assets>
     <icon>icon.png</icon>
     <fanart>fanart.jpg</fanart>
   </assets>
-  <news>v.3.1.0:
+  <news>v.3.1.1:
+- Fixed search enpdoint URL.
+- Added French translation
+- Added Dutch translation
+
+v.3.1.0:
 - Removed login feature because of changes on Addic7ed.com.
 - Fixed exception when a filename contained a non-ASCII character.
 - Various optimizations.</news>

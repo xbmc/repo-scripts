@@ -1,0 +1,80 @@
+# XBMC Media Center language file
+msgid ""
+msgstr ""
+
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: fr\n"
+
+
+msgctxt "#32000"
+msgid "Success!"
+msgstr "Succès!"
+
+msgctxt "#32001"
+msgid "Subtitles downloaded."
+msgstr "Sous-titres téléchargés."
+
+msgctxt "#32002"
+msgid "Error!"
+msgstr "Erreur!"
+
+msgctxt "#32003"
+msgid "Exceeded daily limit for subs downloads."
+msgstr "Limite journalière de téléchargements dépassée."
+
+msgctxt "#32004"
+msgid "Unable to download subtitles."
+msgstr "Erreur lors du téléchargement."
+
+msgctxt "#32005"
+msgid "Unable to connect to addic7ed.com."
+msgstr "Impossible de se connecter à addic7ed.com."
+
+msgctxt "#32006"
+msgid "Unable to determine episode data."
+msgstr "Impossible d'identifier les données de l'épisode."
+
+msgctxt "#32007"
+msgid "Always use filename for subs search"
+msgstr "Toujours utiliser le nom de fichier pour les recherches"
+
+msgctxt "#32008"
+msgid "Select episode"
+msgstr "Sélectionner l'épisode"
+
+msgctxt "#32009"
+msgid "Login error!"
+msgstr "Erreur de connexion!"
+
+msgctxt "#32010"
+msgid "Login to Addic7ed.com"
+msgstr "Connexion à Addic7ed.com"
+
+msgctxt "#32011"
+msgid "Username"
+msgstr "Nom utilisateur"
+
+msgctxt "#32012"
+msgid "Password"
+msgstr "Mot de passe"
+
+msgctxt "#32013"
+msgid "Clean cookies"
+msgstr "Effacer les cookies"
+
+msgctxt "#32014"
+msgid "This will logout you from Addic7ed.com."
+msgstr "Cela va vous déconnecter d'Addic7ed.com."
+
+msgctxt "#32015"
+msgid "Are you sure?"
+msgstr "Êtes-vous sûr(e)?"
+
+msgctxt "#32016"
+msgid "Cookies removed successfully."
+msgstr "Cookies effacés avec succès."
+
+msgctxt "#32017"
+msgid "Unable to remove cookies!"
+msgstr "Impossible d'effacer les cookies!"
