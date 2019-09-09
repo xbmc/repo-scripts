@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.module.mysql.connector" name="mysql-connector" version="8.0.17" provider-name="dagwieers">
+  <requires>
+    <import addon="xbmc.python" version="2.1.0"/>
+  </requires>
+  <extension point="xbmc.python.module" library="lib"/>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en_GB">MySQL driver for Python</summary>
+    <description lang="en_GB">MySQL driver written in Python which does not depend on MySQL C client libraries and implements the DB API v2.0 specification (PEP-249).</description>
+    <platform>all</platform>
+    <license>GPL License</license>
+    <source>https://pypi.org/project/mysql-connector-python/</source>
+    <website>https://dev.mysql.com/doc/connector-python/en/</website>
+    <assets>
+      <icon>icon.png</icon>
+    </assets>
+  </extension>
+</addon>
