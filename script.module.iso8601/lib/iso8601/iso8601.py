@@ -3,21 +3,18 @@
 Basic usage:
 >>> import iso8601
 >>> iso8601.parse_date("2007-01-25T12:00:00Z")
-datetime.datetime(2007, 1, 25, 12, 0, tzinfo=<iso8601.iso8601.Utc ...>)
+datetime.datetime(2007, 1, 25, 12, 0, tzinfo=<iso8601.Utc ...>)
 >>>
 
 """
 
-from datetime import (
-    datetime,
-    timedelta,
-    tzinfo
-)
+import datetime
 from decimal import Decimal
 import sys
 import re
 
-__all__ = ["parse_date", "ParseError", "UTC"]
+__all__ = ["parse_date", "ParseError", "UTC",
+           "FixedOffset"]
 
 if sys.version_info >= (3, 0, 0):
     _basestring = str
@@ -73,61 +70,69 @@ ISO8601_REGEX = re.compile(
 class ParseError(Exception):
     """Raised when there is a problem parsing a date string"""
 
-# Yoinked from python docs
-ZERO = timedelta(0)
-class Utc(tzinfo):
-    """UTC Timezone
+if sys.version_info >= (3, 2, 0):
+    UTC = datetime.timezone.utc
+    def FixedOffset(offset_hours, offset_minutes, name):
+        return datetime.timezone(
+            datetime.timedelta(
+                hours=offset_hours, minutes=offset_minutes),
+            name)
+else:
+    # Yoinked from python docs
+    ZERO = datetime.timedelta(0)
+    class Utc(datetime.tzinfo):
+        """UTC Timezone
 
-    """
-    def utcoffset(self, dt):
-        return ZERO
+        """
+        def utcoffset(self, dt):
+            return ZERO
 
-    def tzname(self, dt):
-        return "UTC"
+        def tzname(self, dt):
+            return "UTC"
 
-    def dst(self, dt):
-        return ZERO
+        def dst(self, dt):
+            return ZERO
 
-    def __repr__(self):
-        return "<iso8601.Utc>"
+        def __repr__(self):
+            return "<iso8601.Utc>"
 
-UTC = Utc()
+    UTC = Utc()
 
-class FixedOffset(tzinfo):
-    """Fixed offset in hours and minutes from UTC
+    class FixedOffset(datetime.tzinfo):
+        """Fixed offset in hours and minutes from UTC
 
-    """
-    def __init__(self, offset_hours, offset_minutes, name):
-        self.__offset_hours = offset_hours  # Keep for later __getinitargs__
-        self.__offset_minutes = offset_minutes  # Keep for later __getinitargs__
-        self.__offset = timedelta(hours=offset_hours, minutes=offset_minutes)
-        self.__name = name
+        """
+        def __init__(self, offset_hours, offset_minutes, name):
+            self.__offset_hours = offset_hours  # Keep for later __getinitargs__
+            self.__offset_minutes = offset_minutes  # Keep for later __getinitargs__
+            self.__offset = datetime.timedelta(
+                hours=offset_hours, minutes=offset_minutes)
+            self.__name = name
 
-    def __eq__(self, other):
-        if isinstance(other, FixedOffset):
-            return (
-                (other.__offset == self.__offset)
-                and
-                (other.__name == self.__name)
-            )
-        if isinstance(other, tzinfo):
-            return other == self
-        return False
+        def __eq__(self, other):
+            if isinstance(other, FixedOffset):
+                return (
+                    (other.__offset == self.__offset)
+                    and
+                    (other.__name == self.__name)
+                )
+            return NotImplemented
 
-    def __getinitargs__(self):
-        return (self.__offset_hours, self.__offset_minutes, self.__name)
+        def __getinitargs__(self):
+            return (self.__offset_hours, self.__offset_minutes, self.__name)
 
-    def utcoffset(self, dt):
-        return self.__offset
+        def utcoffset(self, dt):
+            return self.__offset
 
-    def tzname(self, dt):
-        return self.__name
+        def tzname(self, dt):
+            return self.__name
 
-    def dst(self, dt):
-        return ZERO
+        def dst(self, dt):
+            return ZERO
 
-    def __repr__(self):
-        return "<FixedOffset %r %r>" % (self.__name, self.__offset)
+        def __repr__(self):
+            return "<FixedOffset %r %r>" % (self.__name, self.__offset)
+
 
 def to_int(d, key, default_to_zero=False, default=None, required=True):
     """Pull a value from the dict and convert to int
@@ -195,7 +200,7 @@ def parse_date(datestring, default_timezone=UTC):
     groups["second_fraction"] = int(Decimal("0.%s" % (groups["second_fraction"] or 0)) * Decimal("1000000.0"))
 
     try:
-        return datetime(
+        return datetime.datetime(
             year=to_int(groups, "year"),
             month=to_int(groups, "month", default=to_int(groups, "monthdash", required=False, default=1)),
             day=to_int(groups, "day", default=to_int(groups, "daydash", required=False, default=1)),
