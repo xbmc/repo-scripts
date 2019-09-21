@@ -11,6 +11,13 @@ from resources.lib.helper import *
 from resources.lib.json_map import *
 from resources.lib.library import get_joined_items
 
+# Disable image function for TVOS if ImportError
+try:
+    from resources.lib.image import *
+    PIL_supported = True
+except ImportError:
+    PIL_supported = False
+
 ########################
 
 class PlayerMonitor(xbmc.Monitor):
@@ -48,6 +55,9 @@ class PlayerMonitor(xbmc.Monitor):
                 self.get_videoinfo()
                 self.get_nextitem(clear=True)
                 self.get_nextitem()
+                if PIL_supported:
+                    self.get_art_info(clear=True)
+                    self.get_art_info()
 
             if PLAYER.isPlayingAudio() and not self.pvr_playback and visible('!String.IsEmpty(MusicPlayer.DBID) + [String.IsEmpty(Player.Art(thumb)) | String.IsEmpty(Player.Art(album.discart))]'):
                 self.get_songartworks()
@@ -60,10 +70,14 @@ class PlayerMonitor(xbmc.Monitor):
                 self.get_nextitem()
                 self.nextitem_lock = True
 
-        ''' Check if multiple audio tracks are available.
+        ''' Check if multiple audio tracks are available and refetch
+            artwork info for PVR playback.
         '''
         if method == 'Player.OnAVChange':
             self.get_audiotracks()
+            if PIL_supported and self.pvr_playback:
+                self.get_art_info(clear=True)
+                self.get_art_info()
 
         ''' Playback stopped. Clean up.
         '''
@@ -194,7 +208,7 @@ class PlayerMonitor(xbmc.Monitor):
             return
 
 
-    def get_nextitem(params,clear=False):
+    def get_nextitem(self,clear=False):
         try:
             if clear:
                 raise Exception
@@ -283,3 +297,16 @@ class PlayerMonitor(xbmc.Monitor):
         item.setPath(xbmc.Player().getPlayingFile())
         item.setArt(art)
         xbmc.Player().updateInfoTag(item)
+
+
+    def get_art_info(self,clear=False):
+        for art in ['Player.Icon', 'Player.Art(poster)', 'Player.Art(tvshow.poster)', 'Pvr.EPGEventIcon']:
+            if not clear:
+                width,height,ar = image_info(xbmc.getInfoLabel(art))
+                winprop(art + '.width',str(width))
+                winprop(art + '.height',str(height))
+                winprop(art + '.ar',str(ar))
+            else:
+                winprop(art + '.width',clear=True)
+                winprop(art + '.height',clear=True)
+                winprop(art + '.ar',clear=True)
