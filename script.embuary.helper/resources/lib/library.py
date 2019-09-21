@@ -322,7 +322,13 @@ def parse_episodes(li, item, append=False):
     li_item.setProperty('resumetime', str(item['resume']['position']))
     li_item.setProperty('totaltime', str(item['resume']['total']))
 
-    li_item.setArt({'icon': 'DefaultTVShows.png', 'fanart': item['art'].get('tvshow.fanart', ''), 'clearlogo': item['art'].get('tvshow.clearlogo', ''), 'landscape': item['art'].get('tvshow.landscape', ''), 'clearart': item['art'].get('tvshow.clearart', '')})
+    li_item.setArt({'icon': 'DefaultTVShows.png',
+                    'fanart': item['art'].get('tvshow.fanart', ''),
+                    'poster': item['art'].get('tvshow.poster', ''),
+                    'banner': item['art'].get('tvshow.banner', ''),
+                    'clearlogo': item['art'].get('tvshow.clearlogo', ''),
+                    'landscape': item['art'].get('tvshow.landscape', ''),
+                    'clearart': item['art'].get('tvshow.clearart', '')})
     li_item.setArt(item['art'])
 
     hasVideo = False

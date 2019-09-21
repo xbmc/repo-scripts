@@ -2,6 +2,7 @@
 #Based on script.toolbox by phil65 - https://github.com/phil65/script.toolbox/
 
 #################################################################################################
+from __future__ import division
 
 import xbmc
 import xbmcaddon
@@ -82,7 +83,7 @@ def image_blur(image,radius):
                     xbmcvfs.copy(image, targetfile)
                     img = Image.open(targetfile)
                     break
-            except Exception as error:
+            except Exception:
                 log('Could not get image for %s (try %i)' % (image, i))
                 xbmc.sleep(500)
 
@@ -102,6 +103,34 @@ def image_blur(image,radius):
     imagecolor = get_colors(img)
 
     return targetfile, imagecolor
+
+
+def image_info(image):
+    cachedthumb = xbmc.getCacheThumbName(image)
+    xbmc_vid_cache_file = os.path.join('special://profile/Thumbnails/Video', cachedthumb[0], cachedthumb)
+    xbmc_cache_jpg_file = os.path.join('special://profile/Thumbnails/', cachedthumb[0], cachedthumb[:-4] + '.jpg')
+    xbmc_cache_png_file = os.path.join('special://profile/Thumbnails/', cachedthumb[0], cachedthumb[:-4] + '.png')
+
+    for i in range(1, 10):
+        try:
+            if xbmcvfs.exists(xbmc_cache_jpg_file):
+                img = Image.open(xbmc.translatePath(xbmc_cache_jpg_file))
+            elif xbmcvfs.exists(xbmc_cache_png_file):
+                img = Image.open(xbmc.translatePath(xbmc_cache_png_file))
+            elif xbmcvfs.exists(xbmc_vid_cache_file):
+                img = Image.open(xbmc.translatePath(xbmc_vid_cache_file))
+            else:
+                raise Exception
+
+            width,height = img.size
+            ar = round(width / height,2)
+            return width,height,ar
+
+        except Exception:
+            xbmc.sleep(500)
+
+    log('Image info: Could not get cached image for %s' % image)
+    return '','',''
 
 
 def get_colors(img):

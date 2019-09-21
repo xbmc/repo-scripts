@@ -76,6 +76,7 @@ def createselect(params):
     selectionlist = []
     indexlist = []
     headertxt = remove_quotes(params.get('header', ''))
+    splitby = remove_quotes(params.get('splitby', '||'))
 
     for i in range(1, 30):
 
@@ -92,13 +93,31 @@ def createselect(params):
 
         if index > -1:
             value = xbmc.getInfoLabel('Window.Property(Dialog.%i.Builtin)' % (indexlist[index]))
-            for builtin in value.split('||'):
+            for builtin in value.split(splitby):
                 execute(builtin)
                 xbmc.sleep(30)
 
     for i in range(1, 30):
         execute('ClearProperty(Dialog.%i.Builtin)' % i)
         execute('ClearProperty(Dialog.%i.Label)' % i)
+
+
+def splitandcreateselect(params):
+    headertxt = remove_quotes(params.get('header', ''))
+    seperator = remove_quotes(params.get('seperator', ' / '))
+    splitby = remove_quotes(params.get('splitby', '||'))
+    selectionlist = remove_quotes(params.get('items')).split(seperator)
+
+    if selectionlist:
+        index = DIALOG.select(headertxt, selectionlist)
+
+        if index > -1:
+            value = xbmc.getInfoLabel('Window.Property(Dialog.Builtin)').replace('???',selectionlist[index])
+            for builtin in value.split(splitby):
+                execute(builtin)
+                xbmc.sleep(30)
+
+    execute('ClearProperty(Dialog.Builtin)')
 
 
 def dialogok(params):
@@ -210,6 +229,16 @@ def toggleaddons(params):
 
 def playsfx(params):
     xbmc.playSFX(remove_quotes(params.get('path', '')))
+
+
+def imginfo(params):
+    prop = remove_quotes(params.get('prop','img'))
+    img = params.get('img')
+    if img:
+        width,height,ar = image_info(img)
+        winprop(prop + '.width',str(width))
+        winprop(prop + '.height',str(height))
+        winprop(prop + '.ar',str(ar))
 
 
 def playitem(params):
@@ -430,7 +459,7 @@ def details_by_season(params):
 
 
 def txtfile(params):
-    prop = params.get('property')
+    prop = params.get('prop')
     path = xbmc.translatePath(remove_quotes(params.get('path')))
 
     if os.path.isfile(path):
@@ -477,11 +506,12 @@ def fontchange(params):
 def setinfo(params):
     dbid = params.get('dbid')
     dbtype = params.get('type')
-    value = params.get('value')
+    value = remove_quotes(params.get('value'))
 
     try:
         value = int(value)
     except Exception:
+        value = eval(value)
         pass
 
     if dbtype == 'movie':
@@ -495,8 +525,8 @@ def setinfo(params):
         key = 'tvshowid'
 
     json_call(method,
-                params={key: int(dbid), params.get('field'): value}
-                )
+            params={key: int(dbid), params.get('field'): value}
+            )
 
 
 def split(params):
