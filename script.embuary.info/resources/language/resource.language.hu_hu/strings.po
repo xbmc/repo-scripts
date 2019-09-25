@@ -49,7 +49,7 @@ msgstr ""
 " \n"
 "Nincs információ"
 
-#: /resources/lib/tmdb_utils.py
+#: /resources/lib/utils.py
 msgctxt "#32022"
 msgid "Invalid TheMovieDB API key"
 msgstr "Érvénytelen TheMovieDB API kulcs"

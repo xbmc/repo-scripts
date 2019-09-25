@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Embuary Helper\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2019-08-08 13:02+0000\n"
+"PO-Revision-Date: 2019-09-04 11:35+0000\n"
 "Last-Translator: sualfred <su4lfred@gmail.com>, 2019\n"
 "Language-Team: German (Germany) (https://www.transifex.com/sualfred/teams/80018/de_DE/)\n"
 "MIME-Version: 1.0\n"
@@ -44,7 +44,7 @@ msgctxt "#32019"
 msgid "No information found"
 msgstr "Keine Informationen gefunden"
 
-#: /resources/lib/tmdb_utils.py
+#: /resources/lib/utils.py
 msgctxt "#32022"
 msgid "Invalid TheMovieDB API key"
 msgstr "Ungültiger TheMovieDB API Key"
@@ -167,3 +167,68 @@ msgid ""
 msgstr ""
 "Personenauftritte in Specials / Dokumentationen / Behind the Scenes-Filmen "
 "ausblenden"
+
+#: /resources/lib/listing.py
+msgctxt "#32029"
+msgid "Top rated movies"
+msgstr "Bestbewertete Filme"
+
+#: /resources/lib/listing.py
+msgctxt "#32030"
+msgid "Now playing movies"
+msgstr "Aktuell laufende Filme"
+
+#: /resources/lib/listing.py
+msgctxt "#32031"
+msgid "Upcoming movies"
+msgstr "Kommende Filme"
+
+#: /resources/lib/listing.py
+msgctxt "#32032"
+msgid "Popular movies"
+msgstr "Beliebte Filme"
+
+#: /resources/lib/listing.py
+msgctxt "#32033"
+msgid "Top rated TV shows"
+msgstr "Bestbewertete Serien"
+
+#: /resources/lib/listing.py
+msgctxt "#32034"
+msgid "Popular TV shows"
+msgstr "Beliebte Serien"
+
+#: /resources/lib/listing.py
+msgctxt "#32035"
+msgid "TV shows airing today"
+msgstr "Heute laufende Serien"
+
+#: /resources/lib/listing.py
+msgctxt "#32036"
+msgid "TV shows airing in the next 7 days"
+msgstr "Serien-Ausstrahlungen der nächsten 7 Tage"
+
+#: /resources/skins/default/1080i/script-embuary-video.xml
+msgctxt "#32037"
+msgid "Collection"
+msgstr "Sammlung"
+
+#: /resources/skins/default/1080i/script-embuary-video.xml
+msgctxt "#32039"
+msgid "Guest stars"
+msgstr "Nebendarsteller"
+
+#: /resources/skins/default/1080i/script-embuary-video.xml
+msgctxt "#32040"
+msgid "Season"
+msgstr "Staffel"
+
+#: /plugin.py
+msgctxt "#32038"
+msgid "Widgets"
+msgstr "Widgets"
+
+#: /resources/settings.xml
+msgctxt "#32041"
+msgid "Hide items from similar movies if they are part of the collection"
+msgstr "Ähnliche Filme ausblenden, wenn sie Teil der Sammlung sind"

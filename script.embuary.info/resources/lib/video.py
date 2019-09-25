@@ -9,7 +9,11 @@ import xbmcgui
 import requests
 
 from resources.lib.helper import *
-from resources.lib.tmdb_utils import *
+from resources.lib.utils import *
+
+########################
+
+SIMILAR_FILTER = ADDON.getSettingBool('similar_movies_filter')
 
 ########################
 
@@ -24,29 +28,34 @@ class TMDBVideos(object):
         self.tvshow = get_bool(self.call,'tv')
 
         if self.tmdb_id:
-            cache_key = str(call_request) + DEFAULT_LANGUAGE + COUNTRY_CODE
+            cache_key = self.call + str(self.tmdb_id)
             self.details = get_cache(cache_key)
 
             if not self.details:
-                self.details = tmdb_item_details(self.call,self.tmdb_id,append_to_response='release_dates,content_ratings,external_ids,credits,videos,translations')
+                self.details = tmdb_query(action=self.call,
+                                            call=self.tmdb_id,
+                                            params={'append_to_response': 'release_dates,content_ratings,external_ids,credits,videos,translations,similar'}
+                                            )
+
+                write_cache(cache_key,self.details)
 
             if not self.details:
                 return
 
             self.created_by = self.details['created_by'] if self.details.get('created_by') else ''
-            self.cast = self.details['credits']['cast']
             self.crew = self.details['credits']['crew']
-            self.videos = self.details['videos']['results']
             self.details['crew'] = self.crew
+            self.similar_duplicate_handler = list()
 
             self.result['details'] = self.get_details()
             self.result['cast'] = self.get_cast()
             self.result['crew'] = self.get_crew()
+            self.result['collection'] = self.get_collection()
             self.result['similar'] = self.get_similar()
             self.result['youtube'] = self.get_yt_videos()
-            self.result['images'] = self.get_images()
+            self.result['backdrops'], self.result['posters'] = self.get_images()
+            self.result['seasons'] = self.get_seasons()
 
-            write_cache(cache_key,self.details)
 
     def __getitem__(self, key):
         return self.result.get(key,'')
@@ -65,7 +74,7 @@ class TMDBVideos(object):
     def get_cast(self):
         li = list()
 
-        for item in self.cast:
+        for item in self.details['credits']['cast']:
             item['label2'] = item.get('character','')
             list_item = tmdb_handle_credits(item)
             li.append(list_item)
@@ -126,15 +135,57 @@ class TMDBVideos(object):
 
         return li
 
+    def get_seasons(self):
+        seasons = self.details.get('seasons')
+        li = list()
+
+        if seasons:
+            for item in seasons:
+                if item['season_number'] == 0:
+                    continue
+                list_item = tmdb_handle_season(item,self.details)
+                li.append(list_item)
+
+        return li
+
+    def get_collection(self):
+        collection = self.details.get('belongs_to_collection')
+        li = list()
+
+        if collection:
+            collection_id = collection['id']
+
+            cache_key = 'collection' + str(collection_id)
+            collection_data = get_cache(cache_key)
+
+            if not collection_data:
+                collection_data = tmdb_query(action='collection',
+                                            call=collection_id
+                                            )
+
+                write_cache(cache_key,collection_data)
+
+            if collection_data['parts']:
+                set_items = sort_dict(collection_data['parts'],'release_date')
+                for item in set_items:
+                    list_item, is_local = tmdb_handle_movie(item,self.local_movies)
+                    li.append(list_item)
+
+                    if SIMILAR_FILTER:
+                        self.similar_duplicate_handler.append(item['id'])
+
+        return li
+
     def get_similar(self):
-        similar = tmdb_item_details(self.call,self.tmdb_id,'similar')
-        similar = similar['results']
+        similar = self.details['similar']['results']
         li = list()
 
         if self.movie:
             similar = sort_dict(similar,'release_date',True)
 
             for item in similar:
+                if SIMILAR_FILTER and item['id'] in self.similar_duplicate_handler:
+                   continue
                 list_item, is_local = tmdb_handle_movie(item,self.local_movies)
                 li.append(list_item)
 
@@ -148,35 +199,47 @@ class TMDBVideos(object):
         return li
 
     def get_images(self):
-        cache_key = str(self.tmdb_id) + self.call + 'images' + DEFAULT_LANGUAGE
+        cache_key = 'images' + str(self.tmdb_id)
         images = get_cache(cache_key)
-        li = list()
+        li_backdrops = list()
+        li_poster = list()
 
         if not images:
-            images = tmdb_item_details(self.call,self.tmdb_id,'images',use_language=False,include_image_language='%s,en,null' % DEFAULT_LANGUAGE)
-            images = images['backdrops']
+            images = tmdb_query(action=self.call,
+                                call=self.tmdb_id,
+                                get='images',
+                                params={'include_image_language': '%s,en,null' % DEFAULT_LANGUAGE}
+                                )
 
-            if images:
-                write_cache(cache_key,images)
+            write_cache(cache_key,images)
 
-        for item in images:
+        for item in images['backdrops']:
             list_item = tmdb_handle_images(item)
-            li.append(list_item)
+            li_backdrops.append(list_item)
 
-        return li
+        for item in images['posters']:
+            list_item = tmdb_handle_images(item)
+            li_poster.append(list_item)
+
+        return li_backdrops, li_poster
 
     def get_yt_videos(self):
-        cache_key = str(self.tmdb_id) + self.call + 'ytvideos' + DEFAULT_LANGUAGE
+        cache_key = 'ytvideos' + str(self.tmdb_id)
         videos = get_cache(cache_key)
         li = list()
 
         if not videos:
-            videos = self.videos
+            videos = self.details['videos']['results']
 
             ''' Add EN videos next to the user configured language
             '''
             if DEFAULT_LANGUAGE != FALLBACK_LANGUAGE:
-                videos_en = tmdb_item_details(self.call,self.tmdb_id,'videos',use_language=False)
+                videos_en = tmdb_query(action=self.call,
+                                        call=self.tmdb_id,
+                                        get='videos',
+                                        use_language=False
+                                        )
+
                 videos_en = videos_en.get('results')
                 videos = videos + videos_en
 
@@ -189,9 +252,7 @@ class TMDBVideos(object):
                     online_videos.append(item)
 
             videos = online_videos
-
-            if videos:
-                write_cache(cache_key,videos)
+            write_cache(cache_key,videos)
 
         for item in videos:
             if item['site'] == 'YouTube':

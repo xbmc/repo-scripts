@@ -20,6 +20,7 @@ The script provides a selection dialog if multiple results were returned.
 
 *  ```RunScript(script.embuary.info,call=person,tmbd_id=65)```
 *  ```RunScript(script.embuary.info,call=tv,tmbd_id=65)```
+*  ```RunScript(script.embuary.info,call=tv,tmbd_id=65,season=1)```
 *  ```RunScript(script.embuary.info,call=tv,external_id=70559)```
 *  ```RunScript(script.embuary.info,call=movie,tmbd_id=65)```
 *  ```RunScript(script.embuary.info,call=movie,external_id=tt0371746)```
@@ -64,7 +65,10 @@ Special properties:
 * List control ID `10053` = Similar titles
 * List control ID `10054` = YouTube results
 * List control ID `10055` = Backdrop images
-* List control ID `10056` = Crew
+* List control ID `10056` = Crew (for seasons it is used to display guest stars)
+* List control ID `10057` = Collection items
+* List control ID `10058` = Seasons
+* List control ID `10059` = Poster images
 
 Special properties for all items:
 * `Container(id).ListItem.Property(UnwatchedEpisodes)` = Local unwatched episodes
@@ -107,6 +111,10 @@ Special properties:
 * List control ID `1` = Is used to display a portrait/backdrop images in fullscreen.
 * Scrollbar control ID `2` = Will be the focused on window init.
 
+*additional properties*
+* Configured language code `Window(home).Property(script.embuary.info-language_code)`
+* Configured country code `Window(home).Property(script.embuary.info-country_code)`
+
 ## Overwriting onback or provide an additional onclose action
 You can add a custom onback or a general onclose action in script-embuary-video.xml and script-embuary-person.xml
 
@@ -114,5 +122,19 @@ You can add a custom onback or a general onclose action in script-embuary-video.
 
 * `<onload>SetProperty(onclose,SetFocus(100))</onload>` = To set a general action if a window is going to be closed. Like reseting the focus to a default control.
 * `<onload>SetProperty(onback_10052,SetFocus(900))</onload>` = Don't close the window, but set focus to ID 900 if onback was called while container 10052 was in focus.
+
+## Widgets
+The script ships following widgets:
+
+* `plugin://script.embuary.info/?info=movies&amp;call=upcoming` = upcoming movies
+* `plugin://script.embuary.info/?info=movies&amp;call=now_playing` = now playing movies
+* `plugin://script.embuary.info/?info=movies&amp;call=top_rated` = top rated movies
+* `plugin://script.embuary.info/?info=movies&amp;call=popular` = popular movies
+* `plugin://script.embuary.info/?info=tvshows&amp;call=top_rated` = top rates shows
+* `plugin://script.embuary.info/?info=tvshows&amp;call=popular` = popular shows
+* `plugin://script.embuary.info/?info=tvshows&amp;call=airing_today` = shows airing today
+* `plugin://script.embuary.info/?info=tvshows&amp;call=on_the_air` = shows on the air
+
+All of them can be accessed by the addons -> video addons node so it's easy to set them with the skinshortcuts script.
 
 

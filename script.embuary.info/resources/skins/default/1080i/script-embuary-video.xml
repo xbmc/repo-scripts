@@ -141,7 +141,15 @@
 								<font>font12</font>
 								<textcolor>ffffffff</textcolor>
 								<shadowcolor>50000000</shadowcolor>
-								<visible>!String.IsEmpty(Container(10051).ListItem.Season)</visible>
+								<visible>!String.IsEmpty(Container(10051).ListItem.Season) + !String.IsEqual(Container(10051).ListItem.DBType,season)</visible>
+							</control>
+							<control type="label">
+								<label>$INFO[Container(10051).ListItem.Season,$ADDON[script.embuary.info 32040] ]</label>
+								<width>auto</width>
+								<font>font12</font>
+								<textcolor>ffffffff</textcolor>
+								<shadowcolor>50000000</shadowcolor>
+								<visible>!String.IsEmpty(Container(10051).ListItem.Season) + String.IsEqual(Container(10051).ListItem.DBType,season)</visible>
 							</control>
 							<control type="label">
 								<label>$INFO[Container(10051).ListItem.Episode,$LOCALIZE[20360]: ]</label>
@@ -438,7 +446,7 @@
 						<width>100%</width>
 						<scrolltime>150</scrolltime>
 						<orientation>horizontal</orientation>
-						<ondown>10053</ondown>
+						<ondown>10056</ondown>
 						<onup>100</onup>
 						<itemlayout width="257">
 							<control type="group">
@@ -581,6 +589,524 @@
 				</control>
 			</control>
 
+			<!-- crew / guest stars -->
+			<control type="group">
+				<visible>true</visible>
+				<visible>Integer.IsGreater(Container(10056).NumItems,0) | Container(10056).IsUpdating</visible>
+				<width>100%</width>
+				<height>581</height>
+				<control type="group">
+					<control type="label">
+						<left>65</left>
+						<top>23</top>
+						<height>87</height>
+						<width>auto</width>
+						<font>font13</font>
+						<align>left</align>
+						<aligny>center</aligny>
+						<label>$ADDON[script.embuary.info 32018]</label>
+						<textcolor>ffffffff</textcolor>
+						<shadowcolor>50000000</shadowcolor>
+						<visible>!String.IsEqual(Container(10051).ListItem.DBType,season)</visible>
+					</control>
+					<control type="label">
+						<left>65</left>
+						<top>23</top>
+						<height>87</height>
+						<width>auto</width>
+						<font>font13</font>
+						<align>left</align>
+						<aligny>center</aligny>
+						<label>$ADDON[script.embuary.info 32039]</label>
+						<textcolor>ffffffff</textcolor>
+						<shadowcolor>50000000</shadowcolor>
+						<visible>String.IsEqual(Container(10051).ListItem.DBType,season)</visible>
+					</control>
+					<control type="fixedlist" id="10056">
+						<movement>6</movement>
+						<top>30</top>
+						<width>100%</width>
+						<scrolltime>150</scrolltime>
+						<orientation>horizontal</orientation>
+						<ondown>10057</ondown>
+						<onup>10052</onup>
+						<itemlayout width="257">
+							<control type="group">
+								<left>70</left>
+								<top>64</top>
+								<control type="image">
+									<width>237</width>
+									<height>355</height>
+									<texture colordiffuse="ff45d374">white.jpg</texture>
+									<aspectratio scalediffuse="false">stretch</aspectratio>
+									<visible>String.IsEmpty(ListItem.Art(thumb))</visible>
+								</control>
+								<control type="textbox">
+									<top>10</top>
+									<left>10</left>
+									<width>217</width>
+									<height>335</height>
+									<font>font13</font>
+									<textcolor>ffffffff</textcolor>
+									<shadowcolor>50000000</shadowcolor>
+									<align>center</align>
+									<aligny>center</aligny>
+									<label>$INFO[ListItem.Label]</label>
+									<visible>String.IsEmpty(ListItem.Art(thumb))</visible>
+								</control>
+								<control type="image">
+									<width>237</width>
+									<height>355</height>
+									<texture background="true">$INFO[ListItem.Art(thumb)]</texture>
+									<aspectratio scalediffuse="false">stretch</aspectratio>
+								</control>
+								<control type="label">
+									<top>363</top>
+									<height>50</height>
+									<width>237</width>
+									<font>font12</font>
+									<textcolor>ffffffff</textcolor>
+									<shadowcolor>50000000</shadowcolor>
+									<scroll>false</scroll>
+									<label>$INFO[ListItem.Label]</label>
+								</control>
+								<control type="label">
+									<top>397</top>
+									<height>50</height>
+									<width>237</width>
+									<font>font12</font>
+									<textcolor>ffffffff</textcolor>
+									<shadowcolor>50000000</shadowcolor>
+									<scroll>false</scroll>
+									<label>$INFO[ListItem.Label2]</label>
+								</control>
+							</control>
+						</itemlayout>
+						<focusedlayout width="257">
+							<control type="group">
+								<left>70</left>
+								<top>64</top>
+								<control type="image">
+									<left>-12</left>
+									<top>-7</top>
+									<width>261</width>
+									<height>379</height>
+									<texture border="20,20,20,20" colordiffuse="ff45d374">focus.png</texture>
+									<aspectratio>stretch</aspectratio>
+									<visible>Control.HasFocus(10056)</visible>
+								</control>
+								<control type="image">
+									<width>237</width>
+									<height>355</height>
+									<texture colordiffuse="ff45d374">white.jpg</texture>
+									<aspectratio scalediffuse="false">stretch</aspectratio>
+									<visible>String.IsEmpty(ListItem.Art(thumb))</visible>
+								</control>
+								<control type="textbox">
+									<top>10</top>
+									<left>10</left>
+									<width>217</width>
+									<height>335</height>
+									<font>font13</font>
+									<textcolor>ffffffff</textcolor>
+									<shadowcolor>50000000</shadowcolor>
+									<align>center</align>
+									<aligny>center</aligny>
+									<label>$INFO[ListItem.Label]</label>
+									<visible>String.IsEmpty(ListItem.Art(thumb))</visible>
+								</control>
+								<control type="image">
+									<width>237</width>
+									<height>355</height>
+									<texture background="true">$INFO[ListItem.Art(thumb)]</texture>
+									<aspectratio scalediffuse="false">stretch</aspectratio>
+								</control>
+								<control type="label">
+									<top>363</top>
+									<height>50</height>
+									<width>237</width>
+									<font>font12</font>
+									<textcolor>ffffffff</textcolor>
+									<shadowcolor>50000000</shadowcolor>
+									<label>$INFO[ListItem.Label]</label>
+									<scroll>false</scroll>
+									<visible>!Control.HasFocus(10056)</visible>
+								</control>
+								<control type="label">
+									<top>363</top>
+									<height>50</height>
+									<width>237</width>
+									<font>font12</font>
+									<textcolor>ff45d374</textcolor>
+									<shadowcolor>50000000</shadowcolor>
+									<label>$INFO[ListItem.Label]</label>
+									<scroll>true</scroll>
+									<visible>Control.HasFocus(10056)</visible>
+								</control>
+								<control type="label">
+									<top>397</top>
+									<height>50</height>
+									<width>237</width>
+									<font>font12</font>
+									<textcolor>ffffffff</textcolor>
+									<shadowcolor>50000000</shadowcolor>
+									<label>$INFO[ListItem.Label2]</label>
+									<scroll>false</scroll>
+									<visible>!Control.HasFocus(10056)</visible>
+								</control>
+								<control type="label">
+									<top>397</top>
+									<height>50</height>
+									<width>237</width>
+									<font>font12</font>
+									<textcolor>ffffffff</textcolor>
+									<shadowcolor>50000000</shadowcolor>
+									<label>$INFO[ListItem.Label2]</label>
+									<scroll>true</scroll>
+									<visible>Control.HasFocus(10056)</visible>
+								</control>
+							</control>
+						</focusedlayout>
+					</control>
+				</control>
+			</control>
+
+			<!-- collection -->
+			<control type="group">
+				<visible>true</visible>
+				<visible>Integer.IsGreater(Container(10057).NumItems,1) | Container(10057).IsUpdating</visible>
+				<width>100%</width>
+				<height>581</height>
+				<control type="group">
+					<control type="label">
+						<left>65</left>
+						<top>23</top>
+						<height>87</height>
+						<width>auto</width>
+						<font>font13</font>
+						<align>left</align>
+						<aligny>center</aligny>
+						<label>$ADDON[script.embuary.info 32037]: $INFO[Container(10051).ListItem.Property(collection)]</label>
+						<textcolor>ffffffff</textcolor>
+						<shadowcolor>50000000</shadowcolor>
+					</control>
+					<control type="fixedlist" id="10057">
+						<movement>6</movement>
+						<top>30</top>
+						<width>100%</width>
+						<scrolltime>150</scrolltime>
+						<orientation>horizontal</orientation>
+						<ondown>10058</ondown>
+						<onup>10056</onup>
+						<itemlayout width="257">
+							<control type="group">
+								<left>70</left>
+								<top>64</top>
+								<control type="image">
+									<width>237</width>
+									<height>355</height>
+									<texture colordiffuse="ff45d374">white.jpg</texture>
+									<aspectratio scalediffuse="false">stretch</aspectratio>
+									<visible>String.IsEmpty(ListItem.Art(thumb))</visible>
+								</control>
+								<control type="textbox">
+									<top>10</top>
+									<left>10</left>
+									<width>217</width>
+									<height>335</height>
+									<font>font13</font>
+									<textcolor>ffffffff</textcolor>
+									<shadowcolor>50000000</shadowcolor>
+									<align>center</align>
+									<aligny>center</aligny>
+									<label>$INFO[ListItem.Label]</label>
+									<visible>String.IsEmpty(ListItem.Art(thumb))</visible>
+								</control>
+								<control type="image">
+									<width>237</width>
+									<height>355</height>
+									<texture background="true">$INFO[ListItem.Art(thumb)]</texture>
+									<aspectratio scalediffuse="false">stretch</aspectratio>
+								</control>
+								<control type="label">
+									<top>363</top>
+									<height>50</height>
+									<width>237</width>
+									<font>font12</font>
+									<textcolor>ffffffff</textcolor>
+									<shadowcolor>50000000</shadowcolor>
+									<scroll>false</scroll>
+									<label>$INFO[ListItem.Label]</label>
+								</control>
+								<control type="label">
+									<top>397</top>
+									<height>50</height>
+									<width>237</width>
+									<font>font12</font>
+									<textcolor>ffffffff</textcolor>
+									<shadowcolor>50000000</shadowcolor>
+									<scroll>false</scroll>
+									<label>$INFO[ListItem.Year]</label>
+								</control>
+							</control>
+						</itemlayout>
+						<focusedlayout width="257">
+							<control type="group">
+								<left>70</left>
+								<top>64</top>
+								<control type="image">
+									<left>-12</left>
+									<top>-7</top>
+									<width>261</width>
+									<height>379</height>
+									<texture border="20,20,20,20" colordiffuse="ff45d374">focus.png</texture>
+									<aspectratio>stretch</aspectratio>
+									<visible>Control.HasFocus(10057)</visible>
+								</control>
+								<control type="image">
+									<width>237</width>
+									<height>355</height>
+									<texture colordiffuse="ff45d374">white.jpg</texture>
+									<aspectratio scalediffuse="false">stretch</aspectratio>
+									<visible>String.IsEmpty(ListItem.Art(thumb))</visible>
+								</control>
+								<control type="textbox">
+									<top>10</top>
+									<left>10</left>
+									<width>217</width>
+									<height>335</height>
+									<font>font13</font>
+									<textcolor>ffffffff</textcolor>
+									<shadowcolor>50000000</shadowcolor>
+									<align>center</align>
+									<aligny>center</aligny>
+									<label>$INFO[ListItem.Label]</label>
+									<visible>String.IsEmpty(ListItem.Art(thumb))</visible>
+								</control>
+								<control type="image">
+									<width>237</width>
+									<height>355</height>
+									<texture background="true">$INFO[ListItem.Art(thumb)]</texture>
+									<aspectratio scalediffuse="false">stretch</aspectratio>
+								</control>
+								<control type="label">
+									<top>363</top>
+									<height>50</height>
+									<width>237</width>
+									<font>font12</font>
+									<textcolor>ffffffff</textcolor>
+									<shadowcolor>50000000</shadowcolor>
+									<label>$INFO[ListItem.Label]</label>
+									<scroll>false</scroll>
+									<visible>!Control.HasFocus(10057)</visible>
+								</control>
+								<control type="label">
+									<top>363</top>
+									<height>50</height>
+									<width>237</width>
+									<font>font12</font>
+									<textcolor>ff45d374</textcolor>
+									<shadowcolor>50000000</shadowcolor>
+									<label>$INFO[ListItem.Label]</label>
+									<scroll>true</scroll>
+									<visible>Control.HasFocus(10057)</visible>
+								</control>
+								<control type="label">
+									<top>397</top>
+									<height>50</height>
+									<width>237</width>
+									<font>font12</font>
+									<textcolor>ffffffff</textcolor>
+									<shadowcolor>50000000</shadowcolor>
+									<label>$INFO[ListItem.Year]</label>
+									<scroll>false</scroll>
+									<visible>!Control.HasFocus(10057)</visible>
+								</control>
+								<control type="label">
+									<top>397</top>
+									<height>50</height>
+									<width>237</width>
+									<font>font12</font>
+									<textcolor>ffffffff</textcolor>
+									<shadowcolor>50000000</shadowcolor>
+									<label>$INFO[ListItem.Year]</label>
+									<scroll>true</scroll>
+									<visible>Control.HasFocus(10057)</visible>
+								</control>
+							</control>
+						</focusedlayout>
+					</control>
+				</control>
+			</control>
+
+			<!-- seasons -->
+			<control type="group">
+				<visible>true</visible>
+				<visible>Integer.IsGreater(Container(10058).NumItems,1) | Container(10058).IsUpdating</visible>
+				<width>100%</width>
+				<height>581</height>
+				<control type="group">
+					<control type="label">
+						<left>65</left>
+						<top>23</top>
+						<height>87</height>
+						<width>auto</width>
+						<font>font13</font>
+						<align>left</align>
+						<aligny>center</aligny>
+						<label>$ADDON[script.embuary.info 32016]</label>
+						<textcolor>ffffffff</textcolor>
+						<shadowcolor>50000000</shadowcolor>
+					</control>
+					<control type="fixedlist" id="10058">
+						<movement>6</movement>
+						<top>30</top>
+						<width>100%</width>
+						<scrolltime>150</scrolltime>
+						<orientation>horizontal</orientation>
+						<ondown>10053</ondown>
+						<onup>10057</onup>
+						<itemlayout width="257">
+							<control type="group">
+								<left>70</left>
+								<top>64</top>
+								<control type="image">
+									<width>237</width>
+									<height>355</height>
+									<texture colordiffuse="ff45d374">white.jpg</texture>
+									<aspectratio scalediffuse="false">stretch</aspectratio>
+									<visible>String.IsEmpty(ListItem.Art(thumb))</visible>
+								</control>
+								<control type="textbox">
+									<top>10</top>
+									<left>10</left>
+									<width>217</width>
+									<height>335</height>
+									<font>font13</font>
+									<textcolor>ffffffff</textcolor>
+									<shadowcolor>50000000</shadowcolor>
+									<align>center</align>
+									<aligny>center</aligny>
+									<label>$INFO[ListItem.Title]</label>
+									<visible>String.IsEmpty(ListItem.Art(thumb))</visible>
+								</control>
+								<control type="image">
+									<width>237</width>
+									<height>355</height>
+									<texture background="true">$INFO[ListItem.Art(thumb)]</texture>
+									<aspectratio scalediffuse="false">stretch</aspectratio>
+								</control>
+								<control type="label">
+									<top>363</top>
+									<height>50</height>
+									<width>237</width>
+									<font>font12</font>
+									<textcolor>ffffffff</textcolor>
+									<shadowcolor>50000000</shadowcolor>
+									<scroll>false</scroll>
+									<label>$INFO[ListItem.Title]</label>
+								</control>
+								<control type="label">
+									<top>397</top>
+									<height>50</height>
+									<width>237</width>
+									<font>font12</font>
+									<textcolor>ffffffff</textcolor>
+									<shadowcolor>50000000</shadowcolor>
+									<scroll>false</scroll>
+									<label>$INFO[ListItem.Year]</label>
+								</control>
+							</control>
+						</itemlayout>
+						<focusedlayout width="257">
+							<control type="group">
+								<left>70</left>
+								<top>64</top>
+								<control type="image">
+									<left>-12</left>
+									<top>-7</top>
+									<width>261</width>
+									<height>379</height>
+									<texture border="20,20,20,20" colordiffuse="ff45d374">focus.png</texture>
+									<aspectratio>stretch</aspectratio>
+									<visible>Control.HasFocus(10058)</visible>
+								</control>
+								<control type="image">
+									<width>237</width>
+									<height>355</height>
+									<texture colordiffuse="ff45d374">white.jpg</texture>
+									<aspectratio scalediffuse="false">stretch</aspectratio>
+									<visible>String.IsEmpty(ListItem.Art(thumb))</visible>
+								</control>
+								<control type="textbox">
+									<top>10</top>
+									<left>10</left>
+									<width>217</width>
+									<height>335</height>
+									<font>font13</font>
+									<textcolor>ffffffff</textcolor>
+									<shadowcolor>50000000</shadowcolor>
+									<align>center</align>
+									<aligny>center</aligny>
+									<label>$INFO[ListItem.Title]</label>
+									<visible>String.IsEmpty(ListItem.Art(thumb))</visible>
+								</control>
+								<control type="image">
+									<width>237</width>
+									<height>355</height>
+									<texture background="true">$INFO[ListItem.Art(thumb)]</texture>
+									<aspectratio scalediffuse="false">stretch</aspectratio>
+								</control>
+								<control type="label">
+									<top>363</top>
+									<height>50</height>
+									<width>237</width>
+									<font>font12</font>
+									<textcolor>ffffffff</textcolor>
+									<shadowcolor>50000000</shadowcolor>
+									<label>$INFO[ListItem.Title]</label>
+									<scroll>false</scroll>
+									<visible>!Control.HasFocus(10058)</visible>
+								</control>
+								<control type="label">
+									<top>363</top>
+									<height>50</height>
+									<width>237</width>
+									<font>font12</font>
+									<textcolor>ff45d374</textcolor>
+									<shadowcolor>50000000</shadowcolor>
+									<label>$INFO[ListItem.Title]</label>
+									<scroll>true</scroll>
+									<visible>Control.HasFocus(10058)</visible>
+								</control>
+								<control type="label">
+									<top>397</top>
+									<height>50</height>
+									<width>237</width>
+									<font>font12</font>
+									<textcolor>ffffffff</textcolor>
+									<shadowcolor>50000000</shadowcolor>
+									<label>$INFO[ListItem.Year]</label>
+									<scroll>false</scroll>
+									<visible>!Control.HasFocus(10058)</visible>
+								</control>
+								<control type="label">
+									<top>397</top>
+									<height>50</height>
+									<width>237</width>
+									<font>font12</font>
+									<textcolor>ffffffff</textcolor>
+									<shadowcolor>50000000</shadowcolor>
+									<label>$INFO[ListItem.Year]</label>
+									<scroll>true</scroll>
+									<visible>Control.HasFocus(10058)</visible>
+								</control>
+							</control>
+						</focusedlayout>
+					</control>
+				</control>
+			</control>
+
 			<!-- similar -->
 			<control type="group">
 				<visible>true</visible>
@@ -607,7 +1133,7 @@
 						<scrolltime>150</scrolltime>
 						<orientation>horizontal</orientation>
 						<ondown>10054</ondown>
-						<onup>10052</onup>
+						<onup>10058</onup>
 						<itemlayout width="257">
 							<control type="group">
 								<left>70</left>
@@ -934,7 +1460,7 @@
 						<width>100%</width>
 						<scrolltime>150</scrolltime>
 						<orientation>horizontal</orientation>
-						<ondown>10056</ondown>
+						<ondown>10059</ondown>
 						<onup>10054</onup>
 						<itemlayout width="450">
 							<control type="group">
@@ -1045,10 +1571,10 @@
 				</control>
 			</control>
 
-			<!-- crew -->
+			<!-- posters -->
 			<control type="group">
 				<visible>true</visible>
-				<visible>Integer.IsGreater(Container(10056).NumItems,0) | Container(10056).IsUpdating</visible>
+				<visible>Integer.IsGreater(Container(10059).NumItems,0) | Container(10059).IsUpdating</visible>
 				<width>100%</width>
 				<height>581</height>
 				<control type="group">
@@ -1060,11 +1586,11 @@
 						<font>font13</font>
 						<align>left</align>
 						<aligny>center</aligny>
-						<label>$ADDON[script.embuary.info 32018]</label>
+						<label>$LOCALIZE[20021]</label>
 						<textcolor>ffffffff</textcolor>
 						<shadowcolor>50000000</shadowcolor>
 					</control>
-					<control type="fixedlist" id="10056">
+					<control type="fixedlist" id="10059">
 						<movement>6</movement>
 						<top>30</top>
 						<width>100%</width>
@@ -1112,16 +1638,6 @@
 									<scroll>false</scroll>
 									<label>$INFO[ListItem.Label]</label>
 								</control>
-								<control type="label">
-									<top>397</top>
-									<height>50</height>
-									<width>237</width>
-									<font>font12</font>
-									<textcolor>ffffffff</textcolor>
-									<shadowcolor>50000000</shadowcolor>
-									<scroll>false</scroll>
-									<label>$INFO[ListItem.Label2]</label>
-								</control>
 							</control>
 						</itemlayout>
 						<focusedlayout width="257">
@@ -1135,7 +1651,7 @@
 									<height>379</height>
 									<texture border="20,20,20,20" colordiffuse="ff45d374">focus.png</texture>
 									<aspectratio>stretch</aspectratio>
-									<visible>Control.HasFocus(10056)</visible>
+									<visible>Control.HasFocus(10059)</visible>
 								</control>
 								<control type="image">
 									<width>237</width>
@@ -1172,7 +1688,7 @@
 									<shadowcolor>50000000</shadowcolor>
 									<label>$INFO[ListItem.Label]</label>
 									<scroll>false</scroll>
-									<visible>!Control.HasFocus(10056)</visible>
+									<visible>!Control.HasFocus(10059)</visible>
 								</control>
 								<control type="label">
 									<top>363</top>
@@ -1183,35 +1699,14 @@
 									<shadowcolor>50000000</shadowcolor>
 									<label>$INFO[ListItem.Label]</label>
 									<scroll>true</scroll>
-									<visible>Control.HasFocus(10056)</visible>
-								</control>
-								<control type="label">
-									<top>397</top>
-									<height>50</height>
-									<width>237</width>
-									<font>font12</font>
-									<textcolor>ffffffff</textcolor>
-									<shadowcolor>50000000</shadowcolor>
-									<label>$INFO[ListItem.Label2]</label>
-									<scroll>false</scroll>
-									<visible>!Control.HasFocus(10056)</visible>
-								</control>
-								<control type="label">
-									<top>397</top>
-									<height>50</height>
-									<width>237</width>
-									<font>font12</font>
-									<textcolor>ffffffff</textcolor>
-									<shadowcolor>50000000</shadowcolor>
-									<label>$INFO[ListItem.Label2]</label>
-									<scroll>true</scroll>
-									<visible>Control.HasFocus(10056)</visible>
+									<visible>Control.HasFocus(10059)</visible>
 								</control>
 							</control>
 						</focusedlayout>
 					</control>
 				</control>
 			</control>
+
 		</control>
 
 	</controls>

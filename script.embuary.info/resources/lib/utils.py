@@ -24,14 +24,54 @@ from resources.lib.helper import *
 API_KEY = ADDON.getSettingString('tmdb_api_key')
 API_URL = 'https://api.themoviedb.org/3/'
 IMAGEPATH = 'https://image.tmdb.org/t/p/original'
-COUNTRY_CODE = ADDON.getSettingString('country_code')
-DEFAULT_LANGUAGE = ADDON.getSettingString('language_code')
-FALLBACK_LANGUAGE = 'en'
 
 OMDB_API_KEY = ADDON.getSettingString('omdb_api_key')
 OMDB_URL = 'http://www.omdbapi.com/'
 
 ########################
+
+def get_local_media():
+    local_media = get_cache('local_items')
+
+    if not local_media:
+        local_media = {}
+        local_media['shows'] = query_local_media('tvshow',
+                                                get='VideoLibrary.GetTVShows',
+                                                properties=['title', 'originaltitle', 'year', 'playcount', 'episode', 'watchedepisodes']
+                                                )
+        local_media['movies'] = query_local_media('movie',
+                                                get='VideoLibrary.GetMovies',
+                                                properties=['title', 'originaltitle', 'year', 'imdbnumber', 'playcount', 'file']
+                                                )
+
+        write_cache('local_items',local_media,1)
+
+    return local_media
+
+
+def query_local_media(dbtype,get,properties):
+    items = json_call(get,properties,sort={'order': 'descending', 'method': 'year'})
+
+    try:
+        items = items['result']['%ss' % dbtype]
+    except Exception:
+        return
+
+    local_items = []
+    for item in items:
+        local_items.append({'title': item.get('title',''),
+                            'originaltitle': item.get('originaltitle',''),
+                            'imdbnumber': item.get('imdbnumber',''),
+                            'year': item.get('year',''),
+                            'dbid': item.get('%sid' % dbtype,''),
+                            'playcount': item.get('playcount',''),
+                            'episodes': item.get('episode',''),
+                            'watchedepisodes': item.get('watchedepisodes',''),
+                            'file': item.get('file','')}
+                            )
+
+    return local_items
+
 
 def omdb_call(imdbnumber=None,title=None,year=None,content_type=None):
     omdb = {}
@@ -122,50 +162,45 @@ def tmdb_call(request_url,error_check=False,error=ADDON.getLocalizedString(32019
         tmdb_error(error)
 
 
-def tmdb_query(action=None,call=None,get=None,use_language=True,language=DEFAULT_LANGUAGE,error_check=False,**kwargs):
-    kwargs['api_key'] = API_KEY
+def tmdb_query(action,call=None,get=None,season=None,season_get=None,params=None,use_language=True,language=DEFAULT_LANGUAGE,error_check=False):
+    args = {}
+    args['api_key'] = API_KEY
 
     if use_language:
-        kwargs['language'] = language
+        args['language'] = language
 
-    if get is not None:
-        call = call + '/' + get
+    if params:
+        args.update(params)
 
-    if call is not None:
-        action = action + '/' + call
+    call = '/' + str(call) if call else ''
+    get = '/' + get if get else ''
+    season = '/' + str(season) if season else ''
+    season_get = '/' + season_get if season_get else ''
 
-    url = API_URL + action
-    url = '{0}?{1}'.format(url, urlencode(kwargs))
+    url = API_URL + action + call + get + season + season_get
+    url = '{0}?{1}'.format(url, urlencode(args))
 
     return tmdb_call(url,error_check)
 
 
 def tmdb_search(call,query,year=None,include_adult='false'):
-    #/search/{call}?api_key=&language=&query={query}&page=1&include_adult=false
     if call == 'person':
-        result = tmdb_query(action='search',
-                            call=call,
-                            query=query,
-                            include_adult=include_adult,
-                            error_check=True
-                            )
+        params = {'query': query, 'include_adult': include_adult}
 
     elif call == 'movie':
-        result = tmdb_query(action='search',
-                            call=call,
-                            query=query,
-                            year=year,
-                            include_adult=include_adult,
-                            error_check=True
-                            )
+        params = {'query': query, 'year': year, 'include_adult': include_adult}
 
     elif call == 'tv':
-        result = tmdb_query(action='search',
-                            call=call,
-                            query=query,
-                            first_air_date_year=year,
-                            error_check=True
-                            )
+        params = {'query': query, 'year': year}
+
+    else:
+        return ''
+
+    result = tmdb_query(action='search',
+                        call=call,
+                        params=params,
+                        error_check=True
+                        )
 
     try:
         return result['results']
@@ -174,7 +209,6 @@ def tmdb_search(call,query,year=None,include_adult='false'):
 
 
 def tmdb_find(call,external_id):
-    #/find/{id}?api_key=&language=en-US&external_source=tvdb_id
     if external_id.startswith('tt'):
         external_source = 'imdb_id'
     else:
@@ -182,7 +216,7 @@ def tmdb_find(call,external_id):
 
     result = tmdb_query(action='find',
                         call=str(external_id),
-                        external_source=external_source,
+                        params={'external_source': external_source},
                         use_language=False
                         )
 
@@ -195,21 +229,6 @@ def tmdb_find(call,external_id):
         tmdb_error(ADDON.getLocalizedString(32019))
 
     return result
-
-
-def tmdb_item_details(action,tmdb_id,get=None,append_to_response=None,use_language=True,include_image_language=None):
-    #{action}/{id}?api_key=&language=
-    #{action}/{id}/{get}?api_key=&language=
-    result = tmdb_query(action=action,
-                        call=str(tmdb_id),
-                        get=get,
-                        append_to_response=append_to_response,
-                        use_language=use_language,
-                        include_image_language=include_image_language
-                        )
-
-    return result
-
 
 def tmdb_select_dialog(list,call):
     indexlist = []
@@ -350,8 +369,15 @@ def tmdb_check_localdb(local_items,title,originaltitle,year,imdbnumber=False):
                 break
 
             try:
-                if int(item['year']) == int(tmdb_get_year(year)):
+                tmdb_year = int(tmdb_get_year(year))
+                item_year = int(item['year'])
+
+                if item_year == tmdb_year:
                     if item['originaltitle'] == originaltitle or item['title'] == originaltitle or item['title'] == title:
+                        found_local = True
+                        break
+                elif tmdb_year in [item_year-2,item_year-1,item_year+1,item_year+2]:
+                    if item['title'] == title and item['originaltitle'] == originaltitle:
                         found_local = True
                         break
 
@@ -393,7 +419,7 @@ def tmdb_handle_person(item):
     return list_item
 
 
-def tmdb_handle_movie(item,local_items,full_info=False):
+def tmdb_handle_movie(item,local_items=None,full_info=False):
     icon = IMAGEPATH + item['poster_path'] if item['poster_path'] is not None else ''
     backdrop = IMAGEPATH + item['backdrop_path'] if item['backdrop_path'] is not None else ''
 
@@ -401,8 +427,12 @@ def tmdb_handle_movie(item,local_items,full_info=False):
     originaltitle = item.get('original_title','')
     imdbnumber = item.get('imdb_id','')
     collection = item.get('belongs_to_collection','')
-    premiered = item.get('release_date') if item.get('release_date',0) != '0' else ''
     duration = item.get('runtime') * 60 if item.get('runtime',0) > 0 else ''
+
+    premiered = item.get('release_date')
+    if premiered in ['2999-01-01', '1900-01-01']:
+        premiered = ''
+
     local_info = tmdb_check_localdb(local_items,label,originaltitle,premiered,imdbnumber)
     dbid = local_info['dbid']
     is_local = True if dbid > 0 else False
@@ -450,17 +480,21 @@ def tmdb_handle_movie(item,local_items,full_info=False):
     return list_item, is_local
 
 
-def tmdb_handle_tvshow(item,local_items,full_info=False):
+def tmdb_handle_tvshow(item,local_items=None,full_info=False):
     icon = IMAGEPATH + item['poster_path'] if item['poster_path'] is not None else ''
     backdrop = IMAGEPATH + item['backdrop_path'] if item['backdrop_path'] is not None else ''
 
     label = item['name'] or item['original_name']
     originaltitle = item.get('original_name','')
-    premiered = item.get('first_air_date') if item.get('first_air_date',0) != '0' else ''
     imdbnumber = item['external_ids']['imdb_id'] if item.get('external_ids') else ''
     next_episode = item.get('next_episode_to_air','')
     last_episode = item.get('last_episode_to_air','')
     tvdb_id = item['external_ids']['tvdb_id'] if item.get('external_ids') else ''
+
+    premiered = item.get('release_date')
+    if premiered in ['2999-01-01', '1900-01-01']:
+        premiered = ''
+
     local_info = tmdb_check_localdb(local_items,label,originaltitle,premiered,tvdb_id)
     dbid = local_info['dbid']
     is_local = True if dbid > 0 else False
@@ -516,6 +550,47 @@ def tmdb_handle_tvshow(item,local_items,full_info=False):
             list_item.setProperty('nextepisode_thumb', IMAGEPATH + next_episode['still_path'] if next_episode['still_path'] is not None else '')
 
     return list_item, is_local
+
+
+def tmdb_handle_season(item,tvshow_details,full_info=False):
+    backdrop = IMAGEPATH + tvshow_details['backdrop_path'] if tvshow_details['backdrop_path'] is not None else ''
+    icon = IMAGEPATH + item['poster_path'] if item['poster_path'] is not None else ''
+    if not icon and tvshow_details['poster_path']:
+        icon = IMAGEPATH + tvshow_details['poster_path']
+
+    imdbnumber = tvshow_details['external_ids']['imdb_id'] if tvshow_details.get('external_ids') else ''
+    season_nr = str(item.get('season_number',''))
+    tvshow_label = tvshow_details['name'] or tvshow_details['original_name']
+
+    episodes_count = 0
+    for episode in item.get('episodes',''):
+        episodes_count += 1
+
+    list_item = xbmcgui.ListItem(label=tvshow_label)
+    list_item.setInfo('video', {'title': item['name'],
+                                'tvshowtitle': tvshow_label,
+                                'premiered': item.get('air_date',''),
+                                'episode': episodes_count,
+                                'season': season_nr,
+                                'plot': item.get('overview',''),
+                                'genre': tmdb_join_items(tvshow_details.get('genres','')),
+                                'rating': tvshow_details.get('vote_average',''),
+                                'votes': tvshow_details.get('vote_count',''),
+                                'mpaa': tmdb_get_cert(tvshow_details),
+                                'mediatype': 'season'}
+                                )
+    list_item.setArt({'icon': 'DefaultVideo.png','thumb': icon, 'fanart': backdrop})
+    list_item.setProperty('TotalEpisodes', str(episodes_count))
+    list_item.setProperty('id', str(tvshow_details['id']))
+    list_item.setProperty('call', 'tv')
+    list_item.setProperty('call_season', season_nr)
+
+    if full_info:
+        tmdb_studios(list_item,tvshow_details,'production')
+        tmdb_studios(list_item,tvshow_details,'network')
+        omdb_properties(list_item,imdbnumber)
+
+    return list_item
 
 
 def tmdb_fallback_info(item,key):

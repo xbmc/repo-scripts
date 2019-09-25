@@ -8,9 +8,10 @@ import xbmc
 import xbmcgui
 
 from resources.lib.helper import *
-from resources.lib.tmdb_utils import *
-from resources.lib.tmdb_person import *
-from resources.lib.tmdb_video import *
+from resources.lib.utils import *
+from resources.lib.person import *
+from resources.lib.video import *
+from resources.lib.season import *
 
 ########################
 
@@ -20,9 +21,13 @@ class TheMovieDB(object):
         self.dialog_cache = {}
         self.call = call
         self.tmdb_id = params.get('tmdb_id')
+        self.season = params.get('season')
         self.query = remove_quotes(params.get('query'))
         self.query_year = params.get('year')
         self.external_id = params.get('external_id')
+
+        winprop('script.embuary.info-language_code', DEFAULT_LANGUAGE)
+        winprop('script.embuary.info-country_code', COUNTRY_CODE)
 
         busydialog()
 
@@ -31,8 +36,10 @@ class TheMovieDB(object):
 
         if self.tmdb_id:
             self.call_params = {}
-            self.call_params['local_shows'] = self.get_local_media('tvshow','VideoLibrary.GetTVShows',['title', 'originaltitle', 'year', 'playcount', 'episode', 'watchedepisodes'])
-            self.call_params['local_movies'] = self.get_local_media('movie','VideoLibrary.GetMovies',['title', 'originaltitle', 'year', 'imdbnumber', 'playcount', 'file'])
+
+            local_media = get_local_media()
+            self.call_params['local_shows'] = local_media['shows']
+            self.call_params['local_movies'] = local_media['movies']
 
             self.entry_point()
 
@@ -71,41 +78,23 @@ class TheMovieDB(object):
         return tmdb_id
 
 
-    ''' Get local media for listitem.dbid recognization.
-    '''
-    def get_local_media(self,dbtype,get,properties):
-        items = json_call(get,properties,sort={'order': 'descending', 'method': 'year'})
-
-        try:
-            items = items['result']['%ss' % dbtype]
-        except Exception:
-            return
-
-        local_items = []
-        for item in items:
-            local_items.append({'title': item.get('title',''),
-                                'originaltitle': item.get('originaltitle',''),
-                                'imdbnumber': item.get('imdbnumber',''),
-                                'year': item.get('year',''),
-                                'dbid': item.get('%sid' % dbtype,''),
-                                'playcount': item.get('playcount',''),
-                                'episodes': item.get('episode',''),
-                                'watchedepisodes': item.get('watchedepisodes',''),
-                                'file': item.get('file','')}
-                                )
-
-        return local_items
-
-
     ''' Collect all data by the tmdb_id and build the dialogs.
     '''
     def entry_point(self):
         self.call_params['call'] = self.call
         self.call_params['tmdb_id'] = self.tmdb_id
+        self.call_params['season'] = self.season
         self.request = self.call + str(self.tmdb_id)
 
         busydialog()
-        dialog = self.fetch_person() if self.call == 'person' else self.fetch_video()
+
+        if self.call == 'person':
+            dialog = self.fetch_person()
+        elif self.call == 'tv' and self.season:
+            dialog = self.fetch_season()
+        elif self.call == 'movie' or self.call == 'tv':
+            dialog = self.fetch_video()
+
         busydialog(close=True)
 
         ''' Open next dialog if information has been found. If not open the previous dialog again.
@@ -125,14 +114,47 @@ class TheMovieDB(object):
         if not data['person']:
             return
 
-        return DialogPerson('script-embuary-person.xml', ADDON_PATH, 'default', '1080i', person=data['person'], movies=data['movies'], tvshows=data['tvshows'], images=data['images'])
+        dialog = DialogPerson('script-embuary-person.xml', ADDON_PATH, 'default', '1080i',
+                            person=data['person'],
+                            movies=data['movies'],
+                            tvshows=data['tvshows'],
+                            images=data['images'],
+                            tmdb_id=self.tmdb_id
+                            )
+        return dialog
 
     def fetch_video(self):
         data = TMDBVideos(self.call_params)
         if not data['details']:
             return
 
-        return DialogVideo('script-embuary-video.xml', ADDON_PATH, 'default', '1080i', details=data['details'], cast=data['cast'], crew=data['crew'], similar=data['similar'], youtube=data['youtube'], backdrops=data['images'])
+        dialog = DialogVideo('script-embuary-video.xml', ADDON_PATH, 'default', '1080i',
+                            details=data['details'],
+                            cast=data['cast'],
+                            crew=data['crew'],
+                            similar=data['similar'],
+                            youtube=data['youtube'],
+                            backdrops=data['backdrops'],
+                            posters=data['posters'],
+                            collection=data['collection'],
+                            seasons=data['seasons'],
+                            tmdb_id=self.tmdb_id
+                            )
+        return dialog
+
+    def fetch_season(self):
+        data = TMDBSeasons(self.call_params)
+        if not data['details']:
+            return
+
+        dialog = DialogSeason('script-embuary-video.xml', ADDON_PATH, 'default', '1080i',
+                            details=data['details'],
+                            cast=data['cast'],
+                            gueststars=data['gueststars'],
+                            posters=data['posters'],
+                            tmdb_id=self.tmdb_id
+                            )
+        return dialog
 
 
     ''' Dialog handler. Creates the window history, reopens dialogs from a stack
@@ -144,6 +166,7 @@ class TheMovieDB(object):
         try:
             next_id = dialog['id']
             next_call = dialog['call']
+            next_season = dialog['season']
 
             if next_call == 'back':
                 self.dialog_history()
@@ -157,7 +180,8 @@ class TheMovieDB(object):
             self.window_stack.append(dialog)
             self.tmdb_id = next_id
             self.call = next_call
-            self.request = next_call + str(next_id)
+            self.season = next_season
+            self.request = next_call + str(next_id) + str(next_season)
 
             if self.dialog_cache.get(self.request):
                 dialog = self.dialog_cache[self.request]
@@ -189,6 +213,7 @@ class DialogPerson(xbmcgui.WindowXMLDialog):
         self.first_load = True
         self.action = {}
 
+        self.tmdb_id = kwargs['tmdb_id']
         self.person = kwargs['person']
         self.movies = kwargs['movies']
         self.tvshows = kwargs['tvshows']
@@ -219,6 +244,7 @@ class DialogPerson(xbmcgui.WindowXMLDialog):
     def onAction(self,action):
         if action.getId() in [92,10]:
             self.action['id'] = ''
+            self.action['season'] = ''
             self.action['call'] = 'back' if action.getId() == 92 else 'close'
             self.quit()
 
@@ -229,6 +255,7 @@ class DialogPerson(xbmcgui.WindowXMLDialog):
         if next_call in ['person','movie','tv'] and next_id:
             self.action['id'] = next_id
             self.action['call'] = next_call
+            self.action['season'] = ''
             self.quit()
 
         elif next_call == 'image':
@@ -253,12 +280,16 @@ class DialogVideo(xbmcgui.WindowXMLDialog):
         self.first_load = True
         self.action = {}
 
+        self.tmdb_id = kwargs['tmdb_id']
         self.details = kwargs['details']
         self.cast = kwargs['cast']
         self.crew = kwargs['crew']
         self.similar = kwargs['similar']
         self.youtube = kwargs['youtube']
         self.backdrops = kwargs['backdrops']
+        self.posters = kwargs['posters']
+        self.seasons = kwargs['seasons']
+        self.collection = kwargs['collection']
 
     def __getitem__(self,key):
         return self.action[key]
@@ -284,21 +315,31 @@ class DialogVideo(xbmcgui.WindowXMLDialog):
         self.cont4.addItems(self.backdrops)
         self.cont5 = self.getControl(10056)
         self.cont5.addItems(self.crew)
+        self.cont6 = self.getControl(10057)
+        self.cont6.addItems(self.collection)
+        self.cont7 = self.getControl(10058)
+        self.cont7.addItems(self.seasons)
+        self.cont8 = self.getControl(10059)
+        self.cont8.addItems(self.posters)
 
     def onAction(self,action):
         if action.getId() in [92,10]:
             self.action['id'] = ''
+            self.action['season'] = ''
             self.action['call'] = 'back' if action.getId() == 92 else 'close'
             self.quit()
 
     def onClick(self,controlId):
         next_id = xbmc.getInfoLabel('Container(%s).ListItem.Property(id)' % controlId)
         next_call = xbmc.getInfoLabel('Container(%s).ListItem.Property(call)' % controlId)
+        next_season = xbmc.getInfoLabel('Container(%s).ListItem.Property(call_season)' % controlId)
 
         if next_call in ['person','movie','tv'] and next_id:
-            self.action['id'] = next_id
-            self.action['call'] = next_call
-            self.quit()
+            if next_id != str(self.tmdb_id) or next_season:
+                self.action['id'] = next_id
+                self.action['call'] = next_call
+                self.action['season'] = next_season
+                self.quit()
 
         elif next_call == 'image':
             FullScreenImage(controlId)
@@ -308,6 +349,72 @@ class DialogVideo(xbmcgui.WindowXMLDialog):
             execute('Dialog.Close(all)')
             xbmc.Player().play('plugin://plugin.video.youtube/play/?video_id=%s' % xbmc.getInfoLabel('Container(%s).ListItem.Property(ytid)' % controlId))
             self.quit()
+
+    def quit(self):
+        close_action = self.getProperty('onclose')
+        onback_action = self.getProperty('onback_%s' % self.getFocusId())
+
+        if self.action.get('call') == 'back' and onback_action:
+            execute(onback_action)
+        else:
+            if close_action:
+                execute(close_action)
+            self.close()
+
+
+''' Season dialog
+'''
+class DialogSeason(xbmcgui.WindowXMLDialog):
+    def __init__(self,*args,**kwargs):
+        self.first_load = True
+        self.action = {}
+
+        self.tmdb_id = kwargs['tmdb_id']
+        self.details = kwargs['details']
+        self.cast = kwargs['cast']
+        self.gueststars = kwargs['gueststars']
+        self.posters = kwargs['posters']
+
+    def __getitem__(self,key):
+        return self.action[key]
+
+    def __setitem__(self,key,value):
+        self.action[key] = value
+
+    def onInit(self):
+        if self.first_load:
+            self.add_items()
+
+    def add_items(self):
+        self.first_load = False
+        self.cont0 = self.getControl(10051)
+        self.cont0.addItems(self.details)
+        self.cont1 = self.getControl(10052)
+        self.cont1.addItems(self.cast)
+        self.cont2 = self.getControl(10056)
+        self.cont2.addItems(self.gueststars)
+        self.cont3 = self.getControl(10059)
+        self.cont3.addItems(self.posters)
+
+    def onAction(self,action):
+        if action.getId() in [92,10]:
+            self.action['id'] = ''
+            self.action['season'] = ''
+            self.action['call'] = 'back' if action.getId() == 92 else 'close'
+            self.quit()
+
+    def onClick(self,controlId):
+        next_id = xbmc.getInfoLabel('Container(%s).ListItem.Property(id)' % controlId)
+        next_call = xbmc.getInfoLabel('Container(%s).ListItem.Property(call)' % controlId)
+
+        if next_call in ['person'] and next_id:
+            self.action['id'] = next_id
+            self.action['call'] = next_call
+            self.action['season'] = ''
+            self.quit()
+
+        elif next_call == 'image':
+            FullScreenImage(controlId)
 
     def quit(self):
         close_action = self.getProperty('onclose')

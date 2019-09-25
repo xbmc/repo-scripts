@@ -36,12 +36,13 @@ DEBUG = xbmc.LOGDEBUG
 
 DIALOG = xbmcgui.Dialog()
 
+COUNTRY_CODE = ADDON.getSettingString('country_code')
+DEFAULT_LANGUAGE = ADDON.getSettingString('language_code')
+FALLBACK_LANGUAGE = 'en'
+
 CACHE = simplecache.SimpleCache()
 CACHE_ENABLED = ADDON.getSettingBool('cache_enabled')
-
-FILTER_MOVIES = ADDON.getSettingBool('filter_movies')
-FILTER_SHOWS = ADDON.getSettingBool('filter_shows')
-FILTER_SHOWS_BLACKLIST = [10763,10764,10767]
+CACHE_PREFIX = ADDON_ID + '_' + ADDON_VERSION + '_' + DEFAULT_LANGUAGE + COUNTRY_CODE + '_'
 
 ########################
 
@@ -63,11 +64,12 @@ def log(txt,loglevel=DEBUG,force=False):
 
 def get_cache(key):
     if CACHE_ENABLED:
-        return CACHE.get(ADDON_VERSION + key)
+        return CACHE.get(CACHE_PREFIX + key)
 
 
-def write_cache(key,data):
-    CACHE.set(ADDON_VERSION + key,data,expiration=datetime.timedelta(days=14))
+def write_cache(key,data,cache_time=336):
+    if data:
+        CACHE.set(CACHE_PREFIX + key,data,expiration=datetime.timedelta(hours=cache_time))
 
 
 def format_currency(integer):
@@ -83,15 +85,17 @@ def format_currency(integer):
 
 
 def sort_dict(items,key,reverse=False):
-    try:
-        return sorted(items,key=operator.itemgetter(key),reverse=reverse)
+    ''' Dummy date to always add planned or rumored items at the end of the list
+        if no release date is available yet.
+    '''
+    for item in items:
+        if not item.get(key):
+            if not reverse:
+                item[key] = '2999-01-01'
+            else:
+                item[key] = '1900-01-01'
 
-    except KeyError:
-        for item in items:
-            if not item.get(key):
-                item[key] = '0'
-
-        return sorted(items,key=operator.itemgetter(key),reverse=reverse)
+    return sorted(items,key=operator.itemgetter(key),reverse=reverse)
 
 
 def remove_quotes(label):
