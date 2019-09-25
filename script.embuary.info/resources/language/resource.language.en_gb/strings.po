@@ -37,7 +37,7 @@ msgctxt "#32019"
 msgid "No information found"
 msgstr ""
 
-#: /resources/lib/tmdb_utils.py
+#: /resources/lib/utils.py
 msgctxt "#32022"
 msgid "Invalid TheMovieDB API key"
 msgstr ""
@@ -155,4 +155,69 @@ msgstr ""
 #: /resources/settings.xml
 msgctxt "#32028"
 msgid "Hide person appearances in specials/documentaries/behind the scenes movies"
+msgstr ""
+
+#: /resources/lib/listing.py
+msgctxt "#32029"
+msgid "Top rated movies"
+msgstr ""
+
+#: /resources/lib/listing.py
+msgctxt "#32030"
+msgid "Now playing movies"
+msgstr ""
+
+#: /resources/lib/listing.py
+msgctxt "#32031"
+msgid "Upcoming movies"
+msgstr ""
+
+#: /resources/lib/listing.py
+msgctxt "#32032"
+msgid "Popular movies"
+msgstr ""
+
+#: /resources/lib/listing.py
+msgctxt "#32033"
+msgid "Top rated TV shows"
+msgstr ""
+
+#: /resources/lib/listing.py
+msgctxt "#32034"
+msgid "Popular TV shows"
+msgstr ""
+
+#: /resources/lib/listing.py
+msgctxt "#32035"
+msgid "TV shows airing today"
+msgstr ""
+
+#: /resources/lib/listing.py
+msgctxt "#32036"
+msgid "TV shows airing in the next 7 days"
+msgstr ""
+
+#: /resources/skins/default/1080i/script-embuary-video.xml
+msgctxt "#32037"
+msgid "Collection"
+msgstr ""
+
+#: /resources/skins/default/1080i/script-embuary-video.xml
+msgctxt "#32039"
+msgid "Guest stars"
+msgstr ""
+
+#: /resources/skins/default/1080i/script-embuary-video.xml
+msgctxt "#32040"
+msgid "Season"
+msgstr ""
+
+#: /plugin.py
+msgctxt "#32038"
+msgid "Widgets"
+msgstr ""
+
+#: /resources/settings.xml
+msgctxt "#32041"
+msgid "Hide items from similar movies if they are part of the collection"
 msgstr ""

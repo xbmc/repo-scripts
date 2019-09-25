@@ -124,7 +124,7 @@ msgctxt "#32021"
 msgid "Enable caching of fetched data"
 msgstr "Ukladať stiahnuté údaje do vyrovnávacej pamäte"
 
-#: /resources/lib/tmdb_utils.py
+#: /resources/lib/utils.py
 msgctxt "#32022"
 msgid "Invalid TheMovieDB API key"
 msgstr "Neplatný API kľúč k TheMovieDB"

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.embuary.info" name="Embuary Info" version="1.0.13" provider-name="sualfred">
+<addon id="script.embuary.info" name="Embuary Info" version="1.0.16" provider-name="sualfred">
 	<requires>
 		<import addon="xbmc.python" version="2.26.0"/>
 		<import addon="script.module.requests" version="2.9.1"/>
@@ -7,6 +7,9 @@
 		<import addon="script.module.simplecache" version="1.0.17" />
 	</requires>
 	<extension point="xbmc.python.script" library="default.py" />
+	<extension point="xbmc.python.pluginsource" library="plugin.py">
+	  <provides>video</provides>
+	</extension>
 	<extension point="xbmc.addon.metadata">
 		<summary lang="en_GB">Embuary Info Script</summary>
 		<summary lang="sk_SK">Embuary Info Skript</summary>

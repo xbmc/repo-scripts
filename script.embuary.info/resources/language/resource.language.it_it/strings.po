@@ -4,7 +4,7 @@
 # Addon Provider: sualfred
 # Translators:
 # Andrea Matesi <andreamatesi@gmail.com>, 2019
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: Embuary Helper\n"
@@ -44,7 +44,7 @@ msgctxt "#32019"
 msgid "No information found"
 msgstr "Nessuna informazione trovata"
 
-#: /resources/lib/tmdb_utils.py
+#: /resources/lib/utils.py
 msgctxt "#32022"
 msgid "Invalid TheMovieDB API key"
 msgstr "Chiave API TheMovieDB invalida"
