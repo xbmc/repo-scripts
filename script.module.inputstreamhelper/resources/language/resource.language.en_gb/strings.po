@@ -30,7 +30,7 @@ msgid "An error occurred while installing [B]Widevine CDM[/B]. Please enable deb
 msgstr ""
 
 msgctxt "#30006"
-msgid "Due to distribution rights, [B]Widevine CDM[/B] has to be extracted from a ChromeOS recovery image. This process requires at least [B]{diskspace}[/B] of free disk space. Do you wish to continue?"
+msgid "Due to distribution rights, [B]Widevine CDM[/B] has to be extracted from a Chrome OS recovery image. This process requires at least [B]{diskspace}[/B] of free disk space. Do you wish to continue?"
 msgstr ""
 
 msgctxt "#30007"
@@ -94,7 +94,7 @@ msgid "[B]'{command}'[/B] command needs to exist on system to extract the [B]Wid
 msgstr ""
 
 msgctxt "#30022"
-msgid "Downloading the ChromeOS recovery image..."
+msgid "Downloading the Chrome OS recovery image..."
 msgstr ""
 
 msgctxt "#30023"
@@ -225,6 +225,10 @@ msgctxt "#30054"
 msgid "disabled"
 msgstr ""
 
+msgctxt "#30055"
+msgid "There is not enough free disk space in the current temporary directory. Would you like to specify a different one to temporarily use for the Chrome OS Recovery Image (e.g. on a USB)?"
+msgstr ""
+
 
 ### INFORMATION DIALOG
 msgctxt "#30800"
@@ -264,17 +268,17 @@ msgid "Widevine CDM path: [B]{path}[/B]"
 msgstr ""
 
 msgctxt "#30823"
-msgid "ChromeOS version: [B]{version}[/B]"
+msgid "Chrome OS version: [B]{version}[/B]"
 msgstr ""
 
 msgctxt "#30830"
-msgid "Please report issues to:\n - [B]{url}[/B]"
+msgid "Please report issues to:\n - [COLOR yellow]{url}[/COLOR]"
 msgstr ""
 
 
 ### SETTINGS
 msgctxt "#30900"
-msgid "Troubleshooting"
+msgid "Expert"
 msgstr ""
 
 msgctxt "#30901"
@@ -290,10 +294,17 @@ msgid "[I]When disabled, DRM playback may fail![/I]"
 msgstr ""
 
 msgctxt "#30905"
-msgid "(Re)install Widevine CDM library..."
+msgid "Update frequency in days"
 msgstr ""
 
 msgctxt "#30907"
-msgid "Remove Widevine CDM library..."
+msgid "Temporary download directory"
 msgstr ""
 
+msgctxt "#30909"
+msgid "(Re)install Widevine CDM library..."
+msgstr ""
+
+msgctxt "#30911"
+msgid "Remove Widevine CDM library..."
+msgstr ""

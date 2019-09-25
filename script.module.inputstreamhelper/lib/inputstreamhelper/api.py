@@ -2,7 +2,8 @@
 ''' This is the actual InputStream Helper API script '''
 
 from __future__ import absolute_import, division, unicode_literals
-from inputstreamhelper import ADDON, Helper, log
+from inputstreamhelper import Helper
+from .kodiutils import ADDON, log
 
 
 def run(params):

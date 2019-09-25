@@ -30,8 +30,8 @@ msgid "An error occurred while installing [B]Widevine CDM[/B]. Please enable deb
 msgstr "Προέκυψε ένα σφάλμα κατά την εγκατάσταση του [B]Widevine CDM[/B]. Παρακαλώ ενεργοποιήστε την αποσφαλμάτωση και κάντε αίτημα αναφοράς σφάλματος σε: [CR][CR]github.com/emilsvennesson/script.module.inputstreamhelper"
 
 msgctxt "#30006"
-msgid "Due to distribution rights, [B]Widevine CDM[/B] has to be extracted from a ChromeOS recovery image. This process requires at least [B]{diskspace}[/B] of free disk space. Do you wish to continue?"
-msgstr "Λόγω ενοχλητικών προβλημάτων, το [B]Widevine CDM[/B] πρέπει να εξαχθεί από μία εικόνα επαναφοράς του ChromeOS. Για τον λόγο αυτόν απαιτείται τουλάχιστον [B]{diskspace}[/B] ελεύθερου χώρου. Επιθυμείτε να συνεχίσετε;"
+msgid "Due to distribution rights, [B]Widevine CDM[/B] has to be extracted from a Chrome OS recovery image. This process requires at least [B]{diskspace}[/B] of free disk space. Do you wish to continue?"
+msgstr "Λόγω ενοχλητικών προβλημάτων, το [B]Widevine CDM[/B] πρέπει να εξαχθεί από μία εικόνα επαναφοράς του Chrome OS. Για τον λόγο αυτόν απαιτείται τουλάχιστον [B]{diskspace}[/B] ελεύθερου χώρου. Επιθυμείτε να συνεχίσετε;"
 
 msgctxt "#30007"
 msgid "[B]Widevine CDM[/B] is unfortunately not available on this system architecture."
@@ -94,8 +94,8 @@ msgid "[B]'{command}'[/B] command needs to exist on system to extract the [B]Wid
 msgstr "Η [B]'{command}'[/B] εντολή χρειάζεται να είναι παρούσα στο σύστημα ώστε για την εξαγωγή του [B]Widevine CDM[/B]."
 
 msgctxt "#30022"
-msgid "Downloading the ChromeOS recovery image..."
-msgstr "Λήψη της εικόνας επαναφοράς του ChromeOS..."
+msgid "Downloading the Chrome OS recovery image..."
+msgstr "Λήψη της εικόνας επαναφοράς του Chrome OS..."
 
 msgctxt "#30023"
 msgid "Download completed!"
@@ -223,63 +223,67 @@ msgstr "Το [B]Widevine CDM[/B] δεν βρέθηκε"
 
 msgctxt "#30054"
 msgid "disabled"
-msgstr ""
+msgstr "απενεργοποιημένο"
+
+msgctxt "#30055"
+msgid "There is not enough free disk space in the current temporary directory. Would you like to specify a different one to temporarily use for the Chrome OS Recovery Image (e.g. on a USB)?"
+msgstr "Δεν υπάρχει επαρκής αποθηκευτικός χώρος στον δίσκο στον τρέχοντα προσωρινό φάκελο. Θέλετε να προσδιορίσετε έναν διαφορετικό για χρηση ως προσωρινό για την εικόνα επαναφορας του Chrome OS (π.χ. σε ενα USB);"
 
 
 ### INFORMATION DIALOG
 msgctxt "#30800"
 msgid "[B]Kodi information[/B]"
-msgstr ""
+msgstr "[B]Πληροφορίες του Kodi[/B]"
 
 msgctxt "#30801"
 msgid "Kodi version: [B]{version}[/B]"
-msgstr ""
+msgstr "Έκδοση Kodi: [B]{version}[/B]"
 
 msgctxt "#30802"
 msgid "Kodi platform/architecture: [B]{platform}[/B]/[B]{arch}[/B]"
-msgstr ""
+msgstr "Αρχιτεκτονική/πλατφόρμα του Kodi: [B]{platform}[/B]/[B]{arch}[/B]"
 
 msgctxt "#30810"
 msgid "[B]InputStream information[/B]"
-msgstr ""
+msgstr "[B]Πληροφορίες inputstream[/B]"
 
 msgctxt "#30811"
 msgid "InputStream Helper version: [B]{version}[/B] {state}"
-msgstr ""
+msgstr "Εκδοση του Βοηθού Inputstream: [B]{version}[/B] {state}"
 
 msgctxt "#30812"
 msgid "InputStream Adaptive version: [B]{version}[/B] {state}"
-msgstr ""
+msgstr "Έκδοση InputStream Adaptive: [B]{version}[/B] {state}"
 
 msgctxt "#30820"
 msgid "[B]Widevine information[/B]"
-msgstr ""
+msgstr "[B]Πληροφορίες Widevine[/B]"
 
 msgctxt "#30821"
 msgid "Widevine version: [B]{version}[/B] [COLOR gray](last updated on [B]{date}[/B])[/COLOR]"
-msgstr ""
+msgstr "Έκδοση Widevina: [B]{version}[/B] [COLOR gray](τελευταία ενημερωση [B]{date}[/B])[/COLOR]"
 
 msgctxt "#30822"
 msgid "Widevine CDM path: [B]{path}[/B]"
-msgstr ""
+msgstr "Διαδρομη CDM του Widevine: [B]{path}[/B]"
 
 msgctxt "#30823"
-msgid "ChromeOS version: [B]{version}[/B]"
-msgstr ""
+msgid "Chrome OS version: [B]{version}[/B]"
+msgstr "Έκδοση του Chrome OS: [B]{version}[/B]"
 
 msgctxt "#30830"
-msgid "Please report issues to:\n - [B]{url}[/B]"
-msgstr ""
+msgid "Please report issues to:\n - [COLOR yellow]{url}[/COLOR]"
+msgstr "Παρακαλω αναφέρατε σφάλματα στο:\n - [COLOR yellow]{url}[/COLOR]"
 
 
 ### SETTINGS
 msgctxt "#30900"
-msgid "Troubleshooting"
-msgstr "Αντιμετώπιση προβλημάτων"
+msgid "Expert"
+msgstr "Ειδικός"
 
 msgctxt "#30901"
 msgid "InputStream Helper information"
-msgstr ""
+msgstr "Πληροφορίες Βοηθού Inputstream"
 
 msgctxt "#30903"
 msgid "Disable InputStream Helper"
@@ -290,9 +294,17 @@ msgid "[I]When disabled, DRM playback may fail![/I]"
 msgstr "[I]Όταν απενεργοποιηθεί, η αναπαραγωγή ροών με DRM μπορεί να αποτύχει![/I]"
 
 msgctxt "#30905"
+msgid "Update frequency in days"
+msgstr "Συχνότητα ανανέωσης σε μέρες"
+
+msgctxt "#30907"
+msgid "Temporary download directory"
+msgstr "Προσωρινός φάκελος μεταφόρτωσης"
+
+msgctxt "#30909"
 msgid "(Re)install Widevine CDM library..."
 msgstr "(Επαν)εγκατάσταση της βιβλιοθήκης CDM..."
 
-msgctxt "#30907"
+msgctxt "#30911"
 msgid "Remove Widevine CDM library..."
 msgstr "Αφαίρεση της βιβλιοθήκης CDM..."

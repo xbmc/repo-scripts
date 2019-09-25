@@ -30,8 +30,8 @@ msgid "An error occurred while installing [B]Widevine CDM[/B]. Please enable deb
 msgstr "Ett fel inträffade under installationen av [B]Widevine CDM[/B]. Vänligen aktivera debugloggning och skicka in en bugrapport på:[CR][CR]github.com/emilsvennesson/script.module.inputstreamhelper"
 
 msgctxt "#30006"
-msgid "Due to distribution rights, [B]Widevine CDM[/B] has to be extracted from a ChromeOS recovery image. This process requires at least [B]{diskspace}[/B] of free disk space. Do you wish to continue?"
-msgstr "På grund av distributionssvårigheter måste [B]Widevine CDM[/B] extraheras från en ChromeOS-återställningsbild. Denna process kräver minst [B]{diskspace}[/B] fritt diskutrymme. Vill du fortsätta?"
+msgid "Due to distribution rights, [B]Widevine CDM[/B] has to be extracted from a Chrome OS recovery image. This process requires at least [B]{diskspace}[/B] of free disk space. Do you wish to continue?"
+msgstr "På grund av distributionssvårigheter måste [B]Widevine CDM[/B] extraheras från en Chrome OS-återställningsbild. Denna process kräver minst [B]{diskspace}[/B] fritt diskutrymme. Vill du fortsätta?"
 
 msgctxt "#30007"
 msgid "[B]Widevine CDM[/B] is unfortunately not available on this system architecture."
@@ -94,8 +94,8 @@ msgid "[B]'{command}'[/B] command needs to exist on system to extract the [B]Wid
 msgstr "[B]'{command}'[/B] måste finnas på systemet för att kunna extrahera [B]Widevine CDM[/B]."
 
 msgctxt "#30022"
-msgid "Downloading the ChromeOS recovery image..."
-msgstr "Laddar ner ChromeOS-återställningsbild..."
+msgid "Downloading the Chrome OS recovery image..."
+msgstr "Laddar ner Chrome OS-återställningsbild..."
 
 msgctxt "#30023"
 msgid "Download completed!"
@@ -223,63 +223,67 @@ msgstr "[B]Widevine CDM[/B] hittades inte."
 
 msgctxt "#30054"
 msgid "disabled"
-msgstr ""
+msgstr "inaktiverad"
+
+msgctxt "#30055"
+msgid "There is not enough free disk space in the current temporary directory. Would you like to specify a different one to temporarily use for the Chrome OS Recovery Image (e.g. on a USB)?"
+msgstr "Det finns inte tillräckligt med diskutrymme i den temporära mappen. Vill du specificera en annan mapp att använda för Chrome OS-återställningsbilden (exempelvis ett USB-minne)?"
 
 
 ### INFORMATION DIALOG
 msgctxt "#30800"
 msgid "[B]Kodi information[/B]"
-msgstr ""
+msgstr "[B]Kodi-information[/B]"
 
 msgctxt "#30801"
 msgid "Kodi version: [B]{version}[/B]"
-msgstr ""
+msgstr "Kodi-version: [B]{version}[/B]"
 
 msgctxt "#30802"
 msgid "Kodi platform/architecture: [B]{platform}[/B]/[B]{arch}[/B]"
-msgstr ""
+msgstr "Kodi-plattform/arkitektur: [B]{platform}[/B]/[B]{arch}[/B]"
 
 msgctxt "#30810"
 msgid "[B]InputStream information[/B]"
-msgstr ""
+msgstr "[B]InputStream-information[/B]"
 
 msgctxt "#30811"
 msgid "InputStream Helper version: [B]{version}[/B] {state}"
-msgstr ""
+msgstr "InputStream Helper-version: [B]{version}[/B] {state}"
 
 msgctxt "#30812"
 msgid "InputStream Adaptive version: [B]{version}[/B] {state}"
-msgstr ""
+msgstr "InputStream Adaptive-version: [B]{version}[/B] {state}"
 
 msgctxt "#30820"
 msgid "[B]Widevine information[/B]"
-msgstr ""
+msgstr "[B]Widevine-information[/B]"
 
 msgctxt "#30821"
 msgid "Widevine version: [B]{version}[/B] [COLOR gray](last updated on [B]{date}[/B])[/COLOR]"
-msgstr ""
+msgstr "Widevine-version: [B]{version}[/B] [COLOR gray](senast uppdaterad [B]{date}[/B])[/COLOR]"
 
 msgctxt "#30822"
 msgid "Widevine CDM path: [B]{path}[/B]"
-msgstr ""
+msgstr "Widevine CDM-sökväg: [B]{path}[/B]"
 
 msgctxt "#30823"
-msgid "ChromeOS version: [B]{version}[/B]"
-msgstr ""
+msgid "Chrome OS version: [B]{version}[/B]"
+msgstr "Chrome OS-version: [B]{version}[/B]"
 
 msgctxt "#30830"
-msgid "Please report issues to:\n - [B]{url}[/B]"
-msgstr ""
+msgid "Please report issues to:\n - [COLOR yellow]{url}[/COLOR]"
+msgstr "Vänligen rapportera problem till:\n - [COLOR yellow]{url}[/COLOR]"
 
 
 ### SETTINGS
 msgctxt "#30900"
-msgid "Troubleshooting"
-msgstr "Felsökning"
+msgid "Expert"
+msgstr "Expert"
 
 msgctxt "#30901"
 msgid "InputStream Helper information"
-msgstr ""
+msgstr "InputStream Helper-information"
 
 msgctxt "#30903"
 msgid "Disable InputStream Helper"
@@ -290,9 +294,17 @@ msgid "[I]When disabled, DRM playback may fail![/I]"
 msgstr "[I]DRM-uppspelning kan misslyckas vid inaktivering![/I]"
 
 msgctxt "#30905"
+msgid "Update frequency in days"
+msgstr "Uppdateringsfrekvens i dagar"
+
+msgctxt "#30907"
+msgid "Temporary download directory"
+msgstr "Temporär nedladdningsmapp"
+
+msgctxt "#30909"
 msgid "(Re)install Widevine CDM library..."
 msgstr "(Om)installera Widevine CDM-biblioteket..."
 
-msgctxt "#30907"
+msgctxt "#30911"
 msgid "Remove Widevine CDM library..."
 msgstr "Ta bort Widevine CDM-biblioteket..."

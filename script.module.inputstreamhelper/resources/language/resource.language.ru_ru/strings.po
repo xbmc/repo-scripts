@@ -30,8 +30,8 @@ msgid "An error occurred while installing [B]Widevine CDM[/B]. Please enable deb
 msgstr "При установке [B]Widevine CDM[/B] возникла ошибка. Включите журнал отладки и опубликуйте отчет об ошибке на:[CR][CR]github.com/emilsvennesson/script.module.inputstreamhelper"
 
 msgctxt "#30006"
-msgid "Due to distribution rights, [B]Widevine CDM[/B] has to be extracted from a ChromeOS recovery image. This process requires at least [B]{diskspace}[/B] of free disk space. Do you wish to continue?"
-msgstr "Из-за проблем с распространением, [B]Widevine CDM[/B] необходимо извлечь из образа восстановления ChromeOS. Для этого процесса требуется минимум [B]{diskspace}[/B] свободного дискового пространства. Вы хотите продолжить?"
+msgid "Due to distribution rights, [B]Widevine CDM[/B] has to be extracted from a Chrome OS recovery image. This process requires at least [B]{diskspace}[/B] of free disk space. Do you wish to continue?"
+msgstr "Из-за проблем с распространением, [B]Widevine CDM[/B] необходимо извлечь из образа восстановления Chrome OS. Для этого процесса требуется минимум [B]{diskspace}[/B] свободного дискового пространства. Вы хотите продолжить?"
 
 msgctxt "#30007"
 msgid "[B]Widevine CDM[/B] is unfortunately not available on this system architecture."
@@ -94,8 +94,8 @@ msgid "[B]'{command}'[/B] command needs to exist on system to extract the [B]Wid
 msgstr "В системе нужна команда [B]'{command}'[/B] для извлечения [B]Widevine CDM[/B]."
 
 msgctxt "#30022"
-msgid "Downloading the ChromeOS recovery image..."
-msgstr "Загружается образ восстановления ChromeOS..."
+msgid "Downloading the Chrome OS recovery image..."
+msgstr "Загружается образ восстановления Chrome OS..."
 
 msgctxt "#30023"
 msgid "Download completed!"
@@ -107,11 +107,11 @@ msgstr "Теперь установка должна распаковывать,
 
 msgctxt "#30025"
 msgid "Acquiring EULA."
-msgstr ""
+msgstr "Получение EULA."
 
 msgctxt "#30026"
 msgid "Widevine CDM EULA"
-msgstr ""
+msgstr "Widevine CDM EULA"
 
 msgctxt "#30027"
 msgid "I accept"
@@ -223,63 +223,67 @@ msgstr "[B]Widevine CDM[/B] не найден."
 
 msgctxt "#30054"
 msgid "disabled"
-msgstr ""
+msgstr "отключен"
+
+msgctxt "#30055"
+msgid "There is not enough free disk space in the current temporary directory. Would you like to specify a different one to temporarily use for the Chrome OS Recovery Image (e.g. on a USB)?"
+msgstr "На разделе с временым каталогом недостаточно свободного места. Хотите выбрать другой раздел для работы с Chrome OS Recovery Image (например, USB)?"
 
 
 ### INFORMATION DIALOG
 msgctxt "#30800"
 msgid "[B]Kodi information[/B]"
-msgstr ""
+msgstr "[B]Информация о Kodi[/B]"
 
 msgctxt "#30801"
 msgid "Kodi version: [B]{version}[/B]"
-msgstr ""
+msgstr "Версия Kodi: [B]{version}[/B]"
 
 msgctxt "#30802"
 msgid "Kodi platform/architecture: [B]{platform}[/B]/[B]{arch}[/B]"
-msgstr ""
+msgstr "Платформа/архитектура Kodi: [B]{platform}[/B]/[B]{arch}[/B]"
 
 msgctxt "#30810"
 msgid "[B]InputStream information[/B]"
-msgstr ""
+msgstr "[B]Информация о InputStream[/B]"
 
 msgctxt "#30811"
 msgid "InputStream Helper version: [B]{version}[/B] {state}"
-msgstr ""
+msgstr "Версия InputStream Helper: [B]{version}[/B] {state}"
 
 msgctxt "#30812"
 msgid "InputStream Adaptive version: [B]{version}[/B] {state}"
-msgstr ""
+msgstr "Версия InputStream Adaptive: [B]{version}[/B] {state}"
 
 msgctxt "#30820"
 msgid "[B]Widevine information[/B]"
-msgstr ""
+msgstr "[B]Информация о Widevine[/B]"
 
 msgctxt "#30821"
 msgid "Widevine version: [B]{version}[/B] [COLOR gray](last updated on [B]{date}[/B])[/COLOR]"
-msgstr ""
+msgstr "Версия Widevine: [B]{version}[/B] [COLOR gray](последнее обновление [B]{date}[/B])[/COLOR]"
 
 msgctxt "#30822"
 msgid "Widevine CDM path: [B]{path}[/B]"
-msgstr ""
+msgstr "Путь к Widevine CDM: [B]{path}[/B]"
 
 msgctxt "#30823"
-msgid "ChromeOS version: [B]{version}[/B]"
-msgstr ""
+msgid "Chrome OS version: [B]{version}[/B]"
+msgstr "Версия Chrome OS: [B]{version}[/B]"
 
 msgctxt "#30830"
-msgid "Please report issues to:\n - [B]{url}[/B]"
-msgstr ""
+msgid "Please report issues to:\n - [COLOR yellow]{url}[/COLOR]"
+msgstr "Пожалуйста, о проблемах сообщайте сюда:\n - [COLOR yellow]{url}[/COLOR]"
 
 
 ### SETTINGS
 msgctxt "#30900"
-msgid "Troubleshooting"
-msgstr "Исправление проблем"
+msgid "Expert"
+msgstr "Эксперт"
 
 msgctxt "#30901"
 msgid "InputStream Helper information"
-msgstr ""
+msgstr "Информация о InputStream Helper"
 
 msgctxt "#30903"
 msgid "Disable InputStream Helper"
@@ -287,12 +291,20 @@ msgstr "Отключить InputStream Helper"
 
 msgctxt "#30904"
 msgid "[I]When disabled, DRM playback may fail![/I]"
-msgstr "[I]Если отключить, возможны проблемы с воспроизведением DRM контента![/I]"
+msgstr "[I]При отключении возможны проблемы с запуском DRM контента![/I]"
 
 msgctxt "#30905"
+msgid "Update frequency in days"
+msgstr "Частота обновления в днях"
+
+msgctxt "#30907"
+msgid "Temporary download directory"
+msgstr "Временный каталог загрузки"
+
+msgctxt "#30909"
 msgid "(Re)install Widevine CDM library..."
 msgstr "(Пере)установить модуль Widevine CDM..."
 
-msgctxt "#30907"
+msgctxt "#30911"
 msgid "Remove Widevine CDM library..."
 msgstr "Удалить модуль Widevine CDM..."
