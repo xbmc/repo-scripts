@@ -1,25 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addon id="script.module.qrcode"
-       name="QR-Code"
-       version="5.2"
-       provider-name="schapplm">
+       name="qrcode"
+       version="5.3"
+       provider-name="Lincoln Loop">
   <requires>
-    <import addon="xbmc.python" version="2.1.0"/>
-    <import addon="script.module.six" version="1.7.3"/>
+    <import addon="xbmc.python" version="2.20.0"/>
+    <import addon="script.module.six"/>
     <import addon="script.module.pil" version="1.1.7"/> <!-- Python Image Library required to create QR images -->
   </requires>
   <extension point="xbmc.python.module" library="lib" />
   <extension point="xbmc.addon.metadata">
-    <summary lang="en">Provide QR Code Generation</summary>
-    <summary lang="de">Bietet die Erstellung von QR-Codes</summary>
-    <description lang="en">Provide QR Code Generation</description>
-    <description lang="de">Bietet die Erstellung von QR-Codes</description>
-    <platform>all</platform>
-    <language/>
-    <license>BSD 3-Clause</license>
-    <forum></forum>
-    <website>https://pypi.python.org/pypi/qrcode</website>
-    <source>https://github.com/SchapplM/python-qrcode</source>
-    <email>msahadl60@gmail.com</email>
+    <summary lang="en">QR Code image generator</summary>
+    <description lang="en">This module uses image libraries, Python Imaging Library (PIL) by default, to generate QR Codes.</description>
+    <license>BSD-3-Clause</license>
+    <website>https://pypi.org/project/qrcode/</website>
+    <source>https://github.com/lincolnloop/python-qrcode</source>
   </extension>
 </addon>
