@@ -19,5 +19,5 @@ def basic_parse(file, **kwargs):
 def parse(file, **kwargs):
     return _yajl2.parse(file.read, decimal.Decimal, common.JSONError, common.IncompleteJSONError, **kwargs)
 
-def items(file, prefix):
-    return _yajl2.items(prefix, file.read, decimal.Decimal, common.JSONError, common.IncompleteJSONError)
+def items(file, prefix, map_type=None, **kwargs):
+    return _yajl2.items(prefix, file.read, decimal.Decimal, common.JSONError, common.IncompleteJSONError, map_type, **kwargs)

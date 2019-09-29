@@ -14,12 +14,21 @@ also two other backends using the C library yajl in ``ijson.backends`` that have
 the same API and are faster under CPython.
 '''
 from ijson.common import JSONError, IncompleteJSONError, ObjectBuilder
-import ijson.backends.python as backend
 
+from .version import __version__
 
-__version__ = '2.4'
-
+def _default_backend():
+    import importlib
+    for backend in ('yajl2_c', 'yajl2_cffi', 'yajl2', 'python'):
+        try:
+            return importlib.import_module('ijson.backends.' + backend)
+        except ImportError:
+            continue
+    raise ImportError('no backends available')
+backend = _default_backend()
+del _default_backend
 
 basic_parse = backend.basic_parse
 parse = backend.parse
 items = backend.items
+del backend

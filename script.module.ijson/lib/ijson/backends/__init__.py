@@ -1,3 +1,5 @@
+import warnings
+
 class YAJLImportError(ImportError):
     pass
 
@@ -11,6 +13,13 @@ def require_version(version, required):
     minor, micro = divmod(rest, 100)
     if major != required:
         raise YAJLImportError('YAJL version %s.x required, found %s.%s.%s' % (required, major, minor, micro))
+
+def get_yajl_version(yajl):
+    try:
+        return yajl.yajl_version()
+    except AttributeError:
+        warnings.warn('Cannot determine yajl version, assuming <1.0.12')
+        return 10000
 
 def find_yajl_ctypes(required):
     '''
@@ -29,7 +38,7 @@ def find_yajl_ctypes(required):
         yajl = cdll.LoadLibrary(so_name)
     except OSError:
         raise YAJLImportError('Unable to load YAJL.')
-    require_version(yajl.yajl_version(), required)
+    require_version(get_yajl_version(yajl), required)
     return yajl
 
 def find_yajl_cffi(ffi, required):
@@ -41,5 +50,5 @@ def find_yajl_cffi(ffi, required):
         yajl = ffi.dlopen('yajl')
     except OSError:
         raise YAJLImportError('Unable to load YAJL.')
-    require_version(yajl.yajl_version(), required)
+    require_version(get_yajl_version(yajl), required)
     return yajl

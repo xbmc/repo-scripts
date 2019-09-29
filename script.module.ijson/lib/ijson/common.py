@@ -104,19 +104,20 @@ class ObjectBuilder(object):
         print builder.value
 
     '''
-    def __init__(self):
+    def __init__(self, map_type=None):
         def initial_set(value):
             self.value = value
         self.containers = [initial_set]
+        self.map_type = map_type or dict
 
     def event(self, event, value):
         if event == 'map_key':
             self.key = value
         elif event == 'start_map':
-            map = {}
-            self.containers[-1](map)
+            mappable = self.map_type()
+            self.containers[-1](mappable)
             def setter(value):
-                map[self.key] = value
+                mappable[self.key] = value
             self.containers.append(setter)
         elif event == 'start_array':
             array = []
@@ -127,7 +128,7 @@ class ObjectBuilder(object):
         else:
             self.containers[-1](value)
 
-def items(prefixed_events, prefix):
+def items(prefixed_events, prefix, map_type=None):
     '''
     An iterator returning native Python objects constructed from the events
     under a given prefix.
@@ -138,7 +139,7 @@ def items(prefixed_events, prefix):
             current, event, value = next(prefixed_events)
             if current == prefix:
                 if event in ('start_map', 'start_array'):
-                    builder = ObjectBuilder()
+                    builder = ObjectBuilder(map_type=map_type)
                     end_event = event.replace('start', 'end')
                     while (current, event) != (prefix, end_event):
                         builder.event(event, value)
@@ -156,7 +157,6 @@ def number(str_value):
     Converts string with a numeric value into an int or a Decimal.
     Used in different backends for consistent number representation.
     '''
-    number = decimal.Decimal(str_value)
     if not ('.' in str_value or 'e' in str_value or 'E' in str_value):
-        number = int(number)
-    return number
+        return int(str_value)
+    return decimal.Decimal(str_value)
