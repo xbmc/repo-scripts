@@ -1,6 +1,0 @@
-v0.2.10 (August 20th, 2016)
-- m3u8 version 0.2.10
-- Drop arrow dependency; add iso8601
-
-v0.2.2 (November 21st, 2014)
-- m3u8 version 0.2.2
