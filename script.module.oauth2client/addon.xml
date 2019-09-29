@@ -1,24 +1,21 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addon id="script.module.oauth2client"
        name="oauth2client"
-       version="4.1.2" 
-       provider-name="Google">
+       version="4.1.3"
+       provider-name="Google Inc.">
   <requires>
     <import addon="xbmc.python" version="2.24.0"/>
-	<import addon="script.module.httplib2" version="0.8.0" />
-	<import addon="script.module.uritemplate" version="0.6" />
-	<import addon="script.module.six" version="1.9.0" />
+	<import addon="script.module.httplib2" version="0.9.1" />
+	<import addon="script.module.six" version="1.6.1" />
   </requires>
   <extension point="xbmc.python.module"
              library="lib" />
   <extension point="xbmc.addon.metadata">
-    <platform>all</platform>
-    <language></language>
-    <summary lang="en">Google Oauth2Client libraries</summary>
-    <description lang="en">A packaged version of the libraries needed for Google Oauth2 Client access to their API via python.</description>
-    <disclaimer lang="en">Source code from https://github.com/google/oauth2client</disclaimer>
-    <license>Apache 2.0</license>
+    <summary lang="en_GB">OAuth 2.0 client library</summary>
+    <description lang="en_GB">oauth2client is a client library for OAuth 2.0.</description>
+    <disclaimer lang="en_GB">Source code from https://github.com/google/oauth2client</disclaimer>
+    <license>Apache-2.0</license>
     <website>https://oauth2client.readthedocs.io/en/latest/</website>
-    <source>https://github.com/google/oauth2client</source>
+    <source>https://github.com/googleapis/oauth2client</source>
   </extension>
 </addon>
