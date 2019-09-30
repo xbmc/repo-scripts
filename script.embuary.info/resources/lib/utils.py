@@ -96,7 +96,7 @@ def omdb_call(imdbnumber=None,title=None,year=None,content_type=None):
             omdb['awards'] = result.get('Awards')
             omdb['imdbRating'] = result.get('imdbRating')
             omdb['imdbVotes'] = result.get('imdbVotes')
-            omdb['DVD'] = date_format(result.get('DVD'))
+            omdb['DVD'] = date_format(result.get('DVD'),scheme='DD MMM YYYY')
 
             delete_keys = [key for key,value in omdb.items() if value == 'N/A' or value == 'NA']
             for key in delete_keys:
@@ -471,6 +471,10 @@ def tmdb_handle_movie(item,local_items=None,full_info=False):
         tmdb_studios(list_item,item,'production')
         omdb_properties(list_item,imdbnumber)
 
+        region_release = tmdb_get_region_release(item)
+        if premiered != region_release:
+            list_item.setProperty('region_release', date_format(region_release))
+
         if collection:
             list_item.setProperty('collection', collection['name'])
             list_item.setProperty('collection_id', str(collection['id']))
@@ -668,27 +672,39 @@ def tmdb_get_year(item):
         return ''
 
 
-def tmdb_get_cert(item):
+def tmdb_get_region_release(item):
     try:
-        if COUNTRY_CODE == 'DE':
-            prefix = 'FSK '
-        else:
-            prefix = ''
-
-        if item.get('content_ratings'):
-            for cert in item['content_ratings']['results']:
-                if cert['iso_3166_1'] == COUNTRY_CODE:
-                    mpaa = prefix + cert['rating']
-                    return mpaa
-
-        elif item.get('release_dates'):
-            for cert in item['release_dates']['results']:
-                if cert['iso_3166_1'] == COUNTRY_CODE:
-                    mpaa = prefix + cert['release_dates'][0]['certification']
-                    return mpaa
-
-        else:
-            return ''
+        for release in item['release_dates']['results']:
+            if release['iso_3166_1'] == COUNTRY_CODE:
+                date = release['release_dates'][0]['release_date']
+                return date[:-14]
 
     except Exception:
         return ''
+
+
+def tmdb_get_cert(item):
+    prefix = 'FSK ' if COUNTRY_CODE == 'DE' else ''
+    mpaa = ''
+    mpaa_fallback = ''
+
+    if item.get('content_ratings'):
+        for cert in item['content_ratings']['results']:
+            if cert['iso_3166_1'] == COUNTRY_CODE:
+                mpaa = cert['rating']
+                break
+            elif cert['iso_3166_1'] == 'US':
+                mpaa_fallback = cert['rating']
+
+    elif item.get('release_dates'):
+        for cert in item['release_dates']['results']:
+            if cert['iso_3166_1'] == COUNTRY_CODE:
+                mpaa = cert['release_dates'][0]['certification']
+                break
+            elif cert['iso_3166_1'] == 'US':
+                mpaa_fallback = cert['release_dates'][0]['certification']
+
+    if mpaa:
+        return prefix + mpaa
+
+    return mpaa_fallback

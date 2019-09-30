@@ -216,7 +216,7 @@ msgstr "Coleção"
 #: /resources/skins/default/1080i/script-embuary-video.xml
 msgctxt "#32039"
 msgid "Guest stars"
-msgstr "Participação especiais"
+msgstr "Participações especiais"
 
 #: /resources/skins/default/1080i/script-embuary-video.xml
 msgctxt "#32040"
@@ -227,3 +227,8 @@ msgstr "Temporadas"
 msgctxt "#32038"
 msgid "Widgets"
 msgstr "Widgets"
+
+#: /resources/settings.xml
+msgctxt "#32041"
+msgid "Hide items from similar movies if they are part of the collection"
+msgstr "Ocultar itens em filmes semelhantes se eles fizerem parte da coleção"

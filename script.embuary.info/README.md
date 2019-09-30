@@ -106,6 +106,7 @@ Special properties:
 * `Container(10051).ListItem.Property(LastEpisode_plot)` = Last aired episode plot
 * `Container(10051).ListItem.Property(LastEpisode_date)` = Last aired episode date
 * `Container(10051).ListItem.Property(LastEpisode_thumb)` = Last aired episode thumb
+* `Container(10051).ListItem.Property(Region_release)` = Movie release date of set country if it's different to ListItem.Premiered
 
 *script-embuary-image.xml*
 * List control ID `1` = Is used to display a portrait/backdrop images in fullscreen.
