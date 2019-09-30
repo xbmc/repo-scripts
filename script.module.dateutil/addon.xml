@@ -1,20 +1,22 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addon id="script.module.dateutil"
-       name="dateutil"
-       version="2.7.3"
-       provider-name="Gustavo Niemeyer, Tomi Pieviläinen, Yaron de Leeuw, Razzeee">
+       name="python-dateutil"
+       version="2.8.0"
+       provider-name="Paul Ganssle, Gustavo Niemeyer">
   <requires>
     <import addon="xbmc.python" version="2.25.0"/>
-    <import addon="script.module.six" version="1.9.0"/>
+    <import addon="script.module.six" version="1.5"/>
   </requires>
   <extension point="xbmc.python.module"
              library="lib" />
   <extension point="xbmc.addon.metadata">
-    <summary lang="en_GB">dateutil - powerful extensions to datetime</summary>
-    <description lang="en_GB">Packed for Kodi from https://github.com/dateutil/dateutil</description>
-    <platform>all</platform>
-    <license>Revised BSD License</license>
-    <website>https://dateutil.readthedocs.org/en/latest/</website>
-    <source>https://github.com/Razzeee/script.module.dateutil</source>
+    <summary lang="en_GB">Extensions to the standard Python datetime module</summary>
+    <description lang="en_GB">The dateutil module provides powerful extensions to the standard datetime module, available in Python.</description>
+    <license>Apache-2.0, BSD-3-Clause</license>
+    <website>https://dateutil.readthedocs.io/en/stable/</website>
+    <source>https://github.com/dateutil/dateutil</source>
+    <assets>
+      <icon>icon.png</icon>
+    </assets>
   </extension>
 </addon>
