@@ -107,8 +107,8 @@ def parse(file, **kwargs):
     '''
     return common.parse(basic_parse(file, **kwargs))
 
-def items(file, prefix):
+def items(file, prefix, map_type=None, **kwargs):
     '''
     Backend-specific wrapper for ijson.common.items.
     '''
-    return common.items(parse(file), prefix)
+    return common.items(parse(file, **kwargs), prefix, map_type=map_type)

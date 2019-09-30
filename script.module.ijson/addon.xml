@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addon	id="script.module.ijson"
 		name="ijson"
-		version="2.4"
-		provider-name="Ivan Sagalaev, Rodrigo Tobar">
+		version="2.5"
+		provider-name="Rodrigo Tobar, Ivan Sagalaev">
 	<requires>
 		<import addon="xbmc.python" version="2.25.0"/>
 	</requires>
