@@ -162,15 +162,10 @@ def winprop(key, value=None, clear=False, window_id=10000):
         return result
 
 
-def date_format(value,date='short'):
+def date_format(value,date='short',scheme='YYYY-MM-DD'):
     try:
-        try:
-            date_time = arrow.get(value, 'YYYY-MM-DD')
-        except Exception:
-            date_time = arrow.get(value, 'DD MMM YYYY')
-
+        date_time = arrow.get(value, scheme)
         value = date_time.strftime(xbmc.getRegion('date%s' % date))
-
     except Exception:
         pass
 
