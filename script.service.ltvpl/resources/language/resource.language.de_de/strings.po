@@ -1,0 +1,319 @@
+# Kodi Media Center language file
+# Addon Name: Live TV Playlist
+# Addon id: script.service.ltvpl
+# Addon Provider: jmooremcc
+msgid ""
+msgstr ""
+"Project-Id-Version: KODI Main\n"
+"Report-Msgid-Bugs-To: http://trac.kodi.tv/\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: HeresJohnny\n"
+"Language-Team: German (Germany) (http://www.transifex.com/projects/p/kodi-main/language/de_DE/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: de_DE\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#30000"
+msgid "Keymap Editor"
+msgstr "Keymap-Editor"
+
+# empty string with id 30001
+
+msgctxt "#30002"
+msgid "Press the key you want to assign now"
+msgstr "Drücke die Taste, die Du jetzt zuweisen möchtest"
+
+msgctxt "#30003"
+msgid "Edit"
+msgstr "Bearbeiten"
+
+msgctxt "#30004"
+msgid "Reset to default"
+msgstr "Auf Standard zurücksetzen"
+
+msgctxt "#30005"
+msgid "Save"
+msgstr "Speichern"
+
+msgctxt "#30006"
+msgid "Discard changes?"
+msgstr "Änderungen verwerfen?"
+
+msgctxt "#30007"
+msgid "Select Window to manage shortcuts"
+msgstr "Fenster auswählen, um Verknüpfungen zu verwalten"
+
+msgctxt "#30008"
+msgid "Select action category"
+msgstr "Aktionskategorie auswählen"
+
+msgctxt "#30009"
+msgid "Select the action to assign a key"
+msgstr "Auswahl der Aktion zur Zuweisung einer Taste"
+
+msgctxt "#30010"
+msgid "Timeout in {:0f} seconds..."
+msgstr "Timeout in {:.0f} Sekunden..."
+
+msgctxt "#30011"
+msgid "Edit key"
+msgstr "Schlüssel bearbeiten"
+
+msgctxt "#30012"
+msgid "Remove"
+msgstr "Entfernen"
+
+msgctxt "#30020"
+msgid "Skip Event"
+msgstr "Ereignis überspringen"
+
+msgctxt "#30021"
+msgid "Suspend Event"
+msgstr "Ereignis anhalten"
+
+msgctxt "#30022"
+msgid "Edit Event"
+msgstr "Ereignis bearbeiten"
+
+msgctxt "#30023"
+msgid "Delete Event"
+msgstr "Ereignis löschen"
+
+msgctxt "#30024"
+msgid "Enable Event"
+msgstr "Ereignis aktivieren"
+
+msgctxt "#30030"
+msgid "Date"
+msgstr "Datum"
+
+msgctxt "#30031"
+msgid "Time"
+msgstr "Zeit"
+
+msgctxt "#30032"
+msgid "Ch"
+msgstr "CH"
+
+msgctxt "#30033"
+msgid "Frequency"
+msgstr "Frequenz"
+
+msgctxt "#30034"
+msgid "Description"
+msgstr "Beschreibung"
+
+msgctxt "#30035"
+msgid "Expires On"
+msgstr "Ablaufdatum"
+
+msgctxt "#30036"
+msgid "Suspended Flag"
+msgstr "Angehalten Marker"
+
+msgctxt "#30037"
+msgid "Vacation Mode: On"
+msgstr "Urlaubsmodus: Ein"
+
+msgctxt "#30038"
+msgid "Vacation Mode: Off"
+msgstr "Urlaubsmodus: Aus"
+
+msgctxt "#30040"
+msgid "Date:"
+msgstr "Datum:"
+
+msgctxt "#30041"
+msgid "Time:"
+msgstr "Zeit:"
+
+msgctxt "#30042"
+msgid "Ch:"
+msgstr "CH:"
+
+msgctxt "#30043"
+msgid "Title:"
+msgstr "Titel:"
+
+msgctxt "#30044"
+msgid "Expiration Date:"
+msgstr "Ablaufdatum:"
+
+msgctxt "#30045"
+msgid "Submit"
+msgstr "Senden"
+
+msgctxt "#30046"
+msgid "Cancel"
+msgstr "Abbrechen"
+
+msgctxt "#30047"
+msgid "Working ..."
+msgstr "Verarbeite ..."
+
+msgctxt "#30050"
+msgid "Once"
+msgstr "Einmalig"
+
+msgctxt "#30051"
+msgid "Daily"
+msgstr "Täglich"
+
+msgctxt "#30052"
+msgid "Weekdays"
+msgstr "Wochentags"
+
+msgctxt "#30053"
+msgid "Weekends"
+msgstr "Wochenenden"
+
+msgctxt "#30054"
+msgid "Weekly"
+msgstr "Wöchentlich"
+
+msgctxt "#30055"
+msgid "Monthly"
+msgstr "Monatllich"
+
+msgctxt "#30060"
+msgid "Delete Operation Successful"
+msgstr "Löschen erfolgreich"
+
+msgctxt "#30061"
+msgid "Delete Operation Cancelled!"
+msgstr "Löschen abgebrochen!"
+
+msgctxt "#30062"
+msgid "Vacation Mode is Active..."
+msgstr "Urlaubsmodus ist aktiv..."
+
+msgctxt "#30063"
+msgid "miniClient Service Started..."
+msgstr "miniClient Service gestartet..."
+
+msgctxt "#30064"
+msgid "This item cannot be added because the program has already started!"
+msgstr "Dieses Element kann nicht hinzugefügt werden, da die Sendung bereits begonnen hat!"
+
+msgctxt "#30065"
+msgid "{} Added Successfully"
+msgstr "{} Erfolgreich hinzugefügt"
+
+msgctxt "#30066"
+msgid "{} Updated Successfully"
+msgstr "{} Erfolgreich aktualisiert"
+
+msgctxt "#30067"
+msgid "Are you sure you want to delete\n{}?"
+msgstr "Möchtest Du \n{} wirklich löschen?"
+
+msgctxt "#30070"
+msgid "Live TV Playlist Activation"
+msgstr "Aktivierung der TV-Wiedergabeliste"
+
+msgctxt "#30071"
+msgid "Next: Ch {}  {}"
+msgstr "Jetzt: CH {} {}"
+
+msgctxt "#30072"
+msgid "Live TV Playlist Viewer"
+msgstr "TV-Wiedergabeliste ansehen"
+
+msgctxt "#30073"
+msgid "Add to Live TV Playlist"
+msgstr "Zur TV-Wiedergabeliste hinzfügen"
+
+msgctxt "#30080"
+msgid "Item conflicts with {}"
+msgstr "Element steht in Konflikt mit {}"
+
+msgctxt "#30081"
+msgid "Vacation Mode Active"
+msgstr "Urlaubsmodus aktiv"
+
+msgctxt "#30082"
+msgid "Invalid Alarm Time Error"
+msgstr "Ungültige Alarmzeit"
+
+msgctxt "#30083"
+msgid "Item Update Failed"
+msgstr "Aktualisierung des Elements fehlgeschlagen"
+
+msgctxt "#30084"
+msgid "Item Does Not Exist"
+msgstr "Element existiert nicht"
+
+msgctxt "#30085"
+msgid "Item Added Failed"
+msgstr "Fehler beim Hinzufügen von Element"
+
+msgctxt "#30086"
+msgid "Item Removed Failed"
+msgstr "Fehler beim Entfernen von Element"
+
+msgctxt "#30087"
+msgid "Item Cancelled Failed"
+msgstr "Fehler beim Stornieren von Element"
+
+msgctxt "#30088"
+msgid "Server Connection Error"
+msgstr "Fehler beim Verbinden mit Server"
+
+msgctxt "#30090"
+msgid "Add To Live TV Playlist"
+msgstr "Zu TV-Wiedergabeliste hinzufügen"
+
+msgctxt "#30100"
+msgid "General"
+msgstr "Allgemeines"
+
+msgctxt "#30101"
+msgid "Playlist Autoclean Mode"
+msgstr "Wiedergabeliste Autoclean-Modus"
+
+msgctxt "#30102"
+msgid "Vacation Mode"
+msgstr "Urlaubsmodus"
+
+msgctxt "#30103"
+msgid "Debug Mode"
+msgstr "Debug-Modus"
+
+msgctxt "#30104"
+msgid "Count Down Dialog Duration"
+msgstr "Dauer Countdown-Dialog"
+
+msgctxt "#30105"
+msgid "Preroll Time"
+msgstr "Vorlaufzeit"
+
+msgctxt "#30106"
+msgid "Addon Activation Key"
+msgstr "Addon-Aktivierungsschlüssel"
+
+msgctxt "#30107"
+msgid "Set Addon Activation Key"
+msgstr "Addon-Aktivierungsschlüssel festlegen"
+
+msgctxt "#30108"
+msgid "Activation Key"
+msgstr "Aktivierungsschlüssel"
+
+msgctxt "#30109"
+msgid "Reload Keymaps"
+msgstr "Keymaps neu laden"
+
+msgctxt "#30110"
+msgid "Daily Stop Command"
+msgstr "Täglicher Stoppbefehl"
+
+msgctxt "#30111"
+msgid "Active"
+msgstr "Aktiv"
+
+msgctxt "#30112"
+msgid "Time (24 hr)"
+msgstr "Zeit (24 Stunden)"

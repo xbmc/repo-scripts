@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+  <category label="30100">
+    <setting id="autocleanmode" type="bool" label="30101" default="true"/>
+    <setting id="vacationmode" type="bool" label="30102" default="false"/>
+    <setting id="debugmode" type="bool" label="30103" default="false"/>
+    <setting type="sep"/>
+    <setting subsetting="true" id="countdown_duration" type="slider" range="10,5,40" option="int" label="30104" default="15"/>
+    <setting subsetting="true" id="preroll_time" type="slider" range="5,5,30" option="int" label="30105" default="5"/>
+  </category>
+  <category label="30106">
+    <setting label="30107" type="action" action="RunAddon(script.service.ltvpl, keymap)"/>
+    <setting label="30108" type="text" id="activationkey" default="227"/>
+    <setting type="sep"/>
+    <setting label="30109" type="action" action="RunAddon(script.service.ltvpl, reloadkeymaps)" option="close"/>
+  </category>
+  <category label="30110">
+    <setting id="stopcmd_active" type="bool" label="30111" default="false"/>
+    <setting id="alarmtime" type="time" label="30112" default="00:00"/>
+  </category>
+</settings>

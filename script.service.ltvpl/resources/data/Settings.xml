@@ -1,0 +1,17 @@
+<Settings>
+  <Devices>
+    <Device chgroup="2" ipaddr="localHost" name="localHost" selected="false" />
+    <Device chgroup="2" ipaddr="192.168.3.107" name="Den" selected="true" />
+    <Device chgroup="2" ipaddr="192.168.3.106" name="Bed Room" selected="false" />
+  </Devices>
+  <DefaultChannels>
+    <channel>2.1</channel>
+    <channel>4.1</channel>
+    <channel>6.1</channel>
+    <channel>7.1</channel>
+    <channel>10.1</channel>
+    <channel>33.1</channel>
+    <channel>39.1</channel>
+  </DefaultChannels>
+  <SelectedDevice>Den</SelectedDevice>
+</Settings>

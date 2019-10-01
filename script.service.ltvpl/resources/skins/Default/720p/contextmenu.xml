@@ -1,0 +1,146 @@
+<window>
+  <coordinates>
+    <system>1</system>
+    <posx>470</posx>
+    <posy>255</posy>
+  </coordinates>
+  <!--PreviousMenu>Home</PreviousMenu-->
+  <!--visible>!Window.IsActive(Window.Property(parentWinID))</visible-->
+  <controls>
+    <!--item background image 1-->
+    <control type="image" id="5001">
+      <posx>0</posx>
+      <posy>0</posy>
+      <width>342</width>
+      <height>96</height>
+      <texture border="20">DialogBack.png</texture>
+    </control>
+    <!--item background image 2-->
+    <control type="image" id="5002">
+      <posx>0</posx>
+      <posy>0</posy>
+      <width>342</width>
+      <height>134</height>
+      <texture border="20">DialogBack.png</texture>
+    </control>
+    <!--item background image 3-->
+    <control type="image" id="5003">
+      <posx>0</posx>
+      <posy>0</posy>
+      <width>342</width>
+      <height>172</height>
+      <texture border="20">DialogBack.png</texture>
+    </control>
+    <!--item background image 4-->
+    <control type="image" id="5004">
+      <posx>0</posx>
+      <posy>0</posy>
+      <width>342</width>
+      <height>210</height>
+      <texture border="20">DialogBack.png</texture>
+    </control>
+    <!--List to hold 'buttons'-->
+    <control type="list" id="3000">
+      <posx>20</posx>
+      <posy>30</posy>
+      <width>300</width>
+      <height>152</height>
+      <itemwidth>300</itemwidth>
+      <itemheight>38</itemheight>
+      <pagecontrol>4000</pagecontrol>
+      <scrolltime>200</scrolltime>
+      <!--
+        jmoore Mod
+        Purpose: Fix Navigation to accomodate invisible scrollbar
+      -->
+      <onright condition="Control.IsVisible(4000)">4000</onright>
+      <onright condition="!Control.IsVisible(4000)">3001</onright>
+      <onleft condition="Control.IsVisible(4000)">4000</onleft>
+      <onleft condition="!Control.IsVisible(4000)">3001</onleft>
+
+      <itemlayout width="300" height="38">
+        <control type="image">
+          <posx>0</posx>
+          <posy>0</posy>
+          <width>300</width>
+          <height>38</height>
+          <texture border="5">button-nofocus.png</texture>
+        </control>
+        <control type="label">
+          <posx>50</posx>
+          <posy>0</posy>
+          <width>250</width>
+          <height>38</height>
+          <font>fontContextMenu</font>
+          <textcolor>white</textcolor>
+          <aligny>center</aligny>
+          <align>left</align>
+          <info>ListItem.Label</info>
+        </control>
+      </itemlayout>
+
+      <focusedlayout width="300" height="38">
+        <control type="image">
+          <posx>0</posx>
+          <posy>0</posy>
+          <width>300</width>
+          <height>38</height>
+          <texture border="5">button-nofocus.png</texture>
+        </control>
+        <control type="label">
+          <posx>50</posx>
+          <posy>0</posy>
+          <width>250</width>
+          <height>38</height>
+          <font>fontContextMenu</font>
+          <textcolor>orange</textcolor>
+          <aligny>center</aligny>
+          <align>left</align>
+          <info>ListItem.Label</info>
+        </control>
+      </focusedlayout>
+    </control>
+    <!--Scrollbar 4000-->
+    <control type="scrollbar" id="4000">
+      <posx>315</posx>
+      <posy>30</posy>
+      <width>25</width>
+      <height>152</height>
+      <texturesliderbackground border="0,14,0,14">ScrollBarV.png</texturesliderbackground>
+      <texturesliderbar border="0,14,0,14">ScrollBarV_bar.png</texturesliderbar>
+      <texturesliderbarfocus border="0,14,0,14">ScrollBarV_bar_focus.png</texturesliderbarfocus>
+      <textureslidernib>ScrollBarNib.png</textureslidernib>
+      <textureslidernibfocus>ScrollBarNib.png</textureslidernibfocus>
+      <onleft>3000</onleft>
+      <onright>3000</onright>
+      <showonepage>false</showonepage>
+      <orientation>vertical</orientation>
+    </control>
+    <!--Close Window button 3001-->
+    <control type="button" id="3001">
+      <posx>260</posx>
+      <posy>5</posy>
+      <width>64</width>
+      <height>32</height>
+      <label>-</label>
+      <font>-</font>
+      <onclick>PreviousMenu</onclick>
+      <texturefocus>DialogCloseButton-focus.png</texturefocus>
+      <texturenofocus>DialogCloseButton.png</texturenofocus>
+      <visible>system.getbool(input.enablemouse)</visible>
+      <onup>3000</onup>
+      <ondown>3000</ondown>
+    </control>
+    <!--control type="label">
+      <posx>0</posx>
+      <posy>0</posy>
+      <width>300</width>
+      <height>38</height>
+      <font>fontContextMenu</font>
+      <textcolor>white</textcolor>
+      <aligny>center</aligny>
+      <align>left</align>
+      <info>Window.Property(ParentAddonID)</info>
+    </control-->
+  </controls>
+</window>

@@ -1,0 +1,307 @@
+# Kodi Media Center language file
+# Addon Name: Live TV Playlist
+# Addon id: script.service.ltvpl
+# Addon Provider: jmooremcc
+msgid ""
+msgstr ""
+"Project-Id-Version: Kodi Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@kodi.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: English (http://www.transifex.com/projects/p/xbmc-addons/language/en/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#30000"
+msgid "Keymap Editor"
+msgstr ""
+
+# empty string with id 30001
+
+msgctxt "#30002"
+msgid "Press the key you want to assign now"
+msgstr ""
+
+msgctxt "#30003"
+msgid "Edit"
+msgstr ""
+
+msgctxt "#30004"
+msgid "Reset to default"
+msgstr ""
+
+msgctxt "#30005"
+msgid "Save"
+msgstr ""
+
+msgctxt "#30006"
+msgid "Discard changes?"
+msgstr ""
+
+msgctxt "#30007"
+msgid "Select Window to manage shortcuts"
+msgstr ""
+
+msgctxt "#30008"
+msgid "Select action category"
+msgstr ""
+
+msgctxt "#30009"
+msgid "Select the action to assign a key"
+msgstr ""
+
+msgctxt "#30010"
+msgid "Timeout in {:.0f} seconds..."
+msgstr ""
+
+msgctxt "#30011"
+msgid "Edit key"
+msgstr ""
+
+msgctxt "#30012"
+msgid "Remove"
+msgstr ""
+
+msgctxt "#30020"
+msgid "Skip Event"
+msgstr ""
+
+msgctxt "#30021"
+msgid "Suspend Event"
+msgstr ""
+
+msgctxt "#30022"
+msgid "Edit Event"
+msgstr ""
+
+msgctxt "#30023"
+msgid "Delete Event"
+msgstr ""
+
+msgctxt "#30024"
+msgid "Enable Event"
+msgstr ""
+
+msgctxt "#30030"
+msgid "Date"
+msgstr ""
+
+msgctxt "#30031"
+msgid "Time"
+msgstr ""
+
+msgctxt "#30032"
+msgid "Ch"
+msgstr ""
+
+msgctxt "#30033"
+msgid "Frequency"
+msgstr ""
+
+msgctxt "#30034"
+msgid "Description"
+msgstr ""
+
+msgctxt "#30035"
+msgid "Expires On"
+msgstr ""
+
+msgctxt "#30036"
+msgid "suspendedFlag"
+msgstr ""
+
+msgctxt "#30037"
+msgid "Vacation Mode: On"
+msgstr ""
+
+msgctxt "#30038"
+msgid "Vacation Mode: Off"
+msgstr ""
+
+msgctxt "#30040"
+msgid "Date:"
+msgstr ""
+
+msgctxt "#30041"
+msgid "Time:"
+msgstr ""
+
+msgctxt "#30042"
+msgid "Ch:"
+msgstr ""
+
+msgctxt "#30043"
+msgid "Title:"
+msgstr ""
+
+msgctxt "#30044"
+msgid "Expiration Date:"
+msgstr ""
+
+msgctxt "#30045"
+msgid "Submit"
+msgstr ""
+
+msgctxt "#30046"
+msgid "Cancel"
+msgstr ""
+
+msgctxt "#30047"
+msgid "Working ..."
+msgstr ""
+
+msgctxt "#30050"
+msgid "Once"
+msgstr ""
+
+msgctxt "#30051"
+msgid "Daily"
+msgstr ""
+
+msgctxt "#30052"
+msgid "Weekdays"
+msgstr ""
+
+msgctxt "#30053"
+msgid "Weekends"
+msgstr ""
+
+msgctxt "#30054"
+msgid "Weekly"
+msgstr ""
+
+msgctxt "#30055"
+msgid "Monthly"
+msgstr ""
+
+msgctxt "#30060"
+msgid "Delete Operation Successful"
+msgstr ""
+
+msgctxt "#30061"
+msgid "Delete Operation Cancelled!"
+msgstr ""
+
+msgctxt "#30062"
+msgid "Vacation Mode is Active..."
+msgstr ""
+
+msgctxt "#30063"
+msgid "miniClient Service Started..."
+msgstr ""
+
+msgctxt "#30064"
+msgid "This item cannot be added because the program has already started!"
+msgstr ""
+
+msgctxt "#30065"
+msgid "{} Added Successfully"
+msgstr ""
+
+msgctxt "#30066"
+msgid "{} Updated Successfully"
+msgstr ""
+
+msgctxt "#30070"
+msgid "Live TV Playlist Activation"
+msgstr ""
+
+msgctxt "#30071"
+msgid "Next: Ch {}  {}"
+msgstr ""
+
+msgctxt "#30080"
+msgid "Item conflicts with {}"
+msgstr ""
+
+msgctxt "#30081"
+msgid "Vacation Mode Active"
+msgstr ""
+
+msgctxt "#30082"
+msgid "Invalid Alarm Time Error"
+msgstr ""
+
+msgctxt "#30083"
+msgid "Item Update Failed"
+msgstr ""
+
+msgctxt "#30084"
+msgid "Item Does Not Exist"
+msgstr ""
+
+msgctxt "#30085"
+msgid "Item Added Failed"
+msgstr ""
+
+msgctxt "#30086"
+msgid "Item Removed Failed"
+msgstr ""
+
+msgctxt "#30087"
+msgid "Item Cancelled Failed"
+msgstr ""
+
+msgctxt "#30088"
+msgid "Server Connection Error"
+msgstr ""
+
+msgctxt "#30090"
+msgid "Add To Live TV Playlist"
+msgstr ""
+
+msgctxt "#30100"
+msgid "General"
+msgstr ""
+
+msgctxt "#30101"
+msgid "Playlist Autoclean Mode"
+msgstr ""
+
+msgctxt "#30102"
+msgid "Vacation Mode"
+msgstr ""
+
+msgctxt "#30103"
+msgid "Debug Mode"
+msgstr ""
+
+msgctxt "#30104"
+msgid "Count Down Dialog Duration"
+msgstr ""
+
+msgctxt "#30105"
+msgid "Preroll Time"
+msgstr ""
+
+msgctxt "#30106"
+msgid "Addon Activation Key"
+msgstr ""
+
+msgctxt "#30107"
+msgid "Set Addon Activation Key"
+msgstr ""
+
+msgctxt "#30108"
+msgid "Activation Key"
+msgstr ""
+
+msgctxt "#30109"
+msgid "Reload Keymaps"
+msgstr ""
+
+msgctxt "#30110"
+msgid "Daily Stop Command"
+msgstr ""
+
+msgctxt "#30111"
+msgid "Active"
+msgstr ""
+
+msgctxt "#30112"
+msgid "Time (24 hr)"
+msgstr ""

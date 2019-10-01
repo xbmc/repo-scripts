@@ -1,0 +1,338 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<window id="1101" type="dialog">
+  <coordinates>
+    <system>1</system>
+    <posx>300</posx>
+    <posy>200</posy>
+    <width>350</width>
+    <height>200</height>
+  </coordinates>
+  <defaultcontrol>300</defaultcontrol>
+  <controls>
+    <control type="image">
+      <description>1 item background image</description>
+      <posx>0</posx>
+      <posy>0</posy>
+      <width>533</width>
+      <height>240</height>
+      <texture border="20">DialogBack.png</texture>
+    </control>
+    <!--Left Panel-->
+    <control type="group" border="5">
+      <description>The Left Panel</description>
+      <left>0</left>
+      <top>10</top>
+      <width>350</width>
+
+      <control type="image">
+        <description>1 item background image</description>
+        <top>10</top>
+        <left>8</left>
+        <width>340</width>
+        <height>192</height>
+        <texture border="1">DialogBack.png</texture>
+        <!--texture border="5">DialogBack.png</texture-->
+      </control>
+      <!--Date Label-->
+      <control type="group">
+        <description>Date Data Item</description>
+        <left>10</left>
+        <top>6</top>
+        <width>100</width>
+        <control type="label">
+          <font>font10</font>
+          <label>$INFO[Window.Property(date)]</label>
+          <textcolor>yellow</textcolor>
+        </control>
+        <control type="label">
+          <left>45</left>
+          <font>font10</font>
+          <label>$INFO[Window.Property(pgmDate)]</label>
+          <width>150</width>
+          <textcolor>white</textcolor>
+        </control>
+      </control>
+      <!--Time Label-->
+      <control type="group">
+        <description>Time Data Item</description>
+        <left>145</left>
+        <top>6</top>
+        <width>100</width>
+        <control type="label">
+          <font>font10</font>
+          <label>$INFO[Window.Property(time)]</label>
+          <textcolor>yellow</textcolor>
+        </control>
+        <control type="label">
+          <left>45</left>
+          <font>font10</font>
+          <label>$INFO[Window.Property(pgmTime)]</label>
+          <width>150</width>
+          <textcolor>white</textcolor>
+        </control>
+      </control>
+      <!--Channel Label-->
+      <control type="group">
+        <description>Channel Data Item</description>
+        <left>270</left>
+        <top>6</top>
+        <width>100</width>
+        <control type="label">
+          <font>font10</font>
+          <label>$INFO[Window.Property(ch)]</label>
+          <textcolor>yellow</textcolor>
+        </control>
+        <control type="label">
+          <left>30</left>
+          <font>font10</font>
+          <label>$INFO[Window.Property(pgmCh)]</label>
+          <width>40</width>
+          <textcolor>white</textcolor>
+        </control>
+      </control>
+      <!--Title Label-->
+      <control type="group">
+        <description>Title Data Item</description>
+        <left>10</left>
+        <top>30</top>
+        <width>100</width>
+        <control type="label">
+          <font>font10</font>
+          <label>$INFO[Window.Property(title)]</label>
+          <textcolor>yellow</textcolor>
+        </control>
+        <control type="label">
+          <left>45</left>
+          <font>font10</font>
+          <height>60</height>
+          <textwidth>290</textwidth>
+          <label>$INFO[Window.Property(pgmTitle)]</label>
+          <wrapmultiline>false</wrapmultiline>
+          <width>270</width>
+          <textcolor>white</textcolor>
+        </control>
+      </control>
+      <!--Icon Image 400-->
+      <control type="image" id="200">
+        <left>80</left>
+        <top>60</top>
+        <width>200</width>
+        <height>100</height>
+        <description>icon</description>
+        <!--texture>
+          http://pc5:8866/service?method=channel.show.artwork&sid=cf923306f8314ba4b8d5facf32b5a1f1&event_id=1637134
+        </texture-->
+        <visible>true</visible>
+      </control>
+      <!--Expiration Box 400-->
+      <control type="group">
+        <description>Expiration Date Box</description>
+        <left>10</left>
+        <top>160</top>
+        <width>250</width>
+        <height>30</height>
+        <!--Left Expiry Label-->
+        <control type="image">
+          <texture colordiffuse="FF2222CC" border="4">WhiteDialogBack.png</texture>
+          <left>15</left>
+          <top>1</top>
+          <width>145</width>
+          <height>32</height>
+        </control>
+        <control type="label">
+          <left>30</left>
+          <top>5</top>
+          <font>font10</font>
+          <label>$INFO[Window.Property(expiry)]</label>
+          <textcolor>yellow</textcolor>
+        </control>
+        <!--Data Right of Label-->
+        <control type="button" id="400">
+          <description>Expiration Date button control</description>
+          <left>155</left>
+          <top>5</top>
+          <visible>true</visible>
+          <align>center</align>
+          <textwidth>200</textwidth>
+          <font>font10</font>
+          <textoffsetx>0</textoffsetx>
+          <textcolor>FFB2D4F5</textcolor>
+          <label>$INFO[Window.Property(pgmExpiration)]</label>
+          <disabledcolor>FF000000</disabledcolor>
+          <invalidcolor>FFFFFFFF</invalidcolor>
+          <texturefocus>button-focus.png</texturefocus>
+          <texturenofocus>button-nofocus.png</texturenofocus>
+          <pulseonselect>no</pulseonselect>
+          <onup>3001</onup>
+          <ondown>210</ondown>
+          <onleft>3001</onleft>
+          <onright>300</onright>
+        </control>
+      </control>
+      <!--Action Buttons 210 & 211-->
+      <control type="group">
+        <description>Action Buttons</description>
+        <left>60</left>
+        <top>198</top>
+        <width>300</width>
+        <height>30</height>
+        <control type="button" id="210">
+          <left>0</left>
+          <width>70</width>
+          <height>20</height>
+          <font>font10</font>
+          <label>$INFO[Window.Property(submit)]</label>
+          <textwidth>100</textwidth>
+          <textcolor>white</textcolor>
+          <focusedcolor>yellow</focusedcolor>
+          <align>center</align>
+          <textoffsety>5</textoffsety>
+          <texturefocus colordiffuse="FF2266AA" border="10">white.png</texturefocus>
+          <texturenofocus colordiffuse="FF333388" border="10">white.png</texturenofocus>
+          <visible>system.getbool(input.enablemouse)</visible>
+          <onup>400</onup>
+          <ondown>3001</ondown>
+          <onleft>300</onleft>
+          <onright>211</onright>
+        </control>
+        <control type="button" id="211">
+          <left>90</left>
+          <width>90</width>
+          <height>20</height>
+          <font>font10</font>
+          <label>$INFO[Window.Property(cancel)]</label>
+          <textwidth>100</textwidth>
+          <textcolor>white</textcolor>
+          <focusedcolor>yellow</focusedcolor>
+          <align>center</align>
+          <textoffsety>5</textoffsety>
+          <texturefocus colordiffuse="FF2266AA" border="10">white.png</texturefocus>
+          <texturenofocus colordiffuse="FF333388" border="10">white.png</texturenofocus>
+          <visible>system.getbool(input.enablemouse)</visible>
+          <onup>400</onup>
+          <ondown>3001</ondown>
+          <onleft>210</onleft>
+          <onright>3001</onright>
+        </control>
+      </control>
+    </control>
+
+    <!--Right Panel-->
+    <control type="group" border="5">
+      <description>Right Panel</description>
+      <left>340</left>
+      <top>10</top>
+      <width>200</width>
+      <control type="label">Right Panel</control>
+      <!--Frequency List-->
+      <control type="group" border="5">
+        <description>Frequency List</description>
+        <left>0</left>
+        <top>0</top>
+        <height>300</height>
+        <width>200</width>
+
+        <control type="image">
+          <top>10</top>
+          <left>7</left>
+          <description>Frame Around List</description>
+          <width>170</width>
+          <height>186</height>
+          <texture border="10">button-focus.png</texture>
+          <visible>Control.HasFocus(300)</visible>
+          <!--texture colordiffuse="FFAA66AA" border="5">WhiteDialogBack.png</texture-->
+        </control>
+
+        <control type="image">
+          <top>15</top>
+          <left>12</left>
+          <description>Frequency Backcolor</description>
+          <width>158</width>
+          <height>30</height>
+          <texture colordiffuse="FF2222CC" border="5">WhiteDialogBack.png</texture>
+        </control>
+
+        <control type="label">
+          <left>12</left>
+          <top>15</top>
+          <label>$INFO[Window.Property(frequency)]</label>
+          <!--label>Frequency</label-->
+          <textcolor>yellow</textcolor>
+          <align>center</align>
+          <width>150</width>
+        </control>
+
+        <control type="list" id="300">
+          <description>Frequency Selection List</description>
+          <visible>true</visible>
+          <orientation>vertical</orientation>
+          <left>12</left>
+          <top>40</top>
+          <width>160</width>
+          <font>font8</font>
+          <height>200</height>
+          <onleft>400</onleft>
+          <onright>210</onright>
+          <!--onup>3001</onup>
+          <ondown>3001</ondown-->
+          <itemlayout height="25" width="160">
+            <control type="image">
+              <top>0</top>
+              <height>28</height>
+              <!--colordiffuse>FFAA0000</colordiffuse-->
+              <aspectratio>stretch</aspectratio>
+              <texture border="5">DialogBack.png</texture>
+            </control>
+
+            <control type="label">
+              <font>font8</font>
+              <textcolor>white</textcolor>
+              <label>$INFO[ListItem.Label]</label>
+              <aligny>0</aligny>
+              <align>center</align>
+              <selectedcolor>green</selectedcolor>
+            </control>
+          </itemlayout>
+          <focusedlayout height="25" width="160">
+            <control type="image">
+              <top>0</top>
+              <height>35</height>
+              <colordiffuse>FFAA0000</colordiffuse>
+              <aspectratio>stretch</aspectratio>
+              <texture border="5">WhiteDialogBack.png</texture>
+            </control>
+
+            <control type="label">
+              <font>font8</font>
+              <textcolor>yellow</textcolor>
+              <label>$INFO[ListItem.Label]</label>
+              <aligny>0</aligny>
+              <align>center</align>
+              <selectedcolor>green</selectedcolor>
+            </control>
+          </focusedlayout>
+
+        </control>
+      </control>
+    </control>
+    <!--Close Button-->
+    <control type="button" id="3001">
+      <description>Close Window button</description>
+      <posx>464</posx>
+      <posy>5</posy>
+      <width>64</width>
+      <height>32</height>
+      <label>-</label>
+      <font>-</font>
+      <onclick>PreviousMenu</onclick>
+      <texturefocus>DialogCloseButton-focus.png</texturefocus>
+      <texturenofocus>DialogCloseButton.png</texturenofocus>
+      <visible>system.getbool(input.enablemouse)</visible>
+      <onup>210</onup>
+      <ondown>400</ondown>
+      <onleft>211</onleft>
+      <onright>400</onright>
+    </control>
+  </controls>
+</window>
