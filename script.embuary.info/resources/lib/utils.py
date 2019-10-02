@@ -495,7 +495,7 @@ def tmdb_handle_tvshow(item,local_items=None,full_info=False):
     last_episode = item.get('last_episode_to_air','')
     tvdb_id = item['external_ids']['tvdb_id'] if item.get('external_ids') else ''
 
-    premiered = item.get('release_date')
+    premiered = item.get('first_air_date')
     if premiered in ['2999-01-01', '1900-01-01']:
         premiered = ''
 

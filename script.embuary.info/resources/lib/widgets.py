@@ -16,10 +16,12 @@ except ImportError:
 ########################
 
 INDEX = [
+        {'name': ADDON.getLocalizedString(32042), 'info': 'trending', 'call': 'movies', 'get': 'week'},
         {'name': ADDON.getLocalizedString(32029), 'info': 'movies', 'call': 'top_rated'},
         {'name': ADDON.getLocalizedString(32030), 'info': 'movies', 'call': 'now_playing'},
         {'name': ADDON.getLocalizedString(32031), 'info': 'movies', 'call': 'upcoming'},
         {'name': ADDON.getLocalizedString(32032), 'info': 'movies', 'call': 'popular'},
+        {'name': ADDON.getLocalizedString(32043), 'info': 'trending', 'call': 'tv', 'get': 'week'},
         {'name': ADDON.getLocalizedString(32033), 'info': 'tvshows', 'call': 'top_rated'},
         {'name': ADDON.getLocalizedString(32034), 'info': 'tvshows', 'call': 'popular'},
         {'name': ADDON.getLocalizedString(32035), 'info': 'tvshows', 'call': 'airing_today'},
@@ -36,7 +38,7 @@ class PluginListing(object):
     def widgets(self):
         for widget in INDEX:
             label = widget['name']
-            url = '{0}?{1}'.format(sys.argv[0], urlencode({'info': widget['info'], 'call': widget['call']}))
+            url = '{0}?{1}'.format(sys.argv[0], urlencode({'info': widget['info'], 'call': widget['call'], 'get': widget.get('get')}))
 
             list_item = xbmcgui.ListItem(label=label)
             list_item.setInfo('video', {'title': label, 'mediatype': 'video'})
@@ -49,6 +51,14 @@ class PluginContent(object):
         self.li = li
         self.local_media = get_local_media()
         self.call = params.get('call')
+        self.get = params.get('get')
+
+    def trending(self):
+        result = self._query('trending',self.call,self.get)
+        if self.call == 'movies':
+            self._process_movies(result)
+        elif self.call == 'tv':
+            self._process_tvshows(result)
 
     def movies(self):
         result = self._query('movie',self.call)
@@ -58,16 +68,18 @@ class PluginContent(object):
         result = self._query('tv',self.call)
         self._process_tvshows(result)
 
-    def _query(self,content_type,call):
-        tmdb = get_cache(content_type + call)
+    def _query(self,content_type,call,get=None):
+        cache_key = 'widget' + content_type + call + str(get)
+        tmdb = get_cache(cache_key)
 
         if not tmdb:
             tmdb = tmdb_query(action=content_type,
                                 call=call,
+                                get=get,
                                 params={'region': COUNTRY_CODE}
                                 )
 
-            write_cache(content_type + call,tmdb,3)
+            write_cache(cache_key,tmdb,3)
 
         return tmdb['results']
 

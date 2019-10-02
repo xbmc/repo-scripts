@@ -232,3 +232,13 @@ msgstr "Widgets"
 msgctxt "#32041"
 msgid "Hide items from similar movies if they are part of the collection"
 msgstr "Ähnliche Filme ausblenden, wenn sie Teil der Sammlung sind"
+
+#: /resources/lib/widgets.py
+msgctxt "#32042"
+msgid "Trending movies"
+msgstr "Filme im Trend"
+
+#: /resources/lib/widgets.py
+msgctxt "#32043"
+msgid "Trending shows"
+msgstr "Serien im Trend"
