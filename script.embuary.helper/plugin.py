@@ -75,6 +75,7 @@ class Main:
 
 
     def _additems(self,li):
+        xbmcplugin.setPluginCategory(int(sys.argv[1]), self.params.get('plugincat',''))
         xbmcplugin.addDirectoryItems(int(sys.argv[1]), li)
         xbmcplugin.endOfDirectory(handle=int(sys.argv[1]))
 
