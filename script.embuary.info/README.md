@@ -127,10 +127,12 @@ You can add a custom onback or a general onclose action in script-embuary-video.
 ## Widgets
 The script ships following widgets:
 
+* `plugin://script.embuary.info/?info=trending&amp;call=movies&amp;get=week` = trending movies
 * `plugin://script.embuary.info/?info=movies&amp;call=upcoming` = upcoming movies
 * `plugin://script.embuary.info/?info=movies&amp;call=now_playing` = now playing movies
 * `plugin://script.embuary.info/?info=movies&amp;call=top_rated` = top rated movies
 * `plugin://script.embuary.info/?info=movies&amp;call=popular` = popular movies
+* `plugin://script.embuary.info/?info=trending&amp;call=tv&amp;get=week` = trending shows
 * `plugin://script.embuary.info/?info=tvshows&amp;call=top_rated` = top rates shows
 * `plugin://script.embuary.info/?info=tvshows&amp;call=popular` = popular shows
 * `plugin://script.embuary.info/?info=tvshows&amp;call=airing_today` = shows airing today

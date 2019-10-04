@@ -221,3 +221,13 @@ msgstr ""
 msgctxt "#32041"
 msgid "Hide items from similar movies if they are part of the collection"
 msgstr ""
+
+#: /resources/lib/widgets.py
+msgctxt "#32042"
+msgid "Trending movies"
+msgstr ""
+
+#: /resources/lib/widgets.py
+msgctxt "#32043"
+msgid "Trending shows"
+msgstr ""
