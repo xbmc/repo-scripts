@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="screensaver.google.earth" name="Google Earth" version="1.0.4" provider-name="Lunatixz">
+<addon id="screensaver.google.earth" name="Google Earth" version="1.0.5" provider-name="Lunatixz">
     <requires>
         <import addon="xbmc.python" version="2.25.0"/>
         <import addon="script.module.simplecache" version="1.0.0"/>
@@ -13,7 +13,7 @@
         <platform>all</platform>
         <source>https://github.com/Lunatixz/KODI_Addons/tree/master/screensaver.google.earth</source>
         <forum>https://forum.kodi.tv/showthread.php?tid=321718</forum>
-        <news>v.1.0.4[CR]- Core Update[CR]v.1.0.3[CR]- Leia compatibility.</news>
+        <news>v.1.0.4[CR]- Parser update[CR]v.1.0.4[CR]- Core Update[CR]v.1.0.3[CR]- Leia compatibility.</news>
         <assets>
             <icon>resources/images/icon.png</icon>
             <fanart>resources/images/fanart.jpg</fanart>

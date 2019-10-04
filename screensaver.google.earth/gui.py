@@ -1,4 +1,4 @@
-#   Copyright (C) 2018 Lunatixz
+#   Copyright (C) 2019 Lunatixz
 #
 #
 # This file is part of Earth View ScreenSaver.
@@ -33,8 +33,8 @@ LANGUAGE       = REAL_SETTINGS.getLocalizedString
 # Global Info
 KODI_MONITOR   = xbmc.Monitor()
 BASE_URL       = 'https://earthview.withgoogle.com'
-DEFAULT_JSON   = '/_api/marble-canyon-united-states-2000.json'
-BASE_API       = (REAL_SETTINGS.getSetting("Last") or DEFAULT_JSON)
+NEXT_JSON      = '/_api/%s.json'
+BASE_API       = (REAL_SETTINGS.getSetting("Last") or NEXT_JSON%('marble-canyon-united-states-2000'))
 ANIMATION      = 'okay' if REAL_SETTINGS.getSetting("Animate") == 'true' else 'nope'
 TIME           = 'okay' if REAL_SETTINGS.getSetting("Time") == 'true' else 'nope'
 TIMER          = [30,60,120,240][int(REAL_SETTINGS.getSetting("RotateTime"))]
@@ -61,7 +61,6 @@ class GUI(xbmcgui.WindowXMLDialog):
     
     def openURL(self, url):
         try:
-            self.log('openURL, url = ' + str(url))
             cacheresponse = self.cache.get(ADDON_NAME + '.openURL, url = %s'%url)
             if not cacheresponse:
                 cacheresponse = (urllib2.urlopen(urllib2.Request(url), timeout=15)).read()
@@ -78,8 +77,8 @@ class GUI(xbmcgui.WindowXMLDialog):
             results = json.loads(self.openURL('%s%s'%(BASE_URL,self.baseAPI)))
             self.getControl(id).setImage(results['photoUrl'])
             self.getControl(id+1).setLabel(('%s, %s'%(results.get('region',' '),results.get('country',''))).strip(' ,'))
-            baseAPI = results['nextApi']
-        except: baseAPI = DEFAULT_JSON
+            baseAPI = NEXT_JSON%(results['nextSlug'])
+        except: baseAPI = NEXT_JSON%('marble-canyon-united-states-2000')
         self.baseAPI = baseAPI
         
         
