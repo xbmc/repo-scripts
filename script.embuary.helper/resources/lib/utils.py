@@ -480,7 +480,6 @@ def txtfile(params):
 
 
 def blurimg(params):
-
     image_filter(params.get('prop','output'),remove_quotes(params.get('file')),params.get('radius'))
 
 
@@ -644,32 +643,32 @@ class PlayCinema(object):
 
 
     def get_trailers(self):
-            movies = json_call('VideoLibrary.GetMovies',
-                                properties=movie_properties,
-                                query_filter={'and': [{'field': 'playcount', 'operator': 'lessthan', 'value': '1'},{'field': 'hastrailer', 'operator': 'true', 'value': []}]},
-                                sort={'method': 'random'}, limit=int(self.trailer_count)
-                                )
+        movies = json_call('VideoLibrary.GetMovies',
+                            properties=movie_properties,
+                            query_filter={'and': [{'field': 'playcount', 'operator': 'lessthan', 'value': '1'},{'field': 'hastrailer', 'operator': 'true', 'value': []}]},
+                            sort={'method': 'random'}, limit=int(self.trailer_count)
+                            )
 
-            try:
-                movies = movies['result']['movies']
-            except KeyError:
-                log('Play with cinema mode: No unwatched movies with available trailer found')
-                return
+        try:
+            movies = movies['result']['movies']
+        except KeyError:
+            log('Play with cinema mode: No unwatched movies with available trailer found')
+            return
 
-            return movies
+        return movies
 
 
     def get_intros(self):
-            dirs, files = xbmcvfs.listdir(self.intro_path)
+        dirs, files = xbmcvfs.listdir(self.intro_path)
+        intros = []
 
-            intros = []
-            for file in files:
-                if file.endswith(('.mp4', '.mkv', '.mpg', '.mpeg', '.avi', '.wmv', '.mov')):
-                    intros.append(file)
+        for file in files:
+            if file.endswith(('.mp4', '.mkv', '.mpg', '.mpeg', '.avi', '.wmv', '.mov')):
+                intros.append(file)
 
-            if intros:
-                url = '%s%s' % (self.intro_path,random.choice(intros))
-                return url
+        if intros:
+            url = '%s%s' % (self.intro_path,random.choice(intros))
+            return url
 
-            log('Play with cinema mode: No intros found')
-            return
+        log('Play with cinema mode: No intros found')
+        return

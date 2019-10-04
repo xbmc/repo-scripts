@@ -294,9 +294,9 @@ class PlayerMonitor(xbmc.Monitor):
             pass
 
         item = xbmcgui.ListItem()
-        item.setPath(xbmc.Player().getPlayingFile())
+        item.setPath(PLAYER.getPlayingFile())
         item.setArt(art)
-        xbmc.Player().updateInfoTag(item)
+        PLAYER.updateInfoTag(item)
 
 
     def get_art_info(self,clear=False):

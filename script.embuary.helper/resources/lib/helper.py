@@ -167,6 +167,12 @@ def get_bool(value,string='true'):
         return False
 
 
+def encode_string(string):
+    if not PYTHON3:
+        string = string.encode('utf-8')
+    return string
+
+
 def json_call(method,properties=None,sort=None,query_filter=None,limit=None,params=None,item=None,options=None,limits=None,debug=False):
     json_string = {'jsonrpc': '2.0', 'id': 1, 'method': method, 'params': {}}
 

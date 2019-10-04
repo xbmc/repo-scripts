@@ -21,6 +21,7 @@ class PluginContent(object):
         self.exclude = remove_quotes(params.get('exclude'))
         self.dbcontent = remove_quotes(params.get('content'))
         self.dbid = remove_quotes(params.get('dbid'))
+        self.idtype = remove_quotes(params.get('idtype'))
         self.season = remove_quotes(params.get('season'))
         self.tag = remove_quotes(params.get('tag'))
         self.unwatched = remove_quotes(params.get('unwatched'))
@@ -42,6 +43,13 @@ class PluginContent(object):
             self.key_details = 'tvshowdetails'
             self.key_items = 'tvshows'
             self.properties = tvshow_properties
+        elif self.dbtype == 'season':
+            self.method_details = 'VideoLibrary.GetSeasonDetails'
+            self.method_item = 'VideoLibrary.GeSeasons'
+            self.param = 'seasonid'
+            self.key_details = 'seasondetails'
+            self.key_items = 'seasons'
+            self.properties = season_properties
         elif self.dbtype == 'episode':
             self.method_details = 'VideoLibrary.GetEpisodeDetails'
             self.method_item = 'VideoLibrary.GetEpisodes'
@@ -68,6 +76,9 @@ class PluginContent(object):
     '''
     def getbydbid(self):
         try:
+            if self.dbtype == 'tvshow' and self.idtype in ['season','episode']:
+                self.dbid = self._gettvshowid()
+
             json_query = json_call(self.method_details,
                                 properties=self.properties,
                                 params={self.param: int(self.dbid)}
@@ -253,7 +264,10 @@ class PluginContent(object):
                 return
 
         else:
-            tvshow_dbid = self.dbid
+            if self.idtype in ['season','episode']:
+                tvshow_dbid = self._gettvshowid()
+            else:
+                tvshow_dbid = self.dbid
 
         season_query = json_call('VideoLibrary.GetSeasons',
                                 properties=season_properties,
@@ -288,7 +302,10 @@ class PluginContent(object):
                 return
 
         else:
-            tvshow_dbid = self.dbid
+            if self.idtype == 'episode':
+                tvshow_dbid = self._gettvshowid()
+            else:
+                tvshow_dbid = self.dbid
 
         episode_query = json_call('VideoLibrary.GetEpisodes',
                                     properties=episode_properties,
@@ -326,7 +343,6 @@ class PluginContent(object):
             return
 
         for episode in json_query:
-
                 episode_query = json_call('VideoLibrary.GetEpisodes',
                                         properties=episode_properties,
                                         sort={'order': 'ascending', 'method': 'episode'},limit=1,
@@ -645,8 +661,6 @@ class PluginContent(object):
             actor = ''.join(random.choice(cast_range))
 
         else:
-            ''' Pick actor by label
-            '''
             actor = self.dblabel
             exclude = self.exclude
 
@@ -779,19 +793,23 @@ class PluginContent(object):
     ''' get cast of item
     '''
     def getcast(self):
-        if self.dbtitle:
-            json_query = json_call(self.method_item,
-                                    properties=['cast'],
-                                    limit=1,
-                                    query_filter=self.title_filter
-                                    )
-        elif self.dbid:
-            json_query = json_call(self.method_details,
-                                    properties=['cast'],
-                                    params={self.param: int(self.dbid)}
-                                    )
-
         try:
+            if self.dbtitle:
+                json_query = json_call(self.method_item,
+                                        properties=['cast'],
+                                        limit=1,
+                                        query_filter=self.title_filter
+                                        )
+
+            elif self.dbid:
+                if self.dbtype == 'tvshow' and self.idtype in ['season','episode']:
+                    self.dbid = self._gettvshowid()
+
+                json_query = json_call(self.method_details,
+                                        properties=['cast'],
+                                        params={self.param: int(self.dbid)}
+                                        )
+
             if self.key_details in json_query['result']:
                 cast = json_query['result'][self.key_details]['cast']
             else:
@@ -919,6 +937,41 @@ class PluginContent(object):
             winprop('%s_Episodes' % prop_prefix, str(episodes))
             winprop('%s_WatchedEpisodes' % prop_prefix, str(watchedepisodes))
             winprop('%s_UnwatchedEpisodes' % prop_prefix, str(episodes - watchedepisodes))
+
+
+    ''' function to return the TV show id based on a season or episode id
+    '''
+    def _gettvshowid(self,dbid=None,idtype=None):
+        try:
+            if not dbid:
+                dbid = self.dbid
+
+            if not idtype:
+                idtype = self.idtype
+
+            if idtype == 'season':
+                method_details = 'VideoLibrary.GetSeasonDetails'
+                param = 'seasonid'
+                key_details = 'seasondetails'
+            elif idtype == 'episode':
+                method_details = 'VideoLibrary.GetEpisodeDetails'
+                param = 'episodeid'
+                key_details = 'episodedetails'
+            else:
+                raise Exception
+
+            json_query = json_call(method_details,
+                                properties=['tvshowid'],
+                                params={param: int(dbid)}
+                                )
+
+            result = json_query['result'][key_details]
+            dbid = result.get('tvshowid')
+
+            return dbid
+
+        except Exception:
+            return ''
 
 
     ''' retry loop for random based widgets if previous run has not returned any single item
