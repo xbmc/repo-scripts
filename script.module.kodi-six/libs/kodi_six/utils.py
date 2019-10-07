@@ -20,25 +20,25 @@ __all__ = [
 PY2 = sys.version_info[0] == 2  #: ``True`` for Python 2
 
 
-def py2_encode(s, encoding='utf-8'):
+def py2_encode(s, encoding='utf-8', errors='strict'):
     """
     Encode Python 2 ``unicode`` to ``str``
 
     In Python 3 the string is not changed.
     """
     if PY2 and isinstance(s, unicode):
-        s = s.encode(encoding)
+        s = s.encode(encoding, errors)
     return s
 
 
-def py2_decode(s, encoding='utf-8'):
+def py2_decode(s, encoding='utf-8', errors='strict'):
     """
     Decode Python 2 ``str`` to ``unicode``
 
     In Python 3 the string is not changed.
     """
     if PY2 and isinstance(s, str):
-        s = s.decode(encoding)
+        s = s.decode(encoding, errors)
     return s
 
 
@@ -59,7 +59,7 @@ def encode_decode(func):
             mod_args = tuple(py2_encode(item) for item in args)
             mod_kwargs = {key: py2_encode(value) for key, value
                           in kwargs.iteritems()}
-            return py2_decode(func(*mod_args, **mod_kwargs))
+            return py2_decode(func(*mod_args, **mod_kwargs), errors='replace')
         wrapper.__name__ = 'wrapped_func_{0}'.format(func.__name__)
         return wrapper
     return func
