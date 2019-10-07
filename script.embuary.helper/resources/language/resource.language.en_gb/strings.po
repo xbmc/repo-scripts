@@ -34,6 +34,11 @@ msgctxt "#32005"
 msgid "Changed font to"
 msgstr ""
 
+#: /resources/settings.xml
+msgctxt "#32003"
+msgid "Delete add-on image cache"
+msgstr ""
+
 msgctxt "#32006"
 msgid "Applying changes"
 msgstr ""
@@ -106,4 +111,19 @@ msgstr ""
 #: /resources/settings.xml
 msgctxt "#32021"
 msgid "Background change interval"
+msgstr ""
+
+#: /resources/lib/utils.py
+msgctxt "#32019"
+msgid "This will delete all created images (blurred backgrounds, genre thumbs, etc.) in the addon_data folder. Do you want to proceed?"
+msgstr ""
+
+#: /resources/lib/plugin_listing.py
+msgctxt "#32022"
+msgid "All available database items"
+msgstr ""
+
+#: /resources/lib/plugin_listing.py
+msgctxt "#32023"
+msgid "items"
 msgstr ""

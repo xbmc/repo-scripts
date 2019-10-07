@@ -4,12 +4,12 @@
 # Addon Provider: sualfred
 # Translators:
 # sualfred <su4lfred@gmail.com>, 2019
-#
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: Embuary Helper\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2019-07-14 05:59+0000\n"
+"PO-Revision-Date: 2019-10-06 17:40+0000\n"
 "Last-Translator: sualfred <su4lfred@gmail.com>, 2019\n"
 "Language-Team: German (Germany) (https://www.transifex.com/sualfred/teams/80018/de_DE/)\n"
 "MIME-Version: 1.0\n"
@@ -33,10 +33,6 @@ msgctxt "#32002"
 msgid "Enable logging"
 msgstr "Aktiviere Logging"
 
-msgctxt "#32003"
-msgid "Enable debug logging"
-msgstr "Aktiviere Debug-Logging"
-
 msgctxt "#32004"
 msgid "detected"
 msgstr "erkannt"
@@ -44,6 +40,11 @@ msgstr "erkannt"
 msgctxt "#32005"
 msgid "Changed font to"
 msgstr "Wechsle Schriftart zu"
+
+#: /resources/settings.xml
+msgctxt "#32003"
+msgid "Delete add-on image cache"
+msgstr "Add-on Image Cache löschen"
 
 msgctxt "#32006"
 msgid "Applying changes"
@@ -118,3 +119,22 @@ msgstr "Sonstiges"
 msgctxt "#32021"
 msgid "Background change interval"
 msgstr "Hintergrund-Wechselintervall"
+
+#: /resources/lib/utils.py
+msgctxt "#32019"
+msgid ""
+"This will delete all created images (blurred backgrounds, genre thumbs, "
+"etc.) in the addon_data folder. Do you want to proceed?"
+msgstr ""
+"Dies löscht alle erstellen Bilder (weich gezeichnete Hintergründe, Genre "
+"Vorschaubilder, usw.) im addon_data Ordner. Fortfahren?"
+
+#: /resources/lib/plugin_listing.py
+msgctxt "#32022"
+msgid "All available database items"
+msgstr "Alle Datenbankeinträge"
+
+#: /resources/lib/plugin_listing.py
+msgctxt "#32023"
+msgid "items"
+msgstr "Inhalte"

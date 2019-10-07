@@ -9,5 +9,6 @@
     	<setting label="32017" type="slider" id="service_interval" default="0.5" range="0.1,0.1,2.0" option="float" />
     	<setting label="32018" type="slider" id="blur_radius" default="2" range="1,1,10" option="int" />
     	<setting label="32021" type="slider" id="background_interval" default="10" range="5,1,30" option="int" />
+        <setting label="32003" type="action" action="RunScript(script.embuary.helper,action=deleteimgcache)" />
 	</category>
 </settings>
