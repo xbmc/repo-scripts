@@ -74,3 +74,31 @@ msgstr "Canali"
 msgctxt "#30111"
 msgid "Newest videos"
 msgstr "Video più recenti"
+
+msgctxt "#30112"
+msgid "Search videos"
+msgstr "Cerca video"
+
+msgctxt "#30113"
+msgid "Search audios"
+msgstr "Cerca audio"
+
+msgctxt "#30114"
+msgid "Search shows"
+msgstr "Cerca show"
+
+msgctxt "#30115"
+msgid "Enter a search term"
+msgstr "Inserisci il termine di ricerca"
+
+msgctxt "#30116"
+msgid "Recently searched videos"
+msgstr "Video cercati di recente"
+
+msgctxt "#30117"
+msgid "Recently searched audios"
+msgstr "Audios cercato di recente"
+
+msgctxt "#30118"
+msgid "Recently searched shows"
+msgstr "Show cercato di recente"

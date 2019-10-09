@@ -74,3 +74,31 @@ msgstr ""
 msgctxt "#30111"
 msgid "Newest videos"
 msgstr ""
+
+msgctxt "#30112"
+msgid "Search videos"
+msgstr ""
+
+msgctxt "#30113"
+msgid "Search audios"
+msgstr ""
+
+msgctxt "#30114"
+msgid "Search shows"
+msgstr ""
+
+msgctxt "#30115"
+msgid "Enter a search term"
+msgstr ""
+
+msgctxt "#30116"
+msgid "Recently searched videos"
+msgstr ""
+
+msgctxt "#30117"
+msgid "Recently searched audios"
+msgstr ""
+
+msgctxt "#30118"
+msgid "Recently searched shows"
+msgstr ""
