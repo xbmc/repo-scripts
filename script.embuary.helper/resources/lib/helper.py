@@ -6,11 +6,20 @@
 import xbmc
 import xbmcaddon
 import xbmcgui
+import xbmcvfs
 import json
 import time
 import datetime
 import os
 import sys
+import hashlib
+
+''' Python 2<->3 compatibility
+'''
+try:
+    import urllib2 as urllib
+except ImportError:
+    import urllib.request as urllib
 
 ########################
 
@@ -20,10 +29,12 @@ ADDON = xbmcaddon.Addon()
 ADDON_ID = ADDON.getAddonInfo('id')
 ADDON_DATA_PATH = os.path.join(xbmc.translatePath("special://profile/addon_data/%s" % ADDON_ID))
 ADDON_DATA_IMG_PATH = os.path.join(xbmc.translatePath("special://profile/addon_data/%s/img" % ADDON_ID))
+ADDON_DATA_IMG_TEMP_PATH = os.path.join(xbmc.translatePath("special://profile/addon_data/%s/img/tmp" % ADDON_ID))
 
 NOTICE = xbmc.LOGNOTICE
 WARNING = xbmc.LOGWARNING
 DEBUG = xbmc.LOGDEBUG
+ERROR = xbmc.LOGERROR
 
 DIALOG = xbmcgui.Dialog()
 
@@ -52,7 +63,7 @@ def addon_setting(skin,setting,save=False):
 
 
 def log(txt,loglevel=NOTICE,force=False):
-    if ((loglevel == NOTICE or loglevel == WARNING) and ADDON.getSettingBool('log')) or loglevel == DEBUG or force:
+    if (loglevel == NOTICE and ADDON.getSettingBool('log')) or loglevel in [DEBUG, WARNING, ERROR] or force:
 
         if not PYTHON3 and isinstance(txt, str):
             txt = txt.decode('utf-8')
@@ -171,6 +182,22 @@ def encode_string(string):
     if not PYTHON3:
         string = string.encode('utf-8')
     return string
+
+
+def url_quote(string):
+    return urllib.quote(string)
+
+
+def url_unquote(string):
+    return urllib.unquote(string)
+
+
+def md5hash(value):
+    return hashlib.md5(str(value)).hexdigest()
+
+
+def touch_file(filepath):
+    os.utime(filepath,None)
 
 
 def json_call(method,properties=None,sort=None,query_filter=None,limit=None,params=None,item=None,options=None,limits=None,debug=False):

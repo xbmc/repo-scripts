@@ -6,8 +6,16 @@
 import random
 import xbmcvfs
 
+''' Python 2<->3 compatibility
+'''
+try:
+    from urllib import urlencode
+except ImportError:
+    from urllib.parse import urlencode
+
 from resources.lib.helper import *
 from resources.lib.library import *
+from resources.lib.image import *
 
 ########################
 
@@ -563,17 +571,31 @@ class PluginContent(object):
             log('Get genres: No genres found')
             return
 
+        genres = []
         for genre in json_query:
+            filters = [{'operator': 'is', 'field': 'genre', 'value': genre['label']}]
+            if self.tag:
+                filters.append(self.tag_filter)
+            filter = {'and': filters}
 
             genre_items = json_call(self.method_item,
                                     properties=['art'],
-                                    sort=self.sort_random, limit=4,
-                                    query_filter={'operator': 'is', 'field': 'genre', 'value': genre['label']}
+                                    sort=self.sort_recent, limit=4,
+                                    query_filter=filter
                                     )
+
+            try:
+                genre_items = genre_items['result'][self.key_items]
+                if not genre_items:
+                    raise Exception
+
+            except Exception:
+                continue
+
             posters = {}
             index = 0
             try:
-                for art in genre_items['result'][self.key_items]:
+                for art in genre_items:
                     poster = 'poster.%s' % index
                     posters[poster] = art['art'].get('poster', '')
                     index += 1
@@ -582,13 +604,20 @@ class PluginContent(object):
 
             genre['art'] = posters
 
-            try:
-                genre['file'] = 'videodb://%ss/genres/%s/' % (self.dbtype, genre['genreid'])
-            except Exception:
-                log('Get genres: No genre ID found')
-                return
+            generated_thumb = CreateGenreThumb(genre['label'],posters)
+            if generated_thumb:
+                genre['art']['thumb'] = str(CreateGenreThumb(genre['label'],posters))
 
-        append_items(self.li,json_query,type='genre')
+            if self.tag:
+                xsp = '{"rules":{"and":[{"field":"genre","operator":"is","value":["%s"]},{"field":"tag","operator":"is","value":["%s"]}]},"type":"%ss"}' % (genre['label'],self.tag,self.dbtype)
+            else:
+                xsp = '{"rules":{"and":[{"field":"genre","operator":"is","value":["%s"]}]},"type":"%ss"}' % (genre['label'],self.dbtype)
+
+            genre['url'] = 'videodb://{0}s/titles/?xsp={1}'.format(self.dbtype, url_quote(xsp))
+
+            genres.append(genre)
+
+        append_items(self.li,genres,type='genre')
 
 
     ''' get movies by director

@@ -12,7 +12,6 @@ from resources.lib.helper import *
 ########################
 
 def append_items(li, json_query, type, searchstring=False, append=True):
-
     for item in json_query:
         if type == 'movie':
             parse_movies(li, item, searchstring, append)
@@ -366,9 +365,9 @@ def parse_genre(li,item,append=False):
     li_item = xbmcgui.ListItem(item['label'])
     li_item.setInfo(type='Video', infoLabels={'title': item['label'],
                                             'dbid': str(item['genreid']),
-                                            'path': item['file']})
+                                            'path': item['url']})
     li_item.setArt(item['art'])
     li_item.setArt({'icon': 'DefaultGenre.png'})
 
     if append:
-        li.append((item['file'], li_item, True))
+        li.append((item['url'], li_item, True))

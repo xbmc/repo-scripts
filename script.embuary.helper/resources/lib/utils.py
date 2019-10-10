@@ -14,13 +14,6 @@ import random
 import os
 import locale
 
-''' Python 2<->3 compatibility
-'''
-try:
-    import urllib
-except ImportError:
-    import urllib.parse as urllib
-
 from resources.lib.helper import *
 from resources.lib.library import *
 from resources.lib.json_map import *
@@ -63,13 +56,13 @@ def settimer(params):
 def encode(params):
     string = remove_quotes(params.get('string'))
     prop = params.get('prop','EncodedString')
-    winprop(prop,urllib.quote(string))
+    winprop(prop,url_quote(string))
 
 
 def decode(params):
     string = remove_quotes(params.get('string'))
     prop = params.get('prop','DecodedString')
-    winprop(prop,urllib.unquote(string))
+    winprop(prop,url_unquote(string))
 
 
 def createselect(params):
@@ -80,7 +73,7 @@ def createselect(params):
 
     for i in range(1, 30):
 
-        label = xbmc.getInfoLabel('Window.Property(Dialog.%i.Label)' % (i))
+        label = xbmc.getInfoLabel('Window.Property(Dialog.%d.Label)' % (i))
 
         if label == '':
             break
@@ -92,14 +85,14 @@ def createselect(params):
         index = DIALOG.select(headertxt, selectionlist)
 
         if index > -1:
-            value = xbmc.getInfoLabel('Window.Property(Dialog.%i.Builtin)' % (indexlist[index]))
+            value = xbmc.getInfoLabel('Window.Property(Dialog.%d.Builtin)' % (indexlist[index]))
             for builtin in value.split(splitby):
                 execute(builtin)
                 xbmc.sleep(30)
 
     for i in range(1, 30):
-        execute('ClearProperty(Dialog.%i.Builtin)' % i)
-        execute('ClearProperty(Dialog.%i.Label)' % i)
+        execute('ClearProperty(Dialog.%d.Builtin)' % i)
+        execute('ClearProperty(Dialog.%d.Label)' % i)
 
 
 def splitandcreateselect(params):
@@ -480,7 +473,7 @@ def txtfile(params):
 
 
 def blurimg(params):
-    image_filter(params.get('prop','output'),remove_quotes(params.get('file')),params.get('radius'))
+    ImageBlur(params.get('prop','output'),remove_quotes(params.get('file')),params.get('radius',None))
 
 
 def fontchange(params):
@@ -570,8 +563,21 @@ def getlocale(params):
         winprop('SystemLocale', clear=True)
 
 
-class PlayCinema(object):
+def deleteimgcache(params,path=ADDON_DATA_IMG_PATH,delete=False):
+    if not delete:
+        if DIALOG.yesno(heading=ADDON.getLocalizedString(32003), line1=ADDON.getLocalizedString(32019)):
+            delete = True
 
+    if delete:
+        for item in os.listdir(path):
+            full_path = os.path.join(path, item)
+            if os.path.isfile(full_path):
+                os.remove(full_path)
+            else:
+                deleteimgcache(params,full_path,True)
+
+
+class PlayCinema(object):
     def __init__(self, params):
         self.trailer_count = xbmc.getInfoLabel('Skin.String(TrailerCount)') if xbmc.getInfoLabel('Skin.String(TrailerCount)') != '0' else False
         self.intro_path = xbmc.getInfoLabel('Skin.String(IntroPath)')
