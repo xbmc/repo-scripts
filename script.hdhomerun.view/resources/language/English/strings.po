@@ -161,13 +161,10 @@ msgctxt "#32037"
 msgid "Would you like to delete this rule?"
 msgstr ""
 
-#First run text
 msgctxt "#32100"
 msgid "[B]Controls:[/B][CR][CR]   Remote/Controller:[CR]      Show Guide: Select or move right[CR]      Show DVR/Options: Back[CR]      Channel Entry (Remote): Press buttons 0-9 - select when finished[CR][CR]   Touch:[CR]      Show Guide: Tap or swipe left[CR]      Show DVR/Options: Back[CR][CR]   Keyboard/Mouse:[CR]      Show Guide: Enter, right or left click[CR]      Show DVR/Options: ESC[CR]      Channel Entry: Press keys 0-9 - enter when finished[CR][CR]      *For sub-channels, down will insert a [B].[/B]"
 msgstr ""
 
-
-#Transcoding
 msgctxt "#32500"
 msgid "None"
 msgstr ""
@@ -200,7 +197,6 @@ msgctxt "#32507"
 msgid "Default"
 msgstr ""
 
-#DVR
 msgctxt "#32800"
 msgid "Done"
 msgstr ""

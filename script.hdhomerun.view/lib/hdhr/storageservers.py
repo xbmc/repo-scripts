@@ -457,7 +457,7 @@ class StorageServers(object):
         try:
             url = recording.cmdURL + '&cmd=delete' + (rerecord and '&rerecord=1' or '')
             util.DEBUG_LOG('Delete recording URL: {0}'.format(url))
-            req = requests.get(url)
+            req = requests.post(url)
             util.DEBUG_LOG('Delete recording response: {0}'.format(repr(req.text)))
             self.updateRecordings()
             return True

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addon id="script.hdhomerun.view"
        name="HDHomeRun"
-       version="2018.12.27"
+       version="2019.9.15"
        provider-name="SiliconDust">
     <requires>
         <import addon="xbmc.python" version="2.14.0"/>
@@ -16,7 +16,7 @@
         <disclaimer lang="en">Requires a compatible HDHomeRun device. DVR requires a running DVR server</disclaimer>
         <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
         <forum>https://forum.silicondust.com/forum/viewforum.php?f=88</forum>
-        <website>https://www.hdhomerun.com</website>
+        <website>https://www.silicondust.com</website>
         <source>https://github.com/Silicondust/script.hdhomerun.view</source>
         <platform>all</platform>
     </extension>
