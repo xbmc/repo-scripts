@@ -415,7 +415,7 @@ def download(info, path, template='%(title)s-%(id)s.%(ext)s'):
     try:
         AddonSignals.sendSignal('download.started', signalPayload, sourceID='script.module.youtube.dl')
         YoutubeDLWrapper.download(info)
-    except YoutubeDLWrapper.youtube_dl.DownloadError, e:
+    except YoutubeDLWrapper.youtube_dl.DownloadError as e:
         return DownloadResult(False, e.message, filepath=ytdl._lastDownloadedFilePath)
     except YoutubeDLWrapper.DownloadCanceledException:
         return DownloadResult(False, status='canceled', filepath=ytdl._lastDownloadedFilePath)

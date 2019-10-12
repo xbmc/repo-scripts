@@ -1,3 +1,9 @@
+
+*** 19.912.0 ***
+
+Updated youtube-dl core to 2019.09.12
+Fixes for Kodi 18
+
 *** 18.1107.0 ***
 
 Updated youtube-dl core to 2018.11.7

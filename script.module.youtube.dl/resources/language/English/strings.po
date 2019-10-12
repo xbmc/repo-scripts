@@ -164,3 +164,31 @@ msgstr ""
 msgctxt "#32038"
 msgid "Skip Videos Without Audio"
 msgstr ""
+
+msgctxt "#32039"
+msgid "Cancel Download"
+msgstr ""
+
+msgctxt "#32040"
+msgid "Cancel current download?"
+msgstr ""
+
+msgctxt "#32041"
+msgid "Cancel Downloads"
+msgstr ""
+
+msgctxt "#32042"
+msgid "Cancel current download and all queued downloads?"
+msgstr ""
+
+msgctxt "#32043"
+msgid "Addon version: {0}"
+msgstr ""
+
+msgctxt "#32044"
+msgid "Core version: {0}"
+msgstr ""
+
+msgctxt "#32045"
+msgid "Info"
+msgstr ""
