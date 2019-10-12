@@ -33,7 +33,7 @@
 
             <control type="button" id="200">
     			<description>Stop Current Download</description>
-                <enable>StringCompare(Window(10000).Property(script.module.youtube.dl_STATUS),ACTIVE)</enable>
+                <enable>String.IsEqual(Window(10000).Property(script.module.youtube.dl_STATUS),ACTIVE)</enable>
     			<left>-</left>
     			<top>-</top>
     			<width>560</width>
@@ -49,7 +49,7 @@
     		</control>
             <control type="button" id="201">
     			<description>Stop All Downloads</description>
-                <enable>StringCompare(Window(10000).Property(script.module.youtube.dl_STATUS),ACTIVE)</enable>
+                <enable>String.IsEqual(Window(10000).Property(script.module.youtube.dl_STATUS),ACTIVE)</enable>
     			<left>-</left>
     			<top>-</top>
     			<width>560</width>
@@ -65,7 +65,7 @@
     		</control>
             <control type="button" id="202">
     			<description>Manage Queue</description>
-                <enable>StringCompare(Window(10000).Property(script.module.youtube.dl_STATUS),ACTIVE) + IntegerGreaterThan(Window(10000).property(XBMCJsonRAFifoQueue_download.queue.size),0)</enable>
+                <enable>String.IsEqual(Window(10000).Property(script.module.youtube.dl_STATUS),ACTIVE) + IntegerGreaterThan(Window(10000).property(XBMCJsonRAFifoQueue_download.queue.size),0)</enable>
     			<left>-</left>
     			<top>-</top>
     			<width>560</width>
