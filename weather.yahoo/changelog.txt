@@ -1,3 +1,6 @@
+v5.0.6
+- cleanup
+
 v5.0.5
 - fix url. thx olympus
 

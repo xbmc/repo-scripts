@@ -111,7 +111,6 @@ def location(loc):
     log('location data: %s' % data)
     if data:
         for item in data:
-            print str(item)
             locs.append(item['qualifiedName'])
             locids.append(str(item['woeid']))
     return locs, locids
