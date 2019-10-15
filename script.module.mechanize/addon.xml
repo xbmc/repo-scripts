@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.module.mechanize" name="Mechanize" version="0.4.3" provider-name="Kovid Goyal">
+	<requires>
+		<import addon="xbmc.python" version="2.26.0"/>
+	</requires>
+	<extension point="xbmc.python.module" library="lib" />
+	<extension point="xbmc.addon.metadata">
+		<summary lang="en_GB">Stateful programmatic web browsing in Python.</summary>
+		<description lang="en_GB">Stateful programmatic web browsing in Python, after Andy Lester’s Perl module WWW::Mechanize.</description>
+		<forum></forum>
+		<website>https://mechanize.readthedocs.io/en/latest/</website>
+		<license>BSD</license>
+		<platform>all</platform>
+		<source>https://github.com/python-mechanize/</source>
+	</extension>
+</addon>
