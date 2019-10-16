@@ -131,7 +131,7 @@ class HDHRPlayer(xbmc.Player):
 
     def isPlayingRecording(self):
         try:
-            if '/play?' in self.url: return True
+            if '/recorded/play' in self.url: return True
         except:
             util.ERROR()
         return False
