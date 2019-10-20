@@ -4,10 +4,14 @@ import xbmcgui
 import os
 import sys
 import json as simplejson
-if sys.version_info < (2, 9):
-    import urllib, urllib2
+
+if sys.version_info.major == 3:
+    import urllib.request
+    import urllib.parse
+    import urllib.error
 else:
-    import urllib.request, urllib.parse, urllib.error
+    import urllib
+    # import urllib2
 
 ADDON = xbmcaddon.Addon()
 ADDON_ID = ADDON.getAddonInfo('id')
@@ -17,10 +21,10 @@ INFODIALOG = xbmcgui.Window(12003)
 
 def Get_JSON_response(query):
     json_response = xbmc.executeJSONRPC(query)
-    if sys.version_info < (2, 9):
-        json_response = unicode(json_response, 'utf-8', errors='ignore')
-    else:
+    if sys.version_info.major == 3:
         json_response = json_response
+    else:
+        json_response = unicode(json_response, 'utf-8', errors='ignore')
     return simplejson.loads(json_response)
 
 
@@ -45,6 +49,8 @@ def media_streamdetails(filename, streamdetails):
             info['videoresolution'] = "1080"
         elif (videowidth <= 3840 or videoheight <= 2160):
             info['videoresolution'] = "4k"
+        elif (videowidth <= 7680 or videoheight <= 4320):
+            info['videoresolution'] = "8k"
         else:
             info['videoresolution'] = ""
     elif (('dvd') in filename and not ('hddvd' or 'hd-dvd') in filename) or (filename.endswith('.vob' or '.ifo')):
@@ -101,36 +107,15 @@ def media_path(path):
 
 
 def log(txt):
-    try:
-        if isinstance(txt, str):
-            txt = txt.decode("utf-8")
-    except AttributeError:
-        pass
+    if not isinstance (txt, str):
+        txt = txt.decode("utf-8")
+
     message = u'%s: %s' % (ADDON_ID, txt)
-    try:
-        xbmc.log(msg=message.encode("utf-8"), level=xbmc.LOGDEBUG)
-    except TypeError:
+
+    if sys.version_info.major == 3:
         xbmc.log(msg=message, level=xbmc.LOGDEBUG)
-
-
-def GetStringFromUrl(encurl):
-    succeed = 0
-    while succeed < 5:
-        try:
-            req = urllib2.Request(encurl)
-            req.add_header('User-agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
-            res = urllib2.urlopen(req)
-            html = res.read()
-            return html
-        except:
-            log("GetStringFromURL: could not get data from %s" % encurl)
-            xbmc.sleep(1000)
-            succeed += 1
-    return ""
-
-
-def Notify(header, line='', line2='', line3=''):
-    xbmcgui.Dialog().notification(('%s, %s, %s, %s') % (header, line, line2, line3))
+    else:
+        xbmc.log(msg=message.encode("utf-8"), level=xbmc.LOGDEBUG)
 
 
 def prettyprint(string):
@@ -143,11 +128,13 @@ def set_artist_properties(audio):
     firstyear = 0
     playcount = 0
     for item in audio['result']['albums']:
+        art = item['art']
         HOME.setProperty('SkinInfo.Artist.Album.%d.Title' % count, item['title'])
         HOME.setProperty('SkinInfo.Artist.Album.%d.Year' % count, str(item['year']))
-        HOME.setProperty('SkinInfo.Artist.Album.%d.Thumb' % count, item['thumbnail'])
         HOME.setProperty('SkinInfo.Artist.Album.%d.DBID' % count, str(item.get('albumid')))
         HOME.setProperty('SkinInfo.Artist.Album.%d.Label' % count, item['albumlabel'])
+        HOME.setProperty('SkinInfo.Artist.Album.%d.Art(discart)' % count, art.get('discart', ''))
+        HOME.setProperty('SkinInfo.Artist.Album.%d.Art(thumb)' % count, art.get('thumb', ''))
         if item['playcount']:
             playcount = playcount + item['playcount']
         if item['year'] > latestyear:
@@ -155,11 +142,14 @@ def set_artist_properties(audio):
         if firstyear == 0 or item['year'] < firstyear:
             firstyear = item['year']
         count += 1
-    if firstyear > 0 and latestyear < 2020:
+    if firstyear > 0 and latestyear < 2030:
         HOME.setProperty('SkinInfo.Artist.Albums.Newest', str(latestyear))
         HOME.setProperty('SkinInfo.Artist.Albums.Oldest', str(firstyear))
     HOME.setProperty('SkinInfo.Artist.Albums.Count', str(audio['result']['limits']['total']))
     HOME.setProperty('SkinInfo.Artist.Albums.Playcount', str(playcount))
+
+    if ADDON.getSettingBool("enable_debug_json"):
+        prettyprint(audio)
 
 
 def set_album_properties(json_response):
@@ -182,6 +172,9 @@ def set_album_properties(json_response):
     HOME.setProperty('SkinInfo.Album.Songs.Duration', str(minutes).zfill(2) + ":" + str(seconds).zfill(2))
     HOME.setProperty('SkinInfo.Album.Songs.Tracklist', tracklist)
     HOME.setProperty('SkinInfo.Album.Songs.Count', str(json_response['result']['limits']['total']))
+
+    if ADDON.getSettingBool("enable_debug_json"):
+        prettyprint(json_response)
 
 
 def set_movie_properties(json_response):
@@ -211,8 +204,11 @@ def set_movie_properties(json_response):
         HOME.setProperty('SkinInfo.Set.Movie.%d.Art(discart)' % count, art.get('discart', ''))
         HOME.setProperty('SkinInfo.Set.Movie.%d.Art(fanart)' % count, art.get('fanart', ''))
         HOME.setProperty('SkinInfo.Set.Movie.%d.Art(poster)' % count, art.get('poster', ''))
-        HOME.setProperty('SkinInfo.Detail.Movie.%d.Art(fanart)' % count, art.get('fanart', ''))  # hacked in
-        HOME.setProperty('SkinInfo.Detail.Movie.%d.Art(poster)' % count, art.get('poster', ''))
+        HOME.setProperty('SkinInfo.Set.Movie.%d.MPAA' % count, item['mpaa'])
+
+        if studio:
+            HOME.setProperty('SkinInfo.Set.Movies.Single.Studio', studio[0])
+
         title_list += "[I]" + item['label'] + " (" + str(item['year']) + ")[/I][CR]"
         if item['plotoutline']:
             plot += "[B]" + item['label'] + " (" + str(item['year']) + ")[/B][CR]" + item['plotoutline'] + "[CR][CR]"
@@ -246,6 +242,9 @@ def set_movie_properties(json_response):
     HOME.setProperty('SkinInfo.Set.Movies.Studio', " / ".join(studio))
     HOME.setProperty('SkinInfo.Set.Movies.Years', " / ".join(years))
     HOME.setProperty('SkinInfo.Set.Movies.Count', str(json_response['result']['setdetails']['limits']['total']))
+
+    if ADDON.getSettingBool("enable_debug_json"):
+        prettyprint(json_response)
 
 
 def clear_properties():
@@ -281,6 +280,8 @@ def clear_properties():
             HOME.clearProperty('SkinInfo.Artist.Album.%d.Duration' % i)
             HOME.clearProperty('SkinInfo.Artist.Album.%d.Thumb' % i)
             HOME.clearProperty('SkinInfo.Artist.Album.%d.ID' % i)
+            HOME.clearProperty('SkinInfo.Artist.Album.%d.Art(discart)' % i)
+            HOME.clearProperty('SkinInfo.Artist.Album.%d.Art(thumb)' % i)
             HOME.clearProperty('SkinInfo.Album.Song.%d.Title' % i)
             HOME.clearProperty('SkinInfo.Album.Song.%d.FileExtension' % i)
             HOME.clearProperty('SkinInfo.Detail.Music.%d.Art(fanart)' % i)
@@ -299,19 +300,3 @@ def clear_properties():
         HOME.clearProperty('SkinInfo.Album.Songs.Discs')
         HOME.clearProperty('SkinInfo.Album.Songs.Duration')
         HOME.clearProperty('SkinInfo.Album.Songs.Count')
-
-
-def passDataToSkin(name, data, prefix="", debug=False):
-    if data is not None:
-       # log( "%s%s.Count = %s" % (prefix, name, str(len(data)) ) )
-        for (count, result) in enumerate(data):
-            if debug:
-                log("%s%s.%i = %s" % (prefix, name, count + 1, str(result)))
-            for (key, value) in result.iteritems():
-                HOME.setProperty('SkinInfo.%s%s.%i.%s' % (prefix, name, count + 1, str(key)), unicode(value))
-                if debug:
-                    log('%s%s.%i.%s --> ' % (prefix, name, count + 1, str(key)) + unicode(value))
-        HOME.setProperty('SkinInfo.%s%s.Count' % (prefix, name), str(len(data)))
-    else:
-        HOME.setProperty('SkinInfo.%s%s.Count' % (prefix, name), '0')
-        log("%s%s.Count = None" % (prefix, name))
