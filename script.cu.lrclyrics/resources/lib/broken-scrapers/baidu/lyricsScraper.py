@@ -1,10 +1,4 @@
-﻿#-*- coding: UTF-8 -*-
-'''
-Scraper for http://www.baidu.com
-
-ronie
-'''
-
+#-*- coding: UTF-8 -*-
 import urllib
 import socket
 import re

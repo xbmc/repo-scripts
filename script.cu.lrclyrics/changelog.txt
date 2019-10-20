@@ -1,3 +1,10 @@
+v5.6.1
+- fix minilyrics crashing if no result found
+
+v5.6.0
+- add msuic 163 scraper
+- remove broken scrapers
+
 v5.5.14
 - stop searching for lyrics when exiting the visualization screen
 

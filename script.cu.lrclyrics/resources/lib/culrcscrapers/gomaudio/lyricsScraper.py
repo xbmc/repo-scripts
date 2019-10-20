@@ -1,4 +1,4 @@
-﻿# -*- Mode: python; coding: utf-8; tab-width: 8; indent-tabs-mode: t; -*-
+# -*- coding: utf-8 -*-
 '''
 Scraper for http://newlyrics.gomtv.com/
 
@@ -15,7 +15,7 @@ from utilities import *
 from audiofile import AudioFile
 
 __title__ = 'GomAudio'
-__priority__ = '140'
+__priority__ = '120'
 __lrc__ = True
 
 socket.setdefaulttimeout(10)

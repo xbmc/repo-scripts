@@ -88,26 +88,6 @@ class LyricsFetcher:
             string = string.replace(i,entities[i])
         return string
 
-    def miniLyricsParser(self, text):
-        lines = text.splitlines()
-        ret = []
-        for line in lines:
-            if line.strip().startswith("<fileinfo "):
-                loc = []
-                loc.append(self.htmlDecode(re.search('link=\"([^\"]*)\"',line).group(1)))
-                if not loc[0].lower().endswith(".lrc"):
-                    continue
-                if(re.search('artist=\"([^\"]*)\"',line)):
-                    loc.insert(0,self.htmlDecode(re.search('artist=\"([^\"]*)\"',line).group(1)))
-                else:
-                    loc.insert(0,' ')
-                if(re.search('title=\"([^\"]*)\"',line)):
-                    loc.insert(1,self.htmlDecode(re.search('title=\"([^\"]*)\"',line).group(1)))
-                else:
-                    loc.insert(1,' ')
-                ret.append(loc)
-        return ret
-
     def get_lyrics(self, song):
         log('%s: searching lyrics for %s - %s' % (__title__, song.artist, song.title))
         lyrics = Lyrics()
@@ -131,12 +111,22 @@ class LyricsFetcher:
             search_result = response.read()
         except:
             return
-        xml = MiniLyrics.vl_dec(search_result)
-        lrcList = self.miniLyricsParser(xml)
+        rawdata = MiniLyrics.vl_dec(search_result)
+        # might be a better way to parse the data 
+        lrcdata = rawdata.replace('\x00', '*')
+        artistmatch = re.search('artist\*(.*?)\*',lrcdata)
+        if not artistmatch:
+            return
+        titlematch = re.search('title\*(.*?)\*',lrcdata)
+        if not titlematch:
+            return
+        artist = artistmatch.group(1)
+        title = titlematch.group(1)
         links = []
-        for x in lrcList:
-            if (difflib.SequenceMatcher(None, song.artist.lower(), x[0].lower()).ratio() > 0.8) and (difflib.SequenceMatcher(None, song.title.lower(), x[1].lower()).ratio() > 0.8):
-                links.append((x[0] + ' - ' + x[1], x[2], x[0], x[1]))
+        if (difflib.SequenceMatcher(None, song.artist.lower(), artist.lower()).ratio() > 0.8) and (difflib.SequenceMatcher(None, song.title.lower(), title.lower()).ratio() > 0.8):
+            results = re.findall('[a-z0-9/_]*?\.lrc', lrcdata)
+            for item in results:
+                links.append((artist + ' - ' + title, item, artist, title))
         if len(links) == 0:
             return None
         elif len(links) > 1:
@@ -150,7 +140,7 @@ class LyricsFetcher:
     def get_lyrics_from_list(self, link):
         title,url,artist,song = link
         try:
-            f = urllib.urlopen('http://minilyrics.com/' + url)
+            f = urllib.urlopen('http://search.crintsoft.com/l/' + url)
             lyrics = f.read()
         except:
             return

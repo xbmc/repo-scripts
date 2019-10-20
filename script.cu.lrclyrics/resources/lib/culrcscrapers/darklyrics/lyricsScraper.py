@@ -2,7 +2,7 @@
 '''
 Scraper for http://www.darklyrics.com/ - the largest metal lyrics archive on the Web.
 
-scraper by smory
+smory
 '''
 
 import hashlib
