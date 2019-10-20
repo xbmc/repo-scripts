@@ -1,0 +1,113 @@
+# XBMC Media Center language file
+# Addon Name: Library Data Provider
+# Addon id: plugin.library.data.provider
+# Addon Provider: BigNoid
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2015-07-26 15:17+0200\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: Guilouz\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: fr\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+msgctxt "#32001"
+msgid "Recommended"
+msgstr "Recommandé"
+
+msgctxt "#32002"
+msgid "Random Items"
+msgstr "Eléments aléatoires"
+
+msgctxt "#32003"
+msgid "Set number of items to fetch from the database"
+msgstr "Définir le nombre d’éléments à récupérer à partir de la base de données"
+
+msgctxt "#32004"
+msgid "Random Movies"
+msgstr "Films aléatoires"
+
+msgctxt "#32005"
+msgid "Recent Movies"
+msgstr "Films récents"
+
+msgctxt "#32006"
+msgid "Recommended Movies"
+msgstr "Films recommandés"
+
+msgctxt "#32007"
+msgid "Random Episodes"
+msgstr "Episodes aléatoires"
+
+msgctxt "#32008"
+msgid "Recent Episodes"
+msgstr "Episodes récents"
+
+msgctxt "#32009"
+msgid "Recent Items"
+msgstr "Eléments récents"
+
+msgctxt "#32010"
+msgid "Recommended Episodes"
+msgstr "Episodes recommandés"
+
+msgctxt "#32011"
+msgid "Only unplayed and unfinished"
+msgstr "Non visionnés et non terminés seulement"
+
+msgctxt "#32012"
+msgid "General"
+msgstr "Général"
+
+msgctxt "#32013"
+msgid "Show plot for unwatched items"
+msgstr "Afficher le résumé pour les éléments non visionnés"
+
+msgctxt "#32014"
+msgid "* Hidden to prevent spoilers *"
+msgstr "* Caché pour éviter les spoilers *"
+
+msgctxt "#32015"
+msgid "Random Songs"
+msgstr "Chansons aléatoires"
+
+msgctxt "#32016"
+msgid "Random Albums"
+msgstr "Albums aléatoires"
+
+msgctxt "#32017"
+msgid "Recent Albums"
+msgstr "Albums récents"
+
+msgctxt "#32018"
+msgid "Recommended Albums"
+msgstr "Albums recommandés"
+
+msgctxt "#32019"
+msgid "Recent Videos"
+msgstr "Vidéos récentes"
+
+msgctxt "#32020"
+msgid "Favourite Episodes"
+msgstr "Episodes favoris"
+
+msgctxt "#32021"
+msgid "Include Specials"
+msgstr "Inclure les épisodes spéciaux"
+
+msgctxt "#32022"
+msgid "Random Music Videos"
+msgstr "Clips musicaux aléatoires"
+
+msgctxt "#32023"
+msgid "Recent Music Videos"
+msgstr "Clips musicaux récents"
+
+msgctxt "#32024"
+msgid "Recommended Music Videos"
+msgstr "Clips musicaux recommandés"

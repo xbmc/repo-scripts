@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes'?>
+<addon id="service.library.data.provider" name="Library Data Provider" provider-name="BigNoid, SiLVO" version="0.4.0">
+	<requires>
+		<import addon="xbmc.json" version="7.9.0"/>
+		<import addon="xbmc.python" version="3.0.0"/>
+		<import addon="script.module.routing" version="0.1.0"/>
+	</requires>
+	<extension point="xbmc.python.pluginsource" library="plugin.py">
+		<provides>video</provides>
+	</extension>
+	<extension library="service.py" point="xbmc.service" />
+	<extension point="xbmc.addon.metadata">
+		<summary lang="en_GB">Browse movies and episodes in a variety of sorted playlists.</summary>
+		<description lang="en_GB">Plugin for skins to provide library data throughout the skin. It can also be used as standalone plugin to browse the playlists in the video library.</description>
+		<platform>all</platform>
+		<license>GPL-2.0-only</license>
+		<forum>https://forum.kodi.tv/showthread.php?tid=210063</forum>
+		<source>https://github.com/mikesilvo164/service.library.data.provider</source>
+		<news>Kodi v19 + Python 3 compatibility</news>
+		<assets>
+			<icon>resources/icon.png</icon>
+			<fanart>resources/fanart.jpg</fanart>
+		</assets>
+	</extension>
+</addon>
