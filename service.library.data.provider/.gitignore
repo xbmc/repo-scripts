@@ -1,0 +1,10 @@
+*.pyc
+*.pyo
+*.sh
+*.sublime*
+.DS*
+.pylint_rc
+/.idea
+/.project
+/.pydevproject
+/.settings
