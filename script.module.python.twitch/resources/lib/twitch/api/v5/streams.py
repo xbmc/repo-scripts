@@ -28,12 +28,11 @@ def by_id(channel_id, stream_type=StreamType.LIVE):
 # required scope: none
 # platform undocumented / unsupported
 @query
-def get_all(game=None, channel_ids=None, community_id=None, language=Language.ALL,
+def get_all(game=None, channel_ids=None, language=Language.ALL,
             stream_type=StreamType.LIVE, platform=Platform.ALL, limit=25, offset=0):
     q = Qry('streams', use_token=False)
     q.add_param(keys.GAME, game)
     q.add_param(keys.CHANNEL, channel_ids)
-    q.add_param(keys.COMMUNITY_ID, community_id)
     q.add_param(keys.BROADCASTER_LANGUAGE, Language.validate(language), Language.ALL)
     q.add_param(keys.STREAM_TYPE, StreamType.validate(stream_type), StreamType.LIVE)
     platform = Platform.validate(platform)

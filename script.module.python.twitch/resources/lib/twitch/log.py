@@ -94,8 +94,14 @@ class Log:
         else:
             self._log.critical(message)
 
-    def deprecated_query(self, old, new):
-        self.warning('DEPRECATED call to |{0}| detected, please use |{1}| instead'.format(old, new))
+    def deprecated_query(self, old, new=None):
+        if new:
+            self.warning('DEPRECATED call to |{0}| detected, please use |{1}| instead'.format(old, new))
+        else:
+            self.warning('DEPRECATED call to |{0}| detected, no alternatives available'.format(old))
+
+    def deprecated_endpoint(self, old):
+        self.warning('DEPRECATED call to |{0}| endpoint detected'.format(old))
 
     def deprecated_api_version(self, old, new, eol_date):
         self.warning('API version |{0}| is deprecated, update to |{1}| by |{2}|'.format(old, new, eol_date))
