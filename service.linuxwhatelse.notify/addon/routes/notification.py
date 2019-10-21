@@ -54,7 +54,7 @@ def on_notification_posted(data):
                                  hashlib.md5(small_icon_data).hexdigest())
 
     if not os.path.exists(icon_path):
-        with open(icon_path, 'w') as f:
+        with open(icon_path, 'wb') as f:
             f.write(icon.decode('base64'))
 
     addon = xbmcaddon.Addon()
