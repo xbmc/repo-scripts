@@ -108,9 +108,7 @@ class Simkl:
             # TESTED
             s_data[item["type"]] = [{
                 "title": item["title"],
-                "ids": {
-                    "tvdb": item["tvdb"]
-                },
+                "ids": item['ids'],
                 "seasons": [{
                     "number": item['season'],
                     "episodes": [{
@@ -125,8 +123,8 @@ class Simkl:
             }
             if "simkl" in item:
                 _prep["ids"] = {"simkl": item["simkl"]}
-            elif "imdb" in item:
-                _prep["ids"] = {"imdb": item["imdb"]}
+            elif "ids" in item:
+                _prep["ids"] = item['ids']
 
             s_data[item["type"]] = [_prep]
 

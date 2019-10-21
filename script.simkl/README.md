@@ -1,5 +1,6 @@
 # Simkl scrobbler (for Kodi)
-[![](https://img.shields.io/badge/licence-%20GPLv3-brightgreen.svg)][license] [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/SIMKL/script.simkl/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/SIMKL/script.simkl/?branch=master) [![Build Status](https://scrutinizer-ci.com/g/SIMKL/script.simkl/badges/build.png?b=master)](https://scrutinizer-ci.com/g/SIMKL/script.simkl/build-status/master) [![Gitter](https://badges.gitter.im/Simkl/API.svg)](https://gitter.im/Simkl/apps-automatic-trakers?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
+[![](https://img.shields.io/badge/licence-%20GPLv3-brightgreen.svg)][license] [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/SIMKL/script.simkl/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/SIMKL/script.simkl/?branch=master) [![Build Status](https://scrutinizer-ci.com/g/SIMKL/script.simkl/badges/build.png?b=master)](https://scrutinizer-ci.com/g/SIMKL/script.simkl/build-status/master) [![Crowdin](https://d322cqt584bo4o.cloudfront.net/Kodi-add-on-for-Simkl/localized.svg)](https://crowdin.com/project/Kodi-add-on-for-Simkl)
+
 
 ## Installing from Kodi
 1. Open Kodi. Then go to System » Settings » Add-ons » Install from repository » Services » Simkl TV Tracker and click Install
@@ -16,10 +17,11 @@
 ## TODO:
 - [x] Make it work on Android
 
+## Help Translate:
+You can use Crowdin [https://crowdin.com/project/Kodi-add-on-for-Simkl](https://crowdin.com/project/Kodi-add-on-for-Simkl) to help translate this add-on into your language.
+
 ## Donations:
 It would be very nice if you invite me for a cup of coffee:
-
-[<img src="https://www.coinbase.com/assets/buttons/donation_large-5cf4f17cc2d2ae2f45b6b021ee498297409c94dcf0ba1bbf76fd5668e80b0d02.png">](https://www.coinbase.com/daviddavo)
 
 Bitcoin address: 1PcbSQrBddJszsTiRhqHyLntp7Lxfuyaio
 
