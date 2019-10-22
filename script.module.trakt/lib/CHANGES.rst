@@ -1,3 +1,30 @@
+3.1.0 (2019-10-22)
+------------------
+**Added**
+
+- Support for absolute episode numbers (#63)
+- Support for rating votes (#68)
+
+**Changed**
+
+- Dropped support for Python 3.4
+
+3.0.0 (2018-10-26)
+------------------
+**Added**
+
+- Implemented the show progress interface (#60)
+- Support for the :code:`extended` parameter on sync methods (#57)
+
+**Changed**
+
+- Requests that raise exceptions are now retried (with :code:`retry=True`)
+- Dropped support for Python 2.6, 3.3
+
+**Fixed**
+
+- Issue disabling pagination on watchlist requests (#62)
+
 2.14.1 (2017-03-07)
 -------------------
 **Added**

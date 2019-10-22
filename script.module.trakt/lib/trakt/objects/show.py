@@ -183,6 +183,7 @@ class Show(Media):
 
         if self.rating:
             result['rating'] = self.rating.value
+            result['votes'] = self.rating.votes
             result['rated_at'] = to_iso8601_datetime(self.rating.timestamp)
 
         # Extended Info

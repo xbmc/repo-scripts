@@ -243,7 +243,7 @@ class HttpClient(object):
             return True
 
         if not config['oauth.refresh']:
-            log.warning('OAuth - Unable to refresh expired token (token refreshing hasn\'t been enabled)')
+            log.warning("OAuth - Unable to refresh expired token (token refreshing hasn't been enabled)")
             return False
 
         if not config['oauth.refresh_token']:
