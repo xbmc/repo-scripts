@@ -149,7 +149,7 @@ def recreate_dir(path):
         xbmcvfs.mkdirs(path)
 
 def normalize_string(str):
-    return py2_encode(unicodedata.normalize('NFKD', py2_decode(py2_encode(str, 'utf-8'))), 'ascii')
+    return py2_encode(unicodedata.normalize('NFKD', py2_decode(py2_encode(str, 'utf-8'))), 'ascii', 'ignore')
 
 
 def lang_hun2eng(hunlang):
