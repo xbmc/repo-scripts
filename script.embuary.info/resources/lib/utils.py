@@ -419,7 +419,7 @@ def tmdb_handle_person(item):
     return list_item
 
 
-def tmdb_handle_movie(item,local_items=None,full_info=False):
+def tmdb_handle_movie(item,local_items=None,full_info=False,mediatype='movie'):
     icon = IMAGEPATH + item['poster_path'] if item['poster_path'] is not None else ''
     backdrop = IMAGEPATH + item['backdrop_path'] if item['backdrop_path'] is not None else ''
 
@@ -456,7 +456,7 @@ def tmdb_handle_movie(item,local_items=None,full_info=False):
                                 'country': tmdb_join_items(item.get('production_countries','')),
                                 'genre': tmdb_join_items(item.get('genres','')),
                                 'studio': tmdb_join_items(item.get('production_companies','')),
-                                'mediatype': 'movie'}
+                                'mediatype': mediatype}
                                  )
     list_item.setArt({'icon': 'DefaultVideo.png','thumb': icon,'fanart': backdrop})
     list_item.setProperty('role', item.get('character',''))
@@ -484,7 +484,7 @@ def tmdb_handle_movie(item,local_items=None,full_info=False):
     return list_item, is_local
 
 
-def tmdb_handle_tvshow(item,local_items=None,full_info=False):
+def tmdb_handle_tvshow(item,local_items=None,full_info=False,mediatype='tvshow'):
     icon = IMAGEPATH + item['poster_path'] if item['poster_path'] is not None else ''
     backdrop = IMAGEPATH + item['backdrop_path'] if item['backdrop_path'] is not None else ''
 
@@ -520,7 +520,7 @@ def tmdb_handle_tvshow(item,local_items=None,full_info=False):
                                 'director': tmdb_join_items(item.get('created_by','')),
                                 'genre': tmdb_join_items(item.get('genres','')),
                                 'studio': tmdb_join_items(item.get('networks','')),
-                                'mediatype': 'tvshow'}
+                                'mediatype': mediatype}
                                 )
     list_item.setArt({'icon': 'DefaultVideo.png','thumb': icon,'fanart': backdrop})
     list_item.setProperty('TotalEpisodes', str(local_info['episodes']))
