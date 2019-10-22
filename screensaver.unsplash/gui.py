@@ -1,4 +1,4 @@
-#   Copyright (C) 2017 Lunatixz
+#   Copyright (C) 2019 Lunatixz
 #
 #
 # This file is part of Unsplash Photo ScreenSaver.
@@ -36,14 +36,16 @@ URL_PARAMS     = '/%s'%PHOTO_TYPE
 TIMER          = [30,60,120,240][int(REAL_SETTINGS.getSetting("RotateTime"))]
 ANIMATION      = 'okay' if REAL_SETTINGS.getSetting("Animate") == 'true' else 'nope'
 TIME           = 'okay' if REAL_SETTINGS.getSetting("Time") == 'true' else 'nope'
+OVERLAY        = 'okay' if REAL_SETTINGS.getSetting("Overlay") == 'true' else 'nope'
 IMG_CONTROLS   = [30000,30001]
-CYC_CONTROL    = itertools.cycle(IMG_CONTROLS).next
+try: CYC_CONTROL = itertools.cycle(IMG_CONTROLS).__next__ #py3
+except: CYC_CONTROL = itertools.cycle(IMG_CONTROLS).next #py2
 KODI_MONITOR   = xbmc.Monitor()
 RES            = ['1280x720','1920x1080','3840x2160'][int(REAL_SETTINGS.getSetting("Resolution"))]
 
-if PHOTO_TYPE in ['featured','random']: IMAGE_URL  = BASE_URL + URL_PARAMS + '/%s/?%s'%(RES, KEYWORDS if ENABLE_KEYS else BASE_URL + URL_PARAMS)
-elif PHOTO_TYPE == 'user': IMAGE_URL  = BASE_URL + URL_PARAMS + '/%s/%s' %(USER, RES)
-else: IMAGE_URL  = BASE_URL + URL_PARAMS + '/%s/%s' %(COLLECTION, RES)
+if PHOTO_TYPE in ['featured','random']: IMAGE_URL = '%s%s/%s/?%s'%(BASE_URL, URL_PARAMS, RES, KEYWORDS if ENABLE_KEYS else BASE_URL + URL_PARAMS)
+elif PHOTO_TYPE == 'user': IMAGE_URL = '%s%s/%s/%s' %(BASE_URL, URL_PARAMS, USER, RES)
+else: IMAGE_URL = '%s%s/%s/%s' %(BASE_URL, URL_PARAMS, COLLECTION, RES)
     
 class GUI(xbmcgui.WindowXMLDialog):
     def __init__( self, *args, **kwargs ):
@@ -58,6 +60,7 @@ class GUI(xbmcgui.WindowXMLDialog):
         self.winid = xbmcgui.Window(xbmcgui.getCurrentWindowDialogId())
         self.winid.setProperty('unsplash_animation', ANIMATION)
         self.winid.setProperty('unsplash_time', TIME)
+        self.winid.setProperty('unsplash_overlay', OVERLAY)
         self.startRotation()
 
          
@@ -94,6 +97,6 @@ class GUI(xbmcgui.WindowXMLDialog):
             url = page.geturl()
             self.log("openURL return url = " + url)
             return url
-        except urllib2.URLError, e: self.log("openURL Failed! " + str(e), xbmc.LOGERROR)
-        except socket.timeout, e: self.log("openURL Failed! " + str(e), xbmc.LOGERROR)
+        except urllib2.URLError as e: self.log("openURL Failed! " + str(e), xbmc.LOGERROR)
+        except socket.timeout as e: self.log("openURL Failed! " + str(e), xbmc.LOGERROR)
         return ''

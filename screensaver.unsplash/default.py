@@ -1,4 +1,4 @@
-#   Copyright (C) 2017 Lunatixz
+#   Copyright (C) 2019 Lunatixz
 #
 #
 # This file is part of Unsplash Photo ScreenSaver.
