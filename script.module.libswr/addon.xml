@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addon id="script.module.libswr" 
 	     name="libswr" 
-	     version="1.0.0" 
-	     provider-name="membrane">
+	     version="1.0.1" 
+	     provider-name="sarbes">
   <requires>
     <import addon="xbmc.python" version="2.25.0" />
     <import addon="script.module.libmediathek3" version="1.3.1"/>
   </requires>
   <extension point="xbmc.python.module" library="lib" />
   <extension point="xbmc.addon.metadata">
+    <broken>The content migrated to the ARD Mediathel, the scraper is not needed anymore.</broken>
     <platform>all</platform>
     <summary lang="en">This is a scraper for the SWR Mediathek (http://swrmediathek.de/).</summary>
     <description lang="en">This is a scraper for the SWR Mediathek (http://swrmediathek.de/). It uses the mobile webpages.</description>
