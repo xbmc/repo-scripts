@@ -84,16 +84,18 @@ class Main:
 
     def _select(self, items):
         listitems = []
-        listitems.append(xbmcgui.ListItem(LANGUAGE(32001), iconImage="DefaultAddonNone.png"))
+        clear = xbmcgui.ListItem(LANGUAGE(32001))
+        clear.setArt({'icon':'DefaultAddonNone.png'})
+        listitems.append(clear)
         for item in items:
             listitem = xbmcgui.ListItem(item.attributes[ 'name' ].nodeValue)
             fav_path = item.childNodes [ 0 ].nodeValue
             try:
                 if 'playlists/music' in fav_path or 'playlists/video' in fav_path:
-                    listitem.setIconImage("DefaultPlaylist.png")
+                    listitem.setArt({'icon':'DefaultPlaylist.png'})
                     listitem.setProperty("Icon", "DefaultPlaylist.png")
                 else:
-                    listitem.setIconImage(item.attributes[ 'thumb' ].nodeValue)
+                    listitem.setArt({'icon':item.attributes['thumb'].nodeValue})
                     listitem.setProperty("Icon", item.attributes[ 'thumb' ].nodeValue)
             except:
                 pass
