@@ -63,13 +63,13 @@ class Main:
         tag = md5.hexdigest()
         streetthread_created = False
         stamp = int(time.time())
-        street_url = 'http://c.tile.openstreetmap.org/%i/%i/%i.png?appid=%s'
-        precip_url = 'http://tile.openweathermap.org/map/precipitation/%i/%i/%i.png?appid=%s'
-        clouds_url = 'http://tile.openweathermap.org/map/clouds/%i/%i/%i.png?appid=%s'
-        temp_url = 'http://tile.openweathermap.org/map/temp/%i/%i/%i.png?appid=%s'
-        wind_url = 'http://tile.openweathermap.org/map/wind/%i/%i/%i.png?appid=%s'
-        pressure_url = 'http://tile.openweathermap.org/map/pressure/%i/%i/%i.png?appid=%s'
-        pressurecntr_url = 'http://undefined.tile.openweathermap.org/map/pressure_cntr/%i/%i/%i.png?appid=%s'
+        street_url = 'http://c.tile.openstreetmap.org/{}/{}/{}.png?appid={}'
+        precip_url = 'http://tile.openweathermap.org/map/precipitation/{}/{}/{}.png?appid={}'
+        clouds_url = 'http://tile.openweathermap.org/map/clouds/{}/{}/{}.png?appid={}'
+        temp_url = 'http://tile.openweathermap.org/map/temp/{}/{}/{}.png?appid={}'
+        wind_url = 'http://tile.openweathermap.org/map/wind/{}/{}/{}.png?appid={}'
+        pressure_url = 'http://tile.openweathermap.org/map/pressure/{}/{}/{}.png?appid={}'
+        pressurecntr_url = 'http://undefined.tile.openweathermap.org/map/pressure_cntr/{}/{}/{}.png?appid{}'
         streetmapdir = os.path.join(PROFILE, 'maps', 'streetmap-%s' % tag, '')
         precipmapdir = os.path.join(PROFILE, 'maps', 'precipmap', '')
         cloudsmapdir = os.path.join(PROFILE, 'maps', 'cloudsmap', '')
@@ -207,7 +207,7 @@ class get_tiles(threading.Thread):
         failed = []
         for img in imgs:
             data = b''
-            query = self.url % (zoom, img[0], img[1], api)
+            query = self.url.format(zoom, img[0], img[1], api)
             response = requests.get(query, timeout=5)
             if response.status_code == 401:
                 log('401 Unauthorized', DEBUG)

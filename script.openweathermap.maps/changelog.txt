@@ -1,3 +1,6 @@
+v1.0.1
+- bump
+
 v1.0.0
 - changes for python 3
 
