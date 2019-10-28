@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.kodi.loguploader" name="Kodi Logfile Uploader" version="1.0.0" provider-name="Team Kodi">
+<addon id="script.kodi.loguploader" name="Kodi Logfile Uploader" version="1.0.1" provider-name="Team Kodi">
 	<requires>
-		<import addon="xbmc.python" version="2.24.0"/>
-		<import addon="script.module.pyqrcode" version="0.0.2"/>
-		<import addon="script.module.requests" version="2.18.4.1"/>
+		<import addon="xbmc.python" version="3.0.0"/>
+		<import addon="script.module.pyqrcode" version="1.2.1"/>
+		<import addon="script.module.requests" version="2.19.1"/>
 	</requires>
 	<extension point="xbmc.python.script" library="default.py">
 		<provides>executable</provides>
@@ -14,9 +14,12 @@
 		<language></language>
 		<platform>all</platform>
 		<license>GNU GENERAL PUBLIC LICENSE Version 2</license>
-		<forum>http://forum.kodi.tv/showthread.php?tid=288153</forum>
-		<website>http://kodi.tv/</website>
+		<forum>https://forum.kodi.tv/showthread.php?tid=288153</forum>
+		<website>https://kodi.tv/</website>
 		<email></email>
-		<source>https://github.com/XBMC-Addons/script.kodi.loguploader/</source>
+		<source>https://gitlab.com/ronie/script.kodi.loguploader/</source>
+		<assets>
+			<icon>resources/icon.png</icon>
+		</assets>
 	</extension>
 </addon>

@@ -36,6 +36,14 @@ msgctxt "#32005"
 msgid "This file is too large. Max size is 1MB."
 msgstr ""
 
+msgctxt "#32006"
+msgid "Post this url or scan QRcode for your %s, together with a problem description, on the Kodi forum: %s"
+msgstr ""
+
+msgctxt "#32007"
+msgid "Error posting the logfile."
+msgstr ""
+
 msgctxt "#32011"
 msgid "Error posting the kodi.log file"
 msgstr ""
@@ -76,8 +84,16 @@ msgctxt "#32033"
 msgid "crashlog"
 msgstr ""
 
-msgctxt "#32006"
-msgid "Post this url or scan QRcode for your %s, together with a problem description, on the Kodi support forum: %s"
+msgctxt "#32040"
+msgid "Do you want to view your %s or upload it to http://paste.kodi.tv/?"
+msgstr ""
+
+msgctxt "#32041"
+msgid "view"
+msgstr ""
+
+msgctxt "#32042"
+msgid "upload"
 msgstr ""
 
 msgctxt "#32501"
@@ -95,4 +111,3 @@ msgstr ""
 msgctxt "#32504"
 msgid "Post the crashlog (available on linux/osx/ios only)"
 msgstr ""
-

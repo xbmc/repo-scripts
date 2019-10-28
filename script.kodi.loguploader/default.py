@@ -18,14 +18,14 @@ LANGUAGE = ADDON.getLocalizedString
 
 socket.setdefaulttimeout(5)
 
-POST     = 'http://ix.io/'
+URL = 'https://paste.kodi.tv/'
 LOGPATH = xbmc.translatePath('special://logpath')
 LOGFILE = os.path.join(LOGPATH, 'kodi.log')
 OLDLOG = os.path.join(LOGPATH, 'kodi.old.log')
 REPLACES = (('//.+?:.+?@', '//USER:PASSWORD@'),('<user>.+?</user>', '<user>USER</user>'),('<pass>.+?</pass>', '<pass>PASSWORD</pass>'),)
 
 def log(txt):
-    message = '%s: %s' % (ADDONID, txt)
+    message = u'%s: %s' % (ADDONID, txt)
     xbmc.log(msg=message, level=xbmc.LOGDEBUG)
 
 
@@ -49,6 +49,20 @@ class QRCode(xbmcgui.WindowXMLDialog):
         if (controlId == self.okbutton):
             self.close()
 
+class LogView(xbmcgui.WindowXMLDialog):
+    def __init__(self, *args, **kwargs):
+        self.name = kwargs["name"]
+        self.content = kwargs["content"]
+
+    def onInit(self):
+        self.header = 501
+        self.textbox = 502
+        self.showdialog()
+
+    def showdialog(self):
+        self.getControl(self.header).setLabel(self.name)
+        self.getControl(self.textbox).setText(self.content)
+        self.setFocusId(503)
 
 class Main:
     def __init__(self):
@@ -70,17 +84,24 @@ class Main:
             succes, data = self.readLog(item[1])
             if succes:
                 content = self.cleanLog(data)
-                succes, data = self.postLog(content)
-                if succes:
-                    self.showResult(LANGUAGE(32006) % (name, data), data)
+                dialog = xbmcgui.Dialog()
+                confirm = dialog.yesno(ADDONNAME, LANGUAGE(32040) % name, nolabel=LANGUAGE(32041), yeslabel=LANGUAGE(32042))
+                if confirm:
+                    succes, data = self.postLog(content)
+                    if succes:
+                        self.showResult(LANGUAGE(32006) % (name, data), data)
+                    else:
+                        self.showResult('%s[CR]%s' % (error, data))
                 else:
-                    self.showResult('%s[CR]%s' % (error, data))
+                    lv = LogView( "script-loguploader-view.xml" , CWD, "default", name=name, content=content)
+                    lv.doModal()
+                    del lv
             else:
                 self.showResult('%s[CR]%s' % (error, data))
 
     def getSettings(self):
-        self.oldlog = ADDON.getSetting('oldlog') == 'true'
-        self.crashlog = ADDON.getSetting('crashlog') == 'true'
+        self.oldlog = ADDON.getSettingBool('oldlog')
+        self.crashlog = ADDON.getSettingBool('crashlog')
 
     def getFiles(self):
         logfiles = []
@@ -122,12 +143,11 @@ class Main:
 
     def readLog(self, path):
         try:
-            st = xbmcvfs.Stat(path)
-            sz = st.st_size()
-            if sz > 999999:
+            lf = xbmcvfs.File(path)
+            sz = lf.size()
+            if sz > 1000000:
                 log('file is too large')
                 return False, LANGUAGE(32005)
-            lf = xbmcvfs.File(path)
             content = lf.read()
             lf.close()
             if content:
@@ -145,18 +165,19 @@ class Main:
             return content
 
     def postLog(self, data):
-        params = {}
-        params['f:1'] = data
         self.session = requests.Session()
         UserAgent = '%s: %s' % (ADDONID, ADDONVERSION)
         try:
-            response = self.session.post(POST, data=params, headers={'User-Agent': UserAgent})
-            result = response.text.strip()
-            if result:
+            response = self.session.post(URL + 'documents', data=data.encode('utf-8'), headers={'User-Agent': UserAgent})
+            if 'key' in response.json():
+                result = URL + response.json()['key']
                 return True, result
-            else:
+            elif 'message' in response.json():
                 log('upload failed, paste may be too large')
-                return False, LANGUAGE(32005)
+                return False, response.json()['message']
+            else:
+                log('error: %s' % response.text)
+                return False, LANGUAGE(32007)
         except:
             log('unable to retrieve the paste url')
             return False, LANGUAGE(32004)
