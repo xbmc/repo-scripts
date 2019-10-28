@@ -41,7 +41,7 @@ msgid "Search Artists"
 msgstr ""
 
 msgctxt "#32006"
-msgid "Search Abums"
+msgid "Search Albums"
 msgstr ""
 
 msgctxt "#32007"
@@ -60,7 +60,7 @@ msgctxt "#32010"
 msgid "Search Directors"
 msgstr ""
 
-#empty strings from id 32010 to 32100
+# empty strings from id 32010 to 32100
 
 msgctxt "#32101"
 msgid "Enter search string"
@@ -110,7 +110,7 @@ msgctxt "#32212"
 msgid "Resume from %s"
 msgstr ""
 
-#empty strings from id 32213 to 32296
+# empty strings from id 32213 to 32296
 
 msgctxt "#32297"
 msgid "Searching:"
