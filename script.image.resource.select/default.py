@@ -45,7 +45,8 @@ class Main:
                     path = item['path']
                     summary = item['summary']
                     extension, subfolders = self._get_data(path)
-                    listitem = xbmcgui.ListItem(label=name, label2=addonid, iconImage='DefaultAddonImages.png', thumbnailImage=icon)
+                    listitem = xbmcgui.ListItem(label=name, label2=addonid)
+                    listitem.setArt({'icon':'DefaultAddonImages.png', 'thumb':icon})
                     listitem.setProperty('extension', extension)
                     listitem.setProperty('subfolders', subfolders)
                     listitem.setProperty('Addon.Summary', summary)
@@ -66,7 +67,8 @@ class Main:
             return 'png', 'false'
 
     def _select(self, addonlist, category, string):
-        listitem = xbmcgui.ListItem(xbmc.getLocalizedString(15109), iconImage='DefaultAddon.png')
+        listitem = xbmcgui.ListItem(xbmc.getLocalizedString(15109))
+        listitem.setArt({'icon':'DefaultAddon.png'})
         addonlist.insert(0, listitem)
         listitem = xbmcgui.ListItem(xbmc.getLocalizedString(21452))
         listitem.setProperty('more', 'true')

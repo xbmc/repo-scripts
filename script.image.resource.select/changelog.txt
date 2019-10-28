@@ -1,5 +1,14 @@
+v3.0.1
+- bump
+
 v3.0.0
-- required changes for python 3
+- changes for python 3
+
+v2.0.4
+- cosmetics
+
+v2.0.3
+- move repo to gitlab
 
 v2.0.2
 - required changes for kodi leia
