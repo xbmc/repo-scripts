@@ -261,13 +261,14 @@
 			<aspectratio>keep</aspectratio>
 			<fadetime>0</fadetime>
 			<texture>screensaver-splash.png</texture>
-			<animation effect="rotate" end="-360" center="auto" time="7000" loop="true" reversible="false" condition="True">Conditional</animation>
+			<animation effect="rotate" end="-360" center="auto" time="7000" loop="true" reversible="false" condition="!String.IsEqual(Window.Property(SlideView.Splash),hide)">Conditional</animation>
 			<animation type="WindowOpen">
 				<effect type="fade" start="0" end="100" time="1000" delay="500"/>
 			</animation>
 			<animation type="Conditional" condition="String.IsEqual(Window.Property(SlideView.Splash),hide)">
 				<effect type="fade" start="100" end="0" time="500"/>
 			</animation>
+			<visible>!String.IsEqual(Window.Property(SlideView.Splash),hide)</visible>
 		</control>
 		<control type="image">
 			<posx>0</posx>
