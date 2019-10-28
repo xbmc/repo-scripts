@@ -1,9 +1,7 @@
 info for skinners:
+
+- if a song can be loved, you can use this visible condition to display the love button:
 Window(Home).Property(LastFM.CanLove)
-Window(Home).Property(LastFM.CanBan)
 
-LastFM.Love:
+- add this onclick action to the love button:
 RunScript(service.scrobbler.lastfm,action=LastFM.Love)
-
-LastFM.Ban:
-RunScript(plugin.audio.lastfm,action=LastFM.Ban)

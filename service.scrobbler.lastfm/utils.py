@@ -22,7 +22,7 @@ HEADERS = {'User-Agent': 'Kodi Media center', 'Accept-Charset': 'utf-8'}
 LANGUAGE = ADDON.getLocalizedString
 ADDONVERSION = ADDON.getAddonInfo('version')
 CWD = ADDON.getAddonInfo('path')
-STATUS = ADDON.getSetting('lastfmstatus')
+STATUS = 'YzkxMGMwOTlkMzY3MTdlMzM2ZmMwZDAwOTVhMGM4YWRhMjJhNzI1ZmMwODE2MWVmNzYyMGM5MDI2NTkxMzA1ZQ=='
 DATAPATH = xbmc.translatePath(ADDON.getAddonInfo('profile'))
 WINDOW = xbmcgui.Window(10000)
 
@@ -40,12 +40,13 @@ def parse_argv():
 def read_settings(session, puser=False, ppwd=False):
     # read settings
     settings = {}
-    user = ADDON.getSetting('lastfmuser')
-    pwd = ADDON.getSetting('lastfmpass')
-    songs = ADDON.getSetting('lastfmsubmitsongs') == 'true'
-    radio = ADDON.getSetting('lastfmsubmitradio') == 'true'
-    confirm = ADDON.getSetting('lastfmconfirm') == 'true'
-    sesskey = ADDON.getSetting('lastfmkey')
+    user = ADDON.getSettingString('lastfmuser')
+    pwd = ADDON.getSettingString('lastfmpass')
+    songs = ADDON.getSettingBool('lastfmsubmitsongs')
+    radio = ADDON.getSettingBool('lastfmsubmitradio')
+    videos = ADDON.getSettingBool('lastfmsubmitvideos')
+    confirm = ADDON.getSettingBool('lastfmconfirm')
+    sesskey = ADDON.getSettingString('lastfmkey')
     # if puser or ppwd is true, we were called by onSettingsChanged
     if puser or ppwd:
         # check if user has changed it's username or password
@@ -76,7 +77,7 @@ def read_settings(session, puser=False, ppwd=False):
             log('Last.fm an unknown authentication response', session)
             sesskey = ''
         if sesskey:
-            ADDON.setSetting('lastfmkey', sesskey)
+            ADDON.setSettingString('lastfmkey', sesskey)
     elif not (user and pwd):
         # no username or password
         xbmc.executebuiltin('Notification(%s,%s,%i)' % (LANGUAGE(32011), LANGUAGE(32027), 7000))
@@ -84,6 +85,7 @@ def read_settings(session, puser=False, ppwd=False):
     settings['pwd'] = pwd
     settings['songs'] = songs
     settings['radio'] = radio
+    settings['videos'] = videos
     settings['confirm'] = confirm
     settings['sesskey'] = sesskey
     if sesskey:
@@ -149,7 +151,7 @@ def jsonparse(response):
 
 def drop_sesskey():
     # drop our key, this will trigger onsettingschanged to fetch a new key
-    ADDON.setSetting('lastfmkey', '')
+    ADDON.setSettingString('lastfmkey', '')
 
 class LastFM:
     def __init__(self):

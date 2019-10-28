@@ -1,5 +1,20 @@
+v4.0.1
+- bump
+
+v4.0.0
+- changes for pyrhon 3
+
+v3.1.1
+- cosmetics
+
+v3.1.0
+- remove option to ban tracks, no longer supported by last.fm
+
+v3.0.1
+- move repo to gitlab
+
 v3.0.0
-- changes for python 3
+- add support for musicvideos
 
 v2.1.0
 - add albumartist support

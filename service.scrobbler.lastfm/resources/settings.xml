@@ -1,11 +1,50 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<settings>
-	<category label="30000">
-		<setting id="lastfmsubmitsongs" type="bool" label="30001" default="true"/>
-		<setting id="lastfmsubmitradio" type="bool" label="30002" default="false"/>
-		<setting id="lastfmuser" type="text" label="30003" default=""/>
-		<setting id="lastfmpass" type="text" label="30004" default="" option="hidden"/>
-		<setting id="lastfmconfirm" type="bool" label="30005" default="true"/>
-		<setting id="lastfmstatus" default="YzkxMGMwOTlkMzY3MTdlMzM2ZmMwZDAwOTVhMGM4YWRhMjJhNzI1ZmMwODE2MWVmNzYyMGM5MDI2NTkxMzA1ZQ=="/>
-	</category>
+<?xml version="1.0" ?>
+<settings version="1">
+	<section id="addon">
+		<category id="30000" label="30000">
+			<group id="1">
+				<setting help="" id="lastfmsubmitsongs" label="30001" type="boolean">
+					<level>0</level>
+					<default>true</default>
+					<control type="toggle"/>
+				</setting>
+				<setting help="" id="lastfmsubmitvideos" label="30006" type="boolean">
+					<level>0</level>
+					<default>false</default>
+					<control type="toggle"/>
+				</setting>
+				<setting help="" id="lastfmsubmitradio" label="30002" type="boolean">
+					<level>0</level>
+					<default>false</default>
+					<control type="toggle"/>
+				</setting>
+				<setting help="" id="lastfmuser" label="30003" type="string">
+					<level>0</level>
+					<default/>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<control format="string" type="edit">
+						<heading>30003</heading>
+					</control>
+				</setting>
+				<setting help="" id="lastfmpass" label="30004" type="string">
+					<level>0</level>
+					<default/>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<control format="string" type="edit">
+						<heading>30004</heading>
+						<hidden>true</hidden>
+					</control>
+				</setting>
+				<setting help="" id="lastfmconfirm" label="30005" type="boolean">
+					<level>0</level>
+					<default>true</default>
+					<control type="toggle"/>
+				</setting>
+			</group>
+		</category>
+	</section>
 </settings>

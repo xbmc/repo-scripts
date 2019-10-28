@@ -15,25 +15,25 @@
 
 from utils import *
 
-SESSION = 'loveban'
+SESSION = 'love'
 
-class LoveBan:
+class Love:
     def __init__( self, params ):
         artist = xbmc.getInfoLabel('MusicPlayer.Artist')
         song   = xbmc.getInfoLabel('MusicPlayer.Title')
         action = params.get( 'action' )
         # check if the skin provided valid params
-        if artist and song and (action == 'LastFM.Love' or action == 'LastFM.Ban'):
+        if artist and song and (action == 'LastFM.Love'):
             settings = read_settings(SESSION)
             sesskey  = settings['sesskey']
             confirm  = settings['confirm']
             # check if we have an artist name and song title
             if sesskey:
-                self._submit_loveban(action, artist, song, confirm, sesskey)
+                self._submit_love(action, artist, song, confirm, sesskey)
             else:
                 log('no sessionkey, artistname or songname provided', SESSION)
 
-    def _submit_loveban( self, action, artist, song, confirm, sesskey ):
+    def _submit_love( self, action, artist, song, confirm, sesskey ):
         # love a track
         if action == 'LastFM.Love':
             action = 'track.love'
@@ -50,28 +50,10 @@ class LoveBan:
                 msg = 'Notification(%s,%s,%i)' % (LANGUAGE(32011), LANGUAGE(32014) % song, 7000)
             else:
                 msg = 'Notification(%s,%s,%i)' % (LANGUAGE(32011), LANGUAGE(32015) % song, 7000)
-        # ban a track
-        elif action == 'LastFM.Ban':
-            action = 'track.ban'
-            # popup a confirmation dialog if specified by the skin
-            if confirm:
-                dialog = xbmcgui.Dialog()
-                ack = dialog.yesno(LANGUAGE(32011), LANGUAGE(32013), artist + ' - ' + song)
-                if not ack:
-                    return
-            # submit data to last.fm
-            result = self._post_data(action, artist, song, sesskey)
-            # notify user on success / fail
-            if result:
-                msg = 'Notification(%s,%s,%i)' % (LANGUAGE(32011), LANGUAGE(32016) % song, 7000)
-            else:
-                msg = 'Notification(%s,%s,%i)' % (LANGUAGE(32011), LANGUAGE(32017) % song, 7000)
-            # if a song is banned, we skip to the next track
-            xbmc.executebuiltin('playercontrol(next)')
 
     def _post_data( self, action, artist, song, sesskey ):
-        # love, ban
-        log('love/ban submission', SESSION)
+        # love
+        log('love submission', SESSION)
         # collect post data
         data = {}
         data['method'] = action
