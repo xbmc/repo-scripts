@@ -12,4 +12,7 @@
 		<setting id="Location4id" type="text" visible="false" default=""/>
 		<setting id="Location5id" type="text" visible="false" default=""/>
 	</category>
+	<category label="32102">
+		<setting id="Debug" label="32129" type="bool" default="false"/>
+	</category>
 </settings>
