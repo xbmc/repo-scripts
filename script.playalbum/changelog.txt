@@ -1,5 +1,17 @@
+v4.0.1
+- bump
+
 v4.0.0
 - changes for python 3
+
+v3.0.4
+- cosmetics
+
+v3.0.3
+- move repo to gitlab
+
+v3.0.2
+- move repo to gitlab
 
 v3.0.1
 - simplify code
