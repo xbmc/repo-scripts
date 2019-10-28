@@ -16,7 +16,7 @@ from utilities import *
 from audiofile import AudioFile
 
 __title__ = 'GomAudio'
-__priority__ = '130'
+__priority__ = '140'
 __lrc__ = True
 
 socket.setdefaulttimeout(10)
@@ -70,7 +70,7 @@ class LyricsFetcher:
                 key = gomClient.GetKeyFromFile(song.filepath)
             if not key:
                 return None
-            url = GOM_URL %(key, urllib.parse.quote(remove_accents(song.title).encode('euc-kr')), (remove_accents(song.artist).encode('euc-kr')))
+            url = GOM_URL %(key, urllib.parse.quote(remove_accents(song.title).encode('euc-kr')), urllib.parse.quote(remove_accents(song.artist).encode('euc-kr')))
             response = urllib.request.urlopen(url)
             Page = response.read().decode('euc-kr')
         except:

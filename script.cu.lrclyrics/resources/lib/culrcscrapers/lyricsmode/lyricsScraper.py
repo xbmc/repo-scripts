@@ -1,6 +1,6 @@
 #-*- coding: UTF-8 -*-
 import sys
-import urllib.request
+import requests
 import urllib.parse
 import re
 from utilities import *
@@ -22,24 +22,27 @@ class LyricsFetcher:
         if not result:
             result = self.search_url(artist, title)
         if result:
-            lyr = result.split('ui-annotatable">')[1].split('</p>')[0]
+            lyr = result.split('style="position: relative;">')[1].split('<div')[0]
             lyrics.lyrics = lyr.replace('<br />', '')
             return lyrics
 
     def direct_url(self, url):
         try:
-            log('%s: search url: %s' % (__title__, url))
-            song_search = urllib.request.urlopen(url).read().decode('utf-8')
-            if song_search.find('ui-annotatable">') >= 0:
-                return song_search
+            log('%s: direct url: %s' % (__title__, url))
+            song_search = requests.get(url)
+            response = song_search.text
+            if response.find('lyrics_text') >= 0:
+                return response
         except:
             log('error in direct url')
 
     def search_url(self, artist, title):
         try:
             url = 'http://www.lyricsmode.com/search.php?search=' + urllib.parse.quote_plus(artist.lower() + ' ' + title.lower())
-            song_search = urllib.request.urlopen(url).read().decode('utf-8')
-            matchcode = re.search('d><a href="(.*?)"', song_search, flags=re.DOTALL)
+            log('%s: search url: %s' % (__title__, url))
+            song_search = requests.get(url)
+            response = song_search.text
+            matchcode = re.search('lm-list__cell-title">.*?<a href="(.*?)" class="lm-link lm-link--primary', response, flags=re.DOTALL)
             try:
                 url = 'http://www.lyricsmode.com' + (matchcode.group(1))
                 result = self.direct_url(url)

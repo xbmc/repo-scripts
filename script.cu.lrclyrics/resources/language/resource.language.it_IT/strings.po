@@ -108,7 +108,7 @@ msgctxt "#32118"
 msgid "Debugging"
 msgstr "Debugging"
 
-#empty strings from id 32119 to 32148
+# empty strings from id 32119 to 32148
 
 msgctxt "#32149"
 msgid "Expert"
@@ -182,8 +182,8 @@ msgctxt "#32166"
 msgid "Time offset for synchronised lyrics"
 msgstr "Tempo di sfasamento per la sincronizzazione dei testi"
 
-#empty strings from id 32161 to 32198
-#Skin labels
+# empty strings from id 32161 to 32198
+# Skin labels
 
 msgctxt "#32199"
 msgid "CU LRC Lyrics"

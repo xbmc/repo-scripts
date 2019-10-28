@@ -1,49 +1,216 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<settings>
-	<category label="32150">
-		<setting id="search_embedded" type="bool" label="32152" default="true"/>
-		<setting type="sep" />
-		<setting id="search_file" type="bool" label="32153" default="true"/>
-		<setting type="sep" />
-		<setting label="32154" type="lsep"/>
-		<setting id="minilyrics" type="bool" label="MiniLyrics" default="true"/>
-		<setting id="ttplayer" type="bool" label="TTPlayer" default="true"/>
-		<setting id="xiami" type="bool" label="Xiami" default="true"/>
-		<setting id="baidu" type="bool" label="Baidu" default="true"/>
-		<setting id="gomaudio" type="bool" label="GomAudio" default="true"/>
-		<setting id="alsong" type="bool" label="Alsong" default="true"/>
-		<setting type="sep" />
-		<setting label="32155" type="lsep"/>
-		<setting id="lyricwiki" type="bool" label="LyricWiki" default="true"/>
-		<setting id="genius" type="bool" label="Genius" default="true"/>
-		<setting id="lyricsmode" type="bool" label="Lyrics Mode" default="true"/>
-		<setting id="letssingit" type="bool" label="LetsSingIt" default="true"/>
-		<setting id="lyricscom" type="bool" label="Lyrics.com" default="true"/>
-		<setting id="darklyrics" type="bool" label="Dark Lyrics" default="true"/>
-	</category>
-	<category label="32151">
-		<setting label="32115" type="lsep"/>
-		<setting id="service" type="bool" label="32156" default="true"/>
-		<setting id="silent" type="bool" label="32160" default="false"/>
-		<setting id="strip" type="bool" label="32161" default="false"/>
-		<setting type="sep" />
-		<setting label="32116" type="lsep"/>
-		<setting id="read_filename" type="bool" label="32106" default="false"/>
-		<setting id="read_filename_format" type="enum" label="32107" default="0" lvalues="32108|32109|32110|32104|32114" />
-		<setting id="clean_title" type="bool" label="32157" default="false"/>
-		<setting type="sep" />
-		<setting label="32117" type="lsep"/>
-		<setting id="save_lyrics1" type="bool" label="32101" default="true"/>
-		<setting id="save_lyrics_path" type="folder" enable="eq(-1,true)" source="files" label="32102" default="" />
-		<setting id="save_filename_format" type="enum" enable="eq(-2,true)" label="32103" default="0" lvalues="32105|32108"/>
-		<setting id="save_lyrics2" type="bool" label="32113" default="false"/>
-		<setting id="save_subfolder" type="bool" enable="eq(-1,true)" label="32111" default="false"/>
-		<setting id="save_subfolder_path" type="text" enable="eq(-1,true)" label="32112" default="lyrics"/>
-	</category>
-	<category label="32149">
-		<setting id="offset" type="slider" label="32166" default="0.00" range="-20.00,0.10,20.00" option="float" />
-		<setting label="32118" type="lsep"/>
-		<setting id="log_enabled" type="bool" label="32159" default="false"/>
-		<setting id="scraper_test" type="action" label="32162" action="RunScript($ID,test)"/>
-	</category>
+<?xml version="1.0" ?>
+<settings version="1">
+	<section id="addon">
+		<category id="32150" label="32150">
+			<group id="1">
+				<setting help="" id="search_embedded" label="32152" type="boolean">
+					<level>0</level>
+					<default>true</default>
+					<control type="toggle"/>
+				</setting>
+			</group>
+			<group id="2">
+				<setting help="" id="search_file" label="32153" type="boolean">
+					<level>0</level>
+					<default>true</default>
+					<control type="toggle"/>
+				</setting>
+			</group>
+			<group id="3" label="32154">
+				<setting help="" id="minilyrics" label="32901" type="boolean">
+					<level>0</level>
+					<default>true</default>
+					<control type="toggle"/>
+				</setting>
+				<setting help="" id="ttplayer" label="32902" type="boolean">
+					<level>0</level>
+					<default>true</default>
+					<control type="toggle"/>
+				</setting>
+				<setting help="" id="gomaudio" label="32903" type="boolean">
+					<level>0</level>
+					<default>true</default>
+					<control type="toggle"/>
+				</setting>
+				<setting help="" id="music163" label="32904" type="boolean">
+					<level>0</level>
+					<default>true</default>
+					<control type="toggle"/>
+				</setting>
+			</group>
+			<group id="4" label="32155">
+				<setting help="" id="lyricwiki" label="32905" type="boolean">
+					<level>0</level>
+					<default>true</default>
+					<control type="toggle"/>
+				</setting>
+				<setting help="" id="genius" label="32906" type="boolean">
+					<level>0</level>
+					<default>true</default>
+					<control type="toggle"/>
+				</setting>
+				<setting help="" id="lyricsmode" label="32907" type="boolean">
+					<level>0</level>
+					<default>true</default>
+					<control type="toggle"/>
+				</setting>
+				<setting help="" id="azlyrics" label="32908" type="boolean">
+					<level>0</level>
+					<default>true</default>
+					<control type="toggle"/>
+				</setting>
+				<setting help="" id="lyricscom" label="32909" type="boolean">
+					<level>0</level>
+					<default>true</default>
+					<control type="toggle"/>
+				</setting>
+				<setting help="" id="darklyrics" label="32910" type="boolean">
+					<level>0</level>
+					<default>true</default>
+					<control type="toggle"/>
+				</setting>
+			</group>
+		</category>
+		<category id="32151" label="32151">
+			<group id="1" label="32115">
+				<setting help="" id="service" label="32156" type="boolean">
+					<level>0</level>
+					<default>true</default>
+					<control type="toggle"/>
+				</setting>
+				<setting help="" id="silent" label="32160" type="boolean">
+					<level>0</level>
+					<default>false</default>
+					<control type="toggle"/>
+				</setting>
+				<setting help="" id="strip" label="32161" type="boolean">
+					<level>0</level>
+					<default>false</default>
+					<control type="toggle"/>
+				</setting>
+			</group>
+			<group id="2" label="32116">
+				<setting help="" id="read_filename" label="32106" type="boolean">
+					<level>0</level>
+					<default>false</default>
+					<control type="toggle"/>
+				</setting>
+				<setting help="" id="read_filename_format" label="32107" type="integer">
+					<level>0</level>
+					<default>0</default>
+					<control format="string" type="spinner"/>
+					<constraints>
+						<options>
+							<option label="32108">0</option>
+							<option label="32109">1</option>
+							<option label="32110">2</option>
+							<option label="32104">3</option>
+							<option label="32114">4</option>
+						</options>
+					</constraints>
+				</setting>
+				<setting help="" id="clean_title" label="32157" type="boolean">
+					<level>0</level>
+					<default>false</default>
+					<control type="toggle"/>
+				</setting>
+			</group>
+			<group id="3" label="32117">
+				<setting help="" id="save_lyrics1" label="32101" type="boolean">
+					<level>0</level>
+					<default>true</default>
+					<control type="toggle"/>
+				</setting>
+				<setting help="" id="save_lyrics_path" label="32102" type="path">
+					<level>0</level>
+					<default/>
+					<constraints>
+						<allowempty>true</allowempty>
+						<sources>
+							<source>files</source>
+						</sources>
+					</constraints>
+					<dependencies>
+						<dependency type="enable">
+							<condition operator="is" setting="save_lyrics1">true</condition>
+						</dependency>
+					</dependencies>
+					<control format="path" type="button">
+						<heading>32102</heading>
+					</control>
+				</setting>
+				<setting help="" id="save_filename_format" label="32103" type="integer">
+					<level>0</level>
+					<default>0</default>
+					<dependencies>
+						<dependency type="enable">
+							<condition operator="is" setting="save_lyrics1">true</condition>
+						</dependency>
+					</dependencies>
+					<control format="string" type="spinner"/>
+					<constraints>
+						<options>
+							<option label="32105">0</option>
+							<option label="32108">1</option>
+						</options>
+					</constraints>
+				</setting>
+				<setting help="" id="save_lyrics2" label="32113" type="boolean">
+					<level>0</level>
+					<default>false</default>
+					<control type="toggle"/>
+				</setting>
+				<setting help="" id="save_subfolder" label="32111" type="boolean">
+					<level>0</level>
+					<default>false</default>
+					<dependencies>
+						<dependency type="enable">
+							<condition operator="is" setting="save_lyrics2">true</condition>
+						</dependency>
+					</dependencies>
+					<control type="toggle"/>
+				</setting>
+				<setting help="" id="save_subfolder_path" label="32112" type="string">
+					<level>0</level>
+					<default>lyrics</default>
+					<dependencies>
+						<dependency type="enable">
+							<condition operator="is" setting="save_subfolder">true</condition>
+						</dependency>
+					</dependencies>
+					<control format="string" type="edit">
+						<heading>32112</heading>
+					</control>
+				</setting>
+			</group>
+		</category>
+		<category id="32149" label="32149">
+			<group id="1">
+				<setting help="" id="offset" label="32166" type="number">
+					<level>0</level>
+					<default>0.00</default>
+					<control format="number" type="slider">
+						<popup>false</popup>
+					</control>
+					<constraints>
+						<minimum>-20.00</minimum>
+						<step>0.10</step>
+						<maximum>20.00</maximum>
+					</constraints>
+				</setting>
+			</group>
+			<group id="2" label="32118">
+				<setting help="" id="log_enabled" label="32159" type="boolean">
+					<level>0</level>
+					<default>false</default>
+					<control type="toggle"/>
+				</setting>
+				<setting help="" id="scraper_test" label="32162" type="action">
+					<level>0</level>
+					<data>RunScript(script.cu.lrclyrics,test)</data>
+					<control format="action" type="button"/>
+				</setting>
+			</group>
+		</category>
+	</section>
 </settings>

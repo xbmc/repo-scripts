@@ -28,14 +28,14 @@ msgctxt "#32002"
 msgid "Embedded"
 msgstr "內嵌歌詞"
 
-#empty string with id 32003
+# empty string with id 32003
 
 msgctxt "#32004"
 msgid "Searching lyrics..."
 msgstr "正搜尋歌詞..."
 
-#empty strings from id 32005 to 32100
-#Settings labels
+# empty strings from id 32005 to 32100
+# Settings labels
 
 msgctxt "#32101"
 msgid "Search and save lyrics in separate lyrics folder"
@@ -109,7 +109,7 @@ msgctxt "#32118"
 msgid "Debugging"
 msgstr "測錯"
 
-#empty strings from id 32119 to 32149
+# empty strings from id 32119 to 32149
 
 msgctxt "#32150"
 msgid "Scrapers"
@@ -159,8 +159,8 @@ msgctxt "#32161"
 msgid "Remove Chinese/Korean text from lyrics"
 msgstr "移除歌詞內的 中文/韓文 內容"
 
-#empty strings from id 32161 to 32198
-#Skin labels
+# empty strings from id 32161 to 32198
+# Skin labels
 
 msgctxt "#32199"
 msgid "CU LRC Lyrics"

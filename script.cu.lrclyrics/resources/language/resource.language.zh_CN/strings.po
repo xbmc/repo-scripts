@@ -16,7 +16,7 @@ msgstr ""
 "Language: zh\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#Script labels
+# Script labels
 
 msgctxt "#32000"
 msgid "File"
@@ -58,8 +58,8 @@ msgctxt "#32009"
 msgid "Ahead by: %ss"
 msgstr "提前：%s秒"
 
-#empty strings from id 32010 to 32100
-#Settings labels
+# empty strings from id 32010 to 32100
+# Settings labels
 
 msgctxt "#32101"
 msgid "Search and save lyrics in separate lyrics folder"
@@ -133,7 +133,7 @@ msgctxt "#32118"
 msgid "Debugging"
 msgstr "调试"
 
-#empty strings from id 32120 to 32148
+# empty strings from id 32120 to 32148
 
 msgctxt "#32149"
 msgid "Expert"
@@ -211,8 +211,8 @@ msgctxt "#32167"
 msgid "Delete lyrics"
 msgstr "删除歌词"
 
-#empty strings from id 32168 to 32198
-#Skin labels
+# empty strings from id 32168 to 32198
+# Skin labels
 
 msgctxt "#32199"
 msgid "CU LRC Lyrics"

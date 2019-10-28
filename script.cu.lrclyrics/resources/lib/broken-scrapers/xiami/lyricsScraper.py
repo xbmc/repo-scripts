@@ -1,6 +1,6 @@
 #-*- coding: UTF-8 -*-
 """
-Scraper for http://xiami.com
+Scraper for https://xiami.com
 
 Taxigps
 """
@@ -15,7 +15,7 @@ import requests
 from utilities import *
 
 __title__ = "Xiami"
-__priority__ = '115'
+__priority__ = '110'
 __lrc__ = True
 
 UserAgent = 'Mozilla/5.0 (Windows NT 10.0; WOW64; rv:51.0) Gecko/20100101 Firefox/51.0'
@@ -24,8 +24,8 @@ socket.setdefaulttimeout(10)
 
 class LyricsFetcher:
     def __init__( self ):
-        self.LIST_URL = 'http://www.xiami.com/search/song?key=%s'
-        self.SONG_URL = 'http://www.xiami.com/song/playlist/id/%s/object_name/default/object_id/0/cat/json'
+        self.LIST_URL = 'https://www.xiami.com/search?key=%s'
+        self.SONG_URL = 'https://www.xiami.com/song/playlist/id/%s/object_name/default/object_id/0'
         self.session = requests.Session()
 
     def get_lyrics(self, song):
@@ -37,7 +37,7 @@ class LyricsFetcher:
         keyword = "%s %s" % (song.title, song.artist)
         url = self.LIST_URL % (urllib.parse.quote(keyword))
         try:
-            response = self.session.get(url, headers={'User-Agent': UserAgent, 'Referer': 'http://www.xiami.com/play'})
+            response = self.session.get(url, headers={'User-Agent': UserAgent, 'Referer': 'https://www.xiami.com/play'})
             result = response.text
         except:
             log( "%s: %s::%s (%d) [%s]" % (
@@ -47,7 +47,7 @@ class LyricsFetcher:
                    sys.exc_info()[ 1 ]
                    ))
             return None
-        match = re.compile('<td class="chkbox">.+?value="(.+?)".+?href="http://www.xiami.com/song/[^"]+" title="([^"]+)".*?href="http://www.xiami.com/artist/[^"]+" title="([^"]+)"', re.DOTALL).findall(result)
+        match = re.compile('<td class="chkbox">.+?value="(.+?)".+?href="//www.xiami.com/song/[^"]+" title="([^"]+)".*?href="//www.xiami.com/artist/[^"]+" title="([^"]+)"', re.DOTALL).findall(result)
         links = []
         for x in match:
             title = x[1]
@@ -67,7 +67,7 @@ class LyricsFetcher:
     def get_lyrics_from_list(self, link):
         title,id,artist,song = link
         try:
-            response = self.session.get(self.SONG_URL % (id), headers={'User-Agent': UserAgent, 'Referer': 'http://www.xiami.com/play'})
+            response = self.session.get(self.SONG_URL % (id), headers={'User-Agent': UserAgent, 'Referer': 'https://www.xiami.com/play'})
             result = response.text
             data = json.loads(result)
             if 'data' in data and 'trackList' in data['data'] and data['data']['trackList'] and 'lyric' in data['data']['trackList'][0] and data['data']['trackList'][0]['lyric']:
@@ -81,7 +81,7 @@ class LyricsFetcher:
                    ))
             return
         try:
-            response = self.session.get(url, headers={'User-Agent': UserAgent, 'Referer': 'http://www.xiami.com/play'})
+            response = self.session.get(url, headers={'User-Agent': UserAgent, 'Referer': 'https://www.xiami.com/play'})
             lyrics = response.content
         except:
             log( "%s: %s::%s (%d) [%s]" % (

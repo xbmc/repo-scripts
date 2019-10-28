@@ -56,7 +56,7 @@ msgctxt "#32009"
 msgid "Ahead by: %ss"
 msgstr "Avancées de %ss"
 
-#empty strings from id 32010 to 32100
+# empty strings from id 32010 to 32100
 
 msgctxt "#32101"
 msgid "Search and save lyrics in separate lyrics folder"
@@ -130,7 +130,7 @@ msgctxt "#32118"
 msgid "Debugging"
 msgstr "Débogage"
 
-#empty strings from id 32119 to 32149
+# empty strings from id 32119 to 32149
 
 msgctxt "#32150"
 msgid "Scrapers"
@@ -204,8 +204,8 @@ msgctxt "#32167"
 msgid "Delete lyrics"
 msgstr "Supprimer les paroles"
 
-#empty strings from id 32168 to 32198
-#Skin labels
+# empty strings from id 32168 to 32198
+# Skin labels
 
 msgctxt "#32199"
 msgid "CU LRC Lyrics"

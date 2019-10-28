@@ -16,7 +16,7 @@ msgstr ""
 "Language: en\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#Script labels
+# Script labels
 
 msgctxt "#32000"
 msgid "File"
@@ -58,8 +58,8 @@ msgctxt "#32009"
 msgid "Ahead by: %ss"
 msgstr ""
 
-#empty strings from id 32010 to 32100
-#Settings labels
+# empty strings from id 32010 to 32100
+# Settings labels
 
 msgctxt "#32101"
 msgid "Search and save lyrics in separate lyrics folder"
@@ -133,7 +133,7 @@ msgctxt "#32118"
 msgid "Debugging"
 msgstr ""
 
-#empty strings from id 32120 to 32148
+# empty strings from id 32120 to 32148
 
 msgctxt "#32149"
 msgid "Expert"
@@ -211,9 +211,45 @@ msgctxt "#32167"
 msgid "Delete lyrics"
 msgstr ""
 
-#empty strings from id 32168 to 32198
-#Skin labels
+# Scrapers - do not translate!
 
-msgctxt "#32199"
-msgid "CU LRC Lyrics"
+msgctxt "#32901"
+msgid "MiniLyrics"
 msgstr ""
+
+msgctxt "#32902"
+msgid "TTPlayer"
+msgstr ""
+
+msgctxt "#32903"
+msgid "GomAudio"
+msgstr ""
+
+msgctxt "#32904"
+msgid "Music 163"
+msgstr ""
+
+msgctxt "#32905"
+msgid "LyricWiki"
+msgstr ""
+
+msgctxt "#32906"
+msgid "Genius"
+msgstr ""
+
+msgctxt "#32907"
+msgid "Lyrics Mode"
+msgstr ""
+
+msgctxt "#32908"
+msgid "AZLyrics"
+msgstr ""
+
+msgctxt "#32909"
+msgid "Lyrics.com"
+msgstr ""
+
+msgctxt "#32910"
+msgid "Dark Lyrics"
+msgstr ""
+
