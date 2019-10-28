@@ -51,10 +51,10 @@ class Main:
     def _get_settings( self ):
         log('reading settings')
         service    = []
-        LibrefmSubmitSongs = ADDON.getSetting('librefmsubmitsongs') == 'true'
-        LibrefmSubmitRadio = ADDON.getSetting('librefmsubmitradio') == 'true'
-        LibrefmUser        = ADDON.getSetting('librefmuser').lower()
-        LibrefmPass        = ADDON.getSetting('librefmpass')
+        LibrefmSubmitSongs = ADDON.getSettingBool('librefmsubmitsongs')
+        LibrefmSubmitRadio = ADDON.getSettingBool('librefmsubmitradio')
+        LibrefmUser        = ADDON.getSettingString('librefmuser').lower()
+        LibrefmPass        = ADDON.getSettingString('librefmpass')
         if (LibrefmSubmitSongs or LibrefmSubmitRadio) and LibrefmUser and LibrefmPass:
             # [service, auth-url, user, pass, submitsongs, submitradio, sessionkey, np-url, submit-url, auth-fail, failurecount, timercounter, timerexpiretime, queue]
             service = ['librefm', self.LibrefmURL, LibrefmUser, LibrefmPass, LibrefmSubmitSongs, LibrefmSubmitRadio, '', '', '', False, 0, 0, 0, []]
@@ -121,8 +121,8 @@ class Main:
             xbmc.executebuiltin(u'Notification(%s,%s)' % ('Scrobbler: ' + service[0], LANGUAGE(32003)))
             log('%s has banned our app id' % service[0])
             # disable the service, the monitor class will pick up the changes
-            ADDON.setSetting('%ssubmitsongs' % service[0], 'false')
-            ADDON.setSetting('%ssubmitradio' % service[0], 'false')
+            ADDON.setSettingBool('%ssubmitsongs' % service[0], False)
+            ADDON.setSettingBool('%ssubmitradio' % service[0], False)
         elif data[0] == 'BADAUTH':
             # user has to change username / password
             xbmc.executebuiltin(u'Notification(%s,%s)' % ('Scrobbler: ' + service[0], LANGUAGE(32001)))
@@ -258,7 +258,7 @@ class MyPlayer(xbmc.Player):
         self.Count = 0
         log('Player Class Init')
 
-    def onPlayBackStarted( self ):
+    def onAVStarted( self ):
         # only do something if we're playing audio
         if self.isPlayingAudio():
             # we need to keep track of this bool for stopped/ended notifications
@@ -308,7 +308,7 @@ class MyPlayer(xbmc.Player):
         path = self.getPlayingFile()
         timestamp = int(time.time())
         source = 'P'
-        # streaming radio of provides both artistname and songtitle as one label
+        # streaming radio provides both artistname and songtitle as one label
         if title and not artist:
             try:
                 artist = title.split(' - ')[0]

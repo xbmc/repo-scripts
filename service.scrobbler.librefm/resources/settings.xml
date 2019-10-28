@@ -1,9 +1,56 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<settings>
-	<category label="30000">
-		<setting id="librefmsubmitsongs" type="bool" label="30004" default="true"/>
-		<setting id="librefmsubmitradio" type="bool" label="30005" default="true"/>
-		<setting id="librefmuser" type="text" label="30006" default="" enable="eq(-1,true) | eq(-2,true)"/>
-		<setting id="librefmpass" type="text" label="30007" default="" enable="eq(-2,true) | eq(-3,true)" option="hidden"/>
-	</category>
+<?xml version="1.0" ?>
+<settings version="1">
+	<section id="addon">
+		<category id="30000" label="30000">
+			<group id="1">
+				<setting help="" id="librefmsubmitsongs" label="30004" type="boolean">
+					<level>0</level>
+					<default>true</default>
+					<control type="toggle"/>
+				</setting>
+				<setting help="" id="librefmsubmitradio" label="30005" type="boolean">
+					<level>0</level>
+					<default>true</default>
+					<control type="toggle"/>
+				</setting>
+				<setting help="" id="librefmuser" label="30006" type="string">
+					<level>0</level>
+					<default/>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="enable">
+							<or>
+								<condition operator="is" setting="librefmsubmitradio">true</condition>
+								<condition name="InfoBool" on="property"> eq(-2,true)</condition>
+							</or>
+						</dependency>
+					</dependencies>
+					<control format="string" type="edit">
+						<heading>30006</heading>
+					</control>
+				</setting>
+				<setting help="" id="librefmpass" label="30007" type="string">
+					<level>0</level>
+					<default/>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="enable">
+							<or>
+								<condition operator="is" setting="librefmsubmitradio">true</condition>
+								<condition name="InfoBool" on="property"> eq(-3,true)</condition>
+							</or>
+						</dependency>
+					</dependencies>
+					<control format="string" type="edit">
+						<heading>30007</heading>
+						<hidden>true</hidden>
+					</control>
+				</setting>
+			</group>
+		</category>
+	</section>
 </settings>

@@ -1,27 +1,36 @@
-3.0.0
+v4.0.1
+- bump
+
+v4.0.0
 - changes for python 3
 
-2.0.4
+v3.0.1
+- krypton bump
+
+v2.0.5
+- move repo to gitlab
+
+v2.0.4
 - lanuage update
 - cosmetics
 
-2.0.3
+v2.0.3
 - update language files from Transifex
 
-2.0.2
+v2.0.2
 - update language files from Transifex
 - better support for streaming radio
 
-2.0.1
+v2.0.1
 - use Monitor.abortRequested()
 
-2.0.0
+v2.0.0
 - kodi name change
 
-1.0.2
+v1.0.2
 - update language
 
-1.0.1
+v1.0.1
 - update language
 
 v1.0.0
