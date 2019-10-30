@@ -21,7 +21,6 @@ msgctxt "#30002"
 msgid "This add-on relies on the proprietary decryption module [B]Widevine CDM[/B] for playback."
 msgstr "Deze add-on heeft de [B]Widevine CDM[/B] decryptie-module van een derde partij nodig om af te spelen."
 
-
 msgctxt "#30004"
 msgid "Error"
 msgstr "Fout"
@@ -31,8 +30,8 @@ msgid "An error occurred while installing [B]Widevine CDM[/B]. Please enable deb
 msgstr "Er is een fout opgetreden bij het installeren van [B]Widevine CDM[/B]. Schakel debug logging in en dien een bug-rapport in op:[CR][CR]github.com/emilsvennesson/script.module.inputstreamhelper"
 
 msgctxt "#30006"
-msgid "Due to distribution rights, [B]Widevine CDM[/B] has to be extracted from a ChromeOS recovery image. This process requires at least [B]{diskspace}[/B] of free disk space. Do you wish to continue?"
-msgstr "Wegens distributierechten moet [B]Widevine CDM[/B] worden uitgepakt uit een recovery-image van ChromeOS. Voor dit process is minimaal [B]{diskspace}[/B] vrije schijfruimte nodig. Wil je doorgaan?"
+msgid "Due to distribution rights, [B]Widevine CDM[/B] has to be extracted from a Chrome OS recovery image. This process requires at least [B]{diskspace}[/B] of free disk space. Do you wish to continue?"
+msgstr "Wegens distributierechten moet [B]Widevine CDM[/B] worden uitgepakt uit een recovery-image van Chrome OS. Voor dit process is minimaal [B]{diskspace}[/B] vrije schijfruimte nodig. Wil je doorgaan?"
 
 msgctxt "#30007"
 msgid "[B]Widevine CDM[/B] is unfortunately not available on this system architecture."
@@ -95,7 +94,7 @@ msgid "[B]'{command}'[/B] command needs to exist on system to extract the [B]Wid
 msgstr "Het commando [B]'{command}'[/B] moet op het systeem aanwezig zijn om [B]Widevine CDM[/B] uit te pakken."
 
 msgctxt "#30022"
-msgid "Downloading the ChromeOS recovery image..."
+msgid "Downloading the Chrome OS recovery image..."
 msgstr "De recovery-image van Chrome OS wordt gedownload..."
 
 msgctxt "#30023"
@@ -226,6 +225,10 @@ msgctxt "#30054"
 msgid "disabled"
 msgstr "uitgeschakeld"
 
+msgctxt "#30055"
+msgid "There is not enough free disk space in the current temporary directory. Would you like to specify a different one to temporarily use for the Chrome OS Recovery Image (e.g. on a USB)?"
+msgstr "Er is onvoldoende vrije schijfruimte in de huidige tijdelijke map. Wilt u een andere opgeven om tijdelijk te gebruiken voor de Chrome OS Recovery Image (bijvoorbeeld op een USB-stick)?"
+
 
 ### INFORMATION DIALOG
 msgctxt "#30800"
@@ -265,18 +268,18 @@ msgid "Widevine CDM path: [B]{path}[/B]"
 msgstr "Widevine CDM pad: [B]{path}[/B]"
 
 msgctxt "#30823"
-msgid "ChromeOS version: [B]{version}[/B]"
-msgstr "ChromeOS versie: [B]{version}[/B]"
+msgid "Chrome OS version: [B]{version}[/B]"
+msgstr "Chrome OS versie: [B]{version}[/B]"
 
 msgctxt "#30830"
-msgid "Please report issues to:\n - [B]{url}[/B]"
-msgstr "Graag problemen melden op:\n - [B]{url}[/B]"
+msgid "Please report issues to:\n - [COLOR yellow]{url}[/COLOR]"
+msgstr "Graag problemen melden op:\n - [COLOR yellow]{url}[/COLOR]"
 
 
 ### SETTINGS
 msgctxt "#30900"
-msgid "Troubleshooting"
-msgstr "Foutopsporing"
+msgid "Expert"
+msgstr "Expert"
 
 msgctxt "#30901"
 msgid "InputStream Helper information"
@@ -291,9 +294,17 @@ msgid "[I]When disabled, DRM playback may fail![/I]"
 msgstr "[I]Indien uitgeschakeld, kan de weergave van DRM-content mislukken![/I]"
 
 msgctxt "#30905"
+msgid "Update frequency in days"
+msgstr "Update frequentie in dagen"
+
+msgctxt "#30907"
+msgid "Temporary download directory"
+msgstr "Tijdelijke download folder"
+
+msgctxt "#30909"
 msgid "(Re)install Widevine CDM library..."
 msgstr "Widevine CDM (her)installeren..."
 
-msgctxt "#30907"
+msgctxt "#30911"
 msgid "Remove Widevine CDM library..."
 msgstr "Widevine CDM verwijderen..."

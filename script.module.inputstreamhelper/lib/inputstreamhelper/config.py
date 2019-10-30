@@ -76,32 +76,41 @@ WIDEVINE_MANIFEST_FILE = 'manifest.json'
 
 WIDEVINE_CONFIG_NAME = 'widevine_config.json'
 
-WIDEVINE_UPDATE_INTERVAL_DAYS = 14
-
 CHROMEOS_RECOVERY_URL = 'https://dl.google.com/dl/edgedl/chromeos/recovery/recovery.conf'
 
 # Last updated: 2019-08-20 (version 12239.67.0)
 CHROMEOS_RECOVERY_ARM_HWIDS = [
-    'BOB',
-    'WHITETIP',
-    'SKATE',
-    'SPRING',
-    'SNOW',
-    'ELM',
-    'HANA',
+    # 'ARKHAM',
     'BIG',
     'BLAZE',
-    'RELM',
+    'BOB',
+    # 'DAISY',
+    'DRUWL',
     'DUMO',
-    'SCARLET',
+    'ELM',
+    'EXPRESSO',
     'FIEVEL',
+    'HANA',
     'JAQ',
     'JERRY',
+    'KEVIN',
+    'KITTY',
     'MICKEY',
     'MIGHTY',
     'MINNIE',
+    'PHASER',
+    'PHASER360',
+    'PI',
+    'PIT',
+    'RELM',
+    'SCARLET',
+    'SKATE',
+    'SNOW',
     'SPEEDY',
+    'SPRING',
     'TIGER',
+    # 'WHIRLWIND',
+    'WHITETIP',
 ]
 
 CHROMEOS_BLOCK_SIZE = 512

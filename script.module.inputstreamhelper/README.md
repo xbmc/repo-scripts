@@ -63,6 +63,15 @@ Please report any issues or bug reports on the [GitHub Issues](https://github.co
 This module is licensed under the **The MIT License**. Please see the [LICENSE.txt](LICENSE.txt) file for details.
 
 ## Releases
+## v0.4.3 (2019-09-25)
+- French translation (@brunoduc)
+- Updated translations (@vlmaksime, @dagwieers, @pinoelefante, @horstle, @Twilight0, @emilsvennesson)
+- Ensure Kodi 19 compatibility (@mediaminister)
+- Configurable temporary download directory for devices with limited space (@horstle)
+- Configurable Widevine CDM update frequency (@horstle)
+- Fix add-on settings crashes when InputStream Adaptive is missing (@mediaminister)
+- Improve unicode character support (@mediaminister)
+
 ## v0.4.2 (2019-09-03)
 - Move release history to readme file (@mediaminister)
 - Clean up coverage/codecov config (@dagwieers)
