@@ -136,15 +136,17 @@ def reset_stream_key(channel_id):
 # deprecated
 @query
 def get_community(channel_id):
-    log.deprecated_query('channels.get_community', 'channels.get_communities')
+    log.deprecated_query('channels.get_community')
     q = Qry('channels/{channel_id}/community')
     q.add_urlkw(keys.CHANNEL_ID, channel_id)
     return q
 
 
 # required scope: none
+# deprecated
 @query
 def get_communities(channel_id):
+    log.deprecated_query('channels.get_community')
     q = Qry('channels/{channel_id}/communities', use_token=False)
     q.add_urlkw(keys.CHANNEL_ID, channel_id)
     return q
@@ -154,7 +156,7 @@ def get_communities(channel_id):
 # deprecated
 @query
 def set_community(channel_id, community_id):
-    log.deprecated_query('channels.set_community', 'channels.set_communities')
+    log.deprecated_query('channels.set_community')
     q = Qry('channels/{channel_id}/community/{community_id}', method=methods.PUT)
     q.add_urlkw(keys.CHANNEL_ID, channel_id)
     q.add_urlkw(keys.COMMUNITY_ID, community_id)
@@ -162,8 +164,10 @@ def set_community(channel_id, community_id):
 
 
 # required scope: channel_editor
+# deprecated
 @query
 def set_communities(channel_id, community_ids):
+    log.deprecated_query('channels.set_communities')
     q = Qry('channels/{channel_id}/communities', method=methods.PUT)
     q.add_urlkw(keys.CHANNEL_ID, channel_id)
     q.add_data(keys.COMMUNITY_IDS, community_ids)
@@ -171,9 +175,10 @@ def set_communities(channel_id, community_ids):
 
 
 # required scope: channel_editor
-# deprecated action: act on single community, new action: act on all communities
+# deprecated
 @query
 def delete_from_community(channel_id):
+    log.deprecated_query('channels.delete_from_community')
     q = Qry('channels/{channel_id}/community', method=methods.DELETE)
     q.add_urlkw(keys.CHANNEL_ID, channel_id)
     return q

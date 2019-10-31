@@ -1,3 +1,6 @@
+2.0.8
+[upd] Mark communities endpoints and queries as deprecated
+
 2.0.7
 [add] add platform parameter to usher
 

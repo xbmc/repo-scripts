@@ -19,14 +19,13 @@ from ...queries import query
 
 # required scope: none
 @query
-def get_streams(community_id=list(), game_id=list(), user_id=list(),
+def get_streams(game_id=list(), user_id=list(),
                 user_login=list(), language=list(), after='MA==',
                 before='MA==', first=20, use_app_token=False):
     q = Qry('streams', use_app_token=use_app_token)
     q.add_param(keys.AFTER, Cursor.validate(after), 'MA==')
     q.add_param(keys.BEFORE, Cursor.validate(before), 'MA==')
     q.add_param(keys.FIRST, IntRange(1, 100).validate(first), 20)
-    q.add_param(keys.COMMUNITY_ID, ItemCount().validate(community_id), list())
     q.add_param(keys.GAME_ID, ItemCount().validate(game_id), list())
     q.add_param(keys.USER_ID, ItemCount().validate(user_id), list())
     q.add_param(keys.USER_LOGIN, ItemCount().validate(user_login), list())
@@ -41,14 +40,13 @@ def get_streams(community_id=list(), game_id=list(), user_id=list(),
 
 # required scope: none
 @query
-def get_metadata(community_id=list(), game_id=list(), user_id=list(),
+def get_metadata(game_id=list(), user_id=list(),
                  user_login=list(), language=list(), after='MA==',
                  before='MA==', first=20, use_app_token=False):
     q = Qry('streams/metadata', use_app_token=use_app_token)
     q.add_param(keys.AFTER, Cursor.validate(after), 'MA==')
     q.add_param(keys.BEFORE, Cursor.validate(before), 'MA==')
     q.add_param(keys.FIRST, IntRange(1, 100).validate(first), 20)
-    q.add_param(keys.COMMUNITY_ID, ItemCount().validate(community_id), list())
     q.add_param(keys.GAME_ID, ItemCount().validate(game_id), list())
     q.add_param(keys.USER_ID, ItemCount().validate(user_id), list())
     q.add_param(keys.USER_LOGIN, ItemCount().validate(user_login), list())
