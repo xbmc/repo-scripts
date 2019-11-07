@@ -4,6 +4,15 @@
         "stable": [
             {
                 "major": "18",
+                "minor": "5",
+                "tag": "stable",
+                "tagversion":"",
+                "revision": "20191116-37f51f6",
+                "extrainfo": "final",
+                "addon_support": "yes"
+            },
+            {
+                "major": "18",
                 "minor": "4",
                 "tag": "stable",
                 "tagversion":"",
@@ -489,6 +498,7 @@
                 "tag": "beta",
                 "tagversion":"5",
                 "revision": "20181103-920e823249",
+                "extrainfo": "beta5",
                 "addon_support": "yes"
             },
             {
@@ -497,6 +507,7 @@
                 "tag": "beta",
                 "tagversion":"4",
                 "revision": "20181023-c77874c5bf",
+                "extrainfo": "beta4",
                 "addon_support": "yes"
             },
             {
@@ -505,6 +516,7 @@
                 "tag": "beta",
                 "tagversion":"3",
                 "revision": "20181002-c2e1b316f5",
+                "extrainfo": "beta3",
                 "addon_support": "yes"
             },
             {
@@ -513,6 +525,7 @@
                 "tag": "beta",
                 "tagversion":"2",
                 "revision": "20180909-7868a27c6a",
+                "extrainfo": "beta2",
                 "addon_support": "yes"
             },
             {
@@ -521,6 +534,7 @@
                 "tag": "beta",
                 "tagversion":"1",
                 "revision": "20180826-f21b477993",
+                "extrainfo": "beta1",
                 "addon_support": "yes"
             },
             {
@@ -529,6 +543,7 @@
                 "tag": "beta",
                 "tagversion":"6",
                 "revision": "20161130-654f1b7",
+                "extrainfo": "beta6",
                 "addon_support": "yes"
             },
             {
@@ -537,6 +552,7 @@
                 "tag": "beta",
                 "tagversion":"5",
                 "revision": "20160110-9d9a153",
+                "extrainfo": "beta5",
                 "addon_support": "yes"
             },
             {
@@ -545,6 +561,7 @@
                 "tag": "beta",
                 "tagversion":"4",
                 "revision": "20151213-a724f29",
+                "extrainfo": "beta4",
                 "addon_support": "yes"
             },
             {
@@ -553,6 +570,7 @@
                 "tag": "beta",
                 "tagversion":"3",
                 "revision": "20151205-85a0a13",
+                "extrainfo": "beta3",
                 "addon_support": "yes"
             },
             {
@@ -561,6 +579,7 @@
                 "tag": "beta",
                 "tagversion":"2",
                 "revision": "20151121-98e0275",
+                "extrainfo": "beta2",
                 "addon_support": "yes"
             },
             {
@@ -569,6 +588,7 @@
                 "tag": "beta",
                 "tagversion":"1",
                 "revision": "20151113-9c7322e",
+                "extrainfo": "beta1",
                 "addon_support": "yes"
             },
             {
@@ -577,6 +597,7 @@
                 "tag": "beta",
                 "tagversion":"2",
                 "revision": "20150614-daedd5f",
+                "extrainfo": "beta2",
                 "addon_support": "yes"
             },
             {
@@ -585,6 +606,7 @@
                 "tag": "beta",
                 "tagversion":"1",
                 "revision": "20150501-d1a2c33",
+                "extrainfo": "beta1",
                 "addon_support": "yes"
             },
             {
@@ -593,6 +615,7 @@
                 "tag": "beta",
                 "tagversion":"5",
                 "revision": "20141125-4465fbf",
+                "extrainfo": "beta5",
                 "addon_support": "yes"
             },
             {
@@ -601,6 +624,7 @@
                 "tag": "beta",
                 "tagversion":"4",
                 "revision": "20141124-ec361ca",
+                "extrainfo": "beta4",
                 "addon_support": "yes"
             },
             {
@@ -609,6 +633,7 @@
                 "tag": "beta",
                 "tagversion":"3",
                 "revision": "20141116-88a9a44",
+                "extrainfo": "beta3",
                 "addon_support": "yes"
             },
             {
@@ -617,6 +642,7 @@
                 "tag": "beta",
                 "tagversion":"2",
                 "revision": "20141108-2d88a9a",
+                "extrainfo": "beta2",
                 "addon_support": "yes"
             },
             {
@@ -625,6 +651,7 @@
                 "tag": "beta",
                 "tagversion":"1",
                 "revision": "20141103-d6947be",
+                "extrainfo": "beta1",
                 "addon_support": "yes"
             },
             {
@@ -779,6 +806,7 @@
                 "tag": "alpha",
                 "tagversion":"2",
                 "revision": "",
+                "extrainfo": "alpha2",
                 "addon_support": "yes"
             },
             {
@@ -787,6 +815,7 @@
                 "tag": "alpha",
                 "tagversion":"1",
                 "revision": "",
+                "extrainfo": "alpha1",
                 "addon_support": "yes"
             },
             {
@@ -795,6 +824,7 @@
                 "tag": "alpha",
                 "tagversion":"3",
                 "revision": "20151001-ca8d08c",
+                "extrainfo": "alpha3",
                 "addon_support": "yes"
             },
             {
@@ -803,6 +833,7 @@
                 "tag": "alpha",
                 "tagversion":"2",
                 "revision": "20150831-b4afc20",
+                "extrainfo": "alpha2",
                 "addon_support": "yes"
             },
             {
@@ -811,6 +842,7 @@
                 "tag": "alpha",
                 "tagversion":"1",
                 "revision": "20150801-c5f806e",
+                "extrainfo": "alpha1",
                 "addon_support": "yes"
             },
             {
@@ -819,6 +851,7 @@
                 "tag": "alpha",
                 "tagversion":"2",
                 "revision": "20150331-32c1f53",
+                "extrainfo": "alpha2",
                 "addon_support": "yes"
             },
             {
@@ -827,6 +860,7 @@
                 "tag": "alpha",
                 "tagversion":"1",
                 "revision": "20150228-5dc1a55",
+                "extrainfo": "alpha1",
                 "addon_support": "yes"
             },
             {
@@ -835,6 +869,7 @@
                 "tag": "alpha",
                 "tagversion":"5",
                 "revision": "20141002-d2a4ee9",
+                "extrainfo": "alpha5",
                 "addon_support": "yes"
             },
             {
