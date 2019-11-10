@@ -51,6 +51,13 @@ class Episode(Video):
         Available translations (for title, overview, etc..)
         """
 
+        self.number_abs = None
+        """
+        :type: :class:`~python:int`
+
+        Absolute episode number
+        """
+
     def to_identifier(self):
         """Retrieve the episode identifier.
 
@@ -99,6 +106,7 @@ class Episode(Video):
 
         if self.rating:
             result['rating'] = self.rating.value
+            result['votes'] = self.rating.votes
             result['rated_at'] = to_iso8601_datetime(self.rating.timestamp)
 
         # Extended Info
@@ -113,6 +121,9 @@ class Episode(Video):
 
         if self.available_translations:
             result['available_translations'] = self.available_translations
+
+        if self.number_abs:
+            result['number_abs'] = self.number_abs
 
         return result
 
@@ -135,6 +146,9 @@ class Episode(Video):
 
         if 'updated_at' in info:
             self.updated_at = from_iso8601_datetime(info.get('updated_at'))
+
+        if 'number_abs' in info:
+            self.number_abs = info.get('number_abs')
 
     @classmethod
     def _construct(cls, client, keys, info=None, index=None, **kwargs):

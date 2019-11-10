@@ -27,7 +27,7 @@ class UsersInterface(Interface):
             raise ValueError('Unknown type specified: %r' % type)
 
         if kwargs.get('parse') is False:
-            raise ValueError('Parse can\'t be disabled on this method')
+            raise ValueError("Parse can't be disabled on this method")
 
         # Send request
         response = self.http.get(
