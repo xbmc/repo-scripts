@@ -45,6 +45,8 @@ class PluginListing(object):
             list_item.setArt({'icon': 'DefaultFolder.png', 'thumb': 'special://home/addons/script.embuary.info/resources/icon.png'})
             self.li.append((url, list_item, True))
 
+        set_plugincontent(category=ADDON.getLocalizedString(32038))
+
 
 class PluginContent(object):
     def __init__(self,params,li):
@@ -52,21 +54,36 @@ class PluginContent(object):
         self.local_media = get_local_media()
         self.call = params.get('call')
         self.get = params.get('get')
+        self.category = None
+
+        for item in INDEX:
+            if self.call == item.get('call'):
+                self.category = item.get('name')
+                break
 
     def trending(self):
         result = self._query('trending',self.call,self.get)
         if self.call == 'movie':
             self._process_movies(result)
+            content = 'movies'
+
         elif self.call == 'tv':
             self._process_tvshows(result)
+            content = 'tvshows'
+
+        set_plugincontent(content=content, category=self.category)
 
     def movies(self):
         result = self._query('movie',self.call)
         self._process_movies(result)
 
+        set_plugincontent(content='movies', category=self.category)
+
     def tvshows(self):
         result = self._query('tv',self.call)
         self._process_tvshows(result)
+
+        set_plugincontent(content='tvshows', category=self.category)
 
     def _query(self,content_type,call,get=None):
         cache_key = 'widget' + content_type + call + str(get)

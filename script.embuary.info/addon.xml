@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.embuary.info" name="Embuary Info" version="1.0.22" provider-name="sualfred">
+<addon id="script.embuary.info" name="Embuary Info" version="1.1.2" provider-name="sualfred">
 	<requires>
 		<import addon="xbmc.python" version="2.26.0"/>
 		<import addon="script.module.requests" version="2.9.1"/>
@@ -12,9 +12,9 @@
 	</extension>
 	<extension point="xbmc.addon.metadata">
 		<summary lang="en_GB">Embuary Info Script</summary>
-		<summary lang="sk_SK">Embuary Info Skript</summary>
-		<description lang="en_GB">Helper script for skinner to provide The Movie DB informations for persons, shows and movies.</description>
-		<description lang="sk_SK">Pomocný skript pre vzhľady. Poskytuje informácie z TheMovieDB o osobách, seriáloch a filmoch.</description>
+		<summary lang="de_DE">Embuary Info Script</summary>
+		<description lang="en_GB">Helper script to provide The Movie DB informations for persons, shows and movies. Works best with a skin integration.</description>
+		<description lang="de_DE">Helfer Script das Abfragen von The Movie DB informationen für Personen, Serien und Filme zu ermöglichen. Funktioniert am besten mit einer Skin Integration.</description>
 		<platform>all</platform>
 		<license>Apache-2.0</license>
 		<forum>https://forum.kodi.tv/showthread.php?tid=346034</forum>

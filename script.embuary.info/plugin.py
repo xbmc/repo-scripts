@@ -56,12 +56,6 @@ class Main:
         getattr(plugin,action.lower())()
 
     def _additems(self,li):
-        category = ADDON.getLocalizedString(32038)
-        for item in INDEX:
-            if self.info == item['info']:
-                category = item['name']
-                break
-        xbmcplugin.setPluginCategory(int(sys.argv[1]), category)
         xbmcplugin.addDirectoryItems(int(sys.argv[1]), li)
         xbmcplugin.endOfDirectory(handle=int(sys.argv[1]))
 

@@ -25,14 +25,24 @@ class TheMovieDB(object):
         self.query = remove_quotes(params.get('query'))
         self.query_year = params.get('year')
         self.external_id = params.get('external_id')
+        self.dbid = params.get('dbid')
+
+        if self.call == 'tv':
+            self.dbtype = 'tvshow'
+        elif self.call == 'movie':
+            self.dbtype = 'movie'
 
         winprop('script.embuary.info-language_code', DEFAULT_LANGUAGE)
         winprop('script.embuary.info-country_code', COUNTRY_CODE)
 
         busydialog()
 
-        if self.external_id or self.query:
-            self.tmdb_id = self.find_id()
+        if self.dbid and self.dbtype:
+            self.tmdb_id = self.find_id(method='dbid')
+        elif self.external_id:
+            self.tmdb_id = self.find_id(method='external_id')
+        elif self.query:
+            self.tmdb_id = self.find_id(method='query')
 
         if self.tmdb_id:
             self.call_params = {}
@@ -48,10 +58,47 @@ class TheMovieDB(object):
 
     ''' Search for tmdb_id based one a query string or external ID (IMDb or TVDb)
     '''
-    def find_id(self):
-        if self.external_id:
-            result = tmdb_find(self.call,self.external_id)
-        else:
+    def find_id(self,method):
+        if method == 'dbid':
+            method_details = 'VideoLibrary.Get%sDetails' % self.dbtype
+            param = '%sid' % self.dbtype
+            key_details = '%sdetails' % self.dbtype
+
+            dbinfo = json_call(method_details,
+                               properties=['uniqueid', 'year', 'title'],
+                               params={param: int(self.dbid)}
+                               )
+            try:
+                dbinfo = dbinfo['result'][key_details]
+            except KeyError:
+                return
+
+            uniqueid = dbinfo.get('uniqueid', {})
+
+            result = None
+            for item in uniqueid:
+                if uniqueid[item].startswith('tt'):
+                    result = tmdb_find(self.call, uniqueid[item])
+                    break
+
+                elif self.dbtype == 'tvshow' and item.lower() == 'tvdb' and uniqueid[item]:
+                    result = tmdb_find(self.call, uniqueid[item])
+                    break
+
+            if not result:
+                self.query = dbinfo.get('title')
+                self.query_year = dbinfo.get('year', '')
+
+                tmdb_id = self.find_id(method='query')
+                return tmdb_id
+
+        elif method == 'external_id':
+            result = tmdb_find(self.call, self.external_id)
+
+            if not result and self.query:
+                self.find_id(method='query')
+
+        elif method == 'query':
             if ' / ' in self.query:
                 query_values = self.query.split(' / ')
                 position = tmdb_select_dialog_small(query_values)
@@ -60,11 +107,11 @@ class TheMovieDB(object):
                 else:
                     self.query = query_values[position]
 
-            result = tmdb_search(self.call,self.query,self.query_year)
+            result = tmdb_search(self.call, self.query, self.query_year)
 
         try:
             if len(result) > 1:
-                position = tmdb_select_dialog(result,self.call)
+                position = tmdb_select_dialog(result, self.call)
                 if position < 0:
                     raise Exception
             else:
