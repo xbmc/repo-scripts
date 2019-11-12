@@ -258,7 +258,8 @@ if not xbmcvfs.exists(DATAPATH):
     xbmcvfs.mkdir(DATAPATH)
 
 if sys.argv[1].startswith('Location'):
-    keyboard = xbmc.Keyboard('', xbmc.getLocalizedString(14024), False)
+    value = ADDON.getSettingString(sys.argv[1])
+    keyboard = xbmc.Keyboard(value, xbmc.getLocalizedString(14024), False)
     keyboard.doModal()
     if (keyboard.isConfirmed() and keyboard.getText()):
         text = keyboard.getText()
