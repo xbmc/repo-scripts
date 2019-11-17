@@ -1,4 +1,9 @@
 
+*** 19.912.1 ***
+
+Add German translation - (Thanks CurlingTongs)
+Updates for AddonSignals module
+
 *** 19.912.0 ***
 
 Updated youtube-dl core to 2019.09.12
@@ -11,8 +16,8 @@ Updated youtube-dl core to 2018.11.7
 *** 18.619.0 ***
 
 Updated youtube-dl core to 2018.06.19
-Added dutch translation - (Thanks Quihico)
-Added greek translations - (Thanks Twilight0)
+Added Dutch translation - (Thanks Quihico)
+Added Greek translations - (Thanks Twilight0)
 
 *** 18.425.0 ***
 

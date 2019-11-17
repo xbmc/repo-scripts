@@ -413,7 +413,7 @@ def download(info, path, template='%(title)s-%(id)s.%(ext)s'):
     import AddonSignals
     signalPayload = {'title': info.get('title'), 'url': info.get('url'), 'download.ID': info.get('download.ID')}
     try:
-        AddonSignals.sendSignal('download.started', signalPayload, sourceID='script.module.youtube.dl')
+        AddonSignals.sendSignal('download.started', signalPayload, source_id='script.module.youtube.dl')
         YoutubeDLWrapper.download(info)
     except YoutubeDLWrapper.youtube_dl.DownloadError as e:
         return DownloadResult(False, e.message, filepath=ytdl._lastDownloadedFilePath)
@@ -422,7 +422,7 @@ def download(info, path, template='%(title)s-%(id)s.%(ext)s'):
     finally:
         ytdl.clearDownloadParams()
         signalPayload['path'] = ytdl._lastDownloadedFilePath
-        AddonSignals.sendSignal('download.finished', signalPayload, sourceID='script.module.youtube.dl')
+        AddonSignals.sendSignal('download.finished', signalPayload, source_id='script.module.youtube.dl')
 
     return DownloadResult(True, filepath=ytdl._lastDownloadedFilePath)
 

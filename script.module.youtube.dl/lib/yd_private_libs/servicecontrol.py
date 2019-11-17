@@ -5,15 +5,13 @@ import binascii
 import json
 import util
 import jsonqueue
+import AddonSignals
 
 IS_WEB = False
 try:
     import xbmcgui
 except ImportError:
     IS_WEB = True
-
-BASE_COMMAND = 'XBMC.NotifyAll(script.module.youtube.dl,{0},"{{{1}}}")'
-BASE_ARG = '\\"{0}\\":\\"{1}\\"'
 
 
 def safeEncode(text):
@@ -25,20 +23,6 @@ def safeDecode(enc_text):
 
 
 class ServiceControl(object):
-    def sendCommand(self, command, **kwargs):
-        args = []
-        for k, v in kwargs.items():
-            args.append(BASE_ARG.format(k, safeEncode(v)))
-        command = BASE_COMMAND.format(command, ','.join(args))
-        xbmc.executebuiltin(command)
-
-    def processCommandData(self, data):
-        args = json.loads(data)
-        for k in args.keys():
-            v = args[k]
-            args[k] = safeDecode(v)
-        return args
-
     def download(self, info, path, duration):
         addonPath = xbmc.translatePath(util.ADDON.getAddonInfo('path')).decode('utf-8')
         service = os.path.join(addonPath, 'service.py')
@@ -48,7 +32,7 @@ class ServiceControl(object):
         xbmc.executebuiltin('RunScript({0})'.format(service))
 
     def stopDownload(self):
-        self.sendCommand('DOWNLOAD_STOP')
+        AddonSignals.sendSignal('DOWNLOAD_STOP')
 
     def stopAllDownloads(self):
         jsonqueue.XBMCJsonRAFifoQueue(util.QUEUE_FILE).clear()
