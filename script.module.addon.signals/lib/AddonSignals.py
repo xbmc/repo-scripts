@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
+import sys
 import xbmc
 import xbmcaddon
-import binascii
+import base64
 import json
 
 RECEIVER = None
@@ -17,11 +18,17 @@ def _getReceiver():
 def _decodeData(data):
     data = json.loads(data)
     if data:
-        return json.loads(binascii.unhexlify(data[0]))
+        return json.loads(base64.b64decode(data[0]))
 
 
 def _encodeData(data):
-    return '\\"[\\"{0}\\"]\\"'.format(binascii.hexlify(json.dumps(data)))
+    json_data = json.dumps(data)
+    if not isinstance(json_data, bytes):
+        json_data = json_data.encode('utf-8')
+    encoded_data = base64.b64encode(json_data)
+    if sys.version_info[0] > 2:
+        encoded_data = encoded_data.decode('ascii')
+    return '\\"[\\"{0}\\"]\\"'.format(encoded_data)
 
 
 class SignalReceiver(xbmc.Monitor):
