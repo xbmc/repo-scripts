@@ -1,3 +1,11 @@
+[B]Version 2.6.0[/B]
+- Kodi 19 / Python 3 ready
+- convert strings.xml to strings.po
+- use new language paths ie. ../resource.language.en_gb
+- refactor
+- housekeeping
+- replace icon to resolve transparency issue
+
 [B]Version 2.5.10[/B]
 - Fix self usage in non instance methods
 

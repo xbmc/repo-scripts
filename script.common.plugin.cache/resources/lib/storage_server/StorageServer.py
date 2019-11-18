@@ -1,54 +1,48 @@
-'''
-    Cache service for XBMC
-    Copyright (C) 2010-2011 Tobias Ussing And Henrik Mosgaard Jensen
-
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
-
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+"""
+    Cache service for Kodi
     Version 0.8
-'''
 
-import os
-import sys
-import socket
-import time
+    Copyright (C) 2010-2011 Tobias Ussing And Henrik Mosgaard Jensen
+    Copyright (C) 2019 anxdpanic
+
+    This file is part of script.common.plugin.cache
+
+    SPDX-License-Identifier: GPL-3.0-only
+    See LICENSES/GPL-3.0-only.txt for more information.
+"""
+
 import hashlib
 import inspect
+import os
+import socket
 import string
+import sys
+import time
+
 import xbmc
 
-try: import sqlite
-except: pass
-try: import sqlite3
-except: pass
+sqlite3 = None
+sqlite = None
+
+try:
+    import sqlite3
+except ImportError:
+    sqlite3 = None
+    try:
+        import sqlite
+    except ImportError:
+        sqlite = None
+
+try:
+    basestring
+except NameError:
+    basestring = str
+
+PY3 = sys.version_info[0] >= 3
 
 
-class StorageServer():
+class StorageServer:
     def __init__(self, table=None, timeout=24, instance=False):
-        self.version = u"2.5.4"
-        self.plugin = u"StorageClient-" + self.version
-        self.instance = instance
-        self.die = False
-
-        if hasattr(sys.modules["__main__"], "dbg"):
-            self.dbg = sys.modules["__main__"].dbg
-        else:
-            self.dbg = False
-
-        if hasattr(sys.modules["__main__"], "dbglevel"):
-            self.dbglevel = sys.modules["__main__"].dbglevel
-        else:
-            self.dbglevel = 3
-
         if hasattr(sys.modules["__main__"], "xbmc"):
             self.xbmc = sys.modules["__main__"].xbmc
         else:
@@ -67,20 +61,34 @@ class StorageServer():
             import xbmcaddon
             self.xbmcaddon = xbmcaddon
 
+        if hasattr(sys.modules["__main__"], "xbmcgui"):
+            self.xbmcgui = sys.modules["__main__"].xbmcgui
+        else:
+            import xbmcgui
+            self.xbmcgui = xbmcgui
+
+        self.instance = instance
+        self.die = False
+
         self.settings = self.xbmcaddon.Addon(id='script.common.plugin.cache')
         self.language = self.settings.getLocalizedString
 
-        self.path = self.xbmc.translatePath('special://temp/')
-        if not self.xbmcvfs.exists(self.path.decode('utf8', 'ignore')):
+        self.dbg = self.settings.getSetting("debug") == "true"
+
+        self.version = to_unicode(self.settings.getAddonInfo('version'))
+        self.plugin = u"StorageClient-" + self.version
+
+        self.path = to_unicode(self.xbmc.translatePath('special://temp/'))
+        if not self.xbmcvfs.exists(self.path):
             self._log(u"Making path structure: " + self.path)
             self.xbmcvfs.mkdir(self.path)
         self.path = os.path.join(self.path, 'commoncache.db')
 
         self.socket = ""
         self.clientsocket = False
-        self.sql2 = False
-        self.sql3 = False
-        self.abortRequested = False
+        self.sql2 = True if sqlite else False
+        self.sql3 = True if sqlite3 else False
+
         self.daemon_start_time = time.time()
         if self.instance:
             self.idle = int(self.settings.getSetting("timeout"))
@@ -88,26 +96,24 @@ class StorageServer():
             self.idle = 3
 
         self.platform = sys.platform
-        self.modules = sys.modules
         self.network_buffer_size = 4096
 
         if isinstance(table, str) and len(table) > 0:
-            self.table = ''.join(c for c in table if c in "%s%s" % (string.ascii_letters, string.digits))
+            self.table = ''.join(c for c in table if c in "%s%s" %
+                                 (string.ascii_letters, string.digits))
             self._log("Setting table to : %s" % self.table)
-        elif table != False:
+        elif table is False:
             self._log("No table defined")
 
-        self.setCacheTimeout(timeout)
+        self.timeout = float(timeout) * 3600
 
     def _startDB(self):
         try:
-            if "sqlite3" in self.modules:
-                self.sql3 = True
-                self._log("sql3 - " + self.path, 2)
+            if self.sql3:
+                self._log("sql3 - " + self.path)
                 self.conn = sqlite3.connect(self.path, check_same_thread=False)
-            elif "sqlite" in self.modules:
-                self.sql2 = True
-                self._log("sql2 - " + self.path, 2)
+            elif self.sql2:
+                self._log("sql2 - " + self.path)
                 self.conn = sqlite.connect(self.path)
             else:
                 self._log("Error, no sql found")
@@ -125,38 +131,39 @@ class StorageServer():
             if self.die:
                 return True
         else:
-            return self.xbmc.abortRequested
+            return self.xbmc.Monitor().abortRequested()
         return False
-        
+
     def _usePosixSockets(self):
-      if self.platform in ["win32", 'win10'] or xbmc.getCondVisibility('system.platform.android') or xbmc.getCondVisibility('system.platform.ios') or xbmc.getCondVisibility('system.platform.tvos'):
-        return False
-      else:
-        return True
+        if (self.platform in ["win32", 'win10'] or
+                xbmc.getCondVisibility('system.platform.android') or
+                xbmc.getCondVisibility('system.platform.ios') or
+                xbmc.getCondVisibility('system.platform.tvos')):
+            return False
+        else:
+            return True
 
     def _sock_init(self, check_stale=False):
-        self._log("", 2)
         if not self.socket or check_stale:
-            self._log("Checking", 4)
+            self._log("Checking")
 
             if self._usePosixSockets():
-                self._log("POSIX", 4)
-                self.socket = os.path.join(self.xbmc.translatePath('special://temp/').decode("utf-8"), 'commoncache.socket')
-                #self.socket = os.path.join(self.xbmc.translatePath(self.settings.getAddonInfo("profile")).decode("utf-8"), 'commoncache.socket')
+                self._log("POSIX")
+                self.socket = os.path.join(to_unicode(self.xbmc.translatePath('special://temp/')),
+                                           'commoncache.socket')
                 if self.xbmcvfs.exists(self.socket) and check_stale:
                     self._log("Deleting stale socket file : " + self.socket)
                     self.xbmcvfs.delete(self.socket)
             else:
-                self._log("Non-POSIX", 4)
+                self._log("Non-POSIX")
                 port = self.settings.getSetting("port")
                 self.socket = ("127.0.0.1", int(port))
 
-        self._log("Done: " + repr(self.socket), 2)
+        self._log("Done: " + repr(self.socket))
 
     def _recieveData(self):
-        self._log("", 3)
         data = self._recv(self.clientsocket)
-        self._log("received data: " + data, 4)
+        self._log("received data: " + data)
 
         try:
             data = eval(data)
@@ -164,11 +171,10 @@ class StorageServer():
             self._log("Couldn't evaluate message : " + repr(data))
             data = {"action": "stop"}
 
-        self._log("Done, got data: " + str(len(data)) + " - " + str(repr(data))[0:50], 3)
+        self._log("Done, got data: " + str(len(data)) + " - " + str(repr(data))[0:50])
         return data
 
     def _runCommand(self, data):
-        self._log("", 3)
         res = ""
         if data["action"] == "get":
             res = self._sqlGet(data["table"], data["name"])
@@ -186,19 +192,18 @@ class StorageServer():
             res = self._unlock(data["table"], data["name"])
 
         if len(res) > 0:
-            self._log("Got response: " + str(len(res))  + " - " + str(repr(res))[0:50], 3)
+            self._log("Got response: " + str(len(res)) + " - " + str(repr(res))[0:50])
             self._send(self.clientsocket, repr(res))
 
-        self._log("Done", 3)
+        self._log("Done")
 
     def _showMessage(self, heading, message):
         self._log(repr(type(heading)) + " - " + repr(type(message)))
-        duration = 10 * 1000
-        self.xbmc.executebuiltin((u'XBMC.Notification("%s", "%s", %s)' % (heading, message, duration)).encode("utf-8"))
+        icon = self.settings.getAddonInfo('icon')
+        self.xbmcgui.Dialog().notification(heading, message, icon, 10000, sound=False)
 
     def run(self):
         self.plugin = "StorageServer-" + self.version
-        #self.xbmc.log(self.plugin + " Storage Server starting " + self.path)
         self._sock_init(True)
 
         if not self._startDB():
@@ -213,7 +218,7 @@ class StorageServer():
             sock.bind(self.socket)
         except Exception as e:
             self._log("Exception: " + repr(e))
-            self._showMessage(self.language(100), self.language(200))
+            self._showMessage(self.language(32100), self.language(32200))
 
             return False
 
@@ -224,7 +229,7 @@ class StorageServer():
         waiting = 0
         while not self._aborting():
             if waiting == 0:
-                self._log("accepting", 3)
+                self._log("accepting")
                 waiting = 1
             try:
                 (self.clientsocket, address) = sock.accept()
@@ -247,7 +252,7 @@ class StorageServer():
                 pass
 
             if waiting:
-                self._log("Continue : " + repr(waiting), 3)
+                self._log("Continue : " + repr(waiting))
                 continue
 
             data = self._recieveData()
@@ -269,48 +274,59 @@ class StorageServer():
         data = "   "
         idle = True
 
-        self._log(u"", 3)
         i = 0
         start = time.time()
+        recv_buffer = ""
         while data[len(data) - 2:] != "\r\n" or not idle:
             try:
                 if idle:
                     recv_buffer = sock.recv(self.network_buffer_size)
                     idle = False
                     i += 1
-                    self._log(u"got data  : " + str(i) + u" - " + repr(idle) + u" - " + str(len(data)) + u" + " + str(len(recv_buffer)) + u" | " + repr(recv_buffer)[len(recv_buffer) - 5:], 4)
+                    if PY3:
+                        recv_buffer = recv_buffer.decode('utf-8')
+                    self._log(u"got data  : " + str(i) + u" - " + repr(idle) + u" - " +
+                              str(len(data)) + u" + " + str(len(recv_buffer)) + u" | " +
+                              repr(recv_buffer)[len(recv_buffer) - 5:])
                     data += recv_buffer
                     start = time.time()
                 elif not idle:
                     if data[len(data) - 2:] == "\r\n":
-                        sock.send("COMPLETE\r\n" + (" " * (15 - len("COMPLETE\r\n"))))
+                        content = "COMPLETE\r\n" + (" " * (15 - len("COMPLETE\r\n")))
+                        if PY3:
+                            content = content.encode('utf-8')
+                        sock.send(content)
                         idle = True
-                        self._log(u"sent COMPLETE " + str(i), 4)
+                        self._log(u"sent COMPLETE " + str(i))
                     elif len(recv_buffer) > 0:
-                        sock.send("ACK\r\n" + (" " * (15 - len("ACK\r\n"))))
+                        content = "ACK\r\n" + (" " * (15 - len("ACK\r\n")))
+                        if PY3:
+                            content = content.encode('utf-8')
+                        sock.send(content)
                         idle = True
-                        self._log(u"sent ACK " + str(i), 4)
-                    recv_buffer = ""
-                    self._log(u"status " + repr(not idle) + u" - " + repr(data[len(data) - 2:] != u"\r\n"), 3)
+                        self._log(u"sent ACK " + str(i))
+                    self._log(u"status " + repr(not idle) + u" - " +
+                              repr(data[len(data) - 2:] != u"\r\n"))
 
             except socket.error as e:
-                if not e.errno in [10035, 35]:
+                if e.errno not in [10035, 35]:
                     self._log(u"Except error " + repr(e))
 
                 if e.errno in [22]:  # We can't fix this.
                     return ""
 
                 if start + 10 < time.time():
-                    self._log(u"over time", 2)
+                    self._log(u"over time")
                     break
 
-        self._log(u"done", 3)
+        self._log(u"done")
         return data.strip()
 
     def _send(self, sock, data):
         idle = True
         status = ""
-        self._log(str(len(data)) + u" - " + repr(data)[0:20], 3)
+        result = ""
+        self._log(str(len(data)) + u" - " + repr(data)[0:20])
         i = 0
         start = time.time()
         while len(data) > 0 or not idle:
@@ -321,7 +337,8 @@ class StorageServer():
                         send_buffer = data[:self.network_buffer_size]
                     else:
                         send_buffer = data + "\r\n"
-
+                    if PY3:
+                        send_buffer = send_buffer.encode('utf-8')
                     result = sock.send(send_buffer)
                     i += 1
                     idle = False
@@ -330,6 +347,8 @@ class StorageServer():
                     status = ""
                     while status.find("COMPLETE\r\n") == -1 and status.find("ACK\r\n") == -1:
                         status = sock.recv(15)
+                        if PY3:
+                            status = status.decode('utf-8')
                         i -= 1
 
                     idle = True
@@ -338,20 +357,22 @@ class StorageServer():
                     else:
                         data = ""
 
-                    self._log(u"Got response " + str(i) + u" - " + str(result) + u" == " + str(len(send_buffer)) + u" | " + str(len(data)) + u" - " + repr(send_buffer)[len(send_buffer) - 5:], 3)
+                    self._log(u"Got response " + str(i) + u" - " + str(result) + u" == " +
+                              str(len(send_buffer)) + u" | " + str(len(data)) + u" - " +
+                              repr(send_buffer)[len(send_buffer) - 5:])
 
             except socket.error as e:
                 self._log(u"Except error " + repr(e))
                 if e.errno != 10035 and e.errno != 35 and e.errno != 107 and e.errno != 32:
                     self._log(u"Except error " + repr(e))
                     if start + 10 < time.time():
-                        self._log(u"Over time", 2)
+                        self._log(u"Over time")
                         break
-        self._log(u"Done", 3)
+        self._log(u"Done")
         return status.find(u"COMPLETE\r\n") > -1
 
     def _lock(self, table, name):  # This is NOT atomic
-        self._log(name, 1)
+        self._log(name)
         locked = True
         curlock = self._sqlGet(table, name)
         if curlock.strip():
@@ -366,97 +387,99 @@ class StorageServer():
         if not locked:
             self._sqlExecute("INSERT INTO " + table + " VALUES ( %s , %s )", (name, time.time()))
             self.conn.commit()
-            self._log(u"locked: " + name.decode('utf8', 'ignore'))
+            self._log(u"locked: " + to_unicode(name))
 
             return "true"
 
-        self._log(u"failed for : " + name.decode('utf8', 'ignore'), 1)
+        self._log(u"failed for : " + to_unicode(name))
         return "false"
 
     def _unlock(self, table, name):
-        self._log(name, 1)
+        self._log(name)
 
         self._checkTable(table)
         self._sqlExecute("DELETE FROM " + table + " WHERE name = %s", (name,))
 
         self.conn.commit()
-        self._log(u"done", 1)
+        self._log(u"done")
         return "true"
 
     def _sqlSetMulti(self, table, pre, inp_data):
-        self._log(pre, 1)
+        self._log(pre)
         self._checkTable(table)
         for name in inp_data:
             if self._sqlGet(table, pre + name).strip():
-                self._log(u"Update : " + pre + name.decode('utf8', 'ignore'), 3)
-                self._sqlExecute("UPDATE " + table + " SET data = %s WHERE name = %s", (inp_data[name], pre + name))
+                self._log(u"Update : " + pre + to_unicode(name))
+                self._sqlExecute("UPDATE " + table + " SET data = %s WHERE name = %s",
+                                 (inp_data[name], pre + name))
             else:
-                self._log(u"Insert : " + pre + name.decode('utf8', 'ignore'), 3)
-                self._sqlExecute("INSERT INTO " + table + " VALUES ( %s , %s )", (pre + name, inp_data[name]))
+                self._log(u"Insert : " + pre + to_unicode(name))
+                self._sqlExecute("INSERT INTO " + table + " VALUES ( %s , %s )",
+                                 (pre + name, inp_data[name]))
 
         self.conn.commit()
-        self._log(u"Done", 3)
+        self._log(u"Done")
         return ""
 
     def _sqlGetMulti(self, table, pre, items):
-        self._log(pre, 1)
+        self._log(pre)
 
         self._checkTable(table)
         ret_val = []
         for name in items:
-            self._log(pre + name, 3)
+            self._log(pre + name)
             self._sqlExecute("SELECT data FROM " + table + " WHERE name = %s", (pre + name))
 
             result = ""
             for row in self.curs:
-                self._log(u"Adding : " + str(repr(row[0]))[0:20], 3)
+                self._log(u"Adding : " + str(repr(row[0]))[0:20])
                 result = row[0]
             ret_val += [result]
 
-        self._log(u"Returning : " + repr(ret_val), 2)
+        self._log(u"Returning : " + repr(ret_val))
         return ret_val
 
     def _sqlSet(self, table, name, data):
-        self._log(name + str(repr(data))[0:20], 2)
+        self._log(name + str(repr(data))[0:20])
 
         self._checkTable(table)
         if self._sqlGet(table, name).strip():
-            self._log(u"Update : " + data.decode('utf8', 'ignore'), 3)
+            self._log(u"Update : " + to_unicode(data))
             self._sqlExecute("UPDATE " + table + " SET data = %s WHERE name = %s", (data, name))
         else:
-            self._log(u"Insert : " + data.decode('utf8', 'ignore'), 3)
+            self._log(u"Insert : " + to_unicode(data))
             self._sqlExecute("INSERT INTO " + table + " VALUES ( %s , %s )", (name, data))
 
         self.conn.commit()
-        self._log(u"Done", 2)
+        self._log(u"Done")
         return ""
 
     def _sqlDel(self, table, name):
-        self._log(name + u" - " + table, 1)
+        self._log(name + u" - " + table)
 
         self._checkTable(table)
 
         self._sqlExecute("DELETE FROM " + table + " WHERE name LIKE %s", name)
         self.conn.commit()
-        self._log(u"done", 1)
+        self._log(u"done")
         return "true"
 
     def _sqlGet(self, table, name):
-        self._log(name + u" - " + table, 2)
+        self._log(name + u" - " + table)
 
         self._checkTable(table)
         self._sqlExecute("SELECT data FROM " + table + " WHERE name = %s", name)
 
         for row in self.curs:
-            self._log(u"Returning : " + str(repr(row[0]))[0:20], 3)
+            self._log(u"Returning : " + str(repr(row[0]))[0:20])
             return row[0]
 
-        self._log(u"Returning empty", 3)
+        self._log(u"Returning empty")
         return " "
 
     def _sqlExecute(self, sql, data):
         try:
-            self._log(repr(sql) + u" - " + repr(data), 5)
+            self._log(repr(sql) + u" - " + repr(data))
             if self.sql2:
                 self.curs.execute(sql, data)
             elif self.sql3:
@@ -466,7 +489,8 @@ class StorageServer():
                 else:
                     self.curs.execute(sql, (data,))
         except sqlite3.DatabaseError as e:
-            if self.xbmcvfs.exists(self.path) and (str(e).find("file is encrypted") > -1 or str(e).find("not a database") > -1):
+            if (self.xbmcvfs.exists(self.path) and
+                    (str(e).find("file is encrypted") > -1 or str(e).find("not a database") > -1)):
                 self._log(u"Deleting broken database file")
                 self.xbmcvfs.delete(self.path)
                 self._startDB()
@@ -481,19 +505,18 @@ class StorageServer():
             self.conn.commit()
             self._log(u"Created new table")
         except:
-            self._log(u"Passed", 5)
+            self._log(u"Passed")
             pass
 
     def _evaluate(self, data):
         try:
-            data = eval(data) # Test json.loads vs eval
+            data = eval(data)  # Test json.loads vs eval
             return data
         except:
             self._log(u"Couldn't evaluate message : " + repr(data))
             return ""
 
     def _generateKey(self, funct, *args):
-        self._log(u"", 5)
         name = repr(funct)
         if name.find(" of ") > -1:
             name = name[name.find("method") + 7:name.find(" of ")]
@@ -505,50 +528,71 @@ class StorageServer():
             if isinstance(params, dict):
                 for key in sorted(params.keys()):
                     if key not in ["new_results_function"]:
-                        keyhash.update("'%s'='%s'" % (key, params[key]))
+                        val = params[key]
+                        if not isinstance(val, basestring):
+                            val = str(val)
+                        if PY3:
+                            if isinstance(key, str):
+                                key = key.encode('utf-8')
+                            if isinstance(val, str):
+                                val = val.encode('utf-8')
+                            key_val_pair = b"'%s'='%s'" % (key, val)
+                        else:
+                            key_val_pair = "'%s'='%s'" % (key, val)
+                        keyhash.update(key_val_pair)
             elif isinstance(params, list):
-                keyhash.update(",".join(["%s" % el for el in params]))
+                if PY3:
+                    hash_list = []
+                    for el in params:
+                        if not isinstance(el, basestring):
+                            el = str(el)
+                        if isinstance(el, str):
+                            el = el.encode('utf-8')
+                        hash_list.append(el)
+                    keyhash.update(b",".join([b"%s" % el for el in hash_list]))
+                else:
+                    keyhash.update(",".join(["%s" % el for el in params]))
             else:
-                try:
-                    keyhash.update(params)
-                except:
-                    keyhash.update(str(params))
+                if not isinstance(params, basestring):
+                    params = str(params)
+                if PY3:
+                    if isinstance(params, str):
+                        params = params.encode('utf-8')
+                keyhash.update(params)
 
         name += "|" + keyhash.hexdigest() + "|"
 
-        self._log(u"Done: " + repr(name), 5)
+        self._log(u"Done: " + repr(name))
         return name
 
     def _getCache(self, name, cache):
-        self._log(u"")
         if name in cache:
             if "timeout" not in cache[name]:
                 cache[name]["timeout"] = 3600
 
             if cache[name]["timestamp"] > time.time() - (cache[name]["timeout"]):
-                self._log(u"Done, found cache : " + name.decode('utf8', 'ignore'))
+                self._log(u"Done, found cache : " + to_unicode(name))
                 return cache[name]["res"]
             else:
-                self._log(u"Deleting old cache : " + name.decode('utf8', 'ignore'), 1)
-                del(cache[name])
+                self._log(u"Deleting old cache : " + to_unicode(name))
+                del (cache[name])
 
         self._log(u"Done")
         return False
 
     def _setCache(self, cache, name, ret_val):
-        self._log(u"")
         if len(ret_val) > 0:
             if not isinstance(cache, dict):
                 cache = {}
             cache[name] = {"timestamp": time.time(),
                            "timeout": self.timeout,
                            "res": ret_val}
-            self._log(u"Saving cache: " + name  + str(repr(cache[name]["res"]))[0:50], 1)
+            self._log(u"Saving cache: " + name + str(repr(cache[name]["res"]))[0:50])
             self.set("cache" + name, repr(cache))
         self._log(u"Done")
         return ret_val
 
-### EXTERNAL FUNCTIONS ###
+    # EXTERNAL FUNCTIONS
     soccon = False
     table = False
 
@@ -566,13 +610,13 @@ class StorageServer():
             ret_val = self._getCache(name, cache)
 
             if not ret_val:
-                self._log(u"Running: " + name.decode('utf8', 'ignore'))
+                self._log(u"Running: " + to_unicode(name))
                 ret_val = funct(*args)
                 self._setCache(cache, name, ret_val)
 
             if ret_val:
                 self._log(u"Returning result: " + str(len(ret_val)))
-                self._log(ret_val, 4)
+                self._log(ret_val)
                 return ret_val
             else:
                 self._log(u"Returning []. Got result: " + repr(ret_val))
@@ -582,15 +626,14 @@ class StorageServer():
         return []
 
     def cacheDelete(self, name):
-        self._log(name, 1)
+        self._log(name)
         if self._connect() and self.table:
             temp = repr({"action": "del", "table": self.table, "name": "cache" + name})
             self._send(self.soccon, temp)
             res = self._recv(self.soccon)
-            self._log(u"GOT " + repr(res), 3)
+            self._log(u"GOT " + repr(res))
 
     def cacheClean(self, empty=False):
-        self._log(u"")
         if self.table:
             cache = self.get("cache" + self.table)
 
@@ -599,14 +642,14 @@ class StorageServer():
             except:
                 self._log(u"Couldn't evaluate message : " + repr(cache))
 
-            self._log(u"Cache : " + repr(cache), 5)
+            self._log(u"Cache : " + repr(cache))
             if cache:
                 new_cache = {}
                 for item in cache:
-                    if (cache[item]["timestamp"] > time.time() - (3600)) and not empty:
+                    if (cache[item]["timestamp"] > (time.time() - 3600)) and not empty:
                         new_cache[item] = cache[item]
                     else:
-                        self._log(u"Deleting: " + item.decode('utf8', 'ignore'))
+                        self._log(u"Deleting: " + to_unicode(item))
 
                 self.set("cache", repr(new_cache))
                 return True
@@ -614,8 +657,8 @@ class StorageServer():
         return False
 
     def lock(self, name):
-        self._log(name, 1)
-        self._log(self.table, 1)
+        self._log(name)
+        self._log(self.table)
 
         if self._connect() and self.table:
             data = repr({"action": "lock", "table": self.table, "name": name})
@@ -625,14 +668,14 @@ class StorageServer():
                 res = self._evaluate(res)
 
                 if res == "true":
-                    self._log(u"Done : " + res.strip(), 1)
+                    self._log(u"Done : " + res.strip())
                     return True
 
-        self._log(u"Failed", 1)
+        self._log(u"Failed")
         return False
 
     def unlock(self, name):
-        self._log(name, 1)
+        self._log(name)
 
         if self._connect() and self.table:
             data = repr({"action": "unlock", "table": self.table, "name": name})
@@ -642,14 +685,13 @@ class StorageServer():
                 res = self._evaluate(res)
 
                 if res == "true":
-                    self._log(u"Done: " + res.strip(), 1)
+                    self._log(u"Done: " + res.strip())
                     return True
 
-        self._log(u"Failed", 1)
+        self._log(u"Failed")
         return False
 
     def _connect(self):
-        self._log("", 3)
         self._sock_init()
 
         if self._usePosixSockets():
@@ -671,20 +713,27 @@ class StorageServer():
         return connected
 
     def setMulti(self, name, data):
-        self._log(name, 1)
+        self._log(name)
         if self._connect() and self.table:
             temp = repr({"action": "set_multi", "table": self.table, "name": name, "data": data})
             res = self._send(self.soccon, temp)
-            self._log(u"GOT " + repr(res), 3)
+            self._log(u"GOT " + repr(res))
 
     def getMulti(self, name, items):
-        self._log(name, 1)
+        self._log(name)
         if self._connect() and self.table:
-            self._send(self.soccon, repr({"action": "get_multi", "table": self.table, "name": name, "items": items}))
-            self._log(u"Receive", 3)
+            self._send(self.soccon, repr(
+                {
+                    "action": "get_multi",
+                    "table": self.table,
+                    "name": name,
+                    "items": items
+                }
+            ))
+            self._log(u"Receive")
             res = self._recv(self.soccon)
 
-            self._log(u"res : " + str(len(res)), 3)
+            self._log(u"res : " + str(len(res)))
             if res:
                 res = self._evaluate(res)
 
@@ -696,28 +745,28 @@ class StorageServer():
         return ""
 
     def delete(self, name):
-        self._log(name, 1)
+        self._log(name)
         if self._connect() and self.table:
             temp = repr({"action": "del", "table": self.table, "name": name})
             self._send(self.soccon, temp)
             res = self._recv(self.soccon)
-            self._log(u"GOT " + repr(res), 3)
+            self._log(u"GOT " + repr(res))
 
     def set(self, name, data):
-        self._log(name, 1)
+        self._log(name)
         if self._connect() and self.table:
             temp = repr({"action": "set", "table": self.table, "name": name, "data": data})
             res = self._send(self.soccon, temp)
-            self._log(u"GOT " + repr(res), 3)
+            self._log(u"GOT " + repr(res))
 
     def get(self, name):
-        self._log(name, 1)
+        self._log(name)
         if self._connect() and self.table:
             self._send(self.soccon, repr({"action": "get", "table": self.table, "name": name}))
-            self._log(u"Receive", 3)
+            self._log(u"Receive")
             res = self._recv(self.soccon)
 
-            self._log(u"res : " + str(len(res)), 3)
+            self._log(u"res : " + str(len(res)))
             if res:
                 res = self._evaluate(res)
                 return res.strip()  # We return " " as nothing. Strip it out.
@@ -727,21 +776,37 @@ class StorageServer():
     def setCacheTimeout(self, timeout):
         self.timeout = float(timeout) * 3600
 
-    def _log(self, description, level=0):
-        if self.dbg and self.dbglevel > level:
+    def _log(self, description):
+        if self.dbg:
             try:
-                self.xbmc.log(u"[%s] %s : '%s'" % (self.plugin, repr(inspect.stack()[1][3]), description), self.xbmc.LOGNOTICE)
+                self.xbmc.log(u"[%s] %s : '%s'" %
+                              (self.plugin, repr(inspect.stack()[1][3]), description),
+                              self.xbmc.LOGDEBUG)
             except:
-                self.xbmc.log(u"[%s] %s : '%s'" % (self.plugin, repr(inspect.stack()[1][3]), repr(description)), self.xbmc.LOGNOTICE)
+                self.xbmc.log(u"[%s] %s : '%s'" %
+                              (self.plugin, repr(inspect.stack()[1][3]),
+                               repr(description)), self.xbmc.LOGDEBUG)
+
+
+def to_unicode(text):
+    if isinstance(text, bytes):
+        return text.decode('utf-8')
+    if sys.version_info[0] == 2 and isinstance(text, str):
+        return text.decode('utf-8')
+    return text
+
 
 # Check if this module should be run in instance mode or not.
 __workersByName = {}
+
+
 def run_async(func, *args, **kwargs):
     from threading import Thread
     worker = Thread(target=func, args=args, kwargs=kwargs)
     __workersByName[worker.getName()] = worker
     worker.start()
     return worker
+
 
 def checkInstanceMode():
     if hasattr(sys.modules["__main__"], "xbmcaddon"):
@@ -752,13 +817,12 @@ def checkInstanceMode():
     settings = xbmcaddon.Addon(id='script.common.plugin.cache')
     if settings.getSetting("autostart") == "false":
         s = StorageServer(table=False, instance=True)
-        xbmc.log(u" StorageServer Module loaded RUN(instance only)")
-
-        xbmc.log(s.plugin + u" Starting server")
-
+        xbmc.log("[%s] Module loaded (instance only), starting server ..." % s.plugin,
+                 xbmc.LOGDEBUG)
         run_async(s.run)
         return True
     else:
         return False
 
-checkInstanceMode()
+
+_ = checkInstanceMode()
