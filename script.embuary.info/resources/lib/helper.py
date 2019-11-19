@@ -6,6 +6,7 @@
 import xbmc
 import xbmcaddon
 import xbmcgui
+import xbmcplugin
 import json
 import time
 import datetime
@@ -122,12 +123,12 @@ def execute(cmd):
     xbmc.executebuiltin(cmd)
 
 
-def visible(condition):
+def condition(condition):
     return xbmc.getCondVisibility(condition)
 
 
 def busydialog(close=False):
-    if not close and not visible('Window.IsVisible(busydialognocancel)'):
+    if not close and not condition('Window.IsVisible(busydialognocancel)'):
         execute('ActivateWindow(busydialognocancel)')
     elif close:
         execute('Dialog.Close(busydialognocancel)')
@@ -239,3 +240,10 @@ def json_call(method,properties=None,sort=None,query_filter=None,limit=None,para
         pass
 
     return json.loads(result)
+
+
+def set_plugincontent(content=None,category=None):
+    if category:
+        xbmcplugin.setPluginCategory(int(sys.argv[1]), category)
+    if content:
+        xbmcplugin.setContent(int(sys.argv[1]), content)

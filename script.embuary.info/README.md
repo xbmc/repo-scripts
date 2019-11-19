@@ -21,9 +21,11 @@ The script provides a selection dialog if multiple results were returned.
 *  ```RunScript(script.embuary.info,call=person,tmbd_id=65)```
 *  ```RunScript(script.embuary.info,call=tv,tmbd_id=65)```
 *  ```RunScript(script.embuary.info,call=tv,tmbd_id=65,season=1)```
-*  ```RunScript(script.embuary.info,call=tv,external_id=70559)```
+*  ```RunScript(script.embuary.info,call=tv,external_id=70559)``` (ID must be TVDb or IMDb)
+*  ```RunScript(script.embuary.info,call=tv,dbid=1)``` (fetches TVDb from uniqueid table in the database if available; title + year is used as fallback)
 *  ```RunScript(script.embuary.info,call=movie,tmbd_id=65)```
-*  ```RunScript(script.embuary.info,call=movie,external_id=tt0371746)```
+*  ```RunScript(script.embuary.info,call=movie,external_id=tt0371746)``` (IMDb ID)
+*  ```RunScript(script.embuary.info,call=movie,dbid=1)``` (fetches IMDb ID from uniqueid table in the database if available; title + year is used as fallback)
 
 ## Options
 
@@ -127,7 +129,7 @@ You can add a custom onback or a general onclose action in script-embuary-video.
 ## Widgets
 The script ships following widgets:
 
-* `plugin://script.embuary.info/?info=trending&amp;call=movies&amp;get=week` = trending movies
+* `plugin://script.embuary.info/?info=trending&amp;call=movie&amp;get=week` = trending movies
 * `plugin://script.embuary.info/?info=movies&amp;call=upcoming` = upcoming movies
 * `plugin://script.embuary.info/?info=movies&amp;call=now_playing` = now playing movies
 * `plugin://script.embuary.info/?info=movies&amp;call=top_rated` = top rated movies
