@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.module.gtts"
+       name="gtts"
+       version="2.0.4"
+       provider-name="pndurette">
+  <requires>
+    <import addon="xbmc.python" version="2.26.0"/>
+    <import addon="script.module.urllib3" version="1.25.2" />
+    <import addon="script.module.six" />
+  </requires>
+  <extension point="xbmc.python.module"
+             library="lib" />
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en">Python library and CLI tool to interface with Google Translate's text-to-speech API.</summary>
+    <description lang="en">Packed for KODI from https://github.com/pndurette/gTTS</description>
+    <platform>all</platform>
+    <license>MIT</license>
+    <website>https://github.com/pndurette/gTTS</website>
+    <assets>
+      <icon>icon.png</icon>
+    </assets>
+  </extension>
+</addon>
