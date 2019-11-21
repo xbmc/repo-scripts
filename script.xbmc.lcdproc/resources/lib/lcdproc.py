@@ -286,9 +286,9 @@ class LCDProc(LcdBase):
       if lcdinfo is None:
         return False
 
-      # protocol version must currently be 0.3
-      if float(lcdinfo.group(1)) != 0.3:
-        log(LOGERROR, "Only LCDproc protocol 0.3 supported (got " + lcdinfo.group(1) +")")
+      # protocol version must currently either be 0.3 or 0.4
+      if float(lcdinfo.group(1)) not in [0.3, 0.4]:
+        log(LOGERROR, "Only LCDproc protocols 0.3 and 0.4 supported (got " + lcdinfo.group(1) +")")
         return False
 
       # set up class vars
