@@ -138,3 +138,68 @@ msgstr "Alle Datenbankeinträge"
 msgctxt "#32023"
 msgid "items"
 msgstr "Inhalte"
+
+#: /resources/lib/utils.py
+msgctxt "#32024"
+msgid "The video database has no library tags stored."
+msgstr "Deine Videodatenbank enthält keine Tags."
+
+#: /resources/lib/utils.py
+msgctxt "#32025"
+msgid "Attention"
+msgstr "Achtung"
+
+#: /resources/lib/utils.py
+msgctxt "#32026"
+msgid "Enable library tag detection for"
+msgstr "Aktiviere Tag-Erkennung für"
+
+#: /addon.xml
+msgctxt "#32027"
+msgid "Add/remove movie favourite"
+msgstr "Film-Favorit hinzufügen/entfernen"
+
+#: /addon.xml
+msgctxt "#32028"
+msgid "Add/remove TV show favourite"
+msgstr "Serien-Favorit hinzufügen/entfernen"
+
+#: /resources/lib/plugin_content.py
+msgctxt "#32029"
+msgid "Directed by"
+msgstr "Unter der Regie von"
+
+#: /resources/lib/plugin_content.py
+msgctxt "#32030"
+msgid "Items starring"
+msgstr "Einträge mit"
+
+#: /resources/lib/plugin_content.py
+msgctxt "#32031"
+msgid "Because you watched"
+msgstr "Ähnliche Titel wie"
+
+#: /resources/lib/plugin_content.py
+msgctxt "#32032"
+msgid "Christmas holiday season"
+msgstr "Weihnachtszeit"
+
+#: /resources/lib/plugin_content.py
+msgctxt "#32033"
+msgid "Spooky suggestions"
+msgstr "Gruselige Vorschläge"
+
+#: /resources/lib/plugin_content.py
+msgctxt "#32034"
+msgid "May the force be with you"
+msgstr "Möge die Macht mit dir sein"
+
+#: /resources/lib/plugin_content.py
+msgctxt "#32035"
+msgid "Live long and prosper"
+msgstr "Lebe lang und in Frieden"
+
+#: /resources/lib/plugin_listing.py
+msgctxt "#32036"
+msgid "Special and seasonal widgets"
+msgstr "Spezielle und saisonale Widgets"

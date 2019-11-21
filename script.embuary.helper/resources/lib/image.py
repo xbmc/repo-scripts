@@ -22,13 +22,18 @@ OLD_IMAGE = ''
 #################################################################################################
 
 
-''' create imgage storage folders
+''' create image storage folders
 '''
-if not os.path.exists(ADDON_DATA_IMG_PATH):
-    os.makedirs(ADDON_DATA_IMG_PATH)
+try:
+    if not os.path.exists(ADDON_DATA_IMG_PATH):
+        os.makedirs(ADDON_DATA_IMG_PATH)
+        os.makedirs(ADDON_DATA_IMG_TEMP_PATH)
 
-if not os.path.exists(ADDON_DATA_IMG_TEMP_PATH):
-    os.makedirs(ADDON_DATA_IMG_TEMP_PATH)
+except OSError as e:
+    # fix for race condition
+    if e.errno != os.errno.EEXIST:
+        raise
+    pass
 
 
 ''' blur image and store result in addon data folder
@@ -154,7 +159,7 @@ class CreateGenreThumb():
             self.thumb = self.create_thumb()
 
     def __str__(self):
-        return self.thumb
+        return encode_string(self.thumb)
 
     def copy_files(self):
         ''' copy source posters to addon_data/img/tmp
@@ -209,29 +214,38 @@ class CreateGenreThumb():
 ''' get image dimension and aspect ratio
 '''
 def image_info(image):
-    try:
-        filename = md5hash(image) + '.jpg'
-        img = _openimage(image,ADDON_DATA_IMG_TEMP_PATH,filename)
-        width,height = img.size
-        ar = round(width / height,2)
+    width, height, ar = '', '', ''
 
-        return width, height, ar
+    if image:
+        try:
+            filename = md5hash(image) + '.jpg'
+            img = _openimage(image,ADDON_DATA_IMG_TEMP_PATH,filename)
+            width,height = img.size
+            ar = round(width / height,2)
+        except Exception:
+            pass
 
-    except Exception:
-        return '', '', ''
+    return width, height, ar
 
 
 ''' get cached images or copy to temp if file has not been cached yet
 '''
 def _openimage(image,targetpath,filename):
+    image = image.encode('utf-8')
+    image = url_unquote(image.replace('image://', ''))
+    if image.endswith('/'):
+        image = image[:-1]
+
     cached_files = list()
     cachedthumb = xbmc.getCacheThumbName(image)
     cached_files.append(os.path.join('special://profile/Thumbnails/', cachedthumb[0], cachedthumb[:-4] + '.jpg'))
     cached_files.append(os.path.join('special://profile/Thumbnails/', cachedthumb[0], cachedthumb[:-4] + '.png'))
-    cached_files.append(os.path.join('special://profile/Thumbnails/Video', cachedthumb[0], cachedthumb))
+    cached_files.append(os.path.join('special://profile/Thumbnails/Video/', cachedthumb[0], cachedthumb))
 
     for i in range(1, 4):
         try:
+            ''' Try to get cached image at first
+            '''
             for cache in cached_files:
                 if xbmcvfs.exists(cache):
                     try:
@@ -241,16 +255,26 @@ def _openimage(image,targetpath,filename):
                         log('Image error: Could not open cached image --> %s' % error, WARNING)
                         pass
 
-            targetfile = os.path.join(targetpath, filename)
-            if not xbmcvfs.exists(targetfile):
-                image = url_unquote(image.replace('image://', ''))
-                if image.endswith('/'):
-                    image = image[:-1]
-                xbmcvfs.copy(image, targetfile)
+            ''' Skin images will be tried to be accessed directly. For all other ones
+                the source will be copied to the addon_data folder to get access.
+            '''
+            if xbmc.skinHasImage(image):
+                if not image.startswith('special://skin'):
+                    image = os.path.join('special://skin/media/', image)
 
-            img = Image.open(targetfile)
+                try: # in case image is packed in textures.xbt
+                    img = Image.open(xbmc.translatePath(image))
+                    return img
+                except Exception:
+                    return ''
 
-            return img
+            else:
+                targetfile = os.path.join(targetpath, filename)
+                if not xbmcvfs.exists(targetfile):
+                    xbmcvfs.copy(image, targetfile)
+
+                img = Image.open(targetfile)
+                return img
 
         except Exception as error:
             log('Image error: Could not get image for %s (try %d) -> %s' % (image, i, error), ERROR)

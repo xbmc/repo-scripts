@@ -3,205 +3,199 @@
 # Addon id: script.embuary.helper
 # Addon Provider: sualfred
 # Translators:
-# sualfred <su4lfred@gmail.com>, 2019
-# Andrea Matesi <andreamatesi@gmail.com>, 2019
-# EffeF, 2019
+# Noisy✘ <164980316@qq.com>, 2019
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: Embuary Helper\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: 2019-10-06 17:40+0000\n"
-"Last-Translator: EffeF, 2019\n"
-"Language-Team: Italian (Italy) (https://www.transifex.com/sualfred/teams/80018/it_IT/)\n"
+"Last-Translator: Noisy✘ <164980316@qq.com>, 2019\n"
+"Language-Team: Chinese (China) (https://www.transifex.com/sualfred/teams/80018/zh_CN/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: it_IT\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Language: zh_CN\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 
 msgctxt "#32000"
 msgid "Error"
-msgstr "Errore"
+msgstr "错误"
 
 msgctxt "#32001"
 msgid ""
 "This is a tool to provide features to a skin and requires skin integration."
-msgstr ""
-"Questo è uno strumento per fornire funzionalità a una skin e richiede "
-"l'integrazione nella skin."
+msgstr "这是一个为皮肤提供功能的插件，需要皮肤集成。"
 
 msgctxt "#32002"
 msgid "Enable logging"
-msgstr "Attiva logging"
+msgstr "启用日志记录"
 
 msgctxt "#32004"
 msgid "detected"
-msgstr "rilevato"
+msgstr "检测到"
 
 msgctxt "#32005"
 msgid "Changed font to"
-msgstr "Font modificato in"
+msgstr "已将字体更改为"
 
 #: /resources/settings.xml
 msgctxt "#32003"
 msgid "Delete add-on image cache"
-msgstr "Elimina cache immagini add-on"
+msgstr "删除附加图像缓存"
 
 msgctxt "#32006"
 msgid "Applying changes"
-msgstr "Applicazione modifiche"
+msgstr "应用更改"
 
 #: /resources/lib/plugin_listing.py
 msgctxt "#32007"
 msgid "Suggestions based on random watched item"
-msgstr "Suggerimenti basati su elementi guardati a caso"
+msgstr "基于随机观看项目的建议"
 
 #: /resources/lib/plugin_listing.py
 msgctxt "#32008"
 msgid "Next up"
-msgstr "Prossimo"
+msgstr "接下来"
 
 #: /resources/lib/plugin_listing.py
 msgctxt "#32009"
 msgid "Suggestions by random genre"
-msgstr "Suggerimenti per genere casuale"
+msgstr "按随机类型列出的建议"
 
 #: /resources/lib/plugin_listing.py
 msgctxt "#32010"
 msgid "Recently added episodes and shows"
-msgstr "Episodi e serie aggiunte di recente"
+msgstr "最近添加的剧集和节目"
 
 #: /resources/lib/plugin_listing.py
 msgctxt "#32011"
 msgid "All media"
-msgstr "Tutti i media"
+msgstr "所有媒体"
 
 #: /resources/lib/plugin_listing.py
 msgctxt "#32012"
 msgid "Recommended by rating"
-msgstr "Raccomandazioni basate sulla valutazione"
+msgstr "按评级推荐"
 
 #: /resources/lib/plugin_listing.py
 msgctxt "#32013"
 msgid "Continue watching"
-msgstr "Continua a guardare"
+msgstr "继续观看"
 
 #: /resources/lib/plugin_listing.py
 msgctxt "#32014"
 msgid "Suggestions based on the last watched item"
-msgstr "Suggerimenti basati sull'ultimo elemento guardato"
+msgstr "基于上次观看项目的建议"
 
 #: /resources/lib/plugin_listing.py
 msgctxt "#32015"
 msgid "Recently added unwatched episodes and shows"
-msgstr "Episodi e serie non viste aggiunte di recente"
+msgstr "最近添加的未观看剧集和节目"
 
 #: /resources/settings.xml
 msgctxt "#32016"
 msgid "Enable service module"
-msgstr "Abilita modulo di servizio"
+msgstr "启用服务模块"
 
 #: /resources/settings.xml
 msgctxt "#32017"
 msgid "Service interval time"
-msgstr "Intervallo servizio"
+msgstr "服务间隔时间"
 
 #: /resources/settings.xml
 msgctxt "#32018"
 msgid "Default blurring radius"
-msgstr "Raggio di sfocatura predefinito"
+msgstr "默认模糊范围"
 
 #: /resources/settings.xml
 msgctxt "#32020"
 msgid "Misc."
-msgstr "Varie"
+msgstr "杂项"
 
 #: /resources/settings.xml
 msgctxt "#32021"
 msgid "Background change interval"
-msgstr "Intervallo cambio dello sfondo"
+msgstr "背景更改间隔"
 
 #: /resources/lib/utils.py
 msgctxt "#32019"
 msgid ""
 "This will delete all created images (blurred backgrounds, genre thumbs, "
 "etc.) in the addon_data folder. Do you want to proceed?"
-msgstr ""
-"Ciò eliminerà tutte le immagini create (sfondi sfocati, immagini genere, "
-"ecc.) nella cartella addon_data. Vuoi procedere?"
+msgstr "这将删除加载项数据文件夹中创建的所有图像（模糊背景、类型、流派等），你要继续吗？"
 
 #: /resources/lib/plugin_listing.py
 msgctxt "#32022"
 msgid "All available database items"
-msgstr "Tutti gli elementi del database disponibili"
+msgstr "所有可用的数据库项"
 
 #: /resources/lib/plugin_listing.py
 msgctxt "#32023"
 msgid "items"
-msgstr "elementi"
+msgstr "项目"
 
 #: /resources/lib/utils.py
 msgctxt "#32024"
 msgid "The video database has no library tags stored."
-msgstr "Il database video non ha alcuna libreria tag disponibile."
+msgstr "视频数据库没有存储库标记。"
 
 #: /resources/lib/utils.py
 msgctxt "#32025"
 msgid "Attention"
-msgstr "Attenzione"
+msgstr "注意"
 
 #: /resources/lib/utils.py
 msgctxt "#32026"
 msgid "Enable library tag detection for"
-msgstr "Attiva riconoscimento tag libreria per"
+msgstr "启用库标记检测"
 
 #: /addon.xml
 msgctxt "#32027"
 msgid "Add/remove movie favourite"
-msgstr "Aggiungi/rimuovi film preferito"
+msgstr "添加 / 删除电影收藏夹"
 
 #: /addon.xml
 msgctxt "#32028"
 msgid "Add/remove TV show favourite"
-msgstr "Aggiungi/rimuovi programma TV preferito"
+msgstr "添加 / 删除电视节目收藏夹"
 
 #: /resources/lib/plugin_content.py
 msgctxt "#32029"
 msgid "Directed by"
-msgstr "Diretto da"
+msgstr "导演"
 
 #: /resources/lib/plugin_content.py
 msgctxt "#32030"
 msgid "Items starring"
-msgstr "Elementi con protagonista"
+msgstr "星号项目"
 
 #: /resources/lib/plugin_content.py
 msgctxt "#32031"
 msgid "Because you watched"
-msgstr "Perché hai visto"
+msgstr "因为你在观看"
 
 #: /resources/lib/plugin_content.py
 msgctxt "#32032"
 msgid "Christmas holiday season"
-msgstr "Festività natalizie"
+msgstr "圣诞季"
 
 #: /resources/lib/plugin_content.py
 msgctxt "#32033"
 msgid "Spooky suggestions"
-msgstr "Suggerimenti spettrali"
+msgstr "诡异的建议"
 
 #: /resources/lib/plugin_content.py
 msgctxt "#32034"
 msgid "May the force be with you"
-msgstr "Che la forza sia con te"
+msgstr "愿力量与你同在"
 
 #: /resources/lib/plugin_content.py
 msgctxt "#32035"
 msgid "Live long and prosper"
-msgstr "Lunga vita e prosperità"
+msgstr "长寿和繁荣"
 
 #: /resources/lib/plugin_listing.py
 msgctxt "#32036"
 msgid "Special and seasonal widgets"
-msgstr "Widget speciali e stagionali"
+msgstr "特别篇和季小工具"

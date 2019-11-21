@@ -6,11 +6,11 @@ import xbmcgui
 
 from resources.lib.helper import *
 from resources.lib.utils import *
+from resources.lib.cinema_mode import *
 
 ########################
 
 class Main:
-
     def __init__(self):
         self.action = False
         self._parse_argv()
@@ -19,7 +19,6 @@ class Main:
             self.getactions()
         else:
             DIALOG.ok(ADDON.getLocalizedString(32000), ADDON.getLocalizedString(32001))
-
 
     def _parse_argv(self):
         args = sys.argv
@@ -35,15 +34,10 @@ class Main:
                 except:
                     self.params = {}
 
-
     def getactions(self):
-        if self.action == 'playcinema':
-            PlayCinema(self.params)
-
-        else:
-            util = globals()[self.action]
-            util(self.params)
+        util = globals()[self.action]
+        util(self.params)
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     Main()
