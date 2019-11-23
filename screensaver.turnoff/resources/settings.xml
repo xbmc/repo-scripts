@@ -1,25 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <settings>
-  <category id="display" label="33100">
-    <setting type="lsep" label="33101"/>
-    <setting id="display_method" type="select" label="33102" help="33103" lvalues="33110|33111|33112|33113|33114|33115|33116|33117" default="1"/>
-    <setting id="display_label" type="text" label="33103" enable="false" />
-    <setting id="cec_label" type="text" label="33104" enable="false" />
-    <setting id="rpi_label" type="text" label="33105" enable="false" />
-    <setting id="dpms_label" type="text" label="33106" enable="false" />
-    <setting id="deactivate_label" type="text" label="33107" enable="false" />
-    <setting id="deactivate_note" type="text" label="33108" enable="false" />
+  <category id="display" label="32100">
+    <setting type="lsep" label="32101"/> <!-- display intro -->
+    <setting id="display_method" type="select" label="32102" help="32103" lvalues="32110|32111|32112|32113|32114|32115|32116|32117|32118|32119" default="1"/>
+    <setting type="text" label="32103" enable="false"/> <!-- display_label -->
+    <setting type="text" label="32104" enable="false"/> <!-- cec_label -->
+    <setting type="text" label="32105" enable="false"/> <!-- rpi_label -->
+    <setting type="text" label="32106" enable="false"/> <!-- dpms_label -->
+    <setting type="text" label="32107" enable="false"/> <!-- deactivate_label -->
+    <setting type="text" label="32108" enable="false"/> <!-- deactivate_note -->
   </category>
-  <category id="power" label="33200">
-    <setting type="lsep" label="33201"/>
-    <setting id="power_method" type="select" label="33202" help="33203" lvalues="33210|33211|33212|33213|33214|33215|33216|33217" default="0"/>
-    <setting id="power_label" type="text" label="33203" enable="false" />
+  <category id="power" label="32200">
+    <setting type="lsep" label="32201"/> <!-- power intro -->
+    <setting id="power_method" type="select" label="32202" help="32203" lvalues="32210|32211|32212|32213|32214|32215|32216|32217" default="0"/>
+    <setting type="text" label="32203" enable="false"/> <!-- power_label -->
   </category>
-  <category id="options" label="33300">
-    <setting type="lsep" label="33301"/>
-    <setting id="logoff" type="bool" label="33311" help="33312" default="false"/>
-    <setting id="logoff_label" type="text" label="33312" enable="false" />
-    <setting id="mute" type="bool" label="33321" help="33322" default="true"/>
-    <setting id="mute_label" type="text" label="33322" enable="false" />
+  <category id="options" label="32300">
+    <setting type="lsep" label="32301"/> <!-- extra options -->
+    <setting id="logoff" type="bool" label="32311" help="32312" default="false"/>
+    <setting type="text" label="32312" enable="false"/> <!-- logoff_label -->
+    <setting id="mute" type="bool" label="32321" help="32322" default="true"/>
+    <setting type="text" label="32322" enable="false"/> <!-- mute_label -->
   </category>
+    <category label="32400"> <!-- Expert -->
+    <!-- setting type="lsep" label="32401"/ --> <!-- test drive screensaver -->
+    <!-- setting type="action" label="32411" action="Addon.Default.Set(xbmc.ui.screensaver)"/ --> <!-- select -->
+    <!-- setting type="action" label="32412" action="ActivateScreensaver"/ --> <!-- activate -->
+  <!-- /category -->
+        <setting label="32420" type="lsep"/> <!-- Logging -->
+        <setting label="32421" help="32422" type="enum" id="max_log_level" lvalues="32430|32431|32432|32433" default="1"/>
+    </category>
 </settings>
