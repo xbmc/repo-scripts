@@ -28,8 +28,8 @@ def get_top(limit=10, offset=0):
 # required scope: none
 # undocumented / unsupported
 @query
-def _check_follows(username, name):
-    q = HQry('users/{username}/follows/games/isFollowing', use_token=False)
+def _check_follows(username, name, headers={}):
+    q = HQry('users/{username}/follows/games/isFollowing', headers=headers, use_token=False)
     q.add_urlkw(keys.USERNAME, username)
     q.add_param(keys.NAME, name)
     return q
@@ -38,8 +38,8 @@ def _check_follows(username, name):
 # required scope: none
 # undocumented / unsupported
 @query
-def _get_followed(username, limit=25, offset=0):
-    q = HQry('users/{username}/follows/games', use_token=False)
+def _get_followed(username, limit=25, offset=0, headers={}):
+    q = HQry('users/{username}/follows/games', headers=headers, use_token=False)
     q.add_urlkw(keys.USERNAME, username)
     q.add_param(keys.LIMIT, limit, 25)
     q.add_param(keys.OFFSET, offset, 0)
@@ -49,8 +49,8 @@ def _get_followed(username, limit=25, offset=0):
 # required scope: user_follows_edit
 # undocumented / unsupported
 @query
-def _follow(username, name):
-    q = HQry('users/{username}/follows/games/follow', method=methods.PUT)
+def _follow(username, name, headers={}):
+    q = HQry('users/{username}/follows/games/follow', headers=headers, method=methods.PUT)
     q.add_urlkw(keys.USERNAME, username)
     q.add_data(keys.NAME, name)
     return q
@@ -59,8 +59,8 @@ def _follow(username, name):
 # required scope: user_follows_edit
 # undocumented / unsupported
 @query
-def _unfollow(username, name):
-    q = HQry('users/{username}/follows/games/unfollow', method=methods.DELETE)
+def _unfollow(username, name, headers={}):
+    q = HQry('users/{username}/follows/games/unfollow', headers=headers, method=methods.DELETE)
     q.add_urlkw(keys.USERNAME, username)
     q.add_data(keys.NAME, name)
     return q

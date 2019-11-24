@@ -30,8 +30,8 @@ def valid_video_id(video_id):
 
 
 @query
-def channel_token(channel, platform=keys.WEB):
-    q = HiddenApiQuery('channels/{channel}/access_token')
+def channel_token(channel, platform=keys.WEB, headers={}):
+    q = HiddenApiQuery('channels/{channel}/access_token', headers=headers)
     q.add_urlkw(keys.CHANNEL, channel)
     q.add_param(keys.NEED_HTTPS, Boolean.TRUE)
     q.add_param(keys.PLATFORM, platform)
@@ -40,8 +40,8 @@ def channel_token(channel, platform=keys.WEB):
 
 
 @query
-def vod_token(video_id, platform=keys.WEB):
-    q = HiddenApiQuery('vods/{vod}/access_token')
+def vod_token(video_id, platform=keys.WEB, headers={}):
+    q = HiddenApiQuery('vods/{vod}/access_token', headers=headers)
     q.add_urlkw(keys.VOD, video_id)
     q.add_param(keys.NEED_HTTPS, Boolean.TRUE)
     q.add_param(keys.PLATFORM, platform)
@@ -56,12 +56,12 @@ def _legacy_video(video_id):
     return q
 
 
-def live_request(channel, platform=keys.WEB):
-    token = channel_token(channel, platform=platform)
+def live_request(channel, platform=keys.WEB, headers={}):
+    token = channel_token(channel, platform=platform, headers=headers)
     if keys.ERROR in token:
         return token
     else:
-        q = UsherQuery('api/channel/hls/{channel}.m3u8')
+        q = UsherQuery('api/channel/hls/{channel}.m3u8', headers=headers)
         q.add_urlkw(keys.CHANNEL, channel)
         q.add_param(keys.SIG, token[keys.SIG].encode('utf-8'))
         q.add_param(keys.TOKEN, token[keys.TOKEN].encode('utf-8'))
@@ -81,8 +81,8 @@ def live_request(channel, platform=keys.WEB):
 
 
 @query
-def _live(channel, token):
-    q = UsherQuery('api/channel/hls/{channel}.m3u8')
+def _live(channel, token, headers={}):
+    q = UsherQuery('api/channel/hls/{channel}.m3u8', headers=headers)
     q.add_urlkw(keys.CHANNEL, channel)
     q.add_param(keys.SIG, token[keys.SIG].encode('utf-8'))
     q.add_param(keys.TOKEN, token[keys.TOKEN].encode('utf-8'))
@@ -99,22 +99,22 @@ def _live(channel, token):
 
 
 @m3u8
-def live(channel, platform=keys.WEB):
-    token = channel_token(channel, platform=platform)
+def live(channel, platform=keys.WEB, headers={}):
+    token = channel_token(channel, platform=platform, headers=headers)
     if keys.ERROR in token:
         return token
     else:
-        return _live(channel, token)
+        return _live(channel, token, headers=headers)
 
 
-def video_request(video_id, platform=keys.WEB):
+def video_request(video_id, platform=keys.WEB, headers={}):
     video_id = valid_video_id(video_id)
     if video_id:
-        token = vod_token(video_id, platform=platform)
+        token = vod_token(video_id, platform=platform, headers=headers)
         if keys.ERROR in token:
             return token
         else:
-            q = UsherQuery('vod/{id}')
+            q = UsherQuery('vod/{id}', headers=headers)
             q.add_urlkw(keys.ID, video_id)
             q.add_param(keys.NAUTHSIG, token[keys.SIG].encode('utf-8'))
             q.add_param(keys.NAUTH, token[keys.TOKEN].encode('utf-8'))
@@ -137,8 +137,8 @@ def video_request(video_id, platform=keys.WEB):
 
 
 @query
-def _vod(video_id, token):
-    q = UsherQuery('vod/{id}')
+def _vod(video_id, token, headers={}):
+    q = UsherQuery('vod/{id}', headers=headers)
     q.add_urlkw(keys.ID, video_id)
     q.add_param(keys.NAUTHSIG, token[keys.SIG].encode('utf-8'))
     q.add_param(keys.NAUTH, token[keys.TOKEN].encode('utf-8'))
@@ -156,14 +156,14 @@ def _vod(video_id, token):
 
 
 @m3u8
-def video(video_id, platform=keys.WEB):
+def video(video_id, platform=keys.WEB, headers={}):
     video_id = valid_video_id(video_id)
     if video_id:
-        token = vod_token(video_id, platform=platform)
+        token = vod_token(video_id, platform=platform, headers=headers)
         if keys.ERROR in token:
             return token
         else:
-            return _vod(video_id, token)
+            return _vod(video_id, token, headers=headers)
     else:
         raise NotImplementedError('Unknown Video Type')
 

@@ -48,7 +48,10 @@ def _find_frame_rate(group_id, group_name):
 def m3u8(f):
     def m3u8_wrapper(*args, **kwargs):
         results = f(*args, **kwargs)
-        results = results.decode('utf-8')
+        try:
+            results = results.decode('utf-8')
+        except AttributeError:
+            pass
         if keys.ERROR in results:
             if isinstance(results, dict):
                 return results

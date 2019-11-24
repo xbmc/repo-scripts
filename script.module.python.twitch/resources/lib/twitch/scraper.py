@@ -108,6 +108,9 @@ def download(baseurl, parameters={}, headers={}, data={}, method=methods.GET, re
     else:
         raise ResourceUnavailableException('Max retries exceeded')
 
+    if isinstance(content, bytes):
+        content = content.decode('utf-8')
+
     if not response_headers:
         return content
     else:
