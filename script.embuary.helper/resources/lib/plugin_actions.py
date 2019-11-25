@@ -13,10 +13,8 @@ from resources.lib.helper import *
 ########################
 
 class PluginActions(object):
-
     def __init__(self,params):
         self.params = params
-
 
     def folderjump(self):
         type = self.params.get('type')
@@ -32,8 +30,7 @@ class PluginActions(object):
         except Exception:
             pass
 
-        gotopath(path)
-
+        go_to_path(path)
 
     def smsjump(self):
         letter = self.params.get('letter').upper()

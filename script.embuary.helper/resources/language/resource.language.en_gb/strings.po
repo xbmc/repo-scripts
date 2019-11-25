@@ -127,3 +127,58 @@ msgstr ""
 msgctxt "#32023"
 msgid "items"
 msgstr ""
+
+#: /resources/lib/utils.py
+msgctxt "#32024"
+msgid "The video database has no library tags stored."
+msgstr ""
+
+#: /resources/lib/utils.py
+msgctxt "#32025"
+msgid "Attention"
+msgstr ""
+
+#: /resources/lib/utils.py
+msgctxt "#32026"
+msgid "Enable library tag detection for"
+msgstr ""
+
+#: /resources/lib/plugin_content.py
+msgctxt "#32029"
+msgid "Directed by"
+msgstr ""
+
+#: /resources/lib/plugin_content.py
+msgctxt "#32030"
+msgid "Items starring"
+msgstr ""
+
+#: /resources/lib/plugin_content.py
+msgctxt "#32031"
+msgid "Because you watched"
+msgstr ""
+
+#: /resources/lib/plugin_content.py
+msgctxt "#32032"
+msgid "Christmas holiday season"
+msgstr ""
+
+#: /resources/lib/plugin_content.py
+msgctxt "#32033"
+msgid "Spooky suggestions"
+msgstr ""
+
+#: /resources/lib/plugin_content.py
+msgctxt "#32034"
+msgid "May the force be with you"
+msgstr ""
+
+#: /resources/lib/plugin_content.py
+msgctxt "#32035"
+msgid "Live long and prosper"
+msgstr ""
+
+#: /resources/lib/plugin_listing.py
+msgctxt "#32036"
+msgid "Special and seasonal widgets"
+msgstr ""

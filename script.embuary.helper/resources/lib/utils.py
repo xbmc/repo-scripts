@@ -18,51 +18,59 @@ from resources.lib.helper import *
 from resources.lib.library import *
 from resources.lib.json_map import *
 from resources.lib.image import *
+from resources.lib.cinema_mode import *
 
 ########################
 
-def restartservice(params):
-    execute('NotifyAll(%s, restart)' % ADDON_ID)
+''' Classes
+'''
+def blurimg(params):
+    ImageBlur(prop=params.get('prop', 'output'),
+              file=remove_quotes(params.get('file')),
+              radius=params.get('radius', None)
+              )
 
 
-def calc(params):
-    prop = remove_quotes(params.get('prop','CalcResult'))
-    formula = remove_quotes(params.get('do'))
-    result = eval(str(formula))
-    winprop(prop, str(result))
+def playcinema(params):
+    CinemaMode(dbid=params.get('dbid'),
+               dbtype=params.get('type')
+               )
 
 
-def settimer(params):
-    actions = remove_quotes(params.get('do'))
-    time = params.get('time','50')
-    delay = params.get('delay')
-    busydialog = get_bool(params.get('busydialog','true'))
+''' Dialogs
+'''
+def createcontext(params):
+    selectionlist = []
+    indexlist = []
+    splitby = remove_quotes(params.get('splitby', '||'))
+    window = params.get('window', '')
 
-    if busydialog:
-        execute('ActivateWindow(busydialognocancel)')
+    for i in range(1, 100):
+        label = xbmc.getInfoLabel('Window(%s).Property(Context.%d.Label)' % (window, i))
 
-    xbmc.sleep(int(time))
-    execute('Dialog.Close(all,true)')
+        if label == '':
+            break
 
-    while visible('Window.IsVisible(busydialognocancel)'):
-        xbmc.sleep(10)
+        elif label != 'none' and label != '-':
+            selectionlist.append(label)
+            indexlist.append(i)
 
-    for action in actions.split('||'):
-        execute(action)
-        if delay:
-            xbmc.sleep(int(delay))
+    if selectionlist:
+        index = DIALOG.contextmenu(selectionlist)
 
+        if index > -1:
+            value = xbmc.getInfoLabel('Window(%s).Property(Context.%d.Builtin)' % (window, indexlist[index]))
+            for builtin in value.split(splitby):
+                execute(builtin)
+                xbmc.sleep(30)
 
-def encode(params):
-    string = remove_quotes(params.get('string'))
-    prop = params.get('prop','EncodedString')
-    winprop(prop,url_quote(string))
-
-
-def decode(params):
-    string = remove_quotes(params.get('string'))
-    prop = params.get('prop','DecodedString')
-    winprop(prop,url_unquote(string))
+    for i in range(1, 100):
+    	if window:
+        	execute('ClearProperty(Context.%d.Builtin,%s)' % (i, window))
+        	execute('ClearProperty(Context.%d.Label,%s)' % (i, window))
+        else:
+        	execute('ClearProperty(Context.%d.Builtin)' % i)
+        	execute('ClearProperty(Context.%d.Label)' % i)
 
 
 def createselect(params):
@@ -70,47 +78,68 @@ def createselect(params):
     indexlist = []
     headertxt = remove_quotes(params.get('header', ''))
     splitby = remove_quotes(params.get('splitby', '||'))
+    window = params.get('window', '')
+    usedetails = True if params.get('usedetails') == 'true' else False
+    preselect = int(params.get('preselect', -1))
 
-    for i in range(1, 30):
-
-        label = xbmc.getInfoLabel('Window.Property(Dialog.%d.Label)' % (i))
+    for i in range(1, 100):
+        label = xbmc.getInfoLabel('Window(%s).Property(Dialog.%d.Label)' % (window, i))
+        label2 = xbmc.getInfoLabel('Window(%s).Property(Dialog.%d.Label2)' % (window, i))
+        icon = xbmc.getInfoLabel('Window(%s).Property(Dialog.%d.Icon)' % (window, i))
 
         if label == '':
             break
+
         elif label != 'none' and label != '-':
-            selectionlist.append(label)
+            li_item = xbmcgui.ListItem(label=label, label2=label2)
+            li_item.setArt({'icon': icon})
+            selectionlist.append(li_item)
             indexlist.append(i)
 
     if selectionlist:
-        index = DIALOG.select(headertxt, selectionlist)
+        index = DIALOG.select(headertxt, selectionlist, preselect=preselect, useDetails=usedetails)
 
         if index > -1:
-            value = xbmc.getInfoLabel('Window.Property(Dialog.%d.Builtin)' % (indexlist[index]))
+            value = xbmc.getInfoLabel('Window(%s).Property(Dialog.%d.Builtin)' % (window, indexlist[index]))
             for builtin in value.split(splitby):
                 execute(builtin)
                 xbmc.sleep(30)
 
-    for i in range(1, 30):
-        execute('ClearProperty(Dialog.%d.Builtin)' % i)
-        execute('ClearProperty(Dialog.%d.Label)' % i)
+    for i in range(1, 100):
+    	if window:
+        	execute('ClearProperty(Dialog.%d.Builtin,%s)' % (i, window))
+        	execute('ClearProperty(Dialog.%d.Label,%s)' % (i, window))
+        	execute('ClearProperty(Dialog.%d.Label2,%s)' % (i, window))
+        	execute('ClearProperty(Dialog.%d.Icon,%s)' % (i, window))
+        else:
+        	execute('ClearProperty(Dialog.%d.Builtin)' % i)
+        	execute('ClearProperty(Dialog.%d.Label)' % i)
+        	execute('ClearProperty(Dialog.%d.Label2)' % i)
+        	execute('ClearProperty(Dialog.%d.Icon)' % i)
 
 
 def splitandcreateselect(params):
     headertxt = remove_quotes(params.get('header', ''))
     seperator = remove_quotes(params.get('seperator', ' / '))
     splitby = remove_quotes(params.get('splitby', '||'))
+    window = params.get('window', '')
+
     selectionlist = remove_quotes(params.get('items')).split(seperator)
 
     if selectionlist:
         index = DIALOG.select(headertxt, selectionlist)
 
         if index > -1:
-            value = xbmc.getInfoLabel('Window.Property(Dialog.Builtin)').replace('???',selectionlist[index])
+            value = xbmc.getInfoLabel('Window(%s).Property(Dialog.Builtin)' % window)
+            value = value.replace('???', selectionlist[index])
             for builtin in value.split(splitby):
                 execute(builtin)
                 xbmc.sleep(30)
 
-    execute('ClearProperty(Dialog.Builtin)')
+    if window:
+    	execute('ClearProperty(Dialog.Builtin,%s)' % window)
+    else:
+    	execute('ClearProperty(Dialog.Builtin)')
 
 
 def dialogok(params):
@@ -139,6 +168,52 @@ def textviewer(params):
     DIALOG.textviewer(headertxt, bodytxt)
 
 
+''' Functions
+'''
+def restartservice(params):
+    execute('NotifyAll(%s, restart)' % ADDON_ID)
+
+
+def calc(params):
+    prop = remove_quotes(params.get('prop', 'CalcResult'))
+    formula = remove_quotes(params.get('do'))
+    result = eval(str(formula))
+    winprop(prop, str(result))
+
+
+def settimer(params):
+    actions = remove_quotes(params.get('do'))
+    time = params.get('time', '50')
+    delay = params.get('delay')
+    busydialog = get_bool(params.get('busydialog', 'true'))
+
+    if busydialog:
+        execute('ActivateWindow(busydialognocancel)')
+
+    xbmc.sleep(int(time))
+    execute('Dialog.Close(all,true)')
+
+    while condition('Window.IsVisible(busydialognocancel)'):
+        xbmc.sleep(10)
+
+    for action in actions.split('||'):
+        execute(action)
+        if delay:
+            xbmc.sleep(int(delay))
+
+
+def encode(params):
+    string = remove_quotes(params.get('string'))
+    prop = params.get('prop', 'EncodedString')
+    winprop(prop,url_quote(string))
+
+
+def decode(params):
+    string = remove_quotes(params.get('string'))
+    prop = params.get('prop', 'DecodedString')
+    winprop(prop,url_unquote(string))
+
+
 def getaddonsetting(params):
     addon_id = params.get('addon')
     addon_setting = params.get('setting')
@@ -153,11 +228,11 @@ def getaddonsetting(params):
 
 def togglekodisetting(params):
     settingname = params.get('setting', '')
-    value = False if visible('system.getbool(%s)' % settingname) else True
+    value = False if condition('system.getbool(%s)' % settingname) else True
 
     json_call('Settings.SetSettingValue',
-                params={'setting': '%s' % settingname, 'value': value}
-                )
+              params={'setting': '%s' % settingname, 'value': value}
+              )
 
 
 def getkodisetting(params):
@@ -201,8 +276,8 @@ def setkodisetting(params):
             value = False
 
     json_call('Settings.SetSettingValue',
-                params={'setting': '%s' % settingname, 'value': value}
-                )
+              params={'setting': '%s' % settingname, 'value': value}
+              )
 
 
 def toggleaddons(params):
@@ -213,8 +288,8 @@ def toggleaddons(params):
 
         try:
             json_call('Addons.SetAddonEnabled',
-                params={'addonid': '%s' % addon, 'enabled': enable}
-                )
+                      params={'addonid': '%s' % addon, 'enabled': enable}
+                      )
             log('%s - enable: %s' % (addon, enable))
         except Exception:
             pass
@@ -224,37 +299,78 @@ def playsfx(params):
     xbmc.playSFX(remove_quotes(params.get('path', '')))
 
 
+def stopsfx(params):
+    xbmc.stopSFX()
+
+
 def imginfo(params):
-    prop = remove_quotes(params.get('prop','img'))
-    img = params.get('img')
+    prop = remove_quotes(params.get('prop', 'img'))
+    img = remove_quotes(params.get('img'))
     if img:
         width,height,ar = image_info(img)
-        winprop(prop + '.width',str(width))
-        winprop(prop + '.height',str(height))
-        winprop(prop + '.ar',str(ar))
+        winprop(prop + '.width', str(width))
+        winprop(prop + '.height', str(height))
+        winprop(prop + '.ar', str(ar))
 
 
 def playitem(params):
     clear_playlists()
-
-    dbtype = params.get('dbtype')
-    dbid = params.get('dbid')
-
-    if dbtype =='episode':
-        itemtype = 'episodeid'
-    elif dbtype =='song':
-        itemtype = 'songid'
-    else:
-        itemtype = 'movieid'
-
     execute('Dialog.Close(all,true)')
 
-    if dbid:
-        json_call('Player.Open',
-                    item={itemtype: int(dbid)}
-                    )
+    dbtype = params.get('type')
+    dbid = params.get('dbid')
+    resume = params.get('resume', True)
+    file = remove_quotes(params.get('item'))
+
+    if dbtype == 'song':
+        param = 'songid'
+
+    elif dbtype == 'episode':
+        method_details = 'VideoLibrary.GetEpisodeDetails'
+        param = 'episodeid'
+        key_details = 'episodedetails'
+
     else:
-        PLAYER.play(remove_quotes(params.get('item')))
+        method_details = 'VideoLibrary.GetMovieDetails'
+        param = 'movieid'
+        key_details = 'moviedetails'
+
+    if dbid:
+        if dbtype == 'song' or not resume:
+            position = 0
+
+        else:
+            result = json_call(method_details,
+                               properties=['resume', 'runtime'],
+                               params={param: int(dbid)}
+                               )
+
+            try:
+                result = result['result'][key_details]
+                position = result['resume'].get('position') / result['resume'].get('total') * 100
+                resume_time = result.get('runtime') / 100 * position
+                resume_time = str(datetime.timedelta(seconds=resume_time))
+            except Exception:
+                position = 0
+                resume_time = None
+
+            if position > 0:
+                resume_string = xbmc.getLocalizedString(12022)[:-5] + resume_time
+                contextdialog = DIALOG.contextmenu([resume_string, xbmc.getLocalizedString(12021)])
+
+                if contextdialog == 1:
+                    position = 0
+                elif contextdialog == -1:
+                    return
+
+        json_call('Player.Open',
+                  item={param: int(dbid)},
+                  options={'resume': position},
+                  )
+
+    elif file:
+        # playmedia() because otherwise resume points get ignored
+        execute('PlayMedia(%s)' % file)
 
 
 def playfolder(params):
@@ -268,9 +384,9 @@ def playfolder(params):
 
     if params.get('type') == 'season':
         json_query = json_call('VideoLibrary.GetSeasonDetails',
-                                properties=['title','season','tvshowid'],
-                                params={'seasonid': dbid}
-                                )
+                               properties=['title', 'season', 'tvshowid'],
+                               params={'seasonid': dbid}
+                               )
         try:
             result = json_query['result']['seasondetails']
         except Exception as error:
@@ -278,15 +394,15 @@ def playfolder(params):
             return
 
         json_query = json_call('VideoLibrary.GetEpisodes',
-                                properties=episode_properties,
-                                query_filter={'operator': 'is', 'field': 'season', 'value': '%s' % result['season']},
-                                params={'tvshowid': int(result['tvshowid'])}
-                                )
+                               properties=episode_properties,
+                               query_filter={'operator': 'is', 'field': 'season', 'value': '%s' % result['season']},
+                               params={'tvshowid': int(result['tvshowid'])}
+                               )
     else:
         json_query = json_call('VideoLibrary.GetEpisodes',
-                            properties=episode_properties,
-                            params={'tvshowid': dbid}
-                            )
+                               properties=episode_properties,
+                               params={'tvshowid': dbid}
+                               )
 
     try:
         result = json_query['result']['episodes']
@@ -296,16 +412,16 @@ def playfolder(params):
 
     for episode in result:
         json_call('Playlist.Add',
-                item={'episodeid': episode['episodeid']},
-                params={'playlistid': 1}
-                )
+                  item={'episodeid': episode['episodeid']},
+                  params={'playlistid': 1}
+                  )
 
     execute('Dialog.Close(all)')
 
     json_call('Player.Open',
-            item={'playlistid': 1, 'position': 0},
-            options={'shuffled': shuffled}
-            )
+              item={'playlistid': 1, 'position': 0},
+              options={'shuffled': shuffled}
+              )
 
 
 def playall(params):
@@ -327,11 +443,11 @@ def playall(params):
 
     for i in range(int(xbmc.getInfoLabel('Container(%s).NumItems' % container))):
 
-        if visible('String.IsEqual(%s(%s).DBType,movie)' % (method,i)):
+        if condition('String.IsEqual(%s(%s).DBType,movie)' % (method,i)):
             media_type = 'movie'
-        elif visible('String.IsEqual(%s(%s).DBType,episode)' % (method,i)):
+        elif condition('String.IsEqual(%s(%s).DBType,episode)' % (method,i)):
             media_type = 'episode'
-        elif visible('String.IsEqual(%s(%s).DBType,song)' % (method,i)):
+        elif condition('String.IsEqual(%s(%s).DBType,song)' % (method,i)):
             media_type = 'song'
         else:
             media_type = None
@@ -341,33 +457,32 @@ def playall(params):
 
         if media_type and dbid:
             json_call('Playlist.Add',
-                        item={'%sid' % media_type: int(dbid)},
-                        params={'playlistid': playlistid}
-                        )
+                      item={'%sid' % media_type: int(dbid)},
+                      params={'playlistid': playlistid}
+                      )
         elif url:
             json_call('Playlist.Add',
-                        item={'file': url},
-                        params={'playlistid': playlistid}
-                        )
+                      item={'file': url},
+                      params={'playlistid': playlistid}
+                      )
 
     json_call('Player.Open',
-                item={'playlistid': playlistid, 'position': 0},
-                options={'shuffled': shuffled}
-                )
+              item={'playlistid': playlistid, 'position': 0},
+              options={'shuffled': shuffled}
+              )
 
 
 def playrandom(params):
     clear_playlists()
-
     container = params.get('id')
 
     i = random.randint(1,int(xbmc.getInfoLabel('Container(%s).NumItems' % container)))
 
-    if visible('String.IsEqual(Container(%s).ListItemAbsolute(%s).DBType,movie)' % (container,i)):
+    if condition('String.IsEqual(Container(%s).ListItemAbsolute(%s).DBType,movie)' % (container,i)):
         media_type = 'movie'
-    elif visible('String.IsEqual(Container(%s).ListItemAbsolute(%s).DBType,episode)' % (container,i)):
+    elif condition('String.IsEqual(Container(%s).ListItemAbsolute(%s).DBType,episode)' % (container,i)):
         media_type = 'episode'
-    elif visible('String.IsEqual(Container(%s).ListItemAbsolute(%s).DBType,song)' % (container,i)):
+    elif condition('String.IsEqual(Container(%s).ListItemAbsolute(%s).DBType,song)' % (container,i)):
         media_type = 'song'
     else:
         media_type = None
@@ -375,25 +490,25 @@ def playrandom(params):
     item_dbid = xbmc.getInfoLabel('Container(%s).ListItemAbsolute(%s).DBID' % (dbid,i))
     url = xbmc.getInfoLabel('Container(%s).ListItemAbsolute(%s).Filenameandpath' % (dbid,i))
 
-    playitem({'dbtype': media_type, 'dbid': item_dbid, 'item': url})
+    playitem({'type': media_type, 'dbid': item_dbid, 'item': url, 'resume': False})
 
 
 def jumptoshow_by_episode(params):
     episode_query = json_call('VideoLibrary.GetEpisodeDetails',
-                    properties=['tvshowid'],
-                    params={'episodeid': int(params.get('dbid'))}
-                    )
+                              properties=['tvshowid'],
+                              params={'episodeid': int(params.get('dbid'))}
+                              )
     try:
         tvshow_id = str(episode_query['result']['episodedetails']['tvshowid'])
     except Exception:
         log('Could not get the TV show ID')
         return
 
-    gotopath('videodb://tvshows/titles/%s/' % tvshow_id)
+    go_to_path('videodb://tvshows/titles/%s/' % tvshow_id)
 
 
 def goto(params):
-    gotopath(remove_quotes(params.get('path')),params.get('target'))
+    go_to_path(remove_quotes(params.get('path')),params.get('target'))
 
 
 def resetposition(params):
@@ -418,9 +533,9 @@ def resetposition(params):
 
 def details_by_season(params):
     season_query = json_call('VideoLibrary.GetSeasonDetails',
-                        properties=season_properties,
-                        params={'seasonid': int(params.get('dbid'))}
-                        )
+                             properties=season_properties,
+                             params={'seasonid': int(params.get('dbid'))}
+                             )
 
     try:
         tvshow_id = str(season_query['result']['seasondetails']['tvshowid'])
@@ -429,9 +544,9 @@ def details_by_season(params):
         return
 
     tvshow_query = json_call('VideoLibrary.GetTVShowDetails',
-                        properties=tvshow_properties,
-                        params={'tvshowid': int(tvshow_id)}
-                        )
+                             properties=tvshow_properties,
+                             params={'tvshowid': int(tvshow_id)}
+                             )
 
     try:
         details = tvshow_query['result']['tvshowdetails']
@@ -472,10 +587,6 @@ def txtfile(params):
         winprop(prop, clear=True)
 
 
-def blurimg(params):
-    ImageBlur(params.get('prop','output'),remove_quotes(params.get('file')),params.get('radius',None))
-
-
 def fontchange(params):
     font = params.get('font')
     fallback_locales = params.get('locales').split('+')
@@ -509,16 +620,18 @@ def setinfo(params):
     if dbtype == 'movie':
         method = 'VideoLibrary.SetMovieDetails'
         key = 'movieid'
+
     elif dbtype == 'episode':
         method = 'VideoLibrary.SetEpisodeDetails'
         key = 'episodeid'
+
     elif dbtype == 'tvshow':
         method = 'VideoLibrary.SetTVShowDetails'
         key = 'tvshowid'
 
     json_call(method,
-            params={key: int(dbid), params.get('field'): value}
-            )
+              params={key: int(dbid), params.get('field'): value}
+              )
 
 
 def split(params):
@@ -544,11 +657,12 @@ def split(params):
 
 def lookforfile(params):
     file = remove_quotes(params.get('file'))
-    prop = params.get('prop','FileExists')
+    prop = params.get('prop', 'FileExists')
 
     if xbmcvfs.exists(file):
         winprop('%s.bool' % prop, True)
         log('File exists: %s' % file)
+
     else:
         winprop(prop, clear=True)
         log('File does not exist: %s' % file)
@@ -577,104 +691,45 @@ def deleteimgcache(params,path=ADDON_DATA_IMG_PATH,delete=False):
                 deleteimgcache(params,full_path,True)
 
 
-class PlayCinema(object):
-    def __init__(self, params):
-        self.trailer_count = xbmc.getInfoLabel('Skin.String(TrailerCount)') if xbmc.getInfoLabel('Skin.String(TrailerCount)') != '0' else False
-        self.intro_path = xbmc.getInfoLabel('Skin.String(IntroPath)')
+def selecttags(params):
+    tags = get_library_tags()
 
-        self.dbid = params.get('dbid')
-        self.dbtype = params.get('type')
-
-        if not self.dbid or not self.dbtype:
-            for i in range(30):
-                if xbmc.getInfoLabel('Container.ListItem.Label'):
-                    break
-                xbmc.sleep(100)
-
-            self.dbid = xbmc.getInfoLabel('Container.ListItem.DBID')
-            self.dbtype = xbmc.getInfoLabel('Container.ListItem.DBTYPE')
-
-        if self.dbid and self.dbtype:
-            self.run()
-        else:
-            log('Play with cinema mode: Not enough arguments')
-
-
-    def run(self):
-        clear_playlists()
-        index = 0
-
-        if self.trailer_count:
-            movies = self.get_trailers()
-            for trailer in movies:
-
-                trailer_title = '%s (%s)' % (trailer['title'], xbmc.getLocalizedString(20410))
-                trailer_rating = str(round(trailer['rating'],1))
-                trailer_thumb = trailer['art'].get('landscape') or trailer['art'].get('fanart') or trailer['art'].get('poster', '')
-
-                listitem = xbmcgui.ListItem(trailer_title)
-                listitem.setInfo('video', {'Title': trailer_title, 'mediatype': 'video', 'plot': trailer.get('plot', ''), 'year': trailer.get('year', ''), 'mpaa': trailer.get('mpaa', ''), 'rating': trailer_rating})
-                listitem.setArt({'thumb': trailer_thumb, 'clearlogo': trailer['art'].get('clearlogo', '')})
-                VIDEOPLAYLIST.add(url=trailer['trailer'], listitem=listitem, index=index)
-
-                log('Play with cinema mode: Adding trailer %s' % trailer_title)
-
-                index += 1
-
-        if self.intro_path:
-            intro = self.get_intros()
-            if intro:
-                listitem = xbmcgui.ListItem('Intro')
-                listitem.setInfo('video', {'Title': 'Intro', 'mediatype': 'video'})
-                listitem.setArt({'thumb':'special://home/addons/script.embuary.helper/resources/trailer.jpg'})
-                VIDEOPLAYLIST.add(url=intro, listitem=listitem, index=index)
-
-                log('Play with cinema mode: Adding intro %s' % intro)
-                index += 1
-
-
-        json_call('Playlist.Add',
-                    item={'%sid' % self.dbtype: int(self.dbid)},
-                    params={'playlistid': 1}
-                    )
-
-        log('Play with cinema mode: Grab your popcorn')
-
-        execute('Dialog.Close(all,true)')
-
-        json_call('Player.Open',
-                item={'playlistid': 1, 'position': 0},
-                options={'shuffled': False}
-                )
-
-
-    def get_trailers(self):
-        movies = json_call('VideoLibrary.GetMovies',
-                            properties=movie_properties,
-                            query_filter={'and': [{'field': 'playcount', 'operator': 'lessthan', 'value': '1'},{'field': 'hastrailer', 'operator': 'true', 'value': []}]},
-                            sort={'method': 'random'}, limit=int(self.trailer_count)
-                            )
+    if tags:
+        sync_library_tags(tags)
 
         try:
-            movies = movies['result']['movies']
-        except KeyError:
-            log('Play with cinema mode: No unwatched movies with available trailer found')
-            return
+            whitelist = addon_data('tags_whitelist.' + xbmc.getSkinDir() +'.data')
+        except Exception:
+            whitelist = []
 
-        return movies
+        indexlist = {}
+        selectlist = []
+        preselectlist = []
+
+        index = 0
+        for item in sorted(tags):
+            selectlist.append(item)
+            indexlist[index] = item
+            if item in whitelist:
+                preselectlist.append(index)
+            index += 1
+
+        selectdialog = DIALOG.multiselect(ADDON.getLocalizedString(32026), selectlist, preselect=preselectlist)
+
+        if selectdialog is not None and not selectdialog:
+            set_library_tags(tags, [], clear=True)
+
+        elif selectdialog is not None:
+            whitelist_new = []
+            for item in selectdialog:
+                whitelist_new.append(indexlist[item])
+
+            if whitelist != whitelist_new:
+                set_library_tags(tags, whitelist_new)
+
+    elif params.get('silent') != 'true':
+        DIALOG.ok(heading=ADDON.getLocalizedString(32000), line1=ADDON.getLocalizedString(32024))
 
 
-    def get_intros(self):
-        dirs, files = xbmcvfs.listdir(self.intro_path)
-        intros = []
-
-        for file in files:
-            if file.endswith(('.mp4', '.mkv', '.mpg', '.mpeg', '.avi', '.wmv', '.mov')):
-                intros.append(file)
-
-        if intros:
-            url = '%s%s' % (self.intro_path,random.choice(intros))
-            return url
-
-        log('Play with cinema mode: No intros found')
-        return
+def whitelisttags(params):
+    sync_library_tags(recreate=True)

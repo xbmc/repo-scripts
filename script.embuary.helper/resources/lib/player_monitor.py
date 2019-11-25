@@ -9,7 +9,6 @@ import datetime
 
 from resources.lib.helper import *
 from resources.lib.json_map import *
-from resources.lib.library import get_joined_items
 from resources.lib.image import *
 
 ########################
@@ -19,12 +18,10 @@ class PlayerMonitor(xbmc.Monitor):
     def __init__(self):
         log('Service: Player monitor started', force=True)
         self.fullscreen_lock = False
-        self.nextitem_lock = False
         self.pvr_playback = False
 
     def onNotification(self, sender, method, data):
         if method in ['Player.OnPlay', 'Player.OnStop', 'Player.OnAVChange', 'Playlist.OnAdd', 'Playlist.OnRemove', 'VideoLibrary.OnUpdate', 'AudioLibrary.OnUpdate']:
-            log('Kodi_Monitor: sender %s - method: %s  - data: %s' % (sender, method, data))
             self.data = json.loads(data)
 
         ''' Clear music or video playlist based on player content.
@@ -36,8 +33,7 @@ class PlayerMonitor(xbmc.Monitor):
         '''
         if method == 'Player.OnPlay':
             xbmc.stopSFX()
-            self.nextitem_lock = False
-            self.pvr_playback = visible('String.StartsWith(Player.Filenameandpath,pvr://)')
+            self.pvr_playback = condition('String.StartsWith(Player.Filenameandpath,pvr://)')
 
             self.get_art_info()
 
@@ -46,10 +42,9 @@ class PlayerMonitor(xbmc.Monitor):
 
             if PLAYER.isPlayingVideo() and not self.pvr_playback:
                 self.get_videoinfo()
-                self.get_nextitem(clear=True)
                 self.get_nextitem()
 
-            if PLAYER.isPlayingAudio() and not self.pvr_playback and visible('!String.IsEmpty(MusicPlayer.DBID) + [String.IsEmpty(Player.Art(thumb)) | String.IsEmpty(Player.Art(album.discart))]'):
+            if PLAYER.isPlayingAudio() and not self.pvr_playback and condition('!String.IsEmpty(MusicPlayer.DBID) + [String.IsEmpty(Player.Art(thumb)) | String.IsEmpty(Player.Art(album.discart))]'):
                 self.get_songartworks()
 
             if not self.fullscreen_lock:
@@ -58,10 +53,7 @@ class PlayerMonitor(xbmc.Monitor):
         ''' Playlist changed. Fetch nextitem again.
         '''
         if method in ['Playlist.OnAdd', 'Playlist.OnRemove'] and PLAYER.isPlayingVideo() and not self.pvr_playback:
-            if not self.nextitem_lock or method == 'Playlist.OnRemove':
-                self.get_nextitem(clear=True)
-                self.get_nextitem()
-                self.nextitem_lock = True
+            self.get_nextitem()
 
         ''' Check if multiple audio tracks are available and refetch
             artwork info for PVR playback.
@@ -78,7 +70,6 @@ class PlayerMonitor(xbmc.Monitor):
             xbmc.sleep(2500)
             if not PLAYER.isPlaying() and xbmcgui.getCurrentWindowId() not in [12005, 12006, 10028, 10500, 10138, 10160]:
                 self.fullscreen_lock = False
-                self.nextitem_lock = False
                 self.pvr_playback = False
                 self.get_nextitem(clear=True)
                 self.get_channellogo(clear=True)
@@ -98,7 +89,7 @@ class PlayerMonitor(xbmc.Monitor):
 
 
     def clear_playlists(self):
-        if self.data['position'] == 0 and visible('Skin.HasSetting(ClearPlaylist)'):
+        if self.data['position'] == 0 and condition('Skin.HasSetting(ClearPlaylist)'):
                 if self.data['playlistid'] == 0:
                     VIDEOPLAYLIST.clear()
                     log('Music playlist has been filled. Clear existing video playlist')
@@ -110,11 +101,13 @@ class PlayerMonitor(xbmc.Monitor):
 
     def do_fullscreen(self):
         xbmc.sleep(1000)
-        if visible('Skin.HasSetting(StartPlayerFullscreen)'):
+        if condition('Skin.HasSetting(StartPlayerFullscreen)'):
 
             for i in range(1,200):
                 if xbmcgui.getCurrentWindowId() in [12005, 12006]:
+                    execute('Dialog.Close(all,true)')
                     self.fullscreen_lock = True
+                    log('Playback started. Force closing all dialogs.')
                     break
 
                 elif xbmcgui.getCurrentWindowId() not in [12005, 12006, 10028, 10500, 10138, 10160]:
@@ -161,11 +154,11 @@ class PlayerMonitor(xbmc.Monitor):
         if clear or not dbid:
             return
 
-        if visible('VideoPlayer.Content(movies)'):
+        if condition('VideoPlayer.Content(movies)'):
             method = 'VideoLibrary.GetMovieDetails'
             mediatype = 'movieid'
             details = 'moviedetails'
-        elif visible('VideoPlayer.Content(episodes)'):
+        elif condition('VideoPlayer.Content(episodes)'):
             method = 'VideoLibrary.GetEpisodeDetails'
             mediatype = 'episodeid'
             details = 'episodedetails'
@@ -295,8 +288,10 @@ class PlayerMonitor(xbmc.Monitor):
 
     def get_art_info(self,clear=False):
         for art in ['Player.Icon', 'Player.Art(poster)', 'Player.Art(tvshow.poster)', 'Pvr.EPGEventIcon']:
-            if not clear:
-                width,height,ar = image_info(xbmc.getInfoLabel(art))
+            image = xbmc.getInfoLabel(art)
+
+            if not clear and image:
+                width,height,ar = image_info(image)
                 winprop(art + '.width',str(width))
                 winprop(art + '.height',str(height))
                 winprop(art + '.ar',str(ar))

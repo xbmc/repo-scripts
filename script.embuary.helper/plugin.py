@@ -19,7 +19,6 @@ from resources.lib.plugin_actions import *
 ########################
 
 class Main:
-
     def __init__(self):
         self._parse_argv()
         self.info = self.params.get('info')
@@ -30,7 +29,6 @@ class Main:
             self.actions()
         else:
             self.listing()
-
 
     def _parse_argv(self):
         base_url = sys.argv[0]
@@ -51,12 +49,10 @@ class Main:
         except Exception:
             self.params = {}
 
-
     def listing(self):
         li = list()
         PluginListing(self.params,li)
         self._additems(li)
-
 
     def getinfos(self):
         li = list()
@@ -64,18 +60,14 @@ class Main:
         self._execute(plugin,self.info)
         self._additems(li)
 
-
     def actions(self):
         plugin = PluginActions(self.params)
         self._execute(plugin,self.action)
 
-
     def _execute(self,plugin,action):
         getattr(plugin,action.lower())()
 
-
     def _additems(self,li):
-        xbmcplugin.setPluginCategory(int(sys.argv[1]), self.params.get('plugincat',''))
         xbmcplugin.addDirectoryItems(int(sys.argv[1]), li)
         xbmcplugin.endOfDirectory(handle=int(sys.argv[1]))
 
