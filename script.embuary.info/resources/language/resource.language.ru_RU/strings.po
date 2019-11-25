@@ -3,252 +3,250 @@
 # Addon id: script.embuary.info
 # Addon Provider: sualfred
 # Translators:
-# sualfred <su4lfred@gmail.com>, 2019
+# Ivan Poletsky <wiperus55@gmail.com>, 2019
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: Embuary Helper\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: 2019-11-24 08:54+0000\n"
-"Last-Translator: sualfred <su4lfred@gmail.com>, 2019\n"
-"Language-Team: German (Germany) (https://www.transifex.com/sualfred/teams/80018/de_DE/)\n"
+"Last-Translator: Ivan Poletsky <wiperus55@gmail.com>, 2019\n"
+"Language-Team: Russian (Russia) (https://www.transifex.com/sualfred/teams/80018/ru_RU/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: de_DE\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Language: ru_RU\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);\n"
 
 msgctxt "#32000"
 msgid "Error"
-msgstr "Fehler"
+msgstr "Ошибка"
 
 msgctxt "#32001"
 msgid ""
 "This is a tool to provide features to a skin and requires skin integration."
 msgstr ""
-"Dieses Tool stellt Features für Skins bereit und benötigt eine Skin-"
-"Integration."
+"Это инструмент для обеспечения функций для обложки и требует интеграции "
+"обложки."
 
 #: /resources/settings.xml
 msgctxt "#32002"
 msgid "(Get a free API key on www.omdbapi.com)"
-msgstr "(Kostenfreier API Key ist auf www.omdbapi.com erhältlich)"
+msgstr "(Получите бесплатный ключ API на www.omdbapi.com)"
 
 #: /resources/settings.xml
 msgctxt "#32003"
 msgid "Certification country"
-msgstr "Ursprungsland der Bewertungen"
+msgstr "Страна сертификации"
 
 #: /resources/lib/tmdb.py
 msgctxt "#32019"
 msgid "No information found"
-msgstr "Keine Informationen gefunden"
+msgstr "Информация не найдена"
 
 #: /resources/lib/utils.py
 msgctxt "#32022"
 msgid "Invalid TheMovieDB API key"
-msgstr "Ungültiger TheMovieDB API Key"
+msgstr "Неверный ключ API TheMovieDB"
 
 #: /default.py
 msgctxt "#32004"
 msgid "Person"
-msgstr "Person"
+msgstr "Человек"
 
 #: /default.py
 msgctxt "#32005"
 msgid "Search for"
-msgstr "Suche nach"
+msgstr "Поиск"
 
 #: /resources/skins/default/1080i/script-embuary-person.xml
 msgctxt "#32006"
 msgid "Age"
-msgstr "Alter"
+msgstr "Возраст"
 
 #: /resources/skins/default/1080i/script-embuary-person.xml
 msgctxt "#32007"
 msgid "Place of birth"
-msgstr "Geburtsort"
+msgstr "Место рождения"
 
 #: /resources/skins/default/1080i/script-embuary-person.xml
 msgctxt "#32008"
 msgid "Facts"
-msgstr "Fakten"
+msgstr "Факты"
 
 #: /resources/skins/default/1080i/script-embuary-video.xml
 msgctxt "#32009"
 msgid "Similar"
-msgstr "Ähnliches"
+msgstr "Похожее"
 
 #: /resources/skins/default/1080i/script-embuary-video.xml
 msgctxt "#32010"
 msgid "Images"
-msgstr "Bilder"
+msgstr "Изображения"
 
 #: /resources/skins/default/1080i/script-embuary-video.xml
 msgctxt "#32011"
 msgid "Premiered"
-msgstr "Veröffentlichung"
+msgstr "Премьера"
 
 #: /resources/skins/default/1080i/script-embuary-video.xml
 msgctxt "#32012"
 msgid "Retail"
-msgstr "Retail"
+msgstr "Ритейл"
 
 #: /resources/skins/default/1080i/script-embuary-video.xml
 msgctxt "#32013"
 msgid "Budget"
-msgstr "Budget"
+msgstr "Бюджет"
 
 #: /resources/skins/default/1080i/script-embuary-video.xml
 msgctxt "#32014"
 msgid "Revenue"
-msgstr "Einnahmen"
+msgstr "Кассовые сборы"
 
 #: /resources/skins/default/1080i/script-embuary-video.xml
 msgctxt "#32015"
 msgid "Awards"
-msgstr "Awards"
+msgstr "Награды"
 
 #: /resources/skins/default/1080i/script-embuary-video.xml
 msgctxt "#32016"
 msgid "Seasons"
-msgstr "Staffeln"
+msgstr "Сезоны"
 
 #: /resources/skins/default/1080i/script-embuary-person.xml
 msgctxt "#32017"
 msgid "Known for"
-msgstr "Bekannt für"
+msgstr "Известность за"
 
 #: /resources/skins/default/1080i/script-embuary-video.xml
 msgctxt "#32018"
 msgid "Crew"
-msgstr "Crew"
+msgstr "Съёмочный состав"
 
 #: /resources/settings.xml
 msgctxt "#32023"
 msgid "API key"
-msgstr "API Key"
+msgstr "Ключ API"
 
 #: /resources/settings.xml
 msgctxt "#32020"
 msgid "Caching"
-msgstr "Caching"
+msgstr "Кэширование"
 
 #: /resources/settings.xml
 msgctxt "#32021"
 msgid "Enable caching of fetched data"
-msgstr "Aktiviere Caching von abgerufenen Daten"
+msgstr "Включить кэширование извлеченных данных"
 
 #: /resources/settings.xml
 msgctxt "#32024"
 msgid "Default language"
-msgstr "Standardsprache"
+msgstr "Язык по умолчанию"
 
 #: /resources/skins/default/1080i/script-embuary-person.xml
 msgctxt "#32025"
 msgid "items in your library"
-msgstr "Einträge in der Datenbank"
+msgstr "в вашей библиотеке"
 
 #: /resources/settings.xml
 msgctxt "#32026"
 msgid "Misc."
-msgstr "Sonstiges"
+msgstr "Разное"
 
 #: /resources/settings.xml
 msgctxt "#32027"
 msgid "Hide person appearances in reality/talk/news shows"
-msgstr ""
-"Personenauftritte in Reality- / Talk- / Nachrichtensendungen ausblenden"
+msgstr "Скрыть появления человека в реалити/разговорных/новостных шоу"
 
 #: /resources/settings.xml
 msgctxt "#32028"
 msgid ""
 "Hide person appearances in specials/documentaries/behind the scenes movies"
 msgstr ""
-"Personenauftritte in Specials / Dokumentationen / Behind the Scenes-Filmen "
-"ausblenden"
+"Скрыть появления человека в спешлах/бекстейджах/документальных фильмах"
 
 #: /resources/lib/listing.py
 msgctxt "#32029"
 msgid "Top rated movies"
-msgstr "Bestbewertete Filme"
+msgstr "Лучшие фильмы"
 
 #: /resources/lib/listing.py
 msgctxt "#32030"
 msgid "Now playing movies"
-msgstr "Aktuell laufende Filme"
+msgstr "Новинки кино"
 
 #: /resources/lib/listing.py
 msgctxt "#32031"
 msgid "Upcoming movies"
-msgstr "Kommende Filme"
+msgstr "Предстоящие фильмы"
 
 #: /resources/lib/listing.py
 msgctxt "#32032"
 msgid "Popular movies"
-msgstr "Beliebte Filme"
+msgstr "Популярные фильмы"
 
 #: /resources/lib/listing.py
 msgctxt "#32033"
 msgid "Top rated TV shows"
-msgstr "Bestbewertete Serien"
+msgstr "Лучшие сериалы"
 
 #: /resources/lib/listing.py
 msgctxt "#32034"
 msgid "Popular TV shows"
-msgstr "Beliebte Serien"
+msgstr "Популярные фильмы"
 
 #: /resources/lib/listing.py
 msgctxt "#32035"
 msgid "TV shows airing today"
-msgstr "Heute laufende Serien"
+msgstr "Сериалы, выходящие сегодня"
 
 #: /resources/lib/listing.py
 msgctxt "#32036"
 msgid "TV shows airing in the next 7 days"
-msgstr "Serien-Ausstrahlungen der nächsten 7 Tage"
+msgstr "Сериалы, выходящие в течение 7 дней"
 
 #: /resources/skins/default/1080i/script-embuary-video.xml
 msgctxt "#32037"
 msgid "Collection"
-msgstr "Sammlung"
+msgstr "Коллекция"
 
 #: /resources/skins/default/1080i/script-embuary-video.xml
 msgctxt "#32039"
 msgid "Guest stars"
-msgstr "Nebendarsteller"
+msgstr "Приглашенные звезды"
 
 #: /resources/skins/default/1080i/script-embuary-video.xml
 msgctxt "#32040"
 msgid "Season"
-msgstr "Staffel"
+msgstr "Сезон"
 
 #: /plugin.py
 msgctxt "#32038"
 msgid "Widgets"
-msgstr "Widgets"
+msgstr "Виджеты"
 
 #: /resources/settings.xml
 msgctxt "#32041"
 msgid "Hide items from similar movies if they are part of the collection"
-msgstr "Ähnliche Filme ausblenden, wenn sie Teil der Sammlung sind"
+msgstr "Скрывать похожие фильмы, если они часть коллекции"
 
 #: /resources/lib/widgets.py
 msgctxt "#32042"
 msgid "Trending movies"
-msgstr "Filme im Trend"
+msgstr "Популярные фильмы"
 
 #: /resources/lib/widgets.py
 msgctxt "#32043"
 msgid "Trending shows"
-msgstr "Serien im Trend"
+msgstr "Популярные сериалы"
 
 #: /resources/settings.xml
 msgctxt "#32044"
-msgid "Hide upcoming items"
-msgstr "Verberge kommende Filme/Serien"
+msgid "Hide upcoming items in the person dialog"
+msgstr "Скрыть предстоящее в информации о человеке"
 
 #: /resources/settings.xml
 msgctxt "#32045"
 msgid "Allow items of the next [n] days"
-msgstr "Erlaube Einträge der nächsten [n] Tage"
+msgstr "Разрешить элементы следующих [n] дней"

@@ -204,7 +204,7 @@ def tmdb_search(call,query,year=None,include_adult='false'):
         params = {'query': query, 'year': year, 'include_adult': include_adult}
 
     elif call == 'tv':
-        params = {'query': query, 'year': year}
+        params = {'query': query, 'first_air_date_year': year}
 
     else:
         return ''

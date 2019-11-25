@@ -10,6 +10,7 @@ Some examples
 *  ```RunScript(script.embuary.info,call=tv,query='"Californication"')```
 *  ```RunScript(script.embuary.info,call=movie,query='"Iron Man"')```
 *  ```RunScript(script.embuary.info,call=movie,query='"Iron Man"',year=2008)```
+*  ```RunScript(script.embuary.info,call=movie,query='"Iron Man"',year=2008,exact=true)```
 
 `'" "'` is not required, but useful if a string contains special characters. which needs to be escaped.
 

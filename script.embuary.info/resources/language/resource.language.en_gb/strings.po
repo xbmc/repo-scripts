@@ -231,3 +231,13 @@ msgstr ""
 msgctxt "#32043"
 msgid "Trending shows"
 msgstr ""
+
+#: /resources/settings.xml
+msgctxt "#32044"
+msgid "Hide upcoming items"
+msgstr ""
+
+#: /resources/settings.xml
+msgctxt "#32045"
+msgid "Allow items of the next [n] days"
+msgstr ""

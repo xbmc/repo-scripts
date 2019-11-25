@@ -14,6 +14,8 @@ from resources.lib.utils import *
 ########################
 
 SIMILAR_FILTER = ADDON.getSettingBool('similar_movies_filter')
+FILTER_UPCOMING = ADDON.getSettingBool('filter_upcoming')
+FILTER_DAYDELTA = int(ADDON.getSetting('filter_daydelta'))
 
 ########################
 
@@ -167,12 +169,26 @@ class TMDBVideos(object):
 
             if collection_data['parts']:
                 set_items = sort_dict(collection_data['parts'],'release_date')
+
                 for item in set_items:
+                    ''' Filter to hide in production or rumored future movies
+                    '''
+                    if FILTER_UPCOMING:
+                        diff = date_delta(item.get('release_date', '2900-01-01'))
+                        if diff.days > FILTER_DAYDELTA:
+                            continue
+
                     list_item, is_local = tmdb_handle_movie(item,self.local_movies)
                     li.append(list_item)
 
                     if SIMILAR_FILTER:
                         self.similar_duplicate_handler.append(item['id'])
+
+            ''' Don't show sets with only 1 item
+            '''
+            if len(li) == 1:
+                self.similar_duplicate_handler = list()
+                li = list()
 
         return li
 
@@ -184,8 +200,18 @@ class TMDBVideos(object):
             similar = sort_dict(similar,'release_date',True)
 
             for item in similar:
+                ''' Filter to hide item if it's part of the collection
+                '''
                 if SIMILAR_FILTER and item['id'] in self.similar_duplicate_handler:
                    continue
+
+                ''' Filter to hide in production or rumored future movies
+                '''
+                if FILTER_UPCOMING:
+                    diff = date_delta(item.get('release_date', '2900-01-01'))
+                    if diff.days > FILTER_DAYDELTA:
+                        continue
+
                 list_item, is_local = tmdb_handle_movie(item,self.local_movies)
                 li.append(list_item)
 
@@ -193,6 +219,13 @@ class TMDBVideos(object):
             similar = sort_dict(similar,'first_air_date',True)
 
             for item in similar:
+                ''' Filter to hide in production or rumored future shows
+                '''
+                if FILTER_UPCOMING:
+                    diff = date_delta(item.get('first_air_date', '2900-01-01'))
+                    if diff.days > FILTER_DAYDELTA:
+                        continue
+
                 list_item, is_local = tmdb_handle_tvshow(item,self.local_shows)
                 li.append(list_item)
 
