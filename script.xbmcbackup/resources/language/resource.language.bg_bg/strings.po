@@ -1,0 +1,393 @@
+# Kodi Media Center language file
+# Addon Name: Backup
+# Addon id: script.xbmcbackup
+# Addon Provider: robweber
+# Translators:
+# Atanas Kovachki <crashdeburn@gmail.com>, 2014
+# Kiril <neohidra@gmail.com>, 2014-2015
+# Любомир Василев, 2015
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2017-09-23 18:37+0000\n"
+"Last-Translator: Martijn Kaijser <machine.sanctum@gmail.com>\n"
+"Language-Team: Bulgarian (http://www.transifex.com/teamxbmc/xbmc-addons/language/bg/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: bg\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "Addon Summary"
+msgid ""
+"Backup and restore your Kodi database and configuration files in the event "
+"of a crash or file corruption."
+msgstr "Добавката може да създава резервни копия и възстановява базата данни и настройките на Kodi, в случай на срив или повреда на файловете."
+
+msgctxt "Addon Description"
+msgid ""
+"Ever hosed your Kodi configuration and wished you'd had a backup? Now you "
+"can with one easy click. You can export your database, playlist, thumbnails,"
+" addons and other configuration details to any source writeable by Kodi or "
+"directly to Dropbox cloud storage. Backups can be run on demand or via a "
+"scheduler. "
+msgstr "Да сте губили всички настройки, които сте правили по Kodi? А разполагахте ли с резервно копие? Сега можете да създавате копие само с едно кликване - на базата данни, плейлистите, миниатюрите, добавките и други, в определено от вас място или директно в Dropbox. Можете да настроите и автоматично създаване на копия през определен интервал от време."
+
+msgctxt "#30010"
+msgid "Backup"
+msgstr "Резервно копие"
+
+msgctxt "#30011"
+msgid "General"
+msgstr "Основи"
+
+msgctxt "#30012"
+msgid "File Selection"
+msgstr "Избор на файлове"
+
+msgctxt "#30013"
+msgid "Scheduling"
+msgstr "Планиране"
+
+msgctxt "#30016"
+msgid "Backup"
+msgstr "Резервно копие"
+
+msgctxt "#30017"
+msgid "Restore"
+msgstr "Възстанови"
+
+msgctxt "#30018"
+msgid "Browse Path"
+msgstr "Преглеждане за път"
+
+msgctxt "#30019"
+msgid "Type Path"
+msgstr "Въвеждане на път"
+
+msgctxt "#30020"
+msgid "Browse Remote Path"
+msgstr "Прегледайте за отдалечен път"
+
+msgctxt "#30021"
+msgid "Backup Folder Name"
+msgstr "Име на папката за резервните копия"
+
+msgctxt "#30022"
+msgid "Progress Display"
+msgstr "Известяване за напредъка"
+
+msgctxt "#30023"
+msgid "Mode"
+msgstr "Режим"
+
+msgctxt "#30024"
+msgid "Type Remote Path"
+msgstr "Въведете отдалечения път"
+
+msgctxt "#30025"
+msgid "Remote Path Type"
+msgstr "Окажете пътя до папката с резервни копия"
+
+msgctxt "#30026"
+msgid "Backups to keep (0 for all)"
+msgstr "Колко резервни копия да бъдат съхранявани  (0 за всички)"
+
+msgctxt "#30027"
+msgid "Dropbox"
+msgstr "Dropbox"
+
+msgctxt "#30028"
+msgid "Dropbox Key"
+msgstr "Dropbox ключ"
+
+msgctxt "#30029"
+msgid "Dropbox Secret"
+msgstr "Dropbox секретен ключ"
+
+msgctxt "#30030"
+msgid "User Addons"
+msgstr "Добавки"
+
+msgctxt "#30031"
+msgid "Addon Data"
+msgstr "Данните на добавките"
+
+msgctxt "#30032"
+msgid "Database"
+msgstr "Базата данни"
+
+msgctxt "#30033"
+msgid "Playlist"
+msgstr "Плейлисти"
+
+msgctxt "#30034"
+msgid "Thumbnails/Fanart"
+msgstr "Миниатюри/Фен-арт"
+
+msgctxt "#30035"
+msgid "Config Files"
+msgstr "Файловете с настройки"
+
+msgctxt "#30036"
+msgid "Custom Directory 1"
+msgstr "Персонална директория 1"
+
+msgctxt "#30037"
+msgid "Custom Directory 2"
+msgstr "Персонална директория 1"
+
+msgctxt "#30038"
+msgid "Advanced Settings Detected"
+msgstr "Засечени са допълнителни настройки"
+
+msgctxt "#30039"
+msgid "The advancedsettings file should be restored first"
+msgstr "Първо трябва да бъде възстановен файла \"advancedsettings.xml\""
+
+msgctxt "#30040"
+msgid "Select Yes to restore this file and restart Kodi"
+msgstr "Изберете \"Да\" за възстановяване от файла и рестартиране на Kodi"
+
+msgctxt "#30041"
+msgid "Select No to continue"
+msgstr "Изберете \"Не\" за да продължите"
+
+msgctxt "#30042"
+msgid "Resume Restore"
+msgstr "Възобнови"
+
+msgctxt "#30043"
+msgid "The Backup addon has detected an unfinished restore"
+msgstr "Kodi Backup засече незавършено възстановяване"
+
+msgctxt "#30044"
+msgid "Would you like to continue?"
+msgstr "Искате ли да продължите?"
+
+msgctxt "#30045"
+msgid "Error: Remote path doesn't exist"
+msgstr "Грешка: Отдалеченият път не съществува"
+
+msgctxt "#30046"
+msgid "Starting"
+msgstr "Стартиране"
+
+msgctxt "#30047"
+msgid "Local Dir"
+msgstr "Локална папка"
+
+msgctxt "#30048"
+msgid "Remote Dir"
+msgstr "Отдалечена папка"
+
+msgctxt "#30049"
+msgid "Gathering file list"
+msgstr "Изграждане на списък с файлове"
+
+msgctxt "#30050"
+msgid "Remote Path exists - may have old files in it!"
+msgstr "Отдалеченият път съществува. Вероятно съдържа стари файлове!"
+
+msgctxt "#30051"
+msgid "Creating Files List"
+msgstr "Създаване на списъка с файлове"
+
+msgctxt "#30052"
+msgid "Writing file"
+msgstr "Записване на файла"
+
+msgctxt "#30053"
+msgid "Starting scheduled backup"
+msgstr "Създаване на резервно копие (по план)"
+
+msgctxt "#30054"
+msgid "Removing backup"
+msgstr "Премахване на резервно копие"
+
+msgctxt "#30056"
+msgid "Check log for Dropbox authorize URL"
+msgstr "За оторизационния URL адрес за Dropbox проверете журнала"
+
+msgctxt "#30057"
+msgid "Click OK when authorized"
+msgstr "След оторизирането натиснете \"Добре\""
+
+msgctxt "#30058"
+msgid "Dropbox Developer Code Needed"
+msgstr "Необходим е код за разработчик за Dropbox"
+
+msgctxt "#30059"
+msgid "Visit https://www.dropbox.com/developers"
+msgstr "Посетете https://www.dropbox.com/developers"
+
+msgctxt "#30060"
+msgid "Enable Scheduler"
+msgstr "Включи планировчика"
+
+msgctxt "#30061"
+msgid "Schedule"
+msgstr "Планиране"
+
+msgctxt "#30062"
+msgid "Hour of Day"
+msgstr "Час"
+
+msgctxt "#30063"
+msgid "Day of Week"
+msgstr "Ден"
+
+msgctxt "#30064"
+msgid "Cron Schedule"
+msgstr "Cron планиране"
+
+msgctxt "#30065"
+msgid "Sunday"
+msgstr "неделя"
+
+msgctxt "#30066"
+msgid "Monday"
+msgstr "понеделник"
+
+msgctxt "#30067"
+msgid "Tuesday"
+msgstr "вторник"
+
+msgctxt "#30068"
+msgid "Wednesday"
+msgstr "сряда"
+
+msgctxt "#30069"
+msgid "Thursday"
+msgstr "четвъртък"
+
+msgctxt "#30070"
+msgid "Friday"
+msgstr "петък"
+
+msgctxt "#30071"
+msgid "Saturday"
+msgstr "събота"
+
+msgctxt "#30072"
+msgid "Every Day"
+msgstr "Всеки ден"
+
+msgctxt "#30073"
+msgid "Every Week"
+msgstr "Всяка седмица"
+
+msgctxt "#30074"
+msgid "First Day of Month"
+msgstr "Първия ден на месеца"
+
+msgctxt "#30075"
+msgid "Custom Schedule"
+msgstr "Персонално планиране"
+
+msgctxt "#30076"
+msgid "Shutdown After Backup"
+msgstr "Изключвай Kodi след създаването на резервно копиране"
+
+msgctxt "#30077"
+msgid "Restart Kodi"
+msgstr "Рестартиране на Kodi"
+
+msgctxt "#30078"
+msgid "You should restart Kodi to continue"
+msgstr "Необходимо е да рестартирате Kodi за да продължите"
+
+msgctxt "#30079"
+msgid "Just Today"
+msgstr "Само днес"
+
+msgctxt "#30080"
+msgid "Profiles"
+msgstr "Профили"
+
+msgctxt "#30081"
+msgid "Scheduler will run again on"
+msgstr "Планировчика ще стартира отново на"
+
+msgctxt "#30082"
+msgid "Progress Bar"
+msgstr "Лента за напредъка"
+
+msgctxt "#30083"
+msgid "Background Progress Bar"
+msgstr "Лента за напредъка на заден план"
+
+msgctxt "#30084"
+msgid "None (Silent)"
+msgstr "Без (тих режим)"
+
+msgctxt "#30085"
+msgid "Version Warning"
+msgstr "Предупреждение за версията"
+
+msgctxt "#30086"
+msgid ""
+"This version of Kodi is different than the one used to create the archive"
+msgstr "Версията на Kodi, която ползвате е различна, от тази която се намира в архива"
+
+msgctxt "#30087"
+msgid "Compress Archives"
+msgstr "Компресирай архивите"
+
+msgctxt "#30088"
+msgid "Copying Zip Archive"
+msgstr "Копиране на .zip архива"
+
+msgctxt "#30089"
+msgid "Write Error Detected"
+msgstr "Грешка при записването на файла"
+
+msgctxt "#30090"
+msgid "The destination may not be writeable"
+msgstr "Вероятно нямате права за писане в отдалечения път"
+
+msgctxt "#30091"
+msgid "Zip archive could not be copied"
+msgstr ".zip архива не може да бъде копиран"
+
+msgctxt "#30092"
+msgid "Not all files were copied"
+msgstr "Някои файлове не бяха копирани"
+
+msgctxt "#30093"
+msgid "Delete Authorization Info"
+msgstr "Изтрий информацията за оторизиране"
+
+msgctxt "#30094"
+msgid "This will delete any OAuth token files"
+msgstr "Това ще изтрие всички идентификационни файлове на OAuth"
+
+msgctxt "#30095"
+msgid "Do you want to do this?"
+msgstr "Сигурни ли сте?"
+
+msgctxt "#30096"
+msgid "Old Zip Archive could not be deleted"
+msgstr "Старите .ZIP архиви не могат да бъдат изтрити."
+
+msgctxt "#30097"
+msgid "This needs to happen before a backup can run"
+msgstr ""
+
+msgctxt "#30098"
+msgid "Google Drive"
+msgstr "Google Диск"
+
+msgctxt "#30099"
+msgid "Open Settings"
+msgstr "Отвори настройките"
+
+msgctxt "#30100"
+msgid "Extracting Archive"
+msgstr "Извличане от архив"
+
+msgctxt "#30101"
+msgid "Error extracting the zip archive"
+msgstr "Възникна грешка при извличането от архива"

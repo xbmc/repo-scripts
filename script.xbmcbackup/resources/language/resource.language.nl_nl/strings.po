@@ -1,0 +1,398 @@
+# Kodi Media Center language file
+# Addon Name: Backup
+# Addon id: script.xbmcbackup
+# Addon Provider: robweber
+# Translators:
+# Chris Stijnen <inactive+kriss1981@transifex.com>, 2013
+# Koos van Klojum, 2013-2015
+# Martijn Kaijser <machine.sanctum@gmail.com>, 2013
+# M. de Boer <de.boer.melle@gmail.com>, 2013-2015
+# Bloksel <mgboom@gmail.com>, 2013
+# Marcel Dijkerman <inactive+Tecumseh@transifex.com>, 2012
+# Peereboominc <peereboominc@gmail.com>, 2013
+# W. de Kler <peekstra@outlook.com>, 2015
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2017-09-19 14:20+0000\n"
+"Last-Translator: Martijn Kaijser <machine.sanctum@gmail.com>\n"
+"Language-Team: Dutch (http://www.transifex.com/teamxbmc/xbmc-addons/language/nl/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: nl\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "Addon Summary"
+msgid ""
+"Backup and restore your Kodi database and configuration files in the event "
+"of a crash or file corruption."
+msgstr "Backup en herstel je Kodi database- en configuratiebestanden in geval van een crash of bestandscorruptie."
+
+msgctxt "Addon Description"
+msgid ""
+"Ever hosed your Kodi configuration and wished you'd had a backup? Now you "
+"can with one easy click. You can export your database, playlist, thumbnails,"
+" addons and other configuration details to any source writeable by Kodi or "
+"directly to Dropbox cloud storage. Backups can be run on demand or via a "
+"scheduler. "
+msgstr "Ooit je Kodi-configuratie verknald en hoopte je dat je een backup had? Nu kan dat met een simpele klik. Je kunt je bibliotheek, afspeellijsten, miniaturen, addons en andere configuratie-opties naar elke bron die door Kodi beschrijfbaar is of direct naar een Dropbox-cloudopslag exporteren. Backups kunnen op aanvraag of via planning gemaakt worden."
+
+msgctxt "#30010"
+msgid "Backup"
+msgstr "Backup"
+
+msgctxt "#30011"
+msgid "General"
+msgstr "Algemeen"
+
+msgctxt "#30012"
+msgid "File Selection"
+msgstr "Bestand Selectie"
+
+msgctxt "#30013"
+msgid "Scheduling"
+msgstr "Inplannen"
+
+msgctxt "#30016"
+msgid "Backup"
+msgstr "Backup"
+
+msgctxt "#30017"
+msgid "Restore"
+msgstr "Terugzetten"
+
+msgctxt "#30018"
+msgid "Browse Path"
+msgstr "Blader naar locatie"
+
+msgctxt "#30019"
+msgid "Type Path"
+msgstr "Type pad"
+
+msgctxt "#30020"
+msgid "Browse Remote Path"
+msgstr "Blader externe locatie"
+
+msgctxt "#30021"
+msgid "Backup Folder Name"
+msgstr "Backup Folder Naam"
+
+msgctxt "#30022"
+msgid "Progress Display"
+msgstr "Voortgangsweergave"
+
+msgctxt "#30023"
+msgid "Mode"
+msgstr "Modus"
+
+msgctxt "#30024"
+msgid "Type Remote Path"
+msgstr "Type Extern Pad"
+
+msgctxt "#30025"
+msgid "Remote Path Type"
+msgstr "Extern Pad Type"
+
+msgctxt "#30026"
+msgid "Backups to keep (0 for all)"
+msgstr "Te bewaren backups (0 voor alle)"
+
+msgctxt "#30027"
+msgid "Dropbox"
+msgstr "Dropbox"
+
+msgctxt "#30028"
+msgid "Dropbox Key"
+msgstr "Dropbox sleutel"
+
+msgctxt "#30029"
+msgid "Dropbox Secret"
+msgstr "Dropbox Geheim"
+
+msgctxt "#30030"
+msgid "User Addons"
+msgstr "Gebruiker addons"
+
+msgctxt "#30031"
+msgid "Addon Data"
+msgstr "Addon Data"
+
+msgctxt "#30032"
+msgid "Database"
+msgstr "Database"
+
+msgctxt "#30033"
+msgid "Playlist"
+msgstr "Afspeellijst"
+
+msgctxt "#30034"
+msgid "Thumbnails/Fanart"
+msgstr "Miniaturen/Fanart"
+
+msgctxt "#30035"
+msgid "Config Files"
+msgstr "Configuratiebestanden"
+
+msgctxt "#30036"
+msgid "Custom Directory 1"
+msgstr "Aangepaste Map 1"
+
+msgctxt "#30037"
+msgid "Custom Directory 2"
+msgstr "Aangepaste Map 2"
+
+msgctxt "#30038"
+msgid "Advanced Settings Detected"
+msgstr "Geavanceerde instellingen gevonden"
+
+msgctxt "#30039"
+msgid "The advancedsettings file should be restored first"
+msgstr "Het advancedsettingsbestand moet eerst teruggezet worden"
+
+msgctxt "#30040"
+msgid "Select Yes to restore this file and restart Kodi"
+msgstr "Kies Ja om dit bestand terug te zetten en Kodi te herstarten"
+
+msgctxt "#30041"
+msgid "Select No to continue"
+msgstr "Selecteer nee om door te gaan"
+
+msgctxt "#30042"
+msgid "Resume Restore"
+msgstr "Doorgaan met herstellen"
+
+msgctxt "#30043"
+msgid "The Backup addon has detected an unfinished restore"
+msgstr "De Backup add-on heeft een onafgemaakte backup gededecteerd"
+
+msgctxt "#30044"
+msgid "Would you like to continue?"
+msgstr "Wil je verdergaan?"
+
+msgctxt "#30045"
+msgid "Error: Remote path doesn't exist"
+msgstr "Fout: Extern pad bestaat niet"
+
+msgctxt "#30046"
+msgid "Starting"
+msgstr "Starten"
+
+msgctxt "#30047"
+msgid "Local Dir"
+msgstr "Lokale map"
+
+msgctxt "#30048"
+msgid "Remote Dir"
+msgstr "Externe map"
+
+msgctxt "#30049"
+msgid "Gathering file list"
+msgstr "Ophalen van bestandslijst"
+
+msgctxt "#30050"
+msgid "Remote Path exists - may have old files in it!"
+msgstr "Extern Pad bestaat - er kunnen oude bestanden in zitten!"
+
+msgctxt "#30051"
+msgid "Creating Files List"
+msgstr "Aanmaken bestandslijst "
+
+msgctxt "#30052"
+msgid "Writing file"
+msgstr "Bestand schrijven"
+
+msgctxt "#30053"
+msgid "Starting scheduled backup"
+msgstr "Start geplande backup"
+
+msgctxt "#30054"
+msgid "Removing backup"
+msgstr "Backup verwijderen"
+
+msgctxt "#30056"
+msgid "Check log for Dropbox authorize URL"
+msgstr "Controleer het log voor de Dropbox autoriseer URL"
+
+msgctxt "#30057"
+msgid "Click OK when authorized"
+msgstr "Klik OK wanneer geauthoriseerd"
+
+msgctxt "#30058"
+msgid "Dropbox Developer Code Needed"
+msgstr "Dropbox Developer Code Nodig"
+
+msgctxt "#30059"
+msgid "Visit https://www.dropbox.com/developers"
+msgstr "Bezoek https://www.dropbox.com/developers"
+
+msgctxt "#30060"
+msgid "Enable Scheduler"
+msgstr "Planner inschakelen"
+
+msgctxt "#30061"
+msgid "Schedule"
+msgstr "Planning"
+
+msgctxt "#30062"
+msgid "Hour of Day"
+msgstr "Uur van de dag"
+
+msgctxt "#30063"
+msgid "Day of Week"
+msgstr "Dag van de week"
+
+msgctxt "#30064"
+msgid "Cron Schedule"
+msgstr "Cron Rooster"
+
+msgctxt "#30065"
+msgid "Sunday"
+msgstr "Zondag"
+
+msgctxt "#30066"
+msgid "Monday"
+msgstr "Maandag"
+
+msgctxt "#30067"
+msgid "Tuesday"
+msgstr "Dinsdag"
+
+msgctxt "#30068"
+msgid "Wednesday"
+msgstr "Woensdag"
+
+msgctxt "#30069"
+msgid "Thursday"
+msgstr "Donderdag"
+
+msgctxt "#30070"
+msgid "Friday"
+msgstr "Vrijdag"
+
+msgctxt "#30071"
+msgid "Saturday"
+msgstr "Zaterdag"
+
+msgctxt "#30072"
+msgid "Every Day"
+msgstr "Iedere dag"
+
+msgctxt "#30073"
+msgid "Every Week"
+msgstr "Iedere week"
+
+msgctxt "#30074"
+msgid "First Day of Month"
+msgstr "Eerste dag van de maand"
+
+msgctxt "#30075"
+msgid "Custom Schedule"
+msgstr "Aangepast Rooster"
+
+msgctxt "#30076"
+msgid "Shutdown After Backup"
+msgstr "Afsluiten na voltooien backup"
+
+msgctxt "#30077"
+msgid "Restart Kodi"
+msgstr "Herstarten Kodi"
+
+msgctxt "#30078"
+msgid "You should restart Kodi to continue"
+msgstr "Herstart Kodi om verder te gaan"
+
+msgctxt "#30079"
+msgid "Just Today"
+msgstr "Alleen vandaag"
+
+msgctxt "#30080"
+msgid "Profiles"
+msgstr "Profielen"
+
+msgctxt "#30081"
+msgid "Scheduler will run again on"
+msgstr "Scheduler zal opnieuw worden uitgevoerd op"
+
+msgctxt "#30082"
+msgid "Progress Bar"
+msgstr "Voortgangsbalk"
+
+msgctxt "#30083"
+msgid "Background Progress Bar"
+msgstr "Voortgangsbalk in de achtergrond"
+
+msgctxt "#30084"
+msgid "None (Silent)"
+msgstr "Geen (Stil)"
+
+msgctxt "#30085"
+msgid "Version Warning"
+msgstr "Versiewaarschuwing"
+
+msgctxt "#30086"
+msgid ""
+"This version of Kodi is different than the one used to create the archive"
+msgstr "Deze versie van Kodi is anders die waarmee het archiefbestand gemaakt is."
+
+msgctxt "#30087"
+msgid "Compress Archives"
+msgstr "Comprimeer archieven "
+
+msgctxt "#30088"
+msgid "Copying Zip Archive"
+msgstr "Kopieren zip-archief"
+
+msgctxt "#30089"
+msgid "Write Error Detected"
+msgstr "Schrijf fout gedetecteerd "
+
+msgctxt "#30090"
+msgid "The destination may not be writeable"
+msgstr "De locatie kan mogelijk niet schrijfbaar zijn"
+
+msgctxt "#30091"
+msgid "Zip archive could not be copied"
+msgstr "Zip archief kan niet worden gecopieerd "
+
+msgctxt "#30092"
+msgid "Not all files were copied"
+msgstr "Niet alle bestanden werden gekopieerd"
+
+msgctxt "#30093"
+msgid "Delete Authorization Info"
+msgstr "Verwijder autorisatie gegevens"
+
+msgctxt "#30094"
+msgid "This will delete any OAuth token files"
+msgstr "Dit zal all OAuth teken bestanden verwijderen"
+
+msgctxt "#30095"
+msgid "Do you want to do this?"
+msgstr "Wilt u dit doen?"
+
+msgctxt "#30096"
+msgid "Old Zip Archive could not be deleted"
+msgstr "Oude zip archief kan niet worden verwijderd"
+
+msgctxt "#30097"
+msgid "This needs to happen before a backup can run"
+msgstr "dit moet gebeuren voordat er een backup kan worden gemaakt"
+
+msgctxt "#30098"
+msgid "Google Drive"
+msgstr "Google Drive"
+
+msgctxt "#30099"
+msgid "Open Settings"
+msgstr "Open instellingen"
+
+msgctxt "#30100"
+msgid "Extracting Archive"
+msgstr "Uitpakken van Archief"
+
+msgctxt "#30101"
+msgid "Error extracting the zip archive"
+msgstr "Fout bij uitpakken van het ziparchief"
