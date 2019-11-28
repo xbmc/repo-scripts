@@ -1,3 +1,5 @@
+3.0.6
+- Allow LCDproc protocol version 0.4
 3.0.5
 - selectable BigDigit clock format by mskalski (thanks!)
 3.0.4
