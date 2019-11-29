@@ -1,3 +1,11 @@
+2.0.10
+[upd] allow overriding headers for all hidden api calls
+
+2.0.9
+[upd] allow overriding headers for usher and hidden api calls
+[fix] decode byte responses in scraper
+[fix] usher/parser error handling
+
 2.0.8
 [upd] Mark communities endpoints and queries as deprecated
 

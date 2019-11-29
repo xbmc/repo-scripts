@@ -108,7 +108,7 @@ def complete_upload(video_id, upload_token):
 # required scope: none
 # undocumented / unsupported
 @query
-def _by_id(video_id):
-    q = HQry('videos/{video_id}', use_token=False)
+def _by_id(video_id, headers={}):
+    q = HQry('videos/{video_id}', headers=headers, use_token=False)
     q.add_urlkw(keys.VIDEO_ID, video_id)
     return q

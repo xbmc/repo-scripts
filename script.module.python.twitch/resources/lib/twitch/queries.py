@@ -10,6 +10,8 @@
     See LICENSES/GPL-3.0-only for more information.
 """
 
+from copy import deepcopy
+
 from six.moves.urllib.parse import urljoin
 
 from . import CLIENT_ID, OAUTH_TOKEN, APP_TOKEN
@@ -122,21 +124,23 @@ class HelixJsonQuery(_Query):
 
 class ApiQuery(JsonQuery):
     def __init__(self, path, headers={}, data={}, use_token=True, method=methods.GET):
-        headers.setdefault('Client-ID', CLIENT_ID)
+        _headers = deepcopy(headers)
+        _headers.setdefault('Client-ID', CLIENT_ID)
         if use_token and OAUTH_TOKEN:
-            headers.setdefault('Authorization', 'OAuth {access_token}'.format(access_token=OAUTH_TOKEN))
-        super(ApiQuery, self).__init__(_kraken_baseurl, headers, data, method)
+            _headers.setdefault('Authorization', 'OAuth {access_token}'.format(access_token=OAUTH_TOKEN))
+        super(ApiQuery, self).__init__(_kraken_baseurl, _headers, data, method)
         self.add_path(path)
 
 
 class HelixApiQuery(HelixJsonQuery):
     def __init__(self, path, headers={}, data={}, use_app_token=False, method=methods.GET):
-        headers.setdefault('Client-ID', CLIENT_ID)
+        _headers = deepcopy(headers)
+        _headers.setdefault('Client-ID', CLIENT_ID)
         if use_app_token and APP_TOKEN:
-            headers.setdefault('Authorization', 'Bearer {access_token}'.format(access_token=APP_TOKEN))
+            _headers.setdefault('Authorization', 'Bearer {access_token}'.format(access_token=APP_TOKEN))
         elif OAUTH_TOKEN:
-            headers.setdefault('Authorization', 'Bearer {access_token}'.format(access_token=OAUTH_TOKEN))
-        super(HelixApiQuery, self).__init__(_helix_baseurl, headers, data, method)
+            _headers.setdefault('Authorization', 'Bearer {access_token}'.format(access_token=OAUTH_TOKEN))
+        super(HelixApiQuery, self).__init__(_helix_baseurl, _headers, data, method)
         self._params = list()
         self.add_path(path)
 
@@ -154,37 +158,54 @@ class HelixApiQuery(HelixJsonQuery):
 
 class HiddenApiQuery(JsonQuery):
     def __init__(self, path, headers={}, data={}, use_token=True, method=methods.GET):
-        headers.setdefault('Client-ID', CLIENT_ID)
-        if use_token and OAUTH_TOKEN:
-            headers.setdefault('Authorization', 'OAuth {access_token}'.format(access_token=OAUTH_TOKEN))
-        super(HiddenApiQuery, self).__init__(_hidden_baseurl, headers, data, method)
+        _headers = deepcopy(headers)
+        if 'Client-ID' not in _headers:
+            _headers.setdefault('Client-ID', CLIENT_ID)
+        if 'Client-ID' in _headers and not _headers.get('Client-ID'):
+            del _headers['Client-ID']
+        if 'Authorization' not in _headers:
+            if use_token and OAUTH_TOKEN:
+                _headers.setdefault('Authorization', 'OAuth {access_token}'.format(access_token=OAUTH_TOKEN))
+        if 'Authorization' in _headers and not _headers.get('Authorization'):
+            del _headers['Authorization']
+        super(HiddenApiQuery, self).__init__(_hidden_baseurl, _headers, data, method)
         self.add_path(path)
 
 
 class UsherQuery(DownloadQuery):
     def __init__(self, path, headers={}, data={}, method=methods.GET):
-        headers.setdefault('Client-ID', CLIENT_ID)
-        if OAUTH_TOKEN:
-            headers.setdefault('Authorization', 'OAuth {access_token}'.format(access_token=OAUTH_TOKEN))
-        super(UsherQuery, self).__init__(_usher_baseurl, headers, data, method)
+        _headers = deepcopy(headers)
+        if 'Client-ID' not in _headers:
+            _headers.setdefault('Client-ID', CLIENT_ID)
+        if 'Client-ID' in _headers and not _headers.get('Client-ID'):
+            del _headers['Client-ID']
+        if 'Authorization' not in _headers:
+            if OAUTH_TOKEN:
+                _headers.setdefault('Authorization', 'OAuth {access_token}'.format(access_token=OAUTH_TOKEN))
+        if 'Authorization' in _headers and not _headers.get('Authorization'):
+            del _headers['Authorization']
+        super(UsherQuery, self).__init__(_usher_baseurl, _headers, data, method)
         self.add_path(path)
 
 
 class OAuthQuery(JsonQuery):
     def __init__(self, path, headers={}, data={}, method=methods.GET):
-        super(JsonQuery, self).__init__(_oauth_baseurl, headers, data, method)
+        _headers = deepcopy(headers)
+        super(JsonQuery, self).__init__(_oauth_baseurl, _headers, data, method)
         self.add_path(path)
 
 
 class ClipsQuery(DownloadQuery):
     def __init__(self, path, headers={}, data={}, method=methods.GET):
-        super(ClipsQuery, self).__init__(_clips_baseurl, headers, data, method)
+        _headers = deepcopy(headers)
+        super(ClipsQuery, self).__init__(_clips_baseurl, _headers, data, method)
         self.add_path(path)
 
 
 class UploadsQuery(DownloadQuery):
     def __init__(self, path, headers={}, data={}, method=methods.PUT):
-        super(UploadsQuery, self).__init__(_uploads_baseurl, headers, data, method)
+        _headers = deepcopy(headers)
+        super(UploadsQuery, self).__init__(_uploads_baseurl, _headers, data, method)
         self.add_path(path)
 
 
