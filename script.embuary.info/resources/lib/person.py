@@ -15,6 +15,8 @@ from resources.lib.utils import *
 FILTER_MOVIES = ADDON.getSettingBool('filter_movies')
 FILTER_SHOWS = ADDON.getSettingBool('filter_shows')
 FILTER_SHOWS_BLACKLIST = [10763,10764,10767]
+FILTER_UPCOMING = ADDON.getSettingBool('filter_upcoming')
+FILTER_DAYDELTA = int(ADDON.getSetting('filter_daydelta'))
 
 ########################
 
@@ -81,6 +83,13 @@ class TMDBPersons(object):
                             skip_movie = True
                             break
 
+            ''' Filter to hide in production or rumored future movies
+            '''
+            if FILTER_UPCOMING:
+                diff = date_delta(item.get('release_date', '2900-01-01'))
+                if diff.days > FILTER_DAYDELTA:
+                    skip_movie = True
+
             if not skip_movie and item['id'] not in duplicate_handler:
                 list_item, is_local = tmdb_handle_movie(item,self.local_movies)
                 li.append(list_item)
@@ -110,6 +119,13 @@ class TMDBPersons(object):
                         if genre in FILTER_SHOWS_BLACKLIST:
                             skip_show = True
                             break
+
+            ''' Filter to hide in production or rumored future shows
+            '''
+            if FILTER_UPCOMING:
+                diff = date_delta(item.get('first_air_date', '2900-01-01'))
+                if diff.days > FILTER_DAYDELTA:
+                    skip_show = True
 
             if not skip_show and item['id'] not in duplicate_handler:
                 list_item, is_local = tmdb_handle_tvshow(item,self.local_shows)

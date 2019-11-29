@@ -48,9 +48,12 @@ CACHE_PREFIX = ADDON_ID + '_' + ADDON_VERSION + '_' + DEFAULT_LANGUAGE + COUNTRY
 
 ########################
 
-def log(txt,loglevel=DEBUG,force=False):
+def log(txt,loglevel=DEBUG,json=False,force=False):
     if force:
         loglevel = NOTICE
+
+    if json:
+        txt = json_prettyprint(txt)
 
     if not PYTHON3:
         if isinstance(txt, str):
@@ -174,6 +177,11 @@ def date_format(value,date='short',scheme='YYYY-MM-DD'):
     return value
 
 
+def date_delta(date):
+    date = arrow.get(date, 'YYYY-MM-DD').date()
+    return date - datetime.date.today()
+
+
 def get_bool(value,string='true'):
     try:
         if value.lower() == string:
@@ -247,3 +255,7 @@ def set_plugincontent(content=None,category=None):
         xbmcplugin.setPluginCategory(int(sys.argv[1]), category)
     if content:
         xbmcplugin.setContent(int(sys.argv[1]), content)
+
+
+def json_prettyprint(string):
+    return json.dumps(string, sort_keys=True, indent=4, separators=(',', ': '))
