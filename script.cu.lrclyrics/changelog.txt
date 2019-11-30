@@ -1,3 +1,13 @@
+v6.0.4
+- handle dialog.close()
+- create listitems offscreen
+
+v6.0.3
+- use threading lock
+
+v6.0.2
+- don't display/focus the first line from the start of the song
+
 v6.0.1
 - bump
 

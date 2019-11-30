@@ -3,7 +3,6 @@ import sys
 import os
 import re
 import time
-import _thread
 import threading
 import xbmc
 import xbmcgui
@@ -296,7 +295,7 @@ class MAIN():
                 if lyrics.lyrics:
                     # signal the gui thread to display the next lyrics
                     WIN.setProperty('culrc.newlyrics', 'TRUE')
-                    # double-check if we're still on the  visualisation screen and check if gui is already running
+                    # double-check if we're still on the visualisation screen and check if gui is already running
                     if xbmc.getCondVisibility('Window.IsVisible(12006)') and not WIN.getProperty('culrc.guirunning') == 'TRUE':
                         WIN.setProperty('culrc.guirunning', 'TRUE')
                         gui = guiThread(mode=self.mode, save=self.save_lyrics_to_file, remove=self.remove_lyrics_from_memory, delete=self.delete_lyrics, function=self.return_time)
@@ -441,6 +440,9 @@ class GUI(xbmcgui.WindowXMLDialog):
             elif WIN.getProperty('culrc.nolyrics') == 'TRUE':
                 # no lyrics, close the gui
                 self.exit_gui('close')
+            elif not xbmc.getCondVisibility('Window.IsVisible(12006)'):
+                # we're not on the visualisation screen anymore
+                self.exit_gui('quit')
             xbmc.sleep(100)
         # music ended, close the gui
         if (not xbmc.Player().isPlayingAudio()):
@@ -453,7 +455,7 @@ class GUI(xbmcgui.WindowXMLDialog):
         WIN.clearProperty('culrc.newlyrics')
         WIN.clearProperty('culrc.nolyrics')
         WIN.clearProperty('culrc.haslist')
-        self.lock = _thread.allocate_lock()
+        self.lock = threading.Lock()
         self.timer = None
         self.allowtimer = True
         self.refreshing = False
@@ -465,7 +467,7 @@ class GUI(xbmcgui.WindowXMLDialog):
 
     def get_page_lines(self):
         self.text.setVisible(False)
-        listitem = xbmcgui.ListItem()
+        listitem = xbmcgui.ListItem(offscreen=True)
         while xbmc.getInfoLabel('Container(110).NumPages') != '2':
             self.getControl(110).addItem(listitem)
             xbmc.sleep(50)
@@ -534,7 +536,7 @@ class GUI(xbmcgui.WindowXMLDialog):
             self.parser_lyrics(lyrics.lyrics)
             for num, (time, line) in enumerate(self.pOverlay):
                 parts = self.get_parts(line)
-                listitem = xbmcgui.ListItem(line)
+                listitem = xbmcgui.ListItem(line, offscreen=True)
                 for count, item in enumerate(parts):
                     listitem.setProperty('part%i' % (count + 1), item)
                 delta = 100000 # in case duration of the last line is undefined
@@ -548,7 +550,7 @@ class GUI(xbmcgui.WindowXMLDialog):
             splitLyrics = lyrics.lyrics.splitlines()
             for line in splitLyrics:
                 parts = self.get_parts(line)
-                listitem = xbmcgui.ListItem(line)
+                listitem = xbmcgui.ListItem(line, offscreen=True)
                 for count, item in enumerate(parts):
                     listitem.setProperty('part%i' % (count + 1), item)
                 self.text.addItem(listitem)
@@ -604,6 +606,8 @@ class GUI(xbmcgui.WindowXMLDialog):
                 for time in times:
                     self.pOverlay.append((time, x))
         self.pOverlay.sort()
+        # don't display/focus the first line from the start of the song
+        self.pOverlay.insert(0, (00.00, ''))
         if ADDON.getSettingBool('strip'):
             poplist = []
             prev_time = []
@@ -622,7 +626,7 @@ class GUI(xbmcgui.WindowXMLDialog):
     def prepare_list(self, list):
         listitems = []
         for song in list:
-            listitem = xbmcgui.ListItem(song[0])
+            listitem = xbmcgui.ListItem(song[0], offscreen=True)
             listitem.setProperty('lyric', str(song))
             listitem.setProperty('source', lyrics.source)
             listitems.append(listitem)
