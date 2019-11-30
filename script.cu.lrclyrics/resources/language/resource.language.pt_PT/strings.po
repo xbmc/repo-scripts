@@ -1,0 +1,129 @@
+# Kodi Media Center language file
+# Addon Name: CU LRC Lyrics
+# Addon id: script.cu.lrclyrics
+# Addon Provider: Taxigps|ronie
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: Portuguese (http://www.transifex.com/projects/p/xbmc-addons/language/pt/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: pt\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#32000"
+msgid "File"
+msgstr "Ficheiro"
+
+msgctxt "#32001"
+msgid "No lyrics found!"
+msgstr "Não foram encontradas letras!"
+
+msgctxt "#32002"
+msgid "Embedded"
+msgstr "Embutidas"
+
+msgctxt "#32004"
+msgid "Searching lyrics..."
+msgstr "Procurando letras..."
+
+msgctxt "#32101"
+msgid "Save lyrics to lyrics folder"
+msgstr "Gravar letras na pasta das letras"
+
+msgctxt "#32102"
+msgid "- Lyrics folder"
+msgstr "Pasta para guardar"
+
+msgctxt "#32103"
+msgid "- Save format"
+msgstr "- Guardar no formato"
+
+msgctxt "#32104"
+msgid "%N %A - %T"
+msgstr "%N %A - %T"
+
+msgctxt "#32105"
+msgid "%A\\%T"
+msgstr "%A\\%T"
+
+msgctxt "#32106"
+msgid "Use only filename for search"
+msgstr "Usar apenas nome do ficheiro para busca"
+
+msgctxt "#32107"
+msgid "Filename format"
+msgstr "Formato do nome do ficheiro"
+
+msgctxt "#32108"
+msgid "%A - %T"
+msgstr "%A - %T"
+
+msgctxt "#32109"
+msgid "%A\\%B\\%T"
+msgstr "%A\\%B\\%T"
+
+msgctxt "#32110"
+msgid "%A\\%B\\%N %T"
+msgstr "%A\\%B\\%N %T"
+
+msgctxt "#32111"
+msgid "Same name lyrics saved in sub folder"
+msgstr "Guardar letras com o mesmo nome numa sub-pasta"
+
+msgctxt "#32112"
+msgid "- Sub folder name"
+msgstr "- Nome da sub-pasta"
+
+msgctxt "#32113"
+msgid "Save lyrics to song folder"
+msgstr "Gravar letras na pasta das músicas"
+
+msgctxt "#32150"
+msgid "Scrapers"
+msgstr "Colectores"
+
+msgctxt "#32151"
+msgid "Options"
+msgstr "Opções"
+
+msgctxt "#32152"
+msgid "Search for embedded lyrics"
+msgstr "Procurar letras embutidas"
+
+msgctxt "#32153"
+msgid "Search for local lyrics files"
+msgstr "Procurar ficheiros locais de letras"
+
+msgctxt "#32154"
+msgid "Synchronised lyrics scrapers"
+msgstr "Colectores de letras sincronizadas"
+
+msgctxt "#32155"
+msgid "Regular lyrics scrapers"
+msgstr "Colectores de letras normais"
+
+msgctxt "#32156"
+msgid "Display lyrics automatically"
+msgstr "Mostrar letras automaticamente"
+
+msgctxt "#32157"
+msgid "Clean song title (remove part in brackets)"
+msgstr "Limpar nome da música (remover parênteses)"
+
+msgctxt "#32158"
+msgid "Script is already running!"
+msgstr "O scrip já está em execução!"
+
+msgctxt "#32159"
+msgid "Enable debug logging"
+msgstr "Activar o registo de depuração"
+
+msgctxt "#32199"
+msgid "CU LRC Lyrics"
+msgstr "CU LRC Lyrics"

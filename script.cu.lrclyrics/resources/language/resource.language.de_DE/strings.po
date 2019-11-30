@@ -1,0 +1,212 @@
+# Kodi Media Center language file
+# Addon Name: CU LRC Lyrics
+# Addon id: script.cu.lrclyrics
+# Addon Provider: Taxigps|ronie
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: German (http://www.transifex.com/projects/p/xbmc-addons/language/de/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: de\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#Script labels
+
+msgctxt "#32000"
+msgid "File"
+msgstr "Datei"
+
+msgctxt "#32001"
+msgid "No lyrics found!"
+msgstr "Kein Songtext gefunden!"
+
+msgctxt "#32002"
+msgid "Embedded"
+msgstr "Eingebettet"
+
+msgctxt "#32003"
+msgid "Lyrics offset"
+msgstr "Songtextversatz"
+
+msgctxt "#32004"
+msgid "Searching lyrics..."
+msgstr "Songtext wird gesucht..."
+
+msgctxt "#32005"
+msgid "Select lyrics:"
+msgstr "Wähle Songtext:"
+
+msgctxt "#32006"
+msgid "Select different lyrics"
+msgstr "Wähle anderen Songtext"
+
+msgctxt "#32007"
+msgid "Manually sync lyrics"
+msgstr "Synchroniesere Songtext manuell"
+
+msgctxt "#32008"
+msgid "Delayed by: %ss"
+msgstr "Verzögert um: %s"
+
+msgctxt "#32009"
+msgid "Ahead by: %ss"
+msgstr "Beschleunigt um: %s"
+
+#empty strings from id 32010 to 32100
+#Settings labels
+
+msgctxt "#32101"
+msgid "Search and save lyrics in separate lyrics folder"
+msgstr "Suche und spreichere Songtexte in separatem Songtextordner"
+
+msgctxt "#32102"
+msgid "- Lyrics folder"
+msgstr "- Songtextordner"
+
+msgctxt "#32103"
+msgid "- Filename format"
+msgstr "- Dateinamenformat"
+
+msgctxt "#32104"
+msgid "%N %A - %T"
+msgstr "%N %A - %T"
+
+msgctxt "#32105"
+msgid "%A\\%T"
+msgstr "%A\\%T"
+
+msgctxt "#32106"
+msgid "Use only filename for search"
+msgstr "Nur den Dateinamen für die Suche verwenden"
+
+msgctxt "#32107"
+msgid "Filename format"
+msgstr "Dateinamensformat"
+
+msgctxt "#32108"
+msgid "%A - %T"
+msgstr "%A - %T"
+
+msgctxt "#32109"
+msgid "%A\\%B\\%T"
+msgstr "%A\\%B\\%T"
+
+msgctxt "#32110"
+msgid "%A\\%B\\%N %T"
+msgstr "%A\\%B\\%N %T"
+
+msgctxt "#32111"
+msgid "Lyrics are in a subfolder"
+msgstr "Songtexte sind im Unterordner"
+
+msgctxt "#32112"
+msgid "- Subfolder name"
+msgstr "- Unterordnername"
+
+msgctxt "#32113"
+msgid "Search and save lyrics in song folder"
+msgstr "Suche und speichere Songtexte im Songordner"
+
+msgctxt "#32114"
+msgid "%N - %A - %T"
+msgstr ""
+
+msgctxt "#32115"
+msgid "Display options"
+msgstr "Anzeigeoptionen"
+
+msgctxt "#32116"
+msgid "Search options"
+msgstr "Suchoptionen"
+
+msgctxt "#32117"
+msgid "Lyrics files"
+msgstr "Songtextdateien"
+
+msgctxt "#32118"
+msgid "Debugging"
+msgstr "Fehlersuche"
+
+#empty strings from id 32119 to 32148
+
+msgctxt "#32149"
+msgid "Expert"
+msgstr "Experte"
+
+msgctxt "#32150"
+msgid "Scrapers"
+msgstr "Scraper"
+
+msgctxt "#32151"
+msgid "Options"
+msgstr "Optionen"
+
+msgctxt "#32152"
+msgid "Search for embedded lyrics"
+msgstr "Suche nach eingebetteten Songtexten"
+
+msgctxt "#32153"
+msgid "Search for local lyrics files"
+msgstr "Nach lokalen Songtextdateien suchen"
+
+msgctxt "#32154"
+msgid "Synchronised lyrics scrapers"
+msgstr "Synchronisierte Songtext-Informationsanbieter"
+
+msgctxt "#32155"
+msgid "Regular lyrics scrapers"
+msgstr "Regulärer Songtext-Informationsanbieter"
+
+msgctxt "#32156"
+msgid "Display lyrics automatically"
+msgstr "Songtexte automatisch anzeigen"
+
+msgctxt "#32157"
+msgid "Clean song title (remove part in brackets)"
+msgstr "Songtitel bereinigen (Teil in Klammern entfernen)"
+
+msgctxt "#32158"
+msgid "Script is already running!"
+msgstr "Skript läuft bereits!"
+
+msgctxt "#32159"
+msgid "Enable debug logging"
+msgstr "Fehler-Protokollierung aktivieren"
+
+msgctxt "#32160"
+msgid "Hide notifications"
+msgstr "Benachrichtigungen ausblenden"
+
+msgctxt "#32161"
+msgid "Remove Chinese/Korean text from lyrics"
+msgstr "Entferne chinesischen/koreanischen Text von Songtexten"
+
+msgctxt "#32162"
+msgid "Scraper test"
+msgstr "Teste Informationsanbieter"
+
+msgctxt "#32163"
+msgid "Testing: %s"
+msgstr "Teste: %s"
+
+msgctxt "#32164"
+msgid "All scrapers are working ok"
+msgstr "Alle Informationsanbieter funktionieren"
+
+msgctxt "#32165"
+msgid "Failed scrapers: %s"
+msgstr "Fehlgeschlagene Informationsanbieter: %s"
+
+msgctxt "#32166"
+msgid "Time offset for synchronised lyrics"
+msgstr "Zeitversatz für synchronisierte Songtexte"
+
+msgctxt "#32167"
+msgid "Delete lyrics"
+msgstr "Gelösche Songtexte"

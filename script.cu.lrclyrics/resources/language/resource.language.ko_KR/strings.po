@@ -1,0 +1,129 @@
+# Kodi Media Center language file
+# Addon Name: CU LRC Lyrics
+# Addon id: script.cu.lrclyrics
+# Addon Provider: Taxigps|ronie
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: Korean (http://www.transifex.com/projects/p/xbmc-addons/language/ko/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ko\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgctxt "#32000"
+msgid "File"
+msgstr "파일"
+
+msgctxt "#32001"
+msgid "No lyrics found!"
+msgstr "가사 찾을 수 없음!"
+
+msgctxt "#32002"
+msgid "Embedded"
+msgstr "내장"
+
+msgctxt "#32004"
+msgid "Searching lyrics..."
+msgstr "가사 찾는 중..."
+
+msgctxt "#32101"
+msgid "Save lyrics to lyrics folder"
+msgstr "가사 저장"
+
+msgctxt "#32102"
+msgid "- Lyrics folder"
+msgstr "저장 폴더"
+
+msgctxt "#32103"
+msgid "- Save format"
+msgstr "- 저장 형식"
+
+msgctxt "#32104"
+msgid "%N %A - %T"
+msgstr "%N %A - %T"
+
+msgctxt "#32105"
+msgid "%A\\%T"
+msgstr "%A\\%T"
+
+msgctxt "#32106"
+msgid "Use only filename for search"
+msgstr "검색에 파일명만 사용"
+
+msgctxt "#32107"
+msgid "Filename format"
+msgstr "파일이름 형식"
+
+msgctxt "#32108"
+msgid "%A - %T"
+msgstr "%A - %T"
+
+msgctxt "#32109"
+msgid "%A\\%B\\%T"
+msgstr "%A\\%B\\%T"
+
+msgctxt "#32110"
+msgid "%A\\%B\\%N %T"
+msgstr "%A\\%B\\%N %T"
+
+msgctxt "#32111"
+msgid "Same name lyrics saved in sub folder"
+msgstr "하위 폴더에서 같은 이름의 가사 불러오기"
+
+msgctxt "#32112"
+msgid "- Sub folder name"
+msgstr "- 하위 폴더 이름"
+
+msgctxt "#32113"
+msgid "Save lyrics to song folder"
+msgstr "노래 폴더에 가사 저장"
+
+msgctxt "#32150"
+msgid "Scrapers"
+msgstr "정보수집기"
+
+msgctxt "#32151"
+msgid "Options"
+msgstr "옵션"
+
+msgctxt "#32152"
+msgid "Search for embedded lyrics"
+msgstr "내장된 가사 찾기"
+
+msgctxt "#32153"
+msgid "Search for local lyrics files"
+msgstr "로컬 가사 파일 찾기"
+
+msgctxt "#32154"
+msgid "Synchronised lyrics scrapers"
+msgstr "동기화 가사 수집기"
+
+msgctxt "#32155"
+msgid "Regular lyrics scrapers"
+msgstr "일반 가사 수집기"
+
+msgctxt "#32156"
+msgid "Display lyrics automatically"
+msgstr "가사 자동 표시"
+
+msgctxt "#32157"
+msgid "Clean song title (remove part in brackets)"
+msgstr "노래 제목 정리 (대괄호 부분 제거)"
+
+msgctxt "#32158"
+msgid "Script is already running!"
+msgstr "스크립트가 이미 실행 중입니다!"
+
+msgctxt "#32159"
+msgid "Enable debug logging"
+msgstr "디버그 로그 사용"
+
+msgctxt "#32199"
+msgid "CU LRC Lyrics"
+msgstr "CU LRC Lyrics"

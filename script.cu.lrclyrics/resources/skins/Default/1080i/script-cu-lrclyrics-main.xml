@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<window>
+	<animation type="WindowOpen" reversible="false">
+		<effect type="zoom" start="80" end="100" center="960,540" delay="160" tween="back" time="240" />
+		<effect type="fade" delay="160" end="100" time="240" />
+	</animation>
+	<animation type="WindowClose" reversible="false">
+		<effect type="zoom" start="100" end="80" center="960,540" easing="in" tween="back" time="240" />
+		<effect type="fade" start="100" end="0" time="240" />
+	</animation>
+	<depth>0.50</depth>
+	<coordinates>
+		<left>300</left>
+		<top>80</top>
+	</coordinates>
+	<controls>
+		<control type="image">
+			<description>background image</description>
+			<left>-1920</left>
+			<top>-1080</top>
+			<width>5760</width>
+			<height>3240</height>
+			<animation effect="fade" start="0" end="100" time="300">WindowOpen</animation>
+			<animation effect="fade" start="100" end="0" time="200">WindowClose</animation>
+			<texture colordiffuse="C2FFFFFF">culrc-black.png</texture>
+		</control>
+		<control type="image">
+			<description>background image</description>
+			<left>0</left>
+			<top>0</top>
+			<width>1320</width>
+			<height>780</height>
+			<texture border="2">culrc-dialog-bg-solid.png</texture>
+		</control>
+		<control type="image">
+			<description>Dialog Header image</description>
+			<left>0</left>
+			<top>0</top>
+			<width>1320</width>
+			<height>70</height>
+			<texture colordiffuse="FF12B2E7" border="2">culrc-white70.png</texture>
+		</control>
+		<control type="label">
+			<description>header label</description>
+			<textoffsetx>70</textoffsetx>
+			<left>-30</left>
+			<top>0</top>
+			<width>1320</width>
+			<height>70</height>
+			<font>font32_title</font>
+			<label>CU LRC Lyrics</label>
+			<align>left</align>
+			<aligny>center</aligny>
+			<shadowcolor>black</shadowcolor>
+		</control>
+		<control type="button">
+			<description>background close area</description>
+			<left>-1920</left>
+			<top>-1080</top>
+			<width>5760</width>
+			<height>3240</height>
+			<texturefocus>-</texturefocus>
+			<texturenofocus>-</texturenofocus>
+			<onclick>Action(close)</onclick>
+		</control>
+		<control type="button">
+			<description>button overlay to avoid closing in dialog area</description>
+			<left>0</left>
+			<top>0</top>
+			<width>1320</width>
+			<height>780</height>
+			<texturefocus>-</texturefocus>
+			<texturenofocus>-</texturenofocus>
+			<onclick>noop</onclick>
+		</control>
+		<control type="radiobutton">
+			<description>logo</description>
+			<left>1320</left>
+			<top>11</top>
+			<width>48</width>
+			<height>48</height>
+			<radiowidth>48</radiowidth>
+			<radioheight>48</radioheight>
+			<texturefocus>-</texturefocus>
+			<texturenofocus>-</texturenofocus>
+			<label></label>
+			<animation effect="slide" end="-70,0" time="0" condition="true">Conditional</animation>
+			<textureradioofffocus colordiffuse="EEFFFFFF">culrc-close.png</textureradioofffocus>
+			<textureradiooffnofocus colordiffuse="EEFFFFFF">culrc-logo.png</textureradiooffnofocus>
+			<textureradioonfocus colordiffuse="EEFFFFFF">culrc-close.png</textureradioonfocus>
+			<textureradioonnofocus colordiffuse="EEFFFFFF">culrc-logo.png</textureradioonnofocus>
+			<onclick>Action(close)</onclick>
+		</control>
+		<!-- ** Required ** Do not change <id> or <type> (Lyrics, will autoscroll if lrc based lyrics are shown) -->
+		<control type="list" id="110">
+			<left>10</left>
+			<top>110</top>
+			<width>1300</width>
+			<height>600</height>
+			<onleft>111</onleft>
+			<onright>111</onright>
+			<onup>110</onup>
+			<ondown>110</ondown>
+			<pagecontrol>111</pagecontrol>
+			<scrolltime>200</scrolltime>
+			<itemlayout height="60">
+				<control type="label">
+					<left>0</left>
+					<top>0</top>
+					<width>1300</width>
+					<height>60</height>
+					<font>font14</font>
+					<aligny>center</aligny>
+					<align>center</align>
+					<label fallback="--">$INFO[ListItem.Label]</label>
+				</control>
+			</itemlayout>
+			<focusedlayout height="60">
+				<control type="label">
+					<left>0</left>
+					<top>0</top>
+					<width>1300</width>
+					<height>60</height>
+					<font>font14</font>
+					<aligny>center</aligny>
+					<align>center</align>
+					<shadowcolor>black</shadowcolor>
+					<textcolor>FF12B2E7</textcolor>
+					<label fallback="--">$INFO[ListItem.Label]</label>
+				</control>
+			</focusedlayout>
+		</control>
+		<control type="label">
+			<description>Pick label</description>
+			<left>10</left>
+			<top>0</top>
+			<width>1300</width>
+			<height>70</height>
+			<align>center</align>
+			<aligny>center</aligny>
+			<font>font32_title</font>
+			<label>$ADDON[script.cu.lrclyrics 32005]</label>
+			<shadowcolor>black</shadowcolor>
+			<visible>Control.IsVisible(120) + !Control.IsVisible(110)</visible>
+		</control>
+		<!-- ** Required ** Do not change <id> or <type> (Lyrics Chooser, if multiple lyrics are available) -->
+		<control type="list" id="120">
+			<left>10</left>
+			<top>110</top>
+			<width>1300</width>
+			<height>600</height>
+			<onleft>121</onleft>
+			<onright>121</onright>
+			<onup>120</onup>
+			<ondown>120</ondown>
+			<pagecontrol>121</pagecontrol>
+			<scrolltime>200</scrolltime>
+			<animation effect="slide" start="0,0" end="20,0" time="0" condition="!Control.IsVisible(121)">Conditional</animation>
+			<itemlayout height="40">
+				<control type="label">
+					<left>10</left>
+					<top>0</top>
+					<width>530</width>
+					<height>40</height>
+					<font>font14</font>
+					<aligny>center</aligny>
+					<label>$INFO[ListItem.Label]</label>
+				</control>
+			</itemlayout>
+			<focusedlayout height="40">
+				<control type="label">
+					<left>10</left>
+					<top>0</top>
+					<width>530</width>
+					<height>40</height>
+					<font>font14</font>
+					<aligny>center</aligny>
+					<label>$INFO[ListItem.Label]</label>
+					<textcolor>FF12B2E7</textcolor>
+				</control>
+			</focusedlayout>
+		</control>
+		<control type="button">
+			<left>636</left>
+			<top>795</top>
+			<width>48</width>
+			<height>24</height>
+			<texturefocus colordiffuse="FF12B2E7">culrc-arrowdown.png</texturefocus>
+			<texturenofocus colordiffuse="FF12B2E7">culrc-arrowdown.png</texturenofocus>
+			<animation effect="zoom" start="100,0" end="100,100" center="auto" time="200" delay="10">VisibleChange</animation>
+			<animation effect="zoom" start="100,0" end="100,100" delay="500" center="auto" time="200">WindowOpen</animation>
+			<animation effect="zoom" start="100,100" end="100,0" center="auto" time="200">WindowClose</animation>
+			<onclick>SetFocus(110)</onclick>
+			<onclick>PageDown</onclick>
+			<visible>Container(110).HasNext + Control.IsVisible(110)</visible>
+		</control>
+		<control type="button">
+			<left>636</left>
+			<top>-40</top>
+			<width>48</width>
+			<height>24</height>
+			<texturefocus colordiffuse="FF12B2E7" flipy="true">culrc-arrowdown.png</texturefocus>
+			<texturenofocus colordiffuse="FF12B2E7" flipy="true">culrc-arrowdown.png</texturenofocus>
+			<animation effect="zoom" start="100,0" end="100,100" center="auto" time="200" delay="10">VisibleChange</animation>
+			<animation effect="zoom" start="100,0" end="100,100" delay="500" center="auto" time="200">WindowOpen</animation>
+			<animation effect="zoom" start="100,100" end="100,0" center="auto" time="200">WindowClose</animation>
+			<onclick>SetFocus(110)</onclick>
+			<onclick>PageUp</onclick>
+			<visible>Container(110).HasPrevious + Control.IsVisible(110)</visible>
+		</control>
+		<control type="image">
+			<description>lyricslist</description>
+			<left>15</left>
+			<top>710</top>
+			<width>64</width>
+			<height>64</height>
+			<texture>culrc-contextmenu.png</texture>
+			<visible>!String.IsEmpty(Window(Home).Property(culrc.haslist))</visible>
+		</control>
+		<control type="label">
+			<description>Scraper label</description>
+			<left>0</left>
+			<top>740</top>
+			<width>1300</width>
+			<height>30</height>
+			<label>$LOCALIZE[21870]: $INFO[Control.GetLabel(200)]</label>
+			<font>font12</font>
+			<align>right</align>
+			<aligny>center</aligny>
+			<textcolor>FF999999</textcolor>
+			<shadowcolor>black</shadowcolor>
+		</control>
+		<!-- ** Required ** Do not change <id> or <type> (name of the used scraper and optionally the number of found lyrics) -->
+		<control type="label" id="200">
+			<description>Scraper label</description>
+			<visible>false</visible>
+		</control>
+	</controls>
+</window>
