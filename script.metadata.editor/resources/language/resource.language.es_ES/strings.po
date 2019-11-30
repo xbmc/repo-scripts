@@ -1,0 +1,239 @@
+# Metadata Editor language file
+# Addon Name: Metadata Editor
+# Addon id: script.metadata.editor
+# Addon Provider: sualfred
+# Translators:
+# Bartolome Soriano <bsoriano@gmail.com>, 2019
+# 
+msgid ""
+msgstr ""
+"Project-Id-Version: Metadata Editor\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2019-11-07 08:05+0000\n"
+"Last-Translator: Bartolome Soriano <bsoriano@gmail.com>, 2019\n"
+"Language-Team: Spanish (Spain) (https://www.transifex.com/sualfred/teams/80018/es_ES/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: es_ES\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: /addon.xml
+msgctxt "#32000"
+msgid "Metadata Editor"
+msgstr "Editor de Meta datos"
+
+#: /resources/lib/dialog.py
+msgctxt "#32001"
+msgid "User rating"
+msgstr "Valorización de usuario"
+
+#: /resources/lib/dialog_videogenres.py
+msgctxt "#32002"
+msgid "Available entries"
+msgstr "Entradas disponibles"
+
+#: /addon.xml
+msgctxt "#32003"
+msgid "Add/remove available tags"
+msgstr "Adicionar/Eliminar Tags disponibles"
+
+#: /addon.xml
+msgctxt "#32004"
+msgid "Add/remove available genres"
+msgstr "Adicionar/Eliminar Géneros disponibles"
+
+#: /resources/lib/utils.py
+msgctxt "#32005"
+msgid "Add new item"
+msgstr "Adicionar ítem nuevo"
+
+#: /resources/lib/utils.py
+msgctxt "#32006"
+msgid "Modify current list"
+msgstr "Modificar lista actual"
+
+#: /resources/lib/utils.py
+msgctxt "#32007"
+msgid "Select from available items"
+msgstr "Seleccionar de ítems disponibles"
+
+#: /context.py
+msgctxt "#32008"
+msgid "Remove favourite tag"
+msgstr "Eliminar tag de favorito"
+
+#: /context.py
+msgctxt "#32009"
+msgid "Add favourite tag"
+msgstr "Adicionar tag de favorito"
+
+#: /context.py
+msgctxt "#32010"
+msgid "Open editor"
+msgstr "Abrir Editor"
+
+#: /resources/lib/utils.py
+msgctxt "#32011"
+msgid "Enter floating number"
+msgstr "Digite número de punto flotante"
+
+#: /resources/lib/utils.py
+msgctxt "#32012"
+msgid "Select source"
+msgstr "Seleccionar fuente"
+
+#: /resources/lib/utils.py
+msgctxt "#32013"
+msgid "Available sources"
+msgstr "Fuentes disponibles"
+
+#: /resources/lib/utils.py
+msgctxt "#32014"
+msgid "Default source"
+msgstr "Fuente predeterminada"
+
+#: /resources/lib/utils.py
+msgctxt "#32015"
+msgid "Select default source"
+msgstr "Seleccionar fuente predeterminada"
+
+#: /resources/lib/utils.py
+msgctxt "#32016"
+msgid "Edit ratings and votes"
+msgstr "Editar valorización y votos"
+
+#: /resources/lib/utils.py
+msgctxt "#32017"
+msgid "Add source"
+msgstr "Adicionar fuente"
+
+#: /resources/lib/utils.py
+msgctxt "#32018"
+msgid "Only values between 1.0 and 10.0 are allowed."
+msgstr "Sólo se permiten valores entre 1.0 y 10.0."
+
+#: /resources/lib/utils.py
+msgctxt "#32019"
+msgid "Attention"
+msgstr "Atención"
+
+#: /resources/lib/utils.py
+msgctxt "#32020"
+msgid "Set as default?"
+msgstr "¿Establecer como predeterminado?"
+
+#: /resources/settings.xml
+msgctxt "#32021"
+msgid "Enable .nfo updating for movies, TV shows and music videos"
+msgstr "Activar actualización de .nfo para películas, series TV y vídeoclips"
+
+#: /resources/lib/dialog_metadata.py
+msgctxt "#32022"
+msgid "value unkown (missing Kodi feature)"
+msgstr "valor desconocido (funcionalidad faltante en Kodi)"
+
+#: /resources/lib/dialog_metadata.py
+msgctxt "#32023"
+msgid "Record label"
+msgstr "Estudio de grabación"
+
+#: /default.py
+msgctxt "#32024"
+msgid "Please use the context menu on a library item to run this script."
+msgstr ""
+"Por favor utilice el menú de contexto sobre un ítem de su colección para "
+"ejecutar este script."
+
+#: /resources/settings.xml
+msgctxt "#32025"
+msgid "Preferred TMDb language"
+msgstr "Idioma preferido en TMDb"
+
+#: /resources/settings.xml
+msgctxt "#32026"
+msgid "TV show scraper related settings"
+msgstr "Ajustes relacionados con el scraper de Series TV"
+
+#: /resources/settings.xml
+msgctxt "#32027"
+msgid "Library is based on informations of"
+msgstr "Colección está basada en informaciones de"
+
+#: /resources/settings.xml
+msgctxt "#32028"
+msgid "ListItem.IMDBNumber fallback value source"
+msgstr "Fuente para valor alternativo de ListItem.IMDBNumber"
+
+#: /resources/settings.xml
+msgctxt "#32029"
+msgid "Enable JSON logging"
+msgstr "Activar bitácora de JSON"
+
+#: /resources/settings.xml
+msgctxt "#32030"
+msgid "Rating updater"
+msgstr "Actualizador de Valoraciones"
+
+#: /resources/settings.xml
+msgctxt "#32031"
+msgid "Your personal OMDb API key (www.omdbapi.com)"
+msgstr "Su llave API personal en OMDb (www.omdbapi.com)"
+
+#: /resources/settings.xml
+msgctxt "#32032"
+msgid "Search OMDb with title/year if IMDb is missing"
+msgstr "Buscar en OMDb con título/año si IMDb no está presente"
+
+#: /resources/lib/rating_updater.py
+msgctxt "#32033"
+msgid "Updating movie ratings"
+msgstr "Actualizado valoraciones de películas"
+
+#: /resources/lib/rating_updater.py
+msgctxt "#32034"
+msgid "Updating TV show ratings"
+msgstr "Actualizando valoraciones de Series TV"
+
+#: /default.py
+msgctxt "#32035"
+msgid ""
+"No OMDb API key is configured, which is required to update IMDb, Rotten "
+"Tomatoes and Metacritic ratings. Please visit www.omdbapi.com and create "
+"your own API key.[CR][CR]Note: The free key is limited to 1000 calls a day. "
+"Please suggest to become a patreon of OMDb to increase the limit to "
+"100.000.[CR][CR]Do you want to proceed updating The Movie DB ratings? This "
+"only works if you have a TMDb ID stored."
+msgstr ""
+"No ha configurado llave API de OMDb. Esta es requerida para actualizar "
+"valoraciones de IMDb, Rotten Tomatoes y Metacritic. Por favor visite "
+"www.omdbapi.com y cree su propia llave API.[CR][CR]Nota: La llave gratis "
+"está limitada a 1000 llamadas diarias. Le sugiero que se convierta en "
+"donante en OMDb para incrementar el límite a 100,000.[CR][CR]¿Quiere "
+"proceder a actualizar las valoraciones de The Movie DB? Esto solo funciona "
+"si tiene un id de TMDb guardado."
+
+#: /default.py
+msgctxt "#32036"
+msgid "Update TV show ratings"
+msgstr "Actualizar valoraciones de Series TV"
+
+#: /default.py
+msgctxt "#32037"
+msgid "Update movie ratings"
+msgstr "Actualizar valoraciones de películas"
+
+#: /default.py
+msgctxt "#32038"
+msgid "Update all ratings"
+msgstr "Actualizar todas las valoraciones"
+
+#: /context.py
+msgctxt "#32039"
+msgid "Update ratings"
+msgstr "Actualizar valoraciones"
+
+#: /resources/lib/dialog_metadata.py
+msgctxt "#32040"
+msgid "Edit data for"
+msgstr "Editar datos para"
