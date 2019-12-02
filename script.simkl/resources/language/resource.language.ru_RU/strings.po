@@ -1,0 +1,120 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Kodi-add-on-for-Simkl\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2019-07-20 22:23\n"
+"Last-Translator: Simkl\n"
+"Language-Team: Russian\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ru\n"
+"Plural-Forms: nplurals=4; plural=((n%10==1 && n%100!=11) ? 0 : ((n%10 >= 2 && n%10 <=4 && (n%100 < 12 || n%100 > 14)) ? 1 : ((n%10 == 0 || (n%10 >= 5 && n%10 <=9)) || (n%100 >= 11 && n%100 <= 14)) ? 2 : 3));\n"
+"X-Generator: crowdin.com\n"
+"X-Crowdin-Project: Kodi-add-on-for-Simkl\n"
+"X-Crowdin-Language: ru\n"
+"X-Crowdin-File: /master/resources/language/resource.language.en_gb/strings.po\n"
+
+msgctxt "#32001"
+msgid "Please click to Log In"
+msgstr "Пожалуйста, нажмите, чтобы войти"
+
+msgctxt "#32002"
+msgid "Other options"
+msgstr "Другие настройки"
+
+msgctxt "#32003"
+msgid "Sync library"
+msgstr "Синхронизировать библиотеку"
+
+msgctxt "#32006"
+msgid "Scrobble at percentage"
+msgstr "Скробблить при проценте просмотра"
+
+msgctxt "#32007"
+msgid "Checkin percentage"
+msgstr "Зачекинится на проценте"
+
+msgctxt "#32008"
+msgid "Show bubble when scrobbled"
+msgstr "Показывать нотификейшн, когда проскробблили"
+
+msgctxt "#32009"
+msgid "See options to customize Simkl TV Tracker"
+msgstr "Смотрите Настройки чтобы кастомизировать Simkl TV Tracker"
+
+msgctxt "#32010"
+msgid "You are not logged in"
+msgstr "Вы не авторизованы"
+
+msgctxt "#32011"
+msgid "You are logged in"
+msgstr "Вы авторизованы"
+
+msgctxt "#32012"
+msgid "Minimum file length for scrobbling (minutes)"
+msgstr "Минимальная длина файла для скробблера (минут)"
+
+msgctxt "#32021"
+msgid "Simkl login"
+msgstr "Авторизироватся в Simkl"
+
+msgctxt "#32022"
+msgid "Please visit {0} on \n"
+"computer or phone and enter this code"
+msgstr "Пожалуйста, посетите {0} на\n"
+"компьютере или телефоне и введите код выше"
+
+msgctxt "#32023"
+msgid "Remaining time: {0}/{1}"
+msgstr "Оставшееся время: {0}/{1}"
+
+msgctxt "#32025"
+msgid "Hello again, {0}"
+msgstr "Привет, {0}"
+
+msgctxt "#32026"
+msgid "Please Log In in addon settings"
+msgstr "Пожалуйста, войдите в настройках аддона"
+
+msgctxt "#32027"
+msgid "You don't have internet"
+msgstr "У вас нет интернета"
+
+msgctxt "#32028"
+msgid "Scrobbling {0}"
+msgstr "Скробблим {0}"
+
+msgctxt "#32029"
+msgid "Error at scrobbling. Retrying ({0})"
+msgstr "Ошибка при скроббле. Повторная попытка ({0})"
+
+msgctxt "#32030"
+msgid "Login successful, {0}"
+msgstr "Успешно залогинились, {0}"
+
+msgctxt "#32031"
+msgid "Couldn't log in"
+msgstr "Не смогли залогинится"
+
+msgctxt "#32032"
+msgid "You are already logged in as {0}"
+msgstr "Вы уже вошли как {0}"
+
+msgctxt "#32033"
+msgid "Continue"
+msgstr "Продолжить"
+
+msgctxt "#32034"
+msgid "Cancel"
+msgstr "Отмена"
+
+msgctxt "#32080"
+msgid "Failed to scrobble, retrying later"
+msgstr "Не удалось заскробблить, попробуем позже"
+
+msgctxt "#32081"
+msgid "Finally, failed to scrobble"
+msgstr "Окончательно не удалось заскробблить"
+

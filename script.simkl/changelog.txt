@@ -1,4 +1,7 @@
-v 2.0
+v 2.2 [19/10/12]
+  upgraded stream detection + fixed random scrobbling
+  
+v 2.0 [17/07/08]
 - New engine, fixed all login and scrobbling bugs
 
 v 1.2.0 []:
