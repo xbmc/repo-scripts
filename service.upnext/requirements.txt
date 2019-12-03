@@ -1,6 +1,0 @@
-git+git://github.com/dagwieers/script.module.addon.signals.git@setup.py#egg=AddonSignals
-codecov
-kodi-addon-checker; python_version >= '3.5'
-polib
-pylint
-tox-travis
