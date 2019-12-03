@@ -1,0 +1,77 @@
+# Kodi Media Center language file
+# Addon Name: Trakt
+# Addon id: script.trakt
+# Addon Provider: Trakt.tv, Razze
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: Bulgarian (http://www.transifex.com/projects/p/xbmc-addons/language/bg/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: bg\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#32000"
+msgid "General"
+msgstr "Общи"
+
+msgctxt "#32004"
+msgid "Rating"
+msgstr "Рейтинг"
+
+msgctxt "#32024"
+msgid "Error"
+msgstr "Грешка"
+
+msgctxt "#32033"
+msgid "Fair"
+msgstr "Ясно с малко облаци"
+
+msgctxt "#32046"
+msgid "Movies"
+msgstr "Филми"
+
+msgctxt "#32048"
+msgid "Add watched movies to Trakt history"
+msgstr "Добавяй изгледаните филми към историята в Trakt"
+
+msgctxt "#32049"
+msgid "Mark movies from Trakt history as watched in Kodi"
+msgstr "Маркирай филмите от историята в Trakt като изгледани в Kodi"
+
+msgctxt "#32054"
+msgid "Service"
+msgstr "Услуга"
+
+msgctxt "#32062"
+msgid "Sync complete"
+msgstr "Синхрониирането завърши"
+
+msgctxt "#32066"
+msgid "Movie Sync Complete"
+msgstr "Синхронизирането на филми завърши"
+
+msgctxt "#32075"
+msgid "Episode Sync Complete"
+msgstr "Синхронизирането на епизоди завърши"
+
+msgctxt "#32082"
+msgid "Retrieving watched movies from Trakt"
+msgstr "Извличане на списъка с изгледани филми от Trakt"
+
+msgctxt "#32101"
+msgid "Retrieving watched episodes from Trakt"
+msgstr "Извличане на списъка с изгледани епизоди от Trakt"
+
+msgctxt "#32116"
+msgid "Enable debug mode"
+msgstr "Включи дебъг режима"
+
+msgctxt "#32163"
+msgid "User"
+msgstr "Потребител"
