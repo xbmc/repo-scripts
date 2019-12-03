@@ -2,150 +2,148 @@
 # Addon Name: Up Next
 # Addon id: service.upnext
 # Addon Provider: im85288
-# Translators:
-# - Thierry, 2019
-# - Kévin Commaille <zecakeh@pm.me>, 2019
 msgid ""
 msgstr ""
 "Project-Id-Version: service.upnext\n"
 "Report-Msgid-Bugs-To: https://github.com/im85288/service.upnext\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2018-02-26 13:31+0000\n"
-"Last-Translator: Kévin Commaille <zecakeh@pm.me>\n"
-"Language-Team: Français\n"
+"PO-Revision-Date: 2019-11-28 09:50+0100\n"
+"Last-Translator: arvvoid\n"
+"Language-Team: Croatian\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: fr\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Language: hr\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);\n"
+"X-Generator: Poedit 2.2.4\n"
 
 msgctxt "#30001"
 msgid "The number of seconds before the end to show the notification"
-msgstr "Le nombre de secondes avant la fin pour afficher la notification"
+msgstr "Broj sekundi prije kraja za prikaz obavijesti"
 
 msgctxt "#30002"
 msgid "Log Level:"
-msgstr "Niveau de journalisation :"
+msgstr "Log Level:"
 
 msgctxt "#30003"
 msgid "Settings"
-msgstr "Réglages"
+msgstr "Postavke"
 
 msgctxt "#30004"
 msgid "Advanced"
-msgstr "Avancé"
+msgstr "Napredno"
 
 msgctxt "#30005"
 msgid "Default action when nothing selected"
-msgstr "Action par défaut lorsque rien n’est sélectionné"
+msgstr "Zadana akcija kada ništa nije odabrano"
 
 msgctxt "#30006"
 msgid "Watch Now"
-msgstr "Regarder maintenant"
+msgstr "Gledaj sada"
 
 msgctxt "#30008"
 msgid "Up Next"
-msgstr "À suivre"
+msgstr "Sljedeće"
 
 msgctxt "#30009"
 msgid "Number of episodes before still watching query"
-msgstr "Nombre d’épisodes avant la demande « Vous regardez toujours »"
+msgstr "Broj epizoda prije upita dali još gledate"
 
 msgctxt "#30010"
 msgid "Continue watching"
-msgstr "Continuer à regarder"
+msgstr "Nastavite gledati"
 
 msgctxt "#30013"
 msgid "Include watched episodes"
-msgstr "Inclure les épisodes visionnés"
+msgstr "Uključi gledane epizode"
 
 msgctxt "#30014"
 msgid "Disable Up Next (restart required)"
-msgstr "Désactiver Up Next (redémarrage requis)"
+msgstr "Onemogući Up Next (restart potreban)"
 
 msgctxt "#30017"
 msgid "Automatically play short videos"
-msgstr "Lire automatiquement de courtes vidéos"
+msgstr "Automatski reproduciraj kratke videozapise"
 
 msgctxt "#30018"
 msgid "Maximum length for automatic short video play (in minutes)"
-msgstr "Durée maximale pour la lecture automatique de vidéos courtes (en minutes)"
+msgstr "Maksimalna dužina automatske kratke reprodukcije videozapisa (u minutama)"
 
 msgctxt "#30019"
 msgid "Show on-screen notification during short video autoplay"
-msgstr "Afficher la notification à l’écran pendant la lecture automatique de vidéos courtes"
+msgstr "Prikažite obavijest na zaslonu tijekom kratkog videozapisa"
 
 msgctxt "#30024"
 msgid "Still there?"
-msgstr "Toujours là ?"
+msgstr "Ste još tamo?"
 
 msgctxt "#30025"
 msgid "Set the display mode for the notifications"
-msgstr "Définir le mode d’affichage des notifications"
+msgstr "Postavite način prikaza za obavijesti"
 
 msgctxt "#30028"
 msgid "Developer"
-msgstr "Développeur"
+msgstr "Developer"
 
 msgctxt "#30029"
 msgid "Enable developer mode"
-msgstr "Activer le mode développeur"
+msgstr "Omogući način za razvojne programere"
 
 msgctxt "#30030"
 msgid "Choose the window to be shown"
-msgstr "Choisir la fenêtre à afficher"
+msgstr "Odaberite prozor koji će se prikazati"
 
 msgctxt "#30032"
 msgid "Enable on playlists"
-msgstr "Activer sur les listes de lecture"
+msgstr "Omogući na popisima za reprodukciju"
 
 msgctxt "#30033"
 msgid "Stop"
-msgstr "Arrêter"
+msgstr "Stop"
 
 msgctxt "#30034"
 msgid "Close"
-msgstr "Fermer"
+msgstr "Zatvori"
 
 msgctxt "#30035"
 msgid "seconds"
-msgstr "secondes"
+msgstr "sekunde"
 
 msgctxt "#30036"
 msgid "in"
-msgstr "dans"
+msgstr "u"
 
 msgctxt "#30037"
 msgid "Next Episode in"
-msgstr "Prochain épisode dans"
+msgstr "Sljedeća epizoda u"
 
 msgctxt "#30038"
 msgid "Simple"
-msgstr "Simple"
+msgstr "Jednostavno"
 
 msgctxt "#30039"
 msgid "Fancy"
-msgstr "Riche"
+msgstr "Složeno"
 
 msgctxt "#30040"
 msgid "Play"
-msgstr "Lire"
+msgstr "Reproduciraj"
 
 msgctxt "#30041"
 msgid "Don't Play"
-msgstr "Ne pas lire"
+msgstr "Ne reproduciraj"
 
 msgctxt "#30042"
 msgid "None"
-msgstr "Aucun"
+msgstr "Nijedan"
 
 msgctxt "#30043"
 msgid "Info"
-msgstr "Informations"
+msgstr "Info"
 
 msgctxt "#30044"
 msgid "Debug"
-msgstr "Débogage"
+msgstr "Debug"
 
 msgctxt "#30045"
 msgid "UpNext"
@@ -165,8 +163,8 @@ msgstr "StillWatchingSimple"
 
 msgctxt "#30049"
 msgid "Next Episode"
-msgstr "Prochain épisode"
+msgstr "Sljedeća epizoda"
 
 msgctxt "#30050"
 msgid "Stop playback when closing dialog"
-msgstr "Arrêter la lecture à la fermeture de la boîte de dialogue"
+msgstr "Zaustavljanje reprodukcije kod zatvaranja dijaloškog okvira"

@@ -1,7 +1,15 @@
-import xbmcgui
+# -*- coding: utf-8 -*-
+# GNU General Public License v2.0 (see COPYING or https://www.gnu.org/licenses/gpl-2.0.txt)
+
+from __future__ import absolute_import, division, unicode_literals
 from platform import machine
+import xbmc
+import xbmcgui
+from . import utils
+from .statichelper import from_unicode
 
 ACTION_PLAYER_STOP = 13
+ACTION_NAV_BACK = 92
 OS_MACHINE = machine()
 
 
@@ -9,120 +17,104 @@ class UpNext(xbmcgui.WindowXMLDialog):
     item = None
     cancel = False
     watchnow = False
-    progressStepSize = 0
-    currentProgressPercent = 100
+    progress_step_size = 0
+    current_progress_percent = 100
 
     def __init__(self, *args, **kwargs):
         self.action_exitkeys_id = [10, 13]
-        self.progressControl = None
+        self.progress_control = None
         if OS_MACHINE[0:5] == 'armv7':
             xbmcgui.WindowXMLDialog.__init__(self)
         else:
             xbmcgui.WindowXMLDialog.__init__(self, *args, **kwargs)
 
-    def onInit(self):
-        self.setInfo()
-        self.prepareProgressControl()
+    def onInit(self):  # pylint: disable=invalid-name
+        self.set_info()
+        self.prepare_progress_control()
 
-    def setInfo(self):
-        episodeInfo = str(self.item['season']) + 'x' + str(self.item['episode']) + '.'
-        if self.item['rating'] is not None:
-            rating = str(round(float(self.item['rating']), 1))
+        if utils.settings('stopAfterClose') == 'true':
+            self.getControl(3013).setLabel(utils.localize(30033))  # Stop
         else:
-            rating = None
+            self.getControl(3013).setLabel(utils.localize(30034))  # Close
+
+    def set_info(self):
+        episode_info = '%(season)sx%(episode)s.' % self.item
+        if self.item.get('rating') is None:
+            rating = ''
+        else:
+            rating = str(round(float(self.item.get('rating')), 1))
 
         if self.item is not None:
-            self.setProperty(
-                'fanart', self.item['art'].get('tvshow.fanart', ''))
-            self.setProperty(
-                'landscape', self.item['art'].get('tvshow.landscape', ''))
-            self.setProperty(
-                'clearart', self.item['art'].get('tvshow.clearart', ''))
-            self.setProperty(
-                'clearlogo', self.item['art'].get('tvshow.clearlogo', ''))
-            self.setProperty(
-                'poster', self.item['art'].get('tvshow.poster', ''))
-            self.setProperty(
-                'thumb', self.item['art'].get('thumb', ''))
-            self.setProperty(
-                'plot', self.item['plot'])
-            self.setProperty(
-                'tvshowtitle', self.item['showtitle'])
-            self.setProperty(
-                'title', self.item['title'])
-            self.setProperty(
-                'season', str(self.item['season']))
-            self.setProperty(
-                'episode', str(self.item['episode']))
-            self.setProperty(
-                'seasonepisode', episodeInfo)
-            self.setProperty(
-                'year', str(self.item['firstaired']))
-            self.setProperty(
-                'rating', rating)
-            self.setProperty(
-                'playcount', str(self.item['playcount']))
+            art = self.item.get('art')
+            self.setProperty('fanart', art.get('tvshow.fanart', ''))
+            self.setProperty('landscape', art.get('tvshow.landscape', ''))
+            self.setProperty('clearart', art.get('tvshow.clearart', ''))
+            self.setProperty('clearlogo', art.get('tvshow.clearlogo', ''))
+            self.setProperty('poster', art.get('tvshow.poster', ''))
+            self.setProperty('thumb', art.get('thumb', ''))
+            self.setProperty('plot', self.item.get('plot', ''))
+            self.setProperty('tvshowtitle', self.item.get('showtitle', ''))
+            self.setProperty('title', self.item.get('title', ''))
+            self.setProperty('season', str(self.item.get('season', '')))
+            self.setProperty('episode', str(self.item.get('episode', '')))
+            self.setProperty('seasonepisode', episode_info)
+            self.setProperty('year', str(self.item.get('firstaired', '')))
+            self.setProperty('rating', rating)
+            self.setProperty('playcount', str(self.item.get('playcount', 0)))
 
-    def prepareProgressControl(self):
-        # noinspection PyBroadException
-        try:
-            self.progressControl = self.getControl(3014)
-            if self.progressControl is not None:
-                self.progressControl.setPercent(self.currentProgressPercent)
-        except Exception:
-            pass
+    def prepare_progress_control(self):
+        self.progress_control = self.getControl(3014)
+        if self.progress_control is not None:
+            self.progress_control.setPercent(self.current_progress_percent)  # pylint: disable=no-member
 
-    def setItem(self, item):
+    def set_item(self, item):
         self.item = item
 
-    def setProgressStepSize(self, progressStepSize):
-        self.progressStepSize = progressStepSize
+    def set_progress_step_size(self, progress_step_size):
+        self.progress_step_size = progress_step_size
 
-    def updateProgressControl(self):
-        # noinspection PyBroadException
-        try:
-            self.currentProgressPercent = self.currentProgressPercent - self.progressStepSize
-            self.progressControl = self.getControl(3014)
-            if self.progressControl is not None:
-                self.progressControl.setPercent(self.currentProgressPercent)
-        except Exception:
-            pass
+    def update_progress_control(self, endtime=None):
+        self.current_progress_percent = self.current_progress_percent - self.progress_step_size
+        self.progress_control = self.getControl(3014)
+        if self.progress_control is not None:
+            self.progress_control.setPercent(self.current_progress_percent)  # pylint: disable=no-member
+        if endtime:
+            self.setProperty('endtime', from_unicode(str(endtime)))
 
-    def setCancel(self, cancel):
+    def set_cancel(self, cancel):
         self.cancel = cancel
 
-    def isCancel(self):
+    def is_cancel(self):
         return self.cancel
 
-    def setWatchNow(self, watchnow):
+    def set_watch_now(self, watchnow):
         self.watchnow = watchnow
 
-    def isWatchNow(self):
+    def is_watch_now(self):
         return self.watchnow
 
-    def onFocus(self, controlId):
+    def onFocus(self, controlId):  # pylint: disable=invalid-name
         pass
 
-    def doAction(self):
+    def doAction(self):  # pylint: disable=invalid-name
         pass
 
-    def closeDialog(self):
+    def closeDialog(self):  # pylint: disable=invalid-name
         self.close()
 
-    def onClick(self, control_id):
-
-        if control_id == 3012:
-            # watch now
-            self.setWatchNow(True)
+    def onClick(self, controlId):  # pylint: disable=invalid-name
+        if controlId == 3012:  # Watch now
+            self.set_watch_now(True)
             self.close()
-        elif control_id == 3013:
-            # cancel
-            self.setCancel(True)
+        elif controlId == 3013:  # Close / Stop
+            self.set_cancel(True)
+            if utils.settings('stopAfterClose') == 'true':
+                xbmc.Player().stop()
             self.close()
 
-        pass
-
-    def onAction(self, action):
-
+    def onAction(self, action):  # pylint: disable=invalid-name
         if action == ACTION_PLAYER_STOP:
+            self.close()
+        elif action == ACTION_NAV_BACK:
+            self.set_cancel(True)
             self.close()

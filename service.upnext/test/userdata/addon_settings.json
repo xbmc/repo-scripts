@@ -1,0 +1,17 @@
+{
+    "service.upnext": {
+        "autoPlayMode": "true",
+        "autoPlaySeasonTime": "30",
+        "developerMode": "false",
+        "disableNexyUp": "false",
+        "enablePlaylist": "false",
+        "includeWatched": "true",
+        "logLevel": "2",
+        "playedInARow": "3",
+        "shortPlayLength": "10",
+        "shortPlayMode": "false",
+        "shortPlayNotification": "true",
+        "simpleMode": "false",
+        "windowMode": "false"
+    }
+}
