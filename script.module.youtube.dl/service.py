@@ -7,22 +7,20 @@ from lib.yd_private_libs import util, servicecontrol, jsonqueue
 sys.path.insert(0, util.MODULE_PATH)
 import YDStreamExtractor  # noqa E402
 import threading  # noqa E402
+import AddonSignals
 
 
-class Service(xbmc.Monitor):
+class Service():
     def __init__(self):
         self.downloadCount = 0
         self.controller = servicecontrol.ServiceControl()
+
+        AddonSignals.registerSlot('script.module.youtube.dl', 'DOWNLOAD_STOP', self.stopDownload)
+
         self.start()
 
-    def onNotification(self, sender, method, data):
-        if not sender == 'script.module.youtube.dl':
-            return
-        self.processCommand(method.split('.', 1)[-1], self.controller.processCommandData(data))  # Remove the "Other." prefix
-
-    def processCommand(self, command, args):
-        if command == 'DOWNLOAD_STOP':
-            YDStreamExtractor._cancelDownload()
+    def stopDownload(self, args):
+        YDStreamExtractor._cancelDownload()
 
     def getNextQueuedDownload(self):
         try:
