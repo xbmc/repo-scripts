@@ -1,12 +1,16 @@
+# -*- coding: utf-8 -*-
+# GNU General Public License v2.0 (see COPYING or https://www.gnu.org/licenses/gpl-2.0.txt)
+
+from __future__ import absolute_import, division, unicode_literals
 import xbmc
-import resources.lib.utils as utils
-from resources.lib.api import Api
-from resources.lib.developer import Developer
-from resources.lib.state import State
+from . import utils
+from .api import Api
+from .developer import Developer
+from .state import State
 
 
-# service class for playback monitoring
 class Player(xbmc.Player):
+    ''' Service class for playback monitoring '''
     last_file = None
     track = False
 
@@ -16,8 +20,8 @@ class Player(xbmc.Player):
         self.developer = Developer()
         xbmc.Player.__init__(self)
 
-    def set_last_file(self, file):
-        self.state.last_file = file
+    def set_last_file(self, filename):
+        self.state.last_file = filename
 
     def get_last_file(self):
         return self.state.last_file
@@ -28,20 +32,32 @@ class Player(xbmc.Player):
     def disable_tracking(self):
         self.state.track = False
 
-    def onPlayBackStarted(self):
-        # Will be called when kodi starts playing a file
-        xbmc.sleep(5000) # Delay for slower devices, should really use onAVStarted for Leia
+    def onPlayBackStarted(self):  # pylint: disable=invalid-name
+        ''' Will be called when kodi starts playing a file '''
+        xbmc.sleep(5000)  # Delay for slower devices, should really use onAVStarted for Leia
+        if not xbmc.getCondVisibility('videoplayer.content(episodes)'):
+            return
         self.state.track = True
-        if utils.settings("developerMode") == "true":
+        if utils.settings('developerMode') == 'true':
             self.developer.developer_play_back()
 
-    def onPlayBackPaused(self):
+    def onPlayBackPaused(self):  # pylint: disable=invalid-name
         self.state.pause = True
 
-    def onPlayBackResumed(self):
+    def onPlayBackResumed(self):  # pylint: disable=invalid-name
         self.state.pause = False
 
-    def onPlayBackStopped(self):
-        # Will be called when user stops playing a file.
+    def onPlayBackStopped(self):  # pylint: disable=invalid-name
+        ''' Will be called when user stops playing a file '''
         self.api.reset_addon_data()
-        self.state =State() # reset state
+        self.state = State()  # Reset state
+
+    def onPlayBackEnded(self):  # pylint: disable=invalid-name
+        ''' Will be called when Kodi has ended playing a file '''
+        self.api.reset_addon_data()
+        self.state = State()  # Reset state
+
+    def onPlayBackError(self):  # pylint: disable=invalid-name
+        ''' Will be called when when playback stops due to an error '''
+        self.api.reset_addon_data()
+        self.state = State()  # Reset state
