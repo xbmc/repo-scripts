@@ -6,19 +6,18 @@ import urllib
 from datetime import timedelta
 from functools import wraps
 
-import xbmcswift2
-from xbmcswift2 import xbmc, xbmcaddon, xbmcplugin, xbmcgui
+from xbmcswift2 import xbmc, xbmcaddon, xbmcplugin, xbmcgui, ListItem
 from xbmcswift2.storage import TimedStorage
 from xbmcswift2.logger import log
-from xbmcswift2.constants import VIEW_MODES, SortMethod
-from common import Modes, DEBUG_MODES
-from request import Request
+from xbmcswift2.constants import SortMethod
+from xbmcswift2.common import Modes, DEBUG_MODES, PY3
+from xbmcswift2.request import Request
 
 
 
 
 class XBMCMixin(object):
-    '''A mixin to add XBMC helper methods. In order to use this mixin,
+    '''A mixin to add KODI helper methods. In order to use this mixin,
     the child class must implement the following methods and
     properties:
 
@@ -158,7 +157,7 @@ class XBMCMixin(object):
         return os.path.join(xbmc.translatePath('special://temp/'), path)
 
     def get_string(self, stringid):
-        '''Returns the localized string from strings.xml for the given
+        '''Returns the localized string from strings.po for the given
         stringid.
         '''
         stringid = int(stringid)
@@ -200,10 +199,12 @@ class XBMCMixin(object):
         #TODO: allow pickling of settings items?
         # TODO: STUB THIS OUT ON CLI
         value = self.addon.getSetting(id=key)
+        if not PY3:
+            if converter is unicode:
+                return value.decode('utf-8')
+
         if converter is str:
             return value
-        elif converter is unicode:
-            return value.decode('utf-8')
         elif converter is bool:
             return value == 'true'
         elif converter is int:
@@ -245,26 +246,24 @@ class XBMCMixin(object):
                                 'playlist type.')
                 # info_type has to be same as the playlist type
                 item['info_type'] = playlist
-                item = xbmcswift2.ListItem.from_dict(**item)
+                item = ListItem.from_dict(**item)
             _items.append(item)
             selected_playlist.add(item.get_path(), item.as_xbmc_listitem())
         return _items
 
     def get_view_mode_id(self, view_mode):
-        '''Attempts to return a view_mode_id for a given view_mode
+        '''@deprecated Attempts to return a view_mode_id for a given view_mode
         taking into account the current skin. If not view_mode_id can
         be found, None is returned. 'thumbnail' is currently the only
         suppported view_mode.
         '''
-        view_mode_ids = VIEW_MODES.get(view_mode.lower())
-        if view_mode_ids:
-            return view_mode_ids.get(xbmc.getSkinDir())
+        log.warning('Editing skin viewmodes is not allowed.')
         return None
 
     def set_view_mode(self, view_mode_id):
-        '''Calls XBMC's Container.SetViewMode. Requires an integer
+        '''@deprecated Calls KODI's Container.SetViewMode. Requires an integer
         view_mode_id'''
-        xbmc.executebuiltin('Container.SetViewMode(%d)' % view_mode_id)
+        log.warning('Changing skin viewmodes is not allowed.')
 
     def keyboard(self, default=None, heading=None, hidden=False):
         '''Displays the keyboard input window to the user. If the user does not
@@ -296,8 +295,8 @@ class XBMCMixin(object):
             log.warning('Empty message for notification dialog')
         if title is None:
             title = self.addon.getAddonInfo('name')
-        xbmc.executebuiltin('XBMC.Notification("%s", "%s", "%s", "%s")' %
-                            (msg, title, delay, image))
+        xbmcgui.Dialog().notification(heading=title, message=msg, time=delay, icon=image)
+
 
     def _listitemify(self, item):
         '''Creates an xbmcswift2.ListItem if the provided value for item is a
@@ -311,7 +310,7 @@ class XBMCMixin(object):
         if not hasattr(item, 'as_tuple'):
             if 'info_type' not in item.keys():
                 item['info_type'] = info_type
-            item = xbmcswift2.ListItem.from_dict(**item)
+            item = ListItem.from_dict(**item)
         return item
 
     def _add_subtitles(self, subtitles):
@@ -348,7 +347,7 @@ class XBMCMixin(object):
                                   the initial playable item (which calls back
                                   into your addon) doesn't have a trailing
                                   slash in the URL. Otherwise it won't work
-                                  reliably with XBMC's PlayMedia().
+                                  reliably with KODI's PlayMedia().
         :param subtitles: A URL to a remote subtitles file or a local filename
                           for a subtitles file to be played along with the
                           item.
@@ -365,8 +364,10 @@ class XBMCMixin(object):
             item = {}
             succeeded = False
 
-        if isinstance(item, basestring):
-            # caller is passing a url instead of an item dict
+        # caller is passing a url instead of an item dict
+        if PY3 and (isinstance(item, bytes) or isinstance(item, str)):
+            item = {'path': item}
+        elif not PY3 and isinstance(item, basestring):
             item = {'path': item}
 
         item = self._listitemify(item)
@@ -396,7 +397,7 @@ class XBMCMixin(object):
         return [item]
 
     def add_items(self, items):
-        '''Adds ListItems to the XBMC interface. Each item in the
+        '''Adds ListItems to the KODI interface. Each item in the
         provided list should either be instances of xbmcswift2.ListItem,
         or regular dictionaries that will be passed to
         xbmcswift2.ListItem.from_dict. Returns the list of ListItems.
@@ -435,7 +436,7 @@ class XBMCMixin(object):
 
     def add_sort_method(self, sort_method, label2_mask=None):
         '''A wrapper for `xbmcplugin.addSortMethod()
-        <http://mirrors.xbmc.org/docs/python-docs/xbmcplugin.html#-addSortMethod>`_.
+        <https://codedocs.xyz/xbmc/xbmc/group__python__xbmcplugin.html#ga85b3bff796fd644fb28f87b136025f40>`_.
         You can use ``dir(xbmcswift2.SortMethod)`` to list all available sort
         methods.
 
@@ -449,7 +450,7 @@ class XBMCMixin(object):
                             * ``plugin.add_sort_method('title')``
         :param label2_mask: A mask pattern for label2. See the `XBMC
                             documentation
-                            <http://mirrors.xbmc.org/docs/python-docs/xbmcplugin.html#-addSortMethod>`_
+                            <https://codedocs.xyz/xbmc/xbmc/group__python__xbmcplugin.html#ga85b3bff796fd644fb28f87b136025f40>`_
                             for more information.
         '''
         try:
@@ -466,13 +467,13 @@ class XBMCMixin(object):
 
     def finish(self, items=None, sort_methods=None, succeeded=True,
                update_listing=False, cache_to_disc=True, view_mode=None):
-        '''Adds the provided items to the XBMC interface.
+        '''Adds the provided items to the KODI interface.
 
         :param items: an iterable of items where each item is either a
             dictionary with keys/values suitable for passing to
             :meth:`xbmcswift2.ListItem.from_dict` or an instance of
             :class:`xbmcswift2.ListItem`.
-        :param sort_methods: a list of valid XBMC sort_methods. Each item in
+        :param sort_methods: a list of valid KODI sort_methods. Each item in
                              the list can either be a sort method or a tuple of
                              ``sort_method, label2_mask``. See
                              :meth:`add_sort_method` for
@@ -486,29 +487,23 @@ class XBMCMixin(object):
         :param view_mode: can either be an integer (or parseable integer
             string) corresponding to a view_mode or the name of a type of view.
             Currrently the only view type supported is 'thumbnail'.
-        :returns: a list of all ListItems added to the XBMC interface.
+        :returns: a list of all ListItems added to the KODI interface.
         '''
         # If we have any items, add them. Items are optional here.
         if items:
             self.add_items(items)
         if sort_methods:
             for sort_method in sort_methods:
-                if not isinstance(sort_method, basestring) and hasattr(sort_method, '__len__'):
-                    self.add_sort_method(*sort_method)
+                if PY3:
+                    if not isinstance(sort_method, str) and hasattr(sort_method, '__len__'):
+                        self.add_sort_method(*sort_method)
+                    else:
+                        self.add_sort_method(sort_method)
                 else:
-                    self.add_sort_method(sort_method)
-
-        # Attempt to set a view_mode if given
-        if view_mode is not None:
-            # First check if we were given an integer or parseable integer
-            try:
-                view_mode_id = int(view_mode)
-            except ValueError:
-                # Attempt to lookup a view mode
-                view_mode_id = self.get_view_mode_id(view_mode)
-
-            if view_mode_id is not None:
-                self.set_view_mode(view_mode_id)
+                    if not isinstance(sort_method, basestring) and hasattr(sort_method, '__len__'):
+                        self.add_sort_method(*sort_method)
+                    else:
+                        self.add_sort_method(sort_method)
 
         # Finalize the directory items
         self.end_of_directory(succeeded, update_listing, cache_to_disc)

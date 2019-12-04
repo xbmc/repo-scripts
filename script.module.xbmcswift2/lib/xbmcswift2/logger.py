@@ -52,11 +52,11 @@ class XBMCFilter(object):
         '''Returns True for all records if running in the CLI, else returns
         True.
 
-        When running inside XBMC it calls the xbmc.log() method and prevents
+        When running inside KODI it calls the xbmc.log() method and prevents
         the message from being double printed to STDOUT.
         '''
 
-        # When running in XBMC, any logged statements will be double printed
+        # When running in KODI, any logged statements will be double printed
         # since we are calling xbmc.log() explicitly. Therefore we return False
         # so every log message is filtered out and not printed again.
         if CLI_MODE:
@@ -80,8 +80,8 @@ else:
 def setup_log(name):
     '''Returns a logging instance for the provided name. The returned
     object is an instance of logging.Logger. Logged messages will be
-    printed to stderr when running in the CLI, or forwarded to XBMC's
-    log when running in XBMC mode.
+    printed to stderr when running in the CLI, or forwarded to KODI's
+    log when running in KODI mode.
     '''
     _log = logging.getLogger(name)
     _log.setLevel(GLOBAL_LOG_LEVEL)
