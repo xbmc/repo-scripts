@@ -1,6 +1,10 @@
 CHANGES
 =======
 
+Version 2.5.0 (4/12/2019)
+-------------
+- Start working on python3 compatibility
+- Remove deprecated or unauthorized kodi methods
 
 Version 2.4.0
 -------------

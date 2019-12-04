@@ -2,7 +2,7 @@
     xbmcswift2
     ----------
 
-    A micro framework to enable rapid development of XBMC plugins.
+    A micro framework to enable rapid development of KODI plugins.
 
     :copyright: (c) 2012 by Jonathan Beluch
     :license: GPLv3, see LICENSE for more details.
@@ -13,7 +13,7 @@ from types import ModuleType
 class module(ModuleType):
     '''A wrapper class for a module used to override __getattr__. This class
     will behave normally for any existing module attributes. For any attributes
-    which do not existi in in the wrapped module, a mock function will be
+    which do not exist in in the wrapped module, a mock function will be
     returned. This function will also return itself enabling multiple mock
     function calls.
     '''
@@ -53,7 +53,7 @@ except ImportError:
     import sys
     from logger import log
 
-    # Mock the XBMC modules
+    # Mock the Kodi modules
     from mockxbmc import xbmc, xbmcgui, xbmcplugin, xbmcaddon, xbmcvfs
     xbmc = module(xbmc)
     xbmcgui = module(xbmcgui)
@@ -66,7 +66,7 @@ from xbmcswift2.storage import TimedStorage
 from xbmcswift2.request import Request
 from xbmcswift2.common import (xbmc_url, enum, clean_dict, pickle_dict,
     unpickle_args, unpickle_dict, download_page, unhex)
-from xbmcswift2.constants import SortMethod, VIEW_MODES
+from xbmcswift2.constants import SortMethod
 from xbmcswift2.listitem import ListItem
 from xbmcswift2.logger import setup_log
 from xbmcswift2.module import Module
