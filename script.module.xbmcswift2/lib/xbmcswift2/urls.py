@@ -8,8 +8,12 @@
     :license: GPLv3, see LICENSE for more details.
 '''
 import re
-from urllib import urlencode, unquote_plus, quote_plus
-from xbmcswift2.common import pickle_dict, unpickle_dict
+from xbmcswift2.common import pickle_dict, unpickle_dict, PY3
+
+if PY3:
+    from urllib.parse import urlencode, unquote_plus, quote_plus
+else:
+    from urllib import urlencode, unquote_plus, quote_plus
 
 
 # TODO: Use regular Exceptions
@@ -58,8 +62,8 @@ class UrlRule(object):
 
         try:
             self._regex = re.compile('^' + p + '$')
-        except re.error, e:
-            raise ValueError, ('There was a problem creating this URL rule. '
+        except re.error as e:
+            raise ValueError('There was a problem creating this URL rule. '
                                'Ensure you do not have any unpaired angle '
                                'brackets: "<" or ">"')
 
@@ -104,9 +108,10 @@ class UrlRule(object):
         with the appropriate value from the items dict.
         '''
         for key, val in items.items():
-            if not isinstance(val, basestring):
-                raise TypeError, ('Value "%s" for key "%s" must be an instance'
-                                  ' of basestring' % (val, key))
+            if not PY3:
+                if not isinstance(val, basestring):
+                    raise TypeError('Value "%s" for key "%s" must be an instance'
+                                    ' of basestring' % (val, key))
             items[key] = quote_plus(val)
 
         try:
@@ -145,8 +150,12 @@ class UrlRule(object):
         '''
         # Convert any ints and longs to strings
         for key, val in items.items():
-            if isinstance(val, (int, long)):
-                items[key] = str(val)
+            if PY3:
+                if isinstance(val, int):
+                    items[key] = str(val)
+            else:
+                if isinstance(val, (int, long)):
+                    items[key] = str(val)
 
         # First use our defaults passed when registering the rule
         url_items = dict((key, val) for key, val in self._options.items()
