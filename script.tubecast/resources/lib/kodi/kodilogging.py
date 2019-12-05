@@ -8,14 +8,18 @@ import xbmc
 
 import xbmcaddon
 
+from resources.lib.tubecast.utils import PY3
+
 
 class KodiLogHandler(logging.StreamHandler):
 
     def __init__(self):
         logging.StreamHandler.__init__(self)
         addon_id = xbmcaddon.Addon().getAddonInfo('id')
-        prefix = b"[%s] " % addon_id
-        formatter = logging.Formatter(prefix + b'%(name)s: %(message)s')
+        if not PY3:
+            addon_id = addon_id.decode('utf-8')
+        prefix = "[%s] " % addon_id
+        formatter = logging.Formatter(prefix + '%(name)s: %(message)s')
         self.setFormatter(formatter)
 
     def emit(self, record):

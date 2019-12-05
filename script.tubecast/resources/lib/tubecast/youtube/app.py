@@ -2,20 +2,23 @@
 import re
 import threading
 
-import urllib
-
 from bottle import request, response
 
 import requests
 
 from resources.lib.kodi import kodilogging
 from resources.lib.kodi.utils import get_device_id, get_setting_as_bool
+from resources.lib.tubecast.utils import PY3
 from resources.lib.tubecast.youtube import kodibrigde
 from resources.lib.tubecast.youtube.player import CastPlayer
 from resources.lib.tubecast.youtube.templates import YoutubeTemplates
 from resources.lib.tubecast.youtube.utils import case, parse_cmd
 from resources.lib.tubecast.youtube.volume import VolumeMonitor
 
+if PY3:
+    from urllib.parse import urlencode
+else:
+    from urllib import urlencode
 
 import xbmc
 
@@ -136,7 +139,7 @@ class YoutubeCastV1(object):
         bind_vals = self.bind_vals
         bind_vals["CVER"] = "1"
         bind_info = self.session.post(
-            "{}/api/lounge/bc/bind?{}".format(self.base_url, urllib.urlencode(bind_vals)),
+            "{}/api/lounge/bc/bind?{}".format(self.base_url, urlencode(bind_vals)),
             data={"count": "0"},
             verify=get_setting_as_bool("verify-ssl")
         ).text
@@ -249,7 +252,7 @@ class YoutubeCastV1(object):
                 logger.debug("updatePlaylist: {}".format(data))
                 if "videoIds" in list(data.keys()):
                     self.cur_list = data["videoIds"].split(",")
-                    if self.current_index >= len(self.cur_list):
+                    if self.current_index and self.current_index >= len(self.cur_list):
                         self.current_index -= 1
                 else:
                     self.cur_list = []
@@ -348,7 +351,7 @@ class YoutubeCastV1(object):
     def report_playback_ended(self):
         # Inform current state (stopped)
         self.__post_bind("onStateChange", {"state": "4", "currentTime": "0", "duration": "0", "cpn": "foo"})
-        if self.cur_list and self.current_index and self.current_index + 1 < len(self.cur_list):
+        if self.cur_list and isinstance(self.current_index, int) and self.current_index + 1 < len(self.cur_list):
             self._next()
         else:
             self._ready()
@@ -385,7 +388,7 @@ class YoutubeCastV1(object):
         self.session.post(
             "{}/api/lounge/bc/bind?{}".format(
                 self.base_url,
-                urllib.urlencode(bind_vals)
+                urlencode(bind_vals)
             ),
             data=post_data,
             verify=get_setting_as_bool("verify-ssl")
@@ -432,7 +435,7 @@ class YoutubeListener(threading.Thread):
         bind_vals["TYPE"] = "xmlhttp"
         bind_vals["AID"] = "3"
         with self.app.session.get("{}/api/lounge/bc/bind?{}".format(self.app.base_url,
-                                                                    urllib.urlencode(bind_vals)), stream=True) as self.r:
+                                                                    urlencode(bind_vals)), stream=True) as self.r:
             for line in self.r.iter_lines():
                 self.app.handle_cmd(line)
         # Restart youtube data input stream if the client is still connected

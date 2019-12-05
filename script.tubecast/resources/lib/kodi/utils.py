@@ -3,6 +3,7 @@
 import json
 
 from resources.lib.kodi import kodilogging
+from resources.lib.tubecast.utils import PY3
 
 import xbmc
 
@@ -34,6 +35,8 @@ def show_settings():
 
 
 def get_setting(setting):
+    if PY3:
+        return ADDON.getSetting(setting).strip()
     return ADDON.getSetting(setting).strip().decode('utf-8')
 
 
@@ -64,6 +67,8 @@ def get_setting_as_int(setting):
 
 
 def get_string(string_id):
+    if PY3:
+        return ADDON.getLocalizedString(string_id)
     return ADDON.getLocalizedString(string_id).encode('utf-8', 'ignore')
 
 

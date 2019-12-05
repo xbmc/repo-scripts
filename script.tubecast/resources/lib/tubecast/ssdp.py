@@ -4,12 +4,16 @@ import operator
 import socket
 import struct
 import threading
-from SocketServer import DatagramRequestHandler, ThreadingUDPServer
 
 from resources.lib.kodi import kodilogging
 from resources.lib.kodi.utils import get_setting_as_bool
 from resources.lib.tubecast.kodicast import Kodicast
-from resources.lib.tubecast.utils import build_template
+from resources.lib.tubecast.utils import build_template, str_to_bytes, PY3
+
+if PY3:
+    from socketserver import DatagramRequestHandler, ThreadingUDPServer
+else:
+    from SocketServer import DatagramRequestHandler, ThreadingUDPServer
 
 
 logger = kodilogging.get_logger()
@@ -121,7 +125,7 @@ ST: urn:dial-multiscreen-org:service:dial:1\r
 
     def reply(self, data, address):
         socket = self.request[1]
-        socket.sendto(data, address)
+        socket.sendto(str_to_bytes(data), address)
 
     @staticmethod
     def get_remote_ip(address):
@@ -129,13 +133,12 @@ ST: urn:dial-multiscreen-org:service:dial:1\r
         s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         s.connect(address)
         iface = s.getsockname()[0]
-        s.close()
-        return unicode(iface)
+        return iface if PY3 else unicode(iface)
 
     def datagram_received(self, datagram, address):
         if get_setting_as_bool('debug-ssdp'):
             logger.debug('Datagram received. Address:{}; Content:{}'.format(address, datagram))
-        if "urn:dial-multiscreen-org:service:dial:1" in datagram and "M-SEARCH" in datagram:
+        if b"urn:dial-multiscreen-org:service:dial:1" in datagram and b"M-SEARCH" in datagram:
             if get_setting_as_bool('debug-ssdp'):
                 logger.debug("Answering datagram")
             data = build_template(self.header).render(
