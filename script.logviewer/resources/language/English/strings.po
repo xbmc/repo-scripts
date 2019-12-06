@@ -20,65 +20,76 @@ msgstr ""
 
 msgctxt "#30000"
 msgid "Log Viewer for Kodi"
-""
+msgstr ""
 
 msgctxt "#30001"
 msgid "Show Log"
-""
+msgstr ""
 
 msgctxt "#30002"
 msgid "Show old Log"
-""
+msgstr ""
 
 msgctxt "#30003"
 msgid "Invalid number of lines. Showing full log"
-""
+msgstr ""
 
 msgctxt "#30004"
 msgid "Failed to open:"
-""
+msgstr ""
 
 msgctxt "#30005"
 msgid "Invert Log (most recent first)"
-""
+msgstr ""
 
 msgctxt "#30006"
 msgid "All"
-""
+msgstr ""
 
 msgctxt "#30007"
 msgid "100"
-""
+msgstr ""
 
 msgctxt "#30008"
 msgid "50"
-""
+msgstr ""
 
 msgctxt "#30009"
 msgid "20"
-""
+msgstr ""
 
 msgctxt "#30010"
 msgid "Number of lines to show"
-""
+msgstr ""
 
 msgctxt "#30011"
 msgid "Settings"
-""
+msgstr ""
 
 msgctxt "#30012"
 msgid "General"
-""
+msgstr ""
 
 msgctxt "#30013"
 msgid "Use custom text box"
-""
+msgstr ""
 
 msgctxt "#30014"
 msgid "Show log when an error occurs"
-""
+msgstr ""
 
 msgctxt "#30015"
 msgid "Upload Log file"
-""
+msgstr ""
 
+msgctxt "#30016"
+msgid "Error"
+msgstr ""
+
+msgctxt "#30017"
+msgid "Unable to locate log file..."
+msgstr ""
+
+msgctxt "#30018"
+msgid "Parse exceptions only"
+msgstr ""

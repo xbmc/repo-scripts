@@ -1,18 +1,31 @@
 # -*- coding: utf-8 -*-
 
+import sys
+
 import xbmcaddon
 
+PY3 = sys.version_info.major >= 3
+
 ADDON = xbmcaddon.Addon()
-ADDON_PATH = ADDON.getAddonInfo("path").decode('utf-8')
+ADDON_PATH = ADDON.getAddonInfo("path")
 ADDON_NAME = ADDON.getAddonInfo("name")
 
+if PY3:
+    def translate(text):
+        return ADDON.getLocalizedString(text)
+else:
+    ADDON_PATH = ADDON_PATH.decode("utf-8")
 
-def translate(text):
-    return ADDON.getLocalizedString(text).encode("utf-8")
+    def translate(text):
+        return ADDON.getLocalizedString(text).encode("utf-8")
 
 
 def get_setting(setting):
     return ADDON.getSetting(setting)
+
+
+def get_boolean(setting):
+    return get_setting(setting) == "true"
 
 
 def open_settings():
@@ -20,7 +33,7 @@ def open_settings():
 
 
 def get_inverted():
-    return get_setting("invert") == "true"
+    return get_boolean("invert")
 
 
 def get_lines():
@@ -36,4 +49,8 @@ def get_lines():
 
 
 def is_default_window():
-    return get_setting("custom_window") == "false"
+    return not get_boolean("custom_window")
+
+
+def parse_exceptions_only():
+    return get_boolean("exceptions_only")

@@ -1,14 +1,15 @@
 # -*- coding: utf-8 -*-
 
 import sys
+
 import xbmc
-import utils
 import xbmcgui
-import logviewer
+
+from resources.lib import logviewer, utils
 
 
 def has_addon(addon_id):
-    return xbmc.getCondVisibility("System.HasAddon(%s)" % addon_id) == 1
+    return xbmc.getCondVisibility("System.HasAddon({})".format(addon_id)) == 1
 
 
 def get_opts():
@@ -32,6 +33,10 @@ def get_opts():
     headings.append(utils.translate(30011))
     handlers.append(utils.open_settings)
 
+    # Test - For debug only
+    # headings.append("Test Exception")
+    # handlers.append(lambda: 1 / 0)
+
     return headings, handlers
 
 
@@ -51,8 +56,7 @@ def run():
         elif method == "show_old_log":
             show_log(True)
         else:
-            e = "Method %s does not exist" % method
-            raise NotImplementedError(e)
+            raise NotImplementedError("Method '{}' does not exist".format(method))
     else:
         headings, handlers = get_opts()
         index = xbmcgui.Dialog().select(utils.ADDON_NAME, headings)
