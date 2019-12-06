@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.module.dropbox"
+       name="Dropbox API"
+       version="9.4.0"
+       provider-name="Dropbox">
+  <requires>
+    <import addon="xbmc.python" version="3.0.0"/>
+    <import addon="script.module.requests" version="2.18.4"/>
+    <import addon="script.module.six" version="1.11.0" />
+  </requires>
+  <extension point="xbmc.python.module" library="lib" /> <!-- entry to import this in other addons -->
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en_GB">Dropbox API</summary>
+    <description lang="en_GB">Provide Dropbox Python API support</description>
+    <description lang="he">התוסף מספק תמיכה ב-API Python Dropbox</description>
+    <platform>all</platform>
+    <license>Apache2</license>
+    <website>https://www.dropbox.com/developers/documentation/python</website>
+    <source>https://github.com/dropbox/dropbox-sdk-python</source>
+    <news>
+v9.4.0 (2019-11-26)
+- support for Python 3
+v8.4.2 (2019-08-23)
+- Fix Windows import errors (github.com/robweber)
+- Make qrcode module an optional dependency (github.com/robweber)
+v8.4.1 (2017-11-28)
+- Update to API version 8.4.0
+- Switch strings to po format
+- Add Hebrew (github.com/Eng2Heb)
+- Fix for UI lib issues (github.com/SchapplM)
+    </news>
+  </extension>
+</addon>
