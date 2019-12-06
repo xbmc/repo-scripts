@@ -72,7 +72,7 @@ def get_setting_as_int(setting):
         return 0
 
 def get_string(string_id):
-    return ADDON.getLocalizedString(string_id).encode('utf-8', 'ignore')
+    return ADDON.getLocalizedString(string_id)
 
 def kodi_json_request(params):
     data = json.dumps(params)

@@ -77,14 +77,14 @@ class Kaster(xbmcgui.WindowXMLDialog):
                         continue
 
                     # photo metadata
-                    if "location" in self.images[rand_index].keys() and "photographer" in self.images[rand_index].keys():
+                    if "location" in list(self.images[rand_index].keys()) and "photographer" in list(self.images[rand_index].keys()):
                         self.metadata_line2.setLabel(self.images[rand_index]["location"])
                         self.metadata_line3.setLabel("%s %s" % (kodiutils.get_string(32001),
                                                                 self.utils.remove_unknown_author(self.images[rand_index]["photographer"])))
-                    elif "location" in self.images[rand_index].keys() and "photographer" not in self.images[rand_index].keys():
+                    elif "location" in list(self.images[rand_index].keys()) and "photographer" not in list(self.images[rand_index].keys()):
                         self.metadata_line2.setLabel(self.images[rand_index]["location"])
                         self.metadata_line3.setLabel("")
-                    elif "location" not in self.images[rand_index].keys() and "photographer" in self.images[rand_index].keys():
+                    elif "location" not in list(self.images[rand_index].keys()) and "photographer" in list(self.images[rand_index].keys()):
                         self.metadata_line2.setLabel("%s %s" % (kodiutils.get_string(32001),
                                                                 self.utils.remove_unknown_author(self.images[rand_index]["photographer"])))
                         self.metadata_line3.setLabel("")
@@ -109,7 +109,7 @@ class Kaster(xbmcgui.WindowXMLDialog):
                 # note: abort requested is only called after kodi kills the entrypoint and we need to return
                 # as soon as possible
                 loop_count = (kodiutils.get_setting_as_int("wait-time-before-changing-image") * 1000) / 200
-                for _ in range(0, loop_count):
+                for _ in range(0, int(loop_count)):
                     if self._isactive and not self.exit_monitor.abortRequested():
                         xbmc.sleep(200)
                 # Check if images dict is empty, if so read the file again

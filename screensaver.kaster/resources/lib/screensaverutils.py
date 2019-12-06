@@ -75,10 +75,10 @@ class ScreenSaverUtils:
                 }
                 if images_dict:
                     for image in images_dict:
-                        if "image" in image.keys() and os.path.join(xbmc.translatePath(path),image["image"]) == _file:
-                            if "line1" in image.keys():
+                        if "image" in list(image.keys()) and os.path.join(xbmc.translatePath(path),image["image"]) == _file:
+                            if "line1" in list(image.keys()):
                                 returned_dict["line1"] = image["line1"]
-                            if "line2" in image.keys():
+                            if "line2" in list(image.keys()):
                                 returned_dict["line2"] = image["line2"]
                 yield returned_dict
 
