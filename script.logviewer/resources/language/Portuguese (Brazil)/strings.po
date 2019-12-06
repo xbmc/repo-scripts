@@ -29,7 +29,7 @@ msgstr "Mostrar Log"
 ""
 
 msgctxt "#30002"
-msgid "Show Old Full Log"
+msgid "Show old Log"
 msgstr "Mostrar Log antigo"
 ""
 
@@ -98,3 +98,17 @@ msgid "Upload Log file"
 msgstr "Fazer upload do log"
 ""
 
+msgctxt "#30016"
+msgid "Error"
+msgstr "Erro"
+""
+
+msgctxt "#30017"
+msgid "Unable to locate log file..."
+msgstr "Falha ao localizar ficheiro de log..."
+""
+
+msgctxt "#30018"
+msgid "Parse exceptions only"
+msgstr "Analisar apenas exceções"
+""

@@ -1,3 +1,7 @@
+v2.1.0 (4 December 2019):
+- Python3 compatibility
+- Fix log error detection service after kodi's migration to libfmt
+
 v2.0.0 (7 August 2017):
 - Fix window not opening
 - Added a custom window for reading log
