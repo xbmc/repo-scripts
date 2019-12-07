@@ -1,4 +1,8 @@
+v5.7.2
+- fix music163 scraper
+
 v5.7.1
+- handle dialog.close()
 - more offscreen listitems
 
 v5.7.0

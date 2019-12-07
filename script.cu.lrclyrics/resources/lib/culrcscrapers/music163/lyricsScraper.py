@@ -33,8 +33,8 @@ class LyricsFetcher:
         lyrics.song = song
         lyrics.source = __title__
         lyrics.lrc = __lrc__
-        artist = song.artist.replace(' ', '+').encode('utf-8')
-        title = song.title.replace(' ', '+').encode('utf-8')
+        artist = song.artist.replace(' ', '+')
+        title = song.title.replace(' ', '+')
         search = '?s=%s+%s&type=1' % (artist, title)
         try:
             url = self.SEARCH_URL + search
