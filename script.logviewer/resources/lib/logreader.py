@@ -1,22 +1,11 @@
 # -*- coding: utf-8 -*-
 
 import os
-import sys
+from io import FileIO
+
+from resources.lib.utils import decode
 
 SEPARATOR = b"\n"
-
-if sys.version_info.major >= 3:
-    def encode(s):
-        return s.encode("utf-8")
-
-    def decode(s):
-        return s.decode("utf-8")
-else:
-    def encode(s):
-        return s
-
-    def decode(s):
-        return s
 
 
 class LogReader(object):
@@ -32,10 +21,16 @@ class LogReader(object):
         if file_size == self._offset:
             return ""
 
-        with open(self._filename, "rb") as fh:
+        with FileIO(self._filename, "rb") as fh:
             fh.seek(self._offset)
             self._offset = file_size
             return decode(fh.read())
+
+    def set_offset(self, offset):
+        self._offset = offset
+
+    def get_offset(self):
+        return self._offset
 
     def read(self, invert=False, lines_number=0):
         return "\n".join(line for line in self.read_lines(invert, lines_number))
@@ -48,13 +43,14 @@ class LogReader(object):
 
     def normal_read_lines(self, lines_number=0):
         """a generator that returns the lines of a file"""
-        with open(self._filename, "rb") as fh:
+        with FileIO(self._filename, "rb") as fh:
             segment = None
             total = 0
             remaining_size = self.file_size()
             while remaining_size > 0 and (lines_number == 0 or total < lines_number):
-                buf = fh.read(self._buf_size)
-                remaining_size -= self._buf_size
+                buf_size = self._buf_size if self._buf_size < remaining_size else remaining_size
+                buf = fh.read(buf_size)
+                remaining_size -= buf_size
                 lines = buf.split(SEPARATOR)
                 start = 0
                 # the last line of the buffer is probably not a complete line so
@@ -81,14 +77,14 @@ class LogReader(object):
 
     def reverse_read_lines(self, lines_number=0):
         """a generator that returns the lines of a file in reverse order"""
-        with open(self._filename, "rb") as fh:
+        with FileIO(self._filename, "rb") as fh:
             segment = None
             total = offset = 0
-            remaining_size = self.file_size()
+            file_size = remaining_size = self.file_size()
             while remaining_size > 0 and (lines_number == 0 or total < lines_number):
                 buf_size = self._buf_size if self._buf_size < remaining_size else remaining_size
-                offset -= buf_size
-                fh.seek(offset, os.SEEK_END)
+                offset += buf_size
+                fh.seek(file_size - offset)
                 buf = fh.read(buf_size)
                 remaining_size -= buf_size
                 lines = buf.split(SEPARATOR)

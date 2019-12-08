@@ -112,3 +112,13 @@ msgctxt "#30018"
 msgid "Parse exceptions only"
 msgstr "Analisar apenas exceções"
 ""
+
+msgctxt "#30019"
+msgid "Enable HTTP server"
+msgstr "Activar servidor HTTP"
+""
+
+msgctxt "#30020"
+msgid "Port"
+msgstr "Porto"
+""
