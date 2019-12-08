@@ -7,5 +7,7 @@
         <setting id="custom_window" type="bool" label="30013" default="false"/>
         <setting id="error_popup" type="bool" label="30014" default="false"/>
         <setting id="exceptions_only" type="bool" label="30018" default="true" enable="!eq(-1,false)"/>
+        <setting id="http_server" type="bool" label="30019" default="false"/>
+        <setting id="port" type="number" label="30020" default="8080" enable="!eq(-1,false)"/>
     </category>
 </settings>
