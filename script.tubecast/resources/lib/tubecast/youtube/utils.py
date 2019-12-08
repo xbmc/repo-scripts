@@ -4,11 +4,11 @@ import re
 
 
 def case(identifier, cmd):
-    return '"{}"'.format(identifier) in cmd
+    return '"%s"' % identifier in str(cmd)
 
 
 def parse_cmd(cmd):
-    cmd = re.compile(r'(\d+),\[".+?",(.*)\]\]').findall(cmd)
+    cmd = re.compile(r'(\d+),\[".+?",(.*)\]\]').findall(cmd.decode("utf-8"))
     if cmd:
         code = cmd[0][0]
         cmd = ast.literal_eval(
