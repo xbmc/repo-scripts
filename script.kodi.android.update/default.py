@@ -1,4 +1,4 @@
-#     Copyright (C) 2018 Team-Kodi
+#     Copyright (C) 2020 Team-Kodi
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -16,7 +16,7 @@
 # -*- coding: utf-8 -*-
 
 import os, time, datetime, traceback, re
-import urllib, urllib2, socket
+import urllib, urllib2, socket, json
 import xbmc, xbmcgui, xbmcvfs, xbmcaddon
 
 from bs4 import BeautifulSoup
@@ -40,10 +40,16 @@ DEBUG     = REAL_SETTINGS.getSetting('Enable_Debugging') == 'true'
 CLEAN     = REAL_SETTINGS.getSetting('Disable_Maintenance') == 'false'
 VERSION   = REAL_SETTINGS.getSetting("Version") #VERSION = 'Android 4.0.0 API level 24, kernel: Linux ARM 64-bit version 3.10.96+' #Test
 BASE_URL  = 'http://mirrors.kodi.tv/'
+BRANCHS   =  {19:'matrix',18:'leia',17:'krypton',16:'jarvis',15:'isengard',14:'helix',13:'gotham','':''}
+BUILD_OPT = {'nightlies':LANGUAGE(30017),'releases':LANGUAGE(30016),'snapshots':LANGUAGE(30015),'test-builds':LANGUAGE(30018)}
+try: BUILD = json.loads(REAL_SETTINGS.getSetting("Build"))
+except: BUILD = ''
+BRANCH    = BRANCHS[int(BUILD.get('major',''))]
 DROID_URL = BASE_URL + '%s/android/%s/'
-BUILD_OPT = ['nightlies','releases','snapshots','test-builds']
-BUILD_DEC = [LANGUAGE(30017),LANGUAGE(30016),LANGUAGE(30015),LANGUAGE(30018)]
 DEVICESTR = (REAL_SETTINGS.getSetting("Platform") or None)
+USERAPP   = REAL_SETTINGS.getSetting("USERAPP")
+CUSTOM    = (REAL_SETTINGS.getSetting('Custom_Manager') or 'com.android.documentsui')
+FMANAGER  = {0:'com.android.documentsui',1:CUSTOM}[int(REAL_SETTINGS.getSetting('File_Manager'))]
 
 if DEVICESTR is None: PLATFORM = ""
 elif '64' in DEVICESTR: PLATFORM = "arm64-v8a"
@@ -55,14 +61,29 @@ def log(msg, level=xbmc.LOGDEBUG):
     if level == xbmc.LOGERROR: msg += ' ,' + traceback.format_exc()
     xbmc.log(ADDON_ID + '-' + ADDON_VERSION + '-' + (msg.encode("utf-8")), level)
 
+def selectDialog(label, items, pselect=-1, uDetails=True):
+    select = xbmcgui.Dialog().select(label, items, preselect=pselect, useDetails=uDetails)
+    if select >= 0: return select
+    return None
+    
+def getParams():
+    try: return sys.argv[1]
+    except: return None
+
 socket.setdefaulttimeout(TIMEOUT)
 class Installer(object):
     def __init__(self):
+        params = getParams()
+        if params is not None:
+            if params == 'test': self.runExplorer()
+            elif params == 'select': self.selectExplorer()
+            REAL_SETTINGS.openSettings()
+            sys.exit()
         self.cache    = SimpleCache()
         if not self.chkVersion(): return
         self.lastURL  = (REAL_SETTINGS.getSetting("LastURL") or self.buildMain())
         self.lastPath = REAL_SETTINGS.getSetting("LastPath")
-        self.selectDialog(self.lastURL)
+        self.selectPath(self.lastURL)
         
         
     def disable(self, build):
@@ -71,12 +92,6 @@ class Installer(object):
         xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method":"Addons.SetAddonEnabled","params":{"addonid":"%s","enabled":false}, "id": 1}'%(ADDON_ID))
         xbmcgui.Dialog().notification(ADDON_NAME, LANGUAGE(30009), ICON, 4000)
         return False
-        
-        
-    def prompt(self, fle):
-        #temp solution no need to use localized strings
-        msg = '[CR][CR]"%s" is temporarily impaired due to an Android API change.[CR][CR]In the interim please open your file explorer, navigate to "%s" and install "%s".[CR][CR]Thank you, Sorry for any inconvenience...'%(ADDON_NAME,SETTINGS_LOC,fle)
-        xbmcgui.Dialog().ok(ADDON_NAME, msg)
         
         
     def chkVersion(self):
@@ -114,11 +129,11 @@ class Installer(object):
         
     def buildMain(self):
         tmpLST = []
-        for idx, item in enumerate(BUILD_OPT): tmpLST.append(xbmcgui.ListItem(item.title(),BUILD_DEC[idx],ICON))
-        select = xbmcgui.Dialog().select(ADDON_NAME, tmpLST, preselect=-1, useDetails=True)
+        for label in sorted(BUILD_OPT.keys()): tmpLST.append(xbmcgui.ListItem(label.title(),BUILD_OPT[label],ICON,path=DROID_URL%(label.lower(),PLATFORM)))
+        select = selectDialog(ADDON_NAME, tmpLST)
         if select < 0: return #return on cancel.
-        return  DROID_URL%(BUILD_OPT[select].lower().replace('//','/'),PLATFORM)
-            
+        return tmpLST[select].getPath()
+        
             
     def buildItems(self, url):
         soup = self.openURL(url)
@@ -127,11 +142,12 @@ class Installer(object):
             try: #folders
                 label, label2 = re.compile("(.*?)/-(.*)").match(item).groups()
                 if label == PLATFORM: label2 = LANGUAGE(30014)%PLATFORM
+                elif label.lower() == BRANCH.lower(): label2 = LANGUAGE(30022)%(BUILD.get('major',''),BUILD.get('minor',''),BUILD.get('revision',''))
                 else: label2 = '' #Don't use time-stamp for folders
-                yield (xbmcgui.ListItem(label.strip(),label2,ICON))
+                yield (xbmcgui.ListItem(label.title(),label2,ICON))
             except: #files
                 label, label2 = re.compile("(.*?)\s(.*)").match(item).groups()
-                if label.endswith('.apk'): yield (xbmcgui.ListItem(label.strip(),label2.strip(),ICON))
+                if '.apk' in label: yield (xbmcgui.ListItem('%s.apk'%label.split('.apk')[0],'%s %s'%(label.split('.apk')[1], label2.replace('MiB','MiB ').strip()),ICON))
 
 
     def setLastPath(self, url, path):
@@ -139,29 +155,26 @@ class Installer(object):
         REAL_SETTINGS.setSetting("LastPath",path)
         
         
-    def selectDialog(self, url, bypass=False):
-        log('selectDialog, url = ' + str(url))
+    def selectPath(self, url, bypass=False):
+        log('selectPath, url = ' + str(url))
         newURL = url
         while not xbmc.Monitor().abortRequested():
             items  = list(self.buildItems(url))
             if len(items) == 0: break
             elif len(items) == 2 and not bypass and items[0].getLabel().startswith('Parent directory') and not items[1].getLabel().startswith('.apk'): select = 1 #If one folder bypass selection.
-            else:
-                label  = url.replace(BASE_URL,'./').replace('//','/')
-                select = xbmcgui.Dialog().select(label, items, preselect=-1, useDetails=True)
-                if select < 0: return #return on cancel.
+            else: select = selectDialog(url.replace(BASE_URL,'./').replace('//','/'), items)
+            if select < 0: return #return on cancel.
             label  = items[select].getLabel()
             newURL = url + items[select].getLabel()
             preURL = url.rsplit('/', 2)[0] + '/'
-            
             if newURL.endswith('.apk'): 
                 dest = xbmc.translatePath(os.path.join(SETTINGS_LOC,label))
                 self.setLastPath(url,dest)
                 return self.downloadAPK(newURL,dest)
             elif label.startswith('Parent directory') and "android" in preURL:
-                return self.selectDialog(preURL, True)
+                return self.selectPath(preURL, True)
             elif label.startswith('Parent directory') and "android" not in preURL:
-                return self.selectDialog(self.buildMain(), False)
+                return self.selectPath(self.buildMain(), False)
             url = newURL + '/'
                 
 
@@ -181,24 +194,25 @@ class Installer(object):
             try: 
                 if xbmcvfs.delete(path): return
             except: pass
-    
+            
         
     def downloadAPK(self, url, dest):
         if self.fileExists(dest): return self.installAPK(dest)
         start_time = time.time()
         dia = xbmcgui.DialogProgress()
-        dia.create(ADDON_NAME, LANGUAGE(30002))
-        try:
-            urllib.urlretrieve(url.rstrip('/'), dest, lambda nb, bs, fs: self.pbhook(nb, bs, fs, dia, start_time))
+        fle = dest.rsplit('/', 1)[1]
+        dia.create(ADDON_NAME, LANGUAGE(30002)%fle)
+        try: urllib.urlretrieve(url.rstrip('/'), dest, lambda nb, bs, fs: self.pbhook(nb, bs, fs, dia, start_time, fle))
         except Exception as e:
             dia.close()
             xbmcgui.Dialog().notification(ADDON_NAME, LANGUAGE(30001), ICON, 4000)
             log("downloadAPK, Failed! (%s) %s"%(url,str(e)), xbmc.LOGERROR)
             return self.deleleAPK(dest)
+        dia.close()
         return self.installAPK(dest)
         
         
-    def pbhook(self, numblocks, blocksize, filesize, dia, start_time):
+    def pbhook(self, numblocks, blocksize, filesize, dia, start_time, fle):
         try: 
             percent = min(numblocks * blocksize * 100 / filesize, 100) 
             currently_downloaded = float(numblocks) * blocksize / (1024 * 1024) 
@@ -206,20 +220,22 @@ class Installer(object):
             if kbps_speed > 0: eta = (filesize - numblocks * blocksize) / kbps_speed 
             else: eta = 0 
             kbps_speed = kbps_speed / 1024 
-            total = float(filesize) / (1024 * 1024) 
-            mbs = '%.02f MB of %.02f MB' % (currently_downloaded, total) 
-            e = 'Speed: %.02f Kb/s ' % kbps_speed 
             if eta < 0: eta = divmod(0, 60)
             else: eta = divmod(eta, 60)
-            e += 'ETA: %02d:%02d' % eta
-            dia.update(percent, LANGUAGE(30002), mbs, e)
+            total   = (float(filesize) / (1024 * 1024))
+            label   = '[B]Downloading:[/B] %s'%SETTINGS_LOC
+            label2  = '%.02f MB of %.02f MB'%(currently_downloaded,total)
+            label2 += ' | [B]Speed:[/B] %.02f Kb/s'%kbps_speed
+            label2 += ' | [B]ETA:[/B] %02d:%02d'%eta
+            dia.update(percent, label, fle, label2)
         except Exception('Download Failed'): dia.update(100)
         if dia.iscanceled(): raise Exception('Download Canceled')
             
             
     def installAPK(self, apkfile):
-        self.prompt(apkfile.rsplit('/', 1)[1])
+        xbmc.executebuiltin('StartAndroidActivity(%s,,,"content://%s")'%(FMANAGER,apkfile))
+        # xbmc.executebuiltin('StartAndroidActivity("","android.intent.action.INSTALL_PACKAGE ","application/vnd.android.package-archive","content://%s")'%apkfile)
         # xbmc.executebuiltin('XBMC.AlarmClock(shutdowntimer,XBMC.Quit(),0.5,true)')
-        # xbmc.executebuiltin('StartAndroidActivity("","android.intent.action.VIEW","application/vnd.android.package-archive","content:%s")'%apkfile)
-        
+
+
 if __name__ == '__main__': Installer()
