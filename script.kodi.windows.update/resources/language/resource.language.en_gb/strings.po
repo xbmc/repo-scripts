@@ -69,7 +69,7 @@ msgid "Would you like to disable this plugin?"
 msgstr ""
 
 msgctxt "#30014"
-msgid "Current Windows platform (%s)"
+msgid "Current Windows Platform (%s)"
 msgstr ""
 
 msgctxt "#30015"
@@ -94,5 +94,9 @@ msgstr ""
 
 msgctxt "#30020"
 msgid "Enable Silent Installation"
+msgstr ""
+
+msgctxt "#30021"
+msgid "Current Kodi Branch (%s.%s-%s)"
 msgstr ""
 
