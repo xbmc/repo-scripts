@@ -13,6 +13,8 @@
 
 import os
 import sys
+import threading
+
 import xbmc
 import xbmcaddon
 import xbmcgui
@@ -23,7 +25,32 @@ settings = xbmcaddon.Addon(id='script.common.plugin.cache')
 
 def run():
     if settings.getSetting("autostart") == "true":
+        sleep_time = 10
+        server_thread = None
 
+        monitor = xbmc.Monitor()
+        while not monitor.abortRequested():
+            if not server_thread:
+                server_thread = ServerThread()
+
+            if monitor.waitForAbort(sleep_time):
+                break
+
+        if server_thread:
+            server_thread.abort()
+            server_thread.join()
+
+
+class ServerThread(threading.Thread):
+    def __init__(self):
+        super(ServerThread, self).__init__()
+
+        self.server = None
+
+        self.daemon = True
+        self.start()
+
+    def run(self):
         addon_path = settings.getAddonInfo('path')
         if isinstance(addon_path, bytes):
             addon_path = addon_path.decode('utf-8')
@@ -31,8 +58,11 @@ def run():
         sys.path = [os.path.join(addon_path, "resources", "lib", "storage_server")] + sys.path
 
         from storage_server import StorageServer
-        s = StorageServer.StorageServer(False)
+        self.server = StorageServer.StorageServer(False)
 
-        xbmc.log("[%s] Service loaded, starting server ..." % s.plugin, xbmc.LOGDEBUG)
+        xbmc.log("[%s] Service loaded, starting server ..." % self.server.plugin, xbmc.LOGDEBUG)
 
-        s.run()
+        self.server.run()
+
+    def abort(self):
+        self.server.force_abort = True
