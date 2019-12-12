@@ -4,6 +4,7 @@ from __future__ import unicode_literals
 
 import inspect
 import sys
+from math import trunc
 
 
 def get_locale(name):
@@ -169,8 +170,7 @@ class Locale(object):
         return dict(map(lambda i: (i[1].lower(), i[0] + 1), enumerate(lst[1:])))
 
     def _format_timeframe(self, timeframe, delta):
-
-        return self.timeframes[timeframe].format(abs(delta))
+        return self.timeframes[timeframe].format(trunc(abs(delta)))
 
     def _format_relative(self, humanized, timeframe, delta):
 
@@ -839,16 +839,15 @@ class GermanLocale(_DeutschLocaleCommonMixin, Locale):
 
     names = ['de', 'de_de']
 
-    timeframes = _DeutschLocaleCommonMixin.timeframes.copy()
-    timeframes['days'] = '{0} Tagen'
 
+class AustrianLocale(_DeutschLocaleCommonMixin, Locale):
 
-class AustriaLocale(_DeutschLocaleCommonMixin, Locale):
+    names = ['de_at']
 
-    names = ['de', 'de_at']
-
-    timeframes = _DeutschLocaleCommonMixin.timeframes.copy()
-    timeframes['days'] = '{0} Tage'
+    month_names = [
+        '', 'Jänner', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli',
+        'August', 'September', 'Oktober', 'November', 'Dezember'
+    ]
 
 
 class NorwegianLocale(Locale):
@@ -951,7 +950,7 @@ class PortugueseLocale(Locale):
 class BrazilianPortugueseLocale(PortugueseLocale):
     names = ['pt_br']
 
-    past = 'fazem {0}'
+    past = 'faz {0}'
 
 
 class TagalogLocale(Locale):
@@ -1077,37 +1076,101 @@ class AzerbaijaniLocale(Locale):
     day_names = ['', 'Bazar ertəsi', 'Çərşənbə axşamı', 'Çərşənbə', 'Cümə axşamı', 'Cümə', 'Şənbə', 'Bazar']
     day_abbreviations = ['', 'Ber', 'Çax', 'Çər', 'Cax', 'Cüm', 'Şnb', 'Bzr']
 
-
 class ArabicLocale(Locale):
-
-    names = ['ar', 'ar_eg']
+    names = ['ar', 'ar_ae', 'ar_bh', 'ar_dj', 'ar_eg', 'ar_eh', 'ar_er',
+    'ar_km', 'ar_kw', 'ar_ly', 'ar_om', 'ar_qa', 'ar_sa', 'ar_sd', 'ar_so',
+    'ar_ss', 'ar_td', 'ar_ye']
 
     past = 'منذ {0}'
     future = 'خلال {0}'
 
     timeframes = {
         'now': 'الآن',
-        'seconds': 'ثوان',
+        'seconds': {
+            'double' : 'ثانيتين',
+            'ten' : '{0} ثوان',
+            'higher' : '{0} ثانية'
+        },
         'minute': 'دقيقة',
-        'minutes': '{0} دقائق',
+        'minutes': {
+            'double' : 'دقيقتين',
+            'ten' : '{0} دقائق',
+            'higher' : '{0} دقيقة'
+        },
         'hour': 'ساعة',
-        'hours': '{0} ساعات',
+        'hours': {
+            'double' : 'ساعتين',
+            'ten' : '{0} ساعات',
+            'higher' : '{0} ساعة'
+        },
         'day': 'يوم',
-        'days': '{0} أيام',
+        'days': {
+            'double' : 'يومين',
+            'ten' : '{0} أيام',
+            'higher' : '{0} يوم'
+        },
         'month': 'شهر',
-        'months': '{0} شهور',
+        'months': {
+            'double' : 'شهرين',
+            'ten' : '{0} أشهر',
+            'higher' : '{0} شهر'
+        },
         'year': 'سنة',
-        'years': '{0} سنوات',
+        'years': {
+            'double' : 'سنتين',
+            'ten' : '{0} سنوات',
+            'higher' : '{0} سنة'
+        },
     }
 
-    month_names = ['', 'يناير', 'فبراير', 'مارس', 'أبريل', 'مايو', 'يونيو', 'يوليو',
-        'أغسطس', 'سبتمبر', 'أكتوبر', 'نوفمبر', 'ديسمبر']
-    month_abbreviations = ['', 'يناير', 'فبراير', 'مارس', 'أبريل', 'مايو', 'يونيو', 'يوليو',
-        'أغسطس', 'سبتمبر', 'أكتوبر', 'نوفمبر', 'ديسمبر']
+    month_names = ['', 'يناير', 'فبراير', 'مارس', 'أبريل', 'مايو',
+        'يونيو', 'يوليو', 'أغسطس', 'سبتمبر', 'أكتوبر', 'نوفمبر', 'ديسمبر']
+    month_abbreviations = ['', 'يناير', 'فبراير', 'مارس', 'أبريل', 'مايو',
+        'يونيو', 'يوليو', 'أغسطس', 'سبتمبر', 'أكتوبر', 'نوفمبر', 'ديسمبر']
 
-    day_names = ['', 'الاثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت', 'الأحد']
-    day_abbreviations = ['', 'اثنين', 'ثلاثاء', 'أربعاء', 'خميس', 'جمعة', 'سبت', 'أحد']
+    day_names = ['', 'الإثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت', 'الأحد']
+    day_abbreviations = ['', 'إثنين', 'ثلاثاء', 'أربعاء', 'خميس', 'جمعة', 'سبت', 'أحد']
+    
+    def _format_timeframe(self, timeframe, delta):
+        form = self.timeframes[timeframe]
+        delta = abs(delta)
+        if isinstance(form, dict):
+            if delta == 2:
+                form = form['double']
+            elif delta > 2 and delta <= 10:
+                form = form['ten']
+            else:
+                form = form['higher']
 
+        return form.format(delta)
+
+class LevantArabicLocale(ArabicLocale):
+    names = ['ar_iq', 'ar_jo', 'ar_lb', 'ar_ps', 'ar_sy']
+    month_names = ['', 'كانون الثاني', 'شباط', 'آذار', 'نيسان', 'أيار', 'حزيران', 'تموز', 'آب',
+        'أيلول', 'تشرين الأول', 'تشرين الثاني', 'كانون الأول']
+    month_abbreviations = ['', 'كانون الثاني', 'شباط', 'آذار', 'نيسان', 'أيار', 'حزيران', 'تموز', 'آب',
+        'أيلول', 'تشرين الأول', 'تشرين الثاني', 'كانون الأول']
+
+class AlgeriaTunisiaArabicLocale(ArabicLocale):
+    names = ['ar_tn', 'ar_dz']
+    month_names = ['', 'جانفي', 'فيفري', 'مارس', 'أفريل', 'ماي', 'جوان',
+        'جويلية', 'أوت', 'سبتمبر', 'أكتوبر', 'نوفمبر', 'ديسمبر']
+    month_abbreviations = ['', 'جانفي', 'فيفري', 'مارس', 'أفريل', 'ماي', 'جوان',
+        'جويلية', 'أوت', 'سبتمبر', 'أكتوبر', 'نوفمبر', 'ديسمبر']
+
+class MauritaniaArabicLocale(ArabicLocale):
+    names = ['ar_mr']
+    month_names = ['', 'يناير', 'فبراير', 'مارس', 'إبريل', 'مايو', 'يونيو',
+        'يوليو', 'أغشت', 'شتمبر', 'أكتوبر', 'نوفمبر', 'دجمبر']
+    month_abbreviations = ['', 'يناير', 'فبراير', 'مارس', 'إبريل', 'مايو', 'يونيو',
+        'يوليو', 'أغشت', 'شتمبر', 'أكتوبر', 'نوفمبر', 'دجمبر']
+
+class MoroccoArabicLocale(ArabicLocale):
+    names = ['ar_ma']
+    month_names = ['', 'يناير', 'فبراير', 'مارس', 'أبريل', 'ماي', 'يونيو',
+        'يوليوز', 'غشت', 'شتنبر', 'أكتوبر', 'نونبر', 'دجنبر']
+    month_abbreviations = ['', 'يناير', 'فبراير', 'مارس', 'أبريل', 'ماي', 'يونيو',
+        'يوليوز', 'غشت', 'شتنبر', 'أكتوبر', 'نونبر', 'دجنبر']
 
 class IcelandicLocale(Locale):
 
@@ -1626,7 +1689,7 @@ class BasqueLocale(Locale):
 
     month_names = ['', 'urtarrilak', 'otsailak', 'martxoak', 'apirilak', 'maiatzak', 'ekainak', 'uztailak', 'abuztuak', 'irailak', 'urriak', 'azaroak', 'abenduak']
     month_abbreviations = ['', 'urt', 'ots', 'mar', 'api', 'mai', 'eka', 'uzt', 'abu', 'ira', 'urr', 'aza', 'abe']
-    day_names = ['', 'asteleehna', 'asteartea', 'asteazkena', 'osteguna', 'ostirala', 'larunbata', 'igandea']
+    day_names = ['', 'astelehena', 'asteartea', 'asteazkena', 'osteguna', 'ostirala', 'larunbata', 'igandea']
     day_abbreviations = ['', 'al', 'ar', 'az', 'og', 'ol', 'lr', 'ig']
 
 
@@ -1758,7 +1821,7 @@ class ThaiLocale(Locale):
     }
 
     month_names = ['', 'มกราคม', 'กุมภาพันธ์', 'มีนาคม', 'เมษายน',
-                   'พฤษภาคม', 'มิถุนายน', 'กรกฏาคม', 'สิงหาคม',
+                   'พฤษภาคม', 'มิถุนายน', 'กรกฎาคม', 'สิงหาคม',
                    'กันยายน', 'ตุลาคม', 'พฤศจิกายน', 'ธันวาคม']
     month_abbreviations = ['', 'ม.ค.', 'ก.พ.', 'มี.ค.', 'เม.ย.', 'พ.ค.',
                            'มิ.ย.', 'ก.ค.', 'ส.ค.', 'ก.ย.', 'ต.ค.',
@@ -1905,7 +1968,7 @@ class SwissLocale(Locale):
             'hour': 'einer Stunde',
             'hours': '{0} Stunden',
             'day': 'einem Tag',
-            'days': '{0} Tage',
+            'days': '{0} Tagen',
             'month': 'einem Monat',
             'months': '{0} Monaten',
             'year': 'einem Jahr',
@@ -2007,5 +2070,90 @@ class SlovenianLocale(Locale):
         '', 'Pon', 'Tor', 'Sre', 'Čet', 'Pet', 'Sob', 'Ned'
     ]
 
+class IndonesianLocale(Locale):
 
+    names = ['id', 'id_id']
+
+    past = '{0} yang lalu'
+    future = 'dalam {0}'
+
+    timeframes = {
+        'now': 'baru saja',
+        'seconds': 'detik',
+        'minute': '1 menit',
+        'minutes': '{0} menit',
+        'hour': '1 jam',
+        'hours': '{0} jam',
+        'day': '1 hari',
+        'days': '{0} hari',
+        'month': '1 bulan',
+        'months': '{0} bulan',
+        'year': '1 tahun',
+        'years': '{0} tahun'
+    }
+
+    meridians = {
+        'am': '',
+        'pm': '',
+        'AM': '',
+        'PM': ''
+    }
+
+    month_names = ['', 'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli',
+        'Agustus', 'September', 'Oktober', 'November', 'Desember']
+
+    month_abbreviations = ['', 'Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul',
+        'Ags', 'Sept', 'Okt', 'Nov', 'Des']
+
+    day_names = ['', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu', 'Minggu']
+
+    day_abbreviations = ['', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu', 'Minggu']
+
+
+class NepaliLocale(Locale):
+    names = ['ne', 'ne_np']
+
+    past = '{0} पहिले'
+    future = '{0} पछी'
+
+    timeframes = {
+        'now': 'अहिले',
+        'seconds': 'सेकण्ड',
+        'minute': 'मिनेट',
+        'minutes': '{0} मिनेट',
+        'hour': 'एक घण्टा',
+        'hours': '{0} घण्टा',
+        'day': 'एक दिन',
+        'days': '{0} दिन',
+        'month': 'एक महिना',
+        'months': '{0} महिना',
+        'year': 'एक बर्ष',
+        'years': 'बर्ष'
+    }
+
+    meridians = {
+        'am': 'पूर्वाह्न',
+        'pm': 'अपरान्ह',
+        'AM': 'पूर्वाह्न',
+        'PM': 'अपरान्ह'
+    }
+
+    month_names = [
+        '', 'जनवरी', 'फेब्रुअरी', 'मार्च', 'एप्रील', 'मे', 'जुन',
+        'जुलाई', 'अगष्ट', 'सेप्टेम्बर', 'अक्टोबर', 'नोवेम्बर', 'डिसेम्बर'
+    ]
+    month_abbreviations = [
+        '', 'जन', 'फेब', 'मार्च', 'एप्रील', 'मे', 'जुन', 'जुलाई', 'अग',
+        'सेप', 'अक्ट', 'नोव', 'डिस'
+    ]
+
+    day_names = [
+        '', 'सोमवार', 'मंगलवार', 'बुधवार', 'बिहिवार', 'शुक्रवार', 'शनिवार', 'आइतवार'
+    ]
+
+    day_abbreviations = [
+        '', 'सोम', 'मंगल', 'बुध', 'बिहि', 'शुक्र', 'शनि', 'आइत'
+    ]
+
+ 
 _locales = _map_locales()

@@ -1,3 +1,7 @@
+Version 0.12.1
+
+- arrow v0.12.1
+
 Version 0.10.0
 
 - arrow v0.10.0
