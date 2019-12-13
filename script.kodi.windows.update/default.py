@@ -1,4 +1,4 @@
-#     Copyright (C) 2019 Team-Kodi
+#     Copyright (C) 2020 Team-Kodi
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -15,12 +15,13 @@
 #
 # -*- coding: utf-8 -*-
 
-import os, time, datetime, traceback, re, fnmatch, glob, threading
-import urllib, urllib2, socket, subprocess, shutil, sys
+import os, time, datetime, traceback, re, threading, json
+import socket, subprocess, sys
 import xbmc, xbmcgui, xbmcvfs, xbmcaddon
 
 from bs4 import BeautifulSoup
 from simplecache import SimpleCache
+from six.moves import urllib
 
 # Plugin Info
 ADDON_ID      = 'script.kodi.windows.update'
@@ -39,10 +40,12 @@ DEBUG     = REAL_SETTINGS.getSetting('Enable_Debugging') == 'true'
 CLEAN     = REAL_SETTINGS.getSetting('Disable_Maintenance') == 'false'
 BASE_URL  = 'http://mirrors.kodi.tv/'
 WIND_URL  = BASE_URL + '%s/windows/%s/'
-BUILD_OPT = ['nightlies','releases','snapshots','test-builds']
-BUILD_DEC = [LANGUAGE(30017),LANGUAGE(30016),LANGUAGE(30015),LANGUAGE(30018)]
-# UWP_PATH  = LANGUAGE(30010)
+BRANCHS   =  {19:'matrix',18:'leia',17:'krypton',16:'jarvis',15:'isengard',14:'helix',13:'gotham','':''}
+BUILD_OPT = {'nightlies':LANGUAGE(30017),'releases':LANGUAGE(30016),'snapshots':LANGUAGE(30015),'test-builds':LANGUAGE(30018)}
 VERSION   = REAL_SETTINGS.getSetting("Version")
+try: BUILD = json.loads(REAL_SETTINGS.getSetting("Build"))
+except: BUILD = ''
+BRANCH    = BRANCHS[int(BUILD.get('major',''))]
 PLATFORM  = {True:"win64", False:"win32", None:""}[('64' in REAL_SETTINGS.getSetting("Platform") or None)]
 
 def log(msg, level=xbmc.LOGDEBUG):
@@ -50,16 +53,21 @@ def log(msg, level=xbmc.LOGDEBUG):
     if level == xbmc.LOGERROR: msg += ' ,' + traceback.format_exc()
     xbmc.log(ADDON_ID + '-' + ADDON_VERSION + '-' + (msg.encode("utf-8")), level)
 
-    
+def selectDialog(label, items, pselect=-1, uDetails=True):
+    select = xbmcgui.Dialog().select(label, items, preselect=pselect, useDetails=uDetails)
+    if select >= 0: return select
+    return None
+        
 socket.setdefaulttimeout(TIMEOUT)
 class Installer(object):
     def __init__(self):
+        self.myMonitor = xbmc.Monitor()
         self.cache    = SimpleCache()
         if self.chkUWP(): return
         self.killKodi = threading.Timer(2.0, self.killME)
         self.lastURL  = (REAL_SETTINGS.getSetting("LastURL") or self.buildMain())
         self.lastPath = REAL_SETTINGS.getSetting("LastPath")
-        self.selectDialog(self.lastURL)
+        self.selectPath(self.lastURL)
         
     
     def chkUWP(self):
@@ -82,8 +90,8 @@ class Installer(object):
         try:
             cacheResponce = self.cache.get(ADDON_NAME + '.openURL, url = %s'%url)
             if not cacheResponce:
-                request = urllib2.Request(url)
-                cacheResponce = urllib2.urlopen(request, timeout = TIMEOUT).read()
+                request = urllib.request.Request(url)
+                cacheResponce = urllib.request.urlopen(request, timeout = TIMEOUT).read()
                 self.cache.set(ADDON_NAME + '.openURL, url = %s'%url, cacheResponce, expiration=datetime.timedelta(minutes=5))
             return BeautifulSoup(cacheResponce, "html.parser")
         except Exception as e:
@@ -99,14 +107,14 @@ class Installer(object):
         except: #files
             items = (soup.find_all('a'))
         return [x.get_text() for x in items if x.get_text() is not None]
-
+       
         
     def buildMain(self):
         tmpLST = []
-        for idx, item in enumerate(BUILD_OPT): tmpLST.append(xbmcgui.ListItem(item.title(),BUILD_DEC[idx],ICON))
-        select = xbmcgui.Dialog().select(ADDON_NAME, tmpLST, preselect=-1, useDetails=True)
+        for label in sorted(BUILD_OPT.keys()): tmpLST.append(xbmcgui.ListItem(label.title(),BUILD_OPT[label],ICON,path=WIND_URL%(label,PLATFORM)))
+        select = selectDialog(ADDON_NAME, tmpLST)
         if select < 0: return #return on cancel.
-        return WIND_URL%(BUILD_OPT[select].lower().replace('//','/'),PLATFORM)
+        return tmpLST[select].getPath()
             
             
     def buildItems(self, url):
@@ -116,12 +124,13 @@ class Installer(object):
             try: #folders
                 if 'uwp' in item.lower(): continue #ignore UWP builds
                 label, label2 = re.compile("(.*?)/-(.*)").match(item).groups()
-                if label == PLATFORM: label2 = LANGUAGE(30014)%PLATFORM
+                if label.lower() == PLATFORM.lower(): label2 = LANGUAGE(30014)%REAL_SETTINGS.getSetting("Platform")
+                elif label.lower() == BRANCH.lower(): label2 = LANGUAGE(30021)%(BUILD.get('major',''),BUILD.get('minor',''),BUILD.get('revision',''))
                 else: label2 = '' #Don't use time-stamp for folders
-                yield (xbmcgui.ListItem(label.strip(),label2.strip(),ICON))
+                yield (xbmcgui.ListItem(label.title(),label2,ICON,path=(url + label)))
             except: #files
                 label, label2 = re.compile("(.*?)\s(.*)").match(item).groups()
-                if label.endswith('.exe'): yield (xbmcgui.ListItem(label.strip(),label2.strip(),ICON))
+                if '.exe' in label: yield (xbmcgui.ListItem('%s.exe'%label.split('.exe')[0],'%s %s'%(label.split('.exe')[1], label2.replace('MiB','MB ').strip()),ICON,path='%s%s.exe'%(url,label.split('.exe')[0])))
 
 
     def setLastPath(self, url, path):
@@ -133,32 +142,29 @@ class Installer(object):
         xbmcgui.Dialog().ok(header, str1, str2, str3)
         
     
-    def selectDialog(self, url, bypass=False):
-        log('selectDialog, url = ' + str(url))
+    def selectPath(self, url, bypass=False):
+        log('selectPath, url = ' + str(url))
         newURL  = url
-        while not xbmc.Monitor().abortRequested():
+        while not self.myMonitor.abortRequested():
             items = list(self.buildItems(url))
-            if len(items) == 0: break
-            elif len(items) == 2 and not bypass and items[0].getLabel().startswith('Parent directory') and not items[1].getLabel().startswith('.exe'): select = 1 #If one folder bypass selection.
-            else:
-                label  = url.replace(BASE_URL,'./').replace('//','/')
-                select = xbmcgui.Dialog().select(label, items, preselect=-1, useDetails=True)
-                if select < 0: return #return on cancel.
+            if   len(items) == 0: break
+            elif len(items) == 2 and not bypass and items[0].getLabel().lower() == 'parent directory' and not items[1].getLabel().startswith('.exe'): select = 1 #If one folder bypass selection.
+            else: select = selectDialog(url.replace(BASE_URL,'./').replace('//','/'), items)
+            if select < 0: return #return on cancel.
             label  = items[select].getLabel()
-            newURL = url + items[select].getLabel()
+            newURL = items[select].getPath()
             preURL = url.rsplit('/', 2)[0] + '/'
-            
             if newURL.endswith('.exe'): 
                 dest = xbmc.translatePath(os.path.join(SETTINGS_LOC,label))
                 self.setLastPath(url,dest)
                 return self.downloadEXE(newURL,dest)
-            elif label.startswith('Parent directory') and "windows" in preURL:
-                return self.selectDialog(preURL, True)
-            elif label.startswith('Parent directory') and "windows" not in preURL:
-                return self.selectDialog(self.buildMain(), False)
-            url = newURL + '/'
-        
-        
+            elif label.lower() == 'parent directory' and "windows" in preURL.lower():
+                return self.selectPath(preURL, True)
+            elif label.lower() == 'parent directory' and "windows" not in preURL.lower():
+                return self.selectPath(self.buildMain(), False)
+            url = newURL.replace('Master','master') + '/'
+            
+            
     def fileExists(self, dest):
         if xbmcvfs.exists(dest):
             if not xbmcgui.Dialog().yesno(ADDON_NAME, LANGUAGE(30004), dest.rsplit('/', 1)[-1], nolabel=LANGUAGE(30005), yeslabel=LANGUAGE(30006)): return False
@@ -167,11 +173,9 @@ class Installer(object):
         
         
     def deleteEXE(self, path):
-        count = 0
         #some file systems don't release the file lock instantly.
-        while not xbmc.Monitor().abortRequested() and count < 3:
-            count += 1
-            if xbmc.Monitor().waitForAbort(1): return 
+        for count in range(3):
+            if self.myMonitor.waitForAbort(1): return 
             try: 
                 if xbmcvfs.delete(path): return
             except: pass
@@ -181,9 +185,9 @@ class Installer(object):
         if self.fileExists(dest): return self.installEXE(dest)
         start_time = time.time()
         dia = xbmcgui.DialogProgress()
+        fle = dest.rsplit('\\', 1)[1]
         dia.create(ADDON_NAME, LANGUAGE(30002))
-        try:
-            urllib.urlretrieve(url.rstrip('/'), dest, lambda nb, bs, fs: self.pbhook(nb, bs, fs, dia, start_time))
+        try: urllib.request.urlretrieve(url.rstrip('/'), dest, lambda nb, bs, fs: self.pbhook(nb, bs, fs, dia, start_time, fle))
         except Exception as e:
             dia.close()
             xbmcgui.Dialog().notification(ADDON_NAME, LANGUAGE(30001), ICON, 4000)
@@ -191,8 +195,8 @@ class Installer(object):
             return self.deleteEXE(dest)
         return self.installEXE(dest)
 
-        
-    def pbhook(self, numblocks, blocksize, filesize, dia, start_time):
+
+    def pbhook(self, numblocks, blocksize, filesize, dia, start_time, fle):
         try: 
             percent = min(numblocks * blocksize * 100 / filesize, 100) 
             currently_downloaded = float(numblocks) * blocksize / (1024 * 1024) 
@@ -200,17 +204,18 @@ class Installer(object):
             if kbps_speed > 0: eta = (filesize - numblocks * blocksize) / kbps_speed 
             else: eta = 0 
             kbps_speed = kbps_speed / 1024 
-            total = float(filesize) / (1024 * 1024) 
-            mbs = '%.02f MB of %.02f MB' % (currently_downloaded, total) 
-            e = 'Speed: %.02f Kb/s ' % kbps_speed 
             if eta < 0: eta = divmod(0, 60)
             else: eta = divmod(eta, 60)
-            e += 'ETA: %02d:%02d' % eta
-            dia.update(percent, LANGUAGE(30002), mbs, e)
+            total   = (float(filesize) / (1024 * 1024))
+            label   = '[B]Downloading:[/B] %s'%SETTINGS_LOC
+            label2  = '%.02f MB of %.02f MB'%(currently_downloaded,total)
+            label2 += ' | [B]Speed:[/B] %.02f Kb/s'%kbps_speed
+            label2 += ' | [B]ETA:[/B] %02d:%02d'%eta
+            dia.update(percent, label, fle, label2)
         except Exception('Download Failed'): dia.update(100)
         if dia.iscanceled(): raise Exception('Download Canceled')
-            
-            
+
+
     def installEXE(self, exefile):
         if not xbmcvfs.exists(exefile): return
         xbmc.executebuiltin('XBMC.AlarmClock(shutdowntimer,XBMC.Quit(),0.5,true)')

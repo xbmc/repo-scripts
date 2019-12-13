@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.kodi.windows.update" name="Kodi Windows Installer" version="1.0.5" provider-name="Team Kodi">
+<addon id="script.kodi.windows.update" name="Kodi Windows Installer" version="1.1.1" provider-name="Team Kodi">
     <requires>
         <import addon="xbmc.python" version="2.25.0"/>
+        <import addon="script.module.six" version="1.0.0"/>
         <import addon="script.module.simplecache" version="1.0.0"/>
         <import addon="script.module.beautifulsoup4" version="4.3.2"/>
     </requires>
@@ -16,7 +17,7 @@
         <source>https://github.com/Lunatixz/KODI_Addons/tree/master/script.kodi.windows.update</source>
         <forum>https://forum.kodi.tv/showthread.php?tid=325226</forum>
         <disclaimer lang="en_GB">UWP not supported! Not intended for Kodi installation through the Windows Store.</disclaimer>
-        <news>v1.0.5[CR]-Improved UWP Detection[CR]v1.0.4[CR]-Improved UI[CR]v1.0.2[CR]-WIndows Platform Detection[CR]-Streamlined Navigation[CR]-Windows Version Detection[CR]v1.0.1[CR]-Improved functionality</news>
+        <news>v1.0.7[CR]-UI Update[CR]v1.0.6[CR]-Fixed Listings[CR]v1.0.5[CR]-Improved UWP Detection[CR]v1.0.4[CR]-Improved UI[CR]v1.0.2[CR]-WIndows Platform Detection[CR]-Streamlined Navigation[CR]-Windows Version Detection[CR]v1.0.1[CR]-Improved functionality</news>
         <assets>
             <icon>resources/images/icon.png</icon>
             <fanart>resources/images/fanart.jpg</fanart>
