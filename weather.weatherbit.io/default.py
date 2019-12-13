@@ -107,7 +107,10 @@ def convert_time(utc_time):
     try:
         utc = datetime.strptime(utc_time, '%Y-%m-%d %H:%M')
     except:
-        utc = datetime(*(time.strptime(utc_time, '%Y-%m-%d %H:%M')[0:6]))
+        try:
+            utc = datetime(*(time.strptime(utc_time, '%Y-%m-%d %H:%M')[0:6]))
+        except:
+            return ''
     utc = utc.replace(tzinfo=from_zone)
     date_time = utc.astimezone(to_zone)
     date_time = time.strptime(str(date_time)[0:16], '%Y-%m-%d %H:%M')
