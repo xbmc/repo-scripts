@@ -3,14 +3,14 @@
 import math
 import xbmc, xbmcgui, xbmcaddon
 
-ADDON      = xbmcaddon.Addon()
-ADDONID    = ADDON.getAddonInfo('id')
-LANGUAGE   = ADDON.getLocalizedString
+ADDON = xbmcaddon.Addon()
+ADDONID = ADDON.getAddonInfo('id')
+LANGUAGE = ADDON.getLocalizedString
 
 WEATHER_WINDOW = xbmcgui.Window(12600)
-DEBUG          = ADDON.getSetting('Debug')
-TEMPUNIT       = xbmc.getRegion('tempunit')
-SPEEDUNIT      = xbmc.getRegion('speedunit')
+DEBUG = ADDON.getSetting('Debug')
+TEMPUNIT = xbmc.getRegion('tempunit')
+SPEEDUNIT = xbmc.getRegion('speedunit')
 
 def log(txt):
     if DEBUG == 'true':

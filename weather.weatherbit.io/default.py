@@ -12,31 +12,31 @@ import xbmcgui
 import xbmcaddon
 import json
 
-ADDON        = xbmcaddon.Addon()
-ADDONNAME    = ADDON.getAddonInfo('name')
-ADDONID      = ADDON.getAddonInfo('id')
-CWD          = ADDON.getAddonInfo('path')
+ADDON = xbmcaddon.Addon()
+ADDONNAME = ADDON.getAddonInfo('name')
+ADDONID = ADDON.getAddonInfo('id')
+CWD = ADDON.getAddonInfo('path')
 ADDONVERSION = ADDON.getAddonInfo('version')
-LANGUAGE     = ADDON.getLocalizedString
-RESOURCE     = xbmc.translatePath(os.path.join(CWD, 'resources', 'lib'))
-PROFILE      = xbmc.translatePath(ADDON.getAddonInfo('profile'))
+LANGUAGE = ADDON.getLocalizedString
+RESOURCE = xbmc.translatePath(os.path.join(CWD, 'resources', 'lib'))
+PROFILE = xbmc.translatePath(ADDON.getAddonInfo('profile'))
 
 sys.path.append(RESOURCE)
 
 from dateutil import tz
 from utils import *
 
-APPID          = ADDON.getSettingString('API')
-MAPID          = ADDON.getSettingString('MAPAPI')
-LOCATION_URL   = 'https://openweathermap.org/data/2.5/find?q=%s&type=like&sort=population&cnt=30&appid=b6907d289e10d714a6e88b30761fae22'
-BASE_URL       = 'https://api.weatherbit.io/v2.0/%s'
-LATLON         = ADDON.getSettingBool('LatLon')
-MAPS           = ADDON.getSettingBool('WMaps')
-ZOOM           = str(ADDON.getSettingInt('Zoom') + 2)
-WEATHER_ICON   = xbmc.translatePath('%s.png')
-DATEFORMAT     = xbmc.getRegion('dateshort')
-TIMEFORMAT     = xbmc.getRegion('meridiem')
-MAXDAYS        = 6
+APPID = ADDON.getSettingString('API')
+MAPID = ADDON.getSettingString('MAPAPI')
+LOCATION_URL = 'https://openweathermap.org/data/2.5/find?q=%s&type=like&sort=population&cnt=30&appid=b6907d289e10d714a6e88b30761fae22'
+BASE_URL = 'https://api.weatherbit.io/v2.0/%s'
+LATLON = ADDON.getSettingBool('LatLon')
+MAPS = ADDON.getSettingBool('WMaps')
+ZOOM = str(ADDON.getSettingInt('Zoom') + 2)
+WEATHER_ICON = xbmc.translatePath('%s.png')
+DATEFORMAT = xbmc.getRegion('dateshort')
+TIMEFORMAT = xbmc.getRegion('meridiem')
+MAXDAYS = 6
 
 
 def clear():
@@ -106,7 +106,10 @@ def convert_time(utc_time):
     try:
         utc = datetime.strptime(utc_time, '%Y-%m-%d %H:%M')
     except:
-        utc = datetime(*(time.strptime(utc_time, '%Y-%m-%d %H:%M')[0:6]))
+        try:
+            utc = datetime(*(time.strptime(utc_time, '%Y-%m-%d %H:%M')[0:6]))
+        except:
+            return ''
     utc = utc.replace(tzinfo=from_zone)
     date_time = utc.astimezone(to_zone)
     date_time = time.strptime(str(date_time)[0:16], '%Y-%m-%d %H:%M')

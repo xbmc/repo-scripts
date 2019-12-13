@@ -1,3 +1,9 @@
+v0.1.4
+- workaround invalid time in json response
+
+v0.1.3
+- cosmetics
+
 v0.1.2
 - update settings
 
