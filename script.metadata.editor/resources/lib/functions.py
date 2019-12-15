@@ -331,12 +331,8 @@ def tmdb_call(action,call=None,get=None,params=None):
             break
         xbmc.sleep(500)
 
-    if request.status_code != requests.codes.ok:
-        return
-
-    result = request.json()
-
-    if not len(result) or ('results' in result and not result.get('results')):
-        return
+    result = {}
+    if request.status_code == requests.codes.ok:
+        result = request.json()
 
     return result
