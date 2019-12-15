@@ -205,6 +205,9 @@ class UpdateRating(object):
                            params={'append_to_response': 'release_dates,content_ratings,external_ids'}
                            )
 
+        if not result:
+            return
+
         self.tmdb_rating = result.get('vote_average')
         self.tmdb_votes = result.get('vote_count')
         self.original_title = result.get('original_name')
