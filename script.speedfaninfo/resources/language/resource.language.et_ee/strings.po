@@ -1,0 +1,57 @@
+# XBMC Media Center language file
+# Addon Name: SpeedFan Information Display
+# Addon id: script.speedfaninfo
+# Addon Provider: pkscuot
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: Estonian (http://www.transifex.com/projects/p/xbmc-addons/language/et/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: et\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#30000"
+msgid "General"
+msgstr "Üldine"
+
+msgctxt "#30001"
+msgid "Enable Verbose Logging"
+msgstr "Luba põhjalikum logimine"
+
+msgctxt "#30002"
+msgid "Log Temperature Scale"
+msgstr "Logi temperatuuriskaala"
+
+msgctxt "#30003"
+msgid "Window Update Interval (in seconds)"
+msgstr "Akna värskendamise intervall (sekundites)"
+
+msgctxt "#30004"
+msgid "Use Compact Display"
+msgstr "Kompaktsem kuva"
+
+msgctxt "#30005"
+msgid "    Background Transparency"
+msgstr "Tausta läbipaistvus"
+
+msgctxt "#30100"
+msgid "Temperature Information"
+msgstr "Temperatuuri Info"
+
+msgctxt "#30101"
+msgid "Fan Speed Information"
+msgstr "Ventilaatori pöörete Info"
+
+msgctxt "#30102"
+msgid "Voltage Information"
+msgstr "Toitepingete Info"
+
+msgctxt "#32209"
+msgid "Enable debug logging"
+msgstr "Lubati silumise logimine"
