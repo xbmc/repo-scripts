@@ -1,0 +1,122 @@
+# XBMC Media Center language file
+# Addon Name: SpeedFan Information Display
+# Addon id: script.speedfaninfo
+# Addon Provider: pkscuot
+msgid ""
+msgstr ""
+"Project-Id-Version: script.speedfaninfo\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: 2014-10-26 17:05+0000\n"
+"PO-Revision-Date: 2017-10-11 08:00+0300\n"
+"Last-Translator: A. Dambledore\n"
+"Language-Team: Eng2Heb\n"
+"Language: he_IL\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 2.0.4\n"
+
+msgctxt "#30000"
+msgid "General"
+msgstr "כללי"
+
+msgctxt "#30001"
+msgid "Enable Verbose Logging"
+msgstr "אפשר רישום מילולי ביומן"
+
+msgctxt "#30002"
+msgid "Log Temperature Scale"
+msgstr "רשום ביומן שינויי טמפרטורה"
+
+msgctxt "#30003"
+msgid "Window Update Interval (in seconds)"
+msgstr "חלון מרווח העדכון (בשניות)"
+
+msgctxt "#30004"
+msgid "Use Compact Display"
+msgstr "תשתמש בתצוגת קומפקטית"
+
+msgctxt "#30005"
+msgid "    Background Transparency"
+msgstr "    שקיפות רקע"
+
+msgctxt "#30006"
+msgid "Log File Location"
+msgstr "רשום ביומן מיקום קובץ"
+
+# empty strings from id 30007 to 30009
+msgctxt "#30010"
+msgid " Additional Logs"
+msgstr " יומנים נוספים"
+
+msgctxt "#30011"
+msgid "Primary Log File Title"
+msgstr "שם קובץ ליומן ראשי"
+
+msgctxt "#30012"
+msgid "Use Log File 2"
+msgstr "תשתמש בקובץ יומן 2"
+
+msgctxt "#30013"
+msgid "Use Log File 3"
+msgstr "השתמש בקובץ יומן 3"
+
+# empty strings from id 30014 to 30019
+msgctxt "#30020"
+msgid "    Log File Title"
+msgstr "   שם קובץ ליומן"
+
+msgctxt "#30021"
+msgid "    Log File Location"
+msgstr "   מיקום קובץ יומן"
+
+# empty strings from id 30022 to 30029
+msgctxt "#30030"
+msgid "Advanced"
+msgstr "מתקדם"
+
+msgctxt "#30031"
+msgid "Set Line Read Size"
+msgstr "הגדר גודל קריאת שורה"
+
+msgctxt "#30032"
+msgid "    External Script"
+msgstr "    סקריפט חיצוני"
+
+msgctxt "#30033"
+msgid "    Timeout (in secs)"
+msgstr "    זמן קצוב (שניות)"
+
+msgctxt "#30034"
+msgid "Use External Script to Generate Log File"
+msgstr "תשתמש בסקריפט חיצוני כדי ליצור קובץ יומן רישום"
+
+# empty strings from 30034 to 30099
+msgctxt "#30100"
+msgid "Temperature Information"
+msgstr "מידע טמפרטורה"
+
+msgctxt "#30101"
+msgid "Fan Speed Information"
+msgstr "מידע מהירות מאוורר"
+
+msgctxt "#30102"
+msgid "Voltage Information"
+msgstr "מידע רמת מתח חשמלי"
+
+msgctxt "#30103"
+msgid "Log File Error"
+msgstr "שגיאה בקובץ יומן רישום"
+
+msgctxt "#30104"
+msgid "No log file found."
+msgstr "לא נמצא קובץ יומן הרישום."
+
+msgctxt "#30105"
+msgid "Other Information"
+msgstr "מידע נוסף"
+
+msgctxt "#32209"
+msgid "Enable debug logging"
+msgstr "הפעל רישום של איתור באגים"
