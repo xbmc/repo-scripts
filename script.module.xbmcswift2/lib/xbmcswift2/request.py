@@ -8,12 +8,16 @@
     :copyright: (c) 2012 by Jonathan Beluch
     :license: GPLv3, see LICENSE for more details.
 '''
-from xbmcswift2.common import unpickle_args
-import urlparse
-try:
-    from urlparse import parse_qs
-except ImportError:
-    from cgi import parse_qs
+from xbmcswift2.common import unpickle_args, PY3
+
+if PY3:
+    from urllib.parse import parse_qs, urlparse
+else:
+    from urlparse import urlparse
+    try:
+        from urlparse import parse_qs
+    except ImportError:
+        from cgi import parse_qs
 
 
 class Request(object):
@@ -37,7 +41,7 @@ class Request(object):
         # urlparse doesn't like the 'plugin' scheme, so pass a protocol
         # relative url, e.g. //plugin.video.helloxbmc/path
         self.scheme, remainder = url.split(':', 1)
-        parts = urlparse.urlparse(remainder)
+        parts = urlparse(remainder)
         self.netloc, self.path, self.query_string = (
             parts[1], parts[2], parts[4])
         self.args = unpickle_args(parse_qs(self.query_string))

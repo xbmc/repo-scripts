@@ -7,7 +7,7 @@
     :copyright: (c) 2012 by Jonathan Beluch
     :license: GPLv3, see LICENSE for more details.
 '''
-from xbmcmixin import XBMCMixin
+from xbmcswift2.xbmcmixin import XBMCMixin
 from xbmcswift2 import setup_log
 
 

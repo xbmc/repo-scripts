@@ -7,8 +7,17 @@
     :copyright: (c) 2012 by Jonathan Beluch
     :license: GPLv3, see LICENSE for more details.
 '''
-import urllib
-import urllib2
+import sys
+
+PY3 = sys.version_info.major >= 3
+
+if PY3:
+    from urllib.parse import urlencode
+    from urllib.request import urlopen
+else:
+    from urllib import urlencode
+    from urllib2 import urlopen
+
 try:
     import cPickle as pickle
 except ImportError:
@@ -17,17 +26,17 @@ except ImportError:
 
 def xbmc_url(url, **options):
     '''Appends key/val pairs to the end of a URL. Useful for passing arbitrary
-    HTTP headers to XBMC to be used when fetching a media resource, e.g.
+    HTTP headers to KODI to be used when fetching a media resource, e.g.
     cookies.
     '''
-    optionstring = urllib.urlencode(options)
+    optionstring = urlencode(options)
     if optionstring:
         return url + '|' + optionstring
     return url
 
 
 def enum(*args, **kwargs):
-    '''An enum class to mirror XBMC constatns. All args and kwargs.keys are
+    '''An enum class to mirror KODI constatns. All args and kwargs.keys are
     added as atrrs on the returned object.
 
     >>> States = enum('NEW_JERSEY', NY='NEW_YORK')
@@ -107,7 +116,7 @@ def unpickle_dict(items):
 def download_page(url, data=None):
     '''Returns the response for the given url. The optional data argument is
     passed directly to urlopen.'''
-    conn = urllib2.urlopen(url, data)
+    conn = urlopen(url, data)
     resp = conn.read()
     conn.close()
     return resp

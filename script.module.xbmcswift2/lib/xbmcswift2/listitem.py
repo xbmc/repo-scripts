@@ -9,6 +9,7 @@
     :license: GPLv3, see LICENSE for more details.
 '''
 from xbmcswift2 import xbmcgui
+from xbmcswift2.logger import log
 
 
 class ListItem(object):
@@ -16,15 +17,13 @@ class ListItem(object):
     of any set properties that xbmcgui doesn't expose getters for.
     '''
     def __init__(self, label=None, label2=None, icon=None, thumbnail=None,
-                 path=None):
+                 path=None, fanart=None):
         '''Defaults are an emtpy string since xbmcgui.ListItem will not
         accept None.
         '''
         kwargs = {
             'label': label,
             'label2': label2,
-            'iconImage': icon,
-            'thumbnailImage': thumbnail,
             'path': path,
         }
         #kwargs = dict((key, val) for key, val in locals().items() if val is
@@ -33,19 +32,25 @@ class ListItem(object):
                       if val is not None)
         self._listitem = xbmcgui.ListItem(**kwargs)
 
-        # xbmc doesn't make getters available for these properties so we'll
+        # kodi doesn't make getters available for these properties so we'll
         # keep track on our own
-        self._icon = icon
         self._path = path
-        self._thumbnail = thumbnail
         self._context_menu_items = []
         self.is_folder = True
         self._played = False
+        self._art = {'icon': icon, 'thumb': thumbnail, 'fanart': fanart}
+
+        # set listitem art
+        self._listitem.setArt(self._art)
 
     def __repr__(self):
+        if PY3:
+            return ("<ListItem '%s'>" % self.label)
         return ("<ListItem '%s'>" % self.label).encode('utf-8')
 
     def __str__(self):
+        if PY3:
+            return ('%s (%s)' % (self.label, self.path))
         return ('%s (%s)' % (self.label, self.path)).encode('utf-8')
 
     def get_context_menu_items(self):
@@ -53,16 +58,18 @@ class ListItem(object):
         return self._context_menu_items
 
     def add_context_menu_items(self, items, replace_items=False):
-        '''Adds context menu items. If replace_items is True all
-        previous context menu items will be removed.
+        '''Adds context menu items. replace_items is only kept for
+        legacy reasons, its functionality was removed.
         '''
         for label, action in items:
             assert isinstance(label, basestring)
             assert isinstance(action, basestring)
+
         if replace_items:
-            self._context_menu_items = []
+            log.warning("Replacing context menu items functionality was removed.")
+
         self._context_menu_items.extend(items)
-        self._listitem.addContextMenuItems(items, replace_items)
+        self._listitem.addContextMenuItems(items)
 
     def get_label(self):
         '''Sets the listitem's label'''
@@ -114,23 +121,27 @@ class ListItem(object):
 
     def get_icon(self):
         '''Returns the listitem's icon image'''
-        return self._icon
+        return self._art['icon']
 
     def set_icon(self, icon):
         '''Sets the listitem's icon image'''
-        self._icon = icon
-        return self._listitem.setIconImage(icon)
+        self._art['icon'] = icon
+        return self._listitem.setArt(self._art)
 
     icon = property(get_icon, set_icon)
 
     def get_thumbnail(self):
         '''Returns the listitem's thumbnail image'''
-        return self._thumbnail
+        return self._art['thumbnail']
 
     def set_thumbnail(self, thumbnail):
         '''Sets the listitem's thumbnail image'''
-        self._thumbnail = thumbnail
-        return self._listitem.setThumbnailImage(thumbnail)
+        self._art['thumbnail'] = thumbnail
+        return self._listitem.setArt(self._art)
+
+    def set_art(self, art):
+        self._art = art
+        return self._listitem.setArt(self._art)
 
     thumbnail = property(get_thumbnail, set_thumbnail)
 
@@ -164,7 +175,7 @@ class ListItem(object):
     def set_played(self, was_played):
         '''Sets the played status of the listitem. Used to
         differentiate between a resolved video versus a playable item.
-        Has no effect on XBMC, it is strictly used for xbmcswift2.
+        Has no effect on KODI, it is strictly used for xbmcswift2.
         '''
         self._played = was_played
 
@@ -186,13 +197,13 @@ class ListItem(object):
     def from_dict(cls, label=None, label2=None, icon=None, thumbnail=None,
                   path=None, selected=None, info=None, properties=None,
                   context_menu=None, replace_context_menu=False,
-                  is_playable=None, info_type='video', stream_info=None):
+                  is_playable=None, info_type='video', stream_info=None, fanart=None):
         '''A ListItem constructor for setting a lot of properties not
         available in the regular __init__ method. Useful to collect all
         the properties in a dict and then use the **dct to call this
         method.
         '''
-        listitem = cls(label, label2, icon, thumbnail, path)
+        listitem = cls(label, label2, icon, thumbnail, path, fanart)
 
         if selected is not None:
             listitem.select(selected)
@@ -216,6 +227,6 @@ class ListItem(object):
                 listitem.add_stream_info(stream_type, stream_values)
 
         if context_menu:
-            listitem.add_context_menu_items(context_menu, replace_context_menu)
+            listitem.add_context_menu_items(context_menu)
 
         return listitem
