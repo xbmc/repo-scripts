@@ -147,8 +147,7 @@ class ImageBlur():
 class CreateGenreThumb():
     def __init__(self,genre,images):
         self.images = images
-        self.genre = genre
-        self.filename = genre + '_' + md5hash(images) + '.jpg'
+        self.filename = 'genre_' + md5hash(images) + '.jpg'
         self.filepath = os.path.join(ADDON_DATA_IMG_PATH, self.filename)
 
         if xbmcvfs.exists(self.filepath):

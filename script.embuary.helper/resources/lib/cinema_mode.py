@@ -10,6 +10,7 @@ import random
 import os
 
 from resources.lib.helper import *
+from resources.lib.json_map import *
 
 #################################################################################################
 

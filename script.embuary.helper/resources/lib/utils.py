@@ -65,12 +65,12 @@ def createcontext(params):
                 xbmc.sleep(30)
 
     for i in range(1, 100):
-    	if window:
-        	execute('ClearProperty(Context.%d.Builtin,%s)' % (i, window))
-        	execute('ClearProperty(Context.%d.Label,%s)' % (i, window))
+        if window:
+            execute('ClearProperty(Context.%d.Builtin,%s)' % (i, window))
+            execute('ClearProperty(Context.%d.Label,%s)' % (i, window))
         else:
-        	execute('ClearProperty(Context.%d.Builtin)' % i)
-        	execute('ClearProperty(Context.%d.Label)' % i)
+            execute('ClearProperty(Context.%d.Builtin)' % i)
+            execute('ClearProperty(Context.%d.Label)' % i)
 
 
 def createselect(params):
@@ -106,16 +106,16 @@ def createselect(params):
                 xbmc.sleep(30)
 
     for i in range(1, 100):
-    	if window:
-        	execute('ClearProperty(Dialog.%d.Builtin,%s)' % (i, window))
-        	execute('ClearProperty(Dialog.%d.Label,%s)' % (i, window))
-        	execute('ClearProperty(Dialog.%d.Label2,%s)' % (i, window))
-        	execute('ClearProperty(Dialog.%d.Icon,%s)' % (i, window))
+        if window:
+            execute('ClearProperty(Dialog.%d.Builtin,%s)' % (i, window))
+            execute('ClearProperty(Dialog.%d.Label,%s)' % (i, window))
+            execute('ClearProperty(Dialog.%d.Label2,%s)' % (i, window))
+            execute('ClearProperty(Dialog.%d.Icon,%s)' % (i, window))
         else:
-        	execute('ClearProperty(Dialog.%d.Builtin)' % i)
-        	execute('ClearProperty(Dialog.%d.Label)' % i)
-        	execute('ClearProperty(Dialog.%d.Label2)' % i)
-        	execute('ClearProperty(Dialog.%d.Icon)' % i)
+            execute('ClearProperty(Dialog.%d.Builtin)' % i)
+            execute('ClearProperty(Dialog.%d.Label)' % i)
+            execute('ClearProperty(Dialog.%d.Label2)' % i)
+            execute('ClearProperty(Dialog.%d.Icon)' % i)
 
 
 def splitandcreateselect(params):
@@ -137,9 +137,9 @@ def splitandcreateselect(params):
                 xbmc.sleep(30)
 
     if window:
-    	execute('ClearProperty(Dialog.Builtin,%s)' % window)
+        execute('ClearProperty(Dialog.Builtin,%s)' % window)
     else:
-    	execute('ClearProperty(Dialog.Builtin)')
+        execute('ClearProperty(Dialog.Builtin)')
 
 
 def dialogok(params):
