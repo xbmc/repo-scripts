@@ -1,3 +1,15 @@
+v0.5.1
+- add Kodi 18.5 stable release
+- add json schema file for versions.txt
+- fix logic for deciding when to use distro over platform
+
+v0.5.0
+- Python 3 / Kodi 19 ready
+- Update to use SPDX license identifiers
+- Refactor
+- PEP8 and cosmetics
+- pylint 10.00/10
+
 v0.4.6 to v0.4.7
 - Update version list
 

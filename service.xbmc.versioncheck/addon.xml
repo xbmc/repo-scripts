@@ -1,13 +1,18 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="service.xbmc.versioncheck"
-       name="Version Check"
-      version="0.4.7"
-      provider-name="Team Kodi">
+<addon id="service.xbmc.versioncheck" name="Version Check" version="0.5.1" provider-name="Team Kodi">
     <requires>
         <import addon="xbmc.python" version="2.14.0"/>
     </requires>
-    <extension point="xbmc.service" library="service.py" start="login"/>
+    <extension point="xbmc.service" library="resources/lib/runner.py" start="login"/>
     <extension point="xbmc.addon.metadata">
+        <news>
+- add Kodi 18.5 stable release
+- add json schema file for versions.txt
+- fix logic for deciding when to use distro over platform
+        </news>
+        <assets>
+            <icon>icon.png</icon>
+        </assets>
         <summary lang="be">Kodi Version Check checks if you are running latest released version.</summary>
         <summary lang="bg">Проверява дали ползвате най-новата версия на Kodi.</summary>
         <summary lang="ca">Kodi Version Check comprova si està utilitzant la última versió publicada.</summary>
@@ -19,7 +24,7 @@
         <summary lang="en_NZ">Kodi Version Check checks if you are running latest released version.</summary>
         <summary lang="en_US">Kodi Version Check checks if you are running latest released version.</summary>
         <summary lang="es">Kodi Version Check comprueba si está ejecutando la última versión de Kodi.</summary>
-        <summary lang="es_MX">Comprobador de Version de Kodi  comprueba si se esta ejecutando ultima version publicada.</summary>
+        <summary lang="es_MX">Comprobador de Version de Kodi comprueba si se esta ejecutando ultima version publicada.</summary>
         <summary lang="fi">Kodi Version Check tarkistaa onko käyttämäsi uusin versio.</summary>
         <summary lang="fr">Le contrôle de version de Kodi vérifie si la dernière version sortie est utilisée.</summary>
         <summary lang="fr_CA">Le contrôleur de version Kodi vérifie si vous utilisez la dernière version parue.</summary>
@@ -110,10 +115,9 @@
         <disclaimer lang="tr">Bu betiği kullanmaktan çekinmeyin. Daha fazla bilgi için kodi.tv adresini ziyaret edin</disclaimer>
         <disclaimer lang="zh">可放心使用此脚本，更多信息访问 kodi.tv</disclaimer>
         <platform>all</platform>
-        <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+        <license>GPL-2.0-or-later</license>
         <forum>https://forum.kodi.tv/showthread.php?tid=160228</forum>
         <website>https://kodi.tv</website>
-        <email></email>
         <source>https://github.com/XBMC-Addons/service.xbmc.versioncheck</source>
     </extension>
 </addon>
