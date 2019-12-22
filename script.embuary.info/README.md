@@ -47,6 +47,7 @@ The script provides a selection dialog if multiple results were returned.
 * List control ID `10052` = All movies starring with actor xyz
 * List control ID `10053` = All shows starring with actor xyz
 * List control ID `10054` = Actor portraits
+* List control ID `10055` = A combined list of all movies and shows starring with actor xyz
 
 Special properties:
 * `Container(10051).ListItem.Property(TotalMedia)` = Total count of media which is also available in your library
@@ -61,6 +62,7 @@ Special properties:
 * `Container(10051).ListItem.Property(Biography)` = Biography
 * `Container(10052).ListItem.Property(Role)` = Character role
 * `Container(10053).ListItem.Property(Role)` = Character role
+* `Container(10055).ListItem.Property(Role)` = Character role
 
 *script-embuary-video.xml*
 * List control ID `10051` = All available information of the called item.

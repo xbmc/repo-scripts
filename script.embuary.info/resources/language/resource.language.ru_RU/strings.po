@@ -4,13 +4,14 @@
 # Addon Provider: sualfred
 # Translators:
 # Ivan Poletsky <wiperus55@gmail.com>, 2019
+# Эдуард Приутеса <eduardpriutesa@gmail.com>, 2019
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: Embuary Helper\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: 2019-11-24 08:54+0000\n"
-"Last-Translator: Ivan Poletsky <wiperus55@gmail.com>, 2019\n"
+"Last-Translator: Эдуард Приутеса <eduardpriutesa@gmail.com>, 2019\n"
 "Language-Team: Russian (Russia) (https://www.transifex.com/sualfred/teams/80018/ru_RU/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -243,8 +244,8 @@ msgstr "Популярные сериалы"
 
 #: /resources/settings.xml
 msgctxt "#32044"
-msgid "Hide upcoming items in the person dialog"
-msgstr "Скрыть предстоящее в информации о человеке"
+msgid "Hide upcoming items"
+msgstr "Скрыть предстоящие предметы"
 
 #: /resources/settings.xml
 msgctxt "#32045"

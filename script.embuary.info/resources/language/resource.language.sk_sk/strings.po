@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Embuary Helper\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2019-09-04 11:35+0000\n"
+"PO-Revision-Date: 2019-11-24 08:54+0000\n"
 "Last-Translator: Miro Valko <mvalec@atlas.sk>, 2019\n"
 "Language-Team: Slovak (Slovakia) (https://www.transifex.com/sualfred/teams/80018/sk_SK/)\n"
 "MIME-Version: 1.0\n"
@@ -241,3 +241,13 @@ msgstr "Filmy v trende"
 msgctxt "#32043"
 msgid "Trending shows"
 msgstr "Seriály v trende"
+
+#: /resources/settings.xml
+msgctxt "#32044"
+msgid "Hide upcoming items"
+msgstr "Skryť pripravované položky"
+
+#: /resources/settings.xml
+msgctxt "#32045"
+msgid "Allow items of the next [n] days"
+msgstr "Povoliť tie, ktoré výjdu v týchto najbližších dňoch"
