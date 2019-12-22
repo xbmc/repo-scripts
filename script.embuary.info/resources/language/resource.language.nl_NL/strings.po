@@ -247,8 +247,8 @@ msgstr "Trending series"
 
 #: /resources/settings.xml
 msgctxt "#32044"
-msgid "Hide upcoming items in the person dialog"
-msgstr "Nakende items in de persoonsdialoog verbergen "
+msgid "Hide upcoming items"
+msgstr "Nakende items verbergen"
 
 #: /resources/settings.xml
 msgctxt "#32045"

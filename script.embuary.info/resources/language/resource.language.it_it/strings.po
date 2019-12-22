@@ -243,9 +243,8 @@ msgstr "Programmi di tendenza"
 
 #: /resources/settings.xml
 msgctxt "#32044"
-msgid "Hide upcoming items in the person dialog"
-msgstr ""
-"Nascondi gli elementi imminenti nella finestra di dialogo della persona"
+msgid "Hide upcoming items"
+msgstr "Nascondi elementi in arrivo"
 
 #: /resources/settings.xml
 msgctxt "#32045"
