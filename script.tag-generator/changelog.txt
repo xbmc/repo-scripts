@@ -1,6 +1,6 @@
 v0.7 (December 12th, 2018)
-- Kodi 18 Support
-- Bugfix for multiple Trakt users (ryanjerksine)
+- Kodi 18 support
+- Bugfix for multiple Trakt users (https://github.com/ryanjerksine)
 - Bugfixes and code cleanup
 
 v0.6 (December 12th, 2018)
