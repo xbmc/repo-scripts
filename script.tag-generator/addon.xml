@@ -4,7 +4,7 @@
        version="0.7.0"
        provider-name="wellspokenman">
   <requires>
-    <import addon="xbmc.python" version="2.25.0"/>
+    <import addon="xbmc.python" version="2.26.0"/>
     <import addon="script.module.simplejson" version="3.3.0"/>
     <import addon="script.module.requests" version="2.12.4"/>
     <import addon="script.module.six" version="1.9.0"/>
@@ -26,5 +26,12 @@
       - Bugfix for multiple Trakt users (ryanjerksine)
       - bugfixes and code cleanup
     </news>
+    <assets>
+        <icon>resources/icon.png</icon>
+        <fanart>resources/fanart.jpg</fanart>
+        <banner></banner>
+        <clearlogo></clearlogo>
+        <screenshot></screenshot>
+    </assets>
   </extension>
 </addon>
