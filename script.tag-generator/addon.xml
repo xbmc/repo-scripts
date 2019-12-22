@@ -30,7 +30,7 @@
         <icon>resources/icon.png</icon>
         <fanart>resources/fanart.jpg</fanart>
         <banner></banner>
-        <clearlogo></clearlogo>
+        <clearlogo>resources/clearlogo.jpg</clearlogo>
         <screenshot></screenshot>
     </assets>
   </extension>
