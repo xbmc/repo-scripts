@@ -1,4 +1,4 @@
-﻿# -*- Mode: python; coding: utf-8; tab-width: 8; indent-tabs-mode: t; -*-
+#-*- coding: UTF-8 -*-
 """
 Scraper for http://lrcct2.ttplayer.com/
 

@@ -1,3 +1,6 @@
+v6.0.5
+- fix music163 error
+
 v6.0.4
 - handle dialog.close()
 - create listitems offscreen
