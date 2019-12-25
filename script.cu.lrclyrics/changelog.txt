@@ -1,3 +1,6 @@
+v5.7.3
+- fix music163 error
+
 v5.7.2
 - fix music163 scraper
 
