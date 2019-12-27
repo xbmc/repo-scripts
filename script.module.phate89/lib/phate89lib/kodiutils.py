@@ -1,13 +1,14 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-import xbmcaddon
-import xbmc
-import xbmcplugin
-import xbmcgui
+from kodi_six import xbmc, xbmcaddon, xbmcplugin, xbmcgui, utils
 import os
 import sys
 import re
-import staticutils
+try:
+    from urllib.parse import urlencode
+except ImportError:
+    from urllib import urlencode
+from . import staticutils
 if sys.version_info < (2, 7):
     import simplejson as json
 else:
@@ -19,33 +20,35 @@ NAME = ADDON.getAddonInfo('name')
 VERSION = ADDON.getAddonInfo('version')
 PATH = ADDON.getAddonInfo('path')
 DATA_PATH = ADDON.getAddonInfo('profile')
-PATH_T = xbmc.translatePath(PATH).decode('utf-8')
-DATA_PATH_T = xbmc.translatePath(DATA_PATH).decode('utf-8')
+PATH_T = xbmc.translatePath(PATH)
+DATA_PATH_T = xbmc.translatePath(DATA_PATH)
 IMAGE_PATH_T = os.path.join(PATH_T, 'resources', 'media', "")
 LANGUAGE = ADDON.getLocalizedString
+KODILANGUAGE = xbmc.getLocalizedString
 
 HANDLE=int(sys.argv[1])
 
 def executebuiltin(func,block=False):
-    if isinstance (func,str):
-        func = func.decode("utf-8", 'ignore')
-    xbmc.executebuiltin(func.encode('utf-8'),block)
-
+    xbmc.executebuiltin(func,block)
 
 def notify(msg):
     message = 'Notification(%s,%s)' % (ID, msg)
     xbmc.executebuiltin(message)
 
 def log(msg, level=2):
-    if isinstance(msg, str):
-        msg = msg.decode("utf-8", 'ignore')
     message = u'%s: %s' % (ID, msg)
     if level > 1:
-        xbmc.log(msg=message.encode("utf-8", 'ignore'), level=xbmc.LOGDEBUG)
+        xbmc.log(msg=message, level=xbmc.LOGDEBUG)
     else:
-        xbmc.log(msg=message.encode("utf-8", 'ignore'), level=xbmc.LOGNOTICE)
+        xbmc.log(msg=message, level=xbmc.LOGNOTICE)
         if level == 0:
             notify(msg)
+
+def py2_decode(s):
+    return utils.py2_decode(s)
+
+def py2_encode(s):
+    return utils.py2_encode(s)
 
 def getSetting(setting):
     return ADDON.getSetting(setting).strip()
@@ -67,23 +70,46 @@ def setSetting(setting,value):
 def getKeyboard():
     return xbmc.Keyboard()
 
-def addListItem(label="", params={}, label2=None, thumb=None, fanart=None, 
+def getKeyboardText(heading, default='', hidden=False):
+    kb = xbmc.Keyboard(default, heading)
+    kb.setHiddenInput(hidden)
+    kb.doModal()
+    if (kb.isConfirmed()):
+        return kb.getText()
+    else:
+        False
+
+def showOkDialog(heading, line):
+    xbmcgui.Dialog().ok(heading, line)
+
+def addListItem(label="", params={}, label2=None, thumb=None, fanart=None, poster=None, arts={},
                 videoInfo={}, properties={}, isFolder=True):
     item=xbmcgui.ListItem(label,label2)
-    item.setArt({'thumb': thumb, 'fanart': fanart})
+    if thumb: arts['thumb'] = thumb
+    if fanart: arts['fanart'] = fanart
+    if poster: arts['poster'] = poster
+    item.setArt(arts)
     item.setInfo( 'video', videoInfo)
     if not isFolder: properties['IsPlayable']='true'
     if isinstance(params,dict):
         url=staticutils.parameters(params)
     else:
         url = params
-    for key, value in properties.iteritems():
+    for key, value in list(properties.items()):
         item.setProperty(key, value)
     return xbmcplugin.addDirectoryItem(handle=HANDLE, url=url, listitem=item, isFolder=isFolder)
 
-def setResolvedUrl(url="", solved=True, subs=[]):
-    item = xbmcgui.ListItem(path = url)
+def setResolvedUrl(url="", solved=True, subs=[], headers=None, ins=None, insdata=None):
+    headerUrl=""
+    if headers:
+            headerUrl = urlencode(headers)
+    item = xbmcgui.ListItem(path = url + "|" + headerUrl)
     item.setSubtitles(subs)
+    if ins:
+        item.setProperty('inputstreamaddon', ins)
+        if insdata:
+            for key, value in list(insdata.items()):
+                item.setProperty(ins + '.' + key, value)
     xbmcplugin.setResolvedUrl(HANDLE, solved, item)
     sys.exit()
 
@@ -119,16 +145,16 @@ def createAddonFolder():
 
 def getShowID():
     json_query = xbmc.executeJSONRPC('{"jsonrpc":"2.0","method":"Player.GetItem","params":{"playerid":1,"properties":["tvshowid"]},"id":1}' )
-    json_player_getitem = json.loads(unicode(json_query, 'utf-8', errors='ignore'))
-    if json_player_getitem.has_key('result') and json_player_getitem['result']['item']['type'] == 'episode':
+    json_player_getitem = json.loads(utils.py2_decode(json_query, 'utf-8', errors='ignore'))
+    if 'result' in json_player_getitem and json_player_getitem['result']['item']['type'] == 'episode':
         json_query = xbmc.executeJSONRPC('{"jsonrpc":"2.0","id":1,"method":"VideoLibrary.GetTVShowDetails","params":{"tvshowid":%s, "properties": ["imdbnumber"]}}' % (json_player_getitem['result']['item']['tvshowid']) )
-        json_getepisodedetails = json.loads(unicode(json_query, 'utf-8', errors='ignore'))
-        if json_getepisodedetails.has_key('result') and json_getepisodedetails['result']['tvshowdetails']['imdbnumber']!='':
+        json_getepisodedetails = json.loads(utils.py2_decode(json_query, 'utf-8', errors='ignore'))
+        if 'result' in json_getepisodedetails and json_getepisodedetails['result']['tvshowdetails']['imdbnumber']!='':
             return str(json_getepisodedetails['result']['tvshowdetails']['imdbnumber'])
     return False
 
 def containsLanguage(strlang,langs):
-    for lang in strlang.decode('utf-8').split(','):
+    for lang in strlang.split(','):
         if xbmc.convertLanguage(lang, xbmc.ISO_639_2) in langs:
             return True
     return False
@@ -139,12 +165,15 @@ def isPlayingVideo():
 def getInfoLabel(lbl):
     return xbmc.getInfoLabel(lbl)
 
+def getRegion(id):
+    return xbmc.getRegion(id)
+
 def getEpisodeInfo():
     episode = {}
     episode['tvshow'] = staticutils.normalizeString(xbmc.getInfoLabel('VideoPlayer.TVshowtitle'))    # Show
     episode['season'] = xbmc.getInfoLabel('VideoPlayer.Season')                                    # Season
     episode['episode'] = xbmc.getInfoLabel('VideoPlayer.Episode')                                  # Episode
-    file_original_path = xbmc.Player().getPlayingFile().decode('utf-8')                 # Full path
+    file_original_path = xbmc.Player().getPlayingFile()                                            # Full path
     
     if str(episode['episode']).lower().find('s') > -1:                                             # Check if season is "Special"
         episode['season'] = 0
