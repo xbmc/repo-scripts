@@ -4,7 +4,6 @@ import json
 import os
 import re
 import requests
-import simplejson
 import sys
 import xbmc
 import xbmcgui
@@ -62,7 +61,7 @@ def ifcancel():
 
 def debuglog(string):
     if c_debug:
-        xbmc.log(msg=string, level=xbmc.LOGNOTICE)
+        xbmc.log(msg=string, level=xbmc.LOGDEBUG)
 
 
 def notify(input):
@@ -81,7 +80,7 @@ def wipealltags():
         json_query = unicode(json_query, 'utf-8', errors='ignore')
         xbmcid = (json.dumps(movie.get('xbmcid', '')))
         json_query = re.sub('replaceid', xbmcid, json_query)
-        jsonobject = simplejson.loads(xbmc.executeJSONRPC(json_query))
+        jsonobject = json.loads(xbmc.executeJSONRPC(json_query))
         if len(sys.argv) == 2:
             counter = counter + 1
             percent = (100 * int(counter) / int(len(medialist)))
@@ -100,7 +99,7 @@ def getkodidb():
                                      '["title","studio","tag","imdbnumber","year"], "sort": {"order": "ascending", '
                                      '"method": "label", "ignorearticle": true}}, "id": "libMovies"}')
     json_query = unicode(json_query, 'utf-8', errors='ignore')
-    jsonobject = simplejson.loads(json_query)
+    jsonobject = json.loads(json_query)
     medialist = []
     if 'movies' in jsonobject['result']:
         for item in jsonobject['result']['movies']:
@@ -177,7 +176,7 @@ def writetags(xbmcid, newtag, xbmctag):
         jsonurl = re.sub('replacetag', '[' + xbmctag + "," + '"' + newtag + '"]', jsonurl)
     else:
         jsonurl = re.sub('replacetag', '["' + newtag + '"]', jsonurl)
-    jsonresponse = simplejson.loads(xbmc.executeJSONRPC(jsonurl))
+    jsonresponse = json.loads(xbmc.executeJSONRPC(jsonurl))
 
 
 def scrapeimdb(imdburl, scrapecount):
@@ -637,7 +636,9 @@ while not monitor.abortRequested():
         xbmc.log(msg="TAG-GEN: Sleeping for " + str(c_refresh) + " hours", level=xbmc.LOGNOTICE)
         while not monitor.abortRequested():
             if (datetime.datetime.now() - start_time).total_seconds() < service_interval:
-                xbmc.sleep(micronap)
+                if monitor.waitForAbort(micronap):
+                    xbmc.log("TAG-GEN: Abort request received, exiting.", level=xbmc.LOGNOTICE)
+                    sys.exit(0)
             else:
                 start_time = datetime.datetime.now()
                 break
