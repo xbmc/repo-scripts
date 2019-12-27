@@ -24,7 +24,7 @@ c_refresh = __settings__.getSetting("32012")
 c_runasservice = json.loads(__settings__.getSetting("32011"))
 start_time = datetime.datetime.now()
 service_interval = int(c_refresh) * 3600  # seconds
-micronap = 500  # milliseconds
+nap = 1  # seconds
 
 
 def _getstr(id):
@@ -636,7 +636,7 @@ while not monitor.abortRequested():
         xbmc.log(msg="TAG-GEN: Sleeping for " + str(c_refresh) + " hours", level=xbmc.LOGNOTICE)
         while not monitor.abortRequested():
             if (datetime.datetime.now() - start_time).total_seconds() < service_interval:
-                if monitor.waitForAbort(micronap):
+                if monitor.waitForAbort(nap):
                     xbmc.log("TAG-GEN: Abort request received, exiting.", level=xbmc.LOGNOTICE)
                     sys.exit(0)
             else:
