@@ -258,7 +258,7 @@ def handle_episodes(li,item):
                     'fanart': item['art'].get('tvshow.fanart', ''),
                     'poster': item['art'].get('tvshow.poster', ''),
                     'banner': item['art'].get('tvshow.banner', ''),
-                    'clearlogo': item['art'].get('tvshow.clearlogo', ''),
+                    'clearlogo': item['art'].get('tvshow.clearlogo') or item['art'].get('tvshow.logo') or '',
                     'landscape': item['art'].get('tvshow.landscape', ''),
                     'clearart': item['art'].get('tvshow.clearart', '')
                     })

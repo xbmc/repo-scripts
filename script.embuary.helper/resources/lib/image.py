@@ -230,7 +230,9 @@ def image_info(image):
 ''' get cached images or copy to temp if file has not been cached yet
 '''
 def _openimage(image,targetpath,filename):
-    image = image.encode('utf-8')
+    if not PYTHON3:
+        image = image.encode('utf-8')
+
     image = url_unquote(image.replace('image://', ''))
     if image.endswith('/'):
         image = image[:-1]
