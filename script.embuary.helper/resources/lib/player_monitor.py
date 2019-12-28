@@ -212,7 +212,7 @@ class PlayerMonitor(xbmc.Monitor):
 
             arts = nextitem['art']
             for art in arts:
-                if art in ['clearlogo','tvshow.clearlogo','landscape','tvshow.landscape','poster','tvshow.poster','clearart','tvshow.clearart','banner','tvshow.banner']:
+                if art in ['clearlogo', 'logo', 'tvshow.clearlogo', 'tvshow.logo', 'landscape', 'tvshow.landscape', 'poster', 'tvshow.poster', 'clearart', 'tvshow.clearart', 'banner', 'tvshow.banner']:
                     winprop('VideoPlayer.Next.Art(%s)' % art, arts[art])
 
             try:
@@ -243,7 +243,7 @@ class PlayerMonitor(xbmc.Monitor):
             winprop('VideoPlayer.Next.Art(thumb)', nextitem.get('thumbnail',''))
 
         except Exception:
-            for art in ['fanart','thumb','clearlogo','tvshow.clearlogo','landscape','tvshow.landscape','poster','tvshow.poster','clearart','tvshow.clearart','banner','tvshow.banner']:
+            for art in ['fanart', 'thumb', 'clearlogo', 'logo', 'tvshow.clearlogo', 'tvshow.logo', 'landscape', 'tvshow.landscape', 'poster', 'tvshow.poster', 'clearart', 'tvshow.clearart', 'banner', 'tvshow.banner']:
                 winprop('VideoPlayer.Next.Art(%s)' % art, clear=True)
 
             for info in ['Duration','Duration(m)','Duration(s)','Title','TVShowTitle','Genre','Plot','Tagline','Season','Episode','Year','Rating','UserRating','DBID','DBType']:
@@ -261,7 +261,7 @@ class PlayerMonitor(xbmc.Monitor):
             songdetails = songdetails['result']['songdetails']
             art['fanart'] = songdetails['art'].get('fanart', '')
             art['thumb'] = songdetails['art'].get('thumb', '')
-            art['clearlogo'] = songdetails['art'].get('clearlogo', '')
+            art['clearlogo'] = songdetails['art'].get('clearlogo') or songdetails['art'].get('logo')
 
         except Exception:
             return
@@ -273,7 +273,7 @@ class PlayerMonitor(xbmc.Monitor):
                                 )
 
             albumdetails = albumdetails['result']['albumdetails']
-            discart = albumdetails['art'].get('discart', '')
+            discart = albumdetails['art'].get('discart') or albumdetails['art'].get('logo')
             art['discart'] = discart
             art['album.discart'] = discart
 

@@ -45,7 +45,7 @@ class CinemaMode(object):
             for trailer in movies:
 
                 trailer_title = '%s (%s)' % (trailer['title'], xbmc.getLocalizedString(20410))
-                trailer_rating = str(round(trailer['rating'],1))
+                trailer_rating = str(round(trailer['rating'], 1))
                 trailer_thumb = trailer['art'].get('landscape') or trailer['art'].get('fanart') or trailer['art'].get('poster', '')
 
                 listitem = xbmcgui.ListItem(trailer_title)
@@ -58,7 +58,7 @@ class CinemaMode(object):
                                            })
 
                 listitem.setArt({'thumb': trailer_thumb,
-                                 'clearlogo': trailer['art'].get('clearlogo', '')
+                                 'clearlogo': trailer['art'].get('clearlogo') or trailer['art'].get('logo') or ''
                                  })
 
                 VIDEOPLAYLIST.add(url=trailer['trailer'], listitem=listitem, index=index)
@@ -99,7 +99,7 @@ class CinemaMode(object):
     def get_trailers(self):
         movies = json_call('VideoLibrary.GetMovies',
                            properties=movie_properties,
-                           query_filter={'and': [{'field': 'playcount', 'operator': 'lessthan', 'value': '1'},{'field': 'hastrailer', 'operator': 'true', 'value': []}]},
+                           query_filter={'and': [{'field': 'playcount', 'operator': 'lessthan', 'value': '1'}, {'field': 'hastrailer', 'operator': 'true', 'value': []}]},
                            sort={'method': 'random'}, limit=int(self.trailer_count)
                            )
 

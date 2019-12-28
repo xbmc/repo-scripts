@@ -121,7 +121,7 @@ class PluginListing(object):
                                    available_tags=available_tags
                                    )
 
-            self._add_item(item['name'],url)
+            self._add_item(item['name'], url)
 
     def list_folder(self):
         folders = self._generate_subfolder()
@@ -132,7 +132,7 @@ class PluginListing(object):
                                    tag=item.get('tag')
                                    )
 
-            self._add_item(item['name'],url)
+            self._add_item(item['name'], url)
 
     def list_widgets(self):
         content_type = self.folder if self.folder in ['tvshow','movie'] else None

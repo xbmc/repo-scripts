@@ -127,13 +127,19 @@ def url_quote(string):
 
 
 def encoded_dict(in_dict):
+    if PYTHON3:
+        return in_dict
+
     out_dict = {}
     for k, v in list(in_dict.items()):
         if isinstance(v, unicode):
-            v = v.encode('utf8')
+            v = v.encode('utf-8')
+
         elif isinstance(v, str):
-            v.decode('utf8')
+            v.decode('utf-8')
+
         out_dict[k] = v
+
     return out_dict
 
 
@@ -142,7 +148,11 @@ def url_unquote(string):
 
 
 def md5hash(value):
-    return hashlib.md5(str(value)).hexdigest()
+    if not PYTHON3:
+        return hashlib.md5(str(value)).hexdigest()
+
+    value = str(value).encode()
+    return hashlib.md5(value).hexdigest()
 
 
 def touch_file(filepath):
