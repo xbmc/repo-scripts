@@ -1,18 +1,24 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 import urllib
-import urlparse
+try:
+    from urllib.parse import urlparse, urlencode, parse_qsl
+except ImportError:
+    from urlparse import parse_qsl, urlparse
+    from urllib import urlencode
 import sys
 import re
 import unicodedata
+from datetime import datetime
+import time
 
 def getParams():
     if not sys.argv[2]:
         return {}
-    return dict(urlparse.parse_qsl(sys.argv[2][1:]))
+    return dict(parse_qsl(sys.argv[2][1:]))
  
 def parameters (p):
-    return sys.argv[0] + '?' + urllib.urlencode(p)
+    return sys.argv[0] + '?' + urlencode(p)
 
 def normalizeString(str):
     return unicodedata.normalize(
@@ -41,6 +47,13 @@ def guessQuality(sFileName):
         return "hr"
     return ""
 
+def createMenu(items, dflt):
+    params = getParams()
+    if 'mode' in params and params['mode'] in items:
+        items[params['mode']](params)
+    elif dflt:
+        dflt()
+
 def parseFileName(filename):
     tvshow=episode=season=''
     reStrings=[
@@ -60,3 +73,16 @@ def parseFileName(filename):
         else:
             season=1
     return tvshow,season,episode
+
+def get_timestamp(dt = None):
+    if dt == None:
+        dt = datetime.now()
+    return int(time.mktime(dt.timetuple())) * 1000
+
+def get_timestamp_midnight(dt = None):
+    if dt == None:
+        dt = datetime.now()
+    return get_timestamp(dt.replace(hour=0, minute=0, second=0, microsecond=0))
+
+def get_date_from_timestamp(dt):
+    return datetime.fromtimestamp(dt / 1e3)
