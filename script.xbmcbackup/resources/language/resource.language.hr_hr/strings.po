@@ -1,0 +1,391 @@
+# Kodi Media Center language file
+# Addon Name: Backup
+# Addon id: script.xbmcbackup
+# Addon Provider: robweber
+# Translators:
+# gogo <trebelnik2@gmail.com>, 2013-2015
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2017-09-23 18:37+0000\n"
+"Last-Translator: Martijn Kaijser <machine.sanctum@gmail.com>\n"
+"Language-Team: Croatian (http://www.transifex.com/teamxbmc/xbmc-addons/language/hr/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: hr\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+
+msgctxt "Addon Summary"
+msgid ""
+"Backup and restore your Kodi database and configuration files in the event "
+"of a crash or file corruption."
+msgstr "Sigurnosno kopirajte i obnovite vašu Kodi bazu podataka i datoteke podešavanja prilikom rušenja ili oštećenja datoteka."
+
+msgctxt "Addon Description"
+msgid ""
+"Ever hosed your Kodi configuration and wished you'd had a backup? Now you "
+"can with one easy click. You can export your database, playlist, thumbnails,"
+" addons and other configuration details to any source writeable by Kodi or "
+"directly to Dropbox cloud storage. Backups can be run on demand or via a "
+"scheduler. "
+msgstr "Jeste li ikada oštetili vaša Kodi podešavanja i poželjeli ste ih obnoviti iz sigurnosne kopije? Sada to možete jednim klikom. Možete izvesti vašu bazu podataka, popis izvođenja, minijature, dodatke i ostale pojedinosti podešavanja na svaki izvor dostupan Kodiju ili izravno na Dropbox oblak pohrane. Sigurnosno kopiranje se može pokrenuti na zahtjev ili u planiranom vremenu."
+
+msgctxt "#30010"
+msgid "Backup"
+msgstr "Sigurnosno kopiranje"
+
+msgctxt "#30011"
+msgid "General"
+msgstr "Općenito"
+
+msgctxt "#30012"
+msgid "File Selection"
+msgstr "Odabir datoteke"
+
+msgctxt "#30013"
+msgid "Scheduling"
+msgstr "Planirano vrijeme"
+
+msgctxt "#30016"
+msgid "Backup"
+msgstr "Sigurnosno kopiranje"
+
+msgctxt "#30017"
+msgid "Restore"
+msgstr "Obnovi"
+
+msgctxt "#30018"
+msgid "Browse Path"
+msgstr "Putanja pregleda"
+
+msgctxt "#30019"
+msgid "Type Path"
+msgstr "Vrsta putanje"
+
+msgctxt "#30020"
+msgid "Browse Remote Path"
+msgstr "Pregledaj udaljenu putanju"
+
+msgctxt "#30021"
+msgid "Backup Folder Name"
+msgstr "Sigurnosno kopiraj naziv mape"
+
+msgctxt "#30022"
+msgid "Progress Display"
+msgstr "Prikaz napretka"
+
+msgctxt "#30023"
+msgid "Mode"
+msgstr "Način"
+
+msgctxt "#30024"
+msgid "Type Remote Path"
+msgstr "Upišite udaljenu putanju"
+
+msgctxt "#30025"
+msgid "Remote Path Type"
+msgstr "Vrsta udaljene putanje"
+
+msgctxt "#30026"
+msgid "Backups to keep (0 for all)"
+msgstr "Sigurnosna kopiranja za zadržavanje (0 za sve)"
+
+msgctxt "#30027"
+msgid "Dropbox"
+msgstr "Dropbox"
+
+msgctxt "#30028"
+msgid "Dropbox Key"
+msgstr "Dropbox ključ"
+
+msgctxt "#30029"
+msgid "Dropbox Secret"
+msgstr "Dropbox tajna"
+
+msgctxt "#30030"
+msgid "User Addons"
+msgstr "Dodaci korisnika"
+
+msgctxt "#30031"
+msgid "Addon Data"
+msgstr "Podaci dodatka"
+
+msgctxt "#30032"
+msgid "Database"
+msgstr "Baza podataka"
+
+msgctxt "#30033"
+msgid "Playlist"
+msgstr "Popisu izvođenja"
+
+msgctxt "#30034"
+msgid "Thumbnails/Fanart"
+msgstr "Minijature/Slike omota"
+
+msgctxt "#30035"
+msgid "Config Files"
+msgstr "Datoteke podešavanja"
+
+msgctxt "#30036"
+msgid "Custom Directory 1"
+msgstr "Prilagođeni direktorij 1"
+
+msgctxt "#30037"
+msgid "Custom Directory 2"
+msgstr "Prilagođeni direktorij 2"
+
+msgctxt "#30038"
+msgid "Advanced Settings Detected"
+msgstr "Otkrivene su napredne postavke"
+
+msgctxt "#30039"
+msgid "The advancedsettings file should be restored first"
+msgstr "Datoteka napredne postavke prvo se treba obnoviti"
+
+msgctxt "#30040"
+msgid "Select Yes to restore this file and restart Kodi"
+msgstr "Odaberite 'Da' za obnavljanje ove datoteke i ponovno pokretanje Kodija"
+
+msgctxt "#30041"
+msgid "Select No to continue"
+msgstr "Odaberite 'Ne' za nastavak"
+
+msgctxt "#30042"
+msgid "Resume Restore"
+msgstr "Nastavi obnovu"
+
+msgctxt "#30043"
+msgid "The Backup addon has detected an unfinished restore"
+msgstr "Dodatak sigurnosnog kopiranja je otkrilo nezavršenu obnovu"
+
+msgctxt "#30044"
+msgid "Would you like to continue?"
+msgstr "Želite li nastaviti?"
+
+msgctxt "#30045"
+msgid "Error: Remote path doesn't exist"
+msgstr "Greška: udaljena putanja ne postoji"
+
+msgctxt "#30046"
+msgid "Starting"
+msgstr "Pokretanje"
+
+msgctxt "#30047"
+msgid "Local Dir"
+msgstr "Lokalni direktorij"
+
+msgctxt "#30048"
+msgid "Remote Dir"
+msgstr "Udaljeni direktorij"
+
+msgctxt "#30049"
+msgid "Gathering file list"
+msgstr "Sakupljanje popisa datoteka"
+
+msgctxt "#30050"
+msgid "Remote Path exists - may have old files in it!"
+msgstr "Udaljena putanja postoji - možda sadrži zastarjele datoteke!"
+
+msgctxt "#30051"
+msgid "Creating Files List"
+msgstr "Stvaranje popisa datoteka"
+
+msgctxt "#30052"
+msgid "Writing file"
+msgstr "Zapisivanje datoteke"
+
+msgctxt "#30053"
+msgid "Starting scheduled backup"
+msgstr "Pokretanje sigurnosnog kopiranja u planirano vrijeme"
+
+msgctxt "#30054"
+msgid "Removing backup"
+msgstr "Uklanjanje sigurnosnog kopiranja"
+
+msgctxt "#30056"
+msgid "Check log for Dropbox authorize URL"
+msgstr "Provjera zapisa za URL autorizacije Dropboxa"
+
+msgctxt "#30057"
+msgid "Click OK when authorized"
+msgstr "Kliknite 'U redu' kada je autorizirano"
+
+msgctxt "#30058"
+msgid "Dropbox Developer Code Needed"
+msgstr "Potreban je kôd Dropbox razvijatelja"
+
+msgctxt "#30059"
+msgid "Visit https://www.dropbox.com/developers"
+msgstr "Posjetite https://www.dropbox.com/developers"
+
+msgctxt "#30060"
+msgid "Enable Scheduler"
+msgstr "Omogući planirano vrijeme"
+
+msgctxt "#30061"
+msgid "Schedule"
+msgstr "Planirano vrijeme"
+
+msgctxt "#30062"
+msgid "Hour of Day"
+msgstr "Sata dnevno"
+
+msgctxt "#30063"
+msgid "Day of Week"
+msgstr "Dan u tjednu"
+
+msgctxt "#30064"
+msgid "Cron Schedule"
+msgstr "Cron planirano vrijeme"
+
+msgctxt "#30065"
+msgid "Sunday"
+msgstr "Nedjelja"
+
+msgctxt "#30066"
+msgid "Monday"
+msgstr "Ponedjeljak"
+
+msgctxt "#30067"
+msgid "Tuesday"
+msgstr "Utorak"
+
+msgctxt "#30068"
+msgid "Wednesday"
+msgstr "Srijeda"
+
+msgctxt "#30069"
+msgid "Thursday"
+msgstr "Četvrtak"
+
+msgctxt "#30070"
+msgid "Friday"
+msgstr "Petak"
+
+msgctxt "#30071"
+msgid "Saturday"
+msgstr "Subota"
+
+msgctxt "#30072"
+msgid "Every Day"
+msgstr "Svaki dan"
+
+msgctxt "#30073"
+msgid "Every Week"
+msgstr "Svaki tjedan"
+
+msgctxt "#30074"
+msgid "First Day of Month"
+msgstr "Prvi dan mjeseca"
+
+msgctxt "#30075"
+msgid "Custom Schedule"
+msgstr "Prilagođeno vrijeme planiranja"
+
+msgctxt "#30076"
+msgid "Shutdown After Backup"
+msgstr "Isključi nakon sigurnosnog kopiranja"
+
+msgctxt "#30077"
+msgid "Restart Kodi"
+msgstr "Ponovno pokreni Kodi"
+
+msgctxt "#30078"
+msgid "You should restart Kodi to continue"
+msgstr "Za nastavak je potrebno ponovno pokretanje Kodija"
+
+msgctxt "#30079"
+msgid "Just Today"
+msgstr "Samo danas"
+
+msgctxt "#30080"
+msgid "Profiles"
+msgstr "Profili"
+
+msgctxt "#30081"
+msgid "Scheduler will run again on"
+msgstr "Planirano vrijeme će se ponovno pokrenuti"
+
+msgctxt "#30082"
+msgid "Progress Bar"
+msgstr "Traka napretka"
+
+msgctxt "#30083"
+msgid "Background Progress Bar"
+msgstr "Pozadina trake napretka"
+
+msgctxt "#30084"
+msgid "None (Silent)"
+msgstr "Nepoznato (Tiho)"
+
+msgctxt "#30085"
+msgid "Version Warning"
+msgstr "Upozorenje inačice"
+
+msgctxt "#30086"
+msgid ""
+"This version of Kodi is different than the one used to create the archive"
+msgstr "Ova inačica Kodija je drugačija od one koja se koristila za stvaranje arhive"
+
+msgctxt "#30087"
+msgid "Compress Archives"
+msgstr "Sažmi arhivu"
+
+msgctxt "#30088"
+msgid "Copying Zip Archive"
+msgstr "Kopiranje zip arhive"
+
+msgctxt "#30089"
+msgid "Write Error Detected"
+msgstr "Otkrivena greška zapisivanja"
+
+msgctxt "#30090"
+msgid "The destination may not be writeable"
+msgstr "Odredište možda nema dozvolu zapisivanja"
+
+msgctxt "#30091"
+msgid "Zip archive could not be copied"
+msgstr "Zip arhiva se ne može kopirati"
+
+msgctxt "#30092"
+msgid "Not all files were copied"
+msgstr "Nisu sve datoteke kopirane"
+
+msgctxt "#30093"
+msgid "Delete Authorization Info"
+msgstr "Obriši informacije ovjere"
+
+msgctxt "#30094"
+msgid "This will delete any OAuth token files"
+msgstr "Ovo će obrisati sve datoteke simbola ovjere"
+
+msgctxt "#30095"
+msgid "Do you want to do this?"
+msgstr "Želite li to učiniti?"
+
+msgctxt "#30096"
+msgid "Old Zip Archive could not be deleted"
+msgstr "Stara zip arhiva se ne može obrisati"
+
+msgctxt "#30097"
+msgid "This needs to happen before a backup can run"
+msgstr "To se mora dogoditi prije pokretanja sigurnosnog kopiranja"
+
+msgctxt "#30098"
+msgid "Google Drive"
+msgstr "Google Disk"
+
+msgctxt "#30099"
+msgid "Open Settings"
+msgstr "Otvori postavke"
+
+msgctxt "#30100"
+msgid "Extracting Archive"
+msgstr "Raspakiravanje arhive"
+
+msgctxt "#30101"
+msgid "Error extracting the zip archive"
+msgstr "Greška raspakiravanja zip arhive"

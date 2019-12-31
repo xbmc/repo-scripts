@@ -1,0 +1,396 @@
+# Kodi Media Center language file
+# Addon Name: Backup
+# Addon id: script.xbmcbackup
+# Addon Provider: robweber
+# Translators:
+# gyeben <gyonkibendeguz@gmail.com>, 2013
+# Till György <gyuri.till@gmail.com>, 2012
+# Lock Punk <lockpunk@gmail.com>, 2016
+# nutella <ms.nut.ella@gmail.com>, 2012
+# Till György <gyuri.till@gmail.com>, 2013
+# Tivadar Sáfrány <osztraksajt@gmail.com>, 2013-2014
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2017-09-19 14:20+0000\n"
+"Last-Translator: Lock Punk <lockpunk@gmail.com>\n"
+"Language-Team: Hungarian (http://www.transifex.com/teamxbmc/xbmc-addons/language/hu/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: hu\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "Addon Summary"
+msgid ""
+"Backup and restore your Kodi database and configuration files in the event "
+"of a crash or file corruption."
+msgstr "Biztonsági mentés készítése az Kodi adatbázisról és a beállítófájlokról vagy állítsa helyre azokat egy rendszerösszeomlás vagy adatvesztés után."
+
+msgctxt "Addon Description"
+msgid ""
+"Ever hosed your Kodi configuration and wished you'd had a backup? Now you "
+"can with one easy click. You can export your database, playlist, thumbnails,"
+" addons and other configuration details to any source writeable by Kodi or "
+"directly to Dropbox cloud storage. Backups can be run on demand or via a "
+"scheduler. "
+msgstr "Sikerült már összekutyulni az Kodi beállításait és jó lett volna egy biztonsági mentés? Most megteheti egy kattintással. Exportálhatja az adatbázisait, lejátszáslistáit, könyvjelzőit, kiegészítőit és egyéb beállításokat bármely, az Kodi által írható tárhelyre vagy közvetlenül a Dropbox felhő tárolóba. A mentések kézzel vagy időzítetten indíthatóak."
+
+msgctxt "#30010"
+msgid "Backup"
+msgstr "Kodi biztonsági mentés"
+
+msgctxt "#30011"
+msgid "General"
+msgstr "Általános"
+
+msgctxt "#30012"
+msgid "File Selection"
+msgstr "Fájlok kiválasztás"
+
+msgctxt "#30013"
+msgid "Scheduling"
+msgstr "Időzítés"
+
+msgctxt "#30016"
+msgid "Backup"
+msgstr "Biztonsági mentés"
+
+msgctxt "#30017"
+msgid "Restore"
+msgstr "Visszaállítás"
+
+msgctxt "#30018"
+msgid "Browse Path"
+msgstr "Útvonal tallózása"
+
+msgctxt "#30019"
+msgid "Type Path"
+msgstr "Adja meg az útvonalat"
+
+msgctxt "#30020"
+msgid "Browse Remote Path"
+msgstr "Távoli útvonal tallózása"
+
+msgctxt "#30021"
+msgid "Backup Folder Name"
+msgstr "Biztonsási mentés mappa neve"
+
+msgctxt "#30022"
+msgid "Progress Display"
+msgstr "Folyamatkijelzés"
+
+msgctxt "#30023"
+msgid "Mode"
+msgstr "Mód"
+
+msgctxt "#30024"
+msgid "Type Remote Path"
+msgstr "Adja meg a távoli útvonalat"
+
+msgctxt "#30025"
+msgid "Remote Path Type"
+msgstr "Távoli útvonal típusa"
+
+msgctxt "#30026"
+msgid "Backups to keep (0 for all)"
+msgstr "Megtartandó mentések száma (0, ha mindet)"
+
+msgctxt "#30027"
+msgid "Dropbox"
+msgstr "Dropbox"
+
+msgctxt "#30028"
+msgid "Dropbox Key"
+msgstr "Dropbox key"
+
+msgctxt "#30029"
+msgid "Dropbox Secret"
+msgstr "Dropbox secret"
+
+msgctxt "#30030"
+msgid "User Addons"
+msgstr "Felhasználói kiegészítők"
+
+msgctxt "#30031"
+msgid "Addon Data"
+msgstr "Kiegészítő adatok"
+
+msgctxt "#30032"
+msgid "Database"
+msgstr "Adatbázis"
+
+msgctxt "#30033"
+msgid "Playlist"
+msgstr "Lejátszási lista"
+
+msgctxt "#30034"
+msgid "Thumbnails/Fanart"
+msgstr "Bélyegképek / Rajongói képek"
+
+msgctxt "#30035"
+msgid "Config Files"
+msgstr "Konfigurációs fájlok"
+
+msgctxt "#30036"
+msgid "Custom Directory 1"
+msgstr "Saját könyvtár 1"
+
+msgctxt "#30037"
+msgid "Custom Directory 2"
+msgstr "Saját könyvtár 2"
+
+msgctxt "#30038"
+msgid "Advanced Settings Detected"
+msgstr "Haladó Beállítások Megtalálva"
+
+msgctxt "#30039"
+msgid "The advancedsettings file should be restored first"
+msgstr "Az advancedsettings fájl visszaállítása szükséges előbb"
+
+msgctxt "#30040"
+msgid "Select Yes to restore this file and restart Kodi"
+msgstr "Válassza az Igen opciót a fájl visszaállításához és az Kodi újraindításához"
+
+msgctxt "#30041"
+msgid "Select No to continue"
+msgstr "Válassza a Nem opciót a folytatáshoz"
+
+msgctxt "#30042"
+msgid "Resume Restore"
+msgstr "Visszaállítás folyatatása"
+
+msgctxt "#30043"
+msgid "The Backup addon has detected an unfinished restore"
+msgstr "Az Kodi Backup befejezetlen visszaállítást érzékelt"
+
+msgctxt "#30044"
+msgid "Would you like to continue?"
+msgstr "Folytassuk?"
+
+msgctxt "#30045"
+msgid "Error: Remote path doesn't exist"
+msgstr "Hiba: A távoli útvonal nem létezik"
+
+msgctxt "#30046"
+msgid "Starting"
+msgstr "Kezdődik"
+
+msgctxt "#30047"
+msgid "Local Dir"
+msgstr "Helyi könyvtár"
+
+msgctxt "#30048"
+msgid "Remote Dir"
+msgstr "Távoli könyvtár"
+
+msgctxt "#30049"
+msgid "Gathering file list"
+msgstr "Fájl lista összegyüjtése"
+
+msgctxt "#30050"
+msgid "Remote Path exists - may have old files in it!"
+msgstr "A távoli útvonal létezik - régi fájlok lehetnek benne!"
+
+msgctxt "#30051"
+msgid "Creating Files List"
+msgstr "Fájl lista létrehozása"
+
+msgctxt "#30052"
+msgid "Writing file"
+msgstr "Fájl írása"
+
+msgctxt "#30053"
+msgid "Starting scheduled backup"
+msgstr "Időzített mentés kezdete"
+
+msgctxt "#30054"
+msgid "Removing backup"
+msgstr "Mentés törlése"
+
+msgctxt "#30056"
+msgid "Check log for Dropbox authorize URL"
+msgstr "Ellenőrizze a naplófájlt a Dropbox bejelentkezési URL-hez"
+
+msgctxt "#30057"
+msgid "Click OK when authorized"
+msgstr "Nyomja meg az OK-t ha bejelentkezett"
+
+msgctxt "#30058"
+msgid "Dropbox Developer Code Needed"
+msgstr "Dropbox fejlesztői kód szükséges"
+
+msgctxt "#30059"
+msgid "Visit https://www.dropbox.com/developers"
+msgstr "További információ: https://www.dropbox.com/developers"
+
+msgctxt "#30060"
+msgid "Enable Scheduler"
+msgstr "Időzítő engedélyezése"
+
+msgctxt "#30061"
+msgid "Schedule"
+msgstr "Időzítés"
+
+msgctxt "#30062"
+msgid "Hour of Day"
+msgstr "A nap órája"
+
+msgctxt "#30063"
+msgid "Day of Week"
+msgstr "A hét napja"
+
+msgctxt "#30064"
+msgid "Cron Schedule"
+msgstr "Cron időzítő"
+
+msgctxt "#30065"
+msgid "Sunday"
+msgstr "Vasárnap"
+
+msgctxt "#30066"
+msgid "Monday"
+msgstr "Hétfő"
+
+msgctxt "#30067"
+msgid "Tuesday"
+msgstr "Kedd"
+
+msgctxt "#30068"
+msgid "Wednesday"
+msgstr "Szerda"
+
+msgctxt "#30069"
+msgid "Thursday"
+msgstr "Csütörtök"
+
+msgctxt "#30070"
+msgid "Friday"
+msgstr "Péntek"
+
+msgctxt "#30071"
+msgid "Saturday"
+msgstr "Szombat"
+
+msgctxt "#30072"
+msgid "Every Day"
+msgstr "Minden nap"
+
+msgctxt "#30073"
+msgid "Every Week"
+msgstr "Minden Héten"
+
+msgctxt "#30074"
+msgid "First Day of Month"
+msgstr "A hónap első napján"
+
+msgctxt "#30075"
+msgid "Custom Schedule"
+msgstr "Egyéni időzítő"
+
+msgctxt "#30076"
+msgid "Shutdown After Backup"
+msgstr "Leállítás a biztonsági mentés után"
+
+msgctxt "#30077"
+msgid "Restart Kodi"
+msgstr "Kodi újraindítása"
+
+msgctxt "#30078"
+msgid "You should restart Kodi to continue"
+msgstr "Az Kodi újraindítása szükséges a folytatáshoz"
+
+msgctxt "#30079"
+msgid "Just Today"
+msgstr "Csak Ma"
+
+msgctxt "#30080"
+msgid "Profiles"
+msgstr "Profilok"
+
+msgctxt "#30081"
+msgid "Scheduler will run again on"
+msgstr "Az ütemező következő futása:"
+
+msgctxt "#30082"
+msgid "Progress Bar"
+msgstr "Folyamatkijelző"
+
+msgctxt "#30083"
+msgid "Background Progress Bar"
+msgstr "Háttér Folyamatjelző"
+
+msgctxt "#30084"
+msgid "None (Silent)"
+msgstr "Nincs (Néma)"
+
+msgctxt "#30085"
+msgid "Version Warning"
+msgstr "Verzió Figyelmeztetés"
+
+msgctxt "#30086"
+msgid ""
+"This version of Kodi is different than the one used to create the archive"
+msgstr "Az Kodi verziója különbözik attól mint amelyik létrehozta az archívumot"
+
+msgctxt "#30087"
+msgid "Compress Archives"
+msgstr "Archívumok tömörítése"
+
+msgctxt "#30088"
+msgid "Copying Zip Archive"
+msgstr "Zip Archívum másolása"
+
+msgctxt "#30089"
+msgid "Write Error Detected"
+msgstr "Írási hiba történt"
+
+msgctxt "#30090"
+msgid "The destination may not be writeable"
+msgstr "A cél valószínűleg nem írható"
+
+msgctxt "#30091"
+msgid "Zip archive could not be copied"
+msgstr "Zip állomány másolása sikertelen"
+
+msgctxt "#30092"
+msgid "Not all files were copied"
+msgstr "Nem minden fájl másolás volt sikeres"
+
+msgctxt "#30093"
+msgid "Delete Authorization Info"
+msgstr "Jogosultsági információk törlése"
+
+msgctxt "#30094"
+msgid "This will delete any OAuth token files"
+msgstr "Ezzel véglegesen kitöröl minden OAuth token fájlt"
+
+msgctxt "#30095"
+msgid "Do you want to do this?"
+msgstr "Tényleg ezt akarja tenni?"
+
+msgctxt "#30096"
+msgid "Old Zip Archive could not be deleted"
+msgstr "A régi Zip archív fájl nem törölhető"
+
+msgctxt "#30097"
+msgid "This needs to happen before a backup can run"
+msgstr "Ennek még a backup futtatás előtt meg kell történnie"
+
+msgctxt "#30098"
+msgid "Google Drive"
+msgstr "Google Drive"
+
+msgctxt "#30099"
+msgid "Open Settings"
+msgstr "Beállítások megnyitása"
+
+msgctxt "#30100"
+msgid "Extracting Archive"
+msgstr "Archív kibontása"
+
+msgctxt "#30101"
+msgid "Error extracting the zip archive"
+msgstr "Hiba történt a zip archívum kibontásakor"

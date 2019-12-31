@@ -1,0 +1,397 @@
+# Kodi Media Center language file
+# Addon Name: Backup
+# Addon id: script.xbmcbackup
+# Addon Provider: robweber
+# Translators:
+# amikam <amikam@baum-ltd.co.il>, 2012
+# dhead666 <myfoolishgames@gmail.com>, 2013-2014
+# Idan Bushari <ibushari@outlook.com>, 2012
+# Idan Bushari <ibushari@outlook.com>, 2015
+# Tamir BO <Benovadya2@walla.co.il>, 2013
+# Yaron Shahrabani <sh.yaron@gmail.com>, 2012
+# Eran Bodankin <eran.bod@gmail.com>, 2017
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2017-09-23 18:37+0000\n"
+"Last-Translator: Eran Bodankin <eran.bod@gmail.com>\n"
+"Language-Team: Hebrew (http://www.transifex.com/teamxbmc/xbmc-addons/language/he/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: he\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "Addon Summary"
+msgid ""
+"Backup and restore your Kodi database and configuration files in the event "
+"of a crash or file corruption."
+msgstr "גיבוי ושחזור מסד הנתונים וקבצי ההגדרות של קודי במקרה של קריסה או קבצים פגומים."
+
+msgctxt "Addon Description"
+msgid ""
+"Ever hosed your Kodi configuration and wished you'd had a backup? Now you "
+"can with one easy click. You can export your database, playlist, thumbnails,"
+" addons and other configuration details to any source writeable by Kodi or "
+"directly to Dropbox cloud storage. Backups can be run on demand or via a "
+"scheduler. "
+msgstr "האם אי פעם נפגמו הגדרות קודי וייחלת שהיה לך גיבוי ? כעת אתה יכול ליצור כזה בלחיצת כפתור. ניתן לייצא את בסיס הנתונים, רשימות ההשמעה, התמונות הממוזערות, הרחבות והגדרות נוספות לכל יעד שיש לקודי הרשאת כתיבה לו או ישירות לשירות אחסון הענן דרופבוקס. ניתן לתזמן מראש גיבויים או להריצם ידנית."
+
+msgctxt "#30010"
+msgid "Backup"
+msgstr "גיבוי קודי"
+
+msgctxt "#30011"
+msgid "General"
+msgstr "כללי"
+
+msgctxt "#30012"
+msgid "File Selection"
+msgstr "בחירת קובץ"
+
+msgctxt "#30013"
+msgid "Scheduling"
+msgstr "תזמון"
+
+msgctxt "#30016"
+msgid "Backup"
+msgstr "גיבוי"
+
+msgctxt "#30017"
+msgid "Restore"
+msgstr "שחזור"
+
+msgctxt "#30018"
+msgid "Browse Path"
+msgstr "עיון בנתיב"
+
+msgctxt "#30019"
+msgid "Type Path"
+msgstr "הזנת נתיב"
+
+msgctxt "#30020"
+msgid "Browse Remote Path"
+msgstr "עיון בנתיב מרוחק"
+
+msgctxt "#30021"
+msgid "Backup Folder Name"
+msgstr "שם תיקיית גיבוי"
+
+msgctxt "#30022"
+msgid "Progress Display"
+msgstr "הצג התקדמות"
+
+msgctxt "#30023"
+msgid "Mode"
+msgstr "מצב"
+
+msgctxt "#30024"
+msgid "Type Remote Path"
+msgstr "הזנת נתיב מרוחק"
+
+msgctxt "#30025"
+msgid "Remote Path Type"
+msgstr "סוג נתיב מרוחק"
+
+msgctxt "#30026"
+msgid "Backups to keep (0 for all)"
+msgstr "מספר גיבוים לשמירה (0 להכול)"
+
+msgctxt "#30027"
+msgid "Dropbox"
+msgstr "דרופבוקס"
+
+msgctxt "#30028"
+msgid "Dropbox Key"
+msgstr "Dropbox Key"
+
+msgctxt "#30029"
+msgid "Dropbox Secret"
+msgstr "Dropbox Secret"
+
+msgctxt "#30030"
+msgid "User Addons"
+msgstr "הרחבות משתמש"
+
+msgctxt "#30031"
+msgid "Addon Data"
+msgstr "נתוני הרחבה"
+
+msgctxt "#30032"
+msgid "Database"
+msgstr "מסד נתונים"
+
+msgctxt "#30033"
+msgid "Playlist"
+msgstr "רשימת השמעה"
+
+msgctxt "#30034"
+msgid "Thumbnails/Fanart"
+msgstr "תמונות ממוזערות/פאנארט"
+
+msgctxt "#30035"
+msgid "Config Files"
+msgstr "קבצי הגדרות"
+
+msgctxt "#30036"
+msgid "Custom Directory 1"
+msgstr "תיקיה מותאמת 1"
+
+msgctxt "#30037"
+msgid "Custom Directory 2"
+msgstr "תיקיה מותאמת 2"
+
+msgctxt "#30038"
+msgid "Advanced Settings Detected"
+msgstr "זוהה Advanced Settings"
+
+msgctxt "#30039"
+msgid "The advancedsettings file should be restored first"
+msgstr "יש לשחזר תחילה את הקובץ advancedsettings"
+
+msgctxt "#30040"
+msgid "Select Yes to restore this file and restart Kodi"
+msgstr "בחר 'כן' לשחזור קובץ זה ולהפעלת קודי מחדש"
+
+msgctxt "#30041"
+msgid "Select No to continue"
+msgstr "בחר \"לא\" להמשך"
+
+msgctxt "#30042"
+msgid "Resume Restore"
+msgstr "המשך שחזור"
+
+msgctxt "#30043"
+msgid "The Backup addon has detected an unfinished restore"
+msgstr "הרחבת הגיבוי של קודי זיהתה שחזור שלא הסתיים"
+
+msgctxt "#30044"
+msgid "Would you like to continue?"
+msgstr "האם ברצונך להמשיך?"
+
+msgctxt "#30045"
+msgid "Error: Remote path doesn't exist"
+msgstr "שגיאה: נתיב מרוחק אינו קיים"
+
+msgctxt "#30046"
+msgid "Starting"
+msgstr "מתחיל"
+
+msgctxt "#30047"
+msgid "Local Dir"
+msgstr "תיקייה מקומית"
+
+msgctxt "#30048"
+msgid "Remote Dir"
+msgstr "תיקייה מרוחקת"
+
+msgctxt "#30049"
+msgid "Gathering file list"
+msgstr "אוסף רשימת קבצים"
+
+msgctxt "#30050"
+msgid "Remote Path exists - may have old files in it!"
+msgstr "נתיב מרוחק נמצא - יתכן שיש בתיקייה זו קבצים ישנים!"
+
+msgctxt "#30051"
+msgid "Creating Files List"
+msgstr "יוצר רשימת קבצים"
+
+msgctxt "#30052"
+msgid "Writing file"
+msgstr "כותב קובץ"
+
+msgctxt "#30053"
+msgid "Starting scheduled backup"
+msgstr "מתחיל גיבוי מתוזמן"
+
+msgctxt "#30054"
+msgid "Removing backup"
+msgstr "מסיר גיבוי"
+
+msgctxt "#30056"
+msgid "Check log for Dropbox authorize URL"
+msgstr "בדוק יומן רישום לכתובת דרופבוקס מאושרת"
+
+msgctxt "#30057"
+msgid "Click OK when authorized"
+msgstr "לחץ 'אישור' כשיש הרשאה"
+
+msgctxt "#30058"
+msgid "Dropbox Developer Code Needed"
+msgstr "נדרש קוד מפתח של דרופבוקס"
+
+msgctxt "#30059"
+msgid "Visit https://www.dropbox.com/developers"
+msgstr "בקר בכתובת https://www.dropbox.com/developers"
+
+msgctxt "#30060"
+msgid "Enable Scheduler"
+msgstr "הפעל מתזמן"
+
+msgctxt "#30061"
+msgid "Schedule"
+msgstr "תזמון"
+
+msgctxt "#30062"
+msgid "Hour of Day"
+msgstr "שעה ביום"
+
+msgctxt "#30063"
+msgid "Day of Week"
+msgstr "יום בשבוע"
+
+msgctxt "#30064"
+msgid "Cron Schedule"
+msgstr "תזמון Cron"
+
+msgctxt "#30065"
+msgid "Sunday"
+msgstr "יום ראשון"
+
+msgctxt "#30066"
+msgid "Monday"
+msgstr "יום שני"
+
+msgctxt "#30067"
+msgid "Tuesday"
+msgstr "יום שלישי"
+
+msgctxt "#30068"
+msgid "Wednesday"
+msgstr "יום רביעי"
+
+msgctxt "#30069"
+msgid "Thursday"
+msgstr "יום חמישי"
+
+msgctxt "#30070"
+msgid "Friday"
+msgstr "יום שישי"
+
+msgctxt "#30071"
+msgid "Saturday"
+msgstr "יום שבת"
+
+msgctxt "#30072"
+msgid "Every Day"
+msgstr "כל יום"
+
+msgctxt "#30073"
+msgid "Every Week"
+msgstr "כל שבוע"
+
+msgctxt "#30074"
+msgid "First Day of Month"
+msgstr "יום ראשון של החודש"
+
+msgctxt "#30075"
+msgid "Custom Schedule"
+msgstr "תזמון מותאם אישית"
+
+msgctxt "#30076"
+msgid "Shutdown After Backup"
+msgstr "כיבוי בתום הגיבוי"
+
+msgctxt "#30077"
+msgid "Restart Kodi"
+msgstr "הפעל את קודי מחדש"
+
+msgctxt "#30078"
+msgid "You should restart Kodi to continue"
+msgstr "כדי להמשיך צריך להפעיל את קודי מחדש"
+
+msgctxt "#30079"
+msgid "Just Today"
+msgstr "היום בלבד"
+
+msgctxt "#30080"
+msgid "Profiles"
+msgstr "פרופילים"
+
+msgctxt "#30081"
+msgid "Scheduler will run again on"
+msgstr "המתזמן יופעל שוב ב-"
+
+msgctxt "#30082"
+msgid "Progress Bar"
+msgstr "פס התקדמות"
+
+msgctxt "#30083"
+msgid "Background Progress Bar"
+msgstr "פס התקדמות ברקע"
+
+msgctxt "#30084"
+msgid "None (Silent)"
+msgstr "ללא (שקט)"
+
+msgctxt "#30085"
+msgid "Version Warning"
+msgstr "אזהרת גרסה"
+
+msgctxt "#30086"
+msgid ""
+"This version of Kodi is different than the one used to create the archive"
+msgstr "גרסה זו של קודי שונה מהגרסה שבה השתמשו כדי ליצור את הארכיון"
+
+msgctxt "#30087"
+msgid "Compress Archives"
+msgstr "מכווץ ארכיונים"
+
+msgctxt "#30088"
+msgid "Copying Zip Archive"
+msgstr "מעתיק קובץ Zip"
+
+msgctxt "#30089"
+msgid "Write Error Detected"
+msgstr " זוהתה שגיאת כתיבה"
+
+msgctxt "#30090"
+msgid "The destination may not be writeable"
+msgstr "כנראה שאין הרשאות כתיבה בנתיב היעד"
+
+msgctxt "#30091"
+msgid "Zip archive could not be copied"
+msgstr "לא היתה אפשרות להעתיק ארכיון Zip"
+
+msgctxt "#30092"
+msgid "Not all files were copied"
+msgstr "לא כל הקבצים הועתקו"
+
+msgctxt "#30093"
+msgid "Delete Authorization Info"
+msgstr "מחק פרטי הרשאה"
+
+msgctxt "#30094"
+msgid "This will delete any OAuth token files"
+msgstr "זה ימחק את קבצי האסימונים OAuth"
+
+msgctxt "#30095"
+msgid "Do you want to do this?"
+msgstr "האם ברצונך לעשות זאת?"
+
+msgctxt "#30096"
+msgid "Old Zip Archive could not be deleted"
+msgstr "לא היתה אפשרות למחוק ארכיון Zip ישן"
+
+msgctxt "#30097"
+msgid "This needs to happen before a backup can run"
+msgstr "התהליך הזה חייב להתבצע לפני שהגיבוי יפעל"
+
+msgctxt "#30098"
+msgid "Google Drive"
+msgstr "גוגל דרייב"
+
+msgctxt "#30099"
+msgid "Open Settings"
+msgstr "פתח הגדרות"
+
+msgctxt "#30100"
+msgid "Extracting Archive"
+msgstr "מחלץ ארכיון"
+
+msgctxt "#30101"
+msgid "Error extracting the zip archive"
+msgstr "שגיאה בחילוץ ארכיון ה-Zip"
