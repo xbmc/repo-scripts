@@ -1,0 +1,513 @@
+# XBMC Media Center language file
+# Addon Name: LazyTV
+# Addon id: script.lazytv
+# Addon Provider: KodeKarnage
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: Lithuanian (http://www.transifex.com/projects/p/xbmc-addons/language/lt/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: lt\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+
+msgctxt "#32000"
+msgid "General Settings"
+msgstr "Pagrindiniai nustatymai"
+
+msgctxt "#32001"
+msgid "Primary Function"
+msgstr "Pagrindinė funkcija"
+
+msgctxt "#32002"
+msgid "Produce a list of 'next episodes' for each TV series"
+msgstr "Sukurti 'kitų epizodų' sąrašą kiekvienam TV serialui"
+
+msgctxt "#32003"
+msgid "Create and launch randomised playlist"
+msgstr "Sukurti ir paleisti atsitiktinai sumaišytą grojaraštį"
+
+msgctxt "#32004"
+msgid "Let me choose on launch"
+msgstr "Leiskite man pasirinkti paleidžiant"
+
+msgctxt "#32005"
+msgid "Use Smart Playlist to Filter Shows"
+msgstr "Naudoti išmanųjį grojaraštį laidų filtravimui"
+
+msgctxt "#32006"
+msgid "Playlist Selection Method"
+msgstr "Grojaraščio pasirinkimo būdas"
+
+msgctxt "#32007"
+msgid "Let me choose on launch"
+msgstr "Leiskite man pasirinkti paleidžiant"
+
+msgctxt "#32008"
+msgid "Choose a default Playlist"
+msgstr "Pasirinkti numatytąjį grojaraštį"
+
+msgctxt "#32009"
+msgid "Select default playlist"
+msgstr "Pasirinkite numatytąjį grojaraštį"
+
+msgctxt "#32010"
+msgid "Some shows are fine to watch out of order"
+msgstr "Kai kurias laidas galima žiūrėti ne eilės tvarka"
+
+msgctxt "#32011"
+msgid "Select random-order shows"
+msgstr "Pasirinkti atsitiktine tvarka rodomas laidas"
+
+msgctxt "#32012"
+msgid "Only populate with selected TV Shows"
+msgstr "Užpildyti tik pasirinktomis TV laidomis"
+
+msgctxt "#32013"
+msgid "Choose shows by ..."
+msgstr "Pasirinkti laidas pagal ..."
+
+msgctxt "#32014"
+msgid "Manual Selection"
+msgstr "Rankinis pasirinkimas"
+
+msgctxt "#32015"
+msgid "Smart Playlist"
+msgstr "Išmanusis grojaraštis"
+
+msgctxt "#32016"
+msgid "Click here to select TV Shows"
+msgstr "Spauskite čia, norėdami pasirinkti TV laidas"
+
+msgctxt "#32030"
+msgid "Player Options"
+msgstr "Grotuvo parinktys"
+
+msgctxt "#32031"
+msgid "Number of shows in playlist"
+msgstr "Laidų kiekis grojaraštyje"
+
+msgctxt "#32032"
+msgid "Allow multiple episodes of same TV Show"
+msgstr "Leisti kelis vienos TV laidos epizodus"
+
+msgctxt "#32033"
+msgid "Include episodes from unwatched TV series"
+msgstr "Įtraukti epizodus iš neperžiūrėtų TV serialų"
+
+msgctxt "#32034"
+msgid "Begin partially watched episodes from their resume point"
+msgstr "Iš dalies peržiūrėtus epizodus atnaujinti nuo jų pratęsimo taško"
+
+msgctxt "#32035"
+msgid "Display episode details when played"
+msgstr "Rodyti epizodo duomenis kai atkuriama"
+
+msgctxt "#32036"
+msgid "Include unwatched movies"
+msgstr "Įtraukti neperžiūrėtus filmus"
+
+msgctxt "#32037"
+msgid "Include watched movies"
+msgstr "Įtraukti peržiūrėtus filmus"
+
+msgctxt "#32038"
+msgid "Start watched movies at random time"
+msgstr "Peržiūrėtus filmus pradėti atsitiktiniu metu"
+
+msgctxt "#32039"
+msgid "Simulates changing the TV channel to a movie in progress"
+msgstr "Simuliuoja TV kanalo pakeitimą į nebaigtą žiūrėti filmą"
+
+msgctxt "#32040"
+msgid "Movie weight"
+msgstr "Filmo svoris"
+
+msgctxt "#32041"
+msgid "Weight: 1.0 = 1 show, 1 movie, 0.5 = 2 shows, 1 movie"
+msgstr "Svoris: 1.0 = 1 laida, 1 filmas, 0.5 = 2 laidos, 1 filmas"
+
+msgctxt "#32042"
+msgid "Weight: 0.0 = unlimited movies"
+msgstr "Svoris: 0.0 = filmai neribojami"
+
+msgctxt "#32043"
+msgid "Ignore TV shows (movies only)"
+msgstr "Ignoruoti TV laidas (tik filmai)"
+
+msgctxt "#32060"
+msgid "List Options"
+msgstr "Sąrašo parinktys"
+
+msgctxt "#32061"
+msgid "Limit the number of shows"
+msgstr "Riboti TV laidų kiekį"
+
+msgctxt "#32062"
+msgid "Number of Shows to display"
+msgstr "Rodomų laidų kiekis"
+
+msgctxt "#32063"
+msgid "Reducing length may help improve speed on slow systems"
+msgstr "Ilgio sumažinimas gali padėti padidinti greitį lėtose sistemose"
+
+msgctxt "#32064"
+msgid "Show Name"
+msgstr "Rodyti vardą"
+
+msgctxt "#32065"
+msgid "Last Watched"
+msgstr "Paskutinis žiūrėtas"
+
+msgctxt "#32066"
+msgid "# Unwatched Episodes"
+msgstr "# Neperžiūrėti epizodai"
+
+msgctxt "#32067"
+msgid "# Watched Episodes"
+msgstr "# Peržiūrėti epizodai"
+
+msgctxt "#32068"
+msgid "Season"
+msgstr "Sezonas"
+
+msgctxt "#32069"
+msgid "Exclude random play shows"
+msgstr "Išskirti atsitiktinio atkūrimo laidas"
+
+msgctxt "#32070"
+msgid "Sort by ..."
+msgstr "Rūšiuoti pagal ..."
+
+msgctxt "#32071"
+msgid "Reverse Order"
+msgstr "Atvirkštinė tvarka"
+
+msgctxt "#32072"
+msgid "LazyTV User Interface"
+msgstr "LazyTV vartotojo sąsaja"
+
+msgctxt "#32080"
+msgid "Other Settings"
+msgstr "Kiti nustatymai"
+
+msgctxt "#32081"
+msgid "Prompt to watch next available episode"
+msgstr "Paklausti ar žiūrėti kitą galimą epizodą"
+
+msgctxt "#32082"
+msgid "Prompt duration (max = do not close)"
+msgstr "Paklausimo trukmė (max = neuždaryti)"
+
+msgctxt "#32083"
+msgid "Notify when previous episode is available"
+msgstr "Pranešti, kai galimas ankstesnis epizodas"
+
+msgctxt "#32084"
+msgid "Prompt and notify functions also apply to shows played outside of LazyTV"
+msgstr "Paklausimo ir pranešimo funkcijos taip pat taikomos ir laidoms, kurios atkuriamos nenaudojant LazyTV"
+
+msgctxt "#32085"
+msgid "Enable logging for Testing"
+msgstr "Įjungti derinimą testavimo tikslais"
+
+msgctxt "#32086"
+msgid "Cloning LazyTV allows multiple Home menu entries."
+msgstr "LazyTV klonavimas leidžia sukurti kelis pradinio meniu įrašus."
+
+msgctxt "#32087"
+msgid "Clone LazyTV Now"
+msgstr "Klonuoti LazyTV dabar"
+
+msgctxt "#32088"
+msgid "It would be nice to know if people are using this addon."
+msgstr "Būtų malonu žinoti ar žmonės naudoja šį priedą."
+
+msgctxt "#32089"
+msgid "Email +1 to the author (no data is sent)"
+msgstr "Išsiųsti +1 autoriui (jokie duomeny nebus išsiųsti)"
+
+msgctxt "#32090"
+msgid "Default action"
+msgstr "Numatytasis veiksmas"
+
+msgctxt "#32091"
+msgid "Dont Play"
+msgstr "Neatkurti"
+
+msgctxt "#32092"
+msgid "Play"
+msgstr "Atkurti"
+
+msgctxt "#32093"
+msgid "Create and maintain smart playlist."
+msgstr "Sukurti ir prižiūrėti išmanųjį grojarštį."
+
+msgctxt "#32094"
+msgid "Copy LazyTV episodes to specified folder. (Script)"
+msgstr "Kopijuoti LazyTV epizodus į nurodytą aplanką. (Scenarijus)"
+
+msgctxt "#32100"
+msgid "This addon finds the next episode in each TV show."
+msgstr "Priedas randa kiekvienos laidos kitą epizodą."
+
+msgctxt "#32101"
+msgid "Do you want a list or a randomised playlist?"
+msgstr "Ar norite atvaizduoti atsitiktinai sumaišytą grojaraštį?"
+
+msgctxt "#32102"
+msgid "Show me"
+msgstr "Parodykite man"
+
+msgctxt "#32103"
+msgid "Surprise me"
+msgstr "Nustebinkite mane"
+
+msgctxt "#32104"
+msgid "Select the playlist"
+msgstr "Pasirinkti grojaraštį"
+
+msgctxt "#32105"
+msgid "Close"
+msgstr "Uždaryti"
+
+msgctxt "#32106"
+msgid "LazyTV Service is not running."
+msgstr "LazyTV paslauga nepaleista."
+
+msgctxt "#32107"
+msgid "Would you like to attempt to start it now?"
+msgstr "Ar norite pamėginti ją paleisti dabar?"
+
+msgctxt "#32108"
+msgid "LazyTV Service has updated. Please restart to apply changes."
+msgstr "LazyTV paslauga atnaujinta. Paleiskite iš naujo, kad įsigaliotų pakeitimai."
+
+msgctxt "#32109"
+msgid "Would you like to restart it now?"
+msgstr "Norite paleisti iš naujo dabar?"
+
+msgctxt "#32110"
+msgid "LazyTV has updated and this clone is now out of date."
+msgstr "LazyTV buvo atnaujinta ir šis klonas dabar yra pasenęs."
+
+msgctxt "#32111"
+msgid "Would you like to update the clone now?"
+msgstr "Ar norite atnaujinti kloną dabar?"
+
+msgctxt "#32112"
+msgid "Never"
+msgstr "Niekada"
+
+msgctxt "#32113"
+msgid "day"
+msgstr "diena"
+
+msgctxt "#32114"
+msgid "days"
+msgstr "dienos"
+
+msgctxt "#32115"
+msgid "LazyTV is still populating with shows."
+msgstr "LazyTV vis dar užpildomas laidomis."
+
+msgctxt "#32116"
+msgid "Please wait and try again."
+msgstr "Prašome palaukti ir mėginti dar kartą."
+
+msgctxt "#32139"
+msgid "name your clone"
+msgstr "pavadinkite kloną"
+
+msgctxt "#32140"
+msgid "An error occurred while creating the clone."
+msgstr "Kuriant kloną įvyko klaida."
+
+msgctxt "#32141"
+msgid "Operation cancelled."
+msgstr "Operacija atšaukta."
+
+msgctxt "#32142"
+msgid "This script creates a cloned version of the LazyTV user interface."
+msgstr "Scenarijus sukuria klonuotą LazyTV vartotojo sąsajos versiją."
+
+msgctxt "#32143"
+msgid "It creates a new folder in your addons directory."
+msgstr "Tai sukurs naują aplanką priedų kataloge."
+
+msgctxt "#32144"
+msgid "Do you wish to continue?"
+msgstr "Ar norite tęsti?"
+
+msgctxt "#32145"
+msgid "That name is in use. Please try another."
+msgstr "Vardas naudojamas. Pamėginkite kitą."
+
+msgctxt "#32146"
+msgid "Cloning successful."
+msgstr "Klonavimas pavyko."
+
+msgctxt "#32147"
+msgid "Clone is now ready for use."
+msgstr "Klonas parengtas naudoti."
+
+msgctxt "#32148"
+msgid "An error occurred while updating the clone."
+msgstr "Įvyko klaida atnaujinant kloną."
+
+msgctxt "#32149"
+msgid "Update successful."
+msgstr "Atnaujinimas sėkmingas."
+
+msgctxt "#32160"
+msgid "LazyTV - there are previous unwatched episodes"
+msgstr "LazyTV - yra ankstesnių neperžiūrėtų epizodų"
+
+msgctxt "#32161"
+msgid "%s (%sx%s) is in your library."
+msgstr "%s (%sx%s) yra jūsų bibliotekoje."
+
+msgctxt "#32162"
+msgid "Would you like to watch it now?"
+msgstr "Ar norite peržiūrėti dabar?"
+
+msgctxt "#32163"
+msgid "\"Now Playing\""
+msgstr "\"Šiuo metu atkuriama\""
+
+msgctxt "#32164"
+msgid "LazyTV -the next unwatched episode is in your library."
+msgstr "LazyTV - kitas neperžiūrėtas epizodas yra jūsų bibliotekoje."
+
+msgctxt "#32165"
+msgid "No, thank you. (Autoclosing in %s seconds)"
+msgstr "Ne, ačiū. (Automatiškai užsidarys po %s sekundžių)"
+
+msgctxt "#32166"
+msgid "Yes, start %s %s now."
+msgstr "Taip, paliesti %s %s dabar."
+
+msgctxt "#32167"
+msgid "LazyTV   (auto-closing in %s seconds)"
+msgstr "LazyTV (automatiškai užsidarys po %s sekundžių)"
+
+msgctxt "#32168"
+msgid "%s %s is in your library."
+msgstr "%s %s yra jūsų bibliotekoje."
+
+msgctxt "#32169"
+msgid "Would you like to watch it now?"
+msgstr "Ar norite žiūrėti dabar?"
+
+msgctxt "#32170"
+msgid "Save"
+msgstr "Išsaugoti"
+
+msgctxt "#32171"
+msgid "Select All"
+msgstr "Pažymėti viską"
+
+msgctxt "#32172"
+msgid "Unselect All"
+msgstr "Atžymėti viską"
+
+msgctxt "#32173"
+msgid "Database analysis complete"
+msgstr "Duomenų bazės analizė baigta"
+
+msgctxt "#32180"
+msgid "Choose export location"
+msgstr "Pasirinkti eksporto vietą"
+
+msgctxt "#32181"
+msgid "Some files failed to transfer"
+msgstr "Nepavyko perkelti kai kurių failų"
+
+msgctxt "#32182"
+msgid "Would you like to see them?"
+msgstr "Ar norite juos pamatyti?"
+
+msgctxt "#32183"
+msgid "Retrieving file size..."
+msgstr "Gaunamas failo dydis..."
+
+msgctxt "#32184"
+msgid "File transfer in progress..."
+msgstr "Vyksta failo perkėlimas..."
+
+msgctxt "#32185"
+msgid "File export completed successfully"
+msgstr "Failo eksportas baigtas sėkmingai"
+
+msgctxt "#32200"
+msgid "Multi-Select (on)"
+msgstr "Pažymėti kelis (įjungta)"
+
+msgctxt "#32201"
+msgid "Multi-Select (off)"
+msgstr "Pažymėti kelis (išjungta)"
+
+msgctxt "#32202"
+msgid "Play Selection"
+msgstr "Atkurti pažymėtus"
+
+msgctxt "#32203"
+msgid "Export Selection"
+msgstr "Eksportuoti pažymėtus"
+
+msgctxt "#32204"
+msgid "Play Episode"
+msgstr "Atkurti epizodą"
+
+msgctxt "#32205"
+msgid "Export Episode"
+msgstr "Eksportuoti epizodą"
+
+msgctxt "#32206"
+msgid "Play From Here"
+msgstr "Atkurti iš čia"
+
+msgctxt "#32207"
+msgid "Mark as Watched"
+msgstr "Žymėti kaip peržiūrėtą"
+
+msgctxt "#32208"
+msgid "Update Library"
+msgstr "Atnaujinti biblioteką"
+
+msgctxt "#32209"
+msgid "Refresh List"
+msgstr "Atnaujinti sąrašą"
+
+msgctxt "#32220"
+msgid "Season"
+msgstr "Sezonas"
+
+msgctxt "#32221"
+msgid "Episode"
+msgstr "Epizodas"
+
+msgctxt "#32222"
+msgid "Progress"
+msgstr "Progresas"
+
+msgctxt "#32223"
+msgid "Available"
+msgstr "Prieinama"
+
+msgctxt "#32224"
+msgid "Watched"
+msgstr "Peržiūrėta"
+
+msgctxt "#32225"
+msgid "Skipped"
+msgstr "Praleista"
+
+msgctxt "#32226"
+msgid "In this episode"
+msgstr "Šiame epizode"

@@ -1,0 +1,513 @@
+# XBMC Media Center language file
+# Addon Name: LazyTV
+# Addon id: script.lazytv
+# Addon Provider: KodeKarnage
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: Spanish (http://www.transifex.com/projects/p/xbmc-addons/language/es/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: es\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#32000"
+msgid "General Settings"
+msgstr "Ajustes Generales"
+
+msgctxt "#32001"
+msgid "Primary Function"
+msgstr "Función Principal"
+
+msgctxt "#32002"
+msgid "Produce a list of 'next episodes' for each TV series"
+msgstr "Producir una lista de 'siguientes episodios' de cada serie"
+
+msgctxt "#32003"
+msgid "Create and launch randomised playlist"
+msgstr "Crear y reproducir una lista aleatoria"
+
+msgctxt "#32004"
+msgid "Let me choose on launch"
+msgstr "Permiteme elegir al iniciar"
+
+msgctxt "#32005"
+msgid "Use Smart Playlist to Filter Shows"
+msgstr "Usar Listas Inteligentes para Filtrar Series"
+
+msgctxt "#32006"
+msgid "Playlist Selection Method"
+msgstr "Método de Selección de Lista"
+
+msgctxt "#32007"
+msgid "Let me choose on launch"
+msgstr "Permiteme elegir al iniciar"
+
+msgctxt "#32008"
+msgid "Choose a default Playlist"
+msgstr "Escoger una Lista por defecto"
+
+msgctxt "#32009"
+msgid "Select default playlist"
+msgstr "Elige lista por defecto"
+
+msgctxt "#32010"
+msgid "Some shows are fine to watch out of order"
+msgstr "Algunos series se pueden ver desordenadas"
+
+msgctxt "#32011"
+msgid "Select random-order shows"
+msgstr "Elegir series con orden aleatorio"
+
+msgctxt "#32012"
+msgid "Only populate with selected TV Shows"
+msgstr "Rellenar sólo con las Series de TV elegidas"
+
+msgctxt "#32013"
+msgid "Choose shows by ..."
+msgstr "Escoger series por..."
+
+msgctxt "#32014"
+msgid "Manual Selection"
+msgstr "Selección Manual"
+
+msgctxt "#32015"
+msgid "Smart Playlist"
+msgstr "Lista Inteligente"
+
+msgctxt "#32016"
+msgid "Click here to select TV Shows"
+msgstr "Click aquí para elegir Series de TV"
+
+msgctxt "#32030"
+msgid "Player Options"
+msgstr "Opciones del Reproductor"
+
+msgctxt "#32031"
+msgid "Number of shows in playlist"
+msgstr "Nº de shows in la lista de reproducción"
+
+msgctxt "#32032"
+msgid "Allow multiple episodes of same TV Show"
+msgstr "Permitir multiples episodios del mismo Show"
+
+msgctxt "#32033"
+msgid "Include episodes from unwatched TV series"
+msgstr "Incluir episodios de series no vistas"
+
+msgctxt "#32034"
+msgid "Begin partially watched episodes from their resume point"
+msgstr "Reanudar episodios empezados desde el punto de reanudación"
+
+msgctxt "#32035"
+msgid "Display episode details when played"
+msgstr "Mostrar los detalles del episodio cuando se reproduzca"
+
+msgctxt "#32036"
+msgid "Include unwatched movies"
+msgstr "Incluir películas no vistas"
+
+msgctxt "#32037"
+msgid "Include watched movies"
+msgstr "Incluir películas vistas"
+
+msgctxt "#32038"
+msgid "Start watched movies at random time"
+msgstr "Empezar películas ya vistas a hora aleatoria"
+
+msgctxt "#32039"
+msgid "Simulates changing the TV channel to a movie in progress"
+msgstr "Simula cambiar de canal de TV a una película empezada"
+
+msgctxt "#32040"
+msgid "Movie weight"
+msgstr "Peso de la película"
+
+msgctxt "#32041"
+msgid "Weight: 1.0 = 1 show, 1 movie, 0.5 = 2 shows, 1 movie"
+msgstr "Peso: 1.0 = 1 serie, 1 película, 0.5 = 2 series, 1 película"
+
+msgctxt "#32042"
+msgid "Weight: 0.0 = unlimited movies"
+msgstr "Peso: 0.0 = películas ilimitadas"
+
+msgctxt "#32043"
+msgid "Ignore TV shows (movies only)"
+msgstr "Ignorar series de TV (sólo películas)"
+
+msgctxt "#32060"
+msgid "List Options"
+msgstr "Opciones de Lista"
+
+msgctxt "#32061"
+msgid "Limit the number of shows"
+msgstr "Limitar número de series"
+
+msgctxt "#32062"
+msgid "Number of Shows to display"
+msgstr "Número de Series a mostrar"
+
+msgctxt "#32063"
+msgid "Reducing length may help improve speed on slow systems"
+msgstr "Reducir la duración puede ayudar a mejorar la velocidad en sistemas lentos"
+
+msgctxt "#32064"
+msgid "Show Name"
+msgstr "Nombre de Serie"
+
+msgctxt "#32065"
+msgid "Last Watched"
+msgstr "Último Visto"
+
+msgctxt "#32066"
+msgid "# Unwatched Episodes"
+msgstr "# Episodios No Vistos"
+
+msgctxt "#32067"
+msgid "# Watched Episodes"
+msgstr "# Episodios Vistos"
+
+msgctxt "#32068"
+msgid "Season"
+msgstr "Temporada"
+
+msgctxt "#32069"
+msgid "Exclude random play shows"
+msgstr "Excluir series con orden aleatorio"
+
+msgctxt "#32070"
+msgid "Sort by ..."
+msgstr "Ordenar por..."
+
+msgctxt "#32071"
+msgid "Reverse Order"
+msgstr "Orden Inverso"
+
+msgctxt "#32072"
+msgid "LazyTV User Interface"
+msgstr "Interfaz de Usuario LazyTV"
+
+msgctxt "#32080"
+msgid "Other Settings"
+msgstr "Otros Ajustes"
+
+msgctxt "#32081"
+msgid "Prompt to watch next available episode"
+msgstr "Preguntar si quieres ver el próximo episodio disponible"
+
+msgctxt "#32082"
+msgid "Prompt duration (max = do not close)"
+msgstr "Preguntar duración (max = no se cierra)"
+
+msgctxt "#32083"
+msgid "Notify when previous episode is available"
+msgstr "Informar cuando hay un episodio anterior disponible"
+
+msgctxt "#32084"
+msgid "Prompt and notify functions also apply to shows played outside of LazyTV"
+msgstr "Las funciones de Preguntar e Informar también aplican a las series vistas fuera de LazyTV"
+
+msgctxt "#32085"
+msgid "Enable logging for Testing"
+msgstr "Habilitar registro para Pruebas"
+
+msgctxt "#32086"
+msgid "Cloning LazyTV allows multiple Home menu entries."
+msgstr "Clonar LazyTV permite tener varias entradas en el Menú Principal"
+
+msgctxt "#32087"
+msgid "Clone LazyTV Now"
+msgstr "Clonar LazyTV Ahora"
+
+msgctxt "#32088"
+msgid "It would be nice to know if people are using this addon."
+msgstr "Estaría bien saber si la gente esta usando este addon."
+
+msgctxt "#32089"
+msgid "Email +1 to the author (no data is sent)"
+msgstr "Email +1 al autor (no se envían datos)"
+
+msgctxt "#32090"
+msgid "Default action"
+msgstr "Acción por defecto"
+
+msgctxt "#32091"
+msgid "Dont Play"
+msgstr "No Reproducir"
+
+msgctxt "#32092"
+msgid "Play"
+msgstr "Reproducir"
+
+msgctxt "#32093"
+msgid "Create and maintain smart playlist."
+msgstr "Crear y mantener Lista Inteligente."
+
+msgctxt "#32094"
+msgid "Copy LazyTV episodes to specified folder. (Script)"
+msgstr "Copiar episodios LazyTV a una carpeta específica. (Script)"
+
+msgctxt "#32100"
+msgid "This addon finds the next episode in each TV show."
+msgstr "Este complemento busca el siguiente episodio en cada show de TV."
+
+msgctxt "#32101"
+msgid "Do you want a list or a randomised playlist?"
+msgstr "¿Desea una lista o una lista aleatoria?"
+
+msgctxt "#32102"
+msgid "Show me"
+msgstr "Muestramelo"
+
+msgctxt "#32103"
+msgid "Surprise me"
+msgstr "Sorprendeme"
+
+msgctxt "#32104"
+msgid "Select the playlist"
+msgstr "Elegir la lista"
+
+msgctxt "#32105"
+msgid "Close"
+msgstr "Cerrar"
+
+msgctxt "#32106"
+msgid "LazyTV Service is not running."
+msgstr "El Servicio LazyTV no está corriendo."
+
+msgctxt "#32107"
+msgid "Would you like to attempt to start it now?"
+msgstr "¿Quieres intentar lanzarlo ahora?"
+
+msgctxt "#32108"
+msgid "LazyTV Service has updated. Please restart to apply changes."
+msgstr "El Servicio LazyTV se ha actualizado. Por favor, reinicia para aplicar los cambios."
+
+msgctxt "#32109"
+msgid "Would you like to restart it now?"
+msgstr "¿Quieres reiniciar ahora?"
+
+msgctxt "#32110"
+msgid "LazyTV has updated and this clone is now out of date."
+msgstr "LazyTV se ha actualizado y este clon está caduco."
+
+msgctxt "#32111"
+msgid "Would you like to update the clone now?"
+msgstr "¿Quieres actualizar el clon ahora?"
+
+msgctxt "#32112"
+msgid "Never"
+msgstr "Nunca"
+
+msgctxt "#32113"
+msgid "day"
+msgstr "día"
+
+msgctxt "#32114"
+msgid "days"
+msgstr "días"
+
+msgctxt "#32115"
+msgid "LazyTV is still populating with shows."
+msgstr "LaxyTV todavia esta rellenándose con las Series."
+
+msgctxt "#32116"
+msgid "Please wait and try again."
+msgstr "Por favor, espera e inténtalo de nuevo."
+
+msgctxt "#32139"
+msgid "name your clone"
+msgstr "Nombre del clon"
+
+msgctxt "#32140"
+msgid "An error occurred while creating the clone."
+msgstr "Ha ocurrido un error al crear el clon."
+
+msgctxt "#32141"
+msgid "Operation cancelled."
+msgstr "Operación cancelada."
+
+msgctxt "#32142"
+msgid "This script creates a cloned version of the LazyTV user interface."
+msgstr "Este script crea una versión clonada de la interfaz de LazyTV."
+
+msgctxt "#32143"
+msgid "It creates a new folder in your addons directory."
+msgstr "Crea una carpeta nueva en tu directorio de addons."
+
+msgctxt "#32144"
+msgid "Do you wish to continue?"
+msgstr "¿Quieres continuar?"
+
+msgctxt "#32145"
+msgid "That name is in use. Please try another."
+msgstr "Ese nombre está en uso. Por favor, inténtalo con otro."
+
+msgctxt "#32146"
+msgid "Cloning successful."
+msgstr "Clonado con éxito."
+
+msgctxt "#32147"
+msgid "Clone is now ready for use."
+msgstr "El clon está listo para usarse."
+
+msgctxt "#32148"
+msgid "An error occurred while updating the clone."
+msgstr "Ha ocurrido un error al actualizar el clon."
+
+msgctxt "#32149"
+msgid "Update successful."
+msgstr "Actualizado con éxito."
+
+msgctxt "#32160"
+msgid "LazyTV - there are previous unwatched episodes"
+msgstr "LazyTV - ahí están los episodios anteriores sin ver"
+
+msgctxt "#32161"
+msgid "%s (%sx%s) is in your library."
+msgstr "%s (%sx%s) está en tu colección."
+
+msgctxt "#32162"
+msgid "Would you like to watch it now?"
+msgstr "¿Quieres verlo ahora?"
+
+msgctxt "#32163"
+msgid "\"Now Playing\""
+msgstr "\"Reproduciendo\""
+
+msgctxt "#32164"
+msgid "LazyTV -the next unwatched episode is in your library."
+msgstr "LazyTV - El siguiente episodio sin ver está en tu colección."
+
+msgctxt "#32165"
+msgid "No, thank you. (Autoclosing in %s seconds)"
+msgstr "No, gracias. (Cerrando en %s segundos)"
+
+msgctxt "#32166"
+msgid "Yes, start %s %s now."
+msgstr "Sí, empezando %s %s ahora."
+
+msgctxt "#32167"
+msgid "LazyTV   (auto-closing in %s seconds)"
+msgstr "LazyTV (cerrando en %s segundos)"
+
+msgctxt "#32168"
+msgid "%s %s is in your library."
+msgstr "%s %s está en tu colección."
+
+msgctxt "#32169"
+msgid "Would you like to watch it now?"
+msgstr "¿Quieres verlo ahora?"
+
+msgctxt "#32170"
+msgid "Save"
+msgstr "Guardar"
+
+msgctxt "#32171"
+msgid "Select All"
+msgstr "Seleccionar Todo"
+
+msgctxt "#32172"
+msgid "Unselect All"
+msgstr "No Seleccionar Nada"
+
+msgctxt "#32173"
+msgid "Database analysis complete"
+msgstr "Análisis de la base de datos completado"
+
+msgctxt "#32180"
+msgid "Choose export location"
+msgstr "Elige dónde exportar"
+
+msgctxt "#32181"
+msgid "Some files failed to transfer"
+msgstr "Algunos ficheros fallaron al transferirse"
+
+msgctxt "#32182"
+msgid "Would you like to see them?"
+msgstr "¿Quieres verlos ahora?"
+
+msgctxt "#32183"
+msgid "Retrieving file size..."
+msgstr "Obteniendo tamaño de archivo..."
+
+msgctxt "#32184"
+msgid "File transfer in progress..."
+msgstr "Transferencia de ficheros en progreso..."
+
+msgctxt "#32185"
+msgid "File export completed successfully"
+msgstr "Exportación de ficheros completada con éxito"
+
+msgctxt "#32200"
+msgid "Multi-Select (on)"
+msgstr "Multi-Selección (activa)"
+
+msgctxt "#32201"
+msgid "Multi-Select (off)"
+msgstr "Multi-Selección (no activa)"
+
+msgctxt "#32202"
+msgid "Play Selection"
+msgstr "Reproducir Selección"
+
+msgctxt "#32203"
+msgid "Export Selection"
+msgstr "Exportar Selección"
+
+msgctxt "#32204"
+msgid "Play Episode"
+msgstr "Reproducir Episodio"
+
+msgctxt "#32205"
+msgid "Export Episode"
+msgstr "Exportar Episodio"
+
+msgctxt "#32206"
+msgid "Play From Here"
+msgstr "Reproducir Desde Aquí"
+
+msgctxt "#32207"
+msgid "Mark as Watched"
+msgstr "Marcar como Visto"
+
+msgctxt "#32208"
+msgid "Update Library"
+msgstr "Actualizar Colección"
+
+msgctxt "#32209"
+msgid "Refresh List"
+msgstr "Actualizar Lista"
+
+msgctxt "#32220"
+msgid "Season"
+msgstr "Temporada"
+
+msgctxt "#32221"
+msgid "Episode"
+msgstr "Episodio"
+
+msgctxt "#32222"
+msgid "Progress"
+msgstr "Progreso"
+
+msgctxt "#32223"
+msgid "Available"
+msgstr "Disponible"
+
+msgctxt "#32224"
+msgid "Watched"
+msgstr "Vistos"
+
+msgctxt "#32225"
+msgid "Skipped"
+msgstr "Saltado"
+
+msgctxt "#32226"
+msgid "In this episode"
+msgstr "En este episodio"
