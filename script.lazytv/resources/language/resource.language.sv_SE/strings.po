@@ -1,0 +1,537 @@
+# XBMC Media Center language file
+# Addon Name: LazyTV
+# Addon id: script.lazytv
+# Addon Provider: KodeKarnage
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: Swedish (http://www.transifex.com/projects/p/xbmc-addons/language/sv/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: sv\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#32000"
+msgid "General Settings"
+msgstr "Allmänna inställningar"
+
+msgctxt "#32001"
+msgid "Primary Function"
+msgstr "Primär funktion"
+
+msgctxt "#32002"
+msgid "Produce a list of 'next episodes' for each TV series"
+msgstr "Skapa en lista av 'nästa avsnitt' för varje TV-serie"
+
+msgctxt "#32003"
+msgid "Create and launch randomised playlist"
+msgstr "Skapa och starta slumpad spellista"
+
+msgctxt "#32004"
+msgid "Let me choose on launch"
+msgstr "Låt mig välja vid start"
+
+msgctxt "#32005"
+msgid "Use Smart Playlist to Filter Shows"
+msgstr "Använd smarta spellistor för filtrering av program"
+
+msgctxt "#32006"
+msgid "Playlist Selection Method"
+msgstr "Valmetod för spellista"
+
+msgctxt "#32007"
+msgid "Let me choose on launch"
+msgstr "Låt mig välja vid start"
+
+msgctxt "#32008"
+msgid "Choose a default Playlist"
+msgstr "Välj en startspellista"
+
+msgctxt "#32009"
+msgid "Select default playlist"
+msgstr "Välj en startspellista "
+
+msgctxt "#32010"
+msgid "Some shows are fine to watch out of order"
+msgstr "En del program går bra att se i slumpvis ordning"
+
+msgctxt "#32011"
+msgid "Select random-order shows"
+msgstr "Välj program för slumpvis visning"
+
+msgctxt "#32012"
+msgid "Only populate with selected TV Shows"
+msgstr "Fyll endast med valda TV-program"
+
+msgctxt "#32013"
+msgid "Choose shows by ..."
+msgstr "Välj program efter ..."
+
+msgctxt "#32014"
+msgid "Manual Selection"
+msgstr "Manuellt val"
+
+msgctxt "#32015"
+msgid "Smart Playlist"
+msgstr "Smart spellista"
+
+msgctxt "#32016"
+msgid "Click here to select TV Shows"
+msgstr "Klicka här för att välja TV-program"
+
+msgctxt "#32030"
+msgid "Player Options"
+msgstr "Spelaralternativ"
+
+msgctxt "#32031"
+msgid "Number of shows in playlist"
+msgstr "Antal program i spellista"
+
+msgctxt "#32032"
+msgid "Allow multiple episodes of same TV Show"
+msgstr "Tillåt multipla avsnitt av samma TV-serie"
+
+msgctxt "#32033"
+msgid "Include episodes from unwatched TV series"
+msgstr "Inkludera avsnitt från osedda TV-serier"
+
+msgctxt "#32034"
+msgid "Begin partially watched episodes from their resume point"
+msgstr "Återuppta delvis visade episoder från senaste position"
+
+msgctxt "#32035"
+msgid "Display episode details when played"
+msgstr "Visa episoddetaljer vid uppspelning"
+
+msgctxt "#32036"
+msgid "Include unwatched movies"
+msgstr "Inkludera ej visade filmer"
+
+msgctxt "#32037"
+msgid "Include watched movies"
+msgstr "Inkludera visade filmer"
+
+msgctxt "#32038"
+msgid "Start watched movies at random time"
+msgstr "Starta visade filmer på slumpmässig tid"
+
+msgctxt "#32039"
+msgid "Simulates changing the TV channel to a movie in progress"
+msgstr "Simulerar kanalbyte till en pågående film"
+
+msgctxt "#32040"
+msgid "Movie weight"
+msgstr "Vikt för film"
+
+msgctxt "#32041"
+msgid "Weight: 1.0 = 1 show, 1 movie, 0.5 = 2 shows, 1 movie"
+msgstr "Vikt: 1.0 = 1 program, 1 film, 0.5 = 2 program, 1 film"
+
+msgctxt "#32042"
+msgid "Weight: 0.0 = unlimited movies"
+msgstr "Vikt: 0.0 = oändligt med film"
+
+msgctxt "#32043"
+msgid "Ignore TV shows (movies only)"
+msgstr "Ignorera TV-program (endast filmer)"
+
+msgctxt "#32044"
+msgid "Begin with latest in progress episode"
+msgstr "Starta med senaste pågående avsnittet"
+
+msgctxt "#32060"
+msgid "List Options"
+msgstr "Listalternativ"
+
+msgctxt "#32061"
+msgid "Limit the number of shows"
+msgstr "Begränsa antal TV-program"
+
+msgctxt "#32062"
+msgid "Number of Shows to display"
+msgstr "Antal program att visa"
+
+msgctxt "#32063"
+msgid "Reducing length may help improve speed on slow systems"
+msgstr "Reducerad längd kan förbättra hastigheten på långsamma system"
+
+msgctxt "#32064"
+msgid "Show Name"
+msgstr "Programnamn"
+
+msgctxt "#32065"
+msgid "Last Watched"
+msgstr "Senast visad"
+
+msgctxt "#32066"
+msgid "# Unwatched Episodes"
+msgstr "# Icke visade avsnitt"
+
+msgctxt "#32067"
+msgid "# Watched Episodes"
+msgstr "# Visade avsnitt"
+
+msgctxt "#32068"
+msgid "Season"
+msgstr "Säsong"
+
+msgctxt "#32069"
+msgid "Exclude random play shows"
+msgstr "Exkludera program med slumpmässig uppspelning"
+
+msgctxt "#32070"
+msgid "Sort by ..."
+msgstr "Sortera efter ..."
+
+msgctxt "#32071"
+msgid "Reverse Order"
+msgstr "Omvänd ordning"
+
+msgctxt "#32072"
+msgid "LazyTV User Interface"
+msgstr "LazyTV användargränssnitt"
+
+msgctxt "#32073"
+msgid "Standard"
+msgstr "Standard"
+
+msgctxt "#32074"
+msgid "Posters"
+msgstr "Omslag"
+
+msgctxt "#32075"
+msgid "Big Screen"
+msgstr "Storbild"
+
+msgctxt "#32076"
+msgid "Return to LazyTV after playback\""
+msgstr "Återgå till LazyTV efteråt"
+
+msgctxt "#32080"
+msgid "Other Settings"
+msgstr "Övriga inställningar"
+
+msgctxt "#32081"
+msgid "Prompt to watch next available episode"
+msgstr "Fråga om nästa tillgängliga avsnitt skall visas"
+
+msgctxt "#32082"
+msgid "Prompt duration (max = do not close)"
+msgstr "Visa fråga (max = stäng inte)"
+
+msgctxt "#32083"
+msgid "Notify when previous episode is available"
+msgstr "Meddela när förgående avsnitt finns tillgängligt"
+
+msgctxt "#32084"
+msgid "Prompt and notify functions also apply to shows played outside of LazyTV"
+msgstr "Frågor och notifieringsfunktioner gäller också för de avsnitt som spelas upp utanför LazyTV"
+
+msgctxt "#32085"
+msgid "Enable logging for Testing"
+msgstr "Aktivera loggning för tester"
+
+msgctxt "#32086"
+msgid "Cloning LazyTV allows multiple Home menu entries."
+msgstr "Kloning av LazyTV medger flera hemmenyposter."
+
+msgctxt "#32087"
+msgid "Clone LazyTV Now"
+msgstr "Klona LazyTV nu"
+
+msgctxt "#32088"
+msgid "It would be nice to know if people are using this addon."
+msgstr "Det vore fint att få veta om folk använder detta tillägg."
+
+msgctxt "#32089"
+msgid "Email +1 to the author (no data is sent)"
+msgstr "E-posta +1 till författaren (ingen data kommer att skickas)"
+
+msgctxt "#32090"
+msgid "Default action"
+msgstr "Standardåtgärd"
+
+msgctxt "#32091"
+msgid "Dont Play"
+msgstr "Spela inte"
+
+msgctxt "#32092"
+msgid "Play"
+msgstr "Spela"
+
+msgctxt "#32093"
+msgid "Create and maintain smart playlist."
+msgstr "Skapa och underhåll smart spellista"
+
+msgctxt "#32094"
+msgid "Copy LazyTV episodes to specified folder. (Script)"
+msgstr "Kopiera LazyTV avsnitt till specifik mapp. (Script)"
+
+msgctxt "#32100"
+msgid "This addon finds the next episode in each TV show."
+msgstr "Detta tillägg hittar nästa avsnitt för varje TV-serie."
+
+msgctxt "#32101"
+msgid "Do you want a list or a randomised playlist?"
+msgstr "VIll du ha en lista eller en slumpad spellista?"
+
+msgctxt "#32102"
+msgid "Show me"
+msgstr "Visa mig"
+
+msgctxt "#32103"
+msgid "Surprise me"
+msgstr "Överraska mig"
+
+msgctxt "#32104"
+msgid "Select the playlist"
+msgstr "Välj spellista"
+
+msgctxt "#32105"
+msgid "Close"
+msgstr "Stäng"
+
+msgctxt "#32106"
+msgid "LazyTV Service is not running."
+msgstr "LazyTV-tjänsten är inte igång."
+
+msgctxt "#32107"
+msgid "Would you like to attempt to start it now?"
+msgstr "Vill du försöka starta den nu?"
+
+msgctxt "#32108"
+msgid "LazyTV Service has updated. Please restart to apply changes."
+msgstr "LazyTV-tjänsten har uppdaterats. Var god starta om för att tillämpa ändringar."
+
+msgctxt "#32109"
+msgid "Would you like to restart it now?"
+msgstr "Vill du starta om den nu?"
+
+msgctxt "#32110"
+msgid "LazyTV has updated and this clone is now out of date."
+msgstr "LazyTV har uppdaterats och den här klonen är nu för gammal."
+
+msgctxt "#32111"
+msgid "Would you like to update the clone now?"
+msgstr "Vill du uppdatera klonen nu?"
+
+msgctxt "#32112"
+msgid "Never"
+msgstr "Aldrig"
+
+msgctxt "#32113"
+msgid "day"
+msgstr "dag"
+
+msgctxt "#32114"
+msgid "days"
+msgstr "dagar"
+
+msgctxt "#32115"
+msgid "LazyTV is still populating with shows."
+msgstr "LazyTV läser fortfarande in avsnitt."
+
+msgctxt "#32116"
+msgid "Please wait and try again."
+msgstr "Vänligen vänta och försök igen."
+
+msgctxt "#32139"
+msgid "name your clone"
+msgstr "Namnge din klon"
+
+msgctxt "#32140"
+msgid "An error occurred while creating the clone."
+msgstr "Ett fel uppstod vid skapandet av klonen."
+
+msgctxt "#32141"
+msgid "Operation cancelled."
+msgstr "Processen avbruten."
+
+msgctxt "#32142"
+msgid "This script creates a cloned version of the LazyTV user interface."
+msgstr "Detta skript skapar en klonad version av LazyTV gränssnittet."
+
+msgctxt "#32143"
+msgid "It creates a new folder in your addons directory."
+msgstr "Den skapar en ny mapp i din tilläggsmapp."
+
+msgctxt "#32144"
+msgid "Do you wish to continue?"
+msgstr "Vill du fortsätta?"
+
+msgctxt "#32145"
+msgid "That name is in use. Please try another."
+msgstr "Det här namnet används redan. Var god välj ett annat namn."
+
+msgctxt "#32146"
+msgid "Cloning successful."
+msgstr "Kloning lyckades."
+
+msgctxt "#32147"
+msgid "Clone is now ready for use."
+msgstr "Klon är klar för användning."
+
+msgctxt "#32148"
+msgid "An error occurred while updating the clone."
+msgstr "Ett fel uppstod vid uppdatering av klonen."
+
+msgctxt "#32149"
+msgid "Update successful."
+msgstr "Uppdatering lyckades."
+
+msgctxt "#32160"
+msgid "LazyTV - there are previous unwatched episodes"
+msgstr "LazyTV - det finns tidigare osedda avsnitt"
+
+msgctxt "#32161"
+msgid "%s (%sx%s) is in your library."
+msgstr "%s (%sx%s) finns i ditt bibliotek."
+
+msgctxt "#32162"
+msgid "Would you like to watch it now?"
+msgstr "Vill du se den nu?"
+
+msgctxt "#32163"
+msgid "\"Now Playing\""
+msgstr "\"Nu spelas\""
+
+msgctxt "#32164"
+msgid "LazyTV -the next unwatched episode is in your library."
+msgstr "LazyTV -nästa osedda avsnitt finns i ditt bibliotek."
+
+msgctxt "#32165"
+msgid "No, thank you. (Autoclosing in %s seconds)"
+msgstr "Nej tack. (stänger automatiskt om %s sekunder)"
+
+msgctxt "#32166"
+msgid "Yes, start %s %s now."
+msgstr "Ja, starta %s %s nu."
+
+msgctxt "#32167"
+msgid "LazyTV   (auto-closing in %s seconds)"
+msgstr "LazyTV   (stängs automatiskt om %s sekunder)"
+
+msgctxt "#32168"
+msgid "%s %s is in your library."
+msgstr "%s %s finns i ditt bibliotek."
+
+msgctxt "#32169"
+msgid "Would you like to watch it now?"
+msgstr "Vill du se den nu?"
+
+msgctxt "#32170"
+msgid "Save"
+msgstr "Spara"
+
+msgctxt "#32171"
+msgid "Select All"
+msgstr "Markera alla"
+
+msgctxt "#32172"
+msgid "Unselect All"
+msgstr "Avmarkera alla"
+
+msgctxt "#32173"
+msgid "Database analysis complete"
+msgstr "Databas-analys slutförd"
+
+msgctxt "#32180"
+msgid "Choose export location"
+msgstr "Välj plats för exportering"
+
+msgctxt "#32181"
+msgid "Some files failed to transfer"
+msgstr "Visa filer kunde inte överföras"
+
+msgctxt "#32182"
+msgid "Would you like to see them?"
+msgstr "Vill du se dom?"
+
+msgctxt "#32183"
+msgid "Retrieving file size..."
+msgstr "Hämtar filstorlek..."
+
+msgctxt "#32184"
+msgid "File transfer in progress..."
+msgstr "Filöverföring pågår..."
+
+msgctxt "#32185"
+msgid "File export completed successfully"
+msgstr "Filexportering slutförd"
+
+msgctxt "#32200"
+msgid "Multi-Select (on)"
+msgstr "Välj flera (på)"
+
+msgctxt "#32201"
+msgid "Multi-Select (off)"
+msgstr "Välj flera (av)"
+
+msgctxt "#32202"
+msgid "Play Selection"
+msgstr "Spela markerad"
+
+msgctxt "#32203"
+msgid "Export Selection"
+msgstr "Exportera markerad"
+
+msgctxt "#32204"
+msgid "Play Episode"
+msgstr "Spela avsnitt"
+
+msgctxt "#32205"
+msgid "Export Episode"
+msgstr "Exportera avsnitt"
+
+msgctxt "#32206"
+msgid "Play From Here"
+msgstr "Spela härifrån"
+
+msgctxt "#32207"
+msgid "Mark as Watched"
+msgstr "Markera som visad"
+
+msgctxt "#32208"
+msgid "Update Library"
+msgstr "Uppdatera bibliotek"
+
+msgctxt "#32209"
+msgid "Refresh List"
+msgstr "Uppdatera listan"
+
+msgctxt "#32220"
+msgid "Season"
+msgstr "Säsong"
+
+msgctxt "#32221"
+msgid "Episode"
+msgstr "Avsnitt"
+
+msgctxt "#32222"
+msgid "Progress"
+msgstr "Sett"
+
+msgctxt "#32223"
+msgid "Available"
+msgstr "Tillgängliga"
+
+msgctxt "#32224"
+msgid "Watched"
+msgstr "Sedda"
+
+msgctxt "#32225"
+msgid "Skipped"
+msgstr "Hoppat över"
+
+msgctxt "#32226"
+msgid "In this episode"
+msgstr "I det här avsnittet"
+
+msgctxt "#32250"
+msgid "* Hidden to prevent spoilers *"
+msgstr "*  Dolt för att undvika spoilers *"

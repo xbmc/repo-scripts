@@ -1,0 +1,75 @@
+0.9.92
+Updated language files from Transifex
+
+0.9.82
+Fixed bugs
+
+0.9.7
+Features:
+* option to reverse the order of the shows in the list view
+* added an option for LazyTV to create and maintain a smartplaylist that can be used in other addons (PseudoTV) or as a criteria in other playlists
+* added option to change default behaviour of the next episode available prompt
+* added a script in the Settings that will copy the next to watch episode from the last 10 watched TV Shows to a folder of your choice
+* added in more language support
+
+Bug Fixes:
+* fixed bug to prevent next episode notification displaying when episode is playing in a playlist
+* fixed the resume partially watched feature in the list view
+* fixed "ignore the in title" bug
+* fixed end of series multi episode bug
+
+0.9.3
+- general: prompt if the next episode is available with autoclose
+- general: posts a warning you if you are beginning to watch a TV episode that has an unwatched episode before it in your library
+- general: ability to switch logs on/off
+- general: accommodate manual updating of watched status
+- general: specify individual tv shows to watch out of order
+- general: clone function duplicates the LazyTV front-end, clone can have distinct settings, occupy additional slot in Home Menu
+- play random option: expanded 'play random tv shows' limit to 50 shows
+- play random option: notification of show title
+- play random option: include unwatched movies
+- play random option: include watched movies
+- play random option: ignore TV shows entirely, making LazyTV a random movie player
+- play random option: jump to a random time in watched movie (simulates changing the channel and coming across a movie in progress)
+- play random option: specify biad between movies and tv shows
+- service: analysis of library and show selection now handled by service
+- service: pre-empts watched status change for improved responsiveness in Pi
+- on-screen list option: limit the shows shown in the window to help speed things up on slow systems
+- on-screen list option: randomised shows refresh each time the window opens
+
+
+0.8.0
+added service to maintain the tvshow list
+
+0.1.17
+added notification option
+added resume option
+
+0.1.16
+Updated language files from Transifex
+added debug function (plan to remove once performance is solid)
+
+0.1.15
+improved playlist and exclusion windows
+better handling of exceptions
+updated string ids
+
+0.1.12
+multiple empty list fixes
+added option to select primary action on addon launch
+
+0.1.10
+added optional Buggalo 
+
+0.1.8
+added function to populate list of next to watch episodes for all TV shows
+added function to backfill watched status
+
+0.1.4
+Introduced option to populate random playlist using Smart playlist selected in Settings or Live
+
+0.1.3
+Rewrite to use json-rpc api in place of direct SQL queries
+
+0.1.2
+No longer accessing native XBMC database. Creates copy and accesses that instead.
