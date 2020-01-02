@@ -17,11 +17,10 @@
             <icon>icon.png</icon>
             <fanart>fanart.jpg</fanart>
         </assets>
-        <summary lang="en">COMBNAME</summary>
-        <description lang="en">This is a cloned version of the LazyTV front-end.</description>
-        <language>en</language>
+        <summary lang="en_GB">COMBNAME</summary>
+        <description lang="en_GB">This is a cloned version of the LazyTV front-end.</description>
         <platform>all</platform>
-        <license>GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007</license>
+        <license>GPL-3.0-or-later</license>
         <email>subliminal.karnage at gmail dot com</email>
         <forum>https://forum.xbmc.org/showthread.php?tid=170975</forum>
         <website>https://wiki.xbmc.org/index.php?title=Add-on:LazyTV</website>

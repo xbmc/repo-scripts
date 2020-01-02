@@ -184,7 +184,7 @@ msgctxt "#32068"
 msgid "Season"
 msgstr ""
 
-msgctxt "#32069"
+msgctxt "#32251"
 msgid "Exclude random play shows"
 msgstr ""
 
@@ -559,4 +559,12 @@ msgstr ""
 
 msgctxt "#32250"
 msgid "* Hidden to prevent spoilers *"
+msgstr ""
+
+msgctxt "#32252"
+msgid "Permit prompt in LazyTV Random Play"
+msgstr ""
+
+msgctxt "#32253"
+msgid "Announce database analysis on start-up"
 msgstr ""

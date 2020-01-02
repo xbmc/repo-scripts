@@ -32,7 +32,7 @@ def json_query(query, ret):
             return json.loads(result)["result"]
         else:
             return json.loads(result)
-    except:
+    except Exception:
         return {}
 
 

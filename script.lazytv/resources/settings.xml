@@ -1,444 +1,71 @@
-<?xml version="1.0" ?>
-<settings version="1">
-	<section id="script.lazytv">
-		<category help="" id="general settings" label="32000">
-			<group id="1" label="32001">
-				<setting help="" id="primary_function" label="" type="integer">
-					<level>0</level>
-					<default>0</default>
-					<constraints>
-						<options>
-							<option label="32002">0</option>
-							<option label="32003">1</option>
-							<option label="32004">2</option>
-						</options>
-					</constraints>
-					<control format="string" type="spinner"/>
-				</setting>
-			</group>
-			<group id="2">
-				<setting help="" id="filterYN" label="32012" type="boolean">
-					<level>0</level>
-					<default>false</default>
-					<control type="toggle"/>
-				</setting>
-				<setting help="" id="populate_by_d" label="32013" type="integer">
-					<level>0</level>
-					<default>0</default>
-					<constraints>
-						<options>
-							<option label="32014">0</option>
-							<option label="32015">1</option>
-						</options>
-					</constraints>
-					<dependencies>
-						<dependency type="visible">
-							<condition operator="is" setting="filterYN">true</condition>
-						</dependency>
-					</dependencies>
-					<control format="string" type="spinner"/>
-				</setting>
-				<setting help="" id="select_pl" label="32006" type="integer">
-					<level>0</level>
-					<default>0</default>
-					<constraints>
-						<options>
-							<option label="32007">0</option>
-							<option label="32008">1</option>
-						</options>
-					</constraints>
-					<dependencies>
-						<dependency type="visible">
-							<and>
-								<condition operator="is" setting="filterYN">true</condition>
-								<condition name="InfoBool" on="property"> eq(-1,1)</condition>
-							</and>
-						</dependency>
-					</dependencies>
-					<control format="string" type="spinner"/>
-				</setting>
-				<setting help="" id="file" label="32009" type="action">
-					<level>0</level>
-					<data>RunScript(/home/k/.kodi/addons/script.lazytv//resources/playlists.py)</data>
-					<constraints>
-						<allowempty>true</allowempty>
-					</constraints>
-					<dependencies>
-						<dependency type="visible">
-							<and>
-								<condition operator="is" setting="filterYN">true</condition>
-								<condition name="InfoBool" on="property"> eq(-2,1) </condition>
-								<condition name="InfoBool" on="property"> eq(-1,1)</condition>
-							</and>
-						</dependency>
-					</dependencies>
-					<control format="action" type="button">
-						<close>true</close>
-					</control>
-				</setting>
-				<setting help="" id="selectshows" label="32016" type="action">
-					<level>0</level>
-					<data>RunScript(/home/k/.kodi/addons/script.lazytv//resources/selector.py,'usersel')</data>
-					<constraints>
-						<allowempty>true</allowempty>
-					</constraints>
-					<dependencies>
-						<dependency type="visible">
-							<and>
-								<condition operator="is" setting="filterYN">true</condition>
-								<condition name="InfoBool" on="property"> eq(-3,0)</condition>
-							</and>
-						</dependency>
-					</dependencies>
-					<control format="action" type="button">
-						<close>true</close>
-					</control>
-				</setting>
-			</group>
-			<group id="3" label="32010">
-				<setting help="" id="selectrandos" label="32011" type="action">
-					<level>0</level>
-					<data>RunScript(/home/k/.kodi/addons/script.lazytv//resources/selector.py,'rando')</data>
-					<constraints>
-						<allowempty>true</allowempty>
-					</constraints>
-					<control format="action" type="button">
-						<close>true</close>
-					</control>
-				</setting>
-			</group>
-			<group id="4" label="">
-				<setting help="" id="maintainsmartplaylist" label="32093" type="boolean">
-					<level>0</level>
-					<default>false</default>
-					<control type="toggle"/>
-				</setting>
-				<setting help="" id="startup" label="Announce database analysis on start-up" type="boolean">
-					<level>0</level>
-					<default>true</default>
-					<control type="toggle"/>
-				</setting>
-			</group>
-		</category>
-		<category help="" id="player options" label="32030">
-			<group id="1">
-				<setting help="" id="length" label="32031" type="integer">
-					<level>0</level>
-					<default>5</default>
-					<constraints>
-						<minimum>1</minimum>
-						<step>1</step>
-						<maximum>50</maximum>
-					</constraints>
-					<control format="integer" type="slider">
-						<popup>false</popup>
-					</control>
-				</setting>
-				<setting help="" id="multipleshows" label="32032" type="boolean">
-					<level>0</level>
-					<default>false</default>
-					<control type="toggle"/>
-				</setting>
-				<setting help="" id="premieres" label="32033" type="boolean">
-					<level>0</level>
-					<default>false</default>
-					<control type="toggle"/>
-				</setting>
-				<setting help="" id="resume_partials" label="32034" type="boolean">
-					<level>0</level>
-					<default>false</default>
-					<control type="toggle"/>
-				</setting>
-				<setting help="" id="start_partials" label="32044" type="boolean">
-					<level>0</level>
-					<default>false</default>
-					<control type="toggle"/>
-				</setting>
-				<setting help="" id="notify" label="32035" type="boolean">
-					<level>0</level>
-					<default>true</default>
-					<control type="toggle"/>
-				</setting>
-				<setting help="" id="movies" label="32036" type="boolean">
-					<level>0</level>
-					<default>false</default>
-					<control type="toggle"/>
-				</setting>
-				<setting help="" id="moviesw" label="32037" type="boolean">
-					<level>0</level>
-					<default>false</default>
-					<control type="toggle"/>
-				</setting>
-				<setting help="" id="moviemid" label="32038" parent="moviesw" type="boolean">
-					<level>0</level>
-					<default>false</default>
-					<dependencies>
-						<dependency type="enable">
-							<condition operator="is" setting="moviesw">true</condition>
-						</dependency>
-					</dependencies>
-					<control type="toggle"/>
-				</setting>
-			</group>
-			<group id="2" label="32039">
-				<setting help="" id="movieweight" label="32040" type="number">
-					<level>0</level>
-					<default>1.0</default>
-					<constraints>
-						<minimum>0</minimum>
-						<step>0.1</step>
-						<maximum>1</maximum>
-					</constraints>
-					<dependencies>
-						<dependency type="enable">
-							<or>
-								<condition operator="is" setting="moviesw">true</condition>
-								<condition operator="is" setting="movies">true</condition>
-							</or>
-						</dependency>
-					</dependencies>
-					<control format="number" type="slider">
-						<popup>false</popup>
-					</control>
-				</setting>
-			</group>
-			<group id="3" label="32041"/>
-			<group id="4" label="32042">
-				<setting help="" id="noshow" label="32043" type="boolean">
-					<level>0</level>
-					<default>false</default>
-					<dependencies>
-						<dependency type="enable">
-							<or>
-								<condition operator="is" setting="moviesw">true</condition>
-								<condition operator="is" setting="movies">true</condition>
-							</or>
-						</dependency>
-					</dependencies>
-					<control type="toggle"/>
-				</setting>
-			</group>
-		</category>
-		<category help="" id="list options" label="32060">
-			<group id="1">
-				<setting help="" id="skinorno" label="32072" type="integer">
-					<level>0</level>
-					<default>0</default>
-					<constraints>
-						<options>
-							<option label="32073">0</option>
-							<option label="32074">1</option>
-							<option label="32075">2</option>
-						</options>
-					</constraints>
-					<control format="string" type="spinner"/>
-				</setting>
-				<setting help="" id="skin_return" label="32076" type="boolean">
-					<level>0</level>
-					<default>true</default>
-					<control type="toggle"/>
-				</setting>
-				<setting help="" id="limitshows" label="32061" type="boolean">
-					<level>0</level>
-					<default>false</default>
-					<control type="toggle"/>
-				</setting>
-				<setting help="" id="window_length" label="32062" type="integer">
-					<level>0</level>
-					<default>10</default>
-					<constraints>
-						<minimum>1</minimum>
-						<step>1</step>
-						<maximum>30</maximum>
-					</constraints>
-					<dependencies>
-						<dependency type="enable">
-							<condition operator="is" setting="limitshows">true</condition>
-						</dependency>
-					</dependencies>
-					<control format="integer" type="slider">
-						<popup>false</popup>
-					</control>
-				</setting>
-			</group>
-			<group id="2" label="32063">
-				<setting help="" id="sort_by" label="32070" type="integer">
-					<level>0</level>
-					<default>32065</default>
-					<constraints>
-						<options>
-							<option label="32064">0</option>
-							<option label="32065">1</option>
-							<option label="32066">2</option>
-							<option label="32067">3</option>
-							<option label="32068">4</option>
-						</options>
-					</constraints>
-					<control format="string" type="spinner"/>
-				</setting>
-				<setting help="" id="sort_reverse" label="32071" type="boolean">
-					<level>0</level>
-					<default>false</default>
-					<control type="toggle"/>
-				</setting>
-				<setting help="" id="excl_randos" label="32069 " type="boolean">
-					<level>0</level>
-					<default>false</default>
-					<control type="toggle"/>
-				</setting>
-			</group>
-		</category>
-		<category help="" id="other settings" label="32080">
-			<group id="1">
-				<setting help="" id="nextprompt" label="32081" type="boolean">
-					<level>0</level>
-					<default>true</default>
-					<control type="toggle"/>
-				</setting>
-				<setting help="" id="promptduration" label="32082" parent="nextprompt" type="integer">
-					<level>0</level>
-					<default>20</default>
-					<constraints>
-						<minimum>0</minimum>
-						<step>5</step>
-						<maximum>60</maximum>
-					</constraints>
-					<dependencies>
-						<dependency type="enable">
-							<condition operator="is" setting="nextprompt">true</condition>
-						</dependency>
-					</dependencies>
-					<control format="integer" type="slider">
-						<popup>false</popup>
-					</control>
-				</setting>
-				<setting help="" id="promptdefaultaction" label="32090" type="integer">
-					<level>0</level>
-					<default>32091</default>
-					<constraints>
-						<options>
-							<option label="32091">0</option>
-							<option label="32092">1</option>
-						</options>
-					</constraints>
-					<dependencies>
-						<dependency type="enable">
-							<condition operator="is" setting="nextprompt">true</condition>
-						</dependency>
-					</dependencies>
-					<control format="string" type="spinner"/>
-				</setting>
-				<setting help="" id="nextprompt_or" label="Permit prompt in LazyTV Random Play" type="boolean">
-					<level>0</level>
-					<default>false</default>
-					<dependencies>
-						<dependency type="enable">
-							<condition operator="is" setting="nextprompt">true</condition>
-						</dependency>
-					</dependencies>
-					<control type="toggle"/>
-				</setting>
-				<setting help="" id="prevcheck" label="32083" type="boolean">
-					<level>0</level>
-					<default>false</default>
-					<control type="toggle"/>
-				</setting>
-			</group>
-			<group id="2" label="32084"/>
-			<group id="3" label="">
-				<setting help="" id="logging" label="32085" type="boolean">
-					<level>0</level>
-					<default>true</default>
-					<control type="toggle"/>
-				</setting>
-			</group>
-			<group id="4" label="32086">
-				<setting help="" id="onmpkgtsxgtqayvavewgwmbgzjjbmlyx" label="32087" type="action">
-					<level>0</level>
-					<data>RunScript(/home/k/.kodi/addons/script.lazytv//resources/clone.py)</data>
-					<constraints>
-						<allowempty>true</allowempty>
-					</constraints>
-					<control format="action" type="button">
-						<close>true</close>
-					</control>
-				</setting>
-			</group>
-			<group id="5" label="">
-				<setting help="" id="roqteelidkcazagkrtftmsdkdhetygdn" label="32094" type="action">
-					<level>0</level>
-					<data>RunScript(/home/k/.kodi/addons/script.lazytv//resources/episode_exporter.py)</data>
-					<constraints>
-						<allowempty>true</allowempty>
-					</constraints>
-					<control format="action" type="button">
-						<close>true</close>
-					</control>
-				</setting>
-			</group>
-			<group id="6" label="32088">
-				<setting help="" id="jziliygvzieyfqyhwhnhajbijdyhueig" label="32089" type="action">
-					<level>0</level>
-					<data>RunScript(/home/k/.kodi/addons/script.lazytv//resources/shout.py)</data>
-					<constraints>
-						<allowempty>true</allowempty>
-					</constraints>
-					<dependencies>
-						<dependency type="visible">
-							<condition operator="is" setting="shout">false</condition>
-						</dependency>
-					</dependencies>
-					<control format="action" type="button">
-						<close>true</close>
-					</control>
-				</setting>
-				<setting help="" id="first_run" type="boolean">
-					<level>0</level>
-					<default>true</default>
-					<dependencies>
-						<dependency type="visible">
-							<condition name="InfoBool" on="property">false</condition>
-						</dependency>
-					</dependencies>
-					<control type="toggle"/>
-				</setting>
-				<setting help="" id="users_spl" type="string">
-					<level>0</level>
-					<default>none</default>
-					<dependencies>
-						<dependency type="visible">
-							<condition name="InfoBool" on="property">false</condition>
-						</dependency>
-					</dependencies>
-					<control format="string" type="edit">
-						<heading/>
-					</control>
-				</setting>
-				<setting help="" id="randos" type="string">
-					<level>0</level>
-					<default>none</default>
-					<dependencies>
-						<dependency type="visible">
-							<condition name="InfoBool" on="property">false</condition>
-						</dependency>
-					</dependencies>
-					<control format="string" type="edit">
-						<heading/>
-					</control>
-				</setting>
-				<setting help="" id="selection" type="string">
-					<level>0</level>
-					<default>none</default>
-					<dependencies>
-						<dependency type="visible">
-							<condition name="InfoBool" on="property">false</condition>
-						</dependency>
-					</dependencies>
-					<control format="string" type="edit">
-						<heading/>
-					</control>
-				</setting>
-			</group>
-		</category>
-	</section>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+ <!-- gap -->
+ <category label="32000">
+ <setting id="lsep0" label="32001" type="lsep" enable="false"/>
+ <setting id="primary_function" label="" type="enum" lvalues="32002|32003|32004"/>
+ <setting id="sep1" type="sep" enable="false"/>
+ <setting id="filterYN" label="32012" type="bool" default="false"/>
+ <setting id="populate_by_d" label="32013" type="enum" visible="eq(-1,true)" lvalues="32014|32015"/>
+ <setting id="select_pl" label="32006" type="enum" visible="eq(-2,true) + eq(-1,1)" lvalues="32007|32008"/>
+ <setting id="file" label="32009" type="action" visible="eq(-3,true) + eq(-2,1) + eq(-1,1)" option="close" action="RunScript($CWD/resources/playlists.py)"/>
+ <setting id="selectshows" label="32016" type="action" visible="eq(-4,true) + eq(-3,0)" option="close" action="RunScript($CWD/resources/selector.py,'usersel')"/>
+ <setting id="lsep2" label="32010" type="lsep" enable="false" />
+ <setting id="selectrandos" label="32011" type="action" option="close" action="RunScript($CWD/resources/selector.py,'rando')"/>
+ <setting id="lsep3" label="" type="lsep" enable="false" />
+ <setting id="maintainsmartplaylist" type="bool" label="32093" default="false"/>
+ <setting id="startup" type="bool" label="32253" default="true"/>
+ <!-- gap -->
+ </category>
+ <category label="32030">
+ <setting id="length" label="32031" type="slider" default="5" range="1,1,50" option="int" />
+ <setting id="multipleshows" type="bool" label="32032" default="false"/>
+ <setting id="premieres" type="bool" label="32033" default="false"/>
+ <setting id="resume_partials" type="bool" label="32034" default="false"/>
+ <setting id="start_partials" type="bool" label="32044" default="false"/>
+ <setting id="notify" type="bool" label="32035" default="true"/>
+ <setting id="movies" type="bool" label="32036" default="false"/>
+ <setting id="moviesw" type="bool" label="32037" default="false"/>
+ <setting id="moviemid" type="bool" label="32038" enable="eq(-1,true)" subsetting="true" default="false"/>
+ <setting type="lsep" label="32039" enable="false"/>
+ <setting id="movieweight" type="slider" label="32040" enable="eq(-3,true)|eq(-4,true)" option='float' range="0,0.1,1" default="1.0"/>
+ <setting type="lsep" label="32041" enable="false"/>
+ <setting type="lsep" label="32042" enable="false"/>
+ <setting id="noshow" type="bool" label="32043" enable="eq(-6,true)|eq(-7,true)" default="false"/>
+ <!-- gap -->
+ </category>
+ <category label="32060">
+ <setting id="skinorno" type="enum" label="32072" lvalues="32073|32074|32075" default="0"/>
+ <setting id="skin_return" type="bool" label="32076" default="true"/>
+ <!--setting id="skinorno" type="bool" label="32072" default="true"/-->
+ <setting id="limitshows" type="bool" label="32061" default="false"/>
+ <setting id="window_length" label="32062" enable="eq(-1,true)" type="slider" default="10" range="1,1,30" option="int" />
+ <setting type="lsep" label="32063" enable="false"/>
+ <setting id="sort_by" type="enum" label="32070" lvalues="32064|32065|32066|32067|32068" default="32065"/>
+ <setting id="sort_reverse" type="bool" label="32071" default="false"/>
+ <setting id="excl_randos" type="bool" label="32251" default="false"/>
+ <!-- gap -->
+ </category>
+ <category label="32080">
+ <setting id="nextprompt" type="bool" label="32081" default="true"/>
+ <setting id="promptduration" label="32082" type="slider" enable="eq(-1,true)" subsetting="true" default="20" range="0,5,60" option="int" />
+ <setting id="promptdefaultaction" type="enum" label="32090" enable="eq(-2,true)" lvalues="32091|32092" default="32091"/>
+ <setting id="nextprompt_or" type="bool" label="32252" enable="eq(-3,true)" default="false"/>
+ <setting id="prevcheck" type="bool" label="32083" default="false"/>
+ <setting type="lsep" label="32084" enable="false"/>
+ 
+
+ <setting type="lsep" label=""/>
+ <setting id="logging" type="bool" label="32085" default="true"/>
+ <setting type="lsep" label="32086" enable="false"/>
+ <setting type="action" label="32087" option="close" action="RunScript($CWD/resources/clone.py)"/>
+ <setting type="lsep" label="" enable="false"/>
+ <setting type="action" label="32094" option="close" action="RunScript($CWD/resources/episode_exporter.py)"/>
+
+ <setting id="first_run" type="bool" default="true" visible="false"/>
+ <setting id="users_spl" type="text" visible="false" default='none'/>
+ <setting id="randos" type="text" visible="false" default='none'/>
+ <setting id="selection" type="text" visible="false" default='none'/>
+ <!-- gap -->
+ </category>
 </settings>

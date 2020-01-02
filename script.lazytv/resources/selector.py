@@ -60,6 +60,19 @@ def lang(id):
     return san
 
 
+
+def stringlist_to_reallist(string, integers=True):
+    # this is needed because ast.literal_eval gives me EOF errors for no obvious reason
+    real_string = string.replace("[", "").replace("]", "").replace(" ", "").split(",")
+    if not integers:
+        return real_string
+    else:
+        try:
+            return [int(x) for x in real_string]
+        except ValueError:
+            return []
+
+    
 def json_query(query, ret):
     try:
         xbmc_request = json.dumps(query)
@@ -69,7 +82,7 @@ def json_query(query, ret):
             return json.loads(result)["result"]
         else:
             return json.loads(result)
-    except:
+    except Exception:
         xbmc_request = json.dumps(query)
         result = xbmc.executeJSONRPC(xbmc_request)
         result = result.encode("utf-8", errors="ignore").decode("utf-8", errors="ignore")
@@ -197,10 +210,11 @@ def selection_func():
 
     try:
         if list_type == 7:
-            current_list = ast.literal_eval(_setting_("randos"))
+            current_list = stringlist_to_reallist(_setting_("randos"))
         else:
-            current_list = ast.literal_eval(_setting_("selection"))
-    except:
+            current_list = stringlist_to_reallist(_setting_("selection"))
+    except Exception:
+        log('Exception when obtaining current_list. list_type: ' + str(list_type))
         current_list = []
 
     # current_list is the list of items that are currently ignored

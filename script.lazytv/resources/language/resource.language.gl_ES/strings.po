@@ -176,7 +176,7 @@ msgctxt "#32068"
 msgid "Season"
 msgstr "Tempada"
 
-msgctxt "#32069"
+msgctxt "#32251"
 msgid "Exclude random play shows"
 msgstr "Excluír series de reprodución ó chou"
 

@@ -50,10 +50,18 @@ base_time = time.time()
 
 WINDOW = xbmcgui.Window(10000)
 
-try:
-    spec_shows = ast.literal_eval(__setting__("selection"))
-except:
-    spec_shows = []
+
+
+def stringlist_to_reallist(string, integers=True):
+    # this is needed because ast.literal_eval gives me EOF errors for no obvious reason
+    real_string = string.replace("[", "").replace("]", "").replace(" ", "").split(",")
+    if not integers:
+        return real_string
+    else:
+        try:
+            return [int(x) for x in real_string]
+        except ValueError:
+            return []
 
 
 def lang(id):
@@ -93,7 +101,7 @@ def json_query(query, ret):
             return json.loads(result)["result"]
         else:
             return json.loads(result)
-    except:
+    except Exception:
         return {}
 
 
@@ -105,7 +113,7 @@ def get_files():
         provided_shows = sys.argv[1].split(":-exporter-:")
         return provided_shows
 
-    except:
+    except Exception:
 
         if filterYN:
 
@@ -218,7 +226,7 @@ def get_TVshows():
     nepl_from_service = WINDOW.getProperty("LazyTV.nepl")
 
     if nepl_from_service:
-        p = ast.literal_eval(nepl_from_service)
+        p = stringlist_to_reallist(nepl_from_service)
         nepl_stored = [int(x) for x in p]
     else:
         dialog.ok("LazyTV", lang(32115), lang(32116))
@@ -234,6 +242,11 @@ def get_TVshows():
 
 
 def Main():
+        
+    try:
+        spec_shows = stringlist_to_reallist(__setting__("selection"))
+    except Exception:
+        spec_shows = []
 
     # open location selection window
     location = dialog.browse(3, lang(32180), "files")
@@ -255,7 +268,7 @@ def Main():
     for f in file_list:
         try:
             sizes.append(os.path.getsize(f))
-        except:
+        except Exception:
             sizes.append(0)
 
     failures = []
@@ -285,7 +298,7 @@ def Main():
                 log("file exported: " + str(fn))
             else:
                 log("file already exists at location: " + str(fn))
-        except:
+        except Exception:
             failures.append(fn)
             log("file failed to export: " + str(fn))
 
