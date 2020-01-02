@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+ <!-- gap -->
+ <category label="32000">
+ <setting id="lsep0" label="32001" type="lsep" enable="false"/>
+ <setting id="primary_function" label="" type="enum" lvalues="32002|32003|32004"/>
+ <setting id="sep1" type="sep" enable="false"/>
+ <setting id="filterYN" label="32012" type="bool" default="false"/>
+ <setting id="populate_by_d" label="32013" type="enum" visible="eq(-1,true)" lvalues="32014|32015"/>
+ <setting id="select_pl" label="32006" type="enum" visible="eq(-2,true) + eq(-1,1)" lvalues="32007|32008"/>
+ <setting id="file" label="32009" type="action" visible="eq(-3,true) + eq(-2,1) + eq(-1,1)" option="close" action="RunScript($CWD/resources/playlists.py)"/>
+ <setting id="selectshows" label="32016" type="action" visible="eq(-4,true) + eq(-3,0)" option="close" action="RunScript($CWD/resources/selector.py,'usersel')"/>
+ <!-- gap -->
+ </category>
+ <category label="32030">
+ <setting id="length" label="32031" type="slider" default="5" range="1,1,50" option="int" />
+ <setting id="multipleshows" type="bool" label="32032" default="false"/>
+ <setting id="premieres" type="bool" label="32033" default="false"/>
+ <setting id="start_partials" type="bool" label="32044" default="false"/>
+ <setting id="movies" type="bool" label="32036" default="false"/>
+ <setting id="moviesw" type="bool" label="32037" default="false"/>
+ <setting id="moviemid" type="bool" label="32038" enable="eq(-1,true)" subsetting="true" default="false"/>
+ <setting type="lsep" label="32039" enable="false"/>
+ <setting id="movieweight" type="slider" label="32040" enable="eq(-3,true)|eq(-4,true)" option='float' range="0,0.1,1" default="1.0"/>
+ <setting type="lsep" label="32041" enable="false"/>
+ <setting type="lsep" label="32042" enable="false"/>
+ <setting id="noshow" type="bool" label="32043" enable="eq(-6,true)|eq(-7,true)" default="false"/>
+ <!-- gap -->
+ </category>
+ <category label="32060">
+ <setting id="skinorno" type="enum" label="32072" lvalues="32073|32074|32075" default="0"/>
+ <setting id="skin_return" type="bool" label="32076" default="true"/>
+ <setting id="limitshows" type="bool" label="32061" default="false"/>
+ <setting id="window_length" label="32062" enable="eq(-1,true)" type="slider" default="10" range="1,1,30" option="int" />
+ <setting type="lsep" label="32063" enable="false"/>
+ <setting id="sort_by" type="enum" label="32070" lvalues="32064|32065|32066|32067|32068" default="32065"/>
+ <setting id="sort_reverse" type="bool" label="32071" default="false"/>
+ <setting id="excl_randos" type="bool" label="32069 " default="false"/>
+ <!-- gap -->
+ </category>
+ <category label="32080">
+ <setting type="lsep" label=""/>
+ <setting id="logging" type="bool" label="32085" default="true"/>
+ <setting type="lsep" label="" enable="false"/>
+ <setting type="action" label="32094" option="close" action="RunScript($CWD/resources/episode_exporter.py)"/>
+
+ <setting id="first_run" type="bool" default="true" visible="false"/>
+ <setting id="users_spl" type="text" visible="false" default='none'/>
+ <setting id="randos" type="text" visible="false" default='none'/>
+ <setting id="selection" type="text" visible="false" default='none'/>
+ <!-- gap -->
+ </category>
+</settings>

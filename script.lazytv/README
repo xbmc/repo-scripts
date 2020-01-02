@@ -1,0 +1,24 @@
+You have a huge library of TV shows and you havent viewed half of it. So why does it feel like such a chore to sit down and watch something?
+
+You know you want to watch TV, so why do you also have to decide what specifically to watch?
+
+LazyTV is here to free you from your battles with indecision, instead letting you lean back and soak up content.
+With one click you can be channel-surfing your own library, or have what you probably want to watch pop up in a single window.
+
+Unlike a smart playlist or skin widget, LazyTV doesnt just provide the first unwatched episode of a TV show. It provides the first unwatched episode AFTER the last watched one in your library. A small, but important, distinction.
+
+LazyTV offers two main functions:
+The first creates and launches a randomised playlist of the TV episodes. And not just any episodes, but the next episode it thinks you would want to watch. You also have the option to blend in your movies (both the watched and the unwatched) to complete the channel-surfing experience.
+The second main function populates a window with the next available episode for each of your TV Shows. One click and your viewing menu is there, immediately.
+
+Combine either of the main functions with a playlist of preselected shows to customise your experience even further.
+Some TV shows, like cartoons or skit shows, can be viewed out of episodic order. So LazyTV gives you the ability to identify these shows and treat them differently. Those shows will be played in a random order.
+
+LazyTV also offers two minor functions that extend beyond the addon itself:
+The first is an option to be notified if you are about to watch an episode that has an unwatched episode before it. This function excludes the TV shows identified as able to be watched out of order.
+The second option posts a notification when you finish watching a TV episode telling you that the next show is available and asks if you want to view it now.
+
+
+LazyTV contains a service that stores the next episodes' information and monitors your player to pre-empt database changes. This is my attempt to make the addon more responsive on my Raspberry Pi. The Pi still takes a while to "warm-up"; a full refresh of the episode data (which occurs at start-up and on a library update) takes about 30 seconds for my ~100 show library*. However, the show list window opens and the random player starts in less than 2 seconds.
+
+*The same update takes 2 seconds on my laptop with its i5 processor.
