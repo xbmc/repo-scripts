@@ -1,0 +1,93 @@
+# XBMC Media Center language file
+# Addon Name: LazyTV
+# Addon id: script.lazytv
+# Addon Provider: KodeKarnage
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: Hungarian (http://www.transifex.com/projects/p/xbmc-addons/language/hu/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: hu\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#32002"
+msgid "Produce a list of 'next episodes' for each TV series"
+msgstr "Minden Sorozat 'következő részek' listájának létrehozása"
+
+msgctxt "#32003"
+msgid "Create and launch randomised playlist"
+msgstr "Véletlenszerű lejátszási sor létrehozása és elindítása"
+
+msgctxt "#32004"
+msgid "Let me choose on launch"
+msgstr "Kiválasztása indításkor"
+
+msgctxt "#32007"
+msgid "Let me choose on launch"
+msgstr "Kiválasztása indításkor"
+
+msgctxt "#32031"
+msgid "Number of shows in playlist"
+msgstr "A lejátszási listában szereplő sorozatok száma"
+
+msgctxt "#32032"
+msgid "Allow multiple episodes of same TV Show"
+msgstr "Egy sorozaton belül több ugyanolyan epizód engedélyezése"
+
+msgctxt "#32033"
+msgid "Include episodes from unwatched TV series"
+msgstr "Nézetlen sorozatokból az epizódok megjelenítése"
+
+msgctxt "#32064"
+msgid "Show Name"
+msgstr "Név mutatása"
+
+msgctxt "#32068"
+msgid "Season"
+msgstr "Évad"
+
+msgctxt "#32092"
+msgid "Play"
+msgstr "Lejátszás"
+
+msgctxt "#32100"
+msgid "This addon finds the next episode in each TV show."
+msgstr "Ez a kiegészítő megtalálja a sorozatok következő epizódját."
+
+msgctxt "#32101"
+msgid "Do you want a list or a randomised playlist?"
+msgstr "Lista vagy véletlenszerű lejátszási lista?"
+
+msgctxt "#32102"
+msgid "Show me"
+msgstr "Sorozatok nekem"
+
+msgctxt "#32103"
+msgid "Surprise me"
+msgstr "Lepj meg"
+
+msgctxt "#32105"
+msgid "Close"
+msgstr "Kilépés"
+
+msgctxt "#32170"
+msgid "Save"
+msgstr "Mentés"
+
+msgctxt "#32220"
+msgid "Season"
+msgstr "Évad"
+
+msgctxt "#32221"
+msgid "Episode"
+msgstr "Epizód"
+
+msgctxt "#32224"
+msgid "Watched"
+msgstr "Megnézett"
