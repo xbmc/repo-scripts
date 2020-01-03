@@ -29,27 +29,3 @@ msgstr ""
 msgctxt "#32004"
 msgid "Addon`s local cache was cleared successfully"
 msgstr ""
-
-msgctxt "#32005"
-msgid "Email"
-msgstr ""
-
-msgctxt "#32006"
-msgid "Password"
-msgstr ""
-
-msgctxt "#32007"
-msgid "Login Details"
-msgstr ""
-
-msgctxt "#32008"
-msgid "Check login details"
-msgstr ""
-
-msgctxt "#32009"
-msgid "Wrong email or password"
-msgstr ""
-
-msgctxt "#32010"
-msgid "Logged in successfully"
-msgstr ""

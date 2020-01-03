@@ -3,5 +3,6 @@
     <category label="32002">
         <setting type="action" label="32003" action="RunScript(service.subtitles.wizdom, 1,action=clean)"/>
 		<setting id="Debug" label="Debug" type="bool" default="false" />
+		<setting id="uploadAP" label="AP Upload Subtitles" type="bool" default="false" />
     </category>
 </settings>

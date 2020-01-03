@@ -29,27 +29,3 @@ msgstr "אפס את נתוני הקאש של התוסף"
 msgctxt "#32004"
 msgid "Addon`s local cache was cleared successfully"
 msgstr "נתוני הקאש של התוסף אופסו בהצלחה"
-
-msgctxt "#32005"
-msgid "Email"
-msgstr "אימייל"
-
-msgctxt "#32006"
-msgid "Password"
-msgstr "סיסמא"
-
-msgctxt "#32007"
-msgid "Login Details"
-msgstr "פרטי התחברות"
-
-msgctxt "#32008"
-msgid "Check login details"
-msgstr "בדוק פרטי התחברות"
-
-msgctxt "#32009"
-msgid "Wrong email or password"
-msgstr "הזנת פרטי התחברות שגויים"
-
-msgctxt "#32010"
-msgid "Logged in successfully"
-msgstr "התחברת בהצלחה"
