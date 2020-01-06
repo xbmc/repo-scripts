@@ -1,3 +1,6 @@
+v5.7.4
+- fix osd would interfere with getlines
+
 v5.7.3
 - fix music163 error
 
