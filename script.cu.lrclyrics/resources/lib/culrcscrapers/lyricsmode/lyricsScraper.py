@@ -15,6 +15,8 @@ class LyricsFetcher:
         log('%s: searching lyrics for %s - %s' % (__title__, song.artist, song.title))
         lyrics = Lyrics()
         lyrics.song = song
+        lyrics.source = __title__
+        lyrics.lrc = __lrc__
         artist = deAccent(song.artist)
         title = deAccent(song.title)
         url = 'http://www.lyricsmode.com/lyrics/%s/%s/%s.html' % (artist.lower()[:1], artist.lower().replace('&','and').replace(' ','_'), title.lower().replace('&','and').replace(' ','_'))

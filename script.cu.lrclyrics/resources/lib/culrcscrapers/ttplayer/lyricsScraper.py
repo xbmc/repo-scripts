@@ -121,7 +121,6 @@ class LyricsFetcher:
         lyrics.song = song
         lyrics.source = __title__
         lyrics.lrc = __lrc__
-
         artist = song.artist
         title = song.title
         # replace ampersands and the like

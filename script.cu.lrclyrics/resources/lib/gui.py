@@ -459,6 +459,7 @@ class GUI(xbmcgui.WindowXMLDialog):
         self.timer = None
         self.allowtimer = True
         self.refreshing = False
+        self.blockOSD = False
         self.controlId = -1
         self.pOverlay = []
         self.scroll_line = int(self.get_page_lines() / 2)
@@ -466,12 +467,21 @@ class GUI(xbmcgui.WindowXMLDialog):
         self.selecteditem = 0
 
     def get_page_lines(self):
+        # we need to close the OSD else we can't get control 110
+        self.blockOSD = True
+        if xbmc.getCondVisibility('Window.IsVisible(musicosd)'):
+            xbmc.executebuiltin('Dialog.Close(musicosd,true)')
         self.text.setVisible(False)
-        listitem = xbmcgui.ListItem(offscreen=True)
-        while xbmc.getInfoLabel('Container(110).NumPages') != '2':
-            self.getControl(110).addItem(listitem)
+        # numpages returns a string, make sure it's not empty
+        while xbmc.getInfoLabel('Container(110).NumPages') and (int(xbmc.getInfoLabel('Container(110).NumPages')) < 2) and (not self.Monitor.abortRequested()):
+            listitem = xbmcgui.ListItem(offscreen=True)
+            self.text.addItem(listitem)
             xbmc.sleep(50)
+        # xbmc quits, close the gui 
+        if self.Monitor.abortRequested():
+            self.exit_gui('quit')
         lines = self.text.size() - 1
+        self.blockOSD = False
         return lines
 
     def refresh(self):
@@ -722,7 +732,8 @@ class GUI(xbmcgui.WindowXMLDialog):
         elif (actionId == 101) or (actionId == 117): # ACTION_MOUSE_RIGHT_CLICK / ACTION_CONTEXT_MENU
             self.context_menu()
         elif (actionId in ACTION_OSD):
-            xbmc.executebuiltin('ActivateWindow(10120)')
+            if not self.blockOSD:
+                xbmc.executebuiltin('ActivateWindow(10120)')
         elif (actionId in ACTION_CODEC):
             xbmc.executebuiltin('Action(PlayerProcessInfo)')
 
