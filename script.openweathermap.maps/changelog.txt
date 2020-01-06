@@ -1,3 +1,6 @@
+v1.0.2
+- fix streetmaps
+
 v1.0.1
 - bump
 

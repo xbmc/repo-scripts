@@ -63,20 +63,18 @@ class Main:
         tag = md5.hexdigest()
         streetthread_created = False
         stamp = int(time.time())
-        street_url = 'http://c.tile.openstreetmap.org/{}/{}/{}.png?appid={}'
+        street_url = 'http://tile.openstreetmap.org/{}/{}/{}.png?appid={}'
         precip_url = 'http://tile.openweathermap.org/map/precipitation/{}/{}/{}.png?appid={}'
         clouds_url = 'http://tile.openweathermap.org/map/clouds/{}/{}/{}.png?appid={}'
         temp_url = 'http://tile.openweathermap.org/map/temp/{}/{}/{}.png?appid={}'
         wind_url = 'http://tile.openweathermap.org/map/wind/{}/{}/{}.png?appid={}'
         pressure_url = 'http://tile.openweathermap.org/map/pressure/{}/{}/{}.png?appid={}'
-        pressurecntr_url = 'http://undefined.tile.openweathermap.org/map/pressure_cntr/{}/{}/{}.png?appid{}'
         streetmapdir = os.path.join(PROFILE, 'maps', 'streetmap-%s' % tag, '')
         precipmapdir = os.path.join(PROFILE, 'maps', 'precipmap', '')
         cloudsmapdir = os.path.join(PROFILE, 'maps', 'cloudsmap', '')
         tempmapdir = os.path.join(PROFILE, 'maps', 'tempmap', '')
         windmapdir = os.path.join(PROFILE, 'maps', 'windmap', '')
         pressuremapdir = os.path.join(PROFILE, 'maps', 'pressuremap', '')
-        pressurecntrmapdir = os.path.join(PROFILE, 'maps', 'pressurecntrmap', '')
         lat = float(lat)
         lon = float(lon)
         x, y = GET_TILE(lat, lon, zoom)
@@ -102,8 +100,6 @@ class Main:
             shutil.rmtree(windmapdir)
         if xbmcvfs.exists(pressuremapdir):
             shutil.rmtree(pressuremapdir)
-        if xbmcvfs.exists(pressurecntrmapdir):
-            shutil.rmtree(pressurecntrmapdir)
         if xbmcvfs.exists(streetmapdir) and not xbmcvfs.exists(os.path.join(streetmapdir, 'streetmap.png')):
             # we have an incomplete streetmap
             shutil.rmtree(streetmapdir)
@@ -134,10 +130,6 @@ class Main:
             xbmcvfs.mkdirs(pressuremapdir)
         thread_pressure = get_tiles(pressuremapdir, 'pressuremap-%s.png', zoom, stamp, imgs, pressure_url, api)
         thread_pressure.start()
-        if not xbmcvfs.exists(pressurecntrmapdir):
-            xbmcvfs.mkdirs(pressurecntrmapdir)
-        thread_pressurecntr = get_tiles(pressurecntrmapdir, 'pressurecntrmap-%s.png', zoom, stamp, imgs, pressurecntr_url, api)
-        thread_pressurecntr.start()
         if streetthread_created:
             thread_street.join()
         thread_precip.join()
@@ -145,14 +137,7 @@ class Main:
         thread_temp.join()
         thread_wind.join()
         thread_pressure.join()
-        thread_pressurecntr.join()
         psmap = os.path.join(PROFILE, 'maps', 'pressuremap', 'pressuremap-%s.png' % stamp)
-        pscntrmap = os.path.join(PROFILE, 'maps', 'pressurecntrmap', 'pressurecntrmap-%s.png' % stamp)
-        if xbmcvfs.exists(psmap) and xbmcvfs.exists(pscntrmap):
-            background = Image.open(psmap)
-            foreground = Image.open(pscntrmap)
-            background.paste(foreground, (0, 0), foreground)
-            background.save(psmap)
         set_property('Map.1.Area', os.path.join(PROFILE, 'maps', 'streetmap-%s' % tag, 'streetmap.png'))
         set_property('Map.2.Area', os.path.join(PROFILE, 'maps', 'streetmap-%s' % tag, 'streetmap.png'))
         set_property('Map.3.Area', os.path.join(PROFILE, 'maps', 'streetmap-%s' % tag, 'streetmap.png'))
@@ -196,6 +181,7 @@ class get_tiles(threading.Thread):
         self.url = url
         self.api = api
         self.loop = 0
+        self.useragent = '%s/%s (+https://forum.kodi.tv/showthread.php?tid=207110)' % (ADDONID, ADDONVERSION)
         threading.Thread.__init__(self)
  
     def run(self):
@@ -206,9 +192,13 @@ class get_tiles(threading.Thread):
         count = 1
         failed = []
         for img in imgs:
+            self.retry = False
             data = b''
             query = self.url.format(zoom, img[0], img[1], api)
-            response = requests.get(query, timeout=5)
+            try:
+                response = requests.get(query, headers={'User-Agent': self.useragent}, timeout=5)
+            except:
+                self.retry = True
             if response.status_code == 401:
                 log('401 Unauthorized', DEBUG)
                 return
@@ -227,6 +217,8 @@ class get_tiles(threading.Thread):
                     log('failed to save image', DEBUG)
                     return
             else:
+                self.retry = True
+            if self.retry:
                 log('failed to connect, retry', DEBUG)
                 data = []
                 if len(img) == 2:
