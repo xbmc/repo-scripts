@@ -31,6 +31,8 @@
         <setting id="theaudiodb" type="bool" label="32102" default="false" />
         <setting id="theaudiodb_all" type="bool" label="32108" visible="eq(-1,true)" default="false" />
         <setting id="theaudiodb_donated" type="bool" label="32110" visible="eq(-2,true)" default="false" />
+        <setting id="download_notification" type="bool" label="32142" visible="eq(-7,true) || eq(-3,true)" default="false" />
+        <setting id="dn_download_only" type="bool" label="32143" visible="eq(-8,true) | eq(-4,true)" default="false" />
     </category>
     <category label="32003">
         <setting id="ai_theaudiodb" type="bool" label="32103" default="false" />
@@ -54,7 +56,11 @@
     <category label="32006">
         <setting id="storage_target" type="enum" label="32128" default="0" lvalues="32131|32132|32133" />
         <setting id="illegal_replace" type="text" label=" 32129" default="_" />
-        <setting id="end_replace" type="text" label="32130" default="" visible="eq(-2,0)" />		
+        <setting id="end_replace" type="text" label="32130" default="" visible="eq(-2,0)" />
+        <setting id="slideshow_sleep" type="slider" label="32141" default="1" range='1,1,3' option='int' />
+        <setting id="main_sleep" type="slider" label="32139" default="1" range='1,1,3' option='int' />
+        <setting id="main_idle_sleep" type="slider" label="32140" default="10" range='5,1,30' option='int' />
+        <setting id="agressive_stream_search" type="bool" label="32144" default="false" />
         <setting id="logging" type="bool" label="32119" default="false" />
         <setting type="sep" />
         <setting label="32134" type="action" action="RunScript(script.artistslideshow, movetokodistorage=True)" />

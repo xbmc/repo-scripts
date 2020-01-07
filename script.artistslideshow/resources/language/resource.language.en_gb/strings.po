@@ -202,8 +202,31 @@ msgctxt "#32138"
 msgid "Fade to black during change in artists"
 msgstr ""
 
+msgctxt "#32139"
+msgid "Main thread sleep time (in seconds)"
+msgstr ""
 
-# empty strings from id 32139 to 32199
+msgctxt "#32140"
+msgid "Main thread idle sleep time (in seconds)"
+msgstr ""
+
+msgctxt "#32141"
+msgid "Slideshow thread sleep time (in seconds)"
+msgstr ""
+
+msgctxt "#32142"
+msgid "Show notification during image downloads"
+msgstr ""
+
+msgctxt "#32143"
+msgid "- Only show notification if there are images to download"
+msgstr ""
+
+msgctxt "#32144"
+msgid "Use more agressive artist search for streams"
+msgstr ""
+
+# empty strings from id 32145 to 32199
 
 # Dialog headings
 
@@ -223,14 +246,21 @@ msgctxt "#32203"
 msgid "Progress"
 msgstr ""
 
-# empty strings from id 32204 to 32299
+msgctxt "#32204"
+msgid "Downloading"
+msgstr ""
+
+msgctxt "#32205"
+msgid "Download Complete"
+msgstr ""
+
+# empty strings from id 32206 to 32299
 
 # Dialog texts
 
 msgctxt "#32300"
 msgid "This will move and rename your image files and cannot be undone. Are you sure you want to do this?"
 msgstr ""
-
 
 msgctxt "#32301"
 msgid "Unable to retrieve path to Kodi music artist image storage. Please check Settings > Media > Music and ensure the Artist Information Folder is set."
@@ -256,8 +286,19 @@ msgctxt "#32306"
 msgid "Image move complete. You may now change the Artist Slideshow storage location to Kodi artist information folder."
 msgstr ""
 
+msgctxt "#32307"
+msgid "Downloading new artist images"
+msgstr ""
 
-# empty strings from id 32307 to 32900
+msgctxt "#32308"
+msgid "artist images downloaded"
+msgstr ""
+
+msgctxt "#32309"
+msgid "artist image downloaded"
+msgstr ""
+
+# empty strings from id 32310 to 32900
 
 # Languages
 

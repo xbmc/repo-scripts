@@ -2,7 +2,7 @@
 
 import os
 import defusedxml.ElementTree as _xmltree
-from resources.common.fileops import readFile, checkPath
+from resources.lib.fileops import readFile, checkPath
 from kodi_six.utils import py2_encode, py2_decode
 
 
