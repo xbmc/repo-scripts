@@ -6,9 +6,9 @@
 """Classes for defining the appearance of PyXBMCt Windows and Controls"""
 
 from __future__ import unicode_literals
-from future.utils import with_metaclass
 import os
 from abc import ABCMeta, abstractmethod
+from six import with_metaclass
 import xbmc
 from xbmcaddon import Addon
 
