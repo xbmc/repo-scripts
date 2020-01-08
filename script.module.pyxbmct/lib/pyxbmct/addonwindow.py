@@ -11,8 +11,8 @@ This module contains all classes and constants of PyXBMCt framework
 """
 
 from __future__ import absolute_import, division, unicode_literals
-from future.builtins import range
 import os
+from six.moves import range
 from kodi_six import xbmc, xbmcgui
 from .addonskin import Skin
 
@@ -842,7 +842,7 @@ class DialogWindowMixin(xbmcgui.WindowDialog):
             self._executeConnected(control, self.controls_connected)
 
 
-class BlankFullWindow(FullWindowMixin, AbstractWindow):
+class BlankFullWindow(AbstractWindow, FullWindowMixin):
     """
     BlankFullWindow()
 
@@ -855,7 +855,7 @@ class BlankFullWindow(FullWindowMixin, AbstractWindow):
     pass
 
 
-class BlankDialogWindow(DialogWindowMixin, AbstractWindow):
+class BlankDialogWindow(AbstractWindow, DialogWindowMixin):
     """
     BlankDialogWindow()
 
@@ -868,7 +868,7 @@ class BlankDialogWindow(DialogWindowMixin, AbstractWindow):
     pass
 
 
-class AddonFullWindow(FullWindowMixin, AddonWindow):
+class AddonFullWindow(AddonWindow, FullWindowMixin):
 
     """
     AddonFullWindow(title='')
@@ -912,7 +912,7 @@ class AddonFullWindow(FullWindowMixin, AddonWindow):
         self.main_bg.setImage(image)
 
 
-class AddonDialogWindow(DialogWindowMixin, AddonWindow):
+class AddonDialogWindow(AddonWindow, DialogWindowMixin):
     """
     AddonDialogWindow(title='')
 
