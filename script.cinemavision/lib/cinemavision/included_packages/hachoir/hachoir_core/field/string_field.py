@@ -231,7 +231,7 @@ class GenericString(Bytes):
         # Try to convert to Unicode
         try:
             return unicode(text, self._charset, "strict")
-        except UnicodeDecodeError, err:
+        except UnicodeDecodeError as err:
             pass
 
         #--- Conversion error ---
@@ -245,7 +245,7 @@ class GenericString(Bytes):
                 text = unicode(text+"\0", self._charset, "strict")
                 self.warning("Fix truncated %s string: add missing nul byte" % self._charset)
                 return text
-            except UnicodeDecodeError, err:
+            except UnicodeDecodeError as err:
                 pass
 
         # On error, use FALLBACK_CHARSET

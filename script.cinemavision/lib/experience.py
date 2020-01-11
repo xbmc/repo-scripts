@@ -459,6 +459,7 @@ class ExperiencePlayer(xbmc.Player):
     PLAYING_DUMMY_NEXT = -1
     PLAYING_DUMMY_PREV = -2
     PLAYING_MUSIC = -10
+    MUSIC_STOPPED = -20
 
     DUMMY_FILE_PREV = 'script.cinemavision.dummy_PREV.mpeg'
     DUMMY_FILE_NEXT = 'script.cinemavision.dummy_NEXT.mpeg'
@@ -470,7 +471,7 @@ class ExperiencePlayer(xbmc.Player):
         self.fakeFilePrev = os.path.join(kodiutil.ADDON_PATH, 'resources', 'videos', self.DUMMY_FILE_PREV)
         self.fakeFileNext = os.path.join(kodiutil.ADDON_PATH, 'resources', 'videos', self.DUMMY_FILE_NEXT)
         self.featureStub = os.path.join(kodiutil.ADDON_PATH, 'resources', 'videos', 'script.cinemavision.feature_stub.mp4')
-        self.playStatus = 0
+        self.playStatus = self.NOT_PLAYING
         self.hasFullscreened = False
         self.loadActions()
         self.init()
@@ -483,8 +484,11 @@ class ExperiencePlayer(xbmc.Player):
                 return True
         return False
 
+    def setPlayStatus(self, status):
+        self.playStatus = status
+
     def doPlay(self, item, listitem=None, windowed=None, startpos=None):
-        self.playStatus = self.NOT_PLAYING
+        self.setPlayStatus(self.NOT_PLAYING)
         self.play(item)
 
     # PLAYER EVENTS
@@ -493,13 +497,14 @@ class ExperiencePlayer(xbmc.Player):
         if self.playStatus != self.PLAYING_MUSIC:
             self.volume.restore()
 
-        if self.playStatus == self.PLAYING_MUSIC:
+        if self.playStatus == self.PLAYING_MUSIC or self.playStatus == self.MUSIC_STOPPED:
+            self.setPlayStatus(self.NOT_PLAYING)
             self.log('MUSIC ENDED')
             return
         elif self.playStatus == self.NOT_PLAYING:
             return self.onPlayBackFailed()
 
-        self.playStatus = self.NOT_PLAYING
+        self.setPlayStatus(self.NOT_PLAYING)
 
         if self.playlist.getposition() != -1:
             DEBUG_LOG('PLAYBACK ENDED')
@@ -533,14 +538,15 @@ class ExperiencePlayer(xbmc.Player):
             DEBUG_LOG('MUSIC STARTED')
             return
 
-        self.playStatus = time.time()
+        self.setPlayStatus(time.time())
+
         if self.DUMMY_FILE_PREV in self.getPlayingFile():
-            self.playStatus = self.PLAYING_DUMMY_PREV
+            self.setPlayStatus(self.PLAYING_DUMMY_PREV)
             kodiutil.DEBUG_LOG('Stopping for PREV dummy')
             self.stop()
             return
         elif self.DUMMY_FILE_NEXT in self.getPlayingFile():
-            self.playStatus = self.PLAYING_DUMMY_NEXT
+            self.setPlayStatus(self.PLAYING_DUMMY_NEXT)
             kodiutil.DEBUG_LOG('Stopping for NEXT dummy')
             self.stop()
             return
@@ -554,29 +560,30 @@ class ExperiencePlayer(xbmc.Player):
         if self.playStatus != self.PLAYING_MUSIC:
             self.volume.restore()
 
-        if self.playStatus == self.PLAYING_MUSIC:
+        if self.playStatus == self.PLAYING_MUSIC or self.playStatus == self.MUSIC_STOPPED:
+            self.setPlayStatus(self.NOT_PLAYING)
             DEBUG_LOG('MUSIC STOPPED')
             return
         elif self.playStatus == self.NOT_PLAYING:
             return self.onPlayBackFailed()
         elif self.playStatus == self.PLAYING_DUMMY_NEXT:
-            self.playStatus = self.NOT_PLAYING
+            self.setPlayStatus(self.NOT_PLAYING)
             DEBUG_LOG('PLAYBACK INTERRUPTED')
             self.next()
             return
         elif self.playStatus == self.PLAYING_DUMMY_PREV:
-            self.playStatus = self.NOT_PLAYING
+            self.setPlayStatus(self.NOT_PLAYING)
             DEBUG_LOG('SKIP BACK')
             self.next(prev=True)
             return
 
-        self.playStatus = self.NOT_PLAYING
+        self.setPlayStatus(self.NOT_PLAYING)
         DEBUG_LOG('PLAYBACK STOPPED')
         self.abort()
 
     @requiresStart
     def onPlayBackFailed(self):
-        self.playStatus = self.NOT_PLAYING
+        self.setPlayStatus(self.NOT_PLAYING)
         DEBUG_LOG('PLAYBACK FAILED')
         self.next()
 
@@ -744,6 +751,17 @@ class ExperiencePlayer(xbmc.Player):
 
         self.features = []
 
+        feature = self.featureFromId(movieid, episodeid)
+        if feature:
+            self.features.append(feature)
+
+        if not self.features:
+            return False
+
+        return True
+
+
+    def featureFromId(self, movieid=None, episodeid=None):
         if movieid:
             for movieid in str(movieid).split('|'):  # ID could be int or \ seperated int string
                 movieid = kodiutil.intOrZero(movieid)
@@ -756,8 +774,7 @@ class ExperiencePlayer(xbmc.Player):
                 )['moviedetails']
                 r['type'] = 'movie'
 
-                feature = self.featureFromJSON(r)
-                self.features.append(feature)
+                return self.featureFromJSON(r)
         elif episodeid:
             for episodeid in str(episodeid).split('|'):  # ID could be int or \ seperated int string
                 episodeid = kodiutil.intOrZero(episodeid)
@@ -769,13 +786,9 @@ class ExperiencePlayer(xbmc.Player):
                     properties=['file', 'streamdetails', 'title', 'thumbnail', 'runtime']
                 )['episodedetails']
                 r['type'] = 'tvshow'
-                feature = self.featureFromJSON(r)
-                self.features.append(feature)
+                return self.featureFromJSON(r)
 
-        if not self.features:
-            return False
-
-        return True
+        return None
 
     def addDBFeature(self, dbtype, dbid):
         return self.addFromID(dbtype=dbtype, dbid=dbid)
@@ -870,16 +883,21 @@ class ExperiencePlayer(xbmc.Player):
         if volume != 100:
             self.volume.set(volume, relative=True)
 
-        self.playlist.add(self.fakeFilePrev)
         if features:
+            rpc.Playlist.Add(playlistid=xbmc.PLAYLIST_VIDEO, item={'file': self.fakeFilePrev})
             for feature in features:
                 self.addFeatureToPlaylist(feature)
+            rpc.Playlist.Add(playlistid=xbmc.PLAYLIST_VIDEO, item={'file': self.fakeFileNext})
         else:
             for video in videos:
                 pli = self.getPathAndListItemFromVideo(video)
                 self.playlist.add(*pli)
 
-        self.playlist.add(self.fakeFileNext)
+            # Something possibly broke in Kodi 18. Adding the video after the dummy removed the dummy.
+            # Inserting the dummy here works. Using rpc would work, but we lose thumbnails and titles.
+            self.playlist.add(self.fakeFileNext)
+            self.playlist.add(self.fakeFilePrev, index=0)
+
         self.videoPreDelay()
         rpc.Player.Open(item={'playlistid': xbmc.PLAYLIST_VIDEO, 'position': 1}, options={'shuffled': False, 'resume': False, 'repeat': 'off'})
         xbmc.sleep(100)
@@ -888,6 +906,19 @@ class ExperiencePlayer(xbmc.Player):
             xbmc.sleep(100)
         self.hasFullscreened = True
         DEBUG_LOG('VIDEO HAS GONE FULLSCREEN')
+
+    # Currently not used. This is probably a better way to add to the playlist, but we lose
+    # the ability to have thumbnails and real titles
+    def addVideoToPlaylist(self, video):
+        path = video.path
+
+        if isURLFile(path):
+            path = resolveURLFile(path)
+        else:
+            if video.userAgent:
+                path += '|User-Agent=' + video.userAgent
+
+        rpc.Playlist.Add(playlistid=xbmc.PLAYLIST_VIDEO, item={'file': path})
 
     def addFeatureToPlaylist(self, feature):
         if feature.dbType == 'movie':
@@ -931,14 +962,6 @@ class ExperiencePlayer(xbmc.Player):
 
         if not xbmc.getCondVisibility('VideoPlayer.IsFullscreen'):
             xbmc.sleep(500)
-
-        print '{0} {1} {2} {3} {4}'.format(
-            self.isPlayingVideo(),
-            xbmc.getCondVisibility('Player.Playing'),
-            self.playStatus,
-            xbmc.getCondVisibility('VideoPlayer.IsFullscreen'),
-            xbmcgui.getCurrentWindowId()
-        )
 
         return not xbmc.getCondVisibility('VideoPlayer.IsFullscreen')
 
@@ -1041,7 +1064,7 @@ class ExperiencePlayer(xbmc.Player):
         self.volume.store()
         self.volume.set(1)
 
-        self.playStatus = self.PLAYING_MUSIC
+        self.setPlayStatus(self.PLAYING_MUSIC)
         self.play(pl, windowed=True)
 
         self.waitForPlayStart()  # Wait playback so fade will work
@@ -1060,7 +1083,7 @@ class ExperiencePlayer(xbmc.Player):
             kodiutil.DEBUG_LOG('Stopping music')
             self.stop()
             self.waitForPlayStop()
-            self.playStatus = self.NOT_PLAYING
+            self.setPlayStatus(self.MUSIC_STOPPED)
         finally:
             self.volume.restore(delay=500)
 

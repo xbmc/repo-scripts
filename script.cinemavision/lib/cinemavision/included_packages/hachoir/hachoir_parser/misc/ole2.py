@@ -312,7 +312,7 @@ class OLE2_File(HachoirParser, RootSeekableFieldSet):
             index = block // items_per_fat
             try:
                 block = fat[index]["index[%u]" % block].value
-            except LookupError, err:
+            except LookupError as err:
                 break
 
     def readBFAT(self):

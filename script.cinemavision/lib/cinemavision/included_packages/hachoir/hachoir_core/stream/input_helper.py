@@ -17,7 +17,7 @@ def FileInputStream(filename, real_filename=None, **args):
         real_filename = filename
     try:
         inputio = FileOpener(real_filename, 'rb')
-    except IOError, err:
+    except IOError as err:
         charset = getTerminalCharset()
         errmsg = unicode(str(err), charset)
         raise InputStreamError(_("Unable to open file %s: %s") % (filename, errmsg))

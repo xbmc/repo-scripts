@@ -21,17 +21,19 @@ class Progress:
         self.heading = ''
 
     def __enter__(self):
-        print '[- {0} -]'.format(self.title)
+        msg = '[- {0} -]'.format(self.title)
+        print(msg)
         return self
 
     def __exit__(self, exc_type, exc_value, traceback):
-        print 'DONE'
+        print('DONE')
 
     def msg(self, message=None, heading=None, pct=None):
         self.pct = pct is not None and pct or self.pct
         self.heading = heading is not None and heading or self.heading
         self.message = message is not None and message or self.message
-        print '{0}% {1}: {2}'.format(self.pct, self.heading, self.message)
+        msg = '{0}% {1}: {2}'.format(self.pct, self.heading, self.message)
+        print(msg)
         return True
 
 
@@ -173,6 +175,12 @@ try:
         vstat = xbmcvfs.Stat(path)
         return stat.S_ISDIR(vstat.st_mode())
 
+    def translatePath(path):
+        if path.startswith('special://'):
+            return xbmc.translatePath(path)
+
+        return path
+
     def LOG(msg):
         xbmc.log('[- CinemaVision -] (API): {0}'.format(msg), xbmc.LOGNOTICE)
 
@@ -236,6 +244,7 @@ try:
         for stype, scraper, default in (
             ('trailers', 'iTunes', True),
             ('trailers', 'KodiDB', True),
+            ('trailers', 'TMDB', True),
             ('trailers', 'StereoscopyNews', False),
             ('trailers', 'Content', False)
         ):
@@ -255,10 +264,9 @@ try:
     imageExtensions = tuple(xbmc.getSupportedMedia('picture').split('|'))
 
 except:
-    raise
     import zipfile
 
-    STORAGE_PATH = '/home/ruuk/tmp/content'
+    STORAGE_PATH = '~'
 
     def T(ID, eng=''):
         return eng
@@ -325,8 +333,12 @@ except:
     def isDir(path):
         return os.path.isdir(path)
 
+    def translatePath(path):
+        return path
+
     def LOG(msg):
-        print '[- CinemaVison -] (API): {0}'.format(msg)
+        prefixedMsg = '[- CinemaVison -] (API): {0}'.format(msg)
+        print(prefixedMsg)
 
     def wait(timeout):
         time.sleep(timeout)

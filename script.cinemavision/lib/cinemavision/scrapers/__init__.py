@@ -4,6 +4,7 @@ from .. import util
 _SOURCES = {
     'itunes': 'iTunes',
     'kodidb': 'kodiDB',
+    'tmdb': 'TMDB',
     'stereoscopynews': 'StereoscopyNews',
     'content': 'Content'
 }
@@ -24,6 +25,9 @@ def getScraper(source=None):
     elif source == 'Content':
         import content
         return content.ContentTrailerScraper()
+    elif source == 'TMDB':
+        import tmdb
+        return tmdb.TMDBTrailerScraper()
     return None
 
 

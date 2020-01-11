@@ -282,7 +282,7 @@ def extractMetadata(parser, quality=QUALITY_NORMAL):
     metadata = extractor(quality)
     try:
         metadata.extract(parser)
-    except HACHOIR_ERRORS, err:
+    except HACHOIR_ERRORS as err:
         error("Error during metadata extraction: %s" % unicode(err))
     if metadata:
         metadata.mime_type = parser.mime_type

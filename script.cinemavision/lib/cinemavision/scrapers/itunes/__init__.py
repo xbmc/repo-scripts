@@ -37,7 +37,7 @@ class Trailer(_scrapers.Trailer):
 
     @property
     def release(self):
-        return self.data.get('releasedatetime', datetime.date(1900, 1, 1))
+        return self.data.get('releasedatetime', datetime.datetime(1900, 1, 1))
 
     def getStaticURL(self):
         return None
@@ -134,7 +134,7 @@ class ItunesTrailerScraper(_scrapers.Scraper):
     def getTrailers(self):
         ms = scraper.Scraper()
         if self.allIsDue():
-            util.DEBUG_LOG('    - Fetching all trailers')
+            util.DEBUG_LOG(' - Fetching all trailers')
             return [Trailer(t) for t in ms.get_all_movies(None)]
 
         return []
@@ -142,7 +142,7 @@ class ItunesTrailerScraper(_scrapers.Scraper):
     def updateTrailers(self):
         ms = scraper.Scraper()
         if self.recentIsDue():
-            util.DEBUG_LOG('    - Fetching recent trailers')
+            util.DEBUG_LOG(' - Fetching recent trailers')
             return [Trailer(t) for t in ms.get_most_recent_movies(None)]
 
         return []

@@ -103,11 +103,11 @@ class QueryParser(object):
                     for key, value in self.parser_args.iteritems():
                         setattr(parser_obj, key, value)
                 return parser_obj
-            except ValidateError, err:
+            except ValidateError as err:
                 res = unicode(err)
                 if fallback and self.fallback:
                     fb = parser
-            except HACHOIR_ERRORS, err:
+            except HACHOIR_ERRORS as err:
                 res = unicode(err)
             if warn:
                 if parser == self.other:

@@ -70,7 +70,7 @@ class Data:
         if self.conversion:
             try:
                 new_value = self.conversion(self.metadata, self.key, value)
-            except HACHOIR_ERRORS, err:
+            except HACHOIR_ERRORS as err:
                 self.metadata.warning("Error during conversion of %r value: %s" % (
                     self.key, err))
                 return

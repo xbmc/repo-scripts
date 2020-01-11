@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.cinemavision" name="CinemaVision" version="1.1.0" provider-name="CinemaVision">
+<addon id="script.cinemavision" name="CinemaVision" version="1.1.1" provider-name="CinemaVision">
     <requires>
-        <import addon="xbmc.python" version="2.1.0"/>
+        <import addon="xbmc.python" version="2.14.0"/>
         <import addon="script.module.youtube.dl" version="15.318.0"/>
         <import addon="script.module.beautifulsoup" version="3.0.8"/>
         <import addon="script.module.requests" version="2.3.0"/>
@@ -11,47 +11,41 @@
     </extension>
     <extension point="xbmc.addon.metadata">
         <summary lang="en">Create a movie theater experience in the comfort of your own home!</summary>
+        <summary lang="fr">Créez une expérience de cinéma dans le confort de votre maison!</summary>
         <summary lang="es">Crear una experiencia de cine en la comodidad de su propia casa!</summary>
         <summary lang="de">Erstellen Sie ein Kinoerlebnis in den Komfort der Ihren eigenen vier Wänden!</summary>
-        <summary lang="pt-br">Crie uma experiência de cinema no conforto da sua própria casa!</summary>
-        <description lang="en">Create a sequence of trivia slides, video bumpers, trailers and more that will bring the experience of a movie theater straight to your home theater. Share your sequences, customize your content and collaborate online at CinemaVision.tv!</description>
-        <description lang="es">Crear una secuencia de diapositivas de trivia, parachoques vídeos, trailers y mucho más que traerán la experiencia de una sala de cine directamente a su cine en casa. Comparte tus secuencias, personalizar el contenido y colaborar en línea en CinemaVision.tv!</description>
-        <description lang="de">Erstellen Sie eine Sequenz von trivia Dias, Video Stoßstangen, Trailer und vieles mehr, die die Erfahrung eines Filmtheaters direkt auf Ihr Heimkino bringen wird. Teile deine Sequenzen, passen Sie Ihre Inhalte und online zusammenarbeiten bei CinemaVision.tv!</description>
-        <description lang="pt-br">Criar uma seqüência de slides trivia, pára-choques de vídeo, trailers e muito mais que trará a experiência de um cinema direto para o seu home theater. Compartilhe suas sequências, personalize o seu conteúdo e colaborar online no CinemaVision.tv!</description>
+        <summary lang="pt_BR">Crie uma experiência de cinema no conforto da sua própria casa!</summary>
+        <description lang="en">Create a completely customizable sequence of trivia slides, video bumpers, trailers and much more that will bring the experience of a movie theater straight to your home theater. Easily control your RESTful home automation solutions to create your perfect theater ambiance. Share your sequences, download content and collaborate online at CinemaVision.tv!</description>
+        <description lang="fr">Créez une séquence complètement personnalisable de diapositives, de pare-chocs vidéo, de bandes-annonces et bien d'autres choses qui apporteront l'expérience d'un cinéma directement à votre home cinéma. Contrôlez facilement vos solutions de domotique RESTful pour créer votre ambiance de théâtre parfaite. Partagez vos séquences, téléchargez le contenu et collaborez en ligne sur CinemaVision.tv!</description>
+        <description lang="es">Cree una secuencia completamente personalizable de diapositivas trivia, parachoques de video, trailers y mucho más que traerá la experiencia de un cine directamente a su cine en casa. Controle fácilmente sus soluciones RESTful de automatización del hogar para crear su ambiente de teatro perfecto. Comparte tus secuencias, descarga contenido y colabora online en CinemaVision.tv!</description>
+        <description lang="de">Erstellen Sie eine vollständig anpassbare Sequenz von Trivia-Folien, Video-Stoßfänger, Trailer und vieles mehr, die die Erfahrung eines Kino direkt zu Ihrem Heimkino bringen wird. Einfache Kontrolle Ihrer RESTful Hausautomation Lösungen, um Ihre perfekte Theater Ambiente zu schaffen. Teilen Sie Ihre Sequenzen, laden Sie Inhalte herunter und arbeiten Sie online bei CinemaVision.tv zusammen!</description>
+        <description lang="pt_BR">Crie uma seqüência completamente customizável de slides de trivia, amortecedores de vídeo, trailers e muito mais que trará a experiência de um cinema diretamente para seu home theater. Controle facilmente suas soluções de automação residencial RESTful para criar seu ambiente de teatro perfeito. Compartilhe suas seqüências, baixe conteúdo e colabore online no CinemaVision.tv!</description>
         <disclaimer lang="en">This work is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License. Visit the website for details.</disclaimer>
+        <disclaimer lang="fr">Ce travail est autorisé sous licence Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License. Visitez le site pour plus de détails.</disclaimer>
         <disclaimer lang="es">Esta obra está bajo una licencia internacional Creative Commons Attribution-NonCommercial-ShareAlike 4.0. Visite el sitio web para más detalles.</disclaimer>
         <disclaimer lang="de">Diese Seite ist unter einer Creative Commons Attribution-NonCommercial-ShareAlike 4.0 Internationale lizensiert. Besuchen Sie die Website für weitere Details.</disclaimer>
-        <disclaimer lang="pt-br">Esta obra está licenciada sob uma Licença Internacional Creative Commons Attribution-Noncommercial-Share Alike 4.0. Visite o site para mais detalhes.</disclaimer>
+        <disclaimer lang="pt_BR">Esta obra está licenciada sob uma Licença Internacional Creative Commons Attribution-Noncommercial-Share Alike 4.0. Visite o site para mais detalhes.</disclaimer>
         <platform>all</platform>
         <license>Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International</license>
-        <forum>http://www.cinemavision.tv/forums/</forum>
-        <website>http://www.cinemavision.tv/</website>
+        <forum>https://cinemavision.tv/forums</forum>
+        <website>https://cinemavision.tv/</website>
         <source>https://github.com/CinemaVision/script.cinemavision</source>
         <assets>
             <icon>icon.png</icon>
-            <screenshot>resources/screenshots/screenshot1.png</screenshot>
-            <screenshot>resources/screenshots/screenshot2.png</screenshot>
-            <screenshot>resources/screenshots/screenshot3.png</screenshot>
+            <screenshot>resources/screenshots/screenshot00.png</screenshot>
+            <screenshot>resources/screenshots/screenshot01.png</screenshot>
+            <screenshot>resources/screenshots/screenshot02.png</screenshot>
         </assets>
-        <news>
-add:     Added 'Sequence settings' option to context menu
-add:     Sequence settings: Conditions Attributes for automatic sequence selection
-add:     Sequence settings: Show in selection dialog Toggle
-fix:     Issues found with non-english characters in the file names of Action files causing errors
-fix:     Issue #6 With context menu visible the options icon for disabled changes to enabled
-fix:     Issue #70 Up/Down nav on options occasionally fails
-fix:     Issue #71 ImportError: Failed to import _strptime because the import lockis held by another thread
-fix:     Issue #78 AttributeError: 'ExperiencePlayer' object has no attribute 'processor'
-change:  Issue #33 Change demo content location
-fix:     Issue #10 When adding module sometimes jumps to the start
-fix:     Issue #73 iTunes scraper picking up clips
-change:  Issue #74 Remove 'Enabled: YES/NO' from settings display
-add:     Issue #50 Add 'Reset module to defaults'
-fix:     Update demo music to point to a working stream
-change:  Make various logging cleaner and more human readable
-fix:     Issue #115 Error caused when playing a movie with no active sequences
-fix:     Issue #116 Error when saving a sequence
-change:  Better handling of read/write falures and errors to help troubleshooting - Issue #95
+        <news>change: Enhanced user interface
+add: Ability to change interface theme
+add: TMDB trailer scraper
+fix: Compatibility fixes for Kodi v18
+add: Actions: Added ID to http requests to help match request to response
+add: Actions: Improve sleep:// handling
+add: Actions: Improve testing
+change: Actions: python:// is now used for inline python statements, script:// for executing a python file
+add: Trailers: Content scraper will now read genre and rating from .nfo files
+add: Support for special:// content paths - Issue #124
         </news>
     </extension>
 </addon>

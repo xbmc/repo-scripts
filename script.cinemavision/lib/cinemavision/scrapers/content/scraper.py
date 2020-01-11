@@ -13,8 +13,10 @@ def getFiles(path, sub=None):
             ret += getFiles(full, p)
             continue
         title, ext = os.path.splitext(p)
+        nfoPath = util.pathJoin(path, title + '.nfo')
+        nfo = nfoPath if util.vfs.exists(nfoPath) else None
         if ext.lower() in util.videoExtensions:
-            ret.append({'url': full, 'ID': ID + p, 'title': title})
+            ret.append({'url': full, 'ID': ID + p, 'title': title, 'nfo': nfo})
     return ret
 
 

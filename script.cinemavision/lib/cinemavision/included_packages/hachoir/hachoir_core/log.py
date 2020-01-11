@@ -46,7 +46,7 @@ class Log:
             else:
                 self.__file = codecs.open(filename, "w", "utf-8")
             self._writeIntoFile(_("Starting Hachoir"))
-        except IOError, err:
+        except IOError as err:
             if err.errno == 2:
                 self.__file = None
                 self.info(_("[Log] setFilename(%s) fails: no such file") % filename)

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <window>
     <defaultcontrol>201</defaultcontrol>
-    <animation effect="zoom" end="74.074074074,74.074074074" center="960,540" time="0" condition="!IsEmpty(Window(10000).Property(script.cinemavision.scope.2.40:1))">Conditional</animation>
-    <animation effect="zoom" end="75.925925926,75.925925926" center="960,540" time="0" condition="!IsEmpty(Window(10000).Property(script.cinemavision.scope.2.35:1))">Conditional</animation>
+    <animation effect="zoom" end="74.074074074,74.074074074" center="960,540" time="0" condition="!String.IsEmpty(Window(10000).Property(script.cinemavision.scope.2.40:1))">Conditional</animation>
+    <animation effect="zoom" end="75.925925926,75.925925926" center="960,540" time="0" condition="!String.IsEmpty(Window(10000).Property(script.cinemavision.scope.2.35:1))">Conditional</animation>
     <animation effect="slide" start="0,1080" end="0,0" time="200">WindowOpen</animation>
     <animation effect="slide" start="0,0" end="0,1080" time="200">WindowClose</animation>
     <coordinates>
@@ -135,7 +135,7 @@
                             <label>$INFO[ListItem.Property(rating)]</label>
                         </control>
                         <control type="image">
-                            <visible>!IsEmpty(ListItem.Property(af))</visible>
+                            <visible>!String.IsEmpty(ListItem.Property(af))</visible>
                             <left>770</left>
                             <top>125</top>
                             <width>200</width>
@@ -144,7 +144,7 @@
                             <aspectratio align="right">keep</aspectratio>
                         </control>
                         <control type="group">
-                            <visible>IsEmpty(ListItem.Property(af)) + !IsEmpty(ListItem.Property(afcodec))</visible>
+                            <visible>String.IsEmpty(ListItem.Property(af)) + !String.IsEmpty(ListItem.Property(afcodec))</visible>
                             <posx>770</posx>
                             <posy>125</posy>
                             <width>200</width>
@@ -167,7 +167,7 @@
                             </control>
                         </control>
                         <control type="label">
-                            <visible>IsEmpty(ListItem.Property(af)) + IsEmpty(ListItem.Property(afcodec))</visible>
+                            <visible>String.IsEmpty(ListItem.Property(af)) + String.IsEmpty(ListItem.Property(afcodec))</visible>
                             <left>770</left>
                             <top>125</top>
                             <width>200</width>
@@ -199,11 +199,11 @@
                         <width>1010</width>
                         <height>180</height>
                         <texture>script.cinemavision-white_square.png</texture>
-                        <colordiffuse>FF26539B</colordiffuse>
+                        <colordiffuse>$INFO[Window(10000).Property(script.cinemavision.theme.color.button.selected)]</colordiffuse>
                         <aspectratio>stretch</aspectratio>
                     </control>
                     <control type="image">
-                        <visible>!IsEmpty(ListItem.Property(moving))</visible>
+                        <visible>!String.IsEmpty(ListItem.Property(moving))</visible>
                         <posx>0</posx>
                         <posy>0</posy>
                         <width>1010</width>
@@ -268,7 +268,7 @@
                             <label>$INFO[ListItem.Property(rating)]</label>
                         </control>
                         <control type="image">
-                            <visible>!IsEmpty(ListItem.Property(af))</visible>
+                            <visible>!String.IsEmpty(ListItem.Property(af))</visible>
                             <left>770</left>
                             <top>125</top>
                             <width>200</width>
@@ -277,7 +277,7 @@
                             <aspectratio align="right">keep</aspectratio>
                         </control>
                         <control type="group">
-                            <visible>IsEmpty(ListItem.Property(af)) + !IsEmpty(ListItem.Property(afcodec))</visible>
+                            <visible>String.IsEmpty(ListItem.Property(af)) + !String.IsEmpty(ListItem.Property(afcodec))</visible>
                             <posx>770</posx>
                             <posy>125</posy>
                             <width>200</width>
@@ -300,7 +300,7 @@
                             </control>
                         </control>
                         <control type="label">
-                            <visible>IsEmpty(ListItem.Property(af)) + IsEmpty(ListItem.Property(afcodec))</visible>
+                            <visible>String.IsEmpty(ListItem.Property(af)) + String.IsEmpty(ListItem.Property(afcodec))</visible>
                             <left>770</left>
                             <top>125</top>
                             <width>200</width>
@@ -338,7 +338,7 @@
                     <aspectratio>stretch</aspectratio>
                 </control>
                 <control type="button" id="204">
-                    <enable>IntegerGreaterThan(Container(300).NumItems, 0)</enable>
+                    <enable>Integer.IsGreater(Container(300).NumItems, 0)</enable>
                     <posx>40</posx>
                     <posy>50</posy>
                     <width>500</width>
@@ -347,7 +347,7 @@
                     <font>font13</font>
                     <textcolor>FFFFFFFF</textcolor>
                     <align>center</align>
-                    <texturefocus colordiffuse="FF26539B">script.cinemavision-white_square.png</texturefocus>
+                    <texturefocus colordiffuse="$INFO[Window(10000).Property(script.cinemavision.theme.color.button.selected)]">script.cinemavision-white_square.png</texturefocus>
                     <texturenofocus colordiffuse="FF252525">script.cinemavision-white_square.png</texturenofocus>
                     <onleft>300</onleft>
                     <ondown>201</ondown>
@@ -363,7 +363,7 @@
                     <aspectratio>stretch</aspectratio>
                 </control>
                 <control type="button" id="201">
-                    <enable>IntegerGreaterThan(Container(300).NumItems, 0)</enable>
+                    <enable>Integer.IsGreater(Container(300).NumItems, 0)</enable>
                     <posx>140</posx>
                     <posy>185</posy>
                     <width>300</width>
@@ -372,7 +372,7 @@
                     <font>font13</font>
                     <textcolor>FFFFFFFF</textcolor>
                     <align>center</align>
-                    <texturefocus colordiffuse="FF26539B">script.cinemavision-white_square.png</texturefocus>
+                    <texturefocus colordiffuse="$INFO[Window(10000).Property(script.cinemavision.theme.color.button.selected)]">script.cinemavision-white_square.png</texturefocus>
                     <texturenofocus colordiffuse="FF252525">script.cinemavision-white_square.png</texturenofocus>
                     <onleft>300</onleft>
                     <ondown>202</ondown>
@@ -397,7 +397,7 @@
                     <font>font13</font>
                     <textcolor>FFFFFFFF</textcolor>
                     <align>center</align>
-                    <texturefocus colordiffuse="FF26539B">script.cinemavision-white_square.png</texturefocus>
+                    <texturefocus colordiffuse="$INFO[Window(10000).Property(script.cinemavision.theme.color.button.selected)]">script.cinemavision-white_square.png</texturefocus>
                     <texturenofocus colordiffuse="FF252525">script.cinemavision-white_square.png</texturenofocus>
                     <onleft>300</onleft>
                     <onup>201</onup>
@@ -422,7 +422,7 @@
                     <font>font13</font>
                     <textcolor>FFFFFFFF</textcolor>
                     <align>center</align>
-                    <texturefocus colordiffuse="FF26539B">script.cinemavision-white_square.png</texturefocus>
+                    <texturefocus colordiffuse="$INFO[Window(10000).Property(script.cinemavision.theme.color.button.selected)]">script.cinemavision-white_square.png</texturefocus>
                     <texturenofocus colordiffuse="FF252525">script.cinemavision-white_square.png</texturenofocus>
                     <onleft>300</onleft>
                     <onup>202</onup>

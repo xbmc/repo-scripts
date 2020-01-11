@@ -446,23 +446,21 @@ msgid "Update every... (hours)"
 msgstr ""
 
 msgctxt "#32108"
-msgid "Update when Kodi starts (requires service add-on)"
+msgid "Background updating: Requires service add-on (Beta)"
 msgstr ""
 
 msgctxt "#32109"
-msgid "Update after library scan (requires service add-on)"
+msgid "Always use CinemaVision when playing movies"
 msgstr ""
 
 msgctxt "#32110"
-msgid "Update every... (hours) (requires service add-on)"
+msgid "Always use CinemaVision when playing movies (requires service add-on)"
 msgstr ""
 
 msgctxt "#32111"
 msgid "Auto Update"
 msgstr ""
 
-
-#Sequence
 msgctxt "#32300"
 msgid "3D Intro"
 msgstr ""
@@ -602,8 +600,6 @@ msgstr ""
 msgctxt "#32334"
 msgid "Video Bumpers"
 msgstr ""
-
-#Dialogs, etc.
 
 msgctxt "#32500"
 msgid "Not Found"
@@ -766,7 +762,7 @@ msgid "Enter a name for this item"
 msgstr ""
 
 msgctxt "#32540"
-msgid "Add-on settings"
+msgid "Preferences"
 msgstr ""
 
 msgctxt "#32541"
@@ -862,11 +858,11 @@ msgid "Please queue some features and try again."
 msgstr ""
 
 msgctxt "#32564"
-msgid "Removed watched status from all trailers."
+msgid "Removed watched status from {0} trailers."
 msgstr ""
 
 msgctxt "#32565"
-msgid "Removed broken status from all trailers."
+msgid "Removed broken status from {0} trailers."
 msgstr ""
 
 msgctxt "#32566"
@@ -1038,7 +1034,7 @@ msgid "Kodi may be unable to write to this location."
 msgstr ""
 
 msgctxt "#32608"
-msgid "Active"
+msgid "Auto Select"
 msgstr ""
 
 msgctxt "#32609"
@@ -1055,4 +1051,20 @@ msgstr ""
 
 msgctxt "#32612"
 msgid "Sequence settings"
+msgstr ""
+
+msgctxt "#32613"
+msgid "Theme"
+msgstr ""
+
+msgctxt "#32614"
+msgid "Set Conditions"
+msgstr ""
+
+msgctxt "#32615"
+msgid "Show in dialog"
+msgstr ""
+
+msgctxt "#32616"
+msgid "Rename current sequence"
 msgstr ""
