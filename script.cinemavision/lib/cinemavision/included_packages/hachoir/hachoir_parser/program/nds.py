@@ -294,7 +294,7 @@ class NdsFile(Parser, RootSeekableFieldSet):
     def validate(self):
         try:
             header = self["header"]
-        except Exception, e:
+        except Exception as e:
             return False
 
         return (self.stream.readBytes(0, 1) != "\0"

@@ -1,4 +1,5 @@
 import os
+import json
 
 import xbmcgui
 import xbmcvfs
@@ -16,6 +17,8 @@ kodiutil.checkAPILevel()
 import cvutil  # noqa E402
 
 from lib import cinemavision  # noqa E402
+
+
 
 
 class ItemSettingsWindow(kodigui.BaseDialog):
@@ -317,6 +320,23 @@ class SequenceEditorWindow(kodigui.BaseWindow):
     SEQUENCE_LIST_ID = 201
     ADD_ITEM_LIST_ID = 202
     ITEM_OPTIONS_LIST_ID = 203
+    DUMMY_BUTTON_ID = 900
+
+    MENU_EDIT_BUTTON_ID = 401
+    MENU_PLAY_BUTTON_ID = 403
+    MENU_SEQUENCE_ACTIVE_BUTTON_ID = 402
+    MENU_CONDITIONS_BUTTON_ID = 404
+    MENU_SHOW_OPTION_BUTTON_ID = 405
+
+    MENU_NEW_BUTTON_ID = 411
+    MENU_LOAD_BUTTON_ID = 432
+    MENU_SAVE_BUTTON_ID = 433
+    MENU_EDIT_SEQ_NAME_ID = 434
+
+    MENU_IMPORT_BUTTON_ID = 421
+    MENU_EXPORT_BUTTON_ID = 422
+    MENU_THEME_BUTTON_ID = 424
+    MENU_ADDON_SETTINGS_BUTTON_ID = 425
 
     def __init__(self, *args, **kwargs):
         kodigui.BaseWindow.__init__(self, *args, **kwargs)
@@ -325,6 +345,7 @@ class SequenceEditorWindow(kodigui.BaseWindow):
         self.setName('')
         self.path = ''
         self.sequenceData = None
+        self.editing = False
 
     def onFirstInit(self):
         self.sequenceControl = kodigui.ManagedControlList(self, self.SEQUENCE_LIST_ID, 22)
@@ -333,67 +354,115 @@ class SequenceEditorWindow(kodigui.BaseWindow):
         self.start()
 
     def onClick(self, controlID):
-        if self.focusedOnItem():
-            self.itemOptions()
+        if self.editing:
+            if self.focusedOnItem():
+                self.itemOptions()
+            else:
+                self.addItem()
+                self.updateFocus()
         else:
-            self.addItem()
-            self.updateFocus()
+            if controlID == self.MENU_EDIT_BUTTON_ID:
+                self.setEditMode()
+            elif 400 < controlID < 440:
+                self.doMenu(controlID)
 
     def onAction(self, action):
         try:
-            if action == xbmcgui.ACTION_PREVIOUS_MENU or action == xbmcgui.ACTION_NAV_BACK:
-                if self.handleClose():
-                    return
+            if self.editing:
+                if action == xbmcgui.ACTION_PREVIOUS_MENU or action == xbmcgui.ACTION_NAV_BACK:
+                    if self.move:
+                        return self.cancelMove()
+                    elif self.editing:
+                        return self.setEditMode(False)
 
-            if self.move:
-                if action == xbmcgui.ACTION_MOVE_LEFT:
-                    pos2 = self.sequenceControl.getSelectedPosition()
-                    pos1 = pos2 - 2
-                    if self.sequenceControl.swapItems(pos1, pos2):
-                        self.selectSequenceItem(pos1)
-                    self.updateSpecials()
-                    return
-                elif action == xbmcgui.ACTION_MOVE_RIGHT:
-                    pos1 = self.sequenceControl.getSelectedPosition()
-                    pos2 = pos1 + 2
-                    if self.sequenceControl.swapItems(pos1, pos2):
-                        self.selectSequenceItem(pos2)
-                    self.updateSpecials()
-                    return
+                if self.move:
+                    if action == xbmcgui.ACTION_MOVE_LEFT:
+                        pos2 = self.sequenceControl.getSelectedPosition()
+                        pos1 = pos2 - 2
+                        if self.sequenceControl.swapItems(pos1, pos2):
+                            self.selectSequenceItem(pos1)
+                        self.updateFirstLast()
+                        self.updateSpecials()
+                        return
+                    elif action == xbmcgui.ACTION_MOVE_RIGHT:
+                        pos1 = self.sequenceControl.getSelectedPosition()
+                        pos2 = pos1 + 2
+                        if self.sequenceControl.swapItems(pos1, pos2):
+                            self.selectSequenceItem(pos2)
+                        self.updateFirstLast()
+                        self.updateSpecials()
+                        return
+                else:
+                    self.updateFocus()
+                    if action == xbmcgui.ACTION_MOVE_LEFT or (action == xbmcgui.ACTION_MOUSE_WHEEL_UP and self.mouseYTrans(action.getAmount2()) < 505):
+                        if self.sequenceControl.size() < 2:
+                            return
+                        oldPos = self.sequenceControl.getSelectedPosition()
+                        pos = oldPos - 1
+                        if not self.sequenceControl.positionIsValid(pos):
+                            pos = self.sequenceControl.size() - 1
+                            self.selectSequenceItem(pos)
+                        else:
+                            self.selectSequenceItem(pos)
+                            self.updateFocus(pos=pos)
+                        self.sequenceControl.getListItem(oldPos).setProperty('selected', '0')
+                    elif action == xbmcgui.ACTION_MOVE_RIGHT or (action == xbmcgui.ACTION_MOUSE_WHEEL_DOWN and self.mouseYTrans(action.getAmount2()) < 505):
+                        if self.sequenceControl.size() < 2:
+                            return
+                        oldPos = self.sequenceControl.getSelectedPosition()
+                        pos  = oldPos + 1
+                        if not self.sequenceControl.positionIsValid(pos):
+                            pos = 0
+                            self.selectSequenceItem(pos)
+                        else:
+                            self.selectSequenceItem(pos)
+                            self.updateFocus(pos=pos)
+                        self.sequenceControl.getListItem(oldPos).setProperty('selected', '0')
+                    elif action == xbmcgui.ACTION_CONTEXT_MENU:
+                        self.setEditMode(False)
             else:
-                self.updateFocus()
-                if action == xbmcgui.ACTION_MOVE_LEFT or (action == xbmcgui.ACTION_MOUSE_WHEEL_UP and self.mouseYTrans(action.getAmount2()) < 505):
-                    if self.sequenceControl.size() < 2:
+                if action == xbmcgui.ACTION_PREVIOUS_MENU or action == xbmcgui.ACTION_NAV_BACK:
+                    if self.handleClose():
                         return
-                    pos = self.sequenceControl.getSelectedPosition()
-                    pos -= 1
-                    if not self.sequenceControl.positionIsValid(pos):
-                        pos = self.sequenceControl.size() - 1
-                        self.selectSequenceItem(pos)
-                    else:
-                        self.selectSequenceItem(pos)
-                        self.updateFocus(pos=pos)
-                elif action == xbmcgui.ACTION_MOVE_RIGHT or (action == xbmcgui.ACTION_MOUSE_WHEEL_DOWN and self.mouseYTrans(action.getAmount2()) < 505):
-                    if self.sequenceControl.size() < 2:
-                        return
-                    pos = self.sequenceControl.getSelectedPosition()
-                    pos += 1
-                    if not self.sequenceControl.positionIsValid(pos):
-                        pos = 0
-                        self.selectSequenceItem(pos)
-                    else:
-                        self.selectSequenceItem(pos)
-                        self.updateFocus(pos=pos)
-                elif action == xbmcgui.ACTION_CONTEXT_MENU:
-                        self.doMenu()
 
         except Exception:
             kodiutil.ERROR()
 
         kodigui.BaseWindow.onAction(self, action)
 
+    def onFocus(self, controlID):
+        if controlID == self.MENU_ADDON_SETTINGS_BUTTON_ID:
+            kodiutil.setGlobalProperty('option.hint', T(32617, '[B]Preferences[/B]: Customize CinemaVision to your needs'))
+        elif controlID == self.MENU_NEW_BUTTON_ID:
+           kodiutil.setGlobalProperty('option.hint', T(32618, '[B]New[/B]: Create a new empty sequence'))
+        elif controlID == self.MENU_SAVE_BUTTON_ID:
+            kodiutil.setGlobalProperty('option.hint', T(32619, '[B]Save Options[/B]: Save or export the current sequence'))
+        elif controlID == self.MENU_LOAD_BUTTON_ID:
+            kodiutil.setGlobalProperty('option.hint', T(32620, '[B]Load Options[/B]: Load or import a sequence'))
+        elif controlID == self.MENU_PLAY_BUTTON_ID:
+            kodiutil.setGlobalProperty('option.hint', T(32621, '[B]Play[/B]: Test the current sequence with a dummy feature'))
+        elif controlID == self.MENU_THEME_BUTTON_ID:
+            kodiutil.setGlobalProperty('option.hint', T(32622, '[B]Theme[/B]: Set the colors and icons for the sequence editor'))
+        elif controlID == self.MENU_CONDITIONS_BUTTON_ID:
+            kodiutil.setGlobalProperty('option.hint', T(32623, '[B]Set Conditions[/B]: Set the conditions for auto-selecting the current sequence'))
+        elif controlID == self.MENU_SEQUENCE_ACTIVE_BUTTON_ID:
+            kodiutil.setGlobalProperty('option.hint', T(32624, '[B]Auto Select[/B]: Whether this sequnce is active for auto-selection'))
+        elif controlID == self.MENU_SHOW_OPTION_BUTTON_ID:
+            kodiutil.setGlobalProperty('option.hint', T(32625, '[B]Show In Dialog[/B]: Whether this sequence will be shown on the sequence selection dialog'))
+        elif controlID == self.MENU_EDIT_BUTTON_ID:
+            kodiutil.setGlobalProperty('option.hint', T(32626, '[B]Edit[/B]: Bring up the sequence editor for the current sequence'))
+        elif controlID == self.MENU_EDIT_SEQ_NAME_ID:
+            kodiutil.setGlobalProperty('option.hint', T(32627, '[B]Name[/B]: Name or rename this sequence'))
+
+    def setEditMode(self, on=True):
+        self.editing = on
+        self.setProperty('editing', on and '1' or '')
+        if not on:
+            self.setFocusId(self.MENU_EDIT_BUTTON_ID)
+
     def selectSequenceItem(self, pos):
         self.sequenceControl.selectItem(pos)
+        self.sequenceControl.getListItem(pos).setProperty('selected', '1')
         dataSource = self.sequenceControl[pos].dataSource
         kodiutil.setGlobalProperty('sequence.item.enabled', dataSource and dataSource.enabled and '1' or '')
 
@@ -409,8 +478,16 @@ class SequenceEditorWindow(kodigui.BaseWindow):
 
         if yes:
             return False
-
-        self.save(as_new=True)
+        else:
+            yes = xbmcgui.Dialog().yesno(
+                T(32523, 'Options'),
+                T(32628, 'Would you like to save and exit or abort'),
+                yeslabel=T(32629, 'Save and exit'),
+                nolabel=T(32630, 'Abort')
+            )
+            if yes:
+                self.save()
+                return False
 
         return True
 
@@ -425,6 +502,7 @@ class SequenceEditorWindow(kodigui.BaseWindow):
         self.fillOptions()
         self.fillSequence()
         self.loadDefault()
+        self.setFocusId(self.MENU_EDIT_BUTTON_ID)
 
     def loadContent(self):
         if self.checkForContentDB() and not kodiutil.getSetting('database.autoUpdate', False):
@@ -433,12 +511,12 @@ class SequenceEditorWindow(kodigui.BaseWindow):
         cvutil.loadContent()
 
     def checkForContentDB(self):
-        if kodiutil.getSetting('content.path'):
+        if kodiutil.getPathSetting('content.path'):
             kodiutil.setGlobalProperty('DEMO_MODE', '')
-            if kodiutil.getSetting('content.initialized', False) and kodiutil.getSetting('content.path') == kodiutil.getSetting('content.last.path'):
+            if kodiutil.getSetting('content.initialized', False) and kodiutil.getPathSetting('content.path') == kodiutil.getSetting('content.last.path'):
                 return True
             else:
-                kodiutil.setSetting('content.last.path', kodiutil.getSetting('content.path'))
+                kodiutil.setSetting('content.last.path', kodiutil.getPathSetting('content.path'))
                 return False
         else:
             kodiutil.setGlobalProperty('DEMO_MODE', '1')
@@ -448,40 +526,43 @@ class SequenceEditorWindow(kodigui.BaseWindow):
         for i in cinemavision.sequence.ITEM_TYPES:
             item = kodigui.ManagedListItem(
                 '{0}: {1}'.format(T(32530, 'Add'), i[1]),
-                thumbnailImage='small/script.cinemavision-{0}.png'.format(i[2]),
+                thumbnailImage='{0}small/script.cinemavision-{1}.png'.format(cvutil.THEME['theme.path'], i[2]),
                 data_source=i[0]
             )
-            item.setProperty('thumb.focus', 'small/script.cinemavision-{0}_selected.png'.format(i[2]))
+            item.setProperty('thumb.focus', '{0}small/script.cinemavision-{1}_Selected.png'.format(cvutil.THEME['theme.path'], i[2]))
+            item.setProperty('thumb.fill', '{0}small/script.cinemavision-{1}_Fill.png'.format(cvutil.THEME['theme.path'], i[2]))
             self.addItemControl.addItem(item)
 
-        item = kodigui.ManagedListItem(T(32531, 'Edit'), T(32531, 'Edit'), thumbnailImage='small/script.cinemavision-edit.png', data_source='edit')
-        item.setProperty('alt.thumb', 'small/script.cinemavision-edit.png')
-        item.setProperty('thumb.focus', 'small/script.cinemavision-A_selected.png')
+        basePath = cvutil.THEME['theme.path'] + 'options/script.cinemavision-'
+
+        item = kodigui.ManagedListItem(T(32531, 'Edit'), T(32531, 'Edit'), thumbnailImage=basePath + 'ModuleEdit.png', data_source='edit')
+        item.setProperty('alt.thumb', basePath + 'ModuleEdit.png')
+        item.setProperty('thumb.focus', basePath + 'Module_Selected.png')
         self.itemOptionsControl.addItem(item)
 
-        item = kodigui.ManagedListItem(T(32532, 'Rename'), T(32532, 'Rename'), thumbnailImage='small/script.cinemavision-rename.png', data_source='rename')
-        item.setProperty('alt.thumb', 'small/script.cinemavision-rename.png')
-        item.setProperty('thumb.focus', 'small/script.cinemavision-A_selected.png')
+        item = kodigui.ManagedListItem(T(32532, 'Rename'), T(32532, 'Rename'), thumbnailImage=basePath + 'ModuleRename.png', data_source='rename')
+        item.setProperty('alt.thumb', basePath + 'ModuleRename.png')
+        item.setProperty('thumb.focus', basePath + 'Module_Selected.png')
         self.itemOptionsControl.addItem(item)
 
-        item = kodigui.ManagedListItem(T(32533, 'Copy'), T(32533, 'Copy'), thumbnailImage='small/script.cinemavision-copy.png', data_source='copy')
-        item.setProperty('alt.thumb', 'small/script.cinemavision-copy.png')
-        item.setProperty('thumb.focus', 'small/script.cinemavision-A_selected.png')
+        item = kodigui.ManagedListItem(T(32533, 'Copy'), T(32533, 'Copy'), thumbnailImage=basePath + 'ModuleCopy.png', data_source='copy')
+        item.setProperty('alt.thumb', basePath + 'ModuleCopy.png')
+        item.setProperty('thumb.focus', basePath + 'Module_Selected.png')
         self.itemOptionsControl.addItem(item)
 
-        item = kodigui.ManagedListItem(T(32534, 'Move'), T(32534, 'Move'), thumbnailImage='small/script.cinemavision-move.png', data_source='move')
-        item.setProperty('alt.thumb', 'small/script.cinemavision-move.png')
-        item.setProperty('thumb.focus', 'small/script.cinemavision-A_selected.png')
+        item = kodigui.ManagedListItem(T(32534, 'Move'), T(32534, 'Move'), thumbnailImage=basePath + 'ModuleMove.png', data_source='move')
+        item.setProperty('alt.thumb', basePath + 'ModuleMove.png')
+        item.setProperty('thumb.focus', basePath + 'Module_Selected.png')
         self.itemOptionsControl.addItem(item)
 
-        item = kodigui.ManagedListItem(T(32535, 'Disable'), T(32610, 'Enable'), thumbnailImage='small/script.cinemavision-disable.png', data_source='enable')
-        item.setProperty('alt.thumb', 'small/script.cinemavision-enable.png')
-        item.setProperty('thumb.focus', 'small/script.cinemavision-A_selected.png')
+        item = kodigui.ManagedListItem(T(32535, 'Disable'), T(32610, 'Enable'), thumbnailImage=basePath + 'ModuleEnabled.png', data_source='enable')
+        item.setProperty('alt.thumb', basePath + 'ModuleDisabled.png')
+        item.setProperty('thumb.focus', basePath + 'Module_Selected.png')
         self.itemOptionsControl.addItem(item)
 
-        item = kodigui.ManagedListItem(T(32536, 'Remove'), T(32536, 'Remove'), thumbnailImage='small/script.cinemavision-minus.png', data_source='remove')
-        item.setProperty('alt.thumb', 'small/script.cinemavision-minus.png')
-        item.setProperty('thumb.focus', 'small/script.cinemavision-A_selected.png')
+        item = kodigui.ManagedListItem(T(32536, 'Remove'), T(32536, 'Remove'), thumbnailImage=basePath + 'ModuleRemove.png', data_source='remove')
+        item.setProperty('alt.thumb', basePath + 'ModuleRemove.png')
+        item.setProperty('thumb.focus', basePath + 'Module_Selected.png')
         self.itemOptionsControl.addItem(item)
 
     def fillSequence(self):
@@ -501,11 +582,12 @@ class SequenceEditorWindow(kodigui.BaseWindow):
 
         self.insertItem(sItem, pos)
 
-    def insertItem(self, sItem, pos):
+    def insertItem(self, sItem, pos, modify=True):
         mli = kodigui.ManagedListItem(sItem.display(), data_source=sItem)
         mli.setProperty('type', sItem.fileChar)
         mli.setProperty('type.name', sItem.displayName)
         mli.setProperty('enabled', sItem.enabled and '1' or '')
+        mli.setProperty('theme.path', cvutil.THEME['theme.path'])
 
         if not self.updateItemSettings(mli):
             mli.setProperty('error', '1')
@@ -514,7 +596,7 @@ class SequenceEditorWindow(kodigui.BaseWindow):
 
         self.updateFirstLast()
 
-        self.modified = True
+        self.modified = modify
         self.updateSpecials()
 
     def addItems(self, items):
@@ -524,6 +606,7 @@ class SequenceEditorWindow(kodigui.BaseWindow):
             mli.setProperty('type', sItem.fileChar)
             mli.setProperty('type.name', sItem.displayName)
             mli.setProperty('enabled', sItem.enabled and '1' or '')
+            mli.setProperty('theme.path', cvutil.THEME['theme.path'])
 
             if not self.updateItemSettings(mli):
                 mli.setProperty('error', '1')
@@ -674,9 +757,6 @@ class SequenceEditorWindow(kodigui.BaseWindow):
         self.insertItem(sItem, item.pos() + 1)
 
     def moveItem(self):
-        item = self.sequenceControl.getSelectedItem()
-        if not item:
-            return
         if self.move:
             kodiutil.DEBUG_LOG('Move item: Finished')
             self.move.setProperty('moving', '')
@@ -684,8 +764,43 @@ class SequenceEditorWindow(kodigui.BaseWindow):
             self.modified = True
         else:
             kodiutil.DEBUG_LOG('Move item: Started')
+            item = self.sequenceControl.getSelectedItem()
+            if not item:
+                return
             self.move = item
-            self.move.setProperty('moving', '1')
+            self.move.setProperty('moving', str(self.sequenceControl.getSelectedPosition()))
+            self.setFocusId(self.DUMMY_BUTTON_ID)
+
+    def cancelMove(self):
+        kodiutil.DEBUG_LOG('Move item: Canceled')
+
+        self.setFocusId(self.ITEM_OPTIONS_LIST_ID)
+
+        try:
+            oldPos = int(self.move.getProperty('moving'))
+        except:
+            oldPos = -1
+
+        pos = self.sequenceControl.getSelectedPosition()
+
+        self.move.setProperty('moving', '')
+
+        if oldPos > -1 and oldPos != pos:
+            if oldPos < pos:
+                self.insertItem(self.move.dataSource, oldPos - 1, modify=False)
+                self.sequenceControl.removeItem(pos + 1)
+                self.sequenceControl.removeItem(pos + 1)
+            elif oldPos > pos:
+                self.insertItem(self.move.dataSource, oldPos + 1, modify=False)
+                self.sequenceControl.removeItem(pos - 1)
+                self.sequenceControl.removeItem(pos - 1)
+
+            self.updateFirstLast()
+            self.updateSpecials()
+
+            self.selectSequenceItem(oldPos)
+
+        self.move = None
 
     def editItem(self):
         item = self.sequenceControl.getSelectedItem()
@@ -753,40 +868,104 @@ class SequenceEditorWindow(kodigui.BaseWindow):
             item = self.sequenceControl.getSelectedItem()
         return bool(item.dataSource)
 
-    def doMenu(self):
-        options = []
-        options.append(('settings', T(32540, 'Add-on settings')))
-        options.append(('attributes', T(32612, 'Sequence settings')))
-        options.append(('new', T(32541, 'New')))
-        options.append(('save', T(32542, 'Save')))
-        options.append(('saveas', T(32543, 'Save as...')))
-        options.append(('load', T(32544, 'Load')))
-        options.append(('import', T(32545, 'Import')))
-        options.append(('export', T(32546, 'Export')))
-        options.append(('test', T(32547, 'Play')))
-        idx = xbmcgui.Dialog().select(T(32548, 'Sequence Options'), [o[1] for o in options])
+    def doMenu(self, controlID):
+        if controlID == self.MENU_ADDON_SETTINGS_BUTTON_ID:
+            self.settings()
+        elif controlID == self.MENU_NEW_BUTTON_ID:
+            self.new()
+        elif controlID == self.MENU_SAVE_BUTTON_ID:
+            self.saveMenu()
+        elif controlID == self.MENU_LOAD_BUTTON_ID:
+            self.loadMenu()
+        elif controlID == self.MENU_PLAY_BUTTON_ID:
+            self.test()
+        elif controlID == self.MENU_THEME_BUTTON_ID:
+            self.themeMenu()
+        elif controlID == self.MENU_CONDITIONS_BUTTON_ID:
+            self.setAttributes()
+        elif controlID == self.MENU_SEQUENCE_ACTIVE_BUTTON_ID:
+            val = not self.sequenceData.active
+            self.sequenceData.active = val
+            kodiutil.setGlobalProperty('ACTIVE', self.sequenceData.active and '1' or '0')
+            self.modified = True
+        elif controlID == self.MENU_SHOW_OPTION_BUTTON_ID:
+            self.sequenceData.visibleInDialog(not self.sequenceData.visibleInDialog())
+            kodiutil.setGlobalProperty('sequence.visible.dialog', self.sequenceData.visibleInDialog() and "1" or "")
+            self.modified = True
+        elif controlID == self.MENU_EDIT_SEQ_NAME_ID:
+            name = xbmcgui.Dialog().input(T(32616, 'Rename current sequence'), self.sequenceData.name)
+            if not name:
+                return
+            self.sequenceData.name = name
+            self.setName(name)
+            self.modified = True
+
+
+    def loadMenu(self):
+        options = [('load', 'Load'), ('import', 'Import')]
+
+        idx = xbmcgui.Dialog().select('Loading Options', [x[1] for x in options])
         if idx < 0:
             return
-        option = options[idx][0]
 
-        if option == 'settings':
-            self.settings()
-        elif option == 'new':
-            self.new()
-        elif option == 'save':
-            self.save()
-        elif option == 'saveas':
-            self.save(as_new=True)
-        elif option == 'load':
+        choice = options[idx][0]
+
+        if choice == 'load':
             self.load()
-        elif option == 'import':
+        elif choice == 'import':
             self.load(import_=True)
-        elif option == 'export':
+
+    def saveMenu(self):
+        options = [('save', 'Save'), ('saveas', 'Save as...'), ('export', 'Export')]
+
+        idx = xbmcgui.Dialog().select('Loading Options', [x[1] for x in options])
+        if idx < 0:
+            return
+
+        choice = options[idx][0]
+
+        if choice == 'save':
+            self.save()
+        elif choice == 'saveas':
+            self.save(as_new=True)
+        elif choice == 'export':
             self.save(export=True)
-        elif option == 'attributes':
-            self.sequenceOptions()
-        elif option == 'test':
-            self.test()
+
+    def themeMenu(self):
+        themes = sorted(self.getThemes(os.path.join(kodiutil.ADDON_PATH, 'resources', 'themes')), key=lambda x: x["theme.path"])
+        if kodiutil.getPathSetting('content.path'):
+            themes += self.getThemes()
+
+        idx = xbmcgui.Dialog().select('Choose Theme', [x['theme.name'] for x in themes])
+        if idx < 0:
+            return False
+
+        cvutil.setTheme(themes[idx]['theme.path'])
+
+        for mli in self.sequenceControl:
+            if mli.getProperty('theme.path'):
+                mli.setProperty('theme.path', cvutil.THEME['theme.path'])
+
+        self.itemOptionsControl.reset()
+        self.addItemControl.reset()
+        self.fillOptions()
+
+    def getThemes(self, themes_path=None):
+        themesPath = themes_path or cinemavision.util.pathJoin(kodiutil.getPathSetting('content.path'), 'Themes')
+        themePaths = [cinemavision.util.pathJoin(themesPath, p) for p in cinemavision.util.vfs.listdir(themesPath)]
+
+        themes = []
+        for tp in themePaths:
+            cfg = cinemavision.util.pathJoin(tp, 'theme.json')
+            try:
+                with cinemavision.util.vfs.File(cfg, 'r') as f:
+                    themeInfo = json.loads(f.read().decode('utf-8'))
+                    themeInfo['theme.path'] = tp + '/'
+                themes.append(themeInfo)
+            except Exception:
+                kodiutil.ERROR('Failed to load: {0}'.format(kodiutil.strRepr(cfg)))
+
+        return themes
 
     def settings(self):
         kodiutil.ADDON.openSettings()
@@ -810,29 +989,6 @@ class SequenceEditorWindow(kodigui.BaseWindow):
         e = experience.ExperiencePlayer().create(from_editor=True)
         e.start(savePath)
 
-    def sequenceOptions(self):
-        while True:
-            options = []
-            options.append(('conditions', 'Conditions: [B]{0}[/B]'.format(self.sequenceData._attrs.get('active') and 'ACTIVE' or 'INACTIVE')))
-            options.append((
-                'show_in_dialog',
-                'Show in selection dialog: [B]{0}[/B]'.format(self.sequenceData._settings.get('show_in_dialog') == False and 'NO' or 'YES')
-            ))
-            options.append(('close', '[B]Close[/B]'))
-
-            idx = xbmcgui.Dialog().select(T(32612, 'Sequence settings'), [o[1] for o in options])
-            if idx < 0:
-                return
-            option = options[idx][0]
-
-            if option == 'close':
-                return
-            elif option == 'conditions':
-                self.setAttributes()
-            elif option == 'show_in_dialog':
-                self.sequenceData.visibleInDialog(not self.sequenceData.visibleInDialog())
-                self.modified = True
-
     def setAttributes(self):
         self.modified = seqattreditor.setAttributes(self.sequenceData) or self.modified
 
@@ -854,24 +1010,26 @@ class SequenceEditorWindow(kodigui.BaseWindow):
         self.sequenceData = cinemavision.sequence.SequenceData()
         self.setName('')
         kodiutil.setGlobalProperty('ACTIVE', self.sequenceData.active and '1' or '0')
+        kodiutil.setGlobalProperty('sequence.visible.dialog', self.sequenceData.visibleInDialog() and "1" or "")
         self.sequenceControl.reset()
         self.fillSequence()
-        self.setFocusId(self.ADD_ITEM_LIST_ID)
 
-    def savePath(self, path=None, name=None):
-        name = name or self.name
+    def savePath(self, path=None, pathName=None):
+        if pathName is None and self.sequenceData is not None:
+            pathName = self.sequenceData.pathName
+
         if not path:
-            contentPath = kodiutil.getSetting('content.path')
+            contentPath = kodiutil.getPathSetting('content.path')
             if not contentPath:
                 return
 
             path = cinemavision.util.pathJoin(contentPath, 'Sequences')
 
-        if not name or not path:
+        if not pathName or not path:
             return None
-        if name.endswith('.cvseq'):
-            name = name[:-6]
-        return cinemavision.util.pathJoin(path, name) + '.cvseq'
+        if pathName.endswith('.cvseq'):
+            pathName = pathName[:-6]
+        return cinemavision.util.pathJoin(path, pathName) + '.cvseq'
 
     def setName(self, name):
         self.name = name
@@ -886,24 +1044,21 @@ class SequenceEditorWindow(kodigui.BaseWindow):
             if not path:
                 return
         else:
-            contentPath = kodiutil.getSetting('content.path')
+            contentPath = kodiutil.getPathSetting('content.path')
             if not contentPath:
                 xbmcgui.Dialog().ok(T(32503, 'No Content Path'), ' ', T(32553, 'Please set the content path in addon settings.'))
                 return
 
             path = cinemavision.util.pathJoin(contentPath, 'Sequences')
 
-        name = self.name
+        pathName = self.sequenceData.pathName
 
-        if not name or as_new or export:
-            name = xbmcgui.Dialog().input(T(32554, 'Enter name for file'), name)
-            if not name:
+        if not pathName or as_new or export:
+            pathName = xbmcgui.Dialog().input(T(32554, 'Enter name for file'), pathName)
+            if not pathName:
                 return
 
-            if not export:
-                self.setName(name)
-
-        fullPath = self.savePath(path, name)
+        fullPath = self.savePath(path, pathName)
 
         self._save(fullPath, temp=export)
 
@@ -956,6 +1111,7 @@ class SequenceEditorWindow(kodigui.BaseWindow):
 
         if not temp:
             self.modified = False
+            self.setName(self.sequenceData.name)
             self.saveDefault()
 
             # sequence2D = kodiutil.getSetting('sequence.2D')
@@ -989,9 +1145,9 @@ class SequenceEditorWindow(kodigui.BaseWindow):
 
         sep = cinemavision.util.getSep(path)
 
-        self.path, name = path.rsplit(sep, 1)
+        self.path, pathName = path.rsplit(sep, 1)
         self.path += sep
-        self.setName(name.rsplit('.', 1)[0])
+        self.setName(self.sequenceData.name)
 
         self.saveDefault()
 
@@ -1030,30 +1186,34 @@ class SequenceEditorWindow(kodigui.BaseWindow):
 
         self.sequenceData = sData
         kodiutil.setGlobalProperty('ACTIVE', self.sequenceData.active and '1' or '0')
+        kodiutil.setGlobalProperty('sequence.visible.dialog', self.sequenceData.visibleInDialog() and "1" or "")
         self.addItems(sData)
 
         if self.sequenceControl.positionIsValid(1):
             self.selectSequenceItem(1)
-            self.setFocusId(self.ITEM_OPTIONS_LIST_ID)
         else:
             self.selectSequenceItem(0)
-            self.setFocusId(self.ADD_ITEM_LIST_ID)
 
         self.modified = False
 
     def saveDefault(self, force=True):
-        if (not self.name or not self.path) and not force:
+        if (self.sequenceData is None or not self.path) and not force:
             return
-        kodiutil.setSetting('save.name', self.name)
+
+        savePathName = ''
+        if self.sequenceData is not None:
+            savePathName = self.sequenceData.pathName
+
         kodiutil.setSetting('save.path', self.path)
+        kodiutil.setSetting('save.path.name', savePathName)
 
     def loadDefault(self):
-        self.setName(kodiutil.getSetting('save.name', ''))
+        savePathName = kodiutil.getSetting('save.path.name', '')
 
-        if not self.name:
+        if not savePathName:
             savePath = self.defaultSavePath()
         else:
-            savePath = self.savePath()
+            savePath = self.savePath(pathName=savePathName)
             if not xbmcvfs.exists(savePath):
                 self.setName('')
                 self.saveDefault(force=True)
@@ -1067,7 +1227,6 @@ class SequenceEditorWindow(kodigui.BaseWindow):
                 )
                 if new:
                     self.setName('')
-                    self.setFocusId(self.ADD_ITEM_LIST_ID)
                     return
                 else:
                     savePath = self.defaultSavePath()
@@ -1075,13 +1234,16 @@ class SequenceEditorWindow(kodigui.BaseWindow):
         kodiutil.DEBUG_LOG('Loading previous save: {0}'.format(savePath))
 
         self._load(savePath)
+        self.setName(self.sequenceData.name)
 
         kodiutil.DEBUG_LOG('Previous save loaded')
 
 
 def main():
+    cvutil.setTheme()
     kodiutil.setScope()
     kodiutil.setGlobalProperty('VERSION', kodiutil.ADDON.getAddonInfo('version'))
+    kodiutil.setGlobalProperty('option.hint', '')
     kodiutil.LOG('Sequence editor: OPENING')
     w = SequenceEditorWindow.open()
     del w

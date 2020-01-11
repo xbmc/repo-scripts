@@ -35,7 +35,7 @@ class SeqAttrEditorDialog(kodigui.BaseDialog):
 
     def fillAttributeList(self, update=False):
         self.options = []
-        self.options.append(('active', 'Active'))
+        # self.options.append(('active', 'Active'))
         self.options.append(('type', 'Type'))
         self.options.append(('ratings', 'Rating(s)'))
         self.options.append(('year', 'Year(s)'))
@@ -113,7 +113,7 @@ class SeqAttrEditorDialog(kodigui.BaseDialog):
 
     def updateItem(self, mli):
         o = mli.dataSource
-        label2 = '[COLOR FF80D0FF]ANY[/COLOR]'
+        label2 = 'ANY'
 
         try:
             if o[0] == 'active':
@@ -127,11 +127,11 @@ class SeqAttrEditorDialog(kodigui.BaseDialog):
                     parts = []
                     for d in data:
                         parts.append(self.getEntryDisplay(o[0], d))
-                    label2 = '[COLOR FF80D0FF],[/COLOR] '.join(parts)
+                    label2 = ', '.join(parts)
             elif o[0] in ('genres', 'studios', 'directors', 'actors', 'tags'):
                 items = self.sequenceData.get(o[0], [])
                 if items:
-                    label2 = '[COLOR FF80D0FF],[/COLOR] '.join(items)
+                    label2 = ', '.join(items)
         except Exception:
             kodiutil.ERROR()
 
@@ -201,13 +201,13 @@ class SeqAttrEditorDialog(kodigui.BaseDialog):
                 yStart = yStart or None
 
                 if itype == 'year':
-                    prefix = u'{0} [COLOR FF80D0FF]thru[/COLOR] '.format(yStart)
+                    prefix = u'{0} thru '.format(yStart)
                 elif itype == 'ratings':
-                    prefix = u'{0} [COLOR FF80D0FF]-[/COLOR] '.format(yStart)
+                    prefix = u'{0} - '.format(yStart)
                 elif itype == 'dates':
-                    prefix = u'{0} {1} [COLOR FF80D0FF]thru[/COLOR] '.format(calendar.month_abbr[yStart[0]], yStart[1])
+                    prefix = u'{0} {1} thru '.format(calendar.month_abbr[yStart[0]], yStart[1])
                 elif itype == 'times':
-                    prefix = u'{0:02d}:{1:02d} [COLOR FF80D0FF]thru[/COLOR] '.format(*yStart)
+                    prefix = u'{0:02d}:{1:02d} thru '.format(*yStart)
 
                 yEnd = func(yStart, remove=ret, disp='End', prefix=prefix)
                 if yEnd is None:

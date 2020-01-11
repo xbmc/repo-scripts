@@ -37,10 +37,18 @@ def showNoFeaturesDialog():
     )
 
 
-def featureComfirmationDialog(features):
-    pd = PlaylistDialog.open(features=features)
+def featureComfirmationDialog(features, args):
+    pd = PlaylistDialog.open(features=features, args=args)
     if not pd.play:
+        if pd.isIntercepted:
+            if pd.normalPlay:
+                xbmc.executebuiltin('PlayerControl(Play)')
+            else:
+                xbmc.executebuiltin('PlayerControl(Stop)')
         return None, None
+    else:
+        if pd.isIntercepted:
+            xbmc.executebuiltin('PlayerControl(Stop)')
 
     return pd.features, pd.sequencePath
 
@@ -48,6 +56,19 @@ def featureComfirmationDialog(features):
 def begin(movieid=None, episodeid=None, dbtype=None, selection=False, args=None):
     e = experience.ExperiencePlayer().create()
     seqPath = None
+
+    feature = None
+    if 'intercept' in args and len(args) >= 3:
+        if args[1] == 'movie':
+            feature = e.featureFromId(movieid=args[2])
+        elif args[1] == 'episode':
+            feature = e.featureFromId(episodeid=args[2])
+
+    if feature is not None:
+        if len(e.features) > 0:
+            e.features[0] = feature
+        else:
+            e.features.append(feature)
 
     if not e.hasFeatures() or selection or movieid or episodeid or dbtype:
         if dbtype:
@@ -61,7 +82,7 @@ def begin(movieid=None, episodeid=None, dbtype=None, selection=False, args=None)
 
     if not kodiutil.getSetting('hide.queue.dialog', False) or (kodiutil.getSetting('hide.queue.dialog.single', False) and len(e.features) > 1):
         if not args or 'nodialog' not in args:
-            e.features, seqPath = featureComfirmationDialog(e.features)
+            e.features, seqPath = featureComfirmationDialog(e.features, args)
 
     if not e.features:
         return
@@ -69,7 +90,8 @@ def begin(movieid=None, episodeid=None, dbtype=None, selection=False, args=None)
     if seqPath:
         kodiutil.DEBUG_LOG('Loading selected sequence: {0}'.format(repr(seqPath)))
     else:
-        feature = e.features[0]
+        if feature is None:
+            feature = e.features[0]
         seqData = cvutil.getMatchedSequence(feature)
         seqPath = seqData['path']
         kodiutil.DEBUG_LOG('Loading sequence for {0}: {1}'.format(feature.is3D and '3D' or '2D', repr(seqPath)))
@@ -96,12 +118,20 @@ class PlaylistDialog(kodigui.BaseDialog):
         kodigui.BaseDialog.__init__(self, *args, **kwargs)
         kodiutil.setScope()
         self.features = kwargs.get('features', [])
+        self.isIntercepted = 'intercept' in kwargs.get('args', [])
         self.play = False
+        self.normalPlay = False
         self.moving = None
         self.sequencePath = None
 
+        cvutil.setTheme()
+
     def onFirstInit(self):
         self.videoListControl = kodigui.ManagedControlList(self, self.VIDEOS_LIST_ID, 5)
+
+        if self.isIntercepted:
+            self.getControl(self.CANCEL_BUTTON_ID).setLabel("[B]PLAY NORMAL[/B]")
+
         self.start()
 
     def onClick(self, controlID):
@@ -109,6 +139,9 @@ class PlaylistDialog(kodigui.BaseDialog):
             self.play = True
             self.doClose()
         elif controlID == self.CANCEL_BUTTON_ID:
+            if self.isIntercepted:
+                self.normalPlay = True
+
             self.doClose()
         elif controlID == self.APPLY_BUTTON_ID:
             self.apply()

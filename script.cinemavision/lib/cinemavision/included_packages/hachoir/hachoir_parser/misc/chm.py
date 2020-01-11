@@ -133,7 +133,7 @@ class PMGL(FieldSet):
         num_quickref = (entry_count // quickref_frequency)
         if entry_count % quickref_frequency == 0:
             num_quickref -= 1
-        print self.current_size//8, quickref_frequency, num_quickref
+        print(self.current_size//8, quickref_frequency, num_quickref)
         padding = (self["free_space"].value - (num_quickref*2+2))
         if padding:
             yield PaddingBytes(self, "padding", padding)
@@ -239,7 +239,7 @@ class SystemEntry(FieldSet):
         yield RawBytes(self, "data", self["length"].value)
     def createDescription(self):
         return '#SYSTEM Entry, Type %s'%self["type"].display
-        
+
 class SystemFile(FieldSet):
     def createFields(self):
         yield UInt32(self, "version", "Either 2 or 3")

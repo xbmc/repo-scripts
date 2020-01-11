@@ -114,6 +114,12 @@ def getSetting(key, default=None):
     return _processSetting(setting, default)
 
 
+def getPathSetting(key, default=None):
+    path = getSetting(key, default)
+    if path and path.startswith('special://'):
+        return xbmc.translatePath(path)
+    return path
+
 def _processSetting(setting, default):
     if not setting:
         return default

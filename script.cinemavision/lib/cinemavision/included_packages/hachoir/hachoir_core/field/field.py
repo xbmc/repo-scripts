@@ -89,7 +89,7 @@ class Field(Logger):
                 if isinstance(self._description, str):
                     self._description = makePrintable(
                         self._description, "ISO-8859-1", to_unicode=True)
-            except HACHOIR_ERRORS, err:
+            except HACHOIR_ERRORS as err:
                 self.error("Error getting description: " + unicode(err))
                 self._description = ""
         return self._description
@@ -111,7 +111,7 @@ class Field(Logger):
     def _getValue(self):
         try:
             value = self.createValue()
-        except HACHOIR_ERRORS, err:
+        except HACHOIR_ERRORS as err:
             self.error(_("Unable to create value: %s") % unicode(err))
             value = None
         self._getValue = lambda: value
@@ -128,7 +128,7 @@ class Field(Logger):
         if not hasattr(self, "_Field__display"):
             try:
                 self.__display = self.createDisplay()
-            except HACHOIR_ERRORS, err:
+            except HACHOIR_ERRORS as err:
                 self.error("Unable to create display: %s" % err)
                 self.__display = u""
         return self.__display
@@ -145,7 +145,7 @@ class Field(Logger):
         if not hasattr(self, "_Field__raw_display"):
             try:
                 self.__raw_display = self.createRawDisplay()
-            except HACHOIR_ERRORS, err:
+            except HACHOIR_ERRORS as err:
                 self.error("Unable to create raw display: %s" % err)
                 self.__raw_display = u""
         return self.__raw_display

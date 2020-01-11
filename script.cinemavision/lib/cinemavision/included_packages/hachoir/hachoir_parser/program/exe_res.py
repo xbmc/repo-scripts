@@ -366,7 +366,7 @@ class PE_Resource(SeekableFieldSet):
                         if field.__class__ == Directory:
                             newsubdirs.append(field)
                         yield field
-                except HACHOIR_ERRORS, err:
+                except HACHOIR_ERRORS as err:
                     self.error("Unable to create directory %s: %s" % (name, err))
             subdirs = newsubdirs
             alldirs.extend(subdirs)
@@ -398,7 +398,7 @@ class PE_Resource(SeekableFieldSet):
                 if padding:
                     yield padding
                 yield ResourceContent(self, "content[]", entry)
-            except HACHOIR_ERRORS, err:
+            except HACHOIR_ERRORS as err:
                 self.warning("Error when parsing entry %s: %s" % (entry.path, err))
 
         size = (self.size - self.current_size) // 8

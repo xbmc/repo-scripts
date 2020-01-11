@@ -148,7 +148,7 @@ class OutputStream(object):
             self._output.seek(0)
             try:
                 return self._output.read(nbytes)
-            except IOError, err:
+            except IOError as err:
                 if err[0] == EBADF:
                     raise OutputStreamError("Stream doesn't support read() operation")
         finally:

@@ -6,8 +6,8 @@
         <posx>0</posx>
         <posy>0</posy>
     </coordinates>
-    <animation effect="zoom" end="74.074074074,74.074074074" center="960,540" time="0" condition="!IsEmpty(Window(10000).Property(script.cinemavision.scope.2.40:1))">Conditional</animation>
-    <animation effect="zoom" end="75.925925926,75.925925926" center="960,540" time="0" condition="!IsEmpty(Window(10000).Property(script.cinemavision.scope.2.35:1))">Conditional</animation>
+    <animation effect="zoom" end="74.074074074,74.074074074" center="960,540" time="0" condition="!String.IsEmpty(Window(10000).Property(script.cinemavision.scope.2.40:1))">Conditional</animation>
+    <animation effect="zoom" end="75.925925926,75.925925926" center="960,540" time="0" condition="!String.IsEmpty(Window(10000).Property(script.cinemavision.scope.2.35:1))">Conditional</animation>
     <controls>
         <control type="image">
             <animation effect="fade" start="0" end="100" time="200">WindowOpen</animation>
@@ -29,7 +29,7 @@
                 <posx>-20</posx>
                 <posy>-20</posy>
                 <width>1360</width>
-                <height>980</height>
+                <height>900</height>
                 <texture>script.cinemavision-white_square.png</texture>
                 <colordiffuse>60000000</colordiffuse>
                 <aspectratio>stretch</aspectratio>
@@ -38,7 +38,7 @@
                 <posx>-5</posx>
                 <posy>-5</posy>
                 <width>1330</width>
-                <height>950</height>
+                <height>870</height>
                 <texture>script.cinemavision-white_square.png</texture>
                 <colordiffuse>FFA0A0A0</colordiffuse>
                 <aspectratio>stretch</aspectratio>
@@ -47,7 +47,7 @@
                 <posx>0</posx>
                 <posy>0</posy>
                 <width>1320</width>
-                <height>940</height>
+                <height>860</height>
                 <texture>script.cinemavision-white_square.png</texture>
                 <colordiffuse>FF303030</colordiffuse>
                 <aspectratio>stretch</aspectratio>
@@ -59,7 +59,7 @@
                     <posx>20</posx>
                     <posy>20</posy>
                     <width>1280</width>
-                    <height>940</height>
+                    <height>860</height>
                     <scrolltime>200</scrolltime>
                     <orientation>vertical</orientation>
                     <!-- <onleft>201</onleft>
@@ -93,7 +93,7 @@
                             <width>840</width>
                             <height>60</height>
                             <font>font20</font>
-                            <textcolor>FFAAAAFF</textcolor>
+                            <textcolor>$INFO[Window(10000).Property(script.cinemavision.theme.color.setting)]</textcolor>
                             <align>left</align>
                             <aligny>center</aligny>
                             <label>$INFO[ListItem.Label2]</label>
@@ -138,7 +138,7 @@
                                 <width>840</width>
                                 <height>60</height>
                                 <font>font20</font>
-                                <textcolor>FFAAAAFF</textcolor>
+                                <textcolor>$INFO[Window(10000).Property(script.cinemavision.theme.color.setting)]</textcolor>
                                 <align>left</align>
                                 <aligny>center</aligny>
                                 <label>$INFO[ListItem.Label2]</label>

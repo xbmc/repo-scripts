@@ -1,5 +1,18 @@
 Changelog for CinemaVision
 
+[- 1.1.1 -]
+
+- change:  Enhanced user interface
+- add:     Ability to change interface theme
+- add:     TMDB trailer scraper
+- fix:     Compatibility fixes for Kodi v18
+- add:     Actions: Added ID to http requests to help match request to response
+- add:     Actions: Improve sleep:// handling
+- add:     Actions: Improve testing
+- change:  Actions: python:// is now used for inline python statements, script:// for executing a python file
+- add:     Trailers: Content scraper will now read genre and rating from .nfo files
+- add:     Support for special:// content paths - Issue #124
+
 [- 1.1.0 -]
 
 - add:     Added 'Sequence settings' option to context menu

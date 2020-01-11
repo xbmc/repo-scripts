@@ -58,6 +58,9 @@ class Trailer:
 
 
 class Scraper:
+    ONLY_KEEP_VERIFIED = True
+    REMOVE_DAYS_OLD = None
+
     @staticmethod
     def getPlayableURL(ID, res='720p', url=None):
         return url

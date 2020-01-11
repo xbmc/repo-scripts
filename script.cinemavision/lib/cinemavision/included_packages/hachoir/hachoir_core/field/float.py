@@ -58,7 +58,7 @@ def floatFactory(name, format, mantissa_bits, exponent_bits, doc):
                     self.absolute_address, self._size//8)
                 try:
                     return struct.unpack(self.struct_format, raw)[0]
-                except struct.error, err:
+                except struct.error as err:
                     raise ValueError("[%s] conversion error: %s" %
                         (self.__class__.__name__, err))
             else:
