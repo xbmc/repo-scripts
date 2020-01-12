@@ -97,7 +97,7 @@
                         <font>font25_title</font>
                         <textcolor>eeffffff</textcolor>
                         <shadowcolor>00000000</shadowcolor>
-                        <label>$ADDON[service.upnext 30008] $ADDON[service.upnext 30036] [COLOR FFFF4081]$INFO[Player.TimeRemaining(ss),,][/COLOR] $ADDON[service.upnext 30035]</label>
+                        <label>$ADDON[service.upnext 30036]</label>
                         <visible>!Integer.IsGreater(Player.TimeRemaining,59)</visible>
                     </control>
                     <control type="label">
@@ -133,7 +133,7 @@
                             <font>font12</font>
                             <textcolor>eeffffff</textcolor>
                             <shadowcolor>00000000</shadowcolor>
-                            <label>$INFO[Window.Property(year),,   ]</label>
+                            <label>$INFO[Window.Property(year),(,)   ]</label>
                             <visible>!String.IsEmpty(Window.Property(year))</visible>
                         </control>
                         <control type="image">
@@ -205,6 +205,32 @@
                         <aspect>keep</aspect>
                         <texture colordiffuse="ddffffff">nextupicons/00.png</texture>
                         <animation effect="slide" end="13,-5" time="0" condition="true">Conditional</animation>
+                    </control>
+                    <control type="group">
+                        <visible>!Window.IsVisible(extendedprogressdialog)</visible>
+                        <animation effect="fade" time="150">VisibleChange</animation>
+                        <control type="label">
+                            <font>font_clock</font>
+                            <shadowcolor>text_shadow</shadowcolor>
+                            <top>0</top>
+                            <right>20</right>
+                            <height>200</height>
+                            <width>600</width>
+                            <align>right</align>
+                            <label>$INFO[System.Time]</label>
+                        </control>
+                        <control type="label">
+                            <right>24</right>
+                            <top>74</top>
+                            <width>800</width>
+                            <height>100</height>
+                            <align>right</align>
+                            <itemgap>5</itemgap>
+                            <orientation>horizontal</orientation>
+                            <usecontrolcoords>true</usecontrolcoords>
+                            <label>$ADDON[service.upnext 30009]</label>
+                            <shadowcolor>text_shadow</shadowcolor>
+                        </control>
                     </control>
                 </control>
             </control>

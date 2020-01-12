@@ -4,7 +4,7 @@
 # Addon Provider: sualfred
 # Translators:
 # Andrea Matesi <andreamatesi@gmail.com>, 2019
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: Metadata Editor\n"
@@ -128,12 +128,12 @@ msgctxt "#32021"
 msgid "Enable .nfo updating for movies, TV shows and music videos"
 msgstr "Attiva aggiornamento .nfo per film, serie TV e video musicali"
 
-#: /resources/lib/dialog_metadata.py
+#: /resources/lib/editor.py
 msgctxt "#32022"
 msgid "value unkown (missing Kodi feature)"
 msgstr "valore sconosciuto (funzionalità Kodi mancante)"
 
-#: /resources/lib/dialog_metadata.py
+#: /resources/lib/editor.py
 msgctxt "#32023"
 msgid "Record label"
 msgstr "Casa discografica"
@@ -233,7 +233,7 @@ msgctxt "#32039"
 msgid "Update ratings"
 msgstr "Aggiorna valutazioni"
 
-#: /resources/lib/dialog_metadata.py
+#: /resources/lib/editor.py
 msgctxt "#32040"
 msgid "Edit data for"
 msgstr "Modifica dati per"
@@ -268,7 +268,7 @@ msgctxt "#32046"
 msgid "Updating episode ratings"
 msgstr "Aggiornamento valutazione episodi"
 
-#: /resources/lib/dialog_metadata.py
+#: /resources/lib/editor.py
 msgctxt "#32047"
 msgid "No default source defined"
 msgstr "Nessuna sorgente definita"

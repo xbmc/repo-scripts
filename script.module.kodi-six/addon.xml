@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addon id="script.module.kodi-six"
        name="Kodi Six"
-       version="0.1.2"
+       version="0.1.3"
        provider-name="Roman V.M.">
   <requires>
     <import addon="xbmc.python" version="2.26.0"/>
@@ -17,13 +17,7 @@
     <assets>
       <icon>icon.png</icon>
     </assets>
-    <news>0.1.2:
-- Use different method for Unicode error handling.
-0.1.1:
-- Fixed UnicodeDecodeErrors when Kodi API returns non-UTF-8 byte strings.
-0.1.0:
-- Implemented lazy patching of Kodi API functions and classes.
-0.0.3:
-- Added xbmcdrm module.</news>
+    <news>0.1.3:
+- Fix non-UTF-8 byte string decoding in Python 2.</news>
   </extension>
 </addon>

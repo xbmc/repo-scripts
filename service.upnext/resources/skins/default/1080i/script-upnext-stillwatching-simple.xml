@@ -59,7 +59,7 @@
                             <pulseonselect>no</pulseonselect>
                         </control>
                         <control type="button" id="11">
-                            <label>    $ADDON[service.upnext 30010] $ADDON[service.upnext 30036] [COLOR FFFF4081]$INFO[Player.TimeRemaining(ss),,][/COLOR] $ADDON[service.upnext 30035]</label>
+                            <label>    $ADDON[service.upnext 30035]</label>
                             <onclick>SendClick(3012)</onclick>
                             <visible>!Integer.IsGreater(Player.TimeRemaining,59)</visible>
                             <height>56</height>
@@ -104,7 +104,7 @@
                             <font>font32_title</font>
                             <textcolor>eeffffff</textcolor>
                             <shadowcolor>00000000</shadowcolor>
-                            <label>[CAPITALIZE]$ADDON[service.upnext 30024][/CAPITALIZE]</label>
+                            <label>$ADDON[service.upnext 30024]</label>
                         </control>
                     </control>
                     <control type="image">

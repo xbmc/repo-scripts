@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: service.upnext\n"
 "Report-Msgid-Bugs-To: https://github.com/im85288/service.upnext\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2018-02-26 13:31+0000\n"
+"PO-Revision-Date: 2020-01-15 09:09+0100\n"
 "Last-Translator: Kévin Commaille <zecakeh@pm.me>\n"
 "Language-Team: Français\n"
 "MIME-Version: 1.0\n"
@@ -19,26 +19,7 @@ msgstr ""
 "Language: fr\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-msgctxt "#30001"
-msgid "The number of seconds before the end to show the notification"
-msgstr "Le nombre de secondes avant la fin pour afficher la notification"
-
-msgctxt "#30002"
-msgid "Log Level:"
-msgstr "Niveau de journalisation :"
-
-msgctxt "#30003"
-msgid "Settings"
-msgstr "Réglages"
-
-msgctxt "#30004"
-msgid "Advanced"
-msgstr "Avancé"
-
-msgctxt "#30005"
-msgid "Default action when nothing selected"
-msgstr "Action par défaut lorsque rien n’est sélectionné"
-
+### APPLICATION
 msgctxt "#30006"
 msgid "Watch Now"
 msgstr "Regarder maintenant"
@@ -48,52 +29,16 @@ msgid "Up Next"
 msgstr "À suivre"
 
 msgctxt "#30009"
-msgid "Number of episodes before still watching query"
-msgstr "Nombre d’épisodes avant la demande « Vous regardez toujours »"
+msgid "Ends at: $INFO[Window.Property(endtime)]"
+msgstr "Fin à : $INFO[Window.Property(endtime)]"
 
 msgctxt "#30010"
 msgid "Continue watching"
 msgstr "Continuer à regarder"
 
-msgctxt "#30013"
-msgid "Include watched episodes"
-msgstr "Inclure les épisodes visionnés"
-
-msgctxt "#30014"
-msgid "Disable Up Next (restart required)"
-msgstr "Désactiver Up Next (redémarrage requis)"
-
-msgctxt "#30017"
-msgid "Automatically play short videos"
-msgstr "Lire automatiquement de courtes vidéos"
-
-msgctxt "#30018"
-msgid "Maximum length for automatic short video play (in minutes)"
-msgstr "Durée maximale pour la lecture automatique de vidéos courtes (en minutes)"
-
-msgctxt "#30019"
-msgid "Show on-screen notification during short video autoplay"
-msgstr "Afficher la notification à l’écran pendant la lecture automatique de vidéos courtes"
-
 msgctxt "#30024"
 msgid "Still there?"
 msgstr "Toujours là ?"
-
-msgctxt "#30025"
-msgid "Set the display mode for the notifications"
-msgstr "Définir le mode d’affichage des notifications"
-
-msgctxt "#30028"
-msgid "Developer"
-msgstr "Développeur"
-
-msgctxt "#30029"
-msgid "Enable developer mode"
-msgstr "Activer le mode développeur"
-
-msgctxt "#30030"
-msgid "Choose the window to be shown"
-msgstr "Choisir la fenêtre à afficher"
 
 msgctxt "#30032"
 msgid "Enable on playlists"
@@ -108,16 +53,16 @@ msgid "Close"
 msgstr "Fermer"
 
 msgctxt "#30035"
-msgid "seconds"
-msgstr "secondes"
+msgid "Continue watching in [COLOR FFFF4081]$INFO[Window.Property(remaining)][/COLOR] seconds"
+msgstr "Continuer à regarder dans [COLOR FFFF4081]$INFO[Window.Property(remaining)][/COLOR] secondes"
 
 msgctxt "#30036"
-msgid "in"
-msgstr "dans"
+msgid "Up next in [COLOR FFFF4081]$INFO[Window.Property(remaining)][/COLOR] seconds"
+msgstr "À suivre dans [COLOR FFFF4081]$INFO[Window.Property(remaining)][/COLOR] secondes"
 
 msgctxt "#30037"
-msgid "Next Episode in"
-msgstr "Prochain épisode dans"
+msgid "Next episode in [COLOR FFFF4081]$INFO[Window.Property(remaining)][/COLOR] seconds"
+msgstr "Prochain épisode dans [COLOR FFFF4081]$INFO[Window.Property(remaining)][/COLOR] secondes"
 
 msgctxt "#30038"
 msgid "Simple"
@@ -128,12 +73,12 @@ msgid "Fancy"
 msgstr "Riche"
 
 msgctxt "#30040"
-msgid "Play"
+msgid "Play next"
 msgstr "Lire"
 
 msgctxt "#30041"
-msgid "Don't Play"
-msgstr "Ne pas lire"
+msgid "Stop playing"
+msgstr "Arrêter la lecture"
 
 msgctxt "#30042"
 msgid "None"
@@ -147,26 +92,112 @@ msgctxt "#30044"
 msgid "Debug"
 msgstr "Débogage"
 
-msgctxt "#30045"
-msgid "UpNext"
-msgstr "UpNext"
-
-msgctxt "#30046"
-msgid "UpNextSimple"
-msgstr "UpNextSimple"
-
-msgctxt "#30047"
-msgid "StillWatching"
-msgstr "StillWatching"
-
-msgctxt "#30048"
-msgid "StillWatchingSimple"
-msgstr "StillWatchingSimple"
-
 msgctxt "#30049"
 msgid "Next Episode"
 msgstr "Prochain épisode"
 
-msgctxt "#30050"
-msgid "Stop playback when closing dialog"
-msgstr "Arrêter la lecture à la fermeture de la boîte de dialogue"
+
+### SETTINGS
+msgctxt "#30500"
+msgid "Interface"
+msgstr "Interface"
+
+msgctxt "#30501"
+msgid "Features"
+msgstr "Fonctionnalités"
+
+msgctxt "#30503"
+msgid "Set the display mode for the notifications"
+msgstr "Définir le mode d’affichage des notifications"
+
+msgctxt "#30505"
+msgid "Show a \"Stop\" button instead of a \"Close\" button"
+msgstr "Afficher un bouton Arrêter au lieu d’un bouton Fermer"
+
+msgctxt "#30600"
+msgid "Behaviour"
+msgstr "Comportement"
+
+msgctxt "#30601"
+msgid "Features"
+msgstr "Fonctionnalités"
+
+msgctxt "#30603"
+msgid "Default action when nothing selected"
+msgstr "Action par défaut lorsque rien n’est sélectionné"
+
+msgctxt "#30605"
+msgid "Include already watched episodes"
+msgstr "Inclure les épisodes visionnés"
+
+msgctxt "#30607"
+msgid "Number of episodes before \"Still there?\" query"
+msgstr "Nombre d’épisodes avant la demande « Vous regardez toujours ? »"
+
+msgctxt "#30609"
+msgid "Duration in seconds for notification to be shown"
+msgstr "Durée d’affichage de la notification en secondes"
+
+msgctxt "#30611"
+msgid "Customize autoplay duration by episode length"
+msgstr "Personnaliser la durée de la lecture automatique en fonction de la longueur de l’épisode"
+
+msgctxt "#30613"
+msgid "All episodes  [COLOR gray]any length[/COLOR]"
+msgstr "Tous les épisodes  [COLOR gray]quelque soit la durée[/COLOR]"
+
+msgctxt "#30615"
+msgid "Very short episodes  [COLOR gray]< 10 mins[/COLOR]"
+msgstr "Épdisodes très courts  [COLOR gray]< 10 min[/COLOR]"
+
+msgctxt "#30617"
+msgid "Short episodes  [COLOR gray]> 10 mins[/COLOR]"
+msgstr "Épisodes courts  [COLOR gray]> 10 min[/COLOR]"
+
+msgctxt "#30619"
+msgid "Medium episodes  [COLOR gray]> 20 mins[/COLOR]"
+msgstr "Épisodes moyens  [COLOR gray]> 20 min[/COLOR]"
+
+msgctxt "#30621"
+msgid "Long episodes  [COLOR gray]> 40 mins[/COLOR]"
+msgstr "Épisodes longs  [COLOR gray]> 40 min[/COLOR]"
+
+msgctxt "#30623"
+msgid "Very long episodes  [COLOR gray]> 60 mins[/COLOR]"
+msgstr "Épisodes très longs  [COLOR gray]> 60 min[/COLOR]"
+
+msgctxt "#30700"
+msgid "Expert"
+msgstr "Expert"
+
+msgctxt "#30703"
+msgid "Disable Up Next"
+msgstr "Désactiver Up Next"
+
+msgctxt "#30705"
+msgid "Log level"
+msgstr "Niveau de journalisation"
+
+msgctxt "#30800"
+msgid "Developer"
+msgstr "Développeur"
+
+msgctxt "#30801"
+msgid "Test how the user interface looks"
+msgstr "Tester l’apparence de l’interface utilisateur"
+
+msgctxt "#30805"
+msgid "Show an UpNext pop-up…"
+msgstr "Afficher une notification UpNext…"
+
+msgctxt "#30807"
+msgid "Show an UpNextSimple pop-up…"
+msgstr "Afficher une notification UpNextSimple…"
+
+msgctxt "#30809"
+msgid "Show a StillWatching pop-up…"
+msgstr "Afficher une notification StillWatching…"
+
+msgctxt "#30811"
+msgid "Show a StillWatchingSimple pop-up…"
+msgstr "Afficher une notification StillWatchingSimple…"

@@ -2,17 +2,17 @@
 # GNU General Public License v2.0 (see COPYING or https://www.gnu.org/licenses/gpl-2.0.txt)
 
 from __future__ import absolute_import, division, unicode_literals
-from datetime import datetime, timedelta
-import xbmc
-from . import pages
-from . import utils
-from .api import Api
-from .player import Player
-from .playitem import PlayItem
-from .state import State
+from xbmc import sleep
+from api import Api
+from player import Player
+from playitem import PlayItem
+from state import State
+from stillwatching import StillWatching
+from upnext import UpNext
+from utils import addon_path, calculate_progress_steps, clear_property, event, get_setting, log as ulog, set_property
 
 
-class PlaybackManager:  # pylint: disable=invalid-name
+class PlaybackManager:
     _shared_state = {}
 
     def __init__(self):
@@ -23,7 +23,7 @@ class PlaybackManager:  # pylint: disable=invalid-name
         self.player = Player()
 
     def log(self, msg, level=2):
-        utils.log(msg, name=self.__class__.__name__, level=level)
+        ulog(msg, name=self.__class__.__name__, level=level)
 
     def launch_up_next(self):
         playlist_item = True
@@ -45,13 +45,22 @@ class PlaybackManager:  # pylint: disable=invalid-name
         include_play_count = True if self.state.include_watched else no_play_count
         if not include_play_count or self.state.current_episode_id == episode_id:
             return
+
         # We have a next up episode choose mode
-        next_up_page, still_watching_page = pages.set_up_pages()
-        showing_next_up_page, showing_still_watching_page, total_time = (
-            self.show_popup_and_wait(episode, next_up_page, still_watching_page))
-        should_play_default, should_play_non_default = (
-            self.extract_play_info(next_up_page, showing_next_up_page, showing_still_watching_page,
-                                   still_watching_page, total_time))
+        if get_setting('simpleMode') == '0':
+            next_up_page = UpNext('script-upnext-upnext-simple.xml', addon_path(), 'default', '1080i')
+            still_watching_page = StillWatching('script-upnext-stillwatching-simple.xml', addon_path(), 'default', '1080i')
+        else:
+            next_up_page = UpNext('script-upnext-upnext.xml', addon_path(), 'default', '1080i')
+            still_watching_page = StillWatching('script-upnext-stillwatching.xml', addon_path(), 'default', '1080i')
+
+        showing_next_up_page, showing_still_watching_page = self.show_popup_and_wait(episode,
+                                                                                     next_up_page,
+                                                                                     still_watching_page)
+        should_play_default, should_play_non_default = self.extract_play_info(next_up_page,
+                                                                              showing_next_up_page,
+                                                                              showing_still_watching_page,
+                                                                              still_watching_page)
         if not self.state.track:
             self.log('exit launch_popup early due to disabled tracking', 2)
             return
@@ -62,83 +71,85 @@ class PlaybackManager:  # pylint: disable=invalid-name
 
         self.log('playing media episode', 2)
         # Signal to trakt previous episode watched
-        utils.event(message='NEXTUPWATCHEDSIGNAL', data=dict(episodeid=self.state.current_episode_id), encoding='base64')
-        # Play media
+        event(message='NEXTUPWATCHEDSIGNAL', data=dict(episodeid=self.state.current_episode_id), encoding='base64')
         if playlist_item:
+            # Play playlist media
             self.player.seekTime(self.player.getTotalTime())
         elif self.api.has_addon_data():
+            # Play add-on media
             self.api.play_addon_item()
         else:
+            # Play local media
             self.api.play_kodi_item(episode)
 
     def show_popup_and_wait(self, episode, next_up_page, still_watching_page):
-        play_time = self.player.getTime()
-        total_time = self.player.getTotalTime()
-        progress_step_size = utils.calculate_progress_steps(total_time - play_time)
-        episode_runtime = episode.get('runtime') is not None
+        try:
+            play_time = self.player.getTime()
+            total_time = self.player.getTotalTime()
+        except RuntimeError:
+            self.log('exit early because player is no longer running', 2)
+            return False, False
+        progress_step_size = calculate_progress_steps(total_time - play_time)
         next_up_page.set_item(episode)
         next_up_page.set_progress_step_size(progress_step_size)
         still_watching_page.set_item(episode)
         still_watching_page.set_progress_step_size(progress_step_size)
-        played_in_a_row_number = utils.settings('playedInARow')
+        played_in_a_row_number = get_setting('playedInARow')
         self.log('played in a row settings %s' % played_in_a_row_number, 2)
         self.log('played in a row %s' % self.state.played_in_a_row, 2)
         showing_next_up_page = False
         showing_still_watching_page = False
-        hide_for_short_videos = bool(self.state.short_play_notification == 'false'
-                                     and self.state.short_play_length >= total_time
-                                     and self.state.short_play_mode == 'true')
-        if int(self.state.played_in_a_row) <= int(played_in_a_row_number) and not hide_for_short_videos:
+        if int(self.state.played_in_a_row) <= int(played_in_a_row_number):
             self.log('showing next up page as played in a row is %s' % self.state.played_in_a_row, 2)
             next_up_page.show()
-            utils.window('service.upnext.dialog', 'true')
+            set_property('service.upnext.dialog', 'true')
             showing_next_up_page = True
-        elif not hide_for_short_videos:
+        else:
             self.log('showing still watching page as played in a row %s' % self.state.played_in_a_row, 2)
             still_watching_page.show()
-            utils.window('service.upnext.dialog', 'true')
+            set_property('service.upnext.dialog', 'true')
             showing_still_watching_page = True
         while (self.player.isPlaying() and (total_time - play_time > 1)
                and not next_up_page.is_cancel() and not next_up_page.is_watch_now()
                and not still_watching_page.is_still_watching() and not still_watching_page.is_cancel()):
-            play_time = self.player.getTime()
-            total_time = self.player.getTotalTime()
-            if episode_runtime:
-                end_time = total_time - play_time + episode.get('runtime')
-                end_time = datetime.now() + timedelta(seconds=end_time)
-                time_format = xbmc.getRegion('time').replace(':%S', '')  # Strip off seconds
-                end_time = end_time.strftime(time_format).lstrip('0')  # Remove leading zero on all platforms
-            else:
-                end_time = None
+            try:
+                play_time = self.player.getTime()
+                total_time = self.player.getTotalTime()
+            except RuntimeError:
+                if showing_next_up_page:
+                    next_up_page.close()
+                    showing_next_up_page = False
+                if showing_still_watching_page:
+                    still_watching_page.close()
+                    showing_still_watching_page = False
+                break
+
+            remaining = total_time - play_time
+            runtime = episode.get('runtime')
             if not self.state.pause:
                 if showing_next_up_page:
-                    next_up_page.update_progress_control(end_time)
+                    next_up_page.update_progress_control(remaining=remaining, runtime=runtime)
                 elif showing_still_watching_page:
-                    still_watching_page.update_progress_control(end_time)
-            xbmc.sleep(100)
-        return showing_next_up_page, showing_still_watching_page, total_time
+                    still_watching_page.update_progress_control(remaining=remaining, runtime=runtime)
+            sleep(100)
+        return showing_next_up_page, showing_still_watching_page
 
-    def extract_play_info(self, next_up_page, showing_next_up_page, showing_still_watching_page, still_watching_page, total_time):
-        if self.state.short_play_length >= total_time and self.state.short_play_mode == 'true':
-            # Play short video and don't add to playcount
-            self.state.played_in_a_row += 0
-            if next_up_page.is_watch_now() or still_watching_page.is_still_watching():
-                self.state.played_in_a_row = 1
+    def extract_play_info(self, next_up_page, showing_next_up_page, showing_still_watching_page, still_watching_page):
+        if showing_next_up_page:
+            next_up_page.close()
             should_play_default = not next_up_page.is_cancel()
             should_play_non_default = next_up_page.is_watch_now()
+        elif showing_still_watching_page:
+            still_watching_page.close()
+            should_play_default = still_watching_page.is_still_watching()
+            should_play_non_default = still_watching_page.is_still_watching()
         else:
-            if showing_next_up_page:
-                next_up_page.close()
-                should_play_default = not next_up_page.is_cancel()
-                should_play_non_default = next_up_page.is_watch_now()
-            elif showing_still_watching_page:
-                still_watching_page.close()
-                should_play_default = still_watching_page.is_still_watching()
-                should_play_non_default = still_watching_page.is_still_watching()
+            # FIXME: This is a workaround until we handle this better (see comments in #142)
+            return False, False
 
-            if next_up_page.is_watch_now() or still_watching_page.is_still_watching():
-                self.state.played_in_a_row = 1
-            else:
-                self.state.played_in_a_row += 1
-        utils.window('service.upnext.dialog', clear=True)
+        if next_up_page.is_watch_now() or still_watching_page.is_still_watching():
+            self.state.played_in_a_row = 1
+        else:
+            self.state.played_in_a_row += 1
+        clear_property('service.upnext.dialog')
         return should_play_default, should_play_non_default

@@ -60,7 +60,7 @@ def encode_decode(func):
             mod_kwargs = {key: py2_encode(value) for key, value
                           in kwargs.iteritems()}
             return py2_decode(func(*mod_args, **mod_kwargs),
-                              errors='surrogateescape')
+                              errors='replace')
         wrapper.__name__ = 'wrapped_func_{0}'.format(func.__name__)
         return wrapper
     return func
