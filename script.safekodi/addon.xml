@@ -34,6 +34,5 @@ Note that the addon information will be sent to safekodi.com ananomously for obt
 			<screenshot>resources/screenshot-04.jpg</screenshot>
 			<screenshot>resources/screenshot-05.jpg</screenshot>
 		</assets>
-		<news></news>
 	</extension>
 </addon>

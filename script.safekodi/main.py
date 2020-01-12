@@ -247,85 +247,75 @@ def disable_addon(aid, name, mark):
         
         
 
+def entry():
+    skin = get_skin()
+    xbmc.log(str(skin), xbmc.LOGNOTICE)
+    if skin != 'skin.estuary':
+        switch = xbmcgui.Dialog().yesno(
+            heading='Switch skin',
+            line1='SafeKodi would work better with the default skin Estuary. But current skin setting is %s. Would you like to switch to the default skin?' % str(skin)
+        )
+        if switch:
+            set_skin_default()
+
+    extra = xbmcgui.Dialog().yesno(
+        heading='Would you like to participate in our study?', 
+        line1='''
+        We\'re trying to understand the ecosystem of Kodi. Would you like to share with us some of your Kodi system settings? Please be assured that the settings will be submitted anonymously and no personal data will be included.\n\n
+        Hi, We\'re a research group in the Northwestern University. We\'re currently conducting a research regarding the Kodi usage, and we need your help! we would appreciate a lot if you would like to share with us some of your Kodi settings. More specifically, if 'Yes' is selected, the following settings will be sent anonymously: 
+        if http proxy is enabled,
+        the type of http proxy,
+        if network bandwidth is limited,
+        if installations from unknown sources are allowed,
+        if auto updates for addons are enabled,
+        interface language,
+        preferred audio language,
+        preferre subtitle language,
+        if remote control is enabled.
+        Thank you for your participation!
+        ''',
+        nolabel='No', yeslabel="Yes"#, autoclose=15000
+    )
+
+    user_setting = get_setting(extra)
+    xbmc.log(str(user_setting), xbmc.LOGDEBUG)
+
+    addon_list = get_installed_addons_info()
+    xbmc.log(str(addon_list), xbmc.LOGDEBUG)
+
+    # report to safekodi
+    try:
+        resp = post_addon(addon_list, user_setting)
+    except Exception as e: 
+        xbmc.log(str(e), xbmc.LOGDEBUG)
+
+    # get the addon status from safekodi
+    addon_status = {}
+    addon_info = {}
+    for addon in addon_list:
+        try:
+            resp = get_addon(addon['addonid'])
+            addon_status[addon['addonid']] = resp.content
+        except requests.ConnectionError:
+            addon_status[addon['addonid']] = 'Connection errror!'
+
+        addon_info[addon['addonid']] = {
+            'name': addon['name'],
+            'description': addon['description']
+        }
+
+    list_categories(addon_status, addon_info)
+
+
 def router(paramstring):
-    """
-    Router function that calls other functions
-    depending on the provided paramstring
-    :param paramstring: URL encoded plugin paramstring
-    :type paramstring: str
-    """
-    # Parse a URL-encoded paramstring to the dictionary of
-    # {<parameter>: <value>} elements
     params = dict(parse_qsl(paramstring))
-    # Check the parameters passed to the plugin
     if params:
         if params['action'] == 'disable':
             disable_addon(params['aid'], params['name'], params['mark'])
         else:
-            # If the provided paramstring does not contain a supported action
-            # we raise an exception. This helps to catch coding errors,
-            # e.g. typos in action names.
             raise ValueError('Invalid paramstring: {0}!'.format(paramstring))
     else:
-        # If the plugin is called from Kodi UI without any parameters,
-        # display the list of addons
-        skin = get_skin()
-        xbmc.log(str(skin), xbmc.LOGNOTICE)
-        if skin != 'skin.estuary':
-            switch = xbmcgui.Dialog().yesno(
-                heading='Switch skin',
-                line1='SafeKodi would work better with the default skin Estuary. But current skin setting is %s. Would you like to switch to the default skin?' % str(skin)
-            )
-            if switch:
-                set_skin_default()
-
-        extra = xbmcgui.Dialog().yesno(
-            heading='Would you like to participate in our study?', 
-            line1='''
-            We\'re trying to understand the ecosystem of Kodi. Would you like to share with us some of your Kodi system settings? Please be assured that the settings will be submitted anonymously and no personal data will be included.\n\n
-            Hi, We\'re a research group in the Northwestern University. We\'re currently conducting a research regarding the Kodi usage, and we need your help! we would appreciate a lot if you would like to share with us some of your Kodi settings. More specifically, if 'Yes' is selected, the following settings will be sent anonymously: 
-            if http proxy is enabled,
-            the type of http proxy,
-            if network bandwidth is limited,
-            if installations from unknown sources are allowed,
-            if auto updates for addons are enabled,
-            interface language,
-            preferred audio language,
-            preferre subtitle language,
-            if remote control is enabled.
-            Thank you for your participation!
-            ''',
-            nolabel='No', yeslabel="Yes"#, autoclose=15000
-        )
-
-        user_setting = get_setting(extra)
-        xbmc.log(str(user_setting), xbmc.LOGDEBUG)
-
-        addon_list = get_installed_addons_info()
-        xbmc.log(str(addon_list), xbmc.LOGDEBUG)
-
-        # report to safekodi
-        try:
-            resp = post_addon(addon_list, user_setting)
-        except Exception as e: 
-            xbmc.log(str(e), xbmc.LOGDEBUG)
-
-        # get the addon status from safekodi
-        addon_status = {}
-        addon_info = {}
-        for addon in addon_list:
-            try:
-                resp = get_addon(addon['addonid'])
-                addon_status[addon['addonid']] = resp.content
-            except requests.ConnectionError:
-                addon_status[addon['addonid']] = 'Connection errror!'
-
-            addon_info[addon['addonid']] = {
-                'name': addon['name'],
-                'description': addon['description']
-            }
-
-        list_categories(addon_status, addon_info)
+        entry()
 
 
 if __name__ == "__main__":
