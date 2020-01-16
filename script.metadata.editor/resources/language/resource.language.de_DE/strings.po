@@ -3,14 +3,13 @@
 # Addon id: script.metadata.editor
 # Addon Provider: sualfred
 # Translators:
-# sualfred <su4lfred@gmail.com>, 2019
-# 
+# sualfred <su4lfred@gmail.com>, 2020
 msgid ""
 msgstr ""
 "Project-Id-Version: Metadata Editor\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: 2019-11-07 08:05+0000\n"
-"Last-Translator: sualfred <su4lfred@gmail.com>, 2019\n"
+"Last-Translator: sualfred <su4lfred@gmail.com>, 2020\n"
 "Language-Team: German (Germany) (https://www.transifex.com/sualfred/teams/80018/de_DE/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -128,35 +127,35 @@ msgctxt "#32021"
 msgid "Enable .nfo updating for movies, TV shows and music videos"
 msgstr "Aktiviere .nfo Updating für Filme, Serien und Musikvideos"
 
-#: /resources/lib/dialog_metadata.py
+#: /resources/lib/editor.py
 msgctxt "#32022"
 msgid "value unkown (missing Kodi feature)"
 msgstr "Wert unbekannt (Kodi Feature fehlt)"
 
-#: /resources/lib/dialog_metadata.py
+#: /resources/lib/editor.py
 msgctxt "#32023"
 msgid "Record label"
 msgstr "Record Label"
 
-#: /default.py
-msgctxt "#32024"
-msgid "Please use the context menu on a library item to run this script."
-msgstr "Bitte nutze das Context-Menü um das Script zu starten"
-
 #: /resources/settings.xml
 msgctxt "#32025"
-msgid "Preferred TMDb language"
-msgstr "Bevorzugte TMDb Sprache"
+msgid "Preferred language"
+msgstr "Bevorzugte Sprachregion"
 
 #: /resources/settings.xml
 msgctxt "#32026"
-msgid "TV show scraper related settings"
-msgstr "Einstellungen für Serien-Scraper"
+msgid "Scraper settings"
+msgstr "Scraper Einstellungen"
+
+#: /resources/lib/rating_updater.py
+msgctxt "#32024"
+msgid "Heavy server load. Please wait."
+msgstr "Hohe Serverlast. Bitte warten."
 
 #: /resources/settings.xml
 msgctxt "#32027"
-msgid "Library is based on informations of"
-msgstr "Datenbank ist basierend auf Informationen von"
+msgid "TV show library is based on informations of"
+msgstr "Serien-Datenbank ist basierend auf Informationen von"
 
 #: /resources/settings.xml
 msgctxt "#32029"
@@ -180,18 +179,8 @@ msgstr "Dein persönlicher OMDb API Schlüssel (www.omdbapi.com)"
 
 #: /resources/settings.xml
 msgctxt "#32032"
-msgid "Search OMDb with title/year if IMDb is missing"
-msgstr "Suche auf OMDb anhand Titel/Jahr falls IMDb ID fehlt"
-
-#: /resources/lib/rating_updater.py
-msgctxt "#32033"
-msgid "Updating movie ratings"
-msgstr "Aktualisieren von Filmbewertungen"
-
-#: /resources/lib/rating_updater.py
-msgctxt "#32034"
-msgid "Updating TV show ratings"
-msgstr "Aktualisieren von Serienbewertungen"
+msgid "Search by title/year if IMDb ID is missing (not recommended)"
+msgstr "Suche anhand Titel/Jahr falls IMDb ID fehlt (nicht empfohlen)"
 
 #: /default.py
 msgctxt "#32035"
@@ -217,6 +206,20 @@ msgctxt "#32036"
 msgid "Update TV show ratings"
 msgstr "Aktutalisiere Serienbewertungen"
 
+#: /resources/lib/rating_updater.py
+msgctxt "#32033"
+msgid ""
+"OMDB API limit reached. Please consider to become a Patreon to increase your"
+" daily call limitation. Proceed by only using The Movie DB?"
+msgstr ""
+"OMDb API Limit erreicht. Bitte erwäge ein Patreon zu werden um das tägliche "
+"Limit zu erhöhen. Nur mit TMDb fortfahren?"
+
+#: /resources/settings.xml
+msgctxt "#32034"
+msgid "Create .nfo file if missing"
+msgstr "Erstelle .nfo Datei, falls diese fehlt"
+
 #: /default.py
 msgctxt "#32037"
 msgid "Update movie ratings"
@@ -232,15 +235,10 @@ msgctxt "#32039"
 msgid "Update ratings"
 msgstr "Aktualisiere Bewertungen"
 
-#: /resources/lib/dialog_metadata.py
+#: /resources/lib/editor.py
 msgctxt "#32040"
 msgid "Edit data for"
 msgstr "Bearbeite Daten für"
-
-#: /default.py
-msgctxt "#32041"
-msgid "Cancel updating"
-msgstr "Aktualisierung abbrechen"
 
 #: /resources/lib/rating_updater.py
 msgctxt "#32042"
@@ -253,6 +251,11 @@ msgid "MPAA region"
 msgstr "MPAA Region"
 
 #: /resources/settings.xml
+msgctxt "#32041"
+msgid "Update premiered/year if database value is different"
+msgstr "Aktualisiere Premiere/Jahr, falls Datenbankwert nicht korrekt ist"
+
+#: /resources/settings.xml
 msgctxt "#32044"
 msgid "Skip updating of MPAA"
 msgstr "MPAA nicht aktualisieren"
@@ -262,12 +265,64 @@ msgctxt "#32045"
 msgid "Update episode ratings"
 msgstr "Aktualisiere Episodenbewertungen"
 
-#: /resources/lib/rating_updater.py
-msgctxt "#32046"
-msgid "Updating episode ratings"
-msgstr "Aktualisiere Episodenbewertungen"
-
-#: /resources/lib/dialog_metadata.py
+#: /resources/lib/editor.py
 msgctxt "#32047"
 msgid "No default source defined"
 msgstr "Keine Standard-Quelle definiert"
+
+#: /resources/lib/rating_updater.py
+msgctxt "#32048"
+msgid "No items found"
+msgstr "Keine Einträge gefunden"
+
+#: /context.py
+msgctxt "#32046"
+msgid "Update .nfo"
+msgstr "Aktualisiere .nfo"
+
+#: /default.py
+msgctxt "#32049"
+msgid "Incomplete arguments or content type not supported"
+msgstr "Unvollständiger Aufruf oder Inhaltstyp werden nicht unterstützt"
+
+#: /default.py
+msgctxt "#32050"
+msgid "Do you want to cancel the update?"
+msgstr "Update abbrechen?"
+
+#: /default.py
+msgctxt "#32051"
+msgid "Content"
+msgstr "Inhalt"
+
+#: /resources/settings.xml
+msgctxt "#32052"
+msgid "Fallback to US MPAA if configured country has no certification stored"
+msgstr ""
+"Nutze US MPAA als Fallback, falls keine Zertifizierung der konfigurierten "
+"Region gefunden wurde"
+
+#: /resources/settings.xml
+msgctxt "#32053"
+msgid "Don't store \"NR\" (Not rated) MPAA rating"
+msgstr "\"NR\" (nicht bewertet) MPAA-Bewertung nicht speichern"
+
+#: /service.py
+msgctxt "#32054"
+msgid "Do you want to rate the following item?"
+msgstr "Möchtest du das folgende Video bewerten?"
+
+#: /resources/settings.xml
+msgctxt "#32055"
+msgid "Automatically update changed watched states to .nfo"
+msgstr "Geänderten Watched Status automatisch in .nfo aktualisieren"
+
+#: /resources/settings.xml
+msgctxt "#32056"
+msgid "Rate your media if playback has ended"
+msgstr "Bewerte Medien nach vollständiger Wiedergabe"
+
+#: /resources/settings.xml
+msgctxt "#32057"
+msgid "Write watched flag and playcount to .nfo"
+msgstr "Schreibe Watched Status und Abspielzähler in .nfo"

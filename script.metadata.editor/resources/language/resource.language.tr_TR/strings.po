@@ -4,7 +4,7 @@
 # Addon Provider: sualfred
 # Translators:
 # Snn 1452 <snn1452@gmail.com>, 2019
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: Metadata Editor\n"
@@ -130,12 +130,12 @@ msgstr ""
 "Filmler, TV programları ve müzik videoları için .nfo güncellemesini "
 "etkinleştir"
 
-#: /resources/lib/dialog_metadata.py
+#: /resources/lib/editor.py
 msgctxt "#32022"
 msgid "value unkown (missing Kodi feature)"
 msgstr "bilinmeyen değer (eksik Kodi özelliği)"
 
-#: /resources/lib/dialog_metadata.py
+#: /resources/lib/editor.py
 msgctxt "#32023"
 msgid "Record label"
 msgstr "Kayıt etiketi"
