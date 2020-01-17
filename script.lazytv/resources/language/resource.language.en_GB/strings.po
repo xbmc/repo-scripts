@@ -568,3 +568,7 @@ msgstr ""
 msgctxt "#32253"
 msgid "Announce database analysis on start-up"
 msgstr ""
+
+msgctxt "#32254"
+msgid "Order playlist as defined in List section"
+msgstr ""

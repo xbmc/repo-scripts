@@ -14,6 +14,7 @@
  <setting id="selectrandos" label="32011" type="action" option="close" action="RunScript($CWD/resources/selector.py,'rando')"/>
  <setting id="lsep3" label="" type="lsep" enable="false" />
  <setting id="maintainsmartplaylist" type="bool" label="32093" default="false"/>
+ <setting id="ordersmartplaylist" label="32254" type="bool" enable="eq(-1,true)" default="false"/>
  <setting id="startup" type="bool" label="32253" default="true"/>
  <!-- gap -->
  </category>

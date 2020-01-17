@@ -142,7 +142,6 @@ play_now = False
 open_addon_window = True
 
 
-
 def stringlist_to_reallist(string, integers=True):
     # this is needed because ast.literal_eval gives me EOF errors for no obvious reason
     real_string = string.replace("[", "").replace("]", "").replace(" ", "").split(",")
@@ -154,6 +153,7 @@ def stringlist_to_reallist(string, integers=True):
         except ValueError:
             return []
 
+
 def version_string_to_tuple(string, integers=True):
     real_string = tuple(string.replace("(", "").replace(")", "").replace(" ", "").split(","))
     if not integers:
@@ -163,6 +163,7 @@ def version_string_to_tuple(string, integers=True):
             return tuple([int(x) for x in real_string])
         except ValueError:
             return (0, 0, 0)
+
 
 def lang(id):
     san = (
@@ -197,16 +198,16 @@ def gracefail(message):
 
 try:
     spec_shows = stringlist_to_reallist(__setting__("selection"))
-    log('spec_shows: ' + str(spec_shows))
+    log("spec_shows: " + str(spec_shows))
 except Exception:
-    log('Failed to get selection.')
+    log("Failed to get selection.")
     spec_shows = []
 
 try:
     randos = stringlist_to_reallist(WINDOW.getProperty("LazyTV.randos"))
-    log('randos: ' + str(randos))
+    log("randos: " + str(randos))
 except Exception:
-    log('Failed to get randos list')
+    log("Failed to get randos list")
     randos = []
 
 # This is a throwaway variable to deal with a python bug
@@ -1494,7 +1495,11 @@ def run():
 
         service_version = WINDOW.getProperty("LazyTV.Version")
 
-        if version_string_to_tuple(str(__addonversion__)) != version_string_to_tuple(str(service_version)) and __addonid__ == "script.lazytv":
+        if (
+            version_string_to_tuple(str(__addonversion__))
+            != version_string_to_tuple(str(service_version))
+            and __addonid__ == "script.lazytv"
+        ):
             log("versions do not match")
 
             # the service version may show as lower than the addon version
@@ -1505,7 +1510,11 @@ def run():
             dialog.ok("LazyTV", lang(32108))
             sys.exit()
 
-        if version_string_to_tuple(str(__addonversion__)) < version_string_to_tuple(str(service_version)) and __addonid__ != "script.lazytv":
+        if (
+            version_string_to_tuple(str(__addonversion__))
+            < version_string_to_tuple(str(service_version))
+            and __addonid__ != "script.lazytv"
+        ):
             log("clone out of date")
             clone_upd = dialog.yesno("LazyTV", lang(32110), lang(32111))
 

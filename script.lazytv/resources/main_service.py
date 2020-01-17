@@ -202,6 +202,12 @@ ep_details_query = {
     },
     "id": "1",
 }
+tv_details_query = {
+    "jsonrpc": "2.0",
+    "method": "VideoLibrary.GetTVShowDetails",
+    "params": {"properties": ["lastplayed"], "tvshowid": 1},
+    "id": "1",
+}
 seek = {"jsonrpc": "2.0", "id": 1, "method": "Player.Seek", "params": {"playerid": 1, "value": 0}}
 plf = {
     "jsonrpc": "2.0",
@@ -261,7 +267,6 @@ def json_query(query, ret):
         return json.loads(result)
 
 
-
 def stringlist_to_reallist(string, integers=True):
     # this is needed because ast.literal_eval gives me EOF errors for no obvious reason
     real_string = string.replace("[", "").replace("]", "").replace(" ", "").split(",")
@@ -272,6 +277,7 @@ def stringlist_to_reallist(string, integers=True):
             return [int(x) for x in real_string]
         except ValueError:
             return []
+
 
 def runtime_converter(time_string):
     if time_string == "":
@@ -466,7 +472,12 @@ class LazyPlayer(xbmc.Player):
 
                 if self.pl_running == "true" and playlist_notifications:
 
-                    xbmcgui.Dialog().notification(lang(32163), "%s S%sE%s" % (showtitle, season_np, episode_np), xbmcgui.NOTIFICATION_INFO, 5000)
+                    xbmcgui.Dialog().notification(
+                        lang(32163),
+                        "%s S%sE%s" % (showtitle, season_np, episode_np),
+                        xbmcgui.NOTIFICATION_INFO,
+                        5000,
+                    )
 
                 if (self.pl_running == "true" and resume_partials) or self.pl_running == "listview":
 
@@ -489,7 +500,12 @@ class LazyPlayer(xbmc.Player):
 
                 if playlist_notifications:
 
-                    xbmcgui.Dialog().notification(lang(32163), self.ep_details["item"]["label"], xbmcgui.NOTIFICATION_INFO, 5000)
+                    xbmcgui.Dialog().notification(
+                        lang(32163),
+                        self.ep_details["item"]["label"],
+                        xbmcgui.NOTIFICATION_INFO,
+                        5000,
+                    )
 
                 if resume_partials and self.ep_details["item"]["resume"]["position"] > 0:
                     seek_point = int(
@@ -1057,12 +1073,12 @@ class Main(object):
             try:
                 tmp_od = stringlist_to_reallist(WINDOW.getProperty("LazyTV.%s.odlist" % rando))
             except Exception:
-                log('Failed to get odlist for ' + str(rando))
+                log("Failed to get odlist for " + str(rando))
                 tmp_od = []
             try:
                 tmp_off = stringlist_to_reallist(WINDOW.getProperty("LazyTV.%s.offlist" % rando))
             except Exception:
-                log('Failed to get offlist for ' + str(rando))
+                log("Failed to get offlist for " + str(rando))
                 tmp_off = []
 
             ep = WINDOW.getProperty("LazyTV.%s.EpisodeID" % rando)
@@ -1258,6 +1274,15 @@ class Main(object):
 
             ep_details = json_query(ep_details_query, True)  # query grabs all the episode details
 
+            tv_details_query["params"]["tvshowid"] = tvshowid
+
+            tv_details = json_query(tv_details_query, True)
+
+            if "tvshowdetails" in tv_details:
+                lastplayed = tv_details["tvshowdetails"]["lastplayed"]
+            else:
+                lastplayed = ""
+
             if "episodedetails" in ep_details:  # continue only if there are details
                 ep_details = ep_details["episodedetails"]
                 episode = "%.2d" % float(ep_details["episode"])
@@ -1341,6 +1366,7 @@ class Main(object):
                     "%s.%s.Premiered" % ("LazyTV", TVShowID_), ep_details["firstaired"]
                 )
                 WINDOW.setProperty("%s.%s.Plot" % ("LazyTV", TVShowID_), plot)
+                WINDOW.setProperty("%s.%s.LastPlayed" % ("LazyTV", TVShowID_), lastplayed)
                 # WINDOW.setProperty("%s.%s.DBID"                    % ('LazyTV', TVShowID_), str(ep_details.get('episodeid')
 
             del ep_details
@@ -1443,6 +1469,10 @@ class Main(object):
             "%s.%s.Plot" % ("LazyTV", TVShowID_),
             WINDOW.getProperty("%s.%s.Plot" % ("LazyTV", "temp")),
         )
+        WINDOW.setProperty(
+            "%s.%s.LastPlayed" % ("LazyTV", TVShowID_),
+            WINDOW.getProperty("%s.%s.LastPlayed" % ("LazyTV", "temp")),
+        )
         # WINDOW.setProperty("%s.%s.DBID"                   % ('LazyTV', TVShowID_), WINDOW.getProperty("%s.%s.DBID"                   % ('LazyTV', 'temp')))
 
         Main.update_smartplaylist(TVShowID_)
@@ -1458,8 +1488,11 @@ class Main(object):
 
             playlist_file = os.path.join(videoplaylistlocation, "LazyTV.xsp")
 
-            showname = WINDOW.getProperty("%s.%s.TVshowTitle" % ("LazyTV", tvshowid))
             filename = os.path.basename(WINDOW.getProperty("%s.%s.File" % ("LazyTV", tvshowid)))
+
+            showname = WINDOW.getProperty("%s.%s.TVshowTitle" % ("LazyTV", tvshowid))
+
+            sort_field = WINDOW.getProperty("%s.%s.%s" % ("LazyTV", tvshowid, sort_by))
 
             if showname:
 
@@ -1471,50 +1504,59 @@ class Main(object):
                 except Exception:
                     all_lines = []
 
-                content = []
+                new_lines = []
                 line1 = '<?xml version="1.0" encoding="UTF-8" standalone="yes" ?><smartplaylist type="episodes"><name>LazyTV</name><match>one</match>\n'
-                linex = '<order direction="ascending">random</order></smartplaylist>'
-                rawshowline = '<!--%s--><rule field="filename" operator="is"> <value>%s</value> </rule><!--END-->\n'
+                linex_1 = '<order direction="ascending">random</order></smartplaylist>'
+                linex_2 = "</smartplaylist>"
+                if not ordersmartplaylist:
+                    linex = linex_1
+                else:
+                    linex = linex_2
+                rawshowline = '<!--%s--><rule field="filename" operator="is"> <value>%s</value> </rule><!--SORTFIELD:%s-->\n'
 
                 xbmc.sleep(10)
 
+                # We just want to work on the rule lines
+                all_lines = [x for x in all_lines if x not in [line1, linex, linex_1, linex_2]]
+                initial_count = len(all_lines)
+
+                # Removing the existing show is quick and easy, but we still want to log the action
+                all_lines = [x for x in all_lines if "".join(["<!--", showname, "-->"]) not in x]
+                if initial_count != len(all_lines):
+                    log(
+                        "playlist item being updated in smartplaylist: %s: %s"
+                        % (showname, filename)
+                    )
+
+                # We append the line no matter what
+                all_lines.append(rawshowline % (showname, filename, sort_field))
+
+                # sort the list
+                if ordersmartplaylist:
+                    sort_fields = []
+                    for line in all_lines:
+                        try:
+                            sf = line[line.index("SORTFIELD:") + 10 :].replace("-->", "").strip()
+                        except Exception:
+                            continue
+                        try:
+                            sf = int(sf)
+                        except Exception:
+                            pass
+                        sort_fields.append(sf)
+                    sortable_list = list(zip(all_lines, sort_fields))
+                    sortable_list.sort(key=lambda x: x[1], reverse=sort_reverse)
+                    valid = [x for x in sortable_list if x[1]]
+                    empty = [x for x in sortable_list if not x[1]]
+                    all_lines = [x for x, y in valid + empty]
+
+                # add the start and end lines
+                all_lines = [line1] + all_lines + [linex]
+
                 with open(playlist_file, "w+") as g:
 
-                    found = False
-
-                    # creates the file if it doesnt exist or is empty
-                    if not all_lines:
-                        content.append(line1)
-                        content.append(rawshowline % (showname, filename))
-                        content.append(linex)
-
-                    # this will only occur if the file had contents
-                    for num, line in enumerate(all_lines):
-
-                        # showname found in line, replacing the file
-                        if "".join(["<!--", showname, "-->"]) in line:
-                            if filename and not remove:
-                                log(
-                                    "playlist item updated: " + str(showname) + ", " + str(filename)
-                                )
-
-                                content.append(rawshowline % (showname, filename))
-
-                                found = True
-
-                        # no entry found and this is the last line, create a new entry and finish off the file
-                        elif found == False and line == linex and not remove:
-                            log("entry not found, adding")
-
-                            content.append(rawshowline % (showname, filename))
-                            content.append(line)
-
-                        # showname not found, not final line, so just carry it over to the new file
-                        else:
-                            content.append(line)
-
                     # writes the new stuff to the file
-                    guts = "".join(content)
+                    guts = "".join(all_lines)
                     g.write(guts)
 
             # log('playlist update complete')
@@ -1530,6 +1572,9 @@ def grab_settings(firstrun=False):
     global prevcheck
     global maintainsmartplaylist
     global promptdefaultaction
+    global sort_by
+    global sort_reverse
+    global ordersmartplaylist
 
     playlist_notifications = True if __setting__("notify") == "true" else False
     resume_partials = True if __setting__("resume_partials") == "true" else False
@@ -1540,6 +1585,18 @@ def grab_settings(firstrun=False):
     promptduration = int(float(__setting__("promptduration")))
     prevcheck = True if __setting__("prevcheck") == "true" else False
     promptdefaultaction = int(float(__setting__("promptdefaultaction")))
+    ordersmartplaylist = True if __setting__("ordersmartplaylist") == "true" else False
+    sort_reverse = True if __setting__("sort_reverse") == "true" else False
+    sort_by = int(float(__setting__("sort_by")))
+    sort_by_options = {
+        0: "TVshowTitle",
+        1: "LastPlayed",
+        2: "CountUnwatchedEps",
+        3: "CountWatchedEps",
+        4: "Season",
+    }
+
+    sort_by = sort_by_options[sort_by]
 
     if promptduration == 0:
         promptduration = 1 / 1000.0
@@ -1556,13 +1613,13 @@ def grab_settings(firstrun=False):
     try:
         randos = stringlist_to_reallist(__setting__("randos"))
     except Exception:
-        log('Failed to get randos list')
+        log("Failed to get randos list")
         randos = []
 
     try:
         old_randos = stringlist_to_reallist(WINDOW.getProperty("LazyTV.randos"))
     except Exception:
-        log('Failed to get old randos')
+        log("Failed to get old randos")
         old_randos = []
 
     if old_randos != randos and not firstrun:
@@ -1578,7 +1635,9 @@ def grab_settings(firstrun=False):
                 log("removing rando")
                 # if rando removed then check if rando has ondeck, if not then remove from nepl,
                 try:
-                    has_ond = stringlist_to_reallist(WINDOW.getProperty("%s.%s.odlist" % ("LazyTV", oar)))
+                    has_ond = stringlist_to_reallist(
+                        WINDOW.getProperty("%s.%s.odlist" % ("LazyTV", oar))
+                    )
                     log("odlist = " + str(has_ond))
                 except Exception:
                     has_ond = False
@@ -1591,20 +1650,18 @@ def grab_settings(firstrun=False):
                     offd = stringlist_to_reallist(retoff)
                     ond = stringlist_to_reallist(retod)
                     try:
-                        tmp_wep = int(
-                                WINDOW.getProperty("%s.%s.CountWatchedEps" % ("LazyTV", oar))
-                            )
+                        tmp_wep = int(WINDOW.getProperty("%s.%s.CountWatchedEps" % ("LazyTV", oar)))
                     except ValueError:
                         tmp_wep = 0
                     tmp_wep += 1
 
                     try:
                         tmp_uwep = int(
-                                WINDOW.getProperty("%s.%s.CountUnwatchedEps" % ("LazyTV", oar))
-                            )
+                            WINDOW.getProperty("%s.%s.CountUnwatchedEps" % ("LazyTV", oar))
+                        )
                     except ValueError:
                         tmp_uwep = 0
-                    
+
                     tmp_uwep = max(tmp_uwep - 1, 0)
 
                     Main.store_next_ep(ond[0], oar, ond, offd, tmp_uwep, tmp_wep)
@@ -1634,5 +1691,3 @@ def run():
     # del Main
     # del LazyMonitor
     # del LazyPlayer
-
-    

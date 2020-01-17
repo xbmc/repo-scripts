@@ -51,7 +51,6 @@ base_time = time.time()
 WINDOW = xbmcgui.Window(10000)
 
 
-
 def stringlist_to_reallist(string, integers=True):
     # this is needed because ast.literal_eval gives me EOF errors for no obvious reason
     real_string = string.replace("[", "").replace("]", "").replace(" ", "").split(",")
@@ -242,7 +241,7 @@ def get_TVshows():
 
 
 def Main():
-        
+
     try:
         spec_shows = stringlist_to_reallist(__setting__("selection"))
     except Exception:
