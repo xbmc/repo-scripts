@@ -21,3 +21,14 @@ The add-on has various settings to fine-tune the experience, however the default
 > NOTE: The add-on settings are found in the Kodi add-ons section, in the *Services* category.
 
 For [Addon Integration](https://github.com/im85288/service.upnext/wiki/Addon-Integration) and [Skinners](https://github.com/im85288/service.upnext/wiki/Skinners) see the [wiki](https://github.com/im85288/service.upnext/wiki)
+
+## Releases
+### v1.1.0 (2020-01-17)
+- Add notification_offset for Netflix add-on (@CastagnaIT)
+- Fix various runtime exceptions (@thebertster)
+- Implement new settings (@dagwieers)
+- Implement new developer mode (@dagwieers)
+- Show current time and next endtime in notification (@dagwieers)
+- New translations for Brazilian, Czech, Greek, Japanese, Korean (@mediabrasiltv, @svetlemodry, @Twilight0, @Thunderbird2086)
+- New translations for Russian, Slovak, Spanish, Swedish (@vlmaksime, @matejmosko, @sagatxxx, @Sopor)
+- Translation updates to Croatian, German, Hungarian, Italian, Polish (@arvvoid, @tweimer, @frodo19, @EffeF, @notoco)

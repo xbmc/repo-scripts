@@ -17,26 +17,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 1.8.7\n"
 
-msgctxt "#30001"
-msgid "The number of seconds before the end to show the notification"
-msgstr ""
-
-msgctxt "#30002"
-msgid "Log Level:"
-msgstr ""
-
-msgctxt "#30003"
-msgid "Settings"
-msgstr ""
-
-msgctxt "#30004"
-msgid "Advanced"
-msgstr ""
-
-msgctxt "#30005"
-msgid "Default action when nothing selected"
-msgstr ""
-
+### APPLICATION
 msgctxt "#30006"
 msgid "Watch Now"
 msgstr ""
@@ -46,51 +27,15 @@ msgid "Up Next"
 msgstr ""
 
 msgctxt "#30009"
-msgid "Number of episodes before still watching query"
+msgid "Ends at: $INFO[Window.Property(endtime)]"
 msgstr ""
 
 msgctxt "#30010"
 msgid "Continue watching"
 msgstr ""
 
-msgctxt "#30013"
-msgid "Include watched episodes"
-msgstr ""
-
-msgctxt "#30014"
-msgid "Disable Up Next (restart required)"
-msgstr ""
-
-msgctxt "#30017"
-msgid "Automatically play short videos"
-msgstr ""
-
-msgctxt "#30018"
-msgid "Maximum length for automatic short video play (in minutes)"
-msgstr ""
-
-msgctxt "#30019"
-msgid "Show on-screen notification during short video autoplay"
-msgstr ""
-
 msgctxt "#30024"
 msgid "Still there?"
-msgstr ""
-
-msgctxt "#30025"
-msgid "Set the display mode for the notifications"
-msgstr ""
-
-msgctxt "#30028"
-msgid "Developer"
-msgstr ""
-
-msgctxt "#30029"
-msgid "Enable developer mode"
-msgstr ""
-
-msgctxt "#30030"
-msgid "Choose the window to be shown"
 msgstr ""
 
 msgctxt "#30032"
@@ -106,15 +51,15 @@ msgid "Close"
 msgstr ""
 
 msgctxt "#30035"
-msgid "seconds"
+msgid "Continue watching in [COLOR FFFF4081]$INFO[Window.Property(remaining)][/COLOR] seconds"
 msgstr ""
 
 msgctxt "#30036"
-msgid "in"
+msgid "Up next in [COLOR FFFF4081]$INFO[Window.Property(remaining)][/COLOR] seconds"
 msgstr ""
 
 msgctxt "#30037"
-msgid "Next Episode in"
+msgid "Next episode in [COLOR FFFF4081]$INFO[Window.Property(remaining)][/COLOR] seconds"
 msgstr ""
 
 msgctxt "#30038"
@@ -126,11 +71,11 @@ msgid "Fancy"
 msgstr ""
 
 msgctxt "#30040"
-msgid "Play"
+msgid "Play next"
 msgstr ""
 
 msgctxt "#30041"
-msgid "Don't Play"
+msgid "Stop playing"
 msgstr ""
 
 msgctxt "#30042"
@@ -145,26 +90,112 @@ msgctxt "#30044"
 msgid "Debug"
 msgstr ""
 
-msgctxt "#30045"
-msgid "UpNext"
-msgstr ""
-
-msgctxt "#30046"
-msgid "UpNextSimple"
-msgstr ""
-
-msgctxt "#30047"
-msgid "StillWatching"
-msgstr ""
-
-msgctxt "#30048"
-msgid "StillWatchingSimple"
-msgstr ""
-
 msgctxt "#30049"
 msgid "Next Episode"
 msgstr ""
 
-msgctxt "#30050"
-msgid "Stop playback when closing dialog"
+
+### SETTINGS
+msgctxt "#30500"
+msgid "Interface"
+msgstr ""
+
+msgctxt "#30501"
+msgid "Features"
+msgstr ""
+
+msgctxt "#30503"
+msgid "Set the display mode for the notifications"
+msgstr ""
+
+msgctxt "#30505"
+msgid "Show a \"Stop\" button instead of a \"Close\" button"
+msgstr ""
+
+msgctxt "#30600"
+msgid "Behaviour"
+msgstr ""
+
+msgctxt "#30601"
+msgid "Features"
+msgstr ""
+
+msgctxt "#30603"
+msgid "Default action when nothing selected"
+msgstr ""
+
+msgctxt "#30605"
+msgid "Include already watched episodes"
+msgstr ""
+
+msgctxt "#30607"
+msgid "Number of episodes before \"Still there?\" query"
+msgstr ""
+
+msgctxt "#30609"
+msgid "Duration in seconds for notification to be shown"
+msgstr ""
+
+msgctxt "#30611"
+msgid "Customize autoplay duration by episode length"
+msgstr ""
+
+msgctxt "#30613"
+msgid "All episodes  [COLOR gray]any length[/COLOR]"
+msgstr ""
+
+msgctxt "#30615"
+msgid "Very short episodes  [COLOR gray]< 10 mins[/COLOR]"
+msgstr ""
+
+msgctxt "#30617"
+msgid "Short episodes  [COLOR gray]> 10 mins[/COLOR]"
+msgstr ""
+
+msgctxt "#30619"
+msgid "Medium episodes  [COLOR gray]> 20 mins[/COLOR]"
+msgstr ""
+
+msgctxt "#30621"
+msgid "Long episodes  [COLOR gray]> 40 mins[/COLOR]"
+msgstr ""
+
+msgctxt "#30623"
+msgid "Very long episodes  [COLOR gray]> 60 mins[/COLOR]"
+msgstr ""
+
+msgctxt "#30700"
+msgid "Expert"
+msgstr ""
+
+msgctxt "#30703"
+msgid "Disable Up Next"
+msgstr ""
+
+msgctxt "#30705"
+msgid "Log level"
+msgstr ""
+
+msgctxt "#30800"
+msgid "Developer"
+msgstr ""
+
+msgctxt "#30801"
+msgid "Test how the user interface looks"
+msgstr ""
+
+msgctxt "#30805"
+msgid "Show an UpNext pop-up…"
+msgstr ""
+
+msgctxt "#30807"
+msgid "Show an UpNextSimple pop-up…"
+msgstr ""
+
+msgctxt "#30809"
+msgid "Show a StillWatching pop-up…"
+msgstr ""
+
+msgctxt "#30811"
+msgid "Show a StillWatchingSimple pop-up…"
 msgstr ""

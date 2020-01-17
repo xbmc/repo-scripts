@@ -4,63 +4,54 @@
 from __future__ import absolute_import, division, unicode_literals
 import sys
 import json
-import xbmc
-import xbmcaddon
-import xbmcgui
-from .statichelper import from_unicode, to_unicode
+from xbmc import executeJSONRPC, getRegion, log as xlog, LOGDEBUG, LOGNOTICE
+from xbmcaddon import Addon
+from xbmcgui import Window
+from statichelper import from_unicode, to_unicode
 
-ADDON = xbmcaddon.Addon()
-ADDON_ID = to_unicode(ADDON.getAddonInfo('id'))
-ADDON_PATH = to_unicode(ADDON.getAddonInfo('path'))
+ADDON = Addon()
 
 
-def window(key, value=None, clear=False, window_id=10000):
-    ''' Get or set Window properties '''
-    the_window = xbmcgui.Window(window_id)
-
-    if clear:
-        the_window.clearProperty(key)
-    elif value is None:
-        result = to_unicode(the_window.getProperty(key.replace('.json', '').replace('.bool', '')))
-
-        if result:
-            if key.endswith('.json'):
-                result = json.loads(result)
-            elif key.endswith('.bool'):
-                result = bool(result in ('true', '1'))
-        return result
-    else:
-        if key.endswith('.json'):
-
-            key = key.replace('.json', '')
-            value = json.dumps(value)
-
-        elif key.endswith('.bool'):
-
-            key = key.replace('.bool', '')
-            value = 'true' if value else 'false'
-
-        the_window.setProperty(key, from_unicode(str(value)))
-    return None
+def get_addon_info(key):
+    ''' Return add-on information '''
+    return to_unicode(ADDON.getAddonInfo(key))
 
 
-def settings(setting, value=None):
-    ''' Get or set add-on settings '''
-    if value is None:
-        result = to_unicode(ADDON.getSetting(setting.replace('.bool', '')))
+def addon_id():
+    ''' Return add-on ID '''
+    return get_addon_info('id')
 
-        if result and setting.endswith('.bool'):
-            result = bool(result in ('true', '1'))
 
-        return result
+def addon_path():
+    ''' Return add-on path '''
+    return get_addon_info('path')
 
-    if setting.endswith('.bool'):
 
-        setting = setting.replace('.bool', '')
-        value = 'true' if value else 'false'
+def get_property(key, window_id=10000):
+    ''' Get a Window property '''
+    return to_unicode(Window(window_id).getProperty(key))
 
-    ADDON.setSetting(setting, from_unicode(value))
-    return None
+
+def set_property(key, value, window_id=10000):
+    ''' Set a Window property '''
+    return Window(window_id).setProperty(key, from_unicode(str(value)))
+
+
+def clear_property(key, window_id=10000):
+    ''' Clear a Window property '''
+    return Window(window_id).clearProperty(key)
+
+
+def get_setting(key, default=None):
+    ''' Get an add-on setting '''
+    # We use Addon() here to ensure changes in settings are reflected instantly
+    try:
+        value = to_unicode(Addon().getSetting(key))
+    except RuntimeError:  # Occurs when the add-on is disabled
+        return default
+    if value == '' and default is not None:
+        return default
+    return value
 
 
 def encode_data(data, encoding='base64'):
@@ -105,7 +96,7 @@ def decode_json(data):
 def event(message, data=None, sender=None, encoding='base64'):
     ''' Send internal notification event '''
     data = data or {}
-    sender = sender or ADDON_ID
+    sender = sender or addon_id()
 
     encoded = encode_data(data, encoding=encoding)
     if not encoded:
@@ -120,34 +111,13 @@ def event(message, data=None, sender=None, encoding='base64'):
 
 def log(msg, name=None, level=1):
     ''' Log information to the Kodi log '''
-    log_level = int(settings('logLevel'))
+    log_level = int(get_setting('logLevel', level))
     debug_logging = get_global_setting('debug.showloginfo')
-    window('logLevel', log_level)
+    set_property('logLevel', log_level)
     if not debug_logging and log_level < level:
         return
-    level = xbmc.LOGDEBUG if debug_logging else xbmc.LOGNOTICE
-    xbmc.log('[%s] %s -> %s' % (ADDON_ID, name, from_unicode(msg)), level=level)
-
-
-def load_test_data():
-    ''' Load test data for developer mode '''
-    test_episode = {'episodeid': 12345678, 'tvshowid': 12345678, 'title': 'Garden of Bones', 'art': {}}
-    test_episode['art']['tvshow.poster'] = 'https://fanart.tv/fanart/tv/121361/tvposter/game-of-thrones-521441fd9b45b.jpg'
-    test_episode['art']['thumb'] = 'https://fanart.tv/fanart/tv/121361/showbackground/game-of-thrones-556979e5eda6b.jpg'
-    test_episode['art']['tvshow.fanart'] = 'https://fanart.tv/fanart/tv/121361/showbackground/game-of-thrones-4fd5fa8ed5e1b.jpg'
-    test_episode['art']['tvshow.landscape'] = 'https://fanart.tv/detailpreview/fanart/tv/121361/tvthumb/game-of-thrones-4f78ce73d617c.jpg'
-    test_episode['art']['tvshow.clearart'] = 'https://fanart.tv/fanart/tv/121361/clearart/game-of-thrones-4fa1349588447.png'
-    test_episode['art']['tvshow.clearlogo'] = 'https://fanart.tv/fanart/tv/121361/hdtvlogo/game-of-thrones-504c49ed16f70.png'
-    test_episode['plot'] = 'Lord Baelish arrives at Renly\'s camp just before he faces off against Stannis. Daenerys and her company are welcomed '\
-                           ' into the city of Qarth. Arya, Gendry, and Hot Pie find themselves imprisoned at Harrenhal.'
-    test_episode['showtitle'] = 'Game of Thrones'
-    test_episode['playcount'] = 1
-    test_episode['season'] = 2
-    test_episode['episode'] = 4
-    test_episode['seasonepisode'] = '2x4.'
-    test_episode['rating'] = '8.9'
-    test_episode['firstaired'] = '23/04/2012'
-    return test_episode
+    level = LOGDEBUG if debug_logging else LOGNOTICE
+    xlog('[%s] %s -> %s' % (addon_id(), name, from_unicode(msg)), level=level)
 
 
 def calculate_progress_steps(period):
@@ -163,7 +133,7 @@ def jsonrpc(**kwargs):
         kwargs.update(id=1)
     if 'jsonrpc' not in kwargs:
         kwargs.update(jsonrpc='2.0')
-    return json.loads(xbmc.executeJSONRPC(json.dumps(kwargs)))
+    return json.loads(executeJSONRPC(json.dumps(kwargs)))
 
 
 def get_global_setting(setting):
@@ -175,3 +145,9 @@ def get_global_setting(setting):
 def localize(string_id):
     ''' Return the translated string from the .po language files, optionally translating variables '''
     return ADDON.getLocalizedString(string_id)
+
+
+def localize_time(time):
+    """Localize time format"""
+    time_format = getRegion('time').replace(':%S', '')  # Strip off seconds
+    return time.strftime(time_format).lstrip('0')  # Remove leading zero on all platforms

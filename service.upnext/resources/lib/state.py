@@ -2,7 +2,7 @@
 # GNU General Public License v2.0 (see COPYING or https://www.gnu.org/licenses/gpl-2.0.txt)
 
 from __future__ import absolute_import, division, unicode_literals
-from . import utils
+from utils import get_setting
 
 
 # keeps track of the state parameters
@@ -11,11 +11,8 @@ class State:
 
     def __init__(self):
         self.__dict__ = self._shared_state
-        self.play_mode = utils.settings('autoPlayMode')
-        self.short_play_mode = utils.settings('shortPlayMode')
-        self.short_play_notification = utils.settings('shortPlayNotification')
-        self.short_play_length = int(utils.settings('shortPlayLength')) * 60
-        self.include_watched = utils.settings('includeWatched') == 'true'
+        self.play_mode = get_setting('autoPlayMode')
+        self.include_watched = bool(get_setting('includeWatched') == 'true')
         self.current_tv_show_id = None
         self.current_episode_id = None
         self.tv_show_id = None
