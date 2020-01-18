@@ -171,7 +171,10 @@ class SimpleCache(object):
             if self._exit or self._monitor.abortRequested():
                 return
             # always cleanup all memory objects on each interval
-            self._win.clearProperty(cache_id.encode("utf-8"))
+            if not PYTHON3:
+                self._win.clearProperty(cache_id.encode("utf-8"))
+            else:
+                self._win.clearProperty(cache_id)
             # clean up db cache object only if expired
             if cache_expires < cur_timestamp:
                 query = 'DELETE FROM simplecache WHERE id = ?'
@@ -253,7 +256,7 @@ class SimpleCache(object):
     def _log_msg(msg, loglevel=xbmc.LOGDEBUG):
         '''helper to send a message to the kodi log'''
         if not PYTHON3 and isinstance(msg, unicode):
-                msg = msg.encode('utf-8')
+            msg = msg.encode('utf-8')
 
         xbmc.log("Skin Helper Simplecache --> %s" % msg, level=loglevel)
 
