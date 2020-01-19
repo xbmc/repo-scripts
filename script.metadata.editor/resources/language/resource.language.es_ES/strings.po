@@ -4,7 +4,7 @@
 # Addon Provider: sualfred
 # Translators:
 # Bartolome Soriano <bsoriano@gmail.com>, 2019
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: Metadata Editor\n"
@@ -128,12 +128,12 @@ msgctxt "#32021"
 msgid "Enable .nfo updating for movies, TV shows and music videos"
 msgstr "Activar actualización de .nfo para películas, series TV y vídeoclips"
 
-#: /resources/lib/dialog_metadata.py
+#: /resources/lib/editor.py
 msgctxt "#32022"
 msgid "value unkown (missing Kodi feature)"
 msgstr "valor desconocido (funcionalidad faltante en Kodi)"
 
-#: /resources/lib/dialog_metadata.py
+#: /resources/lib/editor.py
 msgctxt "#32023"
 msgid "Record label"
 msgstr "Estudio de grabación"
@@ -233,7 +233,7 @@ msgctxt "#32039"
 msgid "Update ratings"
 msgstr "Actualizar valoraciones"
 
-#: /resources/lib/dialog_metadata.py
+#: /resources/lib/editor.py
 msgctxt "#32040"
 msgid "Edit data for"
 msgstr "Editar datos para"

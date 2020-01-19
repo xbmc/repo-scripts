@@ -6,48 +6,68 @@
 from resources.lib.helper import *
 from resources.lib.json_map import *
 from resources.lib.functions import *
+from resources.lib.database import *
+from resources.lib.nfo_updater import *
 
 ########################
 
 class EditDialog(object):
-    def __init__(self,params):
-        self.params = params
-        self.dbid = params.get('dbid')
-        self.dbtype = params.get('type')
-
-        self.nfo_key = []
-        self.nfo_value = []
-
-        if self.dbtype in ['movie', 'tvshow', 'season', 'episode', 'musicvideo']:
-            library = 'Video'
-            self.nfo_support = True
-        else:
-            library = 'Audio'
-            self.nfo_support = False
-
-        self.method_details = '%sLibrary.Get%sDetails' % (library, self.dbtype)
-        self.param = '%sid' % self.dbtype
-        self.key_details = '%sdetails' % self.dbtype
-        self.properties = eval('%s_properties' % self.dbtype)
-
+    def __init__(self,dbid,dbtype):
         winprop('SelectDialogPreselect', clear=True)
+        self.dbid = dbid
+        self.dbtype = dbtype
 
-        self.entry_point()
+        self.db = Database(dbid=self.dbid, dbtype=self.dbtype)
+        self.nfo_support = self.db.result().get('nfo')
+        self.status = None
+        self.get_details()
 
-    def entry_point(self):
-        self.details = self.get_details()
-        self.file = self.details.get('file')
+    def get_details(self):
+        getattr(self.db, self.dbtype)()
+        self.details = self.db.result().get(self.dbtype)[0]
+        self.file = self.details.get('file') if self.nfo_support else False
 
+    def editor(self):
         self.modeselect = []
         self.keylist = []
         self.presetlist = []
         self.typelist = []
         self.optionlist = []
-
         self.generate_list()
-        self.editor_dialog()
+        self.dialog()
 
-    def editor_dialog(self):
+    def set(self,key,type):
+        preset = self.details.get(key)
+
+        if isinstance(preset, list):
+            preset = get_joined_items(preset)
+        elif isinstance(preset, float):
+            preset = str(get_rounded_value(preset))
+        elif isinstance(preset, int):
+            preset = str(preset)
+
+        self._handle_dbitem(value_type=type,
+                            key=key,
+                            preset=preset
+                            )
+        self.get_details()
+        self.quit()
+
+    def quit(self):
+        if self.file:
+
+            if self.status:
+                self.details['status'] = self.status
+
+            update_nfo(file=self.file,
+                       dbtype=self.dbtype,
+                       dbid=self.dbid,
+                       details=self.details
+                       )
+
+        reload_widgets()
+
+    def dialog(self):
         preselect = winprop('SelectDialogPreselect')
         if not preselect:
             preselect = -1
@@ -64,46 +84,21 @@ class EditDialog(object):
         # Dialog closed -> write changes to nfo and exit
         if self.editdialog == -1:
             winprop('SelectDialogPreselect', clear=True)
+            self.quit()
 
-            if self.file and self.nfo_support:
-                update_nfo(file=self.file,
-                           elem=self.nfo_key,
-                           value=self.nfo_value,
-                           dbtype=self.dbtype,
-                           dbid=self.dbid
-                           )
+        else:
+            # Edit value based on the type
+            winprop('SelectDialogPreselect', str(self.editdialog))
 
-                reload_widgets()
+            self._handle_dbitem(value_type=self.typelist[self.editdialog],
+                                key=self.keylist[self.editdialog],
+                                preset=self.presetlist[self.editdialog],
+                                option=self.optionlist[self.editdialog]
+                                )
 
-                exit()
-
-        # Edit value based on the type
-        winprop('SelectDialogPreselect', str(self.editdialog))
-
-        self._handle_dbitem(value_type=self.typelist[self.editdialog],
-                            dbid=self.dbid,
-                            dbtype=self.dbtype,
-                            key=self.keylist[self.editdialog],
-                            preset=self.presetlist[self.editdialog],
-                            option=self.optionlist[self.editdialog],
-                            file=self.details.get('file'),
-                            nfo_support=self.nfo_support
-                            )
-
-        # Return to entry_point to populate the changes in the dialog
-        self.entry_point()
-
-    def get_details(self):
-        json_query = json_call(self.method_details,
-                               properties=self.properties,
-                               params={self.param: int(self.dbid)}
-                               )
-        try:
-            result = json_query['result'][self.key_details]
-            return result
-
-        except KeyError:
-            return
+            # Refetch updated data and return to entry_point to populate the changes in the dialog
+            self.get_details()
+            self.editor()
 
     def generate_list(self):
         details = self.details
@@ -141,7 +136,7 @@ class EditDialog(object):
             self._create_list(xbmc.getLocalizedString(202), 'tagline', value=details.get('tagline'), type='string')
             self._create_list(xbmc.getLocalizedString(207), 'plot', value=details.get('plot'), type='string')
             self._create_list(xbmc.getLocalizedString(203), 'plotoutline', value=details.get('plotoutline'), type='string')
-            self._create_list(xbmc.getLocalizedString(20457), 'set', value=details.get('set'), type='string')
+            self._create_list(xbmc.getLocalizedString(20457), 'set', value=details.get('set'), type='movieset')
             self._create_list(xbmc.getLocalizedString(563) + ' / ' + xbmc.getLocalizedString(205), 'ratings', value=ratings_default, type='ratings', option=ratings)
             self._create_list(ADDON.getLocalizedString(32001), 'userrating', value=str(details.get('userrating')), type='userrating')
             self._create_list(xbmc.getLocalizedString(20074), 'mpaa', value=details.get('mpaa'), type='string')
@@ -159,6 +154,11 @@ class EditDialog(object):
             self._create_list(xbmc.getLocalizedString(567), 'playcount', value=str(details.get('playcount', 0)), type='integer')
 
         elif self.dbtype == 'tvshow':
+            if KODI_VERSION < 19:
+                status = ADDON.getLocalizedString(32022)
+            else:
+                status = details.get('status', '')
+
             self._create_list(xbmc.getLocalizedString(369), 'title', value=details.get('title'), type='string')
             self._create_list(xbmc.getLocalizedString(20376),'originaltitle', value=details.get('originaltitle'), type='string')
             self._create_list(xbmc.getLocalizedString(171), 'sorttitle', value=details.get('sorttitle'), type='string')
@@ -170,14 +170,13 @@ class EditDialog(object):
             self._create_list(xbmc.getLocalizedString(20074), 'mpaa', value=details.get('mpaa'), type='string')
             self._create_list(xbmc.getLocalizedString(572), 'studio', value=get_joined_items(details.get('studio')), type='array')
             self._create_list(xbmc.getLocalizedString(20459), 'tag', value=get_joined_items(details.get('tag')), type='array')
-            self._create_list(xbmc.getLocalizedString(126), 'status', value=ADDON.getLocalizedString(32022), type='status')
+            self._create_list(xbmc.getLocalizedString(126), 'status', value=status, type='status')
             self._create_list('IMDb ID', 'uniqueid', value=uniqueid.get('imdb'), type='uniqueid', option={'type': 'imdb', 'uniqueids': uniqueid, 'episodeguide': details.get('episodeguide')})
             self._create_list('TMDb ID', 'uniqueid', value=uniqueid.get('tmdb'), type='uniqueid', option={'type': 'tmdb', 'uniqueids': uniqueid, 'episodeguide': details.get('episodeguide')})
             self._create_list('TVDb ID', 'uniqueid', value=uniqueid.get('tvdb'), type='uniqueid', option={'type': 'tvdb', 'uniqueids': uniqueid, 'episodeguide': details.get('episodeguide')})
             self._create_list('aniDB ID', 'uniqueid', value=uniqueid.get('anidb'), type='uniqueid', option={'type': 'anidb', 'uniqueids': uniqueid, 'episodeguide': details.get('episodeguide')})
             self._create_list(xbmc.getLocalizedString(570), 'dateadded', value=details.get('dateadded'), type='datetime')
             self._create_list(xbmc.getLocalizedString(568), 'lastplayed', value=details.get('lastplayed'), type='datetime')
-            self._create_list(xbmc.getLocalizedString(567), 'playcount', value=str(details.get('playcount', 0)), type='integer')
 
         elif self.dbtype == 'episode':
             self._create_list(xbmc.getLocalizedString(369), 'title', value=details.get('title'), type='string')
@@ -196,6 +195,10 @@ class EditDialog(object):
             self._create_list(xbmc.getLocalizedString(568), 'lastplayed', value=details.get('lastplayed'), type='datetime')
             self._create_list(xbmc.getLocalizedString(567), 'playcount', value=str(details.get('playcount', 0)), type='integer')
 
+        elif self.dbtype == 'set':
+            self._create_list(xbmc.getLocalizedString(369), 'title', value=details.get('title'), type='string')
+            self._create_list(xbmc.getLocalizedString(207), 'plot', value=details.get('plot'), type='string')
+
         elif self.dbtype == 'musicvideo':
             self._create_list(xbmc.getLocalizedString(369), 'title', value=details.get('title'), type='string')
             self._create_list(xbmc.getLocalizedString(557), 'artist', value=get_joined_items(details.get('artist')), type='array')
@@ -206,8 +209,8 @@ class EditDialog(object):
             self._create_list(xbmc.getLocalizedString(515), 'genre', value=get_joined_items(details.get('genre')), type='array')
             self._create_list(xbmc.getLocalizedString(20339), 'director', value=get_joined_items(details.get('director')), type='array')
             self._create_list(xbmc.getLocalizedString(572), 'studio', value=get_joined_items(details.get('studio')), type='array')
-            self._create_list(xbmc.getLocalizedString(563), 'rating', value=str(get_rounded_value(details.get('rating'))), type='float')
-            self._create_list(ADDON.getLocalizedString(32001), 'userrating', value=details.get('userrating'), type='userrating')
+            # self._create_list(xbmc.getLocalizedString(563), 'rating', value=str(get_rounded_value(details.get('rating'))), type='integer')  broken in kodi? cannot be set
+            self._create_list(ADDON.getLocalizedString(32001), 'userrating', value=str(details.get('userrating')), type='userrating')
             self._create_list(xbmc.getLocalizedString(20459), 'tag', value=get_joined_items(details.get('tag')), type='array')
             self._create_list(xbmc.getLocalizedString(570), 'dateadded', value=details.get('dateadded'), type='datetime')
             self._create_list(xbmc.getLocalizedString(568), 'lastplayed', value=details.get('lastplayed'), type='datetime')
@@ -247,7 +250,7 @@ class EditDialog(object):
             self._create_list(xbmc.getLocalizedString(567), 'playcount', value=str(details.get('playcount', 0)), type='integer')
 
     def _create_list(self,label,key,type,value,option=None):
-        if type in ['uniqueid', 'status']:
+        if type in ['uniqueid', 'status', 'movieset']:
             icon = 'string'
         elif type == ('userrating'):
             icon = 'integer'
@@ -267,13 +270,15 @@ class EditDialog(object):
         self.optionlist.append(option)
         self.presetlist.append('' if not value else value)
 
-    def _handle_dbitem(self,value_type,dbid,dbtype,key,preset,option,file,nfo_support):
-        preset = preset.replace('n/a','')
-        nfo_key = None
-        nfo_value = None
+    def _handle_dbitem(self,key,value_type,preset=None,option=None):
+        if preset:
+            preset = preset.replace('n/a','')
 
         if value_type == 'array':
-            value = set_array(preset, dbid, dbtype, key)
+            value = set_array(self.dbtype, key, preset)
+
+        elif value_type == 'select':
+            value = modify_array(self.dbtype, key, preset)
 
         elif value_type == 'string':
             value = set_string(preset)
@@ -301,6 +306,13 @@ class EditDialog(object):
 
         elif value_type == 'status':
             value = set_status(preset)
+            self.status = value
+
+        elif value_type == 'watchlist':
+            value = toggle_tag(preset)
+
+        elif value_type == 'movieset':
+            value = set_movieset(preset)
 
         elif value_type == ('uniqueid'):
             returned_value = set_string(preset)
@@ -325,8 +337,4 @@ class EditDialog(object):
 
             nfo_value = [updated_dict, option.get('episodeguide')]
 
-        update_library(dbtype, key, value, dbid)
-
-        if nfo_support and file:
-            self.nfo_key.append(nfo_key if nfo_key else key)
-            self.nfo_value.append(nfo_value if nfo_value else value)
+        self.db.write(key=key, value=value)

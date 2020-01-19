@@ -7,129 +7,181 @@ from __future__ import division
 
 from resources.lib.helper import *
 from resources.lib.functions import *
+from resources.lib.database import *
+from resources.lib.nfo_updater import *
 
 ########################
 
+RUN_IN_BACKGROUND = ADDON.getSettingBool('update_background')
+BUSYDIALOG = False if RUN_IN_BACKGROUND else True
 OMDB_FALLBACK = ADDON.getSettingBool('omdb_fallback_search')
+OMDB_API = ADDON.getSetting('omdb_api_key')
+COUNTRY_CODE = ADDON.getSetting('country_code')
+SKIP_MPAA = ADDON.getSettingBool('mpaa_skip')
+SKIP_NOT_RATED = ADDON.getSettingBool('mpaa_skip_nr')
+MPAA_FALLBACK = ADDON.getSettingBool('mpaa_fallback')
+TMDB_LANGUAGE = ADDON.getSetting('tmdb_language')
+RATING_DEBUG = ADDON.getSetting('debug_rating_updater')
 
 ########################
 
-class UpdateAllRatings(object):
-    def __init__(self,params):
-        self.dbtype = params.get('type')
-        self.background_task = ADDON.getSettingBool('update_background')
-        self.items, self.total_items = self.get_items()
+def update_ratings(dbid=None,dbtype=None,content=None):
+    # no omdb API key message
+    if not OMDB_API:
+        if not DIALOG.yesno(xbmc.getLocalizedString(14117), ADDON.getLocalizedString(32035)):
+            return
 
-        if self.items:
-            self.run()
+    winprop('UpdatingRatings.bool', True)
+    msg_text = xbmc.getLocalizedString(19256)
 
-    def get_items(self):
-        if self.dbtype == 'episode':
-            all_items_properties = ['title', 'showtitle']
-        else:
-            all_items_properties = ['title', 'year']
+    # get database ids
+    if isinstance(dbtype, str):
+        dbtype = dbtype.split('+')
 
-        with busy_dialog():
-            all_items = json_call('VideoLibrary.Get%ss' % self.dbtype,
-                                  properties=all_items_properties
-                                  )
+    with busy_dialog(force=BUSYDIALOG):
+        db = Database(dbid=dbid, append=['episodes'])
+        for i in dbtype:
+            getattr(db, i)()
+        result = db.result()
 
-        try:
-            items = all_items['result']['%ss' % self.dbtype]
-            total_items = len(items)
-            return items, total_items
+        # calc total items to process
+        total_items = 0
+        for i in result:
+            if result.get(i):
+                total_items = total_items + len(result[i])
 
-        except Exception:
-            log('No items found for DBtype: %s' % self.dbtype)
-            return '', ''
+    if total_items > 1:
+        # show progress if 1< will be processed
+        progressdialog = ProgressDialog(total_items)
 
-    def run(self):
-        winprop('UpdatingRatings.bool', True)
-        msg_text = None
+        for i in result:
+            if i == 'movie':
+                cat = xbmc.getLocalizedString(20338)
+            elif i == 'tvshow':
+                cat = xbmc.getLocalizedString(20364)
+            elif i == 'episode':
+                cat = xbmc.getLocalizedString(20359)
 
-        if self.dbtype == 'movie':
-            heading = ADDON.getLocalizedString(32033)
-        elif self.dbtype == 'tvshow':
-            heading = ADDON.getLocalizedString(32034)
-        else:
-            heading = ADDON.getLocalizedString(32046)
+            for item in result[i]:
+                if progressdialog.canceled():
+                    break
 
-        processed_items = 0
-        progress = 0
+                if item.get('showtitle') and item.get('label'):
+                    label = item.get('showtitle') + ' - ' + item.get('label')
+                else:
+                    label = item.get('title')
 
-        if self.background_task:
-            progressdialog = xbmcgui.DialogProgressBG()
-        else:
-            progressdialog = xbmcgui.DialogProgress()
+                if item.get('year'):
+                    label = label + ' (' + str(item.get('year')) + ')'
 
-        progressdialog.create(heading, '')
+                progressdialog.update(cat, label)
 
-        for item in self.items:
-            if (not self.background_task and progressdialog.iscanceled()) or winprop('CancelRatingUpdater.bool'):
-                winprop('CancelRatingUpdater', clear=True)
+                UpdateRating({'dbid': item.get('%sid' % i),
+                              'type': i})
+                #xbmc.sleep(50)
+
+            if progressdialog.canceled():
                 msg_text = ADDON.getLocalizedString(32042)
                 break
 
-            processed_items += 1
-            progress = int(100 / self.total_items * processed_items)
-
-            if item.get('showtitle') and item.get('label'):
-                label = item.get('showtitle') + ' - ' + item.get('label')
-            else:
-                label = item.get('title')
-
-            if item.get('year'):
-                label = label + ' (' + str(item.get('year')) + ')'
-
-            if self.background_task:
-                progressdialog.update(int(progress), str(processed_items) + ' / ' + str(self.total_items) + ':', label)
-            else:
-                progressdialog.update(int(progress), label, str(processed_items) + ' / ' + str(self.total_items))
-
-            UpdateRating({'dbid': item.get('%sid' % self.dbtype),
-                          'type': self.dbtype,
-                          'done_msg': False})
-
         progressdialog.close()
-        progressdialog = None
 
-        notification(ADDON.getLocalizedString(32030), msg_text if msg_text else xbmc.getLocalizedString(19256))
+    elif total_items == 1:
+        # process single item
+        for i in result:
+            UpdateRating({'dbid': result[i][0].get('%sid' % i),
+                          'type': i})
 
-        winprop('UpdatingRatings', clear=True)
+    else:
+        # error message
+        msg_text = ADDON.getLocalizedString(32048)
+
+    winprop('UpdatingRatings', clear=True)
+    notification(ADDON.getLocalizedString(32030), msg_text)
+
+
+class ProgressDialog(object):
+    def __init__(self,total_items):
+        if RUN_IN_BACKGROUND:
+            self.progressdialog = xbmcgui.DialogProgressBG()
+        else:
+            self.progressdialog = xbmcgui.DialogProgress()
+
+        self.progressdialog.create('Updating', '')
+        self.total_items = total_items
+        self.processed_items = 0
+        self.progress = 0
+
+    def canceled(self):
+        if RUN_IN_BACKGROUND:
+            return True if winprop('CancelRatingUpdater.bool') else False
+        else:
+            return True if self.progressdialog.iscanceled() or winprop('CancelRatingUpdater.bool') else False
+
+    def update(self,cat,label):
+        self.processed_items += 1
+        progress = int(100 / self.total_items * self.processed_items)
+        processed = str(self.processed_items) + ' / ' + str(self.total_items)
+
+        if RUN_IN_BACKGROUND:
+            self.progressdialog.update(progress, processed, cat + ':' + label)
+        else:
+            self.progressdialog.update(progress, cat + ':[CR]' + label, processed)
+
+    def close(self):
+        self.progressdialog.close()
+        self.progressdialog = None
+        winprop('CancelRatingUpdater', clear=True)
 
 
 class UpdateRating(object):
     def __init__(self,params):
         self.dbid = params.get('dbid')
         self.dbtype = params.get('type')
-        self.done_msg = True if params.get('done_msg', True) else False
         self.tmdb_type = 'movie' if self.dbtype == 'movie' else 'tv'
         self.tmdb_tv_status = None
         self.tmdb_mpaa = None
         self.tmdb_mpaa_fallback = None
+        self.tmdb_rating = None
+        self.imdb_rating = None
+        self.omdb_limit = False
         self.update_uniqueid = False
         self.episodeguide = None
 
-        self.method_details = 'VideoLibrary.Get%sDetails' % self.dbtype
-        self.method_setdetails = 'VideoLibrary.Set%sDetails' % self.dbtype
-        self.param = '%sid' % self.dbtype
-        self.key_details = '%sdetails' % self.dbtype
-
-        self.init()
-
-    def init(self):
-        # get stored IDs that are used to call TMDb and OMDb
+        # collect db data
+        self.db = Database(dbid=self.dbid, dbtype=self.dbtype)
         self.get_details()
 
-        if not self.uniqueid:
-            return
+        self.uniqueid = self.details.get('uniqueid', {})
+        self.ratings = self.details.get('ratings', {})
+        self.file = self.details.get('file')
+        self.year = self.details.get('year')
+        self.premiered = self.details.get('premiered') or self.details.get('firstaired')
+        self.title = self.details.get('title')
+        self.original_title = self.details.get('originaltitle') or self.title
+        self.tags = self.details.get('tag')
 
+        if any(string in self.details.get('episodeguide', '') for string in ['tvdb', 'tmdb']):
+            self.episodeguide = self.details.get('episodeguide')
+        else:
+            self.episodeguide = None
+
+        if self.uniqueid:
+            self.run()
+
+    def get_details(self):
+        getattr(self.db, self.dbtype)()
+        self.details = self.db.result().get(self.dbtype)[0]
+
+    def run(self):
+        log('Run rating updater - %s: %s - ID: %s' % (self.dbtype, self.title, str(self.dbid)), force=RATING_DEBUG)
         self.imdb = self.uniqueid.get('imdb')
         self.tmdb = self.uniqueid.get('tmdb')
         self.tvdb = self.uniqueid.get('tvdb')
 
         # don't proceed for episodes if no IMDb is available
         if self.dbtype == 'episode' and not self.imdb:
+            log('Episode with no IMDb. Skip.', force=RATING_DEBUG)
             return
 
         # get the default used rating
@@ -142,78 +194,75 @@ class UpdateRating(object):
         if self.dbtype != 'episode':
             # get TMDb ID (if not available) by using the ID of IMDb or TVDb
             if not self.tmdb and self.imdb:
+                log('No TMDb. Try to get by IMDb ID %s' % self.imdb, force=RATING_DEBUG)
                 self.get_tmdb_externalid(self.imdb)
 
             elif not self.tmdb and self.tvdb:
+                log('No TMDb. Try to get by TVDb ID %s' % str(self.tvdb), force=RATING_DEBUG)
                 self.get_tmdb_externalid(self.tvdb)
 
             # get TMDb rating and IMDb number if not available
             if self.tmdb:
+                log('Fetch data by TMDb ID %s' % str(self.tmdb), force=RATING_DEBUG)
                 self.get_tmdb()
 
         # get Rotten, Metacritic and IMDb ratings of OMDb
-        self.get_omdb()
+        if not self.omdb_limit:
+            log('Fetch OMDb data', force=RATING_DEBUG)
+            self.get_omdb()
 
         # if no TMDb ID was known before but OMDb return the IMDb ID -> try to get TMDb data again
         if self.dbtype != 'episode' and not self.tmdb and self.imdb:
+            log('Try to get TMDb ID by returned IMDb ID %s of OMDb' % self.imdb, force=RATING_DEBUG)
             self.get_tmdb_externalid(self.imdb)
 
             if self.tmdb:
+                log('Fetch data by TMDb ID %s' % str(self.tmdb), force=RATING_DEBUG)
                 self.get_tmdb()
 
+        # emby <ratings> and <votes>
+        if 'default' in self.ratings:
+            self.emby_ratings()
+
         # update db + nfo
+        log('Updating info', force=RATING_DEBUG)
         self.update_info()
 
-        if self.done_msg:
-            notification(ADDON.getLocalizedString(32030), xbmc.getLocalizedString(19256))
+    def emby_ratings(self):
+        # Emby For Kodi is storing the rating as 'default'
+        if self.imdb_rating:
+            self._update_ratings_dict(key='default',
+                                      rating=float(self.imdb_rating),
+                                      votes=int(self.imdb_votes)
+                                      )
 
-    def get_details(self):
-        if self.dbtype == 'tvshow':
-            details_properties = ['title', 'originaltitle', 'year', 'uniqueid', 'ratings', 'file', 'tag', 'episodeguide']
-        elif self.dbtype == 'episode':
-            details_properties = ['title', 'originaltitle', 'uniqueid', 'ratings', 'file']
-        else:
-            details_properties = ['title', 'originaltitle', 'year', 'uniqueid', 'ratings', 'file', 'tag']
-
-        json_query = json_call(self.method_details,
-                               properties=details_properties,
-                               params={self.param: int(self.dbid)}
-                               )
-        try:
-            result = json_query['result'][self.key_details]
-        except KeyError:
-            result = {}
-
-        self.uniqueid = result.get('uniqueid', {})
-        self.ratings = result.get('ratings', {})
-        self.file = result.get('file')
-        self.year = result.get('year')
-        self.title = result.get('title')
-        self.original_title = result.get('originaltitle') or self.title
-        self.tags = result.get('tag')
-
-        if ('thetvdb' or 'themoviedb') in result.get('episodeguide', ''):
-            self.episodeguide = result.get('episodeguide')
-        else:
-            self.episodeguide = None
+        elif self.tmdb_rating:
+            self._update_ratings_dict(key='default',
+                                      rating=float(self.tmdb_rating),
+                                      votes=int(self.tmdb_votes)
+                                      )
 
     def get_tmdb(self):
-        country_code = ADDON.getSetting('country_code')
-
-        result = tmdb_call(action=self.tmdb_type,
-                           call=str(self.tmdb),
-                           params={'append_to_response': 'release_dates,content_ratings,external_ids'}
-                           )
+        result = self._tmdb(action=self.tmdb_type,
+                            call=str(self.tmdb),
+                            params={'append_to_response': 'release_dates,content_ratings,external_ids'}
+                            )
 
         if not result:
             return
 
         self.tmdb_rating = result.get('vote_average')
         self.tmdb_votes = result.get('vote_count')
-        self.original_title = result.get('original_name')
+
+        if not self.original_title:
+            self.original_title = result.get('original_title') or resultresult.get('original_name')
+
+            # update original title if missing
+            if self.original_title:
+                self._set_value('originaltitle', self.original_title)
 
         if self.tmdb_type == 'tv':
-            year = result.get('first_air_date')
+            premiered = result.get('first_air_date')
             self.tmdb_tv_status = result.get('status')
 
             # update TV status as well
@@ -221,20 +270,28 @@ class UpdateRating(object):
                 self._set_value('status', self.tmdb_tv_status)
 
         else:
-            year = result.get('release_date')
+            premiered = result.get('release_date')
 
-        self.year = year[:4] if year else ''
+        # update the year if not correct
+        if premiered and self.premiered != premiered:
+            self.year = premiered[:4]
+
+            if ADDON.getSettingBool('update_premiered') or not self.premiered:
+                self._set_value('premiered', premiered)
 
         if self.tmdb_rating:
-            self._update_ratings_dict(key='themoviedb', rating=self.tmdb_rating, votes=self.tmdb_votes)
+            self._update_ratings_dict(key='themoviedb',
+                                      rating=self.tmdb_rating,
+                                      votes=self.tmdb_votes
+                                      )
 
         # set MPAA based on setting
-        if not ADDON.getSettingBool('skip_mpaa'):
+        if not SKIP_MPAA:
             if self.tmdb_type == 'movie':
                 release_dates = result['release_dates']['results']
 
                 for country in release_dates:
-                    if country.get('iso_3166_1') == country_code:
+                    if country.get('iso_3166_1') == COUNTRY_CODE:
                         for item in country['release_dates']:
                             if item.get('certification'):
                                 self.tmdb_mpaa = item.get('certification')
@@ -244,28 +301,38 @@ class UpdateRating(object):
                     elif country.get('iso_3166_1') == 'US':
                         for item in country['release_dates']:
                             if item.get('certification'):
-                                self.tmdb_mpaa = item.get('certification')
+                                self.tmdb_mpaa_fallback = item.get('certification')
                                 break
 
             if self.tmdb_type == 'tv':
                 content_ratings = result['content_ratings']['results']
 
                 for country in content_ratings:
-                    if country.get('iso_3166_1') == country_code:
+                    if country.get('iso_3166_1') == COUNTRY_CODE:
                         self.tmdb_mpaa = country.get('rating')
                         break
 
                     elif country.get('iso_3166_1') == 'US':
                         self.tmdb_mpaa_fallback = country.get('rating')
 
+            if SKIP_NOT_RATED:
+                if self.tmdb_mpaa == 'NR':
+                    self.tmdb_mpaa = None
+
+                if self.tmdb_mpaa_fallback == 'NR':
+                    self.tmdb_mpaa_fallback = None
+
             if self.tmdb_mpaa:
-                if country_code == 'DE':
+                if COUNTRY_CODE == 'DE':
                     self.tmdb_mpaa = 'FSK ' + self.tmdb_mpaa
 
                 self._set_value('mpaa', self.tmdb_mpaa)
 
-            elif self.tmdb_mpaa_fallback:
+            elif self.tmdb_mpaa_fallback and MPAA_FALLBACK:
                 self._set_value('mpaa', self.tmdb_mpaa_fallback)
+
+            else:
+                self._set_value('mpaa', '')
 
         # set IMDb ID if not available in the library
         if not self.imdb:
@@ -286,10 +353,10 @@ class UpdateRating(object):
                 self._update_uniqueid_dict('tvdb', self.tvdb)
 
     def get_tmdb_externalid(self,external_id):
-        result = tmdb_call(action='find',
-                           call=str(external_id),
-                           params={'external_source': 'imdb_id' if external_id.startswith('tt') else 'tvdb_id'}
-                           )
+        result = self._tmdb(action='find',
+                            call=str(external_id),
+                            params={'external_source': 'imdb_id' if external_id.startswith('tt') else 'tvdb_id'}
+                            )
 
         if self.dbtype == 'movie' and result.get('movie_results'):
             self.tmdb = result['movie_results'][0].get('id')
@@ -301,15 +368,9 @@ class UpdateRating(object):
             self._update_uniqueid_dict('tmdb', self.tmdb)
 
     def get_omdb(self):
-        omdb = omdb_call(imdbnumber=self.imdb,
-                         title=self.original_title,
-                         year=self.year,
-                         use_fallback=OMDB_FALLBACK if self.dbtype != 'episode' else False
-                         )
+        omdb = self._omdb()
 
-        if not omdb or '<root response="False">' in omdb:
-            error_msg = 'OMDb error for "%s" IMDBd "%s" --> ' % (self.original_title, self.imdb)
-            log(error_msg + str(omdb), WARNING)
+        if not omdb:
             return
 
         tree = ET.ElementTree(ET.fromstring(omdb))
@@ -317,49 +378,47 @@ class UpdateRating(object):
 
         for child in root:
             # imdb ratings
-            imdb_rating = child.get('imdbRating')
-            imdb_votes = child.get('imdbVotes', 0)
-
-            if imdb_rating and imdb_rating != 'N/A':
-                votes = imdb_votes.replace(',', '') if imdb_votes != 'N/A' else 0
+            self.imdb_rating = child.get('imdbRating', '').replace('N/A', '')
+            self.imdb_votes = child.get('imdbVotes', '0').replace('N/A', '0').replace(',', '')
+            if self.imdb_rating:
                 self._update_ratings_dict(key='imdb',
-                                          rating=float(imdb_rating),
-                                          votes=int(votes)
+                                          rating=float(self.imdb_rating),
+                                          votes=int(self.imdb_votes)
                                           )
 
-                # Emby For Kodi is storing the rating as 'default'
-                if 'default' in self.ratings:
-                    self._update_ratings_dict(key='default',
-                                              rating=float(imdb_rating),
-                                              votes=int(votes)
-                                              )
-
             # regular rotten rating
-            tomatometerallcritics = child.get('tomatoMeter')
-            tomatometerallcritics_votes = child.get('tomatoReviews', 0)
+            tomatometerallcritics = child.get('tomatoMeter', '').replace('N/A', '')
+            tomatometerallcritics_avg = child.get('tomatoRating', '').replace('N/A', '')
+            tomatometerallcritics_votes = child.get('tomatoReviews', '0').replace('N/A', '0').replace(',', '')
 
-            if tomatometerallcritics and tomatometerallcritics != 'N/A':
-                tomatometerallcritics = int(tomatometerallcritics) / 10
-                votes = tomatometerallcritics_votes if tomatometerallcritics_votes != 'N/A' else 0
+            if tomatometerallcritics:
                 self._update_ratings_dict(key='tomatometerallcritics',
-                                          rating=tomatometerallcritics,
-                                          votes=int(votes))
+                                          rating=int(tomatometerallcritics) / 10,
+                                          votes=int(tomatometerallcritics_votes))
+
+            if tomatometerallcritics_avg:
+                self._update_ratings_dict(key='tomatometeravgcritics',
+                                          rating=float(tomatometerallcritics_avg),
+                                          votes=int(tomatometerallcritics_votes))
 
             # user rotten rating
-            tomatometeravgcritics = child.get('tomatoUserMeter')
-            tomatometeravgcritics_votes = child.get('tomatoUserReviews', 0)
+            tomatometerallaudience = child.get('tomatoUserMeter', '').replace('N/A', '')
+            tomatometerallaudience_avg = child.get('tomatoUserRating', '').replace('N/A', '')
+            tomatometerallaudience_votes = child.get('tomatoUserReviews', '0').replace('N/A', '0').replace(',', '')
 
-            if tomatometeravgcritics and tomatometeravgcritics != 'N/A':
-                tomatometeravgcritics = int(tomatometeravgcritics) / 10
-                votes = tomatometeravgcritics_votes if tomatometeravgcritics_votes != 'N/A' else 0
-                self._update_ratings_dict(key='tomatometeravgcritics',
-                                          rating=tomatometeravgcritics,
-                                          votes=int(votes))
+            if tomatometerallaudience:
+                self._update_ratings_dict(key='tomatometerallaudience',
+                                          rating=int(tomatometerallaudience) / 10,
+                                          votes=int(tomatometerallaudience_votes))
+
+            if tomatometerallaudience_avg:
+                self._update_ratings_dict(key='tomatometeravgaudience',
+                                          rating=float(tomatometerallaudience_avg),
+                                          votes=int(tomatometerallaudience_votes))
 
             # metacritic
-            metacritic = child.get('metascore')
-
-            if metacritic and metacritic != 'N/A':
+            metacritic = child.get('metascore', '').replace('N/A', '')
+            if metacritic:
                 metacritic = int(metacritic) / 10
                 self._update_ratings_dict(key='metacritic',
                                           rating=metacritic,
@@ -387,16 +446,10 @@ class UpdateRating(object):
                     break
 
         # update to library
-        json_call('VideoLibrary.Set%sDetails' % self.dbtype,
-                  params={'ratings': self.ratings, '%sid' % self.dbtype: int(self.dbid)},
-                  debug=LOG_JSON
-                  )
+        self._set_value(key='ratings', value=self.ratings)
 
         if self.update_uniqueid:
-            json_call('VideoLibrary.Set%sDetails' % self.dbtype,
-                      params={'uniqueid': self.uniqueid, '%sid' % self.dbtype: int(self.dbid)},
-                      debug=LOG_JSON
-                      )
+            self._set_value(key='uniqueid', value=self.uniqueid)
 
         # episode guide verification
         if self.episodeguide:
@@ -413,9 +466,8 @@ class UpdateRating(object):
 
             elif 'tmdb' in self.uniqueid:
                 value = self.uniqueid.get('tmdb')
-                language = ADDON.getSetting('tmdb_language')
-                cache = 'tmdb-%s-%s.json' % (str(value), language)
-                url = 'http://api.themoviedb.org/3/tv/%s?api_key=6a5be4999abf74eba1f9a8311294c267&amp;language=%s' % (str(value), language)
+                cache = 'tmdb-%s-%s.json' % (str(value), TMDB_LANGUAGE)
+                url = 'http://api.themoviedb.org/3/tv/%s?api_key=6a5be4999abf74eba1f9a8311294c267&amp;language=%s' % (str(value), TMDB_LANGUAGE)
                 json_value = '<episodeguide><url cache="%s"><url>%s</url></episodeguide>' % (cache, url)
 
             else:
@@ -426,33 +478,18 @@ class UpdateRating(object):
 
         # nfo updating
         if self.file:
-            elems = ['ratings', 'uniqueid']
-            values = [self.ratings, [self.uniqueid, self.episodeguide]]
+            # get updated data
+            self.get_details()
 
-            # TV status
-            if self.tmdb_tv_status:
-                elems.append('status')
-                values.append(self.tmdb_tv_status)
-
-            # MPAA
-            if self.tmdb_mpaa:
-                elems.append('mpaa')
-                values.append(self.tmdb_mpaa)
-
-            elif self.tmdb_mpaa_fallback:
-                elems.append('mpaa')
-                values.append(self.tmdb_mpaa_fallback)
-
-            # Write tags to nfo in case they weren't there to trigger Emby to add them
-            if self.tags:
-                elems.append('tag')
-                values.append(self.tags)
+            # TV status cannot be fetched in Leia
+            if self.tmdb_tv_status and not self.details.get('status'):
+                self.details['status'] = self.tmdb_tv_status
 
             update_nfo(file=self.file,
-                       elem=elems,
-                       value=values,
                        dbtype=self.dbtype,
-                       dbid=self.dbid)
+                       dbid=self.dbid,
+                       details=self.details
+                       )
 
     def _update_ratings_dict(self,key,rating,votes):
         self.ratings[key] = {'default': True if key == self.default_rating else False,
@@ -464,7 +501,101 @@ class UpdateRating(object):
         self.update_uniqueid = True
 
     def _set_value(self,key,value):
-        json_call('VideoLibrary.Set%sDetails' % self.dbtype,
-                  params={key: value, '%sid' % self.dbtype: int(self.dbid)},
-                  debug=LOG_JSON
-                  )
+        self.db.write(key=key, value=value)
+
+    def _omdb(self):
+        if not OMDB_API:
+            log('No OMDb API key configured. Skip.', force=RATING_DEBUG)
+            return
+
+        if self.imdb:
+            url = 'http://www.omdbapi.com/?apikey=%s&i=%s&plot=short&r=xml&tomatoes=true' % (OMDB_API, self.imdb)
+
+        elif OMDB_FALLBACK and self.dbtype != 'episode' and self.original_title and self.year:
+            # urllib has issues with some asian letters
+            try:
+                title = urllib.quote(self.original_title)
+            except KeyError:
+                return
+
+            url = 'http://www.omdbapi.com/?apikey=%s&t=%s&year=%s&plot=short&r=xml&tomatoes=true' % (OMDB_API, title, self.year)
+
+        else:
+            return
+
+        error_msg = 'OMDb error for "%s (%s)" IMDBd "%s". Error --> ' % (self.original_title, self.year, self.imdb)
+
+        for i in range(1,4): # loop if heavy server load
+            log('OMDb call try %s/3' % str(i), force=RATING_DEBUG)
+            try:
+                request = requests.get(url, timeout=5)
+                if not str(request.status_code).startswith('5'):
+                    break
+                elif i == 1:
+                    notification('OMDb', ADDON.getLocalizedString(32024))
+
+            except Exception:
+                if i < 3:
+                    xbmc.sleep(500)
+                else:
+                    log(error_msg + '408', WARNING)
+                    return
+
+        if request.status_code == 401:
+            log('OMDb error --> API limit reached', WARNING)
+            if DIALOG.yesno(xbmc.getLocalizedString(257), ADDON.getLocalizedString(32033)):
+                log('OMDb limit reached and disabled for next calls', force=RATING_DEBUG)
+                self.omdb_limit = True
+            else:
+                log('OMDb limit reached and rating updater canceled', force=RATING_DEBUG)
+                winprop('CancelRatingUpdater.bool', True)
+            return
+
+        elif not request.ok:
+            log(error_msg + str(request.status_code), WARNING)
+            return
+
+        result = request.text
+
+        if not result or '<root response="False">' in result:
+            log(error_msg + 'Result = ' + str(result), WARNING)
+            return
+
+        return result
+
+    def _tmdb(self,action,call=None,get=None,params=None):
+        result = {}
+        args = {}
+        args['api_key'] = 'fc168650632c6597038cf7072a7c20da'
+
+        if params:
+            args.update(params)
+
+        call = '/' + str(call) if call else ''
+        get = '/' + get if get else ''
+
+        url = 'https://api.themoviedb.org/3/' + action + call + get
+        url = '{0}?{1}'.format(url, urlencode(args))
+
+        for i in range(1,4): # loop if heavy server load
+            log('TMDb call try %s/3' % str(i), force=RATING_DEBUG)
+            try:
+                request = requests.get(url, timeout=5)
+                if not str(request.status_code).startswith('5'):
+                    break
+                elif i == 1:
+                    notification('TMDb', ADDON.getLocalizedString(32024))
+
+            except Exception:
+                if i < 3:
+                    xbmc.sleep(500)
+                else:
+                    log('TMDb connection error', force=RATING_DEBUG)
+                    return result
+
+        if request.ok:
+            result = request.json()
+        else:
+            log('TMDb returned nothing', force=RATING_DEBUG)
+
+        return result
