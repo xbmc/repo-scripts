@@ -1,4 +1,3 @@
-
 from resources import main_service
 
 if __name__ == "__main__":
