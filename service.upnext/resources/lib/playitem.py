@@ -2,11 +2,11 @@
 # GNU General Public License v2.0 (see COPYING or https://www.gnu.org/licenses/gpl-2.0.txt)
 
 from __future__ import absolute_import, division, unicode_literals
-import xbmc
-from . import utils
-from .api import Api
-from .player import Player
-from .state import State
+from xbmc import PlayList, PLAYLIST_VIDEO
+from api import Api
+from player import Player
+from state import State
+from utils import log as ulog
 
 
 class PlayItem:
@@ -19,7 +19,7 @@ class PlayItem:
         self.state = State()
 
     def log(self, msg, level=2):
-        utils.log(msg, name=self.__class__.__name__, level=level)
+        ulog(msg, name=self.__class__.__name__, level=level)
 
     def get_episode(self):
         current_file = self.player.getPlayingFile()
@@ -41,9 +41,9 @@ class PlayItem:
         return episode
 
     def get_next(self):
-        playlist = xbmc.PlayList(xbmc.PLAYLIST_VIDEO)
+        playlist = PlayList(PLAYLIST_VIDEO)
         position = playlist.getposition()
-        # A playlist with only one element has no next item and xbmc.PlayList().getposition() starts counting from zero
+        # A playlist with only one element has no next item and PlayList().getposition() starts counting from zero
         if playlist.size() > 1 and position < (playlist.size() - 1):
             return self.api.get_next_in_playlist(position)
         return False

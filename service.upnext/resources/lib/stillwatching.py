@@ -2,16 +2,18 @@
 # GNU General Public License v2.0 (see COPYING or https://www.gnu.org/licenses/gpl-2.0.txt)
 
 from __future__ import absolute_import, division, unicode_literals
+from datetime import datetime, timedelta
 from platform import machine
-import xbmcgui
-from .statichelper import from_unicode
+from xbmcgui import WindowXMLDialog
+from statichelper import from_unicode
+from utils import localize_time
 
 ACTION_PLAYER_STOP = 13
 ACTION_NAV_BACK = 92
 OS_MACHINE = machine()
 
 
-class StillWatching(xbmcgui.WindowXMLDialog):
+class StillWatching(WindowXMLDialog):
     item = None
     cancel = False
     stillwatching = False
@@ -23,9 +25,9 @@ class StillWatching(xbmcgui.WindowXMLDialog):
         self.action_exitkeys_id = [10, 13]
         self.progress_control = None
         if OS_MACHINE[0:5] == 'armv7':
-            xbmcgui.WindowXMLDialog.__init__(self)
+            WindowXMLDialog.__init__(self)
         else:
-            xbmcgui.WindowXMLDialog.__init__(self, *args, **kwargs)
+            WindowXMLDialog.__init__(self, *args, **kwargs)
 
     def onInit(self):  # pylint: disable=invalid-name
         self.set_info()
@@ -55,11 +57,15 @@ class StillWatching(xbmcgui.WindowXMLDialog):
             self.setProperty('year', str(self.item.get('firstaired', '')))
             self.setProperty('rating', rating)
             self.setProperty('playcount', str(self.item.get('playcount', 0)))
+            self.setProperty('runtime', str(self.item.get('runtime', '')))
 
     def prepare_progress_control(self):
-        self.progress_control = self.getControl(3014)
-        if self.progress_control is not None:
-            self.progress_control.setPercent(self.current_progress_percent)  # pylint: disable=no-member
+        try:
+            self.progress_control = self.getControl(3014)
+        except RuntimeError:  # Occurs when skin does not include progress control
+            pass
+        else:
+            self.progress_control.setPercent(self.current_progress_percent)  # pylint: disable=no-member,useless-suppression
 
     def set_item(self, item):
         self.item = item
@@ -67,13 +73,19 @@ class StillWatching(xbmcgui.WindowXMLDialog):
     def set_progress_step_size(self, progress_step_size):
         self.progress_step_size = progress_step_size
 
-    def update_progress_control(self, endtime=None):
+    def update_progress_control(self, remaining=None, runtime=None):
         self.current_progress_percent = self.current_progress_percent - self.progress_step_size
-        self.progress_control = self.getControl(3014)
-        if self.progress_control is not None:
-            self.progress_control.setPercent(self.current_progress_percent)  # pylint: disable=no-member
-        if endtime:
-            self.setProperty('endtime', from_unicode(str(endtime)))
+        try:
+            self.progress_control = self.getControl(3014)
+        except RuntimeError:  # Occurs when skin does not include progress control
+            pass
+        else:
+            self.progress_control.setPercent(self.current_progress_percent)  # pylint: disable=no-member,useless-suppression
+
+        if remaining:
+            self.setProperty('remaining', from_unicode('%02d' % remaining))
+        if runtime:
+            self.setProperty('endtime', from_unicode(localize_time(datetime.now() + timedelta(seconds=runtime))))
 
     def set_cancel(self, cancel):
         self.cancel = cancel
