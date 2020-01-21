@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.rss.editor" name="RSS Editor" version="4.0.0" provider-name="rwparris2, Team Kodi">
+	<requires>
+		<import addon="xbmc.python" version="3.0.0" />
+	</requires>
+	<extension point="xbmc.python.script" library="default.py" />
+	<extension point="xbmc.addon.metadata">
+		<platform>all</platform>
+		<summary lang="en_GB">A Script for editing Kodi's built in RSS Ticker</summary>
+		<summary lang="hu_HU">RSS forrás szerkesztő</summary> 
+		<summary lang="de_DE">Skript zum Bearbeiten des Kodi internen RSS Tickers</summary>
+		<description lang="en_GB">A Script for editing Kodi's built in RSS Ticker</description>
+		<description lang="hu_HU">A szkript képes szerkeszteni az Kodi beépített RSS forrás készletét</description>
+		<description lang="de_DE">Skript zum Bearbeiten des Kodi internen RSS Tickers</description>
+		<language />
+		<license>GNU GENERAL PUBLIC LICENSE Version 2</license>
+		<forum />
+		<email />
+		<source>https://github.com/XBMC-Addons/script.rss.editor/</source>
+		<assets>
+			<icon>icon.png</icon>
+		</assets>
+	</extension>
+</addon>
