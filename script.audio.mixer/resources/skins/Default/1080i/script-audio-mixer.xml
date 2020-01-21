@@ -1,0 +1,2178 @@
+<window>
+	<defaultcontrol always="true">901</defaultcontrol>
+	<animation effect="fade" time="400">WindowOpen</animation>
+	<animation effect="fade" time="400">WindowClose</animation>
+	<coordinates>
+		<left>290</left>
+		<top>130</top>
+	</coordinates>
+	<controls>
+		<control type="image">
+			<left>0</left>
+			<top>0</top>
+			<width>1340</width>
+			<height>820</height>
+			<texture>audiomixer-panel.png</texture>
+		</control>
+		<control type="image">
+			<left>0</left>
+			<top>0</top>
+			<width>1340</width>
+			<height>70</height>
+			<texture colordiffuse="FF12B2E7" border="2">audiomixer-header.png</texture>
+		</control>
+		<control type="label">
+			<textoffsetx>70</textoffsetx>
+			<left>-30</left>
+			<top>0</top>
+			<width>1340</width>
+			<label>$ADDON[script.audio.mixer 30001]</label>
+			<height>70</height>
+			<font>font32_title</font>
+			<align>left</align>
+			<aligny>center</aligny>
+			<shadowcolor>black</shadowcolor>
+		</control>
+		<control type="image">
+			<left>0</left>
+			<top>90</top>
+			<width>1340</width>
+			<height>660</height>
+			<texture border="40">audiomixer-button-nofocus.png</texture>
+		</control>
+		<control type="grouplist" id="17">
+			<description>Grouplist</description>
+			<left>20</left>
+			<top>110</top>
+			<width>1290</width>
+			<height>630</height>
+			<itemgap>5</itemgap>
+			<pagecontrol>121</pagecontrol>
+			<scrolltime>200</scrolltime>
+			<orientation>vertical</orientation>
+			<usecontrolcoords>false</usecontrolcoords>
+			<visible>true</visible>
+			<onup>10</onup>
+			<ondown>10</ondown>
+			<onleft>17</onleft>
+			<onright>17</onright>
+			<control type="group" id="1000">
+				<description>ControlGroup</description>
+				<height>63</height>
+				<control type="radiobutton" id="901">
+					<description>mute button</description>
+					<left>0</left>
+					<top>0</top>
+					<width>590</width>
+					<height>69</height>
+					<visible>true</visible>
+					<label>$ADDON[script.audio.mixer 30010]</label>
+					<font>font13</font>
+					<texturefocus colordiffuse="FF12B2E7">audiomixer-list-focus.png</texturefocus>
+					<texturenofocus>audiomixer-list-nofocus.png</texturenofocus>
+					<textureradioonfocus>audiomixer-radio-on.png</textureradioonfocus>
+					<textureradioonnofocus>audiomixer-radio-on.png</textureradioonnofocus>
+					<textureradioofffocus>audiomixer-radio-off.png</textureradioofffocus>
+					<textureradiooffnofocus>audiomixer-radio-off.png</textureradiooffnofocus>
+					<textureradioondisabled colordiffuse="40FFFFFF">audiomixer-radio-on.png</textureradioondisabled>
+					<textureradiooffdisabled colordiffuse="40FFFFFF">audiomixer-radio-off.png</textureradiooffdisabled>
+					<radiowidth>120</radiowidth>
+					<radioheight>76</radioheight>
+					<radioposx>490</radioposx>
+					<radioposy>0</radioposy>
+					<align>right</align>
+					<aligny>center</aligny>
+					<textoffsetx>90</textoffsetx>
+					<pulseonselect>false</pulseonselect>
+					<onup>10</onup>
+					<ondown>902</ondown>
+					<onleft>1902</onleft>
+					<onright>1902</onright>
+				</control>
+				<control type="label" id="1900">
+					<description>ControlName</description>
+					<left>0</left>
+					<textoffsetx>20</textoffsetx>
+					<top>0</top>
+					<width>590</width>
+					<height>69</height>
+					<font>font13</font>
+					<align>left</align>
+					<aligny>center</aligny>
+				</control>
+				<control type="slider" id="1902">
+					<description>Slider</description>
+					<left>610</left>
+					<top>22</top>
+					<width>590</width>
+					<height>25</height>
+					<texturefocus>-</texturefocus>
+					<texturenofocus>-</texturenofocus>
+					<texturesliderbar>audiomixer-slider-background.png</texturesliderbar>
+					<textureslidernib>audiomixer-slider-nib-nofocus.png</textureslidernib>
+					<textureslidernibfocus>audiomixer-slider-nib-focus.png</textureslidernibfocus>
+					<onup>901</onup>
+					<ondown>901</ondown>
+				</control>
+				<control type="label" id="1903">
+					<description>ControlPercentage</description>
+					<left>1140</left>
+					<top>0</top>
+					<width>150</width>
+					<height>69</height>
+					<font>font13</font>
+					<align>right</align>
+					<aligny>center</aligny>
+				</control>
+			</control>
+			<control type="group" id="2000">
+				<description>ControlGroup</description>
+				<height>63</height>
+				<visible>Control.IsVisible(1000)</visible>
+				<control type="radiobutton" id="902">
+					<description>mute button</description>
+					<left>0</left>
+					<top>0</top>
+					<width>590</width>
+					<height>69</height>
+					<visible>true</visible>
+					<label>$ADDON[script.audio.mixer 30010]</label>
+					<font>font13</font>
+					<texturefocus colordiffuse="FF12B2E7">audiomixer-list-focus.png</texturefocus>
+					<texturenofocus>audiomixer-list-nofocus.png</texturenofocus>
+					<textureradioonfocus>audiomixer-radio-on.png</textureradioonfocus>
+					<textureradioonnofocus>audiomixer-radio-on.png</textureradioonnofocus>
+					<textureradioofffocus>audiomixer-radio-off.png</textureradioofffocus>
+					<textureradiooffnofocus>audiomixer-radio-off.png</textureradiooffnofocus>
+					<textureradioondisabled colordiffuse="40FFFFFF">audiomixer-radio-on.png</textureradioondisabled>
+					<textureradiooffdisabled colordiffuse="40FFFFFF">audiomixer-radio-off.png</textureradiooffdisabled>
+					<radiowidth>120</radiowidth>
+					<radioheight>76</radioheight>
+					<radioposx>490</radioposx>
+					<radioposy>0</radioposy>
+					<align>right</align>
+					<aligny>center</aligny>
+					<textoffsetx>90</textoffsetx>
+					<pulseonselect>false</pulseonselect>
+					<onup>901</onup>
+					<ondown>903</ondown>
+					<onleft>1902</onleft>
+					<onright>2902</onright>
+				</control>
+				<control type="label" id="2900">
+					<description>ControlName</description>
+					<left>0</left>
+					<textoffsetx>20</textoffsetx>
+					<top>0</top>
+					<width>590</width>
+					<height>69</height>
+					<font>font13</font>
+					<align>left</align>
+					<aligny>center</aligny>
+				</control>
+				<control type="slider" id="2902">
+					<description>Slider</description>
+					<left>610</left>
+					<top>22</top>
+					<width>590</width>
+					<height>25</height>
+					<texturefocus>-</texturefocus>
+					<texturenofocus>-</texturenofocus>
+					<texturesliderbar>audiomixer-slider-background.png</texturesliderbar>
+					<textureslidernib>audiomixer-slider-nib-nofocus.png</textureslidernib>
+					<textureslidernibfocus>audiomixer-slider-nib-focus.png</textureslidernibfocus>
+					<onup>902</onup>
+					<ondown>902</ondown>
+				</control>
+				<control type="label" id="2903">
+					<description>ControlPercentage</description>
+					<left>1140</left>
+					<top>0</top>
+					<width>150</width>
+					<height>69</height>
+					<font>font13</font>
+					<align>right</align>
+					<aligny>center</aligny>
+				</control>
+			</control>
+			<control type="group" id="3000">
+				<description>ControlGroup</description>
+				<height>63</height>
+				<visible>Control.IsVisible(2000)</visible>
+				<control type="radiobutton" id="903">
+					<description>mute button</description>
+					<left>0</left>
+					<top>0</top>
+					<width>590</width>
+					<height>69</height>
+					<visible>true</visible>
+					<label>$ADDON[script.audio.mixer 30010]</label>
+					<font>font13</font>
+					<texturefocus colordiffuse="FF12B2E7">audiomixer-list-focus.png</texturefocus>
+					<texturenofocus>audiomixer-list-nofocus.png</texturenofocus>
+					<textureradioonfocus>audiomixer-radio-on.png</textureradioonfocus>
+					<textureradioonnofocus>audiomixer-radio-on.png</textureradioonnofocus>
+					<textureradioofffocus>audiomixer-radio-off.png</textureradioofffocus>
+					<textureradiooffnofocus>audiomixer-radio-off.png</textureradiooffnofocus>
+					<textureradioondisabled colordiffuse="40FFFFFF">audiomixer-radio-on.png</textureradioondisabled>
+					<textureradiooffdisabled colordiffuse="40FFFFFF">audiomixer-radio-off.png</textureradiooffdisabled>
+					<radiowidth>120</radiowidth>
+					<radioheight>76</radioheight>
+					<radioposx>490</radioposx>
+					<radioposy>0</radioposy>
+					<align>right</align>
+					<aligny>center</aligny>
+					<textoffsetx>90</textoffsetx>
+					<pulseonselect>false</pulseonselect>
+					<onup>902</onup>
+					<ondown>904</ondown>
+					<onleft>2902</onleft>
+					<onright>3902</onright>
+				</control>
+				<control type="label" id="3900">
+					<description>ControlName</description>
+					<left>0</left>
+					<textoffsetx>20</textoffsetx>
+					<top>0</top>
+					<width>590</width>
+					<height>69</height>
+					<font>font13</font>
+					<align>left</align>
+					<aligny>center</aligny>
+				</control>
+				<control type="slider" id="3902">
+					<description>Slider</description>
+					<left>610</left>
+					<top>22</top>
+					<width>590</width>
+					<height>25</height>
+					<texturefocus>-</texturefocus>
+					<texturenofocus>-</texturenofocus>
+					<texturesliderbar>audiomixer-slider-background.png</texturesliderbar>
+					<textureslidernib>audiomixer-slider-nib-nofocus.png</textureslidernib>
+					<textureslidernibfocus>audiomixer-slider-nib-focus.png</textureslidernibfocus>
+					<onup>903</onup>
+					<ondown>903</ondown>
+				</control>
+				<control type="label" id="3903">
+					<description>ControlPercentage</description>
+					<left>1140</left>
+					<top>0</top>
+					<width>150</width>
+					<height>69</height>
+					<font>font13</font>
+					<align>right</align>
+					<aligny>center</aligny>
+				</control>
+			</control>
+			<control type="group" id="4000">
+				<description>ControlGroup</description>
+				<height>63</height>
+				<visible>Control.IsVisible(3000)</visible>
+				<control type="radiobutton" id="904">
+					<description>mute button</description>
+					<left>0</left>
+					<top>0</top>
+					<width>590</width>
+					<height>69</height>
+					<visible>true</visible>
+					<label>$ADDON[script.audio.mixer 30010]</label>
+					<font>font13</font>
+					<texturefocus colordiffuse="FF12B2E7">audiomixer-list-focus.png</texturefocus>
+					<texturenofocus>audiomixer-list-nofocus.png</texturenofocus>
+					<textureradioonfocus>audiomixer-radio-on.png</textureradioonfocus>
+					<textureradioonnofocus>audiomixer-radio-on.png</textureradioonnofocus>
+					<textureradioofffocus>audiomixer-radio-off.png</textureradioofffocus>
+					<textureradiooffnofocus>audiomixer-radio-off.png</textureradiooffnofocus>
+					<textureradioondisabled colordiffuse="40FFFFFF">audiomixer-radio-on.png</textureradioondisabled>
+					<textureradiooffdisabled colordiffuse="40FFFFFF">audiomixer-radio-off.png</textureradiooffdisabled>
+					<radiowidth>120</radiowidth>
+					<radioheight>76</radioheight>
+					<radioposx>490</radioposx>
+					<radioposy>0</radioposy>
+					<align>right</align>
+					<aligny>center</aligny>
+					<textoffsetx>90</textoffsetx>
+					<pulseonselect>false</pulseonselect>
+					<onup>903</onup>
+					<ondown>905</ondown>
+					<onleft>3902</onleft>
+					<onright>4902</onright>
+				</control>
+				<control type="label" id="4900">
+					<description>ControlName</description>
+					<left>0</left>
+					<textoffsetx>20</textoffsetx>
+					<top>0</top>
+					<width>590</width>
+					<height>69</height>
+					<font>font13</font>
+					<align>left</align>
+					<aligny>center</aligny>
+				</control>
+				<control type="slider" id="4902">
+					<description>Slider</description>
+					<left>610</left>
+					<top>22</top>
+					<width>590</width>
+					<height>25</height>
+					<texturefocus>-</texturefocus>
+					<texturenofocus>-</texturenofocus>
+					<texturesliderbar>audiomixer-slider-background.png</texturesliderbar>
+					<textureslidernib>audiomixer-slider-nib-nofocus.png</textureslidernib>
+					<textureslidernibfocus>audiomixer-slider-nib-focus.png</textureslidernibfocus>
+					<onup>904</onup>
+					<ondown>904</ondown>
+				</control>
+				<control type="label" id="4903">
+					<description>ControlPercentage</description>
+					<left>1140</left>
+					<top>0</top>
+					<width>150</width>
+					<height>69</height>
+					<font>font13</font>
+					<align>right</align>
+					<aligny>center</aligny>
+				</control>
+			</control>
+			<control type="group" id="5000">
+				<description>ControlGroup</description>
+				<height>63</height>
+				<visible>Control.IsVisible(4000)</visible>
+				<control type="radiobutton" id="905">
+					<description>mute button</description>
+					<left>0</left>
+					<top>0</top>
+					<width>590</width>
+					<height>69</height>
+					<visible>true</visible>
+					<label>$ADDON[script.audio.mixer 30010]</label>
+					<font>font13</font>
+					<texturefocus colordiffuse="FF12B2E7">audiomixer-list-focus.png</texturefocus>
+					<texturenofocus>audiomixer-list-nofocus.png</texturenofocus>
+					<textureradioonfocus>audiomixer-radio-on.png</textureradioonfocus>
+					<textureradioonnofocus>audiomixer-radio-on.png</textureradioonnofocus>
+					<textureradioofffocus>audiomixer-radio-off.png</textureradioofffocus>
+					<textureradiooffnofocus>audiomixer-radio-off.png</textureradiooffnofocus>
+					<textureradioondisabled colordiffuse="40FFFFFF">audiomixer-radio-on.png</textureradioondisabled>
+					<textureradiooffdisabled colordiffuse="40FFFFFF">audiomixer-radio-off.png</textureradiooffdisabled>
+					<radiowidth>120</radiowidth>
+					<radioheight>76</radioheight>
+					<radioposx>490</radioposx>
+					<radioposy>0</radioposy>
+					<align>right</align>
+					<aligny>center</aligny>
+					<textoffsetx>90</textoffsetx>
+					<pulseonselect>false</pulseonselect>
+					<onup>904</onup>
+					<ondown>906</ondown>
+					<onleft>4902</onleft>
+					<onright>5902</onright>
+				</control>
+				<control type="label" id="5900">
+					<description>ControlName</description>
+					<left>0</left>
+					<textoffsetx>20</textoffsetx>
+					<top>0</top>
+					<width>590</width>
+					<height>69</height>
+					<font>font13</font>
+					<align>left</align>
+					<aligny>center</aligny>
+				</control>
+				<control type="slider" id="5902">
+					<description>Slider</description>
+					<left>610</left>
+					<top>22</top>
+					<width>590</width>
+					<height>25</height>
+					<texturefocus>-</texturefocus>
+					<texturenofocus>-</texturenofocus>
+					<texturesliderbar>audiomixer-slider-background.png</texturesliderbar>
+					<textureslidernib>audiomixer-slider-nib-nofocus.png</textureslidernib>
+					<textureslidernibfocus>audiomixer-slider-nib-focus.png</textureslidernibfocus>
+					<onup>905</onup>
+					<ondown>905</ondown>
+				</control>
+				<control type="label" id="5903">
+					<description>ControlPercentage</description>
+					<left>1140</left>
+					<top>0</top>
+					<width>150</width>
+					<height>69</height>
+					<font>font13</font>
+					<align>right</align>
+					<aligny>center</aligny>
+				</control>
+			</control>
+			<control type="group" id="6000">
+				<description>ControlGroup</description>
+				<height>63</height>
+				<visible>Control.IsVisible(5000)</visible>
+				<control type="radiobutton" id="906">
+					<description>mute button</description>
+					<left>0</left>
+					<top>0</top>
+					<width>590</width>
+					<height>69</height>
+					<visible>true</visible>
+					<label>$ADDON[script.audio.mixer 30010]</label>
+					<font>font13</font>
+					<texturefocus colordiffuse="FF12B2E7">audiomixer-list-focus.png</texturefocus>
+					<texturenofocus>audiomixer-list-nofocus.png</texturenofocus>
+					<textureradioonfocus>audiomixer-radio-on.png</textureradioonfocus>
+					<textureradioonnofocus>audiomixer-radio-on.png</textureradioonnofocus>
+					<textureradioofffocus>audiomixer-radio-off.png</textureradioofffocus>
+					<textureradiooffnofocus>audiomixer-radio-off.png</textureradiooffnofocus>
+					<textureradioondisabled colordiffuse="40FFFFFF">audiomixer-radio-on.png</textureradioondisabled>
+					<textureradiooffdisabled colordiffuse="40FFFFFF">audiomixer-radio-off.png</textureradiooffdisabled>
+					<radiowidth>120</radiowidth>
+					<radioheight>76</radioheight>
+					<radioposx>490</radioposx>
+					<radioposy>0</radioposy>
+					<align>right</align>
+					<aligny>center</aligny>
+					<textoffsetx>90</textoffsetx>
+					<pulseonselect>false</pulseonselect>
+					<onup>905</onup>
+					<ondown>907</ondown>
+					<onleft>5902</onleft>
+					<onright>6902</onright>
+				</control>
+				<control type="label" id="6900">
+					<description>ControlName</description>
+					<left>0</left>
+					<textoffsetx>20</textoffsetx>
+					<top>0</top>
+					<width>590</width>
+					<height>69</height>
+					<font>font13</font>
+					<align>left</align>
+					<aligny>center</aligny>
+				</control>
+				<control type="slider" id="6902">
+					<description>Slider</description>
+					<left>610</left>
+					<top>22</top>
+					<width>590</width>
+					<height>25</height>
+					<texturefocus>-</texturefocus>
+					<texturenofocus>-</texturenofocus>
+					<texturesliderbar>audiomixer-slider-background.png</texturesliderbar>
+					<textureslidernib>audiomixer-slider-nib-nofocus.png</textureslidernib>
+					<textureslidernibfocus>audiomixer-slider-nib-focus.png</textureslidernibfocus>
+					<onup>906</onup>
+					<ondown>906</ondown>
+				</control>
+				<control type="label" id="6903">
+					<description>ControlPercentage</description>
+					<left>1140</left>
+					<top>0</top>
+					<width>150</width>
+					<height>69</height>
+					<font>font13</font>
+					<align>right</align>
+					<aligny>center</aligny>
+				</control>
+			</control>
+			<control type="group" id="7000">
+				<description>ControlGroup</description>
+				<height>63</height>
+				<visible>Control.IsVisible(6000)</visible>
+				<control type="radiobutton" id="907">
+					<description>mute button</description>
+					<left>0</left>
+					<top>0</top>
+					<width>590</width>
+					<height>69</height>
+					<visible>true</visible>
+					<label>$ADDON[script.audio.mixer 30010]</label>
+					<font>font13</font>
+					<texturefocus colordiffuse="FF12B2E7">audiomixer-list-focus.png</texturefocus>
+					<texturenofocus>audiomixer-list-nofocus.png</texturenofocus>
+					<textureradioonfocus>audiomixer-radio-on.png</textureradioonfocus>
+					<textureradioonnofocus>audiomixer-radio-on.png</textureradioonnofocus>
+					<textureradioofffocus>audiomixer-radio-off.png</textureradioofffocus>
+					<textureradiooffnofocus>audiomixer-radio-off.png</textureradiooffnofocus>
+					<textureradioondisabled colordiffuse="40FFFFFF">audiomixer-radio-on.png</textureradioondisabled>
+					<textureradiooffdisabled colordiffuse="40FFFFFF">audiomixer-radio-off.png</textureradiooffdisabled>
+					<radiowidth>120</radiowidth>
+					<radioheight>76</radioheight>
+					<radioposx>490</radioposx>
+					<radioposy>0</radioposy>
+					<align>right</align>
+					<aligny>center</aligny>
+					<textoffsetx>90</textoffsetx>
+					<pulseonselect>false</pulseonselect>
+					<onup>906</onup>
+					<ondown>908</ondown>
+					<onleft>6902</onleft>
+					<onright>7902</onright>
+				</control>
+				<control type="label" id="7900">
+					<description>ControlName</description>
+					<left>0</left>
+					<textoffsetx>20</textoffsetx>
+					<top>0</top>
+					<width>590</width>
+					<height>69</height>
+					<font>font13</font>
+					<align>left</align>
+					<aligny>center</aligny>
+				</control>
+				<control type="slider" id="7902">
+					<description>Slider</description>
+					<left>610</left>
+					<top>22</top>
+					<width>590</width>
+					<height>25</height>
+					<texturefocus>-</texturefocus>
+					<texturenofocus>-</texturenofocus>
+					<texturesliderbar>audiomixer-slider-background.png</texturesliderbar>
+					<textureslidernib>audiomixer-slider-nib-nofocus.png</textureslidernib>
+					<textureslidernibfocus>audiomixer-slider-nib-focus.png</textureslidernibfocus>
+					<onup>907</onup>
+					<ondown>907</ondown>
+				</control>
+				<control type="label" id="7903">
+					<description>ControlPercentage</description>
+					<left>1140</left>
+					<top>0</top>
+					<width>150</width>
+					<height>69</height>
+					<font>font13</font>
+					<align>right</align>
+					<aligny>center</aligny>
+				</control>
+			</control>
+			<control type="group" id="8000">
+				<description>ControlGroup</description>
+				<height>63</height>
+				<visible>Control.IsVisible(7000)</visible>
+				<control type="radiobutton" id="908">
+					<description>mute button</description>
+					<left>0</left>
+					<top>0</top>
+					<width>590</width>
+					<height>69</height>
+					<visible>true</visible>
+					<label>$ADDON[script.audio.mixer 30010]</label>
+					<font>font13</font>
+					<texturefocus colordiffuse="FF12B2E7">audiomixer-list-focus.png</texturefocus>
+					<texturenofocus>audiomixer-list-nofocus.png</texturenofocus>
+					<textureradioonfocus>audiomixer-radio-on.png</textureradioonfocus>
+					<textureradioonnofocus>audiomixer-radio-on.png</textureradioonnofocus>
+					<textureradioofffocus>audiomixer-radio-off.png</textureradioofffocus>
+					<textureradiooffnofocus>audiomixer-radio-off.png</textureradiooffnofocus>
+					<textureradioondisabled colordiffuse="40FFFFFF">audiomixer-radio-on.png</textureradioondisabled>
+					<textureradiooffdisabled colordiffuse="40FFFFFF">audiomixer-radio-off.png</textureradiooffdisabled>
+					<radiowidth>120</radiowidth>
+					<radioheight>76</radioheight>
+					<radioposx>490</radioposx>
+					<radioposy>0</radioposy>
+					<align>right</align>
+					<aligny>center</aligny>
+					<textoffsetx>90</textoffsetx>
+					<pulseonselect>false</pulseonselect>
+					<onup>907</onup>
+					<ondown>909</ondown>
+					<onleft>7902</onleft>
+					<onright>8902</onright>
+				</control>
+				<control type="label" id="8900">
+					<description>ControlName</description>
+					<left>0</left>
+					<textoffsetx>20</textoffsetx>
+					<top>0</top>
+					<width>590</width>
+					<height>69</height>
+					<font>font13</font>
+					<align>left</align>
+					<aligny>center</aligny>
+				</control>
+				<control type="slider" id="8902">
+					<description>Slider</description>
+					<left>610</left>
+					<top>22</top>
+					<width>590</width>
+					<height>25</height>
+					<texturefocus>-</texturefocus>
+					<texturenofocus>-</texturenofocus>
+					<texturesliderbar>audiomixer-slider-background.png</texturesliderbar>
+					<textureslidernib>audiomixer-slider-nib-nofocus.png</textureslidernib>
+					<textureslidernibfocus>audiomixer-slider-nib-focus.png</textureslidernibfocus>
+					<onup>908</onup>
+					<ondown>908</ondown>
+				</control>
+				<control type="label" id="8903">
+					<description>ControlPercentage</description>
+					<left>1140</left>
+					<top>0</top>
+					<width>150</width>
+					<height>69</height>
+					<font>font13</font>
+					<align>right</align>
+					<aligny>center</aligny>
+				</control>
+			</control>
+			<control type="group" id="9000">
+				<description>ControlGroup</description>
+				<height>63</height>
+				<visible>Control.IsVisible(8000)</visible>
+				<control type="radiobutton" id="909">
+					<description>mute button</description>
+					<left>0</left>
+					<top>0</top>
+					<width>590</width>
+					<height>69</height>
+					<visible>true</visible>
+					<label>$ADDON[script.audio.mixer 30010]</label>
+					<font>font13</font>
+					<texturefocus colordiffuse="FF12B2E7">audiomixer-list-focus.png</texturefocus>
+					<texturenofocus>audiomixer-list-nofocus.png</texturenofocus>
+					<textureradioonfocus>audiomixer-radio-on.png</textureradioonfocus>
+					<textureradioonnofocus>audiomixer-radio-on.png</textureradioonnofocus>
+					<textureradioofffocus>audiomixer-radio-off.png</textureradioofffocus>
+					<textureradiooffnofocus>audiomixer-radio-off.png</textureradiooffnofocus>
+					<textureradioondisabled colordiffuse="40FFFFFF">audiomixer-radio-on.png</textureradioondisabled>
+					<textureradiooffdisabled colordiffuse="40FFFFFF">audiomixer-radio-off.png</textureradiooffdisabled>
+					<radiowidth>120</radiowidth>
+					<radioheight>76</radioheight>
+					<radioposx>490</radioposx>
+					<radioposy>0</radioposy>
+					<align>right</align>
+					<aligny>center</aligny>
+					<textoffsetx>90</textoffsetx>
+					<pulseonselect>false</pulseonselect>
+					<onup>908</onup>
+					<ondown>910</ondown>
+					<onleft>8902</onleft>
+					<onright>9902</onright>
+				</control>
+				<control type="label" id="9900">
+					<description>ControlName</description>
+					<left>0</left>
+					<textoffsetx>20</textoffsetx>
+					<top>0</top>
+					<width>590</width>
+					<height>69</height>
+					<font>font13</font>
+					<align>left</align>
+					<aligny>center</aligny>
+				</control>
+				<control type="slider" id="9902">
+					<description>Slider</description>
+					<left>610</left>
+					<top>22</top>
+					<width>590</width>
+					<height>25</height>
+					<texturefocus>-</texturefocus>
+					<texturenofocus>-</texturenofocus>
+					<texturesliderbar>audiomixer-slider-background.png</texturesliderbar>
+					<textureslidernib>audiomixer-slider-nib-nofocus.png</textureslidernib>
+					<textureslidernibfocus>audiomixer-slider-nib-focus.png</textureslidernibfocus>
+					<onup>909</onup>
+					<ondown>909</ondown>
+				</control>
+				<control type="label" id="9903">
+					<description>ControlPercentage</description>
+					<left>1140</left>
+					<top>0</top>
+					<width>150</width>
+					<height>69</height>
+					<font>font13</font>
+					<align>right</align>
+					<aligny>center</aligny>
+				</control>
+			</control>
+			<control type="group" id="10000">
+				<description>ControlGroup</description>
+				<height>63</height>
+				<visible>Control.IsVisible(9000)</visible>
+				<control type="radiobutton" id="910">
+					<description>mute button</description>
+					<left>0</left>
+					<top>0</top>
+					<width>590</width>
+					<height>69</height>
+					<visible>true</visible>
+					<label>$ADDON[script.audio.mixer 30010]</label>
+					<font>font13</font>
+					<texturefocus colordiffuse="FF12B2E7">audiomixer-list-focus.png</texturefocus>
+					<texturenofocus>audiomixer-list-nofocus.png</texturenofocus>
+					<textureradioonfocus>audiomixer-radio-on.png</textureradioonfocus>
+					<textureradioonnofocus>audiomixer-radio-on.png</textureradioonnofocus>
+					<textureradioofffocus>audiomixer-radio-off.png</textureradioofffocus>
+					<textureradiooffnofocus>audiomixer-radio-off.png</textureradiooffnofocus>
+					<textureradioondisabled colordiffuse="40FFFFFF">audiomixer-radio-on.png</textureradioondisabled>
+					<textureradiooffdisabled colordiffuse="40FFFFFF">audiomixer-radio-off.png</textureradiooffdisabled>
+					<radiowidth>120</radiowidth>
+					<radioheight>76</radioheight>
+					<radioposx>490</radioposx>
+					<radioposy>0</radioposy>
+					<align>right</align>
+					<aligny>center</aligny>
+					<textoffsetx>90</textoffsetx>
+					<pulseonselect>false</pulseonselect>
+					<onup>909</onup>
+					<ondown>911</ondown>
+					<onleft>9902</onleft>
+					<onright>10902</onright>
+				</control>
+				<control type="label" id="10900">
+					<description>ControlName</description>
+					<left>0</left>
+					<textoffsetx>20</textoffsetx>
+					<top>0</top>
+					<width>590</width>
+					<height>69</height>
+					<font>font13</font>
+					<align>left</align>
+					<aligny>center</aligny>
+				</control>
+				<control type="slider" id="10902">
+					<description>Slider</description>
+					<left>610</left>
+					<top>22</top>
+					<width>590</width>
+					<height>25</height>
+					<texturefocus>-</texturefocus>
+					<texturenofocus>-</texturenofocus>
+					<texturesliderbar>audiomixer-slider-background.png</texturesliderbar>
+					<textureslidernib>audiomixer-slider-nib-nofocus.png</textureslidernib>
+					<textureslidernibfocus>audiomixer-slider-nib-focus.png</textureslidernibfocus>
+					<onup>910</onup>
+					<ondown>910</ondown>
+				</control>
+				<control type="label" id="10903">
+					<description>ControlPercentage</description>
+					<left>1140</left>
+					<top>0</top>
+					<width>150</width>
+					<height>69</height>
+					<font>font13</font>
+					<align>right</align>
+					<aligny>center</aligny>
+				</control>
+			</control>
+			<control type="group" id="11000">
+				<description>ControlGroup</description>
+				<height>63</height>
+				<visible>Control.IsVisible(10000)</visible>
+				<control type="radiobutton" id="911">
+					<description>mute button</description>
+					<left>0</left>
+					<top>0</top>
+					<width>590</width>
+					<height>69</height>
+					<visible>true</visible>
+					<label>$ADDON[script.audio.mixer 30010]</label>
+					<font>font13</font>
+					<texturefocus colordiffuse="FF12B2E7">audiomixer-list-focus.png</texturefocus>
+					<texturenofocus>audiomixer-list-nofocus.png</texturenofocus>
+					<textureradioonfocus>audiomixer-radio-on.png</textureradioonfocus>
+					<textureradioonnofocus>audiomixer-radio-on.png</textureradioonnofocus>
+					<textureradioofffocus>audiomixer-radio-off.png</textureradioofffocus>
+					<textureradiooffnofocus>audiomixer-radio-off.png</textureradiooffnofocus>
+					<textureradioondisabled colordiffuse="40FFFFFF">audiomixer-radio-on.png</textureradioondisabled>
+					<textureradiooffdisabled colordiffuse="40FFFFFF">audiomixer-radio-off.png</textureradiooffdisabled>
+					<radiowidth>120</radiowidth>
+					<radioheight>76</radioheight>
+					<radioposx>490</radioposx>
+					<radioposy>0</radioposy>
+					<align>right</align>
+					<aligny>center</aligny>
+					<textoffsetx>90</textoffsetx>
+					<pulseonselect>false</pulseonselect>
+					<onup>910</onup>
+					<ondown>912</ondown>
+					<onleft>10902</onleft>
+					<onright>11902</onright>
+				</control>
+				<control type="label" id="11900">
+					<description>ControlName</description>
+					<left>0</left>
+					<textoffsetx>20</textoffsetx>
+					<top>0</top>
+					<width>590</width>
+					<height>69</height>
+					<font>font13</font>
+					<align>left</align>
+					<aligny>center</aligny>
+				</control>
+				<control type="slider" id="11902">
+					<description>Slider</description>
+					<left>610</left>
+					<top>22</top>
+					<width>590</width>
+					<height>25</height>
+					<texturefocus>-</texturefocus>
+					<texturenofocus>-</texturenofocus>
+					<texturesliderbar>audiomixer-slider-background.png</texturesliderbar>
+					<textureslidernib>audiomixer-slider-nib-nofocus.png</textureslidernib>
+					<textureslidernibfocus>audiomixer-slider-nib-focus.png</textureslidernibfocus>
+					<onup>911</onup>
+					<ondown>911</ondown>
+				</control>
+				<control type="label" id="11903">
+					<description>ControlPercentage</description>
+					<left>1140</left>
+					<top>0</top>
+					<width>150</width>
+					<height>69</height>
+					<font>font13</font>
+					<align>right</align>
+					<aligny>center</aligny>
+				</control>
+			</control>
+			<control type="group" id="12000">
+				<description>ControlGroup</description>
+				<height>63</height>
+				<visible>Control.IsVisible(11000)</visible>
+				<control type="radiobutton" id="912">
+					<description>mute button</description>
+					<left>0</left>
+					<top>0</top>
+					<width>590</width>
+					<height>69</height>
+					<visible>true</visible>
+					<label>$ADDON[script.audio.mixer 30010]</label>
+					<font>font13</font>
+					<texturefocus colordiffuse="FF12B2E7">audiomixer-list-focus.png</texturefocus>
+					<texturenofocus>audiomixer-list-nofocus.png</texturenofocus>
+					<textureradioonfocus>audiomixer-radio-on.png</textureradioonfocus>
+					<textureradioonnofocus>audiomixer-radio-on.png</textureradioonnofocus>
+					<textureradioofffocus>audiomixer-radio-off.png</textureradioofffocus>
+					<textureradiooffnofocus>audiomixer-radio-off.png</textureradiooffnofocus>
+					<textureradioondisabled colordiffuse="40FFFFFF">audiomixer-radio-on.png</textureradioondisabled>
+					<textureradiooffdisabled colordiffuse="40FFFFFF">audiomixer-radio-off.png</textureradiooffdisabled>
+					<radiowidth>120</radiowidth>
+					<radioheight>76</radioheight>
+					<radioposx>490</radioposx>
+					<radioposy>0</radioposy>
+					<align>right</align>
+					<aligny>center</aligny>
+					<textoffsetx>90</textoffsetx>
+					<pulseonselect>false</pulseonselect>
+					<onup>911</onup>
+					<ondown>913</ondown>
+					<onleft>11902</onleft>
+					<onright>12902</onright>
+				</control>
+				<control type="label" id="12900">
+					<description>ControlName</description>
+					<left>0</left>
+					<textoffsetx>20</textoffsetx>
+					<top>0</top>
+					<width>590</width>
+					<height>69</height>
+					<font>font13</font>
+					<align>left</align>
+					<aligny>center</aligny>
+				</control>
+				<control type="slider" id="12902">
+					<description>Slider</description>
+					<left>610</left>
+					<top>22</top>
+					<width>590</width>
+					<height>25</height>
+					<texturefocus>-</texturefocus>
+					<texturenofocus>-</texturenofocus>
+					<texturesliderbar>audiomixer-slider-background.png</texturesliderbar>
+					<textureslidernib>audiomixer-slider-nib-nofocus.png</textureslidernib>
+					<textureslidernibfocus>audiomixer-slider-nib-focus.png</textureslidernibfocus>
+					<onup>912</onup>
+					<ondown>912</ondown>
+				</control>
+				<control type="label" id="12903">
+					<description>ControlPercentage</description>
+					<left>1140</left>
+					<top>0</top>
+					<width>150</width>
+					<height>69</height>
+					<font>font13</font>
+					<align>right</align>
+					<aligny>center</aligny>
+				</control>
+			</control>
+			<control type="group" id="13000">
+				<description>ControlGroup</description>
+				<height>63</height>
+				<visible>Control.IsVisible(12000)</visible>
+				<control type="radiobutton" id="913">
+					<description>mute button</description>
+					<left>0</left>
+					<top>0</top>
+					<width>590</width>
+					<height>69</height>
+					<visible>true</visible>
+					<label>$ADDON[script.audio.mixer 30010]</label>
+					<font>font13</font>
+					<texturefocus colordiffuse="FF12B2E7">audiomixer-list-focus.png</texturefocus>
+					<texturenofocus>audiomixer-list-nofocus.png</texturenofocus>
+					<textureradioonfocus>audiomixer-radio-on.png</textureradioonfocus>
+					<textureradioonnofocus>audiomixer-radio-on.png</textureradioonnofocus>
+					<textureradioofffocus>audiomixer-radio-off.png</textureradioofffocus>
+					<textureradiooffnofocus>audiomixer-radio-off.png</textureradiooffnofocus>
+					<textureradioondisabled colordiffuse="40FFFFFF">audiomixer-radio-on.png</textureradioondisabled>
+					<textureradiooffdisabled colordiffuse="40FFFFFF">audiomixer-radio-off.png</textureradiooffdisabled>
+					<radiowidth>120</radiowidth>
+					<radioheight>76</radioheight>
+					<radioposx>490</radioposx>
+					<radioposy>0</radioposy>
+					<align>right</align>
+					<aligny>center</aligny>
+					<textoffsetx>90</textoffsetx>
+					<pulseonselect>false</pulseonselect>
+					<onup>912</onup>
+					<ondown>914</ondown>
+					<onleft>12902</onleft>
+					<onright>13902</onright>
+				</control>
+				<control type="label" id="13900">
+					<description>ControlName</description>
+					<left>0</left>
+					<textoffsetx>20</textoffsetx>
+					<top>0</top>
+					<width>590</width>
+					<height>69</height>
+					<font>font13</font>
+					<align>left</align>
+					<aligny>center</aligny>
+				</control>
+				<control type="slider" id="13902">
+					<description>Slider</description>
+					<left>610</left>
+					<top>22</top>
+					<width>590</width>
+					<height>25</height>
+					<texturefocus>-</texturefocus>
+					<texturenofocus>-</texturenofocus>
+					<texturesliderbar>audiomixer-slider-background.png</texturesliderbar>
+					<textureslidernib>audiomixer-slider-nib-nofocus.png</textureslidernib>
+					<textureslidernibfocus>audiomixer-slider-nib-focus.png</textureslidernibfocus>
+					<onup>913</onup>
+					<ondown>913</ondown>
+				</control>
+				<control type="label" id="13903">
+					<description>ControlPercentage</description>
+					<left>1140</left>
+					<top>0</top>
+					<width>150</width>
+					<height>69</height>
+					<font>font13</font>
+					<align>right</align>
+					<aligny>center</aligny>
+				</control>
+			</control>
+			<control type="group" id="14000">
+				<description>ControlGroup</description>
+				<height>63</height>
+				<visible>Control.IsVisible(13000)</visible>
+				<control type="radiobutton" id="914">
+					<description>mute button</description>
+					<left>0</left>
+					<top>0</top>
+					<width>590</width>
+					<height>69</height>
+					<visible>true</visible>
+					<label>$ADDON[script.audio.mixer 30010]</label>
+					<font>font13</font>
+					<texturefocus colordiffuse="FF12B2E7">audiomixer-list-focus.png</texturefocus>
+					<texturenofocus>audiomixer-list-nofocus.png</texturenofocus>
+					<textureradioonfocus>audiomixer-radio-on.png</textureradioonfocus>
+					<textureradioonnofocus>audiomixer-radio-on.png</textureradioonnofocus>
+					<textureradioofffocus>audiomixer-radio-off.png</textureradioofffocus>
+					<textureradiooffnofocus>audiomixer-radio-off.png</textureradiooffnofocus>
+					<textureradioondisabled colordiffuse="40FFFFFF">audiomixer-radio-on.png</textureradioondisabled>
+					<textureradiooffdisabled colordiffuse="40FFFFFF">audiomixer-radio-off.png</textureradiooffdisabled>
+					<radiowidth>120</radiowidth>
+					<radioheight>76</radioheight>
+					<radioposx>490</radioposx>
+					<radioposy>0</radioposy>
+					<align>right</align>
+					<aligny>center</aligny>
+					<textoffsetx>90</textoffsetx>
+					<pulseonselect>false</pulseonselect>
+					<onup>913</onup>
+					<ondown>915</ondown>
+					<onleft>13902</onleft>
+					<onright>14902</onright>
+				</control>
+				<control type="label" id="14900">
+					<description>ControlName</description>
+					<left>0</left>
+					<textoffsetx>20</textoffsetx>
+					<top>0</top>
+					<width>590</width>
+					<height>69</height>
+					<font>font13</font>
+					<align>left</align>
+					<aligny>center</aligny>
+				</control>
+				<control type="slider" id="14902">
+					<description>Slider</description>
+					<left>610</left>
+					<top>22</top>
+					<width>590</width>
+					<height>25</height>
+					<texturefocus>-</texturefocus>
+					<texturenofocus>-</texturenofocus>
+					<texturesliderbar>audiomixer-slider-background.png</texturesliderbar>
+					<textureslidernib>audiomixer-slider-nib-nofocus.png</textureslidernib>
+					<textureslidernibfocus>audiomixer-slider-nib-focus.png</textureslidernibfocus>
+					<onup>914</onup>
+					<ondown>914</ondown>
+				</control>
+				<control type="label" id="14903">
+					<description>ControlPercentage</description>
+					<left>1140</left>
+					<top>0</top>
+					<width>150</width>
+					<height>69</height>
+					<font>font13</font>
+					<align>right</align>
+					<aligny>center</aligny>
+				</control>
+			</control>
+			<control type="group" id="15000">
+				<description>ControlGroup</description>
+				<height>63</height>
+				<visible>Control.IsVisible(14000)</visible>
+				<control type="radiobutton" id="915">
+					<description>mute button</description>
+					<left>0</left>
+					<top>0</top>
+					<width>590</width>
+					<height>69</height>
+					<visible>true</visible>
+					<label>$ADDON[script.audio.mixer 30010]</label>
+					<font>font13</font>
+					<texturefocus colordiffuse="FF12B2E7">audiomixer-list-focus.png</texturefocus>
+					<texturenofocus>audiomixer-list-nofocus.png</texturenofocus>
+					<textureradioonfocus>audiomixer-radio-on.png</textureradioonfocus>
+					<textureradioonnofocus>audiomixer-radio-on.png</textureradioonnofocus>
+					<textureradioofffocus>audiomixer-radio-off.png</textureradioofffocus>
+					<textureradiooffnofocus>audiomixer-radio-off.png</textureradiooffnofocus>
+					<textureradioondisabled colordiffuse="40FFFFFF">audiomixer-radio-on.png</textureradioondisabled>
+					<textureradiooffdisabled colordiffuse="40FFFFFF">audiomixer-radio-off.png</textureradiooffdisabled>
+					<radiowidth>120</radiowidth>
+					<radioheight>76</radioheight>
+					<radioposx>490</radioposx>
+					<radioposy>0</radioposy>
+					<align>right</align>
+					<aligny>center</aligny>
+					<textoffsetx>90</textoffsetx>
+					<pulseonselect>false</pulseonselect>
+					<onup>914</onup>
+					<ondown>916</ondown>
+					<onleft>14902</onleft>
+					<onright>15902</onright>
+				</control>
+				<control type="label" id="15900">
+					<description>ControlName</description>
+					<left>0</left>
+					<textoffsetx>20</textoffsetx>
+					<top>0</top>
+					<width>590</width>
+					<height>69</height>
+					<font>font13</font>
+					<align>left</align>
+					<aligny>center</aligny>
+				</control>
+				<control type="slider" id="15902">
+					<description>Slider</description>
+					<left>610</left>
+					<top>22</top>
+					<width>590</width>
+					<height>25</height>
+					<texturefocus>-</texturefocus>
+					<texturenofocus>-</texturenofocus>
+					<texturesliderbar>audiomixer-slider-background.png</texturesliderbar>
+					<textureslidernib>audiomixer-slider-nib-nofocus.png</textureslidernib>
+					<textureslidernibfocus>audiomixer-slider-nib-focus.png</textureslidernibfocus>
+					<onup>915</onup>
+					<ondown>915</ondown>
+				</control>
+				<control type="label" id="15903">
+					<description>ControlPercentage</description>
+					<left>1140</left>
+					<top>0</top>
+					<width>150</width>
+					<height>69</height>
+					<font>font13</font>
+					<align>right</align>
+					<aligny>center</aligny>
+				</control>
+			</control>
+			<control type="group" id="16000">
+				<description>ControlGroup</description>
+				<height>63</height>
+				<visible>Control.IsVisible(15000)</visible>
+				<control type="radiobutton" id="916">
+					<description>mute button</description>
+					<left>0</left>
+					<top>0</top>
+					<width>590</width>
+					<height>69</height>
+					<visible>true</visible>
+					<label>$ADDON[script.audio.mixer 30010]</label>
+					<font>font13</font>
+					<texturefocus colordiffuse="FF12B2E7">audiomixer-list-focus.png</texturefocus>
+					<texturenofocus>audiomixer-list-nofocus.png</texturenofocus>
+					<textureradioonfocus>audiomixer-radio-on.png</textureradioonfocus>
+					<textureradioonnofocus>audiomixer-radio-on.png</textureradioonnofocus>
+					<textureradioofffocus>audiomixer-radio-off.png</textureradioofffocus>
+					<textureradiooffnofocus>audiomixer-radio-off.png</textureradiooffnofocus>
+					<textureradioondisabled colordiffuse="40FFFFFF">audiomixer-radio-on.png</textureradioondisabled>
+					<textureradiooffdisabled colordiffuse="40FFFFFF">audiomixer-radio-off.png</textureradiooffdisabled>
+					<radiowidth>120</radiowidth>
+					<radioheight>76</radioheight>
+					<radioposx>490</radioposx>
+					<radioposy>0</radioposy>
+					<align>right</align>
+					<aligny>center</aligny>
+					<textoffsetx>90</textoffsetx>
+					<pulseonselect>false</pulseonselect>
+					<onup>915</onup>
+					<ondown>917</ondown>
+					<onleft>15902</onleft>
+					<onright>16902</onright>
+				</control>
+				<control type="label" id="16900">
+					<description>ControlName</description>
+					<left>0</left>
+					<textoffsetx>20</textoffsetx>
+					<top>0</top>
+					<width>590</width>
+					<height>69</height>
+					<font>font13</font>
+					<align>left</align>
+					<aligny>center</aligny>
+				</control>
+				<control type="slider" id="16902">
+					<description>Slider</description>
+					<left>610</left>
+					<top>22</top>
+					<width>590</width>
+					<height>25</height>
+					<texturefocus>-</texturefocus>
+					<texturenofocus>-</texturenofocus>
+					<texturesliderbar>audiomixer-slider-background.png</texturesliderbar>
+					<textureslidernib>audiomixer-slider-nib-nofocus.png</textureslidernib>
+					<textureslidernibfocus>audiomixer-slider-nib-focus.png</textureslidernibfocus>
+					<onup>916</onup>
+					<ondown>916</ondown>
+				</control>
+				<control type="label" id="16903">
+					<description>ControlPercentage</description>
+					<left>1140</left>
+					<top>0</top>
+					<width>150</width>
+					<height>69</height>
+					<font>font13</font>
+					<align>right</align>
+					<aligny>center</aligny>
+				</control>
+			</control>
+			<control type="group" id="17000">
+				<description>ControlGroup</description>
+				<height>63</height>
+				<visible>Control.IsVisible(16000)</visible>
+				<control type="radiobutton" id="917">
+					<description>mute button</description>
+					<left>0</left>
+					<top>0</top>
+					<width>590</width>
+					<height>69</height>
+					<visible>true</visible>
+					<label>$ADDON[script.audio.mixer 30010]</label>
+					<font>font13</font>
+					<texturefocus colordiffuse="FF12B2E7">audiomixer-list-focus.png</texturefocus>
+					<texturenofocus>audiomixer-list-nofocus.png</texturenofocus>
+					<textureradioonfocus>audiomixer-radio-on.png</textureradioonfocus>
+					<textureradioonnofocus>audiomixer-radio-on.png</textureradioonnofocus>
+					<textureradioofffocus>audiomixer-radio-off.png</textureradioofffocus>
+					<textureradiooffnofocus>audiomixer-radio-off.png</textureradiooffnofocus>
+					<textureradioondisabled colordiffuse="40FFFFFF">audiomixer-radio-on.png</textureradioondisabled>
+					<textureradiooffdisabled colordiffuse="40FFFFFF">audiomixer-radio-off.png</textureradiooffdisabled>
+					<radiowidth>120</radiowidth>
+					<radioheight>76</radioheight>
+					<radioposx>490</radioposx>
+					<radioposy>0</radioposy>
+					<align>right</align>
+					<aligny>center</aligny>
+					<textoffsetx>90</textoffsetx>
+					<pulseonselect>false</pulseonselect>
+					<onup>916</onup>
+					<ondown>918</ondown>
+					<onleft>16902</onleft>
+					<onright>17902</onright>
+				</control>
+				<control type="label" id="17900">
+					<description>ControlName</description>
+					<left>0</left>
+					<textoffsetx>20</textoffsetx>
+					<top>0</top>
+					<width>590</width>
+					<height>69</height>
+					<font>font13</font>
+					<align>left</align>
+					<aligny>center</aligny>
+				</control>
+				<control type="slider" id="17902">
+					<description>Slider</description>
+					<left>610</left>
+					<top>22</top>
+					<width>590</width>
+					<height>25</height>
+					<texturefocus>-</texturefocus>
+					<texturenofocus>-</texturenofocus>
+					<texturesliderbar>audiomixer-slider-background.png</texturesliderbar>
+					<textureslidernib>audiomixer-slider-nib-nofocus.png</textureslidernib>
+					<textureslidernibfocus>audiomixer-slider-nib-focus.png</textureslidernibfocus>
+					<onup>917</onup>
+					<ondown>917</ondown>
+				</control>
+				<control type="label" id="17903">
+					<description>ControlPercentage</description>
+					<left>1140</left>
+					<top>0</top>
+					<width>150</width>
+					<height>69</height>
+					<font>font13</font>
+					<align>right</align>
+					<aligny>center</aligny>
+				</control>
+			</control>
+			<control type="group" id="18000">
+				<description>ControlGroup</description>
+				<height>63</height>
+				<visible>Control.IsVisible(17000)</visible>
+				<control type="radiobutton" id="918">
+					<description>mute button</description>
+					<left>0</left>
+					<top>0</top>
+					<width>590</width>
+					<height>69</height>
+					<visible>true</visible>
+					<label>$ADDON[script.audio.mixer 30010]</label>
+					<font>font13</font>
+					<texturefocus colordiffuse="FF12B2E7">audiomixer-list-focus.png</texturefocus>
+					<texturenofocus>audiomixer-list-nofocus.png</texturenofocus>
+					<textureradioonfocus>audiomixer-radio-on.png</textureradioonfocus>
+					<textureradioonnofocus>audiomixer-radio-on.png</textureradioonnofocus>
+					<textureradioofffocus>audiomixer-radio-off.png</textureradioofffocus>
+					<textureradiooffnofocus>audiomixer-radio-off.png</textureradiooffnofocus>
+					<textureradioondisabled colordiffuse="40FFFFFF">audiomixer-radio-on.png</textureradioondisabled>
+					<textureradiooffdisabled colordiffuse="40FFFFFF">audiomixer-radio-off.png</textureradiooffdisabled>
+					<radiowidth>120</radiowidth>
+					<radioheight>76</radioheight>
+					<radioposx>490</radioposx>
+					<radioposy>0</radioposy>
+					<align>right</align>
+					<aligny>center</aligny>
+					<textoffsetx>90</textoffsetx>
+					<pulseonselect>false</pulseonselect>
+					<onup>917</onup>
+					<ondown>919</ondown>
+					<onleft>17902</onleft>
+					<onright>18902</onright>
+				</control>
+				<control type="label" id="18900">
+					<description>ControlName</description>
+					<left>0</left>
+					<textoffsetx>20</textoffsetx>
+					<top>0</top>
+					<width>590</width>
+					<height>69</height>
+					<font>font13</font>
+					<align>left</align>
+					<aligny>center</aligny>
+				</control>
+				<control type="slider" id="18902">
+					<description>Slider</description>
+					<left>610</left>
+					<top>22</top>
+					<width>590</width>
+					<height>25</height>
+					<texturefocus>-</texturefocus>
+					<texturenofocus>-</texturenofocus>
+					<texturesliderbar>audiomixer-slider-background.png</texturesliderbar>
+					<textureslidernib>audiomixer-slider-nib-nofocus.png</textureslidernib>
+					<textureslidernibfocus>audiomixer-slider-nib-focus.png</textureslidernibfocus>
+					<onup>918</onup>
+					<ondown>918</ondown>
+				</control>
+				<control type="label" id="18903">
+					<description>ControlPercentage</description>
+					<left>1140</left>
+					<top>0</top>
+					<width>150</width>
+					<height>69</height>
+					<font>font13</font>
+					<align>right</align>
+					<aligny>center</aligny>
+				</control>
+			</control>
+			<control type="group" id="19000">
+				<description>ControlGroup</description>
+				<height>63</height>
+				<visible>Control.IsVisible(18000)</visible>
+				<control type="radiobutton" id="919">
+					<description>mute button</description>
+					<left>0</left>
+					<top>0</top>
+					<width>590</width>
+					<height>69</height>
+					<visible>true</visible>
+					<label>$ADDON[script.audio.mixer 30010]</label>
+					<font>font13</font>
+					<texturefocus colordiffuse="FF12B2E7">audiomixer-list-focus.png</texturefocus>
+					<texturenofocus>audiomixer-list-nofocus.png</texturenofocus>
+					<textureradioonfocus>audiomixer-radio-on.png</textureradioonfocus>
+					<textureradioonnofocus>audiomixer-radio-on.png</textureradioonnofocus>
+					<textureradioofffocus>audiomixer-radio-off.png</textureradioofffocus>
+					<textureradiooffnofocus>audiomixer-radio-off.png</textureradiooffnofocus>
+					<textureradioondisabled colordiffuse="40FFFFFF">audiomixer-radio-on.png</textureradioondisabled>
+					<textureradiooffdisabled colordiffuse="40FFFFFF">audiomixer-radio-off.png</textureradiooffdisabled>
+					<radiowidth>120</radiowidth>
+					<radioheight>76</radioheight>
+					<radioposx>490</radioposx>
+					<radioposy>0</radioposy>
+					<align>right</align>
+					<aligny>center</aligny>
+					<textoffsetx>90</textoffsetx>
+					<pulseonselect>false</pulseonselect>
+					<onup>918</onup>
+					<ondown>920</ondown>
+					<onleft>18902</onleft>
+					<onright>19902</onright>
+				</control>
+				<control type="label" id="19900">
+					<description>ControlName</description>
+					<left>0</left>
+					<textoffsetx>20</textoffsetx>
+					<top>0</top>
+					<width>590</width>
+					<height>69</height>
+					<font>font13</font>
+					<align>left</align>
+					<aligny>center</aligny>
+				</control>
+				<control type="slider" id="19902">
+					<description>Slider</description>
+					<left>610</left>
+					<top>22</top>
+					<width>590</width>
+					<height>25</height>
+					<texturefocus>-</texturefocus>
+					<texturenofocus>-</texturenofocus>
+					<texturesliderbar>audiomixer-slider-background.png</texturesliderbar>
+					<textureslidernib>audiomixer-slider-nib-nofocus.png</textureslidernib>
+					<textureslidernibfocus>audiomixer-slider-nib-focus.png</textureslidernibfocus>
+					<onup>919</onup>
+					<ondown>919</ondown>
+				</control>
+				<control type="label" id="19903">
+					<description>ControlPercentage</description>
+					<left>1140</left>
+					<top>0</top>
+					<width>150</width>
+					<height>69</height>
+					<font>font13</font>
+					<align>right</align>
+					<aligny>center</aligny>
+				</control>
+			</control>
+			<control type="group" id="20000">
+				<description>ControlGroup</description>
+				<height>63</height>
+				<visible>Control.IsVisible(19000)</visible>
+				<control type="radiobutton" id="920">
+					<description>mute button</description>
+					<left>0</left>
+					<top>0</top>
+					<width>590</width>
+					<height>69</height>
+					<visible>true</visible>
+					<label>$ADDON[script.audio.mixer 30010]</label>
+					<font>font13</font>
+					<texturefocus colordiffuse="FF12B2E7">audiomixer-list-focus.png</texturefocus>
+					<texturenofocus>audiomixer-list-nofocus.png</texturenofocus>
+					<textureradioonfocus>audiomixer-radio-on.png</textureradioonfocus>
+					<textureradioonnofocus>audiomixer-radio-on.png</textureradioonnofocus>
+					<textureradioofffocus>audiomixer-radio-off.png</textureradioofffocus>
+					<textureradiooffnofocus>audiomixer-radio-off.png</textureradiooffnofocus>
+					<textureradioondisabled colordiffuse="40FFFFFF">audiomixer-radio-on.png</textureradioondisabled>
+					<textureradiooffdisabled colordiffuse="40FFFFFF">audiomixer-radio-off.png</textureradiooffdisabled>
+					<radiowidth>120</radiowidth>
+					<radioheight>76</radioheight>
+					<radioposx>490</radioposx>
+					<radioposy>0</radioposy>
+					<align>right</align>
+					<aligny>center</aligny>
+					<textoffsetx>90</textoffsetx>
+					<pulseonselect>false</pulseonselect>
+					<onup>919</onup>
+					<ondown>921</ondown>
+					<onleft>19902</onleft>
+					<onright>20902</onright>
+				</control>
+				<control type="label" id="20900">
+					<description>ControlName</description>
+					<left>0</left>
+					<textoffsetx>20</textoffsetx>
+					<top>0</top>
+					<width>590</width>
+					<height>69</height>
+					<font>font13</font>
+					<align>left</align>
+					<aligny>center</aligny>
+				</control>
+				<control type="slider" id="20902">
+					<description>Slider</description>
+					<left>610</left>
+					<top>22</top>
+					<width>590</width>
+					<height>25</height>
+					<texturefocus>-</texturefocus>
+					<texturenofocus>-</texturenofocus>
+					<texturesliderbar>audiomixer-slider-background.png</texturesliderbar>
+					<textureslidernib>audiomixer-slider-nib-nofocus.png</textureslidernib>
+					<textureslidernibfocus>audiomixer-slider-nib-focus.png</textureslidernibfocus>
+					<onup>920</onup>
+					<ondown>920</ondown>
+				</control>
+				<control type="label" id="20903">
+					<description>ControlPercentage</description>
+					<left>1140</left>
+					<top>0</top>
+					<width>150</width>
+					<height>69</height>
+					<font>font13</font>
+					<align>right</align>
+					<aligny>center</aligny>
+				</control>
+			</control>
+			<control type="group" id="21000">
+				<description>ControlGroup</description>
+				<height>63</height>
+				<visible>Control.IsVisible(20000)</visible>
+				<control type="radiobutton" id="921">
+					<description>mute button</description>
+					<left>0</left>
+					<top>0</top>
+					<width>590</width>
+					<height>69</height>
+					<visible>true</visible>
+					<label>$ADDON[script.audio.mixer 30010]</label>
+					<font>font13</font>
+					<texturefocus colordiffuse="FF12B2E7">audiomixer-list-focus.png</texturefocus>
+					<texturenofocus>audiomixer-list-nofocus.png</texturenofocus>
+					<textureradioonfocus>audiomixer-radio-on.png</textureradioonfocus>
+					<textureradioonnofocus>audiomixer-radio-on.png</textureradioonnofocus>
+					<textureradioofffocus>audiomixer-radio-off.png</textureradioofffocus>
+					<textureradiooffnofocus>audiomixer-radio-off.png</textureradiooffnofocus>
+					<textureradioondisabled colordiffuse="40FFFFFF">audiomixer-radio-on.png</textureradioondisabled>
+					<textureradiooffdisabled colordiffuse="40FFFFFF">audiomixer-radio-off.png</textureradiooffdisabled>
+					<radiowidth>120</radiowidth>
+					<radioheight>76</radioheight>
+					<radioposx>490</radioposx>
+					<radioposy>0</radioposy>
+					<align>right</align>
+					<aligny>center</aligny>
+					<textoffsetx>90</textoffsetx>
+					<pulseonselect>false</pulseonselect>
+					<onup>920</onup>
+					<ondown>922</ondown>
+					<onleft>20902</onleft>
+					<onright>21902</onright>
+				</control>
+				<control type="label" id="21900">
+					<description>ControlName</description>
+					<left>0</left>
+					<textoffsetx>20</textoffsetx>
+					<top>0</top>
+					<width>590</width>
+					<height>69</height>
+					<font>font13</font>
+					<align>left</align>
+					<aligny>center</aligny>
+				</control>
+				<control type="slider" id="21902">
+					<description>Slider</description>
+					<left>610</left>
+					<top>22</top>
+					<width>590</width>
+					<height>25</height>
+					<texturefocus>-</texturefocus>
+					<texturenofocus>-</texturenofocus>
+					<texturesliderbar>audiomixer-slider-background.png</texturesliderbar>
+					<textureslidernib>audiomixer-slider-nib-nofocus.png</textureslidernib>
+					<textureslidernibfocus>audiomixer-slider-nib-focus.png</textureslidernibfocus>
+					<onup>921</onup>
+					<ondown>921</ondown>
+				</control>
+				<control type="label" id="21903">
+					<description>ControlPercentage</description>
+					<left>1140</left>
+					<top>0</top>
+					<width>150</width>
+					<height>69</height>
+					<font>font13</font>
+					<align>right</align>
+					<aligny>center</aligny>
+				</control>
+			</control>
+			<control type="group" id="22000">
+				<description>ControlGroup</description>
+				<height>63</height>
+				<visible>Control.IsVisible(21000)</visible>
+				<control type="radiobutton" id="922">
+					<description>mute button</description>
+					<left>0</left>
+					<top>0</top>
+					<width>590</width>
+					<height>69</height>
+					<visible>true</visible>
+					<label>$ADDON[script.audio.mixer 30010]</label>
+					<font>font13</font>
+					<texturefocus colordiffuse="FF12B2E7">audiomixer-list-focus.png</texturefocus>
+					<texturenofocus>audiomixer-list-nofocus.png</texturenofocus>
+					<textureradioonfocus>audiomixer-radio-on.png</textureradioonfocus>
+					<textureradioonnofocus>audiomixer-radio-on.png</textureradioonnofocus>
+					<textureradioofffocus>audiomixer-radio-off.png</textureradioofffocus>
+					<textureradiooffnofocus>audiomixer-radio-off.png</textureradiooffnofocus>
+					<textureradioondisabled colordiffuse="40FFFFFF">audiomixer-radio-on.png</textureradioondisabled>
+					<textureradiooffdisabled colordiffuse="40FFFFFF">audiomixer-radio-off.png</textureradiooffdisabled>
+					<radiowidth>120</radiowidth>
+					<radioheight>76</radioheight>
+					<radioposx>490</radioposx>
+					<radioposy>0</radioposy>
+					<align>right</align>
+					<aligny>center</aligny>
+					<textoffsetx>90</textoffsetx>
+					<pulseonselect>false</pulseonselect>
+					<onup>921</onup>
+					<ondown>923</ondown>
+					<onleft>21902</onleft>
+					<onright>22902</onright>
+				</control>
+				<control type="label" id="22900">
+					<description>ControlName</description>
+					<left>0</left>
+					<textoffsetx>20</textoffsetx>
+					<top>0</top>
+					<width>590</width>
+					<height>69</height>
+					<font>font13</font>
+					<align>left</align>
+					<aligny>center</aligny>
+				</control>
+				<control type="slider" id="22902">
+					<description>Slider</description>
+					<left>610</left>
+					<top>22</top>
+					<width>590</width>
+					<height>25</height>
+					<texturefocus>-</texturefocus>
+					<texturenofocus>-</texturenofocus>
+					<texturesliderbar>audiomixer-slider-background.png</texturesliderbar>
+					<textureslidernib>audiomixer-slider-nib-nofocus.png</textureslidernib>
+					<textureslidernibfocus>audiomixer-slider-nib-focus.png</textureslidernibfocus>
+					<onup>922</onup>
+					<ondown>922</ondown>
+				</control>
+				<control type="label" id="22903">
+					<description>ControlPercentage</description>
+					<left>1140</left>
+					<top>0</top>
+					<width>150</width>
+					<height>69</height>
+					<font>font13</font>
+					<align>right</align>
+					<aligny>center</aligny>
+				</control>
+			</control>
+			<control type="group" id="23000">
+				<description>ControlGroup</description>
+				<height>63</height>
+				<visible>Control.IsVisible(22000)</visible>
+				<control type="radiobutton" id="923">
+					<description>mute button</description>
+					<left>0</left>
+					<top>0</top>
+					<width>590</width>
+					<height>69</height>
+					<visible>true</visible>
+					<label>$ADDON[script.audio.mixer 30010]</label>
+					<font>font13</font>
+					<texturefocus colordiffuse="FF12B2E7">audiomixer-list-focus.png</texturefocus>
+					<texturenofocus>audiomixer-list-nofocus.png</texturenofocus>
+					<textureradioonfocus>audiomixer-radio-on.png</textureradioonfocus>
+					<textureradioonnofocus>audiomixer-radio-on.png</textureradioonnofocus>
+					<textureradioofffocus>audiomixer-radio-off.png</textureradioofffocus>
+					<textureradiooffnofocus>audiomixer-radio-off.png</textureradiooffnofocus>
+					<textureradioondisabled colordiffuse="40FFFFFF">audiomixer-radio-on.png</textureradioondisabled>
+					<textureradiooffdisabled colordiffuse="40FFFFFF">audiomixer-radio-off.png</textureradiooffdisabled>
+					<radiowidth>120</radiowidth>
+					<radioheight>76</radioheight>
+					<radioposx>490</radioposx>
+					<radioposy>0</radioposy>
+					<align>right</align>
+					<aligny>center</aligny>
+					<textoffsetx>90</textoffsetx>
+					<pulseonselect>false</pulseonselect>
+					<onup>922</onup>
+					<ondown>924</ondown>
+					<onleft>22902</onleft>
+					<onright>23902</onright>
+				</control>
+				<control type="label" id="23900">
+					<description>ControlName</description>
+					<left>0</left>
+					<textoffsetx>20</textoffsetx>
+					<top>0</top>
+					<width>590</width>
+					<height>69</height>
+					<font>font13</font>
+					<align>left</align>
+					<aligny>center</aligny>
+				</control>
+				<control type="slider" id="23902">
+					<description>Slider</description>
+					<left>610</left>
+					<top>22</top>
+					<width>590</width>
+					<height>25</height>
+					<texturefocus>-</texturefocus>
+					<texturenofocus>-</texturenofocus>
+					<texturesliderbar>audiomixer-slider-background.png</texturesliderbar>
+					<textureslidernib>audiomixer-slider-nib-nofocus.png</textureslidernib>
+					<textureslidernibfocus>audiomixer-slider-nib-focus.png</textureslidernibfocus>
+					<onup>923</onup>
+					<ondown>923</ondown>
+				</control>
+				<control type="label" id="23903">
+					<description>ControlPercentage</description>
+					<left>1140</left>
+					<top>0</top>
+					<width>150</width>
+					<height>69</height>
+					<font>font13</font>
+					<align>right</align>
+					<aligny>center</aligny>
+				</control>
+			</control>
+			<control type="group" id="24000">
+				<description>ControlGroup</description>
+				<height>63</height>
+				<visible>Control.IsVisible(23000)</visible>
+				<control type="radiobutton" id="924">
+					<description>mute button</description>
+					<left>0</left>
+					<top>0</top>
+					<width>590</width>
+					<height>69</height>
+					<visible>true</visible>
+					<label>$ADDON[script.audio.mixer 30010]</label>
+					<font>font13</font>
+					<texturefocus colordiffuse="FF12B2E7">audiomixer-list-focus.png</texturefocus>
+					<texturenofocus>audiomixer-list-nofocus.png</texturenofocus>
+					<textureradioonfocus>audiomixer-radio-on.png</textureradioonfocus>
+					<textureradioonnofocus>audiomixer-radio-on.png</textureradioonnofocus>
+					<textureradioofffocus>audiomixer-radio-off.png</textureradioofffocus>
+					<textureradiooffnofocus>audiomixer-radio-off.png</textureradiooffnofocus>
+					<textureradioondisabled colordiffuse="40FFFFFF">audiomixer-radio-on.png</textureradioondisabled>
+					<textureradiooffdisabled colordiffuse="40FFFFFF">audiomixer-radio-off.png</textureradiooffdisabled>
+					<radiowidth>120</radiowidth>
+					<radioheight>76</radioheight>
+					<radioposx>490</radioposx>
+					<radioposy>0</radioposy>
+					<align>right</align>
+					<aligny>center</aligny>
+					<textoffsetx>90</textoffsetx>
+					<pulseonselect>false</pulseonselect>
+					<onup>923</onup>
+					<ondown>925</ondown>
+					<onleft>23902</onleft>
+					<onright>24902</onright>
+				</control>
+				<control type="label" id="24900">
+					<description>ControlName</description>
+					<left>0</left>
+					<textoffsetx>20</textoffsetx>
+					<top>0</top>
+					<width>590</width>
+					<height>69</height>
+					<font>font13</font>
+					<align>left</align>
+					<aligny>center</aligny>
+				</control>
+				<control type="slider" id="24902">
+					<description>Slider</description>
+					<left>610</left>
+					<top>22</top>
+					<width>590</width>
+					<height>25</height>
+					<texturefocus>-</texturefocus>
+					<texturenofocus>-</texturenofocus>
+					<texturesliderbar>audiomixer-slider-background.png</texturesliderbar>
+					<textureslidernib>audiomixer-slider-nib-nofocus.png</textureslidernib>
+					<textureslidernibfocus>audiomixer-slider-nib-focus.png</textureslidernibfocus>
+					<onup>924</onup>
+					<ondown>924</ondown>
+				</control>
+				<control type="label" id="24903">
+					<description>ControlPercentage</description>
+					<left>1140</left>
+					<top>0</top>
+					<width>150</width>
+					<height>69</height>
+					<font>font13</font>
+					<align>right</align>
+					<aligny>center</aligny>
+				</control>
+			</control>
+			<control type="group" id="25000">
+				<description>ControlGroup</description>
+				<height>63</height>
+				<visible>Control.IsVisible(24000)</visible>
+				<control type="radiobutton" id="925">
+					<description>mute button</description>
+					<left>0</left>
+					<top>0</top>
+					<width>590</width>
+					<height>69</height>
+					<visible>true</visible>
+					<label>$ADDON[script.audio.mixer 30010]</label>
+					<font>font13</font>
+					<texturefocus colordiffuse="FF12B2E7">audiomixer-list-focus.png</texturefocus>
+					<texturenofocus>audiomixer-list-nofocus.png</texturenofocus>
+					<textureradioonfocus>audiomixer-radio-on.png</textureradioonfocus>
+					<textureradioonnofocus>audiomixer-radio-on.png</textureradioonnofocus>
+					<textureradioofffocus>audiomixer-radio-off.png</textureradioofffocus>
+					<textureradiooffnofocus>audiomixer-radio-off.png</textureradiooffnofocus>
+					<textureradioondisabled colordiffuse="40FFFFFF">audiomixer-radio-on.png</textureradioondisabled>
+					<textureradiooffdisabled colordiffuse="40FFFFFF">audiomixer-radio-off.png</textureradiooffdisabled>
+					<radiowidth>120</radiowidth>
+					<radioheight>76</radioheight>
+					<radioposx>490</radioposx>
+					<radioposy>0</radioposy>
+					<align>right</align>
+					<aligny>center</aligny>
+					<textoffsetx>90</textoffsetx>
+					<pulseonselect>false</pulseonselect>
+					<onup>924</onup>
+					<ondown>926</ondown>
+					<onleft>24902</onleft>
+					<onright>25902</onright>
+				</control>
+				<control type="label" id="25900">
+					<description>ControlName</description>
+					<left>0</left>
+					<textoffsetx>20</textoffsetx>
+					<top>0</top>
+					<width>590</width>
+					<height>69</height>
+					<font>font13</font>
+					<align>left</align>
+					<aligny>center</aligny>
+				</control>
+				<control type="slider" id="25902">
+					<description>Slider</description>
+					<left>610</left>
+					<top>22</top>
+					<width>590</width>
+					<height>25</height>
+					<texturefocus>-</texturefocus>
+					<texturenofocus>-</texturenofocus>
+					<texturesliderbar>audiomixer-slider-background.png</texturesliderbar>
+					<textureslidernib>audiomixer-slider-nib-nofocus.png</textureslidernib>
+					<textureslidernibfocus>audiomixer-slider-nib-focus.png</textureslidernibfocus>
+					<onup>925</onup>
+					<ondown>925</ondown>
+				</control>
+				<control type="label" id="25903">
+					<description>ControlPercentage</description>
+					<left>1140</left>
+					<top>0</top>
+					<width>150</width>
+					<height>69</height>
+					<font>font13</font>
+					<align>right</align>
+					<aligny>center</aligny>
+				</control>
+			</control>
+			<control type="group" id="26000">
+				<description>ControlGroup</description>
+				<height>63</height>
+				<visible>Control.IsVisible(25000)</visible>
+				<control type="radiobutton" id="926">
+					<description>mute button</description>
+					<left>0</left>
+					<top>0</top>
+					<width>590</width>
+					<height>69</height>
+					<visible>true</visible>
+					<label>$ADDON[script.audio.mixer 30010]</label>
+					<font>font13</font>
+					<texturefocus colordiffuse="FF12B2E7">audiomixer-list-focus.png</texturefocus>
+					<texturenofocus>audiomixer-list-nofocus.png</texturenofocus>
+					<textureradioonfocus>audiomixer-radio-on.png</textureradioonfocus>
+					<textureradioonnofocus>audiomixer-radio-on.png</textureradioonnofocus>
+					<textureradioofffocus>audiomixer-radio-off.png</textureradioofffocus>
+					<textureradiooffnofocus>audiomixer-radio-off.png</textureradiooffnofocus>
+					<textureradioondisabled colordiffuse="40FFFFFF">audiomixer-radio-on.png</textureradioondisabled>
+					<textureradiooffdisabled colordiffuse="40FFFFFF">audiomixer-radio-off.png</textureradiooffdisabled>
+					<radiowidth>120</radiowidth>
+					<radioheight>76</radioheight>
+					<radioposx>490</radioposx>
+					<radioposy>0</radioposy>
+					<align>right</align>
+					<aligny>center</aligny>
+					<textoffsetx>90</textoffsetx>
+					<pulseonselect>false</pulseonselect>
+					<onup>925</onup>
+					<ondown>927</ondown>
+					<onleft>25902</onleft>
+					<onright>26902</onright>
+				</control>
+				<control type="label" id="26900">
+					<description>ControlName</description>
+					<left>0</left>
+					<textoffsetx>20</textoffsetx>
+					<top>0</top>
+					<width>590</width>
+					<height>69</height>
+					<font>font13</font>
+					<align>left</align>
+					<aligny>center</aligny>
+				</control>
+				<control type="slider" id="26902">
+					<description>Slider</description>
+					<left>610</left>
+					<top>22</top>
+					<width>590</width>
+					<height>25</height>
+					<texturefocus>-</texturefocus>
+					<texturenofocus>-</texturenofocus>
+					<texturesliderbar>audiomixer-slider-background.png</texturesliderbar>
+					<textureslidernib>audiomixer-slider-nib-nofocus.png</textureslidernib>
+					<textureslidernibfocus>audiomixer-slider-nib-focus.png</textureslidernibfocus>
+					<onup>926</onup>
+					<ondown>926</ondown>
+				</control>
+				<control type="label" id="26903">
+					<description>ControlPercentage</description>
+					<left>1140</left>
+					<top>0</top>
+					<width>150</width>
+					<height>69</height>
+					<font>font13</font>
+					<align>right</align>
+					<aligny>center</aligny>
+				</control>
+			</control>
+			<control type="group" id="27000">
+				<description>ControlGroup</description>
+				<height>63</height>
+				<visible>Control.IsVisible(26000)</visible>
+				<control type="radiobutton" id="927">
+					<description>mute button</description>
+					<left>0</left>
+					<top>0</top>
+					<width>590</width>
+					<height>69</height>
+					<visible>true</visible>
+					<label>$ADDON[script.audio.mixer 30010]</label>
+					<font>font13</font>
+					<texturefocus colordiffuse="FF12B2E7">audiomixer-list-focus.png</texturefocus>
+					<texturenofocus>audiomixer-list-nofocus.png</texturenofocus>
+					<textureradioonfocus>audiomixer-radio-on.png</textureradioonfocus>
+					<textureradioonnofocus>audiomixer-radio-on.png</textureradioonnofocus>
+					<textureradioofffocus>audiomixer-radio-off.png</textureradioofffocus>
+					<textureradiooffnofocus>audiomixer-radio-off.png</textureradiooffnofocus>
+					<textureradioondisabled colordiffuse="40FFFFFF">audiomixer-radio-on.png</textureradioondisabled>
+					<textureradiooffdisabled colordiffuse="40FFFFFF">audiomixer-radio-off.png</textureradiooffdisabled>
+					<radiowidth>120</radiowidth>
+					<radioheight>76</radioheight>
+					<radioposx>490</radioposx>
+					<radioposy>0</radioposy>
+					<align>right</align>
+					<aligny>center</aligny>
+					<textoffsetx>90</textoffsetx>
+					<pulseonselect>false</pulseonselect>
+					<onup>926</onup>
+					<ondown>928</ondown>
+					<onleft>26902</onleft>
+					<onright>27902</onright>
+				</control>
+				<control type="label" id="27900">
+					<description>ControlName</description>
+					<left>0</left>
+					<textoffsetx>20</textoffsetx>
+					<top>0</top>
+					<width>590</width>
+					<height>69</height>
+					<font>font13</font>
+					<align>left</align>
+					<aligny>center</aligny>
+				</control>
+				<control type="slider" id="27902">
+					<description>Slider</description>
+					<left>610</left>
+					<top>22</top>
+					<width>590</width>
+					<height>25</height>
+					<texturefocus>-</texturefocus>
+					<texturenofocus>-</texturenofocus>
+					<texturesliderbar>audiomixer-slider-background.png</texturesliderbar>
+					<textureslidernib>audiomixer-slider-nib-nofocus.png</textureslidernib>
+					<textureslidernibfocus>audiomixer-slider-nib-focus.png</textureslidernibfocus>
+					<onup>927</onup>
+					<ondown>927</ondown>
+				</control>
+				<control type="label" id="27903">
+					<description>ControlPercentage</description>
+					<left>1140</left>
+					<top>0</top>
+					<width>150</width>
+					<height>69</height>
+					<font>font13</font>
+					<align>right</align>
+					<aligny>center</aligny>
+				</control>
+			</control>
+			<control type="group" id="28000">
+				<description>ControlGroup</description>
+				<height>63</height>
+				<visible>Control.IsVisible(27000)</visible>
+				<control type="radiobutton" id="928">
+					<description>mute button</description>
+					<left>0</left>
+					<top>0</top>
+					<width>590</width>
+					<height>69</height>
+					<visible>true</visible>
+					<label>$ADDON[script.audio.mixer 30010]</label>
+					<font>font13</font>
+					<texturefocus colordiffuse="FF12B2E7">audiomixer-list-focus.png</texturefocus>
+					<texturenofocus>audiomixer-list-nofocus.png</texturenofocus>
+					<textureradioonfocus>audiomixer-radio-on.png</textureradioonfocus>
+					<textureradioonnofocus>audiomixer-radio-on.png</textureradioonnofocus>
+					<textureradioofffocus>audiomixer-radio-off.png</textureradioofffocus>
+					<textureradiooffnofocus>audiomixer-radio-off.png</textureradiooffnofocus>
+					<textureradioondisabled colordiffuse="40FFFFFF">audiomixer-radio-on.png</textureradioondisabled>
+					<textureradiooffdisabled colordiffuse="40FFFFFF">audiomixer-radio-off.png</textureradiooffdisabled>
+					<radiowidth>120</radiowidth>
+					<radioheight>76</radioheight>
+					<radioposx>490</radioposx>
+					<radioposy>0</radioposy>
+					<align>right</align>
+					<aligny>center</aligny>
+					<textoffsetx>90</textoffsetx>
+					<pulseonselect>false</pulseonselect>
+					<onup>927</onup>
+					<ondown>929</ondown>
+					<onleft>27902</onleft>
+					<onright>28902</onright>
+				</control>
+				<control type="label" id="28900">
+					<description>ControlName</description>
+					<left>0</left>
+					<textoffsetx>20</textoffsetx>
+					<top>0</top>
+					<width>590</width>
+					<height>69</height>
+					<font>font13</font>
+					<align>left</align>
+					<aligny>center</aligny>
+				</control>
+				<control type="slider" id="28902">
+					<description>Slider</description>
+					<left>610</left>
+					<top>22</top>
+					<width>590</width>
+					<height>25</height>
+					<texturefocus>-</texturefocus>
+					<texturenofocus>-</texturenofocus>
+					<texturesliderbar>audiomixer-slider-background.png</texturesliderbar>
+					<textureslidernib>audiomixer-slider-nib-nofocus.png</textureslidernib>
+					<textureslidernibfocus>audiomixer-slider-nib-focus.png</textureslidernibfocus>
+					<onup>928</onup>
+					<ondown>928</ondown>
+				</control>
+				<control type="label" id="28903">
+					<description>ControlPercentage</description>
+					<left>1140</left>
+					<top>0</top>
+					<width>150</width>
+					<height>69</height>
+					<font>font13</font>
+					<align>right</align>
+					<aligny>center</aligny>
+				</control>
+			</control>
+			<control type="group" id="29000">
+				<description>ControlGroup</description>
+				<height>63</height>
+				<visible>Control.IsVisible(28000)</visible>
+				<control type="radiobutton" id="929">
+					<description>mute button</description>
+					<left>0</left>
+					<top>0</top>
+					<width>590</width>
+					<height>69</height>
+					<visible>true</visible>
+					<label>$ADDON[script.audio.mixer 30010]</label>
+					<font>font13</font>
+					<texturefocus colordiffuse="FF12B2E7">audiomixer-list-focus.png</texturefocus>
+					<texturenofocus>audiomixer-list-nofocus.png</texturenofocus>
+					<textureradioonfocus>audiomixer-radio-on.png</textureradioonfocus>
+					<textureradioonnofocus>audiomixer-radio-on.png</textureradioonnofocus>
+					<textureradioofffocus>audiomixer-radio-off.png</textureradioofffocus>
+					<textureradiooffnofocus>audiomixer-radio-off.png</textureradiooffnofocus>
+					<textureradioondisabled colordiffuse="40FFFFFF">audiomixer-radio-on.png</textureradioondisabled>
+					<textureradiooffdisabled colordiffuse="40FFFFFF">audiomixer-radio-off.png</textureradiooffdisabled>
+					<radiowidth>120</radiowidth>
+					<radioheight>76</radioheight>
+					<radioposx>490</radioposx>
+					<radioposy>0</radioposy>
+					<align>right</align>
+					<aligny>center</aligny>
+					<textoffsetx>90</textoffsetx>
+					<pulseonselect>false</pulseonselect>
+					<onup>928</onup>
+					<ondown>930</ondown>
+					<onleft>28902</onleft>
+					<onright>29902</onright>
+				</control>
+				<control type="label" id="19900">
+					<description>ControlName</description>
+					<left>0</left>
+					<textoffsetx>20</textoffsetx>
+					<top>0</top>
+					<width>590</width>
+					<height>69</height>
+					<font>font13</font>
+					<align>left</align>
+					<aligny>center</aligny>
+				</control>
+				<control type="slider" id="29902">
+					<description>Slider</description>
+					<left>610</left>
+					<top>22</top>
+					<width>590</width>
+					<height>25</height>
+					<texturefocus>-</texturefocus>
+					<texturenofocus>-</texturenofocus>
+					<texturesliderbar>audiomixer-slider-background.png</texturesliderbar>
+					<textureslidernib>audiomixer-slider-nib-nofocus.png</textureslidernib>
+					<textureslidernibfocus>audiomixer-slider-nib-focus.png</textureslidernibfocus>
+					<onup>929</onup>
+					<ondown>929</ondown>
+				</control>
+				<control type="label" id="29903">
+					<description>ControlPercentage</description>
+					<left>1140</left>
+					<top>0</top>
+					<width>150</width>
+					<height>69</height>
+					<font>font13</font>
+					<align>right</align>
+					<aligny>center</aligny>
+				</control>
+			</control>
+			<control type="group" id="30000">
+				<description>ControlGroup</description>
+				<height>63</height>
+				<visible>Control.IsVisible(29000)</visible>
+				<control type="radiobutton" id="930">
+					<description>mute button</description>
+					<left>0</left>
+					<top>0</top>
+					<width>590</width>
+					<height>69</height>
+					<visible>true</visible>
+					<label>$ADDON[script.audio.mixer 30010]</label>
+					<font>font13</font>
+					<texturefocus colordiffuse="FF12B2E7">audiomixer-list-focus.png</texturefocus>
+					<texturenofocus>audiomixer-list-nofocus.png</texturenofocus>
+					<textureradioonfocus>audiomixer-radio-on.png</textureradioonfocus>
+					<textureradioonnofocus>audiomixer-radio-on.png</textureradioonnofocus>
+					<textureradioofffocus>audiomixer-radio-off.png</textureradioofffocus>
+					<textureradiooffnofocus>audiomixer-radio-off.png</textureradiooffnofocus>
+					<textureradioondisabled colordiffuse="40FFFFFF">audiomixer-radio-on.png</textureradioondisabled>
+					<textureradiooffdisabled colordiffuse="40FFFFFF">audiomixer-radio-off.png</textureradiooffdisabled>
+					<radiowidth>120</radiowidth>
+					<radioheight>76</radioheight>
+					<radioposx>490</radioposx>
+					<radioposy>0</radioposy>
+					<align>right</align>
+					<aligny>center</aligny>
+					<textoffsetx>90</textoffsetx>
+					<pulseonselect>false</pulseonselect>
+					<onup>929</onup>
+					<ondown>10</ondown>
+					<onleft>29902</onleft>
+					<onright>30902</onright>
+				</control>
+				<control type="label" id="30900">
+					<description>ControlName</description>
+					<left>0</left>
+					<textoffsetx>20</textoffsetx>
+					<top>0</top>
+					<width>590</width>
+					<height>69</height>
+					<font>font13</font>
+					<align>left</align>
+					<aligny>center</aligny>
+				</control>
+				<control type="slider" id="30902">
+					<description>Slider</description>
+					<left>610</left>
+					<top>22</top>
+					<width>590</width>
+					<height>25</height>
+					<texturefocus>-</texturefocus>
+					<texturenofocus>-</texturenofocus>
+					<texturesliderbar>audiomixer-slider-background.png</texturesliderbar>
+					<textureslidernib>audiomixer-slider-nib-nofocus.png</textureslidernib>
+					<textureslidernibfocus>audiomixer-slider-nib-focus.png</textureslidernibfocus>
+					<onup>930</onup>
+					<ondown>930</ondown>
+				</control>
+				<control type="label" id="30903">
+					<description>ControlPercentage</description>
+					<left>1140</left>
+					<top>0</top>
+					<width>150</width>
+					<height>69</height>
+					<font>font13</font>
+					<align>right</align>
+					<aligny>center</aligny>
+				</control>
+			</control>
+		</control>
+		<control type="button" id="10">
+			<left>520</left>
+			<top>730</top>
+			<width>300</width>
+			<height>90</height>
+			<label>$LOCALIZE[186]</label>
+			<font>font12_title</font>
+			<textcolor>white</textcolor>
+			<textoffsetx>20</textoffsetx>
+			<align>center</align>
+			<texturenofocus border="40">audiomixer-button-nofocus.png</texturenofocus>
+			<texturefocus border="40" colordiffuse="FF12B2E7">audiomixer-button-focus.png</texturefocus>
+			<onup>901</onup>
+			<ondown>901</ondown>
+			<onleft>901</onleft>
+			<onright>901</onright>
+			<onclick>Dialog.Close(all,true)</onclick>
+		</control>
+	</controls>
+</window>
