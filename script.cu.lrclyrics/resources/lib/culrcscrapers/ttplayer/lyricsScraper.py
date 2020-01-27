@@ -14,7 +14,7 @@ import difflib
 from utilities import *
 
 __title__ = "TTPlayer"
-__priority__ = '120'
+__priority__ = '110'
 __lrc__ = True
 
 UserAgent = 'Mozilla/5.0 (Windows NT 10.0; WOW64; rv:51.0) Gecko/20100101 Firefox/51.0'

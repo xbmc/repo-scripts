@@ -230,26 +230,30 @@ msgid "Music 163"
 msgstr ""
 
 msgctxt "#32905"
+msgid "Syair"
+msgstr ""
+
+msgctxt "#32911"
 msgid "LyricWiki"
 msgstr ""
 
-msgctxt "#32906"
+msgctxt "#32912"
 msgid "Genius"
 msgstr ""
 
-msgctxt "#32907"
+msgctxt "#32913"
 msgid "Lyrics Mode"
 msgstr ""
 
-msgctxt "#32908"
+msgctxt "#32914"
 msgid "AZLyrics"
 msgstr ""
 
-msgctxt "#32909"
+msgctxt "#32915"
 msgid "Lyrics.com"
 msgstr ""
 
-msgctxt "#32910"
+msgctxt "#32916"
 msgid "Dark Lyrics"
 msgstr ""
 

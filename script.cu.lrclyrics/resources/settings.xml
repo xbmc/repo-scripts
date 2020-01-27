@@ -37,34 +37,39 @@
 					<default>true</default>
 					<control type="toggle"/>
 				</setting>
+				<setting help="" id="syair" label="32905" type="boolean">
+					<level>0</level>
+					<default>true</default>
+					<control type="toggle"/>
+				</setting>
 			</group>
 			<group id="4" label="32155">
-				<setting help="" id="lyricwiki" label="32905" type="boolean">
+				<setting help="" id="lyricwiki" label="32911" type="boolean">
 					<level>0</level>
 					<default>true</default>
 					<control type="toggle"/>
 				</setting>
-				<setting help="" id="genius" label="32906" type="boolean">
+				<setting help="" id="genius" label="32912" type="boolean">
 					<level>0</level>
 					<default>true</default>
 					<control type="toggle"/>
 				</setting>
-				<setting help="" id="lyricsmode" label="32907" type="boolean">
+				<setting help="" id="lyricsmode" label="32913" type="boolean">
 					<level>0</level>
 					<default>true</default>
 					<control type="toggle"/>
 				</setting>
-				<setting help="" id="azlyrics" label="32908" type="boolean">
+				<setting help="" id="azlyrics" label="32914" type="boolean">
 					<level>0</level>
 					<default>true</default>
 					<control type="toggle"/>
 				</setting>
-				<setting help="" id="lyricscom" label="32909" type="boolean">
+				<setting help="" id="lyricscom" label="32915" type="boolean">
 					<level>0</level>
 					<default>true</default>
 					<control type="toggle"/>
 				</setting>
-				<setting help="" id="darklyrics" label="32910" type="boolean">
+				<setting help="" id="darklyrics" label="32916" type="boolean">
 					<level>0</level>
 					<default>true</default>
 					<control type="toggle"/>
