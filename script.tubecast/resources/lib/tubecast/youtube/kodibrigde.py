@@ -16,8 +16,8 @@ def set_kodi_volume(volume):
                              "params": {"volume": volume}, "id": 8})
 
 
-def get_youtube_plugin_path(videoid):
-    return "plugin://plugin.video.youtube/play/?video_id={}".format(videoid)
+def get_youtube_plugin_path(videoid, seek=0):  # type: (str, str) -> str
+    return "plugin://plugin.video.youtube/play/?video_id={}&seek={}".format(videoid, seek)
 
 
 def remote_connected(name):
