@@ -28,6 +28,9 @@ class SilentWSGIRequestHandler(WSGIRequestHandler):
             # Avoid garbage on the kodi log
             pass
 
+    def address_string(self):
+        return self.client_address[0]
+
 
 class ThreadedWSGIServer(ThreadingMixIn, WSGIServer):
     """Multi-Threaded WSGI server"""
@@ -39,7 +42,8 @@ class Chromecast(object):
 
     def __init__(self, monitor):
         self._monitor = monitor
-        self._server_thread = Thread(target=self._run_server,
+        self._server_thread = Thread(name="ChromecastServer",
+                                     target=self._run_server,
                                      args=('0.0.0.0', 8008))
         self._server_thread.daemon = True
         self._server = None
@@ -53,10 +57,11 @@ class Chromecast(object):
         while not self._abort_var or not self._monitor.abortRequested():
             self._server.handle_request()
 
-        self._server.socket.close()
+        self._server.server_close()
 
     def start(self):
         self._server_thread.start()
 
     def abort(self):
         self._abort_var = True
+        self._server_thread.join()

@@ -30,7 +30,7 @@ class CastPlayer(xbmc.Player):
 
     @staticmethod
     def getPlayingStatusCode():
-        return 2 if xbmc.getInfoLabel('Player.Paused') else 1
+        return 2 if xbmc.getCondVisibility('Player.Paused') else 1
 
     def onPlayBackStarted(self):
         self.playing = True
