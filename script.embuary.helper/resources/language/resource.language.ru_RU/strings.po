@@ -1,0 +1,195 @@
+# Embuary Helper language file
+# Addon Name: Embuary Helper
+# Addon id: script.embuary.helper
+# Addon Provider: sualfred
+# Translators:
+# Эдуард Приутеса <eduardpriutesa@gmail.com>, 2020
+# 
+msgid ""
+msgstr ""
+"Project-Id-Version: Embuary Helper\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2019-10-06 17:40+0000\n"
+"Last-Translator: Эдуард Приутеса <eduardpriutesa@gmail.com>, 2020\n"
+"Language-Team: Russian (Russia) (https://www.transifex.com/sualfred/teams/80018/ru_RU/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ru_RU\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);\n"
+
+msgctxt "#32000"
+msgid "Error"
+msgstr "Ошибка"
+
+msgctxt "#32001"
+msgid ""
+"This is a tool to provide features to a skin and requires skin integration."
+msgstr ""
+"Это инструмент для предоставления функций для скина и требует интеграции "
+"скина."
+
+msgctxt "#32002"
+msgid "Enable logging"
+msgstr "Включить ведение журнала"
+
+msgctxt "#32004"
+msgid "detected"
+msgstr "Обнаружены"
+
+msgctxt "#32005"
+msgid "Changed font to"
+msgstr "Изменен шрифт на"
+
+#: /resources/settings.xml
+msgctxt "#32003"
+msgid "Delete add-on image cache"
+msgstr "Удалить дополнительный кеш изображений"
+
+msgctxt "#32006"
+msgid "Applying changes"
+msgstr "Применение изменений"
+
+#: /resources/lib/plugin_listing.py
+msgctxt "#32007"
+msgid "Suggestions based on random watched item"
+msgstr "Предложения на основе случайно просматриваемого элемента"
+
+#: /resources/lib/plugin_listing.py
+msgctxt "#32008"
+msgid "Next up"
+msgstr "Следующий"
+
+#: /resources/lib/plugin_listing.py
+msgctxt "#32009"
+msgid "Suggestions by random genre"
+msgstr "Предложения по случайному жанру"
+
+#: /resources/lib/plugin_listing.py
+msgctxt "#32010"
+msgid "Recently added episodes and shows"
+msgstr "Недавно добавленные эпизоды и сериалы"
+
+#: /resources/lib/plugin_listing.py
+msgctxt "#32011"
+msgid "All media"
+msgstr "Все медия"
+
+#: /resources/lib/plugin_listing.py
+msgctxt "#32012"
+msgid "Recommended by rating"
+msgstr "Рекомендуется по рейтингу"
+
+#: /resources/lib/plugin_listing.py
+msgctxt "#32013"
+msgid "Continue watching"
+msgstr "Продолжайте смотреть"
+
+#: /resources/lib/plugin_listing.py
+msgctxt "#32014"
+msgid "Suggestions based on the last watched item"
+msgstr "Предложения, основанные на последнем просмотренном элементе"
+
+#: /resources/lib/plugin_listing.py
+msgctxt "#32015"
+msgid "Recently added unwatched episodes and shows"
+msgstr "Недавно добавленные неназванные эпизоды и сериалы"
+
+#: /resources/settings.xml
+msgctxt "#32016"
+msgid "Enable service module"
+msgstr "Включить сервисный модуль"
+
+#: /resources/settings.xml
+msgctxt "#32017"
+msgid "Service interval time"
+msgstr "Время обслуживания"
+
+#: /resources/settings.xml
+msgctxt "#32018"
+msgid "Default blurring radius"
+msgstr "Радиус размытия по умолчанию"
+
+#: /resources/settings.xml
+msgctxt "#32020"
+msgid "Misc."
+msgstr "Разное."
+
+#: /resources/settings.xml
+msgctxt "#32021"
+msgid "Background change interval"
+msgstr "Интервал фоновых изменений"
+
+#: /resources/lib/utils.py
+msgctxt "#32019"
+msgid ""
+"This will delete all created images (blurred backgrounds, genre thumbs, "
+"etc.) in the addon_data folder. Do you want to proceed?"
+msgstr ""
+"Это позволит удалить все созданные изображения ( фоны,  жанры и т.д.) в "
+"папке addon_data. Ты хочешь продолжить?"
+
+#: /resources/lib/plugin_listing.py
+msgctxt "#32022"
+msgid "All available database items"
+msgstr "Все доступные элементы базы данных"
+
+#: /resources/lib/plugin_listing.py
+msgctxt "#32023"
+msgid "items"
+msgstr "Элементы"
+
+#: /resources/lib/utils.py
+msgctxt "#32024"
+msgid "The video database has no library tags stored."
+msgstr "В базе данных видео нет библиотечных тегов."
+
+#: /resources/lib/utils.py
+msgctxt "#32025"
+msgid "Attention"
+msgstr "Внимание"
+
+#: /resources/lib/utils.py
+msgctxt "#32026"
+msgid "Enable library tag detection for"
+msgstr "Включить обнаружение библиотечных тегов для"
+
+#: /resources/lib/plugin_content.py
+msgctxt "#32029"
+msgid "Directed by"
+msgstr "Режиссер:"
+
+#: /resources/lib/plugin_content.py
+msgctxt "#32030"
+msgid "Items starring"
+msgstr "Предметы в главной роли"
+
+#: /resources/lib/plugin_content.py
+msgctxt "#32031"
+msgid "Because you watched"
+msgstr "Потому что вы смотрели"
+
+#: /resources/lib/plugin_content.py
+msgctxt "#32032"
+msgid "Christmas holiday season"
+msgstr "Сезон рождественских праздников"
+
+#: /resources/lib/plugin_content.py
+msgctxt "#32033"
+msgid "Spooky suggestions"
+msgstr " Жуткие предложения"
+
+#: /resources/lib/plugin_content.py
+msgctxt "#32034"
+msgid "May the force be with you"
+msgstr "Да пребудет с тобой сила"
+
+#: /resources/lib/plugin_content.py
+msgctxt "#32035"
+msgid "Live long and prosper"
+msgstr "Живи долго и процветай"
+
+#: /resources/lib/plugin_listing.py
+msgctxt "#32036"
+msgid "Special and seasonal widgets"
+msgstr "Специальные и сезонные виджеты"

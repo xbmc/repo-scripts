@@ -259,8 +259,8 @@ def json_call(method,properties=None,sort=None,query_filter=None,limit=None,para
     result = json.loads(result)
 
     if debug:
-        log('--> JSON CALL: ' + json_prettyprint(json_string))
-        log('--> JSON RESULT: ' + json_prettyprint(result))
+        log('--> JSON CALL: ' + json_prettyprint(json_string), force=True)
+        log('--> JSON RESULT: ' + json_prettyprint(result), force=True)
 
     return result
 
@@ -421,28 +421,31 @@ def set_library_tags(tags,whitelist=None,save=True,clear=False):
 
 
 def addon_data_cleanup(number_of_days=60):
-    if not os.path.exists(ADDON_DATA_IMG_PATH):
-        return
-
     time_in_secs = time.time() - (number_of_days * 24 * 60 * 60)
 
     ''' Image storage maintaining. Deletes all created images which were unused in the
         last 60 days. The image functions are touching existing files to update the
         modification date. Often used images are never get deleted by this task.
     '''
-    for file in os.listdir(ADDON_DATA_IMG_PATH):
-        full_path = os.path.join(ADDON_DATA_IMG_PATH, file)
-        if os.path.isfile(full_path):
-            stat = os.stat(full_path)
-            if stat.st_mtime <= time_in_secs:
-                os.remove(full_path)
+    try:
+        for file in os.listdir(ADDON_DATA_IMG_PATH):
+            full_path = os.path.join(ADDON_DATA_IMG_PATH, file)
+            if os.path.isfile(full_path):
+                stat = os.stat(full_path)
+                if stat.st_mtime <= time_in_secs:
+                    os.remove(full_path)
+    except Exception:
+        return
 
     ''' Deletes old temporary files on startup
     '''
-    for file in os.listdir(ADDON_DATA_IMG_TEMP_PATH):
-        full_path = os.path.join(ADDON_DATA_IMG_TEMP_PATH, file)
-        if os.path.isfile(full_path):
-            os.remove(full_path)
+    try:
+        for file in os.listdir(ADDON_DATA_IMG_TEMP_PATH):
+            full_path = os.path.join(ADDON_DATA_IMG_TEMP_PATH, file)
+            if os.path.isfile(full_path):
+                os.remove(full_path)
+    except Exception:
+        pass
 
 
 def addon_data(file,content=False):

@@ -205,13 +205,17 @@ def settimer(params):
 def encode(params):
     string = remove_quotes(params.get('string'))
     prop = params.get('prop', 'EncodedString')
-    winprop(prop,url_quote(string))
+
+    if not PYTHON3:
+        string = string.decode('utf-8')
+
+    winprop(prop, url_quote(string))
 
 
 def decode(params):
     string = remove_quotes(params.get('string'))
     prop = params.get('prop', 'DecodedString')
-    winprop(prop,url_unquote(string))
+    winprop(prop, url_unquote(string))
 
 
 def getaddonsetting(params):
@@ -394,13 +398,13 @@ def playfolder(params):
             return
 
         json_query = json_call('VideoLibrary.GetEpisodes',
-                               properties=episode_properties,
+                               properties=JSON_MAP['episode_properties'],
                                query_filter={'operator': 'is', 'field': 'season', 'value': '%s' % result['season']},
                                params={'tvshowid': int(result['tvshowid'])}
                                )
     else:
         json_query = json_call('VideoLibrary.GetEpisodes',
-                               properties=episode_properties,
+                               properties=JSON_MAP['episode_properties'],
                                params={'tvshowid': dbid}
                                )
 
@@ -533,7 +537,7 @@ def resetposition(params):
 
 def details_by_season(params):
     season_query = json_call('VideoLibrary.GetSeasonDetails',
-                             properties=season_properties,
+                             properties=JSON_MAP['season_properties'],
                              params={'seasonid': int(params.get('dbid'))}
                              )
 
@@ -544,7 +548,7 @@ def details_by_season(params):
         return
 
     tvshow_query = json_call('VideoLibrary.GetTVShowDetails',
-                             properties=tvshow_properties,
+                             properties=JSON_MAP['tvshow_properties'],
                              params={'tvshowid': int(tvshow_id)}
                              )
 
@@ -673,6 +677,7 @@ def getlocale(params):
         defaultlocale = locale.getdefaultlocale()
         shortlocale = defaultlocale[0][3:].upper()
         winprop('SystemLocale', shortlocale)
+
     except Exception:
         winprop('SystemLocale', clear=True)
 

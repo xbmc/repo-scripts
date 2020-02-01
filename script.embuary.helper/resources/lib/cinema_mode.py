@@ -98,7 +98,7 @@ class CinemaMode(object):
 
     def get_trailers(self):
         movies = json_call('VideoLibrary.GetMovies',
-                           properties=movie_properties,
+                           properties=JSON_MAP['movie_properties'],
                            query_filter={'and': [{'field': 'playcount', 'operator': 'lessthan', 'value': '1'}, {'field': 'hastrailer', 'operator': 'true', 'value': []}]},
                            sort={'method': 'random'}, limit=int(self.trailer_count)
                            )
