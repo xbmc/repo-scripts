@@ -44,9 +44,6 @@ class PlayerMonitor(xbmc.Monitor):
                 self.get_videoinfo()
                 self.get_nextitem()
 
-            if PLAYER.isPlayingAudio() and not self.pvr_playback and condition('!String.IsEmpty(MusicPlayer.DBID) + [String.IsEmpty(Player.Art(thumb)) | String.IsEmpty(Player.Art(album.discart))]'):
-                self.get_songartworks()
-
             if not self.fullscreen_lock:
                 self.do_fullscreen()
 
@@ -203,7 +200,7 @@ class PlayerMonitor(xbmc.Monitor):
             position = int(VIDEOPLAYLIST.getposition())
 
             json_query = json_call('Playlist.GetItems',
-                                    properties=playlist_properties,
+                                    properties=JSON_MAP['playlist_properties'],
                                     limits={"start": position+1, "end": position+2},
                                     params={'playlistid': 1}
                                     )
@@ -249,43 +246,6 @@ class PlayerMonitor(xbmc.Monitor):
             for info in ['Duration','Duration(m)','Duration(s)','Title','TVShowTitle','Genre','Plot','Tagline','Season','Episode','Year','Rating','UserRating','DBID','DBType']:
                 winprop('VideoPlayer.Next.%s' % info, clear=True)
 
-
-    def get_songartworks(self):
-        art = {}
-        try:
-            songdetails = json_call('AudioLibrary.GetSongDetails',
-                                properties=['art', 'albumid'],
-                                params={'songid': int(xbmc.getInfoLabel('MusicPlayer.DBID'))},
-                                )
-
-            songdetails = songdetails['result']['songdetails']
-            art['fanart'] = songdetails['art'].get('fanart', '')
-            art['thumb'] = songdetails['art'].get('thumb', '')
-            art['clearlogo'] = songdetails['art'].get('clearlogo') or songdetails['art'].get('logo')
-
-        except Exception:
-            return
-
-        try:
-            albumdetails = json_call('AudioLibrary.GetAlbumDetails',
-                                properties=['art'],
-                                params={'albumid': int(songdetails['albumid'])},
-                                )
-
-            albumdetails = albumdetails['result']['albumdetails']
-            discart = albumdetails['art'].get('discart') or albumdetails['art'].get('logo')
-            art['discart'] = discart
-            art['album.discart'] = discart
-
-        except Exception:
-            pass
-
-        item = xbmcgui.ListItem()
-        item.setPath(PLAYER.getPlayingFile())
-        item.setArt(art)
-        PLAYER.updateInfoTag(item)
-
-
     def get_art_info(self,clear=False):
         for art in ['Player.Icon', 'Player.Art(poster)', 'Player.Art(tvshow.poster)', 'Pvr.EPGEventIcon']:
             image = xbmc.getInfoLabel(art)
@@ -299,3 +259,9 @@ class PlayerMonitor(xbmc.Monitor):
                 winprop(art + '.width',clear=True)
                 winprop(art + '.height',clear=True)
                 winprop(art + '.ar',clear=True)
+
+
+        ImageBlur(prop='playericon',
+                  file=xbmc.getInfoLabel('Player.Icon'),
+                  radius=5
+                  )
