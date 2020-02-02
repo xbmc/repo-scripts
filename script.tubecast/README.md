@@ -30,8 +30,7 @@ Support will only be provided via the forum thread in [Kodi's Forums](https://fo
 
 ### Known issues
 
-* If you have a video queue set and attempt to stop playback from Kodi the next video on the queue will be played. Make sure you clear the playlist from the youtube application itself
-
+None, for now at least :)
 
 ### Disclaimer
 
