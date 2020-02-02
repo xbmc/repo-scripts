@@ -3,14 +3,14 @@
 # Addon id: script.metadata.editor
 # Addon Provider: sualfred
 # Translators:
-# David Claes <d3claes@gmail.com>, 2019
-#
+# David Claes <d3claes@gmail.com>, 2020
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: Metadata Editor\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: 2019-11-07 08:05+0000\n"
-"Last-Translator: David Claes <d3claes@gmail.com>, 2019\n"
+"Last-Translator: David Claes <d3claes@gmail.com>, 2020\n"
 "Language-Team: Dutch (Netherlands) (https://www.transifex.com/sualfred/teams/80018/nl_NL/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -138,27 +138,25 @@ msgctxt "#32023"
 msgid "Record label"
 msgstr "Opnamelabel"
 
-#: /default.py
-msgctxt "#32024"
-msgid "Please use the context menu on a library item to run this script."
-msgstr ""
-"Gebruik a.u.b. het contextmenu van een bibliotheekitem om dit script uit te "
-"voeren."
-
 #: /resources/settings.xml
 msgctxt "#32025"
-msgid "Preferred TMDb language"
-msgstr "TMDb-voorkeurstaal"
+msgid "Preferred language"
+msgstr "Voorkeurstaal"
 
 #: /resources/settings.xml
 msgctxt "#32026"
-msgid "TV show scraper related settings"
-msgstr "Instellingen voor TV-series schraper"
+msgid "Scraper settings"
+msgstr "Schraperinstellingen"
+
+#: /resources/lib/rating_updater.py
+msgctxt "#32024"
+msgid "Heavy server load. Please wait."
+msgstr "Zware serverbelasting. Even geduld a.u.b."
 
 #: /resources/settings.xml
 msgctxt "#32027"
-msgid "Library is based on informations of"
-msgstr "Bibliotheek is gebaseerd op informatie van"
+msgid "TV show library is based on informations of"
+msgstr "Bibliotheek TV-series is gebaseerd op informatie van"
 
 #: /resources/settings.xml
 msgctxt "#32029"
@@ -182,18 +180,8 @@ msgstr "Uw persoonlijke OMDb API key (www.omdbapi.com)"
 
 #: /resources/settings.xml
 msgctxt "#32032"
-msgid "Search OMDb with title/year if IMDb is missing"
-msgstr "In OMDb zoeken met titel/jaar als IMDb ontbreekt"
-
-#: /resources/lib/rating_updater.py
-msgctxt "#32033"
-msgid "Updating movie ratings"
-msgstr "Beoordelingen van films aan het bijwerken"
-
-#: /resources/lib/rating_updater.py
-msgctxt "#32034"
-msgid "Updating TV show ratings"
-msgstr "Beoordelingen van TV-series aan het bijwerken"
+msgid "Search by title/year if IMDb ID is missing (not recommended)"
+msgstr "Zoeken op titel/jaar als IMDb ID ontbreekt (niet aanbevolen)"
 
 #: /default.py
 msgctxt "#32035"
@@ -218,6 +206,20 @@ msgctxt "#32036"
 msgid "Update TV show ratings"
 msgstr "Beoordelingen van TV-series bijwerken"
 
+#: /resources/lib/rating_updater.py
+msgctxt "#32033"
+msgid ""
+"OMDB API limit reached. Please consider to become a Patreon to increase your"
+" daily call limitation. Proceed by only using The Movie DB?"
+msgstr ""
+"OMDB API-limiet bereikt. Overweeg a.u.b. om een Patreon te worden om uw "
+"dagelijkse aanroepbeperking te verhogen. Enkel verdergaan met The Movie DB?"
+
+#: /resources/settings.xml
+msgctxt "#32034"
+msgid "Create .nfo file if missing"
+msgstr ".nfo bestand aanmaken als het ontbreekt"
+
 #: /default.py
 msgctxt "#32037"
 msgid "Update movie ratings"
@@ -238,11 +240,6 @@ msgctxt "#32040"
 msgid "Edit data for"
 msgstr "Data bewerken voor"
 
-#: /default.py
-msgctxt "#32041"
-msgid "Cancel updating"
-msgstr "Bijwerken annuleren"
-
 #: /resources/lib/rating_updater.py
 msgctxt "#32042"
 msgid "Canceled"
@@ -254,6 +251,11 @@ msgid "MPAA region"
 msgstr "MPAA regio"
 
 #: /resources/settings.xml
+msgctxt "#32041"
+msgid "Update premiered/year if database value is different"
+msgstr "Première/jaar bijwerken als de databasewaarde anders is"
+
+#: /resources/settings.xml
 msgctxt "#32044"
 msgid "Skip updating of MPAA"
 msgstr "Bijwerken van MPAA overslaan"
@@ -263,12 +265,64 @@ msgctxt "#32045"
 msgid "Update episode ratings"
 msgstr "Beoordelingen van afleveringen bijwerken"
 
-#: /resources/lib/rating_updater.py
-msgctxt "#32046"
-msgid "Updating episode ratings"
-msgstr "Beoordelingen van afleveringen aan het bijwerken"
-
 #: /resources/lib/editor.py
 msgctxt "#32047"
 msgid "No default source defined"
 msgstr "Geen standaardbron gedefinieerd"
+
+#: /resources/lib/rating_updater.py
+msgctxt "#32048"
+msgid "No items found"
+msgstr "Geen items gevonden"
+
+#: /context.py
+msgctxt "#32046"
+msgid "Update .nfo"
+msgstr ".nfo bijwerken"
+
+#: /default.py
+msgctxt "#32049"
+msgid "Incomplete arguments or content type not supported"
+msgstr "Onvolledige argumenten of inhoudstype niet ondersteund"
+
+#: /default.py
+msgctxt "#32050"
+msgid "Do you want to cancel the update?"
+msgstr "Wilt u de bijwerking annuleren?"
+
+#: /default.py
+msgctxt "#32051"
+msgid "Content"
+msgstr "Inhoud"
+
+#: /resources/settings.xml
+msgctxt "#32052"
+msgid "Fallback to US MPAA if configured country has no certification stored"
+msgstr ""
+"Terugvallen op US MPAA als ingesteld land geen certificering heeft "
+"opgeslagen"
+
+#: /resources/settings.xml
+msgctxt "#32053"
+msgid "Don't store \"NR\" (Not rated) MPAA rating"
+msgstr "MPAA NR-beoordeling niet opslaan (NR = No rating = geen beoordeling)"
+
+#: /service.py
+msgctxt "#32054"
+msgid "Do you want to rate the following item?"
+msgstr "Wilt u het volgende item beoordelen?"
+
+#: /resources/settings.xml
+msgctxt "#32055"
+msgid "Automatically update changed watched states to .nfo"
+msgstr "Automatische bijwerking wijzigde kijkstatus naar .nfo"
+
+#: /resources/settings.xml
+msgctxt "#32056"
+msgid "Rate your media if playback has ended"
+msgstr "Beoordeel uw media als het afspelen beëindigd is"
+
+#: /resources/settings.xml
+msgctxt "#32057"
+msgid "Write watched flag and playcount to .nfo"
+msgstr "Kijkstatus (bekeken) en kijkteller wegschrijven naar .nfo"

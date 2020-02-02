@@ -63,13 +63,13 @@ class ContextMenu(object):
             editor.editor()
 
         elif action == 1:
-            editor.set(key='genre', valuetype='select')
+            editor.set(key='genre', type='select')
 
         elif action == 2:
-            editor.set(key='tag', valuetype='select')
+            editor.set(key='tag', type='select')
 
         elif action == 3:
-            editor.set(key='tag', valuetype='watchlist')
+            editor.set(key='tag', type='watchlist')
 
         elif action == 4 :
             update_ratings(dbid=self.dbid, dbtype=self.dbtype)
