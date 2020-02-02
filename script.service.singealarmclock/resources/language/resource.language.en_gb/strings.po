@@ -1,0 +1,162 @@
+# XBMC Media Center language file
+# Addon Name: XBMC Alarm Clock
+# Addon id: script.service.alarmclock
+# Addon version: 0.0.1
+# Addon Provider: remigius
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Main Translation Project (Frodo)\n"
+"Report-Msgid-Bugs-To: http://trac.xbmc.org/\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: English (http://www.transifex.com/projects/p/XBMC-Main-Frodo/language/en/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#30001"
+msgid "Label"
+msgstr ""
+
+msgctxt "#30002"
+msgid "HDMI Device Connectivity"
+msgstr ""
+
+msgctxt "#30003"
+msgid "Delete Alarm"
+msgstr ""
+
+msgctxt "#30004"
+msgid "Clone Alarm"
+msgstr ""
+
+msgctxt "#30005"
+msgid "Trigger At Specified Time"
+msgstr ""
+
+msgctxt "#30006"
+msgid "Trigger Manually"
+msgstr ""
+
+msgctxt "#30009"
+msgid "Volume"
+msgstr ""
+
+msgctxt "#30010"
+msgid "Time"
+msgstr ""
+
+msgctxt "#30011"
+msgid "Fade Audio In (seconds)"
+msgstr ""
+
+msgctxt "#30012"
+msgid "Day"
+msgstr ""
+
+msgctxt "#30013"
+msgid "Play"
+msgstr ""
+
+msgctxt "#30015"
+msgid "Action"
+msgstr ""
+
+msgctxt "#30016"
+msgid "Play file"
+msgstr ""
+
+msgctxt "#30017"
+msgid "Play URL"
+msgstr ""
+
+msgctxt "#30018"
+msgid "Enable Duration"
+msgstr ""
+
+msgctxt "#30019"
+msgid "Duration (minutes)"
+msgstr ""
+
+msgctxt "#30020"
+msgid "Monday"
+msgstr ""
+
+msgctxt "#30021"
+msgid "Tuesday"
+msgstr ""
+
+msgctxt "#30022"
+msgid "Wednesday"
+msgstr ""
+
+msgctxt "#30023"
+msgid "Thursday"
+msgstr ""
+
+msgctxt "#30024"
+msgid "Friday"
+msgstr ""
+
+msgctxt "#30025"
+msgid "Saturday"
+msgstr ""
+
+msgctxt "#30026"
+msgid "Sunday"
+msgstr ""
+
+msgctxt "#30027"
+msgid "Weekdays (Mon-Fri)"
+msgstr ""
+
+msgctxt "#30028"
+msgid "Weekends (Sat-Sun)"
+msgstr ""
+
+msgctxt "#30029"
+msgid "Everyday"
+msgstr ""
+
+msgctxt "#30030"
+msgid "Add A New Alarm"
+msgstr ""
+
+msgctxt "#30031"
+msgid "Create Alarm"
+msgstr ""
+
+msgctxt "#30032"
+msgid "Run Now"
+msgstr ""
+
+msgctxt "#30033"
+msgid "CEC Device"
+msgstr ""
+
+msgctxt "#30034"
+msgid "Timer Settings"
+msgstr ""
+
+msgctxt "#30035"
+msgid "Alarm Action"
+msgstr ""
+
+msgctxt "#30036"
+msgid "Duration"
+msgstr ""
+
+msgctxt "#30037"
+msgid "Do Nothing"
+msgstr ""
+
+msgctxt "#30038"
+msgid "Activate"
+msgstr ""
+
+msgctxt "#30039"
+msgid "Standby"
+msgstr ""
