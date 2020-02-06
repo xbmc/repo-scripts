@@ -1,0 +1,203 @@
+# Kodi Media Center language file
+# Addon Name: Watchdog
+# Addon id: service.watchdog
+# Addon Provider: takoi
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: English (http://www.transifex.com/projects/p/xbmc-addons/language/en/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#30001"
+msgid "General"
+msgstr ""
+
+msgctxt "#30002"
+msgid "Advanced"
+msgstr ""
+
+# empty strings from id 30003 to 30006
+
+msgctxt "#30007"
+msgid "Auto"
+msgstr ""
+
+msgctxt "#30008"
+msgid "Polling"
+msgstr ""
+
+# empty strings from id 30009 to 30017
+
+msgctxt "#30018"
+msgid "Note: Addon must be restarted for changes to take effect"
+msgstr ""
+
+# empty strings from id 30019 to 30030
+
+msgctxt "#30031"
+msgid "Auto detect video sources"
+msgstr ""
+
+msgctxt "#30032"
+msgid "Video Source 1"
+msgstr ""
+
+msgctxt "#30033"
+msgid "Video Source 2"
+msgstr ""
+
+msgctxt "#30034"
+msgid "Video Source 3"
+msgstr ""
+
+msgctxt "#30035"
+msgid "Video Source 4"
+msgstr ""
+
+msgctxt "#30036"
+msgid "Video Source 5"
+msgstr ""
+
+msgctxt "#30037"
+msgid "Auto detect music sources"
+msgstr ""
+
+msgctxt "#30038"
+msgid "Music Source 1"
+msgstr ""
+
+msgctxt "#30039"
+msgid "Music Source 2"
+msgstr ""
+
+msgctxt "#30040"
+msgid "Music Source 3"
+msgstr ""
+
+msgctxt "#30041"
+msgid "Music Source 4"
+msgstr ""
+
+msgctxt "#30042"
+msgid "Music Source 5"
+msgstr ""
+
+msgctxt "#30043"
+msgid "Delay before updating library (seconds)"
+msgstr ""
+
+msgctxt "#30044"
+msgid "Startup delay (seconds)"
+msgstr ""
+
+msgctxt "#30045"
+msgid "Method for local sources"
+msgstr ""
+
+msgctxt "#30046"
+msgid "Polling Interval for network shares (seconds)"
+msgstr ""
+
+msgctxt "#30047"
+msgid "Update entire library on changes"
+msgstr ""
+
+msgctxt "#30048"
+msgid "Pause during playback"
+msgstr ""
+
+msgctxt "#30049"
+msgid "Poll recursively"
+msgstr ""
+
+msgctxt "#30050"
+msgid "Clean on startup"
+msgstr ""
+
+msgctxt "#30051"
+msgid "Scan on startup"
+msgstr ""
+
+msgctxt "#30052"
+msgid "Removal method"
+msgstr ""
+
+msgctxt "#30053"
+msgid "Show status dialog on startup"
+msgstr ""
+
+msgctxt "#30054"
+msgid "Remove the deleted video only"
+msgstr ""
+
+msgctxt "#30055"
+msgid "Clean entire library"
+msgstr ""
+
+msgctxt "#30056"
+msgid "Remove from library when files are removed"
+msgstr ""
+
+msgctxt "#30057"
+msgid "Hide progress of library scan/clean (Helix only)"
+msgstr ""
+
+msgctxt "#30058"
+msgid "Video sources"
+msgstr ""
+
+msgctxt "#30059"
+msgid "Music sources"
+msgstr ""
+
+msgctxt "#30060"
+msgid "Video Source 6"
+msgstr ""
+
+msgctxt "#30061"
+msgid "Video Source 7"
+msgstr ""
+
+msgctxt "#30062"
+msgid "Video Source 8"
+msgstr ""
+
+msgctxt "#30063"
+msgid "Video Source 9"
+msgstr ""
+
+msgctxt "#30064"
+msgid "Video Source 10"
+msgstr ""
+
+msgctxt "#30065"
+msgid "Music Source 6"
+msgstr ""
+
+msgctxt "#30066"
+msgid "Music Source 7"
+msgstr ""
+
+msgctxt "#30067"
+msgid "Music Source 8"
+msgstr ""
+
+msgctxt "#30068"
+msgid "Music Source 9"
+msgstr ""
+
+msgctxt "#30069"
+msgid "Music Source 10"
+msgstr ""
+
+
+
+
