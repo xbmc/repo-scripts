@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.module.feedparser" name="feedparser" version="6.0.0" provider-name="Kurt McKee">
+    <requires>
+        <import addon="xbmc.python" version="3.0.0"/>
+        <import addon="script.module.sgmllib3k" version="1.0.0"/>
+    </requires>
+    <extension point="xbmc.python.module" library="lib" />
+    <extension point="xbmc.addon.metadata">
+        <language></language>
+        <summary lang="en_GB">Universal feed parser, handles RSS 0.9x, RSS 1.0, RSS 2.0, CDF, Atom 0.3, and Atom 1.0 feeds</summary>
+        <description lang="en_GB">Universal feed parser, handles RSS 0.9x, RSS 1.0, RSS 2.0, CDF, Atom 0.3, and Atom 1.0 feeds</description>
+        <license>MIT</license>
+        <platform>all</platform>
+        <source>https://github.com/kurtmckee/feedparser</source>
+    </extension>
+</addon>
