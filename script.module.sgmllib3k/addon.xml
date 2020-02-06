@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.module.sgmllib3k" name="sgmllib3k" version="1.0.0" provider-name="hsoft">
+    <requires>
+        <import addon="xbmc.python" version="3.0.0"/>
+    </requires>
+    <extension point="xbmc.python.module" library="lib" />
+    <extension point="xbmc.addon.metadata">
+        <language></language>
+        <summary lang="en_GB">Python 3 port of sgmllib</summary>
+        <description lang="en_GB">Python 3 port of sgmllib</description>
+        <license>BSD</license>
+        <platform>all</platform>
+        <source>https://pypi.org/project/sgmllib3k/</source>
+    </extension>
+</addon>
