@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.module.pathtools" name="" version="0.1.2" provider-name="Yesudeep Mangalapilly">
+	<requires>
+		<import addon="xbmc.python" version="3.0.0"/>
+	</requires>
+	<extension point="xbmc.python.module" library="lib"/>
+	<extension point="xbmc.addon.metadata">
+		<summary lang="en_GB">Pathtools</summary>
+		<description lang="en_GB">Pattern matching and various utilities for file systems paths.</description>
+		<license>Apache-2.0</license>
+		<platform>all</platform>
+		<website>https://pypi.org/project/pathtools</website>
+		<source>https://github.com/gorakhargosh/pathtools/</source>
+	</extension>
+</addon>
+
