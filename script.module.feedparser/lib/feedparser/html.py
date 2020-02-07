@@ -30,12 +30,8 @@ from __future__ import unicode_literals
 
 import re
 
-try:
-    from html.entities import name2codepoint
-except ImportError:
-    # Python 2
-    # noinspection PyUnresolvedReferences
-    from htmlentitydefs import name2codepoint
+from html.entities import name2codepoint
+
 
 from .sgml import *
 
