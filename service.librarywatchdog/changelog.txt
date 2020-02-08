@@ -1,0 +1,92 @@
+v1.0.0
+- Remove script.module.pathtools and script.module.watchdog so they are correctly referenced upstream 
+
+v0.9.8
+- convert addon to work on py3
+
+v0.9.7
+- increased number of possible custom sources to 10
+
+v0.9.6
+- added headless support
+
+v0.9.5
+- improved detection of offline media sources
+
+v0.9.4
+- improved shutdown time
+
+v0.9.3
+- fixed crash on invalid filename encoding from file system
+
+v0.9.2
+- Helix only: progress dialogs are now hidden by default. Can be changed in settings
+- fixed OS X regression
+
+v0.9.1
+- added option for removing videos directly without cleaning entire library
+- added option for cleaning/scanning library on startup
+- added option for showing status dialog on startup (for easy debugging)
+- improved skipping of non-media files, reducing number of library scans needed
+- replaced different depth methods with recursive/non-recursive option
+- detection of OS mounted network file systems now works on busybox systems such as OpenElec
+- other minor improvements and fixes
+
+v0.8.1
+- added startup delay setting
+
+v0.8.0
+- added settings for manually selecting folders to watch
+- added setting for changing network polling interval
+- added dialog for add-on start up progress
+- many performance and stability improvements including faster startup and shutdown
+- fixed inotify never working on android
+- polling now auto-selected for mounted smb/nfs shares (linux)
+
+v0.7.7
+- fixed: add-on sometimes failing to start on android, causing xbmc to hang on exit
+
+v0.7.6
+- fixed multiple issues with the depth 2 poller
+
+v0.7.5
+- added option for forcing global scan on video sources. This is a workaround for a bug that cause XBMC to sometimes fail to recognize the newly added files
+
+v0.7.4
+- fixed encoding related regression affecting posix systems (OpenElec and other non-standard distributions)
+
+v0.7.3
+- added French translation
+- now tries to not scan when when non-media files are added
+- fixed: scanning sometimes failing due to reserved characters not being escaped
+- fixed: poller (depth 2) sometimes failing when files are added
+
+v0.7.2
+- added option for disabling pause on playback
+- other minor tweaks
+
+v0.7.1
+- fixed: library was cleaned even if it was disabled
+
+v0.7.0
+- support for network shares
+- now only scans the media source an event appeared in
+- now shows notifications when a media source is not being watched (optional)
+- settings now accessible through programs menu
+- various fixes
+
+v0.6.3
+- added setting for delaying updates
+- no longer scans/cleans during playback
+
+v0.6.2
+- added multipath support
+- added stricter triggering of library clean based on file type
+
+v0.6.1
+- fixed: not able to resume from sleep mode on linux
+- fixed: addon not able to start on windows xp when syscall is selected
+
+v0.6.0
+- fixed: xbmc deadlocks on windows when exiting
+
