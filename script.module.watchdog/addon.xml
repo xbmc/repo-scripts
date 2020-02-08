@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.module.watchdog" name="" version="0.10.1" provider-name="Yesudeep Mangalapilly">
+	<requires>
+		<import addon="xbmc.python" version="3.0.0"/>
+		<import addon="script.module.pathtools" version="0.1.2"/>
+	</requires>
+	<extension point="xbmc.python.module" library="lib"/>
+	<extension point="xbmc.addon.metadata">
+		<summary lang="en_GB">Watchdog</summary>
+		<description lang="en_GB">Python API and shell utilities to monitor file system events.</description>
+		<license>Apache-2.0</license>
+		<platform>all</platform>
+		<website>https://pypi.org/project/watchdog</website>
+		<source>https://github.com/gorakhargosh/watchdog/</source>
+	</extension>
+</addon>
+
