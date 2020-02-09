@@ -7,5 +7,6 @@
 	<category label="32012">
 		<setting label="32005" type="bool" id="debug-ssdp" default="false"/>
 		<setting label="32011" type="bool" id="debug-cmd" default="false"/>
+		<setting label="32014" type="bool" id="debug-http" default="false"/>
 	</category>
 </settings>

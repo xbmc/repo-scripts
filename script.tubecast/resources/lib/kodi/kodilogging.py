@@ -10,6 +10,15 @@ import xbmcaddon
 
 from resources.lib.tubecast.utils import PY3
 
+LEVEL_MAP = {
+    logging.CRITICAL: xbmc.LOGFATAL,
+    logging.ERROR: xbmc.LOGERROR,
+    logging.WARNING: xbmc.LOGWARNING,
+    logging.INFO: xbmc.LOGINFO,
+    logging.DEBUG: xbmc.LOGDEBUG,
+    logging.NOTSET: xbmc.LOGNONE,
+}
+
 
 class KodiLogHandler(logging.StreamHandler):
 
@@ -23,19 +32,11 @@ class KodiLogHandler(logging.StreamHandler):
         self.setFormatter(formatter)
 
     def emit(self, record):
-        levels = {
-            logging.CRITICAL: xbmc.LOGFATAL,
-            logging.ERROR: xbmc.LOGERROR,
-            logging.WARNING: xbmc.LOGWARNING,
-            logging.INFO: xbmc.LOGINFO,
-            logging.DEBUG: xbmc.LOGDEBUG,
-            logging.NOTSET: xbmc.LOGNONE,
-        }
         try:
-            xbmc.log(self.format(record), levels[record.levelno])
+            xbmc.log(self.format(record), LEVEL_MAP[record.levelno])
         except UnicodeEncodeError:
             xbmc.log(self.format(record).encode(
-                'utf-8', 'ignore'), levels[record.levelno])
+                'utf-8', 'ignore'), LEVEL_MAP[record.levelno])
 
     def flush(self):
         pass
@@ -46,6 +47,11 @@ def config():
     logger.addHandler(KodiLogHandler())
     logger.setLevel(logging.DEBUG)
 
+    # urllib3 makes a lot of unhelpful noise
+    # (POST logs don't show the body for example)
+    logging.getLogger("urllib3").setLevel(logging.WARNING)
 
-def get_logger():
-    return logging.getLogger(xbmcaddon.Addon().getAddonInfo('id'))
+
+def get_logger(name="general"):
+    return logging.getLogger(name)
+
