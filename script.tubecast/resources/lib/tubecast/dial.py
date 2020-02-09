@@ -6,8 +6,6 @@ from resources.lib.tubecast.kodicast import Kodicast
 from resources.lib.tubecast.utils import build_template
 from resources.lib.tubecast.youtube.app import YoutubeCastV1
 
-logger = kodilogging.get_logger()
-
 __device__ = '''<?xml version="1.0" encoding="utf-8"?>
 <root xmlns="urn:schemas-upnp-org:device-1-0" xmlns:r="urn:restful-tv-org:schemas:upnp-dd">
     <specVersion>

@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
-from threading import Thread
+import threading
+
 try:
     from socketserver import ThreadingMixIn
 except ImportError:
@@ -13,11 +14,12 @@ from resources.lib.tubecast.dial import app
 import socket
 
 
-logger = kodilogging.get_logger()
+logger = kodilogging.get_logger("chromecast")
 
 
 class SilentWSGIRequestHandler(WSGIRequestHandler):
     """WSGI request handler with logging disabled"""
+
     def log_message(self, format, *args):
         logger.debug("{} - - {}".format(self.address_string(), format % args))
 
@@ -42,25 +44,29 @@ class Chromecast(object):
 
     def __init__(self, monitor):
         self._monitor = monitor
-        self._server_thread = Thread(name="ChromecastServer",
-                                     target=self._run_server,
-                                     args=('0.0.0.0', 8008))
+        self._server_thread = threading.Thread(name="ChromecastServer",
+                                               target=self._run_server,
+                                               args=('0.0.0.0', 0))
         self._server_thread.daemon = True
         self._server = None
+        self._has_server = threading.Event()
         self._abort_var = False
 
     def _run_server(self, host, port):
         self._server = make_server(host, port, app,
                                    server_class=ThreadedWSGIServer,
                                    handler_class=SilentWSGIRequestHandler)
+        self._has_server.set()
         self._server.timeout = 0.1
         while not self._abort_var or not self._monitor.abortRequested():
             self._server.handle_request()
 
         self._server.server_close()
 
-    def start(self):
+    def start(self):  # type: () -> Tuple[int, int]
         self._server_thread.start()
+        self._has_server.wait()
+        return tuple(self._server.socket.getsockname()[:2])
 
     def abort(self):
         self._abort_var = True
