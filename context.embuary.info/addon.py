@@ -2,15 +2,18 @@
 import xbmc
 
 def main():
-    if xbmc.getCondVisibility('String.IsEqual(ListItem.DBType,movie) + !String.IsEmpty(ListItem.IMDBNumber) + !String.StartsWith(ListItem.IMDBNumber,xx)'):
-        xbmc.executebuiltin('RunScript(script.embuary.info,call=movie,external_id=%s)' % xbmc.getInfoLabel('ListItem.IMDBNumber'))
+    if xbmc.getCondVisibility('String.IsEqual(ListItem.DBType,movie) + !String.IsEmpty(ListItem.DBID)'):
+        xbmc.executebuiltin('RunScript(script.embuary.info,call=movie,dbid=%s)' % xbmc.getInfoLabel('ListItem.DBID'))
+
     elif xbmc.getCondVisibility('String.IsEqual(ListItem.DBType,movie)'):
         xbmc.executebuiltin('RunScript(script.embuary.info,call=movie,query=\'"%s"\',year=%s)' % (xbmc.getInfoLabel('ListItem.Title'),xbmc.getInfoLabel('ListItem.Year')))
 
-    elif xbmc.getCondVisibility('String.IsEqual(ListItem.DBType,tvshow) + !String.IsEmpty(ListItem.IMDBNumber) + !String.StartsWith(ListItem.IMDBNumber,xx)'):
-        xbmc.executebuiltin('RunScript(script.embuary.info,call=tv,external_id=%s)' % xbmc.getInfoLabel('ListItem.IMDBNumber'))
+    elif xbmc.getCondVisibility('String.IsEqual(ListItem.DBType,tvshow) + !String.IsEmpty(ListItem.DBID)'):
+        xbmc.executebuiltin('RunScript(script.embuary.info,call=tv,dbid=%s)' % xbmc.getInfoLabel('ListItem.DBID'))
+
     elif xbmc.getCondVisibility('String.IsEqual(ListItem.DBType,tvshow)'):
         xbmc.executebuiltin('RunScript(script.embuary.info,call=tv,query=\'"%s"\',year=%s)' % (xbmc.getInfoLabel('ListItem.TVShowTitle'),xbmc.getInfoLabel('ListItem.Year')))
+
     elif xbmc.getCondVisibility('String.IsEqual(ListItem.DBType,episode) | String.IsEqual(ListItem.DBType,season)'):
         xbmc.executebuiltin('RunScript(script.embuary.info,call=tv,query=\'"%s"\')' % xbmc.getInfoLabel('ListItem.TVShowTitle'))
 
