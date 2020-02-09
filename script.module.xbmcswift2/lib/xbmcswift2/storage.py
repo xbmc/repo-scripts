@@ -60,6 +60,11 @@ class _PersistentDictMixin(object):
             raise
         finally:
             fileobj.close()
+
+        # shutil error (SameFileError when performing copyfile)
+        if os.path.exists(self.filename):
+            os.remove(self.filename)
+
         shutil.move(tempname, self.filename)    # atomic commit
         if self.mode is not None:
             os.chmod(self.filename, self.mode)

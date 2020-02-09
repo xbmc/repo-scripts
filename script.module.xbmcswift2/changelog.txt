@@ -1,5 +1,7 @@
 CHANGES
 =======
+Version 2.5.1 (9/2/2020)
+- Fix shutil error when moving cache file
 
 Version 2.5.0 (4/12/2019)
 -------------
