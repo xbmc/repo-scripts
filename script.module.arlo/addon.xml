@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addon id="script.module.arlo"
        name="arlo"
-       version="1.2.27"
+       version="1.2.33"
        provider-name="jeffreydwalter">
   <requires>
     <import addon="xbmc.python" version="2.26.0"/>
     <import addon="script.module.monotonic" version="1.5"/>
     <import addon="script.module.requests" version="2.19.1"/>
-    <import addon="script.module.sseclient" version="0.0.20"/>
+    <import addon="script.module.ssearlo" version="0.0.22"/>
   </requires>
-  <extension point="xbmc.python.module"
-             library="lib" />
+  <extension point="xbmc.python.module" library="lib" />
   <extension point="xbmc.addon.metadata">
     <summary lang="en_GB">Python module for interacting with Netgear's Arlo camera system.</summary>
     <description lang="en_GB">Packed for KODI from https://github.com/jeffreydwalter/arlo</description>
