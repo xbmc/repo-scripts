@@ -28,7 +28,7 @@
     <assets>
         <icon>resources/icon.png</icon>
         <fanart>resources/fanart.jpg</fanart>
-        <clearlogo>resources/clearlogo.jpg</clearlogo>
+        <clearlogo>resources/clearlogo.png</clearlogo>
     </assets>
   </extension>
 </addon>
