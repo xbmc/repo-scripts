@@ -35,9 +35,9 @@ class TMDBVideos(object):
 
             if not self.details:
                 self.details = tmdb_query(action=self.call,
-                                            call=self.tmdb_id,
-                                            params={'append_to_response': 'release_dates,content_ratings,external_ids,credits,videos,translations,similar'}
-                                            )
+                                          call=self.tmdb_id,
+                                          params={'append_to_response': 'release_dates,content_ratings,external_ids,credits,videos,translations,similar'}
+                                          )
 
                 write_cache(cache_key,self.details)
 

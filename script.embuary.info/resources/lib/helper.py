@@ -137,6 +137,10 @@ def busydialog(close=False):
         execute('Dialog.Close(busydialognocancel)')
 
 
+def textviewer(params):
+    DIALOG.textviewer(remove_quotes(params.get('header', '')), remove_quotes(params.get('message', '')))
+
+
 def winprop(key, value=None, clear=False, window_id=10000):
     window = xbmcgui.Window(window_id)
 

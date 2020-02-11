@@ -17,6 +17,7 @@ from resources.lib.season import *
 
 class TheMovieDB(object):
     def __init__(self,call,params):
+        self.monitor = xbmc.Monitor()
         self.window_stack = []
         self.dialog_cache = {}
         self.call = call
@@ -236,6 +237,13 @@ class TheMovieDB(object):
             next_call = dialog['call']
             next_season = dialog['season']
 
+            if next_call == 'youtube':
+                while condition('Player.HasMedia | Window.IsVisible(busydialog) | Window.IsVisible(busydialognocancel) | Window.IsVisible(okdialog)') and not self.monitor.abortRequested():
+                    self.monitor.waitForAbort(1)
+
+                # reopen dialog after playback ended
+                self.dialog_manager(dialog)
+
             if next_call == 'back':
                 self.dialog_history()
 
@@ -295,6 +303,8 @@ class DialogPerson(xbmcgui.WindowXMLDialog):
         self.action[key] = value
 
     def onInit(self):
+        execute('ClearProperty(script.embuary.info-nextcall,home)')
+
         if self.first_load:
             self.add_items()
 
@@ -335,10 +345,17 @@ class DialogPerson(xbmcgui.WindowXMLDialog):
 
     def quit(self):
         close_action = self.getProperty('onclose')
+        onnext_action = self.getProperty('onnext')
         onback_action = self.getProperty('onback_%s' % self.getFocusId())
+
+        if self.action.get('call') and self.action.get('id'):
+            execute('SetProperty(tmdb_next_call,true,home)')
+            if onnext_action:
+                execute(onnext_action)
 
         if self.action.get('call') == 'back' and onback_action:
             execute(onback_action)
+
         else:
             if close_action:
                 execute(close_action)
@@ -370,6 +387,8 @@ class DialogVideo(xbmcgui.WindowXMLDialog):
         self.action[key] = value
 
     def onInit(self):
+        execute('ClearProperty(script.embuary.info-nextcall,home)')
+
         if self.first_load:
             self.add_items()
 
@@ -411,17 +430,25 @@ class DialogVideo(xbmcgui.WindowXMLDialog):
             FullScreenImage(controlId)
 
         elif next_call == 'youtube':
-            self.action['call'] = 'close'
-            execute('Dialog.Close(all)')
+            self.action['id'] = ''
+            self.action['season'] = ''
+            self.action['call'] = 'youtube'
             xbmc.Player().play('plugin://plugin.video.youtube/play/?video_id=%s' % xbmc.getInfoLabel('Container(%s).ListItem.Property(ytid)' % controlId))
             self.quit()
 
     def quit(self):
         close_action = self.getProperty('onclose')
+        onnext_action = self.getProperty('onnext')
         onback_action = self.getProperty('onback_%s' % self.getFocusId())
+
+        if self.action.get('call') and self.action.get('id'):
+            execute('SetProperty(script.embuary.info-nextcall,true,home)')
+            if onnext_action:
+                execute(onnext_action)
 
         if self.action.get('call') == 'back' and onback_action:
             execute(onback_action)
+
         else:
             if close_action:
                 execute(close_action)
@@ -448,23 +475,24 @@ class DialogSeason(xbmcgui.WindowXMLDialog):
         self.action[key] = value
 
     def onInit(self):
+        execute('ClearProperty(script.embuary.info-nextcall,home)')
+
         if self.first_load:
             self.add_items()
 
     def add_items(self):
         self.first_load = False
 
-        index = 10051
+        index = [10051, 10052, 10056, 10059]
         li = [self.details, self.cast, self.gueststars, self.posters]
 
         for items in li:
             try:
-                clist = self.getControl(index)
+                clist = self.getControl(index[li.index(items)])
                 clist.addItems(items)
             except RuntimeError as error:
-                log('Control with id %s cannot be filled. Error --> %s' % (str(index), error), DEBUG)
+                log('Control with id %s cannot be filled. Error --> %s' % (str(index[li.index(items)]), error), DEBUG)
                 pass
-            index += 1
 
     def onAction(self,action):
         if action.getId() in [92,10]:
@@ -488,10 +516,17 @@ class DialogSeason(xbmcgui.WindowXMLDialog):
 
     def quit(self):
         close_action = self.getProperty('onclose')
+        onnext_action = self.getProperty('onnext')
         onback_action = self.getProperty('onback_%s' % self.getFocusId())
+
+        if self.action.get('call') and self.action.get('id'):
+            execute('SetProperty(script.embuary.info-nextcall,true,home)')
+            if onnext_action:
+                execute(onnext_action)
 
         if self.action.get('call') == 'back' and onback_action:
             execute(onback_action)
+
         else:
             if close_action:
                 execute(close_action)
