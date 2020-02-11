@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.module.ssearlo"
+       name="ssearlo"
+       version="0.0.22"
+       provider-name="Al DAmico">
+  <requires>
+    <import addon="xbmc.python" version="2.26.0"/>
+    <import addon="script.module.requests" version="2.9"/>
+    <import addon="script.module.six" version="1.11.0"/>
+  </requires>
+  <extension point="xbmc.python.module" library="lib" />
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en_GB">Python client library for reading Server Sent Event streams based on sseclient.</summary>
+    <description lang="en_GB">Cloned from from https://github.com/btubbs/sseclient 0.0.22 due to bug in 0.0.24</description>
+    <platform>all</platform>
+    <license>MIT</license>
+    <assets>
+      <icon>icon.png</icon>
+    </assets>
+  </extension>
+</addon>
