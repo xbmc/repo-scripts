@@ -15,8 +15,12 @@ class Main:
         self.call = False
         self._parse_argv()
 
-        if self.call:
-            TheMovieDB(self.call,self.params)
+        if self.call == 'textviewer':
+            textviewer(self.params)
+
+        elif self.call:
+            TheMovieDB(self.call, self.params)
+
         else:
             call = DIALOG.select(ADDON.getLocalizedString(32005), [ADDON.getLocalizedString(32004), xbmc.getLocalizedString(20338), xbmc.getLocalizedString(20364)])
             if call == 0:
@@ -29,7 +33,7 @@ class Main:
                 quit()
 
             query = DIALOG.input(xbmc.getLocalizedString(19133), type=xbmcgui.INPUT_ALPHANUM)
-            TheMovieDB(call,{'query': query})
+            TheMovieDB(call, {'query': query})
 
 
     def _parse_argv(self):

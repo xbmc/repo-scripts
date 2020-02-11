@@ -15,5 +15,6 @@
                 <setting label="$ADDON[script.embuary.info 32041]" type="bool" id="similar_movies_filter" default="false"/>
                 <setting label="$ADDON[script.embuary.info 32044]" type="bool" id="filter_upcoming" default="false"/>
                 <setting label="- $ADDON[script.embuary.info 32045]" type="slider" id="filter_daydelta" default="180" range="0,30,360" option="int" enable="eq(-1,true)"/>
+                <setting label="$ADDON[script.embuary.info 32047]" type="action" action="InstallAddon(context.embuary.info)" visible="!System.HasAddon(context.embuary.info)"/>
         </category>
 </settings>

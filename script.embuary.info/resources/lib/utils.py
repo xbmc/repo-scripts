@@ -9,6 +9,7 @@ import xbmc
 import xbmcgui
 import requests
 import datetime
+import xml.etree.ElementTree as ET
 
 ''' Python 2<->3 compatibility
 '''
@@ -26,30 +27,23 @@ from resources.lib.helper import *
 
 ########################
 
+OMDB_API_KEY = ADDON.getSettingString('omdb_api_key')
 API_KEY = ADDON.getSettingString('tmdb_api_key')
 API_URL = 'https://api.themoviedb.org/3/'
 IMAGEPATH = 'https://image.tmdb.org/t/p/original'
 
-OMDB_API_KEY = ADDON.getSettingString('omdb_api_key')
-OMDB_URL = 'http://www.omdbapi.com/'
-
 ########################
 
 def get_local_media():
-    local_media = get_cache('local_items')
-
-    if not local_media:
-        local_media = {}
-        local_media['shows'] = query_local_media('tvshow',
-                                                get='VideoLibrary.GetTVShows',
-                                                properties=['title', 'originaltitle', 'year', 'playcount', 'episode', 'watchedepisodes']
-                                                )
-        local_media['movies'] = query_local_media('movie',
-                                                get='VideoLibrary.GetMovies',
-                                                properties=['title', 'originaltitle', 'year', 'imdbnumber', 'playcount', 'file']
-                                                )
-
-        write_cache('local_items',local_media,1)
+    local_media = {}
+    local_media['shows'] = query_local_media('tvshow',
+                                            get='VideoLibrary.GetTVShows',
+                                            properties=['title', 'originaltitle', 'year', 'playcount', 'episode', 'watchedepisodes']
+                                            )
+    local_media['movies'] = query_local_media('movie',
+                                            get='VideoLibrary.GetMovies',
+                                            properties=['title', 'originaltitle', 'year', 'imdbnumber', 'playcount', 'file']
+                                            )
 
     return local_media
 
@@ -79,54 +73,69 @@ def query_local_media(dbtype,get,properties):
 
 
 def omdb_call(imdbnumber=None,title=None,year=None,content_type=None):
-    omdb = {}
-
     if imdbnumber:
-        url = '%s?i=%s&apikey=%s' % (OMDB_URL,imdbnumber,OMDB_API_KEY)
+        url = 'http://www.omdbapi.com/?apikey=%s&i=%s&plot=short&r=xml&tomatoes=true' % (OMDB_API_KEY, imdbnumber)
 
     elif title and year and content_type:
         # urllib has issues with some asian letters
         try:
             title = urllib.quote(title)
         except KeyError:
-            return omdb
+            return
 
-        url = '%s?t=%s&year=%s&type=%s&apikey=%s' % (OMDB_URL,title,year,content_type,OMDB_API_KEY)
+        url = 'http://www.omdbapi.com/?apikey=%s&t=%s&year=%s&plot=short&r=xml&tomatoes=true' % (OMDB_API_KEY, title, year)
 
     else:
+        return
+
+    omdb = get_cache(url)
+    if omdb:
         return omdb
 
-    omdb_cache = get_cache(url)
+    elif OMDB_API_KEY:
+        omdb = {}
 
-    if omdb_cache:
-        return omdb_cache
+        for i in range(1,4): # loop if heavy server load
+            try:
+                request = requests.get(url, timeout=5)
 
-    else:
-        try:
-            request = requests.get(url)
-            result = request.json()
+                if not request.ok:
+                    raise Exception(str(request.status_code))
 
-            omdb['awards'] = result.get('Awards')
-            omdb['imdbRating'] = result.get('imdbRating')
-            omdb['imdbVotes'] = result.get('imdbVotes')
-            omdb['DVD'] = date_format(result.get('DVD'),scheme='DD MMM YYYY')
+                result = request.text
 
-            delete_keys = [key for key,value in omdb.items() if value == 'N/A' or value == 'NA']
-            for key in delete_keys:
-                del omdb[key]
+                tree = ET.ElementTree(ET.fromstring(result))
+                root = tree.getroot()
 
-            for rating in result['Ratings']:
-                if rating['Source'] == 'Rotten Tomatoes':
-                    omdb['rotten'] = rating['Value'][:-1]
-                elif rating['Source'] == 'Metacritic':
-                    omdb['metacritic'] = rating['Value'][:-4]
+                for child in root:
+                    # imdb ratings
+                    omdb['imdbRating'] = child.get('imdbRating', '').replace('N/A', '')
+                    omdb['imdbVotes'] = child.get('imdbVotes', '0').replace('N/A', '0').replace(',', '')
 
-        except Exception as error:
-            log('OMDB Error: %s' % error)
-            pass
+                    # regular rotten rating
+                    omdb['tomatometerallcritics'] = child.get('tomatoMeter', '').replace('N/A', '')
+                    omdb['tomatometerallcritics_avg'] = child.get('tomatoRating', '').replace('N/A', '')
+                    omdb['tomatometerallcritics_votes'] = child.get('tomatoReviews', '0').replace('N/A', '0').replace(',', '')
 
-        else:
-            write_cache(url,omdb)
+                    # user rotten rating
+                    omdb['tomatometerallaudience'] = child.get('tomatoUserMeter', '').replace('N/A', '')
+                    omdb['tomatometerallaudience_avg'] = child.get('tomatoUserRating', '').replace('N/A', '')
+                    omdb['tomatometerallaudience_votes'] = child.get('tomatoUserReviews', '0').replace('N/A', '0').replace(',', '')
+
+                    # metacritic
+                    omdb['metacritic'] = child.get('metascore', '').replace('N/A', '')
+
+                    # other
+                    omdb['awards'] = child.get('awards', '').replace('N/A', '')
+                    omdb['DVD'] = date_format(child.get('DVD', '').replace('N/A', ''), scheme='DD MMM YYYY')
+
+            except Exception as error:
+                log('OMDB Error: %s' % error)
+                pass
+
+            else:
+                write_cache(url,omdb)
+                break
 
         return omdb
 
@@ -136,7 +145,12 @@ def omdb_properties(list_item,imdbnumber):
         omdb = omdb_call(imdbnumber)
         if omdb:
             list_item.setProperty('rating.metacritic', omdb.get('metacritic', ''))
-            list_item.setProperty('rating.rotten', omdb.get('rotten', ''))
+            list_item.setProperty('rating.rotten', omdb.get('tomatometerallcritics', ''))
+            list_item.setProperty('rating.rotten_avg', omdb.get('tomatometerallcritics_avg', ''))
+            list_item.setProperty('votes.rotten', omdb.get('tomatometerallcritics_votes', ''))
+            list_item.setProperty('rating.rotten_user', omdb.get('tomatometerallaudience', ''))
+            list_item.setProperty('rating.rotten_user_avg', omdb.get('tomatometerallaudience_avg', ''))
+            list_item.setProperty('votes.rotten_user', omdb.get('tomatometerallaudience_votes', ''))
             list_item.setProperty('rating.imdb', omdb.get('imdbRating', ''))
             list_item.setProperty('votes.imdb', omdb.get('imdbVotes', ''))
             list_item.setProperty('awards', omdb.get('awards', ''))
@@ -145,33 +159,35 @@ def omdb_properties(list_item,imdbnumber):
 
 def tmdb_call(request_url,error_check=False,error=ADDON.getLocalizedString(32019)):
     try:
-        for i in range(1,10):
-            request = requests.get(request_url)
-            if not str(request.status_code).startswith('5'):
-                break
-            log('TMDb server error: Code ' + str(request.status_code))
-            xbmc.sleep(500)
+        for i in range(1,4): # loop if heavy server load
+            try:
+                request = requests.get(request_url, timeout=5)
+
+                if str(request.status_code).startswith('5'):
+                    raise Exception(str(request.status_code))
+
+            except Exception as error:
+                log('TMDb server error: Code ' + error)
+                xbmc.sleep(500)
 
         if request.status_code == 401:
-            error = ADDON.getLocalizedString(32022)
-            raise Exception
+            raise Exception(ADDON.getLocalizedString(32022))
 
         elif request.status_code == 404:
-            raise Exception
+            raise Exception(error)
 
-        elif request.status_code != requests.codes.ok:
-            error = 'Code ' + str(request.status_code)
-            raise Exception
+        elif not request.ok:
+            raise Exception('Code ' + str(request.status_code))
 
         result = request.json()
 
         if error_check:
-            if len(result) == 0: raise Exception
-            if 'results' in result and len(result['results']) == 0: raise Exception
+            if len(result) == 0 or ('results' in result and len(result['results']) == 0):
+                raise Exception(error)
 
         return result
 
-    except Exception:
+    except Exception as error:
         tmdb_error(error)
 
 

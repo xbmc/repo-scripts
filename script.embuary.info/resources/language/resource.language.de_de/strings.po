@@ -3,14 +3,14 @@
 # Addon id: script.embuary.info
 # Addon Provider: sualfred
 # Translators:
-# sualfred <su4lfred@gmail.com>, 2019
+# sualfred <su4lfred@gmail.com>, 2020
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: Embuary Helper\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: 2019-11-24 08:54+0000\n"
-"Last-Translator: sualfred <su4lfred@gmail.com>, 2019\n"
+"Last-Translator: sualfred <su4lfred@gmail.com>, 2020\n"
 "Language-Team: German (Germany) (https://www.transifex.com/sualfred/teams/80018/de_DE/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -252,3 +252,18 @@ msgstr "Verberge kommende Filme/Serien"
 msgctxt "#32045"
 msgid "Allow items of the next [n] days"
 msgstr "Erlaube Einträge der nächsten [n] Tage"
+
+#: /resources/skins/default/1080i/script-embuary-video.xml
+msgctxt "#32046"
+msgid "Watched episodes"
+msgstr "Gesehene Episoden"
+
+#: /resources/settings.xml
+msgctxt "#32047"
+msgid "Install context menu addon"
+msgstr "Installiere Context Menü Addon"
+
+#: /resources/skins/default/1080i/script-embuary-video.xml
+msgctxt "#32048"
+msgid "Next episode"
+msgstr "Nächste Episode"

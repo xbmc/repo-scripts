@@ -85,6 +85,11 @@ Special properties:
 * `Container(10051).ListItem.Property(Votes.IMDB)` = IMDb votes
 * `Container(10051).ListItem.Property(Rating.IMDB)` = IMDb rating
 * `Container(10051).ListItem.Property(Rating.Rotten)` = Rotten Tomatoes rating
+* `Container(10051).ListItem.Property(Rating.Rotten_Avg)` = Average Rotten Tomatoes rating
+* `Container(10051).ListItem.Property(Votes.Rotten)` = Rotten Tomatoes votes
+* `Container(10051).ListItem.Property(Rating.Rotten_User)` = Rotten Tomatoes user rating
+* `Container(10051).ListItem.Property(Rating.Rotten_User_Avg)` = Average Rotten Tomatoes user rating
+* `Container(10051).ListItem.Property(Votes.Rotten_User)` = Rotten Tomatoes user votes
 * `Container(10051).ListItem.Property(Rating.Metacritic)` = Metacritic rating
 * `Container(10051).ListItem.Property(Release)` = Retail release date
 * `Container(10051).ListItem.Property(Budget)` = Budget
@@ -120,6 +125,7 @@ Special properties:
 *additional properties*
 * Configured language code `Window(home).Property(script.embuary.info-language_code)`
 * Configured country code `Window(home).Property(script.embuary.info-country_code)`
+* Filled property if a next script is going to be called `Window(home).Property(script.embuary.info-nextcall)`. Will be cleared afterwards.
 
 ## Overwriting onback or provide an additional onclose action
 You can add a custom onback or a general onclose action in script-embuary-video.xml and script-embuary-person.xml
@@ -127,6 +133,7 @@ You can add a custom onback or a general onclose action in script-embuary-video.
 *Example*
 
 * `<onload>SetProperty(onclose,SetFocus(100))</onload>` = To set a general action if a window is going to be closed. Like reseting the focus to a default control.
+* `<onload>SetProperty(onnext,SetFocus(100))</onload>` = To set a general action if a window is going to be closed and a script window is called. Like reseting the focus to a default control.
 * `<onload>SetProperty(onback_10052,SetFocus(900))</onload>` = Don't close the window, but set focus to ID 900 if onback was called while container 10052 was in focus.
 
 ## Widgets
