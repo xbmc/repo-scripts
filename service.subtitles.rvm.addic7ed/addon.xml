@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <addon id="service.subtitles.rvm.addic7ed"
   name="Addic7ed.com"
-  version="3.1.1"
+  version="3.1.2"
   provider-name="Roman V.M.">
 <requires>
   <import addon="xbmc.python" version="2.25.0"/>
@@ -32,15 +32,8 @@
     <icon>icon.png</icon>
     <fanart>fanart.jpg</fanart>
   </assets>
-  <news>v.3.1.1:
-- Fixed search enpdoint URL.
-- Added French translation
-- Added Dutch translation
-
-v.3.1.0:
-- Removed login feature because of changes on Addic7ed.com.
-- Fixed exception when a filename contained a non-ASCII character.
-- Various optimizations.</news>
+  <news>v.3.1.2:
+- Fixed manual search (thanks to [B]quthla[/B].</news>
   <reuselanguageinvoker>false</reuselanguageinvoker>
 </extension>
 </addon>
