@@ -124,6 +124,7 @@ def parse_filename(filename):
     :return: parsed showname, season and episode
     :raises ParseError: if the filename does not match any episode patterns
     """
+    filename = filename.replace(' ', '.')
     for regexp in episode_patterns:
         episode_data = regexp.search(filename)
         if episode_data is not None:

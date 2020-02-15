@@ -122,7 +122,8 @@ def download_subs(link, referrer, filename):
         shutil.rmtree(temp_dir)
     xbmcvfs.mkdirs(temp_dir)
     # Combine a path where to download the subs
-    subspath = os.path.join(temp_dir, filename[:-3] + 'srt')
+    filename = os.path.splitext(filename)[0] + '.srt'
+    subspath = os.path.join(temp_dir, filename)
     # Download the subs from addic7ed.com
     try:
         parser.download_subs(link, referrer, subspath)
@@ -203,21 +204,23 @@ def search_subs(params):
     languages = get_languages(
         urlparse.unquote_plus(params['languages']).split(',')
     )
-    try:
-        episode_data = extract_episode_data()
-    except ParseError:
-        return
     # Search subtitles in Addic7ed.com.
     if params['action'] == 'search':
+        try:
+            episode_data = extract_episode_data()
+        except ParseError:
+            return
         # Create a search query string
         query = '{0} {1}x{2}'.format(
             normalize_showname(episode_data.showname),
             episode_data.season,
             episode_data.episode
         )
+        filename = episode_data.filename
     else:
         # Get the query string typed on the on-screen keyboard
         query = params['searchstring']
+        filename = query
     if query:
         logger.debug('Search query: {0}'.format(query))
         try:
@@ -251,7 +254,7 @@ def search_subs(params):
                     return
             logger.notice('Found subs for "{0}"'.format(query))
             display_subs(results.subtitles, results.episode_url,
-                         episode_data.filename)
+                         filename)
 
 
 def router(paramstring):
