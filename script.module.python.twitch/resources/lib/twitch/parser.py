@@ -12,6 +12,7 @@
 
 import re
 from ast import literal_eval
+from six import PY2
 from . import keys
 from .log import log
 
@@ -132,7 +133,8 @@ def m3u8_to_list(string):
 
 def clip_embed_to_list(response):
     log.debug('clip_embed_to_list called for:\n{0}'.format(response))
-    response = response.decode('utf-8')
+    if PY2 or isinstance(response, bytes):
+        response = response.decode('utf-8')
     response = literal_eval(response)
     qualities = list()
     l = list()
