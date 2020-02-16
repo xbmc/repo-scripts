@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.module.uritemplate"
+       name="uritemplate"
+       version="3.0.1" 
+       provider-name="Ian Stapleton Cordasco">
+  <requires>
+    <import addon="xbmc.python" version="3.0.0"/>
+  </requires>
+  <extension point="xbmc.python.module"
+             library="lib" />
+  <extension point="xbmc.addon.metadata">
+    <platform>all</platform>
+    <language></language>
+    <summary lang="en_GB">URItemplates python module</summary>
+    <description lang="en_GB">A packaged version of the uritemplates python module.</description>
+    <license>Apache 2.0, BSD</license>
+    <website>https://github.com/python-hyper/uritemplate</website>
+    <source>https://github.com/python-hyper/uritemplate</source>
+  </extension>
+</addon>

@@ -1,0 +1,5 @@
+
+v3.4 - 2018-06-29
+
+- Initial release
+- pyserial 3.4

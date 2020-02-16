@@ -1,0 +1,5 @@
+[B]3.0.4[/B]
+- synchronize with chardet 3.0.4
+
+[B]2.1.1[/B]
+- initial Release for XBMC

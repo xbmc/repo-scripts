@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.module.googleapi"
+       name="googleapi"
+       version="1.6.7" 
+       provider-name="Google">
+  <requires>
+    <import addon="xbmc.python" version="3.0.0"/>
+	<import addon="script.module.httplib2" version="0.17.0" />
+	<import addon="script.module.oauth2client" version="4.1.3.1" />
+	<import addon="script.module.six" version="1.14.0" />
+	<import addon="script.module.uritemplate" version="3.0.1" />
+  </requires>
+  <extension point="xbmc.python.module"
+             library="lib" />
+  <extension point="xbmc.addon.metadata">
+    <platform>all</platform>
+    <language></language>
+    <summary lang="en_GB">Google API python classes and dependencies</summary>
+    <description lang="en_GB">A packaged version of all the libraries needed for Google API access via python.</description>
+    <disclaimer lang="en_GB">Source code for the Google API from https://developers.google.com/api-client-library/python/start/installation</disclaimer>
+    <license>Apache 2.0</license>
+    <website>https://developers.google.com/api-client-library/python/start/installation</website>
+    <source>https://github.com/google/google-api-python-client</source>
+  </extension>
+</addon>
