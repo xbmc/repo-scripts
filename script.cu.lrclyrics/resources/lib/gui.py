@@ -70,6 +70,8 @@ class MAIN():
                         dialog.notification(ADDONNAME, LANGUAGE(32004), time=2000, sound=False)
                     # start fetching lyrics
                     self.myPlayerChanged()
+                    # only the first lyrics are fetched by main_loop, the rest is done through onAVChanged. this makes sure both don't run simultaniously
+                    WIN.setProperty('culrc.firstrun','TRUE')
                 elif WIN.getProperty('culrc.force') == 'TRUE':
                     # we're already running, user clicked button on osd
                     WIN.setProperty('culrc.force','FALSE')
@@ -89,6 +91,7 @@ class MAIN():
         WIN.clearProperty('culrc.source')
         WIN.clearProperty('culrc.haslist')
         WIN.clearProperty('culrc.running')
+        WIN.clearProperty('culrc.firstrun')
 
     def get_lyrics(self, song):
         log('searching memory for lyrics')
@@ -281,7 +284,8 @@ class MAIN():
         songchanged = False
         for cnt in range(5):
             song = Song.current()
-            if (song and (self.current_lyrics.song != song)):
+            #TODO why is str() conversion needed when Player.IsInternetStream returns True? The != comparison will always return True without the str() conversion.
+            if (song and (str(self.current_lyrics.song) != str(song))):
                 songchanged = True
                 if xbmc.getCondVisibility('Player.IsInternetStream') and not xbmc.getInfoLabel('MusicPlayer.TimeRemaining'):
                     # internet stream that does not provide time, we need our own timer to sync lrc lyrics
@@ -745,7 +749,7 @@ class MyPlayer(xbmc.Player):
 
     def onAVStarted(self):
         self.clear()
-        if xbmc.getCondVisibility('Window.IsVisible(12006)'):
+        if xbmc.getCondVisibility('Window.IsVisible(12006)') and WIN.getProperty('culrc.firstrun') == 'TRUE':
             self.function()
 
     def onPlayBackStopped(self):
