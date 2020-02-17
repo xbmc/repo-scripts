@@ -4,10 +4,9 @@ try:
     from itertools import izip_longest as _zip_longest
 except ImportError:
     from itertools import zip_longest as _zip_longest
-from resources.common.xlogger import Logger
-from resources.common.kodisettings import getSettingBool, getSettingInt, getSettingString
+from resources.lib.xlogger import Logger
+from resources.lib.kodisettings import getSettingBool, getSettingInt, getSettingString
 
-### get addon info and set globals
 addon        = xbmcaddon.Addon()
 addonname    = addon.getAddonInfo( 'id' )
 addonversion = addon.getAddonInfo( 'version' )
@@ -19,56 +18,52 @@ logdebug     = getSettingBool( addon, 'logging', default=False )
 
 lw = Logger( preamble=preamble, logdebug=logdebug )
 
-#global used to tell the worker thread the status of the window
-windowopen   = True
-
-#capture a couple of actions to close the window
-ACTION_PREVIOUS_MENU = 10
-ACTION_BACK = 92
+lw.log( ['script version %s started' % addonversion], xbmc.LOGNOTICE )
+lw.log( ['debug logging set to %s' % logdebug], xbmc.LOGNOTICE )
 
 
-def updateWindow( name, w ):
-    delay = getSettingInt( addon, 'update_delay', default=30 )
-    global windowopen
-    while windowopen and not xbmc.Monitor().abortRequested():
-        for i in range( delay ):
-            if xbmc.Monitor().waitForAbort( 1 ) or not windowopen:
-                windowopen = False
-                break
-        if windowopen:
-            lw.log( ['window is still open, updating the window with new data'] );
-            w._populate_from_all_logs()
-    w.close()
 
-
-class Main( xbmcgui.WindowXMLDialog ):
+class SpeedFanWindow( xbmcgui.WindowXMLDialog ):
 
     def __init__( self, *args, **kwargs ):
-        pass
-
-
-    def onInit( self ):
-        self._get_settings()
-        self._populate_from_all_logs()
+        self.KEEPRUNNING = True
+        self.ACTION_PREVIOUS_MENU = 10
+        self.ACTION_BACK = 92
 
 
     def onAction( self, action ):
-        #captures user input and acts as needed
-        lw.log( ['running onAction from SpeedFanInfoWindow class'] )
-        if action == ACTION_PREVIOUS_MENU or action == ACTION_BACK:
-            #if the user hits back or exit, close the window
-            lw.log( ['user initiated previous menu or back'] )
-            global windowopen
-            #set this to false so the worker thread knows the window is being closed
-            windowopen = False
-            lw.log( ['set windowopen to false'] )
-            #tell the window to close
-            lw.log( ['tell the window to close'] )
-            self.close()
+        if action == self.ACTION_PREVIOUS_MENU or action == self.ACTION_BACK:
+            lw.log( ['user initiated previous menu or back, telling addon to quit'] )
+            self.KEEPRUNNING = False
+
+
+    def KeepRunning( self ):
+        return self.KEEPRUNNING
+
+
+
+class Main():
+
+    def __init__( self ):
+        self._get_settings()
+        self._init_vars()
+        if self.GUIWINDOW.getProperty( 'SpeedFan.Running' ) == "True":
+            lw.log( ['script already running, aborting subsequent run attempts'], xbmc.LOGNOTICE )
+            return
+        self.GUIWINDOW.setProperty( 'SpeedFan.Running',  'True' )
+        self._init_window()
+        self._populate_from_all_logs()
+        if self.FOUNDLOGFILE:
+            while not self.MONITOR.abortRequested() and self.SPEEDFANWINDOW.KeepRunning():
+                for i in range( self.DELAY ):
+                    if self.MONITOR.waitForAbort( 1 ) or not self.SPEEDFANWINDOW.KeepRunning():
+                        break
+                self._populate_from_all_logs()
+        self.SPEEDFANWINDOW.close()
+        self.GUIWINDOW.setProperty( 'SpeedFan.Running',  'False' )
 
 
     def _get_log_files( self ):
-        #SpeedFan rolls the log every day, so we have to look for the log file based on the date
         log_file_date = datetime.date(2011,1,29).today().isoformat().replace('-','')
         log_files = []
         for info_set in self.LOGINFO:
@@ -79,10 +74,11 @@ class Main( xbmcgui.WindowXMLDialog ):
 
 
     def _get_settings( self ):
-        self.LISTCONTROL = self.getControl( 120 )
         self.SHOWCOMPACT = getSettingBool( addon, 'show_compact' )
+        self.TRANSPARENCY = getSettingString( addon, 'transparency', default='70' )
         self.TEMPSCALE = getSettingString( addon, 'temp_scale' )
         self.READSIZE = getSettingInt( addon, 'read_size' )
+        self.DELAY = getSettingInt( addon, 'update_delay', default=30 )
         self.LOGINFO = []
         for i in range( 3 ):
             log_info = {}
@@ -95,6 +91,23 @@ class Main( xbmcgui.WindowXMLDialog ):
             log_info['loc'] = getSettingString( addon, 'log_location' + log_num )
             log_info['title'] = getSettingString( addon, 'log_title' + log_num )
             self.LOGINFO.append( log_info )
+
+
+    def _init_vars( self ):
+        self.GUIWINDOW = xbmcgui.Window( 10000 )
+        self.FOUNDLOGFILE = False
+        self.MONITOR = xbmc.Monitor()
+
+
+    def _init_window( self ):
+        if self.SHOWCOMPACT:
+            transparency_image = 'speedfan-panel-compact-%s.png' %  self.TRANSPARENCY
+            self.GUIWINDOW.setProperty( 'speedfan.panel.compact',  transparency_image )
+            self.SPEEDFANWINDOW = SpeedFanWindow( 'speedfaninfo-compact.xml', addonpath )
+        else:
+            self.SPEEDFANWINDOW = SpeedFanWindow( "speedfaninfo-main.xml", addonpath )
+        self.SPEEDFANWINDOW.show()
+        self.LISTCONTROL = self.SPEEDFANWINDOW.getControl( 120 )
 
 
     def _parse_log( self ):
@@ -159,10 +172,10 @@ class Main( xbmcgui.WindowXMLDialog ):
                 displayed_log = True
                 self._populate_from_log()
         if displayed_log:
-            self.setFocus( self.LISTCONTROL )
+            self.SPEEDFANWINDOW.setFocus( self.LISTCONTROL )
+            self.FOUNDLOGFILE = True
         else:
-            global windowopen
-            windowopen = False
+            lw.log( ['no logfile found, put up a notification and quitting'] )
             xbmcgui.Dialog().notification( language( 30103 ), language( 30104 ), icon=addonicon, time=6000 )
 
 
@@ -295,8 +308,8 @@ class Main( xbmcgui.WindowXMLDialog ):
         lw.log( ['opened logfile ' + self.LOGFILE] )
         #get the first and last line of the log file
         #the first line has the header information, and the last line has the last log entry
-        first = self._parse_line( f, 0 )
-        last = self._parse_line( f, 2 )
+        first_line = self._parse_line( f, 0 )
+        last_line = self._parse_line( f, 2 )
         f.close()
-        lw.log( ['first line: ' + first, 'last line: ' + last] )
-        return first, last
+        lw.log( ['first line: ' + first_line, 'last line: ' + last_line] )
+        return first_line, last_line
