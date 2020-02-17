@@ -18,11 +18,8 @@ try:
     from itertools import izip_longest as _zip_longest
 except ImportError:
     from itertools import zip_longest as _zip_longest
-try:
-    from queue import Queue
-except ImportError:
-    from Queue import Queue
 import os, random, re, sys, threading, time
+from resources.plugins import *
 import json as _json
 from kodi_six import xbmc, xbmcaddon, xbmcgui, xbmcvfs
 from kodi_six.utils import py2_encode, py2_decode
@@ -30,7 +27,6 @@ from resources.lib.fileops import checkPath, writeFile, readFile, deleteFile, de
 from resources.lib.url import URL
 from resources.lib.xlogger import Logger
 from resources.lib.kodisettings import getSettingBool, getSettingInt, getSettingString
-import resources.plugins
 
 addon        = xbmcaddon.Addon()
 addonname    = addon.getAddonInfo('id')
@@ -48,53 +44,6 @@ imgURL  = URL( 'binary' )
 
 lw.log( ['script version %s started' % addonversion], xbmc.LOGNOTICE )
 lw.log( ['debug logging set to %s' % logdebug], xbmc.LOGNOTICE )
-
-# this section imports all the scraper plugins, initializes, and sorts them
-def _get_plugin_settings( service_name, module ):
-    if module == 'local':
-        return True, 0
-    return getSettingBool( addon, service_name + module ), getSettingInt( addon, service_name + 'priority_' + module, default=10 )
-
-bio_plugins = {'names':[], 'objs':{}}
-image_plugins = {'names':[], 'objs':{}}
-album_plugins = {'names':[], 'objs':{}}
-similar_plugins = {'names':[], 'objs':{}}
-mbid_plugins = {'names':[], 'objs':{}}
-for module in resources.plugins.__all__:
-    full_plugin = 'resources.plugins.' + module
-    __import__( full_plugin )
-    imp_plugin = sys.modules[ full_plugin ]
-    lw.log( ['loaded plugin ' + module] )
-    plugin = imp_plugin.objectConfig()
-    scrapers = plugin.provides()
-    if 'bio' in scrapers:
-        bio_active, bio_priority = _get_plugin_settings( 'ab_', module )
-        if bio_active:
-            bio_plugins['objs'][module] = plugin
-            bio_plugins['names'].append( [bio_priority, module] )
-            lw.log( ['added %s to bio plugins' % module] )
-    if 'images' in scrapers:
-        img_active, img_priority = _get_plugin_settings( '', module )
-        if img_active:
-            image_plugins['objs'][module] = plugin
-            image_plugins['names'].append( [img_priority, module] )
-            lw.log( ['added %s to image plugins' % module] )
-    if 'albums' in scrapers:
-        ai_active, ai_priority = _get_plugin_settings( 'ai_', module )
-        if ai_active:
-            album_plugins['objs'][module] = plugin
-            album_plugins['names'].append( [ai_priority, module] )
-            lw.log( ['added %s to album info plugins' % module] )
-    if 'similar' in scrapers:
-        sa_active, sa_priority = _get_plugin_settings( 'sa_', module )
-        if sa_active:
-            similar_plugins['objs'][module] = plugin
-            similar_plugins['names'].append( [ai_priority, module] )
-            lw.log( ['added %s to similar artist plugins' % module] )
-    if 'mbid' in scrapers:
-        mbid_plugins['objs'][module] = plugin
-        mbid_plugins['names'].append( [1, module] )
-        lw.log( ['added %s to mbid plugins' % module] )
 
 LANGUAGES = (
 # Full Language name[0]         ISO 639-1[1]   Script Language[2]
@@ -151,17 +100,16 @@ LANGUAGES = (
 
 class Slideshow( threading.Thread ):
 
-    def __init__( self, workqueue, queuelock, window, delay ):
-        super( Slideshow , self).__init__()
+    def __init__( self, window, delay ):
+        super( Slideshow , self ).__init__()
         self.MONITOR = xbmc.Monitor()
-        self.WORKQUEUE = workqueue
-        self.QUEUELOCK= queuelock
         self.WINDOW = window
         self.DELAY = delay
         self.IMAGES = []
         self.IMAGEADDED = False
         self.IMAGESCLEARED = False
         self.SHOW = True
+        self.PAUSESLIDESHOW = False
         self.SLIDESHOWSLEEP = getSettingInt( addon, 'slideshow_sleep', default=1 )
         self.VALIDIMAGETYPES = tuple( xbmc.getSupportedMedia( 'picture' ).split( '|' )[:-2] )
         lw.log( ['slideshow thread started'] )
@@ -192,39 +140,41 @@ class Slideshow( threading.Thread ):
         self.IMAGESCLEARED = True
 
 
+    def PauseSlideshow( self ):
+        lw.log( ['pausing slideshow'] )
+        self.PAUSESLIDESHOW = True
+
+
+    def ResumeSlideshow( self ):
+        lw.log( ['resuming slideshow'] )
+        self.PAUSESLIDESHOW = False
+
+
+    def StopSlideshow( self ):
+        self.SHOW = False
+
+
     def run( self ):
         last_image = ''
         while self.SHOW:
             outofimages = True
-            if self._check_for_quit():
-                break
             if self.IMAGEADDED or self.IMAGESCLEARED or outofimages:
                 random.shuffle( self.IMAGES )
                 self.IMAGEADDED = False
                 self.IMAGESCLEARED = False
                 outofimages = False
             for image in self.IMAGES:
-                if self.IMAGEADDED or self.IMAGESCLEARED:
-                    lw.log( ['image list changed, resetting loop'] )
-                    break
                 if not image == last_image or len( self.IMAGES ) == 1:
-                    if not image == last_image:
+                    if not self.PAUSESLIDESHOW:
                         self._set_property( 'ArtistSlideshow.Image', image )
                         last_image = image
                     self._wait( wait_time=self.DELAY, sleep_time=self.SLIDESHOWSLEEP )
-                if self._check_for_quit():
+                if not self.SHOW:
+                    break
+                if self.IMAGEADDED or self.IMAGESCLEARED:
+                    lw.log( ['image list changed, resetting loop'] )
                     break
         lw.log( ['slideshow thread stopping'] )
-
-
-    def _check_for_quit( self ):
-        cmd = ''
-        with self.QUEUELOCK:
-            if not self.WORKQUEUE.empty():
-                cmd = self.WORKQUEUE.get()
-            if cmd == 'quit':
-                self.SHOW = False
-        return not self.SHOW
 
 
     def _set_property( self, property_name, value='' ):
@@ -242,61 +192,115 @@ class Slideshow( threading.Thread ):
                 self.SHOW = False
                 return
             waited = waited + sleep_time
-            if self._check_for_quit():
+            if not self.SHOW:
                 return
 
 
 
-class Main( object ):
+class SlideshowMonitor( xbmc.Monitor ):
 
     def __init__( self ):
+        super( SlideshowMonitor , self ).__init__()
+        self.SETTINGSCHANGED = False
+
+
+    def onSettingsChanged( self ):
+        lw.log( ['the settings have changed'] )
+        self.SETTINGSCHANGED = True
+
+
+    def SettingsChanged( self ):
+        return self.SETTINGSCHANGED
+
+
+    def UpdatedSettings( self ):
+        self.SETTINGSCHANGED = False
+
+
+
+class Main( xbmc.Player ):
+
+    def __init__( self ):
+        super( Main , self ).__init__()
         self._parse_argv()
         self._init_window()
-        if self._get_infolabel( self.ARTISTSLIDESHOWRUNNING ) == 'True' and not self.RUNFROMSETTINGS:
-            lw.log( ['script already running'] )
+        self._upgrade_settings()
+        self._get_settings()
+        self._init_vars()
+        self._make_dirs()
+
+
+    def onPlayBackPaused( self ):
+        lw.log( ['got a PlaybackPaused event'] )
+        if self.PAUSESLIDESHOW:
+            self.SLIDESHOW.PauseSlideshow()
+
+
+    def onPlayBackResumed( self ):
+        lw.log( ['got a PlaybackResumed event'] )
+        if self.PAUSESLIDESHOW:
+            self.SLIDESHOW.ResumeSlideshow()
+
+
+    def RunFromSettings( self ):
+        return self.RUNFROMSETTINGS
+
+
+    def SlideshowRunning( self ):
+        running = self._get_infolabel( self.ARTISTSLIDESHOWRUNNING )
+        if running.lower() == 'true':
+            lw.log( ['script is already running'], xbmc.LOGNOTICE )
+            return True
         else:
-            self._upgrade_settings()
-            self._get_settings()
-            self._init_vars()
-            self._make_dirs()
-            self._upgrade()
-            if self._run_from_settings():
-                return
+            return False
+
+
+    def DoSettingsRoutines( self ):
+        lw.log( ['running script from a settings call with action ' + self.SETTINGSACTION], xbmc.LOGNOTICE )
+        if self.SETTINGSACTION.lower() == 'movetokodistorage':
+            lw.log( ['starting process to move images to Kodi artist folder'] )
+            self._move_to_kodi_storage()
+
+
+    def Start( self ):
+        self._upgrade()
+        self._get_plugins()
+        sleeping = False
+        change_slideshow = True
+        if self._is_playing():
+            lw.log( ['music playing'], xbmc.LOGNOTICE )
             self._set_property( 'ArtistSlideshowRunning', 'True' )
-            if not self.PLAYER.isPlayingAudio() and self._get_infolabel( self.EXTERNALCALL ) == '':
-                lw.log( ['no music playing'] )
-                if not self.DAEMON:
-                    self._set_property( 'ArtistSlideshowRunning' )
-                    self._set_property( 'ArtistSlideshow.Image' )
-            else:
-                lw.log( ['first song started'] )
-                if not self.MONITOR.waitForAbort( 1 ): # it may take some time for Kodi to read the tag info after playback started
-                    self._slideshow_thread_start()
+        else:
+            lw.log( ['no music playing'], xbmc.LOGNOTICE )
+            if self.DAEMON:
+                self._set_property( 'ArtistSlideshowRunning', 'True' )
+        if self.MONITOR.waitForAbort( 1 ):
+            return
+        while not self.MONITOR.abortRequested() and self._get_infolabel( self.ARTISTSLIDESHOWRUNNING ) == 'True':
+            if self.MONITOR.SettingsChanged():
+                self._get_settings()
+                self._get_plugins()
+                self.MONITOR.UpdatedSettings()
+            if self._is_playing():
+                sleeping = False
+                if change_slideshow:
+                    self._clear_properties( fadetoblack=self.FADETOBLACK )
                     self._use_correct_artwork()
                     self._trim_cache()
-                else:
-                    self._set_property( 'ArtistSlideshowRunning' )
-            sleeping = False
-            while not self.MONITOR.abortRequested() and self._get_infolabel( self.ARTISTSLIDESHOWRUNNING ) == 'True':
-                if self.PLAYER.isPlayingAudio() or self._get_infolabel( self.EXTERNALCALL ) != '':
-                    if self._playback_stopped_or_changed( wait_time=self.MAINSLEEP ):
-                        if sleeping:
-                            self._get_settings()
-                            sleeping = False
-                        self._clear_properties( fadetoblack=self.FADETOBLACK )
-                        self._use_correct_artwork()
-                        self._trim_cache()
-                elif self.DAEMON:
-                    if not sleeping:
-                        self._clear_properties( clearartists=True )
-                        sleeping = True
-                    if self._waitForAbort( wait_time=self.MAINIDLESLEEP ):
-                        break
-                elif not self.DAEMON:
+                    change_slideshow = False
+                change_slideshow = self._playback_stopped_or_changed( wait_time=self.MAINSLEEP )
+            elif self.DAEMON:
+                if not sleeping:
+                    self._clear_properties( clearartists=True )
+                    sleeping = True
+                    change_slideshow = True
+                if self._waitForAbort( wait_time=self.MAINIDLESLEEP ):
                     break
-            self._clear_properties()
-            self._set_property( 'ArtistSlideshowRunning' )
-            self._set_property( 'ArtistSlideshow.CleanupComplete', 'True' )
+            elif not self.DAEMON:
+                break
+        self._clear_properties()
+        self._set_property( 'ArtistSlideshowRunning' )
+        self._set_property( 'ArtistSlideshow.CleanupComplete', 'True' )
 
 
     def _clean_dir( self, dir_path ):
@@ -330,7 +334,7 @@ class Main( object ):
         if self._get_infolabel( 'ArtistSlideshow.Image' ):
             self.SLIDESHOW.ClearImages( fadetoblack=fadetoblack )
         self._slideshow_thread_stop()
-        if self.PLAYER.isPlayingAudio() or self._get_infolabel( self.EXTERNALCALL ) != '':
+        if self._is_playing():
             self._slideshow_thread_start()
         if self._get_infolabel( 'ArtistSlideshow.ArtistBiography' ):
             self._set_property( 'ArtistSlideshow.ArtistBiography' )
@@ -446,13 +450,13 @@ class Main( object ):
         bio_params['artist'] = self.NAME
         bio = ''
         try:
-            bio_plugins['names'].sort( key=lambda x: x[0] )
+            self.BIOPLUGINS['names'].sort( key=lambda x: x[0] )
         except TypeError:
             pass
-        for plugin_name in bio_plugins['names']:
+        for plugin_name in self.BIOPLUGINS['names']:
             lw.log( ['checking %s for bio' % plugin_name[1]] )
             bio_params['donated'] = getSettingBool( addon, plugin_name[1] + '_donated' )
-            bio, loglines = bio_plugins['objs'][plugin_name[1]].getBio( bio_params )
+            bio, loglines = self.BIOPLUGINS['objs'][plugin_name[1]].getBio( bio_params )
             lw.log( loglines )
             if bio:
                 lw.log( ['got a bio from %s, so stop looking' % plugin_name] )
@@ -471,13 +475,13 @@ class Main( object ):
         album_params['artist'] = self.NAME
         albums = []
         try:
-            album_plugins['names'].sort( key=lambda x: x[0] )
+            self.ALBUMPLUGINS['names'].sort( key=lambda x: x[0] )
         except TypeError:
             pass
-        for plugin_name in album_plugins['names']:
+        for plugin_name in self.ALBUMPLUGINS['names']:
             lw.log( ['checking %s for album info' % plugin_name[1]] )
             album_params['donated'] = getSettingBool( addon, plugin_name[1] + '_donated' )
-            albums, loglines = album_plugins['objs'][plugin_name[1]].getAlbumList( album_params )
+            albums, loglines = self.ALBUMPLUGINS['objs'][plugin_name[1]].getAlbumList( album_params )
             lw.log( loglines )
             if not albums == []:
                 lw.log( ['got album list from %s, so stop looking' % plugin_name] )
@@ -496,12 +500,12 @@ class Main( object ):
         similar_params['artist'] = self.NAME
         similar_artists = []
         try:
-            similar_plugins['names'].sort( key=lambda x: x[0] )
+            self.SIMILARPLUGINS['names'].sort( key=lambda x: x[0] )
         except TypeError:
             pass
-        for plugin_name in similar_plugins['names']:
+        for plugin_name in self.SIMILARPLUGINS['names']:
             lw.log( ['checking %s for similar artist info' % plugin_name[1]] )
-            similar_artists, loglines = similar_plugins['objs'][plugin_name[1]].getSimilarArtists( similar_params )
+            similar_artists, loglines = self.SIMILARPLUGINS['objs'][plugin_name[1]].getSimilarArtists( similar_params )
             lw.log( loglines )
             if not similar_artists == []:
                 lw.log( ['got similar artist list from %s, so stop looking' % plugin_name] )
@@ -530,10 +534,14 @@ class Main( object ):
 
 
     def _get_current_artist_names_mbids( self, playing_song ):
-        response = xbmc.executeJSONRPC (
-            '{"jsonrpc":"2.0", "method":"Player.GetItem", "params":{"playerid":0, "properties":["artist", "musicbrainzartistid"]},"id":1}' )
-        artist_names = _json.loads( response ).get( 'result', {} ).get( 'item', {} ).get( 'artist', [] )
-        mbids = _json.loads( response ).get( 'result', {} ).get( 'item', {} ).get( 'musicbrainzartistid', [] )
+        try:
+            response = xbmc.executeJSONRPC (
+                '{"jsonrpc":"2.0", "method":"Player.GetItem", "params":{"playerid":0, "properties":["artist", "musicbrainzartistid"]},"id":1}' )
+            artist_names = _json.loads( response ).get( 'result', {} ).get( 'item', {} ).get( 'artist', [] )
+            mbids = _json.loads( response ).get( 'result', {} ).get( 'item', {} ).get( 'musicbrainzartistid', [] )
+        except LookupError:
+            artist_names = []
+            mbids = []
         if not artist_names:
             lw.log( ['No artist names returned from JSON call, assuming this is an internet stream'] )
             playingartists = playing_song.split( ' - ', 1 )
@@ -565,10 +573,10 @@ class Main( object ):
         featured_artists = ''
         artist_names = []
         mbids = []
-        if self.PLAYER.isPlayingAudio():
+        if self.isPlayingAudio():
             try:
-                playing_file = self.PLAYER.getPlayingFile()
-                playing_song = self.PLAYER.getMusicInfoTag().getTitle()
+                playing_file = self.getPlayingFile()
+                playing_song = self.getMusicInfoTag().getTitle()
             except RuntimeError:
                 lw.log( ['RuntimeError getting playing file/song back from Kodi'] )
                 self.ARTISTS_INFO = []
@@ -641,13 +649,13 @@ class Main( object ):
         image_params['lang'] = self.LANGUAGE
         image_params['artist'] = self.NAME
         image_params['infodir'] = self.INFODIR
-        for plugin_name in image_plugins['names']:
+        for plugin_name in self.IMAGEPLUGINS['names']:
             image_list = []
             lw.log( ['checking %s for images' % plugin_name[1]] )
             image_params['getall'] = getSettingBool( addon, plugin_name[1] + '_all' )
             image_params['clientapikey'] = getSettingString( addon, plugin_name[1] + '_clientapikey' )
             image_params['donated'] = getSettingBool( addon, plugin_name[1] + '_donated' )
-            image_list, loglines = image_plugins['objs'][plugin_name[1]].getImageList( image_params )
+            image_list, loglines = self.IMAGEPLUGINS['objs'][plugin_name[1]].getImageList( image_params )
             lw.log( loglines )
             images.extend( image_list )
             image_params['mbid'] = self._get_musicbrainz_id( self.NAME, self.MBID )
@@ -674,9 +682,9 @@ class Main( object ):
             return mbid
         mbid_params = {}
         mbid_params['infodir'] = self.INFODIR
-        for plugin_name in mbid_plugins['names']:
+        for plugin_name in self.MBIDPLUGINS['names']:
             lw.log( ['checking %s for mbid' % plugin_name[1]] )
-            mbid, loglines = mbid_plugins['objs'][plugin_name[1]].getMBID( mbid_params )
+            mbid, loglines = self.MBIDPLUGINS['objs'][plugin_name[1]].getMBID( mbid_params )
             lw.log( loglines )
             if mbid:
                 lw.log( ['returning ' + mbid] )
@@ -693,9 +701,9 @@ class Main( object ):
         while not got_item:
             try:
                 if item == 'album':
-                    playing_item = self.PLAYER.getMusicInfoTag().getAlbum()
+                    playing_item = self.getMusicInfoTag().getAlbum()
                 elif item == 'title':
-                    playing_item = self.PLAYER.getMusicInfoTag().getTitle()
+                    playing_item = self.getMusicInfoTag().getTitle()
                 got_item = True
             except RuntimeError:
                 got_item = False
@@ -713,13 +721,64 @@ class Main( object ):
         return playing_item
 
 
+    def _get_plugin_settings( self, service_name, module ):
+        if module == 'local':
+            return True, 0
+        return getSettingBool( addon, service_name + module ), getSettingInt( addon, service_name + 'priority_' + module, default=10 )
+
+
+    def _get_plugins( self ):
+        lw.log( ['loading plugins'] )
+        self.BIOPLUGINS = {'names':[], 'objs':{}}
+        self.IMAGEPLUGINS = {'names':[], 'objs':{}}
+        self.ALBUMPLUGINS = {'names':[], 'objs':{}}
+        self.SIMILARPLUGINS = {'names':[], 'objs':{}}
+        self.MBIDPLUGINS = {'names':[], 'objs':{}}
+        for module in ['local', 'fanarttv', 'kodi', 'theaudiodb', 'lastfm']:
+            full_plugin = 'resources.plugins.' + module
+            imp_plugin = sys.modules[ full_plugin ]
+            plugin = imp_plugin.objectConfig()
+            lw.log( ['loaded plugin ' + module] )
+            scrapers = plugin.provides()
+            if 'bio' in scrapers:
+                bio_active, bio_priority = self._get_plugin_settings( 'ab_', module )
+                if bio_active:
+                    self.BIOPLUGINS['objs'][module] = plugin
+                    self.BIOPLUGINS['names'].append( [bio_priority, module] )
+                    lw.log( ['added %s to bio plugins' % module] )
+            if 'images' in scrapers:
+                img_active, img_priority = self._get_plugin_settings( '', module )
+                if img_active:
+                    self.IMAGEPLUGINS['objs'][module] = plugin
+                    self.IMAGEPLUGINS['names'].append( [img_priority, module] )
+                    lw.log( ['added %s to image plugins' % module] )
+            if 'albums' in scrapers:
+                ai_active, ai_priority = self._get_plugin_settings( 'ai_', module )
+                if ai_active:
+                    self.ALBUMPLUGINS['objs'][module] = plugin
+                    self.ALBUMPLUGINS['names'].append( [ai_priority, module] )
+                    lw.log( ['added %s to album info plugins' % module] )
+            if 'similar' in scrapers:
+                sa_active, sa_priority = self._get_plugin_settings( 'sa_', module )
+                if sa_active:
+                    self.SIMILARPLUGINS['objs'][module] = plugin
+                    self.SIMILARPLUGINS['names'].append( [ai_priority, module] )
+                    lw.log( ['added %s to similar artist plugins' % module] )
+            if 'mbid' in scrapers:
+                self.MBIDPLUGINS['objs'][module] = plugin
+                self.MBIDPLUGINS['names'].append( [1, module] )
+                lw.log( ['added %s to mbid plugins' % module] )
+
+
     def _get_settings( self ):
+        lw.log( ['loading settings'] )
         self.LANGUAGE = getSettingString( addon, 'language', default='11' )
         for language in LANGUAGES:
             if self.LANGUAGE == language[2]:
                 self.LANGUAGE = language[1]
                 lw.log( ['language = %s' % self.LANGUAGE] )
                 break
+        self.PAUSESLIDESHOW = getSettingBool( addon, 'pause_slideshow' )
         self.USEFALLBACK = getSettingBool( addon, 'fallback' )
         self.FALLBACKPATH = getSettingString( addon, 'fallback_path' )
         self.USEOVERRIDE = getSettingBool( addon, 'slideshow' )
@@ -790,8 +849,7 @@ class Main( object ):
 
 
     def _init_vars( self ):
-        self.MONITOR = xbmc.Monitor()
-        self.PLAYER = xbmc.Player()
+        self.MONITOR = SlideshowMonitor()
         self.FANARTNUMBER = False
         self.CACHEDIR = ''
         self.ARTISTS_INFO = []
@@ -817,14 +875,16 @@ class Main( object ):
         self.LASTARTISTREFRESH = 0
         self.LASTCACHETRIM = 0
         self.PARAMS = {}
-        self.SLIDESHOWLOCK = threading.Lock()
-        self.SLIDESHOWCMD = Queue()
 
 
     def _init_window( self ):
         self.WINDOW = xbmcgui.Window( int(self.WINDOWID) )
         self.ARTISTSLIDESHOWRUNNING = 'ArtistSlideshowRunning'
         self.EXTERNALCALL = 'ArtistSlideshow.ExternalCall'
+
+
+    def _is_playing( self ):
+        return self.isPlayingAudio() or self._get_infolabel( self.EXTERNALCALL ) != ''
 
 
     def _make_dirs( self ):
@@ -920,6 +980,7 @@ class Main( object ):
         except Exception as e:
             lw.log( ['unexpected error while parsing arguments', e] )
             params = {}
+        lw.log( ['the params from the script are:', params] )
         self.WINDOWID = params.get( 'windowid', '12006' )
         lw.log( ['window id is set to %s' % self.WINDOWID] )
         self.PASSEDFIELDS = {}
@@ -930,23 +991,25 @@ class Main( object ):
         daemon = params.get( 'daemon', 'False' )
         if daemon == 'True':
             self.DAEMON = True
+            lw.log( ['daemonizing'], xbmc.LOGNOTICE )
         else:
             self.DAEMON = False
-        if self.DAEMON:
-            lw.log( ['daemonizing'] )
-        self.RUNFROMSETTINGS = False
-        self.MOVETOKODISTORAGE = False
-        checkmove = params.get( 'movetokodistorage', 'False' )
-        if checkmove.lower() == 'true':
-            self.MOVETOKODISTORAGE = True
+        checkrun = params.get( 'runfromsettings', 'False' )
+        if checkrun.lower() == 'true':
             self.RUNFROMSETTINGS = True
+            self.SETTINGSACTION = params.get( 'action', '' )
+        else:
+            self.RUNFROMSETTINGS = False
+            self.SETTINGSACTION = ''
 
 
     def _playback_stopped_or_changed( self, wait_time=1 ):
         if self._waitForAbort( wait_time=wait_time ):
             return True
-        if not self.PLAYER.isPlayingAudio() and self._get_infolabel( self.EXTERNALCALL ) == '':
+        if not self._is_playing():
             return True
+        if self.USEOVERRIDE:
+            return False
         current_artists = self._get_infolabel( self.EXTERNALCALL )
         if current_artists:
             cached_artists = self.EXTERNALCALLSTATUS
@@ -966,13 +1029,6 @@ class Main( object ):
             return self._remove_trailing_dot( thename[:-1] + self.ENDREPLACE )
         else:
             return thename
-
-
-    def _run_from_settings( self ):
-        if self.MOVETOKODISTORAGE:
-            self._move_to_kodi_storage()
-            return True
-        return False
 
 
     def _set_artwork_from_dir( self, thedir, files ):
@@ -1050,20 +1106,26 @@ class Main( object ):
                 s_name = s_name + self.ILLEGALREPLACE
             else:
                 s_name = s_name + c
-        return py2_decode( s_name )
+        try:
+            s_name = py2_decode( s_name )
+        except UnicodeDecodeError:
+            s_name = ''
+        return s_name
 
 
     def _set_thedir( self, theartist, dirtype ):
-        CacheName = self._set_safe_artist_name( theartist )
+        cache_name = self._set_safe_artist_name( theartist )
+        if not cache_name:
+            return ''
         if dirtype == 'ArtistSlideshow' and (self.LOCALARTISTSTORAGE or self.KODILOCALSTORAGE) and self.LOCALARTISTPATH:
             if self.FANARTFOLDER:
-                thedir = os.path.join( self.LOCALARTISTPATH, CacheName, self.FANARTFOLDER )
+                thedir = os.path.join( self.LOCALARTISTPATH, cache_name, self.FANARTFOLDER )
             else:
-                thedir = os.path.join( self.LOCALARTISTPATH, CacheName )
+                thedir = os.path.join( self.LOCALARTISTPATH, cache_name )
         elif dirtype == 'ArtistInformation' and self.LOCALINFOSTORAGE and self.LOCALINFOPATH:
-            thedir = os.path.join( self.LOCALINFOPATH, CacheName, 'information' )
+            thedir = os.path.join( self.LOCALINFOPATH, cache_name, 'information' )
         else:
-            thedir = os.path.join( self.DATAROOT, dirtype, CacheName )
+            thedir = os.path.join( self.DATAROOT, dirtype, cache_name )
         exists, loglines = checkPath( os.path.join( thedir, '' ) )
         if exists:
             lw.log( loglines )
@@ -1109,31 +1171,28 @@ class Main( object ):
 
 
     def _slideshow_thread_start( self ):
-        self.SLIDESHOW = Slideshow( self.SLIDESHOWCMD, self.SLIDESHOWLOCK, self.WINDOW, self.SLIDEDELAY )
+        self.SLIDESHOW = Slideshow( self.WINDOW, self.SLIDEDELAY )
         self.SLIDESHOW.setDaemon(True)
         self.SLIDESHOW.start()
 
 
     def _slideshow_thread_stop( self ):
         try:
-            alive = self.SLIDESHOW.is_alive()
+            self.SLIDESHOW.StopSlideshow()
         except AttributeError:
-            alive = False
-        if alive:
-            with self.SLIDESHOWLOCK:
-                self.SLIDESHOWCMD.put( 'quit' )
-            self.SLIDESHOW.join()
+            return
+        self.SLIDESHOW.join()
 
 
     def _use_correct_artwork( self ):
-        self.ALLARTISTS = self._get_current_artists()
-        self.ARTISTNUM = 0
-        self.TOTALARTISTS = len( self.ALLARTISTS )
-        self.IMAGESFOUND = False
         if self.USEOVERRIDE:
             lw.log( ['using override directory for images'] )
             self._set_artwork_from_dir( self.OVERRIDEPATH, self._get_file_list( self.OVERRIDEPATH ) )
             return
+        self.ALLARTISTS = self._get_current_artists()
+        self.ARTISTNUM = 0
+        self.TOTALARTISTS = len( self.ALLARTISTS )
+        self.IMAGESFOUND = False
         if self.INCLUDEARTISTFANART:
             self.IMAGESFOUND = self.IMAGESFOUND or self.SLIDESHOW.AddImage( xbmc.getInfoLabel( 'Player.Art(artist.fanart)' ) )
         if self.INCLUDEALBUMFANART:
@@ -1163,7 +1222,6 @@ class Main( object ):
                     self._delete_folder( os.path.abspath( os.path.join( self.CACHEDIR, os.pardir ) ) )
                 elif self.LOCALINFOSTORAGE:
                     self._delete_folder( os.path.abspath( os.path.join( self.INFODIR, os.pardir ) ) )
-
         if not self.IMAGESFOUND:
             lw.log( ['no images found for any currently playing artists'] )
             if self.USEFALLBACK:
@@ -1171,6 +1229,7 @@ class Main( object ):
                 lw.log( ['fallbackdir = ' + self.FALLBACKPATH] )
                 self._set_artwork_from_dir( self.FALLBACKPATH, self._get_file_list( self.FALLBACKPATH ) )
             else:
+                self._slideshow_thread_stop()
                 self._set_property( 'ArtistSlideshow.Image' )
 
 

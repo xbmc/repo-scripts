@@ -17,17 +17,17 @@ except AttributeError:
 
 class objectConfig( object ):
     def __init__( self ):
-        secsinweek = int( 7*24*60*60 )
+        secsinweek = int( 7 * 24 * 60 * 60 )
         self.URL = 'https://webservice.fanart.tv/v3/music/'
         self.FILENAME = 'fanarttvartistimages.nfo'
         self.CACHETIMEFILENAME = 'fanarttvcachetime.nfo'
         self.HASCLIENTKEY = False
         self.HASDONATION = False
         self.CACHEEXPIRE = {}
-        self.CACHEEXPIRE['low'] = int( 3*secsinweek )
-        self.CACHEEXPIRE['high'] = int( 4*secsinweek )
-        self.CACHEEXPIREWITHCLIENTKEY = int( 2*secsinweek )
-        self.CACHEEXPIREWITHDONATION = int( secsinweek/7 )
+        self.CACHEEXPIRE['low'] = int( 1 * secsinweek )
+        self.CACHEEXPIRE['high'] = int( 2 * secsinweek )
+        self.CACHEEXPIREWITHCLIENTKEY = int( secsinweek / 3 )
+        self.CACHEEXPIREWITHDONATION = int( secsinweek / 14 )
         self.LOGLINES = []
         self.JSONURL = URL( 'json' )
 

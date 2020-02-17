@@ -226,6 +226,11 @@ msgctxt "#32144"
 msgid "Use more agressive artist search for streams"
 msgstr ""
 
+msgctxt "#32145"
+msgid "Pause slideshow on playback pause"
+msgstr ""
+
+
 # empty strings from id 32145 to 32199
 
 # Dialog headings

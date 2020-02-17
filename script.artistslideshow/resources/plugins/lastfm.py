@@ -17,7 +17,7 @@ except AttributeError:
 
 class objectConfig( object ):
     def __init__( self ):
-        secsinweek = int( 7*24*60*60 )
+        secsinweek = int( 7 * 24 * 60 * 60 )
         self.ARTISTPARAMS = {'autocorrect':'1',
                              'api_key':base64.b64decode(clowncar.encode('ascii')).decode('ascii'), 'method':'artist.getInfo'}
         self.ALBUMPARAMS = {'autocorrect':'1',
@@ -30,8 +30,8 @@ class objectConfig( object ):
         self.SIMILARFILENAME = 'lastfmartistsimilar.nfo'
         self.CACHETIMEFILENAME = 'lastfmcachetime.nfo'
         self.CACHEEXPIRE = {}
-        self.CACHEEXPIRE['low'] = int( 12*secsinweek )
-        self.CACHEEXPIRE['high'] = int( 24*secsinweek )
+        self.CACHEEXPIRE['low'] = int( 1 * secsinweek )
+        self.CACHEEXPIRE['high'] = int( 2 * secsinweek )
         self.loglines = []
         self.TEXTURL = URL( 'text' )
 

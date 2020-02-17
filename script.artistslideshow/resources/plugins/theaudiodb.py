@@ -20,7 +20,7 @@ except AttributeError:
 class objectConfig( object ):
     def __init__( self ):
         url = 'https://www.theaudiodb.com/api/v1/json/%s/' % base64.b64decode(clowncar.encode('ascii')).decode('ascii')
-        secsinweek = int( 7*24*60*60 )
+        secsinweek = int( 7 * 24 * 60 * 60 )
         self.ARTISTMBIDURL = url + 'artist-mb.php'
         self.ARTISTSEARCHURL = url + 'search.php'
         self.ARTISTTADBIDURL = url + 'artist.php'
@@ -33,9 +33,9 @@ class objectConfig( object ):
         self.ALBUMCACHETIMEFILENAME = 'theaudiodbalbumcachetime.nfo'
         self.HASDONATION = False
         self.CACHEEXPIRE = {}
-        self.CACHEEXPIRE['low'] = int( 3*secsinweek )
-        self.CACHEEXPIRE['high'] = int( 4*secsinweek )
-        self.CACHEEXPIREWITHDONATION = int( 1*secsinweek )
+        self.CACHEEXPIRE['low'] = int( 1 * secsinweek )
+        self.CACHEEXPIRE['high'] = int( 2 * secsinweek )
+        self.CACHEEXPIREWITHDONATION = int( secsinweek / 7 )
         self.LOGLINES = []
         self.JSONURL = URL( 'json' )
 
