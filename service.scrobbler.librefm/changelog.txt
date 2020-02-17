@@ -1,3 +1,6 @@
+v4.0.2
+- move icon to resources
+
 v4.0.1
 - bump
 
