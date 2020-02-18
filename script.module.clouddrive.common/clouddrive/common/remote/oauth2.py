@@ -75,7 +75,7 @@ class OAuth2(object):
             url += '?' + parameters
         return url
     
-    def request(self, method, path, parameters=None, request_params=None, access_tokens=None, headers=None):
+    def prepare_request(self, method, path, parameters=None, request_params=None, access_tokens=None, headers=None):
         parameters = Utils.default(parameters, {})
         access_tokens = Utils.default(access_tokens, {})
         encoded_parameters = urllib.urlencode(parameters)
@@ -96,7 +96,10 @@ class OAuth2(object):
             self._validate_access_tokens(access_tokens, 'refresh_access_tokens', 'Unknown', 'Unknown')
             self.persist_access_tokens(access_tokens)
         headers['authorization'] = 'Bearer ' + access_tokens['access_token']
-        return Request(url, data, headers, **request_params).request_json()
+        return Request(url, data, headers, **request_params) 
+    
+    def request(self, method, path, parameters=None, request_params=None, access_tokens=None, headers=None):
+        return self.prepare_request(method, path, parameters, request_params, access_tokens, headers).request_json()
     
     def get(self, path, **kwargs):
         return self.request('get', path, **kwargs)

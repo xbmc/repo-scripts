@@ -148,6 +148,10 @@ msgctxt "#32032"
 msgid "Auto-Refreshed slideshow"
 msgstr ""
 
+msgctxt "#32033"
+msgid "Yes"
+msgstr ""
+
 msgctxt "#32034"
 msgid "'%s' is not a folder"
 msgstr ""
