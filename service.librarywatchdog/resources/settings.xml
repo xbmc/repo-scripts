@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+    <category label="30001">
+        <setting label="30056" id="clean" type="bool" default="false"/>
+        <setting label="30050" id="cleanonstart" type="bool" default="false"/>
+        <setting label="30051" id="scanonstart" type="bool" default="false"/>
+        <setting label="30048" id="pauseonplayback" type="bool" default="true"/>
+        <setting label="30057" id="hideprogress" type="bool" default="true"/>
+        <setting label="30053" id="showstatusdialog" type="bool" default="false"/>
+        <setting label="30018" type="lsep"/>
+        <setting label="30019" type="lsep"/>
+    </category>
+    <category label="30058">
+        <setting label="30031" id="watchvideo" type="bool" default="true"/>
+        <setting label="30032" id="videosource1" type="folder" value="" enable="eq(-1,false)"/>
+        <setting label="30033" id="videosource2" type="folder" value="" enable="eq(-2,false)"/>
+        <setting label="30034" id="videosource3" type="folder" value="" enable="eq(-3,false)"/>
+        <setting label="30035" id="videosource4" type="folder" value="" enable="eq(-4,false)"/>
+        <setting label="30036" id="videosource5" type="folder" value="" enable="eq(-5,false)"/>
+        <setting label="30060" id="videosource6" type="folder" value="" enable="eq(-6,false)"/>
+        <setting label="30061" id="videosource7" type="folder" value="" enable="eq(-7,false)"/>
+        <setting label="30062" id="videosource8" type="folder" value="" enable="eq(-8,false)"/>
+        <setting label="30063" id="videosource9" type="folder" value="" enable="eq(-9,false)"/>
+        <setting label="30064" id="videosource10" type="folder" value="" enable="eq(-10,false)"/>
+        <setting label="30018" type="lsep"/>
+        <setting label="30019" type="lsep"/>
+    </category>
+    <category label="30059">
+        <setting label="30037" id="watchmusic" type="bool" default="true"/>
+        <setting label="30038" id="musicsource1" type="folder" value="" enable="eq(-1,false)"/>
+        <setting label="30039" id="musicsource2" type="folder" value="" enable="eq(-2,false)"/>
+        <setting label="30040" id="musicsource3" type="folder" value="" enable="eq(-3,false)"/>
+        <setting label="30041" id="musicsource4" type="folder" value="" enable="eq(-4,false)"/>
+        <setting label="30042" id="musicsource5" type="folder" value="" enable="eq(-5,false)"/>
+        <setting label="30065" id="musicsource6" type="folder" value="" enable="eq(-6,false)"/>
+        <setting label="30066" id="musicsource7" type="folder" value="" enable="eq(-7,false)"/>
+        <setting label="30067" id="musicsource8" type="folder" value="" enable="eq(-8,false)"/>
+        <setting label="30068" id="musicsource9" type="folder" value="" enable="eq(-9,false)"/>
+        <setting label="30069" id="musicsource10" type="folder" value="" enable="eq(-10,false)"/>
+        <setting label="30018" type="lsep"/>
+        <setting label="30019" type="lsep"/>
+    </category>
+    <category label="30002">
+        <setting label="30045" id="method" type="select" lvalues="30007|30008" default="0"/>
+        <setting label="30052" id="removalmethod" type="select" lvalues="30055|30054" default="0"/>
+        <setting label="30046" id="pollinginterval" type="number" default="4"/>
+        <setting label="30049" id="recursivepolling" type="bool" default="true"/>
+        <setting label="30043" id="delay" type="number" default="1"/>
+        <setting label="30044" id="startupdelay" type="number" default="0"/>
+        <setting label="30047" id="forceglobalscan" type="bool" default="false"/>
+        <setting label="30018" type="lsep"/>
+    </category>
+</settings>
