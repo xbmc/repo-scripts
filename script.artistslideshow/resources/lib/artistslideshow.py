@@ -974,7 +974,7 @@ class Main( xbmc.Player ):
 
     def _parse_argv( self ):
         try:
-            params = dict( arg.split( '=' ) for arg in sys.argv[ 1 ].split( '&' ) )
+            params = dict( arg.split( '=' ) for arg in sys.argv[ 1 ].replace( '&amp;', '&' ).split( '&' ) )
         except IndexError:
             params = {}
         except Exception as e:

@@ -64,6 +64,6 @@
         <setting id="agressive_stream_search" type="bool" label="32144" default="false" />
         <setting id="logging" type="bool" label="32119" default="false" />
         <setting type="sep" />
-        <setting label="32134" type="action" action="RunScript(script.artistslideshow,runfromsettings=True&action=movetokodistorage)" />
+        <setting label="32134" type="action" action="RunScript(script.artistslideshow,runfromsettings=True&amp;action=movetokodistorage)" />
     </category>
 </settings>
