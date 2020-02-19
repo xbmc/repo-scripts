@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+    <category label="32000">
+        <setting id="slide_delay" type="number" label="32137" default="10" />
+        <setting id="pause_slideshow" type="bool" label="32145" default="false" />        
+        <setting id="slideshow" type="bool" label="32112" default="false" />
+        <setting id="slideshow_path" type="folder" label="32113" default="" visible="eq(-1,true)" />
+        <setting id="fadetoblack" type="bool" label="32138" default="true" visible="eq(-2,false)" />
+		<setting id="include_artistfanart" type="bool" label="32114" default="true" visible="eq(-3,false)" />
+		<setting id="include_albumfanart" type="bool" label="32115" default="false" visible="eq(-4,false)"/>
+        <setting id="disable_multiartist" type="bool" label="32120" default="false" visible="eq(-5,false)" />
+        <setting id="fallback" type="bool" label="32111" default="false" visible="eq(-6,false)" />
+        <setting id="fallback_path" type="folder" label="32113" default="" visible="eq(-1,true) + eq(-7,false)" />
+    </category>
+	<category label="32001">
+	    <setting id="artist_image_storage" type="enum" label="32121" lvalues="32122|32123|32136" default="0" />
+        <setting id="local_artist_path" type="folder" label="32113" default="" visible="eq(-1,2)" />
+        <setting id="use_extrafanart_folder" type="bool" label="32127" default="true" visible="eq(-2,2)" /> 
+		<setting id="fanart_folder" type="text" label="32118" default="extrafanart" visible="eq(-3,2) + eq(-1,true)"/>
+        <setting id="restrict_cache" type="bool" label="32116" default="false" visible="eq(-4,0)" />
+        <setting id="max_cache_size" label="32117" type="labelenum" values="128|256|512|768|1024|2048|3072|4096" visible="eq(-1,true) + eq(-5,0)" default="1024" />
+	    <setting id="artist_info_storage" type="enum" label="32125" lvalues="32122|32136" default="0" />
+        <setting id="local_info_path" type="folder" label="32113" default="" visible="eq(-1,1)" />
+        <setting id="localstorageonly" type="bool" label="depreciated setting 1" default="false" visible="false" />
+        <setting id="localinfostorage" type="bool" label="depreciated setting 2" default="false" visible="false" />
+	</category>
+    <category label="32002">
+        <setting id="fanarttv" type="bool" label="32101" default="false" />
+        <setting id="fanarttv_clientapikey" type="text" label="32109" visible="eq(-1,true)" default="" />
+        <setting id="fanarttv_all" type="bool" label="32108" visible="eq(-2,true)" default="false" />
+        <setting id="fanarttv_donated" type="bool" label="32110" visible="eq(-3,true)" default="false" />
+        <setting id="theaudiodb" type="bool" label="32102" default="false" />
+        <setting id="theaudiodb_all" type="bool" label="32108" visible="eq(-1,true)" default="false" />
+        <setting id="theaudiodb_donated" type="bool" label="32110" visible="eq(-2,true)" default="false" />
+        <setting id="download_notification" type="bool" label="32142" visible="eq(-7,true) || eq(-3,true)" default="false" />
+        <setting id="dn_download_only" type="bool" label="32143" visible="eq(-8,true) | eq(-4,true)" default="false" />
+    </category>
+    <category label="32003">
+        <setting id="ai_theaudiodb" type="bool" label="32103" default="false" />
+        <setting id="ai_priority_theaudiodb" type="slider" label="32124" visible="eq(-1,true)" default="5" range='1,1,10' option='int' />
+        <setting id="ai_lastfm" type="bool" label="32104" default="false" />
+        <setting id="ai_priority_lastfm" type="slider" label="32124" visible="eq(-1,true)" default="5" range='1,1,10' option='int' />
+    </category>
+    <category label="32004">
+        <setting id="language" type="enum" label="32126" default="11" lvalues="32901|32902|32903|32904|32905|32906|32907|32908|32909|32910|32911|32912|32913|32947|32914|32915|32916|32917|32918|32919|32920|32921|32922|32924|32925|32926|32927|32928|32929|32930|32932|32933|32934|32935|32936|32937|32938|32939|32940|32942|32943|32944|32945|32946" />
+        <setting id="ab_kodi" type="bool" label="32135" default="true" />
+        <setting id="ab_priority_kodi" type="slider" label="32124" visible="eq(-1,true)" default="1" range='1,1,10' option='int' />
+        <setting id="ab_theaudiodb" type="bool" label="32105" default="false" />
+        <setting id="ab_priority_theaudiodb" type="slider" label="32124" visible="eq(-1,true)" default="5" range='1,1,10' option='int' />
+        <setting id="ab_lastfm" type="bool" label="32106" default="false" />
+        <setting id="ab_priority_lastfm" type="slider" label="32124" visible="eq(-1,true)" default="5" range='1,1,10' option='int' />
+    </category>
+    <category label="32005">
+        <setting id="sa_lastfm" type="bool" label="32107" default="false" />
+        <setting id="sa_priority_lastfm" type="slider" label="32124" visible="eq(-1,true)" default="5" range='1,1,10' option='int' />
+    </category>
+    <category label="32006">
+        <setting id="storage_target" type="enum" label="32128" default="0" lvalues="32131|32132|32133" />
+        <setting id="illegal_replace" type="text" label=" 32129" default="_" />
+        <setting id="end_replace" type="text" label="32130" default="" visible="eq(-2,0)" />
+        <setting id="slideshow_sleep" type="slider" label="32141" default="1" range='1,1,3' option='int' />
+        <setting id="main_sleep" type="slider" label="32139" default="1" range='1,1,3' option='int' />
+        <setting id="main_idle_sleep" type="slider" label="32140" default="10" range='5,1,30' option='int' />
+        <setting id="agressive_stream_search" type="bool" label="32144" default="false" />
+        <setting id="logging" type="bool" label="32119" default="false" />
+        <setting type="sep" />
+        <setting label="32134" type="action" action="RunScript(script.artistslideshow,runfromsettings=True&amp;action=movetokodistorage)" />
+    </category>
+</settings>
