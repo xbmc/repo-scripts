@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.service.singealarmclock"
+       name="Alarm Clock"
+       version="1.01"
+       provider-name="Damien Ruscoe">
+  <requires>
+    <import addon="xbmc.python" version="2.1.0"/>
+  </requires>
+
+  <extension point="xbmc.service" library="default.py" />
+
+  <extension point="xbmc.python.pluginsource" library="plugin.py">
+    <provides>executable</provides>
+  </extension>
+
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en">Alarm Clock</summary>
+    <description lang="en">Schedule custom alarms and wake up to your favourite media.</description>
+
+    <website>http://damienruscoe.co.uk</website>
+    <forum>https://bitbucket.org/Chuddah/script.service.singealarmclock/wiki/Home</forum>
+    <source>https://bitbucket.org/Chuddah/script.service.singealarmclock/src/master</source>
+    <email>chuddah@gmail.com</email>
+    <news>Watch this space!</news>
+
+    <platform>all</platform>
+    <license>GNU GENERAL PUBLIC LICENSE Version 2, June 1991</license>
+    <language />
+
+    <assets>
+        <icon>icon.png</icon>
+        <fanart>fanart.jpg</fanart>
+    </assets>
+
+  </extension>
+</addon>

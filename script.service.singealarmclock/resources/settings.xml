@@ -1,0 +1,26 @@
+<?xml version="1.0" ?><settings>
+
+    <category label="Alarm">
+        <setting label="30001" type="text" id="label" default="Alarm" />
+        <setting label="30015" type="enum" id="trigger_when" lvalues="30006|30005" default="1" />
+        <setting label="30034" type="lsep" visible="eq(-1,1)" />
+        <setting label="30012" type="enum" id="day" lvalues="30020|30021|30022|30023|30024|30025|30026|30027|30028|30029" default="7" visible="eq(-2,1)" />
+        <setting label="30010" type="time" id="time" default="07:00" visible="eq(-3,1)" />
+
+        <setting label="30015" type="enum" id="has_been_cancelled" lvalues="30006" default="0" visible="false" />
+    </category>
+    <category label="30035">
+        <setting label="30015" type="enum" id="action" lvalues="30016|30017" default="1" />
+        <setting label="30013" type="file" id="file" visible="eq(-1,0)" subsetting="true" />
+        <setting label="30013" type="text" id="text" default="{2}" visible="eq(-2,1)" subsetting="true" />
+        <setting label="30009" type="slider" id="volume" default="90" range="0, 5, 100" option="percent" />
+        <setting label="30011" type="slider" id="fade" default="10" range="0, 5, 60" option="int" />
+        <setting label="30002" type="lsep"/>
+        <setting label="30033" type="enum" id="cec" lvalues="30037|30038|30039" default="0" />
+    </category>
+    <category label="30036">
+        <setting label="30018" type="bool" id="turnOff" default="false" />
+        <setting label="30019" type="slider" id="duration" default="30" range="5, 5, 120" option="int" subsetting="true" />
+    </category>
+
+</settings>
