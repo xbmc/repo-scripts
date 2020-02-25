@@ -246,11 +246,9 @@ class get_tiles(threading.Thread):
                     tile = Image.open(tile_file)
                 except:
                     return
-                out.paste( tile, (imx, imy), tile.convert('RGBA') )
+                out.paste( tile, (imx, imy))
                 imx += 256
             imy += 256
-        if self.mapfile[0:6] == 'clouds' or self.mapfile[0:9] == 'pressurec':
-            out = out.point(lambda p: p * 0.5)
         if not self.mapfile == 'streetmap.png':
             out.save(os.path.join(self.mapdir,self.mapfile % str(self.stamp)))
         else:
