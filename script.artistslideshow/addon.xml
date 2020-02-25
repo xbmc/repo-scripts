@@ -1,4 +1,4 @@
-<addon id="script.artistslideshow" name="Artist Slideshow" provider-name="pkscout,ronie" version="3.1.0">
+<addon id="script.artistslideshow" name="Artist Slideshow" provider-name="pkscout,ronie" version="3.2.1">
 	<requires>
 		<import addon="xbmc.python" version="2.26.0" />
 		<import addon="xbmc.addon" version="17.9.0" />
@@ -12,24 +12,15 @@
 	</extension>
 	<extension point="xbmc.addon.metadata">
 		<news>
-v.3.1.0
-- In daemon mode you can now change AS settings without having to restart Kodi
-- added back option to show notifications when downloading new images
-- updated service plugins to use https for API calls
-- added options to change sleep time for main and slideshow threads
-- set slideshow thread to close if no music playing
-- added option to search stream titles more aggressively for an artist name
-- fix for crash if artist image name has an extended character in it
-- fix for crash when trying to get last fanart number from Kodi Artist Information Folder
-- fix for artist images not changing when using a radio stream
-- fix for theaudiodb.com plugin not downloading all three images for an artist
-- fix for unicode errors causing cache trimming not to work
-- fix for non-images getting added to image list and showing a black screen
-- fix for high CPU usage when using AS in daemon mode and no music playing
-- fix for issue where slideshow might not start when in daemon mode
-- fix for runaway loop if there is only one image in an artist's slideshow
-- fix for AS taking too long to quit on Kodi exit when in daemon mode
-- fix for Setting Type Error in Kodi logs
+v.3.2.1
+- added option to pause slideshow when playback pauses
+- logic change to load first slideshow image sooner
+- override slideshow no longer resets at each song change
+- fix for potential runaway loop
+- fix for slow slideshow change when artist changes
+- fix for AS not reloading settings properly when in daemon mode
+- fixes for miscellaneous UTF8 errors
+- internal change to the way the main thread talks to the slideshow thread
 		</news>
 		<assets>
         	<icon>icon.png</icon>

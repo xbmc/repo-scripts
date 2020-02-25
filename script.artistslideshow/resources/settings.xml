@@ -2,6 +2,7 @@
 <settings>
     <category label="32000">
         <setting id="slide_delay" type="number" label="32137" default="10" />
+        <setting id="pause_slideshow" type="bool" label="32145" default="false" />        
         <setting id="slideshow" type="bool" label="32112" default="false" />
         <setting id="slideshow_path" type="folder" label="32113" default="" visible="eq(-1,true)" />
         <setting id="fadetoblack" type="bool" label="32138" default="true" visible="eq(-2,false)" />
@@ -63,6 +64,6 @@
         <setting id="agressive_stream_search" type="bool" label="32144" default="false" />
         <setting id="logging" type="bool" label="32119" default="false" />
         <setting type="sep" />
-        <setting label="32134" type="action" action="RunScript(script.artistslideshow, movetokodistorage=True)" />
+        <setting label="32134" type="action" action="RunScript(script.artistslideshow,runfromsettings=True&amp;action=movetokodistorage)" />
     </category>
 </settings>
