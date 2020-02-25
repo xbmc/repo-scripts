@@ -1,0 +1,227 @@
+<?xml version="1.0" ?>
+<settings version="1">
+	<section id="weather.multi">
+		<category id="1" label="32101">
+			<group id="1">
+				<setting help="" id="loc1" label="32111" type="string">
+					<level>0</level>
+					<default></default>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<control format="action" type="button">
+						<data>RunScript(weather.multi,loc1)</data>
+					</control>
+				</setting>
+				<setting help="" id="loc2" label="32112" type="string">
+					<level>0</level>
+					<default></default>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="enable">
+							<condition operator="!is" setting="loc1"/>
+						</dependency>
+					</dependencies>
+					<control format="action" type="button">
+						<data>RunScript(weather.multi,loc2)</data>
+					</control>
+				</setting>
+				<setting help="" id="loc3" label="32113" type="string">
+					<level>0</level>
+					<default></default>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="enable">
+							<condition operator="!is" setting="loc2"/>
+						</dependency>
+					</dependencies>
+					<control format="action" type="button">
+						<data>RunScript(weather.multi,loc3)</data>
+					</control>
+				</setting>
+				<setting help="" id="loc4" label="32114" type="string">
+					<level>0</level>
+					<default></default>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="enable">
+							<condition operator="!is" setting="loc3"/>
+						</dependency>
+					</dependencies>
+					<control format="action" type="button">
+						<data>RunScript(weather.multi,loc4)</data>
+					</control>
+				</setting>
+				<setting help="" id="loc5" label="32115" type="string">
+					<level>0</level>
+					<default></default>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="enable">
+							<condition operator="!is" setting="loc4"/>
+						</dependency>
+					</dependencies>
+					<control format="action" type="button">
+						<data>RunScript(weather.multi,loc5)</data>
+					</control>
+				</setting>
+				<setting help="" id="loc1id" type="integer">
+					<default>-1</default>
+					<visible>false</visible>
+					<control format="integer" type="edit"/>
+				</setting>
+				<setting help="" id="loc2id" type="integer">
+					<default>-1</default>
+					<visible>false</visible>
+					<control format="integer" type="edit"/>
+				</setting>
+				<setting help="" id="loc3id" type="integer">
+					<default>-1</default>
+					<visible>false</visible>
+					<control format="integer" type="edit"/>
+				</setting>
+				<setting help="" id="loc4id" type="integer">
+					<default>-1</default>
+					<visible>false</visible>
+					<control format="integer" type="edit"/>
+				</setting>
+				<setting help="" id="loc5id" type="integer">
+					<default>-1</default>
+					<visible>false</visible>
+					<control format="integer" type="edit"/>
+				</setting>
+				<setting help="" id="loc1lat" type="number">
+					<default>0</default>
+					<visible>false</visible>
+					<control format="number" type="edit"/>
+				</setting>
+				<setting help="" id="loc2lat" type="number">
+					<default>0</default>
+					<visible>false</visible>
+					<control format="number" type="edit"/>
+				</setting>
+				<setting help="" id="loc3lat" type="number">
+					<default>0</default>
+					<visible>false</visible>
+					<control format="number" type="edit"/>
+				</setting>
+				<setting help="" id="loc4lat" type="number">
+					<default>0</default>
+					<visible>false</visible>
+					<control format="number" type="edit"/>
+				</setting>
+				<setting help="" id="loc5lat" type="number">
+					<default>0</default>
+					<visible>false</visible>
+					<control format="number" type="edit"/>
+				</setting>
+				<setting help="" id="loc1lon" type="number">
+					<default>0</default>
+					<visible>false</visible>
+					<control format="number" type="edit"/>
+				</setting>
+				<setting help="" id="loc2lon" type="number">
+					<default>0</default>
+					<visible>false</visible>
+					<control format="number" type="edit"/>
+				</setting>
+				<setting help="" id="loc3lon" type="number">
+					<default>0</default>
+					<visible>false</visible>
+					<control format="number" type="edit"/>
+				</setting>
+				<setting help="" id="loc4lon" type="number">
+					<default>0</default>
+					<visible>false</visible>
+					<control format="number" type="edit"/>
+				</setting>
+				<setting help="" id="loc5lon" type="number">
+					<default>0</default>
+					<visible>false</visible>
+					<control format="number" type="edit"/>
+				</setting>
+			</group>
+		</category>
+		<category id="2" label="32102">
+			<group id="1" label="32131">
+				<setting help="" id="WAdd" label="32125" type="boolean">
+					<level>0</level>
+					<default>false</default>
+					<control type="toggle"/>
+				</setting>
+				<setting help="" id="API" label="32110" type="string">
+					<level>0</level>
+					<default/>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="enable">
+							<condition operator="is" setting="WAdd">true</condition>
+						</dependency>
+					</dependencies>
+					<control format="string" type="edit">
+						<heading>32110</heading>
+					</control>
+				</setting>
+			</group>
+		</category>
+		<category id="3" label="32103">
+			<group id="1" label="32135">
+				<setting help="" id="WMaps" label="32130" type="boolean">
+					<level>0</level>
+					<default>false</default>
+					<control type="toggle"/>
+				</setting>
+				<setting help="" id="MAPAPI" label="32110" type="string">
+					<level>0</level>
+					<default/>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="enable">
+							<condition operator="is" setting="WMaps">true</condition>
+						</dependency>
+					</dependencies>
+					<control format="string" type="edit">
+						<heading>32110</heading>
+					</control>
+				</setting>
+				<setting help="" id="Zoom" label="32128" parent="WMaps" type="integer">
+					<level>0</level>
+					<default>4</default>
+					<dependencies>
+						<dependency type="enable">
+							<condition operator="is" setting="WMaps">true</condition>
+						</dependency>
+					</dependencies>
+					<control format="integer" type="slider">
+						<popup>false</popup>
+					</control>
+					<constraints>
+						<minimum>1</minimum>
+						<maximum>10</maximum>
+					</constraints>
+				</setting>
+			</group>
+		</category>
+		<category id="4" label="32104">
+			<group id="1">
+				<setting help="" id="Debug" label="32129" type="boolean">
+					<level>0</level>
+					<default>false</default>
+					<control type="toggle"/>
+				</setting>
+			</group>
+		</category>
+	</section>
+</settings>

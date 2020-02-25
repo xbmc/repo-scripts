@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="weather.multi" name="Multi Weather" version="0.0.1" provider-name="ronie">
+	<requires>
+		<import addon="xbmc.python" version="3.0.0"/>
+		<import addon="script.module.requests" version="2.19.1"/>
+		<import addon="script.openweathermap.maps" version="1.0.0"/>
+		<import addon="script.module.dateutil" version="2.5.3"/>
+	</requires>
+	<extension point="xbmc.python.weather" library="default.py"/>
+	<extension point="xbmc.addon.metadata">
+		<summary lang="en_GB">Weather forecast from several providers</summary>
+		<description lang="en_GB">Weather forecast provided by Yahoo, Weatherbit and Openweathermap</description>
+		<language></language>
+		<platform>all</platform>
+		<license>GNU GENERAL PUBLIC LICENSE Version 2</license>
+		<forum>https://forum.kodi.tv/showthread.php?tid=352028</forum>
+		<source>https://gitlab.com/ronie/weather.multi/</source>
+		<assets>
+			<icon>resources/icon.png</icon>
+			<fanart>resources/fanart.jpg</fanart>
+		</assets>
+	</extension>
+</addon>
