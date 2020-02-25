@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<window>
+	<defaultcontrol>200</defaultcontrol>
+	<coordinates>
+		<system>1</system>
+		<left>0</left>
+		<top>0</top>
+	</coordinates>
+	<animation effect="fade" time="250">WindowOpen</animation>
+	<animation effect="fade" time="250">WindowClose</animation>
+	<controls>
+		<control type="group">
+			<left>975</left>
+			<top>5</top>
+			<!-- ** Required ** Do not change <id> or <type> -->
+			<control type="image">
+				<left>0</left>
+				<top>0</top>
+				<width>300</width>
+				<height>710</height>
+				<texture border="40">$INFO[Window(Home).Property(speedfan.panel.compact)]</texture>
+			</control>
+			<control type="button" id="200">
+				<description>Close Window button</description>
+				<left>238</left>
+				<top>0</top>
+				<width>64</width>
+				<height>32</height>
+				<label>-</label>
+				<font>-</font>
+				<onclick>PreviousMenu</onclick>
+				<texturefocus>DialogCloseButton-focus.png</texturefocus>
+				<texturenofocus>DialogCloseButton.png</texturenofocus>
+				<onleft>120</onleft>
+				<onright>120</onright>
+				<onup>120</onup>
+				<ondown>120</ondown>
+				<visible>system.getbool(input.enablemouse)</visible>
+			</control>
+			<!-- ** Required ** Do not change <id> or <type> -->
+			<control type="list" id="120">
+				<left>10</left>
+				<top>35</top>
+				<width>280</width>
+				<height>695</height>
+				<onleft>200</onleft>
+				<onright>200</onright>
+				<onup>120</onup>
+				<ondown>120</ondown>
+				<viewtype label="535">list</viewtype>
+				<pagecontrol>121</pagecontrol>
+				<scrolltime>200</scrolltime>
+				<itemlayout height="26">					
+					<control type="image">
+						<left>0</left>
+						<top>0</top>
+						<width>280</width>
+						<height>26</height>
+						<texture border="0">speedfan-overlay.png</texture>
+						<visible>ListItem.Property(istitle)</visible>
+					</control>
+					<control type="label">
+						<left>5</left>
+						<top>-3</top>
+						<width>270</width>
+						<height>26</height>
+						<font>font12</font>
+						<align>left</align>
+						<aligny>center</aligny>
+						<textcolor>white</textcolor>
+						<selectedcolor>green</selectedcolor>
+						<align>left</align>
+						<info>ListItem.Label</info>
+						<visible>ListItem.Property(istitle)</visible>
+					</control>
+					<control type="label">
+						<left>0</left>
+						<top>0</top>
+						<width>130</width>
+						<height>26</height>
+						<font>font12</font>
+						<align>right</align>
+						<aligny>center</aligny>
+						<textcolor>white</textcolor>
+						<selectedcolor>green</selectedcolor>
+						<align>left</align>
+						<info>ListItem.Label</info>
+						<visible>!ListItem.Property(istitle)</visible>
+					</control>
+					<control type="label">
+						<left>145</left>
+						<top>0</top>
+						<width>130</width>
+						<height>26</height>
+						<font>font12</font>
+						<aligny>center</aligny>
+						<textcolor>white</textcolor>
+						<selectedcolor>green</selectedcolor>
+						<align>left</align>
+						<info>ListItem.Property(value)</info>
+						<visible>!ListItem.Property(istitle)</visible>
+					</control>
+				</itemlayout>
+				<focusedlayout height="26">
+					<control type="image">
+						<left>0</left>
+						<top>0</top>
+						<width>280</width>
+						<height>26</height>
+						<texture border="10">speedfan-list-focus.png</texture>
+						<visible>Control.HasFocus(120)</visible>
+					</control>
+					<control type="image">
+						<left>0</left>
+						<top>0</top>
+						<width>280</width>
+						<height>26</height>
+						<texture border="0">speedfan-overlay.png</texture>
+						<visible>ListItem.Property(istitle)</visible>
+					</control>
+					<control type="label">
+						<left>5</left>
+						<top>-3</top>
+						<width>280</width>
+						<height>26</height>
+						<font>font12</font>
+						<align>left</align>
+						<aligny>center</aligny>
+						<textcolor>white</textcolor>
+						<selectedcolor>green</selectedcolor>
+						<align>left</align>
+						<info>ListItem.Label</info>
+						<visible>ListItem.Property(istitle)</visible>
+					</control>
+					<control type="label">
+						<left>0</left>
+						<top>0</top>
+						<width>130</width>
+						<height>26</height>
+						<font>font12</font>
+						<align>right</align>
+						<aligny>center</aligny>
+						<textcolor>white</textcolor>
+						<selectedcolor>green</selectedcolor>
+						<align>left</align>
+						<info>ListItem.Label</info>
+						<visible>!ListItem.Property(istitle)</visible>
+					</control>
+					<control type="label">
+						<left>145</left>
+						<top>0</top>
+						<width>130</width>
+						<height>26</height>
+						<font>font12</font>
+						<aligny>center</aligny>
+						<textcolor>white</textcolor>
+						<selectedcolor>green</selectedcolor>
+						<align>left</align>
+						<info>ListItem.Property(value)</info>
+						<visible>!ListItem.Property(istitle)</visible>
+					</control>
+				</focusedlayout>
+			</control>
+			<control type="group">
+				<left>1263</left>
+				<top>35</top>
+				<control type="scrollbar" id="121">
+					<description>scroll bar indicator for lists</description>
+					<left>0</left>
+					<top>0</top>
+					<width>12</width>
+					<height>605</height>
+					<texturesliderbackground border="6">speedfan-scroll_back.png</texturesliderbackground>
+					<texturesliderbar border="6">speedfan-scroll_mid.png</texturesliderbar>
+					<texturesliderbarfocus border="6">speedfan-scroll_mid.png</texturesliderbarfocus>
+					<textureslidernib>-</textureslidernib>
+					<textureslidernibfocus>-</textureslidernibfocus>
+					<orientation>vertical</orientation>
+					<showonepage>false</showonepage>
+					<visible>Control.IsVisible(120)</visible>
+				</control>
+			</control>
+		</control>
+	</controls>
+</window>

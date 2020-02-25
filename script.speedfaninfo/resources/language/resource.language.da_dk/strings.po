@@ -1,0 +1,93 @@
+# XBMC Media Center language file
+# Addon Name: SpeedFan Information Display
+# Addon id: script.speedfaninfo
+# Addon Provider: pkscuot
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: Danish (http://www.transifex.com/projects/p/xbmc-addons/language/da/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: da\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#30000"
+msgid "General"
+msgstr "Generelt"
+
+msgctxt "#30001"
+msgid "Enable Verbose Logging"
+msgstr "Aktivér Grundig Logning"
+
+msgctxt "#30002"
+msgid "Log Temperature Scale"
+msgstr "Log Temperaturskala"
+
+msgctxt "#30003"
+msgid "Window Update Interval (in seconds)"
+msgstr "Opdateringsinterval i Windows (i sekunder)"
+
+msgctxt "#30004"
+msgid "Use Compact Display"
+msgstr "Anvend kompakt visning"
+
+msgctxt "#30005"
+msgid "    Background Transparency"
+msgstr "Gennemsigtighed af baggrund"
+
+msgctxt "#30006"
+msgid "Log File Location"
+msgstr "Placering af logfilen"
+
+msgctxt "#30010"
+msgid " Additional Logs"
+msgstr "Yderligere Logfiler"
+
+msgctxt "#30011"
+msgid "Primary Log File Title"
+msgstr "Primær Log Fil Titel"
+
+msgctxt "#30012"
+msgid "Use Log File 2"
+msgstr "Brug Logfil 2"
+
+msgctxt "#30013"
+msgid "Use Log File 3"
+msgstr "Brug Logfil 3"
+
+msgctxt "#30020"
+msgid "    Log File Title"
+msgstr "Logfil Titel"
+
+msgctxt "#30021"
+msgid "    Log File Location"
+msgstr "Placering af logfilen"
+
+msgctxt "#30100"
+msgid "Temperature Information"
+msgstr "Temperaturinformation"
+
+msgctxt "#30101"
+msgid "Fan Speed Information"
+msgstr "Oplysninger om blæserhastighed"
+
+msgctxt "#30102"
+msgid "Voltage Information"
+msgstr "Oplysninger om Spænding (volt)"
+
+msgctxt "#30103"
+msgid "Log File Error"
+msgstr "Logfil Fejl"
+
+msgctxt "#30104"
+msgid "No log file found."
+msgstr "Ingen log fil fundet."
+
+msgctxt "#32209"
+msgid "Enable debug logging"
+msgstr "Aktiver fejlfindingslogning"
