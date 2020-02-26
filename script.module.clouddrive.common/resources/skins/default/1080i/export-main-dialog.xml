@@ -233,7 +233,7 @@
 			<left>0</left>
 			<top>280</top>
 			<width>1300</width>
-			<height>88</height>
+			<height>80</height>
 			<texturenofocus>dialog-bg.png</texturenofocus>
 			<label>Update library after export</label>
 			<textoffsetx>22</textoffsetx>
@@ -245,25 +245,25 @@
 		
 		<control type="radiobutton" id="1008">
 			<left>0</left>
-			<top>350</top>
+			<top>340</top>
 			<width>1300</width>
-			<height>88</height>
+			<height>80</height>
 			<texturenofocus>dialog-bg.png</texturenofocus>
-			<label>Watch for changes in the Cloud Folder</label>
+			<label>Create NFO Files</label>
 			<textoffsetx>22</textoffsetx>
 			<onup>1007</onup>
 			<ondown>1009</ondown>
 			<onleft>1007</onleft>
 			<onright>1009</onright>
 		</control>
-		
+
 		<control type="radiobutton" id="1009">
 			<left>0</left>
-			<top>420</top>
+			<top>400</top>
 			<width>1300</width>
-			<height>88</height>
+			<height>80</height>
 			<texturenofocus>dialog-bg.png</texturenofocus>
-			<label>Schedule automatic exports</label>
+			<label>Watch for changes in the Cloud Folder</label>
 			<textoffsetx>22</textoffsetx>
 			<onup>1008</onup>
 			<ondown>1010</ondown>
@@ -271,9 +271,23 @@
 			<onright>1010</onright>
 		</control>
 		
+		<control type="radiobutton" id="1010">
+			<left>0</left>
+			<top>460</top>
+			<width>1300</width>
+			<height>80</height>
+			<texturenofocus>dialog-bg.png</texturenofocus>
+			<label>Schedule automatic exports</label>
+			<textoffsetx>22</textoffsetx>
+			<onup>1009</onup>
+			<ondown>1011</ondown>
+			<onleft>1009</onleft>
+			<onright>1011</onright>
+		</control>
+		
 		<control type="group">
 			<left>0</left>
-			<top>510</top>
+			<top>540</top>
 			<!-- schedules label -->
 			<control type="label" id="10100">
 				<textoffsetx>20</textoffsetx>
@@ -294,16 +308,16 @@
 				<texture colordiffuse="44000000">white.png</texture>
 			</control>
 			<!-- schedules folder textbox -->
-			<control type="fixedlist" id="1010">
+			<control type="fixedlist" id="1011">
 				<left>250</left>
 				<top>0</top>
 				<width>1030</width>
 				<height>200</height>
 				<pagecontrol>10</pagecontrol>
-				<onup>1009</onup>
-				<ondown>1011</ondown>
-				<onleft>1009</onleft>
-				<onright>1011</onright>
+				<onup>1010</onup>
+				<ondown>1012</ondown>
+				<onleft>1010</onleft>
+				<onright>1012</onright>
 				<itemlayout width="1030" height="50">
 					<control type="label">
 						<left>10</left>
@@ -335,7 +349,7 @@
 			</control>
 	
 			<!-- Add button -->
-			<control type="button" id="1011">
+			<control type="button" id="1012">
 				<left>230</left>
 				<top>190</top>
 				<width>170</width>
@@ -344,9 +358,9 @@
 				<align>center</align>
 				<aligny>center</aligny>
 	
-				<onup>1010</onup>
+				<onup>1011</onup>
 				<ondown>998</ondown>
-				<onleft>1010</onleft>
+				<onleft>1011</onleft>
 				<onright>1001</onright>
 			</control>
 		</control>

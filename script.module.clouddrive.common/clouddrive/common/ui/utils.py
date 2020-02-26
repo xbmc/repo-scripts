@@ -249,7 +249,7 @@ class KodiUtils:
         return dt
     
     @staticmethod
-    def file(f, opts):
+    def file(f, opts="r"):
         import xbmcvfs
         return xbmcvfs.File(f, opts)
     
