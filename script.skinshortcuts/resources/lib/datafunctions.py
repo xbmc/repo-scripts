@@ -691,7 +691,7 @@ class DataFunctions():
                 if propertyName not in fallbackProperties:
                     # Save the property name in the order in which we processed it
                     fallbackProperties.append( propertyName )
-                if propertyName not in fallbacks.keys():
+                if propertyName not in list(fallbacks.keys()):
                     # Create an empty list to hold fallbacks for this property
                     fallbacks[ propertyName ] = []
                 # Check whether any attribute/value pair has to match for this fallback
@@ -1222,14 +1222,14 @@ class DataFunctions():
             text = "NUM-" + text
     
         # text to unicode
-        if type(text) != types.UnicodeType:
+        if type(text) != str:
             text = unicode(text, 'utf-8', 'ignore')
 
         # decode unicode ( ??? = Ying Shi Ma)
         text = unidecode(text)
 
         # text back to unicode
-        if type(text) != types.UnicodeType:
+        if type(text) != str:
             text = unicode(text, 'utf-8', 'ignore')
 
         # character entity reference

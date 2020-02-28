@@ -444,14 +444,14 @@ class GUI( xbmcgui.WindowXMLDialog ):
 
         # Add fallback properties
         for key in fallbackProperties:
-            if key not in allProps.keys():
+            if key not in list(allProps.keys()):
                 # Check whether we have a fallback for the value
                 for propertyMatch in fallbacks[ key ]:
                     matches = False
                     if propertyMatch[ 1 ] is None:
                         # This has no conditions, so it matched
                         matches = True
-                    elif propertyMatch[ 1 ] in allProps.keys() and allProps[ propertyMatch[ 1 ] ] == propertyMatch[ 2 ]:
+                    elif propertyMatch[ 1 ] in list(allProps.keys()) and allProps[ propertyMatch[ 1 ] ] == propertyMatch[ 2 ]:
                         matches = True
 
                     if matches:
@@ -463,10 +463,10 @@ class GUI( xbmcgui.WindowXMLDialog ):
 
         # Remove any properties whose requirements haven't been met
         for key in otherProperties:
-            if key in allProps.keys() and key in requires.keys() and requires[ key ] not in allProps.keys():
+            if key in list(allProps.keys()) and key in list(requires.keys()) and requires[ key ] not in list(allProps.keys()):
                 # This properties requirements aren't met
                 allProps.pop( key )
-                if "%s-NUM" %( key ) in allProps.keys():
+                if "%s-NUM" %( key ) in list(allProps.keys()):
                     allProps.pop( "%s-NUM" %( key ) )
 
         # Save the new properties to the listitem

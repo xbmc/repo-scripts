@@ -326,7 +326,7 @@ class NodeFunctions():
         icon = try_decode( icon )
         
         # Add all directories returned by the json query
-        if json_response.has_key('result') and json_response['result'].has_key('files') and json_response['result']['files'] is not None:
+        if 'result' in json_response and 'files' in json_response['result'] and json_response['result']['files'] is not None:
             labels = [ LANGUAGE(32058) ]
             paths = [ "ActivateWindow(%s,%s,return)" %( window, path ) ]
             for item in json_response['result']['files']:
@@ -503,10 +503,10 @@ class NodeFunctions():
         allProps[ group ] = {}
         for currentProperty in currentProperties:
             # If the group isn't in allProps, add it
-            if currentProperty[ 0 ] not in allProps.keys():
+            if currentProperty[ 0 ] not in list(allProps.keys()):
                 allProps[ currentProperty [ 0 ] ] = {}
             # If the labelID isn't in the allProps[ group ], add it
-            if currentProperty[ 1 ] not in allProps[ currentProperty[ 0 ] ].keys():
+            if currentProperty[ 1 ] not in list(allProps[ currentProperty[ 0 ] ].keys()):
                 allProps[ currentProperty[ 0 ] ][ currentProperty[ 1 ] ] = {}
             # And add the property to allProps[ group ][ labelID ]
             if currentProperty[ 3 ] is not None:
@@ -518,13 +518,13 @@ class NodeFunctions():
             log( "Setting %s to %s" %( propertyName, propertyValues[ count ] ) )
             if len( labelIDValues ) != 1:
                 labelID = labelIDValues[ count ]
-            if labelID not in allProps[ group ].keys():
+            if labelID not in list(allProps[ group ].keys()):
                 allProps[ group ][ labelID ] = {}
             allProps[ group ][ labelID ][ propertyName ] = propertyValues[ count ]
 
             # Remove any properties whose requirements haven't been met
             for key in otherProperties:
-                if key in allProps[ group ][ labelID ].keys() and key in requires.keys() and requires[ key ] not in allProps[ group ][ labelID ].keys():
+                if key in list(allProps[ group ][ labelID ].keys()) and key in list(requires.keys()) and requires[ key ] not in list(allProps[ group ][ labelID ].keys()):
                     # This properties requirements aren't met
                     log( "Removing value %s" %( key ) )
                     allProps[ group ][ labelID ].pop( key )
