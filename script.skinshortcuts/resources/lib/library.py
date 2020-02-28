@@ -39,9 +39,9 @@ def kodiwalk(path, stringForce = False):
     json_query = unicode(json_query, 'utf-8', errors='ignore')
     json_response = simplejson.loads(json_query)
     files = []
-    if json_response.has_key('result') and json_response['result'].has_key('files') and json_response['result']['files'] is not None:
+    if 'result' in json_response and 'files' in json_response['result'] and json_response['result']['files'] is not None:
         for item in json_response['result']['files']:
-            if item.has_key('file') and item.has_key('filetype') and item.has_key('label'):
+            if 'file' in item and 'filetype' in item and 'label' in item:
                 if item['filetype'] == 'directory' and not item['file'].endswith(('.xsp', '.m3u', '.xml/', '.xml' )):
                     if stringForce and item['file'].startswith(stringForce):
                         files = files + kodiwalk( xbmc.translatePath( item['file'] ), stringForce )
@@ -576,11 +576,11 @@ class LibraryFunctions():
             
         # Retrieve icon and thumbnail
         if item[3]:
-            if "icon" in item[3].keys() and item[ 3 ][ "icon" ] is not None:
+            if "icon" in list(item[3].keys()) and item[ 3 ][ "icon" ] is not None:
                 icon = item[3]["icon"]
             else:
                 icon = "DefaultShortcut.png"
-            if "thumb" in item[3].keys():
+            if "thumb" in list(item[3].keys()):
                 thumbnail = item[3]["thumb"]
             else:
                 thumbnail = None

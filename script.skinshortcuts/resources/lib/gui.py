@@ -475,7 +475,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
         for key in added:
             listitem.setProperty( key, allProps[ key ] )
         for key in removed:
-            if key not in allProps.keys(): continue
+            if key not in list(allProps.keys()): continue
             listitem.setProperty( key, None )
         for key in changed:
             listitem.setProperty( key, allProps[ key ] )
@@ -601,7 +601,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
         
         enabledSystemDebug = False
         enabledScriptDebug = False
-        if json_response.has_key('result') and json_response['result'].has_key('settings') and json_response['result']['settings'] is not None:
+        if 'result' in json_response and 'settings' in json_response['result'] and json_response['result']['settings'] is not None:
             for item in json_response['result']['settings']:
                 if item["id"] == "debug.showloginfo":
                     if item["value"] == False:
@@ -831,12 +831,12 @@ class GUI( xbmcgui.WindowXMLDialog ):
         for property in currentProperties:
             #[ groupname, itemLabelID, property, value ]
             if not property[0] == self.group:
-                if property[0] in labelIDChanges.keys():
+                if property[0] in list(labelIDChanges.keys()):
                     property[0] = labelIDChanges[property[0]]
                 elif "." in property[0] and property[ 0 ].rsplit( ".", 1 )[ 1 ].isdigit():
                     # Additional menu
                     groupName, groupValue = property[ 0 ].rsplit( ".", 1 )
-                    if groupName in labelIDChanges.keys() and int( groupValue ) in range( 1, 6 ):
+                    if groupName in list(labelIDChanges.keys()) and int( groupValue ) in range( 1, 6 ):
                         property[0] = "%s.%s" %( labelIDChanges[ groupName ], groupValue )
                 saveData.append( property )
         

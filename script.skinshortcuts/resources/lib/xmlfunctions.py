@@ -566,7 +566,7 @@ class XMLFunctions():
                         # Remove any template-only properties
                         otherProperties, requires, templateOnly = DATA._getPropertyRequires()
                         for key in otherProperties:
-                            if key in allProps.keys() and key in templateOnly:
+                            if key in list(allProps.keys()) and key in templateOnly:
                                 # This key is template-only
                                 menuitem.remove( allProps[ key ] )
                                 allProps.pop( key )
@@ -808,7 +808,7 @@ class XMLFunctions():
 
         # Add fallback properties
         for key in fallbackProperties:
-            if key not in allProps.keys():
+            if key not in list(allProps.keys()):
                 # Check whether we have a fallback for the value
                 for propertyMatch in fallbacks[ key ]:
                     matches = False
@@ -834,7 +834,7 @@ class XMLFunctions():
 
         # Remove any properties whose requirements haven't been met
         for key in otherProperties:
-            if key in allProps.keys() and key in requires.keys() and requires[ key ] not in allProps.keys():
+            if key in list(allProps.keys()) and key in list(requires.keys()) and requires[ key ] not in list(allProps.keys()):
                 # This properties requirements aren't met
                 newelement.remove( allProps[ key ] )
                 allProps.pop( key )
@@ -887,7 +887,7 @@ class XMLFunctions():
                 onclickelement.text = onclick.text
                 
             # Also add it as a path property
-            if not self.propertyExists( "path", newelement ) and not "path" in allProps.keys():
+            if not self.propertyExists( "path", newelement ) and not "path" in list(allProps.keys()):
                 # we only add the path property if there isn't already one in the list because it has to be unique in Kodi lists
                 pathelement = xmltree.SubElement( newelement, "property" )
                 pathelement.set( "name", "path" )
@@ -895,7 +895,7 @@ class XMLFunctions():
                 allProps[ "path" ] = pathelement
             
             # Get 'list' property (the action property of an ActivateWindow shortcut)
-            if not self.propertyExists( "list", newelement ) and not "list" in allProps.keys():
+            if not self.propertyExists( "list", newelement ) and not "list" in list(allProps.keys()):
                 # we only add the list property if there isn't already one in the list because it has to be unique in Kodi lists
                 listElement = xmltree.SubElement( newelement, "property" )
                 listElement.set( "name", "list" )
