@@ -136,7 +136,7 @@ class XMLFunctions():
                 enabledSystemDebug = False
                 enabledScriptDebug = False
 
-                if json_response.has_key('result') and json_response['result'].has_key('settings') and json_response['result']['settings'] is not None:
+                if 'result' in json_response and 'settings' in json_response['result'] and json_response['result']['settings'] is not None:
                     for item in json_response['result']['settings']:
                         if item["id"] == "debug.showloginfo":
                             if item["value"] == False:
@@ -445,7 +445,7 @@ class XMLFunctions():
                     # Remove any template-only properties
                     otherProperties, requires, templateOnly = DATA._getPropertyRequires()
                     for key in otherProperties:
-                        if key in allProps.keys() and key in templateOnly:
+                        if key in list(allProps.keys()) and key in templateOnly:
                             # This key is template-only
                             menuitem.remove( allProps[ key ] )
                             allProps.pop( key )

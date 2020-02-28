@@ -716,7 +716,7 @@ class Template():
         # Combines an existing set of properties with additional properties
         newProperties = self.getProperties( elem, items )
         for propertyName in newProperties:
-            if propertyName in currentProperties.keys():
+            if propertyName in list(currentProperties.keys()):
                 continue
             currentProperties[ propertyName ] = newProperties[ propertyName ]
 

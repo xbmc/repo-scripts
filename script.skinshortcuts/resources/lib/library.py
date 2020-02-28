@@ -871,7 +871,7 @@ class LibraryFunctions():
         json_response = simplejson.loads(json_query)
         
         # Add all directories returned by the json query
-        if json_response.has_key('result') and json_response['result'].has_key('channels') and json_response['result']['channels'] is not None:
+        if 'result' in json_response and 'channels' in json_response['result'] and json_response['result']['channels'] is not None:
             for item in json_response['result']['channels']:
                 listitems.append( self._create(["pvr-channel://" + str( item['channelid'] ), item['label'], "::SCRIPT::32076", {"icon": "DefaultTVShows.png", "thumb": item[ "thumbnail"]}]) )
         
@@ -884,7 +884,7 @@ class LibraryFunctions():
         json_response = simplejson.loads(json_query)
         
         # Add all directories returned by the json query
-        if json_response.has_key('result') and json_response['result'].has_key('channels') and json_response['result']['channels'] is not None:
+        if 'result' in json_response and 'channels' in json_response['result'] and json_response['result']['channels'] is not None:
             for item in json_response['result']['channels']:
                 listitems.append( self._create(["pvr-channel://" + str( item['channelid'] ), item['label'], "::SCRIPT::32077", {"icon": "DefaultTVShows.png", "thumb": item[ "thumbnail"]}]) )
         
@@ -939,7 +939,7 @@ class LibraryFunctions():
         json_response = simplejson.loads(json_query)
             
         # Add all directories returned by the json query
-        if json_response.has_key('result') and json_response['result'].has_key('sources') and json_response['result']['sources'] is not None:
+        if 'result' in json_response and 'sources' in json_response['result'] and json_response['result']['sources'] is not None:
             for item in json_response['result']['sources']:
                 listitems.append( self._create(["||SOURCE||" + item['file'], item['label'], "32069", {"icon": "DefaultFolder.png"} ]) )
         self.addToDictionary( "videosources", listitems )
@@ -953,7 +953,7 @@ class LibraryFunctions():
         json_response = simplejson.loads(json_query)
             
         # Add all directories returned by the json query
-        if json_response.has_key('result') and json_response['result'].has_key('sources') and json_response['result']['sources'] is not None:
+        if 'result' in json_response and 'sources' in json_response['result'] and json_response['result']['sources'] is not None:
             for item in json_response['result']['sources']:
                 listitems.append( self._create(["||SOURCE||" + item['file'], item['label'], "32073", {"icon": "DefaultFolder.png"} ]) )
         self.addToDictionary( "musicsources", listitems )
@@ -967,7 +967,7 @@ class LibraryFunctions():
         json_response = simplejson.loads(json_query)
             
         # Add all directories returned by the json query
-        if json_response.has_key('result') and json_response['result'].has_key('sources') and json_response['result']['sources'] is not None:
+        if 'result' in json_response and 'sources' in json_response['result'] and json_response['result']['sources'] is not None:
             for item in json_response['result']['sources']:
                 listitems.append( self._create(["||SOURCE||" + item['file'], item['label'], "32089", {"icon": "DefaultFolder.png"} ]) )
         self.addToDictionary( "picturesources", listitems )
@@ -1155,7 +1155,7 @@ class LibraryFunctions():
             json_query = unicode(json_query, 'utf-8', errors='ignore')
             json_response = simplejson.loads(json_query)
             
-            if json_response.has_key('result') and json_response['result'].has_key('addons') and json_response['result']['addons'] is not None:
+            if 'result' in json_response and 'addons' in json_response['result'] and json_response['result']['addons'] is not None:
                 for item in json_response['result']['addons']:
                     if item['enabled'] == True:                            
                         path = "RunAddOn(" + item['addonid'].encode('utf-8') + ")"
@@ -1232,16 +1232,16 @@ class LibraryFunctions():
     def detectPluginContent(self, item):
         #based on the properties in the listitem we try to detect the content
         
-        if not item.has_key("showtitle") and not item.has_key("artist"):
+        if "showtitle" not in item and "artist" not in item:
             #these properties are only returned in the json response if we're looking at actual file content...
             # if it's missing it means this is a main directory listing and no need to scan the underlying listitems.
             return None
 
-        if not item.has_key("showtitle") and not item.has_key("artist"):
+        if "showtitle" not in item and "artist" not in item:
             #these properties are only returned in the json response if we're looking at actual file content...
             # if it's missing it means this is a main directory listing and no need to scan the underlying listitems.
             return "files"
-        if not item.has_key("showtitle") and item.has_key("artist"):
+        if "showtitle" not in item and "artist" in item:
             ##### AUDIO ITEMS ####
             if len( item["artist"] ) != 0:
                 artist = item["artist"][0]
@@ -1370,7 +1370,7 @@ class LibraryFunctions():
         json_response = simplejson.loads(json_query)
             
         # Add all directories returned by the json query
-        if json_response.has_key('result') and json_response['result'].has_key('files') and json_response['result']['files']:
+        if 'result' in json_response and 'files' in json_response['result'] and json_response['result']['files']:
             json_result = json_response['result']['files']
             
             for item in json_result:
@@ -1426,7 +1426,7 @@ class LibraryFunctions():
                     listitem = self._create( [ item[ "file" ], altLabel, "", {"icon": item.get("icon"), "thumb": thumb} ] )
                     # add all passed properties to the gui to set default background, widget etc.
                     properties = []
-                    for key, value in smartShortCutsData.iteritems():
+                    for key, value in smartShortCutsData.items():
                         properties.append( [key, value ] )
                     listitem.setProperty( "smartShortcutProperties", repr( properties ) )
                     listitem.setProperty( "untranslatedIcon", thumb )
@@ -1909,15 +1909,15 @@ class LibraryFunctions():
         json_query = xbmc.executeJSONRPC('{ "jsonrpc": "2.0", "id": 0, "method": "Files.GetDirectory", "params": { "properties": ["title", "art", "file", "fanart"], "directory": "' + path + '", "media": "files" } }')
         json_query = unicode(json_query, 'utf-8', errors='ignore')
         json_response = simplejson.loads(json_query)
-        if json_response.has_key('result') and json_response['result'].has_key('files') and json_response['result']['files']:
+        if 'result' in json_response and 'files' in json_response['result'] and json_response['result']['files']:
             json_result = json_response['result']['files']
             for item in json_result:
                 label = item["label"]
                 image = ""
                 if item.get("art"):
-                    if item["art"].has_key("fanart"):
+                    if "fanart" in item["art"]:
                         image = item["art"]["fanart"]
-                    elif item["art"].has_key("thumb"):
+                    elif "thumb" in item["art"]:
                         image = item["art"]["thumb"]
                 if not image and item.get("thumbnail"):
                     image = item["thumbnail"]
