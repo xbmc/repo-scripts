@@ -34,8 +34,8 @@ msgid "Due to distribution rights, [B]Widevine CDM[/B] has to be extracted from 
 msgstr "Из-за проблем с распространением, [B]Widevine CDM[/B] необходимо извлечь из образа восстановления Chrome OS. Для этого процесса требуется минимум [B]{diskspace}[/B] свободного дискового пространства. Вы хотите продолжить?"
 
 msgctxt "#30007"
-msgid "[B]Widevine CDM[/B] is unfortunately not available on this system architecture."
-msgstr "К сожалению, [B]Widevine CDM[/B] не доступен для текущей архитектуры системы."
+msgid "[B]Widevine CDM[/B] is unfortunately not available on this system architecture ([B]{arch}[/B])."
+msgstr "К сожалению, [B]Widevine CDM[/B] не доступен для текущей архитектуры системы ([B]{arch}[/B])."
 
 msgctxt "#30008"
 msgid "[B]{addon}[/B] is missing on your Kodi install. This add-on is required to play this content."
@@ -50,8 +50,8 @@ msgid "[B]Kodi {version}[/B] or higher is required for [B]Widevine CDM[/B] conte
 msgstr "Требуется [B]Kodi {version}[/B] или выше для воспроизведения контента с помощью [B]Widevine CDM[/B]."
 
 msgctxt "#30011"
-msgid "This operating system ([B]{0}[/B]) is not supported by [B]Widevine CDM[/B]."
-msgstr "Эта операционная система ([B]{0}[/B]) не поддерживается [B]Widevine CDM[/B]."
+msgid "This operating system ([B]{os}[/B]) is not supported by [B]Widevine CDM[/B]."
+msgstr "Эта операционная система ([B]{os}[/B]) не поддерживается [B]Widevine CDM[/B]."
 
 msgctxt "#30012"
 msgid "The Windows Store version of Kodi does not support [B]Widevine CDM[/B].[CR][CR]Please use the installer from kodi.tv instead."
@@ -190,8 +190,8 @@ msgid "Uncompressing image..."
 msgstr "Распаковка образа..."
 
 msgctxt "#30046"
-msgid "This may take several minutes."
-msgstr "Это может занять несколько минут."
+msgid "This may take several minutes. ({mins:d}:{secs:02d})"
+msgstr "Это может занять несколько минут. ({mins:d}:{secs:02d})"
 
 msgctxt "#30047"
 msgid "[I]Please do not interrupt this process.[/I]"
@@ -229,6 +229,14 @@ msgctxt "#30055"
 msgid "There is not enough free disk space in the current temporary directory. Would you like to specify a different one to temporarily use for the Chrome OS Recovery Image (e.g. on a USB)?"
 msgstr "На разделе с временым каталогом недостаточно свободного места. Хотите выбрать другой раздел для работы с Chrome OS Recovery Image (например, USB)?"
 
+msgctxt "#30056"
+msgid "No backups found!"
+msgstr "Резервные копии не найдены!"
+
+msgctxt "#30057"
+msgid "Choose a backup to restore"
+msgstr "Выберите резервную копию для восстановления"
+
 
 ### INFORMATION DIALOG
 msgctxt "#30800"
@@ -260,14 +268,18 @@ msgid "[B]Widevine information[/B]"
 msgstr "[B]Информация о Widevine[/B]"
 
 msgctxt "#30821"
+msgid "Widevine version: [B]Built into Android[/B]"
+msgstr "Версия Widevine: [B]Встроенный в Android[/B]"
+
+msgctxt "#30822"
 msgid "Widevine version: [B]{version}[/B] [COLOR gray](last updated on [B]{date}[/B])[/COLOR]"
 msgstr "Версия Widevine: [B]{version}[/B] [COLOR gray](последнее обновление [B]{date}[/B])[/COLOR]"
 
-msgctxt "#30822"
+msgctxt "#30823"
 msgid "Widevine CDM path: [B]{path}[/B]"
 msgstr "Путь к Widevine CDM: [B]{path}[/B]"
 
-msgctxt "#30823"
+msgctxt "#30824"
 msgid "Chrome OS version: [B]{version}[/B]"
 msgstr "Версия Chrome OS: [B]{version}[/B]"
 
@@ -308,3 +320,11 @@ msgstr "(Пере)установить модуль Widevine CDM..."
 msgctxt "#30911"
 msgid "Remove Widevine CDM library..."
 msgstr "Удалить модуль Widevine CDM..."
+
+msgctxt "#30913"
+msgid "Number of backups"
+msgstr "Количество резервных копий"
+
+msgctxt "#30915"
+msgid "Restore Widevine CDM library..."
+msgstr "Восстановить модуль Widevine CDM..."

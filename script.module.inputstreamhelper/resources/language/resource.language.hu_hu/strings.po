@@ -4,110 +4,110 @@ msgstr ""
 "Project-Id-Version: script.module.inputstreamhelper\n"
 "Report-Msgid-Bugs-To: https://github.com/emilsvennesson/script.module.inputstreamhelper\n"
 "POT-Creation-Date: 2013-11-18 16:15+0000\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Sebastian Golasch <public@asciidisco.com\n"
-"Language-Team: German\n"
+"PO-Revision-Date: 2020-02-17 16:30+0000\n"
+"Last-Translator: frodo19\n"
+"Language-Team: Hungarian\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: de\n"
+"Language: hu\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
 
 msgctxt "#30001"
 msgid "Information"
-msgstr "Informationen"
+msgstr "Információ"
 
 msgctxt "#30002"
 msgid "This add-on relies on the proprietary decryption module [B]Widevine CDM[/B] for playback."
-msgstr "Dieses Add-on benötigt das proprietäre Entschlüsselungsmodul [B]Widevine CDM[/B] für die Wiedergabe."
+msgstr "Ez a kiegészítő a szabadalmaztatott dekódolási modulra támaszkodik [B]Widevine CDM[/B] a lejátszáshoz"
 
 msgctxt "#30004"
 msgid "Error"
-msgstr "Fehler"
+msgstr "Hiba"
 
 msgctxt "#30005"
 msgid "An error occurred while installing [B]Widevine CDM[/B]. Please enable debug logging and file a bug report at:[CR][CR]github.com/emilsvennesson/script.module.inputstreamhelper"
-msgstr "Während der Installation der [B]Widevine CDM[/B] Bibliothek ist ein Fehler aufgetreten. Bitte Debug-Logging aktivieren und den Fehler melden:[CR][CR]github.com/emilsvennesson/script.module.inputstreamhelper"
+msgstr "Hiba a telepítéskor [B]Widevine CDM[/B]. Engedélyezze a hibakeresést, a hibajelentést itt teheti meg:[CR][CR]github.com/emilsvennesson/script.module.inputstreamhelper"
 
 msgctxt "#30006"
 msgid "Due to distribution rights, [B]Widevine CDM[/B] has to be extracted from a Chrome OS recovery image. This process requires at least [B]{diskspace}[/B] of free disk space. Do you wish to continue?"
-msgstr "Wegen lizenzrechtlicher Reglementierungen muss die [B]Widevine CDM[/B] Bibliothek aus einem Chrome OS Image extrahiert werden. Dafür sind mindestens [B]{diskspace}[/B] freier Festplattenspeicher notwendig. Soll der Vorgang fortgesetzt werden?"
+msgstr "A terjesztési jogok miatt a [B]Widevine CDM-et[/B]a Chrome OS helyreállítási képből kell kivonni. Ehhez legalább [B]{diskspace}[/B] szabad lemezterületre van szükség. Folytatni akarja?"
 
 msgctxt "#30007"
 msgid "[B]Widevine CDM[/B] is unfortunately not available on this system architecture ([B]{arch}[/B])."
-msgstr "Die [B]Widevine CDM[/B] Bibliothek ist leider für diese System-Architektur ([B]{arch}[/B]) nicht verfügbar."
+msgstr "[B]A Widevine CDM[/B] sajnos nem érhető el ezen a rendszer architektúrán ([B]{arch}[/B])."
 
 msgctxt "#30008"
 msgid "[B]{addon}[/B] is missing on your Kodi install. This add-on is required to play this content."
-msgstr "[B]{addon}[/B] fehlt in der Kodi Installation. Das Add-on wird benötigt um den Inhalt wiederzugeben."
+msgstr "[B]{addon}[/B] hiányzik a Kodi telepítésből. A tartalom lejátszásához ehhez a kiegészítő szükséges."
 
 msgctxt "#30009"
 msgid "[B]{addon}[/B] is not enabled. This add-on is required to play this content.[CR][CR]Would you like to enable [B]{addon}[/B]?"
-msgstr "[B]{addon}[/B] ist nicht aktiviert. Das Add-on wird benötigt um den Inhalt wiederzugeben.[CR][CR]Soll [B]{addon}[/B] aktiviert werden?"
+msgstr "[B]{addon}[/B] nincs engedélyezve. A tartalom lejátszásához ehhez a kiegészítő szükséges.[CR][CR]Szeretné engedélyezni a [B]{addon}[/B]?"
 
 msgctxt "#30010"
 msgid "[B]Kodi {version}[/B] or higher is required for [B]Widevine CDM[/B] content playback."
-msgstr "[B]Kodi in der Version {version}[/B] oder höher wird benötigt, um [B]Widevine CDM[/B] geschützte Inhalte wiederzugeben."
+msgstr "[B]Kodi {version}[/B] vagy magasabb verzió kell a [B]Widevine CDM[/B] tartalom lejátszásához."
 
 msgctxt "#30011"
 msgid "This operating system ([B]{os}[/B]) is not supported by [B]Widevine CDM[/B]."
-msgstr "Das genutzte Betriebssystem ([B]{os}[/B]) wird aktuell nicht von der [B]Widevine CDM[/B] Bibliothek unterstützt."
+msgstr "Ezt az operációs rendszert ([B]{os}[/B]) nem támogatja a [B]Widevine CDM[/B]"
 
 msgctxt "#30012"
 msgid "The Windows Store version of Kodi does not support [B]Widevine CDM[/B].[CR][CR]Please use the installer from kodi.tv instead."
-msgstr "Die Windows Store Version von Kodi unterstützt die [B]Widevine CDM[/B] Bibliothek nicht.[CR][CR]Es wird empfohlen Kodi mit einem Installer von kodi.tv zu installieren."
+msgstr "A Kodi Windows Store verziója nem támogatja a [B]Widevine CDM[/B].[CR][CR]Kérjük, inkább a kodi.tv oldalon levő telepítőt használja."
 
 msgctxt "#30013"
 msgid "Failed to retrieve [B]{filename}[/B]."
-msgstr "Fehler beim Laden von [B]{filename}[/B]."
+msgstr "Nem sikerült letölteni a [B]{filename}[/B]."
 
 msgctxt "#30014"
 msgid "Download in progress..."
-msgstr "Download aktiv..."
+msgstr "Letöltés folyamatban..."
 
 msgctxt "#30015"
 msgid "Downloading [B]{filename}[/B]..."
-msgstr "Download von [B]{filename}[/B]..."
+msgstr "Letöltés [B]{filename}[/B]..."
 
 msgctxt "#30016"
 msgid "Failed to extract [B]Widevine CDM[/B] from zip file."
-msgstr "Fehler beim Entpacken der [B]Widevine CDM[/B] Bibliothek."
+msgstr "Nem sikerült kitömöríteni a [B]Widevine CDM-t[/B] a zip fájlból."
 
 msgctxt "#30017"
 msgid "[B]{addon}[/B] {version} or later is required to play this content."
-msgstr "[B]{addon}[/B] {version} oder höher ist notwendig, um den Inhalt wiederzugeben."
+msgstr "[B]{addon}[/B] {version} vagy újabb, kell a lejátszáshoz."
 
 msgctxt "#30018"
 msgid "You do not have enough free disk space to install [B]Widevine CDM[/B]. Free up at least [B]{diskspace}[/B] and try again."
-msgstr "Es ist nicht genug Festplattenspeicher zur Installation der [B]Widevine CDM[/B] Bibliothek vorhanden. Es müssen [B]{diskspace}[/B] verfügbar gemacht werden um es erneut zu versuchen."
+msgstr "Nincs elég hely a lemezen a [B]Widevine CDM[/B] telepítéséhez. Szabadíts fel helyet [B]{diskspace}[/B] és próbáld meg újra."
 
 msgctxt "#30019"
 msgid "This operating system ([B]{os}[/B]) is not supported by [B]Widevine CDM[/B] for ARM devices."
-msgstr "Das Betriebssystem ([B]{os}[/B]) wird auf ARM Systemarchitekturen nicht von der [B]Widevine CDM[/B] Bibliothek unterstützt."
+msgstr "Ez az operációs rendszer ([B]{os}[/B]) nem támogatotja a [B]Widevine CDM-t[/B] ARM eszközökön."
 
 msgctxt "#30020"
 msgid "[B]'{command1}'[/B] or [B]'{command2}'[/B] command needs to exist on system to extract the [B]Widevine CDM[/B]."
-msgstr "Einer der Befehle [B]'{command1}'[/B] oder [B]'{command2}'[/B] muss verfügbar sein, um die [B]Widevine CDM[/B] Bibliothek zu extrahieren."
+msgstr "[B]'{command1}'[/B] vagy [B]'{command2}'[/B] parancsnak léteznie kell a rendszerben a [B]Widevine CDM[/B] kitömörítéséhez."
 
 msgctxt "#30021"
 msgid "[B]'{command}'[/B] command needs to exist on system to extract the [B]Widevine CDM[/B]."
-msgstr "Der Befehl [B]'{command}'[/B] muss verfügbar sein, um die [B]Widevine CDM[/B] Bibliothek zu extrahieren."
+msgstr "[B]'{command}'[/B] parancsnak léteznie kell a rendszerben a [B]Widevine CDM[/B] kitömörítéséhez."
 
 msgctxt "#30022"
 msgid "Downloading the Chrome OS recovery image..."
-msgstr "Download des Chrome OS Recovery Images..."
+msgstr "Chrome OS helyreállítási képfájl letöltése folyamatban..."
 
 msgctxt "#30023"
 msgid "Download completed!"
-msgstr "Download erfolgreich abgeschlossen!"
+msgstr "Letöltés kész!"
 
 msgctxt "#30024"
 msgid "The installation now needs to unzip, mount and extract [B]Widevine CDM[/B] from the recovery image.[CR][CR]This process may take up to ten minutes to complete."
-msgstr "Das Chrome OS Recovery Image wird nun extrahiert und gemountet, um die [B]Widevine CDM[/B] Bibliothek zu extrahieren.[CR][CR]Dieser Prozess kann bis zu zehn Minuten dauern."
+msgstr "A telepítésnek most ki kell csomagolnia, össze kell raknia és ki kell vonnia a [B]Widevine CDM-t[/B] a helyreállítási képfájlból.[CR][CR]Ez akár 10 percnél is tovább tarthat."
 
 msgctxt "#30025"
 msgid "Acquiring EULA."
-msgstr "Laden der EULA."
+msgstr "EULA elolvasása."
 
 msgctxt "#30026"
 msgid "Widevine CDM EULA"
@@ -115,216 +115,216 @@ msgstr "Widevine CDM EULA"
 
 msgctxt "#30027"
 msgid "I accept"
-msgstr "Ich akzeptiere"
+msgstr "Egyetértek"
 
 msgctxt "#30028"
 msgid "Cancel"
-msgstr "Abbrechen"
+msgstr "Törlés"
 
 msgctxt "#30029"
 msgid "OK"
-msgstr "OK"
+msgstr "Rendben"
 
 msgctxt "#30030"
 msgid "The installation may need to run the following commands with root permissions: [B]{cmds}[/B]."
-msgstr "Für den Installationsvorgang müssen folgende Befehle mit root-Berechtigung ausgeführt werden: [B]{cmds}[/B]."
+msgstr "A telepítéshez szükség van a kövekező parancs root engedéllyel való futtatásához: [B]{cmds}[/B]."
 
 msgctxt "#30031"
 msgid "An update of [B]Widevine CDM[/B] is required to play this content."
-msgstr "Ein Update der [B]Widevine CDM[/B] Bibliothek ist notwendig, um diesen Inhalt abzuspielen."
+msgstr "A [B]Widevine CDM[/B] frissítése szükséges a tartalom lejátszásához"
 
 msgctxt "#30032"
 msgid "Your system is missing the following libraries required by Widevine CDM: [B]{libs}[/B]. Install the libraries to play this content."
-msgstr "Dem System fehlen die folgenden Bibliotheken, welche von der Widevine CDM Bibliothek benötigt werden: [B]{libs}[/B]. Diese installieren, um den Inhalt abzuspielen."
+msgstr "A te rendszeredben hiányzik a következő elérési út a Widevine CDM-nek: [B]{libs}[/B]. Telepítse a könyvtárakat a tartalom lejátszásához."
 
 msgctxt "#30033"
 msgid "There is an update available for [B]Widevine CDM[/B]."
-msgstr "Es gibt ein Update für die [B]Widevine CDM[/B]."
+msgstr "Frissítés elérhető a [B]Widevine CDM-hez[/B]"
 
 msgctxt "#30034"
 msgid "Update"
-msgstr "Update"
+msgstr "Frissítés"
 
 msgctxt "#30035"
 msgid "[B]loop[/B] is still loaded"
-msgstr "[B]loop[/B] ist noch geladen"
+msgstr "[B]loop[/B] még betöltve"
 
 msgctxt "#30036"
 msgid "Unload it by running [B]modprobe -r loop[/B] in the terminal."
-msgstr "Führe zum Auswerfen [B]modprobe -r loop[/B] im Terminal aus."
+msgstr "Szakítsd meg a [B]modprobe -r loop[/B] paranccsal terminálon kersztül"
 
 msgctxt "#30037"
 msgid "Success!"
-msgstr "Erfolg!"
+msgstr "Sikeres!"
 
 msgctxt "#30038"
 msgid "Install Widevine"
-msgstr "Installiere Widevine"
+msgstr "Widevine telepítése"
 
 msgctxt "#30039"
 msgid "[B]Widevine CDM[/B] is currently not available natively on ARM64. Please switch to a 32-bit userspace for [B]Widevine CDM[/B] support."
-msgstr "[B]Widevine CDM[/B] ist aktuell nicht nativ für ARM64 verfügbar. Für [B]Widevine CDM[/B] Unterstützung, bitte zu 32-Bit Userspace wechseln."
+msgstr "A [B]Widevine CDM[/B] jelenleg nem támogatott natívan az ARM64-en. Kérjük, váltson egy 32 bites felhasználói területre a [B]Widevine CDM[/B] támogatáshoz."
 
 msgctxt "#30040"
 msgid "Update available"
-msgstr "Update verfügbar"
+msgstr "Frissítés elérhető"
 
 msgctxt "#30041"
 msgid "Widevine CDM is required"
-msgstr "Widevine CDM ist erforderlich"
+msgstr "Widevine CDM kell hozzá"
 
 msgctxt "#30042"
 msgid "Using a SOCKS proxy requires the PySocks library (script.module.pysocks) installed."
-msgstr "Um einen SOCKS Proxy zu verwenden muss die PySocks Bibliothek (script.module.pysocks) installiert werden."
+msgstr "SOCKS proxy használatához telepíteni kell a PySocks könyvtárat (script.module.pysocks)."
 
 msgctxt "#30043"
 msgid "Extracting Widevine CDM"
-msgstr "Extrahiere Widevine CDM"
+msgstr "Widevine CDM kicsomagolása"
 
 msgctxt "#30044"
 msgid "Preparing downloaded image..."
-msgstr "Bereite das heruntergeladene Image vor..."
+msgstr "A letöltött fájl előkészítése..."
 
 msgctxt "#30045"
 msgid "Uncompressing image..."
-msgstr "Entpacke das Image..."
+msgstr "Lemezkép kitömörítése"
 
 msgctxt "#30046"
 msgid "This may take several minutes. ({mins:d}:{secs:02d})"
-msgstr "Dies kann einige Minuten in Anspruch nehmen. ({mins:d}:{secs:02d})"
+msgstr "Ez néhány percig eltarthat. ({mins:d}:{secs:02d})"
 
 msgctxt "#30047"
 msgid "[I]Please do not interrupt this process.[/I]"
-msgstr "[I]Bitte diesen Prozess nicht unterbrechen.[/I]"
+msgstr "[I]NE szakítsd meg a folyamatot.[/I]"
 
 msgctxt "#30048"
 msgid "Extracting Widevine CDM from image..."
-msgstr "Extrahiere Widevine CDM aus dem Image..."
+msgstr "A Widevine CDM kitömörítése..."
 
 msgctxt "#30049"
 msgid "Installing Widevine CDM..."
-msgstr "Installiere Widevine CDM..."
+msgstr "A Widevine CDM telepítése..."
 
 msgctxt "#30050"
 msgid "Finishing..."
-msgstr "Fertigstellen..."
+msgstr "Befejezés..."
 
 msgctxt "#30051"
 msgid "[B]Widevine CDM[/B] successfully installed."
-msgstr "[B]Widevine CDM[/B] Bibliothek wurde erfolgreich installiert."
+msgstr "A [B]Widevine CDM[/B] sikeresen telepítve."
 
 msgctxt "#30052"
 msgid "[B]Widevine CDM[/B] successfully removed."
-msgstr "[B]Widevine CDM[/B] wurde erfolgreich entfernt."
+msgstr "A [B]Widevine CDM[/B] sikeresen törölve."
 
 msgctxt "#30053"
 msgid "[B]Widevine CDM[/B] not found."
-msgstr "[B]Widevine CDM[/B] wurde nicht gefunden."
+msgstr "A [B]Widevine CDM[/B] nem található."
 
 msgctxt "#30054"
 msgid "disabled"
-msgstr "Deaktiviert"
+msgstr "letiltva"
 
 msgctxt "#30055"
 msgid "There is not enough free disk space in the current temporary directory. Would you like to specify a different one to temporarily use for the Chrome OS Recovery Image (e.g. on a USB)?"
-msgstr "Es ist nicht genügend Speicher im aktuellen temporären Verzeichnis vorhanden. Möchten Sie ein anderes angeben, welches temporär für das Chrome OS Recovery Image verwendet wird (z.B. auf einem USB Stick)?"
+msgstr "Nincs elég hely az ideiglenes könyvtárban. Meg akarsz határozni egy ideiglenes tárolóhelyet a Chrome OS Recovery Image-nak (pl. egy USB)?"
 
 msgctxt "#30056"
 msgid "No backups found!"
-msgstr "Keine Backups gefunden!"
+msgstr "Nem található mentés fájl!"
 
 msgctxt "#30057"
 msgid "Choose a backup to restore"
-msgstr "Wählen Sie ein Backup zum Wiederherstellen aus."
+msgstr "Válassz mentés fájlt a visszaállításhoz"
 
 
 ### INFORMATION DIALOG
 msgctxt "#30800"
 msgid "[B]Kodi information[/B]"
-msgstr "[B]Kodi Informationen[/B]"
+msgstr "[B]Kodi információ[/B]"
 
 msgctxt "#30801"
 msgid "Kodi version: [B]{version}[/B]"
-msgstr "Kodi Version: [B]{version}[/B]"
+msgstr "Kodi verzió: [B]{version}[/B]"
 
 msgctxt "#30802"
 msgid "Kodi platform/architecture: [B]{platform}[/B]/[B]{arch}[/B]"
-msgstr "Kodi Plattform/Architektur: [B]{platform}[/B]/[B]{arch}[/B]"
+msgstr "Kodi platform/architectúra: [B]{platform}[/B]/[B]{arch}[/B]"
 
 msgctxt "#30810"
 msgid "[B]InputStream information[/B]"
-msgstr "[B]InputStream Informationen[/B]"
+msgstr "[B]InputStream információ[/B]"
 
 msgctxt "#30811"
 msgid "InputStream Helper version: [B]{version}[/B] {state}"
-msgstr "InputStream Helper Version: [B]{version}[/B] {state}"
+msgstr "InputStream Helper verzió: [B]{version}[/B] {state}"
 
 msgctxt "#30812"
 msgid "InputStream Adaptive version: [B]{version}[/B] {state}"
-msgstr "InputStream Adaptive Version: [B]{version}[/B] {state}"
+msgstr "InputStream Adaptive verzió: [B]{version}[/B] {state}"
 
 msgctxt "#30820"
 msgid "[B]Widevine information[/B]"
-msgstr "[B]Widevine Informationen[/B]"
+msgstr "[B]Widevine információ[/B]"
 
 msgctxt "#30821"
 msgid "Widevine version: [B]Built into Android[/B]"
-msgstr "Widevine Version: [B]In Android eingebaut[/B]"
+msgstr "Widevine verzió: [B]Androiddal telepített[/B]"
 
 msgctxt "#30822"
 msgid "Widevine version: [B]{version}[/B] [COLOR gray](last updated on [B]{date}[/B])[/COLOR]"
-msgstr "Widevine Version: [B]{version}[/B] [COLOR gray](zuletzt aktualisiert am [B]{date}[/B])[/COLOR]"
+msgstr "Widevine verzió: [B]{version}[/B] [COLOR gray](utolsó frissítés [B]{date}[/B])[/COLOR]"
 
 msgctxt "#30823"
 msgid "Widevine CDM path: [B]{path}[/B]"
-msgstr "Widevine CDM Pfad: [B]{path}[/B]"
+msgstr "Widevine CDM elérési út: [B]{path}[/B]"
 
 msgctxt "#30824"
 msgid "Chrome OS version: [B]{version}[/B]"
-msgstr "Chrome OS Version: [B]{version}[/B]"
+msgstr "Chrome OS verzió: [B]{version}[/B]"
 
 msgctxt "#30830"
 msgid "Please report issues to:\n - [COLOR yellow]{url}[/COLOR]"
-msgstr "Bitte melden Sie Fehler hier:\n - [COLOR yellow]{url}[/COLOR]"
+msgstr "Hiba jelzése:\n - [COLOR yellow]{url}[/COLOR]"
 
 
 ### SETTINGS
 msgctxt "#30900"
 msgid "Expert"
-msgstr "Experte"
+msgstr "Haladó"
 
 msgctxt "#30901"
 msgid "InputStream Helper information"
-msgstr "InputStream Helper Informationen"
+msgstr "InputStream Helper információ"
 
 msgctxt "#30903"
 msgid "Disable InputStream Helper"
-msgstr "InputStream Helper deaktivieren"
+msgstr "InputStream Helper letiltása"
 
 msgctxt "#30904"
 msgid "[I]When disabled, DRM playback may fail![/I]"
-msgstr "[I]Bei Deaktivierung könnte DRM Wiedergabe fehlschlagen![/I]"
+msgstr "[I]Ha letiltod, a DRM tartalom lejátszása hibás lehet![/I]"
 
 msgctxt "#30905"
 msgid "Update frequency in days"
-msgstr "Updatefrequenz in Tagen"
+msgstr "Frissítés keresése napokban"
 
 msgctxt "#30907"
 msgid "Temporary download directory"
-msgstr "Temporäres Downloadverzeichnis"
+msgstr "Ideiglenes letöltési könyvtár"
 
 msgctxt "#30909"
 msgid "(Re)install Widevine CDM library..."
-msgstr "Widevine CDM Bibliothek (erneut) installieren..."
+msgstr "A Widevine CDM könyvtár úrjratelepítése..."
 
 msgctxt "#30911"
 msgid "Remove Widevine CDM library..."
-msgstr "Widevine CDM Bibliothek entfernen..."
+msgstr "A Widevine CDM könyvtár törlése..."
 
 msgctxt "#30913"
 msgid "Number of backups"
-msgstr "Anzahl Backups"
+msgstr "Mentések száma"
 
 msgctxt "#30915"
 msgid "Restore Widevine CDM library..."
-msgstr "Widevine CDM Bibliothek wiederherstellen..."
+msgstr "Widevine CDM könyvtár visszaállítása..."
