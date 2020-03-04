@@ -1,10 +1,12 @@
 # -*- coding: utf-8 -*-
 import sys
 from lib.yd_private_libs import util, servicecontrol, updater
-import xbmc
-import xbmcgui
+from kodi_six import xbmc
+from kodi_six import xbmcgui
 
 T = util.T
+PY3 = sys.version_info >= (3, 0)
+
 
 class PlayMonitor(xbmc.Player):
     def onPlayBackStarted(self):
@@ -81,12 +83,15 @@ class main():
                 'id': int(time.time()), 'media_type': 'video'}
         if extra:
             try:
-                import urlparse
+                if PY3:
+                    import urllib.parse as urlparse
+                else:
+                    import urlparse
                 for k, v in urlparse.parse_qsl(extra):
                     if k.lower() == 'user-agent':
                         info['user_agent'] = v
                         break
-            except:
+            except Exception:
                 util.ERROR(hide_tb=True)
 
         util.LOG(repr(info), debug=True)

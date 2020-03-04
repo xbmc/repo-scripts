@@ -1,4 +1,8 @@
 
+*** 19.912.2 ***
+
+Add Python 3 compatibility
+
 *** 19.912.1 ***
 
 Add German translation - (Thanks CurlingTongs)

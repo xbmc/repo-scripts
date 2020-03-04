@@ -1,15 +1,24 @@
-import urllib
 import os
-import urlparse
-import httplib
 import time
-import xbmc
+from kodi_six import xbmc
+import sys
 
 import YoutubeDLWrapper
 
 import YDStreamUtils as StreamUtils
 from yd_private_libs import util, servicecontrol
 
+
+PY3 = sys.version_info >= (3, 0)
+if PY3:
+    import urllib.parse as urlparse
+    from urllib.parse import urlencode
+    import http.client as httplib
+else:
+    import urlparse
+    import httplib
+    from urllib import urlencode
+    
 
 class DownloadResult:
     """
@@ -52,99 +61,99 @@ def _getQualityLimits(quality):
 
 
 def _selectVideoQuality(r, quality=None):
-        if quality is None:
-            quality = util.getSetting('video_quality', 1)
+    if quality is None:
+        quality = util.getSetting('video_quality', 1)
 
-        disable_dash = util.getSetting('disable_dash_video', True)
-        skip_no_audio = util.getSetting('skip_no_audio', True)
+    disable_dash = util.getSetting('disable_dash_video', True)
+    skip_no_audio = util.getSetting('skip_no_audio', True)
 
-        entries = r.get('entries') or [r]
+    entries = r.get('entries') or [r]
 
-        minHeight, maxHeight = _getQualityLimits(quality)
+    minHeight, maxHeight = _getQualityLimits(quality)
 
-        util.LOG('Quality: {0}'.format(quality), debug=True)
-        urls = []
-        idx = 0
-        for entry in entries:
-            defFormat = None
-            defMax = 0
-            defPref = -1000
-            prefFormat = None
-            prefMax = 0
-            prefPref = -1000
+    util.LOG('Quality: {0}'.format(quality), debug=True)
+    urls = []
+    idx = 0
+    for entry in entries:
+        defFormat = None
+        defMax = 0
+        defPref = -1000
+        prefFormat = None
+        prefMax = 0
+        prefPref = -1000
 
-            index = {}
-            formats = entry.get('formats') or [entry]
+        index = {}
+        formats = entry.get('formats') or [entry]
 
-            for i in range(len(formats)):
-                index[formats[i]['format_id']] = i
+        for i in range(len(formats)):
+            index[formats[i]['format_id']] = i
 
-            keys = sorted(index.keys())
-            fallback = formats[index[keys[0]]]
-            for fmt in keys:
-                fdata = formats[index[fmt]]
+        keys = sorted(index.keys())
+        fallback = formats[index[keys[0]]]
+        for fmt in keys:
+            fdata = formats[index[fmt]]
 
-                if 'height' not in fdata:
-                    continue
-                elif disable_dash and 'dash' in fdata.get('format_note', '').lower():
-                    continue
-                elif skip_no_audio and fdata.get('acodec', '').lower() == 'none':
-                    continue
+            if 'height' not in fdata:
+                continue
+            elif disable_dash and 'dash' in fdata.get('format_note', '').lower():
+                continue
+            elif skip_no_audio and fdata.get('acodec', '').lower() == 'none':
+                continue
 
-                h = fdata['height']
-                if h == None:
-                   h = 1
-                p = fdata.get('preference', 1)
-                if p == None:
-                   p = 1
-                if h >= minHeight and h <= maxHeight:
-                    if (h >= prefMax and p > prefPref) or (h > prefMax and p >= prefPref):
-                        prefMax = h
-                        prefPref = p
-                        prefFormat = fdata
-                elif(h >= defMax and h <= maxHeight and p > defPref) or (h > defMax and h <= maxHeight and p >= defPref):
-                        defMax = h
-                        defFormat = fdata
-                        defPref = p
-            formatID = None
-            if prefFormat:
-                info = prefFormat
-                logBase = '[{3}] Using Preferred Format: {0} ({1}x{2})'
-            elif defFormat:
-                info = defFormat
-                logBase = '[{3}] Using Default Format: {0} ({1}x{2})'
-            else:
-                info = fallback
-                logBase = '[{3}] Using Fallback Format: {0} ({1}x{2})'
-            url = info['url']
-            formatID = info['format_id']
-            util.LOG(logBase.format(formatID, info.get('width', '?'), info.get('height', '?'), entry.get('title', '').encode('ascii', 'replace')), debug=True)
-            if url.find("rtmp") == -1:
-                url += '|' + urllib.urlencode({'User-Agent': entry.get('user_agent') or YoutubeDLWrapper.std_headers['User-Agent']})
-            else:
-                url += ' playpath='+fdata['play_path']
-            new_info = dict(entry)
-            new_info.update(info)
-            urls.append(
-                {
-                    'xbmc_url': url,
-                    'url': info['url'],
-                    'title': entry.get('title', ''),
-                    'thumbnail': entry.get('thumbnail', ''),
-                    'formatID': formatID,
-                    'idx': idx,
-                    'ytdl_format': new_info
-                }
-            )
-            idx += 1
-        return urls
+            h = fdata['height']
+            if h is None:
+                h = 1
+            p = fdata.get('preference', 1)
+            if p is None:
+                p = 1
+            if h >= minHeight and h <= maxHeight:
+                if (h >= prefMax and p > prefPref) or (h > prefMax and p >= prefPref):
+                    prefMax = h
+                    prefPref = p
+                    prefFormat = fdata
+            elif(h >= defMax and h <= maxHeight and p > defPref) or (h > defMax and h <= maxHeight and p >= defPref):
+                defMax = h
+                defFormat = fdata
+                defPref = p
+        formatID = None
+        if prefFormat:
+            info = prefFormat
+            logBase = '[{3}] Using Preferred Format: {0} ({1}x{2})'
+        elif defFormat:
+            info = defFormat
+            logBase = '[{3}] Using Default Format: {0} ({1}x{2})'
+        else:
+            info = fallback
+            logBase = '[{3}] Using Fallback Format: {0} ({1}x{2})'
+        url = info['url']
+        formatID = info['format_id']
+        util.LOG(logBase.format(formatID, info.get('width', '?'), info.get('height', '?'), entry.get('title', '').encode('ascii', 'replace')), debug=True)
+        if url.find("rtmp") == -1:
+            url += '|' + urlencode({'User-Agent': entry.get('user_agent') or YoutubeDLWrapper.std_headers['User-Agent']})
+        else:
+            url += ' playpath=' + fdata['play_path']
+        new_info = dict(entry)
+        new_info.update(info)
+        urls.append(
+            {
+                'xbmc_url': url,
+                'url': info['url'],
+                'title': entry.get('title', ''),
+                'thumbnail': entry.get('thumbnail', ''),
+                'formatID': formatID,
+                'idx': idx,
+                'ytdl_format': new_info
+            }
+        )
+        idx += 1
+    return urls
 
 
 # Recursively follow redirects until there isn't a location header
 # Credit to: Zachary Witte @ http://www.zacwitte.com/resolving-http-redirects-in-python
 def resolve_http_redirect(url, depth=0):
     if depth > 10:
-        raise Exception("Redirected "+depth+" times, giving up.")
+        raise Exception("Redirected " + depth + " times, giving up.")
     o = urlparse.urlparse(url, allow_fragments=True)
     conn = httplib.HTTPConnection(o.netloc)
     path = o.path
@@ -154,7 +163,7 @@ def resolve_http_redirect(url, depth=0):
     res = conn.getresponse()
     headers = dict(res.getheaders())
     if 'location' in headers and headers['location'] != url:
-        return resolve_http_redirect(headers['location'], depth+1)
+        return resolve_http_redirect(headers['location'], depth + 1)
     else:
         return url
 
@@ -163,7 +172,7 @@ def _getYoutubeDLVideo(url, quality=None, resolve_redirects=False):
     if resolve_redirects:
         try:
             url = resolve_http_redirect(url)
-        except:
+        except Exception:
             util.ERROR('_getYoutubeDLVideo(): Failed to resolve URL')
             return None
     ytdl = YoutubeDLWrapper._getYTDL()
@@ -244,7 +253,7 @@ def _actualGetExtension(info):
         ext = mimetypes.guess_extension(contentType)
         if ext:
             contentTypeExt = ext.strip('.')  # This is probabaly wrong
-    except:
+    except Exception:
         util.ERROR(hide_tb=True)
 
     extensions = [ex for ex in (resolvedURLExt, initialURLExt, contentTypeExt) if ex]
@@ -374,7 +383,7 @@ def getVideoInfo(url, quality=None, resolve_redirects=False):
         info = _getYoutubeDLVideo(url, quality, resolve_redirects)
         if not info:
             return None
-    except:
+    except Exception:
         util.ERROR('_getYoutubeDLVideo() failed', hide_tb=True)
         return None
     return info
@@ -413,7 +422,7 @@ def download(info, path, template='%(title)s-%(id)s.%(ext)s'):
     import AddonSignals
     signalPayload = {'title': info.get('title'), 'url': info.get('url'), 'download.ID': info.get('download.ID')}
     try:
-        AddonSignals.sendSignal('download.started', signalPayload, source_id='script.module.youtube.dl')
+        AddonSignals.sendSignal('download.started', signalPayload, sourceID='script.module.youtube.dl')
         YoutubeDLWrapper.download(info)
     except YoutubeDLWrapper.youtube_dl.DownloadError as e:
         return DownloadResult(False, e.message, filepath=ytdl._lastDownloadedFilePath)
@@ -422,7 +431,7 @@ def download(info, path, template='%(title)s-%(id)s.%(ext)s'):
     finally:
         ytdl.clearDownloadParams()
         signalPayload['path'] = ytdl._lastDownloadedFilePath
-        AddonSignals.sendSignal('download.finished', signalPayload, source_id='script.module.youtube.dl')
+        AddonSignals.sendSignal('download.finished', signalPayload, sourceID='script.module.youtube.dl')
 
     return DownloadResult(True, filepath=ytdl._lastDownloadedFilePath)
 
@@ -434,7 +443,7 @@ def mightHaveVideo(url, resolve_redirects=False):
     if resolve_redirects:
         try:
             url = resolve_http_redirect(url)
-        except:
+        except Exception:
             util.ERROR('mightHaveVideo(): Failed to resolve URL')
             return False
 
@@ -467,7 +476,7 @@ def generateBlacklist(regexs):
     Extractors that match any of the regular expressions are added.
     """
     import re
-    from youtube_dl.extractor import gen_extractors
+    from .youtube_dl.extractor import gen_extractors
     for ie in gen_extractors():
         for r in regexs:
             if re.search(r, ie.IE_NAME):

@@ -1,5 +1,5 @@
 # Fake _subprocess.py to allow subprocess to import
-import util
+from . import util
 util.LOG('Using fake _subprocess module', debug=True)
 
 STD_INPUT_HANDLE = -10
