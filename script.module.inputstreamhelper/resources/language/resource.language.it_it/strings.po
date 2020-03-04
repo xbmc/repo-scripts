@@ -34,8 +34,8 @@ msgid "Due to distribution rights, [B]Widevine CDM[/B] has to be extracted from 
 msgstr "A causa di diritti di distribuzione, [B]Widevine CDM[/B] deve essere estratto dall'immagine di recovery di Chrome OS. Questo processo richiede almeno [B]{diskspace}[/B] di spazio libero. Vuoi continuare?"
 
 msgctxt "#30007"
-msgid "[B]Widevine CDM[/B] is unfortunately not available on this system architecture."
-msgstr "[B]Widevine CDM[/B] sfortunatamente non e' disponibile per l'architettura del tuo processore."
+msgid "[B]Widevine CDM[/B] is unfortunately not available on this system architecture ([B]{arch}[/B])."
+msgstr "[B]Widevine CDM[/B] sfortunatamente non e' disponibile per l'architettura del tuo processore ([B]{arch}[/B])."
 
 msgctxt "#30008"
 msgid "[B]{addon}[/B] is missing on your Kodi install. This add-on is required to play this content."
@@ -50,8 +50,8 @@ msgid "[B]Kodi {version}[/B] or higher is required for [B]Widevine CDM[/B] conte
 msgstr "E' richiesto [B]Kodi {version}[/B] o superiore per riprodurre contenuti con [B]Widevine CDM[/B]."
 
 msgctxt "#30011"
-msgid "This operating system ([B]{0}[/B]) is not supported by [B]Widevine CDM[/B]."
-msgstr "Il tuo sistema operativo ([B]{0}[/B]) non e' supportato da [B]Widevine CDM[/B]."
+msgid "This operating system ([B]{os}[/B]) is not supported by [B]Widevine CDM[/B]."
+msgstr "Il tuo sistema operativo ([B]{os}[/B]) non e' supportato da [B]Widevine CDM[/B]."
 
 msgctxt "#30012"
 msgid "The Windows Store version of Kodi does not support [B]Widevine CDM[/B].[CR][CR]Please use the installer from kodi.tv instead."
@@ -190,8 +190,8 @@ msgid "Uncompressing image..."
 msgstr "Sto estraendo l'immagine"
 
 msgctxt "#30046"
-msgid "This may take several minutes."
-msgstr "Potrebbero volerci alcuni minuti."
+msgid "This may take several minutes. ({mins:d}:{secs:02d})"
+msgstr "Potrebbero volerci alcuni minuti. ({mins:d}:{secs:02d})"
 
 msgctxt "#30047"
 msgid "[I]Please do not interrupt this process.[/I]"
@@ -229,6 +229,14 @@ msgctxt "#30055"
 msgid "There is not enough free disk space in the current temporary directory. Would you like to specify a different one to temporarily use for the Chrome OS Recovery Image (e.g. on a USB)?"
 msgstr "Non c'è abbastanza spazio libero nella cartella temporanea in uso. Ne vuoi specificare un'altra da usare temporaneamente per l'immagine di recovery di Chrome OS (es. disco USB)?"
 
+msgctxt "#30056"
+msgid "No backups found!"
+msgstr "Backup non trovato!"
+
+msgctxt "#30057"
+msgid "Choose a backup to restore"
+msgstr "Scegli un backup da ripristinare"
+
 
 ### INFORMATION DIALOG
 msgctxt "#30800"
@@ -260,14 +268,18 @@ msgid "[B]Widevine information[/B]"
 msgstr "[B]Widevine info[/B]"
 
 msgctxt "#30821"
+msgid "Widevine version: [B]Built into Android[/B]"
+msgstr "Widevine: [B]incluso in Android[/B]"
+
+msgctxt "#30822"
 msgid "Widevine version: [B]{version}[/B] [COLOR gray](last updated on [B]{date}[/B])[/COLOR]"
 msgstr "Widevine: [B]{version}[/B] [COLOR gray](aggiornato il [B]{date}[/B])[/COLOR]"
 
-msgctxt "#30822"
+msgctxt "#30823"
 msgid "Widevine CDM path: [B]{path}[/B]"
 msgstr "Widevine CDM: [B]{path}[/B]"
 
-msgctxt "#30823"
+msgctxt "#30824"
 msgid "Chrome OS version: [B]{version}[/B]"
 msgstr "Chrome OS: [B]{version}[/B]"
 
@@ -308,3 +320,11 @@ msgstr "(Re)installa Widevine CDM"
 msgctxt "#30911"
 msgid "Remove Widevine CDM library..."
 msgstr "Rimuovi Widevine CDM"
+
+msgctxt "#30913"
+msgid "Number of backups"
+msgstr "Copie di backup"
+
+msgctxt "#30915"
+msgid "Restore Widevine CDM library..."
+msgstr "Ripristino libreria Widevine CDM..."

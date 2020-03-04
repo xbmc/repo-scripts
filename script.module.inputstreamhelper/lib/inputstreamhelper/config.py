@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
-''' Configuration variables for inpustreamhelper '''
+# MIT License (see LICENSE.txt or https://opensource.org/licenses/MIT)
+"""Configuration variables for inpustreamhelper"""
 from __future__ import absolute_import, division, unicode_literals
 
 
@@ -74,7 +75,7 @@ WIDEVINE_LICENSE_FILE = 'LICENSE.txt'
 
 WIDEVINE_MANIFEST_FILE = 'manifest.json'
 
-WIDEVINE_CONFIG_NAME = 'widevine_config.json'
+WIDEVINE_CONFIG_NAME = 'manifest.json'
 
 CHROMEOS_RECOVERY_URL = 'https://dl.google.com/dl/edgedl/chromeos/recovery/recovery.conf'
 

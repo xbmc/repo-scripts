@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.module.inputstreamhelper" name="InputStream Helper" version="0.4.3" provider-name="emilsvennesson, dagwieers, mediaminister">
+<addon id="script.module.inputstreamhelper" name="InputStream Helper" version="0.4.4" provider-name="emilsvennesson, dagwieers, mediaminister">
   <requires>
+    <!--py3 compliant-->
+    <!--<import addon="xbmc.python" version="2.25.0" target="3.0.0"/>-->
     <import addon="xbmc.python" version="2.25.0"/>
     <import addon="script.module.pysocks" version="1.6.8" optional="true"/>
   </requires>
-  <!-- This is needed to get an addon icon -->
+  <!-- This is needed to get an add-on icon -->
   <extension point="xbmc.python.script" library="default.py">
     <provides>executable</provides>
   </extension>
@@ -20,14 +22,15 @@
     <description lang="ru_RU">Простой модуль для Kodi, который облегчает жизнь разработчикам дополнений, с использованием InputStream дополнений и воспроизведения DRM контента.</description>
     <description lang="fr_FR">Un simple module Kodi qui simplifie la vie des développeurs de modules complémentaires en s’appuyant sur des modules complémentaires basés sur InputStream et sur la lecture de DRM.</description>
     <news>
-      v0.4.3 (2019-09-25)
-        - French translation
-        - Updated translations
-        - Ensure Kodi 19 compatibility
-        - Configurable temporary download directory for devices with limited space
-        - Configurable Widevine CDM update frequency
-        - Fix add-on settings crashes when InputStream Adaptive is missing
-        - Improve unicode character support
+      v0.4.4 (2020-03-01)
+        - Added option to restore a previously installed Widevine version
+        - Improve progress bar when extracting Widevine on ARM devices
+        - Improve Widevine library version detection
+        - Improve InputStream Helper information
+        - Increase download reliability for Chrome OS on ARM devices
+        - Added Japanese, Korean, Croatian and Hungarian translations
+        - Updated existing translations
+        - Various small bugfixes for Widevine installation on ARM devices
     </news>
     <platform>all</platform>
     <license>MIT</license>

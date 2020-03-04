@@ -31,12 +31,12 @@ LICENSE_URL = 'https://cwip-shaka-proxy.appspot.com/no_auth'
 def play():
     is_helper = inputstreamhelper.Helper(PROTOCOL, drm=DRM)
     if is_helper.check_inputstream():
-        playitem = xbmcgui.ListItem(path=STREAM_URL)
-        playitem.setProperty('inputstreamaddon', is_helper.inputstream_addon)
-        playitem.setProperty('inputstream.adaptive.manifest_type', PROTOCOL)
-        playitem.setProperty('inputstream.adaptive.license_type', DRM)
-        playitem.setProperty('inputstream.adaptive.license_key', LICENSE_URL + '||R{SSM}|')
-        xbmcplugin.setResolvedUrl(handle=sys.argv[1], succeeded=True, listitem=play_item)
+        play_item = xbmcgui.ListItem(path=STREAM_URL)
+        play_item.setProperty('inputstreamaddon', is_helper.inputstream_addon)
+        play_item.setProperty('inputstream.adaptive.manifest_type', PROTOCOL)
+        play_item.setProperty('inputstream.adaptive.license_type', DRM)
+        play_item.setProperty('inputstream.adaptive.license_key', LICENSE_URL + '||R{SSM}|')
+        xbmcplugin.setResolvedUrl(handle=int(sys.argv[1]), succeeded=True, listitem=play_item)
 
 if __name__ == '__main__':
     play()
@@ -63,6 +63,16 @@ Please report any issues or bug reports on the [GitHub Issues](https://github.co
 This module is licensed under the **The MIT License**. Please see the [LICENSE.txt](LICENSE.txt) file for details.
 
 ## Releases
+## v0.4.4 (2020-03-01)
+- Added option to restore a previously installed Widevine version (@horstle)
+- Improve progress bar when extracting Widevine on ARM devices (@dagwieers)
+- Improve Widevine library version detection (@dagwieers, @mediaminister)
+- Improve InputStream Helper information (@dagwieers, @mediaminister)
+- Increase download reliability for Chrome OS on ARM devices (@horstle, @RolfWojtech)
+- Added Japanese, Korean, Croatian and Hungarian translations (@Thunderbird2086, @arvvoid, @frodo19)
+- Updated existing translations (@dnicolaas, @Sopor, @tweimer, @horstle, @mediaminister)
+- Various small bugfixes for Widevine installation on ARM devices (@dagwieers, @mediaminister, @Twilight0, @janhicken)
+
 ## v0.4.3 (2019-09-25)
 - French translation (@brunoduc)
 - Updated translations (@vlmaksime, @dagwieers, @pinoelefante, @horstle, @Twilight0, @emilsvennesson)
