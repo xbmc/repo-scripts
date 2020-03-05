@@ -9,7 +9,7 @@ import xbmcgui
 import requests
 
 from resources.lib.helper import *
-from resources.lib.utils import *
+from resources.lib.tmdb import *
 
 ########################
 
@@ -26,8 +26,8 @@ class TMDBVideos(object):
         self.tmdb_id = call_request['tmdb_id']
         self.local_movies = call_request['local_movies']
         self.local_shows = call_request['local_shows']
-        self.movie = get_bool(self.call,'movie')
-        self.tvshow = get_bool(self.call,'tv')
+        self.movie = get_bool(self.call, 'movie')
+        self.tvshow = get_bool(self.call, 'tv')
 
         if self.tmdb_id:
             cache_key = self.call + str(self.tmdb_id)
@@ -36,10 +36,11 @@ class TMDBVideos(object):
             if not self.details:
                 self.details = tmdb_query(action=self.call,
                                           call=self.tmdb_id,
-                                          params={'append_to_response': 'release_dates,content_ratings,external_ids,credits,videos,translations,similar'}
+                                          params={'append_to_response': 'release_dates,content_ratings,external_ids,credits,videos,translations,similar'},
+                                          show_error=True
                                           )
 
-                write_cache(cache_key,self.details)
+                write_cache(cache_key, self.details)
 
             if not self.details:
                 return
@@ -60,15 +61,15 @@ class TMDBVideos(object):
 
 
     def __getitem__(self, key):
-        return self.result.get(key,'')
+        return self.result.get(key, '')
 
     def get_details(self):
         li = list()
 
         if self.movie:
-            list_item, is_local = tmdb_handle_movie(self.details,self.local_movies,full_info=True)
+            list_item, is_local = tmdb_handle_movie(self.details, self.local_movies,full_info=True)
         elif self.tvshow:
-            list_item, is_local = tmdb_handle_tvshow(self.details,self.local_shows,full_info=True)
+            list_item, is_local = tmdb_handle_tvshow(self.details, self.local_shows,full_info=True)
 
         li.append(list_item)
         return li
@@ -77,7 +78,7 @@ class TMDBVideos(object):
         li = list()
 
         for item in self.details['credits']['cast']:
-            item['label2'] = item.get('character','')
+            item['label2'] = item.get('character', '')
             list_item = tmdb_handle_credits(item)
             li.append(list_item)
 
@@ -99,7 +100,7 @@ class TMDBVideos(object):
         ''' Filter crew and merge duplicate crew members if they were responsible for different jobs
         '''
         for item in self.crew:
-            if item['job'] in ['Creator','Director','Producer','Screenplay','Writer','Original Music Composer','Novel','Storyboard','Executive Producer','Comic Book']:
+            if item['job'] in ['Creator', 'Director', 'Producer', 'Screenplay', 'Writer', 'Original Music Composer', 'Novel', 'Storyboard', 'Executive Producer', 'Comic Book']:
                 if item['id'] not in li_crew_duplicate_handler_id:
                     li_clean_crew.append(item)
                     li_crew_duplicate_handler_id.append(item['id'])
@@ -112,26 +113,26 @@ class TMDBVideos(object):
         '''
         for item in li_clean_crew:
             if item['department'] == 'Directing':
-                item['label2'] = item.get('job','')
+                item['label2'] = item.get('job', '')
                 list_item = tmdb_handle_credits(item)
                 li.append(list_item)
 
         for item in li_clean_crew:
             if item['department'] == 'Writing':
-                item['label2'] = item.get('job','')
+                item['label2'] = item.get('job', '')
                 list_item = tmdb_handle_credits(item)
                 li.append(list_item)
 
         for item in li_clean_crew:
             if item['department'] == 'Production':
-                item['label2'] = item.get('job','')
+                item['label2'] = item.get('job', '')
                 list_item = tmdb_handle_credits(item)
                 li.append(list_item)
 
         for item in li_clean_crew:
             if item['department'] == 'Sound':
                 item['job'] = 'Music Composer' if item['job'] == 'Original Music Composer' else item['job']
-                item['label2'] = item.get('job','')
+                item['label2'] = item.get('job', '')
                 list_item = tmdb_handle_credits(item)
                 li.append(list_item)
 
@@ -145,7 +146,7 @@ class TMDBVideos(object):
             for item in seasons:
                 if item['season_number'] == 0:
                     continue
-                list_item = tmdb_handle_season(item,self.details)
+                list_item = tmdb_handle_season(item, self.details)
                 li.append(list_item)
 
         return li
@@ -162,13 +163,13 @@ class TMDBVideos(object):
 
             if not collection_data:
                 collection_data = tmdb_query(action='collection',
-                                            call=collection_id
-                                            )
+                                             call=collection_id
+                                             )
 
-                write_cache(cache_key,collection_data)
+                write_cache(cache_key, collection_data)
 
             if collection_data['parts']:
-                set_items = sort_dict(collection_data['parts'],'release_date')
+                set_items = sort_dict(collection_data['parts'], 'release_date')
 
                 for item in set_items:
                     ''' Filter to hide in production or rumored future movies
@@ -178,7 +179,7 @@ class TMDBVideos(object):
                         if diff.days > FILTER_DAYDELTA:
                             continue
 
-                    list_item, is_local = tmdb_handle_movie(item,self.local_movies)
+                    list_item, is_local = tmdb_handle_movie(item, self.local_movies)
                     li.append(list_item)
 
                     if SIMILAR_FILTER:
@@ -197,7 +198,7 @@ class TMDBVideos(object):
         li = list()
 
         if self.movie:
-            similar = sort_dict(similar,'release_date',True)
+            similar = sort_dict(similar, 'release_date',True)
 
             for item in similar:
                 ''' Filter to hide item if it's part of the collection
@@ -212,11 +213,11 @@ class TMDBVideos(object):
                     if diff.days > FILTER_DAYDELTA:
                         continue
 
-                list_item, is_local = tmdb_handle_movie(item,self.local_movies)
+                list_item, is_local = tmdb_handle_movie(item, self.local_movies)
                 li.append(list_item)
 
         elif self.tvshow:
-            similar = sort_dict(similar,'first_air_date',True)
+            similar = sort_dict(similar, 'first_air_date', True)
 
             for item in similar:
                 ''' Filter to hide in production or rumored future shows
@@ -226,7 +227,7 @@ class TMDBVideos(object):
                     if diff.days > FILTER_DAYDELTA:
                         continue
 
-                list_item, is_local = tmdb_handle_tvshow(item,self.local_shows)
+                list_item, is_local = tmdb_handle_tvshow(item, self.local_shows)
                 li.append(list_item)
 
         return li
@@ -244,7 +245,7 @@ class TMDBVideos(object):
                                 params={'include_image_language': '%s,en,null' % DEFAULT_LANGUAGE}
                                 )
 
-            write_cache(cache_key,images)
+            write_cache(cache_key, images)
 
         for item in images['backdrops']:
             list_item = tmdb_handle_images(item)
@@ -285,7 +286,7 @@ class TMDBVideos(object):
                     online_videos.append(item)
 
             videos = online_videos
-            write_cache(cache_key,videos)
+            write_cache(cache_key, videos)
 
         for item in videos:
             if item['site'] == 'YouTube':

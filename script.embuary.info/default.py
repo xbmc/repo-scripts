@@ -5,12 +5,12 @@
 import xbmcgui
 
 from resources.lib.helper import *
+from resources.lib.tmdb import *
 from resources.lib.main import *
 
 ########################
 
 class Main:
-
     def __init__(self):
         self.call = False
         self._parse_argv()
@@ -18,7 +18,21 @@ class Main:
         if self.call == 'textviewer':
             textviewer(self.params)
 
-        elif self.call:
+        elif self.call == 'refresh_library_cache':
+            get_local_media(force=True)
+
+        else:
+            ''' It takes a couple of milliseconds until the script starts (Kodi<->Python delay). This could cause double calls
+                for users with a nervous "DO IT NOW!!!11!"-finger. This is a ugly but working workaround. Will be replaced with
+                a better one if found and if it won't be too complex -> #TODO
+            '''
+            if not winprop('script.embuary.info-double_start_workaround.bool'):
+                winprop('script.embuary.info-double_start_workaround.bool', True)
+                execute('AlarmClock(ClearWorkaroundProp,ClearProperty(script.embuary.info-double_start_workaround,home),00:01,silent)')
+                self.run()
+
+    def run(self):
+        if self.call:
             TheMovieDB(self.call, self.params)
 
         else:
@@ -34,7 +48,6 @@ class Main:
 
             query = DIALOG.input(xbmc.getLocalizedString(19133), type=xbmcgui.INPUT_ALPHANUM)
             TheMovieDB(call, {'query': query})
-
 
     def _parse_argv(self):
         args = sys.argv
