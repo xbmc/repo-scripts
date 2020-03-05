@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+	<category label="128">
+		<setting label="$LOCALIZE[128]" type="lsep"/>
+		<setting label="$ADDON[script.metadata.editor 32021]" type="bool" id="nfo_updating" default="true"/>
+		<setting label="$ADDON[script.metadata.editor 32034]" type="bool" id="create_nfo" default="true" enable="eq(-1,true)" />
+		<setting label="$ADDON[script.metadata.editor 32057]" type="bool" id="write_watched_stated" default="true" enable="eq(-2,true)" />
+		<setting label="$ADDON[script.metadata.editor 32055]" type="bool" id="playback_update_playcount" default="true" enable="eq(-3,true) + eq(-1,true)" />
+		<setting label="$ADDON[script.metadata.editor 32056]" type="bool" id="playback_user_rating" default="false" />
+		<setting label="$ADDON[script.metadata.editor 32029]" type="bool" id="json_log" default="false"/>
+
+		<setting label="$ADDON[script.metadata.editor 32026]" type="lsep"/>
+		<setting label="$ADDON[script.metadata.editor 32027]" type="select" values="TVDb|TMDb" id="tv_scraper_base" default="TVDb"/>
+		<setting label="$ADDON[script.metadata.editor 32025]" type="select" values="bg|cs|da|de|ee|el|en|es|fa|fa-ir|fi|fr|fr-ca|he|hr|hu|it|ja|ko|nl|no|pl|pt|pt-br|ru|sl|sr|sv|tr|zh-cn|zh-tw" id="tmdb_language" default="en"/>
+		<setting label="$ADDON[script.metadata.editor 32043]" type="select" values="AU|BG|BR|CA|DE|DK|ES|FI|FR|GB|HU|IN|IT|KR|LT|MY|NL|NO|NZ|PH|PT|RU|SE|SK|TH|US" id="country_code" default="US"/>
+		<setting label="$ADDON[script.metadata.editor 32044]" type="bool" id="mpaa_skip" default="false"/>
+		<setting label="$ADDON[script.metadata.editor 32052]" type="bool" id="mpaa_fallback" default="true" enable="eq(-1,false) + !eq(-2,US)" />
+		<setting label="$ADDON[script.metadata.editor 32053]" type="bool" id="mpaa_skip_nr" default="false" enable="eq(-2,false) + !eq(-3,US)" />
+		<setting label="$ADDON[script.metadata.editor 32032]" type="bool" id="omdb_fallback_search" default="true"/>
+		<setting label="$ADDON[script.metadata.editor 32041]" type="bool" id="update_premiered" default="true"/>
+
+		<setting label="$ADDON[script.metadata.editor 32030]" type="lsep"/>
+		<setting label="$ADDON[script.metadata.editor 32031]" type="text" id="omdb_api_key"/>
+		<setting label="$ADDON[script.metadata.editor 32028]" type="bool" id="update_background" default="false"/>
+		<setting label="$LOCALIZE[20191]" type="bool" id="debug_rating_updater" default="false"/>
+	</category>
+</settings>

@@ -1,0 +1,329 @@
+# Metadata Editor language file
+# Addon Name: Metadata Editor
+# Addon id: script.metadata.editor
+# Addon Provider: sualfred
+# Translators:
+# Snn 1452 <snn1452@gmail.com>, 2020
+# 
+msgid ""
+msgstr ""
+"Project-Id-Version: Metadata Editor\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2019-11-07 08:05+0000\n"
+"Last-Translator: Snn 1452 <snn1452@gmail.com>, 2020\n"
+"Language-Team: Turkish (Turkey) (https://www.transifex.com/sualfred/teams/80018/tr_TR/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: tr_TR\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: /addon.xml
+msgctxt "#32000"
+msgid "Metadata Editor"
+msgstr "Metaveri Düzenleyici"
+
+#: /resources/lib/dialog.py
+msgctxt "#32001"
+msgid "User rating"
+msgstr "Kullanıcı derecelendirmesi"
+
+#: /resources/lib/dialog_videogenres.py
+msgctxt "#32002"
+msgid "Available entries"
+msgstr "Mevcut girişler"
+
+#: /addon.xml
+msgctxt "#32003"
+msgid "Add/remove available tags"
+msgstr "Mevcut etiketleri ekle/kaldır"
+
+#: /addon.xml
+msgctxt "#32004"
+msgid "Add/remove available genres"
+msgstr "Mevcut türleri ekle/kaldır"
+
+#: /resources/lib/utils.py
+msgctxt "#32005"
+msgid "Add new item"
+msgstr "Yeni öğe ekle"
+
+#: /resources/lib/utils.py
+msgctxt "#32006"
+msgid "Edit current list as string"
+msgstr "Geçerli listeyi dize olarak düzenle"
+
+#: /resources/lib/utils.py
+msgctxt "#32007"
+msgid "Select from available items"
+msgstr "Mevcut öğelerden seç"
+
+#: /context.py
+msgctxt "#32008"
+msgid "Remove watchlist tag"
+msgstr "İzleme listesi etiketini kaldır"
+
+#: /context.py
+msgctxt "#32009"
+msgid "Add watchlist tag"
+msgstr "İzleme listesi etiketi ekle"
+
+#: /context.py
+msgctxt "#32010"
+msgid "Open editor"
+msgstr "Düzenleyiciyi aç"
+
+#: /resources/lib/utils.py
+msgctxt "#32011"
+msgid "Enter floating number"
+msgstr "Yüzen numarayı girin"
+
+#: /resources/lib/utils.py
+msgctxt "#32012"
+msgid "Select source"
+msgstr "Kaynak Seç"
+
+#: /resources/lib/utils.py
+msgctxt "#32013"
+msgid "Available sources"
+msgstr "Mevcut kaynaklar"
+
+#: /resources/lib/utils.py
+msgctxt "#32014"
+msgid "Default source"
+msgstr "Varsayılan kaynak"
+
+#: /resources/lib/utils.py
+msgctxt "#32015"
+msgid "Select default source"
+msgstr "Varsayılan kaynağı seç"
+
+#: /resources/lib/utils.py
+msgctxt "#32016"
+msgid "Edit ratings and votes"
+msgstr "Derecelendirmeleri ve oyları düzenle"
+
+#: /resources/lib/utils.py
+msgctxt "#32017"
+msgid "Add source"
+msgstr "Kaynak ekle"
+
+#: /resources/lib/utils.py
+msgctxt "#32018"
+msgid "Only values between 1.0 and 10.0 are allowed."
+msgstr "Yalnızca 1.0 ile 10.0 arasındaki değerlere izin verilir."
+
+#: /resources/lib/utils.py
+msgctxt "#32019"
+msgid "Attention"
+msgstr "Dikkat"
+
+#: /resources/lib/utils.py
+msgctxt "#32020"
+msgid "Set as default?"
+msgstr "Varsayılan olarak ayarla?"
+
+#: /resources/settings.xml
+msgctxt "#32021"
+msgid "Enable .nfo updating for movies, TV shows and music videos"
+msgstr ""
+"Filmler, TV programları ve müzik videoları için .nfo güncellemesini "
+"etkinleştir"
+
+#: /resources/lib/editor.py
+msgctxt "#32022"
+msgid "value unkown (missing Kodi feature)"
+msgstr "bilinmeyen değer (eksik Kodi özelliği)"
+
+#: /resources/lib/editor.py
+msgctxt "#32023"
+msgid "Record label"
+msgstr "Kayıt etiketi"
+
+#: /resources/settings.xml
+msgctxt "#32025"
+msgid "Preferred language"
+msgstr "Tercih edilen dil"
+
+#: /resources/settings.xml
+msgctxt "#32026"
+msgid "Scraper settings"
+msgstr "Scraper ayarları"
+
+#: /resources/lib/rating_updater.py
+msgctxt "#32024"
+msgid "Heavy server load. Please wait."
+msgstr "Ağır sunucu yükü. Lütfen bekleyin."
+
+#: /resources/settings.xml
+msgctxt "#32027"
+msgid "TV show library is based on informations of"
+msgstr "TV programları kitaplığı bilgilerine dayanmaktadır:"
+
+#: /resources/settings.xml
+msgctxt "#32029"
+msgid "Enable JSON logging"
+msgstr "JSON günlüğünü etkinleştir"
+
+#: /resources/settings.xml
+msgctxt "#32030"
+msgid "Rating updater"
+msgstr "Derecelendirme güncelleyici"
+
+#: /resources/settings.xml
+msgctxt "#32028"
+msgid "Run updating process in the background"
+msgstr "Güncelleme işlemini arka planda çalıştır"
+
+#: /resources/settings.xml
+msgctxt "#32031"
+msgid "Your personal OMDb API key (www.omdbapi.com)"
+msgstr "Kişisel OMDb API anahtarınız (www.omdbapi.com)"
+
+#: /resources/settings.xml
+msgctxt "#32032"
+msgid "Search by title/year if IMDb ID is missing (not recommended)"
+msgstr "IMDb kimliği eksikse başlığa/yıla göre ara (önerilmez)"
+
+#: /default.py
+msgctxt "#32035"
+msgid ""
+"No OMDb API key is configured, which is required to update IMDb, Rotten "
+"Tomatoes and Metacritic ratings. Please visit www.omdbapi.com and create "
+"your own API key.[CR][CR]Note: The free key is limited to 1000 calls a day. "
+"Please suggest to become a patreon of OMDb to increase the limit to "
+"100.000.[CR][CR]Do you want to proceed updating The Movie DB ratings? This "
+"only works if you have a TMDb ID stored."
+msgstr ""
+"IMDb, Çürük Domates ve Metakritik derecelendirmelerini güncellemek için "
+"gerekli olan hiçbir OMDb API anahtarı yapılandırılmadı. Lütfen "
+"www.omdbapi.com adresini ziyaret edin ve kendi API anahtarınızı "
+"oluşturun.[CR][CR]Not: Ücretsiz anahtar günde 1000 çağrı ile sınırlıdır. "
+"Lütfen limiti 100.000'e çıkarmak için OMDb'de patron olun.[CR][CR]The Movie "
+"DB derecelendirmelerini güncellemeye devam etmek ister misiniz? Bu yalnızca "
+"kayıtlı bir TMDb kimliğiniz varsa çalışır."
+
+#: /default.py
+msgctxt "#32036"
+msgid "Update TV show ratings"
+msgstr "TV programı derecelendirmelerini güncelle"
+
+#: /resources/lib/rating_updater.py
+msgctxt "#32033"
+msgid ""
+"OMDB API limit reached. Please consider to become a Patreon to increase your"
+" daily call limitation. Proceed by only using The Movie DB?"
+msgstr ""
+"OMDB API sınırına ulaşıldı. Günlük arama sınırınızı artırmak için lütfen bir"
+" Patreon olmayı düşünün. Yalnızca The Movie DB kullanarak devam edilsin mi?"
+
+#: /resources/settings.xml
+msgctxt "#32034"
+msgid "Create .nfo file if missing"
+msgstr "Eksikse .nfo dosyası oluştur"
+
+#: /default.py
+msgctxt "#32037"
+msgid "Update movie ratings"
+msgstr "Film derecelendirmelerini güncelle"
+
+#: /default.py
+msgctxt "#32038"
+msgid "Update all ratings"
+msgstr "Tüm derecelendirmeleri güncelle"
+
+#: /context.py
+msgctxt "#32039"
+msgid "Update ratings"
+msgstr "Derecelendirmeleri güncelle"
+
+#: /resources/lib/editor.py
+msgctxt "#32040"
+msgid "Edit data for"
+msgstr "Verilerini düzenle:"
+
+#: /resources/lib/rating_updater.py
+msgctxt "#32042"
+msgid "Canceled"
+msgstr "İptal edildi"
+
+#: /resources/settings.xml
+msgctxt "#32043"
+msgid "MPAA region"
+msgstr "MPAA bölgesi"
+
+#: /resources/settings.xml
+msgctxt "#32041"
+msgid "Update premiered/year if database value is different"
+msgstr "Veritabanı değeri farklıysa gösterim/yıl değerini güncelle"
+
+#: /resources/settings.xml
+msgctxt "#32044"
+msgid "Skip updating of MPAA"
+msgstr "MPAA'nın güncellenmesini atla"
+
+#: /default.py
+msgctxt "#32045"
+msgid "Update episode ratings"
+msgstr "Bölüm derecelendirmelerini güncelle"
+
+#: /resources/lib/editor.py
+msgctxt "#32047"
+msgid "No default source defined"
+msgstr "Tanımlanmış varsayılan kaynak yok"
+
+#: /resources/lib/rating_updater.py
+msgctxt "#32048"
+msgid "No items found"
+msgstr "Hiç öğe bulunamadı"
+
+#: /context.py
+msgctxt "#32046"
+msgid "Update .nfo"
+msgstr ".nfo güncelle"
+
+#: /default.py
+msgctxt "#32049"
+msgid "Incomplete arguments or content type not supported"
+msgstr "Eksik argümanlar veya içerik türü desteklenmiyor"
+
+#: /default.py
+msgctxt "#32050"
+msgid "Do you want to cancel the update?"
+msgstr "Güncellemeyi iptal etmek istiyor musunuz?"
+
+#: /default.py
+msgctxt "#32051"
+msgid "Content"
+msgstr "İçerik"
+
+#: /resources/settings.xml
+msgctxt "#32052"
+msgid "Fallback to US MPAA if configured country has no certification stored"
+msgstr ""
+"Yapılandırılmış ülkenin kayıtlı sertifikası yoksa ABD MPAA'ya geri dön"
+
+#: /resources/settings.xml
+msgctxt "#32053"
+msgid "Don't store \"NR\" (Not rated) MPAA rating"
+msgstr "\"NR\" (Derecelendirilmedi) MPAA derecelendirmesini saklama"
+
+#: /service.py
+msgctxt "#32054"
+msgid "Do you want to rate the following item?"
+msgstr "Takip edilen öğeyi derecelendirmek istiyor musunuz?"
+
+#: /resources/settings.xml
+msgctxt "#32055"
+msgid "Automatically update changed watched states to .nfo"
+msgstr "İzlenme durumları değiştiğinde .nfo'yu otomatik güncelle"
+
+#: /resources/settings.xml
+msgctxt "#32056"
+msgid "Rate your media if playback has ended"
+msgstr "Oynatma sona erdiğinde medyanızı derecelendirin"
+
+#: /resources/settings.xml
+msgctxt "#32057"
+msgid "Write watched flag and playcount to .nfo"
+msgstr "İzlenen durumunu ve çalma sayısını .nfo'ya yaz"
