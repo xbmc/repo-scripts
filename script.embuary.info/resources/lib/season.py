@@ -9,7 +9,7 @@ import xbmcgui
 import requests
 
 from resources.lib.helper import *
-from resources.lib.utils import *
+from resources.lib.tmdb import *
 
 ########################
 
@@ -25,11 +25,12 @@ class TMDBSeasons(object):
 
             if not self.details:
                 self.details = tmdb_query(action='tv',
-                                            call=self.tmdb_id,
-                                            get='season',
-                                            season=self.season,
-                                            params={'append_to_response': 'credits'}
-                                            )
+                                          call=self.tmdb_id,
+                                          get='season',
+                                          get2=self.season,
+                                          params={'append_to_response': 'credits'},
+                                          show_error=True
+                                          )
 
             if not self.details:
                 return
@@ -38,7 +39,7 @@ class TMDBSeasons(object):
                 fallback_details = tmdb_query(action='tv',
                                                 call=self.tmdb_id,
                                                 get='season',
-                                                season=self.season,
+                                                get2=self.season,
                                                 use_language=False
                                                 )
 
@@ -113,8 +114,8 @@ class TMDBSeasons(object):
             images = tmdb_query(action='tv',
                                 call=self.tmdb_id,
                                 get='season',
-                                season=self.season,
-                                season_get='images',
+                                get2=self.season,
+                                get3='images',
                                 params={'include_image_language': '%s,en,null' % DEFAULT_LANGUAGE}
                                 )
 

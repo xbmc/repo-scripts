@@ -8,13 +8,13 @@ import xbmc
 import xbmcgui
 
 from resources.lib.helper import *
-from resources.lib.utils import *
+from resources.lib.tmdb import *
 
 ########################
 
 FILTER_MOVIES = ADDON.getSettingBool('filter_movies')
 FILTER_SHOWS = ADDON.getSettingBool('filter_shows')
-FILTER_SHOWS_BLACKLIST = [10763,10764,10767]
+FILTER_SHOWS_BLACKLIST = [10763, 10764, 10767]
 FILTER_UPCOMING = ADDON.getSettingBool('filter_upcoming')
 FILTER_DAYDELTA = int(ADDON.getSetting('filter_daydelta'))
 
@@ -33,11 +33,12 @@ class TMDBPersons(object):
 
             if not self.details:
                 self.details = tmdb_query(action='person',
-                                            call=self.tmdb_id,
-                                            params={'append_to_response': 'translations,movie_credits,tv_credits,images'}
-                                            )
+                                          call=self.tmdb_id,
+                                          params={'append_to_response': 'translations,movie_credits,tv_credits,images'},
+                                          show_error=True
+                                          )
 
-                write_cache(cache_key,self.details)
+                write_cache(cache_key, self.details)
 
             if not self.details:
                 return
@@ -52,8 +53,8 @@ class TMDBPersons(object):
             self.result['person'] = self.get_person_details()
             self.result['images'] = self.get_person_images()
 
-    def __getitem__(self, key):
-        return self.result.get(key,'')
+    def __getitem__(self,key):
+        return self.result.get(key, '')
 
     def get_person_details(self):
         li = list()
@@ -72,10 +73,10 @@ class TMDBPersons(object):
 
         for item in combined:
             if item['type'] == 'movie':
-                list_item, is_local = tmdb_handle_movie(item,self.local_movies)
+                list_item, is_local = tmdb_handle_movie(item, self.local_movies)
 
             elif item['type'] =='tvshow':
-                list_item, is_local = tmdb_handle_tvshow(item,self.local_shows)
+                list_item, is_local = tmdb_handle_tvshow(item, self.local_shows)
 
             li.append(list_item)
 
@@ -108,7 +109,7 @@ class TMDBPersons(object):
                     skip_movie = True
 
             if not skip_movie and item['id'] not in duplicate_handler:
-                list_item, is_local = tmdb_handle_movie(item,self.local_movies)
+                list_item, is_local = tmdb_handle_movie(item, self.local_movies)
                 li.append(list_item)
                 duplicate_handler.append(item['id'])
                 item['type'] = 'movie'
@@ -148,7 +149,7 @@ class TMDBPersons(object):
                     skip_show = True
 
             if not skip_show and item['id'] not in duplicate_handler:
-                list_item, is_local = tmdb_handle_tvshow(item,self.local_shows)
+                list_item, is_local = tmdb_handle_tvshow(item, self.local_shows)
                 li.append(list_item)
                 duplicate_handler.append(item['id'])
                 item['type'] = 'tvshow'

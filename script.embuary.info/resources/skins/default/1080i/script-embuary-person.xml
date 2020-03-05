@@ -74,17 +74,19 @@
 			<control type="group">
 				<top>110</top>
 				<height>900</height>
-
 				<!-- poster -->
 				<control type="group">
 					<left>103</left>
 					<width>500</width>
 					<height>750</height>
 					<control type="image">
-						<width>400</width>
-						<height>600</height>
-						<texture colordiffuse="FF12A0C7">white.jpg</texture>
-						<aspectratio scalediffuse="false">stretch</aspectratio>
+						<left>-20</left>
+						<top>-20</top>
+						<width>540</width>
+						<height>790</height>
+						<texture>dialogs/dialog-bg-nobo.png</texture>
+						<bordertexture border="21">overlays/shadow.png</bordertexture>
+						<bordersize>20</bordersize>
 					</control>
 					<control type="image">
 						<width>500</width>
@@ -93,10 +95,8 @@
 						<aspectratio>scale</aspectratio>
 					</control>
 				</control>
-
 				<!-- meta -->
 				<control type="group">
-					<top>-5</top>
 					<left>650</left>
 					<right>103</right>
 					<!-- plot -->
@@ -207,7 +207,7 @@
 					<!-- buttons -->
 					<control type="panel" id="100">
 						<left>-21</left>
-						<top>620</top>
+						<top>619</top>
 						<height>130</height>
 						<width>100%</width>
 						<orientation>horizontal</orientation>

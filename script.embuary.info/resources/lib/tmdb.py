@@ -3,13 +3,10 @@
 
 ########################
 
-import json
-import sys
 import xbmc
 import xbmcgui
 import requests
 import datetime
-import xml.etree.ElementTree as ET
 
 ''' Python 2<->3 compatibility
 '''
@@ -24,156 +21,49 @@ except ImportError:
     import urllib.request as urllib
 
 from resources.lib.helper import *
+from resources.lib.omdb import *
+from resources.lib.localdb import *
 
 ########################
 
-OMDB_API_KEY = ADDON.getSettingString('omdb_api_key')
 API_KEY = ADDON.getSettingString('tmdb_api_key')
 API_URL = 'https://api.themoviedb.org/3/'
 IMAGEPATH = 'https://image.tmdb.org/t/p/original'
 
 ########################
 
-def get_local_media():
-    local_media = {}
-    local_media['shows'] = query_local_media('tvshow',
-                                            get='VideoLibrary.GetTVShows',
-                                            properties=['title', 'originaltitle', 'year', 'playcount', 'episode', 'watchedepisodes']
-                                            )
-    local_media['movies'] = query_local_media('movie',
-                                            get='VideoLibrary.GetMovies',
-                                            properties=['title', 'originaltitle', 'year', 'imdbnumber', 'playcount', 'file']
-                                            )
+def tmdb_query(action,call=None,get=None,get2=None,get3=None,get4=None,params=None,use_language=True,language=DEFAULT_LANGUAGE,show_error=False):
+    urlargs = {}
+    urlargs['api_key'] = API_KEY
 
-    return local_media
+    if use_language:
+        urlargs['language'] = language
 
+    if params:
+        urlargs.update(params)
 
-def query_local_media(dbtype,get,properties):
-    items = json_call(get,properties,sort={'order': 'descending', 'method': 'year'})
+    url = urljoin(API_URL ,action, call, get, get2, get3, get4)
+    url = '{0}?{1}'.format(url, urlencode(urlargs))
 
     try:
-        items = items['result']['%ss' % dbtype]
-    except Exception:
-        return
-
-    local_items = []
-    for item in items:
-        local_items.append({'title': item.get('title', ''),
-                            'originaltitle': item.get('originaltitle', ''),
-                            'imdbnumber': item.get('imdbnumber', ''),
-                            'year': item.get('year', ''),
-                            'dbid': item.get('%sid' % dbtype, ''),
-                            'playcount': item.get('playcount', ''),
-                            'episodes': item.get('episode', ''),
-                            'watchedepisodes': item.get('watchedepisodes', ''),
-                            'file': item.get('file', '')}
-                            )
-
-    return local_items
-
-
-def omdb_call(imdbnumber=None,title=None,year=None,content_type=None):
-    if imdbnumber:
-        url = 'http://www.omdbapi.com/?apikey=%s&i=%s&plot=short&r=xml&tomatoes=true' % (OMDB_API_KEY, imdbnumber)
-
-    elif title and year and content_type:
-        # urllib has issues with some asian letters
-        try:
-            title = urllib.quote(title)
-        except KeyError:
-            return
-
-        url = 'http://www.omdbapi.com/?apikey=%s&t=%s&year=%s&plot=short&r=xml&tomatoes=true' % (OMDB_API_KEY, title, year)
-
-    else:
-        return
-
-    omdb = get_cache(url)
-    if omdb:
-        return omdb
-
-    elif OMDB_API_KEY:
-        omdb = {}
+        request = None
 
         for i in range(1,4): # loop if heavy server load
             try:
                 request = requests.get(url, timeout=5)
 
-                if not request.ok:
-                    raise Exception(str(request.status_code))
-
-                result = request.text
-
-                tree = ET.ElementTree(ET.fromstring(result))
-                root = tree.getroot()
-
-                for child in root:
-                    # imdb ratings
-                    omdb['imdbRating'] = child.get('imdbRating', '').replace('N/A', '')
-                    omdb['imdbVotes'] = child.get('imdbVotes', '0').replace('N/A', '0').replace(',', '')
-
-                    # regular rotten rating
-                    omdb['tomatometerallcritics'] = child.get('tomatoMeter', '').replace('N/A', '')
-                    omdb['tomatometerallcritics_avg'] = child.get('tomatoRating', '').replace('N/A', '')
-                    omdb['tomatometerallcritics_votes'] = child.get('tomatoReviews', '0').replace('N/A', '0').replace(',', '')
-
-                    # user rotten rating
-                    omdb['tomatometerallaudience'] = child.get('tomatoUserMeter', '').replace('N/A', '')
-                    omdb['tomatometerallaudience_avg'] = child.get('tomatoUserRating', '').replace('N/A', '')
-                    omdb['tomatometerallaudience_votes'] = child.get('tomatoUserReviews', '0').replace('N/A', '0').replace(',', '')
-
-                    # metacritic
-                    omdb['metacritic'] = child.get('metascore', '').replace('N/A', '')
-
-                    # other
-                    omdb['awards'] = child.get('awards', '').replace('N/A', '')
-                    omdb['DVD'] = date_format(child.get('DVD', '').replace('N/A', ''), scheme='DD MMM YYYY')
-
-            except Exception as error:
-                log('OMDB Error: %s' % error)
-                pass
-
-            else:
-                write_cache(url,omdb)
-                break
-
-        return omdb
-
-
-def omdb_properties(list_item,imdbnumber):
-    if OMDB_API_KEY and imdbnumber:
-        omdb = omdb_call(imdbnumber)
-        if omdb:
-            list_item.setProperty('rating.metacritic', omdb.get('metacritic', ''))
-            list_item.setProperty('rating.rotten', omdb.get('tomatometerallcritics', ''))
-            list_item.setProperty('rating.rotten_avg', omdb.get('tomatometerallcritics_avg', ''))
-            list_item.setProperty('votes.rotten', omdb.get('tomatometerallcritics_votes', ''))
-            list_item.setProperty('rating.rotten_user', omdb.get('tomatometerallaudience', ''))
-            list_item.setProperty('rating.rotten_user_avg', omdb.get('tomatometerallaudience_avg', ''))
-            list_item.setProperty('votes.rotten_user', omdb.get('tomatometerallaudience_votes', ''))
-            list_item.setProperty('rating.imdb', omdb.get('imdbRating', ''))
-            list_item.setProperty('votes.imdb', omdb.get('imdbVotes', ''))
-            list_item.setProperty('awards', omdb.get('awards', ''))
-            list_item.setProperty('release', omdb.get('DVD', ''))
-
-
-def tmdb_call(request_url,error_check=False,error=ADDON.getLocalizedString(32019)):
-    try:
-        for i in range(1,4): # loop if heavy server load
-            try:
-                request = requests.get(request_url, timeout=5)
-
                 if str(request.status_code).startswith('5'):
                     raise Exception(str(request.status_code))
 
-            except Exception as error:
-                log('TMDb server error: Code ' + error)
+            except Exception:
                 xbmc.sleep(500)
 
-        if request.status_code == 401:
-            raise Exception(ADDON.getLocalizedString(32022))
+        if not request or request.status_code == 404:
+            error = ADDON.getLocalizedString(32019)
+            raise Exception(error)
 
-        elif request.status_code == 404:
+        elif request.status_code == 401:
+            error = ADDON.getLocalizedString(32022)
             raise Exception(error)
 
         elif not request.ok:
@@ -181,35 +71,17 @@ def tmdb_call(request_url,error_check=False,error=ADDON.getLocalizedString(32019
 
         result = request.json()
 
-        if error_check:
-            if len(result) == 0 or ('results' in result and len(result['results']) == 0):
+        if show_error:
+            if len(result) == 0 or ('results' in result and not len(result['results']) == 0):
+                error = ADDON.getLocalizedString(32019)
                 raise Exception(error)
 
         return result
 
     except Exception as error:
-        tmdb_error(error)
-
-
-def tmdb_query(action,call=None,get=None,season=None,season_get=None,params=None,use_language=True,language=DEFAULT_LANGUAGE,error_check=False):
-    args = {}
-    args['api_key'] = API_KEY
-
-    if use_language:
-        args['language'] = language
-
-    if params:
-        args.update(params)
-
-    call = '/' + str(call) if call else ''
-    get = '/' + get if get else ''
-    season = '/' + str(season) if season else ''
-    season_get = '/' + season_get if season_get else ''
-
-    url = API_URL + action + call + get + season + season_get
-    url = '{0}?{1}'.format(url, urlencode(args))
-
-    return tmdb_call(url,error_check)
+        log('%s --> %s' % (error, url), ERROR)
+        if show_error:
+            tmdb_error(error)
 
 
 def tmdb_search(call,query,year=None,include_adult='false'):
@@ -227,17 +99,21 @@ def tmdb_search(call,query,year=None,include_adult='false'):
 
     result = tmdb_query(action='search',
                         call=call,
-                        params=params,
-                        error_check=True
-                        )
+                        params=params)
 
     try:
-        return result['results']
-    except TypeError:
-        return ''
+        result = result.get('results')
+
+        if not result:
+            raise Exception
+
+        return result
+
+    except Exception:
+        tmdb_error(ADDON.getLocalizedString(32019))
 
 
-def tmdb_find(call,external_id):
+def tmdb_find(call,external_id,error_check=True):
     if external_id.startswith('tt'):
         external_source = 'imdb_id'
     else:
@@ -246,18 +122,17 @@ def tmdb_find(call,external_id):
     result = tmdb_query(action='find',
                         call=str(external_id),
                         params={'external_source': external_source},
-                        use_language=False
+                        use_language=False,
+                        show_error=True
                         )
+    try:
+        if call == 'movie':
+            return result.get('movie_results')
+        else:
+            return result.get('tv_results')
 
-    if call == 'movie':
-        result = result['movie_results']
-    else:
-        result = result['tv_results']
-
-    if not result:
-        tmdb_error(ADDON.getLocalizedString(32019))
-
-    return result
+    except AttributeError:
+        return
 
 def tmdb_select_dialog(list,call):
     indexlist = []
@@ -273,14 +148,14 @@ def tmdb_select_dialog(list,call):
         default_img = 'DefaultVideo.png'
         img = 'poster_path'
         label = 'title'
-        label2 = 'tmdb_get_year(item.get("release_date",""))'
+        label2 = 'tmdb_get_year(item.get("release_date", ""))'
 
     elif call == 'tv':
         default_img = 'DefaultVideo.png'
         img = 'poster_path'
         label = 'name'
         label2 = 'first_air_date'
-        label2 = 'tmdb_get_year(item.get("first_air_date",""))'
+        label2 = 'tmdb_get_year(item.get("first_air_date", ""))'
 
     else:
         return
@@ -338,9 +213,11 @@ def tmdb_select_dialog_small(list):
 def tmdb_calc_age(birthday,deathday=None):
     if deathday is not None:
         ref_day = deathday.split("-")
+
     elif birthday:
         date = datetime.date.today()
         ref_day = [date.year, date.month, date.day]
+
     else:
         return ''
 
@@ -359,7 +236,7 @@ def tmdb_calc_age(birthday,deathday=None):
 
 def tmdb_error(message=ADDON.getLocalizedString(32019)):
     busydialog(close=True)
-    DIALOG.ok(ADDON.getLocalizedString(32000),message)
+    DIALOG.ok(ADDON.getLocalizedString(32000), str(message))
 
 
 def tmdb_studios(list_item,item,key):
@@ -405,7 +282,7 @@ def tmdb_check_localdb(local_items,title,originaltitle,year,imdbnumber=False):
                     if item['originaltitle'] == originaltitle or item['title'] == originaltitle or item['title'] == title:
                         found_local = True
                         break
-                elif tmdb_year in [item_year-2,item_year-1,item_year+1,item_year+2]:
+                elif tmdb_year in [item_year-2, item_year-1, item_year+1, item_year+2]:
                     if item['title'] == title and item['originaltitle'] == originaltitle:
                         found_local = True
                         break
@@ -434,16 +311,16 @@ def tmdb_handle_person(item):
 
     icon = IMAGEPATH + item['profile_path'] if item['profile_path'] is not None else ''
     list_item = xbmcgui.ListItem(label=item['name'])
-    list_item.setProperty('birthday', date_format(item.get('birthday')))
-    list_item.setProperty('deathday', date_format(item.get('deathday')))
-    list_item.setProperty('age', str(tmdb_calc_age(item.get('birthday', ''),item.get('deathday', None))))
+    list_item.setProperty('birthday', date_format(item.get('birthday', '')))
+    list_item.setProperty('deathday', date_format(item.get('deathday', '')))
+    list_item.setProperty('age', str(tmdb_calc_age(item.get('birthday', ''), item.get('deathday'))))
     list_item.setProperty('biography', tmdb_fallback_info(item, 'biography'))
     list_item.setProperty('place_of_birth', item.get('place_of_birth', ''))
     list_item.setProperty('known_for_department', item.get('known_for_department', ''))
     list_item.setProperty('gender', gender)
     list_item.setProperty('id', str(item.get('id', '')))
     list_item.setProperty('call', 'person')
-    list_item.setArt({'icon': 'DefaultActor.png', 'thumb': icon})
+    list_item.setArt({'icon': 'DefaultActor.png', 'thumb': icon, 'poster': icon})
 
     return list_item
 
@@ -456,13 +333,13 @@ def tmdb_handle_movie(item,local_items=None,full_info=False,mediatype='movie'):
     originaltitle = item.get('original_title', '')
     imdbnumber = item.get('imdb_id', '')
     collection = item.get('belongs_to_collection', '')
-    duration = item.get('runtime') * 60 if item.get('runtime',0) > 0 else ''
+    duration = item.get('runtime') * 60 if item.get('runtime', 0) > 0 else ''
 
     premiered = item.get('release_date')
     if premiered in ['2999-01-01', '1900-01-01']:
         premiered = ''
 
-    local_info = tmdb_check_localdb(local_items,label,originaltitle,premiered,imdbnumber)
+    local_info = tmdb_check_localdb(local_items, label, originaltitle, premiered, imdbnumber)
     dbid = local_info['dbid']
     is_local = True if dbid > 0 else False
 
@@ -480,14 +357,14 @@ def tmdb_handle_movie(item,local_items=None,full_info=False,mediatype='movie'):
                                 'duration': duration,
                                 'status': item.get('status', ''),
                                 'plot': tmdb_fallback_info(item, 'overview'),
-                                'director': tmdb_join_items_by(item.get('crew', ''),key_is='job',value_is='Director'),
-                                'writer': tmdb_join_items_by(item.get('crew', ''),key_is='department',value_is='Writing'),
+                                'director': tmdb_join_items_by(item.get('crew', ''), key_is='job', value_is='Director'),
+                                'writer': tmdb_join_items_by(item.get('crew', ''), key_is='department', value_is='Writing'),
                                 'country': tmdb_join_items(item.get('production_countries', '')),
                                 'genre': tmdb_join_items(item.get('genres', '')),
                                 'studio': tmdb_join_items(item.get('production_companies', '')),
                                 'mediatype': mediatype}
                                  )
-    list_item.setArt({'icon': 'DefaultVideo.png', 'thumb': icon, 'fanart': backdrop})
+    list_item.setArt({'icon': 'DefaultVideo.png', 'thumb': icon, 'poster': icon, 'fanart': backdrop})
     list_item.setProperty('role', item.get('character', ''))
     list_item.setProperty('budget', format_currency(item.get('budget')))
     list_item.setProperty('revenue', format_currency(item.get('revenue')))
@@ -497,8 +374,8 @@ def tmdb_handle_movie(item,local_items=None,full_info=False,mediatype='movie'):
     list_item.setProperty('call', 'movie')
 
     if full_info:
-        tmdb_studios(list_item,item, 'production')
-        omdb_properties(list_item,imdbnumber)
+        tmdb_studios(list_item, item, 'production')
+        omdb_properties(list_item, imdbnumber)
 
         region_release = tmdb_get_region_release(item)
         if premiered != region_release:
@@ -528,7 +405,7 @@ def tmdb_handle_tvshow(item,local_items=None,full_info=False,mediatype='tvshow')
     if premiered in ['2999-01-01', '1900-01-01']:
         premiered = ''
 
-    local_info = tmdb_check_localdb(local_items,label,originaltitle,premiered,tvdb_id)
+    local_info = tmdb_check_localdb(local_items, label, originaltitle, premiered, tvdb_id)
     dbid = local_info['dbid']
     is_local = True if dbid > 0 else False
 
@@ -551,7 +428,7 @@ def tmdb_handle_tvshow(item,local_items=None,full_info=False,mediatype='tvshow')
                                 'studio': tmdb_join_items(item.get('networks', '')),
                                 'mediatype': mediatype}
                                 )
-    list_item.setArt({'icon': 'DefaultVideo.png', 'thumb': icon, 'fanart': backdrop})
+    list_item.setArt({'icon': 'DefaultVideo.png', 'thumb': icon, 'poster': icon, 'fanart': backdrop})
     list_item.setProperty('TotalEpisodes', str(local_info['episodes']))
     list_item.setProperty('WatchedEpisodes', str(local_info['watchedepisodes']))
     list_item.setProperty('UnWatchedEpisodes', str(local_info['unwatchedepisodes']))
@@ -564,7 +441,7 @@ def tmdb_handle_tvshow(item,local_items=None,full_info=False,mediatype='tvshow')
     if full_info:
         tmdb_studios(list_item,item, 'production')
         tmdb_studios(list_item,item, 'network')
-        omdb_properties(list_item,imdbnumber)
+        omdb_properties(list_item, imdbnumber)
 
         if last_episode:
             list_item.setProperty('lastepisode', last_episode.get('name'))
@@ -612,7 +489,7 @@ def tmdb_handle_season(item,tvshow_details,full_info=False):
                                 'mpaa': tmdb_get_cert(tvshow_details),
                                 'mediatype': 'season'}
                                 )
-    list_item.setArt({'icon': 'DefaultVideo.png', 'thumb': icon, 'fanart': backdrop})
+    list_item.setArt({'icon': 'DefaultVideo.png', 'thumb': icon, 'poster': icon, 'fanart': backdrop})
     list_item.setProperty('TotalEpisodes', str(episodes_count))
     list_item.setProperty('id', str(tvshow_details['id']))
     list_item.setProperty('call', 'tv')
@@ -621,7 +498,7 @@ def tmdb_handle_season(item,tvshow_details,full_info=False):
     if full_info:
         tmdb_studios(list_item,tvshow_details, 'production')
         tmdb_studios(list_item,tvshow_details, 'network')
-        omdb_properties(list_item,imdbnumber)
+        omdb_properties(list_item, imdbnumber)
 
     return list_item
 
@@ -658,7 +535,7 @@ def tmdb_handle_credits(item):
     icon = IMAGEPATH + item['profile_path'] if item['profile_path'] is not None else ''
     list_item = xbmcgui.ListItem(label=item['name'])
     list_item.setLabel2(item['label2'])
-    list_item.setArt({'icon': 'DefaultActor.png', 'thumb': icon})
+    list_item.setArt({'icon': 'DefaultActor.png', 'thumb': icon, 'poster': icon})
     list_item.setProperty('id', str(item.get('id', '')))
     list_item.setProperty('call', 'person')
 
@@ -669,7 +546,7 @@ def tmdb_handle_yt_videos(item):
     icon = 'https://img.youtube.com/vi/%s/0.jpg' % str(item['key'])
     list_item = xbmcgui.ListItem(label=item['name'])
     list_item.setLabel2(item.get('type', ''))
-    list_item.setArt({'icon': 'DefaultVideo.png', 'thumb': icon})
+    list_item.setArt({'icon': 'DefaultVideo.png', 'thumb': icon, 'landscape': icon})
     list_item.setProperty('ytid', str(item['key']))
     list_item.setProperty('call', 'youtube')
 
@@ -737,3 +614,20 @@ def tmdb_get_cert(item):
         return prefix + mpaa
 
     return mpaa_fallback
+
+
+def omdb_properties(list_item,imdbnumber):
+    if OMDB_API_KEY and imdbnumber:
+        omdb = omdb_api(imdbnumber)
+        if omdb:
+            list_item.setProperty('rating.metacritic', omdb.get('metacritic', ''))
+            list_item.setProperty('rating.rotten', omdb.get('tomatometerallcritics', ''))
+            list_item.setProperty('rating.rotten_avg', omdb.get('tomatometerallcritics_avg', ''))
+            list_item.setProperty('votes.rotten', omdb.get('tomatometerallcritics_votes', ''))
+            list_item.setProperty('rating.rotten_user', omdb.get('tomatometerallaudience', ''))
+            list_item.setProperty('rating.rotten_user_avg', omdb.get('tomatometerallaudience_avg', ''))
+            list_item.setProperty('votes.rotten_user', omdb.get('tomatometerallaudience_votes', ''))
+            list_item.setProperty('rating.imdb', omdb.get('imdbRating', ''))
+            list_item.setProperty('votes.imdb', omdb.get('imdbVotes', ''))
+            list_item.setProperty('awards', omdb.get('awards', ''))
+            list_item.setProperty('release', omdb.get('DVD', ''))

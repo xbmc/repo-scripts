@@ -131,13 +131,14 @@ msgstr "API Key"
 
 #: /resources/settings.xml
 msgctxt "#32020"
-msgid "Caching"
-msgstr "Caching"
+msgid "Developer settings"
+msgstr "Entwickler-Einstellungen"
 
 #: /resources/settings.xml
 msgctxt "#32021"
-msgid "Enable caching of fetched data"
-msgstr "Aktiviere Caching von abgerufenen Daten"
+msgid "Enable caching (highly recommended - only turn off for debugging)"
+msgstr ""
+"Caching aktivieren (dringend empfohlen - nur zum Debuggen deaktivieren)"
 
 #: /resources/settings.xml
 msgctxt "#32024"
@@ -267,3 +268,58 @@ msgstr "Installiere Context Menü Addon"
 msgctxt "#32048"
 msgid "Next episode"
 msgstr "Nächste Episode"
+
+#: /resources/lib/widgets.py
+msgctxt "#32049"
+msgid "Discover"
+msgstr "Entdecken"
+
+#: /resources/lib/widgets.py
+msgctxt "#32050"
+msgid "Discover movies"
+msgstr "Filme entdecken"
+
+#: /resources/lib/widgets.py
+msgctxt "#32051"
+msgid "Discover TV shows"
+msgstr "Serien entdecken"
+
+#: /resources/lib/widgets.py
+msgctxt "#32052"
+msgid "Discover movies by year"
+msgstr "Entdecke Filme anhand Jahr"
+
+#: /resources/lib/widgets.py
+msgctxt "#32053"
+msgid "Discover movies by genre"
+msgstr "Entdecke Filme anhand Genre"
+
+#: /resources/lib/widgets.py
+msgctxt "#32054"
+msgid "Discover TV shows by year"
+msgstr "Entdecke Serien anhand Jahr"
+
+#: /resources/lib/widgets.py
+msgctxt "#32055"
+msgid "Discover TV shows by genre"
+msgstr "Entdecke Serien anhand Genre"
+
+#: /resources/lib/widgets.py
+msgctxt "#32056"
+msgid "Previous page"
+msgstr "Vorherige Seite"
+
+#: /resources/lib/widgets.py
+msgctxt "#32057"
+msgid "Discover people"
+msgstr "Personen entdecken"
+
+#: /resources/lib/widgets.py
+msgctxt "#32058"
+msgid "Next 7 days"
+msgstr "Nächste 7 Tage"
+
+#: /resources/lib/widgets.py
+msgctxt "#32059"
+msgid "Next airing episodes of your TV show library"
+msgstr "Kommende Folgen deiner TV-Show-Bibliothek"

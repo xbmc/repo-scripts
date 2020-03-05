@@ -8,10 +8,11 @@ import xbmc
 import xbmcgui
 
 from resources.lib.helper import *
-from resources.lib.utils import *
+from resources.lib.tmdb import *
 from resources.lib.person import *
 from resources.lib.video import *
 from resources.lib.season import *
+from resources.lib.localdb import *
 
 ########################
 
@@ -120,7 +121,8 @@ class TheMovieDB(object):
 
                     if title.lower() == self.query.lower() or original_title.lower() == self.query.lower():
                         if self.query_year:
-                            if self.query_year == item.get('release_date', '')[:-6]:
+                            premiered = item.get('first_air_date', '') if self.call == 'tv' else item.get('release_date', '')
+                            if self.query_year == premiered[:-6]:
                                 exact_results.append(item)
                         else:
                             exact_results.append(item)
@@ -183,13 +185,13 @@ class TheMovieDB(object):
             return
 
         dialog = DialogPerson('script-embuary-person.xml', ADDON_PATH, 'default', '1080i',
-                            person=data['person'],
-                            movies=data['movies'],
-                            tvshows=data['tvshows'],
-                            combined=data['combined'],
-                            images=data['images'],
-                            tmdb_id=self.tmdb_id
-                            )
+                              person=data['person'],
+                              movies=data['movies'],
+                              tvshows=data['tvshows'],
+                              combined=data['combined'],
+                              images=data['images'],
+                              tmdb_id=self.tmdb_id
+                              )
         return dialog
 
     def fetch_video(self):
@@ -198,17 +200,17 @@ class TheMovieDB(object):
             return
 
         dialog = DialogVideo('script-embuary-video.xml', ADDON_PATH, 'default', '1080i',
-                            details=data['details'],
-                            cast=data['cast'],
-                            crew=data['crew'],
-                            similar=data['similar'],
-                            youtube=data['youtube'],
-                            backdrops=data['backdrops'],
-                            posters=data['posters'],
-                            collection=data['collection'],
-                            seasons=data['seasons'],
-                            tmdb_id=self.tmdb_id
-                            )
+                             details=data['details'],
+                             cast=data['cast'],
+                             crew=data['crew'],
+                             similar=data['similar'],
+                             youtube=data['youtube'],
+                             backdrops=data['backdrops'],
+                             posters=data['posters'],
+                             collection=data['collection'],
+                             seasons=data['seasons'],
+                             tmdb_id=self.tmdb_id
+                             )
         return dialog
 
     def fetch_season(self):
@@ -217,12 +219,12 @@ class TheMovieDB(object):
             return
 
         dialog = DialogSeason('script-embuary-video.xml', ADDON_PATH, 'default', '1080i',
-                            details=data['details'],
-                            cast=data['cast'],
-                            gueststars=data['gueststars'],
-                            posters=data['posters'],
-                            tmdb_id=self.tmdb_id
-                            )
+                              details=data['details'],
+                              cast=data['cast'],
+                              gueststars=data['gueststars'],
+                              posters=data['posters'],
+                              tmdb_id=self.tmdb_id
+                              )
         return dialog
 
 

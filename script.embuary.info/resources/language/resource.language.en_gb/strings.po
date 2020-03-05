@@ -124,12 +124,12 @@ msgstr ""
 
 #: /resources/settings.xml
 msgctxt "#32020"
-msgid "Caching"
+msgid "Developer settings"
 msgstr ""
 
 #: /resources/settings.xml
 msgctxt "#32021"
-msgid "Enable caching of fetched data"
+msgid "Enable caching (highly recommended - only turn off for debugging)"
 msgstr ""
 
 #: /resources/settings.xml
@@ -255,4 +255,59 @@ msgstr ""
 #: /resources/skins/default/1080i/script-embuary-video.xml
 msgctxt "#32048"
 msgid "Next episode"
+msgstr ""
+
+#: /resources/lib/widgets.py
+msgctxt "#32049"
+msgid "Discover"
+msgstr ""
+
+#: /resources/lib/widgets.py
+msgctxt "#32050"
+msgid "Discover movies"
+msgstr ""
+
+#: /resources/lib/widgets.py
+msgctxt "#32051"
+msgid "Discover TV shows"
+msgstr ""
+
+#: /resources/lib/widgets.py
+msgctxt "#32052"
+msgid "Discover movies by year"
+msgstr ""
+
+#: /resources/lib/widgets.py
+msgctxt "#32053"
+msgid "Discover movies by genre"
+msgstr ""
+
+#: /resources/lib/widgets.py
+msgctxt "#32054"
+msgid "Discover TV shows by year"
+msgstr ""
+
+#: /resources/lib/widgets.py
+msgctxt "#32055"
+msgid "Discover TV shows by genre"
+msgstr ""
+
+#: /resources/lib/widgets.py
+msgctxt "#32056"
+msgid "Previous page"
+msgstr ""
+
+#: /resources/lib/widgets.py
+msgctxt "#32057"
+msgid "Discover people"
+msgstr ""
+
+#: /resources/lib/widgets.py
+msgctxt "#32058"
+msgid "Next 7 days"
+msgstr ""
+
+#: /resources/lib/widgets.py
+msgctxt "#32059"
+msgid "Next airing episodes of your TV show library"
 msgstr ""
