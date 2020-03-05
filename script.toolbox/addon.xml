@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.toolbox" name="ToolBox Script" version="2.0.0" provider-name="phil65,sualfred">
+    <requires>
+        <import addon="xbmc.python" version="3.0.0"/>
+        <import addon="script.module.pil" version="1.1.7"/>
+    </requires>
+    <extension point="xbmc.python.script" library="default.py">
+        <provides>executable</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <language/>
+        <summary lang="en_GB">ToolBox Script</summary>
+        <description lang="en_GB">This script exposes several python functions to the UI engine as well as some other stuff to make life for skinners a bit easier.</description>
+        <platform>all</platform>
+        <license>GPL-2.0-only</license>
+        <forum>http://forum.kodi.tv/showthread.php?tid=207618</forum>
+        <source>https://github.com/phil65/script.toolbox</source>
+        <email>phil65@kodi.tv</email>
+        <assets>
+            <icon>resources/icon.png</icon>
+        </assets>
+    </extension>
+</addon>
