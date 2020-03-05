@@ -1,0 +1,146 @@
+# Metadata Editor language file
+# Addon Name: Metadata Editor
+# Addon id: script.metadata.editor
+# Addon Provider: sualfred
+# Translators:
+# Edjalmo Bf <edjalmo.bf@hotmail.com>, 2019
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Metadata Editor\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2019-11-07 08:05+0000\n"
+"Last-Translator: Edjalmo Bf <edjalmo.bf@hotmail.com>, 2019\n"
+"Language-Team: Portuguese (Brazil) (https://www.transifex.com/sualfred/teams/80018/pt_BR/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: pt_BR\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: /addon.xml
+msgctxt "#32000"
+msgid "Metadata Editor"
+msgstr "Editor de Metadados"
+
+#: /resources/lib/dialog.py
+msgctxt "#32001"
+msgid "User rating"
+msgstr "Avaliação do usuário"
+
+#: /resources/lib/dialog_videogenres.py
+msgctxt "#32002"
+msgid "Available entries"
+msgstr "Entradas disponíveis"
+
+#: /addon.xml
+msgctxt "#32003"
+msgid "Add/remove available tags"
+msgstr "Add/remover tags disponíveis"
+
+#: /addon.xml
+msgctxt "#32004"
+msgid "Add/remove available genres"
+msgstr "Add/remover gêneros disponíveis"
+
+#: /resources/lib/utils.py
+msgctxt "#32005"
+msgid "Add new item"
+msgstr "Add novo item"
+
+#: /resources/lib/utils.py
+msgctxt "#32006"
+msgid "Modify current list"
+msgstr "Modificar lista atual"
+
+#: /resources/lib/utils.py
+msgctxt "#32007"
+msgid "Select from available items"
+msgstr "Selecionar de itens disponíveis"
+
+#: /context.py
+msgctxt "#32008"
+msgid "Remove favourite tag"
+msgstr "Remover tag favorita"
+
+#: /context.py
+msgctxt "#32009"
+msgid "Add favourite tag"
+msgstr "Add tag favorita"
+
+#: /context.py
+msgctxt "#32010"
+msgid "Open editor"
+msgstr "Editor livre"
+
+#: /resources/lib/utils.py
+msgctxt "#32011"
+msgid "Enter floating number"
+msgstr "Digite um número real"
+
+#: /resources/lib/utils.py
+msgctxt "#32012"
+msgid "Select source"
+msgstr "Selecionar caminho"
+
+#: /resources/lib/utils.py
+msgctxt "#32013"
+msgid "Available sources"
+msgstr "Caminhos disponíveis"
+
+#: /resources/lib/utils.py
+msgctxt "#32014"
+msgid "Default source"
+msgstr "Caminho padrão"
+
+#: /resources/lib/utils.py
+msgctxt "#32015"
+msgid "Select default source"
+msgstr "Selecionar caminho padrão"
+
+#: /resources/lib/utils.py
+msgctxt "#32016"
+msgid "Edit ratings and votes"
+msgstr "Editar notas e votos"
+
+#: /resources/lib/utils.py
+msgctxt "#32017"
+msgid "Add source"
+msgstr "Add caminho"
+
+#: /resources/lib/utils.py
+msgctxt "#32018"
+msgid "Only values between 1.0 and 10.0 are allowed."
+msgstr "Somente valores entre 1.0 e 10.0 são permitidos."
+
+#: /resources/lib/utils.py
+msgctxt "#32019"
+msgid "Attention"
+msgstr "Atenção"
+
+#: /resources/lib/utils.py
+msgctxt "#32020"
+msgid "Set as default?"
+msgstr "Definir como padrão?"
+
+#: /resources/settings.xml
+msgctxt "#32021"
+msgid "Enable .nfo updating for movies, TV shows and music videos"
+msgstr "Ativar atualização de .nfo para filmes, seriados e videoclipes"
+
+#: /resources/lib/editor.py
+msgctxt "#32022"
+msgid "value unkown (missing Kodi feature)"
+msgstr "valor desconhecidos (faltando recurso do Kodi)"
+
+#: /resources/lib/editor.py
+msgctxt "#32023"
+msgid "Record label"
+msgstr "Gravadora"
+
+#: /default.py
+msgctxt "#32024"
+msgid "Please use the context menu on a library item to run this script."
+msgstr ""
+"Por favor, use o menu de contexto em um item da biblioteca para executar "
+"este script."
