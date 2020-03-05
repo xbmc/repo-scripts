@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="screensaver.picture.slideshow" name="Picture Slideshow Screensaver" version="6.0.1" provider-name="Team Kodi">
+<addon id="screensaver.picture.slideshow" name="Picture Slideshow Screensaver" version="6.0.2" provider-name="Team Kodi">
 	<requires>
 		<import addon="xbmc.python" version="3.0.0"/>
-		<import addon="script.module.elementtree" version="1.2.8" />
 	</requires>
 	<extension point="xbmc.ui.screensaver" library="default.py"/>
 	<extension point="xbmc.addon.metadata">
