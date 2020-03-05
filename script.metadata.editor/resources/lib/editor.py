@@ -175,8 +175,6 @@ class EditDialog(object):
             self._create_list('TMDb ID', 'uniqueid', value=uniqueid.get('tmdb'), type='uniqueid', option={'type': 'tmdb', 'uniqueids': uniqueid, 'episodeguide': details.get('episodeguide')})
             self._create_list('TVDb ID', 'uniqueid', value=uniqueid.get('tvdb'), type='uniqueid', option={'type': 'tvdb', 'uniqueids': uniqueid, 'episodeguide': details.get('episodeguide')})
             self._create_list('aniDB ID', 'uniqueid', value=uniqueid.get('anidb'), type='uniqueid', option={'type': 'anidb', 'uniqueids': uniqueid, 'episodeguide': details.get('episodeguide')})
-            self._create_list(xbmc.getLocalizedString(570), 'dateadded', value=details.get('dateadded'), type='datetime')
-            self._create_list(xbmc.getLocalizedString(568), 'lastplayed', value=details.get('lastplayed'), type='datetime')
 
         elif self.dbtype == 'episode':
             self._create_list(xbmc.getLocalizedString(369), 'title', value=details.get('title'), type='string')
