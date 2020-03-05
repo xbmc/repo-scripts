@@ -373,6 +373,9 @@ class UpdateRating(object):
         if not omdb:
             return
 
+        if not PYTHON3:
+            omdb = omdb.encode('utf-8')
+
         tree = ET.ElementTree(ET.fromstring(omdb))
         root = tree.getroot()
 
