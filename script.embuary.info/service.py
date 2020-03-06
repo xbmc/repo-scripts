@@ -27,6 +27,8 @@ if __name__ == "__main__":
     ''' Fetch next airing items on Kodi startup
     '''
     if condition('Library.HasContent(TVShows)') and ADDON.getSettingBool('cache_enabled'):
+        log('Refreshing next airing database', force=True)
         NextAired()
+        log('Finished next airing database refreshing', force=True)
 
     Service()
