@@ -1,0 +1,101 @@
+# XBMC Media Center language file
+# Addon Name: OnIdle Service
+# Addon id: service.onidle
+# Addon Provider: Lunatixz
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To:  \n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: English"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#32001"
+msgid "Enable Debugging"
+msgstr ""
+
+msgctxt "#32002"
+msgid "Idle Action"
+msgstr ""
+
+msgctxt "#32003"
+msgid "Idle Timer (Minutes)"
+msgstr ""
+
+msgctxt "#32004"
+msgid "Idle Countdown (Seconds)"
+msgstr ""
+
+msgctxt "#32005"
+msgid "Ignore When Playing Music"
+msgstr ""
+
+msgctxt "#32006"
+msgid "User Defined"
+msgstr ""
+
+msgctxt "#32007"
+msgid "CEC Shutdown"
+msgstr ""
+
+msgctxt "#32008"
+msgid "CEC Standby"
+msgstr ""
+
+msgctxt "#32009"
+msgid "Hibernate"
+msgstr ""
+
+msgctxt "#32010"
+msgid "Suspend"
+msgstr ""
+
+msgctxt "#32011"
+msgid "Shutdown"
+msgstr ""
+
+msgctxt "#32012"
+msgid "Quit"
+msgstr ""
+
+msgctxt "#32013"
+msgid "Activate Screensaver"
+msgstr ""
+
+msgctxt "#32014"
+msgid "Visit 'https://kodi.wiki/view/List_of_built-in_functions' for details"
+msgstr ""
+
+msgctxt "#32015"
+msgid "Enter built-in function"
+msgstr ""
+
+msgctxt "#32016"
+msgid "Enable Soft Mute"
+msgstr ""
+
+msgctxt "#32017"
+msgid "Idle Countdown"
+msgstr ""
+
+msgctxt "#32018"
+msgid "Cancel to continue watching"
+msgstr ""
+
+msgctxt "#32019"
+msgid "Sleeping in %s seconds"
+msgstr ""
+
+msgctxt "#32020"
+msgid "Run Manually"
+msgstr ""
+
+msgctxt "#32021"
+msgid "Test Action"
+msgstr ""
