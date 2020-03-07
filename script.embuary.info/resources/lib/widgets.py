@@ -122,7 +122,6 @@ def dialog(call,idtype,tmdbid):
         execute('RunScript(script.embuary.info,call=%s,external_id=%s)' % (call, tmdbid))
 
 
-
 @plugin.route('/search')
 def search():
     execute('RunScript(script.embuary.info)')
@@ -140,16 +139,18 @@ def nextaired(day=None):
                              plugin.url_for(nextaired, i.get('day')),
                              li_item, True)
 
-
         utc = arrow.utcnow()
-        local_date = utc.to('local')
+        local_date = utc.to(TIMEZONE)
+
+        kodi_locale = json_call('Settings.GetSettingValue', params={'setting': 'locale.language'})
+        kodi_locale = kodi_locale['result']['value'][-5:]
 
         for i in range(6):
             local_date = local_date.shift(days=1)
-            long_date = local_date.strftime('%A, %d %B %Y')
+            translated_date = local_date.format(fmt='dddd, D. MMMM YYYY', locale=kodi_locale)
             tmp_day_str, tmp_day = date_weekday(local_date)
 
-            li_item = ListItem(long_date)
+            li_item = ListItem(translated_date)
             li_item.setArt(DEFAULT_ART)
             addDirectoryItem(plugin.handle,
                              plugin.url_for(nextaired, tmp_day),

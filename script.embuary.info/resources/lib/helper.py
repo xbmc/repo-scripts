@@ -48,6 +48,9 @@ CACHE.enable_mem_cache = False
 CACHE_ENABLED = ADDON.getSettingBool('cache_enabled')
 CACHE_PREFIX = ADDON_ID + '_' + ADDON_VERSION + '_' + DEFAULT_LANGUAGE + COUNTRY_CODE + '_'
 
+#TIMEZONE = 'US/Alaska'
+TIMEZONE = 'local'
+
 ########################
 
 def log(txt,loglevel=DEBUG,json=False,force=False):
@@ -192,7 +195,7 @@ def date_delta(date):
 def date_weekday(date=None):
     if not date:
         utc = arrow.utcnow()
-        date = utc.to('local').date()
+        date = utc.to(TIMEZONE).date()
 
     try:
         weekdays = (xbmc.getLocalizedString(11), xbmc.getLocalizedString(12), xbmc.getLocalizedString(13), xbmc.getLocalizedString(14), xbmc.getLocalizedString(15), xbmc.getLocalizedString(16), xbmc.getLocalizedString(17))
@@ -205,7 +208,7 @@ def date_weekday(date=None):
 
 
 def utc_to_local(value):
-    conv_date = arrow.get(value).to('local')
+    conv_date = arrow.get(value).to(TIMEZONE)
     conv_date_str = conv_date.strftime('%Y-%m-%d')
 
     if xbmc.getRegion('time').startswith('%I'):
