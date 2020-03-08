@@ -177,6 +177,9 @@ def winprop(key,value=None,clear=False,window_id=10000):
 
 
 def date_format(value,date='short'):
+    if not value:
+        return value
+
     try:
         date_time = arrow.get(value)
         value = date_time.strftime(xbmc.getRegion('date%s' % date))
