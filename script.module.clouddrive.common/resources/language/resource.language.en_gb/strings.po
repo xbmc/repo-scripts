@@ -355,3 +355,7 @@ msgstr ""
 msgctxt "#32085"
 msgid "Destination"
 msgstr ""
+
+msgctxt "#32086"
+msgid "Do you want to keep the local files of '%s'?"
+msgstr ""

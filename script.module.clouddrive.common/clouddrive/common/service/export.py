@@ -39,7 +39,7 @@ class ExportService(object):
         self._startup_type = Utils.str(ExportScheduleDialog._startup_type)
         self.export_manager = ExportManager(self._profile_path)
         self._account_manager = AccountManager(self._profile_path)
-        self._video_file_extensions = KodiUtils.get_supported_media("video")
+        self._video_file_extensions = [x for x in KodiUtils.get_supported_media("video") if x not in ('','zip')]
         self._audio_file_extensions = KodiUtils.get_supported_media("music")
     
     def __del__(self):
@@ -171,7 +171,7 @@ class ExportService(object):
         if KodiUtils.file_exists(item_info_path):
             if is_folder:
                 Logger.debug('Change is delete folder: %s' % item_info_path)
-                if not self.remove_folder(item_info_path):
+                if not Utils.remove_folder(item_info_path, self._system_monitor):
                     change_type = 'retry'
             else:
                 Logger.debug('Change is delete file')
@@ -181,26 +181,18 @@ class ExportService(object):
             ExportManager.remove_item_info(items_info, item_id)
         return change_type
     
-    def remove_folder(self, folder_path):
-        if not KodiUtils.rmdir(folder_path, True):
-            if self._system_monitor.waitForAbort(3):
-                return False
-            return KodiUtils.rmdir(folder_path, True)
-        return True
-    
     def process_change(self, change, items_info, export):
         change_type = None
         changed_item_id = change['id']
         Logger.debug('Change: %s' % Utils.str(change))
         if changed_item_id != export['id']:
-            changed_item_name = change['name']
-            deleted = Utils.get_safe_value(change, 'deleted')
-            parent_id = change['parent']
-            is_folder = 'folder' in change
-            if not is_folder:
-                changed_item_name += ExportManager._strm_extension
+            changed_item_name = Utils.get_safe_value(change,'name','')
+            deleted = Utils.get_safe_value(change, 'removed')
+            parent_id = Utils.get_safe_value(change,'parent','')
             if changed_item_id in items_info:
                 item_info = items_info[changed_item_id]
+                item_type = item_info['type']
+                is_folder = item_type == 'folder'
                 Logger.debug('item_info: %s' % Utils.str(item_info))
                 item_info_path = item_info['full_local_path']
                 if KodiUtils.file_exists(item_info_path):
@@ -212,12 +204,12 @@ class ExportService(object):
                             Logger.debug('Change is move')
                             parent_item_info = items_info[parent_id]
                             parent_item_path = parent_item_info['full_local_path']
-                            new_path = os.path.join(parent_item_path, changed_item_name)
+                            new_path = os.path.join(parent_item_path, Utils.unicode(changed_item_name))
                             if is_folder:
                                 new_path = os.path.join(new_path, '')
                             if KodiUtils.file_rename(item_info_path, new_path):
                                 ExportManager.remove_item_info(items_info, changed_item_id)
-                                ExportManager.add_item_info(items_info, changed_item_id, changed_item_name, new_path, parent_id)
+                                ExportManager.add_item_info(items_info, changed_item_id, Utils.unicode(changed_item_name), new_path, parent_id,item_type)
                             else:
                                 change_type = 'retry'
                         else:
@@ -227,22 +219,28 @@ class ExportService(object):
                     Logger.debug('Invalid state. Changed item not found: %s. Deleting from item list.' % item_info_path)
                     change_type = self.process_change_delete(items_info, changed_item_id, is_folder)
             elif parent_id in items_info and not deleted:
+                is_folder = 'application/vnd.google-apps.folder' in change.get('mimetype')
                 content_type = export['content_type']
                 item_name_extension = change['name_extension']
-                if is_folder or (('video' in change or item_name_extension in self._video_file_extensions) and content_type == 'video') or ('audio' in change and content_type == 'audio'):
+                is_stream_file = (('video' in change or item_name_extension in self._video_file_extensions) and content_type == 'video') or ('audio' in change and content_type == 'audio')
+                item_type = 'folder' if is_folder else 'file'
+                if is_folder or is_stream_file or (export['nfo_export'] and ('nfo' in item_name_extension or 'text/x-nfo' in change.get("mimetype"))):
                     change_type = 'add'
                     Logger.debug('Change is new item')
                     parent_item_info = items_info[parent_id]
                     parent_item_path = parent_item_info['full_local_path']
-                    new_path = os.path.join(parent_item_path, changed_item_name)
+                    new_path = os.path.join(parent_item_path, Utils.unicode(changed_item_name))
                     if is_folder:
                         new_path = os.path.join(new_path, '')
                         if not KodiUtils.mkdirs(new_path):
                             change_type = 'retry'
-                    else:
+                    elif is_stream_file:
+                        new_path += '.strm'
                         ExportManager.create_strm(export['driveid'], change, new_path, content_type, 'plugin://%s/' % self.addonid)
+                    else:
+                        ExportManager.create_nfo(changed_item_id, export['item_driveid'], new_path, self.provider)
                     if change_type != 'retry':
-                        ExportManager.add_item_info(items_info, changed_item_id, changed_item_name, new_path, parent_id)
+                        ExportManager.add_item_info(items_info, changed_item_id, Utils.unicode(changed_item_name), new_path, parent_id, item_type)
         Logger.debug('change type: %s ' % Utils.str(change_type))
         return change_type
     

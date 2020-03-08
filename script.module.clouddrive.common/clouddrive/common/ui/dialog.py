@@ -275,12 +275,13 @@ class ExportMainDialog(xbmcgui.WindowXMLDialog):
         self.dest_folder_button = self.getControl(1006)
         
         self.update_library_sw = self.getControl(1007)
-        self.watch_drive_sw = self.getControl(1008)
-        self.schedule_sw = self.getControl(1009)
+        self.nfo_export_sw = self.getControl(1008)
+        self.watch_drive_sw = self.getControl(1009)
+        self.schedule_sw = self.getControl(1010)
         
         self.schedule_label = self.getControl(10100)
-        self.schedule_list = self.getControl(1010)
-        self.add_schedule_button = self.getControl(1011)
+        self.schedule_list = self.getControl(1011)
+        self.add_schedule_button = self.getControl(1012)
         self.setFocus(self.dest_folder_button)
         
         self.schedule_label.setLabel(self._common_addon.getLocalizedString(32083))
@@ -298,6 +299,7 @@ class ExportMainDialog(xbmcgui.WindowXMLDialog):
         if export:
             self.editing = True
             self.watch_drive_sw.setSelected(Utils.get_safe_value(export, 'watch', False))
+            self.nfo_export_sw.setSelected(Utils.get_safe_value(export, 'nfo_export', False))
             self.schedule_sw.setSelected(Utils.get_safe_value(export, 'schedule', False))
             self.update_library_sw.setSelected(Utils.get_safe_value(export, 'update_library', False))
             self.schedules = Utils.get_safe_value(export, 'schedules', [])
@@ -325,6 +327,7 @@ class ExportMainDialog(xbmcgui.WindowXMLDialog):
             'content_type': self.content_type,
             'destination_folder': self.dest_folder_label.getLabel(),
             'watch': self.watch_drive_sw.isSelected(),
+            'nfo_export':self.nfo_export_sw.isSelected(),
             'schedule': self.schedule_sw.isSelected(),
             'update_library': self.update_library_sw.isSelected(),
             'schedules': self.schedules

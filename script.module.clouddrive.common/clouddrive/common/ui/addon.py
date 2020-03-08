@@ -60,6 +60,7 @@ class CloudDriveAddon(RemoteProcessCallable):
     _content_type = None
     _dialog = None
     _exporting = None
+    _export_manager = None
     _exporting_target = 0
     _exporting_percent = 0
     _exporting_count = 0
@@ -72,7 +73,7 @@ class CloudDriveAddon(RemoteProcessCallable):
     _progress_dialog_bg = None
     _export_progress_dialog_bg = None
     _system_monitor = None
-    _video_file_extensions = KodiUtils.get_supported_media("video")
+    _video_file_extensions = [x for x in KodiUtils.get_supported_media("video") if x not in ('','zip')]
     _audio_file_extensions = KodiUtils.get_supported_media("music")
     _image_file_extensions = KodiUtils.get_supported_media("picture")
     _account_manager = None
@@ -316,8 +317,8 @@ class CloudDriveAddon(RemoteProcessCallable):
             self._list_folder(driveid, path='/')
 
     def _list_exports(self, driveid):
-        export_manager = ExportManager(self._account_manager._addon_data_path)
-        exports = export_manager.load()
+        self._export_manager = ExportManager(self._account_manager._addon_data_path)
+        exports = self._export_manager.load()
         listing = []
         for exportid in exports:
             export = exports[exportid]
@@ -337,10 +338,15 @@ class CloudDriveAddon(RemoteProcessCallable):
         xbmcplugin.endOfDirectory(self._addon_handle, True)
     
     def _remove_export(self, driveid, item_id):
-        export_manager = ExportManager(self._account_manager._addon_data_path)
-        item = export_manager.load()[item_id]
-        if self._dialog.yesno(self._addon_name, self._common_addon.getLocalizedString(32001) % Utils.unicode(item['name']), None):
-            export_manager.remove_export(item_id)
+        self._export_manager = ExportManager(self._account_manager._addon_data_path)
+        item = self._export_manager.load()[item_id]
+        remove_export = self._dialog.yesno(self._addon_name, self._common_addon.getLocalizedString(32001) % Utils.unicode(item['name']))
+        if remove_export:
+            keep_locals = self._dialog.yesno(self._addon_name, self._common_addon.getLocalizedString(32086) % Utils.unicode(item['name']))
+            if not keep_locals:
+                self._export_manager.remove_export(item_id, False)
+            else:
+                self._export_manager.remove_export(item_id)
             KodiUtils.executebuiltin('Container.Refresh')
     
     def _open_export(self, driveid, item_driveid, item_id, name):
@@ -351,23 +357,16 @@ class CloudDriveAddon(RemoteProcessCallable):
             t.setDaemon(True)
             t.start()
     
-    def _remove_folder(self, folder_path):
-        if not KodiUtils.rmdir(folder_path, True):
-            if self._system_monitor.waitForAbort(3):
-                return False
-            return KodiUtils.rmdir(folder_path, True)
-        return True
-    
     def _run_export(self, driveid, item_id=None):
-        export_manager = ExportManager(self._account_manager._addon_data_path)
-        export = export_manager.load()[item_id]
+        self._export_manager = ExportManager(self._account_manager._addon_data_path)
+        export = self._export_manager.load()[item_id]
         Logger.debug('Running export:')
         Logger.debug(export)
         if Utils.get_safe_value(export, 'exporting', False):
             self._dialog.ok(self._addon_name, self._common_addon.getLocalizedString(32059) + ' ' + self._common_addon.getLocalizedString(32038))
         else:
             export['exporting'] = True
-            export_manager.save()
+            self._export_manager.save()
             export_folder = export['destination_folder']
             if xbmcvfs.exists(export_folder):
                 self.get_provider().configure(self._account_manager, driveid)
@@ -381,12 +380,12 @@ class CloudDriveAddon(RemoteProcessCallable):
                 self._exporting_target += 1
                 folder_name = Utils.unicode(item['name'])
                 folder_path = os.path.join(os.path.join(export_folder, folder_name), '')
-                if self._addon.getSetting('clean_folder') != 'true' or not xbmcvfs.exists(folder_path) or self._remove_folder(folder_path):
+                if self._addon.getSetting('clean_folder') != 'true' or not xbmcvfs.exists(folder_path) or Utils.remove_folder(folder_path):
                     self._exporting = item_id
                     export_items_info = {}
-                    ExportManager.add_item_info(export_items_info, item_id, folder_name, folder_path, None)
-                    self.__export_folder(driveid, item, export_folder, export, export_items_info)
-                    export_manager.save_items_info(item_id, export_items_info)
+                    ExportManager.add_item_info(export_items_info, item_id, folder_name, folder_path, None,'root')
+                    self.__export_folder(driveid, item, export_folder, export, export_items_info, item_id)
+                    self._export_manager.save_items_info(item_id, export_items_info)
                     if Utils.get_safe_value(export, 'update_library', False) and self._content_type:
                         database = self._content_type
                         if database == 'audio':
@@ -402,9 +401,9 @@ class CloudDriveAddon(RemoteProcessCallable):
                 Logger.debug(error)
                 self._dialog.ok(self._addon_name, error)
             export['exporting'] = False
-            export_manager.save()
-    
-    def __export_folder(self, driveid, folder, export_folder, export, items_info):
+            self._export_manager.save()
+
+    def __export_folder(self, driveid, folder, export_folder, export, items_info, root_id):
         folder_id = Utils.str(folder['id'])
         folder_name = Utils.unicode(folder['name'])
         folder_path = os.path.join(os.path.join(export_folder, folder_name), '')
@@ -431,13 +430,22 @@ class CloudDriveAddon(RemoteProcessCallable):
             item_name_extension = item['name_extension']
             file_path = os.path.join(folder_path, item_name)
             if is_folder:
-                ExportManager.add_item_info(items_info, item_id, item_name, os.path.join(file_path, ''), folder_id)
-                self.__export_folder(driveid, item, folder_path, export, items_info)
+                ExportManager.add_item_info(items_info, item_id, item_name, os.path.join(file_path, ''), folder_id,'folder')
+                self.__export_folder(driveid, item, folder_path, export, items_info, root_id)
             elif (('video' in item or item_name_extension in self._video_file_extensions) and export['content_type'] == 'video') or ('audio' in item and export['content_type'] == 'audio'):
                 item_name += ExportManager._strm_extension
                 file_path += ExportManager._strm_extension
+                if self._addon.getSetting('skip_unmodified') and KodiUtils.file_exists(file_path) and KodiUtils.file(file_path).size() == item["size"]:
+                    continue
                 ExportManager.create_strm(driveid, item, file_path, export['content_type'], self._addon_url)
-                ExportManager.add_item_info(items_info, item_id, item_name, file_path, folder_id)
+                ExportManager.add_item_info(items_info, item_id, item_name, file_path, folder_id,'file')
+            elif export['nfo_export'] and ('nfo' in item_name_extension or 'text/x-nfo' in item.get("mimetype")):
+                nfo_path = os.path.join(folder_path, Utils.unicode(item_name))
+                if self._addon.getSetting('skip_unmodified') and KodiUtils.file_exists(nfo_path) and KodiUtils.file(nfo_path).size() == item["size"]:
+                    continue
+                ExportManager.create_nfo(item_id, export["item_driveid"], nfo_path, self.get_provider())
+                ExportManager.add_item_info(items_info, item_id, item_name, nfo_path, folder_id,'file')
+            self._export_manager.save_items_info(root_id, items_info)
             self._exporting_count += 1
             p = int(self._exporting_count/float(self._exporting_target)*100)
             if self._exporting_percent < p:
@@ -597,7 +605,7 @@ class CloudDriveAddon(RemoteProcessCallable):
         elif self.cancel_operation():
             Logger.debug('Abort requested...')
             
-    def _get_item_play_url(self, file_name, driveid, item_driveid=None, item_id=None):
+    def _get_item_play_url(self, file_name, driveid, item_driveid=None, item_id=None, is_subtitle=False):
         return DownloadServiceUtil.build_download_url(driveid, item_driveid, item_id, urllib.quote(Utils.str(file_name)))
     
     def play(self, driveid, item_driveid=None, item_id=None):
@@ -773,9 +781,7 @@ class CloudDriveAddon(RemoteProcessCallable):
             if self._pin_dialog:
                 self._pin_dialog.close()
             if self._exporting:
-                export_manager = ExportManager(self._account_manager._addon_data_path)
-                export = export_manager.load()[self._exporting]
+                self._export_manager = ExportManager(self._account_manager._addon_data_path)
+                export = self._export_manager.load()[self._exporting]
                 export['exporting'] = False
-                export_manager.save()
-
-
+                self._export_manager.save()
