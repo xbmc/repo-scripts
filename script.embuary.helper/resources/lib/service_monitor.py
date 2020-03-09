@@ -31,27 +31,13 @@ class Service(xbmc.Monitor):
         self.restart = False
         self.screensaver = False
         self.service_enabled = ADDON.getSettingBool('service')
-        self.service_interval = xbmc.getInfoLabel('Skin.String(ServiceInterval)') or ADDON.getSetting('service_interval')
-        self.service_interval = float(self.service_interval)
-
-        self.widget_refresh = 0
-        self.get_backgrounds = 200
-        self.set_background = xbmc.getInfoLabel('Skin.String(BackgroundInterval)') or ADDON.getSetting('background_interval')
-        self.set_background = int(self.set_background)
-
-        self.blur_background = condition('Skin.HasSetting(BlurEnabled)')
-        self.blur_radius = xbmc.getInfoLabel('Skin.String(BlurRadius)') or ADDON.getSetting('blur_radius')
-
-        self.master_lock = None
-        self.login_reload = False
 
         if self.service_enabled:
             self.start()
         else:
             self.keep_alive()
 
-    def onNotification(self, sender, method, data):
-        #log('Skin debug -----------------------------> Kodi_Monitor: sender %s - method: %s  - data: %s' % (sender, method, data))
+    def onNotification(self,sender,method,data):
         if ADDON_ID in sender and 'restart' in method:
             self.restart = True
 
@@ -98,6 +84,16 @@ class Service(xbmc.Monitor):
 
         self.player_monitor = PlayerMonitor()
 
+        master_lock = None
+        login_reload = False
+
+        service_interval = xbmc.getInfoLabel('Skin.String(ServiceInterval)') or ADDON.getSetting('service_interval')
+        service_interval = float(service_interval)
+        background_interval = xbmc.getInfoLabel('Skin.String(BackgroundInterval)') or ADDON.getSetting('background_interval')
+        background_interval = int(background_interval)
+        widget_refresh = 0
+        get_backgrounds = 200
+
         while not self.abortRequested() and not self.restart:
 
             ''' Only run timed tasks if screensaver is inactive to avoid keeping NAS/servers awake
@@ -106,17 +102,17 @@ class Service(xbmc.Monitor):
 
                 ''' Grab fanarts
                 '''
-                if self.get_backgrounds >= 200:
+                if get_backgrounds >= 200:
                     log('Start new fanart grabber process')
                     movie_fanarts, tvshow_fanarts, artists_fanarts = self.grabfanart()
-                    self.get_backgrounds = 0
+                    get_backgrounds = 0
 
                 else:
-                    self.get_backgrounds += self.service_interval
+                    get_backgrounds += service_interval
 
                 ''' Set background properties
                 '''
-                if self.set_background >= 10:
+                if background_interval >= 10:
 
                     if movie_fanarts or tvshow_fanarts or artists_fanarts:
                         winprop('EmbuaryBackground', random.choice(movie_fanarts + tvshow_fanarts + artists_fanarts))
@@ -129,54 +125,55 @@ class Service(xbmc.Monitor):
                     if artists_fanarts:
                         winprop('EmbuaryBackgroundMusic', random.choice(artists_fanarts))
 
-                    self.set_background = 0
+                    background_interval = 0
 
                 else:
-                    self.set_background += self.service_interval
+                    background_interval += service_interval
 
                 ''' Blur backgrounds
                 '''
-                if self.blur_background:
-                    ImageBlur(radius=self.blur_radius)
+                if condition('Skin.HasSetting(BlurEnabled)'):
+                    radius = xbmc.getInfoLabel('Skin.String(BlurRadius)') or ADDON.getSetting('blur_radius')
+                    ImageBlur(radius=radius)
 
                 ''' Refresh widgets
                 '''
-                if self.widget_refresh >= 600:
+                if widget_refresh >= 600:
                     reload_widgets(instant=True)
-                    self.widget_refresh = 0
+                    widget_refresh = 0
 
                 else:
-                    self.widget_refresh += self.service_interval
+                    widget_refresh += service_interval
 
             ''' Workaround for login screen bug
             '''
-            if not self.login_reload:
+            if not login_reload:
                 if condition('System.HasLoginScreen'):
                     log('System has login screen enabled. Reload the skin to load all strings correctly.')
                     execute('ReloadSkin()')
-                    self.login_reload = True
+                    login_reload = True
 
             ''' Master lock reload logic for widgets
             '''
             if condition('System.HasLocks'):
-                if self.master_lock is None:
-                    self.master_lock = condition('System.IsMaster')
-                    log('Master mode: %s' % self.master_lock)
+                if master_lock is None:
+                    master_lock = condition('System.IsMaster')
+                    log('Master mode: %s' % master_lock)
 
-                if self.master_lock == True and not condition('System.IsMaster'):
+                if master_lock == True and not condition('System.IsMaster'):
                     log('Left master mode. Reload skin.')
-                    self.master_lock = False
+                    master_lock = False
                     execute('ReloadSkin()')
 
-                elif self.master_lock == False and condition('System.IsMaster'):
+                elif master_lock == False and condition('System.IsMaster'):
                     log('Entered master mode. Reload skin.')
-                    self.master_lock = True
+                    master_lock = True
                     execute('ReloadSkin()')
 
-            elif self.master_lock is not None:
-                self.master_lock = None
+            elif master_lock is not None:
+                master_lock = None
 
-            self.waitForAbort(self.service_interval)
+            self.waitForAbort(service_interval)
 
         self.stop()
 
