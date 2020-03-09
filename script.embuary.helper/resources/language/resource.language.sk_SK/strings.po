@@ -1,0 +1,165 @@
+# Embuary Helper language file
+# Addon Name: Embuary Helper
+# Addon id: script.embuary.helper
+# Addon Provider: sualfred
+# Translators:
+# Miro Valko <mvalec@atlas.sk>, 2019
+# 
+msgid ""
+msgstr ""
+"Project-Id-Version: Embuary Helper\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2019-10-06 17:40+0000\n"
+"Last-Translator: Miro Valko <mvalec@atlas.sk>, 2019\n"
+"Language-Team: Slovak (Slovakia) (https://www.transifex.com/sualfred/teams/80018/sk_SK/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: sk_SK\n"
+"Plural-Forms: nplurals=4; plural=(n % 1 == 0 && n == 1 ? 0 : n % 1 == 0 && n >= 2 && n <= 4 ? 1 : n % 1 != 0 ? 2: 3);\n"
+
+msgctxt "#32000"
+msgid "Error"
+msgstr "Chyba"
+
+msgctxt "#32001"
+msgid ""
+"This is a tool to provide features to a skin and requires skin integration."
+msgstr ""
+"Toto je nástroj na poskytovanie služieb pre vzhľad a vyžaduje integráciu vo "
+"vzhľade."
+
+msgctxt "#32002"
+msgid "Enable logging"
+msgstr "Povoliť zapisovať ladiace informácie"
+
+msgctxt "#32004"
+msgid "detected"
+msgstr "zistené"
+
+msgctxt "#32005"
+msgid "Changed font to"
+msgstr "Písmo zmenené na"
+
+#: /resources/settings.xml
+msgctxt "#32003"
+msgid "Delete add-on image cache"
+msgstr "Vymazať obrázkovú medzipamäť doplnku"
+
+msgctxt "#32006"
+msgid "Applying changes"
+msgstr "Aplikujem zmeny"
+
+#: /resources/lib/plugin_listing.py
+msgctxt "#32007"
+msgid "Suggestions based on random watched item"
+msgstr "Odporúčania podľa náhodnej sledovanej položky"
+
+#: /resources/lib/plugin_listing.py
+msgctxt "#32008"
+msgid "Next up"
+msgstr "Ďalej"
+
+#: /resources/lib/plugin_listing.py
+msgctxt "#32009"
+msgid "Suggestions by random genre"
+msgstr "Odporúčania podľa náhodne zvoleného žánru"
+
+#: /resources/lib/plugin_listing.py
+msgctxt "#32010"
+msgid "Recently added episodes and shows"
+msgstr "Naposledy pridané seriály a epizódy"
+
+#: /resources/lib/plugin_listing.py
+msgctxt "#32011"
+msgid "All media"
+msgstr "Všetky médiá"
+
+#: /resources/lib/plugin_listing.py
+msgctxt "#32012"
+msgid "Recommended by rating"
+msgstr "Doporučené podľa hodnotenia"
+
+#: /resources/lib/plugin_listing.py
+msgctxt "#32013"
+msgid "Continue watching"
+msgstr "Pokračovať v sledovaní"
+
+#: /resources/lib/plugin_listing.py
+msgctxt "#32014"
+msgid "Suggestions based on the last watched item"
+msgstr "Odporúčania podľa naposledy sledovanej položky"
+
+#: /resources/lib/plugin_listing.py
+msgctxt "#32015"
+msgid "Recently added unwatched episodes and shows"
+msgstr "Naposledy pridané nevidené seriály a epizódy"
+
+#: /resources/settings.xml
+msgctxt "#32016"
+msgid "Enable service module"
+msgstr "Povoliť službu na pozadí"
+
+#: /resources/settings.xml
+msgctxt "#32017"
+msgid "Service interval time"
+msgstr "Časový interval služby"
+
+#: /resources/settings.xml
+msgctxt "#32018"
+msgid "Default blurring radius"
+msgstr "Predvolený polomer rozmazania"
+
+#: /resources/settings.xml
+msgctxt "#32020"
+msgid "Misc."
+msgstr "Rôzne"
+
+#: /resources/settings.xml
+msgctxt "#32021"
+msgid "Background change interval"
+msgstr "Interval zmeny pozadia"
+
+#: /resources/lib/utils.py
+msgctxt "#32019"
+msgid ""
+"This will delete all created images (blurred backgrounds, genre thumbs, "
+"etc.) in the addon_data folder. Do you want to proceed?"
+msgstr ""
+"Týmto vymažete všetky vytvorené obrázky v zložke tohoto doplnku (rozmazané "
+"pozadia, miniatúry, náhľady, a pod.). Prajete si pokračovať?"
+
+#: /resources/lib/plugin_listing.py
+msgctxt "#32022"
+msgid "All available database items"
+msgstr "Všetky dostupné položky databázy"
+
+#: /resources/lib/plugin_listing.py
+msgctxt "#32023"
+msgid "items"
+msgstr "položky"
+
+#: /resources/lib/utils.py
+msgctxt "#32024"
+msgid "The video database has no library tags stored."
+msgstr "Vo video databáze nie sú uložené žiadne značky."
+
+#: /resources/lib/utils.py
+msgctxt "#32025"
+msgid "Attention"
+msgstr "Upozornenie"
+
+#: /resources/lib/utils.py
+msgctxt "#32026"
+msgid "Enable library tag detection for"
+msgstr "Povoliť detekciu značiek v knižnici pre"
+
+#: /addon.xml
+msgctxt "#32027"
+msgid "Add/remove movie favourite"
+msgstr "Pridať/Odobrať obľúbený film"
+
+#: /addon.xml
+msgctxt "#32028"
+msgid "Add/remove TV show favourite"
+msgstr "Pridať/Odobrať obľubený seriál"

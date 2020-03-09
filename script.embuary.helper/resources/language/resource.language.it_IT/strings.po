@@ -1,0 +1,207 @@
+# Embuary Helper language file
+# Addon Name: Embuary Helper
+# Addon id: script.embuary.helper
+# Addon Provider: sualfred
+# Translators:
+# sualfred <su4lfred@gmail.com>, 2019
+# Andrea Matesi <andreamatesi@gmail.com>, 2019
+# EffeF, 2019
+# 
+msgid ""
+msgstr ""
+"Project-Id-Version: Embuary Helper\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2019-10-06 17:40+0000\n"
+"Last-Translator: EffeF, 2019\n"
+"Language-Team: Italian (Italy) (https://www.transifex.com/sualfred/teams/80018/it_IT/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: it_IT\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#32000"
+msgid "Error"
+msgstr "Errore"
+
+msgctxt "#32001"
+msgid ""
+"This is a tool to provide features to a skin and requires skin integration."
+msgstr ""
+"Questo è uno strumento per fornire funzionalità a una skin e richiede "
+"l'integrazione nella skin."
+
+msgctxt "#32002"
+msgid "Enable logging"
+msgstr "Attiva logging"
+
+msgctxt "#32004"
+msgid "detected"
+msgstr "rilevato"
+
+msgctxt "#32005"
+msgid "Changed font to"
+msgstr "Font modificato in"
+
+#: /resources/settings.xml
+msgctxt "#32003"
+msgid "Delete add-on image cache"
+msgstr "Elimina cache immagini add-on"
+
+msgctxt "#32006"
+msgid "Applying changes"
+msgstr "Applicazione modifiche"
+
+#: /resources/lib/plugin_listing.py
+msgctxt "#32007"
+msgid "Suggestions based on random watched item"
+msgstr "Suggerimenti basati su elementi guardati a caso"
+
+#: /resources/lib/plugin_listing.py
+msgctxt "#32008"
+msgid "Next up"
+msgstr "Prossimo"
+
+#: /resources/lib/plugin_listing.py
+msgctxt "#32009"
+msgid "Suggestions by random genre"
+msgstr "Suggerimenti per genere casuale"
+
+#: /resources/lib/plugin_listing.py
+msgctxt "#32010"
+msgid "Recently added episodes and shows"
+msgstr "Episodi e serie aggiunte di recente"
+
+#: /resources/lib/plugin_listing.py
+msgctxt "#32011"
+msgid "All media"
+msgstr "Tutti i media"
+
+#: /resources/lib/plugin_listing.py
+msgctxt "#32012"
+msgid "Recommended by rating"
+msgstr "Raccomandazioni basate sulla valutazione"
+
+#: /resources/lib/plugin_listing.py
+msgctxt "#32013"
+msgid "Continue watching"
+msgstr "Continua a guardare"
+
+#: /resources/lib/plugin_listing.py
+msgctxt "#32014"
+msgid "Suggestions based on the last watched item"
+msgstr "Suggerimenti basati sull'ultimo elemento guardato"
+
+#: /resources/lib/plugin_listing.py
+msgctxt "#32015"
+msgid "Recently added unwatched episodes and shows"
+msgstr "Episodi e serie non viste aggiunte di recente"
+
+#: /resources/settings.xml
+msgctxt "#32016"
+msgid "Enable service module"
+msgstr "Abilita modulo di servizio"
+
+#: /resources/settings.xml
+msgctxt "#32017"
+msgid "Service interval time"
+msgstr "Intervallo servizio"
+
+#: /resources/settings.xml
+msgctxt "#32018"
+msgid "Default blurring radius"
+msgstr "Raggio di sfocatura predefinito"
+
+#: /resources/settings.xml
+msgctxt "#32020"
+msgid "Misc."
+msgstr "Varie"
+
+#: /resources/settings.xml
+msgctxt "#32021"
+msgid "Background change interval"
+msgstr "Intervallo cambio dello sfondo"
+
+#: /resources/lib/utils.py
+msgctxt "#32019"
+msgid ""
+"This will delete all created images (blurred backgrounds, genre thumbs, "
+"etc.) in the addon_data folder. Do you want to proceed?"
+msgstr ""
+"Ciò eliminerà tutte le immagini create (sfondi sfocati, immagini genere, "
+"ecc.) nella cartella addon_data. Vuoi procedere?"
+
+#: /resources/lib/plugin_listing.py
+msgctxt "#32022"
+msgid "All available database items"
+msgstr "Tutti gli elementi del database disponibili"
+
+#: /resources/lib/plugin_listing.py
+msgctxt "#32023"
+msgid "items"
+msgstr "elementi"
+
+#: /resources/lib/utils.py
+msgctxt "#32024"
+msgid "The video database has no library tags stored."
+msgstr "Il database video non ha alcuna libreria tag disponibile."
+
+#: /resources/lib/utils.py
+msgctxt "#32025"
+msgid "Attention"
+msgstr "Attenzione"
+
+#: /resources/lib/utils.py
+msgctxt "#32026"
+msgid "Enable library tag detection for"
+msgstr "Attiva riconoscimento tag libreria per"
+
+#: /addon.xml
+msgctxt "#32027"
+msgid "Add/remove movie favourite"
+msgstr "Aggiungi/rimuovi film preferito"
+
+#: /addon.xml
+msgctxt "#32028"
+msgid "Add/remove TV show favourite"
+msgstr "Aggiungi/rimuovi programma TV preferito"
+
+#: /resources/lib/plugin_content.py
+msgctxt "#32029"
+msgid "Directed by"
+msgstr "Diretto da"
+
+#: /resources/lib/plugin_content.py
+msgctxt "#32030"
+msgid "Items starring"
+msgstr "Elementi con protagonista"
+
+#: /resources/lib/plugin_content.py
+msgctxt "#32031"
+msgid "Because you watched"
+msgstr "Perché hai visto"
+
+#: /resources/lib/plugin_content.py
+msgctxt "#32032"
+msgid "Christmas holiday season"
+msgstr "Festività natalizie"
+
+#: /resources/lib/plugin_content.py
+msgctxt "#32033"
+msgid "Spooky suggestions"
+msgstr "Suggerimenti spettrali"
+
+#: /resources/lib/plugin_content.py
+msgctxt "#32034"
+msgid "May the force be with you"
+msgstr "Che la forza sia con te"
+
+#: /resources/lib/plugin_content.py
+msgctxt "#32035"
+msgid "Live long and prosper"
+msgstr "Lunga vita e prosperità"
+
+#: /resources/lib/plugin_listing.py
+msgctxt "#32036"
+msgid "Special and seasonal widgets"
+msgstr "Widget speciali e stagionali"
