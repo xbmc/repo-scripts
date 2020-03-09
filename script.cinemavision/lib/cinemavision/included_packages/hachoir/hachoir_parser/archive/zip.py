@@ -376,7 +376,7 @@ class ZipFile(Parser):
             return "Invalid magic"
         try:
             file0 = self["file[0]"]
-        except HACHOIR_ERRORS, err:
+        except HACHOIR_ERRORS as err:
             return "Unable to get file #0"
         err = file0.validate()
         if err:

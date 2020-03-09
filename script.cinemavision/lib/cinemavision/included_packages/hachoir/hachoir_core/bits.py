@@ -7,6 +7,7 @@ from hachoir_core.endian import BIG_ENDIAN, LITTLE_ENDIAN, MIDDLE_ENDIAN
 from hachoir_core.compatibility import reversed
 from itertools import chain, repeat
 from struct import calcsize, unpack, error as struct_error
+import operator
 
 def swap16(value):
     """
@@ -177,9 +178,9 @@ def long2raw(value, endian, size=None):
         need = 0
     if need:
         if endian is LITTLE_ENDIAN:
-            text = chain(text, repeat("\0", need))
+            text = chain(text, operator.mul("\0", need))
         else:
-            text = chain(repeat("\0", need), reversed(text))
+            text = chain(operator.mul("\0", need), reversed(text))
     else:
         if endian is not LITTLE_ENDIAN:
             text = reversed(text)

@@ -5,23 +5,23 @@ from kodiutil import T
 def clearDBWatchedStatus():
     from cinemavision import database as DB
 
-    DB.Trailers.update(watched=False).where(
+    rows = DB.Trailers.update(watched=False).where(
         DB.Trailers.watched == 1
     ).execute()
 
     import xbmcgui
-    xbmcgui.Dialog().ok(T(32515, 'Done'), T(32564, 'Removed watched status from all trailers.'))
+    xbmcgui.Dialog().ok(T(32515, 'Done'), T(32564, 'Removed watched status from {0} trailers.').format(rows))
 
 
 def clearDBBrokenStatus():
     from cinemavision import database as DB
 
-    DB.Trailers.update(broken=False).where(
+    rows = DB.Trailers.update(broken=False).where(
         DB.Trailers.broken == 1
     ).execute()
 
     import xbmcgui
-    xbmcgui.Dialog().ok(T(32515, 'Done'), T(32565, 'Removed broken status from all trailers.'))
+    xbmcgui.Dialog().ok(T(32515, 'Done'), T(32565, 'Removed broken status from {0} trailers.').format(rows))
 
 
 def pasteLog():

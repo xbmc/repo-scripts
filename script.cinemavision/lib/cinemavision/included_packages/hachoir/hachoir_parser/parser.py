@@ -76,7 +76,7 @@ class HachoirParser(object):
                 self._description = self.createDescription()
                 if isinstance(self._description, str):
                     self._description = makeUnicode(self._description)
-            except HACHOIR_ERRORS, err:
+            except HACHOIR_ERRORS as err:
                 error("Error getting description of %s: %s" \
                     % (self.path, unicode(err)))
                 self._description = self.PARSER_TAGS["description"]
@@ -88,7 +88,7 @@ class HachoirParser(object):
         if not self._mime_type:
             try:
                 self._mime_type = self.createMimeType()
-            except HACHOIR_ERRORS, err:
+            except HACHOIR_ERRORS as err:
                 self.error("Error when creating MIME type: %s" % unicode(err))
             if not self._mime_type \
             and self.createMimeType != Parser.createMimeType:
@@ -104,7 +104,7 @@ class HachoirParser(object):
         if not hasattr(self, "_content_size"):
             try:
                 self._content_size = self.createContentSize()
-            except HACHOIR_ERRORS, err:
+            except HACHOIR_ERRORS as err:
                 error("Unable to compute %s content size: %s" % (self.__class__.__name__, err))
                 self._content_size = None
         return self._content_size
@@ -136,14 +136,17 @@ class HachoirParser(object):
     @classmethod
     def print_(cls, out, verbose):
         tags = cls.getParserTags()
-        print >>out, "- %s: %s" % (tags["id"], tags["description"])
+        msg = "- %s: %s" % (tags["id"], tags["description"])
+        print(msg)
         if verbose:
             if "mime" in tags:
-                print >>out, "  MIME type: %s" % (", ".join(tags["mime"]))
+                msg = "  MIME type: %s" % (", ".join(tags["mime"]))
+                print(msg)
             if "file_ext" in tags:
                 file_ext = ", ".join(
                     ".%s" % file_ext for file_ext in tags["file_ext"])
-                print >>out, "  File extension: %s" % file_ext
+                msg = "  File extension: %s" % file_ext
+                print(msg)
 
     autofix = property(lambda self: self._autofix and config.autofix)
 

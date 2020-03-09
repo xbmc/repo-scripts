@@ -165,8 +165,7 @@ class ManagedListItem(object):
         self.listItem.setProperty('__ID__', self._ID)
         self.listItem.setLabel(self.label)
         self.listItem.setLabel2(self.label2)
-        self.listItem.setIconImage(self.iconImage)
-        self.listItem.setThumbnailImage(self.thumbnailImage)
+        self.listItem.setArt({'thumb': self.thumbnailImage, 'icon': self.iconImage})
         self.listItem.setPath(self.path)
         for k in self.__class__._properties.keys():
             self.listItem.setProperty(k, self.properties.get(k) or '')
@@ -211,7 +210,7 @@ class ManagedListItem(object):
 
     def setIconImage(self, icon):
         self.iconImage = icon
-        return self.listItem.setIconImage(icon)
+        return self.listItem.setArt({'icon': icon})
 
     def setInfo(self, itype, infoLabels):
         return self.listItem.setInfo(itype, infoLabels)
@@ -241,7 +240,7 @@ class ManagedListItem(object):
 
     def setThumbnailImage(self, thumb):
         self.thumbnailImage = thumb
-        return self.listItem.setThumbnailImage(thumb)
+        return self.listItem.setArt({'thumb': thumb})
 
 
 class ManagedControlList(object):

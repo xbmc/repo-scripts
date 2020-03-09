@@ -6,8 +6,8 @@
         <posx>0</posx>
         <posy>0</posy>
     </coordinates>
-    <animation effect="zoom" end="74.074074074,74.074074074" center="960,540" time="0" condition="!IsEmpty(Window(10000).Property(script.cinemavision.scope.2.40:1))">Conditional</animation>
-    <animation effect="zoom" end="75.925925926,75.925925926" center="960,540" time="0" condition="!IsEmpty(Window(10000).Property(script.cinemavision.scope.2.35:1))">Conditional</animation>
+    <animation effect="zoom" end="74.074074074,74.074074074" center="960,540" time="0" condition="!String.IsEmpty(Window(10000).Property(script.cinemavision.scope.2.40:1))">Conditional</animation>
+    <animation effect="zoom" end="75.925925926,75.925925926" center="960,540" time="0" condition="!String.IsEmpty(Window(10000).Property(script.cinemavision.scope.2.35:1))">Conditional</animation>
     <controls>
         <control type="image">
             <animation effect="fade" start="0" end="100" time="200">WindowOpen</animation>
@@ -91,7 +91,7 @@
                         <width>840</width>
                         <height>60</height>
                         <font>font20</font>
-                        <textcolor>FFAAAAFF</textcolor>
+                        <textcolor>$INFO[Window(10000).Property(script.cinemavision.theme.color.setting)]</textcolor>
                         <align>left</align>
                         <aligny>center</aligny>
                         <label>$INFO[ListItem.Label2]</label>
@@ -136,7 +136,7 @@
                             <width>840</width>
                             <height>60</height>
                             <font>font20</font>
-                            <textcolor>FFAAAAFF</textcolor>
+                            <textcolor>$INFO[Window(10000).Property(script.cinemavision.theme.color.setting)]</textcolor>
                             <align>left</align>
                             <aligny>center</aligny>
                             <label>$INFO[ListItem.Label2]</label>
@@ -147,15 +147,15 @@
             </control>
 
             <control type="group" id="400">
-                <animation effect="slide" end="0,80"  time="1" condition="StringCompare(Container(300).Position,1)">Conditional</animation>
-                <animation effect="slide" end="0,160" time="1" condition="StringCompare(Container(300).Position,2)">Conditional</animation>
-                <animation effect="slide" end="0,240" time="1" condition="StringCompare(Container(300).Position,3)">Conditional</animation>
-                <animation effect="slide" end="0,320" time="1" condition="StringCompare(Container(300).Position,4)">Conditional</animation>
-                <animation effect="slide" end="0,400" time="1" condition="StringCompare(Container(300).Position,5)">Conditional</animation>
+                <animation effect="slide" end="0,80"  time="1" condition="String.IsEqual(Container(300).Position,1)">Conditional</animation>
+                <animation effect="slide" end="0,160" time="1" condition="String.IsEqual(Container(300).Position,2)">Conditional</animation>
+                <animation effect="slide" end="0,240" time="1" condition="String.IsEqual(Container(300).Position,3)">Conditional</animation>
+                <animation effect="slide" end="0,320" time="1" condition="String.IsEqual(Container(300).Position,4)">Conditional</animation>
+                <animation effect="slide" end="0,400" time="1" condition="String.IsEqual(Container(300).Position,5)">Conditional</animation>
                 <posx>840</posx>
                 <posy>20</posy>
                 <control type="group" id="400">
-                    <visible>StringCompare(Container(300).ListItem.Property(type),integer)</visible>
+                    <visible>String.IsEqual(Container(300).ListItem.Property(type),integer)</visible>
                     <control type="image">
                         <posx>5</posx>
                         <posy>5</posy>
@@ -177,8 +177,8 @@
                         <onleft>100</onleft>
                         <onright>100</onright>
                         <texturesliderbar colordiffuse="FF101010">script.cinemavision-white_square.png</texturesliderbar>
-                        <textureslidernib colordiffuse="FFAAAAFF">script.cinemavision-slider_nib.png</textureslidernib>
-                        <textureslidernibfocus colordiffuse="FFAAAAFF">script.cinemavision-slider_nib.png</textureslidernibfocus>
+                        <textureslidernib colordiffuse="$INFO[Window(10000).Property(script.cinemavision.theme.color.setting)]">script.cinemavision-slider_nib.png</textureslidernib>
+                        <textureslidernibfocus colordiffuse="$INFO[Window(10000).Property(script.cinemavision.theme.color.setting)]">script.cinemavision-slider_nib.png</textureslidernibfocus>
                     </control>
                 </control>
             </control>

@@ -138,7 +138,7 @@ try:
     if isinstance(1, int):
         from __builtin__ import isinstance
 except TypeError:
-    print "Redef isinstance"
+    print("Redef isinstance")
     def isinstance20(a, typea):
         if type(typea) != type(type):
             raise TypeError("TypeError: isinstance() arg 2 must be a class, type, or tuple of classes and types")

@@ -6,6 +6,7 @@ import util
 import mutagen
 import hachoir
 import database as DB
+import datetime
 
 try:
     ET.ParseError
@@ -68,6 +69,7 @@ class UserContent:
             'DEJUS',
             'FSK'
         )),
+        'Themes',
         'Trailers',
         'Trivia',
         ('Video Bumpers', (
@@ -400,13 +402,21 @@ class UserContent:
                         pct = int((allct / total) * 100)
                         self._callback(t.title, pct=pct)
 
-                    rows = DB.Trailers.delete().where(
-                        DB.Trailers.verified == 0,
-                        DB.Trailers.source == source
-                    ).execute()
+                    removed = 0
+                    scraper = scrapers.getScraper(source)
+                    if scraper.ONLY_KEEP_VERIFIED:
+                        removed += DB.Trailers.delete().where(
+                            DB.Trailers.verified == 0,
+                            DB.Trailers.source == source
+                        ).execute()
+                    if scraper.REMOVE_DAYS_OLD is not None:
+                        removed += DB.Trailers.delete().where(
+                            DB.Trailers.release < datetime.datetime.now() - datetime.timedelta(days=scraper.REMOVE_DAYS_OLD),
+                            DB.Trailers.source == source
+                        ).execute()
 
                     util.DEBUG_LOG(' - {0} new {1} trailers added to database'.format(ct, source))
-                    util.DEBUG_LOG(' - {0} {1} trailers removed from database'.format(rows, source))
+                    util.DEBUG_LOG(' - {0} {1} trailers removed from database'.format(removed, source))
                 else:
                     util.DEBUG_LOG(' - No new {0} trailers added to database'.format(source))
 

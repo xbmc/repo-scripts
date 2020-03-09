@@ -139,8 +139,9 @@ def _getConditionValueString(itype, val):
     return util.strRepr(val)
 
 class SequenceData(object):
-    def __init__(self, data_string='', name=''):
-        self.name = name
+    def __init__(self, data_string='', path_name=''):
+        self.pathName = path_name
+        self.name = path_name
         self.active = False
         self._items = []
         self._attrs = {}
@@ -149,7 +150,7 @@ class SequenceData(object):
         self._process(data_string)
 
     def __nonzero__(self):
-        return bool(self._items)
+        return bool(self.pathName)
 
     def __len__(self):
         return len(self._items)
@@ -158,7 +159,7 @@ class SequenceData(object):
         return self._items[idx]
 
     def __repr__(self):
-        return 'SequenceData [{0}]({1}): {2}'.format(repr(self.name), len(self._items), repr(self._attrs))
+        return 'SequenceData [{0}]({1}): {2}'.format(repr(self.pathName), len(self._items), repr(self._attrs))
 
     def _process(self, data_string):
         if not data_string:
@@ -177,21 +178,23 @@ class SequenceData(object):
     def _getItemsFromString(self, dstring):
         try:
             data = json.loads(dstring)
-            self._items = [Item.fromDict(ddict) for ddict in data['items']]
             self._attrs = data.get('attributes', {})
             self._settings = data.get('settings', {})
             self.active = data.get('active', False)
+            self.name = data.get('name') or self.pathName
+            if 'items' in data:
+                self._items = [Item.fromDict(ddict) for ddict in data['items']]
         except (ValueError, TypeError):
             if dstring.startswith('{'):
                 util.DEBUG_LOG(repr(dstring))
-                util.ERROR('Error parsing sequence: {0}'.format(repr(self.name)))
+                util.ERROR('Error parsing sequence: {0}'.format(repr(self.pathName)))
                 raise exceptions.BadSequenceFileException()
             else:
                 try:
                     self._items = self._getItemsFromXMLString(dstring)
                 except:
                     util.DEBUG_LOG(repr(dstring[:100]))
-                    util.ERROR('Error parsing sequence: {0}'.format(repr(self.name)))
+                    util.ERROR('Error parsing sequence: {0}'.format(repr(self.pathName)))
                     raise exceptions.BadSequenceFileException()
 
         self._attrs['type'] = self._attrs.get('type')
@@ -223,7 +226,7 @@ class SequenceData(object):
         if not dstring:
             raise exceptions.EmptySequenceFileException()
 
-        obj = cls(dstring, name=re.split(r'[/\\]', path)[-1][:-6])
+        obj = cls(dstring, path_name=re.split(r'[/\\]', path)[-1][:-6])
         obj._loadPath = path
         return obj
 
@@ -249,6 +252,9 @@ class SequenceData(object):
         except:
             raise exceptions.SequenceWriteReadUnknownException()
 
+        self.pathName = self.pathName or re.split(r'[/\\]', path)[-1][:-6]
+        self.name = self.name or self.pathName
+
         return success
 
     def serialize(self):
@@ -262,6 +268,7 @@ class SequenceData(object):
         return json.dumps(
             {
                 'version': SAVE_VERSION,
+                'name': self.name,
                 'active': self.active,
                 'items': data,
                 'attributes': attrs,
@@ -657,7 +664,7 @@ class Feature(Item):
         }
     )
     displayName = T(32073, 'Features')
-    typeChar = 'F'
+    typeChar = 'Feature'
 
     def __init__(self):
         Item.__init__(self)
@@ -753,7 +760,7 @@ class Trivia(Item):
         }
     )
     displayName = T(32026, 'Trivia Slides')
-    typeChar = 'Q'
+    typeChar = 'Trivia'
 
     def __init__(self):
         Item.__init__(self)
@@ -892,12 +899,13 @@ class Trailer(Item):
         }
     )
     displayName = T(32049, 'Trailers')
-    typeChar = 'T'
+    typeChar = 'Trailer'
 
     _scrapers = [
         ['Content', T(32326, 'Trailers Folder'), 'content'],
         ['KodiDB', T(32318, 'Kodi Database'), 'kodidb'],
         ['iTunes', 'Apple iTunes', 'itunes'],
+        ['TMDB', 'The Movie Database', 'tmdb'],
         ['StereoscopyNews', 'StereoscopyNews.com', 'stereoscopynews']
     ]
 
@@ -1077,7 +1085,7 @@ class Video(Item):
         }
     )
     displayName = T(32023, 'Video')
-    typeChar = 'V'
+    typeChar = 'VideoBumper'
 
     def __init__(self):
         Item.__init__(self)
@@ -1186,7 +1194,7 @@ class AudioFormat(Item):
         }
     )
     displayName = T(32329, 'Audio Format Bumper')
-    typeChar = 'A'
+    typeChar = 'AudioFormatBumper'
 
     def __init__(self):
         Item.__init__(self)
@@ -1233,8 +1241,7 @@ class Action(Item):
         }
     )
     displayName = T(32083, 'Actions')
-    typeChar = '!'
-    fileChar = '_'
+    typeChar = 'Action'
 
     def __init__(self):
         Item.__init__(self)
@@ -1275,7 +1282,7 @@ class Command(Item):
         }
     )
     displayName = T(32331, 'Command')
-    typeChar = 'C'
+    typeChar = 'Command'
 
     def _set(self, attr, value):
         if self.command in ('back', 'skip'):
@@ -1351,13 +1358,13 @@ CONTENT_CLASSES = {
 }
 
 ITEM_TYPES = [
-    ('V', T(32334, 'Video Bumper'), 'V', Video),
-    ('Q', T(32026, 'Trivia'), 'Q', Trivia),
-    ('T', T(32049, 'Trailers'), 'T', Trailer),
-    ('A', T(32329, 'Audio Format Bumper'), 'A', AudioFormat),
-    ('F', T(32073, 'Features'), 'F', Feature),
-    ('C', T(32331, 'Command'), 'C', Command),
-    ('!', T(32083, 'Actions'), '_', Action)
+    ('VideoBumper', T(32334, 'Video Bumper'), 'VideoBumper', Video),
+    ('Trivia', T(32026, 'Trivia'), 'Trivia', Trivia),
+    ('Trailer', T(32049, 'Trailers'), 'Trailer', Trailer),
+    ('AudioFormatBumper', T(32329, 'Audio Format Bumper'), 'AudioFormatBumper', AudioFormat),
+    ('Feature', T(32073, 'Features'), 'Feature', Feature),
+    ('Command', T(32331, 'Command'), 'Command', Command),
+    ('Action', T(32083, 'Actions'), 'Action', Action)
 ]
 
 

@@ -48,7 +48,7 @@ class Fragment(FieldSet):
     def getData(self):
         try:
             return self._getData()
-        except MissingField, e:
+        except MissingField as e:
             self.error(str(e))
         return None
 

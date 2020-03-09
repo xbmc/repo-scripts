@@ -97,8 +97,8 @@ class Benchmark:
         average = stat.getSum() / len(stat)
         values = (stat.getMin(), average, stat.getMax(), stat.getSum())
         values = tuple(self.formatTime(value) for value in values)
-        print _("Benchmark: best=%s  average=%s  worst=%s  total=%s") \
-            % values
+        msg = _("Benchmark: best=%s  average=%s  worst=%s  total=%s") % values
+        print(msg)
 
     def _runOnce(self, func, args, kw):
         before = time()
@@ -139,17 +139,16 @@ class Benchmark:
             return stat
         estimate = diff * count
         if self.verbose:
-            print _("Run benchmark: %s calls (estimate: %s)") \
-                % (count, self.formatTime(estimate))
+            msg = _("Run benchmark: %s calls (estimate: %s)") % (count, self.formatTime(estimate))
+            print(msg)
 
         display_progress = self.verbose and (1.0 <= estimate)
         total_count = 1
         while total_count < count:
             # Run benchmark and display each result
             if display_progress:
-                print _("Result %s/%s: %s  (best: %s)") % \
-                    (total_count, count,
-                    self.formatTime(diff), self.formatTime(best))
+                msg = _("Result %s/%s: %s  (best: %s)") % (total_count, count, self.formatTime(diff), self.formatTime(best))
+                print(msg)
             part = count - total_count
 
             # Will takes more than one second?
@@ -163,9 +162,8 @@ class Benchmark:
                 best = min(diff, best)
             total_count += part
         if display_progress:
-            print _("Result %s/%s: %s  (best: %s)") % \
-                (count, count,
-                self.formatTime(diff), self.formatTime(best))
+            msg = _("Result %s/%s: %s  (best: %s)") % (count, count, self.formatTime(diff), self.formatTime(best))
+            print(msg)
         return stat
 
     def validateStat(self, stat):

@@ -1,5 +1,6 @@
 import os
 import re
+import json
 import xbmc
 import kodiutil
 import cinemavision
@@ -11,6 +12,39 @@ DEFAULT_3D_RE = '(?i)3DSBS|3D.SBS|HSBS|H.SBS|H-SBS|[\. _]SBS[\. _]|FULL-SBS|FULL
 
 cinemavision.init(kodiutil.DEBUG(), kodiutil.Progress, kodiutil.T, kodiutil.getSetting('3D.tag.regex', DEFAULT_3D_RE))
 
+THEME = None
+
+def setTheme(theme_path=None):
+    global THEME
+
+    default = os.path.join(kodiutil.ADDON_PATH, 'resources', 'themes', 'default') + '/'
+
+    if theme_path is not None:
+        kodiutil.setSetting('theme.path', theme_path)
+    else:
+        theme_path = kodiutil.getSetting('theme.path', default)
+
+    cfg = cinemavision.util.pathJoin(theme_path, 'theme.json')
+    try:
+        with cinemavision.util.vfs.File(cfg, 'r') as f:
+            THEME = json.loads(f.read().decode('utf-8'))
+            THEME['theme.path'] = theme_path
+    except:
+        kodiutil.ERROR('Could not read {0}'.format(cfg))
+        THEME = {
+            'theme.name': '[I]Default[/I]',
+            'theme.color.icon': 'FF9C2A2D',
+            'theme.color.setting': 'FF9C2A2D',
+            'theme.color.move': 'FF9C2A2D',
+            'theme.color.button.selected': 'FF9C2A2D',
+            'theme.path': default
+        }
+
+    kodiutil.setGlobalProperty('theme.color.icon', THEME['theme.color.icon'])
+    kodiutil.setGlobalProperty('theme.color.setting', THEME['theme.color.setting'])
+    kodiutil.setGlobalProperty('theme.color.move', THEME['theme.color.move'])
+    kodiutil.setGlobalProperty('theme.color.button.selected', THEME['theme.color.button.selected'])
+    kodiutil.setGlobalProperty('theme.path', THEME['theme.path'])
 
 def defaultSavePath(for_3D=False):
     return os.path.join(kodiutil.ADDON_PATH, 'resources', 'script.cinemavision.default{0}.cvseq'.format(for_3D and '3D' or '2D'))
@@ -22,7 +56,7 @@ def lastSavePath():
 
 
 def getSavePath(name):
-    contentPath = kodiutil.getSetting('content.path')
+    contentPath = kodiutil.getPathSetting('content.path')
     if not name or not contentPath:
         return
 
@@ -66,7 +100,14 @@ def selectSequence(active=True, for_dialog=False):
 
     sequences = getActiveSequences(active=active, for_dialog=for_dialog)
 
-    options = [('{0}.cvseq'.format(s.name), s.name) for s in sequences]
+    dupNames = {}
+    for s in sequences:
+        if s.name in dupNames:
+            dupNames[s.name] = True
+        else:
+            dupNames[s.name] = False
+
+    options = [('{0}.cvseq'.format(s.pathName), '{0} ({1})'.format(s.name, s.pathName) if dupNames[s.name] else s.name) for s in sequences]
     options.append((default2D, u'[ {0} ]'.format(T(32599, 'Default 2D'))))
     options.append((default3D, u'[ {0} ]'.format(T(32600, 'Default 3D'))))
 
@@ -92,7 +133,7 @@ def selectSequence(active=True, for_dialog=False):
 
 def getSequencesContentPath():
     import xbmcgui
-    contentPath = kodiutil.getSetting('content.path')
+    contentPath = kodiutil.getPathSetting('content.path')
     if not contentPath:
         xbmcgui.Dialog().ok(T(32500, 'Not Found'), ' ', T(32501, 'No sequences found.'))
         return None
@@ -180,7 +221,7 @@ def getDefaultSequenceData(feature):
     return {'path': path, 'sequence': seqData}
 
 def getContentPath(from_load=False):
-    contentPath = kodiutil.getSetting('content.path')
+    contentPath = kodiutil.getPathSetting('content.path')
     demoPath = os.path.join(kodiutil.PROFILE_PATH, 'demo')
 
     if contentPath:
@@ -205,7 +246,7 @@ def getContentPath(from_load=False):
 def loadContent(from_settings=False, bg=False):
     import xbmcgui
 
-    if from_settings and not kodiutil.getSetting('content.path'):
+    if from_settings and not kodiutil.getPathSetting('content.path'):
         xbmcgui.Dialog().ok(T(32503, 'No Content Path'), ' ', T(32504, 'Content path not set or not applied'))
         return
 
