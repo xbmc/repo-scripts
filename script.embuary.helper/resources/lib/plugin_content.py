@@ -59,7 +59,16 @@ class PluginContent(object):
         self.filter_not_inprogress = {'field': 'inprogress', 'operator': 'false', 'value': ''}
         self.filter_tag = {'operator': 'is', 'field': 'tag', 'value': self.tag}
         self.filter_title = {'operator': 'is', 'field': 'title', 'value': self.dbtitle}
-        self.filter_playlist = {'operator': 'is', 'field': 'playlist', 'value': self.playlist}
+
+        if self.playlist:
+            playlist_li = []
+            for item in self.playlist.split('  '): # params parsing replaces ++ with a double whitespace
+                playlist_li.append({'operator': 'is', 'field': 'playlist', 'value': item})
+
+            self.filter_playlist  = {'or': playlist_li}
+
+        else:
+            self.filter_playlist = None
 
     ''' by dbid to get all available listitems
     '''
@@ -437,7 +446,7 @@ class PluginContent(object):
             if self.tag:
                 filters.append(self.filter_tag)
             filter = {'and': filters}
-            plugin_category = ADDON.getLocalizedString(32007)
+            plugin_category = ADDON.getLocalizedString(32015)
 
 
         json_query = json_call('VideoLibrary.GetTVShows',
@@ -592,6 +601,8 @@ class PluginContent(object):
         filters = [self.filter_inprogress]
         if self.tag:
             filters.append(self.filter_tag)
+        if self.playlist:
+            filters.append(self.filter_playlist)
 
         if self.dbtype != 'tvshow':
             json_query = json_call('VideoLibrary.GetMovies',

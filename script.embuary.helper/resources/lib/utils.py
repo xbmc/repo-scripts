@@ -145,7 +145,7 @@ def splitandcreateselect(params):
 def dialogok(params):
     headertxt = remove_quotes(params.get('header', ''))
     bodytxt = remove_quotes(params.get('message', ''))
-    DIALOG.ok(heading=headertxt, line1=bodytxt)
+    DIALOG.ok(headertxt, bodytxt)
 
 
 def dialogyesno(params):
@@ -154,7 +154,7 @@ def dialogyesno(params):
     yesactions = params.get('yesaction', '').split('|')
     noactions = params.get('noaction', '').split('|')
 
-    if DIALOG.yesno(heading=headertxt, line1=bodytxt):
+    if DIALOG.yesno(headertxt, bodytxt):
         for action in yesactions:
             execute(action)
     else:
@@ -244,8 +244,8 @@ def getkodisetting(params):
     strip = params.get('strip')
 
     json_query = json_call('Settings.GetSettingValue',
-                params={'setting': '%s' % setting}
-                )
+                           params={'setting': '%s' % setting}
+                           )
 
     try:
         result = json_query['result']
@@ -576,15 +576,13 @@ def txtfile(params):
 
     if os.path.isfile(path):
         log('Reading file %s' % path)
-
-        file = open(path, 'r')
-        text = file.read()
-        file.close()
+        with open(path) as f:
+            text = f.read()
 
         if prop:
             winprop(prop,text)
         else:
-            DIALOG.textviewer(remove_quotes(params.get('header')),text)
+            DIALOG.textviewer(remove_quotes(params.get('header')), text)
 
     else:
         log('Cannot find %s' % path)
@@ -684,7 +682,7 @@ def getlocale(params):
 
 def deleteimgcache(params,path=ADDON_DATA_IMG_PATH,delete=False):
     if not delete:
-        if DIALOG.yesno(heading=ADDON.getLocalizedString(32003), line1=ADDON.getLocalizedString(32019)):
+        if DIALOG.yesno(ADDON.getLocalizedString(32003), ADDON.getLocalizedString(32019)):
             delete = True
 
     if delete:
@@ -733,7 +731,7 @@ def selecttags(params):
                 set_library_tags(tags, whitelist_new)
 
     elif params.get('silent') != 'true':
-        DIALOG.ok(heading=ADDON.getLocalizedString(32000), line1=ADDON.getLocalizedString(32024))
+        DIALOG.ok(ADDON.getLocalizedString(32000), ADDON.getLocalizedString(32024))
 
 
 def whitelisttags(params):
