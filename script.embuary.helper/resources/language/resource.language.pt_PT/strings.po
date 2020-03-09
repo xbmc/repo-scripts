@@ -1,0 +1,120 @@
+# Embuary Helper language file
+# Addon Name: Embuary Helper
+# Addon id: script.embuary.helper
+# Addon Provider: sualfred
+# Translators:
+# Pedro Pinto <pedropinto.inbox@gmail.com>, 2019
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Embuary Helper\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2019-07-14 05:59+0000\n"
+"Last-Translator: Pedro Pinto <pedropinto.inbox@gmail.com>, 2019\n"
+"Language-Team: Portuguese (Portugal) (https://www.transifex.com/sualfred/teams/80018/pt_PT/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: pt_PT\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#32000"
+msgid "Error"
+msgstr "Erro"
+
+msgctxt "#32001"
+msgid ""
+"This is a tool to provide features to a skin and requires skin integration."
+msgstr ""
+"Esta ferramenta disponibiliza recursos para serem utilizados num tema e "
+"necessita integração com esse tema."
+
+msgctxt "#32002"
+msgid "Enable logging"
+msgstr "Activar log"
+
+msgctxt "#32003"
+msgid "Enable debug logging"
+msgstr "Activar log de depuração"
+
+msgctxt "#32004"
+msgid "detected"
+msgstr "encontrado"
+
+msgctxt "#32005"
+msgid "Changed font to"
+msgstr "Alterar fonte para"
+
+msgctxt "#32006"
+msgid "Applying changes"
+msgstr "Aplicar alterações"
+
+#: /resources/lib/plugin_listing.py
+msgctxt "#32007"
+msgid "Suggestions based on random watched item"
+msgstr "Sugestões baseadas em itens visualizados aleatoriamente"
+
+#: /resources/lib/plugin_listing.py
+msgctxt "#32008"
+msgid "Next up"
+msgstr "Próximo (Next up)"
+
+#: /resources/lib/plugin_listing.py
+msgctxt "#32009"
+msgid "Suggestions by random genre"
+msgstr "Sugestões por género aleatoriamente"
+
+#: /resources/lib/plugin_listing.py
+msgctxt "#32010"
+msgid "Recently added episodes and shows"
+msgstr "Episódios e séries de TV adicionados recentemente"
+
+#: /resources/lib/plugin_listing.py
+msgctxt "#32011"
+msgid "All media"
+msgstr "Todos os mídias"
+
+#: /resources/lib/plugin_listing.py
+msgctxt "#32012"
+msgid "Recommended by rating"
+msgstr "Recomendados por avaliação"
+
+#: /resources/lib/plugin_listing.py
+msgctxt "#32013"
+msgid "Continue watching"
+msgstr "Continuar a ver"
+
+#: /resources/lib/plugin_listing.py
+msgctxt "#32014"
+msgid "Suggestions based on the last watched item"
+msgstr "Sugestões baseadas no último item visualizado"
+
+#: /resources/lib/plugin_listing.py
+msgctxt "#32015"
+msgid "Recently added unwatched episodes and shows"
+msgstr "Episódios e séries de TV por visualizar adicionados recentemente"
+
+#: /resources/settings.xml
+msgctxt "#32016"
+msgid "Enable service module"
+msgstr "Activar módulo de serviço"
+
+#: /resources/settings.xml
+msgctxt "#32017"
+msgid "Service interval time"
+msgstr "Intervalo de tempo do serviço"
+
+#: /resources/settings.xml
+msgctxt "#32018"
+msgid "Default blurring radius"
+msgstr "Raio de desfocagem por defeito"
+
+#: /resources/settings.xml
+msgctxt "#32020"
+msgid "Misc."
+msgstr "Outros"
+
+#: /resources/settings.xml
+msgctxt "#32021"
+msgid "Background change interval"
+msgstr ""
