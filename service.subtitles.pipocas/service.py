@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Service Pipocas.tv version 0.1.5
+# Service Pipocas.tv version 0.1.7
 # Code based on Undertext (FRODO) service
 # Coded by HiGhLaNdR@OLDSCHOOL
 # Ported to Gotham by HiGhLaNdR@OLDSCHOOL
@@ -26,6 +26,9 @@ import xbmcvfs
 import cookielib
 import urllib2
 import uuid
+import requests
+try: import simplejson as json
+except: import json
 
 _addon = xbmcaddon.Addon()
 _author     = _addon.getAddonInfo('author')
@@ -53,7 +56,7 @@ debug_pretext = "Pipocas"
 #SEARCH_PAGE_URL = main_url + "modules.php?name=Downloads&file=jz&d_op=search_next&order=&form_cat=28&page=%(page)s&query=%(query)s"
 
 INTERNAL_LINK_URL = "plugin://%(scriptid)s/?action=download&id=%(id)s&filename=%(filename)s"
-SUB_EXTS = ['srt', 'sub', 'txt', 'aas', 'ssa', 'smi']
+SUB_EXTS = ['srt', 'sub', 'txt', 'ass', 'ssa', 'smi']
 HTTP_USER_AGENT = "User-Agent=Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.2.3) Gecko/20100401 Firefox/3.6.3 ( .NET CLR 3.5.30729)"
 
 #Grabbing login and pass from xbmc settings
@@ -66,12 +69,13 @@ password = _addon.getSetting( "PPpass" )
 
 """
 """
-subtitle_pattern = "<a href=\"info.php(.+?)\" class=\"info\"></a>"
-name_pattern = "<h1 class=\"title\">[\r\n\s]Release: (.+?)\s</h1>|<h1 class=\"title\">[\r\n\s]Release: (.+?)\s<img class=\".+?[\r\n\s]</h1>"
-id_pattern = "download.php\?id=(.+?)\""
-hits_pattern = "<li><span>Hits:</span> (.+?)</li>"
+token_pattern = "<meta name=\"csrf-token\" content=\"(.+?)\">"
+subtitle_pattern = "<a href=\"" + main_url + "legendas/info/(.+?)\" class=\"text-dark no-decoration\">"
+name_pattern = "<h3 class=\"title\" style=\"word-break: break-all;\">Release: <span class=\"font-normal\">(.+?)<\/span><\/h3>"
+id_pattern = "legendas/download/(.+?)\""
+hits_pattern = "<span class=\"hits hits-pd\"><div><i class=\"fa fa-cloud-download\" aria-hidden=\"true\"></i> (.+?)</div></span>"
 #desc_pattern = "<div class=\"description-box\">([\n\r\t].*[\n\r\t].*[\n\r\t].*[\n\r\t].*[\n\r\t].*[\n\r\t].*[\n\r\t].*[\n\r\t].*[\n\r\t].*[\n\r\t].*[\n\r\t].*[\n\r\t].*)<center><iframe"
-uploader_pattern = "<a href=\"/my.php\?u.+?:normal;\"> (.+?)</font></a>"
+uploader_pattern = "<span style=\"color: .+?\" >(.+?)</span></a></b>"
 release_pattern = "([^\W]\w{1,}\.{1,1}[^\.|^\ ][\w{1,}\.|\-|\(\d\d\d\d\)|\[\d\d\d\d\]]{3,}[\w{3,}\-|\.{1,1}]\w{2,})"
 release_pattern1 = "([^\W][\w\ ]{4,}[^\Ws][x264|xvid]{1,}-[\w]{1,})"
 
@@ -100,52 +104,98 @@ def geturl(url):
         content = None
     return content
 
+def enable_rar():
+
+    def is_rar_enabled():
+        q = '{"jsonrpc": "2.0", "method": "Addons.GetAddonDetails", "params": {"addonid": "vfs.libarchive", "properties": ["enabled"]}, "id": 0 }'
+        r  = json.loads(xbmc.executeJSONRPC(q))
+        log(xbmc.executeJSONRPC(q))
+        if r.has_key("result") and r["result"].has_key("addon"):
+            return r['result']["addon"]["enabled"]
+        return True
+
+    if not is_rar_enabled():    
+        xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "Addons.SetAddonEnabled", "params": {"addonid": "vfs.libarchive", "enabled": true} }')
+        time.sleep(1)
+        if not is_rar_enabled():
+            dialog = xbmcgui.Dialog()
+            ok = dialog.ok(__language__(32012).encode("utf-8"),  __language__(32013).encode("utf-8"), " ", __language__(32014).encode("utf-8"))
+
+def xbmc_walk(DIR):
+    LIST = []
+    dirs, files = xbmcvfs.listdir(DIR)
+    for file in files:
+        ext = os.path.splitext(file)[1][1:].lower()
+        if ext in SUB_EXTS:
+            LIST.append( os.path.join( DIR,  file ))
+    for dir in dirs:
+        LIST.extend(list(xbmc_walk(os.path.join( DIR, dir ))))
+    return LIST
+
 def getallsubs(searchstring, languageshort, languagelong, file_original_path, searchstring_notclean):
     subtitles_list = []
 
     # LOGIN FIRST AND THEN SEARCH
-    url = main_url + 'vlogin.php'
+    url = main_url + 'login'
+    # GET CSRF TOKEN
     req_headers = {
     'User-Agent': 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US) AppleWebKit/525.13 (KHTML, like Gecko) Chrome/0.A.B.C Safari/525.13',
-    'Referer': main_url,
+    'Referer': url,
     'Keep-Alive': '300',
     'Connection': 'keep-alive'}
-    request = urllib2.Request(url, headers=req_headers)
-    cj = cookielib.CookieJar()
-    opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cj))
-    login_data = urllib.urlencode({'username' : username, 'password' : password})
-    response = opener.open(request,login_data)
+    sessionPipocasTv = requests.Session()
+    result = sessionPipocasTv.get(url)
+    if not result.ok:
+        xbmc.executebuiltin(('Notification(%s,%s,%d)' % (_scriptname , _language(32019).encode('utf8'),5000)))
+        return []
 
-    page = 0
-    if languageshort == "pt": url = main_url + "subtitles.php?grupo=rel&linguagem=portugues&page=" + str(page) + "&release=" + urllib.quote_plus(searchstring)
-    elif languageshort == "pb": url = main_url + "subtitles.php?grupo=rel&linguagem=brasileiro&page=" + str(page) + "&release=" + urllib.quote_plus(searchstring)
-    elif languageshort == "es": url = main_url + "subtitles.php?grupo=rel&linguagem=espanhol&page=" + str(page) + "&release=" + urllib.quote_plus(searchstring)
-    elif languageshort == "en": url = main_url + "subtitles.php?grupo=rel&linguagem=ingles&page=" + str(page) + "&release=" + urllib.quote_plus(searchstring)
-    else: url = main_url + "index.php"
+    token = re.search(token_pattern, result.text)
 
-    content = opener.open(url)
-    content = content.read()
-    content = content.decode('latin1')
-    while re.search(subtitle_pattern, content, re.IGNORECASE | re.DOTALL) and page < 2:
+    # LOGIN NOW
+    payload = {
+        "username": username, 
+        "password": password, 
+        "_token": token.group(1), 
+    }
+
+    loginResult = sessionPipocasTv.post(
+        url, 
+        data = payload, 
+        headers = req_headers
+    )
+    if not loginResult.ok:
+        xbmc.executebuiltin(('Notification(%s,%s,%d)' % (_scriptname , _language(32019).encode('utf8'),5000)))
+        return []
+
+    page = 1
+    if languageshort == "pt": url = main_url + "legendas?t=rel&l=portugues&page=" + str(page) + "&s=" + urllib.quote_plus(searchstring)
+    elif languageshort == "pb": url = main_url + "legendas?t=rel&l=brasileiro&page=" + str(page) + "&s=" + urllib.quote_plus(searchstring)
+    elif languageshort == "es": url = main_url + "legendas?t=rel&l=espanhol&page=" + str(page) + "&s=" + urllib.quote_plus(searchstring)
+    elif languageshort == "en": url = main_url + "legendas?t=rel&l=ingles&page=" + str(page) + "&s=" + urllib.quote_plus(searchstring)
+    else: url = main_url + "home"
+
+    content = sessionPipocasTv.get(url)
+    while re.search(subtitle_pattern, content.text, re.IGNORECASE | re.DOTALL) and page < 2:
         log("Getting '%s' inside while ..." % subtitle_pattern)
-        for matches in re.finditer(subtitle_pattern, content, re.IGNORECASE | re.DOTALL):
+        for matches in re.finditer(subtitle_pattern, content.text, re.IGNORECASE | re.DOTALL):
             details = matches.group(1)
-            content_details = opener.open(main_url + "info.php" + details)
-            content_details = content_details.read()
-            content_details = content_details.decode('latin1')
-            for namematch in re.finditer(name_pattern, content_details, re.IGNORECASE | re.DOTALL):
+            content_details = sessionPipocasTv.get(main_url + "legendas/info/" + details)
+            for namematch in re.finditer(name_pattern, content_details.text, re.IGNORECASE | re.DOTALL):
                 filename = string.strip(namematch.group(1))
                 desc = filename
                 log("FILENAME match: '%s' ..." % namematch.group(1))         
-            for idmatch in re.finditer(id_pattern, content_details, re.IGNORECASE | re.DOTALL):
+            for idmatch in re.finditer(id_pattern, content_details.text, re.IGNORECASE | re.DOTALL):
                 id = idmatch.group(1)
                 log("ID match: '%s' ..." % idmatch.group(1))         
-            for upmatch in re.finditer(uploader_pattern, content_details, re.IGNORECASE | re.DOTALL):
+            uploader = ""
+            for upmatch in re.finditer(uploader_pattern, content_details.text, re.IGNORECASE | re.DOTALL):
+                global uploader
                 uploader = upmatch.group(1)
-            for hitsmatch in re.finditer(hits_pattern, content_details, re.IGNORECASE | re.DOTALL):
+            if uploader == "": uploader = "Bot-Pipocas"
+            for hitsmatch in re.finditer(hits_pattern, content_details.text, re.IGNORECASE | re.DOTALL):
                 hits = hitsmatch.group(1)
-            downloads = int(hits) / 150
-            if (downloads > 5): downloads=5
+            downloads = int(hits) / 100
+            if (downloads > 5): downloads = 5
             filename = re.sub('\n',' ',filename)
             desc = re.sub('\n',' ',desc)
             #Remove HTML tags on the commentaries
@@ -185,14 +235,12 @@ def getallsubs(searchstring, languageshort, languagelong, file_original_path, se
             filename = filename + "  " + "hits: " + hits + " uploader: " + uploader
             subtitles_list.append({'rating': str(downloads), 'filename': filename, 'hits': hits, 'desc': desc, 'sync': sync, 'id': id, 'language_short': languageshort, 'language_name': languagelong})
         page = page + 1
-        if languageshort == "pt": url = main_url + "subtitles.php?grupo=rel&linguagem=portugues&page=" + str(page) + "&release=" + urllib.quote_plus(searchstring)
-        elif languageshort == "pb": url = main_url + "subtitles.php?grupo=rel&linguagem=brasileiro&page=" + str(page) + "&release=" + urllib.quote_plus(searchstring)
-        elif languageshort == "es": url = main_url + "subtitles.php?grupo=rel&linguagem=espanhol&page=" + str(page) + "&release=" + urllib.quote_plus(searchstring)
-        elif languageshort == "en": url = main_url + "subtitles.php?grupo=rel&linguagem=ingles&page=" + str(page) + "&release=" + urllib.quote_plus(searchstring)
-        else: url = main_url + "index.php"
-        content = opener.open(url)
-        content = content.read()
-        content = content.decode('latin1')
+        if languageshort == "pt": url = main_url + "legendas?t=rel&l=portugues&page=" + str(page) + "&s=" + urllib.quote_plus(searchstring)
+        elif languageshort == "pb": url = main_url + "legendas?t=rel&l=brasileiro&page=" + str(page) + "&s=" + urllib.quote_plus(searchstring)
+        elif languageshort == "es": url = main_url + "legendas?t=rel&l=espanhol&page=" + str(page) + "&s=" + urllib.quote_plus(searchstring)
+        elif languageshort == "en": url = main_url + "legendas?t=rel&l=ingles&page=" + str(page) + "&s=" + urllib.quote_plus(searchstring)
+        else: url = main_url + "home"
+        content = sessionPipocasTv.get(url)
 
 #   Bubble sort, to put syncs on top
     for n in range(0,len(subtitles_list)):
@@ -223,6 +271,7 @@ def append_subtitle(item):
     xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=url, listitem=listitem, isFolder=False)
 
 def Search(item):
+    enable_rar()
     """Called when searching for subtitles from XBMC."""
     #### Do what's needed to get the list of subtitles from service site
     #### use item["some_property"] that was set earlier
@@ -256,6 +305,8 @@ def Search(item):
     filename = xbmc.getCleanMovieTitle(filename)[0]
     searchstring_notclean = os.path.splitext(os.path.basename(file_original_path))[0]
     searchstring = ""
+    log(u"_searchstring_notclean = %s" % searchstring_notclean)
+    log(u"_searchstring = %s" % searchstring)
     global israr
     israr = os.path.abspath(file_original_path)
     israr = os.path.split(israr)
@@ -333,7 +384,7 @@ def Search(item):
     PTBR_ON = _addon.getSetting( 'PTBR' )
     ES_ON = _addon.getSetting( 'ES' )
     EN_ON = _addon.getSetting( 'EN' )
-    
+
     if PT_ON == 'true':
         subtitles_list = getallsubs(searchstring, "pt", "Portuguese", file_original_path, searchstring_notclean)
         for sub in subtitles_list: append_subtitle(sub)
@@ -347,31 +398,39 @@ def Search(item):
         subtitles_list = getallsubs(searchstring, "en", "English", file_original_path, searchstring_notclean)
         for sub in subtitles_list: append_subtitle(sub)
     if PT_ON == 'false' and PTBR_ON == 'false' and ES_ON == 'false' and EN_ON == 'false':
-        xbmc.executebuiltin((u'Notification(%s,%s,%d)' % (_scriptname , 'Apenas Português | Português Brasil | English | Spanish.',5000)))
+        xbmc.executebuiltin((u'Notification(%s,%s,%d)' % (_scriptname , normalizeString('Apenas Português | Português Brasil | English | Spanish.'),5000)))
 
-def recursive_glob(treeroot, pattern):
-    results = []
-    for base, dirs, files in os.walk(treeroot):
-        for extension in pattern:
-            for filename in fnmatch.filter(files, '*.' + extension): results.append(os.path.join(base, filename))
-    return results
+def extract_all_libarchive(archive_file, directory_to):
+    overall_success = True
+    files_out = list()
+    if 'archive://' in archive_file:
+        archive_path = archive_file
+    else:
+        archive_path = 'archive://%(archive_file)s' % {'archive_file': urllib.quote_plus(xbmc.translatePath(archive_file))}
+    dirs_in_archive, files_in_archive = xbmcvfs.listdir(archive_path)
+    for ff in files_in_archive:
+        file_from = os.path.join(archive_path,ff).replace('\\','/') #Windows unexpectedly requires a forward slash in the path
+        success = xbmcvfs.copy(file_from,os.path.join(xbmc.translatePath(directory_to),ff)) #Attempt to move the file first
+        if not success:
+            xbmc.log(msg='Error extracting file %(ff)s from archive %(archive_file)s' % {'ff': ff,'archive_file':archive_file}, level=xbmc.LOGDEBUG)
+            overall_success = False
+        else:
+            xbmc.log(msg='Extracted file %(ff)s from archive %(archive_file)s' % {'ff': ff,'archive_file':archive_file}, level=xbmc.LOGDEBUG)
+            files_out.append(os.path.join(xbmc.translatePath(directory_to),ff))
+    for dd in dirs_in_archive:
+        if xbmcvfs.mkdir(os.path.join(xbmc.translatePath(directory_to),dd)):
+            xbmc.log(msg='Created folder %(dd)s for archive %(archive_file)s' % {'dd': os.path.join(xbmc.translatePath(directory_to),dd,''),'archive_file':archive_file}, level=xbmc.LOGDEBUG)
+            files_out2, success2 = extract_all_libarchive(os.path.join(archive_path,dd,'').replace('\\','/'),os.path.join(directory_to,dd))
+            if success2:
+                files_out = files_out + files_out2
+            else:
+                overall_success = False
+        else:
+            overall_success = False
+            xbmc.log(msg='Unable to create the folder %(dir_from)s for libarchive extraction' % {'dir_from': os.path.join(xbmc.translatePath(directory_to),dd)}, level=xbmc.LOGDEBUG)
 
-def get_download(url, download, id):
-    req_headers = {
-        'User-Agent': 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US) AppleWebKit/525.13 (KHTML, like Gecko) Chrome/0.A.B.C Safari/525.13',
-        'Referer': main_url,
-        'Keep-Alive': '300',
-        'Connection': 'keep-alive'}
-    request = urllib2.Request(url, headers=req_headers)
-    cj = cookielib.CookieJar()
-    opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cj))
-    login_data = urllib.urlencode({'username' : username, 'password' : password})
-    response = opener.open(request,login_data)
-    download_data = urllib.urlencode({'sid' : id, 'submit' : '+', 'action' : 'Download'})
-    request1 = urllib2.Request(download, download_data, req_headers)
-    f = opener.open(request1)
-    return f
-    
+    return files_out, overall_success
+
 def Download(id, filename):
     """Called when subtitle download request from XBMC."""
     # Cleanup temp dir, we recomend you download/unzip your subs in temp folder and
@@ -382,104 +441,117 @@ def Download(id, filename):
     
     subtitles_list = []
 
-    url = main_url + 'vlogin.php'
-    download = main_url + 'download.php?id=' + id
+    url = main_url + 'login'
+    download = main_url + 'legendas/download/' + id
+    # GET CSRF TOKEN
     req_headers = {
     'User-Agent': 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US) AppleWebKit/525.13 (KHTML, like Gecko) Chrome/0.A.B.C Safari/525.13',
-    'Referer': main_url,
+    'Referer': url,
     'Keep-Alive': '300',
     'Connection': 'keep-alive'}
-    request = urllib2.Request(url, headers=req_headers)
-    cj = cookielib.CookieJar()
-    opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cj))
-    login_data = urllib.urlencode({'username' : username, 'password' : password})
-    response = opener.open(request,login_data)
-    download_data = urllib.urlencode({'id' : id})
-    request1 = urllib2.Request(download, download_data, req_headers)
-    content = opener.open(request1)
+    sessionPipocasTv = requests.Session()
+    result = sessionPipocasTv.get(url)
+    if not result.ok:
+        return []
+    token = re.search(token_pattern, result.text)
 
-#    content = get_download(main_url+'fazendologin.php', main_url+'downloadsub.php', id)
+    # LOGIN NOW
+    payload = {
+        "username": username, 
+        "password": password, 
+        "_token": token.group(1), 
+    }
 
-    content = content.read()
+    loginResult = sessionPipocasTv.post(
+        url, 
+        data = payload, 
+        headers = req_headers
+    )
+    if not loginResult.ok:
+        return []
+
+    content = sessionPipocasTv.get(download)
+    if not content.ok:
+        return []
     #### If user is not registered or User\Pass is misspelled it will generate an error message and break the script execution!
-    if '<title>Pipocas.TV - Login</title>' in content.decode('utf8', 'ignore'):
+    if 'Cria uma conta' in content.content:
         xbmcplugin.endOfDirectory(int(sys.argv[1]))
         xbmc.executebuiltin(('Notification(%s,%s,%d)' % (_scriptname , _language(32019).encode('utf8'),5000)))
-    if content is not None:
-        header = content[:4]
-        if header == 'Rar!':
-            local_tmp_file = pjoin(_temp, str(uuid.uuid4())+".rar")
-            packed = True
-        elif header == 'PK':
-            local_tmp_file = pjoin(_temp, str(uuid.uuid4())+".zip")
-            packed = True
+    if content.content is not None:
+        uid = uuid.uuid4()
+        if sys.version_info.major == 3:
+            local_tmp_file = os.path.join(_temp, str(uid) + ".xxx")
         else:
-            # never found/downloaded an unpacked subtitles file, but just to be sure ...
-            # assume unpacked sub file is an '.srt'
-            local_tmp_file = pjoin(_temp, str(uuid.uuid4())+".srt")
-            subs_file = local_tmp_file
-            packed = False
-        log(u"Saving subtitles to '%s'" % (local_tmp_file,))
+            local_tmp_file = os.path.join(_temp, unicode(uid) + ".xxx")
+        packed = False
+
         try:
-            local_file_handle = open(local_tmp_file, "wb")
-            local_file_handle.write(content)
-            local_file_handle.close()
-        except: log(u"Failed to save subtitles to '%s'" % (local_tmp_file,))
-        if packed:
-            files = os.listdir(_temp)
-            init_filecount = len(files)
-            log(u"pipocas: número de init_filecount %s" % (init_filecount,)) #EGO
-            filecount = init_filecount
-            max_mtime = 0
-            # Determine the newest file from _temp
-            for file in files:
-                if file.split('.')[-1] in SUB_EXTS:
-                    mtime = os.stat(pjoin(_temp, file)).st_mtime
-                    if mtime > max_mtime: max_mtime =  mtime
-            init_max_mtime = max_mtime
-            # Wait 2 seconds so that the unpacked files are at least 1 second newer
-            time.sleep(2)
-            xbmc.executebuiltin("XBMC.Extract(" + local_tmp_file.encode("utf-8") + ", " + _temp +")")
-            waittime  = 0
-            while filecount == init_filecount and waittime < 20 and init_max_mtime == max_mtime: # nothing yet extracted
-                time.sleep(1)  # wait 1 second to let the builtin function 'XBMC.extract' unpack
-                files = os.listdir(_temp)
-                filecount = len(files)
-                # determine if there is a newer file created in _temp (marks that the extraction had completed)
-                for file in files:
-                    if file.split('.')[-1] in SUB_EXTS:
-                        mtime = os.stat(pjoin(_temp, file)).st_mtime
-                        if mtime > max_mtime: max_mtime =  mtime
-                waittime  = waittime + 1
-            if waittime == 20: log(u"Failed to unpack subtitles in '%s'" % (_temp,))
+            log(u"Saving subtitles to '%s'" % local_tmp_file)
+            if sys.version_info.major == 3:
+                local_file_handle = xbmcvfs.File(local_tmp_file, "w")
+                local_file_handle.write(bytearray(content.content))
             else:
-                log(u"Unpacked files in '%s'" % (_temp,))
-                searchsubs = recursive_glob(_temp, SUB_EXTS)
-                searchsubscount = len(searchsubs)
-                for file in searchsubs:
-                    # There could be more subtitle files in _temp, so make
-                    # sure we get the newly created subtitle file
-                    #if file.split('.')[-1] in SUB_EXTS and os.stat(pjoin(_temp, file)).st_mtime > init_max_mtime:
-                    if searchsubscount == 1:
-                        # unpacked file is a newly created subtitle file
-                        log(u"Unpacked subtitles file '%s'" % (file.decode('utf-8'),))
-                        try:  subs_file = pjoin(_temp, file.decode("utf-8"))
-                        except: subs_file = pjoin(_temp, file.decode("latin1"))
-                        subtitles_list.append(subs_file)
-                        break
-                    else:
-                    # If there are more than one subtitle in the temp dir, launch a browse dialog
-                    # so user can choose. If only one subtitle is found, parse it to the addon.
-                        if len(_temp) > 1:
-                            dialog = xbmcgui.Dialog()
-                            subs_file = dialog.browse(1, 'XBMC', 'files', '.srt|.sub|.aas|.ssa|.smi|.txt', False, False, _temp+'/')
-                            subtitles_list.append(subs_file)
-                            break
-        else: subtitles_list.append(subs_file)
+                local_file_handle = xbmcvfs.File(local_tmp_file, "wb")
+                local_file_handle.write(content.content)
+            local_file_handle.close()
+
+            log(u"Checking archive type")
+            # Check archive type (rar/zip/else) through the file header (rar=Rar!, zip=PK)
+            myfile = xbmcvfs.File(local_tmp_file, "rb")
+            myfile.seek(0,0)
+            if myfile.read(1) == 'R':
+                typeid = "rar"
+                packed = True
+                log(u"Discovered RAR Archive")
+            else:
+                myfile.seek(0,0)
+                if myfile.read(1) == 'P':
+                    typeid = "zip"
+                    packed = True
+                    log(u"Discovered ZIP Archive")
+                else:
+                    typeid = "srt"
+                    packed = False
+                    log(u"Discovered a non-archive file")
+            myfile.close()
+            if sys.version_info.major == 3:
+                local_tmp_file = os.path.join(_temp, str(uid) + "." + typeid)
+                xbmcvfs.rename(os.path.join(_temp, str(uid) + ".xxx"), local_tmp_file)
+            else:
+                local_tmp_file = os.path.join(_temp, unicode(uid) + "." + typeid)
+                xbmcvfs.rename(os.path.join(_temp, unicode(uid) + ".xxx"), local_tmp_file)
+            log(u"Saving to %s" % local_tmp_file)
+        except:
+            log(u"Failed to save subtitle to %s" % local_tmp_file)
+
+        if packed:
+            time.sleep(2)
+            extractedFileList, success = extract_all_libarchive(local_tmp_file, _temp)
+
+            temp = []
+            for file in extractedFileList:
+                sub = urllib.unquote_plus(file)
+                sub, ext = os.path.splitext(os.path.basename(file))
+                temp.append([file, sub, ext])
+
+            subtitles = sorted(temp, reverse=False)
+            subtitles_list = []
+
+            if len(subtitles) > 1:
+                dialog = xbmcgui.Dialog()
+                sel = dialog.select("FILES: %s" % filename , [y for x, y, z in subtitles])
+                if sel >= 0:
+                    subSelected = subtitles[sel][0]
+                    subtitles_list.append(subSelected)
+            elif len(subtitles) == 1: 
+                subSelected = subtitles[0][0]
+                subtitles_list.append(subSelected)
+        else: subtitles_list.append(local_tmp_file)
+        
     return subtitles_list
 
 def normalizeString(str):
-    return unicodedata.normalize('NFKD', unicode(unicode(str, 'utf-8'))).encode('ascii', 'ignore')
+    return unicodedata.normalize('NFKD', unicode(str, 'utf-8')).encode('ascii', 'ignore')
 
 def get_params():
     param = []

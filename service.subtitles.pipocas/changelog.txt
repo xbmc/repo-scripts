@@ -1,3 +1,7 @@
+0.1.7
+- Fix unrar solid files (Windows only)
+0.1.6
+- New website design
 0.1.5
 - http -> https
 0.1.4

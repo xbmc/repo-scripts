@@ -4,10 +4,10 @@
     <string id="32001">Utilizador</string>
     <string id="32002">Palavra-passe</string>
     <string id="32003">Detalhes da conta</string>
-    <string id="32004">Português Activo</string>
-    <string id="32005">Português Brasileiro Activo</string>
-    <string id="32006">Espanhol Activo</string>
-    <string id="32007">Inglês Activo</string>
+    <string id="32004">Português Ativo</string>
+    <string id="32005">Português Brasileiro Ativo</string>
+    <string id="32006">Espanhol Ativo</string>
+    <string id="32007">Inglês Ativo</string>
     <string id="32008">Forçar Descrição Completa (Texto com "lixo" incluído)</string>
     <string id="32009">Sem RELEASE na descrição!</string>
     <string id="32010">Procura e sincroniza pela pasta do filme</string>
@@ -23,5 +23,8 @@
     <string id="32020">Prioridade de Pesquisa por</string>
     <string id="32021">Nome do Ficheiro</string>
     <string id="32022">Título</string>
-    <string id="32023">Activar modo depuração</string>
+    <string id="32023">Ativar modo depuração</string>
+    <string id="32024">Extração RAR</string>
+    <string id="32025">O sistema de arquivos virtual RAR precisa estar ativado.</string>
+    <string id="32026">Deves ativá-lo em Add-ons -> Os meus add-ons -> Virtual filesystems -> Archive support.</string>
 </strings>
