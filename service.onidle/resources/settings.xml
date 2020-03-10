@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+    <setting id="Enable_Debugging"   type="bool"   label="32001"  default="false" />
+    <setting id="Manual_Run"         type="bool"   label="32020"  default="false" enable="false" visible="false"/>
+    <setting id="Ignore_Music"       type="bool"   label="32005"  default="true" />
+    <setting id="Soft_Mute"          type="bool"   label="32016"  default="true" />
+    <setting id="User_Idle_Min"      type="slider" label="32003"  default="30" range="30,15,900" option="int" />
+    <setting id="User_Countdown_Sec" type="slider" label="32004"  default="30" range="30,15,300" option="int" />
+    <setting id="User_Exit_Action"   type="enum"   label="32002"  lvalues="32013|32012|32011|32010|32009|32008|32007|32006"/>
+    <setting id="User_Action"        type="text"   label="32015"  default="" subsetting="true" visible="eq(-1,7)" />
+    <setting id="PROMPT"             type="text"   label="32014"  enable="false" visible="eq(-2,7)" />
+    <setting id="EXE_User_Action"    type="action" label="32021"  action="RunScript(special://home/addons/service.onidle/test.py)" option="close" />
+</settings>
