@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.sublissimo" name="Sublissimo" version="0.0.1" provider-name="AJVM">
+    <requires>
+        <import addon="xbmc.python" version="2.26.0"/>
+    </requires>
+    <extension point="xbmc.python.script" library="main.py">
+	<provides>executable</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <summary lang="en_GB">Edit and synchronize subtitles with your remote</summary>
+        <description lang="en_GB">With this script you can edit specific lines, move or stretch subtitles, and synchronize with other subtitles. You can also synchronize with a videofile.</description>
+        <platform>all</platform>
+        <license>MIT</license>
+        <email>drinkblacklabel@gmail.com</email>
+        <source>https://github.com/Allertj/script.sublissimo</source>
+        <assets>
+            <icon>resources/icon.png</icon>
+            <fanart>resources/fanart.jpg</fanart>
+        </assets>
+    </extension>
+</addon>
