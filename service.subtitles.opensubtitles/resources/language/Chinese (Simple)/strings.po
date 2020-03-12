@@ -1,0 +1,20 @@
+msgid ""
+msgstr ""
+
+#Chinese Simplified
+
+msgctxt "#32001"
+msgid "Error searching for subtitles"
+msgstr "字幕搜索出错"
+
+msgctxt "#32002"
+msgid "Username"
+msgstr "用户名"
+
+msgctxt "#32003"
+msgid "Password"
+msgstr "密码"
+
+msgctxt "#32004"
+msgid "Login Details"
+msgstr "登录详细信息"
