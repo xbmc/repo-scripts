@@ -68,6 +68,7 @@ class PlayerMonitor(xbmc.Monitor):
         if method == 'Player.OnStop':
             while not self.abortRequested(): # workaround for unwanted behaviours on slow systems
                 self.waitForAbort(3)
+                break
 
             if not PLAYER.isPlaying() and xbmcgui.getCurrentWindowId() not in [12005, 12006, 10028, 10500, 10138, 10160]:
                 self.fullscreen_lock = False
