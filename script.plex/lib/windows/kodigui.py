@@ -17,6 +17,7 @@ class BaseFunctions:
     height = 720
 
     usesGenerate = False
+    lastWinID = None
 
     def __init__(self):
         self.isOpen = True
@@ -92,6 +93,7 @@ class BaseWindow(xbmcgui.WindowXML, BaseFunctions):
 
     def onInit(self):
         self._winID = xbmcgui.getCurrentWindowId()
+        BaseFunctions.lastWinID = self._winID
         if self.started:
             self.onReInit()
         else:
@@ -143,9 +145,9 @@ class BaseDialog(xbmcgui.WindowXMLDialog, BaseFunctions):
 
     def onInit(self):
         self._winID = xbmcgui.getCurrentWindowDialogId()
+        BaseFunctions.lastWinID = self._winID
         if self.started:
             self.onReInit()
-
         else:
             self.started = True
             self.onFirstInit()
@@ -221,6 +223,17 @@ class ControlledDialog(ControlledBase, BaseDialog):
 DUMMY_LIST_ITEM = xbmcgui.ListItem()
 
 
+class DummyDataSource(object):
+    def __nonzero__(self):
+        return False
+
+    def exists(self):
+        return False
+
+
+DUMMY_DATA_SOURCE = DummyDataSource()
+
+
 class ManagedListItem(object):
     def __init__(self, label='', label2='', iconImage='', thumbnailImage='', path='', data_source=None, properties=None):
         self._listItem = xbmcgui.ListItem(label, label2, iconImage, thumbnailImage, path)
@@ -257,6 +270,7 @@ class ManagedListItem(object):
     def invalidate(self):
         self._valid = False
         self._listItem = DUMMY_LIST_ITEM
+        self.dataSource = DUMMY_DATA_SOURCE
 
     def _takeListItem(self, manager, lid):
         self._manager = manager
@@ -813,9 +827,9 @@ class SafeControlEdit(object):
             self._text = self._win.getControl(self.controlID).getText()
 
             if self._keyCallback:
-                self._keyCallback()
+                self._keyCallback(action_id)
 
-            self. updateLabel()
+            self.updateLabel()
 
             return True
 
@@ -833,7 +847,7 @@ class SafeControlEdit(object):
             return False
 
         if self._keyCallback:
-            self._keyCallback()
+            self._keyCallback(action_id)
 
         return True
 

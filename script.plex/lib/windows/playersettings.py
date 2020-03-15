@@ -84,8 +84,10 @@ class VideoSettingsDialog(kodigui.BaseDialog, util.CronReceiver):
         if not self.nonPlayback:
             options += [
                 ('kodi_video', T(32398, 'Kodi Video Settings'), ''),
-                ('kodi_audio', T(32399, 'Kodi Audio Settings'), '')
+                ('kodi_audio', T(32399, 'Kodi Audio Settings'), ''),
             ]
+            if util.KODI_VERSION_MAJOR >= 18:
+                options.append(('kodi_subtitle', T(32492, 'Kodi Subtitle Settings'), ''))
 
         items = []
         for o in options:
@@ -138,6 +140,8 @@ class VideoSettingsDialog(kodigui.BaseDialog, util.CronReceiver):
             xbmc.executebuiltin('ActivateWindow(OSDVideoSettings)')
         elif result == 'kodi_audio':
             xbmc.executebuiltin('ActivateWindow(OSDAudioSettings)')
+        elif result == 'kodi_subtitle':
+            xbmc.executebuiltin('ActivateWindow(OSDSubtitleSettings)')
 
         self.showSettings()
 
@@ -252,7 +256,8 @@ def showSubtitlesDialog(video, non_playback=False):
 
 
 def showQualityDialog(video, non_playback=False, selected_idx=None):
-    options = [(13 - i, T(l)) for (i, l) in enumerate((32001, 32002, 32003, 32004, 32005, 32006, 32007, 32008, 32009, 32010, 32011, 32012, 32013, 32014))]
+    options = [(13 - i, T(l)) for (i, l) in enumerate((32001, 32002, 32003, 32004, 32005, 32006, 32007, 32008, 32009,
+                                                       32010, 32011))]
 
     choice = showOptionsDialog('Quality', options, non_playback=non_playback, selected_idx=selected_idx)
     if choice is None:

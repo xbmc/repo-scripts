@@ -67,6 +67,8 @@ class VideoPlayerWindow(kodigui.ControlledWindow, windowutils.UtilMixin):
         self.aborted = True
         self.timeout = None
         self.passoutProtection = 0
+        self.lastFocusID = None
+        self.lastNonOptionsFocusID = None
 
     def doClose(self):
         util.DEBUG_LOG('VideoPlayerWindow: Closing')
@@ -97,8 +99,15 @@ class VideoPlayerWindow(kodigui.ControlledWindow, windowutils.UtilMixin):
                 self.resetPassoutProtection()
                 if action in(xbmcgui.ACTION_NAV_BACK, xbmcgui.ACTION_CONTEXT_MENU):
                     if not xbmc.getCondVisibility('ControlGroup({0}).HasFocus(0)'.format(self.OPTIONS_GROUP_ID)):
-                        self.setFocusId(self.OPTIONS_GROUP_ID)
-                        return
+                        if not util.advancedSettings.fastBack or action == xbmcgui.ACTION_CONTEXT_MENU:
+                            self.lastNonOptionsFocusID = self.lastFocusID
+                            self.setFocusId(self.OPTIONS_GROUP_ID)
+                            return
+                    else:
+                        if self.lastNonOptionsFocusID and action == xbmcgui.ACTION_CONTEXT_MENU:
+                            self.setFocusId(self.lastNonOptionsFocusID)
+                            self.lastNonOptionsFocusID = None
+                            return
 
                 if action in(xbmcgui.ACTION_NAV_BACK, xbmcgui.ACTION_PREVIOUS_MENU):
                     self.doClose()
@@ -141,6 +150,8 @@ class VideoPlayerWindow(kodigui.ControlledWindow, windowutils.UtilMixin):
     def onFocus(self, controlID):
         if not self.postPlayMode:
             return
+
+        self.lastFocusID = controlID
 
         if 399 < controlID < 500:
             self.setProperty('hub.focus', str(controlID - 400))
@@ -369,9 +380,9 @@ class VideoPlayerWindow(kodigui.ControlledWindow, windowutils.UtilMixin):
             self.setProperty('prev.info.summary', self.prev.summary)
 
         if self.prev.type == 'episode':
+            self.setProperty('related.header', T(32306, 'Related Shows'))
             if self.next:
                 self.setProperty('next.thumb', self.next.thumb.asTranscodedImageURL(*self.NEXT_DIM))
-                self.setProperty('related.header', T(32306, 'Related Shows'))
                 self.setProperty('info.date', util.cleanLeadingZeros(self.next.originallyAvailableAt.asDatetime('%B %d, %Y')))
 
                 self.setProperty('next.title', self.next.grandparentTitle)
@@ -386,9 +397,9 @@ class VideoPlayerWindow(kodigui.ControlledWindow, windowutils.UtilMixin):
                 )
                 self.setProperty('prev.info.date', util.cleanLeadingZeros(self.prev.originallyAvailableAt.asDatetime('%B %d, %Y')))
         elif self.prev.type == 'movie':
+            self.setProperty('related.header', T(32404, 'Related Movies'))
             if self.next:
                 self.setProperty('next.thumb', self.next.defaultArt.asTranscodedImageURL(*self.NEXT_DIM))
-                self.setProperty('related.header', T(32404, 'Related Movies'))
                 self.setProperty('info.date', self.next.year)
 
                 self.setProperty('next.title', self.next.title)
@@ -418,6 +429,7 @@ class VideoPlayerWindow(kodigui.ControlledWindow, windowutils.UtilMixin):
             mli = kodigui.ManagedListItem(title or '', thumbnailImage=thumb, data_source=ondeck)
             if mli:
                 mli.setProperty('index', str(idx))
+                mli.setProperty('progress', util.getProgressImage(mli.dataSource))
                 mli.setProperty(
                     'thumb.fallback', 'script.plex/thumb_fallbacks/{0}.png'.format(ondeck.type in ('show', 'season', 'episode') and 'show' or 'movie')
                 )
@@ -451,6 +463,12 @@ class VideoPlayerWindow(kodigui.ControlledWindow, windowutils.UtilMixin):
             if mli:
                 mli.setProperty('thumb.fallback', 'script.plex/thumb_fallbacks/{0}.png'.format(rel.type in ('show', 'season', 'episode') and 'show' or 'movie'))
                 mli.setProperty('index', str(idx))
+                if self.prev and self.prev.type == 'episode':
+                    if not mli.dataSource.isWatched:
+                        mli.setProperty('unwatched.count', str(mli.dataSource.unViewedLeafCount))
+                else:
+                    mli.setProperty('unwatched', not mli.dataSource.isWatched and '1' or '')
+                mli.setProperty('progress', util.getProgressImage(mli.dataSource))
                 items.append(mli)
                 idx += 1
 
@@ -517,6 +535,7 @@ class VideoPlayerWindow(kodigui.ControlledWindow, windowutils.UtilMixin):
 
 def play(video=None, play_queue=None, resume=False):
     w = VideoPlayerWindow.open(video=video, play_queue=play_queue, resume=resume)
+    player.PLAYER.reset()
     player.PLAYER.off('session.ended', w.sessionEnded)
     player.PLAYER.off('post.play', w.postPlay)
     player.PLAYER.off('change.background', w.changeBackground)

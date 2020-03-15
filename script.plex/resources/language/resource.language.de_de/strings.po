@@ -4,18 +4,19 @@ msgstr ""
 "Project-Id-Version: XBMC-Addons\n"
 "Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
 "POT-Creation-Date: 2013-12-12 22:56+0000\n"
-"PO-Revision-Date: 2017-05-29 16:47++0200\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"PO-Revision-Date: 2017-05-25 10:52+0200\n"
 "Language-Team: LANGUAGE\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: fr\n"
-"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+"Language: de\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Last-Translator: \n"
+"X-Generator: Poedit 2.0.2\n"
 
 msgctxt "#32000"
 msgid "Main"
-msgstr "Main"
+msgstr "Allgemein"
 
 msgctxt "#32001"
 msgid "Original"
@@ -75,135 +76,135 @@ msgstr "64 kbps"
 
 msgctxt "#32020"
 msgid "Local Quality"
-msgstr "Qualité locale"
+msgstr "Qualität für lokale Geräte"
 
 msgctxt "#32021"
 msgid "Remote Quality"
-msgstr "Qualité distante"
+msgstr "Qualität für entfernte Geräte"
 
 msgctxt "#32022"
 msgid "Online Quality"
-msgstr "Qualité online"
+msgstr "Online Quality"
 
 msgctxt "#32023"
 msgid "Transcode Format"
-msgstr "Format transcodage"
+msgstr "Transkodierungsformat"
 
 msgctxt "#32024"
 msgid "Debug Logging"
-msgstr "Debug Logging"
+msgstr "Debug-Protokollierung"
 
 msgctxt "#32025"
 msgid "Allow Direct Play"
-msgstr "Autoriser Direct Play"
+msgstr "Direkte Wiedergabe erlauben"
 
 msgctxt "#32026"
 msgid "Allow Direct Stream"
-msgstr "Autoriser Direct Stream"
+msgstr "Direktes streamen erlauben"
 
 msgctxt "#32027"
 msgid "Force"
-msgstr "Force"
+msgstr "Erzwingen"
 
 msgctxt "#32028"
 msgid "Always"
-msgstr "Toujours"
+msgstr "Immer"
 
 msgctxt "#32029"
 msgid "Only Image Formats"
-msgstr "Seulement formats d'image"
+msgstr "nur Bildformate"
 
 msgctxt "#32030"
 msgid "Auto"
-msgstr "Auto"
+msgstr "Automatisch"
 
 msgctxt "#32031"
 msgid "Burn Subtitles (Direct Play Only)"
-msgstr "Incruster sous-titres (pour Direct Play)"
+msgstr "Untertitel einbrennen (bei direkter Wiedergabe)"
 
 msgctxt "#32032"
 msgid "Allow Insecure Connections"
-msgstr "Autoriser connexions non sécurisées"
+msgstr "Unsichere Verbindung erlauben"
 
 msgctxt "#32033"
 msgid "Never"
-msgstr "Jamais"
+msgstr "Nie"
 
 msgctxt "#32034"
 msgid "On Same network"
-msgstr "Sur le même réseau"
+msgstr "Im selben Netzwerk"
 
 msgctxt "#32035"
 msgid "Always"
-msgstr "Toujours"
+msgstr "Immer"
 
 msgctxt "#32036"
 msgid "Allow 4K"
-msgstr "Autoriser 4K"
+msgstr "4K erlauben"
 
 msgctxt "#32037"
 msgid "Allow HEVC (h265)"
-msgstr "Autoriser HEVC (h265)"
+msgstr "HEVC erlauben (h265)"
 
 msgctxt "#32038"
 msgid "Automatically Sign In"
-msgstr "Connexion automatique"
+msgstr "Automatisch anmelden"
 
 msgctxt "#32039"
 msgid "Post Play Auto Play"
-msgstr "Post Play Auto Play"
+msgstr "Automatisch nächsten Titel abspielen"
 
 msgctxt "#32040"
 msgid "Enable Subtitle Downloading"
-msgstr "Activer le téléchargement des sous-titres"
+msgstr "Untertitel download aktivieren"
 
 msgctxt "#32041"
 msgid "Enable Subtitle Downloading"
-msgstr "Activer le téléchargement des sous-titres"
+msgstr "Untertitel download aktivieren"
 
 msgctxt "#32042"
 msgid "Server Discovery (GDM)"
-msgstr "Server Discovery (GDM)"
+msgstr "Server Erkennung (GDM)"
 
 msgctxt "#32043"
 msgid "Start Plex On Kodi Startup"
-msgstr "Démarrer Plex au démarrage de Kodi"
+msgstr "Plex mit Kodi starten"
 
 msgctxt "#32044"
 msgid "Connection 1 IP"
-msgstr "Connexion 1 IP"
+msgstr "Verbindung 1 IP"
 
 msgctxt "#32045"
 msgid "Connection 1 Port"
-msgstr "Connexion 1 Port"
+msgstr "Verbindung 1 Port"
 
 msgctxt "#32046"
 msgid "Connection 2 IP"
-msgstr "Connexion 2 IP"
+msgstr "Verbindung 2 IP"
 
 msgctxt "#32047"
 msgid "Connection 2 Port"
-msgstr "Connexion 2 Port"
+msgstr "Verbindung 2 Port"
 
 msgctxt "#32048"
 msgid "Audio"
-msgstr "Audio"
+msgstr "Ton"
 
 msgctxt "#32049"
 msgid "Advanced"
-msgstr "Avancée"
+msgstr "Erweitert"
 
 msgctxt "#32050"
 msgid "Manual Servers"
-msgstr "Serveurs manuels"
+msgstr "Manuelle Server"
 
 msgctxt "#32051"
 msgid "Privacy"
-msgstr "Privacy"
+msgstr "Datenschutz"
 
 msgctxt "#32052"
 msgid "About"
-msgstr "A propos"
+msgstr "Über"
 
 msgctxt "#32053"
 msgid "Video"
@@ -211,49 +212,47 @@ msgstr "Video"
 
 msgctxt "#32054"
 msgid "Addon Version"
-msgstr "Version de l'addon"
+msgstr "Erweiterung Version"
 
 msgctxt "#32055"
 msgid "Kodi Version"
-msgstr "Version de kodi"
+msgstr "Kodi Version"
 
 msgctxt "#32056"
 msgid "Screen Resolution"
-msgstr "Résolution de l'écran"
+msgstr "Bilschirmauflösung"
 
 msgctxt "#32057"
 msgid "Current Server Version"
-msgstr "Version actuelle du serveur"
-
+msgstr "Aktuelle Server Version"
 
 msgctxt "#32100"
 msgid "Skip user selection and pin entry on startup."
-msgstr "Passer l'écran de sélection de l'utilisateur et du PIN au démarrage"
+msgstr "Benutzerauswahl und Pin-Eingabe beim Start überspringen."
 
 msgctxt "#32101"
 msgid "If enabled, when playback ends and there is a 'Next Up' item available, it will be automatically be played after a 15 second delay."
-msgstr "Si actif, à la fin de la lecture, les éléments suivants seront joués après un délai de 15s."
+msgstr "Falls aktiviert wird, sofern verfügbar, nachdem die Wiedergabe endet ein 'nächster Titel' automatisch nach 15 Sekunden gestartet."
 
 msgctxt "#32102"
 msgid "Enable this if your hardware can handle 4K playback. Disable it to force transcoding."
-msgstr "Activer cette option si votre hardware est capable de lire la 4K. Désactiver pour forcer le transcodage."
+msgstr "Aktiviert 4K Wiedergabe per Hardware. Deaktivierung erzwingt Transcodierung."
 
 msgctxt "#32103"
 msgid "Enable this if your hardware can handle HEVC/h265. Disable it to force transcoding."
-msgstr "Activer cette option si votre hardware est capable de décoder l'HEVC/h265. Désactiver pour forcer le transcodage."
+msgstr "Aktiviert HEVC/h265 Wiedergabe per Hardware. Deaktivierung erzwingt Transcodierung."
 
 msgctxt "#32104"
 msgid "When to connect to servers with no secure connections.[CR][CR]* [B]Never[/B]: Never connect to a server insecurely[CR]* [B]On Same Network[/B]: Allow if on the same network[CR]* [B]Always[/B]: Allow same network and remote connections"
-msgstr "Pour se connecter à un serveur via une connexion non sécurisée.[CR][CR]* [B]Attention[/B]: Ne jamais se connecter à un serveur via une connexion son sécurisée[CR]* [B]Sur le même réseau[/B]: Autoriser si même réseau[CR]* [B]Toujours[/B]: Autoriser même réseau et connexions distantes"
-
+msgstr "Wann soll zu Servern ohne 'sichere Verbindung' verbunden werden[CR]* [B]Nie[/B]: Niemals unsicher zu eine Server verbinden.[CR]* [B]Im selben Netzwerk[/B]: Im selben Netzwerk erlauben[CR]* [B]Immer[/B]: Im selben Netzwerk und bei entfernter Verbindung erlauben"
 
 msgctxt "#32201"
 msgid "Trailer"
-msgstr "Bande-annonce"
+msgstr "Trailer"
 
 msgctxt "#32202"
 msgid "Deleted Scene"
-msgstr "Supprimer scène"
+msgstr "Entfernte Szene"
 
 msgctxt "#32203"
 msgid "Interview"
@@ -261,27 +260,27 @@ msgstr "Interview"
 
 msgctxt "#32204"
 msgid "Music Video"
-msgstr "Vidéos Musiques"
+msgstr "Musik-Video"
 
 msgctxt "#32205"
 msgid "Behind the Scenes"
-msgstr "Dans les coulisses"
+msgstr "Hinter den Kulissen"
 
 msgctxt "#32206"
 msgid "Scene"
-msgstr "Scene"
+msgstr "Szene"
 
 msgctxt "#32207"
 msgid "Live Music Video"
-msgstr "Vidéos Musiques Live"
+msgstr "Live Musikvideo"
 
 msgctxt "#32208"
 msgid "Lyric Music Video"
-msgstr "Paroles vidéos musiques"
+msgstr "Musikvideo mit Lyrics"
 
 msgctxt "#32209"
 msgid "Concert"
-msgstr "Concert"
+msgstr "Konzert"
 
 msgctxt "#32210"
 msgid "Featurette"
@@ -289,31 +288,31 @@ msgstr "Featurette"
 
 msgctxt "#32211"
 msgid "Short"
-msgstr "Courte"
+msgstr "Kurzfilm"
 
 msgctxt "#32212"
 msgid "Other"
-msgstr "Autres"
+msgstr "Sonstige"
 
 msgctxt "#32300"
 msgid "Go to Album"
-msgstr "Voir l'album"
+msgstr "Gehe zu Album"
 
 msgctxt "#32301"
 msgid "Go to Artist"
-msgstr "Voir l'artiste"
+msgstr "Gehe zu Künstler(in)"
 
 msgctxt "#32302"
 msgid "Go to {0}"
-msgstr "Aller à {0}"
+msgstr "Gehe zu {0}"
 
 msgctxt "#32303"
 msgid "Season"
-msgstr "Saison"
+msgstr "Staffel"
 
 msgctxt "#32304"
 msgid "Episode"
-msgstr "Episode"
+msgstr "Folge"
 
 msgctxt "#32305"
 msgid "Extras"
@@ -321,19 +320,19 @@ msgstr "Extras"
 
 msgctxt "#32306"
 msgid "Related Shows"
-msgstr "Liens"
+msgstr "Ähnliche Serien"
 
 msgctxt "#32307"
 msgid "More"
-msgstr "Plus"
+msgstr "Film"
 
 msgctxt "#32308"
 msgid "Available"
-msgstr "Disponible"
+msgstr "Verfügbar"
 
 msgctxt "#32309"
 msgid "None"
-msgstr "Aucun"
+msgstr "Ohne"
 
 msgctxt "#32310"
 msgid "S"
@@ -345,271 +344,271 @@ msgstr "E"
 
 msgctxt "#32312"
 msgid "Unavailable"
-msgstr "Non disponible"
+msgstr "Nicht verfügbar"
 
 msgctxt "#32313"
 msgid "This item is currently unavailable."
-msgstr "Cet élément n'est actuellement pas disponible."
+msgstr "Dieser Eintrag ist aktuell nicht verfügbar."
 
 msgctxt "#32314"
 msgid "In Progress"
-msgstr "En cours"
+msgstr "in Bearbeitung"
 
 msgctxt "#32315"
 msgid "Resume playback?"
-msgstr "Poursuivre la lecture ?"
+msgstr "Wiedergabe fortsetzen?"
 
 msgctxt "#32316"
 msgid "Resume"
-msgstr "Resume"
+msgstr "Fortsetzen"
 
 msgctxt "#32317"
 msgid "Play from beginning"
-msgstr "Lire depuis le début"
+msgstr "Von vorne wiedergeben"
 
 msgctxt "#32318"
-msgid "Mark Unwatched"
-msgstr "Marquer comme non vu"
+msgid "Mark Unplayed"
+msgstr "Als ungesehen markieren"
 
 msgctxt "#32319"
-msgid "Mark Watched"
-msgstr "Marquer comme vu"
+msgid "Mark Played"
+msgstr "Als gesehen markieren"
 
 msgctxt "#32320"
-msgid "Mark Season Unwatched"
-msgstr "Marquer saison comme non vue"
+msgid "Mark Season Unplayed"
+msgstr "Staffel als ungesehen markieren"
 
 msgctxt "#32321"
-msgid "Mark Season Watched"
-msgstr "Marquer saison comme vue"
+msgid "Mark Season Played"
+msgstr "Staffel als gesehen markieren"
 
 msgctxt "#32322"
 msgid "Delete"
-msgstr "Supprimer"
+msgstr "Löschen"
 
 msgctxt "#32323"
 msgid "Go To Show"
-msgstr "Voir le Show"
+msgstr "Gehe zu Serie"
 
 msgctxt "#32324"
 msgid "Go To {0}"
-msgstr "Aller à {0}"
+msgstr "Gehe zu {0}"
 
 msgctxt "#32325"
 msgid "Play Next"
-msgstr "Lire le media suivant"
+msgstr "Nächster Titel"
 
 msgctxt "#32326"
 msgid "Really Delete?"
-msgstr "Supprimer?"
+msgstr "Wirklich löschen?"
 
 msgctxt "#32327"
 msgid "Are you sure you really want to delete this media?"
-msgstr "Etes-vous sûr de vouloir supprimer ce media ?"
+msgstr "Soll diese Mediandatei wirklich gelöscht werden?"
 
 msgctxt "#32328"
 msgid "Yes"
-msgstr "Oui"
+msgstr "Ja"
 
 msgctxt "#32329"
 msgid "No"
-msgstr "Non"
+msgstr "Nein"
 
 msgctxt "#32330"
 msgid "Message"
-msgstr "Message"
+msgstr "Nachricht"
 
 msgctxt "#32331"
 msgid "There was a problem while attempting to delete the media."
-msgstr "Erreur : impossible de supprimer le media"
+msgstr "Es gab einen Fehler beim Löschversuch dieser Mediendatei."
 
 msgctxt "#32332"
 msgid "Home"
-msgstr "Home"
+msgstr "Start"
 
 msgctxt "#32333"
 msgid "Playlists"
-msgstr "Playlists"
+msgstr "Wiedergabelisten"
 
 msgctxt "#32334"
 msgid "Confirm Exit"
-msgstr "Quitter"
+msgstr "Beenden bestätigen"
 
 msgctxt "#32335"
 msgid "Are you ready to exit Plex?"
-msgstr "Souhaitez-vous quitter Plex ?"
+msgstr "Bereit um Plex zu beenden?"
 
 msgctxt "#32336"
 msgid "Exit"
-msgstr "Quitter"
+msgstr "Beenden"
 
 msgctxt "#32337"
 msgid "Cancel"
-msgstr "Annuler"
+msgstr "Abbrechen"
 
 msgctxt "#32338"
 msgid "No Servers Found"
-msgstr "Aucun serveur trouvé"
+msgstr "Keine Server gefunden"
 
 msgctxt "#32339"
 msgid "Server is not accessible"
-msgstr "Serveur non accessible"
+msgstr "Server ist nicht erreichbar"
 
 msgctxt "#32340"
 msgid "Connection tests are in progress. Please wait."
-msgstr "Tests de connexion en cours. Merci de patienter."
+msgstr "Verbindungstests laufen. Bitte warten."
 
 msgctxt "#32341"
 msgid "Server is not accessible. Please sign into your server and check your connection."
-msgstr "Serveur non joignable. Merci de vérifier l'accessibilité du serveur."
+msgstr "Der Server ist nicht erreichbar. Bitte einloggen und Verbindung prüfen."
 
 msgctxt "#32342"
 msgid "Switch User"
-msgstr "Changer d'utilisateur"
+msgstr "Benutzer wechseln"
 
 msgctxt "#32343"
 msgid "Settings"
-msgstr "Paramètres"
+msgstr "Einstellungen"
 
 msgctxt "#32344"
 msgid "Sign Out"
-msgstr "Déconnexion"
+msgstr "Abmelden"
 
 msgctxt "#32345"
 msgid "All"
-msgstr "Tous"
+msgstr "Alle"
 
 msgctxt "#32346"
 msgid "By Name"
-msgstr "Par Nom"
+msgstr "Nach Name"
 
 msgctxt "#32347"
 msgid "Artists"
-msgstr "Artites"
+msgstr "Künstler"
 
 msgctxt "#32348"
 msgid "movies"
-msgstr "films"
+msgstr "Filme"
 
 msgctxt "#32349"
 msgid "photos"
-msgstr "photos"
+msgstr "Fotos"
 
 msgctxt "#32350"
 msgid "Shows"
-msgstr "Séries"
+msgstr "Serien"
 
 msgctxt "#32351"
 msgid "By Date Added"
-msgstr "Par date d'ajout"
+msgstr "Nach 'Hinzugefügt am'"
 
 msgctxt "#32352"
 msgid "Date Added"
-msgstr "Date d'ajout"
+msgstr "Hinzugefügt am"
 
 msgctxt "#32353"
 msgid "By Release Date"
-msgstr "Par date de sortie"
+msgstr "Nach Erscheinungsdatum"
 
 msgctxt "#32354"
 msgid "Release Date"
-msgstr "Date de sortie"
+msgstr "Erscheinungsdatum"
 
 msgctxt "#32355"
 msgid "By Date Viewed"
-msgstr "Par date de visionnage"
+msgstr "Nach 'Gesehen am'"
 
 msgctxt "#32356"
 msgid "Date Viewed"
-msgstr "Date du visionnage"
+msgstr "Gesehen am"
 
 msgctxt "#32357"
 msgid "By Name"
-msgstr "Par nom"
+msgstr "Nach Name"
 
 msgctxt "#32358"
 msgid "Name"
-msgstr "Nom"
+msgstr "Name"
 
 msgctxt "#32359"
 msgid "By Rating"
-msgstr "Par note"
+msgstr "Nach Bewertung"
 
 msgctxt "#32360"
 msgid "Rating"
-msgstr "Note"
+msgstr "Bewertung"
 
 msgctxt "#32361"
 msgid "By Resolution"
-msgstr "Par qualité"
+msgstr "Nach Auflösung"
 
 msgctxt "#32362"
 msgid "Resolution"
-msgstr "Qualité"
+msgstr "Auflösung"
 
 msgctxt "#32363"
 msgid "By Duration"
-msgstr "Par durée"
+msgstr "Nach Dauer"
 
 msgctxt "#32364"
 msgid "Duration"
-msgstr "Durée"
+msgstr "Dauer"
 
 msgctxt "#32365"
 msgid "By First Aired"
-msgstr "Par première diffusion"
+msgstr "Nach Erstausstrahlung"
 
 msgctxt "#32366"
 msgid "First Aired"
-msgstr "Première diffusion"
+msgstr "Erstausstrahlung"
 
 msgctxt "#32367"
-msgid "By Unwatched"
-msgstr "Par non vus"
+msgid "By Unplayed"
+msgstr "Nach Ungesehen"
 
 msgctxt "#32368"
-msgid "Unwatched"
-msgstr "Non vus"
+msgid "Unplayed"
+msgstr "Ungesehen"
 
 msgctxt "#32369"
 msgid "By Date Played"
-msgstr "Par date de lecture"
+msgstr "Nach 'Abgespielt am'"
 
 msgctxt "#32370"
 msgid "Date Played"
-msgstr "Date de lecture"
+msgstr "Abgespielt am"
 
 msgctxt "#32371"
 msgid "By Play Count"
-msgstr "Par nombre de lectures"
+msgstr "Nach Wiedergabe-Zähler"
 
 msgctxt "#32372"
 msgid "Play Count"
-msgstr "Nombre de lectures"
+msgstr "Wiedergabe-Zähler"
 
 msgctxt "#32373"
 msgid "By Date Taken"
-msgstr "Par date de prise de vue"
+msgstr "Nach Aufnahmedatum"
 
 msgctxt "#32374"
 msgid "Date Taken"
-msgstr "Date de prise de vue"
+msgstr "Aufnahmedatum"
 
 msgctxt "#32375"
 msgid "No filters available"
-msgstr "Aucuns filtres disponibles"
+msgstr "Keine Filter verfügbar"
 
 msgctxt "#32376"
 msgid "Clear Filter"
-msgstr "Effacer filtres"
+msgstr "Filter bereinigen"
 
 msgctxt "#32377"
 msgid "Year"
-msgstr "Année"
+msgstr "Jahr"
 
 msgctxt "#32378"
 msgid "Decade"
-msgstr "Décennie"
+msgstr "Jahrzent"
 
 msgctxt "#32379"
 msgid "Genre"
@@ -617,27 +616,27 @@ msgstr "Genre"
 
 msgctxt "#32380"
 msgid "Content Rating"
-msgstr "Note du contenu"
+msgstr "Jugendfreigabe"
 
 msgctxt "#32381"
 msgid "Network"
-msgstr "Réseau"
+msgstr "Netzwerk"
 
 msgctxt "#32382"
 msgid "Collection"
-msgstr "Collection"
+msgstr "Sammlung"
 
 msgctxt "#32383"
 msgid "Director"
-msgstr "Réalisateur"
+msgstr "Regisseur(in)"
 
 msgctxt "#32384"
 msgid "Actor"
-msgstr "Acteur"
+msgstr "Schauspieler(in)"
 
 msgctxt "#32385"
 msgid "Country"
-msgstr "Pays"
+msgstr "Land"
 
 msgctxt "#32386"
 msgid "Studio"
@@ -649,231 +648,231 @@ msgstr "Labels"
 
 msgctxt "#32388"
 msgid "Camera Make"
-msgstr "Marque appareil photo"
+msgstr "Kamerahersteller"
 
 msgctxt "#32389"
 msgid "Camera Model"
-msgstr "Modèle caméra"
+msgstr "Kameramodell"
 
 msgctxt "#32390"
 msgid "Aperture"
-msgstr "Aperture"
+msgstr "Blendenöffnung"
 
 msgctxt "#32391"
 msgid "Shutter Speed"
-msgstr "Vitesse d'obturation"
+msgstr "Verschlusszeit"
 
 msgctxt "#32392"
 msgid "Lens"
-msgstr "Lentille"
+msgstr "Linse"
 
 msgctxt "#32393"
 msgid "TV Shows"
-msgstr "Séries TV"
+msgstr "Fernsehserien"
 
 msgctxt "#32394"
 msgid "Music"
-msgstr "Musiques"
+msgstr "Musik"
 
 msgctxt "#32395"
 msgid "Audio"
-msgstr "Audio"
+msgstr "Ton"
 
 msgctxt "#32396"
 msgid "Subtitles"
-msgstr "Sous-titres"
+msgstr "Untertitel"
 
 msgctxt "#32397"
 msgid "Quality"
-msgstr "Qualité"
+msgstr "Qualität"
 
 msgctxt "#32398"
 msgid "Kodi Video Settings"
-msgstr "Paramètres vidéo Kodi"
+msgstr "Kodi Bild Einstellungen"
 
 msgctxt "#32399"
 msgid "Kodi Audio Settings"
-msgstr "Paramètres audio Kodi"
+msgstr "Kodi Ton Einstellungen"
 
 msgctxt "#32400"
 msgid "Go To Season"
-msgstr "Aller à la saison"
+msgstr "Gehe zu Staffel"
 
 msgctxt "#32401"
 msgid "Directors"
-msgstr "Réalisateurs"
+msgstr "Regisseure"
 
 msgctxt "#32402"
 msgid "Writer"
-msgstr "Auteur"
+msgstr "Autor(in)"
 
 msgctxt "#32403"
 msgid "Writers"
-msgstr "Auteurs"
+msgstr "Autoren"
 
 msgctxt "#32404"
 msgid "Related Movies"
-msgstr "Films liés"
+msgstr "Ähnliche Filme"
 
 msgctxt "#32405"
 msgid "Download Subtitles"
-msgstr "Télécharger sous-titres"
+msgstr "Untertitel downloaden"
 
 msgctxt "#32406"
 msgid "Subtitle Delay"
-msgstr "Délai sous-titres"
+msgstr "Untertitel Verzögerung"
 
 msgctxt "#32407"
 msgid "Next Subtitle"
-msgstr "Sous-titres suivants"
+msgstr "Nächster Untertitel"
 
 msgctxt "#32408"
 msgid "Disable Subtitles"
-msgstr "Désactiver sous-titres"
+msgstr "Untertitel deaktiviren"
 
 msgctxt "#32409"
 msgid "Enable Subtitles"
-msgstr "Activer sous-titres"
+msgstr "Untertitel aktivieren"
 
 msgctxt "#32410"
 msgid "Platform Version"
-msgstr "Version de la plateforme"
+msgstr "Platform Version"
 
 msgctxt "#32411"
 msgid "Unknown"
-msgstr "Inconnu"
+msgstr "Unbekannt"
 
 msgctxt "#32412"
 msgid "Edit Or Clear"
-msgstr "Editer ou Effacer"
+msgstr "Bearbeiten oder bereinigen"
 
 msgctxt "#32413"
 msgid "Edit IP address or clear the current setting?"
-msgstr "Editer adresse IP ou effacer les paramètres actuels ?"
+msgstr "IP Adresse bearbeiten oder die aktuellen Einstellungen bereinigen?"
 
 msgctxt "#32414"
 msgid "Clear"
-msgstr "Effacer"
+msgstr "Bereinigen"
 
 msgctxt "#32415"
 msgid "Edit"
-msgstr "Editer"
+msgstr "Ändern"
 
 msgctxt "#32416"
 msgid "Enter IP Address"
-msgstr "Saisir adresse IP"
+msgstr "IP Adresse eingeben"
 
 msgctxt "#32417"
 msgid "Enter Port Number"
-msgstr "Saisir le port"
+msgstr "Port Nummer eingeben"
 
 msgctxt "#32418"
 msgid "Creator"
-msgstr "Creator"
+msgstr "Urheber(in)"
 
 msgctxt "#32419"
 msgid "Cast"
-msgstr "Casting"
+msgstr "Besetzung"
 
 msgctxt "#32420"
 msgid "Disc"
-msgstr "Disc"
+msgstr "Disk"
 
 msgctxt "#32421"
 msgid "Sign Out"
-msgstr "Déconnexion"
+msgstr "Abmelden"
 
 msgctxt "#32422"
 msgid "Exit"
-msgstr "Quitter"
+msgstr "Beenden"
 
 msgctxt "#32423"
 msgid "Shutdown"
-msgstr "Eteindre"
+msgstr "Herunterfahren"
 
 msgctxt "#32424"
 msgid "Suspend"
-msgstr "Veille"
+msgstr "Energie sparen"
 
 msgctxt "#32425"
 msgid "Hibernate"
-msgstr "Veille prolongée"
+msgstr "Ruhezustand"
 
 msgctxt "#32426"
 msgid "Reboot"
-msgstr "Redémarrer"
+msgstr "Neustart"
 
 msgctxt "#32427"
 msgid "Failed"
-msgstr "Echec"
+msgstr "Fehlgeschlagen"
 
 msgctxt "#32428"
 msgid "Login failed!"
-msgstr "Impossible de se connecter"
+msgstr "Anmeldung fehlgeschlagen!"
 
 msgctxt "#32429"
 msgid "Resume from {0}"
-msgstr "Reprendre à {0}"
+msgstr "Fortsetzen ab {0}"
 
 msgctxt "#32430"
 msgid "Discovery"
-msgstr "Recherche"
+msgstr "Entdecken"
 
 msgctxt "#32431"
 msgid "Search"
-msgstr "Recherche"
+msgstr "Suche"
 
 msgctxt "#32432"
 msgid "Space"
-msgstr "Espace"
+msgstr "Leerzeichen"
 
 msgctxt "#32433"
 msgid "Clear"
-msgstr "Effacer"
+msgstr "Bereinigen"
 
 msgctxt "#32434"
 msgid "Searching..."
-msgstr "Recherche en cours..."
+msgstr "Suche..."
 
 msgctxt "#32435"
 msgid "No Results"
-msgstr "Aucun résultat"
+msgstr "Keine Ergebnisse"
 
 msgctxt "#32436"
 msgid "Paused"
-msgstr "Pause"
+msgstr "Pausiert"
 
 msgctxt "#32437"
 msgid "Welcome"
-msgstr "Bienvenue"
+msgstr "Wilkommen"
 
 msgctxt "#32438"
 msgid "Previous"
-msgstr "Précédent"
+msgstr "Vorheriger Titel"
 
 msgctxt "#32439"
 msgid "Playing Next"
-msgstr "A regarder ensuite"
+msgstr "Nächster Titel"
 
 msgctxt "#32440"
 msgid "On Deck"
-msgstr "Découvrir"
+msgstr "Aktuell"
 
 msgctxt "#32441"
 msgid "Unknown"
-msgstr "Inconnu"
+msgstr "Unbekannt"
 
 msgctxt "#32442"
 msgid "Embedded"
-msgstr "Intégré"
+msgstr "Eingebettet"
 
 msgctxt "#32443"
 msgid "Forced"
-msgstr "Forcé"
+msgstr "Zwangsuntertitel"
 
 msgctxt "#32444"
 msgid "Lyrics"
-msgstr "Parole"
+msgstr "Lyrics"
 
 msgctxt "#32445"
 msgid "Mono"
@@ -885,69 +884,92 @@ msgstr "Stereo"
 
 msgctxt "#32447"
 msgid "None"
-msgstr "Aucun"
+msgstr "Nichts"
 
 msgctxt "#32448"
 msgid "Playback Failed!"
-msgstr "Echec de lecture!"
+msgstr "Wiedergabe fehlgeschlagen!"
 
 msgctxt "#32449"
 msgid "Can't connect to plex.tv[CR]Check your internet connection and try again."
-msgstr "Impossible de se connecter à plex.tv[CR]Vérifiez votre connexion et réessayez."
+msgstr "Keine Verbindung zu plex.tv[CR]Internetverbindung prüfen und erneut versuchen."
 
 msgctxt "#32450"
 msgid "Choose Version"
-msgstr "Choisir une version"
+msgstr "Version auswählen"
 
 msgctxt "#32451"
 msgid "Play Version..."
-msgstr "Lire version..."
+msgstr "Version abspielen..."
 
 msgctxt "#32452"
 msgid "No Content available in this library"
-msgstr ""
+msgstr "In dieser Bibliothek ist nichts vorhanden"
 
 msgctxt "#32453"
 msgid "Please add content and/or check that 'Include in dashboard' is enabled."
-msgstr ""
+msgstr "Bitte Inhalte ergänzen und/oder prüfen ob 'In Dashboard anzeigen' aktiv ist."
 
 msgctxt "#32454"
 msgid "No Content available for this filter"
-msgstr "Aucun contenu disponible dans cette librairie"
+msgstr "Mit diesem Filter ist kein Inhalt verfügbar"
 
 msgctxt "#32455"
 msgid "Please change change or remove the current filter"
-msgstr "Merci de modifier ou supprimer le filtre courant"
+msgstr "Bitte aktuellen Filter ändern oder entfernen"
 
 msgctxt "#32456"
 msgid "Show"
-msgstr ""
+msgstr "Serie"
 
 msgctxt "#32457"
 msgid "By Show"
-msgstr ""
+msgstr "Nach Serie"
 
 msgctxt "#32458"
 msgid "Episodes"
-msgstr ""
+msgstr "Episoden"
 
 msgctxt "#32459"
 msgid "Offline Mode"
-msgstr "Mode Hors-Ligne"
+msgstr "Offline-Modus"
 
 msgctxt "#32460"
 msgid "Sign In"
-msgstr "Se connecter"
+msgstr "Anmelden"
 
 msgctxt "#32461"
 msgid "Albums"
-msgstr ""
+msgstr "Alben"
 
 msgctxt "#32462"
 msgid "Artist"
-msgstr ""
+msgstr "Künstler(in)"
 
 msgctxt "#32463"
 msgid "By Artist"
-msgstr ""
+msgstr "Nach Künstler(in)"
 
+msgctxt "#32464"
+msgid "Player"
+msgstr "Wiedergabe"
+
+msgctxt "#32465"
+msgid "Use skip step settings from Kodi"
+msgstr "Skip-Schritte-Einstellung von Kodi benutzen"
+
+msgctxt "#32466"
+msgid "Automatically seek to the selected timeline position after a second"
+msgstr "Nach Verzögerung automatisch zur aktuell gewählten Position springen"
+
+msgctxt "#32467"
+msgid "User Interface"
+msgstr "Benutzeroberfläche"
+
+msgctxt "#32471"
+msgid "Use Plex/Kodi steps for timeline"
+msgstr "Plex/Kodi-Skip-Schritte für die Zeitachse verwenden"
+
+msgctxt "#32485"
+msgid "Go back instantly with the previous menu action in scrolled views"
+msgstr "Mit der Previous-Menu-Aktion In gescrollten Ansichten sofort zurückgehen"

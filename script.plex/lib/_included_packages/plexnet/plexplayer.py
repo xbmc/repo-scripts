@@ -235,8 +235,6 @@ class PlexPlayer(object):
             server = self.metadata.transcodeServer or self.item.getServer()
             decisionPath = self.buildTranscode(server, util.AttributeDict(), self.metadata.partIndex, True, False).decisionPath
 
-        util.TEST(decisionPath)
-
         # Modify the decision params based on the transcode url
         if decisionPath:
             if directPlay:
@@ -253,7 +251,7 @@ class PlexPlayer(object):
             # Global variables for all decisions
             decisionPath = http.addUrlParam(decisionPath, "mediaBufferSize=20971") # Kodi default is 20971520 (20MB)
             decisionPath = http.addUrlParam(decisionPath, "hasMDE=1")
-            decisionPath = http.addUrlParam(decisionPath, 'X-Plex-Platform=Chrome')
+            decisionPath = http.addUrlParam(decisionPath, 'X-Plex-Client-Profile-Name=Chrome')
 
         return decisionPath
 
@@ -281,6 +279,9 @@ class PlexPlayer(object):
         builder.extras = []
         builder.addParam("protocol", "hls")
 
+        # TODO: This should be Generic, but will need to re-evaluate the augmentations with that change
+        builder.addParam("X-Plex-Client-Profile-Name", "Chrome")
+
         if self.choice.subtitleDecision == self.choice.SUBTITLES_SOFT_ANY:
             builder.addParam("skipSubtitles", "1")
         else:  # elif self.choice.hasBurnedInSubtitles is True:  # Must burn transcoded because we can't set offset
@@ -303,8 +304,11 @@ class PlexPlayer(object):
 
         builder = http.HttpRequest(obj.transcodeServer.buildUrl(obj.transcodeEndpoint, True))
         builder.extras = []
-        # builder.addParam("protocol", "http")
+        builder.addParam("protocol", "http")
         builder.addParam("copyts", "1")
+
+        # TODO: This should be Generic, but will need to re-evaluate the augmentations with that change
+        builder.addParam("X-Plex-Client-Profile-Name", "Chrome")
 
         obj.subtitleUrl = None
         if True:  # if self.choice.subtitleDecision == self.choice.SUBTITLES_BURN:  # Must burn transcoded because we can't set offset
@@ -330,9 +334,9 @@ class PlexPlayer(object):
         # Augment the server's profile for things that depend on the Roku's configuration.
         if self.item.settings.supportsSurroundSound():
             if self.choice.audioStream is not None:
-                numChannels = self.choice.audioStream.channels.asInt(6)
+                numChannels = self.choice.audioStream.channels.asInt(8)
             else:
-                numChannels = 6
+                numChannels = 8
 
             for codec in ("ac3", "eac3", "dca"):
                 if self.item.settings.supportsAudioStream(codec, numChannels):
@@ -340,7 +344,7 @@ class PlexPlayer(object):
                     builder.extras.append("add-direct-play-profile(type=videoProfile&container=matroska&videoCodec=*&audioCodec=" + codec + ")")
                     if codec == "dca":
                         builder.extras.append(
-                            "add-limitation(scope=videoAudioCodec&scopeName=dca&type=upperBound&name=audio.channels&value=6&isRequired=false)"
+                            "add-limitation(scope=videoAudioCodec&scopeName=dca&type=upperBound&name=audio.channels&value=8&isRequired=false)"
                         )
 
         # AAC sample rate cannot be less than 22050hz (HLS is capable).
@@ -506,7 +510,6 @@ class PlexPlayer(object):
 
         # Build the decision path now that we have build our stream url, and only if the server supports it.
         if server.supportsFeature("streamingBrain"):
-            util.TEST("TEST==========================")
             decisionPath = builder.getRelativeUrl().replace(obj.transcodeEndpoint, self.DECISION_ENDPOINT)
             if decisionPath.startswith(self.DECISION_ENDPOINT):
                 obj.decisionPath = decisionPath
