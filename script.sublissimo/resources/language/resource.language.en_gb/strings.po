@@ -7,7 +7,6 @@ msgid ""
 msgstr ""
 
 "Project-Id-Version: XBMC Addons\n"
-"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "MIME-Version: 1.0\n"
@@ -29,7 +28,7 @@ msgid "Move subtitles"
 msgstr ""
 
 msgctxt "#31003"
-msgid "Stretch Subtitles"
+msgid "Stretch/shrink subtitles"
 msgstr ""
 
 msgctxt "#31004"
@@ -54,6 +53,18 @@ msgstr ""
 
 msgctxt "#31009"
 msgid "Quit"
+msgstr ""
+
+msgctxt "#31010"
+msgid "Synchronize by frame rate"
+msgstr ""
+
+msgctxt "#31011"
+msgid "Play video with edited subtitle"
+msgstr ""
+
+msgctxt "#31013"
+msgid "Advanced options"
 msgstr ""
 
 msgctxt "#31001"
@@ -360,6 +371,10 @@ msgctxt "#32072"
 msgid "First subtitle now starts at {}"
 msgstr ""
 
+msgctxt "#33072"
+msgid "Last subtitle now starts at {}"
+msgstr ""
+
 msgctxt "#32073"
 msgid " Paused at: "
 msgstr ""
@@ -454,4 +469,132 @@ msgstr ""
 
 msgctxt "#32095"
 msgid "View entire library"
+msgstr ""
+
+msgctxt "#32096"
+msgid "Exit to main menu with changes"
+msgstr ""
+
+msgctxt "#32097"
+msgid "Save the shown subtitle"
+msgstr ""
+
+msgctxt "#32098"
+msgid "Exit to main menu w/o changes"
+msgstr ""
+
+msgctxt "#32099"
+msgid "Exit completely"
+msgstr ""
+
+msgctxt "#32100"
+msgid "Reset to another framerate"
+msgstr ""
+
+msgctxt "#32101"
+msgid "Save and Continue playing"
+msgstr ""
+
+msgctxt "#32102"
+msgid "The subtitle is loaded with the new framerate. Pause to reset to another frame rate or to save."
+msgstr ""
+
+msgctxt "#32103"
+msgid "Please enter a valid number"
+msgstr ""
+
+msgctxt "#32104"
+msgid "Get frame rate from video"
+msgstr ""
+
+msgctxt "#32105"
+msgid "Sync options by frame rate"
+msgstr ""
+
+msgctxt "#32106"
+msgid "Frame rate"
+msgstr ""
+
+msgctxt "#32107"
+msgid "New ending time"
+msgstr ""
+
+msgctxt "#32108"
+msgid "Old starting time: "
+msgstr ""
+
+msgctxt "#34108"
+msgid "Starting time: "
+msgstr ""
+
+msgctxt "#32109"
+msgid "Old ending time: "
+msgstr ""
+
+msgctxt "#34110"
+msgid "New starting time: "
+msgstr ""
+
+msgctxt "#32110"
+msgid "New ending time: "
+msgstr ""
+
+msgctxt "#32111"
+msgid "Save and Exit"
+msgstr ""
+
+msgctxt "#32112"
+msgid "Calculate manually"
+msgstr ""
+
+msgctxt "#32113"
+msgid "Provide sum or factor"
+msgstr ""
+
+msgctxt "#32114"
+msgid "Calculate factor or provide factor"
+msgstr ""
+
+msgctxt "#32115"
+msgid "In the next screen, write a sum with the current framerate divided by the real frame rate. If the current frame rate is 25 and it should be 24, type '25/24'. Or type your own factor, like '1.2'"
+msgstr ""
+
+msgctxt "#32116"
+msgid "Play with the file you opened before"
+msgstr ""
+
+msgctxt "#32117"
+msgid "Provide factor"
+msgstr ""
+
+msgctxt "#32118"
+msgid "Stretch by providing factor"
+msgstr ""
+
+msgctxt "#32119"
+msgid "Stretch by giving new end time"
+msgstr ""
+
+msgctxt "#32120"
+msgid "The frame rate of this video is "
+msgstr ""
+
+msgctxt "#32121"
+msgid "The video is playing with the modified subtitle. Pause to save or to return to the menu."
+msgstr ""
+
+msgctxt "#32122"
+msgid "Subtitles loaded"
+msgstr ""
+
+msgctxt "#32123"
+msgid "The video is playing with the saved subtitle. The filename of the subtitle is: "
+msgstr ""
+
+msgctxt "#32124"
+msgid "Jump to time of current first subtitle"
+msgstr ""
+
+msgctxt "#32125"
+msgid "Jump to time of last subtitle"
 msgstr ""
