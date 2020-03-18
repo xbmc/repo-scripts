@@ -1,0 +1,253 @@
+# Embuary Info language file
+# Addon Name: Embuary Info
+# Addon id: script.embuary.info
+# Addon Provider: sualfred
+# Translators:
+# sualfred <su4lfred@gmail.com>, 2019
+# Miro Valko <mvalec@atlas.sk>, 2019
+# 
+msgid ""
+msgstr ""
+"Project-Id-Version: Embuary Helper\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2019-11-24 08:54+0000\n"
+"Last-Translator: Miro Valko <mvalec@atlas.sk>, 2019\n"
+"Language-Team: Slovak (Slovakia) (https://www.transifex.com/sualfred/teams/80018/sk_SK/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: sk_SK\n"
+"Plural-Forms: nplurals=4; plural=(n % 1 == 0 && n == 1 ? 0 : n % 1 == 0 && n >= 2 && n <= 4 ? 1 : n % 1 != 0 ? 2: 3);\n"
+
+msgctxt "#32000"
+msgid "Error"
+msgstr "Chyba"
+
+msgctxt "#32001"
+msgid ""
+"This is a tool to provide features to a skin and requires skin integration."
+msgstr ""
+"Toto je nástroj na poskytovanie služieb pre vzhľad a vyžaduje integráciu vo "
+"vzhľade."
+
+#: /resources/settings.xml
+msgctxt "#32002"
+msgid "(Get a free API key on www.omdbapi.com)"
+msgstr "(Získajte voľný API kľúč na www.omdbapi.com)"
+
+#: /resources/settings.xml
+msgctxt "#32003"
+msgid "Certification country"
+msgstr "Krajina certifikácie"
+
+#: /resources/lib/tmdb.py
+msgctxt "#32019"
+msgid "No information found"
+msgstr "Žiadne informácie neboli nájdené"
+
+#: /resources/lib/utils.py
+msgctxt "#32022"
+msgid "Invalid TheMovieDB API key"
+msgstr "Neplatný API kľúč k TheMovieDB"
+
+#: /default.py
+msgctxt "#32004"
+msgid "Person"
+msgstr "Osoba"
+
+#: /default.py
+msgctxt "#32005"
+msgid "Search for"
+msgstr "Vyhľadať"
+
+#: /resources/skins/default/1080i/script-embuary-person.xml
+msgctxt "#32006"
+msgid "Age"
+msgstr "Vek"
+
+#: /resources/skins/default/1080i/script-embuary-person.xml
+msgctxt "#32007"
+msgid "Place of birth"
+msgstr "Miesto narodenia"
+
+#: /resources/skins/default/1080i/script-embuary-person.xml
+msgctxt "#32008"
+msgid "Facts"
+msgstr "Fakty"
+
+#: /resources/skins/default/1080i/script-embuary-video.xml
+msgctxt "#32009"
+msgid "Similar"
+msgstr "Podobné"
+
+#: /resources/skins/default/1080i/script-embuary-video.xml
+msgctxt "#32010"
+msgid "Images"
+msgstr "Obrázky"
+
+#: /resources/skins/default/1080i/script-embuary-video.xml
+msgctxt "#32011"
+msgid "Premiered"
+msgstr "Premiéra"
+
+#: /resources/skins/default/1080i/script-embuary-video.xml
+msgctxt "#32012"
+msgid "Retail"
+msgstr "Retail"
+
+#: /resources/skins/default/1080i/script-embuary-video.xml
+msgctxt "#32013"
+msgid "Budget"
+msgstr "Rozpočet"
+
+#: /resources/skins/default/1080i/script-embuary-video.xml
+msgctxt "#32014"
+msgid "Revenue"
+msgstr "Tržby"
+
+#: /resources/skins/default/1080i/script-embuary-video.xml
+msgctxt "#32015"
+msgid "Awards"
+msgstr "Ocenenia"
+
+#: /resources/skins/default/1080i/script-embuary-video.xml
+msgctxt "#32016"
+msgid "Seasons"
+msgstr "Série"
+
+#: /resources/skins/default/1080i/script-embuary-person.xml
+msgctxt "#32017"
+msgid "Known for"
+msgstr "Známa(y) pre"
+
+#: /resources/skins/default/1080i/script-embuary-video.xml
+msgctxt "#32018"
+msgid "Crew"
+msgstr "Obsadenie"
+
+#: /resources/settings.xml
+msgctxt "#32023"
+msgid "API key"
+msgstr "API kľúč"
+
+#: /resources/settings.xml
+msgctxt "#32020"
+msgid "Caching"
+msgstr "Vyrovnávacia pamäť"
+
+#: /resources/settings.xml
+msgctxt "#32021"
+msgid "Enable caching of fetched data"
+msgstr "Ukladať stiahnuté údaje do vyrovnávacej pamäte"
+
+#: /resources/settings.xml
+msgctxt "#32024"
+msgid "Default language"
+msgstr "Predvolený jazyk"
+
+#: /resources/skins/default/1080i/script-embuary-person.xml
+msgctxt "#32025"
+msgid "items in your library"
+msgstr "položky vo vašej knižnici"
+
+#: /resources/settings.xml
+msgctxt "#32026"
+msgid "Misc."
+msgstr "Rôzne"
+
+#: /resources/settings.xml
+msgctxt "#32027"
+msgid "Hide person appearances in reality/talk/news shows"
+msgstr "Nezobrazovať účinkovanie osoby v rôznych šou "
+
+#: /resources/settings.xml
+msgctxt "#32028"
+msgid ""
+"Hide person appearances in specials/documentaries/behind the scenes movies"
+msgstr "Nezobrazovať účinkovanie osoby v dokumentoch a špeciáloch o filmoch"
+
+#: /resources/lib/listing.py
+msgctxt "#32029"
+msgid "Top rated movies"
+msgstr "Najlepšie hodnotené filmy"
+
+#: /resources/lib/listing.py
+msgctxt "#32030"
+msgid "Now playing movies"
+msgstr "Práve prehrávané filmy"
+
+#: /resources/lib/listing.py
+msgctxt "#32031"
+msgid "Upcoming movies"
+msgstr "Prichádzajúce filmy"
+
+#: /resources/lib/listing.py
+msgctxt "#32032"
+msgid "Popular movies"
+msgstr "Populárne filmy"
+
+#: /resources/lib/listing.py
+msgctxt "#32033"
+msgid "Top rated TV shows"
+msgstr "Najlepšie hodnotené seriály"
+
+#: /resources/lib/listing.py
+msgctxt "#32034"
+msgid "Popular TV shows"
+msgstr "Populárne seriály"
+
+#: /resources/lib/listing.py
+msgctxt "#32035"
+msgid "TV shows airing today"
+msgstr "Dnes vysielané seriály"
+
+#: /resources/lib/listing.py
+msgctxt "#32036"
+msgid "TV shows airing in the next 7 days"
+msgstr "Seriály vysielané v najbližších 7 dňoch"
+
+#: /resources/skins/default/1080i/script-embuary-video.xml
+msgctxt "#32037"
+msgid "Collection"
+msgstr "Kolekcia"
+
+#: /resources/skins/default/1080i/script-embuary-video.xml
+msgctxt "#32039"
+msgid "Guest stars"
+msgstr "Hosťujúce hviezdy"
+
+#: /resources/skins/default/1080i/script-embuary-video.xml
+msgctxt "#32040"
+msgid "Season"
+msgstr "Séria"
+
+#: /plugin.py
+msgctxt "#32038"
+msgid "Widgets"
+msgstr "Miniaplikácie"
+
+#: /resources/settings.xml
+msgctxt "#32041"
+msgid "Hide items from similar movies if they are part of the collection"
+msgstr ""
+"Nezobrazovať položky z podobných filmov, ak sú súčasťou jednej kolekcie"
+
+#: /resources/lib/widgets.py
+msgctxt "#32042"
+msgid "Trending movies"
+msgstr "Filmy v trende"
+
+#: /resources/lib/widgets.py
+msgctxt "#32043"
+msgid "Trending shows"
+msgstr "Seriály v trende"
+
+#: /resources/settings.xml
+msgctxt "#32044"
+msgid "Hide upcoming items"
+msgstr "Skryť pripravované položky"
+
+#: /resources/settings.xml
+msgctxt "#32045"
+msgid "Allow items of the next [n] days"
+msgstr "Povoliť tie, ktoré výjdu v týchto najbližších dňoch"

@@ -1,0 +1,244 @@
+# Embuary Info language file
+# Addon Name: Embuary Info
+# Addon id: script.embuary.info
+# Addon Provider: sualfred
+# Translators:
+# sualfred <su4lfred@gmail.com>, 2019
+# Attila Ilyés <ilyes3@gmail.com>, 2019
+# 
+msgid ""
+msgstr ""
+"Project-Id-Version: Embuary Helper\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2019-09-04 11:35+0000\n"
+"Last-Translator: Attila Ilyés <ilyes3@gmail.com>, 2019\n"
+"Language-Team: Hungarian (Hungary) (https://www.transifex.com/sualfred/teams/80018/hu_HU/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: hu_HU\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#32000"
+msgid "Error"
+msgstr "Hiba"
+
+msgctxt "#32001"
+msgid ""
+"This is a tool to provide features to a skin and requires skin integration."
+msgstr ""
+"Ez egy olyan eszköz, amely a felszín jellemzőit biztosítja, és a felszín "
+"integrációját igényli."
+
+#: /resources/settings.xml
+msgctxt "#32002"
+msgid "(Get a free API key on www.omdbapi.com)"
+msgstr "(Ingyenes API kulcs beszerzése a www.omdbapi.com webhelyen)"
+
+#: /resources/settings.xml
+msgctxt "#32003"
+msgid "Certification country"
+msgstr "Tanúsító ország"
+
+#: /resources/lib/tmdb.py
+msgctxt "#32019"
+msgid "No information found"
+msgstr "Nincs információ"
+
+#: /resources/lib/utils.py
+msgctxt "#32022"
+msgid "Invalid TheMovieDB API key"
+msgstr "Érvénytelen TheMovieDB API kulcs"
+
+#: /default.py
+msgctxt "#32004"
+msgid "Person"
+msgstr "Személy"
+
+#: /default.py
+msgctxt "#32005"
+msgid "Search for"
+msgstr "Keresés"
+
+#: /resources/skins/default/1080i/script-embuary-person.xml
+msgctxt "#32006"
+msgid "Age"
+msgstr "Kor"
+
+#: /resources/skins/default/1080i/script-embuary-person.xml
+msgctxt "#32007"
+msgid "Place of birth"
+msgstr "Születési helye"
+
+#: /resources/skins/default/1080i/script-embuary-person.xml
+msgctxt "#32008"
+msgid "Facts"
+msgstr "Tények"
+
+#: /resources/skins/default/1080i/script-embuary-video.xml
+msgctxt "#32009"
+msgid "Similar"
+msgstr "Hasonló"
+
+#: /resources/skins/default/1080i/script-embuary-video.xml
+msgctxt "#32010"
+msgid "Images"
+msgstr "Képek"
+
+#: /resources/skins/default/1080i/script-embuary-video.xml
+msgctxt "#32011"
+msgid "Premiered"
+msgstr "Premierje"
+
+#: /resources/skins/default/1080i/script-embuary-video.xml
+msgctxt "#32012"
+msgid "Retail"
+msgstr "Kiskereskedelmi"
+
+#: /resources/skins/default/1080i/script-embuary-video.xml
+msgctxt "#32013"
+msgid "Budget"
+msgstr "Költség"
+
+#: /resources/skins/default/1080i/script-embuary-video.xml
+msgctxt "#32014"
+msgid "Revenue"
+msgstr "Bevétel"
+
+#: /resources/skins/default/1080i/script-embuary-video.xml
+msgctxt "#32015"
+msgid "Awards"
+msgstr "Díjak"
+
+#: /resources/skins/default/1080i/script-embuary-video.xml
+msgctxt "#32016"
+msgid "Seasons"
+msgstr "Évadok"
+
+#: /resources/skins/default/1080i/script-embuary-person.xml
+msgctxt "#32017"
+msgid "Known for"
+msgstr "Ismert"
+
+#: /resources/skins/default/1080i/script-embuary-video.xml
+msgctxt "#32018"
+msgid "Crew"
+msgstr "Stáb"
+
+#: /resources/settings.xml
+msgctxt "#32023"
+msgid "API key"
+msgstr "API kulcs"
+
+#: /resources/settings.xml
+msgctxt "#32020"
+msgid "Caching"
+msgstr "Gyorsítótárral"
+
+#: /resources/settings.xml
+msgctxt "#32021"
+msgid "Enable caching of fetched data"
+msgstr "A letöltött adatok gyorsítótárazásának engedélyezése"
+
+#: /resources/settings.xml
+msgctxt "#32024"
+msgid "Default language"
+msgstr "Alapértelmezett nyelv"
+
+#: /resources/skins/default/1080i/script-embuary-person.xml
+msgctxt "#32025"
+msgid "items in your library"
+msgstr "könyvtár tartalma"
+
+#: /resources/settings.xml
+msgctxt "#32026"
+msgid "Misc."
+msgstr "Vegyes"
+
+#: /resources/settings.xml
+msgctxt "#32027"
+msgid "Hide person appearances in reality/talk/news shows"
+msgstr "Személyek megjelenésének elrejtése a reality/talk/hír műsorokban"
+
+#: /resources/settings.xml
+msgctxt "#32028"
+msgid ""
+"Hide person appearances in specials/documentaries/behind the scenes movies"
+msgstr ""
+"Személyes megjelenések elrejtése speciális/dokumentum/kulisszatitkok "
+"filmekben"
+
+#: /resources/lib/listing.py
+msgctxt "#32029"
+msgid "Top rated movies"
+msgstr "Legjobban értékelt filmek"
+
+#: /resources/lib/listing.py
+msgctxt "#32030"
+msgid "Now playing movies"
+msgstr "Most játszott filmek"
+
+#: /resources/lib/listing.py
+msgctxt "#32031"
+msgid "Upcoming movies"
+msgstr "Következő filmek"
+
+#: /resources/lib/listing.py
+msgctxt "#32032"
+msgid "Popular movies"
+msgstr "Népszerű filmek"
+
+#: /resources/lib/listing.py
+msgctxt "#32033"
+msgid "Top rated TV shows"
+msgstr "Legjobban értékelt TV-sorozatok"
+
+#: /resources/lib/listing.py
+msgctxt "#32034"
+msgid "Popular TV shows"
+msgstr "Népszerű TV-sorozatok"
+
+#: /resources/lib/listing.py
+msgctxt "#32035"
+msgid "TV shows airing today"
+msgstr "Ma bemutatandó TV-sorozatok"
+
+#: /resources/lib/listing.py
+msgctxt "#32036"
+msgid "TV shows airing in the next 7 days"
+msgstr "A következő 7 napban bemutatandó TV-sorozatok"
+
+#: /resources/skins/default/1080i/script-embuary-video.xml
+msgctxt "#32037"
+msgid "Collection"
+msgstr "Gyűjtemény"
+
+#: /resources/skins/default/1080i/script-embuary-video.xml
+msgctxt "#32039"
+msgid "Guest stars"
+msgstr "Vendég szereplők"
+
+#: /resources/skins/default/1080i/script-embuary-video.xml
+msgctxt "#32040"
+msgid "Season"
+msgstr "Évad"
+
+#: /plugin.py
+msgctxt "#32038"
+msgid "Widgets"
+msgstr "Widgetek"
+
+#: /resources/settings.xml
+msgctxt "#32041"
+msgid "Hide items from similar movies if they are part of the collection"
+msgstr "Filmek elrejtése, ha azok a gyűjtemény részét képezik"
+
+#: /resources/lib/widgets.py
+msgctxt "#32042"
+msgid "Trending movies"
+msgstr "Népszerű filmek"
+
+#: /resources/lib/widgets.py
+msgctxt "#32043"
+msgid "Trending shows"
+msgstr "Népszerű sorozatok"

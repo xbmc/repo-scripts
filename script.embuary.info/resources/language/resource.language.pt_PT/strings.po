@@ -1,0 +1,170 @@
+# Embuary Info language file
+# Addon Name: Embuary Info
+# Addon id: script.embuary.info
+# Addon Provider: sualfred
+# Translators:
+# sualfred <su4lfred@gmail.com>, 2019
+# Art Querido <aquerido@live.com.pt>, 2019
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Embuary Helper\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2019-09-04 11:35+0000\n"
+"Last-Translator: Art Querido <aquerido@live.com.pt>, 2019\n"
+"Language-Team: Portuguese (Portugal) (https://www.transifex.com/sualfred/teams/80018/pt_PT/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: pt_PT\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#32000"
+msgid "Error"
+msgstr "Erro"
+
+msgctxt "#32001"
+msgid ""
+"This is a tool to provide features to a skin and requires skin integration."
+msgstr ""
+"Esta é uma ferramenta que adiciona funcionalidades a um tema e requer "
+"integração no mesmo."
+
+#: /resources/settings.xml
+msgctxt "#32002"
+msgid "(Get a free API key on www.omdbapi.com)"
+msgstr "(Obtenha uma chave API gratuita em www.omdbapi.com)"
+
+#: /resources/settings.xml
+msgctxt "#32003"
+msgid "Certification country"
+msgstr "País de certificação"
+
+#: /resources/lib/tmdb.py
+msgctxt "#32019"
+msgid "No information found"
+msgstr "Não foi encontrada informação"
+
+#: /resources/lib/utils.py
+msgctxt "#32022"
+msgid "Invalid TheMovieDB API key"
+msgstr "Chave API TheMovieDB inválida"
+
+#: /default.py
+msgctxt "#32004"
+msgid "Person"
+msgstr "Pessoa"
+
+#: /default.py
+msgctxt "#32005"
+msgid "Search for"
+msgstr "Procurar por"
+
+#: /resources/skins/default/1080i/script-embuary-person.xml
+msgctxt "#32006"
+msgid "Age"
+msgstr "Idade"
+
+#: /resources/skins/default/1080i/script-embuary-person.xml
+msgctxt "#32007"
+msgid "Place of birth"
+msgstr "Local de nascimento"
+
+#: /resources/skins/default/1080i/script-embuary-person.xml
+msgctxt "#32008"
+msgid "Facts"
+msgstr "Fatos"
+
+#: /resources/skins/default/1080i/script-embuary-video.xml
+msgctxt "#32009"
+msgid "Similar"
+msgstr "Similar"
+
+#: /resources/skins/default/1080i/script-embuary-video.xml
+msgctxt "#32010"
+msgid "Images"
+msgstr "Imagens"
+
+#: /resources/skins/default/1080i/script-embuary-video.xml
+msgctxt "#32011"
+msgid "Premiered"
+msgstr "Estreou em"
+
+#: /resources/skins/default/1080i/script-embuary-video.xml
+msgctxt "#32012"
+msgid "Retail"
+msgstr "Comercial"
+
+#: /resources/skins/default/1080i/script-embuary-video.xml
+msgctxt "#32013"
+msgid "Budget"
+msgstr "Orçamento"
+
+#: /resources/skins/default/1080i/script-embuary-video.xml
+msgctxt "#32014"
+msgid "Revenue"
+msgstr "Receita"
+
+#: /resources/skins/default/1080i/script-embuary-video.xml
+msgctxt "#32015"
+msgid "Awards"
+msgstr "Prémios"
+
+#: /resources/skins/default/1080i/script-embuary-video.xml
+msgctxt "#32016"
+msgid "Seasons"
+msgstr "Temporadas"
+
+#: /resources/skins/default/1080i/script-embuary-person.xml
+msgctxt "#32017"
+msgid "Known for"
+msgstr "Conhecido por"
+
+#: /resources/skins/default/1080i/script-embuary-video.xml
+msgctxt "#32018"
+msgid "Crew"
+msgstr "Equipa"
+
+#: /resources/settings.xml
+msgctxt "#32023"
+msgid "API key"
+msgstr "Chave API"
+
+#: /resources/settings.xml
+msgctxt "#32020"
+msgid "Caching"
+msgstr "Obtenção"
+
+#: /resources/settings.xml
+msgctxt "#32021"
+msgid "Enable caching of fetched data"
+msgstr "Ativar obtenção de dados recolhidos"
+
+#: /resources/settings.xml
+msgctxt "#32024"
+msgid "Default language"
+msgstr "Idioma padrão"
+
+#: /resources/skins/default/1080i/script-embuary-person.xml
+msgctxt "#32025"
+msgid "items in your library"
+msgstr "Itens na sua coleção"
+
+#: /resources/settings.xml
+msgctxt "#32026"
+msgid "Misc."
+msgstr "Misc."
+
+#: /resources/settings.xml
+msgctxt "#32027"
+msgid "Hide person appearances in reality/talk/news shows"
+msgstr ""
+"Ocultar presença desta pessoa em reality shows, talk shows ou notícias"
+
+#: /resources/settings.xml
+msgctxt "#32028"
+msgid ""
+"Hide person appearances in specials/documentaries/behind the scenes movies"
+msgstr ""
+"Ocultar presença desta pessoa em filmes especiais/documentários/atrás das "
+"cenas"
