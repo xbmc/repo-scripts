@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addon id="script.module.dropbox"
        name="Dropbox API"
-       version="9.4.0"
+       version="9.4.0+matrix.1"
        provider-name="Dropbox">
   <requires>
     <import addon="xbmc.python" version="3.0.0"/>
-    <import addon="script.module.requests" version="2.18.4"/>
-    <import addon="script.module.six" version="1.11.0" />
+    <import addon="script.module.requests" version="2.18.4+matrix.1"/>
+    <import addon="script.module.six" version="1.14.0+matrix.1" />
   </requires>
   <extension point="xbmc.python.module" library="lib" /> <!-- entry to import this in other addons -->
   <extension point="xbmc.addon.metadata">

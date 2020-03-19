@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addon id="script.module.monotonic"
        name="monotonic"
-       version="1.5.0.1"
+       version="1.5.0+matrix.1"
        provider-name="Ori Livneh">
   <requires>
     <import addon="xbmc.python" version="3.0.0"/>

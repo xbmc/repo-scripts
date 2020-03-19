@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addon id="script.module.certifi"
        name="certifi"
-       version="2019.11.28"
+       version="2019.11.28+matrix.1"
        provider-name="Kenneth Reitz">
   <requires>
     <import addon="xbmc.python" version="3.0.0"/>

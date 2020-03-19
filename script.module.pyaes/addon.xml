@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.module.pyaes" name="PyAES" version="1.6.1.1" provider-name="ricmoo">
+<addon id="script.module.pyaes" name="PyAES" version="1.6.1+matrix.1" provider-name="ricmoo">
     <requires>
         <import addon="xbmc.python" version="3.0.0"/>
     </requires>

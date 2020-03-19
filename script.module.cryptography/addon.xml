@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.module.cryptography" name="cryptography" version="2.8.0" provider-name="pyca">
+<addon id="script.module.cryptography" name="cryptography" version="2.8.0+matrix.1" provider-name="pyca">
 	<requires>
 		<import addon="xbmc.python" version="3.0.0"/>
 	</requires>
