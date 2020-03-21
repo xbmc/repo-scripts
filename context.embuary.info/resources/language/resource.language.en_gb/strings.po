@@ -1,0 +1,19 @@
+# Embuary Info language file
+# Addon Name: Embuary Info - Open dialog
+# Addon id: context.embuary.info
+# Addon Provider: sualfred
+msgid ""
+msgstr ""
+"Project-Id-Version: Embuary Info - Open dialog\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en_GB\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#32000"
+msgid "Embuary Info Script"
+msgstr ""
