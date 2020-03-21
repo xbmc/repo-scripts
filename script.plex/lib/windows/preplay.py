@@ -21,6 +21,8 @@ from lib import metadata
 
 from lib.util import T
 
+VIDEO_RELOAD_KW = dict(includeRelated=1, includeRelatedCount=10)
+
 
 class PrePlayWindow(kodigui.ControlledWindow, windowutils.UtilMixin):
     xmlFile = 'script-plex-pre_play.xml'
@@ -57,12 +59,12 @@ class PrePlayWindow(kodigui.ControlledWindow, windowutils.UtilMixin):
     def __init__(self, *args, **kwargs):
         kodigui.ControlledWindow.__init__(self, *args, **kwargs)
         self.video = kwargs.get('video')
-        self.auto_play = kwargs.get('auto_play')
         self.parentList = kwargs.get('parent_list')
         self.videos = None
         self.exitCommand = None
         self.trailer = None
         self.lastFocusID = None
+        self.lastNonOptionsFocusID = None
 
     def onFirstInit(self):
         self.extraListControl = kodigui.ManagedControlList(self, self.EXTRA_LIST_ID, 5)
@@ -72,12 +74,11 @@ class PrePlayWindow(kodigui.ControlledWindow, windowutils.UtilMixin):
         self.progressImageControl = self.getControl(self.PROGRESS_IMAGE_ID)
         self.setup()
 
-        if self.auto_play:
-            self.auto_play = False
-            self.playVideo()
+    def doAutoPlay(self):
+        return self.playVideo()
 
     def onReInit(self):
-        self.video.reload()
+        self.video.reload(**VIDEO_RELOAD_KW)
         self.refreshInfo()
 
     def refreshInfo(self):
@@ -85,6 +86,7 @@ class PrePlayWindow(kodigui.ControlledWindow, windowutils.UtilMixin):
 
         util.setGlobalProperty('hide.resume', '' if self.video.viewOffset.asInt() else '1')
         self.setInfo()
+        self.updateRelated()
         xbmc.sleep(100)
 
         if oldFocusId == self.PLAY_BUTTON_ID:
@@ -98,10 +100,18 @@ class PrePlayWindow(kodigui.ControlledWindow, windowutils.UtilMixin):
                 self.setFocusId(self.lastFocusID)
 
             if action in(xbmcgui.ACTION_NAV_BACK, xbmcgui.ACTION_CONTEXT_MENU):
-                if not xbmc.getCondVisibility('ControlGroup({0}).HasFocus(0)'.format(self.OPTIONS_GROUP_ID)):
+                if not xbmc.getCondVisibility('ControlGroup({0}).HasFocus(0)'.format(
+                        self.OPTIONS_GROUP_ID)) and \
+                        (not util.advancedSettings.fastBack or action == xbmcgui.ACTION_CONTEXT_MENU):
                     if self.getProperty('on.extras'):
+                        self.lastNonOptionsFocusID = self.lastFocusID
                         self.setFocusId(self.OPTIONS_GROUP_ID)
                         return
+                elif xbmc.getCondVisibility('ControlGroup({0}).HasFocus(0)'.format(self.OPTIONS_GROUP_ID)) \
+                        and self.getProperty('on.extras') and self.lastNonOptionsFocusID:
+                    self.setFocusId(self.lastNonOptionsFocusID)
+                    self.lastNonOptionsFocusID = None
+                    return
 
             if action == xbmcgui.ACTION_LAST_PAGE and xbmc.getCondVisibility('ControlGroup(300).HasFocus(0)'):
                 self.next()
@@ -184,9 +194,9 @@ class PrePlayWindow(kodigui.ControlledWindow, windowutils.UtilMixin):
             options.append({'key': 'play_version', 'display': T(32451, 'Play Version...')})
 
         if self.video.isWatched and not self.video.viewOffset.asInt():
-            options.append({'key': 'mark_unwatched', 'display': T(32318, 'Mark Unwatched')})
+            options.append({'key': 'mark_unwatched', 'display': T(32318, 'Mark Unplayed')})
         else:
-            options.append({'key': 'mark_watched', 'display': T(32319, 'Mark Watched')})
+            options.append({'key': 'mark_watched', 'display': T(32319, 'Mark Played')})
 
         options.append(dropdown.SEPARATOR)
 
@@ -218,11 +228,11 @@ class PrePlayWindow(kodigui.ControlledWindow, windowutils.UtilMixin):
         elif choice['key'] == 'play_next':
             xbmc.executebuiltin('PlayerControl(Next)')
         elif choice['key'] == 'mark_watched':
-            self.video.markWatched()
+            self.video.markWatched(**VIDEO_RELOAD_KW)
             self.refreshInfo()
             util.MONITOR.watchStatusChanged()
         elif choice['key'] == 'mark_unwatched':
-            self.video.markUnwatched()
+            self.video.markUnwatched(**VIDEO_RELOAD_KW)
             self.refreshInfo()
             util.MONITOR.watchStatusChanged()
         elif choice['key'] == 'to_season':
@@ -402,6 +412,7 @@ class PrePlayWindow(kodigui.ControlledWindow, windowutils.UtilMixin):
             resume = (button == 0)
 
         self.processCommand(videoplayer.play(video=self.video, resume=resume))
+        return True
 
     def openItem(self, control=None, item=None):
         if not item:
@@ -429,7 +440,7 @@ class PrePlayWindow(kodigui.ControlledWindow, windowutils.UtilMixin):
         elif self.video.type == 'movie':
             self.setProperty('preview.no', '1')
 
-        self.video.reload(checkFiles=1, includeRelated=1, includeRelatedCount=10, includeExtras=1, includeExtrasCount=10)
+        self.video.reload(checkFiles=1, includeExtras=1, includeExtrasCount=10, **VIDEO_RELOAD_KW)
         self.setInfo()
         self.fillExtras()
         hasPrev = self.fillRelated()
@@ -572,6 +583,8 @@ class PrePlayWindow(kodigui.ControlledWindow, windowutils.UtilMixin):
             if mli:
                 mli.setProperty('thumb.fallback', 'script.plex/thumb_fallbacks/{0}.png'.format(rel.type in ('show', 'season', 'episode') and 'show' or 'movie'))
                 mli.setProperty('index', str(idx))
+                mli.setProperty('unwatched', not mli.dataSource.isWatched and '1' or '')
+                mli.setProperty('progress', util.getProgressImage(mli.dataSource))
                 items.append(mli)
                 idx += 1
 
@@ -583,6 +596,28 @@ class PrePlayWindow(kodigui.ControlledWindow, windowutils.UtilMixin):
         self.relatedListControl.reset()
         self.relatedListControl.addItems(items)
         return True
+
+    def updateRelated(self):
+        """
+        Update item watched/progress states dynamically
+        :return:
+        """
+        if not self.video.related:
+            return False
+
+        states = {}
+        for rel in self.video.related()[0].items:
+            states[rel.ratingKey] = {
+                "unwatched": not rel.isWatched and '1' or '',
+                "progress": util.getProgressImage(rel)
+            }
+
+        for mli in self.relatedListControl:
+            stateInfo = states.get(mli.dataSource.ratingKey)
+            if stateInfo:
+                for fillProperty in ("unwatched", "progress"):
+                    if mli.getProperty(fillProperty) != stateInfo[fillProperty]:
+                        mli.setProperty(fillProperty, stateInfo[fillProperty])
 
     def fillRoles(self, has_prev=False):
         items = []

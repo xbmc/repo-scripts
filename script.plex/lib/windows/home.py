@@ -98,13 +98,16 @@ class UpdateHubTask(backgroundthread.Task):
 
 
 class ExtendHubTask(backgroundthread.Task):
-    def setup(self, hub, callback):
+    def setup(self, hub, callback, canceledCallback=None):
         self.hub = hub
         self.callback = callback
+        self.canceledCallback = canceledCallback
         return self
 
     def run(self):
         if self.isCanceled():
+            if self.canceledCallback:
+                self.canceledCallback(self.hub)
             return
 
         if not plexapp.SERVERMANAGER.selectedServer:
@@ -115,10 +118,14 @@ class ExtendHubTask(backgroundthread.Task):
             start = self.hub.offset.asInt() + self.hub.size.asInt()
             items = self.hub.extend(start=start, size=HUB_PAGE_SIZE)
             if self.isCanceled():
+                if self.canceledCallback:
+                    self.canceledCallback(self.hub)
                 return
             self.callback(self.hub, items)
         except plexnet.exceptions.BadRequest:
             util.DEBUG_LOG('404 on hub: {0}'.format(repr(self.hub.hubIdentifier)))
+            if self.canceledCallback:
+                self.canceledCallback(self.hub)
 
 
 class HomeSection(object):
@@ -174,8 +181,11 @@ class ServerListItem(kodigui.ManagedListItem):
         self.safeSetLabel(self.dataSource.name)
 
     def onDestroy(self):
-        self.dataSource.off('completed:reachability', self.onUpdate)
-        self.dataSource.off('started:reachability', self.onUpdate)
+        try:
+            self.dataSource.off('completed:reachability', self.onUpdate)
+            self.dataSource.off('started:reachability', self.onUpdate)
+        except AttributeError:
+            util.DEBUG_LOG('Destroying invalidated ServerListItem')
 
 
 class HomeWindow(kodigui.BaseWindow, util.CronReceiver):
@@ -299,9 +309,12 @@ class HomeWindow(kodigui.BaseWindow, util.CronReceiver):
         self.sectionChangeThread = None
         self.sectionChangeTimeout = 0
         self.lastFocusID = None
+        self.lastNonOptionsFocusID = None
         self.sectionHubs = {}
         self.updateHubs = {}
         windowutils.HOME = self
+
+        self.lock = threading.Lock()
 
         util.setGlobalBoolProperty('off.sections', '')
 
@@ -345,6 +358,47 @@ class HomeWindow(kodigui.BaseWindow, util.CronReceiver):
 
         self.hookSignals()
         util.CRON.registerReceiver(self)
+
+    def onReInit(self):
+        if self.lastFocusID:
+            # try focusing the last focused ID. if that's a hub and it's empty (=not focusable), try focusing the
+            # next best hub
+            if 399 < self.lastFocusID < 500:
+                hubControlIndex = self.lastFocusID - 400
+
+                if hubControlIndex in self.hubFocusIndexes and self.hubControls[hubControlIndex]:
+                    util.DEBUG_LOG("Re-focusing %i" % self.lastFocusID)
+                    self.setFocusId(self.lastFocusID)
+                else:
+                    util.DEBUG_LOG("Focus requested on %i, which can't focus. Trying next hub" % self.lastFocusID)
+                    self.focusFirstValidHub(hubControlIndex)
+
+            else:
+                self.setFocusId(self.lastFocusID)
+
+    def focusFirstValidHub(self, startIndex=None):
+        indices = self.hubFocusIndexes
+        if startIndex is not None:
+            try:
+                indices = self.hubFocusIndexes[self.hubFocusIndexes.index(startIndex):]
+                util.DEBUG_LOG("Trying to focus the next best hub after: %i" % (400 + startIndex))
+            except IndexError:
+                pass
+
+        for index in indices:
+            if self.hubControls[index]:
+                util.DEBUG_LOG("Focusing hub: %i" % (400 + index))
+                self.setFocusId(400+index)
+                return
+
+        if startIndex is not None:
+            util.DEBUG_LOG("Tried all possible hubs after %i. Continuing from the top" % (400 + startIndex))
+        else:
+            util.DEBUG_LOG("Can't find any suitable hub to focus. This is bad.")
+            self.setFocusId(self.SECTION_LIST_ID)
+            return
+
+        return self.focusFirstValidHub()
 
     def hookSignals(self):
         plexapp.SERVERMANAGER.on('new:server', self.onNewServer)
@@ -429,20 +483,37 @@ class HomeWindow(kodigui.BaseWindow, util.CronReceiver):
                     self.hubItemClicked(controlID, auto_play=True)
                     return
 
-            if action in(xbmcgui.ACTION_NAV_BACK, xbmcgui.ACTION_CONTEXT_MENU):
-                if not xbmc.getCondVisibility('ControlGroup({0}).HasFocus(0)'.format(self.OPTIONS_GROUP_ID)) and self.getProperty('off.sections'):
-                    self.setFocusId(self.OPTIONS_GROUP_ID)
-                    return
+            if action in(xbmcgui.ACTION_NAV_BACK, xbmcgui.ACTION_PREVIOUS_MENU, xbmcgui.ACTION_CONTEXT_MENU):
+                optionsFocused = xbmc.getCondVisibility('ControlGroup({0}).HasFocus(0)'.format(self.OPTIONS_GROUP_ID))
+                offSections = util.getGlobalProperty('off.sections')
+                if action in (xbmcgui.ACTION_NAV_BACK, xbmcgui.ACTION_PREVIOUS_MENU):
+                    if self.getFocusId() == self.USER_LIST_ID:
+                        self.setFocusId(self.USER_BUTTON_ID)
+                        return
+                    elif self.getFocusId() == self.SERVER_LIST_ID:
+                        self.setFocusId(self.SERVER_BUTTON_ID)
+                        return
 
-            if action in(xbmcgui.ACTION_NAV_BACK, xbmcgui.ACTION_PREVIOUS_MENU):
-                if self.getFocusId() == self.USER_LIST_ID:
-                    self.setFocusId(self.USER_BUTTON_ID)
-                    return
-                elif self.getFocusId() == self.SERVER_LIST_ID:
-                    self.setFocusId(self.SERVER_BUTTON_ID)
-                    return
+                    if util.advancedSettings.fastBack and not optionsFocused and offSections \
+                            and self.lastFocusID not in (self.USER_BUTTON_ID, self.SERVER_BUTTON_ID,
+                                                         self.SEARCH_BUTTON_ID, self.SECTION_LIST_ID):
+                        self.setProperty('hub.focus', '0')
+                        self.setFocusId(self.SECTION_LIST_ID)
+                        return
 
-                if not self.confirmExit():
+                if action in(xbmcgui.ACTION_NAV_BACK, xbmcgui.ACTION_CONTEXT_MENU):
+                    if not optionsFocused and offSections \
+                            and (not util.advancedSettings.fastBack or action == xbmcgui.ACTION_CONTEXT_MENU):
+                        self.lastNonOptionsFocusID = self.lastFocusID
+                        self.setFocusId(self.OPTIONS_GROUP_ID)
+                        return
+                    elif action == xbmcgui.ACTION_CONTEXT_MENU and optionsFocused and offSections \
+                            and self.lastNonOptionsFocusID:
+                        self.setFocusId(self.lastNonOptionsFocusID)
+                        self.lastNonOptionsFocusID = None
+                        return
+
+                if action in(xbmcgui.ACTION_NAV_BACK, xbmcgui.ACTION_PREVIOUS_MENU) and not self.confirmExit():
                     return
         except:
             util.ERROR()
@@ -512,16 +583,17 @@ class HomeWindow(kodigui.BaseWindow, util.CronReceiver):
             for task in self.tasks:
                 task.cancel()
 
-        self.setProperty('hub.focus', '')
-        self.displayServerAndUser()
-        if not plexapp.SERVERMANAGER.selectedServer:
-            self.setFocusId(self.USER_BUTTON_ID)
-            return False
+        with self.lock:
+            self.setProperty('hub.focus', '')
+            self.displayServerAndUser()
+            if not plexapp.SERVERMANAGER.selectedServer:
+                self.setFocusId(self.USER_BUTTON_ID)
+                return False
 
-        self.showSections()
-        self.backgroundSet = False
-        self.showHubs(HomeSection)
-        return True
+            self.showSections()
+            self.backgroundSet = False
+            self.showHubs(HomeSection)
+            return True
 
     def hubItemClicked(self, hubControlID, auto_play=False):
         control = self.hubControls[hubControlID - 400]
@@ -535,6 +607,9 @@ class HomeWindow(kodigui.BaseWindow, util.CronReceiver):
         command = opener.open(mli.dataSource, auto_play=auto_play)
 
         self.updateListItem(mli)
+
+        if not mli:
+            return
 
         if not mli.dataSource.exists():
             control.removeItem(mli.pos())
@@ -582,12 +657,13 @@ class HomeWindow(kodigui.BaseWindow, util.CronReceiver):
     def checkHubItem(self, controlID):
         control = self.hubControls[controlID - 400]
         mli = control.getSelectedItem()
-        if not mli or not mli.getProperty('is.end'):
+        if not mli or not mli.getProperty('is.end') or mli.getProperty('is.updating') == '1':
             return
 
         mli.setBoolProperty('is.updating', True)
         self.cleanTasks()
-        task = ExtendHubTask().setup(control.dataSource, self.extendHubCallback)
+        task = ExtendHubTask().setup(control.dataSource, self.extendHubCallback,
+                                     canceledCallback=lambda hub: mli.setBoolProperty('is.updating', False))
         self.tasks.append(task)
         backgroundthread.BGThreader.addTask(task)
 
@@ -623,33 +699,36 @@ class HomeWindow(kodigui.BaseWindow, util.CronReceiver):
         self._sectionReallyChanged()
 
     def _sectionReallyChanged(self):
-        section = self.lastSection
-        self.setProperty('hub.focus', '')
-        util.DEBUG_LOG('Section changed ({0}): {1}'.format(section.key, repr(section.title)))
-        self.showHubs(section)
-        self.lastSection = section
-        self.checkSectionItem(force=True)
+        with self.lock:
+            section = self.lastSection
+            self.setProperty('hub.focus', '')
+            util.DEBUG_LOG('Section changed ({0}): {1}'.format(section.key, repr(section.title)))
+            self.showHubs(section)
+            self.lastSection = section
+            self.checkSectionItem(force=True)
 
     def sectionHubsCallback(self, section, hubs):
-        update = bool(self.sectionHubs.get(section.key))
-        self.sectionHubs[section.key] = hubs
-        if self.lastSection == section:
-            self.showHubs(section, update=update)
+        with self.lock:
+            update = bool(self.sectionHubs.get(section.key))
+            self.sectionHubs[section.key] = hubs
+            if self.lastSection == section:
+                self.showHubs(section, update=update)
 
     def updateHubCallback(self, hub, items=None):
-        for mli in self.sectionList:
-            section = mli.dataSource
-            if not section:
-                continue
+        with self.lock:
+            for mli in self.sectionList:
+                section = mli.dataSource
+                if not section:
+                    continue
 
-            hubs = self.sectionHubs.get(section.key, ())
-            for idx, ihub in enumerate(hubs):
-                if ihub == hub:
-                    if self.lastSection == section:
-                        util.DEBUG_LOG('Hub {0} updated - refreshing section: {1}'.format(hub.hubIdentifier, repr(section.title)))
-                        hubs[idx] = hub
-                        self.showHub(hub, items=items)
-                        return
+                hubs = self.sectionHubs.get(section.key, ())
+                for idx, ihub in enumerate(hubs):
+                    if ihub == hub:
+                        if self.lastSection == section:
+                            util.DEBUG_LOG('Hub {0} updated - refreshing section: {1}'.format(hub.hubIdentifier, repr(section.title)))
+                            hubs[idx] = hub
+                            self.showHub(hub, items=items)
+                            return
 
     def extendHubCallback(self, hub, items):
         self.updateHubCallback(hub, items)

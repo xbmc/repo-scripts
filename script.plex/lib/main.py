@@ -1,8 +1,14 @@
+import xbmc
+
+if xbmc.getInfoLabel('Window(10000).Property(script.plex.running)') == "1":
+    command = 'XBMC.NotifyAll({0},{1},{2})'.format('script.plex', 'RESTORE', None)
+    xbmc.executebuiltin(command)
+    raise SystemExit
+
 import gc
 import atexit
 import threading
 
-import xbmc
 import plex
 
 from plexnet import plexapp
@@ -25,11 +31,11 @@ def waitForThreads():
                     util.DEBUG_LOG('Main: Waiting on: {0}...'.format(t.name))
                     if isinstance(t, threading._Timer):
                         t.cancel()
+
+                    try:
                         t.join()
-                    elif isinstance(t, threadutils.KillableThread):
-                        t.kill(force_and_wait=True)
-                    else:
-                        t.join()
+                    except:
+                        util.ERROR()
 
 
 @atexit.register

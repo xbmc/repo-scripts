@@ -77,6 +77,7 @@ class ShowWindow(kodigui.ControlledWindow, windowutils.UtilMixin):
         self.mediaItems = None
         self.exitCommand = None
         self.lastFocusID = None
+        self.lastNonOptionsFocusID = None
 
     def onFirstInit(self):
         self.subItemListControl = kodigui.ManagedControlList(self, self.SUB_ITEM_LIST_ID, 5)
@@ -167,10 +168,19 @@ class ShowWindow(kodigui.ControlledWindow, windowutils.UtilMixin):
 
             if action == xbmcgui.ACTION_CONTEXT_MENU:
                 if not xbmc.getCondVisibility('ControlGroup({0}).HasFocus(0)'.format(self.OPTIONS_GROUP_ID)):
+                    self.lastNonOptionsFocusID = self.lastFocusID
                     self.setFocusId(self.OPTIONS_GROUP_ID)
                     return
+                else:
+                    if self.lastNonOptionsFocusID:
+                        self.setFocusId(self.lastNonOptionsFocusID)
+                        self.lastNonOptionsFocusID = None
+                        return
+
             elif action in(xbmcgui.ACTION_NAV_BACK, xbmcgui.ACTION_CONTEXT_MENU):
-                if not xbmc.getCondVisibility('ControlGroup({0}).HasFocus(0)'.format(self.OPTIONS_GROUP_ID)):
+                if not xbmc.getCondVisibility('ControlGroup({0}).HasFocus(0)'.format(
+                        self.OPTIONS_GROUP_ID)) and \
+                        (not util.advancedSettings.fastBack or action == xbmcgui.ACTION_CONTEXT_MENU):
                     if self.getProperty('on.extras'):
                         self.setFocusId(self.OPTIONS_GROUP_ID)
                         return
@@ -321,6 +331,9 @@ class ShowWindow(kodigui.ControlledWindow, windowutils.UtilMixin):
         elif self.mediaItem.type == 'artist':
             w = tracks.AlbumWindow.open(album=mli.dataSource, parent_list=self.subItemListControl)
 
+        if not mli:
+            return
+
         if not mli.dataSource.exists():
             self.subItemListControl.removeItem(mli.pos())
 
@@ -378,9 +391,9 @@ class ShowWindow(kodigui.ControlledWindow, windowutils.UtilMixin):
 
         if self.mediaItem.type != 'artist':
             if self.mediaItem.isWatched:
-                options.append({'key': 'mark_unwatched', 'display': 'Mark Unwatched'})
+                options.append({'key': 'mark_unwatched', 'display': T(32318, 'Mark Unplayed')})
             else:
-                options.append({'key': 'mark_watched', 'display': 'Mark Watched'})
+                options.append({'key': 'mark_watched', 'display': T(32319, 'Mark Played')})
 
         # if xbmc.getCondVisibility('Player.HasAudio') and self.section.TYPE == 'artist':
         #     options.append({'key': 'add_to_queue', 'display': 'Add To Queue'})
@@ -538,6 +551,11 @@ class ShowWindow(kodigui.ControlledWindow, windowutils.UtilMixin):
             if mli:
                 mli.setProperty('thumb.fallback', 'script.plex/thumb_fallbacks/{0}.png'.format(rel.type in ('show', 'season', 'episode') and 'show' or 'movie'))
                 mli.setProperty('index', str(idx))
+                if rel.type in ('show', 'season'):
+                    if not mli.dataSource.isWatched:
+                        mli.setProperty('unwatched.count', str(mli.dataSource.unViewedLeafCount))
+                else:
+                    mli.setProperty('unwatched', not mli.dataSource.isWatched and '1' or '')
                 items.append(mli)
                 idx += 1
 

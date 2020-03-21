@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addon id="script.plex"
        name="Plex"
-       version="0.1.6"
+       version="0.1.7"
        provider-name="Plex">
     <requires>
         <import addon="xbmc.python" version="2.25.0"/>
@@ -18,39 +18,55 @@
         <summary lang="en">Plex for Kodi</summary>
         <summary lang="de">Plex für Kodi</summary>
         <summary lang="hu">Plex for Kodi</summary>
+        <summary lang="it">Plex per Kodi</summary>
         <summary lang="ru">Plex for Kodi</summary>
         <description lang="en">Official Plex for Kodi add-on</description>
         <description lang="de">Offizielles Plex für Kodi Addon</description>
         <description lang="hu">Hivatalos Plex for Kodi add-on</description>
+        <description lang="it">Addon ufficiale Plex per Kodi</description>
         <description lang="fr">Add-on Officiel Plex pour Kodi</description>
         <description lang="ru">Официальный аддон Plex for Kodi</description>
         <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
-        <forum>https://forums.plex.tv/categories/plex-for-kodi</forum>
+        <forum>https://forums.plex.tv/tags/plex-for-kodi</forum>
         <website>https://www.plex.tv</website>
         <source>https://github.com/plexinc/plex-for-kodi</source>
         <platform>all</platform>
         <news>
-Kodi v18: Fix skin compatability issues
-Kodi v18: Fix incompatibility with requests module update
-Kodi v18: Fix issue with playback not resuming properly when direct playing
-Kodi v18: Fix issue with progress bar not moving on music player/music playlist screens
-Fix album display on artist screen
-Fix bug causing failure to show audio player when clicking the mini player from some screens
-Show original artist when available (Issue #143)
-Improve centering over label backgrounds on pre-play screens
-Fix some spots where tokens could still be logged
-Play correct track when playing a multi-disc album (Issue #148)
-Improve headers for better identification in 'Now Playing' and future server profile
-Updated German language strings (thanks to coffinbearer)
-Fix French translations file (thanks to coffinbearer)
-Fix some Hungarian translations (thanks to vampywiz17)
-Add Russion translations (thanks to shady2k)
-Fix autostart to work with profiles (thanks to pannal)
-Fix focus loss on home screen due to error (Issue #169)
-Fix "No Servers Found" when preferred server is unavailable (Issue #159)
-Fix system keyboard not working for search (Kodi 17+)(Issue #165)
-Fix issue causing hubs to scroll up when settings were opened
-Fix failure to sign in when signed off externally (Issue #110, #117)
+Fix transcode failures on some platforms
+Use Kodi time format setting
+Restore last window when starting the add-on while it is running
+Add Portuguese (Brazil), Italian, Polish translations
+Add ability to exit search edit box with previous menu button
+Only play unwatched media on play/shuffle when filtering for unwatched
+Fix duplicated icons when fast-scrolling a hub
+Fixed GUI not responding after public IP renewal
+Advanced settings:
+- Automatically seek selected position after a delay
+- Use skip step settings from Kodi for timeline
+OSD-Autohide improvements
+Show post play on user stop when item considered played
+Use Unplayed/Played instead of Unwatched/Watched
+Fix cast popup displaying partially offscreen
+Various fixes for incorrectly transcoded playback
+Support new subtitles menu in playback for Leia
+Make sure progress bar is visible on items with less than 2% watched
+Fix focus issues caused when hubs disappear
+Fix flattened seasons issues
+Allow Kodi info display to be visible on info button
+Fixes hubs not updating and some crashes
+More fixes for Kodi 18, ex. missing letters list
+Fix resume behavior with DSPlayer
+Fix to allow 3D mode selection
+Add advanced option to skip the header when going back
+Ensure paused state is kept after seeking or changing video settings
+Allow closing of the options header in scrolled views using context menu button
+Some direct playback and resume fixes
+Shutdown fixes
+Show play state on related items in preplays + On Deck in postplay
         </news>
+        <assets>
+            <icon>icon.png</icon>
+            <fanart>fanart.jpg</fanart>
+        </assets>
     </extension>
 </addon>

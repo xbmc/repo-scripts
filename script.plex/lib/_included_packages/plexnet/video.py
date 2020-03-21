@@ -91,15 +91,15 @@ class Video(media.MediaItem):
         """
         self.server.query('/%s/analyze' % self.key)
 
-    def markWatched(self):
+    def markWatched(self, **kwargs):
         path = '/:/scrobble?key=%s&identifier=com.plexapp.plugins.library' % self.ratingKey
         self.server.query(path)
-        self.reload()
+        self.reload(**kwargs)
 
-    def markUnwatched(self):
+    def markUnwatched(self, **kwargs):
         path = '/:/unscrobble?key=%s&identifier=com.plexapp.plugins.library' % self.ratingKey
         self.server.query(path)
-        self.reload()
+        self.reload(**kwargs)
 
     # def play(self, client):
     #     client.playMedia(self)
@@ -123,7 +123,7 @@ class Video(media.MediaItem):
             'mediaIndex': params.get('mediaIndex', 0),
             'directStream': '1',
             'directPlay': '0',
-            'X-Plex-Platform': params.get('platform', 'Chrome'),
+            'X-Plex-Platform': params.get('platform', ''),
             # 'X-Plex-Platform': params.get('platform', plexapp.INTERFACE.getGlobal('platform')),
             'maxVideoBitrate': max(mvb, 64) if mvb else None,
             'videoResolution': '{0}x{1}'.format(*vr) if vr else None
@@ -426,13 +426,16 @@ class Episode(PlayableVideo):
     @property
     def isWatched(self):
         return self.get('viewCount').asInt() > 0
-
     def getStreamURL(self, **params):
         return self._getStreamURL(**params)
 
     def season(self):
-        if not self._season:
-            self._season = plexobjects.listItems(self.server, self.parentKey)[0]
+        if not self._season and not self.get('skipParent').asBool():
+            items = plexobjects.listItems(self.server, self.parentKey)
+
+            if items:
+                self._season = items[0]
+
         return self._season
 
     def show(self):
