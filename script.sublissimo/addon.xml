@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.sublissimo" name="Sublissimo" version="0.0.1" provider-name="AJVM">
+<addon id="script.sublissimo" name="Sublissimo" version="0.0.2" provider-name="AJVM">
     <requires>
         <import addon="xbmc.python" version="2.26.0"/>
     </requires>
@@ -12,6 +12,11 @@
         <platform>all</platform>
         <license>MIT</license>
         <email>drinkblacklabel@gmail.com</email>
+        <news>Version 0.0.2
+ - New: Frame rate conversion on the fly
+ - New: Play modified subtitle directly on video
+ - Minor Bugfixes
+        </news>
         <source>https://github.com/Allertj/script.sublissimo</source>
         <assets>
             <icon>resources/icon.png</icon>
