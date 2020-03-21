@@ -4,6 +4,8 @@ Search and download subtitles for movies and TV-Series from OpenSubtitles.org. S
                             
 Changelog
 
+5.1.1
+- Fixed issue with language flag icons
 
 5.1.0
 - Ported to python 3.0. The 30th anniversary of the Restoration of Independence of Lithuania

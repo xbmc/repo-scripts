@@ -56,11 +56,9 @@ def Search( item ):
           (item['season'] == "" and item['episode'] == "") ## for file search, season and episode == ""
          ):
         listitem = xbmcgui.ListItem(label          = item_data["LanguageName"],
-                                    label2         = item_data["SubFileName"],
-                                    iconImage      = str(int(round(float(item_data["SubRating"])/2))),
-                                    thumbnailImage = item_data["ISO639"]
+                                    label2         = item_data["SubFileName"]
                                     )
-
+        listitem.setArt( { "icon": str(int(round(float(item_data["SubRating"])/2))), "thumb" : item_data["ISO639"] } )
         listitem.setProperty( "sync", ("false", "true")[str(item_data["MatchedBy"]) == "moviehash"] )
         listitem.setProperty( "hearing_imp", ("false", "true")[int(item_data["SubHearingImpaired"]) != 0] )
         url = "plugin://%s/?action=download&link=%s&ID=%s&filename=%s&format=%s" % (__scriptid__,
