@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.module.routing" name="Plugin routing" version="0.2.3+matrix" provider-name="takoi,Team Kodi">
+<addon id="script.module.routing" name="Plugin routing" version="0.2.3+matrix.1" provider-name="takoi,Team Kodi">
     <requires>
         <import addon="xbmc.python" version="3.0.0"/>
     </requires>
