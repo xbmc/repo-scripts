@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="service.autosubs"
+    name="AutoSubs" version="1.1.0" provider-name="amet,schumi2004,juokelis">
+  <requires>
+    <import addon="xbmc.python" version="3.0.0"/>
+  </requires>
+  <extension point="xbmc.service" library="default.py" />
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en_GB">Auto Search for Subtitles on Play</summary>
+    <description lang="en_GB">Auto Search for Subtitles on Playback start if no subs are found.[CR][CR]Icon credits goes to zNET Computer Solutions http://www.znetcs.pl</description>
+    <news>
+v1.1.0 (2020-03-21) by juokelis
+- Ported to python 3 to run on v19 Matrix
+- strings.xml > strings.po
+
+v1.0.0 - schumi2004,CaTz, Mafarricos
+- Several fixes
+- Clean up
+- Added translations: Dutch, Portuguese
+- Exclude setting based on video duration
+- Check for specific language
+
+v0.0.9 - schumi2004
+- added debug function
+- added exclude paths
+    </news>
+    <platform>all</platform>
+    <license>GPL-2.0-only</license>
+    <source>https://github.com/amet/service.autosubs</source>
+    <forum>https://forum.xbmc.org/showthread.php?tid=198973</forum>
+    <assets>
+      <icon>resources/media/srt_logo_256x256.png</icon>
+      <fanart>resources/media/srt_fanart.jpg</fanart>
+    </assets>
+  </extension>
+</addon>
