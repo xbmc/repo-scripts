@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.module.pysocks" name="PySocks" version="1.7.0" provider-name="anorov">
+<addon id="script.module.pysocks" name="PySocks" version="1.7.0+matrix.1" provider-name="anorov">
   <requires>
     <import addon="xbmc.python" version="3.0.0"/>
   </requires>

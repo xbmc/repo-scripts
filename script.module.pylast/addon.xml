@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.module.pylast" version="3.2.0" name="pyLastFM" provider-name="Lunatixz, hugovk, Amr Hassan">
+<addon id="script.module.pylast" version="3.2.0+matrix.1" name="pyLastFM" provider-name="Lunatixz, hugovk, Amr Hassan">
     <requires>
         <import addon="xbmc.python" version="3.0.0" />
     </requires>

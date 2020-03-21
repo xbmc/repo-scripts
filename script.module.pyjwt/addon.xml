@@ -2,7 +2,7 @@
 <addon id="script.module.pyjwt"
        name="pyjwt"
        provider-name="jpadilla (hello@jpadilla.com)" 
-       version="1.7.1">
+       version="1.7.1+matrix.1">
   <requires>
     <import addon="xbmc.python" version="3.0.0" />
   </requires>

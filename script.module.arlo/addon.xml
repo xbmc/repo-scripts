@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addon id="script.module.arlo"
        name="arlo"
-       version="1.2.33.1"
+       version="1.2.33+matrix.1"
        provider-name="jeffreydwalter">
   <requires>
     <import addon="xbmc.python" version="3.0.0"/>
-    <import addon="script.module.monotonic" version="1.5.0.1"/>
-    <import addon="script.module.pysocks" version="1.7.0"/>
-    <import addon="script.module.requests" version="2.22.0.1"/>
-    <import addon="script.module.sseclient" version="0.0.24.1"/>
+    <import addon="script.module.monotonic" version="1.5.0+matrix.1"/>
+    <import addon="script.module.pysocks" version="1.7.0+matrix.1"/>
+    <import addon="script.module.requests" version="2.22.0+matrix.1"/>
+    <import addon="script.module.sseclient" version="0.0.24+matrix.1"/>
   </requires>
   <extension point="xbmc.python.module"
              library="lib" />

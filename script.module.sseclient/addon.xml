@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addon id="script.module.sseclient"
        name="sseclient"
-       version="0.0.24.1"
+       version="0.0.24+matrix.1"
        provider-name="Brent Tubbs">
   <requires>
     <import addon="xbmc.python" version="3.0.0"/>
-    <import addon="script.module.requests" version="2.22.0"/>
-    <import addon="script.module.six" version="1.14.0"/>
+    <import addon="script.module.requests" version="2.22.0+matrix.1"/>
+    <import addon="script.module.six" version="1.14.0+matrix.1"/>
   </requires>
   <extension point="xbmc.python.module"
              library="lib" />
