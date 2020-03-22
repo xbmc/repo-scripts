@@ -1,0 +1,330 @@
+# script.module.inputstreamhelper language file
+msgid ""
+msgstr ""
+"Project-Id-Version: script.module.inputstreamhelper\n"
+"Report-Msgid-Bugs-To: https://github.com/emilsvennesson/script.module.inputstreamhelper\n"
+"POT-Creation-Date: 2013-11-18 16:15+0000\n"
+"PO-Revision-Date: 2019-12-07 14:00+0900\n"
+"Last-Translator: Allen Choi<37539914+Thunderbird2086@users.noreply.github.com>\n"
+"Language-Team: Japanese\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ja\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+
+msgctxt "#30001"
+msgid "Information"
+msgstr "情報"
+
+msgctxt "#30002"
+msgid "This add-on relies on the proprietary decryption module [B]Widevine CDM[/B] for playback."
+msgstr "このアドオンは、独占復号化モデュールである[B]Widevine CDM[/B]を使います。"
+
+msgctxt "#30004"
+msgid "Error"
+msgstr "エラー"
+
+msgctxt "#30005"
+msgid "An error occurred while installing [B]Widevine CDM[/B]. Please enable debug logging and file a bug report at:[CR][CR]github.com/emilsvennesson/script.module.inputstreamhelper"
+msgstr "[B]Widevine CDM[/B]をインストール中にエラー発生しました。デバッグモードにしてログと一緒に報告してください:[CR][CR]github.com/emilsvennesson/script.module.inputstreamhelper"
+
+msgctxt "#30006"
+msgid "Due to distribution rights, [B]Widevine CDM[/B] has to be extracted from a Chrome OS recovery image. This process requires at least [B]{diskspace}[/B] of free disk space. Do you wish to continue?"
+msgstr "配給権の理由で、[B]Widevine CDM[/B]をChrome OSのリカバリイメージから抽出しなければなりません。このため[B]{diskspace}[/B]以上の空き容量が必要です。続きますか。"
+
+msgctxt "#30007"
+msgid "[B]Widevine CDM[/B] is unfortunately not available on this system architecture ([B]{arch}[/B])."
+msgstr "このシステムにて使用可能な[B]Widevine CDM[/B]はありません。([B]{arch}[/B])"
+
+msgctxt "#30008"
+msgid "[B]{addon}[/B] is missing on your Kodi install. This add-on is required to play this content."
+msgstr "このコンテンツを再生するため必要な[B]{addon}[/B]が見つかりません。"
+
+msgctxt "#30009"
+msgid "[B]{addon}[/B] is not enabled. This add-on is required to play this content.[CR][CR]Would you like to enable [B]{addon}[/B]?"
+msgstr "このコンテンツを再生するため必要な[B]{addon}[/B]が使えない状態です。[CR][CR][B]{addon}[/B]を使いましょうか。"
+
+msgctxt "#30010"
+msgid "[B]Kodi {version}[/B] or higher is required for [B]Widevine CDM[/B] content playback."
+msgstr "[B]Widevine CDM[/B]コンテンツを再生するため、[B]Kodi {version}[/B]以後が必要です。"
+
+msgctxt "#30011"
+msgid "This operating system ([B]{os}[/B]) is not supported by [B]Widevine CDM[/B]."
+msgstr "[B]Widevine CDM[/B]はこのシステム([B]{os}[/B])に対応しません。"
+
+msgctxt "#30012"
+msgid "The Windows Store version of Kodi does not support [B]Widevine CDM[/B].[CR][CR]Please use the installer from kodi.tv instead."
+msgstr "MicrosoftストアのKodiは[B]Widevine CDM[/B]を対応しません。[CR][CR]kodi.tvのインストーラを使ってください。"
+
+msgctxt "#30013"
+msgid "Failed to retrieve [B]{filename}[/B]."
+msgstr "[B]{filename}[/B]の抽出を失敗しました。"
+
+msgctxt "#30014"
+msgid "Download in progress..."
+msgstr "ダウンロード中。。。"
+
+msgctxt "#30015"
+msgid "Downloading [B]{filename}[/B]..."
+msgstr "[B]{filename}[/B]をダウンロード中。。。"
+
+msgctxt "#30016"
+msgid "Failed to extract [B]Widevine CDM[/B] from zip file."
+msgstr "圧縮ファイルから[B]Widevine CDM[/B]の抽出を失敗しました。"
+
+msgctxt "#30017"
+msgid "[B]{addon}[/B] {version} or later is required to play this content."
+msgstr "このコンテンツを再生するには{version}以後の[B]{addon}[/B]が必要です。"
+
+msgctxt "#30018"
+msgid "You do not have enough free disk space to install [B]Widevine CDM[/B]. Free up at least [B]{diskspace}[/B] and try again."
+msgstr "[B]Widevine CDM[/B]をインストールする充分はスペースがありません。[B]{diskspace}[/B]以上の空き容量を確保してからやり直してください。"
+
+msgctxt "#30019"
+msgid "This operating system ([B]{os}[/B]) is not supported by [B]Widevine CDM[/B] for ARM devices."
+msgstr "[B]Widevine CDM[/B]は、このOS([B]{os}[/B])を対応しません。"
+
+msgctxt "#30020"
+msgid "[B]'{command1}'[/B] or [B]'{command2}'[/B] command needs to exist on system to extract the [B]Widevine CDM[/B]."
+msgstr "[B]Widevine CDM[/B]を抽出するため、[B]'{command1}'[/B]又は[B]'{command2}'[/B]コマンドが必要です。"
+
+msgctxt "#30021"
+msgid "[B]'{command}'[/B] command needs to exist on system to extract the [B]Widevine CDM[/B]."
+msgstr "[B]Widevine CDM[/B]を抽出するため、[B]'{command}'[/B]コマンドが必要です。"
+
+msgctxt "#30022"
+msgid "Downloading the Chrome OS recovery image..."
+msgstr "Chrome OSリカバリイメージをダウンロード中。。。"
+
+msgctxt "#30023"
+msgid "Download completed!"
+msgstr "ダウンロード完了！"
+
+msgctxt "#30024"
+msgid "The installation now needs to unzip, mount and extract [B]Widevine CDM[/B] from the recovery image.[CR][CR]This process may take up to ten minutes to complete."
+msgstr "インストールのため、リカバリイメージを解凍し、マウントして[B]Widevine CDM[/B]を抽出します。[CR][CR]完了まで10分ほど掛かります。"
+
+msgctxt "#30025"
+msgid "Acquiring EULA."
+msgstr "ソフトウェア利用許諾契約取得中"
+
+msgctxt "#30026"
+msgid "Widevine CDM EULA"
+msgstr "Widevine CDMのソフトウェア利用許諾契約"
+
+msgctxt "#30027"
+msgid "I accept"
+msgstr "了解"
+
+msgctxt "#30028"
+msgid "Cancel"
+msgstr "キャンセル"
+
+msgctxt "#30029"
+msgid "OK"
+msgstr "オッケー"
+
+msgctxt "#30030"
+msgid "The installation may need to run the following commands with root permissions: [B]{cmds}[/B]."
+msgstr "インストールのため、スパユーザの権限が必要です: [B]{cmds}[/B]。"
+
+msgctxt "#30031"
+msgid "An update of [B]Widevine CDM[/B] is required to play this content."
+msgstr "コンテンツを再生するため[B]Widevine CDM[/B]をアップデートしてください。"
+
+msgctxt "#30032"
+msgid "Your system is missing the following libraries required by Widevine CDM: [B]{libs}[/B]. Install the libraries to play this content."
+msgstr "Widevine CDMに必要なライブラリが見つかりません: [B]{libs}[/B]."
+
+msgctxt "#30033"
+msgid "There is an update available for [B]Widevine CDM[/B]."
+msgstr "[B]Widevine CDM[/B]のアップデートが可能です。"
+
+msgctxt "#30034"
+msgid "Update"
+msgstr "アップデート"
+
+msgctxt "#30035"
+msgid "[B]loop[/B] is still loaded"
+msgstr "[B]loop[/B]がまだロードされている。"
+
+msgctxt "#30036"
+msgid "Unload it by running [B]modprobe -r loop[/B] in the terminal."
+msgstr "アンロードするには、ターミナルで[B]modprobe -r loop[/B]を実行してください。"
+
+msgctxt "#30037"
+msgid "Success!"
+msgstr "成功！"
+
+msgctxt "#30038"
+msgid "Install Widevine"
+msgstr "Widevineインストール"
+
+msgctxt "#30039"
+msgid "[B]Widevine CDM[/B] is currently not available natively on ARM64. Please switch to a 32-bit userspace for [B]Widevine CDM[/B] support."
+msgstr "現在、[B]Widevine CDM[/B]はARM64を対応しません。[B]Widevine CDM[/B]を使うには、32ビットモドに切り替えてください。"
+
+msgctxt "#30040"
+msgid "Update available"
+msgstr "アップデート可能"
+
+msgctxt "#30041"
+msgid "Widevine CDM is required"
+msgstr "Widevine CDMが必要です。"
+
+msgctxt "#30042"
+msgid "Using a SOCKS proxy requires the PySocks library (script.module.pysocks) installed."
+msgstr "SOCKSプロキシを使うため、PySocksライブラリ(script.module.pysocks)が必要です。"
+
+msgctxt "#30043"
+msgid "Extracting Widevine CDM"
+msgstr "Widevine CDM抽出"
+
+msgctxt "#30044"
+msgid "Preparing downloaded image..."
+msgstr "イメージダウンロード中"
+
+msgctxt "#30045"
+msgid "Uncompressing image..."
+msgstr "イメージを解凍中。。。"
+
+msgctxt "#30046"
+msgid "This may take several minutes. ({mins:d}:{secs:02d})"
+msgstr "少し時間掛かります。({mins:d}:{secs:02d})"
+
+msgctxt "#30047"
+msgid "[I]Please do not interrupt this process.[/I]"
+msgstr "[I]このままお待ち下さい。[/I]"
+
+msgctxt "#30048"
+msgid "Extracting Widevine CDM from image..."
+msgstr "イメージからWidevine CDMを抽出中。。。"
+
+msgctxt "#30049"
+msgid "Installing Widevine CDM..."
+msgstr "Widevine CDMをインストール中。。。"
+
+msgctxt "#30050"
+msgid "Finishing..."
+msgstr "仕上げ中。。。"
+
+msgctxt "#30051"
+msgid "[B]Widevine CDM[/B] successfully installed."
+msgstr "[B]Widevine CDM[/B]をインストールしました。"
+
+msgctxt "#30052"
+msgid "[B]Widevine CDM[/B] successfully removed."
+msgstr "[B]Widevine CDM[/B]を削除しました。"
+
+msgctxt "#30053"
+msgid "[B]Widevine CDM[/B] not found."
+msgstr "[B]Widevine CDM[/B]が無いようです。"
+
+msgctxt "#30054"
+msgid "disabled"
+msgstr "使わない"
+
+msgctxt "#30055"
+msgid "There is not enough free disk space in the current temporary directory. Would you like to specify a different one to temporarily use for the Chrome OS Recovery Image (e.g. on a USB)?"
+msgstr "充分は空き容量がありません。Chrome OSリカバリイメージをUSBのような別の一時ストレジに保存ましょうか。"
+
+msgctxt "#30056"
+msgid "No backups found!"
+msgstr "バックアップがありませんよ!"
+
+msgctxt "#30057"
+msgid "Choose a backup to restore"
+msgstr "バックアップを選んでください"
+
+
+### INFORMATION DIALOG
+msgctxt "#30800"
+msgid "[B]Kodi information[/B]"
+msgstr "[B]Kodiの情報[/B]"
+
+msgctxt "#30801"
+msgid "Kodi version: [B]{version}[/B]"
+msgstr "Kodiのバージョン: [B]{version}[/B]"
+
+msgctxt "#30802"
+msgid "Kodi platform/architecture: [B]{platform}[/B]/[B]{arch}[/B]"
+msgstr "Kodiのプラットフォーム/アーキテクチャ: [B]{platform}[/B]/[B]{arch}[/B]"
+
+msgctxt "#30810"
+msgid "[B]InputStream information[/B]"
+msgstr "[B]インプットストリームの情報[/B]"
+
+msgctxt "#30811"
+msgid "InputStream Helper version: [B]{version}[/B] {state}"
+msgstr "インプットストリームヘルパーバージョン: [B]{version}[/B] {state}"
+
+msgctxt "#30812"
+msgid "InputStream Adaptive version: [B]{version}[/B] {state}"
+msgstr "インプットストリームアドオンバージョン: [B]{version}[/B] {state}"
+
+msgctxt "#30820"
+msgid "[B]Widevine information[/B]"
+msgstr "[B]Widevine情報[/B]"
+
+msgctxt "#30821"
+msgid "Widevine version: [B]Built into Android[/B]"
+msgstr ""
+
+msgctxt "#30822"
+msgid "Widevine version: [B]{version}[/B] [COLOR gray](last updated on [B]{date}[/B])[/COLOR]"
+msgstr "Widevineバージョン：[B]{version}[/B] [COLOR gray](直近更新日[B]{date}[/B])[/COLOR]"
+
+msgctxt "#30823"
+msgid "Widevine CDM path: [B]{path}[/B]"
+msgstr "Widevine CDM パス: [B]{path}[/B]"
+
+msgctxt "#30824"
+msgid "Chrome OS version: [B]{version}[/B]"
+msgstr "Chrome OS バージョン： [B]{version}[/B]"
+
+msgctxt "#30830"
+msgid "Please report issues to:\n - [COLOR yellow]{url}[/COLOR]"
+msgstr "問題があったらここへ：\n - [COLOR yellow]{url}[/COLOR]"
+
+
+### SETTINGS
+msgctxt "#30900"
+msgid "Expert"
+msgstr "エキスパート"
+
+msgctxt "#30901"
+msgid "InputStream Helper information"
+msgstr "インプットストリームヘルパー情報"
+
+msgctxt "#30903"
+msgid "Disable InputStream Helper"
+msgstr "インプットストリームヘルパーを使わない"
+
+msgctxt "#30904"
+msgid "[I]When disabled, DRM playback may fail![/I]"
+msgstr "[I]使わないと、DRM再生が出来ません！[/I]"
+
+msgctxt "#30905"
+msgid "Update frequency in days"
+msgstr "何日毎に更新を確認しましょうか。"
+
+msgctxt "#30907"
+msgid "Temporary download directory"
+msgstr "ダウンロードフォルダ"
+
+msgctxt "#30909"
+msgid "(Re)install Widevine CDM library..."
+msgstr "Widevind CDMライブラリの(再)インストール"
+
+msgctxt "#30911"
+msgid "Remove Widevine CDM library..."
+msgstr "Widevine CDMライブラリを削除。。。"
+
+msgctxt "#30913"
+msgid "Number of backups"
+msgstr "バックアップ数"
+
+msgctxt "#30915"
+msgid "Restore Widevine CDM library..."
+msgstr ""
