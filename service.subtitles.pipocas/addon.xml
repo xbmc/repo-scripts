@@ -19,8 +19,8 @@
     <platform>all</platform>
     <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
     <forum>http://forum.xbmc.org/forumdisplay.php?fid=143</forum>
-    <website></website>
-    <email></email>
+    <website>https://pipocas.tv/</website>
+    <email>admin [at] pipocas {dot} pt</email>
     <source>https://github.com/highlandr/service.subtitles.pipocas</source>
   </extension>
 </addon>
