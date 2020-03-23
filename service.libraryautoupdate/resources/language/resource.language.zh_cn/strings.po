@@ -1,0 +1,214 @@
+# Kodi Media Center language file
+# Addon Name: XBMC Library Auto Update
+# Addon id: service.libraryautoupdate
+# Addon Provider: robweber
+# Translators:
+# Arcko Duan <arcko@qq.com>, 2012
+# taxigps <taxigps@sina.com>, 2013,2016
+# YF <yfdyh000@gmail.com>, 2015
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2017-09-23 18:37+0000\n"
+"Last-Translator: taxigps <taxigps@sina.com>\n"
+"Language-Team: Chinese (http://www.transifex.com/teamxbmc/xbmc-addons/language/zh/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: zh\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgctxt "Addon Summary"
+msgid ""
+"Update your Kodi Video and Music Libraries on a timer. Timer runs as an Kodi"
+" service so you never miss an update."
+msgstr "定时更新你的 Kodi 视频和音乐资料库。定时器以 Kodi 服务的方式运行以保证不会错过更新。"
+
+msgctxt "Addon Description"
+msgid ""
+"This is an Kodi Service that will update your music and video libraries on a"
+" timer. You can select a different interval to scan your media databases "
+"(Audio,Video,Both) or you can set a cron-style timer for greater control. If"
+" you are playing an audio or video file when the timer starts it can skip "
+"the library update process until it is completed so that you're media "
+"experience is not interrupted. Updating a specific Video Path, and Cleaning "
+"the Music/Video libraries is now supported."
+msgstr "这是一个定时更新你的音乐和视频资料库的 Kodi 服务程序。你可以设置不同的时间间隔来扫描媒体库（音频、视频或二者），或者设置一个 cron 类型的定时器来获得更好的控制。如果定时动作开始时你正在播放一个音频或视频文件，它会跳过此次更新直到播放完毕以避免影响你欣赏媒体。现在已支持更新指定的视频路径以及清理音视频资料库。"
+
+msgctxt "#30000"
+msgid "Kodi Library Auto Update"
+msgstr "Kodi 资料库自动更新"
+
+msgctxt "#30001"
+msgid "General"
+msgstr "常规"
+
+msgctxt "#30002"
+msgid "Video"
+msgstr "视频"
+
+msgctxt "#30003"
+msgid "Music"
+msgstr "音乐"
+
+msgctxt "#30004"
+msgid "Update Video Library"
+msgstr "更新视频资料库"
+
+msgctxt "#30005"
+msgid "Update Music Library"
+msgstr "更新音乐资料库"
+
+msgctxt "#30006"
+msgid "Show Notifications"
+msgstr "显示通知"
+
+msgctxt "#30007"
+msgid "Run during playback"
+msgstr "播放时更新"
+
+msgctxt "#30008"
+msgid "Startup Delay (minutes)"
+msgstr "延迟启动（分）"
+
+msgctxt "#30009"
+msgid "Used Advanced Timer"
+msgstr "使用过的高级定时器"
+
+msgctxt "#30010"
+msgid "Amount of time between updates (hours)"
+msgstr "更新间隔（小时）"
+
+msgctxt "#30011"
+msgid "Cron Expression"
+msgstr "Cron 表达式"
+
+msgctxt "#30012"
+msgid "Update Video Library"
+msgstr "更新视频资料库"
+
+msgctxt "#30013"
+msgid "Update Music Library"
+msgstr "更新音乐资料库"
+
+msgctxt "#30014"
+msgid "Only run when idle"
+msgstr "仅在闲置时运行"
+
+msgctxt "#30015"
+msgid "Disable manual run prompt"
+msgstr "禁用手动运行提示"
+
+msgctxt "#30020"
+msgid "Update Specific Path 1"
+msgstr "更新指定路径 1"
+
+msgctxt "#30021"
+msgid "Update Specific Path 2"
+msgstr "更新指定路径 2"
+
+msgctxt "#30022"
+msgid "Update Specific Path 3"
+msgstr "更新指定路径 3"
+
+msgctxt "#30023"
+msgid "Video Path"
+msgstr "视频路径"
+
+msgctxt "#30030"
+msgid "Read Disclaimer"
+msgstr "阅读免责声明"
+
+msgctxt "#30031"
+msgid "Video Paths Disclaimer"
+msgstr "视频路径免责声明"
+
+msgctxt "#30032"
+msgid "Path must already be a video source with content"
+msgstr "路径必须是一个有内容的视频源"
+
+msgctxt "#30033"
+msgid "Path must match source path exactly to scan"
+msgstr "路径必须与源路径相匹配以便扫描"
+
+msgctxt "#30040"
+msgid "Cleaning"
+msgstr "清理中"
+
+msgctxt "#30041"
+msgid "Clean Libraries"
+msgstr "清理资料库"
+
+msgctxt "#30042"
+msgid "Verify Sources Before Clean"
+msgstr "清理前验证来源"
+
+msgctxt "#30043"
+msgid "Frequency"
+msgstr "频率"
+
+msgctxt "#30044"
+msgid "After Update"
+msgstr "更新后"
+
+msgctxt "#30045"
+msgid "Once Per Day"
+msgstr "每天一次"
+
+msgctxt "#30046"
+msgid "Once Per Week"
+msgstr "每周一次"
+
+msgctxt "#30047"
+msgid "Once Per Month"
+msgstr "每月一次"
+
+msgctxt "#30048"
+msgid "Clean Video Library"
+msgstr "清理视频资料库"
+
+msgctxt "#30049"
+msgid "Clean Music Library"
+msgstr "清理音乐资料库"
+
+msgctxt "#30050"
+msgid "Error Cleaning Database"
+msgstr "清理资料库出错"
+
+msgctxt "#30051"
+msgid "Prompt User Before Cleaning Library"
+msgstr "清理资料库前提示用户"
+
+msgctxt "#30052"
+msgid "A database clean is scheduled to run"
+msgstr "已设定一个数据库清理任务"
+
+msgctxt "#30053"
+msgid "Would you like to run it now?"
+msgstr "您想现在运行它吗？"
+
+msgctxt "#30054"
+msgid "Library to clean"
+msgstr "要清理的资料库"
+
+msgctxt "#30055"
+msgid "Both"
+msgstr "两者都"
+
+msgctxt "#30056"
+msgid "Video Cron Expression"
+msgstr "视频 Cron 表达式"
+
+msgctxt "#30057"
+msgid "Music Cron Expression"
+msgstr "音乐 Cron 表达式"
+
+msgctxt "#30060"
+msgid "Update will run again "
+msgstr "更新将再次运行"
+
+msgctxt "#30061"
+msgid "Do you wish to manually run an update?"
+msgstr "你要手动运行更新吗？"

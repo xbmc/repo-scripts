@@ -1,0 +1,214 @@
+# Kodi Media Center language file
+# Addon Name: XBMC Library Auto Update
+# Addon id: service.libraryautoupdate
+# Addon Provider: robweber
+# Translators:
+# Karel Sommer <karel.sommer@gmail.com>, 2013
+# Trottel <trottel09@gmail.com>, 2017
+# Zbyněk Fiala, 2014-2015
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2017-09-19 14:20+0000\n"
+"Last-Translator: Trottel <trottel09@gmail.com>\n"
+"Language-Team: Czech (http://www.transifex.com/teamxbmc/xbmc-addons/language/cs/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: cs\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+
+msgctxt "Addon Summary"
+msgid ""
+"Update your Kodi Video and Music Libraries on a timer. Timer runs as an Kodi"
+" service so you never miss an update."
+msgstr "Aktualizujte svou knihovnu videa a hudby v Kodi podle časovače. Časovač běží jako služba Kodi, takže nikdy nezmeškáte aktualizaci."
+
+msgctxt "Addon Description"
+msgid ""
+"This is an Kodi Service that will update your music and video libraries on a"
+" timer. You can select a different interval to scan your media databases "
+"(Audio,Video,Both) or you can set a cron-style timer for greater control. If"
+" you are playing an audio or video file when the timer starts it can skip "
+"the library update process until it is completed so that you're media "
+"experience is not interrupted. Updating a specific Video Path, and Cleaning "
+"the Music/Video libraries is now supported."
+msgstr "Toto je služba Kodi, která aktualizuje vaše knihovny hudby a videa podle časovače. Můžete vybrat různý interval pro prohledávání vašich databází médií (audio, video, obojí) nebo můžete nastavit časovač ve stylu cronu pro lepší ovládání. Pokud přehráváte soubor audia nebo videa, když se spustí časovač, může být proces aktualizace knihovny přeskočen, dokud není přehrávání dokončeno, aby nebylo přerušeno. Nyní jsou také podporovány Aktualizace konkrétní cesty k videu a Čištění knihoven hudby a videa."
+
+msgctxt "#30000"
+msgid "Kodi Library Auto Update"
+msgstr "Automatická aktualizace knihovny Kodi"
+
+msgctxt "#30001"
+msgid "General"
+msgstr "Obecné"
+
+msgctxt "#30002"
+msgid "Video"
+msgstr "Video"
+
+msgctxt "#30003"
+msgid "Music"
+msgstr "Hudba"
+
+msgctxt "#30004"
+msgid "Update Video Library"
+msgstr "Aktualizovat knihovnu videí"
+
+msgctxt "#30005"
+msgid "Update Music Library"
+msgstr "Aktualizovat knihovnu hudby"
+
+msgctxt "#30006"
+msgid "Show Notifications"
+msgstr "Zobrazit oznámení"
+
+msgctxt "#30007"
+msgid "Run during playback"
+msgstr "Spustit během přehrávání"
+
+msgctxt "#30008"
+msgid "Startup Delay (minutes)"
+msgstr "Zpoždění spuštění (minuty)"
+
+msgctxt "#30009"
+msgid "Used Advanced Timer"
+msgstr "Použít rozšířený časovač"
+
+msgctxt "#30010"
+msgid "Amount of time between updates (hours)"
+msgstr "Doba mezi aktualizacemi (hodiny)"
+
+msgctxt "#30011"
+msgid "Cron Expression"
+msgstr "Výraz Cron"
+
+msgctxt "#30012"
+msgid "Update Video Library"
+msgstr "Aktualizovat knihovnu videí"
+
+msgctxt "#30013"
+msgid "Update Music Library"
+msgstr "Aktualizovat knihovnu hudby"
+
+msgctxt "#30014"
+msgid "Only run when idle"
+msgstr "Spustit pouze při nečinnosti"
+
+msgctxt "#30015"
+msgid "Disable manual run prompt"
+msgstr "Zakázat výzvu ručního spuštění"
+
+msgctxt "#30020"
+msgid "Update Specific Path 1"
+msgstr "Aktualizovat konkrétní cestu 1"
+
+msgctxt "#30021"
+msgid "Update Specific Path 2"
+msgstr "Aktualizovat konkrétní cestu 2"
+
+msgctxt "#30022"
+msgid "Update Specific Path 3"
+msgstr "Aktualizovat konkrétní cestu 3"
+
+msgctxt "#30023"
+msgid "Video Path"
+msgstr "Cesta k videu"
+
+msgctxt "#30030"
+msgid "Read Disclaimer"
+msgstr "Přečtěte si zřeknutí se odpovědnosti"
+
+msgctxt "#30031"
+msgid "Video Paths Disclaimer"
+msgstr "Cesty k videu - zřeknutí se odpovědnosti"
+
+msgctxt "#30032"
+msgid "Path must already be a video source with content"
+msgstr "Cesta již musí být zdroj videa s obsahem"
+
+msgctxt "#30033"
+msgid "Path must match source path exactly to scan"
+msgstr "Cesta musí přesně odpovídat cestě ke zdroji, aby prohledání proběhlo"
+
+msgctxt "#30040"
+msgid "Cleaning"
+msgstr "Čištění"
+
+msgctxt "#30041"
+msgid "Clean Libraries"
+msgstr "Vyčistit knihovny"
+
+msgctxt "#30042"
+msgid "Verify Sources Before Clean"
+msgstr "Ověřit zdroje před vyčištěním"
+
+msgctxt "#30043"
+msgid "Frequency"
+msgstr "Frekvence"
+
+msgctxt "#30044"
+msgid "After Update"
+msgstr "Po aktualizaci"
+
+msgctxt "#30045"
+msgid "Once Per Day"
+msgstr "Jednou za den"
+
+msgctxt "#30046"
+msgid "Once Per Week"
+msgstr "Jednou za týden"
+
+msgctxt "#30047"
+msgid "Once Per Month"
+msgstr "Jednou za měsíc"
+
+msgctxt "#30048"
+msgid "Clean Video Library"
+msgstr "Vyčistit knihovnu videí"
+
+msgctxt "#30049"
+msgid "Clean Music Library"
+msgstr "Vyčistit knihovnu hudby"
+
+msgctxt "#30050"
+msgid "Error Cleaning Database"
+msgstr "Chyba při čištění databáze"
+
+msgctxt "#30051"
+msgid "Prompt User Before Cleaning Library"
+msgstr "Vyzvat uživatele před vyčištěním knihovny"
+
+msgctxt "#30052"
+msgid "A database clean is scheduled to run"
+msgstr "Čištění databáze je naplánováno ke spuštění"
+
+msgctxt "#30053"
+msgid "Would you like to run it now?"
+msgstr "Chcete ho spustit nyní?"
+
+msgctxt "#30054"
+msgid "Library to clean"
+msgstr "Knihovna k vyčištění"
+
+msgctxt "#30055"
+msgid "Both"
+msgstr "Obojí"
+
+msgctxt "#30056"
+msgid "Video Cron Expression"
+msgstr "Výraz Cron pro video"
+
+msgctxt "#30057"
+msgid "Music Cron Expression"
+msgstr "Výraz Cron pro hudbu"
+
+msgctxt "#30060"
+msgid "Update will run again "
+msgstr "Aktualizace se spustí znovu"
+
+msgctxt "#30061"
+msgid "Do you wish to manually run an update?"
+msgstr "Chcete spustit aktualizaci ručně?"
