@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.module.pyxbmct"
+   name="PyXBMCt"
+   version="1.3.1+matrix.1"
+   provider-name="Roman V.M.">
+  <requires>
+    <import addon="xbmc.python" version="3.0.0"/>
+    <import addon="script.module.six" />
+    <import addon="script.module.kodi-six" />
+  </requires>
+  <extension point="xbmc.python.module" library="lib" />
+  <extension point="xbmc.addon.metadata">
+    <platform>all</platform>
+    <summary lang="en_GB">PyXBMCt UI framework</summary>
+    <description lang="en_GB">PyXBMCt is a mini-framework for simple XBMC addon UI buliding. It is similar to PyQt and provides parent windows, a number of UI controls (widgets) and a grid layout manager to place controls.</description>
+    <license>GPL-3.0-only</license>
+    <forum>https://forum.kodi.tv/showthread.php?tid=174859</forum>
+    <website>http://romanvm.github.io/script.module.pyxbmct/</website>
+    <email>roman1972@gmail.com</email>
+    <source>https://github.com/romanvm/script.module.pyxbmct</source>
+    <news>1.3.1:
+- Fix incompatibility with newer Python 3 Kodi builds
+- Replace future library with six for Python 3 compatibility</news>
+    <assets>
+      <icon>icon.png</icon>
+    </assets>
+  </extension>  
+</addon>
