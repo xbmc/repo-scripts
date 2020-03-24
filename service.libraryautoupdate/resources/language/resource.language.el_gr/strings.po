@@ -1,0 +1,213 @@
+# Kodi Media Center language file
+# Addon Name: XBMC Library Auto Update
+# Addon id: service.libraryautoupdate
+# Addon Provider: robweber
+# Translators:
+# CutSickAss <cutsickass@yahoo.com>, 2013-2014
+# CutSickAss <cutsickass@yahoo.com>, 2012
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2017-09-23 18:37+0000\n"
+"Last-Translator: Martijn Kaijser <machine.sanctum@gmail.com>\n"
+"Language-Team: Greek (http://www.transifex.com/teamxbmc/xbmc-addons/language/el/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: el\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "Addon Summary"
+msgid ""
+"Update your Kodi Video and Music Libraries on a timer. Timer runs as an Kodi"
+" service so you never miss an update."
+msgstr "Ενημερώστε τις συλλογές ταινιών και μουσικής σας με χρονοδιακόπτη. Ο χρονοδιακόπτης εκτελείται σαν υπηρεσία του Kodi ούτως ώστε να μη χάνετε ποτέ καμία ενημέρωση."
+
+msgctxt "Addon Description"
+msgid ""
+"This is an Kodi Service that will update your music and video libraries on a"
+" timer. You can select a different interval to scan your media databases "
+"(Audio,Video,Both) or you can set a cron-style timer for greater control. If"
+" you are playing an audio or video file when the timer starts it can skip "
+"the library update process until it is completed so that you're media "
+"experience is not interrupted. Updating a specific Video Path, and Cleaning "
+"the Music/Video libraries is now supported."
+msgstr "Αυτή είναι μία Υπηρεσία του Kodi που ενημερώνει τις συλλογές ταινιών και μουσικής σας με χρονοδιακόπτη. Μπορείτε να επιλέξετε διαφορετικό χρονικό διάστημα για σάρωση των πολυμέσων σας (Μουσική, Βίντεο, Και Τα Δυο) ή μπορείτε να ορίσετε ένα χρονοδιακόπτη τύπου cron για καλύτερο έλεγχο. Αν αναπαράγεται μία ταινία ή ένα τραγούδι όταν αρχίσει ο χρονοδιακόπτης μπορεί να αναβληθεί η διαδικασία της ενημέρωσης της συλλογής μέχρις ότου τελειώσει, προκειμένου να μην επηρεαστεί η αναπαραγωγή. Πλέον υποστηρίζεται η ενημέρωση συγκεκριμένης Διαδρομής Βίντεο, καθώς και Εκκαθάριση των συλλογών Ταινιών/Μουσικής."
+
+msgctxt "#30000"
+msgid "Kodi Library Auto Update"
+msgstr "Αυτόματη Ενημέρωση Συλλογής Kodi"
+
+msgctxt "#30001"
+msgid "General"
+msgstr "Γενικά"
+
+msgctxt "#30002"
+msgid "Video"
+msgstr "Βίντεο"
+
+msgctxt "#30003"
+msgid "Music"
+msgstr "Μουσική"
+
+msgctxt "#30004"
+msgid "Update Video Library"
+msgstr "Ενημέρωση Συλλογής Βίντεο"
+
+msgctxt "#30005"
+msgid "Update Music Library"
+msgstr "Ενημέρωση Μουσικής Συλλογής"
+
+msgctxt "#30006"
+msgid "Show Notifications"
+msgstr "Εμφάνιση Ειδοποιήσεων"
+
+msgctxt "#30007"
+msgid "Run during playback"
+msgstr "Εκτέλεση κατά την αναπαραγωγή"
+
+msgctxt "#30008"
+msgid "Startup Delay (minutes)"
+msgstr "Καθυστέρηση Έναρξης (λεπτά)"
+
+msgctxt "#30009"
+msgid "Used Advanced Timer"
+msgstr "Χρήση Προηγμένου Χρονοδιακόπτη"
+
+msgctxt "#30010"
+msgid "Amount of time between updates (hours)"
+msgstr "Διάστημα μεταξύ των ενημερώσεων (ώρες)"
+
+msgctxt "#30011"
+msgid "Cron Expression"
+msgstr "Έκφραση Cron"
+
+msgctxt "#30012"
+msgid "Update Video Library"
+msgstr "Ενημέρωση Συλλογής Βίντεο"
+
+msgctxt "#30013"
+msgid "Update Music Library"
+msgstr "Ενημέρωση Μουσικής Συλλογής"
+
+msgctxt "#30014"
+msgid "Only run when idle"
+msgstr "Εκτέλεση μόνο κατά την αδράνεια"
+
+msgctxt "#30015"
+msgid "Disable manual run prompt"
+msgstr ""
+
+msgctxt "#30020"
+msgid "Update Specific Path 1"
+msgstr "Ενημέρωση Συγκεκριμένης Διαδρομής 1"
+
+msgctxt "#30021"
+msgid "Update Specific Path 2"
+msgstr "Ενημέρωση Συγκεκριμένης Διαδρομής 2"
+
+msgctxt "#30022"
+msgid "Update Specific Path 3"
+msgstr "Ενημέρωση Συγκεκριμένης Διαδρομής 3"
+
+msgctxt "#30023"
+msgid "Video Path"
+msgstr "Διαδρομή Βίντεο"
+
+msgctxt "#30030"
+msgid "Read Disclaimer"
+msgstr "Διαβάστε την Αποποίηση Ευθυνών"
+
+msgctxt "#30031"
+msgid "Video Paths Disclaimer"
+msgstr "Αποποίηση Ευθυνών Διαδρομών Βίντεο"
+
+msgctxt "#30032"
+msgid "Path must already be a video source with content"
+msgstr "Η διαδρομή πρέπει να είναι ήδη μία πηγή βίντεο με περιεχόμενο"
+
+msgctxt "#30033"
+msgid "Path must match source path exactly to scan"
+msgstr "Η διαδρομή πρέπει να ταυτίζεται με τη διαδρομή της πηγής για να γίνει σάρωση"
+
+msgctxt "#30040"
+msgid "Cleaning"
+msgstr "Γίνεται εκκαθάριση"
+
+msgctxt "#30041"
+msgid "Clean Libraries"
+msgstr "Εκκαθάριση Συλλογών"
+
+msgctxt "#30042"
+msgid "Verify Sources Before Clean"
+msgstr "Επαλήθευση Πηγών πριν την Εκκαθάριση"
+
+msgctxt "#30043"
+msgid "Frequency"
+msgstr "Συχνότητα"
+
+msgctxt "#30044"
+msgid "After Update"
+msgstr "Μετά την Ενημέρωση"
+
+msgctxt "#30045"
+msgid "Once Per Day"
+msgstr "Ημερησίως"
+
+msgctxt "#30046"
+msgid "Once Per Week"
+msgstr "Εβδομαδιαία"
+
+msgctxt "#30047"
+msgid "Once Per Month"
+msgstr "Μηνιαία"
+
+msgctxt "#30048"
+msgid "Clean Video Library"
+msgstr "Εκκαθάριση Συλλογής Βίντεο"
+
+msgctxt "#30049"
+msgid "Clean Music Library"
+msgstr "Εκκαθάριση Μουσικής Συλλογής"
+
+msgctxt "#30050"
+msgid "Error Cleaning Database"
+msgstr "Σφάλμα Εκκαθάρισης Βάσης Δεδομένων"
+
+msgctxt "#30051"
+msgid "Prompt User Before Cleaning Library"
+msgstr "Ειδοποίηση του χρήστη πριν την Εκκαθάριση της Συλλογής"
+
+msgctxt "#30052"
+msgid "A database clean is scheduled to run"
+msgstr "Είναι προγραμματισμένη μία εκκαθάριση της βάσης δεδομένων"
+
+msgctxt "#30053"
+msgid "Would you like to run it now?"
+msgstr "Να εκτελεστεί τώρα;"
+
+msgctxt "#30054"
+msgid "Library to clean"
+msgstr "Προς εκκαθάριση Συλλογή"
+
+msgctxt "#30055"
+msgid "Both"
+msgstr "Και οι δύο"
+
+msgctxt "#30056"
+msgid "Video Cron Expression"
+msgstr "Έκφραση Cron Βίντεο"
+
+msgctxt "#30057"
+msgid "Music Cron Expression"
+msgstr "Έκφραση Cron Μουσικής"
+
+msgctxt "#30060"
+msgid "Update will run again "
+msgstr "Η ενημέρωση θα γίνει ξανά"
+
+msgctxt "#30061"
+msgid "Do you wish to manually run an update?"
+msgstr "Να γίνει η ενημέρωση χειροκίνητα;"
