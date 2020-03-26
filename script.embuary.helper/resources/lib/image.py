@@ -230,15 +230,16 @@ def image_info(image):
 ''' get cached images or copy to temp if file has not been cached yet
 '''
 def _openimage(image,targetpath,filename):
-    image = url_unquote(image.replace('image://', ''))
-    if image.endswith('/'):
-        image = image[:-1]
+    # some paths require unquoting to get a valid cached thumb hash
+    cached_image_path = url_unquote(image.replace('image://', ''))
+    if cached_image_path.endswith('/'):
+        cached_image_path = cached_image_path[:-1]
 
-    cached_files = list()
-    cachedthumb = xbmc.getCacheThumbName(image)
-    cached_files.append(os.path.join('special://profile/Thumbnails/', cachedthumb[0], cachedthumb[:-4] + '.jpg'))
-    cached_files.append(os.path.join('special://profile/Thumbnails/', cachedthumb[0], cachedthumb[:-4] + '.png'))
-    cached_files.append(os.path.join('special://profile/Thumbnails/Video/', cachedthumb[0], cachedthumb))
+    cached_files = []
+    for path in [xbmc.getCacheThumbName(cached_image_path), xbmc.getCacheThumbName(image)]:
+        cached_files.append(os.path.join('special://profile/Thumbnails/', path[0], path[:-4] + '.jpg'))
+        cached_files.append(os.path.join('special://profile/Thumbnails/', path[0], path[:-4] + '.png'))
+        cached_files.append(os.path.join('special://profile/Thumbnails/Video/', path[0], path))
 
     for i in range(1, 4):
         try:
@@ -249,9 +250,9 @@ def _openimage(image,targetpath,filename):
                     try:
                         img = Image.open(xbmc.translatePath(cache))
                         return img
+
                     except Exception as error:
                         log('Image error: Could not open cached image --> %s' % error, WARNING)
-                        pass
 
             ''' Skin images will be tried to be accessed directly. For all other ones
                 the source will be copied to the addon_data folder to get access.
@@ -263,6 +264,7 @@ def _openimage(image,targetpath,filename):
                 try: # in case image is packed in textures.xbt
                     img = Image.open(xbmc.translatePath(image))
                     return img
+
                 except Exception:
                     return ''
 
