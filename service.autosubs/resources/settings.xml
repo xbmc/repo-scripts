@@ -1,0 +1,233 @@
+<?xml version="1.0" ?>
+<settings version="1">
+    <section id="service.autosubs">
+        <!-- General -->
+        <category id="general" label="32010">
+            <group id="1">
+                <setting id="debug" type="boolean" label="32100">
+                    <level>3</level>
+                    <default>false</default>
+                    <control type="toggle"/>
+                </setting>
+                <setting id="check_for_specific" type="boolean" label="32101">
+                    <level>1</level>
+                    <default>false</default>
+                    <control type="toggle"/>
+                </setting>
+                <setting id="selected_language" type="string" label="32102">
+                    <level>1</level>
+                    <default>English</default>
+                    <constraints>
+                        <options>
+                            <option label="Albanian">Albanian</option>
+                            <option label="Arabic">Arabic</option>
+                            <option label="Belorussian">Belorussian</option>
+                            <option label="Bosnian (Latin)">osnian (Latin)</option>
+                            <option label="Bulgarian">Bulgarian</option>
+                            <option label="Catalan">Catalan</option>
+                            <option label="Chinese">Chinese</option>
+                            <option label="Croatian">Croatian</option>
+                            <option label="Czech">Czech</option>
+                            <option label="Danish">Danish</option>
+                            <option label="Dutch">Dutch</option>
+                            <option label="English">English</option>
+                            <option label="Estonian">Estonian</option>
+                            <option label="Farsi">Farsi</option>
+                            <option label="Finnish">Finnish</option>
+                            <option label="French">French</option>
+                            <option label="German">German</option>
+                            <option label="Greek">Greek</option>
+                            <option label="Hebrew">Hebrew</option>
+                            <option label="Hindi">Hindi</option>
+                            <option label="Hungarian">Hungarian</option>
+                            <option label="Icelandic">Icelandic</option>
+                            <option label="Indonesian">Indonesian</option>
+                            <option label="Italian">Italian</option>
+                            <option label="Japanese">Japanese</option>
+                            <option label="Korean">Korean</option>
+                            <option label="Latvian">Latvian</option>
+                            <option label="Lithuanian">Lithuanian</option>
+                            <option label="Macedonian">Macedonian</option>
+                            <option label="Malay">Malay</option>
+                            <option label="Norwegian">Norwegian</option>
+                            <option label="Polish">Polish</option>
+                            <option label="Portuguese">Portuguese</option>
+                            <option label="Romanian">Romanian</option>
+                            <option label="Russian">Russian</option>
+                            <option label="Serbian (Latin)">Serbian (Latin)</option>
+                            <option label="Slovak">Slovak</option>
+                            <option label="Slovenian">Slovenian</option>
+                            <option label="Spanish">Spanish</option>
+                            <option label="Swedish">Swedish</option>
+                            <option label="Thai">Thai</option>
+                            <option label="Turkish">Turkish</option>
+                            <option label="Ukrainian">Ukrainian</option>
+                            <option label="Vietnamese">Vietnamese</option>
+                        </options>
+                    </constraints>
+                    <control type="list" format="string">
+                        <heading>32102</heading>
+                    </control>
+                    <dependencies>
+                        <dependency type="enable" setting="check_for_specific">true</dependency>
+                        <dependency type="visible" setting="check_for_specific">true</dependency>
+                    </dependencies>
+                </setting>
+            </group>
+        </category>
+
+        <!-- Exclusions -->
+        <category id="exclusions" label="32020">
+            <group id="1">
+                <setting id="ExcludeTime" type="integer" label="32200">
+                    <level>1</level>
+                    <default>15</default>
+                    <control type="edit" format="integer">
+                        <heading>32200</heading>
+                    </control>
+                </setting>
+                <setting id="ignore_words" type="string" label="32201">
+                    <level>1</level>
+                    <default>"theme"</default>
+                    <constraints>
+                        <allowempty>true</allowempty>
+                    </constraints>
+                    <control type="edit" format="string">
+                        <heading>32201</heading>
+                    </control>
+                </setting>
+                <setting id="ExcludeLiveTV" type="boolean" label="32202">
+                    <level>1</level>
+                    <default>false</default>
+                    <control type="toggle"/>
+                </setting>
+                <setting id="ExcludeHTTP" type="boolean" label="32203">
+                    <level>1</level>
+                    <default>false</default>
+                    <control type="toggle"/>
+                </setting>
+                <setting id="ExcludeVideoClip" type="boolean" label="32206">
+                    <level>1</level>
+                    <default>false</default>
+                    <control type="toggle"/>
+                </setting>
+                <setting id="ExcludePathOption" type="boolean" label="32204">
+                    <level>1</level>
+                    <default>false</default>
+                    <control type="toggle"/>
+                </setting>
+                <setting id="ExcludePath" type="path" label="32205">
+                    <level>1</level>
+                    <default/>
+                    <constraints>
+                        <writable>false</writable>
+                        <allowempty>true</allowempty>
+                    </constraints>
+                    <control type="button" format="path">
+                        <heading>32205</heading>
+                    </control>
+                    <dependencies>
+                        <dependency type="enable" setting="ExcludePathOption">true</dependency>
+                        <dependency type="visible" setting="ExcludePathOption">true</dependency>
+                    </dependencies>
+                </setting>
+                <setting id="ExcludePathOption2" type="boolean" label="32204">
+                    <level>1</level>
+                    <default>false</default>
+                    <control type="toggle"/>
+                    <dependencies>
+                        <dependency type="enable" setting="ExcludePathOption">true</dependency>
+                        <dependency type="visible" setting="ExcludePathOption">true</dependency>
+                    </dependencies>
+                </setting>
+                <setting id="ExcludePath2" type="path" label="32205">
+                    <level>1</level>
+                    <default/>
+                    <constraints>
+                        <writable>false</writable>
+                        <allowempty>true</allowempty>
+                    </constraints>
+                    <control type="button" format="path">
+                        <heading>32205</heading>
+                    </control>
+                    <dependencies>
+                        <dependency type="enable" setting="ExcludePathOption2">true</dependency>
+                        <dependency type="visible" setting="ExcludePathOption2">true</dependency>
+                    </dependencies>
+                </setting>
+                <setting id="ExcludePathOption3" type="boolean" label="32204">
+                    <level>1</level>
+                    <default>false</default>
+                    <control type="toggle"/>
+                    <dependencies>
+                        <dependency type="enable" setting="ExcludePathOption2">true</dependency>
+                        <dependency type="visible" setting="ExcludePathOption2">true</dependency>
+                    </dependencies>
+                </setting>
+                <setting id="ExcludePath3" type="path" label="32205">
+                    <level>1</level>
+                    <default/>
+                    <constraints>
+                        <writable>false</writable>
+                        <allowempty>true</allowempty>
+                    </constraints>
+                    <control type="button" format="path">
+                        <heading>32205</heading>
+                    </control>
+                    <dependencies>
+                        <dependency type="enable" setting="ExcludePathOption3">true</dependency>
+                        <dependency type="visible" setting="ExcludePathOption3">true</dependency>
+                    </dependencies>
+                </setting>
+                <setting id="ExcludePathOption4" type="boolean" label="32204">
+                    <level>1</level>
+                    <default>false</default>
+                    <control type="toggle"/>
+                    <dependencies>
+                        <dependency type="enable" setting="ExcludePathOption3">true</dependency>
+                        <dependency type="visible" setting="ExcludePathOption3">true</dependency>
+                    </dependencies>
+                </setting>
+                <setting id="ExcludePath4" type="path" label="32205">
+                    <level>1</level>
+                    <default/>
+                    <constraints>
+                        <writable>false</writable>
+                        <allowempty>true</allowempty>
+                    </constraints>
+                    <control type="button" format="path">
+                        <heading>32205</heading>
+                    </control>
+                    <dependencies>
+                        <dependency type="enable" setting="ExcludePathOption4">true</dependency>
+                        <dependency type="visible" setting="ExcludePathOption4">true</dependency>
+                    </dependencies>
+                </setting>
+                <setting id="ExcludePathOption5" type="boolean" label="32204">
+                    <level>1</level>
+                    <default>false</default>
+                    <control type="toggle"/>
+                    <dependencies>
+                        <dependency type="enable" setting="ExcludePathOption4">true</dependency>
+                        <dependency type="visible" setting="ExcludePathOption4">true</dependency>
+                    </dependencies>
+                </setting>
+                <setting id="ExcludePath5" type="path" label="32205">
+                    <level>1</level>
+                    <default/>
+                    <constraints>
+                        <writable>false</writable>
+                        <allowempty>true</allowempty>
+                    </constraints>
+                    <control type="button" format="path">
+                        <heading>32205</heading>
+                    </control>
+                    <dependencies>
+                        <dependency type="enable" setting="ExcludePathOption5">true</dependency>
+                        <dependency type="visible" setting="ExcludePathOption5">true</dependency>
+                    </dependencies>
+                </setting>
+            </group>
+        </category>
+    </section>
+</settings>

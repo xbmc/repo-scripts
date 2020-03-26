@@ -1,0 +1,63 @@
+# Autosubs language file
+# Addon Name: Autosubs
+# Addon id: service.autosubs
+# Addon Provider: amet,schumi2004
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Autosubs\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: nl_NL\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+msgctxt "#32010"
+msgid "General"
+msgstr "Algemeen"
+
+msgctxt "#32100"
+msgid "Enable debug mode"
+msgstr "Activeer debug mode"
+
+msgctxt "#32101"
+msgid "Look for a specific language"
+msgstr "Zoek naar specifieke taal"
+
+msgctxt "#32102"
+msgid "Subtitle language"
+msgstr "Ondertitel taal"
+
+msgctxt "#32020"
+msgid "Exclusions"
+msgstr "Uitzonderingen"
+
+msgctxt "#32200"
+msgid "Exclude for videos with less than X minutes"
+msgstr "Uitgezonderd voor videos korter dan X minuten"
+
+msgctxt "#32201"
+msgid "Ignore words, comma separated"
+msgstr "Uitzonderingenlijst, komma gescheiden"
+
+msgctxt "#32202"
+msgid "Exclude Live TV"
+msgstr "Uitgezonderd voor Live TV"
+
+msgctxt "#32203"
+msgid "Exclude HTTP sources"
+msgstr "Uitgezonderd voor HTTP bronnen"
+
+msgctxt "#32204"
+msgid "Exclude path"
+msgstr "Uitgezonderd voor pad"
+
+msgctxt "#32205"
+msgid "Folder's path (and subfolders)"
+msgstr "Pad naar folder (en subfolders)"
+
+msgctxt "#32206"
+msgid "Exclude Music Videos"
+msgstr "Uitsluiten Music Videos"
