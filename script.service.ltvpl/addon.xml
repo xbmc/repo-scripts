@@ -1,0 +1,46 @@
+<addon id="script.service.ltvpl" name="Live TV Playlist" provider-name="jmooremcc" version="1.0.0">
+  <extension library="service.py" point="xbmc.service" />
+  <requires>
+    <import addon="xbmc.python" version="2.26.0" />
+    <import addon="script.module.enum34" version="1.1.6" />
+  </requires>
+  <extension library="resources" point="xbmc.python.module" />
+  <extension library="addon.py" point="xbmc.python.script">
+    <provides>executable</provides>
+  </extension>
+  <extension point="kodi.context.item">
+    <menu id="kodi.core.main">
+      <item library="addon.py">
+        <label>30090</label>
+        <visible>Window.IsVisible(tvguide)|Window.IsVisible(tvsearch)</visible>
+      </item>
+    </menu>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <language>en es de</language>
+    <summary lang="en_GB">Live TV Playlist Manager</summary>
+    <summary lang="es_ES">Gerente de Lista de Reproducción de TV en Vivo</summary>
+    <summary lang="de_DE">Manager für TV-Wiedergabelisten</summary>
+    <description lang="en_GB">
+      The Live TV PlayList Manager provides a service for clients to use to schedule live TV events. A Live TV Playlist is a list of channel change instructions that occur at a specified time. A Playlist item consists of an alarm time, channel and recurrence option. The manager maintains a database of playlist items and saves the list in a file. This file is read each time the manager starts up so that on going events will always occur.
+    </description>
+    <description lang="es_ES">
+      Gerente de Lista de Reproducción de TV en Vivo ofrece un servicio para que los clientes utilicen para programar eventos de TV en vivo. Una lista de reproducción de TV en vivo es una lista de instrucciones de cambio de canal que ocurren en un momento específico. Un elemento de lista de reproducción consiste en una hora de alarma, un canal y una opción de repetición. El administrador mantiene una base de datos de elementos de la lista de reproducción y guarda la lista en un archivo. Este archivo se lee cada vez que se inicia el administrador para que los eventos en curso siempre ocurran.
+    </description>
+    <description lang="de_DE">
+      Der Manager für TV-Wiedergabelisten stellt einen Service für Clients zur Verfügung, um Fernsehsendungen zu planen. Eine Wiedergabeliste für TV-Programme ist eine Liste von Kanalwechselbefehlen, die zu einer bestimmten Zeit stattfinden. Ein Element der Wiedergabeliste besteht aus einer Alarmzeit, einem Kanal und einer Wiederholungsoption. Der Manager verwaltet eine Datenbank mit Wiedergabelistenelementen und speichert die Liste in einer Datei. Diese Datei wird bei jedem Start des Managers gelesen, so dass laufende Ereignisse ständig ausgeführt werden.
+    </description>
+    <platform>all</platform>
+    <license>GNU General Public License v3.0 only, June 2007</license>
+    <source>https://github.com/jmooremcc/Live_TV_Playlist</source>
+    <email>jmooremcc@hotmail.com</email>
+    <assets>
+      <icon>ltvpl-icon.png</icon>
+      <fanart>ltvpl-fanart.jpg</fanart>
+      <screenshot>resources/screenshots/screenshot001.png</screenshot>
+      <screenshot>resources/screenshots/screenshot002.png</screenshot>
+      <screenshot>resources/screenshots/screenshot004.png</screenshot>
+      <screenshot>resources/screenshots/screenshot005.png</screenshot>
+    </assets>
+  </extension>
+</addon>
