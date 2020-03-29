@@ -11,6 +11,8 @@
     See LICENSES/GPL-3.0-only for more information.
 """
 
+import json
+
 from .. import keys
 from ..api.parameters import Boolean
 from ..parser import m3u8, clip_embed
@@ -170,7 +172,32 @@ def video(video_id, platform=keys.WEB, headers={}):
 
 @clip_embed
 @query
-def clip(slug):
-    q = ClipsQuery('api/v2/clips/{clip}/status')
-    q.add_urlkw(keys.CLIP, slug)
+def clip(slug, headers={}):
+    data = json.dumps({
+        'query': '''{
+      clip(slug: "%s") {
+        broadcaster {
+          displayName
+        }
+        createdAt
+        curator {
+          displayName
+          id
+        }
+        durationSeconds
+        id
+        tiny: thumbnailURL(width: 86, height: 45)
+        small: thumbnailURL(width: 260, height: 147)
+        medium: thumbnailURL(width: 480, height: 272)
+        title
+        videoQualities {
+          frameRate
+          quality
+          sourceURL
+        }
+        viewCount
+      }
+    }''' % slug,
+    })
+    q = ClipsQuery(headers=headers, data=data)
     return q
