@@ -1,0 +1,8 @@
+How to release a new version of the addon:
+
+- Update version number in:
+  - addon.xml
+  - service.py
+
+- Update version number and add entries describing main changes in the new
+  release to the changelog.txt file.
