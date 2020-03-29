@@ -1,3 +1,135 @@
+= 4.8.2 (20191224)
+
+* Added Python docstrings to all public methods of the most commonly
+  used classes.
+
+* Added a Chinese translation by Deron Wang and a Brazilian Portuguese
+  translation by Cezar Peixeiro to the repository.
+
+* Fixed two deprecation warnings. Patches by Colin
+  Watson and Nicholas Neumann. [bug=1847592] [bug=1855301]
+
+* The html.parser tree builder now correctly handles DOCTYPEs that are
+  not uppercase. [bug=1848401]
+
+* PageElement.select() now returns a ResultSet rather than a regular
+  list, making it consistent with methods like find_all().
+
+= 4.8.1 (20191006)
+
+* When the html.parser or html5lib parsers are in use, Beautiful Soup
+  will, by default, record the position in the original document where
+  each tag was encountered. This includes line number (Tag.sourceline)
+  and position within a line (Tag.sourcepos).  Based on code by Chris
+  Mayo. [bug=1742921]
+
+* When instantiating a BeautifulSoup object, it's now possible to
+   provide a dictionary ('element_classes') of the classes you'd like to be
+   instantiated instead of Tag, NavigableString, etc.
+
+* Fixed the definition of the default XML namespace when using
+   lxml 4.4. Patch by Isaac Muse. [bug=1840141]
+
+* Fixed a crash when pretty-printing tags that were not created
+   during initial parsing. [bug=1838903]
+
+* Copying a Tag preserves information that was originally obtained from
+   the TreeBuilder used to build the original Tag. [bug=1838903]
+
+* Raise an explanatory exception when the underlying parser
+   completely rejects the incoming markup. [bug=1838877]
+
+* Avoid a crash when trying to detect the declared encoding of a
+   Unicode document. [bug=1838877]
+
+* Avoid a crash when unpickling certain parse trees generated
+   using html5lib on Python 3. [bug=1843545]
+
+= 4.8.0 (20190720, "One Small Soup")
+
+This release focuses on making it easier to customize Beautiful Soup's
+input mechanism (the TreeBuilder) and output mechanism (the Formatter).
+
+* You can customize the TreeBuilder object by passing keyword
+  arguments into the BeautifulSoup constructor. Those keyword
+  arguments will be passed along into the TreeBuilder constructor.
+
+  The main reason to do this right now is to change how which
+  attributes are treated as multi-valued attributes (the way 'class'
+  is treated by default). You can do this with the
+  'multi_valued_attributes' argument. [bug=1832978]
+
+* The role of Formatter objects has been greatly expanded. The Formatter
+  class now controls the following:
+
+  - The function to call to perform entity substitution. (This was
+    previously Formatter's only job.)
+  - Which tags should be treated as containing CDATA and have their
+    contents exempt from entity substitution.
+  - The order in which a tag's attributes are output. [bug=1812422]
+  - Whether or not to put a '/' inside a void element, e.g. '<br/>' vs '<br>'
+
+  All preexisting code should work as before.
+
+* Added a new method to the API, Tag.smooth(), which consolidates
+  multiple adjacent NavigableString elements. [bug=1697296]
+
+* &apos; (which is valid in XML, XHTML, and HTML 5, but not HTML 4) is always
+  recognized as a named entity and converted to a single quote. [bug=1818721]
+
+= 4.7.1 (20190106)
+
+* Fixed a significant performance problem introduced in 4.7.0. [bug=1810617]
+
+* Fixed an incorrectly raised exception when inserting a tag before or
+  after an identical tag. [bug=1810692]
+
+* Beautiful Soup will no longer try to keep track of namespaces that
+  are not defined with a prefix; this can confuse soupselect. [bug=1810680]
+
+* Tried even harder to avoid the deprecation warning originally fixed in
+   4.6.1. [bug=1778909]
+
+= 4.7.0 (20181231)
+
+* Beautiful Soup's CSS Selector implementation has been replaced by a
+  dependency on Isaac Muse's SoupSieve project (the soupsieve package
+  on PyPI). The good news is that SoupSieve has a much more robust and
+  complete implementation of CSS selectors, resolving a large number
+  of longstanding issues. The bad news is that from this point onward,
+  SoupSieve must be installed if you want to use the select() method.
+
+  You don't have to change anything lf you installed Beautiful Soup
+  through pip (SoupSieve will be automatically installed when you
+  upgrade Beautiful Soup) or if you don't use CSS selectors from
+  within Beautiful Soup.
+
+  SoupSieve documentation: https://facelessuser.github.io/soupsieve/
+
+* Added the PageElement.extend() method, which works like list.append().
+   [bug=1514970]
+
+* PageElement.insert_before() and insert_after() now take a variable
+   number of arguments. [bug=1514970]
+
+* Fix a number of problems with the tree builder that caused
+  trees that were superficially okay, but which fell apart when bits
+  were extracted. Patch by Isaac Muse. [bug=1782928,1809910]
+
+* Fixed a problem with the tree builder in which elements that
+  contained no content (such as empty comments and all-whitespace
+  elements) were not being treated as part of the tree. Patch by Isaac
+  Muse. [bug=1798699]
+
+* Fixed a problem with multi-valued attributes where the value
+  contained whitespace. Thanks to Jens Svalgaard for the
+  fix. [bug=1787453]
+
+* Clarified ambiguous license statements in the source code. Beautiful
+  Soup is released under the MIT license, and has been since 4.4.0.
+
+* This file has been renamed from NEWS.txt to CHANGELOG.
+
 = 4.6.3 (20180812)
 
 * Exactly the same as 4.6.2. Re-released to make the README file
