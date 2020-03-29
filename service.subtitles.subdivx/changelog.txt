@@ -1,3 +1,12 @@
+0.3.5
+- Adapt to handle subdivx.com pagination changes
+- Add caching of web search results with new configurable TTL setting
+- Limit search results to 40. Avoid duplicate results if pagination stops
+  working
+
+0.3.3
+- Implement caching of web search results. Use a cache validity of one hour.
+
 0.3.2
 - Be less verbose when removing old temporary dirs.
 

@@ -12,11 +12,15 @@ import os.path
 from pprint import pformat
 import re
 import shutil
+try:
+    import StorageServer
+except Exception:
+    import storageserverdummy as StorageServer
 import sys
 import tempfile
 from unicodedata import normalize
 from urllib import FancyURLopener, unquote, quote_plus, urlencode, quote
-from urlparse import parse_qs
+from urlparse import parse_qs, urlsplit, urlunsplit
 
 try:
     import xbmc
@@ -44,7 +48,7 @@ __addon__ = xbmcaddon.Addon()
 __author__     = __addon__.getAddonInfo('author')
 __scriptid__   = __addon__.getAddonInfo('id')
 __scriptname__ = __addon__.getAddonInfo('name')
-__version__    = '0.3.2'
+__version__    = '0.3.5'
 __language__   = __addon__.getLocalizedString
 
 __cwd__        = xbmc.translatePath(__addon__.getAddonInfo('path')).decode("utf-8")
@@ -52,8 +56,13 @@ __profile__    = xbmc.translatePath(__addon__.getAddonInfo('profile')).decode("u
 
 
 MAIN_SUBDIVX_URL = "http://www.subdivx.com/"
-SEARCH_PAGE_URL = MAIN_SUBDIVX_URL + \
-    "index.php?accion=5&masdesc=&oxdown=1&pg=%(page)s&buscar=%(query)s"
+SEARCH_PAGE_URL = MAIN_SUBDIVX_URL + "index.php"
+QS_DICT = {
+    'accion': '5',
+    'masdesc': '',
+    'oxdown': '1',
+}
+MAX_RESULTS_COUNT = 40
 
 INTERNAL_LINK_URL_BASE = "plugin://%s/?"
 SUB_EXTS = ['SRT', 'SUB', 'SSA']
@@ -164,51 +173,85 @@ def cleanup_subdivx_comment(comment):
     return clean_text.rstrip(' \t')
 
 
+def build_subdivx_url(qs_dict):
+    parts = urlsplit(SEARCH_PAGE_URL)
+    mod_parts = (
+        parts.scheme,
+        parts.netloc,
+        parts.path,
+        urlencode(qs_dict),
+        parts.fragment
+    )
+    return urlunsplit(mod_parts)
+
+
+def process_page(page_nr, srch_param_name, srch_str, file_orig_path):
+    log(u"Trying page %d" % page_nr)
+    qs_dict = QS_DICT.copy()
+    qs_dict[srch_param_name] = srch_str
+    if page_nr > 1:
+        qs_dict['pg'] = str(page_nr)
+    url = build_subdivx_url(qs_dict)
+    content = get_url(url)
+    if content is None or not SUBTITLE_RE.search(content):
+        return [], set()
+    subs = []
+    descriptions = []
+    for counter, match in enumerate(SUBTITLE_RE.finditer(content)):
+        groups = match.groupdict()
+
+        subdivx_id = groups['subdivx_id']
+
+        dls = re.sub(r'[,.]', '', groups['downloads'])
+        downloads = int(dls)
+
+        raw_desc = groups['comment'].decode(PAGE_ENCODING)
+        descriptions.append(raw_desc)
+        descr = cleanup_subdivx_comment(raw_desc)
+
+        # If our actual video file's name appears in the description
+        # then set sync to True because it has better chances of its
+        # synchronization to match
+        _, fn = os.path.split(file_orig_path)
+        name, _ = os.path.splitext(fn)
+        sync = re.search(re.escape(name), descr, re.I) is not None
+
+        try:
+            if not counter:
+                log(u'Subtitles found for subdivx_id = %s:' % subdivx_id)
+            log(u'"%s"' % descr)
+        except Exception:
+            pass
+        item = {
+            'descr': descr,
+            'sync': sync,
+            'subdivx_id': subdivx_id.decode(PAGE_ENCODING),
+            'uploader': groups['uploader'],
+            'downloads': downloads,
+            'score': int(groups['calif']),
+        }
+        subs.append(item)
+
+    return subs, set(descriptions)
+
+
 def get_all_subs(searchstring, languageshort, file_orig_path):
     if languageshort != "es":
         return []
     subs_list = []
-    page = 1
+    page_nr = 1
+    last_page = set()
     while True:
-        log(u"Trying page %d" % page)
-        url = SEARCH_PAGE_URL % {'page': page,
-                                 'query': quote_plus(searchstring)}
-        content = get_url(url)
-        if content is None or not SUBTITLE_RE.search(content):
+        page_results, current_page = process_page(page_nr, 'q', searchstring, file_orig_path)
+        if not page_results:
             break
-        for counter, match in enumerate(SUBTITLE_RE.finditer(content)):
-            groups = match.groupdict()
-
-            subdivx_id = groups['subdivx_id']
-
-            dls = re.sub(r'[,.]', '', groups['downloads'])
-            downloads = int(dls)
-
-            descr = cleanup_subdivx_comment(groups['comment'].decode(PAGE_ENCODING))
-
-            # If our actual video file's name appears in the description
-            # then set sync to True because it has better chances of its
-            # synchronization to match
-            _, fn = os.path.split(file_orig_path)
-            name, _ = os.path.splitext(fn)
-            sync = re.search(re.escape(name), descr, re.I) is not None
-
-            try:
-                if not counter:
-                    log(u'Subtitles found for subdivx_id = %s:' % subdivx_id)
-                log(u'"%s"' % descr)
-            except Exception:
-                pass
-            item = {
-                'descr': descr,
-                'sync': sync,
-                'subdivx_id': subdivx_id.decode(PAGE_ENCODING),
-                'uploader': groups['uploader'],
-                'downloads': downloads,
-                'score': int(groups['calif']),
-            }
-            subs_list.append(item)
-        page += 1
+        if current_page == last_page:
+            break
+        subs_list.extend(page_results)
+        if len(subs_list) >= MAX_RESULTS_COUNT:
+            break
+        page_nr += 1
+        last_page = current_page
 
     # Put subs with sync=True at the top
     subs_list = sorted(subs_list, key=lambda s: s['sync'], reverse=True)
@@ -319,7 +362,16 @@ def Search(item):
         searchstring = '%s%s' % (item['title'], ' (%s)' % item['year'].strip('()') if item.get('year') else '')
     log(u"Search string = %s" % searchstring)
 
-    subs_list = get_all_subs(searchstring, "es", file_original_path)
+    cache_ttl_value = __addon__.getSetting('cache_ttl')
+    try:
+        cache_ttl = int(cache_ttl_value)
+    except Exception:
+        cache_ttl = 0
+    if cache_ttl:
+        cache = StorageServer.StorageServer('service.subtitles.subdivx', cache_ttl / 60.0)
+        subs_list = cache.cacheFunction(get_all_subs, searchstring, 'es', file_original_path)
+    else:
+        subs_list = get_all_subs(searchstring, 'es', file_original_path)
 
     compute_ratings(subs_list)
 
