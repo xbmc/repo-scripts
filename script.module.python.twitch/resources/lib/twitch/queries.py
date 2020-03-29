@@ -24,7 +24,7 @@ _kraken_baseurl = 'https://api.twitch.tv/kraken/'
 _helix_baseurl = 'https://api.twitch.tv/helix/'
 _hidden_baseurl = 'https://api.twitch.tv/api/'
 _usher_baseurl = 'https://usher.ttvnw.net/'
-_clips_baseurl = 'https://clips.twitch.tv/'
+_clips_baseurl = 'https://gql.twitch.tv/gql'
 _uploads_baseurl = 'https://uploads.twitch.tv/'
 _oauth_baseurl = 'https://api.twitch.tv/kraken/oauth2/'
 
@@ -195,11 +195,12 @@ class OAuthQuery(JsonQuery):
         self.add_path(path)
 
 
-class ClipsQuery(DownloadQuery):
-    def __init__(self, path, headers={}, data={}, method=methods.GET):
+class ClipsQuery(JsonQuery):
+    def __init__(self, path='', headers={}, data={}, method=methods.POST):
         _headers = deepcopy(headers)
         super(ClipsQuery, self).__init__(_clips_baseurl, _headers, data, method)
-        self.add_path(path)
+        if path:
+            self.add_path(path)
 
 
 class UploadsQuery(DownloadQuery):
