@@ -1,3 +1,6 @@
+2.0.12
+[fix] clip usher
+
 2.0.11
 [fix] Python 3 - don't decode string when processing clips
 
