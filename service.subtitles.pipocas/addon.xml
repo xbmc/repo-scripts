@@ -6,16 +6,16 @@
   </requires>
   <extension point="xbmc.subtitle.module" library="service.py"/>
   <extension point="xbmc.addon.metadata">
-    <summary lang="en">Pipocas.tv</summary>
-    <summary lang="pt">Pipocas.tv</summary>
-    <summary lang="ptbr">Pipocas.tv</summary>
-    <description lang="en">Search and download subtitles from Pipocas.tv. Please check the add-on configuration before using it! Note: The "Parent Folder Search and Match" set to "AUTO" will first search by parent folder but if it's not a release then it will search normally, it's recommend to leave it "AUTO". Library is always primary, this is only for non Library Movies\TVSHOWS.</description>
-    <description lang="pt">Procura e descarrega legendas do site Pipocas.tv. Por favor, verifica as definições do add-on antes de usar! Nota: O campo "Procura e sincroniza pela pasta do filme" em modo "AUTO" vai primeiro tentar procurar pelo nome da pasta "PAI" mas se a mesma não for uma release irá procurar pelo nome do ficheiro, recomenda-se que esteja em "AUTO". Se o filme ou série estiver na Biblioteca, o nome do filme/série é da Biblioteca.</description>
-    <description lang="ptbr">Pesquisa e baixa legendas do site Pipocas.tv. Por favor, verifica as configurações do add-on antes de usar! Nota: O campo "Procura e sincroniza pela pasta do filme" em modo "AUTO" vai primeiro tentar procurar pelo nome do diretório "PAI" mas se a mesma não for uma release irá procurar pelo nome do arquivo, recomenda-se que esteja em "AUTO". Se o filme ou série estiver na Biblioteca, o nome do filme/série é da Biblioteca.</description>
-    <disclaimer lang="en">For bugs, requests or general questions please contact: highlander@teknorage.com</disclaimer>
-    <disclaimer lang="pt">Para bugs, pedidos ou perguntas, contacte: highlander@teknorage.com</disclaimer>
-    <disclaimer lang="ptbr">Para bugs, pedidos ou perguntas, contate: highlander@teknorage.com</disclaimer>
-    <language>pt en ptbr</language>
+    <summary lang="en_GB">Pipocas.tv</summary>
+    <summary lang="pt_PT">Pipocas.tv</summary>
+    <summary lang="pt_BR">Pipocas.tv</summary>
+    <description lang="en_GB">Search and download subtitles from Pipocas.tv. Please check the add-on configuration before using it! Note: The "Parent Folder Search and Match" set to "AUTO" will first search by parent folder but if it's not a release then it will search normally, it's recommend to leave it "AUTO". Library is always primary, this is only for non Library Movies\TVSHOWS.</description>
+    <description lang="pt_PT">Procura e descarrega legendas do site Pipocas.tv. Por favor, verifica as definições do add-on antes de usar! Nota: O campo "Procura e sincroniza pela pasta do filme" em modo "AUTO" vai primeiro tentar procurar pelo nome da pasta "PAI" mas se a mesma não for uma release irá procurar pelo nome do ficheiro, recomenda-se que esteja em "AUTO". Se o filme ou série estiver na Biblioteca, o nome do filme/série é da Biblioteca.</description>
+    <description lang="pt_BR">Pesquisa e baixa legendas do site Pipocas.tv. Por favor, verifica as configurações do add-on antes de usar! Nota: O campo "Procura e sincroniza pela pasta do filme" em modo "AUTO" vai primeiro tentar procurar pelo nome do diretório "PAI" mas se a mesma não for uma release irá procurar pelo nome do arquivo, recomenda-se que esteja em "AUTO". Se o filme ou série estiver na Biblioteca, o nome do filme/série é da Biblioteca.</description>
+    <disclaimer lang="en_GB">For bugs, requests or general questions please contact: highlander@teknorage.com</disclaimer>
+    <disclaimer lang="pt_PT">Para bugs, pedidos ou perguntas, contacte: highlander@teknorage.com</disclaimer>
+    <disclaimer lang="pt_BR">Para bugs, pedidos ou perguntas, contate: highlander@teknorage.com</disclaimer>
+    <language>pt_PT en_GB pt_BR</language>
     <platform>all</platform>
     <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
     <forum>http://forum.xbmc.org/forumdisplay.php?fid=143</forum>
