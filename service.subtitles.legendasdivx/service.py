@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Service LegendasDivx.com version 0.2.8
+# Service LegendasDivx.com version 0.2.9
 # Code based on Undertext (FRODO) service
 # Coded by HiGhLaNdR@OLDSCHOOL
 # Ported to Gotham by HiGhLaNdR@OLDSCHOOL
@@ -335,7 +335,7 @@ def Search(item):
                         log(u"Search: RAR MULTI CD String = %s" % (searchstring,))
                     else: searchstring = title
                 else:
-                    searchstring = title
+                    searchstring = filename
                     log(u"Search: RAR NO MULTI CD String = %s" % (searchstring,))
             elif 'cd1' in string.lower(title) or 'cd2' in string.lower(title) or 'cd3' in string.lower(title):
                 dirsearch = os.path.abspath(file_original_path)
