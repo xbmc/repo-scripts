@@ -17,9 +17,9 @@
     <language>pt_PT en_GB</language>
     <platform>all</platform>
     <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
-    <forum>http://forum.xbmc.org/forumdisplay.php?fid=143</forum>
-    <website></website>
-    <email></email>
+    <forum>http://forum.kodi.tv/forumdisplay.php?fid=143</forum>
+    <website>https://www.legendasdivx.com</website>
+    <email>admin [at] legendasdivx {dot} com</email>
     <source>https://github.com/highlandr/service.subtitles.legendasdivx</source>
   </extension>
 </addon>

@@ -126,7 +126,7 @@ def urlpost(query, lang, page):
     log(u"POST url data: %s" % postdata)
     try:
         response = urllib2.urlopen(request, None, 6.5).read()
-    except urllib2.URLError, e:
+    except urllib2.URLError as e:
         response = ''
         xbmc.executebuiltin(('Notification(%s,%s,%d)' % (_scriptname , _language(32025).encode('utf8'),5000)))
         log(u"Oops, site down?")
