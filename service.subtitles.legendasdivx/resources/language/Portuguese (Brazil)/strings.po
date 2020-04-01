@@ -1,0 +1,121 @@
+# Addon Name: LegendasDivx.com
+# Addon id: service.subtitles.legendasdivx
+# Addon Provider: HiGhLaNdeR
+msgid ""
+msgstr ""
+"Project-Id-Version: legendasdivx.com 0.2.8\n"
+"Report-Msgid-Bugs-To: highlander@teknorage.com\n"
+"POT-Creation-Date: 2020-03-30 11:29\n"
+"PO-Revision-Date: 2020-03-30 11:29+0000\n"
+"Last-Translator: HiGhLaNdeR\n"
+"Language-Team: Portuguese (Brazil)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: pt_BR\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 2.3\n"
+
+msgctxt "#32001"
+msgid "Usuário"
+msgstr ""
+
+msgctxt "#32002"
+msgid "Senha"
+msgstr ""
+
+msgctxt "#32003"
+msgid "Detalhes da conta"
+msgstr ""
+
+msgctxt "#32004"
+msgid "Português Ativo"
+msgstr ""
+
+msgctxt "#32005"
+msgid "Português Brasileiro Ativo"
+msgstr ""
+
+msgctxt "#32006"
+msgid "Espanhol Ativo"
+msgstr ""
+
+msgctxt "#32007"
+msgid "Inglês Ativo"
+msgstr ""
+
+msgctxt "#32008"
+msgid "Forçar Descrição Completa (Texto com \"lixo\" incluído)"
+msgstr ""
+
+msgctxt "#32009"
+msgid "Sem RELEASE na descrição!"
+msgstr ""
+
+msgctxt "#32010"
+msgid "Pesquisa e sincroniza pelo diretório do filme"
+msgstr ""
+
+msgctxt "#32011"
+msgid "Auto"
+msgstr ""
+
+msgctxt "#32012"
+msgid "Sempre ligado"
+msgstr ""
+
+msgctxt "#32013"
+msgid "Desligado"
+msgstr ""
+
+msgctxt "#32014"
+msgid "Idiomas (Site)"
+msgstr ""
+
+msgctxt "#32015"
+msgid "Avançadas"
+msgstr ""
+
+msgctxt "#32016"
+msgid "O usuário é obrigatório! Verifique as configurações do serviço!"
+msgstr ""
+
+msgctxt "#32017"
+msgid "A senha é obrigatória! Verifique as configurações do serviço!"
+msgstr ""
+
+msgctxt "#32018"
+msgid "O usuário e senha são obrigatórios! Verifique as configurações do serviço!"
+msgstr ""
+
+msgctxt "#32019"
+msgid "Apenas para usuários registrados! Usuário e/ou Senha errados? Verifique as configurações do serviço! Obrigado."
+msgstr ""
+
+msgctxt "#32020"
+msgid "Prioridade de Pesquisa por"
+msgstr ""
+
+msgctxt "#32021"
+msgid "Nome do Arquivo"
+msgstr ""
+
+msgctxt "#32022"
+msgid "Título"
+msgstr ""
+
+msgctxt "#32023"
+msgid "Ativar modo depuração"
+msgstr ""
+
+msgctxt "#32024"
+msgid "Escolher subtitulo:"
+msgstr ""
+
+msgctxt "#32025"
+msgid "Sem ligação! Webite com problemas?"
+msgstr ""
+
+msgctxt "#32026"
+msgid "Excedeu o tempo! Tenta de novo!"
+msgstr ""
