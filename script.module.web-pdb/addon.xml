@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addon id="script.module.web-pdb"
        name="Web-PDB"
-       version="1.5.2"
+       version="1.5.3"
        provider-name="Roman V.M.">
   <requires>
     <import addon="xbmc.python" version="2.25.0"/>
@@ -20,8 +20,8 @@
     <source>https://github.com/romanvm/kodi.web-pdb</source>
     <assets>
       <icon>icon.png</icon>
-      <screenshot>resources/screenshot.png</screenshot>
+      <screenshot>resources/screenshot.jpg</screenshot>
     </assets>
-    <news>1.5.2: Internal updates.</news>
+    <news>1.5.3: Fix a rare issue when a debugger session cannot be started.</news>
   </extension>
 </addon>
