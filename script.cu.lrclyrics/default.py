@@ -1,52 +1,21 @@
-import sys
-import os
-import xbmc
-import xbmcaddon
+from lib.utils import *
 
-ADDON = xbmcaddon.Addon()
-ADDONID = ADDON.getAddonInfo('id')
-ADDONNAME = ADDON.getAddonInfo('name')
-ADDONVERSION = ADDON.getAddonInfo('version')
-CWD = xbmc.translatePath(ADDON.getAddonInfo('path'))
-PROFILE = xbmc.translatePath(ADDON.getAddonInfo('profile'))
-LANGUAGE = ADDON.getLocalizedString
-
-BASE_RESOURCE_PATH = os.path.join(CWD, 'resources', 'lib')
-sys.path.append(BASE_RESOURCE_PATH)
-
-from utilities import *
-from scrapertest import *
 log('script version %s started' % ADDONVERSION)
+service = ADDON.getSettingBool('service')
 
-def culrc_run(mode):
-    log('mode is %s' % mode)
-    if not WIN.getProperty('culrc.running') == 'true':
-        import gui
-        gui.MAIN(mode=mode)
-    elif not WIN.getProperty('culrc.guirunning') == 'TRUE':
-        # we're already running, user clicked button on osd
-        WIN.setProperty('culrc.force','TRUE')
-    else:
-        log('script already running')
-        if ADDON.getSettingBool('silent'):
-            dialog = xbmcgui.Dialog()
-            dialog.notification(ADDONNAME, LANGUAGE(32158), time=2000, sound=False)
-
-if (__name__ == '__main__'):
-    service = ADDON.getSettingBool('service')
-    # started as a service
-    if sys.argv == ['']:
-        if service:
-            culrc_run('service')
-        else:
-            log('service not enabled')
-    # manually started
-    else:
-        if len(sys.argv) == 2 and sys.argv[1] == 'test':
-            test_scrapers()
-        elif service:
-            culrc_run('service')
-        else:
-            culrc_run('manual')
+if sys.argv == [''] and not service:
+    log('service not enabled')
+elif len(sys.argv) == 2 and sys.argv[1] == 'test':
+    from lib.scrapertest import *
+    test_scrapers()
+elif not WIN.getProperty('culrc.running') == 'true':
+    from lib import gui
+    gui.MAIN(mode=service)
+elif not WIN.getProperty('culrc.guirunning') == 'TRUE':
+    WIN.setProperty('culrc.force','TRUE') # we're already running, user clicked button on osd
+else:
+    log('script already running')
+    if not ADDON.getSettingBool('silent'):
+        xbmcgui.Dialog().notification(ADDONNAME, LANGUAGE(32158), time=2000, sound=False)
 
 log('script version %s ended' % ADDONVERSION)
