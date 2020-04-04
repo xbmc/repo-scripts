@@ -6,6 +6,7 @@ from .exif_log import get_logger
 from .classes import *
 from .tags import *
 from .utils import ord_
+from .heic import HEICExifFinder
 
 __version__ = '2.1.2'
 
@@ -16,26 +17,33 @@ def increment_base(data, base):
     return ord_(data[base + 2]) * 256 + ord_(data[base + 3]) + 2
 
 
-def process_file(f, stop_tag=DEFAULT_STOP_TAG, details=True, strict=False, debug=False, truncate_tags=True):
+def process_file(f, stop_tag=DEFAULT_STOP_TAG, details=True, strict=False, debug=False, truncate_tags=True, auto_seek=True):
     """
     Process an image file (expects an open file object).
 
     This is the function that has to deal with all the arbitrary nasty bits
     of the EXIF standard.
     """
-
+    
+    if auto_seek:
+        f.seek(0)
+    
     # by default do not fake an EXIF beginning
     fake_exif = 0
 
     # determine whether it's a JPEG or TIFF
     data = f.readBytes(12)
-    if data[0:4] in [b'II*\x00', b'MM\x00*']:
+    if data[0:2] in [b'II', b'MM']:
         # it's a TIFF file
-        logger.debug("TIFF format recognized in data[0:4]")
-        f.seek(0,0)
+        logger.debug("TIFF format recognized in data[0:2]")
+        f.seek(0)
         endian = f.readBytes(1)
         f.readBytes(1)
         offset = 0
+    elif data[4:12] == b'ftypheic':
+        f.seek(0)
+        heic = HEICExifFinder (f)
+        offset, endian = heic.find_exif()
     elif data[0:2] == b'\xFF\xD8':
         # it's a JPEG file
         logger.debug("JPEG format recognized data[0:2]=0x%X%X", ord_(data[0]), ord_(data[1]))
@@ -59,7 +67,7 @@ def process_file(f, stop_tag=DEFAULT_STOP_TAG, details=True, strict=False, debug
             logger.debug(" Set segment base to 0x%X", base)
 
         # Big ugly patch to deal with APP2 (or other) data coming before APP1
-        f.seek(0,0)
+        f.seek(0)
         # in theory, this could be insufficient since 64K is the maximum size--gd
         data = f.readBytes(base + 4000)
         # base = 2
@@ -150,23 +158,23 @@ def process_file(f, stop_tag=DEFAULT_STOP_TAG, details=True, strict=False, debug
                 else:
                     logger.debug("  Increment base by %s", increment)
                     base += increment
-        f.seek((base+12),0)
+        f.seek(base + 12)
         if ord_(data[2 + base]) == 0xFF and data[6 + base:10 + base] == b'Exif':
             # detected EXIF header
-            offset = base+12
+            offset = f.tell()
             endian = f.readBytes(1)
             #HACK TEST:  endian = 'M'
         elif ord_(data[2 + base]) == 0xFF and data[6 + base:10 + base + 1] == b'Ducky':
             # detected Ducky header.
             logger.debug("EXIF-like header (normally 0xFF and code): 0x%X and %s",
                          ord_(data[2 + base]), data[6 + base:10 + base + 1])
-            offset = base+12
+            offset = f.tell()
             endian = f.readBytes(1)
         elif ord_(data[2 + base]) == 0xFF and data[6 + base:10 + base + 1] == b'Adobe':
             # detected APP14 (Adobe)
             logger.debug("EXIF-like header (normally 0xFF and code): 0x%X and %s",
                          ord_(data[2 + base]), data[6 + base:10 + base + 1])
-            offset = base+12
+            offset = f.tell()
             endian = f.readBytes(1)
         else:
             # no EXIF information

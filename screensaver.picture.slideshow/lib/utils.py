@@ -1,17 +1,23 @@
-import sys, os, re, urllib, hashlib
-import xbmc, xbmcvfs, xbmcaddon
+import hashlib
+import os
+import re
+import sys
+import urllib
+import xbmc
+import xbmcvfs
+import xbmcaddon
 import xml.etree.ElementTree as etree
 
-ADDON    = sys.modules[ '__main__' ].ADDON
-ADDONID  = sys.modules[ '__main__' ].ADDONID
-LANGUAGE = sys.modules[ '__main__' ].LANGUAGE
+ADDON    = xbmcaddon.Addon()
+ADDONID = ADDON.getAddonInfo('id')
+LANGUAGE = ADDON.getLocalizedString
 
 # supported image types by the screensaver
 IMAGE_TYPES = ('.jpg', '.jpeg', '.png', '.tif', '.tiff', '.gif', '.pcx', '.bmp', '.tga', '.ico', '.nef')
 CACHEFOLDER = xbmc.translatePath(ADDON.getAddonInfo('profile'))
-CACHEFILE   = os.path.join(CACHEFOLDER, '%s')
-RESUMEFILE  = os.path.join(CACHEFOLDER, 'offset')
-ASFILE      = xbmc.translatePath('special://profile/advancedsettings.xml')
+CACHEFILE = os.path.join(CACHEFOLDER, '%s')
+RESUMEFILE = os.path.join(CACHEFOLDER, 'offset')
+ASFILE = xbmc.translatePath('special://profile/advancedsettings.xml')
 
 def log(txt):
     message = '%s: %s' % (ADDONID, txt)

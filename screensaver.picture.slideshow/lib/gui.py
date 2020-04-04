@@ -13,22 +13,18 @@
 # *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
 # *  http://www.gnu.org/copyleft/gpl.html
 
-import re
-import random
 import copy
-import threading
-import xbmcgui
-import xbmcaddon
-import exifreadvfs
-from iptcinfovfs import IPTCInfo
-from xml.dom.minidom import parse
-from utils import *
 import json
+import random
+import threading
+from xml.dom.minidom import parse
+import xbmcgui
+from lib import exifread_xbmcvfs
+from lib.iptcinfo3_xbmcvfs import IPTCInfo
+from lib.utils import *
 
-ADDON    = sys.modules[ '__main__' ].ADDON
-ADDONID  = sys.modules[ '__main__' ].ADDONID
-CWD      = sys.modules[ '__main__' ].CWD
-SKINDIR  = xbmc.getSkinDir()
+ADDON = xbmcaddon.Addon()
+SKINDIR = xbmc.getSkinDir()
 
 # images types that can contain exif/iptc data
 EXIF_TYPES  = ('.jpg', '.jpeg', '.tif', '.tiff')
@@ -85,21 +81,21 @@ class Screensaver(xbmcgui.WindowXMLDialog):
 
     def _get_settings(self):
         # read addon settings
-        self.slideshow_type   = ADDON.getSettingInt('type')
-        self.slideshow_path   = ADDON.getSettingString('path')
+        self.slideshow_type = ADDON.getSettingInt('type')
+        self.slideshow_path = ADDON.getSettingString('path')
         self.slideshow_effect = ADDON.getSettingInt('effect')
         # labelenum is broken, we use enum and get the index (index 0 = 2 secs)
-        self.slideshow_time   = ADDON.getSettingInt('time') + 2
+        self.slideshow_time = ADDON.getSettingInt('time') + 2
         # convert float to hex value usable by the skin
-        self.slideshow_dim    = hex(int('%.0f' % (float(100 - ADDON.getSettingInt('level')) * 2.55)))[2:] + 'ffffff'
+        self.slideshow_dim = hex(int('%.0f' % (float(100 - ADDON.getSettingInt('level')) * 2.55)))[2:] + 'ffffff'
         self.slideshow_random = ADDON.getSettingBool('random')
         self.slideshow_resume = ADDON.getSettingBool('resume')
-        self.slideshow_scale  = ADDON.getSettingBool('scale')
-        self.slideshow_name   = ADDON.getSettingInt('label')
-        self.slideshow_date   = ADDON.getSettingBool('date')
-        self.slideshow_iptc   = ADDON.getSettingBool('iptc')
-        self.slideshow_music  = ADDON.getSettingBool('music')
-        self.slideshow_bg     = ADDON.getSettingBool('background')
+        self.slideshow_scale = ADDON.getSettingBool('scale')
+        self.slideshow_name = ADDON.getSettingInt('label')
+        self.slideshow_date = ADDON.getSettingBool('date')
+        self.slideshow_iptc = ADDON.getSettingBool('iptc')
+        self.slideshow_music = ADDON.getSettingBool('music')
+        self.slideshow_bg = ADDON.getSettingBool('background')
         # select which image controls from the xml we are going to use
         if self.slideshow_scale:
             self.image1 = self.getControl(3)
@@ -174,7 +170,7 @@ class Screensaver(xbmcgui.WindowXMLDialog):
                     if self.slideshow_date:
                         exiffile = xbmcvfs.File(img[0])
                         try:
-                            exiftags = exifreadvfs.process_file(exiffile, details=False, stop_tag='DateTimeOriginal')
+                            exiftags = exifread_xbmcvfs.process_file(exiffile, details=False, stop_tag='DateTimeOriginal')
                             if 'EXIF DateTimeOriginal' in exiftags:
                                 datetime = bytes(exiftags['EXIF DateTimeOriginal'].values).decode('utf-8')
                                 # sometimes exif date returns useless data, probably no date set on camera
@@ -202,15 +198,15 @@ class Screensaver(xbmcgui.WindowXMLDialog):
                         iptcfile = xbmcvfs.File(img[0])
                         try:
                             iptc = IPTCInfo(iptcfile)
-                            if 105 in iptc.data and iptc.data[105]:
-                                title = bytes(iptc.data[105]).decode('utf-8')
+                            if iptc['headline']:
+                                title = bytes(iptc['headline']).decode('utf-8')
                                 iptc_ti = True
-                            if 120 in iptc.data and iptc.data[120]:
-                                description = bytes(iptc.data[120]).decode('utf-8')
+                            if iptc['caption/abstract']:
+                                description = bytes(iptc['caption/abstract']).decode('utf-8')
                                 iptc_de = True
-                            if 25 in iptc.data and iptc.data[25]:
+                            if iptc['keywords']:
                                 tags = []
-                                for tag in iptc.data[25]:
+                                for tag in iptc['keywords']:
                                     tags.append(bytes(tag).decode('utf-8'))
                                 keywords = ', '.join(tags)
                                 iptc_ke = True
@@ -220,23 +216,22 @@ class Screensaver(xbmcgui.WindowXMLDialog):
                         # get xmp title, description and subject
                         if (not iptc_ti or not iptc_de or not iptc_ke):
                             try:
-                                # why do i need to recreate the file object?
                                 xmpfile = xbmcvfs.File(img[0])
                                 data = xmpfile.readBytes().decode('cp437')
-                                titlematch = re.search(r'<dc:title.*?rdf:Alt.*?rdf:li.*?>(.*?)<', data, flags=re.DOTALL)
-                                if titlematch and not iptc_ti:
-                                    title = titlematch.group(1)
-                                    iptc_ti = True
-                                descmatch = re.search(r'<dc:description.*?rdf:Alt.*?rdf:li.*?>(.*?)<', data, flags=re.DOTALL)
-                                if descmatch and not iptc_de:
-                                    description = descmatch.group(1)
-                                    iptc_de = True
-                                subjmatch = re.search(r'<dc:subject.*?rdf:Bag.*?>(.*?)</rdf:Bag', data, flags=re.DOTALL)
-                                if subjmatch and not iptc_ke:
-                                    subjectpart = ''.join(subjmatch.group(1).split())
-                                    subjectgroup = subjectpart.replace('<rdf:li>','').split('</rdf:li>')
-                                    keywords = ' '.join(subjectgroup)
-                                    iptc_ke = True
+                                xmpdata = re.search(r'<x:xmpmeta.*?>(.*?)</x:xmpmeta', data, flags=re.DOTALL)
+                                if xmpdata:
+                                    titlematch = re.search(r'<dc:title.*?rdf:Alt.*?rdf:li.*?>(.*?)<', xmpdata.group(1), flags=re.DOTALL)
+                                    if titlematch and not iptc_ti:
+                                        title = titlematch.group(1)
+                                        iptc_ti = True
+                                    descmatch = re.search(r'<dc:description.*?rdf:Alt.*?rdf:li.*?>(.*?)<', xmpdata.group(1), flags=re.DOTALL)
+                                    if descmatch and not iptc_de:
+                                        description = descmatch.group(1)
+                                        iptc_de = True
+                                    subjmatch = re.search(r'<dc:subject.*?rdf:Bag.*?>(.*?)</rdf:Bag', xmpdata.group(1), flags=re.DOTALL)
+                                    if subjmatch and not iptc_ke:
+                                        keywords = ', '.join(subjmatch.group(1).split()).replace('<rdf:li>', '').replace('</rdf:li>', '')
+                                        iptc_ke = True
                             except:
                                 pass
                             xmpfile.close()
@@ -283,8 +278,12 @@ class Screensaver(xbmcgui.WindowXMLDialog):
                     # add fade anim, used for both fade and slide/zoom anim
                     self._set_prop('Fade%d' % order[0], '0')
                     self._set_prop('Fade%d' % order[1], '1')
+                elif self.slideshow_effect == 3:
+                    # we need to hide the images when no effect is selected, add fade effect with time=0
+                    self._set_prop('NoEffectFade%d' % order[0], '0')
+                    self._set_prop('NoEffectFade%d' % order[1], '1')
                 # add fade anim to background images
-                if self.slideshow_bg:
+                if self.slideshow_bg and self.slideshow_effect != 3:
                     self._set_prop('Fade1%d' % order[0], '0')
                     self._set_prop('Fade1%d' % order[1], '1')
                 # define next image

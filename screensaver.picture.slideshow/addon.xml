@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="screensaver.picture.slideshow" name="Picture Slideshow Screensaver" version="6.0.2" provider-name="Team Kodi">
+<addon id="screensaver.picture.slideshow" name="Picture Slideshow Screensaver" version="6.1.0" provider-name="Team Kodi">
 	<requires>
 		<import addon="xbmc.python" version="3.0.0"/>
 	</requires>
@@ -107,14 +107,16 @@
 		<description lang="vi">Trình bảo vệ màn hình Slideshow sẽ giúp bạn trình chiếu bộ sưu tập ảnh với các hiệu ứng chuyển đổi đẹp mắt. Bạn có thể tuỳ chỉnh để hiện thông tin về bài hát, video, fanart hoặc một thư mục chứa ảnh bất kì</description>
 		<description lang="zh">幻灯片屏保将使用各种过渡效果以幻灯片形式显示您的图片。你可以设置它显示音乐或视频资料库同人画，或某个文件夹中的图片。</description>
 		<description lang="zh_TW">幻燈片屏幕保護程序可以顯示使用各種過場效果的幻燈片播放。它可以被配置為顯示您的圖書館音樂模式或視頻圖庫，或自行定義的文件夾中的圖像。</description>
-		<language></language>
 		<platform>all</platform>
-		<license>GNU GENERAL PUBLIC LICENSE Version 2</license>
+		<license>GPL-2.0-only</license>
 		<forum>https://forum.kodi.tv/showthread.php?tid=154032</forum>
 		<source>https://gitlab.com/ronie/screensaver.picture.slideshow</source>
 		<assets>
 			<icon>resources/icon.png</icon>
 			<fanart>resources/fanart.jpg</fanart>
 		</assets>
+		<news>- update exif, iptc and xmp data parsers
+- fix: display background setting was not selectable
+- fix: slideshow with no effect was broken</news>
 	</extension>
 </addon>
