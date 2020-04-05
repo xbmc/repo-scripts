@@ -2,12 +2,12 @@ import sys
 import re
 import xbmc
 import xbmcgui
+import xbmcaddon
 
-ADDON = sys.modules['__main__'].ADDON
-ADDONID = sys.modules['__main__'].ADDONID
-ADDONVERSION = sys.modules['__main__'].ADDONVERSION
-LANGUAGE = sys.modules['__main__'].LANGUAGE
-CWD = sys.modules['__main__'].CWD
+ADDON = xbmcaddon.Addon()
+ADDONID = ADDON.getAddonInfo('id')
+ADDONVERSION = ADDON.getAddonInfo('version')
+LANGUAGE = ADDON.getLocalizedString
 
 ACTION_CANCEL_DIALOG = (9, 10, 92, 216, 247, 257, 275, 61467, 61448,)
 ACTION_CONTEXT_MENU = (117,)

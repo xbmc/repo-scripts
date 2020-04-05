@@ -1,7 +1,7 @@
 import datetime
 import json
 import operator
-from defs import *
+from .defs import *
 
 def log(txt):
     message = '%s: %s' % (ADDONID, txt)
@@ -263,7 +263,8 @@ class GUI(xbmcgui.WindowXML):
                         plot = item['plot']
                         starttime = item['starttime']
                         endtime = item['endtime']
-                        listitem = xbmcgui.ListItem(label=broadcastname, iconImage='DefaultFolder.png', thumbnailImage=channelthumb, offscreen=True)
+                        listitem = xbmcgui.ListItem(label=broadcastname, offscreen=True)
+                        listitem.setArt({'icon':'DefaultFolder.png', 'thumb':channelthumb})
                         listitem.setProperty("icon", channelthumb)
                         listitem.setProperty("genre", genre)
                         listitem.setProperty("plot", plot)
