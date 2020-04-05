@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.cu.lrclyrics" name="CU LRC Lyrics" version="6.1.0" provider-name="Taxigps, ronie">
+<addon id="script.cu.lrclyrics" name="CU LRC Lyrics" version="6.2.0" provider-name="Taxigps, ronie">
 	<requires>
 		<import addon="xbmc.python" version="3.0.0"/>
-		<import addon="script.module.chardet" version="2.2.1"/>
-		<import addon="script.module.beautifulsoup4" version="4.3.2"/>
-		<import addon="script.module.requests" version="2.18.4.1"/>
+		<import addon="script.module.beautifulsoup4" version="4.8.2+matrix.1"/>
+		<import addon="script.module.chardet" version="3.0.4+matrix.1"/>
+		<import addon="script.module.mutagen" version="1.44.0+matrix.1"/>
+		<import addon="script.module.requests" version="2.22.0+matrix.1"/>
 	</requires>
 	<extension point="xbmc.python.lyrics" library="default.py"/>
 	<extension point="xbmc.service" library="default.py"/>
@@ -70,7 +71,6 @@
 		<description lang="sv_SE">CU LRC Lyrics är ett skript för Kodi. Det stödjer såväl vanliga som LRC texter. Skriptet kan söka synkroniserade/osynkroniserade texter inbäddade från fil eller från skraport. Det kan läsa .lrc/.txt filer sparade med samma sökväg och filnamn som .mp3 (eller annan typ av musik).</description>
 		<description lang="zh_CN">CU LRC Lyrics 是 Kodi 的歌词插件。它支持原 LRC Lyrics 歌词插件的功能。这个插件会搜索内嵌的、本地文件或通过刮削器获取同步/非同步歌词。它可以读取以相同文件名与歌曲文件保存在相同目录的 .lrc/.txt 歌词文件。</description>
 		<description lang="zh_TW">CU LRC Lyrics 是為 Kodi 而設的歌詞腳本。它支援一般格式的歌詞以及 LRC 格式的歌詞。此腳本能夠搜尋歌曲檔案內嵌歌詞的同步及非同步歌詞，同時也能使用刮削器在線搜尋、本地文件或通过刮削器获取同步/非同步歌词。它可以讀取放在同一個資料夾內，而又與歌曲相同命名的 .lrc/.txt 歌詞檔。</description>
-		<language></language>
 		<platform>all</platform>
 		<license>GNU GENERAL PUBLIC LICENSE Version 2</license>
 		<forum>https://forum.kodi.tv/showthread.php?tid=147340</forum>

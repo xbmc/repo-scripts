@@ -1,3 +1,7 @@
+v6.2.0
+- refactor
+- update mutagen
+
 v6.1.0
 - really add syair scraper
 
