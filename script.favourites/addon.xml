@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.favourites" name="Favourites script" version="8.0.1" provider-name="ronie, `Black">
+<addon id="script.favourites" name="Favourites script" version="8.1.0" provider-name="ronie, `Black">
 	<requires>
 		<import addon="xbmc.python" version="3.0.0"/>
 	</requires>
@@ -103,13 +103,13 @@
 		<disclaimer lang="sv_SE">Behöver skalsupport för att kunna användas riktigt</disclaimer>
 		<disclaimer lang="tr_TR">Düzgün kullanılabilmesi için dış görünüm desteğine ihtiyacınız var</disclaimer>
 		<disclaimer lang="zh_CN">正常使用需要皮肤支持</disclaimer>
-		<language></language>
 		<platform>all</platform>
-		<license>GNU GENERAL PUBLIC LICENSE Version 2</license>
+		<license>GPL-2.0-only</license>
 		<forum>https://forum.kodi.tv/showthread.php?tid=114671</forum>
 		<source>https://gitlab.com/ronie/script.favourites</source>
 		<assets>
 			<icon>resources/icon.png</icon>
 		</assets>
+		<news>- get favourites using json-rpc instead of parsing the favourites.xml file</news>
 	</extension>
 </addon>
