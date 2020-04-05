@@ -2,5 +2,6 @@
 <settings>
     <category label="30000">
         <setting id="show_nick_in_place_of_lang" type="bool" label="30001" default="true"/>
+        <setting id="cache_ttl" type="slider" option="int" default="10" range="0,5,60" label="30002"/>
     </category>
 </settings>
