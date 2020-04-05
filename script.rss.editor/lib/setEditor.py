@@ -2,14 +2,14 @@ import os
 import sys
 import xbmc
 import xbmcgui
+import xbmcaddon
 from .xmlParser import XMLParser
 
 #enable localization
-getLS = sys.modules[ "__main__" ].LANGUAGE
-CWD = sys.modules[ "__main__" ].CWD
+getLS = xbmcaddon.Addon().getLocalizedString
+CWD = xbmcaddon.Addon().getAddonInfo('path')
 
 class GUI(xbmcgui.WindowXMLDialog):
-
     def __init__(self, *args, **kwargs):
         xbmcgui.WindowXMLDialog.__init__(self, *args, **kwargs)
         self.setNum = kwargs['setNum']
@@ -17,11 +17,10 @@ class GUI(xbmcgui.WindowXMLDialog):
         if self.parser.feedsTree:
             self.doModal()
 
-
     def onInit(self):
         self.defineControls()
         if not self.parser.feedsList:
-            xbmcgui.Dialog().ok(getLS(40) + 'RssFeeds.xml', 'RssFeeds.xml ' + getLS(32041), getLS(32042), getLS(32043))
+            xbmcgui.Dialog().ok(getLS(40) + 'RssFeeds.xml', 'RssFeeds.xml ' + getLS(32041) + ' ' + getLS(32042) + ' ' + getLS(32043))
             self.closeDialog()
         self.showDialog()
 
@@ -152,7 +151,7 @@ class GUI(xbmcgui.WindowXMLDialog):
             setNum = self.list.getSelectedItem().getLabel()
         if setNum == 'set1':
             #Ask if user wants to set everything to default.
-            if xbmcgui.Dialog().yesno(getLS(32045), getLS(32046), getLS(32047)):
+            if xbmcgui.Dialog().yesno(getLS(32045), getLS(32046) + ' ' + getLS(32047)):
                 self.parser.feedsList[setNum] = {'feedslist':self.dFeedsList, 'attrs':{'rtl':'false','id':'1'}}
         else:
             del self.parser.feedsList[setNum]
