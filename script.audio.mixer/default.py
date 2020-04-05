@@ -18,29 +18,19 @@
 # *
 # */
 
-
 import sys
-import os
 import xbmc
 import xbmcaddon
 
-
 ADDON = xbmcaddon.Addon()
-ADDONNAME = ADDON.getAddonInfo('name')
 ADDONID = ADDON.getAddonInfo('id')
-LANGUAGE = ADDON.getLocalizedString
-VERSION = ADDON.getAddonInfo("version")
 CWD = ADDON.getAddonInfo('path')
-PROFILE = xbmc.translatePath(ADDON.getAddonInfo('profile'))
-RESOURCE = xbmc.translatePath(os.path.join(CWD, 'resources', 'lib' ))
 
-sys.path.append(RESOURCE)
+xbmc.log("%s: started" % (ADDONID), level=xbmc.LOGDEBUG)
 
-xbmc.log("%s: version %s" % (ADDONNAME,VERSION), level=xbmc.LOGDEBUG)
-
-if ( __name__ == "__main__" ):
-    import gui
-    ui = gui.GUI( "%s.xml" % ADDONID.replace(".","-"), CWD, "Default")
+if (__name__ == "__main__"):
+    from lib import gui
+    ui = gui.GUI( "%s.xml" % ADDONID.replace(".", "-"), CWD, "Default")
     ui.doModal()
     del ui
     sys.modules.clear()
