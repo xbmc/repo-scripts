@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.plex"
+       name="Plex"
+       version="0.2.0"
+       provider-name="Plex">
+    <requires>
+        <import addon="xbmc.python" version="2.26.0"/>
+        <import addon="script.module.requests" version="2.22.0" />
+        <import addon="script.module.six" version="1.13.0" />
+        <import addon="script.module.kodi-six" version="0.1.3" />
+    </requires>
+    <extension point="xbmc.python.script" library="default.py">
+        <provides>video</provides>
+    </extension>
+    <extension point="xbmc.python.pluginsource" library="plugin.py">
+        <provides>executable</provides>
+    </extension>
+    <extension point="xbmc.service" library="service.py" />
+    <extension point="xbmc.addon.metadata">
+        <summary lang="en_GB">Plex for Kodi</summary>
+        <summary lang="de_DE">Plex für Kodi</summary>
+        <summary lang="hu_HU">Plex for Kodi</summary>
+        <summary lang="it_IT">Plex per Kodi</summary>
+        <summary lang="es_ES">Plex para Kodi</summary>
+        <summary lang="ru_RU">Plex for Kodi</summary>
+        <description lang="en_GB">Official Plex for Kodi add-on</description>
+        <description lang="de_DE">Offizielles Plex für Kodi Addon</description>
+        <description lang="hu_HU">Hivatalos Plex for Kodi add-on</description>
+        <description lang="it_IT">Addon ufficiale Plex per Kodi</description>
+        <description lang="es_ES">Addon oficial Plex para Kodi</description>
+        <description lang="fr_FR">Add-on Officiel Plex pour Kodi</description>
+        <description lang="ru_RU">Официальный аддон Plex for Kodi</description>
+        <license>GPL-2.0-only</license>
+        <forum>https://forums.plex.tv/tags/plex-for-kodi</forum>
+        <website>https://www.plex.tv</website>
+        <source>https://github.com/plexinc/plex-for-kodi</source>
+        <platform>all</platform>
+        <news>
+Fix seek resetting when clicking select on seek bar with OSD visible
+Add Spanish translations (thanks to rdcalle)
+Add Portuguese (Portugal) translations (thanks to Generator)
+Make python 3 compatible (thanks to pannal)
+        </news>
+        <assets>
+            <icon>icon.png</icon>
+            <fanart>fanart.jpg</fanart>
+        </assets>
+    </extension>
+</addon>
