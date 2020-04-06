@@ -26,11 +26,13 @@ import sys
 import time
 from threading import Thread
 import xbmc
+import xbmcaddon
 
-ADDONNAME = sys.modules[ "__main__" ].ADDONNAME
+ADDON = xbmcaddon.Addon()
+ADDONID = ADDON.getAddonInfo('id')
 
 def log(msg):
-    xbmc.log("%s: %s" % (ADDONNAME,msg,),level=xbmc.LOGDEBUG)
+    xbmc.log("%s: %s" % (ADDONID, msg), level=xbmc.LOGDEBUG)
 
 class WorkerThread(Thread):
     def __init__ (self, execPath):

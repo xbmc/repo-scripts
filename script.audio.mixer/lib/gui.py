@@ -22,9 +22,10 @@ import os
 import sys
 import xbmc
 import xbmcgui
+import xbmcaddon
 
-ADDON = sys.modules[ "__main__" ].ADDON
-ADDONNAME = sys.modules[ "__main__" ].ADDONNAME
+ADDON = xbmcaddon.Addon()
+ADDONID = ADDON.getAddonInfo('id')
 
 CANCEL_DIALOG = (9, 10, 92, 216, 247, 257, 275, 61467, 61448)
 
@@ -39,9 +40,9 @@ class GUI(xbmcgui.WindowXMLDialog):
       
     def onInit(self):
       if sys.platform == "darwin":
-        import osascriptCore as alsaMixerCore
+        from lib import osascriptCore as alsaMixerCore
       else:  
-        import alsaMixerCore
+        from lib import alsaMixerCore
 
       self.alsaCore = alsaMixerCore.alsaMixerCore()
       self.controls = self.alsaCore.getPlaybackControls()
@@ -110,7 +111,7 @@ class GUI(xbmcgui.WindowXMLDialog):
             self.alsaCore.setVolume(control, label_value)
 
     def set_slider_value(self, controlId):
-      i = (controlId - 902) / 1000
+      i = int((controlId - 902) / 1000)
       self.set_mute(i + 900, False)
       control = self.getControl((1000 * i) + 900).getLabel()
       label_value = self.getControl((1000 * i) + 903).getLabel().replace(" %","")
@@ -123,9 +124,9 @@ class GUI(xbmcgui.WindowXMLDialog):
       if (controlId >= 1000):
         self.getControl(controlId + 1).setLabel("%.2d %s" % (int(self.getControl(controlId).getPercent()), "%",))
         if self.getControl(controlId).getPercent() == 0:
-          self.getControl((controlId/1000) + 900).setSelected(True)
+          self.getControl(int(controlId/1000) + 900).setSelected(True)
         else:
-          self.getControl((controlId/1000) + 900).setSelected(False)
+          self.getControl(int(controlId/1000) + 900).setSelected(False)
 
       if (controlId >= 900) and (controlId <  1000):
         self.set_mute(controlId)
@@ -151,7 +152,7 @@ class GUI(xbmcgui.WindowXMLDialog):
           self.control_state[self.controlId] = cur_slider
 
     def log(self, msg):
-      xbmc.log("%s: %s" % (ADDONNAME,msg,),level=xbmc.LOGDEBUG)
+      xbmc.log("%s: %s" % (ADDONID, msg), level=xbmc.LOGDEBUG)
 
     def onAction(self, action):    
       if (action.getButtonCode() == 61453):
