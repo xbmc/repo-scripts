@@ -1,0 +1,331 @@
+# script.module.inputstreamhelper language file
+# Romanian translator: tmihai20
+msgid ""
+msgstr ""
+"Project-Id-Version: script.module.inputstreamhelper\n"
+"Report-Msgid-Bugs-To: https://github.com/emilsvennesson/script.module.inputstreamhelper\n"
+"POT-Creation-Date: 2013-11-18 16:15+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: tmihai20 <tmihai20@yahoo.com>\n"
+"Language-Team: Română\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ro\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+
+msgctxt "#30001"
+msgid "Information"
+msgstr "Informații"
+
+msgctxt "#30002"
+msgid "This add-on relies on the proprietary decryption module [B]Widevine CDM[/B] for playback."
+msgstr "Acest add-on depinde de un modul proprietar de decriptare [B]Widevine CDM[/B] pentru redare"
+
+msgctxt "#30004"
+msgid "Error"
+msgstr "Eroare"
+
+msgctxt "#30005"
+msgid "An error occurred while installing [B]Widevine CDM[/B]. Please enable debug logging and file a bug report at:[CR][CR]github.com/emilsvennesson/script.module.inputstreamhelper"
+msgstr "A apărut o eroare la instalarea [B]Widevine CDM[/B]. Vă rugăm să activați depanarea și să raportați un bug la:[CR][CR]github.com/emilsvennesson/script.module.inputstreamhelper"
+
+msgctxt "#30006"
+msgid "Due to distribution rights, [B]Widevine CDM[/B] has to be extracted from a Chrome OS recovery image. This process requires at least [B]{diskspace}[/B] of free disk space. Do you wish to continue?"
+msgstr "Din cauza drepturilor de distribuție, [B]Widevine CDM[/B] trebuie să fie extras dintr-o imagine de recuperare Chrome OS. Acest proces are nevoie de cel puțin [B]{diskspace}[/B] spațiu liber. Doriți să continuați"
+
+msgctxt "#30007"
+msgid "[B]Widevine CDM[/B] is unfortunately not available on this system architecture ([B]{arch}[/B])."
+msgstr "Din păcate, [B]Widevine CDM[/B] nu este disponibil pentru arhitectura ([B]{arch}[/B]) a acestui sistem."
+
+msgctxt "#30008"
+msgid "[B]{addon}[/B] is missing on your Kodi install. This add-on is required to play this content."
+msgstr "[B]{addon}[/B] lipsește din Kodi. Acest add-on este necesar pentru redarea acestui conținut."
+
+msgctxt "#30009"
+msgid "[B]{addon}[/B] is not enabled. This add-on is required to play this content.[CR][CR]Would you like to enable [B]{addon}[/B]?"
+msgstr "[B]{addon}[/B] nu este activat. Acest add-on este necesar pentru redarea acestui conținut.[CR][CR]Doriți să activați [B]{addon}[/B]?"
+
+msgctxt "#30010"
+msgid "[B]Kodi {version}[/B] or higher is required for [B]Widevine CDM[/B] content playback."
+msgstr "[B]Kodi {version}[/B] sau mai nou este nevoie pentru a reda conținut [B]Widevine CDM[/B]."
+
+msgctxt "#30011"
+msgid "This operating system ([B]{os}[/B]) is not supported by [B]Widevine CDM[/B]."
+msgstr "Acest sistem de operare ([B]{os}[/B]) nu este suportat de [B]Widevine CDM[/B]."
+
+msgctxt "#30012"
+msgid "The Windows Store version of Kodi does not support [B]Widevine CDM[/B].[CR][CR]Please use the installer from kodi.tv instead."
+msgstr "Versiunea Kodi din Windows Store nu suportă [B]Widevine CDM[/B]. [CR][CR]Folosiți pachetul de pe kodi.tv în schimb."
+
+msgctxt "#30013"
+msgid "Failed to retrieve [B]{filename}[/B]."
+msgstr "Recuperarea [B]{filename}[/B] a eșuat"
+
+msgctxt "#30014"
+msgid "Download in progress..."
+msgstr "Descărcare în desfășurare..."
+
+msgctxt "#30015"
+msgid "Downloading [B]{filename}[/B]..."
+msgstr "Se descarcă [B]{filename}[/B]..."
+
+msgctxt "#30016"
+msgid "Failed to extract [B]Widevine CDM[/B] from zip file."
+msgstr "Extragerea [B]Widevine CDM[/B] din arhivă a eșuat."
+
+msgctxt "#30017"
+msgid "[B]{addon}[/B] {version} or later is required to play this content."
+msgstr "[B]{addon}[/B] {version} sau mai nou este necesar pentru a reda acest conținut."
+
+msgctxt "#30018"
+msgid "You do not have enough free disk space to install [B]Widevine CDM[/B]. Free up at least [B]{diskspace}[/B] and try again."
+msgstr "Nu aveți spațiu liber suficient pentru a instala [B]Widevine CDM[/B]. Eliberați cel puțin [B]{diskspace}[/B] și re-încercați."
+
+msgctxt "#30019"
+msgid "This operating system ([B]{os}[/B]) is not supported by [B]Widevine CDM[/B] for ARM devices."
+msgstr "Acest sistem de operare ([B]{os}[/B]) nu este suportat de [B]Widevine CDM[/B] pentru dispozitive ARM."
+
+msgctxt "#30020"
+msgid "[B]'{command1}'[/B] or [B]'{command2}'[/B] command needs to exist on system to extract the [B]Widevine CDM[/B]."
+msgstr "Comenzile [B]'{command1}'[/B] sau [B]'{command2}'[/B] trebuie să existe în sistem pentru a extrage [B]Widevine CDM[/B]."
+
+msgctxt "#30021"
+msgid "[B]'{command}'[/B] command needs to exist on system to extract the [B]Widevine CDM[/B]."
+msgstr "Comanda [B]'{command}'[/B] trebuie să existe în sistem pentru a extrage [B]Widevine CDM[/B]."
+
+msgctxt "#30022"
+msgid "Downloading the Chrome OS recovery image..."
+msgstr "Se descarcă imaginea de recuperare Chrome OS..."
+
+msgctxt "#30023"
+msgid "Download completed!"
+msgstr "Descărcarea s-a terminat!"
+
+msgctxt "#30024"
+msgid "The installation now needs to unzip, mount and extract [B]Widevine CDM[/B] from the recovery image.[CR][CR]This process may take up to ten minutes to complete."
+msgstr "Procesul de instalarea trebuie să dezarhiveze și să extragă [B]Widevine CDM[/B] din imaginea de recuperare.[CR][CR]Acest proces poate lua până la 10 minute pentru a se termina."
+
+msgctxt "#30025"
+msgid "Acquiring EULA."
+msgstr "Se descarcă licența EULA."
+
+msgctxt "#30026"
+msgid "Widevine CDM EULA"
+msgstr "Licența Widevine CDM"
+
+msgctxt "#30027"
+msgid "I accept"
+msgstr "Accept"
+
+msgctxt "#30028"
+msgid "Cancel"
+msgstr "Anulare"
+
+msgctxt "#30029"
+msgid "OK"
+msgstr "Da"
+
+msgctxt "#30030"
+msgid "The installation may need to run the following commands with root permissions: [B]{cmds}[/B]."
+msgstr "Instalarea ar putea rula următoarele comenzi cu drepturi de root: [B]{cmds}[/B]"
+
+msgctxt "#30031"
+msgid "An update of [B]Widevine CDM[/B] is required to play this content."
+msgstr "Este nevoie de o actualizare a [B]Widevine CDM[/B] pentru a reda acest conținut."
+
+msgctxt "#30032"
+msgid "Your system is missing the following libraries required by Widevine CDM: [B]{libs}[/B]. Install the libraries to play this content."
+msgstr "Sistemului dumneavoastră îi lipsesc următoarele librării cerute de Widevine CDM: [B]{libs}[/B]. Instalați aceste librării pentru a reda acest conținut."
+
+msgctxt "#30033"
+msgid "There is an update available for [B]Widevine CDM[/B]."
+msgstr "Există o actualizare disponibilă pentru [B]Widevine CDM[/B]."
+
+msgctxt "#30034"
+msgid "Update"
+msgstr "Actualizare"
+
+msgctxt "#30035"
+msgid "[B]loop[/B] is still loaded"
+msgstr "[B]loop[/B] este încărcat încă"
+
+msgctxt "#30036"
+msgid "Unload it by running [B]modprobe -r loop[/B] in the terminal."
+msgstr "Descărcați-l rulând [B]modprobe -r loop[/B] în terminal."
+
+msgctxt "#30037"
+msgid "Success!"
+msgstr "Succes!"
+
+msgctxt "#30038"
+msgid "Install Widevine"
+msgstr "Instalați Widevine"
+
+msgctxt "#30039"
+msgid "[B]Widevine CDM[/B] is currently not available natively on ARM64. Please switch to a 32-bit userspace for [B]Widevine CDM[/B] support."
+msgstr "[B]Widevine CDM[/B] nu este disponibil nativ pentru ARM64. Vă rugă să treceți la spațiu utilizator pe 32 biți pentru suport [B]Widevine CDM[/B]."
+
+msgctxt "#30040"
+msgid "Update available"
+msgstr "Actualizare disponibilă"
+
+msgctxt "#30041"
+msgid "Widevine CDM is required"
+msgstr "Este nevoie de Widevine CDM"
+
+msgctxt "#30042"
+msgid "Using a SOCKS proxy requires the PySocks library (script.module.pysocks) installed."
+msgstr "Folosirea unui proxy SOCKS necesită instalarea librăriei PySocks (script.module.pysocks)."
+
+msgctxt "#30043"
+msgid "Extracting Widevine CDM"
+msgstr "Se extrage Widevine CDM"
+
+msgctxt "#30044"
+msgid "Preparing downloaded image..."
+msgstr "Se pregătește imaginea descărcată..."
+
+msgctxt "#30045"
+msgid "Uncompressing image..."
+msgstr "Se decompresează imaginea..."
+
+msgctxt "#30046"
+msgid "This may take several minutes. ({mins:d}:{secs:02d})"
+msgstr "Acest proces poate dura câteva minute. ({mins:d}:{secs:02d})"
+
+msgctxt "#30047"
+msgid "[I]Please do not interrupt this process.[/I]"
+msgstr "[I]Vă rugăm să nu întrerupeți procesul.[/I]"
+
+msgctxt "#30048"
+msgid "Extracting Widevine CDM from image..."
+msgstr "Se extrage Widevine CDM din imagine...."
+
+msgctxt "#30049"
+msgid "Installing Widevine CDM..."
+msgstr "Se instalează Widevine CDM..."
+
+msgctxt "#30050"
+msgid "Finishing..."
+msgstr "Finisare..."
+
+msgctxt "#30051"
+msgid "[B]Widevine CDM[/B] successfully installed."
+msgstr "[B]Widevine CDM[/B] instalat cu succes."
+
+msgctxt "#30052"
+msgid "[B]Widevine CDM[/B] successfully removed."
+msgstr "[B]Widevine CDM[/B] eliminat cu succes."
+
+msgctxt "#30053"
+msgid "[B]Widevine CDM[/B] not found."
+msgstr "[B]Widevine CDM[/B] n-a fost găsit."
+
+msgctxt "#30054"
+msgid "disabled"
+msgstr "dezactivat"
+
+msgctxt "#30055"
+msgid "There is not enough free disk space in the current temporary directory. Would you like to specify a different one to temporarily use for the Chrome OS Recovery Image (e.g. on a USB)?"
+msgstr "Nu este spațiu liber suficient în directorul temporar. Doriți să specificați un director diferit de utilizat temporar pentru imaginea de recuperea Chrome OS (spre exemplu un stick USB)?"
+
+msgctxt "#30056"
+msgid "No backups found!"
+msgstr "Nu au fost găsite copii de siguranță!"
+
+msgctxt "#30057"
+msgid "Choose a backup to restore"
+msgstr "Alegeți o copie de siguranță pentru a fi restabilită"
+
+
+### INFORMATION DIALOG
+msgctxt "#30800"
+msgid "[B]Kodi information[/B]"
+msgstr "[B]Informații despre Kodi[/B]"
+
+msgctxt "#30801"
+msgid "Kodi version: [B]{version}[/B]"
+msgstr "Versiunea Kodi: [B]{version}[/B]"
+
+msgctxt "#30802"
+msgid "Kodi platform/architecture: [B]{platform}[/B]/[B]{arch}[/B]"
+msgstr "Platforma/arhitectura Kodi: [B]{platform}[/B]/[B]{arch}[/B]"
+
+msgctxt "#30810"
+msgid "[B]InputStream information[/B]"
+msgstr "[B]Informații InputStream[/B]"
+
+msgctxt "#30811"
+msgid "InputStream Helper version: [B]{version}[/B] {state}"
+msgstr "Versiune InputStream Helper: [B]{version}[/B] {state}"
+
+msgctxt "#30812"
+msgid "InputStream Adaptive version: [B]{version}[/B] {state}"
+msgstr "Versiune InputStream Adaptive: [B]{version}[/B] {state}"
+
+msgctxt "#30820"
+msgid "[B]Widevine information[/B]"
+msgstr "[B]Informații Widevine[/B]"
+
+msgctxt "#30821"
+msgid "Widevine version: [B]Built into Android[/B]"
+msgstr "Versiune Widevine: [B]Inclus în Android[/B]"
+
+msgctxt "#30822"
+msgid "Widevine version: [B]{version}[/B] [COLOR gray](last updated on [B]{date}[/B])[/COLOR]"
+msgstr "Versiune Widevine: [B]{version}[/B] [COLOR gray](ultima dată actualizat pe [B]{date}[/B])[/COLOR]"
+
+msgctxt "#30823"
+msgid "Widevine CDM path: [B]{path}[/B]"
+msgstr "Calea Widevine CDM: [B]{path}[/B]"
+
+msgctxt "#30824"
+msgid "Chrome OS version: [B]{version}[/B]"
+msgstr "Versiune Chrome OS: [B]{version}[/B]"
+
+msgctxt "#30830"
+msgid "Please report issues to:\n - [COLOR yellow]{url}[/COLOR]"
+msgstr "Vă rugăm să raportați probleme la: \n - [COLOR yellow]{url}[/COLOR]"
+
+
+### SETTINGS
+msgctxt "#30900"
+msgid "Expert"
+msgstr "Avansat"
+
+msgctxt "#30901"
+msgid "InputStream Helper information"
+msgstr "Informații InputStream Helper"
+
+msgctxt "#30903"
+msgid "Disable InputStream Helper"
+msgstr "Dezactivează InputStream Helper"
+
+msgctxt "#30904"
+msgid "[I]When disabled, DRM playback may fail![/I]"
+msgstr "[I]Dacă este dezactivat, redarea de conținut DRM ar putea eșua![/I]"
+
+msgctxt "#30905"
+msgid "Update frequency in days"
+msgstr "Frecvența de actualizare în zile"
+
+msgctxt "#30907"
+msgid "Temporary download directory"
+msgstr "Director temporar de descărcare"
+
+msgctxt "#30909"
+msgid "(Re)install Widevine CDM library..."
+msgstr "(Re)-Instalați librăria Widevine CDM..."
+
+msgctxt "#30911"
+msgid "Remove Widevine CDM library..."
+msgstr "Eliminați librăria Widevine CDM..."
+
+msgctxt "#30913"
+msgid "Number of backups"
+msgstr "Număr de copii de siguranță"
+
+msgctxt "#30915"
+msgid "Restore Widevine CDM library..."
+msgstr "Restaurați librăria Widevine CDM..."

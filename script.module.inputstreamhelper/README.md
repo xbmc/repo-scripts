@@ -1,5 +1,5 @@
 [![GitHub release](https://img.shields.io/github/release/emilsvennesson/script.module.inputstreamhelper.svg)](https://github.com/emilsvennesson/script.module.inputstreamhelper/releases)
-[![Build Status](https://travis-ci.org/emilsvennesson/script.module.inputstreamhelper.svg?branch=master)](https://travis-ci.org/emilsvennesson/script.module.inputstreamhelper)
+[![CI](https://github.com/emilsvennesson/script.module.inputstreamhelper/workflows/CI/badge.svg)](https://github.com/emilsvennesson/script.module.inputstreamhelper/actions?query=workflow:CI)
 [![Codecov status](https://img.shields.io/codecov/c/github/emilsvennesson/script.module.inputstreamhelper/master)](https://codecov.io/gh/emilsvennesson/script.module.inputstreamhelper/branch/master)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Contributors](https://img.shields.io/github/contributors/emilsvennesson/script.module.inputstreamhelper.svg)](https://github.com/emilsvennesson/script.module.inputstreamhelper/graphs/contributors)
@@ -63,6 +63,12 @@ Please report any issues or bug reports on the [GitHub Issues](https://github.co
 This module is licensed under the **The MIT License**. Please see the [LICENSE.txt](LICENSE.txt) file for details.
 
 ## Releases
+## v0.4.5 (2020-04-07)
+- Added Spanish and Romanian translations (@roliverosc, @tmihai20)
+- Added support for Kodi 19 Matrix "pre-release" builds (@mediaminister)
+- Fix Widevine backups when using an external drive (@horstle)
+- Various fixes for Widevine installation on ARM devices (@horstle)
+
 ## v0.4.4 (2020-03-01)
 - Added option to restore a previously installed Widevine version (@horstle)
 - Improve progress bar when extracting Widevine on ARM devices (@dagwieers)
