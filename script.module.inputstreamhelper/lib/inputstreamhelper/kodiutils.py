@@ -5,10 +5,27 @@
 from __future__ import absolute_import, division, unicode_literals
 import xbmc
 import xbmcaddon
-from .utils import from_unicode, to_unicode
+from xbmcgui import DialogProgress
+from .unicodes import from_unicode, to_unicode
 
 # NOTE: We need to add the add-on id in here explicitly !
 ADDON = xbmcaddon.Addon('script.module.inputstreamhelper')
+
+
+class progress_dialog(DialogProgress, object):  # pylint: disable=invalid-name,useless-object-inheritance
+    """Show Kodi's Progress dialog"""
+
+    def create(self, heading, message=''):  # pylint: disable=arguments-differ
+        """Create and show a progress dialog"""
+        if kodi_version_major() < 19:
+            return super(progress_dialog, self).create(heading, line1=message)
+        return super(progress_dialog, self).create(heading, message=message)
+
+    def update(self, percent, message=''):  # pylint: disable=arguments-differ
+        """Update the progress dialog"""
+        if kodi_version_major() < 19:
+            return super(progress_dialog, self).update(percent, line1=message)
+        return super(progress_dialog, self).update(percent, message=message)
 
 
 class SafeDict(dict):
@@ -74,7 +91,9 @@ def ok_dialog(heading='', message=''):
     from xbmcgui import Dialog
     if not heading:
         heading = ADDON.getAddonInfo('name')
-    return Dialog().ok(heading=heading, line1=message)
+    if kodi_version_major() < 19:
+        return Dialog().ok(heading=heading, line1=message)
+    return Dialog().ok(heading=heading, message=message)
 
 
 def select_dialog(heading='', opt_list=None, autoclose=0, preselect=-1, useDetails=False):  # pylint: disable=invalid-name
@@ -83,12 +102,6 @@ def select_dialog(heading='', opt_list=None, autoclose=0, preselect=-1, useDetai
     if not heading:
         heading = ADDON.getAddonInfo('name')
     return Dialog().select(heading, opt_list, autoclose=autoclose, preselect=preselect, useDetails=useDetails)
-
-
-def progress_dialog():
-    """Show Kodi's Progress dialog"""
-    from xbmcgui import DialogProgress
-    return DialogProgress()
 
 
 def textviewer(heading='', text='', usemono=False):
@@ -106,7 +119,9 @@ def yesno_dialog(heading='', message='', nolabel=None, yeslabel=None, autoclose=
     from xbmcgui import Dialog
     if not heading:
         heading = ADDON.getAddonInfo('name')
-    return Dialog().yesno(heading=heading, line1=message, nolabel=nolabel, yeslabel=yeslabel, autoclose=autoclose)
+    if kodi_version_major() < 19:
+        return Dialog().yesno(heading=heading, line1=message, nolabel=nolabel, yeslabel=yeslabel, autoclose=autoclose)
+    return Dialog().yesno(heading=heading, message=message, nolabel=nolabel, yeslabel=yeslabel, autoclose=autoclose)
 
 
 def localize(string_id, **kwargs):
