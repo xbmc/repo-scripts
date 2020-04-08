@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addon id="script.module.yaml"
        name="PyYAML"
-       version="5.3.0+matrix.1"
+       version="5.3.0+matrix.2"
        provider-name="Kirill Simonov">
   <requires>
     <import addon="xbmc.python" version="3.0.0"/>
@@ -10,11 +10,13 @@
              library="lib" />
   <extension point="xbmc.addon.metadata">
     <platform>all</platform>
-    <language></language>
     <summary lang="en_GB">YAML parser and emitter for Python</summary>
     <description lang="en_GB">A packaged version of files needed for the pyyamml library.</description>
     <license>MIT</license>
     <website>https://pyyaml.org</website>
     <source>https://github.com/yaml/pyyaml</source>
+    <assets>
+      <icon>icon.png</icon>
+    </assets>
   </extension>
 </addon>
