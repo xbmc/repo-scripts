@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="service.scrobbler.librefm" name="Libre.fm Scrobbler" version="4.0.2" provider-name="ronie">
+<addon id="service.scrobbler.librefm" name="Libre.fm Scrobbler" version="4.0.3" provider-name="ronie">
 	<requires>
 		<import addon="xbmc.python" version="3.0.0"/>
 	</requires>
-	<extension point="xbmc.service" library="scrobbler.py" start="login">
-	</extension>
+	<extension point="xbmc.service" library="scrobbler.py"/>
 	<extension point="xbmc.addon.metadata">
 		<summary lang="af_ZA">Scrobble diens vir libre.fm</summary>
 		<summary lang="ar_SA">خدمه سكروبلر لموقع libre.fm</summary>
@@ -68,9 +67,8 @@
 		<description lang="pt_BR">Scrobbler irá submeter suas músicas quando estiver ouvindo no Kodi para libre.fm</description>
 		<description lang="sv_SE">Inskickningstjänst för att skicka in info om låtarna du har lyssnat på i Kodi till libre.fm</description>
 		<description lang="zh_CN">Scrobbler 会将你在 Kodi 中听过的歌曲信息提交到 libre.fm</description>
-		<language></language>
 		<platform>all</platform>
-		<license>GNU GENERAL PUBLIC LICENSE Version 2</license>
+		<license>GPL-2.0-only</license>
 		<forum>https://forum.kodi.tv/showthread.php?tid=158540</forum>
 		<source>https://gitlab.com/ronie/service.scrobbler.librefm/</source>
 		<assets>
