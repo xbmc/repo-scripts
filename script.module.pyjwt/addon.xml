@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='UTF-8' standalone='yes'?>
 <addon id="script.module.pyjwt"
        name="pyjwt"
-       provider-name="jpadilla (hello@jpadilla.com)" 
-       version="1.7.1+matrix.1">
+       provider-name="jpadilla"
+       version="1.7.1+matrix.2">
   <requires>
     <import addon="xbmc.python" version="3.0.0" />
   </requires>
@@ -12,7 +12,11 @@
         <summary lang="en_GB">pyjwt module</summary>
         <license>MIT</license>
         <platform>all</platform>
-        <website>https://pyjwt.readthedocs.io</website>
+        <email>hello@jpadilla.com</email>
+        <website>https://pyjwt.readthedocs.io/en/latest/</website>
         <source>https://github.com/jpadilla/pyjwt</source>
+        <assets>
+          <icon>icon.png</icon>
+        </assets>
    </extension>
 </addon>
