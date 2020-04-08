@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.module.m3u8" name="m3u8" version="0.5.4+matrix.1" provider-name="Globo.com">
+<addon id="script.module.m3u8" name="m3u8" version="0.5.4+matrix.2" provider-name="Globo.com">
 	<requires>
         <import addon="xbmc.python" version="3.0.0"/>
         <import addon="script.module.iso8601" version="0.1.12+matrix.1"/>
@@ -11,5 +11,8 @@
 		<license>MIT</license>
 		<website>https://pypi.org/project/m3u8/</website>
 		<source>https://github.com/globocom/m3u8</source>
+		<assets>
+			<icon>icon.png</icon>
+		</assets>
 	</extension>
 </addon>
