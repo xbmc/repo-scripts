@@ -22,8 +22,8 @@ See the [Releases](https://github.com/i96751414/script.logviewer/releases) page.
 Screenshots
 -----------
 
-![screen1](https://github.com/i96751414/script.logviewer/raw/master/resources/images/screenshot-1.png)
+![screen1](https://github.com/i96751414/script.logviewer/raw/master/resources/images/screenshot-1.jpg)
 
-![screen2](https://github.com/i96751414/script.logviewer/raw/master/resources/images/screenshot-2.png)
+![screen2](https://github.com/i96751414/script.logviewer/raw/master/resources/images/screenshot-2.jpg)
 
-![screen3](https://github.com/i96751414/script.logviewer/raw/master/resources/images/screenshot-3.png)
+![screen3](https://github.com/i96751414/script.logviewer/raw/master/resources/images/screenshot-3.jpg)

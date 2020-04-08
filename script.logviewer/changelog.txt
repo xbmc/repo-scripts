@@ -1,3 +1,6 @@
+v2.1.2 (8 April 2020):
+- Automated submissions to matrix branch
+
 v2.1.1 (8 December 2019):
 - Fix android file handling
 - Add http server (webtail)
