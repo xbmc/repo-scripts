@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+    <category label="30012">
+        <setting id="invert" type="bool" label="30005" default="false"/>
+        <setting id="lines" type="enum" label="30010" lvalues="30006|30007|30008|30009" default="0"
+                 enable="!eq(-1,false)"/>
+        <setting id="custom_window" type="bool" label="30013" default="false"/>
+        <setting id="error_popup" type="bool" label="30014" default="false"/>
+        <setting id="exceptions_only" type="bool" label="30018" default="true" enable="!eq(-1,false)"/>
+        <setting id="http_server" type="bool" label="30019" default="false"/>
+        <setting id="port" type="number" label="30020" default="8080" enable="!eq(-1,false)"/>
+    </category>
+</settings>
