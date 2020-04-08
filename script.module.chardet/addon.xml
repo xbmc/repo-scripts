@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addon id="script.module.chardet"
        name="chardet"
-       version="3.0.4+matrix.1"
+       version="3.0.4+matrix.2"
        provider-name="Dan Blanchard">
   <requires>
     <import addon="xbmc.python" version="3.0.0"/>
@@ -16,7 +16,7 @@
     <language></language>
     <forum></forum>
     <website>https://chardet.readthedocs.io/en/latest/</website>
-    <source>https://github.com/beenje/script.module.chardet</source>
+    <source>https://github.com/Freso/script.module.chardet</source>
     <email>beenje AT gmail.com</email>
   </extension>
 </addon>
