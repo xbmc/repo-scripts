@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addon id="script.module.qrcode"
        name="qrcode"
-       version="6.1.0+matrix.1"
+       version="6.1.0+matrix.2"
        provider-name="Lincoln Loop">
   <requires>
     <import addon="xbmc.python" version="3.0.0"/>
@@ -15,5 +15,8 @@
     <license>BSD-3-Clause</license>
     <website>https://pypi.org/project/qrcode/</website>
     <source>https://github.com/lincolnloop/python-qrcode</source>
+    <assets>
+      <icon>icon.png</icon>
+    </assets>
   </extension>
 </addon>
