@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.module.sgmllib3k" name="sgmllib3k" version="1.0.0+matrix.1" provider-name="hsoft">
+<addon id="script.module.sgmllib3k" name="sgmllib3k" version="1.0.0+matrix.2" provider-name="hsoft">
     <requires>
         <import addon="xbmc.python" version="3.0.0"/>
     </requires>
@@ -8,8 +8,11 @@
         <language></language>
         <summary lang="en_GB">Python 3 port of sgmllib</summary>
         <description lang="en_GB">Python 3 port of sgmllib</description>
-        <license>BSD</license>
+        <license>BSD-1-Clause	</license>
         <platform>all</platform>
         <source>https://pypi.org/project/sgmllib3k/</source>
+        <assets>
+            <icon>icon.png</icon>
+        </assets>
     </extension>
 </addon>
