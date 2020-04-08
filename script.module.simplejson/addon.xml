@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addon id="script.module.simplejson"
        name="simplejson"
-       version="3.17.0+matrix.1"
+       version="3.17.0+matrix.2"
        provider-name="Bob Ippolito">
   <requires>
     <import addon="xbmc.python" version="3.0.0"/>
@@ -17,5 +17,8 @@
     <license>MIT License, Academic Free License v. 2.1</license>
     <website>https://pypi.org/project/simplejson/</website>
     <source>https://github.com/simplejson/simplejson</source>
+    <assets>
+      <icon>icon.png</icon>
+    </assets>
   </extension>
 </addon>
