@@ -1,15 +1,18 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.module.webencodings" name="webencodings" version="0.5.1+matrix.1" provider-name="gsneller">
+<addon id="script.module.webencodings" name="webencodings" version="0.5.1+matrix.2" provider-name="gsneller">
   <requires>
     <import addon="xbmc.python" version="3.0.0"/>
   </requires>
   <extension point="xbmc.python.module" library="lib" />
   <extension point="xbmc.addon.metadata">
-    <summary>This is a Python implementation of the WHATWG Encoding standard.</summary>
-    <description>This module has encoding labels and BOM detection, but the actual implementation for encoders and decoders is Python’s.</description>
+    <summary lang="en_GB">This is a Python implementation of the WHATWG Encoding standard.</summary>
+    <description lang="en_GB">This module has encoding labels and BOM detection, but the actual implementation for encoders and decoders is Python’s.</description>
     <platform>all</platform>
-    <license>BSD</license>
+    <license>BSD-1-Clause</license>
     <source>https://github.com/gsnedders/python-webencodings</source>
     <website>https://pythonhosted.org/webencodings/</website>
+    <assets>
+      <icon>icon.png</icon>
+    </assets>
   </extension>
 </addon>
