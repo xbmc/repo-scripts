@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addon id="script.module.html2text"
        name="html2text"
-       version="2020.1.16+matrix.1"
+       version="2020.1.16+matrix.2"
        provider-name="Aaron Swartz">
   <requires>
     <import addon="xbmc.python" version="3.0.0"/>
@@ -15,5 +15,8 @@
     <license>GPLv3</license>
     <source>https://github.com/Alir3z4/html2text</source>
     <website>http://alir3z4.github.io/html2text/</website>
+    <assets>
+      <icon>icon.png</icon>
+    </assets>
   </extension>
 </addon>
