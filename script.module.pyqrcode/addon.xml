@@ -1,18 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.module.pyqrcode" version="1.2.1+matrix.1" name="pyQRcode" provider-name="Lunatixz">
+<addon id="script.module.pyqrcode" version="1.2.1+matrix.2" name="pyQRcode" provider-name="Lunatixz">
     <requires>
         <import addon="xbmc.python" version="3.0.0" />
     </requires>
     <extension library="lib" point="xbmc.python.module" />
     <extension point="xbmc.addon.metadata">
-        <summary lang="en_US">A Python interface to generate QR Code</summary>
-        <description lang="en_US">A Python interface to generate QR Code</description>
-        <forum></forum>
-        <website>https://pypi.python.org/pypi/pyqrcode</website>
-        <license>Apache2</license>
+        <summary lang="en_GB">A Python interface to generate QR Code</summary>
+        <description lang="en_GB">A Python interface to generate QR Code</description>
+        <website>https://pypi.org/project/PyQRCode</website>
+        <license>Apache-2.0</license>
         <platform>all</platform>
         <source>https://github.com/mnooner256/pyqrcode</source>
-        <news></news>
         <assets>
             <icon>icon.png</icon>
         </assets>
