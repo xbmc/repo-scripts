@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.module.bottle" name="Bottle" version="0.12.18+matrix.1" provider-name="Marcel Hellkamp">
+<addon id="script.module.bottle" name="Bottle" version="0.12.18+matrix.2" provider-name="Marcel Hellkamp">
   <requires>
     <import addon="xbmc.python" version="3.0.0"/>
   </requires>
@@ -9,6 +9,9 @@
     <description lang="en_GB">Bottle is a fast and simple micro-framework for small web applications. It offers request dispatching (Routes) with url parameter support, templates, a built-in HTTP Server and adapters for many third party WSGI/HTTP-server and template engines - all in a single file and with no dependencies other than the Python Standard Library.</description>
     <license>MIT</license>
     <source>https://github.com/bottlepy/bottle</source>
-    <website>http://bottlepy.org</website>
+    <website>https://bottlepy.org/docs/dev/</website>
+    <assets>
+      <icon>icon.png</icon>
+    </assets>
   </extension>
 </addon>
