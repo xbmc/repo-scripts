@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addon id="script.module.livestreamer"
        name="livestreamer"
-       version="1.12.2+matrix.1"
+       version="1.12.2+matrix.2"
        provider-name="Christopher Rosell">
   <requires>
     <import addon="xbmc.python" version="3.0.0"/>
@@ -12,8 +12,11 @@
     <summary lang="en_GB">Livestreamer extracts streams from various services</summary>
     <description lang="en_GB">Livestreamer is a command-line utility that pipes video streams from various services into a video player, such as VLC. The main purpose of Livestreamer is to allow the user to avoid buggy and CPU heavy flash plugins but still be able to enjoy various streamed content. There is also an API available for developers who want access to the video stream data.</description>
     <platform>all</platform>
-    <license>Simplified BSD</license>
-    <source>https://github.com/chrippa/livestreamer.git</source>
-    <website>http://livestreamer.io</website>
+    <license>BSD-2-Clause</license>
+    <source>https://github.com/chrippa/livestreamer</source>
+    <website>http://docs.livestreamer.io</website>
+    <assets>
+      <icon>icon.png</icon>
+    </assets>
   </extension>
 </addon>
