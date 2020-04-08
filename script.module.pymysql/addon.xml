@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addon id="script.module.pymysql"
        name="pymysql"
-       version="0.9.3+matrix.1"
+       version="0.9.3+matrix.2"
        provider-name="PyMySQL">
   <requires>
     <import addon="xbmc.python" version="3.0.0"/>
@@ -14,8 +14,10 @@
     <description lang="en_GB">Simple MySql Connector for Python. Package by smitchell6879</description>
     <platform>all</platform>
     <license>MIT</license>
-    <forum></forum>
-    <website>http://pymysql.readthedocs.io/</website>
+    <website>https://pymysql.readthedocs.io/en/latest/</website>
     <source>https://github.com/PyMySQL/PyMySQL</source>
+    <assets>
+      <icon>icon.png</icon>
+    </assets>
   </extension>
 </addon>
