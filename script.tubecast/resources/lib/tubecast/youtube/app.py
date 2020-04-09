@@ -430,7 +430,7 @@ class YoutubeCastV1(object):
     def __post_bind(self, sc, postdata):  # type: (str, dict) -> None
         self.ofs += 1
         post_data = {"count": "1", "ofs": str(self.ofs), "req0__sc": sc}
-        for key in postdata.keys():
+        for key in list(postdata.keys()):
             post_data["req0_" + key] = postdata[key]
 
         if get_setting_as_bool("debug-http"):

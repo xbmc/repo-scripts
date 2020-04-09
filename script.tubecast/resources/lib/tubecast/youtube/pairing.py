@@ -4,6 +4,7 @@ import time
 from .app import YoutubeCastV1
 
 from resources.lib.kodi.utils import get_string
+from resources.lib.tubecast.utils import PY3
 
 from xbmc import Monitor
 
@@ -18,12 +19,23 @@ def generate_pairing_code():
     pairing_code = chromecast.pair()
 
     i = 0
-    progress.update(i, get_string(32002), pairing_code)
+
+    if PY3:
+        progress.update(i, message="{} {}".format(get_string(32002), pairing_code))
+    else:
+        progress.update(i, get_string(32002), pairing_code)
+
     start_time = time.time()
     while not monitor.abortRequested() and not chromecast.has_client and not progress.iscanceled() and not (time.time() - start_time) > (60 * 1):
         i += 10
         if i > 100:
             i = 0
-        progress.update(i, get_string(32002), pairing_code)
+
+
+        if PY3:
+            progress.update(i, message="{} {}".format(get_string(32002), pairing_code))
+        else:
+            progress.update(i, get_string(32002), pairing_code)
+
         monitor.waitForAbort(2)
     progress.close()
