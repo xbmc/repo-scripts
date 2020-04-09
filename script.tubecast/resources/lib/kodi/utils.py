@@ -19,7 +19,13 @@ logger = kodilogging.get_logger()
 
 
 def yes_no(line1, line2=None, line3=None, nolabel=None, yeslabel=None):
-    return xbmcgui.Dialog().yesno(heading=ADDON.getAddonInfo('name'),
+    if PY3:
+        return xbmcgui.Dialog().yesno(heading=ADDON.getAddonInfo('name'),
+                                  message="{} {}".format(line1, line2),
+                                  nolabel=nolabel,
+                                  yeslabel=yeslabel)
+    else:
+        return xbmcgui.Dialog().yesno(heading=ADDON.getAddonInfo('name'),
                                   line1=line1, line2=line2,
                                   nolabel=nolabel,
                                   yeslabel=yeslabel)
