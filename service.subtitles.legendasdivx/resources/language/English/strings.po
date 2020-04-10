@@ -1,0 +1,121 @@
+# Addon Name: LegendasDivx.com
+# Addon id: service.subtitles.legendasdivx
+# Addon Provider: HiGhLaNdeR
+msgid ""
+msgstr ""
+"Project-Id-Version: legendasdivx.com 0.2.8\n"
+"Report-Msgid-Bugs-To: highlander@teknorage.com\n"
+"POT-Creation-Date: 2020-03-30 11:29\n"
+"PO-Revision-Date: 2020-03-30 11:29+0000\n"
+"Last-Translator: HiGhLaNdeR\n"
+"Language-Team: English\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en_GB\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 2.3\n"
+
+msgctxt "#32001"
+msgid "Username"
+msgstr ""
+
+msgctxt "#32002"
+msgid "Password"
+msgstr ""
+
+msgctxt "#32003"
+msgid "Login Details"
+msgstr ""
+
+msgctxt "#32004"
+msgid "Portuguese Enabled"
+msgstr ""
+
+msgctxt "#32005"
+msgid "Portuguese Brazilian Enabled"
+msgstr ""
+
+msgctxt "#32006"
+msgid "Spanish Enabled"
+msgstr ""
+
+msgctxt "#32007"
+msgid "English Enabled"
+msgstr ""
+
+msgctxt "#32008"
+msgid "Force Full Description (Garbage text included)"
+msgstr ""
+
+msgctxt "#32009"
+msgid "No RELEASE in description!"
+msgstr ""
+
+msgctxt "#32010"
+msgid "Parent Folder Search and Match"
+msgstr ""
+
+msgctxt "#32011"
+msgid "Auto"
+msgstr ""
+
+msgctxt "#32012"
+msgid "Always on"
+msgstr ""
+
+msgctxt "#32013"
+msgid "Off"
+msgstr ""
+
+msgctxt "#32014"
+msgid "Language Settings"
+msgstr ""
+
+msgctxt "#32015"
+msgid "Advanced Settings"
+msgstr ""
+
+msgctxt "#32016"
+msgid "Username is required! Check add-on settings!"
+msgstr ""
+
+msgctxt "#32017"
+msgid "Password is required! Check add-on settings!"
+msgstr ""
+
+msgctxt "#32018"
+msgid "Username and Password is required! Check add-on setttings!"
+msgstr ""
+
+msgctxt "#32019"
+msgid "Only for registered users! Wrong username and/or password? Check add-on settings! Thanks."
+msgstr ""
+
+msgctxt "#32020"
+msgid "Priority Search by"
+msgstr ""
+
+msgctxt "#32021"
+msgid "Filename"
+msgstr ""
+
+msgctxt "#32022"
+msgid "Title"
+msgstr ""
+
+msgctxt "#32023"
+msgid "Enable debug mode"
+msgstr ""
+
+msgctxt "#32024"
+msgid "Choose subtitle:"
+msgstr ""
+
+msgctxt "#32025"
+msgid "Can't connect! Website down?"
+msgstr ""
+
+msgctxt "#32026"
+msgid "Timeout! Please try again!"
+msgstr ""
