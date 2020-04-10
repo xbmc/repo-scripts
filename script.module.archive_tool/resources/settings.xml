@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+	<category label="30006">
+		<setting id="archive_tool_file" type="file" label="30002"/>
+		<setting id="archive_tool_folder" type="folder" label="30003"/>
+		<setting id="archive_tool_vfs_type" type="select" label="30004" values="libarchive|rar" default="libarchive"/>
+		<setting visible="true" label="30005" type="action" option="close" action="RunScript(special://home/addons/script.module.archive_tool/lib/archive_tool/run_archive_tool_test.py)"/>
+	</category>
+</settings>
