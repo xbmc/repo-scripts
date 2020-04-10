@@ -15,12 +15,13 @@
     <description lang="pt_PT">Procura e download de legendas do site LegendasDivx.com. Por favor verifica as configurações do add-on antes de usar! Nota: O campo "Forçar Descrição Completa" vai mostrar todo o texto da descrição da legenda, mesmo o que não interessa. O campo "Procura e sincroniza pela pasta do filme" em modo "AUTO" vai primeiro tentar procurar pelo nome da directoria "PAI" mas se a mesma não for uma release irá procurar pelo nome do ficheiro, recomenda-se que esteja em "AUTO". Se o filme ou série estiver na Biblioteca, o nome do filme\serie é da Biblioteca.</description>
     <disclaimer lang="en_GB">highlander@teknorage.com</disclaimer>
     <disclaimer lang="pt_PT">highlander@teknorage.com</disclaimer>
-    <language>pt_PT en_GB</language>
+    <language>pt en</language>
+	<news>v1.0.4  (2020-4-10) - Initial release. Fixed rar extraction thanks to Alwinus (vfs.rar) and Zach (extraction code).</news>
     <platform>all</platform>
     <assets>
       <icon>icon.png</icon>
     </assets>
-    <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+    <license>GPL-2.0-only</license>
     <forum>https://forum.kodi.tv/forumdisplay.php?fid=143</forum>
     <website>https://www.legendasdivx.pt</website>
     <email>admin [at] legendasdivx {dot} com</email>

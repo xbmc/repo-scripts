@@ -256,7 +256,7 @@ def append_subtitle(item):
     xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=url, listitem=listitem, isFolder=False)
 
 def Search(item):
-    """Called when searching for subtitles from XBMC."""
+    """Called when searching for subtitles from KODI."""
     #### Do what's needed to get the list of subtitles from service site
     #### use item["some_property"] that was set earlier
     #### once done, set xbmcgui.ListItem() below and pass it to xbmcplugin.addDirectoryItem()
@@ -426,7 +426,7 @@ def xbmc_extract(SRC, DEST):
 
 
 def Download(id, filename):
-    """Called when subtitle download request from XBMC."""
+    """Called when subtitle download request from KODI."""
     # Cleanup temp dir, we recomend you download/unzip your subs in temp folder and
     # pass that to XBMC to copy and activate
     if os.path.isdir(_temp):shutil.rmtree(_temp)
