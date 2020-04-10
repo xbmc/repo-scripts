@@ -1,0 +1,73 @@
+<html>
+    <head>
+        <title>Log Viewer for Kodi</title>
+        <script type="text/javascript">
+            var offset = 0;
+            var polling = null;
+
+            var param = function (key, fallback) {
+                var query = window.location.search.substring(1);
+                var parameters = query.split('&');
+                for (var i = 0; i < parameters.length; i++) {
+                    var pair = parameters[i].split('=');
+                    if (pair[0] == key) {
+                        return unescape(pair[1]);
+                    }
+                }
+                return fallback;
+            }
+
+            var append = function (text) {
+                if (text) {
+                    var element = document.getElementById('tail');
+                    var scrollDown = element.scrollHeight - element.scrollTop- element.clientHeight < 1;
+                    element.textContent += text;
+                    if (scrollDown) {
+                        element.scrollTop = element.scrollHeight;
+                        // element.scrollLeft = 0;
+                    }
+                }
+            }
+
+            var request = function (uri, callback) {
+                var xhr = new XMLHttpRequest();
+                xhr.open('GET', uri, true);
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState == 4 && xhr.status == 200) {
+                        var newOffset = xhr.getResponseHeader('X-Seek-Offset');
+                        if (newOffset) offset = parseInt(newOffset);
+                        callback(xhr.responseText);
+                    }
+                };
+                xhr.send(null);
+            }
+
+            var tail = function () {
+                var uri = '/tail?offset=' + offset;
+                request(uri, append);
+            }
+
+            var refresh = function () {
+                tail();
+                if (polling == null) {
+                    var interval = parseInt(param('interval', 3000));
+                    polling = window.setInterval(tail, interval);
+                }
+            }
+
+            var sleep = function () {
+                if (polling != null) {
+                    window.clearInterval(polling);
+                    polling = null;
+                }
+            }
+
+            window.onload = refresh;
+            window.onfocus = refresh;
+            window.onblur = sleep;
+        </script>
+    </head>
+    <body style="background: black; color: #ddd; margin: 0px;">
+        <pre id="tail" style="white-space: pre-wrap; margin: 0px; height: 100%; overflow: auto;"></pre>
+    </body>
+</html>
