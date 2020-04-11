@@ -1,0 +1,124 @@
+# Kodi Media Center language file
+# Addon Name: Log Viewer for Kodi
+# Addon id: scripy.logviewer
+# Addon Provider: i96751414
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-08-06 12:03+0100\n"
+"PO-Revision-Date: 2017-08-06 12:07+0100\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: pt\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 1.8.12\n"
+
+msgctxt "#30000"
+msgid "Log Viewer for Kodi"
+msgstr "Log Viewer para Kodi"
+""
+
+msgctxt "#30001"
+msgid "Show Log"
+msgstr "Mostrar Log"
+""
+
+msgctxt "#30002"
+msgid "Show old Log"
+msgstr "Mostrar Log antigo"
+""
+
+msgctxt "#30003"
+msgid "Invalid number of lines. Showing full log"
+msgstr "Número de linhas inválido. A mostrar log completo"
+""
+
+msgctxt "#30004"
+msgid "Failed to open:"
+msgstr "Falhou a abrir:"
+""
+
+msgctxt "#30005"
+msgid "Invert Log (most recent first)"
+msgstr "Inverter log (mais recente primeiro)"
+""
+
+msgctxt "#30006"
+msgid "All"
+msgstr "Todas"
+""
+
+msgctxt "#30007"
+msgid "100"
+msgstr "100"
+""
+
+msgctxt "#30008"
+msgid "50"
+msgstr "50"
+""
+
+msgctxt "#30009"
+msgid "20"
+msgstr "20"
+""
+
+msgctxt "#30010"
+msgid "Number of lines to show"
+msgstr "Número de linhas a mostrar"
+""
+
+msgctxt "#30011"
+msgid "Settings"
+msgstr "Definições"
+""
+
+msgctxt "#30012"
+msgid "General"
+msgstr "Geral"
+""
+
+msgctxt "#30013"
+msgid "Use custom text box"
+msgstr "Usar caixa de texto alternativa"
+""
+
+msgctxt "#30014"
+msgid "Show log when an error occurs"
+msgstr "Mostrar o log quando existir um erro"
+""
+
+msgctxt "#30015"
+msgid "Upload Log file"
+msgstr "Fazer upload do log"
+""
+
+msgctxt "#30016"
+msgid "Error"
+msgstr "Erro"
+""
+
+msgctxt "#30017"
+msgid "Unable to locate log file..."
+msgstr "Falha ao localizar ficheiro de log..."
+""
+
+msgctxt "#30018"
+msgid "Parse exceptions only"
+msgstr "Analisar apenas exceções"
+""
+
+msgctxt "#30019"
+msgid "Enable HTTP server"
+msgstr "Activar servidor HTTP"
+""
+
+msgctxt "#30020"
+msgid "Port"
+msgstr "Porto"
+""
