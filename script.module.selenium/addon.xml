@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.module.selenium"
+		name="Selenium and Web Drivers"
+		version="3.141.59.001"
+		provider-name="D. Jiang">
+	<requires>
+		<import addon="xbmc.python" version="2.18.0" />
+	</requires>
+	<extension point="xbmc.python.module" library="lib" />
+	<extension point="xbmc.addon.metadata">
+		<platform>all</platform>
+		<summary>Selenium automates browsers.</summary>
+		<description>Selenium has the support of some of the largest browser vendors who have taken (or are taking) steps to make Selenium a native part of their browser. It is also the core technology in countless other browser automation tools, APIs and frameworks.</description>
+		<license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+        <platform>all</platform>
+		<source>https://github.com/SeleniumHQ/selenium</source>
+	</extension>
+</addon>
