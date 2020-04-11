@@ -1,5 +1,8 @@
-class Main:
-    def run(self):
-        service.Main()
+# -*- coding: utf-8 -*-
+# Service LegendasDivx.com
 
-Main()
+#simple call, it's just a subtitle addon
+from service import Main
+
+#run the program
+Main().get_params

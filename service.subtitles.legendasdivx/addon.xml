@@ -7,8 +7,7 @@
     <import addon="xbmc.python" version="3.0.0"/>
     <import addon="vfs.rar" version="3.3.0"/>	
   </requires>
-  <extension point="xbmc.subtitle.module"
-             library="service.py" />
+  <extension point="xbmc.subtitle.module" library="default.py" />
   <extension point="xbmc.addon.metadata">
     <summary lang="en_GB">LegendasDivx.com - Search and Download Subtitles</summary>
     <description lang="en_GB">Search and download subtitles from LegendasDivx.com. Please check the add-on configuration before using it! Note: The "Force Full Description" switch will grab all the text in the website including all the non useful information. The "Parent Folder Search and Match" set to "AUTO" will first search by parent folder but if it's not a release then it will search normally, it's recommend to leave it "AUTO". Library is always primary this is only for non Library Movies\TVSHOWS.</description>

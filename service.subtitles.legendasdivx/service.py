@@ -115,6 +115,42 @@ def _log(module, msg):
 def log(msg):
     if debug == 'true': _log(_scriptname, msg)
 
+def recursive_glob(treeroot, pattern):
+    results = []
+    for base, dirs, files in os.walk(treeroot):
+        for extension in pattern:
+            for filename in fnmatch.filter(files, '*.' + extension): results.append(os.path.join(base, filename))
+    return results
+
+def xbmc_extract(SRC, DEST):
+    dd_ext, ff_ext = xbmcvfs.listdir(SRC)
+    for ff in ff_ext:
+        ext = os.path.splitext(ff)[1][1:].lower()
+        if ext in SUB_EXTS:
+            src_file = pjoin(SRC,ff).replace('\\','/')
+            dst_file = pjoin(xbmc.translatePath(DEST),ff)
+            success = xbmcvfs.copy(src_file,dst_file)
+            if not success:
+                log("Error extracting: '%s' to '%s'" % (src_file,dst_file))
+            else:
+                log("Extracting: '%s' to '%s'" % (src_file,dst_file))
+        else:
+            log("NO FILES YET...")
+    for dd in dd_ext:
+        dd_mk = pjoin(DEST,dd).replace('\\','/')
+        success_mk = xbmcvfs.mkdir(dd_mk)
+        if not success_mk:
+            log("Error creating directory: '%s'" % dd_mk)
+        else:
+            log("Created directory: '%s'" % dd_mk)
+        now_SRC = pjoin(SRC,dd,'').replace('\\','/')
+        now_DEST = pjoin(DEST,dd)
+        success_dd = xbmc_extract(now_SRC,now_DEST)
+        if not success_dd:
+            log("Error extracting inside dir: '%s' to '%s'" % (now_SRC,now_DEST))
+        else:
+            log("Extracting (back into the ff loop: '%s' to '%s'" % (now_SRC,now_DEST))
+
 def urlpost(query, lang, page):
     postdata = urllib.parse.urlencode({'query' : query, 'form_cat' : lang}).encode("utf-8")
     cj = http.cookiejar.CookieJar()
@@ -255,330 +291,295 @@ def append_subtitle(item):
     ## add it to list, this can be done as many times as needed for all subtitles found
     xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=url, listitem=listitem, isFolder=False)
 
-def Search(item):
-    """Called when searching for subtitles from KODI."""
-    #### Do what's needed to get the list of subtitles from service site
-    #### use item["some_property"] that was set earlier
-    #### once done, set xbmcgui.ListItem() below and pass it to xbmcplugin.addDirectoryItem()
-    #### CHECKING FOR ANYTHING IN THE USERNAME AND PASSWORD, IF NULL IT STOPS THE SCRIPT WITH A WARNING
-    username = _addon.getSetting( 'LDuser' )
-    password = _addon.getSetting( 'LDpass' )
-    if username == '' or password == '':
-        xbmcplugin.endOfDirectory(int(sys.argv[1]))
-        if username == '' and password != '': xbmc.executebuiltin(('Notification(%s,%s,%d)' % (_scriptname , _language(32016).encode('utf-8'),5000)))
-        if username != '' and password == '': xbmc.executebuiltin(('Notification(%s,%s,%d)' % (_scriptname , _language(32017).encode('utf-8'),5000)))
-        if username == '' and password == '': xbmc.executebuiltin(('Notification(%s,%s,%d)' % (_scriptname , _language(32018).encode('utf-8'),5000)))
-    #### PARENT FOLDER TWEAK DEFINED IN THE ADD-ON SETTINGS (AUTO | ALWAYS ON (DEACTIVATED) | OFF)
-    file_original_path = item['file_original_path']
-    _parentfolder = _addon.getSetting( 'PARENT' )
-    if _parentfolder == '0':
-        filename = os.path.abspath(file_original_path)
-        dirsearch = filename.split(os.sep)
-        log(u"getallsubs: dirsearch string _parentfolder is 0 = %s" % (dirsearch,))
-        if re.search(release_pattern, dirsearch[-2], re.IGNORECASE): _parentfolder = '1'
-        else: _parentfolder = '2'
-    if _parentfolder == '1':
-        filename = os.path.abspath(file_original_path)
-        dirsearch = filename.split(os.sep)
-        filename = dirsearch[-2]
-        log(u"getallsubs: filename string _parentfolder is 1 = %s" % (filename,))
-    if _parentfolder == '2':   
-        filename = os.path.splitext(os.path.basename(file_original_path))[0]
-        log(u"getallsubs: filename string _parentfolder is 2 = %s" % (filename,))
- 
-    filename = xbmc.getCleanMovieTitle(filename)[0] + " " + xbmc.getCleanMovieTitle(filename)[1]
-    log(u"Search: FILENAME = %s" % (filename,))
-    searchstring_notclean = os.path.splitext(os.path.basename(file_original_path))[0]
-    searchstring = ""
-    global israr
-    israr = os.path.abspath(file_original_path)
-    israr = os.path.split(israr)
-    israr = israr[0].split(os.sep)
-    israr = str.split(israr[-1], '.')
-    israr = str.lower(israr[-1])
+class Main:
 
-    title = xbmc.getCleanMovieTitle(item['title'])[0]
-    year = item['year']
-    ## REMOVING THE YEAR FROM THE TV SHOW FOR BETTER MATCH ##
-    tvshow = item['tvshow']
-    tvshow = tvshow.split('(')
-    tvshow = tvshow[0]
-    ##########################################################
-    season = item['season']
-    episode = item['episode']
-    log(u"Search: Tvshow string = %s" % (tvshow,))
-    log(u"Search: Title string = %s" % (title,))
-    subtitles_list = []
-    
-    if item['mansearch']:
-        searchstring = '"' + item['mansearchstr'] + '"'
-        log(u"Search: Manual String = %s" % (searchstring,))
-    else:
-        if tvshow != '':
-            searchstring = "%s S%#02dE%#02d" % (tvshow, int(season), int(episode))
-            log(u"Search: Title TV LIBRARY String = %s" % (searchstring,))
-        elif title != '' and tvshow == '':
-            searchstring = '"' + title + ' ' + year + '"'
-            log(u"Search: Title MOVIE LIBRARY String = %s" % (searchstring,))
-        else:
-            if 'rar' in israr and searchstring is not None:
-                log(u"Search: RAR Filename String = %s" % (searchstring,))
-                if 'cd1' in str.lower(title) or 'cd2' in str.lower(title) or 'cd3' in str.lower(title):
-                    dirsearch = os.path.abspath(file_original_path)
-                    dirsearch = os.path.split(dirsearch)
-                    dirsearch = dirsearch[0].split(os.sep)
-                    if len(dirsearch) > 1:
-                        searchstring_notclean = dirsearch[-3]
-                        searchstring = xbmc.getCleanMovieTitle(dirsearch[-3])
-                        searchstring = searchstring[0]
-                        log(u"Search: RAR MULTI CD String = %s" % (searchstring,))
-                    else: searchstring = title
-                else:
-                    searchstring = filename
-                    log(u"Search: RAR NO MULTI CD String = %s" % (searchstring,))
-            elif 'cd1' in str.lower(title) or 'cd2' in str.lower(title) or 'cd3' in str.lower(title):
-                dirsearch = os.path.abspath(file_original_path)
-                dirsearch = os.path.split(dirsearch)
-                dirsearch = dirsearch[0].split(os.sep)
-                if len(dirsearch) > 1:
-                    searchstring_notclean = dirsearch[-2]
-                    searchstring = xbmc.getCleanMovieTitle(dirsearch[-2])
-                    searchstring = searchstring[0]
-                    log(u"Search: MULTI CD String = %s" % (searchstring,))
-                else:
-                    #We are at the root of the drive!!! so there's no dir to lookup only file#
-                    title = os.path.split(file_original_path)
-                    searchstring = title[-1]
-            else:
-                ########## TODO: EXTRACT THE YEAR FROM THE FILENAME AND ADD IT TO THE SEARCH ###########
-                if _search == '0':
-                    if re.search("(.+?s[0-9][0-9]e[0-9][0-9])", filename, re.IGNORECASE):
-                        searchstring = re.search("(.+?s[0-9][0-9]e[0-9][0-9])", filename, re.IGNORECASE)
-                        searchstring = searchstring.group(0)
-                        log(u"Search: Filename is TV String (search is 0) = %s" % (searchstring,))
-                    else:
-                        searchstring = '"' + filename + '"'
-                        log(u"Search: Filename is Not TV String (search is 0) = %s" % (searchstring,))
-                else:
-                    if re.search("(.+?s[0-9][0-9]e[0-9][0-9])", title, re.IGNORECASE):
-                        searchstring = re.search("(.+?s[0-9][0-9]e[0-9][0-9])", title, re.IGNORECASE)
-                        searchstring = searchstring.group(0)
-                        log(u"Search: Title is TV String (search is 1) = %s" % (searchstring,))
-                    else:
-                        searchstring = title
-                        log(u"Search: Title is Not TV String (search is 1) = %s" % (searchstring,))
+	def Search(item):
+		"""Called when searching for subtitles from KODI."""
+		#### Do what's needed to get the list of subtitles from service site
+		#### use item["some_property"] that was set earlier
+		#### once done, set xbmcgui.ListItem() below and pass it to xbmcplugin.addDirectoryItem()
+		#### CHECKING FOR ANYTHING IN THE USERNAME AND PASSWORD, IF NULL IT STOPS THE SCRIPT WITH A WARNING
+		username = _addon.getSetting( 'LDuser' )
+		password = _addon.getSetting( 'LDpass' )
+		if username == '' or password == '':
+			xbmcplugin.endOfDirectory(int(sys.argv[1]))
+			if username == '' and password != '': xbmc.executebuiltin(('Notification(%s,%s,%d)' % (_scriptname , _language(32016).encode('utf-8'),5000)))
+			if username != '' and password == '': xbmc.executebuiltin(('Notification(%s,%s,%d)' % (_scriptname , _language(32017).encode('utf-8'),5000)))
+			if username == '' and password == '': xbmc.executebuiltin(('Notification(%s,%s,%d)' % (_scriptname , _language(32018).encode('utf-8'),5000)))
+		#### PARENT FOLDER TWEAK DEFINED IN THE ADD-ON SETTINGS (AUTO | ALWAYS ON (DEACTIVATED) | OFF)
+		file_original_path = item['file_original_path']
+		_parentfolder = _addon.getSetting( 'PARENT' )
+		if _parentfolder == '0':
+			filename = os.path.abspath(file_original_path)
+			dirsearch = filename.split(os.sep)
+			log(u"getallsubs: dirsearch string _parentfolder is 0 = %s" % (dirsearch,))
+			if re.search(release_pattern, dirsearch[-2], re.IGNORECASE): _parentfolder = '1'
+			else: _parentfolder = '2'
+		if _parentfolder == '1':
+			filename = os.path.abspath(file_original_path)
+			dirsearch = filename.split(os.sep)
+			filename = dirsearch[-2]
+			log(u"getallsubs: filename string _parentfolder is 1 = %s" % (filename,))
+		if _parentfolder == '2':   
+			filename = os.path.splitext(os.path.basename(file_original_path))[0]
+			log(u"getallsubs: filename string _parentfolder is 2 = %s" % (filename,))
+	 
+		filename = xbmc.getCleanMovieTitle(filename)[0] + " " + xbmc.getCleanMovieTitle(filename)[1]
+		log(u"Search: FILENAME = %s" % (filename,))
+		searchstring_notclean = os.path.splitext(os.path.basename(file_original_path))[0]
+		searchstring = ""
+		global israr
+		israr = os.path.abspath(file_original_path)
+		israr = os.path.split(israr)
+		israr = israr[0].split(os.sep)
+		israr = str.split(israr[-1], '.')
+		israr = str.lower(israr[-1])
 
-    PT_ON = _addon.getSetting( 'PT' )
-    PTBR_ON = _addon.getSetting( 'PTBR' )
-    ES_ON = _addon.getSetting( 'ES' )
-    EN_ON = _addon.getSetting( 'EN' )
-    
-    if 'por' in item['languages'] and PT_ON == 'true':
-        subtitles_list = getallsubs(searchstring, "pt", "Portuguese", file_original_path, searchstring_notclean)
-        for sub in subtitles_list: append_subtitle(sub)
-    if 'por' in item['languages'] and PTBR_ON == 'true':
-        subtitles_list = getallsubs(searchstring, "pb", "Brazilian", file_original_path, searchstring_notclean)
-        for sub in subtitles_list: append_subtitle(sub)
-    if 'spa' in item['languages'] and ES_ON == 'true':
-        subtitles_list = getallsubs(searchstring, "es", "Spanish", file_original_path, searchstring_notclean)
-        for sub in subtitles_list: append_subtitle(sub)
-    if 'eng' in item['languages'] and EN_ON == 'true':
-        subtitles_list = getallsubs(searchstring, "en", "English", file_original_path, searchstring_notclean)
-        for sub in subtitles_list: append_subtitle(sub)
-    if 'eng' not in item['languages'] and 'spa' not in item['languages'] and 'por' not in item['languages'] and 'por' not in item['languages']:
-        xbmc.executebuiltin((u'Notification(%s,%s,%d)' % (_scriptname , 'Only Portuguese | Portuguese Brazilian | English | Spanish.',5000)))
+		title = xbmc.getCleanMovieTitle(item['title'])[0]
+		year = item['year']
+		## REMOVING THE YEAR FROM THE TV SHOW FOR BETTER MATCH ##
+		tvshow = item['tvshow']
+		tvshow = tvshow.split('(')
+		tvshow = tvshow[0]
+		##########################################################
+		season = item['season']
+		episode = item['episode']
+		log(u"Search: Tvshow string = %s" % (tvshow,))
+		log(u"Search: Title string = %s" % (title,))
+		subtitles_list = []
+		
+		if item['mansearch']:
+			searchstring = '"' + item['mansearchstr'] + '"'
+			log(u"Search: Manual String = %s" % (searchstring,))
+		else:
+			if tvshow != '':
+				searchstring = "%s S%#02dE%#02d" % (tvshow, int(season), int(episode))
+				log(u"Search: Title TV LIBRARY String = %s" % (searchstring,))
+			elif title != '' and tvshow == '':
+				searchstring = '"' + title + ' ' + year + '"'
+				log(u"Search: Title MOVIE LIBRARY String = %s" % (searchstring,))
+			else:
+				if 'rar' in israr and searchstring is not None:
+					log(u"Search: RAR Filename String = %s" % (searchstring,))
+					if 'cd1' in str.lower(title) or 'cd2' in str.lower(title) or 'cd3' in str.lower(title):
+						dirsearch = os.path.abspath(file_original_path)
+						dirsearch = os.path.split(dirsearch)
+						dirsearch = dirsearch[0].split(os.sep)
+						if len(dirsearch) > 1:
+							searchstring_notclean = dirsearch[-3]
+							searchstring = xbmc.getCleanMovieTitle(dirsearch[-3])
+							searchstring = searchstring[0]
+							log(u"Search: RAR MULTI CD String = %s" % (searchstring,))
+						else: searchstring = title
+					else:
+						searchstring = filename
+						log(u"Search: RAR NO MULTI CD String = %s" % (searchstring,))
+				elif 'cd1' in str.lower(title) or 'cd2' in str.lower(title) or 'cd3' in str.lower(title):
+					dirsearch = os.path.abspath(file_original_path)
+					dirsearch = os.path.split(dirsearch)
+					dirsearch = dirsearch[0].split(os.sep)
+					if len(dirsearch) > 1:
+						searchstring_notclean = dirsearch[-2]
+						searchstring = xbmc.getCleanMovieTitle(dirsearch[-2])
+						searchstring = searchstring[0]
+						log(u"Search: MULTI CD String = %s" % (searchstring,))
+					else:
+						#We are at the root of the drive!!! so there's no dir to lookup only file#
+						title = os.path.split(file_original_path)
+						searchstring = title[-1]
+				else:
+					########## TODO: EXTRACT THE YEAR FROM THE FILENAME AND ADD IT TO THE SEARCH ###########
+					if _search == '0':
+						if re.search("(.+?s[0-9][0-9]e[0-9][0-9])", filename, re.IGNORECASE):
+							searchstring = re.search("(.+?s[0-9][0-9]e[0-9][0-9])", filename, re.IGNORECASE)
+							searchstring = searchstring.group(0)
+							log(u"Search: Filename is TV String (search is 0) = %s" % (searchstring,))
+						else:
+							searchstring = '"' + filename + '"'
+							log(u"Search: Filename is Not TV String (search is 0) = %s" % (searchstring,))
+					else:
+						if re.search("(.+?s[0-9][0-9]e[0-9][0-9])", title, re.IGNORECASE):
+							searchstring = re.search("(.+?s[0-9][0-9]e[0-9][0-9])", title, re.IGNORECASE)
+							searchstring = searchstring.group(0)
+							log(u"Search: Title is TV String (search is 1) = %s" % (searchstring,))
+						else:
+							searchstring = title
+							log(u"Search: Title is Not TV String (search is 1) = %s" % (searchstring,))
 
-def recursive_glob(treeroot, pattern):
-    results = []
-    for base, dirs, files in os.walk(treeroot):
-        for extension in pattern:
-            for filename in fnmatch.filter(files, '*.' + extension): results.append(os.path.join(base, filename))
-    return results
+		PT_ON = _addon.getSetting( 'PT' )
+		PTBR_ON = _addon.getSetting( 'PTBR' )
+		ES_ON = _addon.getSetting( 'ES' )
+		EN_ON = _addon.getSetting( 'EN' )
+		
+		if 'por' in item['languages'] and PT_ON == 'true':
+			subtitles_list = getallsubs(searchstring, "pt", "Portuguese", file_original_path, searchstring_notclean)
+			for sub in subtitles_list: append_subtitle(sub)
+		if 'por' in item['languages'] and PTBR_ON == 'true':
+			subtitles_list = getallsubs(searchstring, "pb", "Brazilian", file_original_path, searchstring_notclean)
+			for sub in subtitles_list: append_subtitle(sub)
+		if 'spa' in item['languages'] and ES_ON == 'true':
+			subtitles_list = getallsubs(searchstring, "es", "Spanish", file_original_path, searchstring_notclean)
+			for sub in subtitles_list: append_subtitle(sub)
+		if 'eng' in item['languages'] and EN_ON == 'true':
+			subtitles_list = getallsubs(searchstring, "en", "English", file_original_path, searchstring_notclean)
+			for sub in subtitles_list: append_subtitle(sub)
+		if 'eng' not in item['languages'] and 'spa' not in item['languages'] and 'por' not in item['languages'] and 'por' not in item['languages']:
+			xbmc.executebuiltin((u'Notification(%s,%s,%d)' % (_scriptname , 'Only Portuguese | Portuguese Brazilian | English | Spanish.',5000)))
 
-def xbmc_extract(SRC, DEST):
-    dd_ext, ff_ext = xbmcvfs.listdir(SRC)
-    for ff in ff_ext:
-        ext = os.path.splitext(ff)[1][1:].lower()
-        if ext in SUB_EXTS:
-            src_file = pjoin(SRC,ff).replace('\\','/')
-            dst_file = pjoin(xbmc.translatePath(DEST),ff)
-            success = xbmcvfs.copy(src_file,dst_file)
-            if not success:
-                log("Error extracting: '%s' to '%s'" % (src_file,dst_file))
-            else:
-                log("Extracting: '%s' to '%s'" % (src_file,dst_file))
-        else:
-            log("NO FILES YET...")
-    for dd in dd_ext:
-        dd_mk = pjoin(DEST,dd).replace('\\','/')
-        success_mk = xbmcvfs.mkdir(dd_mk)
-        if not success_mk:
-            log("Error creating directory: '%s'" % dd_mk)
-        else:
-            log("Created directory: '%s'" % dd_mk)
-        now_SRC = pjoin(SRC,dd,'').replace('\\','/')
-        now_DEST = pjoin(DEST,dd)
-        success_dd = xbmc_extract(now_SRC,now_DEST)
-        if not success_dd:
-            log("Error extracting inside dir: '%s' to '%s'" % (now_SRC,now_DEST))
-        else:
-            log("Extracting (back into the ff loop: '%s' to '%s'" % (now_SRC,now_DEST))
+	def Download(id, filename):
+		"""Called when subtitle download request from KODI."""
+		# Cleanup temp dir, we recomend you download/unzip your subs in temp folder and
+		# pass that to XBMC to copy and activate
+		if os.path.isdir(_temp):shutil.rmtree(_temp)
+		xbmcvfs.mkdirs(_temp)
+		if not os.path.isdir(_temp):xbmcvfs.mkdir(_temp)
+		unpacked = 'ldivx-' + str(uuid.uuid4()).replace("-","")[0:6]
+		xbmcvfs.mkdirs(pjoin(_temp,unpacked,''))
+		_newtemp = os.path.join(_temp, xbmc.translatePath(unpacked).replace('\\','/'))
 
+		subtitles_list = []
+		username = _addon.getSetting( 'LDuser' )
+		password = _addon.getSetting( 'LDpass' )
+		login_postdata = urllib.parse.urlencode({'username' : username, 'password' : password, 'login' : 'Login', 'sid' : ''}).encode("utf-8")
+		cj = http.cookiejar.CookieJar()
+		my_opener = urllib.request.build_opener(urllib.request.HTTPCookieProcessor(cj))
+		urllib.request.install_opener(my_opener)
+		request = urllib.request.Request(main_url + 'forum/ucp.php?mode=login', login_postdata)
+		response = urllib.request.urlopen(request, None, 6.5).read().decode('ISO-8859-1')
+		content = my_opener.open(main_url + 'modules.php?name=Downloads&d_op=getit&lid=' + id + '&username=' + username)
+		content = content.read()
+		#### If user is not registered or User\Pass is misspelled it will generate an error message and break the script execution!
+		if 'url=sair.php?referer=login' in content.decode('ISO-8859-1'):
+			xbmc.executebuiltin(('Notification(%s,%s,%d)' % (_scriptname , _language(32019).encode('utf8'),5000)))
+			xbmcplugin.endOfDirectory(int(sys.argv[1]))
+		if content.decode('ISO-8859-1') is not None:
+			header = content[:4].decode('ISO-8859-1')
+			if header == 'Rar!':
+				tmp_file = str(uuid.uuid4())+".rar"
+				local_tmp_file = pjoin(_temp, tmp_file)
+				packed = True
+			elif header == 'PK':
+				local_tmp_file = pjoin(_temp, str(uuid.uuid4())+".zip")
+				packed = True
+			else:
+				# never found/downloaded an unpacked subtitles file, but just to be sure ...
+				# assume unpacked sub file is an '.srt'
+				local_tmp_file = pjoin(_temp, "ldivx.srt")
+				subs_file = local_tmp_file
+				packed = False
+			log(u"Trying to save subtitles to '%s'" % (local_tmp_file,))
+			try:
+				with open(local_tmp_file, "wb") as local_file_handle:
 
-def Download(id, filename):
-    """Called when subtitle download request from KODI."""
-    # Cleanup temp dir, we recomend you download/unzip your subs in temp folder and
-    # pass that to XBMC to copy and activate
-    if os.path.isdir(_temp):shutil.rmtree(_temp)
-    xbmcvfs.mkdirs(_temp)
-    if not os.path.isdir(_temp):xbmcvfs.mkdir(_temp)
-    unpacked = 'ldivx-' + str(uuid.uuid4()).replace("-","")[0:6]
-    xbmcvfs.mkdirs(pjoin(_temp,unpacked,''))
-    _newtemp = os.path.join(_temp, xbmc.translatePath(unpacked).replace('\\','/'))
+					local_file_handle.write(content)
+				local_file_handle.close()
+				xbmc.sleep(500)
+			except:
+				log(u"Failed to save subtitles to '%s'" % (local_tmp_file,))
+			if packed:
+				try:
+					compressed_file = 'rar://' + quote_plus(local_tmp_file) + '/'
+					log(u"Will try to extract...")
+					xbmc_extract(compressed_file,_newtemp)
+				except:
+					xbmc.executebuiltin("XBMC.Extract(%s, %s)" % (compressed_file, _newtemp), True)
+				## IF EXTRACTION FAILS, WHICH HAPPENS SOMETIMES ... BUG?? ... WE WILL BROWSE THE RAR FILE FOR MANUAL EXTRACTION ##
+				searchsubs = recursive_glob(_newtemp, SUB_EXTS)
+				searchsubscount = len(searchsubs)
+				if searchsubscount == 0:
+					dialog = xbmcgui.Dialog()
+					subs_file = dialog.browse(1, _language(32024).encode('utf8'), 'files', '', False, True, _temp + '/')
+					subtitles_list.append(subs_file)
+				## ELSE WE WILL GO WITH THE NORMAL PROCEDURE ##
+				else:
+					os.remove(local_tmp_file)
+					log(u"count: '%s'" % (searchsubscount,))
+					for file in searchsubs:
+						# There could be more subtitle files in _temp, so make
+						# sure we get the newly created subtitle file
+						if searchsubscount == 1:
+							# unpacked file is a newly created subtitle file
+							log(u"Unpacked subtitles file '%s'" % (file,))
+							try:
+								subs_file = pjoin(_newtemp, file)
+							except:
+								log(u"Failed to load subtitle file '%s'" % (file,))
+							subtitles_list.append(subs_file)
+							break
+						else:
+						# If there are more than one subtitle in the temp dir, launch a browse dialog
+						# so user can choose.
+							dialog = xbmcgui.Dialog()
+							subs_file = dialog.browse(1, _language(32024).encode('utf8'), 'files', '', False, True, _newtemp + '/')
+							subtitles_list.append(subs_file)
+							break
+			else: subtitles_list.append(subs_file)
+		return subtitles_list
 
-    subtitles_list = []
-    username = _addon.getSetting( 'LDuser' )
-    password = _addon.getSetting( 'LDpass' )
-    login_postdata = urllib.parse.urlencode({'username' : username, 'password' : password, 'login' : 'Login', 'sid' : ''}).encode("utf-8")
-    cj = http.cookiejar.CookieJar()
-    my_opener = urllib.request.build_opener(urllib.request.HTTPCookieProcessor(cj))
-    urllib.request.install_opener(my_opener)
-    request = urllib.request.Request(main_url + 'forum/ucp.php?mode=login', login_postdata)
-    response = urllib.request.urlopen(request, None, 6.5).read().decode('ISO-8859-1')
-    content = my_opener.open(main_url + 'modules.php?name=Downloads&d_op=getit&lid=' + id + '&username=' + username)
-    content = content.read()
-    #### If user is not registered or User\Pass is misspelled it will generate an error message and break the script execution!
-    if 'url=sair.php?referer=login' in content.decode('ISO-8859-1'):
-        xbmc.executebuiltin(('Notification(%s,%s,%d)' % (_scriptname , _language(32019).encode('utf8'),5000)))
-        xbmcplugin.endOfDirectory(int(sys.argv[1]))
-    if content.decode('ISO-8859-1') is not None:
-        header = content[:4].decode('ISO-8859-1')
-        if header == 'Rar!':
-            tmp_file = str(uuid.uuid4())+".rar"
-            local_tmp_file = pjoin(_temp, tmp_file)
-            packed = True
-        elif header == 'PK':
-            local_tmp_file = pjoin(_temp, str(uuid.uuid4())+".zip")
-            packed = True
-        else:
-            # never found/downloaded an unpacked subtitles file, but just to be sure ...
-            # assume unpacked sub file is an '.srt'
-            local_tmp_file = pjoin(_temp, "ldivx.srt")
-            subs_file = local_tmp_file
-            packed = False
-        log(u"Trying to save subtitles to '%s'" % (local_tmp_file,))
-        try:
-            with open(local_tmp_file, "wb") as local_file_handle:
+	def get_params():
+		param = []
+		paramstring = sys.argv[2]
+		if len(paramstring) >= 2:
+			params = paramstring
+			cleanedparams = params.replace('?', '')
+			if params.endswith('/'): params = params[:-2] # XXX: Should be [:-1] ?
+			pairsofparams = cleanedparams.split('&')
+			param = {}
+			for pair in pairsofparams:
+				splitparams = {}
+				splitparams = pair.split('=')
+				if len(splitparams) == 2: param[splitparams[0]] = splitparams[1]
+		return param
 
-                local_file_handle.write(content)
-            local_file_handle.close()
-            xbmc.sleep(500)
-        except:
-            log(u"Failed to save subtitles to '%s'" % (local_tmp_file,))
-        if packed:
-            try:
-                compressed_file = 'rar://' + quote_plus(local_tmp_file) + '/'
-                log(u"Will try to extract...")
-                xbmc_extract(compressed_file,_newtemp)
-            except:
-                xbmc.executebuiltin("XBMC.Extract(%s, %s)" % (compressed_file, _newtemp), True)
-            ## IF EXTRACTION FAILS, WHICH HAPPENS SOMETIMES ... BUG?? ... WE WILL BROWSE THE RAR FILE FOR MANUAL EXTRACTION ##
-            searchsubs = recursive_glob(_newtemp, SUB_EXTS)
-            searchsubscount = len(searchsubs)
-            if searchsubscount == 0:
-                dialog = xbmcgui.Dialog()
-                subs_file = dialog.browse(1, _language(32024).encode('utf8'), 'files', '', False, True, _temp + '/')
-                subtitles_list.append(subs_file)
-            ## ELSE WE WILL GO WITH THE NORMAL PROCEDURE ##
-            else:
-                os.remove(local_tmp_file)
-                log(u"count: '%s'" % (searchsubscount,))
-                for file in searchsubs:
-                    # There could be more subtitle files in _temp, so make
-                    # sure we get the newly created subtitle file
-                    if searchsubscount == 1:
-                        # unpacked file is a newly created subtitle file
-                        log(u"Unpacked subtitles file '%s'" % (file,))
-                        try:
-                            subs_file = pjoin(_newtemp, file)
-                        except:
-                            log(u"Failed to load subtitle file '%s'" % (file,))
-                        subtitles_list.append(subs_file)
-                        break
-                    else:
-                    # If there are more than one subtitle in the temp dir, launch a browse dialog
-                    # so user can choose.
-                        dialog = xbmcgui.Dialog()
-                        subs_file = dialog.browse(1, _language(32024).encode('utf8'), 'files', '', False, True, _newtemp + '/')
-                        subtitles_list.append(subs_file)
-                        break
-        else: subtitles_list.append(subs_file)
-    return subtitles_list
+	# Get parameters from XBMC and launch actions
+	params = get_params()
 
-def get_params():
-    param = []
-    paramstring = sys.argv[2]
-    if len(paramstring) >= 2:
-        params = paramstring
-        cleanedparams = params.replace('?', '')
-        if params.endswith('/'): params = params[:-2] # XXX: Should be [:-1] ?
-        pairsofparams = cleanedparams.split('&')
-        param = {}
-        for pair in pairsofparams:
-            splitparams = {}
-            splitparams = pair.split('=')
-            if len(splitparams) == 2: param[splitparams[0]] = splitparams[1]
-    return param
+	if params['action'] == 'search' or params['action'] == 'manualsearch':
+		item = {}
+		item['temp']               = False
+		item['rar']                = False
+		item['year']               = xbmc.getInfoLabel("VideoPlayer.Year")                           # Year
+		item['season']             = str(xbmc.getInfoLabel("VideoPlayer.Season"))                    # Season
+		item['episode']            = str(xbmc.getInfoLabel("VideoPlayer.Episode"))                   # Episode
+		item['tvshow']             = str(xbmc.getInfoLabel("VideoPlayer.TVshowtitle"))   # Show
+		item['title']              = str(xbmc.getInfoLabel("VideoPlayer.OriginalTitle")) # try to get original title
+		item['file_original_path'] = urllib.parse.unquote(xbmc.Player().getPlayingFile())  # Full path of a playing file
+		item['mansearch'] = False
+		item['languages'] = []
 
-# Get parameters from XBMC and launch actions
-params = get_params()
+		if 'searchstring' in params:
+			item['mansearch'] = True
+			item['mansearchstr'] = urllib.parse.unquote(params['searchstring'])
 
-if params['action'] == 'search' or params['action'] == 'manualsearch':
-    item = {}
-    item['temp']               = False
-    item['rar']                = False
-    item['year']               = xbmc.getInfoLabel("VideoPlayer.Year")                           # Year
-    item['season']             = str(xbmc.getInfoLabel("VideoPlayer.Season"))                    # Season
-    item['episode']            = str(xbmc.getInfoLabel("VideoPlayer.Episode"))                   # Episode
-    item['tvshow']             = str(xbmc.getInfoLabel("VideoPlayer.TVshowtitle"))   # Show
-    item['title']              = str(xbmc.getInfoLabel("VideoPlayer.OriginalTitle")) # try to get original title
-    item['file_original_path'] = urllib.parse.unquote(xbmc.Player().getPlayingFile())  # Full path of a playing file
-    item['mansearch'] = False
-    item['languages'] = []
-
-    if 'searchstring' in params:
-        item['mansearch'] = True
-        item['mansearchstr'] = urllib.parse.unquote(params['searchstring'])
-
-    for lang in urllib.parse.unquote(params['languages']).split(','):
-        item['languages'].append(xbmc.convertLanguage(lang, xbmc.ISO_639_2))
+		for lang in urllib.parse.unquote(params['languages']).split(','):
+			item['languages'].append(xbmc.convertLanguage(lang, xbmc.ISO_639_2))
 
 
-    if "s" in item['episode'].lower():
-        # Check if season is "Special"
-        item['season'] = "0"
-        item['episode'] = item['episode'][-1:]
+		if "s" in item['episode'].lower():
+			# Check if season is "Special"
+			item['season'] = "0"
+			item['episode'] = item['episode'][-1:]
 
-    if "http" in item['file_original_path']: item['temp'] = True
+		if "http" in item['file_original_path']: item['temp'] = True
 
-    elif "rar://" in item['file_original_path']:
-        item['rar'] = True
-        item['file_original_path'] = os.path.dirname(item['file_original_path'][6:])
+		elif "rar://" in item['file_original_path']:
+			item['rar'] = True
+			item['file_original_path'] = os.path.dirname(item['file_original_path'][6:])
 
-    elif "stack://" in item['file_original_path']:
-        stackPath = item['file_original_path'].split(" , ")
-        item['file_original_path'] = stackPath[0][8:]
+		elif "stack://" in item['file_original_path']:
+			stackPath = item['file_original_path'].split(" , ")
+			item['file_original_path'] = stackPath[0][8:]
 
-    Search(item)
+		Search(item)
 
-elif params['action'] == 'download':
-    # we pickup all our arguments sent from def Search()
-    subs = Download(params["id"], params["filename"])
-    # we can return more than one subtitle for multi CD versions, for now we
-    # are still working out how to handle that in XBMC core
-    for sub in subs:
-        listitem = xbmcgui.ListItem(label=sub)
-        xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=sub, listitem=listitem, isFolder=False)
+	elif params['action'] == 'download':
+		# we pickup all our arguments sent from def Search()
+		subs = Download(params["id"], params["filename"])
+		# we can return more than one subtitle for multi CD versions, for now we
+		# are still working out how to handle that in XBMC core
+		for sub in subs:
+			listitem = xbmcgui.ListItem(label=sub)
+			xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=sub, listitem=listitem, isFolder=False)
 
-# Send end of directory to XBMC
-xbmcplugin.endOfDirectory(int(sys.argv[1]))
+	# Send end of directory to XBMC
+	xbmcplugin.endOfDirectory(int(sys.argv[1]))
