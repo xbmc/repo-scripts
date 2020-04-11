@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Service LegendasDivx.com version 0.2.9
+# Service LegendasDivx.com version 0.3.0
 # Code based on Undertext (FRODO) service
 # Coded by HiGhLaNdR@OLDSCHOOL
 # Ported to Gotham by HiGhLaNdR@OLDSCHOOL
@@ -27,6 +27,7 @@ import cookielib
 import urllib2
 import uuid
 import socket
+from urllib import unquote, quote_plus
 
 _addon = xbmcaddon.Addon()
 _author     = _addon.getAddonInfo('author')
@@ -55,8 +56,8 @@ debug_pretext = "LegendasDivx"
 #SEARCH_PAGE_URL = main_url + "modules.php?name=Downloads&file=jz&d_op=search_next&order=&form_cat=28&page=%(page)s&query=%(query)s"
 
 INTERNAL_LINK_URL = "plugin://%(scriptid)s/?action=download&id=%(id)s&filename=%(filename)s"
-SUB_EXTS = ['srt', 'sub', 'txt', 'aas', 'ssa', 'smi']
-HTTP_USER_AGENT = "User-Agent=Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.2.3) Gecko/20100401 Firefox/3.6.3 ( .NET CLR 3.5.30729)"
+SUB_EXTS = ['srt', 'sub', 'txt', 'ass', 'ssa', 'smi']
+HTTP_USER_AGENT = "User-Agent=Kodi 18 Leia; Kodi 17; Kodi 16; Kodi 15"
 
 #====================================================================================================================
 # Regular expression patterns
@@ -114,6 +115,35 @@ def _log(module, msg):
 
 def log(msg):
     if debug == 'true': _log(_scriptname, msg)
+
+def xbmc_extract(SRC, DEST):
+    dd_ext, ff_ext = xbmcvfs.listdir(SRC)
+    for ff in ff_ext:
+        ext = os.path.splitext(ff)[1][1:].lower()
+        if ext in SUB_EXTS:
+            src_file = pjoin(SRC,ff).replace('\\','/')
+            dst_file = pjoin(xbmc.translatePath(DEST),ff)
+            success = xbmcvfs.copy(src_file,dst_file)
+            if not success:
+                log("Error extracting: '%s' to '%s'" % (src_file,dst_file))
+            else:
+                log("Extracting: '%s' to '%s'" % (src_file,dst_file))
+        else:
+            log("NO FILES YET...")
+    for dd in dd_ext:
+        dd_mk = pjoin(DEST,dd).replace('\\','/')
+        success_mk = xbmcvfs.mkdir(dd_mk)
+        if not success_mk:
+            log("Error creating directory: '%s'" % dd_mk)
+        else:
+            log("Created directory: '%s'" % dd_mk)
+        now_SRC = pjoin(SRC,dd,'').replace('\\','/')
+        now_DEST = pjoin(DEST,dd)
+        success_dd = xbmc_extract(now_SRC,now_DEST)
+        if not success_dd:
+            log("Error extracting inside dir: '%s' to '%s'" % (now_SRC,now_DEST))
+        else:
+            log("Extracting (back into the ff loop: '%s' to '%s'" % (now_SRC,now_DEST))
 
 def urlpost(query, lang, page):
     postdata = urllib.urlencode({'query' : query, 'form_cat' : lang})
@@ -448,10 +478,17 @@ def Download(id, filename):
             xbmc.sleep(500)
         except: log(u"Failed to save subtitles to '%s'" % (local_tmp_file,))
         if packed:
-            xbmc.executebuiltin("XBMC.Extract(%s, %s)" % (local_tmp_file.encode("utf-8"), _newtemp))
-            xbmc.sleep(1000)
-
+            try:
+                compressed_file = 'rar://' + quote_plus(local_tmp_file) + '/'
+                log(u"Will try to extract...")
+                xbmc_extract(compressed_file,_newtemp)
+                log(u"Success...")
+            except:
+                xbmc.executebuiltin("XBMC.Extract(%s, %s)" % (local_tmp_file.encode("utf-8"), _newtemp))
+                xbmc.sleep(1000)
+    
             ## IF EXTRACTION FAILS, WHICH HAPPENS SOMETIMES ... BUG?? ... WE WILL BROWSE THE RAR FILE FOR MANUAL EXTRACTION ##
+            log(u"Here...")
             searchsubs = recursive_glob(_newtemp, SUB_EXTS)
             searchsubscount = len(searchsubs)
             if searchsubscount == 0:
