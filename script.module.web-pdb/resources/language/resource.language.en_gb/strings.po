@@ -8,7 +8,7 @@ msgstr ""
 
 
 msgctxt "#32000"
-msgid "Web-based remote Python debugger:"
+msgid "Web-based remote Python debugger:[CR]github.com/romanvm/kodi.web-pdb"
 msgstr ""
 
 msgctxt "#32001"
