@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<window type="dialog">
+    <!-- 1280 x 720 -->
+    <include>dialogeffect</include>
+    <depth>DepthDialog+</depth>
+    <defaultcontrol always="true">32500</defaultcontrol>
+    <controls>
+        <control type="group">
+            <!-- Background -->
+            <control type="image">
+                <left>0</left>
+                <top>0</top>
+                <width>1280</width>
+                <height>720</height>
+                <texture colordiffuse="F0F0F0F0">AddonWindow/black.png</texture>
+            </control>
+
+            <control type="button" id="32500">
+                <!-- Close button -->
+                <left>1210</left>
+                <top>30</top>
+                <width>32</width>
+                <height>32</height>
+                <texturefocus colordiffuse="FF12A0C7">Button/close.png</texturefocus>
+                <texturenofocus colordiffuse="EEFFFFFF">Button/close.png</texturenofocus>
+                <ondown>32502</ondown>
+            </control>
+
+            <control type="label" id="32501">
+                <!-- Window title -->
+                <left>140</left>
+                <top>30</top>
+                <width>1000</width>
+                <height>30</height>
+                <font>font14</font>
+                <align>center</align>
+                <aligny>center</aligny>
+                <scroll>true</scroll>
+                <textcolor>white</textcolor>
+                <shadowcolor>AA000000</shadowcolor>
+            </control>
+
+            <control type="scrollbar" id="32502">
+                <!-- Scrollbar -->
+                <left>1223</left>
+                <top>100</top>
+                <width>10</width>
+                <height>580</height>
+                <onup>32500</onup>
+                <texturesliderbackground border="0,14,0,14">Scrollbar/scrollbar.png</texturesliderbackground>
+                <texturesliderbar border="2,16,2,16">Scrollbar/scrollbarv_bar.png</texturesliderbar>
+                <texturesliderbarfocus border="2,16,2,16">Scrollbar/scrollbarv_bar_focus.png</texturesliderbarfocus>
+                <showonepage>false</showonepage>
+                <orientation>vertical</orientation>
+            </control>
+
+            <control type="textbox" id="32503">
+                <!-- Text Box -->
+                <left>45</left>
+                <top>100</top>
+                <width>1150</width>
+                <height>580</height>
+                <visible>true</visible>
+                <colordiffuse>FFFFFFFF</colordiffuse>
+                <font>font13</font>
+                <textcolor>FFFFFFFF</textcolor>
+                <pagecontrol>32502</pagecontrol>
+                <align>left</align>
+            </control>
+        </control>
+    </controls>
+</window>
