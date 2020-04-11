@@ -1,0 +1,170 @@
+# Kodi Media Center language file
+# Addon Name: youtube-dl Control
+# Addon id: script.module.youtube.dl
+# Addon Provider: Rick Phillips (ruuk)
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: 2018-01-30 23:49+0000\n"
+"PO-Revision-Date: 2019-03-19 22:22+0100\n"
+"Last-Translator: MSC\n"
+"Language-Team: German (http://www.transifex.com/projects/p/xbmc-addons/language/de/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: de_DE@formal\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 2.0.2\n"
+
+msgctxt "#32001"
+msgid "ETA"
+msgstr "Verbleibende Zeit"
+
+msgctxt "#32002"
+msgid "Size"
+msgstr "Größe"
+
+msgctxt "#32003"
+msgid "Received"
+msgstr "Empfangen"
+
+msgctxt "#32004"
+msgid "Downloading"
+msgstr "Download läuft"
+
+msgctxt "#32005"
+msgid "Use Default?"
+msgstr "Standard verwenden?"
+
+msgctxt "#32006"
+msgid "Use default path:"
+msgstr "Standardpfad verwenden:"
+
+msgctxt "#32007"
+msgid "Or choose a new path?"
+msgstr "Oder einen neuen Pfad wählen?"
+
+msgctxt "#32008"
+msgid "Default"
+msgstr "Standard"
+
+msgctxt "#32009"
+msgid "New"
+msgstr "Neu"
+
+msgctxt "#32010"
+msgid "Select Directory"
+msgstr "Verzeichnis wählen"
+
+msgctxt "#32011"
+msgid "Done"
+msgstr "Fertig"
+
+msgctxt "#32012"
+msgid "Download Complete"
+msgstr "Download beendet"
+
+msgctxt "#32013"
+msgid "Download Failed"
+msgstr "Download fehlgeschlagen"
+
+msgctxt "#32014"
+msgid "SD Only"
+msgstr "Nur SD"
+
+msgctxt "#32015"
+msgid "720p"
+msgstr "720p"
+
+msgctxt "#32016"
+msgid "1080p"
+msgstr "1080p"
+
+msgctxt "#32017"
+msgid "Max Streaming Video Quality"
+msgstr "Max. Videoqualität"
+
+msgctxt "#32018"
+msgid "Disable DASH Video (Recommended)"
+msgstr "DASH-Video deaktivieren (Empfohlen)"
+
+msgctxt "#32019"
+msgid "Main"
+msgstr "Allgemein"
+
+msgctxt "#32020"
+msgid "Advanced"
+msgstr "Erweitert"
+
+msgctxt "#32021"
+msgid "Use user updated youtube-dl core version"
+msgstr "Durch Anwender aktualisierte youtube-dl Core-Version verwenden"
+
+msgctxt "#32022"
+msgid "Update automatically"
+msgstr "Automatisch aktualisieren"
+
+msgctxt "#32023"
+msgid "Update now"
+msgstr "Jetzt aktualisieren"
+
+msgctxt "#32024"
+msgid "View youtube-dl core info"
+msgstr "Youtube-dl Core-Info anzeigen"
+
+msgctxt "#32025"
+msgid "Debug Logging"
+msgstr "Debug-Logging"
+
+msgctxt "#32026"
+msgid "Highest Available"
+msgstr "Höchstverfügbare"
+
+msgctxt "#32027"
+msgid "Enable youtube-dl verbose logging"
+msgstr "Protokollierung für youtube-dl aktivieren"
+
+msgctxt "#32028"
+msgid "Confirm download path"
+msgstr "Download-Pfad bestätigen"
+
+msgctxt "#32029"
+msgid "Download path"
+msgstr "Download-Pfad"
+
+msgctxt "#32030"
+msgid "Stop Current Download"
+msgstr "Aktuellen Download stoppen"
+
+msgctxt "#32031"
+msgid "Stop All Downloads"
+msgstr "Alle Downloads stoppen"
+
+msgctxt "#32032"
+msgid "Manage Queue"
+msgstr "Warteschlange verwalten"
+
+msgctxt "#32033"
+msgid "Download Currently Playing Video"
+msgstr "Download spielt gerade Video"
+
+msgctxt "#32034"
+msgid "Settings"
+msgstr "Einstellungen"
+
+msgctxt "#32035"
+msgid "Message"
+msgstr "Meldung"
+
+msgctxt "#32036"
+msgid "Failed"
+msgstr "Fehlgeschlagen"
+
+msgctxt "#32037"
+msgid "Failed to move to downloads folder - leaving in temp"
+msgstr "Verschieben in Download-Ordner fehlgeschlagen - verbleibt in temp"
+
+msgctxt "#32038"
+msgid "Skip Videos Without Audio"
+msgstr "Videos ohne Audio überspringen"
