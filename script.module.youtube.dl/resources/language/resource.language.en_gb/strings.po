@@ -1,0 +1,194 @@
+# XBMC Media Center language file
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC-Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: 2013-12-12 22:56+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+
+msgctxt "#32001"
+msgid "ETA"
+msgstr ""
+
+msgctxt "#32002"
+msgid "Size"
+msgstr ""
+
+msgctxt "#32003"
+msgid "Received"
+msgstr ""
+
+msgctxt "#32004"
+msgid "Downloading"
+msgstr ""
+
+msgctxt "#32005"
+msgid "Use Default?"
+msgstr ""
+
+msgctxt "#32006"
+msgid "Use default path:"
+msgstr ""
+
+msgctxt "#32007"
+msgid "Or choose a new path?"
+msgstr ""
+
+msgctxt "#32008"
+msgid "Default"
+msgstr ""
+
+msgctxt "#32009"
+msgid "New"
+msgstr ""
+
+msgctxt "#32010"
+msgid "Select Directory"
+msgstr ""
+
+msgctxt "#32011"
+msgid "Done"
+msgstr ""
+
+msgctxt "#32012"
+msgid "Download Complete"
+msgstr ""
+
+msgctxt "#32013"
+msgid "Download Failed"
+msgstr ""
+
+msgctxt "#32014"
+msgid "SD Only"
+msgstr ""
+
+msgctxt "#32015"
+msgid "720p"
+msgstr ""
+
+msgctxt "#32016"
+msgid "1080p"
+msgstr ""
+
+msgctxt "#32017"
+msgid "Max Streaming Video Quality"
+msgstr ""
+
+msgctxt "#32018"
+msgid "Disable DASH Video (Recommended)"
+msgstr ""
+
+msgctxt "#32019"
+msgid "Main"
+msgstr ""
+
+msgctxt "#32020"
+msgid "Advanced"
+msgstr ""
+
+msgctxt "#32021"
+msgid "Use user updated youtube-dl core version"
+msgstr ""
+
+msgctxt "#32022"
+msgid "Update automatically"
+msgstr ""
+
+msgctxt "#32023"
+msgid "Update now"
+msgstr ""
+
+msgctxt "#32024"
+msgid "View youtube-dl core info"
+msgstr ""
+
+msgctxt "#32025"
+msgid "Debug Logging"
+msgstr ""
+
+msgctxt "#32026"
+msgid "Highest Available"
+msgstr ""
+
+msgctxt "#32027"
+msgid "Enable youtube-dl verbose logging"
+msgstr ""
+
+msgctxt "#32028"
+msgid "Confirm download path"
+msgstr ""
+
+msgctxt "#32029"
+msgid "Download path"
+msgstr ""
+
+msgctxt "#32030"
+msgid "Stop Current Download"
+msgstr ""
+
+msgctxt "#32031"
+msgid "Stop All Downloads"
+msgstr ""
+
+msgctxt "#32032"
+msgid "Manage Queue"
+msgstr ""
+
+msgctxt "#32033"
+msgid "Download Currently Playing Video"
+msgstr ""
+
+msgctxt "#32034"
+msgid "Settings"
+msgstr ""
+
+msgctxt "#32035"
+msgid "Message"
+msgstr ""
+
+msgctxt "#32036"
+msgid "Failed"
+msgstr ""
+
+msgctxt "#32037"
+msgid "Failed to move to downloads folder - leaving in temp"
+msgstr ""
+
+msgctxt "#32038"
+msgid "Skip Videos Without Audio"
+msgstr ""
+
+msgctxt "#32039"
+msgid "Cancel Download"
+msgstr ""
+
+msgctxt "#32040"
+msgid "Cancel current download?"
+msgstr ""
+
+msgctxt "#32041"
+msgid "Cancel Downloads"
+msgstr ""
+
+msgctxt "#32042"
+msgid "Cancel current download and all queued downloads?"
+msgstr ""
+
+msgctxt "#32043"
+msgid "Addon version: {0}"
+msgstr ""
+
+msgctxt "#32044"
+msgid "Core version: {0}"
+msgstr ""
+
+msgctxt "#32045"
+msgid "Info"
+msgstr ""

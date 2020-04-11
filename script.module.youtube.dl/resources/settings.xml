@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+    <category label="32019">
+        <setting id="video_quality" type="enum" label="32017" lvalues="32014|32015|32016|32026" default="1" />
+        <setting id="disable_dash_video" type="bool" label="32018" default="true" />
+        <setting id="skip_no_audio" type="bool" label="32038" default="true" />
+        <setting id="last_download_path" label="32029" type="folder" source="files" option="writeable"/>
+        <setting id="confirm_download_path" type="bool" label="32028" default="true" />
+    </category>
+    <category label="32020">
+        <setting id="view_info_action" label="32024" type="action" action="RunScript(script.module.youtube.dl,INFO)" />
+        <setting id="debug" type="bool" label="32025" default="false" />
+        <setting id="ytdl_debug" type="bool" label="32027" default="false" subsetting="true" enable="eq(-1,true)" />
+    </category>
+</settings>
