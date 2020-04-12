@@ -5,7 +5,6 @@
        provider-name="HiGhLaNdeR">
   <requires>
     <import addon="xbmc.python" version="2.14.0"/>
-    <import addon="vfs.rar" version="2.3.0"/>
   </requires>
   <extension point="xbmc.subtitle.module" library="service.py" />
   <extension point="xbmc.addon.metadata">
