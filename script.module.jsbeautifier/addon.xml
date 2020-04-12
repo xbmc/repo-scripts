@@ -1,0 +1,14 @@
+<addon id="script.module.jsbeautifier" name="jsbeautifier" provider-name="D Jiang" version="1.11.0.001">
+	<requires>
+		<import addon="xbmc.python" version="2.18.0" />
+	</requires>
+	<extension point="xbmc.python.module" library="lib" />
+	<extension point="xbmc.addon.metadata">
+		<platform>all</platform>
+		<source>https://beautifier.io/</source>
+		<license>GPL-3.0</license>
+		<summary lang="en">jsbeautifier Javascript parser</summary>
+        <platform>all</platform>
+		<description lang="en">jsbeautifier will reformat and re-indent bookmarklets, ugly JavaScript, unpack scripts packed by Dean Edward’s popular packer, as well as partly deobfuscate scripts processed by the npm package javascript-obfuscator.</description>
+	</extension>
+</addon>
