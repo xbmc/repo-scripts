@@ -1,5 +1,10 @@
 CHANGES
 =======
+Version 13.0.0 (12/4/2020)
+- Fix args
+- py2 only version
+- automated submissions
+
 Version 2.5.1 (9/2/2020)
 - Fix shutil error when moving cache file
 

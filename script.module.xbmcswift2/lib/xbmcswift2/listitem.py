@@ -44,13 +44,9 @@ class ListItem(object):
         self._listitem.setArt(self._art)
 
     def __repr__(self):
-        if PY3:
-            return ("<ListItem '%s'>" % self.label)
         return ("<ListItem '%s'>" % self.label).encode('utf-8')
 
     def __str__(self):
-        if PY3:
-            return ('%s (%s)' % (self.label, self.path))
         return ('%s (%s)' % (self.label, self.path)).encode('utf-8')
 
     def get_context_menu_items(self):

@@ -8,12 +8,9 @@
     :license: GPLv3, see LICENSE for more details.
 '''
 import re
-from xbmcswift2.common import pickle_dict, unpickle_dict, PY3
+from xbmcswift2.common import pickle_dict, unpickle_dict
 
-if PY3:
-    from urllib.parse import urlencode, unquote_plus, quote_plus
-else:
-    from urllib import urlencode, unquote_plus, quote_plus
+from urllib import urlencode, unquote_plus, quote_plus
 
 
 # TODO: Use regular Exceptions
@@ -108,9 +105,8 @@ class UrlRule(object):
         with the appropriate value from the items dict.
         '''
         for key, val in items.items():
-            if not PY3:
-                if not isinstance(val, basestring):
-                    raise TypeError('Value "%s" for key "%s" must be an instance'
+            if not isinstance(val, basestring):
+                raise TypeError('Value "%s" for key "%s" must be an instance'
                                     ' of basestring' % (val, key))
             items[key] = quote_plus(val)
 
@@ -150,12 +146,8 @@ class UrlRule(object):
         '''
         # Convert any ints and longs to strings
         for key, val in items.items():
-            if PY3:
-                if isinstance(val, int):
-                    items[key] = str(val)
-            else:
-                if isinstance(val, (int, long)):
-                    items[key] = str(val)
+            if isinstance(val, (int, long)):
+                items[key] = str(val)
 
         # First use our defaults passed when registering the rule
         url_items = dict((key, val) for key, val in self._options.items()
