@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.module.selenium"
+		name="Selenium Python Library"
+		version="3.141.59.001"
+		provider-name="TJ Jiang">
+	<requires>
+		<import addon="xbmc.python" version="2.26.0" />
+	</requires>
+	<extension point="xbmc.python.module" library="lib" />
+	<extension point="xbmc.addon.metadata">
+		<assets>
+			<icon>resources/icon.png</icon>
+		</assets>
+		<description>Selenium has the support of some of the largest browser vendors who have taken (or are taking) steps to make Selenium a native part of their browser. It is also the core technology in countless other browser automation tools, APIs and frameworks. Packed for KODI from selenium source codes at https://github.com/SeleniumHQ/selenium.</description>
+		<license>GPL-3.0</license>
+		<platform>all</platform>
+		<source>https://github.com/tingjhenjiang/repo-scripts</source>
+		<summary>Selenium automates browsers.</summary>
+		<website>https://www.selenium.dev/</website>
+	</extension>
+</addon>

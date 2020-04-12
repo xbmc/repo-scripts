@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.module.jsbeautifier"
+		name="jsbeautifier"
+		version="1.11.0.001"
+		provider-name="TJ Jiang">
+	<requires>
+		<import addon="xbmc.python" version="2.26.0" />
+	</requires>
+	<extension point="xbmc.python.module" library="lib" />
+	<extension point="xbmc.addon.metadata">
+		<assets>
+			<icon>resources/icon.png</icon>
+		</assets>
+		<description>jsbeautifier will reformat and re-indent bookmarklets, ugly JavaScript, unpack scripts packed by Dean Edward’s popular packer, as well as partly deobfuscate scripts processed by the npm package javascript-obfuscator. Packed for Kodi from source codes at https://beautifier.io/ .</description>
+		<license>GPL-3.0</license>
+		<platform>all</platform>
+		<source>https://beautifier.io/</source>
+		<summary>jsbeautifier Javascript parser</summary>
+		<website>https://beautifier.io/</website>
+	</extension>
+</addon>
