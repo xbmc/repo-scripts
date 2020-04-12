@@ -10,7 +10,7 @@ from xbmcswift2 import xbmc, xbmcaddon, xbmcplugin, xbmcgui, ListItem
 from xbmcswift2.storage import TimedStorage
 from xbmcswift2.logger import log
 from xbmcswift2.constants import SortMethod
-from xbmcswift2.common import Modes, DEBUG_MODES, PY3
+from xbmcswift2.common import Modes, DEBUG_MODES
 from xbmcswift2.request import Request
 
 
@@ -199,9 +199,8 @@ class XBMCMixin(object):
         #TODO: allow pickling of settings items?
         # TODO: STUB THIS OUT ON CLI
         value = self.addon.getSetting(id=key)
-        if not PY3:
-            if converter is unicode:
-                return value.decode('utf-8')
+        if converter is unicode:
+            return value.decode('utf-8')
 
         if converter is str:
             return value
@@ -365,9 +364,7 @@ class XBMCMixin(object):
             succeeded = False
 
         # caller is passing a url instead of an item dict
-        if PY3 and (isinstance(item, bytes) or isinstance(item, str)):
-            item = {'path': item}
-        elif not PY3 and isinstance(item, basestring):
+        if isinstance(item, basestring):
             item = {'path': item}
 
         item = self._listitemify(item)
@@ -494,16 +491,10 @@ class XBMCMixin(object):
             self.add_items(items)
         if sort_methods:
             for sort_method in sort_methods:
-                if PY3:
-                    if not isinstance(sort_method, str) and hasattr(sort_method, '__len__'):
-                        self.add_sort_method(*sort_method)
-                    else:
-                        self.add_sort_method(sort_method)
+                if not isinstance(sort_method, basestring) and hasattr(sort_method, '__len__'):
+                    self.add_sort_method(*sort_method)
                 else:
-                    if not isinstance(sort_method, basestring) and hasattr(sort_method, '__len__'):
-                        self.add_sort_method(*sort_method)
-                    else:
-                        self.add_sort_method(sort_method)
+                    self.add_sort_method(sort_method)
 
         # Finalize the directory items
         self.end_of_directory(succeeded, update_listing, cache_to_disc)
