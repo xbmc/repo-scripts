@@ -488,7 +488,6 @@ def Download(id, filename):
                 xbmc.sleep(1000)
     
             ## IF EXTRACTION FAILS, WHICH HAPPENS SOMETIMES ... BUG?? ... WE WILL BROWSE THE RAR FILE FOR MANUAL EXTRACTION ##
-            log(u"Here...")
             searchsubs = recursive_glob(_newtemp, SUB_EXTS)
             searchsubscount = len(searchsubs)
             if searchsubscount == 0:
