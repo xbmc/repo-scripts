@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<settings>
+	<category label="$LOCALIZE[16000]">
+		<setting label="32120" type="bool" id="donthidepvr" default="false"/>
+		<setting label="32121" type="bool" id="shared_menu" default="true"/>
+		<setting label="32122" type="bool" id="enable_logging" default="false"/>
+	</category>
+</settings>
