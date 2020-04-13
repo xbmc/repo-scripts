@@ -24,4 +24,4 @@ INFO FOR SKINNERS - How to use this addon in your skin:
    favourite.%d.thumb
    favourite.count
 
-   Additionally you can pass 'playlists=play' to make sure xbmc will play the playlist instead of opening it.
+   Additionally you can pass 'playlists=play' to make sure kodi will play the playlist instead of opening it.
