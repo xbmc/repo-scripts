@@ -1,0 +1,146 @@
+# XBMC Media Center language file
+# Addon Name: Transmission
+# Addon id: script.transmission
+# Addon version: 0.7.5
+# Addon Provider: Correl Roush
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC-Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: 2014-06-04 04:09+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: es\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+
+msgctxt "Addon Summary"
+msgid "A client for the popular Transmission BitTorrent application"
+msgstr ""
+
+msgctxt "Addon Description"
+msgid "Currently, Transmission-XBMC supports viewing, adding, removing, starting and stopping torrents. More advanced features may be added in future releases."
+msgstr ""
+
+msgctxt "#32000"
+msgid "Transmission"
+msgstr "Transmission"
+
+msgctxt "#32001"
+msgid "Connecting to Transmission"
+msgstr "Conectando con Transmission"
+
+msgctxt "#32002"
+msgid "Transmission Error"
+msgstr "Transmission Error"
+
+msgctxt "#32003"
+msgid "Open settings dialog?"
+msgstr "¿Abrir diálogo de configuración?"
+
+msgctxt "#32101"
+msgid "Add"
+msgstr "Agregar"
+
+msgctxt "#32102"
+msgid "Remove"
+msgstr "Eliminar"
+
+msgctxt "#32103"
+msgid "Pause"
+msgstr "Pausar"
+
+msgctxt "#32104"
+msgid "Start"
+msgstr "Iniciar"
+
+msgctxt "#32105"
+msgid "Pause All"
+msgstr "Pausar Todo"
+
+msgctxt "#32106"
+msgid "Start All"
+msgstr "Iniciar Todo"
+
+msgctxt "#32107"
+msgid "Exit"
+msgstr "Salir"
+
+msgctxt "#32108"
+msgid "Settings"
+msgstr "Configuración"
+
+msgctxt "#32110"
+msgid "Name"
+msgstr "Nombre"
+
+msgctxt "#32111"
+msgid "Status"
+msgstr "Estado"
+
+msgctxt "#32200"
+msgid "Browse for torrent file"
+msgstr "Buscar un archivo torrent"
+
+msgctxt "#32300"
+msgid "working"
+msgstr "trabajando"
+
+msgctxt "#32301"
+msgid "seeding"
+msgstr "compartiendo"
+
+msgctxt "#32302"
+msgid "stopped"
+msgstr "datenido"
+
+# empty strings from id 32303 to 32699
+
+msgctxt "#32700"
+msgid "General"
+msgstr ""
+
+msgctxt "#32701"
+msgid "General settings for Transmission daemon"
+msgstr ""
+
+# empty strings from id 32702 to 32799
+
+msgctxt "#32800"
+msgid "RPC Settings"
+msgstr "Configuración RPC"
+
+msgctxt "#32801"
+msgid "Host"
+msgstr "Host"
+
+msgctxt "#32802"
+msgid "Port"
+msgstr "Puerto"
+
+msgctxt "#32803"
+msgid "User"
+msgstr "Usuario"
+
+msgctxt "#32804"
+msgid "Password"
+msgstr "Contraseña"
+
+msgctxt "#32805"
+msgid "Stop all torrents on video playback"
+msgstr "Detener todos los torrents durante la reproducción de video"
+
+msgctxt "#32900"
+msgid "An unexpected error occurred"
+msgstr "Ha ocurrido un error inesperado"
+
+msgctxt "#32901"
+msgid "Could not connect to Transmission"
+msgstr "No se ha podido conectar con Transmission"
+
+msgctxt "#32902"
+msgid "Invalid username or password"
+msgstr "Usuario o contraseña inválidos"

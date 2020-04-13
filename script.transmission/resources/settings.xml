@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+    <category id="general" label="32700" help="32701">
+        <setting type="lsep" label="32800" />
+        <setting id="rpc_host" type="text" label="32801" default="localhost"/>
+        <setting id="rpc_port" type="number" label="32802" default="9091"/>
+        <setting id="rpc_user" type="text" label="32803"/>
+        <setting id="rpc_password" type="text" option="hidden" label="32804"/>
+        <setting id="stop_all_on_playback" type="bool" label="32805" default="false"/>
+   </category>
+</settings>
