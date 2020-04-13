@@ -4,11 +4,14 @@
 # License: GPL v. 3 <http://www.gnu.org/licenses/gpl-3.0.en.html>
 
 from __future__ import absolute_import, unicode_literals
-from future.utils import python_2_unicode_compatible
+
 import json
 from copy import deepcopy
 from pprint import pformat
+
+from future.utils import python_2_unicode_compatible
 from requests import post
+
 from . import logger
 from .medialibrary import get_tvdb_id
 
@@ -29,6 +32,7 @@ class DataUpdateError(Exception):
     that failed update to next-episode.net
     """
     def __init__(self, failed_movies=None, failed_shows=None):
+        super(DataUpdateError, self).__init__()
         self._failed_movies = failed_movies
         self._failed_shows = failed_shows
 
@@ -40,8 +44,7 @@ class DataUpdateError(Exception):
         """
         if self._failed_movies is not None:
             return ', '.join(self._failed_movies)
-        else:
-            return 'none'
+        return 'none'
 
     @property
     def failed_shows(self):
@@ -51,8 +54,7 @@ class DataUpdateError(Exception):
         """
         if self._failed_shows is not None:
             return ', '.join(self._failed_shows)
-        else:
-            return 'none'
+        return 'none'
 
     def __str__(self):
         return (

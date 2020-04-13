@@ -4,13 +4,16 @@
 # License: GPL v. 3 <http://www.gnu.org/licenses/gpl-3.0.en.html>
 
 from __future__ import absolute_import, unicode_literals
-from future.utils import with_metaclass
+
 from abc import ABCMeta, abstractmethod
 from contextlib import contextmanager
+
+import pyxbmct
+from future.utils import with_metaclass
 from kodi_six.xbmc import executebuiltin
 from xbmcgui import ACTION_NAV_BACK
-import pyxbmct
-from .addon import addon
+
+from .addon import ADDON
 
 __all__ = ['NextEpDialog', 'ui_string', 'busy_spinner']
 
@@ -24,7 +27,7 @@ def ui_string(id_):
     :return: localized string
     :rtype: str
     """
-    return addon.getLocalizedString(id_)
+    return ADDON.getLocalizedString(id_)
 
 
 @contextmanager

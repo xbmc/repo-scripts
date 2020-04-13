@@ -4,6 +4,7 @@
 # License: GPL v. 3 <http://www.gnu.org/licenses/gpl-3.0.en.html>
 
 from __future__ import unicode_literals
+import sys
 import pyxbmct
 from libs.gui import NextEpDialog, ui_string
 from libs.utils import sync_library, login
@@ -38,6 +39,11 @@ class MainDialog(NextEpDialog):
 
 
 if __name__ == '__main__':
-    main_dialog = MainDialog(520, 160, 2, 1, 'next-episode.net')
-    main_dialog.doModal()
-    del main_dialog
+    if 'sync_library' in sys.argv:
+        sync_library()
+    elif 'login' in sys.argv:
+        login()
+    else:
+        main_dialog = MainDialog(520, 160, 2, 1, 'next-episode.net')
+        main_dialog.doModal()
+        del main_dialog

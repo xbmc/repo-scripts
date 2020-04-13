@@ -8,22 +8,24 @@ import json
 from kodi_six import xbmc
 from kodi_six.xbmcgui import Dialog
 from . import logger
-from .addon import addon
+from .addon import ADDON
 from .utils import sync_library, sync_new_items, login, update_single_item
 from .medialibrary import get_item_details
 from .gui import ui_string
+
 # Here ``addon`` is imported from another module to prevent a bug
 # when username and hash are not stored in the addon settings.
 
 __all__ = ['UpdateMonitor', 'initial_prompt']
 
-dialog = Dialog()
+DIALOG = Dialog()
 
 
 class UpdateMonitor(xbmc.Monitor):
     """
     Monitors updating Kodi library
     """
+
     def onScanFinished(self, library):
         if library == 'video':
             sync_new_items()
@@ -51,14 +53,18 @@ def initial_prompt():
     """
     Show login prompt at first start
     """
-    if (addon.getSetting('prompt_shown') != 'true' and
-            not addon.getSetting('username') and
-            dialog.yesno(ui_string(32012),
-                         ui_string(32013),
-                         ui_string(32014),
-                         ui_string(32015))):
-        if login() and dialog.yesno(ui_string(32016),
-                                    ui_string(32017),
-                                    ui_string(32018)):
+    if (ADDON.getSetting('prompt_shown') != 'true' and
+            not ADDON.getSetting('username') and
+            DIALOG.yesno(ui_string(32012),
+                         '[CR]'.join(
+                             (ui_string(32013),
+                              ui_string(32014),
+                              ui_string(32015)
+                             )))):
+        if login() and DIALOG.yesno(ui_string(32016),
+                                    '[CR]'.join((
+                                        ui_string(32017),
+                                        ui_string(32018)
+                                    ))):
             sync_library()
-        addon.setSetting('prompt_shown', 'true')
+        ADDON.setSetting('prompt_shown', 'true')
