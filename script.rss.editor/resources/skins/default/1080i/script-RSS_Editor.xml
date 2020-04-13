@@ -64,8 +64,8 @@
 					<left>0</left>
 					<top>0</top>
 					<width>880</width>
-					<height>69</height>
-					<texture border="40">lists/separator.png</texture>
+					<height>2</height>
+					<texture>rsseditor-list-separator.png</texture>
 				</control>
 				<control type="label">
 					<left>0</left>
@@ -84,15 +84,15 @@
 					<left>0</left>
 					<top>0</top>
 					<width>880</width>
-					<height>69</height>
-					<texture border="40">lists/separator.png</texture>
+					<height>2</height>
+					<texture>rsseditor-list-separator.png</texture>
 				</control>
 				<control type="image">
 					<left>0</left>
 					<top>0</top>
 					<width>880</width>
 					<height>69</height>
-					<texture colordiffuse="FF12B2E7">lists/focus.png</texture>
+					<texture colordiffuse="FF12B2E7">rsseditor-list-focus.png</texture>
 					<animation effect="fade" start="100" end="40" time="100" condition="ControlGroup(9001).HasFocus">Conditional</animation>
 				</control>
 				<control type="label">

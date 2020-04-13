@@ -36,11 +36,10 @@ def writexml(self, writer, indent="", addindent="", newl=""):
 # monkey patch to fix whitespace issues with toprettyxml
 Element.writexml = writexml
 #enable localization
-getLS = sys.modules[ "__main__" ].LANGUAGE
+getLS = xbmcaddon.Addon().getLocalizedString
 
 
 class XMLParser:
-
     def __init__(self):
         self.RssFeedsPath = xbmc.translatePath('special://userdata/RssFeeds.xml')
         sane = self.checkRssFeedPathSanity()
@@ -49,7 +48,7 @@ class XMLParser:
                 self.feedsTree = parse(self.RssFeedsPath)
             except:
                 log('RSS Editor --> Failed to parse ' + unicodedata.normalize( 'NFKD', self.RssFeedsPath ))
-                regen = xbmcgui.Dialog().yesno(getLS(32040), getLS(32051), getLS(32052), getLS(32053))
+                regen = xbmcgui.Dialog().yesno(getLS(32040), getLS(32051) + ' ' + getLS(32052) + ' ' + getLS(32053))
                 if regen:
                     log('RSS Editor --> Attempting to Regenerate RssFeeds.xml')
                     xml = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>\n<rssfeeds>\n\
