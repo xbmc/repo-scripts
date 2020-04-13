@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addon id="script.transmission"
        name="Transmission"
-       version="0.7.6"
+       version="0.7.7"
        provider-name="Correl Roush">
   <requires>
     <import addon="xbmc.python" version="2.14.0"/>
@@ -25,6 +25,7 @@
     <license>MIT</license>
     <forum></forum>
     <website></website>
+    <broken>Violation of our piracy policy</broken>
     <source>https://github.com/correl/Transmission-XBMC</source>
     <email>correl@gmail.com</email>
   </extension>
