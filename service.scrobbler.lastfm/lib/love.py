@@ -1,27 +1,14 @@
-# *  This Program is free software; you can redistribute it and/or modify
-# *  it under the terms of the GNU General Public License as published by
-# *  the Free Software Foundation; either version 2, or (at your option)
-# *  any later version.
-# *
-# *  This Program is distributed in the hope that it will be useful,
-# *  but WITHOUT ANY WARRANTY; without even the implied warranty of
-# *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-# *  GNU General Public License for more details.
-# *
-# *  You should have received a copy of the GNU General Public License
-# *  along with Kodi; see the file COPYING.  If not, write to
-# *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
-# *  http://www.gnu.org/copyleft/gpl.html
-
-from utils import *
+from lib.utils import *
 
 SESSION = 'love'
 
-class Love:
-    def __init__( self, params ):
+
+class Love():
+    def __init__(self, *args, **kwargs):
+        params = kwargs['params']
         artist = xbmc.getInfoLabel('MusicPlayer.Artist')
         song   = xbmc.getInfoLabel('MusicPlayer.Title')
-        action = params.get( 'action' )
+        action = params.get('action')
         # check if the skin provided valid params
         if artist and song and (action == 'LastFM.Love'):
             settings = read_settings(SESSION)
@@ -33,14 +20,14 @@ class Love:
             else:
                 log('no sessionkey, artistname or songname provided', SESSION)
 
-    def _submit_love( self, action, artist, song, confirm, sesskey ):
+    def _submit_love(self, action, artist, song, confirm, sesskey):
         # love a track
         if action == 'LastFM.Love':
             action = 'track.love'
             # popup a confirmation dialog if specified by the skin
             if confirm:
                 dialog = xbmcgui.Dialog()
-                ack = dialog.yesno(LANGUAGE(32011), LANGUAGE(32012), artist + ' - ' + song)
+                ack = dialog.yesno(LANGUAGE(32011), LANGUAGE(32012) + ' ' + artist + ' - ' + song)
                 if not ack:
                     return
             # submit data to last.fm
@@ -51,7 +38,7 @@ class Love:
             else:
                 msg = 'Notification(%s,%s,%i)' % (LANGUAGE(32011), LANGUAGE(32015) % song, 7000)
 
-    def _post_data( self, action, artist, song, sesskey ):
+    def _post_data(self, action, artist, song, sesskey):
         # love
         log('love submission', SESSION)
         # collect post data
@@ -65,10 +52,10 @@ class Love:
         if not result:
             return False
         # parse response
-        if result.has_key('status'):
+        if 'status' in result:
             result = result['status']
             return True
-        elif result.has_key('error'):
+        elif 'error' in result:
             code = result['error']
             msg = result['message'] 
             xbmc.executebuiltin('Notification(%s,%s,%i)' % (LANGUAGE(32011), msg, 7000))

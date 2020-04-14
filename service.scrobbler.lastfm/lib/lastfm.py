@@ -1,37 +1,11 @@
-# *  This Program is free software; you can redistribute it and/or modify
-# *  it under the terms of the GNU General Public License as published by
-# *  the Free Software Foundation; either version 2, or (at your option)
-# *  any later version.
-# *
-# *  This Program is distributed in the hope that it will be useful,
-# *  but WITHOUT ANY WARRANTY; without even the implied warranty of
-# *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-# *  GNU General Public License for more details.
-# *
-# *  You should have received a copy of the GNU General Public License
-# *  along with Kodi; see the file COPYING.  If not, write to
-# *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
-# *  http://www.gnu.org/copyleft/gpl.html
-
-from love import Love
-from utils import *
-from helpers import *
+from lib.helpers import *
+from lib.utils import *
 
 SESSION = 'scrobbler'
 
-class Main:
-    def __init__( self ):
-        # check how we were started
-        try:
-            love, params = parse_argv()
-            log('params: %s' % params, SESSION)
-            if love and params:
-                # run as script
-                Love(params)
-                return
-        except:
-            # run as service
-            pass
+
+class Main():
+    def __init__(self):
         # get addon settings
         self._get_settings()
         # initialize variables
@@ -46,7 +20,7 @@ class Main:
         # clear skin properties
         clear_prop('LastFM.CanLove')
 
-    def _get_settings( self, puser=False, ppwd=False ):
+    def _get_settings(self, puser=False, ppwd=False):
         log('get settings', SESSION)
         # if available, pass the old user and pwd to readsettings
         settings = read_settings(SESSION, puser, ppwd)
@@ -61,12 +35,12 @@ class Main:
         # init the monitor class (re-init when settings have changed)
         self.monitor = MyMonitor(action=self._get_settings, user=user, pwd=pwd)
 
-    def _init_vars( self ):
+    def _init_vars(self):
         # init vars
-        self.queue   = []
-        self.file    = 'lastfm.xml'
+        self.queue = []
+        self.file = 'lastfm.xml'
 
-    def _lastfm_submit( self, tags ):
+    def _lastfm_submit(self, tags):
         tstamp = int(time.time())
         # check if there's something in our queue for submission
         log('submission queue %s' % str(self.queue), SESSION)
@@ -82,7 +56,7 @@ class Main:
             log('save file to disk', SESSION)
             write_file(self.file, self.queue)
 
-    def _lastfm_nowplaying( self, tags ):
+    def _lastfm_nowplaying(self, tags):
         # update now playing status on last.fm
         log('nowplaying', SESSION)
         # collect post data
@@ -118,7 +92,7 @@ class Main:
             log('Last.fm returned an unknown nowplaying response', SESSION)
             return
 
-    def _lastfm_scrobble( self, tstamp ):
+    def _lastfm_scrobble(self, tstamp):
         # scrobble track
         log('scrobbling', SESSION)
         # check the backlog
@@ -193,15 +167,15 @@ class Main:
         log('save file to disk', SESSION)
         write_file(self.file, self.queue)
 
-    def _remove_invalid( self, unqualified ):
+    def _remove_invalid(self, unqualified):
         log('removing unqualified items from the list', SESSION)
         # iterate over the invalid items and remove them from the queue
         for item in unqualified:
             self.queue.remove(item)
 
 class MyPlayer(xbmc.Player):
-    def __init__( self, *args, **kwargs ):
-        xbmc.Player.__init__( self )
+    def __init__(self, *args, **kwargs):
+        xbmc.Player.__init__(self)
         log('init player class', SESSION)
         self.action = kwargs['action']
         self.user = kwargs['user']
@@ -212,7 +186,7 @@ class MyPlayer(xbmc.Player):
         self.radio = kwargs['radio']
         self.Audio = False
 
-    def onAVStarted( self ):
+    def onAVStarted(self):
         # only do something if we're playing audio and user has enabled it in settings
         if self.sesskey and self.user and self.pwd:
             if (self.isPlayingAudio() and (self.radio or self.songs)) or (self.isPlayingMusicVideo() and self.videos):
@@ -230,7 +204,7 @@ class MyPlayer(xbmc.Player):
                         # announce song
                          self.action(tags)
 
-    def onPlayBackEnded( self ):
+    def onPlayBackEnded(self):
         # ignore onPlayBackEnded notifications from the video player
         if self.Audio:
             # music playback ended
@@ -239,7 +213,7 @@ class MyPlayer(xbmc.Player):
             # submit any remaining tracks
             self.action(None)
 
-    def onPlayBackStopped( self ):
+    def onPlayBackStopped(self):
         # ignore onPlayBackStopped notifications from the video player
         if self.Audio:
             # we stopped playing audio
@@ -248,7 +222,7 @@ class MyPlayer(xbmc.Player):
             # submit any remaining tracks
             self.action(None)
 
-    def _get_tags( self ):
+    def _get_tags(self):
         # get track tags
         if self.isPlayingAudio():
             tags = self.getMusicInfoTag()
@@ -321,25 +295,20 @@ class MyPlayer(xbmc.Player):
             log('cannot scrobble track with no artist and track information', SESSION)
             return None
 
-    def isPlayingMusicVideo( self ):
+    def isPlayingMusicVideo(self):
         return self.isPlayingVideo() and self.getVideoInfoTag().getMediaType() == 'musicvideo'
 
 class MyMonitor(xbmc.Monitor):
-    def __init__( self, *args, **kwargs ):
-        xbmc.Monitor.__init__( self )
+    def __init__(self, *args, **kwargs):
+        xbmc.Monitor.__init__(self)
         log('init monitor class', SESSION)
         self.user = kwargs['user']
         self.pwd = kwargs['pwd']
         self.action = kwargs['action']
 
-    def onSettingsChanged( self ):
+    def onSettingsChanged(self):
         log('onSettingsChanged', SESSION)
         # sleep before retrieving the new settings
         xbmc.sleep(500)
         # pass the previous user and pass to getsettings, so we can check if they have changed
         self.action(self.user,self.pwd)
-
-if ( __name__ == "__main__" ):
-    log('script version %s started' % ADDONVERSION, SESSION)
-    Main()
-log('script stopped', SESSION)

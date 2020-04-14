@@ -1,17 +1,16 @@
-import os
-import sys
-import time
-import socket
-import urllib.request
-import urllib.parse
 import base64
 import hashlib
+import json
+import os
+import socket
+import time
+import urllib.parse
+import urllib.request
 import xbmc
 import xbmcgui
 import xbmcplugin
 import xbmcaddon
 import xbmcvfs
-import json
 
 ADDON = xbmcaddon.Addon()
 ADDONID = ADDON.getAddonInfo('id')
@@ -19,23 +18,21 @@ ADDONID = ADDON.getAddonInfo('id')
 APIURL = 'http://ws.audioscrobbler.com/2.0/'
 AUTHURL = 'https://ws.audioscrobbler.com/2.0/'
 HEADERS = {'User-Agent': 'Kodi Media center', 'Accept-Charset': 'utf-8'}
+STATUS = 'YzkxMGMwOTlkMzY3MTdlMzM2ZmMwZDAwOTVhMGM4YWRhMjJhNzI1ZmMwODE2MWVmNzYyMGM5MDI2NTkxMzA1ZQ=='
+
 LANGUAGE = ADDON.getLocalizedString
 ADDONVERSION = ADDON.getAddonInfo('version')
 CWD = ADDON.getAddonInfo('path')
-STATUS = 'YzkxMGMwOTlkMzY3MTdlMzM2ZmMwZDAwOTVhMGM4YWRhMjJhNzI1ZmMwODE2MWVmNzYyMGM5MDI2NTkxMzA1ZQ=='
+DEBUG = ADDON.getSettingBool('Debug')
 DATAPATH = xbmc.translatePath(ADDON.getAddonInfo('profile'))
 WINDOW = xbmcgui.Window(10000)
 
 socket.setdefaulttimeout(10)
 
 def log(txt, session):
-    message = '%s - %s: %s' % (ADDONID, session, txt)
-    xbmc.log(msg=message, level=xbmc.LOGDEBUG)
-
-def parse_argv():
-    # parse argv
-    params = dict(arg.split( "=" ) for arg in sys.argv[ 1 ].split( "&" ))
-    return True, params
+    if DEBUG:
+        message = '%s - %s: %s' % (ADDONID, session, txt)
+        xbmc.log(msg=message, level=xbmc.LOGDEBUG)
 
 def read_settings(session, puser=False, ppwd=False):
     # read settings
@@ -105,7 +102,7 @@ def clear_prop(key):
 def read_file(item):
     # read the queue file if we have one
     path = os.path.join(DATAPATH, item)
-    if xbmcvfs.exists( path ):
+    if xbmcvfs.exists(path):
         f = open(path, 'r')
         data =  f.read() 
         if data:
@@ -117,8 +114,8 @@ def read_file(item):
 
 def write_file(item, data):
     # create the data dir if needed
-    if not xbmcvfs.exists( DATAPATH ):
-        xbmcvfs.mkdir( DATAPATH )
+    if not xbmcvfs.exists(DATAPATH):
+        xbmcvfs.mkdir(DATAPATH)
     # save data to file
     queue_file = os.path.join(DATAPATH, item)
     f = open(queue_file, 'w')

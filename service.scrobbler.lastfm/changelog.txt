@@ -1,8 +1,14 @@
+v4.0.3
+- v19 update
+
+v4.0.2
+- py3 fix
+
 v4.0.1
 - bump
 
 v4.0.0
-- changes for pyrhon 3
+- changes for python 3
 
 v3.1.1
 - cosmetics

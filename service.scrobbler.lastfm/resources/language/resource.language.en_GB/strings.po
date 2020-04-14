@@ -44,7 +44,13 @@ msgctxt "#30006"
 msgid "Submit music videos to Last.fm"
 msgstr ""
 
-# empty strings from id 30007 to 32010
+# empty strings from id 300007 to 32008
+
+msgctxt "#30009"
+msgid "Enable logging"
+msgstr ""
+
+# empty strings from id 300010 to 32010
 
 msgctxt "#32011"
 msgid "Last.fm"

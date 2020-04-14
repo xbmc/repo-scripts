@@ -1,5 +1,5 @@
-import urllib.parse
 import re
+import urllib.parse
 
 def is_local(path):
     """ Returns True if the given path is a local address, otherwise False. """
