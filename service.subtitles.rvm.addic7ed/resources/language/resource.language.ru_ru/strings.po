@@ -1,0 +1,80 @@
+# XBMC Media Center language file
+msgid ""
+msgstr ""
+
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ru\n"
+
+
+msgctxt "#32000"
+msgid "Success!"
+msgstr "Готово!"
+
+msgctxt "#32001"
+msgid "Subtitles downloaded."
+msgstr "Субтитры загружены."
+
+msgctxt "#32002"
+msgid "Error!"
+msgstr "Ошибка!"
+
+msgctxt "#32003"
+msgid "Exceeded daily limit for subs downloads."
+msgstr "Превышен дневной лимит загрузки субитров."
+
+msgctxt "#32004"
+msgid "Unable to download subtitles."
+msgstr "Не удалось загрузить субтитры."
+
+msgctxt "#32005"
+msgid "Unable to connect to addic7ed.com."
+msgstr "Не удалось подключиться к addic7ed.com."
+
+msgctxt "#32006"
+msgid "Unable to determine episode data."
+msgstr "Не удалось определить данные серии."
+
+msgctxt "#32007"
+msgid "Always use filename for subs search"
+msgstr "Всегда искать субтитры по имени файла"
+
+msgctxt "#32008"
+msgid "Select episode"
+msgstr "Выберите серию"
+
+msgctxt "#32009"
+msgid "Login error!"
+msgstr "Ошибка входа."
+
+msgctxt "#32010"
+msgid "Login to Addic7ed.com"
+msgstr "Вход на Addic7ed.com"
+
+msgctxt "#32011"
+msgid "Username"
+msgstr "Имя пользователя"
+
+msgctxt "#32012"
+msgid "Password"
+msgstr "Пароль"
+
+msgctxt "#32013"
+msgid "Clean cookies"
+msgstr "Очистить куки"
+
+msgctxt "#32014"
+msgid "This will logout you from Addic7ed.com."
+msgstr "Это приведет к выходу с Addic7ed.com"
+
+msgctxt "#32015"
+msgid "Are you sure?"
+msgstr "Вы уверены?"
+
+msgctxt "#32016"
+msgid "Cookies removed successfully."
+msgstr "Куки успешно удалены."
+
+msgctxt "#32017"
+msgid "Unable to remove cookies!"
+msgstr "Не удалось удалить куки."
