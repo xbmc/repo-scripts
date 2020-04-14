@@ -20,7 +20,7 @@ msgctxt "#30000"
 msgid "General"
 msgstr ""
 
-#empty strings from id 30001 to 30003
+# empty strings from id 30001 to 30003
 
 msgctxt "#30004"
 msgid "Submit songs to Libre.fm"
@@ -38,7 +38,13 @@ msgctxt "#30007"
 msgid "Libre.fm password"
 msgstr ""
 
-#empty strings from id 30008 to 32000
+# empty strings with id 30008
+
+msgctxt "#30009"
+msgid "Enable logging"
+msgstr ""
+
+# empty strings from id 300010 to 32000
 
 msgctxt "#32001"
 msgid "Authentication error"

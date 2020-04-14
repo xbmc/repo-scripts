@@ -50,6 +50,11 @@
 						<hidden>true</hidden>
 					</control>
 				</setting>
+				<setting help="" id="Debug" label="30009" type="boolean">
+					<level>0</level>
+					<default>false</default>
+					<control type="toggle"/>
+				</setting>
 			</group>
 		</category>
 	</section>
