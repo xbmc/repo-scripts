@@ -62,8 +62,7 @@ Current.IsFetched
 Current.Visibility         (visible distance)
 Current.Pressure           (air pressure)
 Current.SeaLevel           (pressure at sealevel)
-Current.Snow               (amount of snow over the last 3 hours)
-Current.Precipitation      (total amount of rain and snow over the last 3 hours)
+Current.Precipitation      (probability)
 Current.Cloudiness         (cloud coverage)
 
 
