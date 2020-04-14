@@ -15,7 +15,7 @@ __all__ = ['get_item_details', 'get_tvdb_id', 'get_movies', 'get_tvshows',
 # Starting from v.17.0 (Krypton), Kodi JSON-RPC API returns item's unique IDs
 # (IMDB ID, TheTVDB ID etc.) in "uniqueid" property. Old "imdbnumber" property
 # may contain incorrect data or be empty.
-has_uniqueid = xbmc.getInfoLabel('System.BuildVersion') >= '17.0'
+HAS_UNIQUEID = xbmc.getInfoLabel('System.BuildVersion') >= '17.0'
 
 
 class NoDataError(Exception):
@@ -56,7 +56,7 @@ def get_movies():
         'properties': ['playcount', 'imdbnumber'],
         'sort': {'order': 'ascending', 'method': 'label'}
     }
-    if has_uniqueid:
+    if HAS_UNIQUEID:
         params['properties'].append('uniqueid')
     result = send_json_rpc('VideoLibrary.GetMovies', params)
     if not result.get('movies'):
@@ -115,14 +115,14 @@ def get_tvdb_id(tvshowid):
     :rtype: str
     """
     params = {'tvshowid': tvshowid, 'properties': ['imdbnumber']}
-    if has_uniqueid:
+    if HAS_UNIQUEID:
         params['properties'].append('uniqueid')
     result = send_json_rpc('VideoLibrary.GetTVShowDetails',
                            params)['tvshowdetails']
-    if result.get('imdbnumber'):
-        tvdbid = result['imdbnumber']
-    elif 'uniqueid' in result and result['uniqueid'].get('tvdb'):
+    if 'uniqueid' in result and result['uniqueid'].get('tvdb'):
         tvdbid = result['uniqueid']['tvdb']
+    elif result.get('imdbnumber'):
+        tvdbid = result['imdbnumber']
     else:
         raise NoDataError('Missing TVDB ID: {0}'.format(result))
     return tvdbid
@@ -137,7 +137,7 @@ def get_recent_movies():
     :raises NoDataError: if the Kodi library has no recent movies.
     """
     params = {'properties': ['imdbnumber', 'playcount']}
-    if has_uniqueid:
+    if HAS_UNIQUEID:
         params['properties'].append('uniqueid')
     result = send_json_rpc('VideoLibrary.GetRecentlyAddedMovies', params)
     if not result.get('movies'):
@@ -160,24 +160,24 @@ def get_recent_episodes():
     return result['episodes']
 
 
-def get_item_details(id_, type):
+def get_item_details(id_, type_):
     """
     Get video item details
 
     :param id_: movie or episode Kodi database ID
     :type id_: int
-    :param type: items's type -- 'movie' or 'episode'
-    :type type: str
+    :param type_: items's type -- 'movie' or 'episode'
+    :type type_: str
     :return: item details
     :rtype: dict
     """
-    params = {type + 'id': id_, 'properties': ['playcount']}
-    if type == 'movie':
+    params = {type_ + 'id': id_, 'properties': ['playcount']}
+    if type_ == 'movie':
         method = 'VideoLibrary.GetMovieDetails'
         params['properties'].append('imdbnumber')
     else:
         method = 'VideoLibrary.GetEpisodeDetails'
         params['properties'] += ['tvshowid', 'season', 'episode']
-    if has_uniqueid:
+    if HAS_UNIQUEID:
         params['properties'].append('uniqueid')
-    return send_json_rpc(method, params)[type + 'details']
+    return send_json_rpc(method, params)[type_ + 'details']

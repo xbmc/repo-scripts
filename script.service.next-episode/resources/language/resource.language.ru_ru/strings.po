@@ -20,12 +20,12 @@ msgid "Send video library data to next-episode.net"
 msgstr "Переслать данные медиатеки на next-episode.net"
 
 msgctxt "#32003"
-msgid "Username:"
+msgid "Username"
 msgstr "Имя пользователя"
 
 msgctxt "#32004"
-msgid "Password:"
-msgstr "Пароль:"
+msgid "Password"
+msgstr "Пароль"
 
 msgctxt "#32005"
 msgid "OK"

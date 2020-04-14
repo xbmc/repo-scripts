@@ -4,24 +4,27 @@
 # License: GPL v. 3 <http://www.gnu.org/licenses/gpl-3.0.en.html>
 
 from __future__ import absolute_import, unicode_literals
-from future.builtins import str
+
 from copy import deepcopy
 from pprint import pformat
-from kodi_six.xbmcgui import Dialog
+
 import pyxbmct
+from future.builtins import str
+from kodi_six.xbmcgui import Dialog
+
 from . import logger
-from .addon import addon, icon
+from .addon import ADDON, ICON, KODI_VERSION
+from .gui import NextEpDialog, ui_string, busy_spinner
 from .medialibrary import (get_movies, get_tvshows, get_episodes,
                            get_recent_movies, get_recent_episodes, get_tvdb_id,
                            NoDataError)
 from .nextepisode import (prepare_movies_list, prepare_episodes_list, update_data,
                           get_password_hash, LoginError, DataUpdateError)
-from .gui import NextEpDialog, ui_string, busy_spinner
 
 __all__ = ['LoginDialog', 'sync_library', 'sync_new_items', 'login',
            'update_single_item']
 
-dialog = Dialog()
+DIALOG = Dialog()
 
 
 class LoginDialog(NextEpDialog):
@@ -42,8 +45,15 @@ class LoginDialog(NextEpDialog):
         self.placeControl(password_label, 1, 0)
         self._username_field = pyxbmct.Edit('')
         self.placeControl(self._username_field, 0, 1)
-        self._password_field = pyxbmct.Edit('', isPassword=True)
+        password_field_kwargs = {}
+        if KODI_VERSION < '18':
+            password_field_kwargs['isPassword'] = True
+        self._password_field = pyxbmct.Edit('', **password_field_kwargs)
         self.placeControl(self._password_field, 1, 1)
+        if KODI_VERSION >= '18':
+            from xbmcgui import INPUT_TYPE_TEXT, INPUT_TYPE_PASSWORD
+            self._username_field.setType(INPUT_TYPE_TEXT, ui_string(32003))
+            self._password_field.setType(INPUT_TYPE_PASSWORD, ui_string(32004))
         self._ok_btn = pyxbmct.Button(ui_string(32005))
         self.placeControl(self._ok_btn, 2, 1)
         self._cancel_btn = pyxbmct.Button(ui_string(32006))
@@ -89,20 +99,22 @@ def send_data(data):
         update_data(data)
     except LoginError:
         logger.log_error('Login failed! Re-enter your username and password.')
-        dialog.notification('next-episode.net', ui_string(32007), icon='error')
+        DIALOG.notification('next-episode.net', ui_string(32007), icon='error')
     except DataUpdateError as ex:
         logger.log_error(str(ex))
-        if addon.getSetting('disable_error_dialogs') != 'true':
-            dialog.ok('next-epsisode.net',
-                      ui_string(32020),
-                      ui_string(32021).format(ex.failed_movies),
-                      ui_string(32022).format(ex.failed_shows))
+        if ADDON.getSetting('disable_error_dialogs') != 'true':
+            DIALOG.ok('next-epsisode.net',
+                      '[CR]'.join((
+                          ui_string(32020),
+                          ui_string(32021).format(ex.failed_movies),
+                          ui_string(32022).format(ex.failed_shows)
+                      )))
         else:
-            dialog.notification('next-episode.net', ui_string(32008),
+            DIALOG.notification('next-episode.net', ui_string(32008),
                                 icon='error')
     else:
-        dialog.notification('next-episode.net', ui_string(32009),
-                            icon=icon, time=2000, sound=False)
+        DIALOG.notification('next-episode.net', ui_string(32009),
+                            icon=ICON, time=2000, sound=False)
 
 
 def log_data_sent(data):
@@ -123,10 +135,11 @@ def sync_library():
     """
     with busy_spinner():
         data = {
-        'user': {
-            'username': addon.getSetting('username'),
-            'hash': addon.getSetting('hash')
-        }}
+            'user': {
+                'username': ADDON.getSetting('username'),
+                'hash': ADDON.getSetting('hash')
+            }
+        }
         try:
             data['movies'] = prepare_movies_list(get_movies())
         except NoDataError:
@@ -160,8 +173,8 @@ def sync_new_items():
     """
     data = {
         'user': {
-            'username': addon.getSetting('username'),
-            'hash': addon.getSetting('hash')
+            'username': ADDON.getSetting('username'),
+            'hash': ADDON.getSetting('hash')
         }}
     try:
         data['movies'] = prepare_movies_list(get_recent_movies())
@@ -189,8 +202,8 @@ def update_single_item(item):
     """
     data = {
         'user': {
-            'username': addon.getSetting('username'),
-            'hash': addon.getSetting('hash')
+            'username': ADDON.getSetting('username'),
+            'hash': ADDON.getSetting('hash')
         }}
     if item['type'] == 'episode':
         data['tvshows'] = [{
@@ -220,7 +233,7 @@ def login():
     :rtype: bool
     """
     login_dialog = LoginDialog(ui_string(32001),
-                               username=addon.getSetting('username'))
+                               username=ADDON.getSetting('username'))
     login_dialog.doModal()
     result = False
     if not login_dialog.is_cancelled:
@@ -230,13 +243,17 @@ def login():
             try:
                 hash_ = get_password_hash(username, password)
             except LoginError:
-                dialog.ok('next-episode.net', ui_string(32007), ui_string(32010))
+                DIALOG.ok('next-episode.net',
+                          '[CR]'.join((
+                              ui_string(32007),
+                              ui_string(32010)
+                          )))
                 logger.log_error('Login failed!')
             else:
-                addon.setSetting('username', username)
-                addon.setSetting('hash', hash_)
+                ADDON.setSetting('username', username)
+                ADDON.setSetting('hash', hash_)
                 logger.log_debug('Successful login')
-                dialog.notification('next-episode.net', ui_string(32011),
+                DIALOG.notification('next-episode.net', ui_string(32011),
                                     time=3000, sound=False)
                 result = True
     del login_dialog
