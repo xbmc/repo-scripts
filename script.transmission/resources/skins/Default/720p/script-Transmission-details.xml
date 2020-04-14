@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<window>
+	<defaultcontrol>111</defaultcontrol>
+	<allowoverlay>yes</allowoverlay>
+	<coordinates>
+		<system>1</system>
+		<posx>120</posx>
+		<posy>70</posy>
+	</coordinates>
+	<controls>
+		<control type="image">
+			<posx>0</posx>
+			<posy>0</posy>
+			<width>960</width>
+			<height>540</height>
+			<texture>transmission-dialog.png</texture>
+            <animation effect="fade" time="200">WindowOpen</animation>
+            <animation effect="fade" time="200">WindowClose</animation>
+		</control>
+		<control type="label">
+			<description>textarea</description>
+			<posx>0</posx>
+			<posy>0</posy>
+			<width>960</width>
+			<height>30</height>
+			<visible>true</visible>
+			<label>$ADDON[script.transmission 32112]</label>
+			<font>font11</font>
+			<textcolor>white</textcolor>
+			<align>center</align>
+		</control>
+		<control type="group">
+			<posx>20</posx>
+			<posy>40</posy>
+			<control type="label">
+				<posx>0</posx>
+				<posy>0</posy>
+				<width>140</width>
+				<height>20</height>
+				<label>$ADDON[script.transmission 32110]:</label>
+			</control>
+			<control type="label" id="1">
+				<posx>140</posx>
+				<posy>0</posy>
+				<width>800</width>
+				<height>20</height>
+				<label></label>
+			</control>
+			<control type="label">
+				<posx>0</posx>
+				<posy>20</posy>
+				<width>140</width>
+				<height>30</height>
+				<label>$ADDON[script.transmission 32111]:</label>
+			</control>
+			<control type="label" id="2">
+				<posx>140</posx>
+				<posy>20</posy>
+				<width>800</width>
+				<height>30</height>
+				<label></label>
+			</control>
+			<control type="progress" id="219">
+				<description>Torrent progress</description>
+				<posx>20</posx>
+				<posy>70</posy>
+				<width>830</width>
+				<height>30</height>
+				<visible>true</visible>
+			</control>
+			<control type="label" id="11">
+				<posx>855</posx>
+				<posy>69</posy>
+				<width>70</width>
+				<height>30</height>
+				<label></label>
+			</control>
+		</control>
+		<control type="list" id="220">
+			<description>File list</description>
+			<posx>5</posx>
+			<posy>185</posy>
+			<width>950</width>
+			<height>330</height>
+                        <onup>111</onup>
+			<viewtype label="File List">list</viewtype>
+			<orientation>vertical</orientation>
+			<visible>true</visible>
+			<itemlayout width="560" height="30">
+				<control type="image">
+					<posx>0</posx>
+					<posy>0</posy>
+					<width>950</width>
+					<height>30</height>
+					<texture>list-bg.png</texture>
+				</control>
+				<control type="label">
+					<posx>10</posx>
+					<posy>0</posy>
+					<width>800</width>
+					<height>30</height>
+					<info>ListItem.label</info>
+				</control>
+				<control type="label">
+					<posx>830</posx>
+					<posy>0</posy>
+					<width>100</width>
+					<height>30</height>
+					<info>ListItem.Property(Progress)</info>
+				</control>
+			</itemlayout>
+			<focusedlayout width="560" height="30">
+				<control type="image">
+					<posx>0</posx>
+					<posy>0</posy>
+					<width>950</width>
+					<height>30</height>
+					<visible>Control.HasFocus(20)</visible>
+					<texture border="5">list-bg-selected.png</texture>
+				</control>
+				<control type="image">
+					<posx>0</posx>
+					<posy>0</posy>
+					<width>950</width>
+					<height>30</height>
+					<visible>!Control.HasFocus(20)</visible>
+					<texture border="5">list-bg-selected-nofocus.png</texture>
+				</control>
+				<control type="label">
+					<posx>10</posx>
+					<posy>0</posy>
+					<width>800</width>
+					<height>30</height>
+					<info>ListItem.label</info>
+				</control>
+				<control type="label">
+					<posx>830</posx>
+					<posy>0</posy>
+					<width>100</width>
+					<height>30</height>
+					<info>ListItem.Property(Progress)</info>
+				</control>
+			</focusedlayout>
+		</control>
+		<control type="button" id="111">
+			<description>Close Window button</description>
+			<posx>850</posx>
+			<posy>0</posy>
+			<width>64</width>
+			<height>32</height>
+                        <ondown>220</ondown>
+			<label>-</label>
+			<font>-</font>
+			<onclick>PreviousMenu</onclick>
+			<texturefocus>DialogCloseButton-focus.png</texturefocus>
+			<texturenofocus>DialogCloseButton.png</texturenofocus>
+			<visible>system.getbool(input.enablemouse)</visible>
+		</control>
+	</controls>
+</window>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.transmission"
+       name="Transmission Control Panel"
+       version="1.0.0"
+       provider-name="Vasyl Gello">
+  <requires>
+    <import addon="xbmc.python" version="3.0.0" />
+    <import addon="script.module.kodi-six" version="0.1.3"/>
+    <import addon="script.module.six" version="1.14.0" />
+  </requires>
+  <extension point="xbmc.python.script"
+             library="default.py" />
+  <extension point="xbmc.service" 
+             library="player.py" />
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en_GB">A client for the popular Transmission BitTorrent application</summary>
+    <summary lang="hu_HU">A népszerű Transmission Bittorrent alkalmazás vezérlése</summary>
+    <summary lang="ca_ES">Un client de Transmission, la popular aplicació de Bittorrent</summary>
+    <summary lang="ru_RU">Панель управления для популярного торрент-клиента Transmission</summary>
+    <summary lang="uk_UA">Панель керування для популярного торент-кліента Transmission</summary>
+    <description lang="en_GB">Transmission Control Panel supports viewing, adding, removing, starting and stopping torrents.</description>
+    <description lang="hu_HU">Transmission Control Panel képes megnézni, hozzáadni, elkezdeni, és megállítani a torrenteket.</description>
+    <description lang="ca_ES">Transmission Control Panel permet veure, afegir, eliminar, iniciar i parar torrents.</description>
+    <description lang="ru_RU">Transmission Control Panel позволяет просматривать список торрентов, добавлять, удалять, запускать и останавливать торренты.</description>
+    <description lang="uk_UA">Transmission Control Panel дозволяє переглядати список торентів, додавати, видаляти, стартувати та зупиняти торенти.</description>
+    <platform>all</platform>
+    <license>MIT</license>
+    <email>vasek.gello@gmail.com</email>
+    <source>https://github.com/basilgello/Transmission-Control-Panel</source>
+    <news>Version 1.0.0
+        * Complete rework of original script.transmission by Correl J.Roush
+        * Coded in Python 3
+        * Targets Kodi 19.0 &quot;Matrix&quot; and newer</news>
+    <assets>
+        <icon>icon.png</icon>
+    </assets>
+  </extension>
+</addon>

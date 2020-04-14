@@ -1,0 +1,168 @@
+# XBMC Media Center language file
+# Addon Name: Transmission
+# Addon id: script.transmission
+# Addon version: 0.7.5
+# Addon Provider: Correl Roush
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC-Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: 2014-06-04 04:09+0000\n"
+"PO-Revision-Date: 2014-09-02 10:29+0100\n"
+"Last-Translator: Torstein Husebø <torstein@huseboe.net>\n"
+"Language-Team: Norwegian\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: no\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 1.5.4\n"
+
+msgctxt "Addon Summary"
+msgid "A client for the popular Transmission BitTorrent application"
+msgstr "En klient for den populære Transmission BitTorrent applikasjonen"
+
+msgctxt "Addon Description"
+msgid ""
+"Currently, Transmission-XBMC supports viewing, adding, removing, starting "
+"and stopping torrents. More advanced features may be added in future "
+"releases."
+msgstr ""
+"Foreløpig støtter Transmission-XBMC følgende: visning av, legge til, fjerne, "
+"starte og stoppe torrents. Mer avanserte funksjoner vil kanskje komme i "
+"fremtidige utgivelser."
+
+msgctxt "#32000"
+msgid "Transmission"
+msgstr "Transmission"
+
+msgctxt "#32001"
+msgid "Connecting to Transmission"
+msgstr "Kobler til Transmission"
+
+msgctxt "#32002"
+msgid "Transmission Error"
+msgstr "Feil med Transmission"
+
+msgctxt "#32003"
+msgid "Open settings dialog?"
+msgstr "Åpne instillinger?"
+
+# Buttons
+# empty strings from id 32004 to 32100
+msgctxt "#32101"
+msgid "Add"
+msgstr "Legg til"
+
+msgctxt "#32102"
+msgid "Remove"
+msgstr "Fjern"
+
+msgctxt "#32103"
+msgid "Pause"
+msgstr "Pause"
+
+msgctxt "#32104"
+msgid "Start"
+msgstr "Start"
+
+msgctxt "#32105"
+msgid "Pause All"
+msgstr "Pause alle"
+
+msgctxt "#32106"
+msgid "Start All"
+msgstr "Start alle"
+
+msgctxt "#32107"
+msgid "Exit"
+msgstr "Avslutt"
+
+msgctxt "#32108"
+msgid "Settings"
+msgstr "Instillinger"
+
+# empty string with id 32109
+msgctxt "#32110"
+msgid "Name"
+msgstr "Navn"
+
+msgctxt "#32111"
+msgid "Status"
+msgstr "Status"
+
+msgctxt "#32112"
+msgid "Torrent Details"
+msgstr "Torrent-detaljer"
+
+# Adding
+# empty strings from id 32112 to 32199
+msgctxt "#32200"
+msgid "Browse for torrent file"
+msgstr "Bla for torrent-fil"
+
+# Status
+# Short torrent status
+# empty strings from id 32294 to 32299
+msgctxt "#32300"
+msgid "working"
+msgstr "arbeider"
+
+msgctxt "#32301"
+msgid "seeding"
+msgstr "deler"
+
+msgctxt "#32302"
+msgid "stopped"
+msgstr "stoppet"
+
+# Settings
+# empty strings from id 32303 to 32699
+
+msgctxt "#32700"
+msgid "General"
+msgstr ""
+
+msgctxt "#32701"
+msgid "General settings for Transmission daemon"
+msgstr ""
+
+# empty strings from id 32702 to 32799
+
+msgctxt "#32800"
+msgid "RPC Settings"
+msgstr "RPC-instillinger"
+
+msgctxt "#32801"
+msgid "Host"
+msgstr "Tjener"
+
+msgctxt "#32802"
+msgid "Port"
+msgstr "Port"
+
+msgctxt "#32803"
+msgid "User"
+msgstr "Brukernavn"
+
+msgctxt "#32804"
+msgid "Password"
+msgstr "Passord"
+
+msgctxt "#32805"
+msgid "Stop all torrents on video playback"
+msgstr "Stopp alle torrent under videoavspilling"
+
+# Errors
+# empty strings from id 32806 to 32899
+msgctxt "#32900"
+msgid "An unexpected error occurred"
+msgstr "Det oppstod en uventet feil"
+
+msgctxt "#32901"
+msgid "Could not connect to Transmission"
+msgstr "Kunne ikke koble til Transmission"
+
+msgctxt "#32902"
+msgid "Invalid username or password"
+msgstr "Ugyldig brukernavn eller passord"

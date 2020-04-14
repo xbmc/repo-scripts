@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<window>
+	<defaultcontrol always="true">111</defaultcontrol>
+	<allowoverlays>false</allowoverlays>
+	<coordinates>
+		<system>1</system>
+		<posx>120</posx>
+		<posy>70</posy>
+	</coordinates>
+	<controls>
+
+		<control type="image">
+			<posx>-10</posx>
+			<posy>-8</posy>
+			<width>980</width>
+			<height>560</height>
+			<texture>transmission-main.png</texture>
+			<animation effect="fade" time="200">WindowOpen</animation>
+			<animation effect="fade" time="200">WindowClose</animation>
+		</control>
+
+		<control type="label">
+			<description>textarea</description>
+			<posx>0</posx>
+			<posy>0</posy>
+			<width>980</width>
+			<visible>true</visible>
+			<label>Transmission</label>
+			<font>font11</font>
+			<textcolor>white</textcolor>
+			<align>center</align>
+		</control>
+		<control type="group">
+			<posx>0</posx>
+			<posy>10</posy>
+			<!-- Button Group -->
+			<control type="button" id="111">
+				<description>Add torrent</description>
+				<posx>0</posx>
+				<posy>0</posy>
+				<height>70</height>
+				<width>120</width>
+				<align>center</align>
+				<aligny>top</aligny>
+				<textoffsety>45</textoffsety>
+				<label>$ADDON[script.transmission 32101]</label>
+				<font>font12_title</font>
+				<onright>120</onright>
+				<ondown>112</ondown>
+				<onup>117</onup>
+				<texturefocus>add-focus.png</texturefocus>
+				<texturenofocus>add-nofocus.png</texturenofocus>
+			</control>
+			<control type="button" id="112">
+				<description>Remove torrent</description>
+				<posx>0</posx>
+				<posy>75</posy>
+				<height>70</height>
+				<width>120</width>
+				<align>center</align>
+				<aligny>top</aligny>
+				<textoffsety>45</textoffsety>
+				<label>$ADDON[script.transmission 32102]</label>
+				<font>font12_title</font>
+				<onright>120</onright>
+				<onup>111</onup>
+				<ondown>113</ondown>
+				<texturefocus>remove-focus.png</texturefocus>
+				<texturenofocus>remove-nofocus.png</texturenofocus>
+			</control>
+			<control type="button" id="113">
+				<description>Stop torrent</description>
+				<posx>0</posx>
+				<posy>150</posy>
+				<height>70</height>
+				<width>122</width>
+				<align>center</align>
+				<aligny>top</aligny>
+				<textoffsety>45</textoffsety>
+				<label>$ADDON[script.transmission 32103]</label>
+				<font>font12_title</font>
+				<onright>120</onright>
+				<onup>112</onup>
+				<ondown>114</ondown>
+				<texturefocus>stop-focus.png</texturefocus>
+				<texturenofocus>stop-nofocus.png</texturenofocus>
+			</control>
+			<control type="button" id="114">
+				<description>Start torrent</description>
+				<posx>0</posx>
+				<posy>225</posy>
+				<height>70</height>
+				<width>120</width>
+				<align>center</align>
+				<aligny>top</aligny>
+				<textoffsety>45</textoffsety>
+				<label>$ADDON[script.transmission 32104]</label>
+				<font>font12_title</font>
+				<onright>120</onright>
+				<onup>113</onup>
+				<ondown>115</ondown>
+				<texturefocus>start-focus.png</texturefocus>
+				<texturenofocus>start-nofocus.png</texturenofocus>
+			</control>
+			<control type="button" id="115">
+				<description>Stop all torrents</description>
+				<posx>0</posx>
+				<posy>300</posy>
+				<height>70</height>
+				<width>120</width>
+				<align>center</align>
+				<aligny>top</aligny>
+				<textoffsety>45</textoffsety>
+				<label>$ADDON[script.transmission 32105]</label>
+				<font>font12_title</font>
+				<onright>120</onright>
+				<onup>114</onup>
+				<ondown>116</ondown>
+				<texturefocus>stopall-focus.png</texturefocus>
+				<texturenofocus>stopall-nofocus.png</texturenofocus>
+			</control>
+			<control type="button" id="116">
+				<description>Start all torrents</description>
+				<posx>0</posx>
+				<posy>375 </posy>
+				<height>70</height>
+				<width>120</width>
+				<align>center</align>
+				<aligny>top</aligny>
+				<textoffsety>45</textoffsety>
+				<label>$ADDON[script.transmission 32106]</label>
+				<font>font12_title</font>
+				<onright>120</onright>
+				<onup>115</onup>
+				<ondown>118</ondown>
+				<texturefocus>startall-focus.png</texturefocus>
+				<texturenofocus>startall-nofocus.png</texturenofocus>
+			</control>
+			<control type="button" id="118">
+				<description>Settings</description>
+				<posx>0</posx>
+				<posy>450</posy>
+				<height>70</height>
+				<width>120</width>
+				<align>center</align>
+				<aligny>top</aligny>
+				<textoffsety>45</textoffsety>
+				<label>$ADDON[script.transmission 32108]</label>
+				<font>font12_title</font>
+				<onright>120</onright>
+				<onup>116</onup>
+				<texturefocus>settings-focus.png</texturefocus>
+				<texturenofocus>settings-nofocus.png</texturenofocus>
+				<ondown>111</ondown>
+			</control>
+		</control>
+		<!--
+		<control type="image">
+			<posx>90</posx>
+			<posy>35</posy>
+			<width>560</width>
+			<height>500</height>
+			<texture>blue.png</texture>
+		</control>
+		-->
+		<control type="scrollbar" id="121">
+			<description>Scroll bar for the torrent list</description>
+			<posx>935</posx>
+			<posy>35</posy>
+			<width>30</width>
+			<height>500</height>
+			<visible>true</visible>
+			<texturesliderbackground border="0,14,0,14">ScrollBarV.png</texturesliderbackground>
+			<texturesliderbar border="0,14,0,14">ScrollBarV_bar.png</texturesliderbar>
+			<texturesliderbarfocus border="0,14,0,14">ScrollBarV_bar_focus.png</texturesliderbarfocus>
+			<textureslidernib>ScrollBarNib.png</textureslidernib>
+			<textureslidernibfocus>ScrollBarNib.png</textureslidernibfocus>
+			<pulseonselect></pulseonselect>
+			<orientation>vertical</orientation>
+			<showonepage>false</showonepage>
+		</control>
+		<control type="list" id="120">
+			<description>Torrent list</description>
+			<posx>135</posx>
+			<posy>35</posy>
+			<width>800</width>
+			<height>500</height>
+			<viewtype label="Torrent List">list</viewtype>
+			<orientation>vertical</orientation>
+			<visible>true</visible>
+			<onleft>111</onleft>
+			<onright>117</onright>
+                        <onup>117</onup>
+			<pagecontrol>121</pagecontrol>
+			<itemlayout width="560" height="70">
+				<control type="image">
+					<posx>0</posx>
+					<posy>0</posy>
+					<width>800</width>
+					<height>70</height>
+					<texture>list-bg.png</texture>
+				</control>
+				<control type="image">
+					<posx>10</posx>
+					<posy>0</posy>
+					<width>64</width>
+					<height>64</height>
+					<texture>icons/$INFO[ListItem.Property(TorrentStatusIcon)]</texture>
+				</control>
+				<control type="label">
+					<posx>90</posx>
+					<posy>0</posy>
+					<width>700</width>
+					<height>20</height>
+					<label>$INFO[ListItem.label]</label>
+				</control>
+				<control type="progress">
+					<posx>90</posx>
+					<posy>40</posy>
+					<width>640</width>
+					<height>20</height>
+					<info>ListItem.Property(TorrentProgress)</info>
+				</control>
+				<control type="label">
+					<posx>735</posx>
+					<posy>33</posy>
+					<width>60</width>
+					<height>20</height>
+					<label>$INFO[ListItem.Property(TorrentProgress)]</label>
+				</control>
+			</itemlayout>
+			<focusedlayout width="560" height="70">
+				<control type="image">
+					<posx>0</posx>
+					<posy>0</posy>
+					<width>800</width>
+					<height>70</height>
+					<visible>Control.HasFocus(120)</visible>
+					<texture border="5">list-bg-selected.png</texture>
+				</control>
+				<control type="image">
+					<posx>0</posx>
+					<posy>0</posy>
+					<width>800</width>
+					<height>70</height>
+					<visible>!Control.HasFocus(120)</visible>
+					<texture border="5">list-bg-selected-nofocus.png</texture>
+				</control>
+				<control type="image">
+					<posx>10</posx>
+					<posy>0</posy>
+					<width>64</width>
+					<height>64</height>
+					<texture>icons/$INFO[ListItem.Property(TorrentStatusIcon)]</texture>
+				</control>
+				<control type="label">
+					<posx>90</posx>
+					<posy>0</posy>
+					<width>700</width>
+					<height>20</height>
+					<label>$INFO[ListItem.label]</label>
+					<scroll>true</scroll>
+				</control>
+				<control type="progress">
+					<posx>90</posx>
+					<posy>40</posy>
+					<width>640</width>
+					<height>20</height>
+					<info>ListItem.Property(TorrentProgress)</info>
+				</control>
+				<control type="label">
+					<posx>735</posx>
+					<posy>33</posy>
+					<width>60</width>
+					<height>20</height>
+					<label>$INFO[ListItem.Property(TorrentProgress)]</label>
+				</control>
+			</focusedlayout>
+		</control>
+		<control type="button" id="117">
+			<description>Exit</description>
+			<posx>850</posx>
+			<posy>-5</posy>
+			<height>32</height>
+			<width>64</width>
+			<textoffsety>45</textoffsety>
+			<label>-</label>
+			<font>-</font>
+			<texturefocus>DialogCloseButton-focus.png</texturefocus>
+			<texturenofocus>DialogCloseButton.png</texturenofocus>
+			<visible>system.getbool(input.enablemouse)</visible>
+                        <onleft>111</onleft>
+                        <ondown>120</ondown>
+		</control>
+	</controls>
+</window>
