@@ -96,7 +96,7 @@
 					<default>true</default>
 					<dependencies>
 						<dependency type="enable">
-							<condition operator="is" setting="resume">false</condition>
+							<condition operator="is" setting="scale">false</condition>
 						</dependency>
 					</dependencies>
 					<control type="toggle"/>

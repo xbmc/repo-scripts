@@ -20,6 +20,10 @@
 					<animation type="Conditional" condition="String.IsEqual(Window.Property(SlideView.Fade11),1)">
 						<effect type="fade" start="100" end="0" time="1000"/>
 					</animation>
+					<animation type="Conditional" condition="String.IsEqual(Window.Property(SlideView.NoEffectFade1),1)">
+						<effect type="fade" start="100" end="0" time="0"/>
+					</animation>
+					<!-- background image 1 -->
 					<control type="image" id="5">
 						<posx>0</posx>
 						<posy>0</posy>
@@ -34,6 +38,10 @@
 					<animation type="Conditional" condition="String.IsEqual(Window.Property(SlideView.Fade12),1)">
 						<effect type="fade" start="100" end="0" time="1000"/>
 					</animation>
+					<animation type="Conditional" condition="String.IsEqual(Window.Property(SlideView.NoEffectFade2),1)">
+						<effect type="fade" start="100" end="0" time="0"/>
+					</animation>
+					<!-- background image 2 -->
 					<control type="image" id="6">
 						<posx>0</posx>
 						<posy>0</posy>
@@ -57,6 +65,10 @@
 				<animation type="Conditional" condition="String.IsEqual(Window.Property(SlideView.Fade1),1)">
 					<effect type="fade" start="100" end="0" time="1000"/>
 				</animation>
+				<animation type="Conditional" condition="String.IsEqual(Window.Property(SlideView.NoEffectFade1),1)">
+					<effect type="fade" start="100" end="0" time="0"/>
+				</animation>
+				<!-- image 1 -->
 				<control type="image" id="1">
 					<posx>0</posx>
 					<posy>0</posy>
@@ -77,6 +89,10 @@
 				<animation type="Conditional" condition="String.IsEqual(Window.Property(SlideView.Fade2),1)">
 					<effect type="fade" start="100" end="0" time="1000"/>
 				</animation>
+				<animation type="Conditional" condition="String.IsEqual(Window.Property(SlideView.NoEffectFade2),1)">
+					<effect type="fade" start="100" end="0" time="0"/>
+				</animation>
+				<!-- image 2 -->
 				<control type="image" id="2">
 					<posx>0</posx>
 					<posy>0</posy>
@@ -97,6 +113,10 @@
 				<animation type="Conditional" condition="String.IsEqual(Window.Property(SlideView.Fade1),1)">
 					<effect type="fade" start="100" end="0" time="1000"/>
 				</animation>
+				<animation type="Conditional" condition="String.IsEqual(Window.Property(SlideView.NoEffectFade1),1)">
+					<effect type="fade" start="100" end="0" time="0"/>
+				</animation>
+				<!-- image 1 (setting: scale image)-->
 				<control type="image" id="3">
 					<posx>0</posx>
 					<posy>0</posy>
@@ -117,6 +137,10 @@
 				<animation type="Conditional" condition="String.IsEqual(Window.Property(SlideView.Fade2),1)">
 					<effect type="fade" start="100" end="0" time="1000"/>
 				</animation>
+				<animation type="Conditional" condition="String.IsEqual(Window.Property(SlideView.NoEffectFade2),1)">
+					<effect type="fade" start="100" end="0" time="0"/>
+				</animation>
+				<!-- image 2 (setting: scale image)-->
 				<control type="image" id="4">
 					<posx>0</posx>
 					<posy>0</posy>
