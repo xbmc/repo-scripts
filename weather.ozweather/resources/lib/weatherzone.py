@@ -17,6 +17,7 @@
 # *
 
 import requests
+import re
 from bs4 import BeautifulSoup
 from urlparse import urlparse
 import datetime
@@ -25,8 +26,9 @@ try:
     from xbmc import log as log
 except ImportError:
     print("\nXBMC is not available -> probably unit testing")
-    def log(str):
-        print(str)
+
+    def log(message):
+        print(message)
 
 # CONSTANTS
 
@@ -34,109 +36,105 @@ SCHEMA = "https://"
 WEATHERZONE_URL = 'www.weatherzone.com.au'
 WEATHERZONE_SEARCH_URL = WEATHERZONE_URL + "/search/"
 
-DAYS = {    "Mon": "Monday",
-            "Tue": "Tuesday",
-            "Wed": "Wednesday",
-            "Thu": "Thursday",
-            "Fri": "Friday",
-            "Sat": "Saturday",
-            "Sun": "Sunday"}
+DAYS = {"Mon": "Monday",
+        "Tue": "Tuesday",
+        "Wed": "Wednesday",
+        "Thu": "Thursday",
+        "Fri": "Friday",
+        "Sat": "Saturday",
+        "Sun": "Sunday"}
 
-WEATHER_CODES = {   'Clearing Shower'                 : '39',
-                    'Cloudy'                          : '26',
-                    'Cloud And Wind Increasing'       : '23',
-                    'Cloud Increasing'                : '26',
-                    'Drizzle'                         : '11',
-                    'Drizzle Clearing'                : '39',
-                    'Fog Then Sunny'                  : '34',
-                    'Frost Then Sunny'                : '34',
-                    'Hazy'                            : '21',
-                    'Heavy Rain'                      : '40',
-                    'Heavy Showers'                   : '12',
-                    'Increasing Sunshine'             : '30',
-                    'Late Shower'                     : '45',
-                    'Late Thunder'                    : '47',
-                    'Mostly Cloudy'                   : '26',
-                    'Mostly Sunny'                    : '34',
-                    'Overcast'                        : '26',
-                    'Possible Shower'                 : '11',
-                    'Possible Thunderstorm'           : '37',
-                    'Rain'                            : '40',
-                    'Rain And Snow'                   : '5',
-                    'Rain Clearing'                   : '39',
-                    'Rain Developing'                 : '12',
-                    'Rain Tending To Snow'            : '5',
-                    'Showers'                         : '11',
-                    'Showers Easing'                  : '11',
-                    'Showers Increasing'              : '11',
-                    'Snow'                            : '41',
-                    'Snowfalls Clearing'              : '5',
-                    'Snow Developing'                 : '13',
-                    'Snow Showers'                    : '41',
-                    'Snow Tending To Rain'            : '5',
-                    'Sunny'                           : '32',
-                    'Thunderstorms'                   : '38',
-                    'ThunderStorms'                   : '38',
-                    'Thunderstorms Clearing'          : '37',
-                    'Windy'                           : '23',
-                    'Windy With Rain'                 : '2',
-                    'Windy With Showers'              : '2',
-                    'Windy With Snow'                 : '43',
-                    'Wind And Rain Increasing'        : '2',
-                    'Wind And Showers Easing'         : '11',
-                    'Unknown'                         : 'na',
-                    'nt_unknown'                      : 'na'}
+WEATHER_CODES = {'Clearing Shower': '39',
+                 'Cloudy': '26',
+                 'Cloud And Wind Increasing': '23',
+                 'Cloud Increasing': '26',
+                 'Drizzle': '11',
+                 'Drizzle Clearing': '39',
+                 'Fog Then Sunny': '34',
+                 'Frost Then Sunny': '34',
+                 'Hazy': '21',
+                 'Heavy Rain': '40',
+                 'Heavy Showers': '12',
+                 'Increasing Sunshine': '30',
+                 'Late Shower': '45',
+                 'Late Thunder': '47',
+                 'Mostly Cloudy': '26',
+                 'Mostly Sunny': '34',
+                 'Overcast': '26',
+                 'Possible Shower': '11',
+                 'Possible Thunderstorm': '37',
+                 'Rain': '40',
+                 'Rain And Snow': '5',
+                 'Rain Clearing': '39',
+                 'Rain Developing': '12',
+                 'Rain Tending To Snow': '5',
+                 'Showers': '11',
+                 'Showers Easing': '11',
+                 'Showers Increasing': '11',
+                 'Snow': '41',
+                 'Snowfalls Clearing': '5',
+                 'Snow Developing': '13',
+                 'Snow Showers': '41',
+                 'Snow Tending To Rain': '5',
+                 'Sunny': '32',
+                 'Thunderstorms': '38',
+                 'ThunderStorms': '38',
+                 'Thunderstorms Clearing': '37',
+                 'Windy': '23',
+                 'Windy With Rain': '2',
+                 'Windy With Showers': '2',
+                 'Windy With Snow': '43',
+                 'Wind And Rain Increasing': '2',
+                 'Wind And Showers Easing': '11',
+                 'Unknown': 'na',
+                 'nt_unknown': 'na'}
 
-
-WEATHER_CODES_NIGHT = { 'Clearing Shower'                 : '45',
-                        'Cloudy'                          : '29',
-                        'Cloud And Wind Increasing'       : '27',
-                        'Cloud Increasing'                : '27',
-                        'Drizzle'                         : '45',
-                        'Drizzle Clearing'                : '45',
-                        'Fog Then Sunny'                  : '33',
-                        'Frost Then Sunny'                : '33',
-                        'Hazy'                            : '33',
-                        'Heavy Rain'                      : '47',
-                        'Heavy Showers'                   : '45',
-                        'Increasing Sunshine'             : '31',
-                        'Late Shower'                     : '45',
-                        'Late Thunder'                    : '47',
-                        'Mostly Cloudy'                   : '27',
-                        'Mostly Sunny'                    : '31',
-                        'Overcast'                        : '29',
-                        'Possible Shower'                 : '45',
-                        'Possible Thunderstorm'           : '47',
-                        'Rain'                            : '45',
-                        'Rain And Snow'                   : '46',
-                        'Rain Clearing'                   : '45',
-                        'Rain Developing'                 : '45',
-                        'Rain Tending To Snow'            : '45',
-                        'Showers'                         : '45',
-                        'Showers Easing'                  : '45',
-                        'Showers Increasing'              : '45',
-                        'Snow'                            : '46',
-                        'Snowfalls Clearing'              : '46',
-                        'Snow Developing'                 : '46',
-                        'Snow Showers'                    : '46',
-                        'Snow Tending To Rain'            : '46',
-                        'Sunny'                           : '31',
-                        'Thunderstorms'                   : '47',
-                        'ThunderStorms'                   : '47',
-                        'Thunder-Storms'                  : '47',
-                        'Thunder-storms'                  : '47',
-                        'Thunderstorms Clearing'          : '47',
-                        'Windy'                           : '29',
-                        'Windy With Rain'                 : '45',
-                        'Windy With Showers'              : '45',
-                        'Windy With Snow'                 : '46',
-                        'Wind And Rain Increasing'        : '45',
-                        'Wind And Showers Easing'         : '45',
-                        'Unknown'                         : 'na',
-                        'nt_unknown'                      : 'na'}
-
-
-
+WEATHER_CODES_NIGHT = {'Clearing Shower': '45',
+                       'Cloudy': '29',
+                       'Cloud And Wind Increasing': '27',
+                       'Cloud Increasing': '27',
+                       'Drizzle': '45',
+                       'Drizzle Clearing': '45',
+                       'Fog Then Sunny': '33',
+                       'Frost Then Sunny': '33',
+                       'Hazy': '33',
+                       'Heavy Rain': '47',
+                       'Heavy Showers': '45',
+                       'Increasing Sunshine': '31',
+                       'Late Shower': '45',
+                       'Late Thunder': '47',
+                       'Mostly Cloudy': '27',
+                       'Mostly Sunny': '31',
+                       'Overcast': '29',
+                       'Possible Shower': '45',
+                       'Possible Thunderstorm': '47',
+                       'Rain': '45',
+                       'Rain And Snow': '46',
+                       'Rain Clearing': '45',
+                       'Rain Developing': '45',
+                       'Rain Tending To Snow': '45',
+                       'Showers': '45',
+                       'Showers Easing': '45',
+                       'Showers Increasing': '45',
+                       'Snow': '46',
+                       'Snowfalls Clearing': '46',
+                       'Snow Developing': '46',
+                       'Snow Showers': '46',
+                       'Snow Tending To Rain': '46',
+                       'Sunny': '31',
+                       'Thunderstorms': '47',
+                       'ThunderStorms': '47',
+                       'Thunder-Storms': '47',
+                       'Thunder-storms': '47',
+                       'Thunderstorms Clearing': '47',
+                       'Windy': '29',
+                       'Windy With Rain': '45',
+                       'Windy With Showers': '45',
+                       'Windy With Snow': '46',
+                       'Wind And Rain Increasing': '45',
+                       'Wind And Showers Easing': '45',
+                       'Unknown': 'na',
+                       'nt_unknown': 'na'}
 
 """   These are the weather codes for XBMC is seems
 N/A Not Available
@@ -200,68 +198,68 @@ NIGHT SUBSET:
 
 """
 
-
-
 # Our global to hold the built up weather data
 weatherData = {}
+
 
 # Convert a fire danger numerical rating to human friendly text
 
 def fireDangerToText(fireDangerFloat):
-
     if 0.0 <= fireDangerFloat <= 5.99:
         fireDangerText = "Low"
     elif 6 <= fireDangerFloat <= 11.99:
         fireDangerText = "Moderate"
     elif 12.0 <= fireDangerFloat <= 24.99:
-        fireDangerText = "High" 
+        fireDangerText = "High"
     elif 25.0 <= fireDangerFloat <= 49.99:
-        fireDangerText = "Very High" 
+        fireDangerText = "Very High"
     elif 50.0 <= fireDangerFloat <= 74.99:
-        fireDangerText = "Severe" 
+        fireDangerText = "Severe"
     elif 75.0 <= fireDangerFloat <= 99.99:
-        fireDangerText = "Extreme" 
+        fireDangerText = "Extreme"
     elif fireDangerFloat >= 100.0:
-        fireDangerText = "Catastrophic" 
+        fireDangerText = "Catastrophic"
     else:
-        fireDangerText = "?" 
+        fireDangerText = "?"
 
     return fireDangerText
+
 
 # Clean up the short weather description text
 
 def cleanShortDescription(description):
-    description = description.replace( '<br />','')
-    description = description.replace( '<Br />','')
-    description = description.replace( '-','')
-    description = description.replace( '-','')
-    description = description.replace( 'ThunderStorms','Thunderstorms')
-    description = description.replace( 'windy','Windy')
+    description = description.replace('<br />', '')
+    description = description.replace('<Br />', '')
+    description = description.replace('-', '')
+    description = description.replace('-', '')
+    description = description.replace('ThunderStorms', 'Thunderstorms')
+    description = description.replace('windy', 'Windy')
     # title capatilises the first letter of each word
     return description.title()
+
 
 # Clean up the long weather description text
 
 def cleanLongDescription(description):
-    description = description.replace( '\t','')
-    description = description.replace( '\r',' ')
-    description = description.replace( '&amp;','&')
+    description = description.replace('\t', '')
+    description = description.replace('\r', ' ')
+    description = description.replace('&amp;', '&')
     description = description[:-1]
     return description
+
 
 # Set a group of keys at once - for old and new weather label support
 
 def setKeys(index, keys, value):
-
     global weatherData
 
     for key in keys:
-        setKey(index,key, value)
+        setKey(index, key, value)
+
 
 # Set a key - for old and new weather label support
 
 def setKey(index, key, value):
-
     global weatherData
 
     if index is 0:
@@ -270,42 +268,42 @@ def setKey(index, key, value):
 
     weatherData['Day' + str(index) + '.' + key] = value.strip()
     weatherData['Day' + str(index) + '.' + key] = value.strip()
-    weatherData['Daily.' + str(index+1) + '.' + key] = value.strip()
-    weatherData['Daily.' + str(index+1) + '.' + key] = value.strip()
+    weatherData['Daily.' + str(index + 1) + '.' + key] = value.strip()
+    weatherData['Daily.' + str(index + 1) + '.' + key] = value.strip()
+
 
 # Returns an array of dicts, each with a Locationname and LocationUrlPart.  Empty if no location found.
 # [{'LocationName': u'Ascot Vale, VIC 3032', 'LocationUrlPart': u'/vic/melbourne/ascot-vale'}, ... ]
 
 def getLocationsForPostcodeOrSuburb(text):
-
     locations = []
     locationURLPaths = []
 
     try:
-        r = requests.post(SCHEMA + WEATHERZONE_SEARCH_URL, data={'q' : text, 't' : '3' })
+        r = requests.post(SCHEMA + WEATHERZONE_SEARCH_URL, data={'q': text, 't': '3'})
         soup = BeautifulSoup(r.text, 'html.parser')
         log("Result url: " + r.url)
 
     except Exception as inst:
         log("Exception loading locations results in weatherzone.getLocationsForPostcodeOrSuburb" + str(inst))
         raise
-    
-    # Two repsonses are possible.
+
+    # Two responses are possible.
     try:
 
         # 1. A list of possible locations to choose from (e.g. several suburbs sharing one postcode)
-        if r.url.endswith(WEATHERZONE_SEARCH_URL):       
+        if r.url.endswith(WEATHERZONE_SEARCH_URL):
             locationUl = soup.find("ul", class_="typ2")
-            
+
             # Results block missing? Short circuit
             if not locationUl:
                 return locations, locationURLPaths
-            
+
             for locationLi in locationUl.find_all("li"):
                 location = locationLi.find("a")
                 locations.append(location.text)
                 locationURLPaths.append(location.get('href'))
-            
+
         # 2. Straight to one location
         else:
             h1 = soup.find("h1", class_="local")
@@ -320,18 +318,25 @@ def getLocationsForPostcodeOrSuburb(text):
 
     return locations, locationURLPaths
 
+
 # Returns a dict of weather data values
 # All the try/excepts to follow are gross - python needs ?? support.  
 # But let's not fail if one value is missing/malformed...
 
-def getWeatherData(urlPath, extendedFeatures = True, XBMC_VERSION=17.0):
-
+def getWeatherData(urlPath, extendedFeatures=True, XBMC_VERSION=17.0):
     log("Requesting & souping weather page at " + SCHEMA + WEATHERZONE_URL + urlPath)
 
     # Get the page data...
     try:
         r = requests.get(SCHEMA + WEATHERZONE_URL + urlPath)
         soup = BeautifulSoup(r.text, 'html.parser')
+
+        # We need to extract the location id for the ajax loaded forecast data...
+        lc = re.search(r'lc: \"(\d+)\"', r.text)
+        if lc:
+            weatherData['lc'] = lc.group(1)
+        else:
+            log("Error finding lc value for " + urlPath + " - 7 day forecast probably won't work...")
 
     except Exception as inst:
         # If we can't get and parse the page at all, might as well bail right out...
@@ -340,13 +345,13 @@ def getWeatherData(urlPath, extendedFeatures = True, XBMC_VERSION=17.0):
 
     # Bail early if we can't parse the data for whatever reason...
     if not soup:
-        log("Soup was nonetype - can't get weather data from " + SCHEMA + WEATHERZONE_URL + urlPath)
+        log("Soup was None - can't get weather data from " + SCHEMA + WEATHERZONE_URL + urlPath)
         return weatherData
 
     else:
         # The longer forecast text
         try:
-            p = soup.find_all("p", class_="district-forecast")  
+            p = soup.find_all("p", class_="district-forecast")
             weatherData["Current.ConditionLong"] = cleanLongDescription(p[0].text).strip()
         except Exception as inst:
             log(str(inst))
@@ -357,13 +362,13 @@ def getWeatherData(urlPath, extendedFeatures = True, XBMC_VERSION=17.0):
         try:
             astronomyTable = soup.find("table", class_="astronomy")
             tds = astronomyTable.find_all("td")
-            
+
             # Moonphase
             value = tds[4].find("img").get('title').title().strip()
             weatherData['Today.moonphase'] = value
             weatherData['Today.Moonphase'] = value
-            
-            #Sunrise/set
+
+            # Sunrise/set
             sunrise = tds[1].text.strip()
             sunset = tds[2].text.strip()
             weatherData['Today.Sunrise'] = sunrise
@@ -379,20 +384,19 @@ def getWeatherData(urlPath, extendedFeatures = True, XBMC_VERSION=17.0):
             weatherData['Today.Sunset'] = "?"
             weatherData['Current.Sunrise'] = "?"
             weatherData['Current.Sunset'] = "?"
-     
 
-         # Current Conditions - split in to two sides
+        # Current Conditions - split in to two sides
         try:
-            
+
             divCurrentDetailsLHS = soup.find("div", class_="details_lhs")
-            lhs = divCurrentDetailsLHS.find_all("td", class_="hilite")        
+            lhs = divCurrentDetailsLHS.find_all("td", class_="hilite")
 
             # LHS
             try:
                 weatherData["Current.Temperature"] = str(int(round(float(lhs[0].text[:-2]))))
             except Exception as inst:
                 log(str(inst))
-                weatherData["Current.Temperature"] = "?"       
+                weatherData["Current.Temperature"] = "?"
             try:
                 weatherData["Current.DewPoint"] = str(int(round(float(lhs[1].text[:-2]))))
             except Exception as inst:
@@ -415,7 +419,7 @@ def getWeatherData(urlPath, extendedFeatures = True, XBMC_VERSION=17.0):
                 log(str(inst))
                 weatherData["Current.WindDirection"] = "?"
                 weatherData["Current.WindDegree"] = "?"
-            try:    
+            try:
                 weatherData["Current.Wind"] = str(lhs[4].text.split(" ")[1][:-4])
             except Exception as inst:
                 log(str(inst))
@@ -451,7 +455,7 @@ def getWeatherData(urlPath, extendedFeatures = True, XBMC_VERSION=17.0):
                 if rainSince[2] == " -":
                     weatherData["Current.RainLastHr"] = "0 mm"
                 else:
-                    weatherData["Current.RainLastHr"] = str(rainSince[2][:-2])   
+                    weatherData["Current.RainLastHr"] = str(rainSince[2][:-2])
             except Exception as inst:
                 log(str(inst))
                 weatherData["Current.RainSince9"] = "?"
@@ -459,108 +463,117 @@ def getWeatherData(urlPath, extendedFeatures = True, XBMC_VERSION=17.0):
                 weatherData["Current.RainLastHr"] = "?"
 
         except Exception as inst:
-            log("Exception processing current conditions data from " + SCHEMA + WEATHERZONE_URL + urlPath + "\n" + str(inst))
-            raise
-        
+            log("Exception processing current conditions data from " + SCHEMA + WEATHERZONE_URL + urlPath + "\n" + str(
+                inst))
 
         # 7 Day Forecast & UV
         try:
 
-            #We have to store these, and then set at the end...as we need to process two rows to get all the info..
+            # We have to store these, and then set at the end...as we need to process two rows to get all the info..
 
             windSpeeds9am = []
             windSpeeds3pm = []
             windDirections9am = []
             windDirections3pm = []
 
+            # Pre April 2020 (and if they revert back as they sometime do)..
+            # ...direct load the forecast data from the on-page table
             forecastTable = soup.find("table", id="forecast-table")
-            
+
+            # April 2020 - WeatherZone have moved to ajax loading this data?
+            if forecastTable is None:
+                r = requests.post(SCHEMA + WEATHERZONE_URL + '/local/ajax/forecastlocal.jsp',
+                                  data={'lt': 'twcid', 'lc': weatherData['lc'], 'fs': 'TWC'})
+                ajaxSoup = BeautifulSoup(r.text, 'html.parser')
+                forecastTable = ajaxSoup.find("table", id="forecast-table")
+
             for index, row in enumerate(forecastTable.find_all("tr")):
-                
+
                 # Days and dates
                 if index is 0:
-                    
-                        for i, day in enumerate(row.find_all("span", class_="bold")):
-                            try:
-                                fullDay = DAYS[day.text]
-                                setKey(i, "ShortDay", day.text)
-                                setKey(i, "Title", fullDay)
-                                setKey(i, "LongDay", fullDay)
 
-                            except Exception as inst:
-                                log(str(inst))
-                                log("Exception in ShortDay,Title,LongDay")
-                                setKey(i, "ShortDay", "?")
-                                setKey(i, "Title", "?")  
-                                setKey(i, "LongDay", "?")                      
-           
-                        for i, date in enumerate(row.find_all("span", class_="text_blue")):
-                            try:
-                                setKey(i, "ShortDate", date.text[3:])
-                    
-                            except Exception as inst:
-                                log(str(inst))
-                                log("Exception in ShortDate")
-                                setKey(i, "ShortDate", "?")
-        
-                
+                    for i, day in enumerate(row.find_all("span", class_="bold")):
+                        try:
+                            fullDay = DAYS[day.text]
+                            setKey(i, "ShortDay", day.text)
+                            setKey(i, "Title", fullDay)
+                            setKey(i, "LongDay", fullDay)
+
+                        except Exception as inst:
+                            log(str(inst))
+                            log("Exception in ShortDay,Title,LongDay")
+                            setKey(i, "ShortDay", "?")
+                            setKey(i, "Title", "?")
+                            setKey(i, "LongDay", "?")
+
+                    for i, date in enumerate(row.find_all("span", class_="text_blue")):
+                        try:
+                            setKey(i, "ShortDate", date.text[3:])
+
+                        except Exception as inst:
+                            log(str(inst))
+                            log("Exception in ShortDate")
+                            setKey(i, "ShortDate", "?")
+
                 # Outlook = Short Descriptions & Corresponding Icons
                 if index is 1:
 
-                        for i, shortDesc in enumerate(row.find_all("span")):
+                    for i, shortDesc in enumerate(row.find_all("span")):
+
+                        try:
+                            setKey(i, "Outlook", cleanShortDescription(shortDesc.text))
+                            setKey(i, "Condition", cleanShortDescription(shortDesc.text))
+                        except Exception as inst:
+                            log(str(inst))
+                            log("Exception in Outlook,Condition")
+                            setKey(i, "Outlook", "?")
+                            setKey(i, "Condition", "?")
+
+                        # Attempt to set day / night weather codes as appropriate...
+                        # Fall back on day codes if things go wrong...
+                        try:
+                            now = datetime.datetime.now()
+
+                            # Try and use the actual sunrise/sunset, otherwise go with defaults of sunrise 7am, sunset 7pm
+                            try:
+                                sunriseTime = weatherData['Today.Sunrise'].split(" ")
+                                sunriseHour = sunriseTime[0].split(":")[0]
+                                sunriseMinutes = sunriseTime[0].split(":")[1]
+                            except Exception as inst:
+                                sunriseHour = 7
+                                sunriseMinutes = 0
 
                             try:
-                                setKey(i, "Outlook", cleanShortDescription(shortDesc.text))
-                                setKey(i, "Condition", cleanShortDescription(shortDesc.text))
+                                sunsetTime = weatherData['Today.Sunset'].split(" ")
+                                sunsetHour = sunsetTime[0].split(":")[0]
+                                sunsetMinutes = sunsetTime[0].split(":")[1]
                             except Exception as inst:
-                                log(str(inst))
-                                log("Exception in Outlook,Condition")
-                                setKey(i, "Outlook", "?")
-                                setKey(i, "Condition", "?")
-                           
-                            # Attempt to set day / night weather codes as appropriate - but fall back on day codes if things go wrong...
+                                sunsetHour = 19
+                                sunsetMinutes = 0
+
+                            todaySunrise = now.replace(hour=int(sunriseHour), minute=int(sunriseMinutes), second=0,
+                                                       microsecond=0)
+                            todaySunset = now.replace(hour=int(sunsetHour), minute=int(sunsetMinutes), second=0,
+                                                      microsecond=0)
+
+                            if i == 0 and (now > todaySunset or now < todaySunrise):
+                                weathercode = WEATHER_CODES_NIGHT[cleanShortDescription(shortDesc.text)]
+                            else:
+                                weathercode = WEATHER_CODES[cleanShortDescription(shortDesc.text)]
+
+                        except Exception as inst:
+                            log(str(inst))
+                            log("Exception in weathercode")
                             try:
-                                now = datetime.datetime.now()
-                                
-                                # Try and use the actual sunrise/sunset, otherwise go with defaults of sunrise 7am, sunset 7pm
-                                try:
-                                    sunriseTime = weatherData['Today.Sunrise'].split(" ")
-                                    sunriseHour = sunriseTime[0].split(":")[0]
-                                    sunriseMinutes = sunriseTime[0].split(":")[1]                            
-                                except Exception as inst:
-                                    sunriseHour = 7
-                                    sunriseMinutes = 0
-
-                                try:
-                                    sunsetTime = weatherData['Today.Sunset'].split(" ")
-                                    sunsetHour = sunsetTime[0].split(":")[0]
-                                    sunsetMinutes = sunsetTime[0].split(":")[1]
-                                except Exception as inst:
-                                    sunsetHour = 19
-                                    sunsetMinutes = 0
-     
-                                todaySunrise = now.replace(hour=int(sunriseHour), minute=int(sunriseMinutes), second=0, microsecond=0)
-                                todaySunset = now.replace(hour=int(sunsetHour), minute=int(sunsetMinutes), second=0, microsecond=0)
-
-                                if i==0 and (now > todaySunset or now < todaySunrise):
-                                    weathercode = WEATHER_CODES_NIGHT[cleanShortDescription(shortDesc.text)]
-                                else:                                
-                                    weathercode = WEATHER_CODES[cleanShortDescription(shortDesc.text)]
-                            
+                                weathercode = WEATHER_CODES[cleanShortDescription(shortDesc.text)]
                             except Exception as inst:
                                 log(str(inst))
-                                log("Exception in weathercode")
-                                try:    
-                                    weathercode = WEATHER_CODES[cleanShortDescription(shortDesc.text)]
-                                except Exception as inst:                                
-                                    log(str(inst))
-                                    log("Exception (2nd) in weathercode")
-                                    weathercode = 'na'
-                            
-                            value = '%s.png' % weathercode
-                            setKeys(i, ["OutlookIcon","ConditionIcon"], value)
-                            setKeys(i, ["FanartCode"], value.replace(".png",""))
-     
+                                log("Exception (2nd) in weathercode")
+                                weathercode = 'na'
+
+                        value = '%s.png' % weathercode
+                        setKeys(i, ["OutlookIcon", "ConditionIcon"], value)
+                        setKeys(i, ["FanartCode"], value.replace(".png", ""))
 
                 # Maximums
                 if index is 2:
@@ -568,25 +581,25 @@ def getWeatherData(urlPath, extendedFeatures = True, XBMC_VERSION=17.0):
                     for i, td in enumerate(row.find_all("td")):
                         try:
                             value = '%s' % td.text[:-2]
-                            setKeys(i, ["HighTemp","HighTemperature"], value)
+                            setKeys(i, ["HighTemp", "HighTemperature"], value)
                         except Exception as inst:
                             log(str(inst))
                             log("Exception in HighTemp,HighTemperature")
-                            setKeys(i, ["HighTemp","HighTemperature"], "?")                   
-     
-                # Minimums
+                            setKeys(i, ["HighTemp", "HighTemperature"], "?")
+
+                            # Minimums
                 if index is 3:
 
                     for i, td in enumerate(row.find_all("td")):
                         try:
                             value = '%s' % td.text[:-2]
-                            setKeys(i, ["LowTemp","LowTemperature"], value)
+                            setKeys(i, ["LowTemp", "LowTemperature"], value)
                         except Exception as inst:
                             log(str(inst))
                             log("Exception in LowTemp,LowTemperature")
-                            setKeys(i, ["LowTemp","LowTemperature"], "?")                   
+                            setKeys(i, ["LowTemp", "LowTemperature"], "?")
 
-                # Chance of rain
+                            # Chance of rain
                 if index is 4:
 
                     for i, td in enumerate(row.find_all("td")):
@@ -597,10 +610,10 @@ def getWeatherData(urlPath, extendedFeatures = True, XBMC_VERSION=17.0):
                         except Exception as inst:
                             log(str(inst))
                             log("Exception ChancePrecipitation,RainChance")
-                            setKey(i, "ChancePrecipitation", "?") 
-                            setKey(i, "RainChance", "?")                  
+                            setKey(i, "ChancePrecipitation", "?")
+                            setKey(i, "RainChance", "?")
 
-                # Amount of rain
+                            # Amount of rain
                 if index is 5:
 
                     for i, td in enumerate(row.find_all("td")):
@@ -628,8 +641,7 @@ def getWeatherData(urlPath, extendedFeatures = True, XBMC_VERSION=17.0):
                 # Wind speed and direction - there are two values per day here...
                 # and, sigh, they can appear as rows 10 and 11 or 9 and 10, depending on if there is a pollen row...
 
-
-                # Wind Speed 
+                # Wind Speed
                 if index is 9 or 10:
 
                     try:
@@ -637,14 +649,13 @@ def getWeatherData(urlPath, extendedFeatures = True, XBMC_VERSION=17.0):
                         if header is not None and header.text == "Wind Speed":
 
                             windSpeedData = row.find_all("td")
-                            for i in xrange(0,len(windSpeedData),2):
+                            for i in xrange(0, len(windSpeedData), 2):
                                 windSpeeds9am.append(windSpeedData[i].text)
-                                windSpeeds3pm.append(windSpeedData[i+1].text)
+                                windSpeeds3pm.append(windSpeedData[i + 1].text)
                     except Exception as inst:
                         log(str(inst))
                         windSpeeds9am.append("?")
                         windSpeeds9am.append("?")
-                 
 
                 # # Wind Direction
                 if index is 10 or 11:
@@ -653,17 +664,17 @@ def getWeatherData(urlPath, extendedFeatures = True, XBMC_VERSION=17.0):
                         header = row.find("th")
                         if header is not None and header.text == "Wind Direction":
 
-                            windDirectionData = row.find_all("td")            
-                            for i in xrange(0,len(windDirectionData),2):
-                                windDirections9am.append(windDirectionData[i].text.replace("\n",""))
-                                windDirections3pm.append(windDirectionData[i+1].text.replace("\n",""))
+                            windDirectionData = row.find_all("td")
+                            for i in xrange(0, len(windDirectionData), 2):
+                                windDirections9am.append(windDirectionData[i].text.replace("\n", ""))
+                                windDirections3pm.append(windDirectionData[i + 1].text.replace("\n", ""))
                     except Exception as inst:
                         log(str(inst))
                         windDirections9am.append("?")
                         windDirections3pm.append("?")
 
             # Now join the stored wind data and set it...
-            for i in xrange(0,len(windSpeeds9am)):
+            for i in xrange(0, len(windSpeeds9am)):
                 # setKey(i, "WindSpeed", "9am - " + windSpeeds9am[i] + ", 3pm - " + windSpeeds3pm[i])
                 setKey(i, "WindSpeed", windSpeeds3pm[i])
                 # setKey(i, "WindDirection", "9am - " + windDirections9am[i] + ", 3pm - " + windDirections3pm[i])
@@ -671,7 +682,6 @@ def getWeatherData(urlPath, extendedFeatures = True, XBMC_VERSION=17.0):
 
         except Exception as inst:
             log("Exception processing forecast rows data from " + SCHEMA + WEATHERZONE_URL + urlPath + "\n" + str(inst))
-            raise
 
 
     return weatherData
@@ -693,7 +703,6 @@ if __name__ == "__main__":
     log(getLocationsForPostcodeOrSuburb("Kyneton"))
 
     log("\n\nGet weather data for /vic/central/kyneton:")
-    
 
     weatherData = getWeatherData("/vic/central/kyneton", True)
 
@@ -703,7 +712,6 @@ if __name__ == "__main__":
         log("[%s]: [%s]" % (key, weatherData[key]))
 
     log("\n\nGet weather data for /vic/melbourne/ascot-vale:")
-    
 
     weatherData = getWeatherData("/vic/melbourne/ascot-vale", True)
 

@@ -1,3 +1,6 @@
+v1.0.2
+ - Fix for weatherzone moving to ajax loading the forecast data
+
 v1.0.1
 - Must scrape all WeatherZone data over https now it seems
 
