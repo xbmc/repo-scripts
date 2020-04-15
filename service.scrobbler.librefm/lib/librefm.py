@@ -1,23 +1,8 @@
-# *  This Program is free software; you can redistribute it and/or modify
-# *  it under the terms of the GNU General Public License as published by
-# *  the Free Software Foundation; either version 2, or (at your option)
-# *  any later version.
-# *
-# *  This Program is distributed in the hope that it will be useful,
-# *  but WITHOUT ANY WARRANTY; without even the implied warranty of
-# *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-# *  GNU General Public License for more details.
-# *
-# *  You should have received a copy of the GNU General Public License
-# *  along with Kodi; see the file COPYING.  If not, write to
-# *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
-# *  http://www.gnu.org/copyleft/gpl.html
-
-import urllib.request
-import urllib.parse
-import socket
 import hashlib
+import socket
 import time
+import urllib.parse
+import urllib.request
 import xbmc
 import xbmcgui
 import xbmcaddon
@@ -26,26 +11,30 @@ ADDON = xbmcaddon.Addon()
 ADDONID = ADDON.getAddonInfo('id')
 ADDONVERSION = ADDON.getAddonInfo('version')
 LANGUAGE = ADDON.getLocalizedString
+DEBUG = ADDON.getSettingBool('Debug')
 
 socket.setdefaulttimeout(10)
 
 def log(txt):
-    message = '%s: %s' % (ADDONID, txt)
-    xbmc.log(msg=message, level=xbmc.LOGDEBUG)
+    if DEBUG:
+        message = '%s: %s' % (ADDONID, txt)
+        xbmc.log(msg=message, level=xbmc.LOGDEBUG)
 
-class Main:
+class Main():
     def __init__( self ):
+        log('script version %s started' % ADDONVERSION)
         self._service_setup()
         while (not self.Monitor.abortRequested()) and (not self.Exit):
             xbmc.sleep(1000)
+        log('script stopped')
 
     def _service_setup( self ):
-        self.LibrefmURL           = 'http://turtle.libre.fm/'
-        self.ClientId             = 'xbm'
-        self.ClientVersion        = '0.2'
-        self.ClientProtocol       = '1.2.1'
-        self.Exit                 = False
-        self.Monitor              = MyMonitor(action = self._get_settings)
+        self.LibrefmURL = 'http://turtle.libre.fm/'
+        self.ClientId = 'xbm'
+        self.ClientVersion = '0.2'
+        self.ClientProtocol = '1.2.1'
+        self.Exit = False
+        self.Monitor = MyMonitor(action = self._get_settings)
         self._get_settings()
 
     def _get_settings( self ):
@@ -53,8 +42,8 @@ class Main:
         service    = []
         LibrefmSubmitSongs = ADDON.getSettingBool('librefmsubmitsongs')
         LibrefmSubmitRadio = ADDON.getSettingBool('librefmsubmitradio')
-        LibrefmUser        = ADDON.getSettingString('librefmuser').lower()
-        LibrefmPass        = ADDON.getSettingString('librefmpass')
+        LibrefmUser = ADDON.getSettingString('librefmuser').lower()
+        LibrefmPass = ADDON.getSettingString('librefmpass')
         if (LibrefmSubmitSongs or LibrefmSubmitRadio) and LibrefmUser and LibrefmPass:
             # [service, auth-url, user, pass, submitsongs, submitradio, sessionkey, np-url, submit-url, auth-fail, failurecount, timercounter, timerexpiretime, queue]
             service = ['librefm', self.LibrefmURL, LibrefmUser, LibrefmPass, LibrefmSubmitSongs, LibrefmSubmitRadio, '', '', '', False, 0, 0, 0, []]
@@ -327,8 +316,3 @@ class MyMonitor(xbmc.Monitor):
     def onSettingsChanged( self ):
         log('onSettingsChanged')
         self.action()
-
-if ( __name__ == "__main__" ):
-    log('script version %s started' % ADDONVERSION)
-    Main()
-log('script stopped')
