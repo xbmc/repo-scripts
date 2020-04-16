@@ -1,3 +1,6 @@
+v1.0.2
+- refactor
+
 v1.0.1
 - bump
 
