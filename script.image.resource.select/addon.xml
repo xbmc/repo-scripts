@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.image.resource.select" name="Image Resource Select Addon" version="3.0.1" provider-name="ronie">
+<addon id="script.image.resource.select" name="Image Resource Select Addon" version="3.0.2" provider-name="ronie">
 	<requires>
 		<import addon="xbmc.python" version="3.0.0"/>
 	</requires>
@@ -7,13 +7,13 @@
 	<extension point="xbmc.addon.metadata">
 		<summary lang="en_GB">Image resource selection addon</summary>
 		<description lang="en_GB">Script for skinners to let users select an image resource addon.</description>
-		<language></language>
 		<platform>all</platform>
-		<license>GNU GENERAL PUBLIC LICENSE Version 2</license>
+		<license>GPL-2.0-only</license>
 		<forum>https://forum.kodi.tv/showthread.php?tid=239558</forum>
 		<source>https://gitlab.com/ronie/script.image.resource.select</source>
 		<assets>
 			<icon>resources/icon.png</icon>
 		</assets>
+		<news>- code refactor</news>
 	</extension>
 </addon>
