@@ -1,0 +1,32 @@
+msgid ""
+msgstr ""
+"Report-Msgid-Bugs-To: https://github.com/taxigps/service.subtitles.shooter/issues\n"
+"Last-Translator: taxigps\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: zh_CN\n"
+
+msgctxt "#32001"
+msgid "Text subtitles save as UTF-8"
+msgstr "文本字幕保存为UTF-8编码"
+
+msgctxt "#32002"
+msgid "Simplified and Traditional conversion"
+msgstr "文本字幕简繁转换"
+
+msgctxt "#32003"
+msgid "disable"
+msgstr "禁用"
+
+msgctxt "#32004"
+msgid "Simplified"
+msgstr "简体"
+
+msgctxt "#32005"
+msgid "Traditional"
+msgstr "繁体"
+
+msgctxt "#32006"
+msgid "Choose subtitle file"
+msgstr "请选择要使用的字幕文件"
