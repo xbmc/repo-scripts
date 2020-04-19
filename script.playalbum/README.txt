@@ -10,4 +10,3 @@ RunScript(script.playalbum,songid=$INFO[ListItem.DBID])
 
 it's also possible to start playing a specific track, e.g. from the track list in the album info dialog:
 RunScript(script.playalbum,albumid=$INFO[ListItem.DBID]&amp;tracknr=$INFO[Container(50).ListItem.TrackNumber])
-
