@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.favourites" name="Favourites script" version="8.1.0" provider-name="ronie, `Black">
+<addon id="script.favourites" name="Favourites script" version="8.1.1" provider-name="ronie, `Black">
 	<requires>
 		<import addon="xbmc.python" version="3.0.0"/>
 	</requires>
@@ -110,6 +110,7 @@
 		<assets>
 			<icon>resources/icon.png</icon>
 		</assets>
-		<news>- get favourites using json-rpc instead of parsing the favourites.xml file</news>
+		<news>- get favourites using json-rpc instead of parsing the favourites.xml file
+- fix crash when no favourites exist</news>
 	</extension>
 </addon>
