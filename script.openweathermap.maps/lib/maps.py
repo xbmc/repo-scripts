@@ -184,10 +184,11 @@ class get_tiles(threading.Thread):
                 response = requests.get(query, headers={'User-Agent': self.useragent}, timeout=5)
             except:
                 self.retry = True
-            if response.status_code == 401:
-                log('401 Unauthorized', self.DEBUG)
-                return
+                response = None
             if response:
+                if response.status_code == 401:
+                    log('401 Unauthorized', self.DEBUG)
+                    return
                 data = response.content
                 if len(img) == 3:
                     num = img[2]
