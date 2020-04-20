@@ -19,10 +19,11 @@ class MAIN():
         params = kwargs['params']
         self._parse_argv(params)
         favourites = self._get_favs()
-        if self.PROPERTY == '':
-            self._set_properties(favourites)
-        else:
-            self._select_favourite(favourites)
+        if favourites:
+            if self.PROPERTY == '':
+                self._set_properties(favourites)
+            else:
+                self._select_favourite(favourites)
         log('script stopped')
 
     def _parse_argv(self, params):
