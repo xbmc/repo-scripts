@@ -21,7 +21,7 @@ class MAIN():
         self.MONITOR = MyMonitor()
         mode = kwargs['mode']
         if mode.startswith('loc'):
-            self.search_location()
+            self.search_location(mode)
         else:
             location, locationid, locationlat, locationlon = self.get_location(mode)
             if locationid > 0:
@@ -32,15 +32,15 @@ class MAIN():
             self.refresh_locations()
         log('finished')
     
-    def search_location(self):
+    def search_location(self, mode):
         value = ADDON.getSettingString(mode)
         keyboard = xbmc.Keyboard(value, xbmc.getLocalizedString(14024), False)
         keyboard.doModal()
         if (keyboard.isConfirmed() and keyboard.getText()):
             text = keyboard.getText()
             locs = []
-            log('searching for location: %s' % loc)
-            url = LCURL % loc
+            log('searching for location: %s' % text)
+            url = LCURL % text
             data = self.get_data(url)
             log('location data: %s' % data)
             if data:
@@ -116,7 +116,7 @@ class MAIN():
             weatherbit.Weather.get_weather(add_weather)
             providers = providers + ', Weatherbit.io'
         else:
-            self.daily_properties(data, loc, locid)
+            yahoo.Weather.get_daily_weather(data)
         set_property('WeatherProvider', providers)
         
     def clear_props(self):

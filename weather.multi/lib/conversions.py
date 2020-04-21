@@ -176,8 +176,8 @@ FORECAST = { '200': LANGUAGE(32201),
              '900': LANGUAGE(32238) }
 
 # convert timestamp to localized time and date
-# stamp (input value): either datetime (2020-02-28T22:00:00.000Z) or timestamp (1582871381)
-# inpt (input format) either 'datetime', 'timestamp' or 'seconds' (after midnight)
+# stamp (input value): either datetime (2020-02-28T22:00:00.000Z), timestamp (1582871381) or daynumber (1)
+# inpt (input format) either 'datetime', 'timestamp', 'seconds' (after midnight) or 'day'
 # outpt (return value) time+date, month+day, weekday, time
 # form (output format) either long or short names 
 def convert_datetime(stamp, inpt, outpt, form):
@@ -216,7 +216,10 @@ def convert_datetime(stamp, inpt, outpt, form):
             else:
                 label = xbmc.getLocalizedString(MONTH_NAME_LONG[month]) + ' ' + day
     elif outpt == 'weekday':
-        weekday = time.strftime('%w', timestruct)
+        if inpt == 'day':
+            weekday = str(stamp)
+        else:
+            weekday = time.strftime('%w', timestruct)
         if form == 'short':
             label = xbmc.getLocalizedString(WEEK_DAY_SHORT[weekday])
         elif form == 'long':
