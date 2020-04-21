@@ -59,3 +59,31 @@ class Weather():
             set_property('Hourly.%i.WindDegree'      % (count + 1), str(item['windDirection']) + u'°')
             set_property('Hourly.%i.DewPoint'        % (count + 1), convert_temp(dewpoint(int(convert_temp(item['temperature']['now'], 'F', 'C')), item['humidity']), 'C') + TEMPUNIT)
         set_property('Hourly.IsFetched'              , 'true')
+
+    def get_daily_weather(response):
+        data = response['weathers'][0]
+    #daily - standard
+        for count, item in enumerate(data['forecasts']['daily']):
+            set_property('Day%i.Title'           % count, convert_datetime(item['observationTime']['weekday'], 'day', 'weekday', 'long'))
+            set_property('Day%i.HighTemp'        % count, convert_temp(item['temperature']['high'], 'F', 'C'))
+            set_property('Day%i.LowTemp'         % count, convert_temp(item['temperature']['low'], 'F', 'C'))
+            set_property('Day%i.Outlook'         % count, item['conditionDescription'])
+            set_property('Day%i.OutlookIcon'     % count, '%s.png' % str(item['conditionCode']))
+            set_property('Day%i.FanartCode'      % count, str(item['conditionCode']))
+            if count == MAXDAYS:
+                break
+    #daily - extended
+        for count, item in enumerate(data['forecasts']['daily']):
+            set_property('Daily.%i.ShortDay'        % (count + 1), convert_datetime(item['observationTime']['weekday'], 'day', 'weekday', 'short'))
+            set_property('Daily.%i.LongDay'         % (count + 1), convert_datetime(item['observationTime']['weekday'], 'day', 'weekday', 'long'))
+            set_property('Daily.%i.ShortDate'       % (count + 1), convert_datetime(item['observationTime']['timestamp'], 'datetime', 'monthday', 'short'))
+            set_property('Daily.%i.LongDate'        % (count + 1), convert_datetime(item['observationTime']['timestamp'], 'datetime', 'monthday', 'long'))
+            set_property('Daily.%i.HighTemperature' % (count + 1), convert_temp(item['temperature']['high'], 'F') + TEMPUNIT)
+            set_property('Daily.%i.LowTemperature'  % (count + 1), convert_temp(item['temperature']['low'], 'F') + TEMPUNIT)
+            set_property('Daily.%i.Outlook'         % (count + 1), str(item['conditionDescription']))
+            set_property('Daily.%i.OutlookIcon'     % (count + 1), '%s.png' % str(item['conditionCode']))
+            set_property('Daily.%i.FanartCode'      % (count + 1), str(item['conditionCode']))
+            set_property('Daily.%i.Humidity'        % (count + 1), str(item['humidity']) + '%')
+            set_property('Daily.%i.Precipitation'   % (count + 1), str(item['precipitationProbability']) + '%')
+            set_property('Daily.%i.DewPoint'        % (count + 1), convert_temp(dewpoint(int(convert_temp(item['temperature']['low'], 'F', 'C')), item['humidity']), 'C') + TEMPUNIT)
+        set_property('Daily.IsFetched'              , 'true')
