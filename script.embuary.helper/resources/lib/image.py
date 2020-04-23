@@ -88,54 +88,12 @@ class ImageBlur():
 
         try:
             img = Image.open(self.filepath)
-            width, height = img.size
-            pixels = img.load()
-
-            data = []
-            for x in range(int(width / 2)):
-                for y in range(int(height / 2)):
-                    cpixel = pixels[x * 2, y * 2]
-                    data.append(cpixel)
-
-            counter, r, g, b = 0, 0, 0, 0
-            for x in range(len(data)):
-                brightness = data[x][0] + data[x][1] + data[x][2]
-                if brightness > 150 and brightness < 720:
-                    r += data[x][0]
-                    g += data[x][1]
-                    b += data[x][2]
-                    counter += 1
-
-            if counter > 0:
-                rAvg = int(r / counter)
-                gAvg = int(g / counter)
-                bAvg = int(b / counter)
-                Avg = int((rAvg + gAvg + bAvg) / 3)
-                minBrightness = 130
-
-                if Avg < minBrightness:
-                    Diff = minBrightness - Avg
-
-                    if rAvg <= (255 - Diff):
-                        rAvg += Diff
-                    else:
-                        rAvg = 255
-                    if gAvg <= (255 - Diff):
-                        gAvg += Diff
-                    else:
-                        gAvg = 255
-                    if bAvg <= (255 - Diff):
-                        bAvg += Diff
-                    else:
-                        bAvg = 255
-
-                imagecolor = 'FF%s%s%s' % (format(rAvg, '02x'), format(gAvg, '02x'), format(bAvg, '02x'))
-                log('Average color: ' + imagecolor, DEBUG)
-
-            else:
-                raise Exception
-
-        except Exception as error:
+            imgResize = img.resize((1,1), Image.ANTIALIAS)
+            col = imgResize.getpixel((0,0))
+            imagecolor = 'FF%s%s%s' % (format(col[0], '02x'), format(col[1], '02x'), format(col[2], '02x'))
+            log('Average color: ' + imagecolor, DEBUG)
+            
+        except:
             log('Use fallback average color: ' + imagecolor, DEBUG)
             pass
 
