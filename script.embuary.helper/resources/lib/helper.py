@@ -59,6 +59,16 @@ def remove_quotes(label):
     return label
 
 
+def get_clean_path(path):
+    path = remove_quotes(path)
+
+    if 'activatewindow' in path.lower() and '://' in path and ',' in path:
+        path = path.split(',')[1]
+        path = remove_quotes("'" + path + "'") # be sure to remove unwanted quotes from the path
+
+    return path
+
+
 def get_joined_items(item):
     if len(item) > 0 and item is not None:
         item = ' / '.join(item)
