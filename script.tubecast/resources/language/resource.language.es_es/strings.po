@@ -1,0 +1,78 @@
+# Kodi Media Center language file
+# Addon Name: TubeCast
+# Addon id: script.tubecast
+# Addon Provider: enen92
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: roliverosc\n"
+"Language-Team: Spanish (http://www.transifex.com/projects/p/xbmc-addons/language/es/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: es_ES\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+
+msgctxt "#32000"
+msgid "TubeCast"
+msgstr "TubeCast"
+
+msgctxt "#32001"
+msgid "Getting pairing code..."
+msgstr "Obteniendo código de emparejamiento"
+
+msgctxt "#32002"
+msgid "Please insert the following code in YouTube app settings"
+msgstr "Por favor, inserte el siguiente código en los ajustes de la aplicación YouTube"
+
+msgctxt "#32003"
+msgid "General"
+msgstr "General"
+
+msgctxt "#32004"
+msgid "Enable service discovery (SSDP)"
+msgstr "Habilitar servicio de descubrimiento (SSDP)"
+
+msgctxt "#32005"
+msgid "Debug SSDP datagrams"
+msgstr "Mostrar datagramas SSDP"
+
+msgctxt "#32006"
+msgid "connected"
+msgstr "Conectado"
+
+msgctxt "#32007"
+msgid "disconnected"
+msgstr "Desconectado"
+
+msgctxt "#32008"
+msgid "Do you want to generate a new pairing code?"
+msgstr "¿Quieré generar un nuevo código de emparejamiento?"
+
+msgctxt "#32009"
+msgid "Yes"
+msgstr "Si"
+
+msgctxt "#32010"
+msgid "No"
+msgstr "No"
+
+msgctxt "#32011"
+msgid "Debug youtube cmds"
+msgstr "Mostrar comandos YouTube"
+
+msgctxt "#32012"
+msgid "Debug"
+msgstr "Depuración"
+
+msgctxt "#32013"
+msgid "Verify SSL connections"
+msgstr "Verificar conexiones SSL"
+
+msgctxt "#32014"
+msgid "Debug HTTP requests"
+msgstr "Mostrar solicitudes HTTP"

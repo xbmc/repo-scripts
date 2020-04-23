@@ -71,10 +71,11 @@ class CastPlayer(xbmc.Player):
         self.__report_state_change()
 
     def onPlayBackEnded(self):
-        if self.__should_report():
-            self.cast.report_playback_ended()
-
+        should_report = self.__should_report()
         self.from_yt = False
+
+        if should_report:
+            self.cast.report_playback_ended()
 
     def onPlayBackSeek(self, time, seek_offset):
         self.__report_state_change(status_code=STATUS_LOADING)
