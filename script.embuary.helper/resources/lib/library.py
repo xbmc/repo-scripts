@@ -67,7 +67,8 @@ def handle_movies(li,item,searchstring=None):
                                               'path': item['file'],
                                               'playcount': item['playcount'],
                                               'set': item['set'],
-                                              'setid': item['setid']
+                                              'setid': item['setid'],
+                                              'top250': item['top250']
                                               })
 
     _set_ratings(li_item,item['ratings'])
@@ -285,6 +286,7 @@ def handle_cast(li,item):
     li_item = xbmcgui.ListItem(item['name'])
     li_item.setLabel(item['name'])
     li_item.setLabel2(item['role'])
+    li_item.setProperty('role', item['role'])
 
     li_item.setArt({'icon': 'DefaultActor.png',
                     'thumb': item.get('thumbnail', '')

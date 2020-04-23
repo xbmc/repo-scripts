@@ -33,7 +33,8 @@ JSON_MAP = {
         'dateadded',
         'imdbnumber',
         'set',
-        'setid'
+        'setid',
+        'top250'
     ],
 
     'episode_properties': [
