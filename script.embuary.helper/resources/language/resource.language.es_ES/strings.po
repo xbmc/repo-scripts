@@ -4,14 +4,14 @@
 # Addon Provider: sualfred
 # Translators:
 # sualfred <su4lfred@gmail.com>, 2019
-# Bartolome Soriano <bsoriano@gmail.com>, 2019
+# Rafa Oliveros <roliverosc@gmail.com>, 2020
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: Embuary Helper\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: 2019-10-06 17:40+0000\n"
-"Last-Translator: Bartolome Soriano <bsoriano@gmail.com>, 2019\n"
+"Last-Translator: Rafa Oliveros <roliverosc@gmail.com>, 2020\n"
 "Language-Team: Spanish (Spain) (https://www.transifex.com/sualfred/teams/80018/es_ES/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -45,7 +45,7 @@ msgstr "Font cambiado a"
 #: /resources/settings.xml
 msgctxt "#32003"
 msgid "Delete add-on image cache"
-msgstr "Borrar cache de imágenes del addon"
+msgstr "Borrar caché de imágenes del addon"
 
 msgctxt "#32006"
 msgid "Applying changes"
@@ -54,7 +54,7 @@ msgstr "Aplicando cambios"
 #: /resources/lib/plugin_listing.py
 msgctxt "#32007"
 msgid "Suggestions based on random watched item"
-msgstr "Sugerecnias basadas en un ítem aleatorio ya visto"
+msgstr "Sugerencias basadas en un elemento visto al azar"
 
 #: /resources/lib/plugin_listing.py
 msgctxt "#32008"
@@ -74,7 +74,7 @@ msgstr "Episodios y series añadidos recientemente"
 #: /resources/lib/plugin_listing.py
 msgctxt "#32011"
 msgid "All media"
-msgstr "Toda la media"
+msgstr "Todos los medios"
 
 #: /resources/lib/plugin_listing.py
 msgctxt "#32012"
@@ -89,7 +89,7 @@ msgstr "Continuar viendo"
 #: /resources/lib/plugin_listing.py
 msgctxt "#32014"
 msgid "Suggestions based on the last watched item"
-msgstr "Sugerencias basadas en el ultimo ítem visto"
+msgstr "Sugerencias basadas en el ultimo elemento visto"
 
 #: /resources/lib/plugin_listing.py
 msgctxt "#32015"
@@ -128,14 +128,70 @@ msgid ""
 "etc.) in the addon_data folder. Do you want to proceed?"
 msgstr ""
 "Esto eliminará todas las imágenes creadas (fondos difuminados, miniaturas de"
-" géneros, etc.) in el folder addon_data. ¿Desea proceder?"
+" géneros, etc.) en la carpeta addon_data. ¿Desea proceder?"
 
 #: /resources/lib/plugin_listing.py
 msgctxt "#32022"
 msgid "All available database items"
-msgstr "Todos los ítems de la base de datos disponibles"
+msgstr "Todos los elementos de la base de datos disponibles."
 
 #: /resources/lib/plugin_listing.py
 msgctxt "#32023"
 msgid "items"
-msgstr "ítems"
+msgstr "Elementos"
+
+#: /resources/lib/utils.py
+msgctxt "#32024"
+msgid "The video database has no library tags stored."
+msgstr ""
+"La base de datos de vídeo no tiene etiquetas de biblioteca almacenadas."
+
+#: /resources/lib/utils.py
+msgctxt "#32025"
+msgid "Attention"
+msgstr "Atención"
+
+#: /resources/lib/utils.py
+msgctxt "#32026"
+msgid "Enable library tag detection for"
+msgstr "Activar la detección de etiquetas de biblioteca para"
+
+#: /resources/lib/plugin_content.py
+msgctxt "#32029"
+msgid "Directed by"
+msgstr "Dirigido por"
+
+#: /resources/lib/plugin_content.py
+msgctxt "#32030"
+msgid "Items starring"
+msgstr "Elementos protagonizados"
+
+#: /resources/lib/plugin_content.py
+msgctxt "#32031"
+msgid "Because you watched"
+msgstr "Porque viste"
+
+#: /resources/lib/plugin_content.py
+msgctxt "#32032"
+msgid "Christmas holiday season"
+msgstr "Temporada navideña"
+
+#: /resources/lib/plugin_content.py
+msgctxt "#32033"
+msgid "Spooky suggestions"
+msgstr "Sugerencias misteriosas"
+
+#: /resources/lib/plugin_content.py
+msgctxt "#32034"
+msgid "May the force be with you"
+msgstr "Que la fuerza esté contigo"
+
+#: /resources/lib/plugin_content.py
+msgctxt "#32035"
+msgid "Live long and prosper"
+msgstr "Larga vida y prosperidad"
+
+#: /resources/lib/plugin_listing.py
+msgctxt "#32036"
+msgid "Special and seasonal widgets"
+msgstr "Widgets de especiales y de temporada"

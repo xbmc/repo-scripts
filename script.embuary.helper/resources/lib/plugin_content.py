@@ -943,6 +943,60 @@ class PluginContent(object):
         add_items(self.li, cast, type='cast')
 
 
+    ''' get full cast of movie set
+    '''
+    def getsetcast(self):
+        movies = json_call('VideoLibrary.GetMovieSetDetails',
+                           params={'setid': int(self.dbid)})
+
+        try:
+            movies = movies['result']['setdetails']['movies']
+        except KeyError:
+            return
+
+        cast_list = {}
+        for movie in movies:
+            dbid = movie.get('movieid')
+            dbtitle = movie.get('title')
+
+            json_query = json_call('VideoLibrary.GetMovieDetails',
+                                   properties=['cast'],
+                                   params={'movieid': dbid}
+                                   )
+            try:
+                cast = json_query['result']['moviedetails']['cast']
+            except KeyError:
+                continue
+
+            for actor in cast:
+                actor_name = actor.get('name')
+                actor_role = actor.get('role')
+                actor_thumbnail = actor.get('thumbnail')
+
+                if actor_name not in cast_list:
+                    cast_list[actor_name] = {'thumbnail': actor.get('thumbnail')}
+
+                if not cast_list[actor_name].get('thumbnail') and actor_thumbnail:
+                    cast_list[actor_name].update({'thumbnail': actor_thumbnail})
+
+                if actor_role:
+                    roles = cast_list[actor_name].get('roles', [])
+
+                    if actor_role not in roles:
+                        roles.append(actor_role)
+                        cast_list[actor_name].update({'roles': roles})
+
+
+        cast_cleaned = []
+        for actor in cast_list:
+            cast_cleaned.append({'name': actor,
+                                 'thumbnail': cast_list[actor].get('thumbnail'),
+                                 'role': get_joined_items(cast_list[actor].get('roles', []))
+                                 })
+
+        add_items(self.li, cast_cleaned, type='cast')
+
+
     ''' jump to letter for smsjump navigation
     '''
     def jumptoletter(self):
@@ -994,8 +1048,34 @@ class PluginContent(object):
                         self.li.append((li_path, li_item, False))
 
 
+    ''' get a list of items with existing fanart for backgrounds based on a playlist
+    '''
+    def getfanartsbypath(self):
+        path = get_clean_path(self.params.get('path'))
+
+        json_query = json_call('Files.GetDirectory',
+                               properties=['art', 'title'],
+                               params={'directory': path}
+                               )
+
+        try:
+            for item in json_query['result']['files']:
+                arts = item.get('art', {})
+
+                if not arts.get('fanart'):
+                    continue
+
+                li_item = xbmcgui.ListItem(label=item.get('title'))
+                li_item.setArt(arts)
+                self.li.append(('', li_item, False))
+
+        except Exception:
+            return
+
+    ''' get path stats of playlists etc
+    '''
     def getpathstats(self):
-        path = remove_quotes(self.params.get('path'))
+        path = get_clean_path(self.params.get('path'))
         prop_prefix = self.params.get('prefix', 'Stats')
 
         played = 0
@@ -1006,52 +1086,48 @@ class PluginContent(object):
         tvshowscount = 0
         tvshows = []
 
-        if 'activatewindow' in path.lower() and '://' in path and ',' in path:
-            path = path.split(',')[1]
-            path = remove_quotes("'" + path + "'") #be sure to remove unwanted quotes from the path
+        json_query = json_call('Files.GetDirectory',
+                               properties=['playcount', 'resume', 'episode', 'watchedepisodes', 'tvshowid'],
+                               params={'directory': path, 'media': 'video'}
+                               )
 
-            json_query = json_call('Files.GetDirectory',
-                                    properties=['playcount', 'resume', 'episode', 'watchedepisodes', 'tvshowid'],
-                                    params={'directory': path, 'media': 'video'}
-                                    )
+        try:
+            for item in json_query['result']['files']:
+                if 'type' not in item:
+                    continue
 
-            try:
-                for item in json_query['result']['files']:
-                    if 'type' not in item:
-                        continue
-
-                    if item['type'] == 'episode':
-                        episodes += 1
-                        if item['playcount'] > 0:
-                            watchedepisodes += 1
-                        if item['tvshowid'] not in tvshows:
-                            tvshows.append(item['tvshowid'])
-                            tvshowscount += 1
-
-                    elif item['type'] == 'tvshow':
-                        episodes += item['episode']
-                        watchedepisodes += item['watchedepisodes']
+                if item['type'] == 'episode':
+                    episodes += 1
+                    if item['playcount'] > 0:
+                        watchedepisodes += 1
+                    if item['tvshowid'] not in tvshows:
+                        tvshows.append(item['tvshowid'])
                         tvshowscount += 1
 
-                    else:
-                        numitems += 1
-                        if 'playcount' in list(item.keys()):
-                            if item['playcount'] > 0:
-                                played += 1
-                            if item['resume']['position'] > 0:
-                                inprogress += 1
+                elif item['type'] == 'tvshow':
+                    episodes += item['episode']
+                    watchedepisodes += item['watchedepisodes']
+                    tvshowscount += 1
 
-            except Exception:
-                pass
+                else:
+                    numitems += 1
+                    if 'playcount' in list(item.keys()):
+                        if item['playcount'] > 0:
+                            played += 1
+                        if item['resume']['position'] > 0:
+                            inprogress += 1
 
-            winprop('%s_Watched' % prop_prefix, str(played))
-            winprop('%s_Count' % prop_prefix, str(numitems))
-            winprop('%s_TVShowCount' % prop_prefix, str(tvshowscount))
-            winprop('%s_InProgress' % prop_prefix, str(inprogress))
-            winprop('%s_Unwatched' % prop_prefix, str(numitems - played))
-            winprop('%s_Episodes' % prop_prefix, str(episodes))
-            winprop('%s_WatchedEpisodes' % prop_prefix, str(watchedepisodes))
-            winprop('%s_UnwatchedEpisodes' % prop_prefix, str(episodes - watchedepisodes))
+        except Exception:
+            pass
+
+        winprop('%s_Watched' % prop_prefix, str(played))
+        winprop('%s_Count' % prop_prefix, str(numitems))
+        winprop('%s_TVShowCount' % prop_prefix, str(tvshowscount))
+        winprop('%s_InProgress' % prop_prefix, str(inprogress))
+        winprop('%s_Unwatched' % prop_prefix, str(numitems - played))
+        winprop('%s_Episodes' % prop_prefix, str(episodes))
+        winprop('%s_WatchedEpisodes' % prop_prefix, str(watchedepisodes))
+        winprop('%s_UnwatchedEpisodes' % prop_prefix, str(episodes - watchedepisodes))
 
 
     ''' function to return the TV show id based on a season or episode id
