@@ -1,0 +1,92 @@
+name: Kodi Addon-Submitter
+
+on:
+  create:
+    tags:
+      - v*
+
+jobs:
+  kodi-addon-submitter:
+    runs-on: ubuntu-latest
+    name: Kodi addon submitter
+    steps:
+
+    - name: Checkout
+      uses: actions/checkout@v1
+
+    - name: Extract kodi official repository target
+      id: extract_branch_pr
+      shell: bash
+      env:
+        ADDON_ID: ${{ github.event.repository.name }}
+      run: |
+        echo "##[set-output name=branch;]$(git --no-pager branch -a --contains "$GITHUB_SHA" | grep 'remotes/origin/' | cut -d '/' -f3)"
+        if [[ $ADDON_ID == plugin* ]]; then
+            echo "##[set-output name=repo;]repo-plugins"
+        else
+            echo "##[set-output name=repo;]repo-scripts"
+        fi
+
+    - name: Kodi addon checker validation (leia)
+      id: kodi-addon-checker-leia
+      uses: xbmc/action-kodi-addon-checker@v1.2
+      with:
+        kodi-version: leia
+        is-pr: false
+        addon-id: ${{ github.event.repository.name }}
+        rewrite-for-matrix: false
+
+    - name: Kodi addon checker validation (matrix)
+      id: kodi-addon-checker-matrix
+      uses: xbmc/action-kodi-addon-checker@v1.2
+      with:
+        kodi-version: matrix
+        is-pr: false
+        addon-id: ${{ github.event.repository.name }}
+        rewrite-for-matrix: true
+
+    - name: Generate distribution zip and submit to official kodi repository
+      id: kodi-addon-submitter
+      uses: xbmc/action-kodi-addon-submitter@v1.2
+      with:
+        kodi-repository: ${{ steps.extract_branch_pr.outputs.repo }}
+        kodi-version: leia
+        addon-id: ${{ github.event.repository.name }}
+        kodi-matrix: true
+      env: # Make sure you create the below secrets (GH_TOKEN and EMAIL)
+        GH_USERNAME: ${{ github.repository_owner }}
+        GH_TOKEN: ${{secrets.GH_TOKEN}}
+        EMAIL: ${{secrets.EMAIL}}
+
+    - name: Create Github Release
+      id: create_release
+      uses: actions/create-release@v1.0.0
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ github.ref }}
+        release_name: Release ${{ github.ref }}
+        draft: false
+        prerelease: false
+
+    - name: Upload Addon zip to github release (leia)
+      id: upload-release-asset-leia
+      uses: actions/upload-release-asset@v1.0.1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ${{ steps.kodi-addon-submitter.outputs.addon-zip }}
+        asset_name: ${{ steps.kodi-addon-submitter.outputs.addon-zip }}
+        asset_content_type: application/zip
+
+    - name: Upload Addon zip to github release (matrix)
+      id: upload-release-asset-matrix
+      uses: actions/upload-release-asset@v1.0.1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ${{ steps.kodi-addon-submitter.outputs.addon-zip-matrix }}
+        asset_name: ${{ steps.kodi-addon-submitter.outputs.addon-zip-matrix }}
+        asset_content_type: application/zip

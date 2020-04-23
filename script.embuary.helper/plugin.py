@@ -3,13 +3,7 @@
 ########################
 
 import xbmcplugin
-
-''' Python 2<->3 compatibility
-'''
-try:
-    from urllib2 import urlparse
-except ImportError:
-    import urllib.parse as urlparse
+import urllib.parse as urlparse
 
 from resources.lib.helper import *
 from resources.lib.plugin_listing import *

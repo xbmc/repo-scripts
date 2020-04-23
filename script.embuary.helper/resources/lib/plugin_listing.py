@@ -6,13 +6,7 @@
 import sys
 import xbmc
 import xbmcgui
-
-''' Python 2<->3 compatibility
-'''
-try:
-    from urllib import urlencode
-except ImportError:
-    from urllib.parse import urlencode
+from urllib.parse import urlencode
 
 from resources.lib.helper import *
 
@@ -85,7 +79,7 @@ class PluginListing(object):
             self.plugin_category = ''
 
         if self.tag and self.plugin_category:
-            self.plugin_category = self.plugin_category + ' (' + decode_string(self.tag) + ')'
+            self.plugin_category = self.plugin_category + ' (' + self.tag + ')'
 
         if self.browse == 'widgets':
             self.list_widgets()
@@ -192,8 +186,6 @@ class PluginListing(object):
         empty_keys = [key for key,value in list(kwargs.items()) if not value or value is None]
         for key in empty_keys:
             del kwargs[key]
-
-        kwargs = encoded_dict(kwargs)
 
         return '{0}?{1}'.format(sys.argv[0], urlencode(kwargs))
 

@@ -14,17 +14,9 @@ import datetime
 import os
 import sys
 import hashlib
-
-''' Python 2<->3 compatibility
-'''
-try:
-    import urllib2 as urllib
-except ImportError:
-    import urllib.request as urllib
+import urllib.request as urllib
 
 ########################
-
-PYTHON3 = True if sys.version_info.major == 3 else False
 
 ADDON = xbmcaddon.Addon()
 ADDON_ID = ADDON.getAddonInfo('id')
@@ -49,15 +41,8 @@ def log(txt,loglevel=DEBUG,force=False):
     if (ADDON.getSettingBool('log') or force) and loglevel not in [WARNING, ERROR]:
         loglevel = NOTICE
 
-    if not PYTHON3 and isinstance(txt, str):
-        txt = txt.decode('utf-8')
-
     message = u'[ %s ] %s' % (ADDON_ID,txt)
-
-    if not PYTHON3:
-        xbmc.log(msg=message.encode('utf-8'), level=loglevel)
-    else:
-        xbmc.log(msg=message, level=loglevel)
+    xbmc.log(msg=message, level=loglevel)
 
 
 def remove_quotes(label):
@@ -72,6 +57,16 @@ def remove_quotes(label):
             label = label[6:-6]
 
     return label
+
+
+def get_clean_path(path):
+    path = remove_quotes(path)
+
+    if 'activatewindow' in path.lower() and '://' in path and ',' in path:
+        path = path.split(',')[1]
+        path = remove_quotes("'" + path + "'") # be sure to remove unwanted quotes from the path
+
+    return path
 
 
 def get_joined_items(item):
@@ -121,26 +116,7 @@ def get_bool(value,string='true'):
 
 
 def url_quote(string):
-    if not PYTHON3:
-        string = string.encode('utf-8')
     return urllib.quote(string)
-
-
-def encoded_dict(in_dict):
-    if PYTHON3:
-        return in_dict
-
-    out_dict = {}
-    for k, v in list(in_dict.items()):
-        if isinstance(v, unicode):
-            v = v.encode('utf-8')
-
-        elif isinstance(v, str):
-            v.decode('utf-8')
-
-        out_dict[k] = v
-
-    return out_dict
 
 
 def url_unquote(string):
@@ -148,29 +124,12 @@ def url_unquote(string):
 
 
 def md5hash(value):
-    if not PYTHON3:
-        return hashlib.md5(str(value)).hexdigest()
-
     value = str(value).encode()
     return hashlib.md5(value).hexdigest()
 
 
 def touch_file(filepath):
     os.utime(filepath,None)
-
-
-def encode_string(string):
-    if not PYTHON3 and isinstance(string, unicode):
-        string = string.encode('utf-8')
-
-    return string
-
-
-def decode_string(string):
-    if not PYTHON3 and isinstance(string, str):
-        string = string.decode('utf-8')
-
-    return string
 
 
 def winprop(key, value=None, clear=False, window_id=10000):
@@ -253,9 +212,6 @@ def json_call(method,properties=None,sort=None,query_filter=None,limit=None,para
 
     jsonrpc_call = json.dumps(json_string)
     result = xbmc.executeJSONRPC(jsonrpc_call)
-
-    if not PYTHON3:
-        result = unicode(result, 'utf-8', errors='ignore')
     result = json.loads(result)
 
     if debug:

@@ -16,7 +16,6 @@ from resources.lib.image import *
 class PlayerMonitor(xbmc.Monitor):
     def __init__(self):
         log('Service: Player monitor started', force=True)
-        self.fullscreen_lock = False
         self.pvr_playback = False
 
     def onNotification(self, sender, method, data):
@@ -46,9 +45,6 @@ class PlayerMonitor(xbmc.Monitor):
                 self.get_videoinfo()
                 self.get_nextitem()
 
-            if not self.fullscreen_lock:
-                self.do_fullscreen()
-
         ''' Playlist changed. Fetch nextitem again.
         '''
         if method in ['Playlist.OnAdd', 'Playlist.OnRemove'] and PLAYER.isPlayingVideo() and not self.pvr_playback:
@@ -71,7 +67,6 @@ class PlayerMonitor(xbmc.Monitor):
                 break
 
             if not PLAYER.isPlaying() and xbmcgui.getCurrentWindowId() not in [12005, 12006, 10028, 10500, 10138, 10160]:
-                self.fullscreen_lock = False
                 self.pvr_playback = False
                 self.get_nextitem(clear=True)
                 self.get_channellogo(clear=True)
@@ -98,27 +93,6 @@ class PlayerMonitor(xbmc.Monitor):
                 elif self.data['playlistid'] == 1:
                     MUSICPLAYLIST.clear()
                     log('Video playlist has been filled. Clear existing music playlist')
-
-    def do_fullscreen(self):
-        xbmc.sleep(1000)
-        if condition('Skin.HasSetting(StartPlayerFullscreen)'):
-
-            for i in range(1,200):
-                if xbmcgui.getCurrentWindowId() in [12005, 12006]:
-                    execute('Dialog.Close(all,true)')
-                    self.fullscreen_lock = True
-                    log('Playback started. Force closing all dialogs.')
-                    break
-
-                elif xbmcgui.getCurrentWindowId() not in [12005, 12006, 10028, 10500, 10138, 10160]:
-                    execute('Dialog.Close(all,true)')
-                    execute('action(fullscreen)')
-                    self.fullscreen_lock = True
-                    log('Playback started. Force switch to fullscreen.')
-                    break
-
-                else:
-                    xbmc.sleep(50)
 
     def get_audiotracks(self,clear=False):
         xbmc.sleep(100)
