@@ -1,4 +1,4 @@
-<addon id="script.artistslideshow" name="Artist Slideshow" provider-name="pkscout,ronie" version="3.2.102">
+<addon id="script.artistslideshow" name="Artist Slideshow" provider-name="pkscout,ronie" version="3.2.103">
 	<requires>
 		<import addon="xbmc.python" version="3.0.0" />
 		<import addon="script.module.requests" version="2.22.0+matrix.1" />
@@ -11,9 +11,8 @@
 	</extension>
 	<extension point="xbmc.addon.metadata">
 		<news>
-v.3.2.102
-- fix for crash if Artist Information folder is stored on a network volume
-- Spanish translations
+v.3.2.103
+- changes in logging to accommodate new logging requirements for Kodi 19
 		</news>
 		<assets>
         	<icon>icon.png</icon>

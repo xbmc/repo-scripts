@@ -42,8 +42,8 @@ JSONURL = URL( 'json' )
 txtURL  = URL( 'text' )
 imgURL  = URL( 'binary' )
 
-lw.log( ['script version %s started' % addonversion], xbmc.LOGNOTICE )
-lw.log( ['debug logging set to %s' % logdebug], xbmc.LOGNOTICE )
+lw.log( ['script version %s started' % addonversion], xbmc.LOGINFO )
+lw.log( ['debug logging set to %s' % logdebug], xbmc.LOGINFO )
 
 LANGUAGES = (
 # Full Language name[0]         ISO 639-1[1]   Script Language[2]
@@ -249,14 +249,14 @@ class Main( xbmc.Player ):
     def SlideshowRunning( self ):
         running = self._get_infolabel( self.ARTISTSLIDESHOWRUNNING )
         if running.lower() == 'true':
-            lw.log( ['script is already running'], xbmc.LOGNOTICE )
+            lw.log( ['script is already running'], xbmc.LOGINFO )
             return True
         else:
             return False
 
 
     def DoSettingsRoutines( self ):
-        lw.log( ['running script from a settings call with action ' + self.SETTINGSACTION], xbmc.LOGNOTICE )
+        lw.log( ['running script from a settings call with action ' + self.SETTINGSACTION], xbmc.LOGINFO )
         if self.SETTINGSACTION.lower() == 'movetokodistorage':
             lw.log( ['starting process to move images to Kodi artist folder'] )
             self._move_to_kodi_storage()
@@ -268,10 +268,10 @@ class Main( xbmc.Player ):
         sleeping = False
         change_slideshow = True
         if self._is_playing():
-            lw.log( ['music playing'], xbmc.LOGNOTICE )
+            lw.log( ['music playing'], xbmc.LOGINFO )
             self._set_property( 'ArtistSlideshowRunning', 'True' )
         else:
-            lw.log( ['no music playing'], xbmc.LOGNOTICE )
+            lw.log( ['no music playing'], xbmc.LOGINFO )
             if self.DAEMON:
                 self._set_property( 'ArtistSlideshowRunning', 'True' )
         if self.MONITOR.waitForAbort( 1 ):
@@ -991,7 +991,7 @@ class Main( xbmc.Player ):
         daemon = params.get( 'daemon', 'False' )
         if daemon == 'True':
             self.DAEMON = True
-            lw.log( ['daemonizing'], xbmc.LOGNOTICE )
+            lw.log( ['daemonizing'], xbmc.LOGINFO )
         else:
             self.DAEMON = False
         checkrun = params.get( 'runfromsettings', 'False' )
