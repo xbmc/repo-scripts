@@ -184,7 +184,7 @@ Artist Slideshow checks every second by default to see if the song/artist has ch
 When the skin starts Artist Slideshow in daemon mode, it is always running.  When no music is playing, Artist Slideshow enters an idle mode and only checks every 10 seconds by default to see if music is playing to help reduce CPU load. You can change this to change CPU usage, and the tradeoff is that the longer you set the delay, the longer the slideshow will be delayed after the first song starts.
 
 **Enable debug logging:** (default false)<br />
-When enabled, if you have XBMC logging set the DEBUG you will get a very verbose set of information in your log file. You should only need to activate this when troubleshooting issues.
+When enabled, if you have Kodi logging set to DEBUG you will get a very verbose set of information in your log file. You should only need to activate this when troubleshooting issues.
 
 **Move images to Kodi music artist folder**<br />
 This will run a script to rename all your artwork to the Kodi music artist folder standard (fanart1, fanart2, etc). It cannot be undone, so please backup your artist images before you do this.
@@ -350,4 +350,4 @@ On AppleTV the PAPlayer sometimes stops after each song and restarts at the begi
 If you need assistance using Artist Slideshow, integrating it a skin, or calling it using another addon, please see the support thread on the Kodi forums at <https://forum.kodi.tv/showthread.php?tid=124880>
 
 ## Beta Testing
-If you are interested in beta testing new versions of this add on (or just like being on the bleeding edge of up to date), you can install beta versions (Leia or later, there will be no more updates for earlier versions) from [my addon beta repository](https://github.com/pkscout/repository.beta.pkscout/raw/helix/repository.beta.pkscout-1.1.1.zip) (this is a zip download). You can also monitor the support thread, as links to particular beta releases will be available there as well.
+If you are interested in beta testing new versions of this add on (or just like being on the bleeding edge of up to date), you can install beta versions (Leia or later, there will be no more updates for earlier versions) from my addon beta repository - either [for Leia](https://github.com/pkscout/repository.beta.pkscout/raw/helix/repository.beta.pkscout-1.1.1.zip) or [for Matrix](https://github.com/pkscout/repository.beta.pkscout/raw/matrix/repository.beta.pkscout-1.1.2.zip) (these are zip downloads). You can also monitor the support thread, as links to particular beta releases will be available there as well.

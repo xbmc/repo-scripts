@@ -7,4 +7,4 @@ if ( __name__ == "__main__" ):
         slideshow.DoSettingsRoutines()
     elif not slideshow.SlideshowRunning():
         slideshow.Start()
-xbmc.log( '[Artist Slideshow] script stopped', xbmc.LOGNOTICE )
+xbmc.log( '[Artist Slideshow] script stopped', xbmc.LOGINFO )
