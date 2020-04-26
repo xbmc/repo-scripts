@@ -34,9 +34,6 @@ def handle_movies(li,item,searchstring=None):
     director = item.get('director', '')
     writer = item.get('writer', '')
 
-    if 'cast' in item:
-        cast = _get_cast(item['cast'])
-
     li_item = xbmcgui.ListItem(item['title'])
     li_item.setInfo(type='Video', infoLabels={'title': item['title'],
                                               'originaltitle': item['originaltitle'],
@@ -58,8 +55,6 @@ def handle_movies(li,item,searchstring=None):
                                               'votes': item['votes'],
                                               'mpaa': item['mpaa'],
                                               'lastplayed': item['lastplayed'],
-                                              'cast': cast[0],
-                                              'castandrole': cast[1],
                                               'mediatype': 'movie',
                                               'trailer': item['trailer'],
                                               'dateadded': item['dateadded'],
@@ -71,6 +66,11 @@ def handle_movies(li,item,searchstring=None):
                                               'top250': item['top250']
                                               })
 
+    if 'cast' in item:
+        cast_actors = _get_cast(item['cast'])
+        li_item.setCast(item['cast'])
+        _set_unique_properties(li_item,cast_actors[0],'cast')
+
     _set_ratings(li_item,item['ratings'])
 
     _set_unique_properties(li_item,genre,'genre')
@@ -78,7 +78,6 @@ def handle_movies(li,item,searchstring=None):
     _set_unique_properties(li_item,country,'country')
     _set_unique_properties(li_item,director,'director')
     _set_unique_properties(li_item,writer,'writer')
-    _set_unique_properties(li_item,cast[0],'cast')
 
     li_item.setProperty('resumetime', str(item['resume']['position']))
     li_item.setProperty('totaltime', str(item['resume']['total']))
@@ -112,9 +111,6 @@ def handle_tvshows(li,item,searchstring=None):
     watchedepisodes = item['watchedepisodes']
     unwatchedepisodes = get_unwatched(episode,watchedepisodes)
 
-    if 'cast' in item:
-        cast = _get_cast(item['cast'])
-
     if not condition('Window.IsVisible(movieinformation)'):
         folder = True
         item['file'] = 'videodb://tvshows/titles/%s/' % dbid
@@ -137,8 +133,6 @@ def handle_tvshows(li,item,searchstring=None):
                                               'premiered': item['premiered'],
                                               'mpaa': item['mpaa'],
                                               'tag': item['tag'],
-                                              'cast': cast[0],
-                                              'castandrole': cast[1],
                                               'mediatype': 'tvshow',
                                               'dbid': dbid,
                                               'season': season,
@@ -151,11 +145,15 @@ def handle_tvshows(li,item,searchstring=None):
                                               'playcount': item['playcount']
                                               })
 
+    if 'cast' in item:
+        cast_actors = _get_cast(item['cast'])
+        li_item.setCast(item['cast'])
+        _set_unique_properties(li_item,cast_actors[0],'cast')
+
     _set_ratings(li_item,item['ratings'])
 
     _set_unique_properties(li_item,genre,'genre')
     _set_unique_properties(li_item,studio,'studio')
-    _set_unique_properties(li_item,cast[0],'cast')
 
     li_item.setProperty('totalseasons', str(season))
     li_item.setProperty('totalepisodes', str(episode))
@@ -219,9 +217,6 @@ def handle_episodes(li,item):
     director = item.get('director', '')
     writer = item.get('writer', '')
 
-    if 'cast' in item:
-        cast = _get_cast(item['cast'])
-
     li_item = xbmcgui.ListItem(item['title'])
     li_item.setInfo(type='Video', infoLabels={'title': item['title'],
                                               'episode': item['episode'],
@@ -238,18 +233,20 @@ def handle_episodes(li,item):
                                               'playcount': item['playcount'],
                                               'director': get_joined_items(director),
                                               'writer': get_joined_items(writer),
-                                              'cast': cast[0],
                                               'path': item['file'],
                                               'dateadded': item['dateadded'],
-                                              'castandrole': cast[1],
                                               'mediatype': 'episode'
                                               })
+
+    if 'cast' in item:
+        cast_actors = _get_cast(item['cast'])
+        li_item.setCast(item['cast'])
+        _set_unique_properties(li_item,cast_actors[0],'cast')
 
     _set_ratings(li_item,item['ratings'])
 
     _set_unique_properties(li_item,director,'director')
     _set_unique_properties(li_item,writer,'writer')
-    _set_unique_properties(li_item,cast[0],'cast')
 
     li_item.setProperty('resumetime', str(item['resume']['position']))
     li_item.setProperty('totaltime', str(item['resume']['total']))

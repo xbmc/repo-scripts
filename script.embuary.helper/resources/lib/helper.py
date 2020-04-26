@@ -24,7 +24,7 @@ ADDON_DATA_PATH = os.path.join(xbmc.translatePath("special://profile/addon_data/
 ADDON_DATA_IMG_PATH = os.path.join(xbmc.translatePath("special://profile/addon_data/%s/img" % ADDON_ID))
 ADDON_DATA_IMG_TEMP_PATH = os.path.join(xbmc.translatePath("special://profile/addon_data/%s/img/tmp" % ADDON_ID))
 
-NOTICE = xbmc.LOGNOTICE
+INFO = xbmc.LOGINFO
 WARNING = xbmc.LOGWARNING
 DEBUG = xbmc.LOGDEBUG
 ERROR = xbmc.LOGERROR
@@ -39,9 +39,9 @@ MUSICPLAYLIST = xbmc.PlayList(xbmc.PLAYLIST_MUSIC)
 
 def log(txt,loglevel=DEBUG,force=False):
     if (ADDON.getSettingBool('log') or force) and loglevel not in [WARNING, ERROR]:
-        loglevel = NOTICE
+        loglevel = INFO
 
-    message = u'[ %s ] %s' % (ADDON_ID,txt)
+    message = u'[ %s ] %s' % (ADDON_ID, txt)
     xbmc.log(msg=message, level=loglevel)
 
 
