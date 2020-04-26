@@ -29,7 +29,6 @@ msgctxt "#32103"
 msgid "Dropbox: Setup"
 msgstr ""
 
-#Error messages
 msgctxt "#32201"
 msgid "Python Image Library for QR code not available"
 msgstr ""
@@ -38,7 +37,6 @@ msgctxt "#32202"
 msgid "Wrong input arguments"
 msgstr ""
 
-#Info messages
 msgctxt "#32703"
 msgid "Dropbox authorization Code"
 msgstr ""

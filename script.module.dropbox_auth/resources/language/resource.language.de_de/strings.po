@@ -29,7 +29,6 @@ msgctxt "32103"
 msgid "Dropbox: Setup"
 msgstr "Dropbox: Konfiguration"
 
-# Error messages
 msgctxt "32201"
 msgid "Python Image Library for QR code not available"
 msgstr "Python Image Library für QR-Code-Erzeugung nicht verfügbar"
@@ -38,7 +37,6 @@ msgctxt "32202"
 msgid "Wrong input arguments"
 msgstr "Falsche Anzahl an Eingabeargumenten"
 
-# Info messages
 msgctxt "32703"
 msgid "Dropbox authorization Code"
 msgstr "Dropbox Bestätigungscode"
