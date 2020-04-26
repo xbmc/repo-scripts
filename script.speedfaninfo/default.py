@@ -3,4 +3,4 @@ import resources.lib.spid as SpeedFan
 
 if ( __name__ == "__main__" ):
     window = SpeedFan.Main()
-xbmc.log( '[SpeedFan Info] script stopped', xbmc.LOGNOTICE )
+xbmc.log( '[SpeedFan Info] script stopped', xbmc.LOGINFO )

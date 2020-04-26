@@ -18,8 +18,8 @@ logdebug     = getSettingBool( addon, 'logging', default=False )
 
 lw = Logger( preamble=preamble, logdebug=logdebug )
 
-lw.log( ['script version %s started' % addonversion], xbmc.LOGNOTICE )
-lw.log( ['debug logging set to %s' % logdebug], xbmc.LOGNOTICE )
+lw.log( ['script version %s started' % addonversion], xbmc.LOGINFO )
+lw.log( ['debug logging set to %s' % logdebug], xbmc.LOGINFO )
 
 
 
@@ -48,7 +48,7 @@ class Main():
         self._get_settings()
         self._init_vars()
         if self.GUIWINDOW.getProperty( 'SpeedFan.Running' ) == "True":
-            lw.log( ['script already running, aborting subsequent run attempts'], xbmc.LOGNOTICE )
+            lw.log( ['script already running, aborting subsequent run attempts'], xbmc.LOGINFO )
             return
         self.GUIWINDOW.setProperty( 'SpeedFan.Running',  'True' )
         self._init_window()
