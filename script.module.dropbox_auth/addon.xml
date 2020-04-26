@@ -11,14 +11,14 @@
     <import addon="script.module.qrcode" version="6.1.0+matrix.2" /> <!-- For QR Code display for Dropbox API authentication -->
   </requires>
   <extension point="xbmc.python.library" library="authenticate.py" /> <!-- entry to start the authentification script from the settings dialog of other addons -->
-  <extension point="xbmc.python.module" library="lib" /> <!-- entry to import this in other addons -->
+  <extension point="xbmc.python.module" /> <!-- entry to import this in other addons -->
   <extension point="xbmc.addon.metadata">
     <summary lang="en_GB">Dropbox Auth API</summary>
     <description lang="en_GB">Provide Dropbox Authentification</description>
     <platform>all</platform>
     <language/>
     <license>MIT</license>
-    <website></website>
+    <website />
     <source>https://github.com/SchapplM/xbmc-addon-dropboxauth</source>
     <email></email>
   </extension>
