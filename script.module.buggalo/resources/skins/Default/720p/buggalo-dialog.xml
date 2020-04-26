@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="utf-8"?>
+<window id="3000" type="dialog">
+    <allowoverlay>no</allowoverlay>
+    <visible>true</visible>
+    <defaultcontrol always="true">100</defaultcontrol>
+    <coordinates>
+        <system>1</system>
+        <posx>270</posx>
+        <posy>260</posy>
+    </coordinates>
+    <animation effect="fade" start="100" end="0" time="200">WindowClose</animation> 
+    <controls>
+        <control type="label" id="99">
+            <description>visibility marker for details view</description>
+            <posx>0</posx>
+            <posy>0</posy>
+        </control>
+        <control type="label" id="98">
+            <description>visibility marker for thank you group</description>
+            <posx>0</posx>
+            <posy>0</posy>
+        </control>
+
+        <control type="image">
+            <posx>-270</posx>
+            <posy>-260</posy>
+            <width>1280</width>
+            <height>720</height>
+            <texture>buggalo-glasspane.png</texture>
+            <animation effect="fade" start="0" end="100" time="500">WindowOpen</animation>
+        </control>
+
+        <control type="group" id="201">
+            <description>detail info group</description>
+            <posx>0</posx>
+            <posy>0</posy>
+            <width>740</width>
+            <height>400</height>
+            <visible>!Control.IsVisible(99)</visible>
+            <animation effect="fade" start="0" end="100" time="500">Visible</animation>
+            <animation effect="fade" start="100" end="0" time="500">Hidden</animation>
+
+            <control type="image">
+                <posx>0</posx>
+                <posy>0</posy>
+                <width>740</width>
+                <height>400</height>
+                <texture>buggalo-black.png</texture>
+            </control>
+            <control type="list" id="103">
+                <posx>0</posx>
+                <posy>0</posy>
+                <width>740</width>
+                <height>400</height>
+                <orientation>vertical</orientation>
+                <onup>102</onup>
+                <onleft>102</onleft>
+                <onright>102</onright>
+                <itemlayout width="740" height="40">
+                    <control type="label">
+                        <posx>20</posx>
+                        <posy>0</posy>
+                        <width>150</width>
+                        <height>40</height>
+                        <font>font13</font>
+                        <textcolor>ffffffff</textcolor>
+                        <aligny>center</aligny>
+                        <selectedcolor>green</selectedcolor>
+                        <align>left</align>
+                        <info>ListItem.Label</info>
+                    </control>
+                    <control type="label">
+                        <posx>170</posx>
+                        <posy>0</posy>
+                        <width>570</width>
+                        <height>40</height>
+                        <font>font13</font>
+                        <textcolor>ffffffff</textcolor>
+                        <aligny>center</aligny>
+                        <selectedcolor>green</selectedcolor>
+                        <align>left</align>
+                        <info>ListItem.Label2</info>
+                    </control>
+                </itemlayout>
+                <focusedlayout width="740" height="40">
+                    <control type="image">
+                        <posx>0</posx>
+                        <posy>0</posy>
+                        <width>740</width>
+                        <height>40</height>
+                        <texture>buggalo-button-focus.png</texture>
+                        <visible>Control.HasFocus(103)</visible>
+                    </control>
+                    <control type="label">
+                        <posx>20</posx>
+                        <posy>0</posy>
+                        <width>150</width>
+                        <height>40</height>
+                        <font>font13</font>
+                        <textcolor>ffffffff</textcolor>
+                        <aligny>center</aligny>
+                        <align>left</align>
+                        <info>ListItem.Label</info>
+                    </control>
+                    <control type="label">
+                        <posx>170</posx>
+                        <posy>0</posy>
+                        <width>570</width>
+                        <height>40</height>
+                        <font>font13</font>
+                        <textcolor>ffffffff</textcolor>
+                        <aligny>center</aligny>
+                        <align>left</align>
+                        <info>ListItem.Label2</info>
+                    </control>
+                </focusedlayout>
+            </control>
+        </control>
+
+        <control type="group">
+            <posx>0</posx>
+            <posy>0</posy>
+            <width>740</width>
+            <height>200</height>
+            <animation effect="slide" start="0,0" end="0,-200" time="500" condition="!Control.IsVisible(99)">Conditional</animation>
+            <animation effect="fade" start="0" end="100" time="500">WindowOpen</animation>
+
+            <control type="image">
+                <posx>-270</posx>
+                <posy>0</posy>
+                <width>1280</width>
+                <height>200</height>
+                <texture>buggalo-black.png</texture>
+            </control>
+            <control type="image">
+                <posx>-100</posx>
+                <posy>20</posy>
+                <width>170</width>
+                <height>170</height>
+                <texture>buggalo-error.png</texture>
+                <colordiffuse>44ffffff</colordiffuse>
+            </control>
+
+            <control type="group" id="200">
+                <description>error message group</description>
+                <posx>0</posx>
+                <posy>0</posy>
+                <width>740</width>
+                <height>200</height>
+                <visible>Control.IsVisible(98)</visible>
+                <animation effect="fade" start="100" end="0" time="500">Hidden</animation>
+
+                <control type="label" id="110">
+                    <posx>20</posx>
+                    <posy>10</posy>
+                    <width>1000</width>
+                    <height>48</height>
+                    <font>font13</font>
+                    <textcolor>ffffffff</textcolor>
+                    <label>$ADDON[script.module.buggalo 90000]</label>
+                </control>
+                <control type="label" id="111">
+                    <posx>20</posx>
+                    <posy>40</posy>
+                    <width>1000</width>
+                    <height>80</height>
+                    <font>font13</font>
+                    <textcolor>ffffffff</textcolor>
+                    <label>$ADDON[script.module.buggalo 91000]</label>
+                </control>
+                <control type="label">
+                    <posx>20</posx>
+                    <posy>65</posy>
+                    <width>1000</width>
+                    <height>80</height>
+                    <font>font13</font>
+                    <textcolor>ffffffff</textcolor>
+                    <label>$ADDON[script.module.buggalo 91001]</label>
+                </control>
+                <control type="label">
+                    <posx>20</posx>
+                    <posy>90</posy>
+                    <width>1000</width>
+                    <height>80</height>
+                    <font>font13</font>
+                    <textcolor>ffffffff</textcolor>
+                    <label>$ADDON[script.module.buggalo 91002]</label>
+                </control>
+
+                <control type="button" id="100">
+                    <description>Don't submit button</description>
+                    <posx>0</posx>
+                    <posy>140</posy>
+                    <width>233</width>
+                    <height>40</height>
+                    <font>font13</font>
+                    <textcolor>ffffffff</textcolor>
+                    <focusedcolor>ffffffff</focusedcolor>
+                    <label>$ADDON[script.module.buggalo 91004]</label>
+                    <align>center</align>
+                    <aligny>center</aligny>
+                    <texturefocus>buggalo-button-focus.png</texturefocus>
+                    <texturenofocus>buggalo-button.png</texturenofocus>
+                    <onright>101</onright>
+                </control>
+                <control type="button" id="101">
+                    <description>Submit button</description>
+                    <posx>253</posx>
+                    <posy>140</posy>
+                    <width>233</width>
+                    <height>40</height>
+                    <font>font13</font>
+                    <textcolor>ffffffff</textcolor>
+                    <focusedcolor>ffffffff</focusedcolor>
+                    <label>$ADDON[script.module.buggalo 91003]</label>
+                    <align>center</align>
+                    <texturefocus>buggalo-button-focus.png</texturefocus>
+                    <texturenofocus>buggalo-button.png</texturenofocus>
+                    <aligny>center</aligny>
+                    <onleft>100</onleft>
+                    <onright>102</onright>
+                </control>
+                <control type="button" id="102">
+                    <description>Details button</description>
+                    <posx>507</posx>
+                    <posy>140</posy>
+                    <width>233</width>
+                    <height>40</height>
+                    <font>font13</font>
+                    <textcolor>ffffffff</textcolor>
+                    <focusedcolor>ffffffff</focusedcolor>
+                    <label>$ADDON[script.module.buggalo 91006]</label>
+                    <align>center</align>
+                    <aligny>center</aligny>
+                    <texturefocus>buggalo-button-focus.png</texturefocus>
+                    <texturenofocus>buggalo-button.png</texturenofocus>
+                    <onleft>101</onleft>
+                    <ondown>103</ondown>
+                </control>
+            </control>
+
+            <control type="group" id="202">
+                <description>thank you message group</description>
+                <posx>0</posx>
+                <posy>0</posy>
+                <width>740</width>
+                <height>200</height>
+                <visible>!Control.IsVisible(98)</visible>
+                <animation effect="fade" start="0" end="100" time="500">Visible</animation>
+
+                <control type="label" id="203">
+                    <posx>0</posx>
+                    <posy>76</posy>
+                    <width>740</width>
+                    <height>48</height>
+                    <font>font30</font>
+                    <textcolor>ffffffff</textcolor>
+                    <label>$ADDON[script.module.buggalo 91005]</label>
+                    <align>center</align>
+                    <aligny>center</aligny>
+                </control>
+            </control>
+
+        </control>
+
+    </controls>
+</window>

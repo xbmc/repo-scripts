@@ -1,0 +1,106 @@
+# Kodi Media Center language file
+# Addon Name: Buggalo Exception Collector
+# Addon id: script.module.buggalo
+# Addon Provider: twinther, schapplm
+msgid ""
+msgstr ""
+"Project-Id-Version: Kodi Addons\n"
+"Report-Msgid-Bugs-To: https://forum.kodi.tv/\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: Team-Kodi\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: de_DE\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#90000"
+msgid "[B]That's it man, game over man, [I]Game over![/I][/B] ~ Aliens (1986)"
+msgstr "[B]Die Show ist gelaufen, das Spiel ist aus, Freunde! [I]Das Spiel ist aus![/I][/B] ~ Aliens (1986)"
+
+msgctxt "#90001"
+msgid "[B]You can't handle the truth![/B] ~ A Few Good Men (1992)"
+msgstr "[B]Sie können die Wahrheit doch gar nicht vertragen![/B] ~ Eine Frage der Ehre (1992)"
+
+msgctxt "#90002"
+msgid "[B]Danger Will Robinson[/B] ~ Lost in Space (1998)"
+msgstr "[B]Danger Will Robinson[/B] ~ Lost in Space (1998)"
+
+msgctxt "#90003"
+msgid "[B]Why does it cry, Sméagol?[/B] ~ The Two Towers (2002)"
+msgstr "[B]Sméagol, warum weint Sméagol?[/B] ~ Die Zwei Türme (2002)"
+
+msgctxt "#90004"
+msgid "[B]Houston, we have a problem...[/B] ~ Apollo 13 (1995)"
+msgstr "[B]Houston, wir haben ein Problem...[/B] ~ Apollo 13 (1995)"
+
+msgctxt "#90005"
+msgid "[B]E.T. phone home[/B] ~ E.T. (1982)"
+msgstr "[B]E.T. nach Hause telefonieren[/B] ~ E.T. (1982)"
+
+msgctxt "#90006"
+msgid "[B]Frankly, my dear, I don't give a damn[/B] ~ Gone with the Wind (1939)"
+msgstr "[B]Ehrlich gesagt, meine Liebe, das ist mir egal[/B] ~ Vom Winde verweht (1939)"
+
+msgctxt "#90007"
+msgid "[B]Go ahead, make my day[/B] ~ Sudden Impact (1983)"
+msgstr "[B]Mach schon, make my day[/B] ~ Dirty Harry kommt zurück (1983)"
+
+msgctxt "#90008"
+msgid "[B]May the Force be with you[/B] ~ Star Wars (1977)"
+msgstr "[B]Möge die Macht mit dir sein[/B] ~ Krieg der Sterne (1977)"
+
+msgctxt "#90009"
+msgid "[B]You talkin' to me?[/B] ~ Taxi Driver (1976)"
+msgstr "[B]Redest du mit mir?[/B] ~ Taxi Driver (1976)"
+
+msgctxt "#90010"
+msgid "[B]Round up the usual suspects[/B] ~ Casablanca (1942)"
+msgstr "[B]Verhaftet die üblichen Verdächtigen[/B] ~ Casablanca (1942)"
+
+msgctxt "#90011"
+msgid "[B]You're gonna need a bigger boat[/B] ~ Jaws (1975)"
+msgstr "[B]Sie werden ein größeres Boot brauchen[/B] ~ Der weiße Hai (1975)"
+
+msgctxt "#91000"
+msgid "Unfortunately an error occurred in the [B]%s[/B] addon."
+msgstr "Es ist ein Fehler in der Erweiterung [B]%s[/B] aufgetreten."
+
+msgctxt "#91001"
+msgid "You can help with fixing the problem by submitting an error report. "
+msgstr "Du kannst helfen indem du einen Report sendest."
+
+msgctxt "#91002"
+msgid "Click [I]Show error report[/I] for details. No personal information is sent."
+msgstr "Klicke auf [I]Fehlerbericht anzeigen[/I] für Details. Keine Persönlichen Informationen werden gesendet."
+
+msgctxt "#91003"
+msgid "Submit error report"
+msgstr "Report senden"
+
+msgctxt "#91004"
+msgid "Don't submit"
+msgstr "Nicht senden"
+
+msgctxt "#91005"
+msgid "Thank you for contributing!"
+msgstr "Danke für die Mithilfe!"
+
+msgctxt "#91006"
+msgid "Show error report"
+msgstr "Fehlerbericht anzeigen"
+
+msgctxt "#91007"
+msgid "Hide error report"
+msgstr "Fehlerbericht ausblenden"
+
+msgctxt "#91008"
+msgid "Unfortunately a problem occurred while showing the details..."
+msgstr "Leider ist ein Problem beim Anzeigen der Details aufgetreten..."
+
+msgctxt "#91009"
+msgid "Unable to send error report!"
+msgstr "Der Fehlerbericht konnte nicht gesendet werden!"
+
