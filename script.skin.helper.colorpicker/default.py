@@ -1,7 +1,9 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-from kodi_six import xbmc, xbmcaddon, xbmcgui
+import xbmc
+import xbmcaddon
+import xbmcgui
 import resources.lib.ColorPicker as cp
 
 ADDON_ID = "script.skin.helper.colorpicker"
