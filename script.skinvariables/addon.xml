@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<addon id="script.skinvariables"
+version="0.0.3"
+name="Skin Variables"
+provider-name="jurialmunkey">
+<requires>
+  <import addon="xbmc.python" version="2.26.0"/>
+</requires>
+<extension point="xbmc.python.script" library="script.py" />
+<extension point="xbmc.addon.metadata">
+  <summary lang="en_GB">Skin Variables helps skinners to construct variables for multiple containers and listitems from a template</summary>
+  <description lang="en_GB">Skin Variables helps skinners to construct variables for multiple containers and listitems from a template</description>
+  <disclaimer lang="en_GB">For skinners</disclaimer>
+  <license>GPL-3.0-or-later</license>
+  <assets>
+    <icon>icon.png</icon>
+    <fanart>fanart.jpg</fanart>
+  </assets>
+  <news>0.0.2 - Get folders from addon.xml if no folder specified[CR]0.0.1 - Initial Release</news>
+</extension>
+</addon>
