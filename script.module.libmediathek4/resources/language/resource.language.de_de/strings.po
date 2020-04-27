@@ -1,0 +1,176 @@
+# KODI Media Center language file
+# Addon Name: libmediathek4
+# Addon id: script.module.libmediathek4
+# Addon version: 1.0.0
+# Addon Provider: sarbes
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Main\n"
+
+msgctxt "#32000"
+msgid "This month"
+msgstr "Dieser Monat"
+
+msgctxt "#32001"
+msgid "January"
+msgstr "Januar"
+
+msgctxt "#32002"
+msgid "February"
+msgstr "Februar"
+
+msgctxt "#32003"
+msgid "March"
+msgstr "März"
+
+msgctxt "#32004"
+msgid "April"
+msgstr "April"
+
+msgctxt "#32005"
+msgid "May"
+msgstr "Mai"
+
+msgctxt "#32006"
+msgid "June"
+msgstr "Juni"
+
+msgctxt "#32007"
+msgid "July"
+msgstr "Juli"
+
+msgctxt "#32008"
+msgid "August"
+msgstr "August"
+
+msgctxt "#32009"
+msgid "September"
+msgstr "September"
+
+msgctxt "#32010"
+msgid "October"
+msgstr "Oktober"
+
+msgctxt "#32011"
+msgid "November"
+msgstr "November"
+
+msgctxt "#32012"
+msgid "December"
+msgstr "Dezember"
+
+msgctxt "#32013"
+msgid "Sunday"
+msgstr "Sonntag"
+
+msgctxt "#32014"
+msgid "Monday"
+msgstr "Montag"
+
+msgctxt "#32015"
+msgid "Tuesday"
+msgstr "Dienstag"
+
+msgctxt "#32016"
+msgid "Wednesday"
+msgstr "Mittwoch"
+
+msgctxt "#32017"
+msgid "Thursday"
+msgstr "Donnerstag"
+
+msgctxt "#32018"
+msgid "Friday"
+msgstr "Freitag"
+
+msgctxt "#32019"
+msgid "Saturday"
+msgstr "Samstag"
+
+msgctxt "#32020"
+msgid "Today"
+msgstr "Heute"
+
+msgctxt "#32021"
+msgid "Yesterday"
+msgstr "Gestern"
+
+msgctxt "#32022"
+msgid "Choose date"
+msgstr "Datum aussuchen"
+
+msgctxt "#32030"
+msgid "New"
+msgstr "Neu"
+
+msgctxt "#32031"
+msgid "Most viewed"
+msgstr "Meistgesehen"
+
+msgctxt "#32032"
+msgid "Most recent"
+msgstr "Neuste Beiträge"
+
+msgctxt "#32033"
+msgid "Last Chance"
+msgstr "Letzte Chance"
+
+msgctxt "#32132"
+msgid "Shows by A-Z"
+msgstr "Sendungen nach A-Z"
+
+msgctxt "#32133"
+msgid "Shows by date"
+msgstr "Sendungen nach Datum"
+
+msgctxt "#32134"
+msgid "Rubrics"
+msgstr "Rubriken"
+
+msgctxt "#32135"
+msgid "Topics"
+msgstr "Themen"
+
+msgctxt "#32136"
+msgid "Selected Shows"
+msgstr "Ausgewählte Sendungen"
+
+msgctxt "#32137"
+msgid "Collections"
+msgstr "Sammlungen"
+
+msgctxt "#32138"
+msgid "Most played"
+msgstr "Meistgehört"
+
+msgctxt "#32139"
+msgid "Search"
+msgstr "Suche"
+
+msgctxt "#32140"
+msgid "More Entries"
+msgstr "Weitere Beiträge"
+
+msgctxt "#32141"
+msgid "Archive"
+msgstr "Archiv"
+
+msgctxt "#32142"
+msgid "Detailed search"
+msgstr "Detailsuche"
+
+msgctxt "#32143"
+msgid "Live"
+msgstr "Live"
+
+msgctxt "#32144"
+msgid "Selected Movies"
+msgstr "Ausgewählte Filme"
+
+msgctxt "#32145"
+msgid "Channel Overview"
+msgstr "Kanalüberblick"
+
+msgctxt "#32146"
+msgid "Videos"
+msgstr "Videos"
