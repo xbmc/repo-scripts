@@ -26,54 +26,56 @@ monitor = xbmc.Monitor()
 
 
 def Debug(msg, force=False):
-    if (debug == "true" or force):
+    if debug == "true" or force:
         xbmc.log("#####[AutoSubs]##### " + msg, xbmc.LOGDEBUG)
+
 
 Debug("Loading '%s' version '%s'" % (__scriptname__, __version__))
 
 
 # check exclusion settings for filename passed as argument
-def isExcluded(movieFullPath):
-    if not movieFullPath:
+def isExcluded(movie_full_path):
+    if not movie_full_path:
         return False
 
-    Debug("isExcluded(): Checking exclusion settings for '%s'." % movieFullPath)
+    Debug("isExcluded(): Checking exclusion settings for '%s'." % movie_full_path)
 
-    if (movieFullPath.find("pvr://") > -1) and __addon__.getSettingBool('ExcludeLiveTV'):
+    if (movie_full_path.find("pvr://") > -1) and __addon__.getSettingBool('ExcludeLiveTV'):
         Debug("isExcluded(): Video is playing via Live TV, which is currently set as excluded location.")
         return False
 
-    if (movieFullPath.find("http://") > -1 or movieFullPath.find("https://") > -1) and __addon__.getSettingBool('ExcludeHTTP'):
+    if (movie_full_path.find("http://") > -1 or movie_full_path.find("https://") > -1) \
+            and __addon__.getSettingBool('ExcludeHTTP'):
         Debug("isExcluded(): Video is playing via HTTP source, which is currently set as excluded location.")
         return False
 
     ExcludePath = __addon__.getSetting('ExcludePath')
     if ExcludePath and __addon__.getSettingBool('ExcludePathOption'):
-        if (movieFullPath.find(ExcludePath) > -1):
+        if movie_full_path.find(ExcludePath) > -1:
             Debug("isExcluded(): Video is playing from '%s', which is currently set as excluded path 1." % ExcludePath)
             return False
 
     ExcludePath2 = __addon__.getSetting('ExcludePath2')
     if ExcludePath2 and __addon__.getSettingBool('ExcludePathOption2'):
-        if (movieFullPath.find(ExcludePath2) > -1):
+        if movie_full_path.find(ExcludePath2) > -1:
             Debug("isExcluded(): Video is playing from '%s', which is currently set as excluded path 2." % ExcludePath2)
             return False
 
     ExcludePath3 = __addon__.getSetting('ExcludePath3')
     if ExcludePath3 and __addon__.getSettingBool('ExcludePathOption3'):
-        if (movieFullPath.find(ExcludePath3) > -1):
+        if movie_full_path.find(ExcludePath3) > -1:
             Debug("isExcluded(): Video is playing from '%s', which is currently set as excluded path 3." % ExcludePath3)
             return False
 
     ExcludePath4 = __addon__.getSetting('ExcludePath4')
     if ExcludePath4 and __addon__.getSettingBool('ExcludePathOption4'):
-        if (movieFullPath.find(ExcludePath4) > -1):
+        if movie_full_path.find(ExcludePath4) > -1:
             Debug("isExcluded(): Video is playing from '%s', which is currently set as excluded path 4." % ExcludePath4)
             return False
 
     ExcludePath5 = __addon__.getSetting('ExcludePath5')
     if ExcludePath5 and __addon__.getSettingBool('ExcludePathOption5'):
-        if (movieFullPath.find(ExcludePath5) > -1):
+        if movie_full_path.find(ExcludePath5) > -1:
             Debug("isExcluded(): Video is playing from '%s', which is currently set as excluded path 5." % ExcludePath5)
             return False
 
@@ -83,7 +85,7 @@ def isExcluded(movieFullPath):
 class AutoSubsPlayer(xbmc.Player):
     def __init__(self, *args, **kwargs):
         xbmc.Player.__init__(self)
-        Debug("Initalized")
+        Debug("Initialized")
         self.run = True
 
     def onPlayBackStopped(self):
@@ -95,7 +97,7 @@ class AutoSubsPlayer(xbmc.Player):
         self.run = True
 
     def onPlayBackStarted(self):
-        if (self.isPlayingVideo()):
+        if self.isPlayingVideo():
             check_for_specific = __addon__.getSettingBool('check_for_specific')
             specific_language = __addon__.getSetting('selected_language')
             Debug("Specific language from settings '%s'" % specific_language)
@@ -109,22 +111,23 @@ class AutoSubsPlayer(xbmc.Player):
             except:
                 pass
             if self.run:
-                movieFullPath = self.getPlayingFile()
-                Debug("movieFullPath '%s'" % movieFullPath)
+                movie_full_path = self.getPlayingFile()
+                Debug("movie_full_path '%s'" % movie_full_path)
                 xbmc.sleep(1000)
-                availableLangs = self.getAvailableSubtitleStreams()
-                Debug("availableLangs '%s'" % availableLangs)
-                totalTime = self.getTotalTime()
-                Debug("totalTime '%s'" % totalTime)
-                videoclipAlbum = ''
+                available_langs = self.getAvailableSubtitleStreams()
+                Debug("available_langs '%s'" % available_langs)
+                total_time = self.getTotalTime()
+                Debug("total_time '%s'" % total_time)
+                video_clip_album = ''
                 if __addon__.getSettingBool('ExcludeVideoClip'):
-                    videoclipAlbum = xbmc.InfoTagMusic.getAlbum()
-                    Debug("videoclipAlbum '%s'" % videoclipAlbum)
+                    video_clip_album = xbmc.InfoTagMusic.getAlbum()
+                    Debug("videoclip_album '%s'" % video_clip_album)
 
-                if (totalTime > ExcludeTime and (not videoclipAlbum) and (
-                    (not xbmc.getCondVisibility("VideoPlayer.HasSubtitles")) or (
-                        check_for_specific and not specific_language in availableLangs)) and all(
-                        movieFullPath.find(v) <= -1 for v in ignore_words) and (isExcluded(movieFullPath))):
+                if (total_time > ExcludeTime and (not video_clip_album) and (
+                        (not xbmc.getCondVisibility("VideoPlayer.HasSubtitles"))
+                        or (check_for_specific and specific_language not in available_langs))
+                        and all(movie_full_path.find(v) <= -1 for v in ignore_words)
+                        and (isExcluded(movie_full_path))):
                     self.run = False
                     xbmc.sleep(1000)
                     Debug('Started: AutoSearching for Subs')
@@ -139,14 +142,7 @@ class AutoSubsPlayer(xbmc.Player):
 
 class AutoSubsRunner:
     player = AutoSubsPlayer()
-
     while not monitor.abortRequested():
-        if player.isPlaying():
-            if (not xbmc.getCondVisibility("VideoPlayer.HasSubtitles")):
-                monitor.waitForAbort(3)
-                if player.isPlayingVideo() and player.getPlayingFile() != currentPlaying:
-                    xbmc.executebuiltin('ActivateWindow(SubtitleSearch)')
-                    currentPlaying = player.getPlayingFile()
         monitor.waitForAbort(1)
 
     del player
