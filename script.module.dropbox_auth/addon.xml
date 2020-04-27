@@ -17,8 +17,6 @@
     <platform>all</platform>
     <language/>
     <license>MIT</license>
-    <website />
     <source>https://github.com/SchapplM/xbmc-addon-dropboxauth</source>
-    <email></email>
   </extension>
 </addon>
