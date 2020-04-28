@@ -43,7 +43,6 @@ class PlayerMonitor(xbmc.Monitor):
 
             if PLAYER.isPlayingVideo() and not self.pvr_playback:
                 self.get_videoinfo()
-                self.get_nextitem()
 
         ''' Playlist changed. Fetch nextitem again.
         '''
@@ -164,60 +163,6 @@ class PlayerMonitor(xbmc.Monitor):
 
         except Exception:
             return
-
-    def get_nextitem(self,clear=False):
-        try:
-            if clear:
-                raise Exception
-
-            position = int(VIDEOPLAYLIST.getposition())
-
-            json_query = json_call('Playlist.GetItems',
-                                    properties=JSON_MAP['playlist_properties'],
-                                    limits={"start": position+1, "end": position+2},
-                                    params={'playlistid': 1}
-                                    )
-
-            nextitem = json_query['result']['items'][0]
-
-            arts = nextitem['art']
-            for art in arts:
-                if art in ['clearlogo', 'logo', 'tvshow.clearlogo', 'tvshow.logo', 'landscape', 'tvshow.landscape', 'poster', 'tvshow.poster', 'clearart', 'tvshow.clearart', 'banner', 'tvshow.banner']:
-                    winprop('VideoPlayer.Next.Art(%s)' % art, arts[art])
-
-            try:
-                runtime = int(nextitem.get('runtime'))
-                minutes = runtime / 60
-                winprop('VideoPlayer.Next.Duration(m)', str(round(minutes)))
-                winprop('VideoPlayer.Next.Duration', str(datetime.timedelta(seconds=runtime)))
-                winprop('VideoPlayer.Next.Duration(s)', str(runtime))
-
-            except Exception:
-                winprop('VideoPlayer.Next.Duration', clear=True)
-                winprop('VideoPlayer.Next.Duration(m)', clear=True)
-                winprop('VideoPlayer.Next.Duration(s)', clear=True)
-
-            winprop('VideoPlayer.Next.Title', nextitem.get('title',''))
-            winprop('VideoPlayer.Next.TVShowTitle', nextitem.get('showtitle',''))
-            winprop('VideoPlayer.Next.Genre', get_joined_items(nextitem.get('genre','')))
-            winprop('VideoPlayer.Next.Plot', nextitem.get('plot',''))
-            winprop('VideoPlayer.Next.Tagline', nextitem.get('tagline',''))
-            winprop('VideoPlayer.Next.Season', str(nextitem.get('season','')))
-            winprop('VideoPlayer.Next.Episode', str(nextitem.get('episode','')))
-            winprop('VideoPlayer.Next.Year', str(nextitem.get('year','')))
-            winprop('VideoPlayer.Next.Rating', str(float(nextitem.get('rating','0'))))
-            winprop('VideoPlayer.Next.UserRating', str(float(nextitem.get('userrating','0'))))
-            winprop('VideoPlayer.Next.DBID', str(nextitem.get('id','')))
-            winprop('VideoPlayer.Next.DBType', nextitem.get('type',''))
-            winprop('VideoPlayer.Next.Art(fanart)', nextitem.get('fanart',''))
-            winprop('VideoPlayer.Next.Art(thumb)', nextitem.get('thumbnail',''))
-
-        except Exception:
-            for art in ['fanart', 'thumb', 'clearlogo', 'logo', 'tvshow.clearlogo', 'tvshow.logo', 'landscape', 'tvshow.landscape', 'poster', 'tvshow.poster', 'clearart', 'tvshow.clearart', 'banner', 'tvshow.banner']:
-                winprop('VideoPlayer.Next.Art(%s)' % art, clear=True)
-
-            for info in ['Duration','Duration(m)','Duration(s)','Title','TVShowTitle','Genre','Plot','Tagline','Season','Episode','Year','Rating','UserRating','DBID','DBType']:
-                winprop('VideoPlayer.Next.%s' % info, clear=True)
 
     def get_art_info(self,clear=False):
         for art in ['Player.Icon', 'Player.Art(poster)', 'Player.Art(tvshow.poster)', 'Pvr.EPGEventIcon']:
