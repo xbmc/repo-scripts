@@ -84,9 +84,6 @@ class Service(xbmc.Monitor):
 
         self.player_monitor = PlayerMonitor()
 
-        master_lock = None
-        login_reload = False
-
         service_interval = xbmc.getInfoLabel('Skin.String(ServiceInterval)') or ADDON.getSetting('service_interval')
         service_interval = float(service_interval)
         background_interval = xbmc.getInfoLabel('Skin.String(BackgroundInterval)') or ADDON.getSetting('background_interval')
@@ -147,34 +144,6 @@ class Service(xbmc.Monitor):
 
                 else:
                     widget_refresh += service_interval
-
-            ''' Workaround for login screen bug
-            '''
-            if not login_reload:
-                if condition('System.HasLoginScreen'):
-                    log('System has login screen enabled. Reload the skin to load all strings correctly.')
-                    execute('ReloadSkin()')
-                    login_reload = True
-
-            ''' Master lock reload logic for widgets
-            '''
-            if condition('System.HasLocks'):
-                if master_lock is None:
-                    master_lock = condition('System.IsMaster')
-                    log('Master mode: %s' % master_lock)
-
-                if master_lock == True and not condition('System.IsMaster'):
-                    log('Left master mode. Reload skin.')
-                    master_lock = False
-                    execute('ReloadSkin()')
-
-                elif master_lock == False and condition('System.IsMaster'):
-                    log('Entered master mode. Reload skin.')
-                    master_lock = True
-                    execute('ReloadSkin()')
-
-            elif master_lock is not None:
-                master_lock = None
 
             self.waitForAbort(service_interval)
 
