@@ -60,10 +60,10 @@ class SHOW(xbmcgui.WindowXMLDialog):
 
     def onInit(self):
         # set labels
-        for label, label_text in self.labels.items():
+        for label, label_text in list(self.labels.items()):
             self.getControl(label).setLabel(label_text)
         # set textboxes
-        for textbox, textbox_text in self.textboxes.items():
+        for textbox, textbox_text in list(self.textboxes.items()):
             self.getControl(textbox).setText(textbox_text)
         # set buttons
         self.listitem = self.getControl(self.thelist)
