@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<settings>
+    <category label="32000">
+        <setting label="32007" type="bool" id="profile1" default="true"/>
+        <setting label="32001" type="text" id="name1" default="Digital" visible="eq(-1,true)"/>
+        <setting label="32027" type="enum" id="profile1_cec" lvalues="32026|32028|32029|32030" enable="eq(-2,true)"
+                 visible="eq(-2,true)"/>
+        <setting type="sep"/>
+        <setting label="32008" type="bool" id="profile2" default="true"/>
+        <setting label="32003" type="text" id="name2" default="Analog" visible="eq(-1,true)"/>
+        <setting label="32027" type="enum" id="profile2_cec" lvalues="32026|32028|32029|32030" enable="eq(-2,true)"
+                 visible="eq(-2,true)"/>
+        <setting type="sep"/>
+        <setting label="32009" type="bool" id="profile3" default="false"/>
+        <setting label="32005" type="text" id="name3" default="Headphones" visible="eq(-1,true)"/>
+        <setting label="32027" type="enum" id="profile3_cec" lvalues="32026|32028|32029|32030" enable="eq(-2,true)"
+                 visible="eq(-2,true)"/>
+        <setting type="sep"/>
+        <setting label="32010" type="bool" id="profile4" default="false"/>
+        <setting label="32006" type="text" id="name4" default="HDMI" visible="eq(-1,true)"/>
+        <setting label="32027" type="enum" id="profile4_cec" lvalues="32026|32028|32029|32030" enable="eq(-2,true)"
+                 visible="eq(-2,true)"/>
+    </category>
+    <category label="32002">
+        <setting label="32004" type="bool" id="volume" default="false"/>
+        <setting label="32011" type="bool" id="player" default="false"/>
+        <setting label="32012" type="bool" id="video" default="false"/>
+        <setting type="sep"/>
+        <setting label="32015" type="bool" id="player_show" default="false"/>
+        <setting label="32016" type="bool" id="player_autoclose" default="false" visible="eq(-1,true)"/>
+        <setting id="player_autoclose_delay" type="slider" label="32039" default="10" range="5,1,30" visible="eq(-1,true) + eq(-2,true)" option="int" />
+    </category>
+    <category label="32014">
+        <setting label="32038" type="enum" id="auto_default" lvalues="32026|32007|32008|32009|32010"/>
+        <setting label="32041" type="bool" id="force_auto_default" default="true" visible="!eq(-1,0)"/>
+        <setting label="32021" type="enum" id="auto_gui" lvalues="32026|32007|32008|32009|32010"/>
+        <setting type="lsep" label="32035"/>
+        <setting label="32022" type="enum" id="auto_movies" lvalues="32026|32007|32008|32009|32010"/>
+        <setting label="32031" type="enum" id="auto_videos" lvalues="32026|32007|32008|32009|32010"/>
+        <setting label="32023" type="enum" id="auto_tvshows" lvalues="32026|32007|32008|32009|32010"/>
+        <setting label="32024" type="enum" id="auto_pvr_tv" lvalues="32026|32007|32008|32009|32010"/>
+        <setting type="lsep" label="32036"/>
+        <setting label="32025" type="enum" id="auto_music" lvalues="32026|32007|32008|32009|32010"/>
+        <setting label="32032" type="enum" id="auto_musicvideo" lvalues="32026|32007|32008|32009|32010"/>
+        <setting label="32034" type="enum" id="auto_pvr_radio" lvalues="32026|32007|32008|32009|32010"/>
+        <setting type="lsep" label="32037"/>
+        <setting label="32033" type="enum" id="auto_unknown" lvalues="32026|32007|32008|32009|32010"/>
+    </category>
+    <category label="32018">
+        <setting label="32019" type="bool" id="notify" default="true"/>
+        <setting label="32040" type="bool" id="debug" default="false"/>
+    </category>
+</settings>

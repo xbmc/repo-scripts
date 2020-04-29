@@ -1,0 +1,252 @@
+# script.audio.profiles language file
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: hu\n"
+
+#: addon.xml
+msgctxt "Addon Summary"
+msgid "Save audio profile and easily switch between them"
+msgstr "Hangbeállítások profilba mentése, és könnyű váltás közöttük"
+
+#: addon.xml
+msgctxt "Addon Description"
+msgid "To map a key for switch audio profile edit keymap xml file and add:[CR]RunScript(script.audio.profiles,0) - for switch profile in loop[CR]RunScript(script.audio.profiles,x) - where x is number of profile"
+msgstr "Távirányító gomb hozzárendeléshez módosítsd a keymap xml fájlt az alábbiak szerint:[CR]RunScript(script.audio.profiles,0) - profil léptetése[CR]RunScript(script.audio.profiles,x) - ahol x a profil száma"
+
+#: Settings
+msgctxt "#32000"
+msgid "Profiles"
+msgstr "Profilok"
+
+#: Settings
+msgctxt "#32001"
+msgid "Name of profile 1"
+msgstr "1. Profil neve"
+
+#: Settings
+msgctxt "#32013"
+msgid "Includes Settings"
+msgstr "Beállításokkal együtt"
+
+#: Settings
+msgctxt "#32014"
+msgid "Automatic Switch"
+msgstr "Automatikus váltás"
+
+#: Settings
+msgctxt "#32015"
+msgid "Show audio stream select menu on start playing"
+msgstr "Profilváltó ablak megjelenítése lejátszás indításakor"
+
+#: Settings
+msgctxt "#32016"
+msgid "Auto close select menu"
+msgstr "Profilváltó ablak automatikus bezárása (5mp után)"
+
+#: Settings
+msgctxt "#32018"
+msgid "Debug"
+msgstr "Hibakeresés"
+
+#: Settings
+msgctxt "#32019"
+msgid "Notifications"
+msgstr "Értesítések"
+
+#: Settings
+msgctxt "#32002"
+msgid "Settings"
+msgstr "Beállítások"
+
+#: Settings
+msgctxt "#32003"
+msgid "Name of profile 2"
+msgstr "2. Profil neve"
+
+#: Settings
+msgctxt "#32004"
+msgid "Include volume level"
+msgstr "Hangerő beállítások mentése"
+
+#: Settings
+msgctxt "#32011"
+msgid "Include video player settings"
+msgstr "Tartalmazza a videolejátszó beállításait"
+
+#: Settings
+msgctxt "#32012"
+msgid "Include display settings"
+msgstr "Tartalmazza a megjelenítési beállításokat"
+
+#: Settings
+msgctxt "#32005"
+msgid "Name of profile 3"
+msgstr "3. Profil neve"
+
+#: Settings
+msgctxt "#32006"
+msgid "Name of profile 4"
+msgstr "4. Profil neve"
+
+#: Settings
+msgctxt "#32007"
+msgid "Profile 1"
+msgstr "Profil 1"
+
+#: Settings
+msgctxt "#32008"
+msgid "Profile 2"
+msgstr "Profil 2"
+
+#: Settings
+msgctxt "#32009"
+msgid "Profile 3"
+msgstr "Profil 3"
+
+#: Settings
+msgctxt "#32010"
+msgid "Profile 4"
+msgstr "Profil 4"
+
+#: Settings
+msgctxt "#32021"
+msgid "Profile for GUI"
+msgstr "Profil a Grafikus Felülethez GUI"
+
+#: Settings
+msgctxt "#32022"
+msgid "Profile for Movies"
+msgstr "Profil a Filmekhez"
+
+#: Settings
+msgctxt "#32023"
+msgid "Profile for TVShows"
+msgstr "Profil a Sorozatokhoz"
+
+#: Settings
+#, fuzzy
+msgctxt "#32024"
+msgid "Profile for PVR TV"
+msgstr "Profil a TV-hez PVR"
+
+#: Settings
+msgctxt "#32025"
+msgid "Profile for Music"
+msgstr "Profil a Zenékhez"
+
+#: Settings
+msgctxt "#32026"
+msgid "None"
+msgstr "Nincs"
+
+#: Settings
+msgctxt "#32027"
+msgid "Send HDMI-CEC command when profile activated"
+msgstr "HDMI-CEC parancs küldése a profil aktiválásakor"
+
+#: Settings
+msgctxt "#32028"
+msgid "Wake Up"
+msgstr "Ébresztés"
+
+#: Settings
+msgctxt "#32029"
+msgid "StandBy"
+msgstr "Készenlét"
+
+#: Settings
+msgctxt "#32030"
+msgid "Toggle state"
+msgstr "Váltás"
+
+#: Settings
+msgctxt "#32031"
+msgid "Profile for Videos (not from library)"
+msgstr "Profil a videókhoz (Nem a scrapperből)"
+
+#: Settings
+msgctxt "#32032"
+msgid "Profile for Music Videos"
+msgstr "Profil a Videoklipekhez"
+
+#: Settings
+msgctxt "#32033"
+msgid "Profile for Unknown content type"
+msgstr "Profil az ismeretlen tartalom típusokhoz"
+
+#: Settings
+msgctxt "#32034"
+msgid "Profile for PVR Radio"
+msgstr "Profil a Rádiókhoz PVR"
+
+#: Settings
+msgctxt "#32035"
+msgid "Video"
+msgstr "Videó"
+
+#: Settings
+msgctxt "#32036"
+msgid "Audio"
+msgstr "Hang"
+
+#: Settings
+msgctxt "#32037"
+msgid "Other"
+msgstr "Más"
+
+#: Settings
+msgctxt "#32038"
+msgid "Profile for KODI Start/Wakeup (Default)"
+msgstr "Profil a KODI Indításakor (Alapértelmezett)"
+
+#: Settings
+msgctxt "#32039"
+msgid "Delay before close"
+msgstr "Késleltetés a bezárás előtt"
+
+#: Settings
+msgctxt "#32040"
+msgid "Enable debug logging"
+msgstr "A hibakeresési naplózás engedélyezése"
+
+#: Settings
+msgctxt "#32041"
+msgid "Force load profile at startup"
+msgstr "A terhelési profil kényszerítése indításkor"
+
+#: Script
+msgctxt "#32100"
+msgid "Select profile to save settings"
+msgstr "Hangprofil kiválasztása a mentéshez"
+
+#: Script
+msgctxt "#32106"
+msgid "Select audio profile"
+msgstr "Hangprofil kiválasztása"
+
+#: Script
+msgctxt "#32103"
+msgid "This profile is disabled"
+msgstr "Ez a profil ki van kapcsolva"
+
+#: Script
+msgctxt "#32104"
+msgid "Invalid file for profile"
+msgstr "Érvénytelen profil fájl"
+
+#: Script
+msgctxt "#32105"
+msgid "Enable profiles"
+msgstr "Profilok engedélyezése"
+
+#: Script
+msgctxt "#32101"
+msgid "Configure profile"
+msgstr "Profilok beállítása"
+
+#: Script
+msgctxt "#32102"
+msgid "Saved as profile"
+msgstr "Profil mentve"
