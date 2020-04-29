@@ -6,43 +6,21 @@ from __future__ import absolute_import, division, unicode_literals
 import os
 
 from .. import config
-from ..kodiutils import addon_profile, get_setting_int, localize, log, ok_dialog, translate_path, yesno_dialog
-from ..utils import arch, cmd_exists, http_download, http_get, run_cmd, store, system_os
+from ..kodiutils import addon_profile, exists, get_setting_int, localize, log, mkdir, ok_dialog, translate_path, yesno_dialog
+from ..utils import arch, cmd_exists, hardlink, http_download, http_get, run_cmd, store, system_os
 
 
 def install_cdm_from_backup(version):
     """Copies files from specified backup version to cdm dir"""
-    from xbmcvfs import copy, delete, exists
-
     filenames = os.listdir(os.path.join(backup_path(), version))
 
     for filename in filenames:
         backup_fpath = os.path.join(backup_path(), version, filename)
         install_fpath = os.path.join(ia_cdm_path(), filename)
+        hardlink(backup_fpath, install_fpath)
 
-        if exists(install_fpath):
-            delete(install_fpath)
-
-        try:
-            os.link(backup_fpath, install_fpath)
-        except (AttributeError, OSError):
-            copy(backup_fpath, install_fpath)
-
-    log('Installed CDM version {version} from backup', version=version)
+    log(0, 'Installed CDM version {version} from backup', version=version)
     remove_old_backups(backup_path())
-
-
-def has_widevine():
-    """Checks if Widevine CDM is installed on system."""
-    if system_os() == 'Android':  # widevine is built in on android
-        return True
-
-    if widevine_path():
-        log('Found Widevine binary at {path}', path=widevine_path())
-        return True
-
-    log('Widevine is not installed.')
-    return False
 
 
 def widevine_eula():
@@ -53,7 +31,7 @@ def widevine_eula():
         cdm_os = config.WIDEVINE_OS_MAP[system_os()]
         cdm_arch = config.WIDEVINE_ARCH_MAP_X86[arch()]
     else:  # grab the license from the x86 files
-        log('Acquiring Widevine EULA from x86 files.')
+        log(0, 'Acquiring Widevine EULA from x86 files.')
         cdm_os = 'mac'
         cdm_arch = 'x64'
 
@@ -72,7 +50,6 @@ def widevine_eula():
 
 def backup_path():
     """Return the path to the cdm backups"""
-    from xbmcvfs import exists, mkdir
     path = os.path.join(addon_profile(), 'backup')
     if not exists(path):
         mkdir(path)
@@ -93,20 +70,29 @@ def load_widevine_config():
         return loads(config_file.read())
 
 
-def widevine_path():
-    """Get full widevine path"""
-    widevine_cdm_filename = config.WIDEVINE_CDM_FILENAME[system_os()]
-    if widevine_cdm_filename is None:
+def widevinecdm_path():
+    """Get full Widevine CDM path"""
+    widevinecdm_filename = config.WIDEVINE_CDM_FILENAME[system_os()]
+    if widevinecdm_filename is None:
+        return None
+    if ia_cdm_path() is None:
+        return None
+    return os.path.join(ia_cdm_path(), widevinecdm_filename)
+
+
+def has_widevinecdm():
+    """Whether a Widevine CDM is installed on the system"""
+    if system_os() == 'Android':  # Widevine CDM is built into Android
+        return True
+
+    widevinecdm = widevinecdm_path()
+    if widevinecdm is None:
         return False
-
-    if ia_cdm_path():
-        wv_path = os.path.join(ia_cdm_path(), widevine_cdm_filename)
-        from xbmcvfs import exists
-
-        if exists(wv_path):
-            return wv_path
-
-    return False
+    if not exists(widevinecdm):
+        log(3, 'Widevine CDM is not installed.')
+        return False
+    log(0, 'Found Widevine CDM at {path}', path=widevinecdm)
+    return True
 
 
 def ia_cdm_path():
@@ -118,7 +104,6 @@ def ia_cdm_path():
         return None
 
     cdm_path = translate_path(addon.getSetting('DECRYPTERPATH'))
-    from xbmcvfs import exists, mkdir
     if not exists(cdm_path):
         mkdir(cdm_path)
 
@@ -131,12 +116,13 @@ def missing_widevine_libs():
         return None
 
     if cmd_exists('ldd'):
-        if not os.access(widevine_path(), os.X_OK):
-            log('Changing {path} permissions to 744.', path=widevine_path())
-            os.chmod(widevine_path(), 0o744)
+        widevinecdm = widevinecdm_path()
+        if not os.access(widevinecdm, os.X_OK):
+            log(0, 'Changing {path} permissions to 744.', path=widevinecdm)
+            os.chmod(widevinecdm, 0o744)
 
         missing_libs = []
-        cmd = ['ldd', widevine_path()]
+        cmd = ['ldd', widevinecdm]
         output = run_cmd(cmd, sudo=False)
         if output['success']:
             for line in output['output'].splitlines():
@@ -149,19 +135,13 @@ def missing_widevine_libs():
                     missing_libs.append(lib)
 
             if missing_libs:
-                log('Widevine is missing the following libraries: {libs}', libs=missing_libs)
+                log(4, 'Widevine is missing the following libraries: {libs}', libs=missing_libs)
                 return missing_libs
 
-            log('There are no missing Widevine libraries! :-)')
+            log(0, 'There are no missing Widevine libraries! :-)')
             return None
 
-    if arch() == 'arm64':
-        import struct
-        if struct.calcsize('P') * 8 == 64:
-            log('ARM64 ldd check failed. User needs 32-bit userspace.')
-            ok_dialog(localize(30004), localize(30039))  # Widevine not available on ARM64
-
-    log('Failed to check for missing Widevine libraries.')
+    log(4, 'Failed to check for missing Widevine libraries.')
     return None
 
 
@@ -176,7 +156,7 @@ def latest_widevine_version(eula=False):
     devices = chromeos_config()
     arm_device = select_best_chromeos_image(devices)
     if arm_device is None:
-        log('We could not find an ARM device in the Chrome OS recovery.conf')
+        log(4, 'We could not find an ARM device in the Chrome OS recovery.conf')
         ok_dialog(localize(30004), localize(30005))
         return ''
     return arm_device['version']
@@ -201,7 +181,7 @@ def remove_old_backups(bpath):
 
     while len(versions) > max_backups + 1:
         remove_version = str(versions[1] if versions[0] == LooseVersion(installed_version) else versions[0])
-        log('removing oldest backup which is not installed: {version}', version=remove_version)
+        log(0, 'Removing oldest backup which is not installed: {version}', version=remove_version)
         rmtree(os.path.join(bpath, remove_version))
         versions = sorted([LooseVersion(version) for version in os.listdir(bpath)])
 
