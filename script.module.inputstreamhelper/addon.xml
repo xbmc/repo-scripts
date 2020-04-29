@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.module.inputstreamhelper" name="InputStream Helper" version="0.4.5+matrix.1" provider-name="emilsvennesson, dagwieers, mediaminister">
+<addon id="script.module.inputstreamhelper" name="InputStream Helper" version="0.4.6+matrix.1" provider-name="emilsvennesson, dagwieers, mediaminister">
   <requires>
     <!--py3 compliant-->
     <!--<import addon="xbmc.python" version="3.0.0" targetversion="3.0.0"/>-->
@@ -24,11 +24,10 @@
     <description lang="fr_FR">Un simple module Kodi qui simplifie la vie des développeurs de modules complémentaires en s’appuyant sur des modules complémentaires basés sur InputStream et sur la lecture de DRM.</description>
     <description lang="es_ES">Un módulo Kodi simple que hace la vida más fácil para los desarrolladores de complementos que dependen de complementos basados en InputStream y reproducción de DRM.</description>
     <news>
-      v0.4.5 (2020-04-07)
-        - Added Spanish and Romanian translations
-        - Added support for Kodi 19 Matrix "pre-release" builds
-        - Fix Widevine backups when using an external drive
-        - Various fixes for Widevine installation on ARM devices
+      v0.4.6 (2020-04-29)
+        - Compatibility fixes for Kodi 19 Matrix "pre-release" builds (@mediaminister)
+        - Optimize Widevine CDM detection (@dagwieers)
+        - Minor fixes for Widevine installation on ARM devices (@dagwieers @mediaminister @horstle)
     </news>
     <platform>all</platform>
     <license>MIT</license>

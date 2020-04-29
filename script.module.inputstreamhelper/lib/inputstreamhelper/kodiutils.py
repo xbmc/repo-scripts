@@ -8,7 +8,7 @@ import xbmcaddon
 from xbmcgui import DialogProgress
 from .unicodes import from_unicode, to_unicode
 
-# NOTE: We need to add the add-on id in here explicitly !
+# NOTE: We need to explicitly add the add-on id here!
 ADDON = xbmcaddon.Addon('script.module.inputstreamhelper')
 
 
@@ -18,13 +18,17 @@ class progress_dialog(DialogProgress, object):  # pylint: disable=invalid-name,u
     def create(self, heading, message=''):  # pylint: disable=arguments-differ
         """Create and show a progress dialog"""
         if kodi_version_major() < 19:
-            return super(progress_dialog, self).create(heading, line1=message)
+            lines = message.split('\n', 2)
+            line1, line2, line3 = (lines + [None] * (3 - len(lines)))
+            return super(progress_dialog, self).create(heading, line1=line1, line2=line2, line3=line3)
         return super(progress_dialog, self).create(heading, message=message)
 
     def update(self, percent, message=''):  # pylint: disable=arguments-differ
         """Update the progress dialog"""
         if kodi_version_major() < 19:
-            return super(progress_dialog, self).update(percent, line1=message)
+            lines = message.split('\n', 2)
+            line1, line2, line3 = (lines + [None] * (3 - len(lines)))
+            return super(progress_dialog, self).update(percent, line1=line1, line2=line2, line3=line3)
         return super(progress_dialog, self).update(percent, message=message)
 
 
@@ -262,9 +266,13 @@ def get_proxies():
     return dict(http=proxy_address, https=proxy_address)
 
 
-def log(msg, level=xbmc.LOGDEBUG, **kwargs):
-    """InputStream Helper log method"""
-    xbmc.log(msg=from_unicode('[{addon}] {msg}'.format(addon=addon_id(), msg=msg.format(**kwargs))), level=level)
+def log(level=0, message='', **kwargs):
+    """Log info messages to Kodi"""
+    if kwargs:
+        from string import Formatter
+        message = Formatter().vformat(message, (), SafeDict(**kwargs))
+    message = '[{addon}] {message}'.format(addon=addon_id(), message=message)
+    xbmc.log(from_unicode(message), level)
 
 
 def jsonrpc(*args, **kwargs):
@@ -273,7 +281,7 @@ def jsonrpc(*args, **kwargs):
 
     # We do not accept both args and kwargs
     if args and kwargs:
-        log('ERROR: Wrong use of jsonrpc()')
+        log(4, 'ERROR: Wrong use of jsonrpc()')
         return None
 
     # Process a list of actions
@@ -305,3 +313,43 @@ def kodi_to_ascii(string):
     string = string.replace('[COLOR yellow]', '')
     string = string.replace('[/COLOR]', '')
     return string
+
+
+def copy(src, dest):
+    """Copy a file (using xbmcvfs)"""
+    from xbmcvfs import copy as vfscopy
+    log(2, "Copy file '{src}' to '{dest}'.", src=src, dest=dest)
+    return vfscopy(src, dest)
+
+
+def delete(path):
+    """Remove a file (using xbmcvfs)"""
+    from xbmcvfs import delete as vfsdelete
+    log(2, "Delete file '{path}'.", path=path)
+    return vfsdelete(path)
+
+
+def exists(path):
+    """Whether the path exists (using xbmcvfs)"""
+    from xbmcvfs import exists as vfsexists
+    return vfsexists(path)
+
+
+def mkdir(path):
+    """Create a directory (using xbmcvfs)"""
+    from xbmcvfs import mkdir as vfsmkdir
+    log(2, "Create directory '{path}'.", path=path)
+    return vfsmkdir(path)
+
+
+def mkdirs(path):
+    """Create directory including parents (using xbmcvfs)"""
+    from xbmcvfs import mkdirs as vfsmkdirs
+    log(2, "Recursively create directory '{path}'.", path=path)
+    return vfsmkdirs(path)
+
+
+def stat_file(path):
+    """Return information about a file (using xbmcvfs)"""
+    from xbmcvfs import Stat
+    return Stat(path)
