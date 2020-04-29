@@ -14,19 +14,6 @@ msgstr ""
 "Language: it\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: addon.xml
-msgctxt "Addon Summary"
-msgid "Save audio profile and easily switch between them"
-msgstr "Salva il profilo audio e cambia facilmente da uno all'altro"
-
-#: addon.xml
-msgctxt "Addon Description"
-msgid ""
-"To map a key for switch audio profile edit keymap xml file and "
-"add:[CR]RunScript(script.audio.profiles,0) - for switch profile in "
-"loop[CR]RunScript(script.audio.profiles,x) - where x is number of profile"
-msgstr "Per assegnare ad un pulsante il cambio profilo modifica il file keymap xml e aggiungi:[CR]RunScript(script.audio.profiles,0) - per cambiare  il profilo in ciclo continuo [CR]RunScript(script.audio.profiles,x) - dove x è il numero del profilo"
-
 #: Settings
 msgctxt "#32000"
 msgid "Profiles"
@@ -36,31 +23,6 @@ msgstr "Profili"
 msgctxt "#32001"
 msgid "Name of profile 1"
 msgstr "Nome del Profilo 1"
-
-#: Settings
-msgctxt "#32013"
-msgid "Includes Settings"
-msgstr "Includi impostazioni"
-
-#: Settings
-msgctxt "#32014"
-msgid "Automatic Switch"
-msgstr "Cambio automatico"
-
-#: Settings
-msgctxt "#32015"
-msgid "Show audio stream select menu on start playing"
-msgstr "Mostra menu di selezione stream all'avvio della riproduzione"
-
-#: Settings
-msgctxt "#32016"
-msgid "Auto close select menu"
-msgstr "Chiudi automaticamente il menu di selezione"
-
-#: Settings
-msgctxt "#32019"
-msgid "Notifications"
-msgstr "Notifiche"
 
 #: Settings
 msgctxt "#32002"
@@ -76,16 +38,6 @@ msgstr "Nome del Profilo 2"
 msgctxt "#32004"
 msgid "Include volume level"
 msgstr "Includi livello volume"
-
-#: Settings
-msgctxt "#32011"
-msgid "Include video player settings"
-msgstr "Includi le impostazioni del lettore video"
-
-#: Settings
-msgctxt "#32012"
-msgid "Include display settings"
-msgstr "Includi impostazioni display"
 
 #: Settings
 msgctxt "#32005"
@@ -116,6 +68,46 @@ msgstr "Profilo 3"
 msgctxt "#32010"
 msgid "Profile 4"
 msgstr "Profilo 4"
+
+#: Settings
+msgctxt "#32011"
+msgid "Include video player settings"
+msgstr "Includi le impostazioni del lettore video"
+
+#: Settings
+msgctxt "#32012"
+msgid "Include display settings"
+msgstr "Includi impostazioni display"
+
+#: Settings
+msgctxt "#32013"
+msgid "Includes Settings"
+msgstr "Includi impostazioni"
+
+#: Settings
+msgctxt "#32014"
+msgid "Automatic Switch"
+msgstr "Cambio automatico"
+
+#: Settings
+msgctxt "#32015"
+msgid "Show audio stream select menu on start playing"
+msgstr "Mostra menu di selezione stream all'avvio della riproduzione"
+
+#: Settings
+msgctxt "#32016"
+msgid "Auto close select menu"
+msgstr "Chiudi automaticamente il menu di selezione"
+
+#: Settings
+msgctxt "#32018"
+msgid "Notifications"
+msgstr "Notifiche"
+
+#: Settings
+msgctxt "#32019"
+msgid "Notifications"
+msgstr "Notifiche"
 
 #: Settings
 msgctxt "#32021"
@@ -228,9 +220,14 @@ msgid "Select profile to save settings"
 msgstr "Seleziona il profilo per salvare le impostazioni"
 
 #: Script
-msgctxt "#32106"
-msgid "Select audio profile"
-msgstr "Seleziona il profilo audio"
+msgctxt "#32101"
+msgid "Configure profile"
+msgstr "Configura profilo"
+
+#: Script
+msgctxt "#32102"
+msgid "Saved as profile"
+msgstr "Salvato come profilo"
 
 #: Script
 msgctxt "#32103"
@@ -248,11 +245,6 @@ msgid "Enable profiles"
 msgstr "Abilita i profili"
 
 #: Script
-msgctxt "#32101"
-msgid "Configure profile"
-msgstr "Configura profilo"
-
-#: Script
-msgctxt "#32102"
-msgid "Saved as profile"
-msgstr "Salvato come profilo"
+msgctxt "#32106"
+msgid "Select audio profile"
+msgstr "Seleziona il profilo audio"

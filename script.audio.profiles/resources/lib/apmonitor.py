@@ -5,21 +5,17 @@
 # *  updates and additions through v1.4.1 by notoco and CtrlGy
 # *  updates and additions since v1.4.2 by pkscout
 
-from kodi_six import xbmc, xbmcaddon, xbmcvfs
+from kodi_six import xbmc, xbmcvfs
 import json, os
-import resources.lib.notify as notify
-
-ADDON = xbmcaddon.Addon()
-ADDON_ID = ADDON.getAddonInfo('id')
-ADDON_PATH = xbmc.translatePath(ADDON.getAddonInfo('path'))
-ADDON_PATH_DATA = xbmc.translatePath( ADDON.getAddonInfo('profile') )
-ADDON_LANG = ADDON.getLocalizedString
+from resources.lib import notify
+from resources.lib.addoninfo import *
 
 profiles = ['1', '2', '3', '4']
 map_type = {'movie': 'auto_movies', 'video': 'auto_videos', 'episode': 'auto_tvshows', 'channel': 'auto_pvr',
             'musicvideo': 'auto_musicvideo', 'song': 'auto_music', 'unknown': 'auto_unknown'}
 susppend_auto_change = False
 set_for_susspend = None
+
 
 
 class Monitor(xbmc.Monitor):
@@ -32,8 +28,7 @@ class Monitor(xbmc.Monitor):
 
     def onSettingsChanged(self):
         global ADDON
-        ADDON = xbmcaddon.Addon()
-
+        reload (ADDON)
 
     def onNotification(self, sender, method, data):
         global susppend_auto_change

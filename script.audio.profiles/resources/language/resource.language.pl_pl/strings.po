@@ -12,16 +12,6 @@ msgstr ""
 "Language: pl\n"
 "Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n%100<12 || n%100>=14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);\n"
 
-#: addon.xml
-msgctxt "Addon Summary"
-msgid "Save audio profile and easily switch between them"
-msgstr "Zapisuje profile ustawień audio i łatwo przełącza między nimi"
-
-#: addon.xml
-msgctxt "Addon Description"
-msgid "To map a key for switch audio profile edit keymap xml file and add:[CR]RunScript(script.audio.profiles,0) - for switch profile in loop[CR]RunScript(script.audio.profiles,x) - where x is number of profile"
-msgstr "Aby przypisać przycisk do zmiany profili edytuj plik keymap xml i dodaj:[CR]RunScript(script.audio.profiles,0) - aby przełączać między profilami w pętli[CR]RunScript(script.audio.profiles,x) - gdzie x to numer profilu"
-
 #: Settings
 msgctxt "#32000"
 msgid "Profiles"
@@ -31,36 +21,6 @@ msgstr "Profile"
 msgctxt "#32001"
 msgid "Name of profile 1"
 msgstr "Nazwa profilu 1"
-
-#: Settings
-msgctxt "#32013"
-msgid "Includes Settings"
-msgstr "Uwzględnione Ustawienia"
-
-#: Settings
-msgctxt "#32014"
-msgid "Automatic Switch"
-msgstr "Automatyczne przełączanie"
-
-#: Settings
-msgctxt "#32018"
-msgid "Notifications"
-msgstr "Powiadomienia"
-
-#: Settings
-msgctxt "#32015"
-msgid "Show audio stream select menu on start playing"
-msgstr "Pokaż menu wyboru profilu audio podczas startu odtwarzania"
-
-#: Settings
-msgctxt "#32016"
-msgid "Auto close select menu"
-msgstr "Automatycznie zamknij menu wyboru profilu audio"
-
-#: Settings
-msgctxt "#32019"
-msgid "Notifications"
-msgstr "Powiadomienia"
 
 #: Settings
 msgctxt "#32002"
@@ -76,16 +36,6 @@ msgstr "Nazwa profilu 2"
 msgctxt "#32004"
 msgid "Include volume level"
 msgstr "Załącz poziom głośności"
-
-#: Settings
-msgctxt "#32011"
-msgid "Include video player settings"
-msgstr "Uwzględnij ustawienia odtwarzacza wideo"
-
-#: Settings
-msgctxt "#32012"
-msgid "Include display settings"
-msgstr "Uwzględnij ustawienia wyświetlania"
 
 #: Settings
 msgctxt "#32005"
@@ -116,6 +66,46 @@ msgstr "Profil 3"
 msgctxt "#32010"
 msgid "Profile 4"
 msgstr "Profil 4"
+
+#: Settings
+msgctxt "#32011"
+msgid "Include video player settings"
+msgstr "Uwzględnij ustawienia odtwarzacza wideo"
+
+#: Settings
+msgctxt "#32012"
+msgid "Include display settings"
+msgstr "Uwzględnij ustawienia wyświetlania"
+
+#: Settings
+msgctxt "#32013"
+msgid "Includes Settings"
+msgstr "Uwzględnione Ustawienia"
+
+#: Settings
+msgctxt "#32014"
+msgid "Automatic Switch"
+msgstr "Automatyczne przełączanie"
+
+#: Settings
+msgctxt "#32015"
+msgid "Show audio stream select menu on start playing"
+msgstr "Pokaż menu wyboru profilu audio podczas startu odtwarzania"
+
+#: Settings
+msgctxt "#32016"
+msgid "Auto close select menu"
+msgstr "Automatycznie zamknij menu wyboru profilu audio"
+
+#: Settings
+msgctxt "#32018"
+msgid "Notifications"
+msgstr "Powiadomienia"
+
+#: Settings
+msgctxt "#32019"
+msgid "Notifications"
+msgstr "Powiadomienia"
 
 #: Settings
 msgctxt "#32021"
@@ -228,9 +218,14 @@ msgid "Select profile to save settings"
 msgstr "Wybierz profil aby zapisać ustawienia"
 
 #: Script
-msgctxt "#32106"
-msgid "Select audio profile"
-msgstr "Wybierz profil audio"
+msgctxt "#32101"
+msgid "Configure profile"
+msgstr "Skonfiguruj profil"
+
+#: Script
+msgctxt "#32102"
+msgid "Saved as profile"
+msgstr "Zapisano jako profil"
 
 #: Script
 msgctxt "#32103"
@@ -248,11 +243,6 @@ msgid "Enable profiles"
 msgstr "Włacz profile"
 
 #: Script
-msgctxt "#32101"
-msgid "Configure profile"
-msgstr "Skonfiguruj profil"
-
-#: Script
-msgctxt "#32102"
-msgid "Saved as profile"
-msgstr "Zapisano jako profil"
+msgctxt "#32106"
+msgid "Select audio profile"
+msgstr "Wybierz profil audio"

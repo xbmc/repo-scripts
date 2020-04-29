@@ -5,11 +5,8 @@
 # *  updates and additions through v1.4.1 by notoco and CtrlGy
 # *  updates and additions since v1.4.2 by pkscout
 
-from kodi_six import xbmc, xbmcaddon, xbmcgui
-
-ADDON = xbmcaddon.Addon()
-ADDON_ICON = ADDON.getAddonInfo('icon')
-ADDON_NAME = ADDON.getAddonInfo('name')
+from kodi_six import xbmc, xbmcgui
+from resources.lib.addoninfo import *
 
 
 def popup(msg, force=False, title=''):
