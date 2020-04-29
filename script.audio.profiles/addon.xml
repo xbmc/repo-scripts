@@ -5,7 +5,7 @@
         <import addon="script.module.kodi-six" version="0.0.3" />
     </requires>
     <extension point="xbmc.python.script" library="default.py"/>
-    <extension point="xbmc.service" library="service.py" start="login"/>
+    <extension point="xbmc.service" library="service.py" />
     <extension point="xbmc.addon.metadata">
         <news>
 v.1.4.2~beta5
