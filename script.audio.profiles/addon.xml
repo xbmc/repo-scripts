@@ -26,14 +26,14 @@ v.1.4.2
 		<assets>
 			<icon>icon.png</icon>
 		</assets>
-		<summary lang="en_gb">Save audio profile and easily switch between them.</summary>
-		<summary lang="pl_pl">Zapisuje profile ustawień audio i łatwo przełącza między nimi.</summary>
-		<summary lang="it_it">Salva il profilo audio e cambia facilmente da uno all'altro.</summary>
-		<summary lang="hu_hu">Hangbeállítások profilba mentése, és könnyű váltás közöttük.</summary>
-		<description lang="en_gb">Save audio profile and easily switch between them.</description>
-		<description lang="pl_pl">Zapisuje profile ustawień audio i łatwo przełącza między nimi.</description>
-		<description lang="it_it">Salva il profilo audio e cambia facilmente da uno all'altro.</description>
-		<description lang="hu_hu">Hangbeállítások profilba mentése, és könnyű váltás közöttük.</description>
+		<summary lang="en_GB">Save audio profile and easily switch between them.</summary>
+		<summary lang="pl_PL">Zapisuje profile ustawień audio i łatwo przełącza między nimi.</summary>
+		<summary lang="it_IT">Salva il profilo audio e cambia facilmente da uno all'altro.</summary>
+		<summary lang="hu_HU">Hangbeállítások profilba mentése, és könnyű váltás közöttük.</summary>
+		<description lang="en_GB">Save audio profile and easily switch between them.</description>
+		<description lang="pl_PL">Zapisuje profile ustawień audio i łatwo przełącza między nimi.</description>
+		<description lang="it_IT">Salva il profilo audio e cambia facilmente da uno all'altro.</description>
+		<description lang="hu_HU">Hangbeállítások profilba mentése, és könnyű váltás közöttük.</description>
 		<platform>all</platform>
 		<license>GPL-3.0-only</license>
 		<forum>https://forum.kodi.tv/showthread.php?tid=353852</forum>
