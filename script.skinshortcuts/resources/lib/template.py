@@ -4,9 +4,9 @@ import xml.etree.ElementTree as xmltree
 import hashlib
 import copy
 from traceback import print_exc
-from resources.lib import simpleeval
+import simpleeval
 import operator, ast
-from resources.lib.simpleeval import simple_eval
+from simpleeval import simple_eval
 
 ADDON    = xbmcaddon.Addon()
 ADDONID  = ADDON.getAddonInfo('id')

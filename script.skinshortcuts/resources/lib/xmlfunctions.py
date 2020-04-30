@@ -111,12 +111,12 @@ class XMLFunctions():
                     ADDON.setSetting( "enable_logging", "false" )
 
                 # Offer to upload a debug log
-                if xbmc.getCondVisibility( "System.HasAddon( script.kodi.loguploader )" ):
-                    ret = xbmcgui.Dialog().yesno( ADDON.getAddonInfo( "name" ), LANGUAGE( 32092 ), LANGUAGE( 32093 ) )
+                if xbmc.getCondVisibility("System.HasAddon(script.kodi.loguploader)"):
+                    ret = xbmcgui.Dialog().yesno(ADDON.getAddonInfo("name"), LANGUAGE(32092) + "[CR]" + LANGUAGE(32093))
                     if ret:
-                        xbmc.executebuiltin( "RunScript(script.kodi.loguploader)" )
+                        xbmc.executebuiltin("RunScript(script.kodi.loguploader)")
                 else:
-                    xbmcgui.Dialog().ok( ADDON.getAddonInfo( "name" ), LANGUAGE( 32092 ), LANGUAGE( 32094 ) )
+                    xbmcgui.Dialog().ok(ADDON.getAddonInfo("name"), LANGUAGE(32092 ) + "[CR]" + LANGUAGE(32094))
 
             else:
                 # Enable any debug logging needed
@@ -143,11 +143,11 @@ class XMLFunctions():
                 else:
                     # Offer to upload a debug log
                     if xbmc.getCondVisibility( "System.HasAddon( script.kodi.loguploader )" ):
-                        ret = xbmcgui.Dialog().yesno( ADDON.getAddonInfo( "name" ), LANGUAGE( 32092 ), LANGUAGE( 32093 ) )
+                        ret = xbmcgui.Dialog().yesno(ADDON.getAddonInfo("name"), LANGUAGE(32092) + "[CR]" + LANGUAGE(32093))
                         if ret:
-                            xbmc.executebuiltin( "RunScript(script.kodi.loguploader)" )
+                            xbmc.executebuiltin("RunScript(script.kodi.loguploader)")
                     else:
-                        xbmcgui.Dialog().ok( ADDON.getAddonInfo( "name" ), LANGUAGE( 32092 ), LANGUAGE( 32094 ) )
+                        xbmcgui.Dialog().ok(ADDON.getAddonInfo("name"), LANGUAGE(32092) + "[CR]" + LANGUAGE(32094))
 
     def shouldwerun( self, profilelist ):
         try:
@@ -529,7 +529,7 @@ class XMLFunctions():
                                 pass
 
                     # If we're building a single menu, update the onclicks of the main menu
-                    if buildMode == "single" and not len( submenuitems ) == 0 and not isinstance( item, basestring ):
+                    if buildMode == "single" and not len(submenuitems) == 0 and not isinstance(item, str):
                         for onclickelement in mainmenuItemB.findall( "onclick" ):
                             if "condition" in onclickelement.attrib:
                                 onclickelement.set("condition", "String.IsEqual(Window(10000).Property(submenuVisibility),%s) + [%s]" %(DATA.slugify(submenuVisibilityName, convertInteger=True), onclickelement.attrib.get("condition")))
@@ -573,7 +573,7 @@ class XMLFunctions():
                             visibilityElement.text = "[%s] + %s" %(visibilityElement.text, "String.IsEqual(Window(10000).Property(submenuVisibility),%s)" %(DATA.slugify(submenuVisibilityName, convertInteger=True )))
                             justmenuTreeB.append( menuitemCopy )
 
-                        if buildMode == "single" and not isinstance( item, basestring ):
+                        if buildMode == "single" and not isinstance(item, str):
                             # Add the property 'submenuVisibility'
                             allmenuTreeCopy = Template.copy_tree( menuitemCopy )
                             submenuVisibility = xmltree.SubElement( allmenuTreeCopy, "property" )
