@@ -11,4 +11,7 @@ v0.0.4
 - code cleanup and small fixes
 
 v0.0.5
-- update forkodi leia
+- update for kodi leia
+
+v0.0.6
+- version bump to avoid the addon being shown in matrix
