@@ -1948,8 +1948,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
 
             # Execute the script
             self.currentWindow.setProperty( "additionalDialog", "True" )
-            import gui
-            ui= gui.GUI( "script-skinshortcuts.xml", CWD, "default", group=launchGroup, defaultGroup=launchDefaultGroup, nolabels=self.nolabels, groupname=groupName )
+            ui= GUI( "script-skinshortcuts.xml", CWD, "default", group=launchGroup, defaultGroup=launchDefaultGroup, nolabels=self.nolabels, groupname=groupName )
             ui.doModal()
             del ui
             self.currentWindow.clearProperty( "additionalDialog" )
