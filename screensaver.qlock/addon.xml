@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="screensaver.qlock" name="QLock Screensaver" version="0.0.5" provider-name="phil65">
+<addon id="screensaver.qlock" name="QLock Screensaver" version="0.0.6" provider-name="phil65">
 	<requires>
 		<import addon="xbmc.python" version="2.26.0"/>
 		<import addon="service.qlock" version="0.5.3"/>
@@ -12,5 +12,9 @@
 		<language></language>
 		<platform>all</platform>
 		<license>GNU GENERAL PUBLIC LICENSE Version 2</license>
+		<assets>
+	      <icon>icon.png</icon>
+				<fanart>fanart.jpg</fanart>
+		</assets>
 	</extension>
 </addon>
