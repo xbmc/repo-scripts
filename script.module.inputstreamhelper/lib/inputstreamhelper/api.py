@@ -24,10 +24,10 @@ def run(params):
         elif params[1] == 'info':
             info_dialog()
         else:
-            log("invalid API call method '{method}'", method=params[1])
+            log(4, "Invalid API call method '{method}'", method=params[1])
 
     elif len(params) > 4:
-        log('invalid API call, too many parameters')
+        log(4, 'Invalid API call, too many parameters.')
     else:
         ADDON.openSettings()
 
