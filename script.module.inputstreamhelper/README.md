@@ -17,29 +17,56 @@
 ## Example ##
 
 ```python
+# -*- coding: utf-8 -*-
+"""InputStream Helper Demo"""
+from __future__ import absolute_import, division, unicode_literals
 import sys
+import inputstreamhelper
+import xbmc
 import xbmcgui
 import xbmcplugin
-import inputstreamhelper
+
 
 PROTOCOL = 'mpd'
 DRM = 'com.widevine.alpha'
 STREAM_URL = 'https://demo.unified-streaming.com/video/tears-of-steel/tears-of-steel-dash-widevine.ism/.mpd'
-LICENSE_URL = 'https://cwip-shaka-proxy.appspot.com/no_auth'
+MIME_TYPE = 'application/dash+xml'
+LICENSE_URL = 'https://widevine-proxy.appspot.com/proxy'
+KODI_VERSION_MAJOR = int(xbmc.getInfoLabel('System.BuildVersion').split('.')[0])
 
 
-def play():
-    is_helper = inputstreamhelper.Helper(PROTOCOL, drm=DRM)
-    if is_helper.check_inputstream():
-        play_item = xbmcgui.ListItem(path=STREAM_URL)
-        play_item.setProperty('inputstreamaddon', is_helper.inputstream_addon)
-        play_item.setProperty('inputstream.adaptive.manifest_type', PROTOCOL)
-        play_item.setProperty('inputstream.adaptive.license_type', DRM)
-        play_item.setProperty('inputstream.adaptive.license_key', LICENSE_URL + '||R{SSM}|')
-        xbmcplugin.setResolvedUrl(handle=int(sys.argv[1]), succeeded=True, listitem=play_item)
+def run(addon_url):
+    """Run InputStream Helper Demo"""
+
+    # Play video
+    if addon_url.endswith('/play'):
+        is_helper = inputstreamhelper.Helper(PROTOCOL, drm=DRM)
+        if is_helper.check_inputstream():
+            play_item = xbmcgui.ListItem(path=STREAM_URL)
+            play_item.setContentLookup(False)
+            play_item.setMimeType(MIME_TYPE)
+
+            if KODI_VERSION_MAJOR >= 19:
+                play_item.setProperty('inputstream', is_helper.inputstream_addon)
+            else:
+                play_item.setProperty('inputstreamaddon', is_helper.inputstream_addon)
+
+            play_item.setProperty('inputstream.adaptive.manifest_type', PROTOCOL)
+            play_item.setProperty('inputstream.adaptive.license_type', DRM)
+            play_item.setProperty('inputstream.adaptive.license_key', LICENSE_URL + '||R{SSM}|')
+            xbmcplugin.setResolvedUrl(int(sys.argv[1]), True, play_item)
+
+    # Setup menu item
+    else:
+        xbmcplugin.setContent(int(sys.argv[1]), 'videos')
+        list_item = xbmcgui.ListItem(label='InputStream Helper Demo')
+        list_item.setProperty('IsPlayable', 'true')
+        url = addon_url + '/play'
+        xbmcplugin.addDirectoryItem(int(sys.argv[1]), url, list_item)
+        xbmcplugin.endOfDirectory(int(sys.argv[1]))
 
 if __name__ == '__main__':
-    play()
+    run(sys.argv[0])
 ```
 
 The Helper class takes two arguments: protocol (the media streaming protocol) and the optional argument 'drm'.
@@ -63,6 +90,11 @@ Please report any issues or bug reports on the [GitHub Issues](https://github.co
 This module is licensed under the **The MIT License**. Please see the [LICENSE.txt](LICENSE.txt) file for details.
 
 ## Releases
+## v0.4.6 (2020-04-29)
+- Compatibility fixes for Kodi 19 Matrix "pre-release" builds (@mediaminister)
+- Optimize Widevine CDM detection (@dagwieers)
+- Minor fixes for Widevine installation on ARM devices (@dagwieers @mediaminister @horstle)
+
 ## v0.4.5 (2020-04-07)
 - Added Spanish and Romanian translations (@roliverosc, @tmihai20)
 - Added support for Kodi 19 Matrix "pre-release" builds (@mediaminister)

@@ -6,13 +6,12 @@ from __future__ import absolute_import, division, unicode_literals
 import os
 
 from .. import config
-from ..kodiutils import browsesingle, localize, log, ok_dialog, progress_dialog, yesno_dialog
+from ..kodiutils import browsesingle, copy, exists, localize, log, mkdir, ok_dialog, progress_dialog, yesno_dialog
 from ..utils import cmd_exists, diskspace, http_download, http_get, run_cmd, sizeof_fmt, store, system_os, temp_path, unzip, update_temp_path
 
 
 def mnt_path():
     """Return mount path, usually ~/.kodi/userdata/addon_data/script.module.inputstreamhelper/temp/mnt"""
-    from xbmcvfs import exists, mkdir
     mount_path = os.path.join(temp_path(), 'mnt')
     if not exists(mount_path):
         mkdir(mount_path)
@@ -37,14 +36,14 @@ def chromeos_offset(bin_path):
                     offset = int(partition_data.group(2))
                     return str(offset * config.CHROMEOS_BLOCK_SIZE)
 
-    log('Failed to calculate losetup offset.')
+    log(4, 'Failed to calculate losetup offset.')
     return '0'
 
 
 def check_loop():
     """Check if loop module needs to be loaded into system."""
     if not run_cmd(['modinfo', 'loop'])['success']:
-        log('loop is built in the kernel.')
+        log(0, 'loop is built in the kernel.')
         return True  # assume loop is built in the kernel
 
     store('modprobe_loop', True)
@@ -59,10 +58,10 @@ def set_loop_dev():
     output = run_cmd(cmd, sudo=False)
     if output['success']:
         store('loop_dev', output['output'].strip())
-        log('Found free loop device: {device}', device=store('loop_dev'))
+        log(0, 'Found free loop device: {device}', device=store('loop_dev'))
         return True
 
-    log('Failed to find free loop device.')
+    log(4, 'Failed to find free loop device.')
     return False
 
 
@@ -89,7 +88,7 @@ def mnt_loop_dev():
 
 def select_best_chromeos_image(devices):
     """Finds the newest and smallest of the ChromeOS images given"""
-    log('Find best ARM image to use from the Chrome OS recovery.conf')
+    log(0, 'Find best ARM image to use from the Chrome OS recovery.conf')
 
     best = None
     for device in devices:
@@ -115,7 +114,7 @@ def select_best_chromeos_image(devices):
         # Select the newest version
         from distutils.version import LooseVersion  # pylint: disable=import-error,no-name-in-module,useless-suppression
         if LooseVersion(device['version']) > LooseVersion(best['version']):
-            log('{device[hwid]} ({device[version]}) is newer than {best[hwid]} ({best[version]})',
+            log(0, '{device[hwid]} ({device[version]}) is newer than {best[hwid]} ({best[version]})',
                 device=device,
                 best=best)
             best = device
@@ -123,7 +122,7 @@ def select_best_chromeos_image(devices):
         # Select the smallest image (disk space requirement)
         elif LooseVersion(device['version']) == LooseVersion(best['version']):
             if int(device['filesize']) + int(device['zipfilesize']) < int(best['filesize']) + int(best['zipfilesize']):
-                log('{device[hwid]} ({device_size}) is smaller than {best[hwid]} ({best_size})',
+                log(0, '{device[hwid]} ({device_size}) is smaller than {best[hwid]} ({best_size})',
                     device=device,
                     best=best,
                     device_size=int(device['filesize']) + int(device['zipfilesize']),
@@ -160,10 +159,11 @@ def install_widevine_arm(backup_path):  # pylint: disable=too-many-statements
     devices = chromeos_config()
     arm_device = select_best_chromeos_image(devices)
     if arm_device is None:
-        log('We could not find an ARM device in the Chrome OS recovery.conf')
+        log(4, 'We could not find an ARM device in the Chrome OS recovery.conf')
         ok_dialog(localize(30004), localize(30005))
         return ''
-    required_diskspace = int(arm_device['filesize']) + int(arm_device['zipfilesize'])
+    # Estimated required disk space: takes into account an extra 20 MiB buffer
+    required_diskspace = 20971520 + int(arm_device['zipfilesize']) + int(arm_device['filesize'])
     if yesno_dialog(localize(30001),  # Due to distributing issues, this takes a long time
                     localize(30006, diskspace=sizeof_fmt(required_diskspace))):
         if system_os() != 'Linux':
@@ -250,27 +250,24 @@ def install_widevine_arm(backup_path):  # pylint: disable=too-many-statements
 
 def extract_widevine_from_img(backup_path):
     """Extract the Widevine CDM binary from the mounted Chrome OS image"""
-    from shutil import copyfile
-    from xbmcvfs import exists, mkdir
-
-    for root, _, files in os.walk(str(mnt_path())):
-        if str('libwidevinecdm.so') not in files:
+    for root, _, files in os.walk(mnt_path()):
+        if 'libwidevinecdm.so' not in files:
             continue
         cdm_path = os.path.join(root, 'libwidevinecdm.so')
-        log('Found libwidevinecdm.so in {path}', path=cdm_path)
+        log(0, 'Found libwidevinecdm.so in {path}', path=cdm_path)
         if not exists(backup_path):
             mkdir(backup_path)
-        copyfile(cdm_path, os.path.join(backup_path, 'libwidevinecdm.so'))
+        copy(cdm_path, os.path.join(backup_path, 'libwidevinecdm.so'))
         return True
 
-    log('Failed to find Widevine CDM binary in Chrome OS image.')
+    log(4, 'Failed to find Widevine CDM binary in Chrome OS image.')
     return False
 
 
 def unmount():
     """Unmount mountpoint if mounted"""
     while os.path.ismount(mnt_path()):
-        log('Unmount {mountpoint}', mountpoint=mnt_path())
+        log(0, 'Unmount {mountpoint}', mountpoint=mnt_path())
         umount_output = run_cmd(['umount', mnt_path()], sudo=True)
         if not umount_output['success']:
             break

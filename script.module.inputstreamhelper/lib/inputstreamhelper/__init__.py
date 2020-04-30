@@ -6,13 +6,13 @@ from __future__ import absolute_import, division, unicode_literals
 import os
 
 from . import config
-from .kodiutils import (addon_version, get_proxies, get_setting, get_setting_bool, get_setting_float, get_setting_int, jsonrpc,
+from .kodiutils import (addon_version, delete, exists, get_proxies, get_setting, get_setting_bool, get_setting_float, get_setting_int, jsonrpc,
                         kodi_to_ascii, kodi_version, localize, log, notification, ok_dialog, progress_dialog, select_dialog,
                         set_setting, set_setting_bool, textviewer, translate_path, yesno_dialog)
 from .utils import arch, http_download, run_cmd, store, system_os, temp_path, unzip
 from .widevine.arm import install_widevine_arm, select_best_chromeos_image, unmount
-from .widevine.widevine import (backup_path, has_widevine, ia_cdm_path, install_cdm_from_backup, latest_widevine_version,
-                                load_widevine_config, missing_widevine_libs, widevine_config_path, widevine_eula, widevine_path)
+from .widevine.widevine import (backup_path, has_widevinecdm, ia_cdm_path, install_cdm_from_backup, latest_widevine_version,
+                                load_widevine_config, missing_widevine_libs, widevine_config_path, widevine_eula, widevinecdm_path)
 
 # NOTE: Work around issue caused by platform still using os.popen()
 #       This helps to survive 'IOError: [Errno 10] No child processes'
@@ -46,7 +46,7 @@ class Helper:
         self.drm = drm
 
         from platform import uname
-        log('Platform information: {uname}', uname=uname())
+        log(0, 'Platform information: {uname}', uname=uname())
 
         if self.protocol not in config.INPUTSTREAM_PROTOCOLS:
             raise InputStreamException('UnsupportedProtocol')
@@ -97,7 +97,7 @@ class Helper:
 
     @staticmethod
     def _get_lib_version(path):
-        if not path:
+        if not path or not exists(path):
             return '(Not found)'
         import re
         with open(path, 'rb') as library:
@@ -111,20 +111,20 @@ class Helper:
         """Checks if selected InputStream add-on is installed."""
         data = jsonrpc(method='Addons.GetAddonDetails', params=dict(addonid=self.inputstream_addon))
         if 'error' in data:
-            log('{addon} is not installed.', addon=self.inputstream_addon)
+            log(3, '{addon} is not installed.', addon=self.inputstream_addon)
             return False
 
-        log('{addon} is installed.', addon=self.inputstream_addon)
+        log(0, '{addon} is installed.', addon=self.inputstream_addon)
         return True
 
     def _inputstream_enabled(self):
         """Returns whether selected InputStream add-on is enabled.."""
         data = jsonrpc(method='Addons.GetAddonDetails', params=dict(addonid=self.inputstream_addon, properties=['enabled']))
         if data.get('result', {}).get('addon', {}).get('enabled'):
-            log('{addon} {version} is enabled.', addon=self.inputstream_addon, version=self._inputstream_version())
+            log(0, '{addon} {version} is enabled.', addon=self.inputstream_addon, version=self._inputstream_version())
             return True
 
-        log('{addon} is disabled.', addon=self.inputstream_addon)
+        log(3, '{addon} is disabled.', addon=self.inputstream_addon)
         return False
 
     def _enable_inputstream(self):
@@ -138,23 +138,30 @@ class Helper:
     def _supports_widevine():
         """Checks if Widevine is supported on the architecture/operating system/Kodi version."""
         if arch() not in config.WIDEVINE_SUPPORTED_ARCHS:
-            log('Unsupported Widevine architecture found: {arch}', arch=arch())
+            log(4, 'Unsupported Widevine architecture found: {arch}', arch=arch())
             ok_dialog(localize(30004), localize(30007, arch=arch()))  # Widevine not available on this architecture
             return False
 
+        if arch() == 'arm64' and system_os() != 'Android':
+            import struct
+            if struct.calcsize('P') * 8 == 64:
+                log(4, 'Unsupported 64-bit userspace found. User needs 32-bit userspace on {arch}', arch=arch())
+                ok_dialog(localize(30004), localize(30039))  # Widevine not available on ARM64
+                return False
+
         if system_os() not in config.WIDEVINE_SUPPORTED_OS:
-            log('Unsupported Widevine OS found: {os}', os=system_os())
+            log(4, 'Unsupported Widevine OS found: {os}', os=system_os())
             ok_dialog(localize(30004), localize(30011, os=system_os()))  # Operating system not supported by Widevine
             return False
 
         from distutils.version import LooseVersion  # pylint: disable=import-error,no-name-in-module,useless-suppression
         if LooseVersion(config.WIDEVINE_MINIMUM_KODI_VERSION[system_os()]) > LooseVersion(kodi_version()):
-            log('Unsupported Kodi version for Widevine: {version}', version=kodi_version())
+            log(4, 'Unsupported Kodi version for Widevine: {version}', version=kodi_version())
             ok_dialog(localize(30004), localize(30010, version=config.WIDEVINE_MINIMUM_KODI_VERSION[system_os()]))  # Kodi too old
             return False
 
         if 'WindowsApps' in translate_path('special://xbmcbin/'):  # uwp is not supported
-            log('Unsupported UWP Kodi version detected.')
+            log(4, 'Unsupported UWP Kodi version detected.')
             ok_dialog(localize(30004), localize(30012))  # Windows Store Kodi falls short
             return False
 
@@ -190,7 +197,7 @@ class Helper:
         install_cdm_from_backup(version)
 
         progress.update(98, message=localize(30050))  # Finishing
-        if has_widevine():
+        if has_widevinecdm():
             wv_check = self._check_widevine()
             if wv_check:
                 progress.update(100, message=localize(30051))  # Widevine CDM successfully installed.
@@ -229,10 +236,9 @@ class Helper:
     @staticmethod
     def remove_widevine():
         """Removes Widevine CDM"""
-        from xbmcvfs import delete, exists
-        widevinecdm = widevine_path()
-        if widevinecdm and exists(widevinecdm):
-            log('Remove Widevine CDM at {path}', path=widevinecdm)
+        if has_widevinecdm():
+            widevinecdm = widevinecdm_path()
+            log(0, 'Removed Widevine CDM at {path}', path=widevinecdm)
             delete(widevinecdm)
             notification(localize(30037), localize(30052))  # Success! Widevine successfully removed.
             return True
@@ -251,7 +257,7 @@ class Helper:
         if LooseVersion(addon_version()) > LooseVersion(settings_version):
             # New version found, save addon_version to settings
             set_setting('version', addon_version())
-            log('inputstreamhelper version {version} is running for the first time', version=addon_version())
+            log(2, 'InputStreamHelper version {version} is running for the first time', version=addon_version())
             return True
         return False
 
@@ -263,7 +269,7 @@ class Helper:
         if last_update and not self._first_run():
             last_update_dt = datetime.fromtimestamp(get_setting_float('last_update', 0.0))
             if last_update_dt + timedelta(days=get_setting_int('update_frequency', 14)) >= datetime.utcnow():
-                log('Widevine update check was made on {date}', date=last_update_dt.isoformat())
+                log(2, 'Widevine update check was made on {date}', date=last_update_dt.isoformat())
                 return
 
         wv_config = load_widevine_config()
@@ -274,35 +280,35 @@ class Helper:
         else:
             component = 'Chrome OS'
             current_version = select_best_chromeos_image(wv_config)['version']
-        log('Latest {component} version is {version}', component=component, version=latest_version)
-        log('Current {component} version installed is {version}', component=component, version=current_version)
+        log(0, 'Latest {component} version is {version}', component=component, version=latest_version)
+        log(0, 'Current {component} version installed is {version}', component=component, version=current_version)
 
         from distutils.version import LooseVersion  # pylint: disable=import-error,no-name-in-module,useless-suppression
         if LooseVersion(latest_version) > LooseVersion(current_version):
-            log('There is an update available for {component}', component=component)
+            log(2, 'There is an update available for {component}', component=component)
             if yesno_dialog(localize(30040), localize(30033), nolabel=localize(30028), yeslabel=localize(30034)):
                 self.install_widevine()
             else:
-                log('User declined to update {component}.', component=component)
+                log(3, 'User declined to update {component}.', component=component)
         else:
             from time import mktime
             set_setting('last_update', mktime(datetime.utcnow().timetuple()))
-            log('User is on the latest available {component} version.', component=component)
+            log(0, 'User is on the latest available {component} version.', component=component)
 
     def _check_widevine(self):
         """Checks that all Widevine components are installed and available."""
         if system_os() == 'Android':  # no checks needed for Android
             return True
 
-        if not os.path.exists(widevine_config_path()):
-            log('Widevine or Chrome OS recovery.conf is missing. Reinstall is required.')
+        if not exists(widevine_config_path()):
+            log(4, 'Widevine or Chrome OS recovery.conf is missing. Reinstall is required.')
             ok_dialog(localize(30001), localize(30031))  # An update of Widevine is required
             return self.install_widevine()
 
         if 'x86' in arch():  # check that widevine arch matches system arch
             wv_config = load_widevine_config()
             if config.WIDEVINE_ARCH_MAP_X86[arch()] != wv_config['arch']:
-                log('Widevine/system arch mismatch. Reinstall is required.')
+                log(4, 'Widevine/system arch mismatch. Reinstall is required.')
                 ok_dialog(localize(30001), localize(30031))  # An update of Widevine is required
                 return self.install_widevine()
 
@@ -326,7 +332,7 @@ class Helper:
                 store('attached_loop_dev', False)
         if store('modprobe_loop'):
             notification(localize(30035), localize(30036))  # Unload by hand in CLI
-        if not has_widevine():
+        if not has_widevinecdm():
             rmtree(ia_cdm_path())
 
         rmtree(temp_path())
@@ -338,7 +344,7 @@ class Helper:
         if LooseVersion(self._inputstream_version()) >= LooseVersion(config.HLS_MINIMUM_IA_VERSION):
             return True
 
-        log('HLS is unsupported on {addon} version {version}', addon=self.inputstream_addon, version=self._inputstream_version())
+        log(3, 'HLS is unsupported on {addon} version {version}', addon=self.inputstream_addon, version=self._inputstream_version())
         return False
 
     def _check_drm(self):
@@ -349,7 +355,7 @@ class Helper:
         if self.drm != 'widevine':
             return True
 
-        if has_widevine():
+        if has_widevinecdm():
             return self._check_widevine()
 
         if yesno_dialog(localize(30041), localize(30002), nolabel=localize(30028), yeslabel=localize(30038)):  # Widevine required
@@ -368,16 +374,16 @@ class Helper:
             # Check if InputStream add-on exists!
             Addon('{}'.format(self.inputstream_addon))
 
-            log('inputstream addon installed from repo.')
+            log(0, 'InputStream add-on installed from repo.')
             return True
         except RuntimeError:
-            log('inputstream addon not installed.')
+            log(3, 'InputStream add-on not installed.')
             return False
 
     def check_inputstream(self):
         """Main function. Ensures that all components are available for InputStream add-on playback."""
         if get_setting_bool('disabled', False):  # blindly return True if helper has been disabled
-            log('inputstreamhelper is disabled in its settings.xml.')
+            log(3, 'InputStreamHelper is disabled in its settings.xml.')
             return True
         if self.drm == 'widevine' and not self._supports_widevine():
             return False
@@ -391,7 +397,7 @@ class Helper:
             if not ret:
                 return False
             self._enable_inputstream()
-        log('{addon} {version} is installed and enabled.', addon=self.inputstream_addon, version=self._inputstream_version())
+        log(0, '{addon} {version} is installed and enabled.', addon=self.inputstream_addon, version=self._inputstream_version())
 
         if self.protocol == 'hls' and not self._supports_hls():
             ok_dialog(localize(30004),  # HLS Minimum version is needed
@@ -415,13 +421,13 @@ class Helper:
         text += ' - ' + localize(30812, version=self._inputstream_version(), state=istream_state) + '\n'
         text += '\n'
 
-        text += ' - ' + localize(30820) + '\n'  # Widevine information
+        text += localize(30820) + '\n'  # Widevine information
         if system_os() == 'Android':
             text += ' - ' + localize(30821) + '\n'
         else:
             from datetime import datetime
             wv_updated = datetime.fromtimestamp(get_setting_float('last_update', 0.0)).strftime("%Y-%m-%d %H:%M") if get_setting_float('last_update', 0.0) else 'Never'
-            text += ' - ' + localize(30822, version=self._get_lib_version(widevine_path()), date=wv_updated) + '\n'
+            text += ' - ' + localize(30822, version=self._get_lib_version(widevinecdm_path()), date=wv_updated) + '\n'
             text += ' - ' + localize(30823, path=ia_cdm_path()) + '\n'
 
             if arch() in ('arm', 'arm64'):  # Chrome OS version
@@ -431,7 +437,7 @@ class Helper:
 
         text += localize(30830, url=config.ISSUE_URL)  # Report issues
 
-        log('\n{info}'.format(info=kodi_to_ascii(text)), level=2)
+        log(2, '\n{info}'.format(info=kodi_to_ascii(text)))
         textviewer(localize(30901), text)
 
     def rollback_libwv(self):
@@ -440,7 +446,7 @@ class Helper:
         versions = os.listdir(bpath)
 
         # Return if Widevine is not installed
-        if not os.path.exists(widevine_config_path()):
+        if not exists(widevine_config_path()):
             notification(localize(30004), localize(30041))
             return
 
@@ -465,7 +471,7 @@ class Helper:
 
         version = select_dialog(localize(30057), show_versions)
         if version != -1:
-            log('Rollback to version {version}', version=versions[version])
+            log(0, 'Rollback to version {version}', version=versions[version])
             install_cdm_from_backup(versions[version])
             notification(localize(30037), localize(30051))  # Success! Widevine successfully installed.
 
