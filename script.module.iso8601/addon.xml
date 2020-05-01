@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addon id="script.module.iso8601"
        name="iso8601"
-       version="0.1.12+matrix.1"
+       version="0.1.12+matrix.2"
        provider-name="Michael Twomey">
   <requires>
     <import addon="xbmc.python" version="3.0.0"/>
@@ -13,5 +13,8 @@
     <license>MIT</license>
     <website>https://pypi.org/project/iso8601/</website>
     <source>https://bitbucket.org/micktwomey/pyiso8601</source>
+    <assets>
+      <icon>icon.png</icon>
+    </assets>
   </extension>
 </addon>
