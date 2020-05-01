@@ -1,3 +1,7 @@
+v1.3.2 (1/5/2020)
+- [new] Automated submissions for matrix
+- [fix] Addon.xml and screenshots (addon-checker compliance
+
 v1.2.4/1.2.5/1.2.6 (20/11/2018)
 - [new] initial support for python3 compatibility (tks rechi)
 - automate builds
@@ -19,7 +23,7 @@ v1.2.0 28/2/2018
 
 v1.1.0  21/2/2018
 - Support for network shares (tks InuSasha).
-- Recursive folder support for personal images 
+- Recursive folder support for personal images
 - Black background as an option
 - Option to hide dim overlay
 - Added spanish translation (tks roliverosc)
