@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Service LegendasDivx.com version 0.3.0
+# Service LegendasDivx.com version 0.4.0
 # Code based on Undertext (FRODO) service
 # Coded by HiGhLaNdR@OLDSCHOOL
 # Ported to Gotham by HiGhLaNdR@OLDSCHOOL
@@ -100,11 +100,11 @@ HTTP_USER_AGENT = "User-Agent=Kodi 18 Leia; Kodi 17; Kodi 16; Kodi 15"
 Release: The.Dark.Knight.2008.720p.BluRay.DTS.x264-ESiR</td>
 """
 
-subtitle_pattern = "<div\sclass=\"sub_box\">.+?<div\sclass=\"sub_header\">.+?<b>(.+?)</b>\s\((\d\d\d\d)\)\s.+?name=User_Info&username=(.+?)'><b>.+?</div>.+?<table\sclass=\"sub_main\scolor1\"\scellspacing=\"0\">.+?<tr>.+?<th>CDs:</th>.+?<td>(.+?)</td>.+?<a\shref=\"\?name=Downloads&d_op=ratedownload&lid=(.+?)\">.+?<th\sclass=\"color2\">Hits:</th>.+?<td>(.+?)</td>.+?<td>(.+?)</td>.+?<td\scolspan=\"5\"\sclass=\"td_desc\sbrd_up\">(.*?)</td>.+?<td\sclass"
+subtitle_pattern = "<div\sclass=\"sub_box\">.+?<div\sclass=\"sub_header\">.+?<b>(.+?)</b>\s\((\d\d\d\d)\)\s.+?name=User_Info&username=(.+?)'><b>.+?</div>.+?<table\sclass=\"sub_main\scolor1\"\scellspacing=\"0\">.+?<tr>.+?<th>CDs:</th>.+?<td>(.+?)</td>.+?<a\shref=\"\?name=Downloads&d_op=ratedownload&lid=(.+?)\">.+?<th\sclass=\"color2\">Hits:</th>.+?<td>(.+?)</td>.+?<td>(.+?)</td>.+?<td>(.+?)</td>.+?<td\scolspan=\"5\"\sclass=\"td_desc\sbrd_up\">(.*?)</td><td\sclass=\"td_right\sbrd_up\scolor2\">"
 release_pattern = "([^\W][\w\.]{1,}\w{1,}[\.]{1,1}[^\.|^\ |^\.org|^\.com|^\.net][^\Ws|^\.org|^\.com|^\.net][\w{1,}\.|\-|\(\d\d\d\d\)|\[\d\d\d\d\]]{3,}[^\Ws|^\.org|^\.com|^\.net][\w{3,}\-|\.{1,1}]\w{2,})"
 release_pattern1 = "([^\W][\w\ |\]|[]{4,}[^\Ws][x264|xvid|ac3]{1,}-[\w\[\]]{1,})"
 year_pattern = "(19|20)\d{2}$"
-# group(1) = Name, group(2) = Year, group(3) = Uploader, group (4) = Number Files, group(5) = ID, group(6) = Hits, group(7) = Requests, group(8) = Description
+# group(1) = Name, group(2) = Year, group(3) = Uploader, group (4) = Number Files, group(5) = ID, group(6) = Hits, group(7) = Requests, group(8) = Origin, group(9) = Description
 #==========
 # Functions
 #==========
@@ -146,11 +146,16 @@ def xbmc_extract(SRC, DEST):
             log("Extracting (back into the ff loop: '%s' to '%s'" % (now_SRC,now_DEST))
 
 def urlpost(query, lang, page):
-    postdata = urllib.urlencode({'query' : query, 'form_cat' : lang})
+    username = _addon.getSetting( 'LDuser' )
+    password = _addon.getSetting( 'LDpass' )
+    login_postdata = urllib.urlencode({'username' : username, 'password' : password, 'login' : 'Login', 'sid' : ''})
     cj = cookielib.CookieJar()
     my_opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cj))
-    my_opener.addheaders = [('Referer', main_url + 'modules.php?name=Downloads&file=jz&d_op=search&op=_jz00&page='+ str(page))]
+    my_opener.addheaders = [('Referer', main_url + 'modules.php?name=Your_Account')]
     urllib2.install_opener(my_opener)
+    request = urllib2.Request(main_url + 'forum/ucp.php?mode=login', login_postdata)
+    response = urllib2.urlopen(request).read()
+    postdata = urllib.urlencode({'query' : query, 'form_cat' : lang})
     request = urllib2.Request(main_url + 'modules.php?name=Downloads&file=jz&d_op=search&op=_jz00&page='+ str(page), postdata)
     log(u"POST url page: %s" % page)
     log(u"POST url data: %s" % postdata)
@@ -179,6 +184,8 @@ def getallsubs(searchstring, languageshort, languagelong, file_original_path, se
     while re.search(subtitle_pattern, content, re.IGNORECASE | re.DOTALL | re.MULTILINE) and page < 6:
         for matches in re.finditer(subtitle_pattern, content, re.IGNORECASE | re.DOTALL | re.X):
             uploader = matches.group(3)
+            origin = matches.group(8)
+            origin = origin[:1]
             hits = matches.group(6)
             id = matches.group(5)
             id = string.split(id, '"')
@@ -188,7 +195,7 @@ def getallsubs(searchstring, languageshort, languagelong, file_original_path, se
             downloads = int(matches.group(6)) / 200
             if (downloads > 5): downloads=5
             filename = string.strip(matches.group(1))
-            desc_ori = string.strip(matches.group(8))
+            desc_ori = string.strip(matches.group(9))
             desc_ori = re.sub('www.legendasdivx.com','',desc_ori)
             log(u"getallsubs: Original Decription = '%s'" % desc_ori.decode('utf8', 'ignore'))
             #Remove new lines on the commentaries
@@ -247,9 +254,9 @@ def getallsubs(searchstring, languageshort, languagelong, file_original_path, se
                             if re.search(filesearch[1][:len(filesearch[1])-4], desc) or re.search(dirsearch[-1], desc, re.IGNORECASE): sync = True
                         else:
                             if re.search(filesearch[1][:len(filesearch[1])-4], desc, re.IGNORECASE): sync = True
-            if _filenameon == "false": filename = "From: " + uploader + " - "  + desc + "  " + "hits: " + hits
-            else: filename = "From: " + uploader + " - "  + filename + " " + "(" + movieyear + ")" + "  " + "hits: " + hits + " - " + desc
-            subtitles_list.append({'rating': str(downloads), 'filename': filename, 'uploader': uploader, 'desc': desc, 'sync': sync, 'hits' : hits, 'id': id, 'language_short': languageshort, 'language_name': languagelong})
+            if _filenameon == "false": filename = "From: " + uploader + " (" + origin + ") - "  + desc + "  " + "hits: " + hits
+            else: filename = "From: " + uploader + " (" + origin + ") - "  + filename + " " + "(" + movieyear + ")" + "  " + "hits: " + hits + " - " + desc
+            subtitles_list.append({'rating': str(downloads), 'filename': filename, 'uploader': uploader, 'origin': origin, 'desc': desc, 'sync': sync, 'hits' : hits, 'id': id, 'language_short': languageshort, 'language_name': languagelong})
             log(u"getallsubs: SUBS LIST = '%s'" % subtitles_list)
         page = page + 1
         

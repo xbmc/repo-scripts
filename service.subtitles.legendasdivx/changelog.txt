@@ -1,3 +1,5 @@
+0.4.0
+- Added login before search. Added origin\type of the subtitle.
 0.3.0
 - RAR extraction finally fixed, thanks to Alwinus and Zack-morris.
 0.2.9
