@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.module.blinker" name="blinker" version="1.4.0+matrix.1" provider-name="Jason Kirtand">
+<addon id="script.module.blinker" name="blinker" version="1.4.0+matrix.2" provider-name="Jason Kirtand">
 	<requires>
 		<import addon="xbmc.python" version="3.0.0"/>
 	</requires>
 	<extension point="xbmc.python.module" library="lib" />
 	<extension point="xbmc.addon.metadata">
 		<platform>all</platform>
-		<language></language>
 		<summary lang="en_GB">Blinker provides a fast dispatching system that allows any number of interested parties to subscribe to events, or signals</summary>
 		<description lang="en_GB">Blinker provides a fast dispatching system that allows any number of interested parties to subscribe to events, or signals</description>
 		<license>MIT</license>
 		<website>https://pythonhosted.org/blinker/</website>
 		<source>https://pypi.org/project/blinker/</source>
+		<assets>
+			<icon>icon.png</icon>
+		</assets>
 	</extension>
 </addon>
