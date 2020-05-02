@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.module.watchdog" name="watchdog" version="0.10.1+matrix.1" provider-name="Yesudeep Mangalapilly">
+<addon id="script.module.watchdog" name="watchdog" version="0.10.2+matrix.1" provider-name="Yesudeep Mangalapilly">
 	<requires>
 		<import addon="xbmc.python" version="3.0.0"/>
-		<import addon="script.module.pathtools" version="0.1.2+matrix.1"/>
+		<import addon="script.module.pathtools" version="0.1.2+matrix.2"/>
 	</requires>
 	<extension point="xbmc.python.module" library="lib"/>
 	<extension point="xbmc.addon.metadata">
@@ -12,6 +12,9 @@
 		<platform>all</platform>
 		<website>https://pypi.org/project/watchdog</website>
 		<source>https://github.com/gorakhargosh/watchdog/</source>
+		<assets>
+			<icon>icon.png</icon>
+		</assets>		
 	</extension>
 </addon>
 
