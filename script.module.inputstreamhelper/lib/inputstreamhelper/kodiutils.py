@@ -3,6 +3,7 @@
 """Implements Kodi Helper functions"""
 
 from __future__ import absolute_import, division, unicode_literals
+from contextlib import contextmanager
 import xbmc
 import xbmcaddon
 from xbmcgui import DialogProgress
@@ -51,7 +52,7 @@ def kodi_version_major():
 
 def translate_path(path):
     """Translate special xbmc paths"""
-    return to_unicode(xbmc.translatePath(path))
+    return to_unicode(xbmc.translatePath(from_unicode(path)))
 
 
 def get_addon_info(key):
@@ -66,7 +67,7 @@ def addon_id():
 
 def addon_profile():
     """Cache and return add-on profile"""
-    return translate_path(ADDON.getAddonInfo('profile'))
+    return translate_path(get_addon_info('profile'))
 
 
 def addon_version():
@@ -79,7 +80,7 @@ def browsesingle(type, heading, shares='', mask='', useThumbs=False, treatAsFold
     from xbmcgui import Dialog
     if not heading:
         heading = ADDON.getAddonInfo('name')
-    return Dialog().browseSingle(type=type, heading=heading, shares=shares, mask=mask, useThumbs=useThumbs, treatAsFolder=treatAsFolder, defaultt=defaultt)
+    return to_unicode(Dialog().browseSingle(type=type, heading=heading, shares=shares, mask=mask, useThumbs=useThumbs, treatAsFolder=treatAsFolder, defaultt=defaultt))
 
 
 def notification(heading='', message='', icon='info', time=4000):
@@ -175,7 +176,7 @@ def get_setting_int(key, default=None):
 
 
 def get_setting_float(key, default=None):
-    """Get an add-on setting"""
+    """Get an add-on setting as float"""
     try:
         return ADDON.getSettingNumber(key)
     except (AttributeError, TypeError):  # On Krypton or older, or when not a float
@@ -315,41 +316,57 @@ def kodi_to_ascii(string):
     return string
 
 
+@contextmanager
+def open_file(path, flags='r'):
+    """Open a file (using xbmcvfs)"""
+    from xbmcvfs import File
+    fdesc = File(path, flags)
+    yield fdesc
+    fdesc.close()
+
+
 def copy(src, dest):
     """Copy a file (using xbmcvfs)"""
     from xbmcvfs import copy as vfscopy
     log(2, "Copy file '{src}' to '{dest}'.", src=src, dest=dest)
-    return vfscopy(src, dest)
+    return vfscopy(from_unicode(src), from_unicode(dest))
 
 
 def delete(path):
     """Remove a file (using xbmcvfs)"""
     from xbmcvfs import delete as vfsdelete
     log(2, "Delete file '{path}'.", path=path)
-    return vfsdelete(path)
+    return vfsdelete(from_unicode(path))
 
 
 def exists(path):
     """Whether the path exists (using xbmcvfs)"""
     from xbmcvfs import exists as vfsexists
-    return vfsexists(path)
+    return vfsexists(from_unicode(path))
+
+
+def listdir(path):
+    """Return all files in a directory (using xbmcvfs)"""
+    from xbmcvfs import listdir as vfslistdir
+    dirs, files = vfslistdir(from_unicode(path))
+    return [to_unicode(item) for items in (dirs, files) for item in items]
 
 
 def mkdir(path):
     """Create a directory (using xbmcvfs)"""
     from xbmcvfs import mkdir as vfsmkdir
     log(2, "Create directory '{path}'.", path=path)
-    return vfsmkdir(path)
+    return vfsmkdir(from_unicode(path))
 
 
 def mkdirs(path):
     """Create directory including parents (using xbmcvfs)"""
     from xbmcvfs import mkdirs as vfsmkdirs
     log(2, "Recursively create directory '{path}'.", path=path)
-    return vfsmkdirs(path)
+    return vfsmkdirs(from_unicode(path))
 
 
 def stat_file(path):
     """Return information about a file (using xbmcvfs)"""
     from xbmcvfs import Stat
-    return Stat(path)
+    return Stat(from_unicode(path))
