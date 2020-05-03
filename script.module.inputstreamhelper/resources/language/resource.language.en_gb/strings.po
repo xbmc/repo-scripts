@@ -190,7 +190,7 @@ msgid "Uncompressing image..."
 msgstr ""
 
 msgctxt "#30046"
-msgid "This may take several minutes. ({mins:d}:{secs:02d})"
+msgid "This may take several minutes."
 msgstr ""
 
 msgctxt "#30047"
@@ -235,6 +235,10 @@ msgstr ""
 
 msgctxt "#30057"
 msgid "Choose a backup to restore"
+msgstr ""
+
+msgctxt "#30058"
+msgid "Time remaining: {mins:d}:{secs:02d}"
 msgstr ""
 
 
