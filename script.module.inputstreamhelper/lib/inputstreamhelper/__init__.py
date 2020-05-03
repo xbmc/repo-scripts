@@ -7,12 +7,13 @@ import os
 
 from . import config
 from .kodiutils import (addon_version, delete, exists, get_proxies, get_setting, get_setting_bool, get_setting_float, get_setting_int, jsonrpc,
-                        kodi_to_ascii, kodi_version, localize, log, notification, ok_dialog, progress_dialog, select_dialog,
+                        kodi_to_ascii, kodi_version, listdir, localize, log, notification, ok_dialog, progress_dialog, select_dialog,
                         set_setting, set_setting_bool, textviewer, translate_path, yesno_dialog)
-from .utils import arch, http_download, run_cmd, store, system_os, temp_path, unzip
+from .utils import arch, http_download, remove_tree, run_cmd, store, system_os, temp_path, unzip
 from .widevine.arm import install_widevine_arm, select_best_chromeos_image, unmount
 from .widevine.widevine import (backup_path, has_widevinecdm, ia_cdm_path, install_cdm_from_backup, latest_widevine_version,
                                 load_widevine_config, missing_widevine_libs, widevine_config_path, widevine_eula, widevinecdm_path)
+from .unicodes import compat_path
 
 # NOTE: Work around issue caused by platform still using os.popen()
 #       This helps to survive 'IOError: [Errno 10] No child processes'
@@ -100,7 +101,7 @@ class Helper:
         if not path or not exists(path):
             return '(Not found)'
         import re
-        with open(path, 'rb') as library:
+        with open(compat_path(path), 'rb') as library:
             match = re.search(br'[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+', library.read())
         if not match:
             return '(Undetected)'
@@ -322,7 +323,6 @@ class Helper:
     @staticmethod
     def cleanup():
         """Clean up function after Widevine CDM installation"""
-        from shutil import rmtree
         unmount()
         if store('attached_loop_dev'):
             cmd = ['losetup', '-d', store('loop_dev')]
@@ -333,9 +333,9 @@ class Helper:
         if store('modprobe_loop'):
             notification(localize(30035), localize(30036))  # Unload by hand in CLI
         if not has_widevinecdm():
-            rmtree(ia_cdm_path())
+            remove_tree(ia_cdm_path())
 
-        rmtree(temp_path())
+        remove_tree(temp_path())
         return True
 
     def _supports_hls(self):
@@ -431,7 +431,9 @@ class Helper:
             text += ' - ' + localize(30823, path=ia_cdm_path()) + '\n'
 
             if arch() in ('arm', 'arm64'):  # Chrome OS version
-                text += ' - ' + localize(30824, version=select_best_chromeos_image(load_widevine_config())['version']) + '\n'
+                wv_cfg = load_widevine_config()
+                if wv_cfg:
+                    text += ' - ' + localize(30824, version=select_best_chromeos_image(wv_cfg)['version']) + '\n'
 
         text += '\n'
 
@@ -443,7 +445,7 @@ class Helper:
     def rollback_libwv(self):
         """Rollback lib to a version specified by the user"""
         bpath = backup_path()
-        versions = os.listdir(bpath)
+        versions = listdir(bpath)
 
         # Return if Widevine is not installed
         if not exists(widevine_config_path()):

@@ -4,10 +4,12 @@
 
 from __future__ import absolute_import, division, unicode_literals
 import os
+from time import time
 
 from . import config
 from .kodiutils import copy, delete, exists, get_setting, localize, log, mkdirs, ok_dialog, progress_dialog, set_setting, stat_file, translate_path
-from .unicodes import from_unicode
+from .unicodes import compat_path, from_unicode, to_unicode
+
 
 def temp_path():
     """Return temporary path, usually ~/.kodi/userdata/addon_data/script.module.inputstreamhelper/temp"""
@@ -86,10 +88,16 @@ def http_download(url, message=None, checksum=None, hash_alg='sha1', dl_size=Non
     download_path = os.path.join(temp_path(), filename)
     total_length = float(req.info().get('content-length'))
     progress = progress_dialog()
-    progress.create(localize(30014), message)  # Download in progress
+    progress.create(
+        localize(30014),  # Download in progress
+        message='{line1}\n{line2}'.format(
+            line1=message,
+            line2=localize(30058, mins=0, secs=0))  # Time remaining
+    )
 
+    starttime = time()
     chunk_size = 32 * 1024
-    with open(download_path, 'wb') as image:
+    with open(compat_path(download_path), 'wb') as image:
         size = 0
         while True:
             chunk = req.read(chunk_size)
@@ -100,11 +108,17 @@ def http_download(url, message=None, checksum=None, hash_alg='sha1', dl_size=Non
                 calc_checksum.update(chunk)
             size += len(chunk)
             percent = int(size * 100 / total_length)
+            time_left = int((total_length - size) * (time() - starttime) / size)
             if progress.iscanceled():
                 progress.close()
                 req.close()
                 return False
-            progress.update(percent)
+            progress.update(
+                percent,
+                message='{line1}\n{line2}'.format(
+                    line1=message,
+                    line2=localize(30058, mins=time_left // 60, secs=time_left % 60))  # Time remaining
+            )
 
     if checksum and not calc_checksum.hexdigest() == checksum:
         log(4, 'Download failed, checksums do not match!')
@@ -127,18 +141,18 @@ def unzip(source, destination, file_to_unzip=None, result=[]):  # pylint: disabl
         mkdirs(destination)
 
     from zipfile import ZipFile
-    zip_obj = ZipFile(source)
+    zip_obj = ZipFile(compat_path(source))
     for filename in zip_obj.namelist():
         if file_to_unzip and filename != file_to_unzip:
             continue
 
         # Detect and remove (dangling) symlinks before extraction
         fullname = os.path.join(destination, filename)
-        if os.path.islink(fullname):
+        if os.path.islink(compat_path(fullname)):
             log(3, 'Remove (dangling) symlink at {symlink}', symlink=fullname)
             delete(fullname)
 
-        zip_obj.extract(filename, destination)
+        zip_obj.extract(filename, compat_path(destination))
         result.append(True)  # Pass by reference for Thread
 
     return bool(result)
@@ -176,8 +190,7 @@ def store(name, val=None):
 
 def diskspace():
     """Return the free disk space available (in bytes) in temp_path."""
-    # Python 2.7: os.statvfs() not working well with unicode paths https://bugs.python.org/issue18695
-    statvfs = os.statvfs(from_unicode(temp_path()))
+    statvfs = os.statvfs(compat_path(temp_path()))
     return statvfs.f_frsize * statvfs.f_bavail
 
 
@@ -190,7 +203,6 @@ def cmd_exists(cmd):
 
 def run_cmd(cmd, sudo=False, shell=False):
     """Run subprocess command and return if it succeeds as a bool"""
-    from .unicodes import to_unicode
     import subprocess
     env = os.environ.copy()
     env['LANG'] = 'C'
@@ -212,7 +224,7 @@ def run_cmd(cmd, sudo=False, shell=False):
 
     if output.rstrip():
         log(0, '{cmd} cmd output:\n{output}', cmd=cmd, output=output)
-    if 'sudo' in cmd:
+    if from_unicode('sudo') in cmd:
         subprocess.call(['sudo', '-k'])  # reset timestamp
 
     return {
@@ -261,14 +273,19 @@ def arch():
 
 def hardlink(src, dest):
     """Hardlink a file when possible, copy when needed"""
-    from os import link
-
     if exists(dest):
         delete(dest)
 
     try:
-        link(src, dest)
-    except (AttributeError, OSError):
+        from os import link
+        link(compat_path(src), compat_path(dest))
+    except (AttributeError, OSError, ImportError):
         return copy(src, dest)
     log(2, "Hardlink file '{src}' to '{dest}'.", src=src, dest=dest)
     return True
+
+
+def remove_tree(path):
+    """Remove an entire directory tree"""
+    from shutil import rmtree
+    rmtree(compat_path(path))

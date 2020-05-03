@@ -190,8 +190,8 @@ msgid "Uncompressing image..."
 msgstr "Lemezkép kitömörítése"
 
 msgctxt "#30046"
-msgid "This may take several minutes. ({mins:d}:{secs:02d})"
-msgstr "Ez néhány percig eltarthat. ({mins:d}:{secs:02d})"
+msgid "This may take several minutes."
+msgstr "Ez néhány percig eltarthat."
 
 msgctxt "#30047"
 msgid "[I]Please do not interrupt this process.[/I]"
@@ -236,6 +236,10 @@ msgstr "Nem található mentés fájl!"
 msgctxt "#30057"
 msgid "Choose a backup to restore"
 msgstr "Válassz mentés fájlt a visszaállításhoz"
+
+msgctxt "#30058"
+msgid "Time remaining: {mins:d}:{secs:02d}"
+msgstr ""
 
 
 ### INFORMATION DIALOG

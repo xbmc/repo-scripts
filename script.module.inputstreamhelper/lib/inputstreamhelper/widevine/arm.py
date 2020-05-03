@@ -4,10 +4,12 @@
 
 from __future__ import absolute_import, division, unicode_literals
 import os
+from time import time
 
 from .. import config
-from ..kodiutils import browsesingle, copy, exists, localize, log, mkdir, ok_dialog, progress_dialog, yesno_dialog
-from ..utils import cmd_exists, diskspace, http_download, http_get, run_cmd, sizeof_fmt, store, system_os, temp_path, unzip, update_temp_path
+from ..kodiutils import browsesingle, copy, exists, localize, log, mkdir, ok_dialog, open_file, progress_dialog, yesno_dialog
+from ..utils import cmd_exists, diskspace, http_download, http_get, run_cmd, sizeof_fmt, store, system_os, temp_path, update_temp_path
+from ..unicodes import compat_path, to_unicode
 
 
 def mnt_path():
@@ -78,7 +80,7 @@ def losetup(bin_path):
 
 def mnt_loop_dev():
     """Mount loop device to mnt_path()"""
-    cmd = ['mount', '-t', 'ext2', '-o', 'ro', store('loop_dev'), mnt_path()]
+    cmd = ['mount', '-t', 'ext2', '-o', 'ro', store('loop_dev'), compat_path(mnt_path())]
     output = run_cmd(cmd, sudo=True)
     if output['success']:
         return True
@@ -199,47 +201,49 @@ def install_widevine_arm(backup_path):  # pylint: disable=too-many-statements
         url = arm_device['url']
         downloaded = http_download(url, message=localize(30022), checksum=arm_device['sha1'], hash_alg='sha1', dl_size=int(arm_device['zipfilesize']))  # Downloading the recovery image
         if downloaded:
-            from threading import Thread
-            from xbmc import sleep
             progress = progress_dialog()
             progress.create(heading=localize(30043), message=localize(30044))  # Extracting Widevine CDM
             bin_filename = url.split('/')[-1].replace('.zip', '')
-            bin_path = os.path.join(temp_path(), bin_filename)
+            bin_path = compat_path(os.path.join(temp_path(), bin_filename))
+            starttime = time()
 
             progress.update(
                 0,
                 message='{line1}\n{line2}\n{line3}'.format(
                     line1=localize(30045),  # Uncompressing image
-                    line2=localize(30046, mins=0, secs=0),  # This may take several minutes
+                    line2=localize(30058, mins=0, secs=0),  # Time remaining
                     line3=localize(30047))  # Please do not interrupt this process
             )
-            unzip_result = []
-            unzip_thread = Thread(target=unzip, args=[store('download_path'), temp_path(), bin_filename, unzip_result], name='ImageExtraction')
-            unzip_thread.start()
 
-            time = 0
-            percent = 0
-            remaining = 95
-            while unzip_thread.is_alive():
-                offset = remaining * 0.6 / 100
-                percent += offset
-                remaining -= offset
-                time += 1
-                sleep(1000)
-                progress.update(
-                    int(percent),
-                    message='{line1}\n{line2}\n{line3}'.format(
-                        line1=localize(30045),  # Uncompressing image
-                        line2=localize(30046, mins=time // 60, secs=time % 60),  # This may take several minutes
-                        line3=localize(30047))  # Please do not interrupt this process
-                )
+            from zipfile import ZipFile
 
-            if bool(unzip_result) and check_loop() and set_loop_dev() and losetup(bin_path) and mnt_loop_dev():
+            with ZipFile(compat_path(store('download_path'))) as zip_obj:
+                bin_size = zip_obj.getinfo(bin_filename).file_size
+                chunksize = 1024**2
+
+                with zip_obj.open(bin_filename) as member:
+                    with open(bin_path, 'wb') as bin_file:
+                        bytes_to_read = bin_size
+                        while bytes_to_read > 0:
+                            chunk = member.read(chunksize)
+                            bytes_to_read -= chunksize
+                            bin_file.write(chunk)
+                            percent = 100 * (1 - bytes_to_read / bin_size) - 5
+                            time_left = int(bytes_to_read * (time() - starttime) / (bin_size - bytes_to_read))
+                            progress.update(
+                                int(percent),
+                                message='{line1}\n{line2}\n{line3}'.format(
+                                    line1=localize(30045),  # Uncompressing image
+                                    line2=localize(30058, mins=time_left // 60, secs=time_left % 60),  # Time remaining
+                                    line3=localize(30047))  # Please do not interrupt this process
+                            )
+
+            if check_loop() and set_loop_dev() and losetup(bin_path) and mnt_loop_dev():
                 import json
                 progress.update(96, message=localize(30048))  # Extracting Widevine CDM
                 extract_widevine_from_img(os.path.join(backup_path, arm_device['version']))
                 json_file = os.path.join(backup_path, arm_device['version'], os.path.basename(config.CHROMEOS_RECOVERY_URL) + '.json')
-                with open(json_file, 'w') as config_file:
+                with open_file(json_file, 'w') as config_file:
                     config_file.write(json.dumps(devices, indent=4))
 
                 return (progress, arm_device['version'])
@@ -250,10 +254,10 @@ def install_widevine_arm(backup_path):  # pylint: disable=too-many-statements
 
 def extract_widevine_from_img(backup_path):
     """Extract the Widevine CDM binary from the mounted Chrome OS image"""
-    for root, _, files in os.walk(mnt_path()):
-        if 'libwidevinecdm.so' not in files:
+    for root, _, files in os.walk(compat_path(mnt_path())):
+        if compat_path('libwidevinecdm.so') not in files:
             continue
-        cdm_path = os.path.join(root, 'libwidevinecdm.so')
+        cdm_path = os.path.join(to_unicode(root), 'libwidevinecdm.so')
         log(0, 'Found libwidevinecdm.so in {path}', path=cdm_path)
         if not exists(backup_path):
             mkdir(backup_path)
@@ -266,8 +270,8 @@ def extract_widevine_from_img(backup_path):
 
 def unmount():
     """Unmount mountpoint if mounted"""
-    while os.path.ismount(mnt_path()):
+    while os.path.ismount(compat_path(mnt_path())):
         log(0, 'Unmount {mountpoint}', mountpoint=mnt_path())
-        umount_output = run_cmd(['umount', mnt_path()], sudo=True)
+        umount_output = run_cmd(['umount', compat_path(mnt_path())], sudo=True)
         if not umount_output['success']:
             break

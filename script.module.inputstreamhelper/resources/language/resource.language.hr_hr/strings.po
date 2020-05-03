@@ -190,8 +190,8 @@ msgid "Uncompressing image..."
 msgstr "Raspakiranje preslike u tijeku…"
 
 msgctxt "#30046"
-msgid "This may take several minutes. ({mins:d}:{secs:02d})"
-msgstr "Ovo bi moglo potrajati nekoliko minuta. ({mins:d}:{secs:02d})"
+msgid "This may take several minutes."
+msgstr "Ovo bi moglo potrajati nekoliko minuta."
 
 msgctxt "#30047"
 msgid "[I]Please do not interrupt this process.[/I]"
@@ -236,6 +236,10 @@ msgstr "Nisu pronađene sigurnosne kopije!"
 msgctxt "#30057"
 msgid "Choose a backup to restore"
 msgstr "Odaberite sigurnosnu kopiju za vraćanje"
+
+msgctxt "#30058"
+msgid "Time remaining: {mins:d}:{secs:02d}"
+msgstr ""
 
 
 ### INFORMATION DIALOG
