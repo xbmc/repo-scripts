@@ -70,15 +70,15 @@ msgstr "למרבה הצער קרתה שגיאה בהרחבה [B]%s[/B]."
 
 msgctxt "#91001"
 msgid "You can help with fixing the problem by submitting an error report. "
-msgstr "אתה יכול לעזור בתיקון הבעיה ע"י שליחת דו"ח שגיאות."
+msgstr "אתה יכול לעזור בתיקון הבעיה עי שליחת דוח שגיאות."
 
 msgctxt "#91002"
 msgid "Click [I]Show error report[/I] for details. No personal information is sent."
-msgstr "לחץ  [I]הצג דו"ח שגיאות[/I] לפרטים. לא נשלח מידע אישי."
+msgstr "לחץ  [I]הצג דוח שגיאות[/I] לפרטים. לא נשלח מידע אישי."
 
 msgctxt "#91003"
 msgid "Submit error report"
-msgstr "שלח דו"ח שגיאות"
+msgstr "שלח דוח שגיאות"
 
 msgctxt "#91004"
 msgid "Don't submit"
@@ -90,11 +90,11 @@ msgstr "תודה לך על התרומה!"
 
 msgctxt "#91006"
 msgid "Show error report"
-msgstr "הצג דו"ח שגיאות"
+msgstr "הצג דוח שגיאות"
 
 msgctxt "#91007"
 msgid "Hide error report"
-msgstr "הסתר דו"ח שגיאות"
+msgstr "הסתר דוח שגיאות"
 
 msgctxt "#91008"
 msgid "Unfortunately a problem occurred while showing the details..."
@@ -102,5 +102,5 @@ msgstr "למרבה הצער קרתה שגיאה בעת הצגת הפרטים..."
 
 msgctxt "#91009"
 msgid "Unable to send error report!"
-msgstr "נכשל בשליחת דו"ח שגיאות!"
+msgstr "נכשל בשליחת דוח שגיאות!"
 
