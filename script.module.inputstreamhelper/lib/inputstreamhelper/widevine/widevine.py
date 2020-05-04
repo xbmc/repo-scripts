@@ -6,13 +6,14 @@ from __future__ import absolute_import, division, unicode_literals
 import os
 
 from .. import config
-from ..kodiutils import addon_profile, exists, get_setting_int, localize, log, mkdir, ok_dialog, translate_path, yesno_dialog
-from ..utils import arch, cmd_exists, hardlink, http_download, http_get, run_cmd, store, system_os
+from ..kodiutils import addon_profile, exists, get_setting_int, listdir, localize, log, mkdirs, ok_dialog, open_file, translate_path, yesno_dialog
+from ..utils import arch, cmd_exists, hardlink, http_download, http_get, remove_tree, run_cmd, store, system_os
+from ..unicodes import compat_path, to_unicode
 
 
 def install_cdm_from_backup(version):
     """Copies files from specified backup version to cdm dir"""
-    filenames = os.listdir(os.path.join(backup_path(), version))
+    filenames = listdir(os.path.join(backup_path(), version))
 
     for filename in filenames:
         backup_fpath = os.path.join(backup_path(), version, filename)
@@ -41,7 +42,7 @@ def widevine_eula():
         return False
 
     from zipfile import ZipFile
-    with ZipFile(store('download_path')) as archive:
+    with ZipFile(compat_path(store('download_path'))) as archive:
         with archive.open(config.WIDEVINE_LICENSE_FILE) as file_obj:
             eula = file_obj.read().decode().strip().replace('\n', ' ')
 
@@ -52,7 +53,7 @@ def backup_path():
     """Return the path to the cdm backups"""
     path = os.path.join(addon_profile(), 'backup')
     if not exists(path):
-        mkdir(path)
+        mkdirs(path)
     return path
 
 
@@ -66,8 +67,10 @@ def widevine_config_path():
 def load_widevine_config():
     """Load the widevine or recovery config in JSON format"""
     from json import loads
-    with open(widevine_config_path(), 'r') as config_file:
-        return loads(config_file.read())
+    if exists(widevine_config_path()):
+        with open_file(widevine_config_path(), 'r') as config_file:
+            return loads(config_file.read())
+    return None
 
 
 def widevinecdm_path():
@@ -103,9 +106,9 @@ def ia_cdm_path():
     except RuntimeError:
         return None
 
-    cdm_path = translate_path(addon.getSetting('DECRYPTERPATH'))
+    cdm_path = translate_path(to_unicode(addon.getSetting('DECRYPTERPATH')))
     if not exists(cdm_path):
-        mkdir(cdm_path)
+        mkdirs(cdm_path)
 
     return cdm_path
 
@@ -165,10 +168,9 @@ def latest_widevine_version(eula=False):
 def remove_old_backups(bpath):
     """Removes old Widevine backups, if number of allowed backups is exceeded"""
     from distutils.version import LooseVersion  # pylint: disable=import-error,no-name-in-module,useless-suppression
-    from shutil import rmtree
 
     max_backups = get_setting_int('backups', 4)
-    versions = sorted([LooseVersion(version) for version in os.listdir(bpath)])
+    versions = sorted([LooseVersion(version) for version in listdir(bpath)])
 
     if len(versions) < 2:
         return
@@ -182,7 +184,7 @@ def remove_old_backups(bpath):
     while len(versions) > max_backups + 1:
         remove_version = str(versions[1] if versions[0] == LooseVersion(installed_version) else versions[0])
         log(0, 'Removing oldest backup which is not installed: {version}', version=remove_version)
-        rmtree(os.path.join(bpath, remove_version))
-        versions = sorted([LooseVersion(version) for version in os.listdir(bpath)])
+        remove_tree(os.path.join(bpath, remove_version))
+        versions = sorted([LooseVersion(version) for version in listdir(bpath)])
 
     return

@@ -90,6 +90,11 @@ Please report any issues or bug reports on the [GitHub Issues](https://github.co
 This module is licensed under the **The MIT License**. Please see the [LICENSE.txt](LICENSE.txt) file for details.
 
 ## Releases
+## v0.4.7 (2020-05-03)
+- Fix hardlink on Windows (@BarmonHammer)
+- Fix support for unicode chars in paths (@mediaminister)
+- Show remaining time during Widevine installation on ARM devices (@horstle)
+
 ## v0.4.6 (2020-04-29)
 - Compatibility fixes for Kodi 19 Matrix "pre-release" builds (@mediaminister)
 - Optimize Widevine CDM detection (@dagwieers)

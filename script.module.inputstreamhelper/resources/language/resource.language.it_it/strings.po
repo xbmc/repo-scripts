@@ -190,8 +190,8 @@ msgid "Uncompressing image..."
 msgstr "Sto estraendo l'immagine"
 
 msgctxt "#30046"
-msgid "This may take several minutes. ({mins:d}:{secs:02d})"
-msgstr "Potrebbero volerci alcuni minuti. ({mins:d}:{secs:02d})"
+msgid "This may take several minutes."
+msgstr "Potrebbero volerci alcuni minuti."
 
 msgctxt "#30047"
 msgid "[I]Please do not interrupt this process.[/I]"
@@ -236,6 +236,10 @@ msgstr "Backup non trovato!"
 msgctxt "#30057"
 msgid "Choose a backup to restore"
 msgstr "Scegli un backup da ripristinare"
+
+msgctxt "#30058"
+msgid "Time remaining: {mins:d}:{secs:02d}"
+msgstr ""
 
 
 ### INFORMATION DIALOG
