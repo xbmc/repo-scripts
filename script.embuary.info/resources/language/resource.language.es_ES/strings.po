@@ -4,14 +4,14 @@
 # Addon Provider: sualfred
 # Translators:
 # sualfred <su4lfred@gmail.com>, 2019
-# Bartolome Soriano <bsoriano@gmail.com>, 2019
+# Rafa Oliveros <roliverosc@gmail.com>, 2020
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: Embuary Helper\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2019-09-04 11:35+0000\n"
-"Last-Translator: Bartolome Soriano <bsoriano@gmail.com>, 2019\n"
+"PO-Revision-Date: 2019-11-24 08:54+0000\n"
+"Last-Translator: Rafa Oliveros <roliverosc@gmail.com>, 2020\n"
 "Language-Team: Spanish (Spain) (https://www.transifex.com/sualfred/teams/80018/es_ES/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -33,7 +33,7 @@ msgstr ""
 #: /resources/settings.xml
 msgctxt "#32002"
 msgid "(Get a free API key on www.omdbapi.com)"
-msgstr "(Obtenga una llave API gratis en www.omdbapi.com)"
+msgstr "(Obtenga una clave API gratis en www.omdbapi.com)"
 
 #: /resources/settings.xml
 msgctxt "#32003"
@@ -48,7 +48,7 @@ msgstr "No se encontró información"
 #: /resources/lib/utils.py
 msgctxt "#32022"
 msgid "Invalid TheMovieDB API key"
-msgstr "Llave API de TheMovieDB inválida"
+msgstr "Clave API de TheMovieDB inválida"
 
 #: /default.py
 msgctxt "#32004"
@@ -73,7 +73,7 @@ msgstr "Lugar de nacimiento"
 #: /resources/skins/default/1080i/script-embuary-person.xml
 msgctxt "#32008"
 msgid "Facts"
-msgstr "Hechos"
+msgstr "Datos"
 
 #: /resources/skins/default/1080i/script-embuary-video.xml
 msgctxt "#32009"
@@ -103,7 +103,7 @@ msgstr "Presupuesto"
 #: /resources/skins/default/1080i/script-embuary-video.xml
 msgctxt "#32014"
 msgid "Revenue"
-msgstr "Ganancias"
+msgstr "Recaudación"
 
 #: /resources/skins/default/1080i/script-embuary-video.xml
 msgctxt "#32015"
@@ -118,27 +118,29 @@ msgstr "Temporadas"
 #: /resources/skins/default/1080i/script-embuary-person.xml
 msgctxt "#32017"
 msgid "Known for"
-msgstr "Conocida(o) por"
+msgstr "Conocido(a) por"
 
 #: /resources/skins/default/1080i/script-embuary-video.xml
 msgctxt "#32018"
 msgid "Crew"
-msgstr "Personal"
+msgstr "Equipo"
 
 #: /resources/settings.xml
 msgctxt "#32023"
 msgid "API key"
-msgstr "Llave API"
+msgstr "Clave API"
 
 #: /resources/settings.xml
 msgctxt "#32020"
-msgid "Caching"
-msgstr "Haciendo Caché"
+msgid "Developer settings"
+msgstr "Ajustes de desarrollador"
 
 #: /resources/settings.xml
 msgctxt "#32021"
-msgid "Enable caching of fetched data"
-msgstr "Activar cache para datos obtenidos"
+msgid "Enable caching (highly recommended - only turn off for debugging)"
+msgstr ""
+"Activar almacenamiento en caché (muy recomendable, solo desactívelo para la "
+"depuración)"
 
 #: /resources/settings.xml
 msgctxt "#32024"
@@ -148,7 +150,7 @@ msgstr "Idioma por defecto"
 #: /resources/skins/default/1080i/script-embuary-person.xml
 msgctxt "#32025"
 msgid "items in your library"
-msgstr "ítems en su colección"
+msgstr "elementos en su colección"
 
 #: /resources/settings.xml
 msgctxt "#32026"
@@ -158,15 +160,15 @@ msgstr "Misc."
 #: /resources/settings.xml
 msgctxt "#32027"
 msgid "Hide person appearances in reality/talk/news shows"
-msgstr "Esconder apariciones personas en series de reality/panel/noticias"
+msgstr "Ocultar apariciones de personas en reality / talk / noticieros"
 
 #: /resources/settings.xml
 msgctxt "#32028"
 msgid ""
 "Hide person appearances in specials/documentaries/behind the scenes movies"
 msgstr ""
-"Esconder apariciones de personas en películas de "
-"especiales/documentales/detrás de las escenas"
+"Ocultar apariciones de personas en películas especiales / documentales / "
+"detrás de las cámaras"
 
 #: /resources/lib/listing.py
 msgctxt "#32029"
@@ -176,12 +178,12 @@ msgstr "Películas Mejor Valoradas"
 #: /resources/lib/listing.py
 msgctxt "#32030"
 msgid "Now playing movies"
-msgstr "Películas en el cine hoy"
+msgstr "Ahora en Cines"
 
 #: /resources/lib/listing.py
 msgctxt "#32031"
 msgid "Upcoming movies"
-msgstr "Películas a estrenarse próximamente"
+msgstr "Próximos Estrenos"
 
 #: /resources/lib/listing.py
 msgctxt "#32032"
@@ -201,22 +203,22 @@ msgstr "Series TV Populares"
 #: /resources/lib/listing.py
 msgctxt "#32035"
 msgid "TV shows airing today"
-msgstr "Series TV al aire hoy"
+msgstr "Series TV en Emisión Hoy"
 
 #: /resources/lib/listing.py
 msgctxt "#32036"
 msgid "TV shows airing in the next 7 days"
-msgstr "Series TV al aire en los próximos 7 días"
+msgstr "Series TV en emisión en los próximos 7 días"
 
 #: /resources/skins/default/1080i/script-embuary-video.xml
 msgctxt "#32037"
 msgid "Collection"
-msgstr "Saga"
+msgstr "Colección"
 
 #: /resources/skins/default/1080i/script-embuary-video.xml
 msgctxt "#32039"
 msgid "Guest stars"
-msgstr "Actores/Actrices Invitados(as)"
+msgstr "Estrellas invitadas"
 
 #: /resources/skins/default/1080i/script-embuary-video.xml
 msgctxt "#32040"
@@ -231,7 +233,7 @@ msgstr "Widgets"
 #: /resources/settings.xml
 msgctxt "#32041"
 msgid "Hide items from similar movies if they are part of the collection"
-msgstr "Esconder ítems de películas similares si son parte de la saga"
+msgstr "Ocultar elementos de películas similares si son parte de la colección"
 
 #: /resources/lib/widgets.py
 msgctxt "#32042"
@@ -242,3 +244,83 @@ msgstr "Películas en Tendencia"
 msgctxt "#32043"
 msgid "Trending shows"
 msgstr "Series TV en Tendencia"
+
+#: /resources/settings.xml
+msgctxt "#32044"
+msgid "Hide upcoming items"
+msgstr "Ocultar próximos elementos"
+
+#: /resources/settings.xml
+msgctxt "#32045"
+msgid "Allow items of the next [n] days"
+msgstr "Permitir elementos de los próximos [n] días"
+
+#: /resources/skins/default/1080i/script-embuary-video.xml
+msgctxt "#32046"
+msgid "Watched episodes"
+msgstr "Episodios vistos"
+
+#: /resources/settings.xml
+msgctxt "#32047"
+msgid "Install context menu addon"
+msgstr "Instalar addon de menú contextual"
+
+#: /resources/skins/default/1080i/script-embuary-video.xml
+msgctxt "#32048"
+msgid "Next episode"
+msgstr "Siguiente episodio"
+
+#: /resources/lib/widgets.py
+msgctxt "#32049"
+msgid "Discover"
+msgstr "Descubrir"
+
+#: /resources/lib/widgets.py
+msgctxt "#32050"
+msgid "Discover movies"
+msgstr "Descubrir películas"
+
+#: /resources/lib/widgets.py
+msgctxt "#32051"
+msgid "Discover TV shows"
+msgstr "Descubrir series TV"
+
+#: /resources/lib/widgets.py
+msgctxt "#32052"
+msgid "Discover movies by year"
+msgstr "Descubrir películas por año"
+
+#: /resources/lib/widgets.py
+msgctxt "#32053"
+msgid "Discover movies by genre"
+msgstr "Descubrir películas por género"
+
+#: /resources/lib/widgets.py
+msgctxt "#32054"
+msgid "Discover TV shows by year"
+msgstr "Descubrir series TV por año"
+
+#: /resources/lib/widgets.py
+msgctxt "#32055"
+msgid "Discover TV shows by genre"
+msgstr "Descubrir series TV por género"
+
+#: /resources/lib/widgets.py
+msgctxt "#32056"
+msgid "Previous page"
+msgstr "Página anterior"
+
+#: /resources/lib/widgets.py
+msgctxt "#32057"
+msgid "Discover people"
+msgstr "Descubrir personas"
+
+#: /resources/lib/widgets.py
+msgctxt "#32058"
+msgid "Next 7 days"
+msgstr "Próximos 7 días"
+
+#: /resources/lib/widgets.py
+msgctxt "#32059"
+msgid "Next airing episodes of your TV show library"
+msgstr "Próximos episodios en emisión de su biblioteca de series TV"
