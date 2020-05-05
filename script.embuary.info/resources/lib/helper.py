@@ -24,7 +24,7 @@ ADDON_ID = ADDON.getAddonInfo('id')
 ADDON_VERSION = ADDON.getAddonInfo('version')
 ADDON_PATH = ADDON.getAddonInfo('path')
 
-NOTICE = xbmc.LOGNOTICE
+INFO = xbmc.LOGINFO
 WARNING = xbmc.LOGWARNING
 DEBUG = xbmc.LOGDEBUG
 ERROR = xbmc.LOGERROR
@@ -47,7 +47,7 @@ TIMEZONE = 'local'
 
 def log(txt,loglevel=DEBUG,json=False,force=False):
     if force:
-        loglevel = NOTICE
+        loglevel = INFO
 
     if json:
         txt = json_prettyprint(txt)
