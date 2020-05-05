@@ -1,0 +1,261 @@
+# Kodi Media Center language file
+# Addon Name: Gismeteo
+# Addon id: weather.gismeteo
+# Addon Provider: vl.maksime
+#
+# TRADUCIDO POR GRUPO CHIKIRY WIZARD
+
+msgid ""
+msgstr ""
+
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: es\n"
+
+# Categories
+
+msgctxt "#32101"
+msgid "Location setup"
+msgstr "Configurar ubicación"
+
+msgctxt "#32102"
+msgid "Advanced"
+msgstr "Avanzado"
+
+msgctxt "#32103"
+msgid "Expert"
+msgstr "Experto"
+
+# Location setup
+
+msgctxt "#32110"
+msgid "Current Location"
+msgstr "Ubicación actual"
+
+msgctxt "#32111"
+msgid "Location 1"
+msgstr "Localización 1"
+
+msgctxt "#32112"
+msgid "Location 2"
+msgstr "Localización 2"
+
+msgctxt "#32113"
+msgid "Location 3"
+msgstr "Localización 3"
+
+msgctxt "#32114"
+msgid "Location 4"
+msgstr "Localización 4"
+
+msgctxt "#32115"
+msgid "Location 5"
+msgstr "Localización 5"
+
+msgctxt "#32116"
+msgid "Location 1 ID"
+msgstr "Localización 1 ID"
+
+msgctxt "#32117"
+msgid "Location 2 ID"
+msgstr "Localización 2 ID"
+
+msgctxt "#32118"
+msgid "Location 3 ID"
+msgstr "Localización 3 ID"
+
+msgctxt "#32119"
+msgid "Location 4 ID"
+msgstr "Localización 4 ID"
+
+msgctxt "#32120"
+msgid "Location 5 ID"
+msgstr "Localización 5 ID"
+
+# Advanced
+
+msgctxt "#32122"
+msgid "Weekend"
+msgstr "Fin de semana"
+
+msgctxt "#32123"
+msgid "Saturday/Sunday"
+msgstr "Sábado/Domingo"
+
+msgctxt "#32124"
+msgid "Friday/Saturday"
+msgstr "Viernes/Sábado"
+
+msgctxt "#32125"
+msgid "Thursday/Friday"
+msgstr "Jueves/Viernes"
+
+msgctxt "#32130"
+msgid "Time zone"
+msgstr "Zona horaria"
+
+msgctxt "#32131"
+msgid "from system settings"
+msgstr "desde la configuración del sistema"
+
+msgctxt "#32132"
+msgid "from location"
+msgstr "desde la ubicación"
+
+msgctxt "#32133"
+msgid "Measure units"
+msgstr "Unidades de medida"
+
+msgctxt "#32134"
+msgid "Pressure"
+msgstr "Presión"
+
+msgctxt "#32135"
+msgid "Precipitation"
+msgstr "Precipitación"
+
+msgctxt "#32136"
+msgid "Clear cache"
+msgstr "Limpiar cache"
+
+msgctxt "#32200"
+msgid "User interface language"
+msgstr "Idioma de la interfaz de usuario"
+
+msgctxt "#32201"
+msgid "Russian"
+msgstr ""
+
+msgctxt "#32202"
+msgid "Ukrainian"
+msgstr ""
+
+msgctxt "#32203"
+msgid "Lithuanian"
+msgstr ""
+
+msgctxt "#32204"
+msgid "Latvian"
+msgstr ""
+
+msgctxt "#32205"
+msgid "English"
+msgstr ""
+
+msgctxt "#32206"
+msgid "Romanian"
+msgstr ""
+
+msgctxt "#32207"
+msgid "German"
+msgstr ""
+
+msgctxt "#32208"
+msgid "Polish"
+msgstr ""
+
+msgctxt "#32299"
+msgid "Language"
+msgstr "Idioma"
+
+msgctxt "#32301"
+msgid "a/p"
+msgstr ""
+
+# Speed
+
+msgctxt "#32401"
+msgid "m/s"
+msgstr ""
+
+msgctxt "#32402"
+msgid "km/h"
+msgstr ""
+
+msgctxt "#32403"
+msgid "m/min"
+msgstr ""
+
+msgctxt "#32404"
+msgid "ft/h"
+msgstr ""
+
+msgctxt "#32405"
+msgid "ft/min"
+msgstr ""
+
+msgctxt "#32406"
+msgid "ft/s"
+msgstr ""
+
+msgctxt "#32407"
+msgid "knots"
+msgstr "nudos"
+
+msgctxt "#32408"
+msgid "Beaufort"
+msgstr ""
+
+msgctxt "#32409"
+msgid "inch/s"
+msgstr "pulgada/s"
+
+msgctxt "#32410"
+msgid "yard/s"
+msgstr "yarda/s"
+
+msgctxt "#32411"
+msgid "Furlong/Fortnight"
+msgstr "Furlong/Quincena"
+
+msgctxt "#32412"
+msgid "mph"
+msgstr ""
+
+msgctxt "#32413"
+msgid "kts"
+msgstr ""
+
+# Wind direction
+
+msgctxt "#32420"
+msgid "calm"
+msgstr "calma"
+
+# Precipitation
+
+msgctxt "#32430"
+msgid "mm"
+msgstr ""
+
+msgctxt "#32431"
+msgid "inch"
+msgstr "pulgada"
+
+msgctxt "#32432"
+msgid "n/a"
+msgstr ""
+
+# Pressure
+
+msgctxt "#32440"
+msgid "mmHg"
+msgstr ""
+
+msgctxt "#32441"
+msgid "hPa"
+msgstr ""
+
+msgctxt "#32442"
+msgid "mbar"
+msgstr ""
+
+msgctxt "#32443"
+msgid "inHg"
+msgstr ""
+
+# Messages
+
+msgctxt "#32501"
+msgid "Connection error"
+msgstr "Error de conexión"
