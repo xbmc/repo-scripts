@@ -22,7 +22,7 @@ from watchdog.observers.api import BaseObserver
 from watchdog.observers.api import ObservedWatch
 from .polling_local import LocalPoller
 from .polling_xbmc import VFSPoller
-from .utils import encode_path, is_url
+from .utils import is_url
 
 
 try:
@@ -65,7 +65,7 @@ def select_emitter(path):
     if is_url(path) and xbmcvfs.exists(path):
         return VFSPoller
 
-    if os.path.exists(encode_path(path)):
+    if os.path.exists(path):
         if settings.POLLING:
             return LocalPoller
         if _is_remote_filesystem(path):
@@ -83,15 +83,15 @@ def _is_remote_filesystem(path):
         return False
 
     remote_fs_types = ['cifs', 'smbfs', 'nfs', 'nfs4']
-    escaped_path = encode_path(path.rstrip('/').replace(' ', '\\040'))
+    escaped_path = path.rstrip('/').replace(' ', '\\040')
     try:
         with open('/proc/mounts', 'r') as f:
             for line in f:
                 _, mount_point, fstype = line.split()[:3]
                 if mount_point == escaped_path:
-                    log("[fstype] type is \"%s\" '%s' " % (fstype, path.decode('utf-8')))
+                    log("[fstype] type is \"%s\" '%s' " % (fstype, path))
                     return fstype in remote_fs_types
-        log("[fstype] path not in /proc/mounts '%s' " % escaped_path.decode('utf-8'))
+        log("[fstype] path not in /proc/mounts '%s' " % escaped_path)
         return False
 
     except (IOError, ValueError) as e:
