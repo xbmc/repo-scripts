@@ -21,30 +21,28 @@ import os
 from . import settings
 from functools import partial
 from .polling import Poller, PollerNonRecursive, file_list_from_walk, hidden
-from .utils import encode_path, decode_path, raise_if_aborted
+from .utils import raise_if_aborted
 
 
 def _walk(path):
-    path = encode_path(path)
     for root, dirs, files in os.walk(path):
         raise_if_aborted()
         if dirs or files:
             for d in dirs:
                 if hidden(d):
                     dirs.remove(d)
-            dirs = (decode_path(os.path.join(root, d)) for d in dirs)
-            files = (decode_path(os.path.join(root, f)) for f in files if not hidden(f))
+            dirs = (os.path.join(root, d) for d in dirs)
+            files = (os.path.join(root, f) for f in files if not hidden(f))
             yield dirs, files
 
 
 def _list_files(root):
-    root = encode_path(root)
     paths = [os.path.join(root, name) for name in os.listdir(root) if not hidden(name)]
-    return [decode_path(path) for path in paths if not os.path.isdir(path)]
+    return [path for path in paths if not os.path.isdir(path)]
 
 
 def _get_mtime(path):
-    return os.stat(encode_path(path)).st_mtime
+    return os.stat(path).st_mtime
 
 
 class _Recursive(Poller):

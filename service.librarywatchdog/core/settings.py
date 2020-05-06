@@ -40,13 +40,13 @@ SHOW_PROGRESS_DIALOG = ADDON.getSetting('hideprogress') == 'false'
 if ADDON.getSetting('watchvideo') == 'true':
     VIDEO_SOURCES = utils.get_media_sources('video')
 else:
-    VIDEO_SOURCES = [ADDON.getSetting('videosource%d' % i).decode('utf-8')
+    VIDEO_SOURCES = [ADDON.getSetting('videosource%d' % i)
                      for i in range(1, 11)]
     VIDEO_SOURCES = [s for s in set(VIDEO_SOURCES) if s != ""]
 
 if ADDON.getSetting('watchmusic') == 'true':
     MUSIC_SOURCES = utils.get_media_sources('music')
 else:
-    MUSIC_SOURCES = [ADDON.getSetting('musicsource%d' % i).decode('utf-8')
+    MUSIC_SOURCES = [ADDON.getSetting('musicsource%d' % i)
                      for i in range(1, 11)]
     MUSIC_SOURCES = [s for s in set(MUSIC_SOURCES) if s != ""]

@@ -26,24 +26,11 @@ import json
 from urllib.parse import unquote
 from threading import Condition
 
+monitor = xbmc.Monitor()
 
 def log(msg, level=xbmc.LOGDEBUG):
     from . import settings
-    xbmc.log(("[" + settings.ADDON_ID + "] " + msg).encode('utf-8', 'replace').decode(), level)
-
-
-def encode_path(path):
-    """os.path does not handle unicode properly, i.e. when locale is C, file
-    system encoding is assumed to be ascii. """
-    if sys.platform.startswith('win'):
-        return path
-    return path.encode('utf-8')
-
-
-def decode_path(path):
-    if sys.platform.startswith('win'):
-        return path
-    return path.decode('utf-8')
+    xbmc.log(("[" + settings.ADDON_ID + "] " + msg), level)
 
 
 def is_url(path):
@@ -123,5 +110,5 @@ class XBMCInterrupt(Exception):
 
 
 def raise_if_aborted():
-    if xbmc.abortRequested:
+    if monitor.abortRequested():
         raise XBMCInterrupt

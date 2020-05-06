@@ -29,8 +29,8 @@ def _walk(path):
     dirs, files = xbmcvfs.listdir(path)
     # xbmcvfs bug: sometimes return invalid utf-8 encoding. we only care about
     # finding changed paths so it's ok to ignore here.
-    dirs = [path + _.decode('utf-8', 'ignore') for _ in dirs if not hidden(_)]
-    files = [path + _.decode('utf-8', 'ignore') for _ in files if not hidden(_)]
+    dirs = [path + _ for _ in dirs if not hidden(_)]
+    files = [path + _ for _ in files if not hidden(_)]
     yield dirs, files
     for d in dirs:
         for dirs, files in _walk(d + '/'):
@@ -39,7 +39,7 @@ def _walk(path):
 
 def _list_files(path):
     dirs, files = xbmcvfs.listdir(path)
-    return [path + '/' + f.decode('utf-8', 'ignore') for f in files if not hidden(f)]
+    return [path + '/' + f for f in files if not hidden(f)]
 
 
 def _get_mtime(path):
