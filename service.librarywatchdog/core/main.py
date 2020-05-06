@@ -33,8 +33,6 @@ from watchdog.events import FileSystemEventHandler
 from watchdog.utils.compat import Event
 from .emitters import MultiEmitterObserver
 
-monitor = xbmc.Monitor()
-
 class XBMCIF(threading.Thread):
     """Wrapper around the builtins to make sure no two commands are executed at
     the same time (xbmc will cancel previous if not finished)
@@ -167,6 +165,7 @@ class EventHandler(FileSystemEventHandler):
 
 
 def main():
+    monitor = xbmc.Monitor()
     progress = xbmcgui.DialogProgressBG()
     try:
         progress.create("Watchdog starting. Please wait...")
@@ -250,12 +249,7 @@ def main():
         except:
             dialog = None
 
-    if xbmc.__version__ >= '2.19.0':
-        monitor = monitor
-        monitor.waitForAbort()
-    else:
-        while not monitor.abortRequested():
-            xbmc.sleep(100)
+    monitor.waitForAbort()
 
     log("stopping..")
     observer.stop()
