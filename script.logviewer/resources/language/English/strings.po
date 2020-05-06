@@ -1,6 +1,6 @@
 # Kodi Media Center language file
 # Addon Name: Log Viewer for Kodi
-# Addon id: scripy.logviewer
+# Addon id: script.logviewer
 # Addon Provider: i96751414
 #
 msgid ""
