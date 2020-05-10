@@ -1,3 +1,6 @@
+v1.0.3
+- allow 2MB uploads
+
 v1.0.2
 - refactor
 
