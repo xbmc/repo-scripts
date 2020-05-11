@@ -149,7 +149,7 @@ class Main():
         try:
             lf = xbmcvfs.File(path)
             sz = lf.size()
-            if sz > 1000000:
+            if sz > 2000000:
                 log('file is too large')
                 return False, LANGUAGE(32005)
             content = lf.read()
