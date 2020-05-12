@@ -55,7 +55,7 @@ def prep_search_str(text):
 class BaseProvider(object):
 
     def __init__(self, *args, **kwargs):
-        self.limit = kwargs.get("limit", 10)
+        self.limit = int(kwargs.get("limit", 10))
 
     def get_predictions(self, search_str):
         if not search_str:
