@@ -195,10 +195,8 @@ class Language(_Parameter):
 
     @classmethod
     def validate(cls, value):
-        split_values = value.split(',')
-        for val in split_values:
-            if val not in cls._valid:
-                raise ValueError(value)
+        if value not in cls._valid:
+            raise ValueError(value)
         return value
 
 
