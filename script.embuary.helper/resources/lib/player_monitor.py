@@ -44,11 +44,6 @@ class PlayerMonitor(xbmc.Monitor):
             if PLAYER.isPlayingVideo() and not self.pvr_playback:
                 self.get_videoinfo()
 
-        ''' Playlist changed. Fetch nextitem again.
-        '''
-        if method in ['Playlist.OnAdd', 'Playlist.OnRemove'] and PLAYER.isPlayingVideo() and not self.pvr_playback:
-            self.get_nextitem()
-
         ''' Check if multiple audio tracks are available and refetch
             artwork info for PVR playback.
         '''
@@ -67,7 +62,6 @@ class PlayerMonitor(xbmc.Monitor):
 
             if not PLAYER.isPlaying() and xbmcgui.getCurrentWindowId() not in [12005, 12006, 10028, 10500, 10138, 10160]:
                 self.pvr_playback = False
-                self.get_nextitem(clear=True)
                 self.get_channellogo(clear=True)
                 self.get_audiotracks(clear=True)
                 self.get_videoinfo(clear=True)
