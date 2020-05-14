@@ -62,7 +62,7 @@ class Log:
     def info(self, message):
         message = prep_log_message(message)
         if xbmc:
-            self._log(message, xbmc.LOGNOTICE)
+            self._log(message, xbmc.LOGINFO)
         else:
             self._log.info(message)
 
