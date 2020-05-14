@@ -217,7 +217,17 @@ def handle_episodes(li,item):
     director = item.get('director', '')
     writer = item.get('writer', '')
 
-    li_item = xbmcgui.ListItem(item['title'])
+    if item['episode'] < 10:
+      label = '0%s. %s' % (item['episode'], item['title'])
+    else:
+      label = '%s. %s' % (item['episode'], item['title'])
+
+    if item['season'] == '0':
+      label = 'S' + label
+    else:
+      label = '%sx%s' % (item['season'], label)
+
+    li_item = xbmcgui.ListItem(label)
     li_item.setInfo(type='Video', infoLabels={'title': item['title'],
                                               'episode': item['episode'],
                                               'season': item['season'],
