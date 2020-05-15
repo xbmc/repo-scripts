@@ -251,3 +251,9 @@ msgstr "миллибары"
 msgctxt "#32443"
 msgid "inHg"
 msgstr "дюймы рт. ст."
+
+# Messages
+
+msgctxt "#32501"
+msgid "Connection error"
+msgstr "Ошибка подключения"

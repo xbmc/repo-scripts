@@ -146,7 +146,7 @@ Weekend.%i.Precipitation   (total amount of rain and snow)
 36Hour.%i.Precipitation    (total amount of rain and snow)
 
 
-HOURLY [1-16]              (NOTE: this is 3-hourly, eg. 0:00, 3:00, 6:00, 9:00 and so on) 
+HOURLY [1-16]              (NOTE: this is 3-hourly, eg. 0:00, 3:00, 6:00, 9:00 and so on)
 -------------
 Hourly.IsFetched
 Hourly.%i.Time             (eg. '12:00')
