@@ -1,0 +1,41 @@
+v0.4.1 (2020-05-03)
+- Changed data caching mechanism
+- Fixed identified bugs
+- Added Spanish translation (CHIKIRY WIZARD GROUP)
+
+v0.3.3 (2018-04-07)
+- Fixed bug with parsing XML data
+
+v0.3.2 (2018-02-18)
+- Fixed compatibility with Android and LibreELEC
+
+v0.3.1 (2018-02-11)
+- Adapted to use the SimplePlugin 3 library
+- Implemented support for Python 3.6 (Compatibility with KODI 19 and above)
+- Fixed bugs
+
+v0.2.3 (2017-12-23)
+- Fixed compatibility with KODI 16.1 on Android 4.4
+
+v0.2.2 (2017-12-10)
+- Fixed bugs
+- Added selection of units for pressure and precipitation
+- Added the ability to clear the cache (Settings-Expert-Clear cache)
+
+v0.2.1 (2017-12-04)
+- Cached requests to the service
+- Added the ability to display the current location
+- Added translation for units of measure
+- Added time zone selection to display date and time
+
+v0.1.2 (2017-11-06)
+- Corrected the display of precipitation
+
+v0.1.1 (2017-11-05)
+- Compatibility with older versions of KODI is added
+- Added weather output for the weekend
+- Added weather output for 36 hours
+- Added language selection for forecasting
+
+v0.1.0 (2017-10-23)
+- Public release
