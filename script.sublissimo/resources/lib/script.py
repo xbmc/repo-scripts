@@ -306,10 +306,10 @@ def save_the_file(subtitlefile, filename, playing=False):
     if choice == 0:
         new_file_name = filename[:-4] + "_edited.srt"
     if choice == 1:
-        new_file_name = filename
+        new_file_name = filename[:-4] + ".srt"
     if choice == 2:
         # Give new filename
-        new_file_name = xbmcgui.Dialog().input(_(32042), defaultt=filename)
+        new_file_name = xbmcgui.Dialog().input(_(32042), defaultt=filename[:-4] + ".srt")
     with closing(File(new_file_name, 'w')) as fo:
         fo.write("".join(subtitlefile))
     backupfile = copy.deepcopy(subtitlefile)
@@ -440,6 +440,8 @@ def load_subtitle():
     filename = xbmcgui.Dialog().browse(1, _(32035), 'video')
     if filename == "":
         sys.exit()
+    if filename[-3:] == 'sub':
+        load_sub_subtitlefile(filename)
     if filename[-3:] != 'srt':
         # Error, only .srt files
         xbmcgui.Dialog().ok(_(32014), _(32026))
@@ -514,6 +516,82 @@ def advanced_options(subtitlefile, filename):
         check_integrity_menu(subtitlefile, filename)
     if menuchoice == 2 or menuchoice == -1:
         show_dialog(subtitlefile, filename)
+
+# --------------------- SUB FILES-----------------------
+
+def search_frame_rate(subtitlefile, filename):
+    class SearchFrameRate(xbmc.Player):
+        def __init__ (self):
+            xbmc.Player.__init__(self)
+               
+        def get_frame_rate(self):
+            self.frame_rate = xbmc.getInfoLabel('Player.Process(VideoFPS)')
+            self.stop()
+            return float(self.frame_rate)
+    
+    location = retrieve_video(subtitlefile, filename)
+    newplayer = SearchFrameRate()
+    newplayer.play(location)
+    xbmc.sleep(500)
+    frame_rate = newplayer.get_frame_rate()
+    response = xbmcgui.Dialog().yesno(_(32106), _(32120) + str(frame_rate), yeslabel=_(32089), nolabel=_(32126))
+    if response:
+        create_new_sub(subtitlefile, filename, frame_rate)
+    else:
+        load_sub_subtitlefile(filename)    
+    while newplayer.isPlaying():
+        xbmc.sleep(500)
+
+def recreate_line(line, frame_rate, line_number):
+    startline_index = line.find("{")
+    midline_index = line.find("}{")
+    endline_index = line.find("}", midline_index+1)
+    start_time = line[startline_index+1:midline_index]
+    end_time = line[midline_index+2:endline_index]
+    srt_starttime = make_timelines_classical(int(start_time)/frame_rate*1000)
+    srt_endtime = make_timelines_classical(int(end_time)/frame_rate*1000)
+    txtlines = line[endline_index+1:len(line)].split("|")
+    block = [str(line_number)] + [srt_starttime + " --> " + srt_endtime] + txtlines + [""]
+    return [sentence+"\n" for sentence in block]
+
+def load_sub_subtitlefile(filename="", subtitlefile=[]):
+    if not subtitlefile:
+        f = xbmcvfs.File(filename)
+        b = f.read().split("\n")
+        subtitlefile = [sentence+"\n" for sentence in b]
+    options = ["23.976", "24", "25", "29.976", "30", _(32127), _(32104), _(32129)]
+    menuchoice = xbmcgui.Dialog().select(_(32105), options)
+    if menuchoice == 5:
+        try:
+            frame_rate = float(xbmcgui.Dialog().input(_(32127)))
+            create_new_sub(subtitlefile, filename, frame_rate)
+        except:
+            load_sub_subtitlefile(filename, subtitlefile)
+    if menuchoice == 6:
+        search_frame_rate(subtitlefile, filename)
+    if menuchoice == 7:
+        response = xbmcgui.Dialog().yesno(_(32130), _(32131), yeslabel=_(32012), nolabel=_(32128))           
+        if response:
+            load_sub_subtitlefile(filename, subtitlefile)
+        else:
+            load_subtitle()    
+    else:
+        frame_rate = float(options[menuchoice]) 
+        create_new_sub(subtitlefile, filename, frame_rate)
+        
+def create_new_sub(subtitlefile, filename, frame_rate):          
+    new_subtitlefile = []
+    for line_number, line in enumerate(subtitlefile):
+        if line.find("}{") != -1:
+            new_subtitlefile += recreate_line(line, frame_rate, line_number+1)
+    #xbmcgui.Dialog().multiselect("Sync was succesfull:", new_subtitlefile)
+    if new_subtitlefile:
+        show_dialog(new_subtitlefile, filename)
+    else:
+        xbmcgui.Dialog().ok(_(32014), _(32014))
+        show_dialog()
+
+# -------------END OF SUB FILES ---------------
 
 def show_dialog(subtitlefile="", filename=""):
     if not subtitlefile:

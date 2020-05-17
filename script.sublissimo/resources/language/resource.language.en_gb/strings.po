@@ -136,7 +136,7 @@ msgid "Select subtitle to synchronize with"
 msgstr ""
 
 msgctxt "#32016"
-msgid "Please select an .srt file"
+msgid "Please select a .srt or a .sub file"
 msgstr ""
 
 msgctxt "#32017"
@@ -176,7 +176,7 @@ msgid "No"
 msgstr ""
 
 msgctxt "#32026"
-msgid "This editor only works with .srt files"
+msgid "This editor only works with .srt or .sub files"
 msgstr ""
 
 msgctxt "#32027"
@@ -597,4 +597,28 @@ msgstr ""
 
 msgctxt "#32125"
 msgid "Jump to time of last subtitle"
+msgstr ""
+
+msgctxt "#32126"
+msgid "Choose another"
+msgstr ""
+
+msgctxt "#32127"
+msgid "Enter frame rate"
+msgstr ""
+
+msgctxt "#32128"
+msgid "Open other subtitle"
+msgstr ""
+
+msgctxt "#32129"
+msgid "Why do I see this screen?"
+msgstr ""
+
+msgctxt "#32130"
+msgid "You have selected a .sub file"
+msgstr ""
+
+msgctxt "#32131"
+msgid "You have selected a .sub file, which uses frame rates to indicate when subtitles should be shown. To edit these subtitles, you have to select a frame rate. You can start a video to see what frame rate it has or just pick a random one if you want to use a sync option."
 msgstr ""
