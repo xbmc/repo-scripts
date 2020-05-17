@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.sublissimo" name="Sublissimo" version="0.0.2" provider-name="AJVM">
+<addon id="script.sublissimo" name="Sublissimo" version="0.0.3" provider-name="AJVM">
     <requires>
         <import addon="xbmc.python" version="2.26.0"/>
     </requires>
@@ -15,7 +15,11 @@
         <news>Version 0.0.2
  - New: Frame rate conversion on the fly
  - New: Play modified subtitle directly on video
- - Minor Bugfixes
+ - Minor bugfixes
+ 
+ Version 0.0.3
+ - New: Added support for .sub files
+ - Minor bugfixes
         </news>
         <source>https://github.com/Allertj/script.sublissimo</source>
         <assets>

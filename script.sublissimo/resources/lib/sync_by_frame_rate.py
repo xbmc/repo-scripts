@@ -62,7 +62,7 @@ class SyncWizardFrameRate(xbmc.Player):
                                       + "\n" + _(32110) + str(new_ending_timestamp) 
                                       + "\n", yeslabel=_(32012), nolabel= _(32008))
         if not res:
-            self.give_frame_rate()
+            self.give_frame_rate(False)
         new_subtitlefile = cur_sub.create_new_times(False, new_factor, 0)
         xbmcgui.Dialog().multiselect(_(32010), new_subtitlefile)
         self.write_and_display_temp_file(new_subtitlefile, True)
