@@ -12,8 +12,8 @@ from __future__ import unicode_literals
 from future.builtins import *
 from future.utils import (PY2, PY3, iteritems, itervalues,
                           python_2_unicode_compatible)
-from future.standard_library import install_aliases
-install_aliases()
+# from future.standard_library import install_aliases
+# install_aliases()
 
 if PY3:
     basestring = str
@@ -34,7 +34,11 @@ from shutil import copyfile
 from contextlib import contextmanager
 from pprint import pformat
 from platform import uname
-from urllib.parse import parse_qs, urlencode, quote_plus, urlparse, unquote_plus
+if PY3:
+    from urllib.parse import urlencode, quote_plus, urlparse, unquote_plus, parse_qs
+else:
+    from future.backports.urllib.parse import urlencode, quote_plus, urlparse, unquote_plus
+    from urlparse import parse_qs
 import xbmcaddon
 import xbmc
 import xbmcgui
@@ -355,7 +359,10 @@ class MemStorage(MutableMapping):
         full_key = py2_encode('{0}__{1}'.format(self._id, key))
         raw_item = self._window.getProperty(full_key)
         if raw_item:
-            return pickle.loads(raw_item)
+            try:
+                return pickle.loads(bytes(raw_item))
+            except TypeError as e:
+                return pickle.loads(bytes(raw_item, 'utf-8'))
         else:
             raise KeyError(key)
 
@@ -460,7 +467,9 @@ class Addon(object):
         :return: path to the addon icon image
         :rtype: str
         """
-        icon = os.path.join(self.path, 'icon.png')
+        icon = self._addon.getAddonInfo('icon')
+        if not icon:
+            icon = os.path.join(self.path, 'icon.png')
         if os.path.exists(icon):
             return icon
         else:
@@ -474,7 +483,9 @@ class Addon(object):
         :return: path to the addon fanart image
         :rtype: str
         """
-        fanart = os.path.join(self.path, 'fanart.jpg')
+        fanart = self._addon.getAddonInfo('fanart')
+        if not fanart :
+            fanart = os.path.join(self.path, 'fanart.jpg')
         if os.path.exists(fanart):
             return fanart
         else:
@@ -499,6 +510,86 @@ class Addon(object):
         :rtype: str
         """
         return self._addon.getAddonInfo('version')
+
+    @property
+    def name(self):
+        """
+        Addon name
+
+        :return: addon name
+        :rtype: str
+        """
+        return self._addon.getAddonInfo('name')
+
+    @property
+    def author(self):
+        """
+        Addon author
+
+        :return: addon author
+        :rtype: str
+        """
+        return self._addon.getAddonInfo('author')
+
+    @property
+    def changelog(self):
+        """
+        Addon changelog
+
+        :return: addon changelog
+        :rtype: str
+        """
+        return self._addon.getAddonInfo('changelog')
+
+    @property
+    def description(self):
+        """
+        Addon description
+
+        :return: addon description
+        :rtype: str
+        """
+        return self._addon.getAddonInfo('description')
+
+    @property
+    def disclaimer(self):
+        """
+        Addon disclaimer
+
+        :return: addon disclaimer
+        :rtype: str
+        """
+        return self._addon.getAddonInfo('disclaimer')
+
+    @property
+    def stars(self):
+        """
+        Addon stars
+
+        :return: addon stars
+        :rtype: str
+        """
+        return self._addon.getAddonInfo('stars')
+
+    @property
+    def summary(self):
+        """
+        Addon summary
+
+        :return: addon summary
+        :rtype: str
+        """
+        return self._addon.getAddonInfo('summary')
+
+    @property
+    def type(self):
+        """
+        Addon type
+
+        :return: addon type
+        :rtype: str
+        """
+        return self._addon.getAddonInfo('type')
 
     def get_localized_string(self, id_):
         """
@@ -818,21 +909,20 @@ class Addon(object):
             with open(strings_po, 'rb') as fo:
                 raw_strings = fo.read()
             raw_strings_hash = hashlib.md5(raw_strings).hexdigest()
-            gettext_pcl = '__gettext__.pcl'
-            with self.get_storage(gettext_pcl) as ui_strings_map:
-                if (not os.path.exists(os.path.join(self._profile_dir, gettext_pcl)) or
-                        raw_strings_hash != ui_strings_map['hash']):
-                    ui_strings = self._parse_po(
-                        raw_strings.decode('utf-8').split('\n')
-                    )
-                    self._ui_strings_map = {
-                        'hash': raw_strings_hash,
-                        'strings': ui_strings
-                    }
-                    ui_strings_map['hash'] = raw_strings_hash
-                    ui_strings_map['strings'] = ui_strings.copy()
-                else:
-                    self._ui_strings_map = deepcopy(ui_strings_map)
+            ui_strings_map = self.get_mem_storage('__gettext__')
+            if raw_strings_hash != ui_strings_map.get('hash', ''):
+                ui_strings = self._parse_po(
+                    raw_strings.decode('utf-8').split('\n')
+                )
+                self._ui_strings_map = {
+                    'hash': raw_strings_hash,
+                    'strings': ui_strings
+                }
+                ui_strings_map['hash'] = raw_strings_hash
+                ui_strings_map['strings'] = ui_strings.copy()
+            else:
+                self._ui_strings_map = {}
+                self._ui_strings_map.update(ui_strings_map)
         else:
             raise SimplePluginError('Unable to initialize localization because '
                                     'of missing English strings.po!')
@@ -913,7 +1003,8 @@ class Plugin(Addon):
         raw_params = parse_qs(paramstring)
         params = Params()
         for key, value in iteritems(raw_params):
-            params[key] = value[0] if len(value) == 1 else value
+            param_value = value[0] if len(value) == 1 else value
+            params[key] = py2_decode(param_value)
         return params
 
     def get_url(self, plugin_url='', **kwargs):
@@ -1124,7 +1215,13 @@ class RoutedPlugin(Plugin):
             # list allows to manipulate the dict during iteration
             for key, value in list(iteritems(kwargs)):
                 for match in matches[len(args):]:
-                    if key in match:
+
+                    match_string = match[1:-1]
+                    match_parts = match_string.split('__')
+                    if len(match_parts) > 1:
+                        match_string = match_parts[1]
+
+                    if key == match_string:
                         pattern = pattern.replace(
                             match, quote_plus(py2_encode(str(value)))
                         )
@@ -1237,7 +1334,17 @@ class RoutedPlugin(Plugin):
         path = urlparse(sys.argv[0]).path
         self.log_debug('Routes: {0}'.format(self._routes))
         for route in itervalues(self._routes):
+            if route.pattern == path:
+                kwargs = {}
+                self.log_debug(
+                    'Calling {0} with kwargs {1}'.format(route, kwargs))
+                with log_exception(self.log_error):
+                    return route.func(**kwargs)
+
+        for route in itervalues(self._routes):
             pattern = route.pattern
+            if not pattern.count('/') == path.count('/'):
+                continue
             while True:
                 pattern, count = re.subn(r'/(<\w+?>)', r'/(?P\1.+?)', pattern)
                 if not count:
@@ -1250,10 +1357,10 @@ class RoutedPlugin(Plugin):
                     if key.startswith('int__') or key.startswith('float__'):
                         del kwargs[key]
                         if key.startswith('int__'):
-                            key = key.lstrip('int__')
+                            key = key[5:]
                             value = int(value)
                         else:
-                            key = key.lstrip('float__')
+                            key = key[7:]
                             value = float(value)
                         kwargs[key] = value
                     else:

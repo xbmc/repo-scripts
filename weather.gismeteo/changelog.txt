@@ -1,3 +1,8 @@
+v0.4.1 (2020-05-03)
+- Changed data caching mechanism
+- Fixed identified bugs
+- Added Spanish translation (CHIKIRY WIZARD GROUP)
+
 v0.3.3 (2018-04-07)
 - Fixed bug with parsing XML data
 
