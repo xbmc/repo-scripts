@@ -48,7 +48,7 @@ def string_unicode(text, encoding='utf-8'):
         if sys.version_info[0] >= 3:
             text = str(text)
         else:
-            text = unicode(text, encoding)
+            text = unicode(text, encoding)  # pylint: disable=undefined-variable
     except:  # pylint: disable=bare-except
         pass
     return text
@@ -63,7 +63,7 @@ def normalize_string(text):
     :rtype: unicode (py2) / str (py3)
     """
     try:
-        text = unicodedata.normalize('NFKD', string_unicode(text)).encode('ascii', 'ignore')
+        text = unicodedata.normalize('NFKD', string_unicode(text)).encode('ascii', 'ignore')  # pylint: disable=undefined-variable
     except:  # pylint: disable=bare-except
         pass
     return text

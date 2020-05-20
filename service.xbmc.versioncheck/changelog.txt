@@ -1,3 +1,6 @@
+v0.5.5
+- add Kodi 18.7 stable release
+
 v0.5.4
 - include distro package for Python >= v3.8 where platform.linux_distribution is removed
 
