@@ -41,8 +41,7 @@ def get_installed_version():
     if sys.version_info[0] >= 3:
         json_query = str(json_query)
     else:
-        json_query = \
-            unicode(json_query, 'utf-8', errors='ignore')  # pylint: disable=undefined-variable
+        json_query = unicode(json_query, 'utf-8', errors='ignore')  # pylint: disable=undefined-variable
     json_query = json.loads(json_query)
     version_installed = []
     if 'result' in json_query and 'version' in json_query['result']:
@@ -63,7 +62,6 @@ def get_version_file_list():
     if sys.version_info[0] >= 3:
         version_query = str(data)
     else:
-        version_query = \
-            unicode(data, 'utf-8', errors='ignore')  # pylint: disable=undefined-variable
+        version_query = unicode(data, 'utf-8', errors='ignore')  # pylint: disable=undefined-variable
     version_query = json.loads(version_query)
     return version_query
