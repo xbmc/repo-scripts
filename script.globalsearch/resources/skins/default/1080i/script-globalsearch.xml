@@ -450,7 +450,19 @@
 						<aligny>center</aligny>
 						<selectedcolor>FFF0F0F0</selectedcolor>
 						<label>$INFO[ListItem.Label]</label>
-						<visible>!Container.Content(artists)</visible>
+						<visible>![Container.Content(artists) | Container.Content(songs)]</visible>
+					</control>
+					<control type="label">
+						<left>15</left>
+						<top>276</top>
+						<width>280</width>
+						<height>29</height>
+						<font>font10</font>
+						<align>center</align>
+						<aligny>center</aligny>
+						<selectedcolor>FFF0F0F0</selectedcolor>
+						<label>$INFO[ListItem.TrackNumber,,. ]$INFO[ListItem.Label]</label>
+						<visible>Container.Content(songs)</visible>
 					</control>
 					<control type="group">
 						<left>250</left>
@@ -910,7 +922,19 @@
 							<aligny>center</aligny>
 							<selectedcolor>FFF0F0F0</selectedcolor>
 							<label>$INFO[ListItem.Label]</label>
-							<visible>!Container.Content(artists)</visible>
+							<visible>![Container.Content(artists) | Container.Content(songs)]</visible>
+						</control>
+						<control type="label">
+							<left>15</left>
+							<top>276</top>
+							<width>280</width>
+							<height>29</height>
+							<font>font10</font>
+							<align>center</align>
+							<aligny>center</aligny>
+							<selectedcolor>FFF0F0F0</selectedcolor>
+							<label>$INFO[ListItem.TrackNumber,,. ]$INFO[ListItem.Label]</label>
+							<visible>Container.Content(songs)</visible>
 						</control>
 						<control type="group">
 							<left>250</left>
@@ -1156,6 +1180,18 @@
 						<font>font14</font>
 						<label>[B]$INFO[ListItem.Label][/B]</label>
 						<shadowcolor>22000000</shadowcolor>
+						<visible>!Container.Content(songs)</visible>
+					</control>
+					<control type="label">
+						<left>110</left>
+						<top>5</top>
+						<height>50</height>
+						<width>928</width>
+						<aligny>center</aligny>
+						<font>font14</font>
+						<label>[B]$INFO[ListItem.TrackNumber,,. ]$INFO[ListItem.Label][/B]</label>
+						<shadowcolor>22000000</shadowcolor>
+						<visible>Container.Content(songs)</visible>
 					</control>
 					<control type="label">
 						<left>110</left>
@@ -1260,6 +1296,18 @@
 						<font>font14</font>
 						<label>[B]$INFO[ListItem.Label][/B]</label>
 						<shadowcolor>22000000</shadowcolor>
+						<visible>!Container.Content(songs)</visible>
+					</control>
+					<control type="label">
+						<left>110</left>
+						<top>5</top>
+						<height>50</height>
+						<width>928</width>
+						<aligny>center</aligny>
+						<font>font14</font>
+						<label>[B]$INFO[ListItem.TrackNumber,,. ]$INFO[ListItem.Label][/B]</label>
+						<shadowcolor>22000000</shadowcolor>
+						<visible>Container.Content(songs)</visible>
 					</control>
 					<control type="label">
 						<left>110</left>
