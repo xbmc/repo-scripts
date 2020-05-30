@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="service.skin.widgets" name="Skin Widgets" version="0.0.33+matrix.1" provider-name="Martijn, phil65, scott967">
+    <requires>
+        <import addon="xbmc.json" version="11.2.0"/>
+        <import addon="xbmc.python" version="3.0.0"/>
+        <import addon="script.module.simplejson" version="2.0.10"/>
+    </requires>
+    <extension point="xbmc.service" library="default.py"/>
+    <extension point="xbmc.addon.metadata">
+        <summary lang="be_BY">Skin widgets</summary>
+        <summary lang="da_DK">Widgets til Skins</summary>
+        <summary lang="de_DE">Skin Widgets</summary>
+        <summary lang="el_GR">Widgets κελύφους</summary>
+        <summary lang="en_GB">Skin widgets</summary>
+        <summary lang="es_ES">Skin widgets</summary>
+        <summary lang="fr_FR">Skin widgets</summary>
+        <summary lang="gl_ES">Widgets do Tema</summary>
+        <summary lang="hr_HR">Dodaci za presvlaku</summary>
+        <summary lang="hu_HU">Kinézet miniprogram</summary>
+        <summary lang="it_IT">Skin widgets</summary>
+        <summary lang="ko_KR">스킨 위젯</summary>
+        <summary lang="nl_NL">Skin widgets</summary>
+        <summary lang="pl_PL">Dodatki Skóry</summary>
+        <summary lang="pt_PT">Widgets para Temas</summary>
+        <summary lang="pt_BR">Skin widgets</summary>
+        <summary lang="sk_SK">Widgety Vzhľadov</summary>
+        <summary lang="sv_SE">Skal widgetar</summary>
+        <summary lang="zh_CN">皮肤微件</summary>
+        <description lang="be_BY">Skin widgets</description>
+        <description lang="da_DK">Widgets til Skins</description>
+        <description lang="de_DE">Skin Widgets</description>
+        <description lang="el_GR">Widgets κελύφους</description>
+        <description lang="en_GB">Skin widgets</description>
+        <description lang="es_ES">Skin widgets</description>
+        <description lang="fr_FR">Skin widgets</description>
+        <description lang="gl_ES">Widgets do Tema</description>
+        <description lang="hr_HR">Dodaci za presvlaku</description>
+        <description lang="hu_HU">Kinézet miniprogram</description>
+        <description lang="it_IT">Skin widgets</description>
+        <description lang="ko_KR">스킨 위젯</description>
+        <description lang="nl_NL">Skin widgets</description>
+        <description lang="pl_PL">Dodatki Skóry</description>
+        <description lang="pt_PT">Widgets para Temas</description>
+        <description lang="pt_BR">Skin widgets</description>
+        <description lang="sk_SK">Widgety Vzhľadov</description>
+        <description lang="sv_SE">Skal widgetar</description>
+        <description lang="zh_CN">皮肤微件</description>
+        <disclaimer lang="be_BY">For information visit the wiki page or XBMC forum.</disclaimer>
+        <disclaimer lang="de_DE">Besuche für mehr Informationen die Wiki-Seite oder das XBMC-Forum</disclaimer>
+        <disclaimer lang="el_GR">Για πληροφορίες επισκεφθείτε τη σελίδα wiki ή το forum του XBMC.</disclaimer>
+        <disclaimer lang="en_GB">For information visit the wiki page or XBMC forum.</disclaimer>
+        <disclaimer lang="es_ES">Para más información, visite el wiki o los foros de XBMC.</disclaimer>
+        <disclaimer lang="fr_FR">Pour plus d'information, visitez la page du Wiki ou dur forum XBMC.</disclaimer>
+        <disclaimer lang="gl_ES">Para máis información visite a páxina wiki ou o foro do XBMC.</disclaimer>
+        <disclaimer lang="hr_HR">Za više informacija posjetite wiki stranicu ili XBMC forum.</disclaimer>
+        <disclaimer lang="it_IT">Per le informazioni visita la pagina wiki o il forum</disclaimer>
+        <disclaimer lang="ko_KR">위키 페이지나 XBMC 포럼에서 추가 정보를 확인하세요.</disclaimer>
+        <disclaimer lang="nl_NL">Bezoek voor informatie de wiki pagina of het XBMC forum.</disclaimer>
+        <disclaimer lang="pl_PL">Odwiedź stronę wiki lub forum XBMC by znaleźć więcej informacji.</disclaimer>
+        <disclaimer lang="pt_PT">Para mais informação, visite a página wiki ou o fórum do XBMC.</disclaimer>
+        <disclaimer lang="pt_BR">Para informações visite o página do wiki ou fórum XBMC.org.</disclaimer>
+        <disclaimer lang="sv_SE">För information, besök wiki-sidan eller XBMC forumet.</disclaimer>
+        <disclaimer lang="zh_CN">访问wiki页或XBMC论坛了解更多信息</disclaimer>
+        <platform>all</platform>
+        <license>GPL-2.0</license>
+        <forum>https://forum.kodi.tv/showthread.php?tid=142389</forum>
+        <source>https://github.com/XBMC-Addons/service.skin.widgets</source>
+        <email></email>
+		<news>Updated with changes required for Kodi 19 / Python 3 by scott967</news>
+		<assets>
+			<icon>resources/icon.png</icon>
+		</assets>
+    </extension>
+</addon>

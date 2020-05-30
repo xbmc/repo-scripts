@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<settings version="1">
+	<section id="service.skin.widgets">
+		<category id="General" label="32012">
+			<group id="1">
+				<setting label="32013" type="boolean" id="plot_enable">
+					<level>1</level>
+					<default>true</default>
+					<control type="toggle"/>
+				</setting>
+			</group>
+		</category>
+		<category id="Recommended (in progress)" label="32001">
+			<group id="1">
+				<setting label="32001" type="boolean" id="recommended_enable">
+					<level>1</level>
+					<default>true</default>
+					<control type="toggle"/>
+				</setting>
+			</group>
+		</category>
+		<category id="Random items" label="32002">
+			<group id="1">
+				<setting label="32002" type="boolean" id="randomitems_enable">
+					<level>1</level>
+					<default>true</default>
+					<control type="toggle"/>
+				</setting>
+				<setting label="32011" type="boolean" id="randomitems_unplayed" parent="randomitems_enable">
+					<level>1</level>
+					<default>true</default>
+					<control type="toggle"/>
+					<dependencies>
+						<dependency type="enable" operator="is" setting="randomitems_enable">true</dependency>
+					</dependencies>
+				</setting>
+				<setting label="32005" type="boolean" id="randomitems_seasonfolders" parent="randomitems_enable">
+					<level>1</level>
+					<default>true</default>
+					<control type="toggle"/><dependencies>
+						<dependency type="enable" operator="is" setting="randomitems_enable">true</dependency>
+					</dependencies>
+				</setting>
+				<setting label="32008" type="integer" id="randomitems_method" parent="randomitems_enable">
+					<level>1</level>
+					<default>0</default>
+					<constraints>
+						<options>
+							<option label="32006">0</option>
+							<option label="32007">1</option>
+						</options>
+					</constraints>
+					<control type="spinner" format="string"/>
+					<dependencies>
+						<dependency type="enable" operator="is" setting="randomitems_enable">true</dependency>
+					</dependencies>
+				</setting>
+				<setting label="32004" type="integer" id="randomitems_time" parent="randomitems_enable">
+					<level>1</level>
+					<default>10</default>
+					<constraints>
+						<minimum>5</minimum>
+						<step>5</step>
+						<maximum>60</maximum>
+					</constraints>
+					<control type="slider" format="integer"/>
+					<dependencies>
+						<dependency type="enable" operator="is" setting="randomitems_method">0</dependency>
+					</dependencies>
+				</setting>
+			</group>
+		</category>
+		<category id="Recent items" label="32009">
+			<group id="1">
+				<setting label="32009" type="boolean" id="recentitems_enable">
+					<level>1</level>
+					<default>true</default>
+					<control type="toggle"/>
+				</setting>
+				<setting label="32011" type="boolean" id="recentitems_unplayed" parent="recentitems_enable">
+					<level>1</level>
+					<default>true</default>
+					<control type="toggle"/>
+					<dependencies>
+						<dependency type="enable" operator="is" setting="recentitems_enable">true</dependency>
+					</dependencies>
+				</setting>
+				<setting label="32010" type="boolean" id="recentitems_homeupdate">
+					<level>1</level>
+					<default>false</default>
+					<control type="toggle"/>
+					<dependencies>
+						<dependency type="enable" operator="is" setting="recentitems_enable">true</dependency>
+					</dependencies>
+				</setting>
+			</group>
+		</category>
+	</section>
+</settings>
