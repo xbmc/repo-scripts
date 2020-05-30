@@ -8,12 +8,12 @@
 					<default>true</default>
 					<control type="toggle"/>
 				</setting>
-				<setting help="" id="actors" label="32008" type="boolean">
+				<setting help="" id="actors" label="32011" type="boolean">
 					<level>0</level>
 					<default>false</default>
 					<control type="toggle"/>
 				</setting>
-				<setting help="" id="directors" label="32010" type="boolean">
+				<setting help="" id="directors" label="32012" type="boolean">
 					<level>0</level>
 					<default>false</default>
 					<control type="toggle"/>
@@ -26,6 +26,11 @@
 				<setting help="" id="episodes" label="32003" type="boolean">
 					<level>0</level>
 					<default>true</default>
+					<control type="toggle"/>
+				</setting>
+				<setting help="" id="tvactors" label="32013" type="boolean">
+					<level>0</level>
+					<default>false</default>
 					<control type="toggle"/>
 				</setting>
 				<setting help="" id="musicvideos" label="32004" type="boolean">
@@ -55,7 +60,7 @@
 				</setting>
 				<setting help="" id="view" label="24140" type="integer">
 					<level>0</level>
-					<default>-1</default>
+					<default>50</default>
 					<visible>false</visible>
 					<control type="edit" format="integer" />
 				</setting>

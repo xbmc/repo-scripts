@@ -48,19 +48,27 @@ msgctxt "#32007"
 msgid "Search Songs"
 msgstr ""
 
-msgctxt "#32008"
-msgid "Search Actors"
-msgstr ""
+# empty string with id 32008
 
 msgctxt "#32009"
 msgid "Search Live TV"
 msgstr ""
 
-msgctxt "#32010"
-msgid "Search Directors"
+# empty string with id 32010
+
+msgctxt "#32011"
+msgid "Search Movie Actors"
 msgstr ""
 
-# empty strings from id 32010 to 32100
+msgctxt "#32012"
+msgid "Search Movie Directors"
+msgstr ""
+
+msgctxt "#32013"
+msgid "Search TV Show Actors"
+msgstr ""
+
+# empty strings from id 32012 to 32100
 
 msgctxt "#32101"
 msgid "Enter search string"
@@ -110,7 +118,17 @@ msgctxt "#32212"
 msgid "Resume from %s"
 msgstr ""
 
-# empty strings from id 32213 to 32296
+# empty strings from id 32213 to 32220
+
+msgctxt "#32221"
+msgid "Movie Actors"
+msgstr ""
+
+msgctxt "#32222"
+msgid "TV Show Actors"
+msgstr ""
+
+# empty strings from id 32223 to 32296
 
 msgctxt "#32297"
 msgid "Searching:"
