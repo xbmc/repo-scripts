@@ -393,7 +393,7 @@ class Location(object):
     @property
     def id(self):
 
-        return self._data.get('id', '')
+        return '{0}'.format(self._data.get('id', ''))
 
     @property
     def district(self):
