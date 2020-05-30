@@ -14,7 +14,6 @@
 # *  http://www.gnu.org/copyleft/gpl.html
 
 import copy
-import json
 import random
 import threading
 from xml.dom.minidom import parse
@@ -31,14 +30,14 @@ EXIF_TYPES  = ('.jpg', '.jpeg', '.tif', '.tiff')
 
 # random effect list to choose from
 EFFECTLIST = ["('conditional', 'effect=zoom start=100 end=400 center=auto time=%i condition=true'),",
-              "('conditional', 'effect=slide start=1280,0 end=-1280,0 time=%i condition=true'), ('conditional', 'effect=zoom start=%i end=%i center=auto time=%i condition=true')",
-              "('conditional', 'effect=slide start=-1280,0 end=1280,0 time=%i condition=true'), ('conditional', 'effect=zoom start=%i end=%i center=auto time=%i condition=true')",
-              "('conditional', 'effect=slide start=0,720 end=0,-720 time=%i condition=true'), ('conditional', 'effect=zoom start=%i end=%i center=auto time=%i condition=true')",
-              "('conditional', 'effect=slide start=0,-720 end=0,720 time=%i condition=true'), ('conditional', 'effect=zoom start=%i end=%i center=auto time=%i condition=true')",
-              "('conditional', 'effect=slide start=1280,720 end=-1280,-720 time=%i condition=true'), ('conditional', 'effect=zoom start=%i end=%i center=auto time=%i condition=true')",
-              "('conditional', 'effect=slide start=-1280,720 end=1280,-720 time=%i condition=true'), ('conditional', 'effect=zoom start=%i end=%i center=auto time=%i condition=true')",
-              "('conditional', 'effect=slide start=1280,-720 end=-1280,720 time=%i condition=true'), ('conditional', 'effect=zoom start=%i end=%i center=auto time=%i condition=true')",
-              "('conditional', 'effect=slide start=-1280,-720 end=1280,720 time=%i condition=true'), ('conditional', 'effect=zoom start=%i end=%i center=auto time=%i condition=true')"]
+              "('conditional', 'effect=slide start=1920,0 end=-1920,0 time=%i condition=true'), ('conditional', 'effect=zoom start=%i end=%i center=auto time=%i condition=true')",
+              "('conditional', 'effect=slide start=-1920,0 end=1920,0 time=%i condition=true'), ('conditional', 'effect=zoom start=%i end=%i center=auto time=%i condition=true')",
+              "('conditional', 'effect=slide start=0,1080 end=0,-1080 time=%i condition=true'), ('conditional', 'effect=zoom start=%i end=%i center=auto time=%i condition=true')",
+              "('conditional', 'effect=slide start=0,-1080 end=0,1080 time=%i condition=true'), ('conditional', 'effect=zoom start=%i end=%i center=auto time=%i condition=true')",
+              "('conditional', 'effect=slide start=1920,1080 end=-1920,-1080 time=%i condition=true'), ('conditional', 'effect=zoom start=%i end=%i center=auto time=%i condition=true')",
+              "('conditional', 'effect=slide start=-1920,1080 end=1920,-1080 time=%i condition=true'), ('conditional', 'effect=zoom start=%i end=%i center=auto time=%i condition=true')",
+              "('conditional', 'effect=slide start=1920,-1080 end=-1920,1080 time=%i condition=true'), ('conditional', 'effect=zoom start=%i end=%i center=auto time=%i condition=true')",
+              "('conditional', 'effect=slide start=-1920,-1080 end=1920,1080 time=%i condition=true'), ('conditional', 'effect=zoom start=%i end=%i center=auto time=%i condition=true')"]
 
 # get local dateformat to localize the exif date tag
 DATEFORMAT = xbmc.getRegion('dateshort')
@@ -48,7 +47,7 @@ class Screensaver(xbmcgui.WindowXMLDialog):
         pass
 
     def onInit(self):
-        # load constants
+        # load vars
         self._get_vars()
         # get addon settings
         self._get_settings()
@@ -72,12 +71,12 @@ class Screensaver(xbmcgui.WindowXMLDialog):
 
     def _get_vars(self):
         # get the screensaver window id
-        self.winid    = xbmcgui.Window(xbmcgui.getCurrentWindowDialogId())
+        self.winid = xbmcgui.Window(xbmcgui.getCurrentWindowDialogId())
         # init the monitor class to catch onscreensaverdeactivated calls
-        self.Monitor  = MyMonitor(action = self._exit)
-        self.stop     = False
-        self.startup  = True
-        self.offset   = 0
+        self.Monitor = MyMonitor(action = self._exit)
+        self.stop = False
+        self.startup = True
+        self.offset = 0
 
     def _get_settings(self):
         # read addon settings
@@ -334,12 +333,12 @@ class Screensaver(xbmcgui.WindowXMLDialog):
         if not self.slideshow_type == 2:
             self.items = []
             for method in methods:
-                json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "' + method[0] + '", "params": {"properties": ["fanart"]}, "id": 1}')
+                json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "' + method[0] + '", "params": {"properties": ["art"]}, "id": 1}')
                 json_response = json.loads(json_query)
                 if 'result' in json_response and json_response['result'] != None and method[1] in json_response['result']:
                     for item in json_response['result'][method[1]]:
-                        if item['fanart']:
-                            self.items.append([item['fanart'], item['label']])
+                        if 'fanart' in item['art']:
+                            self.items.append([item['art']['fanart'], item['label']])
         # randomize
         if self.slideshow_random:
             random.seed()
@@ -364,13 +363,12 @@ class Screensaver(xbmcgui.WindowXMLDialog):
             log('failed to save resume point')
 
     def _read_cache(self, hexfile):
-        images = ''
         try:
             cache = xbmcvfs.File(CACHEFILE % hexfile)
-            images = eval(cache.read())
+            images = json.load(cache)
             cache.close()
         except:
-            pass
+            images = []
         return images
 
     def _anim(self, cur_img):
@@ -385,13 +383,13 @@ class Screensaver(xbmcgui.WindowXMLDialog):
         # set zoom level depending on the anim time
         zoom = 110 + anim_time
         if number == 1 or number == 5 or number == 7:
-            posx = int(-1280 + (12.8 * anim_time) + 0.5)
+            posx = int(-1920 + (19.2 * anim_time) + 0.5)
         elif number == 2 or number == 6 or number == 8:
-            posx = int(1280 - (12.8 * anim_time) + 0.5)
+            posx = int(1920 - (19.2 * anim_time) + 0.5)
         if number == 3 or number == 5 or number == 6:
-            posy = int(-720 + (7.2 * anim_time) + 0.5)
+            posy = int(-1080 + (10.8 * anim_time) + 0.5)
         elif number == 4 or number == 7 or number == 8:
-            posy = int(720 - (7.2 * anim_time) + 0.5)
+            posy = int(1080 - (10.8 * anim_time) + 0.5)
         # position the current image
         cur_img.setPosition(posx, posy)
         # add the animation to the current image

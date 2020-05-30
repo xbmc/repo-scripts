@@ -1,5 +1,6 @@
 import hashlib
 import os
+import json
 import re
 import sys
 import urllib
@@ -13,9 +14,9 @@ ADDONID = ADDON.getAddonInfo('id')
 LANGUAGE = ADDON.getLocalizedString
 
 # supported image types by the screensaver
-IMAGE_TYPES = ('.jpg', '.jpeg', '.png', '.tif', '.tiff', '.gif', '.pcx', '.bmp', '.tga', '.ico', '.nef')
+IMAGE_TYPES = ('.jpg', '.jpeg', '.png', '.tif', '.tiff', '.gif', '.pcx', '.bmp', '.tga', '.ico', '.nef', '.webp', '.jp2', '.apng')
 CACHEFOLDER = xbmc.translatePath(ADDON.getAddonInfo('profile'))
-CACHEFILE = os.path.join(CACHEFOLDER, '%s')
+CACHEFILE = os.path.join(CACHEFOLDER, 'cache_%s')
 RESUMEFILE = os.path.join(CACHEFOLDER, 'offset')
 ASFILE = xbmc.translatePath('special://profile/advancedsettings.xml')
 
@@ -36,10 +37,10 @@ def create_cache(path, hexfile):
         if item != 'settings.xml':
             xbmcvfs.delete(os.path.join(CACHEFOLDER,item))
     if images:
-        # create index file
+        # create cache file
         try:
             cache = xbmcvfs.File(CACHEFILE % hexfile, 'w')
-            cache.write(str(images))
+            json.dump(images, cache)
             cache.close()
         except:
             log('failed to save cachefile')
