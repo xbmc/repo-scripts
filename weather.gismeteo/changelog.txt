@@ -1,3 +1,6 @@
+v0.4.2 (2020-05-21)
+- Fixed identified bugs
+
 v0.4.1 (2020-05-03)
 - Changed data caching mechanism
 - Fixed identified bugs
