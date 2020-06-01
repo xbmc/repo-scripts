@@ -1,6 +1,7 @@
 from __future__ import absolute_import, division, print_function
 
-from trakt.core.helpers import clean_username, popitems
+from trakt.core.helpers import clean_username, dictfilter
+from trakt.core.pagination import PaginationIterator
 from trakt.interfaces.base import Interface, authenticated
 from trakt.mapper import ListMapper, ListItemMapper
 
@@ -31,25 +32,35 @@ class UsersListInterface(Interface):
             username=username
         )
 
-    def items(self, username, id, **kwargs):
-        # Send request
+    def items(self, username, id, media=None, extended=None, page=None, per_page=None, **kwargs):
         response = self.http.get(
             '/users/%s/lists/%s/items' % (clean_username(username), id),
+            query={
+                'type': media,
+
+                'extended': extended,
+                'page': page,
+                'limit': per_page
+            },
+            **dictfilter(kwargs, get=[
+                'exceptions'
+            ], pop=[
+                'authenticated',
+                'pagination',
+                'validate_token'
+            ])
         )
 
         # Parse response
         items = self.get_data(response, **kwargs)
 
+        if isinstance(items, PaginationIterator):
+            return items.with_mapper(lambda items: ListItemMapper.process_many(self.client, items))
+
         if isinstance(items, requests.Response):
             return items
 
-        if not items or type(items) is not list:
-            return None
-
-        return [
-            ListItemMapper.process(self.client, item, index=x + 1)
-            for x, item in enumerate(items)
-        ]
+        return ListItemMapper.process_many(self.client, items)
 
     #
     # Owner actions
@@ -61,7 +72,7 @@ class UsersListInterface(Interface):
         response = self.http.post(
             '/users/%s/lists/%s/items' % (clean_username(username), id),
             data=items,
-            **popitems(kwargs, [
+            **dictfilter(kwargs, pop=[
                 'authenticated',
                 'validate_token'
             ])
@@ -75,7 +86,7 @@ class UsersListInterface(Interface):
         # Send request
         response = self.http.delete(
             '/users/%s/lists/%s' % (clean_username(username), id),
-            **popitems(kwargs, [
+            **dictfilter(kwargs, pop=[
                 'authenticated',
                 'validate_token'
             ])
@@ -106,7 +117,7 @@ class UsersListInterface(Interface):
         response = self.http.put(
             '/users/%s/lists/%s' % (clean_username(username), id),
             data=data,
-            **popitems(kwargs, [
+            **dictfilter(kwargs, pop=[
                 'authenticated',
                 'validate_token'
             ])
@@ -139,7 +150,7 @@ class UsersListInterface(Interface):
         response = self.http.post(
             '/users/%s/lists/%s/items/remove' % (clean_username(username), id),
             data=items,
-            **popitems(kwargs, [
+            **dictfilter(kwargs, pop=[
                 'authenticated',
                 'validate_token'
             ])
@@ -157,7 +168,7 @@ class UsersListInterface(Interface):
         # Send request
         response = self.http.post(
             '/users/%s/lists/%s/like' % (clean_username(username), id),
-            **popitems(kwargs, [
+            **dictfilter(kwargs, pop=[
                 'authenticated',
                 'validate_token'
             ])
@@ -170,7 +181,7 @@ class UsersListInterface(Interface):
         # Send request
         response = self.http.delete(
             '/users/%s/lists/%s/like' % (clean_username(username), id),
-            **popitems(kwargs, [
+            **dictfilter(kwargs, pop=[
                 'authenticated',
                 'validate_token'
             ])

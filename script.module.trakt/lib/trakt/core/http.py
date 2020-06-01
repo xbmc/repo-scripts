@@ -5,6 +5,7 @@ from trakt.core.configuration import DEFAULT_HTTP_RETRY, DEFAULT_HTTP_MAX_RETRIE
 from trakt.core.context_stack import ContextStack
 from trakt.core.helpers import synchronized
 from trakt.core.keylock import KeyLock
+from trakt.core.pagination import PaginationIterator
 from trakt.core.request import TraktRequest
 
 from requests.adapters import DEFAULT_POOLBLOCK, HTTPAdapter
@@ -79,7 +80,7 @@ class HttpClient(object):
         return self
 
     def request(self, method, path=None, params=None, data=None, query=None, authenticated=False,
-                validate_token=True, **kwargs):
+                validate_token=True, exceptions=False, pagination=False, **kwargs):
 
         # Retrieve configuration
         ctx = self.configuration.pop()
@@ -108,6 +109,13 @@ class HttpClient(object):
 
         if not self.keep_alive:
             prepared.headers['Connection'] = 'close'
+
+        # Create pagination iterator (if enabled)
+        if pagination:
+            return PaginationIterator(
+                self.client, prepared,
+                exceptions=exceptions
+            )
 
         # Send request
         return self.send(prepared)

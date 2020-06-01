@@ -1,6 +1,6 @@
 from __future__ import absolute_import, division, print_function
 
-from trakt.core.helpers import popitems
+from trakt.core.helpers import dictfilter
 from trakt.interfaces.base import Interface, authenticated
 
 
@@ -10,7 +10,7 @@ class UsersSettingsInterface(Interface):
     @authenticated
     def get(self, **kwargs):
         response = self.http.get(
-            **popitems(kwargs, [
+            **dictfilter(kwargs, pop=[
                 'authenticated',
                 'validate_token'
             ])

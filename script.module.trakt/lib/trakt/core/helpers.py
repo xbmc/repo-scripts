@@ -33,14 +33,22 @@ def deprecated(message):
     return wrap
 
 
-def popitems(d, keys):
+def dictfilter(d, **kwargs):
     result = {}
 
-    for key in keys:
-        value = d.pop(key, None)
+    if 'get' in kwargs:
+        for key in kwargs['get']:
+            value = d.get(key, None)
 
-        if value is not None:
-            result[key] = value
+            if value is not None:
+                result[key] = value
+
+    if 'pop' in kwargs:
+        for key in kwargs['pop']:
+            value = d.pop(key, None)
+
+            if value is not None:
+                result[key] = value
 
     return result
 

@@ -1,6 +1,6 @@
 from __future__ import absolute_import, division, print_function
 
-from trakt.core.helpers import popitems
+from trakt.core.helpers import dictfilter
 from trakt.interfaces.base import Interface, authenticated
 from trakt.mapper.summary import SummaryMapper
 
@@ -113,7 +113,7 @@ class Base(Interface):
                 'networks': networks,
                 'status': status
             },
-            **popitems(kwargs, [
+            **dictfilter(kwargs, pop=[
                 'authenticated',
                 'validate_token'
             ])

@@ -11,7 +11,6 @@ class SyncMapper(Mapper):
     @classmethod
     def process(cls, client, store, items, media=None, flat=False, **kwargs):
         if flat:
-            # Return flat item iterator
             return cls.iterate_items(
                 client, store, items, cls.item,
                 media=media,
@@ -245,6 +244,7 @@ class SyncMapper(Mapper):
 
             if result is None:
                 log.warning('Unable to map item: %s', item)
+                continue
 
             # Yield item in iterator
             yield result

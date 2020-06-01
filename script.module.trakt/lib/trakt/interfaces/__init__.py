@@ -44,9 +44,25 @@ INTERFACES = [
     users.UsersInterface,
     users.UsersSettingsInterface,
 
+    # /users/following
+    users.UsersFollowingInterface,
+
+    # /users/following
+    users.UsersFriendsInterface,
+
+    # /users/history
+    users.UsersHistoryInterface,
+
     # /users/lists/
     users.UsersListsInterface,
-    users.UsersListInterface
+    users.UsersListInterface,
+
+    # /users/ratings
+    users.UsersRatingsInterface,
+
+    # /users/watchlist
+    users.UsersWatchlistInterface
+
 ]
 
 

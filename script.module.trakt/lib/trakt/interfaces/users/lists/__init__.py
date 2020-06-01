@@ -38,7 +38,7 @@ class UsersListsInterface(Interface):
 
         # Send request
         response = self.http.post(
-            '/users/%s/lists' % username,
+            '/users/%s/lists' % clean_username(username),
             data=data
         )
 

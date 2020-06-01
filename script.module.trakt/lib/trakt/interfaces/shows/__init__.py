@@ -1,6 +1,7 @@
 from __future__ import absolute_import, division, print_function
 
-from trakt.core.helpers import popitems
+from trakt.core.helpers import dictfilter
+from trakt.core.pagination import PaginationIterator
 from trakt.interfaces.base import Interface, authenticated
 from trakt.mapper.progress import ProgressMapper
 from trakt.mapper.summary import SummaryMapper
@@ -23,12 +24,22 @@ class ShowsInterface(Interface):
 
         return SummaryMapper.show(self.client, item)
 
-    def trending(self, extended=None, **kwargs):
+    def trending(self, extended=None, page=None, per_page=None, **kwargs):
         response = self.http.get('trending', query={
-            'extended': extended
-        })
+            'extended': extended,
+            'page': page,
+            'limit': per_page
+        }, **dictfilter(kwargs, get=[
+            'exceptions'
+        ], pop=[
+            'pagination'
+        ]))
 
+        # Parse response
         items = self.get_data(response, **kwargs)
+
+        if isinstance(items, PaginationIterator):
+            return items.with_mapper(lambda items: SummaryMapper.shows(self.client, items))
 
         if isinstance(items, requests.Response):
             return items
@@ -112,7 +123,7 @@ class ShowsInterface(Interface):
 
         response = self.http.get(str(id), [
             'progress', progress_type
-        ], query=query, **popitems(kwargs, [
+        ], query=query, **dictfilter(kwargs, pop=[
             'authenticated',
             'validate_token'
         ]))
