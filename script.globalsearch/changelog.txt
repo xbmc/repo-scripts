@@ -1,3 +1,12 @@
+v9.0.4
+- fix issue with unneeded seeking
+- add functionality to navigate back
+- add support for searching musicvideos by artist name
+- add support for originaltitle search
+- add support for tv show actors
+- add videoresolution flag
+- small skin layout changes
+
 v9.0.3
 - fix listing of pvr results
 
