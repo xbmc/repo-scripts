@@ -27,7 +27,7 @@
 				<texture>gradient_focus.png</texture>
 				<colordiffuse>$INFO[skin.string(header_color)]</colordiffuse>
 			</control>
-			<control type="label" id=10071>
+			<control type="label" id="10071">
 				<left>0</left>
 				<width>600</width>
 				<height>75</height>

@@ -16,7 +16,7 @@
 					<width>600</width>
 					<texture>black.png</texture>
 				</control>
-				<control type="label" id=10071>
+				<control type="label" id="10071">
 					<description>header label</description>
 					<left>20</left>
 					<top>36</top>
