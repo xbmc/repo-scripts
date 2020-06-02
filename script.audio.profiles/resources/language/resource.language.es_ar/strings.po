@@ -18,7 +18,7 @@ msgstr " Nombre del Perfil 1"
 #: Settings
 msgctxt "#32002"
 msgid "Settings"
-msgstr "Configuración"
+msgstr "ConfiguraciÃ›n"
 
 #: Settings
 msgctxt "#32003"
@@ -63,32 +63,32 @@ msgstr "Perfil 4"
 #: Settings
 msgctxt "#32011"
 msgid "Include video player settings"
-msgstr "Incluir Configuración de reproductor de video"
+msgstr "Incluir ConfiguraciÃ›n de reproductor de video"
 
 #: Settings
 msgctxt "#32012"
 msgid "Include display settings"
-msgstr "Incluir Configuración de Pantalla"
+msgstr "Incluir ConfiguraciÃ›n de Pantalla"
 
 #: Settings
 msgctxt "#32013"
 msgid "Includes Settings"
-msgstr "Incluye Configuración"
+msgstr "Incluye ConfiguraciÃ›n"
 
 #: Settings
 msgctxt "#32014"
 msgid "Automatic Switch"
-msgstr "Cambio Automático"
+msgstr "Cambio AutomÂ·tico"
 
 #: Settings
 msgctxt "#32015"
 msgid "Show audio profile select menu on media playback"
-msgstr "Mostrar el selector de audio stream al comenzar reproducción"
+msgstr "Mostrar el selector de audio stream al comenzar reproducciÃ›n"
 
 #: Settings
 msgctxt "#32016"
 msgid "Auto close select menu"
-msgstr "Autocerrar menú de selección"
+msgstr "Autocerrar menË™ de selecciÃ›n"
 
 #: Settings
 msgctxt "#32018"
@@ -108,7 +108,7 @@ msgstr "Perfil para GUI"
 #: Settings
 msgctxt "#32022"
 msgid "Profile for movies"
-msgstr "Perfil para Películas"
+msgstr "Perfil para PelÃŒculas"
 
 #: Settings
 msgctxt "#32023"
@@ -123,7 +123,7 @@ msgstr "Perfil para TV PVR"
 #: Settings
 msgctxt "#32025"
 msgid "Profile for music"
-msgstr "Perfil para Música"
+msgstr "Perfil para MË™sica"
 
 #: Settings
 msgctxt "#32026"
@@ -158,7 +158,7 @@ msgstr "Perfiles para Videos (no de la biblioteca)"
 #: Settings
 msgctxt "#32032"
 msgid "Profile for music videos"
-msgstr "Perfil para Videos de Música"
+msgstr "Perfil para Videos de MË™sica"
 
 #: Settings
 msgctxt "#32033"
@@ -208,7 +208,7 @@ msgstr " Forzar la carga de perfil al comienzo"
 #: Settings
 msgctxt "#32042"
 msgid " Auto switch notifications"
-msgstr " Notificaciones de cambio autom‡tico"
+msgstr " Notificaciones de cambio automÃ¡tico"
 
 #: Settings
 msgctxt "#32043"
@@ -228,7 +228,7 @@ msgstr "Mostrar el selector"
 #: Script
 msgctxt "#32100"
 msgid "Select profile to save settings"
-msgstr "Seleccionar perfil para guardar configuración"
+msgstr "Seleccionar perfil para guardar configuraciÃ›n"
 
 #: Script
 msgctxt "#32101"
@@ -243,12 +243,12 @@ msgstr "Guardado como perfil"
 #: Script
 msgctxt "#32103"
 msgid "This profile is disabled"
-msgstr "Este perfil está deshabilitado"
+msgstr "Este perfil estÂ· deshabilitado"
 
 #: Script
 msgctxt "#32104"
 msgid "Invalid file for profile"
-msgstr "Archivo Inválido para perfil"
+msgstr "Archivo InvÂ·lido para perfil"
 
 #: Script
 msgctxt "#32105"
