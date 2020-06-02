@@ -71,7 +71,7 @@ class Dialog:
         skin, skin_values = self._get_skin_info( current_skin )
         self.LOGLINES.append( 'using skin values of:' )
         self.LOGLINES.append( skin_values )
-        display = Show( 'ap-menu.xml', self.SETTINGS['ADDONPATH'], skin, skin_values['res'],
+        display = Show( 'script.audioprofiles-apmenu.xml', self.SETTINGS['ADDONPATH'], skin, skin_values['res'],
                         skin_values=skin_values, title=self.TITLE, buttons=self.BUTTONS )
         display.show()
         while (KODIPLAYER.isPlaying() or self.FORCEDIALOG) and not display.CLOSED and not KODIMONITOR.abortRequested():
