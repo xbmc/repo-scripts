@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<window id="11112">
+    <defaultcontrol always="true">10070</defaultcontrol>
+    <coordinates>
+        <origin x="0" y="0" />
+    </coordinates>
+    <controls>
+        <control type="group" id="10072">
+		    <left>-10000</left>
+		    <right>-10000</right>
+	        <animation type="Visible" reversible="false">
+    	        <effect type="fade" start="0" end="100" time="300" delay="150"/>
+        	    <effect type="slide" start="0,48" end="0" center="auto" tween="back" easing="out" time="450" delay="150"/>
+	        </animation>
+	        <animation effect="fade" end="0" start="100" time="150">Hidden</animation>
+    	    <animation effect="fade" end="0" start="100" time="150">WindowClose</animation>
+            <control type="image" id="10073">
+                <description>background image</description>
+                <bottom>0</bottom>
+                <width>506</width>
+                <height></height>
+                <bordertexture border="32">common/dark-shadow-24.png</bordertexture>
+                <bordersize>24</bordersize>
+                <texture border="16" colordiffuse="dialog_bg_100">common/rounded-dialog.png</texture>
+            </control>
+            <control type="label" id="10071">
+            	<top>20</top>
+                <width>458</width>
+                <height>78</height>
+                <left>24</left>
+                <textcolor>dialog_fg_70</textcolor>
+                <font>font_small_bold</font>
+                <label></label>
+                <align>left</align>
+                <textoffsetx>30</textoffsetx>
+            </control>
+            <control type="image">
+            	<top>30</top>
+                <width>458</width>
+                <height>64</height>
+                <left>16</left>
+                <aspectratio align="right">keep</aspectratio>
+                <texture colordiffuse="dialog_fg_70">special://skin/extras/icons/kodi.png</texture>
+            </control>
+			<control type="panel" id="10070">
+                <top>100</top>
+                <left>24</left>
+                <bottom>32</bottom>
+                <width>458</width>
+				<onleft>10070</onleft>
+				<onright>10070</onright>
+				<onup>10070</onup>
+				<ondown>10070</ondown>
+				<orientation>horizontal</orientation>
+				<itemlayout height="70">
+					<control type="image">
+						<texture colordiffuse="dialog_bg_100">common/white.png</texture>
+					</control>
+					<control type="label">
+						<left>24</left>
+						<width>410</width>
+						<aligny>center</aligny>
+                        <font>font_tiny</font>
+                        <textcolor>dialog_fg_70</textcolor>
+						<label>$INFO[ListItem.Label]</label>
+					</control>
+				</itemlayout>
+				<focusedlayout height="70">
+					<control type="image">
+						<texture colordiffuse="dialog_bg_100">common/white.png</texture>
+					</control>
+                    <control type="image">
+                        <texture colordiffuse="$VAR[ColorHighlight]">common/white.png</texture>
+                    </control>
+                    <control type="image">
+                        <texture colordiffuse="$VAR[ColorHighlight2]">common/gradient-diffuse-horizontal.png</texture>
+                    </control>
+					<control type="label">
+						<left>24</left>
+						<width>410</width>
+						<aligny>center</aligny>
+                        <font>font_tiny</font>
+                        <textcolor>dialog_fg_70</textcolor>
+						<label>$INFO[ListItem.Label]</label>
+					</control>
+				</focusedlayout>
+			</control>
+
+        </control>
+    </controls>
+
+</window>

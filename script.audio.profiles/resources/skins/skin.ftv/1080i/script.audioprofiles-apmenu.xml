@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<window id="11112">
+	<defaultcontrol always="true">10070</defaultcontrol>
+	<coordinates>
+		<origin x="0" y="0"/>
+	</coordinates>
+	<controls>
+		<control type="group" id="10072">
+		    <left>-10000</left>
+		    <right>-10000</right>
+			<animation easing="inout" effect="fade" end="100" start="0" time="120" tween="sine">WindowOpen</animation>
+			<animation easing="inout" effect="fade" end="0" start="100" time="120" tween="sine">WindowClose</animation>
+			<width>540</width>
+			<control type="image" id="10073">
+				<width>100%</width>
+				<height></height>
+				<texture border="2">dialogs/DialogMessageBackground.png</texture>
+				<bordertexture border="2">dialogs/Empty.png</bordertexture>
+				<bordersize>-52</bordersize>
+			</control>
+			<control type="label" id="10071">
+				<height>52</height>
+				<width>540</width>
+				<font>MedUpper24</font>
+				<aligny>center</aligny>
+				<align>center</align>
+				<textcolor>FFFFFFFF</textcolor>
+				<label></label>
+			</control>
+			<control type="grouplist" id="10070">
+				<top>52</top>
+				<centerleft>50%</centerleft>
+				<width>100%</width>
+				<height max="912">auto</height>
+				<itemgap>0</itemgap>
+				<control type="button" id="10080">
+					<left>-5</left>
+					<bottom>0</bottom>
+					<width>100%</width>
+					<height>76</height>
+					<align>center</align>
+					<aligny>top</aligny>
+					<font>MedUpper24</font>
+					<textoffsety>27</textoffsety>
+					<textwidth>460</textwidth>
+					<label></label>
+				</control>
+				<control type="button" id="10081">
+					<left>-5</left>
+					<bottom>0</bottom>
+					<width>100%</width>
+					<height>76</height>
+					<align>center</align>
+					<aligny>top</aligny>
+					<font>MedUpper24</font>
+					<textoffsety>27</textoffsety>
+					<textwidth>460</textwidth>
+					<label></label>
+				</control>
+				<control type="button" id="10082">
+					<left>-5</left>
+					<bottom>0</bottom>
+					<width>100%</width>
+					<height>76</height>
+					<align>center</align>
+					<aligny>top</aligny>
+					<font>MedUpper24</font>
+					<textoffsety>27</textoffsety>
+					<textwidth>460</textwidth>
+					<label></label>
+				</control>
+				<control type="button" id="10083">
+					<left>-5</left>
+					<bottom>0</bottom>
+					<width>100%</width>
+					<height>76</height>
+					<align>center</align>
+					<aligny>top</aligny>
+					<font>MedUpper24</font>
+					<textoffsety>27</textoffsety>
+					<textwidth>460</textwidth>
+					<label></label>
+				</control>
+				<control type="button" id="10084">
+					<left>-5</left>
+					<bottom>0</bottom>
+					<width>100%</width>
+					<height>76</height>
+					<align>center</align>
+					<aligny>top</aligny>
+					<font>MedUpper24</font>
+					<textoffsety>27</textoffsety>
+					<textwidth>460</textwidth>
+					<label></label>
+				</control>
+				<control type="button" id="10085">
+					<left>-5</left>
+					<bottom>0</bottom>
+					<width>100%</width>
+					<height>76</height>
+					<align>center</align>
+					<aligny>top</aligny>
+					<font>MedUpper24</font>
+					<textoffsety>27</textoffsety>
+					<textwidth>460</textwidth>
+					<label></label>
+				</control>
+				<control type="button" id="10086">
+					<left>-5</left>
+					<bottom>0</bottom>
+					<width>100%</width>
+					<height>76</height>
+					<align>center</align>
+					<aligny>top</aligny>
+					<font>MedUpper24</font>
+					<textoffsety>27</textoffsety>
+					<textwidth>460</textwidth>
+					<label></label>
+				</control>
+				<control type="button" id="10087">
+					<left>-5</left>
+					<bottom>0</bottom>
+					<width>100%</width>
+					<height>76</height>
+					<align>center</align>
+					<aligny>top</aligny>
+					<font>MedUpper24</font>
+					<textoffsety>27</textoffsety>
+					<textwidth>460</textwidth>
+					<label></label>
+				</control>
+				<control type="button" id="10088">
+					<left>-5</left>
+					<bottom>0</bottom>
+					<width>100%</width>
+					<height>76</height>
+					<align>center</align>
+					<aligny>top</aligny>
+					<font>MedUpper24</font>
+					<textoffsety>27</textoffsety>
+					<textwidth>460</textwidth>
+					<label></label>
+				</control>
+				<control type="button" id="10089">
+					<left>-5</left>
+					<bottom>0</bottom>
+					<width>100%</width>
+					<height>76</height>
+					<align>center</align>
+					<aligny>top</aligny>
+					<font>MedUpper24</font>
+					<textoffsety>27</textoffsety>
+					<textwidth>460</textwidth>
+					<label></label>
+				</control>
+			</control>
+		</control>
+	</controls>
+</window>

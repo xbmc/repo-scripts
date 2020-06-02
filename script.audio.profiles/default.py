@@ -1,6 +1,5 @@
-# -*- coding: utf-8 -*-
 
-from resources.lib.profiles import PROFILES
+from resources.lib.audioprofiles import apManual
 
 if ( __name__ == "__main__" ):
-    PROFILES()
+    apManual()
