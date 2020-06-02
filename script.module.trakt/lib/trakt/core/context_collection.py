@@ -36,11 +36,11 @@ class ListCollection(object):
 
         pos = 0
 
-        for l in self.lists():
-            l_len = len(l)
+        for lst in self.lists():
+            l_len = len(lst)
 
             if pos <= index < pos + l_len:
-                return l, index - pos
+                return lst, index - pos
             else:
                 pos += l_len
 
@@ -95,14 +95,14 @@ class ListCollection(object):
 
     @synchronized(lambda self: self._lock)
     def __iter__(self):
-        for l in self.lists():
+        for lst in self.lists():
             # Yield items from each list
-            for x in l:
+            for x in lst:
                 yield x
 
     @synchronized(lambda self: self._lock)
     def __len__(self):
-        return sum([len(l) for l in self.lists()])
+        return sum([len(lst) for lst in self.lists()])
 
     def __setitem__(self, index, value):
         list, index = self.find_list(index)

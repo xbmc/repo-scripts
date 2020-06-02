@@ -7,6 +7,10 @@ from trakt.interfaces.sync.core.mixins import Get, Delete
 class SyncPlaybackInterface(Get, Delete):
     path = 'sync/playback'
 
+    #
+    # Shortcut methods
+    #
+
     @authenticated
     def shows(self, store=None, **kwargs):
         raise NotImplementedError()

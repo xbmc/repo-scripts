@@ -1,6 +1,6 @@
 from __future__ import absolute_import, division, print_function
 
-from trakt.core.helpers import from_iso8601_datetime, popitems, to_iso8601_datetime
+from trakt.core.helpers import dictfilter, from_iso8601_datetime, to_iso8601_datetime
 from trakt.objects.core.helpers import update_attributes
 
 LABELS = {
@@ -127,16 +127,16 @@ class Progress(BaseProgress):
 
         if self.hidden_seasons:
             result['hidden_seasons'] = [
-                popitems(season.to_dict(), ['number', 'ids'])
+                dictfilter(season.to_dict(), pop=['number', 'ids'])
                 for season in self.hidden_seasons.values()
             ]
 
         if self.next_episode:
-            result['next_episode'] = popitems(self.next_episode.to_dict(), ['season', 'number', 'title', 'ids'])
+            result['next_episode'] = dictfilter(self.next_episode.to_dict(), pop=['season', 'number', 'title', 'ids'])
             result['next_episode']['season'] = self.next_episode.keys[0][0]
 
         if self.last_episode:
-            result['last_episode'] = popitems(self.last_episode.to_dict(), ['season', 'number', 'title', 'ids'])
+            result['last_episode'] = dictfilter(self.last_episode.to_dict(), pop=['season', 'number', 'title', 'ids'])
             result['last_episode']['season'] = self.last_episode.keys[0][0]
 
         return result

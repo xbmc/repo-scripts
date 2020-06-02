@@ -30,17 +30,10 @@ class SearchMapper(Mapper):
 
     @classmethod
     def process_many(cls, client, items, **kwargs):
-        result = []
+        if not items:
+            return None
 
-        for item in items:
-            item = cls.process(client, item, **kwargs)
-
-            if not item:
-                continue
-
-            result.append(item)
-
-        return result
+        return [item for item in [cls.process(client, item, **kwargs) for item in items] if item]
 
     @classmethod
     def movie(cls, client, item, **kwargs):

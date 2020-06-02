@@ -58,6 +58,13 @@ class Episode(Video):
         Absolute episode number
         """
 
+        self.runtime = None
+        """
+        :type: :class:`~python:int`
+
+        Runtime
+        """
+
     def to_identifier(self):
         """Retrieve the episode identifier.
 
@@ -73,7 +80,10 @@ class Episode(Video):
 
     @deprecated('Episode.to_info() has been moved to Episode.to_dict()')
     def to_info(self):
-        """**Deprecated:** use the :code:`to_dict()` method instead."""
+        """Dump episode to a dictionary.
+
+        **Deprecated:** use the :code:`to_dict()` method instead.
+        """
         return self.to_dict()
 
     def to_dict(self):
@@ -125,6 +135,9 @@ class Episode(Video):
         if self.number_abs:
             result['number_abs'] = self.number_abs
 
+        if self.runtime:
+            result['runtime'] = self.runtime
+
         return result
 
     def _update(self, info=None, **kwargs):
@@ -137,7 +150,8 @@ class Episode(Video):
             'title',
 
             # Extended Info
-            'available_translations'
+            'available_translations',
+            'runtime',
         ])
 
         # Extended Info

@@ -1,6 +1,6 @@
 from __future__ import absolute_import, division, print_function
 
-from trakt.core.helpers import deprecated, popitems
+from trakt.core.helpers import deprecated, dictfilter
 from trakt.interfaces.base import Interface, authenticated
 from trakt.interfaces.sync.collection import SyncCollectionInterface
 from trakt.interfaces.sync.history import SyncHistoryInterface
@@ -28,7 +28,7 @@ class SyncInterface(Interface):
         return self.get_data(
             self.http.get(
                 'last_activities',
-                **popitems(kwargs, [
+                **dictfilter(kwargs, pop=[
                     'authenticated',
                     'validate_token'
                 ])
