@@ -10,6 +10,7 @@ from trakt.objects.progress import CollectionProgress, WatchedProgress
 from trakt.objects.rating import Rating
 from trakt.objects.season import Season
 from trakt.objects.show import Show
+from trakt.objects.user import User
 from trakt.objects.video import Video
 
 
@@ -24,5 +25,6 @@ __all__ = (
     'Show',
     'Video',
     'Person',
-    'WatchedProgress', 'CollectionProgress'
+    'WatchedProgress', 'CollectionProgress',
+    'User'
 )

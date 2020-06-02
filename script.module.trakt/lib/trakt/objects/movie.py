@@ -117,7 +117,10 @@ class Movie(Video):
 
     @deprecated('Movie.to_info() has been moved to Movie.to_dict()')
     def to_info(self):
-        """**Deprecated:** use the :code:`to_dict()` method instead."""
+        """Dump movie to a dictionary.
+
+        **Deprecated:** use the :code:`to_dict()` method instead.
+        """
         return self.to_dict()
 
     def to_dict(self):

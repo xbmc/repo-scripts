@@ -1,5 +1,7 @@
 from __future__ import absolute_import, division, print_function
 
+from trakt.core.helpers import dictfilter
+from trakt.core.pagination import PaginationIterator
 from trakt.interfaces.base import Interface
 from trakt.mapper.search import SearchMapper
 
@@ -11,7 +13,7 @@ import warnings
 class SearchInterface(Interface):
     path = 'search'
 
-    def lookup(self, id, service=None, media=None, extended=None, **kwargs):
+    def lookup(self, id, service=None, media=None, extended=None, page=None, per_page=None, **kwargs):
         """Lookup items by their Trakt, IMDB, TMDB, TVDB, or TVRage ID.
 
         **Note:** If you lookup an identifier without a :code:`media` type specified it
@@ -54,7 +56,7 @@ class SearchInterface(Interface):
         :type kwargs: :class:`~python:dict`
 
         :return: Results
-        :rtype: :class:`trakt.objects.media.Media` or :class:`~python:list` of :class:`trakt.objects.media.Media`
+        :rtype: :class:`~python:list` of :class:`trakt.objects.media.Media`
         """
         # Expand tuple `id`
         if type(id) is tuple:
@@ -68,41 +70,40 @@ class SearchInterface(Interface):
             raise ValueError('Invalid value provided for the "service" parameter')
 
         # Build query
-        query = {}
+        query = {
+            'extended': extended,
+            'page': page,
+            'limit': per_page
+        }
 
         if isinstance(media, six.string_types):
             query['type'] = media
         elif isinstance(media, list):
             query['type'] = ','.join(media)
 
-        if extended:
-            query['extended'] = extended
-
         # Send request
         response = self.http.get(
             params=[service, id],
-            query=query
+            query=query,
+            **dictfilter(kwargs, get=[
+                'exceptions'
+            ], pop=[
+                'pagination'
+            ])
         )
 
         # Parse response
         items = self.get_data(response, **kwargs)
 
+        if isinstance(items, PaginationIterator):
+            return items.with_mapper(lambda items: SearchMapper.process_many(self.client, items))
+
         if isinstance(items, requests.Response):
             return items
 
-        if not items:
-            return None
+        return SearchMapper.process_many(self.client, items)
 
-        count = len(items)
-
-        if count > 1:
-            return SearchMapper.process_many(self.client, items)
-        elif count == 1:
-            return SearchMapper.process(self.client, items[0])
-
-        return None
-
-    def query(self, query, media=None, year=None, fields=None, extended=None, **kwargs):
+    def query(self, query, media=None, year=None, fields=None, extended=None, page=None, per_page=None, **kwargs):
         """Search by titles, descriptions, translated titles, aliases, and people.
 
         **Note:** Results are ordered by the most relevant score.
@@ -153,17 +154,14 @@ class SearchInterface(Interface):
 
         # Build query
         query = {
-            'query': query
+            'query': query,
+            'year': year,
+            'fields': fields,
+
+            'extended': extended,
+            'page': page,
+            'limit': per_page
         }
-
-        if year:
-            query['year'] = year
-
-        if fields:
-            query['fields'] = fields
-
-        if extended:
-            query['extended'] = extended
 
         # Serialize media items
         if isinstance(media, list):
@@ -172,16 +170,21 @@ class SearchInterface(Interface):
         # Send request
         response = self.http.get(
             params=[media],
-            query=query
+            query=query,
+            **dictfilter(kwargs, get=[
+                'exceptions'
+            ], pop=[
+                'pagination'
+            ])
         )
 
         # Parse response
         items = self.get_data(response, **kwargs)
 
+        if isinstance(items, PaginationIterator):
+            return items.with_mapper(lambda items: SearchMapper.process_many(self.client, items))
+
         if isinstance(items, requests.Response):
             return items
 
-        if items is not None:
-            return SearchMapper.process_many(self.client, items)
-
-        return None
+        return SearchMapper.process_many(self.client, items)

@@ -9,7 +9,7 @@ class SummaryMapper(Mapper):
         if not items:
             return None
 
-        return [cls.movie(client, item, **kwargs) for item in items]
+        return [item for item in [cls.movie(client, item, **kwargs) for item in items] if item]
 
     @classmethod
     def movie(cls, client, item, **kwargs):
@@ -41,7 +41,7 @@ class SummaryMapper(Mapper):
         if not items:
             return None
 
-        return [cls.show(client, item, **kwargs) for item in items]
+        return [item for item in [cls.show(client, item, **kwargs) for item in items] if item]
 
     @classmethod
     def show(cls, client, item, **kwargs):
@@ -73,7 +73,7 @@ class SummaryMapper(Mapper):
         if not items:
             return None
 
-        return [cls.season(client, item, **kwargs) for item in items]
+        return [item for item in [cls.season(client, item, **kwargs) for item in items] if item]
 
     @classmethod
     def season(cls, client, item, **kwargs):
@@ -124,7 +124,7 @@ class SummaryMapper(Mapper):
         if not items:
             return None
 
-        return [cls.episode(client, item, **kwargs) for item in items]
+        return [item for item in [cls.episode(client, item, **kwargs) for item in items] if item]
 
     @classmethod
     def episode(cls, client, item, parse_show=False, **kwargs):

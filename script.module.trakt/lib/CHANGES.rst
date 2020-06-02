@@ -1,3 +1,67 @@
+4.1.0 (2020-05-28)
+------------------
+**Added**
+
+- Documentation is now generated for a number of modules that were previously missing
+
+- **Interfaces:**
+
+  - :code:`Trakt['sync/watchlist']`
+
+    - Now supports the :code:`sort` parameter
+
+  - :code:`Trakt['users/*/following']`
+  - :code:`Trakt['users/*/friends']`
+  - :code:`Trakt['users/*/history']`
+  - :code:`Trakt['users/*/ratings']`
+  - :code:`Trakt['users/*/watchlist']`
+
+- **Methods:**
+
+  - :code:`Trakt['sync/history']` :code:`seasons()`, :code:`episodes()`
+  - :code:`Trakt['sync/ratings']` :code:`all()`
+
+- **Objects:**
+
+  - :code:`User`
+
+**Changed**
+
+- **Methods:**
+
+  - :code:`Trakt['users/*/lists']` :code:`create()` now cleans the provided :code:`username` parameter.
+
+4.0.0 (2020-05-15)
+------------------
+**BREAKING**
+
+- :code:`pagination=True` now always returns a :code:`PaginationIterator` with:
+   - :code:`total_items` - Total number of items
+   - :code:`total_pages` - Total number of pages
+   - :code:`get(page)` - Fetch the specified page
+   - :code:`__iter__` - Iterate over all items, automatically requesting the next page as required
+- :code:`Trakt['search'].lookup()` now always returns a list of matched items *(previously a list was only returned when more than one item was returned)*
+
+**Added**
+
+- Pages can now be requested without using :code:`pagination=True` by using the :code:`page` and :code:`per_page` parameters on:
+   - :code:`Trakt['movies']` :code:`trending()`
+   - :code:`Trakt['search']` :code:`lookup()`, :code:`query()`
+   - :code:`Trakt['shows']` :code:`trending()`
+   - :code:`Trakt['sync/history']` :code:`get()`, :code:`movies()`, :code:`shows()`
+   - :code:`Trakt['sync/ratings']` :code:`get()`, :code:`movies()`, :code:`shows()`, :code:`seasons()`, :code:`episodes()`
+   - :code:`Trakt['sync/watchlist']` :code:`get()`, :code:`seasons()`, :code:`episodes()`
+   - :code:`Trakt['users']` :code:`likes()`
+   - :code:`Trakt['users/*/lists/*']` :code:`items()`
+- :code:`Trakt['users/*/lists/*'].items()` now supports a :code:`media` parameter (#76)
+
+3.2.0 (2020-03-17)
+------------------
+**Added**
+
+- Exposed episode runtime (#69)
+- Support :code:`extended` parameter on list :code:`items()` function (#71)
+
 3.1.0 (2019-10-22)
 ------------------
 **Added**

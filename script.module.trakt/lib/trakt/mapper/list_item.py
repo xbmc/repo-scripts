@@ -23,6 +23,16 @@ class ListItemMapper(Mapper):
         return func(client, item, **kwargs)
 
     @classmethod
+    def process_many(cls, client, items, **kwargs):
+        if not items:
+            return None
+
+        return [
+            item for item in [cls.process(client, item, index=x + 1, **kwargs) for x, item in enumerate(items)]
+            if item
+        ]
+
+    @classmethod
     def movie(cls, client, item, **kwargs):
         if 'movie' in item:
             i_movie = item['movie']

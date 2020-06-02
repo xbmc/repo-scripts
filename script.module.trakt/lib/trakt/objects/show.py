@@ -162,7 +162,10 @@ class Show(Media):
 
     @deprecated('Show.to_info() has been moved to Show.to_dict()')
     def to_info(self):
-        """**Deprecated:** use the :code:`to_dict()` method instead."""
+        """Dump show to a dictionary.
+
+        **Deprecated:** use the :code:`to_dict()` method instead.
+        """
         return self.to_dict()
 
     def to_dict(self):
