@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<window id="11112">
+	<defaultcontrol>10070</defaultcontrol>
+	<controls>
+		<animation effect="fade" time="200">WindowOpen</animation>
+		<animation effect="fade" time="200">WindowClose</animation>
+		<control type="group" id="10072">
+		    <width>400</width>
+			<control type="image">
+				<height>30</height>
+				<texture border="20,19,20,0">DialogContextTop.png</texture>
+			</control>
+			<control type="image">
+			    <top>30</top>
+				<height>30</height>
+				<texture border="20,0,20,0">DialogContextMiddle.png</texture>
+			</control>
+			<control type="label" id="10071">
+			    <top>22</top>
+				<height>30</height>
+				<align>center</align>
+				<aligny>center</aligny>
+				<font>font14</font>
+				<textcolor>white</textcolor>
+				<label></label>
+			</control>
+			<control type="group" id="10073">
+				<control type="image">
+					<height>25</height>
+					<texture border="20,0,19,20">DialogContextBottom.png</texture>
+				</control>
+			</control>
+			<control type="panel" id="10070">
+			    <top>60</top>
+			    <width>400</width>
+				<onleft>close</onleft>
+				<onright>close</onright>
+				<onup>10070</onup>
+				<ondown>10070</ondown>
+				<scrolltime tween="sine" easing="inout">280</scrolltime>
+				<itemlayout height="40">
+					<control type="image">
+					    <width>400</width>
+					    <height>40</height>
+						<texture border="25,5,25,5">ShutdownButtonNoFocus.png</texture>
+					</control>
+					<control type="label">
+						<left>25</left>
+						<width>350</width>
+						<height>40</height>
+						<font>font13</font>
+						<align>center</align>
+						<aligny>center</aligny>
+						<textcolor>grey2</textcolor>
+						<label>$INFO[ListItem.Label]</label>
+					</control>
+				</itemlayout>
+				<focusedlayout height="40">
+					<control type="image">
+					    <width>400</width>
+					    <height>40</height>
+						<texture border="25,5,25,5">ShutdownButtonFocus.png</texture>
+					</control>
+					<control type="label">
+						<left>25</left>
+						<width>350</width>
+						<height>40</height>
+						<font>font13</font>
+						<align>center</align>
+						<aligny>center</aligny>
+						<textcolor>white</textcolor>
+						<label>$INFO[ListItem.Label]</label>
+					</control>
+				</focusedlayout>
+			</control>
+		</control>
+	</controls>
+</window>

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<window id="11112">
+	<defaultcontrol>10070</defaultcontrol>
+	<controls>
+		<animation type="WindowOpen">
+			<effect type="zoom" start="95" end="100" center="960,540" time="200" />
+			<effect type="fade" start="80" end="100" time="200" />
+		</animation>
+		<animation type="WindowClose">
+			<effect type="zoom" start="100" end="95" center="960,540" time="100" />
+			<effect type="fade" start="100" end="0" time="100" />
+		</animation>
+		<control type="group" id="10072">
+		    <width>600</width>
+			<control type="image">
+				<height>105</height>
+				<texture>ap-DialogTop.png</texture>
+			</control>
+			<control type="label" id="10071">
+			    <top>8</top>
+				<height>105</height>
+				<font>font14</font>
+				<align>center</align>
+				<aligny>center</aligny>
+				<label></label>
+			</control>
+			<control type="group" id="10073">
+				<control type="image">
+					<height>53</height>
+					<texture>ap-DialogBottom.png</texture>
+				</control>
+			</control>
+			<control type="panel" id="10070">
+			    <top>105</top>
+				<onleft>close</onleft>
+				<onright>close</onright>
+				<onup>10070</onup>
+				<ondown>10070</ondown>
+				<scrolltime tween="sine" easing="inout">280</scrolltime>
+				<itemlayout height="60">
+					<control type="image">
+						<texture border="3">ap-DialogMid.png</texture>
+					</control>
+					<control type="image">
+						<left>30</left>
+						<texture border="3">buttons/ButtonNF.png</texture>
+					</control>
+					<control type="label">
+						<width>473</width>
+						<left>30</left>
+						<font>font14</font>
+						<label>$INFO[ListItem.Label]</label>
+					</control>
+				</itemlayout>
+				<focusedlayout height="60">
+					<control type="image">
+						<texture border="3">ap-DialogMid.png</texture>
+					</control>
+					<control type="image">
+						<left>30</left>
+						<texture border="3">buttons/ButtonNF.png</texture>
+					</control>
+					<control type="image">
+						<width>563</width>
+						<left>20</left>
+						<texture border="4" colordiffuse="Highlight">img/WhiteRoundedST2.png</texture>
+					</control>
+					<control type="label">
+						<width>473</width>
+						<left>30</left>
+						<textcolor>Black</textcolor>
+						<shadowcolor></shadowcolor>
+						<font>font14</font>
+						<label>$INFO[ListItem.Label]</label>
+					</control>
+				</focusedlayout>
+			</control>
+		</control>
+	</controls>
+</window>

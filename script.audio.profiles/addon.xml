@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.audio.profiles" name="Audio Profiles" version="1.4.2" provider-name="pkscout, notoco, Regss">
+<addon id="script.audio.profiles" name="Audio Profiles" version="2.0.0" provider-name="pkscout, notoco, Regss">
 	<requires>
 		<import addon="xbmc.python" version="2.26.0"/>
 		<import addon="script.module.kodi-six" version="0.0.3" />
@@ -8,32 +8,42 @@
 	<extension point="xbmc.service" library="service.py" />
 	<extension point="xbmc.addon.metadata">
 		<news>
-v.1.4.2
-- added option to disable auto load of profile at startup if it's the one that was enabled at shutdown
-- added option to set delay before pop up dialog automatically closes
-- added option to enable debug logging
-- fix for keymap option to pop up dialog not working
-- fix so the auto loaded profile for startup is always loaded
-- fix so setting to pop up dialog box when playback start works again
-- fix so save notifications show even if notifications are off
-- fix so you don't have to restart Kodi for settings changes to be reflected
-- fix for crash when trying to toggle profiles
+v.2.0.0
+- added support for up to 10 audio profiles
+- added more granular control over notifications
+- added option to have select menu show only for certain media types
+- added auto switching by codec kind and channel count (for videos only)
+- added option to use built in select dialog instead of custom menu
+- added option for more agressive matching of unknown content to auto_music
+- added ability to support skin specific custom select menu
+- added skin support for Ace2, Aeon MQ8, Aeon Nox Silvo, Aeon Tajo, Amber, AppTV, Aura, Arctic Horizon, Arctic Zephyr2Bello 7, Box, Confluence, Embuary, Eminence, Estuary, fTV, Pellucid, Quartz, Rapier, Revolve, Transparency, Unity, and Xperience1080
+- added Matrix specific settings file (HDMI-CEC and Codec Detection are now ADVANCED settings for Matrix)
 - updated language files
-- cleaned up some setting descriptions
-- changes for better code compatibility between Kodi 18 and 19
-- changes in logging to accomodate new logging requirements for Kodi 19
+- updated skin support to make it easier to support new skins
+- changed general logic for auto switching
+- changed method for centering select menu
+- fix so PVR recordings are categorized as auto_pvr_tv during auto switch
+- fix for crash in service when changing settings
+- reorganized settings
+- substantial rewrite to eliminate need for service to call main addon via executebuiltin
 		</news>
 		<assets>
 			<icon>icon.png</icon>
 		</assets>
 		<summary lang="en_GB">Save audio profile and easily switch between them.</summary>
-		<summary lang="pl_PL">Zapisuje profile ustawień audio i łatwo przełącza między nimi.</summary>
-		<summary lang="it_IT">Salva il profilo audio e cambia facilmente da uno all'altro.</summary>
+		<summary lang="es_AR">Guarde el perfil de audio y cambie fácilmente entre ellos.</summary>
+		<summary lang="es_ES">Guarde el perfil de audio y cambie fácilmente entre ellos.</summary>
+		<summary lang="es_MX">Guarde el perfil de audio y cambie fácilmente entre ellos.</summary>
 		<summary lang="hu_HU">Hangbeállítások profilba mentése, és könnyű váltás közöttük.</summary>
+		<summary lang="it_IT">Salva il profilo audio e cambia facilmente da uno all'altro.</summary>
+		<summary lang="pl_PL">Zapisuje profile ustawień audio i łatwo przełącza między nimi.</summary>
 		<description lang="en_GB">Save audio profile and easily switch between them.</description>
-		<description lang="pl_PL">Zapisuje profile ustawień audio i łatwo przełącza między nimi.</description>
-		<description lang="it_IT">Salva il profilo audio e cambia facilmente da uno all'altro.</description>
+		<description lang="es_AR">Guarde el perfil de audio y cambie fácilmente entre ellos.</description>
+		<description lang="es_ES">Guarde el perfil de audio y cambie fácilmente entre ellos.</description>
+		<description lang="es_MX">Guarde el perfil de audio y cambie fácilmente entre ellos.</description>
 		<description lang="hu_HU">Hangbeállítások profilba mentése, és könnyű váltás közöttük.</description>
+		<description lang="it_IT">Salva il profilo audio e cambia facilmente da uno all'altro.</description>
+		<description lang="pl_PL">Zapisuje profile ustawień audio i łatwo przełącza między nimi.</description>
 		<platform>all</platform>
 		<license>GPL-3.0-only</license>
 		<forum>https://forum.kodi.tv/showthread.php?tid=353852</forum>
