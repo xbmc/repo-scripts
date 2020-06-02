@@ -9,8 +9,8 @@ class SyncHistoryInterface(Get, Add, Remove):
     path = 'sync/history'
     flags = {'is_watched': True}
 
-    def get(self, media=None, id=None, page=1, per_page=10, start_at=None, end_at=None,
-            store=None, extended=None, **kwargs):
+    def get(self, media=None, id=None, start_at=None, end_at=None, store=None,
+            extended=None, page=None, per_page=None, **kwargs):
 
         if not media and id:
             raise ValueError('The "id" parameter also requires the "media" parameter to be defined')
@@ -22,22 +22,17 @@ class SyncHistoryInterface(Get, Add, Remove):
             params.append(id)
 
         # Build query
-        query = {}
-
-        if page:
-            query['page'] = page
-
-        if per_page:
-            query['limit'] = per_page
+        query = {
+            'extended': extended,
+            'page': page,
+            'limit': per_page
+        }
 
         if start_at:
             query['start_at'] = to_iso8601_datetime(start_at)
 
         if end_at:
             query['end_at'] = to_iso8601_datetime(end_at)
-
-        if extended:
-            query['extended'] = extended
 
         # Request watched history
         return super(SyncHistoryInterface, self).get(
@@ -47,18 +42,50 @@ class SyncHistoryInterface(Get, Add, Remove):
             **kwargs
         )
 
+    #
+    # Shortcut methods
+    #
+
     @authenticated
-    def shows(self, *args, **kwargs):
+    def movies(self, id=None, start_at=None, end_at=None, store=None, **kwargs):
         return self.get(
-            'shows',
-            *args,
+            'movies',
+            id=id,
+            start_at=start_at,
+            end_at=end_at,
+            store=store,
             **kwargs
         )
 
     @authenticated
-    def movies(self, *args, **kwargs):
+    def shows(self, id=None, start_at=None, end_at=None, store=None, **kwargs):
         return self.get(
-            'movies',
-            *args,
+            'shows',
+            id=id,
+            start_at=start_at,
+            end_at=end_at,
+            store=store,
+            **kwargs
+        )
+
+    @authenticated
+    def seasons(self, id=None, start_at=None, end_at=None, store=None, **kwargs):
+        return self.get(
+            'seasons',
+            id=id,
+            start_at=start_at,
+            end_at=end_at,
+            store=store,
+            **kwargs
+        )
+
+    @authenticated
+    def episodes(self, id=None, start_at=None, end_at=None, store=None, **kwargs):
+        return self.get(
+            'episodes',
+            id=id,
+            start_at=start_at,
+            end_at=end_at,
+            store=store,
             **kwargs
         )

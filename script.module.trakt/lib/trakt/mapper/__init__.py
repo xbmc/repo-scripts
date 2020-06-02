@@ -7,6 +7,7 @@ from trakt.mapper.progress import ProgressMapper
 from trakt.mapper.search import SearchMapper
 from trakt.mapper.summary import SummaryMapper
 from trakt.mapper.sync import SyncMapper
+from trakt.mapper.user import UserMapper
 
 
 __all__ = (
@@ -16,5 +17,6 @@ __all__ = (
     'ProgressMapper',
     'SearchMapper',
     'SummaryMapper',
-    'SyncMapper'
+    'SyncMapper',
+    'UserMapper'
 )

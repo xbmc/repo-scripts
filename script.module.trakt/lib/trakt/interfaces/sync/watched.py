@@ -12,10 +12,9 @@ class SyncWatchedInterface(Get):
             raise ValueError('Invalid value provided for the "media" parameter')
 
         # Build query
-        query = {}
-
-        if extended:
-            query['extended'] = extended
+        query = {
+            'extended': extended
+        }
 
         # Request watched
         return super(SyncWatchedInterface, self).get(
