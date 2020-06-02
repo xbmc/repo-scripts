@@ -7,12 +7,12 @@ msgstr ""
 
 #: Settings
 msgctxt "#32000"
-msgid "Profiles"
+msgid "Profiles 1-5"
 msgstr ""
 
 #: Settings
 msgctxt "#32001"
-msgid "Name of profile 1"
+msgid " Name of profile 1"
 msgstr ""
 
 #: Settings
@@ -22,7 +22,7 @@ msgstr ""
 
 #: Settings
 msgctxt "#32003"
-msgid "Name of profile 2"
+msgid " Name of profile 2"
 msgstr ""
 
 #: Settings
@@ -32,12 +32,12 @@ msgstr ""
 
 #: Settings
 msgctxt "#32005"
-msgid "Name of profile 3"
+msgid " Name of profile 3"
 msgstr ""
 
 #: Settings
 msgctxt "#32006"
-msgid "Name of profile 4"
+msgid " Name of profile 4"
 msgstr ""
 
 #: Settings
@@ -77,12 +77,12 @@ msgstr ""
 
 #: Settings
 msgctxt "#32014"
-msgid "Automatic Switch"
+msgid "Auto Switch"
 msgstr ""
 
 #: Settings
 msgctxt "#32015"
-msgid "Show audio stream select menu on start playing"
+msgid "Show audio profile select menu on media playback"
 msgstr ""
 
 #: Settings
@@ -107,12 +107,12 @@ msgstr ""
 
 #: Settings
 msgctxt "#32022"
-msgid "Profile for Movies"
+msgid "Profile for movies"
 msgstr ""
 
 #: Settings
 msgctxt "#32023"
-msgid "Profile for TVShows"
+msgid "Profile for TV shows"
 msgstr ""
 
 #: Settings
@@ -122,7 +122,7 @@ msgstr ""
 
 #: Settings
 msgctxt "#32025"
-msgid "Profile for Music"
+msgid "Profile for music"
 msgstr ""
 
 #: Settings
@@ -132,7 +132,7 @@ msgstr ""
 
 #: Settings
 msgctxt "#32027"
-msgid "Send HDMI-CEC command when profile activated"
+msgid "HDMI-CEC"
 msgstr ""
 
 #: Settings
@@ -152,22 +152,22 @@ msgstr ""
 
 #: Settings
 msgctxt "#32031"
-msgid "Profile for Videos (not from library)"
+msgid "Profile for videos (not in library)"
 msgstr ""
 
 #: Settings
 msgctxt "#32032"
-msgid "Profile for Music Videos"
+msgid "Profile for music videos"
 msgstr ""
 
 #: Settings
 msgctxt "#32033"
-msgid "Profile for Unknown content type"
+msgid "Profile for unknown content type"
 msgstr ""
 
 #: Settings
 msgctxt "#32034"
-msgid "Profile for PVR Radio"
+msgid "Profile for PVR radio"
 msgstr ""
 
 #: Settings
@@ -192,7 +192,7 @@ msgstr ""
 
 #: Settings
 msgctxt "#32039"
-msgid "Delay before close"
+msgid " Delay before close"
 msgstr ""
 
 #: Settings
@@ -202,7 +202,173 @@ msgstr ""
 
 #: Settings
 msgctxt "#32041"
-msgid "Force load profile at startup"
+msgid " Force load profile at startup"
+msgstr ""
+
+#: Settings
+msgctxt "#32042"
+msgid " Auto switch notifications"
+msgstr ""
+
+#: Settings
+msgctxt "#32043"
+msgid " Manual switch notifications"
+msgstr ""
+
+#: Settings
+msgctxt "#32044"
+msgid " Maintenance notifications"
+msgstr ""
+
+#: Settings
+msgctxt "#32045"
+msgid "Select menu"
+msgstr ""
+
+#: Settings
+msgctxt "#32046"
+msgid "Use custom select menu"
+msgstr ""
+
+#: Settings
+msgctxt "#32047"
+msgid "Include skin mods"
+msgstr ""
+
+#: Settings
+msgctxt "#32048"
+msgid "Extras"
+msgstr ""
+
+#: Settings
+msgctxt "#32049"
+msgid "By number of channels"
+msgstr ""
+
+#: Settings
+msgctxt "#32050"
+msgid "Menu Options"
+msgstr ""
+
+#: Settings
+msgctxt "#32051"
+msgid "Profile 5"
+msgstr ""
+
+#: Settings
+msgctxt "#32052"
+msgid "Name of profile 5"
+msgstr ""
+
+#: Settings
+msgctxt "#32053"
+msgid "Profile 6"
+msgstr ""
+
+#: Settings
+msgctxt "#32054"
+msgid "Name of profile 6"
+msgstr ""
+
+#: Settings
+msgctxt "#32055"
+msgid "Profile 7"
+msgstr ""
+
+#: Settings
+msgctxt "#32056"
+msgid "Name of profile 7"
+msgstr ""
+
+#: Settings
+msgctxt "#32057"
+msgid "Profile 8"
+msgstr ""
+
+#: Settings
+msgctxt "#32058"
+msgid "Name of profile 8"
+msgstr ""
+
+#: Settings
+msgctxt "#32059"
+msgid "Profile 9"
+msgstr ""
+
+#: Settings
+msgctxt "#32060"
+msgid "Name of profile 9"
+msgstr ""
+
+#: Settings
+msgctxt "#32061"
+msgid "Profile 10"
+msgstr ""
+
+#: Settings
+msgctxt "#32062"
+msgid "Name of profile 10"
+msgstr ""
+
+
+#: Settings
+msgctxt "#32063"
+msgid "Codec Detection"
+msgstr ""
+
+#: Settings
+msgctxt "#32064"
+msgid "Profile for AC3"
+msgstr ""
+
+#: Settings
+msgctxt "#32065"
+msgid "Profile for E-AC3"
+msgstr ""
+
+#: Settings
+msgctxt "#32066"
+msgid "Profile for DTS"
+msgstr ""
+
+#: Settings
+msgctxt "#32067"
+msgid "Profile for DTS HD"
+msgstr ""
+
+#: Settings
+msgctxt "#32068"
+msgid "Profile for True HD"
+msgstr ""
+
+#: Settings
+msgctxt "#32069"
+msgid "Profile for any other audio codec"
+msgstr ""
+
+#: Settings
+msgctxt "#32070"
+msgid "Profiles 6-10"
+msgstr ""
+
+#: Settings
+msgctxt "#32071"
+msgid "Stereo audio"
+msgstr ""
+
+#: Settings
+msgctxt "#32072"
+msgid "Multi channel audio"
+msgstr ""
+
+#: Settings
+msgctxt "#32073"
+msgid "delay before reading codec info"
+msgstr ""
+
+#: Settings
+msgctxt "#32074"
+msgid "match streams with no codec details as music"
 msgstr ""
 
 #: Script
