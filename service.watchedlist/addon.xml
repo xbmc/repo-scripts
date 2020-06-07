@@ -14,7 +14,7 @@
     <extension point="xbmc.python.script" library="manual.py"> <!--Python code for manual start in the addons menu-->
         <provides>executable</provides> <!-- Addon is shown under Programs -->
     </extension>
-    <extension point="xbmc.service" library="default.py" start="login" /> <!-- Python code for autostart -->
+    <extension point="xbmc.service" library="default.py" /> <!-- Python code for autostart -->
     <extension point="xbmc.python.module" library="lib" /> <!-- entry to access the WatchedList from other addons -->
     <extension point="xbmc.addon.metadata">
         <summary lang="en_GB">Save watched state of movies and TV-series episodes independent from filenames</summary>
