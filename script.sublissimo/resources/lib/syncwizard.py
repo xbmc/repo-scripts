@@ -170,3 +170,15 @@ class SyncWizard(xbmc.Player) :
             if self.ending_time and self.starting_time:
                 self.stop()
                 self.send_times()
+                
+    def onPlayBackStopped(self):
+        if self.proper_exit:
+            pass
+        else:
+            script.show_dialog(self.subtitlefile, self.filename)
+
+    def onPlayBackEnded(self):
+        if self.proper_exit:
+            pass
+        else:
+            script.show_dialog(self.subtitlefile, self.filename)                

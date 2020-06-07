@@ -20,10 +20,11 @@ class SyncWizardFrameRate(xbmc.Player):
         self.flag = False
 
     def add(self, subtitlefile, filename):
+        self.proper_exit = False
         self.subtitlefile = subtitlefile
         self.filename = filename
         self.new_subtitlefile = []
-
+        
     def get_frame_rate(self):
         self.frame_rate = xbmc.getInfoLabel('Player.Process(VideoFPS)')
         xbmcgui.Dialog().ok(_(32106), _(32120) + str(self.frame_rate))
@@ -32,7 +33,9 @@ class SyncWizardFrameRate(xbmc.Player):
     def delete_temp_file(self):
         temp_file = self.filename[:-4] + "_temp.srt"
         if xbmcvfs.exists(temp_file):
-             xbmcvfs.delete(temp_file)
+            xbmcvfs.delete(temp_file)
+        self.proper_exit = True
+        self.stop()
 
     def write_and_display_temp_file(self, new_subtitlefile, temp):
         if temp:
@@ -64,7 +67,7 @@ class SyncWizardFrameRate(xbmc.Player):
         if not res:
             self.give_frame_rate(False)
         new_subtitlefile = cur_sub.create_new_times(False, new_factor, 0)
-        xbmcgui.Dialog().multiselect(_(32010), new_subtitlefile)
+        #xbmcgui.Dialog().multiselect(_(32010), new_subtitlefile)
         self.write_and_display_temp_file(new_subtitlefile, True)
 
     def give_frame_rate(self, from_pause):
@@ -138,7 +141,7 @@ class SyncWizardFrameRate(xbmc.Player):
 
     def onPlayBackStopped(self):
         if not self.proper_exit:
-            xbmcgui.Dialog().contextmenu([_(32096), _(32097), _(32098), _(32099)])
+            choice = xbmcgui.Dialog().contextmenu([_(32096), _(32097), _(32098), _(32099)])
             if choice == 0:
                 if self.new_subtitlefile:
                     self.delete_temp_file()
@@ -147,6 +150,7 @@ class SyncWizardFrameRate(xbmc.Player):
                     self.delete_temp_file()
                     script.show_dialog(self.subtitlefile, self.filename)
             if choice == 1:
+                self.delete_temp_file()
                 script.save_the_file(self.new_subtitlefile, self.filename)
                 #self.write_and_display_temp_file(self.new_subtitlefile, False)
             if choice == 2 or choice == -1:
@@ -156,3 +160,27 @@ class SyncWizardFrameRate(xbmc.Player):
             if choice == 3:
                 self.delete_temp_file()
                 script.exiting(self.new_subtitlefile, self.filename)
+                
+    def onPlayBackEnded(self):
+        if not self.proper_exit:
+            choice = xbmcgui.Dialog().contextmenu([_(32096), _(32097), _(32098), _(32099)])
+            if choice == 0:
+                if self.new_subtitlefile:
+                    self.delete_temp_file()
+                    script.show_dialog(self.new_subtitlefile, self.filename)
+                else:
+                    self.delete_temp_file()
+                    script.show_dialog(self.subtitlefile, self.filename)
+            if choice == 1:
+                self.delete_temp_file()
+                script.save_the_file(self.new_subtitlefile, self.filename)
+                #self.write_and_display_temp_file(self.new_subtitlefile, False)
+            if choice == 2 or choice == -1:
+                self.delete_temp_file()
+                # self.proper_exit = True
+                script.show_dialog(self.subtitlefile, self.filename)
+            if choice == 3:
+                self.delete_temp_file()
+                # self.proper_exit = True
+                script.exiting(self.new_subtitlefile, self.filename)                
+                
