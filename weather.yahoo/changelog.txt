@@ -1,3 +1,6 @@
+v5.0.7
+- fix crash when precipitation data is missing
+
 v5.0.6
 - cleanup
 
