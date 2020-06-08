@@ -1,3 +1,6 @@
+v0.0.5
+- fix crash when precipitation data is missing
+
 v0.0.4
 - fix location search
 - fix yahoo daily weather
