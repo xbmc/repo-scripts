@@ -412,58 +412,15 @@ class traktPlayer(xbmc.Player):
                     logger.debug("[traktPlayer] onAVStarted() - '%s' is in exclusion settings, ignoring." % _filename)
                     return
 
-                self.type = result['item']['type']
-
-                data = {'action': 'started'}
-
                 if (kodiUtilities.getSettingAsBool('scrobble_mythtv_pvr')):
                     logger.debug('[traktPlayer] Setting is enabled to try scrobbling mythtv pvr recording, if necessary.')
 
+                self.type = result['item']['type']
+                data = {'action': 'started'}
                 # check type of item
-                if 'id' not in result['item']:
-                    # do a deeper check to see if we have enough data to perform scrobbles
-                    logger.debug("[traktPlayer] onAVStarted() - Started playing a non-library file, checking available data.")
-
-                    season = xbmc.getInfoLabel('VideoPlayer.Season')
-                    episode = xbmc.getInfoLabel('VideoPlayer.Episode')
-                    showtitle = xbmc.getInfoLabel('VideoPlayer.TVShowTitle')
-                    year = xbmc.getInfoLabel('VideoPlayer.Year')
-                    video_ids = xbmcgui.Window(10000).getProperty('script.trakt.ids')
-                    if video_ids:
-                        data['video_ids'] = json.loads(video_ids)
-
-                    logger.debug("[traktPlayer] info - ids: %s, showtitle: %s, Year: %s, Season: %s, Episode: %s" % (video_ids, showtitle, year, season, episode))
-
-                    if season and episode and (showtitle or video_ids):
-                        # we have season, episode and either a show title or video_ids, can scrobble this as an episode
-                        self.type = 'episode'
-                        data['type'] = 'episode'
-                        data['season'] = int(season)
-                        data['episode'] = int(episode)
-                        data['showtitle'] = showtitle
-                        data['title'] = xbmc.getInfoLabel('VideoPlayer.Title')
-                        if year.isdigit():
-                            data['year'] = int(year)
-                        logger.debug("[traktPlayer] onAVStarted() - Playing a non-library 'episode' - %s - S%02dE%02d - %s." % (data['showtitle'], data['season'], data['episode'], data['title']))
-                    elif (year or video_ids) and not season and not showtitle:
-                        # we have a year or video_id and no season/showtitle info, enough for a movie
-                        self.type = 'movie'
-                        data['type'] = 'movie'
-                        if year.isdigit():
-                            data['year'] = int(year)
-                        data['title'] = xbmc.getInfoLabel('VideoPlayer.Title')
-                        logger.debug("[traktPlayer] onAVStarted() - Playing a non-library 'movie' - %s (%s)." % (data['title'], data.get('year', 'NaN')))
-                    elif showtitle:
-                        title, season, episode = utilities.regex_tvshow(showtitle)
-                        data['type'] = 'episode'
-                        data['season'] = season
-                        data['episode'] = episode
-                        data['title'] = data['showtitle'] = title
-                        logger.debug("[traktPlayer] onAVStarted() - Title: %s, showtitle: %s, season: %d, episode: %d" % (title, showtitle, season, episode))
-                    else:
-                        logger.debug("[traktPlayer] onAVStarted() - Non-library file, not enough data for scrobbling, skipping.")
-                        return
-
+                if 'id' not in result['item'] or self.type == 'channel':
+                    # get non-library details by infolabel (ie. PVR, plugins, etc.)
+                    self.type, data = kodiUtilities.getInfoLabelDetails(result)
                 elif self.type == 'episode' or self.type == 'movie':
                     # get library id
                     self.id = result['item']['id']
