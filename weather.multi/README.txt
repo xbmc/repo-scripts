@@ -19,7 +19,7 @@ Current.Humidity
 Current.FeelsLike
 Current.DewPoint
 Current.UVIndex
-Current.ConditionIcon      (eg. resource://resource.images.weathericons.default/28.png)
+Current.ConditionIcon      (eg. '28.png')
 Current.FanartCode
 
 

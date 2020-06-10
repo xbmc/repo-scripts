@@ -26,9 +26,10 @@ class Weather():
             set_property('Current.Visibility'    , str(round(data['observation']['visibility'],2)) + ' mi')
             set_property('Current.Pressure'      , str(round(data['observation']['barometricPressure'],2)) + ' inHg')
         else:
-            set_property('Current.Visibility'        , str(round(1.60934 * data['observation']['visibility'],2)) + ' km')
+            set_property('Current.Visibility'    , str(round(1.60934 * data['observation']['visibility'],2)) + ' km')
             set_property('Current.Pressure'      , str(int(round((33.864 * data['observation']['barometricPressure'])))) + ' mbar')
-        set_property('Current.Precipitation'     , str(data['observation']['precipitationProbability']) + '%')
+        if 'precipitationProbability' in data['observation']:
+            set_property('Current.Precipitation' , str(data['observation']['precipitationProbability']) + '%')
         set_property('Current.IsFetched'         , 'true')
     #forecast - extended
         set_property('Forecast.City'            , data['location']['displayName'])
