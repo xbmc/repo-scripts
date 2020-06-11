@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.trakt" name="Trakt" version="3.3.0" provider-name="Trakt.tv, Razzeee">
+<addon id="script.trakt" name="Trakt" version="3.3.1" provider-name="Trakt.tv, Razzeee">
     <requires>
         <import addon="xbmc.python" version="3.0.0"/>
-        <import addon="script.module.trakt" version="3.1.0"/>
+        <import addon="script.module.trakt" version="4.1.0"/>
         <import addon="script.module.dateutil" version="2.4.2"/>
     </requires>
     <extension point="xbmc.python.script" library="defaultscript.py">
@@ -57,9 +57,11 @@
         <forum>https://forum.kodi.tv/showthread.php?tid=220547</forum>
         <website>https://trakt.tv</website>
         <source>https://github.com/trakt/script.trakt</source>
-        <news>  - Ported to Python 3
-  - PVR channels with proper tags were not scrobbling, corrected infolabels
-and added pvr progress tracking</news>
+        <news>  - Update to lastest trakt dependency
+  - Improved no runtime handling
+  - Fix manual set watched
+  - Fix manual watchlisting
+  - Improve manual rating matches</news>
     <assets>
         <icon>icon.png</icon>
         <fanart>fanart.jpg</fanart>
