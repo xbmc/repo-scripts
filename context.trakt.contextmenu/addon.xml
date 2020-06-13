@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="context.trakt.contextmenu" name="Trakt - Contextmenu" version="1.1.0+matrix.1" provider-name="Razzeee">
+  <requires>
+    <import addon="xbmc.python" version="3.0.0"/>
+    <import addon="script.trakt" version="3.0.2"/>
+  </requires>
+  <extension point="kodi.context.item">
+    <menu id="kodi.core.main">
+      <item library="addon.py">
+        <label>32000</label>
+        <visible>String.IsEqual(ListItem.dbtype,movie) | String.IsEqual(ListItem.dbtype,tvshow) | String.IsEqual(ListItem.dbtype,season) | String.IsEqual(ListItem.dbtype,episode)</visible>
+      </item>
+    </menu>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en_GB">Adds a Trakt contextmenu button to context menu in your videolibrary</summary>
+    <description lang="en_GB">Add Trakt contextmenu button to context menu in library. This contextmenu will offer "Add to watchlist", "Rate this movie", "Toggle watched" and "Synchronize library".</description>
+    <platform>all</platform>
+    <source>https://github.com/Razzeee/context.trakt.contextmenu/</source>
+    <assets>
+      <icon>icon.png</icon>
+    </assets>
+  </extension>
+</addon>
