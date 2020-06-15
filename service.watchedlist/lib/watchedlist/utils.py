@@ -62,7 +62,7 @@ def showNotification(title, message, loglevel, showtime=4000):
         return  # setting "only errors"
     elif getSetting('verbosity') == '4':
         return  # setting "None"
-    _addoniconpath = os.path.join(addon_dir(), "icon.png")
+    _addoniconpath = _Addon.getAddonInfo('icon')
     log(u'Notification. %s: %s' % (title, message))
     if not xbmc.Player().isPlaying():  # do not show the notification, if a video is being played.
         xbmcgui.Dialog().notification(title, message, _addoniconpath, showtime)

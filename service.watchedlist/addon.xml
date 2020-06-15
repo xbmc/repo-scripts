@@ -30,11 +30,11 @@
         <disclaimer lang="en_GB">This script does not regard the file format. A Movie watched in DVD quality will also set    the 1080p version as watched.</disclaimer>
         <disclaimer lang="de_DE">Dieses Script ignoriert das Dateiformat. Ein gesehener Film in DVD-Qualität wird auch in der BlueRay-Version als gesehen gekennzeichnet.</disclaimer>
         <platform>all</platform>
-        <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+        <license>GPL-2.0-or-later</license>
         <forum>https://forum.kodi.tv/showthread.php?tid=164652</forum>
         <website>https://kodi.wiki/view/Add-on:WatchedList</website>
-        <email></email>
         <source>https://github.com/SchapplM/xbmc-addon-service-watchedlist</source>
+        <news>1.3.0 - Upgrade to Kodi Matrix</news>
         <assets>
             <icon>icon.png</icon>
             <fanart>fanart.jpg</fanart>

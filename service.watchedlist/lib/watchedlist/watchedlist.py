@@ -1737,6 +1737,8 @@ class WatchedList:
             utils.log(u'Dropbox upload error: ' + str(err))
             utils.showNotification(utils.getString(32708), utils.getString(32709), xbmc.LOGERROR)
             return
+        finally:
+            f.close()
         utils.showNotification(utils.getString(32713), utils.getString(32714), xbmc.LOGINFO)
         utils.log(u'Dropbox upload complete: %s -> %s' % (self.dropbox_path, dest_file))
 

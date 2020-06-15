@@ -27,7 +27,5 @@ if __remotedebug__:
         sys.exit(1)
 
 # Run the program
-if xbmc.Monitor().waitForAbort(1.5):  # wait 1.5 seconds to prevent import-errors. TODO: Is this workaround still necessary?
-    sys.exit(0)  # Abort was requested while waiting.
 utils.log("WatchedList Database Service starting...")
 WatchedList().runProgram()
