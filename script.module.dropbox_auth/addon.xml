@@ -15,7 +15,6 @@
     <summary lang="en_GB">Dropbox Auth API</summary>
     <description lang="en_GB">Provide Dropbox Authentification</description>
     <platform>all</platform>
-    <language/>
     <license>MIT</license>
     <source>https://github.com/SchapplM/xbmc-addon-dropboxauth</source>
   </extension>
