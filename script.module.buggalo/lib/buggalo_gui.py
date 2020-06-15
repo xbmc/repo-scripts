@@ -115,7 +115,7 @@ class BuggaloDialog(xbmcgui.WindowXMLDialog):
                 (etype, value, tb) = sys.exc_info()
                 traceback.print_exception(etype, value, tb)
 
-            xbmc.sleep(2000)
+            xbmc.Monitor().waitForAbort(2.0)
             self.close()
 
         elif controlId == self.DETAILS_BUTTON:
@@ -128,3 +128,4 @@ class BuggaloDialog(xbmcgui.WindowXMLDialog):
 
     def onFocus(self, control):
         pass
+

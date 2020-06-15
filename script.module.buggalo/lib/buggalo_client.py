@@ -21,7 +21,7 @@
 import datetime
 import os
 import platform
-import simplejson
+import json
 import sys
 import traceback
 import urllib.request
@@ -127,8 +127,8 @@ def gatherData(etype, value, tracebackInfo, extraData, globalExtraData):
 def submitData(serviceUrl, data):
     for attempt in range(0, 3):
         try:
-            json = simplejson.dumps(data)
-            req = urllib.request.Request(serviceUrl, json)
+            json_data = json.dumps(data)
+            req = urllib.request.Request(serviceUrl, json_data)
             req.add_header('Content-Type', 'text/json')
             u = urllib.request.urlopen(req)
             u.read()

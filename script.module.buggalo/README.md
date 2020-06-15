@@ -2,19 +2,19 @@ INTRODUCTION
 ============
 The buggalo script can collect various information about an
 exception in a Python script as well as information about the
-users system, such as XBMC and Python versions.
+users system, such as Kodi and Python versions.
 
 The collected information is then posted to the internet at a
 predefined URL or email account where the addon author can
 investigate the exception.
 
-The script is somewhat similar to posting the xbmc.log to pastebin,
+The script is somewhat similar to posting the kodi.log to pastebin,
 but is more specialised and doesn't contain superfluous information.
 It is also better integrated into the user experience, the user only
 has to decide if they want to submit the bug report or not.
 
 The user will see a dialog as seen in this screenshot:
-http://forum.xbmc.org/showthread.php?tid=121925&pid=1137307#pid1137307
+http://forum.kodi.tv/showthread.php?tid=121925&pid=1137307#pid1137307
 
 
 HOW TO USE
@@ -80,8 +80,6 @@ To use this script you must do these things besides importing it.
 
 Examples for the implementation can be found in the code of the following addons that use buggalo:
 
-*  [script.tvguide](https://github.com/twinther/script.tvguide)
-*  [script.moviequiz](https://github.com/twinther/script.moviequiz)
 *  [service.watchedlist](https://github.com/SchapplM/xbmc-addon-service-watchedlist)
 
 NOTES ABOUT GMAIL RECIPIENT
@@ -103,7 +101,7 @@ such as date and time.
    OS name and version, kernel version, etc.
 *  Addon information
    Addon id, name, version, path, etc.
-*  XBMC Information
+*  Kodi Information
    Build version and date, the current skin and language
 *  Execution information
    Python version and sys.argv
