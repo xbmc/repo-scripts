@@ -1,0 +1,124 @@
+# Kodi Media Center language file
+# Translators: put your translations in msgstr lines. Preserve items in curly {} and square [] brackets.
+msgid ""
+msgstr ""
+"PO-Revision-Date: 2020-05-29 08:21+0000\n"
+"Last-Translator: Weblate Admin <roman1972@gmail.com>\n"
+"Language-Team: Ukrainian <http://localhost/projects/kodi-tvmaze-scrobbler/"
+"ui-strings/uk/>\n"
+"Language: uk_ua\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<="
+"4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"X-Generator: Weblate 4.0.4\n"
+
+msgctxt "#32000"
+msgid "General"
+msgstr "Загальні"
+
+msgctxt "#32001"
+msgid "Confirm Addon Authorization"
+msgstr "Підтвердження авторизації"
+
+msgctxt "#32002"
+msgid "To authorize the addon open the link below[CR][B]{confirm_url}[/B][CR]or check your mailbox[CR][B]{email}[/B]"
+msgstr ""
+"Щоб авторизувати надбудову, відкрийте посилання[CR][B]{confirm_url}[/B][CR]"
+"або перевірте поштову скриньку[CR][B]{email}[/B]"
+
+msgctxt "#32003"
+msgid "Cancel"
+msgstr "Скасувати"
+
+msgctxt "#32004"
+msgid "TVmaze Scrobbler Menu"
+msgstr "Меню скроблера TVmaze"
+
+msgctxt "#32005"
+msgid "The addon is already authorized.[CR]Authorize again?"
+msgstr "Надбудову вже авторизовано.[CR]Авторизувати знову?"
+
+msgctxt "#32006"
+msgid "Your TVmaze account email"
+msgstr "Пошта облікового запису TVmaze"
+
+msgctxt "#32007"
+msgid "Authorization error: {}"
+msgstr "Помилка авторизації: {}"
+
+msgctxt "#32008"
+msgid "Confirmation error: {}"
+msgstr "Помилка підтвердження: {}"
+
+msgctxt "#32009"
+msgid "Authorize the addon"
+msgstr "Авторизація надбудови"
+
+msgctxt "#32010"
+msgid "Invalid email"
+msgstr "Недопустима адреса"
+
+msgctxt "#32011"
+msgid "TVmaze Scrobbler"
+msgstr "Скроблер TVmaze"
+
+msgctxt "#32012"
+msgid "Pushing episodes"
+msgstr "Передавання серій"
+
+msgctxt "#32013"
+msgid "Pushing episodes for show \"{show_name}\": {count}/{total}"
+msgstr "Передавання серій для серіалу \"{show_name}\": {count}/{total}"
+
+msgctxt "#32014"
+msgid "Push all shows"
+msgstr "Передати всі серіали"
+
+msgctxt "#32015"
+msgid "Push completed"
+msgstr "Передавання завершено"
+
+msgctxt "#32016"
+msgid "Push completed with errors"
+msgstr "Передавання завершено із помилками"
+
+msgctxt "#32017"
+msgid "Failed to push episode status"
+msgstr "Не вдалося передати статус серії"
+
+msgctxt "#32018"
+msgid "Pushed episode status"
+msgstr "Статус серії передано"
+
+msgctxt "#32019"
+msgid "Addon has been authorized successfully"
+msgstr "Надбудову успішно авторизовано"
+
+msgctxt "#32020"
+msgid "Push recent episodes"
+msgstr "Передати свіжі серії"
+
+msgctxt "#32021"
+msgid "Pull watched episodes from TVmaze"
+msgstr "Отримати переглянуті серії із TVmaze"
+
+msgctxt "#32022"
+msgid "Pulled watched episodes from TVmaze"
+msgstr "Переглянуті серії із TVmaze отримано"
+
+msgctxt "#32023"
+msgid "Show update notifications"
+msgstr "Показувати сповіщення про оновлення"
+
+msgctxt "#32024"
+msgid "Automatically pull watched episodes from TVmaze"
+msgstr "Автоматично отримувати переглянуті серії із TVmaze"
+
+msgctxt "#32025"
+msgid "Reset Authorization"
+msgstr "Скидання авторизації"
+
+msgctxt "#32026"
+msgid "This will clear stored authentication credentials.[CR]Are you sure?"
+msgstr "Збережені дані автентифікації буде очищено.[CR]Ви впевнені?"
