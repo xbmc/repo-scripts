@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<settings>
+    <setting label="32024" type="bool" id="pull_from_tvmaze" default="true" />
+    <setting label="32023" type="bool" id="show_notifications" default="true" />
+    <setting label="" type="text" id="username" default="" visible="false"/>
+    <setting label="" type="text" id="apikey" default="" visible="false"/>
+</settings>
