@@ -65,7 +65,8 @@ class MiniLyrics(object):
         try:
             result = '\x02' + chr(magickey) + '\x04\x00\x00\x00' + str(hasheddata) + bytearray(encddata).decode('utf-8')
         except UnicodeDecodeError:
-            result = '\x02' + chr(magickey) + '\x04\x00\x00\x00' + str(hasheddata) + bytearray(encddata)
+            ecd = chardet.detect(bytearray(encddata))
+            result = '\x02' + chr(magickey) + '\x04\x00\x00\x00' + str(hasheddata) + bytearray(encddata).decode(ecd['encoding'])
         return result
 
     @staticmethod
