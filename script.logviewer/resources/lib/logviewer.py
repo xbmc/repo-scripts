@@ -10,7 +10,7 @@ import xbmcgui
 
 from resources.lib.dialog import ACTION_PARENT_DIR, KEY_NAV_BACK, ACTION_PREVIOUS_MENU
 from resources.lib.logreader import LogReader
-from resources.lib.utils import ADDON_PATH, PY3, translate
+from resources.lib.utils import ADDON_PATH, translate, str_to_unicode
 
 
 def get_version_number():
@@ -69,17 +69,27 @@ def log_location(old=False):
             return None
         log_path = os.path.join(log_path, filename)
 
-    return log_path if PY3 else log_path.decode("utf-8")
+    return str_to_unicode(log_path)
+
+
+log_entry_regex = re.compile(r"(?:\d{4}-\d{2}-\d{2} )?\d{2}:\d{2}:\d{2}")
+log_error_regex = re.compile(r" ERROR(?: <[^>]*>)?: ")
+log_warning_regex = re.compile(r" WARNING(?: <[^>]*>)?: ")
+log_exception_regex = re.compile(log_error_regex.pattern + "EXCEPTION ")
+
+
+def with_style(color):
+    def wrapper(match):
+        return "[COLOR {}]{}[/COLOR]".format(color, match.group(0))
+
+    return wrapper
 
 
 def set_styles(content):
-    content = content.replace(" ERROR: ", " [COLOR red]ERROR[/COLOR]: ")
-    content = content.replace(" WARNING: ", " [COLOR gold]WARNING[/COLOR]: ")
+    content = log_error_regex.sub(with_style("red"), content)
+    content = log_warning_regex.sub(with_style("gold"), content)
 
     return content
-
-
-log_entry_regex = re.compile(r"^(?:\d{4}-\d{2}-\d{2} )?\d{2}:\d{2}:\d{2}")
 
 
 def parse_errors(content, set_style=False, exceptions_only=False):
@@ -88,11 +98,11 @@ def parse_errors(content, set_style=False, exceptions_only=False):
 
     parsed_content = []
     found_error = False
-    pattern = " ERROR: EXCEPTION " if exceptions_only else " ERROR: "
+    pattern = log_exception_regex if exceptions_only else log_error_regex
 
     for line in content.splitlines():
         if log_entry_regex.match(line):
-            if pattern in line:
+            if pattern.search(line):
                 found_error = True
                 parsed_content.append(line)
             else:
@@ -141,7 +151,9 @@ def window(title, content, default=True, timeout=1):
                time.time() - start_time < timeout):
             xbmc.sleep(100)
 
+        # noinspection PyUnresolvedReferences
         w.getControl(control_label).setLabel(title)
+        # noinspection PyUnresolvedReferences
         w.getControl(control_textbox).setText(content)
     else:
         w = TextWindow("script.logviewer-textwindow-fullscreen.xml", ADDON_PATH, title=title, content=content)
@@ -160,7 +172,9 @@ class TextWindow(xbmcgui.WindowXMLDialog):
         self.text_box_id = 32503
 
     def onInit(self):
+        # noinspection PyUnresolvedReferences
         self.getControl(self.title_label_id).setLabel(self.title)
+        # noinspection PyUnresolvedReferences
         self.getControl(self.text_box_id).setText(self.content)
 
     def onClick(self, control_id):
