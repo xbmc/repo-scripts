@@ -8,11 +8,6 @@ import xbmcaddon
 
 PY3 = sys.version_info.major >= 3
 
-ADDON = xbmcaddon.Addon()
-ADDON_PATH = ADDON.getAddonInfo("path")
-ADDON_NAME = ADDON.getAddonInfo("name")
-ADDON_ID = ADDON.getAddonInfo("id")
-
 if PY3:
     def translate(text):
         return ADDON.getLocalizedString(text)
@@ -22,9 +17,11 @@ if PY3:
 
     def decode(s):
         return s.decode("utf-8")
-else:
-    ADDON_PATH = ADDON_PATH.decode("utf-8")
 
+    def str_to_unicode(s):
+        return s
+
+else:
     def translate(text):
         return ADDON.getLocalizedString(text).encode("utf-8")
 
@@ -33,6 +30,14 @@ else:
 
     def decode(s):
         return s
+
+    def str_to_unicode(s):
+        return s.decode("utf-8")
+
+ADDON = xbmcaddon.Addon()
+ADDON_PATH = str_to_unicode(ADDON.getAddonInfo("path"))
+ADDON_NAME = ADDON.getAddonInfo("name")
+ADDON_ID = ADDON.getAddonInfo("id")
 
 
 def get_setting(setting):
