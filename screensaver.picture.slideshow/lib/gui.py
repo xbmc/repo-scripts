@@ -17,9 +17,9 @@ import copy
 import random
 import threading
 from xml.dom.minidom import parse
+import exifread
+from iptcinfo3 import IPTCInfo
 import xbmcgui
-from lib import exifread_xbmcvfs
-from lib.iptcinfo3_xbmcvfs import IPTCInfo
 from lib.utils import *
 
 ADDON = xbmcaddon.Addon()
@@ -41,6 +41,11 @@ EFFECTLIST = ["('conditional', 'effect=zoom start=100 end=400 center=auto time=%
 
 # get local dateformat to localize the exif date tag
 DATEFORMAT = xbmc.getRegion('dateshort')
+
+class BinaryFile(xbmcvfs.File):
+    def read(self, numBytes: int = 0) -> bytes:
+        return bytes(self.readBytes(numBytes))
+
 
 class Screensaver(xbmcgui.WindowXMLDialog):
     def __init__( self, *args, **kwargs ):
@@ -167,11 +172,11 @@ class Screensaver(xbmcgui.WindowXMLDialog):
                 if self.slideshow_type == 2 and (self.slideshow_date or self.slideshow_iptc) and (os.path.splitext(img[0])[1].lower() in EXIF_TYPES):
                     # get exif date
                     if self.slideshow_date:
-                        exiffile = xbmcvfs.File(img[0])
+                        exiffile = BinaryFile(img[0])
                         try:
-                            exiftags = exifread_xbmcvfs.process_file(exiffile, details=False, stop_tag='DateTimeOriginal')
+                            exiftags = exifread.process_file(exiffile, details=False, stop_tag='DateTimeOriginal')
                             if 'EXIF DateTimeOriginal' in exiftags:
-                                datetime = bytes(exiftags['EXIF DateTimeOriginal'].values).decode('utf-8')
+                                datetime = exiftags['EXIF DateTimeOriginal'].values
                                 # sometimes exif date returns useless data, probably no date set on camera
                                 if datetime == '0000:00:00 00:00:00':
                                     datetime = ''
@@ -194,7 +199,7 @@ class Screensaver(xbmcgui.WindowXMLDialog):
                         exiffile.close()
                     # get iptc title, description and keywords
                     if self.slideshow_iptc:
-                        iptcfile = xbmcvfs.File(img[0])
+                        iptcfile = BinaryFile(img[0])
                         try:
                             iptc = IPTCInfo(iptcfile)
                             if iptc['headline']:

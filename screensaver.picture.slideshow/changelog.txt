@@ -1,3 +1,6 @@
+v6.3.1
+- use official python libraries
+
 v6.3.0
 - use art table to retrieve fanart
 - use json to read and write cache
