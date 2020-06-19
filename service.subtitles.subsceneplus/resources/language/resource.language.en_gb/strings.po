@@ -1,0 +1,15 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+
+#: Script
+msgctxt "#32001"
+msgid "Subtitle added successfully."
+msgstr ""
+
+#: Script
+msgctxt "#32002"
+msgid "Error adding the subtitle."
+msgstr ""
