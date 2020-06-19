@@ -9,8 +9,8 @@
 	    <platform>all</platform>
 	    <language>en</language>
 	    <license>EPL-2.0</license>
-	    <forum>http://forum.kodi.tv/showthread.php?tid=170715</forum>
-	    <website>http://pydev.org/</website>
+	    <forum>https://forum.kodi.tv/showthread.php?tid=170715</forum>
+	    <website>https://pydev.org/</website>
 	    <source>https://github.com/powlo/script.module.pydevd</source>
 	    <disclaimer lang="en">Use at your own risk. The authors accept no liability. May cause permanent and/or catastrophic damage. Side effects include, but are not limited to, loss of memory, seizures, sudden fits of rage, sudden fits of melancholy, inability to recall prominent capital cities, lack of respect for authority, fear of cats, temporary and/or permanent black outs. Avoid inhalation. Use in a well ventilated space. Keep away from small children.</disclaimer>	
 	</extension>
