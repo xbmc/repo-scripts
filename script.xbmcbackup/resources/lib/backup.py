@@ -571,7 +571,7 @@ class FileManager:
             if(recurse):
                 # create all the subdirs first
                 for aDir in dirs:
-                    dirPath = xbmc.validatePath(xbmc.translatePath(directory + self.pathSep + aDir))
+                    dirPath = xbmcvfs.validatePath(xbmc.translatePath(directory + self.pathSep + aDir))
                     file_ext = aDir.split('.')[-1]
 
                     # check if directory is excluded
