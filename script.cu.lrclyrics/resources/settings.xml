@@ -22,11 +22,6 @@
 					<default>true</default>
 					<control type="toggle"/>
 				</setting>
-				<setting help="" id="ttplayer" label="32902" type="boolean">
-					<level>0</level>
-					<default>true</default>
-					<control type="toggle"/>
-				</setting>
 				<setting help="" id="gomaudio" label="32903" type="boolean">
 					<level>0</level>
 					<default>true</default>

@@ -62,7 +62,7 @@ msgstr ""
 # Settings labels
 
 msgctxt "#32101"
-msgid "Search and save lyrics in separate lyrics folder"
+msgid "Search for and save lyrics in separate lyrics folder"
 msgstr ""
 
 msgctxt "#32102"
@@ -110,7 +110,7 @@ msgid "- Subfolder name"
 msgstr ""
 
 msgctxt "#32113"
-msgid "Search and save lyrics in song folder"
+msgid "Search for and save lyrics in song folder"
 msgstr ""
 
 msgctxt "#32114"
@@ -215,10 +215,6 @@ msgstr ""
 
 msgctxt "#32901"
 msgid "MiniLyrics"
-msgstr ""
-
-msgctxt "#32902"
-msgid "TTPlayer"
 msgstr ""
 
 msgctxt "#32903"

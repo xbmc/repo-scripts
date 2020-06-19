@@ -371,7 +371,7 @@ class syncThread(threading.Thread):
         self.lyrics = kwargs['lyrics']
 
     def run(self):
-        import sync
+        from lib import sync
         dialog = sync.GUI('DialogSlider.xml' , CWD, 'Default', offset=self.adjust, function=self.function)
         dialog.doModal()
         adjust = dialog.val

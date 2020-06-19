@@ -11,7 +11,7 @@ from bs4 import BeautifulSoup
 from lib.utils import *
 
 __title__ = "Syair"
-__priority__ = '140'
+__priority__ = '130'
 __lrc__ = True
 
 UserAgent = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; WOW64; rv:51.0) Gecko/20100101 Firefox/51.0"}

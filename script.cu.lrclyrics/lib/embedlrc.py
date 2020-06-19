@@ -5,6 +5,10 @@ from lib.utils import *
 
 LANGUAGE = ADDON.getLocalizedString
 
+class BinaryFile(xbmcvfs.File):
+    def read(self, numBytes: int = 0) -> bytes:
+        return bytes(self.readBytes(numBytes))
+
 def getEmbedLyrics(song, getlrc):
     lyrics = Lyrics()
     lyrics.song = song
@@ -13,8 +17,9 @@ def getEmbedLyrics(song, getlrc):
     filename = song.filepath
     ext = os.path.splitext(filename)[1].lower()
     lry = None
+    bfile = BinaryFile(filename)
     if ext == '.mp3':
-        lry = getID3Lyrics(filename, getlrc)
+        lry = getID3Lyrics(bfile, getlrc)
         if not lry:
             try:
                 text = getLyrics3(filename, getlrc)
@@ -24,9 +29,9 @@ def getEmbedLyrics(song, getlrc):
             except:
                 pass
     elif  ext == '.flac':
-        lry = getFlacLyrics(filename, getlrc)
+        lry = getFlacLyrics(bfile, getlrc)
     elif  ext == '.m4a':
-        lry = getMP4Lyrics(filename, getlrc)
+        lry = getMP4Lyrics(bfile, getlrc)
     if not lry:
         return None
     lyrics.lyrics = lry
@@ -83,9 +88,9 @@ def ms2timestamp(ms):
 Get USLT/SYLT/TXXX lyrics embed with ID3v2 format
 See: http://id3.org/id3v2.3.0
 '''
-def getID3Lyrics(filename, getlrc):
+def getID3Lyrics(bfile, getlrc):
     try:
-        data = MP3(filename)
+        data = MP3(bfile)
         lyr = ''
         for tag,value in data.items():
             if getlrc and tag.startswith('SYLT'):
@@ -106,9 +111,9 @@ def getID3Lyrics(filename, getlrc):
     except:
         return
 
-def getFlacLyrics(filename, getlrc):
+def getFlacLyrics(bfile, getlrc):
     try:
-        tags = FLAC(filename)
+        tags = FLAC(bfile)
         if 'lyrics' in tags:
             lyr = tags['lyrics'][0]
             match = isLRC(lyr)
@@ -117,9 +122,9 @@ def getFlacLyrics(filename, getlrc):
     except:
         return
 
-def getMP4Lyrics(filename, getlrc):
+def getMP4Lyrics(bfile, getlrc):
     try:
-        tags = MP4(filename)
+        tags = MP4(bfile)
         if '©lyr' in tags:
             lyr = tags['©lyr'][0]
             match = isLRC(lyr)
