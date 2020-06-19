@@ -452,11 +452,18 @@ class APIControl(Route):
             for video in feed[u"items"]:
                 snippet = video[u"snippet"]
                 content_details = video[u"contentDetails"]
-                data = {"title": snippet[u"localized"][u"title"], "thumb": snippet[u"thumbnails"][u"medium"][u"url"],
-                        "description": snippet[u"localized"][u"description"], "date": snippet[u"publishedAt"],
-                        "count": int(video[u"statistics"][u"viewCount"]), "channel_id": snippet[u"channelId"],
-                        "video_id": video[u"id"], "hd": int(content_details[u"definition"] == u"hd"),
-                        "duration": "", "genre_id": int(snippet[u"categoryId"])}
+                data = {
+                    "title": snippet[u"localized"][u"title"],
+                    "thumb": snippet[u"thumbnails"][u"medium"][u"url"],
+                    "description": snippet[u"localized"][u"description"],
+                    "date": snippet[u"publishedAt"],
+                    "count": int(video["statistics"]["viewCount"]) if "statistics" in video else 0,
+                    "channel_id": snippet[u"channelId"],
+                    "video_id": video[u"id"],
+                    "hd": int(content_details[u"definition"] == u"hd"),
+                    "duration": "",
+                    "genre_id": int(snippet[u"categoryId"])
+                }
 
                 # Convert duration to what kodi is expecting (duration in seconds)
                 duration_str = content_details[u"duration"]
@@ -523,7 +530,8 @@ class APIControl(Route):
             item.info["studio"] = video_data["channel_title"]
 
             # Fetch Viewcount
-            item.info["count"] = video_data["count"]
+            if video_data["count"]:
+                item.info["count"] = video_data["count"]
 
             # Fetch Possible Date
             date = video_data["date"]

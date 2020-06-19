@@ -428,28 +428,6 @@ class CacheHandler(object):
         return self.response is not None
 
 
-def cache_cleanup(max_age=None):
-    """
-    Remove all stale cache files.
-
-    :param int max_age: [opt] The max age the cache can be before removal.
-                        defaults => :data:`MAX_AGE <urlquick.MAX_AGE>`
-    """
-    handler = CacheHandler
-    max_age = MAX_AGE if max_age is None else max_age
-    cache_dir = handler.cache_dir()
-
-    # Loop over all cache files and remove stale files
-    filestart = handler.safe_path(u"cache-")
-    for cachefile in os.listdir(cache_dir):
-        # Check that we actually have a cache file
-        if cachefile.startswith(filestart):
-            cache_path = os.path.join(cache_dir, cachefile)
-            # Check if the cache is not fresh and delete if so
-            if not handler.isfilefresh(cache_path, max_age):
-                handler.delete(cache_path)
-
-
 class CacheAdapter(object):
     def __init__(self):
         self.__cache = None
@@ -1529,22 +1507,65 @@ def delete(url, **kwargs):
         return session.request(u"DELETE", url, **kwargs)
 
 
+def cache_cleanup(max_age=None):
+    """
+    Remove all stale cache files.
+
+    :param int max_age: [opt] The max age the cache can be before removal.
+                        defaults => :data:`MAX_AGE <urlquick.MAX_AGE>`
+    """
+    logger.info("Initiating cache cleanup")
+
+    handler = CacheHandler
+    max_age = MAX_AGE if max_age is None else max_age
+    cache_dir = handler.cache_dir()
+
+    # Loop over all cache files and remove stale files
+    filestart = handler.safe_path(u"cache-")
+    for cachefile in os.listdir(cache_dir):
+        # Check that we actually have a cache file
+        if cachefile.startswith(filestart):
+            cache_path = os.path.join(cache_dir, cachefile)
+            # Check if the cache is not fresh and delete if so
+            if not handler.isfilefresh(cache_path, max_age):
+                handler.delete(cache_path)
+
+
+def auto_cache_cleanup(max_age=60 * 60 * 24 * 14):
+    """
+    Check if the cache needs cleanup. Uses a empty file to keep track.
+
+    :param int max_age: [opt] The max age the cache can be before removal.
+                        defaults => 1209600 (14 days)
+
+    :returns: True if cache was cleaned else false if no cache cleanup was started.
+    :rtype: bool
+    """
+    check_file = os.path.join(CACHE_LOCATION, "cache_check")
+    last_check = os.stat(check_file).st_mtime if os.path.exists(check_file) else 0
+    current_time = time.time()
+
+    # Check if it's time to initiate a cache cleanup
+    if current_time - last_check > max_age * 2:
+        cache_cleanup(max_age)
+        try:
+            os.utime(check_file, None)
+        except OSError:
+            open(check_file, "a").close()
+        return True
+    return False
+
+
 #############
 # Kodi Only #
 #############
 
-# Set the loaction of the cache file to the addon data directory
+# Set the location of the cache file to the addon data directory
 _addon_data = __import__("xbmcaddon").Addon()
 _CACHE_LOCATION = __import__("xbmc").translatePath(_addon_data.getAddonInfo("profile"))
 CACHE_LOCATION = _CACHE_LOCATION.decode("utf8") if isinstance(_CACHE_LOCATION, bytes) else _CACHE_LOCATION
+logger.debug("Cache location: %s", CACHE_LOCATION)
 Session.default_raise_for_status = True
 
-# Last cleanup execution time
-_setting_name = "cache_cleanup_timestamp"
-_setting_value = _addon_data.getSetting(_setting_name)
-_current_time = time.time()
-
-# Checks if it's time to initiate a cache cleanup
-if _setting_value == "" or (_current_time - float(_setting_value) > 60 * 60 * 24 * 28):
-    cache_cleanup(60 * 60 * 24 * 14)
-    _addon_data.setSetting(_setting_name, str(_current_time))
+# Check if cache cleanup is required
+auto_cache_cleanup()
