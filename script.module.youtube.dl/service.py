@@ -50,13 +50,14 @@ class Service():
     def _start(self):
         util.LOG('DOWNLOAD SERVICE: START')
         info = self.getNextQueuedDownload()
+        monitor = xbmc.Monitor()
 
-        while info and not xbmc.abortRequested:
+        while info and not monitor.abortRequested():
             t = threading.Thread(target=YDStreamExtractor._handleDownload, args=(
                 info['data'],), kwargs={'path': info['path'], 'duration': info['duration'], 'bg': True})
             t.start()
 
-            while t.isAlive() and not xbmc.abortRequested:
+            while t.isAlive() and not monitor.abortRequested():
                 xbmc.sleep(100)
 
             info = self.getNextQueuedDownload()
