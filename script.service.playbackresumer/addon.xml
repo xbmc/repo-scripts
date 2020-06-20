@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.service.playbackresumer" name="Kodi Playback Resumer" version="2.0.1" provider-name="bossanova808, bradvido88">
+  <requires>
+    <import addon="xbmc.python" version="3.0.0"/>
+  </requires>
+  <extension point="xbmc.service" library="default.py" />
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en_GB">Periodically sets the resume point of videos and can automatically resume last played video if XBMC crashes.</summary>
+    <description lang="en_GB">
+        Runs as a service and will periodically update the resume point while videos are playing, so you can re-start from where you were in the event of a crash.  It can also automatically resume a video if Kodi was shutdown while playing it. See setting to configure how often the resume point is set, and whether to automatically resume.
+    </description>
+    <platform>all</platform>
+	<license>GPL-3.0-only</license>
+    <website>https://github.com/bossanova808/script.service.playbackresumer</website>
+    <source>https://github.com/bossanova808/script.service.playbackresumer</source>
+    <forum>https://forum.kodi.tv/showthread.php?tid=183084</forum>
+    <email>bossanova808@gmail.com</email>
+    <assets>
+      <icon>icon.png</icon>
+    </assets>
+  </extension>
+</addon>
+
+

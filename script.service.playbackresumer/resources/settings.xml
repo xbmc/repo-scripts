@@ -1,0 +1,141 @@
+<?xml version="1.0" ?>
+<settings version="1">
+	<section id="script.service.playbackresumer">
+		<category help="" id="resumer" label="32000">
+			<group id="1">
+				<setting help="" id="saveintervalsecs" label="32001" type="integer">
+					<level>0</level>
+					<default>20</default>
+					<constraints>
+						<minimum>5</minimum>
+						<maximum>600</maximum>
+					</constraints>
+					<control format="integer" type="slider">
+						<popup>false</popup>
+					</control>
+				</setting>
+				<setting help="" id="resumeonstartup" label="32002" type="boolean">
+					<level>0</level>
+					<default>false</default>
+					<control type="toggle"/>
+				</setting>
+				<setting help="" id="autoplayrandom" label="32003" type="boolean">
+					<level>0</level>
+					<default>false</default>
+					<control type="toggle"/>
+				</setting>
+			</group>
+		</category>
+		<category help="" id="exclude" label="32030">
+			<group id="1">
+				<setting help="" id="ExcludeLiveTV" label="32031" type="boolean">
+					<level>0</level>
+					<default>false</default>
+					<control type="toggle"/>
+				</setting>
+				<setting help="" id="ExcludeHTTP" label="32032" type="boolean">
+					<level>0</level>
+					<default>false</default>
+					<control type="toggle"/>
+				</setting>
+				<setting help="" id="ExcludePathOption" label="32033" type="boolean">
+					<level>0</level>
+					<default>false</default>
+					<control type="toggle"/>
+				</setting>
+				<setting help="" id="ExcludePath" label="32034" type="path">
+					<level>0</level>
+					<default/>
+					<constraints>
+						<sources>
+							<source>video</source>
+						</sources>
+						<writable>false</writable>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="enable">
+							<condition operator="is" setting="ExcludePathOption">true</condition>
+						</dependency>
+						<dependency type="visible">
+							<condition operator="is" setting="ExcludePathOption">true</condition>
+						</dependency>
+					</dependencies>
+					<control format="path" type="button">
+						<heading>32034</heading>
+					</control>
+				</setting>
+				<setting help="" id="ExcludePathOption2" label="32033" type="boolean">
+					<level>0</level>
+					<default>false</default>
+					<dependencies>
+						<dependency type="enable">
+							<condition operator="is" setting="ExcludePathOption">true</condition>
+						</dependency>
+						<dependency type="visible">
+							<condition operator="is" setting="ExcludePathOption">true</condition>
+						</dependency>
+					</dependencies>
+					<control type="toggle"/>
+				</setting>
+				<setting help="" id="ExcludePath2" label="32034" type="path">
+					<level>0</level>
+					<default/>
+					<constraints>
+						<sources>
+							<source>video</source>
+						</sources>
+						<writable>false</writable>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="enable">
+							<condition operator="is" setting="ExcludePathOption2">true</condition>
+						</dependency>
+						<dependency type="visible">
+							<condition operator="is" setting="ExcludePathOption2">true</condition>
+						</dependency>
+					</dependencies>
+					<control format="path" type="button">
+						<heading>32034</heading>
+					</control>
+				</setting>
+				<setting help="" id="ExcludePathOption3" label="32033" type="boolean">
+					<level>0</level>
+					<default>false</default>
+					<dependencies>
+						<dependency type="enable">
+							<condition operator="is" setting="ExcludePathOption2">true</condition>
+						</dependency>
+						<dependency type="visible">
+							<condition operator="is" setting="ExcludePathOption2">true</condition>
+						</dependency>
+					</dependencies>
+					<control type="toggle"/>
+				</setting>
+				<setting help="" id="ExcludePath3" label="32034" type="path">
+					<level>0</level>
+					<default/>
+					<constraints>
+						<sources>
+							<source>video</source>
+						</sources>
+						<writable>false</writable>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="enable">
+							<condition operator="is" setting="ExcludePathOption3">true</condition>
+						</dependency>
+						<dependency type="visible">
+							<condition operator="is" setting="ExcludePathOption3">true</condition>
+						</dependency>
+					</dependencies>
+					<control format="path" type="button">
+						<heading>32034</heading>
+					</control>
+				</setting>
+			</group>
+		</category>
+	</section>
+</settings>

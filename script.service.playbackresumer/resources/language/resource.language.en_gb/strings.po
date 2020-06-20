@@ -1,0 +1,64 @@
+# XBMC Media Center language file
+# Addon Name: XBMC Playback Resumer
+# Addon id: script.service.playbackresumer
+# Addon version: 1.2.0
+# Addon Provider: bradvido88,bossanova808
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC-Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: 2014-01-12 02:29+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+
+msgctxt "Addon Summary"
+msgid "Periodically sets the resume point while videos are playing and optionally automatically resumes last played video if XBMC crashes or is shutdown during playback."
+msgstr ""
+
+msgctxt "Addon Description"
+msgid "This addon runs in the background as a service and will periodically update the resume point while videos are playing. It will also automatically resume a video if XBMC was shutdown while playing it. See setting to configure how often the resume point is set and whether to automatically resume."
+msgstr ""
+
+
+msgctxt "#32000"
+msgid "Resumer"
+msgstr ""
+
+msgctxt "#32001"
+msgid "Save resume point every X seconds"
+msgstr ""
+
+msgctxt "#32002"
+msgid "Auto-Resume playback at startup"
+msgstr ""
+
+msgctxt "#32003"
+msgid "Auto-Play a random video if nothing is playing"
+msgstr ""
+
+
+msgctxt "#32030"
+msgid "Exclude"
+msgstr ""
+
+msgctxt "#32031"
+msgid "Exclude Live TV"
+msgstr ""
+
+msgctxt "#32032"
+msgid "Exclude HTTP sources"
+msgstr ""
+
+msgctxt "#32033"
+msgid "Exclude path"
+msgstr ""
+
+msgctxt "#32034"
+msgid "Folder's path (and subfolders)"
+msgstr ""
