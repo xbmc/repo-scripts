@@ -247,6 +247,7 @@
                             <usecontrolcoords>true</usecontrolcoords>
                             <label>$ADDON[service.upnext 30009]</label>
                             <shadowcolor>text_shadow</shadowcolor>
+                            <visible>!String.IsEmpty(Window.Property(endtime))</visible>
                         </control>
                     </control>
                 </control>

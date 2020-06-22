@@ -7,7 +7,7 @@ from platform import machine
 from xbmc import Player
 from xbmcgui import WindowXMLDialog
 from statichelper import from_unicode
-from utils import get_setting, localize, localize_time
+from utils import get_setting_bool, localize, localize_time
 
 ACTION_PLAYER_STOP = 13
 ACTION_NAV_BACK = 92
@@ -33,7 +33,7 @@ class UpNext(WindowXMLDialog):
         self.set_info()
         self.prepare_progress_control()
 
-        if bool(get_setting('stopAfterClose') == 'true'):
+        if get_setting_bool('stopAfterClose'):
             self.getControl(3013).setLabel(localize(30033))  # Stop
         else:
             self.getControl(3013).setLabel(localize(30034))  # Close
@@ -119,7 +119,7 @@ class UpNext(WindowXMLDialog):
             self.close()
         elif controlId == 3013:  # Close / Stop
             self.set_cancel(True)
-            if bool(get_setting('stopAfterClose') == 'true'):
+            if get_setting_bool('stopAfterClose'):
                 Player().stop()
             self.close()
 

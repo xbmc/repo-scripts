@@ -1,14 +1,14 @@
 # -*- coding: utf-8 -*-
 # GNU General Public License v2.0 (see COPYING or https://www.gnu.org/licenses/gpl-2.0.txt)
-''' This is the actual Up Next API script '''
+"""This is the actual Up Next API script"""
 
 from __future__ import absolute_import, division, unicode_literals
 from datetime import datetime, timedelta
 from math import ceil
-from xbmc import sleep
+from xbmc import Monitor, sleep
 from xbmcgui import WindowXMLDialog
 from statichelper import from_unicode
-from utils import addon_path, get_setting, localize, localize_time
+from utils import addon_path, get_setting_bool, localize, localize_time
 
 
 class TestPopup(WindowXMLDialog):
@@ -23,7 +23,7 @@ class TestPopup(WindowXMLDialog):
         self.set_info()
         self.prepare_progress_control()
 
-        if bool(get_setting('stopAfterClose') == 'true'):
+        if get_setting_bool('stopAfterClose'):
             self.getControl(3013).setLabel(localize(30033))  # Stop
         else:
             self.getControl(3013).setLabel(localize(30034))  # Close
@@ -50,8 +50,9 @@ class TestPopup(WindowXMLDialog):
         self.setProperty('runtime', '50')
 
     def prepare_progress_control(self):
-        self.progress_control = self.getControl(3014)
-        if self.progress_control is None:
+        try:
+            self.progress_control = self.getControl(3014)
+        except RuntimeError:
             return
         self.progress_control.setPercent(100.0)  # pylint: disable=no-member,useless-suppression
 
@@ -88,7 +89,8 @@ def test_popup(window):
     step = 0
     wait = 100
     timeout = 10000
-    while popup and step < timeout:
+    monitor = Monitor()
+    while popup and step < timeout and not monitor.abortRequested():
         if popup.pause:
             continue
         sleep(wait)
@@ -102,7 +104,7 @@ def open_settings():
 
 
 def run(argv):
-    ''' Route to API method '''
+    """Route to API method"""
     if len(argv) == 3 and argv[1] == 'test_window':
         test_popup(argv[2])
     else:

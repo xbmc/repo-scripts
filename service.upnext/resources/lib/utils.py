@@ -13,37 +13,37 @@ ADDON = Addon()
 
 
 def get_addon_info(key):
-    ''' Return add-on information '''
+    """Return add-on information"""
     return to_unicode(ADDON.getAddonInfo(key))
 
 
 def addon_id():
-    ''' Return add-on ID '''
+    """Return add-on ID"""
     return get_addon_info('id')
 
 
 def addon_path():
-    ''' Return add-on path '''
+    """Return add-on path"""
     return get_addon_info('path')
 
 
 def get_property(key, window_id=10000):
-    ''' Get a Window property '''
+    """Get a Window property"""
     return to_unicode(Window(window_id).getProperty(key))
 
 
 def set_property(key, value, window_id=10000):
-    ''' Set a Window property '''
+    """Set a Window property"""
     return Window(window_id).setProperty(key, from_unicode(str(value)))
 
 
 def clear_property(key, window_id=10000):
-    ''' Clear a Window property '''
+    """Clear a Window property"""
     return Window(window_id).clearProperty(key)
 
 
 def get_setting(key, default=None):
-    ''' Get an add-on setting '''
+    """Get an add-on setting as string"""
     # We use Addon() here to ensure changes in settings are reflected instantly
     try:
         value = to_unicode(Addon().getSetting(key))
@@ -54,8 +54,35 @@ def get_setting(key, default=None):
     return value
 
 
+def get_setting_bool(key, default=None):
+    """Get an add-on setting as boolean"""
+    try:
+        return Addon().getSettingBool(key)
+    except (AttributeError, TypeError):  # On Krypton or older, or when not a boolean
+        value = get_setting(key, default)
+        if value not in ('false', 'true'):
+            return default
+        return bool(value == 'true')
+    except RuntimeError:  # Occurs when the add-on is disabled
+        return default
+
+
+def get_setting_int(key, default=None):
+    """Get an add-on setting as integer"""
+    try:
+        return Addon().getSettingInt(key)
+    except (AttributeError, TypeError):  # On Krypton or older, or when not an integer
+        value = get_setting(key, default)
+        try:
+            return int(value)
+        except ValueError:
+            return default
+    except RuntimeError:  # Occurs when the add-on is disabled
+        return default
+
+
 def encode_data(data, encoding='base64'):
-    ''' Encode data for a notification event '''
+    """Encode data for a notification event"""
     json_data = json.dumps(data).encode()
     if encoding == 'base64':
         from base64 import b64encode
@@ -72,7 +99,7 @@ def encode_data(data, encoding='base64'):
 
 
 def decode_data(encoded):
-    ''' Decode data coming from a notification event '''
+    """Decode data coming from a notification event"""
     encoding = 'base64'
     from binascii import Error, unhexlify
     try:
@@ -94,7 +121,7 @@ def decode_json(data):
 
 
 def event(message, data=None, sender=None, encoding='base64'):
-    ''' Send internal notification event '''
+    """Send internal notification event"""
     data = data or {}
     sender = sender or addon_id()
 
@@ -110,8 +137,8 @@ def event(message, data=None, sender=None, encoding='base64'):
 
 
 def log(msg, name=None, level=1):
-    ''' Log information to the Kodi log '''
-    log_level = int(get_setting('logLevel', level))
+    """Log information to the Kodi log"""
+    log_level = get_setting_int('logLevel', level)
     debug_logging = get_global_setting('debug.showloginfo')
     set_property('logLevel', log_level)
     if not debug_logging and log_level < level:
@@ -121,33 +148,42 @@ def log(msg, name=None, level=1):
 
 
 def calculate_progress_steps(period):
-    ''' Calculate a progress step '''
+    """Calculate a progress step"""
     if int(period) == 0:  # Avoid division by zero
         return 10.0
     return (100.0 / int(period)) / 10
 
 
 def jsonrpc(**kwargs):
-    ''' Perform JSONRPC calls '''
-    if 'id' not in kwargs:
-        kwargs.update(id=1)
-    if 'jsonrpc' not in kwargs:
+    """Perform JSONRPC calls"""
+    if kwargs.get('id') is None:
+        kwargs.update(id=0)
+    if kwargs.get('jsonrpc') is None:
         kwargs.update(jsonrpc='2.0')
     return json.loads(executeJSONRPC(json.dumps(kwargs)))
 
 
 def get_global_setting(setting):
-    ''' Get a Kodi setting '''
+    """Get a Kodi setting"""
     result = jsonrpc(method='Settings.GetSettingValue', params=dict(setting=setting))
     return result.get('result', {}).get('value')
 
 
 def localize(string_id):
-    ''' Return the translated string from the .po language files, optionally translating variables '''
+    """Return the translated string from the .po language files"""
+
     return ADDON.getLocalizedString(string_id)
 
 
 def localize_time(time):
     """Localize time format"""
-    time_format = getRegion('time').replace(':%S', '')  # Strip off seconds
-    return time.strftime(time_format).lstrip('0')  # Remove leading zero on all platforms
+    time_format = getRegion('time')
+
+    # Fix a bug in Kodi v18.5 and older causing double hours
+    # https://github.com/xbmc/xbmc/pull/17380
+    time_format = time_format.replace('%H%H:', '%H:')
+
+    # Strip off seconds
+    time_format = time_format.replace(':%S', '')
+
+    return time.strftime(time_format)
