@@ -113,7 +113,7 @@ class PlexServer(plexresource.PlexResource, signalsmixin.SignalsMixin):
     def hubs(self, section=None, count=None, search_query=None):
         hubs = []
 
-        params = {}
+        params = {"includeMarkers": 1}
         if search_query:
             q = '/hubs/search'
             params['query'] = search_query.lower()
@@ -189,6 +189,8 @@ class PlexServer(plexresource.PlexResource, signalsmixin.SignalsMixin):
             return None
         except http.requests.ConnectionError:
             util.ERROR()
+            return None
+        except asyncadapter.CanceledException:
             return None
 
         return ElementTree.fromstring(data) if data else None

@@ -14,10 +14,14 @@ from plexnet import plexapp, myplex, util as plexnet_util
 from . import util
 from six.moves import range
 
+if six.PY2:
+    _Event = threading._Event
+else:
+    _Event = threading.Event
 
 class PlexTimer(plexapp.util.Timer):
     def shouldAbort(self):
-        return xbmc.abortRequested
+        return util.MONITOR.abortRequested()
 
 
 def abortFlag():
@@ -79,7 +83,7 @@ class PlexInterface(plexapp.AppInterface):
         'provides': 'player',
         'device': util.getPlatform() or plexapp.PLATFORM,
         'model': 'Unknown',
-        'friendlyName': 'Kodi Add-on ({0})'.format(platform.node()),
+        'friendlyName': util.rpc.Settings.GetSettingValue(setting='services.devicename').get('value') or 'Kodi',
         'supports1080p60': True,
         'vp9Support': True,
         'transcodeVideoQualities': [
@@ -166,7 +170,7 @@ class PlexInterface(plexapp.AppInterface):
 
     def ERROR(self, msg=None, err=None):
         if err:
-            self.LOG('ERROR: {0} - {1}'.format(msg, err.message))
+            self.LOG('ERROR: {0} - {1}'.format(msg, getattr(err, "message", "Unknown Error")))
         else:
             util.ERROR()
 

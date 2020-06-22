@@ -95,6 +95,7 @@ class AdvancedSettings(object):
         ("auto_seek", True),
         ("dynamic_timeline_seek", False),
         ("fast_back", False),
+        ("intro_skip_early", False)
     )
 
     def __init__(self):
@@ -425,7 +426,7 @@ class Cron(threading.Thread):
             if self.force.isSet():
                 self.force.clear()
                 return True
-            if xbmc.abortRequested or self.stopped.isSet():
+            if MONITOR.abortRequested() or self.stopped.isSet():
                 return False
         return True
 
