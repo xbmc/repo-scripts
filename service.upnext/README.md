@@ -1,5 +1,5 @@
 [![GitHub release](https://img.shields.io/github/release/im85288/service.upnext.svg)](https://github.com/im85288/service.upnext/releases)
-[![Build Status](https://travis-ci.org/im85288/service.upnext.svg?branch=master)](https://travis-ci.org/im85288/service.upnext)
+[![CI](https://github.com/im85288/service.upnext/workflows/CI/badge.svg)](https://github.com/im85288/service.upnext/actions?query=workflow:CI)
 [![Codecov status](https://img.shields.io/codecov/c/github/im85288/service.upnext/master)](https://codecov.io/gh/im85288/service.upnext/branch/master)
 [![License: GPLv3](https://img.shields.io/badge/License-GPLv2-yellow.svg)](https://opensource.org/licenses/GPL-2.0)
 [![Contributors](https://img.shields.io/github/contributors/im85288/service.upnext.svg)](https://github.com/im85288/service.upnext/graphs/contributors)
@@ -23,6 +23,14 @@ The add-on has various settings to fine-tune the experience, however the default
 For [Addon Integration](https://github.com/im85288/service.upnext/wiki/Addon-Integration) and [Skinners](https://github.com/im85288/service.upnext/wiki/Skinners) see the [wiki](https://github.com/im85288/service.upnext/wiki)
 
 ## Releases
+### v1.1.1 (2020-06-21)
+- Avoid conflict with external players (@BrutuZ)
+- Restore "Ignore Playlist" option (@BrutuZ)
+- Fix a known Kodi bug related to displaying hours (@Maven85)
+- Improvements to endtime visualization (@dagwieers)
+- New translations for Hindi and Romanian (@tahirdon, @tmihai20)
+- Translation updates to Hungarian and Spanish (@frodo19, @roliverosc)
+
 ### v1.1.0 (2020-01-17)
 - Add notification_offset for Netflix add-on (@CastagnaIT)
 - Fix various runtime exceptions (@thebertster)
@@ -31,4 +39,4 @@ For [Addon Integration](https://github.com/im85288/service.upnext/wiki/Addon-Int
 - Show current time and next endtime in notification (@dagwieers)
 - New translations for Brazilian, Czech, Greek, Japanese, Korean (@mediabrasiltv, @svetlemodry, @Twilight0, @Thunderbird2086)
 - New translations for Russian, Slovak, Spanish, Swedish (@vlmaksime, @matejmosko, @sagatxxx, @Sopor)
-- Translation updates to Croatian, German, Hungarian, Italian, Polish (@arvvoid, @tweimer, @frodo19, @EffeF, @notoco)
+- Translation updates to Croatian, French, German, Hungarian, Italian, Polish (@arvvoid, @zecakeh, @tweimer, @frodo19, @EffeF, @notoco)

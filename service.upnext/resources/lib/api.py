@@ -3,21 +3,21 @@
 
 from __future__ import absolute_import, division, unicode_literals
 from xbmc import sleep
-from utils import event, get_setting, jsonrpc, log as ulog
+from utils import event, get_setting_bool, get_setting_int, jsonrpc, log as ulog
 
 
 class Api:
-    ''' Main API class '''
+    """Main API class"""
     _shared_state = {}
 
     def __init__(self):
-        ''' Constructor for Api class '''
+        """Constructor for Api class"""
         self.__dict__ = self._shared_state
         self.data = {}
         self.encoding = 'base64'
 
     def log(self, msg, level=2):
-        ''' Log wrapper '''
+        """Log wrapper"""
         ulog(msg, name=self.__class__.__name__, level=level)
 
     def has_addon_data(self):
@@ -89,19 +89,19 @@ class Api:
             return total_time - int(self.data.get('notification_offset'))
 
         # Use a customized notification time, when configured
-        if total_time and bool(get_setting('customAutoPlayTime') == 'true'):
+        if total_time and get_setting_bool('customAutoPlayTime'):
             if total_time > 60 * 60:
-                return int(get_setting('autoPlayTimeXL'))
+                return get_setting_int('autoPlayTimeXL')
             if total_time > 40 * 60:
-                return int(get_setting('autoPlayTimeL'))
+                return get_setting_int('autoPlayTimeL')
             if total_time > 20 * 60:
-                return int(get_setting('autoPlayTimeM'))
+                return get_setting_int('autoPlayTimeM')
             if total_time > 10 * 60:
-                return int(get_setting('autoPlayTimeS'))
-            return int(get_setting('autoPlayTimeXS'))
+                return get_setting_int('autoPlayTimeS')
+            return get_setting_int('autoPlayTimeXS')
 
         # Use one global default, regardless of episode length
-        return int(get_setting('autoPlaySeasonTime'))
+        return get_setting_int('autoPlaySeasonTime')
 
     def get_now_playing(self):
         # Seems to work too fast loop whilst waiting for it to become active
