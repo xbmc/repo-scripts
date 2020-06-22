@@ -1,20 +1,10 @@
 # -*- coding: utf-8 -*-
 """
-    screensaver.kaster
-    Copyright (C) 2017 enen92
+  Copyright (C) 2017-2020 enen92
+  This file is part of kaster
 
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
-
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+  SPDX-License-Identifier: GPL-2.0-or-later
+  See LICENSE for more information.
 """
 import xbmc
 import os
@@ -73,7 +63,11 @@ class Kaster(xbmcgui.WindowXMLDialog):
 
                 # if it is a google image....
                 if "private" not in self.images[rand_index]:
-                    if requests.head(url=self.images[rand_index]["url"]).status_code != 200:
+                    req = requests.head(url=self.images[rand_index]["url"])
+                    if req.status_code != 200:
+                        # sleep for a bit to avoid 429 (too many requests)
+                        if req.status_code == 429:
+                            self.exit_monitor.waitForAbort(5)
                         continue
 
                     # photo metadata
@@ -105,13 +99,11 @@ class Kaster(xbmcgui.WindowXMLDialog):
                 self.backgroud.setImage(self.images[rand_index]["url"])
                 # Pop image and wait
                 del self.images[rand_index]
-                # Sleep for a given ammount of time if the window is active abort is not requested
-                # note: abort requested is only called after kodi kills the entrypoint and we need to return
-                # as soon as possible
-                loop_count = (kodiutils.get_setting_as_int("wait-time-before-changing-image") * 1000) / 200
-                for _ in range(0, int(loop_count)):
-                    if self._isactive and not self.exit_monitor.abortRequested():
-                        xbmc.sleep(200)
+                # sleep for the configured time
+                wait_time = kodiutils.get_setting_as_int("wait-time-before-changing-image")
+                self.exit_monitor.waitForAbort(wait_time)
+                if not self._isactive or self.exit_monitor.abortRequested():
+                    break
                 # Check if images dict is empty, if so read the file again
                 if not self.images:
                     self.get_images()
@@ -154,7 +146,7 @@ class Kaster(xbmcgui.WindowXMLDialog):
         # Set animations
         if kodiutils.get_setting_as_int("animation") == 1:
             self.setProperty("animation","panzoom")
-        return         
+        return
 
 
     def exit(self):
