@@ -3,6 +3,7 @@
 PlexLibrary
 """
 from __future__ import absolute_import
+import re
 from . import plexobjects
 from . import playlist
 from . import media
@@ -482,6 +483,9 @@ class Hub(BaseHub):
     def __repr__(self):
         return '<{0}:{1}>'.format(self.__class__.__name__, self.hubIdentifier)
 
+    def getCleanHubIdentifier(self):
+        return re.sub(r'\.\d+$', '', re.sub(r'\.\d+$', '', self.hubIdentifier))
+
     def reload(self, **kwargs):
         """ Reload the data for this object from PlexServer XML. """
         try:
@@ -533,7 +537,7 @@ class PlaylistHub(BaseHub):
     def extend(self, start=None, size=None):
         path = '/playlists/all?playlistType={0}'.format(self.type)
 
-        args = {}
+        args = {"includeMarkers": 1}
 
         if size is not None:
             args['X-Plex-Container-Start'] = start
