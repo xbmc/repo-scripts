@@ -10,7 +10,7 @@ from .kodiutils import (addon_version, delete, exists, get_proxies, get_setting,
                         kodi_to_ascii, kodi_version, listdir, localize, log, notification, ok_dialog, progress_dialog, select_dialog,
                         set_setting, set_setting_bool, textviewer, translate_path, yesno_dialog)
 from .utils import arch, http_download, remove_tree, run_cmd, store, system_os, temp_path, unzip
-from .widevine.arm import install_widevine_arm, select_best_chromeos_image, unmount
+from .widevine.arm import install_widevine_arm, unmount
 from .widevine.widevine import (backup_path, has_widevinecdm, ia_cdm_path, install_cdm_from_backup, latest_widevine_version,
                                 load_widevine_config, missing_widevine_libs, widevine_config_path, widevine_eula, widevinecdm_path)
 from .unicodes import compat_path
@@ -185,7 +185,7 @@ class Helper:
         if downloaded:
             progress = progress_dialog()
             progress.create(heading=localize(30043), message=localize(30044))  # Extracting Widevine CDM
-            unzip(store('download_path'), os.path.join(bpath, cdm_version))
+            unzip(store('download_path'), os.path.join(bpath, cdm_version, ''))
 
             return (progress, cdm_version)
 
@@ -226,9 +226,8 @@ class Helper:
             return result
 
         if self.install_and_finish(*result):
-            from datetime import datetime
-            from time import mktime
-            set_setting('last_update', mktime(datetime.utcnow().timetuple()))
+            from time import time
+            set_setting('last_check', time())
             return True
 
         ok_dialog(localize(30004), localize(30005))  # An error occurred
@@ -242,6 +241,7 @@ class Helper:
             log(0, 'Removed Widevine CDM at {path}', path=widevinecdm)
             delete(widevinecdm)
             notification(localize(30037), localize(30052))  # Success! Widevine successfully removed.
+            set_setting('last_modified', '0.0')
             return True
         notification(localize(30004), localize(30053))  # Error. Widevine CDM not found.
         return False
@@ -264,23 +264,30 @@ class Helper:
 
     def _update_widevine(self):
         """Prompts user to upgrade Widevine CDM when a newer version is available."""
-        from datetime import datetime, timedelta
+        from time import localtime, strftime, time
 
-        last_update = get_setting_float('last_update', 0.0)
-        if last_update and not self._first_run():
-            last_update_dt = datetime.fromtimestamp(get_setting_float('last_update', 0.0))
-            if last_update_dt + timedelta(days=get_setting_int('update_frequency', 14)) >= datetime.utcnow():
-                log(2, 'Widevine update check was made on {date}', date=last_update_dt.isoformat())
+        last_check = get_setting_float('last_check', 0.0)
+        if last_check and not self._first_run():
+            if last_check + 3600 * 24 * get_setting_int('update_frequency', 14) >= time():
+                log(2, 'Widevine update check was made on {date}', date=strftime('%Y-%m-%d %H:%M', localtime(last_check)))
                 return
 
         wv_config = load_widevine_config()
-        latest_version = latest_widevine_version()
-        if 'x86' in arch():
+        if not wv_config:
+            log(3, 'Widevine config missing. Could not determine current version, forcing update.')
+            current_version = '0'
+        elif 'x86' in arch():
             component = 'Widevine CDM'
             current_version = wv_config['version']
         else:
             component = 'Chrome OS'
-            current_version = select_best_chromeos_image(wv_config)['version']
+            current_version = wv_config['version']
+
+        latest_version = latest_widevine_version()
+        if not latest_version:
+            log(3, 'Updating widevine failed. Could not determine latest version.')
+            return
+
         log(0, 'Latest {component} version is {version}', component=component, version=latest_version)
         log(0, 'Current {component} version installed is {version}', component=component, version=current_version)
 
@@ -292,8 +299,7 @@ class Helper:
             else:
                 log(3, 'User declined to update {component}.', component=component)
         else:
-            from time import mktime
-            set_setting('last_update', mktime(datetime.utcnow().timetuple()))
+            set_setting('last_check', time())
             log(0, 'User is on the latest available {component} version.', component=component)
 
     def _check_widevine(self):
@@ -302,7 +308,7 @@ class Helper:
             return True
 
         if not exists(widevine_config_path()):
-            log(4, 'Widevine or Chrome OS recovery.conf is missing. Reinstall is required.')
+            log(4, 'Widevine or Chrome OS recovery.json is missing. Reinstall is required.')
             ok_dialog(localize(30001), localize(30031))  # An update of Widevine is required
             return self.install_widevine()
 
@@ -408,36 +414,39 @@ class Helper:
 
     def info_dialog(self):
         """ Show an Info box with useful info e.g. for bug reports"""
-        text = localize(30800) + '\n'  # Kodi information
-        text += ' - ' + localize(30801, version=kodi_version()) + '\n'
-        text += ' - ' + localize(30802, platform=system_os(), arch=arch()) + '\n'
+        text = localize(30800, version=kodi_version(), system=system_os(), arch=arch()) + '\n'  # Kodi information
         text += '\n'
 
-        text += localize(30810) + '\n'  # InputStream information
         disabled_str = ' ({disabled})'.format(disabled=localize(30054))
         ishelper_state = disabled_str if get_setting_bool('disabled', False) else ''
         istream_state = disabled_str if not self._inputstream_enabled() else ''
-        text += ' - ' + localize(30811, version=addon_version(), state=ishelper_state) + '\n'
-        text += ' - ' + localize(30812, version=self._inputstream_version(), state=istream_state) + '\n'
+        text += localize(30810, version=addon_version(), state=ishelper_state) + '\n'
+        text += localize(30811, version=self._inputstream_version(), state=istream_state) + '\n'
         text += '\n'
 
-        text += localize(30820) + '\n'  # Widevine information
         if system_os() == 'Android':
-            text += ' - ' + localize(30821) + '\n'
+            text += localize(30820) + '\n'
         else:
-            from datetime import datetime
-            wv_updated = datetime.fromtimestamp(get_setting_float('last_update', 0.0)).strftime("%Y-%m-%d %H:%M") if get_setting_float('last_update', 0.0) else 'Never'
-            text += ' - ' + localize(30822, version=self._get_lib_version(widevinecdm_path()), date=wv_updated) + '\n'
-            text += ' - ' + localize(30823, path=ia_cdm_path()) + '\n'
-
+            from time import localtime, strftime
+            if get_setting_float('last_modified', 0.0):
+                wv_updated = strftime('%Y-%m-%d %H:%M', localtime(get_setting_float('last_modified', 0.0)))
+            else:
+                wv_updated = 'Never'
+            text += localize(30821, version=self._get_lib_version(widevinecdm_path()), date=wv_updated) + '\n'
             if arch() in ('arm', 'arm64'):  # Chrome OS version
                 wv_cfg = load_widevine_config()
                 if wv_cfg:
-                    text += ' - ' + localize(30824, version=select_best_chromeos_image(wv_cfg)['version']) + '\n'
+                    text += localize(30822, name=wv_cfg['hwidmatch'].split()[0].lstrip('^'), version=wv_cfg['version']) + '\n'
+            if get_setting_float('last_check', 0.0):
+                wv_check = strftime('%Y-%m-%d %H:%M', localtime(get_setting_float('last_check', 0.0)))
+            else:
+                wv_check = 'Never'
+            text += localize(30823, date=wv_check) + '\n'
+            text += localize(30824, path=ia_cdm_path()) + '\n'
 
         text += '\n'
 
-        text += localize(30830, url=config.ISSUE_URL)  # Report issues
+        text += localize(30830, url=config.SHORT_ISSUE_URL)  # Report issues
 
         log(2, '\n{info}'.format(info=kodi_to_ascii(text)))
         textviewer(localize(30901), text)
@@ -452,10 +461,7 @@ class Helper:
             notification(localize(30004), localize(30041))
             return
 
-        if 'x86' in arch():
-            installed_version = load_widevine_config()['version']
-        else:
-            installed_version = select_best_chromeos_image(load_widevine_config())['version']
+        installed_version = load_widevine_config()['version']
         del versions[versions.index(installed_version)]
 
         if 'x86' in arch():

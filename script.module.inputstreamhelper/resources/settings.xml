@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <settings>
-    <setting id="last_update" value="0.0" visible="false"/>
+    <setting id="last_modified" value="0.0" visible="false"/>
+    <setting id="last_check" value="0.0" visible="false"/>
     <setting id="version" value="" visible="false"/>
     <category label="30900"> <!-- Expert -->
         <setting label="30901" help="30902" type="action" action="RunScript(script.module.inputstreamhelper, info)"/>

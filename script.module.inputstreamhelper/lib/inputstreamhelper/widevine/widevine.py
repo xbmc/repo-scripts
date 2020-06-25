@@ -4,9 +4,10 @@
 
 from __future__ import absolute_import, division, unicode_literals
 import os
+from time import time
 
 from .. import config
-from ..kodiutils import addon_profile, exists, get_setting_int, listdir, localize, log, mkdirs, ok_dialog, open_file, translate_path, yesno_dialog
+from ..kodiutils import addon_profile, exists, get_setting_int, listdir, localize, log, mkdirs, ok_dialog, open_file, set_setting, translate_path, yesno_dialog
 from ..utils import arch, cmd_exists, hardlink, http_download, http_get, remove_tree, run_cmd, store, system_os
 from ..unicodes import compat_path, to_unicode
 
@@ -21,6 +22,7 @@ def install_cdm_from_backup(version):
         hardlink(backup_fpath, install_fpath)
 
     log(0, 'Installed CDM version {version} from backup', version=version)
+    set_setting('last_modified', time())
     remove_old_backups(backup_path())
 
 
@@ -37,7 +39,7 @@ def widevine_eula():
         cdm_arch = 'x64'
 
     url = config.WIDEVINE_DOWNLOAD_URL.format(version=cdm_version, os=cdm_os, arch=cdm_arch)
-    downloaded = http_download(url, message=localize(30025))  # Acquiring EULA
+    downloaded = http_download(url, message=localize(30025), background=True)  # Acquiring EULA
     if not downloaded:
         return False
 
@@ -51,7 +53,7 @@ def widevine_eula():
 
 def backup_path():
     """Return the path to the cdm backups"""
-    path = os.path.join(addon_profile(), 'backup')
+    path = os.path.join(addon_profile(), 'backup', '')
     if not exists(path):
         mkdirs(path)
     return path
@@ -59,9 +61,12 @@ def backup_path():
 
 def widevine_config_path():
     """Return the full path to the widevine or recovery config file"""
+    iacdm = ia_cdm_path()
+    if iacdm is None:
+        return None
     if 'x86' in arch():
-        return os.path.join(ia_cdm_path(), config.WIDEVINE_CONFIG_NAME)
-    return os.path.join(ia_cdm_path(), os.path.basename(config.CHROMEOS_RECOVERY_URL) + '.json')
+        return os.path.join(iacdm, config.WIDEVINE_CONFIG_NAME)
+    return os.path.join(iacdm, 'config.json')
 
 
 def load_widevine_config():
@@ -106,7 +111,7 @@ def ia_cdm_path():
     except RuntimeError:
         return None
 
-    cdm_path = translate_path(to_unicode(addon.getSetting('DECRYPTERPATH')))
+    cdm_path = translate_path(os.path.join(to_unicode(addon.getSetting('DECRYPTERPATH')), ''))
     if not exists(cdm_path):
         mkdirs(cdm_path)
 
@@ -159,7 +164,7 @@ def latest_widevine_version(eula=False):
     devices = chromeos_config()
     arm_device = select_best_chromeos_image(devices)
     if arm_device is None:
-        log(4, 'We could not find an ARM device in the Chrome OS recovery.conf')
+        log(4, 'We could not find an ARM device in the Chrome OS recovery.json')
         ok_dialog(localize(30004), localize(30005))
         return ''
     return arm_device['version']
@@ -175,11 +180,7 @@ def remove_old_backups(bpath):
     if len(versions) < 2:
         return
 
-    if 'x86' in arch():
-        installed_version = load_widevine_config()['version']
-    else:
-        from .arm import select_best_chromeos_image
-        installed_version = select_best_chromeos_image(load_widevine_config())['version']
+    installed_version = load_widevine_config()['version']
 
     while len(versions) > max_backups + 1:
         remove_version = str(versions[1] if versions[0] == LooseVersion(installed_version) else versions[0])
