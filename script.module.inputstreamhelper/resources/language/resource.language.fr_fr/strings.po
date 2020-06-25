@@ -239,57 +239,73 @@ msgstr "Choisissez une sauvegarde à restaurer"
 
 msgctxt "#30058"
 msgid "Time remaining: {mins:d}:{secs:02d}"
-msgstr ""
+msgstr "Temps restant: {mins:d}:{secs:02d}"
+
+msgctxt "#30059"
+msgid "Meanwhile, should we try extracting Widevine CDM using the legacy method?"
+msgstr "En attendant, devrions-nous essayer d'extraire Widevine CDM en utilisant la méthode ancienne?"
+
+msgctxt "#30060"
+msgid "Identifying wanted partition..."
+msgstr "Identifier la partition souhaitée..."
+
+msgctxt "#30061"
+msgid "Scanning the filesystem for the Widevine CDM..."
+msgstr "Analyse du système de fichiers pour le CDM Widevine..."
+
+msgctxt "#30062"
+msgid "Widevine CDM found, analyzing..."
+msgstr "Widevine CDM trouvé, en cours d'analyser..."
+
+msgctxt "#30063"
+msgid "Could not make the request. Your internet may be down."
+msgstr "Impossible de faire la demande. Votre connexion Internet est peut-être en panne."
+
+msgctxt "#30064"
+msgid "Could not finish the download."
+msgstr "Impossible de terminer le téléchargement."
+
+msgctxt "#30065"
+msgid "Shall we try again?"
+msgstr "Allons-nous réessayer?"
 
 
 ### INFORMATION DIALOG
 msgctxt "#30800"
-msgid "[B]Kodi information[/B]"
-msgstr "[B]Informations Kodi[/B]"
-
-msgctxt "#30801"
-msgid "Kodi version: [B]{version}[/B]"
-msgstr "Version de Kodi : [B]{version}[/B]"
-
-msgctxt "#30802"
-msgid "Kodi platform/architecture: [B]{platform}[/B]/[B]{arch}[/B]"
-msgstr "Platforme/architecture de Kodi : [B]{platform}[/B]/[B]{arch}[/B]"
+msgid "[B]Kodi[/B] version [B]{version}[/B] is running on a [B]{system}[/B] system with [B]{arch}[/B] architecture."
+msgstr "Version [B]Kodi[/B] [B]{version}[/B] opère sur un système [B]{system}[/B] avec l'architecture [B]{arch}[/B]."
 
 msgctxt "#30810"
-msgid "[B]InputStream information[/B]"
-msgstr "[B]Informations InputStream[/B]"
+msgid "[B]InputStream Helper[/B] is at version [B]{version}[/B] {state}"
+msgstr "[B]InputStream Helper[/B] est à la version [B]{version}[/B] {state}"
 
 msgctxt "#30811"
-msgid "InputStream Helper version: [B]{version}[/B] {state}"
-msgstr "Version InputStream Helper : [B]{version}[/B] {state}"
-
-msgctxt "#30812"
-msgid "InputStream Adaptive version: [B]{version}[/B] {state}"
-msgstr "Version InputStream Adaptive : [B]{version}[/B] {state}"
+msgid "[B]InputStream Adaptive[/B] is at version [B]{version}[/B] {state}"
+msgstr "[B]InputStream Adaptive[/B] est à la version [B]{version}[/B] {state}"
 
 msgctxt "#30820"
-msgid "[B]Widevine information[/B]"
-msgstr "[B]Information Widevine[/B]"
+msgid "[B]Widevine CDM[/B] is [B]built into Android[/B]"
+msgstr "[B]Widevine CDM[/B] est [B]intégré à Android[/B]"
 
 msgctxt "#30821"
-msgid "Widevine version: [B]Built into Android[/B]"
-msgstr "Version Widevine : [B]Intégré dans Android[/B]"
+msgid "[B]Widevine CDM[/B] is at version [B]{version}[/B] and was installed on [B]{date}[/B]"
+msgstr "[B]Widevine CDM[/B] est à la version [B]{version}[/B] et a été installé le [B]{date}[/B]"
 
 msgctxt "#30822"
-msgid "Widevine version: [B]{version}[/B] [COLOR gray](last updated on [B]{date}[/B])[/COLOR]"
-msgstr "Version Widevine : [B]{version}[/B] [COLOR gray](mise à jour le [B]{date}[/B])[/COLOR]"
+msgid "It was extracted from Chrome OS image [B]{name}[/B] with version [B]{version}[/B]"
+msgstr "Il a été extrait de l'image de Chrome OS [B]{name}[/B] avec la version [B]{version}[/B]"
 
 msgctxt "#30823"
-msgid "Widevine CDM path: [B]{path}[/B]"
-msgstr "Emplacement de Widevine CDM : [B]{path}[/B]"
+msgid "It was last checked for updates on [B]{date}[/B]"
+msgstr "La dernière vérification des mises à jour a eu lieu le [B]{date}[/B]"
 
 msgctxt "#30824"
-msgid "Chrome OS version: [B]{version}[/B]"
-msgstr "Version de ChromeOS : [B]{version}[/B]"
+msgid "It is installed at [B]{path}[/B]"
+msgstr "Il est installé dans [B]{path}[/B]"
 
 msgctxt "#30830"
-msgid "Please report issues to:\n - [COLOR yellow]{url}[/COLOR]"
-msgstr "Veuillez signaler les problèmes à :\n - [COLOR yellow]{url}[/COLOR]"
+msgid "Please report issues to: [COLOR yellow]{url}[/COLOR]"
+msgstr "Veuillez signaler les problèmes à : [COLOR yellow]{url}[/COLOR]"
 
 
 ### SETTINGS
