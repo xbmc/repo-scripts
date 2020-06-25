@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: script.module.inputstreamhelper\n"
 "Report-Msgid-Bugs-To: https://github.com/emilsvennesson/script.module.inputstreamhelper\n"
 "POT-Creation-Date: 2013-11-18 16:15+0000\n"
-"PO-Revision-Date: 2020-02-17 16:30+0000\n"
+"PO-Revision-Date: 2020-06-21 9:30+0000\n"
 "Last-Translator: frodo19\n"
 "Language-Team: Hungarian\n"
 "MIME-Version: 1.0\n"
@@ -239,57 +239,73 @@ msgstr "Válassz mentés fájlt a visszaállításhoz"
 
 msgctxt "#30058"
 msgid "Time remaining: {mins:d}:{secs:02d}"
-msgstr ""
+msgstr "Hátralevő idő: {mins:d}:{secs:02d}"
+
+msgctxt "#30059"
+msgid "Meanwhile, should we try extracting Widevine CDM using the legacy method?"
+msgstr "Megpróbáljuk a Widevine CDM kinyerését a régi módszerrel?"
+
+msgctxt "#30060"
+msgid "Identifying wanted partition..."
+msgstr "A kívánt partíció azonosítása ..."
+
+msgctxt "#30061"
+msgid "Scanning the filesystem for the Widevine CDM..."
+msgstr "A fájlrendszer szkennelése a Widevine CDM számára ..."
+
+msgctxt "#30062"
+msgid "Widevine CDM found, analyzing..."
+msgstr "A Widevine CDM megtalálva, elemzés ..."
+
+msgctxt "#30063"
+msgid "Could not make the request. Your internet may be down."
+msgstr "Nem sikerült teljesíteni a kérést. Lehet, hogy az internet nem működik."
+
+msgctxt "#30064"
+msgid "Could not finish the download."
+msgstr "A letöltés megszakadt"
+
+msgctxt "#30065"
+msgid "Shall we try again?"
+msgstr "Megpróbáljuk újra?"
 
 
 ### INFORMATION DIALOG
 msgctxt "#30800"
-msgid "[B]Kodi information[/B]"
-msgstr "[B]Kodi információ[/B]"
-
-msgctxt "#30801"
-msgid "Kodi version: [B]{version}[/B]"
-msgstr "Kodi verzió: [B]{version}[/B]"
-
-msgctxt "#30802"
-msgid "Kodi platform/architecture: [B]{platform}[/B]/[B]{arch}[/B]"
-msgstr "Kodi platform/architectúra: [B]{platform}[/B]/[B]{arch}[/B]"
+msgid "[B]Kodi[/B] version [B]{version}[/B] is running on a [B]{system}[/B] system with [B]{arch}[/B] architecture."
+msgstr "[B]Kodi[/B] verzió [B]{version}[/B] fut a [B]{system}[/B] rendszeren [B]{arch}[/B] architecturával."
 
 msgctxt "#30810"
-msgid "[B]InputStream information[/B]"
-msgstr "[B]InputStream információ[/B]"
+msgid "[B]InputStream Helper[/B] is at version [B]{version}[/B] {state}"
+msgstr "[B]InputStream Helper[/B] verzió [B]{version}[/B] {state}"
 
 msgctxt "#30811"
-msgid "InputStream Helper version: [B]{version}[/B] {state}"
-msgstr "InputStream Helper verzió: [B]{version}[/B] {state}"
-
-msgctxt "#30812"
-msgid "InputStream Adaptive version: [B]{version}[/B] {state}"
-msgstr "InputStream Adaptive verzió: [B]{version}[/B] {state}"
+msgid "[B]InputStream Adaptive[/B] is at version [B]{version}[/B] {state}"
+msgstr "[B]InputStream Adaptive[/B] verzió [B]{version}[/B] {state}"
 
 msgctxt "#30820"
-msgid "[B]Widevine information[/B]"
-msgstr "[B]Widevine információ[/B]"
+msgid "[B]Widevine CDM[/B] is [B]built into Android[/B]"
+msgstr "[B]Widevine CDM[/B] az [B]Androidba épülve[/B]"
 
 msgctxt "#30821"
-msgid "Widevine version: [B]Built into Android[/B]"
-msgstr "Widevine verzió: [B]Androiddal telepített[/B]"
+msgid "[B]Widevine CDM[/B] is at version [B]{version}[/B] and was installed on [B]{date}[/B]"
+msgstr "[B]Widevine CDM[/B] verzió [B]{version}[/B] telepítve [B]{date}[/B]"
 
 msgctxt "#30822"
-msgid "Widevine version: [B]{version}[/B] [COLOR gray](last updated on [B]{date}[/B])[/COLOR]"
-msgstr "Widevine verzió: [B]{version}[/B] [COLOR gray](utolsó frissítés [B]{date}[/B])[/COLOR]"
+msgid "It was extracted from Chrome OS image [B]{name}[/B] with version [B]{version}[/B]"
+msgstr "Legutóbb kicsomagolva a Chrome OS image-ból [B]{name}[/B] verzió [B]{version}[/B]"
 
 msgctxt "#30823"
-msgid "Widevine CDM path: [B]{path}[/B]"
-msgstr "Widevine CDM elérési út: [B]{path}[/B]"
+msgid "It was last checked for updates on [B]{date}[/B]"
+msgstr "Legutóbbi frissítés keresése [B]{date}[/B]"
 
 msgctxt "#30824"
-msgid "Chrome OS version: [B]{version}[/B]"
-msgstr "Chrome OS verzió: [B]{version}[/B]"
+msgid "It is installed at [B]{path}[/B]"
+msgstr "Telepítve [B]{path}[/B]"
 
 msgctxt "#30830"
-msgid "Please report issues to:\n - [COLOR yellow]{url}[/COLOR]"
-msgstr "Hiba jelzése:\n - [COLOR yellow]{url}[/COLOR]"
+msgid "Please report issues to: [COLOR yellow]{url}[/COLOR]"
+msgstr "Hiba jelzése: [COLOR yellow]{url}[/COLOR]"
 
 
 ### SETTINGS
