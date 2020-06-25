@@ -90,6 +90,13 @@ Please report any issues or bug reports on the [GitHub Issues](https://github.co
 This module is licensed under the **The MIT License**. Please see the [LICENSE.txt](LICENSE.txt) file for details.
 
 ## Releases
+## v0.5.0 (2020-06-25)
+- Extract Widevine CDM directly from Chrome OS, minimizing disk space usage and eliminating the need for root access (@horstle)
+- Improve progress dialog while extracting Widevine CDM on ARM devices (@horstle, @mediaminister)
+- Support resuming interrupted downloads on unreliable internet connections (@horstle, @mediaminister)
+- Reshape InputStream Helper information dialog (@horstle, @dagwieers)
+- Updated Dutch, English, French, German, Greek, Hungarian, Romanian, Russian, Spanish and Swedish translations (@dagwieers, @horstle, @mediaminister, @tweimer, @Twilight0, @frodo19, @tmihai20, @vlmaksime, @roliverosc, @Sopor)
+
 ## v0.4.7 (2020-05-03)
 - Fix hardlink on Windows (@BarmonHammer)
 - Fix support for unicode chars in paths (@mediaminister)

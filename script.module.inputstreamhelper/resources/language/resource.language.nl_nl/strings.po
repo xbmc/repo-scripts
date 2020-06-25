@@ -239,57 +239,73 @@ msgstr "Kies een back-up om te herstellen"
 
 msgctxt "#30058"
 msgid "Time remaining: {mins:d}:{secs:02d}"
-msgstr ""
+msgstr "Resterende tijd: {mins:d}:{secs:02d}"
+
+msgctxt "#30059"
+msgid "Meanwhile, should we try extracting Widevine CDM using the legacy method?"
+msgstr "Moeten we ondertussen Widevine CDM proberen uit te pakken met de legacy-methode?"
+
+msgctxt "#30060"
+msgid "Identifying wanted partition..."
+msgstr "Bezig met de gewenste partitie te identificeren..."
+
+msgctxt "#30061"
+msgid "Scanning the filesystem for the Widevine CDM..."
+msgstr "Bezig met het bestandssysteem te scannen op Widevine CDM..."
+
+msgctxt "#30062"
+msgid "Widevine CDM found, analyzing..."
+msgstr "Widevine CDM gevonden, bezig met analyseren..."
+
+msgctxt "#30063"
+msgid "Could not make the request. Your internet may be down."
+msgstr "Het verzoek kan niet verstuurd worden. Uw internetverbinding is mogelijk niet beschikbaar."
+
+msgctxt "#30064"
+msgid "Could not finish the download."
+msgstr "Het downloaden kan niet voltooid worden."
+
+msgctxt "#30065"
+msgid "Shall we try again?"
+msgstr "Zullen we het opnieuw proberen?"
 
 
 ### INFORMATION DIALOG
 msgctxt "#30800"
-msgid "[B]Kodi information[/B]"
-msgstr "[B]Informatie over Kodi[/B]"
-
-msgctxt "#30801"
-msgid "Kodi version: [B]{version}[/B]"
-msgstr "Kodi versie: [B]{version}[/B]"
-
-msgctxt "#30802"
-msgid "Kodi platform/architecture: [B]{platform}[/B]/[B]{arch}[/B]"
-msgstr "Kodi platform/architectuur: [B]{platform}[/B]/[B]{arch}[/B]"
+msgid "[B]Kodi[/B] version [B]{version}[/B] is running on a [B]{system}[/B] system with [B]{arch}[/B] architecture."
+msgstr "[B]Kodi[/B] versie [B]{version}[/B] draait op een [B]{system}[/B] systeem met [B]{arch}[/B] architectuur."
 
 msgctxt "#30810"
-msgid "[B]InputStream information[/B]"
-msgstr "[B]Informatie over InputStream[/B]"
+msgid "[B]InputStream Helper[/B] is at version [B]{version}[/B] {state}"
+msgstr "[B]InputStream Helper[/B] is versie [B]{version}[/B] {state}"
 
 msgctxt "#30811"
-msgid "InputStream Helper version: [B]{version}[/B] {state}"
-msgstr "InputStream Helper versie: [B]{version}[/B] {state}"
-
-msgctxt "#30812"
-msgid "InputStream Adaptive version: [B]{version}[/B] {state}"
-msgstr "InputStream Adaptive versie: [B]{version}[/B] {state}"
+msgid "[B]InputStream Adaptive[/B] is at version [B]{version}[/B] {state}"
+msgstr "[B]InputStream Adaptive[/B] is versie [B]{versoin}[/B] {state}"
 
 msgctxt "#30820"
-msgid "[B]Widevine information[/B]"
-msgstr "[B]Informatie over Widevine[/B]"
+msgid "[B]Widevine CDM[/B] is [B]built into Android[/B]"
+msgstr "[B]Widevine CDM[/B] is [B]ingebouwd in Android[/B]"
 
 msgctxt "#30821"
-msgid "Widevine version: [B]Built into Android[/B]"
-msgstr "Widevine versie: [B]Ingebouwd in Android[/B]"
+msgid "[B]Widevine CDM[/B] is at version [B]{version}[/B] and was installed on [B]{date}[/B]"
+msgstr "[B]Widevine CDM[/B] is versie [B]{version}[/B] en werd geïnstalleerd op [B]{date}[/B]"
 
 msgctxt "#30822"
-msgid "Widevine version: [B]{version}[/B] [COLOR gray](last updated on [B]{date}[/B])[/COLOR]"
-msgstr "Widevine versie: [B]{version}[/B] [COLOR gray](voor het laatst geüpdatet op [B]{date}[/B])[/COLOR]"
+msgid "It was extracted from Chrome OS image [B]{name}[/B] with version [B]{version}[/B]"
+msgstr "Het werd uitgepakt uit Chrome OS image [B]{name}[/B] met versie [B]{version}[/B]"
 
 msgctxt "#30823"
-msgid "Widevine CDM path: [B]{path}[/B]"
-msgstr "Widevine CDM pad: [B]{path}[/B]"
+msgid "It was last checked for updates on [B]{date}[/B]"
+msgstr "Het werd laatste gecontroleerd op [B]{date}[/B]"
 
 msgctxt "#30824"
-msgid "Chrome OS version: [B]{version}[/B]"
-msgstr "Chrome OS versie: [B]{version}[/B]"
+msgid "It is installed at [B]{path}[/B]"
+msgstr "Het is geïnstalleerd in [B]{path}[/B]"
 
 msgctxt "#30830"
-msgid "Please report issues to:\n - [COLOR yellow]{url}[/COLOR]"
-msgstr "Problemen graag melden op:\n - [COLOR yellow]{url}[/COLOR]"
+msgid "Please report issues to: [COLOR yellow]{url}[/COLOR]"
+msgstr "Gelieve problemen te melden op: [COLOR yellow]{url}[/COLOR]"
 
 
 ### SETTINGS

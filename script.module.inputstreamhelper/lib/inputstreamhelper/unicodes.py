@@ -22,6 +22,7 @@ def from_unicode(text, encoding='utf-8', errors='strict'):
 def compat_path(path, encoding='utf-8', errors='strict'):
     """Convert unicode path to bytestring if needed"""
     import sys
-    if sys.version_info.major == 2 and isinstance(path, unicode) and not sys.platform.startswith('win'):  # noqa: F821; pylint: disable=undefined-variable,useless-suppression
+    if (sys.version_info.major == 2 and isinstance(path, unicode)  # noqa: F821; pylint: disable=undefined-variable,useless-suppression
+            and not sys.platform.startswith('win')):
         return path.encode(encoding, errors)
     return path

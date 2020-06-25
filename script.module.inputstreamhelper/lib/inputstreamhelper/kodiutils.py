@@ -6,7 +6,7 @@ from __future__ import absolute_import, division, unicode_literals
 from contextlib import contextmanager
 import xbmc
 import xbmcaddon
-from xbmcgui import DialogProgress
+from xbmcgui import DialogProgress, DialogProgressBG
 from .unicodes import from_unicode, to_unicode
 
 # NOTE: We need to explicitly add the add-on id here!
@@ -15,6 +15,14 @@ ADDON = xbmcaddon.Addon('script.module.inputstreamhelper')
 
 class progress_dialog(DialogProgress, object):  # pylint: disable=invalid-name,useless-object-inheritance
     """Show Kodi's Progress dialog"""
+
+    def __init__(self):
+        """Initialize a new progress dialog"""
+        # Wait for previous Progress dialog to close
+        # Progress dialog Window ID is 10101: https://kodi.wiki/view/Window_IDs
+        while get_current_window_id() == 10101:
+            xbmc.sleep(100)
+        super(progress_dialog, self).__init__()
 
     def create(self, heading, message=''):  # pylint: disable=arguments-differ
         """Create and show a progress dialog"""
@@ -80,7 +88,8 @@ def browsesingle(type, heading, shares='', mask='', useThumbs=False, treatAsFold
     from xbmcgui import Dialog
     if not heading:
         heading = ADDON.getAddonInfo('name')
-    return to_unicode(Dialog().browseSingle(type=type, heading=heading, shares=shares, mask=mask, useThumbs=useThumbs, treatAsFolder=treatAsFolder, defaultt=defaultt))
+    return to_unicode(Dialog().browseSingle(type=type, heading=heading, shares=shares, mask=mask, useThumbs=useThumbs,
+                                            treatAsFolder=treatAsFolder, defaultt=defaultt))
 
 
 def notification(heading='', message='', icon='info', time=4000):
@@ -212,6 +221,14 @@ def get_global_setting(key):
     return result.get('result', {}).get('value')
 
 
+def get_current_window_id():
+    """Get current window id"""
+    result = jsonrpc(method='GUI.GetProperties', params=dict(properties=['currentwindow']))
+    if result.get('error'):
+        return None
+    return result.get('result', {}).get('currentwindow').get('id')
+
+
 def has_socks():
     """Test if socks is installed, and use a static variable to remember"""
     if hasattr(has_socks, 'cached'):
@@ -341,6 +358,7 @@ def delete(path):
 
 def exists(path):
     """Whether the path exists (using xbmcvfs)"""
+    # File or folder (folder must end with slash or backslash)
     from xbmcvfs import exists as vfsexists
     return vfsexists(from_unicode(path))
 
@@ -370,3 +388,8 @@ def stat_file(path):
     """Return information about a file (using xbmcvfs)"""
     from xbmcvfs import Stat
     return Stat(from_unicode(path))
+
+
+def bg_progress_dialog():
+    """Show Kodi's Background Progress dialog"""
+    return DialogProgressBG()

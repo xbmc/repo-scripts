@@ -4,8 +4,8 @@ msgstr ""
 "Project-Id-Version: script.module.inputstreamhelper\n"
 "Report-Msgid-Bugs-To: https://github.com/emilsvennesson/script.module.inputstreamhelper\n"
 "POT-Creation-Date: 2013-11-18 16:15+0000\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Sebastian Golasch <public@asciidisco.com\n"
+"PO-Revision-Date: 2020-06-14 10:35+0000\n"
+"Last-Translator: Tobias Weimer\n"
 "Language-Team: German\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -235,61 +235,77 @@ msgstr "Keine Backups gefunden!"
 
 msgctxt "#30057"
 msgid "Choose a backup to restore"
-msgstr "Wählen Sie ein Backup zum Wiederherstellen aus."
+msgstr "Wählen Sie ein Backup zum Wiederherstellen aus"
 
 msgctxt "#30058"
 msgid "Time remaining: {mins:d}:{secs:02d}"
-msgstr ""
+msgstr "Verbleibende Zeit: {mins:d}:{secs:02d}"
+
+msgctxt "#30059"
+msgid "Meanwhile, should we try extracting Widevine CDM using the legacy method?"
+msgstr "Sollen wir währenddessen versuchen, Widevine CDM über die Legacy-Methode zu extrahieren?"
+
+msgctxt "#30060"
+msgid "Identifying wanted partition..."
+msgstr "Identifiziere gewünschte Partition..."
+
+msgctxt "#30061"
+msgid "Scanning the filesystem for the Widevine CDM..."
+msgstr "Durchsuche das Dateisystem nach Widevine CDM..."
+
+msgctxt "#30062"
+msgid "Widevine CDM found, analyzing..."
+msgstr "Widevine CDM gefunden, analysiere..."
+
+msgctxt "#30063"
+msgid "Could not make the request. Your internet may be down."
+msgstr "Kann die Anfrage nicht machen. Ihr Internet könnte nicht verfügbar sein."
+
+msgctxt "#30064"
+msgid "Could not finish the download."
+msgstr "Konnte das Herunterladen nicht beenden."
+
+msgctxt "#30065"
+msgid "Shall we try again?"
+msgstr "Sollen wir es nochmal versuchen?"
 
 
 ### INFORMATION DIALOG
 msgctxt "#30800"
-msgid "[B]Kodi information[/B]"
-msgstr "[B]Kodi Informationen[/B]"
-
-msgctxt "#30801"
-msgid "Kodi version: [B]{version}[/B]"
-msgstr "Kodi Version: [B]{version}[/B]"
-
-msgctxt "#30802"
-msgid "Kodi platform/architecture: [B]{platform}[/B]/[B]{arch}[/B]"
-msgstr "Kodi Plattform/Architektur: [B]{platform}[/B]/[B]{arch}[/B]"
+msgid "[B]Kodi[/B] version [B]{version}[/B] is running on a [B]{system}[/B] system with [B]{arch}[/B] architecture."
+msgstr "[B]Kodi[/B] Version [B]{version}[/B] läuft auf einem [B]{system}[/B] System mit [B]{arch}[/B] Architektur."
 
 msgctxt "#30810"
-msgid "[B]InputStream information[/B]"
-msgstr "[B]InputStream Informationen[/B]"
+msgid "[B]InputStream Helper[/B] is at version [B]{version}[/B] {state}"
+msgstr "[B]InputStream Helper[/B] ist in Version [B]{version}[/B] {state}"
 
 msgctxt "#30811"
-msgid "InputStream Helper version: [B]{version}[/B] {state}"
-msgstr "InputStream Helper Version: [B]{version}[/B] {state}"
-
-msgctxt "#30812"
-msgid "InputStream Adaptive version: [B]{version}[/B] {state}"
-msgstr "InputStream Adaptive Version: [B]{version}[/B] {state}"
+msgid "[B]InputStream Adaptive[/B] is at version [B]{version}[/B] {state}"
+msgstr "[B]InputStream Adaptive[/B] ist in Version [B]{version}[/B] {state}"
 
 msgctxt "#30820"
-msgid "[B]Widevine information[/B]"
-msgstr "[B]Widevine Informationen[/B]"
+msgid "[B]Widevine CDM[/B] is [B]built into Android[/B]"
+msgstr "[B]Widevine CDM[/B] ist [B]in Android eingebaut[/B]"
 
 msgctxt "#30821"
-msgid "Widevine version: [B]Built into Android[/B]"
-msgstr "Widevine Version: [B]In Android eingebaut[/B]"
+msgid "[B]Widevine CDM[/B] is at version [B]{version}[/B] and was installed on [B]{date}[/B]"
+msgstr "[B]Widevine CDM[/B] ist in Version [B]{version}[/B] und wurde installiert am [B]{date}[/B]"
 
 msgctxt "#30822"
-msgid "Widevine version: [B]{version}[/B] [COLOR gray](last updated on [B]{date}[/B])[/COLOR]"
-msgstr "Widevine Version: [B]{version}[/B] [COLOR gray](zuletzt aktualisiert am [B]{date}[/B])[/COLOR]"
+msgid "It was extracted from Chrome OS image [B]{name}[/B] with version [B]{version}[/B]"
+msgstr "Es wurde extrahiert aus Chrome OS Image [B]{name}[/B] mit Version [B]{version}[/B]"
 
 msgctxt "#30823"
-msgid "Widevine CDM path: [B]{path}[/B]"
-msgstr "Widevine CDM Pfad: [B]{path}[/B]"
+msgid "It was last checked for updates on [B]{date}[/B]"
+msgstr "Zuletzt am [B]{date}[/B] auf Aktualisierungen geprüft"
 
 msgctxt "#30824"
-msgid "Chrome OS version: [B]{version}[/B]"
-msgstr "Chrome OS Version: [B]{version}[/B]"
+msgid "It is installed at [B]{path}[/B]"
+msgstr "Es ist installiert in [B]{path}[/B]"
 
 msgctxt "#30830"
-msgid "Please report issues to:\n - [COLOR yellow]{url}[/COLOR]"
-msgstr "Bitte melden Sie Fehler hier:\n - [COLOR yellow]{url}[/COLOR]"
+msgid "Please report issues to: [COLOR yellow]{url}[/COLOR]"
+msgstr "Bitte melden Sie Fehler hier: [COLOR yellow]{url}[/COLOR]"
 
 
 ### SETTINGS

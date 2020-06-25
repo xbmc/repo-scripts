@@ -59,7 +59,7 @@ msgstr "Windows Store-versionen av Kodi stöds inte av [B]Widevine CDM[/B].[CR][
 
 msgctxt "#30013"
 msgid "Failed to retrieve [B]{filename}[/B]."
-msgstr "Det gick inte att hämta [B]{filename}[/B]."
+msgstr "Det gick inte att ladda ned [B]{filename}[/B]."
 
 msgctxt "#30014"
 msgid "Download in progress..."
@@ -239,57 +239,73 @@ msgstr "Välj säkerhetskopia att återställa"
 
 msgctxt "#30058"
 msgid "Time remaining: {mins:d}:{secs:02d}"
-msgstr ""
+msgstr "Återstående tid: {mins:d}:{secs:02d}"
+
+msgctxt "#30059"
+msgid "Meanwhile, should we try extracting Widevine CDM using the legacy method?"
+msgstr "Ska vi prova att extrahera Widevine CDM med den gamla metoden?"
+
+msgctxt "#30060"
+msgid "Identifying wanted partition..."
+msgstr "Identifiera önskad partition..."
+
+msgctxt "#30061"
+msgid "Scanning the filesystem for the Widevine CDM..."
+msgstr "Söker igenom filsystemet efter Widevine CDM..."
+
+msgctxt "#30062"
+msgid "Widevine CDM found, analyzing..."
+msgstr "Hittade Widevine CDM, analyserar..."
+
+msgctxt "#30063"
+msgid "Could not make the request. Your internet may be down."
+msgstr "Det gick inte att skicka begäran. Ditt internet kan ligga nere."
+
+msgctxt "#30064"
+msgid "Could not finish the download."
+msgstr "Det gick inte att slutföra nedladdningen"
+
+msgctxt "#30065"
+msgid "Shall we try again?"
+msgstr "Ska vi prova igen?"
 
 
 ### INFORMATION DIALOG
 msgctxt "#30800"
-msgid "[B]Kodi information[/B]"
-msgstr "[B]Kodi-information[/B]"
-
-msgctxt "#30801"
-msgid "Kodi version: [B]{version}[/B]"
-msgstr "Kodi-version: [B]{version}[/B]"
-
-msgctxt "#30802"
-msgid "Kodi platform/architecture: [B]{platform}[/B]/[B]{arch}[/B]"
-msgstr "Kodi-plattform/arkitektur: [B]{platform}[/B]/[B]{arch}[/B]"
+msgid "[B]Kodi[/B] version [B]{version}[/B] is running on a [B]{system}[/B] system with [B]{arch}[/B] architecture."
+msgstr "[B]Kodi[/B] version [B]{version}[/B] körs på ett [B]{system}[/B]-system med [B]{arch}[/B]-arkitektur."
 
 msgctxt "#30810"
-msgid "[B]InputStream information[/B]"
-msgstr "[B]InputStream-information[/B]"
+msgid "[B]InputStream Helper[/B] is at version [B]{version}[/B] {state}"
+msgstr "[B]InputStream Helper[/B] är på version [B]{version}[/B] {state}"
 
 msgctxt "#30811"
-msgid "InputStream Helper version: [B]{version}[/B] {state}"
-msgstr "InputStream Helper-version: [B]{version}[/B] {state}"
-
-msgctxt "#30812"
-msgid "InputStream Adaptive version: [B]{version}[/B] {state}"
-msgstr "InputStream Adaptive-version: [B]{version}[/B] {state}"
+msgid "[B]InputStream Adaptive[/B] is at version [B]{version}[/B] {state}"
+msgstr "[B]InputStream Adaptive[/B] är på version [B]{version}[/B] {state}"
 
 msgctxt "#30820"
-msgid "[B]Widevine information[/B]"
-msgstr "[B]Widevine-information[/B]"
+msgid "[B]Widevine CDM[/B] is [B]built into Android[/B]"
+msgstr "[B]Widevine CDM[/B] finns [B]inbyggt i Android[/B]"
 
 msgctxt "#30821"
-msgid "Widevine version: [B]Built into Android[/B]"
-msgstr "Widevine-version: [B]Inbyggd i Android[/B]"
+msgid "[B]Widevine CDM[/B] is at version [B]{version}[/B] and was installed on [B]{date}[/B]"
+msgstr "[B]Widevine CDM[/B] är på version [B]{version}[/B] och installerades den [B]{date}[/B]"
 
 msgctxt "#30822"
-msgid "Widevine version: [B]{version}[/B] [COLOR gray](last updated on [B]{date}[/B])[/COLOR]"
-msgstr "Widevine-version: [B]{version}[/B] [COLOR gray](senast uppdaterad [B]{date}[/B])[/COLOR]"
+msgid "It was extracted from Chrome OS image [B]{name}[/B] with version [B]{version}[/B]"
+msgstr "Det extraherades från en Chrome OS-avbild [B]{name}[/B] med version [B]{version}[/B]"
 
 msgctxt "#30823"
-msgid "Widevine CDM path: [B]{path}[/B]"
-msgstr "Widevine CDM-sökväg: [B]{path}[/B]"
+msgid "It was last checked for updates on [B]{date}[/B]"
+msgstr "Senaste uppdateringkontrollen gjordes [B]{date}[/B]"
 
 msgctxt "#30824"
-msgid "Chrome OS version: [B]{version}[/B]"
-msgstr "Chrome OS-version: [B]{version}[/B]"
+msgid "It is installed at [B]{path}[/B]"
+msgstr "Det är installerat på [B]{path}[/B]"
 
 msgctxt "#30830"
-msgid "Please report issues to:\n - [COLOR yellow]{url}[/COLOR]"
-msgstr "Rapportera gärna problem till:\n - [COLOR yellow]{url}[/COLOR]"
+msgid "Please report issues to: [COLOR yellow]{url}[/COLOR]"
+msgstr "Rapportera gärna problem till: [COLOR yellow]{url}[/COLOR]"
 
 
 ### SETTINGS

@@ -1,5 +1,4 @@
 # script.module.inputstreamhelper language file
-# Romanian translator: tmihai20
 msgid ""
 msgstr ""
 "Project-Id-Version: script.module.inputstreamhelper\n"
@@ -240,57 +239,73 @@ msgstr "Alegeți o copie de siguranță pentru a fi restabilită"
 
 msgctxt "#30058"
 msgid "Time remaining: {mins:d}:{secs:02d}"
-msgstr ""
+msgstr "Timp rămas: {mins:d}:{secs:02d}"
+
+msgctxt "#30059"
+msgid "Meanwhile, should we try extracting Widevine CDM using the legacy method?"
+msgstr "Între timp, să încercăm să extragem Widevine CDM folosing metoda clasică?"
+
+msgctxt "#30060"
+msgid "Identifying wanted partition..."
+msgstr "Se identifică partiția dorită..."
+
+msgctxt "#30061"
+msgid "Scanning the filesystem for the Widevine CDM..."
+msgstr "Se scanează sistemul după Widevine CDM..."
+
+msgctxt "#30062"
+msgid "Widevine CDM found, analyzing..."
+msgstr "S-a găsit Widevine CDM și este analizat..."
+
+msgctxt "#30063"
+msgid "Could not make the request. Your internet may be down."
+msgstr "Cererea nu s-a putut realiza. Este posibil să aveți probleme cu conexiunea la Internet."
+
+msgctxt "#30064"
+msgid "Could not finish the download."
+msgstr "Nu s-a putut termina descărcarea."
+
+msgctxt "#30065"
+msgid "Shall we try again?"
+msgstr "Doriți să re-încercăm?"
 
 
 ### INFORMATION DIALOG
 msgctxt "#30800"
-msgid "[B]Kodi information[/B]"
-msgstr "[B]Informații despre Kodi[/B]"
-
-msgctxt "#30801"
-msgid "Kodi version: [B]{version}[/B]"
-msgstr "Versiunea Kodi: [B]{version}[/B]"
-
-msgctxt "#30802"
-msgid "Kodi platform/architecture: [B]{platform}[/B]/[B]{arch}[/B]"
-msgstr "Platforma/arhitectura Kodi: [B]{platform}[/B]/[B]{arch}[/B]"
+msgid "[B]Kodi[/B] version [B]{version}[/B] is running on a [B]{system}[/B] system with [B]{arch}[/B] architecture."
+msgstr "[B]Kodi[/B] versiunea [B]{version}[/B] rulează pe un sistem [B]{system}[/B] cu arhitectura [B]{arch}[/B]."
 
 msgctxt "#30810"
-msgid "[B]InputStream information[/B]"
-msgstr "[B]Informații InputStream[/B]"
+msgid "[B]InputStream Helper[/B] is at version [B]{version}[/B] {state}"
+msgstr "[B]InputStream Helper[/B] are versiunea [B]{version}[/B] {state}"
 
 msgctxt "#30811"
-msgid "InputStream Helper version: [B]{version}[/B] {state}"
-msgstr "Versiune InputStream Helper: [B]{version}[/B] {state}"
-
-msgctxt "#30812"
-msgid "InputStream Adaptive version: [B]{version}[/B] {state}"
-msgstr "Versiune InputStream Adaptive: [B]{version}[/B] {state}"
+msgid "[B]InputStream Adaptive[/B] is at version [B]{version}[/B] {state}"
+msgstr "[B]InputStream Adaptive[/B are versiunea [B]{version}[/B] {state}"
 
 msgctxt "#30820"
-msgid "[B]Widevine information[/B]"
-msgstr "[B]Informații Widevine[/B]"
+msgid "[B]Widevine CDM[/B] is [B]built into Android[/B]"
+msgstr "[B]Widevine CDM[/B] face parte din [B]Android[/B]."
 
 msgctxt "#30821"
-msgid "Widevine version: [B]Built into Android[/B]"
-msgstr "Versiune Widevine: [B]Inclus în Android[/B]"
+msgid "[B]Widevine CDM[/B] is at version [B]{version}[/B] and was installed on [B]{date}[/B]"
+msgstr "[B]Widevine CDM[/B] are versiunea [B]{version}[/B] și a fost instalat pe [B]{date}[/B]"
 
 msgctxt "#30822"
-msgid "Widevine version: [B]{version}[/B] [COLOR gray](last updated on [B]{date}[/B])[/COLOR]"
-msgstr "Versiune Widevine: [B]{version}[/B] [COLOR gray](ultima dată actualizat pe [B]{date}[/B])[/COLOR]"
+msgid "It was extracted from Chrome OS image [B]{name}[/B] with version [B]{version}[/B]"
+msgstr "A fost extras din imaginea Chrome OS B]{name}[/B] și are versiunea [B]{version}[/B]"
 
 msgctxt "#30823"
-msgid "Widevine CDM path: [B]{path}[/B]"
-msgstr "Calea Widevine CDM: [B]{path}[/B]"
+msgid "It was last checked for updates on [B]{date}[/B]"
+msgstr "Ultima dată s-a verificat după actualizări pe [B]{date}[/B]"
 
 msgctxt "#30824"
-msgid "Chrome OS version: [B]{version}[/B]"
-msgstr "Versiune Chrome OS: [B]{version}[/B]"
+msgid "It is installed at [B]{path}[/B]"
+msgstr "Este instalat în calea [B]{path}[/B]"
 
 msgctxt "#30830"
-msgid "Please report issues to:\n - [COLOR yellow]{url}[/COLOR]"
-msgstr "Vă rugăm să raportați probleme la: \n - [COLOR yellow]{url}[/COLOR]"
+msgid "Please report issues to: [COLOR yellow]{url}[/COLOR]"
+msgstr "Vă rugăm să raportați probleme la: [COLOR yellow]{url}[/COLOR]"
 
 
 ### SETTINGS
