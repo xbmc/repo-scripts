@@ -1,0 +1,49 @@
+# XBMC Media Center language file
+# Addon Name: Artist Slideshow
+# Addon id: script.artistslideshow
+# Addon Provider: ronie|pkscuot
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: German (http://www.transifex.com/projects/p/xbmc-addons/language/de/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: de\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#32001"
+msgid "Missing Episode"
+msgstr "Fehlende Folge"
+
+msgctxt "#32002"
+msgid "The previous episode is missing from your library!"
+msgstr "Die vorherige Folge fehlt!"
+
+msgctxt "#32003"
+msgid "Are you sure you want to play this one?"
+msgstr "Soll diese Folge wirklich abgespielt werden?"
+
+msgctxt "#32004"
+msgid "Unwatched Episode"
+msgstr "Ungesehene Folge"
+
+msgctxt "#32005"
+msgid "You have not watched the previous episode!"
+msgstr "Die vorherige Folge wurde noch nicht angesehen!"
+
+msgctxt "#32006"
+msgid "Browse show"
+msgstr "Serie durchsuchen"
+
+msgctxt "#32007"
+msgid "Would you like to browse the episodes of this show?"
+msgstr "Möchtest du die Folgen dieser Serie durchsuchen?"
+
+msgctxt "#32008"
+msgid "Show Option to browse the show"
+msgstr "Option anzeigen, um die Folgen der Serie zu durchsuchen"
