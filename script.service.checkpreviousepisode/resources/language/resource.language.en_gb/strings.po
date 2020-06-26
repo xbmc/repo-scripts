@@ -1,0 +1,56 @@
+# XBMC Media Center language file
+# Addon Name: XBMC Version Check
+# Addon id: script.xbmc.checkpreviousepisode
+# Addon Provider: Lucleonhart
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: xbmc@lucleonhart.de\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Lucleonhart\n"
+"Language-Team: English (http://www.transifex.com/projects/p/xbmc-addons/language/en/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+
+msgctxt "#32020"
+msgid "Previous episode not watched! Choose to:"
+msgstr ""
+
+msgctxt "#32021"
+msgid "Stop playback"
+msgstr ""
+
+msgctxt "#32022"
+msgid "Continue playback"
+msgstr ""
+
+msgctxt "#32023"
+msgid "Continue playback (and from now on ignore this show)"
+msgstr ""
+
+
+
+msgctxt "#32050"
+msgid "Force Kodi to browse to show in library after playback prevention?"
+msgstr ""
+
+msgctxt "#32051"
+msgid "Warn only if previous episode actually found in library and unwatched?"
+msgstr ""
+
+msgctxt "#32052"
+msgid "Remove a show from your ignored list..."
+msgstr ""
+
+msgctxt "#32060"
+msgid "No ignored shows to manage."
+msgstr ""
+
+msgctxt "#32061"
+msgid "General"
+msgstr ""
