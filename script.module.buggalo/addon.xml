@@ -54,12 +54,9 @@
         <description lang="sk_SK">Tento doplnok môže zbierať rôzne informácie o vzniknutých výnimkách, užívateľskom systéme ako je Kodi, o verzii Python a inom a odoslať ich na URL.</description>
         <description lang="sv_SE">Den här modulen kan samla in diverse information om undantagsfel och användarens system, såsom Kodi och Python-versioner, etc. och skicka in det till en url.</description>
         <description lang="zh_CN">此组件可以收集一个异常或用户系统相关的多方面信息如Kodi和Python的版本等。并将此信息发送到一个网址</description>
-        <language />
         <platform>all</platform>
-        <license>GPLv2</license>
-        <forum>http://forum.xbmc.org/showthread.php?tid=121925</forum>
-        <website>http://tommy.winther.nu</website>
-        <email>tommy@winther.nu</email>
-        <source>https://github.com/twinther/script.module.buggalo</source>
+        <license>GPL-2.0-or-later</license>
+        <forum>https://forum.kodi.tv/showthread.php?tid=121925</forum>
+        <source>https://github.com/SchapplM/script.module.buggalo</source>
     </extension>
 </addon>
