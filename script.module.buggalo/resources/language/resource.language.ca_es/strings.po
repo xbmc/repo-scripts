@@ -1,0 +1,58 @@
+# Kodi Media Center language file
+# Addon Name: Buggalo Exception Collector
+# Addon id: script.module.buggalo
+# Addon Provider: twinther, schapplm
+msgid ""
+msgstr ""
+"Project-Id-Version: Kodi Addons\n"
+"Report-Msgid-Bugs-To: https://forum.kodi.tv/\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: Team-Kodi\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ca_ES\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#91000"
+msgid "Unfortunately an error occurred in the [B]%s[/B] addon."
+msgstr "Lamentablement hi ha agut un error en el complement [B]%s[/B]."
+
+msgctxt "#91001"
+msgid "You can help with fixing the problem by submitting an error report. "
+msgstr "Pot ajudar a solucionar el problema mitjançant la presentació d'un informe d'error."
+
+msgctxt "#91002"
+msgid "Click [I]Show error report[/I] for details. No personal information is sent."
+msgstr "Prem [I]Envia l'informe d'errors[/I] per detalls. No s'enviara dades personals."
+
+msgctxt "#91003"
+msgid "Submit error report"
+msgstr "Envia l'informe d'errors"
+
+msgctxt "#91004"
+msgid "Don't submit"
+msgstr "No enviar"
+
+msgctxt "#91005"
+msgid "Thank you for contributing!"
+msgstr "Gràcies per la teva contribució!"
+
+msgctxt "#91006"
+msgid "Show error report"
+msgstr "Mostra informe d'errors"
+
+msgctxt "#91007"
+msgid "Hide error report"
+msgstr "Amaga informe d'errros"
+
+msgctxt "#91008"
+msgid "Unfortunately a problem occurred while showing the details..."
+msgstr "Lamentablement hi ha hagut un error mentre mostrava els detalls..."
+
+msgctxt "#91009"
+msgid "Unable to send error report!"
+msgstr "No es pot enviar l'informe d'errors!"
+
