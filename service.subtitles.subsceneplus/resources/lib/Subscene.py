@@ -183,33 +183,10 @@ def SearchMovie(title, year):
     walker = treewalkers.getTreeWalker("dom")
     stream = walker(dom_tree)
 
-    results = SearchTitleMatch(stream)
+    return SearchTitleMatch(stream)
 
     # TODO: We are currently ignoring tv-series, thats to be handled later.
     
-    # Match for exact title
-    if len(results[TYPE_MATCH_EXACT]) > 0:
-        url = results[TYPE_MATCH_EXACT][0][1]
-        for result in results[TYPE_MATCH_EXACT]:
-            m = re.match("^.*\(([0-9\s]*)\).*", result[0])
-            if year.strip() == m.group(1).strip():
-                url = result[1]
-                # Time to list subtitles
-                subtitles = EnumSubtitles(DOMAIN_NAME + url)
-                return subtitles
-    
-    # No exact match, search for the most popular
-    if len(results[TYPE_MATCH_POPULAR]) > 0:
-        url = results[TYPE_MATCH_POPULAR][0][1]
-        for result in results[TYPE_MATCH_POPULAR]:
-            m = re.match("^.*\(([0-9\s]*)\).*", result[0])
-            if year.strip() == m.group(1).strip():
-                url = result[1] 
-                # Time to list subtitles
-                subtitles = EnumSubtitles(DOMAIN_NAME + url)
-                return subtitles
-
-    return None
 
 
 def DownloadSubtitle(link):
@@ -249,3 +226,5 @@ def DownloadSubtitle(link):
     if len(fname) > 0:
         return (fname[0], r.content)
     return None
+
+
