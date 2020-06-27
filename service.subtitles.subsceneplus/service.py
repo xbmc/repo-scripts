@@ -160,6 +160,7 @@ class Subtitle:
 
 
 def Search(item):
+    tvshow = False
     if item['manualsearch']:
         movies = SearchMovie(item['manualsearchstring'], item['year'])
     elif item['tvshow']:
