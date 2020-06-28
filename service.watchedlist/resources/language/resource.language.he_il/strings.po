@@ -369,11 +369,11 @@ msgid "Unable to download"
 msgstr "לא מצליח להוריד"
 
 msgctxt "#32711"
-msgid "Dropbox-Import (Movies)"
+msgid "WatchedList: Dropbox-Import (Movies)"
 msgstr "דרופבוקס-ייבוא (סרטים)"
 
 msgctxt "#32712"
-msgid "Dropbox-Import (Episodes)"
+msgid "WatchedList: Dropbox-Import (Episodes)"
 msgstr "דרופבוקס-ייבוא (פרקים)"
 
 msgctxt "#32713"
@@ -397,11 +397,11 @@ msgid "Dropbox database updated: %d entries."
 msgstr "דרופבוקס - עדכון מסד הנתונים: %d ערכים."
 
 msgctxt "#32718"
-msgid "Dropbox-Export (Movies)"
+msgid "WatchedList: Dropbox-Export (Movies)"
 msgstr "דרופבוקס-ייצוא (סרטים)"
 
 msgctxt "#32719"
-msgid "Dropbox-Export (Episodes)"
+msgid "WatchedList: Dropbox-Export (Episodes)"
 msgstr "דרופבוקס-ייצוא (פרקים)"
 
 msgctxt "#32720"

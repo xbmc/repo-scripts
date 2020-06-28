@@ -900,7 +900,7 @@ class WatchedList:
                     row_xbmc = self.watchedepisodelist_xbmc[i]
 
                 if utils.getSetting("progressdialog") == 'true':
-                    DIALOG_PROGRESS.update(int(100 * (i + 1) / list_length), utils.getString(32105), utils.getString(32610) % (i + 1, list_length, row_xbmc[5]))                    
+                    DIALOG_PROGRESS.update(int(100 * (i + 1) / list_length), (utils.getString(32105)+"\n"+utils.getString(32610) % (i + 1, list_length, row_xbmc[5])))
 
                 try:
                     res = self._wl_update_media(modus, row_xbmc, 0, 0, 0)
@@ -998,7 +998,7 @@ class WatchedList:
                 name = row_wl[5]
 
                 if progressdialogue:
-                    DIALOG_PROGRESS.update(int(100 * (j + 1) / list_length), utils.getString(32106), utils.getString(32610) % (j + 1, list_length, name))
+                    DIALOG_PROGRESS.update(int(100 * (j + 1) / list_length), (utils.getString(32106)+"\n"+utils.getString(32610) % (j + 1, list_length, name)))
                 try:
                     # search the unique movie/episode id in the xbmc-list
                     if modus == 'movie':
@@ -1578,7 +1578,7 @@ class WatchedList:
                     if utils.getSetting("progressdialog") == 'true' and DIALOG_PROGRESS.iscanceled():
                         return 2
                     if utils.getSetting("progressdialog") == 'true':
-                        DIALOG_PROGRESS.update(int(100 * (i + 1) / list_length), utils.getString(32105), utils.getString(32610) % (i + 1, list_length, row_xbmc_sim[5]))
+                        DIALOG_PROGRESS.update(int(100 * (i + 1) / list_length), (utils.getString(32105)+"\n"+utils.getString(32610) % (i + 1, list_length, row_xbmc_sim[5])))
 
                 utils.showNotification(utils.getString(strno), utils.getString(32301) % (count_insert, count_update), xbmc.LOGINFO)
                 if utils.getSetting("progressdialog") == 'true':
@@ -1651,7 +1651,7 @@ class WatchedList:
                 # loop through all rows of the local database and merge it into the remote (dropbox) database
                 if utils.getSetting("progressdialog") == 'true':
                     DIALOG_PROGRESS = xbmcgui.DialogProgress()
-                    DIALOG_PROGRESS.create(utils.getString(strno), utils.getString(32716))  # TODO
+                    DIALOG_PROGRESS.create(utils.getString(strno), utils.getString(32716))
                 list_length = len(rows)
                 for i in range(list_length):
                     if self.monitor.abortRequested():
@@ -1674,7 +1674,7 @@ class WatchedList:
                     if utils.getSetting("progressdialog") == 'true' and DIALOG_PROGRESS.iscanceled():
                         return 2
                     if utils.getSetting("progressdialog") == 'true':
-                        DIALOG_PROGRESS.update(int(100 * (i + 1) / list_length), utils.getString(strno), utils.getString(32610) % (i + 1, list_length, name))
+                        DIALOG_PROGRESS.update(int(100 * (i + 1) / list_length), (utils.getString(32716)+"\n"+utils.getString(32610) % (i + 1, list_length, name)))
                 utils.showNotification(utils.getString(strno), (utils.getString(32717)) % list_length, xbmc.LOGINFO)
                 if utils.getSetting("progressdialog") == 'true':
                     DIALOG_PROGRESS.close()

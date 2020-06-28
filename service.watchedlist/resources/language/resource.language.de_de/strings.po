@@ -349,12 +349,12 @@ msgid "Unable to download"
 msgstr "Herunterladen nicht möglich"
 
 msgctxt "#32711"
-msgid "Dropbox-Import (Movies)"
-msgstr "Dropbox-Import (Filme)"
+msgid "WatchedList: Dropbox-Import (Movies)"
+msgstr "WatchedList: Dropbox-Import (Filme)"
 
 msgctxt "#32712"
-msgid "Dropbox-Import (Episodes)"
-msgstr "Dropbox-Import (Episoden)"
+msgid "WatchedList: Dropbox-Import (Episodes)"
+msgstr "WatchedList: Dropbox-Import (Episoden)"
 
 msgctxt "#32713"
 msgid "Dropbox synchronization"
@@ -377,12 +377,12 @@ msgid "Dropbox database updated: %d entries."
 msgstr "Dropbox-Datenbank aktualisiert. %d Einträge."
 
 msgctxt "#32718"
-msgid "Dropbox-Export (Movies)"
-msgstr "Dropbox-Export (Filme)"
+msgid "WatchedList: Dropbox-Export (Movies)"
+msgstr "WatchedList: Dropbox-Export (Filme)"
 
 msgctxt "#32719"
-msgid "Dropbox-Export (Episodes)"
-msgstr "Dropbox-Export (Episoden)"
+msgid "WatchedList: Dropbox-Export (Episodes)"
+msgstr "WatchedList: Dropbox-Export (Episoden)"
 
 msgctxt "#32720"
 msgid "Error importing python Dropbox API. Disable function."

@@ -379,11 +379,11 @@ msgid "Unable to download"
 msgstr ""
 
 msgctxt "#32711"
-msgid "Dropbox-Import (Movies)"
+msgid "WatchedList: Dropbox-Import (Movies)"
 msgstr ""
 
 msgctxt "#32712"
-msgid "Dropbox-Import (Episodes)"
+msgid "WatchedList: Dropbox-Import (Episodes)"
 msgstr ""
 
 msgctxt "#32713"
@@ -407,11 +407,11 @@ msgid "Dropbox database updated: %d entries."
 msgstr ""
 
 msgctxt "#32718"
-msgid "Dropbox-Export (Movies)"
+msgid "WatchedList: Dropbox-Export (Movies)"
 msgstr ""
 
 msgctxt "#32719"
-msgid "Dropbox-Export (Episodes)"
+msgid "WatchedList: Dropbox-Export (Episodes)"
 msgstr ""
 
 msgctxt "#32720"
