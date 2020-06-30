@@ -77,6 +77,13 @@ class Media(object):
         Overview (or `None`)
         """
 
+        self.plays = None
+        """
+        :type: :class:`~python:int`
+
+        Number of plays (or `None`)
+        """
+
         self.rating = None
         """
         :type: :class:`~python:int`
@@ -99,12 +106,36 @@ class Media(object):
         Flag indicating this item is in your watchlist (or `None`)
         """
 
+        #
         # Timestamps
+        #
+
+        self.last_updated_at = None
+        """
+        :type: :class:`~python:datetime.datetime`
+
+        Timestamp of when this item was last updated (or `None`)
+        """
+
+        self.last_watched_at = None
+        """
+        :type: :class:`~python:datetime.datetime`
+
+        Timestamp of when this item was last watched (or `None`)
+        """
+
         self.listed_at = None
         """
         :type: :class:`~python:datetime.datetime`
 
         Timestamp of when this item was added to the list (or `None`)
+        """
+
+        self.reset_at = None
+        """
+        :type: :class:`~python:datetime.datetime`
+
+        Timestamp of when this item was reset (or `None`)
         """
 
     @property
@@ -139,6 +170,8 @@ class Media(object):
             return
 
         update_attributes(self, info, [
+            'plays',
+
             # Extended Info
             'overview',
 
@@ -150,8 +183,17 @@ class Media(object):
             self.images = info['images']
 
         # Set timestamps
+        if 'last_updated_at' in info:
+            self.last_updated_at = from_iso8601_datetime(info.get('last_updated_at'))
+
+        if 'last_watched_at' in info:
+            self.last_watched_at = from_iso8601_datetime(info.get('last_watched_at'))
+
         if 'listed_at' in info:
             self.listed_at = from_iso8601_datetime(info.get('listed_at'))
+
+        if 'reset_at' in info:
+            self.reset_at = from_iso8601_datetime(info.get('reset_at'))
 
         # Set flags
         if in_watchlist is not None:
