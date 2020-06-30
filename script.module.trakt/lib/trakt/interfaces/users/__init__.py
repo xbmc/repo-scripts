@@ -7,8 +7,10 @@ from trakt.interfaces.users.following import UsersFollowingInterface
 from trakt.interfaces.users.friends import UsersFriendsInterface
 from trakt.interfaces.users.history import UsersHistoryInterface
 from trakt.interfaces.users.lists import UsersListInterface, UsersListsInterface
+from trakt.interfaces.users.profile import UsersProfileInterface
 from trakt.interfaces.users.ratings import UsersRatingsInterface
 from trakt.interfaces.users.settings import UsersSettingsInterface
+from trakt.interfaces.users.watched import UsersWatchedInterface
 from trakt.interfaces.users.watchlist import UsersWatchlistInterface
 from trakt.mapper import CommentMapper, ListMapper
 
@@ -24,8 +26,10 @@ __all__ = (
     'UsersHistoryInterface',
     'UsersListsInterface',
     'UsersListInterface',
+    'UsersProfileInterface',
     'UsersRatingsInterface',
     'UsersSettingsInterface',
+    'UsersWatchedInterface',
     'UsersWatchlistInterface'
 )
 

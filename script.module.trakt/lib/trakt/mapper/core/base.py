@@ -1,8 +1,7 @@
 from __future__ import absolute_import, division, print_function
 
-from trakt.objects import User, Movie, Show, Episode, Season, CustomList, Comment, Person, WatchedProgress,\
-    CollectionProgress
-
+from trakt.objects import User, Movie, Show, Episode, Season, CustomList, Comment, Person, PublicList,\
+    WatchedProgress, CollectionProgress
 
 IDENTIFIERS = {
     'movie': [
@@ -36,6 +35,10 @@ IDENTIFIERS = {
         'trakt'
     ],
     'custom_list': [
+        'trakt',
+        'slug'
+    ],
+    'public_list': [
         'trakt',
         'slug'
     ],
@@ -116,6 +119,9 @@ class Mapper(object):
 
         if media == 'custom_list':
             return CustomList._construct(client, keys, item, **kwargs)
+
+        if media == 'public_list':
+            return PublicList._construct(client, keys, item, **kwargs)
 
         if media == 'person':
             return Person._construct(client, keys, item, **kwargs)

@@ -23,13 +23,6 @@ class Video(Media):
         Item id (e.g. history id)
         """
 
-        self.last_watched_at = None
-        """
-        :type: :class:`~python:datetime.datetime`
-
-        Timestamp of when this item was last watched (or `None`)
-        """
-
         self.collected_at = None
         """
         :type: :class:`~python:datetime.datetime`
@@ -49,13 +42,6 @@ class Video(Media):
         :type: :class:`~python:datetime.datetime`
 
         Timestamp of when this item was watched (or `None`)
-        """
-
-        self.plays = None
-        """
-        :type: :class:`~python:int`
-
-        Number of plays (or `None`)
         """
 
         self.progress = None
@@ -87,7 +73,6 @@ class Video(Media):
         super(Video, self)._update(info, **kwargs)
 
         update_attributes(self, info, [
-            'plays',
             'progress'
         ])
 
@@ -98,9 +83,6 @@ class Video(Media):
             self.id = info.get('id')
 
         # Set timestamps
-        if 'last_watched_at' in info:
-            self.last_watched_at = from_iso8601_datetime(info.get('last_watched_at'))
-
         if 'collected_at' in info:
             self.collected_at = from_iso8601_datetime(info.get('collected_at'))
 

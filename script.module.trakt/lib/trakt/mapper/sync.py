@@ -27,6 +27,9 @@ class SyncMapper(Mapper):
     def item(cls, client, store, item, media=None, **kwargs):
         i_type = item.get('type') or media
 
+        if not i_type:
+            raise ValueError('Unknown item type')
+
         # Find item type function
         if i_type.startswith('movie'):
             func = cls.movie
@@ -72,8 +75,12 @@ class SyncMapper(Mapper):
         return cls.map_items(client, store, items, cls.show, **kwargs)
 
     @classmethod
-    def show(cls, client, store, item, **kwargs):
-        show = cls.map_item(client, store, item, 'show', **kwargs)
+    def show(cls, client, store, item, append=False, **kwargs):
+        show = cls.map_item(
+            client, store, item, 'show',
+            append=append,
+            **kwargs
+        )
 
         # Update with root info
         if 'show' in item:
@@ -205,7 +212,7 @@ class SyncMapper(Mapper):
         return store
 
     @classmethod
-    def iterate_items(cls, client, store, items, func, **kwargs):
+    def iterate_items(cls, client, store, items, func, media=None, **kwargs):
         if store is None:
             store = {}
 
@@ -222,15 +229,18 @@ class SyncMapper(Mapper):
             store['episodes'] = {}
 
         for item in items:
-            i_type = item.get('type')
+            i_type = item.get('type') or media
 
-            if i_type == 'movie':
+            if not i_type:
+                raise ValueError('Unknown item type')
+
+            if i_type.startswith('movie'):
                 i_store = store['movies']
-            elif i_type == 'show':
+            elif i_type.startswith('show'):
                 i_store = store['shows']
-            elif i_type == 'season':
+            elif i_type.startswith('season'):
                 i_store = store['seasons']
-            elif i_type == 'episode':
+            elif i_type.startswith('episode'):
                 i_store = store['episodes']
             else:
                 raise ValueError('Unknown item type: %r' % i_type)
@@ -239,6 +249,7 @@ class SyncMapper(Mapper):
             result = func(
                 client, i_store, item,
                 append=True,
+                media=media,
                 **kwargs
             )
 

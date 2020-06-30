@@ -1,3 +1,26 @@
+4.2.0 (2020-06-29)
+------------------
+**Added**
+
+- **Interfaces:**
+
+  - :code:`Trakt['lists']` :code:`popular()`, :code:`trending()`
+  - :code:`Trakt['users/*']` :code:`get()`, :code:`follow()`, :code:`unfollow()`
+  - :code:`Trakt['users/*/watched']` :code:`get()`, :code:`movies()`, :code:`shows()`
+
+- **Objects:**
+
+  - :code:`PublicList`
+
+- **Properties:**
+
+  - :code:`Media`
+
+    - :code:`plays`
+    - :code:`last_updated_at`
+    - :code:`last_watched_at`
+    - :code:`reset_at`
+
 4.1.0 (2020-05-28)
 ------------------
 **Added**

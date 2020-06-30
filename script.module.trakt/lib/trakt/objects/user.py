@@ -98,6 +98,12 @@ class User(object):
 
         return self.keys[0]
 
+    def follow(self, **kwargs):
+        return self._client['users/*'].follow(
+            self.id,
+            **kwargs
+        )
+
     def following(self, **kwargs):
         return self._client['users/*/following'].get(
             self.id,
@@ -118,6 +124,12 @@ class User(object):
 
     def ratings(self, **kwargs):
         return self._client['users/*/ratings'].get(
+            self.id,
+            **kwargs
+        )
+
+    def unfollow(self, **kwargs):
+        return self._client['users/*'].unfollow(
             self.id,
             **kwargs
         )
