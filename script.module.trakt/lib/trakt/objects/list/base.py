@@ -5,7 +5,7 @@ from trakt.objects.core.helpers import update_attributes
 
 
 class List(object):
-    def __init__(self, client, keys):
+    def __init__(self, client, keys, user):
         self._client = client
 
         self.keys = keys
@@ -22,6 +22,13 @@ class List(object):
 
         """
 
+        self.user = user
+        """
+        :type: :class:`trakt.objects.User`
+
+        Author
+        """
+
         self.name = None
         """
         :type: :class:`~python:str`
@@ -34,6 +41,18 @@ class List(object):
         :type: :class:`~python:str`
 
         Description
+        """
+
+        self.privacy = None
+        """
+        :type: :class:`~python:str`
+
+        Privacy
+
+        **Possible values:**
+         - :code:`private`
+         - :code:`friends`
+         - :code:`public`
         """
 
         self.likes = None
@@ -55,6 +74,45 @@ class List(object):
         :type: :class:`~python:bool`
 
         Flag indicating this list displays numbers
+        """
+
+        self.sort_by = None
+        """
+        :type: :class:`~python:str`
+
+        Sort By
+
+        **Possible values:**
+         - :code:`rank`
+         - :code:`added`
+         - :code:`title`
+         - :code:`released`
+         - :code:`runtime`
+         - :code:`popularity`
+         - :code:`percentage`
+         - :code:`votes`
+         - :code:`my_rating`
+         - :code:`random`
+         - :code:`watched`
+         - :code:`collected`
+        """
+
+        self.sort_how = None
+        """
+        :type: :class:`~python:str`
+
+        Sort Direction
+
+        **Possible values:**
+         - :code:`asc`
+         - :code:`desc`
+        """
+
+        self.created_at = None
+        """
+        :type: :class:`~python:datetime.datetime`
+
+        Timestamp of when this list was created
         """
 
         self.liked_at = None
@@ -112,9 +170,31 @@ class List(object):
 
         return self.keys[0]
 
+    @property
+    def username(self):
+        """Retrieve author username.
+
+        :rtype: :class:`~python:str`
+        """
+        if not self.user:
+            return None
+
+        return self.user.username
+
+    @property
+    def like_count(self):
+        """Retrieve the number of likes.
+
+        :rtype: :class:`~python:int`
+        """
+        return self.likes
+
     def _update(self, info=None):
         if not info:
             return
+
+        if 'created_at' in info:
+            self.updated_at = from_iso8601_datetime(info.get('updated_at'))
 
         if 'liked_at' in info:
             self.liked_at = from_iso8601_datetime(info.get('liked_at'))
@@ -125,14 +205,58 @@ class List(object):
         update_attributes(self, info, [
             'name',
             'description',
+            'privacy',
+
             'likes',
 
             'allow_comments',
             'display_numbers',
+            'sort_by',
+            'sort_how',
 
             'comment_count',
             'item_count'
         ])
+
+    def items(self, **kwargs):
+        """Retrieve list items.
+
+        :param kwargs: Extra request options
+        :type kwargs: :class:`~python:dict`
+
+        :return: Current list items
+        :rtype: :class:`~python:list` of :class:`trakt.objects.media.Media`
+        """
+
+        return self._client['users/*/lists/*'].items(self.user.username, self.id, **kwargs)
+
+    #
+    # Actions
+    #
+
+    def like(self, **kwargs):
+        """Like the list.
+
+        :param kwargs: Extra request options
+        :type kwargs: :class:`~python:dict`
+
+        :return: Boolean to indicate if the request was successful
+        :rtype: :class:`~python:bool`
+        """
+
+        return self._client['users/*/lists/*'].like(self.user.username, self.id, **kwargs)
+
+    def unlike(self, **kwargs):
+        """Un-like the list.
+
+        :param kwargs: Extra request options
+        :type kwargs: :class:`~python:dict`
+
+        :return: Boolean to indicate if the request was successful
+        :rtype: :class:`~python:bool`
+        """
+
+        return self._client['users/*/lists/*'].unlike(self.user.username, self.id, **kwargs)
 
     def __getstate__(self):
         state = self.__dict__
