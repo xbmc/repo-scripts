@@ -98,7 +98,7 @@ msgstr ""
 
 # empty strings from id 32207 to 32300
 
-#Dialog Messages
+# Dialog Messages
 
 msgctxt "#32301"
 msgid "TV Maze api credentials must be provided before continuing."
