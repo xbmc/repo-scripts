@@ -65,7 +65,6 @@ v.0.6.102
 		<platform>all</platform>
 		<license>GPL-3.0-only</license>
 		<forum>https://forum.kodi.tv/showthread.php?tid=354945</forum>
-		<website></website>
 		<source>https://github.com/pkscout/script.tvmaze.integration</source>
 	</extension>
 </addon>
