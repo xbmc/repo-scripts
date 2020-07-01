@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addon id="script.module.trakt"
        name="trakt.py"
-       version="4.1.0"
+       version="4.2.0"
        provider-name="Dean Gardiner, Razzeee">
   <requires>
     <import addon="xbmc.python" version="2.14.0"/>
@@ -12,14 +12,14 @@
   <extension point="xbmc.python.module"
              library="lib" />
   <extension point="xbmc.addon.metadata">
-    <summary lang="en">Python interface for the trakt.tv API</summary>
-    <description lang="en">Packed for Kodi from https://github.com/fuzeman/trakt.py</description>
+    <summary lang="en_GB">Python interface for the trakt.tv API</summary>
+    <description lang="en_GB">Packed for Kodi from https://github.com/fuzeman/trakt.py</description>
     <platform>all</platform>
-    <language></language>
     <license>MIT</license>
-    <forum></forum>
     <website>https://github.com/fuzeman/trakt.py</website>
     <source>https://github.com/Razzeee/script.module.trakt</source>
-    <email></email>
+    <assets>
+      <icon>icon.png</icon>
+    </assets>
   </extension>
 </addon>

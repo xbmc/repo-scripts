@@ -2,6 +2,7 @@ from __future__ import absolute_import, division, print_function
 
 from trakt.interfaces import auth
 from trakt.interfaces import calendars
+from trakt.interfaces import lists
 from trakt.interfaces import movies
 from trakt.interfaces import oauth
 from trakt.interfaces import scrobble
@@ -25,6 +26,9 @@ INTERFACES = [
     calendars.AllCalendarsInterface,
     calendars.MyCalendarsInterface,
 
+    # /lists/
+    lists.ListsInterface,
+
     # /sync/
     sync.SyncInterface,
     sync.SyncCollectionInterface,
@@ -42,6 +46,7 @@ INTERFACES = [
 
     # /users/
     users.UsersInterface,
+    users.UsersProfileInterface,
     users.UsersSettingsInterface,
 
     # /users/following
@@ -59,6 +64,9 @@ INTERFACES = [
 
     # /users/ratings
     users.UsersRatingsInterface,
+
+    # /users/watched
+    users.UsersWatchedInterface,
 
     # /users/watchlist
     users.UsersWatchlistInterface
