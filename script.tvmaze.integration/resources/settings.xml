@@ -1,0 +1,99 @@
+<?xml version="1.0" ?>
+<settings version="1">
+	<section id="script.tvmaze.integration">
+		<category help="" id="general" label="32000">
+			<group id="1">
+				<setting help="" id="version_upgrade" label="hidden_vu" type="string">
+					<level>0</level>
+					<default/>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="visible">
+							<condition name="InfoBool" on="property">false</condition>
+						</dependency>
+					</dependencies>
+					<control format="string" type="edit">
+						<heading>hidden_vu</heading>
+					</control>
+				</setting>
+				<setting help="" id="show_cache" label="hidden_sc" type="string">
+					<level>0</level>
+					<default/>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="visible">
+							<condition name="InfoBool" on="property">false</condition>
+						</dependency>
+					</dependencies>
+					<control format="string" type="edit">
+						<heading>hidden_sc</heading>
+					</control>
+				</setting>
+				<setting help="" id="tvmaze_user" label="32101" type="string">
+					<level>0</level>
+					<default/>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<control format="string" type="edit">
+						<heading>32101</heading>
+					</control>
+				</setting>
+				<setting help="" id="tvmaze_apikey" label="32102" type="string">
+					<level>0</level>
+					<default/>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<control format="string" type="edit">
+						<heading>32102</heading>
+					</control>
+				</setting>
+			</group>
+			<group id="2" label="32002">
+				<setting help="" id="add_followed" label="32103" type="boolean">
+					<level>0</level>
+					<default>false</default>
+					<control type="toggle"/>
+				</setting>
+				<setting help="" id="mark_acquired" label="32104" type="boolean">
+					<level>0</level>
+					<default>true</default>
+					<control type="toggle"/>
+				</setting>
+				<setting help="" id="mark_watched" label="32105" type="boolean">
+					<level>0</level>
+					<default>true</default>
+					<control type="toggle"/>
+				</setting>
+				<setting help="" id="percent_watched" label="32106" parent="mark_watched" type="integer">
+					<level>0</level>
+					<default>85</default>
+					<constraints>
+						<minimum>0</minimum>
+						<maximum>100</maximum>
+					</constraints>
+					<control format="percentage" type="slider">
+						<popup>false</popup>
+					</control>
+				</setting>
+				<setting help="" id="mark_on_remove" label="32107" type="boolean">
+					<level>0</level>
+					<default>true</default>
+					<control type="toggle"/>
+				</setting>
+			</group>
+			<group id="3" label="32001">
+				<setting help="" id="debug" label="32100" type="boolean">
+					<level>0</level>
+					<default>false</default>
+					<control type="toggle"/>
+				</setting>
+			</group>
+		</category>
+	</section>
+</settings>
