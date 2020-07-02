@@ -150,7 +150,7 @@ class APIParser:
 
 
 	def parseDate(self,date='2020-01-30'):
-		j = requests.get(f'{self.baseURL}/{self.langGuide}/app/pages/TV_GUIDE/?day={date}').json()
+		j = requests.get(f'{self.baseURL}/{self.langGuide}/web/pages/TV_GUIDE/?day={date}').json()
 		for item in j['zones'][1]['data']:
 			d = {'type':'date', 'params':{'mode':'libArtePlayWeb'}, 'metadata':{'art':{}}}
 			
