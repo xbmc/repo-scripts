@@ -35,7 +35,8 @@ class libarte(lm4):
 		l.append({'metadata':{'name':self.translation(32032)}, 'params':{'mode':'libArteListData', 'data':'VIDEO_LISTING', 'uriParams':'{"videoType":"MOST_RECENT"}'}, 'type':'dir'})
 		l.append({'metadata':{'name':self.translation(32031)}, 'params':{'mode':'libArteListData', 'data':'VIDEO_LISTING', 'uriParams':'{"videoType":"MOST_VIEWED"}'}, 'type':'dir'})
 		l.append({'metadata':{'name':self.translation(32132)}, 'params':{'mode':'libArteListData', 'data':'VIDEO_LISTING', 'uriParams':'{"videoType":"MAGAZINES"}'}, 'type':'dir'})
-		l.append({'metadata':{'name':self.translation(32133)}, 'params':{'mode':'libMediathekListDate', 'subParams':'{"mode":"libArteListDateVideos"}'}, 'type':'dir'})
+		if self.parser.langGuide in ['de','fr']:
+			l.append({'metadata':{'name':self.translation(32133)}, 'params':{'mode':'libMediathekListDate', 'subParams':'{"mode":"libArteListDateVideos"}'}, 'type':'dir'})
 		l.append({'metadata':{'name':self.translation(32033)}, 'params':{'mode':'libArteListData', 'data':'VIDEO_LISTING', 'uriParams':'{"videoType":"LAST_CHANCE"}'}, 'type':'dir'})
 		l.append({'metadata':{'name':self.translation(32139)}, 'params':{'mode':'libMediathekSearch', 'searchMode':'libArteListSearch'}, 'type':'dir'})
 		return {'items':l,'name':'root'}
