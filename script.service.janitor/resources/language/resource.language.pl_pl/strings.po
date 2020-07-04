@@ -275,7 +275,7 @@ msgctxt "#32517"
 msgid "music video(s)"
 msgstr "teledysk(-ów)"
 
-#Suffix for cleaning results. Do not remove the single leading whitespace!
+# Suffix for cleaning results. Do not remove the single leading whitespace!
 msgctxt "#32518"
 msgid " were cleaned"
 msgstr " zostało wyczyszczonych"

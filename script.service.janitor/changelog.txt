@@ -1,3 +1,7 @@
+[B][I]Version 4.4.1[/I][/B]
+- [FIX] Improved unicode support
+- [FIX] Correctly match excluded paths that contain user credentials
+
 [B][I]Version 4.4.0[/I][/B]
 - [NEW] Leia compatibility
 - [NEW] Updated log viewer to use Estuary skin
