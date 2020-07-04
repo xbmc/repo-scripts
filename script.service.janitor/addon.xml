@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.service.janitor" name="Janitor" version="4.4.0" provider-name="Anthirian, drewzh">
+<addon id="script.service.janitor" name="Janitor" version="4.4.1" provider-name="Anthirian, drewzh">
     <requires>
         <import addon="xbmc.python" version="2.26.0" />
         <import addon="xbmc.json" version="9.7.2" />
@@ -39,15 +39,15 @@ Cet addon à la faculté de supprimer entièrement votre collection vidéo! Assu
         <disclaimer lang="nl_NL">Het is verstandig om videos pas permanent te verwijderen als je bekend bent met alle instellingen.</disclaimer>
         <disclaimer lang="fr_FR">Il est recommandé de ne pas supprimer physiquement de vidéos avant de bien maitriser les réglages.</disclaimer>
         <platform>all</platform>
-        <license>GNU GENERAL PUBLIC LICENSE. Version 3, 29 June 2007</license>
+        <license>GNU General Public License v3.0 only</license>
         <source>https://github.com/Anthirian/script.service.janitor</source>
         <forum>https://forum.kodi.tv/showthread.php?tid=162517</forum>
-        <website>https://github.com/Anthirian/script.service.janitor</website>
+        <website>https://forum.kodi.tv/showthread.php?tid=162517</website>
         <email>anthirian@users.noreply.github.com</email>
         <news>
-[B][I]Version 4.4.0[/I][/B]
-- [NEW] Leia compatibility
-- [NEW] Updated log viewer to use Estuary skin
+[B][I]Version 4.4.1[/I][/B]
+- [FIX] Improved unicode support
+- [FIX] Correctly match excluded paths that contain user credentials
         </news>
         <assets>
             <icon>resources/icon.png</icon>

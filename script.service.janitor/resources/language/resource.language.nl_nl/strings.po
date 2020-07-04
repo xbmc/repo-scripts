@@ -275,7 +275,7 @@ msgctxt "#32517"
 msgid "music video(s)"
 msgstr "videoclip(s)"
 
-#Laatste deel van schoonmaakresultaten. Verwijder niet de eerste spatie!
+# Laatste deel van schoonmaakresultaten. Verwijder niet de eerste spatie!
 msgctxt "#32518"
 msgid " were cleaned"
 msgstr " zijn opgeschoond"
@@ -369,10 +369,12 @@ msgctxt "#32614"
 msgid "Please check the log file for details and move the particular files manually."
 msgstr "Controleer het logbestand voor meer informatie en verplaats de bestanden handmatig."
 
-# Vertalingen van de voortgangsvensters. Laat de tekst tussen accolades zo staan! Elk venster bevat drie regels om te vullen.
+# Vertalingen van de voortgangsvensters. Laat de tekst tussen accolades zo staan!
+# Elk venster bevat drie regels om te vullen.
+# Het is verplicht om tenminste een spatie te laten staan om de vorige regel te wissen.
 msgctxt "#32615"
 msgid " "
-msgstr " " # Het is verplicht om tenminste een spatie te laten staan om de vorige regel te wissen.
+msgstr " "
 
 msgctxt "#32616"
 msgid "[B]{amount}[/B] {type} have expired."

@@ -126,6 +126,27 @@ class Log(object):
             return contents
 
 
+def anonymize_path(path):
+    """
+    :type path: unicode
+    :param path: The network path containing credentials that need to be stripped.
+    :rtype: unicode
+    :return: The network path without the credentials.
+    """
+    if "://" in path:
+        debug(u"Anonymizing {path}".format(path=path.decode("utf-8")))
+        # Look for anything matching a protocol followed by credentials
+        # This regex assumes there is no @ in the remainder of the path
+        regex = u"^(?P<protocol>smb|nfs|afp|upnp|http|https):\/\/(.+:.+@)?(?P<path>[^@]+?)$"
+        results = re.match(regex, path, flags=re.I | re.U).groupdict()
+
+        # Keep only the protocol and the actual path
+        path = u"{protocol}://{path}".format(protocol=results["protocol"].decode("utf-8"), path=results["path"].decode("utf-8"))
+        debug(u"Result: {newpath}".format(newpath=path.decode("utf-8")))
+
+    return path
+
+
 def get_free_disk_space(path):
     """Determine the percentage of free disk space.
 

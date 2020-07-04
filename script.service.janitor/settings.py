@@ -76,7 +76,7 @@ def get_setting(setting):
     elif setting in strings:
         return unicode(utils.ADDON.getSetting(setting), encoding="utf-8")
     elif setting in paths:
-        return unicode(translatePath(utils.ADDON.getSetting(setting).decode("utf-8")), encoding="utf-8")
+        return utils.anonymize_path(unicode(translatePath(utils.ADDON.getSetting(setting).decode("utf-8")), encoding="utf-8"))
     else:
         raise ValueError(u"Failed loading {0} value. Type {1} cannot be handled."
                          .format(setting, unicode(type(setting), encoding="utf-8")))

@@ -275,7 +275,7 @@ msgctxt "#32517"
 msgid "music video(s)"
 msgstr "Clip(s)"
 
-#Suffix for cleaning results. Do not remove the single leading whitespace!
+# Suffix for cleaning results. Do not remove the single leading whitespace!
 msgctxt "#32518"
 msgid " were cleaned"
 msgstr " ont été nettoyés"
@@ -284,7 +284,7 @@ msgctxt "#32519"
 msgid "Would you like to view the cleaning log?"
 msgstr "Voulez vous ouvrir le log de nettoyage"
 
-#TODO: change to more general description why cleaning was not performed
+# TODO: change to more general description why cleaning was not performed
 msgctxt "#32520"
 msgid "No cleaning performed"
 msgstr "Pas de nettoyage à faire"
@@ -370,10 +370,12 @@ msgid "Please check the log file for details and move the particular files manua
 msgstr "Merci de vérifier le fichier log pour les détails et déplacer les fichiers manuellement"
 
 
-# Progress dialog translations. Keep the text between brackets as is! All dialogs have three lines we need to fill.
+# Progress dialog translations. Keep the text between brackets as is!
+# All dialogs have three lines we need to fill.
+# One space is required to remove line from previous dialog
 msgctxt "#32615"
 msgid " "
-msgstr " " # One space is required to remove line from previous dialog
+msgstr " "
 
 msgctxt "#32616"
 msgid "[B]{amount}[/B] {type} have expired."

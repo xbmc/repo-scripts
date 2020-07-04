@@ -3,6 +3,7 @@
 
 import json
 import sys
+import re
 
 from reset_exclusions import *
 from utils import *
@@ -156,6 +157,7 @@ class Cleaner(object):
                                 self.exit_status = self.STATUS_ABORTED
                                 break
                             if get_setting(create_subdirs):
+                                title = re.sub(r"[\\/:*?\"<>|]+","_", title)
                                 new_path = os.path.join(get_setting(holding_folder).encode("utf-8"),
                                                         title.encode("utf-8"))
                             else:
@@ -189,7 +191,6 @@ class Cleaner(object):
                     if not self.silent:
                         progress_percent += increment * 100
                         debug(u"Progress percent is {percent}, amount is {amount} and increment is {increment}".format(percent=progress_percent, amount=amount, increment=increment))
-                        title = title.encode("utf-8")
                         self.progress.update(int(progress_percent), translate(32616).format(amount=amount, type=type_translation[video_type]), translate(32617), u"[I]{0}[/I]".format(title))
                         self.monitor.waitForAbort(2)
                 else:
