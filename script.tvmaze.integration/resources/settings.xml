@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+    <category label="32000">
+        <setting id="version_upgrade" type="text" label="hidden_vu" visible="false" default="" />
+        <setting id="show_cache" type="text" label="hidden_sc" visible="false" default="" />        
+        <setting id="tvmaze_user" type="text" label="32101" default="" />        
+        <setting id="tvmaze_apikey" type="text" label="32102" default="" />        
+		<setting label="32002" type="lsep" />
+        <setting id="add_followed" type="bool" label="32103" default="false" />
+        <setting id="mark_acquired" type="bool" label="32104" default="true" />
+        <setting id="mark_watched" type="bool" label="32105" default="true" />
+		<setting id="percent_watched"  subsetting="true" type="slider" label="32106"  range="0,100" option="percent"  default="85" />
+        <setting id="mark_on_remove" type="bool" label="32107" default="true" />
+		<setting label="32001" type="lsep" />
+        <setting id="debug" type="bool" label="32100" default="false" />
+    </category>
+</settings>
