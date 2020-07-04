@@ -673,4 +673,5 @@ class MyPlayer(xbmc.Player):
         self.resume = 0
 
     def onAVStarted(self):
-        self.seekTime(float(self.resume))
+        if self.resume > 0:
+            self.seekTime(float(self.resume))
