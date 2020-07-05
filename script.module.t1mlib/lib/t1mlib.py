@@ -10,6 +10,10 @@ import xbmcgui
 import xbmcaddon
 import xbmcplugin
 import urllib.parse
+import calendar
+import datetime
+import requests
+
 qp = urllib.parse.quote_plus
 uqp = urllib.parse.unquote_plus
 USERAGENT = 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.101 Safari/537.36'
@@ -78,6 +82,47 @@ class t1mAddon(object):
     def getAddonEpisodes(self, url, ilist):
         return ilist
 
+    def getAddonSearch(self, url, ilist):
+        return ilist
+
+    def getAddonListing(self, url, ilist):
+        url, sta, sids = url.split('|')
+        d = datetime.datetime.utcnow()
+        now = calendar.timegm(d.utctimetuple())
+        a = requests.get(''.join(['http://mobilelistings.tvguide.com/Listingsweb/ws/rest/airings/',sta,'/start/',str(now),'/duration/20160?channelsourceids=',sids,'&formattype=json']), headers=self.defaultHeaders).json()
+        for b in a[:10]:
+            b = b['ProgramSchedule']
+            st = datetime.datetime.fromtimestamp(float(b['StartTime'])).strftime('%H:%M')
+            et = datetime.datetime.fromtimestamp(float(b['EndTime'])).strftime('%H:%M')
+            duration = int(float(b['EndTime']) - float(b['StartTime']))
+            name = ''.join([st,' - ',et,'  ',str(b.get('Title'))])
+            infoList = {'mediatype':'episode',
+                        'Title': name,
+                        'duration': duration,
+                        'Plot':  ''.join([st,' - ',et,'        ',str(duration/60),' min.\n\n[COLOR blue]',str(b.get('Title')),'\n',str(b.get('EpisodeTitle')),'[/COLOR]\n\n',str(b.get('CopyText'))]),
+                        'MPAA': b.get('Rating')
+                       }
+            c = requests.get(''.join(['https://mapi.tvguide.com/listings/expanded_details?v=1.5&program=',str(b.get('ProgramId'))]), headers=self.defaultHeaders).json()
+            thumb = self.addonIcon
+            fanart = self.addonFanart
+            if not (c.get('tvobject') is None):
+                img = c['tvobject'].get('image')
+                if not (img is None):
+                    thumb = img.get('url')
+                img = c['tvobject'].get('backgroundImages')
+                if not (img is None):
+                    fanart = img[0].get('url')
+            ilist = self.addMenuItem(name,'LV', ilist, url, thumb, fanart, infoList, isFolder=False)
+        return(ilist)
+
+    def getAddonLiveVideo(self, url):
+        liz = xbmcgui.ListItem(path = url, offscreen=True)
+        liz.setProperty('inputstream','inputstream.adaptive')
+        liz.setProperty('inputstream.adaptive.manifest_type','hls')
+        liz.setMimeType('application/x-mpegURL')
+        xbmcplugin.setResolvedUrl(int(sys.argv[1]), True, liz)
+
+
     def getAddonVideo(self, url):
         xbmcplugin.setResolvedUrl(int(sys.argv[1]), True, xbmcgui.ListItem(path=uqp(url), offscreen=True))
 
@@ -86,8 +131,9 @@ class t1mAddon(object):
 
     # internal functions for views, cache and directory management
 
-    def procDir(self, dirFunc, url, cache2Disc=True):
+    def procDir(self, dirFunc, url, content, cache2Disc=True):
         ih = int(sys.argv[1])
+        xbmcplugin.setContent(ih, content)
         xbmcplugin.addSortMethod(ih, xbmcplugin.SORT_METHOD_UNSORTED)
         xbmcplugin.addSortMethod(ih, xbmcplugin.SORT_METHOD_TITLE)
         xbmcplugin.addSortMethod(ih, xbmcplugin.SORT_METHOD_EPISODE)
@@ -100,12 +146,15 @@ class t1mAddon(object):
 
 
     def processAddonEvent(self):
-        mtable = {None : self.getAddonMenu,
-                  'GC' : self.getAddonCats,
-                  'GM' : self.getAddonMovies,
-                  'GS' : self.getAddonShows,
-                  'GE' : self.getAddonEpisodes}
+        mtable = {None : [self.getAddonMenu, 'files'],
+                  'GC' : [self.getAddonCats, 'files'],
+                  'GM' : [self.getAddonMovies, 'movies'],
+                  'GS' : [self.getAddonShows, 'tvshows'],
+                  'GE' : [self.getAddonEpisodes, 'episodes'],
+                  'SE' : [self.getAddonSearch, 'movies'],
+                  'GL' : [self.getAddonListing, 'episodes']}
         ftable = {'GV' : self.getAddonVideo,
+                  'LV' : self.getAddonLiveVideo,
                   'DF' : self.doFunction}
         parms = {}
         if len((sys.argv[2][1:])) > 0:
@@ -114,7 +163,7 @@ class t1mAddon(object):
                 parms[key] = uqp(parms[key])
         fun = mtable.get(parms.get('mode'))
         if fun != None:
-            self.procDir(fun,parms.get('url'))
+            self.procDir(fun[0],parms.get('url'),fun[1])
         else:
             fun = ftable.get(parms.get('mode'))
             if fun != None:
