@@ -13,6 +13,7 @@ import urllib.parse
 import calendar
 import datetime
 import requests
+import string
 
 qp = urllib.parse.quote_plus
 uqp = urllib.parse.unquote_plus
@@ -27,6 +28,7 @@ httpHeaders = {'User-Agent': USERAGENT,
 class t1mAddon(object):
 
     def __init__(self, aname):
+        self.script = xbmcaddon.Addon('script.module.t1mlib')
         self.addon = xbmcaddon.Addon(''.join(['plugin.video.', aname]))
         self.addonName = self.addon.getAddonInfo('name')
         self.localLang = self.addon.getLocalizedString
@@ -50,7 +52,7 @@ class t1mAddon(object):
         audioStream = self.defaultAudStream
         subtitleStream = self.defaultSubStream
         liz = xbmcgui.ListItem(name, offscreen=True)
-        liz.setArt({'thumb': thumb, 'fanart': fanart})
+        liz.setArt({'thumb': thumb, 'fanart': fanart, 'poster':thumb})
         liz.setInfo('Video', videoInfo)
         liz.addStreamInfo('video', videoStream)
         liz.addStreamInfo('audio', audioStream)
@@ -115,6 +117,7 @@ class t1mAddon(object):
             ilist = self.addMenuItem(name,'LV', ilist, url, thumb, fanart, infoList, isFolder=False)
         return(ilist)
 
+
     def getAddonLiveVideo(self, url):
         liz = xbmcgui.ListItem(path = url, offscreen=True)
         liz.setProperty('inputstream','inputstream.adaptive')
@@ -126,8 +129,53 @@ class t1mAddon(object):
     def getAddonVideo(self, url):
         xbmcplugin.setResolvedUrl(int(sys.argv[1]), True, xbmcgui.ListItem(path=uqp(url), offscreen=True))
 
+
     def doFunction(self, url):
         return
+
+
+    def cleanFilename(self, filename):
+        whitelist = "-_.() %s%s" % (string.ascii_letters, string.digits)
+        filename = ''.join(c for c in filename if c in whitelist)
+        return filename
+
+
+    def makeLibraryPath(self, ftype):
+        name  = self.cleanFilename(xbmc.getInfoLabel('ListItem.Title'))
+        profile = self.script.getAddonInfo('profile')
+        moviesDir  = xbmc.translatePath(os.path.join(profile,str(ftype)))
+        movieDir  = xbmc.translatePath(os.path.join(moviesDir, name))
+        if not os.path.isdir(movieDir):
+            os.makedirs(movieDir)
+        return movieDir
+
+
+    def addMovieToLibrary(self, url):
+        name  = self.cleanFilename(''.join([xbmc.getInfoLabel('ListItem.Title'),'.strm']))
+        movieDir = self.makeLibraryPath('movies')
+        strmFile = xbmc.translatePath(os.path.join(movieDir, name))
+        url = ''.join([sys.argv[0],'?mode=GV&url=',url])
+        with open(strmFile, 'w') as outfile:
+            outfile.write(url)
+        json_cmd = '{"jsonrpc":"2.0","method":"VideoLibrary.Scan", "params": {"directory":"%s/"},"id":1}' % movieDir.replace('\\','/')
+        jsonRespond = xbmc.executeJSONRPC(json_cmd)
+
+
+    def addShowToLibrary(self,url):
+        movieDir = self.makeLibraryPath('shows')
+        ilist = []
+        ilist = self.getAddonEpisodes(url, ilist)
+        for url, liz, isFolder in ilist:
+            season = str(liz.getVideoInfoTag().getSeason())
+            episode = str(liz.getVideoInfoTag().getEpisode())
+            title = self.cleanFilename(str(liz.getVideoInfoTag().getTitle()))
+            se = ''.join(['S',season,'E',episode,'  ',title,'.strm'])
+            strmFile = xbmc.translatePath(os.path.join(movieDir, se))
+            with open(strmFile, 'w') as outfile:
+                outfile.write(url)
+        json_cmd = '{"jsonrpc":"2.0","method":"VideoLibrary.Scan", "params": {"directory":"%s/"},"id":1}' % movieDir.replace('\\','/')
+        jsonRespond = xbmc.executeJSONRPC(json_cmd)
+
 
     # internal functions for views, cache and directory management
 
@@ -155,6 +203,8 @@ class t1mAddon(object):
                   'GL' : [self.getAddonListing, 'episodes']}
         ftable = {'GV' : self.getAddonVideo,
                   'LV' : self.getAddonLiveVideo,
+                  'AM' : self.addMovieToLibrary,
+                  'AS' : self.addShowToLibrary,
                   'DF' : self.doFunction}
         parms = {}
         if len((sys.argv[2][1:])) > 0:
