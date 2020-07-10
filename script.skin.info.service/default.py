@@ -26,7 +26,7 @@ class Daemon:
         self._stop = False
         self.previousitem = ""
         log("starting backend")
-        while (not self._stop) and (not xbmc.abortRequested):
+        while (not self._stop) and (not xbmc.Monitor().abortRequested()):
             if xbmc.getCondVisibility("[Window.IsActive(videoosd) + Skin.String(SkinInfo.AutoCloseVideoOSD)] | [Window.IsActive(musicosd) + Skin.String(SkinInfo.AutoCloseMusicOSD)]"):
                 if xbmc.getCondVisibility("Window.IsActive(videoosd)"):
                     seconds = xbmc.getInfoLabel("Skin.String(SkinInfo.AutoCloseVideoOSD)")
