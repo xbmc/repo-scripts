@@ -1,0 +1,98 @@
+# XBMC Media Center language file
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC-Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: 2020-04-26 11:43+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: bg\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+
+msgctxt "#32000"
+msgid "Jump back on unpause"
+msgstr "Назад след пауза"
+
+msgctxt "#32001"
+msgid "Jump seconds"
+msgstr "Скока назад (в секунди)"
+
+msgctxt "#32002"
+msgid "Minimum pause before jumpback"
+msgstr "Минимален престой в режим \"На пауза\""
+
+msgctxt "#32010"
+msgid "Jump back after fwd"
+msgstr "Назад след >>"
+
+msgctxt "#32011"
+msgid "Jump after x2"
+msgstr "Скок назад след x2"
+
+msgctxt "#32012"
+msgid "Jump after x4"
+msgstr "Скок назад след x4"
+
+msgctxt "#32013"
+msgid "Jump after x8"
+msgstr "Скок назад след x8"
+
+msgctxt "#32014"
+msgid "Jump after x16"
+msgstr "Скок назад след x16"
+
+msgctxt "#32015"
+msgid "Jump after x32"
+msgstr "Скок назад след x32"
+
+msgctxt "#32020"
+msgid "Jump forward after rwd"
+msgstr "Напред след <<"
+
+msgctxt "#32021"
+msgid "Jump after x2"
+msgstr "Скок напред след x2"
+
+msgctxt "#32022"
+msgid "Jump after x4"
+msgstr "Скок напред след x4"
+
+msgctxt "#32023"
+msgid "Jump after x8"
+msgstr "Скок напред след x8"
+
+msgctxt "#32024"
+msgid "Jump after x16"
+msgstr "Скок напред след x16"
+
+msgctxt "#32025"
+msgid "Jump after x32"
+msgstr "Скок напред след x32"
+
+msgctxt "#32030"
+msgid "Exclude"
+msgstr "Игнориране"
+
+msgctxt "#32031"
+msgid "Exclude Live TV"
+msgstr "Игнориране на Телевизия"
+
+msgctxt "#32032"
+msgid "Exclude HTTP sources"
+msgstr "Игнориране на HTTP източници"
+
+msgctxt "#32033"
+msgid "Exclude path"
+msgstr "Игнориране на път"
+
+msgctxt "#32034"
+msgid "Folder's path (and subfolders)"
+msgstr "Път до папка (и подпапките)"
+
+msgctxt "#32040"
+msgid "Jump after resume"
+msgstr "Скок след възобновяване"

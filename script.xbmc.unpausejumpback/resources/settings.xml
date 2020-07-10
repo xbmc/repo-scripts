@@ -1,0 +1,273 @@
+<?xml version="1.0" ?>
+<settings version="1">
+	<section id="script.xbmc.unpausejumpback">
+		<category help="" id="jump back on unpause" label="32000">
+			<group id="1">
+				<setting help="" id="jumpbacksecs" label="32001" type="integer">
+					<level>0</level>
+					<default>4</default>
+					<constraints>
+						<minimum>0</minimum>
+						<maximum>60</maximum>
+					</constraints>
+					<control format="integer" type="slider">
+						<popup>false</popup>
+					</control>
+				</setting>
+				<setting help="" id="waitforjumpback" label="32002" type="integer">
+					<level>0</level>
+					<default>10</default>
+					<constraints>
+						<minimum>0</minimum>
+						<maximum>600</maximum>
+					</constraints>
+					<control format="integer" type="slider">
+						<popup>false</popup>
+					</control>
+				</setting>
+					<setting help="" id="jumpbackonplaybackstarted" label="32043" type="boolean">
+					<level>0</level>
+					<default>true</default>
+					<control type="toggle"/>
+				</setting>
+			</group>
+			<group id="2" label="32041"/>
+			<group id="3" label="32042">
+				<setting help="" id="jumpbackonresume" label="32040" type="boolean">
+					<level>0</level>
+					<default>true</default>
+					<control type="toggle"/>
+				</setting>
+			</group>
+		</category>
+		<category help="" id="jump back after fwd" label="32010">
+			<group id="1">
+				<setting help="" id="jumpbacksecsfwdx2" label="32011" type="integer">
+					<level>0</level>
+					<default>2</default>
+					<constraints>
+						<minimum>0</minimum>
+						<maximum>60</maximum>
+					</constraints>
+					<control format="integer" type="slider">
+						<popup>false</popup>
+					</control>
+				</setting>
+				<setting help="" id="jumpbacksecsfwdx4" label="32012" type="integer">
+					<level>0</level>
+					<default>4</default>
+					<constraints>
+						<minimum>0</minimum>
+						<maximum>60</maximum>
+					</constraints>
+					<control format="integer" type="slider">
+						<popup>false</popup>
+					</control>
+				</setting>
+				<setting help="" id="jumpbacksecsfwdx8" label="32013" type="integer">
+					<level>0</level>
+					<default>8</default>
+					<constraints>
+						<minimum>0</minimum>
+						<maximum>60</maximum>
+					</constraints>
+					<control format="integer" type="slider">
+						<popup>false</popup>
+					</control>
+				</setting>
+				<setting help="" id="jumpbacksecsfwdx16" label="32014" type="integer">
+					<level>0</level>
+					<default>16</default>
+					<constraints>
+						<minimum>0</minimum>
+						<maximum>60</maximum>
+					</constraints>
+					<control format="integer" type="slider">
+						<popup>false</popup>
+					</control>
+				</setting>
+				<setting help="" id="jumpbacksecsfwdx32" label="32015" type="integer">
+					<level>0</level>
+					<default>32</default>
+					<constraints>
+						<minimum>0</minimum>
+						<maximum>60</maximum>
+					</constraints>
+					<control format="integer" type="slider">
+						<popup>false</popup>
+					</control>
+				</setting>
+			</group>
+		</category>
+		<category help="" id="jump forward after rwd" label="32020">
+			<group id="1">
+				<setting help="" id="jumpbacksecsrwdx2" label="32021" type="integer">
+					<level>0</level>
+					<default>2</default>
+					<constraints>
+						<minimum>0</minimum>
+						<maximum>60</maximum>
+					</constraints>
+					<control format="integer" type="slider">
+						<popup>false</popup>
+					</control>
+				</setting>
+				<setting help="" id="jumpbacksecsrwdx4" label="32022" type="integer">
+					<level>0</level>
+					<default>4</default>
+					<constraints>
+						<minimum>0</minimum>
+						<maximum>60</maximum>
+					</constraints>
+					<control format="integer" type="slider">
+						<popup>false</popup>
+					</control>
+				</setting>
+				<setting help="" id="jumpbacksecsrwdx8" label="32023" type="integer">
+					<level>0</level>
+					<default>8</default>
+					<constraints>
+						<minimum>0</minimum>
+						<maximum>60</maximum>
+					</constraints>
+					<control format="integer" type="slider">
+						<popup>false</popup>
+					</control>
+				</setting>
+				<setting help="" id="jumpbacksecsrwdx16" label="32024" type="integer">
+					<level>0</level>
+					<default>16</default>
+					<constraints>
+						<minimum>0</minimum>
+						<maximum>60</maximum>
+					</constraints>
+					<control format="integer" type="slider">
+						<popup>false</popup>
+					</control>
+				</setting>
+				<setting help="" id="jumpbacksecsrwdx32" label="32025" type="integer">
+					<level>0</level>
+					<default>32</default>
+					<constraints>
+						<minimum>0</minimum>
+						<maximum>60</maximum>
+					</constraints>
+					<control format="integer" type="slider">
+						<popup>false</popup>
+					</control>
+				</setting>
+			</group>
+		</category>
+		<category help="" id="exclude" label="32030">
+			<group id="1">
+				<setting help="" id="ExcludeLiveTV" label="32031" type="boolean">
+					<level>0</level>
+					<default>false</default>
+					<control type="toggle"/>
+				</setting>
+				<setting help="" id="ExcludeHTTP" label="32032" type="boolean">
+					<level>0</level>
+					<default>false</default>
+					<control type="toggle"/>
+				</setting>
+				<setting help="" id="ExcludePathOption" label="32033" type="boolean">
+					<level>0</level>
+					<default>false</default>
+					<control type="toggle"/>
+				</setting>
+				<setting help="" id="ExcludePath" label="32034" type="path">
+					<level>0</level>
+					<default/>
+					<constraints>
+						<sources>
+							<source>video</source>
+						</sources>
+						<writable>false</writable>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="enable">
+							<condition operator="is" setting="ExcludePathOption">true</condition>
+						</dependency>
+						<dependency type="visible">
+							<condition operator="is" setting="ExcludePathOption">true</condition>
+						</dependency>
+					</dependencies>
+					<control format="path" type="button">
+						<heading>32034</heading>
+					</control>
+				</setting>
+				<setting help="" id="ExcludePathOption2" label="32033" type="boolean">
+					<level>0</level>
+					<default>false</default>
+					<dependencies>
+						<dependency type="enable">
+							<condition operator="is" setting="ExcludePathOption">true</condition>
+						</dependency>
+						<dependency type="visible">
+							<condition operator="is" setting="ExcludePathOption">true</condition>
+						</dependency>
+					</dependencies>
+					<control type="toggle"/>
+				</setting>
+				<setting help="" id="ExcludePath2" label="32034" type="path">
+					<level>0</level>
+					<default/>
+					<constraints>
+						<sources>
+							<source>video</source>
+						</sources>
+						<writable>false</writable>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="enable">
+							<condition operator="is" setting="ExcludePathOption2">true</condition>
+						</dependency>
+						<dependency type="visible">
+							<condition operator="is" setting="ExcludePathOption2">true</condition>
+						</dependency>
+					</dependencies>
+					<control format="path" type="button">
+						<heading>32034</heading>
+					</control>
+				</setting>
+				<setting help="" id="ExcludePathOption3" label="32033" type="boolean">
+					<level>0</level>
+					<default>false</default>
+					<dependencies>
+						<dependency type="enable">
+							<condition operator="is" setting="ExcludePathOption2">true</condition>
+						</dependency>
+						<dependency type="visible">
+							<condition operator="is" setting="ExcludePathOption2">true</condition>
+						</dependency>
+					</dependencies>
+					<control type="toggle"/>
+				</setting>
+				<setting help="" id="ExcludePath3" label="32034" type="path">
+					<level>0</level>
+					<default/>
+					<constraints>
+						<sources>
+							<source>video</source>
+						</sources>
+						<writable>false</writable>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="enable">
+							<condition operator="is" setting="ExcludePathOption3">true</condition>
+						</dependency>
+						<dependency type="visible">
+							<condition operator="is" setting="ExcludePathOption3">true</condition>
+						</dependency>
+					</dependencies>
+					<control format="path" type="button">
+						<heading>32034</heading>
+					</control>
+				</setting>
+			</group>
+		</category>
+	</section>
+</settings>
