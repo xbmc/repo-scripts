@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.xbmc.unpausejumpback" name="Unpause Jumpback" version="3.0.0" provider-name="bossanova808,Memphiz,Lucleonhart,schumi2004,dkadioglu">
+  <requires>
+    <import addon="xbmc.python" version="3.0.0"/>
+  </requires>
+  <extension point="xbmc.service" library="default.py"></extension>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en_GB">Kodi automatic jump back on un-pausing of videos</summary>
+    <summary lang="bg_BG">Превърта назад след пауза</summary>
+    <description lang="en_GB">
+        This addon will jump back a number of seconds whenever a video is un-paused - to make sure you don't miss anything.
+        You can set the amount of seconds to jump back, and the minimum duration of the pause before the addon will trigger a jump back.
+        It also allows to jump back or forward after rewind or fast-forward of a specified amount of seconds to compensate for over-shooting.
+        (Originally created by Memphiz, up-keep taken over by bossanova808 in 2020 for Kodi Matrix and beyond).
+    </description>
+    <description lang="bg_BG">
+        Добавката прескача назад автоматично след като прекратите пауза, за да си припомните историята.
+        Може да определите колко време назад да ви връща скока както и след колко време в режим "На пауза" да се активира функцията.
+        Има и възможност за скок напред / назад след превъртане напред или назад за дефиниран период от време.
+    </description>
+    <platform>all</platform>
+    <license>GPL-3.0-only</license>
+    <website>https://github.com/bossanova808/script.xbmc.unpausejumpback/</website>
+    <source>https://github.com/bossanova808/script.xbmc.unpausejumpback/</source>
+    <forum>http://forum.xbmc.org/showthread.php?tid=134837</forum>
+    <email>bossonav808@gmail.com</email>
+    <news>v3.0.0
+        [new] Update for Kodi Matrix / Python 3, make unpause on resume vs. pause a choice, bugfixes and tidy up.
+    </news>
+    <assets>
+      <icon>icon.png</icon>
+    </assets>
+  </extension>
+</addon>
+
+

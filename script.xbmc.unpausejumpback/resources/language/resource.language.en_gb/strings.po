@@ -1,0 +1,106 @@
+# Kodi Media Center language file
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC-Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: 2020-04-26 11:43+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+
+msgctxt "#32000"
+msgid "Jump back on un-pause"
+msgstr ""
+
+msgctxt "#32001"
+msgid "Jump back how many seconds?"
+msgstr ""
+
+msgctxt "#32002"
+msgid "Minimum pause time before jumpback"
+msgstr ""
+
+msgctxt "#32010"
+msgid "Jump back after fast forward"
+msgstr ""
+
+msgctxt "#32011"
+msgid "Jump after x2"
+msgstr ""
+
+msgctxt "#32012"
+msgid "Jump after x4"
+msgstr ""
+
+msgctxt "#32013"
+msgid "Jump after x8"
+msgstr ""
+
+msgctxt "#32014"
+msgid "Jump after x16"
+msgstr ""
+
+msgctxt "#32015"
+msgid "Jump after x32"
+msgstr ""
+
+msgctxt "#32020"
+msgid "Jump forward after rewind"
+msgstr ""
+
+msgctxt "#32021"
+msgid "Jump after x2"
+msgstr ""
+
+msgctxt "#32022"
+msgid "Jump after x4"
+msgstr ""
+
+msgctxt "#32023"
+msgid "Jump after x8"
+msgstr ""
+
+msgctxt "#32024"
+msgid "Jump after x16"
+msgstr ""
+
+msgctxt "#32025"
+msgid "Jump after x32"
+msgstr ""
+
+msgctxt "#32030"
+msgid "Exclude"
+msgstr ""
+
+msgctxt "#32031"
+msgid "Exclude Live TV"
+msgstr ""
+
+msgctxt "#32032"
+msgid "Exclude HTTP sources"
+msgstr ""
+
+msgctxt "#32033"
+msgid "Exclude Path"
+msgstr ""
+
+msgctxt "#32034"
+msgid "Folder's path (and subfolders)"
+msgstr ""
+
+msgctxt "#32040"
+msgid "Actually do jump back at resume (on), or pause (off)"
+msgstr ""
+
+msgctxt "#32042"
+msgid "(For low power systems, jump back on pause may behave more smoothly)"
+msgstr ""
+
+msgctxt "#32043"
+msgid "Also jump back on playback started from resume point?"
+msgstr ""
