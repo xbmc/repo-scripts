@@ -196,7 +196,7 @@ def parse_tvshows_recommended(request, list_type, full_liz, usecache, plot_enabl
         if "result" in json_query and 'tvshows' in json_query['result']:
             count = 0
             for tvshow in json_query['result']['tvshows']:
-                if xbmc.abortRequested:
+                if xbmc.Monitor().abortRequested():
                     break
                 json_query2 = xbmcgui.Window(10000).getProperty(prefix + "-data-" + str(tvshow['tvshowid']))
                 if json_query2:
