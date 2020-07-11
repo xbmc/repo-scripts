@@ -6,6 +6,9 @@
   </requires>
   <extension point="xbmc.python.module" library="lib" />
   <extension point="xbmc.addon.metadata">
+    <assets>
+      <icon>icon.png</icon>
+    </assets>
     <summary>websocket library repacked for Kodi</summary>
     <source>https://github.com/websocket-client/websocket-client</source>
     <website>https://github.com/pkscout/script.module.websocket</website>
