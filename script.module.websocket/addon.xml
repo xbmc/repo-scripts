@@ -9,7 +9,7 @@
     <assets>
       <icon>icon.png</icon>
     </assets>
-    <summary>websocket library repacked for Kodi</summary>
+    <summary lang="en_GB">websocket library repacked for Kodi</summary>
     <source>https://github.com/websocket-client/websocket-client</source>
     <website>https://github.com/pkscout/script.module.websocket</website>
     <platform>all</platform>
