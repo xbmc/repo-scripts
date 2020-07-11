@@ -2010,7 +2010,7 @@ class LibraryFunctions():
                 elif not ">" in path or "Videos" in path:
                     # Give the user the choice of playing or displaying the playlist
                     dialog = xbmcgui.Dialog()
-                    userchoice = dialog.yesno( LANGUAGE( 32040 ), LANGUAGE( 32060 ), "", "", LANGUAGE( 32061 ), LANGUAGE( 32062 ) )
+                    userchoice = dialog.yesno(LANGUAGE(32040), LANGUAGE(32060), LANGUAGE(32061), LANGUAGE(32062))
                     # False: Display
                     # True: Play
                     if not userchoice:
