@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.module.backports.ssl_match_hostname" name="backports.ssl_match_hostname" version="3.7.0.1" provider-name="badger,brandonrhodes">
+  <requires>
+    <import addon="xbmc.python" version="2.26.0" />
+  </requires>
+  <extension point="xbmc.python.module" library="lib" />
+  <extension point="xbmc.addon.metadata">
+    <assets>
+      <icon>icon.png</icon>
+    </assets>
+    <summary lang="en_GB">backports.ssl_match_hostname library repacked for Kodi</summary>
+    <source>https://github.com/pkscout/script.module.backports.ssl_match_hostname</source>
+    <website>https://pypi.org/project/backports.ssl_match_hostname/</website>
+    <platform>all</platform>
+    <license>PSF-2.0</license>
+  </extension>
+</addon>
