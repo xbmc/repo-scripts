@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<settings>
+	<category label="32000">
+		<setting label="hidden_upgrade" type="text" id="version_upgrade" default="" visible="false" />
+		<setting label="hidden_mappings" type="text" id="mappings" default="" visible="false" />
+		<setting label="32102" type="ipaddress" id="hub_ip" />
+		<setting label="32107" type="number" id="delay" default="250" />
+		<setting label="32106" type="number" id="timeout" default="30" />
+		<setting label="32105" type="bool" id="harmonyadvanced" default="false" />
+		<setting label="32101" type="action" option="close" action="RunScript(script.harmony.control,fromsettings)" />
+		<setting label="32103" type="bool" id="use_custom_skin_menu" default="true" />
+		<setting label="32104" type="bool" id="include_skin_mods" default="true" visible="eq(-1,true)" subsetting="true" />
+		<setting label="32100" type="bool" id="debug" default="false" />
+	</category>
+</settings>
