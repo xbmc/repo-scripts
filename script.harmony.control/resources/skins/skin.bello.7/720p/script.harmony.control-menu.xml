@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<window id="11112">
+	<defaultcontrol>10070</defaultcontrol>
+	<animation type="WindowOpen" reversible="false">
+		<effect type="fade" delay="160" end="100" time="240" />
+	</animation>
+	<animation type="WindowClose" reversible="false">
+		<effect type="fade" start="100" end="0" time="240" />
+	</animation>
+	<controls>
+		<control type="image">
+			<width>100%</width>
+			<height>100%</height>
+			<texture>ap-color-black-50.png</texture>
+		</control>
+		<control type="group" id="10072">
+			<width>405</width>
+			<control type="group">
+				<height>75</height>
+				<control type="image">
+					<width>405</width>
+				    <height>75</height>
+					<texture>dialogs/menus/topmenus_context.png</texture>
+				</control>				
+				<control type="label" id="10071">
+					<top>20</top>
+					<left>75</left>
+					<width>385</width>
+					<height>37</height>
+					<font>FontSize_22B</font>
+					<textcolor>white</textcolor>
+					<label></label>
+				</control>
+			</control>
+			<control type="group" id="10073">
+				<control type="image">
+					<width>405</width>
+					<height>22</height>
+					<texture>dialogs/menus/bottom.png</texture>
+				</control>
+			</control>
+			<control type="panel" id="10070">
+				<top>75</top>
+				<onleft>10070</onleft>
+				<onright>10070</onright>
+				<onup>10070</onup>
+				<ondown>10070</ondown>
+				<orientation>vertical</orientation>
+				<itemlayout height="37">
+					<control type="image">
+						<width>405</width>
+						<height>37</height>
+						<texture>dialogs/menus/topmenus_nf.png</texture>
+					</control>
+					<control type="label">
+						<left>50</left>
+						<width>310</width>
+						<height>37</height>
+						<font>FontSize_22</font>
+						<textcolor>77white</textcolor>
+						<label>$INFO[ListItem.Label]</label>
+					</control>
+				</itemlayout>
+				<focusedlayout height="37">
+					<control type="image">
+						<width>405</width>
+						<height>37</height>
+						<texture>dialogs/menus/topmenus_fo.png</texture>
+					</control>
+					<control type="label">
+						<left>50</left>
+						<width>310</width>
+						<height>37</height>
+						<font>FontSize_22</font>
+						<textcolor>white</textcolor>
+						<label>$INFO[ListItem.Label]</label>
+					</control>
+				</focusedlayout>
+			</control>
+		</control>
+	</controls>
+</window>
