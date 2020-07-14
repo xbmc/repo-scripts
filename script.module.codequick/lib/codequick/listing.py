@@ -3,6 +3,7 @@ from __future__ import absolute_import
 
 # Standard Library Imports
 from time import strptime, strftime
+import warnings
 import logging
 import os
 import re
@@ -15,8 +16,9 @@ import xbmcplugin
 import xbmcgui
 
 # Package imports
+from codequick.route import Route
 from codequick.script import Script
-from codequick.support import auto_sort, build_path, logger_id, dispatcher, Route
+from codequick.support import auto_sort, build_path, logger_id, dispatcher, CallbackRef
 from codequick.utils import ensure_unicode, ensure_native_str, unicode_type, PY3, bold
 
 if PY3:
@@ -98,12 +100,20 @@ SEARCH = 137
 
 
 class Params(MutableMapping):
-    def __init__(self):
-        self.raw_dict = {}
+    def __setstate__(self, state):
+        self.__dict__.update(state)
 
-    def __getitem__(self, key):
-        value = self.raw_dict[key]
-        return value.decode("utf8") if isinstance(value, bytes) else value
+    def __init__(self):
+        self.__dict__["raw_dict"] = {}
+
+    def __setattr__(self, name, value):
+        self[name] = value
+
+    def __getattr__(self, name):
+        try:
+            return self[name]
+        except KeyError:
+            raise AttributeError("'{0}' object has no attribute '{1}'".format(self.__class__.__name__, name))
 
     def __setitem__(self, key, value):
         if isinstance(value, bytes):
@@ -111,8 +121,18 @@ class Params(MutableMapping):
         else:
             self.raw_dict[key] = value
 
+    def __getitem__(self, key):
+        value = self.raw_dict[key]
+        return value.decode("utf8") if isinstance(value, bytes) else value
+
     def __delitem__(self, key):  # type: (str) -> None
         del self.raw_dict[key]
+
+    def __delattr__(self, name):
+        if name in self.raw_dict:
+            del self.raw_dict[name]
+        else:
+            raise AttributeError("'{0}' object has no attribute '{1}'".format(self.__class__.__name__, name))
 
     def __contains__(self, key):  # type: (str) -> bool
         return key in self.raw_dict
@@ -162,15 +182,10 @@ class Art(Params):
 
     :example:
         >>> item = Listitem()
-        >>> item.art["icon"] = "http://www.example.ie/icon.png"
+        >>> item.art.icon = "http://www.example.ie/icon.png"
         >>> item.art["fanart"] = "http://www.example.ie/fanart.jpg"
         >>> item.art.local_thumb("thumbnail.png")
     """
-
-    def __init__(self, listitem):  # type: (xbmcgui.ListItem) -> None
-        super(Art, self).__init__()
-        self._listitem = listitem
-
     def __setitem__(self, key, value):  # type: (str, str) -> None
         self.raw_dict[key] = ensure_native_str(value)
 
@@ -201,7 +216,7 @@ class Art(Params):
         # So there is no neeed to use ensure_native_str
         self.raw_dict["thumb"] = global_image.format(image)
 
-    def _close(self, isfolder):
+    def _close(self, listitem, isfolder):  # type: (xbmcgui.ListItem, bool) -> None
         if fanart and "fanart" not in self.raw_dict:  # pragma: no branch
             self.raw_dict["fanart"] = fanart
         if "thumb" not in self.raw_dict:  # pragma: no branch
@@ -210,7 +225,7 @@ class Art(Params):
             self.raw_dict["icon"] = "DefaultFolder.png" if isfolder else "DefaultVideo.png"
 
         self.clean()  # Remove all None values
-        self._listitem.setArt(self.raw_dict)
+        listitem.setArt(self.raw_dict)
 
 
 class Info(Params):
@@ -239,14 +254,9 @@ class Info(Params):
 
     :examples:
         >>> item = Listitem()
-        >>> item.info['genre'] = 'Science Fiction'
-        >>> item.info['size'] = 256816
+        >>> item.info.genre = "Science Fiction"
+        >>> item.info["size"] = 256816
     """
-
-    def __init__(self, listitem):  # type: (xbmcgui.ListItem) -> None
-        super(Info, self).__init__()
-        self._listitem = listitem
-
     def __setitem__(self, key, value):
         if value is None or value == "":
             logger.debug("Ignoring empty infolable: '%s'", key)
@@ -311,10 +321,10 @@ class Info(Params):
     def _duration(duration):
         """Converts duration from a string of 'hh:mm:ss' into seconds."""
         if isinstance(duration, (str, unicode_type)):
-            duration = duration.strip(";").strip(":")
-            if ":" in duration or ";" in duration:
+            duration = duration.replace(";", ":").strip(":")
+            if ":" in duration:
                 # Split Time By Marker and Convert to Integer
-                time_parts = duration.replace(";", ":").split(":")
+                time_parts = duration.split(":")
                 time_parts.reverse()
                 duration = 0
                 counter = 1
@@ -329,29 +339,25 @@ class Info(Params):
 
         return duration
 
-    def _close(self, content_type):
+    def _close(self, listitem, content_type):  # type: (xbmcgui.ListItem, str) -> None
         raw_dict = self.raw_dict
         # Add label as plot if no plot is found
         if "plot" not in raw_dict:  # pragma: no branch
             raw_dict["plot"] = raw_dict["title"]
 
-        self._listitem.setInfo(content_type, raw_dict)
+        listitem.setInfo(content_type, raw_dict)
 
 
 class Property(Params):
-    def __init__(self, listitem):  # type: (xbmcgui.ListItem) -> None
-        super(Property, self).__init__()
-        self._listitem = listitem
-
     def __setitem__(self, key, value):  # type: (str, str) -> None
         if value:
             self.raw_dict[key] = ensure_unicode(value)
         else:
             logger.debug("Ignoring empty property: '%s'", key)
 
-    def _close(self):
+    def _close(self, listitem):  # type: (xbmcgui.ListItem) -> None
         for key, value in self.raw_dict.items():
-            self._listitem.setProperty(key, value)
+            listitem.setProperty(key, value)
 
 
 class Stream(Params):
@@ -374,14 +380,9 @@ class Stream(Params):
 
     :example:
         >>> item = Listitem()
-        >>> item.stream['video_codec'] = 'h264'
-        >>> item.stream['audio_codec'] = 'aac'
+        >>> item.stream.video_codec = "h264"
+        >>> item.stream["audio_codec"] = "aac"
     """
-
-    def __init__(self, listitem):  # type: (xbmcgui.ListItem) -> None
-        super(Stream, self).__init__()
-        self._listitem = listitem
-
     def __setitem__(self, key, value):
         if not value:
             logger.debug("Ignoring empty stream detail value for: '%s'", key)
@@ -436,7 +437,7 @@ class Stream(Params):
         elif self.raw_dict["height"] >= 720:
             self.raw_dict["aspect"] = 1.78
 
-    def _close(self):
+    def _close(self, listitem):  # type: (xbmcgui.ListItem) -> None
         video = {}
         subtitle = {}
         audio = {"channels": 2}
@@ -453,11 +454,11 @@ class Stream(Params):
                 raise KeyError("unknown stream detail key: '{}'".format(key))
 
         # Now we are ready to send the stream info to kodi
-        self._listitem.addStreamInfo("audio", audio)
+        listitem.addStreamInfo("audio", audio)
         if video:
-            self._listitem.addStreamInfo("video", video)
+            listitem.addStreamInfo("video", video)
         if subtitle:
-            self._listitem.addStreamInfo("subtitle", subtitle)
+            listitem.addStreamInfo("subtitle", subtitle)
 
 
 class Context(list):
@@ -472,23 +473,19 @@ class Context(list):
 
                  http://kodi.wiki/view/List_of_Built_In_Functions
     """
-
-    def __init__(self, listitem):  # type: (xbmcgui.ListItem) -> None
-        super(Context, self).__init__()
-        self._listitem = listitem
-
     def related(self, callback, *args, **kwargs):
         """
         Convenient method to add a "Related Videos" context menu item.
 
         All this really does is to call "context.container" and sets "label" for you.
 
-        :param callback: The function that will be called when menu item is activated.
+        :param Callback callback: The function that will be called when menu item is activated.
         :param args: [opt] "Positional" arguments that will be passed to the callback.
         :param kwargs: [opt] "Keyword" arguments that will be passed to the callback.
         """
         # Add '_updatelisting_ = True' to callback params if called from the same callback as is given here
-        if callback.route == dispatcher.get_route():
+        path = callback.path if isinstance(callback, CallbackRef) else callback.route.path
+        if path == dispatcher.get_route().path:
             kwargs["_updatelisting_"] = True
 
         related_videos_text = Script.localize(RELATED_VIDEOS)
@@ -499,9 +496,10 @@ class Context(list):
         """
         Convenient method to add a context menu item that links to a "container".
 
-        :type label: str
-        :param callback: The function that will be called when menu item is activated.
+        :param Callback callback: The function that will be called when menu item is activated.
         :param label: The label of the context menu item.
+        :type label: str
+
         :param args: [opt] "Positional" arguments that will be passed to the callback.
         :param kwargs: [opt] "Keyword" arguments that will be passed to the callback.
         """
@@ -512,7 +510,7 @@ class Context(list):
         """
         Convenient method to add a context menu item that links to a "script".
 
-        :param callback: The function that will be called when menu item is activated.
+        :param Callback callback: The function that will be called when menu item is activated.
         :type label: str or unicode
         :param label: The label of the context menu item.
         :param args: [opt] "Positional" arguments that will be passed to the callback.
@@ -521,9 +519,9 @@ class Context(list):
         command = "XBMC.RunPlugin(%s)" % build_path(callback, args, kwargs)
         self.append((label, command))
 
-    def _close(self):
+    def _close(self, listitem):  # type: (xbmcgui.ListItem) -> None
         if self:
-            self._listitem.addContextMenuItems(self)
+            listitem.addContextMenuItems(self)
 
 
 class Listitem(object):
@@ -532,39 +530,50 @@ class Listitem(object):
 
     :param str content_type: [opt] Type of content been listed. e.g. "video", "music", "pictures".
     """
+    def __getstate__(self):
+        state = self.__dict__.copy()
+        state["label"] = self.label
+        del state["listitem"]
+        return state
+
+    def __setstate__(self, state):
+        label = state.pop("label")
+        self.__dict__.update(state)
+        self.listitem = xbmcgui.ListItem()
+        self.label = label
 
     def __init__(self, content_type="video"):
         self._content_type = content_type
-        self.is_playable = True
-        self.is_folder = False
+        self._is_playable = False
+        self._is_folder = False
         self._args = None
-        self.path = ""
+        self._path = ""
 
         #: The underlining kodi listitem object, for advanced use.
-        self.listitem = listitem = xbmcgui.ListItem()
+        self.listitem = xbmcgui.ListItem()
 
         #: List of paths to subtitle files.
         self.subtitles = []
 
-        self.info = Info(listitem)
+        self.info = Info()
         """
         Dictionary like object for adding "infoLabels".
         See :class:`listing.Info<codequick.listing.Info>` for more details.
         """
 
-        self.art = Art(listitem)
+        self.art = Art()
         """
         Dictionary like object for adding "listitem art".
         See :class:`listing.Art<codequick.listing.Art>` for more details.
         """
 
-        self.stream = Stream(listitem)
+        self.stream = Stream()
         """
         Dictionary like object for adding "stream details".
         See :class:`listing.Stream<codequick.listing.Stream>` for more details.
         """
 
-        self.context = Context(listitem)
+        self.context = Context()
         """
         List object for "context menu" items.
         See :class:`listing.Context<codequick.listing.Context>` for more details.
@@ -579,7 +588,7 @@ class Listitem(object):
             >>> item.params['videoid'] = 'kqmdIV_gBfo'
         """
 
-        self.property = Property(listitem)
+        self.property = Property()
         """
         Dictionary like object that allows you to add "listitem properties". e.g. "StartOffset".
 
@@ -611,67 +620,86 @@ class Listitem(object):
         self.params["_title_"] = unformatted_label
         self.info["title"] = unformatted_label
 
+    @property
+    def path(self):
+        return self._path
+
+    @path.setter
+    def path(self, value):
+        # For backwards compatibility
+        self._path = value
+        self._is_playable = True
+
+    def set_path(self, path, is_folder=False, is_playable=True):
+        """
+        Set the listitem's path.
+
+        The path can be any of the following:
+            * Any kodi path, e.g. "plugin://" or "script://"
+            * Directly playable URL or filepath.
+
+        .. note::
+
+            When specifying a external 'plugin' or 'script' as the path, Kodi will treat it as a playable item.
+            To override this behavior, you can set the ``is_playable`` and ``is_folder`` parameters.
+
+        :param path: A playable URL or plugin/script path.
+        :param is_folder: Tells kodi if path is a folder (default -> ``False``).
+        :param is_playable: Tells kodi if path is a playable item (default -> ``True``).
+        """
+        self._path = path
+        self._is_folder = is_folder
+        self._is_playable = False if path.startswith("script://") else is_playable
+
     def set_callback(self, callback, *args, **kwargs):
         """
-        Set the "callback" object.
+        Set the "callback" function for this listitem.
 
         The "callback" parameter can be any of the following:
             * :class:`codequick.Script<codequick.script.Script>` callback.
             * :class:`codequick.Route<codequick.route.Route>` callback.
             * :class:`codequick.Resolver<codequick.resolver.Resolver>` callback.
-            * The path to a callback function. i.e. "/resources/lib/main/video_list/"
-            * Any kodi path, e.g. "plugin://" or "script://"
-            * Directly playable URL.
+            * A callback reference object :func:`Script.ref<codequick.script.Script.ref>`.
 
-        .. note::
-
-            When specifying a external plugin / script path as a callback, Kodi treats it as a playable item by default.
-            To override this behavior, you can pass in the ``is_playable`` and ``is_folder`` parameters.
-            If only ``is_folder`` is given, then ``is_playable`` will default to ``not is_folder``.
-
-        .. note::
-
-            If callback is a file path, use listitem.path instead of set_callback()
-
-        :param callback: The "callback" or playable URL.
+        :param callback: The "callback" function or reference object.
         :param args: "Positional" arguments that will be passed to the callback.
         :param kwargs: "Keyword" arguments that will be passed to the callback.
         """
-        if not hasattr(callback, "route"):
-            # Only used for external plugin / script paths, ignored otherwise
-            self.is_folder = is_folder = kwargs.pop("is_folder", self.is_folder)
-            self.is_playable = kwargs.pop("is_playable", not is_folder)
-
+        if hasattr(callback, "route"):
+            callback = callback.route
+        elif not isinstance(callback, CallbackRef):
             # We don't have a plugin / http path,
             # So we should then have a callback path
             if "://" not in callback:
-                callback = dispatcher.get_route(callback).callback
+                msg = "passing callback path to 'set_callback' is deprecated, " \
+                      "use callback reference 'Route.ref' instead"
+                warnings.warn(msg, DeprecationWarning)
+                callback = dispatcher.get_route(callback)
+            else:
+                msg = "passing a playable / plugin path to 'set_callback' is deprecated, use 'set_path' instead"
+                warnings.warn(msg, DeprecationWarning)
+                is_folder = kwargs.pop("is_folder", False)
+                is_playable = kwargs.pop("is_playable", not is_folder)
+                self.set_path(callback, is_folder, is_playable)
+                return
 
-        self.path = callback
+        self.params.update(kwargs)
+        self._is_playable = callback.is_playable
+        self._is_folder = callback.is_folder
+        self._path = callback
         self._args = args
-        if kwargs:
-            self.params.update(kwargs)
 
     # noinspection PyProtectedMember
     def _close(self):
-        path = self.path
         listitem = self.listitem
-        # When we have a callback function
-        if hasattr(path, "route"):
-            isfolder = path.route.is_folder
-            listitem.setProperty("isplayable", str(path.route.is_playable).lower())
-            listitem.setProperty("folder", str(path.route.is_folder).lower())
-            path = build_path(path, self._args, self.params.raw_dict)
-        # When we have a blank listitem that does nothing
-        elif not path:
-            listitem.setProperty("isplayable", "false")
-            listitem.setProperty("folder", "false")
-            isfolder = False
+        isfolder = self._is_folder
+        listitem.setProperty("folder", str(isfolder).lower())
+        listitem.setProperty("isplayable", str(self._is_playable).lower())
+
+        if isinstance(self._path, CallbackRef):
+            path = build_path(self._path, self._args, self.params.raw_dict)
         else:
-            # Directly playable item or plugin path that calls another addon.
-            listitem.setProperty("isplayable", str(self.is_playable).lower())
-            listitem.setProperty("folder", str(self.is_folder).lower())
-            isfolder = self.is_folder
+            path = self._path
 
         if not isfolder:
             # Add mediatype if not already set
@@ -687,7 +715,7 @@ class Listitem(object):
             self.context.append(("$LOCALIZE[13350]", "XBMC.ActivateWindow(videoplaylist)"))
 
             # Close video related datasets
-            self.stream._close()
+            self.stream._close(listitem)
 
         # Set label to UNKNOWN if unset
         if not self.label:  # pragma: no branch
@@ -695,10 +723,10 @@ class Listitem(object):
 
         # Close common datasets
         listitem.setPath(path)
-        self.property._close()
-        self.context._close()
-        self.info._close(self._content_type)
-        self.art._close(isfolder)
+        self.property._close(listitem)
+        self.context._close(listitem)
+        self.info._close(listitem, self._content_type)
+        self.art._close(listitem, isfolder)
 
         # Return a tuple compatible with 'xbmcplugin.addDirectoryItems'
         return path, listitem, isfolder
@@ -721,9 +749,8 @@ class Listitem(object):
 
         This method will create and populate a listitem from a set of given values.
 
-        :type label: str
-        :param callback: The "callback" function or playable URL.
-        :param label: The listitem's label.
+        :param Callback callback: The "callback" function or playable URL.
+        :param str label: The listitem's label.
         :param dict art: Dictionary of listitem art.
         :param dict info: Dictionary of infoLabels.
         :param dict stream: Dictionary of stream details.
@@ -741,8 +768,16 @@ class Listitem(object):
             >>> listitem = Listitem.from_dict(**item)
         """
         item = cls()
-        item.set_callback(callback)
         item.label = label
+
+        if isinstance(callback, str):
+            if "://" in callback:
+                item.set_path(callback)
+            else:
+                # noinspection PyTypeChecker
+                item.set_callback(callback)
+        else:
+            item.set_callback(callback)
 
         if params:  # pragma: no branch
             item.params.update(params)
@@ -766,8 +801,8 @@ class Listitem(object):
         """
         Constructor for adding link to "Next Page" of content.
 
-        The current running "callback" will be called with all of the parameters that are given here.
-        You can also specify which "callback" will be called by setting a keywork only argument called 'callback'.
+        By default the current running "callback" will be called with all of the parameters that are given here.
+        You can specify which "callback" will be called by setting a keyword only argument called 'callback'.
 
         :param args: "Positional" arguments that will be passed to the callback.
         :param kwargs: "Keyword" arguments that will be passed to the callback.
@@ -777,8 +812,7 @@ class Listitem(object):
             >>> item.next_page(url="http://example.com/videos?page2")
         """
         # Current running callback
-        callback = dispatcher.get_route().callback
-        callback = kwargs.pop("callback", callback)
+        callback = kwargs.pop("callback") if "callback" in kwargs else dispatcher.get_route().callback
 
         # Add support params to callback params
         kwargs["_updatelisting_"] = True if u"_nextpagecount_" in dispatcher.params else False
@@ -801,7 +835,7 @@ class Listitem(object):
 
         This is a convenience method that creates the listitem with "name", "thumbnail" and "plot", already preset.
 
-        :param callback: The "callback" function.
+        :param Callback callback: The "callback" function.
         :param args: "Positional" arguments that will be passed to the callback.
         :param kwargs: "Keyword" arguments that will be passed to the callback.
         """
@@ -823,29 +857,25 @@ class Listitem(object):
         that was given will be executed with all parameters forwarded on. Except with one extra
         parameter, ``search_query``, which is the "search term" that was selected.
 
-        :param callback: Function that will be called when the "listitem" is activated.
+        :param Callback callback: Function that will be called when the "listitem" is activated.
         :param args: "Positional" arguments that will be passed to the callback.
         :param kwargs: "Keyword" arguments that will be passed to the callback.
-        :raises ValueError: If the given "callback" function does not have a ``search_query`` parameter.
         """
         if hasattr(callback, "route"):
             route = callback.route
+        elif isinstance(callback, CallbackRef):
+            route = callback
         else:
             route = dispatcher.get_route(callback)
 
-        # Check that callback function has required parameter(search_query)
-        if "search_query" not in route.arg_names():
-            raise ValueError("callback function is missing required argument: 'search_query'")
-
-        if args:
-            # Convert positional arguments to keyword arguments
-            route.args_to_kwargs(args, kwargs)
+        kwargs["first_load"] = True
+        kwargs["_route"] = route.path
 
         item = cls()
         item.label = bold(Script.localize(SEARCH))
         item.art.global_thumb("search.png")
         item.info["plot"] = Script.localize(SEARCH_PLOT)
-        item.set_callback("/codequick/search/savedsearches/", _route=route.path, first_load=True, **kwargs)
+        item.set_callback(Route.ref("/codequick/search:saved_searches"), *args, **kwargs)
         return item
 
     @classmethod
@@ -866,15 +896,13 @@ class Listitem(object):
             >>> item = Listitem()
             >>> item.youtube("UC4QZ_LsYcvcq7qOsOhpAX4A")
         """
-        from codequick.youtube import Playlist
-
         # Youtube exists, Creating listitem link
         item = cls()
         item.label = label if label else bold(Script.localize(ALLVIDEOS))
         item.art.global_thumb("videos.png")
         item.params["contentid"] = content_id
         item.params["enable_playlists"] = False if content_id.startswith("PL") else enable_playlists
-        item.set_callback(Playlist)
+        item.set_callback(Route.ref("/codequick/youtube:playlist"))
         return item
 
     def __repr__(self):

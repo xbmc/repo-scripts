@@ -3,10 +3,10 @@ from __future__ import absolute_import
 
 # Standard Library Imports
 import importlib
+import warnings
 import binascii
 import inspect
 import logging
-import pickle
 import time
 import sys
 import re
@@ -19,11 +19,19 @@ import xbmc
 # Package imports
 from codequick.utils import parse_qs, ensure_native_str, urlparse, PY3, unicode_type
 
+try:
+    # noinspection PyPep8Naming
+    import cPickle as pickle
+except ImportError:  # pragma: no cover
+    import pickle
+
 if PY3:
     from inspect import getfullargspec
+    PICKLE_PROTOCOL = 4
 else:
     # noinspection PyDeprecation
     from inspect import getargspec as getfullargspec
+    PICKLE_PROTOCOL = 2
 
 script_data = xbmcaddon.Addon("script.module.codequick")
 addon_data = xbmcaddon.Addon()
@@ -96,7 +104,20 @@ class KodiLogHandler(logging.Handler):
             xbmc.log("###### debug ######", xbmc.LOGWARNING)
 
 
-class Route(object):
+class CallbackRef(object):
+    __slots__ = ("path", "parent", "is_playable", "is_folder")
+
+    def __init__(self, path, parent):
+        self.path = path.rstrip("/").replace(":", "/")
+        self.is_playable = parent.is_playable
+        self.is_folder = parent.is_folder
+        self.parent = parent
+
+    def __eq__(self, other):
+        return self.path == other.path
+
+
+class Route(CallbackRef):
     """
     Handle callback route data.
 
@@ -111,40 +132,26 @@ class Route(object):
     :ivar parent: The parent class that will handle the response from callback.
     :ivar str path: The route path to func/class.
     """
-    __slots__ = ("parent", "function", "callback", "path", "is_playable", "is_folder")
-
-    def __eq__(self, other):
-        return self.path == other.path
+    __slots__ = ("function", "callback")
 
     def __init__(self, callback, parent, path):
         # Register a class callback
         if inspect.isclass(callback):
+            msg = "Use of class based callbacks are Deprecated, please use function callbacks"
+            warnings.warn(msg, DeprecationWarning)
             if hasattr(callback, "run"):
-                self.parent = parent = callback
+                parent = callback
                 self.function = callback.run
                 callback.test = staticmethod(self.unittest_caller)
             else:
                 raise NameError("missing required 'run' method for class: '{}'".format(callback.__name__))
         else:
             # Register a function callback
-            self.parent = parent
             self.function = callback
             callback.test = self.unittest_caller
 
-        self.is_playable = parent.is_playable
-        self.is_folder = parent.is_folder
+        super(Route, self).__init__(path, parent)
         self.callback = callback
-        self.path = path
-
-    def args_to_kwargs(self, args, kwargs):  # type: (tuple, dict) -> None
-        """Convert positional arguments to keyword arguments and merge into callback parameters."""
-        callback_args = self.arg_names()[1:]
-        arg_map = zip(callback_args, args)
-        kwargs.update(arg_map)
-
-    def arg_names(self):  # type: () -> list
-        """Return a list of argument names, positional and keyword arguments."""
-        return getfullargspec(self.function).args
 
     def unittest_caller(self, *args, **kwargs):
         """
@@ -168,7 +175,7 @@ class Route(object):
         # Update support params with the params
         # that are to be passed to callback
         if args:
-            self.args_to_kwargs(args, dispatcher.params)
+            dispatcher.params["_args_"] = args
 
         if kwargs:
             dispatcher.params.update(kwargs)
@@ -239,7 +246,7 @@ class Dispatcher(object):
 
     def get_route(self, path=None):  # type: (str) -> Route
         """Return the given route object."""
-        path = path if path else self.selector
+        path = path.rstrip("/") if path else self.selector
 
         # Attempt to import the module where the route
         # is located if it's not already registered
@@ -266,7 +273,7 @@ class Dispatcher(object):
         # Construct route path
         path = callback.__name__.lower()
         if path != "root":
-            path = "/{}/{}/".format(callback.__module__.strip("_").replace(".", "/"), callback.__name__).lower()
+            path = "/{}/{}".format(callback.__module__.strip("_").replace(".", "/"), callback.__name__).lower()
 
         # Register callback
         if path in self.registered_routes:
@@ -311,7 +318,8 @@ class Dispatcher(object):
 
             # Initialize controller and execute callback
             parent_ins = route.parent()
-            results = route.function(parent_ins, **self.callback_params)
+            arg_params = self.params.get("_args_", [])
+            results = route.function(parent_ins, *arg_params, **self.callback_params)
             if hasattr(parent_ins, "_process_results"):
                 # noinspection PyProtectedMember
                 redirect = parent_ins._process_results(results)
@@ -332,7 +340,7 @@ class Dispatcher(object):
                 msg = unicode_type(e).encode("utf8")
 
             # Log the error in both the gui and the kodi log file
-            logger.critical(msg, exc_info=1)
+            logger.exception(msg)
             dialog = xbmcgui.Dialog()
             dialog.notification(e.__class__.__name__, msg, addon_data.getAddonInfo("icon"))
             return e
@@ -382,12 +390,18 @@ def build_path(callback=None, args=None, query=None, **extra_query):
     # Set callback to current callback if not given
     if callback and hasattr(callback, "route"):
         route = callback.route
-    else:
+    elif isinstance(callback, CallbackRef):
+        route = callback
+    elif callback:
+        msg = "passing in callback path is deprecated, use callback reference 'Route.ref' instead"
+        warnings.warn(msg, DeprecationWarning)
         route = dispatcher.get_route(callback)
+    else:
+        route = dispatcher.get_route()
 
     # Convert args to keyword args if required
     if args:
-        route.args_to_kwargs(args, query)
+        query["_args_"] = args
 
     # If extra querys are given then append the
     # extra querys to the current set of querys
@@ -397,7 +411,7 @@ def build_path(callback=None, args=None, query=None, **extra_query):
 
     # Encode the query parameters using json
     if query:
-        pickled = binascii.hexlify(pickle.dumps(query, protocol=pickle.HIGHEST_PROTOCOL))
+        pickled = binascii.hexlify(pickle.dumps(query, protocol=PICKLE_PROTOCOL))
         query = "_pickle_={}".format(pickled.decode("ascii") if PY3 else pickled)
 
     # Build kodi url with new path and query parameters

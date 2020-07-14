@@ -40,4 +40,12 @@ from codequick.script import Script
 from codequick.route import Route
 from codequick import utils, storage
 
-__all__ = ["run", "Script", "Route", "Resolver", "Listitem", "utils", "storage"]
+__all__ = [
+    "run",
+    "Script",
+    "Route",
+    "Resolver",
+    "Listitem",
+    "utils",
+    "storage",
+]
