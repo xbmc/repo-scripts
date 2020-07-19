@@ -9,14 +9,21 @@ import xbmc
 import xbmcgui
 import xbmcaddon
 import xbmcplugin
+import xbmcvfs
 import urllib.parse
 import calendar
 import datetime
 import requests
 import string
+import json
+from xml.etree.ElementTree import Element
+from xml.etree.ElementTree import tostring
+import html.parser
+from xml.dom import minidom
 
 qp = urllib.parse.quote_plus
 uqp = urllib.parse.unquote_plus
+UNESCAPE = html.parser.HTMLParser().unescape
 USERAGENT = 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.101 Safari/537.36'
 httpHeaders = {'User-Agent': USERAGENT,
                'Accept':"application/json, text/javascript, text/html,*/*",
@@ -140,14 +147,40 @@ class t1mAddon(object):
         return filename
 
 
-    def makeLibraryPath(self, ftype):
-        name  = self.cleanFilename(xbmc.getInfoLabel('ListItem.Title'))
+    def makeLibraryPath(self, ftype, name=None):
+        if name is None:
+            name  = self.cleanFilename(xbmc.getInfoLabel('ListItem.Title').replace('(Series)','',1).strip())
         profile = self.script.getAddonInfo('profile')
         moviesDir  = xbmc.translatePath(os.path.join(profile,str(ftype)))
         movieDir  = xbmc.translatePath(os.path.join(moviesDir, name))
         if not os.path.isdir(movieDir):
             os.makedirs(movieDir)
         return movieDir
+
+
+    def addMusicVideoToLibrary(self, url):
+        url, infoList = urllib.parse.unquote_plus(url).split('||',1)
+        infoList = eval(infoList)
+        artist = infoList.get('artist')
+        title = infoList.get('title')
+        movieDir = self.makeLibraryPath('music_videos', name=self.cleanFilename(artist))
+        strmFile = xbmc.translatePath(os.path.join(movieDir, ''.join([self.cleanFilename(title),'.strm'])))
+        url = ''.join([sys.argv[0],'?mode=GV&url=',url])
+        with open(strmFile, 'w') as outfile:
+            outfile.write(url)
+        nfoFile = xbmc.translatePath(os.path.join(movieDir, ''.join([self.cleanFilename(title),'.nfo'])))
+        nfoData = Element('musicvideo')
+        for key, val in infoList.items():
+            child = Element(key)
+            child.text = str(val)
+            nfoData.append(child)
+
+        nfoData = UNESCAPE(minidom.parseString(tostring(nfoData)).toprettyxml(indent="   "))
+
+        with open(nfoFile, 'w') as outfile:
+            outfile.write(nfoData)
+        json_cmd = '{"jsonrpc":"2.0","method":"VideoLibrary.Scan", "params": {"directory":"%s/"},"id":1}' % movieDir.replace('\\','/')
+        jsonRespond = xbmc.executeJSONRPC(json_cmd)
 
 
     def addMovieToLibrary(self, url):
@@ -159,6 +192,25 @@ class t1mAddon(object):
             outfile.write(url)
         json_cmd = '{"jsonrpc":"2.0","method":"VideoLibrary.Scan", "params": {"directory":"%s/"},"id":1}' % movieDir.replace('\\','/')
         jsonRespond = xbmc.executeJSONRPC(json_cmd)
+
+    def addShowByDate(self,url):
+        url = uqp(url)
+        movieDir = self.makeLibraryPath('shows')
+        ilist = []
+        ilist = self.getAddonEpisodes(url, ilist)
+        for url, liz, isFolder in ilist:
+            pdate = str(liz.getVideoInfoTag().getFirstAired())
+            pdate = pdate.split('/')
+            pdate = ''.join([pdate[2],'-',pdate[0],'-',pdate[1]])
+            title = self.cleanFilename(str(liz.getVideoInfoTag().getTitle()))
+            TVShowTitle = self.cleanFilename(str(liz.getVideoInfoTag().getTVShowTitle()))
+            se = ''.join([TVShowTitle,' ',pdate,' [',title,'].strm'])
+            strmFile = xbmc.translatePath(os.path.join(movieDir, se))
+            with open(strmFile, 'w') as outfile:
+                outfile.write(url)
+        json_cmd = '{"jsonrpc":"2.0","method":"VideoLibrary.Scan", "params": {"directory":"%s/"},"id":1}' % movieDir.replace('\\','/')
+        jsonRespond = xbmc.executeJSONRPC(json_cmd)
+
 
 
     def addShowToLibrary(self,url):
@@ -205,6 +257,8 @@ class t1mAddon(object):
                   'LV' : self.getAddonLiveVideo,
                   'AM' : self.addMovieToLibrary,
                   'AS' : self.addShowToLibrary,
+                  'AD' : self.addShowByDate,
+                  'MU' : self.addMusicVideoToLibrary,
                   'DF' : self.doFunction}
         parms = {}
         if len((sys.argv[2][1:])) > 0:
