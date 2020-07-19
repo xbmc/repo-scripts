@@ -1,8 +1,9 @@
 <?xml version='1.0' encoding='UTF-8' standalone='yes'?>
-<addon id="script.module.t1mlib" name="t1m Library Routines" provider-name="t1m" version="4.0.0">
+<addon id="script.module.t1mlib" name="t1m Library Routines" provider-name="t1m" version="4.0.4">
   <requires>
     <import addon="xbmc.python" version="3.0.0" />
-    <import addon="script.module.requests" version="2.22.0" />
+    <import addon="script.module.requests" version="2.22.0"/>
+    <import addon="inputstream.adaptive" version="2.6.0"/>
   </requires>
   <extension point="xbmc.python.module" library="lib"/>
   <extension point="xbmc.addon.metadata">
@@ -14,7 +15,7 @@
         <forum>https://forum.kodi.tv/showthread.php?tid=247163</forum>
         <source>https://github.com/learningit/repo-scripts></source>
         <language>en</language>
-        <news>Py3 Initial Version 4.0.0</news>
+        <news>Py3 Version 4.0.4 - added music video library functions</news>
         <assets>
             <icon>resources/icon.png</icon>
         </assets>
