@@ -157,6 +157,10 @@ class t1mAddon(object):
             os.makedirs(movieDir)
         return movieDir
 
+    def doScan(self,movieDir):
+        json_cmd = '{"jsonrpc":"2.0","method":"VideoLibrary.Scan", "params": {"directory":"%s/"},"id":1}' % movieDir.replace('\\','/')
+        jsonRespond = xbmc.executeJSONRPC(json_cmd)
+
 
     def addMusicVideoToLibrary(self, url):
         url, infoList = urllib.parse.unquote_plus(url).split('||',1)
@@ -179,8 +183,7 @@ class t1mAddon(object):
 
         with open(nfoFile, 'w') as outfile:
             outfile.write(nfoData)
-        json_cmd = '{"jsonrpc":"2.0","method":"VideoLibrary.Scan", "params": {"directory":"%s/"},"id":1}' % movieDir.replace('\\','/')
-        jsonRespond = xbmc.executeJSONRPC(json_cmd)
+        self.doScan(movieDir)
 
 
     def addMovieToLibrary(self, url):
@@ -190,8 +193,8 @@ class t1mAddon(object):
         url = ''.join([sys.argv[0],'?mode=GV&url=',url])
         with open(strmFile, 'w') as outfile:
             outfile.write(url)
-        json_cmd = '{"jsonrpc":"2.0","method":"VideoLibrary.Scan", "params": {"directory":"%s/"},"id":1}' % movieDir.replace('\\','/')
-        jsonRespond = xbmc.executeJSONRPC(json_cmd)
+        self.doScan(movieDir)
+
 
     def addShowByDate(self,url):
         url = uqp(url)
@@ -208,9 +211,7 @@ class t1mAddon(object):
             strmFile = xbmc.translatePath(os.path.join(movieDir, se))
             with open(strmFile, 'w') as outfile:
                 outfile.write(url)
-        json_cmd = '{"jsonrpc":"2.0","method":"VideoLibrary.Scan", "params": {"directory":"%s/"},"id":1}' % movieDir.replace('\\','/')
-        jsonRespond = xbmc.executeJSONRPC(json_cmd)
-
+        self.doScan(movieDir)
 
 
     def addShowToLibrary(self,url):
@@ -225,8 +226,7 @@ class t1mAddon(object):
             strmFile = xbmc.translatePath(os.path.join(movieDir, se))
             with open(strmFile, 'w') as outfile:
                 outfile.write(url)
-        json_cmd = '{"jsonrpc":"2.0","method":"VideoLibrary.Scan", "params": {"directory":"%s/"},"id":1}' % movieDir.replace('\\','/')
-        jsonRespond = xbmc.executeJSONRPC(json_cmd)
+        self.doScan(movieDir)
 
 
     # internal functions for views, cache and directory management
