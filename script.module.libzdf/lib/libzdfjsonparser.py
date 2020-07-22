@@ -27,6 +27,7 @@ class parser:
 		self.template = {'params':{}, 'metadata':{'art':{}}, 'type':'video'}
 		self.playerId = 'ngplayer_2_3'
 		#self.playerId = 'ngplayer_2_4'
+		#self.playerId = 'ngplayer_2_2_modul'
 		#self.playerId = 'chromecast_1'
 		#self.playerId = 'android_native_1'
 		#self.playerId = 'android_native_2'
@@ -179,7 +180,7 @@ class parser:
 		return self.result
 
 	def _grepItem(self,target,forcedType=False):
-		if target['profile'] == 'http://zdf.de/rels/not-found':
+		if target['profile'] in ['http://zdf.de/rels/not-found','http://zdf.de/rels/gone']:
 			return False
 
 		self.d = copy.deepcopy(self.template)
