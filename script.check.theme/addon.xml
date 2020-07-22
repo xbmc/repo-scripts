@@ -7,11 +7,11 @@
 	<extension point="xbmc.addon.metadata">
 		<summary lang="en_GB">MP3 theme check addon</summary>
 		<description lang="en_GB">Script for skinners to check if a mp3 theme exists.</description>
-		<language></language>
 		<platform>all</platform>
-		<license>GNU GENERAL PUBLIC LICENSE Version 2</license>
+		<license>GPL-2.0-only</license>
 		<assets>
 			<icon>resources/icon.png</icon>
 		</assets>
+		<news>- Python 3 conversion</news>
 	</extension>
 </addon>
