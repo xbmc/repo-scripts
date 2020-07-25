@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="service.master.lock"
+       name="Master Lock Service"
+       version="1.0.0"
+       provider-name="Bas Rieter">
+
+    <requires>
+        <import addon="xbmc.python" version="2.25.0" />
+    </requires>
+
+    <extension point="xbmc.service" library="service.py" />
+
+    <extension point="xbmc.addon.metadata">
+        <reuselanguageinvoker>true</reuselanguageinvoker>
+        <summary lang="en_US">Simple service that engages the Master Lock (if Kodi has one) when the screensaver starts.</summary>
+        <summary lang="en_GB">Simple service that engages the Master Lock (if Kodi has one) when the screensaver starts.</summary>
+        <description lang="en_US">Master Lock Service checks if Kodi has a Master Lock configured and if it is unlocked. If that is the case, it will enage the Master Lock whenever the screen saver starts.</description>
+        <description lang="en_GB">Master Lock Service checks if Kodi has a Master Lock configured and if it is unlocked. If that is the case, it will enage the Master Lock whenever the screen saver starts.</description>
+        <platform>all</platform>
+        <license>GPL-3.0-or-later</license>
+        <source>https://github.com/basrieter/service.master.lock</source>
+        <assets>
+            <icon>resources/media/icon.png</icon>
+        </assets>
+        <news>- Initial version of the Master Lock Service</news>
+    </extension>
+</addon>
