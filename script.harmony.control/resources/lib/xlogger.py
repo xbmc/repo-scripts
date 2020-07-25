@@ -46,7 +46,7 @@ class Logger( object ):
                 loglevel = self.logger.debug
         for line in loglines:
             try:
-                if type(line).__name__ == 'unicode':
+                if isinstance(line, unicode):
                     line = line.encode('utf-8')
                 str_line = line.__str__()
             except Exception as e:
