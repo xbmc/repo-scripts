@@ -127,7 +127,7 @@ class Main:
         dialog_return, loglines = hcdialog.Dialog().start( self.SETTINGS, title=self.SETTINGS['ADDONLANGUAGE']( 32205 ),
                                                            buttons=saved_mappings )
         self.LW.log( loglines )
-        if dialog_return == None:
+        if dialog_return is None:
             return
         activity, cmds = self._get_mapping_details( json_mappings, saved_mappings[dialog_return] )
         self._run_activity( activity, cmds )
