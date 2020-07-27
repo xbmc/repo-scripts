@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<window id="11112">
+	<defaultcontrol always="true">10070</defaultcontrol>
+	<coordinates>
+		<origin x="0" y="0" />
+	</coordinates>
+	<controls>
+		<control type="group" id="10072">
+			<!-- this hides the menu until it's done with setup -->
+		    <left>-10000</left>
+		    <right>-10000</right>
+			<control type="image" id="10073">
+				<!-- Dialog background image -->
+				<width>770</width>
+				<height></height>
+				<texture border="14">button-menu-background.png</texture>
+			</control>
+			<control type="label" id="10071">
+				<left>13</left>
+				<top>8</top>
+				<width>744</width>
+				<height>50</height>
+				<font>apptv25</font>
+				<label></label>
+				<align>center</align>
+			</control>
+			<control type="image">
+				<left>13</left>
+				<top>62</top>
+				<width>744</width>
+				<height>6</height>
+				<texture>separator.png</texture>
+			</control>
+			<control type="grouplist" id="10070">
+				<left>13</left>
+				<top>71</top>
+				<width>744</width>
+				<height min="72" max="864">auto</height>
+				<itemgap>0</itemgap>
+				<control type="button" id="10080">
+					<left>0</left>
+					<top>0</top>
+					<width>744</width>
+					<height>72</height>
+					<align>center</align>
+					<aligny>center</aligny>
+					<label></label>
+				</control>
+				<control type="button" id="10081">
+					<left>0</left>
+					<top>0</top>
+					<width>744</width>
+					<height>72</height>
+					<align>center</align>
+					<aligny>center</aligny>
+					<label></label>
+				</control>
+				<control type="button" id="10082">
+					<left>0</left>
+					<top>0</top>
+					<width>744</width>
+					<height>72</height>
+					<align>center</align>
+					<aligny>center</aligny>
+					<label></label>
+				</control>
+				<control type="button" id="10083">
+					<left>0</left>
+					<top>0</top>
+					<width>744</width>
+					<height>72</height>
+					<align>center</align>
+					<aligny>center</aligny>
+					<label></label>
+				</control>
+				<control type="button" id="10084">
+					<left>0</left>
+					<top>0</top>
+					<width>744</width>
+					<height>72</height>
+					<align>center</align>
+					<aligny>center</aligny>
+					<label></label>
+				</control>
+				<control type="button" id="10085">
+					<left>0</left>
+					<top>0</top>
+					<width>744</width>
+					<height>72</height>
+					<align>center</align>
+					<aligny>center</aligny>
+					<label></label>
+				</control>
+				<control type="button" id="10086">
+					<left>0</left>
+					<top>0</top>
+					<width>744</width>
+					<height>72</height>
+					<align>center</align>
+					<aligny>center</aligny>
+					<label></label>
+				</control>
+				<control type="button" id="10087">
+					<left>0</left>
+					<top>0</top>
+					<width>744</width>
+					<height>72</height>
+					<align>center</align>
+					<aligny>center</aligny>
+					<label></label>
+				</control>
+				<control type="button" id="10088">
+					<left>0</left>
+					<top>0</top>
+					<width>744</width>
+					<height>72</height>
+					<align>center</align>
+					<aligny>center</aligny>
+					<label></label>
+				</control>
+				<control type="button" id="10089">
+					<left>0</left>
+					<top>0</top>
+					<width>744</width>
+					<height>72</height>
+					<align>center</align>
+					<aligny>center</aligny>
+					<label></label>
+				</control>
+			</control>
+		</control>
+	</controls>
+</window>
