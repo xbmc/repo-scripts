@@ -1,0 +1,98 @@
+<?xml version="1.0" ?>
+<settings version="1">
+	<section id="script.harmony.control">
+		<category help="" id="general" label="32000">
+			<group id="1">
+				<setting help="" id="version_upgrade" label="hidden_upgrade" type="string">
+					<level>0</level>
+					<default/>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="visible">
+							<condition name="InfoBool" on="property">false</condition>
+						</dependency>
+					</dependencies>
+					<control format="string" type="edit">
+						<heading>hidden_upgrade</heading>
+					</control>
+				</setting>
+				<setting help="" id="mappings" label="hidden_mappings" type="string">
+					<level>0</level>
+					<default/>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="visible">
+							<condition name="InfoBool" on="property">false</condition>
+						</dependency>
+					</dependencies>
+					<control format="string" type="edit">
+						<heading>hidden_mappings</heading>
+					</control>
+				</setting>
+				<setting help="" id="hub_ip" label="32102" type="string">
+					<level>0</level>
+					<default/>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<control format="ip" type="edit">
+						<heading>32102</heading>
+					</control>
+				</setting>
+				<setting help="" id="delay" label="32107" type="integer">
+					<level>0</level>
+					<default>250</default>
+					<control format="integer" type="edit">
+						<heading>32107</heading>
+					</control>
+				</setting>
+				<setting help="" id="timeout" label="32106" type="integer">
+					<level>0</level>
+					<default>30</default>
+					<control format="integer" type="edit">
+						<heading>32106</heading>
+					</control>
+				</setting>
+				<setting help="" id="harmonyadvanced" label="32105" type="boolean">
+					<level>0</level>
+					<default>false</default>
+					<control type="toggle"/>
+				</setting>
+				<setting help="" id="navmfdfqltfbtdhosbjdohshrjtdkwyn" label="32101" type="action">
+					<level>0</level>
+					<data>RunScript(script.harmony.control,fromsettings)</data>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<control format="action" type="button">
+						<close>true</close>
+					</control>
+				</setting>
+				<setting help="" id="use_custom_skin_menu" label="32103" type="boolean">
+					<level>0</level>
+					<default>true</default>
+					<control type="toggle"/>
+				</setting>
+				<setting help="" id="include_skin_mods" label="32104" parent="use_custom_skin_menu" type="boolean">
+					<level>0</level>
+					<default>true</default>
+					<dependencies>
+						<dependency type="visible">
+							<condition operator="is" setting="use_custom_skin_menu">true</condition>
+						</dependency>
+					</dependencies>
+					<control type="toggle"/>
+				</setting>
+				<setting help="" id="debug" label="32100" type="boolean">
+					<level>0</level>
+					<default>false</default>
+					<control type="toggle"/>
+				</setting>
+			</group>
+		</category>
+	</section>
+</settings>

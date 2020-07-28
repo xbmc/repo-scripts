@@ -1,0 +1,25 @@
+<addon id="script.harmony.control" name="Harmony Hub Controller" provider-name="pkscout" version="0.2.0+matrix.1">
+	<requires>
+		<import addon="xbmc.python" version="3.0.0" />
+		<import addon="script.module.kodi-six" version="0.1.3.1" />
+		<import addon="script.module.requests" version="2.22.0+matrix.1" />
+		<import addon="script.module.websocket" version="0.5.7+matrix.1" />
+	</requires>
+	<extension library="default.py" point="xbmc.python.script">
+		<provides>executable</provides>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<news>
+v.0.2.0
+- initial release
+		</news>
+		<assets>
+			<icon>icon.png</icon>
+		</assets>
+		<summary lang="en_GB">Addon to send activity and remote commands via a Harmony Hub.</summary>
+		<description lang="en_GB">Harmony Hub Controller let's you setup actions to run a Harmony activity and/or a sequence of remote commands. Running the addon gives you a menu of your actions, and you can also send an action name as an arg to have the script run a specific action.</description>
+		<platform>all</platform>
+		<license>GPL-2.0-only</license>
+		<source>https://github.com/pkscout/script.harmony.control</source>
+	</extension>
+</addon>
