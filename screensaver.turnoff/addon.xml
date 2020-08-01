@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="screensaver.turnoff" name="Turn Off" version="0.10.2" provider-name="dagwieers">
+<addon id="screensaver.turnoff" name="Turn Off" version="0.10.3" provider-name="dagwieers">
   <requires>
     <import addon="xbmc.python" version="2.25.0"/>
   </requires>
@@ -18,6 +18,9 @@ Next to managing your display, it can also manage your device power state, log y
     <source>https://github.com/dagwieers/screensaver.turnoff</source>
     <forum>https://forum.kodi.tv/showthread.php?tid=331076</forum>
     <news>
+v0.10.3 (2020-08-01)
+- Workflow changes for Matrix
+
 v0.10.2 (2019-11-21)
 - Create separate entrypoint
 - Improve stability

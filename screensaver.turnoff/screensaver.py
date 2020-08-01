@@ -6,13 +6,8 @@
 from __future__ import absolute_import, division, unicode_literals
 import sys
 import atexit
-import subprocess
-
-from xbmc import executebuiltin, executeJSONRPC, getCondVisibility, log as xlog, Monitor
-from xbmcaddon import Addon
-from xbmcgui import Dialog, WindowXMLDialog
-
-DEBUG_LOGGING = 0
+from xbmc import Monitor
+from xbmcgui import WindowXMLDialog
 
 # NOTE: The below order relates to resources/settings.xml
 DISPLAY_METHODS = [
@@ -63,7 +58,7 @@ DISPLAY_METHODS = [
 
 POWER_METHODS = [
     dict(name='do-nothing', title='Do nothing',
-         function='log', kwargs_off=dict(level=2, msg='Do nothing to power off system')),
+         function='log', kwargs_off=dict(level=2, message='Do nothing to power off system')),
     dict(name='suspend-builtin', title='Suspend (built-in)',
          function='jsonrpc', kwargs_off=dict(method='System.Suspend')),
     dict(name='hibernate-builtin', title='Hibernate (built-in)',
@@ -98,42 +93,81 @@ def to_unicode(text, encoding='utf-8'):
     return text.decode(encoding) if isinstance(text, bytes) else text
 
 
-def log(level=1, msg='', **kwargs):
+def addon_icon():
+    ''' Cache and return VRT NU Add-on icon '''
+    if not hasattr(addon_icon, 'cached'):
+        from xbmcaddon import Addon
+        addon_icon.cached = to_unicode(Addon().getAddonInfo('icon'))
+    return getattr(addon_icon, 'cached')
+
+
+def addon_id():
+    ''' Cache and return VRT NU Add-on ID '''
+    if not hasattr(addon_id, 'cached'):
+        from xbmcaddon import Addon
+        addon_id.cached = to_unicode(Addon().getAddonInfo('id'))
+    return getattr(addon_id, 'cached')
+
+
+def addon_name():
+    ''' Cache and return VRT NU Add-on name '''
+    if not hasattr(addon_name, 'cached'):
+        from xbmcaddon import Addon
+        addon_name.cached = to_unicode(Addon().getAddonInfo('name'))
+    return getattr(addon_name, 'cached')
+
+
+def addon_path():
+    ''' Cache and return VRT NU Add-on path '''
+    if not hasattr(addon_path, 'cached'):
+        from xbmcaddon import Addon
+        addon_path.cached = to_unicode(Addon().getAddonInfo('path'))
+    return getattr(addon_path, 'cached')
+
+
+def log(level=1, message='', **kwargs):
     ''' Log info messages to Kodi '''
+    if not hasattr(log, 'debug_logging'):
+        log.debug_logging = get_global_setting('debug.showloginfo')  # Returns a boolean
     max_log_level = int(get_setting('max_log_level', 0))
-    if not DEBUG_LOGGING and not (level <= max_log_level and max_log_level != 0):
+    if not getattr(log, 'debug_logging') and not (level <= max_log_level and max_log_level != 0):
         return
-    from string import Formatter
     if kwargs:
-        msg = Formatter().vformat(msg, (), SafeDict(**kwargs))
-    msg = '[{addon}] {msg}'.format(addon=ADDON_ID, msg=msg)
-    xlog(from_unicode(msg), level % 3 if DEBUG_LOGGING else 2)
+        from string import Formatter
+        message = Formatter().vformat(message, (), SafeDict(**kwargs))
+    message = '[{addon}] {message}'.format(addon=addon_id(), message=message)
+    from xbmc import log as xlog
+    xlog(from_unicode(message), level % 3 if getattr(log, 'debug_logging') else 2)
 
 
-def log_error(msg, **kwargs):
+def log_error(message, **kwargs):
     ''' Log error messages to Kodi '''
-    from string import Formatter
     if kwargs:
-        msg = Formatter().vformat(msg, (), SafeDict(**kwargs))
-    msg = '[{addon}] {msg}'.format(addon=ADDON_ID, msg=msg)
-    xlog(from_unicode(msg), 4)
+        from string import Formatter
+        message = Formatter().vformat(message, (), SafeDict(**kwargs))
+    message = '[{addon}] {message}'.format(addon=addon_id(), message=message)
+    from xbmc import log as xlog
+    xlog(from_unicode(message), 4)
 
 
 def jsonrpc(**kwargs):
     ''' Perform JSONRPC calls '''
     from json import dumps, loads
+    from xbmc import executeJSONRPC
     if 'id' not in kwargs:
         kwargs.update(id=1)
     if 'jsonrpc' not in kwargs:
         kwargs.update(jsonrpc='2.0')
     result = loads(executeJSONRPC(dumps(kwargs)))
-    log(3, msg="Sending JSON-RPC payload: '{payload}' returns '{result}'", payload=kwargs, result=result)
+    if hasattr(log, 'debug_logging'):
+        log(3, "Sending JSON-RPC payload: '{payload}' returns '{result}'", payload=kwargs, result=result)
     return result
 
 
 def get_setting(setting_id, default=None):
     ''' Get an add-on setting '''
-    value = to_unicode(ADDON.getSetting(setting_id))
+    from xbmcaddon import Addon
+    value = to_unicode(Addon().getSetting(setting_id))
     if value == '' and default is not None:
         return default
     return value
@@ -145,13 +179,14 @@ def get_global_setting(setting):
     return result.get('result', {}).get('value')
 
 
-def popup(heading='', msg='', delay=10000, icon=''):
-    ''' Bring up a pop-up with a meaningful error '''
+def notification(heading='', message='', icon='', time=4000):
+    ''' Show a Kodi notification '''
+    from xbmcgui import Dialog
     if not heading:
-        heading = 'Addon {addon} failed'.format(addon=ADDON_ID)
+        heading = addon_name()
     if not icon:
-        icon = ADDON_ICON
-    Dialog().notification(heading, msg, icon, delay)
+        icon = addon_icon()
+    Dialog().notification(heading=heading, message=message, icon=icon, time=time)
 
 
 def set_mute(toggle=True):
@@ -167,29 +202,31 @@ def activate_window(window='home'):
 
 def run_builtin(builtin):
     ''' Run Kodi builtins while catching exceptions '''
-    log(2, msg="Executing builtin '{builtin}'", builtin=builtin)
+    from xbmc import executebuiltin
+    log(2, "Executing builtin '{builtin}'", builtin=builtin)
     executebuiltin(builtin, True)
 
 
 def run_command(*command, **kwargs):
     ''' Run commands on the OS while catching exceptions '''
+    import subprocess
     # TODO: Add options for running using su or sudo
     try:
         cmd = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=False, **kwargs)
         (out, err) = cmd.communicate()
         if cmd.returncode == 0:
-            log(2, msg="Running command '{command}' returned rc={rc}", command=' '.join(command), rc=cmd.returncode)
+            log(2, "Running command '{command}' returned rc={rc}", command=' '.join(command), rc=cmd.returncode)
         else:
-            log_error(msg="Running command '{command}' failed with rc={rc}", command=' '.join(command), rc=cmd.returncode)
+            log_error("Running command '{command}' failed with rc={rc}", command=' '.join(command), rc=cmd.returncode)
             if err:
-                log_error(msg="Command '{command}' returned on stderr: {stderr}", command=command[0], stderr=err)
+                log_error("Command '{command}' returned on stderr: {stderr}", command=command[0], stderr=err)
             if out:
-                log_error(msg="Command '{command}' returned on stdout: {stdout} ", command=command[0], stdout=out)
-            popup(msg="%s\n%s" % (out, err))
+                log_error("Command '{command}' returned on stdout: {stdout} ", command=command[0], stdout=out)
+            notification(message="%s\n%s" % (out, err))
             sys.exit(1)
     except OSError as exc:
-        log_error(msg="Exception running '{command}': {exc}", command=command[0], exc=exc)
-        popup(msg="Exception running '%s': %s" % (command[0], exc))
+        log_error("Exception running '{command}': {exc}", command=command[0], exc=exc)
+        notification(message="Exception running '%s': %s" % (command[0], exc))
         sys.exit(2)
 
 
@@ -221,18 +258,18 @@ class TurnOffDialog(WindowXMLDialog, object):
         power_method = int(get_setting('power_method', 0))
         self.power = POWER_METHODS[power_method]
 
-        log(3, msg='display_method={display}, power_method={power}, logoff={logoff}, mute={mute}',
+        log(3, 'display_method={display}, power_method={power}, logoff={logoff}, mute={mute}',
             display=self.display.get('name'), power=self.power.get('name'), logoff=self.logoff, mute=self.mute)
 
         # Turn off display
         if self.display.get('name') != 'do-nothing':
-            log(1, msg="Turn display off using method '{name}'", **self.display)
+            log(1, "Turn display off using method '{name}'", **self.display)
         func(self.display.get('function'), *self.display.get('args_off'))
 
         # FIXME: Screensaver always seems to lock when started, requires unlock and re-login
         # Log off user
         if self.logoff == 'true':
-            log(1, msg='Log off user')
+            log(1, 'Log off user')
 #            run_builtin('System.LogOff')
             activate_window('loginscreen')
 #            run_builtin('ActivateWindow(loginscreen)')
@@ -240,7 +277,7 @@ class TurnOffDialog(WindowXMLDialog, object):
 
         # Mute audio
         if self.mute == 'true':
-            log(1, msg='Mute audio')
+            log(1, 'Mute audio')
             set_mute(toggle=True)
 
         self.monitor = TurnOffMonitor(action=self.resume)
@@ -248,19 +285,19 @@ class TurnOffDialog(WindowXMLDialog, object):
 
         # Power off system
         if self.power.get('name') != 'do-nothing':
-            log(1, msg="Turn system off using method '{name}'", **self.power)
+            log(1, "Turn system off using method '{name}'", **self.power)
         func(self.power.get('function'), **self.power.get('kwargs_off', {}))
 
     def resume(self):
         ''' Perform this when the Screensaver is stopped '''
         # Unmute audio
         if self.mute == 'true':
-            log(1, msg='Unmute audio')
+            log(1, 'Unmute audio')
             set_mute(toggle=False)
 
         # Turn on display
         if self.display.get('name') != 'do-nothing':
-            log(1, msg="Turn display back on using method '{name}'", **self.display)
+            log(1, "Turn display back on using method '{name}'", **self.display)
         func(self.display.get('function'), *self.display.get('args_on'))
 
         # Clean up everything
@@ -286,19 +323,11 @@ class TurnOffMonitor(Monitor, object):
 
 def run():
     ''' Runs the screensaver '''
+    from xbmc import getCondVisibility
 
     # If player has media, avoid running
     if getCondVisibility("Player.HasMedia"):
-        log(1, msg='Screensaver not started because player has media.')
+        log(1, 'Screensaver not started because player has media.')
         return
 
-    TurnOffDialog('gui.xml', ADDON_PATH, 'default').doModal()
-
-
-ADDON = Addon()
-ADDON_NAME = to_unicode(ADDON.getAddonInfo('name'))
-ADDON_ID = to_unicode(ADDON.getAddonInfo('id'))
-ADDON_PATH = to_unicode(ADDON.getAddonInfo('path'))
-ADDON_ICON = to_unicode(ADDON.getAddonInfo('icon'))
-
-DEBUG_LOGGING = get_global_setting('debug.showloginfo')
+    TurnOffDialog('gui.xml', addon_path(), 'default').doModal()
