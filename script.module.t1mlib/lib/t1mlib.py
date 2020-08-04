@@ -15,15 +15,10 @@ import calendar
 import datetime
 import requests
 import string
-import json
-from xml.etree.ElementTree import Element
-from xml.etree.ElementTree import tostring
-import html.parser
-from xml.dom import minidom
+
 
 qp = urllib.parse.quote_plus
 uqp = urllib.parse.unquote_plus
-UNESCAPE = html.parser.HTMLParser().unescape
 USERAGENT = 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.101 Safari/537.36'
 httpHeaders = {'User-Agent': USERAGENT,
                'Accept':"application/json, text/javascript, text/html,*/*",
@@ -163,6 +158,12 @@ class t1mAddon(object):
 
 
     def addMusicVideoToLibrary(self, url):
+        from xml.etree.ElementTree import Element
+        from xml.etree.ElementTree import tostring
+        import html.parser
+        from xml.dom import minidom
+        UNESCAPE = html.parser.HTMLParser().unescape
+
         url, infoList = urllib.parse.unquote_plus(url).split('||',1)
         infoList = eval(infoList)
         artist = infoList.get('artist')
@@ -180,9 +181,9 @@ class t1mAddon(object):
             nfoData.append(child)
 
         nfoData = UNESCAPE(minidom.parseString(tostring(nfoData)).toprettyxml(indent="   "))
-
-        with open(nfoFile, 'w') as outfile:
-            outfile.write(nfoData)
+# the next lines of code fail with a Type Error on Android if 'wb' and .encode('utf-8) aren't used. Works ok on Windows and Linux though
+        with open(nfoFile, 'wb') as outfile:
+            outfile.write(nfoData.encode('utf-8'))
         self.doScan(movieDir)
 
 
