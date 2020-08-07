@@ -12,7 +12,7 @@ import xbmc
 
 # Package imports
 from codequick.utils import ensure_unicode, ensure_native_str, unicode_type, string_map
-from codequick.support import dispatcher, script_data, addon_data, logger_id
+from codequick.support import dispatcher, script_data, addon_data, logger_id, CallbackRef
 
 __all__ = ["Script", "Settings"]
 
@@ -158,6 +158,39 @@ class Script(object):
     def __init__(self):
         self._title = self.params.get(u"_title_", u"")
         self.handle = dispatcher.handle
+
+    @classmethod
+    def ref(cls, path):
+        """
+        When given a path to a callback function, will return a reference to that callback function.
+
+        This is used as a way to link to a callback without the need to import it first.
+        With this only the required module containing the callback is imported when callback is executed.
+        This can be used to improve performance when dealing with lots of different callback functions.
+
+        .. note:
+
+            This method needs to be called from the same callback object type of
+            the referenced callback. e.g. Script/Route/Resolver.
+
+        The path structure is '/<package>/<module>:function' where 'package' is the full package path.
+        'module' is the name of the modules containing the callback.
+        And 'function' is the name of the callback function.
+
+        :example:
+            >>> from codequick import Route, Resolver, Listitem
+            >>> item = Listitem()
+            >>>
+            >>> # Example of referencing a Route callback
+            >>> item.set_callback(Route.ref("/resources/lib/videos:video_list"))
+            >>>
+            >>> # Example of referencing a Resolver callback
+            >>> item.set_callback(Resolver.ref("/resources/lib/resolvers:play_video"))
+
+        :param str path: The path to a callback function.
+        :return: A callback reference object.
+        """
+        return CallbackRef(path, cls)
 
     @classmethod
     def register(cls, callback):

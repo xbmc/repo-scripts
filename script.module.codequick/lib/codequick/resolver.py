@@ -2,7 +2,6 @@
 from __future__ import absolute_import
 
 # Standard Library Imports
-import warnings
 import logging
 import inspect
 import re
@@ -217,7 +216,8 @@ class Resolver(Script):
 
     @staticmethod
     def extract_youtube(source):  # pragma: no cover
-        warnings.warn("This method was only temporary and will be removed in future release.", DeprecationWarning)
+        msg = "This method was only temporary and will be removed in future release."
+        logger.warning("DeprecationWarning: " + msg)
         # TODO: Remove this method now that youtube.dl works on kodi for Xbox
         # noinspection PyPackageRequirements
         import htmlement
