@@ -66,7 +66,7 @@ class BaseProvider(object):
             li = {"label": item,
                   "search_string": prep_search_str(item)}
             items.append(li)
-            if i > self.limit:
+            if i > int(self.limit):
                 break
         return items
 
