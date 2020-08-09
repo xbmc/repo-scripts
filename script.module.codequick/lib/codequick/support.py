@@ -418,7 +418,8 @@ def build_path(callback=None, args=None, query=None, **extra_query):
         query = "_pickle_={}".format(pickled.decode("ascii") if PY3 else pickled)
 
     # Build kodi url with new path and query parameters
-    return urlparse.urlunsplit(("plugin", plugin_id, route.path, query, ""))
+    # NOTE: Kodi really needs a trailing '/'
+    return urlparse.urlunsplit(("plugin", plugin_id, route.path + "/", query, ""))
 
 
 # Setup kodi logging
