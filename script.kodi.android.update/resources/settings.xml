@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>     
+    <setting id="Enable_Debugging"    type="bool"   label="30000" default="false" />
+    <setting id="Disable_Maintenance" type="bool"   label="30003" default="false" />
+    <setting id="Disable_Cache"       type="bool"   label="30008" default="true"  visible="eq(-1,false)" subsetting="true" />
+    <setting id="File_Manager"        type="enum"   label="30021" values="Default (Nvidia Shield)|Custom" default="0" />
+    <setting id="Custom_Manager"      type="action" label="30020" default=""      visible="eq(-1,1)" action="RunScript($CWD/select.py)" subsetting="true" />
+    <setting id="LastURL"             type="text"   default=""    enable="false"  visible="false"/>
+    <setting id="LastPath"            type="text"   default=""    enable="false"  visible="false"/>
+    <setting id="Platform"            type="text"   default=""    enable="false"  visible="false"/>
+    <setting id="Version"             type="text"   default=""    enable="false"  visible="false"/>
+</settings>
